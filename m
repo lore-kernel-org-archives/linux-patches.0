@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021839;
-	b=jqsvn6EeO3uDc7wS5fGC/22Z4RMsaExL8XfERW8L0t9VwH3KY5ZdKjPLHTxF8D6Gtf9y
-	 5s1ahk/L+Xp9ObSXLKZINKMT198dDnVuT3NKe2JQBi/19jaRKwu1+oXNFga6Qs7ogdD9l
-	 qYW3AItI2PBehFDOob1ufB3REzZIbZdauc/lGUJkgkOHXueZ0TTYsCunHGNxi9mCJCPWA
-	 wnFwk5HLh208X1UYGSEYA5Ms2DPq4UQlMxC8uiAQ/tmt/6DSRb+9XPbViG3vUsTuF2/B3
-	 TX2gIjUXJodPx/WmTKO18mZkXVMc16DC6WDNKx13aWjUHIrLi8XcEKmPpzjwoIn2BfA==
+	t=1795021841;
+	b=yFXoVm0g7JyZltf05ktkgiMFTm2dRPNq6d7VTevEYqmj4CnB41EBsDYmz3HC7yhhz9qU
+	 dRZCWG9Ue8Z6MxyhlKwnPxvtOqkkBx1/RCKz7qs1cqP6k6xmp9QN4z3O0Zd0XBvQb0TEP
+	 4qdhKEixKNm+Qf4+gfPwtXzeBu5PoGowPbnw6W8bGp0I/8lrBYSCy+ITZlRlco+22bhFw
+	 QK4xgQifHajYsGY3wD/aJ+i5XOJTwEefJDlXbNBZoGUWF/byL8M0o+IpZpjGHWxyUwCm7
+	 upknvQKv6mnuD4ynhGiMBvabuvTS/L6OzeXu44F3sJIYOC/NHoGHIrhdf/0qcf04j+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=giw+9vykF8QXBIjEXIuLxdnhz7VAdDS0yrxOsTsh3Ao=;
-	b=Wz0bzkB1Zka9rp45TQzPrgJAuwInXLryCm2085BWFWlh83geHTNfjILzwucWbNgEBCp4
-	 WDkQXwzdPma//aj6/9InJpP9pjsCZ3Hj8mmakWYjRmBQjKu3felcKc/sHMgeKDAvl+GV0
-	 9BM6sINWHZAVEj0P+k2xn7Sd5PPYoCIS2DmY+wM8Vf5SJtnC4vi7tKGijdngaGetwIotP
-	 Ou0YSCFvfZdtqBnG4gysFMCCF4uHUKrHPc2GA7xJtadoaNRjvjHVSBgxS1RV6pwk/r50y
-	 QZReCt9M70E83bWY7boifN9mI4kY0GVadxKQuOV3VwjLG6eJCuteRH8MK7ukRn7TRwA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Di2luzc0+HB1iqN8PsglmIynQa5b20K7hLWBgABLfvs=;
+	b=kq6kL56iSjMfc/bLiHKzql9bFAtUWTpI1pa51sbchhUqAodd4YAz8a9vCmwf/eRK+0FS
+	 K5I2MgwTzlgyvJRdwpyUhLLg+5A5UIzM+xE9gF2brfeooJCTzv/KB0eM99bxvchgde68u
+	 ej5cKiWX7njGtBY83GGOfcgkanxWdEx9BLD3ceS2GxJO56avlSh/jzTz5BJK2XMez5gjj
+	 4GJ9AUNAapD/PI4BlT8go5dFgvzm9CwSO5vHESlGNETZRM6IxzI5+fyf+5Jy6OFiESV3j
+	 wMeefryua42Xt/tzvyEDHnAQiA9DBd9Afumow5XKdwh4jR+tQAI4RJErf6wA8CLeh2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEKdF201;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfhOq6X7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF73E606A31C;
-	Wed, 18 Nov 2026 17:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D628606A320;
+	Wed, 18 Nov 2026 17:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEKdF201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD551F000C4;
-	Wed, 18 Nov 2026 17:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfhOq6X7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023A11F000C4;
+	Wed, 18 Nov 2026 17:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021838;
-	bh=giw+9vykF8QXBIjEXIuLxdnhz7VAdDS0yrxOsTsh3Ao=;
+	s=korg; t=1795021841;
+	bh=Di2luzc0+HB1iqN8PsglmIynQa5b20K7hLWBgABLfvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LEKdF201Shw/GFEg5jljo15FwqOroEYsJRoTYu10A/fkGg/vblyl93GaI2dt0fgdh
-	 GhBPMkqAm5uzUP23O0S14K4tVp0hY1+Vrz/YsHkh6+4kowp9/DmHp3GR5IU516Oc5j
-	 XAvO7tDJNwsu2W4NWHo6G/JIMvrDfDO0M218Eu4A=
+	b=EfhOq6X7fJFXX7RHrOLXD2S//LFW5E2wJNGX9yES1hu7X6FNDV4GLBm3csLQYMGkn
+	 Z87DNmuuLjoRWu9bLCiC5udPI8gMLUCWtKuVmMiRJdu6TX+a7bZp3/hKZsmk5ysNsZ
+	 UZQJg9p/kPSX9RymyA4IMjahWLYFvE9NGlDwt+Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Nam Cao <namcao@linutronix.de>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	co+eada64ce90ecebce@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2408/2651] vdso/gettimeofday: Correct the read of tz_minuteswest and tz_dsttime
-Date: Wed, 18 Nov 2026 16:00:48 +0100
-Message-ID: <20261118150412.010321877@linuxfoundation.org>
+Subject: [PATCH 7.3 2409/2651] bpf: Validate stack arg reads against caller state
+Date: Wed, 18 Nov 2026 16:00:49 +0100
+Message-ID: <20261118150412.039600328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,51 +63,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit cbd0f65b48f52d308c457b0fd5201324abadb501 ]
+[ Upstream commit 90aedf8854c05713c02b381c41c59081b5cedbcc ]
 
-When these fields got moved from 'struct vdso_time_data' to the new
-'struct vdso_clock', this access was forgotten.
+check_stack_arg_read() bounds a stack argument index with the callee's
+BTF-derived argument count, then uses the index in the caller's
+stack_arg_regs[] array. The array's actual logical length is recorded in
+caller->out_stack_arg_cnt, so the bound and indexed object can diverge.
 
-'vd' is not an array, but a pointer to a single structure. The code
-works by accident in its current form as CS_HRES_COARSE is 0.
+A crafted BPF_PROG_LOAD can use an argument mismatch to mark a static
+subprogram's BTF information unreliable. Later calls return from
+btf_check_subprog_call() before check_outgoing_stack_args(), while
+check_func_call() continues the static call on -EINVAL. The callee can
+then read a slot that the caller never allocated or initialized. The
+earlier commit 4286f5deee14 ("bpf: Validate outgoing stack args when
+btf_prepare_func_args fails") closed this hole for the first call, but
+not for later calls after the subprogram has been marked unreliable.
 
-Replace the incorrect array access with a regular pointer dereference.
+Callbacks have a related problem. The verifier can make incoming stack
+arguments readable from outgoing slots at the helper call site. However,
+helpers and kfuncs invoke callbacks through an ABI that passes at most five
+arguments, so the runtime callback receives no stack arguments. Async
+callback verification can also reach check_stack_arg_read() without a
+caller frame.
 
-Fixes: 886653e36639 ("vdso: Rework struct vdso_time_data and introduce struct vdso_clock")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Link: https://patch.msgid.link/20260902-vdso-tz-v1-1-4d37a6b85ff9@linutronix.de
+On x86-64, KASAN reports the direct-call out-of-bounds copy as:
+
+  BUG: KASAN: slab-out-of-bounds in check_load_mem+0xb51/0xc60
+  Read of size 80 at addr ffff8881009af550 by task poc/131
+  Call Trace:
+   check_stack_arg_read at kernel/bpf/verifier.c:4234
+   (inlined by) check_load_mem at kernel/bpf/verifier.c:6645
+   do_check_common at kernel/bpf/verifier.c:19568
+   bpf_check at kernel/bpf/verifier.c:21318
+   bpf_prog_load at kernel/bpf/syscall.c:3134
+
+Reject callback subprograms with incoming stack arguments before their
+state is pushed. For direct calls, retrieve the slot with
+bpf_get_spilled_stack_arg(), which validates the index against the caller's
+out_stack_arg_cnt and rejects uninitialized slots before copying the
+register state.
+
+Fixes: 0f6bd5e7a804 ("bpf: Support stack arguments for bpf functions")
+Reported-by: <co+eada64ce90ecebce@bugs.sh>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261026015250.1674676-1-bestswngs@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vdso/gettimeofday.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/lib/vdso/gettimeofday.c b/lib/vdso/gettimeofday.c
-index f7a591aba59f1..6e9b03051beec 100644
---- a/lib/vdso/gettimeofday.c
-+++ b/lib/vdso/gettimeofday.c
-@@ -374,8 +374,8 @@ __cvdso_gettimeofday_data(const struct vdso_time_data *vd,
- 		if (vdso_is_timens_clock(vc))
- 			vd = vdso_timens_data(vd);
- 
--		tz->tz_minuteswest = vd[CS_HRES_COARSE].tz_minuteswest;
--		tz->tz_dsttime = vd[CS_HRES_COARSE].tz_dsttime;
-+		tz->tz_minuteswest = vd->tz_minuteswest;
-+		tz->tz_dsttime = vd->tz_dsttime;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 46c21d90820c8..2ed356a03a57b 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4278,7 +4278,12 @@ static int check_stack_arg_read(struct bpf_verifier_env *env, struct bpf_func_st
  	}
  
- 	return 0;
+ 	caller = vstate->frame[vstate->curframe - 1];
+-	arg = &caller->stack_arg_regs[spi];
++	arg = bpf_get_spilled_stack_arg(spi, caller);
++	if (!arg) {
++		verbose(env, "invalid read from uninitialized stack arg off %d\n", off);
++		return -EACCES;
++	}
++
+ 	cur = vstate->frame[vstate->curframe];
+ 	bpf_diag_mod_begin(env, &cur->regs[dst_regno], arg, BPF_DIAG_MOD_WRITE);
+ 	cur->regs[dst_regno] = *arg;
+@@ -10040,6 +10045,10 @@ static int push_callback_call(struct bpf_verifier_env *env, struct bpf_insn *ins
+ 	err = btf_check_subprog_call(env, subprog, caller->regs);
+ 	if (err == -EFAULT)
+ 		return err;
++	if (bpf_in_stack_arg_cnt(&env->subprog_info[subprog])) {
++		verbose(env, "callback subprog cannot have stack args\n");
++		return -EINVAL;
++	}
+ 
+ 	/* set_callee_state is used for direct subprog calls, but we are
+ 	 * interested in validating only BPF helpers that can call subprogs as
 -- 
 2.53.0
 
