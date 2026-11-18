@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015188;
-	b=3p0u0DNlP1/x2QDGyj2pP6uDoMhaBGmTLdr9cLQwa/16FrM+UJnxIV3uJzlB0BXzZpYm
-	 h1rW7z9M90YEY14xVlN60hjmRdKsNHxt1uVpp4DmAVjx2YesW2Z4gmiZ68vyzd1jpQLVL
-	 yOGkvZCLh+qsb84MY6AL4Y2YhB/GlkQm7iESatTjnRbqCDqbII61TpPPKNTk2q2ZDqBp0
-	 58i4S3eBK5/2wpzCEUqgdc4PtXaCFYyX6Sf+Mx+a/7kmO8g5wohYY0XP1fOgqF2j37OWd
-	 GY1wugaYBhiJKHC803HOdGWtUwOk03sI2GcoM2jmfBRHuK4q0ZdLyODoGxUu4yTmuqQ==
+	t=1795015190;
+	b=ddr5ArmTMnIBnx6i5sYwzMl0ZujakHu8VGC7DCanM9fHZxyT6kyAQ0tvdvkhifIY2TXo
+	 Bqon+CU9S1MF8XLxoXe2djQNXVi+yM7B5euv2d7zuyHztY6QjUv9zADPxBto6gvddmOtI
+	 RV9mmkCKf9Q5j/ZDeUk+RZJNS6GS7J8nO0OUA758e4e3/A3zrah5xybsMyxatyxeWWtXb
+	 ASQ+S2vHKCtJFOTNkaQxFVtY56qL8sQVlxv5cdFxv/h6evMZVF6hD5GxCfxileC/YFEqY
+	 +4LKMX01lHrf9BIvwYq5KVr8jMHpDMjtdLzKB4GPNwm5rUWMW/GlpkNPl5mq1r+i76Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015190;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hf2oc9xLjoT/SjDGEKrllnp2Xp5h9TiaGvrrj8anbjY=;
-	b=kcd8MgWpx7H4XWBUs4yoSQOiEJ5Lgog5FwrId4QroT4c7fPprBn86YwylKpONEYMrNd4
-	 Vp8GGPuCwe8UWLOWvq89Qd2gAmqh5+hrHnIxcVef+dZD9j+15DZ97aees9H0ex5AObuY0
-	 w3SNM+Z9gH3+IbOhPkwtQ8m43MrhPR62F8x4oEmQQAdRyWPVCy8ZDjVXN153qH7a/+fI5
-	 lI+OtDsEO8hrobVbWEccpYHSOUiZfzp6b3tt5YS5yXu58LWLQYmH60wWLJO/C1Kf/QF/6
-	 +y5yNGopX0IydzPrHxrZ9fpzQ9Afw3TFQwtPoF+MJTKs2LAntqMBPz0p5wcgyWUrCtg==
+	bh=fuPXJdhwTKSom+9VjUg1oNzqfinhKFp0bZUUs3pKICI=;
+	b=Su28UXwJT+W1HLtIarxwK+W8QduTKsIfvM5FbfRqiu9wdsujLCRrf08UVlbu6wVn6hLh
+	 sZW1zzqIad8kwzdDYEGXBcz/3ROFeQWgck0yrYPahjSNit+BVpDAKYB1so7i+F7q+EyuY
+	 WXbmh+wGzLSUsY4NUhL8L6TowNEdoY+BLHhggnznpQvZaxW3XyEsdRnhRPBYPrJ3yCf5N
+	 7za3BBO/hUtD0kEcCow1Xo4M39VuAneenxjfGOADoxFduuhKkB8vzk2IJC7L8mlkyHxRl
+	 btQgJ4z6yUM5BqX8ftVw0jhptpPCMiMVAwwbIsrTTmbhHwzp7DHZ412N9dnBGG0gVXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Of0YYo4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oeS9KEyT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD8460A2612;
-	Wed, 18 Nov 2026 15:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B2160A3809;
+	Wed, 18 Nov 2026 15:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Of0YYo4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323111F000C5;
-	Wed, 18 Nov 2026 15:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oeS9KEyT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A151F000CA;
+	Wed, 18 Nov 2026 15:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015187;
-	bh=Hf2oc9xLjoT/SjDGEKrllnp2Xp5h9TiaGvrrj8anbjY=;
+	s=korg; t=1795015190;
+	bh=fuPXJdhwTKSom+9VjUg1oNzqfinhKFp0bZUUs3pKICI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Of0YYo4vkY0T7jVlNAmfwFVWc5SqHu5lVjCFWzkXb20xz6bXn2CmVNXhRqynGDnk
-	 99tP4OmZJeAAlUTboD+S91rlfZLihIUt6+YZrRvLARfa2DO7TRKBsod7YopmfqXCL3
-	 RbDKh1yOgCBjCnyetSD2a/x1KyRZWhrmPwa4mAOw=
+	b=oeS9KEyTtwMXYxGFugCytrkAhIPfOjdHw29fkWjSeS5ICHo+d5sVL0arF0gBMA8gD
+	 u61J16eZ89/ys/qG0gp3koiBOdZo8Eg2SrcarSaCgsTjo0L29ipnTqZTHzr4xBTlI1
+	 lAN2yW4v5GtEu0sAw9QMj/B++0bIS0E7+5Xf115A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Riana Tauro <riana.tauro@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0085/2651] drm/ras: Cancel and free message on get counter failure
-Date: Wed, 18 Nov 2026 15:22:05 +0100
-Message-ID: <20261118150250.972617767@linuxfoundation.org>
+Subject: [PATCH 7.3 0086/2651] selftests/bpf: NUL-terminate bpftool command output
+Date: Wed, 18 Nov 2026 15:22:06 +0100
+Message-ID: <20261118150251.008690716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,66 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-[ Upstream commit 9cc19bb8f2f6886392b9185b96bbef91b2f1a50f ]
+[ Upstream commit 4f8a4c76f6704667111d76404bdea4fef0373358 ]
 
-doit_reply_value() directly returns on get counter failure, which results
-in stale sk_buff and genetlink header that aren't cleaned up. Fix it and
-while at it, consolidate error handling using goto.
+run_command() writes a bpftool command's output into a caller-supplied
+buffer, and every caller treats that buffer as a C string.
 
-Fixes: c36218dc49f5 ("drm/ras: Introduce the DRM RAS infrastructure over generic netlink")
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Riana Tauro <riana.tauro@intel.com>
-Link: https://patch.msgid.link/20260818135304.497098-2-raag.jadav@intel.com
-Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+However fread() reports a byte count and doesn't terminate the
+string. The helper does not terminate either, so callers have to zero
+the buffer first. prog_tests/bpftool_metadata.c does not, for example.
+
+Read one byte less and terminate in the helper.
+
+Fixes: f21fae577446 ("selftests/bpf: Add a few helpers for bpftool testing")
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/r/20260828215207.3105313-5-ihor.solodrai@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_ras.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ tools/testing/selftests/bpf/bpftool_helpers.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_ras.c b/drivers/gpu/drm/drm_ras.c
-index d6eab29a1394c..467a169026fc1 100644
---- a/drivers/gpu/drm/drm_ras.c
-+++ b/drivers/gpu/drm/drm_ras.c
-@@ -201,25 +201,28 @@ static int doit_reply_value(struct genl_info *info, u32 node_id,
+diff --git a/tools/testing/selftests/bpf/bpftool_helpers.c b/tools/testing/selftests/bpf/bpftool_helpers.c
+index 0a2a4f0a2794b..c49fdd90eb033 100644
+--- a/tools/testing/selftests/bpf/bpftool_helpers.c
++++ b/tools/testing/selftests/bpf/bpftool_helpers.c
+@@ -53,6 +53,7 @@ static int run_command(char *args, char *output_buf, size_t output_max_len)
+ 	static char bpftool_path[PATH_MAX] = {};
+ 	bool suppress_output = !(output_buf && output_max_len);
+ 	char command[BPFTOOL_FULL_CMD_MAX_LEN];
++	size_t n;
+ 	FILE *f;
+ 	int ret;
  
- 	hdr = genlmsg_iput(msg, info);
- 	if (!hdr) {
--		nlmsg_free(msg);
--		return -EMSGSIZE;
-+		ret = -EMSGSIZE;
-+		goto free_msg;
- 	}
+@@ -68,8 +69,10 @@ static int run_command(char *args, char *output_buf, size_t output_max_len)
+ 	if (!f)
+ 		return 1;
  
- 	ret = get_node_error_counter(node_id, error_id,
- 				     &error_name, &value);
- 	if (ret)
--		return ret;
-+		goto cancel_msg;
+-	if (!suppress_output)
+-		fread(output_buf, 1, output_max_len, f);
++	if (!suppress_output) {
++		n = fread(output_buf, 1, output_max_len - 1, f);
++		output_buf[n] = '\0';
++	}
+ 	ret = pclose(f);
  
- 	ret = msg_reply_value(msg, error_id, error_name, value);
--	if (ret) {
--		genlmsg_cancel(msg, hdr);
--		nlmsg_free(msg);
--		return ret;
--	}
-+	if (ret)
-+		goto cancel_msg;
- 
- 	genlmsg_end(msg, hdr);
- 
- 	return genlmsg_reply(msg, info);
-+
-+cancel_msg:
-+	genlmsg_cancel(msg, hdr);
-+free_msg:
-+	nlmsg_free(msg);
-+	return ret;
- }
- 
- /**
+ 	return ret;
 -- 
 2.53.0
 
