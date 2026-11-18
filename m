@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024378;
-	b=RCYQWUPDqjPMBnfjoEH98pR94XBIv58HjL6ZxxIE09ZS9IRM0EKLYqTyH07+UycsJZLk
-	 h3cwvqbA6LbM5v/Zmm7EA3yH2zapZJoeTDDmPQ0TldBj1/vPzVEvl6AQ6O1gnc8qGWvDU
-	 LK0W9PZgtQVOvDbTFRgFPJrinpkCjuThMXAxuCQF/bI+kb8Jyls73ywT3CwkLlDubicor
-	 vi1F0qC1uLCYouxDyxMIx6jaWsECpcrAWBtZZVZWl6QFjKB8I3d6yPY7ghKlEovdn/G5H
-	 qUVA3x6nn5q5njrkKc+QgvoGZWsNqVXzuKuMsghoUkrFDw7Ms9L78n74CO5+yYxXINQ==
+	t=1795024381;
+	b=WERi18Ic21KlH2FiiHCNh33uyTiN87FQlDr+BNF3jxNZTjAgoVRI6AzbhG7bD61zNVHq
+	 LaSDEjyv1Es5iYcg9kpRE19o88+sAsCvaf+YRjLqDG5OP/HKj5WawXUDzn7xwbRSDGBcH
+	 QSO6F7DBdyZWRH1mt9GYxZVEmqD1/+EaGpZkfJVyk890VsDY3+IgAbcKAwow1tprXqMYk
+	 gEKk9i4rYk3p6M3gY2XIW2UnirWp91okI3soICckJTQzlh07UEc2Q0LRTtkgEFLpfckyn
+	 Me2PlyNlNPR/bJ/A8EJN/4jMc8QboddrlxC6VXLzYhkx32J44qYbCkzxThPGWGOsv/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B09KaHp/xN/z3/6nbiJ2BlG5RVwOnKzdK1S0y58H2aM=;
-	b=0y8RCPix59+m6/IQsYfFTHOHsocfDBHpA4+GbkH5T/syHFI3GmuzG9GrgLfML3T3NpDy
-	 TlvotptwZIOThOL16/pyI6BkKLO96YPlaQDSQD/NmjPTNAfmFJl0gaFrlxDmg5qbp4+ok
-	 eU9LBMxYVZd/ZCe5Dq93kB5AN4qNbmuSVA9jHMVkxuJENJTBpTtURXBYDxJOsjGyQUSTj
-	 SzUUg+vII7hewQ9FDVWNrz9Mv15mqAksDIaq6VuqBWvynC+MXAqjNMh50Ydvr3nrIIyHd
-	 Xj0AIdCSU5FMnaA8ltv69StETOB6uaydl5meYS4mOa6LA3BGFtL01e7Nt+OAAYBWrIQ==
+	bh=dEoSh6GITqbD4+7959TneJWlNLIMU9ZAAGQUgGZCpKA=;
+	b=kWZvnuTk92zRazeLkgm4c7oxV/i9k03Sy5pVQMQuO0HSaWG7LRnsHaYDqfWMd7sXY79r
+	 ypZ0/M46r1p+jAVtExJQG3LOhKz1nfwzsizKwx2ENm57LU7oo1uB1mz6JpRkoYNCJK4SJ
+	 6OZ903dD2UiYd12OjWsMB63HPeLZyCL0HbMP7w8uEYDzGXB8LzrOV5D+VawNlUOqAPoeO
+	 KmyZOyC1SSDrql8IyfidFJp2PWRzab8Ej9MvxbKkXqRx/Ez84B80asC6ZFn1+FOd1BGMJ
+	 74CSI7LKiA28zS4cFTLrKtqR/LdIaDdGGe97OiW5rpLkrn0BlCQuSebiDjCwgKiHWxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jddUn8Tb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwH5n3S9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C039606A320;
-	Wed, 18 Nov 2026 17:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC365606A325;
+	Wed, 18 Nov 2026 17:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jddUn8Tb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C3B1F000C4;
-	Wed, 18 Nov 2026 17:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwH5n3S9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB511F000C4;
+	Wed, 18 Nov 2026 17:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024378;
-	bh=B09KaHp/xN/z3/6nbiJ2BlG5RVwOnKzdK1S0y58H2aM=;
+	s=korg; t=1795024380;
+	bh=dEoSh6GITqbD4+7959TneJWlNLIMU9ZAAGQUgGZCpKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jddUn8TbzdZj8UcR0e/SUbKLww6K14LwYbwmQK4TOhUl5Z/+AlyPKd2HNl1d7kSUe
-	 G//BP2YR129kTn9SWmE/dnP+CEghlu8yx3qtyUFZmkmijpydDIFUU8U2NtJXRDekom
-	 wXppFfNlSuDEuBDtZVAY/DJQtra35J6eLoUv54gE=
+	b=CwH5n3S951oKWFx39O6iv+v/qh+Ki32iwcWsO6ojU4w/Y6n8t1atbh0dbWt4Yyygt
+	 H8HvfU+6j8ghALMxa3OiT9b+9qdEEn1pDVGkvrROC/yr6AInj1S/nGdbpLnBg4leLT
+	 33+k4X1ziGigc2o/EQsShuX63BORa+e09RxZju+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0705/2151] ASoC: rt5616: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:40:40 +0100
-Message-ID: <20261118150147.567007597@linuxfoundation.org>
+Subject: [PATCH 6.18 0706/2151] ASoC: rt5659: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:40:41 +0100
+Message-ID: <20261118150147.601046061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,9 +70,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 8fc9d353d5371a946d9a9952278b96c09070374c ]
+[ Upstream commit 3a9b5bce85a1baff95463a2bb021efac64bcf83f ]
 
-rt5616_resume() restores cached registers during component resume but
+rt5659_resume() restores cached registers during component resume but
 discards the regcache_sync() result and returns success. A failed replay
 can therefore leave the hardware register state stale without reaching
 the component error reporting path.
@@ -86,30 +86,31 @@ The successful resume path is unchanged.
 
 The issue was found by a tool we developed.
 
-Fixes: b1d15059957d ("ASoC: rt5616: add rt5616 codec driver")
+Fixes: d3cb2de2479b ("ASoC: rt5659: add rt5659 codec driver")
 Assisted-by: gpt 5
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-12-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260902013256.93072-13-pengpeng@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5616.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/codecs/rt5659.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5616.c b/sound/soc/codecs/rt5616.c
-index 1ec486707ff94..ab4e70ea89f4e 100644
---- a/sound/soc/codecs/rt5616.c
-+++ b/sound/soc/codecs/rt5616.c
-@@ -1247,8 +1247,7 @@ static int rt5616_resume(struct snd_soc_component *component)
- 	struct rt5616_priv *rt5616 = snd_soc_component_get_drvdata(component);
+diff --git a/sound/soc/codecs/rt5659.c b/sound/soc/codecs/rt5659.c
+index 31b47db7b4f77..805898547025d 100644
+--- a/sound/soc/codecs/rt5659.c
++++ b/sound/soc/codecs/rt5659.c
+@@ -3704,9 +3704,7 @@ static int rt5659_resume(struct snd_soc_component *component)
+ 	struct rt5659_priv *rt5659 = snd_soc_component_get_drvdata(component);
  
- 	regcache_cache_only(rt5616->regmap, false);
--	regcache_sync(rt5616->regmap);
+ 	regcache_cache_only(rt5659->regmap, false);
+-	regcache_sync(rt5659->regmap);
+-
 -	return 0;
-+	return regcache_sync(rt5616->regmap);
++	return regcache_sync(rt5659->regmap);
  }
  #else
- #define rt5616_suspend NULL
+ #define rt5659_suspend NULL
 -- 
 2.53.0
 
