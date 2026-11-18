@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049236;
-	b=WEVzjrHZch1tgndfRbzyJyJpQLnE6X58s6INtBhhm6mZB4DwIAgGgVja0H+zHgqjC9HG
-	 dxMIi37tk9wG37ONJmyIDP5i4jnUSoqOr2I9XJ74Wgy1EeTv825uw7mrCIY+cQp8+EdAq
-	 MoF5ZXsdSabPKGaNKnt45gKYEhySh66NTgmDkxmhGwaCvgJ6dwLTKDmrmML64EcJ1NaP2
-	 90Q/IM0GBm0KF6TbV4O6rysHVpr4pS7ZAp2DgnshEM2ZzxxD9nXqedB8PNzKe82KMaP/1
-	 FLskVnrIZcXBkq2H56JrpDpPcLWePHWrM2BrXUUnvkKN6icvAElxjWQePntsM6bYKzA==
+	t=1795049238;
+	b=kosVPwZpttSFQ5mZl2ftqPz14tXXViffzB6vIz7gK1YOrmzhMkX0fLZ1C9fylPaT4PfV
+	 lPO2LboD8NWTU+m0Hmgt322HaPkOlD8yh744FWq85bpEsc3PIRP1X9MhQAQs/z6OvAkuG
+	 qR1/BF4uoiY41pNVaeaY22olGU6aAZcrkL+O4BcmuXHiPJ44iJymDNd5UcKlKs3T7vfrH
+	 x7yOCRRimoUJYlSeLO21YQgpxIoG+VFy45W0Y5uHMoo+qISV6Y9qqC4dVSlkkxj/ubvw5
+	 cOHA8KDFCqy9ZTAgort/Ao15F8QLvVFIoY2sqYWjQbQvb9O+FVJfd6Tl+F/OrkAF83A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rs09Q7we9onqlUQsJAMexWbhcfB1yqVSTZv5yGfEkW0=;
-	b=TMnbyQ497Hh4gWwcCyGK4W4ayw92FhsPeWlnefK/3Lu+U3mjKnqCzJg0KQbD2yo0UJbI
-	 siKPbqkCG0fHbY6mh63/rMG9dsXVCBJRULq3/Te6YOUStPWbtLlC75t3AfdkT1go3x/3a
-	 QJvX6MJ6bItD64buKLpERvt2oue+/QNxN4OxmiMav3GBpZ3FCj4WDol+1EzLJdUPK1Au8
-	 b109e+rV+/EFzO0nNDekwZRfz986Oq+7MPRQb57Ry5eA2NM3N2soNQToAGLAq3whpvzgA
-	 YNTBDYT59qlxUom2faaNQRHLssB0WR/DSqhLGJQBRDlzSnykN1fnQJdWyX/7RZrLnYA==
+	bh=/sGbNyiEacGFobRldp4tpDsHFwrmes4CJer2274d0tY=;
+	b=24XaYAUYe4mwoO6XPx+NDJHsnWlRADDrN2povVLHZ3aN0rGbMT8moFI3ruCoKzv/5Q6W
+	 3EkQKAMZ+vJ6aA7v4xOygSBkmyHwy3bRwelpeJSdltHGDY92wgLo2vMfFQ+yBUB+G/S3N
+	 DkPET1smBs4GnGigFVGk5O3GPl+4o+bL089GcgkJ/bcnwUny4rA5J26lD6Cz44NCXzoee
+	 l0Fj8xO5+E1vnyAxoh6wfY2V3e0gLlZqEF9B4KOR0lN+cV+MsXTzR8NPofYsJ3fZbsNLX
+	 3OZ5RVRO+GLJIxN0oZMZXBQVUVsBdGkr61AiVam4m9rNmLHDuX43+lT1qOzzxJ8gjsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmWPOpdq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AF2mJkEy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF829606A325;
-	Thu, 19 Nov 2026 00:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5C3606A31C;
+	Thu, 19 Nov 2026 00:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmWPOpdq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BCB1F000C4;
-	Thu, 19 Nov 2026 00:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AF2mJkEy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE941F000C4;
+	Thu, 19 Nov 2026 00:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049235;
-	bh=Rs09Q7we9onqlUQsJAMexWbhcfB1yqVSTZv5yGfEkW0=;
+	s=korg; t=1795049238;
+	bh=/sGbNyiEacGFobRldp4tpDsHFwrmes4CJer2274d0tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmWPOpdqS+LjRVZijrdnaU1Dal37xiSwtq+KqYYQvO7XFvFb8aGeveAhndDHV6xiK
-	 mhOuZAQZ4GuIfxXjVssRoLx9Y7hv2/8QDtmWL/rU782G41+MtYP7m9sifyicFUvSF6
-	 NFvTCMg0gbWI8Q3dZu0Vuz6AzQ30CsqADuXUszDI=
+	b=AF2mJkEyM3mw5JUE/dTc/g+6zqumny58duVgblOrMKEfeF+r2IMmy/X+c78V6CPLj
+	 Z0ACEVw8ICUIpjOFnW0q24ph7M9T7m6KxdS0cp2yqAh/poI39Fa5P00CbkWDHpQwNS
+	 oRK3B0NI8hkx13Yxaa8XzLENbtwk3JRPm1cxBO/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2272/2857] arm64: dts: allwinner: sun50i-h6: Add missing SRAM region for video engine
-Date: Wed, 18 Nov 2026 15:55:06 +0100
-Message-ID: <20261118150323.255887478@linuxfoundation.org>
+Subject: [PATCH 6.1 2281/2857] spi: spi-sun4i: sun4i_spi_transfer_one(): fix transfers for SUN4I_FIFO_DEPTH
+Date: Wed, 18 Nov 2026 15:55:15 +0100
+Message-ID: <20261118150323.588739333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,38 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit d7287d940f3cd8d5945009076058a8120281744b ]
+[ Upstream commit f3ce7a3ca82bd9cda9ef61250aeff65fe6b44809 ]
 
-The SRAM C region contains a partial alias to the VE SRAM already
-referenced by the video engine. To avoid access through this alias
-window, the region should also be claimed by the video engine.
+In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX-FIFO is
+filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around timeouts
+observed on A10s SoCs.
 
-Add a reference to the SRAM C region to the video engine node.
+Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
+size") added support for transfers larger than the FIFO size. But this
+commit only enabled the TX-FIFO empty interrupt for transfers larger
+than the FIFO (= 64) bytes.
 
-Fixes: b542570e5605 ("arm64: dts: allwinner: h6: Add Video Engine node")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260712030011.3778169-6-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+This breaks transfers with exactly 64 bytes: the TX-FIFO is only filled
+with 63 bytes but the interrupt to refill the FIFO is not triggered. The
+problem can be reproduced with the following command:
+
+| spidev_test -D /dev/spidev0.1 -S 64 -s 20000000 -I 1
+|
+| [ 7797.548745] spi_master spi0: spi0.1: timeout transferring 64 bytes@20000000Hz for 110(100)ms
+| [ 7797.557237] spidev spi0.1: SPI transfer failed: -110
+| [ 7797.562308] spi_master spi0: failed to transfer one message from queue
+| [ 7797.568936] spi_master spi0: noqueue transfer failed
+
+To fix the problem enable the TX-FIFO interrupt if the total TX length
+is larger than SUN4I_FIFO_DEPTH - 1 (= 63) bytes.
+
+Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-1-9fe919d5cecf@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi | 2 +-
+ drivers/spi/spi-sun4i.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-index d11e5041bae9a..f69304437862c 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-@@ -172,7 +172,7 @@ video-codec@1c0e000 {
- 			clock-names = "ahb", "mod", "ram";
- 			resets = <&ccu RST_BUS_VE>;
- 			interrupts = <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
--			allwinner,sram = <&ve_sram 1>;
-+			allwinner,sram = <&ve_sram 1>, <&de2_sram 1>;
- 			iommus = <&iommu 3>;
- 		};
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index ccbebf9dafa0e..c1e733586317a 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -321,7 +321,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
+ 					 SUN4I_INT_CTL_RF_F34);
+ 	/* Only enable Tx FIFO interrupt if we really need it */
+-	if (tx_len > SUN4I_FIFO_DEPTH)
++	if (tx_len > SUN4I_FIFO_DEPTH - 1)
+ 		sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TF_E34);
  
+ 	/* Start the transfer */
 -- 
 2.53.0
 
