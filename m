@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047355;
-	b=T+nyqmoh/PXgOKUnLogIpgp7I4ARNc7/EPSZEmNZ7HHsP2+dku3cBL0F6eVEkvkRROKR
-	 Pv6SX0ndslnZBOX2SI8Jkd69xlgYBK5Y9uHoC+zv9lhXWWsKrlvcfLKdIeA2O/8XoJXyK
-	 +yjnbeY7g5PfFLAIBTJq59d8UrAc84iAYuTlx5gyfBT0se80SzuRQiLGjK3v++buV5WR4
-	 FUt7pVu2YBWX0En18OtMbqI40je67qd3OFE8xPtTkGN+fr1/dmitvnewUhYlx9yDbBSF3
-	 M+JJLddJpL7Z+9L0aN54/+trdgciBc1WqqxR7S1fbMiXsEnedXMhGnmtL/OvL3JKlAw==
+	t=1795047358;
+	b=pPPV+SkZxFLV2oS5vA/Z5Xps0sb3JGfIIVurtNuENbBCgJlIwDNnurvEi7lNQJMn2mau
+	 EkymYc+Q2s5G43VTfey8iwyfG8adJRPI9JNip72SvRnwnRvlUFL1N913TIT+ypObLN4hF
+	 6Wqg+9jPvIVSqUbM6GupGBuOWVQ1aM+ffhQQcq11DSQSnto+wK2ZmrRdH0jveF7nUAVTA
+	 /yjMev6w5P6VPPqqct1XBfbREg6lWTnFoyoIu0uOd38cK/urLg84YD04csVr7IC8AxhDD
+	 wIxZKv2+GcgAiTdoFUjWuex7yc7e/0wrgafEFX1e3+8OuRW4Uh66z9G9xmxm5kYzIoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZyLiSUqCaOMSqD+9zFytNsn2AK7/0tP6cZUUpddRZvI=;
-	b=CQpKkEfyHocE8rRHMU6hoaRGwY4pVqqxt6DGEf1P6GI5B7ASw1mZSEpMMHeqRKbfq4T0
-	 KRYowrK2v3vO+NoVpo1wcgnaK48qolDi7C0MxAqG10PH2bAdX7/subwdeVSntcvX8SWW/
-	 TUBoimQQ0akFk+LDDSmlYE5YSMUhhcG3TRmh1VjEjZb4q1LpABoRvmoxYs5xtJsKJPusq
-	 YYtRFlLkahB0xZtuLNGMpZYvHsa9qJqNX9LwieGUeu+KhsKzOLVconuHu2tGxGfQMiq25
-	 Hpy5Az4jYP4hy+qPQN8tgvilUSASUngcGbSVIadY21YW+xVp3sZMhfZyw+zGRHVS9Cw==
+	bh=ajZfflg/jAlC9wFxikE4Uwn9ibi/Tcr+X/vzRSWvFW0=;
+	b=2oY4Vm4UUs61Hne51uiDBo1H7ev+I6VrcGtF+zWIAT41Y7lqrz5ArShuQEFK1fU7W4uN
+	 o3pgdPD+nZNYC+6taGeElwEzzhSEtpjxMGDKVOqPAuyDZdva4QwbxBm+ezhdXgxhmAS6N
+	 9P71ggveryHTpKD27WJQbmj0uRxokFW0HiPwxNBQchWz164jSCPEFz79fZ5f/d68wIczr
+	 hpYQuT1VLx58rcJAw2DrGRFaEPsIfEoL3yZlyytJz29nBZ1p71WjicMNH+nNpqxDLpqJy
+	 zxTDYodWX/GFrrxN8Idx0rFaHXSH+G2DWmcNvzsY4C/dwSwG84231eRkLazXhZlGO0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JnveIh5x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpYUjTcE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C38606A31C;
-	Thu, 19 Nov 2026 00:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209E2606A320;
+	Thu, 19 Nov 2026 00:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JnveIh5x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11B91F000C4;
-	Thu, 19 Nov 2026 00:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpYUjTcE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A4C1F000C4;
+	Thu, 19 Nov 2026 00:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047355;
-	bh=ZyLiSUqCaOMSqD+9zFytNsn2AK7/0tP6cZUUpddRZvI=;
+	s=korg; t=1795047358;
+	bh=ajZfflg/jAlC9wFxikE4Uwn9ibi/Tcr+X/vzRSWvFW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JnveIh5xqCGB6aDi3eCgcrWzkMeFGvo2jrNpdfetKvAAnaJSWt1aHyo92ECFbeAIt
-	 QJoaA1vlcrOKZdZ4TRdJgldhCoANXtZFA/M4tMNoYqN8SZR5GrrXrs0PayTzAqusRy
-	 AdoIb6aaBWNZiInvGh/w3um/0ORmiUuSRdNYuQ3E=
+	b=BpYUjTcErrtUW5spX9ophzGE6gGIQ2/HNjklngDFGjkfJ7MbQ3v//PXjYznFzs6Z5
+	 Lwm6C1aFDarkO/14huy3rgHMwVl9m95LQepFhqXMEzmwkH4cghMF7iGFW/m17CnDuu
+	 Z+s3bMcmXTEvy68wxPvOGAr4Om58fRL6MT/sipOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ollrogge <nils-ollrogge@outlook.de>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1610/2857] assoc_array: dont chain a new shortcut onto an existing one
-Date: Wed, 18 Nov 2026 15:44:04 +0100
-Message-ID: <20261118150259.325520515@linuxfoundation.org>
+Subject: [PATCH 6.1 1611/2857] assoc_array: keep gcs cleanup out of the live tree on allocation failure
+Date: Wed, 18 Nov 2026 15:44:05 +0100
+Message-ID: <20261118150259.360117378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,110 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 48691075b0adc590a6831390723e3603dfca76fc ]
+[ Upstream commit 8afff2e4b90978b8203f9e3898995dcf86821b49 ]
 
-When a full node's leaves and the new key all share the node's segment,
-assoc_array_insert_into_terminal_node() replaces the node with a
-shortcut to a pair of new nodes.  If the node is itself the target of a
-shortcut, the new shortcut is installed as that shortcut's next node,
-and a shortcut leading to a shortcut is something nothing expects:
-assoc_array_walk() indexes the second one as a node, and
-assoc_array_apply_edit() hits the BUG_ON() in the loop that adjusts
-nr_leaves_on_branch, on that same insertion.
+assoc_array_gc() builds a copy of the tree.  Where the copy reaches a
+shortcut, it allocates the copy of the shortcut with kmalloc_flex(),
+fills it with memcpy(), links it into the new tree, and only then
+allocates the copy of the node after it.  The memcpy() leaves the new
+shortcut's next_node pointing at the old tree's node, so if that second
+allocation fails, the cleanup, assoc_array_destroy_subtree() on the new
+tree, follows the new shortcut into the old tree, and the BUG_ON() on
+the old node's back pointer fires.
 
-Deletion gets a node there.  When the subtree below a shortcut shrinks
-enough, assoc_array_delete() collapses it into one node below the
-shortcut, and the leaves it collects can all share that node's segment.
-The next key that shares it too takes this path.  Eighteen insertions
-and a deletion are enough: sixteen keys that agree on bits 0-11, one
-that leaves them at bit 8 and is deleted again, and one more that agrees
-with the sixteen.
+Allocate the node first, and the shortcut once the node exists, freeing
+the node again if the shortcut cannot be allocated.  A copied shortcut
+is then only linked into the new tree when the copy of its node is there
+to follow it.  Nothing else changes: with no allocation failing, the
+trees gc builds are the same as before.
 
-Have the new shortcut replace the one in front of the node as well.
-assoc_array_insert_shortcut() gives it that shortcut's back pointer and
-parent slot, so the caller installs it where that one was, and excises
-the old shortcut along with the node, which takes a second entry in
-excised_meta[].  The new shortcut's index key comes from the new key up
-to the new skip level, so it covers what the old one did.
-
-Found by a userspace test doing random insertions and deletions on keys
-that share long prefixes; a targeted case builds a shortcut, deletes
-down to the collapse and inserts one more key.
+Found by a userspace test that makes each allocation of each operation
+fail in turn.
 
 Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Reported-by: Ollrogge <nils-ollrogge@outlook.de>
 Assisted-by: LLM
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Tested-by: David Howells <dhowells@redhat.com>
 Reviewed-by: David Howells <dhowells@redhat.com>
+[ sashal: used kzalloc(sizeof()) instead of kzalloc_obj() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/assoc_array_priv.h |  2 +-
- lib/assoc_array.c                | 24 ++++++++++++++++++++----
- 2 files changed, 21 insertions(+), 5 deletions(-)
+ lib/assoc_array.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/assoc_array_priv.h b/include/linux/assoc_array_priv.h
-index dca733ef67503..37a9f76e1505b 100644
---- a/include/linux/assoc_array_priv.h
-+++ b/include/linux/assoc_array_priv.h
-@@ -80,7 +80,7 @@ struct assoc_array_edit {
- 	struct assoc_array_ptr		**leaf_p;
- 	struct assoc_array_ptr		*dead_leaf;
- 	struct assoc_array_ptr		*new_meta[3];
--	struct assoc_array_ptr		*excised_meta[1];
-+	struct assoc_array_ptr		*excised_meta[2];
- 	struct assoc_array_ptr		*excised_subtree;
- 	struct assoc_array_ptr		**set_backpointers[ASSOC_ARRAY_FAN_OUT];
- 	struct assoc_array_ptr		*set_backpointers_to;
 diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index ddab703561875..0a210e12d18e9 100644
+index 0a210e12d18e9..4ca7381c60001 100644
 --- a/lib/assoc_array.c
 +++ b/lib/assoc_array.c
-@@ -679,9 +679,10 @@ static void assoc_array_split_node(struct assoc_array_edit *edit,
- /*
-  * All the leaves, new and old, want to cluster together in this node in the
-  * same slot, so we have to replace this node with a shortcut to skip over
-- * the identical parts of the key, leading to new_n0.  The caller then splits
-- * the leaves between new_n0 and new_n1 at the shortcut's far end, for which
-- * this fills in the segment cache.
-+ * the identical parts of the key, leading to new_n0.  If the node is the
-+ * target of a shortcut, the new one replaces that shortcut as well.  The
-+ * caller then splits the leaves between new_n0 and new_n1 at the shortcut's
-+ * far end, for which this fills in the segment cache.
-  */
- static struct assoc_array_shortcut *
- assoc_array_insert_shortcut(struct assoc_array_edit *edit,
-@@ -726,6 +727,20 @@ assoc_array_insert_shortcut(struct assoc_array_edit *edit,
+@@ -1562,17 +1562,26 @@ int assoc_array_gc(struct assoc_array *array,
+ 	cursor = array->root;
  
- 	new_s0->back_pointer = node->back_pointer;
- 	new_s0->parent_slot = node->parent_slot;
+ descend:
+-	/* If this point is a shortcut, then we need to duplicate it and
+-	 * advance the target cursor.
++	/* The node at this position is duplicated, and so is the shortcut in
++	 * front of it if there is one.  The node is allocated first: the copy
++	 * of the shortcut starts out pointing at the old node, and must not be
++	 * in the new tree if the node cannot be allocated, or the cleanup
++	 * would follow it into the old tree.
+ 	 */
++	new_n = kzalloc(sizeof(struct assoc_array_node), GFP_KERNEL);
++	if (!new_n)
++		goto enomem;
 +
-+	/* A shortcut has to lead to a node, so a node at the end of a shortcut
-+	 * is replaced together with that shortcut.  The new one holds the index
-+	 * key from the root, so it covers what the old one did.
-+	 */
-+	if (node->back_pointer &&
-+	    assoc_array_ptr_is_shortcut(node->back_pointer)) {
-+		struct assoc_array_shortcut *above =
-+			assoc_array_ptr_to_shortcut(node->back_pointer);
-+
-+		new_s0->back_pointer = above->back_pointer;
-+		new_s0->parent_slot = above->parent_slot;
-+		edit->excised_meta[1] = node->back_pointer;
-+	}
- 	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
- 	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
- 	new_n0->parent_slot = 0;
-@@ -807,7 +822,8 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
- 		/* The node only contains leaves and all the leaves cluster in
- 		 * the same slot, so we need to insert a shortcut to skip the
- 		 * common portion of the key and split the node at the
--		 * shortcut's far end.
-+		 * shortcut's far end.  The shortcut goes wherever its back
-+		 * pointer says, which may be further up than the node.
- 		 */
- 		new_s0 = assoc_array_insert_shortcut(edit, ops, index_key,
- 						     node, level, new_n0);
+ 	if (assoc_array_ptr_is_shortcut(cursor)) {
+ 		shortcut = assoc_array_ptr_to_shortcut(cursor);
+ 		keylen = round_up(shortcut->skip_to_level, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+ 		keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
+ 		new_s = kmalloc(struct_size(new_s, index_key, keylen),
+ 				GFP_KERNEL);
+-		if (!new_s)
++		if (!new_s) {
++			kfree(new_n);
+ 			goto enomem;
++		}
+ 		pr_devel("dup shortcut %p -> %p\n", shortcut, new_s);
+ 		memcpy(new_s, shortcut, struct_size(new_s, index_key, keylen));
+ 		new_s->back_pointer = new_parent;
+@@ -1582,11 +1591,7 @@ int assoc_array_gc(struct assoc_array *array,
+ 		cursor = shortcut->next_node;
+ 	}
+ 
+-	/* Duplicate the node at this position */
+ 	node = assoc_array_ptr_to_node(cursor);
+-	new_n = kzalloc(sizeof(struct assoc_array_node), GFP_KERNEL);
+-	if (!new_n)
+-		goto enomem;
+ 	pr_devel("dup node %p -> %p\n", node, new_n);
+ 	new_n->back_pointer = new_parent;
+ 	new_n->parent_slot = node->parent_slot;
 -- 
 2.53.0
 
