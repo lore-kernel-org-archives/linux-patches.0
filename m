@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019180;
-	b=09XCurV2PFX6auiGYz/A2yHIgeFaE9y+p2IlVc32U/0CEie3HpcboLpXwEa7ET6GPk9/
-	 8GP0HivPlOKE7ovGh+xLVtIxWeOytJut2KNF7W+Fo8QD9iF2gMWYYGgLMrKKEmWA7t7dZ
-	 prZt7heN/JIRsrsLpZ/NN/S0rtQeapBw1EoJXOHGKPPBav3KgeLR8RD72JUiHyEWK1Sue
-	 wu71cbQ81S/nEXqiWcGMwMjIraJZZghuZk38Yl5j9Zh9+ak0Y1SR+vrMwcOtgkFvZpp8k
-	 QA8VppYvKNaf6i4CktBV2rwbLSmqM5znKREOoRLIFuEyspJndruDF2OWx5WaNd+vfQg==
+	t=1795019183;
+	b=cXZ23jmcnU6QnUzYRS1rydk5PlpXs9cB4+9333ATr7Z3kb68sCZoSMv7F3Am8OM5pXVP
+	 fpCL7+/ivGEJmU5Zh9p6sA+6YKRpIYOfoMWrg/sxtjvn+RH32yalHdi6ffuSEBJwzeICt
+	 2MTqUi/F7UhV0pmPzDRabp4OJwwDwqwXPSVKVlbKLthkx0s7ZyqoPfAq9pEa8hFbdHcc6
+	 z6+vpbwUD2OfIwrJ+35U/C2kr28H8uQVV7jvruOHzmLs/PM9EyKgxP1V9TV2yexlRRmqb
+	 E50jVZZpJrOZfGCsWsEnKP3Cbp3SZtIaK5kxkxLKDM3DZcm4rSkX/Q1g4SzmSkfym2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RiJHEQYjyXbZS99Cwjrba3/NPySIt5FnDIg67gwNddk=;
-	b=vys4BKidgdmtP/iiZXJfO1ImRdk5zb20CLWPMSCqIiksbQgSUeDj7jLk0tbG9YVczjIa
-	 jgpT1V+nwuyBH0TUmmsaX+vOL/RpO65ijwzfqSz82pQxGWVNLjp44oYT0oDzMRz2pjm46
-	 yJP5Y9UZ8AtEqsbAdN++VzZQMzRdtvCuJqoRofp2V32fan1F2pJtV+cD4qW9G7UHue1c9
-	 CwGLlKjHqSWH287Mjiv3RQWPBHPhs0+p+zy9VteGeM/CWFVpMioJc3mFu//VqOi0nhxW2
-	 TJcmXFp8uZoqw/6v2rVupkfYk13wF2CUvf+zy03PQ7QbAbncOH+NGXBycPu/rIMX2Ng==
+	bh=SXopsvF6jtS6QwWwqobisYmPXV1r3pnGN0/iDqVItBk=;
+	b=nJpTn3zNjexrGyV3qOJCVFYS3NTN+8DgnDA+Hizi3eVEdP7ugNs0QJoZr84lPfDcHfBV
+	 DIzOSGbPxaWgxu5dp+VJmOazV8YnyszgGJqyVOCXQEpChRBSpEyR1SmHH96Zee680RT85
+	 AkOmP8L7PKq8Ab/zxzEKXWZKpy4meRJ+EwSbHxGfVyXdlaWea3CqqxzWrh3CgTE9gZQxp
+	 Q4jvE0ECGgN91hxVgXRhocBjSWaK/PIzIU8w2Qf6KYj1kDqwwEHiqr7KoBg4RB5U8ldfP
+	 WSgZdSZFhduyPbBUrcpjFcHqF/yrHHemUhtSrF7U5UPQA0R8XXI/UCIbjpEkiuQbufw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJl9SaaN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHpXexG0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FA8606A31C;
-	Wed, 18 Nov 2026 16:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8B5606A31C;
+	Wed, 18 Nov 2026 16:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJl9SaaN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760B51F000C4;
-	Wed, 18 Nov 2026 16:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHpXexG0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0F41F000C4;
+	Wed, 18 Nov 2026 16:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019180;
-	bh=RiJHEQYjyXbZS99Cwjrba3/NPySIt5FnDIg67gwNddk=;
+	s=korg; t=1795019182;
+	bh=SXopsvF6jtS6QwWwqobisYmPXV1r3pnGN0/iDqVItBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJl9SaaNIp/2+wLQQq8S+eyioo0wWGvWz78W7qRHjL1vbNcQFJpr7/l5/HVQyPtPg
-	 mqXkUvPgNzeyKkELp7S4/IuS9YRchfUivDykKsb7kfuirnImx+/pZiSNJaJPPDaPxc
-	 ihjpLi+i4OhO0RRLLwpdyVZJssAw53bvEmF7ncd0=
+	b=uHpXexG0uOhikYoqq/+nR83oPW4KA0LVSs6z/kjNuY1HOfljv6j7gZo00daX1bPwY
+	 uQDFj5SaOxl1PHoUIdp905jbdrtA5AkGX3yQcVXNQQNWZlRSUsCKFB21Ychyv6gZcI
+	 HT4hf/AXkHmwNnd/W6bl011s2TuLjRfZRZ9mFX/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1504/2651] drm/amd/display: copy function name into dcn_optc_lock_unlock_state trace event
-Date: Wed, 18 Nov 2026 15:45:44 +0100
-Message-ID: <20261118150342.161232134@linuxfoundation.org>
+Subject: [PATCH 7.3 1505/2651] ASoC: mediatek: common: Handle constraint return value in FE startup
+Date: Wed, 18 Nov 2026 15:45:45 +0100
+Message-ID: <20261118150342.196559670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,57 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 624a5a158c2a49f07edba7f8653eeecca114921f ]
+[ Upstream commit 5fcdb40a4776cc6f8d3179aa9cf9663fc18c7861 ]
 
-Userspace trace tools that use libtraceevent to read binary buffer only
-see a kernel address when printing const char *. Use string macros in
-dcn_optc_lock_unlock_state to copy the function name into the trace
-event.
+snd_pcm_hw_constraint_integer() may return 1, which is then returned
+from mtk_afe_fe_startup(). ASoC only treats 0 as success when marking
+the DAI as started, so .shutdown() can be skipped on rollback.
 
-Fixes: f1943a51f0f9 ("drm/amd/display: Add events log to trace OPTC lock and unlock")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Return 0 explicitly on success.
+
+Fixes: 283b612429a2 ("ASoC: mediatek: implement mediatek common structure")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261007110858.509341-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/mediatek/common/mtk-afe-fe-dai.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index 4c87c30f57e89..7d46631854c68 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -661,7 +661,7 @@ TRACE_EVENT(dcn_optc_lock_unlock_state,
- 	    TP_ARGS(optc_state, instance, lock, function, line),
+diff --git a/sound/soc/mediatek/common/mtk-afe-fe-dai.c b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
+index 2a20fa5dba492..002953400938d 100644
+--- a/sound/soc/mediatek/common/mtk-afe-fe-dai.c
++++ b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
+@@ -75,8 +75,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
  
- 	    TP_STRUCT__entry(
--			     __field(const char *, function)
-+			     __string(function, function)
- 			     __field(int, instance)
- 			     __field(bool, lock)
- 			     __field(int, line)
-@@ -679,7 +679,7 @@ TRACE_EVENT(dcn_optc_lock_unlock_state,
- 			     __field(int, vready_offset)
- 	    ),
- 	    TP_fast_assign(
--			   __entry->function = function;
-+			   __assign_str(function);
- 			   __entry->instance = instance;
- 			   __entry->lock = lock;
- 			   __entry->line = line;
-@@ -701,7 +701,7 @@ TRACE_EVENT(dcn_optc_lock_unlock_state,
- 		      "min_v_blank_interlace=%d vstartup_start=%d vupdate_offset=%d vupdate_width=%d "
- 		      "vready_offset=%d",
- 		      __entry->lock ? "Lock" : "Unlock",
--		      __entry->function,
-+		      __get_str(function),
- 		      __entry->line,
- 		      __entry->instance,
- 		      __entry->opp_count,
+ 	ret = snd_pcm_hw_constraint_integer(runtime,
+ 					    SNDRV_PCM_HW_PARAM_PERIODS);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(afe->dev, "snd_pcm_hw_constraint_integer failed\n");
++		return ret;
++	}
+ 
+ 	/* dynamic allocate irq to memif */
+ 	if (memif->irq_usage < 0) {
+@@ -88,10 +90,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
+ 		} else {
+ 			dev_err(afe->dev, "%s() error: no more asys irq\n",
+ 				__func__);
+-			ret = -EBUSY;
++			return -EBUSY;
+ 		}
+ 	}
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(mtk_afe_fe_startup);
+ 
 -- 
 2.53.0
 
