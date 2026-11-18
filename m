@@ -1,62 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037527;
-	b=0OxKzoSJxoNZBePL2b9PLxff2GKWbol8MDtNsG6ZxT06rgukwyTTOQ6R1azWp3mcqe3/
-	 HRrb84YmWHDCRYLvcYYow7TpJpPwJIC7/6IObCMvbBGfwWzEzPAAMiMOdPYWpQmA0IQGu
-	 ss5vZifBhJPtWlPeG9FKmO4yMBXFYKyGoYjC5PBnRlPdSvWFdkNquqepp2xHBMylFW5vV
-	 jMcxcCXdofHd3ayyc8NaSb4PKUyQoHvKzWyBBOHYDdWXowAUwPEtLazPW52qUnca2Enrp
-	 DsF+Ed2wAfwPEoNai09ucPikxg6lhzeYR6lDrTePCqEdY96CiyT84F1S8X1CNdLkSHQ==
+	t=1795037530;
+	b=mXzINUrgh4x0fyIxvshmwcMiUbrcIhYmPDhnxQ4y18sI7fVxaytzk0VrbfhgLV4hNzYK
+	 Q4EqYi62LYxLILjNaCwXVjdvwufOoKLfMbh2L9xU7fFvFg/xjaHTGId5fHh8YMzfm96uv
+	 jkvpeQuAtzklaKxhjd7rKxqGyQQ1RMu5Mb8zXf5k4NjEeV7V4HbXAHJ6TN7sK6pe2EmqS
+	 3VLDATl9PIDdklGJ0bOkKFsJZ4JhgMcWovXmuY1gmULIKkGwmy88Py/AHNmuGm7hVdHfZ
+	 pBCKbQGftSVpyzgSY9WgC0Cf/7V0noatap4MiRIXPSF+YT3ehI/Pe12KcouhjuE9sJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lzT7akHwbwDatIcUr8b+VYAFvl2z/5DUtLJHDsraIps=;
-	b=sWHFnYRjI+Ot2B8ccC/M52ONZdqLlLKSF88wbCXrAkMTUVb8ArpQ5qD+/F6tTfYuU9ZD
-	 Yv8R7/IbOFKS9QUZXASHSQKwlM+RYW6toxYrJxbGw9fub/8ybrTtvpZQH6wNKd7TkNJhA
-	 U+0zpeTPgaDmrVM1VC51fvwgTGtl0BUsH3JWtVYYze1jAlrTIJdxXfW2Jb4Hi/sonXBQ2
-	 73qTLWjovKlcOILqWVubP5+wFhNp45GOIS3eWxD/ZOtRZMttHFSPOHWzkBSLgfciwTwg/
-	 szk3SmtMWIHNjOYeqTAMLA2+63MkGJTi1KnYRZk1lEQ313lzBa16t+X+FFRJtAOtaZA==
+	bh=/py3sY6Yj+mYjdBmxPoPgApwtTb8rxFp0PFk/JZac5Q=;
+	b=THk6uM3Rjzs1UHmIL4cOaLGCxnAk5HssymuS+yrflDDsfwPQRXOP9uNzOYzq+Chlftwf
+	 f81FRgKoX1Y9Linp9fJSVWRNAd9LADnBD/Wm2apzaY8aIn7qTwqfeH+ALv6ccRyTZpyWZ
+	 5/TxklHYijH1nHUQBxkqLNN/XnU5JC0HGySE/lP+WHGl+9ygqWFc9UMsC6MP6YPSQv+4Z
+	 hsa0R+diDe3waMePWLLjyrW3B8ApBx28tkVGrxgMvpeGkgmE01qWgG8nututKi/d19bfb
+	 bRnwHgY5ZEHtbNNV6XnQIT6DgPoB0mTf7m6VpzBhdCE0C1MBMFHDDL75CBNqu5Y12Jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTrvWXKc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvvzWsH0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A6C606A32A;
-	Wed, 18 Nov 2026 21:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32169606A332;
+	Wed, 18 Nov 2026 21:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTrvWXKc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FEE1F000C4;
-	Wed, 18 Nov 2026 21:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvvzWsH0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5571F000C4;
+	Wed, 18 Nov 2026 21:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037527;
-	bh=lzT7akHwbwDatIcUr8b+VYAFvl2z/5DUtLJHDsraIps=;
+	s=korg; t=1795037529;
+	bh=/py3sY6Yj+mYjdBmxPoPgApwtTb8rxFp0PFk/JZac5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTrvWXKcTnqROGd+2DuStqqHHaOg5ckJXmKFZ4iKUtJK8Ey9/eDEoq7WE76amQE7M
-	 XbMhhKvNXAWjJTU3WZf7pYdOt7UTno4SVFlR7A/Sh16mHDbVbJcBKRdNYTytRETj9u
-	 sWP8wbWAUZfp9nXWAEdGqfLXY8eJ8t6RzE7pTPBQ=
+	b=vvvzWsH0h3R8hi9C5Vq91zeM9pZiefIUjy6FVMbY14hS6msJd21flKr62VWdUmJDI
+	 g3MsdFHqsqu+90NQJtcepYl6sNoFjZ41zdUJC9sAqaLNV+4ZKAV8Lu2lMNtb3uHv7P
+	 WHSRtVQxvbwKoMelSu4f5qKVWMc4WsqS05Rx/vKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com,
-	Muchun Song <muchun.song@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Chris Li <chrisl@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Sean Baggaley <me@drinkybird.net>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1387/3318] mm/memcontrol: fix data-race on reading jiffies_64
-Date: Wed, 18 Nov 2026 15:33:29 +0100
-Message-ID: <20261118150402.175829673@linuxfoundation.org>
+Subject: [PATCH 6.6 1378/3318] media: uvcvideo: Add autosuspend quirk for AVerMedia Live Gamer HD 2
+Date: Wed, 18 Nov 2026 15:33:20 +0100
+Message-ID: <20261118150401.862734676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -78,69 +71,476 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit c20cf1c3c8cdd98618d6fcc794003a0e003ae858 ]
+[ Upstream commit b79251c881bb39f70c6f6fb30ad5d454b78c9f4a ]
 
-KCSAN reported a data-race between tick_do_update_jiffies64() updating
-jiffies_64 and mem_cgroup_flush_stats_ratelimited() reading it directly.
+A user has reported that this device gets stuck in a loop where every
+few seconds it will turn off and turn back on, causing audio devices
+to disappear and reappear, its LED to flash, spamming dmesg, etc.
+This only happens when not in use; everything is fine when the video
+device is actually being used.
 
-Unlike jiffies, jiffies_64 is not volatile, so raw reads are plain
-accesses and can even be torn on 32-bit.  Use get_jiffies_64() instead,
-and fix the same pattern in mem_cgroup_flush_foreign().
+They also reported that using the AUTOSUSPEND quirk via module parameters
+fixes the issue.
 
-Link: https://lore.kernel.org/20260827025457.116191-1-jiayuan.chen@linux.dev
-Fixes: 508bed884767 ("mm: memcg: change flush_next_time to flush_last_time")
-Fixes: 97b27821b485 ("writeback, memcg: Implement foreign dirty flushing")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: <stable@vger.kernel.org>
+Add the device to the quirk list.
+
+ID 07ca:1570 AVerMedia Technologies, Inc. AVerMedia USB Device
+Negotiated speed: High Speed (480Mbps)
+Device Descriptor:
+   bLength                18
+   bDescriptorType         1
+   bcdUSB               2.10
+   bDeviceClass          239 Miscellaneous Device
+   bDeviceSubClass         2 [unknown]
+   bDeviceProtocol         1 Interface Association
+   bMaxPacketSize0        64
+   idVendor           0x07ca AVerMedia Technologies, Inc.
+   idProduct          0x1570 AVerMedia USB Device
+   bcdDevice            1.00
+   iManufacturer           6 AVerMedia
+   iProduct                7 AVerMedia USB Device
+   iSerial                 3 53106326013650
+   bNumConfigurations      1
+   Configuration Descriptor:
+     bLength                 9
+     bDescriptorType         2
+     wTotalLength       0x01d6
+     bNumInterfaces          4
+     bConfigurationValue     1
+     iConfiguration          0
+     bmAttributes         0xa0
+       (Bus Powered)
+       Remote Wakeup
+     MaxPower              150mA
+     Interface Association:
+       bLength                 8
+       bDescriptorType        11
+       bFirstInterface         0
+       bInterfaceCount         2
+       bFunctionClass         14 Video
+       bFunctionSubClass       3 Video Interface Collection
+       bFunctionProtocol       0
+       iFunction               8 AVerMedia Live Gamer HD 2
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        0
+       bAlternateSetting       0
+       bNumEndpoints           0
+       bInterfaceClass        14 Video
+       bInterfaceSubClass      1 Video Control
+       bInterfaceProtocol      0
+       iInterface              8 AVerMedia Live Gamer HD 2
+       VideoControl Interface Descriptor:
+         bLength                13
+         bDescriptorType        36
+         bDescriptorSubtype      1 (HEADER)
+         bcdUVC               1.00
+         wTotalLength       0x004d
+         dwClockFrequency      120.000000MHz
+         bInCollection           1
+         baInterfaceNr( 0)       1
+       VideoControl Interface Descriptor:
+         bLength                18
+         bDescriptorType        36
+         bDescriptorSubtype      2 (INPUT_TERMINAL)
+         bTerminalID             1
+         wTerminalType      0x0201 Camera Sensor
+         bAssocTerminal          0
+         iTerminal               0
+         wObjectiveFocalLengthMin      0
+         wObjectiveFocalLengthMax      0
+         wOcularFocalLength            0
+         bControlSize                  3
+         bmControls           0x00000000
+       VideoControl Interface Descriptor:
+         bLength                11
+         bDescriptorType        36
+         bDescriptorSubtype      5 (PROCESSING_UNIT)
+       Warning: Descriptor too short
+         bUnitID                 3
+         bSourceID               1
+         wMaxMultiplier          0
+         bControlSize            2
+         bmControls     0x0000000f
+           Brightness
+           Contrast
+           Hue
+           Saturation
+         iProcessing             0
+         bmVideoStandards     0x09
+           None
+           SECAM - 625/50
+       VideoControl Interface Descriptor:
+         bLength                 9
+         bDescriptorType        36
+         bDescriptorSubtype      3 (OUTPUT_TERMINAL)
+         bTerminalID             2
+         wTerminalType      0x0101 USB Streaming
+         bAssocTerminal          0
+         bSourceID               4
+         iTerminal               0
+       VideoControl Interface Descriptor:
+         bLength                28
+         bDescriptorType        36
+         bDescriptorSubtype      6 (EXTENSION_UNIT)
+         bUnitID                 4
+         guidExtensionCode         {c66d125b-0480-0844-8c26-b8363a84de63}
+         bNumControls           17
+         bNrInPins               1
+         baSourceID( 0)          3
+         bControlSize            3
+         bmControls( 0)       0x07
+         bmControls( 1)       0xfe
+         bmControls( 2)       0x01
+         iExtension              0
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        1
+       bAlternateSetting       0
+       bNumEndpoints           0
+       bInterfaceClass        14 Video
+       bInterfaceSubClass      2 Video Streaming
+       bInterfaceProtocol      0
+       iInterface              8 AVerMedia Live Gamer HD 2
+       VideoStreaming Interface Descriptor:
+         bLength                            14
+         bDescriptorType                    36
+         bDescriptorSubtype                  1 (INPUT_HEADER)
+         bNumFormats                         1
+         wTotalLength                   0x00bd
+         bEndpointAddress                 0x89  EP 9 IN
+         bmInfo                              0
+         bTerminalLink                       2
+         bStillCaptureMethod                 0
+         bTriggerSupport                     0
+         bTriggerUsage                       0
+         bControlSize                        1
+         bmaControls( 0)                     0
+       VideoStreaming Interface Descriptor:
+         bLength                            11
+         bDescriptorType                    36
+         bDescriptorSubtype                  6 (FORMAT_MJPEG)
+         bFormatIndex                        1
+         bNumFrameDescriptors                5
+         bFlags                              0
+           Fixed-size samples: No
+         bDefaultFrameIndex                  1
+         bAspectRatioX                       0
+         bAspectRatioY                       0
+         bmInterlaceFlags                 0x00
+           Interlaced stream or variable: No
+           Fields per frame: 1 fields
+           Field 1 first: No
+           Field pattern: Field 1 only
+         bCopyProtect                        0
+       VideoStreaming Interface Descriptor:
+         bLength                            34
+         bDescriptorType                    36
+         bDescriptorSubtype                  7 (FRAME_MJPEG)
+         bFrameIndex                         1
+         bmCapabilities                   0x00
+           Still image unsupported
+         wWidth                            640
+         wHeight                           480
+         dwMinBitRate                294617088
+         dwMaxBitRate                294912000
+         dwMaxVideoFrameBufferSize      614400
+         dwDefaultFrameInterval         166833
+         bFrameIntervalType                  2
+         dwFrameInterval( 0)            166666
+         dwFrameInterval( 1)            166833
+       VideoStreaming Interface Descriptor:
+         bLength                            34
+         bDescriptorType                    36
+         bDescriptorSubtype                  7 (FRAME_MJPEG)
+         bFrameIndex                         2
+         bmCapabilities                   0x00
+           Still image unsupported
+         wWidth                            720
+         wHeight                           480
+         dwMinBitRate                331444224
+         dwMaxBitRate                331776000
+         dwMaxVideoFrameBufferSize      691200
+         dwDefaultFrameInterval         166833
+         bFrameIntervalType                  2
+         dwFrameInterval( 0)            166666
+         dwFrameInterval( 1)            166833
+       VideoStreaming Interface Descriptor:
+         bLength                            30
+         bDescriptorType                    36
+         bDescriptorSubtype                  7 (FRAME_MJPEG)
+         bFrameIndex                         3
+         bmCapabilities                   0x00
+           Still image unsupported
+         wWidth                            720
+         wHeight                           576
+         dwMinBitRate                331776000
+         dwMaxBitRate                331776000
+         dwMaxVideoFrameBufferSize      829440
+         dwDefaultFrameInterval         200000
+         bFrameIntervalType                  1
+         dwFrameInterval( 0)            200000
+       VideoStreaming Interface Descriptor:
+         bLength                            38
+         bDescriptorType                    36
+         bDescriptorSubtype                  7 (FRAME_MJPEG)
+         bFrameIndex                         4
+         bmCapabilities                   0x00
+           Still image unsupported
+         wWidth                           1280
+         wHeight                           720
+         dwMinBitRate                737280000
+         dwMaxBitRate                884736000
+         dwMaxVideoFrameBufferSize     1843200
+         dwDefaultFrameInterval         166666
+         bFrameIntervalType                  3
+         dwFrameInterval( 0)            166666
+         dwFrameInterval( 1)            166833
+         dwFrameInterval( 2)            200000
+       VideoStreaming Interface Descriptor:
+         bLength                            46
+         bDescriptorType                    36
+         bDescriptorSubtype                  7 (FRAME_MJPEG)
+         bFrameIndex                         5
+         bmCapabilities                   0x00
+           Still image unsupported
+         wWidth                           1920
+         wHeight                          1080
+         dwMinBitRate                994332672
+         dwMaxBitRate                1990656000
+         dwMaxVideoFrameBufferSize     4147200
+         dwDefaultFrameInterval         166666
+         bFrameIntervalType                  5
+         dwFrameInterval( 0)            166666
+         dwFrameInterval( 1)            166833
+         dwFrameInterval( 2)            200000
+         dwFrameInterval( 3)            333333
+         dwFrameInterval( 4)            333667
+       VideoStreaming Interface Descriptor:
+         bLength                             6
+         bDescriptorType                    36
+         bDescriptorSubtype                 13 (COLORFORMAT)
+         bColorPrimaries                     1 (BT.709,sRGB)
+         bTransferCharacteristics            1 (BT.709)
+         bMatrixCoefficients                 4 (SMPTE 170M (BT.601))
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        1
+       bAlternateSetting       1
+       bNumEndpoints           1
+       bInterfaceClass        14 Video
+       bInterfaceSubClass      2 Video Streaming
+       bInterfaceProtocol      0
+       iInterface              8 AVerMedia Live Gamer HD 2
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x89  EP 9 IN
+         bmAttributes            5
+           Transfer Type            Isochronous
+           Synch Type               Asynchronous
+           Usage Type               Data
+         wMaxPacketSize     0x1400  3x 1024 bytes
+         bInterval               1
+     Interface Association:
+       bLength                 8
+       bDescriptorType        11
+       bFirstInterface         2
+       bInterfaceCount         2
+       bFunctionClass          1 Audio
+       bFunctionSubClass       2 Streaming
+       bFunctionProtocol       0
+       iFunction               9 AVerMedia Live Gamer HD 2
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        2
+       bAlternateSetting       0
+       bNumEndpoints           0
+       bInterfaceClass         1 Audio
+       bInterfaceSubClass      1 Control Device
+       bInterfaceProtocol      0
+       iInterface              9 AVerMedia Live Gamer HD 2
+       AudioControl Interface Descriptor:
+         bLength                 9
+         bDescriptorType        36
+         bDescriptorSubtype      1 (HEADER)
+         bcdADC               1.00
+         wTotalLength       0x003a
+         bInCollection           1
+         baInterfaceNr(0)        3
+       AudioControl Interface Descriptor:
+         bLength                12
+         bDescriptorType        36
+         bDescriptorSubtype      2 (INPUT_TERMINAL)
+         bTerminalID             1
+         wTerminalType      0x0602 Digital Audio Interface
+         bAssocTerminal          0
+         bNrChannels             1
+         wChannelConfig     0x0000
+         iChannelNames           0
+         iTerminal               0
+       AudioControl Interface Descriptor:
+         bLength                12
+         bDescriptorType        36
+         bDescriptorSubtype      2 (INPUT_TERMINAL)
+         bTerminalID             5
+         wTerminalType      0x0603 Line Connector
+         bAssocTerminal          0
+         bNrChannels             1
+         wChannelConfig     0x0000
+         iChannelNames           0
+         iTerminal               0
+       AudioControl Interface Descriptor:
+         bLength                 9
+         bDescriptorType        36
+         bDescriptorSubtype      3 (OUTPUT_TERMINAL)
+         bTerminalID             2
+         wTerminalType      0x0101 USB Streaming
+         bAssocTerminal          0
+         bSourceID               3
+         iTerminal               0
+       AudioControl Interface Descriptor:
+         bLength                 8
+         bDescriptorType        36
+         bDescriptorSubtype      6 (FEATURE_UNIT)
+         bUnitID                 3
+         bSourceID               4
+         bControlSize            1
+         bmaControls(0)       0x01
+           Mute Control
+         iFeature                0
+       AudioControl Interface Descriptor:
+         bLength                 8
+         bDescriptorType        36
+         bDescriptorSubtype      5 (SELECTOR_UNIT)
+         bUnitID                 4
+         bNrInPins               2
+         baSourceID(0)           1
+         baSourceID(1)           5
+         iSelector               0
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        3
+       bAlternateSetting       0
+       bNumEndpoints           0
+       bInterfaceClass         1 Audio
+       bInterfaceSubClass      2 Streaming
+       bInterfaceProtocol      0
+       iInterface              9 AVerMedia Live Gamer HD 2
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        3
+       bAlternateSetting       1
+       bNumEndpoints           1
+       bInterfaceClass         1 Audio
+       bInterfaceSubClass      2 Streaming
+       bInterfaceProtocol      0
+       iInterface              9 AVerMedia Live Gamer HD 2
+       AudioStreaming Interface Descriptor:
+         bLength                 7
+         bDescriptorType        36
+         bDescriptorSubtype      1 (AS_GENERAL)
+         bTerminalLink           2
+         bDelay                  1 frames
+         wFormatTag         0x0001 PCM
+       AudioStreaming Interface Descriptor:
+         bLength                11
+         bDescriptorType        36
+         bDescriptorSubtype      2 (FORMAT_TYPE)
+         bFormatType             1 (FORMAT_TYPE_I)
+         bNrChannels             2
+         bSubframeSize           2
+         bBitResolution         16
+         bSamFreqType            1 Discrete
+         tSamFreq[ 0]        48000
+       Endpoint Descriptor:
+         bLength                 9
+         bDescriptorType         5
+         bEndpointAddress     0x8a  EP 10 IN
+         bmAttributes            5
+           Transfer Type            Isochronous
+           Synch Type               Asynchronous
+           Usage Type               Data
+         wMaxPacketSize     0x00c0  1x 192 bytes
+         bInterval               4
+         bRefresh                0
+         bSynchAddress           0
+         AudioStreaming Endpoint Descriptor:
+           bLength                 7
+           bDescriptorType        37
+           bDescriptorSubtype      1 (EP_GENERAL)
+           bmAttributes         0x01
+             Sampling Frequency
+           bLockDelayUnits         0 Undefined
+           wLockDelay         0x0000
+Binary Object Store Descriptor:
+   bLength                 5
+   bDescriptorType        15
+   wTotalLength       0x0016
+   bNumDeviceCaps          2
+   USB 2.0 Extension Device Capability:
+     bLength                 7
+     bDescriptorType        16
+     bDevCapabilityType      2
+     bmAttributes   0x00000006
+       BESL Link Power Management (LPM) Supported
+   SuperSpeed USB Device Capability:
+     bLength                10
+     bDescriptorType        16
+     bDevCapabilityType      3
+     bmAttributes         0x00
+     wSpeedsSupported   0x000e
+       Device can operate at Full Speed (12Mbps)
+       Device can operate at High Speed (480Mbps)
+       Device can operate at SuperSpeed (5Gbps)
+     bFunctionalitySupport   1
+       Lowest fully-functional device speed is Full Speed (12Mbps)
+     bU1DevExitLat           4 micro seconds
+     bU2DevExitLat           4 micro seconds
+Device Status:     0x0000
+   (Bus Powered)
+
+Reported-by: Sean Baggaley <me@drinkybird.net>
+Closes: https://lore.kernel.org/linux-media/5ef59031-0853-41a7-8d11-c345fe535daf@drinkybird.net/
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260730-uvc-avermedia-v1-1-7272dd394d83@chromium.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 5ff036cd70bad..613a0b79a80bc 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -737,7 +737,7 @@ static inline void memcg_rstat_updated(struct mem_cgroup *memcg, int val)
- static void do_flush_stats(struct mem_cgroup *memcg)
- {
- 	if (mem_cgroup_is_root(memcg))
--		WRITE_ONCE(flush_last_time, jiffies_64);
-+		WRITE_ONCE(flush_last_time, get_jiffies_64());
- 
- 	cgroup_rstat_flush(memcg->css.cgroup);
- }
-@@ -766,7 +766,7 @@ void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
- void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg)
- {
- 	/* Only flush if the periodic flusher is one full cycle late */
--	if (time_after64(jiffies_64, READ_ONCE(flush_last_time) + 2*FLUSH_TIME))
-+	if (time_after64(get_jiffies_64(), READ_ONCE(flush_last_time) + 2 * FLUSH_TIME))
- 		mem_cgroup_flush_stats(memcg);
- }
- 
-@@ -4780,7 +4780,7 @@ void mem_cgroup_flush_foreign(struct bdi_writeback *wb)
- {
- 	struct mem_cgroup *memcg = mem_cgroup_from_css(wb->memcg_css);
- 	unsigned long intv = msecs_to_jiffies(dirty_expire_interval * 10);
--	u64 now = jiffies_64;
-+	u64 now = get_jiffies_64();
- 	int i;
- 
- 	for (i = 0; i < MEMCG_CGWB_FRN_CNT; i++) {
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index a4b9a7ca4e50f..72f0ceffc08f4 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2896,6 +2896,15 @@ static const struct usb_device_id uvc_ids[] = {
+ 	  .bInterfaceSubClass	= 1,
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= (kernel_ulong_t)&uvc_quirk_fix_bandwidth },
++	/* AVerMedia Live Gamer HD 2 capture card */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x07ca,
++	  .idProduct		= 0x1570,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_DISABLE_AUTOSUSPEND) },
+ 	/* ViMicro Vega */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
 -- 
 2.53.0
 
