@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020436;
-	b=BZwDTI25rB+EOSOkupN20qHr4/4FgkvUf7YlODmvOLlSAHTc6SOPYitO13DJiq1K6Uah
-	 9JsBd2x70wkQcbZCRCoTvZG2/CCiuoNbiwD0SeVpUJA4JVSnrmn5EqJrvwe9AxCDe8VVC
-	 Gp3OThg1j3ZJNuNAZJCzoG5k5+k94j0gdEoJRNjsgnIaOhXH4XckFBfO4M09Fhuhg/AYk
-	 cZXZU05MWQz7nfoaLMfJWqe0hQyqzcZPnqT/jygs3gw3cCUDb31kwnD7HP+i8kFXJR1NX
-	 skMV7GetOgWudWPYOnjlycFPzFuqNl7U84qX3N9PcLR0qPHblE6hRaJ4EYjyPwLmdBw==
+	t=1795020439;
+	b=TLlu8apwXZPAr/tFjHP8cP1a8TO/9eORCCqFoRMAAcc4AeGIzJlWHgFHuxQwi6qL4M+z
+	 GmMdtk/TKXSHa+T3mMlmogewrOkpe7/q36xvIo9ePR70ukfNy1sU3668ty0NpYRbbA+cg
+	 reu46Wj1xhO2oQcpJme2kq+gpdjxe1hofeLHwzbjw1FAPJrWAOv6wXTsa0Fp8sNH+hNdw
+	 wmkMSDRHwpaueFgzl1KL6ZrFZjs+UMC50YpRHGGM9jzxITXkA9AUvy0seDVT0MmZ4A+nG
+	 XkVgWierV8HEGNjVr5sEte+c/cUwJVGbrITrUGvaZIMdXGGXBRFJeLUvnxFnUNVDYZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=i4oCukIDLWHb0lo/asQVuDaJ2QZwqC3SRseDhXUYF9Q=;
-	b=C8U0o0htBhcYUQHDaoP7jc8nALCBRjZSBpPc+a0OFubIiOZuyItNdlGcxacvA2GIEWxQ
-	 1x4pV/h/4HzJZBhdFqPxF+++ESOhOhfAnxLMTTOAoLAWp9ecZOfaRfGZ5yINQCjkM9Q3F
-	 yWPLI6hGolvrI6lz3sWXt6spTci9MyRDaFfUqkqdIueEzWSyUO3WIJMtcpmhIr/fd+xmR
-	 5axd+AUWlVzRL0tZOOSKdARuANnsRou6J7iPQpM+DHbumWPZK37KH/OBd5v+VV6Obsp4w
-	 KqlWXB66RpGHU1t6HP7fRbecT1/PLZfo2l2EnN+lt9l9ap5z3n7jNGJjWl+Jx80Cqhw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jiUd/b83nLlMCwJPVSnVTU+rV7Y3O/XNnawgLkecrX4=;
+	b=wuydZ6L9qYYIIcbDg8uEiJsTI2/EqyEg3wD/Xlv+2rrCFNwo+04dMB5hcCsGYDNLRLSN
+	 A+nsZmzKjS/8IY4/pMy8vmOxODS/Tlk18mG2YPz0+bzAIbQ60qxelGyumAhys2kxAePKs
+	 0M/yiS35bQOGHVmEwQHvX0HHBAedHBJBd2+/fw9NwznGQyTZXzDjoOEdtAKQ8o/qEGw5M
+	 rAr51KLZCgiSYlGpGvCV+MMAFmoAH1Te4nT4ZpVoDWFVK3wGsQE0r/mVVLsSE6UFvJ5+Q
+	 iatIvcSAfJbl4NqcAF5UQmf7/ns1s/mSsNcvoDjgC+7aqQBZnhwLEzCdlQV11tAuBRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpnCM49W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAMBtGP3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389E8606A325;
-	Wed, 18 Nov 2026 16:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17531606A330;
+	Wed, 18 Nov 2026 16:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpnCM49W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837E01F000C5;
-	Wed, 18 Nov 2026 16:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAMBtGP3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682EA1F000C4;
+	Wed, 18 Nov 2026 16:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020436;
-	bh=i4oCukIDLWHb0lo/asQVuDaJ2QZwqC3SRseDhXUYF9Q=;
+	s=korg; t=1795020439;
+	bh=jiUd/b83nLlMCwJPVSnVTU+rV7Y3O/XNnawgLkecrX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpnCM49WgnyzEcM45NhKHgMA9iCokZhfpQWkxU+TW3c3K4JClhd8e3JuNAQyhhq16
-	 NMLgVomeRts2IYMjpu3xeUg++KHkV75bWPn9/d7IloJl7S8BSv/9IkXUH00GOMGEMc
-	 vwn0+FqaqOVnaoqAMFvsz6W9Z0VoPVpL48MwvjSg=
+	b=HAMBtGP3t4cNJ9P8BWvtJM4TFm5FVXsKPcKngrvPPOmBZVPfuxxPJs0USWrRAVCYD
+	 T3zbC6tp0dw/od7avfnXVpyMxc2C3BYe56fy1TzMo/UqUcCUeKQRcgtIv+hkRmk7I4
+	 t+Wf7QQEv7AArnY5dVSdfqy0LJ0HyJkdc/B0Xtd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 7.3 1924/2651] selftests/exec: report the skipped binfmt_misc_bpf test on stderr
-Date: Wed, 18 Nov 2026 15:52:44 +0100
-Message-ID: <20261118150355.992852856@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 1951/2651] irqchip/mips-gic: Transfer interrupt mask state across clusters
+Date: Wed, 18 Nov 2026 15:53:11 +0100
+Message-ID: <20261118150356.810013760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -61,50 +63,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-[ Upstream commit b36b990c50b1f581b9a7f35ae256f5542415fa69 ]
+From: Benoît Monin <benoit.monin@bootlin.com>
 
-The exec Makefile announces that binfmt_misc_bpf is skipped with
-$(info), which writes to standard output whenever the Makefile is
-parsed. The selftests install target appends the standard output of
-"make -s emit_tests" to kselftest-list.txt, so on systems without the
-BPF toolchain the runlist gains a line that is not a test entry:
+[ Upstream commit a5f0dc656e89d0eb140547823a36212902cdf673 ]
 
-  exec selftests: skipping binfmt_misc_bpf, needs clang, bpftool, ...
+When an interrupt's affinity is moved to a CPU in another cluster,
+gic_set_affinity() updates the routing (GIC_SH_MAP_VP) and trigger type
+in the destination cluster, but never touched the interrupt's mask state.
 
-run_kselftest.sh and CI systems that parse the runlist then treat it as
-a malformed test entry.
+The interrupt mask is per-cluster. After such a move the interrupt may
+be left disabled in the destination cluster, so it never fires despite
+being correctly routed to its new VP.
 
-Use $(warning) so that the notice still appears in build logs but goes
-to standard error.
+Move the mask state along with the interrupt: disable it in the old
+cluster while clearing the route so it is no longer delivered, then
+configure the trigger type in the new cluster and re-enable it there
+if it was enabled in the old cluster.
 
-Fixes: 277d787feb2e ("selftests/exec: add binfmt_misc bpf-backed handler test")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261014200135.1364053-1-sashal@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 322a90638768 ("irqchip/mips-gic: Multi-cluster support")
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://patch.msgid.link/20260929-sync-gic-counters-v4-3-ec70c4b60434@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/exec/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-mips-gic.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/exec/Makefile b/tools/testing/selftests/exec/Makefile
-index b640af8f02b51..bb10d9523e7fc 100644
---- a/tools/testing/selftests/exec/Makefile
-+++ b/tools/testing/selftests/exec/Makefile
-@@ -63,7 +63,7 @@ TEST_GEN_FILES += bpf_interp.bpf.o nix_origin.bpf.o transparent.bpf.o
- TEST_GEN_FILES += loader.bpf.o interp_bind.bpf.o
- TEST_GEN_FILES += binfmt_bpf_interp binfmt_bpf_app binfmt_bind_interp
- else
--$(info exec selftests: skipping binfmt_misc_bpf, needs clang, bpftool, vmlinux BTF and libbpf)
-+$(warning exec selftests: skipping binfmt_misc_bpf, needs clang, bpftool, vmlinux BTF and libbpf)
- endif
+diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
+index f2ae60d39d66d..be38989d8e73e 100644
+--- a/drivers/irqchip/irq-mips-gic.c
++++ b/drivers/irqchip/irq-mips-gic.c
+@@ -368,6 +368,7 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 	unsigned int irq = GIC_HWIRQ_TO_SHARED(d->hwirq);
+ 	unsigned int cpu, cl, old_cpu, old_cl;
+ 	unsigned long flags;
++	bool enabled;
  
- EXTRA_CLEAN := $(OUTPUT)/subdir.moved $(OUTPUT)/execveat.moved $(OUTPUT)/xxxxx*	\
+ 	/*
+ 	 * The GIC specifies that we can only route an interrupt to one VP(E),
+@@ -389,15 +390,20 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 	raw_spin_lock_irqsave(&gic_lock, flags);
+ 
+ 	/*
+-	 * If we're moving affinity between clusters, stop routing the
+-	 * interrupt to any VP(E) in the old cluster.
++	 * If we're moving affinity between clusters, save the interrupt's
++	 * mask state, stop routing it to any VP(E) in the old cluster and
++	 * disable it there so it is no longer delivered.
+ 	 */
+ 	if (cl != old_cl) {
+ 		if (gic_irq_lock_cluster(d)) {
++			enabled = read_gic_redir_mask(irq);
+ 			write_gic_redir_map_vp(irq, 0);
++			write_gic_redir_rmask(irq);
+ 			mips_cm_unlock_other();
+ 		} else {
++			enabled = read_gic_mask(irq);
+ 			write_gic_map_vp(irq, 0);
++			write_gic_rmask(irq);
+ 		}
+ 	}
+ 
+@@ -409,10 +415,20 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 
+ 	/*
+ 	 * If we're moving affinity between clusters, configure the interrupt
+-	 * trigger type in the new cluster.
++	 * trigger type and, if it was enabled in the old cluster, enable it
++	 * in the new one.
+ 	 */
+-	if (cl != old_cl)
++	if (cl != old_cl) {
+ 		gic_set_type_locked(d, irqd_get_trigger_type(d));
++		if (enabled) {
++			if (gic_irq_lock_cluster(d)) {
++				write_gic_redir_smask(irq);
++				mips_cm_unlock_other();
++			} else {
++				write_gic_smask(irq);
++			}
++		}
++	}
+ 
+ 	/* Route the interrupt to its new VP(E) */
+ 	if (gic_irq_lock_cluster(d)) {
 -- 
 2.53.0
 
