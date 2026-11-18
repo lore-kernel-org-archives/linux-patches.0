@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029660;
-	b=kO1X5H49P+GcqFDmE1BslPnH52Tch1qYWY6RwS2wrRlKQUy7shV3yq96CGMU5Bli80eL
-	 Dl45hTfne8HQPC17jq8dkaB9mmJdVskX9L+OzsebI+9tzfwcHOucBBdbtAVY8NoOoDXcL
-	 Falm80gEqlF4TQZvwVl3x0MRWruvnUhjHT7kL7ORvsiuGDrHsitKqHRU5ApG/sSMdQ19z
-	 3p6Rye8XOwBgAK+kbzrVtquJKale6mrDB8Bn+jD//7u5ltMzRZl1fm91vrktHmp86yAAg
-	 d95w9xLF1xIr5OlgvBNmQLTURUB26+YmuUhiDIyl4uwkiMYCtPITAOU7tEXdQkSAO6w==
+	t=1795029663;
+	b=Eu6YNh/4605jjVw5hNzAcWe+iB02RtyiYgJ6OunY9HKDXw6aRP5q6pFzsN/CehtNb5eb
+	 2zL7Y85xEco/NnDzUqqxKZhbnG82XQ1mlwW0dl7fCYoG1UUp6jeaJ1QqWBH+0Nzanmyrm
+	 /BRj+8rvkbR5JZjVqmO8Pqp2D2K9bWRY+0bx/HaRO483af4eoPrEHcdeKacsu0jln/+Sp
+	 9RJusk9HXsSMUwTIFryxv2NeFUxI361zDNGzi9I+O0PwIxEQeBDtB8pLLh07KJAhKunjl
+	 cvcna/cSbLBdbQZljM7C0WLMWnv66mkH5wR4xmffr5CpTRQ2BA48VoPQAZuQnY4VWVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ATm6Egz5JUFhWpnX7raxI9WguhjVRDdEX5cDDFL4j6s=;
-	b=BoqK5DDzWUB+G5o/7Ch1D21OZF0JMjE94OntVFAOnKJ9yasFC1CA1Ui8yFBIPbtuEbhW
-	 F1szohFx+RGTI4cFwoSniAMhD8kSZOW+j/pBYlXI85fo0eE1V6/VC2Fzv99wmNhn8fVn6
-	 ZHdMp+KEftRu67UPvEMPwxX+/IWoMJC5WipwkpyaipSn+wXpWLIbGza9esC+O4v3otwBp
-	 PbvylXyTv8wLJqsfAqr9DZNTMUDyYtSZ4Oeeo+nXgjsSaLQfQ4QzwiJIc6vjlSzpj6vbC
-	 TwcQeppOicI4EEya57CKuuM96RZakSnFNLDUJrQ3R7KPy2o2HES5okUoUv6Gb3yh66g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=NEG3v/d40Fk+V+etZiFmAv+edujRpGHq3xBjaH0sJyc=;
+	b=kUCbtwd5ZAOXaMruazbFWlmMfAmaM6uQHnPFKNpa//iLqsU53X5qTuLYqcms8STS60kD
+	 IfWFPwO24A14ML7UCgD5SSQvK+QEP4yF9F8W40mqwPWcrZ88XBfzH1qiEGqZab5qf6M9v
+	 5WcZ0fc0Y+wQPYhuSvt2jiJ5vnr9vDX8ALgmJC0U53HrHKZvSGNFFvZNxJXYEUW+JLNAr
+	 5+zYj9lW5ljOCEex1HQP3YCpBaHVApiA+9DX7/tuFCg3bp95z71yhMcIFwmou0aDH2Z3L
+	 08Qgr+78zSPfnXE5rF07lwnOJVYHj0iosVYu7O/2TGeBZRMtjyYl/vNIn9HMT5VMfxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LfAHPkI/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RVRbx3rk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01C6606A334;
-	Wed, 18 Nov 2026 19:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EF1606A333;
+	Wed, 18 Nov 2026 19:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfAHPkI/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255411F000C4;
-	Wed, 18 Nov 2026 19:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RVRbx3rk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD511F000C4;
+	Wed, 18 Nov 2026 19:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029660;
-	bh=ATm6Egz5JUFhWpnX7raxI9WguhjVRDdEX5cDDFL4j6s=;
+	s=korg; t=1795029663;
+	bh=NEG3v/d40Fk+V+etZiFmAv+edujRpGHq3xBjaH0sJyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfAHPkI/fLWsVVYb/Q7ZCxK5wiRK02zrVj7Fv4Ez2OpIFaE/FEm4r7PdjHIqaHJcX
-	 SXInb8/29415NqHvbWFn2g4NbdWlVKeRuMRraWPFecd6bEy92folgmPX4JvCaoyi7E
-	 SBw2//T21RVZ8O3EtWcfO81bHMtp2uIMySBRT0vM=
+	b=RVRbx3rkEwO69NXKHNaWO35T3RcyBKY8IKERO2P+LlHcyvjmkingqAtVf2W1wKPIf
+	 ZLJyF8LxHATRabxmyDIGhPfTefXEqQbyBHWAs+V/S1VuXvZupUpXB1t1RGi2aSsexF
+	 4gOLyHmltiLGOtctnTWxrEVevtmhnDvJk544vBJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	=?UTF-8?q?=C8=98tefan=20Ghe=C8=9Bu?= <stefanghetu9@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0422/1756] mm/gup_test: report actual pinned bytes
-Date: Wed, 18 Nov 2026 15:42:29 +0100
-Message-ID: <20261118150025.566517467@linuxfoundation.org>
+Subject: [PATCH 6.12 0431/1756] ASoC: SOF: imx: Prevent stack OOB read in DSP panic dump
+Date: Wed, 18 Nov 2026 15:42:38 +0100
+Message-ID: <20261118150025.911033075@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,51 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sarthak Sharma <sarthak.sharma@arm.com>
+From: Ștefan Ghețu <stefanghetu9@gmail.com>
 
-[ Upstream commit 65a79b9b693d8c7bd7e5e4865c02cce922a7cc50 ]
+[ Upstream commit 48ed992bfbe53537ad1cbc8ad68f7031e7ac0af3 ]
 
-__gup_test_ioctl() advances addr to the end of the current batch before
-checking if GUP pinned the entire requested batch. If GUP pins more than
-0 pages but less than the requested batch size, addr still advances by
-the requested batch size.
+Commit 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore
+call stack") added a shared Xtensa helper that iterates over a flexible
+array of AR registers (`ar[]`) controlled by `plat_hdr.numaregs`.
 
-The next iteration detects the partial pinning and breaks out of the loop.
-Again gup->size is calculated using addr - gup->addr, so it also includes
-the unpinned pages of the requested batch.
+While Intel IPC4 allocates dynamic storage for the AR block, the i.MX
+IPC3 path reads the oops message into a stack-allocated struct without
+backing storage for `ar[]`, while leaving `numaregs` unvalidated. This
+causes a stack out-of-bounds read when printing a DSP panic.
 
-Calculate gup->size using the actual number of pages pinned multiplied
-by PAGE_SIZE.
+Clear `numaregs` to 0 on i.MX since the AR block is not fetched or
+supported on this platform, preventing unsafe out-of-bounds memory
+accesses in the shared Xtensa helper.
 
-Fixes: 64c349f4ae78 ("mm: add infrastructure for get_user_pages_fast() benchmarking")
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Link: https://patch.msgid.link/20260901083452.115365-3-sarthak.sharma@arm.com
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore call stack")
+Signed-off-by: Ștefan Ghețu <stefanghetu9@gmail.com>
+Link: https://patch.msgid.link/20260908170740.276800-1-stefanghetu9@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/imx/imx-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/gup_test.c b/mm/gup_test.c
-index 6de8064090ea1..6014bbf2aadeb 100644
---- a/mm/gup_test.c
-+++ b/mm/gup_test.c
-@@ -180,7 +180,7 @@ static int __gup_test_ioctl(unsigned int cmd,
- 	nr_pages = i;
+diff --git a/sound/soc/sof/imx/imx-common.c b/sound/soc/sof/imx/imx-common.c
+index fce6d9cf6a6be..e0a99f641e3b8 100644
+--- a/sound/soc/sof/imx/imx-common.c
++++ b/sound/soc/sof/imx/imx-common.c
+@@ -29,6 +29,7 @@ void imx8_get_registers(struct snd_sof_dev *sdev,
  
- 	gup->get_delta_usec = ktime_us_delta(end_time, start_time);
--	gup->size = addr - gup->addr;
-+	gup->size = nr_pages * PAGE_SIZE;
+ 	/* first read registers */
+ 	sof_mailbox_read(sdev, offset, xoops, sizeof(*xoops));
++	xoops->plat_hdr.numaregs = 0;
  
- 	/*
- 	 * Take an un-benchmark-timed moment to verify DMA pinned
+ 	/* then get panic info */
+ 	if (xoops->arch_hdr.totalsize > EXCEPT_MAX_HDR_SIZE) {
 -- 
 2.53.0
 
