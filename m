@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054544;
-	b=W300CBjGjh0vRnzEqx7B/Cxrtp/XO0BPIoCyEOCKWs6mSlcC7Ro8EYcbL9BoNK0SZoCI
-	 PZkEchH336OsxGNQq5TpCSs8GM8tBSutqVg3Ubivjrz/JjVCBiWap8oz+LXbN34zM85L0
-	 ZxeoMohGxv6gQr0CQle4d8/73vlWXMVS+7CyyANp5a1ePzEi1bv1KO8vVpLHeZMH/qqmb
-	 DeRzVWz46lbzfRUQbOyA44Y8rVBo8eJdYsTYzmeszW7yBhKhTi0hRztDSQgJXyY9bezxx
-	 ruRZn6vxfL+sZTbQFzfJP4iuzD6EoDQuttAEEHay+Ix4Tt1rsK3TRQ6D7etl3CyFYRw==
+	t=1795054547;
+	b=RugJ92OcxRSyWfThDzwiLTQ6eXD5WCwrRGyu4Qj3QroeiNuSPKVg9b3nCSk7hOF657H+
+	 5wblqRctCz7PNl8t5n304fX+xrQ4y9A4HMVbcfwlInuCyDeqGKGdAvSJFA+R4xcUS4FXo
+	 hZYiT3xdHmPKZ+j4PsmYTiz70g7SKmsLN2EVe/a1l1sI0PRDgOmHrEUceBBNEwgZBqkSP
+	 lwgMd91U5v9JwHOfXh/qvb9+u4ZpSAphIMQOyyZW6vTZ2mPBPStTS4+0b7QnwmclTrzJb
+	 PqAShC2mrjoVFRojX70wKFqY7cQmo5YQxuvPEWi09iTPVTxY1AmgZNHyqL0vodaJ9bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gf3xmEXr4eN1W3jRb2YMvlSqXWN475IYu0+DhMk7wHE=;
-	b=IO1jf2Ao5qS/0vJdAQNtF2Mfy2dVK02eeaOFdGOdZ9xiS44uvt4kp5W5P5AFTM6xcSRR
-	 l9bZ2PzRNtzLa0IwM5E0LGKljV1zWUxRHzF0w3P2FN5Zt9Wzhw6lYGmQL6SSioV7rY2Lp
-	 8lkTa8rULA4kRH6VADEWjdnCY+N0iwDaX/pvIzN+o+GykWTLw8fwce5K+l1dk39uaiYNP
-	 F28HOnvqamriCK6N4O+vyJLLgZYWf88hqMsggD1cATXIk2TZloq0jSDIoq9odv8Hhaa4u
-	 u77166DpVNdjL7nbkAcTlTRjsA/07RzeA0E8x2xTOMdRjQbw10EdoLngWt8u/cp/Wvg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6A1Am5wnXRNw78O1b3hog+pxa+aT7Pbei5XfXpKF0qA=;
+	b=dSfDhunh9lT2nqyG4p6sHGjK5mHvTwwuJCAk1Gbtk7usH1vCbHk68K6hfvurebxZVFCw
+	 08R7i43QE2bDUJuzX9rR9s2ixVdx4WcHq9k2Z/ISrUCINATxeohdzR0lpSlSoeuryA8X8
+	 JPWwUqaU6tTYg++OEsG9AGWl79x0uAGS10ysT6/KIiTHh4HiEZqexS9XI2P4p4udXJ1wP
+	 oQIqdO/eQ8UodjHHY28aQAXoP3E/ssLKkP/8DbRGQ6xI7yyg4K/gLfIwhIXfD3y8ouArs
+	 fD49gOZ1Mm4hLd34mUb7ShbDXBazotQxsk7jMX5ekDCb02zFp/kb7LuV4hzl3FYE8hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T38yC5Gd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9OWkMPs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7353A606A325;
-	Thu, 19 Nov 2026 02:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29132606A32F;
+	Thu, 19 Nov 2026 02:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T38yC5Gd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B185B1F000C5;
-	Thu, 19 Nov 2026 02:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9OWkMPs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFD91F000C4;
+	Thu, 19 Nov 2026 02:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054544;
-	bh=gf3xmEXr4eN1W3jRb2YMvlSqXWN475IYu0+DhMk7wHE=;
+	s=korg; t=1795054547;
+	bh=6A1Am5wnXRNw78O1b3hog+pxa+aT7Pbei5XfXpKF0qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T38yC5GdFPx8VsvW/aJzoXP6DtY3weW2DRylevr2Tnu9e9Jb1nn4/bouqdM6buKMw
-	 xRU2d8IFLhO7fYGI1eTtTz1l4vaR9lOZHDBIPbZFOJGKWirm70x56RDQafTUOwms7i
-	 BT3HYNZ2MS2+segV6VAw38oWJ+p0OOD0P8oTD8MQ=
+	b=S9OWkMPs06nR03k2WNre3gDAC72IWIXYsDFMObkX1jbb2bEh2ukg0hHpgl4PQtD4o
+	 bCOqAxsvLvvnq3AhtwybbbqP7G5zwudtAMNpCz0kdjloO1zHYRBpRAwq908Ir6qVv/
+	 xrQW5m4G5mq/Xaz537gxZveSSXZjMZw4OfnbAQrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edvard Conrad <edvard@tuta.io>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Yang Zi <2959243019@qq.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1312/2214] ovl: inherit FMODE_NONOTIFY when reading directory layers
-Date: Wed, 18 Nov 2026 15:49:48 +0100
-Message-ID: <20261118150103.982071064@linuxfoundation.org>
+Subject: [PATCH 5.15 1313/2214] comedi: addi_apci_3xxx: fix subdevice count underallocation
+Date: Wed, 18 Nov 2026 15:49:49 +0100
+Message-ID: <20261118150104.016073531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,183 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Yang Zi <2959243019@qq.com>
 
-[ Upstream commit 9ff338af0e002fe217cfa16b1289b76f6b21fc72 ]
+[ Upstream commit 3de5aa458dede472a253266d02902bd95af8e849 ]
 
-Listing a merged or impure overlay directory opens the real layer
-directories from ovl_dir_read(), when the readdir cache is filled.
-Those opens use plain ovl_path_open(), so when the directory fd is
-one that fanotify created for a permission event, they can still raise
-FS_OPEN_PERM.  A listener that also marks the backing filesystem and
-calls getdents() on the event fd before answering then deadlocks the
-same way as with the directory open fixed by the previous commit.
+In apci3xxx_auto_attach(), the number of subdevices is computed with
 
-Store the overlay user file in struct ovl_readdir_data and pass it to
-ovl_path_open_realfile() from ovl_dir_read(), for both the merged and
-the impure cache.  Internal readers such as ovl_check_empty_dir() and
-the mount-time workdir cleanup still pass no user file.
+    n_subdevices = (board->ai_n_chan ? 0 : 1) + board->has_ao + ...
 
-A note about severity and real world impact: The FAN_OPEN_PERM event is
-traditionally used by anti-malware protection agents and security/audit
-agents. The scope that is often used in those use cases is FAN_MARK_MOUNT
-and agents typically monitor multiple mounts in a mount namespace.
-FAN_OPEN_PERM from directory open requires user opt-in with FAN_ONDIR.
-It is often not the case that anti-malware agents monitor open of
-directories. Security/audit engines are more likely to opt-into
-FAN_OPEN_PERM on directories, but are less likely to list the content
-of a directory within the scope of FAN_OPEN_PERM event, so the real
-world impact of this bug is likely not significant.
+The ternary is inverted: when the board has analog input channels
+(ai_n_chan != 0), it counts 0 instead of 1, so the AI subdevice that is
+actually created is not accounted for. As a result
+comedi_alloc_subdevices() allocates one entry too few, and the later
+subdevice initialization (notably the TTL Digital I/O subdevice, which
+is populated last) writes past the end of the allocated array, causing a
+slab out-of-bounds write.
 
-Reported-by: Edvard Conrad <edvard@tuta.io>
-Closes: https://lore.kernel.org/all/P5Qu3co--N-9@tuta.io/
-Cc: stable@vger.kernel.org
-Tested-by: Edvard Conrad <edvard@tuta.io>
-Link: https://lore.kernel.org/ltp/P5WKBbq--F-9@tuta.io/
-Co-developed-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: replaced ovl_path_open_realfile() with ovl_path_open() using an inline FMODE_NONOTIFY check to set __FMODE_NONOTIFY ]
+Flip the ternary to count 1 when ai_n_chan is non-zero and 0 otherwise,
+matching the subdevice creation order in the function.
+
+Signed-off-by: Yang Zi <2959243019@qq.com>
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20261014101803.11036-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 656e39fedcf0 ("staging: comedi: addi_apci_3xxx: only allocate needed subdevices")
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/readdir.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/comedi/drivers/addi_apci_3xxx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index eef6c5d1b1f8b..2de2e433530ee 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -37,6 +37,7 @@ struct ovl_dir_cache {
- 
- struct ovl_readdir_data {
- 	struct dir_context ctx;
-+	const struct file *user_file;
- 	struct dentry *dentry;
- 	bool is_lowest;
- 	struct rb_root *root;
-@@ -295,9 +296,13 @@ static inline int ovl_dir_read(struct path *realpath,
- 			       struct ovl_readdir_data *rdd)
- {
- 	struct file *realfile;
-+	int flags = O_RDONLY | O_LARGEFILE;
- 	int err;
- 
--	realfile = ovl_path_open(realpath, O_RDONLY | O_LARGEFILE);
-+	if (rdd->user_file && (rdd->user_file->f_mode & FMODE_NONOTIFY))
-+		flags |= __FMODE_NONOTIFY;
-+
-+	realfile = ovl_path_open(realpath, flags);
- 	if (IS_ERR(realfile))
- 		return PTR_ERR(realfile);
- 
-@@ -341,12 +346,13 @@ static void ovl_dir_reset(struct file *file)
- }
- 
- static int ovl_dir_read_merged(struct dentry *dentry, struct list_head *list,
--	struct rb_root *root)
-+	struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_merge,
-+		.user_file = user_file,
- 		.dentry = dentry,
- 		.list = list,
- 		.root = root,
-@@ -390,9 +396,10 @@ static void ovl_seek_cursor(struct ovl_dir_file *od, loff_t pos)
- 	od->cursor = p;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
-+static struct ovl_dir_cache *ovl_dir_cache_get(struct file *file)
- {
- 	int res;
-+	struct dentry *dentry = file->f_path.dentry;
- 	struct ovl_dir_cache *cache;
- 
- 	cache = ovl_dir_cache(d_inode(dentry));
-@@ -411,7 +418,7 @@ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
- 	INIT_LIST_HEAD(&cache->entries);
- 	cache->root = RB_ROOT;
- 
--	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root);
-+	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -547,14 +554,15 @@ static int ovl_fill_plain(struct dir_context *ctx, const char *name,
- 	return 0;
- }
- 
--static int ovl_dir_read_impure(struct path *path,  struct list_head *list,
--			       struct rb_root *root)
-+static int ovl_dir_read_impure(struct path *path, struct list_head *list,
-+			       struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
- 	struct ovl_cache_entry *p, *n;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_plain,
-+		.user_file = user_file,
- 		.list = list,
- 		.root = root,
- 	};
-@@ -592,9 +600,10 @@ static int ovl_dir_read_impure(struct path *path,  struct list_head *list,
- 	return 0;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get_impure(struct path *path)
-+static struct ovl_dir_cache *ovl_cache_get_impure(struct file *file)
- {
- 	int res;
-+	struct path *path = &file->f_path;
- 	struct dentry *dentry = path->dentry;
- 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
- 	struct ovl_dir_cache *cache;
-@@ -611,7 +620,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(struct path *path)
- 	if (!cache)
- 		return ERR_PTR(-ENOMEM);
- 
--	res = ovl_dir_read_impure(path, &cache->entries, &cache->root);
-+	res = ovl_dir_read_impure(path, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -726,7 +735,7 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
- 	dput(parent);
- 
- 	if (ovl_is_impure_dir(file)) {
--		rdt.cache = ovl_cache_get_impure(&file->f_path);
-+		rdt.cache = ovl_cache_get_impure(file);
- 		if (IS_ERR(rdt.cache))
- 			return PTR_ERR(rdt.cache);
+diff --git a/drivers/comedi/drivers/addi_apci_3xxx.c b/drivers/comedi/drivers/addi_apci_3xxx.c
+index a90d59377e187..4f6898e8827ba 100644
+--- a/drivers/comedi/drivers/addi_apci_3xxx.c
++++ b/drivers/comedi/drivers/addi_apci_3xxx.c
+@@ -788,7 +788,7 @@ static int apci3xxx_auto_attach(struct comedi_device *dev,
+ 			dev->irq = pcidev->irq;
  	}
-@@ -773,7 +782,7 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
- 	if (!od->cache) {
- 		struct ovl_dir_cache *cache;
  
--		cache = ovl_cache_get(dentry);
-+		cache = ovl_dir_cache_get(file);
- 		err = PTR_ERR(cache);
- 		if (IS_ERR(cache))
- 			goto out;
-@@ -987,7 +996,7 @@ int ovl_check_empty_dir(struct dentry *dentry, struct list_head *list)
- 	const struct cred *old_cred;
- 
- 	old_cred = ovl_override_creds(dentry->d_sb);
--	err = ovl_dir_read_merged(dentry, list, &root);
-+	err = ovl_dir_read_merged(dentry, list, &root, NULL);
- 	revert_creds(old_cred);
- 	if (err)
- 		return err;
+-	n_subdevices = (board->ai_n_chan ? 0 : 1) + board->has_ao +
++	n_subdevices = (board->ai_n_chan ? 1 : 0) + board->has_ao +
+ 		       board->has_dig_in + board->has_dig_out +
+ 		       board->has_ttl_io;
+ 	ret = comedi_alloc_subdevices(dev, n_subdevices);
 -- 
 2.53.0
 
