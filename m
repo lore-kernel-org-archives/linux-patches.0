@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040235;
-	b=QO/mXmTtyZU21xHtkWuwvela8iW6JxJnzqRwILBsUOl4OfzSSTKU4UVQ5+fdhw1k42Z/
-	 8NTsY+ppdEBePnJQLH0i+1LiypLc1t5RZKn5S6fHkR3njTIXMgfxF9wtUnfmX8orcOLy2
-	 gnHj6s9BDM+1wKczQz30BZ8kFJXzD6z7QHynVoW9oQi/JgSeu/pYuBUu1KtjHj7fYpnCf
-	 K87a7aQx0b4AcJDpoaoFL6B8+Ax0RzETPeyfokbc7Aeutp0dUhinb7NUk9FmBRgnoSwAr
-	 kFKJjEBXy0OaniIZVmGI+lYChtWmMovi61u6E8DelY8l6drOVUBuzQoKP91Ry5FYe8w==
+	t=1795040238;
+	b=2fidZ5J3AETV0w15Yx5PrjHCSIDVgEguUHNOdF1X8Va0nnprgORAEz0dpzpM8MOfrLSz
+	 V0MV25LMSUx9fB4WWWGQ3Z+njt2iQBz9J1e2/77jbhdgJ6oKlKXIgAkwzhPNSz49yRKaC
+	 ukJWhbWhC5+RaN8uUZdUC4CAxiHHk+N3Y9ORQMyGgvugl8HYPfMrQ+trN/Q1fsZl5zFkr
+	 MVCtVlFVyUFYuk1FBJ8X3yBJaVSU6yRWl//+E/4bfHYJ/eZCiVPqjpESKKqi+9yIun3aS
+	 8g4/OhJKYwxEFa+L7Gi0VeggKXBUdZzhXjJAdr+VUceHIYRzOEAlDNXLls771L6EAEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zzarO/Icnt1S2y1uw6xDgxR6JKX6PylanbJ+dVKBbBA=;
-	b=haHC6smHVCosv74NVP3j20a8h2cdXi8uNTWzbAjGIeGy0pQXmv2IgfkpCJHbkfD7abnz
-	 tkRgignmFMYDyVqIemsvBDY1wgciRIsidDSBZydsx9dFHMQxRBD0pdFDG8w+RUj+wNfzK
-	 Bj3l0MWu1KtVPy2iOmJhD93WsU1kKPoqJ8a5g8cqR6cbnd+BI6LH+FzXxwjAIRucJvQ7D
-	 0E/DKD/cuRXrXuwpy4dDH3wZ2Bn+qgsOfMnlciRDCoTQi3OkstCcVvId9cRiZCMgeWZ9E
-	 Kiq3qRCKn3Mm5NPhZXDYcdG9fAK9UFB9iyCkJBjRKkA90OOiosO7haA4Dj2BWO+RP2g==
+	bh=b528T6SvgQVSDHCQAcR7fflqfQzXMwSPAy8ZFkMfhYE=;
+	b=wMCEn+d2fLNzNNPQ1yx3/vhZXmFObbgO68F/k1UuELJVbGKmtn67ll9bwYmd20dhmjex
+	 xbTMIjLdWPSp0agfb5qAcsLMgibl9N82Pbd3ffnDMSGyZzPEnUAIW+u51pB5ojREn1zov
+	 u2ttFcKmx0Q83zqbPSquo+FsGJk66BKyIU8bI16/hRI58cAYpZnAC2i9w4ZljYSJZsg9Y
+	 LvU1iB56u/nsiRQmJP5RzfEuS+u6iieC0o4F+hQmBvphDoKxBJB75BchxBYl+KFup3hdb
+	 DLJckJIPo9gMUso2Em7z/iuG2mNGKt1vT5OTYMBfD/hbob8lpvWKQp5bkjPOGdT6dqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+rUk+kg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+HASf1c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9D5606A31C;
-	Wed, 18 Nov 2026 22:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EA2606A31C;
+	Wed, 18 Nov 2026 22:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+rUk+kg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30A61F000C4;
-	Wed, 18 Nov 2026 22:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+HASf1c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9601F000C4;
+	Wed, 18 Nov 2026 22:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040235;
-	bh=zzarO/Icnt1S2y1uw6xDgxR6JKX6PylanbJ+dVKBbBA=;
+	s=korg; t=1795040237;
+	bh=b528T6SvgQVSDHCQAcR7fflqfQzXMwSPAy8ZFkMfhYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P+rUk+kgfq6oM9+izhd1Y9JTyNkaqXnJ7ckEyic4Q1GyrKbpBWA8CeGVP8G8LJaxS
-	 StZtodAfh/uliRPzHrKKyCDLgwNQSXiWfJQpoAVW2hpO8TdLF+AUxv+NRR5G7RAraD
-	 3zTQ+JZt74Y0dOYofE5aUJOCurXK/1VaO1aC0mGg=
+	b=k+HASf1cw3/yqgbK7y6pln4Xo7Nk9KO5L55AHDE22t+Oo4pIoGGbEis4JokR9K6sj
+	 sikys5hVHTGw8Q1NqzTdSi7SRLrnAZ1UAXFntwqgYu+ORzUEnc/MKqOxqveJGVXpNX
+	 wkUSQaihFSJidMXqAoIAaENnfZMkGgqyBRLt1kKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Chen Linxuan <chenlinxuan@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Chen Linxuan <me@black-desk.cn>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2385/3318] MIPS: Octeon: size the swiotlb for a modular OHCI platform driver
-Date: Wed, 18 Nov 2026 15:50:07 +0100
-Message-ID: <20261118150433.081543669@linuxfoundation.org>
+Subject: [PATCH 6.6 2386/3318] MIPS: Only check -msym32 when need-compiler
+Date: Wed, 18 Nov 2026 15:50:08 +0100
+Message-ID: <20261118150433.109556069@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,49 +71,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit f1dd1f0c8d595a019be503d40060d25721313b4a ]
+[ Upstream commit 7a8f286c235f5d308208cfdcb025b2a0e0c84742 ]
 
-plat_swiotlb_setup() raises the swiotlb to 64 MB on OCTEON II with
-memory above 4 GB, because that OHCI can only DMA to 32 bits. The test
-is "#ifdef CONFIG_USB_OHCI_HCD_PLATFORM", which is false when the driver
-is a module - the usual way to build it - so the bump is silently
-skipped.
+During 'make modules_install', the need-compiler variable is null, so
+Makefile.compiler isn't included.  This results in call cc-option-yn
+returning nothing and consequently an error is issued:
 
-What is left depends on the rest of the function: with PCI enabled the
-"memory past the BAR1 hole" branch happens to ask for the same 64 MB,
-but with CONFIG_PCI off - which is normal on these SoCs when no PCI
-devices are wired - swiotlbsize stays at the PAGE_SIZE it was
-initialised to. A full- or low-speed device on an OCTEON II board with
-more than 4 GB of RAM then has no bounce buffer to speak of.
+*** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
 
-Use IS_ENABLED() so a modular OHCI gets the same sizing as a built-in
-one. Seen on a CN6635 board with 8 GB of RAM and
-CONFIG_USB_OHCI_HCD_PLATFORM=m.
+and the invocation terminated for configurations that set the Kconfig
+option named.
 
-Fixes: a8667d706dfa ("MIPS: OCTEON: dma-octeon: fix OHCI USB config check")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Previously commit a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS
+`modules_install' regression") addressed the same issue for GCC versions
+now supported for Linux compilation, but caused a build error with Clang
+because it doesn't support '-msym32'.  Then commit 18ca63a2e23c ("MIPS:
+Probe toolchain support of -msym32") fixed the issue with Clang, but
+reintroduced the 'make modules_install' error listed above.
+
+Wrap the handling of the '-msym32' option then with ifdef need-compiler,
+fixing said error for 'make modules_install'.
+
+For more technical details on why need-compiler is null during 'make
+modules_install' and why no compiler invocation is actually needed at
+this point, please refer to commit 4fe4a6374c4d ("MIPS: Only fiddle with
+CHECKFLAGS if need-compiler") and commit 805b2e1d427a ("kbuild: include
+Makefile.compiler only when compiler is needed").
+
+NB leading 8 spaces rather than tabs required due to `make' syntax.
+
+Link: https://lore.kernel.org/all/alpine.DEB.2.21.2502120612000.65342@angie.orcam.me.uk/
+Link: https://lore.kernel.org/all/alpine.DEB.2.21.2307180025120.62448@angie.orcam.me.uk/
+Fixes: a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install' regression")
+Reported-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Closes: https://lore.kernel.org/all/alpine.DEB.2.21.2501030535080.49841@angie.orcam.me.uk/
+Co-developed-by: Chen Linxuan <chenlinxuan@uniontech.com>
+Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Reviewed-by: Chen Linxuan <me@black-desk.cn>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cavium-octeon/dma-octeon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/Makefile | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/arch/mips/cavium-octeon/dma-octeon.c b/arch/mips/cavium-octeon/dma-octeon.c
-index 9fbba6a8fa4c5..c049632fbcc33 100644
---- a/arch/mips/cavium-octeon/dma-octeon.c
-+++ b/arch/mips/cavium-octeon/dma-octeon.c
-@@ -228,7 +228,7 @@ void __init plat_swiotlb_setup(void)
- 		swiotlbsize = 64 * (1<<20);
- 	}
- #endif
--#ifdef CONFIG_USB_OHCI_HCD_PLATFORM
-+#if IS_ENABLED(CONFIG_USB_OHCI_HCD_PLATFORM)
- 	/* OCTEON II ohci is only 32-bit. */
- 	if (OCTEON_IS_OCTEON2() && max_addr >= 0x100000000ul)
- 		swiotlbsize = 64 * (1<<20);
+diff --git a/arch/mips/Makefile b/arch/mips/Makefile
+index 0888074f4dfef..4e742a94d9b51 100644
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -296,18 +296,20 @@ drivers-$(CONFIG_PCI)		+= arch/mips/pci/
+ # We can always force a build with a 64-bits symbol format by
+ # passing 'KBUILD_SYM32=no' option to the make's command line.
+ #
+-ifdef CONFIG_64BIT
+-  ifndef KBUILD_SYM32
+-    ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
+-      KBUILD_SYM32 = $(call cc-option-yn, -msym32)
++ifdef need-compiler
++  ifdef CONFIG_64BIT
++    ifndef KBUILD_SYM32
++      ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
++        KBUILD_SYM32 = $(call cc-option-yn, -msym32)
++      endif
+     endif
+-  endif
+ 
+-  ifeq ($(KBUILD_SYM32), y)
+-    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
+-  else
+-    ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
+-      $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
++    ifeq ($(KBUILD_SYM32), y)
++      cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
++    else
++      ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
++        $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
++      endif
+     endif
+   endif
+ endif
 -- 
 2.53.0
 
