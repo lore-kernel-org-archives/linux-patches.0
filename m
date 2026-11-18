@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030171;
-	b=rgDq0IUAixX/sPPaZkGZHj1ow3H2NdaHNKkjM2pB+ZmG0SukXjFU7lznFL3XLum9yqXV
-	 1tnZRdZomyaEkxqDnbCfJ397c8YboqnXthSHV5gkT2Z5div9SMLeK+FaXmZHCmkVxncLD
-	 fZVs+WVZw1Vs8rKWOtAHko6+w49PjgWFPvdsBRQ6JScWzLejQjc1nN7QcfVvUFqoaTVzx
-	 kzkDKyX7O31fKKAt1R2MMtVUH0Zp11BX6n3mvy5vtTzIYrAbNm5Z2kXgPqc/agbrOH/a0
-	 sz8j2TuRHqZbjXli/9TPr+7LpRNwfy1x+xFiAj6nPlhpi8hkxjgafFQ27bbqW/P4CTA==
+	t=1795030174;
+	b=hhZ2vX0337EBqHad1sc7KE1ubmnMoQ/69A7VqM3Vj5+WKcNXTXakuMBiMEEfbRfe6Krz
+	 8Y1I+4RTxAkemqZTnvtwoY0pd4WxoXESaGDAg4miET0LEyruUYqgJ7JaZ7NDcie80X/M3
+	 1PYcPJdc+DgbB8HNOkVm0P2DmsB1kBzuncIn2DVoyCiyUwUdmwfN+Qav7pbyUGPtaW5Jg
+	 2dHIF2I77mcICUBH9bXjeywOPWQyqcMhTnSZc+O1UO2VkTcRxGdSfUFD8TS9HgK674osq
+	 UpzkqtviLu0luccPE+jRT/0jPGYnGoI47vDPOZzclAuqXHBhQu1S7RDAbUmUwBwOspA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JdVN/d2MZWTRh8fYxjaACex3e2tcbMv6h64ezAici54=;
-	b=XQDuKtE4/1tL9hAKsa/tvDTs/s0jL/h4pYubaKj2/pjcmxxk+VriGrxqEgyeUdn++TL4
-	 nmz4sDvxpWIhBV3/0nQ6hc3FucMo8uLyVYR58lGPn7cdXvJ1dCj7V+/2Lwe1JaVD0QWwf
-	 n/LLJLCLo+aZb3fficnfuyqNvsVr4ANhKk1+26uKABAommg3PgkH6k8kaxc80riwxWwcs
-	 Y1wB0o8m5HJp+czCW7qFq3g2p7MDIMMLEUG7ILmKyrtYPtb/89hiP02LDl0LdOtDGGCRM
-	 H+/Kt+TveE2iCZlGL4W+6tDVMLoO9/SnZumoStK7hYDYXN17/tv7wchm7ySCHJPVXPA==
+	bh=l8rae8Xq/medagAJZkgcPeffDI2TUdwdXDw+qPRT00w=;
+	b=pUZhLuphgmf0idq9JBevElfuGeNU6NqSrwbt+4J/xR3G7yy3QBiBX/RqSNM3g0lpBczt
+	 yE2NsD52aJXGIq7dhdxOYrF80iVw9jrx1aKQO89s4ommB2fhaXo9blTPRKQFPlRUurivu
+	 skuj06iJCaCX2N6p5mJuEE7j5qdBSGCoAQ9HpfZLJf05ajHBJJoiywz9wHqycJQjNeEPU
+	 1Jl4mP3awFilvXSqehpTEmws/MDFbfxjid4m8eg05p2R0bKXeAxLYrmsaBFuAys/izrqG
+	 AHV4GmHx+jWyxQKmQJPNMAWwLwgn+cf9jaeNeI6qMY6FD/xRuzPlDNIYpfE4dTIWOYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XofXokE1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0B83ZDC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8EF606C709;
-	Wed, 18 Nov 2026 19:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115DD606C718;
+	Wed, 18 Nov 2026 19:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XofXokE1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64DB1F000C7;
-	Wed, 18 Nov 2026 19:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0B83ZDC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C521F000C5;
+	Wed, 18 Nov 2026 19:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030171;
-	bh=JdVN/d2MZWTRh8fYxjaACex3e2tcbMv6h64ezAici54=;
+	s=korg; t=1795030173;
+	bh=l8rae8Xq/medagAJZkgcPeffDI2TUdwdXDw+qPRT00w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XofXokE1uv56zlJG5G/2rPPKpIi775grKHhiT8Umw7YhbSppOw5t/c/q34sybJ8g/
-	 r8sZhIA0Rx1S80Tr9nyS/d1UuTdboAyZGqGlhL7+JghJc9LZy3EqCa9FZteP13bR5i
-	 xD532D426qqLUoaV1J2loc6NibEWFgSC6HW3I7qw=
+	b=y0B83ZDCpQTCtfmZZFL+LXl31YZkXWv20w/MoT6AhCiF0OTCLcTpGvtab44wbyBtz
+	 NaIQHUmCY1lCFLbS5js4qmj5FkZjTiCgev+N90kL3I0vCjD0Oplo7QUQ8Lk5xQo4ku
+	 lAGncmhp7U4o5eo9CXW54RahFNCCX3umTTSzU+v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Chen Linxuan <me@black-desk.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Shashank Mohan Jain <jain.sm@gmail.com>,
+	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0611/1756] MIPS: Only check -msym32 when need-compiler
-Date: Wed, 18 Nov 2026 15:45:38 +0100
-Message-ID: <20261118150033.269367582@linuxfoundation.org>
+Subject: [PATCH 6.12 0612/1756] bitmap: bitmap_parse(): reject non-hex character before 8 digits
+Date: Wed, 18 Nov 2026 15:45:39 +0100
+Message-ID: <20261118150033.303313514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,88 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Shashank Mohan Jain <jain.sm@gmail.com>
 
-[ Upstream commit 7a8f286c235f5d308208cfdcb025b2a0e0c84742 ]
+[ Upstream commit 7cee2fb210a198667d3d4200705215e6f315cab0 ]
 
-During 'make modules_install', the need-compiler variable is null, so
-Makefile.compiler isn't included.  This results in call cc-option-yn
-returning nothing and consequently an error is issued:
+bitmap_parse() is documented to return -EINVAL for illegal characters,
+and it does so everywhere except when the illegal character directly
+precedes a chunk of exactly eight hex digits.
 
-*** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
+bitmap_get_x32_reverse() parses a chunk from right to left.  After it
+has consumed eight digits it looks at one more character: a hex digit
+means the chunk is wider than 32 bits and -EOVERFLOW is returned.  Any
+other character is silently consumed as if it were a separator, and the
+remaining input is parsed as the next chunk.  As a result:
 
-and the invocation terminated for configurations that set the Kconfig
-option named.
+  "x12345678"   -> 0x12345678, returns 0 (expected -EINVAL)
+  "1g12345678"  -> 0x1_12345678, returns 0 (expected -EINVAL)
+  "0x0000000f"  -> 0xf, returns 0, while "0xf" returns -EINVAL
 
-Previously commit a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS
-`modules_install' regression") addressed the same issue for GCC versions
-now supported for Linux compilation, but caused a build error with Clang
-because it doesn't support '-msym32'.  Then commit 18ca63a2e23c ("MIPS:
-Probe toolchain support of -msym32") fixed the issue with Clang, but
-reintroduced the 'make modules_install' error listed above.
+bitmap_parse() backs cpumask_parse() and cpumask_parse_user(), so the
+same inconsistency is visible when writing masks such as
+/proc/irq/*/smp_affinity or the network queue rps_cpus/xps_cpus files.
 
-Wrap the handling of the '-msym32' option then with ifdef need-compiler,
-fixing said error for 'make modules_install'.
+__bitmap_parse(), which this function replaced in commit 2d6261583be0
+("lib: rework bitmap_parse()"), rejected all three strings with -EINVAL,
+and a "0x" prefix is accepted today only when exactly eight digits
+follow it, so no reliably working input is lost.
 
-For more technical details on why need-compiler is null during 'make
-modules_install' and why no compiler invocation is actually needed at
-this point, please refer to commit 4fe4a6374c4d ("MIPS: Only fiddle with
-CHECKFLAGS if need-compiler") and commit 805b2e1d427a ("kbuild: include
-Makefile.compiler only when compiler is needed").
+When the loop falls through, *end is known to be a non-separator
+character inside the buffer, so return -EOVERFLOW if it is a hex digit
+and -EINVAL otherwise.
 
-NB leading 8 spaces rather than tabs required due to `make' syntax.
-
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2502120612000.65342@angie.orcam.me.uk/
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2307180025120.62448@angie.orcam.me.uk/
-Fixes: a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install' regression")
-Reported-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Closes: https://lore.kernel.org/all/alpine.DEB.2.21.2501030535080.49841@angie.orcam.me.uk/
-Co-developed-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Reviewed-by: Chen Linxuan <me@black-desk.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 2d6261583be0 ("lib: rework bitmap_parse()")
+Assisted-by: LLM
+Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ lib/bitmap-str.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/Makefile b/arch/mips/Makefile
-index 5785a3d5ccfbb..dd34815ee23d0 100644
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -294,18 +294,20 @@ drivers-$(CONFIG_PCI)		+= arch/mips/pci/
- # We can always force a build with a 64-bits symbol format by
- # passing 'KBUILD_SYM32=no' option to the make's command line.
- #
--ifdef CONFIG_64BIT
--  ifndef KBUILD_SYM32
--    ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
--      KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+ifdef need-compiler
-+  ifdef CONFIG_64BIT
-+    ifndef KBUILD_SYM32
-+      ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
-+        KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+      endif
-     endif
--  endif
+diff --git a/lib/bitmap-str.c b/lib/bitmap-str.c
+index be745209507a4..692a150a4d65c 100644
+--- a/lib/bitmap-str.c
++++ b/lib/bitmap-str.c
+@@ -447,8 +447,12 @@ static const char *bitmap_get_x32_reverse(const char *start,
+ 			goto out;
+ 	}
  
--  ifeq ($(KBUILD_SYM32), y)
--    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
--  else
--    ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
--      $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+    ifeq ($(KBUILD_SYM32), y)
-+      cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
-+    else
-+      ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
-+        $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+      endif
-     endif
-   endif
- endif
+-	if (hex_to_bin(*end--) >= 0)
+-		return ERR_PTR(-EOVERFLOW);
++	/*
++	 * Eight digits have been consumed and the next character is not a
++	 * separator: another hex digit means the chunk does not fit in 32
++	 * bits, anything else is an illegal character.
++	 */
++	return ERR_PTR(hex_to_bin(*end) >= 0 ? -EOVERFLOW : -EINVAL);
+ out:
+ 	*num = ret;
+ 	return end;
 -- 
 2.53.0
 
