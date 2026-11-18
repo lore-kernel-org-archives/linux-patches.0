@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016170;
-	b=fmFe427UOCzGXVNqqpIyUGGdwkoVPUomxqXU6Uv5tZ4HVs2EASrRoYaUCEgJ5Q7pBO+w
-	 JXCAYMORLdokpxtDlX3a3e2zHcTAGGpDTHZSKa65jN5fK+1f3yUpK7aLw59tUdvhjcvcU
-	 lCeYLMvV5sh19oHN44rqB6eX+rp94LvhLhILMCBmt6e8YsigKh5V5Jd0WqzO7hU3NAW3Y
-	 HRA3mM8UECgwzDbggA65m0QezNO55sb0J4ZZHKGsSalFOlKOGkjy+pweXzSvj66Ki7wS4
-	 QeV+iRKp4dQA8Hl0Pg5nbNYGQrUVy9cN8C6VqIehFxtDROgrCOGonnnufoqEX2UT8QQ==
+	t=1795016173;
+	b=0nxLYOLh84+CsQIcsXZimNkUjKEgXiMFGoIrKTM8cyPgr+D5EniPvXns2XxjCtaYSrQk
+	 4ta94qGHjb3uWJLtPGeyPT+ndhpuki1FtbZUQydW3J0IgV9GnJDeHaCf7WVpiHUsW2NjQ
+	 /EMfb5DUagEWIfpcvru+kjV7/V7VjztScgYfh60SsSEL00/Dc0TtGCjoLdMCoghKnafyF
+	 OX2Ev/o0cFy8ou5cHkg29BusRNbAnxCRJArToFbNbLYpwsCZLdalbWnznS7EZy+cdtiz5
+	 4ourewfngnYXB2YPtlmBpUkJFO7uUSHxQxlFcoebz+fYKanKD2mF2/Pq9O9R1riUcJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016170;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tCDSS0YaD08ZdUn1II89ByshfrY4JvWLcPmr8MCHuyk=;
-	b=tjOgmtbSdMIRsrONPdf9NmLIz7xw2L7Y9akFrvwjpmRk8dixJvYKAd02OZL5WqjII2S2
-	 rZdVloM65sW2m1KFX4LEHf5XBYXvHJ7R5LvfxA/8dhnJBctTQrdk/sY/TLE/hUDfoyPDD
-	 4jW0nJbz0HK4HeLTOkUV/Ejwn1sCHTmUGZQ0p6y7T1eb/Oq1KxXLdThP1/23SImEr9wOk
-	 xmDYQ2D3pkUbme513Lod5MOV9k2mNC8K9iVnsT/EWYaduEu97DX1sEc2/FylrxnsFSvhb
-	 jHlOsvVp4WQgQhv8D5SyoZpYPXlp/9FJ0vV3nPCYBlTp6a7X4sMAy8wzSuxJbHoYGRQ==
+	bh=GsnXl62hq4aEKiUibd5eAuJ72KUiEjJBNj4td/2uMAY=;
+	b=LAJf82I0A+aFgWv0GTNqlfmGIFniRj3+uhwYbPZPJ6L7R5YGFp9jaiWPVRPAn3fjJmSD
+	 8xMcVuXtAu4QI8vteqVoPYd60z7Tzab1RxQ+a0ScNznp7msTNzHOW429/a4KiqGDlzMbA
+	 SMw0x1jbRsdaIH6XFpQuuA2KDZnIG4/cJ7U0Jn6VJKKiYFhhrtzTtlyzGLffO+wkzkzzS
+	 XZKr0C+6sfeGP4Yw2NEN2F5k/C53QK82kws4SMQeUl0s5geyJeNZ/FVPAUUtk+PKkJ1/C
+	 DH2BMN7KTp/zWaF2V8wJhyJ8n6+f6RvCZctrhGrDg5+NSbaqK5Jgbitf/6vTZ9qIUKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1pMxAyn+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0W3mO7hX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDD3606A320;
-	Wed, 18 Nov 2026 15:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EF9606A31C;
+	Wed, 18 Nov 2026 15:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1pMxAyn+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D6C1F000C4;
-	Wed, 18 Nov 2026 15:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0W3mO7hX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A85F1F000C4;
+	Wed, 18 Nov 2026 15:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016170;
-	bh=tCDSS0YaD08ZdUn1II89ByshfrY4JvWLcPmr8MCHuyk=;
+	s=korg; t=1795016172;
+	bh=GsnXl62hq4aEKiUibd5eAuJ72KUiEjJBNj4td/2uMAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1pMxAyn+IgSevkUg5si7Fj+YSKWG+EOb1f62p1yfIqSbwNeAa58WnTmmrM4gIwRic
-	 H9MPIZlMst7PSYR9dXMAgkP67fRyx+uC/R9oJVr9fYoCqlgcvmOLm+lWOStulA7fJs
-	 FC+TGf9U22LyF/HDnBNIi4zHKxscbN0NdrpVznpI=
+	b=0W3mO7hXQtRXdMV4F4Y5AF/jdvk2NX3wqoDtVgqMLpDi1Fk8GKDey3rMorA1YlBol
+	 +6x66kKVAxqYzlhTXDmRhJZtiLDuExHH3pCGddlPd27QPfQIi4xfBektL6tDOwogwH
+	 OVLgMVJf+ncYwT8g8zCvBfmhDoNZslZvBXxhAW5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0435/2651] gfs2: Fix the return value in gfs2_get_link() kernel-doc
-Date: Wed, 18 Nov 2026 15:27:55 +0100
-Message-ID: <20261118150303.487896617@linuxfoundation.org>
+Subject: [PATCH 7.3 0436/2651] virtio: synchronize callbacks after device reset
+Date: Wed, 18 Nov 2026 15:27:56 +0100
+Message-ID: <20261118150303.522929049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,39 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 700a0a6892f7c0c541d5d23837cfab98cc744d17 ]
+[ Upstream commit dd75508e6fe77116589c49658d0d18897688dc0b ]
 
-gfs2_get_link() returns the link target or an error pointer, but its
-kernel-doc still describes an integer status. The mismatch dates back to
-when gfs2_readlink() was replaced by generic_readlink() and persisted
-across the removal of nd_set_link().
+virtio_reset_device says:
+	Note: this guarantees that vq callbacks are not in progress
+but in practice, only virtio pci correctly synchronizes the cbs.
 
-Describe the returned pointer and error value.
+On other transports, a callback that is already executing, keeps running
+while the driver tears down the state it uses.
 
-Fixes: c177c2ac8c5a ("Switch gfs2 to nd_set_link()")
+Add virtio_synchronize_cbs to virtio_reset_device fixing this for all
+transports that correctly implement synchronize_cbs().
+
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/all/20260818040433.66986-1-kmehltretter@gmail.com/
+Fixes: c46eccdaadab ("virtio: document virtio_reset_device")
+Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
+Acked-by: Karl Mehltretter <kmehltretter@gmail.com>
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <8ae2995ee649adcfe1398f7f1c4fc9f7028c3db1.1789204858.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/virtio/virtio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index f361876c55833..d5e03ec891272 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1900,7 +1900,7 @@ static int gfs2_rename2(struct mnt_idmap *idmap, struct inode *odir,
-  *
-  * This can handle symlinks of any size.
-  *
-- * Returns: 0 on success or error code
-+ * Returns: the link target on success, an ERR_PTR() on failure
-  */
+diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+index b6c9e927bef57..a8588d7ad109f 100644
+--- a/drivers/virtio/virtio.c
++++ b/drivers/virtio/virtio.c
+@@ -264,6 +264,8 @@ void virtio_reset_device(struct virtio_device *dev)
+ #endif
  
- static const char *gfs2_get_link(struct dentry *dentry,
+ 	dev->config->reset(dev);
++	/* Flush pending VQ/configuration callbacks. */
++	virtio_synchronize_cbs(dev);
+ }
+ EXPORT_SYMBOL_GPL(virtio_reset_device);
+ 
 -- 
 2.53.0
 
