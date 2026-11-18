@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046187;
-	b=2N4rGIX8pH0Dcvgk0nu0OgfmS0gRF3CV9EhtUeMIgMg6o8R0ENxckif8cC1SPrGg5kTW
-	 CeF968SCtj86To7feW6wj0X/NzfmDwLMKpCZlzKJpa4nKg6FEUOZCDCszhlJxYhiMe77X
-	 dFr7LJcQUlFZVlbd4bWtaoiUsZIKvPZgTyvjJpj4bwVeQ7b4lL32wEpA7CYKSU/whkZqc
-	 YztoBkOlIo2a/eJak3KwPEMk8Z1cj4W68Vg0nUP3iEzCHGHkDEKsvkNhFFCHniGE4VodZ
-	 /sO0IddsRB4Fv4XU8MiHMhl+p1ucPsKoo9VbaY1ttQvfguaMPfFQdgLVTfckbVU96NQ==
+	t=1795046189;
+	b=eOP+uDmjbFPwwSnj9TWKTWE/KXBp37ygGYbW/4mwaY7DsJlUot79NHKcsB3O0nQPmMPk
+	 pnwDeSkuiLZifMh6Kr93lmLtuVvbUbV0TA0LyvNutysqTkg+ER28+QRLvx4L27p2KAY27
+	 Bi01fPwKUxiOoYOgKXFapkB9KnrD8p3j9CV+EINSLiGNN1zKHQFVt6ZU+6krssGdEmwKS
+	 N5bFHUsTs039brJQJtSkVUiU0+Bs2461dJlzidt42nR/VF3MjMKQ6yi3/STX4z21Om8Cv
+	 A8SKZZs/KB78L2Z45UqNpHKcSveKQ+VDxA19UL4HXkuWx8W6J8f6dG+bN059NPuFkZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046187;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B2BQVFXSWHYwRLzUSpAesbPRoMhBGgIsoDuaiIrUo+0=;
-	b=QG4dtVU+yv5zFC+dqOFL/hDBTQyfL0TFRgEOHt02TK6U26Y8mVMcyCMg2P4EE90S8xm+
-	 8K69tkD80vlcJfktwyQWuox83798h2fx/0A8jUDnr415LDgSgPdAeyQPQyOzgZiiJuhDf
-	 e5IZiWbptQfAAha/FSdVzvNSYQRxg6KmgpDZZc2w6DBTQXczz0rV62QPruNcBFBy1muV7
-	 EL1YOZ2UvDQVpT/gAhAsAtLT7TeqWtqRpab0mLiUWOyWaWfQxCRelHFvasbdnWigVTB5d
-	 EALRb9HAj5Zo4sfsRI+tbYQsQZaOQI7rLWPLO0uDVFc8e9MiRQMa4s3DOhlhG219/eA==
+	bh=i+qAt9ThCI0IpGRgLaZGHpqXE+ZipQmDjLg43QE0xsw=;
+	b=xJ3d53UY/JiKKJI8BtfA2ZN7FCF1c8EZE/yc8E5/GORyJxiFNbWOAwgNpYhY+OCdrZhM
+	 3/sqXS8UvapKt5EgouWXtqHQWyJtfoWFtcXKH2FfMyd4l3pVWb0QUaAHUeVZe9ggcNAiN
+	 dN1eodSNF9RilMiYGJ8uI72ji+qT+KHAP9k620QU7bBLHKS/CWvNXspOH+B6cnIWf6SIB
+	 CbEVaTbc3N4swngfwovBkTRziIkP1DBU2ostwcZsXWkZ4AWbwxoYABw64Gc5ZS5l77qbh
+	 GXRG09Orqraef4BqJfh4PWhXEgz/cFee5QUaggYFq5dzJmFT6UUzvVRZYC0Wd4hAXgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSzL+Mny;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTfvyTlh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41D6606A320;
-	Wed, 18 Nov 2026 23:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D71606A31C;
+	Wed, 18 Nov 2026 23:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSzL+Mny
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425FB1F000C4;
-	Wed, 18 Nov 2026 23:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTfvyTlh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FB11F000C4;
+	Wed, 18 Nov 2026 23:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046186;
-	bh=B2BQVFXSWHYwRLzUSpAesbPRoMhBGgIsoDuaiIrUo+0=;
+	s=korg; t=1795046189;
+	bh=i+qAt9ThCI0IpGRgLaZGHpqXE+ZipQmDjLg43QE0xsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nSzL+MnyZAPG06UymSMOTw+TuDF9/VtAF5pMpIlZ2OaWEbw46wXMHLRzRYOyyXfx1
-	 xmR9b2pm00JztDoSHKuw208rB73sOtkQICra6I1t91zChdeU6+OS+aeScax7UgzNxM
-	 7aqnWiaaZGAckR+GVg9Yz1bUiMjLuOr8/15dUBj8=
+	b=dTfvyTlht1ThkbInJt7b+C34QH+W6XRzwv4a0QtXU7j+zogWjI1UUQr/Lurm0KnI9
+	 Yv7O8s3uGcI6C30D6AB/jOtcEeWJnUCXjMCuOddSDv4x81sOTrFZjEBQUlJBN0askE
+	 LlXHlQxw69T5sC6dhgt1Af06+g17IVnJAqTPiHJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1190/2857] xfrm: retry inexact policy lookup after node reinsertion
-Date: Wed, 18 Nov 2026 15:37:04 +0100
-Message-ID: <20261118150244.456167521@linuxfoundation.org>
+Subject: [PATCH 6.1 1191/2857] 9p/trans_virtio: reject mount tags longer than NAME_MAX at probe
+Date: Wed, 18 Nov 2026 15:37:05 +0100
+Message-ID: <20261118150244.492926471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,85 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 868f63c8bfafa9b827168c9126f85264c39c02ec ]
+[ Upstream commit 5bfef2b6dafe83fe2d8d210d54093a8f48cfc97e ]
 
-An inexact policy lookup first records pointers to candidate hlist heads
-and then traverses the lists.  A concurrent policy insertion can merge
-inexact tree nodes between those operations:
+p9_virtio_probe() reads a 16-bit mount tag length (tag_len) from the
+device config and kzalloc()s tag_len + 1 bytes for chan->tag with no
+upper bound. A malicious or compromised host can present a tag of up to
+65535 bytes; that tag is later copied into the single-page sysfs buffer
+by p9_mount_tag_show() (memcpy(buf, chan->tag, tag_len + 1)), a
+host-controlled out-of-bounds write of up to ~64 KiB past the PAGE_SIZE
+attribute buffer.
 
-  lookup                         policy insertion
-  ------                         ----------------
-  find inexact candidates
-    save obsolete hlist head
-                                 write_seqcount_begin(&bin->count)
-                                 merge inexact tree nodes
-                                   hlist_del_rcu(&policy->bydst)
-                                   reinsert policy->bydst in survivor
-                                 write_seqcount_end(&bin->count)
-  evaluate saved candidate list
-    miss the moved policy
+Reject an overlong tag at probe time. A 9p mount tag is a name-like
+identifier, so bound it by NAME_MAX (255): that limit is independent of
+the sysfs/seq_file page size and is far above any legitimate mount tag,
+which keeps p9_mount_tag_show() safe at the root without hard-coding a
+seq_file implementation detail.
 
-The merge immediately reinserts the same hlist node into the surviving
-tree node.  RCU keeps the policy alive, but it does not provide a
-consistent view while its list node is moved.  A lookup that selected the
-obsolete list can observe it empty.  A lookup already traversing a moved
-policy can instead follow the next pointer rewritten by the reinsertion.
-Either case can return an incorrect IPsec policy result.
-
-The per-bin sequence counter already brackets calls to
-xfrm_policy_inexact_insert_node(), including node merges.  The read side,
-however, currently validates the counter only while searching an
-individual rb-tree.  A successful search returns without validation, and
-the later candidate-list traversal is outside that read-side section.
-
-Snapshot the per-bin sequence before discovering candidate heads and
-validate it after evaluating all candidate lists.   Retry the lookup if
-the inexact policy tree changes while it is being searched.
-
-Fixes: 9cf545ebd591 ("xfrm: policy: store inexact policies in a tree ordered by destination address")
+Fixes: 179a5bc4b8cb ("net/9p: use memcpy() instead of snprintf() in p9_mount_tag_show()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Suggested-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <20260627211012.4042372-1-michael.bommarito@gmail.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/9p/trans_virtio.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 7ababb73d08e3..4a1242716724d 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -2107,6 +2107,7 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
- 	struct xfrm_pol_inexact_bin *bin;
- 	struct xfrm_policy *pol, *ret;
- 	struct hlist_head *chain;
-+	unsigned int inexact_sequence;
- 	unsigned int sequence;
- 	int err;
- 
-@@ -2138,12 +2139,18 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
- 		}
+diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
+index 3cf660d8a0a7b..f938731b29940 100644
+--- a/net/9p/trans_virtio.c
++++ b/net/9p/trans_virtio.c
+@@ -630,6 +630,11 @@ static int p9_virtio_probe(struct virtio_device *vdev)
+ 		err = -EINVAL;
+ 		goto out_free_vq;
  	}
- 	bin = xfrm_policy_inexact_lookup_rcu(net, type, family, dir, if_id);
--	if (!bin || !xfrm_policy_find_inexact_candidates(&cand, bin, saddr,
--							 daddr))
-+	if (!bin)
-+		goto skip_inexact;
-+
-+	inexact_sequence = read_seqcount_begin(&bin->count);
-+	if (!xfrm_policy_find_inexact_candidates(&cand, bin, saddr, daddr))
- 		goto skip_inexact;
- 
- 	pol = xfrm_policy_eval_candidates(&cand, ret, fl, type,
- 					  family, if_id);
-+	if (read_seqcount_retry(&bin->count, inexact_sequence))
-+		goto retry;
-+
- 	if (pol) {
- 		ret = pol;
- 		if (IS_ERR(pol))
++	if (tag_len > NAME_MAX) {
++		dev_err(&vdev->dev, "mount tag too long (%u bytes)\n", tag_len);
++		err = -EINVAL;
++		goto out_free_vq;
++	}
+ 	tag = kzalloc(tag_len + 1, GFP_KERNEL);
+ 	if (!tag) {
+ 		err = -ENOMEM;
 -- 
 2.53.0
 
