@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021489;
-	b=5pGrsGshEGM0iw70sDEWDwSQA5HmniFzfql6sJHCkrpGJ1cEB3BNqFltfq+ck+7juJM5
-	 NyF9za7DZxqa+DKacqZRIt0Cpv028HEulFcZalgbNtXHnnO5piUTeel4fzpZ71LkHNCGZ
-	 Ml8Q2+DJhaXZpinX4C2gekJDpXv67nv5Q4DsnlvNeKF5hFXPNybDCi2vQv4S7EqnyPId3
-	 F8sUx4tt/seR6Vf7zAdd/BMAZ78vLHjRC7/N2czn1GHS4qunkQsqt7cLlvdcfhx1B4qhL
-	 lbO51BA6+P7XMR+q4LBCGCVrmD2AlWJSBp2ZLo5i0iNhB4Z5gPFJlgpdePFz7VUcuOw==
+	t=1795021491;
+	b=tbsSV9O5z8VAaCcOVhzWGxptaSHIiWF8AS+ZtYvpgjheAAp3emOWhh2nKtQLGjv5SQz7
+	 Q3wjPfno8YMd1QhPORyByjm+9jqD06TpBFEi+mR3RRzjZb5ln2V6NmJWVo6udGRsvc9EA
+	 sSP2SLH676BBLdRUfUT9YfKuu7rUm+BZx2ZCmCICKhmr6LEl9BT2IWUeTX9YlU79tsPIg
+	 p2H8TYpOWeWyy3MlyrzTVsmJlUb6UCSBI/I/DeRzSEhGVZrCNo5tWorXuJNqA3ZPvO+wC
+	 J9lvSVj1vT6FqllpGu4LhD47GGlfkVaSNCI987GCOnTbI21/QT+W7Y917f5Z7z2jOYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IXyM0UG6lzYfpv8r6tchCmWL+HmiV7yfkz3zoBYq29Y=;
-	b=KrZzlY/xi2r9nlY68GNkxZEzsD1grej6iuOGOkYAiM9jIoCPK2aDS0dakIBcZyVcZgQv
-	 hDwaioV25iIoBvVdl0A+FbZChIF/FRL/zYaCyFFvDPhLINfkNgT5rITa6xU+dmHyvOw7N
-	 KiPOCdXCnYZyUIwvOhyO1BlJ0AIXRRh80rBrOFFzlKuSFonMFhpqppuEmY/4U8/SoB7Pl
-	 o1+JM6fH0eIrwbIIr8+TUoBoUCNVnqr0V2as1cr+higsn9ykx1b6MwEIPlSg3g+ArzAlS
-	 +he19ZsisQM2YKxEevPKP3FlfOEkwHek05CYmlI+zYpXXkQNvDNSTk+esOLzMgkTT/g==
+	bh=CM/8+8Hfoa+TYJRGQQRWhdPhpUNOXadNO43PauUXk5U=;
+	b=0uwvlzCnwBnuYl8jCa3MMdEMhfVthNiLz/i9JWk8v8q9u6TLhGsuruYRn5/E2Go91Nwv
+	 fT9rs7MIsotrQ6S6EBymniffySADHa3kdHG7riivmNa8VAJnETLmnaxAqMCAb3r5A/8N5
+	 GOGQ78wXMWeMapvQAslcpobSgBK9XzBajbwm5i8WmSPwc9f+iaWqh87d2ZGKzEcshiHK9
+	 PYVJPskZhbybdB6gKDkWE8CDiG61BtwH6kOmLgtbVxB3lraTb/hO1QqPSBL1gEsUjyg+0
+	 MnwJfa1EoZyxJ7KZw3KfQ+bgqh6tt5T4ec+PCtTerNINMwdOvHA0unV3e2GnY5sF5ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YY1RqNZ7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKvleeWh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC6E606A32A;
-	Wed, 18 Nov 2026 17:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5D7606A32A;
+	Wed, 18 Nov 2026 17:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YY1RqNZ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF161F000C4;
-	Wed, 18 Nov 2026 17:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKvleeWh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3101F000C4;
+	Wed, 18 Nov 2026 17:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021488;
-	bh=IXyM0UG6lzYfpv8r6tchCmWL+HmiV7yfkz3zoBYq29Y=;
+	s=korg; t=1795021491;
+	bh=CM/8+8Hfoa+TYJRGQQRWhdPhpUNOXadNO43PauUXk5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YY1RqNZ7LbRe0KIhnwMHd1hxXSGJpVZfk+DOfL90aUpXginXO0a+T6YaWsfoMrMwQ
-	 WCGnth9TDgt2qRVwQYr5Xba2kdzimMGKbQ/ygT3Eze+8/qLJC7sK6qNlO+VnT7L+V+
-	 n7eswSB0zGDZwfJSAmAVcSooJ8E+Db9ehxHygYPY=
+	b=RKvleeWho2RY0i/yVvBCwaRKEj8SNIqT4kTR2BduGRBz1HW0UOaryn5CSMSOG/kw0
+	 XyRC0g4jG4JQUWOwG65pc99D7hHvX5Wr0sU2i1h1rbr83RMhBY4u+VDOP3bQMS8wxv
+	 qdKP8WbC8at6/f8yWQHVmntkmBKlIENPnKXi/d20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Dmitry Ilvokhin <d@ilvokhin.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2326/2651] PCI/pwrctrl: Power off child devices on power-on failure
-Date: Wed, 18 Nov 2026 15:59:26 +0100
-Message-ID: <20261118150408.888192594@linuxfoundation.org>
+Subject: [PATCH 7.3 2327/2651] perf c2c: Fix memory leaks on output fields
+Date: Wed, 18 Nov 2026 15:59:27 +0100
+Message-ID: <20261118150408.918885345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,82 +72,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit b6087ff2b7a4c9f98c78f56f0f357557fc008768 ]
+[ Upstream commit 7d0fe18bc905a4bf59271e2f7ecc95479caebd7b ]
 
-pci_pwrctrl_power_on_device() recursively powers on the child nodes of a
-device before powering on the device itself. If powering on a child fails
-(e.g. returning -EPROBE_DEFER), the function returned immediately, leaving
-the sibling children that were already powered on in the same loop
-iteration enabled.
+The perf_hpp_list was not freed after use.  Let's add it for the main
+c2c hists list in perf c2c report and a local list in print_pareto().
 
-Since probe deferral is a standard boot path, this leads to unbounded
-regulator and clock enable increments across retries. The error path in
-pci_pwrctrl_power_on_devices() only powers off the top-level children
-processed before the failing one and explicitly stops at it, so it can
-never clean up the siblings leaked deeper in the failed subtree.
+Previously it was detected by ASAN like below.
 
-Power off the sibling children that were successfully powered on before a
-child fails, and power off all children if the device's own power_on()
-fails after its children were already enabled. Switch to a manual child
-iterator so the failing node can be tracked and its reference released in
-the error path.
+  =================================================================
+  ==42183==ERROR: LeakSanitizer: detected memory leaks
 
-Fixes: b35cf3b6aa1e ("PCI/pwrctrl: Add APIs to power on/off pwrctrl devices")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260909-pwrtctl-power-on-rallback-v1-1-412ef996ba27@oss.qualcomm.com
+  Indirect leak of 1064 byte(s) in 7 object(s) allocated from:
+      #0 0x7f17334ef24f in calloc (/lib64/libasan.so.8+0xef24f) (BuildId: 61e8165ca90f7a4f06b73f064a938c76deaae079)
+      #1 0x0000005fa099 in zalloc  ../../lib/zalloc.c:8
+      #2 0x0000004faf6d in get_format  tools/perf/builtin-c2c.c:1978
+      #3 0x0000004fb45e in c2c_hists__init_output  tools/perf/builtin-c2c.c:2004
+      #4 0x0000004fb7de in __hpp_list__parse  tools/perf/builtin-c2c.c:2047
+      #5 0x0000004fbae9 in hpp_list__parse  tools/perf/builtin-c2c.c:2085
+      #6 0x0000004fee13 in print_pareto  tools/perf/builtin-c2c.c:2563
+      #7 0x0000004ffcd7 in perf_c2c__hists_fprintf  tools/perf/builtin-c2c.c:2708
+      #8 0x000000500ab5 in perf_c2c_display  tools/perf/builtin-c2c.c:2949
+      #9 0x0000005045c3 in perf_c2c__report  tools/perf/builtin-c2c.c:3522
+      #10 0x000000505caa in cmd_c2c  tools/perf/builtin-c2c.c:3676
+      #11 0x0000005df50e in run_builtin  tools/perf/perf.c:383
+      #12 0x0000005df9b1 in handle_internal_command  tools/perf/perf.c:436
+      #13 0x0000005dfd7f in run_argv  tools/perf/perf.c:480
+      #14 0x0000005e02d6 in main  tools/perf/perf.c:581
+      #15 0x7f1729450680 in __libc_start_call_main (/lib64/libc.so.6+0x3680) (BuildId: 85075e2ae2e13352a1413d41c327dacf6461526c)
+      #16 0x7f1729450797 in __libc_start_main@GLIBC_2.2.5 (/lib64/libc.so.6+0x3797) (BuildId: 85075e2ae2e13352a1413d41c327dacf6461526c)
+      #17 0x000000409c34 in _start (tools/perf/perf+0x409c34) (BuildId: 36a64600776d92e4ab7dfd5ca20c92280d72a645)
+
+  SUMMARY: AddressSanitizer: 1064 byte(s) leaked in 7 allocation(s).
+
+Fixes: c75540e3160fb586 ("perf c2c report: Add dimension support")
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctrl/core.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ tools/perf/builtin-c2c.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
-index c14df117ece37..0e2387cf46577 100644
---- a/drivers/pci/pwrctrl/core.c
-+++ b/drivers/pci/pwrctrl/core.c
-@@ -252,14 +252,16 @@ static int __pci_pwrctrl_power_on_device(struct device *dev)
- static int pci_pwrctrl_power_on_device(struct device_node *np)
- {
- 	struct platform_device *pdev;
-+	struct device_node *child;
- 	int ret = 0;
- 
--	for_each_available_child_of_node_scoped(np, child) {
-+	for_each_available_child_of_node(np, child) {
- 		ret = pci_pwrctrl_power_on_device(child);
- 		if (ret)
--			return ret;
-+			goto err_power_off;
- 	}
- 
-+	child = NULL;
- 	if (!pci_pwrctrl_is_required(np))
- 		return 0;
- 
-@@ -279,6 +281,19 @@ static int pci_pwrctrl_power_on_device(struct device_node *np)
- 
- 	platform_device_put(pdev);
- 
-+	if (ret)
-+		goto err_power_off;
-+
-+	return 0;
-+
-+err_power_off:
-+	for_each_available_child_of_node_scoped(np, tmp) {
-+		if (tmp == child)
-+			break;
-+		pci_pwrctrl_power_off_device(tmp);
-+	}
-+	of_node_put(child);
-+
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index 715b75d42f2a8..0beda148cdf36 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -2087,6 +2087,11 @@ static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
  	return ret;
  }
  
++static void c2c_hists__exit(struct c2c_hists *c2c_hists)
++{
++	perf_hpp__reset_output_field(&c2c_hists->list);
++}
++
+ #define DISPLAY_LINE_LIMIT  0.001
+ 
+ static u8 filter_display(u32 val, u32 sum)
+@@ -2495,7 +2500,7 @@ static void print_pareto(FILE *out, struct perf_env *env)
+ 	ret = hpp_list__parse(&hpp_list, cl_output, /*evlist=*/NULL, env);
+ 
+ 	if (WARN_ONCE(ret, "failed to setup sort entries\n"))
+-		return;
++		goto out;
+ 
+ 	nd = rb_first_cached(&c2c.hists.hists.entries);
+ 
+@@ -2509,6 +2514,9 @@ static void print_pareto(FILE *out, struct perf_env *env)
+ 		c2c_he = container_of(he, struct c2c_hist_entry, he);
+ 		print_cacheline(c2c_he->hists, he, &hpp_list, out);
+ 	}
++
++out:
++	perf_hpp__reset_output_field(&hpp_list);
+ }
+ 
+ static void print_c2c_info(FILE *out, struct perf_session *session)
+@@ -3211,12 +3219,12 @@ static int perf_c2c__report(int argc, const char **argv)
+ 	err = setup_nodes(session);
+ 	if (err) {
+ 		pr_err("Failed setup nodes\n");
+-		goto out_session;
++		goto out_hists;
+ 	}
+ 
+ 	err = mem2node__init(&c2c.mem2node, env);
+ 	if (err)
+-		goto out_session;
++		goto out_hists;
+ 
+ 	err = setup_callchain(session->evlist);
+ 	if (err)
+@@ -3336,6 +3344,8 @@ static int perf_c2c__report(int argc, const char **argv)
+ 
+ out_mem2node:
+ 	mem2node__exit(&c2c.mem2node);
++out_hists:
++	c2c_hists__exit(&c2c.hists);
+ out_session:
+ 	perf_session__delete(session);
+ out:
 -- 
 2.53.0
 
