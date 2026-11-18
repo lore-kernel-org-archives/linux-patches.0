@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015213;
-	b=FN/uh03+Gm2lX5zweuWENM0Ek8r3r08zdEYUJaMmnWdHqtoRvoLbX2d5an1qmN0uX6QU
-	 3Mj69FF6DvK0n3AiocluaA/8HdlayLcVufM+nuMl6v1OaIS5PlQfkC1Zhkb4ouOk+UZWH
-	 d1fECOyuy9x6sHn4jLF4pdAq+esTpECb+Ui7Hgl8SzeeqMdqiguDHphhqafy0tmbhWVf1
-	 HTSsCoX+MZpvhANhSEPSPG1CjBAk9cDu5E0fo5bJWN8Jy2lC3aRhkY7+urpbfMEgyDpcc
-	 nx7erQKT23rXDMvrBs6Dlab7RZtqxgk4brJAZ1llUwLpL3144ZqP784M7K/GChAmHyQ==
+	t=1795015216;
+	b=A5wiQG8+zffl3rS435wVfItLVSK7NJK4gYNG74h/NX49SlQwZY8u1VvRohOEi0hl1WD3
+	 5fKtaX4Hhy8rFMUK24599YQseAoPjfb/9fBhhbGkrD434wSk4VblORxFecIzJhZADxNkc
+	 tbF8pROIqtLZN5dRCCn5TBeiCHEH3OBo4lqa7T56MXfqd+ksFeU3zNi/HSuOUwGAiUfHo
+	 IPzrJWQccNnC8JeQI42Wc3un21peqGQZi1C0QJbT5oLrVVajPjQ2sedVY14uOkWeL1miV
+	 9aXBpOixmoOvwrmvQ4ldfqfnC2xojYEmz2dWRX/8BgR55PD/rUnl1M7qaqvP6DAfA/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=22EIFnYjitG/8eMx0B7CwR9p3Hvm6vQ2D9XNjJv+pGE=;
-	b=Sf0FE/rwdJMU87x7yW/sRoYvTLfaATmbOT099ij0Np3miU/bYa/nnY0iiURnjAPKhleP
-	 mZCWTjVfDSkMcegIvbWkE48EM7Th/011EaYGr0gI933evLYH8S+2+yYvUwDuxBDSeg4n0
-	 0vhlRd9SzRakqWczRYPEm09lwdyiibiy+qpms+MgnOkTEr8fIJ3YICLMPhrQzwC0tWAGA
-	 FnLEBQBOgcazt1+/W9n6pD62KaG/vLpgGOZleoKwsgOSg+dpWQS8VO6jLlPczMyCM1/Ag
-	 KoVNxRrOYTKFAzpqE5ADYdRn1qC/AmDH1WAUOA25TvndxQ6JQYS43NWlfM/P67xO6PQ==
+	bh=xRnGzTGWQ0KmP+CD6mR1XAXHlCHvwPC5l4MhqMzlR88=;
+	b=tIXqB7J1d9CtPeagisFw4nm+vmA9BJ+RytarffaPWaNP8vYs2WG0Te9Z/kUgY6apL+XU
+	 GF+0thXRect8qYrbUfynkgitrL0a75YnOLkRA98P/KHLpqKaEi0rR9Lr/XmZSRCk7d9se
+	 lVDKJr+D1Nh2dymbrPA6p0CZY2RICHvyDoO4SdaoTQ6Y0hA05Z+ZaC/Q0GYSPvjqvFBFf
+	 7vyjVOC/BQm0LqrdjCE2yBK1ektc7Fvi2Xq46vx1k+p7Gr+fl/yWCVRFz4pWkCFUDohBk
+	 CsegEidclqhuuRSDitO+6Pqyk3BJEAj6b6QZlQpIt0f3IU3maaccvEl5TtnQUCpH/mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqvXSY6B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cNYBY2sV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C403606A330;
-	Wed, 18 Nov 2026 15:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19FE606A31C;
+	Wed, 18 Nov 2026 15:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqvXSY6B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6861F000CA;
-	Wed, 18 Nov 2026 15:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cNYBY2sV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1108D1F000C4;
+	Wed, 18 Nov 2026 15:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015212;
-	bh=22EIFnYjitG/8eMx0B7CwR9p3Hvm6vQ2D9XNjJv+pGE=;
+	s=korg; t=1795015215;
+	bh=xRnGzTGWQ0KmP+CD6mR1XAXHlCHvwPC5l4MhqMzlR88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqvXSY6BWIeNFySkvCC3M3DucGixccgwWgkmGVdoZl55g7Sz/lv4cwELUqzX0HCej
-	 TMlimjVor/qy/wJoKG/WW4aLx94SB+UlIci5u8TUVxhrhwuVLD3unoDSNR6Yv2gwNY
-	 HWJcmsg4lJskgODjLIyh6DY5BxeucPi7MAw0CMYc=
+	b=cNYBY2sVPZouZY+DqO9axf9ZpP2CaIRhDtRtfWudzTqt/9XK/UGRKfobJlHeJZerT
+	 oHURA7u6wEQ2oXw4Mm9rrBHNmxOOAojOT43+VmurhlBi2zj6JYXIN8ipyKPnuZCcHT
+	 8E1MzMbpMNUy03MiDlJnY2V9o8pInjB/gbVem7/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0093/2651] dt-bindings: iio: light: ltr501: Add missing ltr303 compatible
-Date: Wed, 18 Nov 2026 15:22:13 +0100
-Message-ID: <20261118150251.252582675@linuxfoundation.org>
+Subject: [PATCH 7.3 0094/2651] iio: temperature: tmp117: fix calibbias cache update on I2C write failure
+Date: Wed, 18 Nov 2026 15:22:14 +0100
+Message-ID: <20261118150251.287929208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,36 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 198ed7962e42f1e45b7f48b9abc70aad9e3185f8 ]
+[ Upstream commit 61fff9cebbfdf39bbd04d366882476d1def14047 ]
 
-When support for ltr303 was back in 2021, the bindings documentation was
-not updated accordingly.
+The calibbias cache (data->calibbias) was updated before the I2C
+write to TMP117_REG_TEMP_OFFSET was known to succeed. If the write
+failed, the function correctly returned an error, but the driver's
+internal cache had already been updated to the new value.
 
-Fixes: 7d71d289e1ba ("iio: light: ltr501: Added ltr303 driver support")
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Acked-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+This causes the cache and the actual hardware register to go out of
+sync: a subsequent write of the same value would be silently
+skipped by the early "if (off == data->calibbias) return 0;" check,
+since the cache matches even though the register was never
+successfully updated.
+
+Update data->calibbias only after confirming the I2C write
+succeeded, so the cache always reflects the actual state of the
+device.
+
+Found by code inspection.
+
+Fixes: df041e737a38 ("iio: temperature: add driver support for ti tmp117")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/temperature/tmp117.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml b/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml
-index 480523ca37500..6234e2eaec2e4 100644
---- a/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml
-+++ b/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml
-@@ -16,6 +16,7 @@ properties:
-   compatible:
-     enum:
-       - liteon,ltr301
-+      - liteon,ltr303
-       - liteon,ltr501
-       - liteon,ltr559
+diff --git a/drivers/iio/temperature/tmp117.c b/drivers/iio/temperature/tmp117.c
+index 74cb8d62bef3c..3d8c97aa0d998 100644
+--- a/drivers/iio/temperature/tmp117.c
++++ b/drivers/iio/temperature/tmp117.c
+@@ -97,15 +97,20 @@ static int tmp117_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
+ {
+ 	struct tmp117_data *data = iio_priv(indio_dev);
+ 	s16 off;
++	int ret;
  
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		off = clamp_t(int, val, S16_MIN, S16_MAX);
+ 		if (off == data->calibbias)
+ 			return 0;
++
++		ret = i2c_smbus_write_word_swapped(data->client, TMP117_REG_TEMP_OFFSET, off);
++		if (ret)
++			return ret;
++
+ 		data->calibbias = off;
+-		return i2c_smbus_write_word_swapped(data->client,
+-						TMP117_REG_TEMP_OFFSET, off);
++		return 0;
+ 
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
