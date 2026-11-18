@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046597;
-	b=rrwAAtDj2/a94n3Ftda12moggK9koN5fXo5LxxfDupbKBsVV14FeDqm0iZbB+iNMyhVR
-	 6sfiaGiDOaKliVkmVRMkTVEJ47IiaIY4rv0E3yeEUCel4wR2fNavRfIDwBzWkECdPkWcj
-	 Z5xtoWFvjSXuz/JY9uXoJeXYBPTwOJFR9osZdClmFxVip3ac1imRwnSbdh+7JNT4Xmv3W
-	 LMGnD9IOK2jrv+vjmZqtR1c3oavnpCjR5cE3cABwXUmgGh54JnRmnWkjlKMmnYVN10JOr
-	 vL1+8qhZ+vG/2PkayjeBMog0gYrdPFvVA/dCBS3Gj8jX9url0vXRwwY/o7bo47ff63g==
+	t=1795046600;
+	b=S6+ShYPnIFPR7KQnMD3VKWNaACRKMexagno47E3T6GeJDuIw/dUsryv3xgqRGWJs6hiC
+	 yirPXHWbQQ6p7RQT9hDCaowMUyzXGD5Xu1mS34WAkv+0QuplFQkoGirXeXjUXMuw0Mwfq
+	 9Qr39JBDngSKW+CHMyya4RM+LlvJoCOVn0rcHIsxh6IDJyme9SqsNMWOM/SLy0uPnWGWO
+	 B0/5Gi89fg/y9bU3VIzKf2TNqphTk91KlB7VsH1ZD1rRR9Ixa62aWhcsynHmDv0t7ZmqE
+	 LJzaiMVghsYJbU/67pUOVG8pjxlJPli+BQjf5PC2tYYI+BzPgpymbWkNUsD0/B/2PkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5bNkprkbaKfAVetbJUve3cEWhN2mPT8KFcaarvOjgAc=;
-	b=U0LIY9+ip8ijsDoJilIb6ghfn3XmIy4FIzM7CjMtBdZgUBxi0ocmvf8dNW8AH5A7/x5l
-	 IcbkK8ug2Xfg764XzneEcLuM//HLaKtpwe8BQMRZMJPUSvUVv7vsHYqprQGV7P0toLtQJ
-	 0oEUIvtPloHRd6BG4jtRsg1SZFMZzChDWLz36zwJeo36GqiDBkywyldPMDcGaEAhKdwn7
-	 Ie7z91lW54OMSgLb0cbOo1wuOHLCzkDAuUhpU3zm/YhKoCxdZsStgz0Buc2qZ6XHp3Oer
-	 jCjwNHLcRSSySJJDvfFJTwkuj1vW0c2btlL8RRR+5Jq5xmYur74UTbhgaCPs7AFdSew==
+	bh=cANgD2M2No1DYBJo9UMGgWx/25CKIyVBahQ8+J8Yp30=;
+	b=r6AQBEeZnL46omAllzwrYeOxAXVF4jEECSRg7xcbfXbDA7qv/MHqPLrV7V5Hr6L8sE9m
+	 Z4PnkKtULBxEKJZLwweaVncSKTjJbat5wbplS2tgbAAu0m5LHeo0FaX+ldYx/TNDwdJ/U
+	 YCIuJ5CZ2eM0r8dPzoBhLB3fwZGdhR+gV9gPH5Sb6PJlqHJiqtNyo88TqUYkCVOET/sHN
+	 kdWF/6ahbMwpVyRUOTs1Rbsxkn2WwxnwjspqiHmSPe09YixaiijCQ3SI5vvt7AH9jx033
+	 keYfxPcpkZTNf9wN1LhVy8omfoz6j2pk2WuPAbDW/XIa6p2yMqYCBJVUZCQilqSLveA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b5C9cbQa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJ688utl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB671606A31C;
-	Thu, 19 Nov 2026 00:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A6C606A320;
+	Thu, 19 Nov 2026 00:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b5C9cbQa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379681F000C4;
-	Thu, 19 Nov 2026 00:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJ688utl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115761F000C4;
+	Thu, 19 Nov 2026 00:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046597;
-	bh=5bNkprkbaKfAVetbJUve3cEWhN2mPT8KFcaarvOjgAc=;
+	s=korg; t=1795046600;
+	bh=cANgD2M2No1DYBJo9UMGgWx/25CKIyVBahQ8+J8Yp30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5C9cbQaPhj4qAjXug0SvK3q/9+85mL7sXlsWjwlwsD386paCcsVA1fV/jNcLE+Xg
-	 oZ3AWgo5JtiQxZHS4bCLRFYf394sJR0M4DY324UtKrKlGUbXkwF50p2f5QwI53dgPc
-	 Etkkh4oqh9ZNkJKuT1VqUTAOQn43++q8nJMapM04=
+	b=QJ688utlDZmcO6ynna0u5m9sY09XiaobfDFCvdfJX55zApMxPqGhuQ7+/9hQRha8N
+	 jlv9eki8YwKWRLPgQDP3WAzO2pn2WbaMETvjLYEw5REWev3XDGNJRyhqTxHhhNdPIx
+	 7hDOhJtg23tYfBas7b2n4tNnqXnNUNuMQ2PtGRek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Mirkin <imirkin@alum.mit.edu>,
-	Dave Airlie <airlied@redhat.com>,
+	Chris Simpson <chris@nilk.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1297/2857] drm/nouveau/devinit/gf100-: try to avoid double-running vbios scripts
-Date: Wed, 18 Nov 2026 15:38:51 +0100
-Message-ID: <20261118150248.184392226@linuxfoundation.org>
+Subject: [PATCH 6.1 1298/2857] ALSA: hda/realtek: Enable bass speakers on Alienware m17 R3
+Date: Wed, 18 Nov 2026 15:38:52 +0100
+Message-ID: <20261118150248.219790387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,63 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Mirkin <imirkin@alum.mit.edu>
+From: Chris Simpson <chris@nilk.net>
 
-[ Upstream commit 2139cb633d48ebbbaec88d2e5a8ebe8e774df4fb ]
+[ Upstream commit eb296114d5ba4d335a640dbbbbc9618fded0ffe7 ]
 
-Turns out some VBIOSes don't actually set the bit in question in 2240c.
-Use the nv50-style detection to try avoiding running the vbios twice.
+The Alienware m17 R3 (ALC289, PCI SSID 1028:09d1) has a second speaker
+pair, the bass speakers, on pin 0x17, which the BIOS leaves unconnected
+(0x411111f0). No PCI SSID quirk matches the machine, so it gets
+ALC269_FIXUP_DELL4_MIC_NO_PRESENCE from the fallback pin quirk table,
+and only the speakers on pin 0x14 play.
 
-Fixes: a6a0f67ca7aa ("drm/nouveau/devinit/gf100-: detect if BIOS invoked devinit")
-Link: https://bugs.freedesktop.org/show_bug.cgi?id=97620
-Cc: <stable@vger.kernel.org> # v4.6+
-Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20170128205347.17453-1-imirkin@alum.mit.edu
+Use ALC289_FIXUP_DUAL_SPK, as on the Alienware x16 R2 and Dell XPS 15
+9510/9520: it sets pin 0x17 up as a speaker on DAC 0x02, so one volume
+control covers both pairs, and chains to
+ALC269_FIXUP_DELL4_MIC_NO_PRESENCE, so the headset mic setup is
+unchanged.
+
+Tested on an Alienware m17 R3 (BIOS 1.38.0), Linux 7.3 with this change
+applied: the bass speakers play, and volume and mute cover both pairs,
+also after suspend and resume. Headphones and a headset mic were not
+tested.
+
+I used Claude Code (Claude Opus 5.5) to find the unused pin, pick the
+existing fixup and write this patch and changelog; I did the listening
+tests myself.
+
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Chris Simpson <chris@nilk.net>
+Link: https://patch.msgid.link/20261029-alc289-m17r3-v1-1-5d3eac605e7a@nilk.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/nouveau/nvkm/subdev/devinit/gf100.c   | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
-index 5b7cb1fe7897b..0670b7fc95515 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
-@@ -27,6 +27,7 @@
- #include <subdev/bios/init.h>
- #include <subdev/bios/pll.h>
- #include <subdev/clk/pll.h>
-+#include <subdev/vga.h>
- 
- int
- gf100_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
-@@ -101,6 +102,25 @@ gf100_devinit_preinit(struct nvkm_devinit *base)
- 	 * can use it as a reliable way to know whether we should run devinit.
- 	 */
- 	base->post = ((nvkm_rd32(device, 0x2240c) & BIT(1)) == 0);
-+
-+	/*
-+	 * However some VBIOS init sequences miss this bit. So fall back to
-+	 * the nv50 method of checking if the bit is not set. Running the
-+	 * VBIOS multiple times may have detrimental effects.
-+	 */
-+	if (base->post) {
-+		u64 disable = nvkm_devinit_disable(base);
-+		/* magic to detect whether or not x86 vbios code has
-+		 * executed the devinit scripts to initialise the
-+		 * board. only works if there's a display engine.
-+		 */
-+		if (!(disable & (1ULL << NVKM_ENGINE_DISP))) {
-+			if (nvkm_rdvgac(device, 0, 0x00) ||
-+			    nvkm_rdvgac(device, 0, 0x1a)) {
-+				base->post = false;
-+			}
-+		}
-+	}
- }
- 
- static const struct nvkm_devinit_func
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index db583e3de2d04..f83afdc59e4e9 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9860,6 +9860,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x097e, "Dell Precision", ALC289_FIXUP_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1028, 0x098d, "Dell Precision", ALC233_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x09bf, "Dell Precision", ALC233_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1028, 0x09d1, "Alienware m17 R3", ALC289_FIXUP_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1028, 0x0a2e, "Dell", ALC236_FIXUP_DELL_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0a30, "Dell", ALC236_FIXUP_DELL_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0a38, "Dell Latitude 7520", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE_QUIET),
 -- 
 2.53.0
 
