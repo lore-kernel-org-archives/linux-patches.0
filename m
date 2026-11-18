@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037690;
-	b=e5Bj4COVliJhM9swbzwsI8zbl5lBiSax9/0YrdI3tSo68p4r28x2NOJRqqfAqQ0ZUQwt
-	 HrqqiXLnJHBndJ2LHda7Si9Fhw2LylAwrRhHCBlvOG3Pk9m/WBHt2QT2n1I/uziBUgiCZ
-	 HoaNuUmSwIBuRISRescdm+8q1C4G7DnHcPZvVHbKT3mtjzfRpeINLbPJB4FbMkSSulwFQ
-	 Y+FbgMlcetwSLKAa933kba30ZN8NxWk20S3pUC5tHV7wHekdxMRC+rD7xA+olO0rZSLtN
-	 E0Whq3xeA+FRC+k1lrV4EhBCrsHQAc/u2iPiF+UTqyviNWKDynqEjetcJ/ZWhzGyr8w==
+	t=1795037693;
+	b=xXioeVSYWPzFLj9iK1M1Sadjp7x730J05uYKgInOavK+CU7JcS9K5cfkjbMaromtsRaJ
+	 aW4glbro5agkPxTgNvSsnkfk/bAq5Of5kid9UtES/RCQJhVfoSGhP1ctzs89AqZjRqcWi
+	 WWfClnp5qOSDRdquOu8JPtruL1OsnT+LXM5jlVf+pmlJC071b34Nmmx054zGXg4K4nNFj
+	 otfZxA2J+O59WHsWbthvYMjseEiOz8sujnIvQ2tANz1ZB1kM9o54EZV7pIZkR4oKlz9gw
+	 wyvbDlZbYlz8wRLYXLHhJWDCrMQFIQTU+JE7rQGAvH9f9nFv0p0KbUjIGL/6B6oND6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W8dvI2BV/5WfD9h6a7BSyGFWI1haPbda2ceU7YhgNxE=;
-	b=c0bhNoXCWcZDsPjCVFfZojAgDPKSGI/Zt+KIqdWOJtMfwsVPotzeB+yD4F78vp62mov2
-	 Hg+r+2YOAbWkCS79gdG/PNEk6NOQxO/3XhwQ0+1FuJz8JG/CYxO1fr3hJS3VAUXU1bV5A
-	 zZIpZqp+HJaif/0sRCbZa4m+RbK8YdD1Iqeqs1ZSp9jYCqXNIkjJjPDUlbWMbaOO+z4ti
-	 iCXFtaZr3r2I75tzLXpruNEXiD28NiJUAFKQW8Of8Ava1/6JqeEXl7fKf8yLb5n0hhnXD
-	 pFZWKwD5GL8kADh79HOi1ouiXwuPmz84i10JggqWPQKsLnuh26LV6vkPUfZo+VDQdFw==
+	bh=A80Bp4sRQq75YzGdWJ7wbfeWsVrXKyJYsxqa1NHMLyc=;
+	b=5CV7peiH0jilj9I3+8F8Ey206+G4/OAPDzE+/bCEGgyD40dG/78gmhOlKGvyyEOLFkXD
+	 M1hPiBMpUxR41WwKTW9C8jXbn/0caK4ERlQpOOx1rrTn19FThXfLoavIThVHGJjfj8W0D
+	 p91gQODpwNXq0B3MqEa45xqiAdgvfs/oJLyo1BSMk8o6tUwlveeA2RAireRZ+mSv8ejri
+	 kgmwksTjDNNNzD+R83HmtUrMTjm5AnrcPSQDanhW2jEjAnOtgf85P+f42SOQ37B6HzGkt
+	 mW0+GGMBLTxIYJ+TeeZOibwazORz5jX0Ed4LMretmeIDfnlyyYvgK2MW2Flr4KjhH3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhADIQGd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nogLtBs4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BA2606A325;
-	Wed, 18 Nov 2026 21:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4EF606A31C;
+	Wed, 18 Nov 2026 21:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhADIQGd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41701F000C4;
-	Wed, 18 Nov 2026 21:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nogLtBs4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B341F000C6;
+	Wed, 18 Nov 2026 21:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037690;
-	bh=W8dvI2BV/5WfD9h6a7BSyGFWI1haPbda2ceU7YhgNxE=;
+	s=korg; t=1795037693;
+	bh=A80Bp4sRQq75YzGdWJ7wbfeWsVrXKyJYsxqa1NHMLyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DhADIQGdLeDZwp4YCMqICzpVFVYg+G1V0VQraDLPKKY3Vnm+TvMVmN9JThScIbFLC
-	 xEXyFYB1z6CMLdY1A1uT8Zivhyi1WrxMIy3ev94z86JNUvdUwhuA3AQZH4/3oh7R7x
-	 ZV1CsVBUGykQG7LWnJh9Xf9i+7Osyn/F4y2FVf+Q=
+	b=nogLtBs4GTJZCkJ37J5Tb6CduB2oPyd1S+HmvT8ZB2/Od3rdp8E6rpqag3ar3j1B5
+	 OEEgzdt1TSb7SkD3jo9GD9V3AUplQCGA1wzM1nYUIKZkgv45gmrBOv2f0P9B47UFnx
+	 XN/rmihIpg6nXwgZlZHEvrD2M5/ko7bRI2CRa/z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Pedro Falcato <pfalcato@suse.de>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1486/3318] fat: hold truncate_lock in fat_write_failed()
-Date: Wed, 18 Nov 2026 15:35:08 +0100
-Message-ID: <20261118150405.481988858@linuxfoundation.org>
+Subject: [PATCH 6.6 1469/3318] KVM: x86: Conditionally resched when restarting REP string emulation
+Date: Wed, 18 Nov 2026 15:34:51 +0100
+Message-ID: <20261118150404.965870155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,58 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 7b90009546f5d3f3ac9428040cd7ffbdfd60f2eb ]
+[ Upstream commit ae85ac25eb671d174811cc3101549448671fd505 ]
 
-The current fat_write_failed() implementation calls into
-fat_truncate_blocks() without holding truncate_lock.
+When restarting emulation, e.g. of a REP-prefixed string instruction,
+conditionally reschedule as emulating guest writes can be deceptively slow
+and expensive, e.g. when shadow paging is in use and each write can trigger
+write tracking.
 
-A failed or short extending write racing with FIBMAP can spuriously make a
-FAT filesystem read-only.  FIBMAP bounds its lookup by i_blocks, so it can
-walk allocated clusters beyond i_size while fat_write_failed() is removing
-them.  If the chain is shortened during the walk, the mapper can report a
-bogus "request beyond EOF" error, triggering the default read-only error
-policy.  Hold truncate_lock for write around the block cleanup to
-serialize it with _fat_bmap().
+In a perfect world, restarting emulation (or not) would be less arbitrary,
+e.g. would honor not only host events (NEED_RESCHED, signals, etc.) but
+also guest events (e.g. by checking kvm_vcpu_has_events()).  Unfortunately,
+as pointed out by Sashiko, pio_in_emulated()'s read-ahead logic is baked
+into the restart logic, as KVM relies on restarting emulation to drain the
+cache and avoid duplicate reads from the I/O port.  I.e. re-entering the
+guest on kvm_vcpu_has_events() or __xfer_to_guest_mode_work_pending() would
+introduce architecturally-incorrect, guest-visible changes.
 
-For comparison, fat_setattr() correctly holds truncate_lock during
-truncation:
-
-	down_write(&MSDOS_I(inode)->truncate_lock);
-	truncate_setsize(inode, attr->ia_size);
-	fat_truncate_blocks(inode, attr->ia_size);
-	up_write(&MSDOS_I(inode)->truncate_lock);
-
-Make it so ->truncate_lock is held exclusive while truncating.
-
-Link: https://lore.kernel.org/20261021162105.62525-1-matheus.aalmeida@inf.ufrgs.br
-Fixes: 16fab2015099 ("fat: permit to return phy block number by fibmap in fallocated region")
-Fixes: 459f6ed3b8c7 ("fat: convert to use the new truncate convention.")
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: <stable@vger.kernel.org>
+Fixes: 5cd21917da24 ("KVM: x86 emulator: restart string instruction without going back to a guest.")
+Cc: stable@vger.kernel.org
+Cc: David Woodhouse <dwmw2@infradead.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Suggested-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20261028173638.1765329-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/x86.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fat/inode.c b/fs/fat/inode.c
-index cdd39b6020f3d..26d9e39051234 100644
---- a/fs/fat/inode.c
-+++ b/fs/fat/inode.c
-@@ -216,7 +216,9 @@ static void fat_write_failed(struct address_space *mapping, loff_t to)
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 1c785fc364b3f..a09ce0f97c22b 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9130,10 +9130,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 	} else if (vcpu->arch.complete_userspace_io) {
+ 		writeback = false;
+ 		r = 0;
+-	} else if (r == EMULATION_RESTART)
++	} else if (r == EMULATION_RESTART) {
++		cond_resched();
+ 		goto restart;
+-	else
++	} else {
+ 		r = 1;
++	}
  
- 	if (to > inode->i_size) {
- 		truncate_pagecache(inode, inode->i_size);
-+		down_write(&MSDOS_I(inode)->truncate_lock);
- 		fat_truncate_blocks(inode, inode->i_size);
-+		up_write(&MSDOS_I(inode)->truncate_lock);
- 	}
- }
- 
+ writeback:
+ 	if (writeback) {
 -- 
 2.53.0
 
