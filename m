@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023070;
-	b=qG3ehO95QhqWOwVq4Bij0bJd/4Id/+ATW86lcf4HCp+rByvkTq8ZpHoyrwkDweZtk0Mw
-	 eBXIra4JWiC+NksqWLH1tTrqKVIURXROprjCfmx8KpbkbiEX0EP49/21+URcTfTBXt3Ic
-	 ijc9txz1K8GxsjOAYNhU0APe8yvPRwODkBjo861JsQJHKxsNHzCK2OfZWtipnAuw8hhO6
-	 h1tpMAcGLk0BRLaW1Np2Qf74Ymx0D2JWEObUxLYxGoW5nGGEWDSNVfL9dWABklwSjubNg
-	 Yev0JisM/ZMZ/lfiGGAFco++Ty6PTtGjxa0yb4zhajADtpuwOq0P/V9pQuOuIVfRIFA==
+	t=1795023073;
+	b=LvvXh+3VzbR7oPWDORYud1u+u4MV3wr2J0X6Q+qnWz5PVKeuS+DqTHWy8IwGuNmCgp3f
+	 LL7IIcbS7T0aim5zljbvLaxbuG3msC35VUIZ4jjJfgnEUilE7XbOTXDXlskUl8MPs+zBf
+	 LF+eBn8SQoCUeZB8q4NWfUm7LwpmVgtQ73ixtWYoaYOY0+5Zgh22f9egJ9sFWzkPgy8o8
+	 lzShnUhbCK+7CQLTzTicVEE8plig/p1UkuVFDI81K68tppBca7OLvwC+c4Urthof4+lEa
+	 PIUinMXD+n616sni3J2sUCA37J+PBmE3YvHq8f+YgTGv/ZAFFOOBLlVQPXGnIon5thA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=72WslIfBXJgGK9fYcqGZZ+D2qJZabBCceo28QStY2DI=;
-	b=NoU1PllznRTtJaf+yk7CVG/J1CjAdWWDEvZyjDWqb0T29t/iyDaTkFK00AzBJEj6iClJ
-	 ob3HX6oT4INfF0iIv9V0PtnBVIlgU7oZ537rJW6boXvMOVse64/QhcC5GSYbKv4N6Rk1a
-	 rzpJRQHdeVedgmbC+gZ5l75Y5N/uHmMkRG2Uw2OxhxaTacmH2+U8y++xKVf5HPpPNhO4J
-	 YD8rO2urhwJSeUioRP3J+dnrX30etQwC5Y7yrermktCIJlbMQXNe2KTF07CT3l0d4mLYp
-	 XP8CzgGuJzI/AlQaTTX9DJ+B0HSpxwLuzVOW0KJ/DBNOlCSaqDgYchTlH2U4g+wX5CQ==
+	bh=l2b4bTt1IAgIhBC3AefQ1vrvICMdzA0dDKNVHGGgFt8=;
+	b=Vq3iVUeS9UI5R//TFPhrTkhwjvx/6RRtO/u8M5LVAyGObYcvxdGrrfdhjKTjf7c+Hz/F
+	 Sc/YRe2MOShDYRiPzmqrREDvTyVAJiLuKPlklDGWvkM/DjA4iSDV9FlspCw640av4A2q7
+	 R4YjhUXC4NkP21Sp+y6qsMpc5qFtB6BQDxAwF1pVwOn8W3/TBoaNftf/DT41b2ahL2Gh5
+	 ROvMBKK/IQsZIBvL5QEwQ4+nBfJbqlwt2ep+FOCL0foVEPgzR81HphlKA8cr4jMlAMidM
+	 J1Yu4isb5aaflfph1l6sboH74yCA/qwqRr8eZ1oyKUKV4XTvqdHX+69kIxvmK8N3mqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTlSYuW8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G9DUlj4l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32968606A320;
-	Wed, 18 Nov 2026 17:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C02606A320;
+	Wed, 18 Nov 2026 17:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTlSYuW8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883BF1F000C4;
-	Wed, 18 Nov 2026 17:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G9DUlj4l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D291F000C4;
+	Wed, 18 Nov 2026 17:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023070;
-	bh=72WslIfBXJgGK9fYcqGZZ+D2qJZabBCceo28QStY2DI=;
+	s=korg; t=1795023072;
+	bh=l2b4bTt1IAgIhBC3AefQ1vrvICMdzA0dDKNVHGGgFt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTlSYuW8LwHM5q6va88/2DyAp8TY2n8nHJiIV5zrWFhkL/MhS0bMzf0HdQbl+NisU
-	 DUT9Ir7PKUoKJRVWwl1IdYMQqzumXBy0RIcJTuc1EbtnKXXzN7xLweqB/9maYiHkvV
-	 m0Vy0uApTYOq8CcvKt/+boycHE+SoOHWnG1WMT7M=
+	b=G9DUlj4lk/dO80j03UQZmKK+MSCp8HL4fRnSHYXKGXBlvcwDy3ITQjBTqN5SSmzaK
+	 3jhiVSL1QElzUdaOMA2zMJGA2HalgN6uFQaxWkXar84hRvomUFp+1+K+BVjefPxPCf
+	 VZE+RJia01cTm+Uw4LoF3ctCndecOrsdWZZjzRks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0235/2151] memory: brcmstb_dpfe: validate firmware section sizes
-Date: Wed, 18 Nov 2026 15:32:50 +0100
-Message-ID: <20261118150130.338467597@linuxfoundation.org>
+Subject: [PATCH 6.18 0236/2151] arm64: dts: qcom: purwa: Drop the Hamoa workaround for PDC
+Date: Wed, 18 Nov 2026 15:32:51 +0100
+Message-ID: <20261118150130.376511815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,66 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-[ Upstream commit e61c1a1103e2617e8f86288368911a8591e35c1e ]
+[ Upstream commit 13ca1c0b7d8a3ab1e59cb3e780c1dd7441e22515 ]
 
-The firmware header is read before the image has been shown to contain a
-complete header. In addition, the final size check adds two
-firmware-provided u32 section lengths before comparing the result with
-fw->size, so the addition can wrap.
+X1P42100 (Purwa) shares the X1E80100 (Hamoa) PDC device, but the hardware
+register bug addressed in commit e9a48ea4d90b ("irqchip/qcom-pdc:
+Workaround hardware register bug on X1E80100") is already fixed in
+X1P42100 silicon.
 
-Reject images shorter than the fixed header and checksum before reading
-the header. Then derive the available payload length with subtraction and
-require the two declared sections to fill it exactly.
+X1E80100 compatible forces the software workaround. Use the X1P42100
+specific compatible string for the PDC node to remove the workaround.
 
-Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260815134559.47888-1-pengpeng@iscas.ac.cn
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: f08edb529916 ("arm64: dts: qcom: Add X1P42100 SoC and CRD")
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260806-purwa-pdc-v4-3-62467f4b4ddc@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/brcmstb_dpfe.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/purwa.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
-index 7b02c36c7fca7..04ae3cfb449e4 100644
---- a/drivers/memory/brcmstb_dpfe.c
-+++ b/drivers/memory/brcmstb_dpfe.c
-@@ -533,9 +533,15 @@ static int __verify_firmware(struct init_data *init,
- 			     const struct firmware *fw)
- {
- 	const struct dpfe_firmware_header *header = (void *)fw->data;
--	unsigned int dmem_size, imem_size, total_size;
-+	unsigned int dmem_size, imem_size;
- 	bool is_big_endian = false;
- 	const u32 *chksum_ptr;
-+	size_t payload_size;
+diff --git a/arch/arm64/boot/dts/qcom/purwa.dtsi b/arch/arm64/boot/dts/qcom/purwa.dtsi
+index a02b39f98f0b2..df1a64362516b 100644
+--- a/arch/arm64/boot/dts/qcom/purwa.dtsi
++++ b/arch/arm64/boot/dts/qcom/purwa.dtsi
+@@ -154,6 +154,11 @@ &pcie6a_phy {
+ 	compatible = "qcom,x1p42100-qmp-gen4x4-pcie-phy";
+ };
+ 
++/* X1P42100 PDC is same as X1E80100, but without hardware register bug */
++&pdc {
++	compatible = "qcom,x1p42100-pdc", "qcom,pdc";
++};
 +
-+	if (fw->size < sizeof(*header) + sizeof(*chksum_ptr))
-+		return ERR_INVALID_SIZE;
-+
-+	payload_size = fw->size - sizeof(*header) - sizeof(*chksum_ptr);
- 
- 	if (header->magic == DPFE_BE_MAGIC)
- 		is_big_endian = true;
-@@ -554,13 +560,8 @@ static int __verify_firmware(struct init_data *init,
- 	if ((dmem_size % sizeof(u32)) != 0 || (imem_size % sizeof(u32)) != 0)
- 		return ERR_INVALID_SIZE;
- 
--	/*
--	 * The header + the data section + the instruction section + the
--	 * checksum must be equal to the total firmware size.
--	 */
--	total_size = dmem_size + imem_size + sizeof(*header) +
--		sizeof(*chksum_ptr);
--	if (total_size != fw->size)
-+	/* The data and instruction sections must fill the payload exactly. */
-+	if (dmem_size > payload_size || imem_size != payload_size - dmem_size)
- 		return ERR_INVALID_SIZE;
- 
- 	/* The checksum comes at the very end. */
+ &qfprom {
+ 	gpu_speed_bin: gpu-speed-bin@119 {
+ 		reg = <0x119 0x2>;
 -- 
 2.53.0
 
