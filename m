@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060039;
-	b=1ShSwYeC46QCV+02Mt7F4Q0TdHNqZJgDgQt0vPWmP0DD+3fPRjUxV2ONddeLOfqkBBch
-	 0K0Vu9eMi+dtZ0h6maiioJPIXWN4qD2AL897JjyCcwgkNxA9TNOoovtFMHMWjVd658Icf
-	 qg2FSt1bRgQjZ1kDhy9GoRRXeVv/AsTtS/VtUoB3EwaCC+9UVWPIVHkyVcFT8l/kznPdW
-	 hDq1CuLDMC35u0RLr353HnFknKhsy1jdkynTF0uNV5MLnOyM0poKOnUn6xVBU9z2RD1R4
-	 RgBeS8qnvLl7CexZ1XIcAWEb6p+YmRtGiArkWNtNhzPIl6XWbBVPHZDkcieCTtwaoSg==
+	t=1795060041;
+	b=UfAWkspIsIza9FMExDZEQoyQZc4ks80gNpAp+WhAJ7Q8qbdd6kkk6njpmmwnsTolUwVp
+	 Lp8+1yv0qMQ0/5Oy0HiF+oRgPUp70ipGrniqNhf4bkQNZ4H0HaGGyvQl7fVem0+X2vOMZ
+	 S4D1e3VX6+XxCOeDXofslnkwbdQMpag00K2oLvQTrZ9WafCkm3A8qG3NAOH4/cPspVWp8
+	 JtbzNmOxpgun29bwFCSMV1VhOtqXmsAg/Tf/PcHWRJku7/lUmw0vaszwGutiSnQTO7wWL
+	 MvfMPFCIZluECZT8bN6DbgvfM2a/Zwnr+3vKkPQlFlqljpBY6EMO4QgPIWoNS6sPnCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cvydf1Yo6lLQgG1jpV0sc419tpy3sLkPmLdpp7hfffs=;
-	b=HnMK+NRxGH1rQFs5LvY6QAlBbDNBnLyXXSyJBlaAjQAclC1kU+6p2QCrOKf7mlGNPaBn
-	 2cFzsmC+E6pBlN4sx5aOsATk/Ui/RRgFx7ufhZxqloQZKj/sIFKTnpS2mTrODls3/jT14
-	 0BW1de9jnhXP3BJgiuNYAIUiEKi0IT+sTfZxtHrCNAkZ1Q7ywB0V49aH2PpYzJcBeSjNX
-	 TUhD9WsuPgYuUomXTy0qVEjxL6toxl8rr4Wsc1SFYGs4oqrPr2vkNXNaiit+2Fc+ncRB5
-	 L4EboV98bjKf+cgtfM0tjWRf2hd9/QWN64shrPC4lyQEe159OxLzRHRimU37kwQep+A==
+	bh=++WYrMx0xI6W7KpXdEZWKy0x6ypcqxwmvovIOiTZpgo=;
+	b=NGqIw8DYeJ3qJ+GdUmJetkfiAqBHkoHOk1v6yaNJhNh5jC7sl+/dWsbGPcY3QaRmVGNu
+	 u6NkN0ef/7U2DFeekEmrUBBPD34FBKY0gJBkUxWOBC+M6NQ7E+/hhb2VROlTgsKSqn0C8
+	 8e/W+jmOciis7/mlLip77rEZ+n9lyuRXL3U8g60cBBCywEeIyQWDSL5i/soYqgeyAEMMA
+	 NVprr4bR1XbstADAyWOyzvtuiSYalSqmyaBVxAKnx/jxRfFtiZzolv3lx8K8F9L/tTFb9
+	 914zaPy6iYwXZCEXjCHCpAL132BYN9S0fBUpUT4nlIa1L12VSTPhCO6qzC+FCxypRcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7JbOxMw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxrA1lQb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AED606A325;
-	Thu, 19 Nov 2026 03:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9AB606A320;
+	Thu, 19 Nov 2026 03:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7JbOxMw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133271F000C4;
-	Thu, 19 Nov 2026 03:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxrA1lQb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEDD1F000C7;
+	Thu, 19 Nov 2026 03:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060038;
-	bh=Cvydf1Yo6lLQgG1jpV0sc419tpy3sLkPmLdpp7hfffs=;
+	s=korg; t=1795060041;
+	bh=++WYrMx0xI6W7KpXdEZWKy0x6ypcqxwmvovIOiTZpgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P7JbOxMwNKYP0jn25rbGW6534UyHyC3amoWbrF9H8SEtALbVMQ+fbpcgWW9Gp0Oup
-	 3DRK+S8aQ2H/aAt1WDLkB1E5KhbaYBxKjnnN4aUrDrLCZs/9Kp4owvBy/yjHTNxwq+
-	 QdMmrh9htbDV+hJSKs1IO3bzkrPlXrHP+2XAa+CI=
+	b=kxrA1lQb1Z1cGa22mtsjG8g1sFjmGq5YAUjOduAK8/Sy0zt64BHockbYdkWCy6VC4
+	 aLKol5ErFBKFTt2wcr4HVg7v3f6BDMk91GaRSzZE0adTuTQVyf59HY+hCodjrt0wPP
+	 A3aEoACXA1WPO7MySXBc35oHSAVJzyQAZxJF7+kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1055/1848] ovl: look up the index by the decoded origin
-Date: Wed, 18 Nov 2026 15:51:33 +0100
-Message-ID: <20261118150001.553607506@linuxfoundation.org>
+Subject: [PATCH 5.10 1056/1848] drm/msm/hdmi: Handle msm_hdmi_power_on() errors during .atomic_pre_enable()
+Date: Wed, 18 Nov 2026 15:51:34 +0100
+Message-ID: <20261118150001.628603939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,149 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 520ef67f47f69255695859b0008281a384d0bc20 ]
+[ Upstream commit dd6ecace57851878e62367a6f1a26dd5b9aa217f ]
 
-A file opened by file handle on an overlay with nfs_export=on can show
-the stale lower data of a file that was copied up to the upper layer.
-While the file opened this way stays in the inode cache, a lookup of the
-copied up file by path fails with ESTALE for all users. The open can
-also succeed for a file that was removed, where it has to fail with
-ESTALE. This happens with a handle that has one byte changed. The handle
-comes from an NFS client, or from a process that calls
-open_by_handle_at() with CAP_DAC_READ_SEARCH in the initial user
-namespace.
+Properly handle power up failures during .atomic_pre_enable() by
+aborting the .atomic_pre_enable() to avoid accessing registers why
+blocks did not bring up.  Otherwise this could lead to imprecise aborts
+when accessing MMIO while entire power domain is off.
 
-When a file in a lower layer is about to be modified, overlayfs first
-copies it to the upper layer (copy up). With nfs_export=on, each copy up
-also creates an entry in the index directory, a directory that overlayfs
-keeps for itself on the upper filesystem.
-
-The handle of an overlay file that comes from a lower layer wraps the
-handle of its lower inode. Overlayfs calls this lower inode the origin.
-The overlay handle stays valid after a copy up.
-
-To decode such a handle, ovl_lower_fh_to_d() first decodes the wrapped
-handle to the origin. If no overlay inode is cached for the origin, it
-looks in the index directory:
-
-- An index entry there leads to the upper file.
-- A whiteout, the marker that overlayfs uses for a removed file, means
-  that the overlay file was removed.
-
-The name of an index entry is the handle that copy up encoded for the
-origin, as a hex string.
-
-ovl_lower_fh_to_d() builds the name for this lookup from the bytes that
-the caller passed in. But handles with different bytes can decode to the
-same inode:
-
-- Overlayfs ignores some flag bits of the handle.
-- A lower filesystem can accept a different fid type, extra bytes, or
-  generation 0 for any generation.
-
-Such a handle decodes to the origin but misses the index entry or the
-whiteout. So the decode returns an overlay inode that has only the lower
-file.
-
-While that inode is cached, a path lookup of a copied up file fails with
-ESTALE, since the upper file that the lookup finds does not match the
-cached inode, which has none.
-
-Reproduced on tmpfs and on ext4 with open_by_handle_at(), after a copy
-up and a mount cycle. A handle in which one flag bit, the fid type, the
-length or the generation was changed read the old lower data, and path
-lookups returned ESTALE.
-
-Fix this by re-encoding the decoded origin and building the index name
-from that handle.
-
-Fixes: f71bd9cfb692 ("ovl: decode indexed non-dir file handles")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: Removed the ofs argument from ovl_get_index_name() to match the existing two-argument helper. ]
+Cc: <stable@vger.kernel.org>
+Fixes: ba3d7bf3a7ab ("drm/msm/hdmi: Convert PHY files according to new design")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752652/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-2-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[ sashal: adapted error handling to the non-atomic pre_enable callback and regulator/power-clock arrays without state_mutex locking ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/overlayfs.rst |  3 ++-
- fs/overlayfs/export.c                   |  4 ++--
- fs/overlayfs/namei.c                    | 13 ++++++++++---
- fs/overlayfs/overlayfs.h                |  2 +-
- 4 files changed, 15 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 +++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/filesystems/overlayfs.rst b/Documentation/filesystems/overlayfs.rst
-index 137afeb3f581c..435aff7c52f65 100644
---- a/Documentation/filesystems/overlayfs.rst
-+++ b/Documentation/filesystems/overlayfs.rst
-@@ -527,7 +527,8 @@ When decoding an overlay file handle, the following steps are followed:
- 
- 1. Find underlying layer by UUID and path type information.
- 2. Decode the underlying filesystem file handle to underlying dentry.
--3. For a lower file handle, lookup the handle in index directory by name.
-+3. For a lower file handle, encode the decoded underlying inode again and
-+   lookup that handle in index directory by name.
- 4. If a whiteout is found in index, return ESTALE. This represents an
-    overlay object that was deleted after its file handle was encoded.
- 5. For a non-directory, instantiate a disconnected overlay dentry from the
-diff --git a/fs/overlayfs/export.c b/fs/overlayfs/export.c
-index dd3e1969e6c87..d85456e3607b4 100644
---- a/fs/overlayfs/export.c
-+++ b/fs/overlayfs/export.c
-@@ -719,9 +719,9 @@ static struct dentry *ovl_lower_fh_to_d(struct super_block *sb,
- 		}
- 	}
- 
--	/* Then lookup indexed upper/whiteout by origin fh */
-+	/* Then lookup indexed upper/whiteout by origin */
- 	if (ofs->indexdir) {
--		index = ovl_get_index_fh(ofs, fh);
-+		index = ovl_get_index_origin(ofs, origin.dentry);
- 		err = PTR_ERR(index);
- 		if (IS_ERR(index)) {
- 			index = NULL;
-diff --git a/fs/overlayfs/namei.c b/fs/overlayfs/namei.c
-index 11be07632d188..9b09697754f75 100644
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -655,14 +655,21 @@ int ovl_get_index_name(struct dentry *origin, struct qstr *name)
- 	return err;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index dcfefc12385ab..d7dc6cbbea463 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -17,7 +17,7 @@ void msm_hdmi_bridge_destroy(struct drm_bridge *bridge)
+ 	msm_hdmi_hpd_disable(hdmi_bridge);
  }
  
--/* Lookup index by file handle for NFS export */
--struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh)
-+/*
-+ * Lookup index by decoded origin for NFS export.
-+ *
-+ * The name of an index is the hex of the file handle that copy up encoded.
-+ * The bytes of the handle to decode cannot be used as the name, because a
-+ * lower fs may decode many handles to the same inode.  For example, it may
-+ * ignore the fid type, extra fid bytes or a zero generation.
-+ */
-+struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin)
+-static void msm_hdmi_power_on(struct drm_bridge *bridge)
++static int msm_hdmi_power_on(struct drm_bridge *bridge)
  {
- 	struct dentry *index;
- 	struct qstr name;
- 	int err;
+ 	struct drm_device *dev = bridge->dev;
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+@@ -25,11 +25,15 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
+ 	const struct hdmi_platform_config *config = hdmi->config;
+ 	int i, ret;
  
--	err = ovl_get_index_name_fh(fh, &name);
-+	err = ovl_get_index_name(origin, &name);
- 	if (err)
- 		return ERR_PTR(err);
+-	pm_runtime_get_sync(&hdmi->pdev->dev);
++	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
++	if (ret)
++		return ret;
  
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index c149329d71e78..3d2e45d885df7 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -415,7 +415,7 @@ int ovl_verify_set_fh(struct ovl_fs *ofs, struct dentry *dentry,
- struct dentry *ovl_index_upper(struct ovl_fs *ofs, struct dentry *index);
- int ovl_verify_index(struct ovl_fs *ofs, struct dentry *index);
- int ovl_get_index_name(struct dentry *origin, struct qstr *name);
--struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh);
-+struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin);
- struct dentry *ovl_lookup_index(struct ovl_fs *ofs, struct dentry *upper,
- 				struct dentry *origin, bool verify);
- int ovl_path_next(int idx, struct dentry *dentry, struct path *path);
+ 	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
+-	if (ret)
++	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %d\n", ret);
++		goto err_pm_put;
++	}
+ 
+ 	if (config->pwr_clk_cnt > 0) {
+ 		DBG("pixclock: %lu", hdmi->pixclock);
+@@ -45,8 +49,19 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to enable pwr clk: %s (%d)\n",
+ 					config->pwr_clk_names[i], ret);
++			goto err_clk_disable;
+ 		}
+ 	}
++
++	return 0;
++
++err_clk_disable:
++	while (i--)
++		clk_disable_unprepare(hdmi->pwr_clks[i]);
++	regulator_bulk_disable(config->pwr_reg_cnt, hdmi->pwr_regs);
++err_pm_put:
++	pm_runtime_put(&hdmi->pdev->dev);
++	return ret;
+ }
+ 
+ static void power_off(struct drm_bridge *bridge)
+@@ -141,8 +156,13 @@ static void msm_hdmi_bridge_pre_enable(struct drm_bridge *bridge)
+ 	DBG("power up");
+ 
+ 	if (!hdmi->power_on) {
+-		msm_hdmi_phy_resource_enable(phy);
+-		msm_hdmi_power_on(bridge);
++		if (msm_hdmi_phy_resource_enable(phy))
++			return;
++
++		if (msm_hdmi_power_on(bridge)) {
++			msm_hdmi_phy_resource_disable(phy);
++			return;
++		}
+ 		hdmi->power_on = true;
+ 		if (hdmi->hdmi_mode) {
+ 			msm_hdmi_config_avi_infoframe(hdmi);
 -- 
 2.53.0
 
