@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022264;
-	b=AriwRfq1zSMcoQGW1KVzLfCGknVu5JGHiu5qbDuuSRiYd1VEi5kEq7W8T3aTyimcewgU
-	 4XzOtFO4dRWOY1RllLRwQ3TQpIiBKwP8kJn1AGn8OhKDIBdWLBhntkL0EXzRjpKWhCSfi
-	 tTqASPt8BHNpnYLpPih+BKkAdhJZyNWLNqOlBqWaEQv8uRncZV4+mz5SdgHyDSGkxjsb8
-	 MYqswsM8j7HSP8ok41ZqVzl1ansQNCH/nRpEGbvHB+vlttMfq0Rpp62s6AlfrEDNQhSpd
-	 CdXcg+ocK3dzUkDHbERo4HVePvepfYOOZtgZx3i3Ps6Q3keukTfmrhyMtzGckHXlQ/g==
+	t=1795022267;
+	b=4/ew7XpLDsu9LqWSjIdIDqeIHu6z1F7pVqfHdjy2qcTBZrI3De0CUVeo1ZkUlWZxVBsG
+	 Tj1AWwnaH9NIbrW+xLFI2nUJIVu8zFZPhuokzzzBrl8uxsy7s9cpazVXm36Aa9Y9C+T+o
+	 bYCtOutYfn5edbTrHKeQ4bQAudH8+kMSX1NNEEigdO/hAHC9h+C+mqx4lQjsALcG6/hH1
+	 1Ks0SlObnpSYQzapmEhADISzwfF4TPDeq5uw/jSg3jbKe9rBU6ViQz697aBbMcjy1RI8E
+	 oeAeGs6qH7688uCBZpkS2MO22kkeFKX6SxJiI1m54SdEHT7uCwN0PHulBfYBE/AGPxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022264;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022267;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GHLFQOLM2QrknZ4A5Td4nn1LQ+erUZKw20+tgK6zSxI=;
-	b=kCNCgFVCaVENXSK4FS6RUcEbJHooNfOb4lWEuHlbgz8ptvWmGei1AAoAswRJYwMiZfNf
-	 r53ZWVEKMPznf6vSEkLzyBlJrHvOVN5SFjzg0aQW7ZsI1GIQIrrj5xGViRdQc0ZovCFzH
-	 JlrDEd0tftZk6Jr1QCNRl4qf0y4dXBvzo/fqMYYCaB/s1Jhqr+R06JvNhmeT69V+l7mdH
-	 Dlj2s4qFlDgRr26t3bcJTNB77XlFulu33xqUu8cZwydeAsv/RtYEbewFaxKh8bmZz3w8I
-	 hDWT/V2rfZw6pvrxuUdKVlnBiup8u+1pK/CugdWVP4I2D2xujQ5YoWeo24+6DsWy46A==
+	bh=0ZKlMnireTVpIc1An2uu0GXfAKWBG4iUYc3QieAYQWs=;
+	b=DJcDnyHVKkNukKMAubWHQ85N2AghBiwpse8ZFg1TiEx4OLiiEdRqZIxL2QYU1e+4p/T9
+	 WcBI/x4gwbZNQmufpvFeMtmTugP66G1snX3I1vul+K4vX+/jJ+Hrra2AXngueuh9Gq2vx
+	 iYyxPxINgEy49MYn+TWhgnCTIXMdOsWNbMclwoHmWR6UiI5NXDKVynVgzVbbPlx49xkul
+	 xGtVd7479B66UsVdJPuH+Mzjz+Equ9u0D3lSrbLXW2aYKA4iFZ/M7/gALJuUytKnux5VZ
+	 KGdAAbHSd8IwD3Xuy5H6nOuNCCU2hlcVnDqfPgR0av/6/8v4w6aeVf0451ir7Bw4Iew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBNAo6X1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtTgliKQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A59F606A32C;
-	Wed, 18 Nov 2026 17:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1561606A320;
+	Wed, 18 Nov 2026 17:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBNAo6X1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8731F000C4;
-	Wed, 18 Nov 2026 17:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtTgliKQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434661F000C4;
+	Wed, 18 Nov 2026 17:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022264;
-	bh=GHLFQOLM2QrknZ4A5Td4nn1LQ+erUZKw20+tgK6zSxI=;
+	s=korg; t=1795022266;
+	bh=0ZKlMnireTVpIc1An2uu0GXfAKWBG4iUYc3QieAYQWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bBNAo6X1jcvLdlZSolNCzfIoIchQHSNkO6RrMub1buxFrDKTxJ1+18bbTPtGJ4IPQ
-	 FnYd7wqNMKMSIAxRKm8Yv9CFFyqq32oLu/K+XZ7kkA8HF24EPx//1a4l7eAqoX53i+
-	 /fMdGyWLCFwPEsgq+R6QP239EAzZCeUtjMX6Ie2w=
+	b=LtTgliKQ5XyCzquJsSRSwbx5NnhpWmGDK6iH10Mx5aQYGhP6a0KjfocGufRmBYFBs
+	 XJ6fDhBql8b3wa3k50R9qKJ5CyNbbS3Xp7t1+e4kAHsUOMf5PSVKBOIwTUUtZoWsMV
+	 xI29dQulIvRkVbKZ8KTADzQLklyBXTVb6VCfVXMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shaos <shawnq1@163.com>,
+	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2600/2651] apparmor: mediate AF_UNSPEC socket disconnects
-Date: Wed, 18 Nov 2026 16:04:00 +0100
-Message-ID: <20261118150417.868615643@linuxfoundation.org>
+Subject: [PATCH 7.3 2601/2651] apparmor: check address length before reading AF_UNSPEC bind address
+Date: Wed, 18 Nov 2026 16:04:01 +0100
+Message-ID: <20261118150417.900934732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,71 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shaos <shawnq1@163.com>
+From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
 
-[ Upstream commit 049760746597cfd054c181fe850531be3c1e7358 ]
+[ Upstream commit 4890a8b1a9df880dd188adb8b8e8fab107ad69d9 ]
 
-aa_inet_connect_perm() returns success immediately for AF_UNSPEC
-before checking the active AppArmor profile.  AF_UNSPEC is the socket
-disconnect operation for TCP and UDP.  A process confined by a profile
-containing deny network can therefore disconnect inherited sockets
-even though ordinary socket creation and connect calls are denied.
+bind_map_addr() handles AF_UNSPEC on an IPv4 socket by reading
+addr4->sin_addr.s_addr to check for INADDR_ANY. At that point the only
+length check done is addrlen >= offsetofend(struct sockaddr, sa_family),
+i.e. 2 bytes, while sin_addr sits at offset 4. move_addr_to_kernel()
+copies only addrlen bytes into the on-stack sockaddr_storage, so a
+bind() with a short AF_UNSPEC address makes AppArmor branch on bytes the
+caller never supplied.
 
-console output:
-https://gist.githubusercontent.com/shaos26/73b057c77b9ea22d5e6813c259dbf43c/raw/fab5c58d6f184f5fab88a3a31a80c2b919efecf0/console-output.txt
-reproduction kernel config:
-https://gist.githubusercontent.com/shaos26/73b057c77b9ea22d5e6813c259dbf43c/raw/b9192c97c92fdd3b59089704bad6fbd0a33ccf06/kernel-config.txt
-reproducer:
-https://gist.githubusercontent.com/shaos26/73b057c77b9ea22d5e6813c259dbf43c/raw/92c7dd098a227276fe3daeea45996e2848e66439/poc.c
+Depending on those bytes, a confined task gets -EAFNOSUPPORT instead of
+the -EINVAL that inet_bind_sk() returns for the same request. Kernels
+built with CONFIG_INIT_STACK_ALL_ZERO read zeroes and happen to behave
+correctly.
 
-Build the kernel from HEAD with the attached reproduction config, then
-make a one-file initramfs.  The PoC mounts sysfs and securityfs
-itself; DEVTMPFS_MOUNT supplies /dev/console.
+Check the length first, as inet_bind_sk() does, and as the AF_INET6
+case above already does for inet6_bind_sk().
 
-    mkdir -p build rootfs
-    cp kernel-config.txt build/.config
-    make O=build olddefconfig
-    make O=build -j"$(nproc)" bzImage
-    cc -O2 -static -Wall -Wextra -o poc poc.c
-    cp poc rootfs/poc
-    (cd rootfs && find poc | cpio -o -H newc --owner=0:0) | gzip -9 > initramfs.cpio.gz
-    timeout 900 qemu-system-x86_64 -kernel build/arch/x86/boot/bzImage \
-        -initrd initramfs.cpio.gz -append "console=ttyS0 rdinit=/poc panic=-1 loglevel=7 lsm=apparmor security=apparmor apparmor=1" \
-        -nographic -m 1024 -smp 1 -no-reboot 2>&1 | tee console.log
-
-Under the deny-network profile, socket() and connect(AF_INET) returned
-EACCES, but connect(fd, AF_UNSPEC) returned success and tore down the
-inherited connection and listener.  Two fresh boots matched.  A
-one-line control that routed AF_UNSPEC through aa_sk_perm returned
-EACCES and kept both sockets alive.
-
-Impact and prerequisites: A confined process that inherits a TCP/UDP
-socket can bypass the profile's network mediation for disconnect and
-disrupt that socket.  The finding does not permit socket creation,
-bind, or arbitrary peer connections; no privilege escalation is
-demonstrated.
-
-Fixes: 89ac6aa752ec8 ("apparmor: push inet mediation into profile callbacks, and improve auditing")
-Signed-off-by: shaos <shawnq1@163.com>
+Fixes: 89ac6aa752ec ("apparmor: push inet mediation into profile callbacks, and improve auditing")
+Assisted-by: LLM
+Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/af_inet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/af_inet.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/security/apparmor/af_inet.c b/security/apparmor/af_inet.c
-index 516c9016537c6..42994e84cccaa 100644
+index 42994e84cccaa..2a933572fa95e 100644
 --- a/security/apparmor/af_inet.c
 +++ b/security/apparmor/af_inet.c
-@@ -425,7 +425,7 @@ int aa_inet_connect_perm(struct socket *sock, struct sockaddr *addr,
- 	if (addrlen < offsetofend(struct sockaddr, sa_family))
- 		return -EINVAL;
- 	if (addr->sa_family == AF_UNSPEC)
--		return 0;
-+		return aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sock->sk);
- 
- 	/* do we need early bailout for !family ... */
- 	return sk_has_perm2(sock->sk, OP_CONNECT, AA_MAY_CONNECT, profile, ad,
+@@ -196,6 +196,9 @@ static int bind_map_addr(const struct sock *sk, struct sockaddr *addr,
+ 		 * AF_UNSPEC if the address is INADDR_ANY
+ 		 */
+ 		addr4 = (struct sockaddr_in *)addr;
++		/* Length check from inet_bind_sk() */
++		if (addrlen < sizeof(struct sockaddr_in))
++			return -EINVAL;
+ 		if (addr4->sin_addr.s_addr != htonl(INADDR_ANY))
+ 			return -EAFNOSUPPORT;
+ 		family = AF_INET;
 -- 
 2.53.0
 
