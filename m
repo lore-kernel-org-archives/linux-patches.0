@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021600;
-	b=WaVBlP3yaqImQKITsfqAXr0bEe5iDCe/1P8LRfxldaNCFDjUxCRzYNwiceFLCU2edTVD
-	 znwPg9ZF6ahaAP2ahZpCcL0yjeXXt0DfVrdxLBC/93jLkkLJUc6CRJuQC69wA5BMfEv+Q
-	 g8qP1aejGk52odytT/ZZNKOwJIRnB8+/diKIZPW9boexk067ARdcMKi/pgQV4/ZFlR1b0
-	 JpaW5gFNq+vGjlim7n6aXXKErhfYX3r+t0B95Gm5KaKpYQscykG/wAZiD1e4g00lPmFpY
-	 NYQSZEj+PeBIJ2LBDXwD0c7hQefVTkR3AwWLykQ7k+tWQScz+4TvAtDdSQrxL+BTMgg==
+	t=1795021603;
+	b=4s9PlPe54NZTAytgnUFt5GB0XgdB+tNMwK0BHR8aOqT+KIC07lkL86h09JRmGoAcAcAo
+	 xAMCs3+dxMXkhcEx6q2IKUBDXhQDvfeVjHfbKiHNLWuwofCp2IxeNASuToDj719FRDrfz
+	 W5wXn7IiAEAJ4owin5DmTEUsBR1IGnDtqaw7PSZRVjAsft22gEVXZnGWNId1kjbtaA9ni
+	 S+3zOtJaMMG+PXaswFDdAshoGi2SOLlwMlBgd0jPFdd9BIVnlcysvyzasDtgNPhjA0J7D
+	 WUq1pVFLw9O1e0TMX6Yv4FxbGwBO7CQVszDBzmmqTIg8YBaqvmA2/pYCI9MrWtZp/5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=wzi3aYcLLxvglXQ3jPfbsycPl/dSfgNGMLohzEbIA6o=;
-	b=5ZZgdAOUjbfh+LDSM6PkhbKpN+KI+bUpL6VRQ4Hbx3Ts3o+riGsldlLFctKN2ekrfqdT
-	 Cly8h9Bu7GqElerSrc5/fU7QW2svhsrNco1KFCO7Qvk/4cNAkQzHnxow04OyBXKiGQCR2
-	 dD/01swHeZIXhWBFXIMdIvAXSSEB7RTfVtmSUxO2ohDSNvcW9brLVmhnJ0lNH7+Wbb1oG
-	 tRcT7cjaXPQLNWWuawy7GD6Jifnfla9SDMVOiP0eD75rU/grLsxYkQHzcNFq9/rTG0Lx9
-	 0p1FCtgIVtV5VATEjOO7kKgHp2tXaOZ/K0M6SjUOk0Kaz+r3wX4CGcN05RXnskmzT+Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OS+RhHK/JPkd+OwXy2igRkkK0f4GFNGvvYRKE6nldGU=;
+	b=mFJkwSJ1aLfZup3ya59T51DCQTKrLVwSUYpPjeCVxyTN9XqA4AyGJTp/VuuUUk1fHU+c
+	 tXNqSRKjcRam6WUYs7W/zRQaZt6DSUaUph3rKUzpEzwnbasIUw0WmYhwcVRmbYz8L9+NC
+	 Rxq0tQiXO4l+vhUc/tj24KTwxiRrcFmG212JL2mRlDnuP0uVVhs4tKjNQoykECeRe+6LY
+	 XtyjlPvX+b2awoZwtkdHSck0uBIZwbWihT7WESxW9w8uP/xjDeej31VYyURXa6+roCiAN
+	 5KPWyE2E9S+KxAhII5Z/9WZPOgnGisFocXQkB2dsb6MK46WhEDQmYXG+SkrGQnVZpEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSIjrlPJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fExgxk/H";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681E9606A333;
-	Wed, 18 Nov 2026 17:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC6160A380E;
+	Wed, 18 Nov 2026 17:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSIjrlPJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1831F000C5;
-	Wed, 18 Nov 2026 17:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fExgxk/H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C25D1F000C6;
+	Wed, 18 Nov 2026 17:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021600;
-	bh=wzi3aYcLLxvglXQ3jPfbsycPl/dSfgNGMLohzEbIA6o=;
+	s=korg; t=1795021603;
+	bh=OS+RhHK/JPkd+OwXy2igRkkK0f4GFNGvvYRKE6nldGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSIjrlPJAj1mPJtHFiHfPGDnUwL4sd23uQiHM0p85MTut52c/ZCYcJ3lc5sU+JW3M
-	 CR1VylfbGR+oSnFlJCUFMgJ0rKN505BoRF+ezOfJvPsRJ0jCIcBzpmJYfuYCrbOLwH
-	 4vz7fMcQ/uDYOthwVMZNbOBDzvWK8uKAyhTmv2ro=
+	b=fExgxk/HcHRNYhIKuyqlpnFhwcFV+1QUldPr3pn89gfecpxHBQqmAN2BNsC5OwDY4
+	 rZqvI3i0zjuDdpEhouF9+vkx7xodbi1fDTr5VKLrs4bar0tUzPES2Ep3t2rxSik3AT
+	 K79HemPYpDNK+euqZbnrnrXXw+wrr8+WiC7X2Ijc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
+	Simon Horman <horms@kernel.org>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2324/2651] selftests/bpf: Time tc_edt from its first packet with data
-Date: Wed, 18 Nov 2026 15:59:24 +0100
-Message-ID: <20261118150408.825125189@linuxfoundation.org>
+Subject: [PATCH 7.3 2315/2651] net/mlx5: HWS, fix modify header pattern compare on big-endian
+Date: Wed, 18 Nov 2026 15:59:15 +0100
+Message-ID: <20261118150408.544064687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,138 +64,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit b116ac6087541d3d98031e786adbe9c733cd6df3 ]
+[ Upstream commit 7eed173447fba937a19e2f5f2dc79780793f72e7 ]
 
-tc_edt sends 1MB over a TCP connection that a BPF program shapes with
-EDT, and checks that the rate it measures is within 2% of the target
-rate. The transfer takes about 200ms, so the margin is about 4ms.
+mlx5hws_pat_compare_pattern() casts each __be64 action to __be32 to
+compare only its control dword. On big-endian this keeps the data dword
+instead, which HWS clears from the pattern of set and add actions. Two
+such actions writing the same value into different fields then share a
+pattern and the second rule modifies the wrong field.
 
-The measurement starts before send_recv_data(), which first creates the
-sender thread and accepts the connection. On a KASAN kernel, x86_64 VM
-with 32 vCPUs, that takes 0.7ms when idle and up to 4.7ms with all
-CPUs busy, while the BPF program spreads the data over 200.08ms in the
-median. The test also fails without test_progs -j where everything runs
-slower, e.g. on s390x and with ASAN in BPF CI.
+Read the first dword of each action from memory instead. Little-endian
+behavior is unchanged.
 
-Have the BPF program note when the first packet with data goes out, and
-start the measurement there.
+Discovered by an AI code review agent [1] and confirmed by code
+inspection. Not reproduced for lack of big-endian hardware running HWS.
+Tested for regressions on ConnectX-7 with firmware 28.48.1000 on a
+little-endian host.
 
-tc_edt run 100 times on the same VM, idle and with 32 busy loops in the
-background, before and after this patch:
-
-                 before                after
-  idle           0 of 100 failed       0 of 100 failed
-  busy loops     3 of 100 failed       0 of 100 failed
-
-Fixes: b0f82e7ab6fb ("selftests/bpf: integrate test_tc_edt into test_progs")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
-Link: https://patch.msgid.link/20261019-selftests-bpf-tc-edt-serial-v2-1-41c3813e7916@gmail.com
+Fixes: aefc15a0fa1c ("net/mlx5: HWS, added modify header pattern and args handling")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261010120147.135825-1-acassen%40corp.free.fr [1]
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Link: https://patch.msgid.link/20261019133159.1742411-2-acassen@corp.free.fr
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/test_tc_edt.c  | 13 ++++++++++---
- tools/testing/selftests/bpf/progs/test_tc_edt.c     | 13 ++++++++++---
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/test_tc_edt.c b/tools/testing/selftests/bpf/prog_tests/test_tc_edt.c
-index 462512fb191f1..1391978a3e309 100644
---- a/tools/testing/selftests/bpf/prog_tests/test_tc_edt.c
-+++ b/tools/testing/selftests/bpf/prog_tests/test_tc_edt.c
-@@ -90,7 +90,7 @@ static void cleanup(void)
- 	remove_netns(SERVER_NS);
- }
- 
--static void run_test(void)
-+static void run_test(struct test_tc_edt *skel)
- {
- 	int server_fd, client_fd, err;
- 	double rate_mbps, rate_error;
-@@ -113,12 +113,19 @@ static void run_test(void)
- 	if (!ASSERT_OK_FD(client_fd, "connect client"))
- 		return;
- 
--	ts_start = get_time_ns();
- 	err = send_recv_data(server_fd, client_fd, TX_BYTES_COUNT);
- 	ts_end = get_time_ns();
- 	close_netns(nstoken);
- 	ASSERT_OK(err, "send_recv_data");
- 
-+	/*
-+	 * Start from the first packet with data rather than before
-+	 * send_recv_data(), which also sets up the sender.
-+	 */
-+	ts_start = skel->bss->tx_start_ns;
-+	if (!ASSERT_GT(ts_start, 0, "tx_start_ns"))
-+		return;
-+
- 	rate_mbps = TX_BYTES_COUNT / ((ts_end - ts_start) / 1000.0);
- 	rate_error =
- 		fabs((rate_mbps - TARGET_RATE_MBPS) * 100.0 / TARGET_RATE_MBPS);
-@@ -138,7 +145,7 @@ void test_tc_edt(void)
- 	if (!ASSERT_OK(setup(skel), "global setup"))
- 		return;
- 
--	run_test();
-+	run_test(skel);
- 
- 	cleanup();
- 	test_tc_edt__destroy(skel);
-diff --git a/tools/testing/selftests/bpf/progs/test_tc_edt.c b/tools/testing/selftests/bpf/progs/test_tc_edt.c
-index 4f6f03122d61d..69f4b16acbef6 100644
---- a/tools/testing/selftests/bpf/progs/test_tc_edt.c
-+++ b/tools/testing/selftests/bpf/progs/test_tc_edt.c
-@@ -24,6 +24,7 @@ struct {
- } flow_map SEC(".maps");
- 
- __uint64_t target_rate;
-+__uint64_t tx_start_ns;
- 
- static inline int throttle_flow(struct __sk_buff *skb)
- {
-@@ -62,7 +63,8 @@ static inline int throttle_flow(struct __sk_buff *skb)
- 	return TC_ACT_OK;
- }
- 
--static inline int handle_tcp(struct __sk_buff *skb, struct tcphdr *tcp)
-+static inline int handle_tcp(struct __sk_buff *skb, struct tcphdr *tcp,
-+			     uint32_t hdr_len)
- {
- 	void *data_end = (void *)(long)skb->data_end;
- 
-@@ -70,8 +72,12 @@ static inline int handle_tcp(struct __sk_buff *skb, struct tcphdr *tcp)
- 	if ((void *)(tcp + 1) > data_end)
- 		return TC_ACT_SHOT;
- 
--	if (tcp->source == bpf_htons(9000))
-+	if (tcp->source == bpf_htons(9000)) {
-+		/* Note when the first packet with data goes out */
-+		if (!tx_start_ns && skb->len > hdr_len + tcp->doff * 4)
-+			tx_start_ns = bpf_ktime_get_ns();
- 		return throttle_flow(skb);
-+	}
- 
- 	return TC_ACT_OK;
- }
-@@ -94,7 +100,8 @@ static inline int handle_ipv4(struct __sk_buff *skb)
- 		return TC_ACT_SHOT;
- 
- 	if (iph->protocol == IPPROTO_TCP)
--		return handle_tcp(skb, (struct tcphdr *)(((void *)iph) + ihl));
-+		return handle_tcp(skb, (struct tcphdr *)(((void *)iph) + ihl),
-+				  sizeof(struct ethhdr) + ihl);
- 
- 	return TC_ACT_OK;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
+index 9af449c2b4d5a..512299b59fd0d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
+@@ -116,8 +116,8 @@ static bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
+ 				return false;
+ 		} else {
+ 			/* Compare just the control, not the values */
+-			if ((__force __be32)actions[i] !=
+-			    (__force __be32)cur_actions[i])
++			if (*(__be32 *)&actions[i] !=
++			    *(__be32 *)&cur_actions[i])
+ 				return false;
+ 		}
+ 	}
 -- 
 2.53.0
 
