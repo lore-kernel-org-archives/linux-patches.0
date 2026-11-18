@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025804;
-	b=haedmzKa4j7P9IQUfXvzonGB0p6pR8/m7JckYrMzb9enP8jiflFwrvNVTYuh6QpnR20N
-	 z7ZP/MGqqmd1oUzR5h11V8yWEbS0ollc2dDLtfUF7sjuo1T5m/8LMK5UL5SanED/sixOW
-	 FQJuN98e8JQ34MptLTkwlfRknB2bj9xy8Y8Hu7oQXDpVzqFKWSSsNqx5RCpWlMbEyJ00F
-	 rEyvZr8KeiJeh2ErKNC3/IoJdpGykYB783eg5SnX0FhCsO5/7fkroyahtXHjR0CZr267e
-	 Z71NyxP6NJkWT4xfVqXaYSQjg8n5QylSElPiFUrVJGShtW9OLM/AGrA5a5WKGbHFboQ==
+	t=1795025807;
+	b=QQtqMNe3s7ig583g5L47ixJ1m1Ae0sxcq3FA479NMtbc4rZyVfUCooPuEHy3Vg0fgABL
+	 YOLZVMvlLPp0E1ayTUMDYtYdfDnvxUBWrB9zh7jSGDm8garKEIlTlpPKfi3eCylJteUZ5
+	 XjrfPDV7VdCjamKd8LAWYIN2UQ0Wp/o9o1HPpGpFdh7FZErSJ7ia/wVWJ0WHL5+vlS7G8
+	 YeN1selpKZnt4EX11bzQo5HpPPdLQ1fz07wimXJI2tG3xTh8KarFuDaSK7AtrTTEqvoXk
+	 Qk9yU1wl4TEoyTsFzCLzN4TSjs/WWPSm9xu3kCf4pVGafaDtwwxjBIgEu30tXYIoZgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8nNx2/XMmMV/B3mSqIYo+pQcxhszoOwprlqvbDnwQqE=;
-	b=xP4q/hPqlp3ezNoUggm9Ol16WL4G9StgcZcsj4bVlyCR57YyUVHJKP1wPML5wfyjFNzh
-	 OI9YVf4swxaNelc4PZDSYlRIVNzx85k6WwxHFvN5nlBQ9z0sslTo5m0MLnEWgnZyaQXpR
-	 Mb1gXyJM3qv5jXuimA5d+pWU4v2mG2xsfzzTUYjH0Xx+MKA24y7FmjNPIGU2SX/GX794J
-	 7qfZzxOgAht+qE4hzkrWddQiplkQXqNHKz5qa0apI4gIbuXS/9KuUy9x4h3pXf9lndUOd
-	 I8me5D+hT5zYcR78GXRJ0j8r4QbE+GePvQ9j24COS48DlTdiE2oep4qyInzrpfkwfPA==
+	bh=GM9j16QIPjRUxkn1t/rjjpXNJGafkyYweC4TwwNvgU4=;
+	b=YtD9vE8LKzS+uO4TptMnc2yxCaGHnA13OFKm6Z6ztXt/xCZrkEY4xIzU/BaVV6hVkP4b
+	 9XE+OVRqgf7aL55jX4BIvPiGls1oyBv6PM0rhPp1ao73+gkvaa+RYrSYmEuUMT1AFdxB9
+	 pLmzMKzUu5hhGbWAnXipyJULIqqsYhhphWsQfn/9XnXl5UqJT9aJ0b9v3xtK2a1jiaUKv
+	 MhBfH78pjFqC/y1cBqbfcSeNP0kfl3A3xzoIYis1J58gdlgJbgyaTH2IOolqNBZLT1s7H
+	 +0/sreY4PIWM9X+a2vo5pXd/S358okTwGVgcPZybiIcna+E63PTSzbZPoWzI9c10x1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rj3u3cqt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ufMehvw4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C05606A31C;
-	Wed, 18 Nov 2026 18:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449B3606A31C;
+	Wed, 18 Nov 2026 18:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rj3u3cqt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0ED61F000C4;
-	Wed, 18 Nov 2026 18:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ufMehvw4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1A01F000C4;
+	Wed, 18 Nov 2026 18:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025804;
-	bh=8nNx2/XMmMV/B3mSqIYo+pQcxhszoOwprlqvbDnwQqE=;
+	s=korg; t=1795025807;
+	bh=GM9j16QIPjRUxkn1t/rjjpXNJGafkyYweC4TwwNvgU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rj3u3cqtePlb2xf1c09mYjVv8iaKZjh11ZmYMbLIzy2+3gCNHpRez9qN3+9JmBux5
-	 rOxLGXnxGqF0jCpy3T4ImpPTsBGCNYFS35zybfKYS+r3m8d1Njatgo72JtoMBdEaSw
-	 a3FBm1aLadyw/9pXmZZng2urIWECGJ1/7/4hp2ls=
+	b=ufMehvw4zBtwGx07UuZdA33jDVeVB1eIt8G9aMwMuyuyTbhyEfV+j+K6Hdv6qRYoG
+	 x4giVvi2ldomvCitZatDNZ7+EkIvJER7vNHkWyJQpzLBdPBKhcGFhP2hJjhXhDInN9
+	 C9WQVkkdXIdPZfqZfcdL6eASNRqx3B/eN0VPShNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ryan Leung <untilscour@protonmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1210/2151] wifi: mt76: fix unlocked wcid check in mt76_tx_status_skb_add()
-Date: Wed, 18 Nov 2026 15:49:05 +0100
-Message-ID: <20261118150206.283023481@linuxfoundation.org>
+Subject: [PATCH 6.18 1211/2151] wifi: mt76: fix wcid teardown ordering in mt76_reset_device()
+Date: Wed, 18 Nov 2026 15:49:06 +0100
+Message-ID: <20261118150206.316207168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryan Leung <untilscour@protonmail.com>
 
-[ Upstream commit cfb05250ded4d6de09dfd273c2a72092f48b55a3 ]
+[ Upstream commit 5cebbd7a87df834efe002c8e54211e6adc99703a ]
 
-mt76_tx_status_skb_add() checks rcu_access_pointer(dev->wcid[wcid->idx])
-before taking dev->status_lock, then allocates a pktid afterwards. A
-concurrent mt76_wcid_cleanup() can run between the check and the lock,
-letting a stale wcid be re-added to dev->wcid_list after teardown.
-Worse, the check only tests for a non-NULL slot, so it also passes if a
-different wcid has since been published at the same idx.
+mt76_reset_device() tears down each wcid's pktid idr before clearing
+dev->wcid[i], which is the reverse of the ordering used on the
+sta removal path. Until the pointer is cleared, a concurrent lookup
+under status_lock can still find the wcid and access its
+already destroyed idr.
 
-Move the check under status_lock, alongside idr_alloc(), and compare
-identity (rcu_access_pointer(dev->wcid[wcid->idx]) != wcid) instead of
-just testing for non-NULL, so that a reused index is correctly rejected.
+Clear dev->wcid[i] before calling mt76_wcid_cleanup(), reproducing
+the ordering mac80211 already enforces for normal sta removal (where
+mt76_sta_pre_rcu_remove() clears dev->wcid[idx] before
+mt76_wcid_cleanup() runs via the .sta_state callback).
 
-Fixes: fcfe1b5e162b ("mt76: fix tx status related use-after-free race on station removal")
+Fixes: 065c79df595a ("wifi: mt76: mt7915: fix list corruption after hardware restart")
 Signed-off-by: Ryan Leung <untilscour@protonmail.com>
-Link: https://patch.msgid.link/20260821-mt76-stale-wcid-race-v2-1-8f41ee96fb73@protonmail.com
+Link: https://patch.msgid.link/20260821-mt76-wcid-null-before-cleanup-v1-1-0e364d9062d6@protonmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/tx.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 3fef2ad45dee4..5b7a44cad70f8 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -129,7 +129,7 @@ mt76_tx_status_skb_add(struct mt76_dev *dev, struct mt76_wcid *wcid,
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index ae1623215894a..9f70bef1749fa 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -848,8 +848,8 @@ void mt76_reset_device(struct mt76_dev *dev)
+ 			continue;
  
- 	memset(cb, 0, sizeof(*cb));
+ 		wcid->sta = 0;
+-		mt76_wcid_cleanup(dev, wcid);
+ 		rcu_assign_pointer(dev->wcid[i], NULL);
++		mt76_wcid_cleanup(dev, wcid);
+ 	}
+ 	rcu_read_unlock();
  
--	if (!wcid || !rcu_access_pointer(dev->wcid[wcid->idx]))
-+	if (!wcid)
- 		return MT_PACKET_ID_NO_ACK;
- 
- 	if (info->flags & IEEE80211_TX_CTL_NO_ACK)
-@@ -147,6 +147,11 @@ mt76_tx_status_skb_add(struct mt76_dev *dev, struct mt76_wcid *wcid,
- 
- 	spin_lock_bh(&dev->status_lock);
- 
-+	if (rcu_access_pointer(dev->wcid[wcid->idx]) != wcid) {
-+		pid = MT_PACKET_ID_NO_ACK;
-+		goto out;
-+	}
-+
- 	pid = idr_alloc(&wcid->pktid, skb, MT_PACKET_ID_FIRST,
- 			MT_PACKET_ID_MASK, GFP_ATOMIC);
- 	if (pid < 0) {
 -- 
 2.53.0
 
