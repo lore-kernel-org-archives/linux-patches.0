@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051615;
-	b=lafmFWhmf9is1kqJLC0cAj50hiXb2lOHcbR/xL1p41zvHpvGn549u62Mggb6z/Rau5vZ
-	 u4r9lBeZKg8217wGC63XY+sEW16k9i6Fn8xQNum3hyZAz/iCxaaeZB1nyMsaAXtmhCT2M
-	 U1zQTJ6fTVfyL3SG9x/92JEhodZFWZO76OwVlzds1uNodnooyNO+wsCufIsIyx9+6gyu6
-	 8B4D67/gQsMLm8QZVw62iK1S6hng74EXrT0fwDMUuUns4JzoqS1bPzlOd5fGU451y26Ah
-	 Kwx2BeEgo/ZEucXi7NSueMRFyPmL4oIVo2/DdFAHVmG80E3m2XejwIVc2yyQhG+jAdA==
+	t=1795051618;
+	b=0eUgxb78a4EVP3duoQ4eUwYJC/otaX0lykRRclDXcB3ZwVQTUGZl7tmEAvAxGJd5vidP
+	 bnHDw8lx9DqUzOqynQDs/S+CHaRjHdnB/G0j6T5xNvdpXUYYyz66gaKC7OslW48bq3FkW
+	 Qs5oIAFRGjtHG3eag3GYhMLZJZtANE1hdXkX0qJzDjmEbLjm+M97INfSUljhMGOWitP2S
+	 lVZSXa/CGb5sLO/L1WgsEVo7wr6jaToYgU0r/M8Gx4/rHQrqHkQHPJpyiXv76WDLXnZUq
+	 TLLkyKZUeQVPSRdhOTW/yLlVebg2YYzjmmCUGLybRoX1y77W+6W8jv96TDLUBpO36SA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ms9bmKMAr0wO0tyTYOUfgKIr3s0T9n3JQ5FDWYUGHq8=;
-	b=jNROMuoXm2U0VTtTbPlXulELo7nPwAXgSwLRCEKnozYh5QFr9qRjDQWQ0vF73TkyR8Pp
-	 JN9otKK9LqvL+AAv4shmehiqayQaYuumps9O6PA/5YlG9vKycNSSaMq569nJ6shJeFzE/
-	 dSzV/EtsQxYAsJ1vpi4i259dTBwtCmn7iSynmcg3FSqzdkkWd5MoO4ZY1Ndo38JgSqdiq
-	 Ep6LUbkpKDVNZ02uTsw3H2d92r3hWNZYoUho6SXpGbPxs0RFXYUrVdDVjZj1OX35s8v0d
-	 QeJ2LM+y6R2Q/8cEhS5xMsVT6jtTY+wBX8EY1jVjW1Iq0nx1UuN/K1jNlumlJASA2/Q==
+	bh=TAfbWDu8cu2ckE0lhMHBjwwcm6BBIik5JXFsmhXsDRY=;
+	b=qD9AoXPpdAAkgjYdWDVCZAIddhFolLhzU3aHiwfmMV9eQtlIySwJGvHZrpwgqiqocIL8
+	 P+1CS8JOjZ6pCmm9CuJMttNQVLieNMFPpGHsVfyWxBjJ+oFUMDnWL0VCGG01qjzvmodK+
+	 kl8IfWBsckmSOvrSGJ3TKMqZpHIU258vrUQG/wvARR+vVxOKAJaxvSCEWCqU8tI4RSSgF
+	 Zn4p7somwZkJHeZLlkIdtsbM8A8Sv02cSMZq7eRXHbiOaKom++MNDR3FgF14P5VQGWnk7
+	 z0hatu8Q7iQ7t2h0H22miwXCkpRt5zFr9ojFok6cf0ZRuRzFa0WfcFzpksiOUZhEeSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8sGsvuv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcVvjHFK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669F9606A31C;
-	Thu, 19 Nov 2026 01:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447ED606A31C;
+	Thu, 19 Nov 2026 01:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8sGsvuv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87401F000C4;
-	Thu, 19 Nov 2026 01:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcVvjHFK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984301F000C4;
+	Thu, 19 Nov 2026 01:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051615;
-	bh=Ms9bmKMAr0wO0tyTYOUfgKIr3s0T9n3JQ5FDWYUGHq8=;
+	s=korg; t=1795051618;
+	bh=TAfbWDu8cu2ckE0lhMHBjwwcm6BBIik5JXFsmhXsDRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8sGsvuvwvM0ED7xofdSvisxQzgFo1UFfKhekZrC3xvBdcZJ/kaORN82RlHoXICFO
-	 539pGFzF8WtjmUu/jjtLaWSeoOjIXi5porb/nZIoYhIZZOrb5yeqQcEXeTwcL1dq2R
-	 Ht24M49qUzrSW2y5cZ93lJGNpWypXr9IP9tzOEqU=
+	b=JcVvjHFKRe638Y9gEav2R8NHHSHv0daMdvC/2wS9m+pJTsaD6HWO9Mf+NqYT2Ba2U
+	 s4tmzspIadvi/63hwGTdyrLNETrYCH3NtiA0NKoGvZ8c4AxgkHEppdryyxL5Zg6riL
+	 OHwg3ajfmEzqaukHtHPUiVWEAZV5PVDfBWSoQPGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Siddhi Katage <siddhi.katage@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Anand Khoje <anand.a.khoje@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0272/2214] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
-Date: Wed, 18 Nov 2026 15:32:28 +0100
-Message-ID: <20261118150020.955887565@linuxfoundation.org>
+Subject: [PATCH 5.15 0273/2214] net: dst: introduce dst->dev_rcu
+Date: Wed, 18 Nov 2026 15:32:29 +0100
+Message-ID: <20261118150020.993154933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,57 +71,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2f2312c422fd2695da772cecb30c69994b795964 ]
+[ Upstream commit caedcc5b6df1b2e2b5f39079e3369c1d4d5c5f50 ]
 
-Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
-guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
-doesn't use nested_vmx_vmexit() as that API is intended to be used if and
-only if L2 is active, and the open coded equivalent neglects to put the
-vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
-(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
+Followup of commit 88fe14253e18 ("net: dst: add four helpers
+to annotate data-races around dst->dev").
 
-Note, the !from_vmenter scenario doesn't suffer the same problem, as
-vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
-active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
-getting vmcs12 pages.
+We want to gradually add explicit RCU protection to dst->dev,
+including lockdep support.
 
-Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
-Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
-Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
-Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 2f2312c422fd2695da772cecb30c69994b795964)
-[Siddhi: Use 5.15 vmcs12 page teardown because the upstream helper is absent]
-Signed-off-by: Siddhi Katage <siddhi.katage@oracle.com>
+Add an union to alias dst->dev_rcu and dst->dev.
+
+Add dst_dev_net_rcu() helper.
+
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+
+(cherry picked from commit caedcc5b6df1b2e2b5f39079e3369c1d4d5c5f50)
+
+Conflicts:
+ - Use 5.15 dev_hold/dev_put; retain the global IPv4 MSS limit
+
+Signed-off-by: Anand Khoje <anand.a.khoje@oracle.com>
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/dst.h | 16 +++++++++++-----
+ net/core/dst.c    |  2 +-
+ net/ipv4/route.c  |  2 +-
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index b6c302786b933..82aa349e33aff 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3543,6 +3543,14 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
- 		return NVMX_VMENTRY_VMEXIT;
- 	}
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 9a23986f1071a..6b63c3435bb5a 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -23,7 +23,10 @@
+ struct sk_buff;
  
-+	if (vmx->nested.apic_access_page) {
-+		kvm_release_page_clean(vmx->nested.apic_access_page);
-+		vmx->nested.apic_access_page = NULL;
-+	}
-+	kvm_vcpu_unmap(vcpu, &vmx->nested.virtual_apic_map, true);
-+	kvm_vcpu_unmap(vcpu, &vmx->nested.pi_desc_map, true);
-+	vmx->nested.pi_desc = NULL;
+ struct dst_entry {
+-	struct net_device       *dev;
++	union {
++		struct net_device       *dev;
++		struct net_device __rcu *dev_rcu;
++	};
+ 	struct  dst_ops	        *ops;
+ 	unsigned long		_metrics;
+ 	unsigned long           expires;
+@@ -556,9 +559,12 @@ static inline void skb_dst_update_pmtu_no_confirm(struct sk_buff *skb, u32 mtu)
+ 
+ static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
+ {
+-	/* In the future, use rcu_dereference(dst->dev) */
+-	WARN_ON_ONCE(!rcu_read_lock_held());
+-	return READ_ONCE(dst->dev);
++	return rcu_dereference(dst->dev_rcu);
++}
 +
- 	load_vmcs12_host_state(vcpu, vmcs12);
- 	vmcs12->vm_exit_reason = exit_reason.full;
- 	if (enable_shadow_vmcs || evmptr_is_valid(vmx->nested.hv_evmcs_vmptr))
++static inline struct net *dst_dev_net_rcu(const struct dst_entry *dst)
++{
++	return dev_net_rcu(dst_dev_rcu(dst));
+ }
+ 
+ static inline struct net_device *skb_dst_dev_rcu(const struct sk_buff *skb)
+@@ -583,7 +589,7 @@ static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+ 
+ static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+ {
+-	return dev_net_rcu(skb_dst_dev(skb));
++	return dev_net_rcu(skb_dst_dev_rcu(skb));
+ }
+ 
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+diff --git a/net/core/dst.c b/net/core/dst.c
+index 8707b7ffe4210..4376f04ac5145 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -151,7 +151,7 @@ void dst_dev_put(struct dst_entry *dst)
+ 		dst->ops->ifdown(dst, dev, true);
+ 	WRITE_ONCE(dst->input, dst_discard);
+ 	WRITE_ONCE(dst->output, dst_discard_out);
+-	WRITE_ONCE(dst->dev, blackhole_netdev);
++	rcu_assign_pointer(dst->dev_rcu, blackhole_netdev);
+ 	dev_hold(dst->dev);
+ 	dev_put(dev);
+ }
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index b444a57498c2c..92c70648651b3 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1077,7 +1077,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 		return;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
+ 		lock = true;
+ 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
 -- 
 2.53.0
 
