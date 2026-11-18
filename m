@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016890;
-	b=E6kAc35j1y0tTsc9kkplQqtSD/1Ks+KEkE1YUOpBSrVZxPKX/6oNUOlKn9zXGErgY0uN
-	 Wn6/6g1rgi7hnWeWHLwvIHAx02UgWxO5mX2l99UDCslQ/pyfmRNVolLucnIK4jQ0+eE3U
-	 pu2s9yiS5VFdzvU9JsmNGRYVDZ5XJEx/D3+zRaYosyU+sv7ScJRRpiaABSRjFuQEGLJGo
-	 LJdmo0LFMuER3nXyYQdcCroFBBb6FZcxbBIYx5PKPDar6eD5kzu5zcZ8/pjdt5U8IqWLr
-	 gEV2GPToTu0C81rJZvIvRpiwXR7RDRNggfiGvvn8+ReNqbX2F9iTLjtLOKMIFx5Yg9g==
+	t=1795016892;
+	b=AQROTRFcL4/uyOQ8Zxkp/JRPnlnevQNJ/fZbZzDLzUVgLR7WISfnZLHlAdyd3kvAFgan
+	 iAFOe8LasSvE8fB8w1JE46tV2lut9dvPYFNmAF9fTtnllv/7w0fOMROSJki9s9UH8vdkA
+	 bUa1/Mrj7lBzZmAiJ3fgMk2tqkFqP2oNbgESi2jX3blFdAyUqNcOyZ5Hou4vp5/dRR0CT
+	 J0uBkn4W/6FtySpgbNOarrWZxIg6quraSmatVIDexFH3ADvtgYo0YPnLDb90rBBibafA5
+	 j4FN9kLj1r91OtWbFvRUEaetRaetxcjtHc74yca+VBaT1DZ0bE8ipHOr5CjNEuS8SCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016892;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=x8hvnh+OPxUi3G5DuiyZRvLe/3F2IKbOT8PLWNI/XDU=;
-	b=4DpFgy+qykifNXchv0FFOFLDw+X7Q/Qj4jNWxC3Nl7oFeRkuZMhlutfPZi6yZuChL48s
-	 FK3yQE5VGd00ip9OUPCJXmst71OIJW9IFgK8C6fSo6bFU0wf9RFYJiYVsr79l5l0/J39H
-	 8H6w5Vmwk+ZLkUUsVdG4mtdlE2dSSfaeMeedIh16xsk1lfdBNlmwDFooW5FVL/TzdDhhY
-	 RsGp9kMPXdy00r27sTmry8A/3AwrE+zrDQtltrfOEVZ3ry9aONI/N8uRh3v1RFmysVRwJ
-	 pbfBBq2GgUTKmD5HufMkbXaKw7617IjnDyJsKWxMGXQQMuzBKNToFcFek12VVFHrqpw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wOayBHYz97Ksu5FFHfyN7m0VekMvHcraZkTgJfWkZP4=;
+	b=1/q0e08AZ1kCSOL6hNFCYWz+H98LsukT3KfM0xkx5riXBt3rNq6GgNCAc+MdZS/ccgCY
+	 4Jgy0o3CpCEjAthaeCnW9cnjViPdBB4iD0IXYfNh54dIaw8Hsscn92VKISXlrzqQVxzBO
+	 MAVIc2QPvTM3gAF9QrC/kErZ3K2BdHZRmHLQkdhRNMmIp3ew6zquVnmkOM8fL7f/2i0/F
+	 HMuv/iLu9cmYMZqjVlAEZDp3xkPmw19CwhyyuUfGF/IEpRX4p5VYbJRz8ongKtMaBnYWN
+	 +szAQqBFzoCrccWta5BlhqbDR4ul4N15txhZwC75S3G8iBkij6OrWZzTOl0G4bY+GYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PzAAyrqq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfofmQvp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F4B606A320;
-	Wed, 18 Nov 2026 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC97606A320;
+	Wed, 18 Nov 2026 15:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PzAAyrqq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6692B1F000C4;
-	Wed, 18 Nov 2026 15:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfofmQvp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3303B1F000C4;
+	Wed, 18 Nov 2026 15:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016890;
-	bh=x8hvnh+OPxUi3G5DuiyZRvLe/3F2IKbOT8PLWNI/XDU=;
+	s=korg; t=1795016892;
+	bh=wOayBHYz97Ksu5FFHfyN7m0VekMvHcraZkTgJfWkZP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PzAAyrqqe3iarYoWDLPIGE3nWN8xU8rAMI3hDxZOfe5n0Sw96+pbnA4J40KjD/hGo
-	 kT061LzIyEw56yA09xCafPmvElOMU47tDvYRP2E+Z5YkfWjydAQgtqk/uHOM9E18XZ
-	 oMtKG8o9/1nfC+ysmFl+oxFCN7L43gWpuVDIQBtE=
+	b=jfofmQvp36T/ftBckBn+31wP+U/ZiSujAO/Q48Ysog9ZIGx9v9UYfa7mZUaRkq8OG
+	 3no45Lvmxy+wqf7plBt1Vipxqqt/ReEcxEXBQkijhk83XI/EMeo+U9dpWrd7CuZlit
+	 AgJ95wxu7REGk640AF6+RMsYsmAEaHA1pqxK9m40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0687/2651] RDMA/siw: Fix qp use-after-free in siw_get_base_qp()
-Date: Wed, 18 Nov 2026 15:32:07 +0100
-Message-ID: <20261118150312.586295838@linuxfoundation.org>
+Subject: [PATCH 7.3 0688/2651] crypto: asymmetric_keys/x509 - copy X.509 TBS for data signature algorithms
+Date: Wed, 18 Nov 2026 15:32:08 +0100
+Message-ID: <20261118150312.622033807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,50 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit ef15197f81ffedf29560edf2221199d92fd83dc2 ]
+[ Upstream commit 2618f76b277cef3df8ebdff403b05705f5f8a36d ]
 
-The reference taken by siw_qp_id2obj() is dropped before the address
-of the embedded ib_qp is taken from the QP.  If that reference was
-the last one the QP is freed and the pointer returned to the iwarp
-core is dangling; the core only pins the QP with iw_add_ref() after
-the call has returned.
+For signature algorithms operating on a message rather than a digest,
+x509_get_sig_params() points sig->m directly into cert->tbs.
+cert->tbs is the preparsed add_key() payload.  The syscall wipes and frees
+it on return, while the instantiated key retains public_key_signature.
 
-Copy the pointer while the reference is still held.
+A later KEYCTL_LINK into an asymmetric restricted keyring therefore passes
+a dangling message pointer to ML-DSA.  KASAN reports a slab-use-after-free
+in mldsa_verify(), with allocation and free provenance both leading to
+__do_sys_add_key().  Reuse is also an integrity issue: bytes occupying the
+freed object become the authenticated message instead of the certificate's
+own TBSCertificate.
 
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260916184400.2093106-1-vulab@iscas.ac.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Give the signature object its own copy of the TBS, as is already done for
+a precomputed digest, and release it through the existing m_free contract.
+
+Fixes: f3eccecd782d ("pkcs7: Allow the signing algo to do whatever digestion it wants itself")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Assisted-by: Codex:gpt-5
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ crypto/asymmetric_keys/x509_public_key.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index 9735b75ac933a..c08796e4262ae 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -217,8 +217,11 @@ static struct ib_qp *siw_get_base_qp(struct ib_device *base_dev, int id)
- 		/*
- 		 * siw_qp_id2obj() increments object reference count
- 		 */
-+		struct ib_qp *base_qp = &qp->base_qp;
-+
- 		siw_qp_put(qp);
--		return &qp->base_qp;
-+
-+		return base_qp;
+diff --git a/crypto/asymmetric_keys/x509_public_key.c b/crypto/asymmetric_keys/x509_public_key.c
+index 25cf8ac7f2579..5c9165a83f914 100644
+--- a/crypto/asymmetric_keys/x509_public_key.c
++++ b/crypto/asymmetric_keys/x509_public_key.c
+@@ -53,9 +53,11 @@ int x509_get_sig_params(struct x509_certificate *cert)
+ 
+ 	if (sig->algo_takes_data) {
+ 		/* The signature algorithm does whatever passes for hashing. */
+-		sig->m = (u8 *)cert->tbs;
++		sig->m = kmemdup(cert->tbs, cert->tbs_size, GFP_KERNEL);
++		if (!sig->m)
++			return -ENOMEM;
+ 		sig->m_size = cert->tbs_size;
+-		sig->m_free = false;
++		sig->m_free = true;
+ 		goto out;
  	}
- 	return NULL;
- }
+ 
 -- 
 2.53.0
 
