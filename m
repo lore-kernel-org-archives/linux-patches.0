@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061604;
-	b=cR9s6m22hIBw7sso8TCExdZLv4H0GWrXGpo47LNSzqu4TMSfMF7Oa3U9yx8Grf65MReL
-	 JI7oD6ME7BD2iBd6mkflRdoeMOZV/1PJwJ5uYVbJU9qSq5eOKDSkSw4iFjbfxbpp5BBNg
-	 qG9RUhZe1oDZI6cQxg0WCmFbUbaUfGrK5eLOT2t+BlZkjyGaAMYrsT7PYCt9f2zeOS3/B
-	 81STVYGE7FT8ydD+a+hF/aLzBNBk/kB3gjOL65j4vmkzcpO6gdXmEd6HblegHgmLGZM9D
-	 cMwEsW+27/if24oG1dNhr3rq+Aqm3SoNdblCXTNNGw/yqHAoY1Va2Q4yvYL+FqnutkQ==
+	t=1795061607;
+	b=Gx6Ga0/dCepJQjYN8nciGAjtk1NESAS+pr1ovpkF+lczcqCwLow3rLcL8pRXObIDJ99l
+	 xvJJSkpN7YsacItGLt399E6AZe9t0Oa2Rjw8WmjECH2i7Itg665p29kir+MRALaRJfYC1
+	 0SmbnsOH+Oc49xmVKojwNTUwwJJzFJDjndiAkEdwY8HWu5AsDutkkm8S5BBBIs9SSLBsc
+	 fXMYz9EuyPk1GdUPH+yRkcOt3UFzRiKRz2A4zIAyRy1Tq8DUUnUHXB2PXVbesYPEVKKbS
+	 rvBDEguT/DyIHFW12xtz5biAHZ2TKEp40j3sYZtaPbuNsuP94jC8jzJASc8OhnEAU2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BfnHyFBHC2HwFg6PmBrKR4sEbM/S39YjTOFsh2cTF2Q=;
-	b=dm2p3LuvmzSrAr2SvSpjMZKCLCCH0rI0frP5LijZcx6lVrxMdl5I5rKy7dRxEAvtYKct
-	 l+yRplq+j1h2GV1ec84XGGeIKvogU+2NeLxFE1i921NwW6aWkbuceAZm0J14TEWizEEzc
-	 6gEl4ySaz9jF7qQABgY/l54JuWrP34Q5OxZALCeSdJzAtBo82lAkvfWmDPHaV3FCKmiiP
-	 vXmicgu1IIm6gRRZLOOwNsSsM1aO2WJMs4+uhGbhn27auv346pPSzLIUWzg8ZekzbD+07
-	 M3Z5yrVR9Ljr5CCEaxOIZcli8ONO8TuRO46/NJ8igZzAr4wdiqkgxGcV5aCJ5fr5LkQ==
+	bh=zE1erYweEYTfu6mNM7reSgcVuNWJiFC7qnuS55WHBc0=;
+	b=sCaDLhMw2iPlCmwt/OCkccCWozoe4TVXNMozlj+nTvbSKCj+EPz9APb1uVribAppgvwO
+	 ioGe8bQCIAZWUZsGA2rQedlo2Q7jMMuF0o08l+kRJAL9SnPajfR5YDiDsjU1od3MZ/TQ3
+	 l0usmTAYN+t+r/xh42ZdoRa01ck67F4IFm2KqMM9QMSICTX9iI241P37/5NXznNwSPVcJ
+	 6yMw8VJPdRIvffBWKDh25fvpJfgLtau9IdKi/X34t0W5oC0Mv5xOArbRPg2E0/lPdmY+i
+	 ZEU247vDYNyzAS6gkQXeyPf678DlNNNt7y2aB01rtPb6igSRrS2bQZ7MwosHwAkFoMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PWjvbxPt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZsN4VKt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BC1606A33E;
-	Thu, 19 Nov 2026 04:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194D1606A33E;
+	Thu, 19 Nov 2026 04:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PWjvbxPt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683DE1F000C4;
-	Thu, 19 Nov 2026 04:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZsN4VKt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3221A1F000C4;
+	Thu, 19 Nov 2026 04:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061604;
-	bh=BfnHyFBHC2HwFg6PmBrKR4sEbM/S39YjTOFsh2cTF2Q=;
+	s=korg; t=1795061606;
+	bh=zE1erYweEYTfu6mNM7reSgcVuNWJiFC7qnuS55WHBc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PWjvbxPtdj/Jng9WUB4ytdkq7lt22ob117hvOXjq6bfRdC2GHyAk6R/cOvWuU5jjb
-	 DqZjdw6ej7fydQtSAR+XpzFNGetz/j6eV/M6Qr6itaoWGgW8ClSD4SIKhkCPoAxsqb
-	 HrSUMMjkToBrrmiwxyKTbg5Hy2quCvub0zgq5RHQ=
+	b=cZsN4VKtDANBo/3y6xlgxpsX6hG9QMwoHFf0TVXd/qJPvaJG3p+F1chNDzHgq7A69
+	 JY8nyTiTSSVHQ8A10FiDhW8o+VQaCcuCdFAwu+lLX8eU2YyaaRM4Nxv2IxdPvyKflh
+	 6wlEs1nUsg/3tO3dvuKif4ZaNk1LeqQo8HL4zWPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1613/1848] ASoC: atmel-i2s: fix MCK generator error handling
-Date: Wed, 18 Nov 2026 16:00:51 +0100
-Message-ID: <20261118150027.065654400@linuxfoundation.org>
+Subject: [PATCH 5.10 1614/1848] ASoC: atmel-i2s: do not warn if muxclk is missing
+Date: Wed, 18 Nov 2026 16:00:52 +0100
+Message-ID: <20261118150027.104847970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,54 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
 
-[ Upstream commit 2e2da92de9bffd2cdbb9a2558fe60de7f1bb09e3 ]
+[ Upstream commit f4bf1f4d1385b7cb61a3fc811bb4912d49aa394a ]
 
-Disable the gclk and reset the MCK configuration when an error occurs
-while enabling the MCK generator.
+Besides the fact that muxclk is optional, muxclk can be set using
+assigned-clocks, removing the need to set it in driver. The warning is
+thus unneeded, so we can transform it in a debug print, eventually to just
+reflect that muxclk was not set by the driver.
 
-This prevents the gclk from remaining enabled after a failed clock
-configuration.
-
-Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-2-phucduc.bui@gmail.com
+Signed-off-by: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+Link: https://lore.kernel.org/r/20201103100554.1307190-1-codrin.ciubotariu@microchip.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: be952abd69c1 ("ASoC: atmel-i2s: use optional API for muxclk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ sound/soc/atmel/atmel-i2s.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 0341b31197670..d133bfeca496b 100644
+index d133bfeca496b..8f0d517b8facf 100644
 --- a/sound/soc/atmel/atmel-i2s.c
 +++ b/sound/soc/atmel/atmel-i2s.c
-@@ -466,11 +466,21 @@ static int atmel_i2s_switch_mck_generator(struct atmel_i2s_dev *dev,
- 	mr |= ATMEL_I2SC_MR_IMCKMODE_I2SMCK;
- 	ret = regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, mr);
- 	if (ret)
--		return ret;
-+		goto err_disable_gclk;
+@@ -594,8 +594,8 @@ static int atmel_i2s_sama5d2_mck_init(struct atmel_i2s_dev *dev,
+ 		err = PTR_ERR(muxclk);
+ 		if (err == -EPROBE_DEFER)
+ 			return -EPROBE_DEFER;
+-		dev_warn(dev->dev,
+-			 "failed to get the I2S clock control: %d\n", err);
++		dev_dbg(dev->dev,
++			"failed to get the I2S clock control: %d\n", err);
+ 		return 0;
+ 	}
  
- 	/* Finally enable the I2S Master Clock generator. */
--	return regmap_write(dev->regmap, ATMEL_I2SC_CR,
--			    ATMEL_I2SC_CR_CKEN);
-+	ret = regmap_write(dev->regmap, ATMEL_I2SC_CR, ATMEL_I2SC_CR_CKEN);
-+	if (ret)
-+		goto err_reset_mr;
-+
-+	return 0;
-+
-+err_reset_mr:
-+	regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, 0);
-+err_disable_gclk:
-+	clk_disable_unprepare(dev->gclk);
-+
-+	return ret;
- }
- 
- static int atmel_i2s_trigger(struct snd_pcm_substream *substream, int cmd,
 -- 
 2.53.0
 
