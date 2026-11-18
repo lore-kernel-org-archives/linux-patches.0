@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051056;
-	b=oU5hJi9X8VW0XKvWspqfcql8lDvt5tmsmsLD+wpEyh4CzwjWsEPXB0ID/IGB0SK333Ue
-	 BEF2mP39VvnTY7ZUddZlvWUjODID7apEaOSpijD9Hs5cQKcYWkib6zE41dfh/iCbrjfsE
-	 L6tCoEMlJGWO9Rk4nGH8nK/6TWOyGz5aGA8X03j/rC7Uls5RK5Huisq2KfE/QrhXvrPym
-	 RwYOW77I68Ya/4CNRcWWF3lA/3Z3YW8NyUXlTeAPwcUyErsjcD2itZ3pavFZHlRQsIxCM
-	 VZSvG/ptRF86o9CVknwbIzYTkGbjVcFbc8zGKkCVdH9pkpxu8hODhDS9F58R8gIg8EQ==
+	t=1795051059;
+	b=aLvQhEqyCU+scedq3x0TYv172Shmik6+zz9Zob9JMKdOqba/WMJorjxZiUZM7a6P9bs9
+	 n0K3KWohZPumwKLCqViHNMCoO+w1mVymHm+ojN71yt7OZbTsZA+2m1KLOdygodT49hE8T
+	 1vKn+oO5vYgWBcHTLgzhqGv1+mrdZajPBrDh3wEaMfHzy1ildSC6oAo9Tsl9Vko1MiTHm
+	 IEijGA2fFDt8XvktW7eDe4Z0K1MPX1oJJcU9yR7SHBnHLp1defCEZBbEI/6UnODCrHhET
+	 v9hfcBIoWAm5PMwKrmQ0evpjiFc094meU6Zn7u8cgzAlYIfLhvy+AF5pNyF0aDcImqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051056;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZX+8JG5uz8Ivk3l8y0N5d2OLXDjHXvGsbvNL5VAGzps=;
-	b=olMDZTYAo5zdoD+730SZP+ZVDkfSG2oC9C/oQa5YBCQ2BMuFNThoTBLQD5oNALEnBLTp
-	 zkN1q295pugVhiJKJt+rSdvgOSsrpfV7lTdt2dH94x4bGGgGbgfPTjqGQlHNgOq3PSt7N
-	 Uu09IXpUZ9khrRkF3/xQA6W8+DKNthD+cAECcZAAGHb0vJuMkCCpn/myJFv32LBExTpQ9
-	 1KEWpy2NSjpFBooHn/NdcVZvrtMDrYOf8xDyQo67I2kdhViM3xWcoQZIVpEcj0DZfGdBt
-	 Eooxn9L6iO7Nqpy+uxAaH+7QwAM8zoGn8QByi7ruhatW1BzVPuWu33qQlhpo+xbJ5BA==
+	bh=ECBinTabp4ZQ51X23LLOY/8vowuNxrHytvMN0hRD+9E=;
+	b=lSjHEpv6zmD94qzVP/5Nm040dYh496Elw/E0kt0O/dQ0AThZAx/xdb+zEE75zuc1znD3
+	 MBhWfXNaol15pt+QVxg9wQ50SvjWu0p72/IXOvhGgmGlDjLgEM8oC4G9wOlGFyiTNcLSn
+	 c5m0zBqVSM9WDpV5QUkEQtLejiGFTdSs5CLiJDPI1kJZImBDbn3wAHUUbVsYvBoPVKIhT
+	 g3FIUz5XSSyLLsULC7i8YJBnm4VBWFr4QbefsyMBUERpk0lI6iuh3gXHTP72feN+K1dwN
+	 2fKI8TB2SEqRpcWHl7Q6PSIPc+pFaPj5o9UnAOF4RN9XZ8CH85/33/EcK+bxmwyapLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vn770ss6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBQjGfj6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9FB606A330;
-	Thu, 19 Nov 2026 01:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AF9606A32A;
+	Thu, 19 Nov 2026 01:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vn770ss6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4671F000C5;
-	Thu, 19 Nov 2026 01:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBQjGfj6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9752D1F000C4;
+	Thu, 19 Nov 2026 01:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051056;
-	bh=ZX+8JG5uz8Ivk3l8y0N5d2OLXDjHXvGsbvNL5VAGzps=;
+	s=korg; t=1795051059;
+	bh=ECBinTabp4ZQ51X23LLOY/8vowuNxrHytvMN0hRD+9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vn770ss6U56mOdkQFGlCkjcM8uFg9Q9K/n482KGguSWkZn7FHqPn+CJh1QX25pjZU
-	 vfvaDXMcwuJ5+Ak85HOUMtto/kG9B/cLuNWt2zAHLEJa6IkXuTxHGqs44AG56HulEb
-	 7CHRzoijOHdsW7jDwWhcV+Qj6EPP57/8sKG1LImw=
+	b=OBQjGfj6McbVwUfad4VxfK76T7rSQifQHyLm9BvjFGrJa4sEoRSBXPIQPlKGBIa9U
+	 VMd7lNlco5eXxWbZ6nQMsU8URao2DbtSP/Ql2A2WJ9aUSqGgjdLaZSFCbCR+IOmOi7
+	 jSpQMKwbaD+WBXbCT2UEFBubxltiI3Ldlg5inhvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0072/2214] media: em28xx: requeue buffers if start_streaming fails
-Date: Wed, 18 Nov 2026 15:29:08 +0100
-Message-ID: <20261118150012.862872655@linuxfoundation.org>
+Subject: [PATCH 5.15 0073/2214] media: em28xx: use vb2_video_unregister_device
+Date: Wed, 18 Nov 2026 15:29:09 +0100
+Message-ID: <20261118150012.896986161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,72 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 67f87b104f4ef3108607ac9d8fa2075b13ed314d ]
+[ Upstream commit 7c8bf63b79371f5b57da1bd1401bd420180ac6e6 ]
 
-If start_streaming fails, then all queued buffers must be
-returned to vb2 in state QUEUED.
-
-Otherwise it will trigger a WARN_ON.
+Use vb2_video_unregister_device instead of video_unregister_device
+to ensure any streaming is correctly stopped at unregister time.
 
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/media/usb/em28xx/em28xx-video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
-index ffc7ae1ee3a9b..15f90c25fab2b 100644
+index 15f90c25fab2b..a2cdde3bfe900 100644
 --- a/drivers/media/usb/em28xx/em28xx-video.c
 +++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -1080,6 +1080,9 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
- {
- 	struct em28xx *dev = vb2_get_drv_priv(vq);
- 	struct em28xx_v4l2 *v4l2 = dev->v4l2;
-+	struct em28xx_dmaqueue *dmaq = vq->type == V4L2_BUF_TYPE_VBI_CAPTURE ?
-+		&dev->vbiq : &dev->vidq;
-+	unsigned long flags = 0;
- 	struct v4l2_frequency f;
- 	struct v4l2_fh *owner;
- 	int rc = 0;
-@@ -1094,7 +1097,7 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
- 	 */
- 	rc = res_get(dev, vq->type);
- 	if (rc)
--		return rc;
-+		goto exit;
- 
- 	if (v4l2->streaming_users == 0) {
- 		/* First active streaming user, so allocate all the URBs */
-@@ -1117,7 +1120,7 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
- 					  em28xx_urb_data_copy);
- 		if (rc < 0) {
- 			res_free(dev, vq->type);
--			return rc;
-+			goto exit;
- 		}
- 
- 		/*
-@@ -1142,7 +1145,18 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
+@@ -2253,17 +2253,17 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
+ 	if (video_is_registered(&v4l2->radio_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		video_unregister_device(&v4l2->radio_dev);
++		vb2_video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vbi_dev));
+-		video_unregister_device(&v4l2->vbi_dev);
++		vb2_video_unregister_device(&v4l2->vbi_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vdev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vdev));
+-		video_unregister_device(&v4l2->vdev);
++		vb2_video_unregister_device(&v4l2->vdev);
  	}
  
- 	v4l2->streaming_users++;
-+	return 0;
+ 	v4l2_ctrl_handler_free(&v4l2->ctrl_handler);
+@@ -2911,19 +2911,19 @@ static int em28xx_v4l2_init(struct em28xx *dev)
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		video_unregister_device(&v4l2->radio_dev);
++		vb2_video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vbi_dev));
+-		video_unregister_device(&v4l2->vbi_dev);
++		vb2_video_unregister_device(&v4l2->vbi_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vdev)) {
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vdev));
+-		video_unregister_device(&v4l2->vdev);
++		vb2_video_unregister_device(&v4l2->vdev);
+ 	}
  
-+exit:
-+	spin_lock_irqsave(&dev->slock, flags);
-+	while (!list_empty(&dmaq->active)) {
-+		struct em28xx_buffer *buf;
-+
-+		buf = list_entry(dmaq->active.next, struct em28xx_buffer, list);
-+		list_del(&buf->list);
-+		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_QUEUED);
-+	}
-+	spin_unlock_irqrestore(&dev->slock, flags);
- 	return rc;
- }
- 
+ 	v4l2_ctrl_handler_free(&v4l2->ctrl_handler);
 -- 
 2.53.0
 
