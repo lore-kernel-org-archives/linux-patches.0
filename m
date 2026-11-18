@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022592;
-	b=rsPB8m6R3BoXmLnmXsygJZrXxY0xc9lvh/Qcu2+u+rgUhwy1RwdKpbrbq0rBH/vQ0rNu
-	 IMxrv/95LrfqsRwjovS2QYNK4mOnrc1cma5ZFDBH5qdUWed9f0bdeT3Ejr6OWaRoHs1NR
-	 20A3KACJfla2uZVs2RIug0egB14D5W14J42pObfPVZzd7gKNy41ZZfQS1CUGEMxOk2ChQ
-	 lPv6YyW9Ws62fTRbV39swM4bXOgL+70wnRJpzlWkAHD3K9oyN4aGatvLyTp20bfOSRcUV
-	 UnPNFuOJr0PrsuQfEiak+wiVW073v+eB4cfp8nMtN1F+pG1ChBGxwj4/rHL4WCj5k7w==
+	t=1795022595;
+	b=vEDnbAjTZd2AvN+I35PNnFkSRQoPW78XuL1bS5rCTaPoD1vJmRpiEjBUTotVBqQzDwT+
+	 bNnVF/fXN/bmCvYytLGKjIhkaGgX2ZtqjLGZQBsu3YClz9rMwOl3QPcu6PZHdCyQPs3VA
+	 KJgy0GxQxfTlViFxJ5xLfLQF+gC/YGXEQIQb6mcUg7n389QUV3k+Jltaq0Es+Dw1OsfON
+	 2e+1zF/hehYlJcmZuWRfYNEn9B5pNTvEzuGar9TKeOJnv4ndpUQbz6k+XlhXUgUSHlv/0
+	 Spjf6W4kVzfRNjkj1BXrZj7SUUNt/pl84B7207MoTJD+aF6XCiN9izpP3jFptsuofgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bwrfmdjWhvUw+6FU7nj4A8uGFpmWol+Np83/detiKgk=;
-	b=D1i4XEHlVavFx/4yV0LgbCFOXJk6LOPa9mbJ+Hm4ZFYsEPfewvcfg2tZcXKCxV7taLGq
-	 0LAxFu9bVkzrbHnhhD5Bc+7uLInlHmA/D56SfQiJXAW9P0z2gF1IVpl3D1jOIwVG/qqsb
-	 KEObXap92qNQccaiS59yiZ6eNVyiCsyb0OXYVd4ca2QeIaAmfiXxoUf4ZdB8pcvJedDMM
-	 yRsRFriUUp2RdMyXfdyeX8ZHGzGTZ5TsjBIct54bPdWM85uUt7pmGFLap7g1D2mWYx52x
-	 TtSAtlulIt7pBjxZVoCB93UcjmmhqUzGZ0wFzj/0JH9+cRj5PpVxD2k753p/bZ5Yj7A==
+	bh=cONEhnU80wwZ/4zAdjOsXMTHnbADB+vLb0XEQ/7zKxc=;
+	b=5XmuYraLUhimmFLloh+7UBmZCtiIfe8zikRPBMAGPrg+p7qYYCDhU7Y6x12hFquAwo0L
+	 +25ySPUfvIM7ElQnoI7Lu6stueL1STBnNFAj37jYkRYP6Ghu7SMjBthcICT16elnivF/y
+	 ORSlwSyAUyyMhiiHfheJpVwg0rfwfdFaEi352iIahcTfHuYkNen8je0/gyOG1rgmC98tz
+	 d6NYL5pCUm4bZvGnyNkXyuUqt7oy61YMmTgcWKlB+nXWLkOg6D3hcunvu0AWw+93zyqHr
+	 Jv4gtwT27w5BDb/7mv+lrS+Wzw/j84K0+bcsqWZdkcSXnntfjW88oqgIDP3nTfe/p7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tiPYXgXM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EL534oyn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AE1606A31C;
-	Wed, 18 Nov 2026 17:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C41606A31C;
+	Wed, 18 Nov 2026 17:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tiPYXgXM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E671F000C5;
-	Wed, 18 Nov 2026 17:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EL534oyn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5648D1F000C4;
+	Wed, 18 Nov 2026 17:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022592;
-	bh=bwrfmdjWhvUw+6FU7nj4A8uGFpmWol+Np83/detiKgk=;
+	s=korg; t=1795022594;
+	bh=cONEhnU80wwZ/4zAdjOsXMTHnbADB+vLb0XEQ/7zKxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tiPYXgXMSdhKqIYgSL2yuGrW3vB82iBlHFfWiW8VYEipGv0XmT+TJRaRRI41Kzulg
-	 5ksvCAHQH4KJZgh7FrnrhYbMAF8T7DugE+gsgRP9MZ8A3S6JGppUvLgK3TRTR5DYwD
-	 FpPfVsLbk3MqcGSYDWGOhn6/n022YXnKHNuSh0Kc=
+	b=EL534oynxa4VdMGBKYKQsMB33mOyI/2eld55mNg/WqixfmcCXaBLHjEQMcf9OmwKI
+	 LUXzxo6Xfn43xGKg7K6kAPa1PXJal6AzBJ1h50nagv9ocGVe5nEuNnc07NoGQ+qTE9
+	 RvYNj3Cl15W4TktJ6sgAHy9/q42qKV+6wS6tdFRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Wang <kevin.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0068/2151] drm/amd/pm: populate unique ID for smu 13.0.7
-Date: Wed, 18 Nov 2026 15:30:03 +0100
-Message-ID: <20261118150124.236854037@linuxfoundation.org>
+Subject: [PATCH 6.18 0069/2151] drm/amdgpu/userq: wait for GPU reset before mapping or unmapping queues
+Date: Wed, 18 Nov 2026 15:30:04 +0100
+Message-ID: <20261118150124.276474730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,67 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Wang <kevin.wang@amd.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 079f9103d9cde68fb2ccc414e94520f43ee102de ]
+[ Upstream commit 623507b8f4fe24851b2f1cb2c177f8ae3c8584b8 ]
 
-The smu 13.0.7 backend does not register get_unique_id, leaving
-adev->unique_id at zero and KFD topology without the stable GPU
-identifier consumed by HIP.
+The user queue map and unmap helpers talk to the MES, but only the
+create path holds reset_domain->sem around them. The eviction, restore,
+destroy and suspend paths can submit to the MES while a GPU reset is in
+progress:
 
-The failure is observed at:
-    auto ierr = hipDeviceGetUuid(&uuid, 0);
+  WARNING: amdgpu_device.c:928 at amdgpu_device_skip_hw_access+0x73/0x90 [amdgpu]
+  Workqueue: events amdgpu_eviction_fence_suspend_worker [amdgpu]
+  Call Trace:
+   amdgpu_mm_wdoorbell64+0x20/0x70 [amdgpu]
+   mes_v11_0_ring_set_wptr+0x71/0x80 [amdgpu]
+   amdgpu_ring_commit+0x5b/0xa0 [amdgpu]
+   mes_v11_0_submit_pkt_and_poll_completion.constprop.0+0x207/0x520 [amdgpu]
+   mes_v11_0_remove_hw_queue+0xd9/0x100 [amdgpu]
+   mes_userq_unmap+0xc3/0x140 [amdgpu]
+   amdgpu_userq_unmap_helper+0x67/0x280 [amdgpu]
+   amdgpu_userq_evict+0x52/0xf0 [amdgpu]
+   amdgpu_eviction_fence_suspend_worker+0x55/0xe0 [amdgpu]
 
-Fixes: 113cc31dde66 ("drm/amd/pm: add SMU_13_0_7 ppt_funcs for SMU_13_0_7")
-Signed-off-by: Kevin Wang <kevin.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Take the semaphore for read in the helpers instead, around both the MES
+call and the queue state check and update. The reset changes the queue
+state from amdgpu_userq_pre_reset()/post_reset(), so every caller now
+waits for a running reset and acts on the state it left behind.
+
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5e2585daaf8336d9ce1bf52e55a9b7a8cdbf625b)
+(cherry picked from commit e6a8b8588f43bd4d7054ac47cccc35f56ad2df90)
 Cc: stable@vger.kernel.org
-[ sashal: Moved the callback before smu_v13_0_7_ppt_funcs because the surrounding upstream functions are absent. ]
+[ sashal: left amdgpu_userq_create() unchanged because the outer reset semaphore lock was already absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-index 9947b3f6bb5fb..5df28b89cb696 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2836,6 +2836,25 @@ static int smu_v13_0_7_update_pcie_parameters(struct smu_context *smu,
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index a0bf7c82b83b6..0b3502f3f1e23 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -27,6 +27,7 @@
+ #include <linux/pm_runtime.h>
  
-+static void smu_v13_0_7_get_unique_id(struct smu_context *smu)
-+{
-+	SmuMetricsExternal_t metrics_external;
-+	SmuMetrics_t *metrics = &metrics_external.SmuMetrics;
-+	struct amdgpu_device *adev = smu->adev;
-+	u32 upper32 = 0, lower32 = 0;
-+	int ret;
-+
-+	ret = smu_cmn_get_metrics_table(smu, &metrics_external, false);
-+	if (ret)
-+		goto out;
-+
-+	upper32 = metrics->PublicSerialNumberUpper;
-+	lower32 = metrics->PublicSerialNumberLower;
-+
-+out:
-+	adev->unique_id = ((u64)upper32 << 32) | lower32;
-+}
-+
- static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
- 	.get_allowed_feature_mask = smu_v13_0_7_get_allowed_feature_mask,
- 	.set_default_dpm_table = smu_v13_0_7_set_default_dpm_table,
-@@ -2905,6 +2924,7 @@ static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
- 	.enable_uclk_shadow = smu_v13_0_enable_uclk_shadow,
- 	.set_wbrf_exclusion_ranges = smu_v13_0_set_wbrf_exclusion_ranges,
- 	.interrupt_work = smu_v13_0_interrupt_work,
-+	.get_unique_id = smu_v13_0_7_get_unique_id,
- };
+ #include "amdgpu.h"
++#include "amdgpu_reset.h"
+ #include "amdgpu_vm.h"
+ #include "amdgpu_userq.h"
+ #include "amdgpu_userq_fence.h"
+@@ -148,6 +149,8 @@ amdgpu_userq_unmap_helper(struct amdgpu_userq_mgr *uq_mgr,
+ 		adev->userq_funcs[queue->queue_type];
+ 	int r = 0;
  
- void smu_v13_0_7_set_ppt_funcs(struct smu_context *smu)
++	/* The reset changes the queue state and the MES is unusable meanwhile */
++	guard(rwsem_read)(&adev->reset_domain->sem);
+ 	if ((queue->state == AMDGPU_USERQ_STATE_MAPPED) ||
+ 		(queue->state == AMDGPU_USERQ_STATE_PREEMPTED)) {
+ 		r = userq_funcs->unmap(uq_mgr, queue);
+@@ -168,6 +171,8 @@ amdgpu_userq_map_helper(struct amdgpu_userq_mgr *uq_mgr,
+ 		adev->userq_funcs[queue->queue_type];
+ 	int r = 0;
+ 
++	/* The reset changes the queue state and the MES is unusable meanwhile */
++	guard(rwsem_read)(&adev->reset_domain->sem);
+ 	if (queue->state == AMDGPU_USERQ_STATE_UNMAPPED) {
+ 		r = userq_funcs->map(uq_mgr, queue);
+ 		if (r) {
 -- 
 2.53.0
 
