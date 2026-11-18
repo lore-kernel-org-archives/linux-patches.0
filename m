@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037198;
-	b=4yDOwYMlMo1xipk39ZP0gk9eADyPdepPrxYOM3wApBTuLlbn23fcuuAgZMFYZlbAvOb6
-	 jD1Mm6WM9CXhNxkRlX9crXPTE7qdDALoKd4pCurzTIuTDmxH7my0GNYvT7WGnLNBfIi3Y
-	 ts6RpM1HIC5b+SjBnonjCrf1DThhFa/OwhmZL/grj1tHnncFHpGtIS+E1+G70CVTj3V0h
-	 8O58l7SZvq9Cwej/1OAYcExH72YzwjaZILFSVcr5SUfW/Ad6TTW6z3i9ew2vnlO8K3XCr
-	 Qq1h1NB1QBIfoMntbyl3kAcPROELTcOEGfmE79m/7Tk2PJfGCzjMGKiFmmZQ3waL3gQ==
+	t=1795037202;
+	b=OhGZZHn/tw52a2rZH+VMhWfxM2lN8pwpet5in6/SLc/d10na0KlObWh3o9wTrY3s8umI
+	 b8K5RTrasvHZU3XsB05eiO/9xuFxbpuHGF2nYfMLywOAUeP897Nb2ogxDJh0EARplpovp
+	 OCfkrp2hYlg7ZPWlfR94X6QcI19RTprMFsx9rj0jEfPPFK1XIinW0cQKO3N8gd0DyHbT2
+	 E9JzuG9o3uqCKnR5LmpuRlOEaSpLivvl+7AkRBatYeqHUEILD945HyanpqP7REsYnT3Zz
+	 cL7dUi3vLBjbsIhWnPReFxxGg3395in8O2MZmgv8BmKPABDjWZiED+IeoMctyLCa2Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037198;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gPi0AfwPco6bxrWPeUhSzko2/M5r7eB3C/WJgNIzxk4=;
-	b=iahDlyni3STiGBDuDFEtax2ACmL9ienuBbSxSqMK03y8l21Vmc3hzzbztYYqr3b3BybN
-	 P4txtGFIfKLeO5EzBWEtkoDsUJkK0lK5Zrcha/fkJMpXmNjDg9FYXnYA+S1WKannLCvtf
-	 QQpnJzJ1HIaFyJ3eQkw7/ymyPdJpfkGDYnxmoBfN9/Af4FFqVq3F6Ny71Ynm9OoWyT6Ty
-	 XgQ8a90v+MfWWV9OPHTySxWt7AjmApcPFDbHPca9rr/Wv5Msq44Sso0ROn65GaYU05W0d
-	 SIeet3Stje0F0yeqvxlWtUL1/BVWtctxuOcgPIpQkibtONpptz8elNJsjVJXnsRiNvg==
+	bh=iWX+iTUrpq4qGlfTPB+1K+YENAPOb/rb/E56KPggynI=;
+	b=GREzg+l9pQdYJyY7/hRa/iaR2nkZAbsIFmCpfchInBD6+MMVu3Rs/JQjY3ahGLAe5QZZ
+	 u30KCPIEpTzgyFWvjqOXd5s5Y/n5LQiLm2q7FCmknfinaCNO49qo7BLEW8bL7bPndzVqd
+	 7vb2s3U6Syf6oA8JVcL9uRxnPNQLGvk2XN4piwGz+L3PA8Kp03UPjPYiKC7mKcAk49A87
+	 XbU4MF412gOW7NQBJiwUj9xFYgl93a8Np5MQWrCnKz0q5iDLCVl0sCdvEQ3e8br3In+Ed
+	 ZSNnZO1k0wteCRlXi6GVuShpIs9o1MGZeRqzH90bezzh4rSA77tYO5AlQRjIT+N4p9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0EixvwM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRcgaXnQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76055606A325;
-	Wed, 18 Nov 2026 21:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A69606A320;
+	Wed, 18 Nov 2026 21:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0EixvwM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA54B1F000C5;
-	Wed, 18 Nov 2026 21:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRcgaXnQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A001F000C4;
+	Wed, 18 Nov 2026 21:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037198;
-	bh=gPi0AfwPco6bxrWPeUhSzko2/M5r7eB3C/WJgNIzxk4=;
+	s=korg; t=1795037201;
+	bh=iWX+iTUrpq4qGlfTPB+1K+YENAPOb/rb/E56KPggynI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0EixvwMUFMe9f0JreCHfJGPbLoUmBBMHtuS5wo4q0rdxlWvwCAB6Mj+5tC7argt0
-	 MIEU1qinSsHynKi3gx/SWEDib/hLWFn08xMjMfGx95G7y0iKZJfM/C7V2K3dQ+KvPj
-	 nHSXx0CIbNJhxvG7VDPOFQES5Kp2NqeORbakhn1U=
+	b=BRcgaXnQbLFCMqrOMqMlIhiVcZa5+E0aobEzfja6k2BZ/i5rycG3JKV+1eWh/wPT9
+	 SJbUTd/MgQdkAWAqvbEKX0it4ndrcW2i4GGiJgMVrjsNKr0tw/okKNlT91IIZwS2a9
+	 Xs2PT3qOC25vz0TME5GIAg+HbJrNhofcRVoDqGxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Yosry Ahmed <yosry@kernel.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1326/3318] rxrpc: Fix return in rxrpc_recvmsg_data() for service calls
-Date: Wed, 18 Nov 2026 15:32:28 +0100
-Message-ID: <20261118150400.101896762@linuxfoundation.org>
+Subject: [PATCH 6.6 1327/3318] KVM: nSVM: Reject KVM_SET_NESTED_STATE if L1 has EFER.LMA=1 && EFER.LME=0
+Date: Wed, 18 Nov 2026 15:32:29 +0100
+Message-ID: <20261118150400.136911601@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,163 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 18a71e111c7505e16c2de91480561fc491f41341 ]
+[ Upstream commit 5dc500a354cc8e109df678076ae3488094649468 ]
 
-When rxrpc_recvmsg_data() gets called on a service call that has received
-all of the request, RXRPC_CALL_RECVMSG_READ_ALL has been set, and this
-causes rxrpc_recvmsg_data() to jump straight out, indicating the end of the
-call (ie. rxrpc_kernel_recv_data() returns 1) without waiting for the call
-to be processed or the reply to be transmitted.
+Reject KVM_SET_NESTED_STATE if the incoming L1 host state has what is
+effectively an impossible EFER combination of LMA=1 but LME=0, i.e. if the
+state says long mode is active but not enabled.  Unlike VMX, SVM doesn't
+have an explicit consistent check for the illegal combination; presumably
+hardware simply ignores EFER.LMA if EFER.LME=0.
 
-rxperf_deliver_to_call() also has to be altered to call
-rxrpc_kernel_recv_data() to collect the final ACK on a service call as does
-afs_deliver_to_call().
+Unfortunately, KVM doesn't ignore EFER.LMA in this case and consumes the
+illegal state when constructing the shadow MMU for L2.  E.g. if userspace
+also clears CR4.PAE, then kvm_calc_cpu_role() will compute a role with 4 or
+5 levels of paging, but shadow_mmu_init_context() will wire up the MMU to
+use the paging32 template, which maxes out its levels at 2.
 
-Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260914151340.3227501-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-10-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Replaced the older rxrpc_kernel_recv_data() return-value paragraph with upstream's Return: section. ]
+Note, the "real badness" is effectively the same as what happened with the
+nVMX bug fixed by commit 112e66017bff ("KVM: nVMX: add missing consistency
+checks for CR0 and CR4").  Unfortunately, the sanity check added by commit
+72e2fb24a0b0 ("KVM: x86/mmu: Bug the VM if a vCPU ends up in long mode
+without PAE enabled") doesn't work for this case, since L2 state is active
+at the time of the page fault, but it's L1 that has the bad state.
+
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+Cc: stable@vger.kernel.org
+Cc: Yosry Ahmed <yosry@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260902232028.2767071-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: adjusted context for __nested_vmcb_check_save() instead of nested_vmcb_check_save() with a boolean argument ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/rxrpc.rst | 13 +++++++++----
- fs/afs/rxrpc.c                     |  4 ++--
- net/rxrpc/recvmsg.c                | 19 +++++++++++++------
- net/rxrpc/rxperf.c                 | 16 ++++++++++++++--
- 4 files changed, 38 insertions(+), 14 deletions(-)
+ arch/x86/kvm/svm/nested.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/networking/rxrpc.rst b/Documentation/networking/rxrpc.rst
-index e807e18ba32ac..257513e446184 100644
---- a/Documentation/networking/rxrpc.rst
-+++ b/Documentation/networking/rxrpc.rst
-@@ -910,10 +910,15 @@ The kernel interface functions are as follows:
-       want_more should be true if further data will be required after this is
-       satisfied and false if this is the last item of the receive phase.
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 141f0a6388e34..a4019175e39d7 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1768,6 +1768,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 	if (!(save->cr0 & X86_CR0_PG) ||
+ 	    !(save->cr0 & X86_CR0_PE) ||
+ 	    (save->rflags & X86_EFLAGS_VM) ||
++	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
+ 	    !__nested_vmcb_check_save(vcpu, &save_cached))
+ 		goto out_free;
  
--      There are three normal returns: 0 if the buffer was filled and want_more
--      was true; 1 if the buffer was filled, the last DATA packet has been
--      emptied and want_more was false; and -EAGAIN if the function needs to be
--      called again.
-+      For client calls, there are three normal returns: 0 if the buffer was
-+      filled and want_more was true; 1 if the buffer was filled, the last DATA
-+      packet has been emptied and want_more was false; and -EAGAIN if the
-+      function needs to be called again.
-+
-+      For service calls, there are four normal returns: 0 and -EAGAIN are the
-+      same as for client calls; 2 indicates that the last DATA packet of the
-+      request has been received, want_more was false and the call is still in
-+      progress; and 1 indicates that the call is now successfully complete.
- 
-       If the last DATA packet is processed but the buffer contains less than
-       the amount requested, EBADMSG is returned.  If want_more wasn't set, but
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index 02bb3ad472eec..9f312f29bb4bd 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -543,7 +543,7 @@ static void afs_deliver_to_call(struct afs_call *call)
- 						     &call->service_id);
- 			trace_afs_receive_data(call, &call->def_iter, false, ret);
- 
--			if (ret == -EINPROGRESS || ret == -EAGAIN)
-+			if (ret == -EAGAIN || ret == 2)
- 				return;
- 			if (ret < 0 || ret == 1) {
- 				if (ret == 1)
-@@ -949,7 +949,7 @@ int afs_extract_data(struct afs_call *call, bool want_more)
- 		return ret;
- 
- 	state = READ_ONCE(call->state);
--	if (ret == 1) {
-+	if (ret == 1 || ret == 2) {
- 		switch (state) {
- 		case AFS_CALL_CL_AWAIT_REPLY:
- 			afs_set_call_state(call, state, AFS_CALL_CL_PROC_REPLY);
-diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
-index 97879faafb5e7..fcb0fd5a4caa0 100644
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -547,14 +547,16 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
-  * @_service: Where to store the actual service ID (may be upgraded)
-  *
-  * Allow a kernel service to receive data and pick up information about the
-- * state of a call.  Returns 0 if got what was asked for and there's more
-- * available, 1 if we got what was asked for and we're at the end of the data
-- * and -EAGAIN if we need more data.
-+ * state of a call.  Note that *@_abort should also be initialised to %0.
-  *
-- * Note that we may return -EAGAIN to drain empty packets at the end of the
-- * data, even if we've already copied over the requested data.
-+ * Note that we may return %-EAGAIN to drain empty packets at the end
-+ * of the data, even if we've already copied over the requested data.
-  *
-- * *_abort should also be initialised to 0.
-+ * Return: %0 if got what was asked for and there's more available, %1 if we
-+ * got what was asked for and we're at the end of the call, %2 if a service
-+ * call received all of the request but is still in progress and %-EAGAIN if we
-+ * need more data.  A variety of other errors can be returned if the call
-+ * completed with failure.
-  */
- int rxrpc_kernel_recv_data(struct socket *sock, struct rxrpc_call *call,
- 			   struct iov_iter *iter, size_t *_len,
-@@ -593,6 +595,11 @@ int rxrpc_kernel_recv_data(struct socket *sock, struct rxrpc_call *call,
- 
- read_phase_complete:
- 	ret = 1;
-+	if (rxrpc_is_service_call(call)) {
-+		if (rxrpc_call_is_complete(call))
-+			goto call_failed;
-+		ret = 2;
-+	}
- out:
- 	if (_service)
- 		*_service = call->dest_srx.srx_service;
-diff --git a/net/rxrpc/rxperf.c b/net/rxrpc/rxperf.c
-index 7b53e06da4587..66565dd24acf5 100644
---- a/net/rxrpc/rxperf.c
-+++ b/net/rxrpc/rxperf.c
-@@ -292,8 +292,20 @@ static void rxperf_deliver_to_call(struct work_struct *work)
- 	       state == RXPERF_CALL_SV_AWAIT_ACK
- 	       ) {
- 		if (state == RXPERF_CALL_SV_AWAIT_ACK) {
--			if (!rxrpc_kernel_check_life(rxperf_socket, call->rxcall))
-+			size_t len = 0;
-+			iov_iter_kvec(&call->iter, ITER_DEST, NULL, 0, 0);
-+			ret = rxrpc_kernel_recv_data(rxperf_socket,
-+						     call->rxcall, &call->iter,
-+						     &len, false, &remote_abort,
-+						     &call->service_id);
-+
-+			if (ret == -EAGAIN || ret == 2)
-+				return;
-+			if (ret < 0 || ret == 1) {
-+				if (ret == 1)
-+					ret = 0;
- 				goto call_complete;
-+			}
- 			return;
- 		}
- 
-@@ -368,7 +380,7 @@ static int rxperf_extract_data(struct rxperf_call *call, bool want_more)
- 	if (ret == 0 || ret == -EAGAIN)
- 		return ret;
- 
--	if (ret == 1) {
-+	if (ret == 1 || ret == 2) {
- 		switch (call->state) {
- 		case RXPERF_CALL_SV_AWAIT_REQUEST:
- 			rxperf_set_call_state(call, RXPERF_CALL_SV_REPLYING);
 -- 
 2.53.0
 
