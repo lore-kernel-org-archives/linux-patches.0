@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021146;
-	b=RWFAwQ4jQIQyEHFS4ZVnsOApZ08xeGHa4fVkA3iiA6Y5FTFMTkFqGx+umz3HkuB90BCT
-	 AJh/p/9MmINdJmypyGz3I0KCFgmn/S6lWKYSJGfK54jVCiAT/s32RZeVnXHM2HIs3p+FE
-	 bJ0NxEj/xSrrQTPOordUq2sqWrCzJj54Vn3s9R2m0ncF3ezf7l42HvCX6PY4N4ajhuWXt
-	 3PULuP1eZfzjLCBPOVHhK/fwtMP2bYfVJcwoTTMEjffs3Zt9COwuSXdV7g4gsVwTdtUfP
-	 7JSKlsdwLcGIJbsd8u7uaxTvLIdIvLo+zF7pNugS6XHYbsTnPnDthVPY8euUU6WT5KA==
+	t=1795021149;
+	b=2vbafEC0lz06wR6D5kC2EN2UwnayfesP57IpqHiyAPeSRZLrS7fcVefCzCe/sf1HQwGx
+	 19e7OQp6LzrrNQYN0EgJ89CHsH3XEsA0AymT6pv2iAPwNFvMhrLCtAEENAmhcZdh2pAt0
+	 mQqwDPvZIFnwdPMPBGl9gOUycEWRJKSyNsCO8iyyjm1I3b2tdwGkxMY8qVDYgdZ4RQeqP
+	 YkzxsPpreZD6rNeT9YTwulXIM+J9UnnllNH/cszOaJzfN36DzSpAR+knxCl1S1E/ZykHg
+	 9UoYLMiJQ/s6Jxq8YNjmrbiPq8fCLfmq7jhdlIlAh+PRtRhHU+oKdATGQUzZOSnLLFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rd+YS4P+IrxuVvtocKR3O+vQAG33KiI8qfyToVcx7u4=;
-	b=Kj0jZXYluzP+FlJEhL4O/CENwlABhhz0DGdcuzRiJzoOrjKwDQmzUpuJohgiBh+N+DlR
-	 PvnRyQOjrh54Bh4CXmWJosQI/jLKT1sPg9kJXojhyuyeyXjLFtAyqgYysMJ/mLel2WEKh
-	 nEkRRyA7fGYBHLLGKl73Po+XdoIvX2hPYTG/+zgH4uVp+o+vTGjvR5NJkcwheYsP6u6P5
-	 XIYL72Im4e6tYKb8boyHo4jiJO2rVVP8qocg53CnZ0BXpFakA0dzpHAZXWMBPhzkAHZ1e
-	 LShvVOh86iAv1LAptTWglgiNRVo3uiBph4cL/Xp8UMp6q7B/YQdfFB0HiM349Trcmrw==
+	bh=ReRrRLBDGZhcB67038isnHLoOsudp2K0NggluJ1/Nwc=;
+	b=PcO0YmHFHzy4I4M9KHeR+i7xjQudDsp+BMrEOB14x40RsrcGDF19bRReQPQf7/oOmZzz
+	 kxfZb7Do5KPrJe8RL5kv6qPsg9AXEkG8eo3+OJsthPHAnPnjPyrBod6pWxuO3kzVrrr6u
+	 4sQK5UFnlYTlqOTgcK6GtU4TWttoqrAvT9yPJqhz2Tjeduj+YRruZ8ctN2qOoFaIGr7iS
+	 izal3DDAyrg0+UC8qQs4Wl+Z8cZbLqIl91nmac6OuIZBoFVKPJugCAEVn7gRggaA/NgwZ
+	 KQZOvyHnbm04KVcAzt4Ufc1q3X6oomhizTePhJYJLlT7WPibmJJSLMDTDox/p2TlHVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywmmXSMp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ShdUUcTy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50677606A31C;
-	Wed, 18 Nov 2026 16:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B7F606A325;
+	Wed, 18 Nov 2026 16:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywmmXSMp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC25C1F000C4;
-	Wed, 18 Nov 2026 16:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ShdUUcTy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAA21F000C4;
+	Wed, 18 Nov 2026 16:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021146;
-	bh=rd+YS4P+IrxuVvtocKR3O+vQAG33KiI8qfyToVcx7u4=;
+	s=korg; t=1795021148;
+	bh=ReRrRLBDGZhcB67038isnHLoOsudp2K0NggluJ1/Nwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ywmmXSMpaRlLFz2mqjbrNZAekiiuidBrweQDO09Ev0fRYJu5A4VMWlgPQKawJSVd4
-	 IB+BgEzBiILoVoNpEQmTozAaj2ituygV/GeMVUDhC22bWDcB1g4dXj36BdcbVTOrUc
-	 RWXQ9O6fXyQUD/Iz/DRS69ium5YCMx8H37stSnMU=
+	b=ShdUUcTyeD7dwdemUX2KSMDkz0Paea8TXpXe7wu1w9w3JCl5/7e1pKX/3XnufU3aF
+	 pd+ZF9u+ly4rstb8c4Xk0LqSd11YT3Fwyw/OS6hCOnsiAjSOAFLQ859ovgzcB/EF/g
+	 cjASU1QSgfjbMzfHZWmy95FsPxvSYao+qXhC6/3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuewen Wang <wangxuewen@kylinos.cn>,
 	Baolin Liu <liubaolin@kylinos.cn>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2203/2651] ntfs: preserve the 64-bit FITRIM minimum length
-Date: Wed, 18 Nov 2026 15:57:23 +0100
-Message-ID: <20261118150405.000279084@linuxfoundation.org>
+Subject: [PATCH 7.3 2204/2651] ntfs: return -EINVAL from ntfs_collate_ntofs_ulongs() on bad length
+Date: Wed, 18 Nov 2026 15:57:24 +0100
+Message-ID: <20261118150405.031185968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,46 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Wang <wangxuewen@kylinos.cn>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit 406747e46dc8eb73b0976b1e459830927d6022b9 ]
+[ Upstream commit 41001a72daa35ead23d74ee7b6f2373f237c0d72 ]
 
-The minlen member of struct fstrim_range is a 64-bit byte count, but
-ntfs_ioctl_fitrim() uses max_t(u32, ...) to compare it with the device's
-discard granularity. This truncates the requested minimum length before
-passing it to ntfs_trim_fs().
+ntfs_collate_ntofs_ulongs() returns -1 when the key lengths differ or are
+not a multiple of 4. But -1 is also what cmp_int() returns for "collates
+before", so the error is indistinguishable from an ordinary result.
 
-For example, a minimum length of 4 GiB is reduced to the discard
-granularity, allowing smaller free extents to be discarded. The truncated
-minimum length is also copied back to userspace.
+ntfs_ie_lookup() acts on that difference: it maps -EINVAL to -ERANGE, but
+treats -1 as a tree-descent hint and breaks out of the loop. A malformed
+entry in $Reparse/$R or $ObjId/$O is therefore silently taken as a lookup
+miss.
 
-Use max_t(u64, ...) to preserve the requested minimum length. The bitmap
-scan already compares the aligned extent length against range->minlen
-using 64-bit values.
+Return -EINVAL, as the sibling ntfs_collate_ntofs_ulong() already does.
+Well-formed keys are unaffected; both indexes use key sizes that are
+multiples of 4.
 
-Fixes: 9c87959601e8 ("ntfs: update file operations")
-Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Fixes: 5218cd102aec ("ntfs: update misc operations")
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
 Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/file.c | 2 +-
+ fs/ntfs/collate.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
-index f8f4418cbcda8..bb8b5613c7a5f 100644
---- a/fs/ntfs/file.c
-+++ b/fs/ntfs/file.c
-@@ -888,7 +888,7 @@ static int ntfs_ioctl_fitrim(struct ntfs_volume *vol, unsigned long arg)
- 	if (range.len < vol->cluster_size)
- 		return -EINVAL;
+diff --git a/fs/ntfs/collate.c b/fs/ntfs/collate.c
+index 77e34038902d1..744fdfd7bf585 100644
+--- a/fs/ntfs/collate.c
++++ b/fs/ntfs/collate.c
+@@ -73,7 +73,7 @@ static int ntfs_collate_ntofs_ulongs(struct ntfs_volume *vol,
  
--	range.minlen = max_t(u32, range.minlen, bdev_discard_granularity(dev));
-+	range.minlen = max_t(u64, range.minlen, bdev_discard_granularity(dev));
+ 	if (data1_len != data2_len || data1_len & 3) {
+ 		ntfs_error(vol->sb, "data1_len or data2_len not valid\n");
+-		return -1;
++		return -EINVAL;
+ 	}
  
- 	err = ntfs_trim_fs(vol, &range);
- 	if (err < 0)
+ 	len = data1_len;
 -- 
 2.53.0
 
