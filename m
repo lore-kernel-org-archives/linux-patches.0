@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050973;
-	b=J+x5H+/ticy3zF1aKOnQ2hyCXLhwhULWPF20/8vHUWw7ycYKXdHQcnkebv7EQdG651uI
-	 WwCeH++2Agnj9UKVGd9YWc2TeeoD7NQTqJ0UDKTgkxGYx8IW/gOWyXek07qmlDKhb7+ki
-	 JJy5zzG+b1QKGQNcV6Io2dKOYhRF40FS16ICrZnUKnK6czcX81xsiyXG+kGQiXGlisVyh
-	 dFn2PWybiqMDB1XTT8o4GhK0OGVvT7KJetLoXIOyRvKN7D+rySsn5MFU/CSc+JaBb1FfS
-	 mqWGlOm3w9UDCvfam/+WvOJwZEQvgaTe0kPbJNSgSV6E+oPqdQaYF2cVdOSKOrlsQsg==
+	t=1795050976;
+	b=lpFaLF7ubk5di/0wBFe+mQMEgXFqan5vneZHZ5JNkNETHF+LzD3kkSFoL+TXa0tazFd8
+	 xaYw7/XQnsLnslM9SKWPNjINYlXfOurAk4EP1ORFHEeOwbcdK041m+bcPEqtcRGiW7HvD
+	 2QzMMPJmqO0UyWW5Zea0BppUto91qUppnx6x++Xi7+AvJnYmpmZzlpojTKkfugpwFnoYA
+	 tlaWRLU6v2FVwNDo+a4sXAeOA8lTVkUSvwvL3N92d8LpiVOyBRfJB+SusXq/MTa8bWK6N
+	 jLltvnzK04RglRKHnWrh6gQi8yEfTn7xHTCpgla3m+5H6k4O84i5YIS4Kep5qz/rtvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iCevrzCrzPYcP5NpXfVLe61KGZsY97KPMDBA0LXv/Yw=;
-	b=ilCdyLF3eusDOE2moXtQm7SyV+B0Lm6sWUTfvNGF7TGQADt6V2fNt+iaLUQBqjTcJkgh
-	 AS4YJaK56F5W7bbonKZ20OCNqb4PTmurM4fRkNgWJHkFcx9wJcZ7hFx8MWcpWQezEAHee
-	 pO3PkJZH3UThLhCC8BX1jG+kWM8MAlZ0j7zMHQNHPToEnJwTEIDdXQJiPr52asemzBlsD
-	 0SeeRkLu08py2egVXVAbKzVAaQQcNqibD9aD+qHn3Gc/cVT7JgO6LpSxm1fknQC+3hcE4
-	 qk/d2LksebQ94jMgRNFkDskWopMXS9MaDivJN5T97aczPQ3GAfFu+TfHs9U5alAumlA==
+	bh=t+dp1pP0xamwz4n53lyfc97sCh9LQ3eNYV0gy9DVX6k=;
+	b=pq8UueEisENy9fTLshXwYCDIOAHwT+UXSJ1t7xS0eiNsxs3pT7bl9DXdn5xnSFTdITIQ
+	 Vy4+PaQhb5gDxkBN5Y4huabh+jlOVjI/6n+bO3Pz+AnMevYjVGfe4eIheEO4nnXCma3/N
+	 We0C8R1qA29TfOa4k43TabUxuXv+MOpTBNvnId4HFQyvfmMzYVK/Zbds9Gxt5UsaaML6A
+	 ipscDTsAi7VVwBczzkyAv6MIqHwJAg8FJmwQcDgEu99YFZU910zwCRDG+6UE/D5ZXLMK6
+	 KsWVNXdb5iGP8il2CbT9buWaAST/ORgugszD/1eNu+Fg4lUrnBkQmAl7FMdU5WrS+Sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuWudALT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vExIB/01";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB876606A320;
-	Thu, 19 Nov 2026 01:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89576606A31C;
+	Thu, 19 Nov 2026 01:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuWudALT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9901F000C4;
-	Thu, 19 Nov 2026 01:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vExIB/01
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCF61F000C4;
+	Thu, 19 Nov 2026 01:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050973;
-	bh=iCevrzCrzPYcP5NpXfVLe61KGZsY97KPMDBA0LXv/Yw=;
+	s=korg; t=1795050976;
+	bh=t+dp1pP0xamwz4n53lyfc97sCh9LQ3eNYV0gy9DVX6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuWudALTQpdUJ2nGStsGhz+T6Gem6NtICYDaa5bFHXFS6YO9Cfxva3fsWbt9Y2oUs
-	 NUiGVMuBqsXgXtUOIE/clAxEP8bigdKAnG3PqcoiXVzVcHose5qx0X9Dyo8mX2sjWW
-	 fk2XcNhDkS2rH944j5osuWCf4D+yjL4LfH2yPcUY=
+	b=vExIB/01+U4IsOaDTF4+zRx9jau1Qxms2c/Gs4JKzb4sXXYbddXNe8K2PFkfCHrd+
+	 ex7osYxZ3K0Dakpwn6gnSyP9H2sJt5adlo1mJSBI3/F7GVXXOiCCHiyTtaWqyrTPTc
+	 nr3Awhrg9TvmFx4xPQ0YykP4O0toJPxc8ImVNkIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>,
-	Denis Arefev <arefev@swemel.ru>
-Subject: [PATCH 5.15 0012/2214] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
-Date: Wed, 18 Nov 2026 15:28:08 +0100
-Message-ID: <20261118150010.637131611@linuxfoundation.org>
+	stable@kernel.org,
+	Zizhen Liu <pointerliu@126.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0003/2214] net: skbuff: propagate shared-frag marker in skb_zerocopy()
+Date: Wed, 18 Nov 2026 15:27:59 +0100
+Message-ID: <20261118150010.147157752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,71 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zizhen Liu <pointerliu@126.com>
 
-commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 upstream.
+commit 79dc34beb1fdb3da79753e51e15c68591a2561fe upstream.
 
-svdm_consume_modes() checks pmdata->altmodes against the array size once
-before the loop over the count, but forgot to check the bound at every
-point in the loop.
+skb_zerocopy() moves frag descriptors from @from into @to and takes a
+reference on each frag, but it does not copy skb_shinfo(from)->flags into
+skb_shinfo(to)->flags.  A destination skb holding the same page-cache
+backed frags as the source therefore reports skb_has_shared_frag() as
+false.
 
-In the well-behaved SVDM discovery flow this is harmless because each of
-at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
-modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
-CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
-ACK with any request the port actually sent.  Once port->partner is set,
-an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
-or malicious port partner can therefore drive altmodes to
-ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
-Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
-the loop could then writes up to five entries past altmode_desc[].  For
-mode_data_prime the next field in struct tcpm_port is the
-partner_altmode[] pointer array, which then receives partner-chosen
-SVID/VDO bytes.
+That breaks the invariant relied on by later in-place writers.  ESP input
+checks skb_has_shared_frag() before deciding whether an uncloned
+nonlinear skb can skip skb_cow_data(); with the marker lost, an skb that
+skb_zerocopy() built for nfnetlink_queue or for an openvswitch upcall is
+decrypted in place, letting an unprivileged user write into the page
+cache of a root-owned read-only file.
 
-Move the bound check inside the loop so the array can never be indexed
-past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
-supplies or how the function was reached.
+Propagate SKBFL_SHARED_FRAG when frag descriptors are copied, as done for
+the other frag-transfer helpers.
 
-Assisted-by: gkh_clanker_t1000
-Cc: Badhri Jagan Sridharan <badhri@google.com>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Denis Arefev: adapted for 5.10/6.1: tcpm has no SOP' support here,
-svdm_consume_modes() takes no rx_sop_type argument and has a single
-pre-loop bound check instead of the two in the SOP/SOP' switch;
-drop that one check and add the per-iteration bound check]
-Signed-off-by: Denis Arefev <arefev@swemel.ru>                                    
+Fixes: af2806f8f90a ("net: Export skb_zerocopy() to zerocopy from one skb to another")
+Fixes: f4c50a4034e6 ("xfrm: esp: avoid in-place decrypt on shared skb frags")
+Cc: stable@kernel.org
+Signed-off-by: Zizhen Liu <pointerliu@126.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261022104217.1852191-1-pointerliu@126.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adjusted context in skb_zerocopy() due to missing from->unreadable propagation. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/core/skbuff.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1536,17 +1536,16 @@ static void svdm_consume_modes(struct tc
- 	struct typec_altmode_desc *paltmode;
- 	int i;
- 
--	if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
--		/* Already logged in svdm_consume_svids() */
--		return;
--	}
--
- 	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
- 		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
- 		return;
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3241,6 +3241,8 @@ skb_zerocopy(struct sk_buff *to, struct
  	}
+ 	skb_shinfo(to)->nr_frags = j;
  
- 	for (i = 1; i < cnt; i++) {
-+		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
-+			/* Already logged in svdm_consume_svids() */
-+			return;
-+		}
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
- 
++	skb_shinfo(to)->flags |= skb_shinfo(from)->flags & SKBFL_SHARED_FRAG;
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(skb_zerocopy);
 
 
