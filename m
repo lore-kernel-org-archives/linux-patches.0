@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029696;
-	b=Mq3YT7O5PHot3TB5PD4vKq/9+Y9P+/fHK5L+wqSXa7OQ8SEVyuVLxyDgK8RL2BT1YgIl
-	 oRth3k6D9jzvMqxx2k4FvaNRF77mq39BB4hpQqlqQDDX2qFs88JBysFSgTTz8Wygmjrfd
-	 X5VTueweiJGAfJcbdsHLCn1aUxvOqfwPAdM+/MID39Jkd8lDVawr3Vb+Qbmdmk0StFqzT
-	 KfLmvhxm1bMZ0rJHrwFlMb2X0FxSZeM2RBQrep0b3TLL5l1pja2lMuBTQ+Zki3Ibzp7/R
-	 qSRAiO6uIijw0R34unZkDHgDsas2L05cA5ZBdmknK+v2S8OfGhko+UJ31OMfWcb9WlA==
+	t=1795029698;
+	b=XUPNJxSke9xZGzTdSHKTCeRw6njdUkHVFMPMXziMlMsS1MqnBj6Fs4xORONZFXE40Xil
+	 PDcos5+FHuGCsqapZnIQ8N0DZ+RA2zXgcNzwgZP5+FFr8TG9WmNAF0xvTehkooT1jaEdO
+	 UTp2+pv7cg4YqbOmX3y5kR81WAly6B6lTiWHDFGE+G/YzeUv+LF86pRWM8kYsiIGfFM1o
+	 aLbc7shF5NnZU7drMvRGGDQdTjLxAiQehYw6dRToPfMvld0rqJGs8A7KtShlcTu+BjHGf
+	 +O5/XQRsoOHMG3bf4T7vAq92OJ8qh6yPvEVvgK9ocSBvxmoQKL29oThxpf8KPkSRJUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029698;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xTZ1zYpD4WJ0qQ9stTJJACmKLzpx4E0GSDSXkKi/AGc=;
-	b=OJlW6gtIOeTwzanJV2f3se5c6lkCjn52Y3exBmZKDmdVdVM14WR8SW/+QX6UZ0J96zEY
-	 Zpe4c0fjzJrcrepnzbMogwmOTL+c1BaFh9qI4vwBDVpElVcm1H2lFa/FBALqr65bwyPXE
-	 vtoJn+vwwE+wB8tvSAAar2c3Z37850XLezDy3QCooBVZo55lScKg/eTzabup398CyluGq
-	 MICAmTDTLeNj9elXtlUtS58N1JnH/agURP4D8OM5leFiLrO1ZiYAnD25mU60VsERpoE2/
-	 jKzABCot8ns+KHCgJ9l447NYVTBOCL7IUdXUjMc1Zm76sparvNa8gsn4WXEcQRBcbkQ==
+	bh=zzjo4wgM8UoqiDZaVVASULe+fmlJDyP3cuoAK61vGcw=;
+	b=YBB1Gfk64qMCmZMeBcqP+tl95xwcBTtdLJCxc4++tkIjzPA4Umq+IBdJoPfeozETc4ve
+	 42vekFG3QMSMluf96/AVzrdSb46buFagwzpnw2rUpwUuJ9pjibuoysR1LivUgzvYnLeD7
+	 LNneXjxKVfQopEwuDJ9Ok8bLgiKtCYXoaD8IdgpijGIzRGHehgcp9yUtqbZ/EKQ79Zvtv
+	 yXkBrznPiqLcBBchsqgy6ekvYitCTdptzyZ70kI2Me3RF1Lakf1ZuA8FBqhWiPyIqCh+v
+	 +YffRl21xLy0OhQSlHqLqPU1JVqfilK6RxOZZsZA+146LST7SErnEa+yHPc9SSObb9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hJQ1vj19;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dPGoP+lN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC13606A31C;
-	Wed, 18 Nov 2026 19:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF32D606A31C;
+	Wed, 18 Nov 2026 19:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hJQ1vj19
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511581F000C4;
-	Wed, 18 Nov 2026 19:21:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dPGoP+lN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1061E1F000C5;
+	Wed, 18 Nov 2026 19:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029695;
-	bh=xTZ1zYpD4WJ0qQ9stTJJACmKLzpx4E0GSDSXkKi/AGc=;
+	s=korg; t=1795029698;
+	bh=zzjo4wgM8UoqiDZaVVASULe+fmlJDyP3cuoAK61vGcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hJQ1vj194AkqKzpgUjJT0Zb4LlChXOOJXp+rWkhDAiZvR5ljAYyYUUWNSVoQzbVxe
-	 Geiiz9UOjBhTokhWvlE0W8g3Ds39wxyHhaliBt/HDeyq+kEj4+EkI5inD/aLZc4heT
-	 sxWU6yzfEFvvDcsCGY3xTifOVmBQmlJyX1/hrmPo=
+	b=dPGoP+lNfDzFVfojZuuHPosuzgY+UBQNZ0dbASW3jptNr/+BxMewKGPwzoysOXggw
+	 ojtP+h29XrZes5aLKWDnFYNnArVrWD4ANE03B+f6PnjkXlyx96ESOLhz9j/H/g9Bpp
+	 wSmmCn0lqeefrtzFavJc2rp0v3kijLMrDhR/CA0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0441/1756] clk: milbeaut: Return divider update timeouts
-Date: Wed, 18 Nov 2026 15:42:48 +0100
-Message-ID: <20261118150026.294981513@linuxfoundation.org>
+Subject: [PATCH 6.12 0442/1756] drm/amd/pm: bound SCLK FCW range entries to the table size
+Date: Wed, 18 Nov 2026 15:42:49 +0100
+Message-ID: <20261118150026.332129546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,64 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit 92d0998090d1716ee6b47174c10eb9415a12fca8 ]
+[ Upstream commit f35aa5c77f5fca20fc269d6221df19c7b96704a5 ]
 
-m10v_clk_divider_set_rate() logs when the hardware does not clear its
-write-valid request, but still returns success to the clock framework. It
-also uses the sleeping poll helper while holding the divider spinlock.
+atomctrl_get_smc_sclk_range_table() copies ucSclkEntryNum entries from
+the VBIOS SMU_Info table into pp_atom_ctrl_sclk_range_table. Both the
+source (asSclkFcwRangeEntry[]) and destination (table->entry[]) arrays
+are fixed at MAX_SCLK_RANGE (8) entries, but ucSclkEntryNum is an
+unchecked u8 read straight from the VBIOS, so it can be up to 255. The
+destination is stack-allocated in both callers
+(polaris10_get_sclk_range_table(), vegam_get_sclk_range_table()), so a
+count above 8 overflows a stack buffer, not just a heap read.
 
-Use the atomic poll helper under the lock and return its timeout so the
-rate change is not reported as successful before the hardware accepts it.
+Reject counts above MAX_SCLK_RANGE rather than clamping to it. Only
+one version of this VBIOS struct (ATOM_SMU_INFO_V2_1) has ever
+existed, so a count above 8 corresponds to no legitimate table format
+and means either a corrupted or a tampered VBIOS.
 
-The issue was found by our static-analysis tool and manually reviewed.
-
-Fixes: 6a6ba5b55a72 ("clock: milbeaut: Add Milbeaut M10V clock controller")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: a23eefa2f461 ("drm/amd/powerplay: enable dpm for baffin.")
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-milbeaut.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/clk-milbeaut.c b/drivers/clk/clk-milbeaut.c
-index 18c20aff45f76..ef4d8f862f5cb 100644
---- a/drivers/clk/clk-milbeaut.c
-+++ b/drivers/clk/clk-milbeaut.c
-@@ -411,8 +411,8 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
- 				unsigned long parent_rate)
- {
- 	struct m10v_clk_divider *divider = to_m10v_div(hw);
--	int value;
- 	unsigned long flags = 0;
-+	int value, ret = 0;
- 	u32 val;
- 	u32 write_en = BIT(divider->width - 1);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 6a85a3111facf..d992b1aff5c67 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -1453,6 +1453,9 @@ int atomctrl_get_smc_sclk_range_table(struct pp_hwmgr *hwmgr, struct pp_atom_ctr
+ 	if (!psmu_info)
+ 		return -EINVAL;
  
-@@ -434,8 +434,10 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
- 
- 	if (divider->write_valid_reg) {
- 		writel(M10V_DCHREQ, divider->write_valid_reg);
--		if (readl_poll_timeout(divider->write_valid_reg, val,
--			!val, M10V_UPOLL_RATE, M10V_UTIMEOUT))
-+		ret = readl_poll_timeout_atomic(divider->write_valid_reg, val,
-+						!val, M10V_UPOLL_RATE,
-+						M10V_UTIMEOUT);
-+		if (ret)
- 			pr_err("%s:%s couldn't stabilize\n",
- 				__func__, clk_hw_get_name(hw));
- 	}
-@@ -445,7 +447,7 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
- 	else
- 		__release(divider->lock);
- 
--	return 0;
-+	return ret;
- }
- 
- static const struct clk_ops m10v_clk_divider_ops = {
++	if (psmu_info->ucSclkEntryNum > MAX_SCLK_RANGE)
++		return -EINVAL;
++
+ 	for (i = 0; i < psmu_info->ucSclkEntryNum; i++) {
+ 		table->entry[i].ucVco_setting = psmu_info->asSclkFcwRangeEntry[i].ucVco_setting;
+ 		table->entry[i].ucPostdiv = psmu_info->asSclkFcwRangeEntry[i].ucPostdiv;
 -- 
 2.53.0
 
