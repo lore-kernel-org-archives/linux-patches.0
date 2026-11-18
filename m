@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030076;
-	b=gUVffYT8BexxXSCMXVdyf3qehC2TINfWMpuXsNjr2j0xkCjs0TXOMj3LBE8/5Y+eZS7a
-	 6xPdNhZdEM27yVSH11sYr3BEopcXhBkTpQVsoOGztb5zTgWCKW2KW27BJaYWhdIfSMoJX
-	 laHOFetKhfWhz/A5Zga7B5ftpwyMsNcoL5ttRg8oXjrxNpzQgMZtyt/ppPzsXdYZVFVT0
-	 tYvxIO/ttKBRvuL7tTZXXb3+F94KVZo2iPNU2BreVp4xNpsqkCeO8fUhl98YniV50xRaf
-	 GSDENMOSboSzOZZ1S5xkK8eAoqsH2STELyYuyofi0QthoAk8T4Pa9l4xo+v7HzBc5KQ==
+	t=1795030079;
+	b=Z5XE+2jx3B2JgVGYqvks/3SSdis02ra0HDvpxULp+CINjN4RA6o0V/qCyGwMmiCfTpHK
+	 Rt4zM/+tcM0mp87pBloXzyxh0NxHEfC0uEPwHv3+HhXpqN2dQTlYuZjjEimh810hGMDrY
+	 LogXtZ6ECmV+f3xeu8MMObpq3UhRkm+CWOk/cKP1uAH5lD3RBC6eMgTR2DjJ3hIiddaI7
+	 hNJ3WnIC8KHndQ9j7e05ptk2fic53ZvkuFFWi8NoMNUofc2jNVrJk3815UqeB9A98s+in
+	 n+M7GsZG5ztNMlYs8SBsrhaEnPUvIykVuXPVC1dnc412AQL1nFa5PLnB8NItTThM7dg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ggB2wbtfc50h9jr+qxh8p8Ud+PHajt0QmnOsJkD6g4E=;
-	b=j4hA4N4b54ejekXGifrm6Og6ipJelQmROJjQ37QyTgfPqCOMbxZPtv/XPwT4Ots8c0D6
-	 dstkKyYNuivSem6Pd5E16j217Abof+ayWLC0kQD0WWV9rNjqqX2yvuxB0rZNll+Qd67uT
-	 sF0phYblAwlzIduXg4y1dhTLdMsNlRpCRP5GFRco0zpgkmQd9Hoz56xctR6Tzkg9MlemV
-	 ZpsTdW7htkMz6HlHSIy0jouUIIZakL1gVocRGYC3ccPyhdIoz5/0Rm24jUEI3yyXP4Pub
-	 DLYLaF0HYLxtM5/W10r8C9fPb4cXtDdsf1f3iIXssDBLCbQ+Mq9T8A2v59i+zPZ2xvQ==
+	bh=QP2c7qZNT91u4FVDBrjEHfljRj9F93JgNrR27W1IHEs=;
+	b=4mDHc4fxoEa0AmsHZQ7tsYxaV5fxwGg20iy1HhE07plIJLU9HkItedmiQkykR8pvDNlu
+	 EzcGKCmlo0FIrXRVi3r3OEv/Hn6WAAdX40kDqUPeDpk6lwGqLaEcnbEUYw5bJ+LOK6Peb
+	 XSJT8lyuMiIzFTYS7XL3KCBMNhqmQgSw0PZbp1ItEi4OwHqWTEOPXcNsUowcxQPNnDcmg
+	 0ZjB1CV+3AQHjrpMEKAj1RXRO7uQiaWYkshkufS7Bom4zSFB2ikvoh+vUPBZ9SYEAF/2B
+	 NbdyyQoxS/yfKxsSFi4ISrGwhqFEWaRf/INSqjv1B/IRI0YE6AWfXAtUeTwUrnOJj1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfHZIXG4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vzr6vPXh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F1A606BB63;
-	Wed, 18 Nov 2026 19:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4BF606C713;
+	Wed, 18 Nov 2026 19:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfHZIXG4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CB41F000C5;
-	Wed, 18 Nov 2026 19:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vzr6vPXh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDED1F000CA;
+	Wed, 18 Nov 2026 19:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030076;
-	bh=ggB2wbtfc50h9jr+qxh8p8Ud+PHajt0QmnOsJkD6g4E=;
+	s=korg; t=1795030078;
+	bh=QP2c7qZNT91u4FVDBrjEHfljRj9F93JgNrR27W1IHEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfHZIXG4zomLBCj6Egq+9OuvkNskq/AeHZeAxifQWoAXDnH9XFFFrm+/XBCU5Ohcc
-	 u3493xrIPmKaguRRUjfUwwPqSDeoRDiBLDZBD3F6WpTA1hHVbQYGpNp3OTUvflApvR
-	 49y3znpor5QN6kin3YdLwxSOpeFEyJnT6kQacnN0=
+	b=Vzr6vPXhSi2I+Z6NhM7hXtJxLcbvffgsJNYaaJ7KlED42+GlnQ8Fg5ZnO+hRUg4eP
+	 Y5DxMxw2jh9dDTc9TLqKxf1uPPWfzwdV8Xj8f3QRa2IF9N0i7l5kyakXoLsxISMiA5
+	 O+xpaQ1NTBXbnPeWJQ8ghCJ/HbH9xVSr+T2SFrtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0576/1756] ASoC: rt5665: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:45:03 +0100
-Message-ID: <20261118150031.977776867@linuxfoundation.org>
+Subject: [PATCH 6.12 0577/1756] ASoC: mediatek: mt8188: mt8188-afe-clk: Handle tuner clock enable errors
+Date: Wed, 18 Nov 2026 15:45:04 +0100
+Message-ID: <20261118150032.011456147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,49 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 9f2933d9a437302d5ae32eb9022efef049d8ab22 ]
+[ Upstream commit a2c3ee3349a7da91e563b9a21a355a28fa754bc7 ]
 
-rt5665_resume() restores cached registers during component resume but
-discards the regcache_sync() result and returns success. A failed replay
-can therefore leave the hardware register state stale without reaching
-the component error reporting path.
+Clock enable errors are currently ignored when enabling the APLL
+and tuner clocks.
+Check the return values and roll back the APLL clock if the tuner
+clock fails to enable.
 
-Return the cache synchronization result. The ASoC component wrapper
-reports a negative callback result and retains the established
-best-effort resume state, so this adds observability without introducing
-rollback or retry semantics.
-
-The successful resume path is unchanged.
-
-The issue was found by a tool we developed.
-
-Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-15-pengpeng@iscas.ac.cn
+Fixes: f6b026479b13 ("ASoC: mediatek: mt8188: support audio clock control")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260907120310.135693-3-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5665.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
-index 4f0236b34a2d9..2f9b1c305cf0a 100644
---- a/sound/soc/codecs/rt5665.c
-+++ b/sound/soc/codecs/rt5665.c
-@@ -4485,9 +4485,7 @@ static int rt5665_resume(struct snd_soc_component *component)
- 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+index 7f411b8577823..b41069b752a94 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+@@ -260,15 +260,28 @@ static int mt8188_afe_enable_tuner_clk(struct mtk_base_afe *afe,
+ 				       unsigned int id)
+ {
+ 	struct mt8188_afe_private *afe_priv = afe->platform_priv;
++	int ret;
  
- 	regcache_cache_only(rt5665->regmap, false);
--	regcache_sync(rt5665->regmap);
--
--	return 0;
-+	return regcache_sync(rt5665->regmap);
- }
- #else
- #define rt5665_suspend NULL
+ 	switch (id) {
+ 	case MT8188_AUD_PLL1:
+-		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL]);
+-		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL1_TUNER]);
++		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL]);
++		if (ret)
++			return ret;
++		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL1_TUNER]);
++		if (ret) {
++			mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL]);
++			return ret;
++		}
+ 		break;
+ 	case MT8188_AUD_PLL2:
+-		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2]);
+-		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2_TUNER]);
++		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2]);
++		if (ret)
++			return ret;
++		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2_TUNER]);
++		if (ret) {
++			mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2]);
++			return ret;
++		}
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
