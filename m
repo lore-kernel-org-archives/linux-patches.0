@@ -1,59 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054444;
-	b=HpOFNWhIaSuaz1WRzk0/X3yv81xOvt/EsBU7P8ziD0sjcmxNFQsBVpFtnf8081nj27E6
-	 /UqztadfrTYK1nVwlOLcrJ72O/jO1NmVjVAbW0+Jh2Of4wT5rkxKiPsR/+v7h2FfXOpM5
-	 Hrkdc2VxIwqVIVjoa9xtHBsl9oMfFlMGQT6IKcxR4QrP01uPBlX+62AENnNc1RMPuaIC/
-	 iOY1sOwWhvD5PRqPFi+mdCUve33jvUvoBdZWkCLZpcAN6GZkBdw9vbP+ho983Iod9EpMq
-	 qt11T16RRBDu/H/AriZL2XCXVNydg8mwZYapQSQFkW5vr8E3FEP0tnZzlQ55XKbE0fQ==
+	t=1795054446;
+	b=yuMk4nLAqVJbfxDvoTW57spktNMXrb27GwsAW0syNxnQ8EXDR0n61ulAs+SuObg8dOn2
+	 dnBOxDpzYMv9mGO44jOJLZRvBpy6EqpsN5xgfE88ETuGc82dIO4JrRzHHfYrMB99P4Who
+	 dBfFt9ismCWvXhoqYGyyybU1DT314/Sw/aNQ7nGUSDdMcM1BKnqi3WqMx+7ommkQDv5SE
+	 s1J/ivc1AVty27cXP5GzAFNikfgAe07PTwiPPgyHpwbvfOQHNoz6vonuE5jkvozvvG+Q3
+	 u5ia4sBBtLOhnAkZoDeNWs0JplfdD7PQec5zWyUhVME/2V88EMvwVVVgMJSBH/1PjlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6uSd1ZWXfJZZYPJPPWe7I3E8M21r2rrzsjEZx2zHZq0=;
-	b=RuTA9Wjpoz+MlEaHQHWIolIbgzjhWXMQPRCaYh3P3bsOmWT1RuSOTqqyQsVAS69qyQk+
-	 Hlb1b3M4vu5QkIpMWBZrINHB0Zl7ocKeD716COmYMIfBM2+TkO9zVDsr5fTOe0ebph0Wp
-	 Xeq0iSaS2Ur2NtzUEdDBVoceGzWy3ZxxWDIofjVSw0+f33Yae9LCIV7YWsrFzy91pGcrn
-	 wU8mKOtxsHSeaOZURcJwdVdu5KXnRI3mW7Yw7V/q/UfvpecoZ6jh1AdHjdyWUmfCOUZev
-	 nJuQ6Mwx8qYqFcXEzAEUuEpi4QhIKb1DhZ+x1X2xYPHcGovfODuMZ399ZdPdn6Wfbmg==
+	bh=y1QVfMI2c94kLNNnG2LD4QcfMzA+tMN05TkZOosXogc=;
+	b=Tze63mazrybUBhIbv1pLkyNxU1olP6t4bL+MQOymSdemTpMZXVtHsaetjm8UZuEBw2FP
+	 88uc5+oGc2OMWJ5YBeGPbMSl7frSn3xjwliZPQgFQ5SuLv96zfUE72nu/liisUnCFht8d
+	 5u1GcGiA7lbts+e29EQ7IXJpb13sHflMhSVVJe0gwconRsSTBkWm02CqU0tNbfb0Y3IhL
+	 MgR8rWqIkO43Kl5N+TNptcuHInmOVeTz4ClsrfWCCrzyD3OWKeltVuc7EsoKp5jqsCBnb
+	 qVMxxlsTgnm/Si33VSFA3+/vG7C9gsn+4V9xlUDqAf8sclvvZa8PHnPwYI11i6NO34Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbQpE+7+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqnd7zyo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB379606A320;
-	Thu, 19 Nov 2026 02:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89D6606A31C;
+	Thu, 19 Nov 2026 02:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbQpE+7+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5109A1F000C4;
-	Thu, 19 Nov 2026 02:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqnd7zyo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EADD1F000C4;
+	Thu, 19 Nov 2026 02:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054443;
-	bh=6uSd1ZWXfJZZYPJPPWe7I3E8M21r2rrzsjEZx2zHZq0=;
+	s=korg; t=1795054446;
+	bh=y1QVfMI2c94kLNNnG2LD4QcfMzA+tMN05TkZOosXogc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbQpE+7+FrpCVK49u9EfwQ/7FwXa0J+NYa7Jz4InMfpbyyJvN+pzNbl9vxvM0pkSw
-	 FTRnVOUpS3AsUapTtGgnwwspZnoC+v59hy1tBUL0pl2yJ4UdX9T9AMlF/HqHOv414t
-	 VrzlnvHvDmoy5rtJpfuyBvItE0bhqgLu5bpp45yQ=
+	b=oqnd7zyoe4nJZroXMmiJsOfjQekRqTJ61yMye4RaQnoyuCdBvB5AXKIdnHjD7TtLa
+	 V319kemVSE8si+PEcdqb8rj4YHHf5hjK/233JFWJAqa+NM/hHfMxKmMZ0JphB0j4p/
+	 7p7QbI4vyOCOAbLw0tgE2v/yDNdrQPH2o7R0au50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eklavya Singh <eklavyasingh2106@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+5d4e96acd0febccb5e87@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	David Hildenbrand <david@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Michal Hocko <mhocko@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1275/2214] ocfs2/heartbeat: serialize concurrent writes to a regions dev attribute
-Date: Wed, 18 Nov 2026 15:49:11 +0100
-Message-ID: <20261118150102.589742109@linuxfoundation.org>
+Subject: [PATCH 5.15 1276/2214] mm/mempolicy: apply bind policies against the scoped allocation zone
+Date: Wed, 18 Nov 2026 15:49:12 +0100
+Message-ID: <20261118150102.625869492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -75,222 +75,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eklavya Singh <eklavyasingh2106@gmail.com>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-[ Upstream commit 0a8f258c0f012314c36b9e4818cdc0178c68f891 ]
+[ Upstream commit d4ea410ce4b8aa46a316476ea2624a357bf31fa9 ]
 
-o2hb_region_dev_store() checks reg->hr_bdev_file to see if the region
-is already started, but nothing stops two writers from doing that at
-the same time. configfs only serializes writes through the same open
-file, so two processes that each open the dev attribute can both get
-past the check:
+QEMU fails to start a guest with a VFIO device when guest RAM comes
+from a memory backend bound to a movable-only node:
 
-  A: hr_bdev_file is NULL, opens file A, sets hr_bdev_file = A
-  B: hr_bdev_file is NULL, opens file B, sets hr_bdev_file = B
-  A: start fails, fput(hr_bdev_file) drops B, sets it to NULL
-  B: start fails, fput(NULL)
+  vfio_container_dma_map(0x55b1b1317800, 0x0, 0x10000000,
+                         0x7f39a2200000)
+    = -12 (Cannot allocate memory)
 
-Both calls also use the same hr_slots, hr_slot_data and hr_tmp_block,
-so the error paths can free the slot data twice.
+VFIO pins guest RAM when the device is realized, and the pin faults
+the pages in. io_uring fixed buffers fail the same way. Faulting the
+range in before pinning lets the same pin succeed, since resident
+pages are migrated off the node instead.
 
-syzbot hit the fput(NULL) with an unbound loop device, where every
-start fails with -EIO. With four threads doing the same thing on a
-KASAN kernel I get both crashes within a second:
+A long-term pin faults under memalloc_pin_save(). PF_MEMALLOC_PIN makes
+current_gfp_context() clear __GFP_MOVABLE, but policy_nodemask() tests
+apply_policy_zone() against the caller's gfp.
 
-  BUG: KASAN: double-free in o2hb_unmap_slot_data+0x14d/0x2f0
-  BUG: kernel NULL pointer dereference, address: 0000000000000158
+The bind keeps its movable-only nodemask, and the allocation finds no
+usable zone:
 
-Add a mutex to the region and hold it in dev_store(), in the
-block_bytes, start_block and blocks stores, and in dev_show(), since
-they all look at hr_bdev_file. dev_store() cleans up with goto, so it
-takes the mutex in a small wrapper rather than with guard(). The mutex
-is dropped while dev_store() waits for the heartbeat to become steady,
-which takes seconds, so a read of dev doesn't stall behind a start.
-hr_bdev_file is already set at that point, so other writers still get
--EINVAL, and the cleanup after the wait retakes the mutex.
+  page allocation failure:
+      order:0,
+      mode:0x140dc2(GFP_HIGHUSER|__GFP_ZERO|__GFP_COMP),
+      nodemask=1,cpuset=/,mems_allowed=0-1
 
-With the patch the same test ran for 10 minutes with lockdep on and
-nothing was reported. So did a second one, with a working loop device,
-that interrupts starts during the wait while other threads read and
-write the attributes.
+  Call Trace:
+   warn_alloc+0x136/0x150
+   __alloc_frozen_pages_noprof+0xed8/0x1720
+   alloc_pages_mpol+0xaa/0x170
+   vma_alloc_folio_noprof+0x65/0xd0
+   __handle_mm_fault+0x137b/0x1ac0
+   handle_mm_fault+0xa0/0x270
+   __get_user_pages+0x250/0xfd0
+   __gup_longterm_locked+0x116/0x870
+   gup_fast_fallback+0xcfc/0xdf0
+   pin_user_pages_fast+0x47/0x60
+   io_pin_pages+0x9a/0x110
 
-Link: https://lore.kernel.org/20261020212339.46591-1-eklavyasingh2106@gmail.com
-Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Eklavya Singh <eklavyasingh2106@gmail.com>
+Base page faults fail with -ENOMEM.
+hugetlb faults fail with -EFAULT.
+
+Check the policy zone against current_gfp_context(gfp), so a pin-scoped
+fault falls back off the movable-only nodemask, like any other
+non-movable allocation under the same bind.
+
+Tested in qemu with a dax/kmem movable-only node 1. io_uring and VFIO
+pins of unfaulted base pages and 2MB hugetlb pages now succeed and land
+on node 0 (correct). QEMU now starts with the same backend binding.
+
+Link: https://lore.kernel.org/20261018023349.1697434-1-gourry@gourry.net
+Fixes: 8e3560d963d2 ("mm: honor PF_MEMALLOC_PIN for all movable pages")
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+5d4e96acd0febccb5e87@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=5d4e96acd0febccb5e87
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>
-Cc: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Michal Hocko <mhocko@suse.com>
 Cc: <stable@vger.kernel.org>
-[ sashal: replaced scoped mutex guards and the wrapper/helper split with explicit locking and shared unlock exits in the existing callbacks ]
+[ sashal: adapted the MPOL_BIND switch-case change to the existing conditional in policy_nodemask() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 65 +++++++++++++++++++++++++-----------
- 1 file changed, 45 insertions(+), 20 deletions(-)
+ mm/mempolicy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 33e2728c28a4e..b2b7aa46932be 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -266,6 +266,8 @@ struct o2hb_region {
- 	/* Message key for negotiate timeout message. */
- 	unsigned int		hr_key;
- 	struct list_head	hr_handler_list;
-+	/* Serializes the dev, block_bytes, start_block and blocks attributes. */
-+	struct mutex		hr_dev_mutex;
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 51ec529425118..421a3a3ee85f5 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -1766,7 +1766,7 @@ nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *policy)
  
- 	/* last hb status, 0 for success, other value for error. */
- 	int			hr_last_hb_status;
-@@ -1599,22 +1601,25 @@ static ssize_t o2hb_region_block_bytes_store(struct config_item *item,
- 					     size_t count)
- {
- 	struct o2hb_region *reg = to_o2hb_region(item);
--	int status;
-+	ssize_t status = -EINVAL;
- 	unsigned long block_bytes;
- 	unsigned int block_bits;
+ 	/* Lower zones don't get a nodemask applied for MPOL_BIND */
+ 	if (unlikely(mode == MPOL_BIND) &&
+-		apply_policy_zone(policy, gfp_zone(gfp)) &&
++		apply_policy_zone(policy, gfp_zone(current_gfp_context(gfp))) &&
+ 		cpuset_nodemask_valid_mems_allowed(&policy->nodes))
+ 		return &policy->nodes;
  
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
--		return -EINVAL;
-+		goto out;
- 
- 	status = o2hb_read_block_input(reg, page, &block_bytes,
- 				       &block_bits);
- 	if (status)
--		return status;
-+		goto out;
- 
- 	reg->hr_block_bytes = (unsigned int)block_bytes;
- 	reg->hr_block_bits = block_bits;
--
--	return count;
-+	status = count;
-+out:
-+	mutex_unlock(&reg->hr_dev_mutex);
-+	return status;
- }
- 
- static ssize_t o2hb_region_start_block_show(struct config_item *item,
-@@ -1630,18 +1635,20 @@ static ssize_t o2hb_region_start_block_store(struct config_item *item,
- 	struct o2hb_region *reg = to_o2hb_region(item);
- 	unsigned long long tmp;
- 	char *p = (char *)page;
--	ssize_t ret;
-+	ssize_t ret = -EINVAL;
- 
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
--		return -EINVAL;
-+		goto out;
- 
--	ret = kstrtoull(p, 0, &tmp);
--	if (ret)
--		return -EINVAL;
-+	if (kstrtoull(p, 0, &tmp))
-+		goto out;
- 
- 	reg->hr_start_block = tmp;
--
--	return count;
-+	ret = count;
-+out:
-+	mutex_unlock(&reg->hr_dev_mutex);
-+	return ret;
- }
- 
- static ssize_t o2hb_region_blocks_show(struct config_item *item, char *page)
-@@ -1656,28 +1663,37 @@ static ssize_t o2hb_region_blocks_store(struct config_item *item,
- 	struct o2hb_region *reg = to_o2hb_region(item);
- 	unsigned long tmp;
- 	char *p = (char *)page;
-+	ssize_t ret = -EINVAL;
- 
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
--		return -EINVAL;
-+		goto out;
- 
- 	tmp = simple_strtoul(p, &p, 0);
- 	if (!p || (*p && (*p != '\n')))
--		return -EINVAL;
-+		goto out;
- 
--	if (tmp > O2NM_MAX_NODES || tmp == 0)
--		return -ERANGE;
-+	if (tmp > O2NM_MAX_NODES || tmp == 0) {
-+		ret = -ERANGE;
-+		goto out;
-+	}
- 
- 	reg->hr_blocks = (unsigned int)tmp;
--
--	return count;
-+	ret = count;
-+out:
-+	mutex_unlock(&reg->hr_dev_mutex);
-+	return ret;
- }
- 
- static ssize_t o2hb_region_dev_show(struct config_item *item, char *page)
- {
-+	struct o2hb_region *reg = to_o2hb_region(item);
- 	unsigned int ret = 0;
- 
--	if (to_o2hb_region(item)->hr_bdev)
--		ret = sprintf(page, "%s\n", to_o2hb_region(item)->hr_dev_name);
-+	mutex_lock(&reg->hr_dev_mutex);
-+	if (reg->hr_bdev)
-+		ret = sprintf(page, "%s\n", reg->hr_dev_name);
-+	mutex_unlock(&reg->hr_dev_mutex);
- 
- 	return ret;
- }
-@@ -1800,6 +1816,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	ssize_t ret = -EINVAL;
- 	int live_threshold;
- 
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
- 		goto out;
- 
-@@ -1900,9 +1917,15 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	reg->hr_task = hb_task;
- 	spin_unlock(&o2hb_live_lock);
- 
-+	/*
-+	 * Don't hold hr_dev_mutex across the wait, which can take seconds.
-+	 * hr_bdev is already set, so other writers still get -EINVAL.
-+	 */
-+	mutex_unlock(&reg->hr_dev_mutex);
- 	ret = wait_event_interruptible(o2hb_steady_queue,
- 				atomic_read(&reg->hr_steady_iterations) == 0 ||
- 				reg->hr_node_deleted);
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (ret) {
- 		atomic_set(&reg->hr_steady_iterations, 0);
- 		reg->hr_aborted_start = 1;
-@@ -1942,6 +1965,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- out2:
- 	fdput(f);
- out:
-+	mutex_unlock(&reg->hr_dev_mutex);
- 	return ret;
- }
- 
-@@ -2045,6 +2069,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	}
- 
- 	INIT_LIST_HEAD(&reg->hr_all_item);
-+	mutex_init(&reg->hr_dev_mutex);
- 	INIT_LIST_HEAD(&reg->hr_handler_list);
- 	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
- 	if (!config_item_name(&reg->hr_item)) {
 -- 
 2.53.0
 
