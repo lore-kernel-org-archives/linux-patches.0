@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047702;
-	b=kfenBmFzj+HdftxBcxoaQLM6Ux/aOCznyxPiaLfgjzeauUFUWf6gsoPWk1tv20frgwag
-	 LuWjYIelWmuezfLz0Iqocs6JPcYrjSk4ZNURkm2CM2L8L9MXTYTXYaIkFqXGj2gYkEVeQ
-	 QRfSUdDqBgyVlY3x8Wttp3OtOE80j6WZsHLX/RlRMIkr5jR529DLxnrST0YR4ARKPvsfH
-	 6H/5JUY9mbd/M7xrkozfHMrLLNu/MzuQFpuBpPKzLiFrhIDpGNeUqoYumsiMJoMEvgyko
-	 VDOXNoSXhVDjmArJUXIVmz3+gR+htJNTNFOvfkxXlvnYkz/kRbqsHX22r+oZ3ncUsmg==
+	t=1795047705;
+	b=h2f9vqR9+kaMV3ziBxBil+FkJD6AJL97HJz9rZUNL63lYKC0Ww/KNjkQzNCKbciaMAju
+	 qbzIYiuAN2hRLhVY7jKuggXKIDnsjxSVYCh0f1N2ZkK3bjg5527mOOpBnlZO/i9iUeo4e
+	 y5HMy9N3uT/Gk+yqQvkNEfWtxE952N0h8DPW/PYEVPnfUVov1iVWgJoRhMUzkFRswCONa
+	 TbQY+M9KoW0ySz6IahtnrkP4roLkW5giji5zjUkSsVXZDIcucT8geYribxBdcKWxZD+MH
+	 8840Uw4mY7Mia0a/BWmx5RrBMDlwSQ5Ne2alph5Kk1sQvPyEPLMCAcSnKaFdspUcEvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pGqGvEDMx0PGcNZvGSB1txzlUowfQKEHwYiUoioNXCA=;
-	b=KiOUQFJ2Da/kWg/kIj+RKruww04UiG1sSASV8K4kTeviDJrymgixiyvTJx4ksaSW1crO
-	 1iJqjDt2PCLVweecHHyjl6mP6mIZ4NPLwKW2Cue+8QLXYR7fqLtwWOI7VrfjvqWDvn0nW
-	 zKNNmEq0t/RBnSd+Yep4w1ThJWNYNYWBpa9IyxrahGOsHNyebTXAwpCT+sTJoH1xx6D8y
-	 UjvyDpydPZVnFTFgVgv81vOb/hQL2U6iTLO739SoqRy0ptAdmDjEYwhPOQTnlUua7mKiY
-	 D1bfkP5MyJO9b/mJuv7DBKJWMPQ1ZemCpriqsRHqkQTapE4UiLaIVOKOY+tHo6mgftg==
+	bh=dipybhFAgIKL4ka8i/8aNLWwrGU0ISSD8w0tQ/aiOkA=;
+	b=fQ7Ig3m9cYQNxbOvN5iA5Lzo+Jz99rYsJPi6ms5WxyQ0H7plPA46q4ZTozn0C+JswZlE
+	 AYXfn7XHq2+lLb5bsvVz+kyxWFBAGSlJj8D8pnsG2iS1w56pBj08xlvdQ5pfuje9wttLE
+	 ZChJVwZLBJNiQD9W3zKQeRlnkAZxmDAQe5lUxZG6nkkI8Xf9vIMdgW4rlBu6rPtRzRDKg
+	 G7jodkt2DgkiPy7Tw6CS9jkeGYAlFDkIX5NgIJ2uENdxRJiwq10fYtkK4YbzI9jznqkEW
+	 2zvWuiRSUG1lD/55OwkuRmuXo0C4UIR1jDM8qJbey2iKwfZI87H8Fvqcbn6kUauo/Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdhxH31V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T7ZfgWKC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6940B606A31C;
-	Thu, 19 Nov 2026 00:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44191606A325;
+	Thu, 19 Nov 2026 00:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdhxH31V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0611F000CC;
-	Thu, 19 Nov 2026 00:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T7ZfgWKC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DA51F000CC;
+	Thu, 19 Nov 2026 00:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047702;
-	bh=pGqGvEDMx0PGcNZvGSB1txzlUowfQKEHwYiUoioNXCA=;
+	s=korg; t=1795047705;
+	bh=dipybhFAgIKL4ka8i/8aNLWwrGU0ISSD8w0tQ/aiOkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sdhxH31V9UnnD/8tPU/iguElx9OpxAoL3/DulFr1CpwmcsD4vtGPbbB4b1HK5E6QH
-	 Xd3IhZkEhXAM+pEzuWk8YSJUWGvzW6YIMkG3pCLBHiQcQuoAHWUuyZEGjPltHgN6aU
-	 PSAWHMKuOwx6PvVRSQYBJIEdSES+2ynV/Zyw4n9I=
+	b=T7ZfgWKCyob5gyZbYyqlkcpKhNXFeAs+Guwna6KS9hA7p8fqR3gHg/G+VAkJ3Gqbz
+	 EIxmyWelnclvgJTf5hiOyHayg9afDkwUraM5DQ/nq/XRh3PabC1/aDAV/pGWNXV0lf
+	 D/pWCIYJOO1XWLauAfPKR+WfxJTgvvDuwnU88Mh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raveendra Talabattula <raveendra.talabattula@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Esben Haabendal <esben@geanix.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1726/2857] drm/komeda: Fix bits parsing of GLB_CORE_ID
-Date: Wed, 18 Nov 2026 15:46:00 +0100
-Message-ID: <20261118150303.465672612@linuxfoundation.org>
+Subject: [PATCH 6.1 1735/2857] dt-bindings: iio: light: ltr501: Sort compatible enum array
+Date: Wed, 18 Nov 2026 15:46:09 +0100
+Message-ID: <20261118150303.783485827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,55 +71,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raveendra Talabattula <raveendra.talabattula@arm.com>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit ec902de0221747094f9ccbb61454e9633fbf282f ]
+[ Upstream commit 6c430006fbcb63dc8baee3c3bf356b264ba7f61e ]
 
-GLB_CORE_ID contains the product and version information returned by the
-hardware. The current macros parses VERSION_MINOR as a 4-bit field and
-VERSION_STATUS as an 8-bit field, which does not match the register
-layout. As a result, the driver reports an incorrect version number.
+Restore alphabetical sorting of the properties.compatible.enum array.
 
-Fix the parsing macros to match the hardware specification:
-- VERSION_MINOR is 8 bits at [11:4]
-- VERSION_STATUS is 4 bits at [3:0]
-
-Fixes: bd628c1bed79 ("drm/komeda: komeda_dev/pipeline/component definition and initialzation")
-Signed-off-by: Raveendra Talabattula <raveendra.talabattula@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260803142122.4127851-2-raveendra.talabattula@arm.com
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Acked-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Stable-dep-of: 198ed7962e42 ("dt-bindings: iio: light: ltr501: Add missing ltr303 compatible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/include/malidp_product.h | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/arm/display/include/malidp_product.h b/drivers/gpu/drm/arm/display/include/malidp_product.h
-index 16a8a2c22c423..f0c34eff523f1 100644
---- a/drivers/gpu/drm/arm/display/include/malidp_product.h
-+++ b/drivers/gpu/drm/arm/display/include/malidp_product.h
-@@ -8,14 +8,18 @@
- #define _MALIDP_PRODUCT_H_
+diff --git a/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml b/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml
+index c8074f180a793..480523ca37500 100644
+--- a/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml
++++ b/Documentation/devicetree/bindings/iio/light/liteon,ltr501.yaml
+@@ -15,9 +15,9 @@ allOf:
+ properties:
+   compatible:
+     enum:
++      - liteon,ltr301
+       - liteon,ltr501
+       - liteon,ltr559
+-      - liteon,ltr301
  
- /* Product identification */
-+/* GLB_CORE_ID fields as per HW specification:
-+ * MINOR is 8 bits ([11:4]) and STATUS is 4 bits ([3:0]).
-+ * Update masks/shifts accordingly.
-+ */
- #define MALIDP_CORE_ID(__product, __major, __minor, __status) \
- 	((((__product) & 0xFFFF) << 16) | (((__major) & 0xF) << 12) | \
--	(((__minor) & 0xF) << 8) | ((__status) & 0xFF))
-+	(((__minor) & 0xFF) << 4) | ((__status) & 0xF))
- 
- #define MALIDP_CORE_ID_PRODUCT_ID(__core_id) ((__u32)(__core_id) >> 16)
- #define MALIDP_CORE_ID_MAJOR(__core_id)      (((__u32)(__core_id) >> 12) & 0xF)
--#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >> 8) & 0xF)
--#define MALIDP_CORE_ID_STATUS(__core_id)     (((__u32)(__core_id)) & 0xFF)
-+#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >>  4) & 0xFF)
-+#define MALIDP_CORE_ID_STATUS(__core_id)     ((__u32)(__core_id) & 0xF)
- 
- /* Mali-display product IDs */
- #define MALIDP_D71_PRODUCT_ID	0x0071
+   reg:
+     maxItems: 1
 -- 
 2.53.0
 
