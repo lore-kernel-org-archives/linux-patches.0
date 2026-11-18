@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040165;
-	b=Y+jY1OB//GeJl5C4OFr2EyZMR+2BWUap9uro3NOnxceS0AYm7mFYmG1xFQ5iVlxgx63M
-	 A5nzS3U68+XCJNDCqlJYpTWADtd+yk0qQTDPYyWkezcwmMv6bUlMWYOvmJFXnUbif4VaY
-	 af1oNNLb525s9Hp0E+PRTnT45/lzOViHgEMUSWxFjvXQnQrRSNoAACWoKSMGY5eODHGto
-	 3Ke1N1N7UVac+YUuNF54MC8FCQLEMK7+d10/8DmW7NwQpkwt4P3+PGZ8mCFJbzf6O7ks3
-	 ljRYlxaHFjZnyTMb+OH9KY4iyxQfNm9PDPjjadJHlZ+t657B7/j6yHWVqjYV42jr7Fg==
+	t=1795040168;
+	b=gCBtUy2gGF/+xomOjQuwQOfdAFTWM6tC1zJw99C19HeioeTYGW8DFFLnZBFLwTFIR9Y3
+	 forF5zGYAB8Jk8wWRAVn1PPVe7uAdTstaC6cYVi8cBg40d4xclKxl/sqU/4iv+TzKvkrT
+	 6LZgJ6y/9pZAcWwFiE0x9CMFmr61d9V32zEfyzDV47Ww6fQS8AigBXWoW+LCDaajZHKgC
+	 uX7EB+qjHWzidiSNuI9gFiPQDHL06BVpaHJFl63VirG+nozf4c52sAlMBFNwoTgrfYBm6
+	 97JvM3NWKcItzd5/wT/VTjI6/gAXXsOYXS4XgXFBECzP9gHKsZWzHISAzQOdaV++AMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040165;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yjHbFAYlvRq0wEYud7/DuGa9RwALKo/vfm/+zJ/uoXU=;
-	b=4GzW4v55JqExO212iHu+4ND1JMotg353HOGKDkoTeYtJQNn9mJTCWHl42kn4xTNoUyHq
-	 /yzYKaboKrNYrkiVnWE9NGow4y/5ovTMvfTRRYDGsHMy5sP/QBoYb5vn4bSBcTnkb1uFN
-	 qahTVJTehkF19WKcNECe5gG+Jkl9OtOGdktNMkH+3juqya1qtHTCIp+tUjqHChS7YEuHi
-	 s+s4YEvdiE84ouE8QfSPR9WNePi7jfN+LpO+oSEHZTdQv43U7XTswq65wNPyls2iDrnJ+
-	 dJqt1NtebdqtxomNWLlpwHfZyyYqPApXbJukdTM78iD6MNbKpMSLDn0PJetBCa0Ct7g==
+	bh=5ShWgMiZWukwX0m1w2qVslNNa1Wmn41kYEtbS5cNLms=;
+	b=j0g0uqActeLgnTVeF1x342fbr6GnLNtV9kZrMjEa+WrH2o3GA0pPVNoYTg8POazBqajE
+	 NQqMBtbHfEJGdNhU1vRCzE21Ehu4+HO0O/32vlQsGxtaUM95RNmPKuNEecMmd/PQ/C0qQ
+	 3RncGl1iny3jfWMMFfusyJa7notK9nP0Bz4U8hXja91OBPvkLI9gq6VYHM0WLipR0NPcs
+	 abSRdgR+Z92ZUmz02+9UiZca47Ba8EqkQZZZC4yjS6QoHZOAz4WrB3Uvz6v/xxZ9RlNFZ
+	 RNQjY4wlDtEj8Tq5fmyjdM1pRpaRmL5QIZ7w1KCRkH3tYG928hA3rIQCxRhWyQ1AjpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wQ8FgxoM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COyez2cL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7466606A31C;
-	Wed, 18 Nov 2026 22:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85472606A320;
+	Wed, 18 Nov 2026 22:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wQ8FgxoM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F334E1F000C4;
-	Wed, 18 Nov 2026 22:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COyez2cL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33DC1F000C4;
+	Wed, 18 Nov 2026 22:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040165;
-	bh=yjHbFAYlvRq0wEYud7/DuGa9RwALKo/vfm/+zJ/uoXU=;
+	s=korg; t=1795040168;
+	bh=5ShWgMiZWukwX0m1w2qVslNNa1Wmn41kYEtbS5cNLms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wQ8FgxoMdOSHR8pJ8o14W4QoUuZXslVN9Z6W7w4F0JxR+7DSDSgwrrnMFdG2skeR3
-	 CDNR0nXuLvDg74BBjzBYJAGbdc8WVCF/oSxirr1+cpIgxZ1BM8XbKO4hf3KVbIllbx
-	 fvDvLiNw2YhIbmYAp00p44JLVLxZceo9JftUsogA=
+	b=COyez2cLnLOr0dsxMND7dR/62FNThK2qLFT0IyWN4pEs1mvtIVA3+RHKBaCeDAFaA
+	 ZM/ZlFTOlOXDgmLuwQIHnzp7WIVmnQeKxsGPkB2krzSiD/uroMGhdVtkdpCdRo6Vr8
+	 KFfz97W6SuEqhamILihfM/ZO93AH1jqCyZWgWOBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2358/3318] ASoC: mediatek: mt8188: mt8188-afe-clk: Handle tuner clock enable errors
-Date: Wed, 18 Nov 2026 15:49:40 +0100
-Message-ID: <20261118150432.333215257@linuxfoundation.org>
+Subject: [PATCH 6.6 2319/3318] swim: Check error register during sector read
+Date: Wed, 18 Nov 2026 15:49:01 +0100
+Message-ID: <20261118150431.248907344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,63 +70,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit a2c3ee3349a7da91e563b9a21a355a28fa754bc7 ]
+[ Upstream commit d66bdef0a3083fed1a0fc4f0ee1c85b26476b21c ]
 
-Clock enable errors are currently ignored when enabling the APLL
-and tuner clocks.
-Check the return values and roll back the APLL clock if the tuner
-clock fails to enable.
+Clear the error register only once before a sector read operation. Don't
+clear it afterwards -- the caller needs it. Check the error register in
+swim_read_sector() and return the appropriate error when necessary. Fully
+validate the sector header. Don't terminate the search loop early just
+because an erroneous sector header showed up.
 
-Fixes: f6b026479b13 ("ASoC: mediatek: mt8188: support audio clock control")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260907120310.135693-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/efabd807f4ecf5cbc05b60e91ed69aa4c10691a8.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/block/swim.c     | 13 +++++++------
+ drivers/block/swim_asm.S |  8 --------
+ 2 files changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-index 7f411b8577823..b41069b752a94 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-@@ -260,15 +260,28 @@ static int mt8188_afe_enable_tuner_clk(struct mtk_base_afe *afe,
- 				       unsigned int id)
- {
- 	struct mt8188_afe_private *afe_priv = afe->platform_priv;
-+	int ret;
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 83be8293e445a..4fe51dbb9d047 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -483,20 +483,21 @@ static inline int swim_read_sector(struct floppy_state *fs,
  
- 	switch (id) {
- 	case MT8188_AUD_PLL1:
--		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL]);
--		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL1_TUNER]);
-+		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL]);
-+		if (ret)
-+			return ret;
-+		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL1_TUNER]);
-+		if (ret) {
-+			mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL]);
-+			return ret;
-+		}
- 		break;
- 	case MT8188_AUD_PLL2:
--		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2]);
--		mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2_TUNER]);
-+		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2]);
-+		if (ret)
-+			return ret;
-+		ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2_TUNER]);
-+		if (ret) {
-+			mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_APLL2]);
-+			return ret;
-+		}
- 		break;
- 	default:
- 		return -EINVAL;
+ 	local_irq_save(flags);
+ 	for (i = 0; i < 36; i++) {
+-		ret = swim_read_sector_header(base, &header);
+-		if (!ret && (header.sector == sector)) {
++		if (swim_read_sector_header(base, &header) ||
++		    swim_read(base, error) || header.track != track ||
++		    header.side != side || header.size != 2)
++			continue;
++		if (header.sector == sector) {
+ 			/* found */
+ 
+ 			ret = swim_read_sector_data(base, buffer);
++			if (swim_read(base, error))
++				ret = -EIO;
+ 			break;
+ 		}
+ 	}
+ 	local_irq_restore(flags);
+ 
+-	if ((header.side != side)  || (header.track != track) ||
+-	     (header.sector != sector))
+-		return 0;
+-
+ 	return ret;
+ }
+ 
+diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
+index 81c824923336c..fcf574ced85ec 100644
+--- a/drivers/block/swim_asm.S
++++ b/drivers/block/swim_asm.S
+@@ -67,7 +67,6 @@ mfm_read_addrmark:
+ 	movew	#seek_time, %d2
+ 
+ wait_header_init:
+-	tstb	%a3@(read_error - read_mark)
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode1 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode0 - read_mark)
+@@ -140,8 +139,6 @@ crc1:	tstb	%a2@
+ 	andb	#.Lhr_crc_error, %d5
+ 	bne	signal_nonyb
+ 
+-	tstb	%a3@(read_error - read_mark)
+-
+ 	moveq	#0, %d0
+ signal_nonyb:
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+@@ -166,7 +163,6 @@ mfm_read_data:
+ 	movew	#seek_time, %d2
+ 
+ wait_data_init:
+-	tstb	%a3@(read_error - read_mark)
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode1 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode0 - read_mark)
+@@ -191,8 +187,6 @@ wait_data_mark_byte:
+ 
+ 	/* read data */
+ 
+-	tstb	%a3@(read_error - read_mark)
+-
+ 	movel	#sector_size-1, %d4		/* sector size */
+ read_new_data:
+ 	movew	#max_retry, %d2
+@@ -234,8 +228,6 @@ data_crc1:
+ 	andb	#.Lhr_crc_error, %d5
+ 	bne	data_exit
+ 
+-	tstb	%a3@(read_error - read_mark)
+-
+ 	/* return number of bytes read */
+ 
+ 	movel	#sector_size, %d0
 -- 
 2.53.0
 
