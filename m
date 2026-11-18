@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050208;
-	b=lcHF8tqgfs4KyDN+M3cxsKic8i0r4b6f7KkBZyAOxWZSyY2s81mOlzdOqqDGs1tub4MH
-	 TMXJj8VgS1k095ds2b+qmmIu59769fpJnAyXT3Of1VFEu0GvoyEMeHiV6CGp5B/zZeDbt
-	 95S2ooyFiTmcre0GpX3TksrMJz63m8/DjtM4A05z9PxQLtwWNG7nHiikmLEjDkUs2l4Zi
-	 9nmzRsCwszxIDe0xrQJwjGJQQ2AfG5QcPfu6OXiZWCTuzChpArqvRmlOWaxVIWCuOsWKP
-	 lBJeJeitpBaN1VhzehGDZsIge7kmKiaktzPfYDqk9jigd+lDnt69HKtYVFgLxcNWO0g==
+	t=1795050211;
+	b=Bd4NCaHUGHK+dYtoh0rYvBfaw7FW098wIAkPloCqgZD8wfHkIXUbEsWfaSnXh/SfeFTv
+	 IE6tEHfhKjy2AQqpOPRvb6OyXBwELpEMgGx9RFEwz0J8lSroiaj3bDhLdQTcieADlnHLr
+	 /nbX/MDaCEp/nIsNqRAlE/K8oTzj3gmdJcharxfJ2oUFUm5S2DQSVuYsln/AHH7iLObKI
+	 D8FKTPstP9Rc7iJfPuSGEOlbJp8mWVhFOEK6JQr3DDqXOdAVpT4LYMQYdwID6MzJP0kXO
+	 FOiSHGx3pqAMxV65SVBssghL6I7C6vOKEdxd9Eof7h+LfLH3CSeXYSQPYBD19/q/+EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+OUrYpdwZ2ZyWNAvWTdUqXxV3EbuKeQxxkANcAAatck=;
-	b=st8WsuEeIaMWK4kf0orqk+BkPp8OBWCwSS4a7KsJ0IZu1kd2Au9fpyTMx//54PDc3o2n
-	 g6p5jFEoMeEXqbd5p1nyORZkgGK4qZJ1Y+YYIuIhOn6j8zEdtgECOV93IFisOCdsaD8wO
-	 R5XTEa6QcmHrv3ghf1ZlOlU+43v5h6lYNE7Xa/JJv941ozYfkdKqRcePEIuN0PYF8p9PS
-	 +ijoHCTS8t7MMSPAyQC3RWSX1rF6XZMv+ghnIXxfF1ZrgbaLVpmTAk9z375NRMorBEVvB
-	 279hmAObQQPEsbP6sjzSSblugMHgM20WI4beLt5Vg6apSlb2ukNlrFPeBUrOuBOhA2Q==
+	bh=WqOnOY6Aym8bzCii57f5EiUx3LpFxcfIR9ex0Oya0fc=;
+	b=LI7TS3AunydR4wMfbI5I1niKfbZ+0XMh7ALYnpmAlRVIltwEKs5yLNnEAfQEXiAmzhh6
+	 hIt3XxKcogSw021M63oYP+1vCfJzIJmIBTmXjdTgGaORJFaXR0APNIvdN8Nkx2HtI0xd0
+	 tv64NR0dfXtIQixoWxqunHfcDgzUAeqFNib6m6d5E0o/ORiWOGctbX6Zdkvy8AyYeTzvG
+	 8K+o18gQA/ths0HIxuv/BA6e74SOkToFSHl+Q2By4O9SU2f7UQQV+n2nlVI+NP+tBVpkt
+	 fIoMp3Jo34xvD6y+O6FUSNyvLLrZB6zZJ7td7L81ssJNLZ+xepzUCa442J+3Krk/Oww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBAT62mk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CoYO2QK0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E09606A333;
-	Thu, 19 Nov 2026 01:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E76606A325;
+	Thu, 19 Nov 2026 01:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBAT62mk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3581F000C5;
-	Thu, 19 Nov 2026 01:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CoYO2QK0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400021F000C5;
+	Thu, 19 Nov 2026 01:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050208;
-	bh=+OUrYpdwZ2ZyWNAvWTdUqXxV3EbuKeQxxkANcAAatck=;
+	s=korg; t=1795050210;
+	bh=WqOnOY6Aym8bzCii57f5EiUx3LpFxcfIR9ex0Oya0fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZBAT62mkAtDPiVUc2jcxCfOGmbc4B+HYs0yJBWF6BZ3XlupzShZLeOcGAI/W86Uld
-	 jMGcchLOoSNFh3ivdLI33F8sO/wlq+zmi/15Fu2m3WBm8v8rrGU2x7OnjaCZT5jXli
-	 CiF34Nz7EFX6FDKz0GJjJU9zZ1142s+xQq2YnLnc=
+	b=CoYO2QK0JrxVMmT1pOtOqP8tI7uLsH8SUx3gj1PRsMLCpxPtl8tq0bL+j3AOQySyi
+	 2PUQgyu4WYA9BOOf4PBb+4RORqlkwS7TiyAKfxsDY1sefEK3LF2U9Q83JEDd+npMqS
+	 ny2Ejku11JtzhuU42nG4vIQBpr52wkPX5gd7w8JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Sitnicki <jakub@cloudflare.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2585/2857] net: Helper to move packet data and metadata after skb_push/pull
-Date: Wed, 18 Nov 2026 16:00:19 +0100
-Message-ID: <20261118150334.585722198@linuxfoundation.org>
+Subject: [PATCH 6.1 2586/2857] bpf: Make bpf_skb_adjust_room metadata-safe
+Date: Wed, 18 Nov 2026 16:00:20 +0100
+Message-ID: <20261118150334.623528077@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,113 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 8989d328dfe7c7a3b9f4b9f0ef60006d277f81cc ]
+[ Upstream commit be83105d38ab99737ac0488600efd59ddd57b74c ]
 
-Lay groundwork for fixing BPF helpers available to TC(X) programs.
+bpf_skb_adjust_room() may push or pull bytes from skb->data. In both cases,
+skb metadata must be moved accordingly to stay accessible.
 
-When skb_push() or skb_pull() is called in a TC(X) ingress BPF program, the
-skb metadata must be kept in front of the MAC header. Otherwise, BPF
-programs using the __sk_buff->data_meta pseudo-pointer lose access to it.
-
-Introduce a helper that moves both metadata and a specified number of
-packet data bytes together, suitable as a drop-in replacement for
-memmove().
+Replace existing memmove() calls, which only move payload, with a helper
+that also handles metadata. Reserve enough space for metadata to fit after
+skb_push.
 
 Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20251105-skb-meta-rx-path-v4-1-5ceb08a9b37b@cloudflare.com
+Link: https://patch.msgid.link/20251105-skb-meta-rx-path-v4-7-5ceb08a9b37b@cloudflare.com
 Stable-dep-of: 12d07c38e1b0 ("bpf: Don't let bpf_skb_adjust_room() use up the MSS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 75 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ net/core/filter.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 1a5e463502a95..f4c5411eae275 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -4352,6 +4352,81 @@ static inline void skb_metadata_clear(struct sk_buff *skb)
- 	skb_metadata_set(skb, 0);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index cce48847d931d..6c87f72d15b4d 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3287,11 +3287,11 @@ static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
+ 
+ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
+ {
+-	/* Caller already did skb_cow() with len as headroom,
++	/* Caller already did skb_cow() with meta_len+len as headroom,
+ 	 * so no need to do it here.
+ 	 */
+ 	skb_push(skb, len);
+-	memmove(skb->data, skb->data + len, off);
++	skb_postpush_data_move(skb, len, off);
+ 	memset(skb->data + off, 0, len);
+ 
+ 	/* No skb_postpush_rcsum(skb, skb->data + off, len)
+@@ -3315,7 +3315,7 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+ 	old_data = skb->data;
+ 	__skb_pull(skb, len);
+ 	skb_postpull_rcsum(skb, old_data + off, len);
+-	memmove(skb->data, old_data, off);
++	skb_postpull_data_move(skb, len, off);
+ 
+ 	return 0;
  }
- 
-+/**
-+ * skb_data_move - Move packet data and metadata after skb_push() or skb_pull().
-+ * @skb: packet to operate on
-+ * @len: number of bytes pushed or pulled from &sk_buff->data
-+ * @n: number of bytes to memmove() from pre-push/pull &sk_buff->data
-+ *
-+ * Moves @n bytes of packet data, can be zero, and all bytes of skb metadata.
-+ *
-+ * Assumes metadata is located immediately before &sk_buff->data prior to the
-+ * push/pull, and that sufficient headroom exists to hold it after an
-+ * skb_push(). Otherwise, metadata is cleared and a one-time warning is issued.
-+ *
-+ * Prefer skb_postpull_data_move() or skb_postpush_data_move() to calling this
-+ * helper directly.
-+ */
-+static inline void skb_data_move(struct sk_buff *skb, const int len,
-+				 const unsigned int n)
-+{
+@@ -3521,6 +3521,7 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
+ 	u8 inner_mac_len = flags >> BPF_ADJ_ROOM_ENCAP_L2_SHIFT;
+ 	bool encap = flags & BPF_F_ADJ_ROOM_ENCAP_L3_MASK;
+ 	u16 mac_len = 0, inner_net = 0, inner_trans = 0;
 +	const u8 meta_len = skb_metadata_len(skb);
-+	u8 *meta, *meta_end;
-+
-+	if (!len || (!n && !meta_len))
-+		return;
-+
-+	if (!meta_len)
-+		goto no_metadata;
-+
-+	meta_end = skb_metadata_end(skb);
-+	meta = meta_end - meta_len;
-+
-+	if (WARN_ON_ONCE(meta_end + len != skb->data ||
-+			 meta_len > skb_headroom(skb))) {
-+		skb_metadata_clear(skb);
-+		goto no_metadata;
-+	}
-+
-+	memmove(meta + len, meta, meta_len + n);
-+	return;
-+
-+no_metadata:
-+	memmove(skb->data, skb->data - len, n);
-+}
-+
-+/**
-+ * skb_postpull_data_move - Move packet data and metadata after skb_pull().
-+ * @skb: packet to operate on
-+ * @len: number of bytes pulled from &sk_buff->data
-+ * @n: number of bytes to memmove() from pre-pull &sk_buff->data
-+ *
-+ * See skb_data_move() for details.
-+ */
-+static inline void skb_postpull_data_move(struct sk_buff *skb,
-+					  const unsigned int len,
-+					  const unsigned int n)
-+{
-+	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
-+	skb_data_move(skb, len, n);
-+}
-+
-+/**
-+ * skb_postpush_data_move - Move packet data and metadata after skb_push().
-+ * @skb: packet to operate on
-+ * @len: number of bytes pushed onto &sk_buff->data
-+ * @n: number of bytes to memmove() from pre-push &sk_buff->data
-+ *
-+ * See skb_data_move() for details.
-+ */
-+static inline void skb_postpush_data_move(struct sk_buff *skb,
-+					  const unsigned int len,
-+					  const unsigned int n)
-+{
-+	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
-+	skb_data_move(skb, -len, n);
-+}
-+
- struct sk_buff *skb_clone_sk(struct sk_buff *skb);
+ 	unsigned int gso_type = SKB_GSO_DODGY;
+ 	int ret;
  
- #ifdef CONFIG_NETWORK_PHY_TIMESTAMPING
+@@ -3531,7 +3532,7 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
+ 			return -ENOTSUPP;
+ 	}
+ 
+-	ret = skb_cow_head(skb, len_diff);
++	ret = skb_cow_head(skb, meta_len + len_diff);
+ 	if (unlikely(ret < 0))
+ 		return ret;
+ 
 -- 
 2.53.0
 
