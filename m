@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023434;
-	b=uOwuv/tWKtNa190ouLWDyIATFgviYSSPdoXMIqlaOApSY6aGQjfbCuq0xqe4nDZ987pA
-	 TkDkJLToOZBuvUN5MQ+EzreqgV+YI6xaOm5eEHQScgUYJUTtzf6ZaTdSXiBJX3aQWk6Fo
-	 WRkMHCLkZDe4qzMvV4jtI+sDZt4nEri1KiYyPZmO8fbAXmmjUzHyoxxOenOFsmS4ohERE
-	 UsFmO3IS6XP4yarB/KN/mJEUc4c6T6EFvvLgYRdBvFWIzc99wg0UkIg4fLyxTNe9+xrS4
-	 bEb4W502A6fgbnoWI0dYd276VFArcpa+6QLbk/PF+3A3MPjeGvBYDaKuXuMfCwRjQgQ==
+	t=1795023437;
+	b=cmLrA7oAMUmT3QZI+/ZZd/WSgOV4l5ProWUpm/XJZM6Lo0IaxANt7rfPUSFCcDg67v6n
+	 +Mqqiwf/ZhBi+7wOhp4kOkM6hrF9ibAEDZpjTUcPHjnn/Op5YNJ1I8Aq1493c0SWh4Jb1
+	 z0ifHD2WsSJ4rwaa48lAXVLKkBFbvrFeQ3ngznxaj9tANCDU1aUR7dS44j6yugGUD9gbf
+	 SIM7PdRDEmKhCGjkDJVKTGPize2Y+ZK6bZS4EFmFdoor/82EvbsgU/jDbjsLDYsJ6Frtp
+	 B/0Bm0FWf21J3/hyleHRUbf4WYsRoVOLKNxxPFEQ2UVQYoFWcGMbaLiGU/qHdcO6Jaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c+iBnHQQ7X4BRWC5lODy+9x0xm/E69c0Sw9pylgcmnQ=;
-	b=KKpdPGDOTJQy36RJ+e63PKIuJAzdW2gK5jcXyeoxcQl0A6CfZcmsyWCnkly8g6e9A8oR
-	 lC3plcXZa+cK3ZCd2Xq5HHHLoeJbzabPLQmxKamWlZdyZeb0GRmKjME0oldUJ/bY6BzSb
-	 4GITpy+Ys20oHQJOgMO7XkLAgFCdy0ULIONZkkcDVOYKsbodxmwMG3mA6pFKcZY4CMS2B
-	 vw2TYnWcgHU73lHAxlXNWjrQQUeBwNW2UfHkxDDkeDtb5dASDb4JgUCq7k3QdFnwidQPS
-	 nLVgbBX40wYKOKAk6z9xlWjYrAjA4JC7fanRQdOcV2fY4KfG5YgCfhKVVa0HoWmXN0Q==
+	bh=xNxdtnszc6lzipuJi8tNv+k9AdtQReNX46YWL5EdxYc=;
+	b=F+yefu1W1ljGYQ4n0qEaiHUAS9KLtr/TUyy7hHKNgMdurrABSC3V87oGmnT8syjLxJQ5
+	 uEd9/lHx0zl3cqkP89onm/+n+Fou/c5Zk0OnM5DOdWOkav3FD0cdFANIfEnM24WW+rtQy
+	 n8ANMB3xIv85922SFAfZZa8nTHZqWviGk5SxmqKJXPRm5TgiApHKkCXzS3UdxoI6c0Bbz
+	 CLI4oN/Z5KToOJRDqdl7TJ/6M3MC5j/mJx9nTm+jNl9NcRUUnjxLp+4B7Ia8pSt3JPdkf
+	 Upk+O3Y36GxaeOwBME68Guhrs5AxIqPj9/NS9nvOuQfyp2Hl2qhvVxhBE2HKz3LRRfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUscB0wk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lSnxghB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C72B606A32C;
-	Wed, 18 Nov 2026 17:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6488606A325;
+	Wed, 18 Nov 2026 17:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUscB0wk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DB31F000CB;
-	Wed, 18 Nov 2026 17:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lSnxghB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482C31F000C8;
+	Wed, 18 Nov 2026 17:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023434;
-	bh=c+iBnHQQ7X4BRWC5lODy+9x0xm/E69c0Sw9pylgcmnQ=;
+	s=korg; t=1795023436;
+	bh=xNxdtnszc6lzipuJi8tNv+k9AdtQReNX46YWL5EdxYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUscB0wkdZN0TPxEFwVF0dYJgYvcES267A8rKM+0F0UmnJHMwVAGlrNvTz0WQIBLI
-	 AJigyaOx0hZfAmhdjJw9qRM9ePt5klk6mQFKib1RsNDm7Nisr+2wL8m8JxUgKvM+zK
-	 hO8RjUCTiSpUkh+YJR4HF8vmah966Hh3B8aPlzQg=
+	b=2lSnxghBaTg6kTeD44pcbicnYm2KfdzSNTFJApJywiSOWM11nSNK3EIO5N/mDJpfo
+	 KPoAtvyP+UjqQFDjB811jwtLOQBH4AbvTNZ6ZPbaPj9yQfvUuTVv+Mt2CWf8Rxfx6e
+	 m8PYGPJEnCTZCJfqFiwxXw2GyJrzZXDPwor/VAlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Jia Wang <wangjia@ultrarisc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0341/2151] scsi: mpi3mr: zero out diagnostic buffer status memory
-Date: Wed, 18 Nov 2026 15:34:36 +0100
-Message-ID: <20261118150134.492779651@linuxfoundation.org>
+Subject: [PATCH 6.18 0368/2151] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
+Date: Wed, 18 Nov 2026 15:35:03 +0100
+Message-ID: <20261118150135.496097361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,37 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit 052aea807cfbcefaf5b6ed8202f65da1fc65f4a0 ]
+[ Upstream commit e6b49f8016ee8b642e8e495d1704342ee0b35d72 ]
 
-Memory allocated for the BSG diagnostic buffer status is not zeroed before
-it is copied back to user space. Several fields in this structure are
-reserved and never written by the driver. Use kzalloc() instead of
-kmalloc() to zero out the allocated memory.
+axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
+walk the hw_desc[] array of a single transaction. If multiple
+transactions have allocated LLIs, the channel count can exceed the
+transaction-local nr_hw_descs and make the DMA error path read past the
+end of hw_desc[].
 
-Fixes: 78b506984ebe ("scsi: mpi3mr: Add ioctl support for HDB")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-16-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Use the descriptor-local nr_hw_descs count when dumping LLIs.
+
+Fixes: ef6fb2d6f1ab ("dmaengine: dw-axi-dmac: simplify descriptor management")
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260902-dma-fix-v3-2-414c6449fbcc@ultrarisc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 83503c44cc2ac..acdc7c5ba527c 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -1244,7 +1244,7 @@ static long mpi3mr_bsg_query_hdb(struct mpi3mr_ioc *mrioc,
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index d4313d0a2a048..c6c54d0b21e69 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1054,10 +1054,7 @@ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
+ static void axi_chan_list_dump_lli(struct axi_dma_chan *chan,
+ 				   struct axi_dma_desc *desc_head)
+ {
+-	int count = atomic_read(&chan->descs_allocated);
+-	int i;
+-
+-	for (i = 0; i < count; i++)
++	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
+ 		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
+ }
  
- 	length = (sizeof(*hbd_status) + ((MPI3MR_MAX_NUM_HDB - 1) *
- 		    sizeof(*hbd_status_entry)));
--	hbd_status = kmalloc(length, GFP_KERNEL);
-+	hbd_status = kzalloc(length, GFP_KERNEL);
- 	if (!hbd_status)
- 		return -ENOMEM;
- 	hbd_status_entry = &hbd_status->entry[0];
 -- 
 2.53.0
 
