@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023344;
-	b=bbBz4K7jFSjRtB2MuntvoC91Ka11LWisxr8vR1QD49XDEcS9mXnb6G9nmouosv+BqJ8w
-	 Q+ehSheOSMQLH6oktofG8Mng1tGfY64raHXs44N3FO70Vvph0VVNCkj6LwE3/Q8zbaC6V
-	 i3yW8SoOKM6crVr7ohzDiZNP2z4/pN9Dc9A74VA0UzYeO/pRvevWRCNCOdjOheTC87+XL
-	 upyLtbWPvYwLb4S/KiKn/TaQWNurVeiFqrAjhD9WDphgDsHrFeN0W2zpqWT8HHHIMF8Ie
-	 bmp/4dt+v4a1HOzyS5FInBxqkVq0kP9MgHy+HEQvjVggK1hx6Csh9UYvPhyRPw+wo7g==
+	t=1795023347;
+	b=5ZZVURHfOTDJklQbPzY6365ro7f5G+KEOJpbBWEzO7X9yWUJO4ZTlsQcfa3kb30xCP4G
+	 u+FegV3lMGTLojug039nlNI4ov3+Gzjvjbq+ZXKGczVXvbZFEq4K9uCZHrT0NW1KXU5Mv
+	 XuzY990Jm0Dy95OipYPFPViWODCBBEOoJYFGclSUFRMr7mMAjGoihdICdgu+mq9RIOR8i
+	 bSJclWHPbqA36UjiJkHXkpgNuKsu9g/XvYfmNmqT5BLDcAqNfY0f49uC+JNJFifgLsO7N
+	 8FUg90lW4mm2ylbsFKgR3au41+zS6NBrWowFmQ29CSKFABpDelwT5HHZF1l1eyeBNag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=flYrxIK8vLfuWGJ0GWQ5qZF/eQBK5fbeml/IBl0g8G4=;
-	b=kOhKuis88Rqkzqk6wMvC10/0UMLfg5WllmGv2/E7g9Jw33YksB1RDELnHUmqALAAljdI
-	 2Rm3n8aguRs6MK+Pzlm3CzU0ayZQ5A8uoB3N16CS6r1AwSASZqqvxsQZh72cqlDSNb1dZ
-	 GuaL7si8VA9uiUqDG9BllJLTqGk4sSocPrhedzzmkZGinOQ6cpJMUxeZ02jBMWu2bZzMU
-	 G+Xt6zhw30oea7xE4Ueenu5hvGLLOVes2/8k1xJtTwjw/VzBazeewzOy25jEo/q4/QEmz
-	 cE0/zRxtX5ZAYzRXazlq3e1V6X6nNpEaf3fm+RtKiwTyFsEQX+GvRPFzW9hV7tJsmxA==
+	bh=AkEMCglbn8s4JuOHuKXFTX2K1dNRHmZUH1xBtBttMv0=;
+	b=Z2C7m1j7v/IFlqDWNIRsvQcqQtWhFOhVfYVP4ZkkLlWklvCJZoa681zyOPcYIxZW3Y/0
+	 VWNrTt1I0jzOEKG9R+PpShEJ2hI6uVSOdVGIfWhxkN1E6SqVevyFn9I7P4aVI8M+S97Pc
+	 oGOZzcCK2RAk3PY6BQI2vyjAvIECgIlEiYJdvoRPxoi5lPIc7e7LsAywa/xGiZ8un+tsz
+	 3ZDQNSLIkrjJJUmHNcsyZxGRQfpUI8FhX/EWn6lIULtz5pWa34OkiTADEpKxyKEuVcg8+
+	 BcuSzId94r6bWxgOeml0WQit8tSN6uiY51Ba78DgMS3GcASGNUHKIOPBzKE5CpqLBMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRphtW7i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1lEt2Tr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3D4606A331;
-	Wed, 18 Nov 2026 17:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D764606A334;
+	Wed, 18 Nov 2026 17:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRphtW7i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A13C1F000C9;
-	Wed, 18 Nov 2026 17:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1lEt2Tr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E775D1F000C9;
+	Wed, 18 Nov 2026 17:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023344;
-	bh=flYrxIK8vLfuWGJ0GWQ5qZF/eQBK5fbeml/IBl0g8G4=;
+	s=korg; t=1795023347;
+	bh=AkEMCglbn8s4JuOHuKXFTX2K1dNRHmZUH1xBtBttMv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRphtW7igXK2om1aL65J0V9X+TikmkzF8ME+FJarISbN6UupZX5iBeLGOKfWrsgE7
-	 nErdnDXwFwk+DFKLC+SVYe3vPy0TD8GSHtYfOa7PcTuBx9W+7Kx9XJwZY3bMbQqY3t
-	 TK2xXAsk860VlVaoiPwDvOoOPraIykd1vXcb1FvU=
+	b=a1lEt2TrIFJZ8kIbMOGYg1ESog82E5p19CpvUyaTVWBoBA2qTdp2J/Kty5Npy7vAX
+	 6wpwo0abWUPO5xq6DititxR1NN07PiKkvDAR634N9VPkxNGh+a+ebtwt7fEr9Mzk5m
+	 ebRs6dYFKMTqQ4RWeTQQESWlUKkcvcXydmLrA2fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0334/2151] scsi: mpi3mr: Fix target device reference leak in device removal handshake
-Date: Wed, 18 Nov 2026 15:34:29 +0100
-Message-ID: <20261118150134.160853527@linuxfoundation.org>
+Subject: [PATCH 6.18 0335/2151] scsi: mpi3mr: Fix out-of-bounds read in SAS topology change events
+Date: Wed, 18 Nov 2026 15:34:30 +0100
+Message-ID: <20261118150134.200366447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,36 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit a04b0f3a17e32aa449fd896163a7b40efc29c4f5 ]
+[ Upstream commit 9e220ce4bd0468e47cc9eea07e40799ebae6eda8 ]
 
-The device removal handshake looks up the target device to update its state
-but never drops the reference that the lookup takes.
+The number of entries in a SAS topology change event is used to walk the
+entry array without being compared against the amount of event data that
+was received, so the walk can run past the end of the buffer.
 
-Drop it once the state has been updated.
+Work out how many entries the payload can hold and skip the event if it
+claims more.
 
 Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-10-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-11-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 848afd656cf2e..ba7bd376536d4 100644
+index ba7bd376536d4..7c94897e458cf 100644
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2448,6 +2448,9 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
- 		tgtdev->state = MPI3MR_DEV_REMOVE_HS_STARTED;
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
+@@ -2741,12 +2741,28 @@ static void mpi3mr_sastopochg_evt_th(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3_event_data_sas_topology_change_list *topo_evt =
+ 	    (struct mpi3_event_data_sas_topology_change_list *)event_reply->event_data;
+ 	int i;
+-	u16 handle;
+-	u8 reason_code;
++	u16 handle, avail_len;
++	u8 reason_code, max_entries, num_entries;
+ 	struct mpi3mr_tgt_dev *tgtdev = NULL;
+ 	struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data = NULL;
  
-+	if (tgtdev)
-+		mpi3mr_tgtdev_put(tgtdev);
+-	for (i = 0; i < topo_evt->num_entries; i++) {
++	avail_len = event_reply->event_data_length * 4;
++	if (avail_len < offsetof(struct mpi3_event_data_sas_topology_change_list, phy_entry)) {
++		ioc_err(mrioc, "SAS topology event: event data too small (%u bytes)\n",
++			avail_len);
++		return;
++	}
++	max_entries = (avail_len -
++		      offsetof(struct mpi3_event_data_sas_topology_change_list, phy_entry)) /
++		      sizeof(struct mpi3_event_sas_topo_phy_entry);
++	num_entries = topo_evt->num_entries;
++	if (num_entries > max_entries) {
++		ioc_err(mrioc, "SAS topology event: num_entries(%d) exceeds max(%d)\n",
++			num_entries, max_entries);
++		return;
++	}
 +
- 	if (drv_cmd)
- 		goto issue_cmd;
- 	do {
++	for (i = 0; i < num_entries; i++) {
+ 		handle = le16_to_cpu(topo_evt->phy_entry[i].attached_dev_handle);
+ 		if (!handle)
+ 			continue;
 -- 
 2.53.0
 
