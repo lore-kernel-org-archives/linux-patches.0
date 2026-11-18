@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044053;
-	b=fJNOPvHqEbH/gSIrJq1/mANGd5CJzBc3LU5JZ700JjkWcdv3Lo3lVyBjC0LenEDGMdYG
-	 VcsP+BkbBLbJwWmh9O5H70P7tHZ/+DT0A8ss1QAPCfCq6hE6uXuJerpA1hgf04bAFDfao
-	 WtMc1s+34JwO57jvDTZkMlqRBuAgWTD7FdYhlle6OdnJxUcj02x0162EdSuOiIfD0yajW
-	 hMPmthmX9oiTkK2QIDVhn3uF26ZmQ5ycIsRS/Lj/YHDL/RtymlD2SIlktVi4pYjXixe9j
-	 fOoi3qJbMc5i2iln2MRJlEE8bcEtL84abwU0GQzAY+RQe/53wRBy8AQ6bCTtfD51meg==
+	t=1795044055;
+	b=UijE604RJoqxKOnoE7rMs/wtQCp8KiBInny3WhpN0yyJWKoo7b8H2uve09rwD83Dy0zu
+	 EXDJBNk5NNJ4jJvtpsVr5LW6Z2qQqsDPSE+IuPnYE/yn0RTuKoIZHgst4tWv8Jzhq/xJy
+	 Dmp+iFVUK7JGX8ivz2gfPHWf/85quB4y42jiu01m8F2MaC6ZvDD+AOllNh4BKmWzTWn/7
+	 tu9M4KN7czzVj+aOw6acN9NZSMWELzDKiZQGt67eB+dvR9BsPfcEjCFuQk1LGhJmuy6sC
+	 Tm4nlKxu4A9gKl3vkIBjUmaZdcVcffft3dt5fgPQz8Vf71ffp2l+Hss5inpohm6Vxgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044055;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p0eRqWWO4WdNpVDYz4lHMeW/0j4hywo3Smv6p6+K8z4=;
-	b=IDvp32MzH2Psnnm0O25KBt6TCq9EUmoIo9jxVYZnHxlGA8rvpPZCWxIp941c/X01lubI
-	 3eWr0fFT/cs7k0WSe6FF9Vvx5PTL2p+AEpMmBG3tRa/wso5h4Y7gODUKg6DnhfH9LI/Zj
-	 iBbTiXGkpgiMtj/etEa09SAqKFoSKIaYclW7MHfgKE1qVoF+t1zXYpCMyAKOpMOTprT03
-	 hWqpeQ1i/SZDcuBVHSCkFyP9lbiKgtC8XC7laurDRk5eK6+WfjuzIHib1m3BgcLF8LWcy
-	 py8RlTcWK/lASB0wusw90DEk1dvhu4CTPZD7scdxUr7VA3COEqbRYW206mfOqs5kSVw==
+	bh=K6IF12l551nPEFokPXeAMxC+CM20LfaKhViDBV3s7FM=;
+	b=zZJTpC5KVaBUPTSmV559LVaZVWndY0sUZ6Iernoa2+6EgWvPyQqNLwmS2HFcPQcbBbSA
+	 u2i90uOP/LzyDc6xaMvZgH8hlG+StdQsWlGaHFLd7YNoJhrczjtMfX95lpDwLiAXS1bcG
+	 mS5+rVLqKLbQhdBUjGheibTMIzrEXkw05EEixLJeCIgh2ciyhrK8UsJD11slpD0Viq10e
+	 Xau9UhAWcbGkZEAOv5tR/0reaSrhqRP1ewMIfk48xVw6+0cg+8DozJkvwfP7R+d5FocFo
+	 AsSi/aHFRpNMXJNdeetrr1fMMBE2mLoXURLzoyOib947MDLBXzbTK3PPQbfBHXO8dug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqse2xQd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vM/Bjd+k";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E544E606A32A;
-	Wed, 18 Nov 2026 23:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5F0606A325;
+	Wed, 18 Nov 2026 23:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqse2xQd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA481F000C4;
-	Wed, 18 Nov 2026 23:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vM/Bjd+k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122451F000C4;
+	Wed, 18 Nov 2026 23:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044052;
-	bh=p0eRqWWO4WdNpVDYz4lHMeW/0j4hywo3Smv6p6+K8z4=;
+	s=korg; t=1795044055;
+	bh=K6IF12l551nPEFokPXeAMxC+CM20LfaKhViDBV3s7FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqse2xQdddaeT6RAr5IAL6Z48CbIURZEfOFHnvH0Mmu8hKKavoJfd9Akayb5XPMO1
-	 3dQ7MVx0X6QpzR7k7jEmf15VcfXcYxF2rtbGoZHTruJQ9lCvttw64nzXrNqvj/LBQ/
-	 4F9iBKv23LQMF10LNEBIIU3OI2z+OfDyLiNdJki8=
+	b=vM/Bjd+kHPRob7GZhjXbO8ldcTdwGtQYKF5NFG7Gmq+ee+gTXdZ9CYlVMDGzZDDfl
+	 l9IAcUXr9Vd/+GprOAkVwi3BtnB926kBR3xFajAEKqVj8tjBRCvwLl92O20x16A9Bm
+	 qvUu7mLqkxE598g3yEZ4tu/9gxWwVsbNwQoAKU+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonardo Costa <leonardo.costa@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Swamil Jain <s-jain1@ti.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0413/2857] drm/bridge: tc358768: Enforce input bus flags via atomic_check
-Date: Wed, 18 Nov 2026 15:24:07 +0100
-Message-ID: <20261118150216.255270830@linuxfoundation.org>
+Subject: [PATCH 6.1 0431/2857] smb: client: fix rlist race and missing initialization
+Date: Wed, 18 Nov 2026 15:24:25 +0100
+Message-ID: <20261118150216.902215351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,63 +73,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonardo Costa <leonardo.costa@toradex.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit ed761e0693950fcb4f6b0f60387a3961b972adf3 ]
+[ Upstream commit 5f270f091256da1338c3631083e15d7f83cc05e1 ]
 
-The tc358768 declares static bridge timings requiring pixel data to be
-sampled on the positive clock edge.
+TCP_Server_Info.rlist is allocated via kzalloc which zeros both ->next
+and ->prev to NULL instead of pointing to itself, making list_empty()
+always return false and list_add() dereference a NULL ->prev pointer.
 
-However, the DRM core default propagation simply copies the output-side
-bus flags, coming from the next bridge, connector or panel, to the
-input side. If the propagated flags are incompatible with the bridge
-ones, the data is wrongly sampled, typically resulting in visual
-artifacts on the panel.
+Also, cifs_signal_cifsd_for_reconnect() can be called concurrently
+from multiple cifsd threads, allowing the same server's rlist node to
+be added twice into the local list, corrupting it.
 
-Implement the atomic_check hook, replacing the mutually exclusive
-mode_fixup, and set the bridge state input bus flags to the ones
-required by the tc358768. The sync polarity defaulting previously done
-in mode_fixup is carried over into atomic_check unchanged.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Closes: https://sashiko.dev/#/patchset/20260911204446.1719356-1-pc%40manguebit.org
+Fixes: df0e03a4fb94 ("smb: client: fix potential deadlock when reconnecting channels")
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Leonardo Costa <leonardo.costa@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Swamil Jain <s-jain1@ti.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260706132440.1594239-1-leoreis.costa@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-[ sashal: Added a new atomic_check hook that only sets the input bus flags, since mode_fixup and the sync-polarity defaulting it carried are absent, and kept the older pre_enable/enable hook names. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/client/connect.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index acbbf1e79fb78..e9ca3054d4ccd 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -1146,9 +1146,20 @@ tc358768_atomic_get_input_bus_fmts(struct drm_bridge *bridge,
- 	return input_fmts;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 6d3f11372440e..157d947846d9b 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -195,6 +195,8 @@ cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
+ 				nserver = ses->chans[i].server;
+ 				if (!nserver)
+ 					continue;
++				if (!list_empty(&nserver->rlist))
++					continue;
+ 				nserver->srv_count++;
+ 				list_add(&nserver->rlist, &reco);
+ 			}
+@@ -203,11 +205,15 @@ cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
+ 		}
+ 	}
+ 
++	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry_safe(server, nserver, &reco, rlist) {
+ 		list_del_init(&server->rlist);
+ 		set_need_reco(server);
++		spin_unlock(&cifs_tcp_ses_lock);
+ 		cifs_put_tcp_session(server, 0);
++		spin_lock(&cifs_tcp_ses_lock);
+ 	}
++	spin_unlock(&cifs_tcp_ses_lock);
  }
  
-+static int tc358768_bridge_atomic_check(struct drm_bridge *bridge,
-+					struct drm_bridge_state *bridge_state,
-+					struct drm_crtc_state *crtc_state,
-+					struct drm_connector_state *conn_state)
-+{
-+	bridge_state->input_bus_cfg.flags = bridge->timings->input_bus_flags;
-+
-+	return 0;
-+}
-+
- static const struct drm_bridge_funcs tc358768_bridge_funcs = {
- 	.attach = tc358768_bridge_attach,
- 	.mode_valid = tc358768_bridge_mode_valid,
-+	.atomic_check = tc358768_bridge_atomic_check,
- 	.pre_enable = tc358768_bridge_pre_enable,
- 	.enable = tc358768_bridge_enable,
- 	.disable = tc358768_bridge_disable,
+ /*
+@@ -1762,6 +1768,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 	spin_lock_init(&tcp_ses->mid_lock);
+ 	INIT_LIST_HEAD(&tcp_ses->tcp_ses_list);
+ 	INIT_LIST_HEAD(&tcp_ses->smb_ses_list);
++	INIT_LIST_HEAD(&tcp_ses->rlist);
+ 	INIT_DELAYED_WORK(&tcp_ses->echo, cifs_echo_request);
+ 	INIT_DELAYED_WORK(&tcp_ses->reconnect, smb2_reconnect_server);
+ 	mutex_init(&tcp_ses->reconnect_mutex);
 -- 
 2.53.0
 
