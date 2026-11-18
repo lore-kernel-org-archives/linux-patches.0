@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021389;
-	b=OQaDjWrFhf/AMarjasEWwx21BqFPAft5h86cgOMO4w8pNb0JlsGSN+Rp8CfgTP9spfdy
-	 Wwsdc0i/ibO87Y3TlvBXBJETrOaJk28np4fZsNAyBWJqtpa1tk7F3eO8wDeLBsfh2hBt8
-	 Q1Yc70d1w+p5DOpnsrZ2wsfgoal5ad1Mp+AoVukmbNcGS63OEoNFSCQIwG0ZR5rx/7ZlQ
-	 06rreqJby/rg9BRTwg8fWAQNRu4ogbDMGWNmfFfnjM1a/kiRnxl5RLJDpayYno/QJigqe
-	 jPphMiRmhJGGbtr65BQOZdlh8Lqm5AoIizDZ4uLdYvYrKpcw2UzS1x1be/j9v8l0Z7Q==
+	t=1795021392;
+	b=1VaEJBXi1aDfaOdQ0vLn0935tNkensqBki2MqoHBR9vEZhs+DRFRbg1+sHvDbwGkO4wx
+	 HbpUgqVwS1Cz9JhvQcfTGeT7cdSQukUQr8ucIiqLhyn6A4QTU5IQmRi8gv/cPHCeoPUVD
+	 UTjdP5ZR241o1J2ANpPDKBmus+a2LlXWJR6tbE6X3+eIzj4DMDSkvE22qhG506//YC7U+
+	 ejMsiCXJG7kPRUzYMjrZScEwcHaD1X645ptFzCMJY0JRf+e249ss25iQHCXTt4ftl8YTW
+	 APvdmSlM0Bb8ZWGofIpzlfuuexB752CXsYg3eZW2MPAT/uslY/oBvijblujEP3rqZXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bo9E8xLavtM3cIMdzXAPIBt+7rx8b1SoAb771u5wFwU=;
-	b=z1oHwnCBf2Mdf7yu53ZgvbYaCYjZzD10o8rMIFL2OmKCW4u5nb4AigHr1UrYKNaXboee
-	 UhMBSNNHAVmVZJk0iWIhFO5jY85PHoUsxEa7S3aMvTKNtS/mjfnw+2ge3GIlOvvCohHmQ
-	 eualAVf2bt5CtGLE+0QiWQCnhwHM8EYoJjNI8w1O5gT7AmrFdAUey0wpgv4pJluqeHE7Y
-	 xS4MRlM/gawpiW/CHyqBVXXjK6YXaQtnZJDBFwpdzxNzzGOztn1ADyFk84tcp9efyQeFy
-	 gwW+yudGRwTiW18fLQ6vutc2akU5Hpk7zyDyMcSprd6OvjqGdBgETKZ6n74QDXRmhXg==
+	bh=RNVAtW4NCnYVlNAfBGPHBDq5pfeEzenGZhUUsbJwIok=;
+	b=yWt3oLZjVO4UFct2qw8ucsEBfx33sahC4mQpQtCqY2BvSjWnmLw2jhlRWj5dWDc4AA7O
+	 gF1tZo0r7jJkqpgxsupfgdTLxw30HwC2OePwNzQyiltQFaIK/0dZycNQlKHSKm4Tnc9AA
+	 16mehLy1PVTkmBfoz2uCQlcnDY3ZLMpbZvasi6ippb7ZKTmOnCGigWWG2XG8re4ZR8TZp
+	 ESS9XOx/GF23+qLbnmHmuXb1Yyh000UOuHxr8cKEDnKMhCnrZFpKn/oMWZjsk3GO0Sxa1
+	 15HTtkF3px4nghkmLEk8acJnj64tnBp/leWCuEdnHBPVljqppmgdn0jpTed0SL30Oww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9kPcSlk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kDJ1UfsE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E0460A2605;
-	Wed, 18 Nov 2026 17:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D5760A2600;
+	Wed, 18 Nov 2026 17:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9kPcSlk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF461F000C4;
-	Wed, 18 Nov 2026 17:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kDJ1UfsE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60BB1F000C4;
+	Wed, 18 Nov 2026 17:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021389;
-	bh=Bo9E8xLavtM3cIMdzXAPIBt+7rx8b1SoAb771u5wFwU=;
+	s=korg; t=1795021392;
+	bh=RNVAtW4NCnYVlNAfBGPHBDq5pfeEzenGZhUUsbJwIok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u9kPcSlkGbEUXrw5lw3ieHgW7eFr4fyaK+h98pTsunpYyGaM8Sm4oJMpm3lV1DI0v
-	 RPaoOrCvtMs5CGH3HNmCmaXifYuYA80E6B1VdKI2OfEm12nY713Fy37Et7+KIcuqX0
-	 e1zHNGLuZZOCnqKYK5v2m87silAaHnWm4sGPr3+Q=
+	b=kDJ1UfsE571zPm3v/QZdseLLK47whcVAfcizmtvau8urHIvmy8lGPbCCru2U8ERtf
+	 G9h27KfPv92vveG3MxkOJ8SXUMFdPiaR/TBvDzxvrllfO9y/r5n12btFUzjTSiJKyt
+	 RQAHMtB8yrx4XDyFtiBd6NJIfUue62Sy+nm8PpFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2273/2651] ibmveth: release the pool kobjects when probe fails
-Date: Wed, 18 Nov 2026 15:58:33 +0100
-Message-ID: <20261118150407.171839060@linuxfoundation.org>
+Subject: [PATCH 7.3 2291/2651] ksmbd: cache the resolved share path for durable reconnects
+Date: Wed, 18 Nov 2026 15:58:51 +0100
+Message-ID: <20261118150407.744880321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,169 +68,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit fd052c6823b31eb45f824660567ab3f2da2d5195 ]
+[ Upstream commit 2a90ba573d41efa82e075ba9ac532bb3ec0519c4 ]
 
-If register_netdev() fails in ibmveth_probe(), for example with -EINTR
-when the binding task is killed, probe frees the netdev but leaves the
-pool%d kobjects embedded in it registered in sysfs. Reading
-/sys/devices/vio/<unit>/pool0/num is then a use-after-free, and the
-next probe cannot add pool0.
+A share configured as /a/link/b, with /a/link pointing to /real, is
+opened relative to share->vfs_path at /real/b. However,
+ksmbd_validate_name_reconnect() compares the file's d_path() result
+against the original /a/link/b string and rejects a valid reconnect.
 
-Put the kobjects before freeing the netdev, as ibmveth_remove() does,
-on this path and on the netif_set_real_num_tx_queues() one.
+Render share->vfs_path with d_path() after the existing kern_path()
+lookup and cache a copy in real_path along with its length. Use the
+resolved string for durable reconnect name validation. Keep path and
+path_sz as the configured spelling for existing consumers, including
+the volume serial calculation and path lookups.
 
-The kobjects also have no release(). With CONFIG_DEBUG_KOBJECT_RELEASE,
-kobject_put() defers their cleanup, including removing the sysfs files,
-to a work item, so free_netdev() can free them first, here and in
-remove(). Add a release() that signals a per-pool completion, and wait
-for it in both places before free_netdev(). Without that config,
-release() runs from kobject_put() and the wait returns at once.
-
-Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection; the release() part was raised by the Sashiko review of
-the first version. Tested on a POWER10 LPAR with register_netdev()
-forced to fail with -EINTR by a test-only module parameter (not part of
-this patch): no pool%d directories remain and the device binds again. No
-kernel selftests cover ibmveth.
-
-Fixes: 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-6-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Reported-by: Dairui Zhang <zhangdairui@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 52 +++++++++++++++++++++++++-----
- drivers/net/ethernet/ibm/ibmveth.h |  3 ++
- 2 files changed, 47 insertions(+), 8 deletions(-)
+ fs/smb/server/mgmt/share_config.c | 43 +++++++++++++++++++++++++++++--
+ fs/smb/server/mgmt/share_config.h |  2 ++
+ fs/smb/server/vfs_cache.c         | 12 +++++----
+ 3 files changed, 50 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 919b5831d875c..42aa9f7bd49de 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1890,6 +1890,40 @@ static const struct net_device_ops ibmveth_netdev_ops = {
- 	.ndo_features_check	= ibmveth_features_check,
- };
- 
-+/**
-+ * ibmveth_pool_kobj_release - Mark a pool kobject finished
-+ * @kobj: kobject embedded in the pool
-+ *
-+ * The pool kobjects live in netdev_priv(), so the last put must wait
-+ * for this before free_netdev().
-+ */
-+static void ibmveth_pool_kobj_release(struct kobject *kobj)
-+{
-+	struct ibmveth_buff_pool *pool = container_of(kobj,
-+						      struct ibmveth_buff_pool,
-+						      kobj);
-+
-+	complete(&pool->released);
-+}
-+
-+/**
-+ * ibmveth_put_pool_kobjs - Drop the pool kobjects and wait for release
-+ * @adapter: ibmveth adapter
-+ *
-+ * With CONFIG_DEBUG_KOBJECT_RELEASE the cleanup, including removing the
-+ * sysfs files, runs later from a work item in the kobject; wait for it
-+ * so free_netdev() cannot free the pools first.
-+ */
-+static void ibmveth_put_pool_kobjs(struct ibmveth_adapter *adapter)
-+{
-+	int i;
-+
-+	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
-+		kobject_put(&adapter->rx_buff_pool[i].kobj);
-+	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
-+		wait_for_completion(&adapter->rx_buff_pool[i].released);
-+}
-+
- static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
- {
- 	int rc, i, mac_len;
-@@ -2000,6 +2034,7 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
- 		ibmveth_init_buffer_pool(&adapter->rx_buff_pool[i], i,
- 					 pool_count[i], pool_size[i],
- 					 pool_active[i]);
-+		init_completion(&adapter->rx_buff_pool[i].released);
- 		error = kobject_init_and_add(kobj, &ktype_veth_pool,
- 					     &dev->dev.kobj, "pool%d", i);
- 		if (!error)
-@@ -2011,8 +2046,7 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
- 	if (rc) {
- 		netdev_dbg(netdev, "failed to set number of tx queues rc=%d\n",
- 			   rc);
--		free_netdev(netdev);
--		return rc;
-+		goto err_put_pools;
- 	}
- 	adapter->tx_ltb_size = PAGE_ALIGN(IBMVETH_MAX_TX_BUF_SIZE);
- 	for (i = 0; i < IBMVETH_MAX_QUEUES; i++)
-@@ -2027,25 +2061,27 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
- 
- 	if (rc) {
- 		netdev_dbg(netdev, "failed to register netdev rc=%d\n", rc);
--		free_netdev(netdev);
--		return rc;
-+		goto err_put_pools;
- 	}
- 
- 	netdev_dbg(netdev, "registered\n");
- 
- 	return 0;
-+
-+err_put_pools:
-+	ibmveth_put_pool_kobjs(adapter);
-+	free_netdev(netdev);
-+	return rc;
+diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
+index cc9f18ede80df..f85134c38cdd1 100644
+--- a/fs/smb/server/mgmt/share_config.c
++++ b/fs/smb/server/mgmt/share_config.c
+@@ -8,6 +8,7 @@
+ #include <linux/slab.h>
+ #include <linux/rwsem.h>
+ #include <linux/parser.h>
++#include <linux/dcache.h>
+ #include <linux/namei.h>
+ #include <linux/fs_struct.h>
+ #include <linux/sched.h>
+@@ -108,6 +109,7 @@ static void kill_share(struct ksmbd_share_config *share)
+ 		path_put(&share->vfs_path);
+ 	kfree(share->name);
+ 	kfree(share->path);
++	kfree(share->real_path);
+ 	kfree(share);
  }
  
- static void ibmveth_remove(struct vio_dev *dev)
- {
- 	struct net_device *netdev = dev_get_drvdata(&dev->dev);
- 	struct ibmveth_adapter *adapter = netdev_priv(netdev);
--	int i;
+@@ -182,6 +184,43 @@ static int parse_veto_list(struct ksmbd_share_config *share,
+ 	return 0;
+ }
  
- 	disable_work_sync(&adapter->work);
- 
--	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
--		kobject_put(&adapter->rx_buff_pool[i].kobj);
-+	ibmveth_put_pool_kobjs(adapter);
- 
- 	unregister_netdev(netdev);
- 
-@@ -2221,7 +2257,7 @@ static const struct sysfs_ops veth_pool_ops = {
- };
- 
- static struct kobj_type ktype_veth_pool = {
--	.release        = NULL,
-+	.release        = ibmveth_pool_kobj_release,
- 	.sysfs_ops      = &veth_pool_ops,
- 	.default_groups = veth_pool_groups,
- };
-diff --git a/drivers/net/ethernet/ibm/ibmveth.h b/drivers/net/ethernet/ibm/ibmveth.h
-index 3f2240823f6a3..be0939caa328e 100644
---- a/drivers/net/ethernet/ibm/ibmveth.h
-+++ b/drivers/net/ethernet/ibm/ibmveth.h
-@@ -14,6 +14,8 @@
- #ifndef _IBMVETH_H
- #define _IBMVETH_H
- 
-+#include <linux/completion.h>
++static int share_config_resolve_path(struct ksmbd_share_config *share)
++{
++	char *buf, *path;
++	int ret;
 +
- /* constants for H_MULTICAST_CTRL */
- #define IbmVethMcastReceptionModifyBit     0x80000UL
- #define IbmVethMcastReceptionEnableBit     0x20000UL
-@@ -143,6 +145,7 @@ struct ibmveth_buff_pool {
-     struct sk_buff **skbuff;
-     int active;
-     struct kobject kobj;
-+	struct completion released;
- };
++	ret = kern_path(share->path, 0, &share->vfs_path);
++	if (ret)
++		return ret;
++
++	buf = kmalloc(PATH_MAX, KSMBD_DEFAULT_GFP);
++	if (!buf) {
++		ret = -ENOMEM;
++		goto out;
++	}
++
++	path = d_path(&share->vfs_path, buf, PATH_MAX);
++	if (IS_ERR(path)) {
++		ret = PTR_ERR(path);
++		goto out_buf;
++	}
++
++	path = kstrdup(path, KSMBD_DEFAULT_GFP);
++	if (!path) {
++		ret = -ENOMEM;
++		goto out_buf;
++	}
++
++	share->real_path = path;
++	share->real_path_sz = strlen(path);
++out_buf:
++	kfree(buf);
++out:
++	if (ret)
++		path_put(&share->vfs_path);
++	return ret;
++}
++
+ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 						       const char *name)
+ {
+@@ -272,12 +311,12 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 			}
  
- struct ibmveth_rx_q {
+ 			scoped_with_init_fs()
+-				ret = kern_path(share->path, 0, &share->vfs_path);
++				ret = share_config_resolve_path(share);
+ 			ksmbd_revert_fsids(work);
+ 			if (ret) {
+ 				ksmbd_debug(SMB, "failed to access '%s'\n",
+ 					    share->path);
+-				/* Avoid put_path() */
++				/* No path reference is retained on failure. */
+ 				kfree(share->path);
+ 				share->path = NULL;
+ 			}
+diff --git a/fs/smb/server/mgmt/share_config.h b/fs/smb/server/mgmt/share_config.h
+index d157545fe7d1d..91691b525907d 100644
+--- a/fs/smb/server/mgmt/share_config.h
++++ b/fs/smb/server/mgmt/share_config.h
+@@ -16,8 +16,10 @@ struct ksmbd_work;
+ struct ksmbd_share_config {
+ 	char			*name;
+ 	char			*path;
++	char			*real_path;
+ 
+ 	unsigned int		path_sz;
++	unsigned int		real_path_sz;
+ 	unsigned int		flags;
+ 	struct list_head	veto_list;
+ 
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 38196befa03a5..56f07914197c1 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -1921,6 +1921,8 @@ void ksmbd_free_global_file_table(void)
+ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
+ 				  struct ksmbd_file *fp, char *name)
+ {
++	const char *share_path = share->real_path;
++	size_t share_path_sz = share->real_path_sz;
+ 	char *pathname, *ab_pathname;
+ 	int ret = 0;
+ 
+@@ -1937,14 +1939,14 @@ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
+ 	if (name) {
+ 		size_t len = strlen(ab_pathname);
+ 
+-		if (len == share->path_sz && !strncmp(ab_pathname, share->path, len)) {
++		if (len == share_path_sz && !strncmp(ab_pathname, share_path, len)) {
+ 			/* the durable fp is the share root itself */
+ 			if (name[0])
+ 				ret = -EINVAL;
+-		} else if (len <= share->path_sz ||
+-			   strncmp(ab_pathname, share->path, share->path_sz) ||
+-			   ab_pathname[share->path_sz] != '/' ||
+-			   strcmp(&ab_pathname[share->path_sz + 1], name)) {
++		} else if (len <= share_path_sz ||
++			   strncmp(ab_pathname, share_path, share_path_sz) ||
++			   ab_pathname[share_path_sz] != '/' ||
++			   strcmp(&ab_pathname[share_path_sz + 1], name)) {
+ 			ret = -EINVAL;
+ 		}
+ 		if (ret)
 -- 
 2.53.0
 
