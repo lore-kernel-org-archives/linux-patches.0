@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027288;
-	b=2ofaMamj6fMwVebsMyIQAmz+RrHndyLmerHgj/bwvTIhDf99kwd2Fz77zsw3Rkp23Trt
-	 yP0ANxIdo6cmCFZhY1R9YeIoxDY1ucHtQjkBQQ/lS/Hlbp5Y8FMxVHyy1n8KRjUubRqZ7
-	 NiTTJZfCSDa0ulhUMjuNIzikjjeZ0q2BtuqP97BeqeiR75WHrvnzYxIW/0+JkEyJfMQsB
-	 /T1S7aRPHEo2EnqcRrAmA3axo6bwEW2kxW8IgLdUisIFPwyjErExWC9JGvZAVKVZcgZol
-	 90chEOkrX6kcCn9dz/b56G/KJuJdBwcuJyxV5y74aNgMlK7xnijld8vZOZ4/2lWkPwA==
+	t=1795027291;
+	b=lYh7urTy0bGCCRTfAWTiBllOrxNTmqg+uDxxs6HJ7Pj8TJCYVjt9SwQ95DxouN37s8u6
+	 s1eeTehZLFcJ2xxJSu6WL5zp9vk8EPLlU3nbcCZUlKCJKppvOPqdxnPMaZ/5Le/svK6Sx
+	 dba+TdVD4FzZCqGhpe8ep/F9OitW71Uo9vwt/TppAEqQlmvub/P4PgGFG/ZFMcSCgaF2c
+	 aISXDnjP4UlqorA+glCXLAPGqP1W4bKaL+jjxaJ4m7ziLgibYo/i0JyumlwHzMiZfZUek
+	 Ngm1szLednKM7XRP3A5xwFyAwnJbrHpm2Ct1lgZFVHkOFVURdNUZ0zWRCWsdNZlk3kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027288;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027291;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t1MnHUjYUWaFla6pCQpB9GJWYJnXzWGAC7gQarYLtPM=;
-	b=uPIYiH/LMkRF80+YbFu72R83EvohFoFyhzThGyEQs2CbVv42mb5aTeLge64xpgTRPGM9
-	 O2jOs5SIRswNOgHWvM57ktQPC+HhoybVblROEgWg/NhHywe+iWykqLGsuvctdVtcr2X23
-	 G0aEJWSzFdGNcVyvHr++6Ys54ZWmMT99p0KZYMiKU9Ghz6qM3vQLu6+ZcjTp3P6EHJJRI
-	 JyVo5UyNAnq22uRmALZwvj46nCdOnEDFOO8BmCJB8a2zto+JXwCXRvl2Vnommcj/IKRqF
-	 w011Urlp9GHLbym5hSAlz57NfkqN7h58yBiREC5sxyI3sQOy7VHw4NMNpiGRrMlXTiQ==
+	bh=kxUcFq4xmLoYvrBUxlNI7A87u0wysrBNjqRJDb6K/Uo=;
+	b=j4Lw9BMj7brMkBoApnAiocCRJo5LbWFU/mz97s6JaU9TMyunbKJxJ6IL/98ruc9GGvY0
+	 wMsR0udzsU3ui3hzyR9fBDzkqHLNchT9wVJXoVqDMvaP9MMIkY1NciUtQ/FwWtqVzj4eZ
+	 dGXOkXtbgKx/AFP0PZ+qebLvLIE6iUYTnY5Wy1vbahCsqYkrQnkK58CPsm5V2CYoUMYrC
+	 Jc+ltSUKgj0cvFkmkM0i/St5jo/iTIZKBhUzfFW6CnU97swxaZ/BPyb5y2OP22JhUrqTo
+	 aptDhZG0T1JdWdiY5nOxUB/bNNFwldKRZhDHohBRogLlORJE5UiAEleSYqXIRW71OWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mvrVSKb9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTzZlPjC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4045C606A31C;
-	Wed, 18 Nov 2026 18:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1377B606A320;
+	Wed, 18 Nov 2026 18:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mvrVSKb9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B041F000C4;
-	Wed, 18 Nov 2026 18:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTzZlPjC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C131F000C4;
+	Wed, 18 Nov 2026 18:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027287;
-	bh=t1MnHUjYUWaFla6pCQpB9GJWYJnXzWGAC7gQarYLtPM=;
+	s=korg; t=1795027290;
+	bh=kxUcFq4xmLoYvrBUxlNI7A87u0wysrBNjqRJDb6K/Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mvrVSKb9hjNSOABD7EbCwN49G/ToQiCTb5wqm6DiaRu3eT6K3ATEiVYYoshm61Raa
-	 yBgfuo/b9d6U18IIGISr/HQ3r7ZgESA8igNwJ0VLj8CM5ZVS5ZTa6livkC+asXyAzF
-	 OZNPSa6nzDS9fjng6+bYsE1dmip0fDySJWXozsQQ=
+	b=HTzZlPjCQj1sR5+wCsoaJQnZa8baiC721tXeSIAisGkVNOfmSGua8uFGEXcfBpxxa
+	 dQqnWWc9D1cWhogQDlzIayNPUD9nih1ctKlolczsMJUquXh8z4TsgCCjbDPoh0KPgX
+	 MdBZqwp+XoaBlv9SDV+ZMjCpbxpTJymzFxy6M9Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1695/2151] bpf: Claim the per-CPU send_signal irq_work before filling it
-Date: Wed, 18 Nov 2026 15:57:10 +0100
-Message-ID: <20261118150223.575349411@linuxfoundation.org>
+Subject: [PATCH 6.18 1696/2151] ASoC: codecs: da732x: Fix definition of ADC2 EQ Overall Volume control
+Date: Wed, 18 Nov 2026 15:57:11 +0100
+Message-ID: <20261118150223.608893756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,78 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 2d1f101ee619435873ed8a23fcb3bd09204a5024 ]
+[ Upstream commit ebef9212cb469706e28002a20f9d48307d1fd867 ]
 
-irq_work_is_busy() cannot see the per-CPU send_signal_work while
-it is being filled: the check only matches after irq_work_queue()
-has claimed the work. A concurrent caller therefore passes it, both
-callers race for the same irq_work, and the loser's signal is
-silently lost along with its task reference while the queued work
-runs with a mix of both callers' fields.
+The ADC2 EQ overall volume is in DA732X_REG_ADC2_EQ5 (0x9F), not in
+DA732X_REG_ADC1_EQ5 (0x97), which holds the ADC1 one.
 
-kprobe, tracepoint and perf_event programs exclude each other on
-the same CPU through bpf_prog_active, so for two callers to meet,
-one of the programs has to be a raw tracepoint or an fentry one.
-And since commit 87c544108b61 ("bpf: Send signals asynchronously
-if !preemptible") this path runs with IRQs enabled too, so a hard
-IRQ can interrupt the fill as well, not only an NMI. Found by code
-inspection and reproduced with a perf_event NMI program racing an
-fentry one.
-
-Claim the work through work->task itself: cmpxchg() it from NULL
-to the target task before touching the other fields, and set it
-back to NULL once the callback has consumed them. A context
-finding the work claimed returns the documented -EBUSY.
-
-Fixes: 1bc7896e9ef4 ("bpf: Fix deadlock with rq_lock in bpf_send_signal()")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261009022427.968304-1-chenyuan@kylinos.cn
+Fixes: 48e278746070 ("ASoC: codecs: Add DA732x codec driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/35bae3f84cdc3ceb6ca412153f44dee3647fdbd6.1792135144.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/codecs/da732x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index e692d67907e49..af5ab3b2e3d59 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -793,6 +793,7 @@ const struct bpf_func_proto bpf_task_pt_regs_proto = {
+diff --git a/sound/soc/codecs/da732x.c b/sound/soc/codecs/da732x.c
+index 016c9be3ebdaa..04fe9ceb15db6 100644
+--- a/sound/soc/codecs/da732x.c
++++ b/sound/soc/codecs/da732x.c
+@@ -511,7 +511,7 @@ static const struct snd_kcontrol_new da732x_snd_controls[] = {
+ 	SOC_SINGLE_TLV("ACD2 EQ Band 5 Volume", DA732X_REG_ADC2_EQ5,
+ 		       DA732X_EQ_BAND5_SHIFT, DA732X_EQ_VOL_VAL_MAX,
+ 		       DA732X_INVERT, eq_band_pga_tlv),
+-	SOC_SINGLE_TLV("ADC2 EQ Overall Volume", DA732X_REG_ADC1_EQ5,
++	SOC_SINGLE_TLV("ADC2 EQ Overall Volume", DA732X_REG_ADC2_EQ5,
+ 		       DA732X_EQ_OVERALL_SHIFT, DA732X_EQ_OVERALL_VOL_VAL_MAX,
+ 		       DA732X_INVERT, eq_overall_tlv),
  
- struct send_signal_irq_work {
- 	struct irq_work irq_work;
-+	/* The claim: NULL marks the slot free for the next caller. */
- 	struct task_struct *task;
- 	u32 sig;
- 	enum pid_type type;
-@@ -812,6 +813,8 @@ static void do_bpf_send_signal(struct irq_work *entry)
- 
- 	group_send_sig_info(work->sig, siginfo, work->task, work->type);
- 	put_task_struct(work->task);
-+	/* Release once the fields are consumed. */
-+	smp_store_release(&work->task, NULL);
- }
- 
- static int bpf_send_signal_common(u32 sig, enum pid_type type, struct task_struct *task, u64 value)
-@@ -855,14 +858,14 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type, struct task_struc
- 			return -EINVAL;
- 
- 		work = this_cpu_ptr(&send_signal_work);
--		if (irq_work_is_busy(&work->irq_work))
-+		if (cmpxchg(&work->task, NULL, task))
- 			return -EBUSY;
- 
- 		/* Add the current task, which is the target of sending signal,
- 		 * to the irq_work. The current task may change when queued
- 		 * irq works get executed.
- 		 */
--		work->task = get_task_struct(task);
-+		get_task_struct(task);
- 		work->has_siginfo = siginfo == &info;
- 		if (work->has_siginfo)
- 			copy_siginfo(&work->info, &info);
 -- 
 2.53.0
 
