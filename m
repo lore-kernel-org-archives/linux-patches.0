@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031168;
-	b=NVr0YwH7XOi4Ivz+zdCl3Pvy+m1Vz3p5wyADs1fyOlAnFd6GLT75IZncG7aH5pI0NFkP
-	 a21biQmIjj07o28s9Xs/FFblFHk5W7WbSROI+Bk07GIWIMc1jXFnBTem3iKHoA2o2zE90
-	 OXF3wGbFFQPZcyo8WpkTfMPnTn7Pks7D+h7fkkABk4Ng+oHETrnHirSMSHQk5doLjs6mH
-	 NKdO9DqUAG9CnzF8MHQyo3DZH/+6Td46GsNDM0zZ6mQcALE9VEeP2zsynGvpgU4x1hhY8
-	 ElrGzrPMFXhFouRz0/SwPExaBn5yq5gdqdSbCV+9JXx4BkT9Xs7zfJBJoFgQNe4B4dg==
+	t=1795031170;
+	b=x6SkEkxdgzrJqAb9EVujiCbpZiBq9FIMPB/JrxMSqAFt8hrqGaqgHY4AJaQ4ALX1LaeL
+	 KN4CSA9HuD3+N+geKKGWvdVq3jY1zqQNMVuoxA22iqPMfIpJxXh33ErA1GDhxqWSK01LS
+	 fgH8yky3dgXKWvemmfaebgPMw4PsgR7zMDFGUm9VRDZJuHWz7Fe2A23A2b/yeuzhKfzRt
+	 Bp8io5NMejT/h/ludCZuyAC9zowfFwCDy5A3LFYtVChJOSQ8iYky0GXdJJzqKaZMyYQj2
+	 8tqlT0fJGFps6OTqdgUPxemGgVPdi/N4kj3IETawnWxJ5vX7cR06WWaFgzMxLRJMUHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031170;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7HItYmpH/sHSYc8XJcXAJ0ldRRiRsuPS3G8remUYqjU=;
-	b=U1q1hGP5HMA3CFAKxPdpHC0AO8LNgNkOh+BDxmunb1lOFFr6wEF3eF2L7xyNq3tGwaog
-	 UZXBqshTwHoBvy/NFOdyEH98jyaoUColkH1gWKU56B2wGSxod1NQnW/AxSGoJvYEMQ6Z2
-	 MZAWqN6DZtvo1bujQRasCggfSDGjjuZBPLWCw572LHOCYA3UvhDARMUhzOPTNAijFH2wP
-	 0704CquaKS/dAPkWCl7vIRuN7k/GkZAHBDYemSacrhHMM9j6epEXFk2U7Mb+EE8mscsA1
-	 etafWr4q2k+hKMiBkoEf0AlqugboNrA3w1LemZkIJ7NrhB9fiQdKl22J+u/BzlW1UAw==
+	bh=udL9Vjb8AS/t5A2+V6RYlriyKy9PF/K6R9VnbeyVQbU=;
+	b=JQHAcAsGmwZe0HBUGax/6pC0ubnzyQSG7aYsoaHjfo0L1OgvPrHzfgpX8CdrhVhSkGJh
+	 1OYO53fg0nCH54cUZdGzF4kb1Leo81yg3sRwudyQiA3FBflrSt+20pmh1SNMOk9XrNglm
+	 /1XzqNwlDHjOHA9T9CbVe4fBOd+h+u/8rqGhCkv/uutyupSZ31n5fMt0p/Qn9Z7EwAYFs
+	 8e/prPtCsT6ub5BCo0W9E8pM/rKUp3NTRFEJZCKbJ1tpEBbndA95EVBCkPfLEjobS4IZX
+	 eUs9Vl1AVEYPJNwPKabJcnA23iUpc/pJ0J6YlC6yK0IcZr7L0KQ02sQwtcUbTuxKP9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wemsbt1J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tcflczxl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B71606A31C;
-	Wed, 18 Nov 2026 19:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8290606A320;
+	Wed, 18 Nov 2026 19:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wemsbt1J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B13E1F000C6;
-	Wed, 18 Nov 2026 19:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tcflczxl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411871F000C6;
+	Wed, 18 Nov 2026 19:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031168;
-	bh=7HItYmpH/sHSYc8XJcXAJ0ldRRiRsuPS3G8remUYqjU=;
+	s=korg; t=1795031170;
+	bh=udL9Vjb8AS/t5A2+V6RYlriyKy9PF/K6R9VnbeyVQbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wemsbt1JKDZMcXU94sbzvSIbvfjT01fWDNjnMx7Ud1EHBe1DAWSP5PgdNINrLDylH
-	 KW8HlIlQ4nThkV2b/8xpt467geVEfsAdeGg4lkXPJuxc2jFqwq6fOcLVjoUh6N6Zrb
-	 gDUFrrfnsqdC6t6VE9Oeu/U+y/JRxgqXadazXZmw=
+	b=TcflczxlufqoXw+3Pd6/+lq9nJuMPj79xuJm9tBi9EWGHeiBlaUAykprJ5T4nEeQd
+	 KtwJG5Mc2iOlQir5wPPn+cCyRXrwNRK8TrC+QR9FcdbmSLXDcZiDIBxBQFCFLz3IpC
+	 MorCg/jLxzrvHGukwvcPfvsmwvs5lNdRn1/4nV88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ryan Leung <untilscour@protonmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0961/1756] wifi: mt76: mt7915: publish wcid before MCU add commands
-Date: Wed, 18 Nov 2026 15:51:28 +0100
-Message-ID: <20261118150048.343056462@linuxfoundation.org>
+Subject: [PATCH 6.12 0962/1756] wifi: mt76: fix unlocked wcid check in mt76_tx_status_skb_add()
+Date: Wed, 18 Nov 2026 15:51:29 +0100
+Message-ID: <20261118150048.381698775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,57 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryan Leung <untilscour@protonmail.com>
 
-[ Upstream commit a2d1c02c59f84e982179751bced5fb2fd5bb4212 ]
+[ Upstream commit cfb05250ded4d6de09dfd273c2a72092f48b55a3 ]
 
-mt7915_add_interface() enables the BSS/STA in firmware via
-mt7915_mcu_add_bss_info() and mt7915_mcu_add_sta() before publishing
-dev->mt76.wcid[idx] with rcu_assign_pointer(). Firmware can start
-generating tx-status/tx-free events referencing that wcid as soon as it
-processes those MCU commands, but mt76's rx/tx-free handlers (e.g.
-mt7915_mac_tx_free()) look up dev->mt76.wcid[idx] to service them, and
-won't find it published yet. This can lead to memory corruption and
-kernel crashes shortly after an AP interface is brought up.
+mt76_tx_status_skb_add() checks rcu_access_pointer(dev->wcid[wcid->idx])
+before taking dev->status_lock, then allocates a pktid afterwards. A
+concurrent mt76_wcid_cleanup() can run between the check and the lock,
+letting a stale wcid be re-added to dev->wcid_list after teardown.
+Worse, the check only tests for a non-NULL slot, so it also passes if a
+different wcid has since been published at the same idx.
 
-This ordering was introduced by commit 8e3e7567b8c1 ("mt76: mt7915: add
-sta_rec with EXTRA_INFO_NEW for the first time only"):
-mt7915_mcu_add_sta() derived its "newly added" flag from
-!rcu_access_pointer(dev->mt76.wcid[idx]), so the publish had to happen
-after that call. Commit 33eb14f10290 ("wifi: mt76: mt7915: use mac80211
-.sta_state op") later replaced that flag with a caller-supplied `newly`
-argument to mt7915_mcu_add_sta(), now simply hardcoded to true, so the
-ordering is no longer required.
+Move the check under status_lock, alongside idr_alloc(), and compare
+identity (rcu_access_pointer(dev->wcid[wcid->idx]) != wcid) instead of
+just testing for non-NULL, so that a reused index is correctly rejected.
 
-Move the rcu_assign_pointer() before the MCU add_bss_info/add_sta
-calls, so that the wcid is visible to lookups before firmware is told
-it's live. This makes the ordering symmetric with
-mt7915_remove_interface(), which keeps the pointer published until
-after the MCU disable commands have been issued.
-
-Closes: https://github.com/openwrt/openwrt/issues/24594
-Fixes: 8e3e7567b8c1 ("mt76: mt7915: add sta_rec with EXTRA_INFO_NEW for the first time only")
+Fixes: fcfe1b5e162b ("mt76: fix tx status related use-after-free race on station removal")
 Signed-off-by: Ryan Leung <untilscour@protonmail.com>
-Link: https://patch.msgid.link/20260821-mt7915-wcid-publish-order-v2-1-acf0b7f32cbd@protonmail.com
+Link: https://patch.msgid.link/20260821-mt76-stale-wcid-race-v2-1-8f41ee96fb73@protonmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/tx.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 0e3ca0eb9f082..67b9f48100a20 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -275,9 +275,9 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
- 	mt7915_init_bitrate_mask(vif);
- 	memset(&mvif->cap, -1, sizeof(mvif->cap));
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index ed1615192d644..edb1de6582fac 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -129,7 +129,7 @@ mt76_tx_status_skb_add(struct mt76_dev *dev, struct mt76_wcid *wcid,
  
-+	rcu_assign_pointer(dev->mt76.wcid[idx], &mvif->sta.wcid);
- 	mt7915_mcu_add_bss_info(phy, vif, true);
- 	mt7915_mcu_add_sta(dev, vif, NULL, CONN_STATE_PORT_SECURE, true);
--	rcu_assign_pointer(dev->mt76.wcid[idx], &mvif->sta.wcid);
+ 	memset(cb, 0, sizeof(*cb));
  
- 	mutex_unlock(&dev->mt76.mutex);
+-	if (!wcid || !rcu_access_pointer(dev->wcid[wcid->idx]))
++	if (!wcid)
+ 		return MT_PACKET_ID_NO_ACK;
  
+ 	if (info->flags & IEEE80211_TX_CTL_NO_ACK)
+@@ -147,6 +147,11 @@ mt76_tx_status_skb_add(struct mt76_dev *dev, struct mt76_wcid *wcid,
+ 
+ 	spin_lock_bh(&dev->status_lock);
+ 
++	if (rcu_access_pointer(dev->wcid[wcid->idx]) != wcid) {
++		pid = MT_PACKET_ID_NO_ACK;
++		goto out;
++	}
++
+ 	pid = idr_alloc(&wcid->pktid, skb, MT_PACKET_ID_FIRST,
+ 			MT_PACKET_ID_MASK, GFP_ATOMIC);
+ 	if (pid < 0) {
 -- 
 2.53.0
 
