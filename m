@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051985;
-	b=VwSBafnIL2hlkxK8b7+vnFtHTHVebhq0XiLOn83+0Fo6N4ivxU3SRmPziqJghyTlqei3
-	 kZLH8dPso+T8Zw4+vTa+x8X9AE7+JVYCg4oB/nbvJhciSDghrCf30fRbuf87xC/N61g93
-	 Yb19RsWip6SNnm/iII5a1hlLP/G2TYYynOkyYFOBkggg1WMOi3eF6xXHrpAtx66Bij0Ci
-	 Ev9oEdKmi18zE3BsKAO7lRdxZLk57dgGkMJhyVzW47zYkTmHBlgpW2F2I+xD+tbcKkglV
-	 LgPheCx98cJ0VOwyf/ieT9MqAoRiWEK1ZhhWAV+4O37JosWlYgQST3jjQF2gLffU9oA==
+	t=1795051988;
+	b=OGnVaLqakTCjwdo7FtYuXP16TJZdAaKdj/LaEOnMyBHNxVVb7pwmEkzsbyHcgmtivUys
+	 RPulHub8kIWoeU90J4+AftimSmynzwTr6ZW7Rg7BSntVg3Yy+ZT45590xoDBmUo4FpqRe
+	 QV6i/JsgXYu1md6xW7DpmExnIpXoA2/N4RvLLtLfiLul0H0B5cP5WIoE4mZjHzNax/qE2
+	 Q3GhkhclGIJwErg/wPTFgVKfej7UQT3W4QS6YuHQAYQAFc/5/BxJGMZGKhyXeaX9m9hL9
+	 9PRgiJ0I//hlDs3NmlmqJdzOplr/J9kJA8FJDOGN9M3vUC0y77as78JcIx9SkNBsPvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qpPM4gZvm7h8mTb6MZMOHMGDeQE2a0Z5Kx78Px/q/fM=;
-	b=CuOBM7o6KfqCRNJEywBVuzECB2Ohlw+6/9zGAuwQuVY4QUvzI1RTXneVZX4DZaI22WtH
-	 03sjxVN7ClYDOnBDLFkfFqd4BkqGjW/R/m57NRwHisW6gMUpWqiHmNnpR14ldPDCRGG6W
-	 vCdEP4xrvD3AspxIBAB177smE+uWD/g9jJkAsd56R1lcr06Pahzp8UC8aDeOGQvKXn1qE
-	 0QD1s7JchF3stFbfF4EpGc0dzRp9gmy187QvJouOi4Y66Tib9P69lI+v1T2zmPpbKBwxV
-	 sCCAYwoppcCvzOV9FaSHgU3eAkkoINq8sfPfMviOF8cjbu0xu29ISuJTQTYvDh7ZRPA==
+	bh=i+wHzePhihEb13Rpfcg2ZtZQqn0HEahQVfOVpsLPrXs=;
+	b=Oz6puleHDXcIOm45OF6vYR69Ev0xFnZfq1bd+u9GsfMjbvYJocDB54UWQUB43i9Pbn5s
+	 eT5awRNJUezIpOdwtRhr8k24EMG0TOUOUyHlLgcQCSvja1QmEJDRI21poFcx6kbwd3kE2
+	 RbbVEUSz39zW0+cmuCdaZxvOQJ4qwWzwqxOiEeLRJtv29zxYjucXNE6v0T//+5VXw0XYu
+	 XjaZNMUN2WejQzO5pVPhp8ElFbhmJhOHtGunpU4trqxQeZYg3aZDq9mR8oVMob6a7ULzO
+	 mgW4peI7HVU+Nz7+ipkRIN8ezeSgIfF42X+kHYmcR45I26LhRKT2hAjnC9E2EVIIMZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZ7onHqu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNiQabli;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9F9606A333;
-	Thu, 19 Nov 2026 01:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E70606A320;
+	Thu, 19 Nov 2026 01:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZ7onHqu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FDB1F000C4;
-	Thu, 19 Nov 2026 01:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNiQabli
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCA91F000C4;
+	Thu, 19 Nov 2026 01:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051985;
-	bh=qpPM4gZvm7h8mTb6MZMOHMGDeQE2a0Z5Kx78Px/q/fM=;
+	s=korg; t=1795051988;
+	bh=i+wHzePhihEb13Rpfcg2ZtZQqn0HEahQVfOVpsLPrXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wZ7onHquA15CL5zo0+/xOTZScgKfh5rn6ysdHe+HhuVrGb2ymYMpz9wEtLaMeYHXv
-	 gKKtGXeAasIqZJf3OMTx1CfZ4Xy2Xyt8t8vtVjrt4N4jfiH0IpJ+nRLCk2XfFmIj6n
-	 nihV9xwRJKY+UKuVR6cY05CScoe70l2N7KO/haDY=
+	b=QNiQabliQfMB0tp0IUwagXXdcKA2EnH8YXGv+pMEogGdncUGEFnH82nU6hdpsbjoY
+	 kyo4f8ooA/3OsIXc2UpYKmDQSXMxCnuZDDQfREw1k970db/U+lMsGcVJE7tSfPQNj2
+	 dJWte0hsaE0BnmoCh+I/VBxQJE/GTEajDEM7Cw44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 0366/2214] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
-Date: Wed, 18 Nov 2026 15:34:02 +0100
-Message-ID: <20261118150025.303708371@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0402/2214] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
+Date: Wed, 18 Nov 2026 15:34:38 +0100
+Message-ID: <20261118150026.840208061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
+[ Upstream commit cef48693da1e964e9f192bfc16cd0ed287c48337 ]
 
-Ensure all reserved flags are zeroed when setting the msg_pending flag as
-part of SynIC message delivery, as setting only msg_pending can leak seven
-bits of kernel stack data to the guest.  E.g. gcc typically uses a
-bitwise-OR to set the msg_pending flag, without initializing the on-stack
-variable.
+Preserve the negative return value from __vmx_handle_exit() when a bus
+lock is detected, instead of always overwriting it with 0.
 
-Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
-to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
-it would be quite easy to misread the initial read of guest memory and
-think that zeroing the entire structure is completely superfluous.
+The purpose of bus_lock_detected handling is to force a userspace exit to
+inform userspace that a bus lock happened. The negative return value can
+achieve this purpose, and changing the negative value to 0 fails to return
+an error to userspace. So, preserve the negative return value.
 
-Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
+Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/hyperv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/vmx/vmx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -768,7 +768,9 @@ static int synic_deliver_msg(struct kvm_
- 		if (no_retry)
- 			return 0;
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 244b67601bce7..77b1161e36e74 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6192,11 +6192,12 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
+ 	 * a bus lock in guest.
+ 	 */
+ 	if (to_vmx(vcpu)->exit_reason.bus_lock_detected) {
+-		if (ret > 0)
++		if (ret > 0) {
+ 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
++			ret = 0;
++		}
  
-+		hv_hdr.message_flags.asu8 = 0;
- 		hv_hdr.message_flags.msg_pending = 1;
-+
- 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
- 					      &hv_hdr.message_flags,
- 					      msg_off +
+ 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
+-		return 0;
+ 	}
+ 	return ret;
+ }
+-- 
+2.53.0
+
 
 
