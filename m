@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019831;
-	b=fEya6SB4wtmbLX+AogrxHPBPSIxXZTGgWFxN2mjQJpgkfDVFe5vSFV70rZjALyck0xiq
-	 FENJfnxwU5pUI9ZoAFqw98xQ6lx6ErUHhSh/KIcFU1VEKfaym3pn0zBXAh+e0DxIZCHcQ
-	 1fKVmwJCrctHZSXGJwIOoWO8GnZwViI3bIf/KeGUTSeJSYmgcXNhcAX0Q44ZlnUe1K6H4
-	 RBaRbDch8WsDx3tdLK/cxRZeKyWNTC1H6CQ/fm1wW+LcEdMSiDrwJrHWliSv4FkTu/jes
-	 NZewZe+jw3SogWdMAaBY4bKbw8Ue6QUUHY6odRBA9VbI9TGhpLVw6s32sUk8IUa8P+A==
+	t=1795019834;
+	b=am+v5v03h5aWotwqNJAD1kTHhD+hzAeKvwps4RG1+17LreYOQiq3YGOhQId6e4iFS+TE
+	 LCz9LDepD8kdwr/dEB7NPsCBJJ1IKAe6DctSpicPPySFUCMPoH9qpPkXQlhXNHr72VizO
+	 H52/fm5vFHeZ1066TvSdnswihPpb8BYlrzY8rzu6t1aZU5xlmGQTfI7lWTXCkhy281Dn4
+	 0RbYpl9qD/bpoDzdK+QVYbyVdgvbxprQRQ8vu39NwONvy+kONz42Cy+7yxf7Hvt6hgGQC
+	 okKikA7ng7kSzifuoGXIxXaoub89oxZL1wBc1ynQUEZ1Tf+58+96D+bS7CjJ/PTrNig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s0e2+0ZG+9+6++QS3WdWjDHixXiEqVY5OZX3yDwMDDw=;
-	b=DhqVip0oEv2LzSC1C4+T9lqkxmb5Dja7Th4w2ntwg4posspUPTkPlTCNQilok+XTEkJp
-	 xQ3t4pJOK8hQiqgRvudQOzNwGQYghhwKGGOjbPJpZo37lQA6bODZMCaIS1eyDQZcJoESu
-	 D95tzSW1n1+moanhoX0T9bYWEHhLyG2th9ee8Rjw8aueQgQmYLV/nYxRrIcvlAaT+zaLe
-	 Qe6dNNba6eQ5mZRSGGoAUDdiRJ8H9nSZuSN0vyv5UNOnwTK9n+5o1CQ8wq6WywW7n4VgQ
-	 VDAniMBJvFARpr5k0Q8wB9VeNJ2nkqq6OB4d9pkDKT9epMXnGYyHkRrS7Pv5lzvUdPQ==
+	bh=QWurdKROi/9VuMFlSCsGd3TjnTNZ3ZxZ0QZJ2x0umug=;
+	b=gKnOFQ5ilThHgeyO0QkmIp/u31NOoLSWRTcQFyU6QXlCLhMAwhL71qFoUMVQDyY4EJ+W
+	 ovvx6p6O5FtFKc4cFT7U0ZNut6FlpU638wkxlRiZCtMbKJN/Yz2nzygXxrWa6HSuq0yJf
+	 bi7pMHmeRWkUnpni1Euu1OsJo7eUGpbEqYIrxCCI5pHhFD5p2mVHjb1Eytm/Uew29SxbA
+	 cX1Jsh7EAA4NRf1TaEsP8pRuIIMFhOy8v2uurY7Dlf//RP5vm/pS2N3ItzNpcz6Mh7pQf
+	 31LvY4+Pj0TZTT8Od6QZrU1qWhlyTfVekAFxnNuBVLQZfNS/TTsqJHmMDTVVlZoxYfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hck3yvWy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iL2wXahO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632E060A2625;
-	Wed, 18 Nov 2026 16:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563E760A2616;
+	Wed, 18 Nov 2026 16:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hck3yvWy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92961F000C6;
-	Wed, 18 Nov 2026 16:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iL2wXahO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACB51F000C6;
+	Wed, 18 Nov 2026 16:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019831;
-	bh=s0e2+0ZG+9+6++QS3WdWjDHixXiEqVY5OZX3yDwMDDw=;
+	s=korg; t=1795019834;
+	bh=QWurdKROi/9VuMFlSCsGd3TjnTNZ3ZxZ0QZJ2x0umug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hck3yvWyiQVGxDb9gq4sqeF3NXIZPKDoqpeTBc/9FLvyK2GKLg7aYEwXHSYUDzl6B
-	 2k8CVeitiHlI31LtPKiF6TbvF5gfriMj0qOE4bNDM+sQhLasxbn1KA/QIYwRT1B5Ee
-	 F97B1uf6c2FEurOM6FwtVAZ2HmisQuChOaPlk+Y4=
+	b=iL2wXahOBD7QRihnuSWvTJn7w0MP0I5rZ25a54HImjyYktVq2HtLJED+x5pPUUweq
+	 cvhCpAf8Etl4VD8ovYIfoBzKW2d0oLxqB3ATWsfGd/RUb1sg66+dHIY/COBh/iUHBo
+	 +NkIeJmLQAbwTb6b9kNtAEVO8Mwxus3T3ee7ONIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>
-Subject: [PATCH 7.3 1735/2651] tools: hv: remove unused rte_smp_mb()
-Date: Wed, 18 Nov 2026 15:49:35 +0100
-Message-ID: <20261118150350.060560208@linuxfoundation.org>
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 1736/2651] char: scx200_gpio: check cdev_add() return value
+Date: Wed, 18 Nov 2026 15:49:36 +0100
+Message-ID: <20261118150350.089087206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,45 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit b67eeae485e22893b678229169024a73b87cf113 ]
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-rte_smp_mb() has never been used, and its "static inline __always_inline"
-declares inline twice, so clang warns:
+[ Upstream commit fe26c195c265c033e474d015061a0183c7a02193 ]
 
-  vmbus_bufring.c:61:15: warning: duplicate 'inline' declaration specifier [-Wduplicate-decl-specifier]
-  vmbus_bufring.c:62:1: warning: unused function 'rte_smp_mb' [-Wunused-function]
+cdev_add() can fail. The driver currently ignores the return value and
+reports probe success even when the cdev was not registered, leaving a
+chrdev region allocated with no working file operations.
 
-Remove it.
+Check the return value, emit an error, and unwind the chrdev region and
+platform device on failure.
 
-Fixes: 45bab4d746510 ("tools: hv: Add vmbus_bufring")
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Reviewed-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Acked-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://patch.msgid.link/20261011223358.2327625-12-sashal@kernel.org
+Fixes: 635adb6cd25c ("[PATCH] scx200_gpio: use 1 cdev for N minors, not N for N")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260803015450.2050900-1-gonglinkai@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/hv/vmbus_bufring.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/char/scx200_gpio.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/hv/vmbus_bufring.c b/tools/hv/vmbus_bufring.c
-index bac32c1109df8..23542e59a2ee9 100644
---- a/tools/hv/vmbus_bufring.c
-+++ b/tools/hv/vmbus_bufring.c
-@@ -58,12 +58,6 @@ void vmbus_br_setup(struct vmbus_br *br, void *buf, unsigned int blen)
- 	br->dsize = blen - sizeof(struct vmbus_bufring);
- }
+diff --git a/drivers/char/scx200_gpio.c b/drivers/char/scx200_gpio.c
+index 700e6affea6f7..3ec17832e9c9d 100644
+--- a/drivers/char/scx200_gpio.c
++++ b/drivers/char/scx200_gpio.c
+@@ -107,10 +107,16 @@ static int __init scx200_gpio_init(void)
+ 	}
  
--static inline __always_inline void
--rte_smp_mb(void)
--{
--	asm volatile("lock addl $0, -128(%%rsp); " ::: "memory");
--}
--
- static inline int
- rte_atomic32_cmpset(volatile uint32_t *dst, uint32_t exp, uint32_t src)
- {
+ 	cdev_init(&scx200_gpio_cdev, &scx200_gpio_fileops);
+-	cdev_add(&scx200_gpio_cdev, devid, MAX_PINS);
++	rc = cdev_add(&scx200_gpio_cdev, devid, MAX_PINS);
++	if (rc) {
++		dev_err(&pdev->dev, "cdev_add err: %d\n", rc);
++		goto undo_chrdev_region;
++	}
+ 
+ 	return 0; /* succeed */
+ 
++undo_chrdev_region:
++	unregister_chrdev_region(devid, MAX_PINS);
+ undo_platform_device_add:
+ 	platform_device_del(pdev);
+ undo_malloc:
 -- 
 2.53.0
 
