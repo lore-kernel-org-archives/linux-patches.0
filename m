@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055882;
-	b=h3p930TLUH6biM0vkTePgVvrLoojGKRZLtbkxa754wfEswQeUTZkJE8m955x/6IPuvOQ
-	 7ftXh0sN+sEEKm2spJ1nfsDWVa7ow0gwH9ZcMqVUdkO5zzPLBNDlhhX5Qg5rFQu76JhoT
-	 cck90t71uW6vnzrfLEkhmQGhnTCU9eOFvE9n4ONoJsu9nBKUur8mNTYOM3Ati5zYJ2GFZ
-	 /TM3aEA3RpcRSsbH1fxx58Rho4w518eCtMNtZqMNl09G4nAuYD1jbzmQn6bj4hDnGH65d
-	 hEZ+y0e8ZuIxltOtZcDbgvz65+xgBLn7DUifjSoS+60TIrsDywdPkU+MKPfcRqGNJsg==
+	t=1795055885;
+	b=Y/h6oaqbhTxbYcPcQtEUJOFLje8UCz50TT5sjLN5TqZXbELNMn2R/uzD18hOdr+yQFFT
+	 cb1MxJr34xMI1xBVKoQoXVnB4CHxK4vjvRcomh3qKn8vmPjdXhoq8g8c6J9LtjQtH5zrn
+	 RcG632V1OotMYMcX2cjq4QZ0wPRz6/V1wjxPHFs1x21NHuH4aUWVIPNPtkGA9WEy6Jufr
+	 MK6AUC1sPUue458Age48CwXTDlfaTsyPaI9Hakmf2H4YF1zc+oFdEc8OU0mvPUO+pEbFc
+	 ZX+5XvSJ7nSUlm1Hv4S2qni4P4eI3VEasKmIJ5MU6htUYXExJZFc7GBrUpHdrRLLnwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055882;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ACikA7kNcB+Dr0HSBsfmqDtYQZYBeNV/sYlXJvjfT7Y=;
-	b=jyQubVrskucrq5kS+kWGv4uLn8i7w/geRazjdlLD2NgFkrWuErEWQwJyvc0fe8kbvjsn
-	 q/iXdowbb9s2RzzsNNhsGtJT90lp3ZvXY+HAw8S8BGEIeDMt8Bc8J8cfSkbBND4jml6mR
-	 eVjQhXre12FTcuD+3ASokAMdyJvJwepIUgPcuoEYNzJHAglQTRMpNjTsQSWGmpwmcuYn6
-	 a+o9uHSHtWLiA8xDSFMhBCOOMXU2UmVDP8oeF/5GCetaKPqc19gMaf+3XGe2Ts4vd4iFQ
-	 EyAXl0zd2oJRQ2y8OxX7U/BRyrg6xe3pk5+bNhelYw7bqikotOhNIxQi7jMphL6LINQ==
+	bh=ztOxYpMT+8Zvdi3WSySngYa8C+uvRooS04SATwJKvqQ=;
+	b=DWbBQFt8E8rJBQFk+d60UOLd2CfmhN3yd3D6MInDB5ccT2jmT6lwswXEqhmNEfiVjpVU
+	 2HhmmmLlq4tR1svX3WtHIGAmZr9JfHpQAA1nCfYyP2aYYHYh5HDQJ02KaAs7E7tuROPKc
+	 YBgOnigoWg20md2Q7UlE60yez5XhKWK5HppwYRdu+6jSQsepA2mKq88iQGRtPCNOhmFF1
+	 Ce3bDNaqGD0d1UsfPtm7CXBHcp01T59LTb2RrOoJog9X0dm+VAMKa3FjbGyYbRlXmAErz
+	 0T25qw0fD31hhutvo73H8tAI5Uh3AfFtkb8HR3+7xUnxniDLYp0raAp9d3i3NWiUV5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsNU3xZq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJZJuXPl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE85606A320;
-	Thu, 19 Nov 2026 02:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A0D606A32C;
+	Thu, 19 Nov 2026 02:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsNU3xZq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2731F000C4;
-	Thu, 19 Nov 2026 02:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJZJuXPl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5684E1F000C4;
+	Thu, 19 Nov 2026 02:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055882;
-	bh=ACikA7kNcB+Dr0HSBsfmqDtYQZYBeNV/sYlXJvjfT7Y=;
+	s=korg; t=1795055884;
+	bh=ztOxYpMT+8Zvdi3WSySngYa8C+uvRooS04SATwJKvqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zsNU3xZqMKmu+ZWYnEkCThAWyPAuV72efxmUkdhYxO8g62qinCZ8NgLYHxT8e8ovA
-	 y5h4k3cq0bNOZviciUOj1bhbjmtmBJwkLktq8dKDJQ+12cnyIBbAyTsGov4uPDIncL
-	 vp3x2QIkybswsgekF9Yy6gkQ366Ma3P0Dyeoy/IQ=
+	b=nJZJuXPlzVz6CHLoIvo9wypLonWe9a/ySr+dlr9mH3XwGItt5o19leyzS9BcoSPwe
+	 4yjQ/SOtpWWjaJG1AC2tJvII8wIHXTJs9W/xq2D0mSdlQpA6+vkMJY2+9GlT5cEW7m
+	 gzklnpsbFWViHGI5YqDXZ9mrqF2QwXCUhwBCeVjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Priyank Rathod <rathodpriyank@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1790/2214] PCI/AER: Fix struct pci_dev reference leak in aer_process_err_devices()
-Date: Wed, 18 Nov 2026 15:57:46 +0100
-Message-ID: <20261118150123.115806876@linuxfoundation.org>
+Subject: [PATCH 5.15 1791/2214] ALSA: caiaq: Allow zero-length packet handling for EP1
+Date: Wed, 18 Nov 2026 15:57:47 +0100
+Message-ID: <20261118150123.151420963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,68 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Priyank Rathod <rathodpriyank@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e86ac10110d00e6c3801f38bde1863951315222b ]
+[ Upstream commit ccfe6ab672c020fca56988e634088bfb7764e2a7 ]
 
-When an AER error occurs, candidate error-source devices are added to
-e_info->dev[] by add_error_device(), which takes a reference with
-pci_dev_get().
+The recent fix to avoid OOB access for malformed packets added a
+packet length check and returns immediately if it's too short.
+However, this can be lead to a regression because the completion
+handler doesn't resubmit the packet, while a zero-length packet itself
+is valid, per se.
 
-A device can be recorded without any error status being present: the
-Requester ID fast path in is_error_source(),
+For addressing the potential regression above, change the handling for
+a zero-length packet to just resubmit without processing the incoming
+contents.
 
-  if (e_info->id == pci_dev_id(dev))
-    return true;
-
-matches purely on the ID reported by the Root Port and returns true without
-reading the device's AER status registers.
-
-In aer_process_err_devices(), handle_error_source() is called only if
-aer_get_device_error_info() returns non-zero, i.e. only if an unmasked
-error status bit is actually set. It returns 0 if the device has become
-inaccessible (status and mask both read as all ones, so
-status & ~mask == 0) or if no unmasked status bit is set.
-
-Because handle_error_source() was responsible for calling pci_dev_put(),
-skipping it permanently leaks the reference taken in add_error_device().
-
-Decouple reference lifetime from error handling by moving pci_dev_put() out
-of handle_error_source() and into the aer_process_err_devices() loop, so
-every recorded device is put exactly once.
-
-handle_error_source() is static and aer_process_err_devices() is its only
-caller, so no other path is affected.
-
-Fixes: 60271ab044a5 ("PCI/AER: Take reference on error devices")
-Signed-off-by: Priyank Rathod <rathodpriyank@google.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260918-fix-aer-refcount-leak-v2-1-bdd1ff1c35a9@google.com
+Fixes: aba30af07d4f ("ALSA: usb-audio: caiaq: validate EP1 reply lengths")
+Link: https://patch.msgid.link/20261006134405.479603-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/caiaq/device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index da4d7f3060ec9..b827bd2df7863 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -1057,7 +1057,6 @@ static void handle_error_source(struct pci_dev *dev, struct aer_err_info *info)
- {
- 	cxl_rch_handle_error(dev, info);
- 	pci_aer_handle_error(dev, info);
--	pci_dev_put(dev);
- }
- 
- #ifdef CONFIG_ACPI_APEI_PCIEAER
-@@ -1205,6 +1204,7 @@ static inline void aer_process_err_devices(struct aer_err_info *e_info)
- 	for (i = 0; i < e_info->error_dev_num && e_info->dev[i]; i++) {
- 		if (aer_get_device_error_info(e_info->dev[i], e_info))
- 			handle_error_source(e_info->dev[i], e_info);
-+		pci_dev_put(e_info->dev[i]);
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index bc35c36148ac9..39b88f5fc481b 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -142,7 +142,7 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 		return;
  	}
- }
+ 	if (urb->actual_length < 1)
+-		return;
++		goto resubmit;
  
+ 	payload_len = urb->actual_length - 1;
+ 
+@@ -192,6 +192,7 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 		break;
+ 	}
+ 
++ resubmit:
+ 	cdev->ep1_in_urb->actual_length = 0;
+ 	ret = usb_submit_urb(cdev->ep1_in_urb, GFP_ATOMIC);
+ 	if (ret < 0)
 -- 
 2.53.0
 
