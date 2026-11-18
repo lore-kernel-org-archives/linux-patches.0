@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021564;
-	b=Q6RyATLK+L+UtBk4CM1rFWHJYpImZeuwYIX1lnfdzw82yRMsDNefelknYmG4/x2r9sL3
-	 NgBnGYp8LjbE1D6IYbjSb2Ascj8NtL7ye+gMebZ0j6aNgCW0WTf9IXBRwbW24vLlVh1Jv
-	 QDlDEj48EpmuGAk51cU7J3Dn8lj9GcxtGjkjlp0LwbdMBQ6Ui9cXMVtcVP1a1QlwyA9et
-	 vgV0rO3WxHM8bi+424pW6C2BOOqgMH7FNF5aFNfnL/rXPQiKHC6INdDSgY7Ncag5V1Xgc
-	 NH6pgiQbktRtDVzsOsTbME3FhqOele35cMqIjBIs2gCuY3pWrdGTkJbU2aD8ubs9ilw==
+	t=1795021567;
+	b=P+ROvHWGXjeUjmoYTps7tYWOtetOYACOmnzqfkx8BZBvZl6YKvaq80varwmMICitu6Lb
+	 Cn7vjJAHN6BrZO1Faaag1Z683M+74AyDw9oB5+CPehnKlNz4w7MU0ClKm0XYwyAhCc/HC
+	 dgDMhpd6Dtd2DZ4XIXJT7ecaK/6TVexq1UhFhGy/Gezuk3n4MCnMkPZO5smqe84wwwvAq
+	 TCQbG+oJlzMHtxNtODweftS3rO1ytVnd45qHKqJLOH3DMv8y9CymXcOBQC+TR7sie5Ksl
+	 h/HPtfgtPAPChLGkFPuj06/xBV65VXOdwA7QEeQST4ihhyP6ae2K3QYqYom4voNFqiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gQr1cVrBsciFC0qJzO6JGxybXj8C6nhadYVGW3x6Pvk=;
-	b=qelUXAC1vBjBREN+M8L6S0XfSy/iJjKIimIJmET4bPjIeeZQzzbIyAcPsBwcGJXNGLSL
-	 ZlM6SxoBWnJIwxlO7l908zqhIJwYnFNM+GREL2a8PVstuzzncbas1fUlNuJBSRz5tDuwL
-	 nGWNxUo3efzRCDLsDPAX2u/F9s0PW1gLpbVOiRDGsvno6XabImU+1TrfyjDKKxC9BBvp5
-	 cvuQYtEePS+JUiXJeyF/gYZaao+cB6pBcDdFsCWkPQZTFLI/kUPpKp17TLbynd/86wO2E
-	 EIdHJX38/qmFezhyFSUbP3mMa5noZ6phwQqL0VplLBBsB+kozp2NSiX+qJh7KwB3+Zw==
+	bh=sCMMsMdoiqJy0jUDtG9ITrCx/sUrt46GpVFkjT3B3Sk=;
+	b=pxHJv8KJ/2RuqvsxiCu4n9f0JoIZE+DNxkuDPlGkGwcAKDttAXr3sHcebpl8LZ/jdR7M
+	 qebiPIgcSlLFcAo4TZvSBk1H1ClachJZfRPJDslVJL/zcPkOacGBGj9wjMJLDllsEhjFg
+	 4xj0KavXcyF388s5LjbOlU3zaDEu96vgFjWlN3CxB/7d2MVo7oHCzhH70ejfx32gCW2Xk
+	 4fF5z/aTzLe4eOrL2fIruBeRxnvg5YNrTB9vRuXqUTkm2USAvqmHu+CTiMMaiwowe6Vf8
+	 XxT1HtAlf/zC24VVV6lzuO/aHiRgGL9NDtL/E1Rgsd4A5M8EipVc7oM460M+zcEHYag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSA8FAtk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IfNmps6J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4332B606A325;
-	Wed, 18 Nov 2026 17:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBFC606A31C;
+	Wed, 18 Nov 2026 17:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSA8FAtk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9432D1F000C5;
-	Wed, 18 Nov 2026 17:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IfNmps6J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6021F000C6;
+	Wed, 18 Nov 2026 17:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021564;
-	bh=gQr1cVrBsciFC0qJzO6JGxybXj8C6nhadYVGW3x6Pvk=;
+	s=korg; t=1795021567;
+	bh=sCMMsMdoiqJy0jUDtG9ITrCx/sUrt46GpVFkjT3B3Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSA8FAtkqJa/OJGpF1glmYI5w/3Z9faAFobVsmU1usPYw7o2buEZ2meSbdBnAJ1x7
-	 2uItpP3YaPjjh2lKc4dG2ZxE+Omob8Cd2HvjG5P1rM5csKwwmQgvFpm1ht9MMHA6po
-	 2wm+jm7JpzZYynua1gw9p9vJLzXqYZRT4pDpyKGY=
+	b=IfNmps6JmjwMOsXLwxJuxeJUoQqBem/FMilkAPWPyoWZi7MGmxlis3tB2WPMRPFtg
+	 8/91pepiHvuSGbwIBImoD+Vcrf7hViKWorAUcL8GfAsno+8+n+L5Wsl9ZwfUAxvWOv
+	 LzZ084im2kNihG6jfCZmGmCFqavC/8cu39XQD074=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Omar Sandoval <osandov@osandov.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2351/2651] ASoC: wm8994: follow AIF clock source changes in MCLK gating
-Date: Wed, 18 Nov 2026 15:59:51 +0100
-Message-ID: <20261118150409.693997590@linuxfoundation.org>
+Subject: [PATCH 7.3 2352/2651] proc/kcore: advance the vmalloc retry by the last copy, not the total
+Date: Wed, 18 Nov 2026 15:59:52 +0100
+Message-ID: <20261118150409.726519281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,131 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 8731e33a3b98ea1ccade059b3a1ce06b7dd66b17 ]
+[ Upstream commit 88c3f9d6145204cfd88e5d9cbc9463ffd892e10a ]
 
-The AIF clock source can be changed by configure_aif_clock() while the
-AIF clock is running, for example the Midas machine driver switches
-AIF1 between MCLK2 and FLL1 while AIF1CLK is kept enabled for jack
-detection. aif_mclk_set() only enables the MCLK selected at the time
-the AIF clock is turned on, so an MCLK selected later this way is never
-enabled, and the codec may run from a stopped clock.
+A readv() or preadv() of /proc/kcore fails with EFAULT, although every
+byte of the destination is writable, when the page of a later iovec is
+not present at the moment the copy of a KCORE_VMALLOC chunk is retried:
+swapped out, migrated by compaction or NUMA balancing, write-protected
+by KSM, or unmapped by MADV_DONTNEED from another thread. Only root can
+read /proc/kcore, and the read must use more than one iovec. On an
+x86_64 defconfig kernel (v7.3-rc7) a preadv() of one vmalloc page into
+two 2 KiB iovecs on separate pages, with a second thread repeatedly
+unmapping the second page, failed 77701 of 200000 calls with EFAULT;
+with the fix all 200000 succeed. Affected since v6.4.
 
-Track whether the AIF clock is running and, if so, enable the newly
-selected MCLK in configure_aif_clock() before switching to it, then
-release the previously enabled one.
+read_kcore_iter() copies a KCORE_VMALLOC chunk with vread_iter(), which
+writes to the user buffer with page faults disabled and stops at the
+first iovec whose page is absent, after the earlier iovecs were
+written; the loop then faults the rest of the buffer in and calls
+vread_iter() again for what is left. It keeps the running total in
+`read` and advances the source address and the remaining length by that
+total:
 
-Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261022101531.775891-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	read += vread_iter(iter, src, left);
+	if (read == tsz)
+		break;
+	src += read;
+	left -= read;
+
+In the reproducer the first call copies the 2048 bytes of the first
+iovec and stops at the second: read is 2048, and src and left move by
+2048, which is right. The page that fault_in_iov_iter_writeable() then
+faults in is unmapped again before the second call, which copies 0
+bytes: read is still 2048, but src moves by another 2048 to the end of
+the chunk and left drops to 0. The third call has nothing to copy, src
+moves by 2048 once more, left wraps around, and
+fault_in_iov_iter_writeable() fails on that length, so the read returns
+-EFAULT. When both short copies are non-zero (three or more iovecs) the
+extra call also copies bytes from the wrong offset of the page into the
+buffer before the failure. A single iovec is not affected: its nofault
+copy is all or nothing, so a short copy is always empty and the advance
+by the total is still the advance by the last copy.
+
+Keep the return value of each vread_iter() call and advance src and
+left by that; `read` stays the running total compared with tsz.
+
+Found while formally verifying vread_iter() against the kernel binary.
+
+Fixes: 4c91c07c93bb ("mm: vmalloc: convert vread() to vread_iter()")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261017034739.793431-1-nickolai@csail.mit.edu
+Reviewed-by: Omar Sandoval <osandov@osandov.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 27 +++++++++++++++++++++++++++
- sound/soc/codecs/wm8994.h |  1 +
- 2 files changed, 28 insertions(+)
+ fs/proc/kcore.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index dd6a9a3c73610..5d27cefd9d543 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -163,9 +163,12 @@ static void wm8958_micd_set_rate(struct snd_soc_component *component)
- static int configure_aif_clock(struct snd_soc_component *component, int aif)
- {
- 	struct wm8994_priv *wm8994 = snd_soc_component_get_drvdata(component);
-+	struct clk *mclk = NULL;
-+	bool switch_mclk;
- 	int rate;
- 	int reg1 = 0;
- 	int offset;
-+	int ret;
- 
- 	if (aif)
- 		offset = 4;
-@@ -174,11 +177,13 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
- 
- 	switch (wm8994->sysclk[aif]) {
- 	case WM8994_SYSCLK_MCLK1:
-+		mclk = wm8994->mclk[WM8994_MCLK1].clk;
- 		rate = wm8994->mclk_rate[0];
- 		break;
- 
- 	case WM8994_SYSCLK_MCLK2:
- 		reg1 |= 0x8;
-+		mclk = wm8994->mclk[WM8994_MCLK2].clk;
- 		rate = wm8994->mclk_rate[1];
- 		break;
- 
-@@ -196,6 +201,20 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
- 		return -EINVAL;
- 	}
- 
-+	/*
-+	 * If the AIF clock is running, enable the new MCLK before switching
-+	 * to it and release the previous one afterwards.
-+	 */
-+	switch_mclk = wm8994->aif_clk_on[aif] && mclk != wm8994->aif_mclk[aif];
-+	if (switch_mclk) {
-+		ret = clk_prepare_enable(mclk);
-+		if (ret < 0) {
-+			dev_err(component->dev,
-+				"Failed to enable MCLK for AIF%d\n", aif + 1);
-+			return ret;
-+		}
-+	}
+diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
+index 390547b992acd..3264c99bd68ac 100644
+--- a/fs/proc/kcore.c
++++ b/fs/proc/kcore.c
+@@ -531,12 +531,14 @@ static ssize_t read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 			 * again until we are done.
+ 			 */
+ 			while (true) {
+-				read += vread_iter(iter, src, left);
++				size_t n = vread_iter(iter, src, left);
 +
- 	if (rate >= 13500000) {
- 		rate /= 2;
- 		reg1 |= WM8994_AIF1CLK_DIV;
-@@ -210,6 +229,11 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
- 			    WM8994_AIF1CLK_SRC_MASK | WM8994_AIF1CLK_DIV,
- 			    reg1);
++				read += n;
+ 				if (read == tsz)
+ 					break;
  
-+	if (switch_mclk) {
-+		clk_disable_unprepare(wm8994->aif_mclk[aif]);
-+		wm8994->aif_mclk[aif] = mclk;
-+	}
-+
- 	return 0;
- }
+-				src += read;
+-				left -= read;
++				src += n;
++				left -= n;
  
-@@ -1067,6 +1091,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 	if (!enable) {
- 		clk_disable_unprepare(wm8994->aif_mclk[aif]);
- 		wm8994->aif_mclk[aif] = NULL;
-+		wm8994->aif_clk_on[aif] = false;
- 		return 0;
- 	}
- 
-@@ -1086,6 +1111,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 		clk_idx = WM8994_MCLK2;
- 		break;
- 	default:
-+		wm8994->aif_clk_on[aif] = true;
- 		return 0;
- 	}
- 
-@@ -1096,6 +1122,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 		return ret;
- 	}
- 	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
-+	wm8994->aif_clk_on[aif] = true;
- 
- 	return 0;
- }
-diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
-index 5b22cfab317e1..e7df0a1a2314c 100644
---- a/sound/soc/codecs/wm8994.h
-+++ b/sound/soc/codecs/wm8994.h
-@@ -82,6 +82,7 @@ struct wm8994_priv {
- 	struct wm8994 *wm8994;
- 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
- 	struct clk *aif_mclk[2];
-+	bool aif_clk_on[2];
- 	int sysclk[2];
- 	int sysclk_rate[2];
- 	int mclk_rate[2];
+ 				if (fault_in_iov_iter_writeable(iter, left)) {
+ 					ret = -EFAULT;
 -- 
 2.53.0
 
