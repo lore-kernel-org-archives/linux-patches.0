@@ -1,51 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051597;
-	b=W1YGNcRNyDRLNYIuzwmzdwrM9Pgv5Yj9Tu8bfZuNuZ+DESzrdS5FEBfU+OMh07qNepJ5
-	 E3nhabipHwRAAfxKa5f1WFC+mxokDVjSIboIvejzq2pbY7+GYBraj7g//YcZkiEySM7cm
-	 waAh84aOyAa+YbyFn4x1q7OK+RXAKBWbfImeGOE3k4iRIzXlVfXbV9+U4tTkVCYB6QHO1
-	 DlLXyt/vffJSPtUHMZgnTQL5AL0dTZUUqpFqNEDN0zBe/MctYy/SSvxEYkYRPtVzkhjL8
-	 059ElpdacNgA6HNf1bOyv1pZA/49d/0NTyHqQcHj8ta3CPI0Ylp9QO/vCMQLk+kHenw==
+	t=1795051601;
+	b=O0KGCpHzsJYCV9K6p8ldgWZjKjBi6YHlMn3/NPECSmswp/lCPtgWjJr2rx15CaXE8UQ/
+	 zSh5Zp5yh7IbMQCD+PqvJ68cXw3KJ4J8loPXnb50dEmobVlMhUnt8UiwDzk4SHVBAKNaI
+	 gSXeo9po0FK4bLjgCgbi18T+3b7Kzp1Uy/IXFQBmL4Y9uURYTaA0aUJHdXWw80SK71cdj
+	 Mf9A27IvziXRNA/Xc9HIw4acmXDj5eEBm2UJ4PqeoDw6g2KBRPxx5hYQXhkAzbOyJkFL4
+	 B7YZFIkIJ93XA7v7oTutosPt4kIP1SbB8WFrRZdqXSahqm1k4Rake9oUVBcL6GI94KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OGNtLxle6WMgUfngtndqpT7jF/0Tz/DcB3mCk3n6CLs=;
-	b=eBb2EQcPYsygvDBrMFCDWGyzcA9WnST0u8whmLpDbtWBkwSlfT6WdbAPn37Vhy2KSdvR
-	 UB9EMbVrGUkO8fczWV9IT+I+Z7GuhV9mICMsaUfSUka3UkRBZOTE/br96gFvS0PpGA7/M
-	 Z0cEuF2gP3dBK94VhK7NUB01DzqYmFjk4888LbawP8FYbv6uwdoNywhra7Enh5chbVRRu
-	 ADMoHXj3WkZ+5PRtDCYKY70df++B+eLIcMfdttePFr9tqfoGnr/17cyBNshSJ+MoG6tD0
-	 Y2H0h3Kzs3NZvYGxH+YrcRPBg131+EGapMbpXuIE7e1ideCO7wo954stmq/sRfabo9Q==
+	bh=L3Dzw8XlnRrva8bnDUIuu2zUmEVi5YfDuP1rH+azhy8=;
+	b=AInHFFGpo5lMO+pqfxIsSchLhTslxm2kwfmC2ctjPpWLCxbcCvSBHeXgfMX1wEFwG2nH
+	 CbBae3+1o/TVHjq6wpFVM5m49prm/SmPVGqGCA2grWNafR70vdqHDqNEwZMBkI9GzCouV
+	 onojGHro0WpTnZBGDdElwZA6Aobl4TQ4xJbNZMwx4Y3TtbkfYrtd0qRUzPRhTPdzg8NJr
+	 phCmD4LfLgLiSPr/sBJv5YKBdrUv2lHYyjsPrAStBbgQyuRTKxEz8fitTCQHDHgoghWB6
+	 1nBF6kFcko4m2jnEysQvllDZ6EgCp9FCK+51K/ZY+gCMjTilQGZt5V1KcySlyNBsamA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSUIgvtj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15IdkgHb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F0A606A320;
-	Thu, 19 Nov 2026 01:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD475606A31C;
+	Thu, 19 Nov 2026 01:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSUIgvtj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7E21F000C4;
-	Thu, 19 Nov 2026 01:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15IdkgHb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E999F1F000C4;
+	Thu, 19 Nov 2026 01:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051597;
-	bh=OGNtLxle6WMgUfngtndqpT7jF/0Tz/DcB3mCk3n6CLs=;
+	s=korg; t=1795051601;
+	bh=L3Dzw8XlnRrva8bnDUIuu2zUmEVi5YfDuP1rH+azhy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eSUIgvtjT3iHKH2zKMF7Y+rvuWx0UWJJmiZz6lOrstRF1suN1k85lQ5utYVhXKDnA
-	 xonTj2tOVx4yd6Xn7PRAOTb/I1tJmzkMdxpoNDHlY8WU1FnKjeOUuyqc2KFDxPhkui
-	 suIS/Y4S1zTdsvlRpawkrWPAPcheCahsrVnf2hwA=
+	b=15IdkgHbAXKKfQSjIZyzkB6uB+FSQBMf4w6xNJ2linduAeVzAqnQq6TzNQvI9YT9h
+	 +4FKpHBoLIerIj5Q6ZJFak8PjT2EQ5xBYcdbj5sVVqT8cpDkFL2yv4XJFcCt+aPZRT
+	 aQF+d/ae4sgEFqN2XJwAsLU1dyx+tvvx2wUP8XF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Andrea Parri <parri.andrea@gmail.com>
-Subject: [PATCH 5.15 0258/2214] kcsan: Avoid division by zero in kcsan_prandom_u32_max()
-Date: Wed, 18 Nov 2026 15:32:14 +0100
-Message-ID: <20261118150020.446955294@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Gang He <ghe@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 5.15 0267/2214] ocfs2: publish the filecheck owner before adding sysfs attributes
+Date: Wed, 18 Nov 2026 15:32:23 +0100
+Message-ID: <20261118150020.772720349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,80 +74,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 99b6fcce87037cfb6b5e177848342e97f5141205 upstream.
+commit e062baf5680845705d21df415c8f0751c96b0792 upstream.
 
-KCSAN's skip_watch, udelay_task and udelay_interrupt parameters can be
-changed at runtime through /sys/module/kcsan/parameters/, where 0 means
-watching every access or not delaying at all. With the default
-CONFIG_KCSAN_SKIP_WATCH_RANDOMIZE=y and CONFIG_KCSAN_DELAY_RANDOMIZE=y,
-writing 0 to any of them makes the next watchpoint setup divide by zero:
+ocfs2_filecheck_create_sysfs() initializes the filecheck allocation before
+calling kobject_init_and_add(), but assigns entry->fs_fcheck only after
+that call returns.  The default attribute group can already be visible
+while registration is in progress.  A concurrent read can therefore enter
+ocfs2_filecheck_attr_show() with a NULL fs_fcheck and try to lock its
+fc_lock.
 
-  # echo 0 > /sys/module/kcsan/parameters/udelay_task
-  Oops: divide error: 0000 [#1] SMP NOPTI
-  CPU: 0 UID: 0 PID: 93 Comm: sh Not tainted 7.3.0-rc5 #3 PREEMPT(lazy)
-  RIP: 0010:kcsan_setup_watchpoint+0x1b5/0x410
-  Code: ... 65 89 05 ad 8d 98 02 d3 ee <f7> f6 29 d7 e8 22 0e 0f 01 ...
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  ...
-   __show_trace_log_lvl+0x1bd/0x315
-   __die_body.cold+0x19/0x2b
-   die+0x34/0x50
-  ...
-  BUG: TASK stack guard page was hit at ffffd3ab001fbfe8 (...)
+Assign the initialized owner before adding the kobject, so every activated
+attribute has valid state.  Clear the pointer when addition fails,
+preserving the existing teardown guard and error cleanup.
 
-reset_kcsan_skip() and delay_access() pass these values unchecked to
-kcsan_prandom_u32_max(), which returns "state % ep_ro". delay_access()
-halves the delay for compound and assert accesses, so
-udelay_interrupt=1 is enough there.
+A controlled probe-instrumented test kernel with the original OCFS2
+registration ordering produced this Oops during a concurrent sysfs read:
 
-The oops path runs instrumented code, which faults again until the stack
-overflows. With skip_watch=0 the guest hangs without printing anything.
+  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+  RIP: 0010:kasan_byte_accessible+0x15/0x30
+  Call Trace:
+   <TASK>
+   __kasan_check_byte+0x13/0x50
+   lock_acquire+0x113/0x300
+   _raw_spin_lock+0x31/0x40
+   ocfs2_filecheck_attr_show+0x138/0x5f0
+   ocfs2_filecheck_show+0x5d/0x90
+   sysfs_kf_seq_show+0x1d3/0x360
+   seq_read_iter+0x480/0x1110
+   kernfs_fop_read_iter+0x419/0x5a0
+   vfs_read+0x7d2/0xc20
+   ksys_read+0x111/0x200
+   do_syscall_64+0x114/0x620
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Modules linked in:
 
-The division came in with commit 71a076f4a61a ("kcsan: Rewrite
-kcsan_prandom_u32_max() without prandom_u32_state()"). Before it, the
-helper scaled the random value with a multiply-shift, which yields 0 for
-ep_ro == 0. Go back to that via reciprocal_scale().
-
-Tested in an x86-64 KCSAN guest with virtme-ng: after this patch,
-writing 0 to each parameter, or 1 to udelay_interrupt, no longer
-oopses. skip_watch=0 now watches every access, which is very slow with
-the default delays but completes when they are set to 0.
-
-Fixes: 71a076f4a61a ("kcsan: Rewrite kcsan_prandom_u32_max() without prandom_u32_state()")
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0086-v4-1b3a3c5fd05c1fb41df9@gmail.com
+Fixes: 5f483c4abb50 ("ocfs2: add kobject for online file check")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Assisted-by: LLM
-Reviewed-by: Marco Elver <elver@google.com>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Marco Elver <elver@google.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Gang He <ghe@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcsan/core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ocfs2/filecheck.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -281,8 +281,9 @@ should_watch(const volatile void *ptr, s
+--- a/fs/ocfs2/filecheck.c
++++ b/fs/ocfs2/filecheck.c
+@@ -178,17 +178,20 @@ int ocfs2_filecheck_create_sysfs(struct
+ 	fcheck->fc_size = 0;
+ 	fcheck->fc_done = 0;
+ 
++	/* Publish the initialized owner before activating its sysfs callbacks. */
++	entry->fs_fcheck = fcheck;
+ 	entry->fs_kobj.kset = osb->osb_dev_kset;
+ 	init_completion(&entry->fs_kobj_unregister);
+ 	ret = kobject_init_and_add(&entry->fs_kobj, &ocfs2_ktype_filecheck,
+ 					NULL, "filecheck");
+ 	if (ret) {
++		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
++		entry->fs_fcheck = NULL;
+ 		kobject_put(&entry->fs_kobj);
+ 		kfree(fcheck);
+ 		return ret;
+ 	}
+ 
+-	entry->fs_fcheck = fcheck;
+ 	return 0;
  }
  
- /*
-- * Returns a pseudo-random number in interval [0, ep_ro). Simple linear
-- * congruential generator, using constants from "Numerical Recipes".
-+ * Returns a pseudo-random number in interval [0, ep_ro), or 0 if ep_ro is 0,
-+ * which the runtime-tunable callers may pass. Simple linear congruential
-+ * generator, using constants from "Numerical Recipes".
-  */
- static u32 kcsan_prandom_u32_max(u32 ep_ro)
- {
-@@ -291,7 +292,7 @@ static u32 kcsan_prandom_u32_max(u32 ep_
- 	state = 1664525 * state + 1013904223;
- 	this_cpu_write(kcsan_rand_state, state);
- 
--	return state % ep_ro;
-+	return reciprocal_scale(state, ep_ro);
- }
- 
- static inline void reset_kcsan_skip(void)
 
 
