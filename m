@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024235;
-	b=IFgcdWCdKRb70aiNa4hVLQq1wn9WziQVewv5Pq7DoLSmqg9JPxG94yr6mA65ICFfsWCa
-	 l5uFllz1gK+eSz/VcUVIQb5SJLd7r2QeGEdQ9NHhnqi0mQVhbIKUzARvfURnK+4l1WZs7
-	 FfUCs1LLi3z+DC/qO9oHLIjpMyxBYwpRs/GmoJFshTcKfOH0zo0XBYsdFipsSIv4WWL8t
-	 7aHL72yqVZLpVhNIDbekxMgCfERo0eglXk14zVFanV2I64dSkFH8So8pP/F5nesGngJJa
-	 342u65Y0RDbwSuoVCqJ+QTERVEFmXtCz0BHTZDrBadaWpE2VerEwk8IcEpszUgoJdJg==
+	t=1795024238;
+	b=gnHHc1avi/v4nOg3KxnIZ3F2F6ZbNcHCW3Dlqrnt3w4S6UtF8hOHCYBgaoZqXQ+u5TRh
+	 +aD6vBM40XQCjyVrPT9VPyAdaEJ1hLPRarlht34n1A5LQTHh6puF5jrZlintiONy/iNNj
+	 LHEOAPdbpwgXiXr/HYteO/tvKliLOYNVahHr0Z3zhY7kVn1nZPOGZu7vubvqKE3nPzNKh
+	 eyatx8fr2KRg89lUMZfb1vGE5UFtcd79aqxpDUSOKgvWRFIxvtip0Y3BsCwvwzrZreKhB
+	 9eggVjWajBcNM8X8ntE7a+/pX1TZ+m5pMjRle0RBz69AnTHel+K2r6PKTA2WXmWYWng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DNEg/2D2xH0JAR/qtyo8UngHRKbGC0Vg39cEhlniUao=;
-	b=Up9Csd7Vx4V/nf/rd/7bI8BnTo3zRRhiVwGZfxkeaen5OZaJ0ryzmkfPh/sOwYuHmFzU
-	 pc5Rl5tkr64ZhEPpbFBv5nAJpLs6EaroPVRQETx38ifjyioB3DoYkFgD86/KEIOshwHdy
-	 MlXzDVxrswUYF5GmpjfDKlLGlRQpEq316aDsFnu9mIkfPKMOLpWpuQkLLaVlu1KQZS2qR
-	 rHfvcI0RRYSdXj6obdS2gY1t9am/f9BoOeKaUOJ6xt5phexMEIBRmKcSsS8iavdOpJ5Tl
-	 AYLVJHGefajUd6+h+p57fGmAQ4FlTdrqghCv7zU9ZSY7mcd8mYNo5f+33wlEkqXq+JA==
+	bh=UyDpI4KWRkJBRQFS4W1lWBlWtYV73aQBl5+x2zSbX0k=;
+	b=RbewWGAY/M7UISct45u2pXtVdFx4YXx4+gNkiPPGgiOLLUjElia1VsB5yb5QHL9ZnVYh
+	 Kvrl7qEXYSMZFG3exTu7I2q2R4alEO6lccyEVnHbNTSfJY0LI/+LWpJt8+Judflj3OYVp
+	 UcVSB7WB6R3G/lMAFBQxWJAAoV/xwY39dGWY2FSMR7kehcKByDwZzGGUPKWW/WjEArfuL
+	 uf9G3iXsv7xcxQVNNFEbSldCivddYq1xrskkXg0OzXsGDkE8uSVVxdCJigEv+nPG9kXFL
+	 KqJe6iMXrHUgJuILH+hV3er12IvKb6PBhQnSLRqG4A47nmaH82LuzDwuXW4oqDS7K+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybaPSVqY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJsw0GaQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A6E606A320;
-	Wed, 18 Nov 2026 17:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0312C606A31C;
+	Wed, 18 Nov 2026 17:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybaPSVqY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D101F000C4;
-	Wed, 18 Nov 2026 17:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJsw0GaQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D4E1F000C4;
+	Wed, 18 Nov 2026 17:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024235;
-	bh=DNEg/2D2xH0JAR/qtyo8UngHRKbGC0Vg39cEhlniUao=;
+	s=korg; t=1795024237;
+	bh=UyDpI4KWRkJBRQFS4W1lWBlWtYV73aQBl5+x2zSbX0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybaPSVqYv5zx5rAxbjqA0vIIkkG4/mjTPzhpjUcm2tsXRzIPkoOjMp+oLu/7pNc4z
-	 KXKI2tyeNEoV0uaNbEpJWxEuywaNCuo/N1uqGkk20klQcFyw0OI9ni4/dMuMYreCss
-	 ldEPJE4OVmPLLLyUI1XiOK2MiWwKr3c7a3d0DLYo=
+	b=WJsw0GaQVzhVMup3wHIw5SKg0dsSimGQO7Eov3wg128FRWPxh22L9kO2MO56IIlfw
+	 u2xTrFt7HR4nrz3n7V4hgSG508G/sdfoSsevIOCj/t7HyMQqv55i8on+AfO9vyPu1u
+	 WGOLbXsh4AVcTlZ+FQkKaAU4WAnmDCOZ8YP0qbHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0602/2151] regulator: mp886x: check get_voltage_sel() return value
-Date: Wed, 18 Nov 2026 15:38:57 +0100
-Message-ID: <20261118150143.872352348@linuxfoundation.org>
+Subject: [PATCH 6.18 0647/2151] swim: Remove redundant RELAX actions
+Date: Wed, 18 Nov 2026 15:39:42 +0100
+Message-ID: <20261118150145.422090615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,49 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 87121c42fadc7683469aee96ad833bc560197a55 ]
+[ Upstream commit 04cb277e6841b55b950b42063fe11501b5d1676a ]
 
-The get_voltage_sel() can fail, resulting in negative error codes
-stored in unsigned integers and corrupted state logic.
+Wherever we have a swim_select() or swim_readbit() call there is an
+implicit RELAX. That means the caller doesn't have to do it. Remove the
+redundant code.
 
-Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
-Link: https://patch.msgid.link/20260909143957.9284-2-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+BTW, Inside Macintosh says, "Be sure [...] that CA0 and CA1 are set high
+before changing SEL." Hence the RELAX found in swim_select(). The SwimIII
+driver in mkLinux also has that. But the swim3.c driver in Linux is odd:
+it scatters RELAX actions around as though SEL was not actually under its
+control... In anycase, swim.c really does control SEL so there's no need
+for that here.
+
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/08ab67c2780c9107b87a1ece8b5f9cb54a8cea70.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b736189c93c9 ("swim: Deduplicate polling loops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mp886x.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/block/swim.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
-index bbad6207ad7bd..6bad7ff40aa9d 100644
---- a/drivers/regulator/mp886x.c
-+++ b/drivers/regulator/mp886x.c
-@@ -256,6 +256,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
- {
- 	struct regulator_desc *rdesc = &di->desc;
- 	struct regulator_dev *rdev;
-+	int sel;
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index cbf564dc23323..237ed93fb0af4 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -336,7 +336,6 @@ static inline void swim_motor(struct swim __iomem *base,
+ 		swim_action(base, MOTOR_ON);
  
- 	rdesc->name = "mp886x-reg";
- 	rdesc->supply_name = "vin";
-@@ -277,7 +278,12 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
- 	rdev = devm_regulator_register(di->dev, &di->desc, config);
- 	if (IS_ERR(rdev))
- 		return PTR_ERR(rdev);
--	di->sel = rdesc->ops->get_voltage_sel(rdev);
-+
-+	sel = rdesc->ops->get_voltage_sel(rdev);
-+	if (sel < 0)
-+		return sel;
-+	di->sel = sel;
-+
- 	return 0;
+ 		for (i = 0; i < 2*HZ; i++) {
+-			swim_select(base, RELAX);
+ 			if (swim_readbit(base, MOTOR_ON))
+ 				break;
+ 			set_current_state(TASK_INTERRUPTIBLE);
+@@ -344,7 +343,7 @@ static inline void swim_motor(struct swim __iomem *base,
+ 		}
+ 	} else if (action == OFF) {
+ 		swim_action(base, MOTOR_OFF);
+-		swim_select(base, RELAX);
++		swim_write(base, phase, RELAX | PHASE_PIN_DIR);
+ 	}
  }
  
+@@ -355,13 +354,11 @@ static inline void swim_eject(struct swim __iomem *base)
+ 	swim_action(base, EJECT);
+ 
+ 	for (i = 0; i < 2*HZ; i++) {
+-		swim_select(base, RELAX);
+ 		if (!swim_readbit(base, DISK_IN))
+ 			break;
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(1);
+ 	}
+-	swim_select(base, RELAX);
+ }
+ 
+ static inline void swim_head(struct swim __iomem *base, enum head head)
+@@ -385,7 +382,6 @@ static inline int swim_step(struct swim __iomem *base)
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(1);
+ 
+-		swim_select(base, RELAX);
+ 		if (!swim_readbit(base, STEP))
+ 			return 0;
+ 	}
+@@ -399,8 +395,6 @@ static inline int swim_track00(struct swim __iomem *base)
+ 	swim_action(base, SEEK_NEGATIVE);
+ 
+ 	for (try = 0; try < 100; try++) {
+-
+-		swim_select(base, RELAX);
+ 		msleep(3);
+ 
+ 		if (swim_readbit(base, TRACK_ZERO))
 -- 
 2.53.0
 
