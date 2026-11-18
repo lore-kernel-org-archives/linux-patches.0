@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022394;
-	b=o18xOjaN1aVqRWIShjq1VJQsdXHcaXjhAt/aT1qg8tThBNuhCnOnqoCMXVHSAuT3FoYc
-	 zyZsg1wkCUf2KnkOow3MdEqR18cbUREAQsv512FOyEWBfHOS7JHIOa1RwH69or+F1ASvn
-	 Sw/pQ+n9HqzAwDImdrVQ5f8wWpwQ6wCnmQAKIB0aZsExLXrHn/nerrN0yyYVpIQxZg6Nm
-	 sBH/oZ9kBqN7I1Rgs3/FQxgQ9OlPqEQQVTHuWxHm2ehykBknkdaDEPVMGcm6RivsigPya
-	 s2IDCz8zr3XQN0rd2mobVxnarufuOZlis9HaZVDtNcbYWHrAbxxE023I+fMpStQpAwQ==
+	t=1795022397;
+	b=rvoycp+uZd8NYqlbVECyoE+vuNkD0cidA6HqJ03LlRivTjL9DkNCEeYwAAModxbCo8NJ
+	 tI3mwA0rlu4vmndP8A6guQUNGaG08s/Hz7l6qxBAwiZMrZbhrzkC/BUjPn/ukb7fYRWxp
+	 UTSOoqA42lYznZ7z86qSdF691Hc5lrxVFA4/IjHyDejIzVy3BXvBxBAtlwhFtEEhxkWJW
+	 tDVMxxfon43899V88RyHNhl946973ZPAunk8njBHspkDk/NnoIwZNoCrCc92V5/il8DWO
+	 mMA7BYK6ctjhs0MG/hJz2TDLPLK3M3u+A1qHDsAioq0XbUE77W2/6o/t8FflFXyr83w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=stg9YkpjzsV9rnO+ia0D8yUGGJeIkpOJunkXdvbSwBs=;
-	b=0Ax0TMZbBrlDcnIetE2b5HepnouKy9AQxhDX9zpNPqKtxuACkSCOaj+hHcVOLH4mjtIM
-	 Y+HGjK/keaGecgxxCmd86Rc3vB9FxTR8Wu65J1BeghtYOy5izPIb78Y8PmGRZS9VCcJTP
-	 ZcCn4npI7Y7zydZcFgYvldcFYjZzaMXO98FXRFM6Cwek3bFMLKG47B2V+px9Yt4e5nMs6
-	 2A8yn/0sAY7Hvy7iAxZHkiwTyuZMsvIleoIfgCkXu+fcxLJRb32dTW2ORD8DuigNwvW23
-	 gk4Djem13Z6FOdUWnwq9u3vW0vJ5PVgIpyOri+aP/agFmj9or6qRdlDRQ7pVjr0CcdQ==
+	bh=DfxWGwl+qYuoOd7qeCDUauFcz3VhM0FcqRHisv7vtcs=;
+	b=yiIZMGPdjxxnEQPbzq7ocfNUJeYd6ZEzl5Tvs6aj9qxzH4E3OIhj+7X1QC7jy6i2PDNa
+	 ri0YcGMvJMAfZDFgWSEP4tJ4Ygs6I0NzZC8Y0bNEIVjSs2JSieU0M1ifvln6Z8Gfu77jH
+	 SHlgLR5gyTSMX8cdVKlgGmU1Wwobw57NmM8HFa0yB7x+wncPFyqITJ8qboukpcOM6Ob5r
+	 TiW+gjBKWVhCGMYp6yWdpVgqXhsKvEQnnDaEWVUwAjvQbkhrsbZBcYPa3UvlthT+xdeCY
+	 sq6NR4mxh0bVOwoeCLCGAN/GfAvoQNd1fV1VTQX8XWfnqhPekTwEgMpmwY1RIql0iXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WMpxubQs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJ3rbVkm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE509606A325;
-	Wed, 18 Nov 2026 17:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649FD606A320;
+	Wed, 18 Nov 2026 17:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WMpxubQs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC961F000C4;
-	Wed, 18 Nov 2026 17:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJ3rbVkm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4E51F000C4;
+	Wed, 18 Nov 2026 17:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022394;
-	bh=stg9YkpjzsV9rnO+ia0D8yUGGJeIkpOJunkXdvbSwBs=;
+	s=korg; t=1795022397;
+	bh=DfxWGwl+qYuoOd7qeCDUauFcz3VhM0FcqRHisv7vtcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WMpxubQsLdTQZcKL+TF/aACA0ACcO4zTUg9GRSBf39hyr7S8ZNH5L12OycdpXblZQ
-	 DYz5CAaY8MlpH1kM18zhMmd1iJX9+QOI5X73xYfTXwp9w+ipfbw3c3Jx2ccZ22mmCI
-	 7lu3LTf8JMz+IhRToqg4UHcePbVFw5Okv8Ur9U/8=
+	b=oJ3rbVkmp1xBc0p2dd9RIh8hO5DoqJayQGb6EAKJt60I/bQr1FJh8Qp/WcSxzUNGe
+	 ZExN/ybaie7Vv51TYyCUKf9q4Q6VZR0ePjP/7Q2t/Mojq36BcGlmqfxW1CmZBBqsII
+	 KbfgswHPClle/Sj/uTcZCUHAc37ObHTuYcevcWuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.3 2646/2651] kernfs: avoid READ_ONCE() on a kgid_t in kernfs_new_node()
-Date: Wed, 18 Nov 2026 16:04:46 +0100
-Message-ID: <20261118150419.336436282@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.3 2647/2651] rust: bindings: derive Zeroable for bindgens opaque array wrappers
+Date: Wed, 18 Nov 2026 16:04:47 +0100
+Message-ID: <20261118150419.366830431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,50 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Sasha Levin <sashal@kernel.org>
 
-commit ef179363b04306dbc645c53207b9ad3516ebc75f upstream.
+commit 57d916a3eb765ee0577d269bb2ac1bdf3a7a7f40 upstream.
 
-kernfs_new_node() reads the parent's gid with READ_ONCE(attrs->ia_gid).
-That gid is a kgid_t, which is a struct.
+bindgen 0.73 emits the blob of some opaque types, such as ones aligned
+to more than 4 bytes, as a `__BindgenOpaqueArray` or
+`__BindgenOpaqueArray<align>` newtype instead of a plain array. The
+newtype only derives `PartialEq`, `Eq`, `Copy`, `Clone`, `Debug` and
+`Hash`, and the `MaybeZeroable` custom derive does not reach it, so a
+struct that embeds such an opaque type is no longer `Zeroable`.
 
-On SMP alpha, READ_ONCE() ends by casting the value it loaded back to
-the type of its argument. Here that is a cast from a struct to the same
-struct. GCC accepts that as an extension, but ISO C does not allow a
-cast to or from a struct type, so sparse warns:
+`spinlock` is opaque (see rust/bindgen_parameters), and with lockdep its
+blob becomes a `__BindgenOpaqueArray8<[u8; 72]>`. Commit 71ec3c7d6db8
+("blk-mq: quiesce a queue that joins a quiesced tag set") added a
+`spinlock_t` to `struct blk_mq_tag_set`, so an allmodconfig build with
+bindgen 0.73 now fails:
 
-  fs/kernfs/dir.c:751:31: sparse: sparse: cast to non-scalar
-  fs/kernfs/dir.c:751:31: sparse: sparse: cast from non-scalar
+  error[E0277]: the trait bound `bindings::__BindgenOpaqueArray8<[u8; 72]>: pin_init::Zeroable` is not satisfied
+    --> rust/kernel/block/mq/tag_set.rs:41:49
 
-Read the gid_t inside the kgid_t instead, and wrap it back up with
-KGIDT_INIT(). This is still a single marked load of the same four bytes.
+Which wrappers exist depends on the bindgen version and on the opaque
+types of the configuration, so they cannot be covered by unconditional
+impls in rust/bindings/lib.rs like `__BindgenBitfieldUnit` is. Derive
+`Zeroable` for each wrapper in the generated bindings instead. The
+pattern allows for the spacing of bindgen's output when rustfmt is not
+available.
 
-There is no functional change. With GCC 12 for alpha (the config from
-the report) and GCC 14 for x86-64 (with and without KCSAN),
-fs/kernfs/dir.o has the same object code before and after this change.
-
-Fixes: 81bdc85b4c08 ("kernfs: fix up the unlocked attribute reads on the creation paths")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610261608.vItiXCGW-lkp@intel.com/
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261027143247.3537239-1-shakeel.butt@linux.dev
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 71ec3c7d6db8 ("blk-mq: quiesce a queue that joins a quiesced tag set")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/rust-for-linux/20261030223702.GA1673281@ax162/
+Link: https://patch.msgid.link/20261031152846.746656-1-sashal@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/kernfs/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/Makefile |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -748,7 +748,7 @@ struct kernfs_node *kernfs_new_node(stru
- 		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -514,13 +514,20 @@ endif
+ bindgen_c_flags_final = $(bindgen_c_flags_lto) -fno-builtin -D__BINDGEN__
  
- 		if (attrs)
--			gid = READ_ONCE(attrs->ia_gid);
-+			gid = KGIDT_INIT(READ_ONCE(attrs->ia_gid.val));
+ # `--rust-target` points to our minimum supported Rust version.
++#
++# `bindgen` 0.73 emits the blob of some opaque types as a
++# `__BindgenOpaqueArray[<align>]` newtype, which the custom derives do not
++# reach. Derive `Zeroable` for those wrappers, so that a struct embedding such
++# an opaque type (e.g. `spinlock_t` with lockdep) is still `Zeroable`. The
++# pattern also matches the unformatted output used when `rustfmt` is missing.
+ quiet_cmd_bindgen = BINDGEN $@
+       cmd_bindgen = \
+ 	$(BINDGEN) $< $(bindgen_target_flags) --rust-target 1.85 \
+ 		--use-core --with-derive-default --ctypes-prefix ffi --no-layout-tests \
+ 		--no-debug '.*' --enable-function-attribute-detection \
+ 		-o $@ -- $(bindgen_c_flags_final) -DMODULE \
+-		$(bindgen_target_cflags) $(bindgen_target_extra)
++		$(bindgen_target_cflags) $(bindgen_target_extra); \
++	sed -Ei 's/pub struct __BindgenOpaqueArray[0-9]* *< *T *> *\( *pub T *\) *;/$(pound)[derive(pin_init::Zeroable)] &/g' $@
  
- 		if (flags & KERNFS_DIR)
- 			mode |= S_ISGID;
+ $(obj)/bindings/bindings_generated.rs: private bindgen_target_flags = \
+     $(shell grep -Ev '^#|^$$' $(src)/bindgen_parameters)
 
 
