@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059300;
-	b=pfnxYHpGRVOW67tPQOi26AW/vmbl9D0/+R5sgo8jk8tO1UC3ARhKia75NGRN0aDdlgVZ
-	 /FLZwsylKIqJ9H/JRzntGM3NwuqTgW+4ICZod6uZL2Ng4IQesmHdQGKcY/RTX9ncvNeLq
-	 Z1QQTXwaUuclGN8mKCIoNcFwVQAgP/aadKjwFgQ4By4AwuTOu0ImnV5oONASKFqIiFDg+
-	 42uxO98vSEmpXHdMoHooGJyEpj9fDM/JrH5q9H6B6+reQ1ShwJFD/f88XoUpFEqpojF2L
-	 qSSBia6h4gIpQ0VYiwaIK59O/7OwZFFkKWcsrNiMxzWrflrtwRJLThZns6+ve2dy8pw==
+	t=1795059303;
+	b=cP98I8Sg4LLZ6DYrVBFqbcsbuq+lYsFDGiMMXLjqsicKFWeMwWl5Jya8aoV4YSfg749n
+	 IPmU/tU2LbOROq5RXFmy8vGMg4YriKFYlio9Qv9nZZy9ysClxyngeW33MEZXR73YskDp2
+	 JUW0Qk3mK/s3c+CBZuXNbPN8pepIHcr5PwVkhuCMp6u6I6qythCXST8HE8IX+IqRy7hjj
+	 r+6UbiBS2g6vHE+yd0lVYIDGCmijVOgi+BBKyHvaMwpHqULFjqgCQ+HccvhlesErxBdon
+	 Z6xrZ38hJTFt5+YZxtyRA2hIuyJixFVV0Qe1y9h/JKNlAGjNysOcKRrcahWX+77UeIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s0KR7lAIiOvaScML4fxlJFNUOKV0EsVk0uYoIgezVK4=;
-	b=ZZP+2xGKb5xyH8YwYHJqsmFzfifY3R9LEskNVPrS+GM5gf4G7ECkC0GOvyrqRKRh/rug
-	 UXmvgamP3A69bWYaPNtXGzGPbpqc0o6mwX8vzMC4JRLKtalHB9Jn1/nvgSymlqhjAEOhC
-	 3UBXRxnTj2snrbbs4R602W0gZCKnzIiilJf6zIXNTTwRGjWVO/UY1kns2jD9updks9B+3
-	 6lFWxGzMCe+RlMd4i7KtRdzbGydTQiC+QwHb9JiSjMJfmATweB0bHfxdFssbSpHLvIvym
-	 EfYwaF8pu7Ogo/qIBL6rUbZxYw27QRzPWiZyjCC0OBJXEExPHEEzyGLcx98HYmr+Izw==
+	bh=bdZcvgqvSPjEOqYGeSSkw16LJOcwuWGKfxRphWoFpxc=;
+	b=5dDKYrRdAVxpxyQvSxCOanFPhu8ot2chDKNjaMNkPObBfOFAnB6dd69et8xhH/UfkUNy
+	 XBe5RpP0A4N4vBcnh1kYLKTqgtQapax0kRIMZWc3Rzqias7oZEPiXQfPDUym9q9vqs6sr
+	 tvo4CuJWPKi3iJx+yl7wqua//LznxcuFh7rksaExtJ5Y5zcOqRtpFO9EK76gjF/lS0P4s
+	 5QkAMbYQoIXNoAORWDS5bWP3NB8N/L8/XC1++7qn7VnqZE8cc+eVLguQV9+xqJ+Xc/FQA
+	 WVImC3lENgCuBz3TaeLGbX8UvK4anBiJDPH+zht1dsHSPGlDCcxY7rQy/m8yZS3Lp0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gq2MjsEA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUePPwyh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FB2606A326;
-	Thu, 19 Nov 2026 03:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07B9606A325;
+	Thu, 19 Nov 2026 03:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gq2MjsEA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26111F000C5;
-	Thu, 19 Nov 2026 03:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUePPwyh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB431F000C4;
+	Thu, 19 Nov 2026 03:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059300;
-	bh=s0KR7lAIiOvaScML4fxlJFNUOKV0EsVk0uYoIgezVK4=;
+	s=korg; t=1795059303;
+	bh=bdZcvgqvSPjEOqYGeSSkw16LJOcwuWGKfxRphWoFpxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gq2MjsEA1k0I5gfmtd8GSvFa1PpC1bF3TE1z7b2XqNjgSvjvuOqR6KlHcZIH4Ff/D
-	 JODAhvDn/RT3OkaNkbTYFrjsyItAmHQAs2HshPx+uNON0ZNSROVJknBrcWOm2dwLBi
-	 hc6G+S/otBLD2lbrYvuIG/3opzjBinziQh31hjx4=
+	b=mUePPwyhjK4nrT48LALAIIcYwj4K2fWlqeK0XypPwGAaZcOGluq1oyQ6quUgnaQgU
+	 uoMw0DRerQUJ7/39h0exjRzF1jtRMB1gR54Js4T+5Mvoc4E5WxSBcO3Uac6FG1bcbk
+	 kW3/OxwvwBmKqkISROuvl3xO1ZUCgbUH7SS8rXhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0755/1848] x86/boot: Fix off-by-one error in sme_clear_pgd()
-Date: Wed, 18 Nov 2026 15:46:33 +0100
-Message-ID: <20261118145948.099469213@linuxfoundation.org>
+Subject: [PATCH 5.10 0791/1848] udf: Make sure theres enough space for LVID implementation use field
+Date: Wed, 18 Nov 2026 15:47:09 +0100
+Message-ID: <20261118145949.537002390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,44 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit cb319926808b1cca522d2087a13205e840beb45b ]
+[ Upstream commit a61fb39759d719a4f4966742b4d28387e33d81c4 ]
 
-The mapping helpers __sme_map_range_pmd() and __sme_map_range_pte(), and
-therefore sme_encrypt_kernel(), use exclusive end addresses and stop
-before vaddr reaches vaddr_end.
+udf_lvid_valid() verifies that the LVID has enough space for all the
+tables and the reported length of ImplementationUse field. However it
+doesn't make sure the reported length is large enough to contain
+logicalVolIntegrityDescImpUse structure which OSTA specification
+requires. This can thus lead to accesses beyond the end of LVID buffer
+for suitably corrupted UDF filesystem. Add the length check.
 
-However, sme_clear_pgd() treats vaddr_end as inclusive when calculating
-the last PGD entry to clear. If vaddr_end is PGD-aligned, the first PGD
-entry outside the range is cleared too.
-
-Use vaddr_end - 1 to calculate the last PGD entry within the range.
-
-Fixes: 6ebcb060713f ("x86/mm: Add support to encrypt the kernel in-place")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260918142714.242711-2-blum@kernel.org
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: 781d2a9a2fc7 ("udf: Check LVID earlier")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/mem_encrypt_identity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/super.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
-index 5ec47af786ddb..7899448d46fe2 100644
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -102,7 +102,7 @@ static void __init sme_clear_pgd(struct sme_populate_pgd_data *ppd)
- 	pgd_t *pgd_p;
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index 58bc19b82afa4..6994cf6a09d66 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1581,7 +1581,10 @@ static bool udf_lvid_valid(struct super_block *sb,
  
- 	pgd_start = ppd->vaddr & PGDIR_MASK;
--	pgd_end = ppd->vaddr_end & PGDIR_MASK;
-+	pgd_end = (ppd->vaddr_end - 1) & PGDIR_MASK;
- 
- 	pgd_size = (((pgd_end - pgd_start) / PGDIR_SIZE) + 1) * sizeof(pgd_t);
- 
+ 	parts = le32_to_cpu(lvid->numOfPartitions);
+ 	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
+-	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
++	if (sizeof(struct logicalVolIntegrityDescImpUse) > impuselen ||
++	    impuselen >= sb->s_blocksize)
++		return false;
++	if (parts >= sb->s_blocksize ||
+ 	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
+ 	    2 * parts * sizeof(u32) > sb->s_blocksize)
+ 		return false;
 -- 
 2.53.0
 
