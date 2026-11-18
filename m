@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056432;
-	b=Pd9/uRglae6fX+ddiwkv35cXSotdlipdAtE/4vTDJTkMQN0dh1EUVBP5ND6ETfZE5qqu
-	 2bC0ubaofmAUGhNMeliYFhN/NLEIqzEIOP37pJKqwaT3E5bqSRVcAx7ucRqOEVtuUokxG
-	 rCmKDhynyACFt1Y+70Awg//YIUsb4IY2/IY1BrNgdq9slCgZkPQuDYwAp7ysmmkNb+3L4
-	 GBUlq96M5uo12iDZTx+WhWj4NW8skmjZFIm0bVVPz/3+xeMvhVkeSHDnheGlZYMKK3/er
-	 j032l4ChlaFsEtg2jc7p71Sr71MS3zJjAO3k2jh36MjePJ/99sred06tfm7haKgeN/w==
+	t=1795056436;
+	b=vW/30UX3YhSBxtdx/8/gpOX15SVNNbmGH+dltZ1RQSkxRMUaaeKnmTIc09Vt96JiB3YU
+	 zFcVnqtzkPpZHbLahQJviXp6EuK444n0CB4BdeMmLakmDcJ8s1FZ0b4mtida4g7x9sTzE
+	 gO3aBk1oS0iYp+BSADmoIdaE2Kg65r8ftTBtZnzM4p17yP5I1QHmWUC4AXY0a/LZriBHa
+	 L5T/l67KHkig8Lk+R9uPLGn0g+AgnG/CVpHpvY0gw4QODThWk07RNPBP7u5WBWf9DZpKN
+	 pDcrJ4PlSO2HSa+Wttsy2INSDWkwuaXVUhdR2KEsugqod+Sl3gDPhDsPgduqbbqqI4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fcg0Rp2oO4nD67z/dW8vh3UJZI93qq+iz6vxFe1wLWw=;
-	b=xhzKawI0nhpuOIzRqW/VIQu8KwUeBZST9MxhMbzBeA3HLbVtSXtUVeztEnJde+Jlw0qX
-	 sDmaqU24qD3sLCJ55iLtRmGk76Od/aUu2Ojj5yPh98gnKraDOlv7cgdgz658SIEaTWAIV
-	 HSFe9tY2TQ+Dg5d+/mVG1O4m0pcR5y23rseBxm7Jlnrprqin+mpYKXwAIiNueDa0zrIsU
-	 buB6iqrz09mhQacqdEXxsHvJAAUU8pE/Y+HGsMp3RXgrjPdqhFiU4h8j4YHSvBCz+ERYa
-	 +QvayBYHDHndne9czUWvOktU27GRGuXpVDTiiY1YRLCatb/IopFAbA8fr87l2B+EVCg==
+	bh=cj4w4hZ979qKXKHa6dewngIyw9DVCrBjTAUZeoW9+8E=;
+	b=ZE2k3AEqVQ1QTDTtYqqH8BBnrVYjHMW+or4VL1GOgMoipIPLrinR8B1OEeSSPGrzlIPA
+	 WV0MfIGsUK7YBNaJpgkuHRmQ/EBxzvnEwmzFGoJT3ide8wSpGKeAb5isuzint/BwdpDET
+	 fWGJD4k5GmN+vpdKm8XiR3zBS6AqxIFs8bP+HANX2HA9J+t5mGE9h+A7RJyUh8NRpU7sB
+	 4ddz1K/2DZHGCrYYMBQfUNnbAnmSmYqNhXnRK5VbfVJPD598A8rgO6jDkr45hGDoKVQwr
+	 16Uoa7/2hEqrgr6n3TAxLFkJlxcQavCKITjWh2hDM9rV8Ttaz8fYUK+EjaUHRuvAR3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZZge783;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h998rbr6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C350A606A320;
-	Thu, 19 Nov 2026 02:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18D8606A31C;
+	Thu, 19 Nov 2026 02:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZZge783
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241431F000C4;
-	Thu, 19 Nov 2026 02:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h998rbr6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBB41F000C4;
+	Thu, 19 Nov 2026 02:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056432;
-	bh=Fcg0Rp2oO4nD67z/dW8vh3UJZI93qq+iz6vxFe1wLWw=;
+	s=korg; t=1795056435;
+	bh=cj4w4hZ979qKXKHa6dewngIyw9DVCrBjTAUZeoW9+8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZZge783tV8aCTjN1F+r7ZPaGpHcoHOmBHKY/9ClIE3aUZnOPjeCo5onSZDy+vdCb
-	 dFwjBirlo0AOE8QDQP62Z4Zs7HPFb2rvqHv/kh2fOXf0hNkvuYReKovC4UpjJIa7F+
-	 Pqmdbdj1NCmFw9ToWzeQLC8LUi18mw84Jc4H+uLg=
+	b=h998rbr6ln5jVNlOPaCv6g27QWl5Q4Rw/WmL8agq+Px/lx2CSqIJfbXUaJnXzdSA8
+	 q+nTvDeiQD8t0+H+0IJTwgqR2S75IVnimNxVYTq3w0KvElr0933tIv+7cuWIVpASzl
+	 VTK4scU7YdHzIvdEAQ/1zwLEwBF9NiIfWFb4wMc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Popplewell <john.popplewell@nmc2.ai>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Trevor Wu <trevor.wu@mediatek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1949/2214] IB/IPoIB: Cancel normal flush work on device stop
-Date: Wed, 18 Nov 2026 16:00:25 +0100
-Message-ID: <20261118150128.963135920@linuxfoundation.org>
+Subject: [PATCH 5.15 1985/2214] ASoC: mediatek: mt8195: enable apll tuner
+Date: Wed, 18 Nov 2026 16:01:01 +0100
+Message-ID: <20261118150130.258304840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,83 +68,403 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Trevor Wu <trevor.wu@mediatek.com>
 
-[ Upstream commit 66196a559be5963b1ced18418c876caf9bfb76e6 ]
+[ Upstream commit ff5a90173d981934e1134d28af3625acaab01d80 ]
 
-ipoib_ib_dev_flush_normal() can race with ipoib_stop() because the normal
-flush work does not run under RTNL.
+Normally, the clock source of audio module is either 26M or APLL1/APLL2,
+but APLL1/APLL2 are not the multiple of 26M.
 
-Before commit a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in
-ipoib_stop()"), ipoib_stop() flushed ipoib_workqueue after clearing
-IPOIB_FLAG_ADMIN_UP and before calling ipoib_ib_dev_down(). This ensured
-that any in-flight flush work completed before ipoib_ib_dev_down()
-performed the final clear of IPOIB_FLAG_OPER_UP.
+In the patch, APLL1 and APLL2 tuners are enabled to handle sample rate
+mismatch when the data path crosses two different clock domains.
 
-After that commit removed the workqueue flush to avoid a deadlock with
-workqueue tasks taking RTNL, a normal flush can continue running
-concurrently with ipoib_stop() after IPOIB_FLAG_ADMIN_UP has been
-cleared.
-
-The flush may observe IPOIB_FLAG_ADMIN_UP set and continue running while
-ipoib_stop() clears IPOIB_FLAG_ADMIN_UP and brings the device down. The
-flush can then call ipoib_ib_dev_up() and set IPOIB_FLAG_OPER_UP again
-after the device has already been stopped:
-
-  flush_normal (ipoib_workqueue)    ipoib_stop() (RTNL held)
-  ------------------------------    ------------------------
-  test_bit(ADMIN_UP) == 1
-                                    clear_bit(ADMIN_UP)
-                                    ipoib_ib_dev_down()
-                                      clear_bit(OPER_UP)
-  ipoib_ib_dev_up()
-    set_bit(OPER_UP)
-
-This leaves the interface with ADMIN_UP clear and OPER_UP set. During
-device removal, ipoib_ndo_uninit() waits in destroy_workqueue() while
-holding RTNL, while ipoib_mcast_carrier_on_task() may keep retrying
-rtnl_trylock() as long as OPER_UP remains set, resulting in a deadlock.
-
-Cancel the normal flush work from ipoib_stop() after clearing
-IPOIB_FLAG_ADMIN_UP and before bringing the device down. A pending normal
-flush is canceled, while an already running flush is allowed to finish
-before ipoib_ib_dev_down() performs the final transition to OPER_UP
-clear.
-
-Only the normal flush needs this synchronization. The heavy flush is
-already serialized with ipoib_stop() by RTNL, while the light flush does
-not bring the device back up and therefore cannot recreate this race.
-
-Fixes: a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in ipoib_stop()")
-Reported-by: John Popplewell <john.popplewell@nmc2.ai>
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20261014-ipoib-cancel-work-v1-1-6c0faac016b8@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Trevor Wu <trevor.wu@mediatek.com>
+Link: https://lore.kernel.org/r/20220221055716.18580-1-trevor.wu@mediatek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9f1b48c658ac ("ASoC: mediatek: mt8195: Fix main clock error handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 282 ++++++++++++++++++++-
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.h |  11 +
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c |   3 -
+ 3 files changed, 292 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index e956513943c60..b275dfd3bf3c8 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -189,6 +189,13 @@ static int ipoib_stop(struct net_device *dev)
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+index 6199ce4fd8f99..e7f0b61e0f7fd 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+@@ -40,6 +40,8 @@ static const char *aud_clks[MT8195_CLK_NUM] = {
+ 	[MT8195_CLK_SCP_ADSP_AUDIODSP] = "scp_adsp_audiodsp",
+ 	/* afe clock gate */
+ 	[MT8195_CLK_AUD_AFE] = "aud_afe",
++	[MT8195_CLK_AUD_APLL1_TUNER] = "aud_apll1_tuner",
++	[MT8195_CLK_AUD_APLL2_TUNER] = "aud_apll2_tuner",
+ 	[MT8195_CLK_AUD_APLL] = "aud_apll",
+ 	[MT8195_CLK_AUD_APLL2] = "aud_apll2",
+ 	[MT8195_CLK_AUD_DAC] = "aud_dac",
+@@ -77,6 +79,268 @@ static const char *aud_clks[MT8195_CLK_NUM] = {
+ 	[MT8195_CLK_AUD_MEMIF_DL11] = "aud_memif_dl11",
+ };
  
- 	clear_bit(IPOIB_FLAG_ADMIN_UP, &priv->flags);
- 
-+	/* Normal flush runs without RTNL and may bring the device back
-+	 * up. Cancel it before the device down transition.
-+	 * Heavy flush is already serialized by RTNL and must not be
-+	 * waited on here while RTNL is held.
-+	 */
-+	cancel_work_sync(&priv->flush_normal);
++struct mt8195_afe_tuner_cfg {
++	unsigned int id;
++	int apll_div_reg;
++	unsigned int apll_div_shift;
++	unsigned int apll_div_maskbit;
++	unsigned int apll_div_default;
++	int ref_ck_sel_reg;
++	unsigned int ref_ck_sel_shift;
++	unsigned int ref_ck_sel_maskbit;
++	unsigned int ref_ck_sel_default;
++	int tuner_en_reg;
++	unsigned int tuner_en_shift;
++	unsigned int tuner_en_maskbit;
++	int upper_bound_reg;
++	unsigned int upper_bound_shift;
++	unsigned int upper_bound_maskbit;
++	unsigned int upper_bound_default;
++	spinlock_t ctrl_lock; /* lock for apll tuner ctrl*/
++	int ref_cnt;
++};
 +
- 	netif_stop_queue(dev);
++static struct mt8195_afe_tuner_cfg mt8195_afe_tuner_cfgs[MT8195_AUD_PLL_NUM] = {
++	[MT8195_AUD_PLL1] = {
++		.id = MT8195_AUD_PLL1,
++		.apll_div_reg = AFE_APLL_TUNER_CFG,
++		.apll_div_shift = 4,
++		.apll_div_maskbit = 0xf,
++		.apll_div_default = 0x7,
++		.ref_ck_sel_reg = AFE_APLL_TUNER_CFG,
++		.ref_ck_sel_shift = 1,
++		.ref_ck_sel_maskbit = 0x3,
++		.ref_ck_sel_default = 0x2,
++		.tuner_en_reg = AFE_APLL_TUNER_CFG,
++		.tuner_en_shift = 0,
++		.tuner_en_maskbit = 0x1,
++		.upper_bound_reg = AFE_APLL_TUNER_CFG,
++		.upper_bound_shift = 8,
++		.upper_bound_maskbit = 0xff,
++		.upper_bound_default = 0x2,
++	},
++	[MT8195_AUD_PLL2] = {
++		.id = MT8195_AUD_PLL2,
++		.apll_div_reg = AFE_APLL_TUNER_CFG1,
++		.apll_div_shift = 4,
++		.apll_div_maskbit = 0xf,
++		.apll_div_default = 0x7,
++		.ref_ck_sel_reg = AFE_APLL_TUNER_CFG1,
++		.ref_ck_sel_shift = 1,
++		.ref_ck_sel_maskbit = 0x3,
++		.ref_ck_sel_default = 0x1,
++		.tuner_en_reg = AFE_APLL_TUNER_CFG1,
++		.tuner_en_shift = 0,
++		.tuner_en_maskbit = 0x1,
++		.upper_bound_reg = AFE_APLL_TUNER_CFG1,
++		.upper_bound_shift = 8,
++		.upper_bound_maskbit = 0xff,
++		.upper_bound_default = 0x2,
++	},
++	[MT8195_AUD_PLL3] = {
++		.id = MT8195_AUD_PLL3,
++		.apll_div_reg = AFE_EARC_APLL_TUNER_CFG,
++		.apll_div_shift = 4,
++		.apll_div_maskbit = 0x3f,
++		.apll_div_default = 0x3,
++		.ref_ck_sel_reg = AFE_EARC_APLL_TUNER_CFG,
++		.ref_ck_sel_shift = 24,
++		.ref_ck_sel_maskbit = 0x3,
++		.ref_ck_sel_default = 0x0,
++		.tuner_en_reg = AFE_EARC_APLL_TUNER_CFG,
++		.tuner_en_shift = 0,
++		.tuner_en_maskbit = 0x1,
++		.upper_bound_reg = AFE_EARC_APLL_TUNER_CFG,
++		.upper_bound_shift = 12,
++		.upper_bound_maskbit = 0xff,
++		.upper_bound_default = 0x4,
++	},
++	[MT8195_AUD_PLL4] = {
++		.id = MT8195_AUD_PLL4,
++		.apll_div_reg = AFE_SPDIFIN_APLL_TUNER_CFG,
++		.apll_div_shift = 4,
++		.apll_div_maskbit = 0x3f,
++		.apll_div_default = 0x7,
++		.ref_ck_sel_reg = AFE_SPDIFIN_APLL_TUNER_CFG1,
++		.ref_ck_sel_shift = 8,
++		.ref_ck_sel_maskbit = 0x1,
++		.ref_ck_sel_default = 0,
++		.tuner_en_reg = AFE_SPDIFIN_APLL_TUNER_CFG,
++		.tuner_en_shift = 0,
++		.tuner_en_maskbit = 0x1,
++		.upper_bound_reg = AFE_SPDIFIN_APLL_TUNER_CFG,
++		.upper_bound_shift = 12,
++		.upper_bound_maskbit = 0xff,
++		.upper_bound_default = 0x4,
++	},
++	[MT8195_AUD_PLL5] = {
++		.id = MT8195_AUD_PLL5,
++		.apll_div_reg = AFE_LINEIN_APLL_TUNER_CFG,
++		.apll_div_shift = 4,
++		.apll_div_maskbit = 0x3f,
++		.apll_div_default = 0x3,
++		.ref_ck_sel_reg = AFE_LINEIN_APLL_TUNER_CFG,
++		.ref_ck_sel_shift = 24,
++		.ref_ck_sel_maskbit = 0x1,
++		.ref_ck_sel_default = 0,
++		.tuner_en_reg = AFE_LINEIN_APLL_TUNER_CFG,
++		.tuner_en_shift = 0,
++		.tuner_en_maskbit = 0x1,
++		.upper_bound_reg = AFE_LINEIN_APLL_TUNER_CFG,
++		.upper_bound_shift = 12,
++		.upper_bound_maskbit = 0xff,
++		.upper_bound_default = 0x4,
++	},
++};
++
++static struct mt8195_afe_tuner_cfg *mt8195_afe_found_apll_tuner(unsigned int id)
++{
++	if (id >= MT8195_AUD_PLL_NUM)
++		return NULL;
++
++	return &mt8195_afe_tuner_cfgs[id];
++}
++
++static int mt8195_afe_init_apll_tuner(unsigned int id)
++{
++	struct mt8195_afe_tuner_cfg *cfg = mt8195_afe_found_apll_tuner(id);
++
++	if (!cfg)
++		return -EINVAL;
++
++	cfg->ref_cnt = 0;
++	spin_lock_init(&cfg->ctrl_lock);
++
++	return 0;
++}
++
++static int mt8195_afe_setup_apll_tuner(struct mtk_base_afe *afe,
++				       unsigned int id)
++{
++	const struct mt8195_afe_tuner_cfg *cfg = mt8195_afe_found_apll_tuner(id);
++
++	if (!cfg)
++		return -EINVAL;
++
++	regmap_update_bits(afe->regmap, cfg->apll_div_reg,
++			   cfg->apll_div_maskbit << cfg->apll_div_shift,
++			   cfg->apll_div_default << cfg->apll_div_shift);
++
++	regmap_update_bits(afe->regmap, cfg->ref_ck_sel_reg,
++			   cfg->ref_ck_sel_maskbit << cfg->ref_ck_sel_shift,
++			   cfg->ref_ck_sel_default << cfg->ref_ck_sel_shift);
++
++	regmap_update_bits(afe->regmap, cfg->upper_bound_reg,
++			   cfg->upper_bound_maskbit << cfg->upper_bound_shift,
++			   cfg->upper_bound_default << cfg->upper_bound_shift);
++
++	return 0;
++}
++
++static int mt8195_afe_enable_tuner_clk(struct mtk_base_afe *afe,
++				       unsigned int id)
++{
++	struct mt8195_afe_private *afe_priv = afe->platform_priv;
++
++	switch (id) {
++	case MT8195_AUD_PLL1:
++		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL]);
++		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL1_TUNER]);
++		break;
++	case MT8195_AUD_PLL2:
++		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2]);
++		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2_TUNER]);
++		break;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static int mt8195_afe_disable_tuner_clk(struct mtk_base_afe *afe,
++					unsigned int id)
++{
++	struct mt8195_afe_private *afe_priv = afe->platform_priv;
++
++	switch (id) {
++	case MT8195_AUD_PLL1:
++		mt8195_afe_disable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL1_TUNER]);
++		mt8195_afe_disable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL]);
++		break;
++	case MT8195_AUD_PLL2:
++		mt8195_afe_disable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2_TUNER]);
++		mt8195_afe_disable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2]);
++		break;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static int mt8195_afe_enable_apll_tuner(struct mtk_base_afe *afe,
++					unsigned int id)
++{
++	struct mt8195_afe_tuner_cfg *cfg = mt8195_afe_found_apll_tuner(id);
++	unsigned long flags;
++	int ret = 0;
++
++	if (!cfg)
++		return -EINVAL;
++
++	ret = mt8195_afe_setup_apll_tuner(afe, id);
++	if (ret)
++		return ret;
++
++	ret = mt8195_afe_enable_tuner_clk(afe, id);
++	if (ret)
++		return ret;
++
++	spin_lock_irqsave(&cfg->ctrl_lock, flags);
++
++	cfg->ref_cnt++;
++	if (cfg->ref_cnt == 1)
++		regmap_update_bits(afe->regmap,
++				   cfg->tuner_en_reg,
++				   cfg->tuner_en_maskbit << cfg->tuner_en_shift,
++				   1 << cfg->tuner_en_shift);
++
++	spin_unlock_irqrestore(&cfg->ctrl_lock, flags);
++
++	return ret;
++}
++
++static int mt8195_afe_disable_apll_tuner(struct mtk_base_afe *afe,
++					 unsigned int id)
++{
++	struct mt8195_afe_tuner_cfg *cfg = mt8195_afe_found_apll_tuner(id);
++	unsigned long flags;
++	int ret = 0;
++
++	if (!cfg)
++		return -EINVAL;
++
++	spin_lock_irqsave(&cfg->ctrl_lock, flags);
++
++	cfg->ref_cnt--;
++	if (cfg->ref_cnt == 0)
++		regmap_update_bits(afe->regmap,
++				   cfg->tuner_en_reg,
++				   cfg->tuner_en_maskbit << cfg->tuner_en_shift,
++				   0 << cfg->tuner_en_shift);
++	else if (cfg->ref_cnt < 0)
++		cfg->ref_cnt = 0;
++
++	spin_unlock_irqrestore(&cfg->ctrl_lock, flags);
++
++	ret = mt8195_afe_disable_tuner_clk(afe, id);
++	if (ret)
++		return ret;
++
++	return ret;
++}
++
+ int mt8195_afe_get_mclk_source_clk_id(int sel)
+ {
+ 	switch (sel) {
+@@ -113,7 +377,7 @@ int mt8195_afe_get_default_mclk_source_by_rate(int rate)
+ int mt8195_afe_init_clock(struct mtk_base_afe *afe)
+ {
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+-	int i;
++	int i, ret;
  
- 	ipoib_ib_dev_down(dev);
+ 	mt8195_audsys_clk_register(afe);
+ 
+@@ -133,6 +397,16 @@ int mt8195_afe_init_clock(struct mtk_base_afe *afe)
+ 		}
+ 	}
+ 
++	/* initial tuner */
++	for (i = 0; i < MT8195_AUD_PLL_NUM; i++) {
++		ret = mt8195_afe_init_apll_tuner(i);
++		if (ret) {
++			dev_dbg(afe->dev, "%s(), init apll_tuner%d failed",
++				__func__, (i + 1));
++			return -EINVAL;
++		}
++	}
++
+ 	return 0;
+ }
+ 
+@@ -441,11 +715,17 @@ int mt8195_afe_enable_main_clock(struct mtk_base_afe *afe)
+ 
+ 	mt8195_afe_enable_afe_on(afe);
+ 
++	mt8195_afe_enable_apll_tuner(afe, MT8195_AUD_PLL1);
++	mt8195_afe_enable_apll_tuner(afe, MT8195_AUD_PLL2);
++
+ 	return 0;
+ }
+ 
+ int mt8195_afe_disable_main_clock(struct mtk_base_afe *afe)
+ {
++	mt8195_afe_disable_apll_tuner(afe, MT8195_AUD_PLL2);
++	mt8195_afe_disable_apll_tuner(afe, MT8195_AUD_PLL1);
++
+ 	mt8195_afe_disable_afe_on(afe);
+ 
+ 	mt8195_afe_disable_timing_sys(afe);
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.h b/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
+index 24eb2f06682f2..a08c0ee6c8602 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
+@@ -35,6 +35,8 @@ enum {
+ 	MT8195_CLK_INFRA_AO_AUDIO_26M_B,
+ 	MT8195_CLK_SCP_ADSP_AUDIODSP,
+ 	MT8195_CLK_AUD_AFE,
++	MT8195_CLK_AUD_APLL1_TUNER,
++	MT8195_CLK_AUD_APLL2_TUNER,
+ 	MT8195_CLK_AUD_APLL,
+ 	MT8195_CLK_AUD_APLL2,
+ 	MT8195_CLK_AUD_DAC,
+@@ -84,6 +86,15 @@ enum {
+ 	MT8195_MCK_SEL_NUM,
+ };
+ 
++enum {
++	MT8195_AUD_PLL1,
++	MT8195_AUD_PLL2,
++	MT8195_AUD_PLL3,
++	MT8195_AUD_PLL4,
++	MT8195_AUD_PLL5,
++	MT8195_AUD_PLL_NUM,
++};
++
+ struct mtk_base_afe;
+ 
+ int mt8195_afe_get_mclk_source_clk_id(int sel);
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 4e817542dd745..2e06316ff830c 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -2582,8 +2582,6 @@ static bool mt8195_is_volatile_reg(struct device *dev, unsigned int reg)
+ 	case AFE_IRQ3_CON_MON:
+ 	case AFE_IRQ_MCU_MON2:
+ 	case ADSP_IRQ_STATUS:
+-	case AFE_APLL_TUNER_CFG:
+-	case AFE_APLL_TUNER_CFG1:
+ 	case AUDIO_TOP_STA0:
+ 	case AUDIO_TOP_STA1:
+ 	case AFE_GAIN1_CUR:
+@@ -2622,7 +2620,6 @@ static bool mt8195_is_volatile_reg(struct device *dev, unsigned int reg)
+ 	case SPDIFIN_USERCODE10:
+ 	case SPDIFIN_USERCODE11:
+ 	case SPDIFIN_USERCODE12:
+-	case AFE_SPDIFIN_APLL_TUNER_CFG:
+ 	case AFE_LINEIN_APLL_TUNER_MON:
+ 	case AFE_EARC_APLL_TUNER_MON:
+ 	case AFE_CM0_MON:
 -- 
 2.53.0
 
