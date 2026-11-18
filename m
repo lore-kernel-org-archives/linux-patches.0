@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062197;
-	b=QL/VxeFMF3gfBngJDrWr2z7r9747Qx/sqR+Qy0ctHsnI0CJXlk5W74k+qhHT05WQxgM1
-	 rMHxLxT5o9a/bBAAOLxD5jJra7JfGJ27Pt3KoiOX2KUVpqqRf+bPAcTgjEGXXzg0gAtFW
-	 /kuDg2t/3jt/18oFhxYOsAWFbv5LZ5WoZkZ7BhOeutrAKF3EVnmI/inwqiCGPqFJXytNk
-	 hmV+umcIS+SURxOdVYTwR4EgYOst/qSeMnELU78SSW7/Kx7ir6yMkWHB7saR+gwBEa2NU
-	 6DLpE4bcxiKy01mN3INAB29fH3klnwJdHTVbNNfwNMZj9nRnvLuq6GuxPQfFnifUpHw==
+	t=1795062199;
+	b=PTNS3HYRthtJ8rJHb6ufKFJPb6x+zFHMJVqSp4NpZdw9Jw6gb6FTLWd9KTjRKGsDwgwz
+	 Wk6liJ9CceVoFGlnHn0oU9fzMqdRhqC1KSEIW7R0RtNi1LFDSq9V02hx+W3AeL65oAs03
+	 3u7dBwsP5XXqKhm8uh1FnssoB95UVCyybIqy1A8XhWthwkXfAybL9lw4p8jRel14oxLFg
+	 fMi1V+ddHXoJD4TPeFgd6DesoJMMnf679hOgcGVQZGIFPZO2Tltd0wGicn3kUDh5V+0wD
+	 MYXSkcKitYPLyXB6nlQmxjMt14A9Ql8IlXZx/cLI5u3CM8WTrLSymn2XGOLp1rAB96A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V4Zb5SngnG48OCo85XnEp0wGbYAdHmCDcDojXyfUkT8=;
-	b=2jrwYeABWkdNwk+/FZTA0NUih3+kW8b5auJGN4+vBzToGDN2asDI8fcSkLmmM7bQQeqk
-	 7EtjmJkGIyq5jHfTFNRaxHnTrTt+RWhBN40TvieyQ0+HeuSkhhiRctoVx2TDsRYd0y+Vc
-	 hLYu7IX55BnAEQVDYwau0DdeJghIpUAjbed49+0nvWCyFjP4rpUsMHeWtPI24iIsA5f0M
-	 UmlVKOmfmLyPYoYf75mb1K16PbjvP74UbV7HAvrhRkT5TLMpxYi7K7EHOrMr8z1h7LgPC
-	 ykIVKutpA9gaIcv3zo3LZ4g4cPlGUuPYrRbaN/ZdRvIrQibMp9hvP+A2LPm+/i/Wh3Q==
+	bh=D4SmyaJ0VqygRAOlZWTKg1mN+dEF/Qr/vW0f89PwB18=;
+	b=XSIMBWDSV/p+Bemi7KggaIX4zOI4ExF3azqajgWd0lwfNz6pQ8kc5ofSyM7aW/tb/kzA
+	 aU8asw2sKy+q7EkUwAykatgsJvQiEHLartix+uj5/A//UHGV/Lvt0TvT9yAGGdIEx94CZ
+	 x0UJzEEm/pKY1x0M7BWLM1kwkLllnCQN3z7CMuINJRMWZc5Cp8gyj3agyqv0SFw6jidov
+	 MckH/khyaZoeVD7woc7UlPfXlp1RMRyync01ORywxJ41LW0kXKdOan1eJcj47epAiGPJ7
+	 XEVwX7JyQFnyy39BgiGX5gzN+qvTfe4DK/zuXVOi58C4QvpRifl+55MAj/wIGYVgFrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRe2G7B9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=karlSESS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1893606A32A;
-	Thu, 19 Nov 2026 04:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89996606A325;
+	Thu, 19 Nov 2026 04:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRe2G7B9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC691F000C5;
-	Thu, 19 Nov 2026 04:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=karlSESS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E491F000C7;
+	Thu, 19 Nov 2026 04:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062196;
-	bh=V4Zb5SngnG48OCo85XnEp0wGbYAdHmCDcDojXyfUkT8=;
+	s=korg; t=1795062199;
+	bh=D4SmyaJ0VqygRAOlZWTKg1mN+dEF/Qr/vW0f89PwB18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YRe2G7B9a5Lveh8zS/GmE9Ze2yxbolO3ZljnuOZkRWi/bf/4lCPqq+/+EGAvo5XUl
-	 UdsJ4G1RlIA3gockjIYp+cXTdWR4lLJwVnEgWHzh3hgao8E+3HLlFJwvAA8znZrYye
-	 ggvPhi9IMpYvUVWShHn1Fa5hm5mi6AwtJH8iT798=
+	b=karlSESSQYZopKRDuQsNXlQQWyiPQRTxwtcdhApWnl/sDaCJdRra9t6GGMDF26B7P
+	 p2OPp6FBHuOeF9gHav1GVXITzQ3Zn2eMO+rNui69HVPBpPUG5S/DEYO5+TiiqdCZqF
+	 REE3mlJyvoMxRPHTGbfjGhRdQ/U+QNUKke6yhmjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Rosen Penev <rosenp@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1773/1848] netlink: fix out-of-bounds bitmap access clearing stale mc groups
-Date: Wed, 18 Nov 2026 16:03:31 +0100
-Message-ID: <20261118150033.607955632@linuxfoundation.org>
+Subject: [PATCH 5.10 1818/1848] net: bgmac: fix TX DMA unmapping and slot cleanup
+Date: Wed, 18 Nov 2026 16:04:16 +0100
+Message-ID: <20261118150035.647928861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,60 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 6430fb7f1cc4e329e386521b7b208df443de92f2 ]
+[ Upstream commit 4f45e97b3aac2282f2b436d97338c9c2c484d093 ]
 
-netlink_realloc_groups() sizes nlk->groups to the number of groups
-that exist at bind/ADD_MEMBERSHIP time.  When more multicast groups
-are registered later (e.g. a new genl family), existing sockets keep
-their smaller bitmap.
+When mapping a fragment fails, bgmac_dma_tx_add() unwinds with the
+wrong slots. It passes the failed fragment's slot->dma_addr, which
+holds the mapping error, to dma_unmap_single() for the head. The
+fragment loop indexes from ring->end instead of ring->end + 1, so it
+unmaps the head a second time as a page and leaves the last mapped
+fragment mapped. None of the affected slots get their dma_addr cleared
+either, which includes the head slot when mapping the head fails.
 
-When clearing a multicast group of a departing family,
-__netlink_clear_multicast_users() runs netlink_update_socket_mc() on
-each socket on mc_list, which does test_bit()/__assign_bit() on
-group - 1 with no regard to nlk->ngroups.  Skip sockets whose bitmap
-predates the group: such a socket can never have joined it.
+bgmac_dma_tx_ring_free() unmaps every slot with a non-zero dma_addr,
+so tearing down the ring unmaps these addresses again. It also frees
+the skbs of pending TX slots but leaves slot->skb and slot->dma_addr
+set. The slots survive a down/up cycle, and bgmac_dma_tx_add() only
+sets slot->skb on the last slot of a packet. If a slot with a stale
+pointer is later used for the head or a fragment of a scatter/gather
+packet, bgmac_dma_tx_free() frees the old skb a second time when that
+slot completes.
 
-The overflow windows differ per architecture, both needing privileged
-module (un)loading.  On 32-bit kernels the ~54 dynamically allocated
-genl groups already exceed the initial 32-bit bitmap, so the table
-can grow there directly.  On 64-bit kernels the same in-tree set fits
-the initial 64-bit bitmap only while allocation stays contiguous:
-genl_allocate_reserve_groups() takes the first free contiguous range
-and unregister does not compact, so an unload/reload sequence can
-fragment the ~59 free IDs until no fitting range remains, forcing
-the table past 64 bits and reaching the same stale-bitmap overflow on
-the next family teardown.
+bgmac_dma_tx_ring_free() also picks dma_unmap_single() or
+dma_unmap_page() by looking at slot->skb, which is set on the last slot
+of a packet, while the head was mapped with dma_map_single() and the
+fragments with skb_frag_dma_map().
 
-This issue was discovered by Tencent CodeBuddy Security.
+In the error path, unmap the head and each mapped fragment from their
+own slots, and clear dma_addr on every slot the failed packet touched.
+In bgmac_dma_tx_ring_free(), choose the unmap function by the SOF flag
+of the descriptor like bgmac_dma_tx_free() does, unmap every slot
+before freeing any skb, since a packet can wrap around the end of the
+ring with its skb on the last slot, and clear both fields.
 
-Fixes: 84659eb529b3 ("[NETLIKN]: Allow removing multicast groups.")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+This was found through code inspection by an LLM while hitting other
+bugs on an Asus RT-N16. It did not hit these ones specifically.
+
+Fixes: 9cde94506eac ("bgmac: implement scatter/gather support")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261028164839.28605-1-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 47 +++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 7e608b03ec5eb..eeb0b633a2e5f 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2168,8 +2168,12 @@ void __netlink_clear_multicast_users(struct sock *ksk, unsigned int group)
- 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
- 	struct hlist_node *tmp;
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 19177f90c2329..34d260637c49f 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -208,19 +208,24 @@ static netdev_tx_t bgmac_dma_tx_add(struct bgmac *bgmac,
+ 	return NETDEV_TX_OK;
  
--	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
-+	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list) {
-+		/* bitmap predates the group, can't be a member */
-+		if (group - 1 >= nlk_sk(sk)->ngroups)
-+			continue;
- 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
+ err_dma:
+-	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
+-			 DMA_TO_DEVICE);
++	slot->dma_addr = 0;
+ 
+ 	while (i-- > 0) {
+-		int index = (ring->end + i) % BGMAC_TX_RING_SLOTS;
+-		struct bgmac_slot_info *slot = &ring->slots[index];
+-		u32 ctl1 = le32_to_cpu(ring->cpu_base[index].ctl1);
+-		int len = ctl1 & BGMAC_DESC_CTL1_LEN;
+-
+-		dma_unmap_page(dma_dev, slot->dma_addr, len, DMA_TO_DEVICE);
++		index = (ring->end + 1 + i) % BGMAC_TX_RING_SLOTS;
++		slot = &ring->slots[index];
++		dma_unmap_page(dma_dev, slot->dma_addr,
++			       skb_frag_size(&skb_shinfo(skb)->frags[i]),
++			       DMA_TO_DEVICE);
++		slot->dma_addr = 0;
+ 	}
+ 
++	slot = &ring->slots[ring->end % BGMAC_TX_RING_SLOTS];
++	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
++			 DMA_TO_DEVICE);
++
+ err_dma_head:
++	slot->dma_addr = 0;
++
+ 	netdev_err(bgmac->net_dev, "Mapping error of skb on ring 0x%X\n",
+ 		   ring->mmio_base);
+ 
+@@ -535,17 +540,25 @@ static void bgmac_dma_tx_ring_free(struct bgmac *bgmac,
+ 		unsigned int len = ctl1 & BGMAC_DESC_CTL1_LEN;
+ 
+ 		slot = &ring->slots[i];
+-		dev_kfree_skb(slot->skb);
+ 
+-		if (!slot->dma_addr)
+-			continue;
++		if (slot->dma_addr) {
++			if (le32_to_cpu(dma_desc[i].ctl0) & BGMAC_DESC_CTL0_SOF)
++				dma_unmap_single(dma_dev, slot->dma_addr,
++						 len, DMA_TO_DEVICE);
++			else
++				dma_unmap_page(dma_dev, slot->dma_addr,
++					       len, DMA_TO_DEVICE);
++			slot->dma_addr = 0;
++		}
 +	}
+ 
+-		if (slot->skb)
+-			dma_unmap_single(dma_dev, slot->dma_addr,
+-					 len, DMA_TO_DEVICE);
+-		else
+-			dma_unmap_page(dma_dev, slot->dma_addr,
+-				       len, DMA_TO_DEVICE);
++	/* A packet can wrap around the end of the ring with its skb on the
++	 * last slot, so free the skbs only once every slot is unmapped.
++	 */
++	for (i = 0; i < BGMAC_TX_RING_SLOTS; i++) {
++		slot = &ring->slots[i];
++		dev_kfree_skb(slot->skb);
++		slot->skb = NULL;
+ 	}
  }
  
- struct nlmsghdr *
 -- 
 2.53.0
 
