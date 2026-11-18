@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021522;
-	b=1u9/nIue2+f65r7RbgKvOlKJ4MsHTaiX5Hwzv83jaGfFeT9qXNFCS5ysoBFOFQBM2L/E
-	 S17QY+zGRqG6xS9NWVzFoFD/bJBX8utJPo4MbziTPbRAhjNKNxoIZ3i9Dce8idMt4XiWq
-	 SR+lMlzWpGl2A7/3JEUrJxkhgtO4Cyv4gi/L9S/17wVN3FcQopyhEtqI2KC8mCqPJtXox
-	 RBYwmqkUgeu1NsIYuV0Mmg8rl4SDmJ0IetMFUJFlbh7GIwYO1Eth63mL1DNGMy6XhPTV9
-	 57JnTu1iMKDTUYQ0BdnDM/5bF7yLVOuHiV0fJJMfZSEoClsiQHKgCxEJMEoI3DJb5ng==
+	t=1795021525;
+	b=3ZholNvOPOpIGdx+moVCQdeH44In7TDnjm+LbwTeKxrF3mFRXCPctixUk3tz5KYqLrxr
+	 /elmmVUJMDqiJM/+ljFJnzvosE4UD3MCVF5BEbTH3TdSn/XbI7yfpl5ua8zPz4ceazVuI
+	 UmQ1ZJu0ZOmiv0QQE3mZa91F9xJIxe/1EY+Z7qBlpLJk4FTAZFquXJwCVpdIqNJTpOLMM
+	 JI4In2ebjs/KEX/BPxQUQ4F9qhb8QW0txyBibRqALzHiSSVDrK9twSb2aghoNPWorHqNU
+	 tCNcKe4QPiKb7BeIb5fePFjanLowzVHcEEgMmNhrMOfadV+mShRIkh/49AHDmffKtaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=91GagwmoqcimFIFFSEArkubj9o8ccDXFCU0aNWxf08g=;
-	b=hkkO3wFJlnB9gQ6lJP7yZtxh+tjki81B/chpGGQKhGZr2b4kwJvRY0QVV9TMvj0XVuyQ
-	 Jz8NvzhzE4QgsSiFwQ/JAT3G1SxzOnSsSxzTwd0lq1TqHH4/F+q9DhTdTtvByoS1t1PTP
-	 U2gY7zQtu6iA/uGFfqt6xsA4MySInhmOrBoDgDdp7I4DwUyQUs31o6VOaw6vw31y7HMT4
-	 /TXl3HdTDIODzorUnkUwM/6nZBolnkaE8jfzCKgDJiUfjplBqQ0crgxbKDjbgqiA8JzcG
-	 QvUpsI9LkAwqGidVW/DgOxHVsZ1jdPM23d11bknBxjqmYFBP0M5eNZSBwwYu6bQ7Q5Q==
+	bh=8rQbeFu3hgvBeKMVfDobL0uSSclNHvHPPHZcerYnFpk=;
+	b=HhdZExSjvI4/ZvM9NNCnT2411hZYHOMOnOVDBfSyBgCP2T72ztInSt1quwQEH2rRgCZN
+	 NpABRY8BCUDFWTwa3H0X2c4/dhrwbjYAvFMFhRhCkzcg5iph8o77eIjHv47xLvjMCcQRB
+	 xRKKlHxv3TT5gu7BmTmy70766X2m9y8ZvEAQ8WFT7m2s15kp9ONSpjyTBWQ7CpoJgy+vU
+	 bet2eUSuohe38y1JopNtNxMdkUZL7LaM/errGnRk6bz/EmSMKULNLCyQ9x+ou9amWxBfG
+	 aNvkzQLmMHo4GDln9KBxtw9955ePBuZw8VYkXFVAuyxBdSeSKP7zN+ccWnt0IJ680Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s+A/1KiW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sN81LXW6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58C6606A32C;
-	Wed, 18 Nov 2026 17:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69433606A32A;
+	Wed, 18 Nov 2026 17:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+A/1KiW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034DB1F000C4;
-	Wed, 18 Nov 2026 17:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sN81LXW6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF02E1F000C4;
+	Wed, 18 Nov 2026 17:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021522;
-	bh=91GagwmoqcimFIFFSEArkubj9o8ccDXFCU0aNWxf08g=;
+	s=korg; t=1795021525;
+	bh=8rQbeFu3hgvBeKMVfDobL0uSSclNHvHPPHZcerYnFpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+A/1KiWps822MO5hiXNdrVqCpr4ZvXpBLYlqxKnMzgiV7uar8kkinysfnRIAfwUo
-	 S44HoBlxDnZ+2xfMqiCqJPKU8x5SYnPLU1mq44RjLmjSsq8YtohbR15EVV8zkCGEpX
-	 Kex6WPs0iQ+8RfuKsbvA8hmGaJy71/zLYEJetrTY=
+	b=sN81LXW6H7k3wz4QYzch1XhLG41ukI8x353RDAKFhVxWc6UwaBnwiiKHHgl2Opsba
+	 /VbFMV2THMLXkWxsRI3Irb7HFi5oXIelPYnehCf35t5Sw4OIzbO4iyeaMHrMO9DJLk
+	 Z+29g2kKWRZeOcxCZ0r8q6fHZONHG+7qdwOll6G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2337/2651] net: hibmcge: set netdev_ops before hbg_init() to fix NULL pointer dereference
-Date: Wed, 18 Nov 2026 15:59:37 +0100
-Message-ID: <20261118150409.243069124@linuxfoundation.org>
+Subject: [PATCH 7.3 2338/2651] virtio-net: fix frag overflow in big packets receive
+Date: Wed, 18 Nov 2026 15:59:38 +0100
+Message-ID: <20261118150409.273107275@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,53 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 9b8ae9aaa1b8e2b6c1cbf5613d3a37923cf53bc5 ]
+[ Upstream commit b0e4ea3a0cd42eccad9cc4153afcad555480b9e6 ]
 
-The driver assigns netdev_ops after hbg_init(), but hbg_init() calls
-hbg_mdio_init() -> hbg_phy_connect() -> phy_connect_direct() ->
-phy_attach_direct() -> phy_link_topo_add_phy(), which invokes
-netdev_need_ops_lock(). With CONFIG_NET_SHAPER enabled, this function
-dereferences dev->netdev_ops->net_shaper_ops. Since netdev_ops is still
-NULL at this point, a NULL pointer dereference occurs.
+In big packets mode with guest GSO, add_recvbuf_big() posts a chain of
+MAX_SKB_FRAGS + 1 pages. page_to_skb() copies only ETH_HLEN of the
+first page into the linear area and adds the rest of that page as a
+frag, then one frag per remaining page. A device that fills the entire
+buffer therefore causes MAX_SKB_FRAGS + 1 frags, writing one
+skb_frag_t past the end of skb_shinfo(skb)->frags[].
 
-Move the netdev_ops assignment before hbg_init() so that
-netdev_need_ops_lock() can safely access netdev_ops during PHY
-attachment.
+Post one page less. The buffer still fits a maximal GSO packet. A well
+behaved device does not trigger this, as GSO packets are at most 64KB.
 
-The issue was hit and verified on an evaluation board.
+Also check the frag count in page_to_skb() before adding any frag as
+defense in depth.
 
-Fixes: ff4edac6e9bd ("net: hibmcge: Implement some .ndo functions")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261016110421.2288670-1-shaojijie@huawei.com
+Fixes: 9ab86bbcf8be ("virtio_net: Defer skb allocation in receive path Date: Wed, 13 Jan 2010 12:53:38 -0800")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20261020032108.81879-1-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/virtio_net.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c b/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c
-index 66792e2b0fadc..a518dc66d9ef8 100644
---- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c
-+++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_main.c
-@@ -448,6 +448,7 @@ static int hbg_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 4e8a792cec0e7..584bc05c577c7 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -900,6 +900,15 @@ static struct sk_buff *page_to_skb(struct virtnet_info *vi,
+ 	}
  
-+	netdev->netdev_ops = &hbg_netdev_ops;
- 	ret = hbg_init(priv);
- 	if (ret)
- 		return ret;
-@@ -460,7 +461,6 @@ static int hbg_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	netdev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
- 	netdev->max_mtu = priv->dev_specs.max_mtu;
- 	netdev->min_mtu = priv->dev_specs.min_mtu;
--	netdev->netdev_ops = &hbg_netdev_ops;
- 	netdev->watchdog_timeo = 5 * HZ;
+ 	BUG_ON(offset >= PAGE_SIZE);
++
++	/* The first frag starts at offset, each next frag is a full page. */
++	if (unlikely(DIV_ROUND_UP(offset + len, PAGE_SIZE) > MAX_SKB_FRAGS)) {
++		pr_debug("%s: rx error: len %u needs more than %d frags\n",
++			 vi->dev->name, len, MAX_SKB_FRAGS);
++		kfree_skb(skb);
++		return NULL;
++	}
++
+ 	while (len) {
+ 		unsigned int frag_size = min((unsigned)PAGE_SIZE - offset, len);
+ 		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags, page, offset,
+@@ -6709,7 +6718,8 @@ static void virtnet_set_big_packets(struct virtnet_info *vi, const int mtu)
+ 	 */
+ 	if (mtu > ETH_DATA_LEN || guest_gso) {
+ 		vi->big_packets = true;
+-		vi->big_packets_num_skbfrags = guest_gso ? MAX_SKB_FRAGS : DIV_ROUND_UP(mtu, PAGE_SIZE);
++		vi->big_packets_num_skbfrags = guest_gso ? MAX_SKB_FRAGS - 1 :
++							   DIV_ROUND_UP(mtu, PAGE_SIZE);
+ 	}
+ }
  
- 	hbg_hw_set_mtu(priv, ETH_DATA_LEN);
 -- 
 2.53.0
 
