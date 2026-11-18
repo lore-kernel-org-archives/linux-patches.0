@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019049;
-	b=ULiqGUGZm+X7fstyX9C4fELnA/K2sLqOxTerTPZ7tDuC/K44wRy1+R2mjemLXGhQXRmy
-	 KoG8yAzPUm4nwJ2X3hZ2n5KXqHwyFH9/gqtWV9Cnu/0Y430y3vgFvVzneu7yhiLj+dqzZ
-	 Cr8LLImENLVKhs0Wie9hFFBkLLR/0Skui8xe4df9kSPX87ayxx0ilXB4bpVl1VyqKi7Vn
-	 m2taOTobkyYcncNVVqx8+LXNq72R0Oh2RNaqfDC6teSObWOcHFRvQP6Iou9+dQ9oF/cxH
-	 MtyYH/Qy3B02p2FrX6TleFAIk0mU4nqMv7P69YEDnnmoVo7NlBFwAZklax+zXD5Q8dg==
+	t=1795019051;
+	b=knfXfox5bzCn/t5RG3uW9f8XYRJa+7d6CAPWwiu4y+9kh/1/QuxEHUVHyWSXo53UpZOi
+	 Wo42AowAHdgv4OdrrgI4bzOgHpRUJ4mcbdcobL6zDTCUlp0JMCOzrEJFWYkIP7Lai/PgP
+	 UZ0cYHUGLvH+DQMigAB5L61D2wttLrU7q3CTcpriNqRSU3evns2QtX1Jjz3wfWSCROBM2
+	 jBZshdrN6HjnesHoHgWxMKb2AxHKR46DQBSYfU1evdlfxPYXW3IFSURwRF6kAhCRf9wC6
+	 VA4SV0TbFhmyiUT+ejhAc297Z491NkGed3VYWi83LJJn2XzMpLaNQRWUxbhzfteb80w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QJPgFmscZJi89qRybUw9c6EGK3L8ecDA3+F8ZcH59H0=;
-	b=zkClTRP2eg8HvmDZ0smKT44d5zoghW6zmK4VMnM8ueYgHrPTGQhb6ta01+OyKXFuTUrt
-	 V+S0OCm6bIuiw+CE3/nDMCRohpdRWdkzela7/UMhfSTNTBTqNnASKBTh+wkhnTRQJsHQS
-	 Y9ocuYKdMjyzQXmD/pbYpWYu+RWxrIeuUfShsTYc0EaHf7a/aN+Lj/+VrVxCH7SsJya+c
-	 Xd1JxIOYc/LRkpG6OZX5KEa5mLHSbFnZ4MWx7dAuNk52u5n+QUkSyeJXs+YBD5uImSlI/
-	 +Ndb2L+yzLwgpSL/p58oN/+oKpzuMUqeMJRLykZ6Ar0mYsqyjwkL1gp3E24ztzc86Ow==
+	bh=56wUsaa9DLsIkp2hi7is794Zjo2qb/cn8cPRs3y+Kkg=;
+	b=Kv0qaLAGj5sqMyrgfFOoEwiHzB560aitLot1oxoSAWWpEsqHx9NHy3rSIr1VT6+PoWpb
+	 bICd91mmgOUx54WzId2tUG0pRhekBL7lQ9zio3ZLSE1sHXojaDw07ld9EHGiZVlq7l+Zz
+	 t66QLxYn5PAttxBTcyCq75phn2CHgfMKl1z4b2S2ygssD8dUJpisOTPrPQTGZzWgQCI5+
+	 mM4+CtQaafOjX/kT7IksSm5Y2oZTBiQ8RWoJAWAWOaWH/iHvfIsRC1kY2KzARMGZSWY7w
+	 P4L8bnBNuFfxRUGp+58p681rdRzlvi36rHLVCAvCOvoF1GuRtfQeiERUkaaOLFV8Y5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oVG5D4lw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HttxRyk1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D58A606A31C;
-	Wed, 18 Nov 2026 16:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44D1606A31C;
+	Wed, 18 Nov 2026 16:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oVG5D4lw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A941F000C4;
-	Wed, 18 Nov 2026 16:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HttxRyk1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EFA1F000C4;
+	Wed, 18 Nov 2026 16:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019048;
-	bh=QJPgFmscZJi89qRybUw9c6EGK3L8ecDA3+F8ZcH59H0=;
+	s=korg; t=1795019051;
+	bh=56wUsaa9DLsIkp2hi7is794Zjo2qb/cn8cPRs3y+Kkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oVG5D4lw6kQfkhsY2CcOnrA433AHsmmqRkSeYxmwS6vlrWykW9cqNmThAonyI6a5F
-	 9NNnef5VSWk/R3xCjM5674Xf3s7CAEJOFuV6ap90YIWaxy18BP8798dhKcqcFqM6rW
-	 A3Axij85bSM550Y3MPaSU6+8IuqG8Kq9bVCl8o/A=
+	b=HttxRyk1bAXUOZ0LoGb0+gXThCD/HGnDLJDJPqhDvEkOLyasRNZ45sdfpfJFBQqeW
+	 RDy7uiCjm+Tx206iOb2eMapPpEwKdEDjAdMp4fYyE2/0+2LznpLLgyg4adtZMMwCIV
+	 9qRsWXuZjAte7Km9s3Gc28TfYo1naVQ1g4aC6RVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Ryan Leung <untilscour@protonmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1457/2651] wifi: mt76: mt7996: validate TLV length in mt7996_mcu_ie_countdown()
-Date: Wed, 18 Nov 2026 15:44:57 +0100
-Message-ID: <20261118150340.488931324@linuxfoundation.org>
+Subject: [PATCH 7.3 1458/2651] wifi: mt76: fix wcid->pktid corruption in mt76_wcid_cleanup()
+Date: Wed, 18 Nov 2026 15:44:58 +0100
+Message-ID: <20261118150340.524804718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,77 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Ryan Leung <untilscour@protonmail.com>
 
-[ Upstream commit e75897e6cb8b900d095acf6fbff1ffb026c86c35 ]
+[ Upstream commit 158c1145fe7ddd82914011a00de7cc3262616b16 ]
 
-mt7996_mcu_ie_countdown() iterates over TLV entries in the countdown
-event but only checks for a non-zero tlv->len.  A malformed event with
-a TLV length smaller than the 4-byte TLV header advances the cursor by
-less than a header size, causing misaligned reads on subsequent
-iterations.  A TLV whose declared length exceeds the remaining buffer
-is also not caught, so the cursor can overshoot the end.  The band
-field of the event header is also read without checking that the event
-is long enough to contain it.
+mt76_wcid_cleanup() releases dev->status_lock before calling
+idr_destroy(&wcid->pktid) to tear down the pktid idr. Meanwhile,
+mt76_tx_status_skb_add() from tx.c can concurrently insert into
+that same idr during tx completion handling:
 
-This is the same class of bug fixed for mt7925 in
-commit fc7801b7f11d ("wifi: mt76: mt7925: fix infinite loop in UNI
-event TLV parsing").
+	spin_lock_bh(&dev->status_lock);
 
-Fix by checking that the event contains the header before reading the
-band, and that each TLV is large enough to contain the countdown notify
-payload and does not exceed the remaining buffer.
+	pid = idr_alloc(&wcid->pktid, skb, MT_PACKET_ID_FIRST,
+			MT_PACKET_ID_MASK, GFP_ATOMIC);
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Assisted-by: Claude (Anthropic)
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB0001CCE8D1BEE1F330D9E57AC8B22@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Since idr_destroy() runs outside the lock, it can execute concurrently
+with idr_alloc() on the same idr, corrupting its internal data
+structures. Because idr nodes are freed through the generic slab
+allocator, this corruption can resurface later as an unrelated-looking
+crash anywhere in the kernel that happens to reuse the same freed
+memory.
+
+Fix this by calling idr_destroy() before releasing dev->status_lock,
+so that the table teardown and any concurrent insertion are mutually
+exclusive.
+
+Closes: https://github.com/openwrt/openwrt/issues/24594
+Fixes: bd1e3e7b693c ("mt76: introduce packet_id idr")
+Signed-off-by: Ryan Leung <untilscour@protonmail.com>
+Link: https://patch.msgid.link/20260820-mt76-pktid-idr-race-v1-1-451f176a6495@protonmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 6acb8897feb83..a534d07ea1e8a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -488,6 +488,9 @@ mt7996_mcu_ie_countdown(struct mt7996_dev *dev, struct sk_buff *skb)
- 	struct mt7996_mcu_countdown_notify *event;
- 	struct mt7996_mcu_countdown_data cdata;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 16b435b96d99b..9e6fab7b12229 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -1758,9 +1758,8 @@ void mt76_wcid_cleanup(struct mt76_dev *dev, struct mt76_wcid *wcid)
  
-+	if (skb->len < sizeof(*rxd) + sizeof(*hdr))
-+		return;
-+
- 	if (hdr->band >= ARRAY_SIZE(dev->mt76.phys))
- 		return;
+ 	mt76_tx_status_lock(dev, &list);
+ 	mt76_tx_status_skb_get(dev, wcid, -1, &list);
+-	mt76_tx_status_unlock(dev, &list);
+-
+ 	idr_destroy(&wcid->pktid);
++	mt76_tx_status_unlock(dev, &list);
  
-@@ -497,9 +500,14 @@ mt7996_mcu_ie_countdown(struct mt7996_dev *dev, struct sk_buff *skb)
- 
- 	tail = skb->data + skb->len;
- 	data += sizeof(*hdr);
--	while (data + sizeof(*tlv) < tail && le16_to_cpu(tlv->len)) {
--		event = (struct mt7996_mcu_countdown_notify *)tlv->data;
-+	while (data + sizeof(*tlv) <= tail) {
-+		u16 tag_len = le16_to_cpu(tlv->len);
- 
-+		if (tag_len < sizeof(*tlv) + sizeof(*event) ||
-+		    data + tag_len > tail)
-+			break;
-+
-+		event = (struct mt7996_mcu_countdown_notify *)tlv->data;
- 		cdata.omac_idx = event->omac_idx;
- 
- 		switch (le16_to_cpu(tlv->tag)) {
-@@ -517,7 +525,7 @@ mt7996_mcu_ie_countdown(struct mt7996_dev *dev, struct sk_buff *skb)
- 			break;
- 		}
- 
--		data += le16_to_cpu(tlv->len);
-+		data += tag_len;
- 		tlv = (struct tlv *)data;
- 	}
- }
+ 	/* Remove from sta_poll_list to prevent list corruption after reset.
+ 	 * Without this, mt76_reset_device() reinitializes sta_poll_list but
 -- 
 2.53.0
 
