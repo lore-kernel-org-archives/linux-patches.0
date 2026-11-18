@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044943;
-	b=TEMWlBR2xUjgClH8Jcbw9MAfzzXIqPAYEaNmG8QuLP98G5rjbo2/tL3yf4wiDueZLYU1
-	 Ruke3aylENdyoAZIgM9CgFmjKpJjV4IWxHy8N/0JccMOelRU877y4jL5hDo8Lch88eAm/
-	 B8Xp8MRvwoCfI2DMI7YuxDcY2Lb6H/Sbshk/kBF4OXfbfUS/68H1gzuZ3dB189VUT0iHi
-	 zoqxMQ5yoaiBtQq5LlcauL5JnJ5fluhdknN2XvBvGPPsGrVYkjiDfAJ5DiZCR/ubcdtJA
-	 heOceYzDChPimeLplldl05TQASvNlnKD8/Wp0wR5t0KeEIhA71W+N+XeLkrdmWIqahg==
+	t=1795044945;
+	b=Fg0YiOwlIgeJ6cSmfUji3udVCad6MiZrOaPR6y9euYjF4qQ7zxszEMA4hU/6ly5DLal7
+	 P7YTqaxLimSxH9O3iEP7Y5y6Dw4IW4iRyRL802UMG7WNXbm9EVnOvlKP8G9uVNYh8qP/g
+	 d6uHe+PzfkhIlSTuhvkNkhm6zm8mttyvFh0bwTPwKupeoKHsAPjqfufQf1blaeVOD9ToG
+	 ZBohRAilMzf74HL+wxl/yMN1QQ4Cl653F3AK1CmRN8XRQlxnJLn3PQ3cTDNEBR7Q9BtXj
+	 2jZVcZc8KwPal275KgYdH+eiCJQKcX00I2r9IxhPcttQSWq37t9Pf4upxNndf5PQRuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AdgKNW5XloCacJJRInYyWlJo2Iq+hMvhea+wtf0XUnk=;
-	b=FZG3NHgGVKKb3CE4PjSeefEguuuCyKfYIb2Yi8Qb3EoLUNR3xxS6jEAWsV5uw7G7gyig
-	 aQcvJNBx8yvuQ/4bc+s04KtyDk0Ny3jyOUBwZXxU0Ji6eTlOpfL4/bDVbC9NUUiKErSBw
-	 6ys1w6dcg+Av6+dA5fDNcoRWPmLhZKaY4jIrdjRGMgRL7aWTd54e1ItcT/JsLhwvufyQw
-	 bAHJGoh9prIm1TmUVd3QBY6f/7/J46cYX/fjqsB8oUGk9POtmEkiKQMJpPCfUTjghOMNB
-	 Vu5R1M4rHvAH0QHm2yu23zHLKx6Jq7ln7nmExoHwctcKR/CXN+PzXOklUZJgTocoUrg==
+	bh=jydgW45lFgG4e4ND4uMRxR1J1tWOp5XzHXbv2shJcfs=;
+	b=YExC7owRaTZKhscXZNIV8TfifzfZg2gAbntyAys4SJjdK6Xv6QEaNjqd/Fj35rPTQrD4
+	 sT/cIAqgfbWpSMAHZYTO3EdM4Ghv7SohNPxniJpW2cSPiP/ZiJBeMs5e0Z1Vs9cjziHXL
+	 KAoM/BWlcDVluxno5EaASalmfIY89wVbEnM9JURFXEcExaYzhRDmMwC2EaeJR12X38ye4
+	 VeiU4HC8yeKhXLaVSn4UWLdzu1bME50M/qmxStGtDTVSXrHMqLOZCiRGDOl+dyb4Uh4GP
+	 6mntCYsQlsFb0gP2lYQZsug7g4+Wwt8/jm9JjDIM210nfTDj+tlHeEq+yJg/9PoCnPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PCkRWqF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCjjdsHH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82B3606A32F;
-	Wed, 18 Nov 2026 23:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C32606A32F;
+	Wed, 18 Nov 2026 23:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PCkRWqF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7511F000C6;
-	Wed, 18 Nov 2026 23:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCjjdsHH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CD21F000C4;
+	Wed, 18 Nov 2026 23:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044942;
-	bh=AdgKNW5XloCacJJRInYyWlJo2Iq+hMvhea+wtf0XUnk=;
+	s=korg; t=1795044945;
+	bh=jydgW45lFgG4e4ND4uMRxR1J1tWOp5XzHXbv2shJcfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2PCkRWqFSyjSjMCBOm3/l4A69ooFSXJksq0PdXZFXapIeBCPORc3RKMTmVXBdf4e0
-	 y7eZT6rNn898IFyqn98J6qmg2YuUTDR0V/0QxCQER4y6m0fOvTjxaaten3HeGJJwK9
-	 vrlv5fpKNNgbSAqBlWv1evedVyD6HF4E2nqbf6nQ=
+	b=mCjjdsHHgizN4fbm+iUWeMPqFxsFx89CzRsqmS9h64xfCKQ6QtfjFInAIBbPCYYsv
+	 zvZmrSPFjlBnNHevOT9UisSS3ksBk82Ql8ZfpjGBu/2zPNAx55/45QwOyhnjSsrqfl
+	 quWm4BYxpEc+epW+VRzFouWDfCwOx8QEJdPETTk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Michael Walle <mwalle@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0748/2857] media: microchip-isc: do not touch WB registers when not streaming
-Date: Wed, 18 Nov 2026 15:29:42 +0100
-Message-ID: <20261118150228.484692178@linuxfoundation.org>
+Subject: [PATCH 6.1 0731/2857] mtd: spi-nor: sfdp: check the length of the xSPI Profile 1.0 table
+Date: Wed, 18 Nov 2026 15:29:25 +0100
+Message-ID: <20261118150227.870803714@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,69 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit d8983c47d4d95eb1ed889dbb7516d3738fa854d8 ]
+[ Upstream commit b9f34a95a81021fa1f3c9cb8cfd458e66824cad6 ]
 
-isc_s_awb_ctrl() called isc_update_awb_ctrls() unconditionally, writing
-the white balance registers even when the device is runtime suspended;
-on many ARM platforms accessing the unclocked registers is an external
-abort. The write was also done without awb_lock, racing isc_awb_work(),
-which holds it so the DMA done IRQ cannot latch a half-updated pipeline.
+The spi_nor_parse_profile1() sizes its buffer from the table length the
+flash reports in the SFDP parameter header. But it then reads DWORD1,
+DWORD4 and DWORD5 without ever checking the table is that long.
 
-Write the registers only while streaming and not stopping, under
-awb_lock, and update the profile there. The isc->stop check covers the
-window where isc_stop_streaming() has gated the clocks but vb2 still
-reports streaming. Otherwise the new values stay cached and
-isc_configure() programs them at the next stream start.
+So if a flash reports a length of one, the buffer is only four bytes
+while DWORD4 and DWORD5 sit at byte offsets 12 and 16. With a length of
+zero kmalloc() returns ZERO_SIZE_PTR rather than an error, so the NULL
+check doesn't catch it and the first read dereferences it. And the value
+doesn't just get thrown away. It ends up as the dummy cycle count for
+8D-8D-8D fast reads.
 
-Fixes: 4e52889f48fe ("media: atmel: atmel-isc-base: expose white balance as v4l2 controls")
+To fix this, reject a table that's too short for the highest DWORD the
+parser reads, the way spi_nor_parse_4bait() already does. The table is
+optional, so this isn't fatal. The spi_nor_parse_sfdp() warns and
+carries on.
+
+Fixes: fb27f198971a ("mtd: spi-nor: sfdp: parse xSPI Profile 1.0 table")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/atmel/atmel-isc-base.c | 20 +++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/mtd/spi-nor/sfdp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
-index b7fc4177f10bd..bb9c082764076 100644
---- a/drivers/media/platform/atmel/atmel-isc-base.c
-+++ b/drivers/media/platform/atmel/atmel-isc-base.c
-@@ -1550,20 +1550,24 @@ static int isc_s_awb_ctrl(struct v4l2_ctrl *ctrl)
- 		if (ctrl->cluster[ISC_CTRL_GB_OFF]->is_new)
- 			ctrls->offset[ISC_HIS_CFG_MODE_GB] = isc->gb_off_ctrl->val;
+diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
+index f738f6d5219a9..d13f5988c34ff 100644
+--- a/drivers/mtd/spi-nor/sfdp.c
++++ b/drivers/mtd/spi-nor/sfdp.c
+@@ -1142,6 +1142,7 @@ static int spi_nor_parse_4bait(struct spi_nor *nor,
+ #define PROFILE1_DWORD5_DUMMY_166MHZ		GENMASK(31, 27)
+ #define PROFILE1_DWORD5_DUMMY_133MHZ		GENMASK(21, 17)
+ #define PROFILE1_DWORD5_DUMMY_100MHZ		GENMASK(11, 7)
++#define SFDP_PROFILE1_DWORD_MIN			5
  
--		isc_update_awb_ctrls(isc);
--
- 		mutex_lock(&isc->awb_mutex);
--		if (vb2_is_streaming(&isc->vb2_vidq)) {
-+		if (vb2_is_streaming(&isc->vb2_vidq) && !isc->stop) {
-+			unsigned long flags;
+ /**
+  * spi_nor_parse_profile1() - parse the xSPI Profile 1.0 table
+@@ -1159,6 +1160,9 @@ static int spi_nor_parse_profile1(struct spi_nor *nor,
+ 	int ret;
+ 	u8 dummy, opcode;
+ 
++	if (profile1_header->length < SFDP_PROFILE1_DWORD_MIN)
++		return -EINVAL;
 +
- 			/*
--			 * If we are streaming, we can update profile to
--			 * have the new settings in place.
-+			 * awb_lock keeps the DMA done IRQ from latching a
-+			 * partially written WB pipeline.
- 			 */
-+			spin_lock_irqsave(&isc->awb_lock, flags);
-+			isc_update_awb_ctrls(isc);
-+			spin_unlock_irqrestore(&isc->awb_lock, flags);
-+
- 			isc_update_profile(isc);
- 		} else {
- 			/*
--			 * The auto cluster will activate automatically this
--			 * control. This has to be deactivated when not
--			 * streaming.
-+			 * Not streaming: keep the cached values for the next
-+			 * stream start and deactivate the cluster-activated
-+			 * do_white_balance button.
- 			 */
- 			v4l2_ctrl_activate(isc->do_wb_ctrl, false);
- 		}
+ 	len = profile1_header->length * sizeof(*dwords);
+ 	dwords = kmalloc(len, GFP_KERNEL);
+ 	if (!dwords)
 -- 
 2.53.0
 
