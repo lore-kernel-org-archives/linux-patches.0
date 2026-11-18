@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027903;
-	b=BEPGk4pSlXrLbo63YAr/bqFH5KB+SgjWFZrguyglwkUVHAidC/OmA6IE801yZeklsDCI
-	 bzOSIls2IML6fG9fG+C7Waz2jHzkD0tGGnr4OcYgTGcLOLeJlXOW8t5LMNuV35aDGYt9y
-	 GH865uJdzck09tnVZXUcGXQDW3nFpHguOLpkH3IEbVanvOOShQdWY4nxm4Y6TEh+xZ56e
-	 4xDV3pWDiYuCceMJuGZj/FB/zHB99U2LzicWoAkqFsesOKhC5gBYV55ZpS2VppB4bvRJj
-	 LwXNmQyX3E1CzioF1EYLqQEbHvFTpoErqGBtt4w47LBtL0DWJtlKDzOsd2omr2QC1JA==
+	t=1795027906;
+	b=PwouBI5akE8oo1Tl+28Q4UJExARTwjHxJn0fYRIRA7L8kidaZZmEKST8FakWrHxoIBMt
+	 FoWnzNFpb0CwdVG1V1qrvpoeJqO0p1I1hWG3pgicXtuM0gVtLKHgdGS8xBTFXFfo0GDJT
+	 YDykipXXq+XUefTBLwBIga36JsliBXIv0t6RM89HvMGlO+LdvfsmqWD45WAkrer0u2a2i
+	 KszA9+YTFz+oMi4eUAJMbOMY5lf1McCcecJoO8t8JDu962c1pqxKfBTSFzgMD25Na/oEU
+	 N3GX96LKtq4cfISuxE1GP0z3KoMRpVrn4sB8mV1lktJR/JSKHO9YSAHK+Iuy6w3ZXMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fg2Lh0VI/QFIqCGzLhocx3RX9LYRW4HivKY716SmnLU=;
-	b=iDd2iix+NgpssPeWj9ND3jqPr2v10p4e7VhvwxUpA63JUUt0T3ESCA5n4szJpcYQNKwh
-	 M64fIuvDGmPZeuOnK6TGRswwDSZ2yGHhaKeAvA+cyDaN00Zp89B6zrciYGJi0GQrNuy6U
-	 E4qECxHxybl8ttr5GapGLlRjZpVIQv1gTC8m08IJSjW9hhjsoc774J73u3vtjMfyzcOEJ
-	 X99ywFbkfrh2yVcCkrly16QJrL3mgPKAMp6AG4oSiTNmoEkqKP3Z6TMghTgBi1yaSJfbG
-	 wc6T3+279GFu2KFU7L3KyuN14MBSfAeO+9/tCOlk7DNVseHkpH733AT/Akd4KdlpHvw==
+	bh=ULKhursswxFauYfBKVq07PwHm0JE70WrpJLiik7MObE=;
+	b=xNzUdR/ZuvEDWxOyodUKAnobCpM/nNVWlpFAKnvjNa5wxgLQuPheW7OuAnjLyQTQjfce
+	 fF4ncDtA1tvFVp2qZkfl6i5OElufS2mDMxF1tgY9pojKJg/A/YCC1qpS4Me7oqEbSlWLw
+	 vvdK1/eRS8gRENUjC7bBMCtO5oLDe2X1E2KZLXdk5dsJaNZax2l2HA+JIafjaAdG8N32h
+	 3PEOQ66Vfdb2x/G59vyx+j2y6BxKITTo4bavMd/QIgCPHzcRjQSDn6PaztSbAFPNetQn5
+	 Nvi+69Ka1teLrlnfDw5QN5E+1RET7QQPyEszStnC7eqv4ylmGlLIRvk0UGPnxytdSIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Enri95YG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FDY2dXMO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1B6606A331;
-	Wed, 18 Nov 2026 18:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D9A606A325;
+	Wed, 18 Nov 2026 18:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Enri95YG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E661F000C5;
-	Wed, 18 Nov 2026 18:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FDY2dXMO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFE01F000C4;
+	Wed, 18 Nov 2026 18:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027903;
-	bh=fg2Lh0VI/QFIqCGzLhocx3RX9LYRW4HivKY716SmnLU=;
+	s=korg; t=1795027906;
+	bh=ULKhursswxFauYfBKVq07PwHm0JE70WrpJLiik7MObE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Enri95YGjnhUeTnxbC0KTLL+aCm/Etor9p3DtBtJtoQ38g5Nl57zfkq72VgzbJzKC
-	 PVwmrvwXKSO6etLFW5HbLdF45GXdx38KQm97eY4qB6bH7qA6ZvEyn6xDYAxSKNQh3d
-	 ybv8csl9PDdaVEJoDUy0f4HCXK50LGvrXg7iYEgA=
+	b=FDY2dXMOYZxE0tvE5oAa3GU/lhFIkhUpAVUT+R3LoJiugHG602BrqlIDx1QNjc1zk
+	 fWweVLCYr6Tt08q/OaxTksVYFWcr4zo4B3sdNWtI0siKwTff8X1RC4Fv9R8jJH1lIP
+	 BS3NiTjbFwSI11MlV3uG9wdioER724AaGEEC8G4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Markuze <amarkuze@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Tal Zussman <tz2294@columbia.edu>,
+	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1952/2151] ceph: fix page vector leak on encrypted netfs read EIO path
-Date: Wed, 18 Nov 2026 16:01:27 +0100
-Message-ID: <20261118150232.871327232@linuxfoundation.org>
+Subject: [PATCH 6.18 1953/2151] ceph: fix error handling when the OSD client is stopping in ceph_submit_write()
+Date: Wed, 18 Nov 2026 16:01:28 +0100
+Message-ID: <20261118150232.908106460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,52 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 00a0d7f377f6af59bc559b2e07dffff63eaa5544 ]
+[ Upstream commit ad67b498de17b709f050d7ebf84749b1fc6a242d ]
 
-ceph_netfs_issue_read() pins pages with iov_iter_get_pages_alloc2() for
-encrypted inodes and attaches them with own_pages=false. If
-ceph_inc_osd_stopping_blocker() then fails, the request is dropped
-without calling finish_netfs_read(), so the page array and the
-references taken on those pages leak: ceph_osd_data_release() only
-frees pages when own_pages is true, and __free_pages() would be the
-wrong destructor for GUP-pinned pages.
+When ceph_inc_osd_stopping_blocker() fails, ceph_submit_write()
+redirties and unlocks the folios remaining in ceph_wbc->fbatch.
+However, none of those folios are locked at this point: locked folios
+were moved to ceph_wbc->pages[] and removed from the fbatch by
+ceph_process_folio_batch(). Unlocking them triggers
+VM_BUG_ON_FOLIO(!folio_test_locked(folio)) in folio_unlock(), or
+unlocks a folio locked by another task.
 
-Release the vector with put_page() and kvfree() on that error path,
-matching finish_netfs_read(). Unencrypted ITER reads are unaffected.
+This error path also returns -EIO without fully cleaning up the folios in
+ceph_wbc->pages[]: their references are never dropped, fscrypt bounce
+pages are never freed, the writeback congestion count is never
+decremented, and the pages array is leaked. ceph_wbc->locked_pages is
+also left non-zero, so ceph_writepages_start() loops back around and
+hits BUG_ON(ceph_wbc.locked_pages).
 
-Fixes: 1464de9f813e ("ceph: wait for OSD requests' callbacks to finish when unmounting")
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Tal Zussman <tz2294@columbia.edu>
+Leave the fbatch folios alone, as ceph_writepages_start() drops their
+references when releasing the batch, and unwind ceph_wbc->pages[] the
+same way writepages_finish() would have. Abort writeback in
+ceph_writepages_start() instead of continuing, matching the handling
+of ceph_inc_osd_stopping_blocker() failure on entry, as the OSD
+client is being torn down and further writeback cannot make progress.
+
+An LLM was used to verify that the cleanup was comprehensive, and
+suggested aborting the writeback instead of continuing.
+
+Fixes: 1551ec61dc55 ("ceph: introduce ceph_submit_write() method")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260804-remove-wait-on-page-writeback-v2-0-81f0ab065284%40columbia.edu?part=5
+Assisted-by: Claude:fable-5
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ceph/addr.c | 39 +++++++++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 16 deletions(-)
 
 diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 6f6c8d9214362..2ca479647c320 100644
+index 2ca479647c320..0046f9261cf01 100644
 --- a/fs/ceph/addr.c
 +++ b/fs/ceph/addr.c
-@@ -442,6 +442,17 @@ static void ceph_netfs_issue_read(struct netfs_io_subrequest *subreq)
- 		osd_req_op_extent_osd_iter(req, 0, &subreq->io_iter);
- 	}
+@@ -1496,27 +1496,31 @@ int ceph_submit_write(struct address_space *mapping,
+ 	BUG_ON(len < ceph_fscrypt_page_offset(page) + thp_size(page) - offset);
+ 
  	if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
-+		struct ceph_osd_data *osd_data =
-+			osd_req_op_extent_osd_data(req, 0);
-+
-+		if (osd_data->type == CEPH_OSD_DATA_TYPE_PAGES) {
-+			int num_pages = calc_pages_for(osd_data->alignment,
-+						       osd_data->length);
-+
-+			for (int i = 0; i < num_pages; i++)
-+				put_page(osd_data->pages[i]);
-+			kvfree(osd_data->pages);
+-		for (i = 0; i < folio_batch_count(&ceph_wbc->fbatch); i++) {
+-			struct folio *folio = ceph_wbc->fbatch.folios[i];
+-
+-			if (!folio)
+-				continue;
+-
+-			page = &folio->page;
+-			redirty_page_for_writepage(wbc, page);
+-			unlock_page(page);
+-		}
+-
+ 		for (i = 0; i < ceph_wbc->locked_pages; i++) {
+-			page = ceph_fscrypt_pagecache_page(ceph_wbc->pages[i]);
++			page = ceph_wbc->pages[i];
++			if (fscrypt_is_bounce_page(page)) {
++				page = fscrypt_pagecache_page(page);
++				fscrypt_free_bounce_page(ceph_wbc->pages[i]);
++			}
+ 
+-			if (!page)
+-				continue;
++			if (atomic_long_dec_return(&fsc->writeback_count) <
++			    CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
++				fsc->write_congested = false;
+ 
+ 			ceph_undo_wrbuffer_claim(inode, page_folio(page));
+ 			redirty_page_for_writepage(wbc, page);
+ 			unlock_page(page);
++			put_page(page);
 +		}
- 		err = -EIO;
- 		goto out;
- 	}
++
++		if (ceph_wbc->from_pool) {
++			mempool_free(ceph_wbc->pages, ceph_wb_pagevec_pool);
++			ceph_wbc->from_pool = false;
++		} else {
++			kfree(ceph_wbc->pages);
+ 		}
++		ceph_wbc->pages = NULL;
++		ceph_wbc->locked_pages = 0;
+ 
+ 		ceph_osdc_put_request(req);
+ 		return -EIO;
+@@ -1750,8 +1754,11 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 		}
+ 
+ 		rc = ceph_submit_write(mapping, wbc, &ceph_wbc);
+-		if (rc)
+-			goto release_folios;
++		if (rc) {
++			/* the OSD client is being torn down, don't retry */
++			folio_batch_release(&ceph_wbc.fbatch);
++			goto dec_osd_stopping_blocker;
++		}
+ 
+ 		ceph_wbc.locked_pages = 0;
+ 		ceph_wbc.strip_unit_end = 0;
 -- 
 2.53.0
 
