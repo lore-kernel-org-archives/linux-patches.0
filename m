@@ -1,61 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034662;
-	b=Et7/6Hk9oNU1E4kUAMX7guWJUIf05R3twR5NasBDTCqtDOcNSz50UsW2pdxufN5LFaN4
-	 jh0KMsmAtM40wsgIwOrGPCBg4kGzAb4qwIvTfl1RfxgNClA+sF9KBJcwiZjvmq2i6BGU5
-	 QG7CtDAwM/JcMcsborVbi6DLroiVjy/NGoL8wkW/Nby6OFsWrSPoMCc6BcP61RTl+7uLG
-	 xnlyvHjoUThOluz1fdMoMB84spDSo1IcpsBPCpFu9/03e66t4voRrO9gub5hedFJjlU8n
-	 wKQKFB+qD5PlKgtKLLY1wuWECQEYUj+NmJ2KFt7Z8hQ0y3wqp1TqKwDJdKWDEC4DSFg==
+	t=1795034665;
+	b=s1pm9pNRSdfeXnxaK8/yShT583tE9foLoyOVvy/zG8fXzpMgOEBnXTqe0WAG0rtZ6hK/
+	 +5/CTPJaE0D+RsjKAk6QFzYLRIweD7wNdfCM8Q1puQni6Dka5e5UobXkxtt5Rw7pWC8qL
+	 3pae0e/QUs77jsNDjblVjggj84N1tTVmKcAdi1pslhTRceiPh7yAMER1+akFbrtKheTyP
+	 F8ATR9MNV4moir27PkZvqBfy7r3A4/hmsCc78kjUC7qgpYGr+ruM907o2SxYz3SpVWAiC
+	 eaEx9vHjMxdnNkS39pXS5dl+dh5NRU6jsXvwoEZPgEXPb8gDVmBp+o2boF/edA0TDng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034665;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZvqAgjVgQ8ohe23WdgK5iQZ0mYJ9B0MQrYMe54moIY0=;
-	b=Ixf0NZtFRkFR1YqOhiPrd9M1zm3jKM8AJ1FvRzyzHOWI52exIKt5z821gsPx54b9xigt
-	 Lkl29Te8QfLVlzogqyZRnL77TTBnIAC/hZRL9INJ6r+01SBctNKUYai3U8DZ9IW0soh+A
-	 r3RfJHp0CRxiElZx/RzRIJ6dTGdA0nF5pvms0Qams53yYe7GO3t5FWJVGDQuL4T2PUlV3
-	 Hw70rTnGsftNlRlNxwIFNVO+0OlqR8YRGP9cBTBFwLbDkcaiLgVmT9EziUfE8hV7n/sMU
-	 0NieI/qNr/Vu/0Pe5/N6A1z/temJcRohVPaISwBS0dKNfpHAkAE2MeUtAzJeynLNL5g==
+	bh=C/Iv5MD4PDEQhQvrTW218fm+WMwkciqy2S2ZYUYWZoU=;
+	b=MT3em6/ssCWdXOhxpR9UGClXeIr6GjlkmO8PMYqhuWXJsQsshhaR5Nf7+eJaooKtEQc1
+	 w2meQv8MMQjD7Iarn0IWWP9w7SSpaz2E6G9ELQSuo9jhdVHsOe2+eUSrDgyfybCW29QfJ
+	 946vjgFtz5C5xYgIN2xOlkB0D69Ser/eF2PpZMMYfjRtv12Ztf3GjtH+vhbj5FIvEx6rX
+	 Gsz7NxKSXSbqMXDh0iaDHhNjzqxE2wVsSPqMIc8TvWdSzuZ2EwYKT+LfdFe1rpuyPW2PH
+	 GNw+jPO9qXjRbipW/ZPBihkD7zSjf0s7akdWIZ8iuZ5MJdA4igCL56JVQBhIeb+7fXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8Ugq7oU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qWWLBmqJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88FB606A334;
-	Wed, 18 Nov 2026 20:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694BE606A320;
+	Wed, 18 Nov 2026 20:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8Ugq7oU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214CD1F000C4;
-	Wed, 18 Nov 2026 20:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qWWLBmqJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B8A1F000C4;
+	Wed, 18 Nov 2026 20:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034662;
-	bh=ZvqAgjVgQ8ohe23WdgK5iQZ0mYJ9B0MQrYMe54moIY0=;
+	s=korg; t=1795034665;
+	bh=C/Iv5MD4PDEQhQvrTW218fm+WMwkciqy2S2ZYUYWZoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8Ugq7oUQltaFYn1gli3MbT2EGkjnBGM5TxZvZra50PJb/9ZrCP69MdnAr/xNJyDm
-	 lEMKETeCKyZ4Y80zYWsnZ56Ik1Bt8+vEfyl5ZWUJYEcH2O7G5izLAP919elUsilBt7
-	 qQp4EXKBrwiP5cHmbzxZu6Oo8yl7ch+wkT0BFOq0=
+	b=qWWLBmqJibPa5oKEOtfegCU+/LmCUpfkw3lfdsRKYzUiqMQq5xcotiY+9hKAFPifv
+	 fgZz3xZ4AJ9/jKRpKHDAJFRYUrzEz5rVqbGdWWVii5+Q3nfllT2yr8AyhsH6OoRGE/
+	 P47CMfmxS56tWGw0OSpnE0/x6cetiavXIYpcHoAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Barry Song <baohua@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Kairui Song <kasong@tencent.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Chris Li <chrisl@kernel.org>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ju Nan <junan76@163.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Radu Rendec <radu@rendec.net>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0432/3318] mm, swap: ratelimit bad swap entry reports
-Date: Wed, 18 Nov 2026 15:17:34 +0100
-Message-ID: <20261118150329.595869530@linuxfoundation.org>
+Subject: [PATCH 6.6 0450/3318] irqchip/stm32mp-exti: Fix the unit of the hwspinlock timeout
+Date: Wed, 18 Nov 2026 15:17:52 +0100
+Message-ID: <20261118150330.264056518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -77,58 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ju Nan <junan76@163.com>
 
-[ Upstream commit f9dc428249ed962a70acf301f01eae8578449161 ]
+[ Upstream commit d31fbbade43f880b7e59e2b3a72722fe2725d93f ]
 
-A corrupt page table hands the same bogus entry to get_swap_device() on
-every access to the mapping, and every rejection is logged.  One machine
-logged 6185620 copies of the same line in a few hours.
+HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
+timeout argument is in milliseconds, not microseconds:
 
-swap_dup_entry_direct() prints the same message from the fork path, once
-per call: the WARN_ON_ONCE() guarding it warns once, the pr_err() inside
-does not.
+  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
+  if (atomic_delay > to * 1000)
+          return -ETIMEDOUT;
 
-Rate limit all three prints.
+So stm32mp_exti_set_type() asks for a 1 second timeout where the comment
+next to the macro says it wants 1 millisecond. The semaphore is polled
+with udelay() from a section that holds chip_data->rlock, a
+raw_spinlock_t, so preemption stays disabled for the whole wait on every
+configuration, PREEMPT_RT included.
 
-Link: https://lore.kernel.org/20260818-swap_part_one-v1-1-a4fc58119fc0@debian.org
-Fixes: 23b230ba8ac3 ("mm/swap: print bad swap offset entry in get_swap_device")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Acked-by: Kairui Song <kasong@tencent.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ sashal: Applied the two get_swap_device() pr_err-to-pr_err_ratelimited changes by hand at different offsets, and dropped the third hunk because swap_dup_entry_direct() doesn't exist here. ]
+The hwspinlock core documents this explicitly:
+
+  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
+  timeout is handled with busy-waiting delays, hence shall not exceed
+  few msecs.
+
+Fixes: 5257169ade8c ("irqchip/stm32-exti: Use the hwspin_lock_timeout_in_atomic() API")
+Signed-off-by: Ju Nan <junan76@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260821024756.24927-2-junan76@163.com
+[ sashal: Applied the fix to the older driver file, changing two call sites to the renamed millisecond macro because this file has two hwspinlock users where upstream has one. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/swapfile.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-stm32-exti.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/swapfile.c b/mm/swapfile.c
-index 53637144c18e5..d4a4b2fb172aa 100644
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -1284,11 +1284,11 @@ struct swap_info_struct *get_swap_device(swp_entry_t entry)
+diff --git a/drivers/irqchip/irq-stm32-exti.c b/drivers/irqchip/irq-stm32-exti.c
+index 971240e2e31b4..fa9cdfd87c56d 100644
+--- a/drivers/irqchip/irq-stm32-exti.c
++++ b/drivers/irqchip/irq-stm32-exti.c
+@@ -25,7 +25,7 @@
  
- 	return si;
- bad_nofile:
--	pr_err("%s: %s%08lx\n", __func__, Bad_file, entry.val);
-+	pr_err_ratelimited("%s: %s%08lx\n", __func__, Bad_file, entry.val);
- out:
- 	return NULL;
- put_out:
--	pr_err("%s: %s%08lx\n", __func__, Bad_offset, entry.val);
-+	pr_err_ratelimited("%s: %s%08lx\n", __func__, Bad_offset, entry.val);
- 	percpu_ref_put(&si->users);
- 	return NULL;
- }
+ #define IRQS_PER_BANK 32
+ 
+-#define HWSPNLCK_TIMEOUT	1000 /* usec */
++#define HWSPNLCK_TIMEOUT_MS	1
+ 
+ struct stm32_exti_bank {
+ 	u32 imr_ofst;
+@@ -365,7 +365,7 @@ static int stm32_irq_set_type(struct irq_data *d, unsigned int type)
+ 	irq_gc_lock(gc);
+ 
+ 	if (hwlock) {
+-		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
++		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
+ 			goto unlock;
+@@ -569,7 +569,7 @@ static int stm32_exti_h_set_type(struct irq_data *d, unsigned int type)
+ 	raw_spin_lock(&chip_data->rlock);
+ 
+ 	if (hwlock) {
+-		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
++		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
+ 			goto unlock;
 -- 
 2.53.0
 
