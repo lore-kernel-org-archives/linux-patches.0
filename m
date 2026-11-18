@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029706;
-	b=sUndMVSiy5gxNjx6EJ6KmKaDwDPCvMdA8hqfcLuV6TztqNRB/ZZb8tYD1zxtiZPd+XV+
-	 HCUooF9PsXI+nCzDyVZVc2Qzzsr1mwSIK0OKRrMoxWU7G7lKVchAdROT3jakVKFfoQFN4
-	 4OgpvFnsz47c/4Io9boa0X52YJfInl0OetIa5kc9Nkcb49i13zYH7DL8+N66H/FU6bCGB
-	 iWFFdi1ytujpduOZB13TNyygYtqmcPiKjvuNncngeI1KE60992JLk3nqBGP6Iion56Q3L
-	 ePMttwPbhrhsqAEpZTsf2/jzXG+z6713Z0mbKArP8cGc+xRNv8y/YGOZwewHXydm16g==
+	t=1795029709;
+	b=FRreb/2rEZA1HsUg350fZmYxsojetRGlLeAJohfT5i46cm/ZUYycezeVS+Af7atAqCqF
+	 JO9FmvWQSQmk1zWTB8un1WAwK2sXtR+isRhjI3DS4g+RSGxrc+TMElDHPqlaBXXF1NzwE
+	 hnALneo6jA78GJ1dWjVBBXGhXO9y8wCx833B9nd+TaYOmAUgmFS9XKnoi2bzkpfMkHa35
+	 bcJ8jyqHoPeeBhpSZu8prmqBeKO+e6tdzwdR7qLwoh35EfFh4ihbyeH5QaexEEA3DM/CV
+	 MeO87NnF4pijesX1xa2VJpwHOSkyMZBOVoKuf6/6r4iA2QWNt9g6hkiERAVBLEzsf6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+CQ/IgZ+R8oWVRuEAK+zTePMrkzY+28ToSpTXly6Iwg=;
-	b=xHXa8tMHguZrbOGweO58xpMijR5qV2wptNudVRVEu0SKHxwNyOV5mychRJNc/0/A+oxw
-	 qK5Y9AFSQ7aKIBelvq4gxqhg9fx9YvYgCm2wGiPRxmiVk9rRgGeCBsyOmsJfEtwIGSkLK
-	 8Bd9e7Js1zLtclpsUGkEIEjzMtm6s1mae7O0Rddg+UyrhzWi5ufw6T06TCPjVmMV4KQRo
-	 70Q0K/CWtqvxzlTN0D1yX6Uupknr5mfr139USTLanHFJmcNertAn9fJworP5Nnvqjo3P2
-	 AnzUw5hnHnv6+30EDwDG3Z0ziIGUez8ZNnAv3I6BqrFNK59MqwLW83nDOTP8ena6S8A==
+	bh=BJspj+3iy934tRzg3/Yr3+k1j5N0EALfmg25rDV85X8=;
+	b=cOEGSG/aGgvEXhtCSRobMJX5YzUuJgV8kvttgqvBmlXzdIRnsrToM4Xr+d8B1QYr3C6e
+	 g9nBOmMsaymjc/FrI80a5P9EEh/K0zLPVWJQ8Pi07i/4EsStgnRlDNGt54ZORXPfnurGT
+	 6eJJFY7KLDs94M8FHgedUq2Ygh+MsVSWqlXG9SY/pZRR5sf52L5ZHBPGXxbqIlLUsbGSn
+	 BQBZg35/oIiM9sRVIhpelYv2N1ZgMXZTGIaZB9WG6vJEK1yEVrbocAj3FmTmpNNQxFq3a
+	 MnAXtTEQ7+MIr2J1SqyEor7ZuNNfkHd4lBQ1X3iq2kpfLDi9PVigyY6Cwg/YvaejxLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQQC28rE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uj/wCrGk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6423606A31C;
-	Wed, 18 Nov 2026 19:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E276606A31C;
+	Wed, 18 Nov 2026 19:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQQC28rE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227791F000C4;
-	Wed, 18 Nov 2026 19:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uj/wCrGk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60771F000C4;
+	Wed, 18 Nov 2026 19:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029706;
-	bh=+CQ/IgZ+R8oWVRuEAK+zTePMrkzY+28ToSpTXly6Iwg=;
+	s=korg; t=1795029709;
+	bh=BJspj+3iy934tRzg3/Yr3+k1j5N0EALfmg25rDV85X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQQC28rE/WNr/G0+n6/jTyhVHyYA+2OtKjd1VwwiGRUZYQNbixc3uc5K87nUKt7Rm
-	 J4g4h+hqP+vSllKsAoXDaqB0iNbOSS06OuOdWGAUW+n/w0bQrYmVOOeFDpo6IaSWAH
-	 8NaKpTE+AvBLnJVwzbokP+M+jmVlvz++FnJVoqe4=
+	b=uj/wCrGkXdABVYj2k0kLjmwPxvzWP3/e9r2sbPC5mq2NpYJe06W3zF+E44FHHPdG2
+	 zxJcjx0knEXmR6SoPGf6r1ipmLR9N3uvtdZBoE6smsT5EP0v9HcqCNzmov9QUwWgIh
+	 FmMZoPF43VGX01/SKXuFCFK/UGZALSGvV1EQ6skQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0445/1756] drm/amdgpu: Print full vbios info
-Date: Wed, 18 Nov 2026 15:42:52 +0100
-Message-ID: <20261118150026.437946102@linuxfoundation.org>
+Subject: [PATCH 6.12 0446/1756] drm/amdgpu: bounds check ATOM IIO table parsing
+Date: Wed, 18 Nov 2026 15:42:53 +0100
+Message-ID: <20261118150026.474984157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,76 +71,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 4fd7b724a87a4051401ee2ed64c26c9249582040 ]
+[ Upstream commit be88697602238c3dcb47bbc2db1eef923f63e78b ]
 
-Add build number, version and date to the existing part number print.
-
-Example:
-
-[drm] ATOM BIOS: 113-PN000108-103, build: 00159017, ver: 022.040.003.043.000001, 2025/07/27
+atom_index_iio() parsed the IIO bytecode without bounds checks, allowing
+out-of-bounds reads on a malformed VBIOS. Pass the BIOS size into
+amdgpu_atom_parse() and bound the parse loops by it.
 
 Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: Claude Code
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: aee05c455ad3 ("drm/amdgpu/atom: bound the VBIOS date, part number, version and build getters")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c | 28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c |  2 +-
+ drivers/gpu/drm/amd/amdgpu/atom.c            | 25 ++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/atom.h            |  3 ++-
+ 3 files changed, 23 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+index ee843869246fe..433757b8552f2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+@@ -1893,7 +1893,7 @@ int amdgpu_atombios_init(struct amdgpu_device *adev)
+ 	atom_card_info->pll_read = cail_pll_read;
+ 	atom_card_info->pll_write = cail_pll_write;
+ 
+-	adev->mode_info.atom_context = amdgpu_atom_parse(atom_card_info, adev->bios);
++	adev->mode_info.atom_context = amdgpu_atom_parse(atom_card_info, adev->bios, adev->bios_size);
+ 	if (!adev->mode_info.atom_context) {
+ 		amdgpu_atombios_fini(adev);
+ 		return -ENOMEM;
 diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
-index cb7bce00ee283..d232074692ff3 100644
+index d232074692ff3..6405d6e9f1f36 100644
 --- a/drivers/gpu/drm/amd/amdgpu/atom.c
 +++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1461,8 +1461,6 @@ static void atom_get_vbios_pn(struct atom_context *ctx)
- 
- 		ctx->vbios_pn[count] = 0;
+@@ -1316,11 +1316,25 @@ static void atom_index_iio(struct atom_context *ctx, int base)
+ 	ctx->iio = kzalloc(2 * 256, GFP_KERNEL);
+ 	if (!ctx->iio)
+ 		return;
+-	while (CU8(base) == ATOM_IIO_START) {
+-		ctx->iio[CU8(base + 1)] = base + 2;
++	while (base + 1 < ctx->bios_size && CU8(base) == ATOM_IIO_START) {
++		uint8_t index = CU8(base + 1);
++		int start = base + 2;
+ 		base += 2;
+-		while (CU8(base) != ATOM_IIO_END)
+-			base += atom_iio_len[CU8(base)];
++		while (base < ctx->bios_size && CU8(base) != ATOM_IIO_END) {
++			uint8_t op = CU8(base);
++
++			/*
++			 * Unknown opcode: its length is unknown so the byte
++			 * stream cannot be resynced reliably.
++			 */
++			if (op >= ARRAY_SIZE(atom_iio_len))
++				return;
++			base += atom_iio_len[op];
++		}
++		if (base >= ctx->bios_size)
++			return;
++		/* Only index well-formed methods, others stay 0 */
++		ctx->iio[index] = start;
+ 		base += 3;
  	}
--
--	drm_info(ctx->card->dev, "ATOM BIOS: %s\n", ctx->vbios_pn);
+ }
+@@ -1540,7 +1554,7 @@ static inline void atom_print_vbios_info(struct atom_context *ctx)
+ 		drm_info(ctx->card->dev, "ATOM BIOS: %s\n", vbios_info);
  }
  
- static void atom_get_vbios_version(struct atom_context *ctx)
-@@ -1518,6 +1516,30 @@ static void atom_get_vbios_build(struct atom_context *ctx)
- 		strscpy(ctx->build_num, str, STRLEN_NORMAL);
- }
- 
-+static inline void atom_print_vbios_info(struct atom_context *ctx)
-+{
-+	char vbios_info[256];
-+	int off = 0;
-+
-+	if (ctx->vbios_pn[0])
-+		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
-+				 "%s", ctx->vbios_pn);
-+	if (ctx->build_num[0])
-+		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
-+				 "%sbuild: %s", off ? ", " : "",
-+				 ctx->build_num);
-+	if (ctx->vbios_ver_str[0])
-+		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
-+				 "%sver: %s", off ? ", " : "",
-+				 ctx->vbios_ver_str);
-+	if (ctx->date[0])
-+		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
-+				 "%s%.10s", off ? ", " : "",
-+				 ctx->date);
-+	if (off)
-+		drm_info(ctx->card->dev, "ATOM BIOS: %s\n", vbios_info);
-+}
-+
- struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios)
+-struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios)
++struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios, uint32_t bios_size)
  {
  	int base;
-@@ -1580,6 +1602,8 @@ struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios)
- 	atom_get_vbios_version(ctx);
- 	atom_get_vbios_build(ctx);
+ 	struct atom_context *ctx =
+@@ -1554,6 +1568,7 @@ struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios)
  
-+	atom_print_vbios_info(ctx);
-+
- 	return ctx;
- }
+ 	ctx->card = card;
+ 	ctx->bios = bios;
++	ctx->bios_size = bios_size;
  
+ 	if (CU16(0) != ATOM_BIOS_MAGIC) {
+ 		pr_info("Invalid BIOS magic\n");
+diff --git a/drivers/gpu/drm/amd/amdgpu/atom.h b/drivers/gpu/drm/amd/amdgpu/atom.h
+index 825ff28731f52..5a3f55147c7ab 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atom.h
++++ b/drivers/gpu/drm/amd/amdgpu/atom.h
+@@ -133,6 +133,7 @@ struct atom_context {
+ 	struct card_info *card;
+ 	struct mutex mutex;
+ 	void *bios;
++	uint32_t bios_size;
+ 	uint32_t cmd_table, data_table;
+ 	uint16_t *iio;
+ 
+@@ -157,7 +158,7 @@ struct atom_context {
+ 
+ extern int amdgpu_atom_debug;
+ 
+-struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios);
++struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios, uint32_t bios_size);
+ int amdgpu_atom_execute_table(struct atom_context *ctx, int index, uint32_t *params, int params_size);
+ int amdgpu_atom_asic_init(struct atom_context *ctx);
+ void amdgpu_atom_destroy(struct atom_context *ctx);
 -- 
 2.53.0
 
