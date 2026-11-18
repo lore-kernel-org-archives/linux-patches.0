@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043983;
-	b=ni5s2B+y+o2vuP6WH5z207k9keWkllwl+8cz9wKJAYi3AgeocaB+uny7eOvMdM3j5Vxi
-	 owGBm3DxST5k92UYD1HZrsVf07gXDnjc/15IbqOPfq1kOnuMw7XyyrdqLuR05rK78iPJG
-	 /Xd9CkakreJzwOO3JkX4pBTbBTr8v+SOjXKxLdQmSoSnk8nbZ88FMZJiBHvteD9gzFTVc
-	 SwRFIiNn3AJoWUpqsouRWYr6vomMxuwWIyk4df1spG7sFgzDbkwq1QdGzxO7UiFtCIXaU
-	 GytRodxWGPkO9xHuQwj5TwNqVcQ3Hsdi+pm2d2BlNFXuam2ck88R13mXCeGwxK6FL6w==
+	t=1795043986;
+	b=2RGDN72iLG3G4W3qdyexj+maeRg2SXV2gVcpzKYq6wqasfwKRHAMh1Je9P4bP84l4DeK
+	 igoRtV3yNmND6gmi1NSVHP2RFzMeM9cuKBYZQ+puEDLZZuO6dXkb9ebjX2eBLFFTlKdNP
+	 HfB1lVLAThkxRAB80hO5Q2ry2Ltn9j6M5wop2WVCp9z7WT1w3hgePDLcShOeq2BUsERtP
+	 XUzwEMqtve1aRzNQmMNG/S1OTPU6hzZ3hDAlzglcL0QuaFWU6amsKHJXLBBU4LR9y6OCg
+	 tz/arxSThuIaDm4pUpdvbdNJ3y/TxF4a3I5NZ4eH7FB9SqAQlinwPSXKGcWcC7+JUcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IYYQJBCeWJYpxcXGHmnuWOQR35zjwkdDwfR5aNYyxP8=;
-	b=L3l3kTQQvkAIMdzM1YBtOjXU+geTjvjOL/CLml2azCk+cdJNAbUKB2cgO5t5v1HCqGpt
-	 77KnqRTR66OSOeU776t1m2PoazvPQE/0n+ErNK7TYJof75pPOg0b7X7eBWq/loqzS0zTC
-	 te8xNMrSU+s3CerueV8Z+MJjtQqp8jJd7mNU7bDNEwq2jJKvsTt14fRNKekhSfMRn/wOa
-	 he4FBd+69kyfhTLkdpdJHPot7LMISIBKqjDbF1CzGeHE6FKSusy6rHt1DOMUYGf/C1CBV
-	 //fo5/1NX+jDDtiD9IgWQJ3aP8fh46dG2DFjqXSuh3fSdwYJY73G6aLEOZiD/46lFNA==
+	bh=EcV+xzWRqkZY5aggZf97fnFDeHmQYS8pt+4BxMy0EfI=;
+	b=tUFkAMG3rVGQJ/xOQwpAn51hujqoFchCERZQQEzJCFTsTLlyaRnBVmol9AhSKQe7Kk3y
+	 Rfm51eqrAPYRdUOHSoO98B+UKbB1DgeevSIN+kloBwlclPm9sQF4c6edLRGGktw/upj06
+	 PHRwME6LPnxKDPe7kywkErDG/vtaO37V9/F2GfZKaxCmDl0Xtb7dDEvukHDOO9lssVkLl
+	 gkNiJF5EuBaQhxO0EwQ1/Ouw8cXodU2B8l27As4IPu/QaEadF3GFTEygAv22Vq3BAjEKt
+	 L/hHvD2ArDAJVs1HMDol/IA7wFzyFrrlt3SDnitiVSB0zTCCTA8DUw/ZvZLED6AotBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VGvCPEdz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9lWwTdY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FA1606A31C;
-	Wed, 18 Nov 2026 23:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2B260A2621;
+	Wed, 18 Nov 2026 23:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VGvCPEdz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98351F000C4;
-	Wed, 18 Nov 2026 23:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9lWwTdY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA3E1F000C4;
+	Wed, 18 Nov 2026 23:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043983;
-	bh=IYYQJBCeWJYpxcXGHmnuWOQR35zjwkdDwfR5aNYyxP8=;
+	s=korg; t=1795043986;
+	bh=EcV+xzWRqkZY5aggZf97fnFDeHmQYS8pt+4BxMy0EfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGvCPEdzf28L+H1fb+HFdgfJG/fgOtlauMyp7UfPGBKsOhx73nUdMvH8sZ7fN2U76
-	 SYw08ka/+HE+9W2Uyf4NMOp70up8PME+zZ1EJ2kVbgWc7Is52sQD9xoRU+zHt+tYdT
-	 3JduLhePiPBnZ1tSI7mrvJZ1nU0NgN/Xx/AUYyQk=
+	b=t9lWwTdYVGu8DaLXo066p4yYfCe+fGG1be1PCQ3/YZpPEPpJtSQcmBLr9z7HvzFRs
+	 YkxIR2yUkwCvsHjK9MGJ+943/e78C3q65CBoqv74s7cXCZMemNsaXYaZwrXDZFBU4V
+	 OTl9/NJU2B6r9SXMKMUasP8V5GwuRzNHX0mS7rt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0403/2857] xfs: strengthen the "is cow staging" helpers in scrub
-Date: Wed, 18 Nov 2026 15:23:57 +0100
-Message-ID: <20261118150215.900744577@linuxfoundation.org>
+Subject: [PATCH 6.1 0404/2857] path: add cleanup helper
+Date: Wed, 18 Nov 2026 15:23:58 +0100
+Message-ID: <20261118150215.936973721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,46 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 0d43368844a75ad13561a1198a3b027940730756 ]
+[ Upstream commit ff2c570ef7eaa9ded58e7a02dd7a68874a897508 ]
 
-LOLLM pointed out a bug in both of the refcount scrub predicates that
-determine if a range of blocks is marked as CoW staging in the btree.
-While it compares blockcount < len, this isn't enough to determine that
-the CoW staging record is at least as large as the range passed into the
-helper.  Fix both of them.
+Add a simple cleanup helper so we can cleanup struct path easily.
+No need for any extra machinery. Avoid DEFINE_FREE() as it causes a
+local copy of struct path to be used. Just rely on path_put() directly
+called from a cleanup helper.
 
-Cc: stable@vger.kernel.org # v4.16
-Fixes: f6d5fc21fdc713 ("xfs: cross-reference refcount btree during scrub")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Dropped the rtrefcount.c hunk because that file doesn't exist in this tree; the refcount.c hunk applied unchanged. ]
+Link: https://lore.kernel.org/r/20240607-vfs-listmount-reverse-v1-2-7877a2bfa5e5@kernel.org
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: a7c1290eef60 ("configfs: pin the symlink target's dirent instead of chasing ->ci_dentry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/refcount.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/path.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/xfs/scrub/refcount.c b/fs/xfs/scrub/refcount.c
-index a26ee0f24ef2a..17db5f8bdcd7d 100644
---- a/fs/xfs/scrub/refcount.c
-+++ b/fs/xfs/scrub/refcount.c
-@@ -443,8 +443,12 @@ xchk_xref_is_cow_staging(
- 	if (rc.rc_domain != XFS_REFC_DOMAIN_COW)
- 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
- 
-+	/* Can't start after bno */
-+	if (rc.rc_startblock > agbno)
-+		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
-+
- 	/* Must be at least as long as what was passed in */
--	if (rc.rc_blockcount < len)
-+	if (rc.rc_startblock + rc.rc_blockcount < agbno + len)
- 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+diff --git a/include/linux/path.h b/include/linux/path.h
+index 475225a03d0dc..ca073e70decd5 100644
+--- a/include/linux/path.h
++++ b/include/linux/path.h
+@@ -24,4 +24,13 @@ static inline void path_put_init(struct path *path)
+ 	*path = (struct path) { };
  }
  
++/*
++ * Cleanup macro for use with __free(path_put). Avoids dereference and
++ * copying @path unlike DEFINE_FREE(). path_put() will handle the empty
++ * path correctly just ensure @path is initialized:
++ *
++ * struct path path __free(path_put) = {};
++ */
++#define __free_path_put path_put
++
+ #endif  /* _LINUX_PATH_H */
 -- 
 2.53.0
 
