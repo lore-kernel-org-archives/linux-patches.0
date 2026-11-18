@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049935;
-	b=O3CvjSoh1dwTT6+b2dW6k0Bv6Oit3MaWtGtNb1Z4D86zV8ljlFBl+wsK7gxPWrpwO913
-	 L7hOpDTDyezB4Myy0DBau/sHDBgOYvwEQzdTKR+clj+68Csy8WctRqKoNkVaIDyGC60iu
-	 H6YSUzaGFNVb1OObx5DPpultt4OyQDrmGUW/1TRyUAohWp2bU5qhllyvxMzcnrUzhmWhV
-	 Gs676bFJQamtyl5WjUVKA7NkLvhoqr/2BztSO9+sIcU//SVJQJMthf3oL3bphjCutwdge
-	 MYeShahUSFNtak4fGZPXHCjQ1jQVMZPSXeOJQOrJyalR3lEroX4W2LTcnAVUKmM429w==
+	t=1795049938;
+	b=d3nm1mXw2EVVeSzkYDz3FRY1mg9h7y2cCm0Rek31oba5MqPbWxBvkonWlIuwb916TyqW
+	 F7cXiJ0il2Kj2DlH+gSsVPaTrd/juYEs8lcNO3VmS0XZ5dR55JPGBoCOuk3YTc+QFmJw5
+	 8K2L+6U4CuDC1b1sTwEE9h+Gx1kAYPy39hKd+6gk5BHWO7r4gpRwtNCIgaOMB567V+NVX
+	 tQpBc/vFn2nQYgwT+RUfUAHBuK5Jqr+pEU9lO6UL5gKF8g1cpPYKElxBtw7EexYXmPHIy
+	 8VQqvzEFQLyd3dwyVN5ax1Vk926yiEegJW1rxZQuQGXZmID3kz0eENHAJWcAjqbv7Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049938;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/BCQpm98mS90pPRWTztYoSfxTtVV7cVsV7+nXRMGckw=;
-	b=v+7ACZ1ctqq1bNqr0Wvm6NIJvF7qGRm5EhZm1Cild8GYCA/ajot54G5BiQh68qy6Q9HC
-	 qqKljdQjLwbv1hqU6hbdhAuc1bbFSSuLjobQRg2AsVDW4PAuwwZGV8UKoIK3n8pKLa8/0
-	 u9UGPC/cC2K4tVJ+P8xE/zG4sl05GgsuM/bUWQdP494FklrpIU7/3cZx3bP59fGCJcHrp
-	 4+tVv8juv2SLfKowIJPwGzwCyt+6wmhcFpn3M76GmytvwGUlXFn2rCih+Ry78o2gZkTvz
-	 0LteQamM2h2dNj6MQz3dmdssfdFcgcb8g0pRNWxC1KBO3crerW7oiuEIYtzFcYfj3SA==
+	bh=T/YFBaHH5YrFo73G3kYlaGcO1xwv9FKieljuVe51Fqo=;
+	b=aLBe7PZ62kHPlTx7Ep4V3Tce3AVI3IkUEb3n9j2BvAM1W2oljcrCgxZJBBJwNSvm4d0H
+	 wu566pLKkrpNGlpK8h9lQ757PuC0w6ELabQsOC63i/DM8YXCpHDQOD0v5B2fX3g6TU6fZ
+	 r3X/2FmIDENAan3QQOp/iNUNfn1dsmFiWNUpppC14sV37iKvxW1iSP+1MC50Chn2oivNu
+	 UHmCl74w/Nm1anYbiT7VaY2TLPEd4TVFI/rWeD5Gt7QVpvEN/ts3ZsHxZEX2mm9GBUsop
+	 BVrC9m9cjIzTbXSiikOlCuYSimMSAl2WyYSnWR4tAFkEVRlcHsylvjv+Jf3qXCJON1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mx+JgP6Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0YLYdF4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9685A606A320;
-	Thu, 19 Nov 2026 00:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD03606A320;
+	Thu, 19 Nov 2026 00:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mx+JgP6Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82C81F000C4;
-	Thu, 19 Nov 2026 00:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0YLYdF4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1591F000C4;
+	Thu, 19 Nov 2026 00:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049935;
-	bh=/BCQpm98mS90pPRWTztYoSfxTtVV7cVsV7+nXRMGckw=;
+	s=korg; t=1795049938;
+	bh=T/YFBaHH5YrFo73G3kYlaGcO1xwv9FKieljuVe51Fqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mx+JgP6QqFZYpxZkDz4xAOIldHZz9sDyjVbCHnEXhDUzXFosyIqydFge6m04lNgAt
-	 OHu3U2oTdfxYfLO4y58wxYJmctWUwkG2OpkbK1tJ6Gzb1wOsp1oXeWUYLPxA0UsSAw
-	 JP4VQb4V9/9NQJ4Y0YRPoWOeQI6j51F0KW5eWWJA=
+	b=r0YLYdF4DzSjIObW0vefziZcBf6pTtI39f6IbZtCJnbCw2Sgu4SBi1kocPd75qXLI
+	 ya4sJQfkst0cJmHAwOXOmEmmCx+r2rDPAjiLeKAh86wjPwxLY6bahemloWNlwocFvz
+	 pWveieYaNU0wvtVqdvAnlezaGDWBoT2YiNIubPIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2528/2857] RDMA/rxe: bound the WQE opcode before indexing rxe_wr_opcode_info[]
-Date: Wed, 18 Nov 2026 15:59:22 +0100
-Message-ID: <20261118150332.562148970@linuxfoundation.org>
+Subject: [PATCH 6.1 2529/2857] selftests/bpf: Create the vxlan devices of test_tunnel with their MAC
+Date: Wed, 18 Nov 2026 15:59:23 +0100
+Message-ID: <20261118150332.596918298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit c887e53e1c852b88bd5442d1bf4717ee3e7aadda ]
+[ Upstream commit 33cbc5c2cadfe3b43f024e89880dd8fe2efb3a2e ]
 
-wr_opcode_mask() indexes the global rxe_wr_opcode_info[] array with
-a caller-supplied opcode and no bounds check. For a user QP the WQE
-comes from an mmap'd SQ ring, so wqe->wr.opcode is an
-attacker-controlled __u32 read back by the requester
-(req_next_wqe() -> rxe_requester()); rxe_post_send() takes the
-qp->is_user branch and never runs validate_send_wr(), whose only
-opcode check is itself !wr_opcode_mask() (it indexes before it
-checks). rxe_wr_opcode_info[] has entries only up to IB_WR_REG_MR,
-so an out-of-range opcode reads out of bounds and the result is used
-as a mask and dereferenced; observed as a KASAN global-out-of-bounds
-"Read of size 4" and a wild-pointer oops.
+The vxlan tests of test_tunnel create a tunnel device in the initial
+netns with "ip link add", and then give it the MAC address that the
+static neighbor entry at the other end points to with "ip link set".
 
-Return a zero mask for an out-of-range opcode, matching how
-validate_send_wr() already treats a zero mask (an invalid WR), so no
-path indexes the array out of bounds.
+systemd-udevd assigns new devices of the initial netns a MAC address of
+its own, following its MACAddressPolicy, when it handles their uevent.
+When it gets to that after the test set the address, the replies sent
+to the configured MAC are dropped as meant for another host, and the
+ping of vxlan_tunnel fails after 10 seconds.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261002164552.294749-1-ays511.kr@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Pass the address to "ip link add". udevd leaves alone the address of a
+device that was created with one.
+
+Fixes: 1ee7efd40abf ("selftests/bpf: Move vxlan tunnel testcases to test_progs")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-tunnel-vxlan-mac-v1-1-624dd769c334@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_loc.h | 3 +++
- 1 file changed, 3 insertions(+)
+ .../testing/selftests/bpf/prog_tests/test_tunnel.c  | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
-index c2a5c8814a48b..ab638db78594b 100644
---- a/drivers/infiniband/sw/rxe/rxe_loc.h
-+++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -185,6 +185,9 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
+diff --git a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
+index e0823c2472fe7..632f3b709e829 100644
+--- a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
++++ b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
+@@ -129,9 +129,9 @@ static int add_vxlan_tunnel(void)
+ 	    IP4_ADDR2_VETH1, MAC_VETH1);
  
- static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
- {
-+	if (unlikely(opcode < 0 || opcode > IB_WR_REG_MR))
-+		return 0;
-+
- 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
- }
+ 	/* root namespace */
+-	SYS(fail, "ip link add dev %s type vxlan external gbp dstport 4789",
+-	    VXLAN_TUNL_DEV1);
+-	SYS(fail, "ip link set dev %s address %s up", VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip link add dev %s address %s type vxlan external gbp dstport 4789",
++	    VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip link set dev %s up", VXLAN_TUNL_DEV1);
+ 	SYS(fail, "ip addr add dev %s %s/24", VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
+ 	SYS(fail, "ip neigh add %s lladdr %s dev %s",
+ 	    IP4_ADDR_TUNL_DEV0, MAC_TUNL_DEV0, VXLAN_TUNL_DEV1);
+@@ -166,11 +166,10 @@ static int add_ip6vxlan_tunnel(void)
+ 	    IP6VXLAN_TUNL_DEV0, MAC_TUNL_DEV0);
  
+ 	/* root namespace */
+-	SYS(fail, "ip link add dev %s type vxlan external dstport 4789",
+-	    IP6VXLAN_TUNL_DEV1);
+-	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
+-	SYS(fail, "ip link set dev %s address %s up",
++	SYS(fail, "ip link add dev %s address %s type vxlan external dstport 4789",
+ 	    IP6VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
++	SYS(fail, "ip link set dev %s up", IP6VXLAN_TUNL_DEV1);
+ 
+ 	return 0;
+ fail:
 -- 
 2.53.0
 
