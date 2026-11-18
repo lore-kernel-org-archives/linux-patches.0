@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041921;
-	b=W8OubaxaaEyDUfH58d6DvtrX33bkzakzuWFE4iYJc7MaK5/rHvHqJuZqo5GnyGCZh/t6
-	 Vp8xsE2nOm5GuPm2RQrLEbQ1pafWk6BhCZBYVB+np5AEF0ESbr/5zZqQxdI0Ji1hjVnMZ
-	 kPeijNLUjLuUa9tsKfrDkkQBvh8e03uX/Gw7Z4a4ymlojlpfl/PXwitqCA0CrTMzLBNVa
-	 2ayokbkNGt3uYewuZLYVKABTMW0bHe3PRN3IXiygO6qE7lhKbmDQpJUM2OutsB3e5zmvW
-	 Sg7KH2U/45bfBLWvNy2aoXvBGaZkBfzimy6Wm8dt8hO7q6PUPLWpZ5oyaWh05mhFc5A==
+	t=1795041924;
+	b=x6z7PrQ1lio5K712vJh3agijE/sGS/T7t2HE0qV20dn9JWwMTrIVPZiGPq/TSKrX1jQo
+	 R1RCBwn5jhDLcAhyA90slEHxbm/sOAE4SYt+MjmSMXWFFIuYagAQzqM+AN52n6VAc4vjt
+	 aquItfKDV1GQvwnjT8VefUSTRGi39wstfE6V9rKSkPpbAXIc9pT9YigfRV9IVnoTt6wX0
+	 yEff2KQksvkxdoFYmjUxGprrRW3AuenN/+M2/3zCo71LqjQ0mLRpyCxZlzaEVatS2aI93
+	 OjcbN6HpXdaJjmZnXN3PRpuwvNEvdYNnDcgtQGBziBlg4d32afvsLsCGqHf3g3tFPfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q5yIXB/GA1d2q4NYYPAPWinuaqDLIRWim6nPDhkW9Ks=;
-	b=s6paCPllcXsXeR3i/XydfBWKqn1IzT/nkRZeg3qeLeIyMHIee/MzqQXomqWkbi8siFtf
-	 enen4ei70U7/A1zfdZ9ksa0gjHg8nktOTzwsZMNAGG92UepQN9WxYDhbLBP7K0DUu6OC7
-	 7CF2C58ix+4NXXttraCWUrpk1giaq9iT/gGvtBzC+mN3ZVQINUjEw+gXzaL4jf7eIDIa+
-	 1VaDgRYW5y/INZbm/HAfn+hIIuCU7ztsdt/KRoEw5GZMwzeJVPbq2Rzzizh0QdXMaW5gS
-	 yT7o2cwktttzyrGJMWFZ6LWk7ysK6NQact/0tl7pOBoGWDb4+Ma3uY071eecXmv3GEw==
+	bh=U6nvtB5QdmQur9Y+j8XvhBb+ljk7Ln0bhUFWxJHcclg=;
+	b=vZFfv2u0n7ju0ucww394Fy/vFYjt1CQ6crroJvoVDFHb5cwCTRKCXyxPJ1NAkrUmou1f
+	 HfwltlY2mrrA+UdfQd3K0LFqFVd3Qr98DeiMma6vGSwUIC7kTcLSTakw6LS49MwO5mSVr
+	 CMAA+oj+jRIjeOXV8CVPjQb5lenOzVrPIvOORUtKqvFIJUPxHkG3n8f/7bbyu+OGIRXSC
+	 o0vmuPl4b7XdJZrkdR4cTm8PH7e0WHTm9/pHqQS8OMDYPNWZjMnyhcoRbzGgcJipOozNd
+	 Cr8+pzbjP3qXsUQnctku2rjmFPmLfByiCwXNsNn3z1JnpX7h4mvI4AjT0U6krQDrUlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLrNFRML;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YpmfjM9W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD17C606A32F;
-	Wed, 18 Nov 2026 22:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98351606A31C;
+	Wed, 18 Nov 2026 22:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLrNFRML
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343FB1F000C4;
-	Wed, 18 Nov 2026 22:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YpmfjM9W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6E61F000C4;
+	Wed, 18 Nov 2026 22:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041921;
-	bh=Q5yIXB/GA1d2q4NYYPAPWinuaqDLIRWim6nPDhkW9Ks=;
+	s=korg; t=1795041924;
+	bh=U6nvtB5QdmQur9Y+j8XvhBb+ljk7Ln0bhUFWxJHcclg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLrNFRML2Z1fQVi29ZhEzJDD/+SlpFGmf3qaBv0JYhFRPMg/iN9P15m3boIvv02qk
-	 9QUzA5j113lNbqKm56BZcQpIeXrYq9esLvEDJL8umCrIVGn1nJ/Dmv80hcsHs2dSFC
-	 cE1VjgwuO4aOaqfRqNDQPpQPfX+xf/zozYpAcYcI=
+	b=YpmfjM9WJHayy+xoApHBTr7l9HcZVwNyUNAhvvCBTfOTmmSIwQz2AaVWrapHEvTrz
+	 IqypYeQ8HwM19OelHUo8LXlu2rJEVsJz/MlnmfOOzNkZBgN+kYwiDIJNb+95LG4/ja
+	 c8Wr6eRkbWzy3Fg3M3Vy+IMq+ZRZxeuEgUa8HtWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Christoph Hellwig <hch@lst.de>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2935/3318] ASoC: Intel: avs: Remove redundancy around DAI shutdown
-Date: Wed, 18 Nov 2026 15:59:17 +0100
-Message-ID: <20261118150448.424230728@linuxfoundation.org>
+Subject: [PATCH 6.6 2980/3318] blk-iocost: account zone append completions in latency stats
+Date: Wed, 18 Nov 2026 16:00:02 +0100
+Message-ID: <20261118150449.675613481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,120 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit b9d59f970ea7772957f6da02ca1ba272ef4495b8 ]
+[ Upstream commit c38975c427cc3d3f6eb66a36143893be5cdf4ebd ]
 
-Move avs_dai_nonhda_be_shutdown() to avs_dai_shutdown() as the function
-is common for all transfer types, not just non-HDAudio ones. Use it
-to simplify avs_dai_fe_shutdown().
+ioc_rqos_done() only accounts READ and WRITE completions, so zone
+append completions are excluded from the latency window: the vrate
+feedback loop cannot see ZA-induced latency, leaving it unable to
+respond to device saturation caused by zone appends.  Similarly,
+calc_size_vtime_cost_builtin() does not classify zone append as a
+write operation.
 
-While at it, fix explicit kfree(data) and use the destructor instead.
+Charging (the cost model) and feedback (the latency window) are
+separate mechanisms, so this is not covered by the previous patch
+that prices zone appends.
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20240426095733.3946951-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 85bc213f96ac ("ASoC: Intel: avs: Unprepare a stream when recovery occurs")
+Treat zone append as WRITE for both latency accounting and cost
+classification.
+
+Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20260922043856.2020116-4-cui.tao@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c | 44 +++++++++++++++++----------------------
- 1 file changed, 19 insertions(+), 25 deletions(-)
+ block/blk-iocost.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 1270042a73429..37b3cb19eddca 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -84,6 +84,21 @@ static int avs_dai_startup(struct snd_pcm_substream *substream, struct snd_soc_d
- 	return 0;
- }
- 
-+static void avs_dai_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
-+	struct avs_dev *adev = to_avs_dev(dai->dev);
-+	struct avs_dma_data *data;
-+
-+	data = snd_soc_dai_get_dma_data(dai, substream);
-+
-+	if (rtd->dai_link->ignore_suspend)
-+		adev->num_lp_paths--;
-+
-+	snd_soc_dai_set_dma_data(dai, substream, NULL);
-+	kfree(data);
-+}
-+
- static int avs_dai_hw_params(struct snd_pcm_substream *substream,
- 			     struct snd_pcm_hw_params *fe_hw_params,
- 			     struct snd_pcm_hw_params *be_hw_params, struct snd_soc_dai *dai,
-@@ -165,21 +180,6 @@ static int avs_dai_nonhda_be_startup(struct snd_pcm_substream *substream, struct
- 	return avs_dai_startup(substream, dai, false, &avs_dai_nonhda_be_ops);
- }
- 
--static void avs_dai_nonhda_be_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
--{
--	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
--	struct avs_dev *adev = to_avs_dev(dai->dev);
--	struct avs_dma_data *data;
--
--	if (rtd->dai_link->ignore_suspend)
--		adev->num_lp_paths--;
--
--	data = snd_soc_dai_get_dma_data(dai, substream);
--
--	snd_soc_dai_set_dma_data(dai, substream, NULL);
--	kfree(data);
--}
--
- static int avs_dai_nonhda_be_hw_params(struct snd_pcm_substream *substream,
- 				       struct snd_pcm_hw_params *hw_params, struct snd_soc_dai *dai)
- {
-@@ -265,7 +265,7 @@ static int avs_dai_nonhda_be_trigger(struct snd_pcm_substream *substream, int cm
- 
- static const struct snd_soc_dai_ops avs_dai_nonhda_be_ops = {
- 	.startup = avs_dai_nonhda_be_startup,
--	.shutdown = avs_dai_nonhda_be_shutdown,
-+	.shutdown = avs_dai_shutdown,
- 	.hw_params = avs_dai_nonhda_be_hw_params,
- 	.hw_free = avs_dai_nonhda_be_hw_free,
- 	.prepare = avs_dai_nonhda_be_prepare,
-@@ -289,7 +289,7 @@ static int avs_dai_hda_be_startup(struct snd_pcm_substream *substream, struct sn
- 	link_stream = snd_hdac_ext_stream_assign(&codec->bus->core, substream,
- 						 HDAC_EXT_STREAM_TYPE_LINK);
- 	if (!link_stream) {
--		avs_dai_nonhda_be_shutdown(substream, dai);
-+		avs_dai_shutdown(substream, dai);
- 		return -EBUSY;
- 	}
- 
-@@ -305,7 +305,7 @@ static void avs_dai_hda_be_shutdown(struct snd_pcm_substream *substream, struct
- 	snd_hdac_ext_stream_release(link_stream, HDAC_EXT_STREAM_TYPE_LINK);
- 	substream->runtime->private_data = NULL;
- 
--	avs_dai_nonhda_be_shutdown(substream, dai);
-+	avs_dai_shutdown(substream, dai);
- }
- 
- static int avs_dai_hda_be_hw_params(struct snd_pcm_substream *substream,
-@@ -529,18 +529,12 @@ static int avs_dai_fe_startup(struct snd_pcm_substream *substream, struct snd_so
- 
- static void avs_dai_fe_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
- {
--	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
--	struct avs_dev *adev = to_avs_dev(dai->dev);
- 	struct avs_dma_data *data;
- 
--	if (rtd->dai_link->ignore_suspend)
--		adev->num_lp_paths--;
--
- 	data = snd_soc_dai_get_dma_data(dai, substream);
- 
--	snd_soc_dai_set_dma_data(dai, substream, NULL);
- 	snd_hdac_ext_stream_release(data->host_stream, HDAC_EXT_STREAM_TYPE_HOST);
--	kfree(data);
-+	avs_dai_shutdown(substream, dai);
- }
- 
- static int avs_dai_fe_hw_params(struct snd_pcm_substream *substream,
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 6e3082cb90dab..185f2b82dab99 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2592,6 +2592,7 @@ static void calc_size_vtime_cost_builtin(struct request *rq, struct ioc *ioc,
+ 	case REQ_OP_READ:
+ 		*costp = pages * ioc->params.lcoefs[LCOEF_RPAGE];
+ 		break;
++	case REQ_OP_ZONE_APPEND:
+ 	case REQ_OP_WRITE:
+ 		*costp = pages * ioc->params.lcoefs[LCOEF_WPAGE];
+ 		break;
+@@ -2828,6 +2829,7 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
+ 		pidx = QOS_RLAT;
+ 		rw = READ;
+ 		break;
++	case REQ_OP_ZONE_APPEND:
+ 	case REQ_OP_WRITE:
+ 		pidx = QOS_WLAT;
+ 		rw = WRITE;
 -- 
 2.53.0
 
