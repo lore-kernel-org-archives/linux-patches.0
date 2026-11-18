@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051629;
-	b=BUHqBL7FTjnLaqXWbXLYKTThb6VkC8D0nqtcjMrKiK51AU32/8t8jllPmRtp6PekEteC
-	 RsV3e7KyPTWxDTaN0wb7vjEJvRc6xDvvFSg5G5bfrvx02MDhz9iwoKZXXSriAt+1GFtyr
-	 MtfjMybc9zqTvoYEV6tpSKyNJh5sIEQpQy2pMPBS5bLXB9jGC02Xh0MgVLVXwkfqstlLq
-	 zH3BJEQrtW8N6apUnxLXlkMJYuyd3afAnu1/FIARtSthpxn/pVuqxot/sMaOjmrce23fl
-	 lxbmOx5HJkhZigDq8pxSFc4s/FpCdva2df0910ESz1Ye3RcR3fVR3E5Gg6mVK0fVpsQ==
+	t=1795051632;
+	b=eBj7GeUH16Lo3KOiuJI1p6ZqWkUguFOYH+RxNB2y8vy1oHenS81QVlU+2KEtPWy2sMpt
+	 Yt8X7Msare8cIL/iWjGghazCBOZbGtyJW/FAqCVbjDVXvPQqgN+2dj7tIzRaRdEzGp7gI
+	 R2XJr94CoK17oNf0ghY3KSizRJqd6W7JqxJTPRysjAFScf9JO9NLTgNWYjqubUrxJf3EI
+	 gdwGuVGyKBeRXhTqO/Jz2ArsiMAD8XNofVZEg5DHHG9G1OrSHLez7Df+KdwYuaYrbp6Rd
+	 FW4XUas3NqdfYmdv0l7eUZn4tCMXUDaDOaeYY1Ze16BTXWK5vlaTl9+8UXIxWfQEuig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qAw1A5xhX42Ds3BoalS99oJRcsh+E4wf38RUqecPwIE=;
-	b=m5komlSP3oeJqwyPiU9z91mPVhfJZqDWiWrWm5uYDZFVIVQk/mmN1zkp1qPxwklTIGOR
-	 xM7Oebd5HAocP2uu+I1b7d9J4OKmmcpXd/p4ULAENnHBtOCdOgCOR/KIfTFa+/Tp3ibDo
-	 ovqKU3l6DDPHJHIfMTDPuGhWpnfhuVdOdlWATxgcvNBOzkuSrz1qSLQdZkO4z7C4kwBru
-	 oRmZ9vF6V63cZRUrr+jPfgCWd9dwDw4ZtkVmSCzi1XKqYe+sDe7AilNDr7XkGWsKfYetJ
-	 FTqVs0nWkQD5KMUbclJ0eTPAgmJ++BLSif43RWIYOXXioek2+paidzEiooDwL0i2C1Q==
+	bh=nr9LnPv8Z9tu3wE9ABEx6SQdlvYm8Ui9Stl5rvm2PK0=;
+	b=GyYZlEA1yktOu4R7AvWcQshv+RbnAAo5oE1+LmrwvbzsWIL9RNjBS1OYRtCwfMp1aAmA
+	 zb/ZxGzSXH4jqvMHE58tlGW9T5NTQtayVg88dxQbUdLykY0yQOeXWKpFvsiqibwtyZ6PH
+	 QDGPyCvchRi8QrhMte36DS6oJArY4yW0EXFBMJDOAYaH7rHdp59KOeWjMiwoZI09wEPSY
+	 YvD9dc/PVHBr1fAx1yDPPhc/Q2hF7Kqjq/zJWr2IUIJtmqnhvWZY8ObsKTima1bqOzM9w
+	 JlxtUFI65beD7L8PjKWi9+9kKIA2duwkHUgkytrX28IOpusw+sNqO6lHpHzJ2+WvSqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bo2LSXWK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOUV0CHF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8875660A2607;
-	Thu, 19 Nov 2026 01:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B83606A33D;
+	Thu, 19 Nov 2026 01:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bo2LSXWK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80FB1F000C4;
-	Thu, 19 Nov 2026 01:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOUV0CHF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6E01F000C9;
+	Thu, 19 Nov 2026 01:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051629;
-	bh=qAw1A5xhX42Ds3BoalS99oJRcsh+E4wf38RUqecPwIE=;
+	s=korg; t=1795051632;
+	bh=nr9LnPv8Z9tu3wE9ABEx6SQdlvYm8Ui9Stl5rvm2PK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bo2LSXWKNHVzYY0FjNTIJB5SVCQWtyNoJIAn3Vhe5JJ5IXd5KmXL3r7wEwx1fj07e
-	 auYJSD8OcAfOvlGQVjK4oHDj5jCTRbhAR75CCwyPgoDMzcLsbDqb1GfauMRm+OKp7/
-	 VAF0wB8FUa28LXLCdF35GmyZhQEHTb7DU16+TZQY=
+	b=bOUV0CHFmg5+sBwlJIIegV1u6kHvZVFcK4eCQehwsEYFovEvMrXJhR/YnJZmVDUVj
+	 PD8Z9MMxAyOVqP7xeK9o0/oYzzzKhEMij3TPbMY9u780kSVi07M/GbjfbhWlfEwgfa
+	 hA9ROUOplvP0TrMnSz66ucZKt8IGXslxvrt3KW2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+25860fb17af97289@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 0259/2214] libceph: bound mon_command ack decode to front len
-Date: Wed, 18 Nov 2026 15:32:15 +0100
-Message-ID: <20261118150020.483290197@linuxfoundation.org>
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0277/2214] bpf: Fix UAF in sock clone early bailouts
+Date: Wed, 18 Nov 2026 15:32:33 +0100
+Message-ID: <20261118150021.143833930@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,70 +71,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-commit 62b41a16d8603d4d809fda212f15c3e9c783a82b upstream.
+[ Upstream commit 7cbd0c4cebe4c9f678d15e6b9ba975e1155a107f ]
 
-handle_command_ack() bounds the decode with msg->front_alloc_len, the size
-of the reply buffer, instead of msg->front.iov_len, the number of bytes the
-monitor sent.  mon_alloc_msg() routes every CEPH_MSG_MON_COMMAND_ACK to
-get_generic_reply(), which returns the preallocated ->reply of whichever
-generic request carries the same tid, so the buffer keeps its fixed size
-however short the reply is.  An ack with hdr.front_len below sizeof(struct
-ceph_mon_request_header) + sizeof(u32), including 0, still passes
-ceph_decode_need(), and ceph_decode_32() returns four bytes that were never
-received: uninitialized slab memory, stale bytes of an earlier message, or
-bytes the peer planted by sending a reply that lands in the same buffer and
-is then rejected.  The read stays within the allocation, so KASAN does not
-flag it.
+Similar to recent commit 9b51a6155d14 ("bpf,fork: wipe ->bpf_storage
+before bailouts that access it"), sk_clone() performs an initial
+shallow copy of the socket field ->sk_bpf_storage via sock_copy()
+for the cloned socket newsk.
 
-req->result reaches userspace through ceph_monc_do_statfs(),
-ceph_monc_get_version() and ceph_monc_blocklist_add(); rbd hands it back
-from write() on /sys/bus/rbd/add_single_major, and rbd_get_client() passes
-it to ERR_PTR() unchecked, which faults:
+If sk_clone() bails out early (e.g. if sk_filter_charge() fails) prior
+to calling bpf_sk_storage_clone(), newsk->sk_bpf_storage still points
+to the parent socket's BPF local storage. When newsk is subsequently
+freed via sk_free(), the deallocation path (__sk_destruct() ->
+bpf_sk_storage_free()) destroys the parent socket's BPF local storage,
+leading to a use-after-free (UAF) on the parent socket.
 
-  rbd: failed to get latest osdmap: -186318427
-  BUG: unable to handle page fault for address: fffffbfffe9ca034
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:do_rbd_add (drivers/block/rbd.c:7105)
-  Call Trace:
-   ...
-   kernfs_fop_write_iter (fs/kernfs/file.c:345)
-   vfs_write (fs/read_write.c:595 fs/read_write.c:687)
-   ksys_write (fs/read_write.c:739)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception
+Fix this by resetting newsk->sk_bpf_storage to NULL immediately after
+sock_copy() in sk_clone(), and remove the now redundant initialization
+from bpf_sk_storage_clone().
 
-Use msg->front.iov_len, matching handle_subscribe_ack(),
-handle_statfs_reply(), handle_get_version_reply() and handle_auth_reply().
-A well-formed ack has front.iov_len >= 22 and is unaffected; a short one
-takes the existing bad: path.  This applies commit d3c32939fa0e ("libceph:
-bound get_version reply decode to front len") to the last decode-side
-use of front_alloc_len in this file.
+Fixes: 6ac99e8f23d4 ("bpf: Introduce bpf sk local storage")
+Fixes: f12dd75959b0 ("bpf: net: Set sk_bpf_storage back to NULL for cloned sk")
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260709025316.999913-1-mattbobrowski@google.com
 
-Cc: stable@vger.kernel.org
-Fixes: 6305a3b41515 ("libceph: support for blacklisting clients")
-Reported-by: co+25860fb17af97289@bugs.sh
-Assisted-by: Cursor
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Imran : Conflicts resolved:
+  - net/core/bpf_sk_storage.c: upstream commit 0db4941d9dae ("bpf: Use
+    rcu_read_lock_dont_migrate in bpf_sk_storage.c"), got merged in
+    v6.19-rc1, and is not present in these branches. So the line following
+    RCU_INIT_POINTER() in bpf_sk_storage_clone() still uses the old RCU
+    api (rcu_read_lock()).
+
+  - net/core/sock.c: upstream commit 151b98d10ef7 ("net: Add
+    sk_clone()."), merged in v6.19-rc1, moved the body of
+    sk_clone_lock() into the new sk_clone(). That commit is not present
+    in these branches, and the code relevant to this backport is still
+    in sk_clone_lock().
+
+  In all five branches, sk_clone_lock() is the only caller of
+  bpf_sk_storage_clone(), so taking the NULL initialisation out of that
+  function is safe. ]
+
+Signed-off-by: Imran Khan <imran.f.khan@oracle.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/mon_client.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/bpf_sk_storage.c | 2 --
+ net/core/sock.c           | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -943,7 +943,7 @@ static void handle_command_ack(struct ce
- {
- 	struct ceph_mon_generic_request *req;
- 	void *p = msg->front.iov_base;
--	void *const end = p + msg->front_alloc_len;
-+	void *const end = p + msg->front.iov_len;
- 	u64 tid = le64_to_cpu(msg->hdr.tid);
+diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
+index 4953abee79fea..9db272dd1d8af 100644
+--- a/net/core/bpf_sk_storage.c
++++ b/net/core/bpf_sk_storage.c
+@@ -191,8 +191,6 @@ int bpf_sk_storage_clone(const struct sock *sk, struct sock *newsk)
+ 	struct bpf_local_storage_elem *selem;
+ 	int ret = 0;
  
- 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
+-	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
+-
+ 	rcu_read_lock();
+ 	sk_storage = rcu_dereference(sk->sk_bpf_storage);
+ 
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 7ad291f06c1c0..860b8d3cfb9c0 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2070,6 +2070,9 @@ struct sock *sk_clone_lock(const struct sock *sk, const gfp_t priority)
+ 	sock_copy(newsk, sk);
+ 
+ 	newsk->sk_prot_creator = prot;
++#ifdef CONFIG_BPF_SYSCALL
++	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
++#endif
+ 
+ 	/* SANITY */
+ 	if (likely(newsk->sk_net_refcnt)) {
+-- 
+2.53.0
+
 
 
