@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048544;
-	b=Yop8arhepq9vNsteBr48/Y75HfMp0tOKTH8yGfE0yUPKKbahJpvDX2H7ecM5Hc9AoOL8
-	 lXFs10CjTx6oTnHw/YmEQaipS4A6VnkpXQtRNr/X39c3kjLkLJSmMr6eun2mxz9RvXgTN
-	 biawrMaDO4ixJeFx15dMKjjlp5DveMuH67cFajdV4Wk6beaEkIa+M/q75CLEttZ5bHSon
-	 KE9mFEm9WCfRKjRKH/fCwX8wthcXxIiW5lSItZXdHCTq2KM7eLajzAaiDgbtEhbH93soZ
-	 l/Hpw8N7nxUvEHhgdmXp2TeqgOFd+HSWIJMZoF8bRi5zaIzQjkkhu8hm3zgiSZewKJQ==
+	t=1795048547;
+	b=YimZeREVxyUVSzOz7zmjzfw0QQkoat2OoBIpJ+Ws8D9TrH+t9eWOT6j25K4R3FQigzkm
+	 K8FyDqOO0zgCGnz6fqMzgH98155WSMF/QopdptM+awdJWxcjBg7dpo2l34PM+6//oXdZg
+	 apeSbq0ySiVUs6ee/eNHtrm2JKAUUuHM9E/oHWzuMDp12HIuYJlEWAfbAWZrNcQR/K4KG
+	 xeijuWQ6yl+fcKIddA9N+ySdFBWe5laIpDuzPDgekaQMKeUWJbVevaGSktvSLlfdlx8rP
+	 6pOs2OgUj2xvD8KnaSuZez264/Xv+JOWF4On3JXqr/cF9KcUUyTAavgLOISr61SGEdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uEshg2PH8zt7Csr0gJGZgiR5Jc1BNLZuiVNxrwEZIfY=;
-	b=gJmxntfgGwN8GGk5uznr+9zeXSa92pkuxn5vn6DvnVwsg0nvmRpu//vZ9eW4lEFwyca8
-	 ZIZHrKtu+gXXXTHEbwQVw6pQKwG8YwXdbmOmRF6Zs/PmHOv3pxIG4Apo8xM98OBDbOHyN
-	 2m6Uz53XKNUj/X8VReehDEeQxvPzhaqMBIhtTHo9D6BksnODaSnvijsJ6aC5lvrPPuWQp
-	 q2FGOcZ63MhCD+PCiWDV19BWfs5TYbn3Bx8ClOT4Mw9lCbMHMY7MWs8yEcJb0VCKm3DBU
-	 LSaoQ8jK5N4Y/tAOPAGCh+7jGJ8Pvv7D/0TXBv6BNokJ/LL/SxaJF57cZotd8gCKuMQ==
+	bh=ySzGI+2FBhsAS+81sXRUWUw3HoPulEydlprQXirfA5Y=;
+	b=fMbHhxeXqda+SEBz9St/k3qXop+svMu7kdY8USVIIMAbE3sS1ipNS8vEzchZjpLBZPw9
+	 4Qcon2x6yDO5WJ0tzHpvWNGWQz6oyVAvibePQ30xqoiqJPO3Ck7alCscTZzSArggxShFV
+	 3ws8VDMaBkO3yJMVobgWq8OEQzIT53TQFhJptD0uIZa62wYkmxamJYdDime1pTNYvXiZd
+	 Sl1viqNWwEQJtwocTcmBHvnqDaKwH8XLXCHwIgM8yTlW6Ja1d3/kwQ0uMU1QIjmpIS3ON
+	 00mYlHSginS2I76ruAfZrncYlu2CP7H3ncjBBWTniixdsCq8N9aDhbTd6ec5+Su5GEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BElV4ezP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0jod0Bp2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AABB606A320;
-	Thu, 19 Nov 2026 00:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C27E606A325;
+	Thu, 19 Nov 2026 00:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BElV4ezP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65D61F000C4;
-	Thu, 19 Nov 2026 00:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0jod0Bp2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB401F000C4;
+	Thu, 19 Nov 2026 00:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048544;
-	bh=uEshg2PH8zt7Csr0gJGZgiR5Jc1BNLZuiVNxrwEZIfY=;
+	s=korg; t=1795048547;
+	bh=ySzGI+2FBhsAS+81sXRUWUw3HoPulEydlprQXirfA5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BElV4ezPQpqI2WI29cF5wD5vsUWi74SK6KtiSxfAXl5vVxaI1wqqtHsQbkwl8IbIY
-	 AzwF9oUPBN2NFhnl6ho/sSGFIxzzkk6DO4QmhPw878eWbuNSFIM7cBucBaPKS10wPI
-	 C4TEMOk0+8hvx4CJ9RItZIqJZd5EhJuD0+pZMxYE=
+	b=0jod0Bp28/H9euS4JjvicIxjjCpc4lXarnsTZ0fyCUdwazIYw85tWxi1EtEQ77UxD
+	 K8g04ZdGV6LhB3eDSz3sHEfx1nLQi44Y0XGxMXrO0ZXnX356DTtGj2xpSELLQOn7Ls
+	 2PkXp9YbnYQBQA53cIyYls1BBCzEx0JUcz+U5E6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2030/2857] media: i2c: ov5648: Fix a data race on state->streaming
-Date: Wed, 18 Nov 2026 15:51:04 +0100
-Message-ID: <20261118150314.498233232@linuxfoundation.org>
+Subject: [PATCH 6.1 1992/2857] perf build: Check the version of the compiler that is used
+Date: Wed, 18 Nov 2026 15:50:26 +0100
+Message-ID: <20261118150313.098510165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 76c8ffbe1b9bc0ee4c977180e3f498352de0d01e ]
+[ Upstream commit 4f4387a07f601988e44fc6a4f4663aa1ff264f94 ]
 
-ov5648_s_stream() updates state->streaming after it has released
-sensor->mutex, while ov5648_resume() reads that field with sensor->mutex
-held. A concurrent resume can therefore observe a stale streaming state
-and leave the sensor in standby while the software believes that it is
-streaming, or the other way around.
+The flex and bison flags are adjusted for clang older than 13.0.0, which
+doesn't grok -Wno-unused-but-set-variable. The test is reached because
+CC_NO_CLANG says CC is clang, but the version comes from $(CLANG), which
+defaults to plain "clang" and needn't be the compiler in use:
 
-Keep the update inside the sensor->mutex protected section that already
-programs the standby mode.
+  $ make CC=clang-19 CLANG=clang-12
+  version from $(CLANG) -> 12.0.0, flag stripped
+  version from $(CC)    -> 19.1.7, flag kept
 
-Fixes: e43ccb0a045f ("media: i2c: Add support for the OV5648 image sensor")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Dropping the flag lets the warnings it suppresses in the generated flex
+and bison code through, and those are errors under -Werror.
+
+Ask $(CC) instead, as that is what compiles the code.
+
+Fixes: 878460e8d0ff84a0 ("perf build: Remove -Wno-unused-but-set-variable from the flex flags when building with clang < 13.0.0")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5648.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/Build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5648.c b/drivers/media/i2c/ov5648.c
-index 17465fcf28e33..efdebb1bbe134 100644
---- a/drivers/media/i2c/ov5648.c
-+++ b/drivers/media/i2c/ov5648.c
-@@ -2145,13 +2145,13 @@ static int ov5648_s_stream(struct v4l2_subdev *subdev, int enable)
+diff --git a/tools/perf/util/Build b/tools/perf/util/Build
+index 43f74f5b96f8c..fd9305d2c4163 100644
+--- a/tools/perf/util/Build
++++ b/tools/perf/util/Build
+@@ -277,7 +277,7 @@ bison_flags := -DYYENABLE_NLS=0 -Wno-unused-but-set-variable
  
- 	mutex_lock(&sensor->mutex);
- 	ret = ov5648_sw_standby(sensor, !enable);
-+	if (!ret)
-+		state->streaming = !!enable;
- 	mutex_unlock(&sensor->mutex);
- 
- 	if (ret)
- 		return ret;
- 
--	state->streaming = !!enable;
--
- 	if (!enable)
- 		pm_runtime_put(sensor->dev);
- 
+ # Old clangs don't grok -Wno-unused-but-set-variable, remove it
+ ifeq ($(CC_NO_CLANG), 0)
+-  CLANG_VERSION := $(shell $(CLANG) --version | head -1 | sed 's/.*clang version \([[:digit:]]\+.[[:digit:]]\+.[[:digit:]]\+\).*/\1/g')
++  CLANG_VERSION := $(shell $(CC) --version | head -1 | sed 's/.*clang version \([[:digit:]]\+.[[:digit:]]\+.[[:digit:]]\+\).*/\1/g')
+   ifeq ($(call version-lt3,$(CLANG_VERSION),13.0.0),1)
+     bison_flags := $(subst -Wno-unused-but-set-variable,,$(bison_flags))
+     flex_flags := $(subst -Wno-unused-but-set-variable,,$(flex_flags))
 -- 
 2.53.0
 
