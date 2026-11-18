@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045176;
-	b=c0uz3wsklCYfcWOJMNKGFXyPqhtjJbbD+FPykFxvITtBE1TEG/0fpspVDYWXOFooXX+1
-	 3qkhwZze3UrZIm4PUI+dHYT5/dkT2lOvWzUWkToaCCPyilmXAljOBTn074vXUHyWQC0PJ
-	 lFuVXeWzwVYIMnJnM7/Vo8QTYuYGAnDcn9nM+icq2rOjIQYiLMLt0/fm2731XIA8KAIhZ
-	 XSK/KhvIT94A5n417SimVC1d3CIDaEkhby90suk+xt1RcajeMvx4nEKvKVSuNt4dEqUYh
-	 ZF7psAIx7ob9XA66g8jFhcpZiZQC0Hr0L3A+pB46Mi2vCIVK/Hx0XcYVxEyB0UmQ0wA==
+	t=1795045179;
+	b=otcmnFjXcR+e4S6ro/QmcE01IGx7b21lQdCepp3jGkSffZ0HWTszB1wCpz209w0VSLbT
+	 Tl6ycyd/UVhAqpRhbeh42VmkubClFdtOBzl8JH2082rUIsz8BY8/MTa+NUEtIvHO/PmME
+	 wkKiZCLyhL2l53MbeWTOHHn8Lxmt0nuOOJcepJJ832zfAq02A65SWaMzexBpBg37ae4JF
+	 Vt33Ys7LiJJsx1B0W8kAHk8PSWXet34Q9QrgrHFflRkU0Tlhu1qHqFcQ24NMqtkl0XjJ7
+	 ZnPw34fXlBBv7KaMU3Mts3gDOAmm1/nl5WrkCltmaeD4+ZzfUgJCkvIFUzEJjR+pmkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IaJT8IiRAaSOdQgZklbWroUHUDw4xQN1BQSb3AF1yb4=;
-	b=VQNCO4DDpMyROUhSW3A8andBC1P8clGdqjcs+ytEZdPQ4dCQru8BzYRG8e5aEZSFalT7
-	 ztodRMryNd96UhE1vKVEsz9fd+l4SK4I+shkLOrkQPcb7jWc1OczHmI3fem4hufLx5cTU
-	 ddGK6lBQ0bRjGMd8k+h1HtD58Gks5IfNRfvCV+ADCQIt/J200SPUqAm43bdlmn7gJxnEi
-	 NhTHEzRPhRZEf9XROzUC/aLi/xjLBvtuSyZgK65GNfEMH5j8Wig1mbORM9Upt7ikzKvS0
-	 Tt44mBrnFSsIn5wF0VQgR0KmqQe9o5X7JsdquEkzhHt5QdOVQ55t+RCnMsSwjLJHqHQ==
+	bh=K1NdzN5PfxXrxs1t9asMn9Kmb1m5GpXbJpujt2uP7Sk=;
+	b=A1jrN6QHOlEeYTW0T3o5XecEoI3aY0MWTkVDWEzDDw1qdV3b85SIbKAGE3Trgtxb9qqV
+	 l5oj6cPKA1dYsI0x2YGYIzed8oweEhLtBZb5VWL9rkTFUrHNSssyakwJodscvs6LQTdCu
+	 rBsLR1cRNY7ktkaWgq+E/wqJHVtyAC6OruTtWYcYWaFrkdP0XE71lCayKIo0jlMfBra5T
+	 e63LWqXYO5DeDmf7CNYP1FmnAmFh+Jwt99TgoRl1jPKvlJE/qC96btyDz7JJx+U07bNV+
+	 pIr9ii3XqmN1+zzPL/IKvQWdvJehDnOsh9BxMRzQ9EcU9cI0vLkTcOvbFi/m9wD0b6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PkfGzhM+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CCwDhna/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB303606A31C;
-	Wed, 18 Nov 2026 23:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF056606A32C;
+	Wed, 18 Nov 2026 23:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PkfGzhM+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4391F000C4;
-	Wed, 18 Nov 2026 23:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCwDhna/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0867C1F000C4;
+	Wed, 18 Nov 2026 23:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045176;
-	bh=IaJT8IiRAaSOdQgZklbWroUHUDw4xQN1BQSb3AF1yb4=;
+	s=korg; t=1795045179;
+	bh=K1NdzN5PfxXrxs1t9asMn9Kmb1m5GpXbJpujt2uP7Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PkfGzhM+7BqFoRmodlsf2GxwUemlObCRYJrPwEC6ws0XWPvcm47p2lz6d8absCVX0
-	 TVQ7XOeodp+pir0EVRUX76GwxO/ZnSbkXnwPXlfGe15EVkDjbCZdyY44SppyvY24pw
-	 FwhJ2jHYXutbLyLxSRHSWDlWxfuOzdHefZqY6XjI=
+	b=CCwDhna/VIf3mFRbO5hKZ5MxKnpNaPM5UZiIvDxtvzHImqIMz2qFYPEk6puEe8RPW
+	 zR+f9Ca+LglmgisEKZnISRdyVCT5rzduinviyRJ+PwC/FevEmPOGSevru/hk942m/0
+	 g5LXT8oV+TiclcrXQwna9nirCeo8fArobulTBZtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Cemin <dcemin@nvidia.com>,
+	Ma Ke <make_ruc2021@163.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0828/2857] ASoC: sdw_utils: clear stale RT711 device reference on exit
-Date: Wed, 18 Nov 2026 15:31:02 +0100
-Message-ID: <20261118150231.384801145@linuxfoundation.org>
+Subject: [PATCH 6.1 0829/2857] ASoC: wcd9335: Fix device reference leak in wcd9335_slim_status()
+Date: Wed, 18 Nov 2026 15:31:03 +0100
+Message-ID: <20261118150231.420207180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Cemin <dcemin@nvidia.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 7c7df141dcabaa5370b5e52a9d64e2c1ea13a338 ]
+[ Upstream commit f0cc352be29ba616e0682f66f551d3f3029886fd ]
 
-asoc_sdw_rt711_exit() drops the reference held in ctx->headset_codec_dev
-but leaves the pointer populated. If the card cleanup path reaches the
-exit hook more than once after a failed or deferred probe, a later
-invocation reuses the stale pointer and calls put_device() again,
-underflowing the refcount and leading to oopses when later probe,
-driver bind, or suspend paths walk the SoundWire bus after the device
-reference was released. Observed as boot- and suspend-time oopses on an
-arm64 platform with an RT712 headset codec, reproducible
-deterministically by repeated machine-driver probe cycling with the
-codec drivers unloaded.
+wcd9335_slim_status() obtains the SLIM interface device with
+of_slim_get_device(), which uses device_find_child() internally and
+returns the device with a reference held.  As the device_find_child()
+documentation says: you will need to drop the reference with
+put_device() after use. The reference is stored in wcd->slim_ifc_dev
+and never dropped, so the SLIM interface device cannot be released.
+Fix it by using devm_add_action_or_reset() or put_device() respectively.
 
-Clear the pointer after put_device() so repeated cleanup becomes a
-no-op, which also makes the existing NULL check at the top of the exit
-hook effective. This matches what commit 046173b98de3 ("ASoC: sdw_utils:
-fix double put_device() on aggregated amps") did for the aggregated amp
-references.
+Found by code review.
 
-Fixes: 811648340707 ("ASoC: Intel: sof_sdw: avoid oops in error handling")
+Fixes: 20aedafdf492 ("ASoC: wcd9335: add support to wcd9335 codec")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Cemin <dcemin@nvidia.com>
-Link: https://patch.msgid.link/20260912182131.1156475-1-dcemin@nvidia.com
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Link: https://patch.msgid.link/20260914095009.12049-1-make_ruc2021@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw_rt711.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wcd9335.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw_rt711.c b/sound/soc/intel/boards/sof_sdw_rt711.c
-index 8291967f23f30..cbc61988a0b5c 100644
---- a/sound/soc/intel/boards/sof_sdw_rt711.c
-+++ b/sound/soc/intel/boards/sof_sdw_rt711.c
-@@ -144,6 +144,7 @@ int sof_sdw_rt711_exit(struct snd_soc_card *card, struct snd_soc_dai_link *dai_l
- 
- 	device_remove_software_node(ctx->headset_codec_dev);
- 	put_device(ctx->headset_codec_dev);
-+	ctx->headset_codec_dev = NULL;
- 
+diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
+index 99de81c489681..e810951f78600 100644
+--- a/sound/soc/codecs/wcd9335.c
++++ b/sound/soc/codecs/wcd9335.c
+@@ -5158,6 +5158,13 @@ static int wcd9335_slim_probe(struct slim_device *slim)
  	return 0;
  }
+ 
++static void wcd9335_put_device_action(void *data)
++{
++	struct device *dev = data;
++
++	put_device(dev);
++}
++
+ static int wcd9335_slim_status(struct slim_device *sdev,
+ 			       enum slim_device_status status)
+ {
+@@ -5182,6 +5189,11 @@ static int wcd9335_slim_status(struct slim_device *sdev,
+ 		return -EINVAL;
+ 	}
+ 
++	ret = devm_add_action_or_reset(dev, wcd9335_put_device_action,
++			&wcd->slim_ifc_dev->dev);
++	if (ret)
++		return ret;
++
+ 	slim_get_logical_addr(wcd->slim_ifc_dev);
+ 
+ 	wcd->regmap = regmap_init_slimbus(sdev, &wcd9335_regmap_config);
 -- 
 2.53.0
 
