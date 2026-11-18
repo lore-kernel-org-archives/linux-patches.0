@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028345;
-	b=Gm93kI5qe8w8RbnWEgI3bZZAIalXrUVHSh8PuqmpAWR/H4nN0PNnASvAJDj77yCJkWjL
-	 XJgfBLfNtxYUspWKmZ3fnvlilAuK13bKDTVI3t6fNoXf8VEYaxldHSjqfN1YJITCaLt1z
-	 j8a6TlrpT8KITGy8TSUbyoWmmUkD1hgzlx3dLK7cT32eVA9OaSY30hji5S3eSyjqwNz+l
-	 KMAa8nxgHrWcCM+4smBunsbXZf740mHHnvfPpx7/n+VeZeXcLtN8WxxMZco8UgXEL5zrM
-	 rdzc7A8c7UaVMDmId3vnjTARns7tPiF3JQU2eZgF38JUkVUteuAV3RPKBbBG7JC8wkA==
+	t=1795028347;
+	b=GesmQKUK2nCjeicycxswhVxge4hZlDzXh+Tp7qtutxmYb+2lcFyQM9LgwYEugUnBToVg
+	 H2+d7BkO7F4A2NPU1nNk3ccCYBHCBOTgp17MnOLbrOME5GGZc4IynV0lGx9yzZgOCV8JL
+	 FbgHtXkW/BIQPNG+w5el+aTXEUYTz7GSDhVYUGinOmqpeZPLAzkwYtcVNh9pa3CGn5aYz
+	 CXjsIQH6LC9lYeBAKFxvdVgZejDFSHo+Lupu4jWUkT0aPVj5hcgLWSdebcx2U3andTN/l
+	 G7aQKMBO/iggNvPOL6GXpiQpU1aANQyB8hUhM89QFJ4ZNaddh8YH4yaabSvf9ySlfQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=745QfQs7bkbv/uFqg5Awa7leFdcjKuhXKiq6DOSCqNk=;
-	b=0JkqGk3zFaxs1LKFcLAGwFW0XbQ5puFjuvcfMwRiDlkC3bIJugakJTTT2hBnfQQXIzsg
-	 Q7mAaO89BCRSkZfGUgZx6ZY8l8ULs2Ud7t49ZgSkmRJQB3q6sDwMcmcx1C5+40vYCCwei
-	 M6XKf92L/LXwOB3kqCTF+6byO00iiSVCoKzpzul+U4f1afLx1THH/0ZTm7BT7PzmX97U4
-	 STj3XmujZj9YbBoDbVmpTTupW2hE8PFGzk9IDzQBEnH/1M03jUA+pRp4Y1aLWINgZW0mv
-	 0WbRXRPcM6T5dZkzJ/7S4PXVFTQf/Tw9wH4vMLqZSXLFldN9i+h6Nk5ME/2FGsRPNIw==
+	bh=IHMbCpdCVQ4/8PTNhHecD9GF/mSj7V9hKUUQZDVpclc=;
+	b=Cn2lIRLhcEhpfUFA6gwBKctCW4iV3hcIVqfAfW8AFrb8R3D2mO6kh8HCVWHcfOyOvH/+
+	 fWp+PWUQjYcaUxg3atrbDeB3da0muOlOncDzpn1Whg6iev5LiwPIucjlLSxZSTkmgMwOK
+	 WSX/xfl26SRpLM7giBt4iKcy+zZtHgXeA+91C2KpJKXF7cS306J965QQTHSeXXnZc579e
+	 NlCOEADvLKBnm2o6D0XnZXXhq9RxU/diDXRudcn7grfdR4IWEItyPIHuVaPlT7uk9Mrtx
+	 iGOFmTYSTy4amGYRKLQ4SOBUDuMTbR/BiJOWgcEnADDh3XwK5PhHGOFVFfosz2lewxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGlnDxgG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7OIGGzU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC5A606A325;
-	Wed, 18 Nov 2026 18:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B4960A2608;
+	Wed, 18 Nov 2026 18:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGlnDxgG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627EE1F000C4;
-	Wed, 18 Nov 2026 18:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7OIGGzU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216B01F000CD;
+	Wed, 18 Nov 2026 18:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028344;
-	bh=745QfQs7bkbv/uFqg5Awa7leFdcjKuhXKiq6DOSCqNk=;
+	s=korg; t=1795028347;
+	bh=IHMbCpdCVQ4/8PTNhHecD9GF/mSj7V9hKUUQZDVpclc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGlnDxgGR/4pIYwTelIPChxvBfM6a83CVzr3kDws9LLEVBoPLxcIxoESxvTH/f3t+
-	 6YfZW+tgELiOLrSOH5xwwnAo/cpQeTw9OYBW5tHfbF0BmuGaI4P0giO6EhLiwr31QF
-	 6mG6LGBdCGu1JIQeGqyxaWiamcspV7/2t+vxfSC0=
+	b=d7OIGGzUuIQizJnqQti0X613lCO98OOG6Mkgt6phvoW9UB2hYuLSMIe2rw5dIP0U1
+	 Ala0l8icLhuBo+ITlOjjOp+5Sv6DTv1UTumWnJ6Fhj98/rl4NwO4/bkB4G9MG3Xzc5
+	 lG1OcDCwGEQt1LD9RMFWFtmX7w2xzzMfv2YpfgZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vega <vega@nebusec.ai>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2112/2151] net: add eth_type_trans_careful()
-Date: Wed, 18 Nov 2026 16:04:07 +0100
-Message-ID: <20261118150238.631050421@linuxfoundation.org>
+Subject: [PATCH 6.18 2113/2151] loopback: use eth_type_trans_careful()
+Date: Wed, 18 Nov 2026 16:04:08 +0100
+Message-ID: <20261118150238.667020597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,76 +74,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 2519a6fe7a8bba57a961eb804e43e7df35ac40fe ]
+[ Upstream commit 093a28998374f4007ffe67cc661f8192c1b062a9 ]
 
-eth_type_trans() assumes ETH_HLEN bytes are present in skb->head.
-NIC drivers always provide this, and they should keep using the fast
-version.
+tc egress actions can leave an skb with fewer than ETH_HLEN bytes in
+its linear part. loopback_xmit() then crashes in eth_type_trans():
 
-Devices looping skbs from their transmit path back to their receive
-path get skbs built by the stack instead. Their link-layer header
-might have been popped by tc actions (act_vlan pop_eth, act_ife decode)
-or OVS actions (pop_eth + pop_mpls / pop_nsh), leaving fewer than
-ETH_HLEN bytes in the linear part. eth_type_trans() then hits
-the BUG() in __skb_pull().
+  tc qdisc add dev lo clsact
+  tc filter add dev lo egress matchall action vlan pop_eth
+  # AF_PACKET SOCK_RAW: eth / eth / 8192 bytes of payload
 
-Add eth_type_trans_careful(), which first pulls the Ethernet header,
-and returns a drop reason on failure, so that the few devices exposed
-to this can drop such packets.
+  kernel BUG at include/linux/skbuff.h:2839!
+  RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
+  Call Trace:
+   loopback_xmit (drivers/net/loopback.c:87)
+   dev_hard_start_xmit (include/linux/netdevice.h:5455 include/linux/netdevice.h:5464 net/core/dev.c:4057 net/core/dev.c:4073)
+   __dev_queue_xmit (net/core/dev.c:5066)
+   packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
 
+The same happens with "action ife decode" on lo egress.
+
+Use eth_type_trans_careful(), and drop the packet if the Ethernet
+header can not be pulled.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Vega <vega@nebusec.ai>
+Link: https://lore.kernel.org/netdev/20261005052249.1914367-2-weir@nebusec.ai/
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
 Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261028122703.2093730-2-edumazet@kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028122703.2093730-3-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 093a28998374 ("loopback: use eth_type_trans_careful()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/etherdevice.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/net/loopback.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/etherdevice.h b/include/linux/etherdevice.h
-index df8f88f63a706..1f833ebd71ed9 100644
---- a/include/linux/etherdevice.h
-+++ b/include/linux/etherdevice.h
-@@ -38,6 +38,34 @@ int fwnode_get_mac_address(struct fwnode_handle *fwnode, char *addr);
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index 1fb6ce6843ade..6d16d6040401d 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -70,6 +70,7 @@ EXPORT_SYMBOL(blackhole_netdev);
+ static netdev_tx_t loopback_xmit(struct sk_buff *skb,
+ 				 struct net_device *dev)
+ {
++	enum skb_drop_reason reason;
+ 	int len;
  
- u32 eth_get_headlen(const struct net_device *dev, const void *data, u32 len);
- __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev);
-+
-+/**
-+ * eth_type_trans_careful - eth_type_trans() for skbs coming from the stack
-+ * @skb: buffer, possibly with less than ETH_HLEN bytes in its linear area
-+ * @dev: receiving network device
-+ *
-+ * eth_type_trans() expects ETH_HLEN bytes in skb->head, which NIC drivers
-+ * provide. Devices looping skbs from their transmit path back to the
-+ * receive path (loopback, OVS internal ports) get skbs built by the stack,
-+ * whose link-layer header might have been popped by tc or OVS actions.
-+ *
-+ * Sets skb->protocol on success.
-+ *
-+ * Return: SKB_NOT_DROPPED_YET on success, or a drop reason. In the latter
-+ * case, the caller must free @skb.
-+ */
-+static inline enum skb_drop_reason
-+eth_type_trans_careful(struct sk_buff *skb, struct net_device *dev)
-+{
-+	enum skb_drop_reason reason = pskb_may_pull_reason(skb, ETH_HLEN);
-+
-+	if (unlikely(reason))
-+		return reason;
-+
-+	skb->protocol = eth_type_trans(skb, dev);
-+	return SKB_NOT_DROPPED_YET;
-+}
-+
- extern const struct header_ops eth_header_ops;
+ 	skb_tx_timestamp(skb);
+@@ -84,7 +85,12 @@ static netdev_tx_t loopback_xmit(struct sk_buff *skb,
+ 	 */
+ 	skb_dst_force(skb);
  
- int eth_header(struct sk_buff *skb, struct net_device *dev, unsigned short type,
+-	skb->protocol = eth_type_trans(skb, dev);
++	reason = eth_type_trans_careful(skb, dev);
++	if (unlikely(reason)) {
++		dev_core_stats_tx_dropped_inc(dev);
++		kfree_skb_reason(skb, reason);
++		return NETDEV_TX_OK;
++	}
+ 
+ 	len = skb->len;
+ 	if (likely(__netif_rx(skb) == NET_RX_SUCCESS))
 -- 
 2.53.0
 
