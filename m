@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055343;
-	b=g85ShboL/1jQQNH/A65/01x1p7tTNJPDjOHQnRdLUjirHJ1YbIRyPOYBsHL+gknQ6x5N
-	 6f9pfgMLlks5siZlJ2icEiqa051XKcAFy16vLQ17G6pKp+tBHPCVpyb97fTgXKLhGeeT6
-	 pIrcS6w7vzghGVx+FoQ03Ypu2Gr4fJ3PT3Jn1GAuiQ42+TNbUoQa2s0wiYeqfaxHiQ2aL
-	 FWm+Jn09F5dQAclurAgs3DcnY41OJjq1pvFnbUK6+NFl/bwASMv4neLoCkLg7aqd0Jobn
-	 YzzikkRkFk9jMdmBl6SF3LzHYfGOchyNxbsUcmWbBKRoZKtWtv74D6o6YevpJjIzqbQ==
+	t=1795055346;
+	b=XmVKJtBH9Atkx7oPIb4PyJ9vVDAEexoZFP3n0U1OZ8xXwekohgaPw2X9i4fDhBln/J9E
+	 ZpHSmvqlBax96PYf4TQ03mlw497MMizL2n1DSEkuDP3IjFepMdJlUPpSincrzhN2x9yxY
+	 l70nQvsL6lMx4qDW9mqqJFvdov+HfWxmA4LM0aV0b+1nDoV2HlYT8nY0q+ntQLYmmGeFG
+	 ueF9trfh0LHhId+PdSI+Z2FFy9/IEMG/hbiXTPUx2u+oxTv4KfyqRGShw1t/0XoMpCNz2
+	 MZcV4n0pM/LEI4NW/dgbheUiVyujpyc3yKsfgWpi9jcw1wfnRYPe0ejMi9J8rguHFMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YRYQclvFOP2DYqZ+Gr/oYLrjRwQ1vKZPVKOe/HjiSBA=;
-	b=KStSFwlw+oZ4kYbfB0fpjxHTho5ubbxzrA5j+8i+dA7dFGb+8tbXTJLHT2uYKP60YQa6
-	 b5xVuQsfG2BWVZdx3AdRtdIW/rjccOLrVdixcK1r7P91sRFg9/wUxYcb3c6BZ+BKPs34U
-	 G6XwSfj1kAKJ/rqBDj0dHuEV+H/3RgCSqAop3Y8p4ohwDOMt/Dd9US8k2MxSEE2GrPAXG
-	 pIwtk2L3yfMsH3HEIOBTPbQ/MyGlIlLdP5Dy2ZfqRcdkNibwJIsJdaL8XqpkA8nYnnEmY
-	 YrXMpUBt64s2b2CHoD3ryxjlHtxrdzacHvzGXG+vMRdpoQ1OSNZnucnFHPhI/MhA88g==
+	bh=Cicl6zH5iA4HkU8q9DLCAHc3WNY4dkWGXrKrj+ZIhag=;
+	b=ochqsuecqZf/08tSv5lmzwg1Ls76z/os30Eyw6+504fr2i1l6k2vfCtI2G+Vev0arAEo
+	 MIcqXrOi1yF9/yRX3dHrusKu9X+JCOGYnj+rwl1fZjy2UM4D9EC8yvHk4nwkX9xvIqT2V
+	 kAlwXSwa2Tvsih18ggJSH8mWRAenwills8DKpx7nxiQCH31G/+mQ9xFLSsanMnw/tMV5n
+	 /N/cNbnfCDtAezzsgl7s0wdqTYsDi2+F3LJ4Kcw6obSKjxyFHHlkavJ0/R/S4YGD2rh2r
+	 KY6l9qhaYYgIQ+F7Dk4UtiSDaw5HxixyIfvXsGN8spWpvBf9hqvJnb2AN/Ke4OIMLhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YhmCP0v3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VNOdzJ4c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0DC606A325;
-	Thu, 19 Nov 2026 02:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A76606A339;
+	Thu, 19 Nov 2026 02:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YhmCP0v3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B19B1F000C4;
-	Thu, 19 Nov 2026 02:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VNOdzJ4c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8331F000C4;
+	Thu, 19 Nov 2026 02:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055343;
-	bh=YRYQclvFOP2DYqZ+Gr/oYLrjRwQ1vKZPVKOe/HjiSBA=;
+	s=korg; t=1795055346;
+	bh=Cicl6zH5iA4HkU8q9DLCAHc3WNY4dkWGXrKrj+ZIhag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YhmCP0v3DXsT65/KmjUOJ0WUf03xXg6ta7WUbNp0dg3BR7amLi0j4vf9hu5SjCvFw
-	 V4E4taz25Mv8678SsyMuf1vgd8Kp6HAKaDAe071fz1MLId8KqA1vhKeGBLtLZcvMFw
-	 sy+s2ljvN/D/FIvpgSZ3MJHIXjDF6n6Zv2LZS9bk=
+	b=VNOdzJ4czzbDiJUlX2rhCEaNDYnPfKOTqYJWLZNSKyEqZAsNYax1A7pV1dQiPvA4r
+	 2Hskwl0DTRQSkkTJImRMYxVOXdMGTU0i9M6UJoVoTEADgnr61iLYhN1wAehEiLjYrG
+	 2rTgNj97i+QNLmJ00KapikbaqmXerLmSzHtaSdwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1557/2214] RDMA/mlx5: Fix RQ resource reference leak in mlx5_ib_wq_event()
-Date: Wed, 18 Nov 2026 15:53:53 +0100
-Message-ID: <20261118150114.376730584@linuxfoundation.org>
+Subject: [PATCH 5.15 1558/2214] RDMA/siw: Fix qp use-after-free in siw_get_base_qp()
+Date: Wed, 18 Nov 2026 15:53:54 +0100
+Message-ID: <20261118150114.414014883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,45 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 65f3eab431944415bbe5e3af1bbb2736d4bb1523 ]
+[ Upstream commit ef15197f81ffedf29560edf2221199d92fd83dc2 ]
 
-Since commit 312b8f79eb05 ("RDMA/mlx: Calling qp event handler in
-workqueue context") rsc_event_notifier() expects the event handler to
-drop the resource reference taken by mlx5_get_rsc().  mlx5_ib_wq_event()
-was missed by that conversion, so every RQ event leaks one reference,
-which keeps destroy_resource_common() waiting on the completion.
+The reference taken by siw_qp_id2obj() is dropped before the address
+of the embedded ib_qp is taken from the QP.  If that reference was
+the last one the QP is freed and the pointer returned to the iwarp
+core is dangling; the core only pins the QP with iw_add_ref() after
+the call has returned.
 
-Put the resource reference on all exits of the handler.
+Copy the pointer while the reference is still held.
 
-Fixes: 312b8f79eb05 ("RDMA/mlx: Calling qp event handler in workqueue context")
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260916183921.2092821-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260916184400.2093106-1-vulab@iscas.ac.cn
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 5 ++++-
+ drivers/infiniband/sw/siw/siw_main.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 3df6fb5edbf34..8caded8c3b324 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -5121,11 +5121,14 @@ static void mlx5_ib_wq_event(struct mlx5_core_qp *core_qp, int type)
- 			break;
- 		default:
- 			mlx5_ib_warn(dev, "Unexpected event type %d on WQ %06x\n", type, core_qp->qpn);
--			return;
-+			goto out;
- 		}
- 
- 		rwq->ibwq.event_handler(&event, rwq->ibwq.wq_context);
- 	}
+diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
+index f853f3c23540a..dd4c2dcd377c2 100644
+--- a/drivers/infiniband/sw/siw/siw_main.c
++++ b/drivers/infiniband/sw/siw/siw_main.c
+@@ -244,8 +244,11 @@ static struct ib_qp *siw_get_base_qp(struct ib_device *base_dev, int id)
+ 		/*
+ 		 * siw_qp_id2obj() increments object reference count
+ 		 */
++		struct ib_qp *base_qp = &qp->base_qp;
 +
-+out:
-+	mlx5_core_res_put(&core_qp->common);
+ 		siw_qp_put(qp);
+-		return &qp->base_qp;
++
++		return base_qp;
+ 	}
+ 	return NULL;
  }
- 
- static int set_delay_drop(struct mlx5_ib_dev *dev)
 -- 
 2.53.0
 
