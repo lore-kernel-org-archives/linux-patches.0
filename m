@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038599;
-	b=QWHtoTb+9m7ASfxBibwnJAiqcScNOJKNYIFRgV5vkdNjp+S9foFlwZVhvwJtoFesZ1cB
-	 yva8lGDHgnjCX2hRPsUFKt55Wm4+rIbpCzVhNileQa+yVbN2tSz5TdAt5PpkMt51jFxLe
-	 RICagtlY89b2zm2N5gqnzunJsitFyduEjCCqul3cHG0B3qDj9ZX5ZOED51MV6A0k4D6UO
-	 zyM2PW8nUu1w9fsYqkXgeOBtw4B8waTGtSm+IHyizWmzqAyXS1YzKKbxrs8its+gr0ebc
-	 Qyhh/zieIqwElSAZmmjUeiDlrfZTmdza4Pis+4KibhWMXDY+9+vHHHBJL8o/GOa7hzg==
+	t=1795038601;
+	b=0Ty67PlQuYaKZovOIgQj5wjI9/VupmNuDNrWMEOCkhZERy6ly0w9ARkz798BwYQsuYnJ
+	 vQ3dftuScwdnewHZNzaT98JUOsu2zjgolG0b6EX85A2mp70f4WiYNF+zej0G0WYEIkR4a
+	 xotCzumUTKMbzRfSMcvpG5EKWopUjfLA7t1AQzrNt3dO5jLvho34sBHO2Ahwu5uAPIcok
+	 OFelfFtGOg7c0FCWUiy1uhCh5/QROjkRPmDnmEi1+iT2tb6iEe1PexvmO965v7LExT/7Z
+	 C5vWaVWqFg2YvVn38tCDRJYSLx0exdE45sSpmCC9Xc/234z7ly2wAnx6YpAaTY7VR5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UFPK8+wCAabjsdzGHphMHmGLjeHrcCNPXTjPXbJtBUs=;
-	b=nTyLz0d6N2zMQ1fggQu2l+C3fdiJkpB3KPRNWq1HoJICKsfx4h2Wo8rdPQUiOizrPZvN
-	 oK919uJLsi0t3R2GcCa5TwV8Wbyop4QPkO1qS3hynDPW0frVfrvh+9k3naOR2fsCfqypL
-	 itm/GZWwcWoIaianuBijrWmFA3lJNMzU1R40Cet0vlPTqbaKpwGTZLOB+ZBQgg3msUYJ0
-	 mxNvU7Avdt4BZ5EFYxP1nmJg9ywN+pyU5vmZ8maRW5GvuB7ZJzkkJw+olWYKyhNQVvKKM
-	 eiLCgomxeBPJ9itqsXgfw9dCGbJVYX9XQSK18ry6HJ4pTDTcaJThuW88z1sq1urpRWw==
+	bh=GVWzlQnrWpM1BthqYoD4PFzG6hjOqP2BjdhRKX5i+j8=;
+	b=hhzow1qrW6gRrqC6TPgmTNyou7uDVFL5YyhDrfuYoF7gO2j0CcmE9XuHkguEv8c7dJ0X
+	 Nz/E2zBYGJcGC9HjdkKTpUz3EeFUbLIdbFSz9858uizoDVx67wJkUvECxMqfc4XA5HxzT
+	 /nqCMwY/wgc4RKF/kR1tMA4QGoKDeLWzV16RjVZyd6X4LA/wR1SSOCs+gzgAOz42T6LUe
+	 qBCyRY4oc27JTKg4YSpHxO8viBVRWim5dvy9kLSw98raTxYRten6obNpL1PXODb2Zji6b
+	 MREJxIhf0+ahPCUxZxA7hBXlx27EzscZHl1h60vAUZoIVfwb6vRpnReijyfVaU/7d+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yeG/JVfj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBuecxfq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C8606A31C;
-	Wed, 18 Nov 2026 21:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2E8606A320;
+	Wed, 18 Nov 2026 21:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeG/JVfj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253C91F000CD;
-	Wed, 18 Nov 2026 21:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBuecxfq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3391F000C4;
+	Wed, 18 Nov 2026 21:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038598;
-	bh=UFPK8+wCAabjsdzGHphMHmGLjeHrcCNPXTjPXbJtBUs=;
+	s=korg; t=1795038601;
+	bh=GVWzlQnrWpM1BthqYoD4PFzG6hjOqP2BjdhRKX5i+j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeG/JVfjUZzrVfaHqm2RXmMdZbsa2L1A7HRIsUQgfaBhrNvNCPYtStGb3xcHi9scN
-	 CRVRnlzCtdQML+/+iuPG7hw3oZM4m1iYB1Kne2CTep8ak5vasr47273yNRetOg06P1
-	 EJvy6kbXa94RyNHM/kQ8wo6NQW5DzuWnbx9dM9mA=
+	b=pBuecxfqIbS+w8DeUZhdlvCN7dUdZWBIuaJ9s+vS8PbCAyLnPhWe88fnx6lzzBZN5
+	 XiFqaEMcuEDCObprCrOOZiHMyjljGoBU6DISQTiWTrKX+S/g0ecU3Yd17SgEpu4Fgg
+	 PcjqZ7M87JyvtgO7+KBfN2q/tIQjHBZZCyY50NiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolaos Karaolidis <nick@karaolidis.com>,
-	Jan Kara <jack@suse.cz>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Aksh Garg <a-garg7@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1783/3318] fs: rotate inodes whose page cache could not be dropped
-Date: Wed, 18 Nov 2026 15:40:05 +0100
-Message-ID: <20261118150415.348620676@linuxfoundation.org>
+Subject: [PATCH 6.6 1801/3318] PCI: cadence: Store the core controller in platform drvdata
+Date: Wed, 18 Nov 2026 15:40:23 +0100
+Message-ID: <20261118150415.887019177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,78 +70,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolaos Karaolidis <nick@karaolidis.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 8ee09f597763acfd31c62a578ba88b792fc41b24 ]
+[ Upstream commit cfe96ce583c51bf6e034d4038c652a1e8227867c ]
 
-When inode_lru_isolate() drops the page cache of an unused inode, it
-has to unlock the list, so it returns LRU_RETRY and the walk restarts
-at the head of the list, where the inode still is. If
-invalidate_mapping_pages() could not empty the mapping, the restarted
-walk strips the same inode again, and so on until nr_to_walk runs out.
-Every walk of that list then ends on this inode, and nothing behind it
-is reclaimed for as long as its cache stays.
+cdns_plat_pcie_probe() stores a struct cdns_plat_pcie pointer with
+platform_set_drvdata(). cdns_plat_pcie_shutdown() and the callbacks in
+cdns_pcie_pm_ops retrieve the same pointer with dev_get_drvdata() but use
+it as a struct cdns_pcie pointer. This makes them read phy_count and phy
+beyond the wrapper.
 
-Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode lru
-traversing context") the walker pinned the inode with a reference, and
-dropping it in iput_final() set I_REFERENCED, so the restarted walk
-rotated the inode to the tail. Set I_REFERENCED again when the mapping
-is still populated after the invalidation, in the same i_lock section
-that clears I_LRU_ISOLATING. inode_unpin_lru_isolating() now expects
-i_lock to be held, like inode_pin_lru_isolating().
+struct cdns_plat_pcie only contains a pointer to struct cdns_pcie. Drop
+the redundant wrapper and store the struct cdns_pcie pointer directly.
 
-On CONFIG_HIGHMEM kernels this can happen to any unused inode: a folio
-is left behind if it is locked, under writeback, spliced into a pipe,
-or still in another CPU's LRU-add batch after being read. Without
-HIGHMEM it happens to DAX inodes whose only entry is at index 0, which
-mapping_shrinkable() lets onto the LRU and invalidate_mapping_pages()
-never removes.
-
-Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
+Fixes: bd22885aa188 ("PCI: cadence: Refactor driver to use as a core library")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Aksh Garg <a-garg7@ti.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
-Link: https://patch.msgid.link/20261016102515.111285-1-nick@karaolidis.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Replaced inode_state_set(inode, I_REFERENCED) with direct inode->i_state |= I_REFERENCED. ]
+Link: https://patch.msgid.link/20260915082826.4135665-1-lilinmao@kylinos.cn
+[ sashal: Retained the existing PHY-link cleanup loop using the core controller pointer directly. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ .../controller/cadence/pcie-cadence-plat.c    | 36 ++++++-------------
+ 1 file changed, 10 insertions(+), 26 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 5ebe791381096..9d11428af1f3a 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -495,12 +495,11 @@ static void inode_pin_lru_isolating(struct inode *inode)
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+index 371ffc1f00f86..528038f926c13 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+@@ -14,17 +14,6 @@
  
- static void inode_unpin_lru_isolating(struct inode *inode)
+ #define CDNS_PLAT_CPU_TO_BUS_ADDR	0x0FFFFFFF
+ 
+-/**
+- * struct cdns_plat_pcie - private data for this PCIe platform driver
+- * @pcie: Cadence PCIe controller
+- * @is_rc: Set to 1 indicates the PCIe controller mode is Root Complex,
+- *         if 0 it is in Endpoint mode.
+- */
+-struct cdns_plat_pcie {
+-	struct cdns_pcie        *pcie;
+-	bool is_rc;
+-};
+-
+ struct cdns_plat_pcie_of_data {
+ 	bool is_rc;
+ };
+@@ -43,9 +32,9 @@ static const struct cdns_pcie_ops cdns_plat_ops = {
+ static int cdns_plat_pcie_probe(struct platform_device *pdev)
  {
--	spin_lock(&inode->i_lock);
-+	lockdep_assert_held(&inode->i_lock);
- 	WARN_ON(!(inode->i_state & I_LRU_ISOLATING));
- 	inode->i_state &= ~I_LRU_ISOLATING;
- 	smp_mb();
- 	wake_up_bit(&inode->i_state, __I_LRU_ISOLATING);
--	spin_unlock(&inode->i_lock);
- }
+ 	const struct cdns_plat_pcie_of_data *data;
+-	struct cdns_plat_pcie *cdns_plat_pcie;
+ 	struct device *dev = &pdev->dev;
+ 	struct pci_host_bridge *bridge;
++	struct cdns_pcie *pcie;
+ 	struct cdns_pcie_ep *ep;
+ 	struct cdns_pcie_rc *rc;
+ 	int phy_count;
+@@ -59,11 +48,6 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 	is_rc = data->is_rc;
  
- static void inode_wait_for_lru_isolating(struct inode *inode)
-@@ -894,7 +893,13 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
- 				__count_vm_events(PGINODESTEAL, reap);
- 			mm_account_reclaimed_pages(reap);
- 		}
-+
-+		spin_lock(&inode->i_lock);
-+		/* The walk restarts here: don't retry leftovers right away */
-+		if (!mapping_empty(&inode->i_data))
-+			inode->i_state |= I_REFERENCED;
- 		inode_unpin_lru_isolating(inode);
-+		spin_unlock(&inode->i_lock);
- 		spin_lock(lru_lock);
- 		return LRU_RETRY;
+ 	pr_debug(" Started %s with is_rc: %d\n", __func__, is_rc);
+-	cdns_plat_pcie = devm_kzalloc(dev, sizeof(*cdns_plat_pcie), GFP_KERNEL);
+-	if (!cdns_plat_pcie)
+-		return -ENOMEM;
+-
+-	platform_set_drvdata(pdev, cdns_plat_pcie);
+ 	if (is_rc) {
+ 		if (!IS_ENABLED(CONFIG_PCIE_CADENCE_PLAT_HOST))
+ 			return -ENODEV;
+@@ -75,10 +59,9 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 		rc = pci_host_bridge_priv(bridge);
+ 		rc->pcie.dev = dev;
+ 		rc->pcie.ops = &cdns_plat_ops;
+-		cdns_plat_pcie->pcie = &rc->pcie;
+-		cdns_plat_pcie->is_rc = is_rc;
++		pcie = &rc->pcie;
+ 
+-		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
++		ret = cdns_pcie_init_phy(dev, pcie);
+ 		if (ret) {
+ 			dev_err(dev, "failed to init phy\n");
+ 			return ret;
+@@ -103,10 +86,9 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 
+ 		ep->pcie.dev = dev;
+ 		ep->pcie.ops = &cdns_plat_ops;
+-		cdns_plat_pcie->pcie = &ep->pcie;
+-		cdns_plat_pcie->is_rc = is_rc;
++		pcie = &ep->pcie;
+ 
+-		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
++		ret = cdns_pcie_init_phy(dev, pcie);
+ 		if (ret) {
+ 			dev_err(dev, "failed to init phy\n");
+ 			return ret;
+@@ -124,16 +106,18 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 			goto err_init;
  	}
+ 
++	platform_set_drvdata(pdev, pcie);
++
+ 	return 0;
+ 
+  err_init:
+  err_get_sync:
+ 	pm_runtime_put_sync(dev);
+ 	pm_runtime_disable(dev);
+-	cdns_pcie_disable_phy(cdns_plat_pcie->pcie);
+-	phy_count = cdns_plat_pcie->pcie->phy_count;
++	cdns_pcie_disable_phy(pcie);
++	phy_count = pcie->phy_count;
+ 	while (phy_count--)
+-		device_link_del(cdns_plat_pcie->pcie->link[phy_count]);
++		device_link_del(pcie->link[phy_count]);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
