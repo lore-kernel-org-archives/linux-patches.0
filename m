@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061434;
-	b=gtOgEXuozgJBgvbhyBw9Kj/LB0uRswE7Ry2XciQO4ltaTywaKqqbxZRleGDcVA0F5EW+
-	 yddodVluDa95m6wrJDZXGze5NnuAj88gVzJAmWfxe/69Fr1N99haizPNQAgpekKZKXAVZ
-	 3B4ZqLkwcaWzFn5o9spgNajNMlPfj3eYPqP0H4g2oLBLyUQxf670srwqhpWCbqKXonx6I
-	 RlNRtICSFypX1yoh+6gF12QGj5BFweaaNxEale7Blnr4BI7ZOe8EwYFajNcj7nMJfCJkA
-	 uW23bP1wkIPPQpYDYIhSXhb2RfhGcH7simBUhO/AnuXhZjFI0Ropvi9+yw9mqGU3xrg==
+	t=1795061437;
+	b=h5fOa0OesvEde2yNa8EVRMj7LPsmop+uvbO1Y6kGhBmuaovn1GuEgnYFgL+9/z5nsLsa
+	 9HrFgG363NiOVXJ15rcMiSZSHsprOPy2swlEEZBk475KaSXTWADM5jKCUtkcn9XNE6Crm
+	 tb7FHsZpRDOkO8mpDQ9redqoZE9wQDBO6z1pGwaRIOOck9yIhkHNq0rlPOrYQE7tYEYUQ
+	 +ccx3jk+h2YJ+Enaup1uE665E5VA98bt4TmxKuL8OlF7C4Smz6aWJc8K+qqf5EI4b1rsi
+	 NblfJugYCuV2HAD9QP0cuGDhIFMm9JV+Ur/MrLt4/13TUlFs98lTKFbw7TzvT3xuhOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BlTJmDTvKJ0+r8Oec3nmyg8W2QADys4MtKR6Tr8Dy3w=;
-	b=gWuI0epX/pyXSbc8jOnn0+9NLqp+J4gZoT1VMxwRDlHI7n0wgB0G3PA+fU+5Uzt9B6I5
-	 2CsH8tO9eXBl0KTRrMrSt1kp5cC0fE6VkednSZibhM/vOi6Las/KmxfqGL3qlpifO5l2F
-	 0Owaq+klz/cmIzyaYDqxqzAyahPUT9UbT+uM/qjmPa5vsR2r/19Wd2QctTKnKQcu+XYte
-	 jxMYdHydUXnXVIscCbD7VyO9bR4C/lJ+KLrS1trPqWplB+x4foCbQmvRKyZOvGOuZPZw4
-	 KKiJOmUSW3b6X/cyHxTzFv9e56rVs7crqV7d2Fe5q1uEdzO7f/6fjdnz3zpz9bRLLeA==
+	bh=iiN9z8Xpu6VkX/gC9wUMzhXyeKXmzF4lUesmUYTMzHE=;
+	b=uw3W0sAMW6vYiSc5p8gIQ0a9acmf/YAb0xKW6cGaL2lM9hwIzii3SUaakbWgdLQZ0TCA
+	 oW6J89D2EUkNqLxfa8kdIjzyRrLnRFUcsa/mUEn82U+iGkyKtli84V53Q+2M8Sz1Xgz+4
+	 uyAzKwJwJciANE/x/XmnGspusREkZntD2hy1epPAyKc3ue/kjjWTNCBad46irJl1nPN27
+	 LYSnpKDGpWvZK+EWZMevoyyLKTb2kFwBoi2yc7nTq0kJDZeTXyP8+MMwwqRoUH7s6aMKU
+	 MNgp05YOpD24EKHjyxMFHxEeM8aVcVxC8Zg87t2T3WZhP9B0yC8uWCcKXuHp9/Q+NTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Seg6isXf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UTOdu1iL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB671606A330;
-	Thu, 19 Nov 2026 04:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A226606A32A;
+	Thu, 19 Nov 2026 04:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Seg6isXf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196751F000C4;
-	Thu, 19 Nov 2026 04:10:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UTOdu1iL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49E61F000C4;
+	Thu, 19 Nov 2026 04:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061434;
-	bh=BlTJmDTvKJ0+r8Oec3nmyg8W2QADys4MtKR6Tr8Dy3w=;
+	s=korg; t=1795061437;
+	bh=iiN9z8Xpu6VkX/gC9wUMzhXyeKXmzF4lUesmUYTMzHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Seg6isXfQ8XmJ/rADh4LDGOwQaMv1pHsnwctT3J9wk1tp23ZiDaTGjE0QhMhnjIwv
-	 2ePaCyJ4GhFoJ42ZDNi6j1IgLKOYvjCaoLOa9thpeak5qCrp5d+sPebXSLbTzHwIKx
-	 SkjMSSoyZrRCpBCw+A7ilS2C4F5Zc656p55zblmg=
+	b=UTOdu1iL6rmu5B4YXJIuloDUCsQwqUZlLDS6awi17F4ji5WqwhOGn9p3rMEkL0c/5
+	 vnJoRePe+CAtVjThoeCCAMA/yh3Q5BXAin2T4RTpF/GiP65/E0hhxChLa4iM6/OJHt
+	 rp9c9fAg1nMOUpiehYHVEktPONBF5y/3k9+JMt64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1549/1848] ALSA: line6: Reject too small max packet sizes
-Date: Wed, 18 Nov 2026 15:59:47 +0100
-Message-ID: <20261118150024.475268323@linuxfoundation.org>
+Subject: [PATCH 5.10 1511/1848] sh: defconfig: Enable the current M66592 UDC symbol
+Date: Wed, 18 Nov 2026 15:59:09 +0100
+Message-ID: <20261118150022.565010327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,45 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e2ef553dfe923959632e580bcad8583d922868ac ]
+[ Upstream commit 9b65dcd94222c37febf98127b1ac5452c94a16d0 ]
 
-Although the LINE6 driver has a sanity check for the given max packet
-sizes, it still has an implicit requirement of the minimal size being
-bytes-per-frame; e.g. the impulse test signal assuming the fixed size,
-and when a too small size is specified by a malformed USB descriptor,
-this may lead to an OOB access.
+The M66592 UDC provider is built under CONFIG_USB_M66592. Several
+SuperH defconfigs still enable the removed CONFIG_USB_GADGET_M66592
+symbol.
 
-Change the sanity check conditions to reject too small max packet
-sizes for avoiding the scenario above.
+Replace the stale entries with the current provider symbol.
 
-Fixes: 3450121997ce ("ALSA: line6: Fix write on zero-sized buffer")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-10-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 193ab2a6070039e7 ("usb: gadget: allow multiple gadgets to be built")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Assisted-by: Codex:gpt-5
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be> # build-tested
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/pcm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/sh/configs/migor_defconfig   | 2 +-
+ arch/sh/configs/sdk7786_defconfig | 2 +-
+ arch/sh/configs/shx3_defconfig    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
-index 7325482dcaebb..59b7c6beef6c5 100644
---- a/sound/usb/line6/pcm.c
-+++ b/sound/usb/line6/pcm.c
-@@ -564,7 +564,11 @@ int line6_init_pcm(struct usb_line6 *line6,
- 	line6pcm->max_packet_size_out =
- 		usb_maxpacket(line6->usbdev,
- 			usb_sndisocpipe(line6->usbdev, ep_write));
--	if (!line6pcm->max_packet_size_in || !line6pcm->max_packet_size_out) {
-+	/* reject max packet sizes smaller than bytes-per-frame;
-+	 * (the magic number 6 is taken from the playback case)
-+	 */
-+	if (line6pcm->max_packet_size_in < 6 ||
-+	    line6pcm->max_packet_size_out < 6) {
- 		dev_err(line6pcm->line6->ifcdev,
- 			"cannot get proper max packet size\n");
- 		return -EINVAL;
+diff --git a/arch/sh/configs/migor_defconfig b/arch/sh/configs/migor_defconfig
+index a24cf8cd2cea5..e9bcf362752ed 100644
+--- a/arch/sh/configs/migor_defconfig
++++ b/arch/sh/configs/migor_defconfig
+@@ -76,7 +76,7 @@ CONFIG_LOGO=y
+ # CONFIG_LOGO_SUPERH_MONO is not set
+ # CONFIG_LOGO_SUPERH_CLUT224 is not set
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_USB_G_SERIAL=m
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_RS5C372=y
+diff --git a/arch/sh/configs/sdk7786_defconfig b/arch/sh/configs/sdk7786_defconfig
+index 61bec46ebd66a..e0fc69b015de8 100644
+--- a/arch/sh/configs/sdk7786_defconfig
++++ b/arch/sh/configs/sdk7786_defconfig
+@@ -156,7 +156,7 @@ CONFIG_USB_MON=y
+ CONFIG_USB_OHCI_HCD=y
+ CONFIG_USB_STORAGE=y
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_MAX6900=y
+ CONFIG_RTC_DRV_SH=y
+diff --git a/arch/sh/configs/shx3_defconfig b/arch/sh/configs/shx3_defconfig
+index dc2be2514b623..ff3377f2e8f29 100644
+--- a/arch/sh/configs/shx3_defconfig
++++ b/arch/sh/configs/shx3_defconfig
+@@ -81,7 +81,7 @@ CONFIG_USB=y
+ CONFIG_USB_MON=y
+ CONFIG_USB_R8A66597_HCD=m
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_SH=y
+ CONFIG_UIO=m
 -- 
 2.53.0
 
