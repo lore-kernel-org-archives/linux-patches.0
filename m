@@ -1,53 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047539;
-	b=KWB2Kav8yMpB+TDOuQYDj6TtL3BfuXwEKe/Q65U3Ftw7RUBd3TGGb6AXTN1uG0dTmI80
-	 lkYriINJwDTu5qXUD1VF6umI6C5LLESlkcDpdA3m63Dr/aJnZTXdJFgKSMIvaO39rULOS
-	 HTvkJNYIowpHID3qEM4h5bEEw6IEBY0VenZVzO12sWVG/OK9MA23f56WAozz0M0yywgCA
-	 0kUtnl1Iz/LceKTtuPtE1LrVfi8vMTPegWUP8EXRTzIbQ9G1mO0GIB/hHCfk5X5EA5yUq
-	 Uozo6mKScb79K+AKdBllkFz4EPNJN5ox8LVHOXK6u7d+u8daVNvD3j/2vySLn7CTzww==
+	t=1795047542;
+	b=Ud3+6f7n6x3CicfiF7I/IVJA4+TkRu5+WWYcjniL5GwSyk47KQgAUfEhh4XdB3oeaTWx
+	 EVVuL4lXP7vY7nyhJ7TmVzCCLq2QXKMx0rmUcxRZ91XCZhzhlCahoSaIM7hnKnKN+qsPA
+	 /DLD41Cdk2rguSBwhPEDTK9NkfCTe/yyNBHXBNq9UrEqZhVQZ1+tJNB6a0l+7P3PhguN2
+	 fwlNFKsU13ZsyhQWBQhtc73coYkNTFvWDz8g3Lf4hCCADA/jVhIXmLoCGeuMIFGi1jyhP
+	 RsMf7opzx7ZZO/FOAATMYGkUd7FUBVHOd+3xRsP9CABAQYyk/1SW4NF19NkH/j1BqTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047539;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=a2b9UrgRecs6jOEZjaFDUFM4qr5Xc+qV2X6MeZvpR2s=;
-	b=a+ki+V27t7iOof/XldjyPAGv9pNpxE9xRA1FN2P2g2fiutnFZtJ1QXNEYIlUBkpfQFmE
-	 S1wP9lP5FnyHiJxzPSoJUXhfV+6WDVxptmRawpdJ4VDqFULPkT1i46uYSaeGXB2ehywEo
-	 xhQWTrjda5WEiXnta4iBFevGTf6g+NY1arhNTXxbqGi0yEvB1MCgElrNrt/9fA7zxKr+s
-	 P2cqGX8lB8PgKnb5ZdBEUf563SXBcjI8gbmXGVDWfLQPp/rtgnuTMHz0LwlMESrt5v8d0
-	 1WXUVAAa9VysSvZDMTkPUY7jSXwiol+UDkQaeMkzQxXIM65H58os29dynkCOY6Pyqvw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=WSePtPD5dRU1tas5ayJlzIkMgoWpwUS6Ck4SZ5UZoL0=;
+	b=EVqVfTILhwRwvfJWxLiB5X2anVbUUXL4buYfrnnWmNMz6RO2kFa+YjM6LlByDIzwfVTY
+	 m/ZPyHiDOD6YMYN7ic5QN8EPJ3rt3OpwgElfuXB47EK0o8r/EqZFSGHO5/5QqhgD+juwn
+	 R6wzyfPhJcl+w04Ol2OeFUgc7gvq1GBUzUsjPoWQ2AT7mwDXt0kMkcGXpz6Cynnwuts+u
+	 Yrxw/RmKMQc3wzdisc/N3KGuqrumj5STlWa8E+lgWR2BT1CcN66k493R9fqNanGsGU+OB
+	 3MR8XNyid4lD7CvBkEdEF142mL2X1XuIhGQU04hSWFRgrK7wfUnzh+Jm3M6h3GFjMZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hyxM/X1U";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXXuWUaM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0B6606A320;
-	Thu, 19 Nov 2026 00:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B35606A32A;
+	Thu, 19 Nov 2026 00:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hyxM/X1U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CF51F000C4;
-	Thu, 19 Nov 2026 00:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXXuWUaM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8AC1F000C4;
+	Thu, 19 Nov 2026 00:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047539;
-	bh=a2b9UrgRecs6jOEZjaFDUFM4qr5Xc+qV2X6MeZvpR2s=;
+	s=korg; t=1795047542;
+	bh=WSePtPD5dRU1tas5ayJlzIkMgoWpwUS6Ck4SZ5UZoL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hyxM/X1UkPi9Cp2Bpe7cwXmJoeGZDhgxVy29l08Ojap1gyJxvT1S2yCTPYvzmHEra
-	 LTxd+WXQjM8ZeGgKrNm7I5tSl55yjgT367xi8WPlajTkvd0GdLmdOn27QLKS3nZU2t
-	 GTvVlRix1JKZfbWSUSRNL8H0mujdZqa/hltoq6rQ=
+	b=lXXuWUaMJcU8LdzwiYvhXLZULze4MvUKlGcsgBCWJfSE3z6ww/8umITEZd0ooAU73
+	 4s60SKWqXPlHBmcVOEgMfYwSZElMlIeOMhOXQ55Y4DwUEiYoy2VXdSaQvkIKk5Ab3j
+	 YQ+8oGjbHCqukJbYQTeG2fKWcQjYQ/m609rVfkeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jann Horn <jannh@google.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	SJ Park <sj@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Colin Cross <ccross@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1674/2857] drm/i915/psr: Clear selective fetch area when duplicating plane state
-Date: Wed, 18 Nov 2026 15:45:08 +0100
-Message-ID: <20261118150301.605268777@linuxfoundation.org>
+Subject: [PATCH 6.1 1675/2857] mm/madvise: preserve VMA_SOFTDIRTY_BIT when changing anonymous names
+Date: Wed, 18 Nov 2026 15:45:09 +0100
+Message-ID: <20261118150301.642375290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,106 +75,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit cbe565475988d3b22dc36f13c14d9f0eec1685cd ]
+[ Upstream commit 652f15be3c11415725694ccea317c51e35c0b582 ]
 
-We are currently not clearing selective fetch area when duplicating plane
-state. This is causing problem when plane is re-used for another
-purpose. Fix this by clearing selective fetch area when duplicating plane
-state.
+When changing the anonymous VMA name, madvise_update_vma() calls
+vma_modify_name() to possibly merge with adjacent VMAs. We don't call
+vma_modify_flags() and consequently don't obtain the new VMA flags.
 
-Now as the state is cleared we need to ensure we have consistent selective
-fetch area in plane state on full update. Earlier this was relying on
-selective fetch area being copied from old state on state duplicate. Now
-this isn't true anymore as we are clearing it. Tackle this by setting full
-plane area as selective fetch area for each plane on full update. Rename
-the label as skip_su_area_calc as the loop setting the plane selective
-fetch area is not skipped anymore.
+Later in the function we update the VMA flags to the stale new_vma_flags
+we obtained before. This can result in us losing the VMA_SOFTDIRTY_BIT
+flag set on a VMA we just merged with.
 
-Move also psr2_sel_fetch_pipe_state_supported check after psr2_su_area
-initialization. The loop is run on full update as well now and it needs
-initialized psr2_su_area. Clip_area_update is only touching rect height and
-x1/x2 are left untouched.
+There is no need to update the VMA flags at all, so just exit early. This
+skips calling khugepaged_enter_vma(), but since the flags didn't change
+this is fine.
 
-Don't set the area at all for planes not intersecting with the selective
-update area. It is already zero sized after plane state duplicate.
-
-Fixes: efab47658a6c ("drm/i915/display/psr: Calculate selective fetch plane registers")
-Cc: <stable@vger.kernel.org> # v5.12+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260929094434.77129-2-jouni.hogander@intel.com
-(cherry picked from commit bd58f0e221386808cd614bb205112e807dc6b159)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-[ sashal: adapted clip_area_update() to use local pipe_clip instead of crtc_state->psr2_su_area ]
+[ljs@kernel.org: minor edit of commit message, rebased]
+Link: https://lore.kernel.org/20261023-fix-vma-atomic-v1-3-8ff4fae1fc85@kernel.org
+Fixes: 9a10064f5625 ("mm: add a field to store names for private anonymous memory")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: SJ Park <sj@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Colin Cross <ccross@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: inferred name-only operations from new_flags == vma->vm_flags before merging instead of using an explicit name-change indicator ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_atomic_plane.c | 1 +
- drivers/gpu/drm/i915/display/intel_psr.c          | 9 ++++++---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ mm/madvise.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_atomic_plane.c b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
-index 82826454b5e83..b54d3d05a787d 100644
---- a/drivers/gpu/drm/i915/display/intel_atomic_plane.c
-+++ b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
-@@ -109,6 +109,7 @@ intel_plane_duplicate_state(struct drm_plane *plane)
- 	intel_state->ggtt_vma = NULL;
- 	intel_state->dpt_vma = NULL;
- 	intel_state->flags = 0;
-+	intel_state->psr2_sel_fetch_area = DRM_RECT_INIT(0, 0, 0, 0);
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 77dfca84d27ae..15d0e10ea400f 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -143,6 +143,7 @@ static int madvise_update_vma(struct vm_area_struct *vma,
+ 			      struct anon_vma_name *anon_name)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
++	bool set_new_anon_name = new_flags == vma->vm_flags;
+ 	int error;
+ 	pgoff_t pgoff;
  
- 	/* add reference to fb */
- 	if (intel_state->hw.fb)
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 3c5553b21fa89..6839b8fd61aef 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1807,7 +1807,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 
- 	if (!psr2_sel_fetch_pipe_state_supported(crtc_state)) {
- 		full_update = true;
--		goto skip_sel_fetch_set_loop;
-+		goto skip_su_area_calc;
+@@ -179,6 +180,9 @@ static int madvise_update_vma(struct vm_area_struct *vma,
  	}
  
- 	/*
-@@ -1893,7 +1893,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 	}
- 
- 	if (full_update)
--		goto skip_sel_fetch_set_loop;
-+		goto skip_su_area_calc;
- 
- 	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
- 	if (ret)
-@@ -1901,6 +1901,10 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 
- 	intel_psr2_sel_fetch_pipe_alignment(crtc_state, &pipe_clip);
- 
-+skip_su_area_calc:
-+	if (full_update)
-+		clip_area_update(&pipe_clip, &display_area, &display_area);
+ success:
++	if (set_new_anon_name)
++		return replace_anon_vma_name(vma, anon_name);
 +
  	/*
- 	 * Now that we have the pipe damaged area check if it intersect with
- 	 * every plane, if it does set the plane selective fetch area.
-@@ -1947,7 +1951,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 		}
- 	}
- 
--skip_sel_fetch_set_loop:
- 	psr2_man_trk_ctl_calc(crtc_state, &pipe_clip, full_update);
- 	return 0;
- }
+ 	 * vm_flags is protected by the mmap_lock held in write mode.
+ 	 */
 -- 
 2.53.0
 
