@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038052;
-	b=ewBYH6W9RNZ/+nM1yRymK/uvKc//4uy4UvdIL+I/L2W3dVurvn5/hSbC3kNThxN1KHQ/
-	 rU2PA41HhPR9L3y9eDKMykO8PwYQPwi6Fc8BImPoVbH+ngOtrDHI+YrQ5LhF9sNyh0woX
-	 s6epjR6LDAxP7Vn5RGXIoCz3P3Z6dNagYhC2R9HZnPjpBpemABLTP57OXnCp3q8xrQ76Z
-	 sLWpqjtJV6tCxVil9oSETN3IdSzmGKydHfsPGlJMx6Oy7soZ7ooqc2u4FiolVhE9W3VRx
-	 Nr67JHEejtmDU2SzM/COtGAxmCjqpja8kfuV/IvKfvrtjlyf+UdsSwiJdgabCd7YEbQ==
+	t=1795038054;
+	b=rgk7KR7uePZ3CJI57999RKhGwLQ64d+bHy5z/fBdhxDG+btePRZ0yAanFvlWIeRhAKMq
+	 k8jPiYE8CBDAmKi4WD4ZbiNK7DpboiWyyG6Ok78bdoJZTx1bKvFmlo1/3PRAzmWwcF7oi
+	 LEc4i9HA8UT+bRd7KPzp0ssLP9WP/wtE24yAhDBxcA/D5x4+Bzs2r9IkaYvYct8jxB/d2
+	 Ibd7t4bRCqXK6rfXdiLWWzkAV/mLufcoEoif0j+ZvPa0hIHiOUTzG7L7MqMfph9hsj8/h
+	 dtKrCKsHWLgkTZVIPZ06r4OIknYBG6F1wnCZz5o6Nw24oo+fBB6drTCuYzeLvaeDNUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZJtOjLCdIXyfNt2H1On6gQI/UuvdXnliTajzaFgFlZY=;
-	b=KaayoAoziwbc2muuf+acbVX5wez1P0P0M4a/TDx6cZ14DIYEE6CAgyj4mlB78tz0kw1J
-	 GMTNEBEtDKQNYgG9b0aBAn4LykriVKgjIo9UELqvhgWTu/IDxPkdBAicGTzUmPib3WSE2
-	 mHtrmeI8VuG2Y5oA4pqd+ONeui2adIqwnRXTTCOxDBNYiv1XoXyRpPOlHTbzp97x75ewU
-	 RBtVinEJ7lTgNK0MI+7J1z4GplO2CKzMFFPityB9Qrz7vUAGUB3B9foSPy5sNceUq0JgU
-	 /YOvWkMgsHY3YtJq9WbKKDkAT+S/hY79MCM+i6i9f4WA5r745BYnqXO+tY3SPXldlkA==
+	bh=O5vfnhnJSN7Z2ai2xlg2Vg3Rqm8+liN4tezEz4aaiss=;
+	b=H2mzedJENEPdPKE2hXEr9ceLbAdBL8ISCIpkfP6DFbZMjzIyZ2M07KE7ICFfKqcX8vCf
+	 8aUhCodU0oTmBFSKyjMt59+l1G9zFE8v14bZid4nIujeGjEbMPK+EPvmn1hMZSd20+qvV
+	 miK+RySaPGRDOiD2wk7tbtOumCzZL/7g9RNp4rc5pxfJs65wwhx+U/VbExMSkEssl7yk5
+	 5/qizW9Mj+I/5V0kiyhM6TxE6FXAkJYffw88v7HKOchiizbrp/J4NzK6b30erK4yF1rA7
+	 aS7mQAK5iSJKAgiQWulAuNvM2HvRtqDDUgy3gjofZh1tSXdczQHc+TPpI2NFe/s5Iyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osH0p8MI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4HPVUyv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035A9606A32C;
-	Wed, 18 Nov 2026 21:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B991A606A332;
+	Wed, 18 Nov 2026 21:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osH0p8MI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567CA1F000C5;
-	Wed, 18 Nov 2026 21:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4HPVUyv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACF91F000C5;
+	Wed, 18 Nov 2026 21:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038051;
-	bh=ZJtOjLCdIXyfNt2H1On6gQI/UuvdXnliTajzaFgFlZY=;
+	s=korg; t=1795038054;
+	bh=O5vfnhnJSN7Z2ai2xlg2Vg3Rqm8+liN4tezEz4aaiss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=osH0p8MI9eOmA3betu3iUG3SEti+8J67A7Ei/w42FBvgkP4w4oixXfcLYvyyAlvqi
-	 RBShwjDXCRBZ9et6v+hb6CwsMONWMhjvybikWiT1rj0to0hEqINRQERtW9licVFryy
-	 P+X6o346BuwDSDZYQ7tnRirX3hPWfpbDGIzUFFuc=
+	b=Z4HPVUyv4IpoFSWfdgq+kINCZZDEb1UoGGGY9uTu6s3/mo16Wq/Fp3GXJ5V5NbTJi
+	 MHc0hdhvQjDiCtr8dYTVR39JmkZobskNebhJsxi4D/IHYQpWOaXX7J7ctZu3Br5VSX
+	 eIh0d4C93kXBeKBL85JERQpdxeU9JxUiM5qHzC+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1566/3318] x86/boot: Fix off-by-one error in sme_clear_pgd()
-Date: Wed, 18 Nov 2026 15:36:28 +0100
-Message-ID: <20261118150408.019104608@linuxfoundation.org>
+Subject: [PATCH 6.6 1557/3318] udf: dont use eloc after the end of the unallocated space table
+Date: Wed, 18 Nov 2026 15:36:19 +0100
+Message-ID: <20261118150407.737463924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,44 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit cb319926808b1cca522d2087a13205e840beb45b ]
+[ Upstream commit 94401199df90e1c2a50c6e4b73618ac5a4ba83ba ]
 
-The mapping helpers __sme_map_range_pmd() and __sme_map_range_pte(), and
-therefore sme_encrypt_kernel(), use exclusive end addresses and stop
-before vaddr reaches vaddr_end.
+When udf_next_aext() returns 0, its eloc, elen and etype outputs hold
+no defined value.  Two walks of the unallocated space table still use
+eloc after the walk has reached the end of the table.
 
-However, sme_clear_pgd() treats vaddr_end as inclusive when calculating
-the last PGD entry to clear. If vaddr_end is PGD-aligned, the first PGD
-entry outside the range is cleared too.
+udf_table_prealloc_blocks() looks for a free extent starting at
+first_block and decides whether it found one by comparing eloc with
+first_block after the walk.  If the table's list ends in a continuation
+descriptor that leads to an empty allocation extent, eloc is then the
+block of that allocation extent, which is in use, and if that is
+first_block, the block is handed out as preallocation.  Once
+udf_discard_prealloc() no longer frees the wrong block, this is what
+still makes fsx in generic/091 and generic/263 read back bad data on a
+table, in about one run in four.  Only take the extent if the walk
+stopped at it.
 
-Use vaddr_end - 1 to calculate the last PGD entry within the range.
+When udf_table_free_blocks() cannot merge the freed blocks into an
+existing extent, it appends a new one and sets only its block number,
+so the partition reference comes from whatever eloc held after the
+walk, and with long allocation descriptors it is written to disk.  For
+a table without extents, eloc was never set.  Take the partition
+reference from the freed blocks instead.  Short allocation descriptors
+do not store the partition reference, which is why this half remains a
+latent long-descriptor fix rather than a reproduced failure.
 
-Fixes: 6ebcb060713f ("x86/mm: Add support to encrypt the kernel in-place")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260918142714.242711-2-blum@kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://patch.msgid.link/fd9ca4c4ba98c00c012ec861f6c0bc08a3b1d07b.1793349907.git.matthias.goergens@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/mem_encrypt_identity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/balloc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
-index b922b9fea6b64..1bbc117f91ab9 100644
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -101,7 +101,7 @@ static void __head sme_clear_pgd(struct sme_populate_pgd_data *ppd)
- 	pgd_t *pgd_p;
+diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
+index 6eee9d0da90da..a0f9019fd57d3 100644
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -474,6 +474,7 @@ static void udf_table_free_blocks(struct super_block *sb,
  
- 	pgd_start = ppd->vaddr & PGDIR_MASK;
--	pgd_end = ppd->vaddr_end & PGDIR_MASK;
-+	pgd_end = (ppd->vaddr_end - 1) & PGDIR_MASK;
+ 		int adsize;
  
- 	pgd_size = (((pgd_end - pgd_start) / PGDIR_SIZE) + 1) * sizeof(pgd_t);
++		eloc.partitionReferenceNum = bloc->partitionReferenceNum;
+ 		eloc.logicalBlockNum = start;
+ 		elen = EXT_RECORDED_ALLOCATED |
+ 			(count << sb->s_blocksize_bits);
+@@ -549,7 +550,7 @@ static int udf_table_prealloc_blocks(struct super_block *sb,
+ 			  eloc.logicalBlockNum, elen, first_block);
+ 	}
  
+-	if (first_block == eloc.logicalBlockNum) {
++	if (ret > 0 && first_block == eloc.logicalBlockNum) {
+ 		epos.offset -= adsize;
+ 
+ 		alloc_count = (elen >> sb->s_blocksize_bits);
 -- 
 2.53.0
 
