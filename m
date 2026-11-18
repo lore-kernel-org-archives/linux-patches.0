@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034476;
-	b=L6HlKzW7vqZHYTVQmaQ5kb5p/CDXdxJeqkMZFgjCBJiyUbraNCU0ShykyOejegON6nF1
-	 ufGAXUz3VY8CQevOx6lu6h9e9YQzEcl5bXTzUTPjQkcn8S3FPsM4sRAyOP1MeYrydzw2i
-	 8i+QW7RmhGnQ/Uzw17wcBM5jedfeSUEbGlsrQcSnmYcYPxxVUQZQNkPktOPRbdYSKiPVl
-	 d32P+WwlLqMAgQgMjqfANJqzqDP/ZzT6F2zLgqgKf0G+YLhfjhVH2vsfinTNxh3jI2/1/
-	 K/xPIHoklIzlpatkTr79pH0zlpqTdxL2cdxzyscHKQA2FsEF7+JNkgIpmleFtbDY1QA==
+	t=1795034479;
+	b=KDZWCXRUz+y8yzcQNKoSVmJD6Ls6szKKpWpyhz+iIg0IQJ9i2tsCqavSlW6ChVipnr+H
+	 uLgadMCnvgPIXHzlUA6lvxauK4oQtQDIb3J407CYBy+J18xEa6dbm0g7NvLH0+P6O/Bgw
+	 9B3p8DPmtYSYKQfHmUKNd3IRlXMYRmY28GfHZopjl+ZI5oT7JZe5mxMszmb4pPnJky73X
+	 gfxi08ODA4A5ZeErzoVxK79yS6+AvAgMp9KlrUSfI4scrlO97+5M/sUq3bF7ewz5kNpcy
+	 5BP0oaE2sx5nH8C7UOHf96ai8kuBHuDOPY05y3Z05JucrhflGeqlZFjpn/C7k+F+4hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8FS6xk0DRzKkozviASIpdbfs5s+jOeTO4oaK09xF8dg=;
-	b=yb2Hosl0wHIw8idfkpPzuL3qLOl9pBqxfsa84+GC6anpgDt333ARh1VvsXBV4s1+60Cg
-	 ZMkIE9jba4PnBooizh/zR4GO9tzMZ1ihB1dhxzWJUzPYmsxd5kgL0fs6oHqtLWmuR6YaD
-	 p80lwttCvWIUKQtHSzsFYuIBippcTxTkcxoUramYVrbeFNhjFsV4PyWPAghKH+5SWf1Ne
-	 7T6lw3ojvqmzb9G1+CMS83JSB6DkbuH2fRkK0+59wS9TTKUZiqaVN9qxdJBuF3MT9gXYT
-	 eN+DO79s1MMoj4nEfsS51Xv+YWcROPtAGYDqzB3IQXGNHIlqmGp0k+TJ2b/JVcnCn/Q==
+	bh=dbte7P/4DF1MZUxI/TpAx5YcterUfycd6WCnvYLxA7M=;
+	b=FB4woxcm8qGXZcEPXzVLOi7oqAl6Apa5l5UFGeE2UklbtP6OCpMrW1KNZV01YXG/69PG
+	 2q1GlUgGIbQY44bKUhoQaZToPukobPiY3qblebcNYBNmUUpS2gjV7W2pExRPC/DfLq7d7
+	 Y6KranLOVRunNaiBz/mZjxDY+xM6R04drYBmMksz0McCsYSGYxU2PlQmUM6rJpeQQ9lPl
+	 J5TzVOnDFil0aaNYj1/bBDWnaUZtxfNMh2ePDWDnNCimU5T5VS/qUh0U4KZfh8vSPApY8
+	 DmYowT7IFmvmxm1RYfdog6G18QSTWp67ahHsjsZ2EoSx7z88v1SWltLEKuHaIW8o6OQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqH4jx37;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMXPmyNJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E38A606A325;
-	Wed, 18 Nov 2026 20:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0C4606A31C;
+	Wed, 18 Nov 2026 20:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqH4jx37
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59641F000C4;
-	Wed, 18 Nov 2026 20:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMXPmyNJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C210B1F000C4;
+	Wed, 18 Nov 2026 20:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034476;
-	bh=8FS6xk0DRzKkozviASIpdbfs5s+jOeTO4oaK09xF8dg=;
+	s=korg; t=1795034479;
+	bh=dbte7P/4DF1MZUxI/TpAx5YcterUfycd6WCnvYLxA7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CqH4jx37op/fnDNXu3ASVzM8Q2nJAWqZvzE6ZpaeQQC/J3BWOZo3RLbW0EG6DHNZQ
-	 nfx6uz69EKp1PNX0PerE8bB0kW8KSAb0tlUVDbVO3UKuzGSi0UABGpwrZkcuaAriq7
-	 F0PTwO52VFyAFQCYDk8mANpCyh/hFcc77tj+p8qc=
+	b=sMXPmyNJrGS9R4LjcUrkIdHE7mYBHRF+otxaKVI5B8hFYqXGGZJsRpqiVWSUKbk+L
+	 Oc8Hs+Paet+TndfWOfjcdGgAyyasmTqCFqrDztrwOaujrRTto5RX6+hJ4FejcS0uy2
+	 umErrHd5chcRj93jLfh257vJj6gw6M/CQWGNhvfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0336/3318] nvme-fc: do not warn on controller removal race
-Date: Wed, 18 Nov 2026 15:15:58 +0100
-Message-ID: <20261118150326.039120565@linuxfoundation.org>
+Subject: [PATCH 6.6 0337/3318] HID: roccat: fix locking in roccat_connect() and roccat_disconnect()
+Date: Wed, 18 Nov 2026 15:15:59 +0100
+Message-ID: <20261118150326.075031108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 62b70e6c87121ae5b79ca20c3a5b005590336ec5 ]
+[ Upstream commit d76994443eed0af297cb82bd038ae9d76327ef90 ]
 
-In nvme_fc_reconnect_or_delete(), the system attempts to remove
-the controller when reconnect limits are reached by calling
-nvme_delete_ctrl(). This call is currently wrapped in a WARN_ON().
+Extend critical section in roccat_connect() to ensure that partially
+initialized 'struct roccat_device' is never exposed in 'devices' list,
+and do the same in roccat_disconnect() to avoid racy 'devices' access
+against roccat_release().
 
-If a user concurrently deletes the controller via sysfs, the
-controller's state may have already transitioned out of the
-CONNECTING state. When this happens, nvme_delete_ctrl() correctly
-rejects the operation and returns -EBUSY. Because of the WARN_ON()
-wrapper, this race condition triggers an unnecessary kernel warning
-stack trace.
-
-Remove the WARN_ON() macro around nvme_delete_ctrl();
-this allows the system to safely ignore the -EBUSY return value
-if the controller is already being deleted.
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-roccat.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 75a7a372ffd83..506802d39a245 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3319,7 +3319,7 @@ nvme_fc_reconnect_or_delete(struct nvme_fc_ctrl *ctrl, int status)
- 				ctrl->cnum, min_t(int, portptr->dev_loss_tmo,
- 					(ctrl->ctrl.opts->max_reconnects *
- 					 ctrl->ctrl.opts->reconnect_delay)));
--		WARN_ON(nvme_delete_ctrl(&ctrl->ctrl));
-+		nvme_delete_ctrl(&ctrl->ctrl);
+diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
+index e54b6a8a92ef7..77042c7edf765 100644
+--- a/drivers/hid/hid-roccat.c
++++ b/drivers/hid/hid-roccat.c
+@@ -344,8 +344,6 @@ int roccat_connect(const struct class *klass, struct hid_device *hid, int report
+ 		return temp;
  	}
+ 
+-	mutex_unlock(&devices_lock);
+-
+ 	init_waitqueue_head(&device->wait);
+ 	INIT_LIST_HEAD(&device->readers);
+ 	mutex_init(&device->readers_lock);
+@@ -356,6 +354,7 @@ int roccat_connect(const struct class *klass, struct hid_device *hid, int report
+ 	device->cbuf_end = 0;
+ 	device->report_size = report_size;
+ 
++	mutex_unlock(&devices_lock);
+ 	return minor;
  }
+ EXPORT_SYMBOL_GPL(roccat_connect);
+@@ -369,15 +368,12 @@ void roccat_disconnect(int minor)
+ 
+ 	mutex_lock(&devices_lock);
+ 	device = devices[minor];
+-	mutex_unlock(&devices_lock);
+ 
+ 	device->exist = 0; /* TODO exist maybe not needed */
+ 
+ 	device_destroy(device->dev->class, MKDEV(roccat_major, minor));
+ 
+-	mutex_lock(&devices_lock);
+ 	devices[minor] = NULL;
+-	mutex_unlock(&devices_lock);
+ 
+ 	if (device->open) {
+ 		hid_hw_close(device->hid);
+@@ -385,6 +381,8 @@ void roccat_disconnect(int minor)
+ 	} else {
+ 		roccat_free_device(device);
+ 	}
++
++	mutex_unlock(&devices_lock);
+ }
+ EXPORT_SYMBOL_GPL(roccat_disconnect);
  
 -- 
 2.53.0
