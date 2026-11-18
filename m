@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059317;
-	b=4JenqGQA/p9r46rMfgJ74Csf52T/O9DxcR5QKqppHoC1q1mJ6thLnqrRBBfGvmsTqf4y
-	 3t2vJV2f/5BHJvrJPrtnBHRGNZVwJMk7oMy4bfiyydnuv5VOzsJt4Z87oROxsfB0cld0b
-	 UNquntOZ6HZ91Wm7u+z7UUxgtTtwgBmkgoyNXTmdSyIkNd57AEalByOQL08GcQabi5HO1
-	 /4KxEw4b0boeSU738icr2OzjEa7qoK9ItMM5keYBAWNqfUUSQ6mfyNGBFVUfB8n8wYBYm
-	 7g6IMWGM4LrGeFS+lYZQFUFo2xYyYqWsP6o9PCY0S1XZ/NxKr9WGOJyob7aXy+kTQOg==
+	t=1795059320;
+	b=j1K3D14ngpCEBLb2KxsWF/Kz1uUPmpphlxqSfSS9RLx1AMIrlXMrUZ2hw040/lD2IFAF
+	 Puj+V71iPwnV+ZseF35viPyiLRHTdV5oNjCC0tMB1qvTUDOBhgin+4Zkqes8TPeQdf4N7
+	 iP0MH90XBdvChXROtJvnBl+nxDUINaUng8byhBApXGw5huXVHkvYCqwfp4cf0+V23XKYd
+	 MAChghZ9CbsMUAmDhK455DkyQTc84Bh+EyST4MGEEmo/GRXIRgGBUP8SzpyhE4cNzte9j
+	 xyBlDm5bMXKR5vDO+R1ttvyziPlgIfFa47SuG4hwxyZk1Udws69AK5Z7ypNRnLfEnjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ppV7qXcevCGczBlyG5e+bQizZHxadILU+HPXXeQCxC4=;
-	b=ZYypvn2e33iZ6LgHDHsEv0CswfQTCLOyzlJ6vG+LzJYsLgB26/5btDiVLhPEG6m8L2Zt
-	 jr6hrjQK01Juf+mt/hT+7QBllU+BKfqrTNlNbs2dAtjGTUxeqCCLAR4wsBJIQZGPGxCRg
-	 WkTpQT3CLdCynj06plT8iN3xmD/ZTTFMgeoE5WlUjPR1gWkdRcbytXc0QU3208gT+mDDN
-	 jZ3PjtHJDP25UA/kiNTy6x/0Wz+2kvHFl24rEONQPr3Ep+kXKN969AXdtFq8ON1Qn7hdY
-	 zYHW+IbrvGM3XGMEZuGOT1iyiM94A9dSNMsCxYT+xRJd0KrfCq1uUuTpQwPg5yWlYHQ==
+	bh=BiOYLIE5X35Hq19eT2KW3HEYoY0J2H+kBZPgW+OQb8w=;
+	b=RjZK+1838wr1SErRTJPVNZjhA83xHys1t6UC8s9u31NV0LjQkgGq+FVtelsent5QqZWB
+	 ddm+Hjc1/nIcEB5dwUqqiX34J1393oUt4uE7DjBzi2gJrsdETBFCy+89TSIUlbFKvNLuE
+	 adjxXWDiPVhp1obCgV9q62Q5f4CWGMM+yOrUEFjy7fOW42MWwWTlkK2CTQI2wJFJTmdVQ
+	 9mDTcoGiWMt+X2i41vJi9K22LE+Lca5nGFl6Xit49+Z9MaG7MILp2Tp8pCuwhxZoh0Tf6
+	 2a3EtGfwT2yhUBJWkUC9BG9KDKQ33m0VZvnwMdwJra3f3DSXLmnED7yPbJZwAR9pahg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A4x5urFJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JwlWmUem;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889CA606A325;
-	Thu, 19 Nov 2026 03:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345CF606A325;
+	Thu, 19 Nov 2026 03:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A4x5urFJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789E71F000C4;
-	Thu, 19 Nov 2026 03:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JwlWmUem
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE491F000C4;
+	Thu, 19 Nov 2026 03:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059317;
-	bh=ppV7qXcevCGczBlyG5e+bQizZHxadILU+HPXXeQCxC4=;
+	s=korg; t=1795059320;
+	bh=BiOYLIE5X35Hq19eT2KW3HEYoY0J2H+kBZPgW+OQb8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A4x5urFJ9P/S3DF9Ly3PsU3+cOv5Ny7uErZcHoxG6IL79XbsyBFoOUpAmXXr6kpie
-	 oRaUoXQsiJP9m25S/2MfBAhgqeTIrLfImnBzC0Qf0TkUN9EFs1Hhl9UghddlQMzBm8
-	 Fdnzncyb2Dhx5hNJJWu+T7ZhLQjMkdmcDNroXWAc=
+	b=JwlWmUemoCqUnEsokM2o5KWM8YJzBcVPZdrhh+1YuFSro0mvafbEDTNlMT2+RPOof
+	 k6Yftd88uWT/3edTa2WOrqOvxDUutTxXGVCr4G/IG+WVvNmWAGyFpMvyjoLZ6sxuJe
+	 bHu+AnTQaZ5pnyuvVFrggdmNpzib3ZMeBP0sNl4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyrylo Biryuk <illofspeed@gmail.com>,
-	Marco Ziliani <rylos78@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0756/1848] ata: libata-pmp: disable the SEMB port on Marvell 88SM9705
-Date: Wed, 18 Nov 2026 15:46:34 +0100
-Message-ID: <20261118145948.138691918@linuxfoundation.org>
+Subject: [PATCH 5.10 0757/1848] can: raw: fix receiver memory leak
+Date: Wed, 18 Nov 2026 15:46:35 +0100
+Message-ID: <20261118145948.174323490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,92 +69,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Ziliani <rylos78@gmail.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 6b67cdb463b006e57f15e3fe4ea03b00f0ac9ee5 ]
+commit ee8b94c8510ce64afe0b87ef548d23e00915fb10 upstream.
 
-The Marvell 88SM9705 is a 1-to-5 SATA port multiplier with one
-additional SEMB (SATA Enclosure Management Bridge) port [1].  Ports
-0-4 are device ports and port 5 is the SEMB.  The number of fan-out
-ports in GSCR[2] is 6 when the SEMB is enabled and 5 when it is not,
-so on boards without the SEMB there is no link 5 and this quirk does
-nothing.  That includes the common 8-port PCIe cards that pair an
-88SE9215 with an 88SM9705, which report 5 ports.
+Got kmemleak errors with the following ltp can_filter testcase:
 
-The SEMB port never answers SRST.  libata probes it like a device
-port, and every EH round on the PMP ends in a retry loop that lasts
-about a minute before EH gives up, then starts over:
+for ((i=1; i<=100; i++))
+do
+        ./can_filter &
+        sleep 0.1
+done
 
-  ata19.15: Port Multiplier 1.2, 0x1b4b:0x9705 r160, 6 ports, feat 0x1/0x1f
-  ata19.05: hard resetting link
-  ata19.05: failed to resume link (SControl 0)
-  ata19.05: softreset failed (1st FIS failed)
-  ata19.05: hard resetting link
-  ...
-  ata20.05: reset failed, giving up
+==============================================================
+[<00000000db4a4943>] can_rx_register+0x147/0x360 [can]
+[<00000000a289549d>] raw_setsockopt+0x5ef/0x853 [can_raw]
+[<000000006d3d9ebd>] __sys_setsockopt+0x173/0x2c0
+[<00000000407dbfec>] __x64_sys_setsockopt+0x61/0x70
+[<00000000fd468496>] do_syscall_64+0x33/0x40
+[<00000000b7e47d51>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Disk discovery waits for this, including disks on other controllers.
+It's a bug in the concurrent scenario of unregister_netdevice_many()
+and raw_release() as following:
 
-libata.force only partly works around it.  The "disable" horkage
-only takes effect after IDENTIFY, which the SEMB link never reaches.
-"norst" on port 5 stops the retry loop, but the disks still come up
-about a minute later than with this change (see below).
+             cpu0                                        cpu1
+unregister_netdevice_many(can_dev)
+  unlist_netdevice(can_dev) // dev_get_by_index() return NULL after this
+  net_set_todo(can_dev)
+						raw_release(can_socket)
+						  dev = dev_get_by_index(, ro->ifindex); // dev == NULL
+						  if (dev) { // receivers in dev_rcv_lists not free because dev is NULL
+						    raw_disable_allfilters(, dev, );
+						    dev_put(dev);
+						  }
+						  ...
+						  ro->bound = 0;
+						  ...
 
-Treat port 5 the same way as port 4 of the Marvell 88SM4140 and mark
-the link ATA_LFLAG_DISABLED.
+call_netdevice_notifiers(NETDEV_UNREGISTER, )
+  raw_notify(, NETDEV_UNREGISTER, )
+    if (ro->bound) // invalid because ro->bound has been set 0
+      raw_disable_allfilters(, dev, ); // receivers in dev_rcv_lists will never be freed
 
-Tested on a Synology DX1222 expansion unit (four 88SM9705 r160 behind
-a Marvell 88SE9235, passed through to a KVM guest, 6 disks), 7.4-rc1
-with and without this change, one boot each:
+Add a net_device pointer member in struct raw_sock to record bound
+can_dev, and use rtnl_lock to serialize raw_socket members between
+raw_bind(), raw_release(), raw_setsockopt() and raw_notify(). Use
+ro->dev to decide whether to free receivers in dev_rcv_lists.
 
-                                    softreset  reset failed,  last disk
-                                    failed     giving up      attached
-  7.4-rc1, no libata.force          60         12             197 s
-  7.4-rc1, libata.force=N.05:norst   0          0              70 s
-  7.4-rc1 + this patch, no force     0          0              11 s
-
-The problem was first found on a Synology DX1215 with the same chain,
-where this change brought the disks up after about 20 s instead of
-about 200 s, including a disk on a separate AHCI controller.
-
-Each PMP still logs one "failed to resume link (SControl 0)" for port 5
-at probe time.
-
-Link: https://www.marvell.com/content/dam/marvell/en/public-collateral/storage/marvell-storage-88sm9705-functional-specifications-2015-06.pdf [1]
+Fixes: 8d0caedb7596 ("can: bcm/raw/isotp: use per module netdevice notifier")
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Link: https://lore.kernel.org/all/20230711011737.1969582-1-william.xuanziyang@huawei.com
 Cc: stable@vger.kernel.org
-Tested-by: Kyrylo Biryuk <illofspeed@gmail.com>
-Signed-off-by: Marco Ziliani <rylos78@gmail.com>
-Link: https://lore.kernel.org/r/20261107-pmp-88sm9705-v2-1-18eed983d3db@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 962947b69589 ("can: replace ARPHRD_CAN type checks with can_get_ml_priv()")
+[ backport to 5.10: Adapt the raw_release() context as
+  free_percpu(ro->uniq) has already been moved out of raw_release() in
+  this tree. ]
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-pmp.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/can/raw.c | 57 ++++++++++++++++++++++-----------------------------
+ 1 file changed, 24 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
-index 452baa43d77ef..5fa06708eb6a0 100644
---- a/drivers/ata/libata-pmp.c
-+++ b/drivers/ata/libata-pmp.c
-@@ -471,6 +471,20 @@ static void sata_pmp_quirks(struct ata_port *ap)
- 			if (link->pmp == 4)
- 				link->flags |= ATA_LFLAG_DISABLED;
- 		}
-+	} else if (vendor == 0x1b4b && devid == 0x9705) {
-+		/*
-+		 * Marvell 88SM9705 quirks
-+		 *
-+		 * 1-to-5 PMP with an extra SEMB port.  It reports 6 ports and
-+		 * port 5 is the SEMB, which never answers SRST: EH spends about
-+		 * a minute per round retrying it, and disk discovery waits for
-+		 * that.  Seen behind a Marvell 88SE9235 in the Synology DX1215
-+		 * and DX1222.
-+		 */
-+		ata_for_each_link(link, ap, EDGE) {
-+			if (link->pmp == 5)
-+				link->flags |= ATA_LFLAG_DISABLED;
-+		}
+diff --git a/net/can/raw.c b/net/can/raw.c
+index 8bbbd9092e3a3..7df3086e9f910 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -83,6 +83,7 @@ struct raw_sock {
+ 	struct sock sk;
+ 	int bound;
+ 	int ifindex;
++	struct net_device *dev;
+ 	struct list_head notifier;
+ 	int loopback;
+ 	int recv_own_msgs;
+@@ -275,7 +276,7 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 	if (!net_eq(dev_net(dev), sock_net(sk)))
+ 		return;
+ 
+-	if (ro->ifindex != dev->ifindex)
++	if (ro->dev != dev)
+ 		return;
+ 
+ 	switch (msg) {
+@@ -290,6 +291,7 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 
+ 		ro->ifindex = 0;
+ 		ro->bound = 0;
++		ro->dev = NULL;
+ 		ro->count = 0;
+ 		release_sock(sk);
+ 
+@@ -343,6 +345,7 @@ static int raw_init(struct sock *sk)
+ 
+ 	ro->bound            = 0;
+ 	ro->ifindex          = 0;
++	ro->dev              = NULL;
+ 
+ 	/* set default filter to single entry dfilter */
+ 	ro->dfilter.can_id   = 0;
+@@ -392,19 +395,13 @@ static int raw_release(struct socket *sock)
+ 
+ 	lock_sock(sk);
+ 
++	rtnl_lock();
+ 	/* remove current filters & unregister */
+ 	if (ro->bound) {
+-		if (ro->ifindex) {
+-			struct net_device *dev;
+-
+-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
+-			if (dev) {
+-				raw_disable_allfilters(dev_net(dev), dev, sk);
+-				dev_put(dev);
+-			}
+-		} else {
++		if (ro->dev)
++			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
++		else
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
+-		}
  	}
- }
+ 
+ 	if (ro->count > 1)
+@@ -412,7 +409,9 @@ static int raw_release(struct socket *sock)
+ 
+ 	ro->ifindex = 0;
+ 	ro->bound = 0;
++	ro->dev = NULL;
+ 	ro->count = 0;
++	rtnl_unlock();
+ 
+ 	sock_orphan(sk);
+ 	sock->sk = NULL;
+@@ -428,6 +427,7 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	struct sockaddr_can *addr = (struct sockaddr_can *)uaddr;
+ 	struct sock *sk = sock->sk;
+ 	struct raw_sock *ro = raw_sk(sk);
++	struct net_device *dev = NULL;
+ 	int ifindex;
+ 	int err = 0;
+ 	int notify_enetdown = 0;
+@@ -437,14 +437,13 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (addr->can_family != AF_CAN)
+ 		return -EINVAL;
+ 
++	rtnl_lock();
+ 	lock_sock(sk);
+ 
+ 	if (ro->bound && addr->can_ifindex == ro->ifindex)
+ 		goto out;
+ 
+ 	if (addr->can_ifindex) {
+-		struct net_device *dev;
+-
+ 		dev = dev_get_by_index(sock_net(sk), addr->can_ifindex);
+ 		if (!dev) {
+ 			err = -ENODEV;
+@@ -473,26 +472,20 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (!err) {
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+-			if (ro->ifindex) {
+-				struct net_device *dev;
+-
+-				dev = dev_get_by_index(sock_net(sk),
+-						       ro->ifindex);
+-				if (dev) {
+-					raw_disable_allfilters(dev_net(dev),
+-							       dev, sk);
+-					dev_put(dev);
+-				}
+-			} else {
++			if (ro->dev)
++				raw_disable_allfilters(dev_net(ro->dev),
++						       ro->dev, sk);
++			else
+ 				raw_disable_allfilters(sock_net(sk), NULL, sk);
+-			}
+ 		}
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
++		ro->dev = dev;
+ 	}
+ 
+  out:
+ 	release_sock(sk);
++	rtnl_unlock();
+ 
+ 	if (notify_enetdown) {
+ 		sk->sk_err = ENETDOWN;
+@@ -558,9 +551,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		rtnl_lock();
+ 		lock_sock(sk);
+ 
+-		if (ro->bound && ro->ifindex) {
+-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
+-			if (!dev) {
++		dev = ro->dev;
++		if (ro->bound && dev) {
++			if (dev->reg_state != NETREG_REGISTERED) {
+ 				if (count > 1)
+ 					kfree(filter);
+ 				err = -ENODEV;
+@@ -601,7 +594,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		ro->count  = count;
+ 
+  out_fil:
+-		dev_put(dev);
+ 		release_sock(sk);
+ 		rtnl_unlock();
+ 
+@@ -619,9 +611,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		rtnl_lock();
+ 		lock_sock(sk);
+ 
+-		if (ro->bound && ro->ifindex) {
+-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
+-			if (!dev) {
++		dev = ro->dev;
++		if (ro->bound && dev) {
++			if (dev->reg_state != NETREG_REGISTERED) {
+ 				err = -ENODEV;
+ 				goto out_err;
+ 			}
+@@ -645,7 +637,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		ro->err_mask = err_mask;
+ 
+  out_err:
+-		dev_put(dev);
+ 		release_sock(sk);
+ 		rtnl_unlock();
  
 -- 
 2.53.0
