@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058108;
-	b=1mqCripEyCYQty0/7m25qPWpzR+byVUKKXgwrUqVWSfuyyA3s/EGDyWjDkgc6VdoOzX+
-	 TmiJgi09fNgpvo489wUzcBFleOl1PuIWrIX2GXgSeaf4D8FHXBy9NLvN1D8L/kRYQ4SI+
-	 7ufY4q5g0DVMWoLP3oK+1Rr52Y8sulad3uQZYBA9y19HFDOhH3Xh4gr+jLx80HWvnoy6D
-	 nZvNSEy6r/hQLMTZjjfkm6jUChpgKsNvTJn+GlUtun/jELDm9MuqQyGcTuzmKywPBn7bv
-	 ed3qYoEcZQ2i/E7DzggdZmKypRQnwD2NwxxOuc8zzRAWEY1OBzFP1SlWvAPuxveKbXw==
+	t=1795058111;
+	b=mK+Vd6ym+Ae3GXoA0voeZUsW/tnWmUT00nq1Yi7T4c8H0PBKOA36ZYIZyePhCu2zoI7u
+	 qGyMysIzO8kmdQ9QZfLl88Ze9wEKU6n0yHtbu2Fq9GX11+pnlKOtQPNksaoYDtQUXqvJk
+	 XOmIpdlqG8vDd+yBhyz4uoEQRCJfgkPjn83DScWBtCclMPFrl2eDKna9vkMN8xi6bWPyO
+	 +r0Q9vLl+Hd4/tjCM8VhYskV/Yu1bbrNAYhCdXrDcd/DGeIGbRktt/XHXygYvnRtbEIPp
+	 OAI/29uVLMNeorCIikLnUhDtQJ+jIXxlTy85QN1D4U9FNQslvAFQgV8Nee4sx9O/eHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KwkL5WGguvff/Fp4hd/LVurcPwwV1/y0O/1cPUdiDmY=;
-	b=cuJJn/ST/LbWybYUvwB7wKnp6dafN8AI8teu+irfbCXXC+LRSKzeeODdlpoSZgvxNx4L
-	 LbJYXxA6Bc7BbuELjbqHtfzUT/Rfrf4YcwBf/gwTcnZULnHCCpcz5K5XLoIKUeipsXJ9H
-	 kxnWk8X9e/oQc66GJp76lKPjL0dNpdGFrmHR7istobsg6DFAPCW4JPOH5PXJHQO3UF9Rc
-	 CqZaV89eogYZhuMdz/hVEOfbTIt0kp+0Fmx1mOlSrNQHMa+Q7v9eogyw4nq8u0KNQZWXJ
-	 QsQBtfWCsFR8NBKxJT22ljB21CirgMQh+pwEzdxEGnn3TsiclaqRso8Vsd2gWa0IFuA==
+	bh=m34i0kduLPyfJa+iCacgm66OfV06RB8TN8rf0J9S5n0=;
+	b=RL3p4iJr7i+UndpZ3VUt2kGaw9nqJfeBkQtvJ5fC7zd91bbYDfeS1m2hyyUidg5HOUHu
+	 suvs2wxqlAwJkmzqbERCyH9hM2b0Hf2k28n3u7vVXmjhvei5ae+wCh9w/AReyV2HchzgR
+	 Q0K3g5XbQXbOSMBLbVe27sfkoqgO/xG3ZtlfWgBtENx6qrLWDNVGamIbZgXxr7hL14L81
+	 ucCwUf13NCS4rQLduUuUYsg4ZvSLGZJK1eGSX0g0t0iWLs3ARFAejJrjJSBYxx+US5sSq
+	 DIc+A7dLGC3Y5T3zP2F4CJnThYx944ew076p8RLoqa9fc0E64q9Hv80BqO/a8X1aZNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aq0232Lg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZs7I3yr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E96E606A325;
-	Thu, 19 Nov 2026 03:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D433606A325;
+	Thu, 19 Nov 2026 03:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aq0232Lg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5B21F000C5;
-	Thu, 19 Nov 2026 03:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZs7I3yr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C9E1F000C5;
+	Thu, 19 Nov 2026 03:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058108;
-	bh=KwkL5WGguvff/Fp4hd/LVurcPwwV1/y0O/1cPUdiDmY=;
+	s=korg; t=1795058111;
+	bh=m34i0kduLPyfJa+iCacgm66OfV06RB8TN8rf0J9S5n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aq0232Lg0mZ85sJCjy5xVXDmTztSs8PTGvLltuMHnxU2kpRclT1gDnKJOQNBcrZ0I
-	 63ldkH13qUo9L37KthtVrWfl0rWmOXCCQ/h26aIGieBQUVKqgzdlX203/6J99n3FyX
-	 KpYyNTQEpr2IaWl/qC+IgvvfTlTueSX6Y0SpduqM=
+	b=dZs7I3yr2cJCi5tcvCVVNWDz5tTHaqqhXdfVmalmADn/QKGiNoocXGxv/olRkqni/
+	 EsB1Au9QcbFlY4KiK71jUFAJ2nfIyd1uatY0852z5Gp+S8csXoR4kRvb16t0afT+VW
+	 eXju3rf9MpZvu7lzE60fQQ/b1opD1woAjpplR1fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Younho Choi <gdool88@mju.ac.kr>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0369/1848] media: vim2m: keep transaction buffer count stable while streaming
-Date: Wed, 18 Nov 2026 15:40:07 +0100
-Message-ID: <20261118145928.846865093@linuxfoundation.org>
+Subject: [PATCH 5.10 0352/1848] ipc/mqueue: release notification resources during inode eviction
+Date: Wed, 18 Nov 2026 15:39:50 +0100
+Message-ID: <20261118145927.477305412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,118 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Younho Choi <gdool88@mju.ac.kr>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
+[ Upstream commit eb85469f0dd69ca145d63117450e14c31f67f698 ]
 
-V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
-mem2mem job processes before the job is completed. The driver stores
-the value in ctx->translen and device_work() uses it later to decide
-whether the current transaction should continue.
+mqueue_flush_file() removes an mq_notify() registration only when the
+closing task belongs to the thread group stored in notify_owner.
 
-Letting userspace change this control while streaming is active can
-make a queued job observe a different transaction length than the one
-it started with. That leaves the transaction state inconsistent with
-the buffers currently queued for the job.
+A task in a separate thread group created with CLONE_FILES can register
+SIGEV_THREAD notification and exit without closing the shared file table.
+If another thread group then unlinks and last-closes the queue, ->flush()
+skips the registration and inode eviction loses the only pointers to its
+resources.
 
-Grab the transaction buffer count control while either queue is
-streaming, and release it only after both queues have stopped
-streaming. The V4L2 control framework then rejects changes with
--EBUSY while the value is in use, while still allowing userspace to
-configure the value before streaming starts.
+The orphaned registration permanently retains the notification skb, its
+netlink socket, a pid reference and a user namespace reference. An
+unprivileged process can repeat the sequence with new queues and sockets.
 
-Keep the control handler alive until after v4l2_m2m_ctx_release(),
-since releasing the mem2mem context can call stop_streaming(), which
-now ungrabs the control.
+No inode users remain during eviction. Remove any stale registration there
+after dropping info->lock, since netlink_sendskb() may release the final
+socket reference.
 
-Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20260824042359.925145-1-4ncienth@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ ipc/mqueue.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
-index 2f95d70500973..9534dfbaafa30 100644
---- a/drivers/media/test-drivers/vim2m.c
-+++ b/drivers/media/test-drivers/vim2m.c
-@@ -205,6 +205,7 @@ struct vim2m_ctx {
- 	struct vim2m_dev	*dev;
+diff --git a/ipc/mqueue.c b/ipc/mqueue.c
+index 86969de170843..eee77f0a952ac 100644
+--- a/ipc/mqueue.c
++++ b/ipc/mqueue.c
+@@ -528,6 +528,13 @@ static void mqueue_evict_inode(struct inode *inode)
+ 		list_add_tail(&msg->m_list, &tmp_msg);
+ 	kfree(info->node_cache);
+ 	spin_unlock(&info->lock);
++	/*
++	 * A shared file table can let the notification owner exit without
++	 * running ->flush(). No users of the inode remain during eviction, so
++	 * tear down any stale notification after dropping info->lock because
++	 * netlink_sendskb() may release the final socket reference.
++	 */
++	remove_notification(info);
  
- 	struct v4l2_ctrl_handler hdl;
-+	struct v4l2_ctrl	*trans_num_bufs_ctrl;
- 
- 	/* Processed buffers in this transaction */
- 	u8			num_processed;
-@@ -1073,9 +1074,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
- 		ctx->aborting = 0;
- 
- 	q_data->sequence = 0;
-+	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
-+
- 	return 0;
- }
- 
-+static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
-+					   struct vb2_queue *q)
-+{
-+	struct vb2_queue *other_vq;
-+
-+	if (!ctx->fh.m2m_ctx)
-+		return false;
-+
-+	if (V4L2_TYPE_IS_OUTPUT(q->type))
-+		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
-+	else
-+		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
-+
-+	return vb2_is_streaming(other_vq);
-+}
-+
- static void vim2m_stop_streaming(struct vb2_queue *q)
- {
- 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
-@@ -1089,11 +1108,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
- 		else
- 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
- 		if (!vbuf)
--			return;
-+			break;
- 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
- 					   &ctx->hdl);
- 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
- 	}
-+
-+	if (!vim2m_other_queue_is_streaming(ctx, q))
-+		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
- }
- 
- static void vim2m_buf_request_complete(struct vb2_buffer *vb)
-@@ -1196,7 +1218,8 @@ static int vim2m_open(struct file *file)
- 
- 	vim2m_ctrl_trans_time_msec.def = default_transtime;
- 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
--	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
-+	ctx->trans_num_bufs_ctrl =
-+		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
- 	if (hdl->error) {
- 		rc = hdl->error;
- 		v4l2_ctrl_handler_free(hdl);
-@@ -1250,10 +1273,10 @@ static int vim2m_release(struct file *file)
- 
- 	v4l2_fh_del(&ctx->fh);
- 	v4l2_fh_exit(&ctx->fh);
--	v4l2_ctrl_handler_free(&ctx->hdl);
- 	mutex_lock(&dev->dev_mutex);
- 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- 	mutex_unlock(&dev->dev_mutex);
-+	v4l2_ctrl_handler_free(&ctx->hdl);
- 	kfree(ctx);
- 
- 	atomic_dec(&dev->num_inst);
+ 	list_for_each_entry_safe(msg, nmsg, &tmp_msg, m_list) {
+ 		list_del(&msg->m_list);
 -- 
 2.53.0
 
