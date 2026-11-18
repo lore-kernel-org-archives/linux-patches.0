@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031613;
-	b=r88E0jQzpJ3d2MBKLcOXHghrwsLNYp6v8/IvHDjTEbNeTak/ESmOtO8yI1KCEs+hTlxM
-	 pPvsosjNjdlIkchHDXJxk8tz/jorMcqw1HhqHbWWVSZDqhBTLlyg1DoSNPkjWxrBU/fvt
-	 1K7gDPjqpFiDwLWcbIB+jXv4/wiinXlX6tgD5Dlv1a6hsaats8ZLX1Sk6jC4pcTPHT8GB
-	 xrOimfv70bXqpmc1gW6dbmdnUuh3FwwnBL43OjUcMKQ9FVPA3wXbKV6jP1hvhcP7dlMEJ
-	 8BrxSBTLf7mbkVIetWdBaXEk97VKR6LZoQOeyV6xi8xb4IttfilHZl8U1Cu+uSPZRzQ==
+	t=1795031615;
+	b=uXi6eazr4DwcjvXO7nbmakNCn2LPIhJNb+KGwBVcO+62eoWB5bnS6nKEckMscsKGvMp/
+	 WHdphgnq4FV0WsOnJaTZ38R4WFzjUx8JuvKVgdW56+QlCvRSAePTqDiuFZsJXJTbYvw2Y
+	 oEWLj8tzIPtQsKLrwvNuiEfJaNAedE4SJt85hSybJriXm5v80ygb0XzmkfENGOy+2/1cw
+	 zQlB+UmdYSzUsJMxhR1wRkfPO6GdUhmSpwpVoPwOSya7aiITB8sSZ+5u5UeA6K9eCSad8
+	 v8IWoUsKSEyN+lU1pxcw7FsD0j+vVwPk2b2c/2ZeCyRDyU4INmpQty0KRr8UsaIRJog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kspranxBicNpbA+7pwX2jqP808DvxY7irxJA7eS5Ap8=;
-	b=HzdP6ZQvHQdpQZ/pt9Oow4weBFTbgB8sq3SfUx83fqkXmjVGvQkrr7t9ql6XorLJVHv0
-	 v1rj+W7uY9uo0OzprLTVDIUsIolvzKxBV23sa95+w7NsgbfcBr4/LJ/8SWb8R+e8/tQUG
-	 LRtMZjqqDrefCCHZNvhN3Ffz8n2ARKn/92NUZA2QLX5Ar1yV3ibrxk39vV/O7EOADKKAZ
-	 ah9BWJjncRPQj41gRiQ3y/Gs7ZYHbXX19LZJbqLRQkjXdzfvKdA0U2j9q9oxVmiZW7PpT
-	 Sj//yk0l7hL7r1sDSryDu4OU79tqO/k5SEJyDyrfeQc7jV5es5wDEzmqYNXyzxRV0MQ==
+	bh=ICE575WrY0oYn5aKUtwCXsvU5alGaB419EALovBTfDM=;
+	b=1UAH1C0NfUGhoxBpFOop54UzTbC3532KlZWRqlK2w7+7VJJv1YXfINO8r70NicRVMGFS
+	 4g2fQWJsf4juUjwAq9GVnxJOwtg78EUGAwMsKLafyFdUvxwVMQkY9IFjMeRZaXfc61tfE
+	 NJkZSNCN5IjZeKSKVLcK9YNR4S5jGZmLedXXQbffdxyj3YpzNNzOSjMcgBTRLDd8UoTSu
+	 zLL0gp3z7rv6fdYFLx0vmzyx4nmyf5SRQvurGKF1jU7TElg1AEkFIW2KdS5tuAQH+WTfX
+	 4nRuAdZzhJ85eqGjZQGURjRlVLZnAoRWkMGisVfQBTQnrIHngJbLa8oYE+VU7y8EG1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBILdD0j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsKW15+S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFEE606A335;
-	Wed, 18 Nov 2026 19:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AC3606A330;
+	Wed, 18 Nov 2026 19:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBILdD0j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7E61F000C6;
-	Wed, 18 Nov 2026 19:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsKW15+S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241171F000CF;
+	Wed, 18 Nov 2026 19:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031612;
-	bh=kspranxBicNpbA+7pwX2jqP808DvxY7irxJA7eS5Ap8=;
+	s=korg; t=1795031615;
+	bh=ICE575WrY0oYn5aKUtwCXsvU5alGaB419EALovBTfDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBILdD0jZykuB9aPk0O6NWS9ycBV/plg6KTytmiFqJfCxqXQsaFnqmjvfX5F1zBTO
-	 JJS4lI1x4oDMZnb6Gidx5iDC0ZhNJc/FC0I1W4M0NNPg8qS9QdgpqbS3+s+B4PqPhh
-	 u9FsiHxBX2Nn3smyjwu8BmfVvff7mqJEGQww9NVg=
+	b=nsKW15+Shq/ZQOSCKEzF0OWftSXL0n6nW4FXRE+HBHh66IXFMCvLBRnaEktymLC5V
+	 EkFTnTF8qXOfoK/K4vHDfSQiG6AhQo+Vt0WXC9a7UJYiPGFC/047Y6R/tmrjJaoQkB
+	 LINtkd/Mu0YCrzlVgzZZkG0Rk+fD7xzuvJN+or64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1120/1756] ntfs: Do not kmap pages used for reading from disk
-Date: Wed, 18 Nov 2026 15:54:07 +0100
-Message-ID: <20261118150054.706432700@linuxfoundation.org>
+Subject: [PATCH 6.12 1103/1756] calipso: hash the cache key, not the option start, in calipso_cache_add()
+Date: Wed, 18 Nov 2026 15:53:50 +0100
+Message-ID: <20261118150054.094091468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,57 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 14656154d26cf244d063477a03606775eec19780 ]
+[ Upstream commit d538cc3ec0bc4cb7b40981b3213a6c6671959ed5 ]
 
-These pages are accessed through DMA and vmap; they are not accessed
-by calling page_address(), so they do not need to be kmapped.
+calipso_cache_add() stores calipso_ptr + 2 as the cache key, but
+computes entry->hash over calipso_ptr, i.e. starting two bytes earlier
+at the option type and length.  calipso_opt_getattr() looks entries up
+with calipso_cache_check(calipso + 2, calipso[1], ...), which hashes the
+key itself.
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: 80218408836f ("fs/ntfs3: do not mark frame pages uptodate on read error")
+The two hashes only match on a jhash collision, so the CALIPSO label
+cache never hits and every labelled packet takes the full DOI lookup and
+category conversion path.  The memcmp() on the key keeps lookups
+correct, so this is a performance bug only.
+
+Hash the stored key, as cipso_v4_cache_add() does for CIPSO.
+
+Fixes: 4fee5242bf41 ("calipso: Add a label cache.")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/179138670045.80227.16155454353416856947@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 4 ----
- 1 file changed, 4 deletions(-)
+ net/ipv6/calipso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 014dcf2e50422..38d352b70e147 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2684,7 +2684,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- 		}
- 		pages_disk[i] = pg;
- 		lock_page(pg);
--		kmap(pg);
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 3ab22f9b416ec..f3a983aa07036 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -284,7 +284,7 @@ static int calipso_cache_add(const unsigned char *calipso_ptr,
+ 		goto cache_add_failure;
  	}
+ 	entry->key_len = calipso_ptr_len;
+-	entry->hash = calipso_map_cache_hash(calipso_ptr, calipso_ptr_len);
++	entry->hash = calipso_map_cache_hash(entry->key, calipso_ptr_len);
+ 	refcount_inc(&secattr->cache->refcount);
+ 	entry->lsm_data = secattr->cache;
  
- 	/* Read 'ondisk_size' bytes from disk. */
-@@ -2743,7 +2742,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- 	for (i = 0; i < npages_disk; i++) {
- 		pg = pages_disk[i];
- 		if (pg) {
--			kunmap(pg);
- 			unlock_page(pg);
- 			put_page(pg);
- 		}
-@@ -2838,7 +2836,6 @@ int ni_write_frame(struct ntfs_inode *ni, struct page **pages,
- 		}
- 		pages_disk[i] = pg;
- 		lock_page(pg);
--		kmap(pg);
- 	}
- 
- 	/* To simplify compress algorithm do vmap for source and target pages. */
-@@ -2919,7 +2916,6 @@ int ni_write_frame(struct ntfs_inode *ni, struct page **pages,
- 	for (i = 0; i < pages_per_frame; i++) {
- 		pg = pages_disk[i];
- 		if (pg) {
--			kunmap(pg);
- 			unlock_page(pg);
- 			put_page(pg);
- 		}
 -- 
 2.53.0
 
