@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044937;
-	b=Ku5W59/fSEM+Cip556YMo+MzMh0JAattfDbY6xn2nu9vEFdZOQDAdJoAorFSl00wl3Dv
-	 eBlk23btIRbd/m1H/n+A7kvwrHIpi3sCgw4X06acDrjWDazx95upCAFdoLtphz4Rr/9JU
-	 3Od5enw5BLbtCfmMTx1vYsN0zhqaXQHtfGiPga+FwZPcv2larTXRAAMPdpQM0DAj03zCY
-	 JcPC2VY7J9mUJB+Q6kNqX19K34iLZO69olODHgcDKi1AEpcrdPPDP7dMDxJo3O5g97Lri
-	 gbKiGCox5I84tfPxzn6h8a59EkrQu8WNuC0hu+fEqpG9npQDs9TfC7zewfp4uTIDiIA==
+	t=1795044940;
+	b=RsFdWZAm1PlHpA9vCBEfdITJOgTWlalrMySCXXrub6jQbXdJTiHW5ig+K/A2SYHLx7UJ
+	 CbkOjFIDpdkKgGbzRQKWGxvsHbbAfyMP53Id3+pvDv5YQYQR2Evc2awGPprsCH9blUYCT
+	 tuIo3Vhphq9SQxRu6t7OmGwCaXCWVPlMx5FFv1V/vnLF5LKPh6eKoGcYKV/66OKLsx+2l
+	 b7uK9veYZxjdRfdlqh7a4OAgebqVyf0Rox/m/2w6l2dvsEtmtlVV9py39MDvan+jiO262
+	 fyNj+2GBiJxzukEDAAO4GdG9wFnNa+KqlvvQX+UJDeEdB16DsvKjAbQvtPRyqrKNojg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4AMAzwS4oiNixFuU473BBjGdCBBL2F2JaOn9ToQ0hn8=;
-	b=Nm51LkeQo7m+QwaiVWNVqzMMqfyFRX1Bq+WnYXDvsdXgaklvK+OgLApgbSiAR8nYNlTl
-	 vLEl7oFXpPgqEalen9de2PGLMIQigpGEOhddTV7qB0u08A4EiQFsv0BduMOtzH2+O6oQc
-	 ACuflncDBaTT2r9aq66quh6hG8B+/nbfvEoMiCwrzfB6J4l0fq8aUU55VQBxK8YxN7mWF
-	 vAtkg3xilCRmqRTTM0eK0tynAWWkBTPkqHkrV5cmPRvYlAkaNYNjFgUd//Xvc+8dNPM4F
-	 e4Q2qNPo5YlWfeZdz6v9mO+oHmA6n8AvCQYKH+YeJ3S7J6WND6kXLu6fwVKZPiOJ0Hw==
+	bh=vQqcDxiQvid9ET3UZiQ16S62t8ExHU4Md/xqv6PCd+A=;
+	b=Y59BGPi99UVPHz2VO2CT1vSLkIRDerwiiPzYkGdsDq/3qAXzipcKbIrCooKUdbbnFS+n
+	 bF20vi8wn/y7dbbsfcp+j7nSTviS8dqqZ5DR9xyNk8Iujsova1XNoFKIyZYHklb+4AIrJ
+	 TlD8jIPRJuEb79NmL4HA9NtUQ5O7s7eVUD4PwUEYq6MaR/EQB/qBjxQRwMMbnXnY5QnvB
+	 2+9TB39QbVur4idN+pXAVXuYIM+z90E7EcJGbPonCMaAf0OKY+nhVtWm/VcVCLxK/BUv0
+	 MQuRFunij1JGiEo5nFdPDtIq5/9iwgkD1BTmr5jkVQp63CAUr1Zx+8i/JjoWc25eLTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J01GosWr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cRC8/Bio";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF53606A331;
-	Wed, 18 Nov 2026 23:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455E8606A32C;
+	Wed, 18 Nov 2026 23:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J01GosWr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C824A1F000C4;
-	Wed, 18 Nov 2026 23:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRC8/Bio
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961A01F000C4;
+	Wed, 18 Nov 2026 23:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044937;
-	bh=4AMAzwS4oiNixFuU473BBjGdCBBL2F2JaOn9ToQ0hn8=;
+	s=korg; t=1795044940;
+	bh=vQqcDxiQvid9ET3UZiQ16S62t8ExHU4Md/xqv6PCd+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J01GosWr9sEVwqa7aznPVrhpwbI46euRN2wLOJ9bOp4Lmbt5pzIKvrGdmiThPA4ac
-	 6YFASQsiQkzaFJuWbPBs2I5yInPHupAdM9Qu/T3SmIrB5Zv96PJO3xfJmBgddutsHc
-	 y6GxS94/u976dAwPX8qwlUL5Fr5bo/HN6lJAQV8I=
+	b=cRC8/BioqX7Q9D4S+E6i66+dL6ZOh1BH9195dGpYglIm3MYqMoalLTV67JuJoYYq+
+	 O4lQ79JjogmOMI2yi8uo/HXoVSCGk7z2AzBQvWIZUdAANUhzQL3xWwVB9mf1nWTyEP
+	 6zYDHkgtia+uG6ge6fCphnsIf9vbYKVY+g/AqMJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Punnay Sharma <punnaysharma805@gmail.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0746/2857] staging: media: av7110: fix corrupted BER reporting in sp8870
-Date: Wed, 18 Nov 2026 15:29:40 +0100
-Message-ID: <20261118150228.412423178@linuxfoundation.org>
+Subject: [PATCH 6.1 0747/2857] media: m2m-deinterlace: fix default capture field
+Date: Wed, 18 Nov 2026 15:29:41 +0100
+Message-ID: <20261118150228.449621233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,44 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Punnay Sharma <punnaysharma805@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 5764f9bd7b7a72c6df49db6c8c00d4f9994a55ba ]
+[ Upstream commit 4ee3ebede5d01efdcdd88c94f9df271d2eb237de ]
 
-In sp8870_read_ber(), the 14-bit Bit Error Rate (BER) is assembled by
-reading two I2C registers: 0xC08 (lower 6 bits) and 0xC07 (upper 8 bits).
+queue_init() initializes default formats for both the source and capture
+queues.  It first sets the source field to V4L2_FIELD_SEQ_TB, but then
+stores the capture default, V4L2_FIELD_INTERLACED_TB, in the source queue
+again while initializing the capture queue.
 
-The current implementation masks the lower bits via `tmp = ret & 0x3F;`
-but subsequently overwrites `tmp` entirely when processing the upper
-bits using a direct assignment (`tmp = ret << 6;`). This logical error
-causes the lower 6 bits of the BER hardware metric to be silently
-discarded.
+This overwrites the valid source default and leaves the capture field at
+its zero-initialized value, V4L2_FIELD_ANY.  vidioc_streamon() accepts
+only V4L2_FIELD_SEQ_TB or V4L2_FIELD_SEQ_BT on the source queue, and
+requires the capture queue to use a compatible interlaced or NONE field.
+Userspace that relies on the default formats can therefore get -EINVAL
+when starting streaming.
 
-Fix this by using a bitwise OR (`tmp |= ret << 6;`) to correctly merge
-the MSB and LSB payloads before returning the metric to the DVB core.
+Initialize the capture field instead.  The bug is usually hidden because
+mem2mem applications commonly call S_FMT on both queues before streaming;
+the TRY_FMT paths normalize the fields and S_FMT overwrites q_data[].field.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 8f0755c06b90 ("[media] media: Add mem2mem deinterlacing driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Punnay Sharma <punnaysharma805@gmail.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/deprecated/saa7146/av7110/sp8870.c | 2 +-
+ drivers/media/platform/m2m-deinterlace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c b/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
-index 9767159aeb9b2..f68479e75e462 100644
---- a/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
-+++ b/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
-@@ -384,7 +384,7 @@ static int sp8870_read_ber (struct dvb_frontend* fe, u32 * ber)
- 	if (ret < 0)
- 		return -EIO;
+diff --git a/drivers/media/platform/m2m-deinterlace.c b/drivers/media/platform/m2m-deinterlace.c
+index 1f89e71cdccfc..5c05eb2d31045 100644
+--- a/drivers/media/platform/m2m-deinterlace.c
++++ b/drivers/media/platform/m2m-deinterlace.c
+@@ -830,7 +830,7 @@ static int queue_init(void *priv, struct vb2_queue *src_vq,
+ 	q_data[V4L2_M2M_DST].width = 640;
+ 	q_data[V4L2_M2M_DST].height = 480;
+ 	q_data[V4L2_M2M_DST].sizeimage = (640 * 480 * 3) / 2;
+-	q_data[V4L2_M2M_SRC].field = V4L2_FIELD_INTERLACED_TB;
++	q_data[V4L2_M2M_DST].field = V4L2_FIELD_INTERLACED_TB;
  
--	tmp = ret << 6;
-+	tmp |= ret << 6;
- 	if (tmp >= 0x3FFF0)
- 		tmp = ~0;
- 
+ 	return vb2_queue_init(dst_vq);
+ }
 -- 
 2.53.0
 
