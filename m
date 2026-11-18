@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059021;
-	b=AZmhdfJDGCA5jSW3iaSyjV5sJIusqH/cdGESl5s8YFUtIFuECmG1O2OFQMJ5hV/DjfVH
-	 nNhXZnGp3PzRIaou6M6Qep/Qtb1TrjtAujjOpnUAcURT6QyeaMLeCZhMLQlVRouQpRT0Q
-	 pnmqzEiYfBYfBkyMCzYalMGxuyNsk8cR84OBedr5pWKcgL75+NEV82UpFv8iOag1hZvTz
-	 rRTr6YBxgGX9sAI1dL6a6aKb4QrzzBUwNa8O6EvRbQBAfVyCuQN9s7e2uoScIMXg8fpfz
-	 M3rL1zVX7BGPhNYPne5chl8JydWafb5eZBJdw/bgWU7gL4yIZ+Lmh3riLshwJN3QQmg==
+	t=1795059024;
+	b=0GQUYx5a3rMMgTGswTIAOEt7SR2dj65q0Ye+FN5NPnKUyS88AAjxa+DB5Ua8uSgOG0r3
+	 Qz/r4OAbQPdyCtLTR1pQxUtWKMC0vAvIs7FH8ir2xYovQP3asX62NRMoyspl6uhTcYNaj
+	 tBaFeNcGeAB2mbqjA7hxmh6Gz0mD0HzwhuWIq2KGdTUcJ8b0eVQTF0T6sGU27EG2ozRVn
+	 Pb7Ax8q4Tq3rrG1yLRYIh2tsZs8CqHKd0RrTV8sA+nliDhftbjcDOSqtEo9spaFrJHHql
+	 rf6dk0MBAHIV2EmyyDZTXKWTJMYt00WfeL3LQuM5O/ibJem+SdROfL1UBBY3ElFwgig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hvbxiq3uhinSQ5NlaMloC/kiCCy+R4XyyRL2ud+nQZ4=;
-	b=jN2/EV4oInWK65wzbLs7kNqntQP4fK7XPikGa9FGd2B7tgT/s4xMuXQmhHwvVIppP2t/
-	 nxfwEK+u5wKKMhhO8yrrf1NKcjYaE/2jcmzFeeZszGOMWCLDt55S4P4vWSJkgucXgRP2w
-	 PHnCMmJoB/cX/NfeXJ4MAP8mFeu57Y7D1F2ZyrN0gC1y9gxCR6nfUQFX6wykkIRX5Ctxc
-	 tCzwxy7SXjmDjg70bov1dHhaReSN9Tu/BPwTiB7f/1tsRh9aBSJbOlHIVAmoSM7gabBb+
-	 qoq7HXuaTal0j0oLqAjYQAdPrXeuXpQMDsLKniPEDJub1vpTAQ4ukITI52Md/vaDp2A==
+	bh=v3xWjQdz+bTYPce9yvQuxZN53NGmna8X0fD50ScjhI8=;
+	b=gbY5KjZKUk+l+ac2qKH/1I8Qe5YjLFgFm5U2OvhoeFnoXxhAaQ9Q0VHcVjncye9436aS
+	 uAzyCBBzHnlZx/it4p3QklOauD/Dgn2gQQtSh2tA0wK2rdeElYqDpIwVGxN3mfq0APkxL
+	 SnzeVZhwOXKuPNX+XM5xsomBlKmq60L16Kcx6hdMnr03h0ONJ1RLJYzKFp3VYffkEXvMQ
+	 1FJmdJ5mt4LxMvn/kj19GOGkIrrbO6UpJ+Xg0nM+ly9SvuSThAmGG/fqPYZuadncT6eIm
+	 0B25d0MZ6OoMW22/meo6rc/TDYqg9CulPwHdOwcVQRJXKSNJVtzz+vEpiBGf7yiypSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XHGWDej3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAZTshHy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17B0606A326;
-	Thu, 19 Nov 2026 03:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E3E606A325;
+	Thu, 19 Nov 2026 03:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XHGWDej3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EC81F000C4;
-	Thu, 19 Nov 2026 03:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAZTshHy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121911F000C4;
+	Thu, 19 Nov 2026 03:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059021;
-	bh=hvbxiq3uhinSQ5NlaMloC/kiCCy+R4XyyRL2ud+nQZ4=;
+	s=korg; t=1795059024;
+	bh=v3xWjQdz+bTYPce9yvQuxZN53NGmna8X0fD50ScjhI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XHGWDej3B5I8DWaGMTxEtu/mHS6C9smrpxf8b9p9n1sfSTxkzcqhwGpr0D1iAKS37
-	 UoOwQC4TdYsadqh7otg+tMUZ9sO/drlWp30diPB0I5Ui7NGuKBlDb/ruOTwlalYmjd
-	 rITay52CFK3b2G1kLIATUEi09qmVi2GWQL90hkHA=
+	b=zAZTshHyF250DA2W54mE6QPBxyPT5I0XJgWUhewk2ayHaADY6mB/eDowq/15Z41N4
+	 sF/igYMvjgG7dphTzqmMm6Hhl0Mol7/zKcmfrBrKjo+k9ibi+BldNMUbxiWGHDOTYq
+	 Ls50HCCUW2VRZX5xhxJevAQZifQ2bJjKVvkynES8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0692/1848] ALSA: usx2y: Initialize idle URBs before submitting streams
-Date: Wed, 18 Nov 2026 15:45:30 +0100
-Message-ID: <20261118145944.885645141@linuxfoundation.org>
+Subject: [PATCH 5.10 0693/1848] bpf: Fix skb_pull() BUG in __bpf_redirect_neigh()
+Date: Wed, 18 Nov 2026 15:45:31 +0100
+Message-ID: <20261118145944.920397600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,83 +69,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit ceb0d8c22473933099b46cec70639d0f1f7c68ad ]
+[ Upstream commit 23503acb214cbefaf3945d05ab9667ff11ae3de9 ]
 
-usb_stream_start() submits the first two capture and playback URBs and
-only afterwards assigns sk->idle_inurb, sk->idle_outurb,
-sk->completed_inurb and sk->completed_outurb to the remaining two URBs
-of each direction.
+The issue:
+This is a follow-up to the short link-layer header fixes from Eric.
+After vlan pop_eth, a privileged SCHED_ACT BPF program can call
+bpf_skb_change_head(skb, 1, 0) and then bpf_redirect_neigh().
 
-A transfer can complete as soon as usb_submit_urb() has been called, so
-the completion handler i_capture_start() or i_playback_start() may run
-before those pointers are set.  While the stream is still being
-synchronized (state below usb_stream_sync1), stream_start() then calls
-playback_prep_freqn(sk, sk->idle_outurb) with sk->idle_outurb still
-NULL, and the packet descriptors are written through that NULL pointer:
+__bpf_redirect_neigh() calls skb_pull(skb, sizeof(*ethh)) after checking
+only that mac_header < network_header.  Nothing verifies that the MAC
+header is long enough, that it is linear, or that the IP header the
+redirect goes on to read is linear either.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000018: 0000 [#1] SMP KASAN
-  KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-  RIP: 0010:playback_prep_freqn+0x11c/0x4a0 sound/usb/usx2y/usb_stream.c:33
-  Call Trace:
-   <IRQ>
-   stream_start+0x5dc/0x8d0 sound/usb/usx2y/usb_stream.c:596
-   i_capture_start+0x3da/0x710 sound/usb/usx2y/usb_stream.c:654
-   __usb_hcd_giveback_urb+0x238/0x550 drivers/usb/core/hcd.c:1657
-   usb_giveback_urb_bh+0x20b/0x530 drivers/usb/core/hcd.c:1691
-   tasklet_hi_action+0xa/0x20 kernel/softirq.c:994
-   handle_softirqs+0x16f/0x440 kernel/softirq.c:645
-   </IRQ>
+A SCHED_ACT BPF program can do:
 
-The four URBs referenced by these pointers are allocated long before and
-do not depend on any transfer state, so assign them before the submit
-loop.  Keeping the assignment inside the retry path also restores a
-well-defined URB rotation when the start frame mismatch handling kills
-and resubmits the streams.
+    bpf_skb_change_head(skb, 1, 0);
+    bpf_redirect_neigh(lo, NULL, 0, 0);
 
-Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
+after vlan pop_eth.  The skb then has mac_len == 1 and only one byte of
+linear data; skb_pull(ETH_HLEN) trips the skb->len < skb->data_len BUG in
+__skb_pull():
+
+    kernel BUG at ./include/linux/skbuff.h:2839!
+    RIP: skb_pull+0x40/0x50
+    Call Trace: skb_do_redirect -> packet_xmit -> packet_sendmsg
+    Kernel panic - not syncing: Fatal exception in interrupt
+
+The v4 and v6 paths read ip_hdr() and ipv6_hdr() as soon as the MAC
+header is gone.  On the AF_PACKET frame below that leaves headlen == 0
+after the pull, so the network header sits at skb->tail and the route
+lookup reads ip4h->protocol, ip4h->saddr and ip4h->daddr past the linear
+area.
+
+The Fix:
+Use skb_network_offset(), which is the MAC header span, instead of
+skb->mac_len.  mac_len is zero for locally generated tc egress and netkit
+packets, while the span still rejects the one-byte header produced by
+pop_eth + bpf_skb_change_head(skb, 1, 0).  The single check also covers
+the mac_header >= network_header test it replaces.
+
+Use pskb_may_pull() to make the Ethernet header linear before it is read
+or pulled, and to make the IP header linear in both the v4 and the v6
+path before ip_hdr()/ipv6_hdr() is read.  The header pointers are taken
+after the pull, since pskb_may_pull() may reallocate skb->head.
+
+Conditions to recreate the bug:
+On x86-64 with 4 KiB pages, enable CONFIG_PACKET, CONFIG_BPF_SYSCALL,
+CONFIG_NET_SCH_INGRESS, CONFIG_NET_CLS_MATCHALL, CONFIG_NET_ACT_VLAN and
+CONFIG_NET_ACT_BPF.  Run as root with BPF loading, network administration
+and raw-packet privileges.  Bring lo up and attach a SCHED_ACT program
+that calls bpf_skb_change_head(skb, 1, 0), then returns
+bpf_redirect_neigh(skb->ifindex, NULL, 0, 0):
+
+  ip link set lo up
+  tc qdisc add dev lo clsact
+  tc filter add dev lo egress matchall action vlan pop_eth pipe \
+      action bpf object-file neigh_chghead.o section action
+
+Send an untagged ETH_P_IP frame of ETH_HLEN + 8192 bytes through an
+AF_PACKET/SOCK_RAW socket bound to lo, without PACKET_VNET_HDR or
+PACKET_QDISC_BYPASS.  Use a unicast destination MAC.  The sender's skb
+has a 14-byte linear Ethernet prefix and a fragmented payload; pop_eth
+removes that prefix and change_head restores only one linear byte.
+The unfixed neighbor redirect then tries to pull 14 bytes and BUGs.
+
+Sending the same frame without pop_eth and change_head leaves the IP
+header in the frags, which is the route lookup reading past skb->tail.
+
+Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261028103158.22996-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/netdev/20261027082604.1485903-1-edumazet@kernel.org/
+Link: https://lore.kernel.org/all/2a0f5ff1d8db81b07fc4b344b8e68e3505fcbf36f72a471d1678b2f1cecd881b@mail.kernel.org/
+Link: https://lore.kernel.org/netdev/DMII4JGTEUEG.2WRJPT6ODT6J0@gmail.com/
+Link: https://patch.msgid.link/bpf_redirect_neigh_short_linear.v3.r0.20261031153053-1@mojatatu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usb_stream.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/core/filter.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/sound/usb/usx2y/usb_stream.c b/sound/usb/usx2y/usb_stream.c
-index 9d0e44793896f..992eec233675d 100644
---- a/sound/usb/usx2y/usb_stream.c
-+++ b/sound/usb/usx2y/usb_stream.c
-@@ -687,6 +687,10 @@ int usb_stream_start(struct usb_stream_kernel *sk)
- 	s->sync_packet = -1;
- 	s->inpacket_head = -1;
- 	sk->iso_frame_balance = 0;
-+	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
-+	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
-+	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
-+	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
- 	++try;
- 	for (u = 0; u < 2; u++) {
- 		struct urb *inurb = sk->inurb[u];
-@@ -745,11 +749,6 @@ int usb_stream_start(struct usb_stream_kernel *sk)
- 		return -EFAULT;
- 	}
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 1fc7affeb981d..1630692179566 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2257,9 +2257,13 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
+ static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
+ 				   struct bpf_nh_params *nh)
+ {
+-	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct net *net = dev_net(dev);
+ 	int err, ret = NET_XMIT_DROP;
++	const struct ipv6hdr *ip6h;
++
++	if (unlikely(!pskb_may_pull(skb, sizeof(*ip6h))))
++		goto out_drop;
++	ip6h = ipv6_hdr(skb);
  
--	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
--	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
--	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
--	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
+ 	if (!nh) {
+ 		struct dst_entry *dst;
+@@ -2369,9 +2373,13 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
+ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
+ 				   struct bpf_nh_params *nh)
+ {
+-	const struct iphdr *ip4h = ip_hdr(skb);
+ 	struct net *net = dev_net(dev);
+ 	int err, ret = NET_XMIT_DROP;
++	const struct iphdr *ip4h;
++
++	if (unlikely(!pskb_may_pull(skb, sizeof(*ip4h))))
++		goto out_drop;
++	ip4h = ip_hdr(skb);
+ 
+ 	if (!nh) {
+ 		struct flowi4 fl4 = {
+@@ -2421,15 +2429,14 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
+ static int __bpf_redirect_neigh(struct sk_buff *skb, struct net_device *dev,
+ 				struct bpf_nh_params *nh)
+ {
+-	struct ethhdr *ethh = eth_hdr(skb);
 -
- /* wait, check */
- 	{
- 		int wait_ms = 3000;
+-	if (unlikely(skb->mac_header >= skb->network_header))
++	if (unlikely(skb_network_offset(skb) < ETH_HLEN ||
++		     !pskb_may_pull(skb, ETH_HLEN)))
+ 		goto out;
+ 	bpf_push_mac_rcsum(skb);
+-	if (is_multicast_ether_addr(ethh->h_dest))
++	if (is_multicast_ether_addr(eth_hdr(skb)->h_dest))
+ 		goto out;
+ 
+-	skb_pull(skb, sizeof(*ethh));
++	skb_pull(skb, ETH_HLEN);
+ 	skb_unset_mac_header(skb);
+ 	skb_reset_network_header(skb);
+ 
 -- 
 2.53.0
 
