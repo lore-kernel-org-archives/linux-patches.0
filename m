@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056057;
-	b=YD5fXrIRsUMaQvarqKaq9TE4Rb7nxoC9gSNMJHsoqb7qX1UQJ5pd+bjSPYJylVnvVmZi
-	 rdPgVghrK4+vWhDGD/1GMOXEeQrkux5UBGDpw2Sq3rbfttv2zB+VOj1DVK9cnr/8f5HXf
-	 Y0WLVNi/rkQI98Ujo4/qfLyDS6illdHVl70WUcdwPVAPMv69afBFSUX5HsE81vZKJF7fw
-	 RvKcCzr10JWKr0NNgqCcjlbWLRXh35vho7LucLTr13LrfLUNFgIDaTAFGwQb6Sy9I7Yaa
-	 6QvXXX+ZvLXKYZJAM6SWXpdGyFb3ZWGqxHDIKkiDs2OZTge5AGBIWlZLLKBlyiwrSGg==
+	t=1795056060;
+	b=Pmfiw2CcW3ce+1AfhvAFiHFXOGATZ14FaYESK+lFFEcQ1R1n/T+RqFQSeI3ySO0CVbOD
+	 Ghyj8OCdzw+WESW2sJ/7MzycEl02NAdlTAnQXaFABT4EivlHTyq/+RZiEDdfM4pqp9eVh
+	 fkRM3w9f34gZDeQwvXBCYGkwMlD17FaOJLanGGyef4L4CNc+qeWbAlgiOeaiiY+O0oRX3
+	 rASJSWsNgYnSfsWg9As7MuPUjZ1BDOQ1aSXqPwDstg+vBXaGF1L/dcH+V5HKqr/+sR6hv
+	 S1CZsRcG77GcYWl+snXodhUv+MSs1i2kHtPixgiGfiCFK22MZbH9gIIEeIPUixw6bgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y9Dh8/1upjnMohTxED2VuS5+pf+Y5dN7wCagG9Xs5gw=;
-	b=QKqVWd31kmMlZLzZ0Djh9v7yV0VfipMmN0KeqIM/zIP5ywA1M0A+bCWSfOXXl3wRrlSJ
-	 jgTxF032P1p/3aZCXSxcLksvPlKB0YYiNLDdoBkF+8EPb3Ruj28Ih5BcwUShrJL/hP0CI
-	 QGneOOZ8xg3nWk6fzakcyNLf7Rne76BG8w5+qkCuzNYSZCtfs159c7vfJ6zw0ztBAnTdd
-	 EoUUYLAMiQroi2f8luohZ8XwlscJNB5UMUFfhWZWvQ3ZuaP0y5hCZW9XcJEJJJv447MrE
-	 ChuV4qooxgKy+NJCXV3GYYSInWt8eIBIvNc29MDqYmHmWSxt4iURIWEFcKIHb6Y9Ktw==
+	bh=Ij/srz4813XK3Eb4fDWAk5BUXjgM29V1Smd3C3i6pc8=;
+	b=ScUSgb3webRadXnFR/MGBBnwXGJ36ur15pr1YjwUbk5SDs65V/vLqLAmlphCs4X04kTJ
+	 2o7gemWdzkobuXImk/IeIYRaKFFq9oHerVDP4hHcFQq9oPCLuGJpI5vS0skPNVUe/uGKp
+	 QtFTxr1Z4F5EexqgpAfkVYO9p4oATZRFngS+gXhC9nsCLKSLcCOwlWFqT9V230vGes2Rf
+	 7lzXEwyLqaKFB0Yx67BuCOqa97DDBlq8eivdwVO9z0CBsQF3kdSFuMH0m8Nn8mGgpno4M
+	 sgrD3dANNv2hafVf4dEe/0t3qiYyV2ms85pi+kG2AvMkNwEKPEHW4IPqYzXbmuhIMng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQHiEQ67;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1G0uq6q+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9173606A320;
-	Thu, 19 Nov 2026 02:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698FA606A31C;
+	Thu, 19 Nov 2026 02:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQHiEQ67
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B766F1F000C4;
-	Thu, 19 Nov 2026 02:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1G0uq6q+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9A31F000C5;
+	Thu, 19 Nov 2026 02:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056057;
-	bh=Y9Dh8/1upjnMohTxED2VuS5+pf+Y5dN7wCagG9Xs5gw=;
+	s=korg; t=1795056060;
+	bh=Ij/srz4813XK3Eb4fDWAk5BUXjgM29V1Smd3C3i6pc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GQHiEQ67A0tQduyp1ztHBfTmj/3vJP9ObnzJ+8AXQTdsFsthJxSUg8AyZVWDu4OEb
-	 6SR0f1CqtVHkeGww+qwp2EfMriu/vc9SAEBe2dxs986HlvGP3xURIWLCJtVm/8QEDg
-	 1unLxH9ZN0ab9pYpTV/zx/d67GOJwTj8aKIKjS80=
+	b=1G0uq6q+syUmAamu5IBwujNvHLJ3KKow+SXsl1AL/LxMuXzAzXykGyAzrMlt/BhPl
+	 crBmSRr/I6esbaayr6KJpUGWZnyrm0oXgbR/G8LfEVA1Q4bluymxR/LExrrSkXBgsa
+	 G373FwKyzocJspA2+VMmemIqb9H4DDQM+1/dOT9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1851/2214] mtd: rawnand: pl353: fix clk reference leak in pl35x_nfc_setup_interface()
-Date: Wed, 18 Nov 2026 15:58:47 +0100
-Message-ID: <20261118150125.426745580@linuxfoundation.org>
+Subject: [PATCH 5.15 1816/2214] crypto: talitos - use devm_platform_ioremap_resource()
+Date: Wed, 18 Nov 2026 15:58:12 +0100
+Message-ID: <20261118150124.120341809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 1ce45f0e74d60e8279ed380c97047e6c351aee1b ]
+[ Upstream commit 463be1c718fb9f07bdce3d51363a17eac4522538 ]
 
-pl35x_nfc_setup_interface() obtains a reference to the SMC "memclk" with
-of_clk_get_by_name() and only uses it to read the clock rate. The
-reference is never released: the function has many early return paths
-and no clk_put() call anywhere, so the clock reference is leaked.
+platform_get_resource and devm_ioremap effectively open codes this.
 
-The hook is invoked repeatedly by the NAND core (nand_reset(),
-nand_setup_interface() and the NAND_DATA_IFACE_CHECK_ONLY mode probing
-loops), so the reference count keeps growing.
+The return type of devm_platform_ioremap_resource() is also nice as it
+has multiple errors that it can return.
 
-Release the clock reference with clk_put() as soon as its rate has been
-read.
+Because it internally calls devm_request_mem_region(), reg values and
+sizes cannot overlap. This was manually verified to be the case for all
+talitos users.
 
-Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
-Assisted-by: DeepSeek-V4.1-Flash
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 666d66df2525 ("crypto: talitos - init tasklets before requesting IRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/talitos.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-index 04e62c3ab5975..2b6626f34b697 100644
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -809,6 +809,7 @@ static int pl35x_nfc_setup_interface(struct nand_chip *chip, int cs,
- 	 * macro to convert from one to the other.
- 	 */
- 	period_ns = NSEC_PER_SEC / clk_get_rate(mclk);
-+	clk_put(mclk);
+diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
+index dcc73423eb6a0..78fbf8b457bd4 100644
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -3345,7 +3345,6 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	unsigned int num_channels;
+ 	int i, err;
+ 	int stride;
+-	struct resource *res;
  
- 	/*
- 	 * PL35X SMC needs one extra read cycle in SDR Mode 5. This is not
+ 	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
+ 		return -EINVAL;
+@@ -3364,13 +3363,10 @@ static int talitos_probe(struct platform_device *ofdev)
+ 
+ 	spin_lock_init(&priv->reg_lock);
+ 
+-	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
+-	if (!res)
+-		return -ENXIO;
+-	priv->reg = devm_ioremap(dev, res->start, resource_size(res));
+-	if (!priv->reg) {
++	priv->reg = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(priv->reg)) {
+ 		dev_err(dev, "failed to of_iomap\n");
+-		err = -ENOMEM;
++		err = PTR_ERR(priv->reg);
+ 		goto err_out;
+ 	}
+ 
 -- 
 2.53.0
 
