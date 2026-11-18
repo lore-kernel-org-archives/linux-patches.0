@@ -1,76 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024038;
-	b=AcXbAGJQwNt4xBldlKTZggwG7mDdNQJv9Vi08D5uTMXBAi5cILWimK//iSPDs8jDkAsl
-	 ioMX3UxTIksM7hscc3JCPKG2NSDQVvONH7N4dDet/qDBRUzV6CEgELh/MzKfkEX+xwMKT
-	 mHtoHngWRWD5NjkTtxpi0n7E4N754sx0rCIV4qPYWkEWvNzskw8vC41NmcbW5FUOwN2Jb
-	 VOOe0F6QVCxLQBghAKBtgV+xZOUu926O8Vg+aCdD248B4RxSytu5GYSef3TmdMvVZaR6I
-	 VV12iB0TtxgOqIQ3xDVWhlWI9XcENDi0q5qd/F0o+EPQR4RlWXA9wrV0Q8uEQi4wDKA==
+	t=1795024041;
+	b=bO0BfaTzxrDMnkNhhBNwJbb5t12paiPeCt4jrHSsswUXqy9zeTeO0NLNr/4mXPbC3xqA
+	 07suC3SQZrttJccK+cXEC8Cv5HcxtkC+b9XKbdoCIk/Mngg06UhOrPlYKmRkKN2LoNdy9
+	 jQhzC+scAGa4z+6qOeSZp7cOudsas3BhPgLrMMq6kUXELtkCHv4sFAhInadkgWOaQ1taL
+	 7nOeiAlxsjtSrMDsl/RPByqmTgc9/0WBOUHYbpKYrqmeqVWtu+7yu2mP8QwnJ+UKccuVX
+	 71lvwg6n/i9VPmUhmHVXodsupLxfbrwVYSyYfRKK84F8IUBrP91hwf2ZIjrr10nIvZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024038;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u/33CrgY0lsnQT8LLEQZX7T2WdNuxbNw8Oz3u5u0HyA=;
-	b=Wfl/LQxZuakBPhfIo8r3NZXugSiiCEuujO4a/EKjOv+A9H6UAG7yJWU9+GjChtYe7nYf
-	 oElRLSt1c5nUaovT05Tybegk14a16GnKMnCUigtm+T1aC+a/184Kjc977iFw0GtIAFrvt
-	 eC6b8B7OvJQGAwmfkk4wr3SO2gCBWfaVfal/UxkrhC/GeoHHE8QeA0GrX8X7rVuMZZuFX
-	 024+VgWJEkVq7NToHwWcUGwrSQylxgMeCDaUZRPh4XnlMejf7xvuU/1fU+YeCG12Ba81V
-	 baSRClRiTm5M01EeccMwrBapNU9HtsaMuGx7N1JTUL3IUT4O9RMPSgr1GY96mFu2l/A==
+	bh=s/HuXwJLJZBNqzVnYzXkV6mlr9xhSbI+hui4Te117J0=;
+	b=MmtS0PS6XmPnBU6rBdxXQlauyXgTY9LxP7tZUpSi1nqp4cGnBy8o3CAIOv9b6Sbgss6i
+	 DDLB7HHn/UygItkOnxTQh5A15nFzmriJRp52W9z6fUkqyMLhHN0sI95CQLm+kHyum3UUe
+	 2g/TpvaeQdpfFSS2cbkMYy92/BBsP2B9CS+cAFNsNk5zK8rtZ0mDeLyiUf2J6NrOBLWSn
+	 AQbHkGaFL0fI/1eU2OGklddIiavCXmH7rkvi5J/WKzugJ1NyYsqKzSDhKmM+lHqewz5i5
+	 UPsC1Q+RIoPh6QXjYGGE/rky86ygS9GhXvR4qbnIfQhANAdYhNvryttKXS5Yk3y6AEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pV7s11DF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3YX0gz4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ECD606A320;
-	Wed, 18 Nov 2026 17:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D093606A320;
+	Wed, 18 Nov 2026 17:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pV7s11DF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB551F000C4;
-	Wed, 18 Nov 2026 17:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3YX0gz4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139321F000C5;
+	Wed, 18 Nov 2026 17:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024038;
-	bh=u/33CrgY0lsnQT8LLEQZX7T2WdNuxbNw8Oz3u5u0HyA=;
+	s=korg; t=1795024040;
+	bh=s/HuXwJLJZBNqzVnYzXkV6mlr9xhSbI+hui4Te117J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pV7s11DFrZyx7yXOg0Hi6qQe1Ow5bak0Jt+cWluKFWDF1Sba38HDcP7RibREYaNBK
-	 2+XYwmeTOFpkGJtQaVtGAkc3x1WAfmWv4PLZzTCiIN4cDvXsNEo/jqHke/eUgJ8jU0
-	 /9vCYyIdrmadSXT9Gh0HoSYDKP444wsPiytVslxE=
+	b=y3YX0gz4MtNr9z90Oj+XA1t7mvnnl7tibwE75rzhloXu/hbyXfhKBx29mCf8NMIBZ
+	 Q3HrhjQv1QCHeYADBNJDpVSqKu9Dvfv0ar58a3LE/owpX6mXzzTeoblLjakByVC31W
+	 ATwVy84Plkv4fTG5bu5gF+9cQHvRG3gSwsVrkg9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	Michael Jeanson <mjeanson@efficios.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Andrew Jones <andrew.jones@oss.qualcomm.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Dmitrii Dolgov <9erthalion6@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Howard Chu <howardchu95@gmail.com>,
+	Derek Foreman <derek.foreman@collabora.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	James Clark <james.clark@linaro.org>,
 	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Leo Yan <leo.yan@linux.dev>,
-	Li Guan <guanli.oerv@isrc.iscas.ac.cn>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <pjw@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Shimin Guo <shimin.guo@skydio.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Tomas Glozar <tglozar@redhat.com>,
-	Will Deacon <will@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0583/2151] tools build: Deduplicate test-libunwind for different architectures
-Date: Wed, 18 Nov 2026 15:38:38 +0100
-Message-ID: <20261118150143.188584057@linuxfoundation.org>
+Subject: [PATCH 6.18 0584/2151] perf data ctf: replace libbabeltrace with babeltrace2-ctf-writer
+Date: Wed, 18 Nov 2026 15:38:39 +0100
+Message-ID: <20261118150143.228213276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -92,374 +79,454 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Michael Jeanson <mjeanson@efficios.com>
 
-[ Upstream commit 6d13d53be9ddab1425e0c2789788adc4d6f05d74 ]
+[ Upstream commit 536e81f07450562caba8e62022763a78fd00a0a7 ]
 
-The separate test files only exist to pass a different #include,
-instead have a single source file and pass -include to $(CC) to
-include the relevant header file for the architecture being
-tested. Generate the rules using a foreach loop. Include tests for all
-current libunwind architectures.
+The 1.x branch of Babeltrace has been superseded by 2.x in 2020 and has
+been unmaintained since 2022, efforts have started to remove it from
+popular distributions.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
+Babeltrace 2.x offers a very similar 'ctf-writer' library that can be used
+with minimal changes for the '--to-ctf' feature and has been packaged
+since Debian 11 and Fedora 32.
+
+This patch replaces the 'libbabeltrace' build feature with
+'babeltrace2-ctf-writer' using pkgconfig detection, adjusts the naming of
+the public headers and applies minor API cleanups.
+
+There is no changes to the output ctf traces, the ctf-writer API still
+implements version 1.8 of the CTF specification that can be read by
+either Babeltrace 1 / 2 or any CTF compliant reader.
+
+Also remove some ifdefs in the cli option parsing to allow printing the
+helpful error message with '--to-ctf' when built without babeltrace2.
+
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Dmitrii Dolgov <9erthalion6@gmail.com>
-Cc: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Derek Foreman <derek.foreman@collabora.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Li Guan <guanli.oerv@isrc.iscas.ac.cn>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <pjw@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shimin Guo <shimin.guo@skydio.com>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Cc: Tomas Glozar <tglozar@redhat.com>
-Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: a5cac2df8b4a ("perf build: Remove leftovers of removed build options")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.feature                  | 12 ++++-
- tools/build/feature/Makefile                  | 46 +++++++++----------
- tools/build/feature/test-libunwind-aarch64.c  | 27 -----------
- tools/build/feature/test-libunwind-arm.c      | 28 -----------
- .../test-libunwind-debug-frame-aarch64.c      | 17 -------
- .../feature/test-libunwind-debug-frame-arm.c  | 17 -------
- .../feature/test-libunwind-debug-frame.c      |  1 -
- tools/build/feature/test-libunwind-x86.c      | 28 -----------
- tools/build/feature/test-libunwind-x86_64.c   | 28 -----------
- tools/build/feature/test-libunwind.c          |  1 -
- 10 files changed, 32 insertions(+), 173 deletions(-)
- delete mode 100644 tools/build/feature/test-libunwind-aarch64.c
- delete mode 100644 tools/build/feature/test-libunwind-arm.c
- delete mode 100644 tools/build/feature/test-libunwind-debug-frame-aarch64.c
- delete mode 100644 tools/build/feature/test-libunwind-debug-frame-arm.c
- delete mode 100644 tools/build/feature/test-libunwind-x86.c
- delete mode 100644 tools/build/feature/test-libunwind-x86_64.c
+ tools/build/Makefile.feature                  |  5 +--
+ tools/build/feature/Makefile                  |  6 ++--
+ tools/build/feature/test-all.c                |  6 ++--
+ ...ltrace.c => test-babeltrace2-ctf-writer.c} |  3 +-
+ tools/perf/Makefile.config                    | 27 +++++++--------
+ tools/perf/Makefile.perf                      |  2 +-
+ tools/perf/builtin-check.c                    |  2 +-
+ tools/perf/builtin-data.c                     | 18 +++-------
+ tools/perf/tests/make                         |  4 +--
+ .../shell/test_perf_data_converter_ctf.sh     |  8 ++---
+ tools/perf/util/Build                         |  2 +-
+ tools/perf/util/data-convert-bt.c             | 33 +++++++++----------
+ tools/perf/util/data-convert.h                |  4 +--
+ 13 files changed, 53 insertions(+), 67 deletions(-)
+ rename tools/build/feature/{test-libbabeltrace.c => test-babeltrace2-ctf-writer.c} (59%)
 
 diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
-index a0133d52aa8a0..d188cdbee4e53 100644
+index d188cdbee4e53..066e368e7fa91 100644
 --- a/tools/build/Makefile.feature
 +++ b/tools/build/Makefile.feature
-@@ -104,6 +104,9 @@ FEATURE_TESTS_BASIC :=                  \
+@@ -116,7 +116,7 @@ FEATURE_TESTS_EXTRA :=                  \
+          gtk2                           \
+          gtk2-infobar                   \
+          hello                          \
+-         libbabeltrace                  \
++         babeltrace2-ctf-writer         \
+          libcapstone                    \
+          libbfd-liberty                 \
+          libbfd-liberty-z               \
+@@ -165,6 +165,7 @@ FEATURE_GROUP_MEMBERS-libbfd = libbfd-liberty libbfd-liberty-z
+ # Declare list of feature dependency packages that provide pkg-config files.
+ #
+ FEATURE_PKG_CONFIG ?=           \
++	 babeltrace2-ctf-writer \
+          libtraceevent          \
+          libtracefs
  
- # FEATURE_TESTS_BASIC + FEATURE_TESTS_EXTRA is the complete list
- # of all feature tests
-+
-+LIBUNWIND_ARCHS:=aarch64 arm loongarch64 mips ppc32 ppc64 riscv s390x x86 x86_64
-+
- FEATURE_TESTS_EXTRA :=                  \
-          bionic                         \
-          compile-32                     \
-@@ -124,7 +127,10 @@ FEATURE_TESTS_EXTRA :=                  \
-          libpfm4                        \
-          libdebuginfod			\
-          clang-bpf-co-re		\
--         bpftool-skeletons
-+         bpftool-skeletons		\
-+         libunwind			\
-+         libunwind-debug-frame		\
-+         $(foreach arch,$(LIBUNWIND_ARCHS),libunwind-$(arch) libunwind-debug-frame-$(arch))
- 
- 
- FEATURE_TESTS ?= $(FEATURE_TESTS_BASIC)
-@@ -206,6 +212,10 @@ ifeq ($(feature-all), 1)
+@@ -211,7 +212,7 @@ ifeq ($(feature-all), 1)
+   $(call feature_check,compile-32)
    $(call feature_check,compile-x32)
    $(call feature_check,bionic)
-   $(call feature_check,libbabeltrace)
-+  $(call feature_check,libunwind)
-+  $(call feature_check,libunwind-debug-frame)
-+  $(foreach arch,$(LIBUNWIND_ARCHS),$(call feature_check,libunwind-$(arch)))
-+  $(foreach arch,$(LIBUNWIND_ARCHS),$(call feature_check,libunwind-debug-frame-$(arch)))
- else
-   $(foreach feat,$(FEATURE_TESTS),$(call feature_check,$(feat)))
- endif
+-  $(call feature_check,libbabeltrace)
++  $(call feature_check,babeltrace2-ctf-writer)
+   $(call feature_check,libunwind)
+   $(call feature_check,libunwind-debug-frame)
+   $(foreach arch,$(LIBUNWIND_ARCHS),$(call feature_check,libunwind-$(arch)))
 diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index c972304c32117..9a85b884e964b 100644
+index 9a85b884e964b..b22e5a2db2820 100644
 --- a/tools/build/feature/Makefile
 +++ b/tools/build/feature/Makefile
-@@ -1,6 +1,8 @@
- # SPDX-License-Identifier: GPL-2.0
- include ../../scripts/Makefile.include
- 
-+LIBUNWIND_ARCHS:=aarch64 arm loongarch64 mips ppc32 ppc64 riscv s390x x86 x86_64
-+
- FILES=                                          \
-          test-all.bin                           \
-          test-backtrace.bin                     \
-@@ -38,12 +40,7 @@ FILES=                                          \
-          test-libtracefs.bin                    \
-          test-libunwind.bin                     \
-          test-libunwind-debug-frame.bin         \
--         test-libunwind-x86.bin                 \
--         test-libunwind-x86_64.bin              \
--         test-libunwind-arm.bin                 \
--         test-libunwind-aarch64.bin             \
--         test-libunwind-debug-frame-arm.bin     \
--         test-libunwind-debug-frame-aarch64.bin \
-+         $(foreach arch,$(LIBUNWIND_ARCHS),test-libunwind-$(arch).bin test-libunwind-debug-frame-$(arch).bin) \
-          test-pthread-attr-setaffinity-np.bin   \
+@@ -45,7 +45,7 @@ FILES=                                          \
           test-pthread-barrier.bin		\
           test-stackprotector-all.bin            \
-@@ -201,27 +198,26 @@ $(OUTPUT)test-numa_num_possible_cpus.bin:
- 	$(BUILD) -lnuma
+          test-timerfd.bin                       \
+-         test-libbabeltrace.bin                 \
++         test-babeltrace2-ctf-writer.bin        \
+          test-libcapstone.bin			\
+          test-compile-32.bin                    \
+          test-compile-x32.bin                   \
+@@ -294,8 +294,8 @@ $(OUTPUT)test-backtrace.bin:
+ $(OUTPUT)test-timerfd.bin:
+ 	$(BUILD)
  
- $(OUTPUT)test-libunwind.bin:
--	$(BUILD) -lelf -llzma
-+	$(BUILD) -include libunwind.h -lelf -llzma -lunwind
+-$(OUTPUT)test-libbabeltrace.bin:
+-	$(BUILD) # -lbabeltrace provided by $(FEATURE_CHECK_LDFLAGS-libbabeltrace)
++$(OUTPUT)test-babeltrace2-ctf-writer.bin:
++	$(BUILD) # -lbabeltrace2-ctf-writer provided by $(FEATURE_CHECK_LDFLAGS-babeltrace2-ctf-writer)
  
- $(OUTPUT)test-libunwind-debug-frame.bin:
--	$(BUILD) -lelf -llzma
--$(OUTPUT)test-libunwind-x86.bin:
--	$(BUILD) -lelf -llzma -lunwind-x86
--
--$(OUTPUT)test-libunwind-x86_64.bin:
--	$(BUILD) -lelf -llzma -lunwind-x86_64
--
--$(OUTPUT)test-libunwind-arm.bin:
--	$(BUILD) -lelf -llzma -lunwind-arm
--
--$(OUTPUT)test-libunwind-aarch64.bin:
--	$(BUILD) -lelf -llzma -lunwind-aarch64
--
--$(OUTPUT)test-libunwind-debug-frame-arm.bin:
--	$(BUILD) -lelf -llzma -lunwind-arm
--
--$(OUTPUT)test-libunwind-debug-frame-aarch64.bin:
--	$(BUILD) -lelf -llzma -lunwind-aarch64
-+	$(BUILD) -include libunwind.h -lelf -llzma -lunwind
-+
-+define LIBUNWIND_RULE
-+$$(OUTPUT)test-libunwind-$(1).bin:
-+	$$(CC) $$(CFLAGS) -MD -Wall -Werror -include libunwind-$(1).h -o $$@ \
-+		test-libunwind.c $$(LDFLAGS) -lelf -llzma -lunwind-$(1) \
-+		> $$(@:.bin=.make.output) 2>&1
-+
-+$$(OUTPUT)test-libunwind-debug-frame-$(1).bin:
-+	$$(CC) $$(CFLAGS) -MD -Wall -Werror -include libunwind-$(1).h -o $$@ \
-+		test-libunwind-debug-frame.c $$(LDFLAGS) -lelf -llzma -lunwind-$(1) \
-+		> $$(@:.bin=.make.output) 2>&1
-+
-+endef
-+$(foreach arch,$(LIBUNWIND_ARCHS), \
-+    $(eval $(call LIBUNWIND_RULE,$(arch))) \
-+)
+ $(OUTPUT)test-libcapstone.bin:
+ 	$(BUILD) # -lcapstone provided by $(FEATURE_CHECK_LDFLAGS-libcapstone)
+diff --git a/tools/build/feature/test-all.c b/tools/build/feature/test-all.c
+index 8a354b81417c6..3e81c2b2d4298 100644
+--- a/tools/build/feature/test-all.c
++++ b/tools/build/feature/test-all.c
+@@ -100,13 +100,13 @@
  
- $(OUTPUT)test-libslang.bin:
- 	$(BUILD) -lslang
-diff --git a/tools/build/feature/test-libunwind-aarch64.c b/tools/build/feature/test-libunwind-aarch64.c
-deleted file mode 100644
-index 323803f49212a..0000000000000
---- a/tools/build/feature/test-libunwind-aarch64.c
-+++ /dev/null
-@@ -1,27 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <libunwind-aarch64.h>
--#include <stdlib.h>
--
--extern int UNW_OBJ(dwarf_search_unwind_table) (unw_addr_space_t as,
--					       unw_word_t ip,
--					       unw_dyn_info_t *di,
--					       unw_proc_info_t *pi,
--					       int need_unwind_info, void *arg);
--
--#define dwarf_search_unwind_table UNW_OBJ(dwarf_search_unwind_table)
--
--static unw_accessors_t accessors;
--
--int main(void)
--{
--	unw_addr_space_t addr_space;
--
--	addr_space = unw_create_addr_space(&accessors, 0);
--	if (addr_space)
--		return 0;
--
--	unw_init_remote(NULL, addr_space, NULL);
--	dwarf_search_unwind_table(addr_space, 0, NULL, NULL, 0, NULL);
--
--	return 0;
--}
-diff --git a/tools/build/feature/test-libunwind-arm.c b/tools/build/feature/test-libunwind-arm.c
-deleted file mode 100644
-index cb378b7d68669..0000000000000
---- a/tools/build/feature/test-libunwind-arm.c
-+++ /dev/null
-@@ -1,28 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <libunwind-arm.h>
--#include <stdlib.h>
--
--extern int UNW_OBJ(dwarf_search_unwind_table) (unw_addr_space_t as,
--					       unw_word_t ip,
--					       unw_dyn_info_t *di,
--					       unw_proc_info_t *pi,
--					       int need_unwind_info, void *arg);
--
--
--#define dwarf_search_unwind_table UNW_OBJ(dwarf_search_unwind_table)
--
--static unw_accessors_t accessors;
--
--int main(void)
--{
--	unw_addr_space_t addr_space;
--
--	addr_space = unw_create_addr_space(&accessors, 0);
--	if (addr_space)
--		return 0;
--
--	unw_init_remote(NULL, addr_space, NULL);
--	dwarf_search_unwind_table(addr_space, 0, NULL, NULL, 0, NULL);
--
--	return 0;
--}
-diff --git a/tools/build/feature/test-libunwind-debug-frame-aarch64.c b/tools/build/feature/test-libunwind-debug-frame-aarch64.c
-deleted file mode 100644
-index 36d6646c185e1..0000000000000
---- a/tools/build/feature/test-libunwind-debug-frame-aarch64.c
-+++ /dev/null
-@@ -1,17 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <libunwind-aarch64.h>
--#include <stdlib.h>
--
--extern int
--UNW_OBJ(dwarf_find_debug_frame) (int found, unw_dyn_info_t *di_debug,
--				 unw_word_t ip, unw_word_t segbase,
--				 const char *obj_name, unw_word_t start,
--				 unw_word_t end);
--
--#define dwarf_find_debug_frame UNW_OBJ(dwarf_find_debug_frame)
--
--int main(void)
--{
--	dwarf_find_debug_frame(0, NULL, 0, 0, NULL, 0, 0);
--	return 0;
--}
-diff --git a/tools/build/feature/test-libunwind-debug-frame-arm.c b/tools/build/feature/test-libunwind-debug-frame-arm.c
-deleted file mode 100644
-index 8696e48e12684..0000000000000
---- a/tools/build/feature/test-libunwind-debug-frame-arm.c
-+++ /dev/null
-@@ -1,17 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <libunwind-arm.h>
--#include <stdlib.h>
--
--extern int
--UNW_OBJ(dwarf_find_debug_frame) (int found, unw_dyn_info_t *di_debug,
--				 unw_word_t ip, unw_word_t segbase,
--				 const char *obj_name, unw_word_t start,
--				 unw_word_t end);
--
--#define dwarf_find_debug_frame UNW_OBJ(dwarf_find_debug_frame)
--
--int main(void)
--{
--	dwarf_find_debug_frame(0, NULL, 0, 0, NULL, 0, 0);
--	return 0;
--}
-diff --git a/tools/build/feature/test-libunwind-debug-frame.c b/tools/build/feature/test-libunwind-debug-frame.c
-index efb55cdd8d019..4c57e37004b3a 100644
---- a/tools/build/feature/test-libunwind-debug-frame.c
-+++ b/tools/build/feature/test-libunwind-debug-frame.c
-@@ -1,5 +1,4 @@
+ # if 0
+ /*
+- * Disable libbabeltrace check for test-all, because the requested
++ * Disable babeltrace2-ctf-writer check for test-all, because the requested
+  * library version is not released yet in most distributions. Will
+  * reenable later.
+  */
+ 
+-#define main main_test_libbabeltrace
+-# include "test-libbabeltrace.c"
++#define main main_test_babeltrace2_ctf_writer
++# include "test-babeltrace2-ctf-writer.c"
+ #undef main
+ #endif
+ 
+diff --git a/tools/build/feature/test-libbabeltrace.c b/tools/build/feature/test-babeltrace2-ctf-writer.c
+similarity index 59%
+rename from tools/build/feature/test-libbabeltrace.c
+rename to tools/build/feature/test-babeltrace2-ctf-writer.c
+index 10bb69d55694c..9c89082e9f884 100644
+--- a/tools/build/feature/test-libbabeltrace.c
++++ b/tools/build/feature/test-babeltrace2-ctf-writer.c
+@@ -1,7 +1,6 @@
  // SPDX-License-Identifier: GPL-2.0
--#include <libunwind.h>
- #include <stdlib.h>
  
- extern int
-diff --git a/tools/build/feature/test-libunwind-x86.c b/tools/build/feature/test-libunwind-x86.c
-deleted file mode 100644
-index e5e0f6c896374..0000000000000
---- a/tools/build/feature/test-libunwind-x86.c
-+++ /dev/null
-@@ -1,28 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <libunwind-x86.h>
--#include <stdlib.h>
--
--extern int UNW_OBJ(dwarf_search_unwind_table) (unw_addr_space_t as,
--					       unw_word_t ip,
--					       unw_dyn_info_t *di,
--					       unw_proc_info_t *pi,
--					       int need_unwind_info, void *arg);
--
--
--#define dwarf_search_unwind_table UNW_OBJ(dwarf_search_unwind_table)
--
--static unw_accessors_t accessors;
--
--int main(void)
--{
--	unw_addr_space_t addr_space;
--
--	addr_space = unw_create_addr_space(&accessors, 0);
--	if (addr_space)
--		return 0;
--
--	unw_init_remote(NULL, addr_space, NULL);
--	dwarf_search_unwind_table(addr_space, 0, NULL, NULL, 0, NULL);
--
--	return 0;
--}
-diff --git a/tools/build/feature/test-libunwind-x86_64.c b/tools/build/feature/test-libunwind-x86_64.c
-deleted file mode 100644
-index 62ae4db597dca..0000000000000
---- a/tools/build/feature/test-libunwind-x86_64.c
-+++ /dev/null
-@@ -1,28 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <libunwind-x86_64.h>
--#include <stdlib.h>
--
--extern int UNW_OBJ(dwarf_search_unwind_table) (unw_addr_space_t as,
--					       unw_word_t ip,
--					       unw_dyn_info_t *di,
--					       unw_proc_info_t *pi,
--					       int need_unwind_info, void *arg);
--
--
--#define dwarf_search_unwind_table UNW_OBJ(dwarf_search_unwind_table)
--
--static unw_accessors_t accessors;
--
--int main(void)
--{
--	unw_addr_space_t addr_space;
--
--	addr_space = unw_create_addr_space(&accessors, 0);
--	if (addr_space)
--		return 0;
--
--	unw_init_remote(NULL, addr_space, NULL);
--	dwarf_search_unwind_table(addr_space, 0, NULL, NULL, 0, NULL);
--
--	return 0;
--}
-diff --git a/tools/build/feature/test-libunwind.c b/tools/build/feature/test-libunwind.c
-index 53fd26614ff0f..5af5dc3a73d4e 100644
---- a/tools/build/feature/test-libunwind.c
-+++ b/tools/build/feature/test-libunwind.c
-@@ -1,5 +1,4 @@
- // SPDX-License-Identifier: GPL-2.0
--#include <libunwind.h>
- #include <stdlib.h>
+-#include <babeltrace/ctf-writer/writer.h>
+-#include <babeltrace/ctf-ir/stream-class.h>
++#include <babeltrace2-ctf-writer/writer.h>
  
- extern int UNW_OBJ(dwarf_search_unwind_table) (unw_addr_space_t as,
+ int main(void)
+ {
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 1f96a1dd8dae8..284d5d0348f9c 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -212,14 +212,11 @@ endif
+ FEATURE_CHECK_CFLAGS-libdw := $(LIBDW_CFLAGS)
+ FEATURE_CHECK_LDFLAGS-libdw := $(LIBDW_LDFLAGS) $(DWARFLIBS)
+ 
+-# for linking with debug library, run like:
+-# make DEBUG=1 LIBBABELTRACE_DIR=/opt/libbabeltrace/
+-ifdef LIBBABELTRACE_DIR
+-  LIBBABELTRACE_CFLAGS  := -I$(LIBBABELTRACE_DIR)/include
+-  LIBBABELTRACE_LDFLAGS := -L$(LIBBABELTRACE_DIR)/lib
++ifneq ($(NO_BABELTRACE2),1)
++  ifeq ($(call get-executable,$(PKG_CONFIG)),)
++    $(error Error: $(PKG_CONFIG) needed by babeltrace2 is missing on this system, please install it)
++  endif
+ endif
+-FEATURE_CHECK_CFLAGS-libbabeltrace := $(LIBBABELTRACE_CFLAGS)
+-FEATURE_CHECK_LDFLAGS-libbabeltrace := $(LIBBABELTRACE_LDFLAGS) -lbabeltrace-ctf
+ 
+ # for linking with debug library, run like:
+ # make DEBUG=1 LIBCAPSTONE_DIR=/opt/capstone/
+@@ -1096,15 +1093,15 @@ else
+   NO_PERF_READ_VDSOX32 := 1
+ endif
+ 
+-ifndef NO_LIBBABELTRACE
+-  $(call feature_check,libbabeltrace)
+-  ifeq ($(feature-libbabeltrace), 1)
+-    CFLAGS += -DHAVE_LIBBABELTRACE_SUPPORT $(LIBBABELTRACE_CFLAGS)
+-    LDFLAGS += $(LIBBABELTRACE_LDFLAGS)
+-    EXTLIBS += -lbabeltrace-ctf
+-    $(call detected,CONFIG_LIBBABELTRACE)
++ifndef NO_BABELTRACE2
++  $(call feature_check,babeltrace2-ctf-writer)
++  ifeq ($(feature-babeltrace2-ctf-writer), 1)
++    CFLAGS += -DHAVE_BABELTRACE2_CTF_WRITER_SUPPORT $(shell $(PKG_CONFIG) --cflags babeltrace2-ctf-writer)
++    LDFLAGS += $(shell $(PKG_CONFIG) --libs-only-L babeltrace2-ctf-writer)
++    EXTLIBS += $(shell $(PKG_CONFIG) --libs-only-l babeltrace2-ctf-writer)
++    $(call detected,CONFIG_BABELTRACE2_CTF_WRITER)
+   else
+-    $(warning No libbabeltrace found, disables 'perf data' CTF format support, please install libbabeltrace-dev[el]/libbabeltrace-ctf-dev)
++    $(warning No babeltrace2 found, disables 'perf data' CTF format support, please install libbabeltrace2-dev[el])
+   endif
+ endif
+ 
+diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
+index 5aee6f6e8b983..4b184859cbd24 100644
+--- a/tools/perf/Makefile.perf
++++ b/tools/perf/Makefile.perf
+@@ -76,7 +76,7 @@ include ../scripts/utilities.mak
+ #
+ # Define NO_ZLIB if you do not want to support compressed kernel modules
+ #
+-# Define NO_LIBBABELTRACE if you do not want libbabeltrace support
++# Define NO_BABELTRACE2 if you do not want babeltrace2-ctf-writer support
+ # for CTF data format.
+ #
+ # Define NO_CAPSTONE if you do not want libcapstone support
+diff --git a/tools/perf/builtin-check.c b/tools/perf/builtin-check.c
+index a6e4cc6bd51a4..534004a656758 100644
+--- a/tools/perf/builtin-check.c
++++ b/tools/perf/builtin-check.c
+@@ -43,7 +43,7 @@ struct feature_status supported_features[] = {
+ 	FEATURE_STATUS("dwarf_getlocations", HAVE_LIBDW_SUPPORT),
+ 	FEATURE_STATUS("dwarf-unwind", HAVE_DWARF_UNWIND_SUPPORT),
+ 	FEATURE_STATUS_TIP("libbfd", HAVE_LIBBFD_SUPPORT, "Deprecated, license incompatibility, use BUILD_NONDISTRO=1 and install binutils-dev[el]"),
+-	FEATURE_STATUS("libbabeltrace", HAVE_LIBBABELTRACE_SUPPORT),
++	FEATURE_STATUS("babeltrace2-ctf-writer", HAVE_BABELTRACE2_CTF_WRITER_SUPPORT),
+ 	FEATURE_STATUS("libbpf-strings", HAVE_LIBBPF_STRINGS_SUPPORT),
+ 	FEATURE_STATUS("libcapstone", HAVE_LIBCAPSTONE_SUPPORT),
+ 	FEATURE_STATUS("libdw-dwarf-unwind", HAVE_LIBDW_SUPPORT),
+diff --git a/tools/perf/builtin-data.c b/tools/perf/builtin-data.c
+index ce51cbf6dc97e..1c521b1b2d78e 100644
+--- a/tools/perf/builtin-data.c
++++ b/tools/perf/builtin-data.c
+@@ -39,10 +39,8 @@ const struct option data_options[] = {
+ 		OPT_INCR('v', "verbose", &verbose, "be more verbose"),
+ 		OPT_STRING('i', "input", &input_name, "file", "input file name"),
+ 		OPT_STRING(0, "to-json", &to_json, NULL, "Convert to JSON format"),
+-#ifdef HAVE_LIBBABELTRACE_SUPPORT
+ 		OPT_STRING(0, "to-ctf", &to_ctf, NULL, "Convert to CTF format"),
+ 		OPT_BOOLEAN(0, "tod", &opts.tod, "Convert time to wall clock time"),
+-#endif
+ 		OPT_BOOLEAN('f', "force", &opts.force, "don't complain, do it"),
+ 		OPT_BOOLEAN(0, "all", &opts.all, "Convert all events"),
+ 		OPT_END()
+@@ -62,29 +60,21 @@ static int cmd_data_convert(int argc, const char **argv)
+ 		pr_err("You cannot specify both --to-ctf and --to-json.\n");
+ 		return -1;
+ 	}
+-#ifdef HAVE_LIBBABELTRACE_SUPPORT
+ 	if (!to_json && !to_ctf) {
+ 		pr_err("You must specify one of --to-ctf or --to-json.\n");
+ 		return -1;
+ 	}
+-#else
+-	if (!to_json) {
+-		pr_err("You must specify --to-json.\n");
+-	return -1;
+-}
+-#endif
+ 
+ 	if (to_json)
+ 		return bt_convert__perf2json(input_name, to_json, &opts);
+ 
+ 	if (to_ctf) {
+-#if defined(HAVE_LIBBABELTRACE_SUPPORT) && defined(HAVE_LIBTRACEEVENT)
++#if defined(HAVE_BABELTRACE2_CTF_WRITER_SUPPORT) && defined(HAVE_LIBTRACEEVENT)
+ 		return bt_convert__perf2ctf(input_name, to_ctf, &opts);
+ #else
+-		pr_err("The libbabeltrace support is not compiled in. perf should be "
+-		       "compiled with environment variables LIBBABELTRACE=1 and "
+-		       "LIBBABELTRACE_DIR=/path/to/libbabeltrace/.\n"
+-		       "Check also if libbtraceevent devel files are available.\n");
++		pr_err("The babeltrace2 ctf support is not compiled in. Ensure you have both\n"
++			"libbabeltrace2-dev[el] and libtraceevent-dev[el] installed or set\n"
++			"PKG_CONFIG_PATH to find a local installation of those libraries.\n");
+ 		return -1;
+ #endif
+ 	}
+diff --git a/tools/perf/tests/make b/tools/perf/tests/make
+index c721cd1bcaa9a..1fe1ef45e5c10 100644
+--- a/tools/perf/tests/make
++++ b/tools/perf/tests/make
+@@ -92,7 +92,7 @@ make_no_libbpf	    := NO_LIBBPF=1
+ make_libbpf_dynamic := LIBBPF_DYNAMIC=1
+ make_no_libbpf_DEBUG := NO_LIBBPF=1 DEBUG=1
+ make_no_libllvm     := NO_LIBLLVM=1
+-make_with_babeltrace:= LIBBABELTRACE=1
++make_no_babeltrace2 := NO_BABELTRACE2=1
+ make_with_coresight := CORESIGHT=1
+ make_no_sdt	    := NO_SDT=1
+ make_no_libpfm4     := NO_LIBPFM4=1
+@@ -162,7 +162,7 @@ run += make_no_libbpf_DEBUG
+ run += make_no_libllvm
+ run += make_no_sdt
+ run += make_no_syscall_tbl
+-run += make_with_babeltrace
++run += make_no_babeltrace2
+ run += make_with_coresight
+ run += make_with_clangllvm
+ run += make_no_libpfm4
+diff --git a/tools/perf/tests/shell/test_perf_data_converter_ctf.sh b/tools/perf/tests/shell/test_perf_data_converter_ctf.sh
+index 334eebc9945eb..bc58a8dabf4cd 100755
+--- a/tools/perf/tests/shell/test_perf_data_converter_ctf.sh
++++ b/tools/perf/tests/shell/test_perf_data_converter_ctf.sh
+@@ -24,11 +24,11 @@ trap_cleanup()
+ }
+ trap trap_cleanup exit term int
+ 
+-check_babeltrace_support()
++check_babeltrace2_support()
+ {
+-	if ! perf check feature libbabeltrace
++	if ! perf check feature babeltrace2-ctf-writer
+ 	then
+-		echo "perf not linked with libbabeltrace, skipping test"
++		echo "perf not linked with babeltrace2-ctf-writer, skipping test"
+ 		exit 2
+ 	fi
+ }
+@@ -97,7 +97,7 @@ test_ctf_converter_pipe()
+ 	fi
+ }
+ 
+-check_babeltrace_support
++check_babeltrace2_support
+ test_ctf_converter_file
+ test_ctf_converter_pipe
+ 
+diff --git a/tools/perf/util/Build b/tools/perf/util/Build
+index dd4bd73f6c281..90b9274543596 100644
+--- a/tools/perf/util/Build
++++ b/tools/perf/util/Build
+@@ -232,7 +232,7 @@ perf-util-$(CONFIG_LIBUNWIND_X86)      += libunwind/x86_32.o
+ perf-util-$(CONFIG_LIBUNWIND_AARCH64)  += libunwind/arm64.o
+ 
+ ifeq ($(CONFIG_LIBTRACEEVENT),y)
+-  perf-util-$(CONFIG_LIBBABELTRACE) += data-convert-bt.o
++  perf-util-$(CONFIG_BABELTRACE2_CTF_WRITER) += data-convert-bt.o
+ endif
+ 
+ perf-util-y += data-convert-json.o
+diff --git a/tools/perf/util/data-convert-bt.c b/tools/perf/util/data-convert-bt.c
+index 3d2e437e1354c..f8767753ce723 100644
+--- a/tools/perf/util/data-convert-bt.c
++++ b/tools/perf/util/data-convert-bt.c
+@@ -11,14 +11,13 @@
+ #include <linux/compiler.h>
+ #include <linux/kernel.h>
+ #include <linux/zalloc.h>
+-#include <babeltrace/ctf-writer/writer.h>
+-#include <babeltrace/ctf-writer/clock.h>
+-#include <babeltrace/ctf-writer/stream.h>
+-#include <babeltrace/ctf-writer/event.h>
+-#include <babeltrace/ctf-writer/event-types.h>
+-#include <babeltrace/ctf-writer/event-fields.h>
+-#include <babeltrace/ctf-ir/utils.h>
+-#include <babeltrace/ctf/events.h>
++#include <babeltrace2-ctf-writer/writer.h>
++#include <babeltrace2-ctf-writer/clock.h>
++#include <babeltrace2-ctf-writer/stream.h>
++#include <babeltrace2-ctf-writer/event.h>
++#include <babeltrace2-ctf-writer/event-types.h>
++#include <babeltrace2-ctf-writer/event-fields.h>
++#include <babeltrace2-ctf-writer/utils.h>
+ #include "asm/bug.h"
+ #include "data-convert.h"
+ #include "session.h"
+@@ -114,13 +113,13 @@ static int value_set(struct bt_ctf_field_type *type,
+ 	}
+ 
+ 	if (sign) {
+-		ret = bt_ctf_field_signed_integer_set_value(field, val);
++		ret = bt_ctf_field_integer_signed_set_value(field, val);
+ 		if (ret) {
+ 			pr_err("failed to set field value %s\n", name);
+ 			goto err;
+ 		}
+ 	} else {
+-		ret = bt_ctf_field_unsigned_integer_set_value(field, val);
++		ret = bt_ctf_field_integer_unsigned_set_value(field, val);
+ 		if (ret) {
+ 			pr_err("failed to set field value %s\n", name);
+ 			goto err;
+@@ -367,10 +366,10 @@ static int add_tracepoint_field_value(struct ctf_writer *cw,
+ 					data + offset + i * len, len);
+ 
+ 			if (!(flags & TEP_FIELD_IS_SIGNED))
+-				ret = bt_ctf_field_unsigned_integer_set_value(
++				ret = bt_ctf_field_integer_unsigned_set_value(
+ 						field, value_int);
+ 			else
+-				ret = bt_ctf_field_signed_integer_set_value(
++				ret = bt_ctf_field_integer_signed_set_value(
+ 						field, adjust_signedness(value_int, len));
+ 		}
+ 
+@@ -464,7 +463,7 @@ add_bpf_output_values(struct bt_ctf_event_class *event_class,
+ 		goto put_len_type;
+ 	}
+ 
+-	ret = bt_ctf_field_unsigned_integer_set_value(len_field, nr_elements);
++	ret = bt_ctf_field_integer_unsigned_set_value(len_field, nr_elements);
+ 	if (ret) {
+ 		pr_err("failed to set field value for raw_len\n");
+ 		goto put_len_field;
+@@ -493,7 +492,7 @@ add_bpf_output_values(struct bt_ctf_event_class *event_class,
+ 		struct bt_ctf_field *elem_field =
+ 			bt_ctf_field_sequence_get_field(seq_field, i);
+ 
+-		ret = bt_ctf_field_unsigned_integer_set_value(elem_field,
++		ret = bt_ctf_field_integer_unsigned_set_value(elem_field,
+ 				((u32 *)(sample->raw_data))[i]);
+ 
+ 		bt_ctf_field_put(elem_field);
+@@ -538,7 +537,7 @@ add_callchain_output_values(struct bt_ctf_event_class *event_class,
+ 		goto put_len_type;
+ 	}
+ 
+-	ret = bt_ctf_field_unsigned_integer_set_value(len_field, nr_elements);
++	ret = bt_ctf_field_integer_unsigned_set_value(len_field, nr_elements);
+ 	if (ret) {
+ 		pr_err("failed to set field value for perf_callchain_size\n");
+ 		goto put_len_field;
+@@ -568,7 +567,7 @@ add_callchain_output_values(struct bt_ctf_event_class *event_class,
+ 		struct bt_ctf_field *elem_field =
+ 			bt_ctf_field_sequence_get_field(seq_field, i);
+ 
+-		ret = bt_ctf_field_unsigned_integer_set_value(elem_field,
++		ret = bt_ctf_field_integer_unsigned_set_value(elem_field,
+ 				((u64 *)(callchain->ips))[i]);
+ 
+ 		bt_ctf_field_put(elem_field);
+@@ -721,7 +720,7 @@ static struct ctf_stream *ctf_stream__create(struct ctf_writer *cw, int cpu)
+ 		goto out;
+ 	}
+ 
+-	ret = bt_ctf_field_unsigned_integer_set_value(cpu_field, (u32) cpu);
++	ret = bt_ctf_field_integer_unsigned_set_value(cpu_field, (u32) cpu);
+ 	if (ret) {
+ 		pr_err("Failed to update CPU number\n");
+ 		goto out;
+diff --git a/tools/perf/util/data-convert.h b/tools/perf/util/data-convert.h
+index 1b4c5f598415d..7c8d160fe3d93 100644
+--- a/tools/perf/util/data-convert.h
++++ b/tools/perf/util/data-convert.h
+@@ -10,10 +10,10 @@ struct perf_data_convert_opts {
+ 	bool tod;
+ };
+ 
+-#ifdef HAVE_LIBBABELTRACE_SUPPORT
++#ifdef HAVE_BABELTRACE2_CTF_WRITER_SUPPORT
+ int bt_convert__perf2ctf(const char *input_name, const char *to_ctf,
+ 			 struct perf_data_convert_opts *opts);
+-#endif /* HAVE_LIBBABELTRACE_SUPPORT */
++#endif /* HAVE_BABELTRACE2_CTF_WRITER_SUPPORT */
+ 
+ int bt_convert__perf2json(const char *input_name, const char *to_ctf,
+ 			 struct perf_data_convert_opts *opts);
 -- 
 2.53.0
 
