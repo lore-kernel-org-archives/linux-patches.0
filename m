@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039624;
-	b=1zzY8hbCqBEGQbD4EEFXkSpr1+TSaor6fDGpChP0AGFu8ysmD0pGOIGbmehbQ3XmolV1
-	 pPAl6qFInq2ZNldrjO+fzJhzk8vE7gfudOrz6YsQ4r4Dz88deryJoVTc2ZRBpMFurBe0j
-	 BS0Kj135Iy59qtVGpUVSPwiX6JD5f2KAGc9RkgbQtCnGL1U2OqMI5qKHqL+86F2Pr9QH7
-	 JLJibVuVK0xnrAYsbbch8z60Il3KPP5oGrgJJGWvaWpgcO17mum+XHLStqEWfgWfbAcEQ
-	 d6gD6K2raox6VSudAVNHsHqHUtFZapIyqOz1WgV3D9ljH08gifKIzWwPVWXfO3u4/1w==
+	t=1795039626;
+	b=ciBDVla5UpubOvvoNGTHSfePg4tjJ5pNNb+SWEEZZ2iM70XYYSjHgxEZajYRgAYnvfUi
+	 FsG2lHflKuhmgXtgGMMnFIuXXuCN48lTfgHLwPVRPNub09EJmiWNEYdRWz8IQWPo/+eA9
+	 5SYzAsLT2PtbUaj1NAap6qv8ZnYY96pDM1vk5z7UKQ3eW4FruGt4qv7yoT8z275Dt6xzP
+	 XemHmekTQ6t4Dactr2nz9UqawfVpp2Ro6uuZDCmITf3GljgL9KpG2ikvD+7gwENkVqWlL
+	 L0QDaudWXsJFBRmdvGAoSzyncReAGod/JPk8iSwdGlOr3TuqopqaN5I9YA3YDu3fZRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8BPIk9QXxHlia/o7oJ8Kvc8Cjz8AnW9J1KI23LAFH4g=;
-	b=AgOU+pfFqVJmaJg3Tyd4NKKXGgnbf69L/IkxaBLansjJWigp3fMkKg96pylYLnCfcb6C
-	 CKuBJ44SqyNEMjbzHqkD98fIECdnOh7qypqX8y4SYXVm46+mzp9Y1pITjG7KxjL8l8kTf
-	 gOGAramx6WBbMs/34mZ75tkR0gtiXpeCb2PdleXe906Gu2/iMy0vM/xpfyYpWPNqciDp6
-	 dpYzHh9iuVFugEFcL6wkqGKocII5Qw6eChkkGE4P7RZb6KHyp0vLuWP/C7Q7+MQW3rbaV
-	 v8DOz1vfRpY6OLG+SvWZszyqsuvrg+MNgPFG6hlcv7nA82gnN/BTvTA5PNJk00zCwcg==
+	bh=5CrWsaE//F1lT+QyFDZKP11/kyrtx2Nf/xwnaSW7T9w=;
+	b=c2x95XsNr/HCHJGEd4L/GDTyr+JI5Un6bsjB9yxbXms/6YLDaomayp8UJLX2nGPrY2bj
+	 04o1GEEqLJF4Bvfcr390TsuJ3jKjuEEPTww9bQ/0Njpt1NMkvAFyS+0SrWhCLy39CUHEu
+	 YKwT6FlNBk3cXN3SI2CQRfSWSTtlXuAy9IdvLZZNFYqlT2qS4iVGFrr6TNZ2T+9Akb3mF
+	 JCZvOTC/NaDbtXb1WCDZr7MxPEeU3otvvNBkTtISEienl5VCh6OtOqfKP4ONoVL4Y3au/
+	 9zYYtq0KA2yWopaTzxyVyDlac0gC2OCtr8ywiGHCIw7MJKzmMSIUnKhXo7ga0q9frLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlLK3egi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CmYaUL+w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12321606A31C;
-	Wed, 18 Nov 2026 22:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C0C606A320;
+	Wed, 18 Nov 2026 22:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlLK3egi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2541F000C5;
-	Wed, 18 Nov 2026 22:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CmYaUL+w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388EA1F000C4;
+	Wed, 18 Nov 2026 22:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039623;
-	bh=8BPIk9QXxHlia/o7oJ8Kvc8Cjz8AnW9J1KI23LAFH4g=;
+	s=korg; t=1795039626;
+	bh=5CrWsaE//F1lT+QyFDZKP11/kyrtx2Nf/xwnaSW7T9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlLK3egitKnatgzF0JlroHDzbmoezlOAtwaGGoCPhyh5N7/cqnobnQcuV5gSGNlcO
-	 fU4snSi+QnCY3AG5o3dkP8UyHKkGnwnBxDCiPlMwPps5h2WceubHaQFM36v15kuYT5
-	 2U8q57eZ5Fu/FTRvRuM2AaK54K5VO5IYLyN0NV88=
+	b=CmYaUL+wALhnejyIAlFZah16yEiSbCXZO8wEqx+GhqGu7XqeR0kHhFXZeTy6CkCEI
+	 78wqdGpnzJUAa515KX4WdRsIeCXIBU7Uc0MLzw3mIwFhRehnS7MjxBhhyjqcom1hG5
+	 mQGMmnCLWBrnwBZzILJ3aSGg1MKACWEGFFw2Yz90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2167/3318] sit: fix UAF in ipip6_tunnel_del_prl()
-Date: Wed, 18 Nov 2026 15:46:29 +0100
-Message-ID: <20261118150427.006663602@linuxfoundation.org>
+Subject: [PATCH 6.6 2141/3318] RDMA/hns: Fix GID capacity loss in 64K system
+Date: Wed, 18 Nov 2026 15:46:03 +0100
+Message-ID: <20261118150426.287975391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,54 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 5145bb6a2c2683d541828f86d5321e0565f2e30c ]
+[ Upstream commit 95761b8736c938759032e8d4eb42074d39d13007 ]
 
-When flushing all potential router list (PRL) entries,
-ipip6_tunnel_del_prl() called call_rcu(&x->rcu_head, prl_list_destroy_rcu)
-before clearing t->prl.
+Our HW always handles GMV BT pages with a fixed 4K size, but the driver
+calculates the needed GMV BT pages number with PAGE_SIZE, which is 64K
+in 64K system. Only the first 4K (GMV index 0-127) can be reached by HW,
+causing GID capacity loss and memory waste.
 
-A concurrent reader in isatap_chksrc() could enter an RCU read-side
-critical section after call_rcu() but before t->prl is set to NULL,
-allowing prl_list_destroy_rcu() to free nodes while the reader traverses
-them.
+Split a single 64K BT page into multiple 4K pages and register them to
+HW per 4K block so that HW can correctly reach all GMV entries.
 
-Clear t->prl using RCU_INIT_POINTER() before invoking call_rcu().
-Also use rcu_assign_pointer() when unlinking individual entries.
-
-Fixes: ef9a9d1183b3 ("ipv6 sit: RCU conversion phase I")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260907075846.2913645-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 32053e584e4a ("RDMA/hns: Add support for filling GMV table")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20260907084901.2420703-4-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/sit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 37 +++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index bc1f0d3de34e1..2c0d62ec8ec4f 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -432,7 +432,7 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
- 		     (x = rtnl_dereference(*p)) != NULL;
- 		     p = &x->next) {
- 			if (x->addr == a->addr) {
--				*p = x->next;
-+				rcu_assign_pointer(*p, rtnl_dereference(x->next));
- 				kfree_rcu(x, rcu_head);
- 				t->prl_count--;
- 				goto out;
-@@ -443,8 +443,8 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
- 		x = rtnl_dereference(t->prl);
- 		if (x) {
- 			t->prl_count = 0;
-+			RCU_INIT_POINTER(t->prl, NULL);
- 			call_rcu(&x->rcu_head, prl_list_destroy_rcu);
--			t->prl = NULL;
- 		}
- 	}
- out:
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index ef702fd9854b7..2b8afc6fbe87a 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -4049,18 +4049,39 @@ static int get_op_for_set_hem(struct hns_roce_dev *hr_dev, u32 type,
+ static int config_gmv_ba_to_hw(struct hns_roce_dev *hr_dev, unsigned long obj,
+ 			       dma_addr_t base_addr)
+ {
++	u32 obj_num_per_bt = HNS_HW_PAGE_SIZE / hr_dev->caps.gmv_entry_sz;
++	u32 chunk_size = 1 << (hr_dev->caps.gmv_buf_pg_sz + PAGE_SHIFT);
++	u32 bt_num_per_chunk = chunk_size / HNS_HW_PAGE_SIZE;
++	u32 first = obj / obj_num_per_bt;
++	u32 last = min(first + bt_num_per_chunk, hr_dev->caps.gmv_bt_num);
+ 	struct hns_roce_cmq_desc desc;
+-	struct hns_roce_cmq_req *req = (struct hns_roce_cmq_req *)desc.data;
+-	u32 idx = obj / (HNS_HW_PAGE_SIZE / hr_dev->caps.gmv_entry_sz);
+-	u64 addr = to_hr_hw_page_addr(base_addr);
++	struct hns_roce_cmq_req *req;
++	u64 addr;
++	int ret;
++	u32 i;
+ 
+-	hns_roce_cmq_setup_basic_desc(&desc, HNS_ROCE_OPC_CFG_GMV_BT, false);
++	/* The GMV BT entry of hardware covers a fixed 4K region, so a buffer
++	 * chunk larger than 4K must be registered to hardware with one BT
++	 * entry per 4K block, otherwise the GMV entries beyond the first
++	 * 4K of the chunk are unreachable.
++	 */
++	for (i = first; i < last; i++) {
++		hns_roce_cmq_setup_basic_desc(&desc, HNS_ROCE_OPC_CFG_GMV_BT,
++					      false);
++		req = (struct hns_roce_cmq_req *)desc.data;
+ 
+-	hr_reg_write(req, CFG_GMV_BT_BA_L, lower_32_bits(addr));
+-	hr_reg_write(req, CFG_GMV_BT_BA_H, upper_32_bits(addr));
+-	hr_reg_write(req, CFG_GMV_BT_IDX, idx);
++		addr = to_hr_hw_page_addr(base_addr +
++					  (u64)(i - first) * HNS_HW_PAGE_SIZE);
++		hr_reg_write(req, CFG_GMV_BT_BA_L, lower_32_bits(addr));
++		hr_reg_write(req, CFG_GMV_BT_BA_H, upper_32_bits(addr));
++		hr_reg_write(req, CFG_GMV_BT_IDX, i);
+ 
+-	return hns_roce_cmq_send(hr_dev, &desc, 1);
++		ret = hns_roce_cmq_send(hr_dev, &desc, 1);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
+ }
+ 
+ static int set_hem_to_hw(struct hns_roce_dev *hr_dev, int obj,
 -- 
 2.53.0
 
