@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060357;
-	b=fdwwwJgMtSIOH+EQUbZIXIe1ugyJyKvXnKCSKUEZ6bP6kNS+/OCCOYlL8mgMb7pu1Lle
-	 A+Po/6sDTAJmrDlIbsUZQO99UCZl2UCjSVuV7KBIJr1H/XASbzY0lsCzEM/Q9r9/44FDl
-	 S3DoXBqJbXuugoZZ4Grx2WqL8Dn3RiMbxD56iRj9llBeWIDhl2W29uma/tvS9KI0qo/us
-	 Th+BA0JGObmA3ShJOLpPlNcs1WgeI63TOt8+o2F7XLi0Ciw2NI0dSa/2XioDSM9L2SKqp
-	 bLbL5wHlSlq/1rxhXchdJdf0PCYXCBm3hO5OGfXdLFFQd/U1Lo9Z0VyR7tenDLEw5Yg==
+	t=1795060360;
+	b=Bw32RO433Zh5adyLcQW5Ld8aM0rD8A5fcIYR44SrnXLPysAk+v76dQyn3A/57Bh9THfp
+	 RS3cDzksZEir9uJq7YoA+/aVxC6ViXutSQzwnkXsPaBOPKCyd3I2EuS/BEM6LyH4LHHBf
+	 DuBM5K4VZRTOgabCLBj3CvBtRylx5C0HtabTAITNID+Lfx6HPHzTzgpsPf9R1rEVCh+og
+	 8/8WeocZC3GvcxLDOS5hZdzWbDz5M1FkMJQ7Wx//OdF5u9awkA9SodTfuUghCv7zF9ccR
+	 OyqBIT5JQc+AtVPpsdEopNFSyWq9y22cWGyi/cxrkpio+Wt3Iyu7ylHNDAt/27JVWCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m0erdV8JdWfCuSLGg/BGMiAzjPpd118CTX7J6089jrE=;
-	b=mBcbwiilXqW0icVJpp2Ykj2GF4DRyGFPHcyfKxzuzTwSzlpKe72oh/d4ZsqjgX3eTmYh
-	 nRRbnVsbiWko+6dmIRHg+QmpByOAVfrTDSpMZ/zJVmH0y9U/2JyIAUkmhjOQrhv9mFmHQ
-	 U2Yy1TZY48ZSxfhE5sCVmwKrLCStPWLlLg5W/to0rY3wLnCGgXvOI0SPfBoqqZPks8bWN
-	 V0/D6u6JGtIWBoRTFmSq+Eff2H7ewQuv7/AZERjKxfU6A8iWp7UbDZECp7nYv6zRErAUz
-	 t+T5rtfLyKhCVkIeXPHni7+7qWyIPmpYyx2vWF6AYfTxMhAg18X2oxRrool45YB1Cfg==
+	bh=leysDm8z6oJC1meb429QBh9SIftYFL+r2zkrtkJwvZw=;
+	b=3vN2UShve53hFDQKnXPPqVaAagIxZCgyEVOBj1uvfNtvWRy/QYSbocYUKxPsCUKKOu0O
+	 rgPgOXyDd+LqCW/EGEkgEuRhBPhXDoFIOE/2okCuAoS6NkYmY/PlZDUThzW14gSmxe4Sj
+	 ximyUE/thW8F75uPptfiKmM1Usz7WOkqDjIG0jClKBuRoA3S2zSrtkzLNsg4Qcv9blF3d
+	 kfq8n40NxnGC2QhMx5yOBL6WZxlv9b77soAaugFzcP1ezUqMYq/VuuxvMM5Qd58mxPd1A
+	 Tdg6eQARx0k3Pz2bFtQzJ/P6Iz2eKZMeUySt3PKuhBrTUNnxV18NZ/dN7ZmmPQ2Odnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/8U8BNy";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OXACw5e/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6296B606A326;
-	Thu, 19 Nov 2026 03:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B4D606A325;
+	Thu, 19 Nov 2026 03:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/8U8BNy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9121F000C4;
-	Thu, 19 Nov 2026 03:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXACw5e/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814951F000C4;
+	Thu, 19 Nov 2026 03:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060357;
-	bh=m0erdV8JdWfCuSLGg/BGMiAzjPpd118CTX7J6089jrE=;
+	s=korg; t=1795060360;
+	bh=leysDm8z6oJC1meb429QBh9SIftYFL+r2zkrtkJwvZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/8U8BNy9fQiNo6jCOOHgdW0rvYyMtK1oL3IusEE5sqCUFIXvHeWGdmVpTZknCQiP
-	 C2T6/IuvOwzBvuXoT8ejfm0UdH3TeT2z9/djFwiQa0EkK4rY0C03mw6u+/Uz/s0coa
-	 8dWp8rqhQcS649N8EN1hLwGQUp1g1kncJge5jW8g=
+	b=OXACw5e/LmpvH98GActneojE9QL0scq6RvUWd5AfyzFfNjX+V8rUbKP91cRZdE+g6
+	 rveP8mSR7kGXtRjCPvNxlakBSIgKm98lc3UBHcdJz4RG4atsK1CgvWCYZsjj/fATPu
+	 IcNXDSnpHprc8urHuzkK4rQyo1nQB5crJDkNFDXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot@kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1170/1848] efi/cper: Reject an error status block length that wraps a u32
-Date: Wed, 18 Nov 2026 15:53:28 +0100
-Message-ID: <20261118150008.614983838@linuxfoundation.org>
+Subject: [PATCH 5.10 1171/1848] ACPI: extlog: Validate elog record length before walking sections
+Date: Wed, 18 Nov 2026 15:53:29 +0100
+Message-ID: <20261118150008.648748639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,58 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 41e25ef5e417c62eb7bf39b187242b283b3ef9f1 ]
+[ Upstream commit e1fd582a8134150aa10c1f0286dbce00cf63b086 ]
 
-cper_estatus_len() sums the firmware-controlled data_length (or
-raw_data_offset plus raw_data_length) into a u32. A data_length of
-0xffffffec wraps that sum to 0, and a length that reads back short defeats
-every bound built on it: bert_print_all() passes its "remain <
-estatus_len" check, then advances "estatus += estatus_len" by zero and
-loops forever. GHES survives only because __ghes_check_estatus() rejects a
-length below sizeof(*estatus) first.
+extlog_print() copies a fixed ELOG_ENTRY_LEN (4096) bytes from the elog
+record into elog_buf, then walks the sections using the firmware-controlled
+data_length. Nothing keeps data_length inside the buffer, so a malformed
+record walks the section pointer past elog_buf and reads adjacent memory.
+Unlike the GHES paths, extlog never calls cper_estatus_check().
 
-Reject a length that cannot be expressed in a u32 in
-cper_estatus_check_header(), which both of today's callers reach: GHES via
-__ghes_check_estatus() and BERT via cper_estatus_check(). extlog reaches
-neither yet; a later patch routes it through cper_estatus_check(), whose
-ELOG_ENTRY_LEN bound needs this to hold.
+Reject a record longer than ELOG_ENTRY_LEN and run cper_estatus_check()
+before walking the sections. The length test alone is not enough: a wrapped
+length reads back short and passes it, which cper_estatus_check() catches
+via the header check added earlier. Drop a malformed record with
+NOTIFY_DONE and without MCE_HANDLED_EXTLOG, since extlog did not consume
+it.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=1
-Fixes: 06d65deade9a ("ACPI, APEI, UEFI Common Platform Error Record (CPER) header")
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=6
+Fixes: f6ec01da40e4 ("ACPI: extlog: Handle multiple records")
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-3-dave.jiang@intel.com
+Link: https://patch.msgid.link/20260904172337.1409775-4-dave.jiang@intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/acpi/acpi_extlog.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
-index c540d521ee6c1..44a4efbbf26b9 100644
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -682,6 +682,17 @@ int cper_estatus_check_header(const struct acpi_hest_generic_status *estatus)
- 	    estatus->raw_data_offset < sizeof(*estatus) + estatus->data_length)
- 		return -EINVAL;
+diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
+index 0a84d5afd37c1..6384426847674 100644
+--- a/drivers/acpi/acpi_extlog.c
++++ b/drivers/acpi/acpi_extlog.c
+@@ -159,6 +159,15 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+ 
+ 	tmp = (struct acpi_hest_generic_status *)elog_buf;
  
 +	/*
-+	 * cper_estatus_len() sums these into a u32, and a wrapped sum reads
-+	 * back smaller than the record. Reject a length that cannot be
-+	 * expressed so no caller is handed the short value.
++	 * Bound the length before cper_estatus_check() walks the sections: it
++	 * iterates over data_length, which is not yet known to fit elog_buf.
++	 * cper_estatus_check_header() then rejects a length that wrapped, which
++	 * the bound cannot see.
 +	 */
-+	if ((u64)sizeof(*estatus) + estatus->data_length > U32_MAX)
-+		return -EINVAL;
-+	if (estatus->raw_data_length &&
-+	    (u64)estatus->raw_data_offset + estatus->raw_data_length > U32_MAX)
-+		return -EINVAL;
++	if (cper_estatus_len(tmp) > ELOG_ENTRY_LEN || cper_estatus_check(tmp))
++		return NOTIFY_DONE;
 +
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(cper_estatus_check_header);
+ 	if (!ras_userspace_consumers()) {
+ 		print_extlog_rcd(NULL, tmp, cpu);
+ 		goto out;
 -- 
 2.53.0
 
