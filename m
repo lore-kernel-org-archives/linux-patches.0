@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051025;
-	b=tjXjLGUnmFW43U8aaP0WQxSMqF08kgGz7eU+BP0amcUNC/1wlTSfK5z0kmpu8P2tkoMG
-	 K+hfpo3t7nhSTjfl8ST3QMLOFruRmhje/Lv01tynrzyyu3Uu2Kyps/6BBNN9sJQbWBvpw
-	 fIh7rHAPV/oTop+N/SVlvqrDK6BWIWWk1tfWKnsQ1pk1TNJVxY+Y+a86+FZZXl3Wor1B3
-	 rMxN+VSJxOcyudnoAE074LOnv5NhUqhzuFUGhQMEzOucceWW1uf9b1Y9xcMR7G3VaQ7tS
-	 IlvPc57GYvLRUHC9rlWLB2MWfLo0Mwd1GVLmIpqu7hzJRoygitS0+FseQL5rg3BKlOA==
+	t=1795051028;
+	b=gEbLEsTtAvRD1l9Ub2yg0Agag+bGd8G9ofTVE2OzgbDhZcl3mPnqbJ6BHub1hrhLc1X8
+	 fmOZ+4PcNy0elJ24sXBCJen6PppU9ShqVCX7Q0jClEJJNp1W+SqArcXVRib1L+B6qN2c+
+	 hHKwyZzdxjQZIr6T7c+UzRQGzXNt9pBFACS33phXv8lMQi0pY5INE4ye3KBnc72zIq6mD
+	 CNUbZlhnhACMo+5MQwTOocbnUl8/TkgO6vYWFPQuueUKyiG9xgojySEt3AF+Kk3ovG7QZ
+	 zGer4sRKpjyUN0UspLquuJiM265UXh3U1vrKLT9wnI/TqWrMjciW+6gCZBxwYhp7BAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051025;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7UDLP9EeXn2XYPk2fUE9LrAVeBpFoGKgQ6aH8+YgiNw=;
-	b=zD6+0VChD+W7aChOqBYkMjqvrubHqzw4mOn/3n0GEaBdGYPU7gfV8iSFnLC60S7whunq
-	 0p7smMYybiUxJs0fUbVGm0BWnU2kFVNwrLOCFyqtRh5EZ/fHUbeLDyV2Mv02E2CPW3jsg
-	 c98Ovb+E2vWbjpXKdaAvQdyl3YCB6hULessezHmfAtgbQIfMHtq7khSmFVdburoIGo+TV
-	 JFTpDogHgBlwsczbHcFIMdMLBnnrW1Z5+rkvF2WLEGXZb+QnUNPoTnGiJ67JMxLboqQ6X
-	 xLqyYJwIBk1tSk/53UJEq1o/HMO37w/QbZGYJpclKmB/CSGaWsGGFFBUxytQvloRo7A==
+	bh=bEcxDeTYlDjwzqk3g8pVU1f1s8DK812vcL6N3dZknno=;
+	b=g0J3JoAmK9TkPdI2WmATWdao6TeTQ3zdGN+ZQnWk3iZBOw9dmddxTOmzm9KBUFVUJ9di
+	 Hjjqn3cT6IV026haeNM/U7ODRBBA0GJCAmoxWczjf3hxjuv/VHakPkl8h+Hh5PmHAnkkC
+	 6mUMZN6LlvewRyOieSmO8dOExBB09cLB3GLvClApDMC7QzEboiQqiVVPMzA32YVZjkxlG
+	 hIdyY9I33wLqoHwMeSuuMhSSTs4RoAMoIaUf0852uMSS1DMdcYQhfAwS7tFw5Zj3twbDn
+	 5cB94EryiqJuXArIUGVRjIlE+Hw50gTCSiw6TwezmF21cw+JjrOFlwauJ4r+Gn2nvEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/AN+FVi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8Bz1Tzm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D90606A32A;
-	Thu, 19 Nov 2026 01:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C6F606A325;
+	Thu, 19 Nov 2026 01:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/AN+FVi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5DD1F000C4;
-	Thu, 19 Nov 2026 01:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8Bz1Tzm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BB01F000C4;
+	Thu, 19 Nov 2026 01:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051025;
-	bh=7UDLP9EeXn2XYPk2fUE9LrAVeBpFoGKgQ6aH8+YgiNw=;
+	s=korg; t=1795051028;
+	bh=bEcxDeTYlDjwzqk3g8pVU1f1s8DK812vcL6N3dZknno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/AN+FViCUH6E9fsVXUmp3w6N3WC3XhIV8uNmuxVebWQPlyBS3S/vNFGZ3pfU9JrZ
-	 sgp89Uw4X7dUbZXlmsZ1RmFkgDwBaCi3phguZCRxuLP/6CK4ifih5fYNGr8XQkVn94
-	 aX8BIE1Km5c4mSBqOn6XWUD++/pfKDsLWzeFZ8YE=
+	b=A8Bz1Tzm6BSW2e7iQAo2/bTEnElydAYRlFBMHGiLvn9cCqbFXWzrh8vXaLgYCS+GE
+	 rvvCMkao4oHONn5aSCOFv8y6JGJ1LQjTa35rVbLwVAScB5LItwz8v/YPYhK0QAPOp9
+	 TX4i5Ls48Lt4x9CgQEG6kRy5LYgeToXQXf+EZlvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0062/2214] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
-Date: Wed, 18 Nov 2026 15:28:58 +0100
-Message-ID: <20261118150012.497764587@linuxfoundation.org>
+Subject: [PATCH 5.15 0063/2214] media: cec: tegra: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:28:59 +0100
+Message-ID: <20261118150012.537836760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -74,49 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Shrivastava <praan@google.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
+[ Upstream commit 8dcf23edaf4bdf22259f6a47cfddc8bb1467425c ]
 
-Update pci_ats_supported() to additionally check the associated PF's
-status when called on a VF. This ensures that PF-level quirks and
-untrusted status are correctly propagated to VFs, providing a robust
-support check that aligns with the kernel's PF-centric ATS configuration
-model and is immune to the timing of VF-specific fixups.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/ats.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/cec/platform/tegra/tegra_cec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
-index c967ad6e26267..aa89408cf0195 100644
---- a/drivers/pci/ats.c
-+++ b/drivers/pci/ats.c
-@@ -39,10 +39,13 @@ void pci_ats_init(struct pci_dev *dev)
-  */
- bool pci_ats_supported(struct pci_dev *dev)
- {
--	if (!dev->ats_cap)
-+	if (!dev->ats_cap || dev->untrusted)
- 		return false;
+diff --git a/drivers/media/cec/platform/tegra/tegra_cec.c b/drivers/media/cec/platform/tegra/tegra_cec.c
+index 5e907395ca2e5..43fe54f792b65 100644
+--- a/drivers/media/cec/platform/tegra/tegra_cec.c
++++ b/drivers/media/cec/platform/tegra/tegra_cec.c
+@@ -460,6 +460,7 @@ static const struct of_device_id tegra_cec_of_match[] = {
+ 	{ .compatible = "nvidia,tegra210-cec", },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tegra_cec_of_match);
  
--	return (dev->untrusted == 0);
-+	if (dev->is_virtfn)
-+		return pci_ats_supported(pci_physfn(dev));
-+
-+	return true;
- }
- EXPORT_SYMBOL_GPL(pci_ats_supported);
- 
+ static struct platform_driver tegra_cec_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
