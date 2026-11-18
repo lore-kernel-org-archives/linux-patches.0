@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027626;
-	b=n/0CCSyFEccNQ4K9FF276UoyXNccGYBj265IMDPiQop5tYY9szkyv435tpovstE3dFkl
-	 mMSn/ruQ9SlXvboRUu6/Pjwj62e0MFJEm8eJiKZHX/s5aaC3aSoibxqyjE8CxcieKN8D4
-	 +6ogJubligqxVDRkC6JFx5J0t7BzS2Uw4xcYPw28Eo0QEyqZTMfN5HfRw56Q+58WYK+Ep
-	 wQmn/fpi3NdyrS9NOgpeDWY1ZfLIVYJr93ZBsKmOxPTCtSA03x/uWNL7YJK4BYEmJI2l4
-	 FAsMfn7wihtVZOd//AvYLLQZ65E85mExNCw+yDjLj+Umy47FniIH8CPRysE+w83sbZw==
+	t=1795027629;
+	b=5XS5k2VavNHO0hwWDpzjITkNN61ApXpyJiKbN2bnO0A9NrZ4rlrr5j4rJ308+6zdvXwG
+	 NsP1JVbK3LchUsQEM6/VV7Wh9eubcMsZuuJ2g2KpBXLajTeuOZzacdGmKFZhoU5w+iujH
+	 hWJBb++ZnWB1R1brqMid1d52cclnE947WkL7HGnUI6UDsk2JivZv2+ayIQ+JEmsq3u4Mr
+	 nRG1ZZXaxSQOaFXe1qAz5FmOutpIUzDorG8jcpetKTcvYkRUbIuYWYTkJuhzkqdlHZxmi
+	 RUz2aEhJpGooRnRF+nzLcz9ykOGj3OFSAVAMPYhVNhkt+yzBrJixL6hmMb+90BBXC2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=5yA0MS8wn1mzyBjBg4BqhObAVvVAYyfSV54aKQKbmf8=;
-	b=RrboKZwS8AEoQLb2eG/XQ0LR9IlLD5OXZN9olQTU+DscWiXYsSdhe4NVOg6jHGtvs+zj
-	 8F0jWn2Sc60MiZ6FKicsZnpjiIFJpabfOIOHsfaVD5a5RfXXrOb1Laz+RVN72EwxiBo9j
-	 JuGaCku7L6N7XH0T7UgXXFEo/49pH5YZwbPLawElg0iGmpBvkpxjpriHXxg7wxkJTkTsk
-	 DmMiH+oUKgGhHFiR1jYuaqvk3x5Y2YOMWIIHTq64ItHGJ87b/Kce2OglKuL2jZPskedoD
-	 23eMBq6o1U9xUww60GtUZ/N2od8p+pefXEVFWKR7gvx1JZbRaESKUrgtTMmZcZzq0Aw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=9ai/8ZgRre7tpRNc8iXE+KlnQtaDnX2qdRzP0oerPio=;
+	b=3ik/dd3bvF0TZoDiL5dgqvzH+jYMTq0MLUSds9QuailUtUHivpKYmnYrwc5xZSgfhP+K
+	 j4EH0Hj/lxEGjPNAcMDFrZ8HFLhLjrWnGXH2VzPMSvxvsAZZ3/sAd86FmIk6k0WnjA1Y7
+	 Pi+P8AA5xQB3/HlrsLwn9AwoNn2Ik+5I5au0J7PGumimgB4USe+d/c5Cq3T2zUSuRVnlJ
+	 IGpXb4XlA4k3nv11sByjo5gEb5BHt0CJix6hNZDtHT52GLtv7NygtUx/wNvkI8dhMj5kR
+	 DjEHvAjxlZYlE8PwePupxp/pOh1WCTetpBFi7k0Nfj6VJmHczgl2rozYp6QGTIEftXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LThROFap;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehaiGWQe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E499606A333;
-	Wed, 18 Nov 2026 18:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C26B60A2602;
+	Wed, 18 Nov 2026 18:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LThROFap
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8581F000C4;
-	Wed, 18 Nov 2026 18:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehaiGWQe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946C61F000C4;
+	Wed, 18 Nov 2026 18:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027626;
-	bh=5yA0MS8wn1mzyBjBg4BqhObAVvVAYyfSV54aKQKbmf8=;
+	s=korg; t=1795027629;
+	bh=9ai/8ZgRre7tpRNc8iXE+KlnQtaDnX2qdRzP0oerPio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LThROFap1EJ1FpSisEjh/PjN+zwDMZNYSjdkpjz7bT77SPQdeuDsCI8kLpa9qXlvT
-	 S3Puoq4awRZ7tDkpzYvqhMo41EOK5OWjOglE3SCGQtiFdtoX16mOHRBl+dhVG1o0g9
-	 pY8scFZk5IlK0xvDo7AaexTO09yTd2PPaB8heXQQ=
+	b=ehaiGWQeLeWH3tS/RhI6EjygCekMK4gdt5+0/YcHTcOKsky8IJzVRMFv9TWq9VIJI
+	 qKqpl1uNZiedPGkeCnxcdzMWrgz8SSyqnCGHRzeE5xKAcNd4DoL2sBXoehbbnsL940
+	 wIvT8KDxzFsWzdRvdIpl/nWMTNsMVwqlqjsbgIRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Carlo Szelinsky <github@szelinsky.de>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1855/2151] net: pse-pd: si3474: fix use-after-free in ancillary client error path
-Date: Wed, 18 Nov 2026 15:59:50 +0100
-Message-ID: <20261118150229.368909490@linuxfoundation.org>
+Subject: [PATCH 6.18 1856/2151] net: skbuff: dont copy alloc_cpu in skb header copies
+Date: Wed, 18 Nov 2026 15:59:51 +0100
+Message-ID: <20261118150229.404985555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,49 +67,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlo Szelinsky <github@szelinsky.de>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 70c29b35fd87f87a7b8dad6eb8d55ce54a0d549a ]
+[ Upstream commit 78d4bd22ec9df490135303c00e190ac43d5c334a ]
 
-If devm_add_action_or_reset() fails, it has already unregistered the
-ancillary I2C client, and the error message then reads that client's
-device. It can only fail with -ENOMEM, which is already reported, so
-drop the message.
+Commit 68822bdf76f1 ("net: generalize skb freeing deferral to
+per-cpu lists") added alloc_cpu to struct sk_buff and placed it in the
+headers group copied by __copy_skb_header().
 
-Found by code inspection. Not reproduced.
+This is wrong for newly allocated skbs. For example, skb_segment()
+allocates a new skb and records the current CPU in alloc_cpu, but
+__copy_skb_header() overwrites it with the value from the original skb.
 
-Fixes: a2317231df4b ("net: pse-pd: Add Si3474 PSE controller driver")
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Signed-off-by: Carlo Szelinsky <github@szelinsky.de>
-Link: https://patch.msgid.link/20261020171134.852878-2-github@szelinsky.de
+If the original skb was allocated on another CPU, the segment may later
+be treated as remotely allocated and unnecessarily deferred there when
+it is freed.
+
+Move alloc_cpu out of the headers group so it is preserved across
+header copies. Copy it explicitly in skb_clone(), which allocates
+the skb object directly instead of going through __alloc_skb().
+
+This was discovered while investigating a throughput regression with
+software IPsec. The load used 512 IPsec tunnels carrying traffic over
+VXLAN, with 512 parallel iperf3 flows and an MTU of 4500.
+
+Before the fix:
+
+  16.09%  queued_spin_lock_slowpath
+             |
+             --15.90%--_raw_spin_lock_irqsave
+                       |
+                       --9.37%--__slab_free
+                                 kfree
+                                 skb_release_data
+                                 napi_consume_skb
+                                 mlx5e_poll_tx_cq
+
+After the fix:
+
+   6.84%  queued_spin_lock_slowpath
+             |
+             --6.57%--_raw_spin_lock_irqsave
+                      |
+                      --5.00%--__slab_free
+                                kfree
+                                skb_release_data
+                                napi_consume_skb
+                                mlx5e_poll_tx_cq
+
+Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261019174152.2932829-1-cjubran@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pse-pd/si3474.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/linux/skbuff.h | 4 ++--
+ net/core/skbuff.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/pse-pd/si3474.c b/drivers/net/pse-pd/si3474.c
-index aa07ffbce54d7..77c3e92a154b7 100644
---- a/drivers/net/pse-pd/si3474.c
-+++ b/drivers/net/pse-pd/si3474.c
-@@ -516,10 +516,8 @@ static int si3474_i2c_probe(struct i2c_client *client)
- 		return PTR_ERR(priv->client[1]);
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 1779d0759bb58..0abf4a80aecfd 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1036,8 +1036,6 @@ struct sk_buff {
+ 	__u16			tc_index;	/* traffic control index */
+ #endif
  
- 	ret = devm_add_action_or_reset(dev, si3474_ancillary_i2c_remove, priv->client[1]);
--	if (ret < 0) {
--		dev_err(&priv->client[1]->dev, "Cannot register remove callback\n");
-+	if (ret)
- 		return ret;
--	}
+-	u16			alloc_cpu;
+-
+ 	union {
+ 		__wsum		csum;
+ 		struct {
+@@ -1090,6 +1088,8 @@ struct sk_buff {
  
- 	ret = i2c_smbus_read_byte_data(priv->client[1], VENDOR_IC_ID_REG);
- 	if (ret < 0) {
+ 	); /* end headers group */
+ 
++	u16			alloc_cpu;
++
+ 	/* These elements must be at the end, see alloc_skb() for details.  */
+ 	sk_buff_data_t		tail;
+ 	sk_buff_data_t		end;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 227c889fba578..5993b2b4beb99 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1530,7 +1530,6 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+ 	CHECK_SKB_FIELD(napi_id);
+ #endif
+-	CHECK_SKB_FIELD(alloc_cpu);
+ #ifdef CONFIG_XPS
+ 	CHECK_SKB_FIELD(sender_cpu);
+ #endif
+@@ -1562,6 +1561,7 @@ static struct sk_buff *__skb_clone(struct sk_buff *n, struct sk_buff *skb)
+ 	C(pfmemalloc);
+ 	C(pp_recycle);
+ 	n->destructor = NULL;
++	C(alloc_cpu);
+ 	C(tail);
+ 	C(end);
+ 	C(head);
 -- 
 2.53.0
 
