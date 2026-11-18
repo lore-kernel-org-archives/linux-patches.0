@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051003;
-	b=TSi4WKL4HObbJT60xzSp3rU6OPaKjwFHTwn1nUwLY/siS/phYog1nU964DUnDDwt2YL+
-	 lo22a86K+PUEWareaI5ocoifbYGHXzbhB/RVd1KKpMME9OukHZUZSA1qH79CIuvb0HQdU
-	 sm9j5xq6Dxs+k1zrsYOPbfDsSamcRRvl345TBvDGs5c1qPSJQ7q81+eC6MgAEGB6uKKX9
-	 0RNxsD5KyJ/QMM5IDUsggqwm+gLwqetLluLNuDikTkRPsqcVV6uezOpKxsgiNDXttk/nm
-	 zJLx5nX/ppK0eSnsitO4ml9FenMos7BOztI/PZP5bQAIThgBzz1JZVMkfX/oorJHAKA==
+	t=1795051006;
+	b=AWuRjV4GHfhG6csPKqcf2BF9hBqJebm47bmoeHZ7W6dMcpZ+PDfSbw7AHEsuY60wE7My
+	 Hl5IFYd6DZ4lpKlKVw74a2zP55T1giHzrpJPTR4i1A+kQUiNSn9y8jBycZ+qavAKH68LK
+	 1DOLywX1CC6bHuOTIs873eGbP3QOf24uZajOdkvImM0uMZvU3mwMxW2/mREleQAKhVAMM
+	 AKSr7XqYjc7hAbXpZO+VHsbL0LayMOFhui/PKiFXcR90Tj9p5F5bIKBShmocTSAr+RFaK
+	 oRmWT5rlLHOgxq8o9TQg5yhrsGepJqeS4fPPUNCpFLn0zk6DIPMLIWUPy0JRQt+7uIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XbEoeY+H31jMY43XXmPbvTgtdE4YxXNIQjIWaLqjAPo=;
-	b=DzLjNO0J6hc7c9/9BZuneEEqrb8lKU4/yzYmnDloDDeTEumPdI6p7zULS5F4EVro3vZS
-	 FS9sKzTn1EjP9Zj8bcTaoAk3/5X90vYmmWQKXcY55MPvfpyQboEeSJWXESKlU1iQ9txrI
-	 pdo0YPj5ZgD9WtW3lWSq5gCpMNynCbTepFeSL6AwzGswbcovnGQz7x4iNncErEX6u91Pd
-	 ko5wktymGA/+pLo7+JrWk3fGEQ1R2lBA9icT1yF0Vmi39ajWxBTP4CG3fPtFvC+ktVrSG
-	 d3e6vrmqZM2CNXa+hMJeLyof5rlECB1qxGOOZDvfeYHcBUxU6UY4REHl3TFCCR8W67Q==
+	bh=nav0nbQmNev/sKjUxnaQm2EmGRhJ/sqnSvX7+iJZ/8U=;
+	b=Ip/ZgMxChbnpI8RqS8uqwjGpnB3iqNn/MQiKf0JtdCuF6c3cBDJH1ZwTe4bLR1eBQN/E
+	 hhl6HOOUnHu/ISwULZ1hIQmwb38pe0EHSTKWJqu0yQz2jg3g4UWlNY1sWdE2UMkfDrDBL
+	 vPGi2GHUk97MRz03oGLI2T7RwGanlzu80EntSEWMzCHBTdZho+FK4H0uFrl0T8D4O7tjX
+	 0MBc10UCQ2q5/N1ps1j89lQk3/fscuHyCdqMBehkU9UVvYW6PS1dgSJe7/PrKTStBHkD5
+	 N4ItJLRKUltTYFj4qNsGi+yf290OS0EvHbolG0oabanFJQpuwhW21E8F3XYleAQ4j+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QHjLzLb+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+yNELT6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C23606A320;
-	Thu, 19 Nov 2026 01:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E069606A31C;
+	Thu, 19 Nov 2026 01:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QHjLzLb+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B512A1F000C4;
-	Thu, 19 Nov 2026 01:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+yNELT6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902291F000C4;
+	Thu, 19 Nov 2026 01:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051003;
-	bh=XbEoeY+H31jMY43XXmPbvTgtdE4YxXNIQjIWaLqjAPo=;
+	s=korg; t=1795051006;
+	bh=nav0nbQmNev/sKjUxnaQm2EmGRhJ/sqnSvX7+iJZ/8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHjLzLb+SmeWojjbAk2e/FEcMbstKWY32M2KcmGaC5lThrwxsmE3S3DyctRu038TF
-	 IqzkaTanRwqI/4D4DbgbvFgDw5kzxc77kKzdlD+Ez9MYaX1Syutfityl14t8GhkywL
-	 JyykDPvZ2RDx1JJElN0zCcZN8aIKONphmR7Y854w=
+	b=h+yNELT69HZg8QPlU1qyGhaK7M8lEPt27goN01Nz9nrOESS0Fx3o2gSFakC/oD+Ye
+	 qva1A7CinucBV6ozcgtsVO7SCpe9B8bkRCVzd8x18JW546024OTszg2M7ueoXQrlVp
+	 gj1/evpr7EbEVZKt0lvtNnup/mwkuttziQwuKar8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0055/2214] block: reject block device inodes with i_rdev == 0 in lookup_bdev()
-Date: Wed, 18 Nov 2026 15:28:51 +0100
-Message-ID: <20261118150012.227775307@linuxfoundation.org>
+Subject: [PATCH 5.15 0056/2214] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:28:52 +0100
+Message-ID: <20261118150012.266801893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,54 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 83887ad02f30c1814bed5da3ca999f7b0f3f337c ]
+[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
 
-lookup_bdev() blindly returns inode->i_rdev without validating it.
-When a FUSE filesystem exposes a root inode with S_IFBLK mode but
-i_rdev == 0 (via rootmode=060000), any subsequent mount attempt using
-that path as a block device source propagates dev_t 0 into the
-superblock machinery.  After commit 9ee5f161a4db ("fs: maintain a
-global device-to-superblock table") this triggers a WARNING in
-super_dev_register().
+The driver has a match table for the spi bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Reject i_rdev == 0 early with -ENODEV since no real block device
-driver registers major 0.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Reported-by: syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72fe3ea5814121fbc76e
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260703065548.1135125-1-yun.zhou@windriver.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/iio/adc/max1241.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index e015fea1521e2..8f64f3ce27711 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -987,6 +987,18 @@ int lookup_bdev(const char *pathname, dev_t *dev)
- 	if (!may_open_dev(&path))
- 		goto out_path_put;
+diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
+index b60f8448f21a4..fb92a68e6827d 100644
+--- a/drivers/iio/adc/max1241.c
++++ b/drivers/iio/adc/max1241.c
+@@ -202,6 +202,7 @@ static const struct spi_device_id max1241_id[] = {
+ 	{ "max1241", max1241 },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(spi, max1241_id);
  
-+	/*
-+	 * Reject a block device inode with i_rdev == 0.  A dev_t of 0 is
-+	 * never valid for a block device: no real block device driver
-+	 * registers major 0.  Fake block device inodes (e.g. fuse with
-+	 * rootmode=S_IFBLK) can expose i_rdev == 0, and letting that
-+	 * propagate would confuse superblock lookup and trigger warnings
-+	 * in the device-to-superblock table (super_dev_register).
-+	 */
-+	error = -ENODEV;
-+	if (!inode->i_rdev)
-+		goto out_path_put;
-+
- 	*dev = inode->i_rdev;
- 	error = 0;
- out_path_put:
+ static const struct of_device_id max1241_dt_ids[] = {
+ 	{ .compatible = "maxim,max1241" },
 -- 
 2.53.0
 
