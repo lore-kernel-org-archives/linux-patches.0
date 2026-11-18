@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028971;
-	b=a7Pen1H+2EggSsusCbOH2LOCA9HZiSKFMkRT9uwl4FvTvPXqlmuegMCjIHlqKPvO9Edw
-	 lANZEcZUZGie5Cwb7OQ6e//bx6rA75WQkGEB68axoU2qlZedWGYV1/7iP8zrlonrb2RPI
-	 e6wS04YzGhEJ5/98QttHLSPPSMA0Osan2bg0CaYZ0EPFUc7lr+5WkZg0cFQdLBYpBOi3X
-	 zPTOGu4xjKBvDBcyqbWk/mLR9GwIhV0yASdUekvNY/+mc01lL3Ugu2BnJZp/ccltXzSpC
-	 3lIWQp+WfkTFwB+M2C3dIfsSKcuQEVRFVZq2tP0GDiF1PZdSotIwsYdzWSdq7cZ7yWw==
+	t=1795028973;
+	b=YOjkcVVGgbmwm5cyJf1+KDKv7meiLzK3UuURR4+e1XRQrjWjoLeuuTsQYkfiFMwxerzx
+	 +BP/QLdqtEOYEoDUWF8GTj3hdowh6ad0TQ2eHjxSowfWShVKQ7cn/fWX95zH17lLfDrlb
+	 xhW/Y/ls7hvyuBl0ajz5F08dar2IREFcqOJNvMJv15avqfxoaxaqLwx6pBJcoo1hC0oCy
+	 DJVHElAKZ5T8iVTGjpqfOm1K3XaLIr+VyA7n6b6CpIR2mC5m6uHYsVPPu3wYbjTfCipXk
+	 UtiXdu6sWPOIbC8PPndEk5XoYB2dgmpnPjxQzM6rGC0T/dNmUlvY9HkGmxJIQcD05hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7FaQoNh5aRvVTq7FKByTVpIc5eC6QA1AJvLrfYOg4ek=;
-	b=y7DmdSUK5J8aA56/QBb38ZUEk9yh2menNOp5uRZT5MoAdpcnofRb0L09USB/o8NY5oFe
-	 mG8cx8MNImcruXddzGTBcP4bgOH4hAsfCMgDyihLKTO8ZGvY7/CGMM05YIxn/xw4/GNp/
-	 VFzeuALKpGWqSwuA3Qldyj5xu9T3nJ+XIIbcNMOiTkLF7/mSODk/sc99zXnZui15139wf
-	 SXuowBMkru72tAYjMToys7ZoGAr21auLyevyYzguP/VxZzUF/I8vPDkt4Z+52Xs6ofDcN
-	 TjUkkma5cHxHatbX25aJcZnr4LeF4FsEfiURkOzyPhKJcbZsNCr/qvYKHVf2GE59Z9g==
+	bh=6MuRFudO502s2+l5pHGgWDjsgTzeJuVK8U/Ucv7fMn8=;
+	b=0BpkVKk2v2BzJiR2QwZC+UcxYABeOFv4zAZ33pNaqh64tRjkqyUPCO+iJlKd3gZ/grmx
+	 Fgeme5ldBI1b8/OmlIYAUqbVv1yk7Ugsq8Z3ENOTjHDB6GxcOUDu96eT0wHDZltLM2JPF
+	 SFySqQaE2UdNAsgRVd2LnbG3ZTXxoT+pNnqtnp3spNcAoQ3sytra7ISBfPK+LGBscxiXZ
+	 q4UC8+zlVOoDvjsUmgWcFzVDkmP9EsKKpwAYzjTKDUBFUpwhr8hYE9G9IiWFnYgb6oeq7
+	 XKKfVR0yVBDEo5SuKFiKw0AzwGjjVphWvD+h0VXfgSyXeOJhYx1uoNJwAfcQK3xuvuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2uzBzTa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6EEB0i2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3461D606A333;
-	Wed, 18 Nov 2026 19:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F57606A31C;
+	Wed, 18 Nov 2026 19:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2uzBzTa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42ABD1F000C4;
-	Wed, 18 Nov 2026 19:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6EEB0i2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B6D1F000C4;
+	Wed, 18 Nov 2026 19:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028970;
-	bh=7FaQoNh5aRvVTq7FKByTVpIc5eC6QA1AJvLrfYOg4ek=;
+	s=korg; t=1795028973;
+	bh=6MuRFudO502s2+l5pHGgWDjsgTzeJuVK8U/Ucv7fMn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c2uzBzTa/UBBN+ryxLXmujFPBq2RNbVCDwSG7DHFUAmwCHfGVUoESCCsHUsIg3FMR
-	 0zpVpc2h382HXm4ZedtrLZVD3+NaAl/uvJpWDmUxx5rJPXkeLWCcc/Jqf4zZ9jNE8v
-	 eXJEbbjFUHSW1c1gtKo3UzuaX3zrW1PYKWHb8WJg=
+	b=p6EEB0i2rUbH0sUuE7ZYRt0X31kNm4j6TOiBmYKj9HC01jrsgG+p08U7yVKjMsO9Q
+	 IfnnimRWNcHenw5jNBbSb9D8jdCerMljJCkFzyHDWc5vKPa9woSjxc7mesgFhhHyl4
+	 koETmuBuSGsgpJl3BKS6IIJ/dt23SUALsxShWjX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Rob Barnes <robbarnes@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0184/1756] soc: qcom: apr: clean up failed service registrations
-Date: Wed, 18 Nov 2026 15:38:31 +0100
-Message-ID: <20261118150015.741245610@linuxfoundation.org>
+Subject: [PATCH 6.12 0185/1756] platform/chrome: cros_ec_proto: Fix deferred response
+Date: Wed, 18 Nov 2026 15:38:32 +0100
+Message-ID: <20261118150015.778054836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,115 +68,288 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Rob Barnes <robbarnes@google.com>
 
-[ Upstream commit 7dc14f37ca4ee35040c67c4b0180dd7b32079caf ]
+[ Upstream commit c55749415623a58eba3eb527da023d29b43fbf5d ]
 
-apr_add_device() publishes a service in svcs_idr before parsing the
-optional protection domain and registering the device. If device
-registration fails, put_device() frees the apr_device while its service
-remains in the IDR. A received packet can then dereference that stale
-entry. The property error path also leaves the service and allocation
-behind.
+When cros_ec_wait_until_complete() succeeds after an
+EC_RES_IN_PROGRESS status, it previously returned the 4-byte
+transfer size of EC_CMD_GET_COMMS_STATUS. For 0-byte payload
+commands (such as EC_CMD_FLASH_ERASE), userspace received 4
+bytes instead of 0, causing response size validation errors.
+For commands expecting non-zero response payloads, the kernel
+exited without issuing EC_CMD_RESEND_RESPONSE, leaving response
+buffers uninitialized.
 
-Split device_register() into device_initialize() and device_add() so every
-pre-registration error can safely drop the device reference. Remove the
-service from the IDR on all failures after publication, then drain the RX
-workqueue before dropping the device reference. This prevents an in-flight
-lookup from outliving the device.
+Refactor cros_ec_wait_until_complete() to pass orig_msg, issue
+EC_CMD_RESEND_RESPONSE into orig_msg->data when insize > 0, and
+return 0 for 0-byte response commands.
 
-Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260806060541.820-1-getshell@seu.edu.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2c7589af3c4d ("mfd: cros_ec: add proto v3 skeleton")
+Signed-off-by: Rob Barnes <robbarnes@google.com>
+Link: https://lore.kernel.org/r/20260901005126.3344929-1-robbarnes@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/apr.c | 44 +++++++++++++++++++++++++++---------------
- 1 file changed, 28 insertions(+), 16 deletions(-)
+ drivers/platform/chrome/cros_ec_proto.c      |  32 +++-
+ drivers/platform/chrome/cros_ec_proto_test.c | 158 ++++++++++++++++++-
+ 2 files changed, 183 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index a956c407ce030..b80cf8f417b03 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -434,31 +434,35 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	if (np)
- 		snprintf(adev->name, APR_NAME_SIZE, "%pOFn", np);
- 
-+	adev->dev.bus = &aprbus;
-+	adev->dev.parent = dev;
-+	adev->dev.of_node = np;
-+	adev->dev.release = apr_dev_release;
-+	adev->dev.driver = NULL;
-+	device_initialize(&adev->dev);
-+
- 	switch (apr->type) {
- 	case PR_TYPE_APR:
--		dev_set_name(&adev->dev, "aprsvc:%s:%x:%x", adev->name,
--			     domain_id, svc_id);
-+		ret = dev_set_name(&adev->dev, "aprsvc:%s:%x:%x", adev->name,
-+				   domain_id, svc_id);
- 		break;
- 	case PR_TYPE_GPR:
--		dev_set_name(&adev->dev, "gprsvc:%s:%x:%x", adev->name,
--			     domain_id, svc_id);
-+		ret = dev_set_name(&adev->dev, "gprsvc:%s:%x:%x", adev->name,
-+				   domain_id, svc_id);
- 		break;
- 	default:
-+		ret = -EINVAL;
- 		break;
- 	}
--
--	adev->dev.bus = &aprbus;
--	adev->dev.parent = dev;
--	adev->dev.of_node = np;
--	adev->dev.release = apr_dev_release;
--	adev->dev.driver = NULL;
-+	if (ret)
-+		goto out_put_device;
- 
- 	spin_lock(&apr->svcs_lock);
- 	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
- 	if (ret < 0) {
- 		dev_err(dev, "idr_alloc failed: %d\n", ret);
--		goto out;
-+		goto out_put_device;
- 	}
- 
- 	/* Protection domain is optional, it does not exist on older platforms */
-@@ -466,18 +470,26 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 					    1, &adev->service_path);
- 	if (ret < 0 && ret != -EINVAL) {
- 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
--		goto out;
-+		goto out_remove_idr;
- 	}
- 
- 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
- 
--	ret = device_register(&adev->dev);
-+	ret = device_add(&adev->dev);
- 	if (ret) {
--		dev_err(dev, "device_register failed: %d\n", ret);
--		put_device(&adev->dev);
-+		dev_err(dev, "device_add failed: %d\n", ret);
-+		goto out_remove_idr;
- 	}
- 
--out:
-+	return 0;
-+
-+out_remove_idr:
-+	spin_lock(&apr->svcs_lock);
-+	idr_remove(&apr->svcs_idr, svc_id);
-+	spin_unlock(&apr->svcs_lock);
-+	flush_workqueue(apr->rxwq);
-+out_put_device:
-+	put_device(&adev->dev);
+diff --git a/drivers/platform/chrome/cros_ec_proto.c b/drivers/platform/chrome/cros_ec_proto.c
+index 5c9a53dffcf95..6eaa6fd06d915 100644
+--- a/drivers/platform/chrome/cros_ec_proto.c
++++ b/drivers/platform/chrome/cros_ec_proto.c
+@@ -135,7 +135,8 @@ static int cros_ec_xfer_command(struct cros_ec_device *ec_dev, struct cros_ec_co
  	return ret;
  }
  
+-static int cros_ec_wait_until_complete(struct cros_ec_device *ec_dev, uint32_t *result)
++static int cros_ec_wait_until_complete(struct cros_ec_device *ec_dev,
++				       struct cros_ec_command *orig_msg)
+ {
+ 	struct {
+ 		struct cros_ec_command msg;
+@@ -160,7 +161,7 @@ static int cros_ec_wait_until_complete(struct cros_ec_device *ec_dev, uint32_t *
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		*result = msg->result;
++		orig_msg->result = msg->result;
+ 		if (msg->result != EC_RES_SUCCESS)
+ 			return ret;
+ 
+@@ -169,8 +170,31 @@ static int cros_ec_wait_until_complete(struct cros_ec_device *ec_dev, uint32_t *
+ 			break;
+ 		}
+ 
+-		if (!(status->flags & EC_COMMS_STATUS_PROCESSING))
++		if (!(status->flags & EC_COMMS_STATUS_PROCESSING)) {
++			u32 orig_cmd, orig_outsize, orig_version;
++
++			/* If no response payload is expected, return 0. */
++			if (orig_msg->insize == 0)
++				return 0;
++
++			/*
++			 * Request the response using EC_CMD_RESEND_RESPONSE.
++			 * Restore the original message fields so it appears
++			 * to be a direct response to the original command.
++			 */
++			orig_cmd = orig_msg->command;
++			orig_outsize = orig_msg->outsize;
++			orig_version = orig_msg->version;
++
++			orig_msg->command = EC_CMD_RESEND_RESPONSE;
++			orig_msg->outsize = 0;
++			orig_msg->version = 0;
++			ret = cros_ec_xfer_command(ec_dev, orig_msg);
++			orig_msg->command = orig_cmd;
++			orig_msg->outsize = orig_outsize;
++			orig_msg->version = orig_version;
+ 			return ret;
++		}
+ 	}
+ 
+ 	if (i >= EC_COMMAND_RETRIES)
+@@ -184,7 +208,7 @@ static int cros_ec_send_command(struct cros_ec_device *ec_dev, struct cros_ec_co
+ 	int ret = cros_ec_xfer_command(ec_dev, msg);
+ 
+ 	if (msg->result == EC_RES_IN_PROGRESS)
+-		ret = cros_ec_wait_until_complete(ec_dev, &msg->result);
++		ret = cros_ec_wait_until_complete(ec_dev, msg);
+ 
+ 	return ret;
+ }
+diff --git a/drivers/platform/chrome/cros_ec_proto_test.c b/drivers/platform/chrome/cros_ec_proto_test.c
+index 3f281996a6863..cbaaf98d6877e 100644
+--- a/drivers/platform/chrome/cros_ec_proto_test.c
++++ b/drivers/platform/chrome/cros_ec_proto_test.c
+@@ -1744,7 +1744,7 @@ static void cros_ec_proto_test_cmd_xfer_protocol_v2_no_op(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, ret, -EIO);
+ }
+ 
+-static void cros_ec_proto_test_cmd_xfer_in_progress_normal(struct kunit *test)
++static void cros_ec_proto_test_cmd_xfer_in_progress_payload_0byte(struct kunit *test)
+ {
+ 	struct cros_ec_proto_test_priv *priv = test->priv;
+ 	struct cros_ec_device *ec_dev = &priv->ec_dev;
+@@ -1774,7 +1774,7 @@ static void cros_ec_proto_test_cmd_xfer_in_progress_normal(struct kunit *test)
+ 	}
+ 
+ 	ret = cros_ec_cmd_xfer(ec_dev, &msg);
+-	KUNIT_EXPECT_EQ(test, ret, sizeof(struct ec_response_get_comms_status));
++	KUNIT_EXPECT_EQ(test, ret, 0);
+ 
+ 	KUNIT_EXPECT_EQ(test, msg.result, EC_RES_SUCCESS);
+ 
+@@ -1799,6 +1799,156 @@ static void cros_ec_proto_test_cmd_xfer_in_progress_normal(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, cros_kunit_ec_pkt_xfer_mock_called, 2);
+ }
+ 
++static void cros_ec_proto_test_cmd_xfer_in_progress_payload_4bytes(struct kunit *test)
++{
++	struct cros_ec_proto_test_priv *priv = test->priv;
++	struct cros_ec_device *ec_dev = &priv->ec_dev;
++	struct ec_xfer_mock *mock;
++	u8 resp_data[4] = {0x11, 0x22, 0x33, 0x44};
++	struct {
++		struct cros_ec_command msg;
++		u8 data[4];
++	} buf;
++	struct cros_ec_command *msg = &buf.msg;
++	int ret;
++
++	memset(&buf, 0, sizeof(buf));
++	msg->version = 1;
++	msg->command = 0x1234;
++	msg->insize = sizeof(buf.data);
++
++	ec_dev->max_response = sizeof(buf.data);
++	ec_dev->pkt_xfer = cros_kunit_ec_pkt_xfer_mock;
++
++	/* For initial command returning EC_RES_IN_PROGRESS. */
++	{
++		mock = cros_kunit_ec_xfer_mock_addx(test, 0, EC_RES_IN_PROGRESS, 0);
++		KUNIT_ASSERT_PTR_NE(test, mock, NULL);
++	}
++
++	/* For EC_CMD_GET_COMMS_STATUS status polling. */
++	{
++		struct ec_response_get_comms_status *data;
++
++		mock = cros_kunit_ec_xfer_mock_add(test, sizeof(*data));
++		KUNIT_ASSERT_PTR_NE(test, mock, NULL);
++
++		data = (struct ec_response_get_comms_status *)mock->o_data;
++		data->flags = 0;
++	}
++
++	/* For EC_CMD_RESEND_RESPONSE returning 4 bytes payload. */
++	{
++		mock = cros_kunit_ec_xfer_mock_add(test, sizeof(resp_data));
++		KUNIT_ASSERT_PTR_NE(test, mock, NULL);
++		memcpy(mock->o_data, resp_data, sizeof(resp_data));
++	}
++
++	ret = cros_ec_cmd_xfer(ec_dev, msg);
++	KUNIT_EXPECT_EQ(test, ret, 4);
++	KUNIT_EXPECT_EQ(test, msg->result, EC_RES_SUCCESS);
++	KUNIT_EXPECT_EQ(test, msg->command, 0x1234);
++	KUNIT_EXPECT_EQ(test, msg->insize, sizeof(buf.data));
++	KUNIT_EXPECT_EQ(test, msg->version, 1);
++	KUNIT_EXPECT_EQ(test, memcmp(msg->data, resp_data, sizeof(resp_data)), 0);
++
++	/* Verify mock sequence */
++	{
++		mock = cros_kunit_ec_xfer_mock_next();
++		KUNIT_EXPECT_PTR_NE(test, mock, NULL);
++
++		mock = cros_kunit_ec_xfer_mock_next();
++		KUNIT_EXPECT_PTR_NE(test, mock, NULL);
++		KUNIT_EXPECT_EQ(test, mock->msg.command, EC_CMD_GET_COMMS_STATUS);
++
++		mock = cros_kunit_ec_xfer_mock_next();
++		KUNIT_EXPECT_PTR_NE(test, mock, NULL);
++		KUNIT_EXPECT_EQ(test, mock->msg.command, EC_CMD_RESEND_RESPONSE);
++		KUNIT_EXPECT_EQ(test, mock->msg.outsize, 0);
++		KUNIT_EXPECT_EQ(test, mock->msg.version, 0);
++		KUNIT_EXPECT_EQ(test, mock->msg.insize, 4);
++	}
++
++	KUNIT_EXPECT_EQ(test, cros_kunit_ec_pkt_xfer_mock_called, 3);
++}
++
++static void cros_ec_proto_test_cmd_xfer_in_progress_payload_gt4bytes(struct kunit *test)
++{
++	struct cros_ec_proto_test_priv *priv = test->priv;
++	struct cros_ec_device *ec_dev = &priv->ec_dev;
++	struct ec_xfer_mock *mock;
++	u8 resp_data[16];
++	struct {
++		struct cros_ec_command msg;
++		u8 data[16];
++	} buf;
++	struct cros_ec_command *msg = &buf.msg;
++	int ret, i;
++
++	for (i = 0; i < sizeof(resp_data); ++i)
++		resp_data[i] = (u8)(i + 1);
++
++	memset(&buf, 0, sizeof(buf));
++	msg->version = 0;
++	msg->command = 0x5678;
++	msg->insize = sizeof(buf.data);
++
++	ec_dev->max_response = sizeof(buf.data);
++	ec_dev->pkt_xfer = cros_kunit_ec_pkt_xfer_mock;
++
++	/* For initial command returning EC_RES_IN_PROGRESS. */
++	{
++		mock = cros_kunit_ec_xfer_mock_addx(test, 0, EC_RES_IN_PROGRESS, 0);
++		KUNIT_ASSERT_PTR_NE(test, mock, NULL);
++	}
++
++	/* For EC_CMD_GET_COMMS_STATUS status polling. */
++	{
++		struct ec_response_get_comms_status *data;
++
++		mock = cros_kunit_ec_xfer_mock_add(test, sizeof(*data));
++		KUNIT_ASSERT_PTR_NE(test, mock, NULL);
++
++		data = (struct ec_response_get_comms_status *)mock->o_data;
++		data->flags = 0;
++	}
++
++	/* For EC_CMD_RESEND_RESPONSE returning 16 bytes payload. */
++	{
++		mock = cros_kunit_ec_xfer_mock_add(test, sizeof(resp_data));
++		KUNIT_ASSERT_PTR_NE(test, mock, NULL);
++		memcpy(mock->o_data, resp_data, sizeof(resp_data));
++	}
++
++	ret = cros_ec_cmd_xfer(ec_dev, msg);
++	KUNIT_EXPECT_EQ(test, ret, 16);
++	KUNIT_EXPECT_EQ(test, msg->result, EC_RES_SUCCESS);
++	KUNIT_EXPECT_EQ(test, msg->command, 0x5678);
++	KUNIT_EXPECT_EQ(test, msg->outsize, 0);
++	KUNIT_EXPECT_EQ(test, msg->insize, sizeof(buf.data));
++	KUNIT_EXPECT_EQ(test, msg->version, 0);
++	KUNIT_EXPECT_EQ(test, memcmp(msg->data, resp_data, sizeof(resp_data)), 0);
++
++	/* Verify mock sequence */
++	{
++		mock = cros_kunit_ec_xfer_mock_next();
++		KUNIT_EXPECT_PTR_NE(test, mock, NULL);
++
++		mock = cros_kunit_ec_xfer_mock_next();
++		KUNIT_EXPECT_PTR_NE(test, mock, NULL);
++		KUNIT_EXPECT_EQ(test, mock->msg.command, EC_CMD_GET_COMMS_STATUS);
++
++		mock = cros_kunit_ec_xfer_mock_next();
++		KUNIT_EXPECT_PTR_NE(test, mock, NULL);
++		KUNIT_EXPECT_EQ(test, mock->msg.command, EC_CMD_RESEND_RESPONSE);
++		KUNIT_EXPECT_EQ(test, mock->msg.outsize, 0);
++		KUNIT_EXPECT_EQ(test, mock->msg.version, 0);
++		KUNIT_EXPECT_EQ(test, mock->msg.insize, 16);
++	}
++
++	KUNIT_EXPECT_EQ(test, cros_kunit_ec_pkt_xfer_mock_called, 3);
++}
++
+ static void cros_ec_proto_test_cmd_xfer_in_progress_retries_eagain(struct kunit *test)
+ {
+ 	struct cros_ec_proto_test_priv *priv = test->priv;
+@@ -2703,7 +2853,9 @@ static struct kunit_case cros_ec_proto_test_cases[] = {
+ 	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_protocol_v3_no_op),
+ 	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_protocol_v2_normal),
+ 	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_protocol_v2_no_op),
+-	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_normal),
++	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_payload_0byte),
++	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_payload_4bytes),
++	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_payload_gt4bytes),
+ 	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_retries_eagain),
+ 	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_retries_status_processing),
+ 	KUNIT_CASE(cros_ec_proto_test_cmd_xfer_in_progress_xfer_error),
 -- 
 2.53.0
 
