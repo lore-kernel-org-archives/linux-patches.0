@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022584;
-	b=1fG9kFJj+w6U0D5shE9o4yNtZOUmju+/StHPeKdHy111fO4SGeN7v+o+x/rGyuytzThs
-	 U6lXT/aCw3CtN/NK4E80WbYuldFq6Hc3r4lmOz7JiMpmjxaeErOgYRDTUZ1lK6mR9lrVr
-	 muWsjg0Mr/1NORkgLDg5rEJYnq117BrcLK9yToaAtCpyvcIjaQfTJhLRMOs1AWRY7HD88
-	 QYXTZt8qmGtYS0u5M9rCW2+LG2crXmq905jwFY+iKbjYSwo77wK/ydlUp8aRHqfN/22Du
-	 U9Nn16O0KbqiodeKQosq6Q+bUGqvsLiWogkDriRS2t4cyR/3EEugge0dxL6uDM9uJxA==
+	t=1795022586;
+	b=DzvAlNoqXPbvg+Sn2qpCbLDx7+3Rc5oQ5YGlKjFz3jIbyqbP4rsjKNU1vrt7uR/54ysI
+	 XIMELHz1fu8LTwPLcktPbSsDQKZjOJNwh9dNOqkeXhAfiZK566tCcEbBqnciZaMQrC/fS
+	 h0xRYwjmTOu2GdD14nvFXw3LVHbPgQJu2ZNTjucp17jDkdlDI6bAvHGa8I1Pe1EULiWVZ
+	 EREWVWR4PfGjCiXhi2WRId6vYA3YTigyuHU3CgfaGGo4y7+FWAfjZAddv+f1RL+xBvvsP
+	 BenB28G/+bQlJzeRc03ugm/0x4PBbwvNahtMhqWDeyLZB2ROazppkygRqoVRXG5GtSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r0ev9OxbPokwjU9eH0rGmsq9UU9pq7vcblWVoSAEAQE=;
-	b=U4QuMeHMm54qty7sUICq20v5LrhPN/pNewCz0QmoZkVE1IrB7J/8Ao5XTDU9UlzsGjFK
-	 nuuWeLnPr49uQsddJnIuDyOb+g6IgcJfaU3Jw0r7/Zmaw8Lt0sSVpIxcG7O3d4l4zgdO2
-	 +37DBSqDCZn+djRYYYO5PB4Ceo7hKq195WBzZm3sFIHN6KIimwRnAcRBUyKkpib4vvoMq
-	 JrCg3i2gObSIzEZVk1kSla7jPdqDpuuH4hiMq1bmjP093lU8H52G9eSarHYv3jonKemLv
-	 3eJTzGKc718GeLAC3wqLN0qnWRXW/0cNRDNyrpMSCUhQ4MrbeLcVdmfhcQQt52U+0EA==
+	bh=HGB/4+ygSmSM60I/C1wTjaXNNx1BzIvSRi9ewiplxWQ=;
+	b=MPmyCNKa//BOeZbUB5Hw7hzzVKA6anWsD0s7KeEYW0falXsRu6IWtTY/9JzxSviS29xS
+	 LJIDPP5Y5Z0O9joBNL6xuk9q9fVxYrCoQPnc+RiRAWslEWhWd39b9rQNKdrX+6MgDy0TH
+	 +mxy6znYzelwy9SHOHdv0K7adz88rpTUAuZndf1frq9Y9tWTGJKfi7X/7zt+8B0LImDc2
+	 r4DCUYv6yvUd+l6Pa8mMQo53mMhzCldwLE/75y/2FzSnfhMKCl6Gq81Oa9mfQNGo2cHxL
+	 fJaaSh3eOvAu/4PcGEeL0NOhMzLeXx8YY1fTtiKfvCBPHZCbi4GuzOleNoDe4ZgbOpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhC1BCNc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z7jxi3kw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED2606A338;
-	Wed, 18 Nov 2026 17:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF5E606A338;
+	Wed, 18 Nov 2026 17:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhC1BCNc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD451F000C5;
-	Wed, 18 Nov 2026 17:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z7jxi3kw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315B61F000C5;
+	Wed, 18 Nov 2026 17:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022584;
-	bh=r0ev9OxbPokwjU9eH0rGmsq9UU9pq7vcblWVoSAEAQE=;
+	s=korg; t=1795022586;
+	bh=HGB/4+ygSmSM60I/C1wTjaXNNx1BzIvSRi9ewiplxWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MhC1BCNcCp5hgKaJ86QwiP63hd3A/SFCxpNcxROlcUBfId1t9kGPR5zdcjKdbS6SC
-	 HztfmUAKGRlpTwTmdzRxPhzE7X8tm+qp7OK7G2wFVfnzcH2UMybl756NBwK7oP5aAa
-	 EbSqBEFcGBny/gQypoTUlsPy5BquBJ9DByyF51U8=
+	b=Z7jxi3kw2IWSYRV9sTmEFiphixg8nRFyeSqyy2bG2ECG6cC5zbxp1iHhWMMSVq8yT
+	 z6zvFfXBEC3anJrBnRQ0e7Q9LUr3HB95eQk06+AkCtXryCqEjXzfAsM2qGYnuc5MTR
+	 88uAEupPyxMrmr1ihRlm1d2Cw+p7lonYxdZH4kz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0066/2151] drm/amd/display: Signal PQ EOTF in FreeSync infopacket for DP HDR
-Date: Wed, 18 Nov 2026 15:30:01 +0100
-Message-ID: <20261118150124.164793928@linuxfoundation.org>
+Subject: [PATCH 6.18 0049/2151] alpha: select SYSCTL_EXCEPTION_TRACE
+Date: Wed, 18 Nov 2026 15:29:44 +0100
+Message-ID: <20261118150123.516279302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,80 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit 81f923b065801c7d30042bcda31ccb9449b4f58b ]
+[ Upstream commit e517a172b77601839e1c52ac4303602e285804bb ]
 
-Commit c2791297013e ("drm/amd/display: Add color bit info to freesync
-infoframe") created the app_tf interface for FreeSync HDR and commit
-c21a764a98cb ("drm/amd/display: Send PQ bit in AMD VSIF") used it to set
-PB9 bit 5 (PQ EOTF) in v2/v3 AMD Freesync infopacket. However, Linux
-never made use of this interface: DM ignores what userspace sets
-regarding HDR and always passes TRANSFER_FUNC_UNKNOWN as app_tf, so the
-PQ bit is never set in the infopacket received by the eDP panel.
+Report unhandled user faults the way other architectures do, and hook up
+the debug.exception-trace sysctl that controls the reporting.
 
-Check the EOTF in the HDR static metadata and set the PQ bit in Freesync
-infopacket for DP accordingly. This fixes gray-washed HDR on KDE/GNOME
-on Framework 13 Pro AI 9 HX 370 (DCN 3.5) and may fix similar issues on
-other VRR-capable panels that advertise Replay in its AMD VSDB.
+The message gives the faulting address, the PC and the user stack
+pointer, and is rate limited.
 
-It doesn't affect color/EOTF bits on infopackets for SDR and native
-HDMI.
-
-Reported-by: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3200
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b318f3e13dd73781404670d3b3c6cf2177e0119c)
-Cc: stable@vger.kernel.org
-[ sashal: Inlined dm_dp_in_hdr_mode() checks into the existing static update_freesync_state_on_stream() function. ]
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260905-arch-kconfig-options-v2-v2-17-83e8245761a2@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/alpha/Kconfig    |  1 +
+ arch/alpha/mm/fault.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 40ac1a33326fa..d3ec5c11abb18 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9440,6 +9440,8 @@ static void remove_stream(struct amdgpu_device *adev,
- 	acrtc->enabled = false;
- }
+diff --git a/arch/alpha/Kconfig b/arch/alpha/Kconfig
+index 80367f2cf821c..de8d272b4a35d 100644
+--- a/arch/alpha/Kconfig
++++ b/arch/alpha/Kconfig
+@@ -39,6 +39,7 @@ config ALPHA
+ 	select CPU_NO_EFFICIENT_FFS if !ALPHA_EV67
+ 	select MMU_GATHER_NO_RANGE
+ 	select SPARSEMEM_EXTREME if SPARSEMEM
++	select SYSCTL_EXCEPTION_TRACE
+ 	select ZONE_DMA
+ 	help
+ 	  The Alpha is a 64-bit general-purpose processor designed and
+diff --git a/arch/alpha/mm/fault.c b/arch/alpha/mm/fault.c
+index 53e170e965915..63a24afa7a155 100644
+--- a/arch/alpha/mm/fault.c
++++ b/arch/alpha/mm/fault.c
+@@ -28,8 +28,32 @@
+ #include <linux/uaccess.h>
+ #include <linux/perf_event.h>
  
-+#define DP_HDR_SDP_EOTF_IDX 2
++#include <asm/pal.h>
 +
- static void update_freesync_state_on_stream(
- 	struct amdgpu_display_manager *dm,
- 	struct dm_crtc_state *new_crtc_state,
-@@ -9455,6 +9457,8 @@ static void update_freesync_state_on_stream(
- 	bool pack_sdp_v1_3 = false;
- 	struct amdgpu_dm_connector *aconn;
- 	enum vrr_packet_type packet_type = PACKET_TYPE_VRR;
-+	enum color_transfer_func app_tf;
-+	const struct dc_info_packet *hdr;
+ extern void die_if_kernel(char *,struct pt_regs *,long, unsigned long *);
  
- 	if (!new_stream)
- 		return;
-@@ -9506,12 +9510,18 @@ static void update_freesync_state_on_stream(
- 					&new_stream->adaptive_sync_infopacket);
- 	}
- 
-+	hdr = &new_stream->hdr_static_metadata;
-+	app_tf = dc_is_dp_signal(new_stream->signal) && hdr->valid &&
-+		 hdr->sb[DP_HDR_SDP_EOTF_IDX] == HDMI_EOTF_SMPTE_ST2084 ?
-+		 TRANSFER_FUNC_PQ2084 :
-+		 TRANSFER_FUNC_UNKNOWN;
++int show_unhandled_signals = 1;
 +
- 	mod_freesync_build_vrr_infopacket(
- 		dm->freesync_module,
- 		new_stream,
- 		&vrr_params,
- 		packet_type,
--		TRANSFER_FUNC_UNKNOWN,
-+		app_tf,
- 		&vrr_infopacket,
- 		pack_sdp_v1_3);
++static void
++show_signal_msg(struct pt_regs *regs, unsigned long address, int signo,
++		const char *desc)
++{
++	const char *level;
++
++	if (!show_unhandled_signals || !unhandled_signal(current, signo))
++		return;
++	if (!printk_ratelimit())
++		return;
++
++	/* Losing init is fatal, so shout about it.  */
++	level = task_pid_nr(current) > 1 ? KERN_INFO : KERN_EMERG;
++
++	printk("%s%s[%d]: %s at %016lx pc %016lx sp %016lx\n",
++	       level, current->comm, task_pid_nr(current), desc,
++	       address, regs->pc, rdusp());
++	print_vma_addr(KERN_CONT "  in ", regs->pc);
++	printk(KERN_CONT "\n");
++}
+ 
+ /*
+  * Force a new ASN for a task.
+@@ -223,6 +247,8 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 	mmap_read_unlock(mm);
+ 	/* Send a sigbus, regardless of whether we were in kernel
+ 	   or user mode.  */
++	if (user_mode(regs))
++		show_signal_msg(regs, address, SIGBUS, "bus error");
+ 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address);
+ 	if (!user_mode(regs))
+ 		goto no_context;
+@@ -244,6 +270,9 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 	return;
+ 
+  do_sigsegv:
++	show_signal_msg(regs, address, SIGSEGV,
++			si_code == SEGV_MAPERR ? "unmapped access"
++					       : "access violation");
+ 	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
+ 	return;
  
 -- 
 2.53.0
