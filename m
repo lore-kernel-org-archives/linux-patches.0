@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031259;
-	b=xSkTQaBdHPE5eX2h39AmEaZaeaXqLDswOfX017R0aCdbecqkuns08044w02LpAfz7umz
-	 3Jd6K+Uh9oUyNbr3S6A6g2LxkLX+vqmiLEx0Tji0AKEtHg9zzK/zeFTnwJfrkuE0gx20j
-	 2Yj8yWRaZRNnogztDNTkiPeE36FNzoJ7HEQ60HU9LqX0KMnrPe6eWA+lDNjbYs/yv1xGF
-	 xpsqVRQj5eYSC0Q9WY+iDxjr71FVVkNtlgFVjignWV1LYh66+mhuG8YE++Q50rscJQre8
-	 fu7QC1KkK/8JQXveN4MNB52sh56Vb8ZbGelpq3KvoLCrZk2d7KlkwzFmOXLkp7Bkm8A==
+	t=1795031262;
+	b=cYvDR+LYI/fcGDVS0GzZCTI2NrvqexJJu5TEg+IMMJmKjYmJh6FXCAkyhdixaiU9qwPj
+	 6NM338juS0cmZiEBOn7cCbfkis26tWZxU0jzuD8tEFER7sbnl5lpkKVYMUbiHOcRS5wyW
+	 JdjxbfsQhiZGXMpHTShQj0nCxwbWgcWAU9C4R/mIaqRQhshbpx8YmkzGzB9iu5R/oa6yx
+	 fv88Xjrp92NIMbrKDWky/9djzSnGgVy5GSreCKPBem8jWUhAmdwh3IbVSnIl2f7eXVVKA
+	 Jg6iujfV49lNJ+dTn1/qR0dHGeXZFTCc1YSMNa/+DlZp+oq6l0unwacXc34YcSerPgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031262;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SQk6yo3E4SCtzEA+i8ngUlX8/a3tyo96T0Yn4bWQaLI=;
-	b=ztwoRPq7wTxjaULelS3erJUZQ5Tm4qHUVKvls1S1zvRCxFxXT45nPs8TdNxtAbbtB1j0
-	 os8gf2/NwXbP/m+LmNwTKlk+XEHSSzUcQv8xTNgSSwRkuTTXl+ZjyS5mSTNr76eEecXA3
-	 WJiU+mAYjCKEMoz5kHCylWfjQjU59x5uwN80xyzHdL6k5JyOqfbFZg+Y88Dg7JWBBByiV
-	 wm6XZ25APZiyOgscAvaFuMzDAREmcTyN6aBgw95Ct+MbcWuT/sy47rbWLEaylh9UmqVa+
-	 XQCCFvpHWxy/SsK8DYFDiZvNDM4Oo5QD2eSltmhpC5w9e0qgI4wSbDXuv3YdqafvuMQ==
+	bh=ls+GvgK3/8L73CApSLP80sy1Y/hzu8R+3rJ3A6/nvKs=;
+	b=g1hsful/IrdiWom2B6oPRY64PjfSdTkTpdcVNJXBgnqLzEeYwBfD2p8phNOwkEoTuq+c
+	 1OL04RZziZ8UH/Y+EnijXajQWGuuQO4/lpxk3v00EsB7XfsYtfVI2L9sMrtvZ8ZmxNRKZ
+	 3o4osUkpyKllpXcrLgL3WUFyCWuLGsaGyalnGxhX+iq4qazeycsjK9Mww95sfq7VTNRAO
+	 VxmumdEqqnZ583klK7SUYTAMgfLNqhN8+JrzqFn7kQdAM5v+793FzbGgPJmUWoHQnerP7
+	 JPzJCApBm3QLhoYgACUr1V9DAvWWOGG53OEo42CmUXLQY8im/NGmNtPyTRLpIR2bWSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJGK5wuX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ztC4Rmy/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB7606A31C;
-	Wed, 18 Nov 2026 19:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CE2606A31C;
+	Wed, 18 Nov 2026 19:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJGK5wuX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37051F000C4;
-	Wed, 18 Nov 2026 19:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztC4Rmy/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF961F000C4;
+	Wed, 18 Nov 2026 19:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031259;
-	bh=SQk6yo3E4SCtzEA+i8ngUlX8/a3tyo96T0Yn4bWQaLI=;
+	s=korg; t=1795031262;
+	bh=ls+GvgK3/8L73CApSLP80sy1Y/hzu8R+3rJ3A6/nvKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJGK5wuXYRCISXfJyNwtuFT6pMsW4N7D6NUhCO+huppRAzO25zAGBRBRKs2zGxGeo
-	 z0BNu/trSbY31hIbIPDYzhyWI6UmMTQYIc5TZtbuur+uhbNkIj6gibJni+EkeECNsJ
-	 mFtnlntNToG4WwTQEitAsU1UtP496aLtIBu9aiqI=
+	b=ztC4Rmy/Ee3YF6oAXGRQljUzzh1w0tkch55bUTxjH2bAqZK4qzbmzu1w0nUHs0oWA
+	 kl9Q/QjLqd5+09a47A5ShPBwcTriraZIDKZFb5eCVW820opTOwQFcyA+qYkCLNYYJ0
+	 +bGBwVyyLPFe9IeUO6BCRv/LVPFnf+0Cd39M3sgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Cristian Papa <pcristian292@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0995/1756] ALSA: core: Add missing barriers for power_ref vs card->shutdown
-Date: Wed, 18 Nov 2026 15:52:02 +0100
-Message-ID: <20261118150049.796339498@linuxfoundation.org>
+Subject: [PATCH 6.12 0969/1756] wifi: mt76: mt7603: dont drop short frames looped back on PS entry
+Date: Wed, 18 Nov 2026 15:51:36 +0100
+Message-ID: <20261118150048.703976208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,54 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cristian Papa <pcristian292@gmail.com>
 
-[ Upstream commit a6913835735469751f56473f5212eb291a4805e7 ]
+[ Upstream commit 9956c4cac9d3f479817d6fe6a057aef3e86defcf ]
 
-snd_power_ref_and_wait() increments card->power_ref and then reads
-card->shutdown (and the power state) locklessly, while
-snd_card_disconnect() sets card->shutdown and then waits for
-power_ref to drop to zero via snd_power_sync_ref().  Due to the
-missing barrier on both sides, the caller proceeds with shutdown still
-seen as false, while the disconnect side sees a zero refcount and
-continues tearing down incorrectly.
+When a station enters power save, mt7603 has the PSE redirect the frames
+still queued for it back to the host, and mt7603_rx_loopback_skb() parks
+them until the station wakes up.
 
-For addressing the potential race, add smp_mb__after_atomic() after
-the refcount increment and smp_mb() before snd_power_sync_ref() in
-snd_card_disconnect().
+The handler rejects every frame shorter than a four-address header
+(sizeof(struct ieee80211_hdr), 30 bytes) before looking at it. A
+BlockAck request is 20 bytes and a QoS-Null 26, so both are freed
+without a trace. Since commit b473c0e47f04 ("wifi: mt76: mt7603: fix tx
+queue of loopback packets"), a BAR would also be freed later as a frame
+that is not a bufferable MMPDU, although mac80211 buffers BARs for a
+sleeping station like any other unicast frame.
 
-Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
+mac80211 queues the BAR with IEEE80211_TX_CTL_REQ_TX_STATUS, so it only
+learns about the loss when the tx status times out, and the recipient
+keeps waiting on its reorder window until then.
+
+Check the length against the header length of the actual frame, and
+park a BlockAck request on the queue of its TID, behind the data frames
+it refers to.
+
+Found on a TP-Link Archer XR500v (MT7603E) with a client whose Bluetooth
+coexistence toggles PM every ~15 ms under load. To test the change on
+its own, a temporary debugfs switch flipped between the old and the new
+checks every 30 seconds during a bidirectional TCP test, with counters
+on the loop-back path and on the tx status of BARs. With the old check,
+all 92 BARs that came back were freed, and 91 of the 544 BARs queued in
+those phases never got a tx status from the hardware. With this change,
+all 129 BARs that came back were parked and sent again, and 11 of 411
+got no tx status. Throughput was the same with both checks.
+
+Fixes: e004b7006600 ("mt76: mt7603: notify mac80211 about buffered frames in ps queue")
 Assisted-by: LLM
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-9-tiwai@suse.de
+Signed-off-by: Cristian Papa <pcristian292@gmail.com>
+Link: https://patch.msgid.link/20260922220814.15070-1-pcristian292@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7603/dma.c    | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index b37269b86be89..d39dc0198370e 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -552,6 +552,8 @@ void snd_card_disconnect(struct snd_card *card)
- 		clear_bit(card->number, snd_cards_lock);
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/dma.c b/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
+index 1e34cb6beab69..f36f49b743d03 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
+@@ -34,7 +34,7 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
+ 	int idx;
+ 	u32 val;
  
-+	/* order card->shutdown store against power_ref read */
-+	smp_mb();
- 	snd_power_sync_ref(card);
- }
- EXPORT_SYMBOL(snd_card_disconnect);
-@@ -1142,6 +1144,8 @@ EXPORT_SYMBOL(snd_card_file_remove);
- int snd_power_ref_and_wait(struct snd_card *card)
- {
- 	snd_power_ref(card);
-+	/* order power_ref increment against card->shutdown read */
-+	smp_mb__after_atomic();
- 	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
- 		wait_event_cmd(card->power_sleep,
- 			       card->shutdown ||
+-	if (skb->len < MT_TXD_SIZE + sizeof(struct ieee80211_hdr))
++	if (skb->len < MT_TXD_SIZE + 2)
+ 		goto free;
+ 
+ 	val = le32_to_cpu(txd[1]);
+@@ -52,6 +52,9 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
+ 	sta = container_of(priv, struct ieee80211_sta, drv_priv);
+ 	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
+ 
++	if (skb->len < MT_TXD_SIZE + ieee80211_hdrlen(hdr->frame_control))
++		goto free;
++
+ 	hwq = wmm_queue_map[IEEE80211_AC_BE];
+ 	if (ieee80211_is_data_qos(hdr->frame_control)) {
+ 		tid = *ieee80211_get_qos_ctl(hdr) &
+@@ -62,6 +65,19 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
+ 	} else if (ieee80211_is_data(hdr->frame_control)) {
+ 		skb_set_queue_mapping(skb, IEEE80211_AC_BE);
+ 		hwq = wmm_queue_map[IEEE80211_AC_BE];
++	} else if (ieee80211_is_back_req(hdr->frame_control)) {
++		struct ieee80211_bar *bar = (struct ieee80211_bar *)hdr;
++
++		if (skb->len < MT_TXD_SIZE + sizeof(*bar))
++			goto free;
++
++		tid = (le16_to_cpu(bar->control) &
++		       IEEE80211_BAR_CTRL_TID_INFO_MASK) >>
++		      IEEE80211_BAR_CTRL_TID_INFO_SHIFT;
++		tid &= IEEE80211_QOS_CTL_TAG1D_MASK;
++		qid = tid_to_ac[tid];
++		hwq = wmm_queue_map[qid];
++		skb_set_queue_mapping(skb, qid);
+ 	} else {
+ 		skb_pull(skb, MT_TXD_SIZE);
+ 		if (!ieee80211_is_bufferable_mmpdu(skb))
 -- 
 2.53.0
 
