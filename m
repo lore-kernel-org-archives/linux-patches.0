@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020608;
-	b=z7aMrRGwPR0s1VRdFl8pDhblKnaUvvz6VssLU0LpjfUM8SAOsIofNt+KkwRj8wrQYi+g
-	 buBV69VeyxgDhGnbugXLNeo/qF6IcWn1WLZPMwQV3LdlIpXVVrqK4fwRKZOGAKljN2mDb
-	 4UCOOcFA8l8DSRJB6jAyRYlAsUf5O9VqpEN7nPe8D9lA8njjBumqYMS5SZErOMG1CxhfJ
-	 Yck9GwMuL7MdjYYLwhyafeUnOwQyUAX9zVfWldl1JJsZJzOr9zXJkdZq1aOm/q+DtRDJe
-	 2IBGFwgRiV7cn01jvAG2t5uI9ofVdO5bh+6gG6uY2UH9Vi+CPNhXyBbL9w2UdZ0OdWQ==
+	t=1795020611;
+	b=DPo31nWdgKFFr+Q6JawtYvYDJzKbgCA54ni7Y0QhAuNqe/uUoQZUgp9qYfV96Ap50qA9
+	 mmU5xRjENBCFnDxKKbi5WTaFG587hubZq/ybOxym4AmEppMY/FRN2DwsDAyH+hQz7F4df
+	 AnkcZkcv8G2hDieoCHqFIe/jQDiMYhgHBKzRdzMaltiQuOULu/nXrh+98Vf4ac7x6QR34
+	 gko5SVyvAY1U3JpHF9ZHmMnLnaaFA9u8siUK6Tn2VBbVZRrQOO4PE4+gE5hTaRwsxoaJj
+	 Mt8BA3wzSuKoHcEP/cYqEHEWVVTFvRCFDQsl/nDXCjL96XTAPjyTE11eedIeLY26Mkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x0owyecB+7uEyr359APnvTLJo2n88qhDI6aGt4vRIk4=;
-	b=MKswTprtvmsBgafnc1b0XiDHIag2orqDuYwaQuIxO6iDOmOEU3iBq7xfV6Rti+oUl1zO
-	 vyCkyrM69dqKV3m6Cw14lyzwhx+1GSrlG/d6lIDEzbES6ZAXsf1broVihUIC3rDDIv9EY
-	 oSWxJNHu6sBjk131zkqCbKzj70d5Ubgq+LseP3StZZI9dkPS4nl43+C9BiNiEDeZhTMsa
-	 d+R4sXqChUDxC1mkRov2RrIbULMN8bfiHLZfFPUrTeFh4UBCoxWJaE3SVTvkbzkio/h+3
-	 ZGqxVDJw2nSN7clbTkB3au8kUkzNWl52mKAP2H90auyjvCleH8fx/C01p4Ns3OKK7bQ==
+	bh=Y2rkBTrBTJAo75mDyc+P634X8e+/CIE+VqXmB71PXJg=;
+	b=rOVn0YlIOtxdbeZFGm/rmkH42nHThEttes4Rw6hNN0zRvT1NOT2EIIGG0a9mtborCTb3
+	 oHtYAmj7+EMAvpUGCOoGY2GgljWmiRmgs5PitYNAW70s9W0Pp26Pcnm+/r/FDUGSLrcry
+	 s2HW4F6HnWIf/Sa2+ArlCvOGcd79AdFEwWJWYnwTiH8OPYY5eiu7jPzuro9I/d+tZi9Sc
+	 4aG3cyfOXIjHNZuGFHPW/B3wARSZ9ljyFrDn7/E4vN+ZXxkk7iRiwkMHxUdEIkdZtSeVa
+	 22eaErbTTI/3vjZmKGH3Rx9u5UUTj7vW3yOvNhYkl+psyCjiK54GDYb4i8Yvhl8mvOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6g7hFVG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyT54Fti;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B46B60A260F;
-	Wed, 18 Nov 2026 16:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6624C606A320;
+	Wed, 18 Nov 2026 16:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6g7hFVG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11491F000D3;
-	Wed, 18 Nov 2026 16:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyT54Fti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B399E1F000C4;
+	Wed, 18 Nov 2026 16:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020608;
-	bh=x0owyecB+7uEyr359APnvTLJo2n88qhDI6aGt4vRIk4=;
+	s=korg; t=1795020611;
+	bh=Y2rkBTrBTJAo75mDyc+P634X8e+/CIE+VqXmB71PXJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6g7hFVGoh00Inu0Khall73TjLCfcR/UDBmVGmhsjUdV7HBVN8POv8tbPQDDhd7CT
-	 zOZTmjzEqAAEfiDZhdcsPZH3q1C+EEgbMaK8NmpQrZob9H+FAMpeHQuxHGarh/rdGv
-	 MGrGyit5Te5HPIfrYnc6U8m7lE/2GfuHjLxp3qjo=
+	b=FyT54Ftii5bQYfegERCuBttlpKA3n4wYlQEEdzORnbQxqT14uGCDSuwwIlU9EHDuU
+	 Fka3WZda/jAfpwv/7AyQt5RwI8UVW0C3Z2ZFD8vDaUVNvk9d9ZeRMZ80ydBrVl8J2j
+	 jVnNgc0SWA18K0cgp1cUAJtK6i4Zu0/lykIaUA4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kumar Kannoju <praveen.kannoju@oracle.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1972/2651] IB/mlx4: Avoid requeueing executing CM timeout work
-Date: Wed, 18 Nov 2026 15:53:32 +0100
-Message-ID: <20261118150357.448246703@linuxfoundation.org>
+Subject: [PATCH 7.3 1973/2651] selftests/bpf: Create the vxlan devices of test_tunnel with their MAC
+Date: Wed, 18 Nov 2026 15:53:33 +0100
+Message-ID: <20261118150357.477244196@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,87 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Kumar Kannoju <praveen.kannoju@oracle.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 9bcf45bfcaf83aed81b5fb12f0edf4c16e73e02e ]
+[ Upstream commit 33cbc5c2cadfe3b43f024e89880dd8fe2efb3a2e ]
 
-id->scheduled_delete is set by schedule_delayed() itself.  It is used
-in two cases after the RTU timeout support was added:
+The vxlan tests of test_tunnel create a tunnel device in the initial
+netns with "ip link add", and then give it the MAC address that the
+static neighbor entry at the other end points to with "ip link set".
 
-* A new id_map_entry is created, and a 60-second RTU timeout is
-  scheduled.
-* DREQ or REJ is received for an existing entry, and the normal
-  30-second teardown timeout is scheduled or adjusted.
+systemd-udevd assigns new devices of the initial netns a MAC address of
+its own, following its MACAddressPolicy, when it handles their uevent.
+When it gets to that after the test set the address, the replies sent
+to the configured MAC are dropped as meant for another host, and the
+ping of vxlan_tunnel fails after 10 seconds.
 
-The following race is possible when the RTU timeout expires while a
-DREQ or REJ is handled:
+Pass the address to "ip link add". udevd leaves alone the address of a
+device that was created with one.
 
- CPU 0: timeout work                         CPU 1: DREQ/REJ handler
- --------------------                        -----------------------
- RTU timer expires
- timeout callback starts
- waits for id_map_lock                       takes id_map_lock
-
-                                             calls schedule_delayed()
-                                             calls mod_delayed_work()
-
-                                             drops id_map_lock
-
- takes id_map_lock
- removes mapping
- frees id_map_entry
-
-                                             requeued timeout runs
-                                             accesses freed id_map_entry
-
-mod_delayed_work() may requeue the work after the timeout callback has
-started.  The original timeout callback then frees the id_map_entry,
-leaving the requeued work with a dangling delayed_work pointer.
-
-When a timeout is already scheduled, first cancel its pending work.  A
-successful cancellation means the callback has not started and the
-timeout can safely be scheduled again.  If cancellation fails, the
-callback is executing and will free the entry after id_map_lock is
-released; do not requeue it.
-
-cancel_delayed_work() is deliberately used instead of
-cancel_delayed_work_sync(), because the timeout callback may be waiting
-for id_map_lock, which is held by the caller.
-
-Fixes: fa09adf4231f ("IB/mlx4: Fix stale CM id_map entries when RTU is never received")
-Signed-off-by: Praveen Kumar Kannoju <praveen.kannoju@oracle.com>
-Link: https://patch.msgid.link/20261014121344.100048-1-praveen.kannoju@oracle.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 1ee7efd40abf ("selftests/bpf: Move vxlan tunnel testcases to test_progs")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-tunnel-vxlan-mac-v1-1-624dd769c334@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/cm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ .../testing/selftests/bpf/prog_tests/test_tunnel.c  | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/cm.c b/drivers/infiniband/hw/mlx4/cm.c
-index 1e5e525fea733..810f95e55fda1 100644
---- a/drivers/infiniband/hw/mlx4/cm.c
-+++ b/drivers/infiniband/hw/mlx4/cm.c
-@@ -301,10 +301,20 @@ static void schedule_delayed(struct ib_device *ibdev, struct id_map_entry *id,
- 	spin_lock_irqsave(&sriov->going_down_lock, flags);
- 	/*make sure that there is no schedule inside the scheduled work.*/
- 	if (!sriov->is_going_down || id->scheduled_delete) {
-+		/*
-+		 * Do not requeue timeout work that is already executing. The
-+		 * timeout handler may be waiting for id_map_lock and will free
-+		 * this entry after the caller releases it.
-+		 */
-+		if (id->scheduled_delete &&
-+		    !cancel_delayed_work(&id->timeout))
-+			goto out;
-+
- 		id->scheduled_delete = 1;
- 		id->rtu_timeout = rtu_timeout;
- 		mod_delayed_work(cm_wq, &id->timeout, timeout);
- 	}
-+out:
- 	spin_unlock_irqrestore(&sriov->going_down_lock, flags);
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
+index eb93099312720..7b35bf9498056 100644
+--- a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
++++ b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
+@@ -161,9 +161,9 @@ static int add_vxlan_tunnel(void)
+ 	    IP4_ADDR2_VETH1, MAC_VETH1);
  
+ 	/* root namespace */
+-	SYS(fail, "ip link add dev %s type vxlan external gbp dstport 4789",
+-	    VXLAN_TUNL_DEV1);
+-	SYS(fail, "ip link set dev %s address %s up", VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip link add dev %s address %s type vxlan external gbp dstport 4789",
++	    VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip link set dev %s up", VXLAN_TUNL_DEV1);
+ 	SYS(fail, "ip addr add dev %s %s/24", VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
+ 	SYS(fail, "ip neigh add %s lladdr %s dev %s",
+ 	    IP4_ADDR_TUNL_DEV0, MAC_TUNL_DEV0, VXLAN_TUNL_DEV1);
+@@ -198,11 +198,10 @@ static int add_ip6vxlan_tunnel(void)
+ 	    IP6VXLAN_TUNL_DEV0, MAC_TUNL_DEV0);
+ 
+ 	/* root namespace */
+-	SYS(fail, "ip link add dev %s type vxlan external dstport 4789",
+-	    IP6VXLAN_TUNL_DEV1);
+-	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
+-	SYS(fail, "ip link set dev %s address %s up",
++	SYS(fail, "ip link add dev %s address %s type vxlan external dstport 4789",
+ 	    IP6VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
++	SYS(fail, "ip link set dev %s up", IP6VXLAN_TUNL_DEV1);
+ 
+ 	return 0;
+ fail:
 -- 
 2.53.0
 
