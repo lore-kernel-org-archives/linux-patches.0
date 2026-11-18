@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039310;
-	b=xjIR2xqYnNDwupoCU1KJaoKvuentVQQvVFjUdpesYSFr5RRP98Cc6GWj2ruzrWIlipco
-	 hOsJbP+mmZFKdetafoa4jo4DIG9/T4cvOxWDEhldXJGI2DOSH6fFeYJ16pfhcQSxWeC8S
-	 V5e0ZyZpfVJWleh21C418DiO2rI6SsFMbBqqHCXr2UTQQHh+hyIomtDIBnGOGvKVLcn29
-	 5altvs5d4H5ZUMEiOJvyGywtYFE86YC1IogDPb/83+Doq414q+tyOOHc4n9kpphXklcS7
-	 SaPgFWagdfNJ8PTMHjcjoSs4uXx00b8kFujViqVGCzyr065bZ1MI3axVerkso0cMhVg==
+	t=1795039313;
+	b=Gf8kq90llCZr1NpYhWrRS2IIP+KnAcYAq/KhJH7A6g15daUJ67rhSvpgDuzCV4fckYxV
+	 hLhRgzJsItkUdLp4Uhz0T5WHQHZJ8NFiMHyWfavQaEArgyzLy45dAv3rKPNkSAyIzrU33
+	 5KaRpzdIcZqPUIiNbL9IX3AHpkndW5TXDMb9VmpnDYh6HHz9SbaUgLpE1M7UCJZ8APYam
+	 tIhAVVvZnLwlXM9rOwf1DOPhE+y97d1i0UXp/nSPD3xGFNFtomKQcqOETS5IqjXdrZ7if
+	 +zWP09k6JcxyrQCYeoJ3PyqDnaao5cXV/yLh8UTRNxwlfihuzXrO5EH+uz7M6C6KZ8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6LssNK6WIHl6+Z4T71veGQSzSoSkHUjOTTH9CZs5bcs=;
-	b=MharsaZcxUB5Cj0Pnoxxq/dt0vwIrV3GoDEYNJ3D9lKCVcH02r7itOdmUTmod+qFcTaC
-	 Gs7bDqkJMcO22Tcx7BFjmyORk3s4WhC8/TT1q8LxZR1/hLsnkIQL0l2FYj1Wkb49FGmSL
-	 6R+L5V2lxFyRfRrPvG5LXDuXA18t/12uaj33z0lR/J8bwlmhcqCHBf4rsMyAi3nR191xA
-	 dkdklvbtU+XILhgqkczaiatMzuA3A+3k3qUj6qIOI7yqxE+q33crC1FUyrtnq0C6Jfuan
-	 rkNXH/yWQHYRJ3EWNhZ+UXTUaIsqUWDUQUpuTCO75fNEN8FXW/h/TT7H/Zc0IOMYTAQ==
+	bh=UCqLJkB7pB6DkXYEc1i0NTIym++V4ANXOY17ZbDf/SU=;
+	b=QpUDX5CpSvaDsWzh0dWaPZEVWBSDaQswNg+dq2jvmmBq9WOt0nVhbyJNcoUX1pJoJsJR
+	 MAwMiTYMldTYjRzI5zxZxymkZqtjT/53J5uz0nzb85TveMDe4OrHMwwA/4RY/vghSAatg
+	 0h0uhOtoixI77cNpb/pGM7oPo1xnwC8uYIi6j0v4ShvnW3Y2yB2LWThGZjOQqCeFfLbBF
+	 CaiKO7ly846rWeAVkq4OCMJRLqURnxwGh5LPEny759lo2r68I0SxPfmDOjXhR1guu3Zjl
+	 Ear5e3jTnZJdmuay8LfsTFUTRDBI+ZPgU+AmBpqHbj2ICdgo+FaBvUL6t+e+KKJSXEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GPkBXblV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHEKYlLJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA09D606A320;
-	Wed, 18 Nov 2026 22:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC8D606A31C;
+	Wed, 18 Nov 2026 22:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GPkBXblV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074C71F000C4;
-	Wed, 18 Nov 2026 22:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHEKYlLJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9281F000C4;
+	Wed, 18 Nov 2026 22:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039310;
-	bh=6LssNK6WIHl6+Z4T71veGQSzSoSkHUjOTTH9CZs5bcs=;
+	s=korg; t=1795039313;
+	bh=UCqLJkB7pB6DkXYEc1i0NTIym++V4ANXOY17ZbDf/SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GPkBXblV8VrqmjQOHES/l5K2l8tpTZyPJ6Euj4El+KPCmlijxaMYJ0TkoUizDNMTT
-	 q+atf/S4MFdSWku4KGPpWJkTYVjWg8DX0SdXBfgrKo70BPTC3bmt6mpq15R9XcmulQ
-	 GDSW8T2/VxgFVqZaXv7+G57c/CAKqNr2NZ8sz+I8=
+	b=hHEKYlLJyMjmG6DYnNtCsehNJ+WfWJz/bSVWLw0wjDwc4D3EqvCT02Rw32euAliR4
+	 csWBwxunBdXh2y8IkESEBpB6CqjfM6kQn8ps+G5+sHjhR49z2dmM8goNNPwxyub6PW
+	 mi55EFiEOLFtEv/BH23yOlzYPM+vtEGauOIuVcy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Stefano Sanfilippo <ssanfilippo@chromium.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2014/3318] remoteproc: qcom_q6v5_adsp: Fix double jiffies conversion in adsp_start()
-Date: Wed, 18 Nov 2026 15:43:56 +0100
-Message-ID: <20261118150422.461141793@linuxfoundation.org>
+Subject: [PATCH 6.6 2005/3318] perf jitdump: Prevent integer underflow in debug info size calculation
+Date: Wed, 18 Nov 2026 15:43:47 +0100
+Message-ID: <20261118150422.201048472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,48 +71,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit f559ef6316971fe39dc5f5edd6a483429ba03768 ]
+[ Upstream commit dfe8fe96efca3c32979dc0859f88e15b677d25f1 ]
 
-adsp_start() computes 5 * HZ, an already-converted jiffies count, and
-passes it into msecs_to_jiffies(), which expects milliseconds --
-reinterpreting the value and shrinking the intended timeout. Every
-other caller (q6v5_start() in qcom_q6v5_mss.c, qcom_pas_start() in
-qcom_q6v5_pas.c) passes msecs_to_jiffies(5000) directly, matching
-qcom_q6v5_wait_for_start()'s kerneldoc, which documents @timeout as
-already being in jiffies.
+jit_repipe_debug_info() and jit_repipe_unwinding_info() compute payload
+sizes by subtracting the fixed header size from total_size:
 
-On CONFIG_HZ=250 this shrinks the intended 5 second timeout to
-~1.25 seconds, causing a DSP that legitimately takes 2-3 seconds to
-signal ready to be spuriously torn down as a boot failure.
+  sz = jr->prefix.total_size - sizeof(jr->info);
 
-Fix by passing msecs_to_jiffies(5000) directly, matching every other
-caller.
+When total_size is smaller than the header struct (from a truncated or
+corrupted jitdump record), the subtraction underflows to a massive
+value, causing an oversized allocation followed by an OOB memcpy.
 
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Fixes: dc160e449122 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260831-b4-adsp_start_jiffies_fix_upstream-v1-1-9f8cf85ea220@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Validate that total_size covers at least the fixed header before the
+subtraction in both functions.
+
+Fixes: 598b7c6919c7 ("perf jit: add source line info support")
+Fixes: 0284fecd13b6 ("perf jit: Add unwinding support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/jitdump.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 6b1d7c32a44b1..2c9c13c5a51e0 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -438,7 +438,7 @@ static int adsp_start(struct rproc *rproc)
- 		goto disable_adsp_clks;
- 	}
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index ed306582388fa..3fe38e754d3a2 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -652,6 +652,10 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!(jd && jr))
+ 		return -1;
  
--	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5 * HZ));
-+	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
- 	if (ret == -ETIMEDOUT) {
- 		dev_err(adsp->dev, "start timed out\n");
- 		goto disable_adsp_clks;
++	/* total_size must cover at least the fixed header */
++	if (jr->prefix.total_size < sizeof(jr->info))
++		return -1;
++
+ 	sz  = jr->prefix.total_size - sizeof(jr->info);
+ 	data = malloc(sz);
+ 	if (!data)
+@@ -680,6 +684,10 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!(jd && jr))
+ 		return -1;
+ 
++	/* total_size must cover at least the fixed header */
++	if (jr->prefix.total_size < sizeof(jr->unwinding))
++		return -1;
++
+ 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
+ 	unwinding_data = malloc(unwinding_data_size);
+ 	if (!unwinding_data)
 -- 
 2.53.0
 
