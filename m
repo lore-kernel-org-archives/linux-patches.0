@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047536;
-	b=eMvTurmX2VBbSI3xEdXDt19JumUM1eheJBefgWqMkSUMfuWMZKj5xgZefppL0gwLX+G0
-	 3LVNcZ2GRWfgyiiZXBaRcRO2rxUo2VK9SZWClvmqhiGC01Xn6NAHZqekGQx1Z/3Mi1+P9
-	 iVpSIUQI8urSM/yvPaRaTSlLsinkCJZbyNhbWJBpF1en41jmtqGPAEoCiMKYkTEVWJ7cj
-	 4CaoLykHj/atLAA+tkYy2HfsB8l1wC0Jv2S5/n6oYEOsWV52aO2qRmZwSp5suq/CuRuqa
-	 BO7w1muAmrnvyW8QyC7vpPF0lpYm48aZR/gq/fiVY8TN7c+3rE6hp+JtrHz2DkE9yVQ==
+	t=1795047539;
+	b=KWB2Kav8yMpB+TDOuQYDj6TtL3BfuXwEKe/Q65U3Ftw7RUBd3TGGb6AXTN1uG0dTmI80
+	 lkYriINJwDTu5qXUD1VF6umI6C5LLESlkcDpdA3m63Dr/aJnZTXdJFgKSMIvaO39rULOS
+	 HTvkJNYIowpHID3qEM4h5bEEw6IEBY0VenZVzO12sWVG/OK9MA23f56WAozz0M0yywgCA
+	 0kUtnl1Iz/LceKTtuPtE1LrVfi8vMTPegWUP8EXRTzIbQ9G1mO0GIB/hHCfk5X5EA5yUq
+	 Uozo6mKScb79K+AKdBllkFz4EPNJN5ox8LVHOXK6u7d+u8daVNvD3j/2vySLn7CTzww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3lFOrEWulP9ZwT57BXJIpke4tKuMVk9IpE59t1TCMY8=;
-	b=w83XQWmixy/R3CF+icm1DvFv2tQvzd/V5wLJJ8lt8uTCVEyQcXDxg/bpaF5R5UgyoIq5
-	 DH5ueGLd8FPHBXSSUndo5XZ49Ks8p8SCofVy9ff9P27YSyhmOnxk/umlIXEZQMYIX3h+F
-	 vV0mDEAOOhK9hiT53mlww2B6n6mWnrdbhm+rnMx/nYrBTekOKBIZXDbgzk4dzVcyU7sJz
-	 lr312cOzpBh4PotvUJBwJPm4okrjJ5eUVOsbDx6+S805IQF874dU8XVEvVPoUcyKLOTLn
-	 tRKQjuhEY3bmo1pPWRRMHfiTg9ROj0eoqnFPozlujDMxqh6rFeWpjfyJDExq2mf5osw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=a2b9UrgRecs6jOEZjaFDUFM4qr5Xc+qV2X6MeZvpR2s=;
+	b=a+ki+V27t7iOof/XldjyPAGv9pNpxE9xRA1FN2P2g2fiutnFZtJ1QXNEYIlUBkpfQFmE
+	 S1wP9lP5FnyHiJxzPSoJUXhfV+6WDVxptmRawpdJ4VDqFULPkT1i46uYSaeGXB2ehywEo
+	 xhQWTrjda5WEiXnta4iBFevGTf6g+NY1arhNTXxbqGi0yEvB1MCgElrNrt/9fA7zxKr+s
+	 P2cqGX8lB8PgKnb5ZdBEUf563SXBcjI8gbmXGVDWfLQPp/rtgnuTMHz0LwlMESrt5v8d0
+	 1WXUVAAa9VysSvZDMTkPUY7jSXwiol+UDkQaeMkzQxXIM65H58os29dynkCOY6Pyqvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bd9wKOIq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hyxM/X1U";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0074606A31C;
-	Thu, 19 Nov 2026 00:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0B6606A320;
+	Thu, 19 Nov 2026 00:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bd9wKOIq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344821F000C4;
-	Thu, 19 Nov 2026 00:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hyxM/X1U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CF51F000C4;
+	Thu, 19 Nov 2026 00:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047536;
-	bh=3lFOrEWulP9ZwT57BXJIpke4tKuMVk9IpE59t1TCMY8=;
+	s=korg; t=1795047539;
+	bh=a2b9UrgRecs6jOEZjaFDUFM4qr5Xc+qV2X6MeZvpR2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bd9wKOIqNvIulZTzS5j1MoLk5kehHLEEV8Du8n+LL7g48NDgaGS5d4yRY/xwM4BBH
-	 Fh9j90kLEsaRDYlio7EmPTM+H6lVJBTjfU3RhDlVzz0XhmRBtEDfoXOEwuG7lDUaII
-	 tu+R6YWcunvjvuZdUJnXXPkmPfXCmNKJFs0MnJMY=
+	b=hyxM/X1UkPi9Cp2Bpe7cwXmJoeGZDhgxVy29l08Ojap1gyJxvT1S2yCTPYvzmHEra
+	 LTxd+WXQjM8ZeGgKrNm7I5tSl55yjgT367xi8WPlajTkvd0GdLmdOn27QLKS3nZU2t
+	 GTvVlRix1JKZfbWSUSRNL8H0mujdZqa/hltoq6rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1673/2857] mm/vma: dont leak the charge for stack growth
-Date: Wed, 18 Nov 2026 15:45:07 +0100
-Message-ID: <20261118150301.564596017@linuxfoundation.org>
+Subject: [PATCH 6.1 1674/2857] drm/i915/psr: Clear selective fetch area when duplicating plane state
+Date: Wed, 18 Nov 2026 15:45:08 +0100
+Message-ID: <20261118150301.605268777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -66,54 +63,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit b1ee87802111156e27557e82acc31fa7dfc76e2a ]
+[ Upstream commit cbe565475988d3b22dc36f13c14d9f0eec1685cd ]
 
-acct_stack_growth() charges stack expansion even without VM_ACCOUNT.
-This can happen for read-only or MAP_NORESERVE mappings created with
-MAP_GROWSDOWN. Unmapping these VMAs does not release the charge, leaking
-Committed_AS.
+We are currently not clearing selective fetch area when duplicating plane
+state. This is causing problem when plane is re-used for another
+purpose. Fix this by clearing selective fetch area when duplicating plane
+state.
 
-Only check and charge growth for VM_ACCOUNT VMAs, matching mremap().
-Unaccounted growth skips the overcommit check while remaining subject
-to the other stack-growth limits.
+Now as the state is cleared we need to ensure we have consistent selective
+fetch area in plane state on full update. Earlier this was relying on
+selective fetch area being copied from old state on state duplicate. Now
+this isn't true anymore as we are clearing it. Tackle this by setting full
+plane area as selective fetch area for each plane on full update. Rename
+the label as skip_su_area_calc as the loop setting the plane selective
+fetch area is not skipped anymore.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-44-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced vma_test(vma, VMA_ACCOUNT_BIT) with a direct vma->vm_flags & VM_ACCOUNT check. ]
+Move also psr2_sel_fetch_pipe_state_supported check after psr2_su_area
+initialization. The loop is run on full update as well now and it needs
+initialized psr2_su_area. Clip_area_update is only touching rect height and
+x1/x2 are left untouched.
+
+Don't set the area at all for planes not intersecting with the selective
+update area. It is already zero sized after plane state duplicate.
+
+Fixes: efab47658a6c ("drm/i915/display/psr: Calculate selective fetch plane registers")
+Cc: <stable@vger.kernel.org> # v5.12+
+Assisted-by: GitHub-Copilot:claude-opus-5
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20260929094434.77129-2-jouni.hogander@intel.com
+(cherry picked from commit bd58f0e221386808cd614bb205112e807dc6b159)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[ sashal: adapted clip_area_update() to use local pipe_clip instead of crtc_state->psr2_su_area ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_atomic_plane.c | 1 +
+ drivers/gpu/drm/i915/display/intel_psr.c          | 9 ++++++---
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 471dbff3e11de..4138cc91827c2 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1974,7 +1974,8 @@ static int acct_stack_growth(struct vm_area_struct *vma,
- 	 * Overcommit..  This must be the final test, as it will
- 	 * update security statistics.
- 	 */
--	if (security_vm_enough_memory_mm(mm, grow))
-+	if ((vma->vm_flags & VM_ACCOUNT) &&
-+	    security_vm_enough_memory_mm(mm, grow))
- 		return -ENOMEM;
+diff --git a/drivers/gpu/drm/i915/display/intel_atomic_plane.c b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
+index 82826454b5e83..b54d3d05a787d 100644
+--- a/drivers/gpu/drm/i915/display/intel_atomic_plane.c
++++ b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
+@@ -109,6 +109,7 @@ intel_plane_duplicate_state(struct drm_plane *plane)
+ 	intel_state->ggtt_vma = NULL;
+ 	intel_state->dpt_vma = NULL;
+ 	intel_state->flags = 0;
++	intel_state->psr2_sel_fetch_area = DRM_RECT_INIT(0, 0, 0, 0);
  
+ 	/* add reference to fb */
+ 	if (intel_state->hw.fb)
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 3c5553b21fa89..6839b8fd61aef 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1807,7 +1807,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 
+ 	if (!psr2_sel_fetch_pipe_state_supported(crtc_state)) {
+ 		full_update = true;
+-		goto skip_sel_fetch_set_loop;
++		goto skip_su_area_calc;
+ 	}
+ 
+ 	/*
+@@ -1893,7 +1893,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	}
+ 
+ 	if (full_update)
+-		goto skip_sel_fetch_set_loop;
++		goto skip_su_area_calc;
+ 
+ 	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
+ 	if (ret)
+@@ -1901,6 +1901,10 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 
+ 	intel_psr2_sel_fetch_pipe_alignment(crtc_state, &pipe_clip);
+ 
++skip_su_area_calc:
++	if (full_update)
++		clip_area_update(&pipe_clip, &display_area, &display_area);
++
+ 	/*
+ 	 * Now that we have the pipe damaged area check if it intersect with
+ 	 * every plane, if it does set the plane selective fetch area.
+@@ -1947,7 +1951,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		}
+ 	}
+ 
+-skip_sel_fetch_set_loop:
+ 	psr2_man_trk_ctl_calc(crtc_state, &pipe_clip, full_update);
  	return 0;
+ }
 -- 
 2.53.0
 
