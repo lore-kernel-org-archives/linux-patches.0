@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053610;
-	b=IWqJd5nozXazhTHhEbcQLAgAeuhpG9hvDx2ebOTPcJeL8aViio0k9T8y8SWKtYpEpbMu
-	 h/KfEyAt+C000rvf9nptr2Br9F9FyZpcK3LCq8BswR1MqUCdGaAEIKwyIYX32ltZ9cuFq
-	 yNZni0wFieDhseBumVVNfyzBIz8QLAVpzojDIDqk9gD5UzQzVG8mJPr7nR4qNwN/+W9St
-	 INewh5a2UTRNPh7Dig6EDDJcfxsspznUV4ekMQHphy7L1I7cvfPuq+u+KRkehI8JLwCud
-	 xkLpXoUffWWXL2y0Avhf9bGmJMbxU5NmgAZH44Xom97bFFqvd6rJKl9+M2FhTx+6NOg==
+	t=1795053612;
+	b=CRIWIsVoImK0kTL1l1GUJCezhxCLNN1tthdF8NW1lFbMi7/dpapgD7WJt3c5wN+y38BL
+	 Ul1ZvnCE70Pal/R93w+KRK97eCSwR5EFpS8gma483P1zF+D4PUJmrMCzq9CRrlgvozDg2
+	 2WDvrMq4726X+m9eP5xrdTi4R3aADQKVpx7tA/zkF7kSVH+rN3lZ8N3LG7yGB4sQibt9E
+	 z9Zdk9fokhJ3aTC/dOUvymLOPWktH/uVedTLwGNwbMhAxsi89WBryrZyw4FQ4zZElouky
+	 mVg4K07vT3PmpdvCRPMY5oWi+Z8A6uak83wNlo6BCYZtz8Vn8ce2VaYky36sWWLEs5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WFAKepItTk2Zo4NN4qq2ar70dElmumIM2DUPd5a/iLY=;
-	b=m8bh9kO9Ms997gharI5Es8tycqwn55La1Z9C1sgezByLQMPONdbGzwaWBoc6B2/liFv5
-	 afksVEtwWWJKA+pZQVeywe0I2qkzCEj2gCqJdc56Ty1AL16SKonST+WAAPRVYebw7bhxZ
-	 XBJ0Bfa3H/SSOBUhCvPsC1f5uQ9aB5hUg1aI7PpZZH4DzqozPHEsnbX8JqCvPAbzlEUgJ
-	 NFPK01K1I+vXoc00epJKWKAf6N/TYRkb9/YHBNm7M0wRbchWT/tIbIH9B6SwAdVLIaYM/
-	 pbRTeN045AFdbOad25XGrYwktD2UHYkSxhZo6tWqgSVaVBtreYbrKeW428T41xceAcw==
+	bh=inhTFu9+H6JdMXgH6yoz1PDrmhgHm3WQVDsejodyRrk=;
+	b=XNgW6gzQrBIA0CmpwlI89xSPfRh+L2k73pvllVqwlz/yFok+d0r0IBp1+HUpOed0Ejte
+	 BLC70GwhyVWU+bgWwhfmJazJeAGVykuyu8CUTetBSgVTOKfvMCzEmP7ZEeZWJ3FGloJhA
+	 P8rMgQKCdv3j0FCt2R3Eh/YxgFNwt4n0OvLRTtDzgwf9EYn/vMOOLqEkI2mQwapt7xzwo
+	 mvZyLFFuvySE45ktEWv8PzlpeKOeEOrgHOFXDZSbcwOzurYTt4LZlSzSzn4jB8N4q6UVY
+	 eqD6TZ5kVFzIZ1/hyzm0281eveNY7EAKxmcg37ajcykhcPclPSNWT09TJI/9vYilQ9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0MOg9JF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G39vPRp4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A64606A336;
-	Thu, 19 Nov 2026 02:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D2C606A320;
+	Thu, 19 Nov 2026 02:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0MOg9JF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6DA1F000C6;
-	Thu, 19 Nov 2026 02:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G39vPRp4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503B01F000C7;
+	Thu, 19 Nov 2026 02:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053609;
-	bh=WFAKepItTk2Zo4NN4qq2ar70dElmumIM2DUPd5a/iLY=;
+	s=korg; t=1795053612;
+	bh=inhTFu9+H6JdMXgH6yoz1PDrmhgHm3WQVDsejodyRrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0MOg9JF/xKusrz1yyvCp3ratwZl7usvWhDfhQawOtVOAXAJ7KqR9XxYApu66JuJs
-	 h+j7EoMN5cyHdCC2rlhOi7CcxcJCSR0TEG0aomp94+5fuaHBnTpMkGx5EOX3X6RD9B
-	 qszTZ8WNVILkso4TN9k3qnxjszmZK3HZQV/BAqGw=
+	b=G39vPRp4Dh7hY5rdnVUd9YmPhr4v4yrN4wepAh6F+wEaOcmomK67uFZEup4YhcqYF
+	 3Exa7txI141Ov1AzA0JhIPPeZx0AfT03wSZqgFVxr9fX2u2ur2Wqrx7FUvsGk9iJzV
+	 U8OhqoHN3mapPZzy2wE7pKmf1FHwMxb+MO7ZLSGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramin Moussavi <ramin.moussavi@yacoub.de>,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	Michal Simek <michal.simek@amd.com>,
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0939/2214] microblaze: restore the ABI argument home area below pt_regs (PTO)
-Date: Wed, 18 Nov 2026 15:43:35 +0100
-Message-ID: <20261118150049.930204732@linuxfoundation.org>
+Subject: [PATCH 5.15 0940/2214] HID: wacom: Fix Use-After-Free in wacom_intuos_pad
+Date: Wed, 18 Nov 2026 15:43:36 +0100
+Message-ID: <20261118150049.963872369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,720 +69,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramin Moussavi <ramin.moussavi@yacoub.de>
+From: Lee Jones <lee@kernel.org>
 
-commit c35d40a3efd2e575ef51a761e983f2bf7113be6c upstream.
+[ Upstream commit ef32877368a7013c060ef6bd03a30b6da2fe0c41 ]
 
-The MicroBlaze ABI has the caller reserve stack space for the arguments
-it passes in registers: REG_PARM_STACK_SPACE is 24 and
-OUTGOING_REG_PARM_STACK_SPACE is 1 in the gcc backend, so a callee may
-write to [caller_sp + 4, caller_sp + 28).  The kernel calls C functions
-from entry.S with r1 pointing at pt_regs, handing the callee license to
-spill its incoming arguments over the saved registers -- the syscall
-dispatch is the worst case, where the first argument slot is PT_R1, the
-saved user stack pointer.
+wacom_intuos_pad() accesses wacom->shared->touch_input locklessly
+inside the interrupt handler context.  If the Touch sibling device
+is disconnected, wacom_remove_shared_data() clears 'touch_input'
+outside any lock, creating a Time-of-Check to Time-of-Use (TOCTOU)
+race condition where a preempted reader in interrupt context
+dereferences the freed pointer, leading to a Use-After-Free.
 
-This was latent until GCC 15: since 3b9b8d6cfdf5 ("ira: Scale
-save/restore costs of callee save registers with block frequency") the
-allocator prefers spilling incoming arguments over copying them into
-callee-saved registers, and a kernel built with gcc >= 15 (without the
-TARGET_CALLEE_SAVE_COST workaround some distributions carry) corrupts
-PT_R1 on the first syscall: init takes SIGSEGV and the kernel panics.
+Resolve this by introducing RCU protection for the touch_input
+pointer:
 
-The kernel had exactly this reservation until 2011:
-commit 6e83557c38b4 ("microblaze: Remove r0_ram pointer and PTO alignment")
-removed STATE_SAVE_ARG_SPACE and with it the PTO offset, as part of
-cleaning up what was thought to be copied-from-v850 leftovers.  Restore
-it: the frame is STATE_SAVE_SIZE = PT_SIZE + PTO, r1 stays at the frame
-base through every asm-to-C call, and the saved registers are reached
-at r1 + PTO + PT_*.  PTO is 28 rather than the historic 24, which was
-one word short: FIRST_PARM_OFFSET is 4 and REG_PARM_STACK_SPACE is 24,
-so the area spans [sp+4, sp+28) and needs 28 bytes.  With 24 the last
-argument slot overlapped pt_regs' r0 -- harmless only because r0 is the
-constant-zero register.  STACK_BOUNDARY is 32 bits, so 28 needs no
-further rounding.
+ - Annotate 'touch_input' in wacom_shared struct with __rcu
+ - Wrap all lockless readers in wacom_wac.c with guard(rcu)() and
+   rcu_dereference() using a unified wacom_report_touch_mute()
+   helper
+ - Update writers in wacom_sys.c using rcu_assign_pointer()
+ - Call synchronize_rcu() in wacom_remove_shared_data() to ensure
+   all active RCU readers have finished before the input device is
+   freed
 
-Two places deliberately keep their mainline addressing.
-hw_exception_handler.S needs no offset change: its real-mode handler
-saves into the standalone pt_pool_space buffer rather than a stack
-frame, and _unaligned_data_exception works through a pointer to pt_regs
-in r7, where plain PT_* offsets are already right.  And the user-SP
-reload after popping the frame keeps PT_R1 - PT_SIZE because PTO
-cancels there: (PTO + PT_R1) - (PT_SIZE + PTO) = PT_R1 - PT_SIZE.  Both
-are exactly as the pre-2011 code had them.
+Also wrap wacom_set_shared_values() and touch/pen assignments in
+wacom_add_shared_data() inside the wacom_udev_list_lock to serialize
+concurrent probe assignments, and verify that 'shared->touch == hdev'
+before setting touch_input to prevent concurrent sibling probe state
+desynchronization.
 
-The instruction count is unchanged -- the same instructions with
-different immediates, no per-call reservation and no trampolines.  The
-cost is 28 bytes more kernel stack per saved frame.
-
-Fixes: 6e83557c38b4 ("microblaze: Remove r0_ram pointer and PTO alignment")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
-Tested-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://patch.msgid.link/20260821151809.1233057-5-ramin.moussavi@yacoub.de
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: 961794a00eab ("Input: wacom - add reporting of SW_MUTE_DEVICE events")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[Lee: Use explicit mutex_lock()/mutex_unlock() in wacom_remove_shared_data()
+      for -std=gnu89 compatibility and adapt to res_wacom]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/include/asm/entry.h           |  13 +
- arch/microblaze/include/asm/processor.h       |   2 +-
- arch/microblaze/kernel/entry.S                | 277 +++++++++---------
- arch/microblaze/kernel/hw_exception_handler.S |   5 +
- arch/microblaze/kernel/process.c              |   5 +-
- 5 files changed, 163 insertions(+), 139 deletions(-)
+ drivers/hid/wacom_sys.c | 18 +++++++++++++-----
+ drivers/hid/wacom_wac.c | 36 ++++++++++++++++++------------------
+ drivers/hid/wacom_wac.h |  2 +-
+ 3 files changed, 32 insertions(+), 24 deletions(-)
 
-diff --git a/arch/microblaze/include/asm/entry.h b/arch/microblaze/include/asm/entry.h
-index 6c42bed411662..74c5a99a37f8c 100644
---- a/arch/microblaze/include/asm/entry.h
-+++ b/arch/microblaze/include/asm/entry.h
-@@ -21,6 +21,19 @@
+diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
+index b6393a8065744..149d3546367f1 100644
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -885,10 +885,16 @@ static void wacom_remove_shared_data(void *res)
+ 		data = container_of(wacom_wac->shared, struct wacom_hdev_data,
+ 				    shared);
  
- #define PER_CPU(var) var
- 
-+/*
-+ * The MicroBlaze ABI has the caller reserve an argument home area:
-+ * REG_PARM_STACK_SPACE is 24 and OUTGOING_REG_PARM_STACK_SPACE is 1, so a
-+ * callee may write to [caller_sp + 4, caller_sp + 28).  The kernel calls C
-+ * with r1 at the frame base, so reserve that area below pt_regs and reach
-+ * the saved registers through PTO.  This restores what 6e83557c38b4
-+ * ("microblaze: Remove r0_ram pointer and PTO alignment") removed; the old
-+ * value of 24 was one word short and left the last argument slot
-+ * overlapping pt_regs' r0.
-+ */
-+#define PTO			28
-+#define STATE_SAVE_SIZE		(PT_SIZE + PTO)
+-		if (wacom_wac->shared->touch == res_wacom->hdev)
++		mutex_lock(&wacom_udev_list_lock);
++		if (wacom_wac->shared->touch == res_wacom->hdev) {
+ 			wacom_wac->shared->touch = NULL;
+-		else if (wacom_wac->shared->pen == res_wacom->hdev)
++			rcu_assign_pointer(wacom_wac->shared->touch_input, NULL);
++		} else if (wacom_wac->shared->pen == res_wacom->hdev) {
+ 			wacom_wac->shared->pen = NULL;
++		}
++		mutex_unlock(&wacom_udev_list_lock);
 +
- # ifndef __ASSEMBLY__
- DECLARE_PER_CPU(unsigned int, KSP); /* Saved kernel stack pointer */
- DECLARE_PER_CPU(unsigned int, KM); /* Kernel/user mode */
-diff --git a/arch/microblaze/include/asm/processor.h b/arch/microblaze/include/asm/processor.h
-index 7e9e92670df33..03a2ae782827b 100644
---- a/arch/microblaze/include/asm/processor.h
-+++ b/arch/microblaze/include/asm/processor.h
-@@ -78,7 +78,7 @@ unsigned long __get_wchan(struct task_struct *p);
- #  define task_regs(task) ((struct pt_regs *)task_tos(task) - 1)
++		synchronize_rcu();
  
- #  define task_pt_regs_plus_args(tsk) \
--	((void *)task_pt_regs(tsk))
-+	(((void *)task_pt_regs(tsk)) - PTO)
+ 		if (kref_put_mutex(&data->kref, wacom_release_shared_data, &wacom_udev_list_lock))
+ 			mutex_unlock(&wacom_udev_list_lock);
+@@ -2350,9 +2356,11 @@ static void wacom_set_shared_values(struct wacom_wac *wacom_wac)
+ 	}
  
- #  define task_sp(task)	(task_regs(task)->r1)
- #  define task_pc(task)	(task_regs(task)->pc)
-diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index 18028809250fb..7a86ec90295cd 100644
---- a/arch/microblaze/kernel/entry.S
-+++ b/arch/microblaze/kernel/entry.S
-@@ -175,78 +175,78 @@ syscall_debug_table:
- 1:
+ 	if (wacom_wac->features.device_type & WACOM_DEVICETYPE_TOUCH) {
+-		wacom_wac->shared->type = wacom_wac->features.type;
+-		wacom_wac->shared->touch_input = wacom_wac->touch_input;
+-		wacom_wac->shared->touch = wacom->hdev;
++		if (wacom_wac->shared->touch == wacom->hdev || !wacom_wac->shared->touch) {
++			wacom_wac->shared->type = wacom_wac->features.type;
++			wacom_wac->shared->touch = wacom->hdev;
++			rcu_assign_pointer(wacom_wac->shared->touch_input, wacom_wac->touch_input);
++		}
+ 	} else if (wacom_wac->features.device_type & WACOM_DEVICETYPE_PEN) {
+ 		/* Pairs with smp_load_acquire() in wacom_sibling_pending() */
+ 		smp_store_release(&wacom_wac->shared->pen, wacom->hdev);
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 78d7fda68f207..6549439f32031 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -510,6 +510,18 @@ static void wacom_intuos_schedule_prox_event(struct wacom_wac *wacom_wac)
+ 	}
+ }
  
- #define SAVE_REGS \
--	swi	r2, r1, PT_R2;	/* Save SDA */			\
--	swi	r3, r1, PT_R3;					\
--	swi	r4, r1, PT_R4;					\
--	swi	r5, r1, PT_R5;					\
--	swi	r6, r1, PT_R6;					\
--	swi	r7, r1, PT_R7;					\
--	swi	r8, r1, PT_R8;					\
--	swi	r9, r1, PT_R9;					\
--	swi	r10, r1, PT_R10;					\
--	swi	r11, r1, PT_R11;	/* save clobbered regs after rval */\
--	swi	r12, r1, PT_R12;					\
--	swi	r13, r1, PT_R13;	/* Save SDA2 */			\
--	swi	r14, r1, PT_PC;	/* PC, before IRQ/trap */	\
--	swi	r15, r1, PT_R15;	/* Save LP */			\
--	swi	r16, r1, PT_R16;					\
--	swi	r17, r1, PT_R17;					\
--	swi	r18, r1, PT_R18;	/* Save asm scratch reg */	\
--	swi	r19, r1, PT_R19;					\
--	swi	r20, r1, PT_R20;					\
--	swi	r21, r1, PT_R21;					\
--	swi	r22, r1, PT_R22;					\
--	swi	r23, r1, PT_R23;					\
--	swi	r24, r1, PT_R24;					\
--	swi	r25, r1, PT_R25;					\
--	swi	r26, r1, PT_R26;					\
--	swi	r27, r1, PT_R27;					\
--	swi	r28, r1, PT_R28;					\
--	swi	r29, r1, PT_R29;					\
--	swi	r30, r1, PT_R30;					\
--	swi	r31, r1, PT_R31;	/* Save current task reg */	\
-+	swi	r2, r1, PTO+PT_R2;	/* Save SDA */			\
-+	swi	r3, r1, PTO+PT_R3;					\
-+	swi	r4, r1, PTO+PT_R4;					\
-+	swi	r5, r1, PTO+PT_R5;					\
-+	swi	r6, r1, PTO+PT_R6;					\
-+	swi	r7, r1, PTO+PT_R7;					\
-+	swi	r8, r1, PTO+PT_R8;					\
-+	swi	r9, r1, PTO+PT_R9;					\
-+	swi	r10, r1, PTO+PT_R10;					\
-+	swi	r11, r1, PTO+PT_R11;	/* save clobbered regs after rval */\
-+	swi	r12, r1, PTO+PT_R12;					\
-+	swi	r13, r1, PTO+PT_R13;	/* Save SDA2 */			\
-+	swi	r14, r1, PTO+PT_PC;	/* PC, before IRQ/trap */	\
-+	swi	r15, r1, PTO+PT_R15;	/* Save LP */			\
-+	swi	r16, r1, PTO+PT_R16;					\
-+	swi	r17, r1, PTO+PT_R17;					\
-+	swi	r18, r1, PTO+PT_R18;	/* Save asm scratch reg */	\
-+	swi	r19, r1, PTO+PT_R19;					\
-+	swi	r20, r1, PTO+PT_R20;					\
-+	swi	r21, r1, PTO+PT_R21;					\
-+	swi	r22, r1, PTO+PT_R22;					\
-+	swi	r23, r1, PTO+PT_R23;					\
-+	swi	r24, r1, PTO+PT_R24;					\
-+	swi	r25, r1, PTO+PT_R25;					\
-+	swi	r26, r1, PTO+PT_R26;					\
-+	swi	r27, r1, PTO+PT_R27;					\
-+	swi	r28, r1, PTO+PT_R28;					\
-+	swi	r29, r1, PTO+PT_R29;					\
-+	swi	r30, r1, PTO+PT_R30;					\
-+	swi	r31, r1, PTO+PT_R31;	/* Save current task reg */	\
- 	mfs	r11, rmsr;		/* save MSR */			\
--	swi	r11, r1, PT_MSR;
-+	swi	r11, r1, PTO+PT_MSR;
- 
- #define RESTORE_REGS_GP \
--	lwi	r2, r1, PT_R2;	/* restore SDA */		\
--	lwi	r3, r1, PT_R3;					\
--	lwi	r4, r1, PT_R4;					\
--	lwi	r5, r1, PT_R5;					\
--	lwi	r6, r1, PT_R6;					\
--	lwi	r7, r1, PT_R7;					\
--	lwi	r8, r1, PT_R8;					\
--	lwi	r9, r1, PT_R9;					\
--	lwi	r10, r1, PT_R10;					\
--	lwi	r11, r1, PT_R11;	/* restore clobbered regs after rval */\
--	lwi	r12, r1, PT_R12;					\
--	lwi	r13, r1, PT_R13;	/* restore SDA2 */		\
--	lwi	r14, r1, PT_PC;	/* RESTORE_LINK PC, before IRQ/trap */\
--	lwi	r15, r1, PT_R15;	/* restore LP */		\
--	lwi	r16, r1, PT_R16;					\
--	lwi	r17, r1, PT_R17;					\
--	lwi	r18, r1, PT_R18;	/* restore asm scratch reg */	\
--	lwi	r19, r1, PT_R19;					\
--	lwi	r20, r1, PT_R20;					\
--	lwi	r21, r1, PT_R21;					\
--	lwi	r22, r1, PT_R22;					\
--	lwi	r23, r1, PT_R23;					\
--	lwi	r24, r1, PT_R24;					\
--	lwi	r25, r1, PT_R25;					\
--	lwi	r26, r1, PT_R26;					\
--	lwi	r27, r1, PT_R27;					\
--	lwi	r28, r1, PT_R28;					\
--	lwi	r29, r1, PT_R29;					\
--	lwi	r30, r1, PT_R30;					\
--	lwi	r31, r1, PT_R31;	/* Restore cur task reg */
-+	lwi	r2, r1, PTO+PT_R2;	/* restore SDA */		\
-+	lwi	r3, r1, PTO+PT_R3;					\
-+	lwi	r4, r1, PTO+PT_R4;					\
-+	lwi	r5, r1, PTO+PT_R5;					\
-+	lwi	r6, r1, PTO+PT_R6;					\
-+	lwi	r7, r1, PTO+PT_R7;					\
-+	lwi	r8, r1, PTO+PT_R8;					\
-+	lwi	r9, r1, PTO+PT_R9;					\
-+	lwi	r10, r1, PTO+PT_R10;					\
-+	lwi	r11, r1, PTO+PT_R11;	/* restore clobbered regs after rval */\
-+	lwi	r12, r1, PTO+PT_R12;					\
-+	lwi	r13, r1, PTO+PT_R13;	/* restore SDA2 */		\
-+	lwi	r14, r1, PTO+PT_PC;	/* RESTORE_LINK PC, before IRQ/trap */\
-+	lwi	r15, r1, PTO+PT_R15;	/* restore LP */		\
-+	lwi	r16, r1, PTO+PT_R16;					\
-+	lwi	r17, r1, PTO+PT_R17;					\
-+	lwi	r18, r1, PTO+PT_R18;	/* restore asm scratch reg */	\
-+	lwi	r19, r1, PTO+PT_R19;					\
-+	lwi	r20, r1, PTO+PT_R20;					\
-+	lwi	r21, r1, PTO+PT_R21;					\
-+	lwi	r22, r1, PTO+PT_R22;					\
-+	lwi	r23, r1, PTO+PT_R23;					\
-+	lwi	r24, r1, PTO+PT_R24;					\
-+	lwi	r25, r1, PTO+PT_R25;					\
-+	lwi	r26, r1, PTO+PT_R26;					\
-+	lwi	r27, r1, PTO+PT_R27;					\
-+	lwi	r28, r1, PTO+PT_R28;					\
-+	lwi	r29, r1, PTO+PT_R29;					\
-+	lwi	r30, r1, PTO+PT_R30;					\
-+	lwi	r31, r1, PTO+PT_R31;	/* Restore cur task reg */
- 
- #define RESTORE_REGS \
--	lwi	r11, r1, PT_MSR;					\
-+	lwi	r11, r1, PTO+PT_MSR;					\
- 	mts	rmsr , r11;						\
- 	RESTORE_REGS_GP
- 
- #define RESTORE_REGS_RTBD \
--	lwi	r11, r1, PT_MSR;					\
-+	lwi	r11, r1, PTO+PT_MSR;					\
- 	andni	r11, r11, MSR_EIP;          /* clear EIP */             \
- 	ori	r11, r11, MSR_EE | MSR_BIP; /* set EE and BIP */        \
- 	mts	rmsr , r11;						\
-@@ -263,11 +263,11 @@ syscall_debug_table:
- 	lwi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP));			\
- 	/* FIXME: I can add these two lines to one */			\
- 	/* tophys(r1,r1); */						\
--	/* addik	r1, r1, -PT_SIZE; */				\
--	addik	r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - PT_SIZE; \
-+	/* addik	r1, r1, -STATE_SAVE_SIZE; */				\
-+	addik	r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - STATE_SAVE_SIZE; \
- 	SAVE_REGS							\
- 	brid	2f;							\
--	swi	r1, r1, PT_MODE; 	 				\
-+	swi	r1, r1, PTO+PT_MODE; 	 				\
- 1:	/* User-mode state save.  */					\
- 	lwi	r1, r0, TOPHYS(PER_CPU(CURRENT_SAVE)); /* get saved current */\
- 	tophys(r1,r1);							\
-@@ -275,12 +275,13 @@ syscall_debug_table:
- 	/* MS these three instructions can be added to one */		\
- 	/* addik	r1, r1, THREAD_SIZE; */				\
- 	/* tophys(r1,r1); */						\
--	/* addik	r1, r1, -PT_SIZE; */			\
--	addik r1, r1, THREAD_SIZE + CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - PT_SIZE; \
-+	/* addik	r1, r1, -STATE_SAVE_SIZE; */			\
-+	addik r1, r1, THREAD_SIZE + CONFIG_KERNEL_BASE_ADDR		\
-+		- CONFIG_KERNEL_START - STATE_SAVE_SIZE;		\
- 	SAVE_REGS							\
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));			\
--	swi	r11, r1, PT_R1; /* Store user SP.  */		\
--	swi	r0, r1, PT_MODE; /* Was in user-mode.  */		\
-+	swi	r11, r1, PTO+PT_R1; /* Store user SP.  */		\
-+	swi	r0, r1, PTO+PT_MODE; /* Was in user-mode.  */		\
- 	/* MS: I am clearing UMS even in case when I come from kernel space */ \
- 	clear_ums; 							\
- 2:	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
-@@ -310,18 +311,18 @@ C_ENTRY(_user_exception):
- 	addik	r1, r1, THREAD_SIZE;
- 	tophys(r1,r1);
- 
--	addik	r1, r1, -PT_SIZE; /* Make room on the stack.  */
-+	addik	r1, r1, -STATE_SAVE_SIZE; /* Make room on the stack.  */
- 	SAVE_REGS
--	swi	r0, r1, PT_R3
--	swi	r0, r1, PT_R4
-+	swi	r0, r1, PTO+PT_R3
-+	swi	r0, r1, PTO+PT_R4
- 
--	swi	r0, r1, PT_MODE;			/* Was in user-mode. */
-+	swi	r0, r1, PTO+PT_MODE;			/* Was in user-mode. */
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
--	swi	r11, r1, PT_R1;		/* Store user SP.  */
-+	swi	r11, r1, PTO+PT_R1;		/* Store user SP.  */
- 	clear_ums;
- 2:	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
- 	/* Save away the syscall number.  */
--	swi	r12, r1, PT_R0;
-+	swi	r12, r1, PTO+PT_R0;
- 	tovirt(r1,r1)
- 
- /* where the trap should return need -8 to adjust for rtsd r15, 8*/
-@@ -340,18 +341,18 @@ C_ENTRY(_user_exception):
- 	beqi	r11, 4f
- 
- 	addik	r3, r0, -ENOSYS
--	swi	r3, r1, PT_R3
-+	swi	r3, r1, PTO+PT_R3
- 	brlid	r15, do_syscall_trace_enter
--	addik	r5, r1, PT_R0
-+	addik	r5, r1, PTO+PT_R0
- 
- 	# do_syscall_trace_enter returns the new syscall nr.
- 	addk	r12, r0, r3
--	lwi	r5, r1, PT_R5;
--	lwi	r6, r1, PT_R6;
--	lwi	r7, r1, PT_R7;
--	lwi	r8, r1, PT_R8;
--	lwi	r9, r1, PT_R9;
--	lwi	r10, r1, PT_R10;
-+	lwi	r5, r1, PTO+PT_R5;
-+	lwi	r6, r1, PTO+PT_R6;
-+	lwi	r7, r1, PTO+PT_R7;
-+	lwi	r8, r1, PTO+PT_R8;
-+	lwi	r9, r1, PTO+PT_R9;
-+	lwi	r10, r1, PTO+PT_R10;
- 4:
- /* Jump to the appropriate function for the system call number in r12
-  * (r12 is not preserved), or return an error if r12 is not valid.
-@@ -392,8 +393,8 @@ C_ENTRY(_user_exception):
- /* Entry point used to return from a syscall/trap */
- /* We re-enable BIP bit before state restore */
- C_ENTRY(ret_from_trap):
--	swi	r3, r1, PT_R3
--	swi	r4, r1, PT_R4
-+	swi	r3, r1, PTO+PT_R3
-+	swi	r4, r1, PTO+PT_R4
- /*
-  * Entry point for returns that must not store r3/r4 back into pt_regs,
-  * i.e. rt_sigreturn, which has already restored them from the signal
-@@ -401,7 +402,7 @@ C_ENTRY(ret_from_trap):
-  * so it stays correct if the number of stores above ever changes.
-  */
- ret_from_trap_no_rval:
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- /* See if returning to kernel mode, if so, skip resched &c.  */
- 	bnei	r11, 2f;
- 	/* We're returning to user mode, so check for various conditions that
-@@ -413,7 +414,7 @@ ret_from_trap_no_rval:
- 	beqi	r11, 1f
- 
- 	brlid	r15, do_syscall_trace_leave
--	addik	r5, r1, PT_R0
-+	addik	r5, r1, PTO+PT_R0
- 1:
- 	/* We're returning to user mode, so check for various conditions that
- 	 * trigger rescheduling. */
-@@ -432,7 +433,7 @@ ret_from_trap_no_rval:
- 	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
- 	beqi	r11, 4f;		/* Signals to handle, handle them */
- 
--	addik	r5, r1, 0;		/* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO;		/* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	add	r6, r30, r0;		/* Arg 2: int in_syscall */
- 	add	r30, r0, r0		/* no more restarts */
-@@ -444,7 +445,11 @@ ret_from_trap_no_rval:
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
-+	/*
-+	 * Deliberately PT_SIZE, not STATE_SAVE_SIZE: r1 is back at the stack
-+	 * top, so PTO cancels and the saved SP sits at PT_R1 - PT_SIZE.
-+	 */
- 	lwi	r1, r1, PT_R1 - PT_SIZE;/* Restore user stack pointer. */
- 	bri	6f;
- 
-@@ -453,7 +458,7 @@ ret_from_trap_no_rval:
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
- 	tovirt(r1,r1);
- 6:
- TRAP_return:		/* Make global symbol for debugging */
-@@ -494,7 +499,7 @@ C_ENTRY(sys_rt_sigreturn_wrapper):
- 	 */
- 	addik	r15, r0, ret_from_trap_no_rval - 8
- 	brid	sys_rt_sigreturn	/* Do real work */
--	addik	r5, r1, 0;		/* add user context as 1st arg */
-+	addik	r5, r1, PTO;		/* add user context as 1st arg */
- 
- /*
-  * HW EXCEPTION rutine start
-@@ -505,7 +510,7 @@ C_ENTRY(full_exception_trap):
- 	addik	r17, r17, -4
- 	SAVE_STATE /* Save registers */
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* FIXME this can be store directly in PT_ESR reg.
- 	 * I tested it but there is a fault */
-@@ -515,7 +520,7 @@ C_ENTRY(full_exception_trap):
- 	mfs	r7, rfsr;		/* save FSR */
- 	mts	rfsr, r0;	/* Clear sticky fsr */
- 	rted	r0, full_exception
--	addik	r5, r1, 0		 /* parameter struct pt_regs * regs */
-+	addik	r5, r1, PTO		 /* parameter struct pt_regs * regs */
- 
- /*
-  * Unaligned data trap.
-@@ -541,14 +546,14 @@ C_ENTRY(unaligned_data_trap):
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
- 	SAVE_STATE		/* Save registers.*/
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
- 	addik	r15, r0, ret_from_exc-8
- 	mfs	r3, resr		/* ESR */
- 	mfs	r4, rear		/* EAR */
- 	rtbd	r0, _unaligned_data_exception
--	addik	r7, r1, 0		/* parameter struct pt_regs * regs */
-+	addik	r7, r1, PTO		/* parameter struct pt_regs * regs */
- 
- /*
-  * Page fault traps.
-@@ -571,30 +576,30 @@ C_ENTRY(unaligned_data_trap):
- C_ENTRY(page_fault_data_trap):
- 	SAVE_STATE		/* Save registers.*/
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
- 	addik	r15, r0, ret_from_exc-8
- 	mfs	r6, rear		/* parameter unsigned long address */
- 	mfs	r7, resr		/* parameter unsigned long error_code */
- 	rted	r0, do_page_fault
--	addik	r5, r1, 0		/* parameter struct pt_regs * regs */
-+	addik	r5, r1, PTO		/* parameter struct pt_regs * regs */
- 
- C_ENTRY(page_fault_instr_trap):
- 	SAVE_STATE		/* Save registers.*/
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
- 	addik	r15, r0, ret_from_exc-8
- 	mfs	r6, rear		/* parameter unsigned long address */
- 	ori	r7, r0, 0		/* parameter unsigned long error_code */
- 	rted	r0, do_page_fault
--	addik	r5, r1, 0		/* parameter struct pt_regs * regs */
-+	addik	r5, r1, PTO		/* parameter struct pt_regs * regs */
- 
- /* Entry point used to return from an exception.  */
- C_ENTRY(ret_from_exc):
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- 	bnei	r11, 2f;		/* See if returning to kernel mode, */
- 					/* ... if so, skip resched &c.  */
- 
-@@ -626,7 +631,7 @@ C_ENTRY(ret_from_exc):
- 	 * complete register state.  Here we save anything not saved by
- 	 * the normal entry sequence, so that it may be safely restored
- 	 * (in a possibly modified form) after do_notify_resume returns. */
--	addik	r5, r1, 0;		/* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO;		/* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	addi	r6, r0, 0;		/* Arg 2: int in_syscall */
- 	bri	1b
-@@ -638,7 +643,7 @@ C_ENTRY(ret_from_exc):
- 	tophys(r1,r1);
- 
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
- 
- 	lwi	r1, r1, PT_R1 - PT_SIZE; /* Restore user stack pointer. */
- 	bri	6f;
-@@ -647,7 +652,7 @@ C_ENTRY(ret_from_exc):
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
- 
- 	tovirt(r1,r1);
- 6:
-@@ -680,10 +685,10 @@ C_ENTRY(_interrupt):
- 	tophys(r1,r1); /* MS: I have in r1 physical address where stack is */
- 	/* save registers */
- /* MS: Make room on the stack -> activation record */
--	addik	r1, r1, -PT_SIZE;
-+	addik	r1, r1, -STATE_SAVE_SIZE;
- 	SAVE_REGS
- 	brid	2f;
--	swi	r1, r1, PT_MODE; /* 0 - user mode, 1 - kernel mode */
-+	swi	r1, r1, PTO+PT_MODE; /* 0 - user mode, 1 - kernel mode */
- 1:
- /* User-mode state save. */
-  /* MS: get the saved current */
-@@ -693,23 +698,23 @@ C_ENTRY(_interrupt):
- 	addik	r1, r1, THREAD_SIZE;
- 	tophys(r1,r1);
- 	/* save registers */
--	addik	r1, r1, -PT_SIZE;
-+	addik	r1, r1, -STATE_SAVE_SIZE;
- 	SAVE_REGS
- 	/* calculate mode */
--	swi	r0, r1, PT_MODE;
-+	swi	r0, r1, PTO+PT_MODE;
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
--	swi	r11, r1, PT_R1;
-+	swi	r11, r1, PTO+PT_R1;
- 	clear_ums;
- 2:
- 	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
- 	tovirt(r1,r1)
- 	addik	r15, r0, irq_call;
- irq_call:rtbd	r0, do_IRQ;
--	addik	r5, r1, 0;
-+	addik	r5, r1, PTO;
- 
- /* MS: we are in virtual mode */
- ret_from_irq:
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- 	bnei	r11, 2f;
- 
- 1:
-@@ -725,7 +730,7 @@ ret_from_irq:
- 5:	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
- 	beqid	r11, no_intr_resched
- /* Handle a signal return; Pending signals should be in r18. */
--	addik	r5, r1, 0; /* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO; /* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	addi	r6, r0, 0; /* Arg 2: int in_syscall */
- 	bri	1b
-@@ -738,7 +743,7 @@ no_intr_resched:
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE /* MS: Clean up stack space. */
-+	addik	r1, r1, STATE_SAVE_SIZE /* MS: Clean up stack space. */
- 	lwi	r1, r1, PT_R1 - PT_SIZE;
- 	bri	6f;
- /* MS: Return to kernel state. */
-@@ -761,7 +766,7 @@ restore:
- 	VM_OFF /* MS: turn off MMU */
- 	tophys(r1,r1)
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE	/* MS: Clean up stack space. */
-+	addik	r1, r1, STATE_SAVE_SIZE	/* MS: Clean up stack space. */
- 	tovirt(r1,r1);
- 6:
- IRQ_return: /* MS: Make global symbol for debugging */
-@@ -784,28 +789,28 @@ C_ENTRY(_debug_exception):
- 	lwi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP)); /* Reload kernel stack-ptr*/
- 
- 	/* BIP bit is set on entry, no interrupts can occur */
--	addik   r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - PT_SIZE;
-+	addik   r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - STATE_SAVE_SIZE;
- 	SAVE_REGS;
- 	/* save all regs to pt_reg structure */
--	swi	r0, r1, PT_R0;	/* R0 must be saved too */
--	swi	r14, r1, PT_R14	/* rewrite saved R14 value */
--	swi	r16, r1, PT_PC; /* PC and r16 are the same */
-+	swi	r0, r1, PTO+PT_R0;	/* R0 must be saved too */
-+	swi	r14, r1, PTO+PT_R14	/* rewrite saved R14 value */
-+	swi	r16, r1, PTO+PT_PC; /* PC and r16 are the same */
- 	/* save special purpose registers to pt_regs */
- 	mfs	r11, rear;
--	swi	r11, r1, PT_EAR;
-+	swi	r11, r1, PTO+PT_EAR;
- 	mfs	r11, resr;
--	swi	r11, r1, PT_ESR;
-+	swi	r11, r1, PTO+PT_ESR;
- 	mfs	r11, rfsr;
--	swi	r11, r1, PT_FSR;
-+	swi	r11, r1, PTO+PT_FSR;
- 
- 	/* stack pointer is in physical address at it is decrease
--	 * by PT_SIZE but we need to get correct R1 value */
--	addik   r11, r1, CONFIG_KERNEL_START - CONFIG_KERNEL_BASE_ADDR + PT_SIZE;
--	swi	r11, r1, PT_R1
-+	 * by STATE_SAVE_SIZE but we need to get correct R1 value */
-+	addik   r11, r1, CONFIG_KERNEL_START - CONFIG_KERNEL_BASE_ADDR + STATE_SAVE_SIZE;
-+	swi	r11, r1, PTO+PT_R1
- 	/* MS: r31 - current pointer isn't changed */
- 	tovirt(r1,r1)
- #ifdef CONFIG_KGDB
--	addi	r5, r1, 0 /* pass pt_reg address as the first arg */
-+	addi	r5, r1, PTO /* pass pt_reg address as the first arg */
- 	addik	r15, r0, dbtrap_call; /* return address */
- 	rtbd	r0, microblaze_kgdb_break
- 	nop;
-@@ -821,16 +826,16 @@ C_ENTRY(_debug_exception):
- 	addik	r1, r1, THREAD_SIZE;	/* calculate kernel stack pointer */
- 	tophys(r1,r1);
- 
--	addik	r1, r1, -PT_SIZE; /* Make room on the stack.  */
-+	addik	r1, r1, -STATE_SAVE_SIZE; /* Make room on the stack.  */
- 	SAVE_REGS;
--	swi	r16, r1, PT_PC;	/* Save LP */
--	swi	r0, r1, PT_MODE; /* Was in user-mode.  */
-+	swi	r16, r1, PTO+PT_PC;	/* Save LP */
-+	swi	r0, r1, PTO+PT_MODE; /* Was in user-mode.  */
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
--	swi	r11, r1, PT_R1; /* Store user SP.  */
-+	swi	r11, r1, PTO+PT_R1; /* Store user SP.  */
- 	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
- 	tovirt(r1,r1)
- 	set_vms;
--	addik	r5, r1, 0;
-+	addik	r5, r1, PTO;
- 	addik	r15, r0, dbtrap_call;
- dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 	rtbd	r0, sw_exception
-@@ -838,7 +843,7 @@ dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 
- 	/* MS: The first instruction for the second part of the gdb/kgdb */
- 	set_bip; /* Ints masked for state restore */
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- 	bnei	r11, 2f;
- /* MS: Return to user space - gdb */
- 1:
-@@ -857,7 +862,7 @@ dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 5:	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
- 	beqi	r11, 4f;		/* Signals to handle, handle them */
- 
--	addik	r5, r1, 0;		/* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO;		/* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	addi  r6, r0, 0;	/* Arg 2: int in_syscall */
- 	bri	1b
-@@ -868,7 +873,7 @@ dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 	tophys(r1,r1);
- 	/* MS: Restore all regs */
- 	RESTORE_REGS_RTBD
--	addik	r1, r1, PT_SIZE	 /* Clean up stack space */
-+	addik	r1, r1, STATE_SAVE_SIZE	 /* Clean up stack space */
- 	lwi	r1, r1, PT_R1 - PT_SIZE; /* Restore user stack pointer */
- DBTRAP_return_user: /* MS: Make global symbol for debugging */
- 	rtbd	r16, 0; /* MS: Instructions to return from a debug trap */
-@@ -879,9 +884,9 @@ DBTRAP_return_user: /* MS: Make global symbol for debugging */
- 	tophys(r1,r1);
- 	/* MS: Restore all regs */
- 	RESTORE_REGS_RTBD
--	lwi	r14, r1, PT_R14;
--	lwi	r16, r1, PT_PC;
--	addik	r1, r1, PT_SIZE; /* MS: Clean up stack space */
-+	lwi	r14, r1, PTO+PT_R14;
-+	lwi	r16, r1, PTO+PT_PC;
-+	addik	r1, r1, STATE_SAVE_SIZE; /* MS: Clean up stack space */
- 	tovirt(r1,r1);
- DBTRAP_return_kernel: /* MS: Make global symbol for debugging */
- 	rtbd	r16, 0; /* MS: Instructions to return from a debug trap */
-diff --git a/arch/microblaze/kernel/hw_exception_handler.S b/arch/microblaze/kernel/hw_exception_handler.S
-index 07ea23965f817..4693916be5267 100644
---- a/arch/microblaze/kernel/hw_exception_handler.S
-+++ b/arch/microblaze/kernel/hw_exception_handler.S
-@@ -313,6 +313,11 @@ _MB_HW_ExceptionVectorTable:
- .align 4
- .ent _hw_exception_handler
- _hw_exception_handler:
-+	/*
-+	 * This handler saves into the static pt_pool_space buffer, not into a
-+	 * stack frame, so the plain PT_* offsets are right here -- do not add
-+	 * the PTO of entry.S's frames.
-+	 */
- 	swi	r1, r0, TOPHYS(pt_pool_space + PT_R1); /* GET_SP */
- 	/* Save date to kernel memory. Here is the problem
- 	 * when you came from user space */
-diff --git a/arch/microblaze/kernel/process.c b/arch/microblaze/kernel/process.c
-index 5e2b91c1e8ced..578aa49a06e7a 100644
---- a/arch/microblaze/kernel/process.c
-+++ b/arch/microblaze/kernel/process.c
-@@ -20,6 +20,7 @@
- #include <linux/ptrace.h>
- #include <linux/uaccess.h> /* for USER_DS macros */
- #include <asm/cacheflush.h>
-+#include <asm/entry.h>
- 
- void show_regs(struct pt_regs *regs)
++static void wacom_report_touch_mute(struct wacom_wac *wacom_wac, bool mute)
++{
++	struct input_dev *touch_input;
++
++	guard(rcu)();
++	touch_input = rcu_dereference(wacom_wac->shared->touch_input);
++	if (touch_input) {
++		input_report_switch(touch_input, SW_MUTE_DEVICE, mute);
++		input_sync(touch_input);
++	}
++}
++
+ static int wacom_intuos_pad(struct wacom_wac *wacom)
  {
-@@ -64,7 +65,7 @@ int copy_thread(unsigned long clone_flags, unsigned long usp, unsigned long arg,
- 		 * the registers. That's OK for a brand new thread.*/
- 		memset(childregs, 0, sizeof(struct pt_regs));
- 		memset(&ti->cpu_context, 0, sizeof(struct cpu_context));
--		ti->cpu_context.r1  = (unsigned long)childregs;
-+		ti->cpu_context.r1  = (unsigned long)childregs - PTO;
- 		ti->cpu_context.r20 = (unsigned long)usp; /* fn */
- 		ti->cpu_context.r19 = (unsigned long)arg;
- 		childregs->pt_mode = 1;
-@@ -78,7 +79,7 @@ int copy_thread(unsigned long clone_flags, unsigned long usp, unsigned long arg,
- 		childregs->r1 = usp;
+ 	struct wacom_features *features = &wacom->features;
+@@ -650,12 +662,8 @@ static int wacom_intuos_pad(struct wacom_wac *wacom)
+ 	input_report_key(input, KEY_CONTROLPANEL, menu);
+ 	input_report_key(input, KEY_INFO, info);
  
- 	memset(&ti->cpu_context, 0, sizeof(struct cpu_context));
--	ti->cpu_context.r1 = (unsigned long)childregs;
-+	ti->cpu_context.r1 = (unsigned long)childregs - PTO;
- 	childregs->msr |= MSR_UMS;
+-	if (wacom->shared && wacom->shared->touch_input) {
+-		input_report_switch(wacom->shared->touch_input,
+-				    SW_MUTE_DEVICE,
+-				    !wacom->shared->is_touch_on);
+-		input_sync(wacom->shared->touch_input);
+-	}
++	if (wacom->shared)
++		wacom_report_touch_mute(wacom, !wacom->shared->is_touch_on);
  
- 	/* we should consider the fact that childregs is a copy of the parent
+ 	input_report_abs(input, ABS_RX, strip1);
+ 	input_report_abs(input, ABS_RY, strip2);
+@@ -2192,7 +2200,7 @@ static void wacom_wac_pad_event(struct hid_device *hdev, struct hid_field *field
+ 	 */
+ 	if ((equivalent_usage == WACOM_HID_WD_MUTE_DEVICE) ||
+ 	   (equivalent_usage == WACOM_HID_WD_TOUCHONOFF)) {
+-		if (wacom_wac->shared->touch_input) {
++		if (wacom_wac->shared) {
+ 			bool *is_touch_on = &wacom_wac->shared->is_touch_on;
+ 
+ 			if (equivalent_usage == WACOM_HID_WD_MUTE_DEVICE && value)
+@@ -2200,9 +2208,7 @@ static void wacom_wac_pad_event(struct hid_device *hdev, struct hid_field *field
+ 			else if (equivalent_usage == WACOM_HID_WD_TOUCHONOFF)
+ 				*is_touch_on = value;
+ 
+-			input_report_switch(wacom_wac->shared->touch_input,
+-					    SW_MUTE_DEVICE, !(*is_touch_on));
+-			input_sync(wacom_wac->shared->touch_input);
++			wacom_report_touch_mute(wacom_wac, !(*is_touch_on));
+ 		}
+ 		return;
+ 	}
+@@ -3324,11 +3330,8 @@ static int wacom_wireless_irq(struct wacom_wac *wacom, size_t len)
+ 
+ 		if ((wacom->shared->type == INTUOSHT ||
+ 		    wacom->shared->type == INTUOSHT2) &&
+-		    wacom->shared->touch_input &&
+ 		    wacom->shared->touch_max) {
+-			input_report_switch(wacom->shared->touch_input,
+-					SW_MUTE_DEVICE, data[5] & 0x40);
+-			input_sync(wacom->shared->touch_input);
++			wacom_report_touch_mute(wacom, data[5] & 0x40);
+ 		}
+ 
+ 		pid = get_unaligned_be16(&data[6]);
+@@ -3363,11 +3366,8 @@ static int wacom_status_irq(struct wacom_wac *wacom_wac, size_t len)
+ 
+ 	if ((features->type == INTUOSHT ||
+ 	    features->type == INTUOSHT2) &&
+-	    wacom_wac->shared->touch_input &&
+ 	    features->touch_max) {
+-		input_report_switch(wacom_wac->shared->touch_input,
+-				    SW_MUTE_DEVICE, data[8] & 0x40);
+-		input_sync(wacom_wac->shared->touch_input);
++		wacom_report_touch_mute(wacom_wac, data[8] & 0x40);
+ 	}
+ 
+ 	if (data[9] & 0x02) { /* wireless module is attached */
+diff --git a/drivers/hid/wacom_wac.h b/drivers/hid/wacom_wac.h
+index 0491b19430cdf..4f9ef7b21de3f 100644
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -286,7 +286,7 @@ struct wacom_shared {
+ 	/* for wireless device to access USB interfaces */
+ 	unsigned touch_max;
+ 	int type;
+-	struct input_dev *touch_input;
++	struct input_dev __rcu *touch_input;
+ 	struct hid_device *pen;
+ 	struct hid_device *touch;
+ 	bool has_mute_touch_switch;
 -- 
 2.53.0
 
