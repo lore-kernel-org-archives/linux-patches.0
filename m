@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024589;
-	b=i/yHrBF71Y1RKO4702tQ3C2nsGtJ70S9+629zSuCrHWqidl+adURT9RA245po5kBWKR1
-	 OS7g8/N7zrUoZnEeSesQoEw5hj6hihJO18VifIbqp+m6kk7ic3vIuOtu3SnDCam8Hj9c6
-	 /7FbrSuI+a4A223QgdYUwvOOMbS4XckjIKDo2qzAfQMksnxMsq4h5aSVHQyA1C8sRNwes
-	 3mfYa/QKjbTLCUCBWk62SjhTyo5pqo+CSLj3kwfHTbCYXLsWa8xYvXuQITh8+/krbXkJ7
-	 z8oMDukzLo6eLGLhYOH4In3tLsTogQePm30nQkvzzBUFCqg9QnfszEiXCODBhPeiFng==
+	t=1795024592;
+	b=DmiIr4bab50F8B08+nxAiU04EIxlpeC1G3hDMcZkB0y/kTAmBXQ1g5DfMp8hpytJvPb/
+	 mX0H/3lHXgD5mCjx4lTpw09wpqlfR0THedwavvOcLNd9UkunWoCSpcbw3hDUib1LQWLpS
+	 xDa+d2vpdnNXLoo2/7062F3Y8Y8P84nk8hEt1wKjueuq+ylxI+HPcyC85Vz8tb7ZD3twr
+	 7wZrldv9Y/R2NIOZiojRNKRa7g+DxxWdepX159OjuhVx69j4UG6dMLMqE2dfMY+2x1uL8
+	 69Tq1nNf3/LSjpri0kLtppwL4zqts9KiuLriV0LDhQTeJrl+hn3eWcpaMFTatQPER0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9ky/YX5DKM1LuPiDl8C/my62WiDkt2RLA2gyxR0KPwA=;
-	b=4sRWPFJKQVE3qaLE974h4jtchsz3Ts5Egqb5nksRWQhbTlSpDuWs09tqiiS1xjG03ICY
-	 IkdPVao4eKw05Ax0iuwkapvJC+z8zsvT/28VWJ8Zk29CK1sPgpcGhHo2vNe/5x5JUbNDU
-	 9zIuf0dLiEWZUiQXtk3xn7U+70bLtp5Nhsqxv7SSEryAiV84MgV07vu52a7US9bF9I4on
-	 Uw8PccO+2KE8mp3Fxb3w9YthjRLQHYJ1fwtBcnCpEsTAMxgnnZUibGdgiEkenTuQsw/0Z
-	 GLcw81wL6yiMHNh15y5dspxB6DvtfwmnG1GKJM12xlG3DVQmp3xtSkBl1g0edp+pO+A==
+	bh=6Tb3WWqS5M5GRuZYMAeP+qCFpxUXlPJbf69ENR+SmvA=;
+	b=xQTMrJaGXzYoE+qNdiOe2mHcb6uS52TzdiD/z3gKKWMq2omOJxrQFF5kfsskBd0TuIhD
+	 f1cvXDd07FckU+xpkXTBmaxoayKUqAzJOqhgykRFZIsO5c09VL9sm5EUF/8f2yQIqdk2c
+	 NrI72hd5aeoEF7io/Xj7tCUUqJwtU8+c6cP9s17EDXMfDg5OsxjaNfas6VGat85Sbfmry
+	 cQB7WYjOnnTKMMX2frHLge5Gw3Gm9Wrfyp3Wqa8sCNuPvK1hNZFqam+ADFFyoapgJ0OO+
+	 7T2bUM6nnXR/gXZuHZU8JSvyS5E+6JF/056KV9YmE7Izc7BQn+rbvLcYzGGRf/Hu+wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thYWmgKv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mow7Vcte;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A604C606A31C;
-	Wed, 18 Nov 2026 17:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5DB606A31C;
+	Wed, 18 Nov 2026 17:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thYWmgKv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA921F000C4;
-	Wed, 18 Nov 2026 17:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mow7Vcte
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FB51F000C4;
+	Wed, 18 Nov 2026 17:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024589;
-	bh=9ky/YX5DKM1LuPiDl8C/my62WiDkt2RLA2gyxR0KPwA=;
+	s=korg; t=1795024592;
+	bh=6Tb3WWqS5M5GRuZYMAeP+qCFpxUXlPJbf69ENR+SmvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=thYWmgKvBWQ5iKa/FuhS8eAW3hl3USaFbuT1qz7GkACoRd/v+cOw1NZm0yehPb3s3
-	 KdmKMcd/pj5bqf0V2p7eq+V/8Vqy5q2I2GAuVZvZbBqWPQVhsO7K4OfCqLmlqHhhah
-	 av5EUUl+143PYfk2jxxxzrcTBt2vQoZ1MfhCMkOw=
+	b=Mow7VcteuN7rj8ZNfr1a+Ku5mLHRS1/QpJKxskz0hyVUyH9xdVS//XoOejf2wC11h
+	 AQ6a/pE1TYoRp9Y4yruS92TSCugYc2s0MrR3sre/ySIb9j1DvRs546hpxthq1Lfp4i
+	 +BKGfnClyqo87WrfNr7UbqJuq9cU0idFxOgpEtiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0738/2151] mtd: block: prevent reclaim I/O during request processing
-Date: Wed, 18 Nov 2026 15:41:13 +0100
-Message-ID: <20261118150148.919504332@linuxfoundation.org>
+Subject: [PATCH 6.18 0739/2151] clk: qcom: gcc-qcs615: Fix GCC_CPUSS_GNOC_CBCR offset
+Date: Wed, 18 Nov 2026 15:41:14 +0100
+Message-ID: <20261118150148.952825277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,72 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit d498b2ddda99eed28cde177b1620dbcea246a1c4 ]
+[ Upstream commit 51ff9ffa18758c465a1a67ca36a78c2a8a5f3b2e ]
 
-The blktrans request callbacks run under dev->lock and may allocate
-memory with GFP_KERNEL. For example, mtdblock_writesect() uses vmalloc()
-to allocate its eraseblock cache. Direct reclaim can then recurse into
-block I/O and deadlock on resources held by the request being processed.
-syzbot reports a circular locking dependency involving the device mutex
-and fs_reclaim.
+According to the documentation, the offset GCC_CPUSS_GNOC_CBCR is 0x48004.
+Drop the extra zero, otherwise we land outside of regmap range.
 
-Commit d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC") removed PF_MEMALLOC
-from the MTD request thread. That flag had prevented direct reclaim,
-so its removal made allocations during request processing eligible for
-reclaim without excluding I/O.
-
-Wrap request processing in mtd_queue_rq() in a NOIO scope. This covers
-both the request and background callbacks, including allocations made
-by lower MTD drivers, and prevents reclaim from initiating filesystem
-or block I/O.
-
-Fixes: d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC")
-Assisted-by: Codex:gpt-6-astra
-Reported-by: syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e08e0a15269eefa87790
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 39d6dcf67fe9 ("clk: qcom: gcc: Add support for QCS615 GCC clocks")
+Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260924-clk-qcom-gcc-qcs615-fix-cpuss-gnoc-offset-v2-1-67275f94aaec@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtd_blkdevs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/qcom/gcc-qcs615.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
-index 28e09d0804405..245c19cb22590 100644
---- a/drivers/mtd/mtd_blkdevs.c
-+++ b/drivers/mtd/mtd_blkdevs.c
-@@ -18,6 +18,7 @@
- #include <linux/spinlock.h>
- #include <linux/hdreg.h>
- #include <linux/mutex.h>
-+#include <linux/sched/mm.h>
- #include <linux/uaccess.h>
+diff --git a/drivers/clk/qcom/gcc-qcs615.c b/drivers/clk/qcom/gcc-qcs615.c
+index 5b3b8dd4f114b..0f3c326e4769c 100644
+--- a/drivers/clk/qcom/gcc-qcs615.c
++++ b/drivers/clk/qcom/gcc-qcs615.c
+@@ -3000,7 +3000,7 @@ static int gcc_qcs615_probe(struct platform_device *pdev)
+ 	qcom_branch_set_clk_en(regmap, 0x71004); /* GCC_GPU_CFG_AHB_CLK */
+ 	qcom_branch_set_clk_en(regmap, 0xb004); /* GCC_VIDEO_AHB_CLK */
+ 	qcom_branch_set_clk_en(regmap, 0xb040); /* GCC_VIDEO_XO_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x480040); /* GCC_CPUSS_GNOC_CLK */
++	qcom_branch_set_clk_en(regmap, 0x48004); /* GCC_CPUSS_GNOC_CLK */
  
- #include "mtdcore.h"
-@@ -167,6 +168,7 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
- 				 const struct blk_mq_queue_data *bd)
- {
- 	struct mtd_blktrans_dev *dev;
-+	unsigned int noio_flags;
- 
- 	dev = hctx->queue->queuedata;
- 	if (!dev) {
-@@ -174,10 +176,13 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
- 		return BLK_STS_IOERR;
- 	}
- 
-+	/* Reclaim must not recurse into I/O while processing requests. */
-+	noio_flags = memalloc_noio_save();
- 	spin_lock_irq(&dev->queue_lock);
- 	list_add_tail(&bd->rq->queuelist, &dev->rq_list);
- 	mtd_blktrans_work(dev);
- 	spin_unlock_irq(&dev->queue_lock);
-+	memalloc_noio_restore(noio_flags);
- 
- 	return BLK_STS_OK;
- }
+ 	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+ 				       ARRAY_SIZE(gcc_dfs_clocks));
 -- 
 2.53.0
 
