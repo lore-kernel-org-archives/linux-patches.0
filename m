@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026618;
-	b=sS38jLPiFWvSOuBco9mmGpNlECeSm1Ir8SG3DKERjXFiMQfBN8dluXsa2twfe8HYGfpk
-	 joGsBJoXks5FmcwxVZXdzFTcCel/2c6p0oresdkkXMoqAzkkYLQfsa2fR5tjb3KIIZb/p
-	 AC8nBk3ijxfMsCxDIamZ/8xA7/gYRH98R0evwMktJCDxnJx58nsTzSwCcyDe5CLQzhs2t
-	 khsd/y6rZRInb/dKty7q5v9b/Lf+inznrzRrRiPzJy465JTHJ2we+4HDoQUYUlmKY/fKT
-	 /VYL9ZnSlP89kmBn3zyWkQ7iEWDNJcOFryjW26Bcz0VLc+M40s1LVylCDgMxqgwBrqA==
+	t=1795026621;
+	b=mXnktVhZJgx+XD6zJgoLFFyTGyP/1jK0aB6yDb+s9XLRNq1+coRJ93SYR074+HP408mH
+	 JPnwgfT9DtL0dAyd0N8BzKhdZPukZWNVm/Lm0GPAC55hV2OjDlgZ2U0v0suEMmYxiF5qC
+	 BXlC58wI4nKQSfYLaQpKMtnpOPT28i8DKnM6rtHXI1UNdTBzX2HFiPYEfyLPdsff+5k3X
+	 4a/j+YYcFJ8j50YDIOgzhL7mOrGdHeZAHQWff89m5QQdzMNzE7zqHihDAIOr53eDuvctz
+	 qNfgicp1AKBdi/JO0S+IE7hQMZE360eeJJACC3t6n2SJsRqXkrhqoJicx9mxPMq6Tzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZJa41AFR1bLLC+HVTb8t3Rt1Y2EPFwljVi2t3RTvYOw=;
-	b=3PDhuOF/7/R1/SbCUxDsvgiAB7UGLnTsweUi5DsIIX3Dh0TpTZCZ9Pu8Pr8ZQggk6YX6
-	 pefeSsnlsYlNr9OLRvlJp8burmu/BsNlQ1ai6J2DKvggQw8Gl3uoLrvC0E6jvrTTrsm7C
-	 egrpCdlOHTdvGCprofZXJ3f7pqfRSKXNhc/mvIWH6creTeetFqcDRqhixyfef/NQGsCw+
-	 JnGyJ92tfroUIGacn2jMnhFaPC8p4Jz9mhMAXckAdhvAHTWbUZIymIL50MmCS83nJqMtx
-	 d0Ifp+FenEalueNAfiFGNRYiGeuvyh/aN6uQl9ZGUtd8lJm8wYs2aqFc+YIRkUZs0pw==
+	bh=FW9PjcXwUXk8O2e59u4HA4IKd+W1NiWLq1xwt5m49Og=;
+	b=ZtlZ/j0mF6lUKEbNUor24BWL1BIEnBqsucmGbeH5Y1/+qoOEVm8uE6CwAfSqUOwB8POd
+	 NAYUuhDHszQ8kc2CwjnU1h2mwqNN4HaXhSesw7X9chgChdai+WWNO/H6jp7JFKRepJsuV
+	 OErGzz+m+In9Zl59NZAwpm9yiiVDJQj+n74JgeXJtP5azNaANi03RMA+et5Oqs23xotYP
+	 tBTj0GdFaqaiwvqebvIaqQT/HudRzGu/CGSGd3KOVaqVLUCM5S/6eQ0GRwKhewDBYkcr0
+	 y3e7kkaeFNpNd6txvkdYOBUB0SX9hmLNvd82vjrTcC56lg5MADYQrLd5YJxo82L0DwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tU5I9Lvu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxYzycCO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EF4606A32A;
-	Wed, 18 Nov 2026 18:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0EC606A334;
+	Wed, 18 Nov 2026 18:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tU5I9Lvu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7C91F000C4;
-	Wed, 18 Nov 2026 18:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxYzycCO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7BD1F000C4;
+	Wed, 18 Nov 2026 18:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026617;
-	bh=ZJa41AFR1bLLC+HVTb8t3Rt1Y2EPFwljVi2t3RTvYOw=;
+	s=korg; t=1795026620;
+	bh=FW9PjcXwUXk8O2e59u4HA4IKd+W1NiWLq1xwt5m49Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tU5I9LvuCLQX5p4OpVHLu94hk+J6KHeODeCoVwqCWjhFYqAffS6RYNJvnMPgSI34b
-	 4l8LcKoCAumrCdqbfZTdHX8DvK3MlTYFKUxa4GCKwkMjG4mJywx2SDav+UDDfkusG8
-	 i07ipuvajUg0CCjc5oINs5OtmmAZtyO0xz7HaLgw=
+	b=UxYzycCORHh0i1lzqymVsgDXXfbZimgX0FL1DG8iNAb1FwONbEkhRqnvnL6Wj8Cq1
+	 8ZU4s9xZilkSzjRYCZYtzuxGZ9sUIC2HvLlAGRD9UHIvUkZf+ZFFRx73RgMgJTxizl
+	 fC8We/pVkvvMVvVsUzapAiZvY+VLD2nB6okFiYaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1498/2151] platform/x86: hp-bioscfg: fix off-by-one in password length check
-Date: Wed, 18 Nov 2026 15:53:53 +0100
-Message-ID: <20261118150216.441620644@linuxfoundation.org>
+Subject: [PATCH 6.18 1499/2151] platform/x86: hp-bioscfg: validate SPM state returned by firmware
+Date: Wed, 18 Nov 2026 15:53:54 +0100
+Message-ID: <20261118150216.478697051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,46 +71,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 0c22178524864af85ea380be4b2d36078c0edc9c ]
+[ Upstream commit 35fb43f1576e1352077afc33a535007e0568480c ]
 
-current_password and new_password hold MAX_PASSWD_SIZE bytes including
-the NUL, but validate_password_input() accepts a password of exactly
-MAX_PASSWD_SIZE characters when the firmware limits allow it.
-strscpy() then truncates it and fails with -E2BIG, which
-store_password_instance() ignores, so the write reports success with a
-truncated password stored.
+status_show() indexes the 3-entry spm_state_types[] with the state byte
+returned by firmware. update_spm_state() stores the same byte, which
+key_mechanism_show() uses to index the 3-entry spm_mechanism_types[].
+Neither is range checked, so a state above 2 makes the world-readable
+status and key_mechanism files print a string from a pointer read past
+the array.
 
-For example, with a max_password_length of 64 or more, writing 64
-characters succeeds but only 63 are stored.
-
-Reject lengths of MAX_PASSWD_SIZE or more.
+Return -EIO for an out of range state.
 
 Compile tested only.
 
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-6-meatuni001@gmail.com
+Link: https://patch.msgid.link/20261007134711.473857-8-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 97990191b71f3..938e70e806445 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -74,7 +74,7 @@ static int validate_password_input(int instance_id, const char *buf,
- 	if (is_current && !length)
- 		return 0;
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+index 040964ed50ced..343b2356943e3 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+@@ -6,6 +6,7 @@
+  * Copyright (c) 2022 HP Development Company, L.P.
+  */
  
--	if (length > MAX_PASSWD_SIZE)
-+	if (length >= MAX_PASSWD_SIZE)
- 		return -E2BIG;
++#include <linux/array_size.h>
+ #include "bioscfg.h"
  
- 	if (password_data->min_password_length > length ||
+ static const char * const spm_state_types[] = {
+@@ -115,6 +116,9 @@ static ssize_t update_spm_state(void)
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (data.state >= ARRAY_SIZE(spm_mechanism_types))
++		return -EIO;
++
+ 	bioscfg_drv.spm_data.mechanism = data.state;
+ 	if (bioscfg_drv.spm_data.mechanism)
+ 		bioscfg_drv.spm_data.is_enabled = 1;
+@@ -150,6 +154,9 @@ static ssize_t status_show(struct kobject *kobj, struct kobj_attribute
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (data.state >= ARRAY_SIZE(spm_state_types))
++		return -EIO;
++
+ 	/*
+ 	 * 'status' is a read-only file that returns ASCII text in
+ 	 * JSON format reporting the status information.
 -- 
 2.53.0
 
