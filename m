@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046425;
-	b=mM6ymjYxcbc9dNrAs+oTM2XlnHj2nDCl29S2qixrtmtfeZArO+7LiSaXFVphupmNepNc
-	 +DWg2poQBhTn6QSEkvMwUDiWI/0o2inDTpJBYEii2SHu9hFRLBorQBuPqnQb1zaeD2wKA
-	 Erm/IePXIe0I3ofP1NLIerlvf2oP9k8/p4lcTF4JPo4rRwjD+7IK6GMH4i+1fv37kV3jx
-	 PTesrpES8bldlcZAPGdooqvNL3Np0XtoCk4XRdtaERn362CJjnMy9o6T0ztwXUXNBMBGe
-	 TFDCoXBkE0kYGpYvdrHYXtesp7OwuglxjhzircrUL4LUckb8lIi90C9b4K8ieiPO8uw==
+	t=1795046428;
+	b=cGAgXyeYIKANUmNxd7OWGOCRSF7FFcxGPlTgjOQkqUM7aImBKWu4vHbpRQwjfxVtqaQx
+	 GULntV1xaiqU1oCqniQcSmWlmSbCxtZ9SoV/XgVT7pRDWIyY4JejyjGsBzIJvfHy26qF4
+	 oYkOJMvRQdYqzkiAGTqYptZ5xm/GNCVnmVH8ua6mS6Hh0iZRF49mVJRE+WmN3RCKwg4fr
+	 ghB2nnzivzaJnWaB0Fzh2iuiqLpQDCXL571RivX5zuKCQnDMH9QmzUc6NcY61fw32VrJk
+	 nbTiDGxtry4A800kAPGUvm+lxgYClxeZQLzf2gdNRtv0Vr/MxZec50DeGQ9QehZ7KeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aFlRapwqbhwora3EcamfvtNzyLrLAGK65ldnYLffBak=;
-	b=mVqSpcbFCe5VGrp+FFIhnXqmuo5XWO19cIPE25oCgyieYtdE3bIS0ye4cW78ZABcESYc
-	 O63KFeLaYYg4NqTq9OP11DC9ZiCw6mK8uy8kE8V7yOnRMQwYqpZe+0Vz6M0oOUK1Gd653
-	 BDpUHnqV2nX56IJcHyM0N9nS5ku+kTzi6yfJAYwX81/tS7fGiotwQqnVNCb2k9pFj1fpO
-	 Z8Uk8BOzY39PccJ78D269kZWUksqCNTbmYcwoaPiyvO6Kn8MqFb6Hb+6q8M96KMVhlN+t
-	 B8Vl7SbtuN9JyA5KB7ePUYakaOBVDc5x12DIlHojCZ6N1lYa1pOochiESZu1dLVcjtw==
+	bh=PzsyQpGBlYH/a979YoaqJs7bSK95Uzc2qSZB2gBw5+E=;
+	b=HQnSh1b+azcw3N1e0Kr6AJR5ShKEC0d10pJXmxC8uGeI48VG5kIvLAlkSdkQGkmNu9Eu
+	 sRQMMluJMZsrQtJgfFCDztHA97uOo7Q7iuZYOe/HRxA7/lquUPhVr9IuUv9aKWXsJE6wH
+	 GDYYRdKf7y62x/HALTPDK1taCHZlAwi78NBHv7Pwoif1X8XAU91BC6kiZyv3HplXJLsso
+	 d7TIcLo0fwrvMwlOLMBBci4rURlgqVOAE6MJIs+ug7cqE8lMwS4drwVbBWNctk5CMLZRf
+	 2/KpQtOUmzs2wOnOli2JZOqbVlzRwWdwpOG9sLvFXMATQjVPi0od+t0CH9btaq2pb7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uv394879;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RF2AlqFB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB82606A31C;
-	Thu, 19 Nov 2026 00:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10066606A325;
+	Thu, 19 Nov 2026 00:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uv394879
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB811F000C7;
-	Thu, 19 Nov 2026 00:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RF2AlqFB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B941F000C4;
+	Thu, 19 Nov 2026 00:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046425;
-	bh=aFlRapwqbhwora3EcamfvtNzyLrLAGK65ldnYLffBak=;
+	s=korg; t=1795046427;
+	bh=PzsyQpGBlYH/a979YoaqJs7bSK95Uzc2qSZB2gBw5+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uv394879FTWVlItvvF9JcsM5w9rrMOfNpTkeDo9xU1FLdIeZa5H8tWX8IsGqea36k
-	 jHFmgJ+jJpDc0/fMrjmQFsLip1JgbRxwTDUivDbZMA+m6YyoNEkbHZy/oMuqE3Rbu8
-	 cghZbboM4YW1Qo9yx8r7BV2CK3hE9epvHBIvbrno=
+	b=RF2AlqFBb9PSgOhRDPzdaDBTqdwn272u8h/O4B638g8k2DQegWZkiMnKz1d5sJsO5
+	 /uv4o62zXNIuMcmeAD+i96zso2gmdX0oINnRgJyOSHj7pypys64k3k7+3CPgwUsslQ
+	 TH+u3s1tF3sq6iGcSijUV9umRSjKujrY+1TYwXms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Oren Yomtov <thenameisoren@gmail.com>,
-	Chris Mason <mason@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1249/2857] KVM: x86: Unconditionally reset MMU context when emulating INIT
-Date: Wed, 18 Nov 2026 15:38:03 +0100
-Message-ID: <20261118150246.526046989@linuxfoundation.org>
+Subject: [PATCH 6.1 1276/2857] xfs: fix recovery of partial attr removals
+Date: Wed, 18 Nov 2026 15:38:30 +0100
+Message-ID: <20261118150247.457904740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,86 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c7c288d178cb0b78d3464a616b16b1aa0b316049 ]
+[ Upstream commit 30bb61651d2da5a502cf504bcdad16c093c1bb08 ]
 
-Force an MMU reset when emulating an INIT even if paging was already
-disabled, as the MMU page role includes guest_mode (L2), i.e. an INIT while
-L2 is running with CR0.PG=0 will result in KVM running L1 with a stale MMU
-context.
+When running xfs/753 on parent pointer-enabled file systems with DEBUG
+enabled, log recovery will eventually crash after a few dozen iterations
+due to an ASSERT that XFS_ATTR_INCOMPLETE is not already set when
+xfs_attr3_leaf_setflag is called:
 
-Alternatively, the reset could be scoped strictly to paging being enabled
-or L2 being active, but SMM is also encoded in the page role.  Even though
-it _should_ be impossible for the vCPU to be INIT'd while SMM is active,
-there's zero value in not handling SMM.  At that point, the only scenario
-where KVM _doesn't_ need to reset the MMU context is on an INIT with the
-vCPU running in Real Mode or Unpaged Protect Mode, and while INIT in those
-modes is somewhat common, it's far from a hot path and re-initializing the
-MMU is not expensive, especially when the role isn't changing (KVM elides
-most of the re-configuration in that case).
+XFS: Assertion failed: (entry->flags & XFS_ATTR_INCOMPLETE) == 0, file: fs/xfs/libxfs/xfs_attr_leaf.c, line: 3045
 
-Note, like the Fixes commit, this bug only affects nested SVM as INIT is an
-unconditional intercept on VMX, i.e. it's impossible to emulate INIT while
-L2 is active.
+This is because parent pointer use logged attributes, and the attribute
+intents do not track the work that has been done as the transaction
+rolls, and the recovery mechanism is to run the operation from scratch.
+Because of this various places check for XFS_DA_OP_RECOVERY skip work
+already done.  But while recovery tolerates an attribute already fully
+removed, it currently trips the above assert for an attribute that
+already has the INCOMPLETE bit set, but still exists.  Fix this by
+handling the case like all the others.
 
-Temporarily keep the guest TLB flush when CR0.PG is being cleared even
-though it is fully redundant with the flush that is emitted on all INIT
-events (KVM itself only does RESET when a vCPU is being created, i.e. when
-CR0.PG must be '0').
-
-Fixes: ed129ec9057f ("KVM: x86: forcibly leave nested mode on vCPU reset")
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reported-by: Oren Yomtov <thenameisoren@gmail.com>
-Reported-by: Chris Mason <mason@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261022015407.279870-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 1d08e11d04d2 ("xfs: Implement attr logging and replay")
+Cc: stable@vger.kernel.org # v5.19
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ fs/xfs/libxfs/xfs_attr_leaf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index d9f8f2ce4ed25..f24de94fb9a33 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -12307,18 +12307,23 @@ void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event)
- 	static_call(kvm_x86_set_efer)(vcpu, 0);
- 	static_call(kvm_x86_update_exception_bitmap)(vcpu);
+diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c
+index bdf4fe0146b7b..344e166cbf7ca 100644
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -2931,7 +2931,14 @@ xfs_attr3_leaf_setflag(
+ #endif
+ 	entry = &xfs_attr3_leaf_entryp(leaf)[args->index];
  
-+	if (old_cr0 & X86_CR0_PG)
-+		kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
+-	ASSERT((entry->flags & XFS_ATTR_INCOMPLETE) == 0);
++	if (entry->flags & XFS_ATTR_INCOMPLETE) {
++		if (!(args->op_flags & XFS_DA_OP_RECOVERY)) {
++			ASSERT(args->op_flags & XFS_DA_OP_RECOVERY);
++			return -EFSCORRUPTED;
++		}
++		return 0;
++	}
 +
- 	/*
--	 * On the standard CR0/CR4/EFER modification paths, there are several
--	 * complex conditions determining whether the MMU has to be reset and/or
--	 * which PCIDs have to be flushed.  However, CR0.WP and the paging-related
--	 * bits in CR4 and EFER are irrelevant if CR0.PG was '0'; and a reset+flush
--	 * is needed anyway if CR0.PG was '1' (which can only happen for INIT, as
--	 * CR0 will be '0' prior to RESET).  So we only need to check CR0.PG here.
-+	 * Unconditionally reset the MMU, even though super strictly speaking,
-+	 * a MMU reset is only necessary if and only one of the page role bits
-+	 * is changing.  All of the CR0/CR4/EFER bits effectively get covered
-+	 * by checking CR0.PG=1, as CR0.WP and the paging-related bits in CR4
-+	 * and EFER are irrelevant if CR0.PG was '0'.  Subtly, if the vCPU was
-+	 * in guest mode (L2) or SMM (although emulating INIT in SMM _should_
-+	 * be impossible), an MMU reset is also necessary as "guest mode" and
-+	 * "smm" are both encoded in the shadow page role.  As a result, the
-+	 * only scenarios where an MMU reset is *not* needed is if the vCPU is
-+	 * in Real Mode or Unpaged Protected Mode, and micro-optimizing those
-+	 * paths are not worth the risk of running with a stale MMU context.
- 	 */
--	if (old_cr0 & X86_CR0_PG) {
--		kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
--		kvm_mmu_reset_context(vcpu);
--	}
-+	kvm_mmu_reset_context(vcpu);
- 
- 	/*
- 	 * Intel's SDM states that all TLB entries are flushed on INIT.  AMD's
+ 	entry->flags |= XFS_ATTR_INCOMPLETE;
+ 	xfs_trans_log_buf(args->trans, bp,
+ 			XFS_DA_LOGRANGE(leaf, entry, sizeof(*entry)));
 -- 
 2.53.0
 
