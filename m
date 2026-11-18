@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045364;
-	b=OzixdINfuXezgrhayFppnCrMa9zNba4/tr7UfU//dWRU/eGSS5nUYK1qgNHU//RoMd5T
-	 4VoNPxSPwAiCk1ecQtA8R4/CuxqC8323Xzh413oP/ydjE8v1meZYXOUqMw/rofRTy+fLv
-	 F6nbhKluhP4fZVTh1LfVvC/8P7Mdar7dQtB6Dm2n1FqoofJU39qdexzxcLQ9VkrHAZi27
-	 o3BOlqHzw1IrkZLy+JWGOECu4QGszK9vScRTUO/vfiUelauNQw8sRgnQeirVD+1CX8yYR
-	 IdJS+itb22xhlWOiYQeOWR82984tY7dYz7Ra6Ibgb+8RjR0Uj5KzsLlzBJKycSAzKwQ==
+	t=1795045367;
+	b=LZe4ocq9ID4ERTekVqJlJW92DAHrcwjkAuFMCruILFxeJnOaXbYbk3KJxS39XRy0T9MS
+	 8hnw1PhY9L8FDTWkCU6+qvOvc5H0CJQVEGWgiQPQqUW/5fjjC5aT4gAkbl2w0Pv81Zm1M
+	 lJOEccxSQ2ABNTHaoJ2fXKXsze5xehNqpV3Ena4d0rj/3NrSEZOUPbWzNGPem+wMxgobt
+	 D/MF8CwYyNA6m43wFp3zPZN/YmQZvUHM0+a6BraWB2UIad1jqtOfTPxvfA82tMRIt/3g7
+	 Lqc1FuS23tJB3PXk/qIXNKACQLUobR3Dpiz7DqQy5E7V62n3ALVARDYKVWywl7esntQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045364;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045367;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HKVQFJBSwHyFwtZAawjZz0EIFE3faj4g35HOEzqmvwk=;
-	b=2uUHP5A9eeZlfGxfCQM2q/yt35tg4cBqLpZmGOO15ySAANAV1xckjIPAVG9O3YFxCatV
-	 V9R3uSYItDXUnMlMs832S8YaGLnbydV+HCY2W3r1lHZDXl2XxUkHV2AKwEP5IYfE31QfF
-	 LFuhuYwisnQX2vcG4MnsexX5PXcAUGzZqoXQt7WtczFiYp++MNXrDqOVUX8MxU3F/743Z
-	 /25wIFyzeODzsbVoOphVqICurvvj07SVPMLh8oaL5hRClWupCEdqxHdnIlxURRLrDWgLX
-	 vGJwYKlyeIgIp7ohUueC8wcNmKTsgYUU2chjQGuNFOH3W02xzQWRjGfdjEGTvb/szUA==
+	bh=lWq75u495mog8mUjrRbg04CMuJFzSgobBvrMMb5F+nA=;
+	b=G0ggpAkL5g9z3iRk2sM8/6EnsZc3PHM7eVu5mIYTCSfe2+5/FwpRrbvSdUG+5fK68EZi
+	 5/lARTI2VHAPMjFaztQ+8eyYuhXFEX0mfu+yF4KGywQJM1R67/qX2Lfjg9hmybkCKaJRR
+	 xdfR6fIImPiBS6gclkYKRtyNAXuAg1RzaASrX1Oy0nFbKWksfU2PWDRDO65MSfwmhL54w
+	 vndR53Ff7+M74mCtEGY6dclUpV5roW43Wc+dkxOnm6fODbcq1y0MTtMsgkATvnKoXKDos
+	 oPYwiI8RJ08WpVyoevBy9o2Sdw2g7Q16myiCzGh2sZyxDyEa+nmjFWVdTDqtcQ5FQkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NTKNZ/fD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lko44fu5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7D760A2610;
-	Wed, 18 Nov 2026 23:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4396E60A2619;
+	Wed, 18 Nov 2026 23:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NTKNZ/fD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C1D1F000C4;
-	Wed, 18 Nov 2026 23:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lko44fu5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957BC1F000C4;
+	Wed, 18 Nov 2026 23:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045364;
-	bh=HKVQFJBSwHyFwtZAawjZz0EIFE3faj4g35HOEzqmvwk=;
+	s=korg; t=1795045367;
+	bh=lWq75u495mog8mUjrRbg04CMuJFzSgobBvrMMb5F+nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NTKNZ/fDLICoRCc5qDnF7Lak06RsrVJF5mFkL6ynKAKD+MxUABnFBse2uYu3+LDfU
-	 0fSLfpffsiWjwAMY7w1zpHeIHSHfJ8EZHiOYP5TpcCRu6xU236EwVrgzAXalu9QCUX
-	 I0/vdPpwyI9THJJDl3tl8c5PjEG2rLqUZN8vx+d4=
+	b=lko44fu5sWSLIT5bwpEZANlwsWhJTgviG5FbOT+0p61hPAnXuDjnUoAJMzkWuAL5C
+	 0gdRkZh3bdTf/18KL8yx2J62lCy90g2N1+iJ4U1zsR4zeld+OnaGtPQiRId8UDCtuH
+	 5TzJ5UlOS6CowKy3kVuOSE3LtxURavMxNUrb4h+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	ZW Tang <tangzw515@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0890/2857] ocfs2: skip uninitialized lockres in ocfs2_mark_lockres_freeing()
-Date: Wed, 18 Nov 2026 15:32:04 +0100
-Message-ID: <20261118150233.600081344@linuxfoundation.org>
+Subject: [PATCH 6.1 0899/2857] aoe: pull in the headers each received packet type reads
+Date: Wed, 18 Nov 2026 15:32:13 +0100
+Message-ID: <20261118150233.930854464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -75,60 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 6a3ed6b290513859bd27d9fcb67739347d6315fa ]
+[ Upstream commit e1274a6bc40a4618f6fbaebbdc51cca865d51bed ]
 
-A hard readonly mount skips ocfs2_dlm_init(), so the per-osb lock
-resources are never initialized and osb->cconn stays NULL.  Before commit
-550842cc60987 ("ocfs2: fix freeing uninitialized resource on
-ocfs2_dlm_shutdown") ocfs2_dismount_volume() only called
-ocfs2_dlm_shutdown() when osb->cconn was set.  It now calls it
-unconditionally, so unmounting a hard readonly mount drops the osb locks
-and takes the never initialized l_lock in ocfs2_mark_lockres_freeing().
-With lockdep enabled this triggers:
+aoenet_rcv() only pulls the AoE and ATA headers into the skb head when
+the packet is long enough to hold both.  A shorter packet goes through
+unpulled, and aoenet_rcv() reads the AoE header from it anyway.  CFG
+responses go on to aoecmd_cfg_rsp(), which reads the config header
+after it, and ATA responses get queued for ktiocomplete(), which
+skb_pull()s both headers.  Ethernet pads frames to 60 bytes, so this
+mostly takes a virtual link, but nothing stops a short frame from
+getting here.
 
-INFO: trying to register non-static key.  The code is fine but needs
-lockdep annotation, or maybe you didn't initialize this object before use?
-turning off the locking correctness validator.
+Pull the AoE header up front and drop the packet if it isn't there,
+then pull the ATA or config header in the switch arm that hands the
+packet on, so each path gets the headers it reads.  This also replaces
+the open-coded __pskb_pull_tail() with pskb_may_pull().
 
-ocfs2_drop_lock() and ocfs2_lock_res_free() already skip lock resources
-without OCFS2_LOCK_INITIALIZED.  Add the same check to
-ocfs2_mark_lockres_freeing(), which is reachable before them through
-ocfs2_simple_drop_lockres(), so an uninitialized lockres is never touched.
-
-Link: https://lore.kernel.org/20260903104744.2164235-1-joseph.qi@linux.alibaba.com
-Fixes: 550842cc6098 ("ocfs2: fix freeing uninitialized resource on ocfs2_dlm_shutdown")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: ZW Tang <tangzw515@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261007-b4-aoe-short-packets-v1-1-db5155f7bb9c@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/block/aoe/aoenet.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 8e2c43824fb82..a91fdc7a638f8 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3529,6 +3529,10 @@ void ocfs2_mark_lockres_freeing(struct ocfs2_super *osb,
- 	struct ocfs2_mask_waiter mw;
- 	unsigned long flags, flags2;
+diff --git a/drivers/block/aoe/aoenet.c b/drivers/block/aoe/aoenet.c
+index 1e66c7a188a12..03bc1ca3ad472 100644
+--- a/drivers/block/aoe/aoenet.c
++++ b/drivers/block/aoe/aoenet.c
+@@ -132,9 +132,7 @@ static int
+ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt, struct net_device *orig_dev)
+ {
+ 	struct aoe_hdr *h;
+-	struct aoe_atahdr *ah;
+ 	u32 n;
+-	int sn;
  
-+	/* We didn't get anywhere near actually using this lockres. */
-+	if (!(lockres->l_flags & OCFS2_LOCK_INITIALIZED))
-+		return;
-+
- 	ocfs2_init_mask_waiter(&mw);
+ 	if (dev_net(ifp) != &init_net)
+ 		goto exit;
+@@ -145,12 +143,8 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
+ 	if (!is_aoe_netif(ifp))
+ 		goto exit;
+ 	skb_push(skb, ETH_HLEN);	/* (1) */
+-	sn = sizeof(*h) + sizeof(*ah);
+-	if (skb->len >= sn) {
+-		sn -= skb_headlen(skb);
+-		if (sn > 0 && !__pskb_pull_tail(skb, sn))
+-			goto exit;
+-	}
++	if (!pskb_may_pull(skb, sizeof(*h)))
++		goto exit;
+ 	h = (struct aoe_hdr *) skb->data;
+ 	n = get_unaligned_be32(&h->tag);
+ 	if ((h->verfl & AOEFL_RSP) == 0 || (n & 1<<31))
+@@ -172,10 +166,14 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
  
- 	spin_lock_irqsave(&lockres->l_lock, flags);
+ 	switch (h->cmd) {
+ 	case AOECMD_ATA:
++		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_atahdr)))
++			goto exit;
+ 		/* ata_rsp may keep skb for later processing or give it back */
+ 		skb = aoecmd_ata_rsp(skb);
+ 		break;
+ 	case AOECMD_CFG:
++		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_cfghdr)))
++			goto exit;
+ 		aoecmd_cfg_rsp(skb);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
