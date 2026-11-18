@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057228;
-	b=3O1OEEVV4FliGR3ozmz9JWw86KzTTA1iWydNq9ayy4pqStGTmEvqD21/MqeJgHi3amzs
-	 IxiQSKtanEz+e90mQD/xWd/o2p4u1xFC8660L8NF1aoX0kAyhVZ8dDjXQEJ70mFgBL6pw
-	 s+OzYTAkOZ0SqQG6K+wrQSqXZxMLwZE2GVXJ9H8cOZMtuAfen3NcqaU0tvjVX9/G6J4HG
-	 n0zYynVCemQNS1roP0I2VUwCOuv02HtIbLPROzNHZtcGX8BXI/SgwRoGpwDas9yJjye4K
-	 UE7yMt/dfIcE4PHCZpsq/REzVU+ZueC/doAljTsLMlo9l96GP78WGvDwCCK5M5Jt3QA==
+	t=1795057231;
+	b=ZO/seVC7V/XaTMsFaFwbRu0R4tLbINGF16BD83kSYfbcLfzxgYVhovso1n1vfrQ+EGle
+	 xR3Cjta5KU+Sil6ocsgmPBWh4p2qoeixQn7mYT6fR4Sk5ICFz64D93n2n4M8qi+zBR81A
+	 C25zXtCHrkNSNNNci/xLQcUS5TqK2FyVZlUEbWk+cRNwxyflVicljhitgC+1uQpw6150r
+	 E3F0XZucKQ6IKZxekV/oHc7mvuAv0r6v1tjNQcOOnnfLrVMIAmO5QQdRtknfGvCY2e/5I
+	 I+mbFZxrKB+47cdIx9JnmaWfliIvdSHcOXeBahCkAn2I4nCl17mtS8sf0T1XM4E0bIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057231;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lTih8wiMDW4lPiGV/rJMxPqesQK6aqYhKsv+vZ5OYpI=;
-	b=tw+b2XiEnybO2Yzh+Z0BbJTy4jWGs0KJS5SVr5WUHzl+cmW+++VPD470wB5OdGb6ZW/M
-	 2DOB0jCWdr6wwaBjLod72oAZqezEUZhW7b86BhC+hLKXzbjgQ8XOhreLNV6qaud0Lb55W
-	 GTAIQNBaGK7+v86TnAQTeRp6z7Fugnj1F+6gYNOojGvXXXnN/Ktj2INF4etE+5jJCv5ZO
-	 GVMNitXdN9Im3UheyqmVeb5QY1LZdtlQ9zcDYC0ZeTel48dYRox+u+ttVq39CI3CW+dd0
-	 8Yo3lZRtpNK+9XKVqv1wsg1mgZOFeLpbqVeeVJe5BTz0hIA3NeEvKqHFl4a3v3RhIEw==
+	bh=viJWSIsTQXzbkXudjVZNWq1aiREBmMejYgNl/XadOvY=;
+	b=vWxTi7QkyQVpYKndVCuDonhFbYU24IwAgwYLjHrqWYK8hvY+x8x8BnCusgLnB7NV13sR
+	 JWxntDL+//hFTlBqUIQyePnlYTVhYRs95lH47WLcqMUAfkwjj39UutvzQttuJdOrw39Wl
+	 hTQx5Mi0BObFC+bzpXGCCYCiAZFavXtO3vg8iOGvbP7JeCvSYPyEnMgkPUw6rKcHOzKwr
+	 RmbdRPCru7MhvGn3zQF7hLTvb7E3NhzZrAvhs83cAQRMeYl9pTvtwtIrmdL2B97+EOqqX
+	 qnX7bQrfJEZJ6cUACflsZD/d2eAk1fmA5B6DQATqaNc29l6zKf2XJDysBxqTOso7/FA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTfTqBMN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOdMz2AD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A209E606A335;
-	Thu, 19 Nov 2026 03:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E0F606A31C;
+	Thu, 19 Nov 2026 03:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTfTqBMN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D15B1F000C4;
-	Thu, 19 Nov 2026 03:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOdMz2AD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39BD1F000C5;
+	Thu, 19 Nov 2026 03:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057228;
-	bh=lTih8wiMDW4lPiGV/rJMxPqesQK6aqYhKsv+vZ5OYpI=;
+	s=korg; t=1795057231;
+	bh=viJWSIsTQXzbkXudjVZNWq1aiREBmMejYgNl/XadOvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTfTqBMNaA4xmdWnQeIdWemMybg3+/iBIXh0deHrczfGP+LV1zpZAIdEOWf9YWQHD
-	 jG9k+yS0sGdglu5S6MeORZA+lyXIuyHM4KS2XJEPYqx73J8TZg0wP8+E9PPrMMEUNG
-	 EzXIHxveOhe4kDnL4KvqxB/myMHe11L8Y4MPhyTk=
+	b=WOdMz2ADSe321xL8ps3bcQhujgNsZmOtPgbQrg8oRAUYV/mn3oX1oudZwjcZLOiIW
+	 MsOiEKAR8h3eKODuef+fMicLE2Idu6UOwwSnSQDjoYaQU/aFal/iJjjj6irhXyMoxM
+	 IkIMosdP41kXKa7ij7b51MZC3u2Th23lJVi7QE10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Kijo Park <red993688@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	William Hansen-Baird <william.hansen.baird@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0004/1848] exec: Cleanup POSIX timers right after de_thread()
-Date: Wed, 18 Nov 2026 15:34:02 +0100
-Message-ID: <20261118145911.427021055@linuxfoundation.org>
+Subject: [PATCH 5.10 0050/1848] wifi: rtlwifi: fix disabling of ASPM for RTL8723BE with AER flooding
+Date: Wed, 18 Nov 2026 15:34:48 +0100
+Message-ID: <20261118145913.179928405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,132 +68,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-commit acb03d3881818581052924a9bbbe92b8741ed448 upstream.
+[ Upstream commit 04a46c2dbf3b516c96a1d19b72917b56055ad6c1 ]
 
-A per-thread CPU timer holds a reference to the PID of the thread it is
-attached to and, while it is armed, its node is queued in that thread's
-posix_cputimers. The task is looked up by that PID.
+commit 77a6407c6ab2 ("wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723")
+adds code which sets ppsc->support_aspm to false in
+_rtl_pci_update_default_setting() in order to disable ASPM.
+This does not, however, disable ASPM. Rather, it disables driver
+control of ASPM, and blocks calls to rtl_pci_enable_aspm()
+and rtl_pci_disable_aspm().
 
-When a non-leader thread exec()s, de_thread() changes which task owns
-that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
-but the node is still queued on tsk, which is alive. timer_lock_sighand()
-takes a failed lookup to mean that the node is already dequeued, so it
-has nothing to undo.
+In some cases, the pci device supplied to the probe function has
+ASPM enabled. The code would therefore not disable ASPM, as it means to,
+but rather just leave it enabled.
+This was discovered through testing on a Razer Blade 14 2017.
 
-begin_new_exec() calls posix_cpu_timers_exit(me) right after
-exec_task_namespaces() and that removes the leftover node, so the state
-normally stays invisible. But bprm->point_of_no_return is set before
-de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
-exec_task_namespaces() fails, the task dies before it gets there.
-exit_itimers() then frees the k_itimer while its node is still queued,
-and reaping tsk later erases that freed node from the rbtree.
+Implement a new __rtl_pci_disable_aspm(hw) function which does not check
+ppsc->support_aspm before disabling and call it from
+rtl_pci_disable_aspm().
 
-In short:
+Then move the code added in the previous commit to rtl_pci_init_aspm() to
+allow adding a call to __rtl_pci_disable_aspm(hw).
+This makes sure ASPM is disabled while still disabling
+driver control of ASPM to block it from being enabled later.
 
-      the non-leader thread B           the parent
-
-  timer_create(CLOCK_THREAD_CPUTIME_ID)
-  timer_settime()
-    arm_timer()            // the node is queued on B
-  execve()
-    de_thread(B)
-      exchange_tids(B, leader)  // B's PID now belongs to the leader
-      release_task(leader)
-        __exit_signal(leader)
-          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
-          __unhash_process(leader)  // that PID has no task anymore
-    exec_mmap()
-      mmap_read_lock_killable(old_mm)
-                                kill(B, SIGKILL)
-      // -EINTR
-  get_signal()
-    do_exit()
-      exit_itimers()
-        posix_timer_delete()
-          posix_cpu_timer_del()
-        posix_timer_unhash_and_free()  // freed while still queued
-                                wait4()
-                                  release_task(B)
-                                    posix_cpu_timers_exit(B)
-                                      cleanup_timerqueue()
-                                        timerqueue_del()  // use-after-free
-
-Move the POSIX timer cleanup right after de_thread() before any of the
-later failure conditions brings the task into do_exit().
-
-[ tglx: Move the cleanup right after de_thread() ]
-
-Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Kijo Park <red993688@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
-Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
-[Lee: Context conflict only - no functional change]
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260630141553.785769-2-william.hansen.baird@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 39 ++++++++++++++--------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index a2f72a503b7ae..5980f577026d5 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1234,6 +1234,17 @@ void __set_task_comm(struct task_struct *tsk, const char *buf, bool exec)
- 	perf_event_comm(tsk, exec);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 9272ac0095261..bbcf69452d0e9 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -156,15 +156,6 @@ static void _rtl_pci_update_default_setting(struct ieee80211_hw *hw)
+ 	    init_aspm == 0x43)
+ 		ppsc->support_aspm = false;
+ 
+-	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
+-	 * X555UQ with subsystem ID 11ad:1723 are known to output large
+-	 * amounts of PCIe AER errors during and after boot up, causing
+-	 * heavy lags, poor network throughput, and occasional lock-ups.
+-	 */
+-	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
+-	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
+-	     rtlpci->pdev->subsystem_device == 0x1723))
+-		ppsc->support_aspm = false;
  }
  
-+static void posixtimer_exec(struct task_struct *me)
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
+@@ -203,7 +194,7 @@ static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ }
+ 
+ /*Disable RTL8192SE ASPM & Disable Pci Bridge ASPM*/
+-static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++static void __rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
+@@ -215,9 +206,6 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	u16 aspmlevel = 0;
+ 	u8 tmp_u1b = 0;
+ 
+-	if (!ppsc->support_aspm)
+-		return;
+-
+ 	if (pcibridge_vendor == PCI_BRIDGE_VENDOR_UNKNOWN) {
+ 		rtl_dbg(rtlpriv, COMP_POWER, DBG_TRACE,
+ 			"PCI(Bridge) UNKNOWN\n");
+@@ -240,6 +228,16 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	_rtl_pci_platform_switch_device_pci_aspm(hw, linkctrl_reg);
+ }
+ 
++static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
 +{
-+#ifdef CONFIG_POSIX_TIMERS
-+	spin_lock_irq(&me->sighand->siglock);
-+	posix_cpu_timers_exit(me);
-+	spin_unlock_irq(&me->sighand->siglock);
-+	exit_itimers(me);
-+	flush_itimer_signals();
-+#endif
++	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++
++	if (!ppsc->support_aspm)
++		return;
++
++	__rtl_pci_disable_aspm(hw);
 +}
 +
- /*
-  * Calling this is the point of no return. None of the failures will be
-  * seen by userspace since either the process is already taking a fatal
-@@ -1262,6 +1273,15 @@ int begin_new_exec(struct linux_binprm * bprm)
- 	if (retval)
- 		goto out;
+ /*Enable RTL8192SE ASPM & Enable Pci Bridge ASPM for
+  *power saving We should follow the sequence to enable
+  *RTL8192SE first then enable Pci Bridge ASPM
+@@ -331,10 +329,25 @@ static void rtl_pci_parse_configuration(struct pci_dev *pdev,
+ 
+ static void rtl_pci_init_aspm(struct ieee80211_hw *hw)
+ {
++	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 
+ 	_rtl_pci_update_default_setting(hw);
  
 +	/*
-+	 * This must be done here to ensure that POSIX CPU timers which were
-+	 * armed on the current task are dequeued from me::posix_cputimers.
-+	 * Otherwise in case of a TID switch the deletion of the related POSIX
-+	 * timer would not remove an enqueued timer because the TID lookup
-+	 * of the old TID fails.
++	 * RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
 +	 */
-+	posixtimer_exec(me);
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723)) {
++		__rtl_pci_disable_aspm(hw);
++		ppsc->support_aspm = false;
++	}
 +
- 	/* Ensure the files table is not shared. */
- 	retval = unshare_files();
- 	if (retval)
-@@ -1303,14 +1323,6 @@ int begin_new_exec(struct linux_binprm * bprm)
- 
- 	bprm->mm = NULL;
- 
--#ifdef CONFIG_POSIX_TIMERS
--	spin_lock_irq(&me->sighand->siglock);
--	posix_cpu_timers_exit(me);
--	spin_unlock_irq(&me->sighand->siglock);
--	exit_itimers(me);
--	flush_itimer_signals();
--#endif
--
- 	/*
- 	 * Make the signal table private.
- 	 */
+ 	if (ppsc->reg_rfps_level & RT_RF_PS_LEVEL_ALWAYS_ASPM) {
+ 		/*Always enable ASPM & Clock Req. */
+ 		rtl_pci_enable_aspm(hw);
 -- 
 2.53.0
 
