@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021325;
-	b=dC7fjVYCgpZu+DbCiiD98iL3+tT3uY5g/hYXvwTP5exwdCyQG2spoKT75pJguf4OZgAZ
-	 M0uoO+P8zbfdK2FNsMmPsTf/sMDMLGtwwzd6QnYpKaH71t83NcDED4wiAJFLZtXKiOLuP
-	 DuU/PvTWM9vVn0iR0dCRMM7JxgFYYe3hrdCz8ve28qEEuosMaRI/XN/byrIse0rmJHJWT
-	 DQ2WQb6j2ebvq4DYsa9KOkWLWfi2/huO7UrPO+9ChA3xCXGJsR9MfeXFDhKkqF8VtkJUN
-	 lV4fF3CqeN2i0AARCHOQ9BmiKYQ88/yQyYJ7A5emYl/XaGLZT9lRl1+jz/ckTsvgZhA==
+	t=1795021328;
+	b=E3IweA/aof+8YqDnC6DyNHOj1R0Y+v9IgizCnUDAZvdKUSUQSEmmseJWvg50SS/h0Uud
+	 OlcdkMuryuz9LCU5lY4jfWT6KUG7JK615O/IA5QnOi2mr3yOyRno/YXNMKybJJA586vsX
+	 gC6zA1TESwVSBFSpLKaKXARGVeB3xac/4KftP94O7XYw+z01X1j+vI95ttRVbkpCiU/2q
+	 vEG63gP/sM9eR2K8ZYoN2lykt5knkDzeJ17EoIMJJ2O/We3+VSrwJmQA1GRFExuAsedWH
+	 CGrpPLLrNx8yfZMVI97agk9WwFhq1BC6bOYS1N+ZjVuJl/ehFSN7xLx34AgHmnvMRkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BE99CKbavB0Lb+NJFhZavMrfIH0bEi0qGCeIEsYMOrE=;
-	b=nBaVovI7ziORQE3epWuI4eVWFSDKtK1iln2lOGce/3sJmhXSANxyI+969vZz75R7uj4X
-	 kSayxqJ6Ocu7t4se+MF9MneOXNls2O7HevHSnPs6dBRBmztxwqU9LxU9qSVHljdt5wgM4
-	 FyydYcVgug2atgQ2kuhTDezN1jV36ZyXGyY4kD5cVgbv7zWtrjHHqM9CojsvCHLhaMGiw
-	 wBAr/0R8YNFWCxxWNbM6MIjgnb911w57XRzlWekzmk1GEueS7Ul3hS59rFrFBd2meGRkN
-	 MrUqC9Y2ss862XzFwUbOXf8qZHjjRYaAUk1QKnDKC8q9XET6VtsusQdScFZatFSyMOA==
+	bh=p5Q86U8sZeMdwiND40/Ye14rIm5TT7KOpGhn06+fxNo=;
+	b=Nalpios6KI1HPPQbWaeauKTWDBQv8hqIetSijP18EzuwtJRifuG0/4aawS/iH34OdHao
+	 Z2glXpEcT293D8tz2pk7rNhkvA2a1PJo8SU7ZbG0yz/4mlh68pQYovyhvaXVttrMSupZJ
+	 7mqavPc/0y7PIbgfE7Zv2gRHrIG2YKluE2iymCEkU3rEZLjcMFgknp5dw/7sFM9P5G7OU
+	 O2Wwk66CDwkcnnOYOxKamGHyu8WNvwYVgenZiDf9la2SyZrt9ht0b3uclnbmAMzTLUZQX
+	 6Z7tIvvkREPGOZMOvQhz00nk81AbBEfO8BOseKRnl8+3HpWQwEBiAwrRH8WJ69AkBjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZaPFKNz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5G7nTLQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405E4606A320;
-	Wed, 18 Nov 2026 17:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D584606A333;
+	Wed, 18 Nov 2026 17:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZaPFKNz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989821F000C4;
-	Wed, 18 Nov 2026 17:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5G7nTLQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DE51F000C5;
+	Wed, 18 Nov 2026 17:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021325;
-	bh=BE99CKbavB0Lb+NJFhZavMrfIH0bEi0qGCeIEsYMOrE=;
+	s=korg; t=1795021327;
+	bh=p5Q86U8sZeMdwiND40/Ye14rIm5TT7KOpGhn06+fxNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZaPFKNzBqYevJ00xOaZqR2ZSOVEK86f9Kax0icyJW47cxCippYMVovPgZBgh0H0K
-	 EApp4T8rRhVWJjpIFnrX4W3W9PcgBhj6wsLVEomJNaUyazkF9gitBDAGWTzWB8aUtV
-	 /hC6sqsmu1z+79QsA3AsKASTjnvczhH9nHEGwnBU=
+	b=s5G7nTLQnTvgjDdOty8onePULNl2jk5KJBFHjal+F2UQf6XIY38IxJp5wyhkTFSI/
+	 pwWs0qEkcpHPIMeS75D4p7Uhrto32ejsVLc9vaK9KTfjr2EoNAu7/wdKbmlC1pIogO
+	 QgJuVKNHrksbW8/ort/5lhfghmyfklkuBmhNyOcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2266/2651] ipv6: Hold RCU when emitting route hardware flags notification
-Date: Wed, 18 Nov 2026 15:58:26 +0100
-Message-ID: <20261118150406.960546864@linuxfoundation.org>
+Subject: [PATCH 7.3 2231/2651] net/mlx5: HWS, fix reformat pool creation race
+Date: Wed, 18 Nov 2026 15:57:51 +0100
+Message-ID: <20261118150405.844823004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,93 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 7c9cb1edaf8fd8e1af25e39741e603500986ef66 ]
+[ Upstream commit d730ca15cf3e4806e38fa8fc6f2af8d7405ef2a4 ]
 
-fib6_info_hw_flags_set() is called by drivers from process context
-without RTNL or RCU. When the route uses a nexthop object,
-rt6_nlmsg_size() and rt6_fill_node() access the nexthop's RCU protected
-nexthop info and group pointers via rcu_dereference_rtnl(), resulting in
-suspicious RCU usage splats [1].
+mlx5_fs_get_pr_encap_pool() inserts a new pool when the lookup misses.
+Two callers allocating the first reformat of a size at once both
+create one and the second fails with -EBUSY. TC serializes these
+allocations under encap_tbl_lock while RDMA flow actions on the FDB
+don't.
 
-Fix by holding RCU while sizing and filling the notification, like
-fib_alias_hw_flags_set() already does. Switch to GFP_ATOMIC for the skb
-allocation accordingly.
+Sashiko AI review of an earlier series spotted this issue.
 
-Reproducer:
+Tested for regressions on ConnectX-7 with firmware 28.48.1000.
 
- # echo "10 0" > /sys/bus/netdevsim/new_device
- # sysctl -wq net.ipv6.fib_notify_on_flag_change=1
- # sysctl -wq net.ipv4.nexthop_compat_mode=1
- # ip -6 nexthop add id 1 blackhole
- # ip -6 route add 2001:db8:1::1/128 nhid 1
-
-[1]
-WARNING: suspicious RCU usage
-7.3.0-rc7-virtme-g191aa41548b2 #38 Not tainted
-net/ipv4/nexthop.c:1539 suspicious rcu_dereference_check() usage!
-[...]
-Workqueue: events nsim_fib_event_work
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
- lockdep_rcu_suspicious.cold (kernel/locking/lockdep.c:6972)
- nexthop_for_each_fib6_nh (net/ipv4/nexthop.c:1539 (discriminator 16))
- rt6_nlmsg_size (net/ipv6/route.c:5728)
- fib6_info_hw_flags_set (net/ipv6/route.c:6503)
- nsim_fib6_rt_add (drivers/net/netdevsim/fib.c:671 drivers/net/netdevsim/fib.c:694)
- nsim_fib6_rt_insert (drivers/net/netdevsim/fib.c:759)
- nsim_fib_event_work (drivers/net/netdevsim/fib.c:856 drivers/net/netdevsim/fib.c:889 drivers/net/netdevsim/fib.c:1493)
- process_one_work (kernel/workqueue.c:3396)
- worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
- </TASK>
-
-Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/netdev/179152182668.434549.18232968419539498055@kernel.org/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20261019140337.2886875-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: aecd9d1020e3 ("net/mlx5: fs, add HWS packet reformat API function")
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261012100555.1317878-2-acassen@corp.free.fr
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../mellanox/mlx5/core/steering/hws/fs_hws.c        | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 3688280742e48..d989df6ccea5b 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6509,7 +6509,9 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
- 	if (!fib_notify_on_flag_change)
- 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+index 54761754e6577..fcef2b64f62cc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+@@ -1229,7 +1229,7 @@ static struct mlx5_fs_pool *
+ mlx5_fs_get_pr_encap_pool(struct mlx5_core_dev *dev, struct xarray *pr_pools,
+ 			  enum mlx5hws_action_type reformat_type, size_t size)
+ {
+-	struct mlx5_fs_pool *pr_pool;
++	struct mlx5_fs_pool *pr_pool, *old;
+ 	unsigned long index = size;
+ 	int err;
  
--	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_KERNEL);
-+	rcu_read_lock();
+@@ -1243,13 +1243,14 @@ mlx5_fs_get_pr_encap_pool(struct mlx5_core_dev *dev, struct xarray *pr_pools,
+ 	err = mlx5_fs_hws_pr_pool_init(pr_pool, dev, size, reformat_type);
+ 	if (err)
+ 		goto free_pr_pool;
+-	err = xa_insert(pr_pools, index, pr_pool, GFP_KERNEL);
+-	if (err)
+-		goto cleanup_pr_pool;
+-	return pr_pool;
++	old = xa_cmpxchg(pr_pools, index, NULL, pr_pool, GFP_KERNEL);
++	if (!old)
++		return pr_pool;
+ 
+-cleanup_pr_pool:
+ 	mlx5_fs_hws_pr_pool_cleanup(pr_pool);
++	kfree(pr_pool);
++	return xa_is_err(old) ? ERR_PTR(xa_err(old)) : old;
 +
-+	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_ATOMIC);
- 	if (!skb) {
- 		err = -ENOBUFS;
- 		goto errout;
-@@ -6522,10 +6524,13 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
- 		goto errout;
- 	}
- 
-+	rcu_read_unlock();
-+
- 	rtnl_notify(skb, net, 0, RTNLGRP_IPV6_ROUTE, NULL, GFP_KERNEL);
- 	return;
- 
- errout:
-+	rcu_read_unlock();
- 	rtnl_set_sk_err(net, RTNLGRP_IPV6_ROUTE, err);
- }
- EXPORT_SYMBOL(fib6_info_hw_flags_set);
+ free_pr_pool:
+ 	kfree(pr_pool);
+ 	return ERR_PTR(err);
 -- 
 2.53.0
 
