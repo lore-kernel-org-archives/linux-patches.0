@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021029;
-	b=KNtnBiy7xBjXG6YsU5tBYhwUe0BJ+ISDYCPMAizbU0XU4fuIOy0EKNXv2y+bNHGHhZ9E
-	 xblvsmHD2S76UFU4AIXIdkIH6uthNlUBwUKamfxcmVN13Oosik918ckulLHHxuv0PYAHF
-	 252o3lHogTLSCG1k1WAvQxWtXtejcOFYyFED2kTAN/iDEOPA5SQfjDcLpx1/1lehsgOBX
-	 KlE+NSvDWtGLmshIWjHmjPKT/LNU1YV9GHvPL+zFGE7gk3f7dMqFBzpeCAYyeTMnOeuZ2
-	 TCx9t8X26p7yVmfp+j1JCOGByn+qvX4+FnTpEk0qzbMePIBCjWTDT0u4cCPsg6PowTA==
+	t=1795021032;
+	b=DowFsUet6rc2JPXWV/OsJUQvIIb4Ww1b6ePpFnfe3bWcAsxtX6tf1Ka642fX3zKXzWRO
+	 sNRjavJQ0picdaEDEwKciSHegU6BERboH/VUQedc2CCDQz42oC6YNxFCw5kjyXaLplY4s
+	 0LE1QZcEeFb622Et5ZswqXPTP1wjevL/yU9ScOSp4gYFGQvOL4Yru3lHznguW79ipdHC8
+	 wnX32QFwlxMGo56Z2Eqfsvq8FN6rQ1Fcf5w7y6Tc3lmfDRPoFgzn+shhn8g7Z0ACAfuF+
+	 JkcLMLmg8siYW4qrkBifANwyvPXfoK8z0O5WfD/bCVfniafz7Wnq2jWWEP/gOS3y76Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=C088xyeXSLVrD4hmcveEg9PBI3Qqsoc5giKQyHSE7lU=;
-	b=k6HOJdb5tk65b9DuoW+BpW+iVi7HazrsohdkFw8TCDTQqdGRqJ7gjA7aMdgUQEHw0x3f
-	 k5k/lumt7Fo30DDWzmPiNDl/7hKtoLTWbN1Ja3Y/eL97/k8hVuGhyjhUSBlsz4RQml5WN
-	 WiafJ+hP6F8G3XCW+k2w5vdUkPgvv4//vHVPO8+jcOPOBnq3pgZmhUQdgDU3DspVQsm1P
-	 ZvjJ3BDJP7G6M6y//LobWWHrj9KqmwHdga8XUklHkrm6HiWTxeS1x8motBPDM48uPcbhd
-	 zOV2UicRv8s821c+4aPUVupzjiocRapQKt1+rxdrJCxxSQ/2zqvbAMVotU+M+L5sSIg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=C2f1SVLLph/LG1I4IP4U9ShzIKDIY0BU71U6i93Kf8E=;
+	b=uCQ2cXJxoViMK9jk7EIp7/cWQ3MGJ3Ia3grOupsKygsYjhcw7XTv0nYFrFdSGepWyIP/
+	 pyz45YjJ5txA1NGFs5v2ttMvKeHSbBum8FkGPK1lwn5qnr4iN9TwYph1SYqKSYctJtkRp
+	 kw63gY0ILz2HCz2q+Gs/AqHNUn5zMknhdbZQ+f6Uc/XRe/u9YWRfvplUBxGTfX5ac+5ox
+	 nNBGif17gHt7KVh/EyGXbDOrXhwhlYo3Y/A6RJnT3j+fc2UicN0gsHal3XVNm5IOPdYLS
+	 snwkLSSM8qWy/ceUNe/O+Wvgmfn0tgtBu6mt7nn4qwv39UTITkjJz5v21KXewzUnx3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNmlkSg1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0JyUozY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EA1606A325;
-	Wed, 18 Nov 2026 16:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E88C606A320;
+	Wed, 18 Nov 2026 16:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNmlkSg1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEE81F000D2;
-	Wed, 18 Nov 2026 16:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0JyUozY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6AC1F000C5;
+	Wed, 18 Nov 2026 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021029;
-	bh=C088xyeXSLVrD4hmcveEg9PBI3Qqsoc5giKQyHSE7lU=;
+	s=korg; t=1795021032;
+	bh=C2f1SVLLph/LG1I4IP4U9ShzIKDIY0BU71U6i93Kf8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZNmlkSg1fB2G95jQ/j0srf2V4Q2gPfF0p9H0J9F9Xh212MwH/Q2TmFXqZG7pzeIa3
-	 sl5r3NRgpVSkOjTyojPiPanwSFBWCk+S1JoLOKNCGq2qK7qOgXdqcjqOkun7Yh9iSe
-	 IbizH+5pPwdMxmMr7tn2e0D1dvKTQKw35xOBSL9E=
+	b=B0JyUozYjfv5lMAb55/Y/I3/OkNvMy2ZI+MS5/qiRoFjohjUAWsIM1Sniwp++rHhk
+	 OccNDNXwNh7ByP3lVwLQ19eax0zEch+26SMfx5kfPo3visKhmSHxUx+cPkamPlmV3e
+	 v9rmw0phGt9PTkeW345XZdv2MOUwjO7Kr4C37vHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2162/2651] netfilter: nft_set_rbtree: narrow down range completion to anonymous sets
-Date: Wed, 18 Nov 2026 15:56:42 +0100
-Message-ID: <20261118150403.648606799@linuxfoundation.org>
+Subject: [PATCH 7.3 2163/2651] netfilter: xt_dccp: handle reserved options as single-byte
+Date: Wed, 18 Nov 2026 15:56:43 +0100
+Message-ID: <20261118150403.691079603@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,72 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 86d47d4c84a1b8470ba3fc16df13ea2a220b74ff ]
+[ Upstream commit 2edda78aa4eb04cd8f112a81897510ee0cdd7099 ]
 
-For anonymous sets, when adjacent ranges are found, the end element is
-not added to the set to pack the set representation. Use next start
-element to complete this interval.
+The DCCP UAPI defines option numbers 3 through 31 as reserved.  Like
+Padding and Mandatory, these options occupy one byte.  dccp_find_option()
+only treats values below 2 as single-byte and interprets the byte after a
+reserved option as a TLV length.
 
-Jérémy Jean says:
+This can skip a later option and invert an XT_DCCP_OPTION rule result.  A
+local production-hook fixture installed the same DROP rule for IPv4 and
+IPv6.  In three fresh boots per kernel, a target-only packet was dropped
+20/20 times, while adding reserved option 3 before the same target let
+20/20 packets reach the protected receiver.  The fixed kernel dropped all
+trigger packets in three fresh boots and preserved the normal controls.
 
-Consider two ranges in a netfilter verdict map:
-* keys 10-19 accept packets, and
-* keys 30-39 jump to chain 'victim'.
-Now, delete the end marker at 20. The lookup array now uses element 30
-as the first range's end, so an INTERVAL_END query for key 15 returns
-element 30, including its jump verdict and chain pointer. This can make
-KASAN reports a UAF after the GC releases reference chain for 30 that
-has expired:
+Treat every option up to DCCPO_MAX_RESERVED as single-byte, matching the
+protocol definition.  Triggering requires
+CONFIG_NETFILTER_XTABLES_LEGACY, CONFIG_NETFILTER_XT_MATCH_DCCP, an
+option-based rule, and remote protocol-33 reachability.  The touched source
+is unchanged at 0c2669a9f4a1d607e7591ae50ccf3c432a0aff08, where the patch
+applies and builds cleanly.
 
-  BUG: KASAN: slab-use-after-free in nft_verdict_dump+0xdd/0x110
-  Read of size 8 at addr ff110000009dfb58 by task repro/50
-  ...
-  Call Trace:
-  ...
-   nft_verdict_dump+0xdd/0x110
-   nft_data_dump+0x4d/0x80
-   nf_tables_fill_setelem+0x30b/0x8a0
-   ? __asan_memcpy+0x3c/0x60
-   nf_tables_fill_setelem_info+0x1b0/0x200
-   nft_get_set_elem+0x3fd/0x4b0
-  ...
-  Freed by task 24:
-  ...
-   kfree+0x1a5/0x280
-   nf_tables_trans_destroy_work+0x2cb/0x520
-
-Fixes: 2aa34191f06f ("netfilter: nft_set_rbtree: use binary search array in get command")
-Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/netfilter-devel/20261005200404.3544062-2-Jeremy.Jean@oss.cyber.gouv.fr/
+Fixes: 1d3de414eb20 ("[NETFILTER]: New iptables DCCP protocol header match")
+Assisted-by: LLM
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/xt_dccp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 12431b55752fb..fbe1750f1ca23 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -1091,7 +1091,8 @@ static void nft_rbtree_commit(struct nft_set *set)
- 		 * representation. Use next start element to complete this
- 		 * interval.
- 		 */
--		if (nft_rbtree_interval_start(rbe) &&
-+		if (nft_set_is_anonymous(set) &&
-+		    nft_rbtree_interval_start(rbe) &&
- 		    nft_rbtree_interval_start(prev_rbe) &&
- 		    priv->array_next->intervals[num_intervals].from)
- 			priv->array_next->intervals[num_intervals++].to = &prev_rbe->ext;
+diff --git a/net/netfilter/xt_dccp.c b/net/netfilter/xt_dccp.c
+index 3db81e041af9b..23a4e3e8df7de 100644
+--- a/net/netfilter/xt_dccp.c
++++ b/net/netfilter/xt_dccp.c
+@@ -62,7 +62,7 @@ dccp_find_option(u_int8_t option,
+ 			return true;
+ 		}
+ 
+-		if (op[i] < 2 || i == optlen - 1)
++		if (op[i] <= DCCPO_MAX_RESERVED || i == optlen - 1)
+ 			i++;
+ 		else
+ 			i += op[i + 1] ? : 1;
 -- 
 2.53.0
 
