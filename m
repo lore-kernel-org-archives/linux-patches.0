@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044016;
-	b=wQdoTmqYn9JAoa6asF/BCfzKBuxLxjfgsLcCMcx0vvh+G48sMXw91NHZVV2RpA8hdujm
-	 tQkrUmBgo0N1xEnH301G/3C3PeC8ZXiQcZJ+ZxJv+E/gbOvsYVqJqwRvoR/bVZ9PFbwwb
-	 32x8U7ULJb6V1iJm/2+/4VmVflKSUKktf7w7YZ1P9/sJaMAMF4OqgPXxgFs3H3ZjJF3hS
-	 4voxcsHtJrCdZqC0ba6V0ojOjjsvI4QcIeZNvi/9eSCnDREJDrUXZR/M4unMu1t3NNVqe
-	 hOxnCvqGbbyvpcXFmmITfKUJElPgxFqkc8OVAGwtOAj1bVXcBfdQA3nDlSdoLTuqXOA==
+	t=1795044019;
+	b=inLzgXAV4jryLBnJyPLWfdGNyWJe0WOqrBFFiB3Y+4kqoWmdBRnFDTxwl+1s3MEl6YRy
+	 dq8kmpYdkeN7B63NWDL63P0Pmz9Dx0uV//w5Wh0ScFfGAu0d44NSy4wWo3OqU/KRh+OQa
+	 6d7gz9hR9vJZ81qcohuIMjt6BsaIZwoRW1V2qZCY8lSxTbzpLHjX6Mc/DTYnNGx2hPcCV
+	 ceoJI4ntz1MFgecQZamWO4reUV/k5rWYOtuurCtlmbVdT4aFa+Mq8zM8DpB3qHrGWfHfy
+	 AUvStTqCp/X3ybxWODRWdbIlVyD90XcJdPA0g84BFhKNhuXjgmEfC79U3GUxyNZqvcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044019;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=xa2BxnnJm7YO8T6M/1AV9BJre3xraHPDeA8aFb0Es4s=;
-	b=GhBZCamgRI+Fw2panZkdYtt/XbCYI1rI8Q4k3Edcc/vK6cpLqRYFDS0OUt7+fSKItB24
-	 KTg5a+Acj6f5JhRhXkAcWTRMH2NQUWqG1K6J5XlQBUkLDm5hj83X57hMXihDn3/XqJ6fm
-	 Fe9E4s5t0g3oZqdlstyO3CujZtX0v73JYLNDJuepEflQbVxMURASj6TjOEsjMGTExd+ky
-	 1vsDyLrdVCav7k+hUxzdSBVUD1tA5tLaG4fDO9rF94OgVPnwgyoGZk1BSrsIvlqFY9C4w
-	 NVPurwK5s7uKfbiniGSj2g93cp99hglcD+W8vzr1u8QyHxXnIYCVlN+BE2NTi0hcIYQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ffVJH0NuW2tIQZ5KhN5gIsoti/M59/Td/cVjTlleEwQ=;
+	b=gX0stJbdCAZO73bq/GHTj/PqjDMSVUBxJ+mBzEEGpxrYe2hegm2Ept/Jj6Z1koRtEpeR
+	 e2WQoU5uzNxltLONIBuvT2C4FDniMjevUoUWa44sPgNworoa7Bexu8h0UUHVsq476jlZS
+	 zlxeZ7p1H/3fBjXHyKzb+IkUJj76qZleFF8YcPuhBwwwmJ+pOHpU8pfq9PvS66DwRVO54
+	 TNm4y/HV1VEgfx7ZPEEqumZbCaN1k6EBTeLxEr87lkZLysD29yaC0t9Tp88Hr7HKwRtZz
+	 Z6nkf+Yaze9E3zHWzDNNnJ6Dkg8MhiN5aE8H5OWmdTvP14l+5dqc0XLC0oRwOf/tOng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTqLx6CK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rMLonkTa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C160A606A332;
-	Wed, 18 Nov 2026 23:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942CB606A31C;
+	Wed, 18 Nov 2026 23:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTqLx6CK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DC71F000C5;
-	Wed, 18 Nov 2026 23:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rMLonkTa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FEC1F000C5;
+	Wed, 18 Nov 2026 23:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044016;
-	bh=xa2BxnnJm7YO8T6M/1AV9BJre3xraHPDeA8aFb0Es4s=;
+	s=korg; t=1795044019;
+	bh=ffVJH0NuW2tIQZ5KhN5gIsoti/M59/Td/cVjTlleEwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uTqLx6CKGGiW05AXXlMqOsP6bVqC6404TA0oBJnLc8KAQd76s/eI3I2EuRmGsRUNc
-	 59f3cFPLOm2ks/Snus5leILtCy4Rd/DNlZoyPef+sj9KI4nynmv3DMq5fnN+VBQ4iL
-	 cC27mApu0Hdj9z5Bvf9Rshaxea1rYEUbZ0bUASYI=
+	b=rMLonkTaMLxQbxPKXt0+nmAvjj4uTZO/Uihz8/W/YO9yp/7jI+0Nt1hCHYr41Y6Sw
+	 9M9YBfe447NMFSpoXLf+88IDsLMzt+B5P/J1Bl813RazZr3iOtsQQnezUQ1jmd7ql8
+	 U/ZqFtM4SpIV+IHQZcnqv31zHgb2y3PNn1G1fnHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0372/2857] mm/gup: fix always draining LRU caches in collect_longterm_unpinnable_folios()
-Date: Wed, 18 Nov 2026 15:23:26 +0100
-Message-ID: <20261118150214.810214374@linuxfoundation.org>
+Subject: [PATCH 6.1 0363/2857] platform/x86: think-lmi: Fix current password length check
+Date: Wed, 18 Nov 2026 15:23:17 +0100
+Message-ID: <20261118150214.499437208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,93 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 078e1a0fc41a42baaf113383b52dab8874c0b967 ]
+[ Upstream commit 54745d563114b74f6fecebce68cd020d06c1772b ]
 
-folio_may_be_lru_cached() is currently only true for small folios, and
-for small folios FOLL_PIN adds GUP_PIN_COUNTING_BIAS references instead
-of 1 in try_grab_folio()/try_grab_folio_fast().
+current_password_store() checks the password length before removing the
+trailing newline, which can reject valid passwords that are exactly
+->maxlen bytes long.
 
-Consequently, our
+It also passes ->maxlen to strscpy(), which truncates passwords without
+a newline.
 
-	folio_ref_count(folio) != folio_expected_ref_count(folio) + 1
+Use strchrnul() to measure the password length up to the newline, then
+copy that many bytes and add a trailing NUL terminator using strscpy().
 
-check in collect_longterm_unpinnable_folios() will currently always
-identify "reference mismatch" and first drain the local LRU cache to then
-drain the LRU cache on all CPUs, as collect_longterm_unpinnable_folios()
-is really called after pinning the folios with FOLL_PIN.
-
-Add a comment because the current code is not quite intuitive: we used to
-drain only to make sure the folio_isolate_lru() would succeed. But then we
-also started draining to make later migration more reliable.
-
-We'll refactor that code soon a bit, to also make it usable in other
-context where we really want to remove any references from LRU caches.
-
-Let's add CC stable, because having an easy way for excessive LRU cache
-draining on all CPUs does not sound right. In common scenarios we
-don't expect to ever have to drain.
-
-Link: https://lore.kernel.org/20260731-check_and_migrate_movable_folios-v1-1-e0002d7b791e@kernel.org
-Fixes: 98c6d259319e ("mm/gup: check ref_count instead of lru before migration")
-Fixes: a09a8a1fbb37 ("mm/gup: local lru_add_drain() to avoid lru_add_drain_all()")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Hugh Dickins <hughd@google.com>
-Cc: Ackerley Tng <ackerleytng@google.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ sashal: Adapted to the older page-array loop in the collect function and used folio_test_large() in place of the missing folio_has_pincount() to compute pin_refs. ]
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260818151635.37094-2-thorsten.blum@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/platform/x86/think-lmi.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index 72e01b8311d7c..2c20548a0c46e 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1972,6 +1972,7 @@ static unsigned long collect_longterm_unpinnable_pages(
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index f32f960b9a5cf..d1cc9c1ebe9a2 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -396,14 +396,13 @@ static ssize_t current_password_store(struct kobject *kobj,
+ 	struct tlmi_pwd_setting *setting = to_tlmi_pwd_setting(kobj);
+ 	size_t pwdlen;
  
- 	for (i = 0; i < nr_pages; i++) {
- 		struct folio *folio = page_folio(pages[i]);
-+		const int pin_refs = folio_test_large(folio) ? 1 : GUP_PIN_COUNTING_BIAS;
+-	pwdlen = strlen(buf);
++	/* Strip newline; setting password won't work if one is present. */
++	pwdlen = strchrnul(buf, '\n') - buf;
+ 	/* pwdlen == 0 is allowed to clear the password */
+ 	if (pwdlen && ((pwdlen < setting->minlen) || (pwdlen > setting->maxlen)))
+ 		return -EINVAL;
  
- 		if (folio == prev_folio)
- 			continue;
-@@ -1990,15 +1991,20 @@ static unsigned long collect_longterm_unpinnable_pages(
- 			continue;
- 		}
+-	strscpy(setting->password, buf, setting->maxlen);
+-	/* Strip out CR if one is present, setting password won't work if it is present */
+-	strreplace(setting->password, '\n', '\0');
++	strscpy(setting->password, buf, pwdlen + 1);
+ 	return count;
+ }
  
-+		/*
-+		 * We drain not only to make the folio_isolate_lru() succeed,
-+		 * but also to remove any other folio references from LRU
-+		 * caches.
-+		 */
- 		if (drained == 0 && folio_may_be_lru_cached(folio) &&
- 				folio_ref_count(folio) !=
--				folio_expected_ref_count(folio) + 1) {
-+				folio_expected_ref_count(folio) + pin_refs) {
- 			lru_add_drain();
- 			drained = 1;
- 		}
- 		if (drained == 1 && folio_may_be_lru_cached(folio) &&
- 				folio_ref_count(folio) !=
--				folio_expected_ref_count(folio) + 1) {
-+				folio_expected_ref_count(folio) + pin_refs) {
- 			lru_add_drain_all();
- 			drained = 2;
- 		}
 -- 
 2.53.0
 
