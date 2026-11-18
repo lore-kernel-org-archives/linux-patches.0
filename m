@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055779;
-	b=rhYE+kaa9mc0tv/57hMV4FubU4BDfGI8CGnE3nqJLl5au01iHz2HuExs/uTb2q59ILPw
-	 qPxaMFkEHzmMoUynUQC6RddaqMgv33iQhbouMiv/DdVwQUC+u35Buxc2tz8di9cPQ7dlc
-	 RWaiBCXROegQ0vAwlTb+Y/BgGgb56PHrrCJZW5DfZHPBKmFwZELqYO5purrMCYtjHWOhM
-	 SkvSBxvzEDqoEFybbz6k5PSx9sWXKlgCBTKrB7Ikpv/Si8j8s3hOPOWZcYdyhog3k6nGg
-	 qbOh39tX6Tfatq0OyV/pgaAxOE7UPAVyWZaLbEnPIElvy8xHRzJpAiP7CClUKTlukUg==
+	t=1795055781;
+	b=igGswd+YyH/cnw3UHccjfO/6/ljHL1gODjHnJDsRU/xF6239TMN2wPBL+MJvi37oCnub
+	 KJUAWtuFezt8aTAVQNxTOemWInUTr+P3ujs+0rBeD2RJVof8wscEd/hM/9qqwOsIX1cx7
+	 6MXtZJwiHp7/SUaEKZrKEI31OUewZCghHe8BSHurOcIQ8sTewJMmEKYyJG7G0MYmeYnUk
+	 Aq0wUNOcBnWcjAt7X6E/w/vdUkRFS+ygF7Qs2xYifZV6D2BgKB5T5S4B2SB6MeyKbDMTK
+	 +RlAQsXAGnYKPaaaovClCRYBsshNyV4++3Ng9BxVa9x2Xv4UnvSViV+9Tug8nJgMtyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055779;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055781;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RTMb1m5a1h1xwUItJl4C1kQ8visYbNkGbLbdoyBnFPo=;
-	b=vqxOuMbbySNvBYydDzxl3aM+fS+voFcEnFiClhudoKIZSlxky1uzBjm518Qg++JxoCy2
-	 M3zURwwQqGLKtt0mnRUq0p8iUpM4iA/qsrvMAKZfKi0SddOekU/RM/go+QQ08xZaucKfp
-	 ahegitg5Q5ByXzv4s7PxeFP2n8a2wTo0fwSpnMrstVNWAcPWvEuhgyBS/TPh/HZFdJpw0
-	 sMCuOrd+0Eq6zWvwry8yNHkWUB6O0u+jZgkj7YzCnTNeCJOVS1XRACUAGDjTqol3FlZFr
-	 pvBH+opbS9uED9JO/mceCRicnD0UoGG0CiwFsvRucZ26Gbeyj4JiD/CtmTYB8gslcFg==
+	bh=wyjCyOVek9ewZIqjfeUPpX5n96QUqFhXoLHjtGlaIzs=;
+	b=M9+1r/b6q/1XuZ66gU9/qC6leGuoNombiYFyh6HkNJ+hMULWiQpQECxWV5QpOvg/v59t
+	 LSvISbxMvmN/dxdqLxKIHakBWaMU3G2QGjhb5SGZzdCn0hoNheOZrDOM80qhOAklwAzl7
+	 VSoBh2bFs5T2PApC9H0eBWa32MnWu3Bs0NqwBriPik61UZxxB7MJGZPS6QaR2wKtKBnQp
+	 eoyCt+Hg9Q9Xa7BWrzmaPJmwsdrzp82DJSfDJowaR266M1ykExdRZWbK4kOYN8gFFVemQ
+	 sQgN+sEmlQChJWA82o/Lv1r1WXWzoqNr2e7EwNqeQwx9/ZyNwIoYr+Kph7HZlSkdSqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tl7eNhh5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj6OVseX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BFD606A320;
-	Thu, 19 Nov 2026 02:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD2A606A320;
+	Thu, 19 Nov 2026 02:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tl7eNhh5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683331F000C4;
-	Thu, 19 Nov 2026 02:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj6OVseX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9361F000C4;
+	Thu, 19 Nov 2026 02:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055778;
-	bh=RTMb1m5a1h1xwUItJl4C1kQ8visYbNkGbLbdoyBnFPo=;
+	s=korg; t=1795055781;
+	bh=wyjCyOVek9ewZIqjfeUPpX5n96QUqFhXoLHjtGlaIzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tl7eNhh5U3HRAoHOM3oZcZVTBzFnyQY7A37uKw65wHXbETPGmZ6BJkayO4YxREwRG
-	 09FA7Pfjv2TAOg7FuUXqqh2vXoPD0akmwOBTIGP4rPnRMSntZ2czP7HjB3oEiw9MWf
-	 LTZtLe8Ic8q0ARaG4AwJF50qITZsaTz1z+aeLivE=
+	b=oj6OVseXjWwoMn1KyAzjFhot/FwqNsCOEaYd0BMv0z86Ud0YWxb70z5UuHx/j6dLd
+	 DWI2D13u6O04i4eT24YPzz9QEU16QcvGVGigFUTzQeS++cRFJ4OCfvwesWzfoi8sO+
+	 8t2TjDOhRqHatGC5Gg8ObB/oMgb/iFFYxCFlsaL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1753/2214] dmaengine: ste_dma40: Fix failed start cleanup
-Date: Wed, 18 Nov 2026 15:57:09 +0100
-Message-ID: <20261118150121.701841819@linuxfoundation.org>
+Subject: [PATCH 5.15 1727/2214] power: supply: ab8500_charger: Respect AB8505 register layout
+Date: Wed, 18 Nov 2026 15:56:43 +0100
+Message-ID: <20261118150120.792606881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,117 +70,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 8175ead5727173d4b96d1e830e696765d75ade71 ]
+[ Upstream commit dcecf527632297011153f088573689a1ad1de790 ]
 
-If d40_start() fails after a queued descriptor has been moved to the
-active list, d40_queue_start() currently returns NULL without unwinding
-the transfer state or clearing the channel busy flag.
+Several AB8505 charger fields differ from AB8500. Its long VBUS
+falling debounce is 300 ms rather than 100 ms, and its VBUS
+overvoltage selector has a different encoding programmed through OTP.
+Writing the AB8500 6.3 V value selects 9 V on AB8505.
 
-Fix this pre-existing error path by completing the descriptor through the
-normal tasklet path, clearing the busy flag, balancing the runtime PM
-reference and returning an error pointer to distinguish the failure from
-the no-work case. Do not free the descriptor directly, since it has
-already been submitted and has a DMA cookie.
+AB8505 revision 3 also defines SwControlFallback as reserved,
+correcting older documentation which led the driver to support
+autopower there. Preserve the AB8505 overvoltage setting, wait for its
+documented debounce, and reject the unsupported autopower setting.
 
-When starting the next queued transfer from the completion handler, put
-the completed descriptor on the done list first. This preserves FIFO
-completion order if the new transfer fails to start and prevents the
-completed cookie from moving backwards.
-
-Use done-list membership rather than the cyclic flag to identify terminal
-descriptors in the tasklet. A cyclic descriptor that failed to start is
-then completed and removed instead of remaining permanently at the head
-of the done list.
-
-Fixes: 7d83a854a1a4 ("dma40: remove "hardware link with previous jobs" code")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 0ed5107fa860 ("ab8500-charger: Do not touch VBUSOVV bits")
+Fixes: b016322293c7 ("ab8500-charger: Add support for autopower on AB8505 and AB9540")
 Assisted-by: LLM
-Link: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-4-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-9-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/power/supply/ab8500_charger.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index c9097dc6748a7..52f455262857d 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1510,8 +1510,15 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
- 		/* Start dma job */
- 		err = d40_start(d40c);
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index cce2f3c13b797..ae9e938188829 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -52,7 +52,7 @@
+ #define MAIN_CH_DET			0x01
+ #define MAIN_CH_CV_ON			0x04
+ #define USB_CH_CV_ON			0x08
+-#define VBUS_DET_DBNC100		0x02
++#define VBUS_DET_DBNC_LONG		0x02
+ #define VBUS_DET_DBNC1			0x01
+ #define OTP_ENABLE_WD			0x01
+ #define DROP_COUNT_RESET		0x01
+@@ -356,6 +356,10 @@ static void ab8500_enable_disable_sw_fallback(struct ab8500_charger *di,
+ 	u8 bit;
+ 	int ret;
  
--		if (err)
--			return NULL;
-+		if (err) {
-+			d40_desc_remove(d40d);
-+			d40_desc_done(d40c, d40d);
-+			d40c->pending_tx++;
-+			d40c->busy = false;
-+			pm_runtime_put_autosuspend(d40c->base->dev);
-+			tasklet_schedule(&d40c->tasklet);
-+			return ERR_PTR(err);
-+		}
- 	}
- 
- 	return d40d;
-@@ -1555,15 +1562,15 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 			return;
- 		}
- 
-+		d40_desc_remove(d40d);
-+		d40_desc_done(d40c, d40d);
++	/* SwControlFallback is reserved and must remain clear on AB8505. */
++	if (is_ab8505(di->parent))
++		return;
 +
- 		if (d40_queue_start(d40c) == NULL) {
- 			d40c->busy = false;
+ 	dev_dbg(di->dev, "SW Fallback: %d\n", fallback);
  
- 			pm_runtime_mark_last_busy(d40c->base->dev);
- 			pm_runtime_put_autosuspend(d40c->base->dev);
+ 	if (is_ab8500(di->parent)) {
+@@ -660,12 +664,16 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
+ 
+ 	if (!probe) {
+ 		/*
+-		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC100
++		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC_LONG
+ 		 * when disconnecting ACA even though no
+ 		 * charger was connected. Try waiting a little
+-		 * longer than the 100 ms of VBUS_DET_DBNC100...
++		 * longer than its 100 ms debounce. AB8505 uses
++		 * a 300 ms falling debounce for the same bit.
+ 		 */
+-		msleep(110);
++		if (is_ab8505(di->parent))
++			msleep(310);
++		else
++			msleep(110);
+ 	}
+ 	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
+ 		AB8500_CH_USBCH_STAT1_REG, &val);
+@@ -676,7 +684,7 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
+ 	dev_dbg(di->dev,
+ 		"%s AB8500_CH_USBCH_STAT1_REG %x\n", __func__,
+ 		val);
+-	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC100))
++	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC_LONG))
+ 		result |= USB_PW_CONN;
+ 
+ 	return result;
+@@ -3060,7 +3068,7 @@ static int ab8500_charger_init_hw_registers(struct ab8500_charger *di)
  		}
+ 	}
+ 
+-	if (is_ab8505_2p0(di->parent))
++	if (is_ab8505(di->parent))
+ 		ret = abx500_mask_and_set_register_interruptible(di->dev,
+ 			AB8500_CHARGER,
+ 			AB8500_USBCH_CTRL2_REG,
+@@ -3413,11 +3421,14 @@ static int ab8500_charger_probe(struct platform_device *pdev)
+ 
+ 	di->bm = &ab8500_bm_data;
+ 
+-	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
 -
--		d40_desc_remove(d40d);
--		d40_desc_done(d40c, d40d);
- 	}
+ 	/* get parent data */
+ 	di->dev = dev;
+ 	di->parent = dev_get_drvdata(pdev->dev.parent);
++	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
++	if (di->autopower_cfg && is_ab8505(di->parent)) {
++		dev_warn(dev, "autopower is not supported on AB8505\n");
++		di->autopower_cfg = false;
++	}
  
- 	d40c->pending_tx++;
-@@ -1577,20 +1584,22 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	struct d40_desc *d40d;
- 	unsigned long flags;
- 	bool callback_active;
-+	bool from_done;
- 	struct dmaengine_desc_callback cb;
- 
- 	spin_lock_irqsave(&d40c->lock, flags);
- 
- 	/* Get first entry from the done list */
- 	d40d = d40_first_done(d40c);
--	if (d40d == NULL) {
-+	from_done = !!d40d;
-+	if (!from_done) {
- 		/* Check if we have reached here for cyclic job */
- 		d40d = d40_first_active_get(d40c);
- 		if (d40d == NULL || !d40d->cyclic)
- 			goto check_pending_tx;
- 	}
- 
--	if (!d40d->cyclic)
-+	if (from_done)
- 		dma_cookie_complete(&d40d->txd);
- 
- 	/*
-@@ -1606,7 +1615,7 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	callback_active = !!(d40d->txd.flags & DMA_PREP_INTERRUPT);
- 	dmaengine_desc_get_callback(&d40d->txd, &cb);
- 
--	if (!d40d->cyclic) {
-+	if (from_done) {
- 		if (async_tx_test_ack(&d40d->txd)) {
- 			d40_desc_remove(d40d);
- 			d40_desc_free(d40c, d40d);
+ 	/* Get ADC channels */
+ 	di->adc_main_charger_v = devm_iio_channel_get(dev, "main_charger_v");
 -- 
 2.53.0
 
