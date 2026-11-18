@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024033;
-	b=unXlMoBkg+/DaBFSAOuvFce45U9txkDnVa0K3+9Fp/3nr/lbBnbi+NeMZrVDJhBNNvVM
-	 wHT82afTVAcnw13yUiN7xdoA9JNV7qKTL/bhcNX+9Tdky1XWPOP1drZI1tGgdem0Hvo42
-	 ZrSdYdo1W9T3vM6Do2tKl1uzSvpE02XWBpHpWwfSKIX/1XcBgoRWrBBp+Qc+MiyRa3mII
-	 9VOcLwhekl8ee+aAhIn7ewr3gvNm3tnCCbKQIEUbL2IBHkhzH6Ndodep6NWWqlGt9j9k/
-	 6WuCqoXdo06jBEuENU1slJGq5AaqPln/Gtx89Ro0tI1Iwe53Gmcth/qGOJo3JkFynng==
+	t=1795024035;
+	b=wdZVJ8xfJ5j3LUKltUq6tzKVC6Il7Jhs+Q3eVFbWQwpndDF0xlQMM/oDXYivHx18GBgy
+	 Jhn1ix3y0CUY84ZQdLzPDkrIsGQPS5z5vl+fS2TNP9GImRik1kijcTEUJcsZyfN8Rcqpd
+	 6Ojkcypa0khZXLgj5gsjDVIOKz1pkgGSegpF1J7vdgN4rgmNi1rV13nxFa4UYPG411xfd
+	 o5GMl7bFjBC6K4R3gIPRMnZWUnyjip3Dk/DjQxG6yGojnTPn348zlQTQHOHUzNTap7czp
+	 JsWHXB404bxsbeLU6LhE/abNqjdRCZNsu0b4DV17Ran8Hvv/9uXG+mbnZnhHzNTGwHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WWlgBzG3NRHXDl0jrYQBxL+V3MUdfTDHwAc+lBP/84M=;
-	b=q3xOuM1Ogm3Va1mmHJpe19TpAie1n6k0oR6NgrT0Uasg+u69AOdQsEjScUauJSnplrMM
-	 dhl2uEZsl1Mk8LeGVfyXpeSANZNIsC4hbbutSKxh17ceLi/9tD1+NIeeiqs84gpJmRgfp
-	 7mi2Z3RXDlFxffnM9AWehwB0IgGVrI/WQXB+3S5ixy1JCY9MqLMus8/wR3XUj+DtX+o1Y
-	 y5fweiftdTtnj1h3RUvsdHS79LoM6GYd5LD7VOJ7/FIm9dxzUglsamdS5IBNtR9ZF3aqt
-	 ZYIiL+G3oJwHYCxEOPGLVKv5njL02NHkf9ENGkVv7uXVHxldMnjssc5nQCeLvdW4Pgg==
+	bh=sUhxxh7flmn1IDO0ew9d4kmEramY42vivluG4X/wJcw=;
+	b=5jVqOjokP1RkXGio4oK8vaud2Z17ww4PPuoZ46AbTsLqDfXoS2wV2kJDiRQk5mKmvGY3
+	 nfUHAK00wzEBoK3lk9anCRsa1kJptSz/qsvaeLm9RFVi2Kxq3YGVF49QGs0l+U7DQT1Gy
+	 q4QKykCyY4wVBhaFLkvz4pMjw4KPKm5gac0kU3BO6IopUmRr3btWHcAN68t3Pg6bZ+Kb+
+	 YAip3oQE9tL1Lblb5B3sIaf/Wn5m7WFfTMaJumQlvGVMLlrF7+u/XIEe35tpLPoOQsZV1
+	 6MDPy9/t/MNfrt7tCsUtXzvLZjTpHCwzGrwmx/1daUjW5S8s29px7z8CZtrZNaUp52w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zcz1fL5l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2XsxCQ53;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A103606A31C;
-	Wed, 18 Nov 2026 17:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE0B606A320;
+	Wed, 18 Nov 2026 17:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zcz1fL5l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456A51F000C4;
-	Wed, 18 Nov 2026 17:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2XsxCQ53
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C921F000C4;
+	Wed, 18 Nov 2026 17:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024032;
-	bh=WWlgBzG3NRHXDl0jrYQBxL+V3MUdfTDHwAc+lBP/84M=;
+	s=korg; t=1795024035;
+	bh=sUhxxh7flmn1IDO0ew9d4kmEramY42vivluG4X/wJcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcz1fL5lxUgkHRz2unCOUUmFgITbR3LSvsNfG8w1dxJzBsC34NN6RvTrp+vUQi4+l
-	 AbYvWYF3OmQ+XArqvrF4Uv2lrDIRcLcA9Fahi8L8VoYtM9UmMSuXSR7EwlLGAri/YN
-	 cEDbEwEXJGw5T0gSC1CuJOEniH3kD3uot/oM9poM=
+	b=2XsxCQ53MaMsUIZIpx9WSIyZHohxjrxEAE2mFIIk79Qjb7u1MtvSaqqPoDqERhvs6
+	 1dvBF0Fdq0JA8AcgvA5jx9vXRz5IQ0ZIerK/pz0qMyufrFwm2sNYZrvVLSIzoAmdM7
+	 PFaePaaDUZU2UX/Y8hWNdnyVTUSY8KT/zRvObfZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -52,9 +52,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0581/2151] perf check: Add libbabeltrace to the listed features
-Date: Wed, 18 Nov 2026 15:38:36 +0100
-Message-ID: <20261118150143.120380962@linuxfoundation.org>
+Subject: [PATCH 6.18 0582/2151] perf test: perf data --to-ctf testing
+Date: Wed, 18 Nov 2026 15:38:37 +0100
+Message-ID: <20261118150143.154328966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -78,17 +78,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 8772598b7801a2bb235bd35a858017e0fb939c38 ]
+[ Upstream commit 9083ce531a1f7fb5186be934f42d884de34698da ]
 
-This enables scripts to more easily determine if `perf data --to-ctf`
-is supported.
+If babeltrace is detected check that --to-ctf functions with a data
+file and in pipe mode.
 
 Committer testing:
 
-  $ perf check feature libbabeltrace
-         libbabeltrace: [ on  ]  # HAVE_LIBBABELTRACE_SUPPORT
-  $ perf check feature -q libbabeltrace && echo have libbabeltrace support
-  have libbabeltrace support
+  $ perf test 'perf data convert --to-ctf'
+  124: 'perf data convert --to-ctf' command test                       : Ok
+  $ perf test -vv 'perf data convert --to-ctf'
+  124: 'perf data convert --to-ctf' command test:
+  --- start ---
+  test child forked, pid 556008
+           libbabeltrace: [ on  ]  # HAVE_LIBBABELTRACE_SUPPORT
+  Testing Perf Data Conversion Command to CTF (File input)
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.021 MB /tmp/__perf_test.perf.data.9TxzZ (115 samples) ]
+  [ perf data convert: Converted '/tmp/__perf_test.perf.data.9TxzZ' into CTF data '/tmp/__perf_test.ctf.f5EkS' ]
+  [ perf data convert: Converted and wrote 0.012 MB (115 samples) ]
+  Perf Data Converter Command to CTF (File input) [SUCCESS]
+  Testing Perf Data Conversion Command to CTF (Pipe mode)
+  [ perf record: Woken up 2 times to write data ]
+  [ perf record: Captured and wrote 0.047 MB - ]
+  Failed to setup all events.
+  [ perf data convert: Converted '/tmp/__perf_test.perf.data.9TxzZ' into CTF data '/tmp/__perf_test.ctf.f5EkS' ]
+  [ perf data convert: Converted and wrote 0.000 MB (0 samples) ]
+  Perf Data Converter Command to CTF (Pipe mode) [SUCCESS]
+  Unexpected signal in main
+  ---- end(0) ----
+  124: 'perf data convert --to-ctf' command test                       : Ok
   $
 
 Signed-off-by: Ian Rogers <irogers@google.com>
@@ -105,21 +124,120 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: a5cac2df8b4a ("perf build: Remove leftovers of removed build options")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-check.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../shell/test_perf_data_converter_ctf.sh     | 104 ++++++++++++++++++
+ 1 file changed, 104 insertions(+)
+ create mode 100755 tools/perf/tests/shell/test_perf_data_converter_ctf.sh
 
-diff --git a/tools/perf/builtin-check.c b/tools/perf/builtin-check.c
-index d19769a8f6897..a6e4cc6bd51a4 100644
---- a/tools/perf/builtin-check.c
-+++ b/tools/perf/builtin-check.c
-@@ -43,6 +43,7 @@ struct feature_status supported_features[] = {
- 	FEATURE_STATUS("dwarf_getlocations", HAVE_LIBDW_SUPPORT),
- 	FEATURE_STATUS("dwarf-unwind", HAVE_DWARF_UNWIND_SUPPORT),
- 	FEATURE_STATUS_TIP("libbfd", HAVE_LIBBFD_SUPPORT, "Deprecated, license incompatibility, use BUILD_NONDISTRO=1 and install binutils-dev[el]"),
-+	FEATURE_STATUS("libbabeltrace", HAVE_LIBBABELTRACE_SUPPORT),
- 	FEATURE_STATUS("libbpf-strings", HAVE_LIBBPF_STRINGS_SUPPORT),
- 	FEATURE_STATUS("libcapstone", HAVE_LIBCAPSTONE_SUPPORT),
- 	FEATURE_STATUS("libdw-dwarf-unwind", HAVE_LIBDW_SUPPORT),
+diff --git a/tools/perf/tests/shell/test_perf_data_converter_ctf.sh b/tools/perf/tests/shell/test_perf_data_converter_ctf.sh
+new file mode 100755
+index 0000000000000..334eebc9945eb
+--- /dev/null
++++ b/tools/perf/tests/shell/test_perf_data_converter_ctf.sh
+@@ -0,0 +1,104 @@
++#!/bin/bash
++# 'perf data convert --to-ctf' command test
++# SPDX-License-Identifier: GPL-2.0
++
++set -e
++
++err=0
++
++perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
++ctf_dir=$(mktemp -d /tmp/__perf_test.ctf.XXXXX)
++
++cleanup()
++{
++	rm -f "${perfdata}"
++	rm -rf "${ctf_dir}"
++	trap - exit term int
++}
++
++trap_cleanup()
++{
++	echo "Unexpected signal in ${FUNCNAME[1]}"
++	cleanup
++	exit ${err}
++}
++trap trap_cleanup exit term int
++
++check_babeltrace_support()
++{
++	if ! perf check feature libbabeltrace
++	then
++		echo "perf not linked with libbabeltrace, skipping test"
++		exit 2
++	fi
++}
++
++test_ctf_converter_file()
++{
++	echo "Testing Perf Data Conversion Command to CTF (File input)"
++	# Record some data
++	if ! perf record -o "$perfdata" -F 99 -g -- perf test -w noploop
++	then
++		echo "Failed to record perf data"
++		err=1
++		return
++	fi
++
++	# Cleanup previous ctf dir
++	rm -rf "${ctf_dir}"
++
++	# Convert
++	if ! perf data convert --to-ctf "$ctf_dir" --force -i "$perfdata"
++	then
++		echo "Perf Data Converter Command to CTF (File input) [FAILED]"
++		err=1
++		return
++	fi
++
++	if [ -d "${ctf_dir}" ] && [ "$(ls -A "${ctf_dir}")" ]
++	then
++		echo "Perf Data Converter Command to CTF (File input) [SUCCESS]"
++	else
++		echo "Perf Data Converter Command to CTF (File input) [FAILED]"
++		echo "    Output directory empty or missing"
++		err=1
++	fi
++}
++
++test_ctf_converter_pipe()
++{
++	echo "Testing Perf Data Conversion Command to CTF (Pipe mode)"
++
++	# Cleanup previous ctf dir
++	rm -rf "${ctf_dir}"
++
++	# Record to stdout and pipe to $perfdata file
++	if ! perf record -o - -F 99 -g -- perf test -w noploop > "$perfdata"
++	then
++		echo "Failed to record perf data"
++		err=1
++		return
++	fi
++
++	if ! perf data convert --to-ctf "$ctf_dir" --force -i "$perfdata"
++	then
++		echo "Perf Data Converter Command to CTF (Pipe mode) [FAILED]"
++		err=1
++		return
++	fi
++
++	if [ -d "${ctf_dir}" ] && [ "$(ls -A "${ctf_dir}")" ]
++	then
++		echo "Perf Data Converter Command to CTF (Pipe mode) [SUCCESS]"
++	else
++		echo "Perf Data Converter Command to CTF (Pipe mode) [FAILED]"
++		echo "    Output directory empty or missing"
++		err=1
++	fi
++}
++
++check_babeltrace_support
++test_ctf_converter_file
++test_ctf_converter_pipe
++
++exit ${err}
 -- 
 2.53.0
 
