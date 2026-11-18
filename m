@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032862;
-	b=Dgu89Ug9G7rzwsdWHWjWSWtfx87PrPLA4NObyBCOhN3bCtiB01tjv3PVRI8mrS8imtNA
-	 u22IrkC0ZLyMHBDBH8IXHwC1tU/8S7Yc/WoOuJ7VNJAPZOC1Hsva50/jAHis2a0OdqqGp
-	 xbhy0/VZCu/uEtpp0sy71fwAkoZslT8A2DU791VPE33ilVb94fGthcZrT/s+dHYni3f8k
-	 dbJz3E/aAX6EbL2EMbFjTAidiygFMczFMIwSlpoff19xNOU7B0nQtrwONw+QfSkfU5ckU
-	 sO0pkqS66R+u3AFooO59d+CX3vaWKHA0DqFKePUc7tB27b43WnbuMOYvxyPO+M75Nog==
+	t=1795032865;
+	b=hF/fm8VZelnhYJyc8hVnxEyAJD3uwSbO34ujA4+OguiZbsMaHyo8homd1rSN44soIXxW
+	 2A6oBRjA4phfkNanO0nyN6ESY+dlOH+dy0vTtLbxQA2N7NaxsEdLRi9K08taa+8gIFwnM
+	 8tQKRSHEIfz7Hte8fIIfpakNDhUtaZ2Qbh++BdtOAD+0XqPPZEFTlNKaehq/7iV1tyKKJ
+	 p6lXQGLi4llCZw4JE0vHID6ZVSLt3NnYc0DGekTnRVH4mgPjmqb4TeW4WV3xyWtNnQDBq
+	 E3StnFVgTAgeoWX5rxhMYv+GnQDXq8JeNNMxdt9IvAqTYOz2heMb/keByBG73ltCLCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4Q8cjJoxzmXkyw0FWOk7Akqb4MGYq41hgCm22+jFz+8=;
-	b=B6PVugXOnacwr8gx0yvzqjmDcBVjIFUBLznJFOyV0NdVpwFa8zaV+N/uKcUoLWYiYf69
-	 LYQFURoSRYLGoUj8zv+S3/8OqDdmfUablZFT5vZRTpDLAip6e2q0MTINP5amLAgtNR+2v
-	 6fd/nsTEMosi7DgY+Rp6eIk3QynPiyH/82RcD1Hdd2HrivyiQUg3jJUTENRViZVaKSNUT
-	 fKchEhnNWKTBI8vwcnSvWyVgHVosxVy+GeHkxkzgipCGM4c0PbAmBamjq1OaiS5O47DWH
-	 1MqRMmKGMDeUA9HFhfTUJGkQhmkjY01ivPXvXiubYgrejnFCQ3ZVH5AmfmAmJ7U1Sag==
+	bh=Zq9DPYQzPNHoAx1CGsA7ez624AHYfu292TA1FEGOE+8=;
+	b=WLZzy6uxEvZy8R4mKuU7+ldYJ7rxuUR++JdSApzWPI+EwR/J/omJ7Bc+0yvq18czy2lo
+	 H/ZV+zq32N28S/Fp3YqYFM0BS/Gu/uszNIk9gED2QLGLZYMz6JPw/BMceIl+dcPut1zuY
+	 spXVo9+uL7wo2UF2v3gAwEvzZUx/naJ9dlHI4DxF/97ltybGfyvibpTvWnvMjqkEyVsq7
+	 47p+jGqsDnq2QfnfHc3ZGxAn16AuditnIbn6GVdR8B0UeaLWKY6fQKM9TqQqS7GajaYkX
+	 1uIWZ4ra95fiM9UaGG5JmcT0vLCfgc4baqiqmxPIQ9bRUkcRW11SGQ//RhLK/3+cR0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvBcyKLo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRGRWW3v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E43606A32F;
-	Wed, 18 Nov 2026 20:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2E460A261A;
+	Wed, 18 Nov 2026 20:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvBcyKLo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E29F1F000C4;
-	Wed, 18 Nov 2026 20:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRGRWW3v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3623A1F000C4;
+	Wed, 18 Nov 2026 20:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032862;
-	bh=4Q8cjJoxzmXkyw0FWOk7Akqb4MGYq41hgCm22+jFz+8=;
+	s=korg; t=1795032864;
+	bh=Zq9DPYQzPNHoAx1CGsA7ez624AHYfu292TA1FEGOE+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qvBcyKLo3wuw+0qLLxcXgNKN3F2p5EjLMzuhdqBQiqPzPLGH4GHPnIxfkbJg1+Yqh
-	 71wqsTYOuTpcANDvTeXdVzEf2yptLU9IGRUEpZDUjA+Tqn3NVgc0ts+efuwkzFVEye
-	 YI8v6pGfl6iUt4O4sIaPRhqE4VxIFBa4wEFaygK8=
+	b=VRGRWW3vvHBCB3NeZUM7AEgFQDMwve6cVjVGAxgDzDvDoVTbwXn7aw+RJOHtwMNxA
+	 Plex56BapP1KhpR4iifF1tjb04AggUvI3mB+ZLI9NlznwEauTdjpZypORWxGlyOnJB
+	 PTKcLFWVd0L7Cx+2t7j1LLdy43WTAvDYGP/3D8p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Eric Joyner <eric.joyner@amd.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1509/1756] ionic: fix port_info use-after-free on firmware recovery
-Date: Wed, 18 Nov 2026 16:00:36 +0100
-Message-ID: <20261118150108.975305482@linuxfoundation.org>
+Subject: [PATCH 6.12 1556/1756] maple_tree: Replace mt_free_one() with kfree()
+Date: Wed, 18 Nov 2026 16:01:23 +0100
+Message-ID: <20261118150111.175787046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,71 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Pedro Falcato <pfalcato@suse.de>
 
-[ Upstream commit d90d1a768b3b022c52beafb3a4701ee2ee3d2b5e ]
+[ Upstream commit 025f93101bb4e0a0cdc0fc4ee264f7905271ad75 ]
 
-ionic_port_init() allocates port_info when the pointer is NULL, but its
-error path frees it without checking whether this call allocated it.
-Before commit ddc5911b9bd2 ("ionic: call ionic_port_init after
-fw-upgrade") the function returned early when the buffer already
-existed, so the two were symmetric.
+kfree() is a little shorter and works with kmem_cache_alloc'd pointers
+too. Also lets us remove one more helper.
 
-Since then a failed PORT_INIT on either recovery path - fw_up or
-reset_done - frees a buffer an earlier init owns, while the netdev is
-registered and the ethtool ops are reading it.
-
-Free only what this call allocated.
-
-Fixes: ddc5911b9bd2 ("ionic: call ionic_port_init after fw-upgrade")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-1-57232013fd79@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Stable-dep-of: baed735a956f ("maple_tree: fix maple_range_64 crashes in RCU mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ lib/maple_tree.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 533df5993048f..f3d48d0c9ea81 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -715,6 +715,7 @@ int ionic_port_init(struct ionic *ionic)
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index 41fb935134917..f18c06c23a0ed 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -169,11 +169,6 @@ static inline int mt_alloc_bulk(gfp_t gfp, size_t size, void **nodes)
+ 	return kmem_cache_alloc_bulk(maple_node_cache, gfp, size, nodes);
+ }
+ 
+-static inline void mt_free_one(struct maple_node *node)
+-{
+-	kmem_cache_free(maple_node_cache, node);
+-}
+-
+ static inline void mt_free_bulk(size_t size, void __rcu **nodes)
  {
- 	struct ionic_identity *ident = &ionic->ident;
- 	struct ionic_dev *idev = &ionic->idev;
-+	bool allocated = false;
- 	size_t sz;
- 	int err;
+ 	kmem_cache_free_bulk(maple_node_cache, size, (void **)nodes);
+@@ -5294,7 +5289,7 @@ static void mt_free_walk(struct rcu_head *head)
+ 	mt_free_bulk(node->slot_len, slots);
  
-@@ -726,6 +727,8 @@ int ionic_port_init(struct ionic *ionic)
- 						     GFP_KERNEL);
- 		if (!idev->port_info)
- 			return -ENOMEM;
-+
-+		allocated = true;
+ free_leaf:
+-	mt_free_one(node);
++	kfree(node);
+ }
+ 
+ static inline void __rcu **mte_destroy_descend(struct maple_enode **enode,
+@@ -5378,7 +5373,7 @@ static void mt_destroy_walk(struct maple_enode *enode, struct maple_tree *mt,
+ 
+ free_leaf:
+ 	if (free)
+-		mt_free_one(node);
++		kfree(node);
+ 	else
+ 		mt_clear_meta(mt, node, node->type);
+ }
+@@ -5604,7 +5599,7 @@ void mas_destroy(struct ma_state *mas)
+ 			mt_free_bulk(count, (void __rcu **)&node->slot[1]);
+ 			total -= count;
+ 		}
+-		mt_free_one(ma_mnode_ptr(node));
++		kfree(ma_mnode_ptr(node));
+ 		total--;
  	}
  
- 	sz = min(sizeof(ident->port.config), sizeof(idev->dev_cmd_regs->data));
-@@ -742,10 +745,12 @@ int ionic_port_init(struct ionic *ionic)
- 	mutex_unlock(&ionic->dev_cmd_lock);
- 	if (err) {
- 		dev_err(ionic->dev, "Failed to init port\n");
--		dma_free_coherent(ionic->dev, idev->port_info_sz,
--				  idev->port_info, idev->port_info_pa);
--		idev->port_info = NULL;
--		idev->port_info_pa = 0;
-+		if (allocated) {
-+			dma_free_coherent(ionic->dev, idev->port_info_sz,
-+					  idev->port_info, idev->port_info_pa);
-+			idev->port_info = NULL;
-+			idev->port_info_pa = 0;
-+		}
+@@ -6638,7 +6633,7 @@ static void mas_dup_free(struct ma_state *mas)
  	}
  
- 	return err;
+ 	node = mte_to_node(mas->node);
+-	mt_free_one(node);
++	kfree(node);
+ }
+ 
+ /*
 -- 
 2.53.0
 
