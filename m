@@ -1,53 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039178;
-	b=QIOS6Q2K3wcK4yRzJ7i2Y2AO2Pn97pnsz4w6ZGzlreWWbw8BtLGDvSdeqt8RqQE2BALX
-	 TR+HuxuebeP2Z8NCUKsubbfQ7PW1/lApHSoBVmQ0XKN8KCYPyLOzWWR8LRlOqPbN9adDY
-	 +G/nc6YQd6F+I+kO0QCL6fyjlYExFtnPU69ZBE1uAUvTmo1ZDJkySDuXEPa8kdXBMFROs
-	 iqk+8qJyi9jyZeSKdH66pM2wxZWgV9wM14djYB8czKKpH8VeN5kAYcKwtsoalKZ2crNUG
-	 ZHVYZZZYpvyDyOje2MkC9V+KcnSfKyJEzFHsAFncujct9CCV5qpsPJfCyjaIpa6pBYw==
+	t=1795039180;
+	b=Teszo7zlAD9pq747RJleYRIkpSg7ZUcW0r0zTQBZTMk2kaddEYW2q8eh0v0+ZFxN+uT+
+	 Vyz2JMQiFn80MlBoL34xhtJxu4eMzOzPDm2hspZftN6HcUY4m7yww3cxVItcwsyxTMBLB
+	 ZDNfdwv61sTt2w8ewmaneIRQhzPetG2EHMSM9MrR6iU+YS5sNZNI6Gd6dCS9SypdO7vaj
+	 WJDUEIOTCKW9B5FsokoJi9Ye+ePjWFzzDgOTmKWRP9KducAE+r+rwKTLnS3ox9itlXZSd
+	 lfA0wMBnVOTp3J25mmGe2qrcNydD8REPhcNQHi1qwnjuHAuMAgfnqY2VoBJqYMy8LEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039180;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=857dF8gboFCzMSQNoi92XSizMXnCvbeqohTrBDB0A50=;
-	b=GfDwlObZ6LT9XP72G3oAfp9E77gzqNxOtKPiqC75PDMoy3B+HCYiRhPs3IKLAeo1kxrc
-	 70aLQq+bUmRdCB0evozIgTu4WE3cp28yTfnvu6unaqdOfuwJBTMQleZ3J2ZEMNOJRMz86
-	 mAqAfaujgloqWsRr2t6nZyDJcctidE4ibp3cq5deNsqcnAir3c5JdEykSQlXIUhBZdfZy
-	 yZBuGl3AuBz2NvP7CY+XsLlKv+PcljZJnPsHBXBGMpsdOsBFEYedDAvXJGOnU1tEKf39U
-	 xFDz/237OdXgPgp8tTKNVC89mmFSpExSTs+gErox0edy+H5CjwtZ6O7Pu3971mospDQ==
+	bh=HtbkDzaiXxhOBUDalUy91X/DoNp712wZiKNLLtVG71w=;
+	b=tsEIy5V7mYWqtZMrKAc4UiqebiZS0onEegYqKxzMwL6QQ4sbxwqO1038spGLcR86+I56
+	 LxwA3IbYRXWqTJUy0YP2dn7PZ3QeIWFW3RBj96Xj22ZsVQDH9DZGEdj8wDD2t6p9tPCBk
+	 7n4MQuebqjoqCWI/OWB0E6xBh8/SLU5VC6dNPK6xEJxPHjULHO/2zaraVLiZLRgP1/T7L
+	 HlC6FufvrmBJ/93IbWCt+gQUmHqeiw80/ohbGjP6vC+dciNSpNBLhmxP6oPXrUAz89SLd
+	 CTgoQGLwjYgzSSHIzQlHBIZjmBPryf8aCZga7F+yvNlwtTIqe+Qkwowwf4H21h0obKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgnKwGSo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YwhIQKTJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A921606A320;
-	Wed, 18 Nov 2026 21:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6407606A320;
+	Wed, 18 Nov 2026 21:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgnKwGSo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CCF1F000C5;
-	Wed, 18 Nov 2026 21:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YwhIQKTJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD241F000C4;
+	Wed, 18 Nov 2026 21:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039178;
-	bh=857dF8gboFCzMSQNoi92XSizMXnCvbeqohTrBDB0A50=;
+	s=korg; t=1795039180;
+	bh=HtbkDzaiXxhOBUDalUy91X/DoNp712wZiKNLLtVG71w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgnKwGSoS5lmxpIQikAhAMtSXcWbyl8JfqiacFrv4bByNj+0wMXDZ7arU6xfBy8tu
-	 OTmzh3EqIIMbYHU5Qlrra1fBFXqBCowbzVK1vI+RN5jBjU/5CMSI0VHYA76uaDGa1l
-	 Bcml3B3m3OfSrFG6QuQpDS0lro19j2Rvq6pkqNKw=
+	b=YwhIQKTJJbZkBCCcEfYUp3KrqrSzK04zcWySIaoughApvluaEvCBBdj9kXT/IDnOO
+	 Dg8wrqc+QwlDAZzRjMdUvSTBtNT4Ddt2TqbyfURJFZd4o6kgeKQBQDjsOyOLSQ9gUx
+	 aqWoGhLOoJXv2m8Dpt/Pkx5PtP3YwjkB6Vwzv/3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1965/3318] mm/shmem: fix accounting of swapin-error markers
-Date: Wed, 18 Nov 2026 15:43:07 +0100
-Message-ID: <20261118150421.039557897@linuxfoundation.org>
+Subject: [PATCH 6.6 1966/3318] mm/cma: accept memory of CMA areas reserved at a fixed address
+Date: Wed, 18 Nov 2026 15:43:08 +0100
+Message-ID: <20261118150421.070330408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,123 +76,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09 ]
+[ Upstream commit f8f9cbc34a309a388c052706f3329d1b52985aa3 ]
 
-A failed swap read replaces the swap entry with a swapin-error marker in
-the page-cache and subtracts its pages from "alloced" and "swapped";
-however, it leaves their block charge in place.
+CMA areas allocated from memblock have their memory accepted by
+memblock_alloc_range_nid(), but areas reserved at a fixed address with
+memblock_reserve() are not.
 
-Removing the marker during truncate then subtracts from "swapped" again.
-This can underflow the counters or make swapped reach zero while other
-pages remain swapped out, causing swapoff to loop without finding them.
+If a fixed CMA area is requested by the cma=<size>@<base> command line
+parameter, it may be in regular RAM and on TDX and SEV-SNP guests it
+must be accepted.
 
-When installing the marker, subtract only from "swapped" and let
-shmem_recalc_inode() reduce "alloced" and release the block charge.
+Accept the memory of fixed CMA areas as well, so that all CMA areas are
+accepted regardless of how they were reserved.
 
-Make shmem_free_swap() report successful removal separately from the
-number of swap pages freed, so removing a swapin-error marker does not
-subtract from "swapped" again.
-
-It's a bit confusing, but replacing a swapped out page by a swapin-error
-marker in shmem_set_folio_swapin_error() behaves as follows:
-
-Initially:
-	alloced=1, swapped=1, nrpages=0
-Calling shmem_recalc_inode(inode, 0, -1)
-	-> swapped = 0
-	-> freed =  1 - 0 - 0 = 1
-	-> alloced -= freed
-	-> alloced=0, swapped=0, block charge released
-
-Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
-Cc: stable@vger.kernel.org
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-14-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adapted multi-page softleaf_t swap handling to older swp_entry_t APIs for single-page entries. ]
+Link: https://lore.kernel.org/20261029-cma-multi-v1-2-2cbced8b5cb7@kernel.org
+Fixes: 75d090fd167a ("x86/tdx: Add unaccepted memory support")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Tested-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: moved accept_memory() from cma_fixed_reserve() to the fixed-address branch of cma_declare_contiguous_nid(); 6.6's accept_memory() takes (start, end), so pass base + size ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ mm/cma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 74517e446f63f..adb0215ba0b41 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -855,18 +855,24 @@ static void shmem_delete_from_page_cache(struct folio *folio, void *radswap)
- }
- 
- /*
-- * Remove swap entry from page cache, free the swap and its page cache.
-+ * Remove a swap entry or swapin-error marker at index.
-+ * Return whether it was removed, counting freed swap pages in nr_swaps_freed.
-  */
--static int shmem_free_swap(struct address_space *mapping,
--			   pgoff_t index, void *radswap)
-+static bool shmem_free_swap(struct address_space *mapping,
-+		pgoff_t index, void *radswap, long *nr_swaps_freed)
- {
-+	const swp_entry_t swp = radix_to_swp_entry(radswap);
- 	void *old;
- 
- 	old = xa_cmpxchg_irq(&mapping->i_pages, index, radswap, NULL, 0);
- 	if (old != radswap)
--		return -ENOENT;
--	free_swap_and_cache(radix_to_swp_entry(radswap));
--	return 0;
-+		return false;
-+	/* A swapin-error marker holds no swap slot, so just drop it. */
-+	if (!non_swap_entry(swp)) {
-+		free_swap_and_cache(swp);
-+		(*nr_swaps_freed)++;
-+	}
-+	return true;
- }
- 
- /*
-@@ -1019,8 +1025,8 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
--				nr_swaps_freed += !shmem_free_swap(mapping,
--							indices[i], folio);
-+				shmem_free_swap(mapping, indices[i], folio,
-+						&nr_swaps_freed);
- 				continue;
- 			}
- 
-@@ -1088,12 +1094,12 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
--				if (shmem_free_swap(mapping, indices[i], folio)) {
-+				if (!shmem_free_swap(mapping, indices[i], folio,
-+						     &nr_swaps_freed)) {
- 					/* Swap was replaced by page: retry */
- 					index = indices[i];
- 					break;
- 				}
--				nr_swaps_freed++;
- 				continue;
- 			}
- 
-@@ -1847,11 +1853,10 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	folio_wait_writeback(folio);
- 	delete_from_swap_cache(folio);
- 	/*
--	 * Don't treat swapin error folio as alloced. Otherwise inode->i_blocks
--	 * won't be 0 when inode is released and thus trigger WARN_ON(i_blocks)
--	 * in shmem_evict_inode().
-+	 * Let shmem_recalc_inode() reduce alloced and release the block charge
-+	 * for the freed swap pages.
- 	 */
--	shmem_recalc_inode(inode, -1, -1);
-+	shmem_recalc_inode(inode, 0, -1);
- 	swap_free(swap);
- }
+diff --git a/mm/cma.c b/mm/cma.c
+index ac363f16d3923..906bad0393ddd 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -318,6 +318,8 @@ int __init cma_declare_contiguous_nid(phys_addr_t base,
+ 			ret = -EBUSY;
+ 			goto err;
+ 		}
++
++		accept_memory(base, base + size);
+ 	} else {
+ 		phys_addr_t addr = 0;
  
 -- 
 2.53.0
