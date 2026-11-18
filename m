@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039941;
-	b=PljoV8ZNFKmR0FkY1gN3nWzuMPCCRG7UZq3daGBI6RDVygUIn5ojYZJ4TQohvUJEb6JS
-	 N6Nc6VsEr1h25dZkJRprbjDpGrmg8BJbJGC5Rz9izDsg+x1bwS11+D5H6LZP4L1L4x5qE
-	 RWK3L7i9a+kDJqykXnYwxNqCpHf0sLD2OhRvODrf4vsYPV6AkzxLNSOnBrCvCswLbVFT6
-	 w62f5Zf0qS5irvTGu+E5wIZH6KSDsrLtUGtMtgvjJNQ/rdOBNSrTwqRVrCirlyVVnKxuW
-	 0Y8BBhMjBdAeVobiOHqXe1LZ9LQAXeHnbfmlkW6OtB6CdG2Y6nlSHsiZNa8Eroc4F7A==
+	t=1795039944;
+	b=Y3iGUuE841JfYdJAjGlbqqujrfqH/wzhdsPl4HzvXpQRxqsHTzfPk5r0opPModA2Ic9P
+	 CO3yaGtmDMm86dRC8h07iSf+Fd7hzBwwFTHXzUWKV3JdDC+vqYc6IaOGJu12iJsdlxMOj
+	 ZkXY2SXR259Av6MeByuNNEvze9IW9Ht+IXWCw2HphVRJbHIHLjCkgLgsyXqjV0oYyqIrh
+	 pRHMAY/4BKuCYqvFDza6O0xh183+lm3jjmiWBmC/GtRqBhiNmy/3I0r44Cpx7ZH/b0dGt
+	 2f+a2aFuyZBn1yHtFp502zwkR1BaKbQr8Lz6ZKXYwxAeo2JBsXXISGhyroNH+GSTrsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r6YuNPCV0Y5zIzWCcObQ5mugDARXgN25UHFG7xh67Wc=;
-	b=DI6S+tDS7owNKjc6g9t4ffD748j9RUbiwSFUGOJ+HMD6ADdoP0rWhtqv3V7e6a9RmhIT
-	 jX5G3he7lbDd39O0YeZdKTFvZwFwa7kbfff8yXVI4PE+U19/6sVDS3IG5pghy67ToAGEH
-	 rXZPEee++NBH8Y7+2YAC4qLVYLgHqe2OS7HutfhfjN4vCG03mvrJa75saC8WnE0vbO4+7
-	 EIgGMK0bc9LIFePzozaysYiE3U6ObVcimXTG9z45gzeJeVVEKT385oZanqHFDZI/DsLxg
-	 pafRomaYIifCuk3z/p074AjALPrOKY8OpDoDiYBHhi8caZPIdIf9J5GQmdZCZoVxbCg==
+	bh=Dx3DFWL7sFA0IWvmHUDqb9vV5btdmhG7L35If0HhlcU=;
+	b=u96uZ3FAZ4ww8NCyHlAssDUsMAB/L1JP5e59DD3pxI+VqEdk7tELMVnru9yva1tBk3uN
+	 gUESuK5pTF90H35BMhgev52ZcvC0CBA4LzWfHuQGnLHOkvsHDfxmbsLXv+sAhfA/1Pp2h
+	 Vd1Xu08b9yRF8TZtFq/AOa7IL0KFy4MYPxVxrgM431uBDteTK8syHMjtDP6A7U6A2IvLD
+	 It/x4m72CpmdswBPtABbY/AIKh0Lx+O6A2EAkXV9f4ZwcaW36v6zbwQaYMUHL4UMWvKLE
+	 r80YsHCAF9u8LyqWx9kQpI6KKNWKKvnMgWnJu6ztIWRjGhLsenkRDrnG84vi5/j2ZCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+v5+4Xl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLozU38f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B28606A325;
-	Wed, 18 Nov 2026 22:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC4A606A325;
+	Wed, 18 Nov 2026 22:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+v5+4Xl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040BC1F000C4;
-	Wed, 18 Nov 2026 22:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLozU38f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32191F000C4;
+	Wed, 18 Nov 2026 22:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039940;
-	bh=r6YuNPCV0Y5zIzWCcObQ5mugDARXgN25UHFG7xh67Wc=;
+	s=korg; t=1795039944;
+	bh=Dx3DFWL7sFA0IWvmHUDqb9vV5btdmhG7L35If0HhlcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+v5+4XlM5KjNM/cxAzO5Vb/AXxmiA60ilve+V5LboRZw55H5ICykCBcle6djBhvR
-	 d5/ZfEczB/6XeWMg3cFJhr3pteri0R0qvRKFNFMrk0CFWcLFpqWIdsBd3t2XvrOcs5
-	 7mrULwS8PKEcSYWC5UoUvE5eYB7neI7g/5jbbHnE=
+	b=YLozU38fOtTUcji/8x4ZPSkBbQLlTA5898nO+zbHH3Ax0dNCQ4/9ch5dhTNVeJ8HD
+	 8OC1zHK8Gkk2NCEEiciQxINV8AcYecL6eqHB4P7AyHRDk2/BEEWmGd1N46MM1BewRM
+	 p7kKyVy0FQIYxnsNgOupbzrShluorBlYPNlFeaao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2281/3318] pstore: reject persistent RAM zones too small for the buffer header
-Date: Wed, 18 Nov 2026 15:48:23 +0100
-Message-ID: <20261118150430.201244455@linuxfoundation.org>
+Subject: [PATCH 6.6 2282/3318] KMSAN: fix memset() when using fortify-source, again
+Date: Wed, 18 Nov 2026 15:48:24 +0100
+Message-ID: <20261118150430.227352563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,50 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1b30df8662ac85a6759be4332f3bec7e3cb28efc ]
+[ Upstream commit 3555409e524a0279845f91273ba714998658c163 ]
 
-persistent_ram_buffer_map() computes
+Both kmsan and fortify-source replace the memset function. When both
+are enabled at the same time, the kmsan version gets used, which triggers
+a warning about fortify-source being nonfunctional:
 
-	prz->buffer_size = size - sizeof(struct persistent_ram_buffer);
+warning: unsafe memset() usage lacked '__write_overflow' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow-memset.c
+warning: unsafe memset() usage lacked '__write_overflow_field' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow_field-memset.c
 
-without checking that size is large enough to hold the header.  A
-ramoops zone configured with a tiny size (e.g. ramoops.pmsg_size=1)
-underflows buffer_size to a huge value, which defeats every bounds
-check in persistent_ram_write() and persistent_ram_write_user(); a
-write to /dev/pmsg0 then copies user data far past the end of the zone
-and corrupts kernel memory.
+Commit 78a498c3a227 already tried to address this, but this seems
+to only have worked for memcpy() and memmove() but not memset(),
+which is still lacking the macro definition when KMSAN is enabled.
 
-Reject zones that are not larger than the buffer header.
+Remove the incorrect #ifndef check around the memset() macro.
 
-Fixes: 404a6043385de ("staging: android: persistent_ram: handle reserving and mapping memory")
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-3-parri.andrea@gmail.com
+Fixes: ff901d80fff6 ("x86: kmsan: use __msan_ string functions where possible.")
+Fixes: 78a498c3a227 ("x86: fortify: kmsan: fix KMSAN fortify builds")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260618142951.1739694-1-arnd@kernel.org
 Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/fortify-string.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index 95675d4bab141..4d07280768975 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -507,6 +507,12 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
- 	prz->paddr = start;
- 	prz->size = size;
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index f7e1895367fa1..c32fd135cf053 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -534,10 +534,8 @@ __FORTIFY_INLINE void fortify_memset_chk(__kernel_size_t size,
+  * __struct_size() vs __member_size() must be captured here to avoid
+  * evaluating argument side-effects further into the macro layers.
+  */
+-#ifndef CONFIG_KMSAN
+ #define memset(p, c, s) __fortify_memset_chk(p, c, s,			\
+ 		__struct_size(p), __member_size(p))
+-#endif
  
-+	if (size <= sizeof(struct persistent_ram_buffer)) {
-+		pr_err("%s: persistent ram zone too small (%#llx bytes)\n",
-+		       prz->label, (unsigned long long)size);
-+		return -EINVAL;
-+	}
-+
- 	if (pfn_valid(start >> PAGE_SHIFT))
- 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
- 	else
+ /*
+  * To make sure the compiler can enforce protection against buffer overflows,
 -- 
 2.53.0
 
