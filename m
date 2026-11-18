@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057480;
-	b=bRwaqie2QFRABQxJtv/co9AZP1LNbLtaVjtRRtR9dGCOH3rsR3xBC8Tf3ISyfA/Hbl39
-	 T5wZDHB+JKJe8qlzp+JHRE5TPT+XbPCKbscmcuE1WgZvjK3XGZFfiYHLWnKGDOzJkGzDr
-	 hYJMOvgh1RNl0MWJj8qBX9h2f5Zqq953Oge4yzkXEDnzTUaGILxHjRlStlkDb1zP3e/E4
-	 sgWfgS5ie1yTJSqVi4BS7J5omzhMeDftB4poYBpgl739+lBbKfshjIAP3NqzmRRjeS4QN
-	 T0iWG4PJxq8n5175T8dxC92q3JOjf0FhetEfOJhlTcR8vDUGYIhjsDrBQE8GGwRaTJA==
+	t=1795057483;
+	b=NocU9z4B+36nfhL0ecN9sL6ATOive9pg3ZPy+NyZoGp1PfznplcqhA7xrkBBHq9E014E
+	 DLDZlRKOKutP9aRKxBQGw5Gne6V4r9PjhdFhdMr2LP1xbInkWXHT8NFOXvbtub6AcyuwO
+	 Mx4+cq4yeB0xorzDckvYVSfQme91iAVSa2toTaSNzh3lKal1sEZyQnJservppOv83SWfw
+	 D2jjakYgLKZ0KTpA1BbmXsD8FofPFbVC2ZWl3yn9zBY9EGsN8JQdj/QPKl8hWOyJ3nkLl
+	 Ep9XO6rsoRnL7lzKNx4K3Q4xfji7f54pZYPeM4l+WMCCbK4dxzah5kEcLW5HSqJ4/4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W64cTrNhFk1ZIisWpNpSnRQ8ilbAC6ZfTfRtVOz4i8I=;
-	b=ryrQwFcAKW2dSO3fNZtRb1QodLebzXMs55SUonKRFKb/MXI4mLBh0GxgMr5it9P6Gn4Z
-	 zoh1o14S34cIYfouMyFTdtBsodOzBuO+ZgNdW+9nq6Ks7jzxr+3za2A6VYil77m8Sm5Z5
-	 /x7xod799aLJ7JVAyiPCKN8bY/CbycPC6dFRESB32yOXh2mY0K8CldIq+51KAgxsc28gT
-	 GGOEqn1YIo80BsFzEO7bTpVp9VgxRuFCHieTvjtd93HmPgQHZovPERx6XVfu2pcjG61ok
-	 tIW6Qb4Os6HcRO32gBcu2RXkB7LYLKbQ8x7IPUxSWdt5Q3l4ze1xy+sQQEMEQI/DPkQ==
+	bh=qKWQ90udAja7Y8GF0LTuzQ2MuEWppoMukSRgoWNGTlY=;
+	b=kbo2Fx/AmkvGf9tPrR7xOtlkL3ih8jCLP6OuzJL67BEXAXTPfEcM7b+HNQMoxNSVxP/K
+	 m+DhrdE7whPe/Izk3msgtWXiTcPHKi+6XQTYsVfEaL5ba5ca6b5h6331P3cUmRqF7S+Ky
+	 BfGmdHkDLlBm9WzAuQ2jueR30YVIuPxKnq5PCkDdB3Q+pAPUb437qt2FwN9THtIEdeEOc
+	 kh08rt+5W5xEMMwOf0YM88fjBIpN96uBf0nq8lXQm9Wzexxxy+n75uqGi5rWNuk63qSqL
+	 hqBs4iFuwsJp0K2Mx7lJ7iG0+uHjvAGtgQKp56cHnptFIKVTh/ozM2KU0S5Bnrf2tQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQWzbC25;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MB3p2PT+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591C460A260D;
-	Thu, 19 Nov 2026 03:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D27D60A260E;
+	Thu, 19 Nov 2026 03:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQWzbC25
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2421F000C8;
-	Thu, 19 Nov 2026 03:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MB3p2PT+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B231F000C4;
+	Thu, 19 Nov 2026 03:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057480;
-	bh=W64cTrNhFk1ZIisWpNpSnRQ8ilbAC6ZfTfRtVOz4i8I=;
+	s=korg; t=1795057483;
+	bh=qKWQ90udAja7Y8GF0LTuzQ2MuEWppoMukSRgoWNGTlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQWzbC25x3TnbeIk0Dn/GgX0hjpvz/UJARlcZW2/ImD8Gxd5tkxQxm18fQdOSVdv2
-	 ZD/9bNNqRGsEJHa43jAuQcP7T9WTYQUalKhK12gdNy/owgs8JjTXU4gJrpC20Ummmv
-	 0G4jugULQEAPK11jSAtyUuiR02/wnwC4BrtLTSi0=
+	b=MB3p2PT+AbJEoPPNtHzg0giMO5tSeRNS3kGx/R/P8D0TH1xegrOpNMWKaPCxCPA3F
+	 BRpj0DiurleG+HOMO0Obvx37lRjVkrnhPLa9NsQHHTZcl6Knct0z75bVA2MG+lrhrb
+	 F7f49isAPKkNOn8uPYVyxv7RkI6NcSuK2J3jhuaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Simon Glass <sjg@chromium.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0138/1848] wifi: mt76: mt7603: fix U-APSD service period termination
-Date: Wed, 18 Nov 2026 15:36:16 +0100
-Message-ID: <20261118145917.059483251@linuxfoundation.org>
+Subject: [PATCH 5.10 0147/1848] kconfig: abort rather than loop for ever on EOF
+Date: Wed, 18 Nov 2026 15:36:25 +0100
+Message-ID: <20261118145917.432247556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,145 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Simon Glass <sjg@chromium.org>
 
-[ Upstream commit 697badc27a9b3b2a8d86092abeed767714f735a2 ]
+[ Upstream commit f915149f5cfbd0d4406ec0b0f57b1d2c8685ae55 ]
 
-Frames released from the driver PS queue were all tagged with MORE_DATA
-and none of them ever carried the EOSP bit, so from the client's point of
-view a U-APSD service period was started but never finished. Clients that
-keep their receiver on until EOSP arrives stop sending trigger frames,
-and all downlink traffic for that station stalls until they give up.
-ieee80211_sta_eosp() only cleared the service period state inside
-mac80211, which is why the mismatch went unnoticed.
+When a non-interactive 'make oldconfig' or 'syncconfig' meets a new int
+or hex symbol whose default cannot be applied, conf_string() reads a
+value from stdin. At end of file fgets() returns NULL, no value is set
+and the loop asks again. The result is an endless loop which fills the
+output until it exhausts memory, rather than a clean failure.
 
-Assign MORE_DATA per frame and set the wire EOSP bit on the last one. If
-the last released frame is a bufferable MMPDU it has no QoS control field
-to carry EOSP, so let mac80211 append a QoS-Null frame instead.
+Detect this in conf_string(): if the value cannot be set and stdin is at
+end of file, stop with an error that names the symbol.
 
-Also stop handing the remaining frame budget to
-mt76_release_buffered_frames() once frames have been released from the PS
-queue: both would signal the end of the same service period. Releasing
-fewer frames than requested is allowed, and MORE_DATA tells the client to
-trigger again.
+Note that a symbol with no default doesn't trigger this, since
+sym_calc_value() falls back to 0, which is accepted at end of file. The
+loop is triggered by a broken Kconfig file, with a default whose text
+fails sym_string_valid().
 
-Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Such mistakes do creep in from time to time and are hard to debug, since
+the build fills the log with repeated prompts instead of pointing at the
+offending symbol. Some bad defaults draw a parse-time warning, but
+menu_validate_number() accepts a reference to any int or hex symbol, so
+a cross-type reference loops with no warning at all. For example, "0xff"
+is not a valid int value:
+
+  config HEXSYM
+          hex
+          default 0xff
+
+  config VAL
+          int "Value"
+          default HEXSYM
+
+Interactive use is unaffected, since feof() only becomes true once a
+read actually hits end of file: an invalid answer at a terminal still
+re-prompts, while Ctrl-D at such a prompt exits with the error instead
+of looping. bool and tristate symbols and choices already accept the
+default on an empty line, so they still take their defaults in a
+non-interactive build.
+
+Tested with int and hex symbols carrying such defaults: with empty
+stdin, the code without this change produces around 190MB of repeated
+prompts within two seconds, while with the change it exits 1 naming the
+symbol. Piped and interactive (pty) sessions still re-prompt on an
+invalid answer and then accept a valid one. A new string symbol with no
+default still takes the empty string at end of file, since any text is
+valid for a string.
+
+Signed-off-by: Simon Glass <sjg@chromium.org>
+Link: https://patch.msgid.link/20260714133545.3294648-1-sjg@chromium.org
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/main.c  | 74 ++++++++++++++++---
- 1 file changed, 63 insertions(+), 11 deletions(-)
+ scripts/kconfig/conf.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/main.c b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
-index bdff89cc3105e..8df7debf0a8b6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
-@@ -406,13 +406,33 @@ mt7603_sta_ps(struct mt76_dev *mdev, struct ieee80211_sta *sta, bool ps)
- 	mt7603_ps_tx_list(dev, &list);
- }
- 
-+static struct ieee80211_hdr *
-+mt7603_ps_skb_hdr(struct sk_buff *skb)
-+{
-+	return (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
-+}
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index bc3a396bce99d..0b1f2553cd939 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -157,6 +157,23 @@ static int conf_string(struct menu *menu)
+ 		}
+ 		if (def && sym_set_string_value(sym, def))
+ 			return 0;
 +
-+/*
-+ * Buffered frames can be recycled into the PS queue by mt7603_filter_tx(), so
-+ * both bits have to be assigned, not just set.
-+ */
- static void
--mt7603_ps_set_more_data(struct sk_buff *skb)
-+mt7603_ps_set_flags(struct sk_buff *skb, bool more_data, bool eosp)
- {
--	struct ieee80211_hdr *hdr;
-+	struct ieee80211_hdr *hdr = mt7603_ps_skb_hdr(skb);
-+
-+	if (more_data)
-+		hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
-+	else
-+		hdr->frame_control &= ~cpu_to_le16(IEEE80211_FCTL_MOREDATA);
-+
-+	if (!ieee80211_is_data_qos(hdr->frame_control))
-+		return;
- 
--	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
--	hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
-+	if (eosp)
-+		*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
-+	else
-+		*ieee80211_get_qos_ctl(hdr) &= ~IEEE80211_QOS_CTL_EOSP;
- }
- 
- static void
-@@ -425,7 +445,10 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
- 	struct mt7603_dev *dev = hw->priv;
- 	struct mt7603_sta *msta = (struct mt7603_sta *)sta->drv_priv;
- 	struct sk_buff_head list;
--	struct sk_buff *skb, *tmp;
-+	struct sk_buff *skb, *tmp, *last;
-+	bool eosp_null, uapsd;
-+	u16 pending = 0;
-+	u8 last_tid;
- 
- 	__skb_queue_head_init(&list);
- 
-@@ -441,20 +464,49 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
- 
- 		skb_set_queue_mapping(skb, MT_TXQ_PSD);
- 		__skb_unlink(skb, &msta->psq);
--		mt7603_ps_set_more_data(skb);
- 		__skb_queue_tail(&list, skb);
- 		nframes--;
++		/*
++		 * A new int or hex symbol whose default fails validation
++		 * cannot be set from an empty answer. When standard input is
++		 * exhausted, as it is for a non-interactive oldconfig or
++		 * syncconfig, re-asking would loop forever and grow the output
++		 * until it exhausts memory. Stop with an error that names the
++		 * symbol instead. String symbols accept any text, and bool and
++		 * tristate symbols (conf_sym()) and choices (conf_choice())
++		 * accept the default on an empty line, so they are unaffected.
++		 */
++		if (feof(stdin)) {
++			fprintf(stderr,
++				"\nerror: no value for new symbol '%s' at end of input\n",
++				sym->name);
++			exit(1);
++		}
  	}
-+
-+	skb_queue_walk(&msta->psq, skb)
-+		pending |= BIT(skb->priority);
- 	spin_unlock_bh(&dev->ps_lock);
- 
--	if (!skb_queue_empty(&list))
--		ieee80211_sta_eosp(sta);
-+	last = skb_peek_tail(&list);
-+	if (!last) {
-+		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
-+					     more_data);
-+		return;
-+	}
-+
-+	/*
-+	 * End the service period here instead of passing the remaining frame
-+	 * budget on to mt76_release_buffered_frames(), which would signal the
-+	 * end of the same service period a second time.
-+	 */
-+	uapsd = reason == IEEE80211_FRAME_RELEASE_UAPSD;
-+	more_data |= !!(pending & tids);
-+
-+	skb_queue_walk(&list, skb)
-+		mt7603_ps_set_flags(skb, skb != last || more_data,
-+				    skb == last && uapsd);
-+
-+	/*
-+	 * EOSP lives in the QoS control field, so a bufferable MMPDU cannot
-+	 * terminate a U-APSD service period on its own. In that case mac80211
-+	 * has to append a QoS-Null frame, which ends the SP through its tx
-+	 * status.
-+	 */
-+	eosp_null = uapsd &&
-+		    !ieee80211_is_data_qos(mt7603_ps_skb_hdr(last)->frame_control);
-+	last_tid = __fls(tids);
- 
- 	mt7603_ps_tx_list(dev, &list);
- 
--	if (nframes)
--		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
--					     more_data);
-+	if (eosp_null)
-+		ieee80211_send_eosp_nullfunc(sta, last_tid);
-+	else
-+		ieee80211_sta_eosp(sta);
  }
  
- static int
 -- 
 2.53.0
 
