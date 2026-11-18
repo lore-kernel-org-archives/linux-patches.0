@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037505;
-	b=3BkLvmJBniSFgvaZ47ebP4XolRgg18zzrFMtnJCLvbc+mdXnFesn2zh+APHNqAqGGbsb
-	 WUsHF3Az+wCbIJi9tbt6bocuyYcNXpQFANz49M9WqbYN37S63h3OHGFuMCcICAG1OrnH1
-	 HZ3/yPv16xlPWyvLr8UsVyHuL7AWuUVAQD1bGJL3poUF/MbadGvYT/QSDpLoP61xT/hjD
-	 GSaI8RwGwByAD9+lB34SHXxoq11rTes8VYOlw8gyaddn9XP+JQehrtfq1Y82/tB7y2jO7
-	 kdDhLiylGWjGVFddGe4E5FwsZ337zo40vRf6XbazVI0fWdbw9oB+7cJwGrqHIZGlhlA==
+	t=1795037507;
+	b=cjOWc5Qy9mnSvKFaEgRRlFaRGn2/L7o/kN3KtbfKlXqf+aVTMoHBPBUEOWawAfdgtlgM
+	 T19d50Q0QraDDd55K0OYkoxJrfRfOn/g2mxkqc/KY9Ssn85cicH9Db7LSR3grxZLvAcJu
+	 jwFRnziTLV00GLi5NgEc4P9FJ+9Ch5KcrAGhGZgnRYwgxZCTyIxSccQx1jqn3RPcf6k5h
+	 rO4Qs52QzDhX0LAgqpyXeOFy7+iGJM8+32ctAYuoC1eynXntpHJb1QIRc8U1k1ziVNesw
+	 kIMKU59cQw3DAOhuKQV8aR21bNQvGtTsU9jeyBKCfhoSlnRqJnjo2qA9g6I8rakocCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LEY7qVkYwLVR6seGnNjwfkSKxHzSbebXg5Nf+oxXKJQ=;
-	b=Jf2gWqtVVbWx4TEFi8UUtZXlmKDDCQ1FRLT8T770IVFjL4mOvtqPhMmcgicj+BLi/ixJ
-	 uJV3iKmePN/hR7BgWhRRan/PTdOndNZsRMljB2hKuYt5mTD6tNyw4ktI0S1nvI5ZsBBoH
-	 6H+xBbX7vTh/2FP5fSaAu1Tn2c9krqlGM31j+bds8v9NYHpPylE365olzx5kpYdZflztS
-	 lmb96ItHIqh9Poep9ZYeCrQPQ2amx/B4Zspk27xZS59xTshcE7rOLtABcx+lQYyFfX9rA
-	 4OCKfJssRaBuYMK9ui97lY3YhlbYYL5BdGkf3NB8MHmBDw21Rywy5YTTns7WHTsupmw==
+	bh=xUVEBRdphjMVrmDNNZpazux7+i/C/RD/MBpHs11yUvg=;
+	b=cLiR7qSFeLEOlMmeA/mJsCLbMbW+jSsBpgB/CrxSufHAoo6Kq/qARRe4uoQyFEfawx/9
+	 ymqVRbGLPvj2PQGnLqLyw8rA05MWTqtU/XhMoIAwXTa9uOzvikBChDVWVQWc9/JrNvbn4
+	 5aUDEkJ4dq3Zx9RkgUvtY3M3F8ExZrl0Ov/LiU5N7V2qwdynwzfDO9YFoQzUMz1B1iZsJ
+	 58qjJWaHmgSQ/IfXL2OqIchk2DBMscwKdgDfsfkXgJ1SHAbnJ6bjhmne7R70FqofI2MsX
+	 aSWpvT2ucIMdqHP3g7XNaSTGzh429DHjAdZac2neVWUnQ4bs7bAApf5BMNo8bQFONSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dk4M6beM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ScREDKCZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D222606A32A;
-	Wed, 18 Nov 2026 21:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B73606A333;
+	Wed, 18 Nov 2026 21:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dk4M6beM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3790F1F000C6;
-	Wed, 18 Nov 2026 21:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ScREDKCZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C401F000C5;
+	Wed, 18 Nov 2026 21:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037504;
-	bh=LEY7qVkYwLVR6seGnNjwfkSKxHzSbebXg5Nf+oxXKJQ=;
+	s=korg; t=1795037507;
+	bh=xUVEBRdphjMVrmDNNZpazux7+i/C/RD/MBpHs11yUvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dk4M6beMcvZQ058M415KHuwqHUJzsfkBGJcQSyT/oAJ25EZHMi2OLoBPZEMQFQtmB
-	 FLUqeXEgFPoYG10R8NzcIqBBTI3N2iFZNzOzkzW5Kudcb7bdoSsmgBb7h6LOxn0hJg
-	 n3ppXaxFeNU5EtmVMUcAPJOpj+d/zHTFHrpQw7R8=
+	b=ScREDKCZ4fVNZzD9lHemP4+p4lUVtpZW9BBlY3mERO1O2IXjZ5uGBNn31jLlSilnT
+	 dYDd3vSNB+1HroInCj559xtL8CUCWY72cmgRgk1rwzwe4FpVJAapJsH8U2NNAFPgmS
+	 h8dzX7D+ighSoxHGr9R5TpRkk2XtoRUkFZq3q7vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franck Baur <franck.baur.67@gmail.com>,
+	Zhou Qiuyue <n0ps1edzz@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1418/3318] net: jme: keep RX MAC clock enabled for WoL
-Date: Wed, 18 Nov 2026 15:34:00 +0100
-Message-ID: <20261118150403.230498073@linuxfoundation.org>
+Subject: [PATCH 6.6 1419/3318] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
+Date: Wed, 18 Nov 2026 15:34:01 +0100
+Message-ID: <20261118150403.267250129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,151 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franck Baur <franck.baur.67@gmail.com>
+From: Zhou Qiuyue <n0ps1edzz@gmail.com>
 
-[ Upstream commit ed9179fc7228315fb745dc3b111bae446e6894d2 ]
+[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
 
-On the JMicron JMC250 revision 03, the MAC reset performed during
-suspend leaves GPREG1_RXCLKOFF set. Although the driver enables Magic
-Packet detection, the gated RX MAC clock prevents wake-up from ACPI S3.
+rawv6_send_hdrinc() caches the route before handing the skb to
+l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
+the original route, leaving the cached pointer stale.
 
-Keep the RX MAC clock enabled while WoL is armed. Restore the gated
-clock state immediately after disabling WoL during resume, preserving
-the RX engine initialization ordering.
+The function later dereferences that pointer for statistics accounting
+and as the output device passed to NF_HOOK(). Its RCU read-side critical
+section starts after l3mdev_ip6_out(), so it cannot prevent the old route
+from being reclaimed in between.
 
-Prevent concurrent link-change work from gating the clock again after
-WoL has been armed. Quiesce interrupt-driven link-change scheduling,
-synchronize pending interrupts, and cancel outstanding link-change
-work before programming WoL in suspend and shutdown paths.
+Reload the route from the current skb destination after
+l3mdev_ip6_out() returns.
 
-Restore the deferred processing state before requesting link
-reinitialization on resume.
+KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
+allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
+the related RCU callback queued from vrf_l3_out().
 
-Tested on an ASUS K42JE with JMC250 [197b:0250] rev 03 using a
-Debian 6.12.111 kernel and an externally built module. ACPI S3 wake
-with a Magic Packet completed in 19 seconds, while a control without
-a Magic Packet resumed through the RTC alarm after 123 seconds.
-Ethernet and SSH recovered after resume.
-
-S4 and S5 wake behaviour has not been validated with this revision.
-
-Fixes: 854a2e7c331a ("jme: Safer MAC processor reset sequence")
+Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Franck Baur <franck.baur.67@gmail.com>
+Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
 Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/jme.c | 37 ++++++++++++++++++++++++++++++++-----
- drivers/net/ethernet/jme.h |  1 +
- 2 files changed, 33 insertions(+), 5 deletions(-)
+ net/ipv6/raw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
-index a718207988f2c..2fd74ae243add 100644
---- a/drivers/net/ethernet/jme.c
-+++ b/drivers/net/ethernet/jme.c
-@@ -1502,7 +1502,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
- 		 * all other events are ignored
- 		 */
- 		jwrite32(jme, JME_IEVE, intrstat);
--		schedule_work(&jme->linkch_task);
-+		if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
-+			schedule_work(&jme->linkch_task);
- 		goto out_reenable;
- 	}
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index 95d7dd7a4d048..847c18e0a7207 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -646,6 +646,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
+ 	if (unlikely(!skb))
+ 		return 0;
  
-@@ -1546,7 +1547,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
- 	/*
- 	 * Re-enable interrupt
- 	 */
--	jwrite32f(jme, JME_IENS, INTR_ENABLE);
-+	if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
-+		jwrite32f(jme, JME_IENS, INTR_ENABLE);
- }
- 
- static irqreturn_t
-@@ -1892,6 +1894,7 @@ jme_powersave_phy(struct jme_adapter *jme)
- 		jme_set_100m_half(jme);
- 		if (jme->reg_pmcs & (PMCS_LFEN | PMCS_LREN))
- 			jme_wait_link(jme);
-+		jme_mac_rxclk_on(jme);
- 		jme_clear_pm_enable_wol(jme);
- 	} else {
- 		jme_phy_off(jme);
-@@ -3158,6 +3161,21 @@ jme_shutdown(struct pci_dev *pdev)
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct jme_adapter *jme = netdev_priv(netdev);
- 
-+	if (netif_running(netdev)) {
-+		set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
-+		netif_device_detach(netdev);
-+		netif_stop_queue(netdev);
-+		jme_stop_irq(jme);
-+		synchronize_irq(pdev->irq);
-+		jme_stop_irq(jme);
-+		cancel_work_sync(&jme->linkch_task);
-+		tasklet_disable(&jme->pcc_task);
-+		napi_disable(&jme->napi);
-+		tasklet_disable(&jme->txclean_task);
-+		tasklet_disable(&jme->rxclean_task);
-+		tasklet_disable(&jme->rxempty_task);
-+	}
++	/* l3mdev_ip6_out() may have replaced the skb dst. */
++	rt = dst_rt6_info(skb_dst(skb));
 +
- 	jme_powersave_phy(jme);
- 	pci_pme_active(pdev, true);
- }
-@@ -3172,11 +3190,16 @@ jme_suspend(struct device *dev)
- 	if (!netif_running(netdev))
- 		return 0;
- 
--	atomic_dec(&jme->link_changing);
--
-+	set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
- 	netif_device_detach(netdev);
- 	netif_stop_queue(netdev);
- 	jme_stop_irq(jme);
-+	synchronize_irq(jme->pdev->irq);
-+	jme_stop_irq(jme);
-+	cancel_work_sync(&jme->linkch_task);
-+	tasklet_disable(&jme->pcc_task);
-+	napi_disable(&jme->napi);
-+	atomic_dec(&jme->link_changing);
- 
- 	tasklet_disable(&jme->txclean_task);
- 	tasklet_disable(&jme->rxclean_task);
-@@ -3215,6 +3238,7 @@ jme_resume(struct device *dev)
- 		return 0;
- 
- 	jme_clear_pm_disable_wol(jme);
-+	jme_mac_rxclk_off(jme);
- 	jme_phy_on(jme);
- 	if (test_bit(JME_FLAG_SSET, &jme->flags))
- 		jme_set_link_ksettings(netdev, &jme->old_cmd);
-@@ -3226,8 +3250,11 @@ jme_resume(struct device *dev)
- 
- 	atomic_inc(&jme->link_changing);
- 
--	jme_reset_link(jme);
-+	napi_enable(&jme->napi);
-+	tasklet_enable(&jme->pcc_task);
-+	clear_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
- 
-+	jme_reset_link(jme);
- 	jme_start_irq(jme);
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/jme.h b/drivers/net/ethernet/jme.h
-index 860494ff37144..ec5dfddf73227 100644
---- a/drivers/net/ethernet/jme.h
-+++ b/drivers/net/ethernet/jme.h
-@@ -450,6 +450,7 @@ enum jme_flags_bits {
- 	JME_FLAG_SSET		= 2,
- 	JME_FLAG_POLL		= 5,
- 	JME_FLAG_SHUTDOWN	= 6,
-+	JME_FLAG_WOL_QUIESCE	= 7,
- };
- 
- #define TX_TIMEOUT		(5 * HZ)
+ 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
+ 	 * in the error path. Since skb has been freed, the dst could
+ 	 * have been queued for deletion.
 -- 
 2.53.0
 
