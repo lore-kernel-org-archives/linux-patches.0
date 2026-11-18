@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020400;
-	b=s+NLK8v0h+5wHc6OhYMzHG5GhzKl2+unC2M5rC5C9jBKIp+pTvh7RCjrEWTFMNi4oI+k
-	 j9h9R8UtuceU1w/oFWEtPoqT5dzKpHth1MyMY5/cc/d+ri3KlhYaJT3a2CTRlh5QQWUF0
-	 TS7KuUt2IW74q8cfzKEPuX66XDTcd9Qpig6GFtYxra2IkWNRsVL9Xw1+FdnwTui3qgMKp
-	 gW1oDucavTpL9b0mSH5MCZEhb1itFMqIhRt0+rE258w3TJucqE3rJl34SSoWLlRaVYmVV
-	 OiKKllkL1tPGF9h5olMk6Tlq9KS3zxYrprEHLKF8iGyXEsqiuU7HcKNO0Q0CHvrWPqg==
+	t=1795020402;
+	b=ycoQ05qHNRjXHwjWdJoGguwdFFXC1EsYrceZ/daCYhEqM17Bo7N5h9lSXgXt2gLrIvcu
+	 4vvzSR+408kGyFm+4G6r+CMJWToAObP0u0ANOq2mSPMLpNYdc9eLB//QbziNqwCl1W2ag
+	 6/sHCkMpgUc/iVGsPACv8ccoziHozBH3h5FeIAACTuB2YAIjkyIQFc5M0iP0f5RUwN1kc
+	 jC8WNpoA9JRfqEufpStzi0Zu39ou+AK37f7N7jIp2pMyatFXgVE+CWB2PuQXyto3cdLK1
+	 o9X0/cb45I8Sp+9MDbLa+CSMq9WdqbqyqG5v3xm5aW5TuAKK2CZnNKIB/msiDe1gyXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6jBy4AmgTIpTlQogAw1EiklmalM2dw6i/0i1BMXa8qw=;
-	b=PkTtHyXfHCcPWRq/ZqIUM4xOL7LGUeSNnDnZheDaqPUcYnmzvh5BixopBJ7ING63hfOQ
-	 9hhEKvdAXUNNpWYD4Q41HdC+7R5MwU4C5sYEctd67HfLpioZO/stln6LGIyDtbNe58jNr
-	 /lYmU+NfEmh9bxLN3aF6P2u91lUTTS09lXzlRBBewRGa1qlT20YTXx8EJF6vx+3MCCUSg
-	 YO5d+U4qRQBuSHEOEFFl1rgYzeUvWTJRoz2jnboSiZ1rDw/HiG8xCrrptDQobb5unzcVW
-	 FdaJ8DIdFTPKjsD7tF/OhSuMioSLouxjB6OGqgWabyAJ/a4rE6MnDkwnVvxYFPjKiLA==
+	bh=+esiDl8rA5uidmEJemYJM8JblQR5428HW1veib6SwrI=;
+	b=A6ZTmNTYnW7FmC1lxxlqwWwbiCmRVPGh1L1i9Boxn1oAlA8xwBzj+QIzl+s9KI5x/lQr
+	 5yNB736mlHABFpd3a2yRbDvld9Nw9vVmsTP4Aq7VxPeN6+RsQjxjDf0Q5/jjVGhUsS79Y
+	 mKLGi63+IhOLXlHDLmSsUwsPH/3hb7znTMrcUdiBvZPqAjXolx/FpOtsm3JSzY+NMyWvx
+	 DZ8r2j1gDNhvXLotgioi5ASSWWEa23Oqi8P+i7xuJko/HXcMSa+D/zXAznv3+NEIl9uu+
+	 d2z7JC7uZOC9HwdBD78P/TgD+idMDUucCiiC4+Ww6XGCUueqQjuOEyELejEsexyuElQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pbkVDunB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vECwydqS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AB6606A320;
-	Wed, 18 Nov 2026 16:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F581606A320;
+	Wed, 18 Nov 2026 16:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pbkVDunB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A441F000C4;
-	Wed, 18 Nov 2026 16:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vECwydqS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67ED1F000C4;
+	Wed, 18 Nov 2026 16:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020399;
-	bh=6jBy4AmgTIpTlQogAw1EiklmalM2dw6i/0i1BMXa8qw=;
+	s=korg; t=1795020402;
+	bh=+esiDl8rA5uidmEJemYJM8JblQR5428HW1veib6SwrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pbkVDunB4awC3LZP1GjGQl+53ZNCTmoL2vTm1eqAjZhAG4+nxDS+CkCjKCOxCuTSi
-	 cpnQVT5AvtgLCim8HhgNmLXc4Rp+LYgkrEMFqkc8yT2c144duw+2Nb7xmbPdxgqWzB
-	 a5Q8vAMf57DgKgqudmSXl2zQAgDmQ8CkU5ScNCwc=
+	b=vECwydqSMbzXggZHSq5c49dGCP06Drfcd4ym5DdzdTQ2/bHXYzHUybsAnl9pTaeQV
+	 cui4m9UD4nxVY8tFzaXtzAMTIs9dHZtITUy6cfI969EwyUAe9uL2URyu0gVgF9KmzQ
+	 DS4VLvPvxfYnyIl19/uiIYuG1U9YvNedXBqOlu4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Radu Rendec <radu@rendec.net>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1939/2651] irqchip/gic-v3-its: Clear vpt_page after freeing the pending table
-Date: Wed, 18 Nov 2026 15:52:59 +0100
-Message-ID: <20261118150356.439961099@linuxfoundation.org>
+Subject: [PATCH 7.3 1940/2651] irqchip/qcom: Enable compile testing for QCOM_PDC and QCOM_MPM
+Date: Wed, 18 Nov 2026 15:53:00 +0100
+Message-ID: <20261118150356.469758987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,39 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 0d604b1e4617d18dbb5573290ba447d7369251d1 ]
+[ Upstream commit 1b852de05f74cfc96c58caad9df4cc1fa2dc7689 ]
 
-its_vpe_teardown() frees vpt_page without clearing it, so its
-vpt_page == NULL guard only holds the first time it runs on a vPE.
-struct its_vpe outlives a failed KVM_DEV_ARM_VGIC_CTRL_INIT, so a retry
-that fails again frees the pending table and the vPE ID a second time.
+QCOM_PDC and QCOM_MPM do not reference any architecture code, thus
+should be compile-testable.
 
-Fixes: 325ff3e78c64c ("irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260908142632.2795308-4-fuad.tabba@linux.dev
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727-irqchip-qcom-defaults-v2-1-466f3c407937@oss.qualcomm.com
+Stable-dep-of: 8e6b8708f925 ("irqchip/qcom-pdc: Fix linking against QCOM_SCM firmware")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 1bef7ecd3090c..4083265750b6b 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4600,6 +4600,7 @@ static void its_vpe_teardown(struct its_vpe *vpe)
- 	its_vpe_db_proxy_unmap(vpe);
- 	its_vpe_id_free(vpe->vpe_id);
- 	its_free_pending_table(vpe->vpt_page);
-+	vpe->vpt_page = NULL;
- }
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index 20b77fbc51ee0..5a881ddfa3abe 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -522,7 +522,7 @@ config GOLDFISH_PIC
  
- static void its_vpe_irq_domain_free(struct irq_domain *domain,
+ config QCOM_PDC
+ 	tristate "Qualcomm PDC"
+-	depends on ARCH_QCOM
++	depends on ARCH_QCOM || COMPILE_TEST
+ 	select IRQ_DOMAIN_HIERARCHY
+ 	help
+ 	  Power Domain Controller driver to manage and configure wakeup
+@@ -530,7 +530,7 @@ config QCOM_PDC
+ 
+ config QCOM_MPM
+ 	tristate "Qualcomm MPM"
+-	depends on ARCH_QCOM
++	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on MAILBOX
+ 	select IRQ_DOMAIN_HIERARCHY
+ 	help
 -- 
 2.53.0
 
