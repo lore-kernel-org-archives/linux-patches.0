@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046105;
-	b=HzBdG9r029n/EEulXgC6YF2HVuXBlzv5axjdWjO2YMyXTUf2f9CRcCgDurIArh8XRUm7
-	 MF+LF6xPvY8DL7pcZC+huJLpiAn3Rb7TcIzXtFyffSVePe5ojM8l/nkRVzzCcZc4kG3Vb
-	 nMad5sPDZJlfZ3+XphhcyqK1Y6wup+DU3/vQWGlk9XdBp7V3gATcpYwDPlfRt+g8UIdzc
-	 Lz0IupY+Z3gRZIpZ8W3tFICIbGi/d+ec+sRn40FUq+iXkLcU344dj1PizhGqk8PSpUSbN
-	 BrUrb/94JkuT4JftcWckWfxEvPF+74GTg4hgiVvifKbIovvW1qxyoRpJU2JR1OkvEtw==
+	t=1795046108;
+	b=VJ2nvTShZHVrWUTGebn+tx23O92IBHexDHNPIuO8F6tqOj2BKj1VemTpLDZFuiXj3GbR
+	 l+GldAQ32ggoCNELCBrKRZ26hfzjsFimLRNnGd30r6zIdfs/f3x67KK+h1rf8hWuRsvkm
+	 D2aSyiVG+k7nJI4frcjio414Fq2Kz6OB1jtkoQDJS7xsYrElgCQj4OjZVn3QW+1kZCx8l
+	 iG+uFI/r4eYrTGWY+57WaOrbm8E91YCCSNQ2ny2/JgDossDFUryelG4QdUR0RR3taFt3F
+	 EebjleV40FM2q8YAMeyvs9o/CGrJ1zDY9be7ajAP2GJ4Xc8FK7pEybqecsmZLjUARJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3rMBtiQ4x1B0zsWWffuguAyTu94QtzoyV9VwrAq85iQ=;
-	b=rIezzSzP100ueQmOR9wRdHd/KTsuDmxUEcxR5UfKO9jgvaMFLtupqlWXeQIJ3IUKDTKP
-	 hrLkcbwi5UKO/1FxCSkx/byMpk1I5xwsHCaNgB6JU71MmBbBD0oMg5wwJQ1CVdmnDETcK
-	 HqhjWh55+Za/l8ldMnSnN2JUEHoGxfu2Ayb1LxQaOpM7CdFSb6p7NSgsTISU84QmaW9ol
-	 rIY/vmruLTSsYHu/OHXmbgsAQVPUw3yNAENYLow36dgepdSb3R+6kRbrjT3mbAuCMzmFt
-	 6URWGgjY3IFtsk1GCvA04fZYhYFngUecvTbWBmI19t/RXQaGLxGWzNddtUHL2DFuhNg==
+	bh=ISuEE5YN5lHUW2c4YW3Bh1BdSW2LO3o/y7PzNoypUwE=;
+	b=JXH60vK0RJ+HhhZBFsSjfTE9CtDp7kvI4zJcXiXDLLG//S3+X98DZ7CDrwbLdkMDkvH6
+	 hQRhJ3zLhjKYHUmYzLeiV8CLnMdJXxzhV0M8oIksK8d30Mr4Aec3CaKtj25mng2tKezOn
+	 NynGET5feROheqQ+KYIvA8kH7lkmQtX7y/HduAQ37WnH6nDkzTm1lsdA9+WWynAGocjqK
+	 H7RBhEw9lRlWV3PEGfNTcMsnEnciwysPtSqKM/8LeUU2R52U61mxrsFQ62FBQ6U8DVyoQ
+	 FHLIXt8C6GvLjP0sLjuIm0k0Y5ortwZIBMvpAJkLWCCN3txRFA71NUjJUuAy6ZZQAUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ymxl4LoN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jga+j4pP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F732606A31C;
-	Wed, 18 Nov 2026 23:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E28606A31C;
+	Wed, 18 Nov 2026 23:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ymxl4LoN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44EC1F000C4;
-	Wed, 18 Nov 2026 23:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jga+j4pP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEDA1F000C5;
+	Wed, 18 Nov 2026 23:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046105;
-	bh=3rMBtiQ4x1B0zsWWffuguAyTu94QtzoyV9VwrAq85iQ=;
+	s=korg; t=1795046108;
+	bh=ISuEE5YN5lHUW2c4YW3Bh1BdSW2LO3o/y7PzNoypUwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ymxl4LoNQq9DF13D4/a4Mw4DGCoBDEXbDD37JHI8oITEtu8K2kQ+wah1WDo6pcfuW
-	 nMpVgB0JI8Y5ADxjuXOkllyJbXS/hYpY4pKkA2TxIj7VxiCoEmjefohZ4V6cFmO6HB
-	 vCx/s/EgvYkWvUVArqz25KWo0b2ZaBRLyv1Pkj0k=
+	b=jga+j4pP8n5H+sZMaulJcFblAbHZlX3EUGynBio8DX1kyZuxO/mLwp+0ExYpjQWPL
+	 5I6sn1ss6FSkrpwH9iGEkF0T/da57VxRGp0IgYvpYA07SizcxvvBdVL/PFzcxu9m9z
+	 2vqIcMKP3WyKx8tMHylk6Jy7pjo/mpXa2M61tKpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1121/2857] xfs: check for buffer overruns when examining local/remote xattr entries
-Date: Wed, 18 Nov 2026 15:35:55 +0100
-Message-ID: <20261118150241.977808067@linuxfoundation.org>
+Subject: [PATCH 6.1 1122/2857] xfs: improve dirent bounds checking in scrub and repair
+Date: Wed, 18 Nov 2026 15:35:56 +0100
+Message-ID: <20261118150242.012343013@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,55 +71,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 91c41f9524906a8ebd2ae68c98a07b4bd5255ddb ]
+[ Upstream commit 5d470234d04dae6fe2ca2cf4b9ef277b78c7e05a ]
 
-LOLLM noticed that the xattr scrub and repair code can walk off the end
-of the buffer if the xattr entry record starts so close to the end of
-the buffer that there's not even space for the entry structure itself.
-Strengthen the bounds checking here.
+LOLLM complains that we don't do enough bounds checking of the directory
+entries in directory blocks when we're looking for errors or trying to
+salvage entries.  Let's improve that with more detailed checks.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 13791d3b833428 ("xfs: scrub extended attribute leaf space")
+Cc: stable@vger.kernel.org # v4.16
+Fixes: ce92d29ddf9908 ("xfs: directory scrubber must walk through data block to offset")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: adapted checks from separate local and remote helpers to the combined void-returning xchk_xattr_entry() function ]
+[ sashal: Inlined upstream helper checks into the existing xchk_dir_rec() loop because the helper refactor is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/attr.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/xfs/scrub/dir.c | 60 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 54 insertions(+), 6 deletions(-)
 
-diff --git a/fs/xfs/scrub/attr.c b/fs/xfs/scrub/attr.c
-index 6e14c9fc726dd..dba6b6bf8e3c9 100644
---- a/fs/xfs/scrub/attr.c
-+++ b/fs/xfs/scrub/attr.c
-@@ -281,6 +281,12 @@ xchk_xattr_entry(
- 	/* Check the name information. */
- 	if (ent->flags & XFS_ATTR_LOCAL) {
- 		lentry = xfs_attr3_leaf_name_local(leaf, idx);
-+		name_end = (char *)lentry + offsetof(typeof(*lentry), nameval[0]);
-+		if (name_end > buf_end) {
-+			xchk_da_set_corrupt(ds, level);
-+			return;
+diff --git a/fs/xfs/scrub/dir.c b/fs/xfs/scrub/dir.c
+index 5c87800ab223d..73f8449caa9d0 100644
+--- a/fs/xfs/scrub/dir.c
++++ b/fs/xfs/scrub/dir.c
+@@ -219,6 +219,7 @@ xchk_dir_rec(
+ 	xfs_dahash_t			hash;
+ 	struct xfs_dir3_icleaf_hdr	hdr;
+ 	unsigned int			tag;
++	bool				foundit = false;
+ 	int				error;
+ 
+ 	ASSERT(blk->magic == XFS_DIR2_LEAF1_MAGIC ||
+@@ -263,28 +264,67 @@ xchk_dir_rec(
+ 	dent = bp->b_addr + off;
+ 
+ 	/* Make sure we got a real directory entry. */
+-	iter_off = geo->data_entry_offset;
+ 	end = xfs_dir3_data_end_offset(geo, bp->b_addr);
+ 	if (!end) {
+ 		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
+ 		goto out_relse;
+ 	}
+-	for (;;) {
++	iter_off = geo->data_entry_offset;
++	while (iter_off < end) {
+ 		struct xfs_dir2_data_entry	*dep = bp->b_addr + iter_off;
+ 		struct xfs_dir2_data_unused	*dup = bp->b_addr + iter_off;
++		unsigned int			advance;
+ 
+-		if (iter_off >= end) {
++		/* must have freetag */
++		advance = offsetof(typeof(*dup), length);
++		if (iter_off + advance >= end) {
+ 			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
+ 			goto out_relse;
+ 		}
+ 
+ 		if (be16_to_cpu(dup->freetag) == XFS_DIR2_DATA_FREE_TAG) {
+-			iter_off += be16_to_cpu(dup->length);
++			if (iter_off + sizeof(*dup) > end) {
++				xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK,
++						rec_bno);
++				goto out_relse;
++			}
++
++			advance = xfs_dir2_data_unusedsize(be16_to_cpu(dup->length));
++			if (!advance || iter_off + advance > end) {
++				xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK,
++						rec_bno);
++				goto out_relse;
++			}
++
++			iter_off += advance;
+ 			continue;
+ 		}
+-		if (dep == dent)
++
++		/* must have namelen */
++		advance = offsetof(typeof(*dep), name);
++		if (iter_off + advance >= end) {
++			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
++			goto out_relse;
 +		}
 +
- 		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
- 				be16_to_cpu(lentry->valuelen));
- 		name_end = (char *)lentry + namesize;
-@@ -288,6 +294,12 @@ xchk_xattr_entry(
- 			xchk_da_set_corrupt(ds, level);
- 	} else {
- 		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
-+		name_end = (char *)rentry + offsetof(typeof(*rentry), name[0]);
-+		if (name_end > buf_end) {
-+			xchk_da_set_corrupt(ds, level);
-+			return;
++		/* Don't walk off the end of the block. */
++		advance = xfs_dir2_data_entsize(mp, dep->namelen);
++		if (!advance || iter_off + advance > end) {
++			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
++			goto out_relse;
 +		}
 +
- 		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
- 		name_end = (char *)rentry + namesize;
- 		if (rentry->namelen == 0)
++		if (dep == dent) {
++			foundit = true;
+ 			break;
+-		iter_off += xfs_dir2_data_entsize(mp, dep->namelen);
++		}
++		iter_off += advance;
++	}
++
++	/* Hash tree must point to the exact dirent */
++	if (!foundit) {
++		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
++		goto out_relse;
+ 	}
+ 
+ 	/* Retrieve the entry, sanity check it, and compare hashes. */
+@@ -297,6 +337,14 @@ xchk_dir_rec(
+ 		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
+ 		goto out_relse;
+ 	}
++
++	/* Name must not overflow end of block */
++	if ((char *)dent->name + dent->namelen >
++	    (char *)bp->b_addr + BBTOB(bp->b_length)) {
++		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
++		goto out_relse;
++	}
++
+ 	calc_hash = xfs_da_hashname(dent->name, dent->namelen);
+ 	if (calc_hash != hash)
+ 		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
 -- 
 2.53.0
 
