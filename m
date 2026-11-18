@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062205;
-	b=oqPKKFzPNHunBJJzivcwhz+UXDdp7/OV8H9iuqXRZaDdaM39g0RayCx6J5rL6vG6QKo/
-	 HAcjCL0EoEgzAMa7jOUreE6O1griwS06S9EY0ziuXjdXZhK78dBG2oXFREXwZ6CbwW168
-	 9kvuXPvVHrYY9z4Jr0o6A63z2hzWhSEkLdUylVBo42WEpWF20Pch7FW7o7K9Vd+8WdwdJ
-	 iKDIwliUiy5xwKCYy+9oJQpc9HrND4NL5bYDOlsmD4HBGv7SUDkD8hFjGNCAFUB0ijXlV
-	 GREUjwtd0fJjVaRAz1mfDzpGlwc1GHC1YjeMHFGttwvKOg2hEB/0d64BTus+qfTNLrw==
+	t=1795062208;
+	b=lRjIifgb2k/cHY42taJ8AyF9dNtlPQy5FZ/UEa1F4ICdsElqQQpgMmAc/0J61H9Yd4V+
+	 R+q/UBL3lprZpmU0Kt2NxwIWHbhaJUCUrWYUwqbVibU5y7dL7pnOC/OHUkHv+A/Nvf6Lu
+	 wcsETPR5U6FP4C7ep8JO8oxvGg9QiSW8obR0wIH6MoUc8Ilx37tn0vsxYoRBstuZIaNJx
+	 1HcL1DtTVmSUmwNjf7tq6y+hMVVhVg7hmxlfDuuB6J8jZGJwsVrUY22Auvm03mPopqTvk
+	 KU3Z8rsXxWurypf7T3SDlZim0sNjl8dP55fIB8saTMO8L2tVBG+m+MPyl1zDermQ+dA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tz/BJuXj7iDd/HUtrGkVk3on1j+GJ+IaSwR+mQJL1rM=;
-	b=wWOwnXelY5EpUiYtH0pLXER4gmCDQyW+yXQzmivKaSShgdSu9l0DEObctXPR8nK2h+Nk
-	 ZZJj9vmzfVr4fXu0lsQ7p/pQVFU0j82/e4p2zReKjre1Rf+qwDz5zJkyXhyvmveeCX333
-	 SHn5FOutfYCXvsgM71HlCSWOYTHe3aT0AIjTPXksUDYyWJkXvBYMD0ge+DkFKMP5+hPx7
-	 Uz4K8vXp2Tyo0Jewh3PmYgGorsfs9GjsWAsV25kWzjtYocA08MMW0GN9Pziw493wt6yRs
-	 s5hqPEw7cJpmyyLavnPqXdP020njgL1G+MD0ekOX3y6O7SEiGDJ9ZOUg6R2brInf/2w==
+	bh=CXUc58WZN9YsKJBOVanB/IKz5eQmEqwTGzFkjXWnA9I=;
+	b=ubn8/cKQ1EYTF0+cYPVfm0gqbTwhvjlqSUB3fvmTDinvO1+gTsZVd/pO/J9acQnMnhxq
+	 V0u1Efl5dylqphdO92bpuwFx5VIyW7sxHrbXMuL/zPl/YJYcMT8EYx+EbDP6irnnIcZUC
+	 o6n7fiymJy6U9SspmcpFUYvJ1he4FvYBitYQhORAyGpMaXzGGrPq7yKiYm006EJ6oylG4
+	 VcnsC/sO6zvLdS10eDCble2z981AcUb5YGNcaGQmJaZZuJPz6tpA/1/UJsJTqwMTDIy1N
+	 i3A10sofvvJbH6NkL/bFBw3RzVyYZub3nTNWXPCIf7GbetA+g4SaoMe4by/JxVpOxJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zNeWNsK0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HZjutKhG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222F9606A320;
-	Thu, 19 Nov 2026 04:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05382606A320;
+	Thu, 19 Nov 2026 04:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zNeWNsK0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5841F000C6;
-	Thu, 19 Nov 2026 04:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HZjutKhG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5314E1F000C5;
+	Thu, 19 Nov 2026 04:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062205;
-	bh=tz/BJuXj7iDd/HUtrGkVk3on1j+GJ+IaSwR+mQJL1rM=;
+	s=korg; t=1795062207;
+	bh=CXUc58WZN9YsKJBOVanB/IKz5eQmEqwTGzFkjXWnA9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zNeWNsK0BFE8qWc7PvCbJQeLqDNE4oDzxIOAz4SfVkwXM5qk9l6kYVZ7e9Uuch0ZQ
-	 8hrBGIJ0Sa6Lp0IluRIU5aQNWCPM8Cktf0ohHK30JzIQMPeZTlx1SLdDy2OEWTuZWW
-	 P9z3HGzqDa8+X2wYTBkykK6Yxhec1j6g3e84qId0=
+	b=HZjutKhGXYaDry307XnPMbtkmyLtQCev0eOc9SL2QRbXoZVbgf1+aBtDyoyo8cYOL
+	 0vzMCQIm4JnduClyZuR7/dxztNR+0l945ZoZooK+wPRQcTcZFjGkDb4CmvnfhaiPOh
+	 JwovElO4pWRnvgfNq/JDJOc3LK5wVtbQ21eSFwYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 1828/1848] dmaengine: ste_dma40: use proper format string for resource_size_t
-Date: Wed, 18 Nov 2026 16:04:26 +0100
-Message-ID: <20261118150036.182267701@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.10 1829/1848] kconfig: initialize sym->curr.tri to no for all symbol types again
+Date: Wed, 18 Nov 2026 16:04:27 +0100
+Message-ID: <20261118150036.216972409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,38 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 41be14c71bae05c8daa3de5ae7fd7c2a7bc0d057 upstream.
+commit bfef491df67022c56aab3b831044f8d259f9441f upstream.
 
-A fixup for a printk format string warning causes an out-of-bounds
-variable access as the %pR string expects a struct resource instead of
-a plain resource_size_t.
+Geert Uytterhoeven reported that commit 4e244c10eab3 ("kconfig: remove
+unneeded symbol_empty variable") changed the default value of
+CONFIG_LOG_CPU_MAX_BUF_SHIFT from 12 to 0.
 
-Change both to the special %pap and %pap helpers for these types.
+As it turned out, this is an undefined behavior because sym_calc_value()
+stopped setting the sym->curr.tri field for 'int', 'hex', and 'string'
+symbols.
 
-Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
-Fixes: ef1e1c41a11d ("dmaengine: ste_dma40: use correct print specfier for resource_size_t")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230519093447.4097040-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This commit restores the original behavior, where 'int', 'hex', 'string'
+symbols are interpreted as false if used in boolean contexts.
+
+CONFIG_LOG_CPU_MAX_BUF_SHIFT will default to 12 again, irrespective
+of CONFIG_BASE_SMALL. Presumably, this is not the intended behavior,
+as already reported [1], but this is another issue that should be
+addressed by a separate patch.
+
+[1]: https://lore.kernel.org/all/f6856be8-54b7-0fa0-1d17-39632bf29ada@oracle.com/
+
+Fixes: 4e244c10eab3 ("kconfig: remove unneeded symbol_empty variable")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://lore.kernel.org/all/CAMuHMdWm6u1wX7efZQf=2XUAHascps76YQac6rdnQGhc8nop_Q@mail.gmail.com/
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ste_dma40.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/kconfig/symbol.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3647,8 +3647,8 @@ static int __init d40_probe(struct platf
- 	}
- 	base->lcpa_size = resource_size(&res_lcpa);
- 	base->phy_lcpa = res_lcpa.start;
--	dev_info(dev, "found LCPA SRAM at 0x%08x, size %pR\n",
--		 (u32)base->phy_lcpa, &base->lcpa_size);
-+	dev_info(dev, "found LCPA SRAM at %pad, size %pa\n",
-+		 &base->phy_lcpa, &base->lcpa_size);
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -354,6 +354,8 @@ void sym_calc_value(struct symbol *sym)
  
- 	/* We make use of ESRAM memory for this. */
- 	val = readl(base->virtbase + D40_DREG_LCPA);
+ 	oldval = sym->curr;
+ 
++	newval.tri = no;
++
+ 	switch (sym->type) {
+ 	case S_INT:
+ 		newval.val = "0";
+@@ -366,7 +368,7 @@ void sym_calc_value(struct symbol *sym)
+ 		break;
+ 	case S_BOOLEAN:
+ 	case S_TRISTATE:
+-		newval = symbol_no.curr;
++		newval.val = "n";
+ 		break;
+ 	default:
+ 		sym->curr.val = sym->name;
 
 
