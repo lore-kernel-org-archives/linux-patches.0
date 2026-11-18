@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061894;
-	b=ZxpWWCTZCqDpLE1WhkzaxqG9vHEc+gWUITWeZ4NmIv9Nq3obD4q+QahYYlsDCVzYAYhn
-	 Ayi3By7F9vKV5b+jhb6buYCgyus6ogJoKnxxoTf5GSOqK6kVVZy/j7t8fs9WfqDzRWbEM
-	 iB3eC3sn4Zl1+2HF6sD5bsfABerQ5k1MhvbWfNFhlwhVrqGWSDpEmp7zIvfzJoqUSx5IR
-	 GomaI3KN8aefN06VTgtXA1VwsvQxkXTqETSdwKKH3TkcQUeLQXdWJ5boFkpVLVCb3PkoJ
-	 JGELxeCYIX9GRJBXTGggBR/eh8StqbITKKVgjDqCvoXohF6U3x7mMgEgWs/3zIdsp8A==
+	t=1795061897;
+	b=GCiDrDP0Ov8iIGYKiOcpZLd0uMyriP8bdzoAbfrwmOkprTkRJEHyF1lBshvuXBdxKoLf
+	 GHZnuQhjAhHsJLM2z1xXKGXSSbkgTGUGEpY6bCEMpZ8zNaDvRJv2pnB2/e9MishbK03Yf
+	 E0hiz5hfUCy72bVaPW98xuDK6azpWV6bd73KXH4Ej2AFuAxSp3+EN+88TXNmt0Ha/ov6X
+	 08qp2oYj55DS8gq1iOYF+Tl+c1pEbGGmQRxayBPlUiggRoky4ot9z0B9xG7JK9aI8f+hG
+	 Taz/RKvzmitDSKB9lYF3hZDmeRkikG2PjfvlUkpaBVf5xNgZ7Z812/TJpsePwgadUyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9oDp7o0Ftj6lSnC1ADiBEgvA+uagT3/gf7SvIdKBbxQ=;
-	b=5IF2wKRmLoUHPDTttCGXSMiOyvfI8SLp3W/0cFH2zh7aXhCjwh6tRyotVe6lOzm/KAEO
-	 AjzDwHOOysScrk8uluhhPQgKmCzyVXDLlnSbWVgpNeNPeRH/dyQckaFmK48PUuWdNodpk
-	 XN+rqdXDmACHs24iuihCMpgHjG61MQWFjt7EEGrbSH0G2IPjlfe25ADSBI+X3/pfZ3pmX
-	 GHY+QB2dfHG60AvPqzqYdbwqh0+45GtXBTwhCmLP+hPK3wIKN0ivXDbB3s+RMf0UgEoTZ
-	 i/L8rXtnlPENCtCnY/a/Mn5RjdO2n7hpWzmGMwx/A+VlfpYTCD0rk5Imm/aW6XF62Pw==
+	bh=BEve/XdAWls0LrWcFCRdFYHWviy0yNhdPCFRfqeMXZc=;
+	b=vViYLlVcJKF/SNSnnS6In8XLs/yh8GAuqdYDtIXoOBUnnmhtDjvJcpwbTfdBslHIjce8
+	 BFrGtEw+g9wlO7zYsA4KClFdXVgUsnyiHkITQ3+Dvb4OeEXwK9ZM+/rdh3EUcqHxGHxa6
+	 95wAc17nNX9h5SwdXHXzqesP+UJ/cBR4XDfDb6cRcgpuqgWaTfAYy7F58QBWFkSXMW6Dp
+	 //tF/g+2F7l5vlSddfP5y1hG2HbWCl4fFskxN5VNOomXULA5lvDTC4Yp3jPdV1+lEcbIp
+	 GZnArOTpLmlIJdeaxbcl/16G57n51+UfOjOTQnVO1UDHw+3kIp2J+xQdOe0zfywbEyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MfUTTgiC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFfyRaq6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E4B606A325;
-	Thu, 19 Nov 2026 04:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FCD606A320;
+	Thu, 19 Nov 2026 04:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MfUTTgiC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE991F000C4;
-	Thu, 19 Nov 2026 04:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFfyRaq6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4251F000C4;
+	Thu, 19 Nov 2026 04:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061894;
-	bh=9oDp7o0Ftj6lSnC1ADiBEgvA+uagT3/gf7SvIdKBbxQ=;
+	s=korg; t=1795061897;
+	bh=BEve/XdAWls0LrWcFCRdFYHWviy0yNhdPCFRfqeMXZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MfUTTgiCGJ5HCGKeLKTmPoog+3U3zaK0j5LC5GYGtu6fdCnTmy7jasLontagrnYPV
-	 eaVLcA5uRjqdo2KgD2q+PFEA7+eeACY6C8tPmvybnLrE2cGU4N4HVteQ9eHHI0WVKH
-	 KpxPstaYfK0uUPAK6oH+/PHFOhFBomtiPaDR+2BA=
+	b=qFfyRaq6NpTFQovVWnK8y9VnllnzT79fx0FO3PdHqXtkQ5dyXsoAC8pA3048NELZF
+	 0qzxCWW+l3qfy6/BuZ47WanFUDTaQTvqfVcW+dEOtMcBP9RAi6OYFs8Yj5ni0Mqygx
+	 xKZeG9BtOMh1Jd26RDpYJiLu2xpp/St1U1O1X1c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bob Pearson <rpearson@hpe.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1715/1848] ASoC: codecs: sta350: Fix definition of limiter threshold controls
-Date: Wed, 18 Nov 2026 16:02:33 +0100
-Message-ID: <20261118150031.471214805@linuxfoundation.org>
+Subject: [PATCH 5.10 1716/1848] RDMA/rxe: Remove unused pkt->offset
+Date: Wed, 18 Nov 2026 16:02:34 +0100
+Message-ID: <20261118150031.507309316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,65 +68,523 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 77623752c156763d7a80414afe5b769ba4532bd3 ]
+[ Upstream commit bf139b58af09eaed8828510adc094fc281deaf73 ]
 
-The limiter attack and release thresholds are the two 4-bit halves of
-one register, so their maximum is 15, not 16. With 16 the controls on
-bits 3:0 also write bit 4, which belongs to the other threshold.
+The pkt->offset field is never used except to assign it to 0.  But it adds
+lots of unneeded code. This patch removes the field and related code. This
+causes a measurable improvement in performance.
 
-Fixes: 2439ea1f0f8f ("ASoC: sta350: Add codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/d65a21665a1e0d63dec174dd3691bd97764b8ae0.1792135145.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20210211210455.3274-1-rpearson@hpe.com
+Signed-off-by: Bob Pearson <rpearson@hpe.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 7d7214b39b14 ("RDMA/rxe: Clear pkt->qp before the early drop exits in rxe_rcv()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta350.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_hdr.h  | 178 +++++++++++++--------------
+ drivers/infiniband/sw/rxe/rxe_recv.c |   4 +-
+ drivers/infiniband/sw/rxe/rxe_req.c  |   1 -
+ drivers/infiniband/sw/rxe/rxe_resp.c |   3 +-
+ 4 files changed, 90 insertions(+), 96 deletions(-)
 
-diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
-index cc9c64bfd4147..7909fd83d0c12 100644
---- a/sound/soc/codecs/sta350.c
-+++ b/sound/soc/codecs/sta350.c
-@@ -510,28 +510,28 @@ SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta350_limiter2_release_rate_enum),
-  */
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
+diff --git a/drivers/infiniband/sw/rxe/rxe_hdr.h b/drivers/infiniband/sw/rxe/rxe_hdr.h
+index 3b483b75dfe30..e432f9e37795e 100644
+--- a/drivers/infiniband/sw/rxe/rxe_hdr.h
++++ b/drivers/infiniband/sw/rxe/rxe_hdr.h
+@@ -22,7 +22,6 @@ struct rxe_pkt_info {
+ 	u16			paylen;		/* length of bth - icrc */
+ 	u8			port_num;	/* port pkt received on */
+ 	u8			opcode;		/* bth opcode of packet */
+-	u8			offset;		/* bth offset from pkt->hdr */
+ };
  
- BIQUAD_COEFS("Ch1 - Biquad 1", 0),
- BIQUAD_COEFS("Ch1 - Biquad 2", 5),
+ /* Macros should be used only for received skb */
+@@ -280,134 +279,134 @@ static inline void __bth_set_psn(void *arg, u32 psn)
+ 
+ static inline u8 bth_opcode(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_opcode(pkt->hdr + pkt->offset);
++	return __bth_opcode(pkt->hdr);
+ }
+ 
+ static inline void bth_set_opcode(struct rxe_pkt_info *pkt, u8 opcode)
+ {
+-	__bth_set_opcode(pkt->hdr + pkt->offset, opcode);
++	__bth_set_opcode(pkt->hdr, opcode);
+ }
+ 
+ static inline u8 bth_se(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_se(pkt->hdr + pkt->offset);
++	return __bth_se(pkt->hdr);
+ }
+ 
+ static inline void bth_set_se(struct rxe_pkt_info *pkt, int se)
+ {
+-	__bth_set_se(pkt->hdr + pkt->offset, se);
++	__bth_set_se(pkt->hdr, se);
+ }
+ 
+ static inline u8 bth_mig(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_mig(pkt->hdr + pkt->offset);
++	return __bth_mig(pkt->hdr);
+ }
+ 
+ static inline void bth_set_mig(struct rxe_pkt_info *pkt, u8 mig)
+ {
+-	__bth_set_mig(pkt->hdr + pkt->offset, mig);
++	__bth_set_mig(pkt->hdr, mig);
+ }
+ 
+ static inline u8 bth_pad(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_pad(pkt->hdr + pkt->offset);
++	return __bth_pad(pkt->hdr);
+ }
+ 
+ static inline void bth_set_pad(struct rxe_pkt_info *pkt, u8 pad)
+ {
+-	__bth_set_pad(pkt->hdr + pkt->offset, pad);
++	__bth_set_pad(pkt->hdr, pad);
+ }
+ 
+ static inline u8 bth_tver(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_tver(pkt->hdr + pkt->offset);
++	return __bth_tver(pkt->hdr);
+ }
+ 
+ static inline void bth_set_tver(struct rxe_pkt_info *pkt, u8 tver)
+ {
+-	__bth_set_tver(pkt->hdr + pkt->offset, tver);
++	__bth_set_tver(pkt->hdr, tver);
+ }
+ 
+ static inline u16 bth_pkey(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_pkey(pkt->hdr + pkt->offset);
++	return __bth_pkey(pkt->hdr);
+ }
+ 
+ static inline void bth_set_pkey(struct rxe_pkt_info *pkt, u16 pkey)
+ {
+-	__bth_set_pkey(pkt->hdr + pkt->offset, pkey);
++	__bth_set_pkey(pkt->hdr, pkey);
+ }
+ 
+ static inline u32 bth_qpn(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_qpn(pkt->hdr + pkt->offset);
++	return __bth_qpn(pkt->hdr);
+ }
+ 
+ static inline void bth_set_qpn(struct rxe_pkt_info *pkt, u32 qpn)
+ {
+-	__bth_set_qpn(pkt->hdr + pkt->offset, qpn);
++	__bth_set_qpn(pkt->hdr, qpn);
+ }
+ 
+ static inline int bth_fecn(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_fecn(pkt->hdr + pkt->offset);
++	return __bth_fecn(pkt->hdr);
+ }
+ 
+ static inline void bth_set_fecn(struct rxe_pkt_info *pkt, int fecn)
+ {
+-	__bth_set_fecn(pkt->hdr + pkt->offset, fecn);
++	__bth_set_fecn(pkt->hdr, fecn);
+ }
+ 
+ static inline int bth_becn(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_becn(pkt->hdr + pkt->offset);
++	return __bth_becn(pkt->hdr);
+ }
+ 
+ static inline void bth_set_becn(struct rxe_pkt_info *pkt, int becn)
+ {
+-	__bth_set_becn(pkt->hdr + pkt->offset, becn);
++	__bth_set_becn(pkt->hdr, becn);
+ }
+ 
+ static inline u8 bth_resv6a(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_resv6a(pkt->hdr + pkt->offset);
++	return __bth_resv6a(pkt->hdr);
+ }
+ 
+ static inline void bth_set_resv6a(struct rxe_pkt_info *pkt)
+ {
+-	__bth_set_resv6a(pkt->hdr + pkt->offset);
++	__bth_set_resv6a(pkt->hdr);
+ }
+ 
+ static inline int bth_ack(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_ack(pkt->hdr + pkt->offset);
++	return __bth_ack(pkt->hdr);
+ }
+ 
+ static inline void bth_set_ack(struct rxe_pkt_info *pkt, int ack)
+ {
+-	__bth_set_ack(pkt->hdr + pkt->offset, ack);
++	__bth_set_ack(pkt->hdr, ack);
+ }
+ 
+ static inline void bth_set_resv7(struct rxe_pkt_info *pkt)
+ {
+-	__bth_set_resv7(pkt->hdr + pkt->offset);
++	__bth_set_resv7(pkt->hdr);
+ }
+ 
+ static inline u32 bth_psn(struct rxe_pkt_info *pkt)
+ {
+-	return __bth_psn(pkt->hdr + pkt->offset);
++	return __bth_psn(pkt->hdr);
+ }
+ 
+ static inline void bth_set_psn(struct rxe_pkt_info *pkt, u32 psn)
+ {
+-	__bth_set_psn(pkt->hdr + pkt->offset, psn);
++	__bth_set_psn(pkt->hdr, psn);
+ }
+ 
+ static inline void bth_init(struct rxe_pkt_info *pkt, u8 opcode, int se,
+ 			    int mig, int pad, u16 pkey, u32 qpn, int ack_req,
+ 			    u32 psn)
+ {
+-	struct rxe_bth *bth = (struct rxe_bth *)(pkt->hdr + pkt->offset);
++	struct rxe_bth *bth = (struct rxe_bth *)(pkt->hdr);
+ 
+ 	bth->opcode = opcode;
+ 	bth->flags = (pad << 4) & BTH_PAD_MASK;
+@@ -448,14 +447,14 @@ static inline void __rdeth_set_een(void *arg, u32 een)
+ 
+ static inline u8 rdeth_een(struct rxe_pkt_info *pkt)
+ {
+-	return __rdeth_een(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RDETH]);
++	return __rdeth_een(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RDETH]);
+ }
+ 
+ static inline void rdeth_set_een(struct rxe_pkt_info *pkt, u32 een)
+ {
+-	__rdeth_set_een(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RDETH], een);
++	__rdeth_set_een(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RDETH], een);
+ }
+ 
+ /******************************************************************************
+@@ -499,26 +498,26 @@ static inline void __deth_set_sqp(void *arg, u32 sqp)
+ 
+ static inline u32 deth_qkey(struct rxe_pkt_info *pkt)
+ {
+-	return __deth_qkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_DETH]);
++	return __deth_qkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_DETH]);
+ }
+ 
+ static inline void deth_set_qkey(struct rxe_pkt_info *pkt, u32 qkey)
+ {
+-	__deth_set_qkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_DETH], qkey);
++	__deth_set_qkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_DETH], qkey);
+ }
+ 
+ static inline u32 deth_sqp(struct rxe_pkt_info *pkt)
+ {
+-	return __deth_sqp(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_DETH]);
++	return __deth_sqp(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_DETH]);
+ }
+ 
+ static inline void deth_set_sqp(struct rxe_pkt_info *pkt, u32 sqp)
+ {
+-	__deth_set_sqp(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_DETH], sqp);
++	__deth_set_sqp(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_DETH], sqp);
+ }
+ 
+ /******************************************************************************
+@@ -574,38 +573,38 @@ static inline void __reth_set_len(void *arg, u32 len)
+ 
+ static inline u64 reth_va(struct rxe_pkt_info *pkt)
+ {
+-	return __reth_va(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RETH]);
++	return __reth_va(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RETH]);
+ }
+ 
+ static inline void reth_set_va(struct rxe_pkt_info *pkt, u64 va)
+ {
+-	__reth_set_va(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RETH], va);
++	__reth_set_va(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RETH], va);
+ }
+ 
+ static inline u32 reth_rkey(struct rxe_pkt_info *pkt)
+ {
+-	return __reth_rkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RETH]);
++	return __reth_rkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RETH]);
+ }
+ 
+ static inline void reth_set_rkey(struct rxe_pkt_info *pkt, u32 rkey)
+ {
+-	__reth_set_rkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RETH], rkey);
++	__reth_set_rkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RETH], rkey);
+ }
+ 
+ static inline u32 reth_len(struct rxe_pkt_info *pkt)
+ {
+-	return __reth_len(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RETH]);
++	return __reth_len(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RETH]);
+ }
+ 
+ static inline void reth_set_len(struct rxe_pkt_info *pkt, u32 len)
+ {
+-	__reth_set_len(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_RETH], len);
++	__reth_set_len(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_RETH], len);
+ }
+ 
+ /******************************************************************************
+@@ -676,50 +675,50 @@ static inline void __atmeth_set_comp(void *arg, u64 comp)
+ 
+ static inline u64 atmeth_va(struct rxe_pkt_info *pkt)
+ {
+-	return __atmeth_va(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
++	return __atmeth_va(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
+ }
+ 
+ static inline void atmeth_set_va(struct rxe_pkt_info *pkt, u64 va)
+ {
+-	__atmeth_set_va(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH], va);
++	__atmeth_set_va(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH], va);
+ }
+ 
+ static inline u32 atmeth_rkey(struct rxe_pkt_info *pkt)
+ {
+-	return __atmeth_rkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
++	return __atmeth_rkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
+ }
+ 
+ static inline void atmeth_set_rkey(struct rxe_pkt_info *pkt, u32 rkey)
+ {
+-	__atmeth_set_rkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH], rkey);
++	__atmeth_set_rkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH], rkey);
+ }
+ 
+ static inline u64 atmeth_swap_add(struct rxe_pkt_info *pkt)
+ {
+-	return __atmeth_swap_add(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
++	return __atmeth_swap_add(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
+ }
+ 
+ static inline void atmeth_set_swap_add(struct rxe_pkt_info *pkt, u64 swap_add)
+ {
+-	__atmeth_set_swap_add(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH], swap_add);
++	__atmeth_set_swap_add(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH], swap_add);
+ }
+ 
+ static inline u64 atmeth_comp(struct rxe_pkt_info *pkt)
+ {
+-	return __atmeth_comp(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
++	return __atmeth_comp(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH]);
+ }
+ 
+ static inline void atmeth_set_comp(struct rxe_pkt_info *pkt, u64 comp)
+ {
+-	__atmeth_set_comp(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMETH], comp);
++	__atmeth_set_comp(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMETH], comp);
+ }
+ 
+ /******************************************************************************
+@@ -780,26 +779,26 @@ static inline void __aeth_set_msn(void *arg, u32 msn)
+ 
+ static inline u8 aeth_syn(struct rxe_pkt_info *pkt)
+ {
+-	return __aeth_syn(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_AETH]);
++	return __aeth_syn(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_AETH]);
+ }
+ 
+ static inline void aeth_set_syn(struct rxe_pkt_info *pkt, u8 syn)
+ {
+-	__aeth_set_syn(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_AETH], syn);
++	__aeth_set_syn(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_AETH], syn);
+ }
+ 
+ static inline u32 aeth_msn(struct rxe_pkt_info *pkt)
+ {
+-	return __aeth_msn(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_AETH]);
++	return __aeth_msn(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_AETH]);
+ }
+ 
+ static inline void aeth_set_msn(struct rxe_pkt_info *pkt, u32 msn)
+ {
+-	__aeth_set_msn(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_AETH], msn);
++	__aeth_set_msn(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_AETH], msn);
+ }
+ 
+ /******************************************************************************
+@@ -825,14 +824,14 @@ static inline void __atmack_set_orig(void *arg, u64 orig)
+ 
+ static inline u64 atmack_orig(struct rxe_pkt_info *pkt)
+ {
+-	return __atmack_orig(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMACK]);
++	return __atmack_orig(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMACK]);
+ }
+ 
+ static inline void atmack_set_orig(struct rxe_pkt_info *pkt, u64 orig)
+ {
+-	__atmack_set_orig(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_ATMACK], orig);
++	__atmack_set_orig(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_ATMACK], orig);
+ }
+ 
+ /******************************************************************************
+@@ -858,14 +857,14 @@ static inline void __immdt_set_imm(void *arg, __be32 imm)
+ 
+ static inline __be32 immdt_imm(struct rxe_pkt_info *pkt)
+ {
+-	return __immdt_imm(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_IMMDT]);
++	return __immdt_imm(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_IMMDT]);
+ }
+ 
+ static inline void immdt_set_imm(struct rxe_pkt_info *pkt, __be32 imm)
+ {
+-	__immdt_set_imm(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_IMMDT], imm);
++	__immdt_set_imm(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_IMMDT], imm);
+ }
+ 
+ /******************************************************************************
+@@ -891,14 +890,14 @@ static inline void __ieth_set_rkey(void *arg, u32 rkey)
+ 
+ static inline u32 ieth_rkey(struct rxe_pkt_info *pkt)
+ {
+-	return __ieth_rkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_IETH]);
++	return __ieth_rkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_IETH]);
+ }
+ 
+ static inline void ieth_set_rkey(struct rxe_pkt_info *pkt, u32 rkey)
+ {
+-	__ieth_set_rkey(pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_IETH], rkey);
++	__ieth_set_rkey(pkt->hdr +
++		rxe_opcode[pkt->opcode].offset[RXE_IETH], rkey);
+ }
+ 
+ enum rxe_hdr_length {
+@@ -915,13 +914,12 @@ enum rxe_hdr_length {
+ 
+ static inline size_t header_size(struct rxe_pkt_info *pkt)
+ {
+-	return pkt->offset + rxe_opcode[pkt->opcode].length;
++	return rxe_opcode[pkt->opcode].length;
+ }
+ 
+ static inline void *payload_addr(struct rxe_pkt_info *pkt)
+ {
+-	return pkt->hdr + pkt->offset
+-		+ rxe_opcode[pkt->opcode].offset[RXE_PAYLOAD];
++	return pkt->hdr + rxe_opcode[pkt->opcode].offset[RXE_PAYLOAD];
+ }
+ 
+ static inline size_t payload_size(struct rxe_pkt_info *pkt)
+diff --git a/drivers/infiniband/sw/rxe/rxe_recv.c b/drivers/infiniband/sw/rxe/rxe_recv.c
+index 592e351ccec51..7f2f346c7d60c 100644
+--- a/drivers/infiniband/sw/rxe/rxe_recv.c
++++ b/drivers/infiniband/sw/rxe/rxe_recv.c
+@@ -349,9 +349,7 @@ void rxe_rcv(struct sk_buff *skb)
+ 	__be32 *icrcp;
+ 	u32 calc_icrc, pack_icrc;
+ 
+-	pkt->offset = 0;
+-
+-	if (unlikely(skb->len < pkt->offset + RXE_BTH_BYTES))
++	if (unlikely(skb->len < RXE_BTH_BYTES))
+ 		goto drop;
+ 
+ 	if (rxe_chk_dgid(rxe, skb) < 0) {
+diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
+index a034aa8fc5ca5..d14c96267209d 100644
+--- a/drivers/infiniband/sw/rxe/rxe_req.c
++++ b/drivers/infiniband/sw/rxe/rxe_req.c
+@@ -375,7 +375,6 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
+ 	pkt->psn	= qp->req.psn;
+ 	pkt->mask	= rxe_opcode[opcode].mask;
+ 	pkt->paylen	= paylen;
+-	pkt->offset	= 0;
+ 	pkt->wqe	= wqe;
+ 
+ 	/* init skb */
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index d22d95f5e2e3c..649810d930bc8 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -594,11 +594,10 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
+ 	ack->qp = qp;
+ 	ack->opcode = opcode;
+ 	ack->mask = rxe_opcode[opcode].mask;
+-	ack->offset = pkt->offset;
+ 	ack->paylen = paylen;
+ 
+ 	/* fill in bth using the request packet headers */
+-	memcpy(ack->hdr, pkt->hdr, pkt->offset + RXE_BTH_BYTES);
++	memcpy(ack->hdr, pkt->hdr, RXE_BTH_BYTES);
+ 
+ 	bth_set_opcode(ack, opcode);
+ 	bth_set_qpn(ack, qp->attr.dest_qp_num);
 -- 
 2.53.0
 
