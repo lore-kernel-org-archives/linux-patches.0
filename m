@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032469;
-	b=ngP0OOSl/fYKX7tiEyqxlCZPeXIjRnXTGBewl5KZvh2PyirVILjF0N96ATAZowtxPkT9
-	 r3tOHXpvdS/grDkG7E3Ypo48RB/rDy27FZzRw1RlwV5yUh91dPQ+d5vqIkVFnzThPHyDo
-	 AIBg5kxZep9l/yqQ7mK1RX6TXKfHlch+c3CqHIElk08VEwa9hP0KBIGmQ0wo7YCUucUAH
-	 xFgvKHwobNwcdImgds/6dYtcwwLU2FB17Fa+66ZR9ZKNCtEjzz8PVDuFuXSJKZfzWQ8cL
-	 dFxgTF4en6WkfeV774UY5scVQ73Sl8nvrBpY1H4oHYcmOrO8pTfK+ALfSg6001P5oVw==
+	t=1795032472;
+	b=1+8QDCgfSI9iKGO4ypSbJkVchqSifSyeNUQwubUltkD1d5dCXr58pKdUZOOzikoKZZt5
+	 sYEYoMu0fy0zkVOwqLf8wt1jFk0rNWb8ZuXt8ZpB4s9OE74gavHbXrJqMsiSEyqqBzRE2
+	 rJ50WntdbQmwGPi1lhpuTgStg2MwO2/LEYeZKSTWcy9PlHBD74EfI/MpiuOwVW/wTqS+4
+	 lf73B3H8a7yAAe9ipbYKVRAi7ybvnHFjGDdqUshV03Uu7IOipIPaqVyov53L0rV8Pp77T
+	 ixQnVKxdBGNNlyZ9Drdj/XdV7Y/sInfV/GnQmdWL3eA2QeoMO98JAcsD3PJQW2xFO0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032469;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oxZcM3pOQyC5+ao2+7N5zrXRkE292uQppRqgtnhlXe8=;
-	b=1RPbf7zkq2VZBfr976cxengMVP8aeIO0k15LqZkKhm3erqLxdta4lAO3ijsNr/R5ecWw
-	 g5q29RrbgzGw15gktei4bmy8NjeFYFsfQElM2VZFx9YsjsLNmp0rjn0QRo3IS0vSKvuBw
-	 y9jERgMHYHpOVt3GTpcYxtslEdQrCzsDlbu/pRsjO7apzsrl2Z3A/vp3CedJZtGFCHs9z
-	 qca748zn9zvRFXkHc4pm7XaNw1qwdpo5IAsqEdifRzgZjhs8gKju01BXdGq/Oe0co8z6u
-	 kiPo0goWNcAxKFoEn4bYDHNursp+DPipLMfYAf3RxiEftBjfsBGZpLbmWkTwJrWmiLw==
+	bh=TQBYjHm8Gm7aA6TQCjMev2hR25BhrogdnB+hKcozxEw=;
+	b=nK6Pmv5FdUmSWrAkphzhZTf3ejPxLt8k3AQVRyn/YJ6ASW96STSQx0RpxUFrYcG+Y9pF
+	 og7pBIsZ7d69tucXzUsJsPYSSyNpO5m85zG6jsyOdhE2LzOnOXAtK6zRujJfYqxszM8Wd
+	 TuorKkXKukZMo+0Z/K2U90pf08+qvw+2vR2XJ07sDAed1j7RBTaJ0t8qI5E3BgRxCyAcS
+	 1AG/rlhTvY4sFfu0u8Ph8Grr0ZxNH0Sa4AQUQg/DOtpMD4EwVENe344DHXyfc9heFvZ42
+	 X9DLpmeqkyXwJb2t3EnAiRKVzqMbMUwCzsXsfMqFchPid2MEjgV75whnLxgMvtMJ2Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvWJXQn2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0mD/yvGw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF58E606A33B;
-	Wed, 18 Nov 2026 20:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB80606A32C;
+	Wed, 18 Nov 2026 20:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvWJXQn2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B99F1F000C4;
-	Wed, 18 Nov 2026 20:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0mD/yvGw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF781F000C4;
+	Wed, 18 Nov 2026 20:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032469;
-	bh=oxZcM3pOQyC5+ao2+7N5zrXRkE292uQppRqgtnhlXe8=;
+	s=korg; t=1795032472;
+	bh=TQBYjHm8Gm7aA6TQCjMev2hR25BhrogdnB+hKcozxEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YvWJXQn2X6A/HYgfd1729R279uCJT0ZLwkyYI7hKgoK4b9Z4OBlGBViHiD0Nq9OWO
-	 fzw0j+PqLzGGSkrMfDXi3hXKWzzY36mEmTqxfFz4OZiLJWoqm/Ldr4A1GR9y2c7EtQ
-	 dAQUG418Et06WavhBcXekIQEsjP10qoBlBk0+wRA=
+	b=0mD/yvGwgNkvu/BsUDnIHYmfUsB3Pgadnm1imjGkuk9LfoDoFjbs+LZRlJRxOenuY
+	 bgKU7nUTQ6riPZj73KFGIujMDAYnfANuFQkQoClt2Rp3ftdHe9gQS9zKyvQ8DNI3RU
+	 xVVYdbYQFMhSO0cq4s0wHbZuOS/o0feP8AK8vv9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pengfei Zhang <zhangfeionline@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1424/1756] RDMA/mlx5: Fix CQ resize destination index mask
-Date: Wed, 18 Nov 2026 15:59:11 +0100
-Message-ID: <20261118150105.851443050@linuxfoundation.org>
+Subject: [PATCH 6.12 1425/1756] net: stmmac: xgmac: do not treat TBU as a TX event
+Date: Wed, 18 Nov 2026 15:59:12 +0100
+Message-ID: <20261118150105.887821715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,46 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Pengfei Zhang <zhangfeionline@gmail.com>
 
-[ Upstream commit 0fe31052d948a3a993bb2f58cd5886f7ec279ea7 ]
+[ Upstream commit 305deb54c6c287e586bed92da2375ae1220e8dde ]
 
-In copy_resize_cqes, the destination CQE index is computed as
-(i + 1) & cq->resize_buf->nent, but resize_buf->nent is produced by
-roundup_pow_of_two(), so it is a power of two with exactly one bit set.
-Masking with a single-bit value can only yield 0 or nent itself. The
-buffer has nent entries, so valid indices are 0 .. nent - 1 and nent is
-one past the last slot; whenever the masked result is nent the following
-memcpy writes one entry out of bounds.
+Commit 8d07a7930434 ("net: stmmac: xgmac: Do not enable TBU interrupt")
+removed TBUE from the default DMA interrupt mask, but did not remove the
+TBU check from dwxgmac2_dma_interrupt().
 
-Use (nent - 1) as the wrap mask instead. For a power-of-two nent,
-(i + 1) & (nent - 1) is the correct modulo-nent reduction, keeping the
-index within [0, nent - 1]. This matches get_sw_cqe(), which addresses
-the CQ buffer via n & cq->ibcq.cqe, where cq->ibcq.cqe == entries - 1 is
-exactly the nent - 1 wrap mask.
+TBU is set whenever a TX channel runs out of descriptors. Since TBUE is
+not enabled and only enabled bits are cleared, the TBU status bit is
+never cleared. As a result, TBU stays set on every idle TX channel,
+regardless of whether there is any TX traffic.
 
-Fixes: bde51583f49b ("IB/mlx5: Add support for resize CQ")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20261019050503.2313-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+With a shared interrupt, stmmac_dma_interrupt() checks all channels,
+so every interrupt from any source schedules TX NAPI on every idle TX
+channel.
+
+Only use TI to trigger TX processing.
+
+Fixes: 8d07a7930434 ("net: stmmac: xgmac: Do not enable TBU interrupt")
+Signed-off-by: Pengfei Zhang <zhangfeionline@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20261013024747.2688984-1-zhangfeionline@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 4f25aa8c72fd6..8e8983e6099bd 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -1262,7 +1262,7 @@ static int copy_resize_cqes(struct mlx5_ib_cq *cq)
- 
- 	while (get_cqe_opcode(scqe64) != MLX5_CQE_RESIZE_CQ) {
- 		dcqe = mlx5_frag_buf_get_wqe(&cq->resize_buf->fbc,
--					     (i + 1) & cq->resize_buf->nent);
-+					     (i + 1) & (cq->resize_buf->nent - 1));
- 		dcqe64 = dsize == 64 ? dcqe : dcqe + 64;
- 		sw_own = sw_ownership_bit(i + 1, cq->resize_buf->nent);
- 		memcpy(dcqe, scqe, dsize);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+index 4d6bb995d8d84..cc52dfead8d15 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+@@ -366,7 +366,7 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
+ 		u64_stats_update_end(&stats->syncp);
+ 		ret |= handle_rx;
+ 	}
+-	if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
++	if (likely(intr_status & XGMAC_TI)) {
+ 		u64_stats_update_begin(&stats->syncp);
+ 		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+ 		u64_stats_update_end(&stats->syncp);
 -- 
 2.53.0
 
