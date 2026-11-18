@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015294;
-	b=aaTif+f+Ps6MA9eMkFXPHAOY23rL4IllEWkF1xLvvrA89Zo31WsaHtKPUYQ4iPOrP8JI
-	 8jcgYSQAPiM9yUWcVnpuXriRnB2GLdme/o6oxFCZn9ELqdedGfxbfUJ909gs+pypyEwtz
-	 3TaCmecxAJd+qLs9gT+m62tW/LQua92IENS0YaRc8xRjsozuLZaqiyuwJZcGwGn7gSB2x
-	 +vf903wEakDfO8gu4gwZMl66KLpQLbycx7H9q0BBBIMDHtOZLObcGWoB8xlCynVShAwYQ
-	 4Zvxzgpyck5XTxQt9NdU40eKlA37rLfXv/LH3CEl6/uNF7w1o0FjQRCjZaX8N0EJ4aA==
+	t=1795015297;
+	b=fPDQ1Rd1gwAINvh+64mb0TSzGNydRx6cwW47wfzlk0aSdAw2FYyBfXeamoaigsSe1MCH
+	 URyjf+lIcWdBgeb/pMV35ct+kT2R+4skJyjOMGD5jwV/R4gUO4EH+bRwstpi31QSWzsyP
+	 Bq7068hlCtNMtbCaFKnTFgzDBvZQhEl22jzAKZSRkVmsGP0MZYNQgRTNMCXYiOtAkubCC
+	 C48xocrUEsvEVPwtpk9rirWGtgne4P3miD3QNJ2KDRFYOlMO8dA1d5SC1lM7gbxBS+Ey0
+	 d30q4aqp5jHU2yoQhxzmUDhsKd2WNj2sZnfKbO3KdUHia4Z4cBmy3sCaD64YhswAh2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=004IqgnevRlMEmsN70K/x0McxLtF2USPhPwg57Hox6g=;
-	b=LtIixVs7L+SYLU3/7Ua7uMdG2cI0dPPZLNSTq83aDiZ/T5ZaY7oeo6yL8FAsrEE2XrcX
-	 eu9Pr183KSNvNtIzkFJngxGYOVvbhMfagwCS0uqARJpVfB7AwrqCjUN75iyufy/T55s/1
-	 FxmTJJaETyDltdSwDGOKb47Ko68FLndDKiYEnvBApNn9IZv+cyoyfVLj9y3Cnc4g1H+Qt
-	 T2RvmM5v7El6UOUDofuxrpB3Dod/nZIzjpUQojZ411ahn0bDtcpw012eirWeLmlfEjSh3
-	 RMMV5DpCG4Sp+DRQpw3NizHZKikOn39ozPVT+nNHzRIcAbqjmcK4i7h1pDZJ4SoOGqA==
+	bh=cs3JczpzQfP6u+mbt4ZFM6NY3MZAtG4J4YRrFl9Sges=;
+	b=D62uMVIygZJTcOF0B03hJaaDTZN4PuiMq8obi4dnMgTOXi1vXg2VzD6H683+UzJgCvJR
+	 6pVDmwex+NALkWPesgHox/u4+Wpe3V0pshY2mAO4AwWP6y8Bn9MMuP97RHN/mAhJSjA5T
+	 syyxuWMIe8jQp4AH/az6xGAlGZoUvc9WsomgzKEUWPORVVnFPE5zq8XIOAe1oe09epc3U
+	 h4ibapyK4o6Bu+qUqqp76OuZvOrxd9iMkS/4kfgO65Mny5wjkDNAxK4WoKH6rX9PR80RV
+	 Ucv30qULeezZFqrYsqtJH/wU7S2UoT3/RpFbjERdgDXr+FzmZds2ddfoK0YlbOuecVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ4RQlUa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGrT3mG7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DA5606A325;
-	Wed, 18 Nov 2026 15:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF09606A325;
+	Wed, 18 Nov 2026 15:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ4RQlUa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A80D1F000C4;
-	Wed, 18 Nov 2026 15:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGrT3mG7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB6A1F000C4;
+	Wed, 18 Nov 2026 15:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015294;
-	bh=004IqgnevRlMEmsN70K/x0McxLtF2USPhPwg57Hox6g=;
+	s=korg; t=1795015297;
+	bh=cs3JczpzQfP6u+mbt4ZFM6NY3MZAtG4J4YRrFl9Sges=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZ4RQlUa19oNc/OzgMQYfVdhDk+q7YUmSzIxHSgpcrVe1ey+G8O0OGaghJF/g+sqM
-	 r9ZzFfEs5vO+9CF5tGuxlzcgVWSwylBHYg6mmVAceiVsPliyLkZpXxupiirousaXSF
-	 3gI/B6Xp2ouHErId/k6iYR3kVmGZtqoCUutWPu/w=
+	b=PGrT3mG7+UyhUPshII4mtY9NdZI5xWwlk5M96GGTpGbY2OR+kCzGagA15Cnpoy20l
+	 TC8fCY8wtbSiWQFSr7WmnFUG1CXyb5L6dNewC3gBvVl1FuFBdb1mI+wojIl3hJTBZ7
+	 oHHTkwpPIMiDE1Jyg7eBRpWHRq1oZYlQUZ0qCWjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Tabi <ttabi@nvidia.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0070/2651] gpu: nova-core: write initial RPCs before booting GSP-RM
-Date: Wed, 18 Nov 2026 15:21:50 +0100
-Message-ID: <20261118150250.458900230@linuxfoundation.org>
+Subject: [PATCH 7.3 0116/2651] perf jitdump: Validate sym string NUL-termination in code load
+Date: Wed, 18 Nov 2026 15:22:36 +0100
+Message-ID: <20261118150252.052818844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,55 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6556f7556d622dbbc5c936df9d39c2f33600adfb ]
+[ Upstream commit 98bfe1142ccbaa5ffdca5dcdddd26f238ad33585 ]
 
-Make sure that the two setup RPCs, SetSystemInfo and SetRegistry, are in
-the command queue before booting GSP-RM.  These message are expected to
-already be present, because GSP-RM will process the queue early in boot
-but will silently ignore the error if absent.  GSP-RM then continues
-booting, but since the registry is not set up, it fails to initialize.
+jit_repipe_code_load() computes sym = (void *)jr + sizeof(jr->load) and
+passes it to jit_emit_elf() which calls strlen(sym) via jit_write_elf().
+If code_size equals total_size - sizeof(jr->load), the sym pointer
+aliases the code blob with no NUL terminator, and strlen() scans past
+the buffer into adjacent heap memory.
 
-Fixes: 0e42ec83d46a ("gpu: nova-core: gsp: shuffle boot code a bit to keep chipset-specific parts close")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Link: https://patch.msgid.link/20260810181243.3036669-1-ttabi@nvidia.com
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Add a memchr() check to verify the symbol name is NUL-terminated within
+the region between the load header and the code blob before use.
+
+Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/gsp/boot.rs | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/perf/util/jitdump.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/nova-core/gsp/boot.rs b/drivers/gpu/nova-core/gsp/boot.rs
-index e03700ee7beaf..874f6e9499f01 100644
---- a/drivers/gpu/nova-core/gsp/boot.rs
-+++ b/drivers/gpu/nova-core/gsp/boot.rs
-@@ -44,6 +44,11 @@ pub(crate) fn boot(
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index 5a3ea2681fb37..5898a7d8eb962 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -487,6 +487,13 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
  
-         let gsp_fw = KBox::pin_init(GspFirmware::new(dev, chipset), GFP_KERNEL)?;
- 
-+        self.cmdq
-+            .send_command_no_wait(bar, commands::SetSystemInfo::new(pdev, chipset))?;
-+        self.cmdq
-+            .send_command_no_wait(bar, commands::SetRegistry::new(ctx.vgpu.state())?)?;
+ 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
+ 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
 +
-         // Perform the chipset-specific boot sequence, and retrieve the unload bundle.
-         let unload_bundle = hal.boot(&self, &mut ctx, &gsp_fw)?.or_else(|| {
-             dev_warn!(dev, "The GSP won't be able to unload properly on unbind.\n");
-@@ -73,11 +78,6 @@ pub(crate) fn boot(
++	/* sym string lives between the load header and the code blob */
++	if (!memchr(sym, '\0', code - (unsigned long)sym)) {
++		pr_warning("jitdump: unterminated symbol name in code_load record\n");
++		return -1;
++	}
++
+ 	count = jr->load.code_index;
+ 	idr_size = jd->machine->id_hdr_size;
  
-         dev_dbg!(pdev, "RISC-V active? {}\n", gsp_falcon.is_riscv_active(),);
- 
--        self.cmdq
--            .send_command_no_wait(bar, commands::SetSystemInfo::new(pdev, chipset))?;
--        self.cmdq
--            .send_command_no_wait(bar, commands::SetRegistry::new(ctx.vgpu.state())?)?;
--
-         hal.post_boot(&self, ctx, &gsp_fw)?;
- 
-         // Wait until GSP is fully initialized.
 -- 
 2.53.0
 
