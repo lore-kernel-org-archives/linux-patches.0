@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015922;
-	b=cHLuLtr+77SZBvnj+236Mr+OKWVYCvBjY0haD1E2kLTp0ZPDCUBxkFRSa/zzh7mHhqEb
-	 kNurUqtjkLNTLKxnU4/fY0R+Vjoogk8ZZdCW2ikG236qCSMYaDxLk9S3gdsFcOmet+w4d
-	 exWOhnkwUkZ6XI/Pp2CtliMSr8lMOeJRdE8CGJS1P8WN7KdWISfyEDY9fRpuStNZkfA2z
-	 AxO+CP/Uhy7pszzo6rCM4/PRuuRNNXT+N9eRHd6Z24zPYvz/4r5ZrrQHBUSxOeYvNFKZi
-	 evE/lvK7e7HUIIdyU2qxyOiq6lDKvVK8E4lxYNU4OvBUUJKkVBupElwaM5z62AgdILA==
+	t=1795015924;
+	b=UkoUJypaFAkNd2NAFtJSY7oK3WomQTQzH4dmgCypEaKYzwTV1KNbpXPPL6/VJmQZLKMS
+	 cyuh7I9yX57/Ld9uX1ibOyWRYh2eQ+uKYuM0a/R+iMnX6oJBkcVYcZh4bej4S0/n+YX/R
+	 nFYEBlWQG6qFZGgHjyD8P3qQLJV6+lvY4vBwINUWhDT7pkQAlDZeAOr8/55y2lGgv2SHV
+	 x6L2x+IknWo2Lv0rIuSDgEEkB7O77O8RlHe9EdEvgNknSPTGICOHu0qmZF+Uz6XS/XaU0
+	 buaN7rJPq5AwRAKJUMfEpMDJp1vZq3A7lDesGPLbHJtRfY85DbacUX+MkgFAlfA3nrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jHcj/CFVHCOXmMA/xwt6rg93PMPKjIgHgCNiLeND/Ac=;
-	b=3YfTHfdX0ZPam2VkNljlwHySs884ime11LFBd2SK/MkARDpeiMe7I4nx+J8jiGx+6VsN
-	 uWZ0yzaUJKZcWytgX26/p8TxaVJFtuMhFIzIhXgk7F1eVUSyQD1i9maenvbtQ+Kd8d5zF
-	 1RE4OEK4pv8Kz66rcARKoaX9Dhz9hdncoB7yWcXXLSJqHNbrKsVAyMKzwA3dV1EcEnxQH
-	 YtFBItzLSYIWmYVVWtnvfCF4rrRwvWEZYmcQSiO20/U0BKE1tGSGFmHphBVx/Kj+DYJGx
-	 598q71j2uHBtRDsj/msLWjxE73uW30yNGSjAOUrUDkIGgZKUhK8mcrPOUmcUaJkbM8Q==
+	bh=2RpRUZkfaIqPIQRndUGz4c2x9kMKpu2JI4uoctNrpRQ=;
+	b=huTFXJzeww8ePXhCtSelAi9wTMqSlTW0VQiEvGOsNzMKINdALQrGZDlK+tb7bk2cfDpL
+	 BbjBbhMslwdTLZsfyTV5WiCFrDTkhE7vKCL7WaLaWPW4KqaXyMPMPrxtvc92gMW1g9tbI
+	 ZTrNjZIzsLnAhlxMe+UtU8qxcLIPu+y2bQeTImIGaZu7U7r4ufoXx7UN+usZIwVRKaJvV
+	 WlI8K4TUGpnBgeGTly7ZkRE8QQEFoJyDOGmiMHvhRgUZjRzNJ9RMmPWFbaBc4ybWs5jBL
+	 MJP2PCjES7KYgjqfW6VZuIS74m4BsbYCTs1wimUS8efHxcBlsUqiqb1cS+pFxYrTkfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d45TpXXz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8geRAap;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBF3606A320;
-	Wed, 18 Nov 2026 15:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D38606A31C;
+	Wed, 18 Nov 2026 15:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d45TpXXz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4741F000C4;
-	Wed, 18 Nov 2026 15:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8geRAap
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185B41F000C4;
+	Wed, 18 Nov 2026 15:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015921;
-	bh=jHcj/CFVHCOXmMA/xwt6rg93PMPKjIgHgCNiLeND/Ac=;
+	s=korg; t=1795015924;
+	bh=2RpRUZkfaIqPIQRndUGz4c2x9kMKpu2JI4uoctNrpRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d45TpXXznK1nHXJi2FY+cdL5493SnMcV3a9WH9ys3ZPFp2nAs0FbC7fUw3hlemSld
-	 PglsVKaeNkEFkaDwHabchhpQwuadnELj2rnogmXgiUHhKwG3DxIfjRvJ2eF2Og5DTC
-	 C1W/mNqS0vMdm1nBGYBfjHFWbkAABj3XPXzQ0H94=
+	b=P8geRAapJRDOXFsmdWqhOAYqXMuaDMA/OBKlKZTxc55xTDCVH6SG2VV7WND2Z2WV7
+	 vWM5f7ec6YgEBrAr9iZBiCWuTT+z/iMpiei3xdrkgwkoIldlLJjZyecR9aUip8/FKX
+	 BM8AIRKvWnm/uXyXh/uBEDhFqknUjBQGKHbF8qB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0346/2651] scsi: mpi3mr: Fix NULL pointer dereference on PCI error recovery
-Date: Wed, 18 Nov 2026 15:26:26 +0100
-Message-ID: <20261118150300.298589725@linuxfoundation.org>
+Subject: [PATCH 7.3 0347/2651] iio: accel: kionix-kx022a: Fix IPOL macro name
+Date: Wed, 18 Nov 2026 15:26:27 +0100
+Message-ID: <20261118150300.332185927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,46 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 2ba1d12b2629827fdb1116eb3c9f8566911f2034 ]
+[ Upstream commit 4a4b0d75622f7d911c96045b328fe2e88be05072 ]
 
-On a frozen PCI channel the driver unmaps the register window and frees the
-interrupts, but leaves the firmware event workqueue running. An event
-handler that is already in flight can still reach the register window after
-it has been unmapped.
+The "interrupt polarity high"-macro for KX022A variant is defined as:
+"#define KX022A_MASK_IPOL KX022A_MASK_IPOL1"
 
-Stop event processing and drain the queue first, and start it again when
-the channel resumes.
+However, the KX022A_MASK_IPOL1 is not defined anywhere, so actually
+using the KX022A_IPOL_HIGH would produce a compile error.
 
-Fixes: 30bafe1774f0 ("scsi: mpi3mr: Support PCI Error Recovery callback handlers")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-18-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fix the define by using correct mask.
+
+Fixes: 7c1d1677b322 ("iio: accel: Support Kionix/ROHM KX022A accelerometer")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/accel/kionix-kx022a.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index dbeb8375ff05d..991e29a8d382f 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2155,9 +2155,11 @@ static void mpi3mr_fwevt_bh(struct mpi3mr_ioc *mrioc,
- 	mpi3mr_fwevt_del_from_list(mrioc, fwevt);
- 	mrioc->current_event = fwevt;
- 
--	if (mrioc->stop_drv_processing) {
--		dprint_event_bh(mrioc, "ignoring event(0x%02x) in the bottom half handler\n"
--				"due to stop_drv_processing\n", fwevt->event_id);
-+	if (mrioc->stop_drv_processing || mrioc->pci_err_recovery) {
-+		dprint_event_bh(mrioc,
-+				"ignoring event(0x%02x) in the bottom half handler\n"
-+				"due to stop_drv_processing or pci_err_recovery\n",
-+				fwevt->event_id);
- 		goto out;
- 	}
- 
+diff --git a/drivers/iio/accel/kionix-kx022a.h b/drivers/iio/accel/kionix-kx022a.h
+index 0ed54f5842235..a2d122c1e2347 100644
+--- a/drivers/iio/accel/kionix-kx022a.h
++++ b/drivers/iio/accel/kionix-kx022a.h
+@@ -65,7 +65,7 @@
+ #define KX022A_MASK_IEN		BIT(5)
+ #define KX022A_MASK_IPOL	BIT(4)
+ #define KX022A_IPOL_LOW		0
+-#define KX022A_IPOL_HIGH	KX022A_MASK_IPOL1
++#define KX022A_IPOL_HIGH	KX022A_MASK_IPOL
+ #define KX022A_MASK_ITYP	BIT(3)
+ #define KX022A_ITYP_PULSE	KX022A_MASK_ITYP
+ #define KX022A_ITYP_LEVEL	0
 -- 
 2.53.0
 
