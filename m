@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019246;
-	b=EyE2VDThFeBsui9yEG4w2WkUdx78LlVpwCy3atyGolDbiB2Cxgjf5Ew+ihWmdVTbZ+0/
-	 OFJhSNFn4uZzt7xTcaBJ8b753i1NeAQN2HPY9nObad4dimhcWt3NLMQhKyCoobvqVWhOT
-	 6ETDVAC89T2xhQyfAiCcBQXcoQBds0tGeq7UbZCidygyIpjoWSNa9UL8nSEKJTkZHdO4B
-	 qkXIZltJGKXtrWi1Sw9kM6yt01sljTKn2ajv1f6tl/pI0a9Yau6M0pyyVJ401y5gWwznY
-	 k/acFmvUC/iXAtdYyD8VBcaKLP0BKRfDu3RLrlFq83LS+8GhT1dQkFsFkCKWs3gfZgg==
+	t=1795019249;
+	b=tvhAEy/XFLUhT/J6zwSR+A1CbedSb3N6ccFNVi66xLWS7lgxVQrDTm8tP7YKG5tf8f5Q
+	 LUzj+MxLJ6rAPqb9r86gYGRMXuNtBzSZKlwPIb5tTURdfZkzp0/ND0eRv+HIENZID4H3K
+	 yi8FseuafmpnH2T/iiFUbZ0xzUz+6yVv/2ESfAhe+S6gmKIqaR5NOhLPKQETg+DD4ZpPM
+	 YyuuCELFkU8ut0dyMSbPzatqLcdsrEseBl0At6K1KYgx7pxVkulGtTnkXG4vKjKM0Sdd4
+	 uJklQ3m3DRnGKh/vvNOI0zbDo9Nym48asEIdWH8WN5Nj6ildSriQkm8xzkastsUPokQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EwRNr9sPu1BonthDpUSIqJGdrQgFegm2odsVPoyzYyA=;
-	b=D+p1iG8AzvJ/jffd6Qhqlr9/TurpxTLt9ldzUrs8anJzAR2muhepb/96kCKMd6Hx8RVS
-	 jB7KLHLs4IAs7oXWTlPV1am/JRocOmO5YzHe3HSWfx7qR4AfTmHVYIFWMu+l2va0OMYPl
-	 uKi2gQ43Yl3vFN/rYVfjpAYjG3JdgnbI1Iym3pDGgHqusNEZGyHsZmBxxhDlr207lfWSv
-	 iFgWBn3umbUbO1DSdcKvlpdn4fHHNnFLi2lBN4t2TlawSz+1TqzERvWZTpGolL/EpI6gn
-	 Y4FI4lCIawh8+XPdBjAKhE7OvHRbypYg1Wf6cRis1E4wMGRtyfEPgW24+OhmebQY4pQ==
+	bh=vRx39ZDuM9PcKrNrPUV9Hjeptkv5Cvi3rgCWzhQzGEY=;
+	b=NoPpa5bpPhPwTJ66wfzYJdgCDZSJaZLFRKt6xKu8NLnFSZ2GX/K5Ao3ggg7GG8PEoPMl
+	 PUKQ0pAkIxXmYLq0ZcbIpNFZ5b85rj6zRytkDztlLSk8SEG5ecJdgUzkbzMaqeOL/lmtb
+	 yhv6Ne+z3s5nPLy4nRhSPxP26EoSPTSV5yt7xym+cdivEzZdw2k0X10q0S96LQ5674C4S
+	 eJgFrQWwl34CbYpB+yJaX8mUpNzU15eNJ62b/E1LnXwI2O4QZNT0bmffJbRDfdkVhdn+B
+	 jKkYRU6VskqcFuU/xx95ngkamK30uZ9l6BWIraYH7G+AeYUCedMX6BEhmoZrqVM/BqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wqXFRZj4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkLghbfI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F815606A338;
-	Wed, 18 Nov 2026 16:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF1760A2608;
+	Wed, 18 Nov 2026 16:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wqXFRZj4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D519D1F000C4;
-	Wed, 18 Nov 2026 16:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkLghbfI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47F91F000C4;
+	Wed, 18 Nov 2026 16:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019246;
-	bh=EwRNr9sPu1BonthDpUSIqJGdrQgFegm2odsVPoyzYyA=;
+	s=korg; t=1795019249;
+	bh=vRx39ZDuM9PcKrNrPUV9Hjeptkv5Cvi3rgCWzhQzGEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wqXFRZj4JaDw+vFNUay+Tl9DnxPyj8VL5hJuao1tXc38c2Ar54q4jagKtG1cmCkBt
-	 /3qt5SLgH7B2/8z43Y6SqS3GiTyxhsysW7wlOKcmvzH1Z+HsW92fqRJ/4gZHvgas8a
-	 3sFyR+7q9p/Rp6uTRW6H/54bNILBp1nlI0osw2Cs=
+	b=AkLghbfIuLpncc6xueJEU70XiIt3/A8Jvzx3/lc0WMI/yCIVDLaPrOGddM89Q1E8a
+	 8z0/5Uqvu01mDOPC91EVfxXUtfPoR0O9HEthBXocH8oecDhp7z54EsosSOLZDjfxZN
+	 t6/x2dN2Wt3xcCQZGF4nznF4R398Ci/MMdg9/q64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1487/2651] ASoC: rockchip: rockchip_i2s: Handle runtime PM resume failures in set_fmt
-Date: Wed, 18 Nov 2026 15:45:27 +0100
-Message-ID: <20261118150341.551619713@linuxfoundation.org>
+Subject: [PATCH 7.3 1488/2651] kobject: Fix the kobj_set_name reference in kset_register() kernel-doc
+Date: Wed, 18 Nov 2026 15:45:28 +0100
+Message-ID: <20261118150341.585588865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,41 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit e9eb1854d16136006c6fe94c927b54b2b264b429 ]
+[ Upstream commit 3aac49b236c137fa77b97968d25338a28c49f0f8 ]
 
-rockchip_i2s_set_fmt() calls pm_runtime_get_sync() before accessing
-hardware registers, but ignores its return value.
-If the runtime resume fails, the function continues to perform register
-accesses while the device state is undefined.
-Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
-return early on failure to avoid unpowered register accesses.
+The kernel-doc comment of kset_register() refers to kobj_set_name, which
+does not exist. The name is kobject_set_name. Say kobject_set_name.
 
-Fixes: 53ca9b9777b9 ("ASoC: rockchip: i2s: Fix regmap_ops hang")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260903112739.373621-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1662cea4623f ("kset: fix memory leak when kset_register() returns error")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260911222029.7267-1-kmehltretter@gmail.com
+[ Also drop the misplaced braces in "allocated by()". - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_i2s.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ lib/kobject.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
-index 261f36d4c2fd4..e7ea71783e372 100644
---- a/sound/soc/rockchip/rockchip_i2s.c
-+++ b/sound/soc/rockchip/rockchip_i2s.c
-@@ -244,7 +244,9 @@ static int rockchip_i2s_set_fmt(struct snd_soc_dai *cpu_dai,
- 	unsigned int mask = 0, val = 0;
- 	int ret = 0;
- 
--	pm_runtime_get_sync(cpu_dai->dev);
-+	ret = pm_runtime_resume_and_get(cpu_dai->dev);
-+	if (ret)
-+		return ret;
- 	mask = I2S_CKR_MSS_MASK;
- 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
- 	case SND_SOC_DAIFMT_BP_FP:
+diff --git a/lib/kobject.c b/lib/kobject.c
+index e7b010a989fb9..76214cb6fd5ac 100644
+--- a/lib/kobject.c
++++ b/lib/kobject.c
+@@ -855,7 +855,7 @@ EXPORT_SYMBOL_GPL(kobj_sysfs_ops);
+  * kset_register() - Initialize and add a kset.
+  * @k: kset.
+  *
+- * NOTE: On error, the kset.kobj.name allocated by() kobj_set_name()
++ * NOTE: On error, the kset.kobj.name allocated by kobject_set_name()
+  * is freed, it can not be used any more.
+  */
+ int kset_register(struct kset *k)
 -- 
 2.53.0
 
