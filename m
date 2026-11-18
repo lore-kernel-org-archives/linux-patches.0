@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052109;
-	b=unt/bE5xtTRzBpDr8ryeBs3dxilZZZ9+FtKq969LUeKqZAh824ZPYKmYTQsem2qk2ATV
-	 uE74wFIBQXAVexdxDdZ2d4ids1XvEOLYPcEeinMWNPE4pko37LUA0ATXwHtQbSyweRVG3
-	 WJcn/lwaLmrkx++ogxpRcJzuRKWVpj0allCZ6EutVh3G+1RRxDcl06JARv2yAiZiHcq46
-	 0joPSnRmsQW+uJifq9MZcs41YkcBTnwpacBhXQwVr/8sBoaui5zZSGZ6ATMsnYKCWjIYL
-	 fRslIHXyvJLfdIplKq69FOg421CAd979Dm3RQsz3wpWoVwYXS/4iUCUFRlkRp3TEE8Q==
+	t=1795052112;
+	b=Pd+PrI3JKDW2XUzodluTwNX+sL9Ow7VeYM0yt7tNNv/Q9j6qTyhqraacYLZi+rvk4HQa
+	 6P//Q8QzeSxxi2RVCdL2La4ishx6UjSVBhUpmmtx9ziv1vSLIFEwGwqBCBWKeOcQQ5y60
+	 SgPe593X9VKvZtq92bhWe5Q0MKrtthqqvhdFja10c5D9ENv83Lya2/ZRTrhVbjfiKEQaC
+	 cy6DTYk0N6o3KDbqB2VtEPw+cFmR6/aiaAuzIfrpdnd7U+lFusUy606fFvi3At9SnBgex
+	 u7zkiVE9SY/o6TS5GfleuaVWAbAyhzJxaAop3D0+58hqaplBIoIDUHyn6oTslGZSkMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KTP/VaEi0FEjsmZClGM53u0Z7DBR6MFSf4RZG4JHQkA=;
-	b=Bn4eBOfnuySQqjlBdsfPrK6EwkYgz6G0P53hbMfU6WSDhKAsH0njP/lVV1LfBZ0jHQDd
-	 ukDgEzXmVXwXBWett1T1CcJpkTBZlt8LhnihgcAVjpqMSTp1Hh4GcsksLRPA9yZTKClwj
-	 gZMLS0nB87LEtSYsZLUpoMjPQQ3DGlgN2Shn0UB2/ZV203c6LLKawBBYlRt5O85g7LQOB
-	 0+qAyZtZZ6wHnoO7j0y27DD/D++8ZwYtPE+z9FMRm7qbImRE75bZBYx5y/+nlIpqLtjw0
-	 sx9jjP5S4m0x/qaQDFq+Rhjro5kSa+WFCFYqhZ9OtDVwkmeUru22sn0229jaNnps/ZA==
+	bh=MePP0fuu0wImAfS17uX2f6ycq7/mPbsmj+oTAAXzeAc=;
+	b=tYQeyP+lXINN5yGG0QS+jlwkMfRINvUTLP6WvOAVLPgXUHKtuPuuM6Rpj1bXeEQ6RWwp
+	 nrjuHzDqGr+qR6WvcMpXiUW5obBYKCJfOL9ll2fplhV1qk2oAo25jVUxSPGoGZPVtqgT0
+	 ImcnE/iUa1WPCv74ZZcmsexfmUGs3LWmyQCiAMsM+MDBqcRAo+uv4Tm0HUzF2HovakmF1
+	 VQBkVNW7fz6PB8tUmnWctZ1OAAzZF6lEXKd/zTHRC7FvLOM+VBIL4gG73VA+wBWhkQfVk
+	 Pznq243xFcgOT+oZVPPTa2HPdkQOR2feUqQnGXgG9z12bFc64zaWD4+oRCSZ0fQgdAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VM/z6bi7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xGwaqoEu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D959606A320;
-	Thu, 19 Nov 2026 01:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B902E606A320;
+	Thu, 19 Nov 2026 01:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VM/z6bi7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0E31F000C4;
-	Thu, 19 Nov 2026 01:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xGwaqoEu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F1C1F000C4;
+	Thu, 19 Nov 2026 01:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052109;
-	bh=KTP/VaEi0FEjsmZClGM53u0Z7DBR6MFSf4RZG4JHQkA=;
+	s=korg; t=1795052112;
+	bh=MePP0fuu0wImAfS17uX2f6ycq7/mPbsmj+oTAAXzeAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VM/z6bi7ReWkJOQTHFBI/3yd29MQxyL97fiVNlCw+MWNynRblMj94YFLfFmPbEqA9
-	 awuStE7h0aiTclbv0AUKiC5U1IcHCobdFeOAT2Z9yy+mzlZ40IMvLU0VmMQvLainyF
-	 0FxaOsQdY9ZKPyWtxtXz+Xj6SGmGw4FpZslIlV6Q=
+	b=xGwaqoEuj4m+Qem/35ia7BSVz7GcAYm7xWRqMRUJ0AeuRg00aHN580Z51SWTNhvaz
+	 00hwCiliuUitsYClO8aOZN0HClUljVK7ym7vxxufGKGdRQObe9ZLKcghAcIcP3uWrN
+	 p1QpQKFQcB8RV2T6pZu7OcPxQQLn/Zoj94tHlMVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sam Price <thesamprice@gmail.com>,
 	Ramin Moussavi <ramin.moussavi@yacoub.de>,
 	Waldemar Brodkorb <wbx@openadk.org>,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0446/2214] microblaze: dont clobber r3/r4 restored by rt_sigreturn
-Date: Wed, 18 Nov 2026 15:35:22 +0100
-Message-ID: <20261118150028.921266893@linuxfoundation.org>
+Subject: [PATCH 5.15 0447/2214] microblaze: preserve the MSR carry flags across signals
+Date: Wed, 18 Nov 2026 15:35:23 +0100
+Message-ID: <20261118150028.956196734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,105 +70,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramin Moussavi <ramin.moussavi@yacoub.de>
+From: Sam Price <thesamprice@gmail.com>
 
-[ Upstream commit da6829138a39fa3b9ec318ca54ff89af9d94d350 ]
+[ Upstream commit ca35dd21a5f8343f47a23e4e5b3f0ffccf76a4ae ]
 
-ret_from_trap begins by storing the system call return values r3 and r4
-back into the saved user pt_regs.  That is right for an ordinary system
-call, but sys_rt_sigreturn() returns through the same path and has to be
-transparent: restore_sigcontext() has just filled pt_regs from the signal
-frame, and every register must reach userspace exactly as saved.  The two
-stores overwrite the restored r3/r4 with whatever the C function left in
-those registers.
+setup_sigcontext() and restore_sigcontext() copy r0-r31, pc, ear, esr and
+fsr to and from the signal frame but never touch MSR.  The interrupted
+MSR is therefore dropped from the signal context entirely: the handler's
+ucontext does not expose it, a handler cannot adjust the resumed
+arithmetic flags through uc_mcontext.regs.msr, and -- because
+restore_sigcontext() leaves regs->msr as whatever the rt_sigreturn trap
+left in it -- the interrupted context resumes with the carry produced by
+the syscall entry path (_user_exception does "addi r14, r14, 4", which
+writes carry), not with its own.
 
-Only r4 is actually lost, and that follows from how sigreturn is written
-everywhere rather than from chance.  Architectures have sys_rt_sigreturn()
-return the restored return-value register precisely so that this writeback
-stores the restored value -- arm returns regs->ARM_r0, riscv and csky
-regs->a0, arc regs->r0 -- and microblaze does the same through
-*rval_p = regs->r3 in restore_sigcontext().  But the entry macros treat r3
-and r4 as a pair, so ret_from_trap writes back two registers while a C
-function has only one return value; nothing carries the restored r4.
+Other architectures round-trip the user-visible flags through the signal
+frame (arm's cpsr, csky's carry, x86's eflags), so a handler can both read
+and adjust the resumed flags; purely privileged status registers such as
+riscv's sstatus are left out.  MicroBlaze should do the same for the
+user-writable bits.
 
-Commit 791d0a169b91 ("microblaze: Fix sys_rt_sigreturn_wrapper") introduced
-this in v2.6.37.  The old wrapper saved r3/r4 before the call and reloaded
-them from pt_regs afterwards; switching brlid to brid removed the only
-point where they were reloaded, and the stores have been overwriting them
-ever since.
+Concretely, MSR[C] (carry) is lost across signal delivery.  Code that
+keeps a live carry across a point where a signal can be delivered -- for
+example an lwx/swx compare-and-swap retry loop, between the swx and the
+carry test -- resumes with the handler's carry and mis-evaluates the
+result; the same failure class as the rt_sigreturn r3/r4 clobber, reached
+through a different register.  Demonstrated under qemu-system-microblazeel
+(machine petalogix-s3adsp1800): a handler that sets MSR_C in
+uc_mcontext.regs.msr has no effect before this change (0 of 132 in-window
+signals propagated) and takes effect after (130 of 132).
 
-Fix it the way the sibling paths already behave: ret_from_irq and
-ret_from_exc restore the full register set and do not perform these stores
-at all.  Label the instruction after the stores ret_from_trap_no_rval and
-enter there, biasing r15 by -8 so that the ABI return "rtsd r15, 8" lands
-on it; naming the entry rather than computing ret_from_trap + 8 keeps it
-correct if the number of stores ever changes.  Restoring the old
-save/reload would work too, but costs four memory accesses and a branch to
-undo damage that is better not done.
+Save MSR in setup_sigcontext() so the handler's ucontext exposes it.  The
+signal frame is user-writable, so restore_sigcontext() must not restore it
+verbatim: MicroBlaze packs the user-writable carry (MSR_C, MSR_CC) and the
+privileged control bits (MSR_UM, MSR_VM, MSR_IE, MSR_EE, ...) into the one
+register, and a verbatim restore would let userspace alter privileged
+return state -- rtbd derives the resumed mode from MSR_UMS/MSR_VMS.
+Restore only MSR_C | MSR_CC from the frame and keep the rest from the
+current regs->msr.  This mirrors x86's
+restore_sigcontext(), which masks the restored EFLAGS to FIX_EFLAGS for
+the same reason; arches whose status register is purely privileged (e.g.
+riscv sstatus) simply do not restore it at all.
 
-Any value the compiler keeps in r4 across a signal is lost.  The tightest
-windows are the lwx/swx compare-and-swap retry loops gcc emits for atomics:
-in uClibc-ng's libc.so alone, 50 of 364 such loops hold the address in r4.
-This is not specific to one libc -- musl passes the address as "r"(p), and
-glibc has no microblaze atomic-machine.h and so uses gcc's __atomic
-builtins, which expand the same way.  Triggering it needs threads plus a
-signal storm, which is why it survived 15 years.
+Comment on the exposed MSR reworded: it is not read-only,
+restore_sigcontext() applies MSR_C|MSR_CC from the frame.  Author's
+Signed-off-by kept; he agreed to comment and changelog cleanups.
 
-Reproduced on qemu-system-microblazeel (petalogix-s3adsp1800) by running
-the uClibc-ng NPTL test tst-eintr1 40 times against an unchanged userspace:
-on v7.2 built with gcc 16.2.0, 23 of 40 iterations died with SIGSEGV
-without this patch and 0 of 40 with it; on v7.0 built with gcc 12.5.0 the
-same comparison gave 6 of 40 against 0 of 40.  The register dump of a
-failing iteration shows the signature: a zero r4 and a fault at address 0,
-while r3 came back intact.
-
-Fixes: 791d0a169b91 ("microblaze: Fix sys_rt_sigreturn_wrapper")
+Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
+Signed-off-by: Sam Price <thesamprice@gmail.com>
 Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
 Tested-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://patch.msgid.link/20260821151809.1233057-4-ramin.moussavi@yacoub.de
+Link: https://patch.msgid.link/20260821151809.1233057-6-ramin.moussavi@yacoub.de
 Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/entry.S | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ arch/microblaze/kernel/signal.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index b179f8f6d287e..18028809250fb 100644
---- a/arch/microblaze/kernel/entry.S
-+++ b/arch/microblaze/kernel/entry.S
-@@ -394,7 +394,13 @@ C_ENTRY(_user_exception):
- C_ENTRY(ret_from_trap):
- 	swi	r3, r1, PT_R3
- 	swi	r4, r1, PT_R4
--
-+/*
-+ * Entry point for returns that must not store r3/r4 back into pt_regs,
-+ * i.e. rt_sigreturn, which has already restored them from the signal
-+ * context.  Reached as "rtsd r15, 8" with r15 set to this label minus 8,
-+ * so it stays correct if the number of stores above ever changes.
-+ */
-+ret_from_trap_no_rval:
- 	lwi	r11, r1, PT_MODE;
- /* See if returning to kernel mode, if so, skip resched &c.  */
- 	bnei	r11, 2f;
-@@ -478,6 +484,15 @@ C_ENTRY(ret_from_kernel_thread):
+diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
+index 6989792d10e84..72f207e53816a 100644
+--- a/arch/microblaze/kernel/signal.c
++++ b/arch/microblaze/kernel/signal.c
+@@ -33,6 +33,7 @@
+ #include <linux/linkage.h>
+ #include <linux/tracehook.h>
+ #include <asm/entry.h>
++#include <asm/registers.h>
+ #include <asm/ucontext.h>
+ #include <linux/uaccess.h>
+ #include <linux/syscalls.h>
+@@ -81,6 +82,22 @@ static int restore_sigcontext(struct pt_regs *regs,
+ 	COPY(pc);	COPY(ear);	COPY(esr);	COPY(fsr);
+ #undef COPY
  
- C_ENTRY(sys_rt_sigreturn_wrapper):
- 	addik	r30, r0, 0		/* no restarts */
 +	/*
-+	 * rt_sigreturn restores the full register set from the signal
-+	 * context, so it must skip the r3/r4 syscall-return stores at the
-+	 * head of ret_from_trap which would otherwise overwrite the
-+	 * just-restored r3/r4.  Every C function returns with "rtsd r15, 8"
-+	 * -- the ABI return, where the 8 skips the caller's branch and its
-+	 * delay slot -- so bias r15 by -8 to land on ret_from_trap_no_rval.
++	 * The frame is user-writable, so restore only the user-writable
++	 * status flags (carry) and keep the kernel-controlled MSR bits
++	 * (UMS/VMS/IE/EE/...) from regs->msr: rtbd derives the resumed mode
++	 * from UMS/VMS, so a verbatim restore would hand userspace the
++	 * privileged return state.  Same idea as x86 masking the restored
++	 * EFLAGS to FIX_EFLAGS.
 +	 */
-+	addik	r15, r0, ret_from_trap_no_rval - 8
- 	brid	sys_rt_sigreturn	/* Do real work */
- 	addik	r5, r1, 0;		/* add user context as 1st arg */
++	{
++		unsigned long msr;
++
++		err |= __get_user(msr, &sc->regs.msr);
++		regs->msr = (regs->msr & ~(MSR_C | MSR_CC)) |
++			    (msr & (MSR_C | MSR_CC));
++	}
++
+ 	*rval_p = regs->r3;
  
+ 	return err;
+@@ -140,6 +157,7 @@ setup_sigcontext(struct sigcontext __user *sc, struct pt_regs *regs,
+ 	COPY(r26);	COPY(r27);	COPY(r28);	COPY(r29);
+ 	COPY(r30);	COPY(r31);
+ 	COPY(pc);	COPY(ear);	COPY(esr);	COPY(fsr);
++	COPY(msr);	/* restore_sigcontext() accepts only carry state */
+ #undef COPY
+ 
+ 	err |= __put_user(mask, &sc->oldmask);
 -- 
 2.53.0
 
