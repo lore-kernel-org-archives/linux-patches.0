@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050526;
-	b=FCJI8Kyn8I1lx+9i7e3ByM9EjyV+CQX14vCrKGOyM0mrY4smuQ6E9o1MWqV5UM5GUWQN
-	 vVjGh85n+FMwA0FR1UMMBYM7wKPU0P4nZ8U8v6wch93xPxQf3na86CC6khXS1rgB/OmJV
-	 KMwChjkeiEXQtMs1X4qNRgLkRsDHihaCMLCuWdSHu80Htzk1NUIZ8fXAI/gPyQkilcV0L
-	 VMr3KTigyW7eaMIEIJfqCa7W+Vj7S8yMUREdhYLVJL423gFI3F8bA/UsJ9T4b96EAsDUk
-	 8TQG9Gme/xPsoj9Mxd30mpLri0anWdj0vhViskRIP860eHQ3hVK/pDy4kdLUuq6CGhg==
+	t=1795050529;
+	b=Q1VliWPQRNmiaaXRvkNcC6XwluntQfLHmdYjbhRElJTN+RF7KOY3LftnK/lAWWpwSh2E
+	 kFoLFqDj+NGEho5LmrZzNq8FiY0C7Uw0r192cB9mZoNmgMWlHivOjJxCFTpKlSAmeGAzP
+	 fkeiTpJmE8AUIKDY6wEbeXLhBJTZ+aM+IdVfyUjr6n2RzDxdlGAvZHDugOvDA0LxzW39I
+	 IDAElbx0pw/P7DaYheublDdnSfOnMPzrZ5OI5iGfGhfFyVfza7GjGY1+Yu+PNhOOA072j
+	 2Rktc48RIusfwCozFmnM6lTL//cW49tIWe4WpRPOMoYi5cYqkqtPRptVekOHkMSU+Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hsqG3pxl0c5um5I9vJCgkgnqthCjaeF1nHQ2uT3qv6o=;
-	b=UIFm6sOPWw4payh1305SK9M0iXJABWPbHLnR8N3KWrJF5McrGx8rS/TQWxRm/6qRdmso
-	 1To5qAz1KRhCQi1xaGQ+lSUvPflEfgdyuVYmFV/CeSy5wUPE+FA4BwU0p/s6+Dshsd+eP
-	 PtuvhnsBywbJgi4llFR8zXW9HCfNHQCqRiDpy4x5ageL/XpK2inGgKNbAy3PYlMN73RUk
-	 G4lzHJeVVUMHTMZkJ/bXgJLaUsr4eyn3Btdods8FvvWP67OqaMGT1IN25nWuzHgpC740M
-	 m3itxXEXPsH01QV6S7tqBlrCkaPrkHZCkp4urZC7wkNc99EfZjWR241z48OcNg0f3fA==
+	bh=ff9HmlMdHSLF95/Xb4/rurjruL6xRJ3YCPK7uVf0ObM=;
+	b=JzQ8X6eHnsszqwooQlZDIn/kEeNMSLB8AAcM8AFiDPBeX5q5sTLq5XgjJkFvRYoG68s/
+	 +CTHQAmtIdI4//yVY0aaCsNQRcGXAX3mJx1HvKnHW9/guuN/1t7C0RdnIVV2rEQm2mTfw
+	 n63L6ooohyA9usIwbC2vfUGWZSBDr5sumNlZ/nKGfNnHOVB0HWghO29tCBFlfdKOGUyB+
+	 wnZhv5dpPqIGF2iv22DO/5RHnNn7QAEGNy4tp/jitB4pOOVJV7Gw65Ss5iXgkpYZCAhh6
+	 wk6WLdcB2vOQZ1yjW1u6S2Kffb03SqW09FWhTP0V7i+QgdzyTXTrKOdGnzBSCmMrxQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8qzXO3g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgBtadhJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75011606A320;
-	Thu, 19 Nov 2026 01:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A76606A31C;
+	Thu, 19 Nov 2026 01:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8qzXO3g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11B71F000C4;
-	Thu, 19 Nov 2026 01:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgBtadhJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5E31F000C4;
+	Thu, 19 Nov 2026 01:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050526;
-	bh=hsqG3pxl0c5um5I9vJCgkgnqthCjaeF1nHQ2uT3qv6o=;
+	s=korg; t=1795050529;
+	bh=ff9HmlMdHSLF95/Xb4/rurjruL6xRJ3YCPK7uVf0ObM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8qzXO3gARtwNaclZyet+JMxVc60wvSclTOAXRKXVp5JjFzqC3Db5n31RXgcHIzJZ
-	 mfLU0/hkPxnDauJJpUnOvFXp2pFrljjGwUTKjpp1UbE5EXF+W/12EhlOKXGSTx3x7n
-	 1iSbkipk03tOqXS62/FUhLg/+VTeXJLNjp+nu/WY=
+	b=pgBtadhJKU3cBVUG+WEWloO8BKP2YzumPdnlN2KJxX0oaPc547aQjIXER8nY9AlZD
+	 lMfcN7iMVvhLkUm31PChqHmpbEGN1y9Tk8Ht8hfuI5yXwEM54awpFUJ4V4sYwz19lz
+	 23hXsIIiFWsMwZVq7y4MEozyKqw04z3rIT8EkGTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Thelen <gthelen@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	alex todadze <todadzealexi19@proton.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2712/2857] selftests/net: tcp_mmap: remove unused -k option and keepflag
-Date: Wed, 18 Nov 2026 16:02:26 +0100
-Message-ID: <20261118150339.264973862@linuxfoundation.org>
+Subject: [PATCH 6.1 2739/2857] net: stmmac: fix rx checksum offload with extended descriptors
+Date: Wed, 18 Nov 2026 16:02:53 +0100
+Message-ID: <20261118150340.237392188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,61 +68,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Thelen <gthelen@google.com>
+From: alex todadze <todadzealexi19@proton.me>
 
-[ Upstream commit 5536d5553f274c8baa77c44854c9091657213970 ]
+[ Upstream commit 72ee27b97986f4d331fe1c26e4333f12738d982f ]
 
-Commit aacb0c2e524c ("selftests: net: tcp_mmap must use
-TCP_ZEROCOPY_RECEIVE") removed the only read of keepflag in child_thread(),
-leaving the file-scope keepflag variable set by the -k option in main() but
-never read. This triggers a Clang 23 warning:
+With extended descriptors, bit 0 of RDES0 is the Extended Status
+Available flag. enh_desc_get_rx_status() still reads it as the payload
+checksum error bit of the checksum offload table, so every IP frame that
+has extended status is reported as csum_none and its checksum is
+verified again in software.
 
-  tcp_mmap.c:91:12: error: variable 'keepflag' set but not used
-  [-Werror,-Wunused-but-set-global]
+When extended status is available, take the result from RDES4 instead.
+A TCP, UDP or ICMP payload with no IP header error, no payload error and
+no checksum bypass is a good frame. Everything else keeps the status
+from RDES0. Since RDES4 now decides the checksum status, read it after
+the own bit with dma_rmb(). While at it, fix the IP payload type mask,
+which covered bits 6:2 instead of 2:0 and had no users.
 
-Remove the unused keepflag variable and the dead -k getopt option.
+Tested on a Siflower SF19A2890 (GMAC 3.70) with the board as the iperf3
+endpoint. TCP receive goes from 326 to 378 Mbit/s with one stream and
+from 259 to 329 Mbit/s with four, and CPU use while receiving 200 Mbit/s
+drops from 26.6% to 21.5%. In stmmac_rx(), frames with a bad TCP, UDP or
+ICMP checksum, over IPv4 and IPv6 and including fragmented UDP, are
+still passed up as CHECKSUM_NONE and dropped by the stack.
 
-Fixes: aacb0c2e524c ("selftests: net: tcp_mmap must use TCP_ZEROCOPY_RECEIVE")
-Signed-off-by: Greg Thelen <gthelen@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261021152658.2618709-1-gthelen@google.com
+Fixes: c24602ef8664 ("stmmac: support extend descriptors")
+Signed-off-by: alex todadze <todadzealexi19@proton.me>
+Link: https://patch.msgid.link/20261020-stmmac-rx-csum-v2-1-330c8d0951ea@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tcp_mmap.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/descs.h   |  6 ++++-
+ .../net/ethernet/stmicro/stmmac/enh_desc.c    | 25 +++++++++++++++++--
+ drivers/net/ethernet/stmicro/stmmac/hwif.h    |  6 ++---
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 19 ++++++++++----
+ 4 files changed, 45 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tcp_mmap.c b/tools/testing/selftests/net/tcp_mmap.c
-index 51d48229c18cd..457a7d969cb1b 100644
---- a/tools/testing/selftests/net/tcp_mmap.c
-+++ b/tools/testing/selftests/net/tcp_mmap.c
-@@ -85,7 +85,6 @@ static int rcvbuf; /* Default: autotuning.  Can be set with -r <integer> option
- static int sndbuf; /* Default: autotuning.  Can be set with -w <integer> option */
- static int zflg; /* zero copy option. (MSG_ZEROCOPY for sender, mmap() for receiver */
- static int xflg; /* hash received data (simple xor) (-h option) */
--static int keepflag; /* -k option: receiver shall keep all received file in memory (no munmap() calls) */
- static int integrity; /* -i option: sender and receiver compute sha256 over the data.*/
+diff --git a/drivers/net/ethernet/stmicro/stmmac/descs.h b/drivers/net/ethernet/stmicro/stmmac/descs.h
+index 49d6a866244f4..4fc5f69aeaa98 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/descs.h
++++ b/drivers/net/ethernet/stmicro/stmmac/descs.h
+@@ -123,7 +123,7 @@
+ #define	ETDES1_BUFFER2_SIZE_SHIFT	16
  
- static size_t chunk_size  = 512*1024;
-@@ -439,7 +438,7 @@ int main(int argc, char *argv[])
- 	int sflg = 0;
- 	int mss = 0;
+ /* Extended Receive descriptor definitions */
+-#define	ERDES4_IP_PAYLOAD_TYPE_MASK	GENMASK(6, 2)
++#define	ERDES4_IP_PAYLOAD_TYPE_MASK	GENMASK(2, 0)
+ #define	ERDES4_IP_HDR_ERR		BIT(3)
+ #define	ERDES4_IP_PAYLOAD_ERR		BIT(4)
+ #define	ERDES4_IP_CSUM_BYPASSED		BIT(5)
+@@ -154,6 +154,10 @@
+ #define RDES_PTP_SIGNALING		0xa
+ #define RDES_PTP_PKT_RESERVED_TYPE	0xf
  
--	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:i")) != -1) {
-+	while ((c = getopt(argc, argv, "46p:svr:w:H:zxP:M:C:a:i")) != -1) {
- 		switch (c) {
- 		case '4':
- 			cfg_family = PF_INET;
-@@ -473,9 +472,6 @@ int main(int argc, char *argv[])
- 		case 'x':
- 			xflg = 1;
++#define RDES_EXT_PAYLOAD_UDP		0x1
++#define RDES_EXT_PAYLOAD_TCP		0x2
++#define RDES_EXT_PAYLOAD_ICMP		0x3
++
+ /* Basic descriptor structure for normal and alternate descriptors */
+ struct dma_desc {
+ 	__le32 des0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+index 937b7a0466fca..963579518405c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+@@ -114,8 +114,25 @@ static int enh_desc_coe_rdes0(int ipc_err, int type, int payload_err)
+ 	return ret;
+ }
+ 
+-static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
+-				    struct dma_extended_desc *p)
++static int enh_desc_ext_rx_csum(u32 rdes0, u32 rdes4, int status)
++{
++	u32 type = FIELD_GET(ERDES4_IP_PAYLOAD_TYPE_MASK, rdes4);
++
++	if (status != csum_none || !(rdes0 & RDES0_FRAME_TYPE))
++		return status;
++	if (!(rdes4 & (ERDES4_IPV4_PKT_RCVD | ERDES4_IPV6_PKT_RCVD)) ||
++	    (rdes4 & (ERDES4_IP_HDR_ERR | ERDES4_IP_PAYLOAD_ERR |
++		      ERDES4_IP_CSUM_BYPASSED)))
++		return status;
++	if (type != RDES_EXT_PAYLOAD_UDP && type != RDES_EXT_PAYLOAD_TCP &&
++	    type != RDES_EXT_PAYLOAD_ICMP)
++		return status;
++
++	return good_frame;
++}
++
++static int enh_desc_get_ext_status(struct stmmac_extra_stats *x,
++				   struct dma_extended_desc *p, int status)
+ {
+ 	unsigned int rdes0 = le32_to_cpu(p->basic.des0);
+ 	unsigned int rdes4 = le32_to_cpu(p->des4);
+@@ -175,7 +192,11 @@ static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
+ 			x->l4_filter_match++;
+ 		if ((rdes4 & ERDES4_L3_L4_FILT_NO_MATCH_MASK) >> 26)
+ 			x->l3_l4_filter_no_match++;
++
++		status = enh_desc_ext_rx_csum(rdes0, rdes4, status);
+ 	}
++
++	return status;
+ }
+ 
+ static int enh_desc_get_rx_status(struct stmmac_extra_stats *x,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index c4fe5c3f3de39..018bf8121b162 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -68,8 +68,8 @@ struct stmmac_desc_ops {
+ 	/* Return the reception status looking at the RDES1 */
+ 	int (*rx_status)(struct stmmac_extra_stats *x,
+ 			 struct dma_desc *p);
+-	void (*rx_extended_status)(struct stmmac_extra_stats *x,
+-				   struct dma_extended_desc *p);
++	int (*rx_extended_status)(struct stmmac_extra_stats *x,
++				  struct dma_extended_desc *p, int status);
+ 	/* Set tx timestamp enable bit */
+ 	void (*enable_tx_timestamp) (struct dma_desc *p);
+ 	/* get tx timestamp status */
+@@ -128,7 +128,7 @@ struct stmmac_desc_ops {
+ #define stmmac_rx_status(__priv, __args...) \
+ 	stmmac_do_callback(__priv, desc, rx_status, __args)
+ #define stmmac_rx_extended_status(__priv, __args...) \
+-	stmmac_do_void_callback(__priv, desc, rx_extended_status, __args)
++	stmmac_do_callback(__priv, desc, rx_extended_status, __args)
+ #define stmmac_enable_tx_timestamp(__priv, __args...) \
+ 	stmmac_do_void_callback(__priv, desc, enable_tx_timestamp, __args)
+ #define stmmac_get_tx_timestamp_status(__priv, __args...) \
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 281abef609f74..acb0ec94c70ae 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5174,9 +5174,13 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 		if (!buf->xdp)
  			break;
--		case 'k':
--			keepflag = 1;
--			break;
- 		case 'P':
- 			max_pacing_rate = atoi(optarg) ;
- 			break;
+ 
+-		if (priv->extend_desc)
+-			stmmac_rx_extended_status(priv, &priv->xstats,
+-						  rx_q->dma_erx + entry);
++		if (priv->extend_desc) {
++			/* Read the extended status after the own bit */
++			dma_rmb();
++			status = stmmac_rx_extended_status(priv, &priv->xstats,
++							   &rx_q->dma_erx[entry],
++							   status);
++		}
+ 		if (unlikely(status == discard_frame)) {
+ 			xsk_buff_free(buf->xdp);
+ 			buf->xdp = NULL;
+@@ -5363,8 +5367,13 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		prefetch(np);
+ 
+-		if (priv->extend_desc)
+-			stmmac_rx_extended_status(priv, &priv->xstats, rx_q->dma_erx + entry);
++		if (priv->extend_desc) {
++			/* Read the extended status after the own bit */
++			dma_rmb();
++			status = stmmac_rx_extended_status(priv, &priv->xstats,
++							   &rx_q->dma_erx[entry],
++							   status);
++		}
+ 		if (unlikely(status == discard_frame)) {
+ 			page_pool_recycle_direct(rx_q->page_pool, buf->page);
+ 			buf->page = NULL;
 -- 
 2.53.0
 
