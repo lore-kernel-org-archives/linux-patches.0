@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057045;
-	b=rMuTVNwTotXOAIhLvCuGUS5WXch77Aki2wKUNLessxx+bIEaXbXWfZHga+fRYW0aGOLt
-	 xTuL2b+XyVuMKFlhDqzKEf2a1zPLZQ5YCThY9HThjHZGwp1nBfspvWQdewrcy8m0parqQ
-	 ebz1j9QnCbECvSNyoeODBSOQU6ixVGFvv3vLpm41vzHRylIkapLP1AkYbXy64cL9W45AW
-	 thSV4qtsMGfTw7JDyRIagHZB4qMqy0l111fJ3S8ygYWeTVr/m+wBB5zxxKyfvNjJLiOYB
-	 CHTMI9fJ7L6gns7utW6z/Uc7PM1c0GBADB2D8hjYZcUDaw3+y3xsxGLaV4jFeymVbbg==
+	t=1795057047;
+	b=yRjen0DwBQ+L+sp52DiPolb0qR6ToDwxyH6w0IfJMLwNWxsZxNkf7x0/POCKqkn9VYbR
+	 LgbpE2wgvnFYZL0YKAG3sH39AAf6D9dXz/cBwy1a4Pb40+t2lwI6iGweH7KVvP9qQnVXQ
+	 XL738x0qGDHq28yZ2cLyLpa2QtimcbRqw/21wOW5NiFFy/bL84PLtDbrtNJvtpZ7F3f6i
+	 of2ur97vfIWNOsIJLr5a0KZXAD3uUm4STwtL4js0PCewOMM40pfdca7N85aj1T/UIb5b1
+	 SB0AexYz6OTvL/CB1yhyTJUZItYRnDpBDdJV0QRYlIUbDV5fRuOnRtEe/9HEB2ovBiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pYtaur6VB39ENXSY+y9FtyN2GWCRSYpW7NWKBQHF/7c=;
-	b=ievi3MHTq6AX44Vqy4BXCk1kFy1yui91AwBvj8x/6KitYfioV7xS+NIcKF3tZ7VqNXJ3
-	 fpAIS2b2tdHh2mszXeayuKVxJmvLKQDmvZrNhDgthUbfQJuB5YaBvklqqE03Sx6uPbHZw
-	 HlnIf3WpB2iWwKWs55aGZJqPaFyGqc8HwOoYlw9zmmHgkGxIHjvHsuQQEjInKsvzNkGR2
-	 h+wlmx8yQkCFBPCP1MpjWQ9fm6zPFjPkEN1Uc36CDVDtW+VVWRMx8M8u33Y1cCgpzANI/
-	 gCPaJzXQyPRaYM+Hvb1fxMb6AuMAY5BzGBtE/ckSszhq0NxPu0ZThFwegVWa4BgnXUQ==
+	bh=Equxzl6O+Tvm6EXpqrChvlTJICbjOqSo08uwlwf43r4=;
+	b=TeZBvi9KDfOY1fCShhcmDQWNeytuudfnd21EJdkwpk+nJWleC0IW6zlSn9cpgjEphmTj
+	 axuqQpN9eGF+OL0bQRTl76BXkEXAQBXklzKbR3ueY/g+TC/kG8t2dsUMySKZtciN2w3/x
+	 5GDe9h1qnyCbZx0DxFAT5d7fXuyHFqsrlmcuMMVotUIg/Ew4zZic3wZ1J01VstrvRbeDs
+	 sabq6I/Rte9RM5ul+BEWH6U8Q8XnEaYssaWlGKugb8xfFyxDC0E+N8yHF3ctK/yKixjGz
+	 FycAex2nU8Ev2usDi80hVRontC14Hx1BaybUdyMmJxnseUbA2fsVQjY+O9Q7/EYQpNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5wGBuRG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eVSURmx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085D8606A320;
-	Thu, 19 Nov 2026 02:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ECB606A31C;
+	Thu, 19 Nov 2026 02:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5wGBuRG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552EE1F000C6;
-	Thu, 19 Nov 2026 02:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eVSURmx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330381F000C4;
+	Thu, 19 Nov 2026 02:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057044;
-	bh=pYtaur6VB39ENXSY+y9FtyN2GWCRSYpW7NWKBQHF/7c=;
+	s=korg; t=1795057047;
+	bh=Equxzl6O+Tvm6EXpqrChvlTJICbjOqSo08uwlwf43r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5wGBuRGq6eISFZW7BrmWVds0nvFopkrHhs/D5oOle/Ba/Qoj+iZzu0kI5UmNWseA
-	 fETHOoWT1x5C3hqOrj9S59qOGEvph6pN2ryBi/Uo2rg7Pykz2tL+9k6R8aEpUT8Oiy
-	 mN6ZklKFTdOAZlBMynwPqbucckHC91ivjKAeMWo4=
+	b=1eVSURmxq1WmCbuAhEqLGxedvvRk9+osSIFDFfdUVQdFQLrnLcz5eeUylgWVjY1uw
+	 1ucG24EnvNuG09VJjR42BGdUHjMy2Vrq+y2sE6kk5F2inb9SeGH/qiVK/xylzkw+62
+	 ZG3Uxsl5TtFt2PP3o36nOci3Z9N28n8xjsdMHEW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.15 2203/2214] kconfig: initialize sym->curr.tri to no for all symbol types again
-Date: Wed, 18 Nov 2026 16:04:39 +0100
-Message-ID: <20261118150138.410346066@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>
+Subject: [PATCH 5.15 2204/2214] irqchip/gic-v3-its: Restore quirk probing for ACPI-based systems
+Date: Wed, 18 Nov 2026 16:04:40 +0100
+Message-ID: <20261118150138.447314530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,57 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-commit bfef491df67022c56aab3b831044f8d259f9441f upstream.
+commit 8b02da04ad978827e5ccd675acf170198f747a7a upstream.
 
-Geert Uytterhoeven reported that commit 4e244c10eab3 ("kconfig: remove
-unneeded symbol_empty variable") changed the default value of
-CONFIG_LOG_CPU_MAX_BUF_SHIFT from 12 to 0.
+While refactoring the way the ITSs are probed, the handling of quirks
+applicable to ACPI-based platforms was lost. As a result, systems such as
+HIP07 lose their GICv4 functionnality, and some other may even fail to
+boot, unless they are configured to boot with DT.
 
-As it turned out, this is an undefined behavior because sym_calc_value()
-stopped setting the sym->curr.tri field for 'int', 'hex', and 'string'
-symbols.
+Move the enabling of quirks into its_probe_one(), making it common to all
+firmware implementations.
 
-This commit restores the original behavior, where 'int', 'hex', 'string'
-symbols are interpreted as false if used in boolean contexts.
-
-CONFIG_LOG_CPU_MAX_BUF_SHIFT will default to 12 again, irrespective
-of CONFIG_BASE_SMALL. Presumably, this is not the intended behavior,
-as already reported [1], but this is another issue that should be
-addressed by a separate patch.
-
-[1]: https://lore.kernel.org/all/f6856be8-54b7-0fa0-1d17-39632bf29ada@oracle.com/
-
-Fixes: 4e244c10eab3 ("kconfig: remove unneeded symbol_empty variable")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/all/CAMuHMdWm6u1wX7efZQf=2XUAHascps76YQac6rdnQGhc8nop_Q@mail.gmail.com/
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 9585a495ac93 ("irqchip/gic-v3-its: Split allocation from initialisation of its_node")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240213101206.2137483-3-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/kconfig/symbol.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -364,6 +364,8 @@ void sym_calc_value(struct symbol *sym)
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -5137,6 +5137,8 @@ static int __init its_probe_one(struct i
+ 	u32 ctlr;
+ 	int err;
  
- 	oldval = sym->curr;
- 
-+	newval.tri = no;
++	its_enable_quirks(its);
 +
- 	switch (sym->type) {
- 	case S_INT:
- 		newval.val = "0";
-@@ -376,7 +378,7 @@ void sym_calc_value(struct symbol *sym)
- 		break;
- 	case S_BOOLEAN:
- 	case S_TRISTATE:
--		newval = symbol_no.curr;
-+		newval.val = "n";
- 		break;
- 	default:
- 		sym->curr.val = sym->name;
+ 	if (is_v4(its)) {
+ 		if (!(its->typer & GITS_TYPER_VMOVP)) {
+ 			err = its_compute_its_list_map(its);
+@@ -5476,7 +5478,6 @@ static int __init its_of_probe(struct de
+ 		if (!its)
+ 			return -ENOMEM;
+ 
+-		its_enable_quirks(its);
+ 		err = its_probe_one(its);
+ 		if (err)  {
+ 			its_node_destroy(its);
 
 
