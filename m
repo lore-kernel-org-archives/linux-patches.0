@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049338;
-	b=fEPHzDYdMw5hpI394dJRuI8bB5Gh845n1MaDXkKBr2/YxcOlQPcLl7CgpnGKpz+aiHU3
-	 qGaDrzIaUN6U0gC7XtQBVMMzZS5ifsgDEQOuIg6NEOcLfyUQyyWaS/sgOtXLPfDy4jYmE
-	 pj9rUyTOOHdQUx2ZebEJvtv8dmG4HmDekGmOIZDhPEftiDlnWzBAEepkqVPNWq4bHDE6I
-	 ngtV7Exsk8USJVFkuMCe1ESPA2UUHHvO0POBhrb7thsKpOGTHS8cQsVETMFm4OxvaGbOv
-	 w6Vx+YyPwkDzJovDHgJswJoKRczmsG+q+mtRWjEne/bpLXLMvuucalQUJs1sgg1oZOA==
+	t=1795049341;
+	b=EwIJFdQ3hKwSo/ARzPe/SIdALzVzk3eS3J7ce9qqT+jtw49VJDopzekxxGgx4ZnUs3Sw
+	 J2zVz35/QPDn99Yl3hFpVaPIah6CFWQDOvo8JPoxYgBYkEqcmIu9RzcaQpKnS1fTlEZ51
+	 VLDyGtpvNPQlnh0Sh9fj1tBgPG8tzl/K2ldWRrbhu5eZWgXMr1a36Hyf3rQCvIj+a7RR3
+	 pVdrnwON1l9vhswRWfl4ejqke7R5KAmCGyw+7LkcXpqY5EDhEWu/2I7wxGe7bqWun02ie
+	 PD9WK5qGDSe5jOH4qzfYLKdkw+71CBcvqy0W7CJbGGD/EdfY4J5CeNo5gC5ooASAOGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QraIjJHb6gSoNsnapUmk3Zp72kD5xJq94krmTr9TG7c=;
-	b=zJWQbu2hOu3z/WzExeeZIP93+qCGMfGo4A3hL4+d9ylWBILwBX/0qTuw+GHO2UNN+NMI
-	 VVGsIVmlHyLHI+uXq2d/+A8sttSSvYYtguPlPPZhoCMCD+x3yEiY9HvQ1Oc1ftsfCMsRR
-	 ueZlvMJxverj+NdoJlDZpG/6/xu9HEVU12upvydsBjBR2CERUz+9X7kZ7H1Cc6Pa3C8E7
-	 M7wCG7FQTcjrhQd3AGnxPILUtVncTkATZz5KPwCg3CKRBD7TWWZDLbBG90qMZj6gdOwpV
-	 Jwy+yxo97Oxh02fq5T7WC0HcPJa0TL6J8gHUNRWk5NmkBjDWX5zJytyq0SGeM/KkcQA==
+	bh=9JqYJHwgBxwnbgSUrx08jpgVbAjXxvXLOHXdPMFQAzo=;
+	b=FTSbAKUsZmJOc4yi7dz3aQeXqdiKksCntMtrnTJsWYtIm365eBtoHJyufhBFR3JfW1MV
+	 Qfc/lEkywNvng59YTSbP6TFodQlC4YstPyURgmI48JnaFhjlvsTcBdhKApkBBS891DQGr
+	 joXF2hyrD4QiwH9IeNYxs5iAOlgNlijc8X7+d7QmtwiL7vsykMlqd3McLGEjR+k6uQ+U3
+	 Uo9v+CvfFGYaCibZigOJXgyG9np5g00Fba5dYHHDwghmqlLjXl+O4XJpDLYLtu4Rpo2DT
+	 9bzLBMfteQHt/zEvmb2IiBnlHP6toz2scx8BAnVyOjMPNsfLexY7RD6mMSQumJo/eBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZyzfDO1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcXZF2Yo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09F0606A334;
-	Thu, 19 Nov 2026 00:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3FB606A32A;
+	Thu, 19 Nov 2026 00:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZyzfDO1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9061F000C4;
-	Thu, 19 Nov 2026 00:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcXZF2Yo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11D11F000C4;
+	Thu, 19 Nov 2026 00:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049338;
-	bh=QraIjJHb6gSoNsnapUmk3Zp72kD5xJq94krmTr9TG7c=;
+	s=korg; t=1795049341;
+	bh=9JqYJHwgBxwnbgSUrx08jpgVbAjXxvXLOHXdPMFQAzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZyzfDO1vCCW4BoZZtktcYENfsOZzbqoT/kHLT1MpB1AzCBaQJReeSj69FdZvPmOz
-	 Bw5YkXAhqCDnQOkKae9rTJZn5ryEmDkZzIJQ3cCUwZp8RfN+CA9jn0yNE/F3mromdT
-	 Q7VLaIZxzg7cer29PtG07EzRc9hrAyCoE6LFa2V4=
+	b=NcXZF2YoUvuhJrIpg16D9WqbMV8D6kFWyDaOsKly0ojRwtMSjW2DziKQr7qSeVmVY
+	 F78EY2YRw+l9IFdQ2sOnPJKSR5ftvDiLADi5BM8FnEWFjUgqraWL60rysfjm4ULKKK
+	 VcNCrtO+00fBQKJL7q3TZj/nNwzvNEyC3Wl3uUdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2314/2857] drm/amd/display: assign missing trace entry in amdgpu_dm_dc_clocks_state
-Date: Wed, 18 Nov 2026 15:55:48 +0100
-Message-ID: <20261118150324.837990327@linuxfoundation.org>
+Subject: [PATCH 6.1 2276/2857] sh: defconfig: Enable the current M66592 UDC symbol
+Date: Wed, 18 Nov 2026 15:55:10 +0100
+Message-ID: <20261118150323.403171592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,38 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ec167063dbf9fc66dc1364b6f9dd220c6742edeb ]
+[ Upstream commit 9b65dcd94222c37febf98127b1ac5452c94a16d0 ]
 
-disp_dpp_voltage_level_khz is declared and printed, but never assigned.
-So when using clock tracepoint the value of this clock is just garbage.
-Assign clk->disp_dpp_voltage_level_khz since this is stored in dc_clocks
-as other entries.
+The M66592 UDC provider is built under CONFIG_USB_M66592. Several
+SuperH defconfigs still enable the removed CONFIG_USB_GADGET_M66592
+symbol.
 
-Fixes: 13b5ca42ca9c ("drm/amd/display: Add tracepoint for capturing clocks state")
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Replace the stale entries with the current provider symbol.
+
+Fixes: 193ab2a6070039e7 ("usb: gadget: allow multiple gadgets to be built")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Assisted-by: Codex:gpt-5
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be> # build-tested
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/sh/configs/migor_defconfig   | 2 +-
+ arch/sh/configs/sdk7786_defconfig | 2 +-
+ arch/sh/configs/shx3_defconfig    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index d3bc9dc217717..048b7f9c6321e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -511,6 +511,7 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
- 	    TP_fast_assign(
- 			   __entry->dispclk_khz = clk->dispclk_khz;
- 			   __entry->dppclk_khz = clk->dppclk_khz;
-+			   __entry->disp_dpp_voltage_level_khz = clk->disp_dpp_voltage_level_khz;
- 			   __entry->dcfclk_khz = clk->dcfclk_khz;
- 			   __entry->socclk_khz = clk->socclk_khz;
- 			   __entry->dcfclk_deep_sleep_khz = clk->dcfclk_deep_sleep_khz;
+diff --git a/arch/sh/configs/migor_defconfig b/arch/sh/configs/migor_defconfig
+index 4859cd30cfc4c..04a72ac6f67f7 100644
+--- a/arch/sh/configs/migor_defconfig
++++ b/arch/sh/configs/migor_defconfig
+@@ -75,7 +75,7 @@ CONFIG_LOGO=y
+ # CONFIG_LOGO_SUPERH_MONO is not set
+ # CONFIG_LOGO_SUPERH_CLUT224 is not set
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_USB_G_SERIAL=m
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_RS5C372=y
+diff --git a/arch/sh/configs/sdk7786_defconfig b/arch/sh/configs/sdk7786_defconfig
+index 97b7356639ed8..f3b26cc4dd180 100644
+--- a/arch/sh/configs/sdk7786_defconfig
++++ b/arch/sh/configs/sdk7786_defconfig
+@@ -150,7 +150,7 @@ CONFIG_USB_MON=y
+ CONFIG_USB_OHCI_HCD=y
+ CONFIG_USB_STORAGE=y
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_MAX6900=y
+ CONFIG_RTC_DRV_SH=y
+diff --git a/arch/sh/configs/shx3_defconfig b/arch/sh/configs/shx3_defconfig
+index 32ec6eb1eabcf..2ef24c4914ac2 100644
+--- a/arch/sh/configs/shx3_defconfig
++++ b/arch/sh/configs/shx3_defconfig
+@@ -80,7 +80,7 @@ CONFIG_USB=y
+ CONFIG_USB_MON=y
+ CONFIG_USB_R8A66597_HCD=m
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_SH=y
+ CONFIG_UIO=m
 -- 
 2.53.0
 
