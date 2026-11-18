@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020839;
-	b=Tw+pfPiqsOwifO39gpej0oHQvvuGyOC8UhikPsBQTSRGqLI1crkwyMcj9mbFfD778SsS
-	 wXVMuO1L+o8ZZNBy5pPXQNIC4lACx8QMWbcQiE9cdz+hkdLS/jfExea9Y7RbBMFBlIBlU
-	 YSOH1UiO2CV4wUAnX3k2LM3ZAdbFBowuLAt3OR1yd8rnw5bI9OgFDKNgxRzJ6rJK7RTJ6
-	 55SgIt66afryV+4q9pIMS1A4kY32e1eAe+fn7l36AFWJO/UFaQtijd7Lx/cDDRj7Td3VD
-	 jvwl5oHZzwG/a87OULBq3VC4S4RQTCL0a2g203RcIZAiKymHOPD2p5thhEt18D7SrYA==
+	t=1795020842;
+	b=d8eFCRD6fwpyrhaXkrXs9HgC2IP++JdAi/KQhKdMXxxvxiceUuWt/P8fKOZekt16tZnq
+	 F64dVwK1L2bswhCNVPS+ONu/IJxuskEhdkkmI6vsbvCCnlJpkczeM4wup1s6BVu8MxL5y
+	 EQ3YlD6czaQ0dBBdj9k7+rPh/B/5YNhs/56qhPYfBy2VnwWioe+wBGx6XI9kiaE9t/1O1
+	 /3+TgP/c5yYblTbKV8X0j13+ffUlQyE7QJCIT97Xk4qzk9cq7wn8nyuPjpnfAqPEBJEV4
+	 VFzESLXv2YrSX7SPFvaCguvuB6Y4Ik3+VgEhj5xi6A7vqHr4gDFGq4EAwhKSJ2ciRrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ezijBDmYNXrEHJ2GFsI7nbtrSvbKxQsWA1IfbGJabKg=;
-	b=IXKSVZVT8szZiwZ/PR4dmnTfbQFmWFPN/lyivRHMvUdSVRZNhfUqiNaQ62yt+xqKuvyj
-	 BTnCLAq1bMiwHG011zwAnNnkKlOVJ1HsejDd/fDKSBCRlhXwS4YM5jov+T3msTjBGMTsF
-	 HesI9XLKijcrzGPsqGuuMx+USJ2xqVobql7Hjq83n7Ch950oReT9TcUxkYkdhbsVorrqe
-	 5hffy06k5PFo28ztM+iLBQuIEKMQz16vVE1qoK87Sz7DwhZzqaSk5kkMMwa7UFhow5026
-	 lfXf3d+uc+AzC2rruJfL0pO4CSrbDdfDOd5Ncq9o1Z03MzG5Rn4JekWovKvWmYNq90Q==
+	bh=a6tbzX5/TqRlB8NhcvC8GeViWAPUFkVZVEOorF43II8=;
+	b=w1YDnY+AfxVjdQexaRusxbhDhvvIqauCj1YcFbB2mWBjeXo2PhwE5dP3TL7qxoHd6evl
+	 xLakj9JSiC78nwE8/36tltJatFf6jCyEYgZJErcMeRw49d1mev8346wOtheVUzZp/8QMG
+	 RAl93rR9j6OKeW/7HZYxbdB137RAg/KPG5//eXzIYVrGJ7f0OeC3s6o6DmR9KjPRCvuqL
+	 VabTvwzms+LTqu2QJNO9NzqneI8GXrbqHIt6NCe1GZ1X204WWPYuEOiRjgmXitqSSp3LC
+	 KdayfClh+jj8o7atCM6xEFbxkMkJ42OBunhhKl6lx+V6vgOdvMyQXTYwZ6KWAuoUHqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5pf4FOt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuOKF56t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD5860A260E;
-	Wed, 18 Nov 2026 16:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D692606A335;
+	Wed, 18 Nov 2026 16:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5pf4FOt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69D11F000C4;
-	Wed, 18 Nov 2026 16:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuOKF56t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A521F000C4;
+	Wed, 18 Nov 2026 16:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020839;
-	bh=ezijBDmYNXrEHJ2GFsI7nbtrSvbKxQsWA1IfbGJabKg=;
+	s=korg; t=1795020842;
+	bh=a6tbzX5/TqRlB8NhcvC8GeViWAPUFkVZVEOorF43II8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5pf4FOt85uoTLTCe+AWFWJ/Yec+8CXsGzJDpvNphPbBUDnODHcLrOnJB9PCxEY0m
-	 G5C/zKBLnx5xSS6FowM3H2wh3WlYe3R39t7YXK1vySGvkJW8xMgqGf0RUCIQQrPGiY
-	 ERIct7KTN/0Lj/t1bVkxukaUjgNuxXOzQ6gGsJaA=
+	b=OuOKF56tlFYxOyFbD1mCOp3A2fpCGY70+knaYX2lEZqiZ8Jqf6i4Lmm0jGAj+HHQS
+	 +mKg8e1rgOZZOID3OuFVOQTMarPNHsbs8rlUvXzp2ZfQgtEaPKG9mh4ur7mgwvjpCb
+	 mxjAU3fBFTuJoi0rLLJ6DnnyWQce2ZOPm5lgej+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2092/2651] bpf: Dont hand out a linked element as extra element
-Date: Wed, 18 Nov 2026 15:55:32 +0100
-Message-ID: <20261118150401.326413580@linuxfoundation.org>
+Subject: [PATCH 7.3 2093/2651] bpf: Reject sleepable programs for task_vma iterator
+Date: Wed, 18 Nov 2026 15:55:33 +0100
+Message-ID: <20261118150401.369205164@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,109 +70,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit ccb88db8dac8fabde58656d5d4a33711e89c480a ]
+[ Upstream commit dfcd1765911223df60845e288ad392d5237f47a3 ]
 
-When htab_map_update_elem() replaces an element of a preallocated map,
-alloc_htab_elem() takes the spare element of this cpu and puts the old
-element into the per-cpu slot right away, long before the old element is
-unlinked from its bucket.  The bucket lock disables interrupts, but it
-does not keep out an NMI, or a tracing program on the return of
-alloc_htab_elem().  bpf_prog_active only helps if both programs are
-kprobe, tracepoint or perf_event programs.  A program that updates an
-existing key in another bucket of the same map gets to use the slot:
+A sleepable "iter.s/task_vma" program can be attached, but its ->show()
+callback runs with the mmap_lock of the iterated mm held for read. As soon
+as the program runs, bpf_iter_run_prog() calls might_fault(), and any
+bpf_copy_from_user() or bpf_copy_from_user_task() it does may really fault
+or take mmap_lock again. With lockdep this is reported as recursive
+locking of mmap_lock. Without lockdep, a fault on the reader's own mm, or
+access_process_vm() on the iterated mm, has to take mmap_lock for read
+again. If a writer queued up in the meantime that blocks behind the
+writer, which in turn waits for the read lock the iterator already holds,
+and the read() hangs:
 
-  htab_map_update_elem(k1)              tc, xdp, fentry, raw_tp, ...
-    alloc_htab_elem()
-      l_new = *pl_new
-      *pl_new = l_old                   still linked in bucket 1
-      <NMI>
-        htab_map_update_elem(k2)        perf_event program
-          l_new = *pl_new               the l_old of the outer update
-          hlist_nulls_add_head_rcu(l_new, bucket 2)
-          hlist_nulls_del_rcu(k2's old element)
-      </NMI>
-    hlist_nulls_add_head_rcu(l_new, bucket 1)
-    hlist_nulls_del_rcu(l_old)
+    reader (iter.s/task_vma)        other thread of the same mm
+    task_vma_seq_get_next()
+      mmap_read_lock(mm)
+                                    mmap_write_lock(mm)  <- waits
+    bpf prog: copy_from_user()
+      page fault
+        mmap_read_lock(mm)          <- queued behind the writer
 
-If l_old was the first element of bucket 1, the outer add points its pprev
-at l_new, and the delete takes it out of bucket 1 only.  l_new->next now
-leads into bucket 2, where l_old stays with a poisoned pprev, on which a
-delete of k2 crashes.  If it was not the first, the delete takes it out of
-bucket 2: k2 is gone from the map, and the chain of bucket 1 still contains
-l_old, whose next pointer leads into bucket 2.
+The reader waits killable, so the hang lasts until it gets a fatal signal.
 
-Either way a walk of bucket 1 ends on the nulls value of bucket 2.
-lookup_nulls_elem_raw() restarts whenever that happens, so every lookup in
-bucket 1 which does not find its key spins forever:
+bpf_iter_link_attach() allows sleepable programs for the targets that set
+BPF_ITER_RESCHED, and task_vma sets it because cond_resched() between VMAs
+is fine with mmap_lock held. Rescheduling between objects and running a
+sleepable program inside ->show() are different properties, though, and
+task_vma only has the first one. The open-coded task_vma iterator does not
+have this problem since it hands out a snapshot of the VMA and holds no
+lock when it returns to the program.
 
-  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-   __htab_map_lookup_elem+0x354/0x4d0
+The vma handed to the program is only stable under mmap_lock, so the lock
+can't be dropped around ->show(). Add a feature flag BPF_ITER_NOSLEEP for
+targets which can't run sleepable programs although they can reschedule,
+and set it for task_vma.
 
-  BUG: KASAN: wild-memory-access in htab_map_delete_elem+0x30c/0x670
-  Write of size 8 at addr dead000000000122 by task extra/102
+The check at attach time is not enough. BPF_LINK_UPDATE replaces the
+program of a link, and bpf_iter_link_replace() only compares the type, the
+attach type and the BTF id of the two programs, which are the same for a
+sleepable and a non-sleepable one. Do the check there as well. That also
+closes this way around the existing rule: so far a sleepable program could
+be put on a link of a target that doesn't set BPF_ITER_RESCHED, like the
+hash map element iterator, which runs it under rcu_read_lock().
 
-An NMI between the load and the store of the slot makes both updates use
-the same element, with much the same result.
+BPF_LINK_CREATE of a sleepable program for the task_vma target, and
+BPF_LINK_UPDATE to one, now fail with -EINVAL, also for programs that
+don't touch user memory and have been working since sleepable iterator
+programs exist. The programs can still be loaded. They have to be
+loaded as non-sleepable programs, or use the open-coded iterator.
 
-Empty the slot when the spare element is taken, in a way that is atomic
-on this cpu, and put the old element in only after it has been unlinked
-and its timers and the like have been cancelled.  A nested update that
-finds the slot empty, which is the case that corrupted the map, fails with
--EBUSY.
-
-Fixes: 8c290e60fa2a ("bpf: fix hashmap extra_elems logic")
+Fixes: b77fb25dcb34 ("bpf: Add support for bpf iterator programs to use sleepable helpers")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-5-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-6-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ include/linux/bpf.h    |  3 ++-
+ kernel/bpf/bpf_iter.c  | 17 ++++++++++++++---
+ kernel/bpf/task_iter.c |  6 +++++-
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 13a2356c84cf9..02523a6f0bdc5 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -1107,11 +1107,17 @@ static struct htab_elem *alloc_htab_elem(struct bpf_htab *htab, void *key,
- 	if (prealloc) {
- 		if (old_elem) {
- 			/* if we're updating the existing element,
--			 * use per-cpu extra elems to avoid freelist_pop/push
-+			 * use per-cpu extra elems to avoid freelist_pop/push.
-+			 * The caller puts old_elem into the slot once it is
-+			 * unlinked. Until then the slot is empty for an NMI
-+			 * or a kprobe that updates this map on this cpu.
- 			 */
- 			pl_new = this_cpu_ptr(htab->extra_elems);
--			l_new = *pl_new;
--			*pl_new = old_elem;
-+			l_new = READ_ONCE(*pl_new);
-+			do {
-+				if (!l_new)
-+					return ERR_PTR(-EBUSY);
-+			} while (!try_cmpxchg_local(pl_new, &l_new, NULL));
- 		} else {
- 			struct pcpu_freelist_node *l;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 86f7b70bbd9a1..5f39502e4a57b 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -3019,7 +3019,8 @@ typedef const struct bpf_func_proto *
+ 			     const struct bpf_prog *prog);
  
-@@ -1277,11 +1283,15 @@ static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
- 	if (l_old) {
- 		hlist_nulls_del_rcu(&l_old->hash_node);
+ enum bpf_iter_feature {
+-	BPF_ITER_RESCHED	= BIT(0),
++	BPF_ITER_RESCHED	= BIT(0),	/* may cond_resched() between objects */
++	BPF_ITER_NOSLEEP	= BIT(1),	/* ->show() can't run sleepable progs */
+ };
  
--		/* l_old has already been stashed in htab->extra_elems, cancel
--		 * its reusable special fields before it is available for reuse.
-+		/*
-+		 * l_old replaces the extra element that alloc_htab_elem() took.
-+		 * Cancel its reusable special fields first: once it is in the
-+		 * slot, the next update on this cpu can reuse it.
- 		 */
--		if (htab_is_prealloc(htab))
-+		if (htab_is_prealloc(htab)) {
- 			check_and_cancel_fields(htab, l_old);
-+			WRITE_ONCE(*this_cpu_ptr(htab->extra_elems), l_old);
-+		}
+ #define BPF_ITER_CTX_ARG_MAX 2
+diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+index b40eb404adab9..fc3a75684ef7f 100644
+--- a/kernel/bpf/bpf_iter.c
++++ b/kernel/bpf/bpf_iter.c
+@@ -72,6 +72,15 @@ static inline bool bpf_iter_target_support_resched(const struct bpf_iter_target_
+ 	return tinfo->reg_info->feature & BPF_ITER_RESCHED;
+ }
+ 
++/* Only allow sleepable program for resched-able iterator that can run one */
++static bool bpf_iter_target_support_prog(const struct bpf_iter_target_info *tinfo,
++					 const struct bpf_prog *prog)
++{
++	return !prog->sleepable ||
++	       (bpf_iter_target_support_resched(tinfo) &&
++		!(tinfo->reg_info->feature & BPF_ITER_NOSLEEP));
++}
++
+ static bool bpf_iter_support_resched(struct seq_file *seq)
+ {
+ 	struct bpf_iter_priv_data *iter_priv;
+@@ -409,6 +418,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
+ 				 struct bpf_prog *new_prog,
+ 				 struct bpf_prog *old_prog)
+ {
++	struct bpf_iter_link *iter_link =
++		container_of(link, struct bpf_iter_link, link);
+ 	int ret = 0;
+ 
+ 	mutex_lock(&link_mutex);
+@@ -419,7 +430,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
+ 
+ 	if (link->prog->type != new_prog->type ||
+ 	    link->prog->expected_attach_type != new_prog->expected_attach_type ||
+-	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id) {
++	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id ||
++	    !bpf_iter_target_support_prog(iter_link->tinfo, new_prog)) {
+ 		ret = -EINVAL;
+ 		goto out_unlock;
  	}
- 	htab_unlock_bucket(b, flags);
- 	if (l_old && !htab_is_prealloc(htab))
+@@ -544,8 +556,7 @@ int bpf_iter_link_attach(const union bpf_attr *attr, bpfptr_t uattr,
+ 	if (!tinfo)
+ 		return -ENOENT;
+ 
+-	/* Only allow sleepable program for resched-able iterator */
+-	if (prog->sleepable && !bpf_iter_target_support_resched(tinfo))
++	if (!bpf_iter_target_support_prog(tinfo, prog))
+ 		return -EINVAL;
+ 
+ 	link = kzalloc_obj(*link, GFP_USER | __GFP_NOWARN);
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index 13e1aabe6f886..cf2bf388e1817 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -737,7 +737,11 @@ static const struct bpf_iter_seq_info task_vma_seq_info = {
+ static struct bpf_iter_reg task_vma_reg_info = {
+ 	.target			= "task_vma",
+ 	.attach_target		= bpf_iter_attach_task,
+-	.feature		= BPF_ITER_RESCHED,
++	/*
++	 * ->show() runs with the mmap_lock of the iterated mm held, which a
++	 * sleepable program takes again when it faults on user memory.
++	 */
++	.feature		= BPF_ITER_RESCHED | BPF_ITER_NOSLEEP,
+ 	.ctx_arg_info_size	= 2,
+ 	.ctx_arg_info		= {
+ 		{ offsetof(struct bpf_iter__task_vma, task),
 -- 
 2.53.0
 
