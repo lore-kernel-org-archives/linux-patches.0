@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047060;
-	b=qLNeQQ37iSOl8KDCvIBMQPZ0GPbas8CwQpwZCd2yAq3YPHxmkB6QtEQwZdAvmOaecCXc
-	 l/+ChNRghQ88Wnw9CdiYE+W0xx4NjSBeozkIKsl7As/NbF6sOik+pY+0SefNMMzW3zWaF
-	 PnMax5ofa5H/pweiovXKPkeD1S0qVveqP6ffqlPJoPhee0CYpqb58rZfeemEqjE4Y0ard
-	 nyhMrsFtaw1uEScCOQv2OAvGZdylsfDjBguRDqs0T3NK+se+TJdlFdZFqeUop1QLa7XDy
-	 ydsUl814Uk7kfu5U+1J39Vt1i+d7bo05IXi6/Bq1UtmQ4bN1+v3es6sudJEX04KLiEw==
+	t=1795047062;
+	b=YZTlb9zBEqpOYfEog/cXJbjNBiA92nFxQDOEflWvPWIfLJ4gA8VXIabr25IdDej4MO7Y
+	 icCy/e4WmoqEwoxNcBXtS9NDStMjElPVJ67ux0Z7V+FTQ/mG2Olb47XCmvn3TRWLkhlOT
+	 TcVmBhZ533UzJSYeuRAyPIGKbByFHk12lEruSvz0knJ1ROFeC8jAyz8/bDv6M7jaIfu6l
+	 H3/dEDaa8UPSVoMPStY+nQGa3mEO2T/d1JWmN1NzsOp5/mXqzUGoOay84XpieCBfjR5s/
+	 Q0LE3se9jd5IcBwXaQNfIhbaElBWH1Q9vwHdE59z0z/r+oJhf3WIE7XqNSGM03yd0kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9u1J69Z9tgcJABDOCVmyKzura5D8HX5pQe2muYv852k=;
-	b=mGSVAqIsXvI/BFwxsOtdSrPCpWKhvLczpoNopokXCJRFhYqodP3R7TkY6EyjUrLaNvXM
-	 0ueokqFNz9DnqttHxRy2pOchI3xYFQgFG0sHKaELhpmbHi8exWAjwV4gqacIsJiNnDnC9
-	 emg9KZKIlnM1wB+u4baC4KR8dqd2T0/eqpPUgOnKFGoUeVJxVfV4boW5/4iw/oVWN302m
-	 TykpzWI7oydckDuWDKumUqbRF/2HbPOgDa/3Iye2d0UuRj2euhtPfW1h8fOt1nmykamvJ
-	 a+kl2NsT/GEnF8Yx/g4uiiIWapgQBDKuHruBZx9IFsQV2HUfRgFx0Mw9Z4WhKL9AN/w==
+	bh=OqDAZt1LBYw2zs0C3QXZpzYHGv+tN35w0/zA4Ee/rhM=;
+	b=oFcnw+9hyc+dJ2NM+0tzWH9Q3QrtTSWW5ItB1CfNvd88/a91Q3YjUDg2IYc0vmluBXJC
+	 VV6VI84XRf03Sj8D5l3GuZeRn8TsxUTmPTT6IRAlNwwxXLxZf1sD/KepDs7mml48tQe19
+	 t54cxerCqAGprEj85tfrADbfzRYst6ESkuh89O1up91bi2FQwaXFs1l4Yzcz1js0nfz/I
+	 XDuiYC7OYDYOYP3ABKMF1InjgfxA3GKVlFkzM7n2nSJBIv7be07M11W8+1tJzxwepTNTm
+	 93/QfK4Kw0cgaInWgukbOFzrXIg9g0oCr+NUezHae1MxDc7YuQm/D9mT5YZc44l0xdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L547bWDC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2fT0r9/H";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D85606A32A;
-	Thu, 19 Nov 2026 00:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C622760A2600;
+	Thu, 19 Nov 2026 00:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L547bWDC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBC81F000C5;
-	Thu, 19 Nov 2026 00:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fT0r9/H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CB31F000C7;
+	Thu, 19 Nov 2026 00:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047059;
-	bh=9u1J69Z9tgcJABDOCVmyKzura5D8HX5pQe2muYv852k=;
+	s=korg; t=1795047062;
+	bh=OqDAZt1LBYw2zs0C3QXZpzYHGv+tN35w0/zA4Ee/rhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L547bWDCp+r7Ym1gcDdNZ9z16wuDOaw8guPsdp98tk092Uo1sPu2Mp4dlBe1Rjmos
-	 5L2W5WHTYqFr6c6plGTy2R4iaFrYdfpoM86QJiDJpvyOpD6cvhTnFKk9LlC3LhBetu
-	 zfM8npoSwbKVjISq/NaQD2m8H6Sgvwayqq59gcq8=
+	b=2fT0r9/HIY0uqZOi9Ozvqz1ZyTPkOvwa7/XYc/tsnv9l1mStqrWk4ahFWlcgBaqNl
+	 gZK5FjpOOaS+/gMW1wJrAfFBcdg71d2Tz+bNvGDchOCnkJ++4EuGNaNTn/gQr6Q8OE
+	 5RNr8pBaKacgGncVLZeB+FdNMNT/rO/l0xOJhkIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Juergen Gross <jgross@suse.com>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1502/2857] xen/gntdev: Fix gntdev_dmabuf ref leak in dmabuf_exp_wait_released()
-Date: Wed, 18 Nov 2026 15:42:16 +0100
-Message-ID: <20261118150255.419580166@linuxfoundation.org>
+Subject: [PATCH 6.1 1467/2857] virtiofs: validate fixed-output response length
+Date: Wed, 18 Nov 2026 15:41:41 +0100
+Message-ID: <20261118150254.132200216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 6f165abe2b40ede71c98956cd74cd17c18505e75 ]
+[ Upstream commit 5364d081125a34e90851fbb46ecc93f79339ce78 ]
 
-dmabuf_exp_wait_released() takes a reference on the exported
-gntdev_dmabuf with dmabuf_exp_wait_obj_get_dmabuf() and passes it to
-dmabuf_exp_wait_obj_new(), which drops that reference after adding the
-wait object to the wait list.  When the wait object allocation fails,
-dmabuf_exp_wait_obj_new() returns ERR_PTR(-ENOMEM) early and the
-reference is never dropped, leaking a reference to the exported
-gntdev_dmabuf.
+A short successful virtiofs response can leave the fixed-output portion of
+the request argument buffer unwritten.  The completion path nevertheless
+copies the full declared output to the request destination, allowing stale
+allocator contents to reach callers such as fuse_statfs().
 
-Drop the reference on the allocation failure path so the reference is
-consumed whether the wait object is created or not.
+Require successful fixed-output responses to contain their complete
+declared output.  Continue to permit a shorter final argument only for
+out_argvar requests.  Reject positive and internal restart error values
+and require valid error replies to be header-only.  The error already
+stored in the FUSE output header is returned by fuse_request_end(), so do
+not copy output arguments from an error reply.
 
-Fixes: 932d6562179e ("xen/gntdev: Add initial support for dma-buf UAPI")
+This was found by source review with AI assistance.  A header-only
+successful FUSE_STATFS reply returned stale fields in nine of nine calls
+across three boots.  The fixed kernel rejected the short response and
+preserved complete replies, valid negative-error replies, and
+variable-output replies.
+
+Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260916170956.2086505-1-vulab@iscas.ac.cn>
-[ sashal: adjusted allocation context from kzalloc_obj(*obj) to kzalloc(sizeof(*obj), GFP_KERNEL) ]
+Assisted-by: LLM
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntdev-dmabuf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/fuse/virtio_fs.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
-index 7df26330af424..8dd95385d3e46 100644
---- a/drivers/xen/gntdev-dmabuf.c
-+++ b/drivers/xen/gntdev-dmabuf.c
-@@ -96,8 +96,10 @@ dmabuf_exp_wait_obj_new(struct gntdev_dmabuf_priv *priv,
- 	struct gntdev_dmabuf_wait_obj *obj;
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index ab410ebe7c304..2a51d7b4d216c 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -535,6 +535,10 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ 	unsigned int num_out;
+ 	unsigned int i;
  
- 	obj = kzalloc(sizeof(*obj), GFP_KERNEL);
--	if (!obj)
-+	if (!obj) {
-+		kref_put(&gntdev_dmabuf->u.exp.refcount, dmabuf_exp_release);
- 		return ERR_PTR(-ENOMEM);
++	/* fuse_request_end() returns this error; there are no args to copy. */
++	if (req->out.h.error)
++		goto out;
++
+ 	remaining = req->out.h.len - sizeof(req->out.h);
+ 	num_in = args->in_numargs - args->in_pages;
+ 	num_out = args->out_numargs - args->out_pages;
+@@ -560,6 +564,7 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ 	if (args->out_argvar)
+ 		args->out_args[args->out_numargs - 1].size = remaining;
+ 
++out:
+ 	kfree(req->argbuf);
+ 	req->argbuf = NULL;
+ }
+@@ -567,7 +572,9 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ /* Verify that the server properly follows the FUSE protocol */
+ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
+ {
++	struct fuse_args *args = req->args;
+ 	struct fuse_out_header *oh = &req->out.h;
++	unsigned int expected;
+ 
+ 	if (len < sizeof(*oh)) {
+ 		pr_warn("virtio-fs: response too short (%u)\n", len);
+@@ -582,6 +589,29 @@ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
+ 			oh->unique, req->in.h.unique);
+ 		return false;
+ 	}
++	if (oh->error <= -ERESTARTSYS || oh->error > 0) {
++		pr_warn("virtio-fs: invalid error value (%d)\n", oh->error);
++		return false;
 +	}
++
++	if (oh->error) {
++		if (len != sizeof(*oh)) {
++			pr_warn("virtio-fs: error response too long (%u)\n", len);
++			return false;
++		}
++		return true;
++	}
++
++	expected = sizeof(*oh) +
++		   fuse_len_args(args->out_numargs, args->out_args);
++	if (len > expected ||
++	    (len < expected &&
++	     (!args->out_argvar ||
++	      expected - len > args->out_args[args->out_numargs - 1].size))) {
++		pr_warn("virtio-fs: invalid response length (%u, expected %u)\n",
++			len, expected);
++		return false;
++	}
+ 	return true;
+ }
  
- 	init_completion(&obj->completion);
- 	obj->gntdev_dmabuf = gntdev_dmabuf;
 -- 
 2.53.0
 
