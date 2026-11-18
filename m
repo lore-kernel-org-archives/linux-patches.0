@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044650;
-	b=lNKffqTvIhkPGMA/m7mCW6fMkcYTETy+EHnWIw3Y3gM5VxUkimuGolX36UyK3UKaNcwb
-	 6GEYt4jn2TzchMm6sA2/wXyRjOePFCYYC4NbsgUW/L0YV9LF9EYqOzHDmn2wmgWBzUTek
-	 qbKQknaVaU8QrM9xbKwy0Rj0k1y1wSxOgpiM3xsC/nevWWRmshWThz+q56N3uBJlRbtKn
-	 xG+arXPnmfYYDUAAR62oiGFI/N346NJ140wstRGjaPC0/YD+2lQqOVkYOO1FbnPX2xVE8
-	 Lzo11p4ACMVF+CZ+NoqTjCu3NklF0wM/IHyKQ30uLu4XbUsA96+cvxMJxbj+ijJViRQ==
+	t=1795044653;
+	b=LFHcd7f74IOWUWgoG/K5t2YCRF3lyAxnlQuRy+d07VxwRmKOC9chVStfEVLYg0lP6etA
+	 B4QyyBVQI/9i9+lSsOF2aYB+xNXqMdtqHKPD4lZBDcAsVprzq1VCn50jzfGq7YegSW5g1
+	 hYEWIZ0Och7ZQ++DRobRgcF+qREb0GzwrZ92AcOfoX4uB4pe6DfsDoWmQialqaZCm4H/G
+	 7FSlI21e7z9SQcHOePgAfR3FgnXoEAkhk7axt4nR3PH9xMWkzIYjgI0WLqd4OCr8Z1hrP
+	 kGKUPEO1k2vDAamTbCQ32pCBqVpxFGIgJgBmRRe8iJvH0afR97JuNIe2xV7EpartbgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044650;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044653;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XiSi9sOelFPDflOz7CpUCv15pAy3ZqEG+MD+93Reo+c=;
-	b=hXWUazdS1aJTBWfMFptY0xz+JsmNYGDzEipowJROe0kWENl8dpo3ZG0CTkIBpmrIo7A9
-	 Z28SlyGk9VCdZrhzkDMQagDBkeBFj3zujLXayA4YsJm+zdVqr3CUBSi0NNrQ8Tmyp/YK3
-	 4sRdGBUbhjufn4fPx3iIwRj8XuhhwEyOcZorIUtQe8GE03VC1YYmdnZWyYNcIHsF78zy8
-	 VFDIRtGb0RFtemXyHvgfN9JBW/B7G3n60th6D60PXmdJ4mchhI4Vy3Hs/0X5etVT780hG
-	 QE06FbD4wMnOL/p2liHUZOmdRqLl+9ipawi84razl46B/Xg6BqLu07tEETm0Tu1KPAw==
+	bh=L4S9FU8moeACcE+lhG2gZDIU2naxBVYzDkxOU9GmeXM=;
+	b=HNgcex7SWzAlvwVxm85mmh0ULwx+iNXnGMp1YR6Af37dPmCsxyRPU3Xb8IWXe9FxL8OH
+	 kjcAt49aQSR0T39EN/2wAITYbU3cHbPVZpyiSWeeliMinTIDXylAwP8SEaZ7GgXQTTxCx
+	 Pf7kI1JusPU0hELPJQhxLzFRUNTofOM1kPASEgPY+JYKb91Ksjh9Og328RgvcjDQscNHV
+	 a0IbudOL3B7vOCW3aWBIj6V3yarwexzylgjtj2qYKHaeeh57Sf55HJsYtTBnrMDjuyJuW
+	 vi9IsS2l/WXHe7eIgp6OtLowHZdpkU7qp/y3ULUR/BdkSkLgC4Eeak+RjmIR2Ne3Zig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJ2HRTXb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukvz0vNN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C075C606A325;
-	Wed, 18 Nov 2026 23:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81175606A333;
+	Wed, 18 Nov 2026 23:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJ2HRTXb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD6F1F000C4;
-	Wed, 18 Nov 2026 23:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukvz0vNN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95771F000C4;
+	Wed, 18 Nov 2026 23:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044650;
-	bh=XiSi9sOelFPDflOz7CpUCv15pAy3ZqEG+MD+93Reo+c=;
+	s=korg; t=1795044653;
+	bh=L4S9FU8moeACcE+lhG2gZDIU2naxBVYzDkxOU9GmeXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJ2HRTXbyxo14lBcugLTM2ND0shLt5o7u3wsJ9POXL4ysXq6E+v1R6YmaMhDRTspN
-	 7ElYqhkQ0LqjQcLbiKw0dt0lvK5gFiVyma+15rf286f/dayZ59k9ZB9i1I01f+SHkB
-	 n1U6yEqWg+C0lBIcrmGVbSYfPsnXBF3h+DiS2uuo=
+	b=ukvz0vNND4hG2K11taRT4C50Bjz/wJoYS3OeF2WoB2O4pcqCfzuDgoR3QMPe0N6bJ
+	 hxNw/QQwtC/P0rvtAEeu9NYF0iRGjb5K4S1oMvJRiC2yljR4dRlgqbEsGt0m8P9pf1
+	 msey4BFr1VC4OtLl2NMOnyDxmkglPWbjfcplZgrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiale Yao <yaojiale02@163.com>,
 	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.1 0643/2857] HID: roccat: koneplus: reject short button reports
-Date: Wed, 18 Nov 2026 15:27:57 +0100
-Message-ID: <20261118150224.678227813@linuxfoundation.org>
+Subject: [PATCH 6.1 0644/2857] HID: roccat: konepure: reject short button reports
+Date: Wed, 18 Nov 2026 15:27:58 +0100
+Message-ID: <20261118150224.716877710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,37 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-commit d879e17a8b4c572c0b53b4e42a36849484e8f00c upstream.
+commit 1590b7c9bea0abe7a5d25dbfe06287c48c238a6f upstream.
 
 The raw event callback runs before HID core validates and zero-pads the
-report.  It passes the buffer to helpers which inspect data[0] and, for a
-button report, read the complete struct koneplus_mouse_report_button.  A
-truncated report can therefore cause an out-of-bounds read.
+report.  It reads the report number without checking the received length
+and passes matching data to roccat_report_event(), which copies a complete
+struct konepure_mouse_report_button.  A truncated report can therefore
+cause an out-of-bounds read and expose adjacent data through the Roccat
+character device.
 
-Require enough data for the button report before calling either helper.
+Require a complete button report before inspecting or forwarding it.
 Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
 sequence") added the same kind of raw-event length validation to hid-asus.
 
-Fixes: 47dbdbffe15b ("HID: roccat: Add support for Roccat Kone[+] v2")
+Fixes: 8936aa31cd5f ("HID: roccat: add support for Roccat Kone Pure gaming mouse")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-roccat-koneplus.c |    3 +++
+ drivers/hid/hid-roccat-konepure.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-roccat-koneplus.c
-+++ b/drivers/hid/hid-roccat-koneplus.c
-@@ -520,6 +520,9 @@ static int koneplus_raw_event(struct hid
- 	if (koneplus == NULL)
+--- a/drivers/hid/hid-roccat-konepure.c
++++ b/drivers/hid/hid-roccat-konepure.c
+@@ -178,6 +178,9 @@ static int konepure_raw_event(struct hid
+ 			!= USB_INTERFACE_PROTOCOL_MOUSE)
  		return 0;
  
-+	if (size < sizeof(struct koneplus_mouse_report_button))
++	if (size < sizeof(struct konepure_mouse_report_button))
 +		return 0;
 +
- 	koneplus_keep_values_up_to_date(koneplus, data);
+ 	if (data[0] != KONEPURE_MOUSE_REPORT_NUMBER_BUTTON)
+ 		return 0;
  
- 	if (koneplus->roccat_claimed)
 
 
