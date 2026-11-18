@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028507;
-	b=f7dJH/for73XlCRkzQz835MU96B9xxan0JVSF2fjxy835md1gaq+Hmp8rQ0zcqm46zPx
-	 DzNq8J4ZmEF7e+2OF9ZoIAaWawf9HVgbSbEX7+wxrY8ubWOLDHmudqkMHdd/wbe20E9wX
-	 cEoMnEeFGU6J2EP4Mh9rkwQwEE9GG77F/ytGCMrYeEWN6a60dJoiNGfrtzkidTjJnfXnQ
-	 eXKRoE+lDwlJkm94Ps79RsJT8PFuxAOZ7A0YduK7gZz0NuHVEDuleTWXS3QZtkf/ZR+KY
-	 fu3wCmrVscJffmm+pa+8Qby4vD8wuK+eHLg7cm7/4nbuOl4HsLVedaEMvI3GSzQrtCw==
+	t=1795028510;
+	b=ksm0KeF8ELTc11Dt+C1S5QfKPZSWZ0tapwaCTkLPyt6h29Ih03UwGnjQwh9BJ6xl4E5M
+	 D3GZR+od9pWWk7z2DRy9U1wQ0gjaKmaiPdjfKek0bVqC3A42Ota1tUhfkoCVLVnl4sKUy
+	 cXxDKDgfuDwV5xgly3OLfdysYky5CFQpQw/XJ0p1oDT16VNoM/yzNXWCtnf9P5Jz8rlMX
+	 10zXRpRbkyzQ4bacX4ROQI17VcrmxOO+gRXLmwpzEFgZxaTMA4RHWhPRRkxTgkVdqFJAP
+	 vue3H2jLDJRAHFKxxtifiARbGG8JOamuiYnYLtY13v3Rk9m/ySXr7tUh7Mwf9Wpwajw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6WbXt+rYowWrjLfFq7Zc+UM9yIGB8D1+SFJanl6WnXI=;
-	b=N3Z4TbyAnZgJEFfVRRAI/Innc+MakdIgIynUaavAD0f2RsAlRfyzN9YSVNsGC3k3GFXL
-	 WVVFo2UNlu0kfxgvYegi7BoQ3z4jk1Inp2nNt7C/t6OpIBu2ULQkCqSj/9LJpkkIQZ+Aq
-	 zj6f9WLUod2LJsCBe9xKrfBvr9YSL/P/CkXi0fhwevtDbi2BhqpRn3X/XtT25yhKW1Qif
-	 KtWLKtrgI4MPaxardSFuzEHNgKONYVPsKDas7gkM6ZLrEVHnbO1P3Or2IOzpx51+6IGpG
-	 90yjy/LMePap6tHgLbwuDBEySecDHq9zRVgbo0O8C8rWckd8USQcafvuITYLK6HNFUw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=lLnyEdHu6XOZ3G5L8uwZeWaS3CJeLiW1TBZVajnpZhE=;
+	b=xzRNtXMehkrBbIjEdsaykA1jQjNqeIjEzrCwKAJU2kBPtjFeEJcH+7yu+2tGyTmJAJGi
+	 X32AuSqzQDlhZ3pCu4dSn1l00FhUiCQLZqJDlyNg51QDLwenlZcQh3u4ykjwIEPXqdvv9
+	 T48CCwIYsHfAxUfRU+DKDeHRnOdvWK+jtxCnJ/RTMh6y0YK8WlHQ8HXwjgKn0z1tnR0bY
+	 rwASW/nhw8B3vEq+KkOSdidJMzQPeSqrR7OuTxXL9hDhuMVo03540vFLHZMvqxTxZHrqD
+	 MhOZJEO3wQWPKri4TFNTWkPWr3vZMWJ0x1JLpxokLcXu8X+vbo6iDrAwGUG7zdMHoPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdVwRqta;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZInKL7K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9400A606A330;
-	Wed, 18 Nov 2026 19:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517E1606A33F;
+	Wed, 18 Nov 2026 19:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdVwRqta
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4811F000C4;
-	Wed, 18 Nov 2026 19:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZInKL7K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F561F000C4;
+	Wed, 18 Nov 2026 19:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028507;
-	bh=6WbXt+rYowWrjLfFq7Zc+UM9yIGB8D1+SFJanl6WnXI=;
+	s=korg; t=1795028510;
+	bh=lLnyEdHu6XOZ3G5L8uwZeWaS3CJeLiW1TBZVajnpZhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdVwRqta7n4kP/tzSzEa6DPUTy5R0UMLlnBtBhy7Bcqva/V7fXrMQSWSJHEGnbYPu
-	 fCJg8/kOt3MlEU21xzkHuGgXwluAau1elWGLV9vPBudSg4A6iqk620mkqdc79EqMmS
-	 bA3sQjQ/3AqVUs6MrbRmQ3k3rvdfvfwqUDp5wx6U=
+	b=yZInKL7K/sLOjbfglVLt74YroFgJQvKOyasHm8zC807j4B97CqobyU82eRhjxO+HV
+	 vXTvqpBaGcEj0Cbi+1hRcJAdwM83n9Pp3R0RGBqo5DDqCVKd3PHHlwJngFlQeaTE/3
+	 1JiaJTWEZTg3vKwY8Cv4OeW0yLKNb6tcMi8Ex5Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Vernon Yang <yanglincheng@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0007/1756] ksmbd: enforce the read-only share flag when creating a stream
-Date: Wed, 18 Nov 2026 15:35:34 +0100
-Message-ID: <20261118150008.265591156@linuxfoundation.org>
+Subject: [PATCH 6.12 0008/1756] selftests/mm: include kselftest.h in vm_util.h
+Date: Wed, 18 Nov 2026 15:35:35 +0100
+Message-ID: <20261118150008.303866659@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,53 +61,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-[ Upstream commit 09139429fab3a5114c18d7c15fb161511d4d66c9 ]
+commit d8a866c766ebe34b4371d42f4a3edca200f5e645 upstream.
 
-When a share is read-only, smb2_open() rejects opens that would create
-or truncate a file. Creating a named stream on an existing file with
-streams_xattr sets neither O_CREAT nor O_TRUNC, so it passes this check,
-and smb2_set_stream_name_xattr() then creates the stream. On a Time
-Machine share, opening a missing AFP_AfpInfo stream also writes one. A
-user who can write a file at the filesystem level can therefore add
-streams to it through a read-only share.
+The 6.12.y backport of commit fdc3bc349794 ("ksm_tests: skip hugepage
+test when Transparent Hugepages are disabled"), added a KSFT_SKIP return
+to khugepaged.c, but the prerequisite include from upstream commit
+d8a866c766eb ("selftests/mm: add commentary about 9pfs bugs") was not
+backported.
 
-Do not create a stream or synthesize AFP_AfpInfo when the share is not
-writable. Existing streams still open normally, and a missing stream
-opened with FILE_OPEN still returns STATUS_OBJECT_NAME_NOT_FOUND.
+As a result, the selftests/mm build fails:
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: eaff8e924f60 ("ksmbd: synthesize empty AFP_AfpInfo xattr on first probe")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: omitted the writable-tree check in the AFP_AfpInfo stream synthesis branch ]
+  khugepaged.c:1195:24: error: ‘KSFT_SKIP’ undeclared (first use in this function)
+
+Add the missing include, only the vm_util.h hunk of commit d8a866c766eb
+("selftests/mm: add commentary about 9pfs bugs") is needed here.
+
+The remaining hunks depend on commit 32b42970e861 ("selftests/mm: skip
+gup_longterm tests on weird filesystems") and commit 571a4b62ed63
+("selftests/mm: skip map_populate on weird filesystems"), which are not
+present in this tree, so we don't need to backport the remaining hunks.
+
+Fixes: 6cd1e92981f8 ("ksm_tests: skip hugepage test when Transparent Hugepages are disabled")
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/mm/vm_util.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 1af013ae66f94..2577fbce80c4f 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2574,6 +2574,9 @@ static noinline int smb2_set_stream_name_xattr(const struct path *path,
- 		return -EBADF;
- 	}
+diff --git a/tools/testing/selftests/mm/vm_util.h b/tools/testing/selftests/mm/vm_util.h
+index 823d07d84ad01..b3d1d17a09e4b 100644
+--- a/tools/testing/selftests/mm/vm_util.h
++++ b/tools/testing/selftests/mm/vm_util.h
+@@ -5,6 +5,7 @@
+ #include <err.h>
+ #include <strings.h> /* ffsl() */
+ #include <unistd.h> /* _SC_PAGESIZE */
++#include "../kselftest.h"
  
-+	if (!test_tree_conn_flag(fp->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE))
-+		return -EACCES;
-+
- 	rc = ksmbd_vfs_setxattr(idmap, path, xattr_stream_name, NULL, 0, 0, false);
- 	if (rc < 0)
- 		pr_err("Failed to store XATTR stream name :%d\n", rc);
+ #define BIT_ULL(nr)                   (1ULL << (nr))
+ #define PM_SOFT_DIRTY                 BIT_ULL(55)
 -- 
 2.53.0
 
