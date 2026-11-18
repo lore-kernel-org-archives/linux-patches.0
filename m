@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047890;
-	b=VoNkkVbUrwO2GzGbJu6NbpxI4e4+m1Pz73LV/k5NgA4uFIl/k5JQpxE4NMvn86GKXWbr
-	 suY95mLoIhLhkoZoHKMUckwcWEoQnTXg+MOC82Xw3MvIPkatG0zSrDOeToO6UJEfGq3oe
-	 5VkXBazFX92OqARqjmNtKP7oBRcg42rL9x3LHqSS6XXWAcIGd8A8fuBYA7bvZGYHvJINN
-	 nMzlSIGd9h2weivRrmsEcb4lJZJTiYRw7c6p6pOhe67cWFHD7umSVWrRUE6wx9PKQF8Vr
-	 nPNXHwRxD1HeRIL4zO1v61hOBpAkfxUSTE39G9/RNfu16a50UfwshqljmS11bANlDfQ==
+	t=1795047893;
+	b=vRmfNI/k39eD5KNWtCj7BYXeiYMG6RAd9zicgIyEINwWdhc5yjYXVtSKA4WCGCLkjB6j
+	 ucw74SUGPFG6WZht+55wx5wRnb2LsG2CdfyuA87dY+WQl6VSF2Lhv5UdiCXPGQg/y18ty
+	 Jdot9wC18MSp0gFcbjTDvGoh9NWt8AkdcWTMhwBXfLDjU1ccnDl16v/9CJFdkfQL8xSfR
+	 Da38YqypiNYDFNN67JV0LEQtyqjsYp27ziee+pyFqb0qutpjfzPuBcfZ+7TmeQoY7fTHy
+	 1LznTG5d/pfeZ7UMzSN0VI+L+J0M9bqBhFIMyDhkgb0CxEy0re0hE6UJ6gE/Rvwmk/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cWlBiJ3+QRo5LXAVXcn+FGBlKYf2tag2oPqcGzbv3KU=;
-	b=lakVTIZcLJzfy5AL+1IkOTPoJuVivP6hdCFocWXZ0qKkmif5IlKzUXb7YxdmBOb9U+Lx
-	 qX9p6tOKJHW4BeiNqyvdvMwxOTNwhGwJzMj2l2Q8xHjU4PlTNYXZmxuA8YyPbmIMCi02/
-	 FPTTlMEFsywxaBz2Vkjma5eOzIKoFNSJmCYDa4kPK5UG19MRpK1g/4eehLFEDQqrBB+EU
-	 BL7I+KTdxsK9II8YgWDzGGu+Vq/VzymUpxQU33LosBJRXFa3pQK2oOsqw1Y9s8V47f7oI
-	 4w8B6C3Y7YZE9NIrKe79Bb2B6GEJxywfGBaorrA2vB9Ytoy6JufnryF3eLa//kG2iHw==
+	bh=4u409ILpcH08ACuchZ6CN2zYfB0wo0p8ldWcy8KQWDs=;
+	b=jtXJe2YMLaODAqLGitNvV6c5jUDKlyZmagaacIlC7g4ULSWQpI0JHyeA7U9LBj8mzBp4
+	 nc6X/7HERKb06b/Dbt7M3kEYpXXSwPG+fEJhekoSu91LsinKD4n3hu48okz3b84zPPSP2
+	 UvZYBprDYSWYE8dFOVBqNjW43+BYOQRyp5hvMmq7OS6JabQ/qDTk/zxLcKaf0RWsPi8qy
+	 1oqhXKldl1mk8Iv6PYeG5nMQyToi4Z4q+k3FsaZIgxC7qdTjaB1D+sHvRRpmcuvQnjma4
+	 l405R8ySY+CPuKiJ6OQEwb9suqjOa0VLmvKZkASsubvIJP6g/zaLDFEU83WrkxJvmGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2kJArs7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncASZZQN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B51606A31C;
-	Thu, 19 Nov 2026 00:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC09606A31C;
+	Thu, 19 Nov 2026 00:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2kJArs7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF15E1F000C4;
-	Thu, 19 Nov 2026 00:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncASZZQN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9311F000C4;
+	Thu, 19 Nov 2026 00:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047890;
-	bh=cWlBiJ3+QRo5LXAVXcn+FGBlKYf2tag2oPqcGzbv3KU=;
+	s=korg; t=1795047893;
+	bh=4u409ILpcH08ACuchZ6CN2zYfB0wo0p8ldWcy8KQWDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B2kJArs7/Oi2WYZCKg81YtZ94suTwOQBSjIO7GJxeey6LTrTxdeaooKIHBlrkbCvM
-	 5v07WUngoH1jd2W8Thg/xH3ebzHM2vD7lLCSbK1SWuyvcOaaMvLVWjHfXr54KrU4aD
-	 ZKuw3uuWrN2bRwuchkVbG4BhW7G2SUr2U5SSQYew=
+	b=ncASZZQNeKZuw0xvb4jD+I0KEgJjKnTasWAM7UC3ngkK4RYmt8QkAjrFcbJ/474sw
+	 JMccgCkdpg0V4WEeaev9HiTzCl+0YN1xL3cJ9tYdhTRNOg9R4LXKOI65aHlaYyDe0d
+	 Qx6DSSo4blRJLvPZYjq6iSnvKKl9P3kjj7R4ipUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1799/2857] memory: brcmstb_dpfe: validate firmware section sizes
-Date: Wed, 18 Nov 2026 15:47:13 +0100
-Message-ID: <20261118150306.030621765@linuxfoundation.org>
+Subject: [PATCH 6.1 1800/2857] regulator: mp886x: fix vsel_mask
+Date: Wed, 18 Nov 2026 15:47:14 +0100
+Message-ID: <20261118150306.065638608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,66 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit e61c1a1103e2617e8f86288368911a8591e35c1e ]
+[ Upstream commit 24fa0eadc2e3c7e9397924197dca7777ec08b8d7 ]
 
-The firmware header is read before the image has been shown to contain a
-complete header. In addition, the final size check adds two
-firmware-provided u32 section lengths before comparing the result with
-fw->size, so the addition can wrap.
+The MP886X vsel is 7bits, fix the vsel_mask.
 
-Reject images shorter than the fixed header and checksum before reading
-the header. Then derive the available payload length with subtraction and
-require the two declared sections to fill it exactly.
-
-Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260815134559.47888-1-pengpeng@iscas.ac.cn
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260901043123.5401-2-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/brcmstb_dpfe.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/regulator/mp886x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
-index 89854d680cdd3..b7774043e973b 100644
---- a/drivers/memory/brcmstb_dpfe.c
-+++ b/drivers/memory/brcmstb_dpfe.c
-@@ -534,9 +534,15 @@ static int __verify_firmware(struct init_data *init,
- 			     const struct firmware *fw)
- {
- 	const struct dpfe_firmware_header *header = (void *)fw->data;
--	unsigned int dmem_size, imem_size, total_size;
-+	unsigned int dmem_size, imem_size;
- 	bool is_big_endian = false;
- 	const u32 *chksum_ptr;
-+	size_t payload_size;
-+
-+	if (fw->size < sizeof(*header) + sizeof(*chksum_ptr))
-+		return ERR_INVALID_SIZE;
-+
-+	payload_size = fw->size - sizeof(*header) - sizeof(*chksum_ptr);
- 
- 	if (header->magic == DPFE_BE_MAGIC)
- 		is_big_endian = true;
-@@ -555,13 +561,8 @@ static int __verify_firmware(struct init_data *init,
- 	if ((dmem_size % sizeof(u32)) != 0 || (imem_size % sizeof(u32)) != 0)
- 		return ERR_INVALID_SIZE;
- 
--	/*
--	 * The header + the data section + the instruction section + the
--	 * checksum must be equal to the total firmware size.
--	 */
--	total_size = dmem_size + imem_size + sizeof(*header) +
--		sizeof(*chksum_ptr);
--	if (total_size != fw->size)
-+	/* The data and instruction sections must fill the payload exactly. */
-+	if (dmem_size > payload_size || imem_size != payload_size - dmem_size)
- 		return ERR_INVALID_SIZE;
- 
- 	/* The checksum comes at the very end. */
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index 8ad4722eca4b3..7910896df51a5 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -267,7 +267,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
+ 	rdesc->min_uV = 600000;
+ 	rdesc->uV_step = 10000;
+ 	rdesc->vsel_reg = MP886X_VSEL;
+-	rdesc->vsel_mask = 0x3f;
++	rdesc->vsel_mask = 0x7f;
+ 	rdesc->ramp_reg = MP886X_SYSCNTLREG1;
+ 	rdesc->ramp_mask = MP886X_SLEW_MASK;
+ 	rdesc->ramp_delay_table = di->ci->slew_rates;
 -- 
 2.53.0
 
