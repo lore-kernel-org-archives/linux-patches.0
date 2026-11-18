@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015420;
-	b=kGrR0yNRmvgZznsz8H/9kqQDTXWcUzT46e9suX6gkhcFMgdoT4JgnyISfDJoPXrbXPlG
-	 QjdZWySrhr8MzwlO+RDzV6h/GMXBAG1IBGECOFvN0ALSLrHcFv/6U/7tVbealMYejytiz
-	 rnGvrgI+vNR6Hg4S/mg49eoMDPV6MM3occMcCZQLKGUWLAVnjp9RgFQaTU8NWMfETF7IH
-	 NQr36z7QFh9fWckucrgewSnSjlHojN0HvvYZXL4XhNk39lklh/K3DM3l7n9MyhersfxwA
-	 e/cMiGKB581/bPTrkUto3VJIFH94m/PA8x5S7Poc6bs11uPHDkkE6BguWsbRriG0aYQ==
+	t=1795015423;
+	b=JQDp4Ph6TrxwyDXjsgsXb7H7cQpMhPZsOqsBxEEgIDK3nY8UKVjAysweR20Lb+Q5P+SZ
+	 70rr8WJ2Ng1ODyWKzIxvFz8lvPlxdXbaSdq0ICOv/oVAZC1H7Si3eMBUqmbQLrb3aRgyC
+	 K1rtQg0tdSpyLq5egJdnHT7b445FI+fyAr7huykjpsxL6NXqmXRVySF/msd14PZPqdSU7
+	 jLveqY6GzEQPWeeyZc7B+zh2I2zP5mulFQa2Wy2UhvpBzw/C7lq77qn34r2Y9uEEZTKMN
+	 fAxuNlJovXI5zEggrfwHa0VYHtEa/hS0iErCOx1+eMB/g/z5azgl9UXuERF/nlPZ5WQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015423;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CFaE5P8qd+lQUrq75WpgQzWxwvp12StztUIbmfYYIP0=;
-	b=kjdAN1REViOCyL7PLBWep5YSt2qG/xe8trh6tnLwrKqM/nWHg9mL5NrXr5osnLi2l2yy
-	 t164S8dPOxejtFO8BX/BQcD7mnO1K31U94heP0Pt6dRMgi6FxJ5Gr24cMpL/60doU8GZ0
-	 8qZElCQAlPJgVeZeA7EAHiGWEzKnl9WtpGHy6GHoNfl2fSsYASu07wHFbhFMF+4uw3iX4
-	 gKu10yXKybZdrcaW+jRXPp9zokqRtcs3/wz/lVpApuhWMnMcN434gPNOVyX6hC2ERPWu2
-	 zlpf00d5JT0ZN6oCOXSZcfiMP3JwP5vWk/88jWkKmdErLAWdySe0mq6lxGbi45Avq7Q==
+	bh=nDeZZrgHxQqOxhf6aW6eRY5mb05hjwoeiWk7K5f6VBw=;
+	b=r0XPRJsJMdASlWrwYoQUXGR2VbbHcVEAYPueQF/Yxn2qxZhyq24Hihp2cWNJmjUoh2S9
+	 7T2b0GELkCVU15qC8mELcdluHkF94l6gmEEgFLPwj277mOKFimADdlXCnnvDNRdx61Iiv
+	 4mS/BDEDK+JS7CBTESRmrQOzWmsESWIINqfSK5vnHvB5Ztumzxqmx54hEQ+w7yRQMbvYm
+	 VunFnslB8TUQ5PmyvpRo5KovhYG1jukjclT6YrhZ0hZifDYQMIqIiWjkaSQa4d6P1oAY/
+	 IWUPvAnWLBNsHlRE52t1RNhz87JYIXo0LLG32zqNsv/iwH4NOXwtEmXVYq1J7EJoGDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngpCt3PA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9w6cxkV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D6B606A331;
-	Wed, 18 Nov 2026 15:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731F060A2603;
+	Wed, 18 Nov 2026 15:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngpCt3PA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BD81F000C4;
-	Wed, 18 Nov 2026 15:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9w6cxkV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B4F1F000C7;
+	Wed, 18 Nov 2026 15:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015420;
-	bh=CFaE5P8qd+lQUrq75WpgQzWxwvp12StztUIbmfYYIP0=;
+	s=korg; t=1795015423;
+	bh=nDeZZrgHxQqOxhf6aW6eRY5mb05hjwoeiWk7K5f6VBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ngpCt3PAaNd9eGmVA+DUvugmbtqMIQykOPdHAEDCgBMPgA5FGAuEKDDqwP0TUFonH
-	 af/xsK1f7/jDAtU1GsV2n+f7BTyUgkfeNHWGYkJLjSLoLvl2FHTLYDu78iVDM/6wOB
-	 txHkhjZzx4VzsTA78zBKWEDleOmzRUaCdX0DxbRQ=
+	b=H9w6cxkVMhfMkiJjDwgcr1QvGdzBq/OFnSW64IZErNWOIqQfzRe+QnFWtC3l1ymop
+	 d8mZOHI41mdfBRLBd1xrVVcta4xd8QenkIErSA3X1UJDdnaUxjCjQ9fFeWkcMlAK4R
+	 ZXBPuwLkolShHjF4E3LH1pQwZym/biEyVl4r3SlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Changyuan Lyu <changyuanl@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0160/2651] fuse: fall back to copy_splice_read() on FOPEN_DIRECT_IO
-Date: Wed, 18 Nov 2026 15:23:20 +0100
-Message-ID: <20261118150253.614491684@linuxfoundation.org>
+Subject: [PATCH 7.3 0169/2651] dlm: fix variable key length lookup
+Date: Wed, 18 Nov 2026 15:23:29 +0100
+Message-ID: <20261118150253.941738170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,56 +68,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 10bd6b32965265688fa277d166ab224de8e86eb2 ]
+[ Upstream commit b4e6ae7ba711758c38d5eb7d5a7a0712273bdf6f ]
 
-Yafang Shao reports:
+Before commit 6c648035cbe7 ("dlm: switch to use rhashtable for rsbs")
+the rsb hashtable was dynamic key length. Accidentally it was changed to
+switch to static key length which can end in different results. We
+fixing this back to the original behaviour by adding the necessary
+functionality to rhashtable to handle the objects and lookups as dynamic
+key lengths.
 
-  "After upgrading the kernel from 6.1.y to 6.18.y on production servers,
-  some containers failed to read lxcfs data. The root cause is that our
-  lxcfs is still at the old v3.0.4, which does not include commit 25982f5
-  ("Set the file size to 4k") [0].
-
-  Between 6.1.y and 6.18.y, the FUSE splice_read path was converted from
-  generic_file_splice_read() to filemap_splice_read() by commit
-  2cb1e08985e3 ("splice: Use filemap_splice_read() instead of
-  generic_file_splice_read()"). Unlike generic_file_splice_read(),
-  filemap_splice_read() strictly checks i_size and refuses to read from
-  zero-size files, which breaks virtual FUSE filesystems like the old
-  lxcfs."
-
-Fix by using copy_splice_read() for the FOPEN_DIRECT_IO case, just like the
-VFS does for DAX and O_DIRECT files.
-
-Reported-by: Yafang Shao <laoar.shao@gmail.com>
-Closes: https://lore.kernel.org/all/20260706025705.58301-1-laoar.shao@gmail.com/
-Reported-by: Changyuan Lyu <changyuanl@google.com>
-Closes: https://lore.kernel.org/all/20260901213412.1763253-1-changyuanl@google.com/
-Fixes: 2cb1e08985e3 ("splice: Use filemap_splice_read() instead of generic_file_splice_read()")
-Tested-and-acked-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 6c648035cbe7 ("dlm: switch to use rhashtable for rsbs")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/dlm/config.c       | 30 ++++++++++++++++++++++++++++--
+ fs/dlm/dlm_internal.h |  5 +++++
+ fs/dlm/lock.c         |  6 ++++--
+ 3 files changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index 7e6eba6e7086f..f51551165e8fe 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1895,7 +1895,10 @@ static ssize_t fuse_splice_read(struct file *in, loff_t *ppos,
- 	struct fuse_file *ff = in->private_data;
+diff --git a/fs/dlm/config.c b/fs/dlm/config.c
+index 53cd332930423..6c5c3f049b33a 100644
+--- a/fs/dlm/config.c
++++ b/fs/dlm/config.c
+@@ -64,11 +64,37 @@ static void release_node(struct config_item *);
+ static struct configfs_attribute *comm_attrs[];
+ static struct configfs_attribute *node_attrs[];
  
- 	/* FOPEN_DIRECT_IO overrides FOPEN_PASSTHROUGH */
--	if (fuse_file_passthrough(ff) && !(ff->open_flags & FOPEN_DIRECT_IO))
++static u32 rsb_hashfn(const void *data, u32 len, u32 seed)
++{
++	const struct dlm_rsb_key *key = data;
 +
-+	if (ff->open_flags & FOPEN_DIRECT_IO)
-+		return copy_splice_read(in, ppos, pipe, len, flags);
-+	else if (fuse_file_passthrough(ff))
- 		return fuse_passthrough_splice_read(in, ppos, pipe, len, flags);
- 	else
- 		return filemap_splice_read(in, ppos, pipe, len, flags);
++	return jhash(key->name, key->len, 0);
++}
++
++static u32 rsb_obj_hashfn(const void *data, u32 len, u32 seed)
++{
++	const struct dlm_rsb *r = data;
++
++	return r->res_hash;
++}
++
++static int rsb_obj_cmpfn(struct rhashtable_compare_arg *arg, const void *obj)
++{
++	const struct dlm_rsb_key *key = arg->key;
++	const struct dlm_rsb *r = obj;
++
++	if (key->len != r->res_length)
++		return -1;
++
++	return memcmp(&r->res_name, key->name, key->len);
++}
++
+ const struct rhashtable_params dlm_rhash_rsb_params = {
+ 	.nelem_hint = 3, /* start small */
+-	.key_len = DLM_RESNAME_MAXLEN,
+-	.key_offset = offsetof(struct dlm_rsb, res_name),
+ 	.head_offset = offsetof(struct dlm_rsb, res_node),
++	.hashfn = rsb_hashfn,
++	.obj_hashfn = rsb_obj_hashfn,
++	.obj_cmpfn = rsb_obj_cmpfn,
+ 	.automatic_shrinking = true,
+ };
+ 
+diff --git a/fs/dlm/dlm_internal.h b/fs/dlm/dlm_internal.h
+index 9df842421ae06..74c2e77d1b553 100644
+--- a/fs/dlm/dlm_internal.h
++++ b/fs/dlm/dlm_internal.h
+@@ -340,6 +340,11 @@ struct dlm_rsb {
+ 	char			res_name[DLM_RESNAME_MAXLEN+1];
+ };
+ 
++struct dlm_rsb_key {
++	char name[DLM_RESNAME_MAXLEN];
++	size_t len;
++};
++
+ /* dlm_master_lookup() flags */
+ 
+ #define DLM_LU_RECOVER_DIR	1
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index d73c4aed1f8ac..2609e4fdeba84 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -625,12 +625,14 @@ static int get_rsb_struct(struct dlm_ls *ls, const void *name, int len,
+ int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name,
+ 			unsigned int len, struct dlm_rsb **r_ret)
+ {
+-	char key[DLM_RESNAME_MAXLEN] = {};
++	struct dlm_rsb_key key = {
++		.len = len,
++	};
+ 
+ 	if (len > DLM_RESNAME_MAXLEN)
+ 		return -EINVAL;
+ 
+-	memcpy(key, name, len);
++	memcpy(key.name, name, len);
+ 	*r_ret = rhashtable_lookup_fast(rhash, &key, dlm_rhash_rsb_params);
+ 	if (*r_ret)
+ 		return 0;
 -- 
 2.53.0
 
