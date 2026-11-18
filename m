@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028776;
-	b=YSCWTjY8ZakFYhfSC3n7+ZS5tH46drZ295tdWZjQdse8Xd+4brBPlk/24EcfNx3VOw5E
-	 hXErHWfDNu67Fd5wAzAS+3V5QHvke6vcoCrTMnR7Igwk4BQN+SFpONDeqaXCIuyBn5PKJ
-	 2Bu+56fZ4Jr8P79SKHq7fzAnC6FF5iExtwbf90JgAhxE0qa1Zce+iSs0a1UuzWUyI2dib
-	 b9d2edyqsW38BKb2M+ImQG5i2H/1D9zfVx2azm9xHF9PNSS2E+x0wQn0AlzzJ75L4PsU4
-	 Kt7d72mNM8tp/y14x5GblE8rZUlAQm2XR9ZNM5xfQ46bvUd7iTxUj5l/3bjyTOgPfLA==
+	t=1795028779;
+	b=0lfuAZrdQ6lq/etWGw+B2hJcttFfYSpROlTq267acOAPlcbOOqEeLhltbCbOHtyQaRtl
+	 DuHRZGzxaGTLce6K1eJsoSrG1bJVxUdtPTV3NOEmozdJ7FxdsSfHRBxgWD5QB/21s5Loo
+	 d/RfVDdLizRCufxevxh172BYq7KXdoMsjDFVoVzfakKCNWO0hW9KkjiQTqgz60gmCTkxv
+	 4lTcVnsJ/3AZM3Zat3jHA+4MgDs4E0hSnIJEj2WL5q0xM5AeOO6LMtP/QyqI3YlANllQd
+	 8MCtlSx09FTwmwyBRXsGS7PDkPS3pa2APmSLNYUX+Wy1duX9ZCk7nyEsiHF2K8okwbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=wKm23IMj7EYx+qJDdUOeinNZ7QcfAuZD9nFPpjfEQDY=;
-	b=1Ywdj+85zfgtO6ZrX35xMxp9px9WzdQrCG8wozl5hb/St2lkePLKjfQ4kUZEwQ7ljFGg
-	 0daEoovi19CBZM/QXjO0Yu/069golvzKDlVStSy66qZCVRifLR0bH3bIw3QCHLAgEDb6B
-	 4bFnJFyR3rPoUtoqVYzIhq7z26EPUWFPR2wFTCvFBW57Xg1POQSCfy5DYxS3oREuT2EPT
-	 6TYI/WijY08TYGF60tXGF8sLN2Kgj1slDDOPAppcVQX6KSSECcWSCAAyRdja1RiKDHAYS
-	 /QIAr5N/7VhzfZneZF122Aa/aKVFo7cX8i/1BKFNhgwRj/MWi27ajNmXHNwRSmHzmrw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yNj6U+V0RltaSMGYmPcfN2/puAyOQD3283CUNY0AlXw=;
+	b=KxU8Cyx+zfdGiDbCptqv/CYuhDPCVzKeTTb7E/iSbdHOfWU23OsZpyE1rUESriHbS4Uf
+	 kgR/64R6uVXRVjszRtjL5xuLe8gw0Z1uXSz3ZOI/WkSQxtmSrTzEfkSA88oEDJfdUcCSm
+	 Uzp3gHjIupcQNOwFD3hPDPA17YxqRwDue1Mo0kkjwq8OramqyBg0tFn7RvNLsGY7HVSB+
+	 g/NdQkWlyx9/8nfxAVB2R59mRsn1rF1LMB/CcVfRH8xx5Az4aHAR9/e9dUUuyBxUxAwI6
+	 nP/yFrpsxc+hEAm5i3z4BqpevbIVoow5dFHUaCVLqtk5uVtEGpNbcVfNoSxBQGK9fFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ckwXxHWo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnohH88U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803F760A2604;
-	Wed, 18 Nov 2026 19:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B6E606A32A;
+	Wed, 18 Nov 2026 19:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ckwXxHWo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCE11F000C4;
-	Wed, 18 Nov 2026 19:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnohH88U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4D71F000C4;
+	Wed, 18 Nov 2026 19:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028776;
-	bh=wKm23IMj7EYx+qJDdUOeinNZ7QcfAuZD9nFPpjfEQDY=;
+	s=korg; t=1795028779;
+	bh=yNj6U+V0RltaSMGYmPcfN2/puAyOQD3283CUNY0AlXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ckwXxHWomTcaS6UcWuqM22HFvbCWxNfeHzh7Imm03WSz5/Smnll7wgV5GaGmXvDXo
-	 D/89nt/scrHPuB6FTNd9xsqb0H0Pn9SGOWnDjb1tdCQoFC76kAP9UV4eqi4QqK88zL
-	 xnyugiujcRVofWgTKwzbQ5QEj0ABR4K79FRHCHso=
+	b=LnohH88UX9D1xAOaWB1Y28ydXbIaYRXwvxp6VLRLViN9LNlFiFuZpRJK1AOCHfRHi
+	 QPy4uWT7SCVXhiT1YVyDr2R1EvvHX4xzhN8XCXkP/YScNR2zpVUwLK8oS7RSDnGQSn
+	 m2FtnTaFCYUPQ4uHf7LVn/bwUhqtXZfjfTS6u+90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhe <lizhe.67@bytedance.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0074/1756] mm/hugetlb: fix mremap deadlock when PMD sharing is possible
-Date: Wed, 18 Nov 2026 15:36:41 +0100
-Message-ID: <20261118150011.252566240@linuxfoundation.org>
+Subject: [PATCH 6.12 0065/1756] cipso: stop modifying live ip_options_rcu
+Date: Wed, 18 Nov 2026 15:36:32 +0100
+Message-ID: <20261118150010.931694236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,149 +64,352 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Zhe <lizhe.67@bytedance.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 92daa8652f88c8cfc05f4899a8408a04b02f211e ]
+[ Upstream commit 1f2c5183fc0902892648f0453e38c0951cef3fec ]
 
-move_hugetlb_page_tables() holds the mapping's i_mmap_rwsem for
-write while moving hugetlb PTEs. This prevents races with truncation
-and protects huge_pmd_unshare(), but the move loop must not call
-helpers that can acquire the same rwsem for read.
+cipso_v4_delopt() operates on the ip_options_rcu of a socket or a request
+socket, and tries to remove CIPSO options from the middle by moving all
+subsequent options.
+That's not allowed - ip_options_rcu can be read locklessly and must always
+be consistent. For example, ip_options_undo() reads trusted offsets and
+length values from the options buffer.
+Fix it by doing the modification in a copy.
 
-huge_pte_alloc() can do that when the destination can use PMD
-sharing: it may call huge_pmd_share(), which takes i_mmap_rwsem for
-read while searching for a shareable PMD table. Calling it while the
-move path already holds i_mmap_rwsem for write can deadlock.
+The core change is in cipso_v4_delopt(), the rest is ugly plumbing to
+propagate memory allocation failures.
 
-Avoid that path for PMD-sized hugetlb mappings that can use PMD
-sharing. Instead of allocating or sharing the destination page table
-while moving, zap the source range and let the destination fault path
-populate or share the PMD lazily.
+Triggering this bug requires that the system is configured to use CIPSO.
+(Setting up CIPSO requires privileges in init_user_ns.)
 
-Reuse the hugetlb unmap logic for the source-side zap by splitting
-the core loop out of __unmap_hugepage_range(). The wrapper keeps the
-existing tlb_start_vma(), tlb_end_vma() and huge_pmd_unshare_flush()
-behavior, while move_hugetlb_page_tables() can reuse the unmap loop
-with its existing mmu_gather.
-
-Link: https://lore.kernel.org/20261022034543.51226-4-lizhe.67@bytedance.com
-Fixes: 550a7d60bd5e ("mm, hugepages: add mremap() support for hugepage backed vma")
-Signed-off-by: Li Zhe <lizhe.67@bytedance.com>
-Co-developed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted the unmap helper’s folio parameter to the existing struct page ref_page interface ]
+Fixes: f6d8bd051c39 ("inet: add RCU protection to inet->opt")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20261106-cipso-rcuopts-v1-1-31ae931d7a0f@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 47 +++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ include/net/cipso_ipv4.h     | 11 ++++++-----
+ include/net/netlabel.h       | 11 ++++++-----
+ net/ipv4/cipso_ipv4.c        | 16 +++++++++++++---
+ net/netlabel/netlabel_kapi.c | 24 ++++++++++--------------
+ security/selinux/netlabel.c  |  5 +++--
+ security/smack/smack_lsm.c   | 14 +++++++++-----
+ 6 files changed, 47 insertions(+), 34 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index e6f913f227e6c..fcdb4f2e4c599 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -92,6 +92,10 @@ static int __huge_pmd_unshare(struct mmu_gather *tlb,
- 		bool check_locks);
- static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
- 		unsigned long start, unsigned long end, bool take_locks);
-+static void hugetlb_unmap_range(struct mmu_gather *tlb,
-+				struct vm_area_struct *vma, unsigned long start,
-+				unsigned long end, struct page *ref_page,
-+				zap_flags_t zap_flags);
- static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
- 
- static void hugetlb_free_folio(struct folio *folio)
-@@ -5540,6 +5544,8 @@ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
- 	for (; old_addr < old_end; old_addr += sz, new_addr += sz) {
- 		const unsigned long offset_to_last_entry =
- 			(old_addr | last_addr_mask) - old_addr;
-+		const unsigned long offset_to_last_dst_entry =
-+			(new_addr | last_addr_mask) - new_addr;
- 
- 		src_pte = hugetlb_walk(vma, old_addr, sz);
- 		if (!src_pte) {
-@@ -5556,6 +5562,24 @@ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
- 			continue;
- 		}
- 
-+		/*
-+		 * Avoid entering the destination PMD sharing path while holding
-+		 * i_mmap_rwsem for write. Leave destination page table
-+		 * population to the fault path, which can share the PMD lazily.
-+		 */
-+		if (sz == PMD_SIZE && want_pmd_share(new_vma, new_addr)) {
-+			const unsigned long unmap_size =
-+				min(old_end - old_addr,
-+				    offset_to_last_dst_entry + sz);
-+
-+			hugetlb_unmap_range(&tlb, vma, old_addr,
-+					    old_addr + unmap_size, NULL,
-+					    ZAP_FLAG_DROP_MARKER);
-+			old_addr += unmap_size - sz;
-+			new_addr += unmap_size - sz;
-+			continue;
-+		}
-+
- 		dst_pte = huge_pte_alloc(mm, new_vma, new_addr, sz);
- 		if (!dst_pte)
- 			break;
-@@ -5575,9 +5599,10 @@ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
- 	return len + old_addr - old_end;
+diff --git a/include/net/cipso_ipv4.h b/include/net/cipso_ipv4.h
+index d6780d7903f4a..b41672221797b 100644
+--- a/include/net/cipso_ipv4.h
++++ b/include/net/cipso_ipv4.h
+@@ -185,12 +185,12 @@ int cipso_v4_sock_setattr(struct sock *sk,
+ 			  const struct cipso_v4_doi *doi_def,
+ 			  const struct netlbl_lsm_secattr *secattr,
+ 			  bool sk_locked);
+-void cipso_v4_sock_delattr(struct sock *sk);
++int cipso_v4_sock_delattr(struct sock *sk);
+ int cipso_v4_sock_getattr(struct sock *sk, struct netlbl_lsm_secattr *secattr);
+ int cipso_v4_req_setattr(struct request_sock *req,
+ 			 const struct cipso_v4_doi *doi_def,
+ 			 const struct netlbl_lsm_secattr *secattr);
+-void cipso_v4_req_delattr(struct request_sock *req);
++int cipso_v4_req_delattr(struct request_sock *req);
+ int cipso_v4_skbuff_setattr(struct sk_buff *skb,
+ 			    const struct cipso_v4_doi *doi_def,
+ 			    const struct netlbl_lsm_secattr *secattr);
+@@ -221,8 +221,9 @@ static inline int cipso_v4_sock_setattr(struct sock *sk,
+ 	return -ENOSYS;
  }
  
--void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
--			    unsigned long start, unsigned long end,
--			    struct page *ref_page, zap_flags_t zap_flags)
-+static void hugetlb_unmap_range(struct mmu_gather *tlb,
-+				struct vm_area_struct *vma, unsigned long start,
-+				unsigned long end, struct page *ref_page,
-+				zap_flags_t zap_flags)
+-static inline void cipso_v4_sock_delattr(struct sock *sk)
++static inline int cipso_v4_sock_delattr(struct sock *sk)
  {
- 	struct mm_struct *mm = vma->vm_mm;
- 	unsigned long address;
-@@ -5595,13 +5620,6 @@ void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 	BUG_ON(start & ~huge_page_mask(h));
- 	BUG_ON(end & ~huge_page_mask(h));
++	return 0;
+ }
  
--	/*
--	 * This is a hugetlb vma, all the pte entries should point
--	 * to huge page.
--	 */
--	tlb_change_page_size(tlb, sz);
--	tlb_start_vma(tlb, vma);
--
- 	last_addr_mask = hugetlb_mask_last_page(h);
- 	address = start;
- 	for (; address < end; address += sz) {
-@@ -5728,6 +5746,15 @@ void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 		if (ref_page)
- 			break;
+ static inline int cipso_v4_sock_getattr(struct sock *sk,
+@@ -238,9 +239,9 @@ static inline int cipso_v4_req_setattr(struct request_sock *req,
+ 	return -ENOSYS;
+ }
+ 
+-static inline void cipso_v4_req_delattr(struct request_sock *req)
++static inline int cipso_v4_req_delattr(struct request_sock *req)
+ {
+-	return;
++	return 0;
+ }
+ 
+ static inline int cipso_v4_skbuff_setattr(struct sk_buff *skb,
+diff --git a/include/net/netlabel.h b/include/net/netlabel.h
+index 529160f76cac2..93ff5889a2673 100644
+--- a/include/net/netlabel.h
++++ b/include/net/netlabel.h
+@@ -476,7 +476,7 @@ int netlbl_sock_setattr(struct sock *sk,
+ 			u16 family,
+ 			const struct netlbl_lsm_secattr *secattr,
+ 			bool sk_locked);
+-void netlbl_sock_delattr(struct sock *sk);
++int netlbl_sock_delattr(struct sock *sk);
+ int netlbl_sock_getattr(struct sock *sk,
+ 			struct netlbl_lsm_secattr *secattr);
+ int netlbl_conn_setattr(struct sock *sk,
+@@ -484,7 +484,7 @@ int netlbl_conn_setattr(struct sock *sk,
+ 			const struct netlbl_lsm_secattr *secattr);
+ int netlbl_req_setattr(struct request_sock *req,
+ 		       const struct netlbl_lsm_secattr *secattr);
+-void netlbl_req_delattr(struct request_sock *req);
++int netlbl_req_delattr(struct request_sock *req);
+ int netlbl_skbuff_setattr(struct sk_buff *skb,
+ 			  u16 family,
+ 			  const struct netlbl_lsm_secattr *secattr);
+@@ -625,8 +625,9 @@ static inline int netlbl_sock_setattr(struct sock *sk,
+ {
+ 	return -ENOSYS;
+ }
+-static inline void netlbl_sock_delattr(struct sock *sk)
++static inline int netlbl_sock_delattr(struct sock *sk)
+ {
++	return 0;
+ }
+ static inline int netlbl_sock_getattr(struct sock *sk,
+ 				      struct netlbl_lsm_secattr *secattr)
+@@ -644,9 +645,9 @@ static inline int netlbl_req_setattr(struct request_sock *req,
+ {
+ 	return -ENOSYS;
+ }
+-static inline void netlbl_req_delattr(struct request_sock *req)
++static inline int netlbl_req_delattr(struct request_sock *req)
+ {
+-	return;
++	return 0;
+ }
+ static inline int netlbl_skbuff_setattr(struct sk_buff *skb,
+ 				      u16 family,
+diff --git a/net/ipv4/cipso_ipv4.c b/net/ipv4/cipso_ipv4.c
+index 019c16d6d6955..4b27b764ebf59 100644
+--- a/net/ipv4/cipso_ipv4.c
++++ b/net/ipv4/cipso_ipv4.c
+@@ -2006,11 +2006,16 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
+ 	if (!opt || opt->opt.cipso == 0)
+ 		return 0;
+ 	if (opt->opt.srr || opt->opt.rr || opt->opt.ts || opt->opt.router_alert) {
++		struct ip_options_rcu *old_opt = opt;
+ 		u8 cipso_len;
+ 		u8 cipso_off;
+ 		unsigned char *cipso_ptr;
+ 		int optlen_new;
+ 
++		/* ip_options_rcu must not be modified in place, use a copy */
++		opt = kmemdup(opt, sizeof(*opt) + opt->opt.optlen, GFP_ATOMIC);
++		if (!opt)
++			return -ENOMEM;
+ 		cipso_off = opt->opt.cipso - sizeof(struct iphdr);
+ 		cipso_ptr = &opt->opt.__data[cipso_off];
+ 		cipso_len = cipso_ptr[1];
+@@ -2038,6 +2043,8 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
+ 
+ 		memset(&opt->opt.__data[optlen_new], IPOPT_END,
+ 		       opt->opt.optlen - optlen_new);
++		rcu_assign_pointer(*opt_ptr, opt);
++		kfree_rcu(old_opt, rcu);
+ 	} else {
+ 		/* only the cipso option was present on the socket so we can
+ 		 * remove the entire option struct */
+@@ -2057,7 +2064,7 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
+  * Removes the CIPSO option from a socket, if present.
+  *
+  */
+-void cipso_v4_sock_delattr(struct sock *sk)
++int cipso_v4_sock_delattr(struct sock *sk)
+ {
+ 	struct inet_sock *sk_inet;
+ 	int hdr_delta;
+@@ -2070,6 +2077,7 @@ void cipso_v4_sock_delattr(struct sock *sk)
+ 		sk_conn->icsk_ext_hdr_len -= hdr_delta;
+ 		sk_conn->icsk_sync_mss(sk, sk_conn->icsk_pmtu_cookie);
  	}
-+}
-+
-+void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
-+			    unsigned long start, unsigned long end,
-+			    struct page *ref_page, zap_flags_t zap_flags)
-+{
-+	tlb_change_page_size(tlb, huge_page_size(hstate_vma(vma)));
-+	tlb_start_vma(tlb, vma);
-+	hugetlb_unmap_range(tlb, vma, start, end, ref_page, zap_flags);
- 	tlb_end_vma(tlb, vma);
++	return (hdr_delta < 0) ? hdr_delta : 0;
+ }
  
- 	huge_pmd_unshare_flush(tlb, vma);
+ /**
+@@ -2080,9 +2088,11 @@ void cipso_v4_sock_delattr(struct sock *sk)
+  * Removes the CIPSO option from a request socket, if present.
+  *
+  */
+-void cipso_v4_req_delattr(struct request_sock *req)
++int cipso_v4_req_delattr(struct request_sock *req)
+ {
+-	cipso_v4_delopt(&inet_rsk(req)->ireq_opt);
++	int hdr_delta = cipso_v4_delopt(&inet_rsk(req)->ireq_opt);
++
++	return (hdr_delta < 0) ? hdr_delta : 0;
+ }
+ 
+ /**
+diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
+index 33b77084a4e5f..34ef835191dd2 100644
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -1045,18 +1045,18 @@ int netlbl_sock_setattr(struct sock *sk,
+  * ensuring that @sk is locked.
+  *
+  */
+-void netlbl_sock_delattr(struct sock *sk)
++int netlbl_sock_delattr(struct sock *sk)
+ {
+ 	switch (sk->sk_family) {
+ 	case AF_INET:
+-		cipso_v4_sock_delattr(sk);
+-		break;
++		return cipso_v4_sock_delattr(sk);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
+ 		calipso_sock_delattr(sk);
+ 		break;
+ #endif /* IPv6 */
+ 	}
++	return 0;
+ }
+ 
+ /**
+@@ -1156,8 +1156,7 @@ int netlbl_conn_setattr(struct sock *sk,
+ 		case NETLBL_NLTYPE_UNLABELED:
+ 			/* just delete the protocols we support for right now
+ 			 * but we could remove other protocols if needed */
+-			netlbl_sock_delattr(sk);
+-			ret_val = 0;
++			ret_val = netlbl_sock_delattr(sk);
+ 			break;
+ 		default:
+ 			ret_val = -ENOENT;
+@@ -1185,8 +1184,7 @@ int netlbl_conn_setattr(struct sock *sk,
+ 		case NETLBL_NLTYPE_UNLABELED:
+ 			/* just delete the protocols we support for right now
+ 			 * but we could remove other protocols if needed */
+-			netlbl_sock_delattr(sk);
+-			ret_val = 0;
++			ret_val = netlbl_sock_delattr(sk);
+ 			break;
+ 		default:
+ 			ret_val = -ENOENT;
+@@ -1234,8 +1232,7 @@ int netlbl_req_setattr(struct request_sock *req,
+ 						       entry->cipso, secattr);
+ 			break;
+ 		case NETLBL_NLTYPE_UNLABELED:
+-			netlbl_req_delattr(req);
+-			ret_val = 0;
++			ret_val = netlbl_req_delattr(req);
+ 			break;
+ 		default:
+ 			ret_val = -ENOENT;
+@@ -1255,8 +1252,7 @@ int netlbl_req_setattr(struct request_sock *req,
+ 						      entry->calipso, secattr);
+ 			break;
+ 		case NETLBL_NLTYPE_UNLABELED:
+-			netlbl_req_delattr(req);
+-			ret_val = 0;
++			ret_val = netlbl_req_delattr(req);
+ 			break;
+ 		default:
+ 			ret_val = -ENOENT;
+@@ -1280,18 +1276,18 @@ int netlbl_req_setattr(struct request_sock *req,
+ * Remove all the NetLabel labeling from @req.
+ *
+ */
+-void netlbl_req_delattr(struct request_sock *req)
++int netlbl_req_delattr(struct request_sock *req)
+ {
+ 	switch (req->rsk_ops->family) {
+ 	case AF_INET:
+-		cipso_v4_req_delattr(req);
+-		break;
++		return cipso_v4_req_delattr(req);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
+ 		calipso_req_delattr(req);
+ 		break;
+ #endif /* IPv6 */
+ 	}
++	return 0;
+ }
+ 
+ /**
+diff --git a/security/selinux/netlabel.c b/security/selinux/netlabel.c
+index d51dfe8923122..24b11d1891d85 100644
+--- a/security/selinux/netlabel.c
++++ b/security/selinux/netlabel.c
+@@ -557,9 +557,10 @@ static int selinux_netlbl_socket_connect_helper(struct sock *sk,
+ 	 * is set to AF_UNSPEC, if that is what is happening we want to reset
+ 	 * the socket */
+ 	if (addr->sa_family == AF_UNSPEC) {
+-		netlbl_sock_delattr(sk);
++		rc = netlbl_sock_delattr(sk);
++		if (rc)
++			return rc;
+ 		sksec->nlbl_state = NLBL_REQSKB;
+-		rc = 0;
+ 		return rc;
+ 	}
+ 	secattr = selinux_netlbl_sock_genattr(sk);
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index c1c7b1409bf4c..2d39d001cedb9 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -2665,22 +2665,26 @@ static int smack_netlbl_add(struct sock *sk)
+  *
+  * Remove the outbound smack value from a socket
+  */
+-static void smack_netlbl_delete(struct sock *sk)
++static int smack_netlbl_delete(struct sock *sk)
+ {
+ 	struct socket_smack *ssp = smack_sock(sk);
++	int rc;
+ 
+ 	/*
+ 	 * Take the label off the socket if one is set.
+ 	 */
+ 	if (ssp->smk_state != SMK_NETLBL_LABELED)
+-		return;
++		return 0;
+ 
+ 	local_bh_disable();
+ 	bh_lock_sock_nested(sk);
+-	netlbl_sock_delattr(sk);
++	rc = netlbl_sock_delattr(sk);
+ 	bh_unlock_sock(sk);
+ 	local_bh_enable();
++	if (rc)
++		return rc;
+ 	ssp->smk_state = SMK_NETLBL_UNLABELED;
++	return 0;
+ }
+ 
+ /**
+@@ -2720,7 +2724,7 @@ static int smk_ipv4_check(struct sock *sk, struct sockaddr_in *sap)
+ 		 * Clear the socket netlabel if it's set.
+ 		 */
+ 		if (!rc)
+-			smack_netlbl_delete(sk);
++			rc = smack_netlbl_delete(sk);
+ 	}
+ 	rcu_read_unlock();
+ 
+@@ -4564,7 +4568,7 @@ static int smack_inet_conn_request(const struct sock *sk, struct sk_buff *skb,
+ 	if (hskp == NULL)
+ 		rc = netlbl_req_setattr(req, &ssp->smk_out->smk_netlabel);
+ 	else
+-		netlbl_req_delattr(req);
++		rc = netlbl_req_delattr(req);
+ 
+ 	return rc;
+ }
 -- 
 2.53.0
 
