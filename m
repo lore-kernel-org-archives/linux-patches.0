@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020836;
-	b=eBH2xUL3+bpHd99NraMOL/d37M2BtSRhlVpW5aBNN+TNz4pkXezwLBEoLEtuk2COVb5w
-	 +M0HzIA95rwV/pxJhDT2Pvp7zKPDpgcuzE1AnST8HE84pVuJSVQyqpchJ+p0dutbrCqlz
-	 GrjkQgYZ7AtMyvpOHuzZ6qA4GH1lLhxA6JXTv508pORgf+nXFh9uPA8mclawNbai9cGU9
-	 972TqhCmJLrUl7ioT+pPmzAYtRvALC/ZIKK/ppIHTbNGOEP+8C6Mkf6iBLc30dcyFgyPv
-	 6nGGulGteG+USV68GAYpc/cZKH6gov/FMkN2JUZswDuBQLGcMfqGeH7PC5UfIvz3rhg==
+	t=1795020839;
+	b=Tw+pfPiqsOwifO39gpej0oHQvvuGyOC8UhikPsBQTSRGqLI1crkwyMcj9mbFfD778SsS
+	 wXVMuO1L+o8ZZNBy5pPXQNIC4lACx8QMWbcQiE9cdz+hkdLS/jfExea9Y7RbBMFBlIBlU
+	 YSOH1UiO2CV4wUAnX3k2LM3ZAdbFBowuLAt3OR1yd8rnw5bI9OgFDKNgxRzJ6rJK7RTJ6
+	 55SgIt66afryV+4q9pIMS1A4kY32e1eAe+fn7l36AFWJO/UFaQtijd7Lx/cDDRj7Td3VD
+	 jvwl5oHZzwG/a87OULBq3VC4S4RQTCL0a2g203RcIZAiKymHOPD2p5thhEt18D7SrYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o4y9KUcexCzai5pxysNX1Wt2ZVKcqbWOt638JYSMAYs=;
-	b=RMNMM9zRcFPK3jHSUYXUzwbjG4JjGyKl96EOC30KqDKKY+t9R7YRC4WndSxaUHhz49mI
-	 IdjIt8kAB3QF+BSLCXkVSrXI3xfwvOrCtjFtiadftvu5h6k5CBSpBwhzIPobm2smCNrIH
-	 nAknRap2x06lvieFwLpeDBC4Te9W4rcF03hJy6mPy2JEc3fBSJk8mRChGCxhk4AemvE2a
-	 IbyPfMvggIAe9FCvvLLzSMjJsR4HM/i2c6yaZb1vVghmVA8/eUT4YvoEoqHIpvwZ8AMnB
-	 Kyt2dFxg4lzHkb0CVY/KUGJom6/DCsjafhkO83X+ZBMr6lzie9QUc+yNW97bncJFXWA==
+	bh=ezijBDmYNXrEHJ2GFsI7nbtrSvbKxQsWA1IfbGJabKg=;
+	b=IXKSVZVT8szZiwZ/PR4dmnTfbQFmWFPN/lyivRHMvUdSVRZNhfUqiNaQ62yt+xqKuvyj
+	 BTnCLAq1bMiwHG011zwAnNnkKlOVJ1HsejDd/fDKSBCRlhXwS4YM5jov+T3msTjBGMTsF
+	 HesI9XLKijcrzGPsqGuuMx+USJ2xqVobql7Hjq83n7Ch950oReT9TcUxkYkdhbsVorrqe
+	 5hffy06k5PFo28ztM+iLBQuIEKMQz16vVE1qoK87Sz7DwhZzqaSk5kkMMwa7UFhow5026
+	 lfXf3d+uc+AzC2rruJfL0pO4CSrbDdfDOd5Ncq9o1Z03MzG5Rn4JekWovKvWmYNq90Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkszT6VZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5pf4FOt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C660A2630;
-	Wed, 18 Nov 2026 16:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD5860A260E;
+	Wed, 18 Nov 2026 16:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkszT6VZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F351F000C4;
-	Wed, 18 Nov 2026 16:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5pf4FOt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69D11F000C4;
+	Wed, 18 Nov 2026 16:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020836;
-	bh=o4y9KUcexCzai5pxysNX1Wt2ZVKcqbWOt638JYSMAYs=;
+	s=korg; t=1795020839;
+	bh=ezijBDmYNXrEHJ2GFsI7nbtrSvbKxQsWA1IfbGJabKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkszT6VZU+Je6YvJzbsqUbybnnJn0KM1VHJ8TlLcKXePWbl9EGoxbmBqXUhwHsdks
-	 zj0wRb+1YpBNcVASKOopMkj6UUVjp+wn7EWS35uDZ9kaXezFsCNZgJdNjZKWNuFPvP
-	 7PtrccvKVU65gdtBvcJpHuaN32VZSHBsCMJLhyIE=
+	b=r5pf4FOt85uoTLTCe+AWFWJ/Yec+8CXsGzJDpvNphPbBUDnODHcLrOnJB9PCxEY0m
+	 G5C/zKBLnx5xSS6FowM3H2wh3WlYe3R39t7YXK1vySGvkJW8xMgqGf0RUCIQQrPGiY
+	 ERIct7KTN/0Lj/t1bVkxukaUjgNuxXOzQ6gGsJaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2091/2651] bpf: Dont leak the inode when token creation fails
-Date: Wed, 18 Nov 2026 15:55:31 +0100
-Message-ID: <20261118150401.289590711@linuxfoundation.org>
+Subject: [PATCH 7.3 2092/2651] bpf: Dont hand out a linked element as extra element
+Date: Wed, 18 Nov 2026 15:55:32 +0100
+Message-ID: <20261118150401.326413580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,49 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit f52b699c88634d0161c97247e0f791a840eb868d ]
+[ Upstream commit ccb88db8dac8fabde58656d5d4a33711e89c480a ]
 
-bpf_token_create() allocates a bpffs inode and hands it to
-alloc_file_pseudo().  The inode reference only moves to the new file when
-that call succeeds: alloc_file_pseudo() leaves the caller's reference alone
-on failure, and FD_PREPARE() does not even evaluate the file expression
-when it cannot get a descriptor.
+When htab_map_update_elem() replaces an element of a preallocated map,
+alloc_htab_elem() takes the spare element of this cpu and puts the old
+element into the per-cpu slot right away, long before the old element is
+unlinked from its bucket.  The bucket lock disables interrupts, but it
+does not keep out an NMI, or a tracing program on the return of
+alloc_htab_elem().  bpf_prog_active only helps if both programs are
+kprobe, tracepoint or perf_event programs.  A program that updates an
+existing key in another bucket of the same map gets to use the slot:
 
-Before the conversion to FD_PREPARE() the error path did iput(inode).  The
-conversion dropped it, so each BPF_TOKEN_CREATE that fails with -EMFILE,
--ENFILE or -ENOMEM at this point leaks an inode.  A task that is allowed to
-create tokens can hit this at will by lowering RLIMIT_NOFILE, and the
-leaked inodes make umount of that bpffs instance complain about busy
-inodes.
+  htab_map_update_elem(k1)              tc, xdp, fentry, raw_tp, ...
+    alloc_htab_elem()
+      l_new = *pl_new
+      *pl_new = l_old                   still linked in bucket 1
+      <NMI>
+        htab_map_update_elem(k2)        perf_event program
+          l_new = *pl_new               the l_old of the outer update
+          hlist_nulls_add_head_rcu(l_new, bucket 2)
+          hlist_nulls_del_rcu(k2's old element)
+      </NMI>
+    hlist_nulls_add_head_rcu(l_new, bucket 1)
+    hlist_nulls_del_rcu(l_old)
 
-Put the inode again if no file was created.
+If l_old was the first element of bucket 1, the outer add points its pprev
+at l_new, and the delete takes it out of bucket 1 only.  l_new->next now
+leads into bucket 2, where l_old stays with a poisoned pprev, on which a
+delete of k2 crashes.  If it was not the first, the delete takes it out of
+bucket 2: k2 is gone from the map, and the chain of bucket 1 still contains
+l_old, whose next pointer leads into bucket 2.
 
-Fixes: 981bec8f698b ("bpf: convert bpf_token_create() to FD_PREPARE()")
+Either way a walk of bucket 1 ends on the nulls value of bucket 2.
+lookup_nulls_elem_raw() restarts whenever that happens, so every lookup in
+bucket 1 which does not find its key spins forever:
+
+  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   __htab_map_lookup_elem+0x354/0x4d0
+
+  BUG: KASAN: wild-memory-access in htab_map_delete_elem+0x30c/0x670
+  Write of size 8 at addr dead000000000122 by task extra/102
+
+An NMI between the load and the store of the slot makes both updates use
+the same element, with much the same result.
+
+Empty the slot when the spare element is taken, in a way that is atomic
+on this cpu, and put the old element in only after it has been unlinked
+and its timers and the like have been cancelled.  A nested update that
+finds the slot empty, which is the case that corrupted the map, fails with
+-EBUSY.
+
+Fixes: 8c290e60fa2a ("bpf: fix hashmap extra_elems logic")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-4-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-5-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/token.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/bpf/hashtab.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/token.c b/kernel/bpf/token.c
-index e85a179523f02..19660ef95ddbd 100644
---- a/kernel/bpf/token.c
-+++ b/kernel/bpf/token.c
-@@ -169,8 +169,11 @@ int bpf_token_create(union bpf_attr *attr)
- 	FD_PREPARE(fdf, O_CLOEXEC,
- 		   alloc_file_pseudo(inode, path.mnt, BPF_TOKEN_INODE_NAME,
- 				     O_RDWR, &bpf_token_fops));
--	if (fdf.err)
-+	if (fdf.err) {
-+		/* no file took over the inode reference */
-+		iput(inode);
- 		return fdf.err;
-+	}
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 13a2356c84cf9..02523a6f0bdc5 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1107,11 +1107,17 @@ static struct htab_elem *alloc_htab_elem(struct bpf_htab *htab, void *key,
+ 	if (prealloc) {
+ 		if (old_elem) {
+ 			/* if we're updating the existing element,
+-			 * use per-cpu extra elems to avoid freelist_pop/push
++			 * use per-cpu extra elems to avoid freelist_pop/push.
++			 * The caller puts old_elem into the slot once it is
++			 * unlinked. Until then the slot is empty for an NMI
++			 * or a kprobe that updates this map on this cpu.
+ 			 */
+ 			pl_new = this_cpu_ptr(htab->extra_elems);
+-			l_new = *pl_new;
+-			*pl_new = old_elem;
++			l_new = READ_ONCE(*pl_new);
++			do {
++				if (!l_new)
++					return ERR_PTR(-EBUSY);
++			} while (!try_cmpxchg_local(pl_new, &l_new, NULL));
+ 		} else {
+ 			struct pcpu_freelist_node *l;
  
- 	token = kzalloc_obj(*token, GFP_USER);
- 	if (!token)
+@@ -1277,11 +1283,15 @@ static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	if (l_old) {
+ 		hlist_nulls_del_rcu(&l_old->hash_node);
+ 
+-		/* l_old has already been stashed in htab->extra_elems, cancel
+-		 * its reusable special fields before it is available for reuse.
++		/*
++		 * l_old replaces the extra element that alloc_htab_elem() took.
++		 * Cancel its reusable special fields first: once it is in the
++		 * slot, the next update on this cpu can reuse it.
+ 		 */
+-		if (htab_is_prealloc(htab))
++		if (htab_is_prealloc(htab)) {
+ 			check_and_cancel_fields(htab, l_old);
++			WRITE_ONCE(*this_cpu_ptr(htab->extra_elems), l_old);
++		}
+ 	}
+ 	htab_unlock_bucket(b, flags);
+ 	if (l_old && !htab_is_prealloc(htab))
 -- 
 2.53.0
 
