@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026860;
-	b=XVYYmrwn2OEW3/ewJPFFJLLtedr4wU6MWeMclDWEyMokPYegk1/05n2iha+MWNN/73Jx
-	 ZG6RePpynONsXJBvubozpqEPgyy+21EY/Qcm0tL1RDZrZHZKLnp6+iIqexYd0GI9Ki2Kd
-	 tadLB2hQsNMdAzK8Ih2PUqHp9KiggD8p4syl7kIPFc+aaiXzwoQ4/r589SaFP3YtWJVJR
-	 bhSRnwTs55CXtKw3leTNr1SJYTiYHv+A5upQlPNO1ouiOmsME53ry+o4PxxueU103zomk
-	 rbYsWEgHjeA8sg4LiroEG92ODMvaX4KPVY3MzwdqY+rDrI/5hLom5SfZABuO5v/JIAw==
+	t=1795026863;
+	b=3up/4h2cSubsbhr04qW4XzEJXbH0DJAaP0EruYvNNgvKx7AshvULidsbLwHyTRl3scDV
+	 j5opnfz1nrhoT/WUoC1uyOal7Q5TMBICpQInpe8LSFevzbvsvDs+pa2F6jRB/XjPaWPj/
+	 X3S6C11wqsL53GkUAPT4E7gElDJj6KM/J1SvIsrlhLI1IosaMygLtvr32JZ3ozteDD/kV
+	 3ysyQFVkwkd7U22iAtPfo1sy2WSLrAwhvXcW7VL1f9L9HMQrqUzFtEs0qy3NcRNAG15jP
+	 r8E05yWEZDAI+EQiUwmtXdgjVpvgeWVsP7NcItjBcz7l6esyiDhSwNc2UYVtEtBv2ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ShsQTXtEAk5/RNxDBo2voWynMg6Vi6VHsDh+QV3oHmk=;
-	b=mAPEiGh1QqqE2yBcvXcgqn091Ax7fHiVpdORBd0MTitUucJMKvw372cIFcB2Ktt8YfXo
-	 Xay2tv2vv5aOyScQbTUhSvQ7jgwID7np0D6tqLMmjXeIypDzBlTQ4zHR2PtFAo5mbJJQB
-	 xUWdaa9F5KGHInTgA90C679U6uCl9UG+dIq53WgAz+UWk6ueEgfYBmPuTUYhepsuB3oe3
-	 FZndQbhqpvCIQj/Yk+k4upH8dfluSTDQORio3QX9srmI0XDEzxwrISe8PsRw6ZnQGg4eW
-	 9J2QIVW0oO8sJok0ip5bxwEcC9SjvKEzNNfrh8CC87aKlJnBLETQmvyJARiMVBro7Ag==
+	bh=c0QOOz8WF9qvZ4wxeQxMWorBpsu3FmDmAB9KA/QgaMs=;
+	b=wsalIHQeDH5FoJOgi5nVXXpXwiiQPxwS651ydCbCPVix64mZCiXffoIQzj530BR7GcPe
+	 ycjdCKrYg+eiR+5fyt1PfUMfSZvIxActaSI0FjrZrbOH/gSJuzQGu2y+8ClfOvpA/3Ef+
+	 0+S4rkXWpJPP1m8M6dF4ozXE6L2sjCLcd/4h19WvsRtxonQiDkKsNkIYFznJwZf+XElZe
+	 5tkhU4P48avR7yyk1CJcYsOILylnd6mwRlmvpfTviWIpM6ciTS3iICWGKlGN9RtPvBKT8
+	 /j+p5Jw6NpUhbmQsZEgBRd2BjwrVSfOhIj8f6V7a+whXRbj2BNiv4x3FzsYQoWmMaFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgvU0Fbw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAiUfWqY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867EB606A31C;
-	Wed, 18 Nov 2026 18:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7EF606A330;
+	Wed, 18 Nov 2026 18:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgvU0Fbw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51E91F000C4;
-	Wed, 18 Nov 2026 18:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAiUfWqY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2201F000C5;
+	Wed, 18 Nov 2026 18:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026860;
-	bh=ShsQTXtEAk5/RNxDBo2voWynMg6Vi6VHsDh+QV3oHmk=;
+	s=korg; t=1795026863;
+	bh=c0QOOz8WF9qvZ4wxeQxMWorBpsu3FmDmAB9KA/QgaMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YgvU0FbwoM1GfP98AkaIo1DkCoVkXQYTMhvkBXfSSyYT3oNTUmQH7U62XruU43Krx
-	 3y/FxLxiDVaDpJ/VOItDgCw3e2cY+NmTy3kBMs8+v3btNevYE9tyD9nyLSXyKKKAMm
-	 8y1frzpSSTcYubu4g4rKrS6i9xxZDxnoPMUxWvhY=
+	b=QAiUfWqYx/hdv8vfPX9WAA5aJMk3BHubZ15ozoonAI0FGpO9gyBd4rYI5588g+Rj+
+	 CMelDNI41C9Sr5CPlnaG1IVB1CSOgS0sAEhb14TtUEP9K46ocDiWZvVntLPrRk3whG
+	 W248rMfuM6Jzi8aW2YEt7ON1V+pMLmAx/YT9TSGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
 	Thomas Gleixner <tglx@kernel.org>,
-	Anup Patel <anup@brainfault.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1584/2151] irqchip/riscv-imsic: Reject overlapping group index fields
-Date: Wed, 18 Nov 2026 15:55:19 +0100
-Message-ID: <20261118150219.585715908@linuxfoundation.org>
+Subject: [PATCH 6.18 1585/2151] irqchip/gic-v3-its: Dont free a vPE table shared with another ITS
+Date: Wed, 18 Nov 2026 15:55:20 +0100
+Message-ID: <20261118150219.622465140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,54 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 8caa8fcec8db5358437b9b7ca456bc3093d2a4d0 ]
+[ Upstream commit 32e056cc1d1582951f981113ca8b98914f29c32a ]
 
-The IMSIC address layout places the group index above the page offset,
-guest index and HART index. imsic_parse_fwnode() checks the individual
-field widths and the upper end of the group field, but does not check
-that its lower end is above the other fields.
+On GICv4.1, its_alloc_tables() copies a sibling's vPE table baser
+rather than allocating one, but its_free_tables() frees it like the
+rest. A probe failure on the copying ITS then frees pages the enabled
+sibling still points GITS_BASER2 at, and the kernel comes up running
+on that sibling.
 
-Reject a nonzero group field whose shift overlaps the lower fields.
-Otherwise a firmware-supplied layout can assign the same address bit to
-different indices when MSI target addresses are constructed.
+Mark a shared table so its_free_tables() skips it.
 
-Keep the existing upper-bound check unchanged. The new lower-bound
-check applies only when group index bits are present.
-
-The issue was found by our static-analysis tool.
-
-Fixes: 21a8f8a0eb35 ("irqchip: Add RISC-V incoming MSI controller early driver")
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Fixes: 5e5168461c22c ("irqchip/gic-v4.1: VPE table (aka GICR_VPROPBASER) allocation")
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: gpt 5
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://patch.msgid.link/caplitmus-rv.v2.imsic.f2c0e5bdc627451c83deb0cf7eb8834a@163.com
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260925085000.753400-2-fuad.tabba@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-imsic-state.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/irqchip/irq-gic-v3-its.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-riscv-imsic-state.c b/drivers/irqchip/irq-riscv-imsic-state.c
-index e42be461ae670..120cbde971ab7 100644
---- a/drivers/irqchip/irq-riscv-imsic-state.c
-+++ b/drivers/irqchip/irq-riscv-imsic-state.c
-@@ -750,6 +750,14 @@ static int __init imsic_parse_fwnode(struct fwnode_handle *fwnode,
- 		return -EINVAL;
- 	}
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 4bd1623b9c49a..b8384ceebb270 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -87,6 +87,8 @@ struct its_baser {
+ 	u64		val;
+ 	u32		order;
+ 	u32		psz;
++	/* Inherited from a sibling ITS, not freed here */
++	bool		shared;
+ };
  
-+	/* Group index bits must not overlap guest and HART index bits. */
-+	i = IMSIC_MMIO_PAGE_SHIFT + global->guest_index_bits +
-+	    global->hart_index_bits;
-+	if (global->group_index_bits && global->group_index_shift < i) {
-+		pr_err("%pfwP: group index shift too small\n", fwnode);
-+		return -EINVAL;
-+	}
-+
- 	/* Sanity check group index shift */
- 	i = global->group_index_bits + global->group_index_shift - 1;
- 	if (i >= BITS_PER_LONG) {
+ struct its_device;
+@@ -2608,7 +2610,8 @@ static void its_free_tables(struct its_node *its)
+ 
+ 	for (i = 0; i < GITS_BASER_NR_REGS; i++) {
+ 		if (its->tables[i].base) {
+-			its_free_pages(its->tables[i].base, its->tables[i].order);
++			if (!its->tables[i].shared)
++				its_free_pages(its->tables[i].base, its->tables[i].order);
+ 			its->tables[i].base = NULL;
+ 		}
+ 	}
+@@ -2707,6 +2710,7 @@ static int its_alloc_tables(struct its_node *its)
+ 				WARN_ON(i != 2);
+ 				if ((sibling = find_sibling_its(its))) {
+ 					*baser = sibling->tables[2];
++					baser->shared = true;
+ 					its_write_baser(its, baser, baser->val);
+ 					continue;
+ 				}
 -- 
 2.53.0
 
