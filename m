@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020906;
-	b=NcgW3XcCyYaRFaFJeEx4gLyV4iY4IdjAboFrQ5GKI3cb5Ox6K3A5qLiIEnMg7pW1zpHr
-	 GdASwPAIwJNFkg2Xk+EJIYttRHaEHzK3vZq2JIcbDKTRcNFZ3gi5zODf+jPd9PHMYSDZF
-	 e2aASkXCETmUc0at2w8YZHOpJRbRIDqQUM18/LE6/TcnOymMvr8CKdhNzXjDu7vY3IjSy
-	 /i5Or2lC2apEAjaguVZmyOsgkwVw0SgrbLX53VtiKjOYw+il05Ofbjm9VxLhkS2Ds+KlV
-	 ba+Gmx40wZgamWQjBtZohm4c5HdKv/J/Bl2Vy/PKZbNdqq3m6L3YVAaEe+F01Spf0yw==
+	t=1795020909;
+	b=NYSmcwIydJSgONhl8f3oD2+kD6C4Yy9pxZl0R4iAAH1clLzfd8W2uhqbkGjgaK1+6i23
+	 4fAF/hffMETaUMVKOWpa0DnDaIW9eutR62ROrXRoLSilbZsNFJ/1FIJRCDs1+hnYuAFo/
+	 lNZoyu67YfsKAl6BgquShalEPLYzOpu7iP4As+s2EJUFYMrs+EXMBWbNzGOJN0mPW9rVH
+	 KqAi2QB7G5KBY4fzsVweWTdt5ydu38giM5qcAJi0uMu9T8U7hBTBBNfnyJTzVnfAF0WMT
+	 zOAaQ+L7YFyCXq120Hb4rFy6KZpvnFkm3XLAzO7erroA+YWPGRi8UjdFl05NPkpc7gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oZGhUNs+dGCsCXxSVDHl9ghD3D2INw7jryazB/Jf+j8=;
-	b=dGT+XNu+/JlXENgSjTpxvHuHHbojbbeLiKPRY1wGV/xu1u0gnBakbLemRLaemOCSRG+L
-	 omyOmWthhdnEEsU+uXWsLZJeMQXQnLz2j5fuHjtz3/K9ECIVSrDnVAWyl3yoZlt+f2FGL
-	 JYgt9gzG0XE7jM1+egQtyhewzWjyWIAQ5CqVv2yusdIlUvApqdL/Oh/dYG8I/wyk8qCzo
-	 s5+TMEHMdlM7TaVR9Oz+htiDhZCNCMPkkbh3S5C6iugT9pwH5WSnMot6IZ74dQQvi4eaU
-	 0aGUHP0Xo9V8mg6dW4aLGfB+Pr7/H+4bZKuLa099cOyKYBNnXggfdCeYJB1hS1toT7A==
+	bh=ss8G/YMBPzsW1nc4JWtLvqOhnS0DZvXxX0JpiRvaC4A=;
+	b=oji2yrvAiIN5+BrItp8Gq8CA0ka3BmICqHVhaTtExRTo6PSeYhKjOW6VSitzJlQjajiG
+	 ugtnu11Sio0h2ZBC1GzcsgNSAh2fpTMtxhbmKefG9mTVWRuJufJB8U2LtQjW9zG7ZfTuS
+	 fmMQitDSmfNDqfTo72kvI0uTFcDaqB3RiusYK1luvWNE3uzd2knPtQo0cNp0/UmC3KCci
+	 oT94lTdXGG2qfJ29U5pWEf5BANRR+fQVKpGZo6sQj3O++nJTH7HnHdabhnKDxGj9iwPkg
+	 GXi3HPpNEBLC3QTMyPhznXhTGgzKQudzOYtyqlVrEjuASwZcLrUK9DnafkuToYsG12g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=taTwmf7f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D7gETcPr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729A0606B584;
-	Wed, 18 Nov 2026 16:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4676606A335;
+	Wed, 18 Nov 2026 16:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=taTwmf7f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A76E1F000C4;
-	Wed, 18 Nov 2026 16:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D7gETcPr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424201F000C4;
+	Wed, 18 Nov 2026 16:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020906;
-	bh=oZGhUNs+dGCsCXxSVDHl9ghD3D2INw7jryazB/Jf+j8=;
+	s=korg; t=1795020908;
+	bh=ss8G/YMBPzsW1nc4JWtLvqOhnS0DZvXxX0JpiRvaC4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=taTwmf7f5oiRjgOnizaYXE1dJirn+ZzI9v3akdQVPlJ+1cqjimGherb5n8g/Gytrc
-	 f0AOCep0V+IildcC8g30/QkTzc+s0PuznRnukGGjQKwM4Lu2ccQ2T37yDGNOw/lRsb
-	 kLehsZFdKHt2bJJLg8CXcfBDvzb/uH+kCrnxf8Bo=
+	b=D7gETcPrCjHvLRtA9ftFpO3BxK55VU0gn/QxYCMMxzO1J92ssovaeoyPHeBgL2g7r
+	 ggnt1FaSKnvkY1XPEl6CJ9N95NVFu+8s1eW2TvRUjoceH6Wqr01ldOj3RVz1/9vEIE
+	 PGATClr6DtkrqfvhnSS4BCjQpp1ow0Gy6XaFn4ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
 	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2118/2651] netfilter: conntrack: fix unlikely UaF in gc worker
-Date: Wed, 18 Nov 2026 15:55:58 +0100
-Message-ID: <20261118150402.183518482@linuxfoundation.org>
+Subject: [PATCH 7.3 2119/2651] selftests: netfilter: fix return value in zone subtest
+Date: Wed, 18 Nov 2026 15:55:59 +0100
+Message-ID: <20261118150402.213827962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,51 +71,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9836164821a46af07428bb2a5e14137bf0c7bd6e ]
+[ Upstream commit a20a01ae89813ef493dc416d69f2b2ad17afb54c ]
 
-When early-drop scan is enabled, gc_worker() reads tmp->ct_net, resolves
-cnet with nf_ct_pernet(), and reads cnet->count with RCU read lock held but
-before acquiring a reference to tmp.
+zone subtest prints FAIL, but did not set 'ret=1', so kselftest
+framework reports success.
 
-Its unlikely but possible that the worker gets preempted before reading
-cnet->count while nf_conntrack_cleanup_net_list manages to unlink all
-conntracks and returns in the mean time.
-This allows for the pernet memory to get free'd.
+While at it, also fail when "nft -f" returns an error.
 
-On resume, use after free would occur when the worker reads cnet->count.
+Noticed thanks to a (broken) local patch that should have caused this
+selftest (resp. the kselftest framework) to report a failure.
 
-This can be solved either via another synchronize_rcu() in
-nf_conntrack_cleanup_net_list or via cheaper flush_work().  If work
-wasn't running no race can happen as next call cannot observe
-already-unlinked conntrack objects.
-
-This is an LLM finding with no reproducer, but it appears to be correct.
-
-Fixes: c6dd940b1f74 ("netfilter: allow early drop of assured conntracks")
-Reported-by: Vega <vega@nebusec.ai>
+Fixes: 33b8aad21ac1 ("selftests: netfilter: add a vrf+conntrack testcase")
 Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../selftests/net/netfilter/conntrack_vrf.sh  | 25 ++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index d0d9e5ea84a09..6cba999e80561 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -2507,6 +2507,11 @@ void nf_conntrack_cleanup_net_list(struct list_head *net_exit_list)
- 		goto i_see_dead_people;
+diff --git a/tools/testing/selftests/net/netfilter/conntrack_vrf.sh b/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
+index 207b79932d91a..2dbfabaadf4bd 100755
+--- a/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
++++ b/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
+@@ -84,7 +84,7 @@ busywait $BUSYWAIT_TIMEOUT listener_ready "$ns1"
+ # as decided by the first iteration of the ruleset.
+ test_ct_zone_in()
+ {
+-ip netns exec "$ns0" nft -f - <<EOF
++if ! ip netns exec "$ns0" nft -f - <<EOF
+ table testct {
+ 	chain rawpre {
+ 		type filter hook prerouting priority raw;
+@@ -105,6 +105,12 @@ table testct {
  	}
- 
-+	/* must wait for current scan loop, worker also looks at
-+	 * struct nf_conntrack_net, which is about to be free'd.
-+	 */
-+	flush_work(&conntrack_gc_work.dwork.work);
+ }
+ EOF
++	then
++		echo "FAIL: cannot load testct nft ruleset"
++		ret=1
++		return
++	fi
 +
- 	list_for_each_entry(net, net_exit_list, exit_list) {
- 		warn_on_keymap_list_leak(net);
- 		nf_conntrack_ecache_pernet_fini(net);
+ 	ip netns exec "$ns1" ping -W 1 -c 1 -I veth0 "$IP0" > /dev/null
+ 
+ 	# should be in zone 1, not zone 2
+@@ -113,6 +119,7 @@ EOF
+ 		echo "PASS: entry found in conntrack zone 1"
+ 	else
+ 		echo "FAIL: entry not found in conntrack zone 1"
++		ret=1
+ 		count=$(ip netns exec "$ns0" conntrack -L -s $IP1 -d $IP0 -p icmp --zone 2 2> /dev/null | wc -l)
+ 		if [ "$count" -eq 1 ]; then
+ 			echo "FAIL: entry found in zone 2 instead"
+@@ -137,7 +144,7 @@ test_masquerade_vrf()
+ 
+ 	ip netns exec "$ns0" conntrack -F 2>/dev/null
+ 
+-ip netns exec "$ns0" nft -f - <<EOF
++if ! ip netns exec "$ns0" nft -f - <<EOF
+ flush ruleset
+ table ip nat {
+ 	chain rawout {
+@@ -158,6 +165,12 @@ table ip nat {
+ 	}
+ }
+ EOF
++	then
++		echo "FAIL: cannot load ip nat nft ruleset"
++		ret=1
++		return
++	fi
++
+ 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
+ 		echo "FAIL: connect failure with masquerade + sport rewrite on vrf device"
+ 		ret=1
+@@ -184,7 +197,7 @@ EOF
+ test_masquerade_veth()
+ {
+ 	ip netns exec "$ns0" conntrack -F 2>/dev/null
+-ip netns exec "$ns0" nft -f - <<EOF
++if ! ip netns exec "$ns0" nft -f - <<EOF
+ flush ruleset
+ table ip nat {
+ 	chain postrouting {
+@@ -193,6 +206,12 @@ table ip nat {
+ 	}
+ }
+ EOF
++	then
++		echo "FAIL: cannot load ip nat postrouting ruleset"
++		ret=1
++		return
++	fi
++
+ 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
+ 		echo "FAIL: connect failure with masquerade + sport rewrite on veth device"
+ 		ret=1
 -- 
 2.53.0
 
