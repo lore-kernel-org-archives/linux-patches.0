@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053941;
-	b=ir1hDVINpy+Z5LVwFQ+8toQRtWQJXYUjr1ErZA04YRdTpNJSfhvyGJWZrc0C3lH8hTkO
-	 WYaan7rVeTH4g8EO1NXvratCQIV7LIwQRDcq6UdSyyF/gElqZeR7HqHlQOhSahO+UG7H+
-	 Z7Z5rdks9fxk8aTvr258CjS/sC5VX43HdaooSahDlAZS9LHGx3Aq10NRpzcFJhYFLpV3E
-	 xvkVQk6GpYE4P9pFpaKdcZ7EVllf7NHYjpbzheFEMJBoiXtQluOhxtB37JwJ1qjKBgT5v
-	 z28tucvxwf5TddIoMlxkwSD6eSrhM7dxwApkBf6xKoPUMCE+wTRwCfENPDLugmDJNcQ==
+	t=1795053944;
+	b=QMMr8jOBke0+5T1WIWt36SyB5obi8Qe+aP+0PykTBRSU3v2SyUcuitG2CuBU7BbVq156
+	 tumhaYwTjYPAMI4usoLGTuuJrOq+nFc89tAG3I7hglcr9bzagQFZ64G4WtBwU6IGCL44z
+	 r0hEMy7ZOjliP2hhvtUyoB8Qoi1mlFKDzNPUdgUn1G1ny94WNAO+xLy+YrK/GHYtNMmsm
+	 5AxVZrLQ0nzOYU/BfuSHfo6URtowN1i5Iurog0wtyvFvOGuln+JPOqSann5VRv4Ul1WzI
+	 hZObgy1x27vUFB25zloUqciIH7WGUXzF4DxzDBqvPyuasDpSeAiR67Ivt8X6GDN03Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0R6UtCpkIQ59kVGugFRJtiaW3VE+njqQyOArVhRTEnU=;
-	b=zf9piuiq+DpA93yjKku1OvCAi3PRDqabyiNZqB4m+Yu70getA1Lt103ftZXR84wdN1le
-	 KyTjH/rRCNJ2cSPuqylWQYvwjQu7CngL0kkj/EwAgbmZGmLmXzlPg5cOszVRv265kKn/O
-	 8OryCmZv2RLYGal5pz2IOoxa8XRTN7FQDcXnHwzth73NzDq3Lo3zHbz5tIFE/3Ete86BW
-	 IbDjq5IMD9V6qdjkVDXGg/0dBUPEnPcP+ogrnvST8tN1tjSQC382lqU4NWhmint45fH7B
-	 teB6ZXDT+rak3zmmKACjvhvjBVSJV0tB6SivCrH4RGf5vRPDCPxbbiu7+wJSLQ1WazA==
+	bh=x9xAOLfV9Pq5YsC0LckyXVXMyeELMP/smmh/SxNlRFU=;
+	b=d9tySmbX0mHEYdyu7siV6hZrtblSvpwCaLnf/P8MxX2Z9BT+rvhGxw2tGAEpbnZImgdx
+	 uJhCy/AcdKdZ7svMC+Cx/NB7nsZr1QD1RCjRsnACAv+iaBFBj0QbCEgCadKx8kcg0FCYg
+	 pa9RYR0U4QLARkBDmbD9Vp8+gnQDyIRIrQkwPRgUDsnJJ9A+dXEza4kSsuD3dE6JvhwKS
+	 xBK/oy0RCS29x0kKQJ53ugvM4jKYPXk/OD1hsKUMjUULafAHXH5JY3ObCKgaakhdz6rcz
+	 q57nQSeLPpTf3RpRUjdeJPM+cBv6pnqmDhAdndPR4W0RAD0cQX14QMuSRQtkShkC/ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UVXrezd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HwoS/1zD";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D58E606A325;
-	Thu, 19 Nov 2026 02:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FE0606A325;
+	Thu, 19 Nov 2026 02:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UVXrezd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F921F000C5;
-	Thu, 19 Nov 2026 02:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HwoS/1zD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494691F000C4;
+	Thu, 19 Nov 2026 02:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053941;
-	bh=0R6UtCpkIQ59kVGugFRJtiaW3VE+njqQyOArVhRTEnU=;
+	s=korg; t=1795053943;
+	bh=x9xAOLfV9Pq5YsC0LckyXVXMyeELMP/smmh/SxNlRFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UVXrezdOcantzzivFuI13ocBGvHbGGhzVnQOBvUzni/x0NjW+846JK6J0Mupq/Sh
-	 Ldr0R+5a8HpGRxB7SJZitkAkNEOdaOG/2fLuq9H4IEYyF6ee3dhjx7Jy8qYSZ9qmXq
-	 6UkNv+6cznPUuBHRDCsoENrZ5udPSA4H6w+HGng4=
+	b=HwoS/1zD/+tHj6R2z6Az4x6Tn72PXzskVPf013qlzsNklLexDs7UeEiyuugj4BmDH
+	 2N0lUxuTiK3O0ypUdgdrW5y1f/6nIRLUo7JQynjGSWcGrF482U5eUcqzEfreEQXs9G
+	 T8CD+Ky8s12N6l5Nyuzn1B8nDs7pwpXRRxFsPuQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1097/2214] ALSA: hda/hdmi: clamp num_cvts against cvt_nids[] in hdmi_read_pin_conn
-Date: Wed, 18 Nov 2026 15:46:13 +0100
-Message-ID: <20261118150056.087757203@linuxfoundation.org>
+Subject: [PATCH 5.15 1098/2214] fbcon: Retry rotated font allocation after failure
+Date: Wed, 18 Nov 2026 15:46:14 +0100
+Message-ID: <20261118150056.126112145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,53 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit 6cf3ab38b0d53d41f00fe594b2986849bdf994ae ]
+[ Upstream commit 7935db1a4a0f83a63590a222500e5016e2f6c85e ]
 
-hdmi_add_cvt() stores each converter's NID into the fixed-size
-spec->cvt_nids[] array (used only by the Intel Haswell pin-connection
-fixup), but only when spec->num_cvts is still within
-ARRAY_SIZE(cvt_nids); the num_cvts counter itself is incremented
-unconditionally regardless of whether the store happened. A codec
-that reports more converters than cvt_nids[] can hold therefore ends
-up with num_cvts > ARRAY_SIZE(cvt_nids).
+fbcon_rotate_font() records the font, its geometry and the rotation in
+par->rotated before calling font_data_rotate(). If the allocation
+fails, the error path clears par->rotated.buf, but the recorded key
+already looks up to date, so the next call takes the early-out and
+never retries. The rotated putcs/cursor ops keep returning early on
+the NULL buffer, and the console stays blank even after memory is
+available again.
 
-hdmi_read_pin_conn(), on the intel_hsw_fixup path, copies num_cvts
-elements from cvt_nids[] with memcpy(), so once num_cvts exceeds the
-array size this reads past cvt_nids[] and writes the resulting
-garbage NIDs into per_pin->mux_nids[].
+Also test par->rotated.buf in the early-out, so a failed allocation
+is retried on the next call: at the next fbcon_switch(),
+fbcon_modechanged() or font change.
 
-Clamp the copy length to the actual size of cvt_nids[] instead of
-trusting num_cvts, which is also used unbounded as the size of the
-separate, dynamically-sized spec->cvts array and must not be
-truncated at the source.
-
-Fixes: bce0d2a80e42 ("ALSA: hda - Allow unlimited pins and converters in patch_hdmi.c")
+Fixes: e4ef723d8975 ("fbcon: Avoid OOB font access if console rotation fails")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261008085122.9442-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: adjusted the target file to match the older HDMI codec source layout ]
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: Adapted the cached buffer check from par->rotated.buf to par->fontbuffer in the existing font cache condition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c | 3 ++-
+ drivers/video/fbdev/core/fbcon_rotate.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 51a22ed7325dc..9e3366d115a18 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1342,7 +1342,8 @@ static int hdmi_read_pin_conn(struct hda_codec *codec, int pin_idx)
- 	snd_hda_set_dev_select(codec, pin_nid, dev_id);
+diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
+index 66b35613368e1..f7e03c17f94be 100644
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -27,7 +27,8 @@ static int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
+ 	u8 *dst;
  
- 	if (spec->intel_hsw_fixup) {
--		conns = spec->num_cvts;
-+		/* spec->cvt_nids[] only has ARRAY_SIZE(spec->cvt_nids) slots */
-+		conns = min_t(int, spec->num_cvts, ARRAY_SIZE(spec->cvt_nids));
- 		memcpy(per_pin->mux_nids, spec->cvt_nids,
- 		       sizeof(hda_nid_t) * conns);
- 	} else {
+ 	if (vc->vc_font.data == par->fontdata &&
+-	    par->p->con_rotate == par->cur_rotate)
++	    par->p->con_rotate == par->cur_rotate &&
++	    par->fontbuffer)
+ 		goto finished;
+ 
+ 	src = par->fontdata = vc->vc_font.data;
 -- 
 2.53.0
 
