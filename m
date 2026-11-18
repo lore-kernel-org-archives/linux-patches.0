@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015704;
-	b=ihC0kwDmkcBru7Bg206EiY9t8GMMe7NB9yemqTT3vpNTsC0bgGl2w98rcxCuc8IlUU6x
-	 CfCQ9+N75CqYFKpQKwO53GXwFx7JPs3wq3xZ6TaZ8o9Wl0ktzgDRCSFiBz3RYLoo/Y4DM
-	 yPj6Srwth+bgMTVveX65iH4LTE7Ix6Am8/ZQVHVfAlFCwgze0/gCoA6AOALfuk1Fw+Jqu
-	 zJBCaPuqkOs1HOKLIOFj3lqGTxV3cFx4uI2FYamCKyC7TwDaRLCuLywT0bFUdRtKH0uZN
-	 9Yu23OdQNSj/q0s0CWFlW/xSfMuMnLsjlGmVeBFdI5eqjQRxvnKC9LbKGTyla9IzpDQ==
+	t=1795015707;
+	b=o+WMgv8qfFLKwFWExTIa94K5WoAMeL4ByOBgkeJaFOWBaRXGDlLtO6NkqJHme9neDVdA
+	 YswVmyc46EE/qwtubPvL+jtSHXaT/AltIzQN1PkH00fqe7dNpNqsKwTcLtRB317ko/fxF
+	 h78O6veUKepL1/g4UCDeN/QO8MihNY9LYJFTY4qgB+nOs19unrUR3Q0G4dP2RDqtARCJA
+	 dvLgwGQlmgEWAYxq/OTKz8byU7XhOUe91UZ+jwN6GCFLTo/FqJ77LeXYjcOKEO0oxxdek
+	 NO8nvY7NbiQrqnEbouVH1aq8Ai+hTnIE7wegw3kogWI4gG/QyaBBvxjKx3Nun26keCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=djsOvkYN/jmg1h+BcAIEoqyZFIhtsQyd5IPgax5We9k=;
-	b=oen6jc6z6HVVuga2jGVzjz8wHT0fqRtDej+VxKUuFf5lamyV3Y1dOtrf2N4wiVEQfyJA
-	 E+NtG2gZSwNq4CgAreamXIiVon8AQL3bcI0eDmUh4/a/LQvIlCaig5YehpP74KMYbNPjf
-	 25MQTYzzmA12HRVTe3SAChTp/xYfI7IpBM7o2SJnxJ4De/t/BkU0ppMtTo2sOgVZattZu
-	 hHKstUO2h8++wBc55R9nmidO17MAAayZuNPJ5puRV5uUI4JE8J2CoaydesELck0e5RWWO
-	 gaRDbL6lV6SNrQhnHFb5Wg80qQimEtVcKlqxH4PAKXYTVW8hjPSkdQv3yo61LoYQN7Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cJhloYUQos28C+93UiGdpHO3aisdABoWgYKoqMPK81Q=;
+	b=mqXgxyO2YGpRbrsfAiJzFV/zM3zXAkraQR5QF5L3bkyDhRp1y4hrVY/skrZWjGqC/nll
+	 WywL/T5MKAQi7oj2JWPeYFfws56uu69M+LDW1a2WZCIP13nYvW5RItDNt0hRBEOt7jhgb
+	 xZyw/6iB9Z+SnPRV5gSofirL6STVKDOF345XAt2JAJsEMKNaW/w8e3ZCeqOlJwW/uCj1Y
+	 Mr627m3o5bdfF9A3kmvKfJFsLnwrZzROoZgndjunDhagkaaeJlNbIEey6XkfbPItaF3qY
+	 Gwymt/blUtfrH3kh8o+GFNBCAoSIJPQmi95GmJHQ5OBIE/FhCi98qT5XLOZFXNgngnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EntQwe7/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PicFKCO+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A024606A33A;
-	Wed, 18 Nov 2026 15:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA26606A332;
+	Wed, 18 Nov 2026 15:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EntQwe7/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEC81F000C5;
-	Wed, 18 Nov 2026 15:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PicFKCO+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9731F000C4;
+	Wed, 18 Nov 2026 15:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015704;
-	bh=djsOvkYN/jmg1h+BcAIEoqyZFIhtsQyd5IPgax5We9k=;
+	s=korg; t=1795015707;
+	bh=cJhloYUQos28C+93UiGdpHO3aisdABoWgYKoqMPK81Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EntQwe7/qpx5zKLPuQFQEtL+ZFc62a9OaFD+QO4nrDQ53ilX4rpYo9tAHE5GWgCfU
-	 3Sz8cUPqtN/xMolDVZTut2DNyPBRzOugG0RgWXFPun7Vc+4Sfpq76IEiAolB9Tjmcu
-	 wg4GUXk7EscZbjvNADe9UQS1AhicH0OQvdvhLmcY=
+	b=PicFKCO+Mp4N7uFiAIfCpKhKHxQCqUz4cUUGEnVUj7F90Jpdv1j1UsbJQ6GZl57c1
+	 4IJpqkH1vvpDJx4eKqkvC+MUgeuwRDR8kwRYwPT6dmCFR93rFalA0X1RjFMLdidIOc
+	 lXNsOatb0XEuaG4rD2AS7MC2gaXS0ME2WGjGmTvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jitao Shi <jitao.shi@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0268/2651] pwm: mtk-disp: Fix period readback
-Date: Wed, 18 Nov 2026 15:25:08 +0100
-Message-ID: <20261118150257.556581879@linuxfoundation.org>
+Subject: [PATCH 7.3 0269/2651] mac80211: tx: Use info->flags in ieee80211_tx_h_select_key()
+Date: Wed, 18 Nov 2026 15:25:09 +0100
+Message-ID: <20261118150257.595897387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -65,58 +62,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Bert Karwatzki <spasswolf@web.de>
 
-[ Upstream commit c5b29baad42b2b02389cc6a716697a8a63209930 ]
+[ Upstream commit 5f2530a4df8e0573e54cc0f4175c06ecb810a4dd ]
 
-The period value stored in the register is the number of clock cycles - 1.
+Without this ieee80211_select_key_8023() is never called and wifi never
+connects.
 
-Account for the offset when calculating the period in nanoseconds. This
-fixes the discrepancy reported by the pwm core when CONFIG_PWM_DEBUG=1:
-
-    mediatek-disp-pwm 1100e000.pwm: .apply is not idempotent
-    	(ena=1 pol=0 281500/499875) -> (ena=1 pol=0 281500/499750)
-
-Calculation discrepancy in the driver was found by AI run by a colleague
-while debugging another PWM related issue. Check against SoC datasheet
-and fix done by the author.
-
-Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
-Cc: Jitao Shi <jitao.shi@mediatek.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://patch.msgid.link/20260827105738.8570-1-wenst@chromium.org
-[ukleinek: Adapt comment accordingly]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 0e80db08668b ("wifi: mac80211: fix key selection for encap offload frames")
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+Link: https://patch.msgid.link/20260908094341.12196-1-spasswolf@web.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index b5409e15dac86..56d10cde5b460 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -210,9 +210,9 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
- 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
- 	/*
- 	 * period has 12 bits, clk_div 11 and NSEC_PER_SEC has 30,
--	 * so period * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
-+	 * so (period + 1) * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
- 	 */
--	state->period = DIV64_U64_ROUND_UP(period * (clk_div + 1) * NSEC_PER_SEC, rate);
-+	state->period = DIV64_U64_ROUND_UP((period + 1) * (clk_div + 1) * NSEC_PER_SEC, rate);
- 	high_width = FIELD_GET(PWM_HIGH_WIDTH_MASK, con1);
- 	state->duty_cycle = DIV64_U64_ROUND_UP(high_width * (clk_div + 1) * NSEC_PER_SEC,
- 					       rate);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 951e2c678fc5f..e989772ad92b8 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -618,7 +618,7 @@ ieee80211_tx_h_select_key(struct ieee80211_tx_data *tx)
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+ 
+-	if (info->control.flags & IEEE80211_TX_CTL_HW_80211_ENCAP)
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP)
+ 		return ieee80211_select_key_8023(tx);
+ 
+ 	if (unlikely(info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT)) {
 -- 
 2.53.0
 
