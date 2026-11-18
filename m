@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052993;
-	b=dzEnixKvT/leeo37T5FKTHMRrJU0ftZpQZDYLmOwMXcyuyIbC+sRGBlK+BG97Q4rhUy4
-	 MCp36K7PVXDF4CML5N8/VUk1sH2YFccSIwuOyGHxhwTCD8LITWznHxy9SbLQa/6Sr2295
-	 n7rb70myqkdb1XfsHTHEOqzTKJCKM8FU3MwM2SeVes+fzeh6Mx+X7TZCVzZCUgekBFGa/
-	 BoZYZcSGHqlboFPBIQ1eCynf7tGslefz0ywDukRBlOSWhEgKIS1IfU4LYtLtad1yd50+R
-	 KiYAZk4FqHz8rW7N4FDiEguEAXhEWwkQA8lZhktywgsd5cs21/TXb9EAjiOjNEXicBw==
+	t=1795052996;
+	b=kUQ9p14zLkEfynK9DH7pxjAROePEUKyc+l7hhntf7rFXIe3PMAmv3qCnhHQ/Qac/qpcw
+	 YjDTXDChxAyWi+FrCwUNudtjaRGbzvNGwo6vYKUVKZiteMA9AdehiQWilkd04A7hNQprM
+	 kzoujLGNv648F6h+vMy6rOV4xyNJHZL12BQkCOKfA7OPvOd9YIDi6v/3Qo+xZQZZ7d8/J
+	 mlnHi306DoIqtdn/P2b41RLbSOL8msjWPbwaN1vSthdmGi/qAqcJN7tbs7by/VQ2AXBY7
+	 DQw8PGWXTIoQguhgpEZW8Q7B2ogIEsYE0HIvdYO3DG3wZdwFyb8Bsg9xEe/0yYKOcKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z3PV69hbQgj/Fjg64YUsnFLfDhuuNQSc6x+3hiKCtcw=;
-	b=PJ0eehulR7Z+EQq5Z0A852e5WZ1+WxOYYxPvQi+vZEKr6cTkoXTeQdRi+VJHWsXhwXIo
-	 4dqhubJ6VHBJdhszhp4pL6UNtduis2taN7PiKEeFKaolDluD4eOZgolakiYilKYY/FHPf
-	 d5xa4/sl23QHKSGrcIQxeGW7hSqqLxY1GLORP5VM+jjdW/iwuxIt3CRJ3bQwP7m/oxCuV
-	 uaD9LIT86Jc+dnpdCK7Evt/PWR0oYoBEMRA7eem44EOQhG/l7LZxn9yMW0K9X7q7qhQUy
-	 BA9y1fjg4IIVXFDzv0UXDnvFgCb+rmKyR+bazJN2UYlEH9hRY26wQjNDnNUMqVzusWA==
+	bh=ToyPPvED+2BBOnctoIRrxAKjefvicCU5Q9uRHJLL8n8=;
+	b=Kr6dhIW0Ie3h6FebFzaSNMScCDm5mIUVM1GvaQfz/EXVUAUfOVL8Jc4YoqBw7AUjpL91
+	 kcesBhQaoTIjM2i1KM7T/0aCVgGJr9Red8en1+TffNQhvq1bRa0SsnN13qLKOUgO14N5+
+	 M29edWQivqjsOqeg/j04XrJ4cvsULKw7+KJHSYpBZnhp9xXbl0+qgo5zFTmxAeR+nnCzr
+	 6J2p5oKyWOGUCGizitJUvtffG7L9y3Ca2w7wlIcaNFGMNrPoaTLHa5kgdfWPG8mgRCKiH
+	 qg8gSoPcGTk80muxqtDoTbaD3hw7W0ePwkEqPypkNipsurmhcwspY6/ip8KbJBhI0Jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5zwK1Jj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvT5I42A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E0A606A32A;
-	Thu, 19 Nov 2026 01:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CC0606A31C;
+	Thu, 19 Nov 2026 01:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5zwK1Jj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD15F1F000C4;
-	Thu, 19 Nov 2026 01:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvT5I42A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0CB1F000C4;
+	Thu, 19 Nov 2026 01:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052993;
-	bh=Z3PV69hbQgj/Fjg64YUsnFLfDhuuNQSc6x+3hiKCtcw=;
+	s=korg; t=1795052996;
+	bh=ToyPPvED+2BBOnctoIRrxAKjefvicCU5Q9uRHJLL8n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5zwK1Jjl2BFBRluIafq5oLwoKj+ysKKaTKj3WLcPhOHmz4fgXkw9VZZPbobJRicw
-	 PLYtz7KzjxYrruwe0a3KoAvbGsA1E50pOOSrDIUNWeYVY0yP9Yv2RrbB486UrLRweM
-	 NWTWsEij0SNTGlaE+wO+Ho6GIAXKfy3HY9QMsNVI=
+	b=hvT5I42AXGJRj/nt6dI3rcNoOjZxZVCfijkZoX94oE0LHz3mtL/17zJ60Suhk2vA/
+	 Vlp5xVL1p+LJ2V19xh8wGLX2JHqom1iAllpuXZG9kYf5Ekbw4PjuZ66z924tqSZ9It
+	 aHzuKbTc5D880ihO68dlBr6g8TcP1HoXcPMPO0rE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Kamil Sawicki <user148783812897@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hyeontae Lee <wonju345@naver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0761/2214] net: limit priority VLAN untag depth
-Date: Wed, 18 Nov 2026 15:40:37 +0100
-Message-ID: <20261118150042.167310709@linuxfoundation.org>
+Subject: [PATCH 5.15 0735/2214] fs/ntfs3: bound DeleteAttribute asize against rec->used in do_action
+Date: Wed, 18 Nov 2026 15:40:11 +0100
+Message-ID: <20261118150041.225802955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,78 +68,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamil Sawicki <user148783812897@gmail.com>
+From: Hyeontae Lee <wonju345@naver.com>
 
-[ Upstream commit d3ff07f5acc573e5f72bf1c581bae5d05191ba61 ]
+[ Upstream commit 408216b66afd9ddadaba2dce56fd4af6793e95a2 ]
 
-The priority VLAN receive path can repeatedly remove VID 0 tags and retry
-packet processing. Unlike the read-only VLAN protocol parser, this path has
-no limit on the number of nested tags it consumes.
+In do_action()'s DeleteAttribute case (fslog.c:3316), attr is
+Add2Ptr(rec, roff) with roff taken from the on-disk lrh->record_off, and
+asize = le32_to_cpu(attr->size) is read straight out of the MFT record:
 
-Each skb_vlan_untag() advances skb->data and resets header offsets. The
-offsets are stored in 16-bit fields. With enough nested tags, the network
-or transport offset can wrap. A later protocol handler can then derive a
-large pull length from the wrapped offsets and access memory outside the
-skb allocation.
+	asize = le32_to_cpu(attr->size);
+	used  = le32_to_cpu(rec->used);
 
-Apply the existing VLAN_MAX_DEPTH limit to the exceptional VID 0 retry.
-Count the tag already stored in skb VLAN metadata as the first level, then
-stop before untagging a ninth level. Keep the accounting inside this
-uncommon branch so the regular VLAN receive path is unaffected.
+	if (!check_if_attr(rec, lrh))
+		goto dirty_vol;
+	...
+	memmove(attr, Add2Ptr(attr, asize), used - asize - roff);
 
-A single VID 0 priority tag before a real VLAN tag is valid. No normal
-deployment was found that intentionally emits multiple consecutive VID 0
-tags; permitting eight levels is therefore conservative.
+check_if_attr() (fslog.c:2869) walks the attribute chain from
+rec->attr_off and returns o == ro.  Its loop breaks on ATTR_END, so ro may
+legitimately equal the offset of the ATTR_END marker; that is exactly how
+CreateAttribute appends to a record.  But check_file_record()'s walk
+(fslog.c:2831) also stops at ATTR_END, so check_attr() never inspects the
+bytes there.  When roff is the ATTR_END offset, those never-validated bytes
+are what gets read as attr->size, and used - asize - roff underflows.
 
-The issue was found while researching the Linux network receive path for
-Google kvmCTF, with OpenAI Codex (gpt-5.6-sol) assisting the analysis. The
-affected path, reproducer and fix were manually reviewed and tested.
+The read itself is also unbounded: roff is a u16 and attr->size is
+dereferenced at fslog.c:3317, before check_if_attr() has constrained roff
+at all, so it can be up to ~64K past a record_size-sized object.
 
-Fixes: 36b2f61a42c2 ("net: handle 802.1P vlan 0 packets properly")
+Commit 0ca0485e4b2e ("fs/ntfs3: validate rec->used in journal-replay file
+record check") added at fslog.c:2844
+
+	if (used < PtrOffset(rec, attr) + sizeof(attr->type))
+		return false;
+
+and its changelog names this very memmove.  It bounds rec->used against the
+ATTR_END offset; it does not bound asize.  With record_size 0x400,
+attr_off 0x38, a valid three-attribute chain ending in ATTR_END at 0x158
+and used 0x160, a record whose four bytes at 0x15c read 0x100 gives
+
+	used - asize - roff = 0x160 - 0x100 - 0x158 = 0xffffff08
+
+i.e. a ~4 GiB memmove whose source and destination both run off the end of
+rec, a kmalloc(sbi->record_size) object (record.c:105).
+
+The equivalent non-replay path already refuses this.  mi_remove_attr()
+performs the same removal and starts with (record.c:548):
+
+	if (aoff + asize > used)
+		return false;
+
+Apply the same bound, spelled as a subtraction to match the neighbouring
+cases, and move the attr->size read after check_if_attr() so that the
+header is known to lie inside the record before it is dereferenced.
+Requiring roff + SIZEOF_RESIDENT <= used rejects the ATTR_END offset
+without rejecting any real attribute: for an attribute the walk validated,
+roff + asize <= off(ATTR_END) <= used - 4, and any attribute a
+DeleteAttribute record can legitimately name carries a full resident
+header, so roff + SIZEOF_RESIDENT <= roff + asize <= used - 4.
+check_attr() itself imposes no lower bound on asize, so a crafted
+sub-header asize can still pass the first test; the second test then
+bounds it and the memmove stays inside the record.
+
+Reproduced by mounting a crafted image on v7.2-rc5, which already contains
+0ca0485e4b2e, under KASAN.  The image is an ordinary mkfs.ntfs volume with
+four bytes of one MFT record changed and a crafted $LogFile:
+
+  BUG: KASAN: slab-out-of-bounds in do_action.isra.0+0x3211/0x83c0
+  Read of size 4294967048 at addr ffff888002423258 by task mount/66
+
+  CPU: 1 UID: 0 PID: 66 Comm: mount Not tainted 7.2.0-rc5 #3
+  Call Trace:
+   kasan_report+0xce/0x100
+   kasan_check_range+0x105/0x1b0
+   __asan_memmove+0x23/0x60
+   do_action.isra.0+0x3211/0x83c0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+   get_tree_bdev_flags+0x2ef/0x550
+   vfs_get_tree+0x82/0x2f0
+   fc_mount+0x10/0x1b0
+   path_mount+0x517/0x1df0
+   __x64_sys_mount+0x20b/0x270
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  Allocated by task 66:
+   __kasan_kmalloc+0x8f/0xa0
+   __kmalloc_noprof+0x1b4/0x460
+   mi_init+0x81/0x110
+   mi_get+0x6a/0x220
+   do_action.isra.0+0x1dbf/0x83c0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+
+  The buggy address belongs to the object at ffff888002423000
+   which belongs to the cache kmalloc-1k of size 1024
+  The buggy address is located 600 bytes inside of
+   allocated 1024-byte region [ffff888002423000, ffff888002423400)
+
+KASAN reports the source side because __asan_memmove()
+(mm/kasan/shadow.c:94) validates src before dest and returns without
+copying.  Both ends are out of bounds, and on a kernel built without
+KASAN the copy is performed.
+
+rec->used is also left at used - asize by fslog.c:3323 before the memmove,
+so the record stays inconsistent even when the copy is suppressed; the same
+mount goes on to report "ino=1a, mi_enum_attr" and marks the volume dirty.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261024004835.17862-1-user148783812897@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-[ Backport to 5.15.y: __netif_receive_skb_core() has no local
-  drop_reason variable, and this branch does not define
-  SKB_DROP_REASON_RECURSION_LIMIT. Omit the upstream assignment
-  and keep the existing drop path, which frees the skb with
-  kfree_skb(). ]
-Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
-
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyeontae Lee <wonju345@naver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/fslog.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index f7867bc188242..61813b29f5784 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -5461,6 +5461,8 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 	}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 02b2fb1899586..7146cef2963a6 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3345,10 +3345,21 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+ 		break;
  
- 	if (unlikely(skb_vlan_tag_present(skb)) && !netdev_uses_dsa(skb->dev)) {
-+		unsigned int priority_tag_depth = 1;
+ 	case DeleteAttribute:
+-		asize = le32_to_cpu(attr->size);
+ 		used = le32_to_cpu(rec->used);
+ 
+-		if (!check_if_attr(rec, lrh))
++		/*
++		 * check_if_attr() accepts a record_off that points at the
++		 * ATTR_END marker, which is how CreateAttribute appends.  The
++		 * bytes there are not an attribute and check_attr() never
++		 * validated them, so refuse an offset that cannot hold a
++		 * resident header before reading attr->size, and then bound it
++		 * as mi_remove_attr() does.
++		 */
++		if (!check_if_attr(rec, lrh) || roff + SIZEOF_RESIDENT > used)
++			goto dirty_vol;
 +
- check_vlan_id:
- 		if (skb_vlan_tag_get_id(skb)) {
- 			/* Vlan id is non 0 and vlan_do_receive() above couldn't
-@@ -5472,6 +5474,10 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 			 * 802.1Q or 802.1AD and vlan_do_receive() above could
- 			 * not find vlan dev for vlan id 0.
- 			 */
-+			if (unlikely(priority_tag_depth >= VLAN_MAX_DEPTH))
-+				goto drop;
-+
-+			priority_tag_depth++;
- 			__vlan_hwaccel_clear_tag(skb);
- 			skb = skb_vlan_untag(skb);
- 			if (unlikely(!skb))
++		asize = le32_to_cpu(attr->size);
++		if (asize > used - roff)
+ 			goto dirty_vol;
+ 
+ 		rec->used = cpu_to_le32(used - asize);
 -- 
 2.53.0
 
