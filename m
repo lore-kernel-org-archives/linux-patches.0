@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036012;
-	b=TkJbfVNYTLjz9VNgR9tkIp1c5cMnUK8I3CEiBbwQL+J4hbejBCiqDi8N3p9qO5d+t/J3
-	 /EZRFIJoimhsuc4FfWas8A/Q7NciGPrG1hja5a0owFuI3nZfAi2hOkdZL9e2lB2rXR+UC
-	 ISLEj1VCBiiI/OX1cbr+hcLswqLYsoussjI+7chWyau4cLU5X7XPK5Q1tZ3dwa56JKt+b
-	 E3CaPA8Vj37jv0QLUmVhN3l638rER9o5o1sJiJ/J3VS6Y3dCFD0w1S84BzehhWBjn2tMw
-	 h0wtbIZwkmGOzK28csG8Dw6YVA2x9f0iRLcJWD/ljcp5dVkP8jhSCVHLq1a7/QX7q0g==
+	t=1795036014;
+	b=2my5kDlL9qPh5rIsFn2hCnDNbqtv48gKk8yB+IT4LfrYnMLZyhM/GXHU7Og8lImX8lbu
+	 dgv5eHb9+tU8vZTPj5OmwprU00ZC7e3MVFeU5/KsGqRhYVU/0v2wt/sWUD7BuuGcl/6XH
+	 8jcDyc/CMx0qQz9cQKsdbPSn2eu1r9RlYIa56xxxz/G1nsqyNd8viEBjUuJcd/bMBU7WV
+	 QVqCR1iYj1a++73IyKd73IHMtS339x2v2zfrNCRHxZ0kdxVi83U0ksXvDuwm9Cykz7mN+
+	 Xs6HM4OXE7r/s34ixVg5cfJDgNJ78BXZSSuWq/J5eGuXM1iUkFX6UmZ4z5RCWCaRs9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f/nraGmBse96y0Uf/dMffOLF5XVel/y/IUI9hFkkh5s=;
-	b=WWfg8EAYinB4VhbD44b2Z49lLfeIRPPeaYXzeS2PW4GiwqiF4u3YC30tRr+6qp2hFjd4
-	 iUrisg4pxq04kXP02HSXxXERHaj0Q5syEPPspr2E+3E36DbIyDDAgG6Nx8DSGwL48QLf+
-	 CLjfUAgIN5DEv3FetPfXrjVFRgALGRstbQv27t/xOggxRc0lCfm2XdQFLhoo9lOHxzBoY
-	 ZI0cUICau/RkiOpC4uOzBX/QZauIfxbBfifLxdFaXd4GwghFZ7Au/tWjMKAwx1v1uF4kd
-	 dbnGBOLEn4zD3CLNs3s8hoZZdMAiEj7STEjN2LbishAtj6T4KTlmIqNtjZqA/8ZVqAQ==
+	bh=92cJgbiUQiV+mN9ikuBsx6i5XSFCxG2jAjDMcYeybnU=;
+	b=Ha8LB/HB/UTzMM3DoRNioCQCYGYeIESp6g/W9uF2PeEDSVRtPshW5Pt84+x3I+lYhWcA
+	 mxD2xKZ1T21I+S0wgdQsl19Wg4/dURGrWlcKr5sqBRjEV8Df9bh0+wq3mipwgMmukY1lS
+	 eXfmNgtxxguZOM+0yudef1PUf6KyizGhF+9TZ7H3c4Kg/L/Lmhsdxr1lNcanJIYNI3sYk
+	 Kcj/vZ99uXopEZXj4kiwKasecgUnw9qeqBji5UaJ+e69c0L1nke5SCqBI8FWQ8zAewi7g
+	 f3G2HFZ7CYT9a2tJqESt8eK0DzkFWflqOk0cFD6IJV5o6GNCoPL0FCGq9oLMKxwd3cA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JnKSsNgD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKXYY3WN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAC5606A31C;
-	Wed, 18 Nov 2026 21:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13A606A31C;
+	Wed, 18 Nov 2026 21:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JnKSsNgD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6369C1F000C5;
-	Wed, 18 Nov 2026 21:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKXYY3WN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE781F000C4;
+	Wed, 18 Nov 2026 21:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036011;
-	bh=f/nraGmBse96y0Uf/dMffOLF5XVel/y/IUI9hFkkh5s=;
+	s=korg; t=1795036014;
+	bh=92cJgbiUQiV+mN9ikuBsx6i5XSFCxG2jAjDMcYeybnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JnKSsNgDrlnFv4ssGyvDdea+lOyaIcYbrWFYA7AU6oylhvV06Y80rk2kIutwbAGOP
-	 f81z4RIgfnNOprmVimrTqyfkT+kzkZhEWScbGGEbORnEUUxX4s66B13vxmTzGaxYEM
-	 BivP6BQnbuzruG/DJ5YlrLqGc9ekrjwKxqkJfWNk=
+	b=IKXYY3WNl2NQXUuqMUnzYNybE+NoOW5/Dtq+H+EPYcKhPn1de2DPjezZWmTRioVo+
+	 4k3/bZ7Iglfih7XGEjW8urVZpHrp5pQ/xArN9pcj0AO03K8ScWNK3K5CK38BYfDnTu
+	 D3oWYf691HgRsHSTYh4jD2V4i3htF97uoUWnGJ6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Moteen Shah <m-shah@ti.com>,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Nishanth Menon <nm@ti.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0906/3318] arm64: dts: ti: k3-am62-phycore-som: Set eMMC clock pin as OUTPUT
-Date: Wed, 18 Nov 2026 15:25:28 +0100
-Message-ID: <20261118150346.683018308@linuxfoundation.org>
+Subject: [PATCH 6.6 0907/3318] drm/mali-dp: Fix runtime PM leak in malidp_crtc_atomic_enable()
+Date: Wed, 18 Nov 2026 15:25:29 +0100
+Message-ID: <20261118150346.714889355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,41 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit a3c2b6c52e02d58941c0b91bfba052788aeff890 ]
+[ Upstream commit 73ef663c75688168e31dbe9c585b939be410a945 ]
 
-MMC clock pins must be configured as OUTPUT-only per TRM [0] with
-receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
-PIN_INPUT to PIN_OUTPUT to match documentation.
+malidp_crtc_atomic_enable() resumes the device with
+pm_runtime_get_sync() and returns early when the resume fails.  The
+runtime PM usage count is incremented by pm_runtime_get_sync() even
+when the resume fails, so returning without dropping the reference
+leaks it and, once the error has been hit, prevents the device from
+ever suspending again.
 
-[0] https://www.ti.com/lit/pdf/spruiv7 Rev. C: Table 12-246. MMCSDi I/O Signals
+Drop the runtime PM reference with pm_runtime_put_noidle() on the
+resume failure path before returning.
 
-Fixes: 3443c1c4ed61 ("arm64: dts: ti: Add basic support for phyBOARD-Lyra-AM625")
+Fixes: 85f6421889ec ("drm: mali-dp: Enable power management for the device.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Acked-by: Wadim Egorov <w.egorov@phytec.de>
-Link: https://patch.msgid.link/20260909214743.899477-12-jm@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260916102112.2018372-1-vulab@iscas.ac.cn
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/arm/malidp_crtc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi b/arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi
-index aa43e7407eee4..d39985504587e 100644
---- a/arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi
-@@ -121,7 +121,7 @@ AM62X_IOPAD(0x15c, PIN_INPUT, 0) /* (AB22) MDIO0_MDIO */
- 	main_mmc0_pins_default: main-mmc0-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x220, PIN_INPUT_PULLUP, 0) /* (Y3) MMC0_CMD */
--			AM62X_IOPAD(0x218, PIN_INPUT_PULLDOWN, 0) /* (AB1) MMC0_CLK */
-+			AM62X_IOPAD(0x218, PIN_OUTPUT_PULLDOWN, 0) /* (AB1) MMC0_CLK */
- 			AM62X_IOPAD(0x214, PIN_INPUT_PULLUP, 0) /* (AA2) MMC0_DAT0 */
- 			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
- 			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
+diff --git a/drivers/gpu/drm/arm/malidp_crtc.c b/drivers/gpu/drm/arm/malidp_crtc.c
+index dc01c43f61930..0b3a296413767 100644
+--- a/drivers/gpu/drm/arm/malidp_crtc.c
++++ b/drivers/gpu/drm/arm/malidp_crtc.c
+@@ -56,6 +56,7 @@ static void malidp_crtc_atomic_enable(struct drm_crtc *crtc,
+ 
+ 	if (err < 0) {
+ 		DRM_DEBUG_DRIVER("Failed to enable runtime power management: %d\n", err);
++		pm_runtime_put_noidle(crtc->dev->dev);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
