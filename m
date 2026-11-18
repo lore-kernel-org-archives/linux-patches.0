@@ -1,65 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022564;
-	b=q3vIFaQaFN8wXf6lesVBWSPV4iIFr7awuWesfeTNoj2tLKITpnXlbabyaRph4x1q9GCp
-	 CtFmZ10k2m6h12gQ2gRlMZ6NpZ07sdlNx5ijYBImGe3l2vyDWVaVa6syCJnffw5ve/jk7
-	 fslwlwG6AHZ/G4ZKGwrWZj4cghx+rigZejRLH8EvgT9e2qhmgKB6x7ReGXl6WTZ+1jQoP
-	 vzjqbG4TJixpRqDNdn9Z4ugz/LHgBQkN53XsWNe7eipFGOGlUZIbPixIdIK6VFVkqfOWp
-	 zLnMgdgyfcg/V4Z5vWdyvS7hDuXaifqy/ZbHUaUZSXtMwRt0mHXtaKo0ueQHoE9JmLg==
+	t=1795022567;
+	b=IQox/TmlnGDhyrKJ84ny46XnAqUKdHx7/u/+WRf8DOblTONfXwEhTKzoGm85JdGP2QBF
+	 YO8P4e5l5+9xdfik/nrc8aHWyVCjWf6FW1txMdhjRKDS4AKeJpmpOQSiWPAR5nb/7LoR6
+	 zy/3X+6zomrmRETF9RS+gAREWUjOVATQ/VdfCYxKgIeXZjNNVoY8Wu8nvMDLoWgG7o23I
+	 hB6HSm++Fa/QeqFyR+KKQP9nXr9O2Di+ICJT4qx/xfoJCf/IObvZcZwyTtx1DA1fy2mTS
+	 fRqYnUcaKrBV7+0sDSr4xgtjSb5Cm//mwgnH8kes3bQq8C+kan+WtodKR9l+/m8C1Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bXFt9e+kVhoF9ccEpcV3/maHx6N7U0t3XPYxp0xnQYA=;
-	b=cDfjpIOdAZ5+jnCDoDMO4dNQ3SvUFXHp9m7GM22CRFxvdt9ywrmZKUtIcmFsHbOxuBvn
-	 v/WLJZiHbBE+htNoEsxIwm70Ahm0SHLtvpzKtWJohqpG6na8DlhXpg2xl5OOFu7VVYQT2
-	 MyibQQHkrN5Fyny7C9HLXjdSx05zgtXCRHjz2DLipvHjm2owi/QXTc3q95EYuuoPpQOl0
-	 Msc9iyf6QxjCmjW4dOQqcqMV2EUPdSkXAQ22cZ5/jVdEPPh6LfGpEughSSWtg6UDG6Yoi
-	 TJOAZA6yJbHkTlE1BUOn5QGFYnj0c5lE17q5n/wiO2bADikbAvQeT/KR2PFs6dZizNA==
+	bh=8XQ/OdJirr0fbmFIt95HE2o3sUebaAoToJ0b6pBorHM=;
+	b=Rc47MyB2w3pvQJqvbFsYG1c6bitbZ8IM55Zl/eGEPirlGWBIvq65Fc2fymTIdlOFvZCZ
+	 s+QUDOWD0ePr3tkKsUbdCyqms/j7xShhhknH/01TcbdQura+75/qhbTdBeYFAX3mKxzSV
+	 xK7BPWXgyEmAmru415lrRFzVsGl/Cip3Di6gWgXbfnRvT07sUBELgqd8hN1j19bBilxfZ
+	 z1zHkCQx1N+RHKMSQrQ6GCDfahZ+Q6KX1V2VPVVE0pFnKMUvTvoCfAAUkSKJMQbQ5FxT4
+	 QgiX85ocT4GVj2D60z3DOEFoMrDl6qD/KwRlG68vvnDvDQTjw5VJI4nhYEAGQQnlSgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e83FMV5C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMZupsDH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08E3606A32F;
-	Wed, 18 Nov 2026 17:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B17D606A32F;
+	Wed, 18 Nov 2026 17:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e83FMV5C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4CF1F000C4;
-	Wed, 18 Nov 2026 17:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMZupsDH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29C11F000C5;
+	Wed, 18 Nov 2026 17:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022564;
-	bh=bXFt9e+kVhoF9ccEpcV3/maHx6N7U0t3XPYxp0xnQYA=;
+	s=korg; t=1795022567;
+	bh=8XQ/OdJirr0fbmFIt95HE2o3sUebaAoToJ0b6pBorHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e83FMV5C06wFcoylSfJc8t/byLfIYvHl/k2dMaSaj6u7PBsZp2yCVn9ogikzDGAHJ
-	 JXwz8Bz8OteY9fryt15gdas/A580hgMHqmmVDC0GpbVZ/avTKPGNCHHemcMq/zE9rb
-	 jYtvfy8CtO5JOuomUbLbI+FkBgh6Y08T+MGsHdjc=
+	b=VMZupsDHLafRTQaB6sBiPVdU7xhhDcAVT9d4hFDNxmQB8T5j4aHAeqVEnjgziuLFI
+	 7eAwgJjHCoVVVf/fmpMybzTuV8wWUFDCA1+wG9LyNl66JBZr1XQqtf8vWwFsEy7OCT
+	 x0+8WKgcD/iBSmn2Fu6SBBWZN/lNk4q9ZE+fP4mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Salvatore Dipietro <dipiets@amazon.it>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dgc@kernel.org>,
-	Matt Fleming <matt@readmodwrite.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
 	Zi Yan <ziy@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Chanwon Park <flyinrm@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0059/2151] mm: page_alloc: do not give all non-blocking requests reserve access
-Date: Wed, 18 Nov 2026 15:29:54 +0100
-Message-ID: <20261118150123.898290059@linuxfoundation.org>
+Subject: [PATCH 6.18 0060/2151] mm/page_alloc: let the highest memory node recover from hopeless state
+Date: Wed, 18 Nov 2026 15:29:55 +0100
+Message-ID: <20261118150123.937365726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -81,128 +75,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-[ Upstream commit 6ee3d87b940848aaed5d4e8d005c5f674bf2637a ]
+[ Upstream commit 83367658a01087375ede31ae343c99da03f72ac8 ]
 
-Patch series "mm: page_alloc: fix reserve access for non-blocking
-requests", v2.
+free_frozen_page_commit() clears a hopeless node's kswapd failures once
+its zone recovers above the high watermark, but only if another memory
+node exists for allocations to fall back to.
 
-Two fixes for how non-blocking allocations interact with the highatomic
-reserve.  There are prerequisites for Salvatore's "mm/page_alloc: avoid
-direct reclaim and compaction for costly __GFP_NORETRY allocations" [0].
+The test `next_memory_node(nid) < MAX_NUMNODES` finds only memory nodes
+with a higher id.  The highest-numbered memory node therefore never
+recovers on this path, and its kswapd stays disabled until reclaim on that
+node makes progress and balances it, or demotion is re-enabled.
 
-Patch 1 narrows which requests may physically take highatomic pages,
-patch 2 narrows which requests may count them in their watermark check.
+In many cases, direct reclaim many never fully run against a lower node
+(CXL/kmem), and that means its kswapd can end up full disabled in rare
+situations.
 
-Both are prerequisites for Salvatore's patch: it clears
-__GFP_DIRECT_RECLAIM for costly __GFP_NORETRY requests, which turns every
-large page cache folio allocation that reaches the slowpath into a
-non-blocking one.  Without patch 1, those requests may fall back to the
-highatomic freelists reserved for atomic requests.  Without patch 2, they
-count the free highatomic pages in their watermark check while being
-served from regular memory, so they can consume regular high-order blocks
-below the min watermark by the size of the reserve.  GFP_NOWAIT requests
-hit both paths today, so these are existing problems worthy of their own
-stable backports; but Salvatore's patch would widen them significantly.
+To reproduce, fill the highest memory node with bound, non-THP anonymous
+memory and no swap until kswapd gives up, then free it: /proc/zoneinfo
+keeps showing node_unreclaimable 1 for that node.  A lower node recovers.
 
-Patch 2 reproduction: a GFP_NOWAIT burst under memory pressure can drain
-regular free memory to zero while the highatomic reserve sits idle.
-Measured on a 32G box with an anonymous working set, swap, and a full 290M
-reserve, three synthetic bursts drove the 28G Normal zone's regular free
-memory to 28M, 0.8M and 0.6M against a 60M min watermark.  Swapout failed
-its swap table allocation inside reclaim, reclaim scanned 13M pages to
-free 200k, and page faults stalled for tens to hundreds of milliseconds.
-With the fix the burst stops at the min watermark and nothing else
-happens.  This was found in review and reproduced synthetically; it has
-not been observed in production.
+Count the memory nodes instead.  Adding first_memory_node != nid to the
+existing test would also work, but a count says directly what the check
+means: some other memory node exists.
 
-GFP_ATOMIC order-0 requests have a milder version of the same problem:
-They are entitled to the reserve but are served regular memory first, so
-the fix there has to change the watermark check and the freelist order
-together.  Salvatore's change doesn't interact with this, though; fixing
-that is left for a separate patch.
-
-This patch (of 2):
-
-281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access
-highatomic reserves") accidentally gave all non-blocking allocation
-requests access to highatomic reserves, which includes GFP_NOWAIT and
-other sites clearing __GFP_DIRECT_RECLAIM.
-
-While this improved atomic request success rate, it's unintentionally
-broad and can actually worsen highatomic requests by squandering the
-reserves on requests that don't need it.
-
-There are concurrent efforts to clear __GFP_DIRECT_RECLAIM altogether
-for costly order __GFP_NORETRY requests, which would then also fall
-into this exemption and deplete reserves even faster.
-
-What GFP_ATOMIC has over the others is __GFP_HIGH, which
-alloc_flags_slowpath() translates to ALLOC_MIN_RESERVE.
-
-Narrow the exemption to contexts that have both ALLOC_NON_BLOCK |
-ALLOC_MIN_RESERVE.
-
-Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it [0]
-Link: https://lore.kernel.org/linux-mm/arFBWvzXPYrKuIYi@cmpxchg.org/ [1]
-Link: https://lore.kernel.org/linux-mm/20261001082152.2879289-1-dipiets@amazon.it/ [2]
-Link: https://lore.kernel.org/20261028171719.2043421-1-hannes@cmpxchg.org
-Link: https://lore.kernel.org/20261028171719.2043421-2-hannes@cmpxchg.org
-Fixes: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Link: https://lore.kernel.org/20261019184850.3427905-1-gourry@gourry.net
+Fixes: e7a5f249e6db ("mm: re-enable kswapd when memory pressure subsides or demotion is toggled")
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260904115629.3993331-1-dipiets@amazon.it
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Salvatore Dipietro <dipiets@amazon.it>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Dave Chinner <dgc@kernel.org>
-Cc: Matt Fleming <matt@readmodwrite.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@suse.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
 Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Chanwon Park <flyinrm@gmail.com>
 Cc: <stable@vger.kernel.org>
-[ sashal: placed ALLOC_MASK_ATOMIC in the existing internal header because the dedicated allocator header is absent ]
+[ sashal: Retained direct atomic accesses to kswapd_failures because the upstream helpers are unavailable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/internal.h   | 3 +++
- mm/page_alloc.c | 4 +++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ mm/page_alloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/internal.h b/mm/internal.h
-index e0adafc45c8c3..e36c46e865956 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1315,6 +1315,9 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- /* Flags that allow allocations below the min watermark. */
- #define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
- 
-+/* Flags that mean GFP_ATOMIC */
-+#define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
-+
- enum ttu_flags;
- struct tlbflush_unmap_batch;
- 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 2685e570bf7de..bce50449902cb 100644
+index bce50449902cb..2578475dd5d3f 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -3241,7 +3241,9 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
- 			 * reserves as failing now is worse than failing a
- 			 * high-order atomic allocation in the future.
- 			 */
--			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
-+			if (!page &&
-+			    ((alloc_flags & ALLOC_OOM) ||
-+			     (alloc_flags & ALLOC_MASK_ATOMIC) == ALLOC_MASK_ATOMIC))
- 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
- 
- 			if (!page) {
+@@ -2938,7 +2938,7 @@ static void free_frozen_page_commit(struct zone *zone,
+ 		 * kswapd work again by resetting kswapd_failures.
+ 		 */
+ 		if (atomic_read(&pgdat->kswapd_failures) >= MAX_RECLAIM_RETRIES &&
+-		    next_memory_node(pgdat->node_id) < MAX_NUMNODES)
++		    num_node_state(N_MEMORY) > 1)
+ 			atomic_set(&pgdat->kswapd_failures, 0);
+ 	}
+ }
 -- 
 2.53.0
 
