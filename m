@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044592;
-	b=jSpipnHb7rkHngfoJObH22xm6Z9jHIeUZbQXhXF3Pc0OjG7JADNA3TGJAKXcZf4maEdX
-	 xUIglRWAL0f8XGtU/lv5IKgG6k7E/xZxSxhJYXbnz+obzJbTBt2sRcAGwavsmpJ6IJ/IX
-	 Dhl26BuvQ3oe56BRHSLreBc+uBAOv5U2sbMwHLm7v/iVADspe8jLXD7ow6jWIzW8hm58I
-	 5xfNZ6GdH6K+TyD7SfzaQYWUrR5jRLhMgx2WYDlnAHARnWFPL17/vmaY7E+xPYZM1+deF
-	 ugA6jehbtVMFgcksW/5ekunbLrRKpT4gLDicNbLUS2pOYvkYdRH52nF3LE/rfu+j9xA==
+	t=1795044595;
+	b=5en/xQnjPFs19zKty6GW4UWdNDFQR0nwGAAVo7tXKahZ7EljkofEbwe5V3WhI9+6ul2A
+	 kxqkwvPPY3pij9gfBRtPf0sCOeG/IXPzlf+7B3Io/Jbzz+H5s+5jy/ECGXub2THaJVfaZ
+	 AUZvSwpIWO7N6KSdgZcUnRbZujU1dkoI68E7eP1cdlXWpSis6yKMLdhSFy/zDxJhxD3rg
+	 gLKjL3h2ZKpDsMZZFs/+G3DaOxsFSfjlbbmImc/BHLbwrEPNVm0AZAoib2M58Bw5KUGX4
+	 1X7iiK5nGmULVhahEd8fx8UOTR9Dn0phlvahh92Ujb+YoFhey9nraNbOW0ZhU3eEy2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x5Dlnrq1AI6+21uCmVnLqC2bPiZ4brFEF8bvKEsWEfU=;
-	b=EPHU0trp4aSUxa1NgwhTFsv9kM4zR8audQsjz0j7BVWAEwzNclmI0BOTKAJMfLWVIOY5
-	 VTzbRbNLWJyocOqko4yaL2E6PmeJS9AvgO6T2qclUC3/Xe+oQeBCwGZzW3OktMmPcBEXh
-	 mVJYurQcJvr5zmEtbX97riVxB8NdWM4/vbhyJSHd6swel8DZw5pVIrSvYBvwHTOtuNbr5
-	 lIG+NV7QLmREdVijNhtrLmDQfwHqGLSUU0Scq1v4RSRz0U9yCU9VNTNBRec60/gcxkfWi
-	 ZP1Tq/9Z9LfldrPVz5F4aR8Wooeuk6UYO/tuO+13FoJ5OVVfC/MtLO50ou5cWHVI7xw==
+	bh=ikso0pw8ucFWwdwreZhv6FFFCB1Xr+J6sSULC8f39tM=;
+	b=X/Z/sXxXocKE88peUfrYV2yPFEtHaQIpwJAZtbIy2AhEg4qEHsc13w/aWaBBrF6Jzamd
+	 oKZ0yUKDF/FguKx9E67hp1uOM+BDGbH9998pnyBxZRCWQD0LFFaQDpA0a5k4byvQ1II0A
+	 Eil/pOv6E1nG2WuBHmGWYGMj6M7nJKYIq2C/EcliGd+9drmpIA10uLLPoYWFxkYzbdm/V
+	 RT1YKUSI+RtlLBHLlyNTWbboKHxlZhyER5YR8bFwofbJw1DzRyw1nZcNy3fzmYLs1GbIf
+	 z769bZjKmrgFbXrKQfk8TuPBVyWf2xcxZyFox77KbzgP3WV6x4ubinCtFJMH3LO7jOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgGtkbrg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KSVVFQl5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501AF606A320;
-	Wed, 18 Nov 2026 23:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C9E606A31C;
+	Wed, 18 Nov 2026 23:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgGtkbrg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D19B1F000C4;
-	Wed, 18 Nov 2026 23:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KSVVFQl5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9041F000C4;
+	Wed, 18 Nov 2026 23:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044592;
-	bh=x5Dlnrq1AI6+21uCmVnLqC2bPiZ4brFEF8bvKEsWEfU=;
+	s=korg; t=1795044594;
+	bh=ikso0pw8ucFWwdwreZhv6FFFCB1Xr+J6sSULC8f39tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgGtkbrgvBcE1A66xcEPhAq4V+wKguo7AQ2Y/YCfsw2uRJOqkeEPOhGiFbJmn4cMf
-	 bf8mjbd0xFiAWRtiCB4CqjDXAqlZxInGLpPRiyZeRwBSnAiVnTqe5EcQ/OxZcqHhpl
-	 bIKpMNc4KcJaR/Eawh42B0PgDCPT4cbog0EKf/RI=
+	b=KSVVFQl5tocQh3QtunHQ3gKEQEkaDyyaKFiRaqwNwy/A/nKBcn0eZG4zcVzpGPLTC
+	 BUpuHFbsQ8X51OrNw6qENzC4Z5b31ea/sUlbGmy7c6uw2hQRyzjuvN0OOcaRKB5ko+
+	 Xxdjx3RxrQwz0P6qNycABPVaYitU04sWlSI6M64o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
+	VEGA <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0619/2857] SUNRPC: Reject a socket that already has an svc_sock attached
-Date: Wed, 18 Nov 2026 15:27:33 +0100
-Message-ID: <20261118150223.778501644@linuxfoundation.org>
+Subject: [PATCH 6.1 0620/2857] SUNRPC: trace an accepted transport before publishing it
+Date: Wed, 18 Nov 2026 15:27:34 +0100
+Message-ID: <20261118150223.813360140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,64 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
+commit 06f90cf104fc21ee01e7ef1eb80e092173089b9f upstream.
 
-Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
-attaches a second svc_sock to one socket. svc_setup_socket() saves
-the socket's callbacks before installing its own, so the second
-attach records svc_write_space() as the old write_space callback.
-svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
-and svc_write_space() then calls itself until the kernel stack is
-exhausted:
+svc_handle_xprt() publishes a newly accepted transport before tracing
+it. svc_add_new_temp_xprt() places the transport on sv_tempsocks and
+clears XPT_BUSY, so another nfsd thread can dequeue it at once. If the
+peer has already closed the connection, that thread runs
+svc_delete_xprt(), which drops the list reference, the only reference
+the new transport holds. trace_svc_xprt_accept() then reads the
+transport's addresses and network namespace from freed memory.
 
-  BUG: TASK stack guard page was hit at ffffc900037d7ff8
-   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
-   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
-   ... 700 more ...
-   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
-   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
-   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
-   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
-   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
-   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
-   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
+Before publication the accepting thread owns the transport
+exclusively: XPT_BUSY is still set from svc_xprt_init() and the
+transport is on no list. Emit the tracepoint there.
 
-svc_data_ready() and svc_tcp_state_change() chain through their saved
-callbacks the same way, so a TCP descriptor added twice recurses on
-the next incoming segment instead. Reaching any of this takes a
-writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
-so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
-
-Reject a socket that already carries sk_user_data. svc_setup_socket()
-overwrites that field unconditionally, so a socket some other
-consumer has claimed is one NFSD would corrupt whether or not the
-callbacks recurse.
-
-Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
+Fixes: 11bbb0f76e99 ("SUNRPC: Trace a few more generic svc_xprt events")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
-Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reported-by: VEGA <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/d15495bff2247e3f9d4f9ef36df8e246a3898380.1789220778.git.zhilinz@nebusec.ai
+[ cel: trace before publication instead of taking an extra reference ]
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sunrpc/svc_xprt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1375,6 +1375,9 @@ int svc_addsock(struct svc_serv *serv, s
- 	err = -EISCONN;
- 	if (so->state > SS_UNCONNECTED)
- 		goto out;
-+	err = -EBUSY;
-+	if (so->sk->sk_user_data)
-+		goto out;
- 	err = -ENOENT;
- 	if (!try_module_get(THIS_MODULE))
- 		goto out;
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -831,8 +831,8 @@ static int svc_handle_xprt(struct svc_rq
+ 		newxpt = xprt->xpt_ops->xpo_accept(xprt);
+ 		if (newxpt) {
+ 			newxpt->xpt_cred = get_cred(xprt->xpt_cred);
+-			svc_add_new_temp_xprt(serv, newxpt);
+ 			trace_svc_xprt_accept(newxpt, serv->sv_name);
++			svc_add_new_temp_xprt(serv, newxpt);
+ 		} else {
+ 			module_put(xprt->xpt_class->xcl_owner);
+ 		}
 
 
