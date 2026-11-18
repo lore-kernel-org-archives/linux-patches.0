@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017269;
-	b=BpzG1+0uW8QwFtDaE10DlXgjb93I0wZgc92p9WVUfB7c3OrqwKHgXPmUptzf4XqJZRsY
-	 B/MqYQwe1c4ianSLgLqrotBCvG6jOhdLIsbkciO7ZbhXWigOgTOGFOOp0SlC/NoCK1Yev
-	 91xzR6h6YzLg8ilAxdWMIPa1DJRe5mImz/guGIc2qzvu8tjSz1Tdosi+eTNW7iZcZdbj1
-	 nTaIkKT3ZKDnj2wAVoie3KJYZlNvhON8/2h/Lj97HeAUlBvr2JC+CVKHZzBZTHCYNj52b
-	 AAay3AhfbiaWL2KSuZmX+uZI3YKB81SAkPKuwSh/1uecYAp1Ts05CItHDOk35Qo7A9w==
+	t=1795017272;
+	b=uwtebqZCy9IoeOjVmpHZdUpViRVcTkMzumv9vUCLK8qK1wdn9PGXycmvcJePRdSDzD+B
+	 K15EUV5J1JWL3KY5WSJ41Wpo0oEeQffJbGMb/7fgu3nWs92tbvMGvA3zHm4/ndkafI9wj
+	 ohq6/lO4Bf9qLEHwjuv/d8NCd0SQU10NUL9ibhpYSBika05/ATNNqBEyFYUH6/NwHo2mt
+	 /mMYqIZxs92PbgHKq87M58yvCUTaSM7et58ycpDtS9QJa9h/cJeec9frVitN5wDrw3wZ1
+	 1Pv0dtK35J3agdomsRPoP40GTDkrr46Fj0YJI0JzuYvhBen8n0s58AdBRqHtfAYX4ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017269;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017272;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=VGwTmbf+GIMAGj0yjygfMEw6eKHZwO7GewJMllDL6i8=;
-	b=vUEx/grSUxKcufGP6i/r7ML71hI9Nc0FqQAMNaLWOKlpw8AfU9caj0APcUJ/sVtYU32t
-	 BhWMJr6xJaF3Ta0hj+JVUF30U7hemRa08AvLe/mE0BOPYlW9wPYDAyLh27rFy2pSMKVX3
-	 5/jIz3oez/XNS8um7Hp/+Ag8AR675a5IiFqeJInG15xwk1jPt9ZnGF34rZPX55CkYzgIx
-	 9hpHehAmlWA9hf8aE+kYG73E0mPs4vuZCwnf0tAZtfxzmmOHQBwJ8wygv3p6sAtuOMuY0
-	 z8N6ljD1MhZxMh4EsP/mz5JRM45XdPhMCgB4AURLkbO186RQNBIdq61C8I0JFRzRXvA==
+	bh=4QDGeTp4KTn/BOASeE3mPxawZETA0CeVXObxeyXPdjI=;
+	b=mwRbHtrjmzqzF1lifkIEMaTx62Kfx+3XTJ2qp2plgP7a0eEgyboi1VMAW3PcrbckFi3S
+	 WWqfvyj36+z5UmdDIEJqIxzjrLIl9PcVMyNnmwybezWvfII5Bd/ueKqiXXMXdT9pxIJmS
+	 aZfkE61eLeEY3kmfADRJzSr5UjnCOXk+IIKIWlYkmgaKYuOTM0b9tA7LNg6eJTWQV98Tj
+	 KK0N1EpJMZ3q1n3WgPZ5o7nwyVlOuyItc3DgWaL12vOC0NAYtC7BCsf55sLcYBdL30QU3
+	 JAoQ0zfyRcgb6XCOJiKYuH7PYTxw4yPrM33Hp/oALbqayuYPoH5dFvPHFI4IKCKHuFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSH9nzoc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n+C5UnZ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E0E606A320;
-	Wed, 18 Nov 2026 15:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6850B606A32C;
+	Wed, 18 Nov 2026 15:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSH9nzoc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEA31F000C4;
-	Wed, 18 Nov 2026 15:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n+C5UnZ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E0C1F000C4;
+	Wed, 18 Nov 2026 15:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017269;
-	bh=VGwTmbf+GIMAGj0yjygfMEw6eKHZwO7GewJMllDL6i8=;
+	s=korg; t=1795017272;
+	bh=4QDGeTp4KTn/BOASeE3mPxawZETA0CeVXObxeyXPdjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xSH9nzocJJjhIRsSPKECiG0JBBFTzR4P/03wFaLItpWRVIWcAV413dmsDHbQwYt7A
-	 MpJkGEoGT4Ujpx1nWXfaiAksbOGCs7Uxm2Ifo3dKyCW2HvAifbAtxfVC4x4jRqTpDx
-	 CIT9k1wrZUSXilz+GNy78sNWvZpRu3BCv3M5tPlk=
+	b=n+C5UnZ6kd49IbEcB1bPqzVc+Bld+W6pYpMMskqFkPQV7eTpX5H5PsUYEGVYEjDXU
+	 MQZvrCqdIipTE2qUcqxYSyH7hGYVNIdmbf6mi7o2kZPrZ0igvekLfnpyzIcvXMMVHm
+	 R6viCQPSlMhstpSRP1mMLAjfkg9QkyJYyZfHH4Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Samir Mulani <samir@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0822/2651] powerpc/ftrace: Dont restore r13 during ftrace_regs_caller
-Date: Wed, 18 Nov 2026 15:34:22 +0100
-Message-ID: <20261118150317.483794786@linuxfoundation.org>
+Subject: [PATCH 7.3 0784/2651] tools/nolibc: fix verrx() and errx() message formatting
+Date: Wed, 18 Nov 2026 15:33:44 +0100
+Message-ID: <20261118150316.112806980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,97 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit af5f0870883ae4aea7f668d06cbb7ad0e12824c8 ]
+[ Upstream commit 6f114ae7b6006ca7cf72e3e3348d263bbfec4525 ]
 
-Michal reported a stack-protector failure and subsequent panic when
-running kernel builds. This was observed with full/lazy preemption.
-Initially it was suspected as KVM, but later turned out to be due
-to a bcc tool running in parallel.
+verrx() passes its va_list to warnx() instead of vwarnx(). warnx() is
+variadic, so it takes the va_list as its first and only argument, and
+the conversions in the format string print the va_list itself and then
+whatever is left in the following argument slots. On x86_64, for
+instance,
 
-Issue was recreated using a bcc tool.
-For example, running below in parallel leads to crash.
-./funccount sched* -d 100 and make -j 64
+	errx(1, "int args: %d %d %d", 1, 2, 3);
 
-The same crash was observed when running kprobe for schedule() function,
-while simpler function tracer for schedule() didn't cause the crash.
-This helped to narrow it down to ftrace backed kprobes area.
+prints something like "int args: -1699009032 1 2", where the first
+number comes from the address of the va_list and changes from run to
+run, and
 
-The crash occurs as follows:
+	errx(1, "%d %s", 1234, "foo");
 
-ftrace_regs_caller entry on CPU A
-    |
-    +-> save r13 = CPU A PACA into pt_regs
-    |
-    +-> call kprobe_ftrace_handler()
-            |
-            +-> ftrace_test_recursion_unlock()
-                    |
-                    +-> preempt_enable
-                    +-> task can schedule and migrate to CPU B
-                    +-> task resumes with live r13 = CPU B PACA
-    |
-    +-> REST_GPRS(2, 31)
-            |
-            +-> restore saved r13 = CPU A PACA
-    |
-    |-> The task then continues running on CPU B with r13 pointing
-    |   to CPU A's PACA.
+crashes with SIGSEGV, as "%s" takes a leftover argument slot for the
+string. errx() goes through verrx(), so every message with arguments
+printed by either of them is wrong.
 
-The stack-protector canary is accessed through the PACA. After the task
-migrates, CPU A may run a different task and update its PACA with that
-task's canary. Restoring the saved r13 then causes the migrated task's
-saved stack canary to be compared against the canary in CPU A's PACA,
-resulting in a stack-protector failure.
+Call vwarnx() from verrx(), as verr() calls vwarn().
 
-Similarly, current is resolved through the PACA. With a stale r13,
-preempt_count() can access the state of the task referenced by CPU A's
-PACA instead of the task running on CPU B. This results in corrupted
-preempt-count warnings and scheduling-while-atomic failures.
-
-This path for example is called when using kprobes and parallel kernel
-builds can cause preemptions during ftrace_test_recursion_unlock.
-
-Do not restore r13 from the saved register frame. If the task did not
-migrate, the live r13 already has the saved value. If it migrated, the
-live r13 contains the correct PACA pointer for the CPU on which the task
-resumed.
-
-On PPC32, r13 is regular register. So do this fix only for PPC64
-
-Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
-Reported-by: Michal Suchánek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/all/aqKfsVArHHaIK6M9@kunlun.suse.cz/
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Tested-by: Samir Mulani <samir@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260921072151.35531-1-sshegde@linux.ibm.com
+Fixes: 9da0f529c089 ("tools/nolibc: add err.h")
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Link: https://patch.msgid.link/20260924120958.23698-2-danishkhateeb03@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/trace/ftrace_entry.S | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/include/nolibc/err.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/trace/ftrace_entry.S b/arch/powerpc/kernel/trace/ftrace_entry.S
-index 6599fe3c62347..5eb8eee32549d 100644
---- a/arch/powerpc/kernel/trace/ftrace_entry.S
-+++ b/arch/powerpc/kernel/trace/ftrace_entry.S
-@@ -220,7 +220,13 @@
+diff --git a/tools/include/nolibc/err.h b/tools/include/nolibc/err.h
+index e22ae87a72892..61978d537ed8f 100644
+--- a/tools/include/nolibc/err.h
++++ b/tools/include/nolibc/err.h
+@@ -60,7 +60,7 @@ void verr(int eval, const char *fmt, va_list args)
+ static __attribute__((noreturn, unused))
+ void verrx(int eval, const char *fmt, va_list args)
+ {
+-	warnx(fmt, args);
++	vwarnx(fmt, args);
+ 	exit(eval);
+ }
  
- 	/* Restore gprs */
- 	.if \allregs == 1
-+#ifdef CONFIG_PPC64
-+	REST_GPRS(2, 12, r1)
-+	/* Do not restore a stale PACA pointer if the task migrated */
-+	REST_GPRS(14, 31, r1)
-+#else
- 	REST_GPRS(2, 31, r1)
-+#endif
- 	.else
- 	REST_GPRS(3, 10, r1)
- #if defined(CONFIG_LIVEPATCH_64) || defined(CONFIG_PPC_FTRACE_OUT_OF_LINE)
 -- 
 2.53.0
 
