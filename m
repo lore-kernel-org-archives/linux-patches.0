@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028713;
-	b=vmBXN42lc1mXdu2kvI7keLQ9IGk0pMQuCtDqc0asjB2O5i1WCXthJyuQcKet9NBN5oUg
-	 2C/nbEnmqdgO7PEEEJZm/xanKhPK8ofOezxvohzaSr4Ssr+gl+mkPi5tseeGMjmWu+gUI
-	 7TLBDM/1ihuWhsDxg0kiGD3VrfYSMowxlbF40Qcc7XqvQPKFw9QAEtrzKJR9JKVoQmEjJ
-	 06j9pMqTf24xFZLXeQqodglZbXb5vciWKqUv/rxPyDaXn5wOnGRPVl4U70cJbHQegD1Hf
-	 HdcuKR9TAkg2KV8UD9gqPkdSgjmIW1nCRdOGlZpwdmFc2NwXA1dxUfXCNWmBdYYeneQ==
+	t=1795028716;
+	b=SXsEcWgIifIXTL3MGsS+Up9K4ZiKoH7JzhfJXEk0FTRrjOuO4b6Y9j0+jVjjAYI18woX
+	 n11Qm9x+6SkDxZxl470ZOhKKY75jbF73kFtSwPAKbp9zUAwXANAYRyOi9nB5fO+J/eorQ
+	 Rh3Dl1eBP/D5R7zYDbMIEg0l1M8GmHYbzQzx7YdWYV52qctRRWUd+vN5KSaxrp8UsDXJy
+	 E10zWc8hrg9JInUUusAhyb3cXyIiZRl15NQADVA/OgjgVkDFuAyP5UeCP1QNps77YKmey
+	 wyPjjLR3MYXN9A2ZSpYLzPivxRGRbeL04W9xe1vcJizKUWdO8FTAOoi78d8EPb2i0bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hXZONlHlkJm0uvBLx22bjIpDTmJsiHpA/Mmynk4GGhs=;
-	b=HxaQYpRIEyet3ZftCpQriXyel3T6l+fkPQ8xbx+OeK57c/Du0ADQDtvmcKOxbL+0Inch
-	 6FdPkHntxKOwmt8/HafsM+drPoB8a1odm+1A1eFulT5lcAxb2F6WnuBPEvLyq7kcVI3p+
-	 KCinBHnbWdUzbwZ+oX5Sk69EGwmxvIcAlQL+RGjNCRLxIkNou0kcf+NRIQvN31lJCW0C6
-	 nvEX62CyYcFJgnkq2dEeTrsRMJZMppMdnMGdBkAGxWptJ/auvfU8snWexoUtUUEshTcl8
-	 tliKeIaPoXA0rqKIkfEuMHuVq2OvcIMVD0GCzlDQC8lNmYddptN8xU174DlCoJO9YtQ==
+	bh=VLDDYoeankZyFa0cNBrNfac2wCHM/Dgej35VMEujuQY=;
+	b=TzWQ25ydC5bdwAY9S8hdtz3NlTnEC7EVaUXWHZOBYD1HhRRYjWge3hQaC8SGUbWSK/OF
+	 6WNj6MfUslI4/v8WveUdjQcI5R+L5k6tHH5zeAPQ7U74HP9QaL7nnMvSm4Dzt0WeutSrH
+	 mFMbASO2eThley7QsdA7+hXj/KTMBqyVO/s7rvhTLs9fe10p8L+odinh9hcyTVNuKqUSS
+	 R12SVbiTmuaf7vmPhWPHrc4E30a8fazHdA8y4mSfA8bobwMHl8rSO0QDWhYi/V+BpMS0k
+	 XLyEL3L9QflmfQIDO2OXewYNwdq6VvGsP5EKs3jXrT9VRBd+GFdkfgHvU3hAr69Y0Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qr3AQ3Fu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMBg+Qwu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C06C606A334;
-	Wed, 18 Nov 2026 19:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1974E606A325;
+	Wed, 18 Nov 2026 19:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qr3AQ3Fu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9B41F000C5;
-	Wed, 18 Nov 2026 19:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMBg+Qwu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9B91F000C5;
+	Wed, 18 Nov 2026 19:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028713;
-	bh=hXZONlHlkJm0uvBLx22bjIpDTmJsiHpA/Mmynk4GGhs=;
+	s=korg; t=1795028716;
+	bh=VLDDYoeankZyFa0cNBrNfac2wCHM/Dgej35VMEujuQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qr3AQ3FuxxPSJN08dBzlekIAZkhd9Ni/0iENDBzAA4uZdg8fQPwSLy7yrY51i5jKP
-	 IsfDPhI/xoGd/Ltoinix90eFi/U8UPzpEksm2qzYXKPYb73sQmJphfV5TCOgq0dsy5
-	 Dd+pJx74jYLKaPtdV328AYthcWrmZJDEUDz9F9WA=
+	b=NMBg+Qwu7MYbeAd9Jhz+fSjK5f5eMT34WCSDjfBW/n3aJ63BxwmrSco2fyL8LlOL4
+	 /6WyN0qbmoAgnKbjvMOw6nTLPFT5CHpETYjch/XCwb9vsrt1DQ85B7O4LZxKmj0/Sy
+	 OFCuLt9BxPCAGDJ/KwPE6igk1PYhgJummedUkXkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shubham Antil <shubham@octane.security>,
 	Mike Christie <michael.christie@oracle.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0093/1756] vhost-scsi: Reduce mem use by moving upages to per queue
-Date: Wed, 18 Nov 2026 15:37:00 +0100
-Message-ID: <20261118150011.955201405@linuxfoundation.org>
+Subject: [PATCH 6.12 0094/1756] vhost-scsi: zero misaligned I/O bounce pages
+Date: Wed, 18 Nov 2026 15:37:01 +0100
+Message-ID: <20261118150011.990744430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,123 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Shubham Antil <shubham@octane.security>
 
-[ Upstream commit 4c1f3a7d74277903b290dd989cbd2ea8627fc925 ]
+[ Upstream commit 01c3a5fa6d641c93c7cef4fb25c5f12938316e18 ]
 
-Each worker thread can process 1 command at a time so there's no need to
-allocate a upages array per cmd. This patch moves it to per queue. Even a
-small device with 128 cmds and 1 queue this brings mem use for the array
-from
+The misaligned I/O fallback copies the full bounce scatterlist to the
+request buffer during completion.  If a data-in command transfers less
+than requested, part of a newly allocated bounce page can remain unwritten.
 
-2 MB = 8 bytes per page pointer * 2048 pointers * 128 cmds
+Allocate bounce pages with __GFP_ZERO so all bytes copied during completion
+have a defined value.  This path is already the slow fallback for
+misaligned I/O, so the added initialization cost is acceptable.
 
-to
+Found during an LLM-assisted source audit and validated with a QEMU/KVM
+vhost-scsi target using misaligned data-in commands.
 
-16K = 8 bytes per pointer * 2048 * 1 queue
-
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Message-Id: <20241203191705.19431-2-michael.christie@oracle.com>
+Fixes: 5ced58bfa132 ("vhost-scsi: Fix alignment handling with windows")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM (OpenAI Codex, gpt-5.6-sol)
+Signed-off-by: Shubham Antil <shubham@octane.security>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Stable-dep-of: 01c3a5fa6d64 ("vhost-scsi: zero misaligned I/O bounce pages")
+Message-ID: <20261020105503.75904-1-shubham@octane.security>
+[ sashal: Adjusted context to retain the existing indexed scatterlist loop in place of for_each_sgtable_sg(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ drivers/vhost/scsi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index fa0d407442914..725166d4cc79f 100644
+index 4e1b5184cf36b..5a904241f6311 100644
 --- a/drivers/vhost/scsi.c
 +++ b/drivers/vhost/scsi.c
-@@ -83,7 +83,6 @@ struct vhost_scsi_cmd {
- 	/* Pointer to the SGL formatted memory from virtio-scsi */
- 	struct scatterlist *tvc_sgl;
- 	struct scatterlist *tvc_prot_sgl;
--	struct page **tvc_upages;
- 	/* Pointer to response header iovec */
- 	struct iovec *tvc_resp_iov;
- 	/* Pointer to vhost_scsi for our device */
-@@ -187,6 +186,7 @@ struct vhost_scsi_virtqueue {
- 	struct vhost_scsi_cmd *scsi_cmds;
- 	struct sbitmap scsi_tags;
- 	int max_cmds;
-+	struct page **upages;
- 
- 	struct vhost_work completion_work;
- 	struct llist_head completion_list;
-@@ -624,7 +624,6 @@ vhost_scsi_get_cmd(struct vhost_virtqueue *vq, struct vhost_scsi_tpg *tpg,
- 	struct vhost_scsi_nexus *tv_nexus;
- 	struct scatterlist *sg, *prot_sg;
- 	struct iovec *tvc_resp_iov;
--	struct page **pages;
- 	int tag;
- 
- 	tv_nexus = tpg->tpg_nexus;
-@@ -642,12 +641,10 @@ vhost_scsi_get_cmd(struct vhost_virtqueue *vq, struct vhost_scsi_tpg *tpg,
- 	cmd = &svq->scsi_cmds[tag];
- 	sg = cmd->tvc_sgl;
- 	prot_sg = cmd->tvc_prot_sgl;
--	pages = cmd->tvc_upages;
- 	tvc_resp_iov = cmd->tvc_resp_iov;
- 	memset(cmd, 0, sizeof(*cmd));
- 	cmd->tvc_sgl = sg;
- 	cmd->tvc_prot_sgl = prot_sg;
--	cmd->tvc_upages = pages;
- 	cmd->tvc_se_cmd.map_tag = tag;
- 	cmd->tvc_tag = scsi_tag;
- 	cmd->tvc_lun = lun;
-@@ -674,7 +671,9 @@ vhost_scsi_map_to_sgl(struct vhost_scsi_cmd *cmd,
- 		      struct scatterlist *sgl,
- 		      bool is_prot)
- {
--	struct page **pages = cmd->tvc_upages;
-+	struct vhost_scsi_virtqueue *svq = container_of(cmd->tvc_vq,
-+					struct vhost_scsi_virtqueue, vq);
-+	struct page **pages = svq->upages;
- 	struct scatterlist *sg = sgl;
- 	ssize_t bytes, mapped_bytes;
- 	size_t offset, mapped_offset;
-@@ -1659,11 +1658,11 @@ static void vhost_scsi_destroy_vq_cmds(struct vhost_virtqueue *vq)
- 
- 		kfree(tv_cmd->tvc_sgl);
- 		kfree(tv_cmd->tvc_prot_sgl);
--		kfree(tv_cmd->tvc_upages);
- 		kfree(tv_cmd->tvc_resp_iov);
+@@ -771,7 +771,12 @@ vhost_scsi_copy_iov_to_sgl(struct vhost_scsi_cmd *cmd, struct iov_iter *iter,
  	}
  
- 	sbitmap_free(&svq->scsi_tags);
-+	kfree(svq->upages);
- 	kfree(svq->scsi_cmds);
- 	svq->scsi_cmds = NULL;
- }
-@@ -1689,6 +1688,11 @@ static int vhost_scsi_setup_vq_cmds(struct vhost_virtqueue *vq, int max_cmds)
- 		return -ENOMEM;
- 	}
- 
-+	svq->upages = kcalloc(VHOST_SCSI_PREALLOC_UPAGES, sizeof(struct page *),
-+			      GFP_KERNEL);
-+	if (!svq->upages)
-+		goto out;
-+
- 	for (i = 0; i < max_cmds; i++) {
- 		tv_cmd = &svq->scsi_cmds[i];
- 
-@@ -1700,14 +1704,6 @@ static int vhost_scsi_setup_vq_cmds(struct vhost_virtqueue *vq, int max_cmds)
- 			goto out;
- 		}
- 
--		tv_cmd->tvc_upages = kcalloc(VHOST_SCSI_PREALLOC_UPAGES,
--					     sizeof(struct page *),
--					     GFP_KERNEL);
--		if (!tv_cmd->tvc_upages) {
--			pr_err("Unable to allocate tv_cmd->tvc_upages\n");
--			goto out;
--		}
--
- 		tv_cmd->tvc_resp_iov = kcalloc(UIO_MAXIOV,
- 					       sizeof(struct iovec),
- 					       GFP_KERNEL);
+ 	for (i = 0; i < sg_count; i++) {
+-		page = alloc_page(GFP_KERNEL);
++		/*
++		 * Completion copies the full bounce buffer, including bytes the
++		 * target did not write. This is already the slow fallback for
++		 * misaligned I/O, so zeroing is acceptable here.
++		 */
++		page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+ 		if (!page) {
+ 			i--;
+ 			ret = -ENOMEM;
 -- 
 2.53.0
 
