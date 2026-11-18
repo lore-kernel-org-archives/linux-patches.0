@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052766;
-	b=BKZs0FL2jTc3IGxdU1UnrwJEfX3QsV6Fdsjv5mtcUrOcRZO5G1JRD/isCUYNjNdmsYGD
-	 NB1x3mTx9k8vkpUF983PMcOzI+mZTaZIrVWJOVvmfPRRfVJ+lhF+TWzU7Hzxsn9SxWWB+
-	 MMOPp3/pnESGpcd/NqDQ9ENnMAyBRL1WCOCTgYhxjIeISPYXXFHNQ4bC9PrrpqnLQt1yp
-	 zXMNe+jDHDYjDhpd1Pw/7lbYuiNUPkAguU1R2VE+wtdbKEJOCGcRG3VuHeNm3zdgcIAPJ
-	 8+SLmGBMrizvD/3h1ABqqvk+xJv6Eb1RC2/jZwUE0K4zTAHODk+ELkOUFFQrJoa2zTA==
+	t=1795052769;
+	b=sme9eldRbYysDJwoyXHULRpEsQlnnmBpKbrSelASZdfJ+uNBSeQ/N9cjxyzyG01nPRKf
+	 vn6G6J8LOtanG+Ar4wBCKOVWZPQ814EwyuKxlwaToXesCHd9CtVhKNrAHUqIX/L5JCMdA
+	 nGAW5rrYnxDIu+Swle53fJVg+iyDP8JdjyV+CcZKUoytJzg0OCFl+FGs/+x8HWTGg2vHC
+	 X1WGq8ySmGrZ1zg95MyikVNYaU1Bpeb3Qrfd50GEwO0zfV3B7pG5Ktwit2JdKSZ4JMCHN
+	 /pA0ftV9Yh24EjdIHCzUZik/0oIDuWZCZjwpu7z2rmt98fY8llvPxqUkyHu5D8arYXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tSqwVY9eJkN2vj1ErxTpdR9HENNDrIIYAmmsuuKZ4SA=;
-	b=OG2SgERMjV9S6auuRQ65elZpsL+dbNrOT6RcJDipTUXGKLIfIbaMPu1Jntpgy6xVwGAa
-	 ePVaRTHcLsIoNh9iGC8yGdHnm+PSL6SZsxBNOJZyVEVzs19x6g9GOjG9RhD/O7TNyaF0b
-	 61Akn8d2CJu4evl03xCn5NPOyVPLMiiIgMLuep5F9bq6oBuI44aFd5xr9pZ0mSJB0KOif
-	 3u5srLpabLWHLUBed3U1nTdXCzRBLa6J5yjeAmkbUN7vVZf/Ne36qgOaphVuEaJteeIsw
-	 wLS2r2s28ZUTBjSiV/R5lz3ovb9MB17urMxAaD+ps9uW+caVOmCnpVXRqzIQQy7BNUw==
+	bh=CHTlbDyurO1J3TjL4IwK8XWkKQ+vJSaS/czn35I42MQ=;
+	b=dqMB7LIc8uhJqVTald02ffUNBR312r30JAUKiBfUpsYotEjXjDkUTrm3MH5ioI+yXzGO
+	 jaQLuFD5LOrMz67dODA2Pldzx+ZhPm+ogg8ei6kXWcISmoReEloLHhUPU5M0P6WZbFPYI
+	 YG95FjKqVDLSqq1Zt9TZGkN7nU/03fv7B4XN1uc4fsjokPlo6w0ZUUajEfRVw6qat0TJt
+	 rw/4GqFYaF1mAt6yKgptUTah+PVUdbWWWH03cSIM0kwVORLpkVpbnA/9ZLLblnEHEMt1z
+	 Byuy3JB5+h+cZetjrFALTeSf2PYGz0HMQxeWM1THhgV42vb8Tdqhh3vth1uzdEt0HFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qx9FM3gF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAjtFzz1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB062606A32A;
-	Thu, 19 Nov 2026 01:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACEF606A320;
+	Thu, 19 Nov 2026 01:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qx9FM3gF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4151F000C4;
-	Thu, 19 Nov 2026 01:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAjtFzz1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D9B1F000C4;
+	Thu, 19 Nov 2026 01:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052766;
-	bh=tSqwVY9eJkN2vj1ErxTpdR9HENNDrIIYAmmsuuKZ4SA=;
+	s=korg; t=1795052769;
+	bh=CHTlbDyurO1J3TjL4IwK8XWkKQ+vJSaS/czn35I42MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qx9FM3gFvOhTswDA49d3rrqPVJkJGOQzhB1YXc/MXfQku6WaUgIr9ko71bD404OYu
-	 88BXX40jqcScZOOqmnU3ww9CkPZpAQ49kwTbSbstzW5pcsWhYshk0ok8QefXu58yZY
-	 NjVqxicQx+Tlpr9q68WIu0AAzuG5JEFHIYVZR0XM=
+	b=WAjtFzz1WH9f2jPybyh1whbWRkKt9S6q2O1Zu4uEjNrx5oOkwIT1kBoHMKaXgkWY3
+	 TH2lTJuhjQO1eq9z2+ga49EzLWIeprmjAt4D52qASZ8XENYFpDxNROYwKlyjnOCDcp
+	 i74VyPoWYtAxLqxuIKXgvZxPHxo95GVZnX6Xgfyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keita Morisaki <kmta1236@gmail.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	stable@kernel.org,
+	Kaixuan Li <kaixuanli0131@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0678/2214] drm/amd/display: Fix swap in median3() for DSC rate control
-Date: Wed, 18 Nov 2026 15:39:14 +0100
-Message-ID: <20261118150038.911060814@linuxfoundation.org>
+Subject: [PATCH 5.15 0633/2214] f2fs: check every cur_*_segno[] entry on readonly images
+Date: Wed, 18 Nov 2026 15:38:29 +0100
+Message-ID: <20261118150036.671341502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,57 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keita Morisaki <kmta1236@gmail.com>
+From: Kaixuan Li <kaixuanli0131@gmail.com>
 
-[ Upstream commit 7b23bf82ccbdb4cf0752f2b8686e7319a7ce497f ]
+[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
 
-median3() is meant to return the median of three values, but its last
-compare-and-swap step swaps b and c instead of a and b. When c is
-smaller than both a and b, it returns max(a, b) instead of min(a, b).
-For example, median3(2, 3, 1) returns 3 instead of 2.
+sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
+against main_segs, but on an image with the RO feature the goto that skips
+the duplicate-segno cross-checks also leaves the enclosing loop, so only
+index 0 of each array is ever checked.
 
-_do_calc_rc_params() always passes 0 as the first argument, and the
-second argument is never below 12. So whenever the third argument is
-negative, first_line_bpg_offset (and second_line_bpg_offset for 4:2:0)
-is set to the second argument instead of 0.
+An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
+reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
+segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
+three out-of-bounds writes during mount and the mount then succeeds.
 
-Fix this by swapping a and b in the last step, as intended.
+Use continue so every index is bounds-checked, and skip the node-vs-data
+cross-check explicitly, which is the other thing the old goto skipped.
 
-Note that this change does not affect valid DSC configurations. The
-third argument is negative only when bits per pixel exceeds the
-uncompressed rate of the colour format:
-
- - 3 * bpc for 4:4:4, 3 * bpc + 2 for RGB
-
- - 2 * bpc for 4:2:2
-
- - 1.5 * bpc for 4:2:0
-
-Fixes: 97bda0322b8a ("drm/amd/display: Add DSC support for Navi (v2)")
-Signed-off-by: Keita Morisaki <kmta1236@gmail.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1ddc4bc97a62fc89d9d3681413d9f977e1fa1a83)
-Cc: stable@vger.kernel.org
+Cc: stable@kernel.org
+Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
+Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
-index 3ee858f311d12..82fb10329c1eb 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
-@@ -46,7 +46,7 @@ static int median3(int a, int b, int c)
- 	if (b > c)
- 		swap(b, c);
- 	if (a > b)
--		swap(b, c);
-+		swap(a, b);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index a40dc08b3a1e8..405e17984adef 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3529,7 +3529,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			return 1;
  
- 	return b;
- }
+ 		if (f2fs_sb_has_readonly(sbi))
+-			goto check_data;
++			continue;
+ 
+ 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
+@@ -3541,14 +3541,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			}
+ 		}
+ 	}
+-check_data:
++
+ 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
+ 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
+ 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
+ 			return 1;
+ 
+ 		if (f2fs_sb_has_readonly(sbi))
+-			goto skip_cross;
++			continue;
+ 
+ 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
+@@ -3560,6 +3560,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			}
+ 		}
+ 	}
++	if (f2fs_sb_has_readonly(sbi))
++		goto skip_cross;
++
+ 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
+ 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
 -- 
 2.53.0
 
