@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052571;
-	b=UAY+bU87oXKdOojTlE+DlQ5xeDBBYmbXAoG7sCXfnzZpQ/YTo6fhFxcsHxMEU9oCNbyh
-	 RqeXUKAxn4URjZxUBI7hXiWAZeWPZnPRKc7dcAPquGxIUKYQDok7Mfvc+Ji9KnHv1MyRE
-	 EuXv7qa9w+jVthbZKLWiMFoO+HfMulDQySCS3dcNb4oVVYiOX0smK1ppYNIRqTy2N26g5
-	 pAwG6OMYvgaZPtPyOGtVYZIcZ+u8a6jC+E4c2bHY2CXgb346zTnII5tnOiAKZsggGMiaf
-	 hYHkBdW4sGoKaQWUIkAo96bI/jUwlCLWKK1sWej6yTvgNR7y3n9A4HIey+zK4Rif8/w==
+	t=1795052574;
+	b=AUt4Ny0Pru4PCxkDia1YqD2yfSAL2bhhBgfh9XBAcSQWxDcnHxBgzF5zHsKTDu+6/NQL
+	 HeQO86NyEQaCtRihcd+cjDjgJ5ohkLMZ8jEHxFb9jpl3lNoDUae5VSPKOHJkT7kzzIdfq
+	 Pb7QA6H+DmqOKHY2jimShALMKnqg7FeI/QcWzpTFX03CZmqclDV6fO7Ss+aLC06L90N37
+	 c/Is3j+0obDYvVlLwZMZQ5jKwLetzfWNSykVYyHVZ+I5B+RDWvfxoSlQ3V6eyx5iIh+T8
+	 QzN3gIqPQQk6Dd6s6Qshum9WvggneXsg58NsV2O0L5tMZ2reice2kWliDYsej5EYZlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hHUGk1i+8dlXAR6pwv6P5BN3UF1gS7w+B54m+1W5cT8=;
-	b=XWL+ZPN5dJaQaNEv4OMP3U/i5XshNOYV41OOYagRdetiaquDwjBcnec2rizlHrMGkt19
-	 4AuaJBtTO0Yt5IuBH0tvKiWgXt4dyaouiT+KiyYauwOEewJPds+Bg13ANJ/weD7uCIBNy
-	 amZOajgZCH31YUmvWNLhzEIa9MjTmZSdShkJfRbSdySH42eL1iCRR4KZquwhl4JI4jfEO
-	 a4sXZvR97aofrd9C6DyRzVVyvXEcReyLdeXrDwBjuquv5XPciwlWEkPFnQlIeyMCk3OsM
-	 czwX0h5B8Z56NX05GSIFYKNzSWTkgGyXqaWk8MfrCO6PfalKQ9d90paDsPiUx4JZhpQ==
+	bh=G3PDLSEN5ybH7hrXJpJUGJoCzz29OY1M3kun+p09OLo=;
+	b=SKHMtZcttJGM9tHVFXVpidLYPGTkemaQ9g2jzx1oyb0Ct7H7IbFDYM9sWz19AG6iYM94
+	 iOjKFvcLGgYoUBB+TZBX97YBWClVky7KnHiurVV2HhrQ3qz5P8+Gc5XQtuRvveojkiesz
+	 kgDadYWg2DGSn5Z+3/y3JEhiYU8RR/ixkDERuzZ8GhyfKTyIEdsfotCwWy5RA5A57lcK2
+	 P/Zqm0k7P8EcOoEaef/vFrbD5kNNeENggLnrNR8d7Xb9h3LFfqxDkLdSNvqKAydpGsGzj
+	 aQSPozPadSFtwOfnb5l9d5fOoEriYg9j08j7VZnkf3UgcySqGjXwHdouxdL7gcoF1xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcdDJPu8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zk0QYO61;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A610F606A320;
-	Thu, 19 Nov 2026 01:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C68606A320;
+	Thu, 19 Nov 2026 01:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcdDJPu8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C378C1F000C4;
-	Thu, 19 Nov 2026 01:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zk0QYO61
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE701F000C5;
+	Thu, 19 Nov 2026 01:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052571;
-	bh=hHUGk1i+8dlXAR6pwv6P5BN3UF1gS7w+B54m+1W5cT8=;
+	s=korg; t=1795052574;
+	bh=G3PDLSEN5ybH7hrXJpJUGJoCzz29OY1M3kun+p09OLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LcdDJPu8Uaq41RS4ie+bGtLSd4lGdGPxwUBGqNqpSpH7OY8KXJ7Yi5wgglqzQ3u0J
-	 c00YaTYsi7RsM+TXnVGcpzdP7QuROA1ovjWIpxnvQOmy4GFjjLvOEaohLNKZgvxG9H
-	 dCL0apO03nxUzQtdIymyuiGVh5cZW80s9SYAjBVo=
+	b=zk0QYO61SYi4z8kMdIkc4HituzTHouGUeWpB3WNhVXiu/eg2k0H0KVvyJb9SqvkQV
+	 ZflLdSgjjQ/h+90/BOBPL2gdTrbKZwIiXiEWfVvzK8q3ZALgZLwzVEfC7Hw9ft0QRy
+	 aqVCSBMmNYZJKdTe1O33c3CmAF87yKzKXuofebSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Drobyshev Vladimir <enigma_137@icloud.com>,
+	stable <stable@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0610/2214] slimbus: messaging: fix leaked PM vote on tid allocation failure
-Date: Wed, 18 Nov 2026 15:38:06 +0100
-Message-ID: <20261118150035.637076040@linuxfoundation.org>
+Subject: [PATCH 5.15 0611/2214] USB: cdc-acm: add VeriFone VX820 device ID
+Date: Wed, 18 Nov 2026 15:38:07 +0100
+Message-ID: <20261118150035.706544687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Drobyshev Vladimir <enigma_137@icloud.com>
 
-[ Upstream commit c26cc979e28f5193310e4379e14aa6417375c565 ]
+[ Upstream commit ddbddee6592ecf6cf6c24d888780f9ad45a3e30b ]
 
-In slim_do_transfer(), when a transaction needs a tid and
-slim_alloc_txn_tid() fails, the function returns directly instead of
-jumping to slim_xfer_err. The runtime PM vote taken earlier with
-pm_runtime_get_sync() is then never released, leaving the controller
-permanently powered up.
+Add USB ID 11ca:0219 for the VeriFone VX820 to the cdc-acm device
+table and apply the SINGLE_RX_URB quirk.
 
-As txn->tid is still 0 at that point, jumping to slim_xfer_err drops
-the vote exactly like it is done for other failed transactions.
-
-Fixes: d3062a2109309 ("slimbus: messaging: add slim_alloc/free_txn_tid()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101448.1084691-2-srini@kernel.org
+Signed-off-by: Drobyshev Vladimir <enigma_137@icloud.com>
+Link: https://patch.msgid.link/20260929173833.105208-1-enigma_137@icloud.com
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/slimbus/messaging.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/slimbus/messaging.c b/drivers/slimbus/messaging.c
-index 0deb4c291c6a4..c56dc26875fc5 100644
---- a/drivers/slimbus/messaging.c
-+++ b/drivers/slimbus/messaging.c
-@@ -138,7 +138,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
- 	if (need_tid) {
- 		ret = slim_alloc_txn_tid(ctrl, txn);
- 		if (ret)
--			return ret;
-+			goto slim_xfer_err;
- 
- 		if (!txn->msg->comp)
- 			txn->comp = &done;
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 6bb29d679bb1c..5c41de688e3d0 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1767,6 +1767,9 @@ static const struct usb_device_id acm_ids[] = {
+ 	{ USB_DEVICE(0x11ca, 0x0201), /* VeriFone Mx870 Gadget Serial */
+ 	.driver_info = SINGLE_RX_URB,
+ 	},
++	{ USB_DEVICE(0x11ca, 0x0219), /* VeriFone Vx820 Gadget Serial */
++	.driver_info = SINGLE_RX_URB,
++	},
+ 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
+ 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
+ 	},
 -- 
 2.53.0
 
