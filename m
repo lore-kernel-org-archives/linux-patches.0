@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016326;
-	b=pyC5AkXouWNIsyeBX5lnxvRAlf6mB/sUX6941p5gh7dVecRQoGupCvBERpSZB3+OlERf
-	 Z3i5EZxgN5Q8rojslPIukbOzWQV8OVQRaP9gbplY9CoF9oTZ+Wnpn/YZDhBHPI/xuyJmq
-	 uWsW8aU3agcdnBW2vkhCUwyoTtNZsvaAg77liMFpd8C9a3SlWzUaG+5rxMB+xEtnan3ZS
-	 hQOPLt0rvvquBYv9IAkP6o6lUgkvUVrnhNjYLgAsS1YF70fZqms106YNsZwqcP4sTt15/
-	 cI0CSclr7X0Vn5SZOAtbSmB9GDnSD+sebkkCQ6A47twHtBgEDj3Pe2+MlOrPv5Tz8Xw==
+	t=1795016329;
+	b=3auFrJOVwQwi6lpsZSI6hPH59yGYQBbMVz+a9k2hGaAzi0NMIMESSkwPzUj/o2krYzJ4
+	 B0R9FOJGBizMyN91zJFa+0YGwdSXeUvpop7BNRDtknNPlM+ELcx6+6ol8C1txV2kHaJFV
+	 oJIc5ZjqUtUvP7ItSQpEBVNjHCLy5gFyWfjurIKXQLhKiUGTnKuL9cdFx649NjFium/E7
+	 R1gd0bMn0PhlhUgMO7PS4sX3rLAjF/zM8P5qYS3FpYNKuuh5zsPukCLKDg7+Mzk2uSOu9
+	 RTdlAmPaDPO5pJXRxTp4XBLF9zT4fNf8V/omxWWRxFm72Jv5VXaYqYmSKm9rICjiTGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B7MvnLasLrEnqvEM9rBaKVyOBaF+fKIoX8N5Te/vwL4=;
-	b=BRovpGOjmaGq7UKt9KmlWUGyvwda8QX7oeMHKCfCT7BAOdQjjErH7OCYR98nrRQZvek/
-	 fM8F5NhPLjv0C2cdEOobyg0/kCy3kklAGXWP1699jcdvvdfTCUGdY+XJLostEYoyTIeM5
-	 vToVNjPgsDBkST0J8A0rXW6ygFe+7IfLBmahXYoxaK2VeMn6gB9UmSsYjo6kClG/MZsi3
-	 wDRbzf4uA1S+GwVr1Zw5CkUdn1n31Wogg+qTwJTOMOfcq3ufZBVSrLFoQUABr13M/7uOl
-	 uiOYtLL7JT0Btjx6dA+kJ8zvlL3uUzhbwu949tnvTpGS3giHi7MQwFYRnnRxKHnVguA==
+	bh=A3Q7y6FAAEMHnwVlnZHkSFTVeV5NrEberMihnghmnZs=;
+	b=MCGKEq7Q8FyzFu32V+43eWMhf6bY9qtTEmBXKDrvKhKiH7gB5NazhAXkOji6sSz1bKTl
+	 yLTD5JxhhxpgESoQSzyXZk0KPAh1tXKQA3f16rUqCahaLw9FxtxpqCYMxkrmnqVTkUYA1
+	 ccU+gGd7iQ391ppfxHagpXH0jTVV97pNxwAq3rGfcBlP1vOaARFTCQovWAg5dJWqhFvWa
+	 2li0xshYWUmiEq+eGM+EOXnEPrkyXrnTyKkF+myEmnimncDqxX1SCcFA/Az4UMA6aBZMw
+	 muCzuGzuEUikeyRLZLnyxu4g2WUEKG4++yvQ3KSnBh3nhC9hGEAwtm8ORBnm7ePuY5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLAZot2M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HJY/IzrR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FE2606A33E;
-	Wed, 18 Nov 2026 15:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057CB60A260A;
+	Wed, 18 Nov 2026 15:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLAZot2M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D711F000C4;
-	Wed, 18 Nov 2026 15:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HJY/IzrR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2341F000C4;
+	Wed, 18 Nov 2026 15:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016326;
-	bh=B7MvnLasLrEnqvEM9rBaKVyOBaF+fKIoX8N5Te/vwL4=;
+	s=korg; t=1795016328;
+	bh=A3Q7y6FAAEMHnwVlnZHkSFTVeV5NrEberMihnghmnZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLAZot2MmXIYXFLCxvrQsfsE3ca20vhS7liI58mFTBurMVw5bwe2ZYyv1VsuarPbi
-	 ArGMnyfQfeHT2KZwk6NRq4NZEtgfs1eGDllYZQXeHg4+9GmIMZHoc6hxKzozKy5TlM
-	 773bMPuAv6B8MKijM700DwuM8DldCXYsD+45AeOo=
+	b=HJY/IzrRnCGIsUC/nwdZgF5nvaImiF51/+1PDpS2nY28eBzdyEItzStCojLQ5rbOu
+	 3fwtoGg3nJTKfNCyUE6yqRNO/zQQ4lMENLMhwncNZyXU0P72cwIy/6YaqwPh54F3rj
+	 ESVFeRr783iUO9e6jteSFwsKLYSZmom2o83uI8+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitesh Venkatesh <nitesh.venkatesh@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0489/2651] crypto: qat - allow KPT disable when service is not asym
-Date: Wed, 18 Nov 2026 15:28:49 +0100
-Message-ID: <20261118150305.382779713@linuxfoundation.org>
+Subject: [PATCH 7.3 0490/2651] ntfs3: fix out-of-bounds read in ntfs_read_mft()
+Date: Wed, 18 Nov 2026 15:28:50 +0100
+Message-ID: <20261118150305.418155261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,96 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitesh Venkatesh <nitesh.venkatesh@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit f66452a888e60fec5046c7fbdea1da1fcdaff98b ]
+[ Upstream commit 7a374d9be8267834dc534e55f01e5e01765cab4c ]
 
-The KPT (Key Protection Technology) enable sysfs attribute rejects any
-write when the currently enabled service is not 'asym', including writes
-that disable KPT. This blocks a legitimate recovery flow:
+ntfs_read_mft() walks the attributes of an MFT record and, for each
+FILE_NAME attribute, compares the resident on-disk name with the name
+being looked up.  The only size check before the compare is
+rsize >= SIZEOF_ATTRIBUTE_FILENAME, which covers the fixed header up to
+and including name_len, but not the variable-length name that follows it.
 
-  1. Configure the 'asym' service and enable KPT.
-  2. Bring the device up, then down.
-  3. Reconfigure the service to 'sym' and bring the device up.
-  4. KPT is still reported as enabled, but is not active because the
-     asymmetric service is no longer configured.
-  5. Bring the device back down so the KPT enable attribute becomes
-     writable.
-  6. Writing '0' to the KPT enable attribute to clear the stale flag
-     fails with:
-       "KPT can only be enabled when the asymmetric service is enabled"
+name_len comes straight from disk and is not validated against the
+resident data_size.  A crafted image can set name_len large while keeping
+data_size at the header size, so ntfs_cmp_names_cpu() reads name_len
+le16 characters past the end of the MFT record buffer:
 
-The asym-service check is only meaningful when enabling KPT; disabling
-must always be permitted so a stale enable flag can be cleared after
-the service configuration has changed.
+  BUG: KASAN: slab-out-of-bounds in ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+  Read of size 2 at addr ffff888031879c00 by task a.out
+   ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+   ntfs_iget5 (fs/ntfs3/inode.c:209)
+   dir_search_u (fs/ntfs3/dir.c:265)
+   ntfs_lookup (fs/ntfs3/namei.c:85)
+   __lookup_slow (fs/namei.c:1915)
+   lookup_slow (fs/namei.c:1932)
+   path_lookupat (fs/namei.c:2278)
+   vfs_statx (fs/stat.c)
+   vfs_fstatat (fs/stat.c)
+   __do_sys_newfstatat (fs/stat.c)
 
-Parse the user-supplied boolean before the service check and gate the
-check on the enable direction. Disable requests are now accepted
-regardless of the currently configured service, provided the device is
-in the down state (which the attribute already requires for any write).
+  Allocated by task:
+   mi_init (fs/ntfs3/record.c)
+   ntfs_iget5 (fs/ntfs3/inode.c)
+   dir_search_u (fs/ntfs3/dir.c)
+   ntfs_lookup (fs/ntfs3/namei.c)
 
-Fixes: fb98254a5eb9 ("crypto: qat - add KPT support for GEN6 devices")
-Signed-off-by: Nitesh Venkatesh <nitesh.venkatesh@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Check that the name fits in the resident data before using it.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_common/adf_sysfs_kpt.c      | 24 ++++++++++++-------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ fs/ntfs3/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs_kpt.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs_kpt.c
-index 1f733ae80bdfa..a0db98f33f1fe 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_sysfs_kpt.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs_kpt.c
-@@ -31,6 +31,7 @@ static ssize_t enable_store(struct device *dev, struct device_attribute *attr,
- 	struct adf_hw_device_data *hw_data;
- 	struct adf_accel_dev *accel_dev;
- 	bool enable;
-+	int svc;
- 	int ret;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index fd844f9c556a8..d86c8fffbe817 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -213,6 +213,11 @@ static int ntfs_read_mft(struct inode *inode, const struct cpu_str *name,
  
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
-@@ -38,14 +39,25 @@ static ssize_t enable_store(struct device *dev, struct device_attribute *attr,
- 		return -EINVAL;
- 
- 	if (adf_dev_started(accel_dev)) {
--		dev_info(dev, "Device qat_dev%d must be down before enabling KPT\n",
-+		dev_info(dev, "Device qat_dev%d must be down before changing KPT state\n",
- 			 accel_dev->accel_id);
- 		return -EINVAL;
- 	}
- 
--	if (adf_get_service_enabled(accel_dev) != SVC_ASYM) {
--		dev_info(dev, "KPT can only be enabled when the asymmetric service is enabled\n");
--		return -EINVAL;
-+	ret = kstrtobool(buf, &enable);
-+	if (ret)
-+		return ret;
+ 		names += 1;
+ 		fname = Add2Ptr(attr, roff);
 +
-+	if (enable) {
-+		svc = adf_get_service_enabled(accel_dev);
-+		if (svc < 0)
-+			return svc;
++		/* Make sure the full name fits in the resident data. */
++		if (rsize < fname_full_size(fname))
++			goto out;
 +
-+		if (svc != SVC_ASYM) {
-+			dev_info(dev,
-+				 "KPT can only be enabled when the asymmetric crypto service is enabled\n");
-+			return -EINVAL;
-+		}
- 	}
- 
- 	hw_data = GET_HW_DATA(accel_dev);
-@@ -59,10 +71,6 @@ static ssize_t enable_store(struct device *dev, struct device_attribute *attr,
- 	if (!hw_data->accel_capabilities_mask)
- 		return -EINVAL;
- 
--	ret = kstrtobool(buf, &enable);
--	if (ret)
--		return ret;
--
- 	user_data = GET_KPT_USER_DATA(accel_dev);
- 	user_data->enable = enable;
+ 		if (fname->type == FILE_NAME_DOS)
+ 			goto next_attr;
  
 -- 
 2.53.0
