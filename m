@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025030;
-	b=pkKuJhHQX0H1FPCVnuq298Es5jM5cjSSic5D18C35aFMXpVimQO4pfcQg2yzwFJvMO9A
-	 KqFnFhl3xcN9FMbFBGvF3rL/CgOA3KMIsAsKqH1gujCfg1Bb9E5IC8YDNjDD+zg7aOBkQ
-	 RRpyuE94T8yLnV1I3pjt0r2mtdOH/0FFl79/lPfwLkX5bVv2wc0N0nnLfPDN+YCit9cmV
-	 RA5LPP3QSbecr/6Qa2NpoJi5S6MADLE/jrFBQRcZto4y+sINLCJkrU45CUokAtLfbaPuN
-	 mrnbn3TEDuWlmD/CJx6wRLHjTTgzfA/lPp7TeNdeRrYW0c+IGNkZkqdDOCwxdDXYcDw==
+	t=1795025033;
+	b=drj0JugVUgiiSREhyThnjSp1pEPQf/Qjzt27jT82LAo6P5PGJqE3lTNAd0M9VvewL2TI
+	 KWXBiB1MsEpInkY7S++ATUG/Efpyd6aUhDHGc8wFVo1k2cAlse8051dq0jzFpSypdsV5L
+	 FFehdTE2lHaruDAWYjNX32AxsGfiJP0klWZuuj2ATTNGPnz9WO822u8CO84YXeWNhEfTu
+	 KpqObv307/0HDMBDavnXNU7MX+mi9I3xrbm2ARoLqT6cvozGZv2Jvc6yTofc1M+e6SQ8w
+	 5zUaIUxgw4KVL5XILP1alFLkuXmj0IARvySX4jHvPC3v4cIRRYGs7oPUJCzXDplZCFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FEYWv5JeMdVzEkwAnnyHIhGFT+YWB05NX39m4Hwdeqw=;
-	b=UGo/1UXsNenUoZJ12juB5dSTE9XcRfdNWC+T4ZHbXszv/IEa1VJ2vpVmDaZ7PwE4evtw
-	 7ozFvbbdO7Id0uBT4WTCRNUHSYXSzsAxaB8/Js5u4ZePnHcnG8nvpNeTdF4dYLdIzHv15
-	 rpxGYgGJtWg49RGEtGX7FnB4IOCYZt42pSaey0BEK3OgJM2bB44w216KsrLU44A3fynz5
-	 5qtxVlbfEC+789NEfz/Da0gv90XkmAX2yG+p4V4t6CDaJjaUrxuCbCAtATLwfSuHuraH9
-	 lNphKfs9v7BPN9ZO8u8uZN7CKfKdBddveiWZYajMks03WIc6aaezU5QBbrt8Er2e/XQ==
+	bh=era2gtM/bQwhZ2lw1oBm+0naIa1otY3Hdc2vqNHkLUI=;
+	b=lpN20D5N19oqVt6oy1KGnDyPQRJuiagcfZUCEfZc9zVfb4vNeEeUNFN0vYUU4vhQs5Tj
+	 k427OhkYE7x6wvX4IkyF6HfpvK7OeloNaCdgCASLND6E/BDm4XOKbm1tzrqDbtXbnoVxd
+	 5zn9ajBPuXHPpgMn1n9i+0TfC5dY0Co5Gns4Zas8p72UCXisZTcslbZAmH0XV+gGeiKV2
+	 eU7x0K9hl8UZU3LhUJologXxdpk1OFEM9SiNEShv3+wmfkKIQydVJoYpc1I16lnp1N5Oq
+	 EWIaI/ncSZNbMuOT6oT8b7kxzPlinXMSyX8UuoGqwKmJUbXLXznI2jvvQfq6eoRgXZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4NI1fM8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fWZrUc+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93039606A330;
-	Wed, 18 Nov 2026 18:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DCB606A32A;
+	Wed, 18 Nov 2026 18:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4NI1fM8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45251F000C6;
-	Wed, 18 Nov 2026 18:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fWZrUc+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA4B1F000C8;
+	Wed, 18 Nov 2026 18:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025030;
-	bh=FEYWv5JeMdVzEkwAnnyHIhGFT+YWB05NX39m4Hwdeqw=;
+	s=korg; t=1795025033;
+	bh=era2gtM/bQwhZ2lw1oBm+0naIa1otY3Hdc2vqNHkLUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4NI1fM8xUJFA4rFObxaa1ljDSShjC+4FR2Hw56jE+jeaFQjrdG2Fc4g1F9W3qu5F
-	 +dgUSdixCG6QspttoDnuWo1MW0Ntp02lMFjnlTTLpHjbUJS15VI08WBXK/M2l52ZeY
-	 8ngf2Szsl3ncUzOf1WBUk5isWUZ4vPlNFZYS+nIs=
+	b=2fWZrUc+buowoYWxwD1EVbGpqqtcYoi/U9LJ1gl8UFu30Ew4Lx0uh2LTsX4jnl2av
+	 CAmucLcpm3DDUiQr80GWTwa5YnhphYGw0axhoXLtXGTBu5KYoZuTYHa2BXSBVI97NV
+	 lcZEZcXVpBP4NV9kRQT3KuSe8IR0v6KJEzajWmeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0910/2151] ARM: mvebu: fix Cortex-A9 errata selection for Armada 38x
-Date: Wed, 18 Nov 2026 15:44:05 +0100
-Message-ID: <20261118150155.536437463@linuxfoundation.org>
+Subject: [PATCH 6.18 0929/2151] sched: Set TIF_NEED_RESCHED before calling __trace_set_need_resched()
+Date: Wed, 18 Nov 2026 15:44:24 +0100
+Message-ID: <20261118150156.341840754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,47 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit 76e67df8bc1cb72157368c3669119e64cdb0a6a6 ]
+[ Upstream commit 53bc5c556b82a3ca32b62ba349c4511f91526b9f ]
 
-Armada 38x uses Cortex-A9 r4p1, but MACH_ARMADA_38X selects the
-workaround for erratum 720789, which was fixed in r2p0, and omits
-workarounds for errata that still affect r4p1.
+set_tsk_need_resched() tests TIF_NEED_RESCHED, calls
+__trace_set_need_resched() if the flag is clear, then sets it via
+set_tsk_thread_flag().  A BPF raw_tp program attached to
+sched_set_need_resched executes synchronously inside __bpf_trace_run().
+On return, __bpf_trace_run() drops the RCU lock with
+rcu_read_unlock_migrate(), which on the preempt-or-BH-disabled path
+calls set_need_resched_current() -> set_tsk_need_resched() again.
 
-Drop ARM_ERRATA_720789 and select ARM_ERRATA_754322 for faulty MMU
-translations following an ASID switch and ARM_ERRATA_764319 for
-unexpected undefined instruction exceptions when reading debug
-registers. Also select ARM_ERRATA_764369 when SMP is enabled to work
-around cache maintenance by MVA failing to reach other agents.
+set_tsk_thread_flag() follows the tracepoint call, so every re-entrant
+frame sees TIF_NEED_RESCHED clear and calls __trace_set_need_resched()
+again:
 
-The Cortex-A9 r4 Software Developers Errata Notice (ARM UAN 0009D)
-lists these errata in sections 2.3.3, 2.5.10 and 2.3.4, respectively.
+  BUG: TASK stack guard page was hit at ffffc9001224ff98
+  Oops: stack guard page: 0000 [#1] SMP KASAN PTI
+  RIP: 0010:__bpf_trace_sched_set_need_resched_tp+0x1c/0x190
+  Call Trace:
+   trace_sched_set_need_resched_tp+0x110/0x130
+   set_tsk_need_resched include/linux/sched.h:2076
+   set_need_resched_current include/linux/sched.h:2094
+   rcu_read_unlock_special+0x43a/0x440
+   __rcu_read_unlock+0x9e/0x120
+   rcu_read_unlock_migrate+0xa9/0x240
+   __bpf_trace_run+0x131/0x180
+   bpf_trace_run3+0x333/0x430
+   __bpf_trace_sched_set_need_resched_tp+0x13a/0x190
+   trace_sched_set_need_resched_tp+0x110/0x130
+   set_tsk_need_resched include/linux/sched.h:2076
+   ...
 
-Link: https://documentation-service.arm.com/static/608118675e70d934bc69f143
-Fixes: 9aa30f1c13d1 ("ARM: mvebu: add initial support for the Armada 380/385 SOCs")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+__resched_curr() has the same ordering, firing the tracepoint before
+setting the flag via set_ti_thread_flag() or set_nr_and_not_polling().
+Fix it for consistency.
+
+Replace the separate test_tsk_thread_flag() + set_tsk_thread_flag() pair
+in set_tsk_need_resched() with test_and_set_tsk_thread_flag().  In
+__resched_curr(), move the tracepoint call after the flag is set in
+each path.
+
+Fixes: adcc3bfa8806 ("sched: Adapt sched tracepoints for RV task model")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Acked-by: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://patch.msgid.link/20260630084750.2792851-1-rhkrqnwk98@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mvebu/Kconfig | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/sched.h | 5 ++---
+ kernel/sched/core.c   | 7 +++++--
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/mach-mvebu/Kconfig b/arch/arm/mach-mvebu/Kconfig
-index 9f60a6fe0eafb..5203b5cfa4577 100644
---- a/arch/arm/mach-mvebu/Kconfig
-+++ b/arch/arm/mach-mvebu/Kconfig
-@@ -55,7 +55,9 @@ config MACH_ARMADA_375
- config MACH_ARMADA_38X
- 	bool "Marvell Armada 380/385 boards"
- 	depends on ARCH_MULTI_V7
--	select ARM_ERRATA_720789
-+	select ARM_ERRATA_754322
-+	select ARM_ERRATA_764319
-+	select ARM_ERRATA_764369 if SMP
- 	select PL310_ERRATA_753970
- 	select ARM_GIC
- 	select ARM_GLOBAL_TIMER
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 60e893927ac8b..51b80e816fec7 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -2057,10 +2057,9 @@ static inline int test_tsk_thread_flag(struct task_struct *tsk, int flag)
+ 
+ static inline void set_tsk_need_resched(struct task_struct *tsk)
+ {
+-	if (tracepoint_enabled(sched_set_need_resched_tp) &&
+-	    !test_tsk_thread_flag(tsk, TIF_NEED_RESCHED))
++	if (!test_and_set_tsk_thread_flag(tsk, TIF_NEED_RESCHED) &&
++	    tracepoint_enabled(sched_set_need_resched_tp))
+ 		__trace_set_need_resched(tsk, TIF_NEED_RESCHED);
+-	set_tsk_thread_flag(tsk,TIF_NEED_RESCHED);
+ }
+ 
+ static inline void clear_tsk_need_resched(struct task_struct *tsk)
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 824888693c414..3b51a93ba609c 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1114,6 +1114,7 @@ static void __resched_curr(struct rq *rq, int tif)
+ {
+ 	struct task_struct *curr = rq->curr;
+ 	struct thread_info *cti = task_thread_info(curr);
++	bool need_ipi;
+ 	int cpu;
+ 
+ 	lockdep_assert_rq_held(rq);
+@@ -1130,15 +1131,17 @@ static void __resched_curr(struct rq *rq, int tif)
+ 
+ 	cpu = cpu_of(rq);
+ 
+-	trace_sched_set_need_resched_tp(curr, cpu, tif);
+ 	if (cpu == smp_processor_id()) {
+ 		set_ti_thread_flag(cti, tif);
+ 		if (tif == TIF_NEED_RESCHED)
+ 			set_preempt_need_resched();
++		trace_sched_set_need_resched_tp(curr, cpu, tif);
+ 		return;
+ 	}
+ 
+-	if (set_nr_and_not_polling(cti, tif)) {
++	need_ipi = set_nr_and_not_polling(cti, tif);
++	trace_sched_set_need_resched_tp(curr, cpu, tif);
++	if (need_ipi) {
+ 		if (tif == TIF_NEED_RESCHED)
+ 			smp_send_reschedule(cpu);
+ 	} else {
 -- 
 2.53.0
 
