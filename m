@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015828;
-	b=ypk0KfpOgB8DYRlXwqI6e1q1/9wietSyGl0Z+6sObAx42lL4NJ56Hons5Nig0SljI04M
-	 X44JhSUORUfAGimEAeEwPUwSzkKGJeaj/utnpL/EP9/fnrwzD2yt1knJAlKINw3JrRFV6
-	 xC6X5UElUNvqjnof1n0ivdVYwnJ9BFmH1PAT1Xl5qlwJ0h1mmZtdmeXPRrHOnk8F4mBQC
-	 tKsO6zptf6sdcNsYgJi8YBQ96Bw0jFmP7Bhmjjq157+ziBhWMZ7eauStT1uA1somqWzhd
-	 qfmjdxdGbwCD6qylWyBLJ8WV9yjQW95y599o//bAHI4xTAA1VzsGNLykKNNimbGO3zw==
+	t=1795015831;
+	b=4OV5vX7p15oeWhBMI3pqNJ+trtv2u7WdvVIoRIotxFf8EDmSM2TzaXMdPeXCx3b3fi5B
+	 BrfxTD4cpxG1pq/YUIym3NXX1yt6u3Q7WH4FaKq1s0dLaadclfEcpWkCX/6dZNTTaS4D+
+	 hq7O+0pfu7OZtMSm+nsk1klbho1sFh8C7qiyOLvIjg8cACZO5kHGWDgyLgeXDANYhQgdY
+	 8XhqBt17EmcRv2IDYlbOV/D8IV4cFKU+RqxTLpNobb8lMgA7On6BtsSln8PUJ5s1su867
+	 KwtO7NjTPhqCMN4oxskDYjsRFvyNCpdJF+9hneW/Nyc+p2PUrvcBUSCpciBuIeaXexA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E8gu3gENb2jcU1u4WYiF2OKwlMVP7apasG2Ph5IQWQM=;
-	b=Mv4AyfctfnJqFzbouzo9EfsW9GgLcqp4Aso9duFM1AQS6N6keRTk/dcHzFAOjQZtJdOG
-	 n4zk3HV1dCrm1Inu41fJV8gvC4BPfMJqXRA/+omqUxOfmZbt7QmqTXKG/YP2u6qnynWr2
-	 9s1Udf2xZv2F80aDbJYJyq0D2bD42/I8QXFtoMGRuqGWbBLMeR5oMqw0ItriabY/3fm/w
-	 f+vDaFm3V00Cj1jogXHGn3jaRvVL8QrxasERpCGUIA8dXg6GwOP7yeSoCBAhLej3GVALX
-	 HCOS3en25WtdP0B+0QUxWqBdB724oGU+8wuurrWWeYPKbVSwblPGyk+ZlfLjrFifqFg==
+	bh=/YHzInVqNnYJiO5BLtedYH7yYsJsEOCGOaq6ylf7w2c=;
+	b=2BqhEgtAoQPC0WBMkCIrN1IPkJYwwZvarg1PTmdIM9uEw5ocBofkthOpq6+QzRgn5rQy
+	 /msVoNTvvq+GEhnFiYZIdl3lhSYrL9aus4RxOQK9Ykv4otX/TwOtF6lVXmNCzLExMradj
+	 d2zu9NYTyj0MPyKF4qGoR+TYtOnglDeXV0OQPRArJ9BpSohW4JMvt6LLjYieC5O59JvbA
+	 aGrPuoX4indRrIaZzSKeT7je/iVt0NEF5rzXK0dw8fEVDXQgP5uv7ALdffgme7iel0PPq
+	 nJ56sR2QJzPyqqUx+VnTg64/b5c+ffp4T4oA4AklO5whprUIjbHL2iqfRuvStLFrxFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zfhdDUDn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nP5APk2c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3EC60A2602;
-	Wed, 18 Nov 2026 15:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE2E60A2636;
+	Wed, 18 Nov 2026 15:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zfhdDUDn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002311F000C4;
-	Wed, 18 Nov 2026 15:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nP5APk2c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35FB1F000C4;
+	Wed, 18 Nov 2026 15:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015828;
-	bh=E8gu3gENb2jcU1u4WYiF2OKwlMVP7apasG2Ph5IQWQM=;
+	s=korg; t=1795015831;
+	bh=/YHzInVqNnYJiO5BLtedYH7yYsJsEOCGOaq6ylf7w2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zfhdDUDnbg3EwCFLKwL+TcdS/G/D+c3sddE0V7J0QeeXv5ko1A08Lq3SHpVZM4mst
-	 X3RGFMWIo2PXUvWCUUXWIUf7MaddF0KAN6NY13yBSHzM9CNkhj4hxZlb0a5o1SBvyg
-	 nRZ56XWS/dkjHSEwfkt8ZosYjNPGJO0q8kZ25ESI=
+	b=nP5APk2cHc3a/gHFmZIBEC32IMwMM/c6aQRU1W/CnNjY9/1y6DBILa76RA339moX5
+	 H6IWA0rYY/a6+EBVHlK3qLYctEimzadCzfyfg8/Hs+d62IYbjBD1RGh5lKBmRfq02Z
+	 AsRV1zRzqCPjekWto0hG7kTt0wQ3ly/TYUJSXE5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qinyun Tan <qinyuntan@linux.alibaba.com>,
-	Yi Lai <yi1.lai@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0312/2651] iommufd/selftest: Return dmabuf fd from IOMMU_TEST_OP_DMABUF_GET again
-Date: Wed, 18 Nov 2026 15:25:52 +0100
-Message-ID: <20261118150259.123309033@linuxfoundation.org>
+Subject: [PATCH 7.3 0313/2651] ASoC: rt1320: avoid re-initialize in advanced mode
+Date: Wed, 18 Nov 2026 15:25:53 +0100
+Message-ID: <20261118150259.157266904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,61 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qinyun Tan <qinyuntan@linux.alibaba.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit 1d56f4d6db3d2b2c93017a80c4f9c4cfffa9d193 ]
+[ Upstream commit 04c3ee0f5d158f6e2027c7ef617044cb649ab4ab ]
 
-The selftest helper reads the new dmabuf fd from the ioctl return
-value:
+On some machines, speaker protection is enabled.
+We call this advanced mode, which loads the DSP firmware and changes settings
+based on the basic mode, including blind writes.
+The amplifier can retain the advanced mode settings until a POR or power loss occurs.
+Therefore, the driver does not need to switch from basic mode to advanced mode
+when the system performs a warm reboot.
+We only need to check the function_status to determine
+whether the system has undergone a cold or warm reboot.
 
-	*out_fd = ioctl(fd, IOMMU_TEST_CMD, &cmd);
-
-Commit dba4254e216d ("iommufd/selftest: Fix dmabuf leak in
-iommufd_test_dmabuf_get()") fixed the dmabuf leak on dma_buf_fd()
-failure, but the applied version also changed the success path to
-return 0, so userspace no longer receives the fd.  Note the patch as
-posted on the list returned rc here; the change to return 0 appeared
-when it was applied:
-
-  https://lore.kernel.org/all/20260707030635.221577-1-seven.yi.lee@gmail.com/
-
-Every test using test_cmd_get_dmabuf() then operates on fd 0 instead
-of the dmabuf, and the dmabuf_simple and dmabuf_revoke selftests fail
-across all fixtures:
-
-  # iommufd.c:1595:dmabuf_simple:Expected -1 (-1) ==
-    _test_ioctl_ioas_map_file(...) (0)
-
-Keep the dma_buf_put() on failure but return the fd on success.
-
-Fixes: dba4254e216d ("iommufd/selftest: Fix dmabuf leak in iommufd_test_dmabuf_get()")
-Signed-off-by: Qinyun Tan <qinyuntan@linux.alibaba.com>
-Link: https://patch.msgid.link/20260902085414.549830-1-qinyuntan@linux.alibaba.com
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9b30521074f0 ("ASoC: rt1320: run the initialisation preset on the first hardware init")
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260909091806.872977-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/selftest.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt1320-sdw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index ee706f18f7e91..f6da927461b57 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -2056,11 +2056,9 @@ static int iommufd_test_dmabuf_get(struct iommufd_ucmd *ucmd,
- 	}
+diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
+index 72af413306fa9..444a91755be98 100644
+--- a/sound/soc/codecs/rt1320-sdw.c
++++ b/sound/soc/codecs/rt1320-sdw.c
+@@ -2470,7 +2470,7 @@ static int rt1320_io_init(struct device *dev, struct sdw_slave *slave)
+ 	dev_dbg(dev, "%s amp func_status=0x%x\n", __func__, amp_func_status);
  
- 	rc = dma_buf_fd(dmabuf, open_flags);
--	if (rc < 0) {
-+	if (rc < 0)
- 		dma_buf_put(dmabuf);
--		return rc;
--	}
--	return 0;
-+	return rc;
- 
- err_free:
- 	kfree(priv->memory);
+ 	/* initialization write */
+-	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION) || !rt1320->first_hw_init) {
++	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION)) {
+ 		switch (rt1320->dev_id) {
+ 		case RT1320_DEV_ID:
+ 			if (rt1320->version_id < RT1320_VC)
 -- 
 2.53.0
 
