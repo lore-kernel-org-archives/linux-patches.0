@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022652;
-	b=Jt8rQiIOF0Q6dN4oSESmOZvTV+3NwArALswqioaCc6Pv+OhviU4gzmtnpR0GMpAR40pm
-	 ALZ5YqbUHtvY+u4XW+Q+WH0ysI/8jYjhZUZ6yOv4UIiJLBT41vUkf9kuRAhBnoQAolgXR
-	 ZoIWCiGJn9cBTdHZ3tHIzNqai6ibuh7y501NE/xunQr5hTLirDYO3Vzl+HJsNJablqUJ/
-	 UQqUr0IZQ0vcUfYHqYIuICxknf+ffOHXg6ZF6aHjNGoYxaslGfnaun9qXahQPLOe5nui5
-	 qN2b59odZsjWGmhq139siASKEapKDPo+iENIopxE3xn2tvTzQSifBbXdSO7SvlB1EvQ==
+	t=1795022655;
+	b=H7w3fDhVU5xKyYF8o4Qci+jZHT0a8ZzHIyILbhpAjW5ltlXZe9a4KEBUUAL+U1HLOUxg
+	 Z2VbmxzDy06cV8BeD5l9OsF4BNchhC3fsZpQPXGGVb1oJt2VI0v2InRJLoTVQAq7GJJvA
+	 p8DvKWGLG1d+cSiSgaTjBwv4/g0Y9kQut7fA00VgE7Ki/0THWawLrQ/g9aF9zVuC8tMy6
+	 4li560/4Ga91Z7ki/yJvwKNaQBBW7EAC/l6cTqDwDzKBJHBzRCqVbHVlcJOLBdHvCHA5k
+	 53mSgpd00OeNUtPNmyTXTMx4E1+5EPDtTozz1ScKlaaI7jehKRqoU4/5s+YwwJB7WCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ViJa3js2CgwMTLQgjhNIsgV8iu+29kX2et/CgtnSdb0=;
-	b=uPGMyvX0oSy5Hx6FaoKJ0HbwBwmwH6Ypvku6pRcy3Gb+tm3vP1gDPpO/jdISnUS6jIh3
-	 VsGFYwE+HWRxyORMpW6CFm3AYkK/QCV52/4D9ru7IcnAHv3JbPI8YGGue9dRpsqr/xam7
-	 1iur6US7tWrnSxmOlR11fxbkzdR8CIjjxAnrEmNJqf8YPe35U1GfGvuZs4vr5utP+PEMv
-	 nP+hSsmUEPTZOl6RCku7DVA7UADaDhzr4r9TtnsltfLkA6mAqT8dJpM46qx3z6+Z6/HZ1
-	 SEeXZeK9rdbXkeH1lpKU7Rjx0dzIiIrqb5jfF5Mrygr+PiEAfH807DyOC2CqIuhSveg==
+	bh=cvWyviqn9Q+AL98YLPykP8dCe92qz2MJzL5G5PTCVH8=;
+	b=dYwT2PIU0yVjbAO92muJFUkqj98JdDNoAPWV6xB0FKMpSykXBhqiNuYjrrVDJGsqf5Nv
+	 ADgeCQZHHb9IQcIcnMjR200EFODuEPP/ClTbRShGp0GG3RDHxokX+E56EY4jmTaKIHmNs
+	 gGG0h0KBGXJjCXFlzUwh9dBHAsR2IYDColbuxhnHfh3188+S0jsB0u7c0hzDva3p6ufbd
+	 t9fOgvtb5S1Y6cupndPV+OlmdfMaKpwZTDE2Cd5xtMgWe9tfcH3ARjn0GPTJjUytYNEXa
+	 oLLGUx8usjZXFwcXmdaWMEMY865A24unYAnfkKBAiATR5aNcXKULdaiOlj9zLffs9+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUsN61cJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmWxCP10;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE62606A31C;
-	Wed, 18 Nov 2026 17:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87396606A334;
+	Wed, 18 Nov 2026 17:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUsN61cJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381CB1F000C5;
-	Wed, 18 Nov 2026 17:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmWxCP10
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4B21F000C4;
+	Wed, 18 Nov 2026 17:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022652;
-	bh=ViJa3js2CgwMTLQgjhNIsgV8iu+29kX2et/CgtnSdb0=;
+	s=korg; t=1795022655;
+	bh=cvWyviqn9Q+AL98YLPykP8dCe92qz2MJzL5G5PTCVH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUsN61cJ6sZdfP9yIrNwSsLdbW79Ni8SoqnG+woqYPIHvadaO05PqmUZg3X5Pp6XV
-	 +2xQxlpLlntyRyC/8mnJjNT68PmSdFCKEWTo/lcIrgKa24ftt4GxLsreyHzWivFCuS
-	 Sk/+sCR4k9Kmvl28pOcp/vqesRjwqQVj52YwI60I=
+	b=UmWxCP10l1huuIUHt4XnO/F216MYwKdU5ud0aWFqQnjDc5UcT8Uix/1Q2z3BbSQ2e
+	 uS9gsydOiqIIjKuxaicK1zUPhBEvDVSE0th+62o7aRpMtit6eueJ9BCtgs4xg6dxxH
+	 lZiFs3ib2lNSrKCknrCnrjK7RT8jR+XVKIV2JqRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0087/2151] mm/vma: dont leak the charge for stack growth
-Date: Wed, 18 Nov 2026 15:30:22 +0100
-Message-ID: <20261118150124.967070424@linuxfoundation.org>
+Subject: [PATCH 6.18 0088/2151] sched: Re-arrange the {EN,DE}QUEUE flags
+Date: Wed, 18 Nov 2026 15:30:23 +0100
+Message-ID: <20261118150125.006433943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,48 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit b1ee87802111156e27557e82acc31fa7dfc76e2a ]
+[ Upstream commit 376f8963bbda5fee838eb1823b07562368104024 ]
 
-acct_stack_growth() charges stack expansion even without VM_ACCOUNT.
-This can happen for read-only or MAP_NORESERVE mappings created with
-MAP_GROWSDOWN. Unmapping these VMAs does not release the charge, leaking
-Committed_AS.
+Ensure the matched flags are in the low word while the unmatched flags
+go into the second word.
 
-Only check and charge growth for VM_ACCOUNT VMAs, matching mremap().
-Unaccounted growth skips the overcommit check while remaining subject
-to the other stack-growth limits.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-44-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced vma_test() using VMA_ACCOUNT_BIT with the equivalent vma->vm_flags & VM_ACCOUNT check. ]
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+Stable-dep-of: c282051fc2ca ("sched/fair: Clear throttle state when leaving the fair class")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/sched/sched.h | 45 +++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index e7914cd6d901d..d4146631eb3fe 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -3089,7 +3089,8 @@ static int acct_stack_growth(struct vm_area_struct *vma,
- 	 * Overcommit..  This must be the final test, as it will
- 	 * update security statistics.
- 	 */
--	if (security_vm_enough_memory_mm(mm, grow))
-+	if ((vma->vm_flags & VM_ACCOUNT) &&
-+	    security_vm_enough_memory_mm(mm, grow))
- 		return -ENOMEM;
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 0f29def72877b..2e0604b3a337f 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -2377,27 +2377,30 @@ extern const u32		sched_prio_to_wmult[40];
+  *
+  */
  
- 	return 0;
+-#define DEQUEUE_SLEEP		0x01 /* Matches ENQUEUE_WAKEUP */
+-#define DEQUEUE_SAVE		0x02 /* Matches ENQUEUE_RESTORE */
+-#define DEQUEUE_MOVE		0x04 /* Matches ENQUEUE_MOVE */
+-#define DEQUEUE_NOCLOCK		0x08 /* Matches ENQUEUE_NOCLOCK */
+-#define DEQUEUE_SPECIAL		0x10
+-#define DEQUEUE_MIGRATING	0x100 /* Matches ENQUEUE_MIGRATING */
+-#define DEQUEUE_DELAYED		0x200 /* Matches ENQUEUE_DELAYED */
+-#define DEQUEUE_THROTTLE	0x800
+-
+-#define ENQUEUE_WAKEUP		0x01
+-#define ENQUEUE_RESTORE		0x02
+-#define ENQUEUE_MOVE		0x04
+-#define ENQUEUE_NOCLOCK		0x08
+-
+-#define ENQUEUE_HEAD		0x10
+-#define ENQUEUE_REPLENISH	0x20
+-#define ENQUEUE_MIGRATED	0x40
+-#define ENQUEUE_INITIAL		0x80
+-#define ENQUEUE_MIGRATING	0x100
+-#define ENQUEUE_DELAYED		0x200
+-#define ENQUEUE_RQ_SELECTED	0x400
++#define DEQUEUE_SLEEP		0x0001 /* Matches ENQUEUE_WAKEUP */
++#define DEQUEUE_SAVE		0x0002 /* Matches ENQUEUE_RESTORE */
++#define DEQUEUE_MOVE		0x0004 /* Matches ENQUEUE_MOVE */
++#define DEQUEUE_NOCLOCK		0x0008 /* Matches ENQUEUE_NOCLOCK */
++
++#define DEQUEUE_MIGRATING	0x0010 /* Matches ENQUEUE_MIGRATING */
++#define DEQUEUE_DELAYED		0x0020 /* Matches ENQUEUE_DELAYED */
++
++#define DEQUEUE_SPECIAL		0x00010000
++#define DEQUEUE_THROTTLE	0x00020000
++
++#define ENQUEUE_WAKEUP		0x0001
++#define ENQUEUE_RESTORE		0x0002
++#define ENQUEUE_MOVE		0x0004
++#define ENQUEUE_NOCLOCK		0x0008
++
++#define ENQUEUE_MIGRATING	0x0010
++#define ENQUEUE_DELAYED		0x0020
++
++#define ENQUEUE_HEAD		0x00010000
++#define ENQUEUE_REPLENISH	0x00020000
++#define ENQUEUE_MIGRATED	0x00040000
++#define ENQUEUE_INITIAL		0x00080000
++#define ENQUEUE_RQ_SELECTED	0x00100000
+ 
+ #define RETRY_TASK		((void *)-1UL)
+ 
 -- 
 2.53.0
 
