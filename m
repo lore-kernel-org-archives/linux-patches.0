@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040475;
-	b=VXYDAxLT0urBCcAIEF43oLTtQUe+XN0o/BdJnA1tzUk7yU88q2Vl6Fr/u81Vz47tMW7C
-	 OdIZM2rt0j8QbLkj7v+3wKzqheYljqMoljKcfUXRPx0DgQtW9rSRpehWrZ6ORnIYt1q5g
-	 hgAg6VHD69RhF35YK1ljzWE55oiG+UgeCn4M9HeB9i5KNrrbV57TkFsZj30wpsWDBq9vu
-	 M9Tn8YxRL5JG9N2l8jNUNOuvR/3nFYWC7HKsKPdAf/H3sTFjlB/c6zmupJ9nb1MyNgpeq
-	 RZeHb84uCYqCmfePhe+NSzuy2L7f0Xbugx9kyTCoPDbci9IgsPa4BcJ3uadN8srq1Pg==
+	t=1795040477;
+	b=chf2dfO+brETWnD9Ma5QrfzDmcAWo0kMN1LJz+uNfqpmMH8TNU/UWf7SEmgre71/78GB
+	 4Om+QoSz+EVK0fhOW2vEUuEKmTnpTbQZWhJIIFGDbBCj66hckihz0TTM4PaBL8eoGx8I+
+	 FGhc17Doiiz5mX6XZu76HEJIjPdkdyCNT4Rv7SEWlzIPyZf8R8yTYMCvMjpBj7qON5kqc
+	 //5Q2v+hEjZ/Iv7qLSN81LuyXpGd/JvFQufPTuO2dg6A9syhoc6ekEx8Y2wQwBqci/j6g
+	 dYAR0ICqk7ZM7UM7aUVzaOjFfJhtclh+Veu9rS/oWnpmGzG3s672Dkj33W54NCA7c1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OoU1jlp8G5lLuyw8PfZR5DEoQ2IsPGrD46DIou8CGVU=;
-	b=XhKay5pSuFwFGey7BjTClRkjMd2jHIYs13vkzXFfaYUk9vculvH3UKVtsY1jNkTvZxp2
-	 28zSH/JQ8gWn3JNxVQutwi8i66wytGtqPCZSta+uNbkMmYN4iDD5N/jmxgK2B8feYteqT
-	 EQGHeVeUEORYaUvhQYcWB166vy+am+yfA3EAFB2/RRbDxaRfFa1UrVQX0VCClTw6ewgHd
-	 8sNQFF9xHdIhzZNuq55h/+b0h3i5UCd46Jb7r7e7iyWF61pRACatlbOjR5iIN8ZxUMoul
-	 ar8Q/k3E7IRNWgr4qVdqlY9UlkSF83I7VGO733MCagvDEjDt4fQobn1N9/XaxbKaQsw==
+	bh=BTSGCsbNhj66fNYFZTAWo58oUVAaUPJ5bG9WRTBtGnE=;
+	b=xRHgr0XX6+4UwnLbm6CBHx6qJLl/HfkRdVBCeJiSEzxsIsC7urCVDCQviXFLvfIGcmJv
+	 gEh9+EFfjk+owgDXaemfExqIqQYFaqkj8/5zHaP7jiRoMREFTzeaOG8vvrul9evTqepha
+	 drnfzsddlx6Fa8DankSi0u/qzxjRCjDUICcj6N1/Esg5UplYEtSGOMcQ+JSvbNDM367Me
+	 NL0IXm6FCT6dFzdiTboUVcQKs8675b2yrZPNuqrzBXxdOMxFRzBNgmgnQ7w0kgpGlrWC0
+	 7HKVbdO96McQoa0SOw/FFSEipManbbfPlazJ6kJf+z55PX/8yZaq6PCi9dF9IQ5yfJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKS8RjE2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRNWoMcx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011DF606A31C;
-	Wed, 18 Nov 2026 22:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB196606A31C;
+	Wed, 18 Nov 2026 22:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKS8RjE2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B121F000C4;
-	Wed, 18 Nov 2026 22:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRNWoMcx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A41E1F000C4;
+	Wed, 18 Nov 2026 22:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040474;
-	bh=OoU1jlp8G5lLuyw8PfZR5DEoQ2IsPGrD46DIou8CGVU=;
+	s=korg; t=1795040477;
+	bh=BTSGCsbNhj66fNYFZTAWo58oUVAaUPJ5bG9WRTBtGnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wKS8RjE2jva1S7138y4e0D1T7oygPyiTWOl8aoM0IoUq1MVXI61kjpKxlkdtnWob9
-	 Wh/UdraliIFwwqRm0QgzQyGH/B3nLV2mUj+m/P7WUELJpJrRtIZI3t2yy7oX3xleCs
-	 FowrrXaQTqTIEml5Lni4++7R2UfUBq1V4JbdU8YQ=
+	b=NRNWoMcx8aEha145uMd3BJexJ76RspGNrTRei+s1Xpr2n649ij1FugTyfzEfdm01F
+	 +refy1TbF8BXJuBwqcR3tfy3kwvD//DfQ5anwCVUkMygc/oYaxujefIVlllbqucZMK
+	 c4HfgVpWsEHHITWdssFz5FR5xwXPo6jGYD7CGAzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hongyan Xu <getshell@seu.edu.cn>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2470/3318] RDMA/hfi1: shut down the trap timer before unregistering
-Date: Wed, 18 Nov 2026 15:51:32 +0100
-Message-ID: <20261118150435.512263235@linuxfoundation.org>
+Subject: [PATCH 6.6 2471/3318] RDMA/hfi1: quiesce SDMA asynchronous cleanup on exit
+Date: Wed, 18 Nov 2026 15:51:33 +0100
+Message-ID: <20261118150435.544294783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,38 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit a1c9d476c2316685f85fffb6450ad88d01836357 ]
+[ Upstream commit e95d076bc1fca7cc36fc8f2f0e9687f79fd314bd ]
 
-MAD processing arms a trap timer embedded in each hfi1_ibport. Device
-unregistration does not stop the timer, so its callback can run after
-the port and its containing hfi1_devdata have been released.
+The SDMA state reference and completion cover the software cleanup
+tasklet, but not the hardware cleanup tasklet, err_halt_worker, or
+flush_worker. Queued instances can therefore access an SDMA engine after
+per_sdma is released.
 
-Shut down every port timer before unregistering the IB device. The
-shutdown form also prevents a concurrent path from rearming the timer.
+After the state machine has stopped, cancel err_halt_worker first
+because it can publish the hardware cleanup tasklet. Then kill that
+tasklet and drain the remaining flush work.
 
-Fixes: bf90aadd630c ("IB/hfi1: Send MAD traps until repressed")
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
 Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260928134151.1213-1-getshell@seu.edu.cn
+Link: https://patch.msgid.link/20260928134148.977-1-getshell@seu.edu.cn
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/verbs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/hw/hfi1/sdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/verbs.c b/drivers/infiniband/hw/hfi1/verbs.c
-index fbdcfecb1768c..641a9eca61550 100644
---- a/drivers/infiniband/hw/hfi1/verbs.c
-+++ b/drivers/infiniband/hw/hfi1/verbs.c
-@@ -1890,6 +1890,10 @@ int hfi1_register_ib_device(struct hfi1_devdata *dd)
- void hfi1_unregister_ib_device(struct hfi1_devdata *dd)
- {
- 	struct hfi1_ibdev *dev = &dd->verbs_dev;
-+	int i;
-+
-+	for (i = 0; i < dd->num_pports; i++)
-+		timer_shutdown_sync(&dd->pport[i].ibport_data.rvp.trap_timer);
- 
- 	hfi1_verbs_unregister_sysfs(dd);
+diff --git a/drivers/infiniband/hw/hfi1/sdma.c b/drivers/infiniband/hw/hfi1/sdma.c
+index 969c5c3ab859e..1d4760ba1b48f 100644
+--- a/drivers/infiniband/hw/hfi1/sdma.c
++++ b/drivers/infiniband/hw/hfi1/sdma.c
+@@ -1583,6 +1583,9 @@ void sdma_exit(struct hfi1_devdata *dd)
+ 		 * it is not running.
+ 		 */
+ 		sdma_finalput(&sde->state);
++		cancel_work_sync(&sde->err_halt_worker);
++		tasklet_kill(&sde->sdma_hw_clean_up_task);
++		cancel_work_sync(&sde->flush_worker);
+ 	}
+ }
  
 -- 
 2.53.0
