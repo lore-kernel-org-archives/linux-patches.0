@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015648;
-	b=U0g/Si2L6qo2tVI4ebWcMnUqWoiekXkY0p1paQVzHr6eVJS1f3wxHdr9bvjcuJeUTqyv
-	 xD6eHWAhTJW1BegZzQe3Co3IV+6tiItKHAs8M76+FqxPHfcJ/FhHgYQuuoM9+ij27EyRs
-	 MMlrG95DhPLE5FW23fXriWeyU4Nbo0FOWcKCj5Mii4zj00bSBd73waF7ihXkFmvbQkHS/
-	 duluJtZuLdidcDTZbrfN6XaBk+6N7XjHpZ7NOEg4YYj09i64UpPfv/B82ayZZyJ7A+j03
-	 3BAdLlZc1vF6ryApJ03TiLaISTutxn38eQGn3G2hkIdPksOPhlXDKWyorCSrgcsyixQ==
+	t=1795015651;
+	b=BTjH23ByxMqMZJebSehVdUssCk/7qk9Iq512sGsHvD2QiNjNv7pFRGYpodrqRV6FxUwN
+	 XlU/zkTNaGkSup9PX7E5+D9QSPZO7dSA9HMcmKD81PEorwKDcuDfpQxMhQy51otOP04wQ
+	 saut2naEslF3KKbbIVpygN3AO8N2LO21AFVgzK6t/a5LAeuqyEZCCFXgwpPUUclZsgRsf
+	 1SxAn6qXi8QNSP/HgooJ03IMn5Po5cp3v38A/cKBw9vz8XExenh4UIeWsxdoWWI90VFOh
+	 6HKV68x/CjGz3R1ApEFZqOigIsQwT96PRZO1G5yIoM1p4480zWpj9ljwzrfKKi8aNGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C/JrFAT9ckxxgg3aTu9G/6+8aPqh+9CY0I1qW1NSzzE=;
-	b=wJL777RJFfN6hvzGoxNJJoWcbnLW7y8bPtkoVm5MTBLpEKvxyHssIWoJInXW3dKSlaLK
-	 mFrmvc7MBOW0yRMz8jl6Si3fK2Tp9ZIir7JUj+zmzJwbO5Y3ZLK5/hSjqtlj7cko+O3bL
-	 zbnWguAHPjrT6av+jJM3701BGsaypHYfgxkEKRnqSML9pp2IYeWabmvB/7O7l275k8pGF
-	 OGNREx1oflEdcqiUk9g8FIJZCxiKSQUusUpXVJsVChf+P8/3wnIqdjx1UZnLcB90x0Ues
-	 hp9Lm6KGXP1iLJbBKuGT6bSmVIMkaRJhQ8IA++b7RXgm3m4Fx7fm7XWCLNDjLi5AWLA==
+	bh=D3d8Zu+ACZkbV3Ul3/B0dO9MMeZxzitruo5UVgH79xU=;
+	b=IhmJ1nMQXJDOB4MsZGFg5ewqnmGJX8oXTKk1W+ERJT/tzsPl4UxM2pi6m2ieJfDYaAcM
+	 63LxcH8+3BEUIlw0zTAqikwm/ZpwxVrNglgB7ktngIJbqZ5OKkf8yKifVtE5Cw5BMyq5H
+	 aO5dBGp7VXewSiVm5m78r/mP+hfBOCYM2T87Opbsujax15p3phlLZOFMk/xtMaGHGuw25
+	 2ZfBRPBSnmPeQ50SND8qRqEcrF/PICW1/q2VLBfy57ugDE3LELnFhoA9IaXmX4fN7DVwG
+	 un4Ie4DuEay9zEuTn817Sy3BrA2crrRt5e4SdqdC1iJ+wvvS7uLkxpSHTnfERDiklVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=seA0KZAb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+xOI1vl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBE4606A31C;
-	Wed, 18 Nov 2026 15:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DF606A337;
+	Wed, 18 Nov 2026 15:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=seA0KZAb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E43E1F000C6;
-	Wed, 18 Nov 2026 15:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+xOI1vl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8F91F000C4;
+	Wed, 18 Nov 2026 15:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015648;
-	bh=C/JrFAT9ckxxgg3aTu9G/6+8aPqh+9CY0I1qW1NSzzE=;
+	s=korg; t=1795015651;
+	bh=D3d8Zu+ACZkbV3Ul3/B0dO9MMeZxzitruo5UVgH79xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seA0KZAb7OkB79Q8TtqNglszVn2VWr6WsGSduQMowZjGl2ZA+pwO2dXVKbsZZry56
-	 xhY9Ci5VbSo3gLqZ44873nw5RNmuY/Ds1XuWXZJD4O1ni664M+mNrMt/NIhZo0jDv3
-	 Ry/jZHOfjj48FQaRzGHHv2UGWuZnEnlXwMxuuktk=
+	b=Q+xOI1vlg81u3CoAS0l4Cr9DozgON+ySD/jOugMHfxINGz4VEUJCY6//wx5vfjQB4
+	 gt3Z3uTOoWQW1kh04m/Y2J/eDnqzMUJRgGnI8Vk4MjTr7MCyls4rxaLJcyS+JjlaY0
+	 sKPOtWae8ADXC3jIOQBM/ExYuyje4ya7El//g+QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Mark Amirkan <markdamirkan@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0246/2651] perf evsel: Validate branch stack before byte swapping
-Date: Wed, 18 Nov 2026 15:24:46 +0100
-Message-ID: <20261118150256.710729124@linuxfoundation.org>
+Subject: [PATCH 7.3 0208/2651] wifi: mac80211: fix unauthorised port check for encap offload
+Date: Wed, 18 Nov 2026 15:24:08 +0100
+Message-ID: <20261118150255.362785357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,128 +67,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Amirkan <markdamirkan@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2148e094671b0f6a44f033787b7da4ed14e96c27 ]
+[ Upstream commit d59b9bf7df49367e01b06e82dd0f6e7ad3be493c ]
 
-When perf reads an opposite-endian branch stack, __evsel__parse_sample()
-swaps each entry before checking whether all entries fit in the event. A
-truncated sample can therefore make the swap loop read and write past the
-event boundary.
+The check in ieee80211_tx_dequeue() reads frame_control, addr1 and
+addr2 out of the skb, but for encapsulation offload that's just a
+random part of the ethernet addresses, so dropping depends on bits
+in the destination address. This is obviously wrong.
 
-A truncated perf.data file makes perf report crash with SIGSEGV. ASan
-reports an out-of-bounds read. A regression test puts an entry just past
-the declared end and shows that its flags are changed before the parser
-returns -EFAULT.
+Refactor the check and short-circuit for ethernet format frames,
+it only needs the port-control flag check since those are locally
+generated and not forwarded frames.
 
-Move the bounds check before the byte-swap loop. Valid samples are handled
-as before.
-
-Fixes: 63c12ae2f246dcdc ("perf evsel: Add bitfield_swap() to handle branch_stack endian issue")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Symbolic
-Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
+Link: https://patch.msgid.link/20260802105818.dd5da579813d.I51ed0121154bb652bebc97bb0597b1fae9ac978f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/sample-parsing.c | 48 +++++++++++++++++++++++++++++++
- tools/perf/util/evsel.c           |  3 +-
- 2 files changed, 50 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 48 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
-index 32dbc484487af..5839515349373 100644
---- a/tools/perf/tests/sample-parsing.c
-+++ b/tools/perf/tests/sample-parsing.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <stdbool.h>
-+#include <errno.h>
- #include <inttypes.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -417,6 +418,49 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
- 	return ret;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 27bae2a4fa86e..cfa77d4fd96f5 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3923,6 +3923,38 @@ static bool ieee80211_xmit_fast(struct ieee80211_sub_if_data *sdata,
+ 	return true;
  }
  
-+static int test_truncated_branch_stack(void)
++static bool ieee80211_drop_unauth_port(struct ieee80211_tx_data *tx)
 +{
-+	struct perf_event_attr attr = {
-+		.sample_type = PERF_SAMPLE_BRANCH_STACK,
-+	};
-+	struct {
-+		struct perf_event_header header;
-+		u64 nr;
-+		struct branch_entry entry;
-+	} input = {
-+		.header = {
-+			.type = PERF_RECORD_SAMPLE,
-+			.size = sizeof(input.header) + sizeof(input.nr),
-+		},
-+		.nr = 1,
-+	};
-+	struct perf_sample sample;
-+	struct evsel *evsel;
-+	u64 flags = 1;
-+	int err;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
++	struct ieee80211_hdr *hdr;
 +
-+	input.entry.flags.value = flags;
-+	evsel = evsel__new(&attr);
-+	if (!evsel)
-+		return -1;
++	if (likely(test_sta_flag(tx->sta, WLAN_STA_AUTHORIZED)))
++		return false;
 +
-+	evsel->sample_size = __evsel__sample_size(attr.sample_type);
-+	err = __evsel__parse_sample(evsel, (union perf_event *)&input,
-+				    &sample, /*needs_swap=*/true);
-+	perf_sample__exit(&sample);
-+	evsel__put(evsel);
++	if (info->flags & IEEE80211_TX_CTL_INJECTED)
++		return false;
 +
-+	if (err != -EFAULT) {
-+		pr_debug("truncated branch stack returned %d, expected -EFAULT\n", err);
-+		return -1;
-+	}
-+	if (input.entry.flags.value != flags) {
-+		pr_debug("truncated branch stack modified data past the event\n");
-+		return -1;
-+	}
-+	return 0;
++	if (ieee80211_vif_is_mesh(&tx->sdata->vif) ||
++	    tx->sdata->vif.type == NL80211_IFTYPE_OCB)
++		return false;
++
++	/* no need to check forwarding here */
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP)
++		return !(info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO);
++
++	hdr = (struct ieee80211_hdr *)tx->skb->data;
++
++	if (!ieee80211_is_data_present(hdr->frame_control) ||
++	    is_multicast_ether_addr(hdr->addr1))
++		return false;
++
++	if ((info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO) &&
++	    ieee80211_is_our_addr(tx->sdata, hdr->addr2, NULL))
++		return false;
++
++	return true;
 +}
 +
- /**
-  * test__sample_parsing - test sample parsing.
-  *
-@@ -433,6 +477,10 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
- 	size_t i;
- 	int err;
+ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 				     struct ieee80211_txq *txq)
+ {
+@@ -3989,20 +4021,8 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
  
-+	err = test_truncated_branch_stack();
-+	if (err)
-+		return err;
+ 	if (txq->sta) {
+ 		tx.sta = container_of(txq->sta, struct sta_info, sta);
+-		/*
+-		 * Drop unicast frames to unauthorised stations unless they are
+-		 * injected frames or EAPOL frames from the local station.
+-		 */
+-		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data_present(hdr->frame_control) &&
+-			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+-			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+-			     !is_multicast_ether_addr(hdr->addr1) &&
+-			     !test_sta_flag(tx.sta, WLAN_STA_AUTHORIZED) &&
+-			     (!(info->control.flags &
+-				IEEE80211_TX_CTRL_PORT_CTRL_PROTO) ||
+-			      !ieee80211_is_our_addr(tx.sdata, hdr->addr2,
+-						     NULL)))) {
 +
- 	/*
- 	 * Fail the test if it has not been updated when new sample format bits
- 	 * were added.  Please actually update the test rather than just change
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 5db43520f25e7..947835ff7426b 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -3651,6 +3651,8 @@ int __evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 			e = (struct branch_entry *)&data->branch_stack->hw_idx;
- 		}
- 
-+		OVERFLOW_CHECK(array, sz, max_size);
-+
- 		if (swapped) {
- 			/*
- 			 * struct branch_flag does not have endian
-@@ -3666,7 +3668,6 @@ int __evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 				e->flags.value = evsel__bitfield_swap_branch_flags(e->flags.value);
- 		}
- 
--		OVERFLOW_CHECK(array, sz, max_size);
- 		array = (void *)array + sz;
- 
- 		if (evsel__has_branch_counters(evsel)) {
++		if (unlikely(ieee80211_drop_unauth_port(&tx))) {
+ 			I802_DEBUG_INC(local->tx_handlers_drop_unauth_port);
+ 			ieee80211_free_txskb(&local->hw, skb);
+ 			goto begin;
 -- 
 2.53.0
 
