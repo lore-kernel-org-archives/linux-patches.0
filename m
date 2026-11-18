@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047931;
-	b=PiWSSAFDRv2ueL84jCAy5zz7LLSzQ6GEJ13vNSrd+9kPsJZfHQnkuXMyKRxBsrC8vxxK
-	 m3hoIOI31+KjLeENNx4b+nJG8h9eYYr7tkRY11iLeBjd5xqQG5Y6hEbkqRuarMw+v7QFE
-	 apwnwNHolUOeK+WDCDUGNZiy+2FBJZPMdBA/kjoEjK3K3MQ6M4p0hLkhitiLCb1bG7jmk
-	 wJuSA9fu7hYZ+9v2oHl7ppsCJLi8urMLjg5P2E4Bx3V38gfK9zJxpAR1pRRNgT/97E+qb
-	 SroL7IOWNwOWy6IW6dIwonUxH8FDm5jKiqmzUeY7qzZ7zh8LzUc/CaF6697xJYTV7bw==
+	t=1795047934;
+	b=LKfPE6YilUoChsz2QwlNvRSJFR6lQZGouQ7UHe2I17qTOQsF4kWYvUL/Vs2wEGMLqPLG
+	 fvUtcLhFTEYB3meYuVq3mICLhIBD6tmw9Sil8wuexZOQ/2fGVUNtG2zB2J8bWp9BQLRqY
+	 vh1G/lP7ni3U188NU4a1Yn0lfOsa8AifhTyGpso6F/KwPZ9vfx3KcJmpIF0BAKQihPzq/
+	 gXx7YsCpGg+Yqtc3H9hTle38J+5VLHhL0qQj7RCLiM9yfRRpPZ1F6e4s5og+zp8n9dlmO
+	 l3ziJE/Lfu/jnFf7QiJYvgDRIYfOCCE+Yjrs31Fp6WvfF1K29oDxFPa/J33FHABeUig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ArUN4GCZ6TbuYGQI667HhFS/TQqa3KAdxjOVUdmsnaI=;
-	b=OxX/6Ydf4Zkzw1plbHJqQtGOpfcFvUTQ9WOhvCvj3M6YpvjcIBKnRQd9wM/SRYUtTP/a
-	 B6qrjIxmIfnzbSpQK/DKMpo1qWg6whCJeLm4hsivRgjR+V8L+Vith5Fy/Pk8dygfAWOWR
-	 5pfPZJUnnJAg/PfBraA9/8r2P28hEkNR+NGaKZbxO5G8Cuph7WZLl+wFm+XR53y7t547L
-	 yFM+ma7P5QDGJnfPMvFXIgYgKSKofjfWMDr3yW6PgDCVTZY4A37g3Or3BuJChGn8GoxlR
-	 d5Xy77iaU+Vg/kfef0AopTXQ7/eaLY6QndTg27hocKMv6/pKr+xJ6Tw+7zhN1fchHlA==
+	bh=2FYYPTLoOHmtsueskK1ida99FV3OMQVpyJVuWqzcJOg=;
+	b=O/bnJG/qgrnN1hdKOj6sbt57Y7YXpuxKT5cczwn6Ya7poaYtKbUO7AKOlk4W6CcXp0ap
+	 BWAfCLrg9FCUwqeHyAWLmz6VwSKwedAqvX+A5m5NHOkLa3/at2osxmSCIU7XUAUxjt2b8
+	 09RByYRTQCWP+kO1K2SC+qDJZzwD8O1cyoWUbYjaLJfA4QZyrdH9nv/KXR3oQvAJuD1/S
+	 OMoDJUAJqNzemwQxBx/VDD/HfwXme9IgXvdHax10WVLCRUMRQx8QDPow89YJxbuAw5up9
+	 vjCBj8bOeLb0xppjdp34ZRKmRjmbCl3dcMezNn1Do0r76IosQ7L40N2o1UhgBDx45zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=roZiUdOd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Hq/UpONf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C09F606A320;
-	Thu, 19 Nov 2026 00:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF2F606A320;
+	Thu, 19 Nov 2026 00:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=roZiUdOd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9C41F000CC;
-	Thu, 19 Nov 2026 00:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hq/UpONf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C51B1F000CD;
+	Thu, 19 Nov 2026 00:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047931;
-	bh=ArUN4GCZ6TbuYGQI667HhFS/TQqa3KAdxjOVUdmsnaI=;
+	s=korg; t=1795047934;
+	bh=2FYYPTLoOHmtsueskK1ida99FV3OMQVpyJVuWqzcJOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=roZiUdOdCQgI1zxy+Z5VnhZYueHF5ClglsgKm8v8LYNuFfscEefIzJbh99R1yzZd8
-	 JbzUW6ZpKN6KZPKfJmRxlyn6r+s6jggXDm/zrwuTevQ8+Oaa1Ebt/bWGhuEo1U/f1h
-	 w6O0kJtkjQoF3xyYLuqHBGM3bhsEVHoQy8V2es5s=
+	b=Hq/UpONfBj+YfCJzg9fBE3hgr36+ILvp5nd9/SbIvyl0upI+psZwVxia3Bz+JhCmE
+	 KySWk7NCPyPQQ2kHi254C6rEqZM7k920VT4HjcTB3fRk1RwVEhHmx2g4DNG8puzLnZ
+	 ye9tNoN9RgDuiFKHvtKTZwpiotU3F610cQWymvZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jitao Shi <jitao.shi@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1812/2857] pwm: mtk-disp: Fix period readback
-Date: Wed, 18 Nov 2026 15:47:26 +0100
-Message-ID: <20261118150306.488766549@linuxfoundation.org>
+Subject: [PATCH 6.1 1774/2857] microblaze: prevent ptrace writes to MSR and pt_mode
+Date: Wed, 18 Nov 2026 15:46:48 +0100
+Message-ID: <20261118150305.151465760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,51 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit c5b29baad42b2b02389cc6a716697a8a63209930 ]
+[ Upstream commit 8518fd17ccef4a7d77877ccb0403b722106ad1a4 ]
 
-The period value stored in the register is the number of clock cycles - 1.
+arch_ptrace() accepts PTRACE_POKEUSR for every aligned offset below
+PT_SIZE. This includes the saved machine status register and pt_mode,
+which are kernel-owned execution state rather than general registers.
 
-Account for the offset when calculating the period in nanoseconds. This
-fixes the discrepancy reported by the pwm core when CONFIG_PWM_DEBUG=1:
+On return from an exception, rtbd copies MSR_UMS to the live MSR_UM bit.
+An unprivileged same-UID tracer can therefore clear MSR_UMS in its
+tracee's saved register frame and make the tracee resume in supervisor
+mode. pt_mode also controls whether later entry paths classify the frame
+as kernel or user state.
 
-    mediatek-disp-pwm 1100e000.pwm: .apply is not idempotent
-    	(ena=1 pol=0 281500/499875) -> (ena=1 pol=0 281500/499750)
+Reject PTRACE_POKEUSR writes to both fields while retaining read access.
 
-Calculation discrepancy in the driver was found by AI run by a colleague
-while debugging another PWM related issue. Check against SoC datasheet
-and fix done by the author.
-
-Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
-Cc: Jitao Shi <jitao.shi@mediatek.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://patch.msgid.link/20260827105738.8570-1-wenst@chromium.org
-[ukleinek: Adapt comment accordingly]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 2b4384542691 ("microblaze_v8: ptrace support")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260821103026.3627292-2-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/microblaze/kernel/ptrace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index db286284f3ee0..2d7e5424493f3 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -212,9 +212,9 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
- 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
- 	/*
- 	 * period has 12 bits, clk_div 11 and NSEC_PER_SEC has 30,
--	 * so period * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
-+	 * so (period + 1) * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
- 	 */
--	state->period = DIV64_U64_ROUND_UP(period * (clk_div + 1) * NSEC_PER_SEC, rate);
-+	state->period = DIV64_U64_ROUND_UP((period + 1) * (clk_div + 1) * NSEC_PER_SEC, rate);
- 	high_width = FIELD_GET(PWM_HIGH_WIDTH_MASK, con1);
- 	state->duty_cycle = DIV64_U64_ROUND_UP(high_width * (clk_div + 1) * NSEC_PER_SEC,
- 					       rate);
+diff --git a/arch/microblaze/kernel/ptrace.c b/arch/microblaze/kernel/ptrace.c
+index 5234d0c1dcaad..04700b08842e2 100644
+--- a/arch/microblaze/kernel/ptrace.c
++++ b/arch/microblaze/kernel/ptrace.c
+@@ -101,6 +101,9 @@ long arch_ptrace(struct task_struct *child, long request,
+ 			} else {
+ 				rval = -EIO;
+ 			}
++		} else if (request == PTRACE_POKEUSR &&
++			   (addr == PT_MSR || addr == PT_MODE)) {
++			rval = -EIO;
+ 		} else if (addr < PT_SIZE && (addr & 0x3) == 0) {
+ 			microblaze_reg_t *reg_addr = reg_save_addr(addr, child);
+ 			if (request == PTRACE_PEEKUSR)
 -- 
 2.53.0
 
