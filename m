@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061391;
-	b=RQS3Ebqv6FOua3FpnPt1aECOeaHnwmMyAz6Le6r7vICy1NSDxsfPn4NRmHO53khfYGTH
-	 q17Z3J65Mpml+Y2hyR100LNFiNQAKHzwCb7xjH5YkfLDC7a0cy5HyEYCd3N182Y8iOzAF
-	 twUWylnglWZNZy1R/bvwMbxV6lCoYKQHcOIs84dx3T4D4+4H1S6Qsp81lGyBcxU+qreu3
-	 xl/opjjTCxBNxTZcwuUOu9BBXw+H+1klr7oC9z1WizG47vSnPap9CqzXWKyATmW0uQT0E
-	 9RJuIAZpXqEI+90B1WOtM4akQvo6LRKSCvrhwfoPNGBVgMdZUmIKUIAoG8boh0XCtbQ==
+	t=1795061394;
+	b=T69Aexu1jyCPT2XOe5buK+ncSj0kIX7EvvQZGXm2z+Th3gPrs6nQeWMCMffQJu08+5ph
+	 DUpWZLAXyRCAKRmz+oiZzDL3QB5sJNxltOxJ3fiTvjH40sZSF96pqKuN4QLInaGVLz49d
+	 L/QuF6c56d8vMjYa23Sr4BNJh79pcABdZofMcJWpnPz5pQZOzG0HUT7sX4sd0fKTaC5qD
+	 vyFht4JQalrJ6X7Uo7Ga7XapXu5HyerawhGD7fzV8vog5UCPdbZ19WmXExjnxZhkbCwQw
+	 MeaFZFJXiu84sqwRyrBFTXtjRkpQhJew9CQSsJSrQYiMkiN2xwPNuXKzYsRTsi3z1hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=SqjzRu8uMrY0EpUdWw3LNB8+9YwgU8ksHZ+U1nqWVvY=;
-	b=p55LGomtqo64RyZMVDHdqhyN9NrZDaNmL8Gi8Xc9ekx2qVXmcnF85bx1gU3EpprD0vXW
-	 s3SehqHV6/esByvwvGZD68GXR4vgWeDpeVVWlN6tbltJ3h3evYhBZz92yRuFBapSkPNsB
-	 A3N8cjTsUIFWfz8JY3P5tWagQWUI+yxT2Xi70fx5wLTAMJGzEZ59mTB4UBZdXmL7v+mFE
-	 hxc+fQhR7nte1yxh1v7Bgdmq/hGQwPnM6edsVNYx6jRsOVr4RKBpFUp77xz6wG4supLf6
-	 Vd1WtRH5axoFfp79sq9lWj+2pBCYZNdeFV297pJ+oGGskk2yBdCJbeyKD/4uxLFNtUQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=vg6qnVDNgCPeW03Eoi3k30ShyrCxdIITicEuKIi6LUM=;
+	b=MlMMb9ktGeBhq7Mf2xPIu0Z3ivEXrxhVTzqwKyAuHQiRxLNRr4TkJJ6e1iHeQ32/At9x
+	 McKQ7kqTP67EE/Rb1b46SHLw7M3wHEFfFhPLwssqTEKoMtGB6eCXxZYkaFt9+NiJin7uZ
+	 MsklZVj1n4jymTwGtNNQtAMMfwV0i/19xFIhvRNbb3ny200geNDa57zVE0CLkJZp7vFia
+	 XHThtsj2FluKJ0tvU0LGs8Oic3+dvv9p6/xeuGUwPUj9CbzOXmzoVBt47soibMAoAppV3
+	 lqb233LuGKQ4Gr1c6cBpkjYPpE9P5G0LpHLX0WLQMVsTvze1XRlsLpgJKNyJgYz9luA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uH0MhJKe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+kSDI9t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B98606A32F;
-	Thu, 19 Nov 2026 04:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93A4606A320;
+	Thu, 19 Nov 2026 04:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uH0MhJKe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD211F000C4;
-	Thu, 19 Nov 2026 04:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+kSDI9t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0911F000C4;
+	Thu, 19 Nov 2026 04:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061391;
-	bh=SqjzRu8uMrY0EpUdWw3LNB8+9YwgU8ksHZ+U1nqWVvY=;
+	s=korg; t=1795061394;
+	bh=vg6qnVDNgCPeW03Eoi3k30ShyrCxdIITicEuKIi6LUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uH0MhJKezLCiA1CPN7YTK62+KD8bG44cmO+QWaVE/PdR8uEPMUKnE0ZivavSmoEPC
-	 oSnSrdswsbpfN2q0gONB8i2Fkdv9VbTso6SLvsnUAgvDSKmtfKPskpF+UuUTjsZMvC
-	 fjnwySImMxgdJenbZbvzifKdLYdFytrdrpwqsqVI=
+	b=Q+kSDI9tGuS12Veu54Sp7h9DTVqwD+KHU5UIxJImgfaPoGtQ4haS1yE2zAwOn94JZ
+	 ZsOP3Kj61LlY1k2vLC+Rup2f+M+wDqTygcQhoDxNMT4EpbLObNI7N9cFyHpQLjcQIB
+	 cGvM4ifrPRYSLh3f6FzL7CiNLbv3WDCmqa6jzlzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1509/1848] arm64: dts: allwinner: sun50i-h6: Add missing IOMMU for video engine
-Date: Wed, 18 Nov 2026 15:59:07 +0100
-Message-ID: <20261118150022.490659559@linuxfoundation.org>
+Subject: [PATCH 5.10 1536/1848] PCI/sysfs: Stop reporting _DSM failures as -EPERM
+Date: Wed, 18 Nov 2026 15:59:34 +0100
+Message-ID: <20261118150023.813723499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,45 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 965a49fc413d996eba9bae2a3132f03f45a2ea1b ]
+[ Upstream commit 36f9bd09920ed71c1b79db397170412b2de22319 ]
 
-The video engine on the H6 actually has two IOMMU ports. The one already
-listed is simply named "VE" in the user manual. The missing one is named
-"VE_R" and is probably either read-only or used for reference frames.
-Either way, it should be listed.
+Currently, dsm_get_label() returns the literal -1 on every failure path.
+The sysfs read path passes that value to userspace as -EPERM.  Reading the
+"label" or "acpi_index" attribute on a platform where the Device Name _DSM
+returns a malformed result then fails with:
 
-Add a reference to the "VE_R" IOMMU port to the video engine node.
+  $ cat /sys/bus/pci/devices/0000:00:08.3/label
+  cat: /sys/bus/pci/devices/0000:00:08.3/label: Operation not permitted
 
-Fixes: 62a8ccf3a248 ("arm64: dts: allwinner: h6: Fix Cedrus IOMMU usage")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260712030011.3778169-7-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Nothing in that path performs a permission check, and the read fails the
+same way for a privileged reader.  The error code points at a cause that
+does not exist, and tools such as lspci report it on every invocation.
+
+Return -ENODEV when the device has no ACPI companion, and -EIO when the
+_DSM evaluation fails or returns an object that cannot be parsed.  Other
+_DSM users in the tree report such failures the same way.
+
+The set of reads that succeed, and the bytes they return, stay the same.
+Only the error code of reads that already fail differs.
+
+Fixes: 6058989bad05 ("PCI: Export ACPI _DSM provided firmware instance number and string name to sysfs")
+Link: https://github.com/pciutils/pciutils/issues/175
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260814070522.2327975-2-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci-label.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-index 44b69c3dd77cb..9b059f7813573 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-@@ -162,7 +162,7 @@ video-codec@1c0e000 {
- 			resets = <&ccu RST_BUS_VE>;
- 			interrupts = <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
- 			allwinner,sram = <&ve_sram 1>, <&de2_sram 1>;
--			iommus = <&iommu 3>;
-+			iommus = <&iommu 3>, <&iommu 1>;
- 		};
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index 5b59b1870f3f0..959a277d5ddec 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -176,12 +176,12 @@ static int dsm_get_label(struct device *dev, char *buf,
  
- 		gpu: gpu@1800000 {
+ 	handle = ACPI_HANDLE(dev);
+ 	if (!handle)
+-		return -1;
++		return -ENODEV;
+ 
+ 	obj = acpi_evaluate_dsm(handle, &pci_acpi_dsm_guid, 0x2,
+ 				DSM_PCI_DEVICE_NAME, NULL);
+ 	if (!obj)
+-		return -1;
++		return -EIO;
+ 
+ 	tmp = obj->package.elements;
+ 	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
+@@ -206,7 +206,7 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 
+ 	ACPI_FREE(obj);
+ 
+-	return len > 0 ? len : -1;
++	return len > 0 ? len : -EIO;
+ }
+ 
+ static bool device_has_dsm(struct device *dev)
 -- 
 2.53.0
 
