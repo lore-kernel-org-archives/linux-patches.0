@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023779;
-	b=dmGAwSLpIAIGX/PyPSWAxOvVZyBEyeU0WXVSv5J2wuiz+pU/nXy9AN5hu4H2bwRxWM5e
-	 i4/Tt3KswHsL3vMquGq3mhzePfLnXm20VGMHgclvIKu8JFv24RjPuTZ24NqiSjpCvYz8L
-	 hyPOJcaaD7Xd5rHfZJHTuDiW86zYLD2FNME10o2Vn9wis+z/fKIdcsKm+7Zf+63xAgSoA
-	 LXfDp3WPYMDQhhuHAeg6CEPpKe3XAwAkLr10FNQvyu6jqEj63FdihsgmGvMEIZxNlEqQu
-	 jUIlfbRK20/qWZYE/NEGfFt5lX5wYQ306AOzj/ulwrn/l6saSRHgzHf4LzxHicTvxLQ==
+	t=1795023782;
+	b=ugOJRZ6J+SszJmVaC+MEgLy66JHLgLZv1AOgDEnWVeZPWyj0CwhGTCthOmE96/DUzczx
+	 YwKXzQzAXppPMXP1KAhbtJ1CaNWIt9LpP+rUV6hJg+xzhJQRX6KBxPUh/Wyt1nj4pZH+U
+	 +8qdroSZHx04ae58xIfDAr/90+LU+FE3EyghbLbFHTXgP3OvgHIK5RLoayQUIErEpp0zh
+	 1Q8WLFj0X0nRScq5Cat5uDSMdcCjJtdbaTgpehto6UW0cK2QLq/AyhFEm0MjBtY3ORcDw
+	 I9Clld3Ae3Qu+Thxio8Hm0RyDOYupPTYpoQK5IBjtDdYgzveBYpJxw4YhIwLE0CHF5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023779;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FCNBHfKcpf2NeADWx4nN+CkUwDoMoSeNiSve+OQYICk=;
-	b=I1lVRUzZjiOAjzUxiloAdVlNp4rDqqv5EZXCTgTVDGRTd/TX8IPRiIprUME0cWYpbqyI
-	 n9ffwE1CcyS2lPgnAgE2iJ3p4zyzLt5mJ1ifakI90UE8fbo0MbZgIMfKEo/Vdnn8X5Y38
-	 tyys0yycl42N8nYu0wX+QphFfvyGC4Ffrip19YzAAH864kex+XS15W4nYv2LchfDlyuiA
-	 9fe2uSPCi5vubMOZ3NRgJfdRF7huuoYzlkb/xyM+0J3McWAB2ZF+oC/CPISW9ROOfoAyL
-	 bgN+gFbm+gT0mAC0MiVSsXLBSYytNfymY8nx5VKBnhOlNwBcWvxIyCykQLijPeFDphA==
+	bh=9Mq2tsgksphgR0Olzbt9nxKeTT+2vZpbbyXcf5Ucg48=;
+	b=N7S0oVeutfS1VMzZPNcxOkK+0Q1AGuII38eRtzHfIEdTIr/9X/UIsRZk4NOtOEhDmwmk
+	 c+5RWXss3s9Az8DQJ7fFtpeb7EeNIIt3LD6gY5+n9W1jJvSHGNlA0M8BS4djFYozGK2YL
+	 rNRP5f7MPKVQxJnnrC8ii+0CTSmEq4OaXrsi8be+rNECKbCdoLu+zZvuLkKzoic12ApQU
+	 9aNJWFFA405ziXUWZAEipEnfdvzsnRCLoES4qnNd7b221oKGkBQRymXQZPk/lzsPAnPU/
+	 UmwJ7UT+Czg72PZDVYvaYwUKLVjzarGSn0CuyrU+eJomHQ+Titt0EM5cL7sI1Ldv/tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yb04qdp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJfCZtZm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE15606A325;
-	Wed, 18 Nov 2026 17:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B016F606A320;
+	Wed, 18 Nov 2026 17:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yb04qdp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1531F000C4;
-	Wed, 18 Nov 2026 17:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJfCZtZm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3791F000C6;
+	Wed, 18 Nov 2026 17:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023779;
-	bh=FCNBHfKcpf2NeADWx4nN+CkUwDoMoSeNiSve+OQYICk=;
+	s=korg; t=1795023782;
+	bh=9Mq2tsgksphgR0Olzbt9nxKeTT+2vZpbbyXcf5Ucg48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1yb04qdpLGoG+9fJoIeO8+PGj+1teArh0YwHIQ+6SrFKfWzu+w3pdkDUhwOaC/usm
-	 PrLmkb+wfqRQ8R+f9TGXOyg6aaM8uKut3/M7DYHAKI3Ui4WStOVafz1byG5ZzqeW2f
-	 M1OQY0R1+zHwjX++8Auw5vpdoayqun5uA58SU5As=
+	b=FJfCZtZmFKtT4w7GE5GmIf31GOW+kVWKqUHRjRHN7cu7vWtnwPG0S2Pu8WBrv1MjP
+	 ITfoqPyTr6BctgflwmJhYQedpd44wo9Rrkqo/f987Kx7k8ITSLxYo4cKCgVlrOCg4S
+	 chDrJhF28lnAHmSBrzPg4PBSSs6RgToDOOoZPEOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Valla <francesco@valla.it>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0491/2151] spi: virtio: fix max frequency setting
-Date: Wed, 18 Nov 2026 15:37:06 +0100
-Message-ID: <20261118150139.941806561@linuxfoundation.org>
+Subject: [PATCH 6.18 0492/2151] clk: si521xx: correct the SI52147 OF output enable map
+Date: Wed, 18 Nov 2026 15:37:07 +0100
+Message-ID: <20261118150139.976572563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,45 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Valla <francesco@valla.it>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 26f42ca8becd01877e762916865a168c1b6c4ff4 ]
+[ Upstream commit 7a4cc47d715f08309089d40b8c29fb0ba79917db ]
 
-The maximum transfer frequency is read from the virtio config space but
-never propagated to the SPI framework logic. Fix this behavior and drop
-the useless setting copy from the driver's private data.
+The SI52147 data sheet assigns DIFF0 through DIFF3 output-enable bits to
+0x17 in control register 1. The OF match data uses 0x15, leaving the
+DIFF2 bit out of the map, while the I2C ID table already uses the
+documented value.
 
-Fixes: f98cabe3f6cf ("SPI: Add virtio SPI driver")
-Signed-off-by: Francesco Valla <francesco@valla.it>
-Link: https://patch.msgid.link/20260915-virtio-spi-fix2-v1-1-7a474cb1b13b@valla.it
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use 0x17 for the SI52147 OF entry so both enumeration paths expose the
+documented outputs.
+
+Fixes: edc12763a3a29 ("clk: si521xx: Clock driver for Skyworks Si521xx I2C PCIe clock generators")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-virtio.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/clk/clk-si521xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-virtio.c b/drivers/spi/spi-virtio.c
-index 06845bd3fe832..c92ea19881183 100644
---- a/drivers/spi/spi-virtio.c
-+++ b/drivers/spi/spi-virtio.c
-@@ -33,8 +33,6 @@ struct virtio_spi_priv {
- 	struct virtqueue *vq;
- 	/* Copy of config space mode_func_supported */
- 	u32 mode_func_supported;
--	/* Copy of config space max_freq_hz */
--	u32 max_freq_hz;
+diff --git a/drivers/clk/clk-si521xx.c b/drivers/clk/clk-si521xx.c
+index 4ed4e1a5f4f2b..f167fd63c5040 100644
+--- a/drivers/clk/clk-si521xx.c
++++ b/drivers/clk/clk-si521xx.c
+@@ -375,7 +375,7 @@ MODULE_DEVICE_TABLE(i2c, si521xx_id);
+ static const struct of_device_id clk_si521xx_of_match[] = {
+ 	{ .compatible = "skyworks,si52144", .data = (void *)SI521XX_OE_MAP(0x5, 0xc0) },
+ 	{ .compatible = "skyworks,si52146", .data = (void *)SI521XX_OE_MAP(0x15, 0xe0) },
+-	{ .compatible = "skyworks,si52147", .data = (void *)SI521XX_OE_MAP(0x15, 0xf8) },
++	{ .compatible = "skyworks,si52147", .data = (void *)SI521XX_OE_MAP(0x17, 0xf8) },
+ 	{ }
  };
- 
- static void virtio_spi_msg_done(struct virtqueue *vq)
-@@ -305,7 +303,7 @@ static void virtio_spi_read_config(struct virtio_device *vdev)
- 		virtio_cread32(vdev, offsetof(struct virtio_spi_config,
- 					      bits_per_word_mask));
- 
--	priv->max_freq_hz =
-+	ctrl->max_speed_hz =
- 		virtio_cread32(vdev, offsetof(struct virtio_spi_config,
- 					      max_freq_hz));
- }
+ MODULE_DEVICE_TABLE(of, clk_si521xx_of_match);
 -- 
 2.53.0
 
