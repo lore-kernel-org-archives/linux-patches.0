@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038546;
-	b=qYoTz9LQWHpBvHteI28LvsDsQzg1xU/zo4IU7ZgjvKolidOg+8fX543sbLCmxCF2qPHO
-	 c3sF+c4ZyZ9sl4YzXqm59Jf2yE9+j5ge3UHMtSX2B+KmOO8yl0twv7LCwiqLmJpElgOmD
-	 azfI3OAYz+D790NsDkqqCFTGtKZGpSEctAmGdTQb5teYuOSdZNA6PpsVSWiAbnR2GPKHM
-	 uOfpz81yZrqo1OlvQ/O6wjUZyPDCapUFhjCKw5DqsEjIrgHdvc6jzDSZBUgN9grslvnuN
-	 F323eA5PAapw+pLrBM4mor4CiZ2vsWXgBpp/fPLvc4LpIGwq1VzucEhAzgSvImM/f5g==
+	t=1795038549;
+	b=W+dK8PZ7IpefxP/irZdC13QLe87eoonrj9/jGvoZPqbLkp3oVK2j2QcIFDZO/r/zceun
+	 uceXHzvpz5fjNi0BQRNzhfRsVq4dchr+FlJMEP9S8QSw7+7ANzgvLtffd4M+RmtVG6IsJ
+	 KC9Hk+zgLg68Lo7B1ILMOmQk4PTuw0Ho7Na6HjGf3moJwDnmGfJcd37eeEgs46xq7dUR4
+	 5JQ1Xj0yl3l1sFexIlm/l8HoFTHBGRneDHjvoeaIY7WXNrmxcH81jqEGf9Ac7O2mUhUc2
+	 I7fdDOF1LtqGAj7Gs1iJ/hfHMB3zX5hu3pinwqRYIFQwuU0zjJxbToOUNjghpuObCTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rvNVyZ8F69ShkN39WL+nWnBKzTUTYIZNjchA91coZAw=;
-	b=QEX24N2zTzBRLyBabl65PwilgcGtsNOsWxOgB1L3VN7+UYcNnBtxCkXORTXzQX3A1vvy
-	 ASIQqGDuSoOpfZJrK5chTrOY8W9cyZZ0dratWqOHpIpGcvDB2iHkA3RnSpLY/Fqg8jB+b
-	 F6Cp8kybmR4ZDqmn1i9iuhUHbMsmo7k8SRmBTsPlRBKcqZ7DckoNn5ChculW8Pho3/RJ1
-	 HoIPiPMAM3e/IWgZzDITb0r5d9+AOTW+C0c5/NibtK2wcfZQWjF4Do033xF8YNKTtIl8t
-	 WMPbHAGMMcO34CYnSaBiG5jJNCbpz988Ki5cpSAQ0XivtX3yvkl00hJAsNWZCvrRcHA==
+	bh=Jk1ff8RuDbQ8GTbd4YMpeIe3Lsga8GJ4CMyGvowRzto=;
+	b=C6xmychaoNzPoGVNndICP36XoWv4YGXe4E45IDdYgENNFapcpLj7IFq7v69B84EJ5nbZ
+	 jVQpf9CmPS7XSP3y2d0WOUNqHPs1or3EaG2TdJ0JgPL5v3tbj6caMUUHvKVSWqvW8qAmx
+	 6J30w/FBuuyR9/V1lsfMAH62VLU7NjBCf1vu8L8dldtHQ6/xMY395e2QuA9nNnICYDghR
+	 tvxDO0ks6Mfo8KxwA48c6yGo8/JqkFTCaT/ZnPG9LjswqpWX6QcKl7RT2UspBCKyKGlgq
+	 KeT0Yl8N9sooSvLyC1P92usFqiJf17HCD9UEJ8iZdXzGgOmR55bQlmswJE+rMsoHgLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHQIQmJa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mOJTGrpi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4CA606A333;
-	Wed, 18 Nov 2026 21:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33743606A325;
+	Wed, 18 Nov 2026 21:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHQIQmJa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A591F000C4;
-	Wed, 18 Nov 2026 21:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mOJTGrpi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6761F000C4;
+	Wed, 18 Nov 2026 21:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038546;
-	bh=rvNVyZ8F69ShkN39WL+nWnBKzTUTYIZNjchA91coZAw=;
+	s=korg; t=1795038548;
+	bh=Jk1ff8RuDbQ8GTbd4YMpeIe3Lsga8GJ4CMyGvowRzto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHQIQmJaHq2oukktJz0YfDkTDlm4FbiZSmL6zgb1T1jG25iP3FJzO/eXwoBxZmYI0
-	 P0FzYny5WyyiTwe2cuX6KYhDCxxA0mkXMZl6sWoqgkiQXFQ2qvcoEQclLMiCsH3ts7
-	 MvZsBhOPhid7W6vmJw55sMqMa+TnO8beQLdfYejw=
+	b=mOJTGrpimlsK9FxinQGdDRJRSsF/ZwW03zLM9uQu6DDUfF6fGQ8HOn4tDuIwaWHIZ
+	 yoOJ1elbQ52/tkbj1sI+1pmmIKjDrMBRxYa8tXd/rgsWzjkOQq4Do95WPB+ykJcD4l
+	 L2VaDRZA1AqDXrUUuVF3bkI8qEPnBe/vKQFHfjFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1779/3318] tpm: tpm2_probe: propagate transport errors
-Date: Wed, 18 Nov 2026 15:40:01 +0100
-Message-ID: <20261118150415.229283882@linuxfoundation.org>
+Subject: [PATCH 6.6 1780/3318] gpio: pca953x: Utilise temporary variable for struct gpio_chip
+Date: Wed, 18 Nov 2026 15:40:02 +0100
+Message-ID: <20261118150415.260407313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7d4f1cbfe063af5581dac66abe9e9c965e1031cc ]
+[ Upstream commit 9da0a75ea7ced4731b1f2c6c67dc409e40efb95a ]
 
-tpm2_probe() reads the protocol version from the response tag and is
-documented to return -errno on failure, but it always returns 0.  A
-transport error (tpm_transmit_cmd() < 0) is thus swallowed together with
-the intentionally ignored TPM response code, leaving TPM_CHIP_FLAG_TPM2
-unset. A transient bus failure on the first command then misdetects a
-TPM 2.0 as a 1.2 and the probe fails on the TPM 1.2 path:
+We have a temporary variable to keep pointer to struct gpio_chip.
+Utilise it where it makes sense.
 
-  tpm_tis_i2c 0-002e: 1.2 TPM (device-id 0x1C, rev-id 22)
-  tpm tpm0: A TPM error (-62) occurred attempting to determine the timeouts
-
-Return the transport error instead; rc >= 0 still means a valid header was
-received and the TPM's own response code is still ignored.
-
-Fixes: 94e266ba1fa3 ("tpm: migrate tpm2_probe() to use struct tpm_buf")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20261001060114.1582092-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-[ sashal: Replaced the early return with rc = 0 to preserve cleanup of the stack-allocated buffer. ]
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: a0fe26929350 ("gpio: pca953x: Handle direction register read errors in IRQ paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm2-cmd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-pca953x.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
-index 57bb3e34b770f..d01d90beab788 100644
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -507,9 +507,10 @@ int tpm2_probe(struct tpm_chip *chip)
- 		out = (struct tpm_header *)buf.data;
- 		if (be16_to_cpu(out->tag) == TPM2_ST_NO_SESSIONS)
- 			chip->flags |= TPM_CHIP_FLAG_TPM2;
-+		rc = 0;
- 	}
- 	tpm_buf_destroy(&buf);
--	return 0;
-+	return rc;
- }
- EXPORT_SYMBOL_GPL(tpm2_probe);
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index e13fac2132745..6384c0760e0ee 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -690,9 +690,7 @@ static int pca953x_gpio_set_config(struct gpio_chip *gc, unsigned int offset,
  
+ static void pca953x_setup_gpio(struct pca953x_chip *chip, int gpios)
+ {
+-	struct gpio_chip *gc;
+-
+-	gc = &chip->gpio_chip;
++	struct gpio_chip *gc = &chip->gpio_chip;
+ 
+ 	gc->direction_input  = pca953x_gpio_direction_input;
+ 	gc->direction_output = pca953x_gpio_direction_output;
+@@ -958,6 +956,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	struct device *dev = &client->dev;
+ 	DECLARE_BITMAP(reg_direction, MAX_LINE);
+ 	DECLARE_BITMAP(irq_stat, MAX_LINE);
++	struct gpio_chip *gc = &chip->gpio_chip;
+ 	struct gpio_irq_chip *girq;
+ 	int ret;
+ 
+@@ -986,7 +985,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	 * this purpose.
+ 	 */
+ 	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
+-	bitmap_and(chip->irq_stat, irq_stat, reg_direction, chip->gpio_chip.ngpio);
++	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
+ 	mutex_init(&chip->irq_lock);
+ 
+ 	girq = &chip->gpio_chip.irq;
 -- 
 2.53.0
 
