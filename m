@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019461;
-	b=XD5q5cVjNsuYpBIexj+S54U+IdK+b3pObLOIiNYhWqPkcTYMtsJuhtbxyqSKBi3I92Li
-	 5gwq1qeQ2vhf0vvT26NERgUfeECoNlE8JrKdwrGvviTcOHnd9mNodUrekg+jwaW77fWKQ
-	 Javxnqc8Lz1erz+ncfWKNoRFN/EA51CXH6nh+Z2A/WxMQVjXQmtcM6awMWBLB9qYlOqjl
-	 Nqik52CA0YPTBGUENc6u1p3NyjrPRhLwo374BmHIFSC17HJ3rFkZ+Ay3caEfJOx4Jaj5j
-	 hZmI6jIxEeR2XliHGiVhh+vks/0IeXQ/0pxmfUto5jJSfZNEel+3CrhRMhRRjh994CQ==
+	t=1795019464;
+	b=ATnOu+rSXrw2w/r/MsO/cki4JwsNH0Adyl8AVeLS749pB4YR83fyC/8xvpJwtnMXHCUZ
+	 Rg8Lq+SeIZTq2ukZN8raOry5a8NOnZEy+8GUGuUCjr2md2gmUraLTckUrYNeoGArh61yG
+	 QGzbQldTvR6Z2Drvp73Ey156cgUmh/8Zq8BBtRGtfcMw/8HFGz6KrFTxfRnX8JoKs9WpU
+	 Azzzo0UqVDXRuSfXfJ6ZT5IoxSA7uKtxq8npw3+ILcGIhaXlPoIz+dYWNz3dRTpmS6fhs
+	 2dN2tyFcUkdi/AwM61XpUMjfJVZMQ9SnB9lY/rgVYHC+3Xhzadz8gn7y7V+Wc2LJm1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KqGMsG3w5am7PXgWoSOPG/+SQYK+fphDwHPgXhql0QI=;
-	b=kyd8CsCzlIa0fxibD/jKhGS7busbXsq39yX1gVhMdYdDNFBYL88gH4Z6tYuh20/Qfbf0
-	 tPTrr20oLMt92wJ0XKxIkXUqCAdLouAmJ8C/5a2eNiiKOxQIam9EmTxhB5d7PLKteVuvB
-	 oCyRW4i/4VV3NwgP+Qz18o5Igj1GcruH7KBh8orbNXvkpdBdTIPCdCVuykYthDepzgScI
-	 tMQFNfkTnLqIbmeQSs+e9zI5ucGsNL+GTVR5jhucs6P5gpCDxu8IYXSCK+iwcfTyUWk3h
-	 o+XjHMWfF4dnkIBvjHr+CUvW5qSS7cRJoiAY6ohcEPprEIQnsuLZRBs6TwKQsV283Rw==
+	bh=NVCYlG9/vBPUY6AR4xVYxnumK3+SyDKEggeARM1ZKII=;
+	b=xWASjGNJ1KWHpg1/NgMJF5ZC31q+753sDwujEWMXpL5p/zE5SStXyPuEU/veSk4QyH6T
+	 VBVi1P2l/dMsY8FBo5CvlmzAy2Sqi2OnMGaBCGADHqPFpE7rkx+EkZh6RAM16nr3FU+p9
+	 y+++IQkShCXXMXdRlly2JYUsNgpOUqpBK5G1NoyeWk9Zw5vRGPk1aISQgwJsLQlMKaHoC
+	 jIDK7SgCvJ9LGrlKN9XmlILAQYNMiNXy3dOn5nQF4SCuSKQ3M+1QPzJV6odIcNQrjnLNF
+	 5qeXVz38prgBRN727j1xaCK5vzednm1S6Hr7thFI2EQvN+RpSwybKMjV5AvubPpoWHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RumUNJ7G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YyJz4dQk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7574E606A33B;
-	Wed, 18 Nov 2026 16:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387C2606A33F;
+	Wed, 18 Nov 2026 16:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RumUNJ7G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8CF1F000C4;
-	Wed, 18 Nov 2026 16:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YyJz4dQk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB411F000C4;
+	Wed, 18 Nov 2026 16:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019461;
-	bh=KqGMsG3w5am7PXgWoSOPG/+SQYK+fphDwHPgXhql0QI=;
+	s=korg; t=1795019464;
+	bh=NVCYlG9/vBPUY6AR4xVYxnumK3+SyDKEggeARM1ZKII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RumUNJ7GGB7yE2cgiYvBOs/fcRzyCYg6A4Pt/WUJz4IeAPGBl5kuVR8hFJRTLZhuz
-	 I1EdoUWOABAPtjhIVjd0w4FncS8H8wtEZf802vpVw3Vzfi8oZQdNvLVY0bTMNuY8Nf
-	 d/FwBOywcczS+GHCUXJbZLbOjJWfJMnOW+Fnf36o=
+	b=YyJz4dQkE4Zr8X5+fYrPeQtETW6rY0EG/UolkGad9IqG6PZjFGQ9yB8lEHWIr2Pf6
+	 GeffgQKWQITNM/hOPw9er+xmqwkP9Zk+yWWpsea5fIs/9CbDQ/28egWO3+OLDEBaR7
+	 4xqiOLihtr0rgUiCnXv5rgE8DqwSuQLElSbEt5ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Swark Yang <syang@axiado.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1603/2651] dmaengine: ste_dma40: Preserve the LCPA I/O address space
-Date: Wed, 18 Nov 2026 15:47:23 +0100
-Message-ID: <20261118150345.551831422@linuxfoundation.org>
+Subject: [PATCH 7.3 1604/2651] mailbox: axiado: fix RX frame draining and error handling
+Date: Wed, 18 Nov 2026 15:47:24 +0100
+Message-ID: <20261118150345.587516532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,89 +68,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Swark Yang <syang@axiado.com>
 
-[ Upstream commit 42c31fec1ca76b8b5f7759def122d418dff2cd4b ]
+[ Upstream commit fe43cf02f416417f2cdf59524abb84356d36d496 ]
 
-The LCPA area is mapped with devm_ioremap(), but lcpa_base and the
-per-channel lcpa pointer lack __iomem annotations. This loses the I/O
-address space and makes sparse warn when d40_current_addr() assigns
-LCPA register addresses to its __iomem pointers.
+Two RX-path bugs found during bring-up:
 
-Annotate both pointers and the LCPA argument of d40_log_lli_lcpa_write()
-to preserve the I/O address space from the mapping to the register
-accessors. This also fixes the existing LCPA read and write warnings
-without changing the generated code.
+1. axiado_rx_thread() previously consumed only one frame per
+   invocation. Multiple frames can accumulate in the FIFO while the
+   threaded handler is running. Split the single-frame handling into
+   axiado_mbox_receive_one_frame() and drain all currently queued
+   frames before returning from the handler. A cond_resched() in the
+   drain loop prevents a continuously-fed channel from monopolizing
+   the CPU.
 
-Fixes: c80edceff29e ("dmaengine: ste_dma40: Fix cyclic transfer residue")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610090216.pjMRxhRL-lkp@intel.com/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+2. readl_poll_timeout() waiting for the remainder of a frame can
+   return success either because the required FIFO level was reached
+   or because a FIFO error appeared -- it does not distinguish the
+   two. The old code did not check for that case and could therefore
+   enter the read loop without enough words actually being present.
+   Explicitly inspect the error status after the poll: if an error
+   occurs while waiting for the remainder of an already-started
+   frame, treat that frame as unusable and flush the FIFO to
+   resynchronize, rather than risk delivering incomplete or garbage
+   data to the client.
+
+While here:
+
+ - Track whether the handler actually serviced a hardware condition,
+   such as clearing a FIFO error or consuming frame data. Return
+   IRQ_HANDLED whenever something was serviced, even if the FIFO is
+   empty afterward, instead of reporting IRQ_NONE after handling a
+   hardware condition.
+
+ - Use readsl() for the RX FIFO payload. The destination is the
+   driver-owned rx_buffer allocated by devm_kzalloc(), so it has
+   suitable alignment for the stream accessor. readsl() is
+   appropriate for copying a sequence of words from the FIFO into
+   that buffer. The TX path intentionally stays on
+   get_unaligned_le32()/writel(): its buffer is supplied by an
+   external mailbox client, the mailbox API gives no guarantee that
+   buffer is naturally aligned, and the TX path also explicitly
+   handles a partial final word.
+
+mbox_free_channel() invokes ->shutdown() before chan->cl is cleared,
+and axiado_mbox_shutdown() calls disable_irq(), which waits for the
+in-flight threaded handler to complete, so no functional change is
+needed for that path.
+
+Verified: builds clean with the aarch64 cross-compiler, passes
+checkpatch.pl, and was regression-tested with live mailbox traffic on
+AX3005.
+
+Fixes: 14af7a96afa3 ("mailbox: add Axiado AX3005 mailbox driver")
+Signed-off-by: Swark Yang <syang@axiado.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c    | 4 ++--
- drivers/dma/ste_dma40_ll.c | 8 ++++----
- drivers/dma/ste_dma40_ll.h | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/mailbox/axiado-mailbox.c | 114 ++++++++++++++++++++++++-------
+ 1 file changed, 89 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index c93068fc757bf..4f1af65b46712 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -509,7 +509,7 @@ struct d40_chan {
- 	u32				 src_def_cfg;
- 	u32				 dst_def_cfg;
- 	struct d40_def_lcsp		 log_def;
--	struct d40_log_lli_full		*lcpa;
-+	struct d40_log_lli_full __iomem	*lcpa;
- 	/* Runtime reconfiguration */
- 	dma_addr_t			runtime_addr;
- 	enum dma_transfer_direction	runtime_direction;
-@@ -617,7 +617,7 @@ struct d40_base {
- 	/* Physical half channels */
- 	struct d40_phy_res		 *phy_res;
- 	struct d40_lcla_pool		  lcla_pool;
--	void				 *lcpa_base;
-+	void __iomem			 *lcpa_base;
- 	dma_addr_t			  phy_lcpa;
- 	resource_size_t			  lcpa_size;
- 	struct kmem_cache		 *desc_slab;
-diff --git a/drivers/dma/ste_dma40_ll.c b/drivers/dma/ste_dma40_ll.c
-index 4c489b126cb27..3be7f5b1abb08 100644
---- a/drivers/dma/ste_dma40_ll.c
-+++ b/drivers/dma/ste_dma40_ll.c
-@@ -333,10 +333,10 @@ static void d40_log_lli_link(struct d40_log_lli *lli_dst,
- 		(dlos << D40_MEM_LCSP1_SLOS_POS);
+diff --git a/drivers/mailbox/axiado-mailbox.c b/drivers/mailbox/axiado-mailbox.c
+index 3a3cf74218638..aa1dcc1b267d7 100644
+--- a/drivers/mailbox/axiado-mailbox.c
++++ b/drivers/mailbox/axiado-mailbox.c
+@@ -15,6 +15,7 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/property.h>
++#include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <linux/unaligned.h>
+ 
+@@ -36,6 +37,12 @@
+ #define AXIADO_MBOX_CSR_ERRORS		(AXIADO_MBOX_CSR_OVERFLOW | \
+ 					 AXIADO_MBOX_CSR_UNDERFLOW)
+ 
++enum axiado_mbox_frame_result {
++	AXIADO_MBOX_FRAME_EMPTY,
++	AXIADO_MBOX_FRAME_OK,
++	AXIADO_MBOX_FRAME_BAD,		/* malformed/incomplete; FIFO flushed */
++};
++
+ struct axiado_mbox_data {
+ 	u8 num_chans;
+ 	u16 msg_size;
+@@ -116,6 +123,13 @@ static int axiado_mbox_send_data(struct mbox_chan *chan, void *data)
+ 		return -EBUSY;
+ 	}
+ 
++	/*
++	 * Per-word get_unaligned_le32()/writel(), not writesl(): @data is
++	 * supplied by whatever client calls mbox_send_message(), and
++	 * mbox_chan_ops.send_data(void *data) makes no alignment guarantee
++	 * for that buffer. writesl() dereferences it as a native u32 *,
++	 * which is unsafe unless alignment is known.
++	 */
+ 	for (offset = 0; offset + sizeof(u32) <= msg_len;
+ 	     offset += sizeof(u32))
+ 		writel(get_unaligned_le32(buf + offset), priv->mbox_reg);
+@@ -131,31 +145,42 @@ static int axiado_mbox_send_data(struct mbox_chan *chan, void *data)
+ 	return 0;
  }
  
--void d40_log_lli_lcpa_write(struct d40_log_lli_full *lcpa,
--			   struct d40_log_lli *lli_dst,
--			   struct d40_log_lli *lli_src,
--			   int next, unsigned int flags)
-+void d40_log_lli_lcpa_write(struct d40_log_lli_full __iomem *lcpa,
-+			    struct d40_log_lli *lli_dst,
-+			    struct d40_log_lli *lli_src,
-+			    int next, unsigned int flags)
+-static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
++/*
++ * Read and, if valid, deliver exactly one length-prefixed frame currently
++ * at the head of the RX FIFO. Does not loop -- the caller decides whether
++ * to call this again. May clear a pending FIFO error at several points
++ * below, wherever a new one could plausibly have appeared since the last
++ * check; each check is a cheap readl() when nothing is pending.
++ */
++static enum axiado_mbox_frame_result axiado_mbox_receive_one_frame(struct axiado_channel_data *priv,
++								    bool *serviced)
  {
- 	d40_log_lli_link(lli_dst, lli_src, next, flags);
+-	struct axiado_channel_data *priv = dev_id;
+ 	struct mbox_chan *chan = priv->chan;
+ 	struct axiado_mbox *mb = dev_get_drvdata(chan->mbox->dev);
+ 	u8 *buf = priv->rx_buffer;
+ 	unsigned int num_words;
+ 	unsigned int remaining;
+-	unsigned int i;
+ 	u32 msg_len;
+ 	u32 word;
+ 	u32 csr;
+ 	int ret;
  
-diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
-index 55090cb310579..ca9d076493610 100644
---- a/drivers/dma/ste_dma40_ll.h
-+++ b/drivers/dma/ste_dma40_ll.h
-@@ -455,7 +455,7 @@ int d40_log_sg_to_lli(struct scatterlist *sg,
- 		      u32 lcsp13, /* src or dst*/
- 		      u32 data_width1, u32 data_width2);
+ 	/*
+-	 * Clear and log/count any pending errors, but don't discard data
+-	 * on their account alone: a rejected overflow write doesn't
+-	 * corrupt what was already safely queued ahead of it, so let the
+-	 * length-based read below decide whether what's here is usable.
++	 * Don't discard data on a cleared error's account alone: a rejected
++	 * overflow write doesn't corrupt what was already safely queued
++	 * ahead of it, so let the length-based read below decide whether
++	 * what's here is usable. Count clearing a real error as @serviced
++	 * so the handler reports IRQ_HANDLED whenever it actually handled
++	 * a hardware condition.
+ 	 */
+-	axiado_mbox_clear_fifo_errors(priv);
++	if (axiado_mbox_clear_fifo_errors(priv))
++		*serviced = true;
  
--void d40_log_lli_lcpa_write(struct d40_log_lli_full *lcpa,
-+void d40_log_lli_lcpa_write(struct d40_log_lli_full __iomem *lcpa,
- 			    struct d40_log_lli *lli_dst,
- 			    struct d40_log_lli *lli_src,
- 			    int next, unsigned int flags);
+ 	csr = readl(priv->csr_reg);
+ 	if (csr & AXIADO_MBOX_CSR_EMPTY)
+-		return IRQ_NONE;
++		return AXIADO_MBOX_FRAME_EMPTY;
++
++	*serviced = true;
+ 
+ 	/*
+ 	 * The first word contains the total message length in bytes,
+@@ -165,8 +190,12 @@ static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
+ 	msg_len = word;
+ 	put_unaligned_le32(word, buf);
+ 
+-	if (msg_len < sizeof(u32) || msg_len > mb->drv_data->msg_size)
+-		goto invalid_message;
++	if (msg_len < sizeof(u32) || msg_len > mb->drv_data->msg_size) {
++		dev_warn_ratelimited(chan->mbox->dev,
++				     "Channel %u invalid frame length %u (max %u)\n",
++				     priv->channel_num, msg_len, mb->drv_data->msg_size);
++		goto bad_frame;
++	}
+ 
+ 	num_words = DIV_ROUND_UP(msg_len, sizeof(u32));
+ 	remaining = num_words - 1;
+@@ -182,33 +211,68 @@ static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
+ 					  remaining,
+ 					  AXIADO_MBOX_RX_POLL_US,
+ 					  AXIADO_MBOX_RX_TIMEOUT_US);
+-		if (ret)
+-			goto incomplete_message;
++		/*
++		 * The wait condition above is satisfied by EITHER the
++		 * expected word count landing OR a FIFO error appearing.
++		 * ret == 0 only means "didn't time out" - it does not mean
++		 * the words are actually there. Check @csr for the error
++		 * bit explicitly; otherwise an underflow can present as
++		 * "success" and the read loop below pulls words that were
++		 * never pushed, handing the client garbage.
++		 */
++		if (ret || (csr & AXIADO_MBOX_CSR_ERRORS)) {
++			dev_warn_ratelimited(chan->mbox->dev,
++					     "Channel %u incomplete frame: got %lu/%u words (%s)\n",
++					     priv->channel_num,
++					     FIELD_GET(AXIADO_MBOX_CSR_LEVEL, csr),
++					     num_words,
++					     (csr & AXIADO_MBOX_CSR_ERRORS) ?
++					     "FIFO error" : "timed out");
++			goto bad_frame;
++		}
+ 
+ 		axiado_mbox_clear_fifo_errors(priv);
+ 	}
+ 
+-	for (i = 1; i < num_words; i++) {
+-		word = readl(priv->mbox_reg);
+-		put_unaligned_le32(word, buf + i * sizeof(u32));
+-	}
++	/*
++	 * readsl() streams the payload words directly into rx_buffer, which
++	 * is allocated by this driver via devm_kzalloc() and therefore has
++	 * suitable alignment for a stream accessor.
++	 */
++	readsl(priv->mbox_reg, buf + sizeof(u32), remaining);
+ 
+ 	axiado_mbox_clear_fifo_errors(priv);
+ 
+ 	if (READ_ONCE(priv->active))
+ 		mbox_chan_received_data(chan, priv->rx_buffer);
+ 
+-	return IRQ_HANDLED;
++	return AXIADO_MBOX_FRAME_OK;
+ 
+-incomplete_message:
+-	dev_warn_ratelimited(chan->mbox->dev,
+-			     "Channel %u received an incomplete message\n",
+-			     priv->channel_num);
+-
+-invalid_message:
++bad_frame:
++	axiado_mbox_clear_fifo_errors(priv);
+ 	writel(AXIADO_MBOX_CSR_FLUSH, priv->csr_reg);
+ 
+-	return IRQ_HANDLED;
++	return AXIADO_MBOX_FRAME_BAD;
++}
++
++static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
++{
++	struct axiado_channel_data *priv = dev_id;
++	enum axiado_mbox_frame_result result;
++	bool handled = false;
++
++	/*
++	 * Drain all frames currently queued in the FIFO before returning.
++	 * Multiple frames may accumulate while the threaded handler is
++	 * running. cond_resched() prevents a continuously-fed channel from
++	 * monopolizing the CPU.
++	 */
++	do {
++		result = axiado_mbox_receive_one_frame(priv, &handled);
++		cond_resched();
++	} while (result == AXIADO_MBOX_FRAME_OK);
++
++	return handled ? IRQ_HANDLED : IRQ_NONE;
+ }
+ 
+ static int axiado_mbox_startup(struct mbox_chan *chan)
 -- 
 2.53.0
 
