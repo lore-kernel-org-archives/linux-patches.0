@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018092;
-	b=2cu+RA7PE4ypnJeCzASvsOVSlpitKY3HSm4p8a+Jxq4i8/czPKDpb2Za5kw3dzWYe/NC
-	 l7fmlvkSa4F5OC8goRTRL+oO6nKUIdoBkkUNTw4IOZteAxAZcn644nItRSL9j+S6Ose5v
-	 z7abFxCzOvB20AnBrUV1+wVsQ4sDziacQoH/t14yTdJQxNREnzJJx0iqrnjMwyOu0kzs2
-	 V8sW3rgrnG1G+WWLQIXG6FOUCgXw2pBVFz5rd6dP4CFZX0E3ze9JEY3G3bwvfVyJ8fd7J
-	 DBDsGJxw5h1AlYnm23O0JIHaALVWOy5UwfecNLxd2ipCTwyDPjH2iUY3ifQbpmhO+pg==
+	t=1795018095;
+	b=RDeqfvfH8BhN6aJIwDFCTP741p1R7uR2yijOJfpDFsVYf4C9bdM660Y+yGzGtQ3tZQgG
+	 dt8Ga7rQ886Qc1Eh2Lu5BvMaCfF3xDvg5Rz5QaYRE0FEEn0XAAq5oH8F5ha63nTBI8dCM
+	 v9TEuGEoCk55NzE4MU9QiJlapJ69TWH+xyu1sv823DyW9ZAiErWyoArVJqZQfjT8KUY0y
+	 f/c/aH6rkZzXJ3k13mN3Icg51MB65Lk0s13SYHdnuDI4mr4IlHM3KHjZ1ShgwYrhhNZPy
+	 Xd7agOmZb4GsSESGTSiOzHc5p7t0ByF4YNYERfLNTqhOwemHNBbEJhZ13IA+zmCNgwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018095;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X0Dq+S7/VscHlT+ghzOhwjU1FFgQ/oz0HRuOHXzqpK0=;
-	b=zjRwwdRjwh65cSggkKDcYEw6Q5AWVYvH07bsdqMzRhn4fCCbG13ZiwFYH8VQfsgLKs9a
-	 6Rx6W8OsUDGPsnL7a5fcQgCn6iTxs83FxNbp9x/nSxgxLPOvhRcYrc0lI6gkxPG6QZTzn
-	 89n+O7AR00rFgu+FXeWw1zzSUXs5E1WAN62R1FsHmhHmaMWM06cplN27T8fRUwesRBLhG
-	 CXuqSa92FJed8XXDl1XH/U8osIBKMXbWAa1imSOFOVvmgzD2IJg+6KlPAb44k+H7S8F8/
-	 YW0LZrrZsi+gMKLzwcFWHZzO87SoSP0fn56wShjanFiPWflQruphjwA+R0dkrqWFUgA==
+	bh=IQzJ2LZwNSDE0pcoIV4K+ucv/QGc0pCqBH7gvzzlurU=;
+	b=tohcHoQ+LNV7+59vUWEE56gZP54U9k4Iql3VzlSV2zGbFO+LLfyAXPxXnTV1obULm857
+	 7auhfZIXOoh1YHE/REW3ZDWO/JvSeKiVTlkXZxJtVAM7IE3nPmwaV2YynG3/DjoIkPg+T
+	 eTuGDWzLs+OOswYQckIG7SvaGYIAlQ7ELsM9iQ35lFtoC9g/9m31KcDTZDaSRjeShVX00
+	 cM8CB+Am5gOt+R7ivIL3jAh5SUyZ9xv/T5IriBNviGJEe28z6EeCJu69n2OjTs/sldda0
+	 RbcMEEL+enOrxrx1h0J3PTrxh/th5jNyx38eFjdsIinXAC/elYSPLAf330Bep63d2/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVn+rCUa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dHkgzSkV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E54606A32F;
-	Wed, 18 Nov 2026 16:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05EE60A260B;
+	Wed, 18 Nov 2026 16:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVn+rCUa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B731F000C4;
-	Wed, 18 Nov 2026 16:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dHkgzSkV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26FD1F000C4;
+	Wed, 18 Nov 2026 16:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018092;
-	bh=X0Dq+S7/VscHlT+ghzOhwjU1FFgQ/oz0HRuOHXzqpK0=;
+	s=korg; t=1795018095;
+	bh=IQzJ2LZwNSDE0pcoIV4K+ucv/QGc0pCqBH7gvzzlurU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PVn+rCUaDdc/zNRbUzdKMN1VUzzvm9WAnwB8Yp6oQ9VBlwTpyu+JI/xbDgJlyf5NJ
-	 qdGIDjB0N9G8D4aNJtZGIRJmAkf9agpvq/Sj1dbhm+cPhn2flGsDq/qPv85XKk0Jz4
-	 Qhqhr2lYspdZ4HVAGoMaJh9RnhvjaAyK7XlzutQs=
+	b=dHkgzSkVVYUMSsPaqrc9Ws4IX3wXNAchDr7O7RsKnBdvRw08xGYMXd8y7VDmOlLQT
+	 6H09/0dHGJKiMMyxrOJlvI77dVWojPuCtY0RSd0SDws1mcxsQqDyv5cHCK74KXHB/i
+	 ehTPyZXZ9/UWJuaOaCP1nbPLFXCX/oedR5l+dO68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1093/2651] dt-bindings: display/msm: hdmi: Correct name of disallowed supplies
-Date: Wed, 18 Nov 2026 15:38:53 +0100
-Message-ID: <20261118150327.350736523@linuxfoundation.org>
+Subject: [PATCH 7.3 1094/2651] drm/msm/mdp5: drop cursor pipe for msm8x76
+Date: Wed, 18 Nov 2026 15:38:54 +0100
+Message-ID: <20261118150327.384070240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,49 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 3309f5c888602c647f50c1921c9b60759fa86c21 ]
+[ Upstream commit c33cee4c07f1533ad48ed8e3eef75df57edf44c1 ]
 
-There are no properties in DTS or Linux drivers called
-"core-vcc-supplies" or "hdmi-mux-supplies", so the binding probably
-wanted "-supply" properties instead (which are defined in the top-level
-properties of the binding).
+The MSM8976/56 family of platforms doe't have a separate cursor plane.
+Instead the cursor is a part of the LM block. Drop the erroneously added
+pipe configuration, letting LM to provide a legacy cursor instead.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Fixes: 2f14bc38d88a ("dt-bindings: display/msm: hdmi: split and convert to yaml")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752661/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-7-87bdb9f1987f@oss.qualcomm.com
+Fixes: 1860f2a8b8b1 ("drm/msm/mdp5: Add configuration for msm8x76")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/753150/
+Link: https://lore.kernel.org/r/20260914-mdp5-fix-cursor-v1-1-9fba3ace6cb9@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/display/msm/hdmi.yaml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-index dfec6c3480f3f..02d27ccad0247 100644
---- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-@@ -113,7 +113,7 @@ allOf:
-             - const: core
-             - const: master_iface
-             - const: slave_iface
--        core-vcc-supplies: false
-+        core-vcc-supply: false
- 
-   - if:
-       properties:
-@@ -136,7 +136,7 @@ allOf:
-             - const: core
-             - const: alt_iface
-             - const: extp
--        hdmi-mux-supplies: false
-+        hdmi-mux-supply: false
- 
-   - if:
-       properties:
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+index 7c91fc1915f39..389d74ff75163 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+@@ -698,15 +698,6 @@ static const struct mdp5_cfg_hw msm8x76_config = {
+ 			MDP_PIPE_CAP_SW_PIX_EXT	|
+ 			0,
+ 	},
+-	.pipe_cursor = {
+-		.count = 1,
+-		.base = { 0x440DC },
+-		.caps = MDP_PIPE_CAP_HFLIP	|
+-			MDP_PIPE_CAP_VFLIP	|
+-			MDP_PIPE_CAP_SW_PIX_EXT	|
+-			MDP_PIPE_CAP_CURSOR	|
+-			0,
+-	},
+ 	.lm = {
+ 		.count = 2,
+ 		.base = { 0x44000, 0x45000 },
 -- 
 2.53.0
 
