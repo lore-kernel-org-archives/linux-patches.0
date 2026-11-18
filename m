@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028017;
-	b=Lvz3duffCA78azChvJunqADV2S+RFgHAG7Ac18mwTeAPXXcdVFifrl9onLIjzhURgobl
-	 SVtrkVkVJbUHRse2OMhiblaw2M8xJ3v7EcyjswKLgfhIACm2/UF6LTTdChmypyHSso/xM
-	 KVqsRnscyA6c8g9MX3bvRTfZfL7w/xd5x6kmx9B5ZDCkkIH1fS7nGqo1Mmfm2Pr0WFAdr
-	 +151XjI+jJD2Uz8Chdqsg5cMziqX/ywpoSZGLQSaB9ZRAID4MiLdZgaSVON1TmlzyPh1Q
-	 djRoStErT+raRBQnR9ZvvdNmVWWnpkS2JtTP31wBPJySJp4IINXXwtqhAbvi0e/YEdw==
+	t=1795028020;
+	b=e5EmQASZs4+Vpx5i+AhTXxpGhR2LsVrUN/cf9byk+fvY1clf2W+A9qq9c7WzHRXnjlJA
+	 JeWbO1MDJHvFzc00QMxwXbIHwYHQvV/TyaC6i0NU+XKa24WJCvPCQiKhk30/1LaJCefGf
+	 PQUz0SrMbZXQYNDpJLpZ+5ih1A2uoD99RY4N5nomZ+a6ycWqfwpMfk0Iy46tmy+velrcC
+	 r42E2Lv217W5p41ZM4ZPTh2TbbODVU5PI5BX8zJGBav5JpZNjMsaCege1IQ6W1ttW7aUg
+	 dISB+g5RsRjZoDQeWkquqEfZ2UDik5YiXtTQpCuDkIhLT5kirnNRiHwh6woz2cWGgEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4pmSIAOxfwweAqOstxFcPpWkaj9ue3XJu+Usau+wq0o=;
-	b=n0zupEJADObUeElzJndRFkZTYeVHfMhXcTa0ji6t1QwLdYimwIJO8yX6vzEd4Pn4mwLK
-	 3ULt1KHcnB2MpYzXGjU6NZlllMkwJUncnTGAjFBTQ+d4ksKDP4wrwqrM910YOxG9vn4Bp
-	 552tkbeK6e9RFk/z1SKejqK8+YpS7OqmgnyfnQ2/+qXD7gLIQSjxnciV9E3vbdmg/l7u0
-	 eLMoN6DhKvXblyds2XTmZPNTOCWrPsbNsWrYLuFs7PcQxic/wu2oOp84SJzPzMLwahj30
-	 ooB3lwu3gPmEc5rHsyvZvuLrps1Hp4pciNIwxiq137KgtsXlBlmnoPP0p+BkE8mGOrw==
+	bh=Sicotqzp6eCygj/FmZMdefybp/dA4IKtWwZOxwmgXfo=;
+	b=GVLZcDuvHfZIlYRE2O+ixvHVLLUrRGSFeHJnQsYBKeFcOxNTsL7s9N0FQObR3RJgkoer
+	 odxRRzwU6HLtPBGtsp/UcCxE5OgpGiQ+xJu8g7Strl/6nnMP6y6qNgGNMeW+OBOAJgPzw
+	 PDQg6HDTvUrSJ5jy3qzEKhQcw9oI7BuTb+RFfBPRZX/1XFgOOKe92+AG6NTswsOFPg4Tp
+	 geUc03Lwp+EvUpVRWhRH122ssZiiBOszk+2TuI9242F4lCfVKUQs7r6aGU5edmJ8W3Ypf
+	 n5t/ifquX68ichXd7EGOxrelxx/A/rbR23URdQDaKeAgL0KO6qRUxxHOv5sXy3GLEwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFixMtU+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llfOdo3U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2508C606A31C;
-	Wed, 18 Nov 2026 18:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07F6606A31C;
+	Wed, 18 Nov 2026 18:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFixMtU+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746F81F000C4;
-	Wed, 18 Nov 2026 18:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llfOdo3U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FE31F000C4;
+	Wed, 18 Nov 2026 18:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028017;
-	bh=4pmSIAOxfwweAqOstxFcPpWkaj9ue3XJu+Usau+wq0o=;
+	s=korg; t=1795028019;
+	bh=Sicotqzp6eCygj/FmZMdefybp/dA4IKtWwZOxwmgXfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OFixMtU++dhFTB3Q32cxzhwAa/W8kg3nrbQXwLLSQtPV7ghoSYD/hjkroWu0FRvTn
-	 Z0C3m1Q8zfFmdqnnipUcKqbwUp6m2OK2tgBsz2Vauq+Z/UHBGl407DpWbae3jly1uU
-	 kSI1gI8vEcxHA4QpZzx+qRq3MAOhTEipcZ8ZA68A=
+	b=llfOdo3UR7GVdsx/jBBHxaDRe11t8BsXQZQuIi5rtEm6/J3dSukLBpzBGFThDNiG7
+	 HqiNniqSPh3Lgp5b1FolWVD08gfxGMpx1zqTwfYUAKlqRqGHEAQCZeij5Z7rypTBGf
+	 oZcRTYxNlA8xXkO2HLa5r4aCFjPN70PTDzWEAkY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1958/2151] ceph: dont keep a mon_addr string that failed to parse
-Date: Wed, 18 Nov 2026 16:01:33 +0100
-Message-ID: <20261118150233.086715166@linuxfoundation.org>
+Subject: [PATCH 6.18 1994/2151] pppoe: wait for RCU readers before reusing a socket
+Date: Wed, 18 Nov 2026 16:02:09 +0100
+Message-ID: <20261118150234.362419966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,68 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 6c82bff8561f4c20dc0113f81cb2f6e6e2b4cf70 ]
+[ Upstream commit e7b01bc0202a57f1b7dcdf19b2ffab6b781d47f8 ]
 
-ceph_parse_mon_addr() stores the string in fsopt->mon_addr before handing
-it to ceph_parse_mon_ips(), and then returns that function's error. So
-after a mon_addr= that does not parse, fsconfig() reports the failure but
-the mount context keeps the rejected string.
+When pppoe_connect() disconnects or reuses a socket, it removes the old
+session from the hash table and resets the socket's fields. An RCU
+reader that reached the entry before it was unlinked can still be using
+its address, ifindex or next pointer.
 
-That matters because ceph_get_tree() uses fsopt->mon_addr as the "monitor
-addresses were supplied" test:
+If sockets A and B share a hash bucket with A preceding B, a concurrent
+__get_item() looking for B can be traversing A when it is removed.
+Clearing A->next then makes the lookup miss B and drop the packet.
+Reinserting A can similarly redirect the reader into another hash chain.
 
-	if (fsopt->new_dev_syntax && !fsopt->mon_addr)
-		return invalfc(fc, "No monitor address");
+Call synchronize_net() after unlinking the old session and before
+clearing its fields. This allows existing receive-path and
+/proc/net/pppoe readers to finish before the socket is cleared or reused.
 
-Userspace is free to ignore the error from fsconfig(FSCONFIG_SET_STRING)
-and go straight to FSCONFIG_CMD_CREATE. The check then passes on a value
-that was rejected, and the mount continues with ceph_options::num_mon
-still 0 - which is how syzbot reached the BUG_ON() in pick_new_mon()
-fixed by the previous patch.
+This was found by Sashiko's static analysis, and reproduced on a VM
+stress test with KCSAN.
 
-Parse first and commit only on success. A failed mon_addr= now leaves any
-previously accepted value in place instead of replacing it with one that
-does not parse.
+ BUG: KCSAN: data-race in hash_item+0x1c/0x60
 
-Fixes: 7b19b4db5add ("ceph: new device mount syntax")
-Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
-Assisted-by: Cursor
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+ race at unknown origin, with read to 0xffff888000a1c566 of 2 bytes by task 147 on cpu 2:
+  hash_item+0x1c/0x60
+  pppoe_seq_next+0x112/0x1b0
+  seq_read_iter+0x595/0x700
+  seq_read+0xb0/0xe0
+  proc_reg_read+0xd0/0xf0
+  vfs_read+0xbd/0x220
+  ksys_read+0xa9/0x100
+  __x64_sys_read+0x47/0x60
+  x64_sys_call+0x98/0x1fd0
+  do_syscall_64+0x5b/0x260
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+ value changed: 0x0002 -> 0x0000
+
+Fixes: 72cdc67e7fa7 ("pppoe: remove rwlock usage")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261020092118.47416-1-qingfang.deng@linux.dev
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261026061300.256009-1-qingfang.deng@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/super.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ppp/pppoe.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ceph/super.c b/fs/ceph/super.c
-index 4ca777f30a48e..25e32c717a406 100644
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -388,13 +388,18 @@ static int ceph_parse_mon_addr(struct fs_parameter *param,
- {
- 	struct ceph_parse_opts_ctx *pctx = fc->fs_private;
- 	struct ceph_mount_options *fsopt = pctx->opts;
-+	int ret;
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index f6ae4d8d84b0f..c666c1635c353 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -653,6 +653,10 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 		pppox_unbind_sock(sk);
+ 		pn = pppoe_pernet(sock_net(sk));
+ 		delete_item(pn, po);
 +
-+	ret = ceph_parse_mon_ips(param->string, strlen(param->string),
-+				 pctx->copts, fc->log.log, '/');
-+	if (ret)
-+		return ret;
- 
- 	kfree(fsopt->mon_addr);
- 	fsopt->mon_addr = param->string;
- 	param->string = NULL;
- 
--	return ceph_parse_mon_ips(fsopt->mon_addr, strlen(fsopt->mon_addr),
--				  pctx->copts, fc->log.log, '/');
-+	return 0;
- }
- 
- static int ceph_parse_mount_param(struct fs_context *fc,
++		/* wait for concurrent readers before clearing the fields */
++		synchronize_net();
++
+ 		if (po->pppoe_dev) {
+ 			dev_put(po->pppoe_dev);
+ 			po->pppoe_dev = NULL;
 -- 
 2.53.0
 
