@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052839;
-	b=ZsIyJtMVp3qon7qFMIcC2crTKV5EmX9nNYx4+Y+kVc3RFhyb04GMXsFP2cflVq0rN7R5
-	 pqXelVbVzDSRoWbVGFIk2wLLhedUHdBlvNjFxF6KilENEpTZA34rAYUl+pctot9mFfeP7
-	 Kd/ZoOxrNFOFxQhycRIHcaK9WFw3TJNIlhvzqUiQp+AELOxdVyi/Ht5IDKuXGfTFiIk9O
-	 NbVYqYmyd32B2t79Ama1dACWl1ZV5ATHSRXLgqcV/+PPBWcOUM5le2tgVqpPuS2qYp91q
-	 roPHvt+x65Z90TDOJpHccgJ7JieGhOdkVQaJzwjldnZ4z+a7Gpl7lMqX3j7smrjfPbA==
+	t=1795052841;
+	b=obXFH0rMxbyGzGiFyJQE6SnzIAGcghtEXiE0Qo9sqzM0m37HbIoYqfoJbEgp1peV8EQv
+	 1hFW1EtwtuDtX8mwbwh2COhrNKwmLh3SSVfEAFm6A5uSfgNYEnFft5lY/kmiGMMI3LKv0
+	 5dHJCdRe8t/BrAs+RbPqlUqmJ1y9RAsjTfORWrLXJqw99wdl9c8P7AX5lJVyBta5KHMUi
+	 epnaAru3MPtVlQxwyawIbybfrydZc732y+dFc2VoiQGZH8GAY/9vuHY9JvWeSks5QRNJz
+	 YM6io5skv1ZjNLgvUobXqoCyiFJNod4Nh4hkQ1VTgpPOYTTs9iJ8WUjUApkAPDr9ejQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TKR6qhDNmC/pFYQSs25rrPX2f4/elC5uOeM6YjbXIMI=;
-	b=JEBkAkJDQn4C3clDvAjX5EUxYNzM864G72Vc7QBOgS3DR7TyYjX4ufD88ny6ZVrlFNos
-	 YsssCFfxRpsl0K02BCJ6EEVOcP0tx93EMzfSt5zxvIZHzu9azOMJEVwqPlHfdn3FUEOBS
-	 JSecgOlmN6zZRbltmJ2PQhXReE+H4a9MKiWOraA9vmR5C3uNh947Mzl+8WazFXed2aGls
-	 NFtst4lZ7WKH4qkcazI6/5oiGvS1KcGBeGmbOqVsuyf4WngP8gWs+EHfN1eAgpcu+Kbmg
-	 P8//Th9T1IW0FTskj+FkmCt0RCJL0FRTkYhb3bGIq7UiL75CZIw+v7SgUtB5AXO0J7w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=mtEYTwFlOwxkn7zpwyiCFj2ZuPtBMblELrJm1gbtK4w=;
+	b=lQzQ8ZyxW2aqnTK9P/UCR1Al2tY5pB8rd3blm/GB0k0pOnBwZG1RTjjizXmGQ6g2DIzc
+	 sI168ccSeo+a7Su45FNvpwXHeViw/Hf555cY7y2XDucO+sddXio+mKxp+O9+K+d74DiiK
+	 CTGl99FZZECNLOUulN9VABg97hSD4qIGMn8oTyj4I67StEQvk4adDIhmmm+NoGmxTtPgg
+	 UYprnwrSXbfouygPHPxhGa+pqmWzeV6SrMhSBVXaAERKbrr7/kT5ADrgMPQ8kwRMRMlsc
+	 JtcOmcx7EZfewBAh4NeHvdUgNU0B5hcD/pbugs2gi/aU1qnRmEm0rBEaJ4ji79OLqEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GvO3dNSv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmCc7dY5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D7C606A320;
-	Thu, 19 Nov 2026 01:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3502606A32C;
+	Thu, 19 Nov 2026 01:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GvO3dNSv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689031F000C4;
-	Thu, 19 Nov 2026 01:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmCc7dY5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF1A1F000C4;
+	Thu, 19 Nov 2026 01:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052838;
-	bh=TKR6qhDNmC/pFYQSs25rrPX2f4/elC5uOeM6YjbXIMI=;
+	s=korg; t=1795052841;
+	bh=mtEYTwFlOwxkn7zpwyiCFj2ZuPtBMblELrJm1gbtK4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GvO3dNSv+6Vz5vHrGSOs3Jue/Jg44QWE4t+IOTIEVMyaCBqJZU3h7I9h5rMlXepJi
-	 nDpbXmj3Xk7Vq+8GKFW9bLEeWS+CUbqJu/tpKtXrxyECuYj0YXkhFs68xrcN6yOFln
-	 YbOb7TKEEuB59GYQhcdqKFigFA48pUFL6ZQFVq7c=
+	b=BmCc7dY5SYzMzctE+rlzxNnNAPU3KuiMFFgit6mghlNW4wIeYEsKYJl3MqcZM2ERA
+	 YrlQv6ktmLTIcpywRsqSt7NE2kQDu2RgICt8ghJChvLRwKpgr7+ehTJe1zhaoQvnxH
+	 lpVqLwssFZ6KMVpsStUqqyHVx9WwUN+JOCWiYBBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Li Ximo <lixicaicai@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0706/2214] ocfs2/cluster: remove zero-address nodes from IP tree on teardown
-Date: Wed, 18 Nov 2026 15:39:42 +0100
-Message-ID: <20261118150040.045284161@linuxfoundation.org>
+Subject: [PATCH 5.15 0707/2214] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
+Date: Wed, 18 Nov 2026 15:39:43 +0100
+Message-ID: <20261118150040.084883194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,67 +63,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-[ Upstream commit 5dd57e77eff4ba3e85b3df126a55417c88245708 ]
+[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
 
-o2nm_node_ipv4_address_store() accepts 0.0.0.0. It sets
-O2NM_NODE_ATTR_ADDRESS and links nd_ip_node into cl_node_ip_tree under
-cl_nodes_lock, but o2nm_node_group_drop_item() uses nd_ipv4_address as a
-membership test. A zero address therefore leaves the rbtree node linked
-when config_item_put() releases and frees struct o2nm_node. A later
-address store or IP lookup can then walk the stale node and dereference
-freed memory.
+list_first_entry() does not return NULL on an empty list; it returns a
+bogus pointer computed by container_of() from the list head.
+atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
+and later takes its first entry with list_first_entry(), assuming
+atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
+drops the return value of fb_add_videomode() — unlike every other
+fallible call in the same function — so if fb_add_videomode() fails
+(its internal kmalloc can return -ENOMEM under memory pressure or
+fault injection), the list stays empty while of_init() reports
+success. The probe path then dereferences the bogus pointer in
+fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
+pointer lands inside the contiguous fb_info allocation, this may not
+fault immediately; instead it silently reads adjacent memory as a
+struct fb_videomode and programs garbage timing parameters into the
+LCD controller. This was found by code audit; we do not have Atmel
+hardware to reproduce it.
 
-During teardown, drop_item takes cl_nodes_lock, skips rb_erase()
-for the zero key, and then calls config_item_put(). A later
-o2nm_node_ipv4_address_store() duplicate check or o2nm_get_node_by_ip()
-lookup takes the same lock and walks the stale cl_node_ip_tree entry. Use
-O2NM_NODE_ATTR_ADDRESS for teardown so every published nd_ip_node is
-erased before configfs can release the node, without rejecting 0.0.0.0
-or changing lookup semantics.
+Fix this on two levels: check the return value of fb_add_videomode()
+in atmel_lcdfb_of_init() so the failure is propagated (root cause),
+and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
+check that fails probe gracefully with -EINVAL (defense in depth),
+consistent with the surrounding error handling which bails out to
+stop_clk.
 
-Link: https://lore.kernel.org/pm-ocfs2-node-ip-rbtree-zero-address-uaf-v5-e7f64be16b7c3b0988d1@gmail.com
-Fixes: 0c83ed8eeb28 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: Li Ximo <lixicaicai@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/nodemanager.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
-index d8f47704e1220..b19ff06cc84ad 100644
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -625,8 +625,11 @@ static void o2nm_node_group_drop_item(struct config_group *group,
+diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
+index f2b63f13e2444..707a0a0cd74e7 100644
+--- a/drivers/video/fbdev/atmel_lcdfb.c
++++ b/drivers/video/fbdev/atmel_lcdfb.c
+@@ -1032,7 +1032,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
+ 	if (ret < 0)
+ 		goto put_display_node;
  
- 	write_lock(&cluster->cl_nodes_lock);
+-	fb_add_videomode(&fb_vm, &info->modelist);
++	ret = fb_add_videomode(&fb_vm, &info->modelist);
++	if (ret < 0)
++		goto put_display_node;
  
--	/* XXX sloppy */
--	if (node->nd_ipv4_address)
-+	/*
-+	 * 0.0.0.0 is a valid configured address, so nd_ipv4_address does
-+	 * not tell us whether nd_ip_node was published in the IP tree.
-+	 */
-+	if (test_bit(O2NM_NODE_ATTR_ADDRESS, &node->nd_set_attributes))
- 		rb_erase(&node->nd_ip_node, &cluster->cl_node_ip_tree);
+ put_display_node:
+ 	of_node_put(display_np);
+@@ -1100,8 +1102,13 @@ static int __init atmel_lcdfb_probe(struct platform_device *pdev)
+ 	}
+ 	atmel_lcdfb_start_clock(sinfo);
  
- 	/* nd_num might be 0 if the node number hasn't been set.. */
+-	modelist = list_first_entry(&info->modelist,
+-			struct fb_modelist, list);
++	modelist = list_first_entry_or_null(&info->modelist,
++					    struct fb_modelist, list);
++	if (!modelist) {
++		dev_err(dev, "no video mode available\n");
++		ret = -EINVAL;
++		goto stop_clk;
++	}
+ 	fb_videomode_to_var(&info->var, &modelist->mode);
+ 
+ 	atmel_lcdfb_check_var(&info->var, info);
 -- 
 2.53.0
 
