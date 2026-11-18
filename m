@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048381;
-	b=GJ9/0aS7/VdM8FzAUM5g0cUHdsRKP3tJ4x9KPzKszvnzjy0qfkewzDi0y/f3hWGc51lM
-	 KFrLqLpt7r5ahzcRtmKvfCj0leRvBw1VGQGfBfIDEyXxczWKNkxkNu4qDABv8hkP44mrZ
-	 jNnpRR0Bj6zKMqzcyx7KiiJTuM5CytB+NefySKghOz7ght/HaYDvRx3V3qw2W91m2avds
-	 vccn8NsvzIh+3rkP1HzSRk+3YL8MxUhAhNkpvT813v46FTLmIPDa1p3heu6mrRBMpYTKA
-	 V9lCKM5jwdR2+0xkkx2nvfssK+S7U/hntQ14kBkPrX8rmEtIHdV24hVEW2lqnrvF0RQ==
+	t=1795048384;
+	b=br+e8GVyab2743xJT0J4A+h2ZmjNyYcuKRlHS7criH8ePWM0F80bIUEQTFymzCGggpPR
+	 tgKIy+WJ5zGZfec2BulE7vFTACpDzO+lpFYwRE2VKz3DhwsXbCQfllcfsZU4vb3LHVEt0
+	 fvK/NZ7mSp2mhUcOEirSmNZNhfAlXDA/BVJFE5jOS3+ovRf7OOSxVN/qq0+/c2HqWV8v3
+	 CKFymyNrGtevJfcDcdoHDBM1qx21UMQB8zmFnhheW78K2n4Sg3e7khRcMYl+zPjXO5Tzq
+	 8Ru/Wy9Fx8WRB+THUnkyEC44sFJCDuHTeBz8NeS5GKjwkJV1HXC2pGvniJRbYxSRBVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v+eu1U5PO786nUyBv5p3Y2QjnWc2/P2qx2iTCTYdA5M=;
-	b=AIliDECEx9VM7w5DEfyUiBMl+9Vvgpn22cyA6LycEoRdA3dh+/JxlYaV/wXpLZHdGDBm
-	 N49URGmTkXAYJ/NMJz3cwHL+PqoyjU1apzkI7iafTrg6422DVSNtBCM4QtSJ5EqZIPjwB
-	 qaR3uZo3IbAufwkZWEmPXdxq11eKublfkjRhdyT+ZwB85SJHblTxnNic8FEj8QA0Pf4Fx
-	 D+oASjuEesCLzKhFZCnVVb7KdFmabFumsY2jetlET1hVvAyPxPlK5lw/rG8l/xwYyi/Cw
-	 19R4ZaVzLJvgNzu6n5uty+UgT4QpeiyFfcfOaBt0cX81hgQ4oaBvwNWjFUt/sHjn9Ag==
+	bh=7gCFXFRDsLxWdYX5YsjAIgUupAMJjwvq/yibpyqTiTw=;
+	b=OWfMUP5ymjLbhlaFxnygJQxfn0hU/zd+yWPRw79Cd1VFKTVskqBLRiROzg2FW/lRyQhj
+	 Cu9he1kuposwL/+tXji7fcdpxjibUCLijtoBLsVX89FIyzxegCl33ncHhv9yViMaAjcdJ
+	 2JXbbMW6D+4YSFABVU93KkIEOvje9Qy2FRRAGPt0DiCTpb8+H9wKxmtzFjilY88im2OfU
+	 feiYgb0+JFTESjux6QETuQUmiEPWs7TgPftkiVU/MK2HJmJc9cm5f9pHdiUmB6m8VQzZv
+	 ujsRJeZ1a7n4Foy+3NuxlrJKAuzTTFo0DaunbSd21tzhouAGxhTaV81HBIssnynoTqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tdwLouGl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qj1e89Kb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AAF60A3825;
-	Thu, 19 Nov 2026 00:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CD360A2622;
+	Thu, 19 Nov 2026 00:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tdwLouGl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB65C1F000CF;
-	Thu, 19 Nov 2026 00:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qj1e89Kb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2C11F000C5;
+	Thu, 19 Nov 2026 00:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048381;
-	bh=v+eu1U5PO786nUyBv5p3Y2QjnWc2/P2qx2iTCTYdA5M=;
+	s=korg; t=1795048384;
+	bh=7gCFXFRDsLxWdYX5YsjAIgUupAMJjwvq/yibpyqTiTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdwLouGlAs/UFxVjJq2DL8z4SyKOKWbN0mzZCreOadJG82F5aWwWRtvh9Uaf1ostH
-	 aFyLjlfvbVktd+ZW+j3B2DR3yH+MsaWKWaX2/eO7ikno0nGrO0qskRrqIDFenueg1G
-	 PbJLZ2xMA5peJuUxTHTk10fJZT+7kewVl/pvpuio=
+	b=qj1e89KbNNtWQkI6xW74dvkGnF6gy/4dDwA04oPKw0fTtxHGrP06tVLl+AD5IpfDG
+	 lPyJqvz1DA6bYZHG380OITZIA5uVw5JcGUrXA30n+pBkVeTBJk8kOPei45VrFNlK+L
+	 JKn3OwouIlxKm4LHeI5XTqrd0FFbkzbBFZlyCorI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Karl Asseily <karl@asseily.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1973/2857] spi: mxic: fix ps_clk leak in runtime resume
-Date: Wed, 18 Nov 2026 15:50:07 +0100
-Message-ID: <20261118150312.433380002@linuxfoundation.org>
+Subject: [PATCH 6.1 1974/2857] dt-bindings: vendor-prefixes: add ESS Technology
+Date: Wed, 18 Nov 2026 15:50:08 +0100
+Message-ID: <20261118150312.467455465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,45 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Karl Asseily <karl@asseily.com>
 
-[ Upstream commit 648e3c436032b675b339662ea9c0edd9221add76 ]
+[ Upstream commit beb56d1d3de522885b30bb97fee83825041d65c2 ]
 
-mxic_spi_runtime_resume() enables ps_clk before calling
-mxic_spi_clk_enable(). If the latter fails, ps_clk was not
-disabled.
+Add the vendor prefix for ESS Technology, Inc., maker of the SABRE family
+of audio DACs. The prefix follows the company's domain, esstech.com.
 
-Unwind ps_clk with clk_disable_unprepare() before returning
-the error.
-
-Fixes: b942d80b0a39 ("spi: Add MXIC controller driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260902-mxic-v1-1-76806325826d@gmail.com
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Asseily <karl@asseily.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260918182317.143223-2-karl@asseily.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mxic.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-mxic.c b/drivers/spi/spi-mxic.c
-index 65be8e085ab83..d0fff4a681f6b 100644
---- a/drivers/spi/spi-mxic.c
-+++ b/drivers/spi/spi-mxic.c
-@@ -734,7 +734,13 @@ static int __maybe_unused mxic_spi_runtime_resume(struct device *dev)
- 		return ret;
- 	}
- 
--	return mxic_spi_clk_enable(mxic);
-+	ret = mxic_spi_clk_enable(mxic);
-+	if (ret) {
-+		clk_disable_unprepare(mxic->ps_clk);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static const struct dev_pm_ops mxic_spi_dev_pm_ops = {
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index f955db429f55a..fdcfda32bc923 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -420,6 +420,8 @@ patternProperties:
+     description: Seiko Epson Corp.
+   "^esp,.*":
+     description: Espressif Systems Co. Ltd.
++  "^esstech,.*":
++    description: ESS Technology, Inc.
+   "^est,.*":
+     description: ESTeem Wireless Modems
+   "^ettus,.*":
 -- 
 2.53.0
 
