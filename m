@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036663;
-	b=YSkAeJGuJT2caYLzueLfvXz/p/km1E3itRJw9m0eodQZOkEVGUuXwNacwXqrb6tDhMNu
-	 XEHaGINLUWr2OOa5wQ3O2VHSetYQ3B6uKnnd1agl6EKUZodeTVuk03Nais/2DxpPk+DQo
-	 JV8gCoH1ee4+Ye0f7eNPxmKhANLVnenazg7JV10GrcWcfvF5F7e8yB7qIbY/M5PO/qn39
-	 6DRCEm7KIcts2UjOq1Fs0/Hv7hmxyMtjTgj2ZHeQMCN/NLUm70sFw29QqKMrBEtVnbyHa
-	 qbHpYNCPPQsOY9bO/j/rZu12e9l5TeeGlgc3TvylqvOyLXgi7u4wAcfQioaimib3GcQ==
+	t=1795036666;
+	b=NvRI3WfjE10CsO7PpYc8lWMQeNA3u07gQYyzsA21jxvS+2iKQuxvKlRYoLRXG6XEnKB+
+	 2j4zoSFkItXs1ukEDqiXpLDIDDVizSH13XoOF6jSqdgTiFbjFXYjyueFncUcdNe8hIudb
+	 T9QFpvnOjFXQR7eujtcE8zOEkDS+e4sX+/08xREw+3heULauKucY7aaSuyj04jN1T5rKM
+	 p5KHWL2kHpMXGd9GLn8s9s0DeMYtRuLPm4LqmoAIjYpqwOQZJ6s8bH/Zs6XV7qozhUKqZ
+	 WONgaFE9CNeHH9i5FGaWKF9JmEz+D6MFvCNN0xqxfQIhmre/vrnpGOsTqzOt3iy0Zww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036663;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E9RiaStsBx1xcckYc7pC0I/jLPsVmdYWW1VkVk/sAUc=;
-	b=c1FLv5PkwaUFGzBhA2R1vNr8nWHGIu3gPBnUjv8kjc+uVMjOTrabbHbW+akkviX0pkRl
-	 7L1PaJ/1OshEESSWVvgnzza0PJWHf5UjNc/h4lo4rkwrh59mP3t0It9pUtI8QvsFzORsz
-	 yqQmr0EjInUo6i668t9oGa7UXQ7vxjvGrIzOX+xida1KpGqjSFMV7NbOG5GudYBXlPIWU
-	 wi+Y/VxVUhigtYzDiaBh9J6oMHphIgpEZuJ7VWhKNRwMylBltutvp+ngyY5YfYjubFW+q
-	 OwUWhkWQd8shLtP8FPuWmItkGlJk2NsiN/YO8CtfxjDT2spV+R+9WpRjj7noYLdUIdg==
+	bh=6g1cZ+RAG+N2nhguJbzqDg5jP3xmVH1NA/nuQ7MAfMA=;
+	b=onu/fWL/K/la5NAl0hs1763eCHoF01b3AaJ6xn+U5G+gepSKoUtnRmgZC/N7E8aO9urc
+	 mAo71TXDZjSkX4C7VMTnZ/aiCmU4a5RXs3TNNWa95o7+8P/wC7vRwmSrTCF6Dls0w6d95
+	 PZEuzaFVUOAVpBcFrQAQM+C/AVch0oXZecO2oFVBF1Jrl2msBzPNl1fzLZjicbfi5ZUSS
+	 8moQWh58e5EU0IbhEa8GPupEY0rFfspysBdbFEnUBjIViQoxAVuckEBNr45P7opJv64B2
+	 DH5qj2x5KuB4of9SxG29VNUZtLY+FPCoMBzNNckQDHOtJIA/6vhpk/NRu4A31ckAe8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqcmHNxo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xxP/XQOk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBE9606A335;
-	Wed, 18 Nov 2026 21:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BED0606A333;
+	Wed, 18 Nov 2026 21:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqcmHNxo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8311F000CA;
-	Wed, 18 Nov 2026 21:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxP/XQOk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B6B1F000CA;
+	Wed, 18 Nov 2026 21:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036663;
-	bh=E9RiaStsBx1xcckYc7pC0I/jLPsVmdYWW1VkVk/sAUc=;
+	s=korg; t=1795036666;
+	bh=6g1cZ+RAG+N2nhguJbzqDg5jP3xmVH1NA/nuQ7MAfMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NqcmHNxoYL5XM1eShSlA3oHxifiXcywqCdjTzpCukA6bZpFdu61pXtPvtvneugaYJ
-	 xPKOlNbKoXOBzs7G7q/n8//D6FNG8RcPZCe49Wyr9xXe3yuF0OsJCltvOJ5Q85zjSn
-	 rH+tRCpawTi8MBYEtcGaSJnn8cGTk1gJjdPmRUAc=
+	b=xxP/XQOkR2eE7/+WYhbC0HS8SuQm+6eH9S94J7iMQ9MpJmB18OP8Lp9cJH2Uia5EQ
+	 g+fhJYKhj3X3Xfq/JkKIAZny4IepJokfL5LRprsnWHa65RviRYVi//8urWj9wFOZ7q
+	 M0X3El8UqNvZ9DWx4c8gAwGZRTnoMhhhYtqjMYLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
+	Xin Long <lucien.xin@gmail.com>,
+	Seung Min Shin <guncraft2000@naver.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1139/3318] ipv6: defrag: orphan skb before queuing
-Date: Wed, 18 Nov 2026 15:29:21 +0100
-Message-ID: <20261118150354.230043061@linuxfoundation.org>
+Subject: [PATCH 6.6 1140/3318] sctp: hold transport reference across connect wait
+Date: Wed, 18 Nov 2026 15:29:22 +0100
+Message-ID: <20261118150354.263004739@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,53 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Seung Min Shin <guncraft2000@naver.com>
 
-[ Upstream commit 5dfa91a5ec53cfbf907a1fca095ac3ac7a4e94c9 ]
+[ Upstream commit 5bef8649bb9ac4b2a014bcc227202ebd2df824be ]
 
-IPv4 and nf_conntrack fragment queues orphan skbs before returning
--EINPROGRESS, but ip6_frag_queue() leaves the socket association intact.
+sctp_sendmsg_to_asoc() selects a transport before waiting for a new
+interleaved association to become established. sctp_wait_for_connect()
+drops the socket lock while sleeping.
 
-Commit 18685451fc4e ("inet: inet_defrag: prevent sk release while still in
-use") moved skb_orphan() into ip_frag_queue() and nf_ct_frag6_queue(), but
-missed ip6_frag_queue().
+While the lock is dropped, backlog processing can handle a COOKIE ACK and
+an ASCONF DEL-IP that removes the selected transport. sctp_assoc_rm_peer()
+then marks the transport dead and drops its association-owned reference.
+The transport can be freed through RCU before the send path resumes.
 
-Without orphaning, inet_frag_reasm_finish() clears fp->sk on frag_list
-skbs but leaves fp->destructor set to sock_pfree. Freeing the reassembled
-skb then calls sock_pfree() with a NULL socket. A socket using
-SOCK_RCU_FREE may also be released while its fragment is queued, leaving a
-stale socket pointer; this is a second consequence of the same missing
-orphan.
+After the wait, the stale pointer is assigned to newly created DATA or
+I-DATA chunks and later dereferenced by sctp_outq_select_transport().
 
-Orphan the skb before returning -EINPROGRESS so the queued fragment no
-longer retains the socket association or destructor.
+Hold a reference to the selected transport across
+sctp_wait_for_connect(). After the socket lock is reacquired, abort the
+send if the transport was marked dead. Callers without a selected
+transport pass NULL and retain their existing behavior.
 
-Fixes: cf7fbe660f2d ("bpf: Add socket assign support")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/5c396b7011168cd98b9812df4d6bbd00a96048e7.1791008591.git.petalzu987@gmail.com
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Seung Min Shin <guncraft2000@naver.com>
+Link: https://patch.msgid.link/20261011162750.1529631-1-guncraft2000@naver.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/reassembly.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/socket.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index a429620d06ed6..05dbf8144805c 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -227,6 +227,7 @@ static int ip6_frag_queue(struct frag_queue *fq, struct sk_buff *skb,
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index df40d955b284c..4f9978e4f268d 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -75,7 +75,8 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
+ 				struct sctp_transport *transport,
+ 				long *timeo_p, size_t msg_len);
+ static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
+-static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
++static int sctp_wait_for_connect(struct sctp_association *,
++				 struct sctp_transport *, long *timeo_p);
+ static int sctp_wait_for_accept(struct sock *sk, long timeo);
+ static void sctp_wait_for_close(struct sock *sk, long timeo);
+ static void sctp_destruct_sock(struct sock *sk);
+@@ -1244,7 +1245,7 @@ static int __sctp_connect(struct sock *sk, struct sockaddr *kaddrs,
+ 		*assoc_id = asoc->assoc_id;
+ 
+ 	timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
+-	return sctp_wait_for_connect(asoc, &timeo);
++	return sctp_wait_for_connect(asoc, NULL, &timeo);
+ 
+ out_free:
+ 	pr_debug("%s: took out_free path with asoc:%p kaddrs:%p err:%d\n",
+@@ -1846,7 +1847,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 
+ 		if (asoc->ep->intl_enable) {
+ 			timeo = sock_sndtimeo(sk, 0);
+-			err = sctp_wait_for_connect(asoc, &timeo);
++			err = sctp_wait_for_connect(asoc, transport, &timeo);
+ 			if (err || sk->sk_shutdown & RCV_SHUTDOWN) {
+ 				err = -ESRCH;
+ 				goto err;
+@@ -1889,7 +1890,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 
+ 	if (unlikely(wait_connect)) {
+ 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+-		sctp_wait_for_connect(asoc, &timeo);
++		sctp_wait_for_connect(asoc, NULL, &timeo);
  	}
  
- 	skb_dst_drop(skb);
-+	skb_orphan(skb);
- 	return -EINPROGRESS;
+ 	err = msg_len;
+@@ -9358,7 +9359,9 @@ static bool sctp_writeable(const struct sock *sk)
+ /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
+  * returns immediately with EINPROGRESS.
+  */
+-static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
++static int sctp_wait_for_connect(struct sctp_association *asoc,
++				 struct sctp_transport *transport,
++				 long *timeo_p)
+ {
+ 	struct sock *sk = asoc->base.sk;
+ 	int err = 0;
+@@ -9367,12 +9370,16 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
  
- insert_error:
+ 	pr_debug("%s: asoc:%p, timeo:%ld\n", __func__, asoc, *timeo_p);
+ 
+-	/* Increment the association's refcnt.  */
++	/* Hold references while the socket lock is dropped. */
++	if (transport)
++		sctp_transport_hold(transport);
+ 	sctp_association_hold(asoc);
+ 
+ 	for (;;) {
+ 		prepare_to_wait_exclusive(&asoc->wait, &wait,
+ 					  TASK_INTERRUPTIBLE);
++		if (transport && transport->dead)
++			goto do_transport_dead;
+ 		if (!*timeo_p)
+ 			goto do_nonblock;
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN)
+@@ -9401,7 +9408,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ out:
+ 	finish_wait(&asoc->wait, &wait);
+ 
+-	/* Release the association's refcnt.  */
++	if (transport)
++		sctp_transport_put(transport);
+ 	sctp_association_put(asoc);
+ 
+ 	return err;
+@@ -9420,6 +9428,10 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ do_nonblock:
+ 	err = -EINPROGRESS;
+ 	goto out;
++
++do_transport_dead:
++	err = -EAGAIN;
++	goto out;
+ }
+ 
+ static int sctp_wait_for_accept(struct sock *sk, long timeo)
 -- 
 2.53.0
 
