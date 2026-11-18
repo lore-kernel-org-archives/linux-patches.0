@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033409;
-	b=xA8knGzGzoe5ULZwAondEwliKSNVeZdZmWJgqIv05sEWZXdOZ4+B/wmSjrvOSy+Ui4YI
-	 wnAeppUL+wyp/z6pNYzCAI+62q7X/YuZgPeQkg/MCEX/oQhcYb3xmAVsY0401FCe3NnGo
-	 vmrHnGmdzfqrOq5USmcigDw2B0e2COKvSTCEgrR37auQBfkPwhFctFAAxGkSj2DPsU2UD
-	 Rt6Xbr9K7eZbtYmiK0vaU6KhWBX3sJ7Qn485QzYXMtO2eqDa5yYKOMgxA5AzAqFdjbkhR
-	 HM96pf4a34hBhpV3x68KByrYBtPK9uvHssOPHjKVycrqOjrUSXcG0z2EYludH7GZsCg==
+	t=1795033412;
+	b=ZUOwVqorUo/aKCsNedPtTFSUg1bX3bBeOde6qDBX0f30lm22aipZ+soblm6sCjo2vo5Z
+	 BBdZRS3frT1afW7Ooh/xTZv4VMjz7hEx6Bhe3IqBa4ymQvne+Mpn7jHB2ws6CZZe05azW
+	 tHWU6Wz31BzZxXdl0QkW0EYlYNrTBluss4zJK/gScw6gl02v2fzHUvANJbv/HdFKxsjjc
+	 V/KMfAKuvcM0QffrS8RW17+00miDg5tOMBs9nbFRssiEaIHzPDMNH+S3olWhYjGuDbdYn
+	 UFke8yrTfQUjEAm2b2dYJ8fHKAprkbriFLlLBvQud0WZXh5SuvwBIQMk5yqII6+Vq7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=WedX5ijGvWHP3Qx1efz4lyHjR92Ee1qtYLqR4IYscE4=;
-	b=dewX6uzVswERREGd5DCxsh3q+JzMwvWr6WeDR9pUZWvT+9dKzakFWP2b7dIwkr3hwThV
-	 F6bjRI/HG8ADSX+ZoH/2E6yMMl9BnXKrhd1+Gy+01RWhEZxG5hJ90Ie7fvsCgEj65q7k3
-	 oKO4iriTTxYdZ8KDVdsi0ra6V8qGxCpjzG2XCoj/kc0opvoKrwp1xxQdequC+2izVQVlD
-	 QZV2OOX858d+9LfNU90RXYBC1AnbRl3JNSPydvrNktBBRr72tVvIWxGKaV1vAzvZrTkJX
-	 aoCYe2+llcJSaSArh1Z/BkUchnGiRWahSxTQiMIClJwSgRkYBNEgAcEnMoWUp1IK4Dg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=M6LcY2wiFaaXrUFGukJCSPuiBTo6eNFYjtIi9RlwQQg=;
+	b=WgUeZqiwVLOOVeAqA4yMFmzRo2r2zXNqND0lQU5sCxRgfFwJ90eCIpvYs0A6BK7DKC35
+	 nTDA3sEpVogEt//lczBHSQaVgPQmoNH+3mlsKs6Bw/O222KpciqYbJ2uUkkIprCbPX1do
+	 9OvD8ABmdsBnE+9a4iTewx1qMH2NeOOAV0Gst4ET0bytHrS0pUtG20tVwqpsDEF5fW+hY
+	 uYOhfNHhz1uxHLocsZbornMmMKyqQbOOqh5KwdLIuH9ol90PSzzDsiSDoqRAZzv4vcUrY
+	 h8pbxEujQktOlD+naWWdeHDlLOFdh5BtLhQnzSGn68sMs8ItpMseVohBMLFTEccQ5Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8VtELeE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GFW5N5VM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B0D606A32A;
-	Wed, 18 Nov 2026 20:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44205606A325;
+	Wed, 18 Nov 2026 20:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8VtELeE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7460C1F000C4;
-	Wed, 18 Nov 2026 20:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GFW5N5VM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545071F000C4;
+	Wed, 18 Nov 2026 20:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033409;
-	bh=WedX5ijGvWHP3Qx1efz4lyHjR92Ee1qtYLqR4IYscE4=;
+	s=korg; t=1795033411;
+	bh=M6LcY2wiFaaXrUFGukJCSPuiBTo6eNFYjtIi9RlwQQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8VtELeEEkeHV+MOryo5bef9iX/YK/9Dsiz1G4UVvOTstPcRGDXm0KUwNHkiLgd5O
-	 8ssMTW2gsptSyM/cg5sHcNe1CNfVeghmkqvVZaC3OKZm9JR41UATolRqFhFtSxdOgj
-	 Wg7Mb0dXXnKVHQYTldd8VTWS9EN2Conalk5kj36U=
+	b=GFW5N5VMEeL575rldYroqggeEcyHpCQ01cXlBLJ/hfCmKHAzrLA33oeDXoUddnGQH
+	 MASPMQSZ1wZtuuHcJ1krJB1ilngSqEELtTxv+o0iCyIlS0c39YntRYqRX2P7dwrSWv
+	 mwGeJT0HYl5XBHA/8ingEsAWA9x3rRC6mybE7+kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.12 1740/1756] perf libunwind: Fixup conversion perf_sample->user_regs to a pointer
-Date: Wed, 18 Nov 2026 16:04:27 +0100
-Message-ID: <20261118150118.817622574@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 1741/1756] nvme-tcp: fix use-after-free of netns by kernel TCP socket.
+Date: Wed, 18 Nov 2026 16:04:28 +0100
+Message-ID: <20261118150118.853962006@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,110 +61,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 4e82c88a90a99b50f6488defd0d3d85ddc47c068 upstream.
+commit b013b817f32fb8c560b6970e1002e94f1c725923 upstream.
 
-The dc6d2bc2d893a878 ("perf sample: Make user_regs and intr_regs optional") misses
-the changes to a file, resulting in this problem:
+Commit 1be52169c348 ("nvme-tcp: fix selinux denied when calling
+sock_sendmsg") converted sock_create() in nvme_tcp_alloc_queue()
+to sock_create_kern().
 
-  $ make LIBUNWIND=1 -C tools/perf O=/tmp/build/perf-tools-next install-bin
-  <SNIP>
-    CC      /tmp/build/perf-tools-next/util/unwind-libunwind-local.o
-    CC      /tmp/build/perf-tools-next/util/unwind-libunwind.o
-  <SNIP>
-  util/unwind-libunwind-local.c: In function ‘access_mem’:
-  util/unwind-libunwind-local.c:582:56: error: ‘ui->sample->user_regs’ is a pointer; did you mean to use ‘->’?
-    582 |         if (__write || !stack || !ui->sample->user_regs.regs) {
-        |                                                        ^
-        |                                                        ->
-  util/unwind-libunwind-local.c:587:38: error: passing argument 2 of ‘perf_reg_value’ from incompatible pointer type [-Wincompatible-pointer-types]
-    587 |         ret = perf_reg_value(&start, &ui->sample->user_regs,
-        |                                      ^~~~~~~~~~~~~~~~~~~~~~
-        |                                      |
-        |                                      struct regs_dump **
-<SNIP>
-  ⬢ [acme@toolbox perf-tools-next]$ git bisect bad
-  dc6d2bc2d893a878e7b58578ff01b4738708deb4 is the first bad commit
-  commit dc6d2bc2d893a878e7b58578ff01b4738708deb4 (HEAD)
-  Author: Ian Rogers <irogers@google.com>
-  Date:   Mon Jan 13 11:43:45 2025 -0800
+sock_create_kern() creates a kernel socket, which does not hold
+a reference to netns.  If the code does not manage the netns
+lifetime properly, use-after-free could happen.
 
-      perf sample: Make user_regs and intr_regs optional
+Also, TCP kernel socket with sk_net_refcnt 0 has a socket leak
+problem: it remains FIN_WAIT_1 if it misses FIN after close()
+because tcp_close() stops all timers.
 
-Detected using:
+To fix such problems, let's hold netns ref by sk_net_refcnt_upgrade().
 
-  make -C tools/perf build-test
+We had the same issue in CIFS, SMC, etc, and applied the same
+solution, see commit ef7134c7fc48 ("smb: client: Fix use-after-free
+of network namespace.") and commit 9744d2bf1976 ("smc: Fix
+use-after-free in tcp_write_timer_handler().").
 
-Fixes: dc6d2bc2d893a878 ("perf sample: Make user_regs and intr_regs optional")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250313033121.758978-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 1be52169c348 ("nvme-tcp: fix selinux denied when calling sock_sendmsg")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/unwind-libunwind-local.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/nvme/host/tcp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/perf/util/unwind-libunwind-local.c
-+++ b/tools/perf/util/unwind-libunwind-local.c
-@@ -579,12 +579,12 @@ static int access_mem(unw_addr_space_t _
- 	int ret;
- 
- 	/* Don't support write, probably not needed. */
--	if (__write || !stack || !ui->sample->user_regs.regs) {
-+	if (__write || !stack || !ui->sample->user_regs || !ui->sample->user_regs->regs) {
- 		*valp = 0;
- 		return 0;
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2048,6 +2048,8 @@ static int nvme_tcp_alloc_queue(struct n
+ 		ret = PTR_ERR(sock_file);
+ 		goto err_destroy_mutex;
  	}
++
++	sk_net_refcnt_upgrade(queue->sock->sk);
+ 	nvme_tcp_reclassify_socket(queue->sock);
  
--	ret = perf_reg_value(&start, &ui->sample->user_regs,
-+	ret = perf_reg_value(&start, perf_sample__user_regs(ui->sample),
- 			     perf_arch_reg_sp(arch));
- 	if (ret)
- 		return ret;
-@@ -628,7 +628,7 @@ static int access_reg(unw_addr_space_t _
- 		return 0;
- 	}
- 
--	if (!ui->sample->user_regs.regs) {
-+	if (!ui->sample->user_regs || !ui->sample->user_regs->regs) {
- 		*valp = 0;
- 		return 0;
- 	}
-@@ -637,7 +637,7 @@ static int access_reg(unw_addr_space_t _
- 	if (id < 0)
- 		return -EINVAL;
- 
--	ret = perf_reg_value(&val, &ui->sample->user_regs, id);
-+	ret = perf_reg_value(&val, perf_sample__user_regs(ui->sample), id);
- 	if (ret) {
- 		if (!ui->best_effort)
- 			pr_err("unwind: can't read reg %d\n", regnum);
-@@ -741,7 +741,7 @@ static int get_entries(struct unwind_inf
- 	unw_cursor_t c;
- 	int ret, i = 0;
- 
--	ret = perf_reg_value(&val, &ui->sample->user_regs,
-+	ret = perf_reg_value(&val, perf_sample__user_regs(ui->sample),
- 			     perf_arch_reg_ip(arch));
- 	if (ret)
- 		return ret;
-@@ -808,7 +808,7 @@ static int _unwind__get_entries(unwind_e
- 		.best_effort  = best_effort
- 	};
- 
--	if (!data->user_regs.regs)
-+	if (!data->user_regs || !data->user_regs->regs)
- 		return -EINVAL;
- 
- 	if (max_stack <= 0)
+ 	/* Single syn retry */
 
 
