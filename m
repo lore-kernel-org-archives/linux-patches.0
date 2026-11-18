@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051500;
-	b=lI8UaqWu5assWoUd2eOqB4bPPu0XSh6gACP8qPXqU5vEn72+noXHZsNHbcynBWCAraDR
-	 kGPE7lygyiJabLbun5NwR/9xD5PzAVC9ivDSLdP4RE7rvJFXrjX0LoxqnCdDV2huVWtL/
-	 aXOSk1WULPaJpzKKjjYB7pY+rSXYb/XTNU2/bWlCMuaQqKFydvwBcoHsO1pGRj1FLP+eQ
-	 yfl1SC692zjKoKMHsdPRBoFOvdpgFz9I0nKZ75JWXoGJr3aZTBq5CweezMTGyEYZJP90h
-	 yED9vyGrIaN/X5BnDmpshBzPJgicYzsDesNovXGBJWpIdGi28zKYCYD6HRoLs9AA2RQ==
+	t=1795051503;
+	b=kFdImxOu1cNIdbWXe/AlWoXc9ji+QKhmiG32aK9B1JAgvIKb1WkoFOcG8Ai7WMdeaVvI
+	 IK/US97DOaYktL9cYyyh3QT6acDOiMAoZc9u9LRsIBJDo4l3+Yh72uFhA01FZpoYgrk1t
+	 dVDQcjU/ETq6NiX14DNO8NwaXQhjxKRbW2L/ctRylgMQ9xoIXDNBPIb7o2qOYblxgsv5x
+	 7xFYtM3zLO6bpGH2xdVJWY6ZUNbeh/P3SH0uRzIZR/2ZAeTj3BhP5DIDBnSELuhc9oYQQ
+	 Dykw64EWNbzRPnJa5NDsnkUCB0WeEJGdAecOnm88DO7A+U62tzk3s2omRMJPGqlC1zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oF9ZYdjHtgr/v6SCrGjx+Kwviu8pm5NR3ptvzklxBWQ=;
-	b=cGeJ6l39VwFH/J9MgbDLDOthmIoC4JWY83SZsiVN08RQJ51sqiL0Dc3qYp3l26KbiZJL
-	 6irUMXZ3L4LOXwM9M2azZEb+icVojtBKvQSwv7eokDsPe546Hf5WiIg4lqwylryX5tzuj
-	 EISFdC0rB8IvJZq6nev+vZH5RpxAWw1u6lcWRuVFc9pJf/8iZYgatDUlxPjPhPXopSEVy
-	 37A3rAD4V/xdfEWbJI7ZfbhihETGM/VNDV35PD0sXbIASI30JV/iFZhg5zOaekS6FyV/i
-	 UeyBsO0dNu3uSGauldixe/9OQvUDRwbgWXKqZv7xvq5wFnW4neGx5X+HagqE8wBm/DQ==
+	bh=2uyBcjOQIw884CLSeyhAelc9odH/rTv/SPtHSZddIyI=;
+	b=W/afIjP2Z07f/j/LKzLGvlhPpsG6lEj73qJ1RUzvvYc0vjSpVOLw/bW0YgYD9/PE+Oez
+	 HIHB5ht8cTsoWom81JC+TnX+4x2jt9pVsVkEC1QGz58VUWHTkQpkRGRqGgFMqri0ojwjy
+	 wrViUiIZpe+454rioJGYtw5Xv15vPD71/FWpNmnc1Bp0x4ptCemO5Pqn90xp0YIHz8adQ
+	 M8IudMrlG3hiEluYJZd7kYxtESw0kzokfEoupr8YfM9id3pn6TP3ctsdKRfMAZPQQpIfN
+	 pgwitfPMegvBNwUrTG1DwaARdLf8Z9NCvkV3K29b8gdTZkEy1/LtarkjhBtSkvGz8sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eYVV/uT2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTFxFUrV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4660B606A325;
-	Thu, 19 Nov 2026 01:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F6C606A330;
+	Thu, 19 Nov 2026 01:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eYVV/uT2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2571F000C4;
-	Thu, 19 Nov 2026 01:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTFxFUrV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBB81F000C4;
+	Thu, 19 Nov 2026 01:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051500;
-	bh=oF9ZYdjHtgr/v6SCrGjx+Kwviu8pm5NR3ptvzklxBWQ=;
+	s=korg; t=1795051502;
+	bh=2uyBcjOQIw884CLSeyhAelc9odH/rTv/SPtHSZddIyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eYVV/uT2GB/UuqfsbFkQ0DFEWfvnxxSRNKQ9Mwv/GfjgOj/YHLqcPA04F0HKnp/6P
-	 dDZFTUzVEVUk6LBXtg1h1YlWs4psDVEGWhvg5DQPvhTVBJkFUVDGQX/O7t9z13G4S4
-	 Y0lvCKP3+bBepE+QUgIM2LsxFSWozZXFaMWBbC/s=
+	b=fTFxFUrVrSikcbsZceuC/aUIrqhwfoKa76lSjW0ACP18qxjv6wEUrM9t29JPxpNzH
+	 XBlsg3mfceMpZfF6p1NYgdKFdjF6v7mt8dhFtCJL4HJXNYpub/fYZkX2Pf5feGZnTv
+	 +TE3NUXZmz6EElsst8Uyurf6JRabd/+xFZiWEPWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Narsimhulu Musini <nmusini@cisco.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0230/2214] f2fs: avoid setting SBI_NEED_FSCK on transient resize failure
-Date: Wed, 18 Nov 2026 15:31:46 +0100
-Message-ID: <20261118150019.434519530@linuxfoundation.org>
+Subject: [PATCH 5.15 0231/2214] scsi: snic: Fix SCSI host leak on workqueue allocation failure
+Date: Wed, 18 Nov 2026 15:31:47 +0100
+Message-ID: <20261118150019.467709830@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,63 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 258c95150c26a30db1896eacd3bdef26314f2ca1 ]
+[ Upstream commit 12e67eb89eb2b9516685c744d3f7de0a2d1bd701 ]
 
-When free_segment_range() fails in f2fs_resize_fs(), no on-disk
-superblock or filesystem metadata has been modified yet, and
-free_segment_range() safely restores all in-memory counters before
-returning.
+In snic_add_host(), if scsi_add_host() succeeds but
+alloc_ordered_workqueue() fails, the function returns -ENOMEM with
+shost->work_q left as NULL. The caller's error path then calls
+snic_del_host(), which returns early when !shost->work_q without calling
+scsi_remove_host(). The Scsi_Host remains registered in sysfs as a zombie
+device even after the probe has failed. This causes:
 
-However, the current error recovery path unconditionally sets the
-SBI_NEED_FSCK flag and prints a scary error message on any error,
-forcing an unnecessary and time-consuming fsck.f2fs repair on the
-subsequent mount/reboot.
+ - The leaked host remains visible in /sys/class/scsi_host/ after probe
+   failure, with state "running".
 
-Fix this by separating the error recovery path with a dedicated
-recover_user_blocks label to bypass setting SBI_NEED_FSCK on
-free_segment_range() failures.
+ - Subsequent SCSI host numbering is permanently shifted (the leaked host
+   ID from ida_alloc() is never reclaimed).
 
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+ - Memory leak: the Scsi_Host allocation can never be freed because
+   device_add() took a reference that can only be released by device_del()
+   inside scsi_remove_host().
+
+Fix by adding scsi_remove_host() in the workqueue allocation failure path
+inside snic_add_host(), undoing the successful scsi_add_host() before
+returning the error. This is cleaner than modifying snic_del_host() because
+snic_del_host() is called from a shared error label that also serves paths
+where snic_add_host() was never invoked.
+
+Reproducer (requires no real SNIC hardware):
+
+ - Build CONFIG_SCSI_SNIC=y (built-in)
+
+ - Add snic.test_mode=1 snic.inject_wq_fail=1 to kernel cmdline
+
+ - Boot with a PCI device matching the snic driver (e.g. QEMU edu device,
+   PCI ID 0x1234:0x11e8, temporarily added to the driver's PCI ID table)
+
+Before the fix:
+
+  # /sys/class/scsi_host/ contains a zombie host0:
+  $ cat /sys/class/scsi_host/host0/proc_name
+  snic_scsi
+  $ cat /sys/class/scsi_host/host0/state
+  running
+  # ata_piix gets host1, host2 (host0 stuck):
+  scsi host1: ata_piix
+  scsi host2: ata_piix
+
+After the fix:
+
+  # host0 is properly freed and reused by ata_piix:
+  scsi host0: ata_piix
+  scsi host1: ata_piix
+  # No zombie host in /sys/class/scsi_host/
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Acked-by: Narsimhulu Musini <nmusini@cisco.com>
+Link: https://patch.msgid.link/20260727073438.209673-1-chenchangcheng@kylinos.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/scsi/snic/snic_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 663835527298f..2401ad9a24e43 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2092,7 +2092,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
- 	if (err)
--		goto recover_out;
-+		goto recover_user_blocks;
+diff --git a/drivers/scsi/snic/snic_main.c b/drivers/scsi/snic/snic_main.c
+index 14f4ce665e584..31df534b08c88 100644
+--- a/drivers/scsi/snic/snic_main.c
++++ b/drivers/scsi/snic/snic_main.c
+@@ -320,6 +320,7 @@ snic_add_host(struct Scsi_Host *shost, struct pci_dev *pdev)
+ 	if (!shost->work_q) {
+ 		SNIC_HOST_ERR(shost, "Failed to Create ScsiHost wq.\n");
  
- 	update_sb_metadata(sbi, -secs);
- 
-@@ -2113,11 +2113,14 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
++		scsi_remove_host(shost);
+ 		ret = -ENOMEM;
  	}
- recover_out:
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
-+		f2fs_bug_on(sbi, err == -EAGAIN);
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
--
-+	}
-+recover_user_blocks:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
-+	if (err) {
- 		spin_lock(&sbi->stat_lock);
- 		sbi->user_block_count += shrunk_blocks;
- 		spin_unlock(&sbi->stat_lock);
+ 
 -- 
 2.53.0
 
