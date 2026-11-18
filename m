@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021247;
-	b=G80ob8gA6hKDAnCk0sxqYPKKjIAhDCQoIOhs5B8wzpLtR5N7dXuTA99StBk0dx6DC/8s
-	 zLISKIdTSKgUCGqm5IB29vSmovFc+ikI+UPxj9pwhtTR19uRuh+axdHKIr2Nf/DjX8LFR
-	 nGUs15yZXmt40wzO3Vo+AoEVCGjlbDHODUD+flv96dRdKvdRaLTNk5zlZv1I+11TDsS9y
-	 68oESeN9NTRVdNbhGhHA3u2piSdKg4ZPzRU5KXMaGkGN8YNbRn+1dzrnHT5dlboLvhc18
-	 fjhtvBvdZ2BVvgURjRzB3l3AtHArUfkmD2ypcDf5nk1g26nS3UgQ/L/3xqQVOMhwZwg==
+	t=1795021250;
+	b=hBuiH1caeC6euFQ+Th+5VJJaa5ATcOeCULetLTISptzqZpqcYMY0sMNc6CY2i6aRcZhR
+	 7zYU7LFYKbnmQUhL+77FiUbjqYBZMAvxtUHIHZEcoZFZqnFSNuGdNkasUv/a0/WPu87lH
+	 xmcpDVpcfukiUhyCIImX0MQFYChAyYZb0/wMYu8JhdvQ0P3YuhTB1cMtu5n/FHwR74CkI
+	 dYc+zIMIftjbk/U946rui7PF/rtnrNX5+4PB0hTIGNVM5Qf8YzGFCqKttAyoqgFTy6k+p
+	 VXwqoZevkWLfxQp4cd5obaLuBkZDQWO1r2wvjlfKBu+KYkFzrtoqWAaJEKOA7VwJhUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021250;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RgC0R9cizsE0hci6RYdgHj7ahquIQBe3uUpxhIvk/dU=;
-	b=Pb1SrLAXoSI5+suVdiiQ09UrgB174dpzBKFacdo8pDGwKEOiHmhnaDZxZ4qSQWfE8n0L
-	 IwBYNij9V/1LzYmShq5XuTP8yQtD8lol2EHuMK5xyYKcwHhtSyc9+mEOaBwd9qJ8iGYPO
-	 E9SqJ4CdTad/o5dx5o3tHvIR9EW6KSttI1RBNURFIGaxQZkBtMpC136RZ9KOGgDpwCMab
-	 uZ435CEnsdMtqXpRuaoaQ40A0uASW6KiYrkNiJ1Ns+mtqfsqhLNSbdmt0kArWCTgWF5Kf
-	 Ap0j/9Azbj3tsJhTIauzBnRKWDVqpj6yhx5gHAxYgvUVZP3m2YEuA3ozqGwlmUIQfmw==
+	bh=2zUYRpLCOFrtd9EtDaPJ8TTu7xSYkfPa7JOO5IyTwIQ=;
+	b=Deur3zz18MGj/nAQY0rq0t6F6IiEhS6JJxqV4rmQh5vKkbhnalxQPk4pHadZklUcGZQn
+	 KYCnL/3iVkI3l4ZGB81nrJjJcUnfg+uBE2o+HOHFy1rPrV5wm7qhv3PxRzJH/B2DVfb2+
+	 oTmgTpBKz++Al/3b0H7PUj1eREX4+NSfsfkWEZjEocAB7DWtakJf7NCvMtWtWvrzGeF+I
+	 JJ6cRdQKEz89AofzIjmECjaE1brk53NE/eAYuCLkOu5AfSTqnCtywBs/g7/vBQiCBFPy3
+	 cm94JC2jvLhClBtEgqAW+iXWVUNI2s7fEQoNDP5FxtV9ZHfGhXQbycSwc3BsgPS/W2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uh0kDnWt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apC0BKeD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B496606A32F;
-	Wed, 18 Nov 2026 17:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1CB606A337;
+	Wed, 18 Nov 2026 17:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uh0kDnWt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EC01F000C4;
-	Wed, 18 Nov 2026 17:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apC0BKeD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E4B1F000C5;
+	Wed, 18 Nov 2026 17:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021247;
-	bh=RgC0R9cizsE0hci6RYdgHj7ahquIQBe3uUpxhIvk/dU=;
+	s=korg; t=1795021250;
+	bh=2zUYRpLCOFrtd9EtDaPJ8TTu7xSYkfPa7JOO5IyTwIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uh0kDnWttH6fzIHKec0vw1SKdq7orJ0pRLfif7eUsm0f/jf1RgTq7tkewCx+xvL6U
-	 AudylICqjjibLaiiO5bHqZ7NdVCNoksImuuuAu4bi76C1IjWCBmNz1VN6aazwI3Hhu
-	 XVDb8lB63lUpuldPUlHBHapkNgyEaVg55XZwrS9A=
+	b=apC0BKeDdxIp0080aKQNuuVC4rKOSKja1MjXHi+BPzyD2N3Lq8zqkU7zbRKtUY+5Z
+	 qC3i8ZEzcDyFJ3O7CElk3SKfQFkO6rIu0CxR7w4VhPHR+x+osZGL0v475cVcTJIMEU
+	 sQDEm91vts9QX5Yby9bEYQ8oDt/5s/btuyPJ9wWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2240/2651] ASoC: cs42l56: Remove the ADC Mute Switch control
-Date: Wed, 18 Nov 2026 15:58:00 +0100
-Message-ID: <20261118150406.128499095@linuxfoundation.org>
+Subject: [PATCH 7.3 2241/2651] dt-bindings: clock: mediatek: Add MT8516 fallbacks
+Date: Wed, 18 Nov 2026 15:58:01 +0100
+Message-ID: <20261118150406.160313335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,44 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit ff404ef11b975baf38c4472c51a6674c239e8021 ]
+[ Upstream commit 1d48ecb48e2ab9dd2564e735a1c1b29a5eeeb599 ]
 
-The ADC Mute Switch control writes bits 2 and 3 of the Misc ADC Control
-register. These are the ADCA Invert and ADCB Invert bits, which have
-their own controls. The ADC mute bits are bits 0 and 1, and the DAI mute
-callback already sets them.
+MT8516 topckgen and apmixedsys nodes use the common syscon fallback
+form. Add the MT8516 compatibles to the branches that allow the
+syscon fallback.
 
-So the control has never muted the ADCs, and nobody can be relying on
-it. Remove it rather than point it at the mute bits, so the ADCs are
-muted in one place only.
-
-Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
-Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/all/atXh3Br+fuH83S0q@opensource.cirrus.com/
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261019124022.3410793-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: cd9fdd06b0e8 ("dt-bindings: arm: mediatek: topckgen: Convert to DT schema")
+Fixes: 16a146735df3 ("dt-bindings: arm: mediatek: apmixedsys: Convert to DT schema")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260921232807.3137010-1-robh@kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l56.c | 1 -
- 1 file changed, 1 deletion(-)
+ .../devicetree/bindings/clock/mediatek,apmixedsys.yaml          | 2 +-
+ Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
-index f0ea5309a6d49..a259440db0f57 100644
---- a/sound/soc/codecs/cs42l56.c
-+++ b/sound/soc/codecs/cs42l56.c
-@@ -419,7 +419,6 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
- 			      CS42L56_PGAB_MUX_VOLUME, 0, 0x34, 0x24, pga_tlv),
- 	SOC_DOUBLE_R_TLV("ADC Volume", CS42L56_ADCA_ATTENUATOR,
- 			      CS42L56_ADCB_ATTENUATOR, 0, 0x00, 1, adc_tlv),
--	SOC_DOUBLE("ADC Mute Switch", CS42L56_MISC_ADC_CTL, 2, 3, 1, 1),
- 	SOC_DOUBLE("ADC Boost Switch", CS42L56_GAIN_BIAS_CTL, 3, 2, 1, 1),
+diff --git a/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml b/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml
+index 591a9e862c7d4..438723d253207 100644
+--- a/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml
++++ b/Documentation/devicetree/bindings/clock/mediatek,apmixedsys.yaml
+@@ -26,7 +26,6 @@ properties:
+           - mediatek,mt7988-apmixedsys
+           - mediatek,mt8135-apmixedsys
+           - mediatek,mt8173-apmixedsys
+-          - mediatek,mt8516-apmixedsys
+       - items:
+           - const: mediatek,mt7623-apmixedsys
+           - const: mediatek,mt2701-apmixedsys
+@@ -42,6 +41,7 @@ properties:
+               - mediatek,mt7629-apmixedsys
+               - mediatek,mt8167-apmixedsys
+               - mediatek,mt8183-apmixedsys
++              - mediatek,mt8516-apmixedsys
+           - const: syscon
  
- 	SOC_DOUBLE_R_SX_TLV("Headphone Volume", CS42L56_HPA_VOLUME,
+   reg:
+diff --git a/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml b/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml
+index c080fb0a16181..6594d491e215b 100644
+--- a/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml
++++ b/Documentation/devicetree/bindings/clock/mediatek,topckgen.yaml
+@@ -23,7 +23,6 @@ properties:
+           - mediatek,mt7622-topckgen
+           - mediatek,mt8135-topckgen
+           - mediatek,mt8173-topckgen
+-          - mediatek,mt8516-topckgen
+       - items:
+           - const: mediatek,mt7623-topckgen
+           - const: mediatek,mt2701-topckgen
+@@ -43,6 +42,7 @@ properties:
+               - mediatek,mt7988-topckgen
+               - mediatek,mt8167-topckgen
+               - mediatek,mt8183-topckgen
++              - mediatek,mt8516-topckgen
+           - const: syscon
+ 
+   reg:
 -- 
 2.53.0
 
