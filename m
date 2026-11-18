@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056838;
-	b=A4PEAAq2G5mPfNzoxV3qL6DHOXATJBOlHl9K9fkCNMEdwolIRWPbI8mIKrXr2Zt0YcNf
-	 EFZnCnH88X630RAYeP2BUAZTE1FPKfVb35vVTWmG2etEN3d9y8XA/dGNmXHG4qZvnekBW
-	 xt7vOJic6fzy7mPJAmJECv7vXYOBfTMqW90aCT4r0At9q7zD3M5kc2huM+Ry2NSfmr9PF
-	 GRK/+eCZJVI5DIEehVJrfO9xoVBDEgy3gavrMsK4re/n3a/qMEB1veBTiUJyUshlZZE4I
-	 vvBVeOYix28A2MxZTn7ODZAlJiGsk1azFFNm9hH4QfgbxBIhwZC6Bgr6BYj4YJWse0g==
+	t=1795056841;
+	b=kscfaMak9Kpa4E6oZZJc1L/dhKzDlT1LlCS/GEVQ2tS/lIQ2EE/+wq02QJqgHsIfKOTD
+	 +6Y8AIKMCAbE7VM1FG9NN5g6Y+aV6f9LsJabBIlH5ZFHIuhO2Ho0MgLrIbyF/L4XvmwQf
+	 WQdlTxMHXNM0zKUdhonNB9r9FGcjeVFjtCwC7n9ouPBJgGf5oDhAv8j/DxLQNIk5+Xvjd
+	 60dPs7UIN6XoxOIn3VlBzCgt9cjKv31ql0a/I7SYPeDKCzs4k1dEJ84sG8ms0In+RUqDz
+	 yUkGkxJW5oYc1/xGk5jcZ+b2erBFuPydi1h3u27Sqc8h2F7+9kWN8aqdumrfY+esjJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EeAphJfG1RKbMfDFFgXEsGrxH5PcjJw0JlYRgFlVEWk=;
-	b=SaNKvqnEGG1zZHcDikofW1ZIBxsC/3G0MyR0NuBjccpI0kgTr8B9KO8yyQSRx+F6hXfs
-	 hDi8YGYtEll0JB6BK+wNlNMaeoUyJpjZ9RGRPuXzcuXBpStiqXE3LEfVD06bz1VUK+tzt
-	 zuP2DrZQWu910YNmF8JkRqjmr2knUeyQ9YTdo5SqOQDlD4vJ9e1ZsMh9mxS39oRHY2M2E
-	 9EIa9Hf5ZP0M+vCR3vLYFKCPX6PSYgs+ftGtjek2HIOh+p/BQt9X+Cz6FW0+6Y3l3qnUC
-	 zObzQwBCdlmJXh5u+vdtMt2b1LGN8V1HmgeVIJtD5SUD/bwTsq23nU4FSHFbpDItSLg==
+	bh=Z5O3Zv06KcuwxoGeWJCbYd7bSWODIyXDRCW6Ds/W3c8=;
+	b=hVytmW8x+NO56W0EY/dibfJZaCYHO/htFjVKnfDOtDEA7HVQVvrFHIjNxb0Y/bIrPi4W
+	 RoDpdcq9lOJGQbVF2vPs+AEmKbA5V3eKxM2+oOGl5/TGZLXsnIqqapzVfcCRkiIT6YX9Q
+	 VMnWGQIysUBWsh4aq1Z/OMZUBRRAK+eRcVQwTm62rZWapA44+hD+4w2UABUWzdrOUC7L3
+	 DKFsf3MLZ1kDiFF3tpOHD7IOYRPcEaVmJMmuV1p1qbCUNUYFwrg4Fy+UQv2DXAKOEtgCr
+	 UkdqUMydveTZz6E+c3u1UnyZaZiqF7R7uC1DasLhWEVq/ex8B1Jsi6a5uyGluvHfkeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbVgpdcL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BavkLxOn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5E606A334;
-	Thu, 19 Nov 2026 02:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA5160A2612;
+	Thu, 19 Nov 2026 02:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbVgpdcL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48671F000C4;
-	Thu, 19 Nov 2026 02:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BavkLxOn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B1C1F000C4;
+	Thu, 19 Nov 2026 02:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056838;
-	bh=EeAphJfG1RKbMfDFFgXEsGrxH5PcjJw0JlYRgFlVEWk=;
+	s=korg; t=1795056841;
+	bh=Z5O3Zv06KcuwxoGeWJCbYd7bSWODIyXDRCW6Ds/W3c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbVgpdcLkYncI3UZDH+1/7Yzea2DUaL4KzC5LXLhUl3M992C4RC1FlN4ToWzvooQR
-	 D1c/hj6TV6FjYZZOv5W9mI9KpeMGx8Hl1ecz0XWwXL/ueliREI87c2JmwB860FZfzO
-	 gytye7c+aG2jAbNGR469cGLzgZChJtBwlqP5ERfk=
+	b=BavkLxOn9eRNvRSuaW8CwwZGad0nnLx6pftoVJ7w773l+8YO8DFeSzIFLFWPFZbrL
+	 /B/naJCK6ToT0DldXtvQ/P08btHlIeg2xoDRGVn5R5LA6FChegabkxCFGVwQQnAAaO
+	 8yFdMIByFHFbjPuT3rl3tNX6Nijalv4OCw25jVds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0017742620a9d06f06ef@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2131/2214] tipc: fix refcount panic in tipc_rcv() when receiving shared skb
-Date: Wed, 18 Nov 2026 16:03:27 +0100
-Message-ID: <20261118150135.799999392@linuxfoundation.org>
+Subject: [PATCH 5.15 2132/2214] pppoe: drop discovery frames with no MAC header
+Date: Wed, 18 Nov 2026 16:03:28 +0100
+Message-ID: <20261118150135.833934792@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,62 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tung Nguyen <tung.quang.nguyen@est.tech>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 5308a2049b764aa55513c90c68933abf596c51d2 ]
+[ Upstream commit 406bf2dc8d6d3e93fdae0b66d2ae99b6b62e479c ]
 
-TIPC assumes that the received skb is not shared with other users.
-However, syzbot reports a bug triggered by receiving a shared skb:
+Commit 8540827ebac6 ("pppoe: fix reception of frames with no mac
+header") drops PPPoE session frames with no MAC header to avoid reading
+uninitialized memory.
 
-...
-RIP: 0010:pskb_expand_head+0x135a/0x13a0 net/core/skbuff.c:2308
-__pskb_pull_tail+0x111/0x1870 net/core/skbuff.c:2890
-skb_cow_data+0x2ed/0xc50 net/core/skbuff.c:5398
-tipc_aead_decrypt net/tipc/crypto.c:892 [inline]
-tipc_crypto_rcv+0x346/0x23d0 net/tipc/crypto.c:1843
-tipc_rcv+0x4b7/0x1040 net/tipc/node.c:2119
-tipc_l2_rcv_msg+0x2d9/0x470 net/tipc/bearer.c:669
-deliver_ptype_list_skb net/core/dev.c:2533 [inline]
-...
+Apply the same to PPPoE discovery frames, as both functions read
+eth_hdr(skb)->h_source.
 
-The root cause is that local delivery hooks in the kernel (e.g.,
-deliver_skb()) may increment the skb's reference count (`users`) before
-TIPC processes it on ingress.
+Found by LLM static analysis, and reproduced using the same TUN
+injection as described in the mentioned commit.
 
-Fix this by calling skb_share_check() to ensure exclusive ownership
-before passing the skb to tipc_rcv(). As TIPC needs to modify the skb's
-data, the cloned skb needs to be uncloned when needed. This can be
-addressed in separate patch.
-
-Reported-by: syzbot+0017742620a9d06f06ef@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0017742620a9d06f06ef
-Closes: https://lore.kernel.org/all/20261018145928.58317-1-ngocthang2710.1999@gmail.com/T/
-Fixes: b97bf3fd8f6a ("[TIPC] Initial merge")
-Co-developed-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261023052921.54220-1-tung.quang.nguyen@est.tech
+Fixes: 8540827ebac6 ("pppoe: fix reception of frames with no mac header")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261023080002.221332-1-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ppp/pppoe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 986b1fd888544..e72318f1a4183 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -661,6 +661,10 @@ static int tipc_l2_rcv_msg(struct sk_buff *skb, struct net_device *dev,
- {
- 	struct tipc_bearer *b;
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index d85202e8cbdc1..43cfc6ed4354b 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -496,6 +496,9 @@ static int pppoe_disc_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->pkt_type != PACKET_HOST)
+ 		goto abort;
  
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
-+		return NET_RX_DROP;
++	if (skb_mac_header_len(skb) < ETH_HLEN)
++		goto abort;
 +
- 	rcu_read_lock();
- 	b = rcu_dereference(dev->tipc_ptr) ?:
- 		rcu_dereference(orig_dev->tipc_ptr);
+ 	if (!pskb_may_pull(skb, sizeof(struct pppoe_hdr)))
+ 		goto abort;
+ 
 -- 
 2.53.0
 
