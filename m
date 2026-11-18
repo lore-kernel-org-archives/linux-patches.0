@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015367;
-	b=wV5hWew6Wa4OFTlZHu/uaIzhFyJ9bWexM/vihLvx/hqTVcG+EkRebgcCEzfDXTSGvJ91
-	 pp03cVKvOEmnt/9ajFV9XGgeXwIKZjPaqJzt7KAjtfM8hc4HRdeMk1cxXXhnMpli5UB6c
-	 kGUcX97PHevro1MRPtqwQsvewOCO4xklOXXoHF4pZMOtmPaA5x9u8JV2DWdUl+LoNFTkb
-	 jFSG1wTOGN/LO4+X1KCx6/whgthfAbPEAKHj/KzalGdO4CBiVLsjamdL167gjdjB8PwW1
-	 Zp1Ixc3idMbDUyIAjRNWflLzNJitY0U4V+/aeP8tXVlPwHuUxt/IKs8UYlDklbGNN2Q==
+	t=1795015370;
+	b=3hnlAoclh6NSdPb+W3o19VPF7v0RbbebqRheyruylLxPUlu+Ef0Y7efElZUyo78e+e/M
+	 xR/xRpzpREqu+OruP87e/RtVJBgM5O+/USgpS9H7gdoiETY+ftII53h9Pe5tVH44Ysiew
+	 bTza9i11S/nw5u5o2D0MrhV1r+95cqUamyKX0ket8RA2kjrY//HUe8x2KSvg3//6BmoFA
+	 D40q7NEb/b1Q/6nhGQWlvWbHiTl0BhJ6K+s+KHVN9yqbAo8F3fpxnXwd5u1CAYBjXS0mv
+	 Z3Z7rv/9wcOD/4uG74IRNd1VpYxwP7ItZkXXk64vATq3AH93A1alsxU4jL0hJrdd6Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015367;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i3mEjyHl7bWFF8AJkUuI71S9NFj0bkvJUB/3c4h9bE8=;
-	b=e7Z3G5kFNh5KKGtSs3BdO8S99tHtpvdLR87v1rw/+/Us5h4AgxLz7+xX3XQEFzgEUp02
-	 iN/O4zEdPr6onqpq/bv1/VJl5cZ/OqoSKTbT/CylXJUBO5eGs0jqiMvs08foyRkUIYpbN
-	 D6Ny3l1Fzfc5PPyNTKpX/qN8DcYBM+MZyWq/pzCV68SqfyNikhvOBIW++CqcKSbX3r2Zl
-	 +rtrqQmOyF+mv22odg7P0q8ECnQZXGiO3Z8KylIFowncuqStUTVGV7XeDLF286of5kGFD
-	 UlL+AIHFueobSt4Ckk7+ofN49lNTW/yfemTsDkzNUMuTPgrGWfEHL0FMdAQ+8pZndUA==
+	bh=6jV1cboApr5UXp5nPRkae8n1BzpU/vOBQ6aTzHBZMts=;
+	b=zB/a2SAZhOInB3Rrq5FMsOociI4O3xTK4k/GferS+2ySeFe04cVBUPpUur4k0O5chrvd
+	 xFBUFAN3LJ07WD/f+4g++UOn3CjLiYxX1oGuoVpG3ITnNGoXTh/Vgnaz628S1oN3bxvDQ
+	 y7Y0qY+6OqgGQRMcwdn3gwIwiB9Td/I2a7jKl4SuLEsCdYr2j7ZIPMq9OP91ZgNHnOdu4
+	 8Q6cHcGUBOgti1P64eTCzIwoIWud0BtvlPlEHQhlXb7nJAE4gFRBucEj54ViqI5+i56PY
+	 xVtlSYHJKOpzQvvf1QhrryxmplmhgdCy8qyGFMqNAI4ryuinj/4sxdKzchMRrBqvsAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQFDr7hP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fUbqXPeU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849D1606A334;
-	Wed, 18 Nov 2026 15:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D1606A330;
+	Wed, 18 Nov 2026 15:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQFDr7hP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A734C1F000C4;
-	Wed, 18 Nov 2026 15:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fUbqXPeU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646851F000C4;
+	Wed, 18 Nov 2026 15:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015367;
-	bh=i3mEjyHl7bWFF8AJkUuI71S9NFj0bkvJUB/3c4h9bE8=;
+	s=korg; t=1795015369;
+	bh=6jV1cboApr5UXp5nPRkae8n1BzpU/vOBQ6aTzHBZMts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQFDr7hPgu0uNAywttqKkoZA8WSaQU6cTs8AJOtCceCWkuQfJu5O/WE1JON27I+1k
-	 8tI+zlEUE35vB8BeyP8dZV5v8/PWzMCocViKyZcKNalM5VKCbAxItgZA3+RkHgK7r/
-	 x+bMsojlEjnmTfVjiFzrfyB5tTn+z0vLspeboINc=
+	b=fUbqXPeUc8FNzxtQGHj4H5QR5WtOpBNQFA2KkVM4myzd9EMionIK6Bou8JeyBhkvy
+	 x3+uZ9fvTPRenYTsrcEejWVDhOZZYTzfezjC1MxfwatPN7j/dO31wk/lb3zyF2jMkl
+	 G+vdiE6qfgg33lVlvWMeA9VVgqXotc9UobUP67PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Aksh Garg <a-garg7@ti.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0147/2651] PCI: cadence: Fix enum type mismatch warning in LTSSM debugfs
-Date: Wed, 18 Nov 2026 15:23:07 +0100
-Message-ID: <20261118150253.145987447@linuxfoundation.org>
+Subject: [PATCH 7.3 0148/2651] cxl/test: Map mock device nodes to an online node
+Date: Wed, 18 Nov 2026 15:23:08 +0100
+Message-ID: <20261118150253.184352296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,61 +71,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit ce8034bb9c5c50f9f5c305856aff5d1c3efe3a30 ]
+[ Upstream commit 6f057dea152574dd044382fd0ba5ed19e3ecba25 ]
 
-Fix Clang -Wenum-compare-conditional warning by using a single u32
-variable to hold the LTSSM status value, replacing two separate enum
-variables of different types.
+cxl_type3_mem_init() and cxl_type2_mem_init() assign alternating NUMA
+nodes to the mock memdevs to model multi-node topologies. On a
+single-node host node 1 has no pgdat, and the first node-aware
+allocation in an odd device's probe faults on a NULL zonelist:
 
-Fixes: d70e964dc099 ("PCI: cadence: Add LGA IP debugfs for LTSSM status")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202608201933.w2579mwx-lkp@intel.com/
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Aksh Garg <a-garg7@ti.com>
-Link: https://patch.msgid.link/20260820232305.80596-1-18255117159@163.com
+  Oops: general protection fault, probably for non-canonical address 0xdffffc00000006e3
+  KASAN: probably user-memory-access in range [0x0000000000003718-0x000000000000371f]
+  Workqueue: async async_run_entry_fn
+  RIP: __alloc_frozen_pages_noprof+0x288
+   new_slab
+   ___slab_alloc
+   __kmalloc_node_track_caller_noprof
+   devm_kmalloc
+   cxl_mock_mem_probe
+
+Map the requested node to an online one, as dax_hmem already does
+for its target node.
+
+Fixes: cf1f6877b088 ("cxl/memdev: Add numa_node attribute")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://patch.msgid.link/20260831175119.3247915-1-dave@stgolabs.net
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/cadence/pcie-cadence-debugfs.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ tools/testing/cxl/test/cxl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-debugfs.c b/drivers/pci/controller/cadence/pcie-cadence-debugfs.c
-index 0a308f95e9f6c..7b8354052aeab 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-debugfs.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-debugfs.c
-@@ -210,24 +210,21 @@ static const char *cdns_pcie_hpa_ltssm_status_string(enum cdns_pcie_hpa_ltssm lt
- static int ltssm_status_show(struct seq_file *s, void *v)
- {
- 	struct cdns_pcie *pci = s->private;
--	enum cdns_pcie_lga_ltssm lga_ltssm;
--	enum cdns_pcie_hpa_ltssm hpa_ltssm;
- 	const char *str_ltssm;
--	u32 val;
-+	u32 val, ltssm_val;
+diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+index 62bd92b3be45f..221be4addb0e7 100644
+--- a/tools/testing/cxl/test/cxl.c
++++ b/tools/testing/cxl/test/cxl.c
+@@ -1945,7 +1945,7 @@ static int cxl_type2_mem_init(void)
+ 			goto err_mem;
+ 		}
+ 		pdev->dev.parent = &dport->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
  
- 	if (pci->is_hpa) {
- 		val = cdns_pcie_hpa_readl(pci, REG_BANK_IP_REG,
- 					  CDNS_PCIE_HPA_PHY_DBG_STS_REG0);
--		hpa_ltssm = FIELD_GET(CDNS_PCIE_HPA_LTSSM_STATUS_MASK, val);
--		str_ltssm = cdns_pcie_hpa_ltssm_status_string(hpa_ltssm);
-+		ltssm_val = FIELD_GET(CDNS_PCIE_HPA_LTSSM_STATUS_MASK, val);
-+		str_ltssm = cdns_pcie_hpa_ltssm_status_string(ltssm_val);
- 	} else {
- 		val = cdns_pcie_readl(pci, CDNS_PCIE_LM_BASE);
--		lga_ltssm = FIELD_GET(CDNS_PCIE_LGA_LTSSM_STATUS_MASK, val);
--		str_ltssm = cdns_pcie_lga_ltssm_status_string(lga_ltssm);
-+		ltssm_val = FIELD_GET(CDNS_PCIE_LGA_LTSSM_STATUS_MASK, val);
-+		str_ltssm = cdns_pcie_lga_ltssm_status_string(ltssm_val);
- 	}
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
+ 		if (rc)
+@@ -1974,7 +1974,7 @@ static int cxl_type3_mem_init(void)
+ 			goto err_mem;
+ 		}
+ 		pdev->dev.parent = &dport->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
  
--	seq_printf(s, "%s (0x%02x)\n", str_ltssm,
--		   pci->is_hpa ? hpa_ltssm : lga_ltssm);
-+	seq_printf(s, "%s (0x%02x)\n", str_ltssm, ltssm_val);
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
+ 		if (rc)
+@@ -1991,7 +1991,7 @@ static int cxl_type3_mem_init(void)
+ 			goto err_single;
+ 		}
+ 		pdev->dev.parent = &dport->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
  
- 	return 0;
- }
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
+ 		if (rc)
+@@ -2009,7 +2009,7 @@ static int cxl_type3_mem_init(void)
+ 			goto err_rcd;
+ 		}
+ 		pdev->dev.parent = &rch->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
+ 
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
+ 		if (rc)
 -- 
 2.53.0
 
