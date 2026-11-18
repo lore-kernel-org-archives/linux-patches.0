@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033056;
-	b=CQrQbToko+h4weOlwQ725REQX3TckpDEpr+g8eMBNX513f5btXDMBmFvOFP2PilNTRRq
-	 3kLNgJTuE1s262UTNlPsyNJYjLt4CgAM1RBMV1n28ahgbRnY+Wv4eei8dju+kkSQsZHpm
-	 sTSU7Y4pmdlpnzaQ51kr2pnqxfiUUOUQ/b0ZDZx/Zampp4EZ1TZ8ozpOyF0yCu9kEzDAv
-	 ep4LoX+NTVpTntFhMJstkCXKEVrE1XaK5CYoCGk6NACtAAJeIh+ounSrUD9egJe6QfyOU
-	 YW4FgxRCfTDilYqoxOb+SxCwti3a9e3Hwh+EKtIOofVw89kuL7ZC0vbzJL5GaS2l2sg==
+	t=1795033059;
+	b=rNErYMZ8Yy7eRfJv/x0RW4JJO5Z4Ak9PWZpAZC1Frl7l1qfOkrb4jGucCmePzpm+Akz/
+	 93JyECkk8WK1DHDb9JBU4xOCx8nGe5j2jpqXBFArSjraCE3SV4/2/srzGs6rp9H7QB20N
+	 FLdnA92OWOLVtxT/W8tu46HLwoUA3xv+VeEmkbVe9lSO+zaWeLVUU0dmvmc4oULt8dirG
+	 RrVm3tVmGOWkr9T6Wr2DQasiTSBXYcsLZAN+sIZYvTgthizYGJhyoZJKZpq31NwJYge3i
+	 XYkt43AvScXnLThCoMLdrb3mvgNb8rCYUmYK/nntZBjSyVOLPlBP6doAGWz4KlMNmLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033056;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5/YYUVEjyHQ0f/LddWUZvfHALbrr7GbpyIFazjsi60o=;
-	b=FovNLzCh7Svq1U+OvQWVs7lJCz8p3Zk8mflOSSX3Glg6i/gUmE/pIExhnnxJYWsn5WP6
-	 urHhbi2bBNIlkgv54GHdGjqy8EqOU6I8oClwXYy0EPuAa8HxcYWTBBFw7l9QvxuRRMdO7
-	 YOAoIapslkAnjRfcs8JvchTR0BE4hFQoUbf0MLPdFKS1qgTOQSqBCaZlbI9Z87ZkPWYas
-	 snbxjijRfwf9OXXnVDmqaSyRn9CXGSqf2PKFTedwidp3esovQMVnkK7PbG+mZqx621+Qa
-	 83AfBn68RWzk3pKBh5e0zpgCKHjWWd0pqOMDK60KOa2Wh4l0lpKxDj2SZ10ilPuWgzA==
+	bh=n0C6s33R+mdQPrsN2eJDj9el42pgDeFfCnETp+Gylvo=;
+	b=Aflb8z2IEGA+qmUihn7WN2hiQKLIiG8aelOdXHy6607XSq6/A53/KvhFMegtfD8THuvT
+	 CBMQKzxEVCkS0PiFb51p6ss03Zwl4gQUP6iTltiwZRnvP4Hh+Pgoqvccg5uT/Wi6codFh
+	 ZvNS9wwqTYGY7B3xJjtzZaKXLQdjJvLGQYavy4KQv/EnHmmgJY0BqGvKuNQx3EjVXzqzl
+	 aKy2AuPLI3OpSS/5qGApoVgB9RwpnefIVIg4woFpsgLAXWy1sRfkrqSDiI1TtjLsc3Yg2
+	 VPdWIO83k7m8yV3w/1Y4KnWJgzFU3sVTSM5dL2GsBRoVD0gIjr1v+oU5LlCGAUUuAHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbZJLfAu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CV24S6WZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B852606A331;
-	Wed, 18 Nov 2026 20:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4237D60A263E;
+	Wed, 18 Nov 2026 20:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbZJLfAu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19A71F000C5;
-	Wed, 18 Nov 2026 20:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CV24S6WZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9732C1F000C5;
+	Wed, 18 Nov 2026 20:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033056;
-	bh=5/YYUVEjyHQ0f/LddWUZvfHALbrr7GbpyIFazjsi60o=;
+	s=korg; t=1795033059;
+	bh=n0C6s33R+mdQPrsN2eJDj9el42pgDeFfCnETp+Gylvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbZJLfAurhhXEbVb/kAB7E3dArqlT0SuqKur237tDQ+z9rkozuEVeqDc9kOHhucmq
-	 xq0kUDCLDLpWMZj7mLb9idCf9SX9Ilu3yk5E+//eR9S1SrwLtYCsXTQCy/ahFq3jkq
-	 4OvbjfuJc1JB1w9nwF4XKLzorVrUa0/aQn9ON7Cc=
+	b=CV24S6WZC7f0mqg7jJWl5L8rcKIdZ9Ytkn4XJ88sYFge+/+XDnarRlaVffihtwkyS
+	 5q2y7qrHmw1B1XLewYoGLhEXS92qV53mx0meuQOWjelJd6FR3b2Cebr46CyAoCeTdf
+	 CjErMvp/sA9uedkRxCSAwofMauL5lRbRKmrAt/X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1631/1756] nvmet-tcp: stop listening when a port is removed
-Date: Wed, 18 Nov 2026 16:02:38 +0100
-Message-ID: <20261118150114.722818845@linuxfoundation.org>
+Subject: [PATCH 6.12 1632/1756] nvmet: fix NULL dereference in debugfs host_traddr
+Date: Wed, 18 Nov 2026 16:02:39 +0100
+Message-ID: <20261118150114.758598824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -74,22 +74,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit ece0f4e67f08792c8572080fb0fcc231554f08ca ]
+[ Upstream commit 81ce4d9bbe8cf47d4b023e932ee29b22367545e6 ]
 
-nvmet_tcp_accept_work() accepts until there's nothing left. A
-connection that is already dead when accepted is torn down right there,
-which takes a few ms, and more can arrive meanwhile.
-nvmet_tcp_remove_port() waits for the work with cancel_work_sync(), so
-someone opening and closing connections in a loop keeps the removal from
-finishing. It holds nvmet_config_sem for writing, so nothing can be
-configured and no port answers a Connect until the flood stops. No
-secret needed, just an admin removing the port at the wrong time.
+The host_traddr callbacks of tcp, rdma and fc take the host address from
+the transport queue around ctrl->sqs[0], which nvmet_sq_destroy() clears
+when the admin queue goes away while the controller lives on with its
+I/O queues. A host that closes the admin connection and keeps an I/O
+queue leaves such a controller behind, and reading its host_traddr in
+debugfs dereferences a near-NULL pointer:
 
-Shut the listening socket down first. Pending connections are dropped,
-as they were on release, and the next kernel_accept() fails and ends the
-work.
+  BUG: kernel NULL pointer dereference, address: 00000000000002e0
+  RIP: 0010:nvmet_tcp_host_port_addr+0x19/0x50 [nvmet_tcp]
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Don't ask the transport if there's no admin queue. Nothing holds the
+queue for debugfs, so a reader that's past the check when the queue
+goes away is still on its own.
+
+Fixes: 7e5c3de3f2f2 ("nvmet: add 'host_traddr' callback for debugfs")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
@@ -98,22 +99,23 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index fcb1a3dbff011..3c38646d97e44 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -2208,6 +2208,8 @@ static void nvmet_tcp_remove_port(struct nvmet_port *nport)
- 	port->sock->sk->sk_data_ready = port->data_ready;
- 	port->sock->sk->sk_user_data = NULL;
- 	write_unlock_bh(&port->sock->sk->sk_callback_lock);
-+	/* The accept work goes on for as long as there is something to accept */
-+	kernel_sock_shutdown(port->sock, SHUT_RDWR);
- 	cancel_work_sync(&port->accept_work);
- 	/*
- 	 * Destroy the remaining queues, which are not belong to any
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 6fe67b3d708ec..3b90a88e1207b 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1597,6 +1597,9 @@ ssize_t nvmet_ctrl_host_traddr(struct nvmet_ctrl *ctrl,
+ {
+ 	if (!ctrl->ops->host_traddr)
+ 		return -EOPNOTSUPP;
++	/* They all take the address from the admin queue */
++	if (!ctrl->sqs[0])
++		return -ENOTCONN;
+ 	return ctrl->ops->host_traddr(ctrl, traddr, traddr_len);
+ }
+ 
 -- 
 2.53.0
 
