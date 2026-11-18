@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028003;
-	b=vbIRXNwhnpNUHc8CklnGAqJ9k6llQc7+GZBFK8+BXVJuziU9z3l73Jq0de/7xcXfTENG
-	 DmhGSwLrfvhWVbXnJMywhqOcrUkHoVukEpjEM2Hq6r9dyzU34ksxpOal/krp8IZgDar8S
-	 pK8d3DMYVbxNmn0ndjrln7r8UMwdZov6IJEHpewpm6OcWXulrWm+JHkaYmBY6xGxIdYR1
-	 40Cn8HYB7VlvIk/I64nOxGFv42RREPoPxJPeRD6oXSo5Hv2yozigdz+RxxB9jpjzPITtj
-	 eTxkkKZ7Yi1QEoTw1OcF2YfJNvmp5lxCrVORwGfMDXFrR3vVloQRfJwfbS/5r7XjOJg==
+	t=1795028006;
+	b=NkHZ4cTlTcVnFwH8cKW8n3X7QgG/3jsX/ii6PuQUnGv35mJD0PMg8XBqWpIv2YI5RENN
+	 D7qZHRzUonL07bDwL78ZPQO5AvkiZN+CimrMl4zMqWikm7DIAGoMbMUMdJAnJHzM0DkII
+	 jFmbuzmsEiWssU6iSram6omKJdHkrv0JKwQ05Uzl9iH3JpgXuYORmTg3V6j3CUIu5J4Vr
+	 poum38rO2H3eeg7E9i/Oh4lICf/con+jEV1isELoQteXLxbArrHfWm+VHs7EZ/XxPMVaN
+	 Qq8k1fJydSU5zTCOePKRCyjWxdtdiAsmlFQwaqe1siWXM20dfen8R8ow+cDgvtSXilA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t7PM3YOgmBHweVNXxXlreEwIg3GdED5VBoX80S27Xlg=;
-	b=nKqfyqxO0/QlZ7uDNJHTnPHTTqBnVn5Tdm/2lWiipaX/Yk21T1xnhrtxf/QUs2j0Kx63
-	 LC+5YgyMWJ23xBvE4KX0So1w4QzXO43Db3oxtBioVhPmKxy8rkfPUwPEhzgvTr8yUQA0f
-	 AGiWT/L7cfYPTLBfhOz7/IfX9kOUWAYGxcMgJ6URbPvO3EG5vO2Z+DHYCmS7cC8cBgh3A
-	 f9q7ZXNClE75KXIoex2bklDdQU43fXcxJ+NSf457O3pWxyrk8Ut+YWO50gT5nSbDTGN5H
-	 7OGEARCARUhSnjNuoatmbnO7KFkfncwGyjNpqjHSAF81enEAHPGULuIIAskedK86HJA==
+	bh=QTzNbX5bE0QgjhsKfxycc4AvevFeh2hpfdo/pSuB3x0=;
+	b=mKMFmtcCsb4jW7+bJ0CV/5F238bnvF+OZXN8Gp78dwKPGe90L+XKmJYBBuJPYLhZ2SCg
+	 vYGxvy3TIBZrU+3dYYDEMHAkzVbddk5gJM5gd56v1kscLOOVMw6eIRtIF1K3Tr7Rh5yug
+	 hZnrHwqhT4Q45rOAN7pcMta+I1kprSSYhGZz2Ah5ViFCHePXBWIWDP86aMxIKmfJHjfEX
+	 0FWA6EcEZL+qSNxPd+m2ViQjsU4gml2AEIbUhZRNdlLwBNTujKduykq/S0QA+oEMvjY5/
+	 wdLNqU6TiAhfxK3wtDxlbs+EgQqTNKUPMAI+f3AiscmXMwrt6zG6pN3GAO3szw6DNWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrN2EhU6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB9xLsvv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEEE606A32F;
-	Wed, 18 Nov 2026 18:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306B2606A31C;
+	Wed, 18 Nov 2026 18:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrN2EhU6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17FC1F000C4;
-	Wed, 18 Nov 2026 18:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB9xLsvv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B061F000C4;
+	Wed, 18 Nov 2026 18:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028003;
-	bh=t7PM3YOgmBHweVNXxXlreEwIg3GdED5VBoX80S27Xlg=;
+	s=korg; t=1795028006;
+	bh=QTzNbX5bE0QgjhsKfxycc4AvevFeh2hpfdo/pSuB3x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zrN2EhU6Ipb13/C8BxuqX+zs3aG1mMaz88d2QB9YJS5CPtbkVHPnIFdlOqeSYWQK8
-	 8Rc2d3AwEfHzTB4gikJYC4MNTn+SJ9JajtVQv1it8PxYZ7981dDgxa18SaOgtuqtRY
-	 ZBJ/WkgDakn8TAMBX5tIL+bZDBO9XeJODaZSln7I=
+	b=nB9xLsvvTbBNz0mVLaC3pAZbtLLUqVYJyp5m+Na0Pl6lKmaY3HSV1cdk7Qd3N5ZUW
+	 iZTA9bjt8ma2V5uF2K1S8Ckx/tLhDbbrzlV735A4jjG258MZyYoiSUCRbCGxm3rksv
+	 3e4d+dIGdf2y4wPuH1ZB8ygkI/XKh6BnWaduEOuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Tao Gong <gongtao0607@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1989/2151] net: tun: hold napi_mutex when deleting NAPI in tun_detach_all()
-Date: Wed, 18 Nov 2026 16:02:04 +0100
-Message-ID: <20261118150234.180704037@linuxfoundation.org>
+Subject: [PATCH 6.18 1990/2151] net: dsa: mt7530: trap frames to conduit in MFC on EN7581 and AN7583
+Date: Wed, 18 Nov 2026 16:02:05 +0100
+Message-ID: <20261118150234.216519242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,73 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Tao Gong <gongtao0607@gmail.com>
 
-[ Upstream commit 6c799b4998c87bb44574bb090b8728bb3b3dbc47 ]
+[ Upstream commit a58b221496dd576191095d12996f39cee58cf6a8 ]
 
-With IFF_NAPI_FRAGS, tun_get_user() takes tfile->napi_mutex, gets the
-skb from napi_get_frags() and copies the user data into it before it
-enters the RCU read-side section around napi_gro_frags().
+On EN7581, STP BPDUs received on switch user ports never reach the CPU.
 
-tun_detach_all() waits with synchronize_net() and then calls
-tun_napi_del() without napi_mutex.  netif_napi_del() frees napi->skb
-through napi_free_frags().  A writer that is still copying has not yet
-entered its RCU section, so synchronize_net() does not wait for it, and
-deleting the device frees the skb while the writer is using it:
+Like MT7531 and MT7988, EN7581 and AN7583 only set the CPU port bitmap
+in MT7531_CFC and are skipped by mt753x_conduit_state_change(). On
+EN7581 this is not enough: trapped BPDUs reach the CPU only when
+MT7530_CPU_EN and MT7530_CPU_PORT are also set in MT753X_MFC. Add
+EN7581 and AN7583 to mt753x_conduit_state_change().
 
-  BUG: KASAN: slab-use-after-free in skb_copy_datagram_from_iter+0x175/0x720
-  Read of size 8 at addr ffff888077def990 by task br029-poc/9406
-  Call Trace:
-   skb_copy_datagram_from_iter+0x175/0x720
-   tun_get_user+0xb42/0x3d00
-   tun_chr_write_iter+0x113/0x200
-  ...
-  Freed by task 9405:
-   kmem_cache_free+0x184/0x670
-   __netif_napi_del_locked+0x2bb/0x3c0
-   tun_net_uninit+0x566/0xa70
-   unregister_netdevice_many_notify+0x1a26/0x2090
-   rtnl_dellink+0x514/0x710
+Tested on an AN7581 board (Gemtek W1700K, airoha,en7581-switch), where
+only lan3 and lan4 are switch user ports. With RSTP BPDUs arriving on
+lan4:
+- without this patch, none reached the CPU;
+- setting CPU_EN and CPU_PORT by hand delivered them, and clearing them
+  stopped them;
+- with this patch, they are received from boot.
 
-__tun_detach() also calls tun_napi_del() without the mutex, but only
-from tun_chr_close(), when no write on that file can be in flight.
+Only BPDUs were tested. AN7583 is untested and is included because the
+driver sets it up like EN7581.
 
-Take napi_mutex around tun_napi_del() in tun_detach_all() for both
-attached and disabled queues.
-
-Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/179268538303.70821.16548460883330758972@gmail.com
+Fixes: 2b0229f67932 ("net: dsa: mt7530: Add EN7581 support")
+Fixes: d76556db10bf ("net: dsa: mt7530: Add AN7583 support")
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Signed-off-by: Tao Gong <gongtao0607@gmail.com>
+Link: https://patch.msgid.link/20261022205649.2351696-1-gongtao0607@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/dsa/mt7530.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 636a7094577c3..ff1f69589a66a 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -672,14 +672,18 @@ static void tun_detach_all(struct net_device *dev)
- 	synchronize_net();
- 	for (i = 0; i < n; i++) {
- 		tfile = rtnl_dereference(tun->tfiles[i]);
-+		mutex_lock(&tfile->napi_mutex);
- 		tun_napi_del(tfile);
-+		mutex_unlock(&tfile->napi_mutex);
- 		/* Drop read queue */
- 		tun_queue_purge(tfile);
- 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
- 		sock_put(&tfile->sk);
- 	}
- 	list_for_each_entry_safe(tfile, tmp, &tun->disabled, next) {
-+		mutex_lock(&tfile->napi_mutex);
- 		tun_napi_del(tfile);
-+		mutex_unlock(&tfile->napi_mutex);
- 		tun_enable_queue(tfile);
- 		tun_queue_purge(tfile);
- 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 4f391ef797ea3..b9094e36c99ad 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -3280,10 +3280,13 @@ mt753x_conduit_state_change(struct dsa_switch *ds,
+ 
+ 	/* Set the CPU port to trap frames to for MT7530. Trapped frames will be
+ 	 * forwarded to the numerically smallest CPU port whose conduit
+-	 * interface is up.
++	 * interface is up. On EN7581, trapped BPDUs do not reach the CPU port
++	 * without this, even with the CPU port bitmap set. AN7583 is set up
++	 * the same way as EN7581.
+ 	 */
+ 	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
+-	    priv->id != ID_EN7528)
++	    priv->id != ID_EN7528 &&
++	    priv->id != ID_EN7581 && priv->id != ID_AN7583)
+ 		return;
+ 
+ 	mask = BIT(cpu_dp->index);
 -- 
 2.53.0
 
