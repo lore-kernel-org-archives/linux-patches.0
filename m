@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040315;
-	b=rlFK01bOVCQNYV8aUFQsdhPz5FIw8GKwzvBtJMjP8BWV31QkkJmKQ91FKkngDBhYzAti
-	 751fQguHsOfp296BCtARkAwMwHUTnNq0QBplU2DdSocsj+uuHYu2FQvc7HCbJcOpZl2zG
-	 ukSZfc1eWc0YNszonmmvJZ98/M+98uv2rXXGRI4JekaMwiUbVghdaxrVPNECC+4W/RDy/
-	 Iw+i7JqQsG0qw3rOcLJLsdnnphWYYTqnLLgtzUuUasGI2CL2h4WdQt0JbxRLqf/6+794G
-	 9Nel9w0py7ckIMzB+Rol7TsIp5LXDrXM0aHKI+ucdfC9aPVBaCJ9J4U8EKyvgHhXSTw==
+	t=1795040318;
+	b=RRVvUKjhE4s2M9xbu3KsljX8r055PmVrAehWoJ+C4yBWRC4ZJA8qS+xoK7gBV+492qS1
+	 dkkx26QcPtuuHLsHr1OO+FssEOdxsmA0GFxzloOz/DxcY7DQlUcCVFfJZAKf7GKc7lDj7
+	 8m60KlcyA76HX/t4oCeGdTdqF9+AYYrhCad2dmPt7X58geXbvRTfBskt9wNN8xiO0vdMz
+	 tiBtGRBnn8tIpD48Q3Qc1TwsSWHG0VCeEu5I2Jiy1PCFXf7m57p+QzyKG/ZZgC/A38iyV
+	 oSCv5GH4S5eEAS8FeSLG+4n+5acLpT9f+rd+pN//Gjw4SNB5nktlUq2TqZdR9Ck17sA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1VI35J3wwsHvMzRkVqmOXrxt7RM6zoJtyLFE256mHs0=;
-	b=idB5/Beo3NvOVDTqDogLsPfSHquruQja7npKZo66A+HGNj8EsnwXkDySW2bokyYHlAy0
-	 L7g1tCSCafy80NFZ+wWPZwwfM5HT6D0Gm3F+PP6j8l3OohYgCS8+BVTpbwRGEW+aqtgfQ
-	 +YHO18Glm+1upRD1N+xDrKQmnUdk4wyP6cLFeJdcPjgo18RfJpEgmTrKzw8w1PlcwkOKU
-	 LT/FzB3mLB/bgGeDYMkH2qlQL1SV/poepO6gjl4mMaB0ppKot7cIdtMx69Gct1izLYyzn
-	 3KzZXZ1l7S+vztwJ4cP6hyu7GFgYxuoYC7MH3YRKKe+EPa7tT8Civp9bhvtDfXQlc6g==
+	bh=Bc8E7NHlf+jGHMVyx6VJ+7fNbbYbA4brkwmgM1vld9A=;
+	b=41kGsp2WHOsM/bfVNzIoINttRQeBXCVbSyunRm5Tan0XNHUU1twJ9qNRKbsh2wJXnOIC
+	 gN25nwj+nODEnCKcyzreAKiiIDMcgmOsqZhUqYKXEbwpxgYUgOrew5vCcaN2Hpn8S+bjj
+	 RH8K2OlxdDZUZCQIXAupteMt9YAE0gh3J6mOoM+601cNoLUO2LH5vpu/dePPvF27GsUTO
+	 pS4PJg6FdUMASBXkuqJwtpz6vHr54T6fgh6Xm3PAEU9rhr+UGMeob13V5wkfoEh5usIBU
+	 UJhpHL4wDShgdpdbIgc0jmGGKYx/sVcn6hIgK71W7ShUS4wES9Hx924mIcmLYgKWAGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pt/MQU8Q";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iaMaISVi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8341F606A31C;
-	Wed, 18 Nov 2026 22:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36626606A32A;
+	Wed, 18 Nov 2026 22:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pt/MQU8Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA30C1F000C4;
-	Wed, 18 Nov 2026 22:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iaMaISVi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4DC1F000C4;
+	Wed, 18 Nov 2026 22:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040315;
-	bh=1VI35J3wwsHvMzRkVqmOXrxt7RM6zoJtyLFE256mHs0=;
+	s=korg; t=1795040318;
+	bh=Bc8E7NHlf+jGHMVyx6VJ+7fNbbYbA4brkwmgM1vld9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pt/MQU8QBOMTRd/dqAYzr7UCVoYQ3NZJiYKF6lCLjjDmjaRSNXKtlbhznKKtOqxu5
-	 BHEgZSboXo3EhlkUAOodiTh3Jcx1VTJerLQawGWdNsEvHKYhhQDX9RKjpZlUJGbw4d
-	 8cpznAUv/7kaNh+mY6yLskE54Z/MtnaEfAWnEobE=
+	b=iaMaISViDos2QsT1VpZPf/FSl+9IHzThdr6LlPMnJN64PVkJjVNBA4y+qNkKHjU9p
+	 YQjWjuL3NuAaAR+ubxPAka25Uuj9bDDHjA41JhwV7KRjuSZwgxBv/JjK4zp6Rghc1y
+	 jp8rxs1csdt9EYGS2QTJRpy+3IyLnd4yrfynE0LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2414/3318] iio: dac: ad5758: Reject out-of-range raw values
-Date: Wed, 18 Nov 2026 15:50:36 +0100
-Message-ID: <20261118150433.910430619@linuxfoundation.org>
+Subject: [PATCH 6.6 2415/3318] iio: dac: ad5758: Fix the offset calculation
+Date: Wed, 18 Nov 2026 15:50:37 +0100
+Message-ID: <20261118150433.938208518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,13 +72,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Arka Mondal <arka@arkamondal.net>
 
-[ Upstream commit ebc026be1b719e47bd7f2f1e72fabc875b590f87 ]
+[ Upstream commit a3b3580713f3ac5a32dc2874ee546828977a1d68 ]
 
-ad5758_write_raw() passes the value from userspace straight to
-ad5758_spi_reg_write(), which keeps only the low 16 bits. Writing -1
-to the raw attribute gives full-scale output, and 65536 gives code 0.
+The offset is a count of DAC codes, so the microamp or microvolt units
+of min and max cancel out and the final division by 1000 is wrong. For
+the +-20 mA range the driver reports -32 instead of -32768. For the
++-5 V and +-10 V ranges min * (1 << 16) also overflows int, and the
+reported offset is 0.
 
-Return -EINVAL for values outside 0 to U16_MAX, as ad5755 does.
+Drop the division and do the multiplication in 64 bits.
 
 Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
 Signed-off-by: Arka Mondal <arka@arkamondal.net>
@@ -86,23 +88,30 @@ Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5758.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/dac/ad5758.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iio/dac/ad5758.c b/drivers/iio/dac/ad5758.c
-index d7fd2acd7dfee..19e8397b6ca05 100644
+index 19e8397b6ca05..b444c21719853 100644
 --- a/drivers/iio/dac/ad5758.c
 +++ b/drivers/iio/dac/ad5758.c
-@@ -557,6 +557,9 @@ static int ad5758_write_raw(struct iio_dev *indio_dev,
- 
- 	switch (info) {
- 	case IIO_CHAN_INFO_RAW:
-+		if (val < 0 || val > U16_MAX)
-+			return -EINVAL;
-+
- 		mutex_lock(&st->lock);
- 		ret = ad5758_spi_reg_write(st, AD5758_DAC_INPUT, val);
- 		mutex_unlock(&st->lock);
+@@ -9,6 +9,7 @@
+ #include <linux/bsearch.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
++#include <linux/math64.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/property.h>
+@@ -541,7 +542,7 @@ static int ad5758_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		min = st->out_range.min;
+ 		max = st->out_range.max;
+-		*val = ((min * (1 << 16)) / (max - min)) / 1000;
++		*val = div_s64((s64)min * (1 << 16), max - min);
+ 		return IIO_VAL_INT;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
