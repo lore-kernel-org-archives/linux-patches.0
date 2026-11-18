@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048742;
-	b=gsfzyHCd+2A8Fh8z2YUmbozUi1QTV2tYKzus9EaO2xCWYQ6V7O1YKdaHkmrRp+uVV27M
-	 AkxOx+TIJkDqCgSE6F39CbWh9VBnuBaIq213A66/PgJWhkXwKibc64aJe5vWSCfP/M/zy
-	 0+K/eYTi/2QfJie6onEIk0SvkcPewknFgc6Qr0UIs4mF14rUL9FyqQ2BNl/BRZPS4iq8u
-	 oCXE0kHKzUEHM/ffdWHfjcKpXZH06IGcXezf98z0UfXmrjksuollO/UwVSzmuRBmXz55x
-	 v6KaIF20WrKNu8EDCxsKQzwwgHfTg0EUxKSfEmPv1cISzuwXj/vaH79BbdHCJ3JZWqw==
+	t=1795048744;
+	b=nNmyZ690f6S8sZLmWqmt7ZZBoTSwJFUgC/DJ/fktgAVuLr7unyCJWFsKUXcGl7xIUI8B
+	 gWPEkTt19ghucUf/C18YDMQbwfVICn8SV5R2gcnq2aFDRxgmBUbXrk4Et/RHrShAZWGpn
+	 dsSuwBU9vAVnQyLkGg0T/X4XqHrNwlOyh1tvb9PusTCmOCVK2cYxqmMUa2F4aGfDGmU26
+	 l4M8zQSzLdkNE/yOcdeyKeS4iiP5vXq1Iox2de7biVh6Ra6jaGtAMuHlAFMoSYklgATMA
+	 LLkFJaCefT9CLHM5NG7IGvSUgZnOosda5Fjq7c/FEpvfBnhitJDS21Tw6M1anWoLp7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OHYuzds0/G+5fYGzg+I3ICkwgsgv4h9ijKxsfhEmekU=;
-	b=mHgEnNrsDHFLrBaOPjBVFxzNLgeZQ2hriuGcaYYyEvEDCrIpahDIS83fl1OeMQwIFa6z
-	 7w00AZcqztFHiKK82tflBpgy40YFcJdlEvAIQsRb80Q9NfN9nc8CVl3jvmAuQlkSTDXIt
-	 3kMAj5VATkqTa4EHGzFsIbT2ZytN9YZjzIMSKIwDNb6B61OViu5FYQPmJinCn8F+Hm61X
-	 UFp0Cw2QNWQ3AgZeprrkJpZad9YHbtCocK4d7eo5y8FRl9dyPU8M021oOewqbmvoMrJq4
-	 eWVhQqt6NLUVRwDIEKVktMTuvQqQpXrFW0BqREuewGPFgKcjjSKicKyP1cACgCyHvCw==
+	bh=kv9EAm27ve1M1NMyzO/Mc1iDNRceETXXzc7whf9ie4Q=;
+	b=p8wRXc600qqMrXWMhl5IAQS/Rzxe0+Db86dHEd8QAoGYAUwJJG1nXNB9Chcm7LCb2GKs
+	 321GetUSLLpfXwK87DRZMeP4kVHHl5d7o+HiRqr8dA1jxaydJA7Y+b56mmUnIu/wpyfl4
+	 vUVKpORQsR5if++sgT29Ou4AwnSGZZ9ZKFgx5VhTahc1BI4lyiLQb9JBFa+5IecKGL4dA
+	 ebCBrqr0gN3OyfaGaB4NmIyvnxzER3RkErjzCVKXHlWTDNobR3deiwNnO8VN9EN8Er27s
+	 AIsl0Wk2qL9v5mLzRH+BDjaWLb/MimgtrhWLzm/Yygwss3o9uS439PC5VtOt46Ng+UQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ac4rMVuY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiHSoWwq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F44E606A320;
-	Thu, 19 Nov 2026 00:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0127606A31C;
+	Thu, 19 Nov 2026 00:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ac4rMVuY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132561F000C5;
-	Thu, 19 Nov 2026 00:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiHSoWwq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6D01F000C4;
+	Thu, 19 Nov 2026 00:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048741;
-	bh=OHYuzds0/G+5fYGzg+I3ICkwgsgv4h9ijKxsfhEmekU=;
+	s=korg; t=1795048744;
+	bh=kv9EAm27ve1M1NMyzO/Mc1iDNRceETXXzc7whf9ie4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ac4rMVuY78bJ1oRB0AHI6SmuUC9wQ4zsdtoZWlPv/HSvp/I6jRFLqx+mlWFngVmJ8
-	 zWYTDzyThJSG77cMhNLx855HZJeMIKQq/uVWfhMnv/YESa3HYpugtsorx2ErPflgUu
-	 aTOvHLghwEoYDsrIrPvb7qU8TQgGeypLmb8YaqsE=
+	b=PiHSoWwqDO8zMYLG1fSSiWU87Dwa5MRfRerN7ASpRCORBueNGS8YZP3uwK0OxY+Qx
+	 g/JqIrPUeNU3Ci/Ufogd7IgunfaPJPC9Qcnz8uq4DjRn5W7TrtLWIdKoYXrpfhLOuG
+	 uD1W3kFwplV9t1aJ6ri0P+7KsNMpsucqCemIUTT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2103/2857] spi: rspi: Fix DMA mode when the DMA controller is built as a module
-Date: Wed, 18 Nov 2026 15:52:17 +0100
-Message-ID: <20261118150317.132385632@linuxfoundation.org>
+Subject: [PATCH 6.1 2077/2857] drm/msm/a6xx: Fix secondary rail vote in ARC votes
+Date: Wed, 18 Nov 2026 15:51:51 +0100
+Message-ID: <20261118150316.194634526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,137 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 7b85114d47f693b709b2e8e22e44cdf58c04b111 ]
+[ Upstream commit 128a0edde50780ed9eb93ab5d2e18ca24c1f1c43 ]
 
-On the Renesas RZ/G2L platform, the RSPI driver falls back to PIO mode
-instead of using DMA when the DMA controller driver is built as a module
-(CONFIG_RZ_DMAC=m):
+Using the requested level can pick a secondary corner lower than the one
+required to support the chosen primary corner, under-voting the
+dependent rail. To fix this, match against the selected primary voltage
+instead.
 
-    renesas_spi 1004b000.spi: dma_request_slave_channel_compat failed
-    renesas_spi 1004b000.spi: DMA not available, using PIO
-
-The driver requests DMA channels through dma_request_slave_channel_compat()
-which returns either a valid pointer or NULL and cannot handle
--EPROBE_DEFER. If the DMA controller has not probed yet, the driver falls
-back to PIO directly.
-
-Fix this by replacing the dma_request_slave_channel_compat() call with a
-regular dma_request_chan() call. dma_request_slave_channel_compat() is
-always passed a NULL fn_param in all code paths, so it actually behaves
-like a plain dma_request_chan() call.
-
-Fixes: e825b8dd2b36 ("spi: rspi: Add DT support to DMA setup")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Link: https://patch.msgid.link/20260921195943.107247-1-ovidiu.panait.rb@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/755592/
+Message-ID: <20260923-hawi-gpu-v1-2-0c3c79a1a470@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rspi.c | 49 ++++++++++++++++--------------------------
- 1 file changed, 19 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-rspi.c b/drivers/spi/spi-rspi.c
-index e8b3ea2606faa..16df13855e0d9 100644
---- a/drivers/spi/spi-rspi.c
-+++ b/drivers/spi/spi-rspi.c
-@@ -22,7 +22,6 @@
- #include <linux/of_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
--#include <linux/sh_dma.h>
- #include <linux/spi/spi.h>
- #include <linux/spinlock.h>
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 7c1894e5627f8..2b9171e8e2934 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1310,10 +1310,14 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
+ 		/*
+ 		 * Look for a level in in the secondary list that matches. If
+ 		 * nothing fits, use the maximum non zero vote
++		 *
++		 * The secondary rail depends on the primary rail, so match it
++		 * against the quantized primary voltage (which is >= the
++		 * requested level), not the requested level itself.
+ 		 */
  
-@@ -1091,24 +1090,15 @@ static irqreturn_t rspi_irq_tx(int irq, void *_sr)
- 
- static struct dma_chan *rspi_request_dma_chan(struct device *dev,
- 					      enum dma_transfer_direction dir,
--					      unsigned int id,
- 					      dma_addr_t port_addr)
- {
--	dma_cap_mask_t mask;
- 	struct dma_chan *chan;
- 	struct dma_slave_config cfg;
- 	int ret;
- 
--	dma_cap_zero(mask);
--	dma_cap_set(DMA_SLAVE, mask);
--
--	chan = dma_request_slave_channel_compat(mask, shdma_chan_filter,
--				(void *)(unsigned long)id, dev,
--				dir == DMA_MEM_TO_DEV ? "tx" : "rx");
--	if (!chan) {
--		dev_warn(dev, "dma_request_slave_channel_compat failed\n");
--		return NULL;
--	}
-+	chan = dma_request_chan(dev, dir == DMA_MEM_TO_DEV ? "tx" : "rx");
-+	if (IS_ERR(chan))
-+		return chan;
- 
- 	memset(&cfg, 0, sizeof(cfg));
- 	cfg.dst_addr = port_addr + RSPI_SPDR;
-@@ -1121,7 +1111,7 @@ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
- 	if (ret) {
- 		dev_warn(dev, "dmaengine_slave_config failed %d\n", ret);
- 		dma_release_channel(chan);
--		return NULL;
-+		return ERR_PTR(ret);
- 	}
- 
- 	return chan;
-@@ -1130,29 +1120,23 @@ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
- static int rspi_request_dma(struct device *dev, struct spi_controller *ctlr,
- 			    const struct resource *res)
- {
--	unsigned int dma_tx_id, dma_rx_id;
-+	struct dma_chan *chan;
- 
--	if (dev->of_node) {
--		/* In the OF case we will get the slave IDs from the DT */
--		dma_tx_id = 0;
--		dma_rx_id = 0;
--	} else {
--		/* The driver assumes no error. */
-+	if (!dev->of_node)
- 		return 0;
--	}
- 
--	ctlr->dma_tx = rspi_request_dma_chan(dev, DMA_MEM_TO_DEV, dma_tx_id,
--					     res->start);
--	if (!ctlr->dma_tx)
--		return -ENODEV;
-+	chan = rspi_request_dma_chan(dev, DMA_MEM_TO_DEV, res->start);
-+	if (IS_ERR(chan))
-+		return PTR_ERR(chan);
-+	ctlr->dma_tx = chan;
- 
--	ctlr->dma_rx = rspi_request_dma_chan(dev, DMA_DEV_TO_MEM, dma_rx_id,
--					     res->start);
--	if (!ctlr->dma_rx) {
-+	chan = rspi_request_dma_chan(dev, DMA_DEV_TO_MEM, res->start);
-+	if (IS_ERR(chan)) {
- 		dma_release_channel(ctlr->dma_tx);
- 		ctlr->dma_tx = NULL;
--		return -ENODEV;
-+		return PTR_ERR(chan);
- 	}
-+	ctlr->dma_rx = chan;
- 
- 	ctlr->can_dma = rspi_can_dma;
- 	dev_info(dev, "DMA available");
-@@ -1381,6 +1365,11 @@ static int rspi_probe(struct platform_device *pdev)
- 	}
- 
- 	ret = rspi_request_dma(&pdev->dev, ctlr, res);
-+	if (ret == -EPROBE_DEFER) {
-+		dev_err_probe(&pdev->dev, ret,
-+			      "failed to request DMA channels\n");
-+		goto error2;
-+	}
- 	if (ret < 0)
- 		dev_warn(&pdev->dev, "DMA not available, using PIO\n");
- 
+ 		for (j = 0; j < sec_count; j++) {
+-			if (sec[j] >= level) {
++			if (sec[j] >= pri[pindex]) {
+ 				sindex = j;
+ 				break;
+ 			} else if (sec[j]) {
 -- 
 2.53.0
 
