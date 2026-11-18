@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043696;
-	b=2MmsnpVukc6ydDccctC7eNXuLuZZAdDfI8TSuuFdkO5sg1RL8AsxuIJlNe8Bxnru0JHj
-	 TYCZo1BDFvSnePU1tAxg7lj8ZuIysDwJYgZ+Qzj9qOoVP6glDcQXqko8sCe1b9BnjhNbP
-	 WV36ym/AudiN87jrjgS7LT87HOyay4Z9L2GSZGBLEsC8Ep8BOwyJe3+WTmtcERKDp3sK1
-	 YBDq7HI1QJjuMcWsFPJ63RtHmw0S+L6P82E9yhkXZ8HmvFiv/Z+Q5vd+wxdHmqLfOGCTI
-	 wathF04vEgi+LVvkqMLmzmOUkjLoTR8oq1IMOT5ywtnaV9NoHY1w2+wfoAvYQubRbaA==
+	t=1795043699;
+	b=5U0iALjj1zIUgXHYn3yaCRunvjZHhNue0boJW2zZiaD/n2Zw/b2xBd2AY9sler2H6eZF
+	 YQALiE5VzBVKNNykfUKoq4s8O+3uSRNywJiocXiXdaSk2P/AxrsDtoQjvpS1F3VtmTBzj
+	 ayBIwgCb7iAFq9U41AAV4fkc1ZZzEVvRVo+iDzg8wwMOp+jje/64hVi50vOaaOUhoT8B/
+	 XLSs1G8JHHI+OQWlzA8XkWnhipwRYd2BSR+Z3JUr+Oi4FiO8O/CxSgRBkqKI3z3SBKbUh
+	 Y+dQ7lMxA5Z/mULs8JvAIJchQfu+7uJbDJqiAFP7puNszfaHw7XPzdg4aJLRJa7JTcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043699;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mh1BoikooqlI1IUUwdKpXXIhJj+pfbPou+5wzOwm+FI=;
-	b=kF1DuJpPkpplmbomTbhJmb3JmUNmWRdTBzJc2RpJAurPpAF8WrbpmBIZ9edkDa1xSxWB
-	 HwYVFPKhyXpH+lQqCAlco281eT2r502yXMG8E2fxEsxBxL5YLT/nRpnJghEnfUSHC3qVG
-	 6A8p8CrJgUibfWj1Yqwh4Zsi90Jya3hiSVmb8ky3Cyxr+e+n+L9cFJjstLat7HqvjM9oE
-	 XMjkizm3nJLGGtCUKUB4kMyOnkUHBZ4s4pCfBqMoiSnxOwkJFyCm0sPfyRRR8lAwKlK1e
-	 Ipr/4GV+dt5i2bxxCePByCUZl4GIZRbPzgYdStwij2R9U1aRvmcH8oRpg3iJe0kKpdg==
+	bh=cxQT6L1b96a3cBGCjgTxWIGdLIyOQBIURvFPtJgofuI=;
+	b=XUfzUbXhlcHqN/UruXdA9ar2K05ei5H7d0pBsnJzn8fL0LC66SLTrRoSd4oVX7Yw1Kgt
+	 8A/mqW9jsFQBKKu0LX6A1sX0WG+qzXicCdr3ReAfi258QY1/RcIbCnt8H7+4FIRMQiPAO
+	 AiiHwfW28r7R09W5X4SBfegVV8GvJIrNAaN5dbaEQ7itMl1mwHV9zyc+Gl5303ixEdvZI
+	 09OO7ETILvXgQp83cIRpnz9405dkCUILgVoH8w6msbC0DcUrjItzUGgje7VPwLcoUrGso
+	 NJ4Qverpk61SrvoYEEWBIG9I72NuC7xPEfMkP3TDDp7908qeUxXsRTQ1ao+mFT+8bMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rjohcJPR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0/3VKriR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8814E606A325;
-	Wed, 18 Nov 2026 23:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8827D606A31C;
+	Wed, 18 Nov 2026 23:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rjohcJPR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFBF1F000C4;
-	Wed, 18 Nov 2026 23:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0/3VKriR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFB71F000C4;
+	Wed, 18 Nov 2026 23:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043696;
-	bh=Mh1BoikooqlI1IUUwdKpXXIhJj+pfbPou+5wzOwm+FI=;
+	s=korg; t=1795043699;
+	bh=cxQT6L1b96a3cBGCjgTxWIGdLIyOQBIURvFPtJgofuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rjohcJPRurfy//2INbacodfUq49j+s6MpCZEOZuEikxBKa4R7+rYJijgEt41ZR/ct
-	 Y6AcUFbFvnQOUOV4dJWmQN4nWCyIPoix7w0coAPe7GbCzdRBn53sTnk0ZfOx1sf5kz
-	 ejReL74DFFa8R2QWldUI1s18FUESdssy3kof9sFk=
+	b=0/3VKriRIYbS7+J7bqXiZqkyfrK6nGVPwoAktD+qBr6fvH1MzFnZKuTaLSCA5EDgm
+	 cO0jdXNVeljstx4fvsVahOg1eoQBSaNEaCgqtn4UamlosdR3uyW5cz7ApkqIQwYwEs
+	 doeLxwgzKgmbDq15O0cy85wceTdkEodWsbbutNus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com,
-	Rohinthan P <rokinthanp03@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Petr Tesarik <petr@tesarici.cz>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0302/2857] media: em28xx: use video_unregister_device for radio_dev
-Date: Wed, 18 Nov 2026 15:22:16 +0100
-Message-ID: <20261118150212.291692909@linuxfoundation.org>
+Subject: [PATCH 6.1 0303/2857] Revert "net: stmmac: protect updates of 64-bit statistics counters"
+Date: Wed, 18 Nov 2026 15:22:17 +0100
+Message-ID: <20261118150212.326468479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,63 +70,717 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohinthan P <rokinthanp03@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 2579cbe68005f46fc7f8f95364f6b101b07b9d1c ]
+This reverts commit 52002cae02db6ab4c50efe4095d68db3a6892b11 which is
+commit 38cc3c6dcc09dc3a1800b5ec22aef643ca11eab8 upstream.
 
-Commit 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
-converted device unregistrations in em28xx to use
-vb2_video_unregister_device() instead of video_unregister_device().
+It is reported to have regressions on tegra systems, so drop it for now.
 
-However, radio devices do not have an associated videobuf2 queue
-(v4l2->radio_dev.queue is NULL). Calling vb2_video_unregister_device()
-on a radio device triggers a WARNING in vb2_video_unregister_device():
-
-    !vdev->queue
-    WARNING: drivers/media/common/videobuf2/videobuf2-v4l2.c:1264 at vb2_video_unregister_device+0x1f8/0x200
-    Call Trace:
-     em28xx_v4l2_init+0x1c39/0x3150 drivers/media/usb/em28xx/em28xx-video.c:3085
-
-As documented in vb2_video_unregister_device(), video_unregister_device()
-should be used instead when vdev->queue is NULL.
-
-Revert to calling video_unregister_device() for v4l2->radio_dev in both
-em28xx_v4l2_fini() and the em28xx_v4l2_init() error unwind path.
-
-Fixes: 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
-Reported-by: syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f26bc23e42eeb548dee1
-Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Cc: Petr Tesarik <petr@tesarici.cz>
+Cc: Jisheng Zhang <jszhang@kernel.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/7e927599-10b7-44f4-828f-e50c0caf5f27@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/common.h         |   56 ++------
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c    |   15 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c     |   15 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c      |   15 +-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c   |   15 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c |  129 ++++++------------
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c    |  133 +++++++++----------
+ 7 files changed, 157 insertions(+), 221 deletions(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
-index acc2fbadc609c..d2752b101e029 100644
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -2243,7 +2243,7 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
- 	if (video_is_registered(&v4l2->radio_dev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->radio_dev));
--		vb2_video_unregister_device(&v4l2->radio_dev);
-+		video_unregister_device(&v4l2->radio_dev);
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -58,50 +58,27 @@
+ #undef FRAME_FILTER_DEBUG
+ /* #define FRAME_FILTER_DEBUG */
+ 
+-struct stmmac_q_tx_stats {
+-	u64_stats_t tx_bytes;
+-	u64_stats_t tx_set_ic_bit;
+-	u64_stats_t tx_tso_frames;
+-	u64_stats_t tx_tso_nfrags;
+-};
+-
+-struct stmmac_napi_tx_stats {
+-	u64_stats_t tx_packets;
+-	u64_stats_t tx_pkt_n;
+-	u64_stats_t poll;
+-	u64_stats_t tx_clean;
+-	u64_stats_t tx_set_ic_bit;
+-};
+-
+ struct stmmac_txq_stats {
+-	/* Updates protected by tx queue lock. */
+-	struct u64_stats_sync q_syncp;
+-	struct stmmac_q_tx_stats q;
+-
+-	/* Updates protected by NAPI poll logic. */
+-	struct u64_stats_sync napi_syncp;
+-	struct stmmac_napi_tx_stats napi;
++	u64 tx_bytes;
++	u64 tx_packets;
++	u64 tx_pkt_n;
++	u64 tx_normal_irq_n;
++	u64 napi_poll;
++	u64 tx_clean;
++	u64 tx_set_ic_bit;
++	u64 tx_tso_frames;
++	u64 tx_tso_nfrags;
++	struct u64_stats_sync syncp;
+ } ____cacheline_aligned_in_smp;
+ 
+-struct stmmac_napi_rx_stats {
+-	u64_stats_t rx_bytes;
+-	u64_stats_t rx_packets;
+-	u64_stats_t rx_pkt_n;
+-	u64_stats_t poll;
+-};
+-
+ struct stmmac_rxq_stats {
+-	/* Updates protected by NAPI poll logic. */
+-	struct u64_stats_sync napi_syncp;
+-	struct stmmac_napi_rx_stats napi;
+-} ____cacheline_aligned_in_smp;
+-
+-/* Updates on each CPU protected by not allowing nested irqs. */
+-struct stmmac_pcpu_stats {
++	u64 rx_bytes;
++	u64 rx_packets;
++	u64 rx_pkt_n;
++	u64 rx_normal_irq_n;
++	u64 napi_poll;
+ 	struct u64_stats_sync syncp;
+-	u64_stats_t rx_normal_irq_n[MTL_MAX_TX_QUEUES];
+-	u64_stats_t tx_normal_irq_n[MTL_MAX_RX_QUEUES];
+-};
++} ____cacheline_aligned_in_smp;
+ 
+ /* Extra statistic and debug information exposed by ethtool */
+ struct stmmac_extra_stats {
+@@ -227,7 +204,6 @@ struct stmmac_extra_stats {
+ 	/* per queue statistics */
+ 	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
+ 	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
+-	struct stmmac_pcpu_stats __percpu *pcpu_stats;
+ 	unsigned long rx_dropped;
+ 	unsigned long rx_errors;
+ 	unsigned long tx_dropped;
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+@@ -440,7 +440,8 @@ static int sun8i_dwmac_dma_interrupt(str
+ 				     struct stmmac_extra_stats *x, u32 chan,
+ 				     u32 dir)
+ {
+-	struct stmmac_pcpu_stats *stats = this_cpu_ptr(priv->xstats.pcpu_stats);
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	int ret = 0;
+ 	u32 v;
+ 
+@@ -453,9 +454,9 @@ static int sun8i_dwmac_dma_interrupt(str
+ 
+ 	if (v & EMAC_TX_INT) {
+ 		ret |= handle_tx;
+-		u64_stats_update_begin(&stats->syncp);
+-		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+-		u64_stats_update_end(&stats->syncp);
++		u64_stats_update_begin(&txq_stats->syncp);
++		txq_stats->tx_normal_irq_n++;
++		u64_stats_update_end(&txq_stats->syncp);
  	}
- 	if (video_is_registered(&v4l2->vbi_dev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
-@@ -2901,7 +2901,7 @@ static int em28xx_v4l2_init(struct em28xx *dev)
- 		dev_info(&dev->intf->dev,
- 			 "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->radio_dev));
--		vb2_video_unregister_device(&v4l2->radio_dev);
-+		video_unregister_device(&v4l2->radio_dev);
+ 
+ 	if (v & EMAC_TX_DMA_STOP_INT)
+@@ -477,9 +478,9 @@ static int sun8i_dwmac_dma_interrupt(str
+ 
+ 	if (v & EMAC_RX_INT) {
+ 		ret |= handle_rx;
+-		u64_stats_update_begin(&stats->syncp);
+-		u64_stats_inc(&stats->rx_normal_irq_n[chan]);
+-		u64_stats_update_end(&stats->syncp);
++		u64_stats_update_begin(&rxq_stats->syncp);
++		rxq_stats->rx_normal_irq_n++;
++		u64_stats_update_end(&rxq_stats->syncp);
  	}
- 	if (video_is_registered(&v4l2->vbi_dev)) {
- 		dev_info(&dev->intf->dev,
--- 
-2.53.0
-
+ 
+ 	if (v & EMAC_RX_BUF_UA_INT)
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+@@ -171,7 +171,8 @@ int dwmac4_dma_interrupt(struct stmmac_p
+ 	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
+ 	u32 intr_status = readl(ioaddr + DMA_CHAN_STATUS(dwmac4_addrs, chan));
+ 	u32 intr_en = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
+-	struct stmmac_pcpu_stats *stats = this_cpu_ptr(priv->xstats.pcpu_stats);
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	int ret = 0;
+ 
+ 	if (dir == DMA_DIR_RX)
+@@ -200,15 +201,15 @@ int dwmac4_dma_interrupt(struct stmmac_p
+ 	}
+ 	/* TX/RX NORMAL interrupts */
+ 	if (likely(intr_status & DMA_CHAN_STATUS_RI)) {
+-		u64_stats_update_begin(&stats->syncp);
+-		u64_stats_inc(&stats->rx_normal_irq_n[chan]);
+-		u64_stats_update_end(&stats->syncp);
++		u64_stats_update_begin(&rxq_stats->syncp);
++		rxq_stats->rx_normal_irq_n++;
++		u64_stats_update_end(&rxq_stats->syncp);
+ 		ret |= handle_rx;
+ 	}
+ 	if (likely(intr_status & DMA_CHAN_STATUS_TI)) {
+-		u64_stats_update_begin(&stats->syncp);
+-		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+-		u64_stats_update_end(&stats->syncp);
++		u64_stats_update_begin(&txq_stats->syncp);
++		txq_stats->tx_normal_irq_n++;
++		u64_stats_update_end(&txq_stats->syncp);
+ 		ret |= handle_tx;
+ 	}
+ 
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
+@@ -162,7 +162,8 @@ static void show_rx_process_state(unsign
+ int dwmac_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
+ 			struct stmmac_extra_stats *x, u32 chan, u32 dir)
+ {
+-	struct stmmac_pcpu_stats *stats = this_cpu_ptr(priv->xstats.pcpu_stats);
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	int ret = 0;
+ 	/* read the status register (CSR5) */
+ 	u32 intr_status = readl(ioaddr + DMA_STATUS);
+@@ -214,16 +215,16 @@ int dwmac_dma_interrupt(struct stmmac_pr
+ 			u32 value = readl(ioaddr + DMA_INTR_ENA);
+ 			/* to schedule NAPI on real RIE event. */
+ 			if (likely(value & DMA_INTR_ENA_RIE)) {
+-				u64_stats_update_begin(&stats->syncp);
+-				u64_stats_inc(&stats->rx_normal_irq_n[chan]);
+-				u64_stats_update_end(&stats->syncp);
++				u64_stats_update_begin(&rxq_stats->syncp);
++				rxq_stats->rx_normal_irq_n++;
++				u64_stats_update_end(&rxq_stats->syncp);
+ 				ret |= handle_rx;
+ 			}
+ 		}
+ 		if (likely(intr_status & DMA_STATUS_TI)) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
++			u64_stats_update_begin(&txq_stats->syncp);
++			txq_stats->tx_normal_irq_n++;
++			u64_stats_update_end(&txq_stats->syncp);
+ 			ret |= handle_tx;
+ 		}
+ 		if (unlikely(intr_status & DMA_STATUS_ERI))
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+@@ -333,7 +333,8 @@ static int dwxgmac2_dma_interrupt(struct
+ 				  struct stmmac_extra_stats *x, u32 chan,
+ 				  u32 dir)
+ {
+-	struct stmmac_pcpu_stats *stats = this_cpu_ptr(priv->xstats.pcpu_stats);
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	u32 intr_status = readl(ioaddr + XGMAC_DMA_CH_STATUS(chan));
+ 	u32 intr_en = readl(ioaddr + XGMAC_DMA_CH_INT_EN(chan));
+ 	int ret = 0;
+@@ -362,15 +363,15 @@ static int dwxgmac2_dma_interrupt(struct
+ 	/* TX/RX NORMAL interrupts */
+ 	if (likely(intr_status & XGMAC_NIS)) {
+ 		if (likely(intr_status & XGMAC_RI)) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->rx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
++			u64_stats_update_begin(&rxq_stats->syncp);
++			rxq_stats->rx_normal_irq_n++;
++			u64_stats_update_end(&rxq_stats->syncp);
+ 			ret |= handle_rx;
+ 		}
+ 		if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
++			u64_stats_update_begin(&txq_stats->syncp);
++			txq_stats->tx_normal_irq_n++;
++			u64_stats_update_end(&txq_stats->syncp);
+ 			ret |= handle_tx;
+ 		}
+ 	}
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -546,79 +546,44 @@ stmmac_set_pauseparam(struct net_device
+ 	}
+ }
+ 
+-static u64 stmmac_get_rx_normal_irq_n(struct stmmac_priv *priv, int q)
+-{
+-	u64 total;
+-	int cpu;
+-
+-	total = 0;
+-	for_each_possible_cpu(cpu) {
+-		struct stmmac_pcpu_stats *pcpu;
+-		unsigned int start;
+-		u64 irq_n;
+-
+-		pcpu = per_cpu_ptr(priv->xstats.pcpu_stats, cpu);
+-		do {
+-			start = u64_stats_fetch_begin(&pcpu->syncp);
+-			irq_n = u64_stats_read(&pcpu->rx_normal_irq_n[q]);
+-		} while (u64_stats_fetch_retry(&pcpu->syncp, start));
+-		total += irq_n;
+-	}
+-	return total;
+-}
+-
+-static u64 stmmac_get_tx_normal_irq_n(struct stmmac_priv *priv, int q)
+-{
+-	u64 total;
+-	int cpu;
+-
+-	total = 0;
+-	for_each_possible_cpu(cpu) {
+-		struct stmmac_pcpu_stats *pcpu;
+-		unsigned int start;
+-		u64 irq_n;
+-
+-		pcpu = per_cpu_ptr(priv->xstats.pcpu_stats, cpu);
+-		do {
+-			start = u64_stats_fetch_begin(&pcpu->syncp);
+-			irq_n = u64_stats_read(&pcpu->tx_normal_irq_n[q]);
+-		} while (u64_stats_fetch_retry(&pcpu->syncp, start));
+-		total += irq_n;
+-	}
+-	return total;
+-}
+-
+ static void stmmac_get_per_qstats(struct stmmac_priv *priv, u64 *data)
+ {
+ 	u32 tx_cnt = priv->plat->tx_queues_to_use;
+ 	u32 rx_cnt = priv->plat->rx_queues_to_use;
+ 	unsigned int start;
+-	int q;
++	int q, stat;
++	char *p;
+ 
+ 	for (q = 0; q < tx_cnt; q++) {
+ 		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[q];
+-		u64 pkt_n;
++		struct stmmac_txq_stats snapshot;
+ 
+ 		do {
+-			start = u64_stats_fetch_begin(&txq_stats->napi_syncp);
+-			pkt_n = u64_stats_read(&txq_stats->napi.tx_pkt_n);
+-		} while (u64_stats_fetch_retry(&txq_stats->napi_syncp, start));
++			start = u64_stats_fetch_begin(&txq_stats->syncp);
++			snapshot = *txq_stats;
++		} while (u64_stats_fetch_retry(&txq_stats->syncp, start));
+ 
+-		*data++ = pkt_n;
+-		*data++ = stmmac_get_tx_normal_irq_n(priv, q);
++		p = (char *)&snapshot + offsetof(struct stmmac_txq_stats, tx_pkt_n);
++		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
++			*data++ = (*(u64 *)p);
++			p += sizeof(u64);
++		}
+ 	}
+ 
+ 	for (q = 0; q < rx_cnt; q++) {
+ 		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[q];
+-		u64 pkt_n;
++		struct stmmac_rxq_stats snapshot;
+ 
+ 		do {
+-			start = u64_stats_fetch_begin(&rxq_stats->napi_syncp);
+-			pkt_n = u64_stats_read(&rxq_stats->napi.rx_pkt_n);
+-		} while (u64_stats_fetch_retry(&rxq_stats->napi_syncp, start));
++			start = u64_stats_fetch_begin(&rxq_stats->syncp);
++			snapshot = *rxq_stats;
++		} while (u64_stats_fetch_retry(&rxq_stats->syncp, start));
+ 
+-		*data++ = pkt_n;
+-		*data++ = stmmac_get_rx_normal_irq_n(priv, q);
++		p = (char *)&snapshot + offsetof(struct stmmac_rxq_stats, rx_pkt_n);
++		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
++			*data++ = (*(u64 *)p);
++			p += sizeof(u64);
++		}
+ 	}
+ }
+ 
+@@ -677,49 +642,39 @@ static void stmmac_get_ethtool_stats(str
+ 	pos = j;
+ 	for (i = 0; i < rx_queues_count; i++) {
+ 		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[i];
+-		struct stmmac_napi_rx_stats snapshot;
+-		u64 n_irq;
++		struct stmmac_rxq_stats snapshot;
+ 
+ 		j = pos;
+ 		do {
+-			start = u64_stats_fetch_begin(&rxq_stats->napi_syncp);
+-			snapshot = rxq_stats->napi;
+-		} while (u64_stats_fetch_retry(&rxq_stats->napi_syncp, start));
+-
+-		data[j++] += u64_stats_read(&snapshot.rx_pkt_n);
+-		n_irq = stmmac_get_rx_normal_irq_n(priv, i);
+-		data[j++] += n_irq;
+-		normal_irq_n += n_irq;
+-		napi_poll += u64_stats_read(&snapshot.poll);
++			start = u64_stats_fetch_begin(&rxq_stats->syncp);
++			snapshot = *rxq_stats;
++		} while (u64_stats_fetch_retry(&rxq_stats->syncp, start));
++
++		data[j++] += snapshot.rx_pkt_n;
++		data[j++] += snapshot.rx_normal_irq_n;
++		normal_irq_n += snapshot.rx_normal_irq_n;
++		napi_poll += snapshot.napi_poll;
+ 	}
+ 
+ 	pos = j;
+ 	for (i = 0; i < tx_queues_count; i++) {
+ 		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[i];
+-		struct stmmac_napi_tx_stats napi_snapshot;
+-		struct stmmac_q_tx_stats q_snapshot;
+-		u64 n_irq;
++		struct stmmac_txq_stats snapshot;
+ 
+ 		j = pos;
+ 		do {
+-			start = u64_stats_fetch_begin(&txq_stats->q_syncp);
+-			q_snapshot = txq_stats->q;
+-		} while (u64_stats_fetch_retry(&txq_stats->q_syncp, start));
+-		do {
+-			start = u64_stats_fetch_begin(&txq_stats->napi_syncp);
+-			napi_snapshot = txq_stats->napi;
+-		} while (u64_stats_fetch_retry(&txq_stats->napi_syncp, start));
+-
+-		data[j++] += u64_stats_read(&napi_snapshot.tx_pkt_n);
+-		n_irq = stmmac_get_tx_normal_irq_n(priv, i);
+-		data[j++] += n_irq;
+-		normal_irq_n += n_irq;
+-		data[j++] += u64_stats_read(&napi_snapshot.tx_clean);
+-		data[j++] += u64_stats_read(&q_snapshot.tx_set_ic_bit) +
+-			u64_stats_read(&napi_snapshot.tx_set_ic_bit);
+-		data[j++] += u64_stats_read(&q_snapshot.tx_tso_frames);
+-		data[j++] += u64_stats_read(&q_snapshot.tx_tso_nfrags);
+-		napi_poll += u64_stats_read(&napi_snapshot.poll);
++			start = u64_stats_fetch_begin(&txq_stats->syncp);
++			snapshot = *txq_stats;
++		} while (u64_stats_fetch_retry(&txq_stats->syncp, start));
++
++		data[j++] += snapshot.tx_pkt_n;
++		data[j++] += snapshot.tx_normal_irq_n;
++		normal_irq_n += snapshot.tx_normal_irq_n;
++		data[j++] += snapshot.tx_clean;
++		data[j++] += snapshot.tx_set_ic_bit;
++		data[j++] += snapshot.tx_tso_frames;
++		data[j++] += snapshot.tx_tso_nfrags;
++		napi_poll += snapshot.napi_poll;
+ 	}
+ 	normal_irq_n += priv->xstats.rx_early_irq;
+ 	data[j++] = normal_irq_n;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2433,6 +2433,7 @@ static bool stmmac_xdp_xmit_zc(struct st
+ 	struct xdp_desc xdp_desc;
+ 	bool work_done = true;
+ 	u32 tx_set_ic_bit = 0;
++	unsigned long flags;
+ 
+ 	/* Avoids TX time-out as we are sharing with slow path */
+ 	txq_trans_cond_update(nq);
+@@ -2505,9 +2506,9 @@ static bool stmmac_xdp_xmit_zc(struct st
+ 		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 		entry = tx_q->cur_tx;
+ 	}
+-	u64_stats_update_begin(&txq_stats->napi_syncp);
+-	u64_stats_add(&txq_stats->napi.tx_set_ic_bit, tx_set_ic_bit);
+-	u64_stats_update_end(&txq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_set_ic_bit += tx_set_ic_bit;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	if (tx_desc) {
+ 		stmmac_flush_tx_descriptors(priv, queue);
+@@ -2551,6 +2552,7 @@ static int stmmac_tx_clean(struct stmmac
+ 	unsigned int bytes_compl = 0, pkts_compl = 0;
+ 	unsigned int entry, xmits = 0, count = 0;
+ 	u32 tx_packets = 0, tx_errors = 0;
++	unsigned long flags;
+ 
+ 	__netif_tx_lock_bh(netdev_get_tx_queue(priv->dev, queue));
+ 
+@@ -2706,11 +2708,11 @@ static int stmmac_tx_clean(struct stmmac
+ 	if (tx_q->dirty_tx != tx_q->cur_tx)
+ 		stmmac_tx_timer_arm(priv, queue);
+ 
+-	u64_stats_update_begin(&txq_stats->napi_syncp);
+-	u64_stats_add(&txq_stats->napi.tx_packets, tx_packets);
+-	u64_stats_add(&txq_stats->napi.tx_pkt_n, tx_packets);
+-	u64_stats_inc(&txq_stats->napi.tx_clean);
+-	u64_stats_update_end(&txq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_packets += tx_packets;
++	txq_stats->tx_pkt_n += tx_packets;
++	txq_stats->tx_clean++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	priv->xstats.tx_errors += tx_errors;
+ 
+@@ -4099,6 +4101,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	bool has_vlan, set_ic;
+ 	dma_addr_t tso_des, des;
+ 	u8 proto_hdr_len, hdr;
++	unsigned long flags;
+ 	u32 pay_len, mss;
+ 	int i;
+ 
+@@ -4277,13 +4280,13 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 		netif_tx_stop_queue(netdev_get_tx_queue(priv->dev, queue));
+ 	}
+ 
+-	u64_stats_update_begin(&txq_stats->q_syncp);
+-	u64_stats_add(&txq_stats->q.tx_bytes, skb->len);
+-	u64_stats_inc(&txq_stats->q.tx_tso_frames);
+-	u64_stats_add(&txq_stats->q.tx_tso_nfrags, nfrags);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_bytes += skb->len;
++	txq_stats->tx_tso_frames++;
++	txq_stats->tx_tso_nfrags += nfrags;
+ 	if (set_ic)
+-		u64_stats_inc(&txq_stats->q.tx_set_ic_bit);
+-	u64_stats_update_end(&txq_stats->q_syncp);
++		txq_stats->tx_set_ic_bit++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	if (priv->sarc_type)
+ 		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+@@ -4382,6 +4385,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool has_vlan, set_ic;
+ 	int entry, first_tx;
++	unsigned long flags;
+ 	dma_addr_t des;
+ 
+ 	tx_q = &priv->dma_conf.tx_queue[queue];
+@@ -4550,11 +4554,11 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 		netif_tx_stop_queue(netdev_get_tx_queue(priv->dev, queue));
+ 	}
+ 
+-	u64_stats_update_begin(&txq_stats->q_syncp);
+-	u64_stats_add(&txq_stats->q.tx_bytes, skb->len);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_bytes += skb->len;
+ 	if (set_ic)
+-		u64_stats_inc(&txq_stats->q.tx_set_ic_bit);
+-	u64_stats_update_end(&txq_stats->q_syncp);
++		txq_stats->tx_set_ic_bit++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	if (priv->sarc_type)
+ 		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+@@ -4832,11 +4836,12 @@ static int stmmac_xdp_xmit_xdpf(struct s
+ 		set_ic = false;
+ 
+ 	if (set_ic) {
++		unsigned long flags;
+ 		tx_q->tx_count_frames = 0;
+ 		stmmac_set_tx_ic(priv, tx_desc);
+-		u64_stats_update_begin(&txq_stats->q_syncp);
+-		u64_stats_inc(&txq_stats->q.tx_set_ic_bit);
+-		u64_stats_update_end(&txq_stats->q_syncp);
++		flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++		txq_stats->tx_set_ic_bit++;
++		u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 	}
+ 
+ 	stmmac_enable_dma_transmission(priv, priv->ioaddr);
+@@ -4996,6 +5001,7 @@ static void stmmac_dispatch_skb_zc(struc
+ 	unsigned int len = xdp->data_end - xdp->data;
+ 	enum pkt_hash_types hash_type;
+ 	int coe = priv->hw->rx_csum;
++	unsigned long flags;
+ 	struct sk_buff *skb;
+ 	u32 hash;
+ 
+@@ -5020,10 +5026,10 @@ static void stmmac_dispatch_skb_zc(struc
+ 	skb_record_rx_queue(skb, queue);
+ 	napi_gro_receive(&ch->rxtx_napi, skb);
+ 
+-	u64_stats_update_begin(&rxq_stats->napi_syncp);
+-	u64_stats_inc(&rxq_stats->napi.rx_pkt_n);
+-	u64_stats_add(&rxq_stats->napi.rx_bytes, len);
+-	u64_stats_update_end(&rxq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->rx_pkt_n++;
++	rxq_stats->rx_bytes += len;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ }
+ 
+ static bool stmmac_rx_refill_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+@@ -5095,6 +5101,7 @@ static int stmmac_rx_zc(struct stmmac_pr
+ 	unsigned int desc_size;
+ 	struct bpf_prog *prog;
+ 	bool failure = false;
++	unsigned long flags;
+ 	int xdp_status = 0;
+ 	int status = 0;
+ 
+@@ -5248,9 +5255,9 @@ read_again:
+ 
+ 	stmmac_finalize_xdp_rx(priv, xdp_status);
+ 
+-	u64_stats_update_begin(&rxq_stats->napi_syncp);
+-	u64_stats_add(&rxq_stats->napi.rx_pkt_n, count);
+-	u64_stats_update_end(&rxq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->rx_pkt_n += count;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	priv->xstats.rx_dropped += rx_dropped;
+ 	priv->xstats.rx_errors += rx_errors;
+@@ -5288,6 +5295,7 @@ static int stmmac_rx(struct stmmac_priv
+ 	unsigned int desc_size;
+ 	struct sk_buff *skb = NULL;
+ 	struct stmmac_xdp_buff ctx;
++	unsigned long flags;
+ 	int xdp_status = 0;
+ 	int bufsz;
+ 
+@@ -5538,11 +5546,11 @@ drain_data:
+ 
+ 	stmmac_rx_refill(priv, queue);
+ 
+-	u64_stats_update_begin(&rxq_stats->napi_syncp);
+-	u64_stats_add(&rxq_stats->napi.rx_packets, rx_packets);
+-	u64_stats_add(&rxq_stats->napi.rx_bytes, rx_bytes);
+-	u64_stats_add(&rxq_stats->napi.rx_pkt_n, count);
+-	u64_stats_update_end(&rxq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->rx_packets += rx_packets;
++	rxq_stats->rx_bytes += rx_bytes;
++	rxq_stats->rx_pkt_n += count;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	priv->xstats.rx_dropped += rx_dropped;
+ 	priv->xstats.rx_errors += rx_errors;
+@@ -5557,12 +5565,13 @@ static int stmmac_napi_poll_rx(struct na
+ 	struct stmmac_priv *priv = ch->priv_data;
+ 	struct stmmac_rxq_stats *rxq_stats;
+ 	u32 chan = ch->index;
++	unsigned long flags;
+ 	int work_done;
+ 
+ 	rxq_stats = &priv->xstats.rxq_stats[chan];
+-	u64_stats_update_begin(&rxq_stats->napi_syncp);
+-	u64_stats_inc(&rxq_stats->napi.poll);
+-	u64_stats_update_end(&rxq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	work_done = stmmac_rx(priv, budget, chan);
+ 	if (work_done < budget && napi_complete_done(napi, work_done)) {
+@@ -5583,12 +5592,13 @@ static int stmmac_napi_poll_tx(struct na
+ 	struct stmmac_priv *priv = ch->priv_data;
+ 	struct stmmac_txq_stats *txq_stats;
+ 	u32 chan = ch->index;
++	unsigned long flags;
+ 	int work_done;
+ 
+ 	txq_stats = &priv->xstats.txq_stats[chan];
+-	u64_stats_update_begin(&txq_stats->napi_syncp);
+-	u64_stats_inc(&txq_stats->napi.poll);
+-	u64_stats_update_end(&txq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	work_done = stmmac_tx_clean(priv, budget, chan);
+ 	work_done = min(work_done, budget);
+@@ -5613,16 +5623,17 @@ static int stmmac_napi_poll_rxtx(struct
+ 	struct stmmac_rxq_stats *rxq_stats;
+ 	struct stmmac_txq_stats *txq_stats;
+ 	u32 chan = ch->index;
++	unsigned long flags;
+ 
+ 	rxq_stats = &priv->xstats.rxq_stats[chan];
+-	u64_stats_update_begin(&rxq_stats->napi_syncp);
+-	u64_stats_inc(&rxq_stats->napi.poll);
+-	u64_stats_update_end(&rxq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	txq_stats = &priv->xstats.txq_stats[chan];
+-	u64_stats_update_begin(&txq_stats->napi_syncp);
+-	u64_stats_inc(&txq_stats->napi.poll);
+-	u64_stats_update_end(&txq_stats->napi_syncp);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	tx_done = stmmac_tx_clean(priv, budget, chan);
+ 	tx_done = min(tx_done, budget);
+@@ -6884,13 +6895,10 @@ static void stmmac_get_stats64(struct ne
+ 		u64 tx_bytes;
+ 
+ 		do {
+-			start = u64_stats_fetch_begin(&txq_stats->q_syncp);
+-			tx_bytes   = u64_stats_read(&txq_stats->q.tx_bytes);
+-		} while (u64_stats_fetch_retry(&txq_stats->q_syncp, start));
+-		do {
+-			start = u64_stats_fetch_begin(&txq_stats->napi_syncp);
+-			tx_packets = u64_stats_read(&txq_stats->napi.tx_packets);
+-		} while (u64_stats_fetch_retry(&txq_stats->napi_syncp, start));
++			start = u64_stats_fetch_begin(&txq_stats->syncp);
++			tx_packets = txq_stats->tx_packets;
++			tx_bytes   = txq_stats->tx_bytes;
++		} while (u64_stats_fetch_retry(&txq_stats->syncp, start));
+ 
+ 		stats->tx_packets += tx_packets;
+ 		stats->tx_bytes += tx_bytes;
+@@ -6902,10 +6910,10 @@ static void stmmac_get_stats64(struct ne
+ 		u64 rx_bytes;
+ 
+ 		do {
+-			start = u64_stats_fetch_begin(&rxq_stats->napi_syncp);
+-			rx_packets = u64_stats_read(&rxq_stats->napi.rx_packets);
+-			rx_bytes   = u64_stats_read(&rxq_stats->napi.rx_bytes);
+-		} while (u64_stats_fetch_retry(&rxq_stats->napi_syncp, start));
++			start = u64_stats_fetch_begin(&rxq_stats->syncp);
++			rx_packets = rxq_stats->rx_packets;
++			rx_bytes   = rxq_stats->rx_bytes;
++		} while (u64_stats_fetch_retry(&rxq_stats->syncp, start));
+ 
+ 		stats->rx_packets += rx_packets;
+ 		stats->rx_bytes += rx_bytes;
+@@ -7269,16 +7277,9 @@ int stmmac_dvr_probe(struct device *devi
+ 	priv->dev = ndev;
+ 
+ 	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
+-		u64_stats_init(&priv->xstats.rxq_stats[i].napi_syncp);
+-	for (i = 0; i < MTL_MAX_TX_QUEUES; i++) {
+-		u64_stats_init(&priv->xstats.txq_stats[i].q_syncp);
+-		u64_stats_init(&priv->xstats.txq_stats[i].napi_syncp);
+-	}
+-
+-	priv->xstats.pcpu_stats =
+-		devm_netdev_alloc_pcpu_stats(device, struct stmmac_pcpu_stats);
+-	if (!priv->xstats.pcpu_stats)
+-		return -ENOMEM;
++		u64_stats_init(&priv->xstats.rxq_stats[i].syncp);
++	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
++		u64_stats_init(&priv->xstats.txq_stats[i].syncp);
+ 
+ 	stmmac_set_ethtool_ops(ndev);
+ 	priv->pause = pause;
 
 
