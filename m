@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060170;
-	b=NYWCK/66wcoAo3FZjzv4h/APALZGAzQcp5vDQ8c7Up4HkEo6dOTNsgI5aqteVqn4YOxQ
-	 T2k/46jUs6Wo+8hEqJy1SzYNm31VX/hxaQD2a1Jy/+wvoScf324mt3gE8owTcK+tfavCY
-	 6XMA026SF3eKa3sqa+DXCAwpDItO84U5QYB++f8abue7hdfV5NCdUvboKsr7nrN5y9guh
-	 s0dQiYXqTVf+RaBzxILr+oDGHLU/c1e15GKMGQTsRUXpzwaz1qSvvDnQomPaXl5YlokW9
-	 Vmg0ZqZwjruPiAERmFxSH5VclhxsxDeejYkeOlvJT1NxVDdrermlj5Do8T/KEZAtLxg==
+	t=1795060172;
+	b=rf1YuB9g7Kj0FM/M44ZQLm9OGKgL33uSotoRaoIv/aac0mZx5DfusHphGYwTKMqTxvCR
+	 V8deN/TmYpcNbM2nIDKanw1xxKbL/agMWH++BCr6XCkYb2hi51+PwP/w/KV4Ss8wSK861
+	 k+ZNfgy2CBw6MEyAySLFMip0c/O/SMl4yEXaWXCHbXIOpoGcJ7UUZWb/2UxuqcZa7eK6p
+	 4Zrq3SJRMLqHOG7flFLRxT9DipNhT6O5Fz8sKeIdrRw3Orcid6/G+AtEb8+8ML9z+SgEo
+	 HRsiMeNzXKQWaEpzYp0ou+k9CtHeuNOcjHXgI84Omu3bCwzeERM2meOyXfEbiNgPuIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060170;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060172;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T3mhqt4UjhHbQe6CkMEN0gSADiiDUmEVTJWKPcTSr3E=;
-	b=rdBqaTIFZ0oG3z+GV8lJAm7C3aSR30L0jZ6zvbmXnA03D0mVemFQr9vOKgPR5ZQdMFRJ
-	 tp5LbGdPO0yiqzarvDKINab1BpEwr3vqWqxqeNUxdWiAUroD3FIOZWtJwsjHAzmuSYLbA
-	 55MCneEjHYy529GGMhoo91INKL1jGOzWtwGGZQKmHEdO81uqrbgf7eYcmQEfs7MTtSEtx
-	 6S4NSms/aWvJYe7f32rLwjfboRNje8RLOFZE+0ObyaEidJxjfk77D4d9kXj1kOC6xK6ar
-	 6f+J1H4V5+GIZ1TS8oD1gBO9W2pea4byyFKjISrP1/3zB/+fsmv7RtYl8+1g3OsKjSA==
+	bh=GIQfqmeUyFy3at/Ro60P8EbkoV3kl73iXS2rUMZVaf8=;
+	b=bw++xoWuMAYPeWICYJZmxlmO84FHeDIdQBmSQd2uZwRZFX9tumXDn1wovs/rjZuNz0f2
+	 KQpBTCG0VekBoXZGPGNs5jrMpPbdEWgqmtFbrYXj57KhldC9ThYkv62g5lDG35hog1nAb
+	 hVUwHAuUWQk4a7sQh/efEzsD16mEGsYXwyj2TsifVyaFrRF7/l3vleKOCaPdObSHMJhTm
+	 sYFVDTszehFTFfLRJ2YJtxxKcl5H6UlFPZO5nqTDfiYXAXWos3f5OAFnkDD/irRwt1OQT
+	 T2Cr7JSMKHs3i1CanUIlZPFaJQNiXwXCKAKnizmQNZhfYKJDahx2ZuGHrBHCK1G3JwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCGsS760;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpyXgMui;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB9E606A325;
-	Thu, 19 Nov 2026 03:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAEE606A320;
+	Thu, 19 Nov 2026 03:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCGsS760
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEDC1F000C5;
-	Thu, 19 Nov 2026 03:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpyXgMui
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143631F000C4;
+	Thu, 19 Nov 2026 03:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060169;
-	bh=T3mhqt4UjhHbQe6CkMEN0gSADiiDUmEVTJWKPcTSr3E=;
+	s=korg; t=1795060172;
+	bh=GIQfqmeUyFy3at/Ro60P8EbkoV3kl73iXS2rUMZVaf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zCGsS760HL5lpAsx1+sYC/GNhzHTg5m8QVIdyR81DiFmGn4hrEpXmyvCnvjbm4per
-	 wR1idbw59yWmvVquu2lxxxwrwTm3ZfSuAnWDXVw2YV9nVSahwnE7BtGWPMxu4jTNDX
-	 LzoP7bHedhn97kbeblW0ylWS6lnkmIfAmJJwZXEo=
+	b=jpyXgMuiWsu/LqfXBwMf7BNeMG7z3fRomBKPmLgIzH/GgF+XgOU+i6jzQb1IOE+Cz
+	 I5EUdkM22whY4z23lL3LradbVi+kG7GnH/vXfCEw8M8G9wMk8c4tRlerBElBWY6BFN
+	 Kx6n6LjTO/TN0l+bW3n7NURqsKN0IKvXOGvb7oGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Rik van Riel <riel@surriel.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1101/1848] xfrm: retry inexact policy lookup after node reinsertion
-Date: Wed, 18 Nov 2026 15:52:19 +0100
-Message-ID: <20261118150005.197878356@linuxfoundation.org>
+Subject: [PATCH 5.10 1102/1848] mm/filemap: dont lose a folio lock wakeup to a signal
+Date: Wed, 18 Nov 2026 15:52:20 +0100
+Message-ID: <20261118150005.290580318@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,86 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 868f63c8bfafa9b827168c9126f85264c39c02ec ]
+[ Upstream commit 8ccb6ded6a47b59b4907ed4f8c293cf8122de889 ]
 
-An inexact policy lookup first records pointers to candidate hlist heads
-and then traverses the lists.  A concurrent policy insertion can merge
-inexact tree nodes between those operations:
+An exclusive waiter in folio_wait_bit_common() can leave the wait loop
+because of a fatal signal, then be woken by folio_unlock() before
+finish_wait(). If the waker did not hand over the lock, the waiter returns
+-EINTR without trying to acquire it.
 
-  lookup                         policy insertion
-  ------                         ----------------
-  find inexact candidates
-    save obsolete hlist head
-                                 write_seqcount_begin(&bin->count)
-                                 merge inexact tree nodes
-                                   hlist_del_rcu(&policy->bydst)
-                                   reinsert policy->bydst in survivor
-                                 write_seqcount_end(&bin->count)
-  evaluate saved candidate list
-    miss the moved policy
+folio_wake_bit() stops after waking the first exclusive waiter, so this
+loses the wakeup and can leave other waiters asleep indefinitely on an
+unlocked folio.
 
-The merge immediately reinserts the same hlist node into the surviving
-tree node.  RCU keeps the policy alive, but it does not provide a
-consistent view while its list node is moved.  A lookup that selected the
-obsolete list can observe it empty.  A lookup already traversing a moved
-policy can instead follow the next pointer rewritten by the reinsertion.
-Either case can return an incorrect IPsec policy result.
+After finish_wait(), let a waiter woken without a lock handoff try once
+more to acquire the lock. If successful, return success so the caller's
+eventual unlock wakes the next waiter. Otherwise, the current lock owner
+will do so.
 
-The per-bin sequence counter already brackets calls to
-xfrm_policy_inexact_insert_node(), including node merges.  The read side,
-however, currently validates the counter only while searching an
-individual rb-tree.  A successful search returns without validation, and
-the later candidate-list traversal is outside that read-side section.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Snapshot the per-bin sequence before discovering candidate heads and
-validate it after evaluating all candidate lists.   Retry the lookup if
-the inexact policy tree changes while it is being searched.
-
-Fixes: 9cf545ebd591 ("xfrm: policy: store inexact policies in a tree ordered by destination address")
+Fixes: 5ef64cc8987a ("mm: allow a controlled amount of unfairness in the page lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ sashal: preserved the required dir argument in xfrm_policy_eval_candidates() ]
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: clarify and simplify comment + description ]
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-7-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Replaced folio_flags(folio, 0) with &page->flags to match the existing page-based wait function. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ mm/filemap.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index c14f495f62b80..0b753c0ba0055 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -2104,6 +2104,7 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
- 	struct xfrm_pol_inexact_bin *bin;
- 	struct xfrm_policy *pol, *ret;
- 	struct hlist_head *chain;
-+	unsigned int inexact_sequence;
- 	unsigned int sequence;
- 	int err;
+diff --git a/mm/filemap.c b/mm/filemap.c
+index f8a28274828f3..5fed26cf2020e 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1328,10 +1328,22 @@ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
+ 	 * return value based on that state without races.
+ 	 *
+ 	 * Also note that WQ_FLAG_WOKEN is sufficient for a non-exclusive
+-	 * waiter, but an exclusive one requires WQ_FLAG_DONE.
++	 * waiter, but an exclusive one must also acquire the bit.
+ 	 */
+-	if (behavior == EXCLUSIVE)
+-		return wait->flags & WQ_FLAG_DONE ? 0 : -EINTR;
++	if (behavior == EXCLUSIVE) {
++		if (wait->flags & WQ_FLAG_DONE)
++			return 0;
++		/*
++		 * We might have just been woken up and the waker will not
++		 * wake up anybody else. If we ignore that now, the remaining
++		 * waiters may not get woken up: take the bit now if it is
++		 * still free.
++		 */
++		if ((wait->flags & WQ_FLAG_WOKEN) &&
++		    !test_and_set_bit(bit_nr, &page->flags))
++			return 0;
++		return -EINTR;
++	}
  
-@@ -2135,12 +2136,18 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
- 		}
- 	}
- 	bin = xfrm_policy_inexact_lookup_rcu(net, type, family, dir, if_id);
--	if (!bin || !xfrm_policy_find_inexact_candidates(&cand, bin, saddr,
--							 daddr))
-+	if (!bin)
-+		goto skip_inexact;
-+
-+	inexact_sequence = read_seqcount_begin(&bin->count);
-+	if (!xfrm_policy_find_inexact_candidates(&cand, bin, saddr, daddr))
- 		goto skip_inexact;
- 
- 	pol = xfrm_policy_eval_candidates(&cand, ret, fl, type,
- 					  family, dir, if_id);
-+	if (read_seqcount_retry(&bin->count, inexact_sequence))
-+		goto retry;
-+
- 	if (pol) {
- 		ret = pol;
- 		if (IS_ERR(pol))
+ 	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
+ }
 -- 
 2.53.0
 
