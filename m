@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023648;
-	b=vD4oy1rJTqKH/qvBpHyhswC3RYds+vQSCrglvAwf3cWKx+p+2HjuI9cyGxkdUJLcwLnE
-	 oCULtQHhXaHMsC7yfmHkcciVWRHJ6aTGmX2A+cjkiFV5yeV9hgweiU67CYe8R/2sKzT+N
-	 Z1rKn55IvhH1q9uZGPzodlNVTLA2auScgnysrwpDY5TQiiZ35jM2b9ZuPs1B26Ui2OHr8
-	 nK8UCtIgEaSaok4s4PAOW8Hd5LSjaDv9MEt2on0xSC35P3LANcvdvwL8bnoo3ww5uo/iX
-	 diM5EjqDpI5YbZ6WG3sRAGU8tGRgzEKsAAlrvNK+bkJvfiKeH0VVt2UyDbcS4KKHazA==
+	t=1795023651;
+	b=F7j2eAS5j3z72lnx75yE8bpMOxIqP114SgqAQoIoCUPGIhSC0VLC7e/uZlEjQ4MQ3GBN
+	 64+4krDNNbm2DknG5s4tdblinzRZx5e2bJ+1tDueaLBGk4kmckArg2IM0GYgcmXiwDYcu
+	 w2y3M0QPZjta/srDLJV67X/eCgN1rnvtS2wKbk0pLvc5tFo/JnPvfqzvWK00r6MiK91Tf
+	 2e6mZUk82OL1STyvFEOFz4mLB4IzUzzLUtSGSL39H6ZV9u3wmDxNIcJOnIZaSh05g0Kiw
+	 BtLhsSSNDwnXK7mXbucZgLqQL9SgB6R7KuATUym6gC/fA3cumO+ZQsSMQNfmQIkj44A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pejF1eZgjdzWnpAovbqNEq/AOWYN59QdlIg89N9HENA=;
-	b=EV5cUNUIoYIYkPhzBxXvkfkEKeTzveqJ4ke75qbOzEULKILPtlsx8wFrRGkmBR5VdAxh
-	 DUq5x1GFYBO82VlyKPIZHo+bRPpqI/xZPN/eKRjQtyjB1EoEybhdaWg85Q4WISRZrmwiG
-	 ojgeHa7z9wXELIfcN7EAP9kgP+vlV8PTDdCYJopgWKlaARwbEyWActRrk7wD8Zi6axhJB
-	 NWkT4FUIE27UxtTEwsEAAN2u13NWITIowKcy84+7Hfa9/rOyL6pyWQB8tTEIEHwVm1d1Z
-	 L9xHCRF3GRxdBqQdPZ080bMhig8jT9ssTBH8fVveyZ7bnGRbqeTTWgDGbo9XAx/zlbw==
+	bh=bRSa4cyp052X/zyi8BDwG3F/DGvMvki5pkF8rLCHGzs=;
+	b=RTutJQRH0zHXJxT4d0deXSE/ore+AOGm4XS5r2v3di8qiJtByiRSJobSFvXnAEksLmoF
+	 /t3tLRuhu5EpySJPc0XL/65pGREASHyL//SXxUfg/WZmVnjcR5eHCadMcNKzQGnTgIP4f
+	 j/IbnIRixAkjnfCJIOpE18u602e5eJ69bOaaTyFCaBYHiOEZ1mkDWGgb4nUdpCIswCQyP
+	 E/NpxNzvmrBz97aq4SBMhT5M+FAGDDz0R/2R+TEg7tWvA/lK/L6U3IXF735s0l027zBoM
+	 UboOFG++y9pxxLZ+TDZURWzfL0vNjiCcST05c8iKmWnG2OufUvtgdmKS4QdnbFzPaxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VXDRuICS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+RIZUL+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E96606A325;
-	Wed, 18 Nov 2026 17:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1E8606A325;
+	Wed, 18 Nov 2026 17:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VXDRuICS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB6E1F000C5;
-	Wed, 18 Nov 2026 17:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+RIZUL+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479201F000C4;
+	Wed, 18 Nov 2026 17:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023648;
-	bh=pejF1eZgjdzWnpAovbqNEq/AOWYN59QdlIg89N9HENA=;
+	s=korg; t=1795023650;
+	bh=bRSa4cyp052X/zyi8BDwG3F/DGvMvki5pkF8rLCHGzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VXDRuICSZP7s990WLrGXOZmi1oRuClwWAQBXthhAZpwlKVCXGqXEMebwt6akbAEyF
-	 jFVRKHGEQ5opOMcbmoKjlKjzNnjsRwPWkWYa56VOvg2dptvzz+nriHN5uW+vVZClJi
-	 6v5pCYkT+nxq7XBP4ufkiT7HOWclrBMwtuimNNJ4=
+	b=P+RIZUL+zYfSK9SL2SdQb9P6HF4utS06Q52nmdyCkpeCqih7iBAswnMta4puf1A6T
+	 diXfy5jcYB6Iog5XF6lEccTEHTyeVsGzfK7F9Sx3HWxf9LTDWzmestsPaa4mLxbHLQ
+	 seXCvXFia70k2VaHTXbG7HZ/dxk3ZXP2KUU4yH9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Frank Li <Frank.Li@nxp.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0445/2151] firmware: imx: dsp: fix mailbox channel leak on kasprintf failure
-Date: Wed, 18 Nov 2026 15:36:20 +0100
-Message-ID: <20261118150138.245190187@linuxfoundation.org>
+Subject: [PATCH 6.18 0428/2151] clk: sunxi-ng: sun55i-a523-r-ccu: Use P-only clocks for timers
+Date: Wed, 18 Nov 2026 15:36:03 +0100
+Message-ID: <20261118150137.643402220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit e3631d0242842940f9e902afaea98202e56277e8 ]
+[ Upstream commit 1002cc9d60942f8f294d8de7f2805f82f4ebdda0 ]
 
-If kasprintf() fails while setting up mailbox channels, already
-requested channels from earlier iterations were never freed. Route
-the failure through the existing cleanup path.
+The R timer clocks only have a P divider, but are currently modeled as
+MP clocks with a zero-width M divider.
 
-Fixes: ffbf23d50353 ("firmware: imx: Add DSP IPC protocol interface")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+ccu_mp_set_rate() generates an invalid mask for the zero-width M
+divider, clearing unrelated register fields. Model these clocks as
+P-only clocks to avoid accessing a nonexistent M divider.
+
+Fixes: 8cea339cfb81 ("clk: sunxi-ng: add support for the A523/T527 PRCM CCU")
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-4-cbde21c9fe69@pigmoral.tech
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-dsp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c | 37 +++++++++++-------------
+ 1 file changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/firmware/imx/imx-dsp.c b/drivers/firmware/imx/imx-dsp.c
-index ed79e823157af..7e3f45ddf0c18 100644
---- a/drivers/firmware/imx/imx-dsp.c
-+++ b/drivers/firmware/imx/imx-dsp.c
-@@ -99,8 +99,10 @@ static int imx_dsp_setup_channels(struct imx_dsp_ipc *dsp_ipc)
- 		else
- 			chan_name = kasprintf(GFP_KERNEL, "rxdb%d", i - 2);
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
+index db0e36d8838e7..349230e28c1c3 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
+@@ -43,27 +43,24 @@ static SUNXI_CCU_M_DATA_WITH_MUX(r_apb1_clk, "r-apb1",
+ 				 24, 3,	/* mux */
+ 				 0);
  
--		if (!chan_name)
--			return -ENOMEM;
-+		if (!chan_name) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(r_cpu_timer0, "r-timer0",
+-				       r_ahb_apb_parents, 0x100,
+-				       0, 0,	/* no M */
+-				       1, 3,	/* P */
+-				       4, 3,	/* mux */
+-				       BIT(0),
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(r_cpu_timer0, "r-timer0",
++				      r_ahb_apb_parents, 0x100,
++				      1, 3,	/* P */
++				      4, 3,	/* mux */
++				      BIT(0),
++				      0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(r_cpu_timer1, "r-timer1",
++				      r_ahb_apb_parents, 0x104,
++				      1, 3,	/* P */
++				      4, 3,	/* mux */
++				      BIT(0),
++				      0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(r_cpu_timer2, "r-timer2",
++				      r_ahb_apb_parents, 0x108,
++				      1, 3,	/* P */
++				      4, 3,	/* mux */
++				      BIT(0),
+ 				      0);
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(r_cpu_timer1, "r-timer1",
+-				       r_ahb_apb_parents, 0x104,
+-				       0, 0,	/* no M */
+-				       1, 3,	/* P */
+-				       4, 3,	/* mux */
+-				       BIT(0),
+-				       0);
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(r_cpu_timer2, "r-timer2",
+-				       r_ahb_apb_parents, 0x108,
+-				       0, 0,	/* no M */
+-				       1, 3,	/* P */
+-				       4, 3,	/* mux */
+-				       BIT(0),
+-				       0);
  
- 		dsp_chan = &dsp_ipc->chans[i];
- 		dsp_chan->name = chan_name;
+ static SUNXI_CCU_GATE_HW(bus_r_timer_clk, "bus-r-timer", &r_ahb_clk.common.hw,
+ 			 0x11c, BIT(0), 0);
 -- 
 2.53.0
 
