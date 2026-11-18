@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049241;
-	b=wotJBcqdYl2nqIgdSqQWoRjblnGlctqRWjv6oeYZciMDtpkPB5f2D/MGeNFsBURjauAP
-	 Xo13qISSeK1/9Hea81DPBW0Fm9jgXdR4oouDI2XOEbJzcn3WGqPeAH+S3/2vU80b7jtVa
-	 vT8lbfbMBuqreJhf7iz+4TJKlS0fO/OQIkF86yRYFc+f2zsc4DBteTzmB1PmBMEHzH0pw
-	 iIGXjlMM+LWNgpGUJ0wQ/ASsTbJrEC2i29+CTjlUrQ8slZbUiSUN1xtxnR+VdNsrz2fVY
-	 BKicP/a7/BwrubibbFDFMn+MNxpse53roCMJ4eWNxCquTY9SSGZPKRRr19VW1jWoCcw==
+	t=1795049244;
+	b=MZ/LuUnL/PVzXaGLcbgnbiSfM00Y2tNiKlpc7pXs6c1Lg7uldkzr6SOlpkZcwkgy+i+7
+	 +jSeGjIrWBJkbj6c8V/d7YDODshTbbnTS0G9fes4lB8jj//sQ2m2ANNUq6Rbszhoe2xQ6
+	 2xMPQTh/RZaG/jOzb08lL0duY8Z8jQki3FHue7J3hOJAYEPZfi2EKThLxq2oyMryZF5P1
+	 gzu25GijFqdNJNkf6yVyyOGTFzxV5h0k7jQ7+kMwbbdUfC6n91nh+u4SVe5FaBr4RHfL6
+	 HMH9qZTtzjqmlzbHr7o+gyb7H0WP0advmIqDruwXVRHaRjLPRW0MRTcN8OGccaXVoxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Siv7e1PWFmKMSp9PinQ1bnZSTLTdG2VOITBM/SRQ6pU=;
-	b=CWlelgPk2Su+XM1+WMey5YYUXVkZqdJK+SrvHbOj+22C/H95XuvmIvx6lxUx8iCvaisJ
-	 wkYxQ9Cjkbt/AybULDpamS97D+HHy4L4lMhkqG8PxmhcSzAOco6QlzZoB1Cxx3ElZeUmk
-	 MFZb5YjEp0laqLCxSfIBDkuMRnTsA0kDjWhEEZNh9tuT3U/vHDzSGlZ7MU53egETuJIvd
-	 ARg5han0xVqBzHlNMLj11rXm5FDlxB6FA6XffKKKkFZKuJmMZsHG64JZl3zKpnmb2WtnE
-	 SBmC1JvqwrDyFmZYKIsUPjhUUVfDmtCFpH5t2Xv7x86B4l+I2Ipzzd0LenVCwh8CoUQ==
+	bh=rtSS0Z+79eBFbnKKl1NlbaKpE/mlCcPQ9iT7Q8PFWgM=;
+	b=ANzR7tyBleYFUK+7tmiSyST53WYjn96lS8dQktAkKB90AgJ0DtmAo/G0hDR2uKCj1Bz2
+	 NC0uP2scfE1qtI2X/pfE6bfq+vG6K183oO4hyNhP2f/WbvPpY5eb1wJnBXd0D0GBUPgJR
+	 qFj5sQgKZiEwcmamytQXgWOnSj9KaeWNELTYuggEcbHWUsGFYdjpWNHNNmSMI/rYfs9gB
+	 n+6ElqfsUJTZWt6kuTzldQ46q29KL6TaMQ3fw2hnqcThxd2RfJsTRu2x+T8ILvyQ3GY19
+	 Cb65Zuz8JqVJMPd6zhaAL3+a43cd4nzuci6/P58e4pNokxbAGiP6UM5gyRiySetJuFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klLP5PGL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAIrE0FB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0658606A320;
-	Thu, 19 Nov 2026 00:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5177F606A325;
+	Thu, 19 Nov 2026 00:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klLP5PGL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF541F000C4;
-	Thu, 19 Nov 2026 00:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAIrE0FB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5AD1F000C4;
+	Thu, 19 Nov 2026 00:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049241;
-	bh=Siv7e1PWFmKMSp9PinQ1bnZSTLTdG2VOITBM/SRQ6pU=;
+	s=korg; t=1795049244;
+	bh=rtSS0Z+79eBFbnKKl1NlbaKpE/mlCcPQ9iT7Q8PFWgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klLP5PGLRxssAWhrRNEq2J70+UOehBqNG9pl6ofrER938qCiXYJogRCZF0jeQFOrN
-	 dJsvFxpXsXjfc2+jUwg9A2RAai0lj1Mtj9gVgy7qYWby3+GDJXnGAafOLuYvSfVER+
-	 cThntHQIGvsBNxyThvKyRRh9YF8PmF0FgwbiN3uk=
+	b=GAIrE0FBQgt5yzHh+PjLKmgdtUMKlr+3HOP3OMustIt1H9zDQrpsk/XoWY91wJwvk
+	 8LGWdwv/jhkKFq/kCS8oDbu8X7v3F76WvvAzwP2oSXrm4DGh0cQvYTHKIbQmL+dd63
+	 kzpil2DL1UUzjqNtC2phI25bXf/EE3kCkZx81sE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Jonas Rebmann <jre@pengutronix.de>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2282/2857] spi: spi-sun4i: sun4i_spi_fill_fifo(): always apply A10 FIFO fill level workaround
-Date: Wed, 18 Nov 2026 15:55:16 +0100
-Message-ID: <20261118150323.626222624@linuxfoundation.org>
+Subject: [PATCH 6.1 2283/2857] spi: sun4i: use time_left variable with wait_for_completion_timeout()
+Date: Wed, 18 Nov 2026 15:55:17 +0100
+Message-ID: <20261118150323.666052860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,93 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ee109e2bbea0986f6ad34bfbcba90fce36f17538 ]
+[ Upstream commit 34bed8a33f3a4f69b0ef584ef49f04a671a4a5c2 ]
 
-In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX FIFO is
-filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around
-timeouts observed on A10s SoCs.
+There is a confusing pattern in the kernel to use a variable named 'timeout' to
+store the result of wait_for_completion_timeout() causing patterns like:
 
-Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
-size") added support for transfers larger than the FIFO size. This
-commit did not consider the A10 workaround (limit the TX FIFO fill
-size to SUN4I_FIFO_DEPTH - 1 (= 63) bytes) for refilling the TX FIFO
-in the IRQ handler.
+	timeout = wait_for_completion_timeout(...)
+	if (!timeout) return -ETIMEDOUT;
 
-To apply the workaround independent from where sun4i_spi_fill_fifo()
-is called, remove the length argument from the function and directly
-take the max fill level of SUN4I_FIFO_DEPTH - 1 into account when
-calculating the free space in the FIFO.
+with all kinds of permutations. Use 'time_left' as a variable to make the code
+self explaining.
 
-Due to the lack of HW this patch has not been tested on an A10 SoC,
-but on an A20 SoC. It was not possible to reproduce the timeout on the
-A20.
+Fix to the proper variable type 'unsigned long' while here.
 
-Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-2-9fe919d5cecf@pengutronix.de
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20240430114142.28551-7-wsa+renesas@sang-engineering.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 672ba6d88324 ("spi: spi-sun4i: sun4i_spi_transfer_one(): fix setting of clock rate")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/spi/spi-sun4i.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index c1e733586317a..b761b2a0307a7 100644
+index b761b2a0307a7..7e8b7dce31a4b 100644
 --- a/drivers/spi/spi-sun4i.c
 +++ b/drivers/spi/spi-sun4i.c
-@@ -142,15 +142,21 @@ static inline void sun4i_spi_drain_fifo(struct sun4i_spi *sspi, int len)
- 	}
- }
- 
--static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi, int len)
-+static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi)
+@@ -212,7 +212,8 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 				  struct spi_transfer *tfr)
  {
- 	u32 cnt;
-+	int len;
- 	u8 byte;
+ 	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
+-	unsigned int mclk_rate, div, timeout;
++	unsigned int mclk_rate, div;
++	unsigned long time_left;
+ 	unsigned int start, end, tx_time;
+ 	unsigned int tx_len = 0;
+ 	int ret = 0;
+@@ -332,10 +333,10 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
  
--	/* See how much data we can fit */
--	cnt = SUN4I_FIFO_DEPTH - sun4i_spi_get_tx_fifo_count(sspi);
-+	/*
-+	 * See how much data we can fit
-+	 *
-+	 * Filling the FIFO fully causes timeout for some reason
-+	 * at least on spi2 on A10s
-+	 */
-+	cnt = SUN4I_FIFO_DEPTH - 1 - sun4i_spi_get_tx_fifo_count(sspi);
- 
--	len = min3(len, (int)cnt, sspi->len);
-+	len = min_t(int, cnt, sspi->len);
- 
- 	while (len--) {
- 		byte = sspi->tx_buf ? *sspi->tx_buf++ : 0;
-@@ -310,12 +316,8 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	sun4i_spi_write(sspi, SUN4I_BURST_CNT_REG, SUN4I_BURST_CNT(tfr->len));
- 	sun4i_spi_write(sspi, SUN4I_XMIT_CNT_REG, SUN4I_XMIT_CNT(tx_len));
- 
--	/*
--	 * Fill the TX FIFO
--	 * Filling the FIFO fully causes timeout for some reason
--	 * at least on spi2 on A10s
--	 */
--	sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH - 1);
-+	/* Fill the TX FIFO */
-+	sun4i_spi_fill_fifo(sspi);
- 
- 	/* Enable the interrupts */
- 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
-@@ -372,7 +374,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
- 
- 	/* Transmit FIFO 3/4 empty */
- 	if (status & SUN4I_INT_CTL_TF_E34) {
--		sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH);
-+		sun4i_spi_fill_fifo(sspi);
- 
- 		if (!sspi->len)
- 			/* nothing left to transmit */
+ 	tx_time = max(tfr->len * 8 * 2 / (tfr->speed_hz / 1000), 100U);
+ 	start = jiffies;
+-	timeout = wait_for_completion_timeout(&sspi->done,
+-					      msecs_to_jiffies(tx_time));
++	time_left = wait_for_completion_timeout(&sspi->done,
++						msecs_to_jiffies(tx_time));
+ 	end = jiffies;
+-	if (!timeout) {
++	if (!time_left) {
+ 		dev_warn(&host->dev,
+ 			 "%s: timeout transferring %u bytes@%iHz for %i(%i)ms",
+ 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
 -- 
 2.53.0
 
