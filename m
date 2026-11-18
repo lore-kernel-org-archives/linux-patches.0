@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051413;
-	b=uCedF6R/ncWoXbloKVgqGA2MFKG0dK88td6Oj1hKcCWuwc8vfL2NAAqlZtuwxk2rIw8i
-	 3JcytXHJ1qx55l85OfFLKBaQ5iSWPJn9hIvhKo6X9FUMSQ65Bso3qVq9qao1+0olWzFGG
-	 lKqELGQh0TUCzTQUO7ZdfmeCh6yt1uwPZE9YGEgrevWlGPXDycJC66nZPjN23IMDJv6rw
-	 M637bFJNOJmOVpa3co/DVDFaXnxA9qoSxEG1QatQSl/43kjZvdiB7uQjuzhYhmO+mTh70
-	 hS80NueFHlv/ROT/Zsv9Iy7hXvQgotEbRH1L1xtis4SR8iA7XMnUR0NhXV2Q3lrarUQ==
+	t=1795051416;
+	b=dhGpu2sDCB/LPE3lUwPq87fGx3BOq5eyx+4e5i0ExhAWPj4oELbS0ynoozkR2czhUZfT
+	 Z+yLLMW0UDWaZbMOVn6LH/0FcOHfvBYA5+l/D3j+IQemjSpJDgjJ/PucKGvsdcr4NyOuJ
+	 hvJLBXN/n3PjqwBNy3vphIr8svtJJLrAKjLFPHL7D2FI47M8+3deSy4teV/7NWlf7jl4G
+	 isNJKMdaR1+0vbBapHmMjye+lsprzLFZYjAZ/pQN3JWYNNflJ6oJs6FihpTDxrwGjlwdk
+	 T9EO8SlV3Jea5EFzBAb6Zi5LLSAGqhRI8/TDkRGmPtYZ2n2lVweTJoT7P8rvTz+hQSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fZUpHls+Ov8OwQkOe97St1btwFkxOt+30KgrKuScy0U=;
-	b=4n3YEqVP/BY9HjcaaEROqW1GExshxTKzVsBsibKQfZUW9t1h4jf1ELEMpAPDMhNNeUm1
-	 +tNV4UVC7IreqBX+ju6F4DkunxOXjQCUslftfjZHtTLwrDHLnCdRcLYjzC7eTcU6cfVkX
-	 YDpL4Uk+AflSp3h9jn1aPIXRlwGoCzC6g1jA0lqIo2du2iF6xNWdVb3cS9p+H/ylMpEoz
-	 OyDPVGRyVgKiuGrw6dxw+OrhVhhS/wofSayzwS+N4yjjVxV5V/Y8tqNaJc34uUA9T8n9i
-	 y4T7Aaop4ZRoVwiLfsC9S5iQWVJD9aggJ/gZr84j37DYBGt6r83q02JFj5Xc5OWgGfg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=J5UHPQJkwua6AC0HNTOmsDbiBamHnn65cENIpSyLf4k=;
+	b=cOXeu5KFevnC4ZaF3iEg19JxfDT2vmCf39nBIWc2QlsKViCzsuW6cZtET5rSI/KIbx3j
+	 rB6U4yZSSmo9JRvSr8nvrPEBmeRgGURaQyD6kpT1tTGdFjDIsQ1yGFbgTteQm97u0u4Uj
+	 R0OIEO7P+od9vW2wlzuLGQnV8MykMnyGaIaXUbzMLmtmmFwTHgmQQmYavIrT5BTFXtv9+
+	 DKlX1ofB/raUVa8UC4mmLa0hoXjswZZJa8ePVCd3hQcgV7Ocdunb7G3v6GjKUTw1D3S4A
+	 +cicr31Dwi5bSwd+u6Pkme9Ltyn4YtIwWpX0PFnIGPFNHqHXSz9Mu1fQfez+Yf1+WvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQLTevCf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ct5o6uDg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E16606A320;
-	Thu, 19 Nov 2026 01:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14033606A325;
+	Thu, 19 Nov 2026 01:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQLTevCf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D09F1F000C4;
-	Thu, 19 Nov 2026 01:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ct5o6uDg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661701F000C4;
+	Thu, 19 Nov 2026 01:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051413;
-	bh=fZUpHls+Ov8OwQkOe97St1btwFkxOt+30KgrKuScy0U=;
+	s=korg; t=1795051415;
+	bh=J5UHPQJkwua6AC0HNTOmsDbiBamHnn65cENIpSyLf4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQLTevCfAyKQmMJfKOVN6xzNKmv/P8OC+9DH52fUw8CJptS2LpP4aHKtN92zK788M
-	 iwrAYmJz/3sXXM8PiwDeB/pVLoZRntrLvypkU+wjnYHrdcGBF+1AJzen5D3AhOGPiU
-	 evvFJ/dEgAn9FhaR6Pc+8H6StvAy3mbGC2qSSOf8=
+	b=ct5o6uDgzl25MdvT+f2DQcBQgh2j+QQNwBRK4+jgypbVCqzZZczJlZN/8FYwKI2Aa
+	 RicpJNjwZJQ7g7y04pLg143skDi9zjs4R/fn49PD2GQJNkSDMsy50BEgam4BmqcaGW
+	 slc9n1Y5pYOjvJzHVcsjD0+Mqow7bJGI2Ct91ioE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Carl Lee <carl.lee@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Simon Glass <sjg@chromium.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0199/2214] nfc: nxp-nci: Add remove on IRQ error
-Date: Wed, 18 Nov 2026 15:31:15 +0100
-Message-ID: <20261118150018.181037437@linuxfoundation.org>
+Subject: [PATCH 5.15 0173/2214] kconfig: abort rather than loop for ever on EOF
+Date: Wed, 18 Nov 2026 15:30:49 +0100
+Message-ID: <20261118150016.992562391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,54 +62,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Simon Glass <sjg@chromium.org>
 
-[ Upstream commit 56345cea6a30dc7a1b036d5fb7900434b4a4c5e8 ]
+[ Upstream commit f915149f5cfbd0d4406ec0b0f57b1d2c8685ae55 ]
 
-Add a call to nxp_nci_remove() in nxp_nci_i2c_probe() when the
-request_threaded_irq() fails.
-Previously, IRQ resources were not being freed upon error.
+When a non-interactive 'make oldconfig' or 'syncconfig' meets a new int
+or hex symbol whose default cannot be applied, conf_string() reads a
+value from stdin. At end of file fgets() returns NULL, no value is set
+and the loop asks again. The result is an endless loop which fills the
+output until it exhausts memory, rather than a clean failure.
 
-Assisted-by: gkh_clanker_2000
-Cc: David Heidelberg <david@ixit.cz>
-Cc: Carl Lee <carl.lee@amd.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Ian Ray <ian.ray@gehealthcare.com>
-Cc: "Uwe Kleine-König (The Capable Hub)" <u.kleine-koenig@baylibre.com>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/2026070726-observer-fang-9716@gregkh
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Detect this in conf_string(): if the value cannot be set and stdin is at
+end of file, stop with an error that names the symbol.
+
+Note that a symbol with no default doesn't trigger this, since
+sym_calc_value() falls back to 0, which is accepted at end of file. The
+loop is triggered by a broken Kconfig file, with a default whose text
+fails sym_string_valid().
+
+Such mistakes do creep in from time to time and are hard to debug, since
+the build fills the log with repeated prompts instead of pointing at the
+offending symbol. Some bad defaults draw a parse-time warning, but
+menu_validate_number() accepts a reference to any int or hex symbol, so
+a cross-type reference loops with no warning at all. For example, "0xff"
+is not a valid int value:
+
+  config HEXSYM
+          hex
+          default 0xff
+
+  config VAL
+          int "Value"
+          default HEXSYM
+
+Interactive use is unaffected, since feof() only becomes true once a
+read actually hits end of file: an invalid answer at a terminal still
+re-prompts, while Ctrl-D at such a prompt exits with the error instead
+of looping. bool and tristate symbols and choices already accept the
+default on an empty line, so they still take their defaults in a
+non-interactive build.
+
+Tested with int and hex symbols carrying such defaults: with empty
+stdin, the code without this change produces around 190MB of repeated
+prompts within two seconds, while with the change it exits 1 naming the
+symbol. Piped and interactive (pty) sessions still re-prompt on an
+invalid answer and then accept a valid one. A new string symbol with no
+default still takes the empty string at end of file, since any text is
+valid for a string.
+
+Signed-off-by: Simon Glass <sjg@chromium.org>
+Link: https://patch.msgid.link/20260714133545.3294648-1-sjg@chromium.org
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nxp-nci/i2c.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/kconfig/conf.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
-index a0e665f958c4d..0fdd6cc648a77 100644
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -327,8 +327,10 @@ static int nxp_nci_i2c_probe(struct i2c_client *client,
- 				 nxp_nci_i2c_irq_thread_fn,
- 				 irqflags | IRQF_ONESHOT,
- 				 NXP_NCI_I2C_DRIVER_NAME, phy);
--	if (r < 0)
-+	if (r < 0) {
- 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
-+		nxp_nci_remove(phy->ndev);
-+	}
- 
- 	return r;
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index de9fb688c6e6e..49bbfef4d51b3 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -377,6 +377,23 @@ static int conf_string(struct menu *menu)
+ 		}
+ 		if (def && sym_set_string_value(sym, def))
+ 			return 0;
++
++		/*
++		 * A new int or hex symbol whose default fails validation
++		 * cannot be set from an empty answer. When standard input is
++		 * exhausted, as it is for a non-interactive oldconfig or
++		 * syncconfig, re-asking would loop forever and grow the output
++		 * until it exhausts memory. Stop with an error that names the
++		 * symbol instead. String symbols accept any text, and bool and
++		 * tristate symbols (conf_sym()) and choices (conf_choice())
++		 * accept the default on an empty line, so they are unaffected.
++		 */
++		if (feof(stdin)) {
++			fprintf(stderr,
++				"\nerror: no value for new symbol '%s' at end of input\n",
++				sym->name);
++			exit(1);
++		}
+ 	}
  }
+ 
 -- 
 2.53.0
 
