@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045489;
-	b=l09is9CvLYAd9tPAOoBHE2KH6CdTmBVDORjwaMxiVt+BXl9Mh0CTbTELydbNFS4/pXCB
-	 uHvqgM5L/H8lt3VokIDrLGvq5RJyr90Ta5PvAYhPjOjA3zF+7gWw++gsxs8G6GwzxtQiA
-	 CU0mi6/dXVTN7yfdFsW2nXk1Nd9UoKqnGyI3J+EGlEcEQAN/Kf0OWr4nmqrzzSVvUJaPq
-	 hn56d4P088Gt3HG5l4EdzheMG0AnDiQOFHoDiR2iDdNvsq/Mhk3Vy+WhXXKTFzmfIuPV7
-	 Js9vQvZwsdUttFze1dz2PYe3IY9yP5CKHkV9hwyCDdnIDknuXJ1xeqXvlUfepJiMQfA==
+	t=1795045492;
+	b=WxxA/6iP0//M2RSESf9jyV93Q9J6HcA7FRvrY13j/YWyNBua8Fcs/YvfBumKvsyZTlNi
+	 NfnSEAP1XtbxNJ5rUacy1rAkVYiPvlSEdupGjEpMEE2yH8rJQIpsDsXB6KiBDvflwAdnw
+	 No5bexG9ll+8Fckl4bDSVxO6lMk365kQ5szAEfoGOhYzdmmtVK5maDtnes0pBXbsmXjd6
+	 ZQEKbkhCJfCaveSX/5HbFl0Qb0gV8BMT4MWQOmK8uYw1HZkb9HCbreMmQhfRnotHjDi3j
+	 DWIsvZiOAlKNiW1O9vjtmKDT81adNv+l2eIsYmHwEiong03AjOni5FwDChC55W6QJcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VEPanzYuV2U4cYjOiGjI3qndbUgwRDOpLEJXdZjdlaY=;
-	b=y4NK+dsGJhpv9FrwNpeLk1iL+k9YCxhsXkF3Wsjbd6kXwU/WtVgp7hI3+TnkJFtNd8ZA
-	 VXfGal0Nl7qz33wPjORhbtISeuUCoeAo8lW2wqBlDTepqQdF0Y6PjRQIcO+ankzF3bWrm
-	 MfYOQ1o7wLTIcqqOT6m6WL6+rR6uEkkEYmFNnypTrS5GzkQHEuOrvlAvAfZlWxDvrDOAn
-	 sYIge/m3jnuAg/UgWpvgOPWpyz1De5zbwUS6UKxZbXrbRjPtCKyafe/FGSybD46jjCZsx
-	 0rG8JcZxhzrnA9WBNM9AsOx0TXrzC+pa+eudsWTccxINpNPvifDfunia+7Hmxh094Pw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6hDi5JqSlE3eRd42ww4W1ykZvw3TJ55/HJmLV/ezSic=;
+	b=cXZD15e5dfgmMWqP30Mvvw+D6ql4v/LWWdWJy2Qta4CK7DNrzQuqzE0LffWwukj0dJ67
+	 vfWvXeFLRTb/3EcsNtfnJdzw82rinmqozE2SWloTjfKJshSHZAlcqIsvSvCbiEMV9BkA/
+	 TI+6qlPJEMXjr5jjtXjG/MgMnUYgzn+r1d6x+VQhi7mzbpVZcvFnSccXCsXGLa8KmTfN/
+	 EezKdHbQr7/pLFtak7/wRNGVNT5CQrtPRt5eBlAGmXPGz6wkDtH0F9TSG2tlzf+FwSZ74
+	 q0AVgTSAxaH6XdLvw3aIprAnEduUIN+NMRwZiWPKXIQiAB5SqxpDI1BPYNJB0/g8gLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gwpXGQt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iwe+8PJw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA28606A31C;
-	Wed, 18 Nov 2026 23:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF99D606A332;
+	Wed, 18 Nov 2026 23:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gwpXGQt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946171F000C4;
-	Wed, 18 Nov 2026 23:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iwe+8PJw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454FC1F000C5;
+	Wed, 18 Nov 2026 23:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045489;
-	bh=VEPanzYuV2U4cYjOiGjI3qndbUgwRDOpLEJXdZjdlaY=;
+	s=korg; t=1795045491;
+	bh=6hDi5JqSlE3eRd42ww4W1ykZvw3TJ55/HJmLV/ezSic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0gwpXGQtyiX1yPik3fDtSp1TQsQmD1S0Z0BD5VuM8BrF3/3vPDJXbOmn+TE3Feb+b
-	 lmhdLG8otJDC4zXjhfDUskZmtGXRxVfAb4/OJrHR/SxwXLZ/0L/Xx6v1o5TxzwrQgq
-	 2TRM3Q924wMycYG3e+fLAhGkrLt3VnD5uQKPBxT4=
+	b=Iwe+8PJwFnhEXlAv/z/klgBmJtVpG/TiGXmzcNVqWfM/kVP70Z82X8Uvu886rWTyL
+	 4KP4c/3f9114vVPtoHUiOzla+o6zjEcNPzvV5Fg9gkhS0vbJ8Qhtbjd+FsKvqdd/jh
+	 NOXoN5JB0vuvnJsF/v+mM5HM3qLtqguV9k30BVok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Eason Lai <eason.lai@mediatek.com>,
-	Hans Buchheim <hbuchheim@gmail.com>,
-	Sergei Melnichenko <sergei.melnichenko@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Christoph Hellwig <hch@lst.de>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0894/2857] wifi: mt76: fix memory leak in USB TX path
-Date: Wed, 18 Nov 2026 15:32:08 +0100
-Message-ID: <20261118150233.747548685@linuxfoundation.org>
+Subject: [PATCH 6.1 0939/2857] nvmet: free the bvec on file namespace range errors
+Date: Wed, 18 Nov 2026 15:32:53 +0100
+Message-ID: <20261118150235.412543143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -65,105 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eason Lai <eason.lai@mediatek.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 82856da2d3b6a30011f4db6ea5f34c13484e0ef8 ]
+[ Upstream commit 9d820d55b3cb4859c7cf42a74dc78f6154f97398 ]
 
-When errors occur in mt76u_tx_queue_skb(), the skb is not properly
-freed, leading to memory leaks. This happens when:
-- The queue is full
-- tx_prepare_skb() drops zero-length frames (such as WMM NULL frames)
-  to prevent hardware TX hangs
-- Buffer setup fails
+nvmet_file_execute_rw() allocates the bvec before
+nvmet_file_execute_io() checks whether the request fits in the backing
+file. If the request extends beyond the file, nvmet_file_execute_io()
+calls nvmet_req_complete() to return an error. This skips
+nvmet_file_io_done(), so the allocated memory is never freed. Repeated
+requests can exhaust memory.
 
-Fix by properly releasing the skb with ieee80211_tx_status_ext() when
-the queue is full or tx_prepare_skb() fails, and using
-mt76_tx_complete_skb() when mt76u_tx_setup_buffers() fails (since
-tx_prepare_skb() has already succeeded and may have allocated resources
-that need cleanup)
+Use nvmet_file_io_done() to free the bvec before returning the range
+error to the client.
 
-Fixes: b40b15e1521f ("mt76: add usb support to mt76 layer")
+Fixes: 50a909db36f2 ("nvmet: use IOCB_NOWAIT for file-ns buffered I/O")
 Cc: stable@vger.kernel.org
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Closes: https://github.com/morrownr/mt76/issues/83
-Signed-off-by: Eason Lai <eason.lai@mediatek.com>
-Tested-by: Hans Buchheim <hbuchheim@gmail.com>
-Reported-by: Sergei Melnichenko <sergei.melnichenko@gmail.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260914021920.32246-3-eason.lai@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/usb.c | 31 ++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ drivers/nvme/target/io-cmd-file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
-index 1e2133670291c..82d20e052d19a 100644
---- a/drivers/net/wireless/mediatek/mt76/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/usb.c
-@@ -856,23 +856,36 @@ mt76u_tx_queue_skb(struct mt76_dev *dev, struct mt76_queue *q,
- 		   enum mt76_txq_id qid, struct sk_buff *skb,
- 		   struct mt76_wcid *wcid, struct ieee80211_sta *sta)
- {
-+	struct ieee80211_tx_status status = {
-+		.sta = sta,
-+	};
- 	struct mt76_tx_info tx_info = {
- 		.skb = skb,
- 	};
- 	u16 idx = q->head;
- 	int err;
+diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
+index 2d068439b129c..6e14700164724 100644
+--- a/drivers/nvme/target/io-cmd-file.c
++++ b/drivers/nvme/target/io-cmd-file.c
+@@ -133,8 +133,8 @@ static bool nvmet_file_execute_io(struct nvmet_req *req, int ki_flags)
  
--	if (q->queued == q->ndesc)
--		return -ENOSPC;
-+	if (q->queued == q->ndesc) {
-+		err = -ENOSPC;
-+		goto err_free_skb;
-+	}
+ 	pos = le64_to_cpu(req->cmd->rw.slba) << req->ns->blksize_shift;
+ 	if (unlikely(pos + req->transfer_len > req->ns->size)) {
+-		nvmet_req_complete(req, errno_to_nvme_status(req, -ENOSPC));
+-		return true;
++		ret = -ENOSPC;
++		goto complete;
+ 	}
  
- 	skb->prev = skb->next = NULL;
- 	err = dev->drv->tx_prepare_skb(dev, NULL, qid, wcid, sta, &tx_info);
- 	if (err < 0)
--		return err;
-+		goto err_free_skb;
- 
- 	err = mt76u_tx_setup_buffers(dev, tx_info.skb, q->entry[idx].urb);
--	if (err < 0)
--		return err;
-+	if (err < 0) {
-+		/*
-+		 * mt76_tx_status_skb_get() walks the idr and dereferences
-+		 * a freed skb. This SKB is not counted in non-AQL counter
-+		 * due to error return, so using 0xffff as wcid to keep
-+		 * balanced.
-+		 */
-+		mt76_tx_complete_skb(dev, 0xffff, tx_info.skb);
-+		goto err_ret;
-+	}
- 
- 	mt76u_fill_bulk_urb(dev, USB_DIR_OUT, q2ep(q->hw_idx),
- 			    q->entry[idx].urb, mt76u_complete_tx,
-@@ -884,6 +897,14 @@ mt76u_tx_queue_skb(struct mt76_dev *dev, struct mt76_queue *q,
- 	q->queued++;
- 
- 	return idx;
-+
-+err_free_skb:
-+	status.skb = tx_info.skb;
-+	spin_lock_bh(&dev->rx_lock);
-+	ieee80211_tx_status_ext(dev->hw, &status);
-+	spin_unlock_bh(&dev->rx_lock);
-+err_ret:
-+	return err;
- }
- 
- static void mt76u_tx_kick(struct mt76_dev *dev, struct mt76_queue *q)
+ 	memset(&req->f.iocb, 0, sizeof(struct kiocb));
 -- 
 2.53.0
 
