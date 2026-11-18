@@ -1,61 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021690;
-	b=wh6iR0XkuJNOLHhUPdGrOFW/dwpEsQC42AQMj6+6aQkkhTdO0Z+dAYyKnOxHNk3XtIdA
-	 6X0P8ezt0a53TroR9cn1bBnSkdYW67QoxlMPGtbvToMNEjvekUC7/qKrY72KVNjarUKY7
-	 KaFADWhyRSA1728oWJNHP1aQSd74cX/BlmnYavuzyjXB1ikDyR74WvSEzFvpNK+XNKm+A
-	 p9QO7oioufRhJzRhTCh/4pT46wkbbmVNpVr0IAoi82vE+pnJ7xZtO7topgicQAa01e6Qh
-	 kvPW2bF6/9+WnfQLYdcUpOn88/dTBfZzYAomMXZI6/8J2u8uyi9Wd2VIhKHp3d0veUA==
+	t=1795021691;
+	b=ksWrngGe+NLN0WzjuEXbKSLAfA6dYpNd3IPuW+hCDS8aRVZzUsmRoZM6MjP9vcMgHmcB
+	 lOhxMVju/WY8rGW1WpTZQXCosCBUfER8gI2ni11jRpkX74sECd1eNneenp3WMOaA8GXd3
+	 kbmRJVIn7xCOkrMwj+SfibC5sf9SXYWrH+NrAWz/1O+uEYPfjvR/WNxxJaKdCX653o6kE
+	 Lx8FQcbc9AZ43JGLZzOB9BhgWeI/UO5cO8BNiKKmWqCVkO/kiir2dssPmDQv+qa5IcbSe
+	 HP2fhDN/lKRofSKIfw25qJCp69rrQBdxIRIpiSp0LtEzX4eQjDSCNxz++O98f9UTJEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021690;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=0e4+9rbSPkEXp8V8FSZQkmwceWJDyY1Lnqo7tBsNg9s=;
-	b=r/1YlBgxxoN9hj/xU9T82RFX4o5sAgwQREsYuVjyCrlk6dc0D9NXQTOMnjDv0aVCS/9V
-	 ZNgq38okglU/3TQ9BO/f+pWzsv/QpZxbFvLmQjsrT10qBOhucO5EoqkuwhOGS8831N8p5
-	 PJDjkogU4p9w8jupQacAMsmt/FP+uVSQTdPiYKrcKQyRs6g+u83GK+v1s6HP98FrBUWoB
-	 iRmHDL9pkVrbGQbnvnDY5ct2Pu682cZC2CnIsC60T4+D+dMFIriRaSokV+GbjL+KQ+sKu
-	 yRlhkObuNicTnYf/s9ZZ86bP8ZgP8hGKC7qZySJr6kAvQYPmoBNEC0ndSuhbzygpFqQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021691;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Last-TLS-Session-Version;
+	bh=aseNCq+n+5bjQaW0Vanm4zTvexhRPXNbk5ZXU5gkWPg=;
+	b=3uQMTbNIt+indj2sSLJDjBZuZbelMVMIw2fdJ5dbsKl4cUTi8WWUwNMsRqcdmBa5OBt+
+	 A9+gfzn94VQ+SkWTMn/autQebcV2l4GtV4proap66BJYkok336A0gIVo84FQ1M1qliFsw
+	 wGcuWxy57LaCE4HPSBG/MsgJ32otHTojF18uw7n8P5BKjVkwk4RgmcEI/TB97cbWamE4f
+	 RPY1PeTiWfilPaSXqTUgNoplBIa2y2DatVyhttF/p5T3OWDn6b6mF6GS7o0t0kQQcHFTG
+	 vh6OT7BOeSqqpoeI8beyd3eLH2gvOwvc8sHne/ni193D0e1DYlTd4nJbwy7AIrEJyxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xqmSvZvc;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=nabladev.com;
+	spf=pass smtp.mailfrom=nabladev.com;
+	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b="Xye/kTc9";
+	arc=none smtp.remote-ip=178.251.229.89
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A203F606A325;
-	Wed, 18 Nov 2026 17:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F49606A32F
+	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:08:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8F49606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xqmSvZvc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055E11F000C4;
-	Wed, 18 Nov 2026 17:08:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021690;
-	bh=0e4+9rbSPkEXp8V8FSZQkmwceWJDyY1Lnqo7tBsNg9s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xqmSvZvcbEHrnDLXsh1nRvc67SP+GcIUzHDBOp46sOrhsRGxGVpKCAkh7sYhh+xS4
-	 l2HzTxVfOA3QMjYqAi4O4qIYByr04rLYEoljjkqLN2hgqtjDbR2J5CTs5uWecwPEc9
-	 e+KgsgeouZQiiwq4zsDA8YMh8YeyyCs8qZRXF1dY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2396/2651] scripts/gdb: fix radix tree lookup pointer handling
-Date: Wed, 18 Nov 2026 16:00:36 +0100
-Message-ID: <20261118150411.630003451@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
-References: <20261118150247.972732815@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=Xye/kTc9
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C6D7310E048;
+	Wed, 18 Nov 2026 18:08:03 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1795021684;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=aseNCq+n+5bjQaW0Vanm4zTvexhRPXNbk5ZXU5gkWPg=;
+	b=Xye/kTc9O2lTy9sT0HMZ6Hacufu66cq+QObbWSfDMP3YKMYVLhNsEYW5sGb1oXGLv9fL4f
+	bFk0MqOOOGtcbQghKUpV3YLxH1rxhXAC0rKwCLg3aaSDA1Iq3bZR+pAtoDshMTOiU0VVOs
+	T3lZG0l4S2XNtuOtzTZhjq3Zn+b8SZzS2nj7m/QBA2Ru/WovNsWNWySHVSSLJlOBiEsPHB
+	IvrRdr4TMaFYVSCsnx0Wp8uInHVNzDO8EFyym0v4f8ZRoP/X1q8+2KbF44ZUk8gyvOlcTl
+	ZuozZIm/FPX/UURubRRH259GzGzw+zHJ0ur8Jxvo1vOF3cEaEtuI92aUBxtZow==
+Date: Wed, 18 Nov 2026 18:08:02 +0100
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 0000/2857] 6.1.193-rc1 review
+Message-ID: <av3bctJT9Ubq2j8q@duo.ucw.cz>
+References: <20261118150201.293410965@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,163 +67,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-7.3-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Ting-Han Hou <ue081723@gmail.com>
-
-[ Upstream commit 66d190b072b4e261aff35debb53872ace9b80628 ]
-
-Patch series "scripts/gdb: fix radix tree lookup and stack depot
-diagnostic", v2.
-
-Two scripts/gdb fixes.
-
-Patch 1 fixes $lx_radix_tree_lookup(), which dereferenced slot contents
-as if they were node pointers. v2 also handles the XArray sibling,
-retry and zero entries that Sashiko pointed out: they carry the
-internal tag but are not node pointers, and the v1 patch raised a GDB
-MemoryError on them. Large folios in the page cache make sibling
-entries common, so this was worth fixing rather than documenting.
-
-Patch 2 is unchanged from v1 apart from being resent with git
-send-email, since the earlier copy was word-wrapped by the mail
-client. Sorry about that.
-
-Both patches are tested against standalone GCC-built fixtures that use
-the kernel struct layouts (details below the --- line of each patch),
-not against a running kernel.
-
-This patch (of 2):
-
-lookup() casts each slot to a pointer to a node pointer and then
-dereferences it. Since the slot already contains an entry pointer,
-this reads the entry's contents as another pointer instead of
-returning the entry itself. Internal entries also keep their tag
-bits when descending, so multi-level trees are read from the wrong
-address and $lx_radix_tree_lookup() fails with a memory error.
-
-Sibling, retry and zero entries carry the same internal tag but are
-small integers rather than node pointers, so the tag alone must not
-decide whether to descend. A page cache populated with large folios
-has a sibling entry in every slot but the first of each folio.
-
-Walk the tree the way xas_load() does: descend only through entries
-that xa_is_node() would accept, follow sibling entries to the
-canonical slot of a multi-index entry, and treat retry and zero
-entries like empty slots since they hold no data. Remove the explicit
-shift counter, as traversal now follows the entry type.
-
-Link: https://lore.kernel.org/20261011023044.1722-1-ue081723@gmail.com
-Link: https://lore.kernel.org/20261011023044.1722-2-ue081723@gmail.com
-Fixes: b7235d6bb516 ("scripts/gdb: add a Radix Tree Parser")
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- scripts/gdb/linux/radixtree.py | 66 ++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 26 deletions(-)
-
-diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
-index bc2954e45c327..8ce9936dfa50f 100644
---- a/scripts/gdb/linux/radixtree.py
-+++ b/scripts/gdb/linux/radixtree.py
-@@ -27,6 +27,24 @@ def entry_to_node(node):
-     indirect_ptr = node.cast(long_type) & ~constants.LX_RADIX_TREE_INTERNAL_NODE
-     return indirect_ptr.cast(radix_tree_node_type.get_type().pointer())
- 
-+def is_node(entry):
-+    # Like xa_is_node(): internal entries below 4096 are sibling, retry
-+    # or zero entries rather than pointers to a struct xa_node.
-+    ulong_type = utils.get_ulong_type()
-+    return is_internal_node(entry) and entry.cast(ulong_type) > 4096
-+
-+def is_sibling(entry):
-+    # Like xa_is_sibling(): a multi-index entry occupies several slots,
-+    # and all but the first hold a sibling entry that encodes the offset
-+    # of the first one.
-+    ulong_type = utils.get_ulong_type()
-+    return is_internal_node(entry) and entry.cast(ulong_type) < \
-+        xa_mk_internal(constants.LX_RADIX_TREE_MAP_SIZE - 1)
-+
-+def sibling_offset(entry):
-+    ulong_type = utils.get_ulong_type()
-+    return int(entry.cast(ulong_type)) >> 2
-+
- def node_maxindex(node):
-     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
- 
-@@ -40,39 +58,35 @@ def resolve_root(root):
- 
- def lookup(root, index):
-     root = resolve_root(root)
--    node = root['xa_head']
--    if node == 0:
--        return None
-+    entry = root['xa_head']
- 
--    if not (is_internal_node(node)):
--        if (index > 0):
-+    if is_node(entry):
-+        node = entry_to_node(entry)
-+        if index > node_maxindex(node):
-             return None
--        return node
- 
--    node = entry_to_node(node)
--    maxindex = node_maxindex(node)
--
--    if (index > maxindex):
--        return None
--
--    shift = node['shift'] + constants.LX_RADIX_TREE_MAP_SHIFT
--
--    while True:
--        offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
--        slot = node['slots'][offset]
-+        # Walk down the tree like xas_load() does.
-+        while True:
-+            offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
-+            entry = node['slots'][offset]
- 
--        if slot == 0:
--            return None
-+            while is_sibling(entry):
-+                entry = node['slots'][sibling_offset(entry)]
-+                if node['shift'] and is_node(entry):
-+                    # xas_descend() turns this into a retry entry.
-+                    return None
- 
--        node = slot.cast(node.type.pointer()).dereference()
--        if node == 0:
--            return None
-+            if not is_node(entry) or node['shift'] == 0:
-+                break
-+            node = entry_to_node(entry)
-+    elif index > 0:
-+        return None
- 
--        shift -= constants.LX_RADIX_TREE_MAP_SHIFT
--        if (shift <= 0):
--            break
-+    # Empty slots and retry or zero entries hold no data.
-+    if entry == 0 or is_internal_node(entry):
-+        return None
- 
--    return node
-+    return entry
- 
- def descend(parent, index):
-     offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
--- 
-2.53.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="H/qvEaJ/bP24KPwm"
+Content-Disposition: inline
+In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
 
+--H/qvEaJ/bP24KPwm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+HI!
+
+> This is the start of the stable review cycle for the 6.1.193 release.
+> There are 2857 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+We get build failures here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/3084767168
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/18149480104
+
+mm/mremap.c: In function 'move_huge_pud':
+1175
+15:43:14
+mm/mremap.c:395:19: error: implicit declaration of function '__pud_trans_huge_lock'; did you mean 'pud_trans_huge_lock'? [-Werror=implicit-function-declaration]
+1176
+15:43:14
+  395 |         old_ptl = __pud_trans_huge_lock(old_pud, vma);
+1177
+15:43:14
+      |                   ^~~~~~~~~~~~~~~~~~~~~
+1178
+15:43:14
+      |                   pud_trans_huge_lock
+1179
+15:43:14
+mm/mremap.c:395:17: warning: assignment to 'spinlock_t *' {aka 'struct spinlock *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+1180
+15:43:14
+  395 |         old_ptl = __pud_trans_huge_lock(old_pud, vma);
+1181
+15:43:14
+      |                 ^
+1182
+15:43:15
+  CC      fs/ext4/migrate.o
+1183
+15:43:15
+cc1: some warnings being treated as errors
+
+Best regards,
+							Pavel
+
+--H/qvEaJ/bP24KPwm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCav3bcgAKCRAw5/Bqldv6
+8vjWAJ9X09ClZ7hI+kH6TC0PWf9aMBdgMgCgu6mIxCPLwtFrdxWFgv1+zfBzrPU=
+=uBS5
+-----END PGP SIGNATURE-----
+
+--H/qvEaJ/bP24KPwm--
