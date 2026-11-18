@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059733;
-	b=Z4v9HXPbV8diKnfULCUEbcZnibyCnCzFhy9kf1L96/ezGiai7QtZ3wK5/o2nL/FCdSb7
-	 VAuHASDh2ZoDxcYBR+lMa2bQG0gtO217xTOs3TH3bqQzCf1Mj+fuMkY8aRC4ID7/NPeK8
-	 6QPi7wcX4URvRsmK4LJljSk0wcoqS3LSaENvEpjWJCEmKuk8ktLA0+klLXVceIk4lI0zT
-	 cjN9BvlocLN4UKh+TRON+MRIoQNcRgjKqSN9/Kz9BDJl0YIMRlfrc6kTlTLqIpXCUat8W
-	 YMhkBUWxuELhl8qARuDRikX9I57nYF0ZyK4oNGX639ZsTnwCp9jedA1VcWm2mNv4oVQ==
+	t=1795059736;
+	b=kCMsKdbSzZATSPbtqIHhDnll1ti3DriGqJHwSz6hKX4dMdY0Gru4+iPjoIUXcpNeX6Av
+	 RJkAogWwEvUx9giui6YiLu9Rj6vELVg1okI1ps3grL8Ny5LHm1JvvhIpE+bPKPAGZCdHx
+	 bSwjwqipQ2JQEd5YP5tOyxqTNNT6uQyZ9o4ZMsndDocbRAh3iu35qcmzMfCkJfSdh33pc
+	 Wf7CRPWzFmoNtUCKkdrMatJnZ+ePpDlWTka7qEkFlTsX9bH0QI8CTVImJuFsqjGRtk2Gw
+	 MtN5bvSjWxcY4s6Arf35BrLeCA81V7Eq6UW1QUrUkr/Dc4ZBvWaoXT2MO1TDzl2767g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059733;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059736;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IectXQXbLZQj63eLbm9ZUSDYtjfJ4S0cB8D2EBxXr4w=;
-	b=WFbDvnWbSZ3PjUjtZkfssD7lN6SSSsLTNOtU3HwYlmZGWEw/nYlVt1cU47HmTTpnFYEW
-	 +ApUEkMUOCPmx2X/mPQxXajT5sAFtxBXSkT/SMwqcEVRQz0PKRps7HO4bwVFjaJz/AH8L
-	 mRuxjb7hblSh9guAM4/Kl9be95oN1vasbvPJ8OwEg7aVW07EmQ4uhbhqTyO9/PshwpCrc
-	 QSLrGls8yckMPqCW4PN/pvjVFrWYe+FbhvO+AU/fA8SFHGdjvoOyzzzaQerdz3kFUH5if
-	 WtMUgCOv459teI+0Y899krHhraF6qNE2B9G3AJmRjtzza+mwURHZfKRhHKJFbe8Fh3Q==
+	bh=Mc8WojzjmPTvAXRz1YI7Q3/Ai5FujEL2DQmP8cQrM9k=;
+	b=y5IXx1736TFzt72W4fls8pAeYuzRjzlN041kzHZUrEX8Ae8s5TKx0vsh63TFKO0NQgSR
+	 z33PolL6yMhhYitT4MrH12h/WZgMxJTqmcz2dqfa8SYs0MLrMDxNFAGMhXAMF7NMvR09f
+	 Z9q8oESMQGw156zWk7ywifGu0cjOcHIFebwujLG7qGSg+UfnIOXp/jMPYrEkHlKCqdFRP
+	 bQDVnpkUWLZ9CK0bwcrAnyzcqYyhUjIluZHAeWRUCq4qV6TYFep6+Ue/Nh6zmmDN8wylb
+	 +/ClQpXtakKShkAA9L5dVD4IGO51c5ZbohcL2ZA/kFLOJV0Zy/HtYqPKEW5hOng24lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2q2wem3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbHeYDfP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E84D606A320;
-	Thu, 19 Nov 2026 03:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2301606A330;
+	Thu, 19 Nov 2026 03:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2q2wem3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8060E1F000C4;
-	Thu, 19 Nov 2026 03:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbHeYDfP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4348B1F000C4;
+	Thu, 19 Nov 2026 03:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059733;
-	bh=IectXQXbLZQj63eLbm9ZUSDYtjfJ4S0cB8D2EBxXr4w=;
+	s=korg; t=1795059735;
+	bh=Mc8WojzjmPTvAXRz1YI7Q3/Ai5FujEL2DQmP8cQrM9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N2q2wem30MwUZ9IJTsoOnYIQb82opeOygPVGMSiLaD/McCud0K+fbwem3L0JogzD8
-	 Im8PHR8knTQ0wXf3vIfUWuVNqC5Xz8cPKyFY887Byk8DxBAq849zpjWeGAKbOjMfkc
-	 lZhyS+dPoFFPChX+dMmkMfUjwNlauPuz2c87pSdU=
+	b=nbHeYDfPPiqo6futLCQyEo0BSQ/2KxyNCgeHNaWY9ZZR+NyPS6Hk0qZjwKWcesRsS
+	 kpB41hYmFj+wudq6PGlmRwFbYdf2NhLDfZZqrwZpP2mdoqbccnscKJIQrSbGBLi3qY
+	 W0oigbPLfPH3KDTQovB5s9iDXIr9FJwtVLN+Px8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolaos Karaolidis <nick@karaolidis.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0948/1848] fs: dont lose inodes that another LRU walker is isolating
-Date: Wed, 18 Nov 2026 15:49:46 +0100
-Message-ID: <20261118145956.726673646@linuxfoundation.org>
+Subject: [PATCH 5.10 0931/1848] ALSA: emux: Stop voices before freeing zones in all cases
+Date: Wed, 18 Nov 2026 15:49:29 +0100
+Message-ID: <20261118145955.736927414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,69 +67,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolaos Karaolidis <nick@karaolidis.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 8dc4116041e2b377e5e1b62ba98b37636f9f3968 ]
+[ Upstream commit 8a5d87c2ba30e8de31cfbe888fd4d95f43c63db9 ]
 
-When inode_lru_isolate() finds an unused inode that still has page
-cache, it sets I_LRU_ISOLATING, drops i_lock and the list_lru lock,
-invalidates the page cache, clears the flag again and returns
-LRU_RETRY so that the restarted walk can free the inode.
+The emux voice caches the soundfont zone pointer in vp->zone, which
+is referred to later, e.g. in snd_emux_send_effect().  For avoiding
+dangling pointers, the soundfont code calls the sample_reset callback
+to stop all voices before freeing zones.  However, in a few cases
+(e.g. emu10k1's missing sample_reset or the call path via
+remove_info()), the sample reset isn't called properly, leaving the
+playing voices.
 
-Another walker of the same list can reach the inode in that window.
-It sees a non-zero i_state and takes the inode off the LRU, as it
-would an inode that is in use. Page cache deletion requeues the inode
-once the mapping is shrinkable, so this is harmless if it happens
-before the last deletion. If it happens after, nothing puts the inode
-back: it stays in memory, unused, clean and without page cache, out
-of reach of the shrinker and of drop_caches, until it is looked up
-again or the filesystem is unmounted.
+Fix it by always registering the sample_reset callback, falling back
+to snd_emux_terminate_all() when the driver has no own ops, and by
+calling sample_reset in remove_info() before freeing the zones.
 
-Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode
-lru traversing context") the pin was an i_count reference, and the
-final iput() put the inode back on the LRU.
-
-Skip inodes that are being isolated and leave them to the walker that
-pinned them, which restarts its walk once it has unpinned them.
-
-The window is reached by any unused inode with page cache on
-CONFIG_HIGHMEM kernels, and otherwise by inodes whose page cache is a
-single shadow entry at index 0. On an i386 HIGHMEM guest, eight
-concurrent "echo 2 > /proc/sys/vm/drop_caches" over 2000 freshly read
-one-page ext4 files leave roughly 400 of the inodes off the LRU per
-round; on x86_64, with the files' pages first evicted through
-memory.reclaim, 3 to 4 per round. With this patch, none in either case.
-
-Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
-Link: https://patch.msgid.link/20261009142431.713875-1-nick@karaolidis.com
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Replaced inode_state_read(inode) with direct inode->i_state access under the existing i_lock. ]
+Link: https://patch.msgid.link/20261020101624.205638-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/synth/emux/emux.c      | 10 +++++++---
+ sound/synth/emux/soundfont.c |  9 +++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 9f246531ae9cb..59ad098db6c9c 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -787,6 +787,12 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
- 	if (!spin_trylock(&inode->i_lock))
- 		return LRU_SKIP;
+diff --git a/sound/synth/emux/emux.c b/sound/synth/emux/emux.c
+index 8e080a4bcd16f..cfd472effe88d 100644
+--- a/sound/synth/emux/emux.c
++++ b/sound/synth/emux/emux.c
+@@ -71,7 +71,12 @@ static int sf_sample_free(void *private_data, struct snd_sf_sample *sp,
+ static void sf_sample_reset(void *private_data)
+ {
+ 	struct snd_emux *emu = private_data;
+-	emu->ops.sample_reset(emu);
++
++	/* stop all voices that might refer to zones and samples to be freed */
++	if (emu->ops.sample_reset)
++		emu->ops.sample_reset(emu);
++	else
++		snd_emux_terminate_all(emu);
+ }
  
-+	/* Another walker is dropping its page cache, leave it to that one */
-+	if (inode->i_state & I_LRU_ISOLATING) {
-+		spin_unlock(&inode->i_lock);
-+		return LRU_SKIP;
+ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, char *name)
+@@ -96,8 +101,7 @@ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, ch
+ 	sf_cb.private_data = emu;
+ 	sf_cb.sample_new = sf_sample_new;
+ 	sf_cb.sample_free = sf_sample_free;
+-	if (emu->ops.sample_reset)
+-		sf_cb.sample_reset = sf_sample_reset;
++	sf_cb.sample_reset = sf_sample_reset;
+ 	emu->sflist = snd_sf_new(&sf_cb, emu->memhdr);
+ 	if (emu->sflist == NULL)
+ 		return -ENOMEM;
+diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
+index 1266604cf33be..675f274a8485a 100644
+--- a/sound/synth/emux/soundfont.c
++++ b/sound/synth/emux/soundfont.c
+@@ -480,6 +480,15 @@ remove_info(struct snd_sf_list *sflist, struct snd_soundfont *sf,
+ 	struct snd_sf_zone *prev, *next, *p;
+ 	int removed = 0;
+ 
++	/* stop voices before freeing the zones they might refer to */
++	for (p = sf->zones; p; p = p->next) {
++		if (!p->mapped && p->bank == bank && p->instr == instr) {
++			if (sflist->callback.sample_reset)
++				sflist->callback.sample_reset(sflist->callback.private_data);
++			break;
++		}
 +	}
 +
- 	/*
- 	 * Referenced or dirty inodes are still in use. Give them another pass
- 	 * through the LRU as we canot reclaim them now.
+ 	prev = NULL;
+ 	for (p = sf->zones; p; p = next) {
+ 		next = p->next;
 -- 
 2.53.0
 
