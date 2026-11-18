@@ -1,52 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053977;
-	b=RIkhas1D/EyOMsDJ39VCCXR3Hz2qqMnwfETjoMxuWR0M7Jcjx33jjrqWKDldOOt8qAtM
-	 eeIaB6hR30+7GFuRNjIIus3uHrc8RVsoFYXR1NkbLVg/mqmwjgdVegJ02zxpvQ09q4e2e
-	 CYGYKocMf9eKIJLdLKU+1tKPuyhCbOa96G8QjYAeB4Js3UWL6DFlfTgRTZA9I6KZmjz77
-	 BXkZ0zfqOzj8nLdt0PCS3ywJd2q9jkUA+kYpS/KxkY06yn9kOCycN/A3WBgCn2NUrwQ5m
-	 449FnXULifmOLr6ydNT7z3tz+u/g0O9yYoPyFAW7xEwSNyenRmfldUA083Xl74wR0nA==
+	t=1795053979;
+	b=ghfi2H75abPMT+8cqlHhMpOom0agUlSz1XnI9Bp22VbG+yrIXQkvaG24DN0udVgftwQ/
+	 E5Bh41rxotTGvTRhjzjNExbZI58bRxhNEtTJOWNKp35D2w83VAE69UKCUbIWaIZAGQsyE
+	 fp81NT+0RInNlYBPbR8X3bitkju7DWbN9C8tqqhAgPf9xNDa/J3KL3P6xHBiyoJNYOsSW
+	 B4FOOL9YR8Cpo+r6w/i2AwqZsp/gCSW/H8b6WL2W8wViyfNEdT34/6cAus4FJ9d8gLT1l
+	 Nf8gE+qLMu+IHDiF53td1UgxJDeSPgNr9L+hYiRAjKWJaam12Wjp+Sl5rIs1QZYXZ1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fokilYVG3DnWwgVBMUPS454LI/l2eh9ALo9A2E8K8uc=;
-	b=UWXqWEhbM+pWIhoUyDM6SlFK357Hb6ksVcyYECqP6XxTfikZXSXgUOENpDUr4wIZCmQq
-	 onoUBr9kbKRGkRm8d7MpgOyEvkIvXMRyIwjsgiavMbbXw8NvGEyaiRF28HEycSCArFXg+
-	 aNbAzPxAXtbmdPkW5ukwX13SGV/4AzVBIr9d6dSGR7WM5DUzd6b726ymja5WpmIN13dFW
-	 aKaz9l+p3S15GcSp2oheleYhRVWl89BegjrgnthAdkKwWZNzlEdqEdwlyFFlRtldOhfkV
-	 smMpUedo4GJYYCRYjoH9PQVVPhkQj/r+VNpgQhpNEdN/02SGRzWxLx9FVijffi0TKQw==
+	bh=5qtK7BSE85BFcLyYnn5uOj/vaUmHHQUDX+KHBeGQ8jo=;
+	b=5kP5DtNXgvuyqvF+L4lVScfE0Q+nQIPAQ5CWT3pWiN2WEtXi67Dg0V9paHPQLfzBfGWb
+	 NY9zmq13f8ZNpsv/SlnvxxEaqClaciG0XagXQzyHBp5jf0QfEZ4gMIKVvpypRDIrpChku
+	 giAMDbg5pxV02Od9mVoI/3m8uzIwal1HtUl6HuGa84yiR4xzOYCZoHCtwwsAuHFVGnw6L
+	 uq5h0GQCN2DHxKaT9cRoPGVv536CHfrIDDoGLmy4dndp9XIZXTVhZ3aqj5a0RLyJm2TC9
+	 fpgWBK5qkNkn/XNkA90bWZtXfDi1XrFfTEyAKoxYWv6Nc2KhA25GIdhGOiAUHJcTnww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VSV/8Hs3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vH40JKlv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B20606A325;
-	Thu, 19 Nov 2026 02:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DDC606A325;
+	Thu, 19 Nov 2026 02:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSV/8Hs3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE181F000C4;
-	Thu, 19 Nov 2026 02:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vH40JKlv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128371F000C4;
+	Thu, 19 Nov 2026 02:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053976;
-	bh=fokilYVG3DnWwgVBMUPS454LI/l2eh9ALo9A2E8K8uc=;
+	s=korg; t=1795053979;
+	bh=5qtK7BSE85BFcLyYnn5uOj/vaUmHHQUDX+KHBeGQ8jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSV/8Hs3ndGyE77/cnuzFu608W+evWS5iGhOXp5yHWvODJoqipXq4bMedgQThcvpx
-	 3peR0JvMl1toveoqMB7VAgO6ItndpcO+89EatMeP1B499qxbHDlN8fMmsVxNhNK1H8
-	 2GC33FdotXl7LdxoVwOKulk92prq9k/Wy+/HOqdU=
+	b=vH40JKlv3k5JPAh0tGFFtuVpMVuCciaQZsrYNNv0zWY5lCE+6eEJ0tx9fncjSFSNk
+	 HZKXEGBpo358rjwzQ73YtAM4k7fb+S5w7ip9Kkqtxu0ZYVOf842PtMPANnu8kmPCpe
+	 EyrGa5gJHU21X1U6hreSbruHGrHYxRpkDFuWddiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Vega <vega@nebusec.ai>,
+	David Hildenbrand <david@kernel.org>,
+	Grazvydas Ignotas <notasas@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1070/2214] virtiofs: validate fixed-output response length
-Date: Wed, 18 Nov 2026 15:45:46 +0100
-Message-ID: <20261118150055.080481536@linuxfoundation.org>
+Subject: [PATCH 5.15 1071/2214] mm/memory: constrain generic_access_phys() to page boundary
+Date: Wed, 18 Nov 2026 15:45:47 +0100
+Message-ID: <20261118150055.119170747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,100 +78,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-[ Upstream commit 5364d081125a34e90851fbb46ecc93f79339ce78 ]
+[ Upstream commit ae0298a5fbeff32951c0d31398ccec97ec6aa0ea ]
 
-A short successful virtiofs response can leave the fixed-output portion of
-the request argument buffer unwritten.  The completion path nevertheless
-copies the full declared output to the request destination, allowing stale
-allocator contents to reach callers such as fuse_statfs().
+This patch addresses an issue in generic_access_phys() where accessing
+memory across page boundaries in PFNMAP VMAs assumes physical pages are
+contiguous, which can lead to accessing unintended physical memory or
+exceeding VMA boundaries.
 
-Require successful fixed-output responses to contain their complete
-declared output.  Continue to permit a shorter final argument only for
-out_argvar requests.  Reject positive and internal restart error values
-and require valid error replies to be header-only.  The error already
-stored in the FUSE output header is returned by fuse_request_end(), so do
-not copy output arguments from an error reply.
+generic_access_phys() improperly validates the memory access range: it
+only validates the start address using follow_pfnmap_start() and passes
+PAGE_ALIGN(len + offset) to ioremap_prot().
 
-This was found by source review with AI assistance.  A header-only
-successful FUSE_STATFS reply returned stale fields in nine of nine calls
-across three boots.  The fixed kernel rejected the short response and
-preserved complete replies, valid negative-error replies, and
-variable-output replies.
+This poses two problems:
+1. In PFNMAP VMAs, consecutive virtual pages are not guaranteed to be
+   physically contiguous, and individual PTEs may have different access
+   permissions or writability.
+2. The mapping may cross VMA boundaries if len extends beyond vma->vm_end.
 
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: stable@vger.kernel.org
+Constrain the access in generic_access_phys() to at most the current page
+boundary (PAGE_SIZE - offset) and map only a single PAGE_SIZE via
+ioremap_prot().  Since the caller __access_remote_vm() already loops over
+the requested length and handles partial transfers, it will naturally
+iterate over the remaining pages.
+
+Also add a missing (resource_size_t) cast during PFN re-validation to
+avoid truncation on 32-bit PAE systems.
+
+Link: https://lore.kernel.org/e06e28a46c2a176238f03b5740df0913e57c2861.1788842306.git.rakukuip@gmail.com
+Fixes: 9cb12d7b4cca ("mm/memory.c: actually remap enough memory")
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: David Hildenbrand <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 Assisted-by: LLM
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Cc: Grazvydas Ignotas <notasas@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted to the existing follow_pte() implementation instead of follow_pfnmap_start() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ mm/memory.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index c375a5f001056..14c1ae5075938 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -522,6 +522,10 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	unsigned int num_out;
- 	unsigned int i;
+diff --git a/mm/memory.c b/mm/memory.c
+index 3c5abd02aca64..4ca2f4c076a9a 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -5159,6 +5159,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	if (!(vma->vm_flags & (VM_IO | VM_PFNMAP)))
+ 		return -EINVAL;
  
-+	/* fuse_request_end() returns this error; there are no args to copy. */
-+	if (req->out.h.error)
-+		goto out;
++	/*
++	 * Limit access to one page at a time, as that's what follow_pte()
++	 * guarantees; expect the caller to retry to read larger ranges.
++	 */
++	len = min_t(int, len, PAGE_SIZE - offset);
 +
- 	remaining = req->out.h.len - sizeof(req->out.h);
- 	num_in = args->in_numargs - args->in_pages;
- 	num_out = args->out_numargs - args->out_pages;
-@@ -547,6 +551,7 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	if (args->out_argvar)
- 		args->out_args[args->out_numargs - 1].size = remaining;
+ retry:
+ 	if (follow_pte(vma->vm_mm, addr, &ptep, &ptl))
+ 		return -EINVAL;
+@@ -5184,7 +5190,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	if ((write & FOLL_WRITE) && !pte_write(pte))
+ 		return -EINVAL;
  
-+out:
- 	kfree(req->argbuf);
- 	req->argbuf = NULL;
- }
-@@ -554,7 +559,9 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- /* Verify that the server properly follows the FUSE protocol */
- static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- {
-+	struct fuse_args *args = req->args;
- 	struct fuse_out_header *oh = &req->out.h;
-+	unsigned int expected;
- 
- 	if (len < sizeof(*oh)) {
- 		pr_warn("virtio-fs: response too short (%u)\n", len);
-@@ -569,6 +576,29 @@ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- 			oh->unique, req->in.h.unique);
- 		return false;
- 	}
-+	if (oh->error <= -ERESTARTSYS || oh->error > 0) {
-+		pr_warn("virtio-fs: invalid error value (%d)\n", oh->error);
-+		return false;
-+	}
-+
-+	if (oh->error) {
-+		if (len != sizeof(*oh)) {
-+			pr_warn("virtio-fs: error response too long (%u)\n", len);
-+			return false;
-+		}
-+		return true;
-+	}
-+
-+	expected = sizeof(*oh) +
-+		   fuse_len_args(args->out_numargs, args->out_args);
-+	if (len > expected ||
-+	    (len < expected &&
-+	     (!args->out_argvar ||
-+	      expected - len > args->out_args[args->out_numargs - 1].size))) {
-+		pr_warn("virtio-fs: invalid response length (%u, expected %u)\n",
-+			len, expected);
-+		return false;
-+	}
- 	return true;
- }
+-	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
++	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
+ 	if (!maddr)
+ 		return -ENOMEM;
  
 -- 
 2.53.0
