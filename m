@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048437;
-	b=n/bxo0LpbwM9iEdsPQd/0wQTjznexVGWCFe3d6x7kS73NmFfE4hsy89UGr6uNizLI9gT
-	 cFZ+bZCjVGcx+ibFdrFJjzbTj5cLr447znZYdKzBMjumY8hoxkiu+V/EKhNezrMWLiRdM
-	 BqMFbq5h84WIzoEwkfHtvZJDNDWwCT282AggJ2LaarD7W9pqTJjirrq70BDmytEMNpW9f
-	 HrMf7D+Ubnyf4t1psLg1Wsy+1unjIMDnjkd7hDQ79f4KUSF0rqqyn7eKFDDMt/ObeJpIS
-	 9kD5uAb/AcPSgJqavQ2ghasM702xKYoiwkMnSuD5/b/BCtoP/abA++bLQS1dqFFmx+w==
+	t=1795048440;
+	b=PlZHpf0ENwmV/G6rKDJPb00sIQq699jZaNX8twDR0Ss5vJ/PVGe9p0gBbLtYeevf1R3T
+	 d/P/s7eYsQZj/3cjKZ8zIt3gaWLQrl5If99jzETGrYuydEBYWD1PPCNM1jiH0zN2y2Osh
+	 zQEt58fVmyD8WUMRJ7ZvDoFqwKwocfjj5S2fEh6ofdWHZH/gfLHIqGlpvDFag5HkkSsSU
+	 boebeNhYzgZTCSD6pKq38JtPwfhlk1/DVj6o9UAsYmUOffXLYt9myT2upl1c/FeRfAzYC
+	 i6za09kAKyOQEDy0sQn5wKTL5psogaKvavg3bC3EQjR1YMtzZ1or+7WF8CYP69N0WRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Djy7uZxnH9t9MMTuV/WI880tLcOqaHhBfWxUR5r0wys=;
-	b=3T8eGKHOB53sE1GNRwVdNwZ0JjI3zhcOS5y8JTnFd85FlnF7Iz/C6tgfesxQy/zZRPX/
-	 p98zjdzxdcWarR3Uw9l28UWB+UryiNkwvKHPt5/P8PCNW40jgJptAkdz+t+O7XaSANaiQ
-	 Ud/T2WTlgDNknPzqy0FRcM02RQiY2eoiE05XlNAxCwaqBj3USn6KirR93oLIHBs9njfiS
-	 u0bkj69PWW+gJ4tb1FK6xj9N5BIfDR3xReiUYgQ3Kj5SdF9l0sU28tS2N5IFDzek/NgBd
-	 MjMkscLSvYGaBewC5Tj2VR9jk6c/2IlH2Z1jBo97zbEn8+40C+egGk0CkHFecxF8mEA==
+	bh=ezYvf3a4Id0tFy1nNA+2UQUtwTEbO0CPEp/EMlfc2kY=;
+	b=T3PT4kXHaVuCCLKKcba7v1CdBCnB/MP6tci1J00YcaAnsRoVd/goYF64PV48EggsGWuD
+	 6/M5xMNpxzOBhJ5rx+EixiUlzJPbyo10lRr6UR50k4QLenZUtqdfdi+Wjyb0DjzkIZxus
+	 aj8Gm5hcRWXWjhgTjtJYaw9gZOvSESc+D9t3naxLonVzBEGNoY3XGN5ybA8bhPy8Pidar
+	 CVANAxSKrv12GpgpcTCqiMhMjo1fSaKXEsf2H/vBcvpTt9EQ26+hhiJs0lfN1vgY1qhXm
+	 w0TEGXHzwIrfiJync9B/GURz2HSQ0ppvxKy5vjih4RUXY/cX8E5fVlEFSDuohgJFksg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcJ2BTEs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQUDVOAg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A49560A260F;
-	Thu, 19 Nov 2026 00:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205E060A2621;
+	Thu, 19 Nov 2026 00:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcJ2BTEs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09C41F000C6;
-	Thu, 19 Nov 2026 00:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQUDVOAg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B431F000C9;
+	Thu, 19 Nov 2026 00:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048437;
-	bh=Djy7uZxnH9t9MMTuV/WI880tLcOqaHhBfWxUR5r0wys=;
+	s=korg; t=1795048440;
+	bh=ezYvf3a4Id0tFy1nNA+2UQUtwTEbO0CPEp/EMlfc2kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HcJ2BTEsTd9sXkOxECMjI2T3bKZ9pojbC56iAJmDN0AQLMl2yKw+6ImHwFtzTLll3
-	 Bsv6ICHlGuQ1EF5v3HClO9OGsbqO4Hs67uT+Jm25cjwZDcfOtg25WAPCsl1zszDy3z
-	 YO1xz9PV66kTfBvv/g+Drncq+qe29CyV9BMPoJYg=
+	b=DQUDVOAgi5MhtsysGVcHtcZmOPzVMov0jKM6+/yK93Ky7rgvGb5Vic8wSYKJHOGXs
+	 zkiE47LIsZNO6fYvbUNyxi7vwhqKEHf9zpDEgMMpqquw+8P7uwWV881XushgmpsHTA
+	 KhimpY5v0wzB0VXtcSlsMq64On55+bfAuUXvdrrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1943/2857] media: i2c: ar0521: remove duplicate media entity cleanup
-Date: Wed, 18 Nov 2026 15:49:37 +0100
-Message-ID: <20261118150311.173671818@linuxfoundation.org>
+Subject: [PATCH 6.1 1988/2857] pstore: reject persistent RAM zones too small for the buffer header
+Date: Wed, 18 Nov 2026 15:50:22 +0100
+Message-ID: <20261118150312.955093484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 069a0343581bfcaee44bc598e2b95be2e2789807 ]
+[ Upstream commit 1b30df8662ac85a6759be4332f3bec7e3cb28efc ]
 
-The error path taken when ar0521_power_on() fails calls
-media_entity_cleanup() at the disable label and then falls through to
-the entity_cleanup label, where media_entity_cleanup() is called again.
+persistent_ram_buffer_map() computes
 
-There is no need to clean up the media entity twice. Remove the first
-call and let all error paths converge on the common entity_cleanup
-label.
+	prz->buffer_size = size - sizeof(struct persistent_ram_buffer);
 
-This issue was found by manual code inspection.
+without checking that size is large enough to hold the header.  A
+ramoops zone configured with a tiny size (e.g. ramoops.pmsg_size=1)
+underflows buffer_size to a huge value, which defeats every bounds
+check in persistent_ram_write() and persistent_ram_write_user(); a
+write to /dev/pmsg0 then copies user data far past the end of the zone
+and corrupts kernel memory.
 
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reject zones that are not larger than the buffer header.
+
+Fixes: 404a6043385de ("staging: android: persistent_ram: handle reserving and mapping memory")
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260921202317.70595-3-parri.andrea@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ar0521.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/pstore/ram_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/i2c/ar0521.c b/drivers/media/i2c/ar0521.c
-index 1ede57958410c..e10b15ae397fd 100644
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -1011,7 +1011,6 @@ static int ar0521_probe(struct i2c_client *client)
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index ed86e173f8cfc..0c455c2725abb 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -507,6 +507,12 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
+ 	prz->paddr = start;
+ 	prz->size = size;
  
- disable:
- 	v4l2_async_unregister_subdev(&sensor->sd);
--	media_entity_cleanup(&sensor->sd.entity);
- free_ctrls:
- 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
- entity_cleanup:
++	if (size <= sizeof(struct persistent_ram_buffer)) {
++		pr_err("%s: persistent ram zone too small (%#llx bytes)\n",
++		       prz->label, (unsigned long long)size);
++		return -EINVAL;
++	}
++
+ 	if (pfn_valid(start >> PAGE_SHIFT))
+ 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
+ 	else
 -- 
 2.53.0
 
