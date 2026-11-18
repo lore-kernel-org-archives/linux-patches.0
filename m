@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033216;
-	b=Fq03orRXG5iTKrshaR6Cc3uYRMx0qIrpbfPv63rTL590e2lic9k4QZY0Dz/pt/JBUo/y
-	 ZcfYsbXQ8I7S5VTjhcwYEo4KYOTk4WhJS5cqgvF5E78r8hdlL/ILNSz/HOjMARKQcyPkP
-	 LpjlPFnJsjA7T5UbL8Yp8fY+KVpjsniNkeOavfHDmBHaxD5VMKvgPU6c5zPBtECX9o9HT
-	 zXw7bPY0EUMegXGVFpykrAcAF7fh37q7IK9WxbD5N1ZsyQnHNGphsvEitBNVn1MtJcMaD
-	 9tSv7JhBDQ7e7yNGvdP1LylVANjEQv3rDl1QoWE+gLp2pRhXk1b2tQJmQpxlnQ261ng==
+	t=1795033219;
+	b=yg2rqPepW3C8IwasCUdVP6lLdXiuFpQ12ZPvlaOyL4a/j3d9uHHXhSjhwjpNV0DtREe4
+	 OPqfn7SiGgMEw0QAIrONUkviuHBB1zQ2rSxV3f6p4TmBFE3mDX6N1o1sKLK5jU8srBhxb
+	 7DOR5a2Q+GW3bkIkW8lnO3BLL0VheS0MPHwF4EZh+zBX0Tpm/AD4mC7XMiVa1jh28G9j4
+	 aklhkTVDkPnKQkBvuWfCeDV0AKMnFOo8bqlWLn4wY8DWBtZPGB7Cy94dGk+JKZpjelBRc
+	 OKhfwdFxf3yZDm5f4AK4KCM2IbQ7AZwuE9jQzhxZQJrKgoxagfefrZGIPoJf8J+I4qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ArgUuAev1qdMmVippyfJrZCGZrqumUaOyd3jz6rLDcM=;
-	b=inFsk2YpfBkb6H6Boro01liWXNlGa8QX3r32UlC3TqhnwFMBOvKdY9O63mIRPJd1gEaS
-	 NaTVKIY1f9S2HzstQS518MzsvaUNIn+h5bKSerkSJHPl1/XMKSfXbdsAnkQFTb2od7K1j
-	 /GO0DiIHxwsegOwrak0k/ZF+MlED8mVuZmrslKXm6pIc4AvVToyo5d6c7f3jPR7JRwOC8
-	 +C9t54OfdgY8MKgx19fzSS+bNXdmXrfPwlsJysuaeBlRJaYWWyPrhJztCzuqAGyZBoSSV
-	 p+HtJPpJpVnboSDjWWr7VZsqlSJOK9cENCIKEtNZdHxCZOOsXquRcKw0SHK7NZAUcIg==
+	bh=VMIh7wEG6D0f4Q/UpZj9xNBpla6A0/xIqtq7Axwzovs=;
+	b=39UiToKeHfoTnbu2SKOo8/wU9FzAo8N1d8TXaGeS6GaOPmX5J3AhgI4Ht4kQNscotJ3x
+	 IMGH8vgQdul+2Y/CyZg/m2gE1t4kKQP/AKSQODhvLLGF126engyHOUFMTl7ww0VAk6Gyc
+	 JDIvJWWtzxQu/jJM0SZi7oQFuNXVwBzzwjliI9fnQBFwFquPqFIBOdPytRDRaja+wgldy
+	 QafFJjIR5HtBfhFEFgo8+giuKlwZA4AMYACGPmIcVDfrlLHnN6puP/U8E//tWg7YvVJUb
+	 8UR7ukyubCXvs6C+lsNMJlc3QtACYqV2OF7l2V1xIUreRbpVEm8x+uvBJEnU6EJq++Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxXwMcuc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4CKO4Vx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA0A606A33B;
-	Wed, 18 Nov 2026 20:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF7660A2600;
+	Wed, 18 Nov 2026 20:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxXwMcuc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0B71F000C4;
-	Wed, 18 Nov 2026 20:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4CKO4Vx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456E31F000C4;
+	Wed, 18 Nov 2026 20:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033215;
-	bh=ArgUuAev1qdMmVippyfJrZCGZrqumUaOyd3jz6rLDcM=;
+	s=korg; t=1795033218;
+	bh=VMIh7wEG6D0f4Q/UpZj9xNBpla6A0/xIqtq7Axwzovs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zxXwMcucQP/rQAokQbzI9geQng2i8hqmkvoX/66AS22syji39HhYQygVRwjmDMvX2
-	 i/f21EBe+nKUEyNqoMBGER60hssZYBdUoAL32HyzVxWAb9HfpbypQqj+xR7Gs/Nk9c
-	 4AfXHhKqRNlMqXTqCfvBIUGFNNHcHAPl3+bno+yY=
+	b=G4CKO4VxuwCVa8TAMCYV8OkMwWd1Jb0DTB6Bj2nCv89td/7PPdKXIg+6U5TJqhNYp
+	 mS022VJwsOx18xMtj3T0oIv7dPGoB4n+247s+wfUBYDlfrf8tDODZ7web+P1aidn5W
+	 qMKgP55Q1E07u1gWTBd/qoC9njwLcMPMLnaW9PxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunhai Dai <daikunhai@didiglobal.com>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jamie Nguyen <jamien@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1687/1756] blk-iocost: publish hweights as one atomic value
-Date: Wed, 18 Nov 2026 16:03:34 +0100
-Message-ID: <20261118150116.841737343@linuxfoundation.org>
+Subject: [PATCH 6.12 1688/1756] selftests: net: txtimestamp: fix out-of-bounds read in raw UDP checksum
+Date: Wed, 18 Nov 2026 16:03:35 +0100
+Message-ID: <20261118150116.879808511@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,291 +70,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunhai Dai <daikunhai@didiglobal.com>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit 0150554a3f38e1850d5964102eb89a720c5fe789 ]
+[ Upstream commit 8daacee78b3d2798fcf92398b6dff364eab64466 ]
 
-current_hweight() publishes the cache generation and both weights with
-separate stores.  Refreshers running on different CPUs can interleave
-their stores and leave a new generation paired with weights from an older
-calculation.  The compiler can also reorder the generation store before
-the weight stores, so a reader that sees the new generation can accept
-stale weights.
+With -r (SOCK_RAW, IPPROTO_UDP) the test writes only the UDP header and
+payload, and the kernel adds the IP header. get_udp_csum() still expects
+the IP source and destination addresses to directly precede the UDP
+header, and reads 2 * alen bytes before the start of the buffer: 8 bytes
+for IPv4, 32 bytes for IPv6.
 
-A stale weight is not only a reporting artifact.  It feeds the cost
-calculation and the donation logic, where an inconsistent combination can
-lead to a zero divisor in transfer_surpluses().
+ASan reports a heap-buffer-overflow for both -4 -r and -6 -r. Without
+ASan the read usually goes unnoticed, but it faults when the buffer is
+the first chunk in the heap. That happens on Ubuntu 26.04, where the
+kselftest runner wraps the test in uutils stdbuf, and txtimestamp.sh
+fails with SIGSEGV on every run.
 
-In addition, the slow path rereads iocg->hweight_active/inuse after
-publishing them, so the value it returns can be the one written by another
-refresher instead of the locally computed one.
+Even without a crash, -r packets were sent with a checksum computed
+over unrelated heap memory, so their UDP checksum was invalid.
 
-Pack the generation and both weights into a single atomic64_t and publish
-them with one atomic write.  Readers take one atomic snapshot and return
-the local values.  Weights are in [1, WEIGHT_ONE]; storing each minus one
-preserves the full range in 16 bits and leaves 32 bits for the generation.
+Build the pseudo-header from the destination address and checksum only
+the UDP header and payload. -R and -P already write daddr as both the
+source and destination address, so their checksums are unchanged. With
+-r the kernel selects the source address, which equals daddr for the
+loopback addresses used by txtimestamp.sh.
 
-The two weight fields remain as the donation workspace used under
-ioc->lock.  Tracepoints decode the packed cache without refreshing it and
-iocost_monitor.py is updated accordingly.
-
-Developed with assistance from Claude Code (Anthropic): the assistant
-drafted the packed representation, the helpers and the tracepoint/monitor
-changes, and ran the checks listed below.  The author reviewed the result
-and remains responsible for it.
-
-Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-Signed-off-by: Kunhai Dai <daikunhai@didiglobal.com>
-Tested-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261019125412.3123895-3-daikunhai@didiglobal.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b52354aa068e ("selftests: expand txtimestamp with ipv6 dgram + raw and pf_packet")
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261027162945.2122306-1-jamien@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c             | 109 +++++++++++++++++++++++++++------
- include/trace/events/iocost.h  |   7 ++-
- tools/cgroup/iocost_monitor.py |   7 ++-
- 3 files changed, 99 insertions(+), 24 deletions(-)
+ tools/testing/selftests/net/txtimestamp.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index a60d3dcee7c04..c7097b5c39c3a 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -173,6 +173,7 @@
-  */
- 
- #include <linux/kernel.h>
-+#include <linux/bitfield.h>
- #include <linux/module.h>
- #include <linux/timer.h>
- #include <linux/time64.h>
-@@ -472,8 +473,8 @@ struct ioc_gq {
- 	 *
- 	 * When an idle cgroup becomes active its `active` goes from 0 to
- 	 * `weight`.  `inuse` is the surplus adjusted active weight.
--	 * `active` and `inuse` are used to calculate `hweight_active` and
--	 * `hweight_inuse`.
-+	 * `active` and `inuse` determine the hierarchical weights cached in
-+	 * `hweight_cache`.
- 	 *
- 	 * `last_inuse` remembers `inuse` while an iocg is idle to persist
- 	 * surplus adjustments.
-@@ -520,7 +521,9 @@ struct ioc_gq {
- 	u64				child_active_sum;
- 	u64				child_inuse_sum;
- 	u64				child_adjusted_sum;
--	int				hweight_gen;
-+	/* Generation in bits 63:32; active - 1 and inuse - 1 in 31:16/15:0. */
-+	atomic64_t			hweight_cache;
-+	/* Donation workspace, protected by ioc->lock. */
- 	u32				hweight_active;
- 	u32				hweight_inuse;
- 	u32				hweight_donating;
-@@ -727,6 +730,54 @@ static void iocg_commit_bio(struct ioc_gq *iocg, struct bio *bio,
- 	put_cpu_ptr(gcs);
+diff --git a/tools/testing/selftests/net/txtimestamp.c b/tools/testing/selftests/net/txtimestamp.c
+index d626f22f95509..b68e05602047c 100644
+--- a/tools/testing/selftests/net/txtimestamp.c
++++ b/tools/testing/selftests/net/txtimestamp.c
+@@ -417,19 +417,25 @@ static uint16_t get_ip_csum(const uint16_t *start, int num_words,
+ 	return ~sum;
  }
  
-+/*
-+ * The hierarchical weights are in [1, WEIGHT_ONE] and the generation is a
-+ * 32-bit counter.  Pack generation and both weights into one 64-bit value so
-+ * that a reader or a refresher always observes a complete snapshot:
-+ *
-+ *   bits 63:32  generation
-+ *   bits 31:16  hweight_active - 1
-+ *   bits 15:0   hweight_inuse - 1
-+ */
-+#define HWEIGHT_GEN_MASK	GENMASK_ULL(63, 32)
-+#define HWEIGHT_ACTIVE_MASK	GENMASK_ULL(31, 16)
-+#define HWEIGHT_INUSE_MASK	GENMASK_ULL(15, 0)
-+
-+static inline u64 hweight_cache_pack(u32 gen, u32 active, u32 inuse)
-+{
-+	return FIELD_PREP(HWEIGHT_GEN_MASK, gen) |
-+	       FIELD_PREP(HWEIGHT_ACTIVE_MASK, active - 1) |
-+	       FIELD_PREP(HWEIGHT_INUSE_MASK, inuse - 1);
-+}
-+
-+static inline void hweight_cache_unpack(u64 cache, u32 *genp, u32 *activep,
-+					u32 *inusep)
-+{
-+	if (genp)
-+		*genp = FIELD_GET(HWEIGHT_GEN_MASK, cache);
-+	if (activep)
-+		*activep = FIELD_GET(HWEIGHT_ACTIVE_MASK, cache) + 1;
-+	if (inusep)
-+		*inusep = FIELD_GET(HWEIGHT_INUSE_MASK, cache) + 1;
-+}
-+
-+/* Decode the published weights without refreshing the cache. */
-+static inline void iocg_hweight_cache(struct ioc_gq *iocg, u32 *activep,
-+				      u32 *inusep)
-+{
-+	hweight_cache_unpack(atomic64_read(&iocg->hweight_cache), NULL,
-+			     activep, inusep);
-+}
-+
-+/* Decode the cached inuse weight; only used by tracepoints. */
-+static inline u32 iocg_hweight_cache_inuse(struct ioc_gq *iocg)
-+{
-+	u32 inuse;
-+
-+	iocg_hweight_cache(iocg, NULL, &inuse);
-+	return inuse;
-+}
-+
- #define CREATE_TRACE_POINTS
- #include <trace/events/iocost.h>
- 
-@@ -1154,12 +1205,15 @@ static void current_hweight(struct ioc_gq *iocg, u32 *hw_activep, u32 *hw_inusep
+-static uint16_t get_udp_csum(const struct udphdr *udph, int alen)
++static uint16_t get_udp_csum(const struct udphdr *udph, bool is_ipv4)
  {
- 	struct ioc *ioc = iocg->ioc;
- 	int lvl;
--	u32 hwa, hwi;
--	int ioc_gen;
-+	u32 hwa, hwi, ioc_gen, cache_gen;
-+	u64 cache;
-+
-+	ioc_gen = (u32)atomic_read(&ioc->hweight_gen);
+-	unsigned long pseudo_sum, csum_len;
+-	const void *csum_start = udph;
++	const void *addr = is_ipv4 ? (void *)&daddr.sin_addr : &daddr6.sin6_addr;
++	int alen = is_ipv4 ? sizeof(struct in_addr) : sizeof(struct in6_addr);
++	uint16_t addr16[sizeof(struct in6_addr) / sizeof(uint16_t)];
++	unsigned long pseudo_sum;
++	int i;
  
--	/* hot path - if uptodate, use cached */
--	ioc_gen = atomic_read(&ioc->hweight_gen);
--	if (ioc_gen == iocg->hweight_gen)
-+	/* hot path - if uptodate, use the cached snapshot */
-+	cache = atomic64_read(&iocg->hweight_cache);
-+	hweight_cache_unpack(cache, &cache_gen, &hwa, &hwi);
-+	if (cache_gen == ioc_gen)
- 		goto out;
+ 	pseudo_sum = htons(IPPROTO_UDP);
+ 	pseudo_sum += udph->len;
  
- 	/*
-@@ -1194,14 +1248,20 @@ static void current_hweight(struct ioc_gq *iocg, u32 *hw_activep, u32 *hw_inusep
- 		hwi = div64_u64((u64)hwi * inuse, inuse_sum);
- 	}
+-	/* checksum ip(v6) addresses + udp header + payload */
+-	csum_start -= alen * 2;
+-	csum_len = ntohs(udph->len) + alen * 2;
++	/* pseudo-header source and destination: both are daddr */
++	memcpy(addr16, addr, alen);
++	for (i = 0; i < alen / 2; i++)
++		pseudo_sum += 2 * addr16[i];
  
--	iocg->hweight_active = max_t(u32, hwa, 1);
--	iocg->hweight_inuse = max_t(u32, hwi, 1);
--	iocg->hweight_gen = ioc_gen;
-+	hwa = max_t(u32, hwa, 1);
-+	hwi = max_t(u32, hwi, 1);
-+	/*
-+	 * Publish the generation and both weights as one atomic snapshot.
-+	 * A concurrent refresher may overwrite this with its own snapshot,
-+	 * but the generation travels with the weights so the next reader
-+	 * detects the mismatch and refreshes again.
-+	 */
-+	atomic64_set(&iocg->hweight_cache, hweight_cache_pack(ioc_gen, hwa, hwi));
- out:
- 	if (hw_activep)
--		*hw_activep = iocg->hweight_active;
-+		*hw_activep = hwa;
- 	if (hw_inusep)
--		*hw_inusep = iocg->hweight_inuse;
-+		*hw_inusep = hwi;
+-	return get_ip_csum(csum_start, csum_len >> 1, pseudo_sum);
++	/* checksum udp header + payload */
++	return get_ip_csum((const uint16_t *)udph, ntohs(udph->len) >> 1,
++			   pseudo_sum);
  }
  
- /*
-@@ -1249,7 +1309,8 @@ static bool iocg_activate(struct ioc_gq *iocg, struct ioc_now *now)
- {
- 	struct ioc *ioc = iocg->ioc;
- 	u64 __maybe_unused last_period, cur_period;
--	u64 vtime, vtarget;
-+	u64 vtime, vtarget, cache;
-+	u32 active, inuse;
- 	int i;
+ static int fill_header_ipv4(void *p)
+@@ -478,8 +484,7 @@ static void fill_header_udp(void *p, bool is_ipv4)
+ 	udph->len    = ntohs(sizeof(*udph) + cfg_payload_len);
+ 	udph->check  = 0;
  
- 	/*
-@@ -1299,11 +1360,16 @@ static bool iocg_activate(struct ioc_gq *iocg, struct ioc_now *now)
- 	vtime = vtarget;
+-	udph->check  = get_udp_csum(udph, is_ipv4 ? sizeof(struct in_addr) :
+-						    sizeof(struct in6_addr));
++	udph->check  = get_udp_csum(udph, is_ipv4);
+ }
  
- 	/*
--	 * Activate, propagate weight and start period timer if not
--	 * running.  Reset hweight_gen to avoid accidental match from
--	 * wrapping.
-+	 * Activate, propagate weight and start period timer if not running.
-+	 * Invalidate the cached generation to avoid an accidental match from
-+	 * wrapping.  Keep the last published weights so that the activation
-+	 * tracepoint can report them; the next current_hweight() recomputes.
- 	 */
--	iocg->hweight_gen = atomic_read(&ioc->hweight_gen) - 1;
-+	cache = atomic64_read(&iocg->hweight_cache);
-+	hweight_cache_unpack(cache, NULL, &active, &inuse);
-+	atomic64_set(&iocg->hweight_cache,
-+		     hweight_cache_pack((u32)(atomic_read(&ioc->hweight_gen) - 1),
-+					active, inuse));
- 	list_add(&iocg->active_list, &ioc->active_iocgs);
- 
- 	propagate_weights(iocg, iocg->weight,
-@@ -2046,7 +2112,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
- 
- 		TRACE_IOCG_PATH(inuse_transfer, iocg, now,
- 				iocg->inuse, inuse,
--				iocg->hweight_inuse,
-+				iocg_hweight_cache_inuse(iocg),
- 				iocg->hweight_after_donation);
- 
- 		__propagate_weights(iocg, iocg->active, inuse, true, now);
-@@ -2361,7 +2427,7 @@ static void ioc_timer_fn(struct timer_list *timer)
- 				 */
- 				TRACE_IOCG_PATH(inuse_shortage, iocg, &now,
- 						iocg->inuse, iocg->active,
--						iocg->hweight_inuse, new_hwi);
-+						old_hwi, new_hwi);
- 
- 				__propagate_weights(iocg, iocg->active,
- 						    iocg->active, true, &now);
-@@ -3031,6 +3097,9 @@ static void ioc_pd_init(struct blkg_policy_data *pd)
- 	INIT_LIST_HEAD(&iocg->active_list);
- 	INIT_LIST_HEAD(&iocg->walk_list);
- 	INIT_LIST_HEAD(&iocg->surplus_list);
-+	atomic64_set(&iocg->hweight_cache,
-+		     hweight_cache_pack((u32)(atomic_read(&ioc->hweight_gen) - 1),
-+					WEIGHT_ONE, WEIGHT_ONE));
- 	iocg->hweight_active = WEIGHT_ONE;
- 	iocg->hweight_inuse = WEIGHT_ONE;
- 
-diff --git a/include/trace/events/iocost.h b/include/trace/events/iocost.h
-index e772b1bc60d60..eb711343ce4fc 100644
---- a/include/trace/events/iocost.h
-+++ b/include/trace/events/iocost.h
-@@ -34,6 +34,9 @@ DECLARE_EVENT_CLASS(iocost_iocg_state,
- 	),
- 
- 	TP_fast_assign(
-+		u32 hwa, hwi;
-+
-+		iocg_hweight_cache(iocg, &hwa, &hwi);
- 		__assign_str(devname);
- 		__assign_str(cgroup);
- 		__entry->now = now->now;
-@@ -44,8 +47,8 @@ DECLARE_EVENT_CLASS(iocost_iocg_state,
- 		__entry->vtime = vtime;
- 		__entry->weight = iocg->weight;
- 		__entry->inuse = iocg->inuse;
--		__entry->hweight_active = iocg->hweight_active;
--		__entry->hweight_inuse = iocg->hweight_inuse;
-+		__entry->hweight_active = hwa;
-+		__entry->hweight_inuse = hwi;
- 	),
- 
- 	TP_printk("[%s:%s] now=%llu:%llu vrate=%llu "
-diff --git a/tools/cgroup/iocost_monitor.py b/tools/cgroup/iocost_monitor.py
-index 933c750b319b7..c6df7ac7ddf41 100644
---- a/tools/cgroup/iocost_monitor.py
-+++ b/tools/cgroup/iocost_monitor.py
-@@ -149,8 +149,11 @@ class IocgStat:
-         self.weight = iocg.weight.value_() / WEIGHT_ONE
-         self.active = iocg.active.value_() / WEIGHT_ONE
-         self.inuse = iocg.inuse.value_() / WEIGHT_ONE
--        self.hwa_pct = iocg.hweight_active.value_() * 100 / WEIGHT_ONE
--        self.hwi_pct = iocg.hweight_inuse.value_() * 100 / WEIGHT_ONE
-+        hweight_cache = iocg.hweight_cache.counter.value_()
-+        hwa = ((hweight_cache >> 16) & (WEIGHT_ONE - 1)) + 1
-+        hwi = (hweight_cache & (WEIGHT_ONE - 1)) + 1
-+        self.hwa_pct = hwa * 100 / WEIGHT_ONE
-+        self.hwi_pct = hwi * 100 / WEIGHT_ONE
-         self.address = iocg.value_()
- 
-         vdone = iocg.done_vtime.counter.value_()
+ static void do_test(int family, unsigned int report_opt)
 -- 
 2.53.0
 
