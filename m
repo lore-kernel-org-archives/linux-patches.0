@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025700;
-	b=u7hsXzqxo2A42ZaE2iPvnLy9DnmvgIhlE/lk0xNSl01S1D3IdsSuydrQo8nTx87jdu+s
-	 mbYVz2h8mnB7opdaKXTKmBNZGOM6QNSIOKfxH+pty/SlNjNKUIR3uymSfLjtUuTAsP4wQ
-	 9s/onne0v75BOJvjJysksnavxQ9EtPXpAjhcIIN0wCU/2VhA49xLT0NFO1uum1Iw77MIj
-	 0RqN81c4//hy/LUhaLb75VT+dEKMOcaI5RgA+n4RvNG2pixM7B4ihsF7XX5st7rFIeUkk
-	 IelMjLtpOfZg/xx8QV6H5tnBqoAbTmRJFAyCfivNl3QdT3CToTM+0fsSbt2IdKKpnJA==
+	t=1795025703;
+	b=QacRHAGhcdvH0a7tDOsU3ARq3AiZTcT2cVFmlOmWdepblMemrpO62qQoKZpIOCt5LReb
+	 hKXQC2YWictF12xrl9R8My4PZmi7+jPNSs2AdzarKfNTAad++cd0UDJUUsiAj9uvvoc9h
+	 mvpS9Zuu6xmAKriBozAOwTI3C6oF6zhXngG1kQXOIpniAtNiHAeeQS5mOt4BxW00e/M+Z
+	 ezdOODD5Jf6JZ8UiloY7u/jXely7tu7AHN4sVR9vj7M5A1heZBZTjTBss1iJVjjakdM7T
+	 NbiClItv559dfaDunp0fWpXma7d9lczb9oyMBpBG+WI4+I8DaGERK477aVlo8wF2ZvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025703;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=cUep1efcav3/2LpZ9y1YRHKME6rNE1sHmEjzbguc1NQ=;
-	b=j+etFVSEPo/16nOScqEVqMK7Ee5CKR4WBbTboVLwbd6oPBRKWPWH67D0F6N7rGE8e8aL
-	 YHFtL0uUg8McqUn1XIFzj/QPLmWWz0tCoCp/cjdygGlfHLVPcnWfzKN8nuKPfbCXBmt4l
-	 90FWaTqg3V9bbZmwPaYxDqezGJ3HgasgAfLDJ9aq79J2fwpw9QiFVRFFxPDycQdt6maI3
-	 5EQsWHjSnIOW8Zrs3RPoKN8Xtr4W2POyfByVgQnRuzFyg7BfIyquodFxnVI/xfeOa405q
-	 TPNEYcIiYq61Gw4ZETB8MRhCN6ZPcEUJOrh8jW1yT5jcNCymR9I9aZTGP3luW4aWp8Q==
+	bh=EcQ5+/fJaPaj6r2kxgB86TL8nulapx7j/eyaW2Ld2sY=;
+	b=XZURpIdpN8g3P+68lP5AiH2Ey04BP0DGcIdPdqZcx8cLi92uFRhU6RHVS8QQzJCof5tS
+	 dbacuQN6F5q1bB9ugoXvVtsq1PUU0hmpvjB9IMbvmw1gxOScjJf21eQCGKBXGJcYEQcwp
+	 JO7nY5KU29YOEd63e81W35nqtgf3kxtkRduMYICwTPOetDG5wEN7ciY1tMfinaGGa9wZk
+	 s79GbPWTAjwXVSOlDieVFl8lRE1uwBvTK9f2VqIlnHWJ2mrQMcciul1A8n7gVD1kzrsZR
+	 NBwL1xdpzDObaIqLhrqlOjaYCesQwfH1TC3xczwSJ698HEJDcZAaKr07n9JISjUFN1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Y86B3MP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYyR54V2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE649606A32C;
-	Wed, 18 Nov 2026 18:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A63606A320;
+	Wed, 18 Nov 2026 18:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Y86B3MP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1861F000C4;
-	Wed, 18 Nov 2026 18:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYyR54V2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAD31F000C4;
+	Wed, 18 Nov 2026 18:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025699;
-	bh=cUep1efcav3/2LpZ9y1YRHKME6rNE1sHmEjzbguc1NQ=;
+	s=korg; t=1795025703;
+	bh=EcQ5+/fJaPaj6r2kxgB86TL8nulapx7j/eyaW2Ld2sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Y86B3MPIWhGZFnrwzUyOb2Fx79SvCcztpvslseOS5vZS4j2Sl3TRo83Dg8syY//d
-	 EBx4Gkn6MvEC4701Ov2cGgU6rvCxIb/YWBEARBiVDQRsDJN5xr0zaFrH2g9fggoj5P
-	 rdCLVVxPwqGWawGCHB/6da/sv2U5z+tyV0HkJb7w=
+	b=LYyR54V21DxKU+dPlSjsTmh0RkpWr6FJQwSjs74Z5ifGWnjHVycob86n66k6+Wlx3
+	 mEmHSQA5TYzXWT3NqjY/5JfSs0be+WoO2RkzQFI7WLFZv0i4XkOLfekDO0vbimvOWR
+	 +Y2hlyJ6JdiZntaZtnqps95Z5+pYkatlO2/rg9F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -57,9 +57,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yosry Ahmed <yosryahmed@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1172/2151] selftests/cgroup: avoid OOM in test_swapin_nozswap
-Date: Wed, 18 Nov 2026 15:48:27 +0100
-Message-ID: <20261118150204.820224335@linuxfoundation.org>
+Subject: [PATCH 6.18 1173/2151] selftests/cgroup: use runtime page size for zswpin check
+Date: Wed, 18 Nov 2026 15:48:28 +0100
+Message-ID: <20261118150204.855984547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -84,65 +84,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Wang <li.wang@linux.dev>
 
-[ Upstream commit 0d38cded3c6294b0dfa38e3fc92077b5d381951e ]
+[ Upstream commit b19ee588e159c71f0d314246a944dcfc3e2a6009 ]
 
-test_swapin_nozswap can hit OOM before reaching its assertions on some
-setups.  The test currently sets memory.max=8M and then allocates/reads
-32M with memory.zswap.max=0, which may over-constrain reclaim and kill the
-workload process.
+test_zswapin compares memory.stat:zswpin (counted in pages) against a byte
+threshold converted with PAGE_SIZE.  In cgroup selftests, PAGE_SIZE is
+hardcoded to 4096, which makes the conversion wrong on systems with non-4K
+base pages (e.g.  64K).
 
-Replace hardcoded sizes with PAGE_SIZE-based values:
-  - control_allocation_size = PAGE_SIZE * 512
-  - memory.max = control_allocation_size * 3 / 4
-  - minimum expected swap = control_allocation_size / 4
+As a result, the test requires too many pages to pass and fails spuriously
+even when zswap is working.
 
-This keeps the test pressure model intact (allocate/read beyond memory.max
-to force swap-in/out) while making it more robust across different
-environments.
+Use sysconf(_SC_PAGESIZE) for the zswpin threshold conversion so the check
+matches the actual system page size.
 
-The test intent is unchanged: confirm that swapping occurs while zswap remains
-unused when memory.zswap.max=0.
-
-=== Error Logs ===
-
-  # ./test_zswap
-  TAP version 13
-  1..7
-  ok 1 test_zswap_usage
-  not ok 2 test_swapin_nozswap
-  ...
-
-  # dmesg
-  [271641.879153] test_zswap invoked oom-killer: gfp_mask=0xcc0(GFP_KERNEL), order=0, oom_score_adj=0
-  [271641.879168] CPU: 1 UID: 0 PID: 177372 Comm: test_zswap Kdump: loaded Not tainted 6.12.0-211.el10.ppc64le #1 VOLUNTARY
-  [271641.879171] Hardware name: IBM,9009-41A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.02 (UL940_041) hv:phyp pSeries
-  [271641.879173] Call Trace:
-  [271641.879174] [c00000037540f730] [c00000000127ec44] dump_stack_lvl+0x88/0xc4 (unreliable)
-  [271641.879184] [c00000037540f760] [c0000000005cc594] dump_header+0x5c/0x1e4
-  [271641.879188] [c00000037540f7e0] [c0000000005cb464] oom_kill_process+0x324/0x3b0
-  [271641.879192] [c00000037540f860] [c0000000005cbe48] out_of_memory+0x118/0x420
-  [271641.879196] [c00000037540f8f0] [c00000000070d8ec] mem_cgroup_out_of_memory+0x18c/0x1b0
-  [271641.879200] [c00000037540f990] [c000000000713888] try_charge_memcg+0x598/0x890
-  [271641.879204] [c00000037540fa70] [c000000000713dbc] charge_memcg+0x5c/0x110
-  [271641.879207] [c00000037540faa0] [c0000000007159f8] __mem_cgroup_charge+0x48/0x120
-  [271641.879211] [c00000037540fae0] [c000000000641914] alloc_anon_folio+0x2b4/0x5a0
-  [271641.879215] [c00000037540fb60] [c000000000641d58] do_anonymous_page+0x158/0x6b0
-  [271641.879218] [c00000037540fbd0] [c000000000642f8c] __handle_mm_fault+0x4bc/0x910
-  [271641.879221] [c00000037540fcf0] [c000000000643500] handle_mm_fault+0x120/0x3c0
-  [271641.879224] [c00000037540fd40] [c00000000014bba0] ___do_page_fault+0x1c0/0x980
-  [271641.879228] [c00000037540fdf0] [c00000000014c44c] hash__do_page_fault+0x2c/0xc0
-  [271641.879232] [c00000037540fe20] [c0000000001565d8] do_hash_fault+0x128/0x1d0
-  [271641.879236] [c00000037540fe50] [c000000000008be0] data_access_common_virt+0x210/0x220
-  [271641.879548] Tasks state (memory values in pages):
-  ...
-  [271641.879550] [  pid  ]   uid  tgid total_vm      rss rss_anon rss_file rss_shmem pgtables_bytes swapents oom_score_adj name
-  [271641.879555] [ 177372]     0 177372      571        0        0        0         0    51200       96             0 test_zswap
-  [271641.879562] oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=/,mems_allowed=0,oom_memcg=/no_zswap_test,task_memcg=/no_zswap_test,task=test_zswap,pid=177372,uid=0
-  [271641.879578] Memory cgroup out of memory: Killed process 177372 (test_zswap) total-vm:36544kB, anon-rss:0kB, file-rss:0kB, shmem-rss:0kB, UID:0 pgtables:50kB oom_score_adj:0
-
-Link: https://lore.kernel.org/20260424040059.12940-3-li.wang@linux.dev
+Link: https://lore.kernel.org/20260424040059.12940-4-li.wang@linux.dev
 Signed-off-by: Li Wang <li.wang@linux.dev>
-Acked-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
 Acked-by: Nhat Pham <nphamcs@gmail.com>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
 Cc: Michal Hocko <mhocko@kernel.org>
@@ -159,55 +116,22 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 0567c7eaefd7 ("selftests/cgroup: test_zswap: fix implicit unsigned promotion bug in test_no_kmem_bypass")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_zswap.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ tools/testing/selftests/cgroup/test_zswap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/cgroup/test_zswap.c b/tools/testing/selftests/cgroup/test_zswap.c
-index e53bd65d25cfb..53d1553e09619 100644
+index 53d1553e09619..c7d45aa9c77ea 100644
 --- a/tools/testing/selftests/cgroup/test_zswap.c
 +++ b/tools/testing/selftests/cgroup/test_zswap.c
-@@ -165,21 +165,25 @@ static int test_zswap_usage(const char *root)
- static int test_swapin_nozswap(const char *root)
- {
- 	int ret = KSFT_FAIL;
--	char *test_group;
--	long swap_peak, zswpout;
-+	char *test_group, mem_max_buf[32];
-+	long swap_peak, zswpout, min_swap;
-+	size_t allocation_size = sysconf(_SC_PAGESIZE) * 512;
-+
-+	min_swap = allocation_size / 4;
-+	snprintf(mem_max_buf, sizeof(mem_max_buf), "%zu", allocation_size * 3/4);
- 
- 	test_group = cg_name(root, "no_zswap_test");
- 	if (!test_group)
- 		goto out;
- 	if (cg_create(test_group))
- 		goto out;
--	if (cg_write(test_group, "memory.max", "8M"))
-+	if (cg_write(test_group, "memory.max", mem_max_buf))
- 		goto out;
- 	if (cg_write(test_group, "memory.zswap.max", "0"))
- 		goto out;
- 
- 	/* Allocate and read more than memory.max to trigger swapin */
--	if (cg_run(test_group, allocate_and_read_bytes, (void *)MB(32)))
-+	if (cg_run(test_group, allocate_and_read_bytes, (void *)allocation_size))
- 		goto out;
- 
- 	/* Verify that pages are swapped out, but no zswap happened */
-@@ -189,8 +193,9 @@ static int test_swapin_nozswap(const char *root)
+@@ -245,7 +245,7 @@ static int test_zswapin(const char *root)
  		goto out;
  	}
  
--	if (swap_peak < MB(24)) {
--		ksft_print_msg("at least 24MB of memory should be swapped out\n");
-+	if (swap_peak < min_swap) {
-+		ksft_print_msg("at least %ldKB of memory should be swapped out\n",
-+				min_swap / 1024);
+-	if (zswpin < MB(24) / PAGE_SIZE) {
++	if (zswpin < MB(24) / sysconf(_SC_PAGESIZE)) {
+ 		ksft_print_msg("at least 24MB should be brought back from zswap\n");
  		goto out;
  	}
- 
 -- 
 2.53.0
 
