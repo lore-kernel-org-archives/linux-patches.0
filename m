@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045306;
-	b=AZy4CQhLmG7a9FiN2JfOY2SfrP/4XZDssObT0aI+FGkFHFhhUlRvVP8njsfM1HTiH6Js
-	 rFnJpm6vDb/d8DAlVburprhvtfmMIDPwW/EXIuDsAh9QF9Wt1+tq5T/3Yy7XgJ3aBsKWr
-	 bgbsWXzgaJBWlcyDsPaE2E2xSOeRPOvvvgvoywSivWjPcEIMhh4lHHCOUfYC+h9oqYDNu
-	 /lfwvuxmz6mf09PM0SmvDEmedtl5qFg4Dm6F7XcuxWUaQ5r3cXOslyv++fGbaR7h1O6gr
-	 gmB9xhS3BWE0JgWjRezx3ezkvC1X6zrZp7wkhvX2Fs9w6ofnFOj0V+V1Pcz9BIx+CWA==
+	t=1795045309;
+	b=FfTu43wXedhdVesFm3McKyBrXNzhYSLT1t2EB6pMsZFGF8CZgXwEOhnYhk3K54b25sIU
+	 KxyhVL+co9wzutlVJ75hxo34j0IA2B6L+IUVVVK4F/qAIjk8S0TzJ1tR8SfdQsWEjbvtW
+	 qUCbNhPRr4KPsicAYlKTP2r2/huLwZDtLOuCvvCHj+EKfzspcp7ngqquRwS+NTYbEtlAb
+	 Yj83ZplFrs7FTNOBFTQkjyCz/XBpC8LY6zmOYMpFAbYN74ta8elEQQsjTbGf5g/YKTf99
+	 qaVJUDkVm8F5HGbk0YytXgPZGS5c9kydL8L0RGInAazRGS4PUNj8bYW4BwUoDc/ZxCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iedEG45REsGPNWNas4H/JV6ruo5Hce5oZmR4QbUixuI=;
-	b=rRGKajcxF5Lk5bj1jLRGXihCVnMNz09a1RXqgZEQHvaJ2MpzUgb3qxrvdtNd6wBwajDh
-	 44Wnq7Wwkbmqc30GhU9NY/UjhJNV8q6mqk5vFm6kdM9aPLL/xE0MqSJs2PHFvOZkZf51W
-	 meJT77Ji/Aey38+pEllGF0JucSioGEga5XOGemUOrRTjWdNvGXEJaP1BfsKrV53anTecL
-	 1G+EnGM3xPeyjw+p4dnE4c/AA7A5GPHVPzGo1qpVSqmkc5QxSnu9yO0wtZhMjq0Lkvxrt
-	 p1MIxtB0wjsPbDE5TN91ULXw1DVy4XcX6AufxiY2Oc/OXbhyoIEjDDC/e36DzqLmxNw==
+	bh=eVWQZPNUuBhj0OPqHk4pQB9VYnbvjkOrzImWQTyLlrY=;
+	b=LxJ/mieMZm8o+EjX/cVPjmxud6+KcIoORFjRPeX8JqOUBQkGkihsHNwAPiDNGf6ZDXMK
+	 fFJQzjcAY00tXxp1wwHZzFHdWrhBuvpfoRNd3q7fNTu/PZ1WsWZWs7TUSjtP2MrYt/NQF
+	 vpqTzSfESbVh5hHZVQAR2f6F8QPv52R+vbTH6Yasamxv6egCObYYbg3hgjr6HkRii/VA9
+	 BDuFzr5QAPeawTuumc7DuchOiR35guHPiewVYSWXBqsHwePT8i5fJbhRqbRTr/Nkmngg/
+	 qdw8JcRDJQf5MIclblUtwmZVOkW7+yRopMDyxD6R7cmcLg/JIvFcsanZdVoyzqx+Mhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2NvpoZRg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sehdlruq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8668E606A32C;
-	Wed, 18 Nov 2026 23:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68BB606A31C;
+	Wed, 18 Nov 2026 23:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2NvpoZRg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870461F000C4;
-	Wed, 18 Nov 2026 23:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sehdlruq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479B01F000C4;
+	Wed, 18 Nov 2026 23:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045306;
-	bh=iedEG45REsGPNWNas4H/JV6ruo5Hce5oZmR4QbUixuI=;
+	s=korg; t=1795045308;
+	bh=eVWQZPNUuBhj0OPqHk4pQB9VYnbvjkOrzImWQTyLlrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2NvpoZRg7uIFXHrTx2KhRDC8QG1j5DTe6+2G5KU3587YZZzk3KSWI6j+vQgq6ywXj
-	 3WZxLElP1Fs5bIX8MC6++PuOUviq7oCb6UT9YmxXnru35e1UMFEoXlkQ9bnWF7vex2
-	 pZ2sx11v86Id11nMJISGtG2zOqJzVTWdQXP14YRQ=
+	b=SehdlruqNa9Sf0r/luHRQ4mHnEM0uFcEJja6aE/1lxVYhuRNJ/Nfl6VkVTYCWsLak
+	 yM24UDro8JkTSoXo+fgKa99PXstMe+YDPEwImPI2pMPqbnE99r72KwDzb23/H2ZMC+
+	 7XTRqW+yMNPPZtiWwEtSc50I9/FDdTW3T20wQeBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Albershteyn <aalbersh@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0875/2857] fsverity: hoist statx reporting of fs-verity flag
-Date: Wed, 18 Nov 2026 15:31:49 +0100
-Message-ID: <20261118150233.067806015@linuxfoundation.org>
+Subject: [PATCH 6.1 0840/2857] ALSA: core: Check shutdown flag at D0 power-state, too
+Date: Wed, 18 Nov 2026 15:31:14 +0100
+Message-ID: <20261118150231.820285738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,111 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Albershteyn <aalbersh@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f9e450420da2624c93ce9585deebfabb87932774 ]
+[ Upstream commit ad63c5b62843895e8c3cd7291ed07cc659df0355 ]
 
-All filesystems, supporting fsverity, report this status by checking
-inode flag. Also, BTRFS was missing stat->attributes_mask, which is
-fixed now.
+The snd_power_ref_and_wait() skips the card->shutdown check when the
+card is already in D0 state and immediately returns as successful, by
+assuming the all-green in D0.  This assumption makes the code after
+this sync point behaving as if all power is up and ready, even though
+actually it might have been already at the disconnected state.
 
-Fixes: 146054090b08 ("btrfs: initial fsverity support")
+Add the missing check of shutdown flag there for the more consistent
+behavior.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
-Acked-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Link: https://patch.msgid.link/20261002223705.2175542-7-aalbersh@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260929125346.1478631-2-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 3 ---
- fs/ext4/inode.c  | 5 +----
- fs/f2fs/file.c   | 5 +----
- fs/stat.c        | 6 +++++-
- 4 files changed, 7 insertions(+), 12 deletions(-)
+ sound/core/init.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 976aad24ae0a3..abc834c828519 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -9262,7 +9262,6 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
- 	struct inode *inode = d_inode(path->dentry);
- 	u32 blocksize = btrfs_sb(inode->i_sb)->sectorsize;
- 	u32 bi_flags = BTRFS_I(inode)->flags;
--	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
- 
- 	stat->result_mask |= STATX_BTIME;
- 	stat->btime.tv_sec = BTRFS_I(inode)->i_otime.tv_sec;
-@@ -9275,8 +9274,6 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
- 		stat->attributes |= STATX_ATTR_IMMUTABLE;
- 	if (bi_flags & BTRFS_INODE_NODUMP)
- 		stat->attributes |= STATX_ATTR_NODUMP;
--	if (bi_ro_flags & BTRFS_INODE_RO_VERITY)
--		stat->attributes |= STATX_ATTR_VERITY;
- 
- 	stat->attributes_mask |= (STATX_ATTR_APPEND |
- 				  STATX_ATTR_COMPRESSED |
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index b17d13cea6c72..2bb05fc0bc094 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5797,15 +5797,12 @@ int ext4_getattr(struct user_namespace *mnt_userns, const struct path *path,
- 		stat->attributes |= STATX_ATTR_IMMUTABLE;
- 	if (flags & EXT4_NODUMP_FL)
- 		stat->attributes |= STATX_ATTR_NODUMP;
--	if (flags & EXT4_VERITY_FL)
--		stat->attributes |= STATX_ATTR_VERITY;
- 
- 	stat->attributes_mask |= (STATX_ATTR_APPEND |
- 				  STATX_ATTR_COMPRESSED |
- 				  STATX_ATTR_ENCRYPTED |
- 				  STATX_ATTR_IMMUTABLE |
--				  STATX_ATTR_NODUMP |
--				  STATX_ATTR_VERITY);
-+				  STATX_ATTR_NODUMP);
- 
- 	generic_fillattr(mnt_userns, inode, stat);
- 	return 0;
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 4dd995b0c472b..bde1c9cfe1df4 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -928,15 +928,12 @@ int f2fs_getattr(struct user_namespace *mnt_userns, const struct path *path,
- 		stat->attributes |= STATX_ATTR_IMMUTABLE;
- 	if (flags & F2FS_NODUMP_FL)
- 		stat->attributes |= STATX_ATTR_NODUMP;
--	if (IS_VERITY(inode))
--		stat->attributes |= STATX_ATTR_VERITY;
- 
- 	stat->attributes_mask |= (STATX_ATTR_COMPRESSED |
- 				  STATX_ATTR_APPEND |
- 				  STATX_ATTR_ENCRYPTED |
- 				  STATX_ATTR_IMMUTABLE |
--				  STATX_ATTR_NODUMP |
--				  STATX_ATTR_VERITY);
-+				  STATX_ATTR_NODUMP);
- 
- 	generic_fillattr(mnt_userns, inode, stat);
- 
-diff --git a/fs/stat.c b/fs/stat.c
-index ef50573c72a26..5f48a36ce4666 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -116,8 +116,12 @@ int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
- 	if (IS_DAX(inode))
- 		stat->attributes |= STATX_ATTR_DAX;
- 
-+	if (IS_VERITY(inode))
-+		stat->attributes |= STATX_ATTR_VERITY;
-+
- 	stat->attributes_mask |= (STATX_ATTR_AUTOMOUNT |
--				  STATX_ATTR_DAX);
-+				  STATX_ATTR_DAX |
-+				  STATX_ATTR_VERITY);
- 
- 	mnt_userns = mnt_user_ns(path->mnt);
- 	if (inode->i_op->getattr)
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 4d8c77deed185..b3a7df3c85df3 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -1146,12 +1146,12 @@ EXPORT_SYMBOL(snd_card_file_remove);
+ int snd_power_ref_and_wait(struct snd_card *card)
+ {
+ 	snd_power_ref(card);
+-	if (snd_power_get_state(card) == SNDRV_CTL_POWER_D0)
+-		return 0;
+-	wait_event_cmd(card->power_sleep,
+-		       card->shutdown ||
+-		       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
+-		       snd_power_unref(card), snd_power_ref(card));
++	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
++		wait_event_cmd(card->power_sleep,
++			       card->shutdown ||
++			       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
++			       snd_power_unref(card), snd_power_ref(card));
++	}
+ 	if (card->shutdown) {
+ 		snd_power_unref(card);
+ 		return  -ENODEV;
 -- 
 2.53.0
 
