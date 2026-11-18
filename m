@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031031;
-	b=sJFjyZb6OhKvenwEftUlTNQXJq9RKCtAjd4yRSbdGuu+75snVWrz6hXHWsF+PGED8mGo
-	 GJ6v2eodECQM7xps4yTFVi0yRFrF/TeKwj7EagnbBCLzlGAWtsLuqWNpODntD8gVTXne7
-	 IAXrXuawbejnrkwrfEKoxQ6qeqg34jCFAcWc48xf3Ay0BWjW9DXRIWPebMFSh34a2EMlo
-	 GmDsZvMOqZ+7cjCh9FG8rDuuX5UJzbEOOgq8K+pF4EBHC0lJsFt9SuD/FgWJvsr/t8SsD
-	 uLBfmnUzR00ZtS/7kU2vU2HAtpb/2MZxoGtcPUDCboLShYCAyQZ0KeL1DcqrMcZqJFA==
+	t=1795031034;
+	b=K675NtxxDrbsxXcZbn258LxVESwWCrMlnbvAK00zuErOXo84bO/riTxwU/7kRDGLMb1M
+	 yqhKPEsuYGFyArL5AKZKoUJhOWjyST/96l7lP+Jyw3HsJgboTdT/DGSlo2LgqZMFfGMxd
+	 efXrjsydxRVUh0a8uH/1dOpWOeVp2K1oqB9Ics2J9+i6/QCN3TwYU+uYU7LBocHcQd1cU
+	 7e6vOTorsS7RscmOPufisL4XNlQ1nT3xV5BejqiaMBhlcIH/32SLo4vaGiV21D2L8LLEC
+	 3QkBduFUBEyfCr1RZdzwU+s2Abl76JvPxFAIU0F+1R2bqwuibJZMaUYHqwBZUs4KkTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wKSEd2Z7dzVPqYfvL7Bkc4XYnHe+TUzJypsiQy9ypJA=;
-	b=OJdoxmRb5jugwevxYiwruOZS8yCEGswB5+b/8MwOmXsKe3xblfBqAsMEMSD8nR6DjbUW
-	 EB+OmEX1cU1g7kRRqDz3CJe6KZ7rS4IxLp9+pg42A2OIF663haYi8+/HTEe0i9P8PhXeH
-	 IL03JbJZlY0KoNqhH1rcOcjYcfCQPU+3AAFTzct9Cv/r3OpTrt4p/PWncUKKb9szVv0nW
-	 FgQA8UPcRDBdbs0Y4gynTsanP65PDWqb3pUWp6p/2LIffSO8uQZrvn6KClgAd/UnzZZkZ
-	 1m0HLXh87cZmQbEEABtqwJCmTXJ5zFlb3aJg+ibL5I4dZb0jA48MyJLi1aTHYSvR0KA==
+	bh=sYXo6W1HFzQ7AzKok+B304+TamlHchI4v1lzEjK2LtY=;
+	b=bTNQb54GV5BCjgoRiTDYMvmQcXOwxh9QpUmGl4ssrjnWhtwVhb7lUvkuOy+sdgzP6J1D
+	 Pc8p5cnh5iw5ADG9sIVotA7jTBwsp67Xxz0zDPxNJuXdz3+1/K3nBuM7A5DEksRbclKdm
+	 L2JDGAE3tCyZ9ySMOLUBFfeSIYbHUlnHAheEbyBjGpJQK25gkyoLizdc62PNNZgmm9maD
+	 IeIoND7ZMrDOK9PVHo8NueQ3dXdPF+u1cosWiMUUPYLcLwlUY6sJ+vZqcXGWjd+EBix1j
+	 pQpIITcFfYSPU7YVWnY18PBPUFpwd16XJrQQBAWHXSmICUu7lpmfs8/dUKk1X6GPMuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NTel0bgm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTk9296L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DD6606A31C;
-	Wed, 18 Nov 2026 19:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AED606A31C;
+	Wed, 18 Nov 2026 19:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NTel0bgm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA46E1F000C4;
-	Wed, 18 Nov 2026 19:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTk9296L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925F31F000C4;
+	Wed, 18 Nov 2026 19:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031031;
-	bh=wKSEd2Z7dzVPqYfvL7Bkc4XYnHe+TUzJypsiQy9ypJA=;
+	s=korg; t=1795031034;
+	bh=sYXo6W1HFzQ7AzKok+B304+TamlHchI4v1lzEjK2LtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NTel0bgmqiEMO1XSx8prrxH/bAz1hd8hXraeNGN12vyv/6m8rnXFc6QPg3qmNtaIA
-	 tDROqvzY1nQAFSF2srfX/HHEZ8KgQfgzIrmuRJpZ86Angwif357SAfpU2WqmEgDbGg
-	 MrAaouQhR8smfN4Ow5qzgm9zMfizjOVP/xu+l5so=
+	b=OTk9296LdbLiR514Rujf2hXU8Z6QuWRlye5onyDAJ6b7Wg9INUWwnoF2iesD+dT1w
+	 LhcyI2xXLEf6RFKAsH5+ss8KPMTlg499MyLyN1KrA5LomJCjwIh33ISbXzCblOr3Yx
+	 QhaGE+pTM1g2twEmHYOAZqRgURTKFp814atjcxE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
-	Nicolas Saenz Julienne <nsaenz@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0913/1756] x86/efi: Drop support for the EFI_PROPERTIES_TABLE
-Date: Wed, 18 Nov 2026 15:50:40 +0100
-Message-ID: <20261118150046.341619656@linuxfoundation.org>
+Subject: [PATCH 6.12 0914/1756] x86/efistub: Drop long obsolete UGA support
+Date: Wed, 18 Nov 2026 15:50:41 +0100
+Message-ID: <20261118150046.388639064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,173 +67,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Saenz Julienne <nsaenz@amazon.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 7eb4e1dd71009472215bc1f8226ee9a041da8d37 ]
+[ Upstream commit 144d52dd8fc83a082a275e1b663e7454d2b616a4 ]
 
-Drop support for the EFI_PROPERTIES_TABLE. It was a failed, short-lived
-experiment that broke the boot both on Linux and Windows, and was
-replaced by the EFI_MEMORY_ATTRIBUTES_TABLE shortly after.
+UGA is the EFI graphical output protocol that preceded GOP, and has been
+long obsolete. Drop support for it from the x86 implementation of the
+EFI stub - other architectures never bothered to implement it (save for
+ia64)
 
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/efi/efi.c    | 19 ---------------
- arch/x86/platform/efi/efi_64.c | 42 ----------------------------------
- include/linux/efi.h            | 17 +++-----------
- 3 files changed, 3 insertions(+), 75 deletions(-)
+ arch/x86/platform/efi/efi.c             | 10 ---
+ drivers/firmware/efi/efi.c              |  3 -
+ drivers/firmware/efi/libstub/x86-stub.c | 90 -------------------------
+ include/linux/efi.h                     |  4 --
+ 4 files changed, 107 deletions(-)
 
 diff --git a/arch/x86/platform/efi/efi.c b/arch/x86/platform/efi/efi.c
-index e005d0a4143e6..152b0b43c68b2 100644
+index 152b0b43c68b2..b74f7d510801e 100644
 --- a/arch/x86/platform/efi/efi.c
 +++ b/arch/x86/platform/efi/efi.c
-@@ -54,14 +54,12 @@
+@@ -54,13 +54,11 @@
  #include <asm/uv/uv.h>
  
  static unsigned long efi_systab_phys __initdata;
--static unsigned long prop_phys = EFI_INVALID_TABLE_ADDR;
- static unsigned long uga_phys = EFI_INVALID_TABLE_ADDR;
+-static unsigned long uga_phys = EFI_INVALID_TABLE_ADDR;
  static unsigned long efi_runtime, efi_nr_tables;
  
  unsigned long efi_fw_vendor, efi_config_table;
  
  static const efi_config_table_type_t arch_tables[] __initconst = {
--	{EFI_PROPERTIES_TABLE_GUID,	&prop_phys,		"PROP"		},
- 	{UGA_IO_PROTOCOL_GUID,		&uga_phys,		"UGA"		},
+-	{UGA_IO_PROTOCOL_GUID,		&uga_phys,		"UGA"		},
  #ifdef CONFIG_X86_UV
  	{UV_SYSTEM_TABLE_GUID,		&uv_systab_phys,	"UVsystab"	},
-@@ -82,7 +80,6 @@ static const unsigned long * const efi_tables[] = {
- 	&efi_runtime,
- 	&efi_config_table,
- 	&efi.esrt,
--	&prop_phys,
- 	&efi_mem_attr_table,
- #ifdef CONFIG_EFI_RCI2_TABLE
- 	&rci2_table_phys,
-@@ -502,22 +499,6 @@ void __init efi_init(void)
- 		return;
- 	}
+ #endif
+@@ -72,7 +70,6 @@ static const unsigned long * const efi_tables[] = {
+ 	&efi.acpi20,
+ 	&efi.smbios,
+ 	&efi.smbios3,
+-	&uga_phys,
+ #ifdef CONFIG_X86_UV
+ 	&uv_systab_phys,
+ #endif
+@@ -890,13 +887,6 @@ bool efi_is_table_address(unsigned long phys_addr)
+ 	return false;
+ }
  
--	/* Parse the EFI Properties table if it exists */
--	if (prop_phys != EFI_INVALID_TABLE_ADDR) {
--		efi_properties_table_t *tbl;
+-char *efi_systab_show_arch(char *str)
+-{
+-	if (uga_phys != EFI_INVALID_TABLE_ADDR)
+-		str += sprintf(str, "UGA=0x%lx\n", uga_phys);
+-	return str;
+-}
 -
--		tbl = early_memremap_ro(prop_phys, sizeof(*tbl));
--		if (tbl == NULL) {
--			pr_err("Could not map Properties table!\n");
--		} else {
--			if (tbl->memory_protection_attribute &
--			    EFI_PROPERTIES_RUNTIME_MEMORY_PROTECTION_NON_EXECUTABLE_PE_DATA)
--				set_bit(EFI_NX_PE_DATA, &efi.flags);
--
--			early_memunmap(tbl, sizeof(*tbl));
--		}
--	}
--
- 	set_bit(EFI_RUNTIME_SERVICES, &efi.flags);
- 	efi_clean_memmap();
+ #define EFI_FIELD(var) efi_ ## var
  
-diff --git a/arch/x86/platform/efi/efi_64.c b/arch/x86/platform/efi/efi_64.c
-index 91d31ac422d6c..ac57259a432b8 100644
---- a/arch/x86/platform/efi/efi_64.c
-+++ b/arch/x86/platform/efi/efi_64.c
-@@ -412,51 +412,9 @@ static int __init efi_update_mem_attr(struct mm_struct *mm, efi_memory_desc_t *m
+ #define EFI_ATTR_SHOW(name) \
+diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+index fcafaed37f93e..19d2966cf7dc2 100644
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -148,9 +148,6 @@ static ssize_t systab_show(struct kobject *kobj,
+ 	if (efi.smbios != EFI_INVALID_TABLE_ADDR)
+ 		str += sprintf(str, "SMBIOS=0x%lx\n", efi.smbios);
  
- void __init efi_runtime_update_mappings(void)
- {
--	efi_memory_desc_t *md;
+-	if (IS_ENABLED(CONFIG_X86))
+-		str = efi_systab_show_arch(str);
 -
--	/*
--	 * Use the EFI Memory Attribute Table for mapping permissions if it
--	 * exists, since it is intended to supersede EFI_PROPERTIES_TABLE.
--	 */
- 	if (efi_enabled(EFI_MEM_ATTR)) {
- 		efi_disable_ibt_for_runtime = false;
- 		efi_memattr_apply_permissions(NULL, efi_update_mem_attr);
--		return;
--	}
--
--	/*
--	 * EFI_MEMORY_ATTRIBUTES_TABLE is intended to replace
--	 * EFI_PROPERTIES_TABLE. So, use EFI_PROPERTIES_TABLE to update
--	 * permissions only if EFI_MEMORY_ATTRIBUTES_TABLE is not
--	 * published by the firmware. Even if we find a buggy implementation of
--	 * EFI_MEMORY_ATTRIBUTES_TABLE, don't fall back to
--	 * EFI_PROPERTIES_TABLE, because of the same reason.
--	 */
--
--	if (!efi_enabled(EFI_NX_PE_DATA))
--		return;
--
--	for_each_efi_memory_desc(md) {
--		unsigned long pf = 0;
--
--		if (!(md->attribute & EFI_MEMORY_RUNTIME))
--			continue;
--
--		if (!(md->attribute & EFI_MEMORY_WB))
--			pf |= _PAGE_PCD;
--
--		if ((md->attribute & EFI_MEMORY_XP) ||
--			(md->type == EFI_RUNTIME_SERVICES_DATA))
--			pf |= _PAGE_NX;
--
--		if (!(md->attribute & EFI_MEMORY_RO) &&
--			(md->type != EFI_RUNTIME_SERVICES_CODE))
--			pf |= _PAGE_RW;
--
--		if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
--			pf |= _PAGE_ENC;
--
--		efi_update_mappings(md, pf);
+ 	return str - buf;
+ }
+ 
+diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
+index f8e465da344d5..f8f9e043c283c 100644
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -405,96 +405,13 @@ static void setup_quirks(struct boot_params *boot_params)
  	}
  }
  
+-/*
+- * See if we have Universal Graphics Adapter (UGA) protocol
+- */
+-static efi_status_t
+-setup_uga(struct screen_info *si, efi_guid_t *uga_proto, unsigned long size)
+-{
+-	efi_status_t status;
+-	u32 width, height;
+-	void **uga_handle = NULL;
+-	efi_uga_draw_protocol_t *uga = NULL, *first_uga;
+-	efi_handle_t handle;
+-	int i;
+-
+-	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, size,
+-			     (void **)&uga_handle);
+-	if (status != EFI_SUCCESS)
+-		return status;
+-
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
+-			     uga_proto, NULL, &size, uga_handle);
+-	if (status != EFI_SUCCESS)
+-		goto free_handle;
+-
+-	height = 0;
+-	width = 0;
+-
+-	first_uga = NULL;
+-	for_each_efi_handle(handle, uga_handle, size, i) {
+-		efi_guid_t pciio_proto = EFI_PCI_IO_PROTOCOL_GUID;
+-		u32 w, h, depth, refresh;
+-		void *pciio;
+-
+-		status = efi_bs_call(handle_protocol, handle, uga_proto,
+-				     (void **)&uga);
+-		if (status != EFI_SUCCESS)
+-			continue;
+-
+-		pciio = NULL;
+-		efi_bs_call(handle_protocol, handle, &pciio_proto, &pciio);
+-
+-		status = efi_call_proto(uga, get_mode, &w, &h, &depth, &refresh);
+-		if (status == EFI_SUCCESS && (!first_uga || pciio)) {
+-			width = w;
+-			height = h;
+-
+-			/*
+-			 * Once we've found a UGA supporting PCIIO,
+-			 * don't bother looking any further.
+-			 */
+-			if (pciio)
+-				break;
+-
+-			first_uga = uga;
+-		}
+-	}
+-
+-	if (!width && !height)
+-		goto free_handle;
+-
+-	/* EFI framebuffer */
+-	si->orig_video_isVGA	= VIDEO_TYPE_EFI;
+-
+-	si->lfb_depth		= 32;
+-	si->lfb_width		= width;
+-	si->lfb_height		= height;
+-
+-	si->red_size		= 8;
+-	si->red_pos		= 16;
+-	si->green_size		= 8;
+-	si->green_pos		= 8;
+-	si->blue_size		= 8;
+-	si->blue_pos		= 0;
+-	si->rsvd_size		= 8;
+-	si->rsvd_pos		= 24;
+-
+-free_handle:
+-	efi_bs_call(free_pool, uga_handle);
+-
+-	return status;
+-}
+-
+ static void setup_graphics(struct boot_params *boot_params)
+ {
+ 	efi_guid_t graphics_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
+ 	struct screen_info *si;
+-	efi_guid_t uga_proto = EFI_UGA_PROTOCOL_GUID;
+ 	efi_status_t status;
+ 	unsigned long size;
+ 	void **gop_handle = NULL;
+-	void **uga_handle = NULL;
+ 
+ 	si = &boot_params->screen_info;
+ 	memset(si, 0, sizeof(*si));
+@@ -505,13 +422,6 @@ static void setup_graphics(struct boot_params *boot_params)
+ 	if (status == EFI_BUFFER_TOO_SMALL)
+ 		status = efi_setup_gop(si, &graphics_proto, size);
+ 
+-	if (status != EFI_SUCCESS) {
+-		size = 0;
+-		status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
+-				     &uga_proto, NULL, &size, uga_handle);
+-		if (status == EFI_BUFFER_TOO_SMALL)
+-			setup_uga(si, &uga_proto, size);
+-	}
+ }
+ 
+ 
 diff --git a/include/linux/efi.h b/include/linux/efi.h
-index 06e8d3c69f9e6..244e4e4efe1d6 100644
+index 244e4e4efe1d6..4456a9d51c0de 100644
 --- a/include/linux/efi.h
 +++ b/include/linux/efi.h
-@@ -380,7 +380,6 @@ void efi_native_runtime_setup(void);
+@@ -364,7 +364,6 @@ void efi_native_runtime_setup(void);
+ #define ACPI_20_TABLE_GUID			EFI_GUID(0x8868e871, 0xe4f1, 0x11d3,  0xbc, 0x22, 0x00, 0x80, 0xc7, 0x3c, 0x88, 0x81)
+ #define SMBIOS_TABLE_GUID			EFI_GUID(0xeb9d2d31, 0x2d88, 0x11d3,  0x9a, 0x16, 0x00, 0x90, 0x27, 0x3f, 0xc1, 0x4d)
+ #define SMBIOS3_TABLE_GUID			EFI_GUID(0xf2fd1544, 0x9794, 0x4a2c,  0x99, 0x2e, 0xe5, 0xbb, 0xcf, 0x20, 0xe3, 0x94)
+-#define UGA_IO_PROTOCOL_GUID			EFI_GUID(0x61a4d49e, 0x6f68, 0x4f1b,  0xb9, 0x22, 0xa8, 0x6e, 0xed, 0x0b, 0x07, 0xa2)
+ #define EFI_GLOBAL_VARIABLE_GUID		EFI_GUID(0x8be4df61, 0x93ca, 0x11d2,  0xaa, 0x0d, 0x00, 0xe0, 0x98, 0x03, 0x2b, 0x8c)
+ #define UV_SYSTEM_TABLE_GUID			EFI_GUID(0x3b13a7d4, 0x633e, 0x11dd,  0x93, 0xec, 0xda, 0x25, 0x56, 0xd8, 0x95, 0x93)
+ #define LINUX_EFI_CRASH_GUID			EFI_GUID(0xcfc8fc79, 0xbe2e, 0x4ddc,  0x97, 0xf0, 0x9f, 0x98, 0xbf, 0xe2, 0x98, 0xa0)
+@@ -374,7 +373,6 @@ void efi_native_runtime_setup(void);
+ #define EFI_DEVICE_PATH_TO_TEXT_PROTOCOL_GUID	EFI_GUID(0x8b843e20, 0x8132, 0x4852,  0x90, 0xcc, 0x55, 0x1a, 0x4e, 0x4a, 0x7f, 0x1c)
+ #define EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID	EFI_GUID(0x05c99a21, 0xc70f, 0x4ad2,  0x8a, 0x5f, 0x35, 0xdf, 0x33, 0x43, 0xf5, 0x1e)
+ #define EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID	EFI_GUID(0x9042a9de, 0x23dc, 0x4a38,  0x96, 0xfb, 0x7a, 0xde, 0xd0, 0x80, 0x51, 0x6a)
+-#define EFI_UGA_PROTOCOL_GUID			EFI_GUID(0x982c298b, 0xf4fa, 0x41cb,  0xb8, 0x38, 0x77, 0xaa, 0x68, 0x8f, 0xb8, 0x39)
+ #define EFI_PCI_IO_PROTOCOL_GUID		EFI_GUID(0x4cf5b200, 0x68b8, 0x4ca5,  0x9e, 0xec, 0xb2, 0x3e, 0x3f, 0x50, 0x02, 0x9a)
+ #define EFI_FILE_INFO_ID			EFI_GUID(0x09576e92, 0x6d3f, 0x11d2,  0x8e, 0x39, 0x00, 0xa0, 0xc9, 0x69, 0x72, 0x3b)
  #define EFI_SYSTEM_RESOURCE_TABLE_GUID		EFI_GUID(0xb122a263, 0x3661, 0x4f68,  0x99, 0x29, 0x78, 0xf8, 0xb0, 0xd6, 0x21, 0x80)
- #define EFI_FILE_SYSTEM_GUID			EFI_GUID(0x964e5b22, 0x6459, 0x11d2,  0x8e, 0x39, 0x00, 0xa0, 0xc9, 0x69, 0x72, 0x3b)
- #define DEVICE_TREE_GUID			EFI_GUID(0xb1b621d5, 0xf19c, 0x41a5,  0x83, 0x0b, 0xd9, 0x15, 0x2c, 0x69, 0xaa, 0xe0)
--#define EFI_PROPERTIES_TABLE_GUID		EFI_GUID(0x880aaca3, 0x4adc, 0x4a04,  0x90, 0x79, 0xb7, 0x47, 0x34, 0x08, 0x25, 0xe5)
- #define EFI_RNG_PROTOCOL_GUID			EFI_GUID(0x3152bca5, 0xeade, 0x433d,  0x86, 0x2e, 0xc0, 0x1c, 0xdc, 0x29, 0x1f, 0x44)
- #define EFI_RNG_ALGORITHM_RAW			EFI_GUID(0xe43176d7, 0xb6e8, 0x4827,  0xb7, 0x84, 0x7f, 0xfd, 0xc4, 0xb6, 0x85, 0x61)
- #define EFI_MEMORY_ATTRIBUTES_TABLE_GUID	EFI_GUID(0xdcfa911d, 0x26eb, 0x469f,  0xa2, 0x20, 0x38, 0xb7, 0xdc, 0x46, 0x12, 0x20)
-@@ -581,15 +580,6 @@ struct efi_mem_range {
- 	u64 attribute;
- };
+@@ -1287,8 +1285,6 @@ struct linux_efi_memreserve {
  
--typedef struct {
--	u32 version;
--	u32 length;
--	u64 memory_protection_attribute;
--} efi_properties_table_t;
--
--#define EFI_PROPERTIES_TABLE_VERSION	0x00010000
--#define EFI_PROPERTIES_RUNTIME_MEMORY_PROTECTION_NON_EXECUTABLE_PE_DATA	0x1
--
- typedef struct {
- 	u16 version;
- 	u16 length;
-@@ -872,10 +862,9 @@ static inline int efi_range_is_wc(unsigned long start, unsigned long len)
- #define EFI_PARAVIRT		6	/* Access is via a paravirt interface */
- #define EFI_ARCH_1		7	/* First arch-specific bit */
- #define EFI_DBG			8	/* Print additional debug info at runtime */
--#define EFI_NX_PE_DATA		9	/* Can runtime data regions be mapped non-executable? */
--#define EFI_MEM_ATTR		10	/* Did firmware publish an EFI_MEMORY_ATTRIBUTES table? */
--#define EFI_MEM_NO_SOFT_RESERVE	11	/* Is the kernel configured to ignore soft reservations? */
--#define EFI_PRESERVE_BS_REGIONS	12	/* Are EFI boot-services memory segments available? */
-+#define EFI_MEM_ATTR		9	/* Did firmware publish an EFI_MEMORY_ATTRIBUTES table? */
-+#define EFI_MEM_NO_SOFT_RESERVE	10	/* Is the kernel configured to ignore soft reservations? */
-+#define EFI_PRESERVE_BS_REGIONS	11	/* Are EFI boot-services memory segments available? */
+ void __init efi_arch_mem_reserve(phys_addr_t addr, u64 size);
  
- #ifdef CONFIG_EFI
+-char *efi_systab_show_arch(char *str);
+-
  /*
+  * The LINUX_EFI_MOK_VARIABLE_TABLE_GUID config table can be provided
+  * to the kernel by an EFI boot loader. The table contains a packed
 -- 
 2.53.0
 
