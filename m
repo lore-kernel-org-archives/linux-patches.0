@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025404;
-	b=w60EU5xbD4GjLJz0CygueRDHZuKD3U9auIuXNnmS9Y31FvygZ/pLWoP/7VLMgMfpaqq+
-	 EejGk56OrP1+j3Xj5KN0CEueNdDdmCrH37JAOjVFTWy/htN6zVrqY42zahgMaQ49+nABR
-	 I53mceUvcMU+1cMagNoNJEFI/EK9zUUVgxmFPxdLApV3Et5jGzsZj/BQH50++jWUyc8bL
-	 /3zJu54MfI8K4rLWIW8GzzKn5Urzgu5uoqw8y8gE0Hp6Pekm+x7Iwv7CmfYqPJtWIMf8c
-	 wNArC4ApJGyExjhmO33/0LAJOyWzyYYbF5Vey5GyJu2Inf3qS2R1KVpv8sJp68pmeFQ==
+	t=1795025407;
+	b=0+mBnPsOBKQaSt1iwssYzSBtey+gitLaUiKH/GnbSFnPGp1ZvykCIpWJxnn7arzJhfN+
+	 /piDw8t2d2wqrik14djvgijmetez95ZoJsl4feip+gQDEh2C7FYeAFM7lLEH0/cLZrnO7
+	 vRD3R1RsIvfxKm7ervirssVXjnpu1J5FjUnyvJl5TuiR7HRhfRrLBtghERVzWJoQ/2OVJ
+	 NcQ8QYJQ7hQLT5H0SYnCIrrASU9ioWCUfORJ7Oo2Y2chMjbLPN2xljA2JyvjXeTQAT3kX
+	 BWDGP/AGO7ds11c/KVAmquzAlLy7bjXAVJNR/qLXVVlCgSU+eEOhGqo2NFE6W+FT5HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ud/pwfGpfcwtcZMKyNPIo8uY9/KflCq4VMAIbAP9ghA=;
-	b=iUkdIvsmsiWC0zq0YVXHDULtj/WcTLhhbdket8gl9m3Qwz9q8itqEwISTnzd1yZ4Aw7X
-	 eGZAkSNUZBkLSrgS5ivo1aXSj8pPxSeTvwPIcykZmoKns2QoVhaP1A18L0ska0x3ZnubQ
-	 BJTBNhc7ZewxSHbh0GsMNOsKt8kle9NhHtTzM63OguXVFcyqHuuRo1e77tYY6Skm14Uo6
-	 hzhKWhEwDgtX6RTu5mC3bEoVUfDfRWyD4HOXr+ZYEDVhyz7uzEvC+S9nXcsnpTHDZ4ncP
-	 LzzllrG4XqHlolvPGWYeu+sV12rYR8IfPiFL/Nhh2gYr3XhMUdtbqTset4r0E1ILETw==
+	bh=3wV29IIkLUrT3Yuvc2dd9u1/SEyIDsdylBqL7GEnjDE=;
+	b=pNH5/9hMw2jSC/GqpVr0589Sqv3bHeWTS/OZ4B+i4rMxPqL7LaDwDZelh2hzf2uMxAL6
+	 oI6RLDCmLqxF7kWiNDRiJRvOp/+IaLAUmnPKvGip5taW2wPXUEWnufD/8FA+GfyPVyJaE
+	 y+aR8JnF9gZ8Sr52HGPwzT9cCTz7Bc50QUa373GHlcEcjnrd85Y5MaB6dBPZJcHI6NJn2
+	 zelEx2kyS330nctqysgzlSfdpY5y4I3IIXDLpmJ1zHPAK31B0oPLHXgFywA0HFiQtopTO
+	 LVuM8CoTa2sAOVLGyR1KOogvqlTknX5BM+uMboMdKzyBnUdtNTcyB4G2t0ogJRH51jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZiSSPrdN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hmrsTVzX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547C6606A31C;
-	Wed, 18 Nov 2026 18:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30ADB606A31C;
+	Wed, 18 Nov 2026 18:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZiSSPrdN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88681F000C4;
-	Wed, 18 Nov 2026 18:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hmrsTVzX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8071D1F000C4;
+	Wed, 18 Nov 2026 18:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025404;
-	bh=Ud/pwfGpfcwtcZMKyNPIo8uY9/KflCq4VMAIbAP9ghA=;
+	s=korg; t=1795025407;
+	bh=3wV29IIkLUrT3Yuvc2dd9u1/SEyIDsdylBqL7GEnjDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZiSSPrdNWl1yw5u4wQR4mre7Kiz42xPv5I4MjA2bdDb7NxSrqku3ndpjmlbtwrOht
-	 VVqNnhfWK9KyC5LnQh7Fx23QN5k77hvega625uWEKPR3Q3ono/4sYEPfZIcCebyZsI
-	 fG465cdYb1E98BPGHawnGYMQh5V4aWvgvprk3Adc=
+	b=hmrsTVzXVF/5MythtlwWYKvWojfiyCuuZjGQiaQQOI+4t6usf81QYbo62mJiGdtKA
+	 HYPxzx6Qs7RcN1bYDvbZH0N5j+ir02wmjZ83+QPfO43zVpLWCC9Qb7YG6gjqfPOkGe
+	 VnrEtMjxFu0Jn2fD7nZUo5jyRSsAvjv3h6fJfcOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aristo Chen <aristo.chen@canonical.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1026/2151] phy: freescale: fsl-samsung-hdmi: initialize default rate
-Date: Wed, 18 Nov 2026 15:46:01 +0100
-Message-ID: <20261118150159.765948598@linuxfoundation.org>
+Subject: [PATCH 6.18 1017/2151] scsi: scsi_debug: Avoid 32-bit overflow in WRITE SCATTERED offsets
+Date: Wed, 18 Nov 2026 15:45:52 +0100
+Message-ID: <20261118150159.455512522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,148 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aristo Chen <aristo.chen@canonical.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit c01ccf91b257741e9edc374a465126bae9ae4711 ]
+[ Upstream commit 92feb036a2d33c7b78b8daa2384f5c70d6679a91 ]
 
-The HDMI PHY clock reports 74.25 MHz when cur_cfg is unset, but does
-not establish that rate in hardware. The common clock framework caches
-the reported rate when registering the clock and skips a first
-clk_set_rate(74250000) request because the rate appears unchanged.
+resp_write_scat() computes the length of an LBA range in bytes as a 32-bit
+product, num_by = num * lb_size, and adds it to sg_off, the 32-bit offset
+of the next range in the data-out buffer. The product wraps for a range of
+4 GiB or more, which check_device_access_params() allows once the store is
+that large, and sg_off wraps once the ranges add up to 4 GiB, which neither
+their number nor their overlap prevents.  The ranges that follow are then
+written from the wrong offset in the buffer.
 
-Consequently, a display whose initial mode uses a 74.25 MHz pixel clock
-can leave the PHY with its bootloader register state and receive no
-TMDS signal. Requesting another rate first avoids the issue because the
-set_rate callback configures the PHY.
+Make num_by and sg_off 64-bit, and pass do_device_access() sg_off capped at
+the length of the buffer. An offset at the end of the buffer copies
+nothing, and sg_copy_buffer(), which takes it as an off_t, is never given
+one larger than the buffer that it copies.
 
-Program the 74.25 MHz table entry with the reference clock enabled
-before registering the clock provider. recalc_rate can then report the
-configured rate, and a skipped first rate change is safe. Also enable
-the reference clock when restoring that configuration on resume.
-
-Fixes: 6ad082bee902 ("phy: freescale: add Samsung HDMI PHY")
-Signed-off-by: Aristo Chen <aristo.chen@canonical.com>
-Link: https://patch.msgid.link/20260903054811.9720-1-aristo.chen@canonical.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: LLM
+Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-21-cassel@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-samsung-hdmi.c | 59 +++++++++++++++-----
- 1 file changed, 44 insertions(+), 15 deletions(-)
+ drivers/scsi/scsi_debug.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-index 191c282246d96..33866f129124c 100644
---- a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-+++ b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-@@ -44,6 +44,8 @@
- #define MHZ	(1000UL * 1000UL)
- #endif
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 7d462ede0e11a..aaa530f9f6c6a 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -5076,7 +5076,8 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 	struct sdeb_store_info *sip = devip2sip(devip, true);
+ 	u8 wrprotect;
+ 	u16 lbdof, num_lrd, k;
+-	u32 num, num_by, bt_len, lbdof_blen, sg_off, cum_lb;
++	u32 num, bt_len, lbdof_blen, cum_lb;
++	u64 num_by, sg_off;
+ 	u32 lb_size = sdebug_sector_size;
+ 	u32 ei_lba;
+ 	u64 lba;
+@@ -5152,14 +5153,14 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		num = get_unaligned_be32(up + 8);
+ 		if (sdebug_verbose)
+ 			sdev_printk(KERN_INFO, scp->device,
+-				"%s: k=%d  LBA=0x%llx num=%u  sg_off=%u\n",
++				"%s: k=%d  LBA=0x%llx num=%u  sg_off=%llu\n",
+ 				my_name, k, lba, num, sg_off);
+ 		if (num == 0)
+ 			continue;
+ 		ret = check_device_access_params(scp, lba, num, true);
+ 		if (ret)
+ 			goto err_out_unlock;
+-		num_by = num * lb_size;
++		num_by = (u64)num * lb_size;
+ 		ei_lba = is_16 ? 0 : get_unaligned_be32(up + 12);
  
-+#define PHY_DEFAULT_RATE	74250000
-+
- #define PHY_PLL_DIV_REGS_NUM 7
+ 		if ((cum_lb + num) > bt_len) {
+@@ -5190,7 +5191,9 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		 * Write ranges atomically to keep as close to pre-atomic
+ 		 * writes behaviour as possible.
+ 		 */
+-		ret = do_device_access(sip, scp, sg_off, lba, num, group, true, true);
++		ret = do_device_access(sip, scp,
++				       min_t(u64, sg_off, scsi_bufflen(scp)),
++				       lba, num, group, true, true);
+ 		/* If ZBC zone then bump its write pointer */
+ 		if (sdebug_dev_is_zoned(devip))
+ 			zbc_inc_wp(devip, lba, num);
+@@ -5201,7 +5204,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 			goto err_out_unlock;
+ 		} else if (unlikely(sdebug_verbose && (ret < num_by)))
+ 			sdev_printk(KERN_INFO, scp->device,
+-			    "%s: write: cdb indicated=%u, IO sent=%d bytes\n",
++			    "%s: write: cdb indicated=%llu, IO sent=%d bytes\n",
+ 			    my_name, num_by, ret);
  
- struct phy_config {
-@@ -489,17 +491,6 @@ static int fsl_samsung_hdmi_phy_configure(struct fsl_samsung_hdmi_phy *phy,
- 	return ret;
- }
- 
--static unsigned long phy_clk_recalc_rate(struct clk_hw *hw,
--					 unsigned long parent_rate)
--{
--	struct fsl_samsung_hdmi_phy *phy = to_fsl_samsung_hdmi_phy(hw);
--
--	if (!phy->cur_cfg)
--		return 74250000;
--
--	return phy->cur_cfg->pixclk;
--}
--
- /* Helper function to lookup the available fractional-divider rate */
- static const struct phy_config *fsl_samsung_hdmi_phy_lookup_rate(unsigned long rate)
- {
-@@ -520,6 +511,14 @@ static const struct phy_config *fsl_samsung_hdmi_phy_lookup_rate(unsigned long r
- 		&phy_pll_cfg[i] : &phy_pll_cfg[i+1]);
- }
- 
-+static unsigned long phy_clk_recalc_rate(struct clk_hw *hw,
-+					 unsigned long parent_rate)
-+{
-+	struct fsl_samsung_hdmi_phy *phy = to_fsl_samsung_hdmi_phy(hw);
-+
-+	return phy->cur_cfg->pixclk;
-+}
-+
- static void fsl_samsung_hdmi_calculate_phy(struct phy_config *cal_phy, unsigned long rate,
- 				    u8 p, u16 m, u8 s)
- {
-@@ -637,6 +636,7 @@ static int phy_clk_register(struct fsl_samsung_hdmi_phy *phy)
- 
- static int fsl_samsung_hdmi_phy_probe(struct platform_device *pdev)
- {
-+	const struct phy_config *default_cfg;
- 	struct fsl_samsung_hdmi_phy *phy;
- 	int ret;
- 
-@@ -661,6 +661,23 @@ static int fsl_samsung_hdmi_phy_probe(struct platform_device *pdev)
- 		return dev_err_probe(phy->dev, PTR_ERR(phy->refclk),
- 				     "failed to get ref clk\n");
- 
-+	/*
-+	 * Establish the rate reported by recalc_rate() before registering the
-+	 * clock. Otherwise CCF may skip the first set_rate() when it requests
-+	 * the assumed default rate, leaving the PHY unconfigured.
-+	 */
-+	ret = clk_prepare_enable(phy->refclk);
-+	if (ret)
-+		return dev_err_probe(phy->dev, ret,
-+				     "failed to enable ref clk\n");
-+
-+	default_cfg = fsl_samsung_hdmi_phy_lookup_rate(PHY_DEFAULT_RATE);
-+	ret = fsl_samsung_hdmi_phy_configure(phy, default_cfg);
-+	clk_disable_unprepare(phy->refclk);
-+	if (ret)
-+		return dev_err_probe(phy->dev, ret,
-+				     "failed to configure default rate\n");
-+
- 	pm_runtime_get_noresume(phy->dev);
- 	pm_runtime_set_active(phy->dev);
- 	pm_runtime_enable(phy->dev);
-@@ -696,7 +713,7 @@ static int __maybe_unused fsl_samsung_hdmi_phy_suspend(struct device *dev)
- static int __maybe_unused fsl_samsung_hdmi_phy_resume(struct device *dev)
- {
- 	struct fsl_samsung_hdmi_phy *phy = dev_get_drvdata(dev);
--	int ret = 0;
-+	int ret;
- 
- 	ret = clk_prepare_enable(phy->apbclk);
- 	if (ret) {
-@@ -704,11 +721,23 @@ static int __maybe_unused fsl_samsung_hdmi_phy_resume(struct device *dev)
- 		return ret;
- 	}
- 
--	if (phy->cur_cfg)
--		ret = fsl_samsung_hdmi_phy_configure(phy, phy->cur_cfg);
-+	if (!phy->cur_cfg)
-+		return 0;
- 
--	return ret;
-+	ret = clk_prepare_enable(phy->refclk);
-+	if (ret) {
-+		dev_err(phy->dev, "failed to enable ref clk\n");
-+		goto disable_apbclk;
-+	}
-+
-+	ret = fsl_samsung_hdmi_phy_configure(phy, phy->cur_cfg);
-+	clk_disable_unprepare(phy->refclk);
-+	if (!ret)
-+		return 0;
- 
-+disable_apbclk:
-+	clk_disable_unprepare(phy->apbclk);
-+	return ret;
- }
- 
- static DEFINE_RUNTIME_DEV_PM_OPS(fsl_samsung_hdmi_phy_pm_ops,
+ 		if (unlikely((sdebug_opts & SDEBUG_OPT_RECOV_DIF_DIX) &&
 -- 
 2.53.0
 
