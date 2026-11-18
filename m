@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061727;
-	b=r3H42lfiOlhL0tt+lqcdL72TYw9k9IdG8fQVCQOhmDkyN4LNlI4JgD6c2hgqoVccCOAX
-	 dNspS+91xbWmlhKrafd6YzJZ3Z0G+VtNIQ4M8+v8k+qWJV/M8WwceRPS3Zi8Vyrqaynfn
-	 Gm/g6k0gs2lFoBOq2uU8074ekRgp3P4Z0mlvgY4XAZ1SBBAvE/xptzt/9dOqFC6p+J83d
-	 Ag7nhMKtFWUy5DLiaA32dVIq4rFmKIJJeOPZ/r/kmdaU7wwcH9jEOnjb1CV9wLhdRDKGP
-	 pj6stKi4P9qeBoEpFN/EOVokbZgoJXycnLEHza2xO+n3FuujmxwkBmPsszG9kt7wiPg==
+	t=1795061730;
+	b=PTlmknBUD6fV8cdzkmm7lg0kX5U7bxqMZoCeXQJ1v9kZIsMCcafTumgFZvmWzT7K1qnt
+	 gPpEeXtT6r5VZ5g8hyH6qbuP6u2UxIih9Jvp7wKGa2dXlC+KKxjmb8yafB42RDea7FAFJ
+	 FOWZluA+QGNCF9jUobfEOaTY/kPyUk4Jv/F7LaCnVZebU6Bl3VX4Kj9OgaD1mN5H1rNMQ
+	 zdDHGtBiloYCrbGcKvy/1YuPGwuNabgplBHqnCiJhIF1kgwc2OzY6GXHInAWVzHk25DHl
+	 cPMI8D0fXAXaFZ+Z3ebxW8Hv1IjpB+YGGiwYYI3TBTs/yg3q3ju7Ico2y6VNwGk2DLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061730;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mqqEkuVAptFQzxJoN26wELXVr9DGFZnA4Gsk458AZbg=;
-	b=st1VDV9lepxsC9hpyy8zFJRCkAn1GJWdVcAlNPLF8CdvkyUApY22RnfdzWSHS0tKCy7U
-	 I7xTHCdhAUag5JxfWl54qSWqUeqmD0BRA6Z531EFIklBMvnheCmgWu0j6teW5lv+iGSVP
-	 VimWmbBg408n3gbVadDfV7ehrIpfrRFYCLzDO0tYckPcr+Ec8gCygn7I6BHna46weCfjA
-	 5tNFkC3t6Dq/CMqj3ersGpRDu14YoTSpASym2HtCye5wnc7fvIGSgViruLhHwsSLugoe2
-	 3FpDLO8crdfJf9ELbUxyxzOQkWTpFCSODjvL94GklH51PSdB+Wl2PQi/4yQ5+/E+UeQ==
+	bh=hU9WBhWLQJYqVJwuDEr5zOtOjy1hHTdWxDy2WGVekvU=;
+	b=lCy4IPByjPFkIJgWgKOK81ckfBzWz5lurV3/TX52zorEQgoXX8qpK4Fj/Sn0EDisoDUh
+	 74wfbHOyHrjVcMVP7LwE0n9oc2gk394AYXOg2ymk9QuMPtl29v4KOoFO8vRuBMnKN5CMO
+	 kItgNviHxuiPtgZ3TD6ZEQrQgd6LYC5tbfzD/BijBa1ZmDCXNxTyP/YaxXOVnABBR48cm
+	 l3Ep02ry7Th2NYQl9uCelSw3g8yZR/KYzxYPl22lL6NYwcZm6cwdXlK3yelrijvbrClEF
+	 fgjV4WXn9VeBKTXcgXVu90bwSCL0iy0zcOJ0FvVAVDQ/50rdjFE9/NtsNMVo0EvM3Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CkkQ9S+A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCiJQQfr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D481D606A32A;
-	Thu, 19 Nov 2026 04:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F9C606A320;
+	Thu, 19 Nov 2026 04:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CkkQ9S+A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4101F000C4;
-	Thu, 19 Nov 2026 04:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCiJQQfr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12681F000C4;
+	Thu, 19 Nov 2026 04:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061727;
-	bh=mqqEkuVAptFQzxJoN26wELXVr9DGFZnA4Gsk458AZbg=;
+	s=korg; t=1795061730;
+	bh=hU9WBhWLQJYqVJwuDEr5zOtOjy1hHTdWxDy2WGVekvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CkkQ9S+A/bmgkL4WaWZNLGAVWaqZIVkGr6ja/OUv8Z+ljmHdTBDmpR0jfOTLMgJcc
-	 +L7qXlMROMTdZiGYUT98CmlfoqkUP3WVewQsVaxE7JerSAmTBQr34Y25/E3wwfrlSD
-	 NGAJ4CiknKYdR1gS2no+B0Sfh6MhVWT6/ENT79/c=
+	b=dCiJQQfrnqJbaeuaA6jV/dOLGcWFEJeGy8isGuErpGrZ7SAAYCDIpaAA0Z4vUCXSY
+	 VkU6nY0nN894nRNINCmqJpyMwmqnDc9YO8YtWdracx2QVS8i2oyyOa4ZQzqee9bQhP
+	 /AJcAjJWyo8cVnSJNeY/daLVOzlFjsmgYT7AfOuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyrylo Biryuk <illofspeed@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Robert Hancock <robert.hancock@calian.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1657/1848] ata: libahci: re-enable FBS after error handling on a port multiplier
-Date: Wed, 18 Nov 2026 16:01:35 +0100
-Message-ID: <20261118150029.084899731@linuxfoundation.org>
+Subject: [PATCH 5.10 1658/1848] net: axienet: Clean up device used for DMA calls
+Date: Wed, 18 Nov 2026 16:01:36 +0100
+Message-ID: <20261118150029.129942982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,64 +68,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyrylo Biryuk <illofspeed@gmail.com>
+From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit 23eab9e877497397a0e2394ee9174d576816209e ]
+[ Upstream commit 17882fd4256721451457ee57532bbae0cd5cacfe ]
 
-ahci_do_softreset() disables FBS before resetting a device behind a port
-multiplier, as required by AHCI 1.2 section 9.3.9, and re-enables it only
-when that softreset succeeds. If it fails, for example because a
-hot-plugged drive is still spinning up ("softreset failed (device not
-ready)"), EH escalates to a hardreset of the PMP link, and nothing turns
-FBS back on: only ahci_pmp_attach() does, which runs at the next boot.
-The port keeps working with command-based switching until then.
+Instead of using lp->ndev.parent to find the correct device to use for
+DMA API calls, just use the dev attribute in the device structure.
 
-Seen on a Marvell 88SE9235 (1b4b:9235) with Marvell 88SM9705 port
-multipliers (1b4b:9705, in a Synology DX1222 expansion unit): after
-hot-plugging a drive, the kernel logged "FBS is disabled" followed by
-"softreset failed (device not ready)" and a PMP hardreset, and never
-"FBS is enabled" again (twice, on two different ports).
-
-At the end of ahci_error_handler(), re-enable FBS if a PMP is still
-attached and FBS is supported but disabled.
-
-Fixes: 89dafa20f3da ("ahci: disabled FBS prior to issuing software reset")
-Assisted-by: LLM
-Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261012103917.389-1-illofspeed@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 0c20cb4cfb40 ("net: axienet: free outstanding TX buffers in axienet_dma_bd_release()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../net/ethernet/xilinx/xilinx_axienet_main.c | 32 +++++++++----------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index b51fdee5c3989..db7c29ac1ac82 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -2095,6 +2095,21 @@ void ahci_error_handler(struct ata_port *ap)
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 3253ace2b6014..fa3e2bbee7905 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -190,7 +190,7 @@ static void axienet_dma_bd_release(struct net_device *ndev)
+ 	struct axienet_local *lp = netdev_priv(ndev);
  
- 	sata_pmp_error_handler(ap);
+ 	/* If we end up here, tx_bd_v must have been DMA allocated. */
+-	dma_free_coherent(ndev->dev.parent,
++	dma_free_coherent(lp->dev,
+ 			  sizeof(*lp->tx_bd_v) * lp->tx_bd_num,
+ 			  lp->tx_bd_v,
+ 			  lp->tx_bd_p);
+@@ -215,12 +215,12 @@ static void axienet_dma_bd_release(struct net_device *ndev)
+ 		 */
+ 		if (lp->rx_bd_v[i].cntrl) {
+ 			phys = desc_get_phys_addr(lp, &lp->rx_bd_v[i]);
+-			dma_unmap_single(ndev->dev.parent, phys,
++			dma_unmap_single(lp->dev, phys,
+ 					 lp->max_frm_size, DMA_FROM_DEVICE);
+ 		}
+ 	}
  
-+	/*
-+	 * ahci_do_softreset() turns FBS off before resetting a fan-out link
-+	 * and turns it back on only if that reset succeeds. When it fails
-+	 * (e.g. a hot-plugged drive is still spinning up), EH escalates to a
-+	 * PMP hardreset, which never re-enables FBS, so the port would keep
-+	 * command-based switching until the PMP is attached again (reboot).
-+	 * Restore FBS once recovery is done and the PMP is still attached.
-+	 */
-+	if (sata_pmp_attached(ap) && ata_dev_enabled(ap->link.device)) {
-+		struct ahci_port_priv *pp = ap->private_data;
-+
-+		if (pp->fbs_supported && !pp->fbs_enabled)
-+			ahci_enable_fbs(ap);
-+	}
-+
- 	if (!ata_dev_enabled(ap->link.device))
- 		hpriv->stop_engine(ap);
- }
+-	dma_free_coherent(ndev->dev.parent,
++	dma_free_coherent(lp->dev,
+ 			  sizeof(*lp->rx_bd_v) * lp->rx_bd_num,
+ 			  lp->rx_bd_v,
+ 			  lp->rx_bd_p);
+@@ -249,13 +249,13 @@ static int axienet_dma_bd_init(struct net_device *ndev)
+ 	lp->rx_bd_ci = 0;
+ 
+ 	/* Allocate the Tx and Rx buffer descriptors. */
+-	lp->tx_bd_v = dma_alloc_coherent(ndev->dev.parent,
++	lp->tx_bd_v = dma_alloc_coherent(lp->dev,
+ 					 sizeof(*lp->tx_bd_v) * lp->tx_bd_num,
+ 					 &lp->tx_bd_p, GFP_KERNEL);
+ 	if (!lp->tx_bd_v)
+ 		return -ENOMEM;
+ 
+-	lp->rx_bd_v = dma_alloc_coherent(ndev->dev.parent,
++	lp->rx_bd_v = dma_alloc_coherent(lp->dev,
+ 					 sizeof(*lp->rx_bd_v) * lp->rx_bd_num,
+ 					 &lp->rx_bd_p, GFP_KERNEL);
+ 	if (!lp->rx_bd_v)
+@@ -285,9 +285,9 @@ static int axienet_dma_bd_init(struct net_device *ndev)
+ 			goto out;
+ 
+ 		lp->rx_bd_v[i].skb = skb;
+-		addr = dma_map_single(ndev->dev.parent, skb->data,
++		addr = dma_map_single(lp->dev, skb->data,
+ 				      lp->max_frm_size, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(ndev->dev.parent, addr)) {
++		if (dma_mapping_error(lp->dev, addr)) {
+ 			netdev_err(ndev, "DMA mapping error\n");
+ 			goto out;
+ 		}
+@@ -637,7 +637,7 @@ static int axienet_free_tx_chain(struct net_device *ndev, u32 first_bd,
+ 		/* Ensure we see complete descriptor update */
+ 		dma_rmb();
+ 		phys = desc_get_phys_addr(lp, cur_p);
+-		dma_unmap_single(ndev->dev.parent, phys,
++		dma_unmap_single(lp->dev, phys,
+ 				 (cur_p->cntrl & XAXIDMA_BD_CTRL_LENGTH_MASK),
+ 				 DMA_TO_DEVICE);
+ 
+@@ -775,9 +775,9 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 		cur_p->app0 |= 2; /* Tx Full Checksum Offload Enabled */
+ 	}
+ 
+-	phys = dma_map_single(ndev->dev.parent, skb->data,
++	phys = dma_map_single(lp->dev, skb->data,
+ 			      skb_headlen(skb), DMA_TO_DEVICE);
+-	if (unlikely(dma_mapping_error(ndev->dev.parent, phys))) {
++	if (unlikely(dma_mapping_error(lp->dev, phys))) {
+ 		if (net_ratelimit())
+ 			netdev_err(ndev, "TX DMA mapping error\n");
+ 		ndev->stats.tx_dropped++;
+@@ -791,11 +791,11 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 			lp->tx_bd_tail = 0;
+ 		cur_p = &lp->tx_bd_v[lp->tx_bd_tail];
+ 		frag = &skb_shinfo(skb)->frags[ii];
+-		phys = dma_map_single(ndev->dev.parent,
++		phys = dma_map_single(lp->dev,
+ 				      skb_frag_address(frag),
+ 				      skb_frag_size(frag),
+ 				      DMA_TO_DEVICE);
+-		if (unlikely(dma_mapping_error(ndev->dev.parent, phys))) {
++		if (unlikely(dma_mapping_error(lp->dev, phys))) {
+ 			if (net_ratelimit())
+ 				netdev_err(ndev, "TX DMA mapping error\n");
+ 			ndev->stats.tx_dropped++;
+@@ -873,7 +873,7 @@ static void axienet_recv(struct net_device *ndev)
+ 			length = cur_p->app4 & 0x0000FFFF;
+ 
+ 			phys = desc_get_phys_addr(lp, cur_p);
+-			dma_unmap_single(ndev->dev.parent, phys, lp->max_frm_size,
++			dma_unmap_single(lp->dev, phys, lp->max_frm_size,
+ 					 DMA_FROM_DEVICE);
+ 
+ 			skb_put(skb, length);
+@@ -906,10 +906,10 @@ static void axienet_recv(struct net_device *ndev)
+ 		if (!new_skb)
+ 			break;
+ 
+-		phys = dma_map_single(ndev->dev.parent, new_skb->data,
++		phys = dma_map_single(lp->dev, new_skb->data,
+ 				      lp->max_frm_size,
+ 				      DMA_FROM_DEVICE);
+-		if (unlikely(dma_mapping_error(ndev->dev.parent, phys))) {
++		if (unlikely(dma_mapping_error(lp->dev, phys))) {
+ 			if (net_ratelimit())
+ 				netdev_err(ndev, "RX DMA mapping error\n");
+ 			dev_kfree_skb(new_skb);
+@@ -1727,7 +1727,7 @@ static void axienet_dma_err_handler(struct work_struct *work)
+ 		if (cur_p->cntrl) {
+ 			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
+ 
+-			dma_unmap_single(ndev->dev.parent, addr,
++			dma_unmap_single(lp->dev, addr,
+ 					 (cur_p->cntrl &
+ 					  XAXIDMA_BD_CTRL_LENGTH_MASK),
+ 					 DMA_TO_DEVICE);
 -- 
 2.53.0
 
