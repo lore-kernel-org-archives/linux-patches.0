@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044692;
-	b=FXmSwMLGuQMYXCe4YPiMy+49SyJ9y2EXRD5ClGySQ5cFkGQb2n4nD8eA+gsBRVLPsY3n
-	 zZbTsGGfenXWV7NeToQuFjCbGCsB8CHFugdl60O6j33UXUbE0eWCWDGqFlU7LRsrf9tDf
-	 o9UGG97gUpFkrd6YDQhDrS37GzSa08y+NM+HdzVwuSifk1h10wIamVFRqko+95drf63co
-	 FIm9eqeOK9ZJJZ/KT3J3AhVSS3gbA7iGVkhevCqgvYPXx/xMtSgdQjG8aRA2jssuTxchJ
-	 2p+4ouEmj0Mf1udI1oTO4L3KLOhKcl+HenQilnmv/S1vDTiHrTtMm+/Ttz3rejRbNtw==
+	t=1795044695;
+	b=y9kUXAC4o/pFjxk00Vwjrpj/4bmHrsBAUKGShAwaeeSZdOPiXdslJaT0lTf7GI6AkWJb
+	 e8tuICI2YzVJ9+X3e4G3YBxZzomTcBhBIBYeBkArvSrrljpL3O0CiLlGZArGsOdLxKpnF
+	 jTBEkXFQxjRaBSaBD++opJ+OpJCunfIoAVHiFKJi9H12eoAD7RbSIz01skTOOdSeJs77I
+	 Kf+wFvQjcSw0TVRy+X3cnr4d4a4SJ2dd01YStTVUdkmcyFKH6k24WWMWcMnl/Irhh1x9c
+	 25x7SfLTQGgaBKN/7BVrB4c5R0VPZojbTpS9/Z1R6R8mHTYphFGF2KEOYEnlcef4rxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ziOHj64kOLtge4F6B8K0LBr3kTXlT0Oel4tytHglj+k=;
-	b=ScHI9mDUAE8CAPZ+/ZQQOMdjkZLCJ2Tk1zr75voHHWgWoqNPwAWXU6NpgxkKMcrmnwXC
-	 K9UfcLnLYeoC+2dAcFasRqfxxawRZEZx9xPQpomlQEVQENto+63Nxv3w2v/V/i3HWKsCI
-	 SJqvkKbyW4sKYEYfj6DuIfwZfW080UMOsrUce/MpZNIgkL0+2dTj0viieCdL8BhhBVcz6
-	 y3zB1bKnumd5w0IDlF+F3kIoWGEzlujHVC4zBPTasqVvSZSqBxODF9qBX2NdNCcoA6PCE
-	 6eQTqXXu+buGnqubuSQzS0yD3OqwNLnD9WOZ/01AJaf0/zVvGgHOlW+Jhuo5xm3YxGA==
+	bh=w3ZbylOcZcaPlj/XEjhZ0H1ccnhn5m5VtTOczeVUMMA=;
+	b=PAsgR2FQkDHblNIo7N4Kq8fIsD1LtHE7fVK+GV2T35vZPO9LxJAzoWqd84YTKBE54JHa
+	 2KwJNIX4YT6WEQh2Hq83R0M3s/5u1HLZTjCxHj0wp+9OZFqTMY5KfIeEx+ZLkqvogRQew
+	 vBzembprlqRaZnR9Gtuw2G+/qEKgaHGnVPvdXfqmUythsb/8AWy6Mk8dOGdymRwIYHLpZ
+	 pkHjadC9ZHxmGQgZ5lEJ1YMI0RNIcJWP5IboG6X6vanE7yZkgxwuFiLhavw6sGo4w73PP
+	 c+W+PqMEg6unIKSy2LIsOk+B7BXcYaCeI3DdW70fOHJdGH3w7LTodPrNi79pifDjapw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zfM8gqUt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PTn5nez;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF72606A325;
-	Wed, 18 Nov 2026 23:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D54606A320;
+	Wed, 18 Nov 2026 23:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zfM8gqUt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E93D1F000C4;
-	Wed, 18 Nov 2026 23:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PTn5nez
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76041F000C4;
+	Wed, 18 Nov 2026 23:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044692;
-	bh=ziOHj64kOLtge4F6B8K0LBr3kTXlT0Oel4tytHglj+k=;
+	s=korg; t=1795044695;
+	bh=w3ZbylOcZcaPlj/XEjhZ0H1ccnhn5m5VtTOczeVUMMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zfM8gqUts0nDq8MAfgCNZeeMsMp4eLQ6sorMpKlCHB8YvAExPR5wDItMldrxXB59I
-	 Qx0dhc27oVYZ9fMSmFFFCPj+Z7FC4vhAZux6lS0HDU/Xpevvi963XNZ8bgj9MTspMc
-	 kvEtr6hZDzIaobcg3t1Y8XbbIS88+L8c97WWjwbE=
+	b=1PTn5nezVKRhNOLS3FKzPElUh7PdP+5r+vG1ScyZINeSPS8eBjdyp6CbhmvwELAdR
+	 f2uEsh4Yjudvm44ZtlS7hJltHwhibM7GSxCY8VUohEWMetYbXv1iupOqbM4SiG78Ax
+	 tW+43QdW9WYLHEQj3Uu0wF3ghnw7fTGmpay5lfc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 0657/2857] io_uring: charge tctx nodes and personalities
-Date: Wed, 18 Nov 2026 15:28:11 +0100
-Message-ID: <20261118150225.210388318@linuxfoundation.org>
+Subject: [PATCH 6.1 0658/2857] io_uring: free XArray nodes left by a failed store
+Date: Wed, 18 Nov 2026 15:28:12 +0100
+Message-ID: <20261118150225.245670421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,59 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-Commit 0b34e7b20a48710b6f53716bf7030920b69fdbdd upstream.
+Commit 51bab09b7ca1a9a6dd9303a3b7ee346f8128c963 upstream.
 
-The io_tctx_node allocated the first time a task touches a ring, and
-the XArray nodes behind tctx->xa and ctx->personalities, are plain
-GFP_KERNEL. tctx->xa is indexed by the ring pointer, so nearly every
-entry needs nodes of its own, and a task gets one entry per ring it has
-used. 642 threads on 4000 rings held 2.3GB with 59MB charged against a
-64MB memory.max.
+A failed xa_store() can leave nodes without entries in the tree, and
+erasing every entry doesn't free those. An XArray needs xa_destroy()
+before it goes away, even an empty one. That was dropped for tctx->xa in
+commit ca6484cd308a ("io_uring: no need to call xa_destroy() on empty
+xarray") over a lockdep report from freeing the tctx in softirq context,
+and ctx->personalities never had it.
 
-Allocate the node with GFP_KERNEL_ACCOUNT and set XA_FLAGS_ACCOUNT on
-both XArrays.
+Now that the nodes are charged, a store can fail at memory.max and the
+leaked nodes stay charged. Call xa_destroy() in io_uring_clean_tctx(),
+which the task runs itself in process context before the tctx is freed,
+in the error path of __io_uring_add_tctx_node(), and for
+ctx->personalities in io_ring_ctx_free().
 
-Fixes: 0f2122045b94 ("io_uring: don't rely on weak ->files references")
+Fixes: ca6484cd308a ("io_uring: no need to call xa_destroy() on empty xarray")
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.1 has kmalloc() for the node, inline in
-__io_uring_add_tctx_node()]
+[axboe: 6.1 installs the tctx before adding the node and has no error
+path that frees it, drop that hunk. There's no ctx->hpage_acct either]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
- io_uring/tctx.c     |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c |    1 +
+ io_uring/tctx.c     |    2 ++
+ 2 files changed, 3 insertions(+)
 
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -299,7 +299,7 @@ static __cold struct io_ring_ctx *io_rin
- 	io_alloc_cache_init(&ctx->apoll_cache);
- 	io_alloc_cache_init(&ctx->netmsg_cache);
- 	init_completion(&ctx->ref_comp);
--	xa_init_flags(&ctx->personalities, XA_FLAGS_ALLOC1);
-+	xa_init_flags(&ctx->personalities, XA_FLAGS_ALLOC1 | XA_FLAGS_ACCOUNT);
- 	mutex_init(&ctx->uring_lock);
- 	init_waitqueue_head(&ctx->cq_wait);
- 	spin_lock_init(&ctx->completion_lock);
+@@ -2797,6 +2797,7 @@ static __cold void io_ring_ctx_free(stru
+ 	kfree(ctx->dummy_ubuf);
+ 	kfree(ctx->io_bl);
+ 	xa_destroy(&ctx->io_bl_xa);
++	xa_destroy(&ctx->personalities);
+ 	kfree(ctx);
+ }
+ 
 --- a/io_uring/tctx.c
 +++ b/io_uring/tctx.c
-@@ -93,7 +93,7 @@ __cold int io_uring_alloc_task_context(s
- 		return ret;
+@@ -197,6 +197,8 @@ __cold void io_uring_clean_tctx(struct i
+ 		io_uring_del_tctx_node(index);
+ 		cond_resched();
  	}
- 
--	xa_init(&tctx->xa);
-+	xa_init_flags(&tctx->xa, XA_FLAGS_ACCOUNT);
- 	init_waitqueue_head(&tctx->wait);
- 	atomic_set(&tctx->in_idle, 0);
- 	atomic_set(&tctx->inflight_tracked, 0);
-@@ -125,7 +125,7 @@ int __io_uring_add_tctx_node(struct io_r
- 		}
- 	}
- 	if (!xa_load(&tctx->xa, (unsigned long)ctx)) {
--		node = kmalloc(sizeof(*node), GFP_KERNEL);
-+		node = kmalloc(sizeof(*node), GFP_KERNEL_ACCOUNT);
- 		if (!node)
- 			return -ENOMEM;
- 		node->ctx = ctx;
++	/* A failed xa_store() leaves nodes with no entry behind. */
++	xa_destroy(&tctx->xa);
+ 	if (wq) {
+ 		/*
+ 		 * Must be after io_uring_del_tctx_node() (removes nodes under
 
 
