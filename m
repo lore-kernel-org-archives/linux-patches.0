@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029257;
-	b=xIchh0YcptjN5gfBBUrOAzPQYn2CvIaBaJt/tgnAIYPmjEWwoGHBmMlIq3nMRlhSfwD/
-	 E8HHJlzXmykAAxjBbkwIUweqo3ngTZa5kae/Edthup55UirwbB0V+KPVY2SKPvqI0CNCU
-	 t/c+YsndmHc/tDPd2KyoEkTtuM/OMH/1yQxSkas4DhbkV1CdKAFxfmGixeST3Jt07MTyg
-	 rArrPefH6ws1TrXEKAMulqou3MkpJyVqIv1HIsrUh2fh2i96DDbIbtfQ9kFwKqqHqJUGJ
-	 vsrxeAYDB+eWNQt7ErqcszJefDhmgxZbAZ1xaOdLNTintsbmjgg8NgLENE+9YZSWfpw==
+	t=1795029260;
+	b=gtrfdKYk+bROYSrng3CdwCscgWVD5T+RMoCowXSbFgdvXqycDCePe6JObZfDponRqawX
+	 irSFPVyJOJiEkZCA2jKM+re1zjHmi6M3Kmyd2c/RrLU/niH4AKplWnP8RW65oA/HnCekG
+	 uClXzNbUbdpCWzSoOM6tRO1UreOHlq9OpoM8ASur3Tq0AVjFpQ80aN8ShwNErU2S5r2Ct
+	 Ni59FvPm65GX4fQF+OH4hSGuOUd0y54ZvsI63rmv7nf8c/YkmY1+IdPJKTQu/ApVVqB5b
+	 Y6oDa0sr05I7Wc6WPY3UX4QIZpLu36IpyvnxRMjrby8O7xS/XeBOMv3SyTpkWMpCc3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BUEbwvz9scLU7bF76n0C533KzSV28BGPiVyOwFd/hjA=;
-	b=kxdINSXU90vzoYx6FfaABYGExyF0HvmhYQj+jZMBQFOvStK18v4NO1RquLH4XaO1mVI6
-	 +Rp+mXZqnPTw1OogCan8RX24xvI5vhLR75ZkWB4EgZHaYUj9UN93AmDLdF6daHILGn41E
-	 sEZHICTayie7N6wfEjyETJOsvw9qhaS+u73RcuYZt5sSLSVkv0D4BNlfz7aHRZ5DPiCjH
-	 6Fz/RY1S1Rpc3sM1AsdmNm6kkpe9FguZqYwR4T2j/pczTRVMmAJBaeD10JtYBPq81GWvF
-	 EsIA9SB3moFS0i6xcfEQPZ4Kkp8TEuxvOMXo3xbaw6l8EYj+/Kpq5rJ2OUBxpOpJRZg==
+	bh=fujv/Wss0AftbriWkg3O1iLPPoVJeuWGCPyYsEBsdEo=;
+	b=QyWCL5EALwgTjONE8R7rNQcNq7T6xWCjGEB7UoVHGmqwZ/QCNJ3u4bTh56Wth8LK+b21
+	 EuJ26qhUyB+wmAqme3gENc5R4Pn0Nu1+Mh4RGS8RGs8JuQ8Nolfv487hCjx+4VdwD409U
+	 yrKzcuOhHzOEhY5oiZiRoyGCFX0URSgd2LVhQROPmdAFX3Zp8pkOP4jxTZB1COh/XDVDJ
+	 7od5CFB1VnPLICJS5LUMXdCy8ZVh+uO5hdegPSnjNTYnM8/f8SNSuP+G6JjJmRKJIIHlB
+	 Uur/pzHARTQBHWYjSQUGwynlyXP/580HJZc8Fyb2hKsBsVsqK1V2p9lqMT++H5zhLfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyef6jUU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qElA7EGX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A612606A31C;
-	Wed, 18 Nov 2026 19:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF32606A33A;
+	Wed, 18 Nov 2026 19:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyef6jUU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24941F000C5;
-	Wed, 18 Nov 2026 19:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qElA7EGX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C181F000C4;
+	Wed, 18 Nov 2026 19:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029257;
-	bh=BUEbwvz9scLU7bF76n0C533KzSV28BGPiVyOwFd/hjA=;
+	s=korg; t=1795029260;
+	bh=fujv/Wss0AftbriWkg3O1iLPPoVJeuWGCPyYsEBsdEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyef6jUUb54DxCBKxS8C78drM6J6A8E9yizSguZmdSkAVGhrgzW4tErVyvChZPHmm
-	 7s4tTU4sNwS+psjGbsE9k0IRvihfZBWEtFTbRXso2tpash2822QvV4mykWURBLb2bj
-	 w/Utzke5p+JCpDAeq+YfsgGkMiatecRYzq8ytx1A=
+	b=qElA7EGXoNlDqnzPW4gjhy3TX6l+nDZpPTgdf5InB6oFSRkC1OZbot9P/UcPH/TB9
+	 k14PGkpbz7S5EdWPu7NdFYPzcv6uxW6+eYUB324zZMIZ0Wk4r8Hf6cLLi6U0EjqjDB
+	 7g+xmkdY4t5a0vaMt4JTCJLZX7eU2BjyVSPo3D1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0286/1756] wifi: ath11k: modify null check logic in ath11k_ce_rx_post_pipe()
-Date: Wed, 18 Nov 2026 15:40:13 +0100
-Message-ID: <20261118150019.786944964@linuxfoundation.org>
+Subject: [PATCH 6.12 0287/1756] wifi: ath11k: fix locking problem in ath11k_dp_rx_tid_del_func()
+Date: Wed, 18 Nov 2026 15:40:14 +0100
+Message-ID: <20261118150019.822062749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,46 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 52953d149ab4da0432d54b09f3c8add42b4d4a82 ]
+[ Upstream commit c7555d47b1d051e0406474349deccf74b491ae01 ]
 
-The previous logic in ath11k_ce_rx_post_pipe() incorrectly required both
-dest_ring and status_ring to be NULL in order to exit the function.
-This caused the function to continue even if only one of the pointers
-was NULL, potentially leading to null pointer dereferences in
-ath11k_ce_rx_buf_enqueue_pipe().
+In this function, we iterate over dp->reo_cmd_cache_flush_list using
+list_for_each_entry_safe(), under dp->reo_cmd_lock for concurrent access,
+and for each expired entries we :
+  - drop the lock
+  - call ath11k_dp_reo_cache_flush()
+  - kfree() the entry
+  - retake the lock to keep on iterating
 
-Fix the condition by modifying the logic so that the function returns
-early if either dest_ring or status_ring is NULL.
+list_for_each_entry_safe() protects us from deleting the entry during
+iteration but doesn't protect for concurrent access. So another thread can
+take the lock and modify the list in between and crash like below.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+To fix the issue, move all entries that needs to be freed to a local list
+while under the lock and then iterate over the list to free the entries
+without holding the lock.
+
+	BUG: Unable to handle kernel paging request at virtual address 00000010ddbeef8c
+	Call trace:
+	ath11k_dp_rx_tid_del_func+0x164/0x3c8
+	ath11k_dp_process_reo_status+0x1d4/0x2fc
+	ath11k_dp_service_srng+0x334/0x338
+	ath11k_pcic_ext_grp_napi_poll+0x30/0xc0
+	__napi_poll+0x34/0x184
+	napi_threaded_poll+0xb4/0x1d8
+	kthread+0xdc/0xe0
+	ret_from_fork+0x10/0x20
+
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
 
 Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20240909150824.28195-1-m.lobanov@rosalinux.ru
+Link: https://patch.msgid.link/20260813-ath11k-locking-v2-1-f4113a0bd0f4@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ce.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ce.c b/drivers/net/wireless/ath/ath11k/ce.c
-index 39d9aad33bc69..7f2c91fd7ab3a 100644
---- a/drivers/net/wireless/ath/ath11k/ce.c
-+++ b/drivers/net/wireless/ath/ath11k/ce.c
-@@ -324,7 +324,7 @@ static int ath11k_ce_rx_post_pipe(struct ath11k_ce_pipe *pipe)
- 	dma_addr_t paddr;
- 	int ret = 0;
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index 9344d3f1f45da..077ded7f15da5 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -762,6 +762,9 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
+ 	struct ath11k_base *ab = dp->ab;
+ 	struct dp_rx_tid *rx_tid = ctx;
+ 	struct dp_reo_cache_flush_elem *elem, *tmp;
++	struct list_head flush_list;
++
++	INIT_LIST_HEAD(&flush_list);
  
--	if (!(pipe->dest_ring || pipe->status_ring))
-+	if (!pipe->dest_ring || !pipe->status_ring)
- 		return 0;
+ 	if (status == HAL_REO_CMD_DRAIN) {
+ 		goto free_desc;
+@@ -783,23 +786,25 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
+ 	list_add_tail(&elem->list, &dp->reo_cmd_cache_flush_list);
+ 	dp->reo_cmd_cache_flush_count++;
  
- 	spin_lock_bh(&ab->ce.ce_lock);
+-	/* Flush and invalidate aged REO desc from HW cache */
++	/* identify aged REO desc that needs removal */
+ 	list_for_each_entry_safe(elem, tmp, &dp->reo_cmd_cache_flush_list,
+ 				 list) {
+ 		if (dp->reo_cmd_cache_flush_count > DP_REO_DESC_FREE_THRESHOLD ||
+ 		    time_after(jiffies, elem->ts +
+ 			       msecs_to_jiffies(DP_REO_DESC_FREE_TIMEOUT_MS))) {
+-			list_del(&elem->list);
++			list_move_tail(&elem->list, &flush_list);
+ 			dp->reo_cmd_cache_flush_count--;
+-			spin_unlock_bh(&dp->reo_cmd_lock);
+-
+-			ath11k_dp_reo_cache_flush(ab, &elem->data);
+-			kfree(elem);
+-			spin_lock_bh(&dp->reo_cmd_lock);
+ 		}
+ 	}
+ 	spin_unlock_bh(&dp->reo_cmd_lock);
+ 
++	/* remove aged REO desc from HW */
++	list_for_each_entry_safe(elem, tmp, &flush_list, list) {
++		ath11k_dp_reo_cache_flush(ab, &elem->data);
++		list_del(&elem->list);
++		kfree(elem);
++	}
++
+ 	return;
+ free_desc:
+ 	dma_free_noncoherent(ab->dev, rx_tid->unaligned_size,
 -- 
 2.53.0
 
