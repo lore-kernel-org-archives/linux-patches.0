@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050668;
-	b=LglI7h2syz208kksTL+r1DE3gz3N6bVZgu9uAiTB9V1IvkpkZAqtnjabmSwL6H+RmMYx
-	 8ziHE+KrxTawWHX4dJkt92py5Qnr68K82htj6/tV0GBE0aX09T3eABEbgIEpcz4orgBl4
-	 tPJ32YWY7Bv0prr/vQpCtQjSYCpgFeAlIofx+k2bfJD5ZktsSSzsdLph5L7akwlANv7lY
-	 RjFujOID1aNmXZ/zY9SYmzMen1gKqAiN/ZJtRFDVMIDtMn9zgPyzanOgOE9Ui1ggtqh6D
-	 eU7kk9TJd8VP/LzSSrxTNgWc+4/VifVhbkefXz2wfVUdVRJndP5DMWKc8NnPya6+gpg==
+	t=1795050671;
+	b=v9zO4jGHDcmuLFw81rH6ckemPz3c/cKLCR9zQ0m8JAntq9OdbyNisA95993P9oudIb57
+	 kkcjbpP1nji9/b/vMKIFRgZlQV7da7CETI9NyeuDcLJwnAZRvV1QHZ5FAow/El2PACYof
+	 xCNRRtQuPlw7KJhZvg8DXPV7jwAMhxscAfHQ2qQFGDqCixrgaLzPLGV+ZpaBlqQ1nt7aG
+	 rjaLQx2u4diD13lCWjcx/6qj6ofe78DGpe3HrhL9Qf1MEFVWJhkwz+lotb85YTmgzBo1E
+	 PQy29i36XlgG0E/Rg10T2VMLeoECk0mt+VWKpby41DYGFZgL2MAgkDRv8jmp7rPKH1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DBBkZUcF+7mAo+TnRnnN0yBxHOwancci5o8grdGl34c=;
-	b=ol1pniCme4o+WjrN9pmC4042hsBgNut7MOR1lOv0wQpBRKJ07dmZkticCnYAMrMF8NIf
-	 zpXJVTwO553VzNU5Cmw7KbOA+ZC1JN6OkGUqNKti5MNwpveBWygujz05jxypM1Xh6vjY3
-	 ZryXqd/LpllPOoCgJCVKn+ztpiTg5S3sa42Un8XbDM7wY/fRyXcXCxr8LxL35U47pjrpR
-	 Dqq0SCfX/fYvp9OoV8zbX+G8ZPfXYXqeb7xNvD/jSQeC2ki57Zw440xscek8a91KpJMOH
-	 L9hJqU1tSlrJ0FFhBCF9X4pqXoCYGe/reRdjjvFe2zZ0GM3qPd45HYnxzWoT9VmX1cQ==
+	bh=31tQEkUrnqWeZcNmbebdKvxbI51pSfcCVZuDtvqip/E=;
+	b=WXJwad2aj0WTiSemqMB876lCrYtR3zjKik6agSCrXH0E+cxhvWARYcPXvfctRptTVlAT
+	 rmyu0p5WTa1SUv140Rp2OGbjGz59+2l2QnIcvWAJXQ8Q1OswknfxsKOlby+p2eMhEqrK2
+	 ad0/8Gqbnsudv5d9OpxUJtsBuwn5Em+bJqyfbNmh6AaMYpOdZUiTWKeeOSeLh0j3cHYxn
+	 4HAPK25hEpxZJGe+E0p6rHuNpRhLdgddWjrTYot0DBLGdxOW774nInSAtHrUFnkinrXOU
+	 Z/9YoJXloUO22nQDbsejtZfgkLtRhFEgClYZTN3p6w2KSHyW3k5Z2pDAzVmrAfNGzWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e95A5qPY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d8sPkXBR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C28606A32C;
-	Thu, 19 Nov 2026 01:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A23606A337;
+	Thu, 19 Nov 2026 01:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e95A5qPY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093311F000C4;
-	Thu, 19 Nov 2026 01:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d8sPkXBR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA991F000CA;
+	Thu, 19 Nov 2026 01:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050668;
-	bh=DBBkZUcF+7mAo+TnRnnN0yBxHOwancci5o8grdGl34c=;
+	s=korg; t=1795050671;
+	bh=31tQEkUrnqWeZcNmbebdKvxbI51pSfcCVZuDtvqip/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e95A5qPYNwpdnqWv1La8ALv5AiaxawXcz7ug9LrmPW1EYFdkH56sR80j/Wsz94Zej
-	 vPzUZJeU02SR8Gm2QGIIop50NOM3akjxF7vXvMta7WwRBy3E43HNtQtR2rBKk9WkSK
-	 0RagWz83Cn7jqc8Bb2W7F27i/BWH1Xf04ohsVbS0=
+	b=d8sPkXBRJUk/jwHvUWZ0V8MlJu3eKfGI4zoFza8IFM30N01IFyFGwWKtCdGf1KqcA
+	 isABlXf+7kf6mL40ycIWFQaZXQjcV9XbE/G0Q3XVkLaJaKP/UAHevRAUwhUwjujSmh
+	 5OiobKH/1lQCfiRtJQD0el9i+8eBKAfB6dGYGDV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 6.1 2789/2857] ice: handle flushing stale Tx timestamps in ice_ptp_tx_tstamp
-Date: Wed, 18 Nov 2026 16:03:43 +0100
-Message-ID: <20261118150342.020963343@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 2790/2857] ice: set in_use only after preparing Tx timestamp index
+Date: Wed, 18 Nov 2026 16:03:44 +0100
+Message-ID: <20261118150342.058124719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,305 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit d40fd60093325cd7b77bc8622cb9593cd27fdaa6 ]
+[ Upstream commit 50870d62116038e6f1e17a6aedcf2a95cec37ec7 ]
 
-In the event of a PTP clock time change due to .adjtime or .settime, the
-ice driver needs to update the cached copy of the PHC time and also discard
-any outstanding Tx timestamps.
+The ice_ptp_request_ts() function is used to request a timestamp index for
+use with a packet. When reserving an index, it sets the start time and
+saves a pointer to the skb into the appropriate index. The function marks
+the in_use bit first before doing any of these steps. The IRQ handler which
+clears the timestamps reads the in_use bits uses a lockless flow for
+reading the in_use bits to determine which ones are in-use. This is
+necessary as actually processing a complete timestamp must be able to sleep
+so we cannot hold the timestamp tracker lock over the entire sequence.
+Additionally, blocking the Tx hotpath with such a lock indefinitely would
+be problematic.
 
-This is required because otherwise the wrong copy of the PHC time will be
-used when extending the Tx timestamp. This could result in reporting
-incorrect timestamps to the stack.
+However, the existing flow now has a very narrow window where the IRQ
+handler could see a timestamp as in-use but read a stale value for its
+"start" time.
 
-The current approach taken to handle this is to call
-ice_ptp_flush_tx_tracker, which will discard any timestamps which are not
-yet complete.
+Fix this by ordering the sequence to mark the in_use bit last, and add a
+memory barrier to prevent re-ordering of the previous writes to setup the
+index.
 
-This is problematic for two reasons:
+This was found and reported by Sashiko while reviewing an unrelated change.
 
-1) it could lead to a potential race condition where the wrong timestamp is
-   associated with a future packet.
-
-   This can occur with the following flow:
-
-   1. Thread A gets request to transmit a timestamped packet, and picks an
-      index and transmits the packet
-
-   2. Thread B calls ice_ptp_flush_tx_tracker and sees the index in use,
-      marking is as disarded. No timestamp read occurs because the status
-      bit is not set, but the index is released for re-use
-
-   3. Thread A gets a new request to transmit another timestamped packet,
-      picks the same (now unused) index and transmits that packet.
-
-   4. The PHY transmits the first packet and updates the timestamp slot and
-      generates an interrupt.
-
-   5. The ice_ptp_tx_tstamp thread executes and sees the interrupt and a
-      valid timestamp but associates it with the new Tx SKB and not the one
-      that actual timestamp for the packet as expected.
-
-   This could result in the previous timestamp being assigned to a new
-   packet producing incorrect timestamps and leading to incorrect behavior
-   in PTP applications.
-
-   This is most likely to occur when the packet rate for Tx timestamp
-   requests is very high.
-
-2) on E822 hardware, we must avoid reading a timestamp index more than once
-   each time its status bit is set and an interrupt is generated by
-   hardware.
-
-   We do have some extensive checks for the unread flag to ensure that only
-   one of either the ice_ptp_flush_tx_tracker or ice_ptp_tx_tstamp threads
-   read the timestamp. However, even with this we can still have cases
-   where we "flush" a timestamp that was actually completed in hardware.
-   This can lead to cases where we don't read the timestamp index as
-   appropriate.
-
-To fix both of these issues, we must avoid calling ice_ptp_flush_tx_tracker
-outside of the teardown path.
-
-Rather than using ice_ptp_flush_tx_tracker, introduce a new state bitmap,
-the stale bitmap. Start this as cleared when we begin a new timestamp
-request. When we're about to extend a timestamp and send it up to the
-stack, first check to see if that stale bit was set. If so, drop the
-timestamp without sending it to the stack.
-
-When we need to update the cached PHC timestamp out of band, just mark all
-currently outstanding timestamps as stale. This will ensure that once
-hardware completes the timestamp we'll ignore it correctly and avoid
-reporting bogus timestamps to userspace.
-
-With this change, we fix potential issues caused  by calling
-ice_ptp_flush_tx_tracker during normal operation.
-
+Closes: https://sashiko.dev/#/patchset/20260821-jk-e825c-minimized-fixes-v1-0-9d0731eb4858%40intel.com?part=7
+Fixes: ea9b847cda64 ("ice: enable transmit timestamps for E810 devices")
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 50870d621160 ("ice: set in_use only after preparing Tx timestamp index")
+Link: https://patch.msgid.link/20261027-reduction-v1-2-81237c67a361@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 101 +++++++++++++++--------
- drivers/net/ethernet/intel/ice/ice_ptp.h |   2 +
- 2 files changed, 67 insertions(+), 36 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index aa8981423bffa..fad7c415589ee 100644
+index fad7c415589ee..e43e030f2794a 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -625,11 +625,13 @@ ice_ptp_is_tx_tracker_up(struct ice_ptp_tx *tx)
-  *
-  * If a given index has a valid timestamp, perform the following steps:
-  *
-- * 1) copy the timestamp out of the PHY register
-- * 4) clear the timestamp valid bit in the PHY register
-- * 5) unlock the index by clearing the associated in_use bit.
-- * 2) extend the 40b timestamp value to get a 64bit timestamp
-- * 3) send that timestamp to the stack
-+ * 1) check that the timestamp request is not stale
-+ * 2) check that a timestamp is ready and available in the PHY memory bank
-+ * 3) read and copy the timestamp out of the PHY register
-+ * 4) unlock the index by clearing the associated in_use bit
-+ * 5) check if the timestamp is stale, and discard if so
-+ * 6) extend the 40 bit timestamp value to get a 64 bit timestamp value
-+ * 7) send this 64 bit timestamp to the stack
-  *
-  * Returns true if all timestamps were handled, and false if any slots remain
-  * without a timestamp.
-@@ -640,16 +642,16 @@ ice_ptp_is_tx_tracker_up(struct ice_ptp_tx *tx)
-  * interrupt. In some cases hardware might not interrupt us again when the
-  * timestamp is captured.
-  *
-- * Note that we only take the tracking lock when clearing the bit and when
-- * checking if we need to re-queue this task. The only place where bits can be
-- * set is the hard xmit routine where an SKB has a request flag set. The only
-- * places where we clear bits are this work function, or when flushing the Tx
-- * timestamp tracker.
-+ * Note that we do not hold the tracking lock while reading the Tx timestamp.
-+ * This is because reading the timestamp requires taking a mutex that might
-+ * sleep.
-  *
-- * If the Tx tracker gets flushed while we're processing a packet, we catch
-- * this because we grab the SKB pointer under lock. If the SKB is NULL we know
-- * that another thread already discarded the SKB and we can avoid passing it
-- * up to the stack.
-+ * The only place where we set in_use is when a new timestamp is initiated
-+ * with a slot index. This is only called in the hard xmit routine where an
-+ * SKB has a request flag set. The only places where we clear this bit is this
-+ * function, or during teardown when the Tx timestamp tracker is being
-+ * removed. A timestamp index will never be re-used until the in_use bit for
-+ * that index is cleared.
-  *
-  * If a Tx thread starts a new timestamp, we might not begin processing it
-  * right away but we will notice it at the end when we re-queue the task.
-@@ -658,10 +660,11 @@ ice_ptp_is_tx_tracker_up(struct ice_ptp_tx *tx)
-  * interrupt for that timestamp should re-trigger this function once
-  * a timestamp is ready.
-  *
-- * Note that minimizing the time we hold the lock is important. If we held the
-- * lock for the entire function we would unnecessarily block the Tx hot path
-- * which needs to set the timestamp index. Limiting how long we hold the lock
-- * ensures we do not block Tx threads.
-+ * In cases where the PTP hardware clock was directly adjusted, some
-+ * timestamps may not be able to safely use the timestamp extension math. In
-+ * this case, software will set the stale bit for any outstanding Tx
-+ * timestamps when the clock is adjusted. Then this function will discard
-+ * those captured timestamps instead of sending them to the stack.
-  *
-  * If a Tx packet has been waiting for more than 2 seconds, it is not possible
-  * to correctly extend the timestamp using the cached PHC time. It is
-@@ -722,6 +725,8 @@ static bool ice_ptp_tx_tstamp(struct ice_ptp_tx *tx)
- 		clear_bit(idx, tx->in_use);
- 		skb = tx->tstamps[idx].skb;
- 		tx->tstamps[idx].skb = NULL;
-+		if (test_and_clear_bit(idx, tx->stale))
-+			drop_ts = true;
- 		spin_unlock(&tx->lock);
+@@ -694,6 +694,12 @@ static bool ice_ptp_tx_tstamp(struct ice_ptp_tx *tx)
+ 		struct sk_buff *skb;
+ 		int err;
  
- 		/* It is unlikely but possible that the SKB will have been
-@@ -766,21 +771,24 @@ static bool ice_ptp_tx_tstamp(struct ice_ptp_tx *tx)
- static int
- ice_ptp_alloc_tx_tracker(struct ice_ptp_tx *tx)
- {
-+	unsigned long *in_use, *stale;
- 	struct ice_tx_tstamp *tstamps;
--	unsigned long *in_use;
- 
- 	tstamps = kcalloc(tx->len, sizeof(*tstamps), GFP_KERNEL);
- 	in_use = bitmap_zalloc(tx->len, GFP_KERNEL);
-+	stale = bitmap_zalloc(tx->len, GFP_KERNEL);
- 
--	if (!tstamps || !in_use) {
-+	if (!tstamps || !in_use || !stale) {
- 		kfree(tstamps);
- 		bitmap_free(in_use);
-+		bitmap_free(stale);
- 
- 		return -ENOMEM;
- 	}
- 
- 	tx->tstamps = tstamps;
- 	tx->in_use = in_use;
-+	tx->stale = stale;
- 	tx->init = 1;
- 
- 	spin_lock_init(&tx->lock);
-@@ -808,6 +816,7 @@ ice_ptp_flush_tx_tracker(struct ice_pf *pf, struct ice_ptp_tx *tx)
- 			pf->ptp.tx_hwtstamp_flushed++;
- 		}
- 		clear_bit(idx, tx->in_use);
-+		clear_bit(idx, tx->stale);
- 		spin_unlock(&tx->lock);
- 
- 		/* Clear any potential residual timestamp in the PHY block */
-@@ -816,6 +825,25 @@ ice_ptp_flush_tx_tracker(struct ice_pf *pf, struct ice_ptp_tx *tx)
- 	}
- }
- 
-+/**
-+ * ice_ptp_mark_tx_tracker_stale - Mark unfinished timestamps as stale
-+ * @tx: the tracker to mark
-+ *
-+ * Mark currently outstanding Tx timestamps as stale. This prevents sending
-+ * their timestamp value to the stack. This is required to prevent extending
-+ * the 40bit hardware timestamp incorrectly.
-+ *
-+ * This should be called when the PTP clock is modified such as after a set
-+ * time request.
-+ */
-+static void
-+ice_ptp_mark_tx_tracker_stale(struct ice_ptp_tx *tx)
-+{
-+	spin_lock(&tx->lock);
-+	bitmap_or(tx->stale, tx->stale, tx->in_use, tx->len);
-+	spin_unlock(&tx->lock);
-+}
++		/* Paired with smp_mb__before_atomic() in ice_ptp_request_ts()
++		 * to ensure ordering the in_use bitmap and the indexed fields
++		 * in the tstamps array.
++		 */
++		smp_rmb();
 +
- /**
-  * ice_ptp_release_tx_tracker - Release allocated memory for Tx tracker
-  * @pf: Board private structure
-@@ -841,6 +869,9 @@ ice_ptp_release_tx_tracker(struct ice_pf *pf, struct ice_ptp_tx *tx)
- 	bitmap_free(tx->in_use);
- 	tx->in_use = NULL;
- 
-+	bitmap_free(tx->stale);
-+	tx->stale = NULL;
-+
- 	tx->len = 0;
- }
- 
-@@ -953,20 +984,13 @@ static int ice_ptp_update_cached_phctime(struct ice_pf *pf)
-  * @pf: Board specific private structure
-  *
-  * This function must be called when the cached PHC time is no longer valid,
-- * such as after a time adjustment. It discards any outstanding Tx timestamps,
-- * and updates the cached PHC time for both the PF and Rx rings. If updating
-- * the PHC time cannot be done immediately, a warning message is logged and
-- * the work item is scheduled.
-- *
-- * These steps are required in order to ensure that we do not accidentally
-- * report a timestamp extended by the wrong PHC cached copy. Note that we
-- * do not directly update the cached timestamp here because it is possible
-- * this might produce an error when ICE_CFG_BUSY is set. If this occurred, we
-- * would have to try again. During that time window, timestamps might be
-- * requested and returned with an invalid extension. Thus, on failure to
-- * immediately update the cached PHC time we would need to zero the value
-- * anyways. For this reason, we just zero the value immediately and queue the
-- * update work item.
-+ * such as after a time adjustment. It marks any currently outstanding Tx
-+ * timestamps as stale and updates the cached PHC time for both the PF and Rx
-+ * rings.
-+ *
-+ * If updating the PHC time cannot be done immediately, a warning message is
-+ * logged and the work item is scheduled immediately to minimize the window
-+ * with a wrong cached timestamp.
-  */
- static void ice_ptp_reset_cached_phctime(struct ice_pf *pf)
- {
-@@ -990,8 +1014,12 @@ static void ice_ptp_reset_cached_phctime(struct ice_pf *pf)
- 					   msecs_to_jiffies(10));
- 	}
- 
--	/* Flush any outstanding Tx timestamps */
--	ice_ptp_flush_tx_tracker(pf, &pf->ptp.port.tx);
-+	/* Mark any outstanding timestamps as stale, since they might have
-+	 * been captured in hardware before the time update. This could lead
-+	 * to us extending them with the wrong cached value resulting in
-+	 * incorrect timestamp values.
-+	 */
-+	ice_ptp_mark_tx_tracker_stale(&pf->ptp.port.tx);
- }
- 
- /**
-@@ -2406,6 +2434,7 @@ s8 ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb)
+ 		/* Drop packets which have waited for more than 2 seconds */
+ 		if (time_is_before_jiffies(tx->tstamps[idx].start + 2 * HZ)) {
+ 			drop_ts = true;
+@@ -2433,11 +2439,13 @@ s8 ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb)
+ 		 * a reference to the skb and the start time to allow discarding old
  		 * requests.
  		 */
- 		set_bit(idx, tx->in_use);
-+		clear_bit(idx, tx->stale);
+-		set_bit(idx, tx->in_use);
+-		clear_bit(idx, tx->stale);
  		tx->tstamps[idx].start = jiffies;
  		tx->tstamps[idx].skb = skb_get(skb);
  		skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index 4d7f2b9c2b8ff..288b17bcd38c9 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -114,6 +114,7 @@ struct ice_tx_tstamp {
-  * @lock: lock to prevent concurrent access to fields of this struct
-  * @tstamps: array of len to store outstanding requests
-  * @in_use: bitmap of len to indicate which slots are in use
-+ * @stale: bitmap of len to indicate slots which have stale timestamps
-  * @block: which memory block (quad or port) the timestamps are captured in
-  * @offset: offset into timestamp block to get the real index
-  * @len: length of the tstamps and in_use fields.
-@@ -125,6 +126,7 @@ struct ice_ptp_tx {
- 	spinlock_t lock; /* lock protecting in_use bitmap */
- 	struct ice_tx_tstamp *tstamps;
- 	unsigned long *in_use;
-+	unsigned long *stale;
- 	u8 block;
- 	u8 offset;
- 	u8 len;
++		clear_bit(idx, tx->stale);
++		/* Ensure index is setup before marking it as used */
++		smp_mb__before_atomic();
++		set_bit(idx, tx->in_use);
+ 		ice_trace(tx_tstamp_request, skb, idx);
+ 	}
+ 
 -- 
 2.53.0
 
