@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018001;
-	b=i5NB+cZOZjDXKdh+/uHxXuAZinhvlnzGWWfc/XiAFKKbH6J3TKpu17AvaDdiXI4um3cT
-	 VOu8W7louPR24wtVOfr7B8J0qthi7eZacztNKLQRSW+xDB/R739jFGBoiglXG6C/lyBJb
-	 vqCSabTfhNNxdCR3K9/ctciKI9jwv4p6icl0orCNUBShkRI6Rjx8h/N06S3jk7RPUhvmu
-	 WRa7gRJrIvTawItrR47Mf5K/YMR8YpaQCDN++wAH84rLXWCP0CtEsh28HeNRJbnS5EDB+
-	 msIpgh71LSSIy2cyz8Vxo3gkOrXye5v+Yqx/Qu4zNn91eE6u/HFMlD3mVyBw7IZM36g==
+	t=1795018004;
+	b=rZWbPLN7ddzxHYuxnXfyrcYwCiRsI7mdNqWfffwjeiehTmI8mVgT73RXfSqaFVhjWbh4
+	 2juvk/U1WFK9GWRdfF5j65mIfzWjXw6afWFLMkpvWHA+K8VtsP0dV+mQ/XvgQORQ8MveB
+	 qnVmFbd1Uxto3eaCTMVNLGeUuXN+iVij8ygm7968MjP8ncGZTva5nrsQg+LZL/ao6hW53
+	 I53cHkuyM3sVmnQbZgZ+xMMuiWitYB6K6UAnhwkMoZrjxaOnMDGYZcDuKnHE37QM32Hk4
+	 E2NHwuhLUZXNtI8WaRP1KOvSsrYl9OYBbHXE55pIN59mLuOcHiwJgMfxHFSOOJ0c+/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X3WqVCUjqIwIbMY5baR/ktbKM2Ac6Jl5o2uVCBrE8n8=;
-	b=l7JZS9fHz+L0zDc7hQpa8HqSJKTC9YQ2iPme0b5mEU1Hc1EQpGvBQCym6Ycupf3wxUw2
-	 q6/S/5Y8OXlGZKe10XdpfwQljXxnL2XxnETdmklRwpOupG9I2BOkz5oc1rsCRuaiC5Lvo
-	 JZmLskE/EceX4iu9Jwz1WlxipTZXQLb2UDu5IKoq92AEv3p1NFzdgMC/+F9z+A+9evf+P
-	 YFMH1Woy6apS7EL+oMeJCiKLdNsn0Fy9i3nkbOXSK8GitXct9Ndqy+T9LdmXQLKY3moOg
-	 e0obGPEkInKcNXiYM8letvjpvmrYOH7g6vS55mOzizDoI5V3zkVH6RTPBL3/R7qBilw==
+	bh=uepKgfpYfjAhCk6CfRfJUBBCh66J65zDGw6E/qSnyIE=;
+	b=GXpMx6kkLYCgwAeG4dOGifP4A9rObZSu27z8VIYc6WgmNifkwvXiFr2Kel2en5trt94H
+	 1LSUZe7Nx3CPCSa4z4SCXfI5ilAYZKBP1KIRfpXLyZ18CL9hda6tZLckV/9ARZDAgr2OA
+	 gdnusoECTEnq1mkCfRfUeMc3X3dMCB42WwbPhcxelv/+dHW0WqDnGjbhXD7eBQqfpLVA+
+	 BfyQRo+F5Z/37wep6Jc2/QlvILI1fkrH5y7n3yE2Lt1b5aX6ZmvljM9bhs2y8/qoSfPDs
+	 LzgLxMwZ9vS9auZBITiNFEVwlji9sqrp+2DITJXzCN+eFr3U2qtJ/Bycd7ZESOQbrOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Txo//6cw";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lqvWdjnV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D398606A31C;
-	Wed, 18 Nov 2026 16:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDBC606A320;
+	Wed, 18 Nov 2026 16:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Txo//6cw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EB21F000C6;
-	Wed, 18 Nov 2026 16:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lqvWdjnV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED351F000C4;
+	Wed, 18 Nov 2026 16:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018001;
-	bh=X3WqVCUjqIwIbMY5baR/ktbKM2Ac6Jl5o2uVCBrE8n8=;
+	s=korg; t=1795018004;
+	bh=uepKgfpYfjAhCk6CfRfJUBBCh66J65zDGw6E/qSnyIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Txo//6cwjis9OP3KAFcfHms3BCJEkNcX4qwSoFpvk3ZCRQXAAF9tE1uCid6hWAf6o
-	 a6hFkvnStG6WUAhs2uzeG/1Bzj7r7YcQZf/6Mu9ebWoNoWLo/g6nMpnPKeQ8eafJSQ
-	 3WNn7riOPdjye3B52iEWlDF7LXrOmRaOhMsfkBxY=
+	b=lqvWdjnVJGWzmRPcMDqlNxiU/KS8Rh1Hu3I1sYAKam9EdGEKcL1cW9n8lq7nzamwl
+	 oknMZTkMdL1t9vsVn2eUDHkGuNgsHdKRAJtI5d6tI1Zm5ryiQXhFHPyXNfQYClMfyp
+	 qDlJBT37tBf6y/rrfam/jRZFupeYJaG2U83iY1BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1083/2651] ice: extract ice_vsi_new_stat_arrays()
-Date: Wed, 18 Nov 2026 15:38:43 +0100
-Message-ID: <20261118150326.987711174@linuxfoundation.org>
+Subject: [PATCH 7.3 1084/2651] ice: extract ice_vsi_get_num_qs()
+Date: Wed, 18 Nov 2026 15:38:44 +0100
+Message-ID: <20261118150327.021712818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,102 +71,206 @@ Content-Transfer-Encoding: 8bit
 
 From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit ed3cbc4430c2f365281623b8c9fa81e47f4e8d31 ]
+[ Upstream commit 4425fa055c0da53c893ff5989b63cd04b9c8353b ]
 
-Split the allocation of a struct ice_vsi_stats and its two ring stats
-arrays out of ice_vsi_alloc_stat_arrays(), which is left with just the
-lookup and the store into pf->vsi_stats[].
+ice_vsi_set_num_qs() mixed two things: deciding how many queues a VSI
+gets, and applying all the side effects of that decision. Split the
+decision out into ice_vsi_get_num_qs(), returning both counts at once.
 
-The sole caller keeps passing the very same queue counts as before,
-vsi->alloc_txq and vsi->alloc_rxq. A later commit adds a second caller
-in the rebuild path, which cannot use vsi->alloc_* because it has to
-size the arrays before the VSI is reconfigured.
+To make that possible, group alloc_txq and alloc_rxq in struct ice_vsi
+with struct_group_tagged(), which gives the return type without adding
+any new storage. Field order changes slightly, num_txq now follows
+alloc_rxq, but nothing depends on it.
 
-Note that the error path no longer clears pf->vsi_stats[vsi->idx]; the
-early return above guarantees it is already NULL.
+ice_vsi_get_num_qs() takes @held_txq and @held_rxq from the start, even
+though the only caller so far passes zero for both. They let a caller
+ask what the counts would be once the queues the VSI currently owns are
+back in the PF pool. A later commit adds the caller that needs this: the
+rebuild path has to size its ring stats arrays before ice_vsi_decfg()
+releases the queues, yet the arrays must match what ice_vsi_set_num_qs()
+computes afterwards.
+
+While reshaping the whole body, drop the kernel-doc line promising a
+return value; ice_vsi_set_num_qs() returns void.
 
 No functional change intended.
 
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Link: https://patch.msgid.link/20260925132636.123300-4-przemyslaw.kitszel@intel.com
+Link: https://patch.msgid.link/20260925132636.123300-5-przemyslaw.kitszel@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: f1c3b87896e6 ("ice: size ring stats arrays from the final queue count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 47 +++++++++++++-----------
- 1 file changed, 25 insertions(+), 22 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h     |  6 +-
+ drivers/net/ethernet/intel/ice/ice_lib.c | 88 ++++++++++++++----------
+ 2 files changed, 55 insertions(+), 39 deletions(-)
 
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index fadfe94bf1c8c..f1ba86d066be5 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -403,9 +403,11 @@ struct ice_vsi {
+ 	u8 rx_mapping_mode;		 /* ICE_MAP_MODE_[CONTIG|SCATTER] */
+ 	u16 *txq_map;			 /* index in pf->avail_txqs */
+ 	u16 *rxq_map;			 /* index in pf->avail_rxqs */
+-	u16 alloc_txq;			 /* Allocated Tx queues */
++	struct_group_tagged(ice_vsi_alloc_queues_params, alloc_txq_rxq,
++		u16 alloc_txq;		 /* Allocated Tx queues */
++		u16 alloc_rxq;		 /* Allocated Rx queues */
++	);
+ 	u16 num_txq;			 /* Used Tx queues */
+-	u16 alloc_rxq;			 /* Allocated Rx queues */
+ 	u16 num_rxq;			 /* Used Rx queues */
+ 	u16 req_txq;			 /* User requested Tx queues */
+ 	u16 req_rxq;			 /* User requested Rx queues */
 diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 1414127d32cd8..ed32ae2667c5f 100644
+index ed32ae2667c5f..134984077d5da 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -519,6 +519,30 @@ static irqreturn_t ice_msix_clean_rings(int __always_unused irq, void *data)
- 	return IRQ_HANDLED;
+@@ -153,23 +153,61 @@ static void ice_vsi_set_num_desc(struct ice_vsi *vsi)
+ 	}
  }
  
-+static struct ice_vsi_stats *ice_vsi_new_stat_arrays(int txq, int rxq)
-+{
-+	struct ice_ring_stats **tx_ring_stats;
-+	struct ice_ring_stats **rx_ring_stats;
-+	struct ice_vsi_stats *vsi_stat;
-+
-+	vsi_stat = kzalloc_obj(*vsi_stat);
-+	tx_ring_stats = kzalloc_objs(*tx_ring_stats, txq);
-+	rx_ring_stats = kzalloc_objs(*rx_ring_stats, rxq);
-+	if (!vsi_stat || !tx_ring_stats || !rx_ring_stats) {
-+		kfree(vsi_stat);
-+		kfree(tx_ring_stats);
-+		kfree(rx_ring_stats);
-+		return NULL;
-+	}
-+
-+	vsi_stat->tx_ring_stats = tx_ring_stats;
-+	vsi_stat->rx_ring_stats = rx_ring_stats;
-+	vsi_stat->tx_ring_stats_len = txq;
-+	vsi_stat->rx_ring_stats_len = rxq;
-+
-+	return vsi_stat;
+-static u16 ice_get_rxq_count(struct ice_pf *pf)
++static u16 ice_get_rxq_count(struct ice_pf *pf, u16 held)
+ {
+-	return min(ice_get_avail_rxq_count(pf),
+-		   netif_get_num_default_rss_queues());
++	return min_t(u16, ice_get_avail_rxq_count(pf) + held,
++		     netif_get_num_default_rss_queues());
+ }
+ 
+-static u16 ice_get_txq_count(struct ice_pf *pf)
++static u16 ice_get_txq_count(struct ice_pf *pf, u16 held)
+ {
+-	return min(ice_get_avail_txq_count(pf),
+-		   netif_get_num_default_rss_queues());
++	return min_t(u16, ice_get_avail_txq_count(pf) + held,
++		     netif_get_num_default_rss_queues());
 +}
 +
- /**
-  * ice_vsi_alloc_stat_arrays - Allocate statistics arrays
-  * @vsi: VSI pointer
-@@ -537,33 +561,12 @@ static int ice_vsi_alloc_stat_arrays(struct ice_vsi *vsi)
- 	/* realloc will happen in rebuild path */
- 		return 0;
- 
--	vsi_stat = kzalloc_obj(*vsi_stat);
-+	vsi_stat = ice_vsi_new_stat_arrays(vsi->alloc_txq, vsi->alloc_rxq);
- 	if (!vsi_stat)
- 		return -ENOMEM;
- 
--	vsi_stat->tx_ring_stats =
--		kzalloc_objs(*vsi_stat->tx_ring_stats, vsi->alloc_txq);
--	if (!vsi_stat->tx_ring_stats)
--		goto err_alloc_tx;
--	vsi_stat->tx_ring_stats_len = vsi->alloc_txq;
--
--	vsi_stat->rx_ring_stats =
--		kzalloc_objs(*vsi_stat->rx_ring_stats, vsi->alloc_rxq);
--	if (!vsi_stat->rx_ring_stats)
--		goto err_alloc_rx;
--	vsi_stat->rx_ring_stats_len = vsi->alloc_rxq;
--
- 	pf->vsi_stats[vsi->idx] = vsi_stat;
--
- 	return 0;
--
--err_alloc_rx:
--	kfree(vsi_stat->rx_ring_stats);
--err_alloc_tx:
--	kfree(vsi_stat->tx_ring_stats);
--	kfree(vsi_stat);
--	pf->vsi_stats[vsi->idx] = NULL;
--	return -ENOMEM;
++/* @held_txq, @held_rxq: queues the VSI still owns but is about to return to the
++ * PF pool, so that the result matches what it will be once they are back there.
++ */
++static struct ice_vsi_alloc_queues_params
++ice_vsi_get_num_qs(struct ice_vsi *vsi, u16 held_txq, u16 held_rxq)
++{
++	struct ice_vsi_alloc_queues_params qs = {};
++	struct ice_pf *pf = vsi->back;
++
++	switch (vsi->type) {
++	case ICE_VSI_PF:
++		qs.alloc_txq = vsi->req_txq ?: ice_get_txq_count(pf, held_txq);
++
++		/* only 1 Rx queue unless RSS is enabled */
++		if (!test_bit(ICE_FLAG_RSS_ENA, pf->flags))
++			qs.alloc_rxq = 1;
++		else
++			qs.alloc_rxq = vsi->req_rxq ?:
++				       ice_get_rxq_count(pf, held_rxq);
++		break;
++	case ICE_VSI_SF:
++	case ICE_VSI_CTRL:
++	case ICE_VSI_LB:
++		qs.alloc_txq = 1;
++		qs.alloc_rxq = 1;
++		break;
++	case ICE_VSI_VF:
++		qs.alloc_txq = vsi->vf->num_req_qs ?: vsi->vf->num_vf_qs;
++		qs.alloc_rxq = qs.alloc_txq;
++		break;
++	case ICE_VSI_CHNL:
++		break;
++	default:
++		dev_warn(ice_pf_to_dev(pf), "Unknown VSI type %d\n", vsi->type);
++		return vsi->alloc_txq_rxq;
++	}
++
++	return qs;
  }
  
  /**
+  * ice_vsi_set_num_qs - Set number of queues, descriptors and vectors for a VSI
+  * @vsi: the VSI being configured
+- *
+- * Return 0 on success and a negative value on error
+  */
+ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
+ {
+@@ -180,44 +218,27 @@ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
+ 	if (WARN_ON(vsi_type == ICE_VSI_VF && !vf))
+ 		return;
+ 
++	vsi->alloc_txq_rxq = ice_vsi_get_num_qs(vsi, 0, 0);
++
+ 	switch (vsi_type) {
+ 	case ICE_VSI_PF:
+-		if (vsi->req_txq) {
+-			vsi->alloc_txq = vsi->req_txq;
++		if (vsi->req_txq)
+ 			vsi->num_txq = vsi->req_txq;
+-		} else {
+-			vsi->alloc_txq = ice_get_txq_count(pf);
+-		}
++		if (vsi->req_rxq && test_bit(ICE_FLAG_RSS_ENA, pf->flags))
++			vsi->num_rxq = vsi->req_rxq;
+ 
+ 		pf->num_lan_tx = vsi->alloc_txq;
+-
+-		/* only 1 Rx queue unless RSS is enabled */
+-		if (!test_bit(ICE_FLAG_RSS_ENA, pf->flags)) {
+-			vsi->alloc_rxq = 1;
+-		} else {
+-			if (vsi->req_rxq) {
+-				vsi->alloc_rxq = vsi->req_rxq;
+-				vsi->num_rxq = vsi->req_rxq;
+-			} else {
+-				vsi->alloc_rxq = ice_get_rxq_count(pf);
+-			}
+-		}
+-
+ 		pf->num_lan_rx = vsi->alloc_rxq;
+ 
+ 		vsi->num_q_vectors = max(vsi->alloc_rxq, vsi->alloc_txq);
+ 		break;
+ 	case ICE_VSI_SF:
+-		vsi->alloc_txq = 1;
+-		vsi->alloc_rxq = 1;
+ 		vsi->num_q_vectors = 1;
+ 		vsi->irq_dyn_alloc = true;
+ 		break;
+ 	case ICE_VSI_VF:
+ 		if (vf->num_req_qs)
+ 			vf->num_vf_qs = vf->num_req_qs;
+-		vsi->alloc_txq = vf->num_vf_qs;
+-		vsi->alloc_rxq = vf->num_vf_qs;
+ 		/* pf->vfs.num_msix_per includes (VF miscellaneous vector +
+ 		 * data queue interrupts). Since vsi->num_q_vectors is number
+ 		 * of queues vectors, subtract 1 (ICE_NONQ_VECS_VF) from the
+@@ -226,22 +247,15 @@ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
+ 		vsi->num_q_vectors = vf->num_msix - ICE_NONQ_VECS_VF;
+ 		break;
+ 	case ICE_VSI_CTRL:
+-		vsi->alloc_txq = 1;
+-		vsi->alloc_rxq = 1;
+ 		vsi->num_q_vectors = 1;
+ 		break;
+ 	case ICE_VSI_CHNL:
+-		vsi->alloc_txq = 0;
+-		vsi->alloc_rxq = 0;
+ 		break;
+ 	case ICE_VSI_LB:
+-		vsi->alloc_txq = 1;
+-		vsi->alloc_rxq = 1;
+ 		/* A dummy q_vector, no actual IRQ. */
+ 		vsi->num_q_vectors = 1;
+ 		break;
+ 	default:
+-		dev_warn(ice_pf_to_dev(pf), "Unknown VSI type %d\n", vsi_type);
+ 		break;
+ 	}
+ 
 -- 
 2.53.0
 
