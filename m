@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018538;
-	b=xP0qDpttvHiTg4Ze3DY0+FvEQo1Tv+5JzuslCSOvEu02q0u/q0vjIqubgEONWMG8+7my
-	 BXCHMzCfrx0Z/qgZXyPaiPwdyYohteWrAJD1mkEs8C92MDnFmoZXE7MGdIObh8dyBVrLB
-	 Ug6RhdYuKgsblYheQF4T/eJuU4mNhxkKPx9JUvGQO7XqdSnOnyA9gSokO2P/NKCDIS9Gf
-	 F8R2U/6RIkS5TOJ6C15adUZUd6I4uxmWMYoxExNBoeXdGUFKFXhNeVHDvgl81hDx+JBjL
-	 ZFTntR9Cs3dwT9qXmw1HDVwXDbv7wWSH8DtiLUGD5Kgmc9Cp3BBN9Mlq7qSjd/o0grw==
+	t=1795018541;
+	b=FKAMC+G0xl80I/DB0XJSocuuytdq11Cf3Jr11MptFp+hn7xqCzqSRJvBHasrRmlFxhcZ
+	 jxZwQXIjWX6uvwCyDLivOkSzKVwh2VL6dRSUmf3Ns8okQlfk/TVDZvTRHisXzNpOCWPfp
+	 HG6Ortg6um1B/+YrNwHx3aRFMerJeSh141bYIjXGGMA4UKYdc5Oe7BH5w5JQMpVCZ35bW
+	 70oJ/ZP1lcg+EK3ZCyQTIFDRUEkHu8o06JdoEUzwSiSjhEyyEQIuIF3T45Kdin00XGN5I
+	 ZCDcuqo/9BYjemXhMsSVGGO6cMWtWtDaBaAyWk9Y+MZbgRwaCwvbns65KHTqsHP6Ckg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+j73dKNJQSXM+5YC9v6f1nIdOy74vpRTi8MAhnc28Nw=;
-	b=gKJ6JOVAeTCwf4eG4Y8sLM9/AbHlHjfUKfgS1vjPGFqieMH5JBG6wA10ndwk5x3NCuvK
-	 4lo/57t2zy2B+XuOnlsU9eZqPn7XNh3Mve/SNL2FdT8Ztr5mVz94Nvem8ogEkHSRABaNI
-	 AJ1fLTqKqHBlWzzSEL0Pb/dBRQtgxaYTTiPovlYqYupgCDJ5H4los9TcMKAtKmTgmFpA8
-	 x9unp2ST7Mx2xBxdxp6NQbk8y19I5acE+1yAMlGuhL0NkrdNWxo5OVl7v+HuAbqCCfHm2
-	 ek9ojZcn05RpWqwUX9NuS+1P5rhVNVzx6Vli5bjxkoxyIU+tW1nztE2MaC1rr5phNNA==
+	bh=KK8ANL4KgdV+7yf4c43C0GDT/O55W5XBn7qMR+F4OB4=;
+	b=yrFMaryqdjQfdxbqglAbLjHhXKEaDQkg/1m1NkrE+pzTbZQVXUiO6hPXjDS0vS3TIfMe
+	 6gYK/fRYSoPNgeaSBUOAEnnaJQ4y04klcssRodf6c57fGpjkuRoZnwfec+vOSjpDK6A9G
+	 eo3Rqbb7dIE6VOaUWhLcuIA1iRKaJ6+8kB1S8zkBCOtBI1zDH7obu87i2DpxA8WbVB6Dr
+	 uTG5Iq5CZYpkc5lw5HEYDjZJ1U9mE23zeiqAZwKoGfIrgqzqUEYwiv0yn5PERBvaC15VV
+	 saTKO4QsJeDh8HXDjutrAYXzXoFwZCTTeTB+joqIpKjP8fT6Xp+747VcjwcDhIe/z5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQyZglh7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ykjVFTlo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DED606A31C;
-	Wed, 18 Nov 2026 16:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A96606A320;
+	Wed, 18 Nov 2026 16:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQyZglh7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3EC1F000C4;
-	Wed, 18 Nov 2026 16:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ykjVFTlo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088D71F000C4;
+	Wed, 18 Nov 2026 16:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018538;
-	bh=+j73dKNJQSXM+5YC9v6f1nIdOy74vpRTi8MAhnc28Nw=;
+	s=korg; t=1795018541;
+	bh=KK8ANL4KgdV+7yf4c43C0GDT/O55W5XBn7qMR+F4OB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zQyZglh7Xm31E9H6+2lHfSoE8KeRO9Rj19yAjgMSfxk3J9XMY4YrLMGFrbV+HHzlY
-	 kYjv6NOUr5BUWDlI8R/YrK6a6lKhEitc9pjPBWPoZ+BU45oTuMJtp/LRhwZhM9A+7l
-	 yT50f8ULkFx/iJ8ODFJjgWJEH/bKc1iNoqgj14y8=
+	b=ykjVFTloKO+J9MwhRTte7mG3xiziLxuuTqlCT+HkUSCHQben1aCKyBbEyOqDUFK1b
+	 6J4FjBVEJrgV1y1YN9JRgeE84hOGFXqjGQgKhZRJXD1QddBKw9OrEqF3Vlr8h06FiY
+	 MDEp5k9qgnZpgrIQsj6rpwcNc+SG7m/IexOV/qJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Giunta <marco_giunta@outlook.it>,
+	Jiale Yao <yaojiale02@163.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1277/2651] ASoC: aw88399: skip BSTS check when boost converter is bypassed
-Date: Wed, 18 Nov 2026 15:41:57 +0100
-Message-ID: <20261118150333.921911361@linuxfoundation.org>
+Subject: [PATCH 7.3 1278/2651] ASoC: rt5682-sdw: always cancel jack work on remove
+Date: Wed, 18 Nov 2026 15:41:58 +0100
+Message-ID: <20261118150333.954882747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,72 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Giunta <marco_giunta@outlook.it>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 664824782df63013ba8686b649c625cac4793248 ]
+[ Upstream commit 9a98f7e955d35e0831fb179e88e98cf9bc0e001e ]
 
-The sysst check in aw_dev_check_sysst() requires BSTS (boost finished)
-to assert, but on hardware where the boost converter is bypassed via
-external power supply (BSTCTRL10 register 0x69, EN_HVBAT bit 2 set),
-BSTS (SYSST register 0x01, bit 9) will never assert.
+rt5682_sdw_remove() cancels jack_detect_work only when hw_init is true.
+rt5682_update_status() clears hw_init when the SoundWire slave becomes
+unattached, but jack_detect_work may already have been queued by
+rt5682_interrupt_callback() or the jack initialization path.
 
-The vendor's generic driver (aw883xx) handles this by reading EN_HVBAT and
-conditionally masking out BSTS from the sysst check. The in-tree driver
-missed this logic when the original code was ported upstream.
+A remove after that status update can therefore skip the cancellation and
+leave delayed work pending after the codec private data has been freed.
 
-Add the same conditional check, matching the vendor driver's
-aw_dev_sysst_check() implementation.
+The work object is initialized during probe, so cancel it unconditionally
+instead of relying on the mutable hw_init state.
 
-Fixes: 8ade6cc7e261 ("ASoC: codecs: Add aw88399 amplifier driver")
-Signed-off-by: Marco Giunta <marco_giunta@outlook.it>
-Link: https://patch.msgid.link/SN6PR19MB2303FF1922BF5F876378066FFC8F2@SN6PR19MB2303.namprd19.prod.outlook.com
+Fixes: ac63716da307 ("ASoC: Realtek/Maxim SoundWire codecs: disable pm_runtime on remove")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925145019.2290367-2-yaojiale02@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/aw88399.h        |  5 +++++
- sound/soc/codecs/aw88399-lib.c | 13 +++++++++++++
- 2 files changed, 18 insertions(+)
+ sound/soc/codecs/rt5682-sdw.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/sound/aw88399.h b/include/sound/aw88399.h
-index a1e0de6be8eac..974b5774ac2b6 100644
---- a/include/sound/aw88399.h
-+++ b/include/sound/aw88399.h
-@@ -449,6 +449,11 @@
- #define AW88399_NOISE_GATE_EN_MASK	\
- 	(~(((1<<AW88399_NOISE_GATE_EN_BITS_LEN)-1) << AW88399_NOISE_GATE_EN_START_BIT))
+diff --git a/sound/soc/codecs/rt5682-sdw.c b/sound/soc/codecs/rt5682-sdw.c
+index 23c7d2a9dbeeb..5f2897c58ad7d 100644
+--- a/sound/soc/codecs/rt5682-sdw.c
++++ b/sound/soc/codecs/rt5682-sdw.c
+@@ -704,8 +704,7 @@ static void rt5682_sdw_remove(struct sdw_slave *slave)
+ {
+ 	struct rt5682_priv *rt5682 = dev_get_drvdata(&slave->dev);
  
-+#define AW88399_EPS_EN_START_BIT	(2)
-+#define AW88399_EPS_EN_BITS_LEN		(1)
-+#define AW88399_EPS_EN_MASK		\
-+	(~(((1 << AW88399_EPS_EN_BITS_LEN) - 1) << AW88399_EPS_EN_START_BIT))
-+
- #define AW88399_WDT_CNT_START_BIT	(0)
- #define AW88399_WDT_CNT_BITS_LEN	(8)
- #define AW88399_WDT_CNT_MASK		\
-diff --git a/sound/soc/codecs/aw88399-lib.c b/sound/soc/codecs/aw88399-lib.c
-index 809c2faa0c0c7..1ba0147cf4dfd 100644
---- a/sound/soc/codecs/aw88399-lib.c
-+++ b/sound/soc/codecs/aw88399-lib.c
-@@ -183,6 +183,19 @@ static int aw_dev_check_sysst(struct aw88399 *aw88399)
- 	else
- 		check_val = AW88399_BIT_SYSST_SWS_CHECK;
+-	if (rt5682->hw_init)
+-		cancel_delayed_work_sync(&rt5682->jack_detect_work);
++	cancel_delayed_work_sync(&rt5682->jack_detect_work);
  
-+	/*
-+	 * When an external power supply (EPS) is used to feed the amplifier
-+	 * (EN_HVBAT bit in BSTCTRL10 set), the boost converter is bypassed,
-+	 * and BSTS (boost finished) will never assert. Skip the BSTS check in
-+	 * this case, matching the vendor driver's behavior.
-+	 */
-+	ret = regmap_read(aw_dev->regmap, AW88399_BSTCTRL10_REG, &reg_val);
-+	if (ret)
-+		return ret;
-+
-+	if (reg_val & (~AW88399_EPS_EN_MASK))
-+		check_val &= ~AW88399_BSTS_FINISHED_VALUE;
-+
- 	/*
- 	 * On some hardware the BSTS (boost-finished) status bit does not
- 	 * reliably assert even when audio output is working normally.
+ 	pm_runtime_disable(&slave->dev);
+ }
 -- 
 2.53.0
 
