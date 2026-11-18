@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027232;
-	b=Pycn31/p7QpX2ZA+aPQRC+CfhLvRk7ICCrXegVUL4LWQ0BKGUKS6SqwUOABaxt9tnRqk
-	 pxOv6QfeEHM3VtcMjcG4u3pbNx+U5oadZakjSX5PSNctaR5+oX8V9TZE/W/oz5E5Lx3fZ
-	 cjwaQoSrVdHajf9S0VUtYN98nSuda8NfZYOQGJLHpgfFpuJGbe+7EBrcDBp1UfloXhcXd
-	 v2PSwD6YrKIvbQfgIln23NIli0Ajsbr4YF072eQsDE6JLDLCVupvoK0i7OeK9UHXna3AO
-	 3Z6doWxpLfpRExZ4O0vcq96nubPXm8EkYFUtDmYVq79cE3mpKs3OvEqBGpKEAWNDC5w==
+	t=1795027236;
+	b=esDkjM9buRnVnuGuMmalty+SVk4EfwDiMPh3iF57ENDA2/clGvykoT7gXhAPJ/9Web+X
+	 mNFxSjRiceFoQ5YURGjlyfQVqa3ctkfeU6oDrsU7WlhcCm+zWss06npmkZrIO6SMrI/7c
+	 tToEdwVKChDbmgixx0gk1lb9OxJZF91Xw6A1hZWKtZ3aLtAdUYHPpRQDW4aK6DBQ71TDs
+	 LRcX+1WKY81kHNo+25tE2FRT9dHuBXF0Yaena68v/ahTM3gytdM3pf0tgU7kcIaPWrar4
+	 5qka+mXFCHBtm3clvdPftj4U7Kr9I5wzI/oOBtxyNL4/+5LVXnDKsWHO4x62mSbr/hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027232;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027236;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=fLHWVLJEhcucpX+gbSl9mSrBHlY2ICVzN07W2gEM2Ds=;
-	b=B5n6jkiwiwLilT0nuOpucPqgghcJEnSQE1Qbgex7VBNCRCpLL1/1+Wii4H9tQCe6DN8V
-	 Fut6jLsZIKgTSQaxLJqUji0lhgq74WnWZFjt2rxlifvEnGg0JcZDHiuZqcISTQDSb04sL
-	 n/KE3bDFsZfUFofm2HXvwLPtoJym/4pgyYslVRR/WB3INTwDpoQ7srj4vBOUqgjkCzVZD
-	 Mt7j8OjAVhS7w9AaL09yQmCEFR7rh6Voe7e8PqygLF02rFNdIHstju5W4R6a2WzqAALO1
-	 UeuE1HTTx7DMf7/guEKRyn1klkoktUM2bklviaRMjr5hmZ9j5uGDt6+y5g6Z3EiVzug==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Rj4YtIADn76TkgAEfZhA4mjDnoxkPop33L0OxCoWO60=;
+	b=vShFLt4sQHSUULJbqXu2x4LutGw8rbKjKqb++xWVbgsR/+HYhBi3ucqi3UBWEglIqPLH
+	 Yd0Xh61lzm2sXnsO6AzlqisRWUjgbax9Wh3XsOueU6D+b/PH4UExY1IeknhOylUr1m5X7
+	 vU6noMDW83v1SHvXlM/cb8HemwSrKpcljFvt1ayYPRLq20TjiYmnVqSGGM1zmjwEa7lH/
+	 gVR29aLqt7oBVMPFeBWLtI7PMS8dcv6VjD6lXw1y7Y304bwk6SJVScXG70enbwDABVsjj
+	 Jmj9vcZCu9ZN4u2FD8uoN5he8WAz/zZXnxYTiKiCooyefLlCxKSlGpes0EO8GljIoZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v25KCHNr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N0hSz3cX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F9D60A2618;
-	Wed, 18 Nov 2026 18:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004A860A2619;
+	Wed, 18 Nov 2026 18:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v25KCHNr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23561F000D0;
-	Wed, 18 Nov 2026 18:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N0hSz3cX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E3E1F000C9;
+	Wed, 18 Nov 2026 18:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027232;
-	bh=fLHWVLJEhcucpX+gbSl9mSrBHlY2ICVzN07W2gEM2Ds=;
+	s=korg; t=1795027235;
+	bh=Rj4YtIADn76TkgAEfZhA4mjDnoxkPop33L0OxCoWO60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v25KCHNr+3ZMwBFYZMIwk+hKDTrdr1UyZq9CxZg8pV7R+iCdgpTxKPdMzgdIPUhLn
-	 OYbLmDvvmbgXg0yabKEebSNrUpR64IMhxOery19uHGRB8Yu37BzDNjSyU7CannqoAG
-	 6sJN6S80iqWBQvVd5QDCwudE9txUi0d9XbOjZF78=
+	b=N0hSz3cXQMp207HAewaX49iWToxUIeePD1gYI4bBh2RamPvWAHOC7rewuUhlMKNs6
+	 D4SZGB176pU8Tsu2EtL+F3bZCetdKJJPDzS7hBycoOKeueP0K5yDKAgWNMIxoOPx4N
+	 8/2mh+v1hiWM4fATTsImXY+e2yaoRNMxqnYzOhWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Piotr=20Gli=C5=BAniewicz?= <p.glizniewicz@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1717/2151] bpf: Reject sleepable programs for task_vma iterator
-Date: Wed, 18 Nov 2026 15:57:32 +0100
-Message-ID: <20261118150224.378673784@linuxfoundation.org>
+Subject: [PATCH 6.18 1691/2151] ALSA: 6fire: take stream_mutex in the Digital Thru control
+Date: Wed, 18 Nov 2026 15:57:06 +0100
+Message-ID: <20261118150223.427133412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,155 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
 
-[ Upstream commit dfcd1765911223df60845e288ad392d5237f47a3 ]
+[ Upstream commit d030561d53cb272bb55ba2dd11aaa609e8240b7e ]
 
-A sleepable "iter.s/task_vma" program can be attached, but its ->show()
-callback runs with the mmap_lock of the iterated mm held for read. As soon
-as the program runs, bpf_iter_run_prog() calls might_fault(), and any
-bpf_copy_from_user() or bpf_copy_from_user_task() it does may really fault
-or take mmap_lock again. With lockdep this is reported as recursive
-locking of mmap_lock. Without lockdep, a fault on the reader's own mm, or
-access_process_vm() on the iterated mm, has to take mmap_lock for read
-again. If a writer queued up in the meantime that blocks behind the
-writer, which in turn waits for the read lock the iterator already holds,
-and the read() hangs:
+usb6fire_control_digital_thru_put() calls
+usb6fire_control_streaming_update(), which on an idle card with Digital
+Thru on selects altsetting 2 and writes the clock register for 96 kHz
+through usb6fire_control_set_rate(). usb6fire_pcm_prepare() calls both
+functions through usb6fire_pcm_set_rate() under rt->stream_mutex. The
+put does not take stream_mutex, so the two can run at the same time.
 
-    reader (iter.s/task_vma)        other thread of the same mm
-    task_vma_seq_get_next()
-      mmap_read_lock(mm)
-                                    mmap_write_lock(mm)  <- waits
-    bpf prog: copy_from_user()
-      page fault
-        mmap_read_lock(mm)          <- queued behind the writer
+500 runs of a 0.2 s aplay at 48 kHz while a second loop toggled
+"Digital Thru Playback Route" with amixer (12693 on/off cycles, kernel
+7.2.9): in 216 cases the two usb_set_interface() calls ran at the same
+time and the kernel logged "sysfs: cannot create duplicate filename
+'.../3-2:1.1/ep_82'" with a stack dump. 27 of the aplay runs failed,
+and for each of them the kernel logged "could not start pcm stream".
 
-The reader waits killable, so the hang lasts until it gets a fatal signal.
+Take stream_mutex in the put. The pcm runtime is created before the
+controls and freed with the card, so chip->pcm is valid whenever the
+put runs. The put waits for a running prepare, which makes synchronous
+USB transfers under stream_mutex; on a card that responds late the wait
+can reach about 12 s, or 24 s with Digital Thru on, and during the wait
+the other controls of the card can be neither read nor written, because
+snd_ctl_elem_write() holds controls_rwsem around the put. Before this
+patch the put already made transfers of the same kind under
+controls_rwsem. No code that holds stream_mutex takes controls_rwsem.
 
-bpf_iter_link_attach() allows sleepable programs for the targets that set
-BPF_ITER_RESCHED, and task_vma sets it because cond_resched() between VMAs
-is fine with mmap_lock held. Rescheduling between objects and running a
-sleepable program inside ->show() are different properties, though, and
-task_vma only has the first one. The open-coded task_vma iterator does not
-have this problem since it hands out a snapshot of the VMA and holds no
-lock when it returns to the program.
+The same test on kernel 7.2.10 with this patch (12863 cycles) gave no
+failed aplay run and no "duplicate filename" message.
 
-The vma handed to the program is only stable under mmap_lock, so the lock
-can't be dropped around ->show(). Add a feature flag BPF_ITER_NOSLEEP for
-targets which can't run sleepable programs although they can reschedule,
-and set it for task_vma.
-
-The check at attach time is not enough. BPF_LINK_UPDATE replaces the
-program of a link, and bpf_iter_link_replace() only compares the type, the
-attach type and the BTF id of the two programs, which are the same for a
-sleepable and a non-sleepable one. Do the check there as well. That also
-closes this way around the existing rule: so far a sleepable program could
-be put on a link of a target that doesn't set BPF_ITER_RESCHED, like the
-hash map element iterator, which runs it under rcu_read_lock().
-
-BPF_LINK_CREATE of a sleepable program for the task_vma target, and
-BPF_LINK_UPDATE to one, now fail with -EINVAL, also for programs that
-don't touch user memory and have been working since sleepable iterator
-programs exist. The programs can still be loaded. They have to be
-loaded as non-sleepable programs, or use the open-coded iterator.
-
-Fixes: b77fb25dcb34 ("bpf: Add support for bpf iterator programs to use sleepable helpers")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-6-alexei.starovoitov@gmail.com
+Fixes: 2475b0d40761 ("ALSA: 6fire - Add support of digital-thru mixer")
+Assisted-by: LLM
+Signed-off-by: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261016073132.109288-2-p.glizniewicz@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h    |  3 ++-
- kernel/bpf/bpf_iter.c  | 17 ++++++++++++++---
- kernel/bpf/task_iter.c |  6 +++++-
- 3 files changed, 21 insertions(+), 5 deletions(-)
+ sound/usb/6fire/control.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index d551905c8aae9..8a34e139a1215 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2665,7 +2665,8 @@ typedef const struct bpf_func_proto *
- 			     const struct bpf_prog *prog);
+diff --git a/sound/usb/6fire/control.c b/sound/usb/6fire/control.c
+index 7c2274120c765..4474bdc78e535 100644
+--- a/sound/usb/6fire/control.c
++++ b/sound/usb/6fire/control.c
+@@ -20,6 +20,7 @@
+ #include "control.h"
+ #include "comm.h"
+ #include "chip.h"
++#include "pcm.h"
  
- enum bpf_iter_feature {
--	BPF_ITER_RESCHED	= BIT(0),
-+	BPF_ITER_RESCHED	= BIT(0),	/* may cond_resched() between objects */
-+	BPF_ITER_NOSLEEP	= BIT(1),	/* ->show() can't run sleepable progs */
- };
+ static const char * const opt_coax_texts[2] = { "Optical", "Coax" };
+ static const char * const line_phono_texts[2] = { "Line", "Phono" };
+@@ -383,6 +384,12 @@ static int usb6fire_control_digital_thru_put(struct snd_kcontrol *kcontrol,
+ 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
+ 	int changed = 0;
  
- #define BPF_ITER_CTX_ARG_MAX 2
-diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
-index 54596447fbca8..c31fe8775e720 100644
---- a/kernel/bpf/bpf_iter.c
-+++ b/kernel/bpf/bpf_iter.c
-@@ -72,6 +72,15 @@ static inline bool bpf_iter_target_support_resched(const struct bpf_iter_target_
- 	return tinfo->reg_info->feature & BPF_ITER_RESCHED;
- }
- 
-+/* Only allow sleepable program for resched-able iterator that can run one */
-+static bool bpf_iter_target_support_prog(const struct bpf_iter_target_info *tinfo,
-+					 const struct bpf_prog *prog)
-+{
-+	return !prog->sleepable ||
-+	       (bpf_iter_target_support_resched(tinfo) &&
-+		!(tinfo->reg_info->feature & BPF_ITER_NOSLEEP));
-+}
-+
- static bool bpf_iter_support_resched(struct seq_file *seq)
- {
- 	struct bpf_iter_priv_data *iter_priv;
-@@ -409,6 +418,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
- 				 struct bpf_prog *new_prog,
- 				 struct bpf_prog *old_prog)
- {
-+	struct bpf_iter_link *iter_link =
-+		container_of(link, struct bpf_iter_link, link);
- 	int ret = 0;
- 
- 	mutex_lock(&link_mutex);
-@@ -419,7 +430,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
- 
- 	if (link->prog->type != new_prog->type ||
- 	    link->prog->expected_attach_type != new_prog->expected_attach_type ||
--	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id) {
-+	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id ||
-+	    !bpf_iter_target_support_prog(iter_link->tinfo, new_prog)) {
- 		ret = -EINVAL;
- 		goto out_unlock;
- 	}
-@@ -544,8 +556,7 @@ int bpf_iter_link_attach(const union bpf_attr *attr, bpfptr_t uattr,
- 	if (!tinfo)
- 		return -ENOENT;
- 
--	/* Only allow sleepable program for resched-able iterator */
--	if (prog->sleepable && !bpf_iter_target_support_resched(tinfo))
-+	if (!bpf_iter_target_support_prog(tinfo, prog))
- 		return -EINVAL;
- 
- 	link = kzalloc(sizeof(*link), GFP_USER | __GFP_NOWARN);
-diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
-index 13e1aabe6f886..cf2bf388e1817 100644
---- a/kernel/bpf/task_iter.c
-+++ b/kernel/bpf/task_iter.c
-@@ -737,7 +737,11 @@ static const struct bpf_iter_seq_info task_vma_seq_info = {
- static struct bpf_iter_reg task_vma_reg_info = {
- 	.target			= "task_vma",
- 	.attach_target		= bpf_iter_attach_task,
--	.feature		= BPF_ITER_RESCHED,
 +	/*
-+	 * ->show() runs with the mmap_lock of the iterated mm held, which a
-+	 * sleepable program takes again when it faults on user memory.
++	 * with Digital Thru on, streaming_update() selects the altsetting and
++	 * writes the clock register of an idle card; prepare does the same
++	 * under stream_mutex
 +	 */
-+	.feature		= BPF_ITER_RESCHED | BPF_ITER_NOSLEEP,
- 	.ctx_arg_info_size	= 2,
- 	.ctx_arg_info		= {
- 		{ offsetof(struct bpf_iter__task_vma, task),
++	guard(mutex)(&rt->chip->pcm->stream_mutex);
+ 	if (rt->digital_thru_switch != ucontrol->value.integer.value[0]) {
+ 		rt->digital_thru_switch = ucontrol->value.integer.value[0];
+ 		usb6fire_control_streaming_update(rt);
 -- 
 2.53.0
 
