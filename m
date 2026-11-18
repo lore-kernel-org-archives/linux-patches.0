@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019536;
-	b=GdFWGlgstKrHEB3JO75yyondMSZ9XLfLqBkUMmXKyLroLancVVw7jFevNopxM3M8JeK+
-	 Q2WLchoTGmRLuNn5Xm9l0xCaurnb4lka1ulYz5uTfjoAD6YNQ2aGnL0gYcDuPL/e3gjnk
-	 XjqQUFPLRCbdttEGjQlpkJlJXfm4/qBbMTPF006kj1rPqqncav91uBhJLemRWsKWE/GD5
-	 PLptLlSF5tLKa4ur0MOUtvTv67fn0V09WT8hh8OsmZ1ZgK11W/Lih9PQPIRmEjwX7G8P1
-	 Y8mWg+j5zbAqP1GNuU5X3X9qLbpn0VFBfHeFUPC3VvSQ9Y/Y0uAtVk/p7YinC0gEEVw==
+	t=1795019539;
+	b=eC7BfPS1dwXVxavfwxCZmXpLwzGpVskQRjHgHw4rMeG5nSwdxo9aBv0aEC71JVKY+juV
+	 u1kZRg5C0jpsDh5SRuUDDim+03AKXTqeDQru+avPRJv5iWeMy9k9ZGGCdbKW9FYDeJM8w
+	 eBn1g6v7mYgUcxl6d9boBAQOnqndDan49PSH+Dcxv0qBTFAcewSXtcFBlhrUCh0yJ9dC0
+	 2xJRk4TpYWR08QmfM9KT8wXF42VIYx+FK9UAAynmcYDX4GGs7uDr6KFzBl4I2TsY2xaMg
+	 qK0/1xpSI8QuRPLsQWHvh+LgAxzYBifBoUt2I8NjiA6+Z7zqPcNHnILSNI0JbCUIE2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DCoQCjYPpFzIvP0t3dYYfSojZ1yjiBLUfHw6TQhKCss=;
-	b=FBFNSLB+sQR1MYGnPFQbzIkGT2f2N3PcQ/LjDHpPNCqpHXw68V+Fp6B09UA06PpVxYQi
-	 P7fy9WejKdLFa29zDZE96auGwTmTX8nOBNCimg/d5Nb8ZQ/dI+xFn5cDc/aj3EG5u6CdZ
-	 qye6rKs6avQRr/fQehZN66epgRu2Ms8ta3ncjJt60pW5s+4BW3sRiobIbigxqOwigqmOX
-	 iSqxgCN8XKZQ6hlOKu7XQ8t0CXRA9uiKkScTLadXX6CIWerCn84wI4gYQbagiC5G1n1Kw
-	 OiYcGWtSoqWHeG6deFaakqNV9MFef1EDbTjEzjaT5XfEly+RRc6oNqVDJPUh+6cducQ==
+	bh=iIjb2NJwYkmLKTMiEK5FQUH8KDMgIHRMTsXwfGVWssg=;
+	b=O5RC4jyXkseBI1st3U4ny1LOLq8cPHleZOY2BWmVbEjE9PeMxw6wc1+7O275twn0xKpo
+	 21cmqp6y7f0qIzQl1RdAhrR8WKU9qSb8oiqTTY4o0jdE3hopMOvVNzRey9aKtqsWcuMqZ
+	 c6aqc09LcRjMvLruOC5flw1QyKy1EMG5oat+lCpSwrdU8lg2P6Z9Vxgn9SJlD5u1Hg0ZP
+	 mXzDNgrNZBwABiMES0umneT8ssI4UkkbZiovK401LIXehQNKEV0xV5FcIfJei+t1FYmFU
+	 CYxzo+m0Ig7gOqdOb93u/QQapfutgzUK/aPHUJ6NOAsM5vjzj90ZLxOOuuRdg3pMEIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sbKV1Fn8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cg9K6lLw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79959606A330;
-	Wed, 18 Nov 2026 16:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F7B606A7C3;
+	Wed, 18 Nov 2026 16:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sbKV1Fn8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF15E1F000C6;
-	Wed, 18 Nov 2026 16:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cg9K6lLw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8184D1F000D2;
+	Wed, 18 Nov 2026 16:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019536;
-	bh=DCoQCjYPpFzIvP0t3dYYfSojZ1yjiBLUfHw6TQhKCss=;
+	s=korg; t=1795019539;
+	bh=iIjb2NJwYkmLKTMiEK5FQUH8KDMgIHRMTsXwfGVWssg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sbKV1Fn8to3CDkHGnxydMVAfk4eqnOAzBMvd+uJHkXt064EdPgeBJy71UHtENHoeA
-	 RsTHAwsnbRBWCh4RY56f25xbLygQxEt/Z7Sprra6nUeuU65CZ+cG6Lyrsiqk3ALEJo
-	 +HUpP8EtQkPAcSPuchL62vURJ8jhziaVlm7vsTYA=
+	b=cg9K6lLwmC7/bCKWW5rPSv733wyAA+FbhDC62QZfAhPQDaaiEjUI6/gV2XnKeHx/U
+	 Ahuil5T4qANqdchsoUiSwCN6z8Pjsu6IgSd/ndlsF3c4ySw0XiPmDLA2sPKaVg7B7b
+	 315rRRTU6SfLnedH9ROp+2rFT79szA70xweaSuMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Price <steven.price@arm.com>,
 	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1632/2651] drm/panfrost: Move perfcnt GPU disable sequence into a helper
-Date: Wed, 18 Nov 2026 15:47:52 +0100
-Message-ID: <20261118150346.605597059@linuxfoundation.org>
+Subject: [PATCH 7.3 1633/2651] drm/panfrost: Skip cache flush/invalidate when enabling perfcnt
+Date: Wed, 18 Nov 2026 15:47:53 +0100
+Message-ID: <20261118150346.636528419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,81 +72,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit a2858e0f33eaba1c4a1976ba0ddebb1d83e21545 ]
+[ Upstream commit 711a34a56d64d235ff74dbe53ba488ecd54e5570 ]
 
-Just for the sake of avoiding repetition.
+The GPU cache flush/invalidate operation is unnecessary. In the usual case,
+before a perfcnt dump is requested, there will be no stale lines in GPU
+caches for the sample BO's physmem pages, since their memory had not
+recently been addressed by the GPU.
 
-Reviewed-by: Steven Price <steven.price@arm.com>
+However, in the off-chance that the sample BO reuses memory that the GPU
+had recently addressed and for which it contains stale lines in its caches,
+there already was a FLUSH_PT command being issued as part of the buffer GPU
+mapping procedure, so by the time panfrost_gem_open() comes back at perfcnt
+session enable, stale GPU cache lines should've already been evicted.
+
+In either case, forcing a GPU cache clean when enabling a new session makes
+no difference, and removing it simplifies handling of the error path.
+
 Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20261012-claude-fixes-v15-11-bc0a6c498553@collabora.com
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-12-bc0a6c498553@collabora.com
 Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Stable-dep-of: 9944dd07f3cf ("drm/panfrost: Fix races between perfcnt and reset sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_perfcnt.c | 31 +++++++++------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_perfcnt.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-index 7020c0192e189..f71534e741b65 100644
+index f71534e741b65..ffc77121070e2 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
 +++ b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-@@ -35,6 +35,16 @@ struct panfrost_perfcnt {
- 	struct completion dump_comp;
- };
+@@ -124,21 +124,10 @@ static int panfrost_perfcnt_enable_locked(struct panfrost_device *pfdev,
+ 	panfrost_gem_internal_set_label(&bo->base, "Perfcnt sample buffer");
  
-+static void panfrost_perfcnt_hw_disable(struct panfrost_device *pfdev)
-+{
-+	gpu_write(pfdev, GPU_PERFCNT_CFG,
-+		  GPU_PERFCNT_CFG_MODE(GPU_PERFCNT_CFG_MODE_OFF));
-+	gpu_write(pfdev, GPU_PRFCNT_JM_EN, 0x0);
-+	gpu_write(pfdev, GPU_PRFCNT_SHADER_EN, 0x0);
-+	gpu_write(pfdev, GPU_PRFCNT_MMU_L2_EN, 0x0);
-+	gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0);
-+}
-+
- void panfrost_perfcnt_clean_cache_done(struct panfrost_device *pfdev)
- {
- 	complete(&pfdev->perfcnt->dump_comp);
-@@ -193,12 +203,7 @@ static int panfrost_perfcnt_disable_locked(struct panfrost_device *pfdev,
- 	if (user != perfcnt->user)
- 		return -EINVAL;
+ 	/*
+-	 * Invalidate the cache and clear the counters to start from a fresh
+-	 * state.
++	 * Clear the counters to start from a fresh state.
+ 	 */
+-	reinit_completion(&pfdev->perfcnt->dump_comp);
+-	gpu_write(pfdev, GPU_INT_CLEAR,
+-		  GPU_IRQ_CLEAN_CACHES_COMPLETED |
+-		  GPU_IRQ_PERFCNT_SAMPLE_COMPLETED);
++	gpu_write(pfdev, GPU_INT_CLEAR, GPU_IRQ_PERFCNT_SAMPLE_COMPLETED);
+ 	gpu_write(pfdev, GPU_CMD, GPU_CMD_PERFCNT_CLEAR);
+-	gpu_write(pfdev, GPU_CMD, GPU_CMD_CLEAN_INV_CACHES);
+-	ret = wait_for_completion_timeout(&pfdev->perfcnt->dump_comp,
+-					  msecs_to_jiffies(1000));
+-	if (!ret) {
+-		ret = -ETIMEDOUT;
+-		goto err_vunmap;
+-	}
  
--	gpu_write(pfdev, GPU_PRFCNT_JM_EN, 0x0);
--	gpu_write(pfdev, GPU_PRFCNT_SHADER_EN, 0x0);
--	gpu_write(pfdev, GPU_PRFCNT_MMU_L2_EN, 0x0);
--	gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0);
--	gpu_write(pfdev, GPU_PERFCNT_CFG,
--		  GPU_PERFCNT_CFG_MODE(GPU_PERFCNT_CFG_MODE_OFF));
-+	panfrost_perfcnt_hw_disable(pfdev);
- 
- 	perfcnt->user = NULL;
- 	drm_gem_vunmap(&perfcnt->mapping->obj->base.base, &map);
-@@ -327,12 +332,7 @@ int panfrost_perfcnt_init(struct panfrost_device *pfdev)
- 	perfcnt->bosize = size;
- 
- 	/* Start with everything disabled. */
--	gpu_write(pfdev, GPU_PERFCNT_CFG,
--		  GPU_PERFCNT_CFG_MODE(GPU_PERFCNT_CFG_MODE_OFF));
--	gpu_write(pfdev, GPU_PRFCNT_JM_EN, 0);
--	gpu_write(pfdev, GPU_PRFCNT_SHADER_EN, 0);
--	gpu_write(pfdev, GPU_PRFCNT_MMU_L2_EN, 0);
--	gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0);
-+	panfrost_perfcnt_hw_disable(pfdev);
- 
- 	init_completion(&perfcnt->dump_comp);
- 	mutex_init(&perfcnt->lock);
-@@ -344,10 +344,5 @@ int panfrost_perfcnt_init(struct panfrost_device *pfdev)
- void panfrost_perfcnt_fini(struct panfrost_device *pfdev)
- {
- 	/* Disable everything before leaving. */
--	gpu_write(pfdev, GPU_PERFCNT_CFG,
--		  GPU_PERFCNT_CFG_MODE(GPU_PERFCNT_CFG_MODE_OFF));
--	gpu_write(pfdev, GPU_PRFCNT_JM_EN, 0);
--	gpu_write(pfdev, GPU_PRFCNT_SHADER_EN, 0);
--	gpu_write(pfdev, GPU_PRFCNT_MMU_L2_EN, 0);
--	gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0);
-+	panfrost_perfcnt_hw_disable(pfdev);
- }
+ 	ret = panfrost_mmu_as_get(pfdev, perfcnt->mapping->mmu);
+ 	if (ret < 0)
 -- 
 2.53.0
 
