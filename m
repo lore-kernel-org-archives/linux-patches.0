@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024303;
-	b=ucokaYps9OkhM3HwB/96OxDi8JzRZoOsnbjE9TTFFDHQ48snnQcCnoWqASzMz3zg9e+d
-	 HEs5mi9lNW9L4re9jyD0I+Cyirn4oxvn30iU7v0fPuAgSUXjhzzPuRLQCkLxJCRYh6D5M
-	 NpVYhQ8KrYLReG+tTbl3b6Jdg4Rukw3VyHUs8TynBMHnNyJBBPDUnSpGiMLm+hfhc5wTE
-	 9b1m2ivEPfpbPK+jUI2FBfaYUnEU3JtY1Gt6z9C/pF90PXvnixvNJRv75H0NqfDMKNjRT
-	 VEeCVGXvZsEgGabiy7iUcYdZvuK+sO+PT35PcBYOJ8eTYD2mxOhsNZhIRPg+bzETHjA==
+	t=1795024305;
+	b=wg2gqBv8znnHfLH5nL5lRsdX71Z4ZPijKqpy9dB+2p3itSFaPkwLPa7KEjOd3n9e8Ogu
+	 fqWYOQsm/2DuKIe76QE12hEMsyzi9NZ4/Bl3/qL8JaG7FlZwa5/Y5TFaI2eoMkond0cNn
+	 WyjRl2FDRg9J2EztW91MoFlXLA6Px2VfsE+aH2nhsIAfqtjFK3AmiZaGShHlVOy/ulW6h
+	 euYJ5QhzJNeplir4ihOW0p2vyofcj1M+2V7rDmO4QO1PeE4bT557DnC1yjJc8MaUN7YJi
+	 KjR1kDAPwaTy6+71GVRCB2eTqzKYHX37SRIPVt4/X2F8xVWpMaTUAMXfro6nwe7cgyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024305;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MEKzhDC7mXCBcB8vr6h12Fsr4DlF3rb7/QDzFFV7g84=;
-	b=iCHWCAOfdNrmFfY0Sh+BEq8RXkg3RW0LCDtnRj6xtlPAKh6LKfLBVIvLMIZuYrlsBnJ5
-	 jpE1WKktFE0iCVxiyArZOFhlLDH7vramRN44WCtxWO7KpGTU+Sa38HglVBDmYwx34fasp
-	 dF4dTqGYSWwG9eJWpleShgaU67cZt0WhySJJl4pLZmsKrU79xZ1IiyYzZWAXxHvFOIs/n
-	 MY95ycFW3XGH/Q0f+y6ZFeQOPgILCluACy4Ojb2vuYzxDbT0RpiWjRVdcxQWtqob64uRN
-	 YeToiG1ghEzeU3S7hZVgC0iLLKfnZ7Q4/e66epqj2deY2YdMTXdB9gQoBgd59kgVNGA==
+	bh=xjB3pa8MvRDmrwlq1mgiHLVhi/Fcgmm0Yc4Qzx4sRm4=;
+	b=sdFa5VbB+ei03t9oMcLczJSoYIc7qoAukALMi/3FjVEbUxL2i3G8GIHRw92nWA7RQJOT
+	 jN0H1IZwnE6wrqrPlIZISA37Ytih4AJJbdUeWUx5l/2ubUJmKOh0g2H8vtqs+yFtAkzt1
+	 l0xf9DIgkEh3rNBQacXwXzMqm677XN4aVDN9oPFjbINvUoJUjcsto4OrNI9jDa0JPzWag
+	 cCJ6rs/0408f8fQozNT0ODV2LXHnkTes0Oqn1Xlxjk2JJZXptshM2d6YC8N7q4+WYtL+P
+	 AVErRU2kZKnp/TYwJntmQ2xf4NJfOrVzYjx1eTHSDcBDNzeVabwGwQ4fD+AAFsikCfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txxhYcKO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L/bF/eXH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E040A606A31C;
-	Wed, 18 Nov 2026 17:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0885606A31C;
+	Wed, 18 Nov 2026 17:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txxhYcKO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A231F000C4;
-	Wed, 18 Nov 2026 17:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L/bF/eXH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EDA1F000C4;
+	Wed, 18 Nov 2026 17:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024302;
-	bh=MEKzhDC7mXCBcB8vr6h12Fsr4DlF3rb7/QDzFFV7g84=;
+	s=korg; t=1795024305;
+	bh=xjB3pa8MvRDmrwlq1mgiHLVhi/Fcgmm0Yc4Qzx4sRm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=txxhYcKOwJMzYLQ0wTPbtqHXUQkuLA/xXZSfeGT20gjg37FEomeOatkiB2vMWjmDa
-	 FO3h/CdC5l3qObsdb4AkaZxduRE6mgm/Aa0U8KSvx1JFevePh/J6u84wZBcjwKN3Nx
-	 3bsCh3hWhAKDS0LlEb2o0jq1zOKJtzmJdh4Eyf34=
+	b=L/bF/eXHWNF8cnuGwctu0ykppt0ed36VBEqCHmL7WyxDFKsmm/lR1lBzRro0Vzm8l
+	 4MC4rFuzID/qx4aLCPMwsDjT6pvCoFjnlaqKET7EwGNc/qKO66Pz6Mm/YdgHHrct4V
+	 KySsUZAqxbZjQGoC1ekBqjCidP88AXKvk77TcQaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mykyta Yatsenko <yatsenko@meta.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0676/2151] bpftool: Accept zero perf counter snapshots
-Date: Wed, 18 Nov 2026 15:40:11 +0100
-Message-ID: <20261118150146.434781520@linuxfoundation.org>
+Subject: [PATCH 6.18 0677/2151] bpftool: Group profile events by CPU
+Date: Wed, 18 Nov 2026 15:40:12 +0100
+Message-ID: <20261118150146.472713617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,71 +70,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit b2cf39f53478fd4b04d2f04585c21b3d91d7042f ]
+[ Upstream commit 6b5fe4b6d5ae5fac328416b061e5416d68aec762 ]
 
-A perf counter can be zero at fentry when PMU multiplexing has
-not scheduled the event. Do not reject that sample.
+Independently scheduled perf events can cover different intervals,
+making derived ratios inconsistent.
 
-Use enabled time to distinguish a successful snapshot. Read
-directly into the per-CPU map value.
+Open one event group per CPU and enable it only after all selected
+metrics have joined.
+
+Fail the profile setup when a selected event cannot join its group.
 
 Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260916-bpftool_cyles_per_run-v4-1-f2de02c480d5@meta.com
+Link: https://lore.kernel.org/bpf/20260916-bpftool_cyles_per_run-v4-2-f2de02c480d5@meta.com
 Stable-dep-of: edc071d7b3aa ("bpftool: Fix sparse CPU IDs in prog profile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/profiler.bpf.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ tools/bpf/bpftool/prog.c | 87 ++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 35 deletions(-)
 
-diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-index f48c783cb9f7f..6685e7252fb52 100644
---- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
-+++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-@@ -45,28 +45,21 @@ const volatile __u32 num_metric = 1;
- SEC("fentry/XXX")
- int BPF_PROG(fentry_XXX)
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index 86ea90cd45408..f8a93c02d0e01 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -2350,7 +2350,7 @@ static char *profile_tgt_name;
+ static int *profile_perf_events;
+ static int profile_perf_event_cnt;
+ 
+-static void profile_close_perf_events(struct profiler_bpf *obj)
++static void profile_close_perf_events(void)
  {
--	struct bpf_perf_event_value___local *ptrs[MAX_NUM_METRICS];
- 	u32 key = bpf_get_smp_processor_id();
- 	u32 i;
+ 	int i;
  
--	/* look up before reading, to reduce error */
- 	for (i = 0; i < num_metric && i < MAX_NUM_METRICS; i++) {
-+		struct bpf_perf_event_value___local *reading;
- 		u32 flag = i;
--
--		ptrs[i] = bpf_map_lookup_elem(&fentry_readings, &flag);
--		if (!ptrs[i])
+@@ -2361,61 +2361,78 @@ static void profile_close_perf_events(struct profiler_bpf *obj)
+ 	profile_perf_event_cnt = 0;
+ }
+ 
+-static int profile_open_perf_event(int mid, int cpu, int map_fd)
++static int profile_open_perf_event(int mid, int cpu,
++				   int map_fd, int group_fd, __u32 map_key)
+ {
++	struct perf_event_attr attr = metrics[mid].attr;
++	bool group_leader = group_fd < 0;
+ 	int pmu_fd;
++	int err;
+ 
+-	pmu_fd = syscall(__NR_perf_event_open, &metrics[mid].attr,
+-			 -1 /*pid*/, cpu, -1 /*group_fd*/, 0);
++	attr.disabled = group_leader;
++	pmu_fd = syscall(__NR_perf_event_open, &attr, -1 /* pid */, cpu,
++			 group_fd, 0);
+ 	if (pmu_fd < 0) {
+-		if (errno == ENODEV) {
+-			p_info("cpu %d may be offline, skip %s profiling.",
+-				cpu, metrics[mid].name);
+-			profile_perf_event_cnt++;
 -			return 0;
--	}
--
--	for (i = 0; i < num_metric && i < MAX_NUM_METRICS; i++) {
--		struct bpf_perf_event_value___local reading;
- 		int err;
- 
--		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
--						sizeof(reading));
-+		reading = bpf_map_lookup_elem(&fentry_readings, &flag);
-+		if (!reading)
-+			return 0;
-+		err = bpf_perf_event_read_value(&events, key, (void *)reading,
-+						sizeof(*reading));
- 		if (err)
- 			return 0;
--		*(ptrs[i]) = reading;
- 		key += num_cpu;
+-		}
+-		return -1;
++		err = -errno;
++		if (errno == ENODEV && group_leader)
++			p_info("cpu %d may be offline, skip profiling.", cpu);
++		return err;
  	}
  
-@@ -80,7 +73,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
+-	if (bpf_map_update_elem(map_fd,
+-				&profile_perf_event_cnt,
+-				&pmu_fd, BPF_ANY) ||
+-	    ioctl(pmu_fd, PERF_EVENT_IOC_ENABLE, 0)) {
++	if (bpf_map_update_elem(map_fd, &map_key, &pmu_fd, BPF_ANY)) {
++		err = -errno;
+ 		close(pmu_fd);
+-		return -1;
++		return err;
+ 	}
  
- 	before = bpf_map_lookup_elem(&fentry_readings, &id);
- 	/* only account samples with a valid fentry_reading */
--	if (before && before->counter) {
-+	if (before && before->enabled) {
- 		struct bpf_perf_event_value___local *accum;
+ 	profile_perf_events[profile_perf_event_cnt++] = pmu_fd;
+-	return 0;
++	return pmu_fd;
+ }
  
- 		diff.counter = after->counter - before->counter;
+ static int profile_open_perf_events(struct profiler_bpf *obj)
+ {
++	__u32 num_cpu = obj->rodata->num_cpu;
++	__u32 map_key;
+ 	unsigned int cpu, m;
+-	int map_fd;
++	int group_fd, map_fd, pmu_fd;
++	int err;
+ 
+-	profile_perf_events = calloc(
+-		obj->rodata->num_cpu * obj->rodata->num_metric, sizeof(int));
++	profile_perf_events = calloc(num_cpu * obj->rodata->num_metric,
++				     sizeof(*profile_perf_events));
+ 	if (!profile_perf_events) {
+ 		p_err("failed to allocate memory for perf_event array: %s",
+ 		      strerror(errno));
+-		return -1;
++		return -ENOMEM;
+ 	}
++
+ 	map_fd = bpf_map__fd(obj->maps.events);
+-	if (map_fd < 0) {
+-		p_err("failed to get fd for events map");
+-		return -1;
+-	}
++	for (cpu = 0; cpu < num_cpu; cpu++) {
++		group_fd = -1;
++		map_key = cpu;
++		for (m = 0; m < ARRAY_SIZE(metrics); m++) {
++			if (!metrics[m].selected)
++				continue;
+ 
+-	for (m = 0; m < ARRAY_SIZE(metrics); m++) {
+-		if (!metrics[m].selected)
+-			continue;
+-		for (cpu = 0; cpu < obj->rodata->num_cpu; cpu++) {
+-			if (profile_open_perf_event(m, cpu, map_fd)) {
+-				p_err("failed to create event %s on cpu %u",
+-				      metrics[m].name, cpu);
+-				return -1;
++			pmu_fd = profile_open_perf_event(m, cpu, map_fd, group_fd,
++						     map_key);
++			if (pmu_fd == -ENODEV && group_fd < 0)
++				break;
++			if (pmu_fd < 0) {
++				p_err("failed to add event %s to group on CPU %u: %s",
++				      metrics[m].name, cpu, strerror(-pmu_fd));
++				return pmu_fd;
+ 			}
++			if (group_fd < 0)
++				group_fd = pmu_fd;
++			map_key += num_cpu;
++		}
++		if (group_fd < 0)
++			continue;
++		if (ioctl(group_fd, PERF_EVENT_IOC_ENABLE, PERF_IOC_FLAG_GROUP)) {
++			err = -errno;
++			p_err("failed to enable perf event group on CPU %u: %s",
++			      cpu, strerror(-err));
++			return err;
+ 		}
+ 	}
+ 	return 0;
+@@ -2423,7 +2440,7 @@ static int profile_open_perf_events(struct profiler_bpf *obj)
+ 
+ static void profile_print_and_cleanup(void)
+ {
+-	profile_close_perf_events(profile_obj);
++	profile_close_perf_events();
+ 	profile_read_values(profile_obj);
+ 	profile_print_readings();
+ 	profiler_bpf__destroy(profile_obj);
+@@ -2529,7 +2546,7 @@ static int do_profile(int argc, char **argv)
+ 	return 0;
+ 
+ out:
+-	profile_close_perf_events(profile_obj);
++	profile_close_perf_events();
+ 	if (profile_obj)
+ 		profiler_bpf__destroy(profile_obj);
+ 	close(profile_tgt_fd);
 -- 
 2.53.0
 
