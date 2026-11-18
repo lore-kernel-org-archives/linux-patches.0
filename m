@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016617;
-	b=heUmESm0HZ2Wtapk5pB4iyIpdfwX1+dZK8YCTVJSYqfQc5EyG+lA1e6zxE7j3nDlxVbt
-	 fGH+TqCK7IMcRN5hMimP2I/42GiOMxxFoHLw3zxeLA0sFD/gQolyhgVu8pKMrGzlwkip/
-	 lSVqYcQGxXABrzhotZUzAfz5jMNIGsRsEg4ZxNgycXtaZ0WwYHBKP1akCQ+XG4/YLLmTH
-	 WajIcKfPIv/Lw6DMjmY1xQB1Nn7KU/FqRY5ARAS48tv4mxyNAz4eep335xJhAecAEwpt4
-	 VOLYkrt6PXeVlgXv/2IDPb16PlbVUGO+iH2sloijTOgQzbi5S0lLp1itzJArjCUGKcA==
+	t=1795016620;
+	b=A/ybXu/7LoTEn0mHcEF6TK24kbnkz3vA9EUVHjELqAB89jc1xyhlI57Gg+FhQ2x00aeR
+	 1yyVYIVf+/y0JuBdulV9o8jUOgrYvpQ+9SIaYUrdCthmkkMuR3iEdwOKuRZTXjO/AmrVS
+	 tJcuXkE47BcsKCaWaiL0c2B0t389RVQp5SK7WhZsv0zN6lNoKznCwNgPmU3zuJZqiG149
+	 iyCFIrssscp+n4xtzFjQN3w8SNUCVylZZYwHDsEEd8UDXNDqHwyTLSwsc5y0Je51c12yz
+	 n0rRmf6Rwi9DwEuBWX7MbwGH28/YDWErNS5zBzhdsFFdv6ihKK21j7eZ8kA5L7xBQOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VtI9iiNziiq36XABRmc8ydAP//GHT3807AUvUyjEm1w=;
-	b=Ftchmp91nP1l9Mf4CGU4E/mVgbGZahxIiymU7nEHo3v8mJidyTVioWMDqtQfnyhjov57
-	 YZFCT2YMzpAh4CdhR4LShb9/FuJraz4rD7jF+kTTtors1k9AHsl8Wbe1KWbThLkRn3BhB
-	 aLE6grJC7gbhWnb7/E+CWU+NGpG8g/MTZqFIC9EV7VTrIJAxAaO/mbqNQ+9HLauQbATd8
-	 1szGRxsMIhdXH/gjGt+o6oGU/IAl1m1QuJ4Lyd1vP3DqrSuZ21kO5gvopnWktnWcJ/Z1e
-	 phpy+KV7QuzldRMkPcU7rmIPmgABPNl+4mxXBsGQfmjBD1XAUYOMe22feza/6z5Q52A==
+	bh=QtRy5Nqbs90LMUwBzEZ7gTO3M8dbz5p2GdaMGS/PyjE=;
+	b=Q0jiuoEXTyu1263jqnnYJekA6QB4tmPfbFFnLCSpLaIKSZOwJtC1r6k7BrCCXsNJllJM
+	 Mltfce9WT8p3su3e4NzGnTYQ01FU55DSB6uFPDmNZjDNAifcRyfeatRR8qVTiLUaljQqU
+	 u/mHrW0Twz0r8tcK8rf00hPKPfByYLlvmS2X1vxfyvRbDhTkrH9gh8sOW+13r+PNQ4+Ck
+	 x9Yn1CGbRWzWBMTljFSM057HGn7B6kpAXQDh71lgmq3eT6EaBiCDTYuXQzqnfNPqAR31I
+	 0HFZrQPEqj1PRW7Zlxv7yJ1q7z/4VKcjtFq/SqzwDYVTKLF5K/kP/8DrFrLkrwFJjtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N090cgvF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io9mD1YJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F1606A331;
-	Wed, 18 Nov 2026 15:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D4A60A260E;
+	Wed, 18 Nov 2026 15:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N090cgvF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5BF1F000C5;
-	Wed, 18 Nov 2026 15:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io9mD1YJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E727B1F000C4;
+	Wed, 18 Nov 2026 15:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016617;
-	bh=VtI9iiNziiq36XABRmc8ydAP//GHT3807AUvUyjEm1w=;
+	s=korg; t=1795016620;
+	bh=QtRy5Nqbs90LMUwBzEZ7gTO3M8dbz5p2GdaMGS/PyjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N090cgvFcORlsiK6b5ezAPCBafa49szRj+mD/91otvvaeZUq3McwljYHqIJZ4YnLM
-	 w3qU/36hL37mzrILTppU4oP+xm5yI6lkeU4hd5Cn5ZZ3QCeIMjChBzWn1KEgc8eutO
-	 zFfUG0+PamudaLBo3lv/Pl9uqpCRxraXMfLE0OsE=
+	b=io9mD1YJGW1PEYUEcJtz1+rLonlJmn1CDitwEXkgxPWfYuGoN8S42mCmrL+7qsQ3h
+	 XaPU8i5EohD1C3zF22gca9kan093OhRnapMfIjQ0m+I/3zuDxebUn+9w+EzdEiqVmy
+	 90P6sHFc/Enlb/0qJP/NsqOZ7jZPMD0Aa+o1obLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Guixin Liu <kanie@linux.alibaba.com>,
+	Alejandro Lucero <alucerop@amd.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0591/2651] cxl/memdev: Fix deadlock between poison debugfs and cxl_mem unbind
-Date: Wed, 18 Nov 2026 15:30:31 +0100
-Message-ID: <20261118150308.996531067@linuxfoundation.org>
+Subject: [PATCH 7.3 0592/2651] ACPI: HMAT: preserve hmat_adist_nb notifier block
+Date: Wed, 18 Nov 2026 15:30:32 +0100
+Message-ID: <20261118150309.030764748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,84 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Alejandro Lucero <alucerop@amd.com>
 
-[ Upstream commit 391bc7ab9be6635e77a205591b7d30db797f1a0e ]
+[ Upstream commit b1c75a77d494298b8dedf46062f2072239bbc33b ]
 
-The poison debugfs handlers take the memdev device lock so that the
-region lookup sees a stable cxlmd->dev.driver. debugfs holds a
-reference on the file across the handler, and cxl_mem unbind removes
-that file while holding the very same device lock, so a handler that
-waits for the lock deadlocks against a concurrent unbind.
+Remove __meminitdata from hmat_adist_nb declaration preserving it even
+when CONFIG_MEMORY_HOTPLUG is not set. Otherwise further notifier
+registrations using register_mt_adistance_algorithm() will find a
+notifier chain likely corrupted.
 
-The trigger is any teardown that detaches cxl_mem from the memdev
-while a poison write is in flight: unbinding or unloading cxl_mem or
-cxl_pci, or removing the endpoint PCI device, including hot-remove.
+This is the case when cxl_region_probe() calls
+register_mt_adistance_algorithm() what can happen when CXL regions
+are dynamically created at any time from Type3 device(s) or when a Type2
+device is initialized at its driver probe.
 
-Both tasks then hang. The unbind side is uninterruptible, and it also
-blocks the memdev detach work, which runs on an ordered workqueue and so
-stalls every other CXL bus work item.
-
-Take the lock with the trylock guard and return -EBUSY instead of
-waiting. An unbind that wins the race removes the file first and the
-write fails with -ENOENT.
-
-The poison inject and clear files are a debug ABI for expert users,
-mostly device vendors, to test the poison capabilities of their
-devices. Mixing a poison write with cxl_mem teardown is not a supported
-use of the interface, but when it happens anyway the cost should be a
-failed write, not a hung kernel.
-
-Found by code inspection. Reproduced by writing inject_poison in a loop
-while unbinding and rebinding cxl_mem, and confirmed fixed by the same
-test. Also reproduced the same deadlock with those writes racing a
-pciehp hot-remove of the memdev; with this patch the hot-remove flow
-completes normally.
-
-Fixes: 574eda81d0a7 ("cxl/memdev: Hold memdev lock during memdev poison injection/clear")
-Suggested-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
+Signed-off-by: Alejandro Lucero <alucerop@amd.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260916025453.3532614-3-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ rjw: Subject tweak ]
+Link: https://patch.msgid.link/20260716181114.35962-2-alejandro.lucero-palau@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/mem.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/acpi/numa/hmat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
-index 798e5c369cfc2..3959ec9630264 100644
---- a/drivers/cxl/mem.c
-+++ b/drivers/cxl/mem.c
-@@ -50,8 +50,13 @@ static int cxl_debugfs_poison_inject(void *data, u64 dpa)
- 	struct cxl_memdev *cxlmd = data;
- 	int rc;
+diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+index 9792dc3947561..3006789ae31fe 100644
+--- a/drivers/acpi/numa/hmat.c
++++ b/drivers/acpi/numa/hmat.c
+@@ -995,7 +995,7 @@ static int hmat_calculate_adistance(struct notifier_block *self,
+ 	return NOTIFY_STOP;
+ }
  
--	ACQUIRE(device_intr, devlock)(&cxlmd->dev);
--	if ((rc = ACQUIRE_ERR(device_intr, &devlock)))
-+	/*
-+	 * Never wait for this lock: the debugfs proxy holds a file reference
-+	 * across the callback and unbind removes the file under the same
-+	 * device lock, so waiting here deadlocks against unbind.
-+	 */
-+	ACQUIRE(device_try, devlock)(&cxlmd->dev);
-+	if ((rc = ACQUIRE_ERR(device_try, &devlock)))
- 		return rc;
- 
- 	return cxl_inject_poison(cxlmd, dpa);
-@@ -65,8 +70,9 @@ static int cxl_debugfs_poison_clear(void *data, u64 dpa)
- 	struct cxl_memdev *cxlmd = data;
- 	int rc;
- 
--	ACQUIRE(device_intr, devlock)(&cxlmd->dev);
--	if ((rc = ACQUIRE_ERR(device_intr, &devlock)))
-+	/* Never wait, per the inject path above. */
-+	ACQUIRE(device_try, devlock)(&cxlmd->dev);
-+	if ((rc = ACQUIRE_ERR(device_try, &devlock)))
- 		return rc;
- 
- 	return cxl_clear_poison(cxlmd, dpa);
+-static struct notifier_block hmat_adist_nb __meminitdata = {
++static struct notifier_block hmat_adist_nb = {
+ 	.notifier_call = hmat_calculate_adistance,
+ 	.priority = 100,
+ };
 -- 
 2.53.0
 
