@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057413;
-	b=qug79XPbJZ5SXtNjEJMmwEPrincsW+2l1JqjHBuNwL8Kl5o+unr/O4ibggtYMdrzBBsW
-	 7hcoDTFjGIHRVdymp2GadrzmNvzQ6Jx4M6y4Xo8f1ZFGeFjKIianY1TuBBKasYDq/9wqe
-	 qiuPZfi/x1XybW+rwL7xwldLRG7ZXgzRpVd5Wu+ki3YWo+jmkD0nvy/7U27P6pxSjI92D
-	 PO79HjgClSWC8BhcxGpcgLGgSZgMyrPSjwqeihmBY6ZxQkqBLa9sLGwpX0L4PzrYqu+Se
-	 WhMAF4jrArzlK9DwBOm/jEXyssu2m995yEjsnqHG/POhoj+BvuWTiljLGjh/jHLV5vw==
+	t=1795057416;
+	b=if2KTqJBtA9ip8kftqJME7bvuFu0C7cP8KR1C7fLy3f8lJ+VT3tU/gDPqUNBxO3AJyxC
+	 aGoDgZE/h2F3aZhm3t2hI5PR0sOg3LgWkGbniYWhyAkGTn3mpHbk+dqHTXCzh6qRxi6mU
+	 W6Y8b+klwB4zgx0iqctBnpwFcUOuoKkhLSy+DzKh87ibOu6K6JJiV2GjIbINkh1Q8EW0/
+	 7cOVoT0fKY0HJEE9z6voLtNDkRO2w/bOMRRy7bGxcfWCtZTdlrdgCXcR6NLeeakf24rIX
+	 YwgdikJzQgxvi0JiaOpV7jPC9WZpwH9m0eAqZAei8xtWs1tH6qVAzxqWqiRDPNP6ydw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o/bW8pfK1Ssx1IkjlfqEUH5k0E1Ee1nONfMpkfTrJkA=;
-	b=oa85kvn5DBpyW5nxRJD84mZFLVSclxFIz5ejyhtcZMvQXqgu/TxevFVcaTz/91FeppTq
-	 SDOUsDYcLtVfBvVGUkHCSh1zxTPuLPqKCZPxvrwnYAmf89wA6qby7nuAey1xeDdxANI1a
-	 d26FGnyF7GmWCUJoLg5EhZX8rFJtHrwHveiC5vkZLgRTmdXnLEQuzD8PS0VJj95rQDJB5
-	 WDSJzhU0EAjmeslKkZBeVZcFhbgJotXplp92mQc892ElKzrQ9+AC8SiIsORJ7Wx8ZUwXF
-	 eMVV0A6aopK9myLaSigeMQIULH4VHwZxwGPSBvkAT1VLeYuYs/re5QfS01MtkT42j4w==
+	bh=yWeFmKpf7V4NAlty8gu+8tdomGnmZjxC3NQFg9PEeaU=;
+	b=n5L7+b80qCQC5WfJ2uvDhCy39pkUKe5MZDGVWvUT6eUrwfSiRcjSJQceIXn32c1adfvx
+	 DMUEk7UZWOM1Bq/WAcF9db6izrwUobi7Q5ygJOdkYcrs6cLazOGiIyRUEBJEbE2LGQGCd
+	 BVUbMD2L2TM2lwnp81vjZZCty960bfd51xyO20mX697kzhfUC27wn22cx524A85PGck8T
+	 PSeTRjmwOA1wwfwnGtt48KjumszdPe0dg/CtfW0LJvMdintOHKphC/ZjOK3ySuoqYn5pM
+	 7P98uRi9dhTMmK4rgKTMVAY5oL/I5dhJ+8y4iKttDJq0p3nchZrAyzzDuNDcfHtsbNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6qolygD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2JFYzu7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CF6606A332;
-	Thu, 19 Nov 2026 03:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B95160A260C;
+	Thu, 19 Nov 2026 03:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6qolygD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E451F000C4;
-	Thu, 19 Nov 2026 03:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2JFYzu7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8E41F000C4;
+	Thu, 19 Nov 2026 03:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057413;
-	bh=o/bW8pfK1Ssx1IkjlfqEUH5k0E1Ee1nONfMpkfTrJkA=;
+	s=korg; t=1795057416;
+	bh=yWeFmKpf7V4NAlty8gu+8tdomGnmZjxC3NQFg9PEeaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6qolygDp2m5vqfkJB2Q1IQYfPBCdlJrNsofx/7gAWVNwtvKUxVb4+Z+cPzCcjF2/
-	 uxqh1xxlSJ7KcCyYhLvKyJMOFXg61P05bbVpsck1c0ny+dN82KE8SehoRiACH4Pj+w
-	 RQ6DJ3dw/C0qNjoL75RTAshI8I7OQpxKUQTMz8K8=
+	b=z2JFYzu7LpcJV6lohn11zROt7R5e0SeoeQJOXpeexNxwLxEYLXjHAxkMaubT3Fniq
+	 RhJZnarIk70tuMqbZh1eCEHrcGYQ1Dcpot4ioYUo3Qp337d9WSpoA14aE48anmPdaW
+	 x/WC0kKzG2oyzgOf5KhUx/dFUgB8ePMxAbZtamdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0122/1848] udf: Fix bh leak for unallocated space entries
-Date: Wed, 18 Nov 2026 15:36:00 +0100
-Message-ID: <20261118145916.054719431@linuxfoundation.org>
+Subject: [PATCH 5.10 0096/1848] driver core: attribute_container: Unwind device_add() on attr failure
+Date: Wed, 18 Nov 2026 15:35:34 +0100
+Message-ID: <20261118145915.129914518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,31 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit d95094d4c0a62ea17b8a7c6399b42381b8a55bc0 ]
+[ Upstream commit 8cfe7ad274bb42c4653b645267410d4a3a23db98 ]
 
-When processing unallocated space entries we didn't properly release the
-inode bh. Fix it.
+attribute_container_add_class_device() first calls device_add() and then
+creates the container attributes. If attribute_container_add_attrs() fails,
+the helper returns the error with the class device still registered.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+Callers use an error from this helper as a failed add and do not call
+device_del() on that path. Undo the successful device_add() before
+returning the attribute creation error.
+
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260608172717.88657-1-dbgh9129@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/attribute_container.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index 930b17317c1ac..6afbc17af652b 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1432,6 +1432,7 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
- 		memcpy(iinfo->i_data,
- 		       bh->b_data + sizeof(struct unallocSpaceEntry),
- 		       bs - sizeof(struct unallocSpaceEntry));
-+		brelse(bh);
- 		return 0;
- 	}
+diff --git a/drivers/base/attribute_container.c b/drivers/base/attribute_container.c
+index f7bd0f4db13d8..95cb92ecc0a8f 100644
+--- a/drivers/base/attribute_container.c
++++ b/drivers/base/attribute_container.c
+@@ -455,7 +455,12 @@ attribute_container_add_class_device(struct device *classdev)
  
+ 	if (error)
+ 		return error;
+-	return attribute_container_add_attrs(classdev);
++
++	error = attribute_container_add_attrs(classdev);
++	if (error)
++		device_del(classdev);
++
++	return error;
+ }
+ 
+ /**
 -- 
 2.53.0
 
