@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032004;
-	b=VNF5dVIUxtAvX1G3v9CelCy1JXcHKPyHY0YTRHveCL7DOIhKr6uMlMfZeF+IhSQRgMww
-	 l3K72C1BgoXqXfd1kT6XGyVns3psj4Woe0NE/DzT6GD46qwuR+F8M629oZPHXhJ/BCrfg
-	 WaWJ1JTmNvyPS7Y0PC7HPegTrKdU47D8cdlum5q9ThZCPk6ILhKcWVhv89QEwtsss6KkA
-	 hHKj9FskYrKH5HjuOs1AeV2J+sjCpXZVjXfyoAfLDNUJVrNameNRERNncTAxbNhbpgd9X
-	 DOWKqRkVMKqrREHK6/hz/07fNWAzjoMjRTOPoq97UUtdFN8/UR4vb60kYHdSk4GYEjA==
+	t=1795032007;
+	b=u1nUeF6ebUKam1Q5hUcYgjKDtdvfBhmUy6v1VAwAsN0SgwYxGV4U6ZTQAlMqLLAB22vV
+	 zr9zR7C9m32d+7Aws4zJw8i89UE+IuVD4FhiN+wpyYnWbJJT7Kc/en5yV/L+7QZrEEUxW
+	 qYCOLw2LySF+xtp0IjZL6qX6lHhHMOs8Mx9J2r9NLLkfIWFVxNE/VYR8Xq6Cb+0kdzQg/
+	 1CGlkLi0E2IPsZSEiHCQYCH0tbvDFwKsWDwt1Jw+6kfqXTphKc0S2ViLtm22rm+BeE+gV
+	 /Ufsm/PmctLSoddx89d34lU5oUur+1Z44480CjVAdMz9Id/RdlHbse8iRU3AIaAAUFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KL6sY0yEW1FMm4QZ30WuGQ8vJ606YxxzxAugG5kUkjo=;
-	b=yFP2t5jl5UzeTOwnzoI4rZuboB/jsQZm1Y7qZZYs5T4cL3gZEaqwXPL2Ox8QqNd90azF
-	 SSrRSQuj0hjZruP0V2O1bG1ESSQFzrRj5ZlVSViX0talVvjGb0OPUbBs0z+iQe7GAQdno
-	 mB9yPSpI/w/KpogZC2D5iN9NVGo8Fq5pxQr9aypxjAZKT0bm6JMilMb9IjhM1VXxN7cL/
-	 Ns1LZnn/xmHcBV6JXsGZNeDnr+kCO77j4LWmy7mKdzn/9UJk1geKEILm3BOBze2MCJHhb
-	 8YTdt/HkaBftct4LIEPPBnJ5HDGdZroiDBH5A/gZ86lZwfOvnXM2d2sOfKnGu2kYayA==
+	bh=cGdP+9ONFbbi42dbeo/eBIwbxg+RcDl4v6xUChaCjPA=;
+	b=zZR1fBDWcYdg29GfT6FIwwRZM8tj66ZOock/yPYSgJl+3/RwyGEKlOQy63yvsDqfhd8R
+	 2eDmeHwB6+mpGuxr17qU8mRqeE5Trrn9sLW8W1PFqPSEQxv7z38VV7YOWAtZBxuJI2/UU
+	 v1Lu9F++sVtT5RV55YgR7x5POsoET7IYmILiFf2YWyqr7eQmlaXZpZX+DAMJSWJceBMys
+	 wTroR7sNj+gy5eUa76rlVXcli3rYCZw/7sw2BcJgvNKND/qqW0C27Jy9hoKJ0KRy/B+Dd
+	 6/c2xzIBVvbYlePm7uk/mUU3VEjO+WktdY4ok8Gb0tbZasPTx9zbWNsVpm7xLqQfQGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="csw7Z8k/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhDZTGxr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0344606A320;
-	Wed, 18 Nov 2026 20:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A11606A31C;
+	Wed, 18 Nov 2026 20:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csw7Z8k/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322FA1F000C4;
-	Wed, 18 Nov 2026 20:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhDZTGxr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1181B1F000C4;
+	Wed, 18 Nov 2026 20:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032004;
-	bh=KL6sY0yEW1FMm4QZ30WuGQ8vJ606YxxzxAugG5kUkjo=;
+	s=korg; t=1795032007;
+	bh=cGdP+9ONFbbi42dbeo/eBIwbxg+RcDl4v6xUChaCjPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=csw7Z8k/0VjADulIWpFtqerwwX47hywgqLOkjW0aYLCEizP0Vq9oVQjB88BO8to4Z
-	 3EO233sapLfagUHNKBrWaj4InwpTVatEmA8C6i1nJlVAXln0vIr1FpHdYx+8rhMCTK
-	 9SszEA1meu4ADN+/Tju44G9AIH4G8AMXpNCJzgoM=
+	b=PhDZTGxr16eonw5HFPnvJnsOUQEvAnmOOtADWZIjP+oUUlkrn2OsYSDRGsehqjBR6
+	 FEQLTYjkJ6CwgqQGH+064rwi8+vYWuTXeLDeqglsKMJmnlgvi59jOX5s9ePUILCtc3
+	 RVlz598KeuPiLXy6S4ClZWVPeUe/2QeAG1ZPlymQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1258/1756] net: axienet: free outstanding TX buffers in axienet_dma_bd_release()
-Date: Wed, 18 Nov 2026 15:56:25 +0100
-Message-ID: <20261118150059.763576745@linuxfoundation.org>
+Subject: [PATCH 6.12 1259/1756] selftests/bpf: Expect at least one tp_recursion miss in missed
+Date: Wed, 18 Nov 2026 15:56:26 +0100
+Message-ID: <20261118150059.798701783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,172 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Maimon <maimon.sagi@gmail.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 0c20cb4cfb40cf270d6c4c2c2ff5e5d72322644a ]
+[ Upstream commit a5e144985d6855c84b56ea5443fd6333490ce8ec ]
 
-axienet_dma_bd_release() walks the RX ring to unmap and free every
-receive buffer before releasing it, but frees the TX descriptor ring
-with dma_free_coherent() alone.  Any descriptor that
-axienet_free_tx_chain() had not yet reclaimed still holds its skb and
-its streaming DMA mapping, and both are lost.
+missed_tp_recursion attaches its tp programs to bpf_trace_printk and
+expects each of them to miss exactly one run, the one that its kprobe
+program on bpf_fentry_test1 triggers by calling bpf_printk().
 
-axienet_stop() disables TX NAPI and stops the DMA engine before calling
-it, so nothing reclaims those descriptors afterwards.  Bringing the
-interface down while frames are in flight therefore leaks up to
-lp->tx_bd_num skbs and mappings each time.
+The test is not serial, so tests running in parallel can add misses
+to the tp programs while they are attached:
 
-axienet_dma_err_handler() already walks the TX ring this way before it
-restarts the DMA engine: it unmaps every descriptor whose cntrl is still
-set - axienet_free_tx_chain() clears it on reclaim - frees any skb still
-attached, and clears the descriptor.  Move that loop into a helper,
-axienet_free_tx_bufs(), and call it from axienet_dma_bd_release() too.
-This relies on axienet_stop() having stopped the DMA engine first, as
-the RX walk in the same function already does.  The helper frees the
-skbs with dev_kfree_skb_any(), as drops: in the error handler, which
-runs from a workqueue, that frees them directly rather than deferring
-them to softirq as dev_kfree_skb_irq() did.
+  - The kprobe on bpf_fentry_test1 is global. Any other test that
+    does bpf_prog_test_run() on a fentry/fexit program calls
+    bpf_fentry_test1() and thereby fires the kprobe program, which
+    calls bpf_printk() from kprobe context and makes the tp programs
+    fail the bpf_prog_active check once more.
 
-The walk must not run on a ring that is not there.  axienet_open() does
-not check the result of the reset that runs axienet_dma_bd_init(), so
-when that reset fails tx_bd_v is either still NULL or, after an earlier
-close, points at the ring that close freed.  Clear tx_bd_v and rx_bd_v
-once their rings are freed, and skip the walk when tx_bd_v is NULL.
-That also ends the second dma_free_coherent() of a stale ring which the
-same path already did.  On the axienet_dma_bd_init() error path the TX
-ring has just been allocated zeroed, so the walk does nothing.
+  - Any other program that runs under the bpf_prog_active check, such
+    as a kprobe program or the perf event tracepoint program in
+    legacy_printk, and calls bpf_printk() hits bpf_trace_printk the
+    same way.
 
-This was reported by the Sashiko AI review bot.
+Either way, test2_recursion_misses comes out as 2 instead of 1.
 
-Tested on the AXI Ethernet MAC of an ADVA TimeCard X2 (PCIe card, with
-the built-in AXI DMA): traffic passes, and after each of ten down/up
-cycles and five module reloads, all made with traffic running and each
-running axienet_dma_bd_release(), traffic resumes and nothing is logged.
-The leak itself was not measured, and neither the failed-reset paths nor
-axienet_dma_err_handler() were exercised.
+Expect at least one miss, as missed_kprobe_recursion does since commit
+08a7078feacf ("selftests/bpf: Improve missed_kprobe_recursion test
+robustness").
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Reviewed-by: Joe Damato <joe@dama.to>
-Assisted-by: LLM sparse
-Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261007034620.1360542-1-maimon.sagi@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 85981e0f9e9f ("selftests/bpf: Add test for recursion counts of perf event link tracepoint")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261008-selftests-bpf-missed-tp-recursion-v1-1-0dd60471d655@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 74 +++++++++++++------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/missed.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 76970a8065494..6092f7cda5a22 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -173,6 +173,46 @@ static dma_addr_t desc_get_phys_addr(struct axienet_local *lp,
- 	return ret;
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/missed.c b/tools/testing/selftests/bpf/prog_tests/missed.c
+index 70d90c43537c1..03dfae9ab014e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/missed.c
++++ b/tools/testing/selftests/bpf/prog_tests/missed.c
+@@ -119,9 +119,9 @@ static void test_missed_tp_recursion(void)
+ 	ASSERT_EQ(topts.retval, 0, "test_run");
  
-+/**
-+ * axienet_free_tx_bufs - Release the buffers still held by the TX ring
-+ * @lp:		Pointer to the axienet_local structure
-+ *
-+ * Unmap every descriptor whose mapping is still live, free any skb still
-+ * attached, and clear the descriptor for reuse.  axienet_free_tx_chain()
-+ * clears cntrl when it reclaims a descriptor, so a non-zero value means
-+ * the mapping is live.  The DMA engine must be stopped.
-+ */
-+static void axienet_free_tx_bufs(struct axienet_local *lp)
-+{
-+	struct axidma_bd *cur_p;
-+	u32 i;
-+
-+	for (i = 0; i < lp->tx_bd_num; i++) {
-+		cur_p = &lp->tx_bd_v[i];
-+		if (cur_p->cntrl) {
-+			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
-+
-+			dma_unmap_single(lp->dev, addr,
-+					 (cur_p->cntrl &
-+					  XAXIDMA_BD_CTRL_LENGTH_MASK),
-+					 DMA_TO_DEVICE);
-+		}
-+		/* not reclaimed by axienet_free_tx_chain(), so a drop */
-+		if (cur_p->skb)
-+			dev_kfree_skb_any(cur_p->skb);
-+		cur_p->phys = 0;
-+		cur_p->phys_msb = 0;
-+		cur_p->cntrl = 0;
-+		cur_p->status = 0;
-+		cur_p->app0 = 0;
-+		cur_p->app1 = 0;
-+		cur_p->app2 = 0;
-+		cur_p->app3 = 0;
-+		cur_p->app4 = 0;
-+		cur_p->skb = NULL;
-+	}
-+}
-+
- /**
-  * axienet_dma_bd_release - Release buffer descriptor rings
-  * @ndev:	Pointer to the net_device structure
-@@ -186,11 +226,18 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 	int i;
- 	struct axienet_local *lp = netdev_priv(ndev);
+ 	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test1)), 0, "test1_recursion_misses");
+-	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test2)), 1, "test2_recursion_misses");
+-	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test3)), 1, "test3_recursion_misses");
+-	ASSERT_EQ(get_missed_count(bpf_program__fd(skel->progs.test4)), 1, "test4_recursion_misses");
++	ASSERT_GE(get_missed_count(bpf_program__fd(skel->progs.test2)), 1, "test2_recursion_misses");
++	ASSERT_GE(get_missed_count(bpf_program__fd(skel->progs.test3)), 1, "test3_recursion_misses");
++	ASSERT_GE(get_missed_count(bpf_program__fd(skel->progs.test4)), 1, "test4_recursion_misses");
  
--	/* If we end up here, tx_bd_v must have been DMA allocated. */
-+	/* tx_bd_v is NULL if axienet_dma_bd_init() did not get as far as
-+	 * allocating it, and is cleared below once the ring is freed;
-+	 * dma_free_coherent() accepts NULL.
-+	 */
-+	if (lp->tx_bd_v)
-+		axienet_free_tx_bufs(lp);
-+
- 	dma_free_coherent(lp->dev,
- 			  sizeof(*lp->tx_bd_v) * lp->tx_bd_num,
- 			  lp->tx_bd_v,
- 			  lp->tx_bd_p);
-+	lp->tx_bd_v = NULL;
- 
- 	if (!lp->rx_bd_v)
- 		return;
-@@ -221,6 +268,7 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 			  sizeof(*lp->rx_bd_v) * lp->rx_bd_num,
- 			  lp->rx_bd_v,
- 			  lp->rx_bd_p);
-+	lp->rx_bd_v = NULL;
- }
- 
- /**
-@@ -2537,29 +2585,7 @@ static void axienet_dma_err_handler(struct work_struct *work)
- 
- 	axienet_dma_stop(lp);
- 
--	for (i = 0; i < lp->tx_bd_num; i++) {
--		cur_p = &lp->tx_bd_v[i];
--		if (cur_p->cntrl) {
--			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
--
--			dma_unmap_single(lp->dev, addr,
--					 (cur_p->cntrl &
--					  XAXIDMA_BD_CTRL_LENGTH_MASK),
--					 DMA_TO_DEVICE);
--		}
--		if (cur_p->skb)
--			dev_kfree_skb_irq(cur_p->skb);
--		cur_p->phys = 0;
--		cur_p->phys_msb = 0;
--		cur_p->cntrl = 0;
--		cur_p->status = 0;
--		cur_p->app0 = 0;
--		cur_p->app1 = 0;
--		cur_p->app2 = 0;
--		cur_p->app3 = 0;
--		cur_p->app4 = 0;
--		cur_p->skb = NULL;
--	}
-+	axienet_free_tx_bufs(lp);
- 
- 	for (i = 0; i < lp->rx_bd_num; i++) {
- 		cur_p = &lp->rx_bd_v[i];
+ cleanup:
+ 	missed_tp_recursion__destroy(skel);
 -- 
 2.53.0
 
