@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019369;
-	b=AdMAzHWyRkOJ9dY6dQ/MtAt/5i55/gRYnx79C+f6ohdIPMpp4NfM2VesDemjSf0QqpMN
-	 13R8S63pIFMXTDNtjzGmc6LrogNCtWl94MU2sndbBY52ao9BprWtqZvgiA5ApJBqv6RRP
-	 ZQCU8C+MaEgXTN7PKs7lvj70xvu4t1pg8HDhgjC+aCTxjgi/BJolT160vq1IIvYaJoVt5
-	 iMuOwff1ChyEr7nsMLMuFLR4bDvyyTqF5/92a6NBox2/iv5ipgIjLO+BHw7vKynTx6SLZ
-	 bTVwtEutpLKAu5nNQ7RALc53fjov2wZ1v7YWm2nifyAiIXZRq7CojznJT8WW9tmf32Q==
+	t=1795019372;
+	b=M6dEeOa9YLa31xhjlx7iCiJFmSOKAjGWcq9JbVUG4hVLxTOJZJI4v1ZoodkioniGCvjr
+	 4mInyr41Xl4BwaIc1JJfZYwMvP4ve+wYA0K+xVz9VetFttvm113g20lyc5M/jqWSjvr/d
+	 BMYDRe/NwoT+59WEelRYOeuExRObl/wL1Ddirh5S02cWWWhT3+OblcLWwd2rBb7BEYp+j
+	 zabEGmIINp7diEcDj1QSIeYE/hW1qEzoXVzEHMJUjgnA69Fd/FbposLpVIE6qzPW8SYJm
+	 z0HeNG4Dts/dXUIYSTQSp0KjwLEJK/eH9r/9UPI1ZZxCTcutYQoX2Q8dQ3jeJwGhXQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CoKk0sS+mxQ60OTy0vO14aZFrZx+jTpNHeB3p1Yxf4g=;
-	b=WNUyIAXMA/nOrc6B5qzt+Aa/MGV6C4RBCcqi0t8TrOaM3LCKhp45USpTIQpDFLNdic4w
-	 A+vDiUNrUHa12xH5E9s+W4v/q8FMkMY1Oj4vDd73/ViVQPX/N0VeEhcmdE+JtZM4cHLc9
-	 6PiZ/DWu+598hmRYCDb0coxAWlv8STrXFmQakOvATwHw61TzZvycGUTeNCGLp5wDhb6tB
-	 9LhY96SMTfCxfA3XJYtD/ti4JkEk2dJvK3G3iJWbCelH9ko4Pf82EOixkJ8xLKWOxDEf6
-	 KGGnRdVuctwDPMTUDTQqNilWv7LBoK1gzyD92ia1MtHoX3KIMuE63HYgoVb5aKEi1eQ==
+	bh=J/QXjkemFpbHJg6t9umPlHdCRl0rXdV7W+hoy3+PMgM=;
+	b=h2jxgo/mlbaQHuQ7+3Ni1OU3JY+JZM4quLGCM1iiHh6CWY159vB4mRiDy6mF23BtEVps
+	 vHM4qkCGx9lfweNFRpi9pASj4svjfmVWfV+w3gpVfoT9cRJ1Lv4PbfpnZ2a6QZhaAXbQj
+	 VxhLM4wog8yjLTN7t0sVvwT2T39Wjn2QxG9tadOZqOZXvFS6HmVCWq0DZQKfTo2ny+IjJ
+	 YJCKEHs9KWuRuPe1X5472UrsIea/Cou0rEUvbJfaa7RBKNZGxyr8J5cvc5k/73PG0lPJ9
+	 saHx90gLj3hjo3swv4YEsUgBNpjpq4K1VlklbGBxG2EcHD5j9vfyxOjuMRHgWVBHx1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AXCw8LZM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+iu+zF1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4997060A2607;
-	Wed, 18 Nov 2026 16:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A9F60A2602;
+	Wed, 18 Nov 2026 16:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AXCw8LZM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9979D1F000C4;
-	Wed, 18 Nov 2026 16:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+iu+zF1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748141F000C4;
+	Wed, 18 Nov 2026 16:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019369;
-	bh=CoKk0sS+mxQ60OTy0vO14aZFrZx+jTpNHeB3p1Yxf4g=;
+	s=korg; t=1795019372;
+	bh=J/QXjkemFpbHJg6t9umPlHdCRl0rXdV7W+hoy3+PMgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AXCw8LZM166AT+BDzVBRbwdGY39U7qkyuKt+Bqkelw/vMQxBXiIVMd5W5wtxCZ+u7
-	 e8MXEYedYlte/JwBZhyVOtsRI3GzUZZyVz7aDBpW8pHzRHEi9LOxjdRV14q9H0r8yK
-	 x5M+ORnlfW7b7MvGSjA6vf1nVqC0ie88sIdNqdno=
+	b=s+iu+zF1WP3Jp8fhgZZ5vXO20WSpKsAnX6y91k26zSm2asfFhAhGEgaF00g6Qko1d
+	 w8jeHw+o8aBunpORMWayCHIB4SdkdiYNjNXrdi54hJ6nD7Niv2CzDTLe/jjsQ0AaGB
+	 wuietLwOz0PZ9uLxnxpR7ER6gV4z6mDdPIbEaQD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vincent Jardin <vjardin@free.fr>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1530/2651] ALSA: hda: Dont free card at probe error in vga_switcheroo handler
-Date: Wed, 18 Nov 2026 15:46:10 +0100
-Message-ID: <20261118150343.059067938@linuxfoundation.org>
+Subject: [PATCH 7.3 1531/2651] crypto: caam/qi,qi2 - set plain_keylen for skcipher descriptors
+Date: Wed, 18 Nov 2026 15:46:11 +0100
+Message-ID: <20261118150343.095290569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,108 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit 7e1ad3c55baa80399f1727dfd2303fa4d1558d9a ]
+[ Upstream commit b566ebd52eeb661337ef5f52a000528af59479df ]
 
-The vga_switcheroo handler azx_vs_set_state() calls
-azx_probe_contine() for enabling the audio, and if an error happens
-during the probe, azx_probe_continue() releases its associated sound
-card object at the error path.  The card release procedure includes
-the call of vga_switcheroo_unregister_client(), and this triggers the
-vgasr_mutex lock again that had been already held by the caller
-(vga_switcheroo_process_delayed_switch()) -- leading to a deadlock.
+Since the commit 66b9a095f7f9
+  ("crypto: caam - Add support of paes algorithm")
 
-(Moreover, the card release will cause a potential UAF at the error
-message in azx_vs_set_state() since the card object is already gone;
-this was the original report by Sashiko.)
+The shared descriptor then loads a zero-length key and the SEC decodes
+the inlined key bytes as commands.
 
-For avoiding the unneeded crash, it's better to avoid the card release
-in this error path, so we make azx_probe_continue() behaving
-conditionally.  In return, set hda->init_failed flag, so that any
-further (re-)attempts will be filtered after that point.
+Test: with CONFIG_CRYPTO_SELFTESTS on LX2160A every skcipher but xts fails:
 
-The check of hda->init_failed is dropped from azx_vs_can_switch().
-It's because otherwise vga_switcheroo can't be switched to turn off
-GPU once when a probe error happens at the audio side.
+  dpaa2_caam dpseci.0: 40000307: DECO: desc idx 3: Invalid LOAD Command
+  alg: skcipher: ctr-aes-caam-qi2 encryption failed on test vector 0; expected_error=0, actual_error=-22, cfg="in-place (one sglist)"
 
-Fixes: 39173303c838 ("ALSA: hda: Free card instance properly at probe errors")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20261007213728.155092-1-tiwai%40suse.de
-Link: https://patch.msgid.link/20261007223448.172443-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+caamalg_qi.c is compile-tested only.
+
+Fixes: 66b9a095f7f9 ("crypto: caam - Add support of paes algorithm")
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/controllers/intel.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/crypto/caam/caamalg_qi.c  | 2 ++
+ drivers/crypto/caam/caamalg_qi2.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index 068fc522658a6..88b0207fde9cd 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -1184,7 +1184,7 @@ static const struct dev_pm_ops azx_pm = {
- };
+diff --git a/drivers/crypto/caam/caamalg_qi.c b/drivers/crypto/caam/caamalg_qi.c
+index aa779caacfe59..2f2682c8bcd81 100644
+--- a/drivers/crypto/caam/caamalg_qi.c
++++ b/drivers/crypto/caam/caamalg_qi.c
+@@ -637,6 +637,8 @@ static int skcipher_setkey(struct crypto_skcipher *skcipher, const u8 *key,
+ 	ctx->cdata.keylen = keylen;
+ 	ctx->cdata.key_virt = key;
+ 	ctx->cdata.key_inline = true;
++	ctx->cdata.plain_keylen = keylen;
++	ctx->cdata.key_cmd_opt = 0;
  
+ 	/* skcipher encrypt, decrypt shared descriptors */
+ 	cnstr_shdsc_skcipher_encap(ctx->sh_desc_enc, &ctx->cdata, ivsize,
+diff --git a/drivers/crypto/caam/caamalg_qi2.c b/drivers/crypto/caam/caamalg_qi2.c
+index 6b47bcc16a506..d527069312851 100644
+--- a/drivers/crypto/caam/caamalg_qi2.c
++++ b/drivers/crypto/caam/caamalg_qi2.c
+@@ -961,6 +961,8 @@ static int skcipher_setkey(struct crypto_skcipher *skcipher, const u8 *key,
+ 	ctx->cdata.keylen = keylen;
+ 	ctx->cdata.key_virt = key;
+ 	ctx->cdata.key_inline = true;
++	ctx->cdata.plain_keylen = keylen;
++	ctx->cdata.key_cmd_opt = 0;
  
--static int azx_probe_continue(struct azx *chip);
-+static int azx_probe_continue(struct azx *chip, bool free_on_error);
- 
- #ifdef SUPPORT_VGA_SWITCHEROO
- static struct pci_dev *get_bound_vga(struct pci_dev *pci);
-@@ -1211,8 +1211,10 @@ static void azx_vs_set_state(struct pci_dev *pci,
- 		if (!disabled) {
- 			dev_info(chip->card->dev,
- 				 "Start delayed initialization\n");
--			if (azx_probe_continue(chip) < 0)
-+			if (azx_probe_continue(chip, false) < 0) {
-+				hda->init_failed = 1;
- 				dev_err(chip->card->dev, "initialization error\n");
-+			}
- 		}
- 	} else {
- 		dev_info(chip->card->dev, "%s via vga_switcheroo\n",
-@@ -1251,8 +1253,6 @@ static bool azx_vs_can_switch(struct pci_dev *pci)
- 	struct hda_intel *hda = container_of(chip, struct hda_intel, chip);
- 
- 	wait_for_completion(&hda->probe_wait);
--	if (hda->init_failed)
--		return false;
- 	if (chip->disabled || !hda->probe_continued)
- 		return true;
- 	if (snd_hda_lock_devices(&chip->bus))
-@@ -1737,7 +1737,7 @@ static void azx_check_snoop_available(struct azx *chip)
- static void azx_probe_work(struct work_struct *work)
- {
- 	struct hda_intel *hda = container_of(work, struct hda_intel, probe_work.work);
--	azx_probe_continue(&hda->chip);
-+	azx_probe_continue(&hda->chip, true);
- }
- 
- static int default_bdl_pos_adj(struct azx *chip)
-@@ -2355,7 +2355,7 @@ static const unsigned int azx_max_codecs[AZX_NUM_DRIVERS] = {
- 	[AZX_DRIVER_TERA] = 1,
- };
- 
--static int azx_probe_continue(struct azx *chip)
-+static int azx_probe_continue(struct azx *chip, bool free_on_error)
- {
- 	struct hda_intel *hda = container_of(chip, struct hda_intel, chip);
- 	struct hdac_bus *bus = azx_bus(chip);
-@@ -2446,10 +2446,12 @@ static int azx_probe_continue(struct azx *chip)
- 
- out_free:
- 	if (err < 0) {
--		pci_set_drvdata(pci, NULL);
- 		if (hda->vga_switcheroo_registered)
- 			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
--		snd_card_free(chip->card);
-+		if (free_on_error) {
-+			pci_set_drvdata(pci, NULL);
-+			snd_card_free(chip->card);
-+		}
- 		return err;
- 	}
- 
+ 	/* skcipher_encrypt shared descriptor */
+ 	flc = &ctx->flc[ENCRYPT];
 -- 
 2.53.0
 
