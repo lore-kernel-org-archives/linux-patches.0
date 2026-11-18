@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059946;
-	b=LxR99p3GH1SjFfVKZMcnQs57IbAFbdrfpJrMq/lPL+QuNmt1Ovl+u4MaEfcXpTgxnTzc
-	 lKhvmliNoz/Afr2p+wefarBhnOcCSitp+JtZTAGqiftAbg8iJT5++jPqg0+TY+NcLp1HB
-	 e4VLibdgOJM0gOVnN3+xvWT+y7SO2NK4Y/d0t1ns2O/tHwI2KFxlbHFsxZBQaT5wtGfB3
-	 s0WoZhLb0B9n2KZsyE5ron2V0K50c0B1+065KDYWyca6IRL2htmxlxz4W1FfXPA0mI44v
-	 Tq7o8XuSXWuDliGD+b2pbKd2ByEDeURXuRbKye1g1Qi9BUn1jIGxARkF0/9dnb8U1Qg==
+	t=1795059949;
+	b=Ys/2z6IpkT1y1/br7E6zHi1GQV+fZcC+IwpRnM8sxzB1ZevODhUUBHfFkLWc/CdLwXLZ
+	 p0RtlEq5ezp5WnSE58UqftmtLyAXMW67+ZLnFkQNhryszvbARAKXN/lD4SQSC7EvOtZNO
+	 YmW95bqV7b7u415nicnaLAYPm7GK24lEv6Nkbni+feUa8AK1R+7mUBQkkembjCAuUs5Is
+	 +UeUdUilUQqmpM9enxZtti8MArKWhy1DIz80ti5SuutXRAZHb9sX4xRkAVI+s4Q4xfI5m
+	 PT2/alGBBkzRJDEtnEMJmuqf+W126H6oXSfHgNr7qE4iDmljE2dbgoe1dwUBzsWKvJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bUmO+ecNjb3ubchf2B7xMCkCoNt7sCuaeGbaLXWFois=;
-	b=z50ZaeLgxXYJdqomBMjSNXii5SXLKRjJWNKiZgmX6o2CK36rUy6VbygR2Y3HzhkPcxD2
-	 GTlTTjt0rYuWaw+TfxbyAV1lV4xXiZa16OV9Yv0/TDYXpdkOwCsSuS+ZAGczo7eGV8d5m
-	 nU1p73XdYrJ0VNOq1bvceuvPDQTyZFSQnIxsZJvM1MGo/RhKDdArVhNdYCAgXOzLdTOGe
-	 riT8pCqWwfid3cagbK6M70cFJwxNfTkctCKCcDTrAiC+9KIq4GpdFVyRrm9bhDHyjUx55
-	 H6gMaDx7U66qHv9BmY+d5UGnMpgc8jE152zRjnhKRNf25o+ZmwFaOX+HQpiYyRx3vLA==
+	bh=ZSet2p2vLi+pmyBfmIhh8JJsAUzAAtpWwovrS3nHyb4=;
+	b=IeNFrdJxEDVKHkLAFl41JFxtdve35ofOp9wOC3J4FhNCzODovquAL2aR8YC+vqOSgcDE
+	 HP5bz3/rK+vM39l44LECWF1JnQ8Ppv8jGsc0UKfXMY+RSe7OkiRHZ86GgiGiiEBdgOAVw
+	 o19qm81Yu6U1DZ+oPzGEiVDO4ZcKbLaTk6l7D9yTRtZ2/lKrGjuznoPNAxtKo2nqFfz9j
+	 v2UMgxwT+OCJ2hk2+TsfFRBsvnBOJFH19Gxd+8nniG5Dw6yacV6lZoetaDwcMCE/Vat+Q
+	 YPXs10LN/n0pKFK/5z9cGRbSeevLpBZpE5bPN4BvEo+yFqSP0FJBmsbvYQCK8rDnKkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c0KQKLQp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FWH5AxoK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA260606A32F;
-	Thu, 19 Nov 2026 03:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7236D606A325;
+	Thu, 19 Nov 2026 03:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c0KQKLQp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5BE1F000CB;
-	Thu, 19 Nov 2026 03:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FWH5AxoK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83351F000C4;
+	Thu, 19 Nov 2026 03:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059946;
-	bh=bUmO+ecNjb3ubchf2B7xMCkCoNt7sCuaeGbaLXWFois=;
+	s=korg; t=1795059949;
+	bh=ZSet2p2vLi+pmyBfmIhh8JJsAUzAAtpWwovrS3nHyb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c0KQKLQpwhk3CWUisHuKH8FkNge85LY8U53EBy7v4zjnCvXIHARvs1X/r7WIr3hNj
-	 pUVLgL9RYprJe5T/V0jAKwVMTNDo29cn4Twirbbje/ipj7IN/47fcDC4l+QHhJDk3/
-	 3Q1JDztjrVbOU8PRPexQcFysUoV+qcc/gtoYzItA=
+	b=FWH5AxoKvAwx1hfIqIxrT6qLyuhnHEh4y36AL+qXoZNvxZWniJ8M2dSr5M68DIeSy
+	 0ltfgtz5R9AMyCvQRnVbsQenAUXHxsWqNmeaY/hQf8SMoLnik+bUUcOeuKpPg8kEOD
+	 WBolcdXenBxgw7/ZRT7Sf38nafo7Udwq95XL//6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yingjie Wang <x-professor@outlook.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0982/1848] scsi: handle out-of-range SG_SET_TIMEOUT values
-Date: Wed, 18 Nov 2026 15:50:20 +0100
-Message-ID: <20261118145958.025887896@linuxfoundation.org>
+Subject: [PATCH 5.10 0973/1848] drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure
+Date: Wed, 18 Nov 2026 15:50:11 +0100
+Message-ID: <20261118145957.695560056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,75 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <x-professor@outlook.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 9a6cb1da4f3bc4633bf6669faed25a361834b1b9 ]
+[ Upstream commit d27f831aaf20aaf06e41ceb1b260e10672269155 ]
 
-SG_SET_TIMEOUT accepts a signed int in USER_HZ units. The sg character
-device rejects negative values and limits positive values so the converted
-timeout fits its destination field. The block SCSI and BSG paths instead
-pass the value to clock_t_to_jiffies(), which accepts an unsigned long, and
-store the result in an unsigned int.
+If msm_hdmi_phy_resource_enable() fails, e.g. when enabling regulators,
+it should reverse the state of things already changed.
+msm_hdmi_phy_resource_enable() is used also in probe path, thus such
+failure, which could be simple deferred probe, would leave these
+resources permanently enabled for the rest of the runtime.
 
-Negative values are converted into large unsigned timeouts. On 64-bit
-systems, large positive values can also exceed UINT_MAX after conversion
-and are truncated on assignment. With HZ=1000 and USER_HZ=100, for example,
-429496730 clock ticks become 4294967300 jiffies and are stored as 4
-jiffies. On 32-bit systems, an overflowing conversion becomes ULONG_MAX,
-which is an unsafe relative interval for the block timer comparisons.
-
-Reject negative values with -EIO, matching drivers/scsi/sg.c. Saturate the
-converted value at the smaller of the destination field limit and
-MAX_JIFFY_OFFSET. This preserves successful ioctl behavior while avoiding
-both narrowing wraparound and an unsafe 32-bit timer interval.
-
-The block SCSI behavior predates Git history. BSG has exposed the same
-behavior since it was introduced.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 3d6392cfbd7d ("bsg: support for full generic block layer SG v3")
-Cc: stable@vger.kernel.org
-Reported-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/9321a59c-c560-4742-8b71-5b0ec1f30c2f@acm.org
-Signed-off-by: Yingjie Wang <x-professor@outlook.com>
-Link: https://patch.msgid.link/20261022025508.294713-1-x-professor@outlook.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: adapted separate SCSI and BSG timeout changes to the shared sg_set_timeout() helper using q->sg_timeout. ]
+Cc: <stable@vger.kernel.org>
+Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752654/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-1-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/scsi_ioctl.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/block/scsi_ioctl.c b/block/scsi_ioctl.c
-index c9f009cc04460..1039b0dc81d00 100644
---- a/block/scsi_ioctl.c
-+++ b/block/scsi_ioctl.c
-@@ -5,6 +5,7 @@
- #include <linux/compat.h>
- #include <linux/kernel.h>
- #include <linux/errno.h>
-+#include <linux/jiffies.h>
- #include <linux/string.h>
- #include <linux/module.h>
- #include <linux/blkdev.h>
-@@ -62,10 +63,14 @@ static int sg_set_timeout(struct request_queue *q, int __user *p)
- {
- 	int timeout, err = get_user(timeout, p);
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+index 326b43c803f09..1bdaa1f94c29b 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -62,16 +62,28 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
+ 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
+-		return ret;
++		goto err_pm_put;
+ 	}
  
--	if (!err)
--		q->sg_timeout = clock_t_to_jiffies(timeout);
-+	if (err)
-+		return err;
-+	if (timeout < 0)
-+		return -EIO;
+ 	for (i = 0; i < cfg->num_clks; i++) {
+ 		ret = clk_prepare_enable(phy->clks[i]);
+-		if (ret)
++		if (ret) {
+ 			DRM_DEV_ERROR(dev, "failed to enable clock: %s (%d)\n",
+ 				cfg->clk_names[i], ret);
++			goto err_clk_unprepare;
++		}
+ 	}
  
--	return err;
-+	q->sg_timeout = min(clock_t_to_jiffies(timeout),
-+			    min(UINT_MAX, MAX_JIFFY_OFFSET));
 +	return 0;
++
++err_clk_unprepare:
++	for (; i > 0; i--)
++		clk_disable_unprepare(phy->clks[i - 1]);
++	regulator_bulk_disable(cfg->num_regs, phy->regs);
++
++err_pm_put:
++	pm_runtime_put_sync(dev);
++
+ 	return ret;
  }
  
- static int max_sectors_bytes(struct request_queue *q)
 -- 
 2.53.0
 
