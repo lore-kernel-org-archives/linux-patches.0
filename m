@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056485;
-	b=W0zngxJPv3LC/v5yawTFJ4MV5bL8gFDvfrd0inl/WIILFd1ptzMmozdjzG7sBN3NncLW
-	 zaqFSMfZIWE7wxxCo3HxoeD4oBvJDTvkZECzlYnMjANM5oxfFQ/AFqXYFlrUmX+QEKfSt
-	 RlqWZtK0YxqOazRWqHWPyuK1JWK9qMvnGnmhbGSaV2k3+UpUMWxwk/UVDko6hmPN41AhY
-	 hO0Br4fkF5ZdVGaQ2xE66EC8Xe1GI6coLGq9p1fa38at5mWWNG2wQ6sk2S6Ctiu0xXbwb
-	 8QoA3rM+pglKYgjWyWQHJrglDoTEaJ3lwtRbkZJVo8H5GhUIUzgWT32lclKCRFHmTAw==
+	t=1795056488;
+	b=sntq8mj49y6TFYjSlHvoK4j1MfzXt7l2vMm9DsgL1BP1USFQaLDnPozbteqA9PqVBz96
+	 15q7DSQ4VUdqugZv7kOTgmPheJGyqYCiQ/SF4GBGdwd+SPVG9/xJckLG9MuNtJa8yFf2s
+	 0EEEuTQhi+h9yl9Z0rz1YZCRUSs9uIF86qb51x/Dp/DXczv56Ki4K3JQYABaeMYI0eupq
+	 aIoDmAD9MF34Qvs6Vs4m78hkT4Yj7JaerfrzDbex2f6m//SgFuT8ikmqS81oTVJ8vJ0jL
+	 XfjS3T0TSnUl2Q3Wj93+zEbmi4aUdZTGdbCdY8J1+23v+UYJ3XVAYFFI0EqnyoUjJyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V3SRrKZs+Yusa6WKwPPuPwDFVXxr8ToNQJk+0kOFVds=;
-	b=iytQ4jmp+XXAftxRLoy4QOXg1+VcA+02fd9FfaOUAKuKhcQ7s44BP3wxElyb5RNs4poq
-	 iE6lVVJA0r9niJpyP+sAUlcKMVS5I8OqcMnqYoydLwPxgSeijBnAy0Ca7bAHPUxNrdQdr
-	 Ohx58/WBTY3emCfqWXzldurg/Ot3Xg8PE1GZw6Q148CDWnwPYuJDx1xXTBSKdSHSCKfXJ
-	 jnCvQz+KYdZ9HdHxPvHn2Z3Us9A2S1VgZNVA0WXp9kkWkgdsoEcdvFqjr6RvBrU+t8MHv
-	 2xkw6Mmyjkeb7XeUNJxV14BpYXDF/hQ8y623xQPhhW453mRq0dJKLltNFTQZg77Qc/g==
+	bh=KWsTxmiTdp7xaGNEPr2HoH1CFRc4dqZIlHMR9jOWkIQ=;
+	b=GABGuXxQjZR1pNCs8XfhnIGXWXi5BlUnnRcC6bNybgzqjI0T9+ZWThzK3mELXXwjKoyo
+	 hQR8GYfO6TBSLuschynkYIMvtm8TCsqX4080gTke0AzqH74CR4dMScieG29USn9BpG3nn
+	 WRcCmwB3zilyg8W5qkYn6CKV+9ssav9/IEkPkSJtuJwtAbwBLg7YHLcu5WkUBUFHrqp+f
+	 tXWOw90SgDzPoRoGtkXMdL9BJbIAb9iN07T6ZHZHJMoj3wwEAixv2JPt7SD2KV8UD3yjQ
+	 64SyS0/u3RYxPk4nwA7QUD1FWtav+lHCgc7BdIG0Kb0DpZQlK/NXXJOnrq0b9k8pIAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxTGP0S4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhYG84Ng;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9891C606A330;
-	Thu, 19 Nov 2026 02:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F2E606A320;
+	Thu, 19 Nov 2026 02:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxTGP0S4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECF11F000C4;
-	Thu, 19 Nov 2026 02:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhYG84Ng
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7B51F000C6;
+	Thu, 19 Nov 2026 02:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056485;
-	bh=V3SRrKZs+Yusa6WKwPPuPwDFVXxr8ToNQJk+0kOFVds=;
+	s=korg; t=1795056487;
+	bh=KWsTxmiTdp7xaGNEPr2HoH1CFRc4dqZIlHMR9jOWkIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YxTGP0S47ocA4l7Bw3eGMo/MqsyOIbG+riLZoduHoLO/JxY3hvmdOIp4Hr48oWrHJ
-	 BiLtleRfAH8kV6qdUpzoHNZt9oJSiYN7RBc1yi0UjS3cIxOyGtdLu2kZiW6SHypPmF
-	 aLm39/1DEg8dStBDYiBPGnXxU8qW6TAux4JAvyoE=
+	b=vhYG84NgZC8Cl2O85FQ/vmucDtqJqEKOSZ+tus8JCQNleNcvwtd4JwDsjI52R7pQ4
+	 cjPbq2iWl/CBxiCIua8QfJR4Fn1EdfLYcmxdvFvdMFeINU2YNU/7/d36maPjbl+4Pa
+	 soFiBrzCnqVSvv4Iwm2RcM9rB1OlCky+Q9NRqbm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2006/2214] HID: wacom: fix wacom_intuos_irq NULL pen_input deref
-Date: Wed, 18 Nov 2026 16:01:22 +0100
-Message-ID: <20261118150131.015075194@linuxfoundation.org>
+Subject: [PATCH 5.15 2007/2214] bpftool: Fix inverted tracefs validation when scanning /proc/mounts
+Date: Wed, 18 Nov 2026 16:01:23 +0100
+Message-ID: <20261118150131.047961081@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,75 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 2f985de0afbe9366af9d322ea20589712c1dc8fe ]
+[ Upstream commit 21c755efaab1f40c2588ae5acbfa319a6d7d3638 ]
 
-Currently, wacom_intuos_irq() passes the parent of wacom_wac's
-pen_input to the dev_dbg() in the unknown report path. However,
-pen_input can be NULL on interfaces without a pen, causing a
-NULL pointer dereference.
+The /proc/mounts fallback in get_tracefs_pipe() accepts only non-tracefs
+mount points, so a tracefs mounted outside the default locations is
+ignored: bpftool prog tracelog then mounts a second tracefs, or exits
+silently with --nomount. Negate the condition.
 
-Get the HID device from the enclosing struct wacom and use hid_dbg()
-instead.
-
-Fixes: eb71d1bb270e ("Input: wacom - use dev_xxx() instead of naked printk()s and dbg()s")
-Reported-by: syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b5a7cd83622c747977de
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: be3245e22d22 ("tools: bpftool: attempt to mount tracefs if required for tracelog cmd")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261016015057.127061-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ tools/bpf/bpftool/tracelog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index 965f9fdc140a6..84e5227793a89 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1073,10 +1073,10 @@ static int wacom_intuos_general(struct wacom_wac *wacom)
- 	return 2;
- }
+diff --git a/tools/bpf/bpftool/tracelog.c b/tools/bpf/bpftool/tracelog.c
+index e80a5c79b38f0..e060d04485fd1 100644
+--- a/tools/bpf/bpftool/tracelog.c
++++ b/tools/bpf/bpftool/tracelog.c
+@@ -88,7 +88,7 @@ static bool get_tracefs_pipe(char *mnt)
+ 	fclose(fp);
  
--static int wacom_intuos_irq(struct wacom_wac *wacom)
-+static int wacom_intuos_irq(struct wacom_wac *wacom_wac)
- {
--	unsigned char *data = wacom->data;
--	struct input_dev *input = wacom->pen_input;
-+	unsigned char *data = wacom_wac->data;
-+	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
- 	int result;
+ 	/* The string from fscanf() might be truncated, check mnt is valid */
+-	if (found && validate_tracefs_mnt(mnt, TRACEFS_MAGIC))
++	if (found && !validate_tracefs_mnt(mnt, TRACEFS_MAGIC))
+ 		goto exit_found;
  
- 	if (data[0] != WACOM_REPORT_PENABLED &&
-@@ -1087,23 +1087,23 @@ static int wacom_intuos_irq(struct wacom_wac *wacom)
- 	    data[0] != WACOM_REPORT_CINTIQ &&
- 	    data[0] != WACOM_REPORT_CINTIQPAD &&
- 	    data[0] != WACOM_REPORT_INTUOS5PAD) {
--		dev_dbg(input->dev.parent,
-+		hid_dbg(wacom->hdev,
- 			"%s: received unknown report #%d\n", __func__, data[0]);
-                 return 0;
- 	}
- 
- 	/* process pad events */
--	result = wacom_intuos_pad(wacom);
-+	result = wacom_intuos_pad(wacom_wac);
- 	if (result)
- 		return result;
- 
- 	/* process in/out prox events */
--	result = wacom_intuos_inout(wacom);
-+	result = wacom_intuos_inout(wacom_wac);
- 	if (result)
- 		return result - 1;
- 
- 	/* process general packets */
--	result = wacom_intuos_general(wacom);
-+	result = wacom_intuos_general(wacom_wac);
- 	if (result)
- 		return result - 1;
- 
+ 	if (block_mount)
 -- 
 2.53.0
 
