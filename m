@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058100;
-	b=A9NnM98w0Dg08ys6BViKRRnHURpeBdG8z+2Z/iqpotflEz6GkR4pj3eRz4Qr/ftOKfMd
-	 LsirodX2WYb+Uw3XyCMmEroczSStQ4SFWx0BwzN4hlbsGGirbAQxwmiw9eKmt4Pratcpy
-	 u0JpXORuUZw8911x7xxyZEsjOUiU2nTCz3j+emU4exKb4eKx55UeUGz3S0ImpUtncAfA0
-	 5jngvJzcJJAi1CsC1W0KznQvHC0YYGBuIuSNXgMEJdgndIAyaH7mZNSQHSgNYyl0yg7pp
-	 OHxQqnC7EdlPNoRrRLaJ8y1wC7AbgxKl3cTKxAmlwqs4vEzpBAh8JQfY8tZtpdB0S5w==
+	t=1795058102;
+	b=a8ZCs0dc17pamW+vaUhR+ApBVOrqZXZV8OUogCFM8cEjCJMiwdavqUesF4Di/LR/o7Yv
+	 LEZLE5cubK98vjWx1gvhTlQ7FK6zCzcLzHtdlxugOEP1iNmCptwiLWpK256zJ2qTnH/+4
+	 yY7IEZzu3cnU2Ppq/Kwo6PGj61fu5HIqdHVL5ZbfA3LfD6aCr1n/iGlD9FwCtN0obV2lP
+	 oQqrR2yFQFTNiRcShUEZezgTm+erp+0VugH7J5JEgTdj5bxSdPIjx6abAW6WxoFUco0g3
+	 Kweqw6DzCSL4w9/XIcWcBtsXtr62jjDNk4D4Mc3pGfubndKTAF7pzhc9W7ILEh44Irg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=InbVjpW6FYZ1wx3GZ/mPFXQdg3MAK/z8JABtZ9Z/4iQ=;
-	b=Fa7ArwYKXBDzkTTFFfyIGJ3kymtnJs4hkFJvDANu188PQHmSmr/pIuA2mH00GkKf6PZs
-	 aYNjhGFZHTToTGV35fF7uBNubOogzQxCClpifOHLS7YHygJHJRf/it0Rw2/BEmtac9D9h
-	 UrVX0mF0+5sPL0be918TerTfKZ58hsMEbSJJw99uVuQQCj9c+bDY/Rlsa1o1reJCcOY1Y
-	 liQtNdEtnrZe6OpumT6wyd/RH8wPA0VhX+jWxTHIyEKduBdezTgZE1Sx5PBus0pLrm9pR
-	 oKPwpyKmm4bA16XV0bfNstaVT1XbFWoPwCb5nmXUPx1id5YKHjbL+zFayU/J9B1tffg==
+	bh=1WES4n7Ae5pC4dttidqS2ZdY/EQR+GuXwbm0MSwqeE4=;
+	b=twbcZD8zPatdVzxRQJb4CojgE0/BsY82dMjtYURZBfLG+AUj3r7Qj/bSPv/XgCUbPr90
+	 uOucXpSr0YMFl6iZlo9lgeiJHqOLfgGWs22Uzo7NwKNepmBFsOWMk5Gy5D++r+9eyW8m2
+	 pCVmJbo1FepRCEZ238Kbx1C5aCuJlgH9BTRMhYxq0zgpITC0nsiuaT/mUF9EMF3Vk1Ymo
+	 qGA8SzMgATDyC8vMbqvdet0JVqx4wUm84rz+8lmHk8meOOAxNuG9zv4zDBKGcIDBNoFQc
+	 enuBVeLNWcuTrKglMnM9y4+w5zquf85LtqiDyBBKXUBvey399g72z1MR5dWnZcMrK5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0vwwNfX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YU8PPphX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16193606A31C;
-	Thu, 19 Nov 2026 03:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A5E606A330;
+	Thu, 19 Nov 2026 03:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0vwwNfX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622471F000C4;
-	Thu, 19 Nov 2026 03:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YU8PPphX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2E41F000C5;
+	Thu, 19 Nov 2026 03:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058099;
-	bh=InbVjpW6FYZ1wx3GZ/mPFXQdg3MAK/z8JABtZ9Z/4iQ=;
+	s=korg; t=1795058102;
+	bh=1WES4n7Ae5pC4dttidqS2ZdY/EQR+GuXwbm0MSwqeE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0vwwNfXnsgSumab9/gORzI+Url+HmTdrpukU5nzz20IE9whoYB9vfGDwks2Xwdgq
-	 nXUrLj8vatulLa5LJ9HPctD3+6JDX5Xkz6+SO05o+BktL+AyNpt4D9Cm1rqdxXsFFq
-	 eHljPWuoBK420U7/GTGuDJOniRtVi9F8qT0/E120=
+	b=YU8PPphXnCzVyXBQ6CIzY8y80LV1Td9TMYC/FD9OM5yNbMtqAfa2cWFi6VDKlqiKF
+	 eZ+SPfuskgqjYiWBJ2jy6XOd+gHbIbr5nmYukmJzUWtoalnIh8aWTFMkEwAnXyfGaJ
+	 jZ5QWR05n7TG49zH644JUBNXy4X1x+EfL7TI0sJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
+	Shengzhuo Wei <me@cherr.cc>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0366/1848] media: i2c: tc358743: add missing color-space strings
-Date: Wed, 18 Nov 2026 15:40:04 +0100
-Message-ID: <20261118145928.583586369@linuxfoundation.org>
+Subject: [PATCH 5.10 0367/1848] media: go7007: bound EZ-USB I2C transfers to the usb_buf size
+Date: Wed, 18 Nov 2026 15:40:05 +0100
+Message-ID: <20261118145928.681932838@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,37 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Shengzhuo Wei <me@cherr.cc>
 
-[ Upstream commit cb37e83f1bbdf0964ed0a9524ce45a0694f98205 ]
+[ Upstream commit 816c4628b23e8c3d925978433f4dd1a13620c01b ]
 
-VI_STATUS3 S_V_COLOR is four bits, so the index after the shift
-is 0-15. input_color_space[] only has 14 entries. Add the two
-reserved values so log_status() cannot walk off the table.
+go7007_usb_i2c_master_xfer() copies msgs[i].len bytes into go->usb_buf,
+a 16-byte buffer embedded in struct go7007, without any length check.
+The adapter declares no transfer limits, so an SMBus block transfer
+issued through /dev/i2c-N can write up to 34 bytes into it and corrupt
+the struct fields that follow the buffer.
 
-Fixes: d32d98642de6 ("[media] Driver for Toshiba TC358743 HDMI to CSI-2 bridge")
+Bound the transfer size with i2c_adapter_quirks so the I2C core
+rejects oversized messages before they reach the driver.
+
+Fixes: 7955f03d18d1 ("[media] go7007: move out of staging into drivers/media/usb.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Assisted-by: GLM:5.3
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358743.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/go7007/go7007-usb.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
-index ac0d3076d1124..06d54d8df450e 100644
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -1268,7 +1268,8 @@ static int tc358743_log_status(struct v4l2_subdev *sd)
- 	static const char * const input_color_space[] = {
- 		"RGB", "YCbCr 601", "opRGB", "YCbCr 709", "NA (4)",
- 		"xvYCC 601", "NA(6)", "xvYCC 709", "NA(8)", "sYCC601",
--		"NA(10)", "NA(11)", "NA(12)", "opYCC 601"};
-+		"NA(10)", "NA(11)", "NA(12)", "opYCC 601", "NA(14)",
-+		"NA(15)"};
+diff --git a/drivers/media/usb/go7007/go7007-usb.c b/drivers/media/usb/go7007/go7007-usb.c
+index 762c13e49bfa5..6a0733c5925fc 100644
+--- a/drivers/media/usb/go7007/go7007-usb.c
++++ b/drivers/media/usb/go7007/go7007-usb.c
+@@ -1029,10 +1029,16 @@ static const struct i2c_algorithm go7007_usb_algo = {
+ 	.functionality	= go7007_usb_functionality,
+ };
  
- 	v4l2_info(sd, "-----Chip status-----\n");
- 	v4l2_info(sd, "Chip ID: 0x%02x\n",
++static const struct i2c_adapter_quirks go7007_usb_quirks = {
++	.max_write_len	= 12,
++	.max_read_len	= 15,
++};
++
+ static struct i2c_adapter go7007_usb_adap_templ = {
+ 	.owner			= THIS_MODULE,
+ 	.name			= "WIS GO7007SB EZ-USB",
+ 	.algo			= &go7007_usb_algo,
++	.quirks			= &go7007_usb_quirks,
+ };
+ 
+ /********************* USB add/remove functions *********************/
 -- 
 2.53.0
 
