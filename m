@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026974;
-	b=kyZ4RiugdEQNZ0MfJ7eHEcyhebPB/d4qlKSKwM9SNn/cbvalU1Si7Mgi8rh6l4k1N/NF
-	 Ol6w2aOcXL3+k8/8rhrMiUClzp7hNHYrUuKy8v0g2o4mH4ukAH9a4B1rEgkji1YeMT2n4
-	 iFVCWiHKDasa3T8RWAXVL03nkY6AmOAg5r1lDbzfhUiE628ikNigOxXpfLEbT+MnK7FNQ
-	 eCB+qM3D8T/8+3caJ4FrnxUtsVsaysEApgWeFPggS+Da4eOpAT0NDhE1s5L7RKJDUKLlf
-	 2meOLmS9zE3Hn/+z1IdAFtJumJ/XcP99JWOlS1GG6KvvQA2b7oMS8Res6sm3iIyHhlw==
+	t=1795026977;
+	b=xUmefYeiqB6vq3H277+Xl7oTkgEaYcnqmYL3N62YrQ1c2cjQI8Ee3ZWocakGB/vZvaQH
+	 E9S2/Q2wz91DcdkqreB76QECfbVgBwKBMizMDP+ltRtuVxLJGFjbGkraRGGiZ74y58ZOI
+	 FRSi75rfPfsxi7HKjDQAlNEJPVzCp64HVBV9Kj53zNvzf+MpTchOCRg3vDnnGOhGPltb/
+	 N+vMyF8S4X5UNVTypMTihykTyrtWUoheUzU9hP0oCrjIlfCOxG/ZvrqJYxFP5y9E3FMWw
+	 CHBer3ZDUAyroHlUO1Pqz+goFZ85sZqIFOYQn6mW/3uJbXvMoDEtY96f9aUTKzqTO6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pnS4HjE7OxTmuaQy0UfGb24DFUwc/3RPz3WSpG0mclU=;
-	b=gTkXXweGeEAKwrDgb7bGuTH+911fELG4kGHlscksu/E9c45NnLlU9uEWbRDhTj6tY/zs
-	 N1GMr38mduHVlgIsyBqHhVr2mLGeH0gqHc154DPw1I+qP4UApa2bpLtU8U355ksG4Tyv3
-	 npM2zzc0IFOBBeJ/w+xmAJrHhELEZ9LagLgP9qnFlpj3kCl3SIXwdcmD7tD5NiASSePVi
-	 WRUl9ExNRyaz5KcDatQxiEfQVwNAygWE9WKcVhy5n8pk4L1ipuaBMrOIfbNfPlRIDSbDq
-	 KjZektEyP88yAMYnyBx12NDQM2L7+RgB5EmgaXClK9LOxorb4ZCu4qQXBqNc2injQKA==
+	bh=MBLv+6c8wlf32PUP4a5KaD83HMjRRjDdWtQ/igJluHQ=;
+	b=IXXSgnhxdySNBtq1MdlItAuRp8DeuUvZqocXcwcYE1eZ6exMCmypWFrjeh0ZGuQGrpx+
+	 YtEZqANx+w03ehqsc+MbOOSWw3oIxD/3e9/uRiXMv3DcrYk++4ASoPmXsgbqmIz5Wp77A
+	 WaKfMDbfiIMZMFBaibcXn4B8pQaEa/kbjiTClfhAyeD5kYkgtWUACH444BDzzgcmhtgxf
+	 Bvkjguy4NvuOSmZiXydqADCeciTPlDutYpbWrHF+o+s4Ob/dtUj74rGEQiGoAivWQi79z
+	 mbkzvIoL/gsmlvFwoZ4YrTiuvm10bU8R8bKr9EKg0Z2Unwz1u+G4FJsEI7iOQHLmijw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEEXPjiI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c5wymAVm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9125E606A31C;
-	Wed, 18 Nov 2026 18:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D254606A325;
+	Wed, 18 Nov 2026 18:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEEXPjiI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F791F000C4;
-	Wed, 18 Nov 2026 18:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c5wymAVm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE1A1F000C5;
+	Wed, 18 Nov 2026 18:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026974;
-	bh=pnS4HjE7OxTmuaQy0UfGb24DFUwc/3RPz3WSpG0mclU=;
+	s=korg; t=1795026976;
+	bh=MBLv+6c8wlf32PUP4a5KaD83HMjRRjDdWtQ/igJluHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tEEXPjiIFC8oWfLls+bW3hVcB5F8LgQw5QgM6AF52OX85drbiJh/M1Njwzb44Afyn
-	 93Lkg4VNzdhvsmaIDWut8bDRbpj64v02y1NwXBZ4XNGyS0SS5fiqw6hCWCAFjGaTsf
-	 k+o2Sh6SQvdozPRiHDKYaVzAZPHEY/0k4LrmoN2Q=
+	b=c5wymAVmNTRVy1b5Qp4Z3I/m/mzcEFDokiuHVcMy4wc960km+6qJJd9UmI5++5znN
+	 fbvpm0oy6KZz3gA7yCDsQlL0+txCDEesXgmXY4NMy1Y7fbHcf9XJxJP2DfZW9nhe8j
+	 bl0Sgz79idKwBR8JLp61ppTyUNd0tF1pn0cmz3Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1625/2151] ASoC: soc-link: Correct stream stop operations in snd_soc_link_trigger
-Date: Wed, 18 Nov 2026 15:56:00 +0100
-Message-ID: <20261118150221.070689029@linuxfoundation.org>
+Subject: [PATCH 6.18 1626/2151] ASoC: ops: Fix return value in snd_soc_limit_volume()
+Date: Wed, 18 Nov 2026 15:56:01 +0100
+Message-ID: <20261118150221.107648166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,34 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Amadeusz Sławiński <amade@asmblr.net>
 
-[ Upstream commit 7ef99fcfbbac20ebec10d21a37aeaf8321de7829 ]
+[ Upstream commit 223ec2a93bec6c5ee859094c826fec78516a0bb3 ]
 
-When snd_soc_link_trigger() is called to stop, pause push or suspend
-stream it should call soc_link_mark_pop() on proper target to reverse
-operation from trigger start, pause release or resume.
+As documented snd_soc_limit_volume() should return 0 on success, however
+at some point in time this promise was broken when
+snd_soc_clip_to_platform_max() was refactored, refactor it once again
+using __free() to automatically free struct snd_ctl_elem_value and
+return proper value.
 
-Fixes: 6374f493d93b ("ASoC: soc-pcm: care trigger rollback")
+Fixes: 7e10d7242ea8 ("ASoC: ops: dynamically allocate struct snd_ctl_elem_value")
 Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
-Link: https://patch.msgid.link/20261014200608.118770-2-amade@asmblr.net
+Link: https://patch.msgid.link/20261014200608.118770-3-amade@asmblr.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-link.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-ops.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/soc-link.c b/sound/soc/soc-link.c
-index 02fd68f2e7028..50ff9ba3ac871 100644
---- a/sound/soc/soc-link.c
-+++ b/sound/soc/soc-link.c
-@@ -161,7 +161,7 @@ int snd_soc_link_trigger(struct snd_pcm_substream *substream, int cmd,
- 			break;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 624e9269fc25b..6630cf87d266d 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -448,7 +448,7 @@ EXPORT_SYMBOL_GPL(snd_soc_put_volsw_sx);
+ static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
+ {
+ 	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
+-	struct snd_ctl_elem_value *uctl;
++	struct snd_ctl_elem_value *uctl __free(kfree) = NULL;
+ 	int ret;
  
- 		ret = soc_link_trigger(substream, cmd);
--		soc_link_mark_pop(rtd, startup);
-+		soc_link_mark_pop(rtd, trigger);
- 	}
+ 	if (!mc->platform_max)
+@@ -460,7 +460,7 @@ static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
  
- 	return ret;
+ 	ret = kctl->get(kctl, uctl);
+ 	if (ret < 0)
+-		goto out;
++		return ret;
+ 
+ 	if (uctl->value.integer.value[0] > mc->platform_max)
+ 		uctl->value.integer.value[0] = mc->platform_max;
+@@ -470,10 +470,10 @@ static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
+ 		uctl->value.integer.value[1] = mc->platform_max;
+ 
+ 	ret = kctl->put(kctl, uctl);
++	if (ret < 0)
++		return ret;
+ 
+-out:
+-	kfree(uctl);
+-	return ret;
++	return 0;
+ }
+ 
+ /**
 -- 
 2.53.0
 
