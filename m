@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045035;
-	b=yEEckGSjLypr20Nq3+LkkK+5fEhmEM/JgS/ILn/KXepOZzh/ywwJ7hfGMApZXMbZ4uc1
-	 u5ML4d2zgKFWLE47rY/PMx8gvE9O/kZDM+W/r8PqXwwxt+R6fkMUG0BoyA4eGuORQNvnL
-	 +B4lrXj3h7OSfhzQBQjtyiAeWvhXDZ8gfdYss3/HJCJl6yXeMRec7nWIdtjNvGRgMHf4W
-	 6tl/ni+MKejXdwp7VfYx26VV0uZaxWVLw/zZdjbNgAxhxzQGfJKbNbfkVMmYXFBj0ZBlC
-	 W5H39rdGpyHJ04koE1kSR6Y0UwQAU+Y2hLFaIr6j7iK1uqQ8xjxy8h/yWv4KiDzr0AA==
+	t=1795045038;
+	b=wtBrI5qVWyw00zOcZZsSudkiCrxdVDu7Ov+MFKRalxlZBHc8wr17T5ftgDnLGwoua2Tb
+	 W2Shpc4RkIOvae4djCeEpigiMShOR03azqygTXq0o11rLTXTNemJ+nx8eJeIj8LK3sIzF
+	 HXS2nNb2Kk2S2+X8Hcjtf5QKQ2sBiuS19PmLrkUWzvYZiqA2yL1DewiJ2usAN6KaOcNWS
+	 bIc6dLN2ffU3/nfDUgxjyrngRLHI6BilzA1AKMnhATRVGOXxoHNnDH3GVqbVkDeBEU/rG
+	 UaSoswj7XtvKcaih4PEoj4tRvPjiSl2tvz5APH8vudWtsWqZjJx3dHc6a6UpRB7npFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MH954t97fgcx4mHiJsI5RbpBczuKtHKe2auiy1+9KmQ=;
-	b=Z8hK++O2fyEF8I5Ftx7sLCgI12QB44fiAtx8iNdpXxNfX/pV5bR5qg/ahhy1dYfyjl2Y
-	 Ccj3ltDuPX0zYtc7GW4iiQrTArDmUzgIqWS0yO36SnA/fxpV8GpyOhq8UbGticX/8Fubk
-	 5gb3ID3ZuvVQjSuleyCpyKYVQwxT4ktJIgZXPwhYxntU3AXaMnfP7EYBgMg5B6ZQOXsmc
-	 +GLbQw+cJKvF7+g5Jlq1p5MNpeXCpCFCVr5vjVOKF8wbJESoFWuDTsO1pLSkpER80DuCG
-	 ckSqlfBeXJAvYzMmDvs3xf3F582tOHfG0d1YsKzfrKpL/UMKvf+35W1wUs4HSsJW3gA==
+	bh=37lxlitxOZwKtD/ZfVBXafLOQFONvOmX8u0pqarkJ14=;
+	b=zJ+NzWzL5bd2cFHaRWnsnpbNMT3Ye9GHV0ElFqNbYKE9GjOBL2vp6W6jmUwYFiZ32MVH
+	 nXAo7lKTpjoa5HwBIcJpf8WQ6xW3GQVrF4gIUox+yO7vyjLCq9BOH4TJRgvg/jyKs5ueE
+	 tr+fUbtQQEWm0BAKjKOAP2Io4ju4ElN25r7tREBKId4khGJXfMPueeI1c37y2dBrNqS1u
+	 wjbYkVfS8evuzWQ/xo/C1SkmmNJey5VnN3Y9q/P0cwWaAor0GFhUx3GEBoQHFz4KEuqxG
+	 78l6ictoN6kvD7SPx4c95zCawFULnPFK/Ca+blC+TAEjfMLKgUtnkYOgy+P37EQCbew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zc/vc6He";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IRWOD38k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A92606A325;
-	Wed, 18 Nov 2026 23:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DD7606A320;
+	Wed, 18 Nov 2026 23:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zc/vc6He
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67E41F000C4;
-	Wed, 18 Nov 2026 23:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IRWOD38k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840331F000C4;
+	Wed, 18 Nov 2026 23:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045035;
-	bh=MH954t97fgcx4mHiJsI5RbpBczuKtHKe2auiy1+9KmQ=;
+	s=korg; t=1795045038;
+	bh=37lxlitxOZwKtD/ZfVBXafLOQFONvOmX8u0pqarkJ14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zc/vc6HeD5lv3QksLJvXJ4lEk3pGsZ1IgaQjW8HFb6jr2BY1YdjQp/LS7U2PYg48y
-	 GSKrbIw762WyYfc1NlOfDllZD+sXIlCNwPaQIJXCUp6Kdzrc/q/fKseAZBYu1q7BNX
-	 pJUymfeB/UVEzTXwIOnQw3WNgGmaeeWbBI/agXt0=
+	b=IRWOD38kdXAr/84x4kvfKi0obNI899Fq1ZM7HN4rhLsDIOefBLEShNSsdJpTXNcVI
+	 IEOCHI1mYP+9fR4UVC6SAybBW7VyDuBi1uOC1x6oLGF8bw9oNeFBc8c/vdwGQs8x3A
+	 hOj5nUM+5YE7+nDSQUo8M1xzU9DxAR9Na4NhTsKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0778/2857] iio: accel: mma9553: disable autosuspend on remove
-Date: Wed, 18 Nov 2026 15:30:12 +0100
-Message-ID: <20261118150229.581538094@linuxfoundation.org>
+Subject: [PATCH 6.1 0734/2857] isofs: fix Rock Ridge CE extent validation on multisession media
+Date: Wed, 18 Nov 2026 15:29:28 +0100
+Message-ID: <20261118150227.978878041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +68,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit 4dda1f9d25fb889649e81bbf015809daa512a049 ]
+[ Upstream commit 43de050fa4a31f7e7a73cf8974dcf6037e161a39 ]
 
-mma9553_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+Commit a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent
+against volume size") compares the CE extent directly with s_nzones.  The
+extent is an absolute block number, while s_nzones is the number of blocks
+relative to the selected ISO session.  The comparison is therefore wrong
+when a multisession disc starts at a non-zero block.
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+isofs_get_last_session() selects the last session on multisession
+media, and its volume descriptors describe a volume beginning at that
+session's LBA.
+For example, a session beginning at LBA 45447 with 64 blocks can contain a
+valid CE at absolute LBA 45467.  The existing check rejects that CE, so the
+ER continuation record is not read, Rock Ridge is disabled, and the mount
+falls back to Joliet names.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
+Save the selected session start in filesystem-block units and validate the
+CE extent against the half-open interval [session_start, session_end).
+Scale the session length to the same block units and retain a separate
+block-device limit.  The lower bound is intentional: accepting arbitrary
+blocks before the selected session could make a CE read data from a
+previous session or another filesystem on the device.
 
-This issue was found by manual code inspection.
+Only apply the bounds check when cont_extent is non-zero.  A zero extent is
+the in-memory sentinel indicating that no CE continuation was found, rather
+than a request to read block zero.
 
-Fixes: 40cb761306d6 ("iio: add driver for Freescale MMA9553")
+For a single-session image, session_start is zero and the effective volume
+boundary remains unchanged.
+
+Build-tested with:
+
+    make CONFIG_RUST= CONFIG_RUST_DRIVERS= fs/isofs/
+
+Fixes: a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent against volume size")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
+Link: https://patch.msgid.link/20260907082602.3777551-1-liubaolin12138@163.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma9553.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/isofs/inode.c |  2 ++
+ fs/isofs/isofs.h |  2 ++
+ fs/isofs/rock.c  | 11 +++++++++--
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/accel/mma9553.c b/drivers/iio/accel/mma9553.c
-index 2da0e005b13eb..2d80eb3ba91b7 100644
---- a/drivers/iio/accel/mma9553.c
-+++ b/drivers/iio/accel/mma9553.c
-@@ -1155,6 +1155,7 @@ static void mma9553_remove(struct i2c_client *client)
+diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
+index 8fd91f09086f1..e3d2d7bca8f9d 100644
+--- a/fs/isofs/inode.c
++++ b/fs/isofs/inode.c
+@@ -862,6 +862,8 @@ static int isofs_fill_super(struct super_block *s, void *data, int silent)
+ 	if (!sb_set_blocksize(s, orig_zonesize))
+ 		goto out_freesbi;
  
- 	iio_device_unregister(indio_dev);
++	sbi->s_session_start = (sector_t)vol_desc_start <<
++				(ISOFS_BLOCK_BITS - s->s_blocksize_bits);
+ 	sbi->s_nls_iocharset = NULL;
  
-+	pm_runtime_dont_use_autosuspend(&client->dev);
- 	pm_runtime_disable(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
+ #ifdef CONFIG_JOLIET
+diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
+index dcdc191ed1834..3459cefe1003c 100644
+--- a/fs/isofs/isofs.h
++++ b/fs/isofs/isofs.h
+@@ -35,6 +35,8 @@ struct isofs_sb_info {
+ 	unsigned long s_firstdatazone;
+ 	unsigned long s_log_zone_size;
+ 	unsigned long s_max_size;
++	/* Session start in filesystem block units. */
++	sector_t s_session_start;
+ 	
+ 	int           s_rock_offset; /* offset of SUSP fields within SU area */
+ 	s32           s_sbsector;
+diff --git a/fs/isofs/rock.c b/fs/isofs/rock.c
+index e2f573f3d5757..3ae2881e1bb66 100644
+--- a/fs/isofs/rock.c
++++ b/fs/isofs/rock.c
+@@ -9,6 +9,7 @@
  
+ #include <linux/slab.h>
+ #include <linux/pagemap.h>
++#include <linux/blkdev.h>
+ 
+ #include "isofs.h"
+ #include "rock.h"
+@@ -84,6 +85,10 @@ static void init_rock_state(struct rock_state *rs, struct inode *inode)
+  */
+ static int rock_continue(struct rock_state *rs)
+ {
++	struct super_block *sb = rs->inode->i_sb;
++	struct isofs_sb_info *sbi = ISOFS_SB(sb);
++	sector_t session_end = sbi->s_session_start +
++		((sector_t)sbi->s_nzones << (ISOFS_BLOCK_BITS - sb->s_blocksize_bits));
+ 	int ret = 1;
+ 	int blocksize = 1 << rs->inode->i_blkbits;
+ 	const int min_de_size = offsetof(struct rock_ridge, u);
+@@ -101,11 +106,13 @@ static int rock_continue(struct rock_state *rs)
+ 		goto out;
+ 	}
+ 
+-	if ((unsigned)rs->cont_extent >= ISOFS_SB(rs->inode->i_sb)->s_nzones) {
++	if (rs->cont_extent &&
++	    (rs->cont_extent < sbi->s_session_start ||
++	     rs->cont_extent >= session_end)) {
+ 		printk(KERN_NOTICE "rock: corrupted directory entry. "
+ 			"extent=%u out of volume (nzones=%lu)\n",
+ 			(unsigned)rs->cont_extent,
+-			ISOFS_SB(rs->inode->i_sb)->s_nzones);
++			sbi->s_nzones);
+ 		ret = -EIO;
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
