@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029514;
-	b=WYMb2O4Lrs/I05eTm22XQqVHk3xImOUCjXTUYuYM6W6LNKm66mG+CI4LoYOw/qXdSMpp
-	 14BE0lBdjUpMFl5uGR07pvR+LHWEyy4Shs1N3Lt5Gyh7ZdjPnVBKUhj/hD24cpKhs+xkU
-	 RxNZW9qyMq04Tdyb7ce7G5pU5FFJuPUtZV7ae4TB5XVavYkzFTj/ZkKJADpFctfT4GNfc
-	 Vx55S7CQ01CVhLv/ZRjTu3F5YoL0qg6GK4w/d10t4y4pmcsfmGxROIbhKRd6Mmv7+ETNH
-	 kf5F6vVoHaqkOFEpzRBjqvi2et5wjk6XNX9GEDRGximhboA/MLV26l6V9390m6QFd1Q==
+	t=1795029517;
+	b=GERkhu9HEe2MPOvVVfZRHk79jt1uYWzZGezzq33Q+CBVwug3q0mdCqHyaMsJV+drsGJs
+	 TjQuMQ3h8nNY0oU6YB0s7DGvRDeG5ylqtE3k2tnOusxQEchChwNiOTgnkcHMuTk9zXux2
+	 vb7gQuzT/5UkO5f0he+wm8Kxdi1PBOAguovhNi58IIAM6YC4AXivZPFRNqFHOmTOFKvEq
+	 riZrCZvBpTIuJqTbFB+IZmTidHbTfPlzhMrX9UdATjsWn0IxSK/8ctm0j5XZYZZx/iXUt
+	 s0RFgQvgh+Sp3kaV1l5eByNrjAz/PqfskTPWgjV3FXAbhmLZO9JlVLcbMfrywUo9nCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DyuSbHG5yjIcVhLWr+UcdMnrlAGBIfWhKAaioje+Xh0=;
-	b=wv+3W0Q3Zs24w+S37WfhOVfKldT5OjGplN5tat09d9e3bAx/ujnOJxXMOulZ7z3oKrRQ
-	 FbZwfaWrxMM8sMRbtNr50Xnpp48qIzIwwwtq/TtHVeJ3rm9xJlJVIKWiDtb8LdKBQ7WUH
-	 QJObVieFWtaWtehAiWuxy+3GGcNrpiEQMnJXU5EVmrhaY6n/C3LEQ2pvx3r4ta9TdIb+Z
-	 gJCpUUwrcVz/scNAVDxpta+JQ0XrR4Bf8qnmn0zg5NWGn/aHNFnosbCLlYy2N6qFVBnj+
-	 XA1ojcKe1h8by/XqGgSCirt+xauoWdRmJ0AUXmdChOoImnfzdFuMSqFf7U6rpHfW1vA==
+	bh=VULqr1q8ve5Rp+oPzqFoWafCIbPx3IxF+Uc2JQ8m9Pc=;
+	b=CAu1F8LkLqB9YmGZD6T6GgICTguj8TqDgdurjzzKXgnpZb91xSpNLrW1cLIG+EIHTYEk
+	 h0hq57pT0AfhivgOigNGR2I4+yJz4PU7H0yx7pIU+8Y4LsPw7+anNxKp0gLbE8Zi6BIs5
+	 vxlyZF+PMQvq4uR98fWbZc3PQ+hmjiyI5+V8aGhTLr2ePcnuUosGxi46TO/Cr5BCWmKuu
+	 jDD7Z9B+5zK7nMV9qD+nUWDw35soEvWKG87NSaCDMabswVQCJQu/xTucOlkKIBuiDG8pw
+	 F7e+mviSDQhcZ3mrRkwqCHpMdldVN8vRl2C1IBtLdn1Hh7JepvjvFgVyQgll1CL1gpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LQpzeaG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvFF29Jz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EBE606A31C;
-	Wed, 18 Nov 2026 19:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67E606A320;
+	Wed, 18 Nov 2026 19:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LQpzeaG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46151F000C4;
-	Wed, 18 Nov 2026 19:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvFF29Jz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8D51F000C4;
+	Wed, 18 Nov 2026 19:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029514;
-	bh=DyuSbHG5yjIcVhLWr+UcdMnrlAGBIfWhKAaioje+Xh0=;
+	s=korg; t=1795029517;
+	bh=VULqr1q8ve5Rp+oPzqFoWafCIbPx3IxF+Uc2JQ8m9Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LQpzeaG7jGhKinKbWrOyaqgSelkdkEU1PkcUEFY0olfXrn21FiY8iJFooJ3ebdze
-	 J27iiAaiBU8+JhnHIpFXCYD2xBE+ffrmcjEjnOYxp+Jl2uEWh7L4u3CSIVjEhunwaX
-	 NovvDMz+Tg3th9mY7o//NxhNctBnXqegTh3V9mpo=
+	b=lvFF29JzTmnMgk+LsZkggh+m1qYZy+JnvYswRLeplyzt00ugVvbebm8vPSpaohQd8
+	 pdms7mRsrYB6oxE/dQWE2qH4LwT49+8oQXU0nP3LNcqssm1X3MjkxES+zJFaoBTBVD
+	 +E5Rxd1xwJ1hBXWcrAjQXy72IVQA4mMotsxbow2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com,
-	"Jiangong.Han" <jiangong.han@windriver.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0326/1756] USB: usbmon: fix null-ptr-deref in mon_bus_remove() when mon_bus_init() fails
-Date: Wed, 18 Nov 2026 15:40:53 +0100
-Message-ID: <20261118150021.254969829@linuxfoundation.org>
+Subject: [PATCH 6.12 0327/1756] USB: pci-quirks: Release EHCI device reference
+Date: Wed, 18 Nov 2026 15:40:54 +0100
+Message-ID: <20261118150021.292253698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangong.Han <jiangong.han@windriver.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 0c6cae0f56239e3274b30dbe5b362cd297ccacc7 ]
+[ Upstream commit e93731c29f749d5b2495a67109d1f0804ab3b89d ]
 
-When mon_bus_init() fails to allocate the mon_bus struct, it returns
-without setting ubus->mon_bus, so mbus->mon_bus remains NULL.
-mon_bus_add() intentionally ignores this failure because the USB core
-does not require monitoring to be established for normal operation.
-However, when the HCD is later removed, usb_remove_hcd() fires the
-USB_BUS_REMOVE notifier which calls mon_bus_remove(), it dereferences
-ubus->mon_bus without checking for NULL, causing a null-ptr deference.
+for_each_pci_dev() holds a reference to the current device.  The Intel
+EHCI lookup breaks as soon as it finds a match, so the iterator does not
+get a chance to drop that reference on its next iteration.
 
-Fix this by adding a NULL check for mbus at the top of mon_bus_remove().
-If mon_bus_init() failed, ubus->mon_bus is NULL, meaning the bus was
-never tracked by the monitor, so there is nothing to clean up and
-returning early is correct.
+Release the reference before leaving the loop.
 
-Reported-by: syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5f4b29d9fe710a964482
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jiangong.Han <jiangong.han@windriver.com>
-Link: https://patch.msgid.link/20260801095128.46322-1-jiangong.han@windriver.com
+Fixes: 26b76798e050 ("Intel xhci: refactor EHCI/xHCI port switching")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260807024304.928708-1-dbgh9129@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mon/mon_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/pci-quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/mon/mon_main.c b/drivers/usb/mon/mon_main.c
-index af852d53aac69..4aaaa9d0748fc 100644
---- a/drivers/usb/mon/mon_main.c
-+++ b/drivers/usb/mon/mon_main.c
-@@ -199,6 +199,9 @@ static void mon_bus_remove(struct usb_bus *ubus)
- {
- 	struct mon_bus *mbus = ubus->mon_bus;
- 
-+	if (mbus == NULL)
-+		return;
-+
- 	mutex_lock(&mon_lock);
- 	list_del(&mbus->bus_link);
- 	if (mbus->text_inited)
+diff --git a/drivers/usb/host/pci-quirks.c b/drivers/usb/host/pci-quirks.c
+index 0404489c2f6a9..ba158d63bb8bd 100644
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -1073,6 +1073,7 @@ void usb_enable_intel_xhci_ports(struct pci_dev *xhci_pdev)
+ 		if (companion->class == PCI_CLASS_SERIAL_USB_EHCI &&
+ 		    companion->vendor == PCI_VENDOR_ID_INTEL) {
+ 			ehci_found = true;
++			pci_dev_put(companion);
+ 			break;
+ 		}
+ 	}
 -- 
 2.53.0
 
