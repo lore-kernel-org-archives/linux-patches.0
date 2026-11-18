@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047433;
-	b=pCKN6WsgC/ukvDxtl8Zkx2naPpeUepm5QRgU3hYMyZWkS5uOryzkfQvQnWlKNLr5rK8V
-	 fY8y+C5Sg8nF8kQx4bCj40qC0EXZQts7Em88UYm+w7ZP4OxoSxrschra73kZaRzesv8XU
-	 NlsO8tLBZpS0KGKXxJfbKSpup1fpl7Z6EngxJjFnV29ICTBl+tH7BvxIfAHupgpWyeBP6
-	 I8avt64hySvNS8bPV58Q2dAOSRmTyOMi0IPEcwDFeqXwURjvnjixGeYslS011G6DWV18R
-	 uZFs+EiheWBPUw3fBjcdnWLqloees8WPDen8KP6Sy+Lndd4NTq3T1Dv2PWYxfqlqA5A==
+	t=1795047436;
+	b=dyzxVwCVXV7grk/eJy2K//yDntlo8hmgVzHiD270YPugXwhauO7F3rc/wfLEsjaPtsRC
+	 CZxHjpdbTAoL1eK4JfetpBXlRumsgJJLEcXCvptCPfTVt5me8k/745qe0vkADDX+N6eht
+	 kQX7i26CETZvUDQA6uBntGFg6dtLG5clNP10zCMNAwLYnc8bzVnQ6lg74NPpVDUHAfLHM
+	 D+NcZ6hCWowBF3i49aamR7uFcCuGEY06eKiOSCVl+6DxMZN1PVqTchtN4kK2Ljuf8MaDB
+	 TwMuZd75BtkMnAam0kILmhzFR57JNcu2LVAOM80infPTVI6QDYNCCNGM5dkrN3GDdDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kxNTDADj9wqMXr8eHKLZKRrjhqYDbaOdJrRidhHlWkc=;
-	b=f4eqncUaf3XTVTcQxE3Nq7PNhC3NlCWB7hnpTr+W35Lak6k/i4dYLK0GiWL3v+qFiYHV
-	 u3444RgPP8/FM9nIFmn31jQIqrXYjOr6oAfgO1tC688lFDdy1N/MaAP5Y3er6jKtkBhES
-	 mY+hspVhGXi5PD2KySHuXQrKwATrrkeCVZJzpbV+LdU0uIJMhzsu219r2tw4Nym9Okw2G
-	 ocvKUTxSgobO6AQhNtFakAbKyeLRsnTQpTQLTKNbPtk4ASsFVW0KL0+hEO1474/PdOCn7
-	 R3SLR5CEvd3GtMIkK9cTzAOJRkfRzoE3LMz3tBz1ZK60LYI9xckFiBBF52fGW46EFPg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=D4wJYihkqbTfZlahw4Q0SRjxU+enkHwy4QXZ16Mh13k=;
+	b=bYL3xUsauNkgB4so70KrZzb4GdNW8Vkvz1dOtE08emr8PCsUQ2eOHTaw6SpTU+7ti7kL
+	 5VEGRLn4S7AYC4pDziOT7CybYXVjG2LRXx3krNByoQ+DTRzu6zpzFOT+OfGv6SfXARWj6
+	 lq9CEXzQnKt2CaauEmZQMvvUJOJimPcgl/YVjGm0nRehFSy9tx1LZi0D8DvZFOGz4ZSbd
+	 2D/WiATyWLAidAfFSq134Eb8n5pHuSfH96jVQVmhzr9uj6dFaMK6AClvnPqGY1wFJMVvM
+	 9d2ax/GGk7kY0QDyNEP3g/gp9sDC61h3AALS8ScAiYo4wr8as9NffSEvg6j6ltFKqmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+bvuCor;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0OVyVnD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF37C606A331;
-	Thu, 19 Nov 2026 00:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991FF606A31C;
+	Thu, 19 Nov 2026 00:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+bvuCor
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196811F000C4;
-	Thu, 19 Nov 2026 00:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0OVyVnD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA47A1F000C4;
+	Thu, 19 Nov 2026 00:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047433;
-	bh=kxNTDADj9wqMXr8eHKLZKRrjhqYDbaOdJrRidhHlWkc=;
+	s=korg; t=1795047436;
+	bh=D4wJYihkqbTfZlahw4Q0SRjxU+enkHwy4QXZ16Mh13k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+bvuCora0hCFeYmOyKOE/kZLpmX6aMTkvz3GzgZJl97dqw4zMvHV+LOeOBI88yrk
-	 DeNrqdBTvc4SpaSY8E6M7VsycBf9OU6dFfVJ2OOTdywI3THdg05yBGpMHaLwUKOJra
-	 J6AD/yVi824GrpyYlY1hbumtqAlSlasEsKH58TcA=
+	b=F0OVyVnDBWHVOPyEmn2UuzMDlz2jkuyCQlqXXf4YlOFaJ7jridg6NL4Yyw7fmMLN+
+	 PFmNTFlxV7ux/avx45WIyeGRw9ddkgG97CCWZl+veBwPuj/Lf+C31VK4c0gsjEbAzT
+	 JnHoW8lPC1llBR0fe/tbdzfk5Ciwu7DoVutX/9eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1635/2857] hwmon: (pmbus) Check return value from pmbus_thermal_add_sensor()
-Date: Wed, 18 Nov 2026 15:44:29 +0100
-Message-ID: <20261118150300.206409038@linuxfoundation.org>
+Subject: [PATCH 6.1 1636/2857] drm/amdgpu: drop the gang leader reference when freeing gang jobs
+Date: Wed, 18 Nov 2026 15:44:30 +0100
+Message-ID: <20261118150300.243663079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -61,161 +63,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 11dfbd835b17b75f7cc7a4a969f33ff702b1b081 ]
+[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
 
-During PMBus device probe, if registering a temperature sensor with the
-thermal subsystem fails, pmbus_add_sensor() silently ignores the error and
-returns success.
-When a valid temperature sensor is detected (class PSC_TEMPERATURE and type
-"input"), pmbus_add_sensor() invokes pmbus_thermal_add_sensor() to hook it
-into the kernel's thermal framework. However, the return value of this call
-is completely discarded. If thermal registration fails, such as from an
--ENOMEM allocation failure or an invalid device tree configuration like a
-malformed #thermal-sensor-cells property, no error is propagated.
+Every job of a gang except the leader holds a reference to the
+scheduled fence of the leader in job->gang_submit. Only
+amdgpu_job_free(), used for jobs which never ran, drops it, so for every
+gang submission which completes the scheduler fence of the leader, and
+with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
+for the leader only after drm_sched_job_cleanup() cleared the scheduler
+fence, so a leader freed there drops a reference it never took.
 
-Because the hardware monitor probe falsely succeeds despite the failure to
-register the thermal zone, the system is left without thermal mitigation
-for the affected PMBus device. This silently blinds the system to actual
-PMIC temperatures, preventing the execution of necessary cooling mechanisms
-or emergency shutdowns and risking localized overheating.
+On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
+drm_sched_fence is merged into by 60 to 180 objects each time, while
+100 GFX only submissions don't.
 
-Pass the return value from pmbus_thermal_add_sensor() to the calling code
-to fix the problem. To enable passing the actual error, change the error
-return from pmbus_add_sensor() from NULL to ERR_PTR() and extract the error
-from in the calling code.
+Use amdgpu_job_free() for the jobs the scheduler frees too, and check
+for the gang leader there before drm_sched_job_cleanup() clears the
+scheduler fence. As the scheduler clears the entity of the jobs it
+picked up, check for the scheduler fence instead to tell whether the job
+needs cleaning up.
 
-Fixes: 3aa74796cfd0 ("hwmon: (pmbus) Register with thermal for PSC_TEMPERATURE")
+Keep freeing the remaining IBs with amdgpu_job_free_resources() after
+drm_sched_job_cleanup(), so that it frees them with the hardware fence or
+right away and not with the scheduler fence, which nobody signals for
+jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
+
+v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
+    free the remaining IBs with the scheduler fence
+v3: drop the comments (Christian)
+v4: free the IBs with amdgpu_job_free_resources() again (Christian)
+
+Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
+Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
 Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: adapted sensor creation to the existing device_attribute layout and PMBus interfaces without writeonly or per-limit permission fields ]
+[ sashal: Adapted job cleanup to use sync and sched_sync while preserving the embedded hardware fence’s ownership model. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 42 ++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 4328978228c18..de3bf69386f20 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -1347,10 +1347,11 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+index d321db549a1e0..00e632e45f656 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -179,18 +179,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
+ 
+ static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
  {
- 	struct pmbus_sensor *sensor;
- 	struct device_attribute *a;
-+	int err;
- 
- 	sensor = devm_kzalloc(data->dev, sizeof(*sensor), GFP_KERNEL);
- 	if (!sensor)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 	a = &sensor->attribute;
- 
- 	if (type)
-@@ -1375,14 +1376,17 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 			    pmbus_show_sensor, pmbus_set_sensor);
- 
- 	if (pmbus_add_attribute(data, &a->attr))
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	sensor->next = data->sensors;
- 	data->sensors = sensor;
- 
- 	/* temperature sensors with _input values are registered with thermal */
--	if (class == PSC_TEMPERATURE && strcmp(type, "input") == 0)
--		pmbus_thermal_add_sensor(data, sensor, seq);
-+	if (class == PSC_TEMPERATURE && strcmp(type, "input") == 0) {
-+		err = pmbus_thermal_add_sensor(data, sensor, seq);
-+		if (err)
-+			return ERR_PTR(err);
-+	}
- 
- 	return sensor;
+-	struct amdgpu_job *job = to_amdgpu_job(s_job);
+-
+-	drm_sched_job_cleanup(s_job);
+-
+-	amdgpu_sync_free(&job->sync);
+-	amdgpu_sync_free(&job->sched_sync);
+-
+-	/* only put the hw fence if has embedded fence */
+-	if (!job->hw_fence.ops)
+-		kfree(job);
+-	else
+-		dma_fence_put(&job->hw_fence);
++	amdgpu_job_free(to_amdgpu_job(s_job));
  }
-@@ -1483,8 +1487,8 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
- 						page, 0xff, l->reg, attr->class,
- 						attr->update || l->update,
- 						false, true);
--			if (!curr)
--				return -ENOMEM;
-+			if (IS_ERR(curr))
-+				return PTR_ERR(curr);
- 			if (l->sbit && (info->func[page] & attr->sfunc)) {
- 				ret = pmbus_add_boolean(data, name,
- 					l->alarm, index,
-@@ -1523,8 +1527,8 @@ static int pmbus_add_sensor_attrs_one(struct i2c_client *client,
- 	}
- 	base = pmbus_add_sensor(data, name, "input", index, page, phase,
- 				attr->reg, attr->class, true, true, true);
--	if (!base)
--		return -ENOMEM;
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
- 	/* No limit and alarm attributes for phase specific sensors */
- 	if (attr->sfunc && phase == 0xff) {
- 		ret = pmbus_add_limit_attrs(client, data, info, name,
-@@ -2154,8 +2158,8 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
- 				  0xff, PMBUS_VIRT_FAN_TARGET_1 + id, PSC_FAN,
- 				  false, false, true);
  
--	if (!sensor)
--		return -ENOMEM;
-+	if (IS_ERR(sensor))
-+		return PTR_ERR(sensor);
+ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+@@ -211,14 +200,15 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
  
- 	if (!((data->info->func[page] & PMBUS_HAVE_PWM12) ||
- 			(data->info->func[page] & PMBUS_HAVE_PWM34)))
-@@ -2165,15 +2169,15 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
- 				  0xff, PMBUS_VIRT_PWM_1 + id, PSC_PWM,
- 				  false, false, true);
+ void amdgpu_job_free(struct amdgpu_job *job)
+ {
+-	if (job->base.entity)
++	if (job->gang_submit != &job->base.s_fence->scheduled)
++		dma_fence_put(job->gang_submit);
++
++	if (job->base.s_fence)
+ 		drm_sched_job_cleanup(&job->base);
  
--	if (!sensor)
--		return -ENOMEM;
-+	if (IS_ERR(sensor))
-+		return PTR_ERR(sensor);
+ 	amdgpu_job_free_resources(job);
+ 	amdgpu_sync_free(&job->sync);
+ 	amdgpu_sync_free(&job->sched_sync);
+-	if (job->gang_submit != &job->base.s_fence->scheduled)
+-		dma_fence_put(job->gang_submit);
  
- 	sensor = pmbus_add_sensor(data, "pwm", "enable", index, page,
- 				  0xff, PMBUS_VIRT_PWM_ENABLE_1 + id, PSC_PWM,
- 				  true, false, false);
- 
--	if (!sensor)
--		return -ENOMEM;
-+	if (IS_ERR(sensor))
-+		return PTR_ERR(sensor);
- 
- 	return 0;
- }
-@@ -2190,6 +2194,7 @@ static int pmbus_add_fan_attributes(struct i2c_client *client,
- 		int f;
- 
- 		for (f = 0; f < ARRAY_SIZE(pmbus_fan_registers); f++) {
-+			struct pmbus_sensor *sensor;
- 			int regval;
- 
- 			if (!(info->func[page] & pmbus_fan_flags[f]))
-@@ -2210,10 +2215,11 @@ static int pmbus_add_fan_attributes(struct i2c_client *client,
- 			    (!(regval & (PB_FAN_1_INSTALLED >> ((f & 1) * 4)))))
- 				continue;
- 
--			if (pmbus_add_sensor(data, "fan", "input", index,
--					     page, 0xff, pmbus_fan_registers[f],
--					     PSC_FAN, true, true, true) == NULL)
--				return -ENOMEM;
-+			sensor = pmbus_add_sensor(data, "fan", "input", index,
-+						  page, 0xff, pmbus_fan_registers[f],
-+						  PSC_FAN, true, true, true);
-+			if (IS_ERR(sensor))
-+				return PTR_ERR(sensor);
- 
- 			/* Fan control */
- 			if (pmbus_check_word_register(client, page,
+ 	if (!job->hw_fence.ops)
+ 		kfree(job);
 -- 
 2.53.0
 
