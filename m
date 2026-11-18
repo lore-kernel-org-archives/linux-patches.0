@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057587;
-	b=AmH+PXrpzx4345sNJYssjbbVF5SzEzG0O6CZBDcrZig1y7YOepXX9JDDBfHmYcBOtEbf
-	 EaG6UT1lGemsQOGe8Fv/Fntb73OZlx5J1qMFt5A5XRqqjjI6NGlaJJcKIi+h0ddTrd6Pj
-	 UAI4IbmvdIXUCGiKPv4NKCTDC3HHO+UahnUGVQOJGgqza4GtMOYzizbNSLJ15Oo6ah2GC
-	 z94+H1Q0EXIFDxGqWNCuPK34VZcQPmlG1P/Cyn2w2GA+EpLvIEB8hmobYVO6rJfzwwYO5
-	 NfGIHVx+HKT8/W1B/5mKekVpf89A0ZmdqYIPGy1eRe6difUpdbLIGZvtXvdqxas8EoQ==
+	t=1795057590;
+	b=zG30O1mRo3CnW3TkJiuNNyew48XcsASLafTCh3HJuhIuY5tQK5cYJfzety+nNzaUm6n0
+	 DSrpSg58eEHNmh1+lIkAFj6oZ0JSJgoVhEFvapxEayTW414VaLMEjnyWWfuI7xZLK9U71
+	 O8moZVpAY1ixa+y6O++otYdw/tXw87lQ2l6lcm0uBPGKq/I03OlNGAol5qabXR5VPwSUv
+	 qCOpNtvoGLAAecO1h2HeDCAASYNSC9x6g49Mnn0y/pyWgJqK6AWbeP25G/OWam5Rm4fxW
+	 YuMdcMkaqIyL69GJk6zileSLAm76PP9ZJrGRgykKe3GnFi2kYffT7k47U2CGcZWR7dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057587;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=B6UBzrL2MXFoCmRlwEXRuZ+Tvz/nGBFD1N0BPmo+MR0=;
-	b=YfT0EI81f9J0zhdI1rmnRhzIR0sjMWP2XaXBogt+HZ1iH3kAFSxYrkMiS9EFe7+psOwF
-	 0ObR4VmCwgI33jG/3220pM9Cg4q7CM6dz1VbFHbgxjnY5D4cBzXvIUNE3t5IgWI2/esg2
-	 7vWEpCXzZ7l4ZPj3AzetzGt8Z+uoaBeYRK2rWUNzOnKeiq9O3q6OoJOYxD/f3OGKFGzD4
-	 L1I1hT01JeJI0eOUZiJmS+0vT1HlDp6/v3wyXIq/5//nn1JnSA+s8nOvs0lAhDp7wkS8m
-	 ASyM7O9RBhrcfQtZDi8zqLyXDjjwxIKg1MNieb3q2WZrfZ6yh4yfeRAtqcui9aq95MQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=tAQ/thqm6PjMyaNHTHhq7NL0cckEkLhha6quGl5DunI=;
+	b=z2Wx+0R55+vcV0OzrYu1Rjw5dayAr9sMjA5v1i9ZS0WsR2mZmaV+wlmIvAcBVo6ZECPa
+	 RX2jc4UqyNn6LzImS8QoL8ZI86VtNJ72zkveokOjhSeb7QNMkGt01YcbLwFLot9aRahHF
+	 WRyEfux22Uv+lglWmNDos1955lEtvdREocCVJMGNWBTMQazNEooJHOEq3W+gJThipQb+t
+	 Onb0rsGe1oa2LgQKqnSuzfLStuuyBmgUqkRR4q97L8uef9mGyKpRnI2l7AW5umJOFFAAd
+	 K+c7zPO2gZvffDr/bMYT0VguQGQM9aeakKLblz+rbHC6Z2Q/zY1w8g5ekvWa4/+UIAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nLMbQVT7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX6mbG8+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF45C606A337;
-	Thu, 19 Nov 2026 03:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B265260A2619;
+	Thu, 19 Nov 2026 03:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nLMbQVT7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2B41F000C4;
-	Thu, 19 Nov 2026 03:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX6mbG8+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1FE1F000C4;
+	Thu, 19 Nov 2026 03:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057587;
-	bh=B6UBzrL2MXFoCmRlwEXRuZ+Tvz/nGBFD1N0BPmo+MR0=;
+	s=korg; t=1795057590;
+	bh=tAQ/thqm6PjMyaNHTHhq7NL0cckEkLhha6quGl5DunI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nLMbQVT70F97uXR0Zj8crcJ1qUR6yTbGfyNymasPUeaYZuXneSLY7zh3CqODhLfCm
-	 0yUAh3BECEQtxa9/NvgVkQCUDyceI3tMlxN9wwJ1S7ROZ4Tj4yW8YKCCasGjz6f8tG
-	 QQZjf5HrWH1giaHMKn7vBSRfGvxQXVQNLiaPPYYA=
+	b=wX6mbG8+Vy0C5Wyn+4un9xX22BzCvR4rNCojwMH00bhDspzwDFhZkvIbsmuo6qNPW
+	 JnwywcM92DMnruaC3ToGbBysXfoSvvN1wnx2fi3wLIVsyRenXRYMNLy80pSU+BME3D
+	 rtEcXQbMC82VejRz3cn69Ann8UuCnI9R7gTlsmZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Robin Everaars <robineveraars@pm.me>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0176/1848] libbpf: Fix ring buffer consumer loop on 32-bit position wrap
-Date: Wed, 18 Nov 2026 15:36:54 +0100
-Message-ID: <20261118145918.904457988@linuxfoundation.org>
+Subject: [PATCH 5.10 0185/1848] ACPI: button: Add DMI quirk for Razer Blade Pro 17 early 2020 lid switch
+Date: Wed, 18 Nov 2026 15:37:03 +0100
+Message-ID: <20261118145919.356332644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,61 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Robin Everaars <robineveraars@pm.me>
 
-[ Upstream commit fdd4fad0bbbd08501465c5f9b556963093c5d58a ]
+[ Upstream commit 415125669c2ddc773c579a60df108f75712dfa83 ]
 
-ringbuf_process_ring() walks the records between the consumer and the
-producer with an ordering comparison:
+The lid switch reports "close" but can miss the matching "open", leaving
+_LID closed after resume. systemd-logind then suspends the system again
+roughly every 35 seconds.
 
-	while (cons_pos < prod_pos) {
+Reading the embedded controller's PSTA byte while _LID is stale shows that
+bit 0x04 is set, which the DSDT treats as open. The DSDT returns the cached
+LIDS byte from _LID. Its wake path aborts in RTEC on an unhandled
+SystemCMOS region before copying PSTA to LIDS.
 
-cons_pos and prod_pos mirror the kernel's ring positions and are
-unsigned long here too, so on 32-bit they wrap at 2^32 bytes of traffic.
-When producer_pos has wrapped and consumer_pos has not, prod_pos is the
-smaller of the two, the loop body never runs and no record is consumed.
-Since consumer_pos only advances inside that loop, it never wraps either
-and the consumer stops delivering samples for good, with no error
-returned to the caller: ring_buffer__poll() keeps reporting zero
-records while the kernel side fills up and starts dropping.
+Initialize the lid state to open on resume, matching the existing quirk
+for the Razer Blade Stealth 13 late 2019. With
+button.lid_init_state=open, a physical close suspended once and resume
+reported open without another suspend.
 
-Compare the distance instead. The consumer never runs ahead of the
-producer, so prod_pos - cons_pos is the amount of unconsumed data and
-stays correct across the wrap.
-
-64-bit hosts are unaffected in practice: the counters would need 16 EiB
-to wrap. This is the userspace counterpart of the kernel-side walk fixed
-in "bpf: Fix pending_pos walk on 32-bit ring position wrap"; a 32-bit
-consumer hits whichever of the two comes first.
-
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-5-i.tellez@btesa.com
+Signed-off-by: Robin Everaars <robineveraars@pm.me>
+Link: https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/button.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-index 5e242be45206a..d850f6d731cd7 100644
---- a/tools/lib/bpf/ringbuf.c
-+++ b/tools/lib/bpf/ringbuf.c
-@@ -219,7 +219,7 @@ static int64_t ringbuf_process_ring(struct ring* r)
- 	do {
- 		got_new_data = false;
- 		prod_pos = smp_load_acquire(r->producer_pos);
--		while (cons_pos < prod_pos) {
-+		while (prod_pos - cons_pos > 0) {
- 			len_ptr = r->data + (cons_pos & r->mask);
- 			len = smp_load_acquire(len_ptr);
- 
+diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
+index 4b90dd928398c..10aca4d2b8244 100644
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -124,6 +124,17 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Razer Blade Pro 17 early 2020, notification of the LID device
++		 * only happens on close, not on open and _LID keeps returning closed.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Pro 17 (Early 2020) - RZ09-0329"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{
+ 		/*
+ 		 * Samsung galaxybook2 ,initial _LID device notification returns
 -- 
 2.53.0
 
