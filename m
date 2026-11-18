@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015376;
-	b=EegxTmfkdXVsQAm5ufbgty9ueEtHpzzjJm+cV7+VKDLBnJ+jUIUumgiREDEvrCCUXVkv
-	 yh/QaL2F2zl8ckWdfjIRrsJMUZzwJVUcHYS+hWypB3J2EBa39F8VUvNoLMgqXNRNPv3K5
-	 XlL4oA/s1AxmZPfSHg2dBDLX0n37PpFsfNcg2McyNCYFD5mzwZc95WHxj2rYsUvkSPHkd
-	 sL41L2RmvPT7u4DKopHmk4qJca4ccgN/PK9nub36kQITcfJAamgCJAjj4eIGsXdLdidLX
-	 YBiBqhaPmo8ChD+v66+Yn6GiIyHrGdGJloOrL/VhKVlwxbveE3RIYr1rJRSWqBGT9Tw==
+	t=1795015378;
+	b=sRbtdQkVS/qvLcvqhIa/xziR9wVObFb8Scs1yUG/SC0Pb1fUN1XMu2pZvobM0pdK3XjF
+	 DK58/2LE1fbZyoqPWXmYvNajlpVVeFv6hU+IZt8lpGuocurT4UnkoJsm96EJkPoq598sd
+	 eFwACvzJGKtQqXkeVM+uMdG0qquIZsTA3jfqNmkoZIb7K1lV7J2pvfu+rC2xplQKY3aNd
+	 5F/i+yCoQGjTtAZQZDsg+H3ctyYqMvbfKQlzzR4m78XoIZvM+IubI+9TTQtw/dc7lBY94
+	 roJy+aSEly5cVfeJpAD25dPd8W8UZxkDFdrbT1bHg+QSBdxocjUNzqmAIlvqXNDPKnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yRcJRoMaHTxxtUDW5WK4Frrl3TxJ5Kh56ipQmL/Udz4=;
-	b=F0wK97PtnLbn0tQcqUtfQI7jf4Z4rKo6O4BkmDJ0eAz/GsGiiQnfeB8tQz24TykGk/5/
-	 j5zg3KYUGSVeLncXvYcWoYTUaoLMsQbuOO9Hjg+hyWxkUvTXUkir8gwFVOM0fzpRjDxDJ
-	 1+VY4V9P0uofnRozDa3ZBYqcbQoottAJOukEMP+ALs9NHajSHUSs72v7f4+gyu1BU7XGt
-	 YuA7ij/geH0ZBpEaFh3tTnrCUTmP3guCbQpj3xrpDSFHzRhs/LVS7XhClTEUWUmJeGIcS
-	 SvmA8IuncfGAVU/a8Cerb0xRLtZjqZR5CBpvzw3e910nXuelWxt1byevkLGtQbDxd+A==
+	bh=6+/7sOdL+wtPJUdnYz/+v6nuYi3/n706x9yzyerTS48=;
+	b=rGf4cTy2bogAe7hJmxxK7rLf3TdEBg0Xg//UX+65mssKrCVEsGK2CPPij4LIfkUZxf/w
+	 quqvSUe6okCGJfCu70owC0bpSIMqllSw2H8tslLAWdrRmKeAesn2Lxw04dq6tqRfaGyOI
+	 QDflTSguTOi7+rLwn2i3RB1akBLA4ru0dcSI2NrbDUtbEPTvZrgXqKtTtS8BbNaogCupQ
+	 iaEMqW0oznw0YNFcZadgrQYTFJnS0iI1IR+khr+AfCnfq/589+QtaGOqX/+PnNYm0yQru
+	 PeH0ND6atgKfFDJ5+ubmw7MOQQhIYeGCXanr6143KJazPvkhDDV5QAG2RE4vgd4UP+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnFGUjHn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pc9pnoRa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0626F606A334;
-	Wed, 18 Nov 2026 15:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99969606A337;
+	Wed, 18 Nov 2026 15:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PnFGUjHn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107471F000C4;
-	Wed, 18 Nov 2026 15:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pc9pnoRa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E929F1F000C4;
+	Wed, 18 Nov 2026 15:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015375;
-	bh=yRcJRoMaHTxxtUDW5WK4Frrl3TxJ5Kh56ipQmL/Udz4=;
+	s=korg; t=1795015378;
+	bh=6+/7sOdL+wtPJUdnYz/+v6nuYi3/n706x9yzyerTS48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnFGUjHnIEK8bTMt9QgU0iFcO2a8gwEAioFhvyzJYR5uqDu9JzLexiWymtd7T3JOE
-	 1pGzX96+exipJRudv761rITKag3H5WxxFKbZpHCmHIDL1XSXkSrPZ1m3dw+527eJvr
-	 jcJFyX+Ckwf+DSsBNCmNj7Gx/kisuBo7sHRJv0Fg=
+	b=pc9pnoRavDod2qs3apekk+n5/owwcisrSgiXgi/0nn4PCEJz4E3f6AaSSPzaCamgx
+	 76esDynMKCXBPjztyo561PWTFQmfwvs/6V1Lld/JiN3n8dFQiyYfzJwQfTun47ZXQl
+	 l7sDhxbsmzYrw1Da/88h4FSg+9RmTLl+BXoFPbGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Max Zhen <max.zhen@amd.com>,
 	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0150/2651] accel/amdxdna: Fix unexpected wait when flushing notifier_wq
-Date: Wed, 18 Nov 2026 15:23:10 +0100
-Message-ID: <20261118150253.255774043@linuxfoundation.org>
+Subject: [PATCH 7.3 0151/2651] accel/amdxdna: Fix possible use-after-free when freeing device BO
+Date: Wed, 18 Nov 2026 15:23:11 +0100
+Message-ID: <20261118150253.290134492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,156 +70,351 @@ Content-Transfer-Encoding: 8bit
 
 From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 445d20910429b41e88768624b914344658991a5b ]
+[ Upstream commit 6a1f6cb7593aebcdb4f9022410622128fb23b1a1 ]
 
-In amdxdna_gem_obj_free(), flush_workqueue(xdna->notifier_wq) waits for
-all pending work items on the device-global notifier workqueue, rather
-than only the work items associated with the BO being freed.
+When the DRM file descriptor is closed, amdxdna_client_cleanup() frees
+the client structure. If device BOs are still alive, freeing them may
+access abo->client and result in a use-after-free.
 
-If another BO has a pending hmm_unreg_work, freeing an unrelated BO can
-be unnecessarily blocked until that work completes.
+Move amdxdna_gem_heap_free(), which accesses abo->client, before clearing
+abo->client in the BO close callback. Also track the heap BOs referenced
+by device BOs so they can be accessed without dereferencing abo->client.
 
-mmu_interval_notifier_remove() is deferred to a workqueue because it
-cannot be called from the MMU notifier callback itself. The BO free path
-is not a notifier callback, so call mmu_interval_notifier_remove()
-directly there and avoid the workqueue.
-
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Fixes: dbc8fd7a03cb ("accel/amdxdna: Add expandable device heap support")
 Reviewed-by: Max Zhen <max.zhen@amd.com>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260813205016.941743-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260901160129.3812405-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 69 +++++++++++++++++++----------
- drivers/accel/amdxdna/amdxdna_gem.h |  1 +
- 2 files changed, 47 insertions(+), 23 deletions(-)
+ drivers/accel/amdxdna/aie2_ctx.c    |   9 +-
+ drivers/accel/amdxdna/amdxdna_gem.c | 128 ++++++++++++++++++++--------
+ drivers/accel/amdxdna/amdxdna_gem.h |   4 +-
+ 3 files changed, 104 insertions(+), 37 deletions(-)
 
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index baf9a8b90a4d6..164441e439406 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -799,6 +799,7 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
+ 	for (i = 0; i < ARRAY_SIZE(priv->cmd_buf); i++) {
+ 		if (!priv->cmd_buf[i])
+ 			continue;
++		amdxdna_gem_heap_free(client, priv->cmd_buf[i]);
+ 		drm_gem_object_put(to_gobj(priv->cmd_buf[i]));
+ 	}
+ 	amdxdna_gem_unpin(heap);
+@@ -836,8 +837,14 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
+ 	drm_sched_fini(&hwctx->priv->sched);
+ 	aie2_ctx_syncobj_destroy(hwctx);
+ 
+-	for (idx = 0; idx < ARRAY_SIZE(hwctx->priv->cmd_buf); idx++)
++	for (idx = 0; idx < ARRAY_SIZE(hwctx->priv->cmd_buf); idx++) {
++		/*
++		 * The open/close will never be called for driver allocated
++		 * dev bo. Call amdxdna_gem_heap_free explicitly.
++		 */
++		amdxdna_gem_heap_free(hwctx->client, hwctx->priv->cmd_buf[idx]);
+ 		drm_gem_object_put(to_gobj(hwctx->priv->cmd_buf[idx]));
++	}
+ 	amdxdna_gem_unpin(hwctx->priv->heap);
+ 	drm_gem_object_put(to_gobj(hwctx->priv->heap));
+ 
 diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index 4b0d58d0329b7..d305c58244fd0 100644
+index d305c58244fd0..3f05fa8811af1 100644
 --- a/drivers/accel/amdxdna/amdxdna_gem.c
 +++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -253,13 +253,16 @@ static bool amdxdna_hmm_invalidate(struct mmu_interval_notifier *mni,
- 	struct amdxdna_gem_obj *abo = mapp->abo;
- 	struct amdxdna_dev *xdna;
+@@ -37,6 +37,7 @@ amdxdna_init_dev_bo(struct amdxdna_gem_obj *dev_bo)
+ 	struct amdxdna_gem_obj *heap;
+ 	u64 heap_addr, exp_heap_uva;
+ 	u32 heap_id;
++	int ret;
  
-+	if (!mmu_notifier_range_blockable(range))
-+		return false;
-+
-+	if (mapp->unmapped)
-+		return true;
-+
- 	xdna = to_xdna_dev(to_gobj(abo)->dev);
- 	XDNA_DBG(xdna, "Invalidating range 0x%lx, 0x%lx, type %d",
- 		 mapp->range.start, mapp->range.end, abo->type);
+ 	if (xa_empty(&client->dev_heap_xa)) {
+ 		XDNA_DBG(xdna, "Empty heap xa");
+@@ -58,24 +59,32 @@ amdxdna_init_dev_bo(struct amdxdna_gem_obj *dev_bo)
+ 	heap = xa_load(&client->dev_heap_xa, heap_id);
+ 	exp_heap_uva = amdxdna_gem_uva(heap);
+ 	heap_addr = amdxdna_gem_dev_addr(heap);
+-	dev_bo->heap_start_id = heap_id;
+ 	dev_bo->mem.uva = dev_bo->mm_node.start - heap_addr + exp_heap_uva;
  
--	if (!mmu_notifier_range_blockable(range))
--		return false;
--
- 	down_write(&xdna->notifier_lock);
- 	abo->mem.map_invalid = true;
- 	mapp->invalid = true;
-@@ -301,33 +304,40 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
+ 	for (; heap_id < client->dev_heap_nid; heap_id++) {
+ 		heap = xa_load(&client->dev_heap_xa, heap_id);
+ 		if (!heap) {
+ 			XDNA_ERR(xdna, "Failed to load heap %d", heap_id);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto cleanup_heap_xa;
+ 		}
+ 		heap_addr = amdxdna_gem_uva(heap);
+ 		if (heap_addr == AMDXDNA_INVALID_ADDR) {
+ 			XDNA_ERR(xdna, "Heap %d is not mapped", heap_id);
+-			return -EAGAIN;
++			ret = -EAGAIN;
++			goto cleanup_heap_xa;
+ 		}
  
- 	down_write(&xdna->notifier_lock);
- 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
--		if (!vma || compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
--			if (!mapp->unmapped) {
--				queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
--				mapp->unmapped = true;
--			}
--			if (vma)
--				break;
--		}
-+		if (!compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end))
-+			continue;
+ 		if (heap_addr != exp_heap_uva) {
+ 			XDNA_ERR(xdna, "Heap %d uva is not contiguous", heap_id);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto cleanup_heap_xa;
++		}
 +
-+		queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
-+		mapp->unmapped = true;
++		ret = xa_insert(&dev_bo->heap_xa, heap_id, heap, GFP_KERNEL);
++		if (ret) {
++			ret = -ENOMEM;
++			goto cleanup_heap_xa;
+ 		}
+ 
+ 		if (heap->dev_addr + heap->mem.size >=
+@@ -87,12 +96,15 @@ amdxdna_init_dev_bo(struct amdxdna_gem_obj *dev_bo)
+ 
+ 	if (heap_id == client->dev_heap_nid) {
+ 		XDNA_DBG(xdna, "Can not find heap end");
+-		return -EAGAIN;
++		ret = -EAGAIN;
++		goto cleanup_heap_xa;
  	}
- 	up_write(&xdna->notifier_lock);
- }
  
--static void amdxdna_umap_release(struct kref *ref)
-+static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
- {
--	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
--	struct amdxdna_gem_obj *abo = mapp->abo;
--	struct amdxdna_dev *xdna;
+-	dev_bo->heap_end_id = heap_id;
 -
--	mmu_interval_notifier_remove(&mapp->notifier);
-+	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
-+	struct amdxdna_umap *mapp, *tmp;
-+	LIST_HEAD(dead);
- 
--	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
- 	down_write(&xdna->notifier_lock);
--	list_del(&mapp->node);
--	if (list_empty(&abo->mem.umap_list))
--		abo->mem.uva = AMDXDNA_INVALID_ADDR;
-+	list_for_each_entry_safe(mapp, tmp, &abo->mem.umap_list, node) {
-+		mapp->unmapped = true;
-+		mapp->cleanup = true;
-+		list_move(&mapp->node, &dead);
-+	}
- 	up_write(&xdna->notifier_lock);
- 
-+	list_for_each_entry_safe(mapp, tmp, &dead, node) {
-+		cancel_work_sync(&mapp->hmm_unreg_work);
-+		amdxdna_umap_put(mapp);
-+	}
-+}
+ 	return 0;
 +
-+static void amdxdna_umap_release(struct kref *ref)
-+{
-+	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
-+
-+	mmu_interval_notifier_remove(&mapp->notifier);
- 	kvfree(mapp->range.hmm_pfns);
- 	kfree(mapp);
++cleanup_heap_xa:
++	xa_destroy(&dev_bo->heap_xa);
++	return ret;
  }
-@@ -341,6 +351,20 @@ static void amdxdna_hmm_unreg_work(struct work_struct *work)
+ 
+ static int
+@@ -132,8 +144,7 @@ amdxdna_gem_heap_alloc(struct amdxdna_gem_obj *abo)
+ 	}
+ 
+ 	client->heap_usage += mem->size;
+-	xa_for_each_range(&client->dev_heap_xa, heap_id, heap,
+-			  abo->heap_start_id, abo->heap_end_id)
++	xa_for_each(&abo->heap_xa, heap_id, heap)
+ 		drm_gem_object_get(to_gobj(heap));
+ 
+ unlock_out:
+@@ -142,22 +153,13 @@ amdxdna_gem_heap_alloc(struct amdxdna_gem_obj *abo)
+ 	return ret;
+ }
+ 
+-static void
+-amdxdna_gem_heap_free(struct amdxdna_gem_obj *abo)
++void amdxdna_gem_heap_free(struct amdxdna_client *client, struct amdxdna_gem_obj *abo)
  {
- 	struct amdxdna_umap *mapp = container_of(work, struct amdxdna_umap,
- 						 hmm_unreg_work);
-+	struct amdxdna_gem_obj *abo = mapp->abo;
-+	struct amdxdna_dev *xdna;
-+
-+	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
-+	down_write(&xdna->notifier_lock);
-+	if (mapp->cleanup) {
-+		up_write(&xdna->notifier_lock);
-+		return;
-+	}
-+
-+	list_del(&mapp->node);
-+	if (list_empty(&abo->mem.umap_list))
-+		abo->mem.uva = AMDXDNA_INVALID_ADDR;
-+	up_write(&xdna->notifier_lock);
+-	struct amdxdna_client *client = abo->client;
+-	struct amdxdna_gem_obj *heap;
+-	unsigned long heap_id;
+-
+ 	mutex_lock(&client->mm_lock);
  
- 	amdxdna_umap_put(mapp);
+ 	drm_mm_remove_node(&abo->mm_node);
+ 	client->heap_usage -= abo->mem.size;
+ 
+-	xa_for_each_range(&client->dev_heap_xa, heap_id, heap,
+-			  abo->heap_start_id, abo->heap_end_id)
+-		drm_gem_object_put(to_gobj(heap));
+-
+ 	mutex_unlock(&client->mm_lock);
  }
-@@ -643,8 +667,7 @@ static void amdxdna_gem_obj_free(struct drm_gem_object *gobj)
+ 
+@@ -180,6 +182,7 @@ amdxdna_gem_create_obj(struct drm_device *dev, size_t size)
+ 	abo->open_ref = 0;
+ 	abo->internal = false;
+ 	INIT_LIST_HEAD(&abo->mem.umap_list);
++	xa_init_flags(&abo->heap_xa, XA_FLAGS_ALLOC);
+ 
+ 	return abo;
+ }
+@@ -449,13 +452,18 @@ static void amdxdna_gem_dev_obj_free(struct drm_gem_object *gobj)
+ {
  	struct amdxdna_dev *xdna = to_xdna_dev(gobj->dev);
  	struct amdxdna_gem_obj *abo = to_xdna_obj(gobj);
++	struct amdxdna_gem_obj *heap;
++	unsigned long heap_id;
  
--	amdxdna_hmm_unregister(abo, NULL);
--	flush_workqueue(xdna->notifier_wq);
-+	amdxdna_hmm_unregister_all(abo);
- 
+ 	XDNA_DBG(xdna, "BO type %d xdna_addr 0x%llx", abo->type, amdxdna_gem_dev_addr(abo));
  	if (abo->pinned)
  		amdxdna_gem_unpin(abo);
+ 
+ 	amdxdna_gem_vunmap(abo);
+-	amdxdna_gem_heap_free(abo);
++	xa_for_each(&abo->heap_xa, heap_id, heap)
++		drm_gem_object_put(to_gobj(heap));
++	xa_destroy(&abo->heap_xa);
++
+ 	drm_gem_object_release(gobj);
+ 	amdxdna_gem_destroy_obj(abo);
+ }
+@@ -757,19 +765,72 @@ static void amdxdna_gem_obj_vunmap(struct drm_gem_object *obj, struct iosys_map
+ 		drm_gem_shmem_object_vunmap(obj, map);
+ }
+ 
++static int amdxdna_gem_dev_obj_open(struct drm_gem_object *gobj, struct drm_file *filp)
++{
++	struct amdxdna_gem_obj *abo = to_xdna_obj(gobj);
++
++	guard(mutex)(&abo->lock);
++	if (filp->driver_priv != abo->client)
++		return -EPERM;
++	abo->open_ref++;
++
++	return 0;
++}
++
++static void amdxdna_gem_dev_obj_close(struct drm_gem_object *gobj, struct drm_file *filp)
++{
++	struct amdxdna_gem_obj *abo = to_xdna_obj(gobj);
++	struct amdxdna_client *client = NULL;
++
++	mutex_lock(&abo->lock);
++	abo->open_ref--;
++
++	/*
++	 * Freeing the heap allocation here, when the handle is closed, is
++	 * intentional.  DEV BOs are carved out of a per-client drm_mm heap;
++	 * any subsequent allocation that lands on the same device address will
++	 * also belong to the same client.  If the user closes the handle while
++	 * a job is still in flight the only consequence is self-inflicted
++	 * corruption within their own context -- it cannot affect other
++	 * processes.  The GEM reference held by the in-flight job keeps the
++	 * amdxdna_gem_obj struct alive until the job completes; it does not
++	 * prevent the device address from being reclaimed by the allocator.
++	 *
++	 * Cross-process handle creation for DEV BOs is rejected in
++	 * amdxdna_gem_dev_obj_open(), which prevents the following UAF:
++	 * if a second process shared the handle via GEM flink and the
++	 * original creator exited (freeing client), the importer would later
++	 * reach open_ref == 0 here and call amdxdna_gem_heap_free() with a
++	 * dangling abo->client pointer.  Because cross-process opens are
++	 * rejected, the process arriving here is always the owning client,
++	 * which is still alive.  abo->client is nulled out afterwards so that
++	 * any code path running on a lingering GEM reference (e.g. an
++	 * in-flight job) cannot silently dereference a stale pointer.
++	 */
++	if (abo->open_ref == 0) {
++		client = abo->client;
++		abo->client = NULL;
++	}
++	mutex_unlock(&abo->lock);
++
++	if (client)
++		amdxdna_gem_heap_free(client, abo);
++}
++
+ static int amdxdna_gem_dev_obj_vmap(struct drm_gem_object *obj, struct iosys_map *map)
+ {
+ 	struct amdxdna_gem_obj *abo = to_xdna_obj(obj);
+ 	struct amdxdna_gem_obj *heap;
++	unsigned long index = 0;
+ 	void *base;
+ 	u64 offset;
+ 
+-	/* vmap dev bo which is across more than 1 heap is not allowed */
+-	if (abo->heap_start_id != abo->heap_end_id)
++	heap = xa_find(&abo->heap_xa, &index, ULONG_MAX, XA_PRESENT);
++	if (!heap)
+ 		return -ENOMEM;
+ 
+-	heap = xa_load(&abo->client->dev_heap_xa, abo->heap_start_id);
+-	if (!heap)
++	/* vmap dev bo which is across more than 1 heap is not allowed */
++	if (xa_find_after(&abo->heap_xa, &index, ULONG_MAX, XA_PRESENT))
+ 		return -ENOMEM;
+ 
+ 	base = amdxdna_gem_vmap(heap);
+@@ -788,6 +849,8 @@ static struct dma_buf *amdxdna_gem_dev_obj_export(struct drm_gem_object *gobj, i
+ 
+ static const struct drm_gem_object_funcs amdxdna_gem_dev_obj_funcs = {
+ 	.free = amdxdna_gem_dev_obj_free,
++	.open = amdxdna_gem_dev_obj_open,
++	.close = amdxdna_gem_dev_obj_close,
+ 	.vmap = amdxdna_gem_dev_obj_vmap,
+ 	.export = amdxdna_gem_dev_obj_export,
+ };
+@@ -1126,6 +1189,8 @@ int amdxdna_drm_create_bo_ioctl(struct drm_device *dev, void *data, struct drm_f
+ 		 args->handle, args->type, amdxdna_gem_uva(abo),
+ 		 amdxdna_gem_dev_addr(abo), abo->mem.size);
+ put_obj:
++	if (ret && abo->type == AMDXDNA_BO_DEV)
++		amdxdna_gem_heap_free(client, abo);
+ 	/* Dereference object reference. Handle holds it now. */
+ 	drm_gem_object_put(to_gobj(abo));
+ 	return ret;
+@@ -1159,7 +1224,6 @@ static void amdxdna_bo_unpin(struct amdxdna_gem_obj *abo)
+ 
+ int amdxdna_gem_pin_nolock(struct amdxdna_gem_obj *abo)
+ {
+-	struct amdxdna_client *client = abo->client;
+ 	struct amdxdna_gem_obj *heap;
+ 	unsigned long heap_id, last = ULONG_MAX;
+ 	int ret = 0;
+@@ -1167,17 +1231,15 @@ int amdxdna_gem_pin_nolock(struct amdxdna_gem_obj *abo)
+ 	if (abo->type != AMDXDNA_BO_DEV)
+ 		return amdxdna_bo_pin(abo);
+ 
+-	xa_for_each_range(&client->dev_heap_xa, heap_id, heap,
+-			  abo->heap_start_id, abo->heap_end_id) {
++	xa_for_each(&abo->heap_xa, heap_id, heap) {
+ 		ret = amdxdna_bo_pin(heap);
+ 		if (ret)
+ 			break;
+ 		last = heap_id;
+ 	}
+ 
+-	if (ret && last <= abo->heap_end_id) {
+-		xa_for_each_range(&client->dev_heap_xa, heap_id, heap,
+-				  abo->heap_start_id, last)
++	if (ret && last != ULONG_MAX) {
++		xa_for_each_range(&abo->heap_xa, heap_id, heap, 0, last)
+ 			amdxdna_bo_unpin(heap);
+ 	}
+ 
+@@ -1202,8 +1264,7 @@ void amdxdna_gem_unpin(struct amdxdna_gem_obj *abo)
+ 		struct amdxdna_gem_obj *heap;
+ 		unsigned long heap_id;
+ 
+-		xa_for_each_range(&abo->client->dev_heap_xa, heap_id, heap,
+-				  abo->heap_start_id, abo->heap_end_id)
++		xa_for_each(&abo->heap_xa, heap_id, heap)
+ 			amdxdna_bo_unpin(heap);
+ 	} else {
+ 		amdxdna_bo_unpin(abo);
+@@ -1323,8 +1384,7 @@ int amdxdna_drm_sync_bo_ioctl(struct drm_device *dev,
+ 		u64 flush_start = bo_start + args->offset;
+ 		u64 flush_end = flush_start + args->size;
+ 
+-		xa_for_each_range(&client->dev_heap_xa, heap_id, heap,
+-				  abo->heap_start_id, abo->heap_end_id) {
++		xa_for_each(&abo->heap_xa, heap_id, heap) {
+ 			u64 heap_start = amdxdna_gem_dev_addr(heap);
+ 			u64 heap_end = heap_start + heap->mem.size;
+ 			u64 start = max(flush_start, heap_start);
 diff --git a/drivers/accel/amdxdna/amdxdna_gem.h b/drivers/accel/amdxdna/amdxdna_gem.h
-index 1e90e32bf3cd7..fb033ced1045f 100644
+index fb033ced1045f..5dfefdcf13560 100644
 --- a/drivers/accel/amdxdna/amdxdna_gem.h
 +++ b/drivers/accel/amdxdna/amdxdna_gem.h
-@@ -20,6 +20,7 @@ struct amdxdna_umap {
- 	struct kref			refcnt;
- 	bool				invalid;
- 	bool				unmapped;
-+	bool				cleanup;
- };
+@@ -47,8 +47,7 @@ struct amdxdna_gem_obj {
  
- struct amdxdna_mem {
+ 	/* Below members are initialized when needed */
+ 	struct drm_mm_node		mm_node; /* For AMDXDNA_BO_DEV */
+-	u32				heap_start_id;
+-	u32				heap_end_id;
++	struct xarray			heap_xa;
+ 	u64				dev_addr; /* For heap bo */
+ 	u32				assigned_hwctx;
+ 	struct dma_buf			*dma_buf;
+@@ -105,6 +104,7 @@ static inline u64 amdxdna_obj_dma_addr(struct amdxdna_gem_obj *abo)
+ }
+ 
+ void amdxdna_umap_put(struct amdxdna_umap *mapp);
++void amdxdna_gem_heap_free(struct amdxdna_client *client, struct amdxdna_gem_obj *abo);
+ 
+ struct drm_gem_object *
+ amdxdna_gem_create_shmem_object_cb(struct drm_device *dev, size_t size);
 -- 
 2.53.0
 
