@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040494;
-	b=shFKwMzuO0ZoV2eKjymxq9zKnx2HaLJQv6+g9sjrrMDPJKHryywp1d8/Gdbr0E3ZE2nQ
-	 rY2Ty6pSvHToLabwg4w70suAt3MJov/b/GOns9VeLqwt6v5Hvm57tu1XyIza8FOhluUZ3
-	 neDjAtO4i6YycsAq7RbjF0UzwVyGzcvNM6KChGNV8ItRH5MjzB78/Sl1E5m5jLwYnn2v2
-	 sRNfeoG9H0B1ax9aWmDJJkrPGZurUUmigZx5Rif90WpNXkM3gZwWbKE72g4VY/jsuYcjX
-	 1cCe6PE1s72HaPDobVYo67+z78GEfOD9DaDFdDmSV+EyTR9YPVsEcu+U0lsz1cmeW1Q==
+	t=1795040497;
+	b=vjLqOmIjUngHtBoQ7aULF3AQmyRvNQ+NAxWjy69y+Qn8dSk6QTbftQ3+fOU3pHxy8F0+
+	 KYEjAKGrRoO09A2KMak4d/yp8jkzXDiT+VynvI9T23jUG+Y9XXs4BWk1Q4NJXy9c3XHAm
+	 SGigoQTnTDqHQf3xhK58QMXCEGXDy34gu/KVcfnurjup/+op3f/VL3EGvRdtyFIKR97BN
+	 BXMWbxYgB+asNSrZ3hhwQs/R1hrhN0/JAOqv39hcC0VHXt+EdrsdgB201tRj4DgyfDTXT
+	 Q5DvV6KpGY9nPbb2DGu9RBDwR+6pVwQNwCN1oujYkn13Au6DTW+0A7jC3KOMFzXcsHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=nQNZ7ePYHLoLH00WvC5XLeJlbqHJBS1jz19zNtMYkm4=;
-	b=5DR0Uu2TV1KSYMLZASviGpPhhzJzrstsvpmkjESliuwlvbHWA8Hgb/BXCSAk94d+0yWH
-	 9a8vagWF9SfjGo36OSLLepoEdsGPe93/6iq0YcwSS7YiFQrDMRJZeVpleBhZIH8HTPN2N
-	 oO/TkZ+K6+whDGgyje2Q7bgHF2mbjzYuQK4czr7rxeXKU5CUt/zsnrPU0hXjFuFpeoFGE
-	 8M8Bxo0pwVCAg8oLm7jL8bBXzEUiJ6XuFBSFzX/mSvyTL9TbzuPhiD8JwZFtiFBGDaY9n
-	 rC3PG5IMLcXHpXwBnWSCXfaxD6mF6xEkbAoErgWgRJdhx9a2njVqYMRLh97XvHl9aBg==
+	bh=Lnqo/QycX+BBq4RGJ1rSEgmyNDstY8szIcHb3BlmijU=;
+	b=vKD8aGD7fejWBFG6cNR2ps/OTt35W+weA2cMK4QcVdQncpz7bn9wLTWDHgnNvt9I3Yb/
+	 Wzp+xUZceY28JTKGAq5BDgEtuehi6HjpLvexR+5ofpc9Gy8JQXdYLmJRNL8nzhlMva9g+
+	 7JlZE/LxfaiF8YqvkykfEn8jFsL0ZzkLWD4PBvPxIQoYnlWRDcFU0pm3toXHgvWM77HhO
+	 VBuxRsAQYcNnSuzPAwCRcErs0p2LA03Ey0C53hTZAakime13js7kpc1d3or5SqsY7eDID
+	 APHowVfyycMqUKAWe2wwkh8NRht47V5FzO10OyPhShBaDwjfDRPA+E+/Xi3JvpE3GpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XCk/Fo3s";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNp1FPNx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFDB606A325;
-	Wed, 18 Nov 2026 22:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDB2606A31C;
+	Wed, 18 Nov 2026 22:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XCk/Fo3s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2451F000C4;
-	Wed, 18 Nov 2026 22:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNp1FPNx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD0A1F000C4;
+	Wed, 18 Nov 2026 22:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040494;
-	bh=nQNZ7ePYHLoLH00WvC5XLeJlbqHJBS1jz19zNtMYkm4=;
+	s=korg; t=1795040496;
+	bh=Lnqo/QycX+BBq4RGJ1rSEgmyNDstY8szIcHb3BlmijU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XCk/Fo3seSP4FHAsbbQamfujyM+d9z7EPbpXLP3zLLh9lrod53KbJeRFLT8UZRHfP
-	 oK2DEfINwm8oV3PXkxApYq/5rBM0dnXJBaJ97N3DDvp9suTzr/BbtPIFhEPgibiiEx
-	 zPpMXHkl683hBeLoFUgTBAR8JbrI0qVFkYpWJpKk=
+	b=kNp1FPNxu7wBUOXIyX73T8tkVj2ZHMPYWdOKpxUovPc9Plufd54hmX3LhSqNzYfHo
+	 foL4Z41C7TADp70r4dYrd5uNpqmOnQxCo4Qeqb9MtlzJJCr/mJeesTRqaJqBeIVzy8
+	 tSXYfGWtysx3ZJ8WJg0k+4tWucaBPiCqoUprgjlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Danish Khateeb <danishkhateeb03@gmail.com>,
-	Willy Tarreau <w@1wt.eu>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2476/3318] tools/nolibc: stop rounding malloc() sizes up to 4096 bytes
-Date: Wed, 18 Nov 2026 15:51:38 +0100
-Message-ID: <20261118150435.685216820@linuxfoundation.org>
+Subject: [PATCH 6.6 2477/3318] tools/nolibc: check for overflow in malloc()
+Date: Wed, 18 Nov 2026 15:51:39 +0100
+Message-ID: <20261118150435.713145252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,38 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit b7db3ba9434cbad3d15f62500104525bfa28a304 ]
+[ Upstream commit 2111eb4273e7fda0815de85319653104f323c441 ]
 
-malloc() rounds the size of each mapping up to a multiple of 4096,
-presumably to align it to a page boundary. But the page size is not 4096
-on all architectures, and mmap() and munmap() round the length up to the
-page size themselves.
+malloc() adds the size of its header to the requested size without
+checking for overflow. For a size within the header size of SIZE_MAX,
+the sum wraps around to a few bytes, and malloc() returns a single page
+instead of NULL.
 
-Drop the rounding. As heap->len is no longer rounded up, growing a block
-with realloc() now always creates a new mapping.
+calloc() checks its multiplication for overflow, but then passes the
+product to malloc(), so calloc(SIZE_MAX, 1) returns a single page too.
+So does realloc(ptr, SIZE_MAX).
 
+Such a size is usually a bug in the caller, for instance a length of -1
+used as a size_t, and returning a page instead of NULL can turn it into
+a heap overflow.
+
+Fail with ENOMEM when adding the header overflows, as glibc does for
+sizes this large.
+
+Fixes: 0e0ff638400b ("tools/nolibc/stdlib: Implement `malloc()`, `calloc()`, `realloc()` and `free()`")
 Assisted-by: LLM
 Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Reviewed-by: Willy Tarreau <w@1wt.eu>
-Link: https://patch.msgid.link/20260926152414.251214-2-danishkhateeb03@gmail.com
+Link: https://patch.msgid.link/20260926152414.251214-3-danishkhateeb03@gmail.com
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Stable-dep-of: 2111eb4273e7 ("tools/nolibc: check for overflow in malloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdlib.h | 2 --
- 1 file changed, 2 deletions(-)
+ tools/include/nolibc/stdlib.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
-index 5be9d3c7435a8..5393f001267dc 100644
+index 5393f001267dc..c7832a31ed483 100644
 --- a/tools/include/nolibc/stdlib.h
 +++ b/tools/include/nolibc/stdlib.h
-@@ -132,9 +132,7 @@ void *malloc(size_t len)
+@@ -132,7 +132,11 @@ void *malloc(size_t len)
  {
  	struct nolibc_heap *heap;
  
--	/* Always allocate memory with size multiple of 4096. */
- 	len  = sizeof(*heap) + len;
--	len  = (len + 4095UL) & -4096UL;
+-	len  = sizeof(*heap) + len;
++	if (__builtin_expect(__builtin_add_overflow(len, sizeof(*heap), &len), 0)) {
++		SET_ERRNO(ENOMEM);
++		return NULL;
++	}
++
  	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
  		    -1, 0);
  	if (__builtin_expect(heap == MAP_FAILED, 0))
