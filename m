@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054527;
-	b=xAYhlUSsnIVRmXoSSwdZ5LXwkwc219TuDiV6PlrNSbN9c1f0G+vDG+FCW5yNDTiWiAWs
-	 uz7UQzbyCxZxSL/cxC2c+JojKNMYOSr23rGnmZQcIiNP6iizw+YLf8hqhW+PEVpxWy+P1
-	 O8OPZ51eQmPD0ynL2951zHBJNRuiOQy11Nak2YmfjKvECAuOkzyDSuDd5LyeBC96CfFFN
-	 0PfJ2GVTKJCsJY7wUlEFLOai8h4VwF6WuHeMxThTBqMxe/2Xh/2n2Kz0qBJ/V7MLDVIrC
-	 Gx1L0Gq9Mh6BE6OfdoUwwKDZb2Cf2Bg4NkGuzHHBgpMAcxfHZ0ubn85GFBDFb/PgoPw==
+	t=1795054530;
+	b=fueDWDqO2DXZjSaWBjESlfdE9m68/laOx7A8DCAvK3cLr9xb8JUGQ+4RxD1iAAvAXO5x
+	 5ifpO9jP1K1v2sltvCfVLSOiBerYHEfD2WR2QDFoOo0ONk9lREFrEbwbVTOEkuSsUWAMg
+	 xKR7BneNwaW3vGhXAe3ts+7qdoGVRT4csh/+WD9t2CKRvL7F2Xa+H11KCKUaejfl8bl3R
+	 9P9PsZ6liJUvguITKksLx3E6NCmabQuDfqqjDnQVMIf69/3V60sqN+NOmv7l09Y5xKwWQ
+	 iXDTIrONqeK9c1AeV8W7oZ3LfdltpCEMo7Z2L3KsZbejfW8dz7OTLSyoi4TjrYtIyeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=38pDBDvNrUXd7sljRx3qjGJGMW5Od3zubaWzltfz73o=;
-	b=i0ItgU6iHQt/g/2twj61vFEZYpza3Vs4ymt5f8R4n/HufdLzoajc6nYFVmH5sj4e8BMB
-	 GJDKMgTtRfres4YN8bOqFfqt8+Gg4Uad21STZkpyFtfZmkE78C71kasnLM5eubt98YN25
-	 pFJFkK6tlzj69rVRkl/9VF2KZGkLEK/PD6M67/shTUZRs66n0qCCxhUGP2TLFWjFpTEBp
-	 pXENY/ZbjmWvKL8anf0pRb0URznqh3IFp61VLiyGKQj8K9b0pkF9TmTM5M4lHCvEeF98T
-	 2B33Alivd0GoXCyUuAZ2gek/fbGppmwb4Opy9nGN2xWlpxckq+0B6GvZJYcdLTLCxLQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=T8GxcVGN/Ev7SBufUDyFvQtizghr6KMAVO0QlOHsnXI=;
+	b=WvQBp4KXZwO+faICLxked0qMkrdJZAggqtGmAkbDzGHVv4kAdcDcBojuvuISiOrYeItK
+	 945Udak5tbSJSYU7fyLL2B5Hbl+IHci5Zrqvn6yZYeRs6ZUdW0jLSm8AMWBpSwfPsxphK
+	 mRPr17B2DbrY2Zn9CflJ0/5pJMqGRk9ZjZzLyCw7D7FJyzZtSg+Jieziuv07Plw/geT8e
+	 lF37/jhR7KJKTGUOdwbUrPl9hm9QG+NlUkKYLuAyy8m1pwfyO/mRuq7uv9glHB7X8s2D4
+	 hzJiYrmqisyxdb9ittr+RBmO1RDuaPS3LpiYfm1vPol4s7CaPEP8OsDiPz6dNVKUdjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR8MF3bn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJFE1tbh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD2F606A31C;
-	Thu, 19 Nov 2026 02:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925A4606A31C;
+	Thu, 19 Nov 2026 02:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR8MF3bn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC8A1F000C4;
-	Thu, 19 Nov 2026 02:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJFE1tbh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51EF1F000C5;
+	Thu, 19 Nov 2026 02:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054527;
-	bh=38pDBDvNrUXd7sljRx3qjGJGMW5Od3zubaWzltfz73o=;
+	s=korg; t=1795054530;
+	bh=T8GxcVGN/Ev7SBufUDyFvQtizghr6KMAVO0QlOHsnXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pR8MF3bnptIvngvoPgvsJzJDMlPDBsb0mMu08xntCsg+LRpem5ydz1gLjrh5k75eE
-	 v6/qPYM7UqMEtlrH+u6kqugRojPKQkmTE7cRrmYu5F7ff22rL8HKXA4v/FcPnlqpbz
-	 vvpN5NrfMjxDHKx92sXQGhZIzP3AvJGrdVqJML7A=
+	b=PJFE1tbhihVhEvu/gT1kbYOSYxb0ELGhRMRbQFGNjxRN9VJWI8uQfARR35EUc53Jp
+	 tS1amOVC08PDwVM4XHNu5RZYfSlt64o6KERsDc/ma03DYbUqev6/AnfPQmWVh7hJDR
+	 KlT30njpoK+kGvHfiuqG/NNJwRhIgx3DAzSeRJbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	renpanpan <renpanpan@kylinos.cn>,
+	Lucas Tanure <lucas.tanure@neat.no>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1289/2214] drm/amdgpu: Only enable HDMI audio if display supports it
-Date: Wed, 18 Nov 2026 15:49:25 +0100
-Message-ID: <20261118150103.128986610@linuxfoundation.org>
+Subject: [PATCH 5.15 1307/2214] drm/vc4: hdmi: enable scrambling before the TMDS clock starts
+Date: Wed, 18 Nov 2026 15:49:43 +0100
+Message-ID: <20261118150103.781540977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,91 +62,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: renpanpan <renpanpan@kylinos.cn>
+From: Lucas Tanure <lucas.tanure@neat.no>
 
-[ Upstream commit 0de95c96655c8a12df62e47871016f49e5cd8618 ]
+[ Upstream commit 81383bd290a18f06ccf9b0bfb29e1a3ef73d9357 ]
 
-The amdgpu legacy DCE audio path (dce_v6/v8/v10) unconditionally calls
-audio_enable(pin, true) at the end of afmt_setmode(), regardless of
-whether the connected display advertises audio support in its EDID.
+HDMI 2.0 requires a source to suspend the TMDS clock, write the
+TMDS_Bit_Clock_Ratio bit in the sink's SCDC registers, wait at least
+1 ms and only then resume the clock. vc4 does the opposite: the PHY
+starts at the new rate first, and the SCDC bits are written tens of
+milliseconds later, at the very end of the enable sequence, together
+with the source side scrambler. On disable the bits are cleared while
+the clock is still running.
 
-This causes a phantom HDMI audio output to appear for displays that
-have no audio capability (no basic audio bit, no Audio Data Block in
-EDID), because the GPU sets the AUDIO_ENABLED register bit, which
-drives the HDA codec's ELDV pin sense, making the codec report the
-jack as audio-available.
+Some sinks sample the bit only when the clock appears. One HDMI 2.0
+sink we tested then sets up its receiver for a 1/10 clock and never
+recovers: a Raspberry Pi 5 at 3840x2160@60 shows no picture, while
+1080p60 and 4K30 work and other sources work at 4K60 on the same sink.
+Writing the bit by hand before enabling the output makes the same mode
+lock every time.
 
-The radeon, nouveau, and dw-hdmi drivers all gate audio enablement on
-display_info.has_audio. Apply the same check to amdgpu's DCE
-afmt_setmode functions.
+Enable scrambling, on the sink and in the controller, before the PHY is
+started, and disable it only after the PHY has been stopped. The SCDC
+helper already waits the required time after writing the ratio bit.
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: renpanpan <renpanpan@kylinos.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 842a45c68e0355eea47796551c8761c0c77e8ce0)
 Cc: stable@vger.kernel.org
-[ sashal: Replaced unavailable connector->display_info.has_audio checks with drm_detect_monitor_audio(amdgpu_connector_edid(connector)). ]
+Fixes: c85695a2016e ("drm/vc4: hdmi: Enable the scrambler")
+Link: https://github.com/raspberrypi/linux/issues/7693
+Assisted-by: LLM
+Signed-off-by: Lucas Tanure <lucas.tanure@neat.no>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patch.msgid.link/20261026164028.78792-4-lucas.tanure@neat.no
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+[ sashal: adjusted context around the scrambling calls for missing upstream locking, device guards, and newer hardware checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c | 5 +++--
- drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  | 5 +++--
- drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  | 5 +++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-index 0b872bc71b70d..d77daf89a9dd9 100644
---- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-@@ -1738,8 +1738,9 @@ static void dce_v10_0_afmt_setmode(struct drm_encoder *encoder,
- 	WREG32(mmAFMT_RAMP_CONTROL2 + dig->afmt->offset, 0x00000001);
- 	WREG32(mmAFMT_RAMP_CONTROL3 + dig->afmt->offset, 0x00000001);
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 9b540728b8fae..81b12b7c7a7d4 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -622,7 +622,6 @@ static void vc4_hdmi_encoder_post_crtc_disable(struct drm_encoder *encoder,
  
--	/* enable audio after to setting up hw */
--	dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
-+	/* Only enable audio if the display supports it */
-+	if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-+		dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
+ 	HDMI_WRITE(HDMI_VID_CTL,
+ 		   HDMI_READ(HDMI_VID_CTL) & ~VC4_HD_VID_CTL_ENABLE);
+-	vc4_hdmi_disable_scrambling(encoder);
  }
  
- static void dce_v10_0_afmt_enable(struct drm_encoder *encoder, bool enable)
-diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-index 5e21eb88b2e71..429c97751e5ca 100644
---- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-@@ -1702,8 +1702,9 @@ static void dce_v6_0_afmt_setmode(struct drm_encoder *encoder,
- 		dce_v6_0_audio_dp_enable(encoder, 1);
+ static void vc4_hdmi_encoder_post_crtc_powerdown(struct drm_encoder *encoder,
+@@ -637,6 +636,8 @@ static void vc4_hdmi_encoder_post_crtc_powerdown(struct drm_encoder *encoder,
+ 	if (vc4_hdmi->variant->phy_disable)
+ 		vc4_hdmi->variant->phy_disable(vc4_hdmi);
+ 
++	vc4_hdmi_disable_scrambling(encoder);
++
+ 	clk_disable_unprepare(vc4_hdmi->pixel_bvb_clock);
+ 	clk_disable_unprepare(vc4_hdmi->pixel_clock);
+ 
+@@ -976,6 +977,8 @@ static void vc4_hdmi_encoder_pre_crtc_configure(struct drm_encoder *encoder,
+ 		goto err_disable_pixel_clock;
  	}
  
--	/* enable audio after setting up hw */
--	dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
-+	/* Only enable audio if the display supports it */
-+	if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-+		dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
++	vc4_hdmi_enable_scrambling(encoder);
++
+ 	if (vc4_hdmi->variant->phy_init)
+ 		vc4_hdmi->variant->phy_init(vc4_hdmi, vc4_conn_state);
+ 
+@@ -1078,7 +1081,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
+ 	}
+ 
+ 	vc4_hdmi_recenter_fifo(vc4_hdmi);
+-	vc4_hdmi_enable_scrambling(encoder);
  }
  
- static void dce_v6_0_afmt_enable(struct drm_encoder *encoder, bool enable)
-diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-index f3b0642f9d9d2..dc72c04d9b7f7 100644
---- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-@@ -1667,8 +1667,9 @@ static void dce_v8_0_afmt_setmode(struct drm_encoder *encoder,
- 	WREG32(mmAFMT_RAMP_CONTROL2 + offset, 0x00000001);
- 	WREG32(mmAFMT_RAMP_CONTROL3 + offset, 0x00000001);
- 
--	/* enable audio after setting up hw */
--	dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
-+	/* Only enable audio if the display supports it */
-+	if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-+		dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
- }
- 
- static void dce_v8_0_afmt_enable(struct drm_encoder *encoder, bool enable)
+ static void vc4_hdmi_encoder_enable(struct drm_encoder *encoder)
 -- 
 2.53.0
 
