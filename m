@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048051;
-	b=tdSIE4WvWXf8Zi8NPTlX181oL17BNMpPvMfO0HkOmbPKUk6lkqMChS7KSWJ2IMOizuIO
-	 +j3ZzEaoTfFe25N8WLe3kv3tbB4JWX6+sP7Ce03m/ULY2wJYr/GbfMgnwFKnhkonqb2Op
-	 0R4Kyw2QyJbbpd6jt/iOJKBmXruxxzpKcJuHDq5Pt+PHHbT/+1A7mJlJgipzlLZ0Y5F8U
-	 0CFb+pDB7cxkoETfixB6wQX9aNyhLlXi3Kg5yZIaBdQboA6wFjIv5K2AyvoyrtP18kv0W
-	 4DJm3CtXUU0WLe+kI4lqstRaKk6gwvS+z66UReUl6nFrt+FpzpPu1s13VmHI7ktuvUA==
+	t=1795048054;
+	b=SpymT/hlgHVCWGKM/SNuE4PtHt/jBMO3pVsoCYY/MXPaIt8M6/PVCoFtY7WcM/neWvUF
+	 n5XVWAhe21Xr6vwd+CAdU4dnT23L3MuxRa+OTVwRAqnAqdR3L9d39buq3Gr+HkJZsxB/4
+	 n3klu0m5MuYAGTKDsQ2nLkYOQXWRAnlCovHu5RzR7u6sbN6r0+AkGRHRPbvcgv8j7fcaM
+	 PizNZeJgdHwjhlU/c/zWXtMfSCS6O2CIxsTTeFvgHbuUgLdrP9YqMIC+urxWBJDZL4WjW
+	 8VvF+3Oo5yQDihizWMUtitsAsZM7ehid00BG7duLzegta9Us1CqNLzWEtJqPJ1PAc2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gaWJuLQvPmlluz2jiYSU+/NQBgrLPJ6iVufbdDMpgSM=;
-	b=XXJk2tMRpy9Ovwv5ryBDcqmSp9hh2ex/DSCIYyHE1KysAlrCGERG7ji5pFWdHG4LhPF3
-	 A40ShJwl1+J+qurWqijUYgc9bL3c9EKpcw+dwkXXKX3tNTcamcrGiCnrqmOpSjRUubBmp
-	 gKmp9M81wB2tT3j08szsqMltDrW+TDTLVgz3xbDJnayTmur4ridHTUSeefRZyzP2UQqwu
-	 juUJqMaSDG5bPN3UJywP7zBhX17RIDFXbu2LvOcVxrRVB+JsIR+qyEePmts/kCaRwI8o6
-	 7XrHbtc2x4/eLtGcUsAlwiZPbzQkvJhxvQIFUfqznFyXRy1g32pL5MWQdiyJwjDHUEA==
+	bh=cbMOlzE88cqbClmoq3OHI5t9XiyHF+ZEcaD+Ai17cYc=;
+	b=Ni/p8J+UfhvF8293ALqECgj/mo0nlF/BRLf8PzcTpX2ce02vnvm/e0eSyBbZQR+MzPRr
+	 3cudIFk/hn/+YdQMVQWpzwECP/D7yuyMtANEvJ/ckZjDbN6Q873eU9JKE47EjKgaqXMWG
+	 ERUWkicJnJw6iQM6CnzWoxDZPE3kPqCYYw8OZHlUi7kKw7eJo5PQVkOjZv71ahk7tVqdV
+	 bhu/BpT6wElmbXpZBnFfWQkQ0wup/tpW6PY3cNVApWWHStFoJYGwOnfoviYKYQam2Ooos
+	 OknHyENju3A91m5DftwNHgFhh2Q1CLInq1b0v+9T/tSL1IVJM1bRHeF+r9dimVxMC7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvs7LJMP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqYRrOWv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D59D606A320;
-	Thu, 19 Nov 2026 00:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1583F606A325;
+	Thu, 19 Nov 2026 00:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvs7LJMP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28E41F000C4;
-	Thu, 19 Nov 2026 00:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqYRrOWv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692841F000C4;
+	Thu, 19 Nov 2026 00:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048051;
-	bh=gaWJuLQvPmlluz2jiYSU+/NQBgrLPJ6iVufbdDMpgSM=;
+	s=korg; t=1795048053;
+	bh=cbMOlzE88cqbClmoq3OHI5t9XiyHF+ZEcaD+Ai17cYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvs7LJMPfz64oOPt8GP6HbOcBPE2lEAJwh6t30Xea5xahDaVu8xl0TRLTyq17ImKU
-	 ar42EH/ENwy1c9RROS1GAsZ9GYp37UDVWU3b7ijmWlkvjcARpOrNLdgGTwS0HW4jLD
-	 s7Oc0oMDt4B9d1G8Z6KDvCaxfYH+jHunF52ox8yI=
+	b=vqYRrOWvOqD3GKsvhdqxwSMxoREcW9qrd1Pct7i4s9Pwd7jxXa9L461be1Lg1x3cV
+	 N2YKGgaRyH7TvBpW7jAghf5fxCUoxz32E7huKwhH+FNEn3/GeAH231XuMKlW8ZFF5B
+	 HFwVVuOCt38bHXbYK3tiTjXAPRah5bjEICoTPrFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1855/2857] scsi: mpi3mr: Fix target device reference leak in device removal handshake
-Date: Wed, 18 Nov 2026 15:48:09 +0100
-Message-ID: <20261118150308.031757560@linuxfoundation.org>
+Subject: [PATCH 6.1 1818/2857] ASoC: mediatek: mt6797: fix wrong unwind order and error code in enable_clock
+Date: Wed, 18 Nov 2026 15:47:32 +0100
+Message-ID: <20261118150306.727361975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,38 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit a04b0f3a17e32aa449fd896163a7b40efc29c4f5 ]
+[ Upstream commit e967d479b65c778cd2394ab185e289beefcf996d ]
 
-The device removal handshake looks up the target device to update its state
-but never drops the reference that the lookup takes.
+The error paths in mt6797_afe_enable_clock() use incorrect goto labels,
+causing clocks that failed to enable to be disabled during cleanup.
 
-Drop it once the state has been updated.
+Fix the goto labels to only unwind clocks that were successfully
+enabled, and return the actual error code.
 
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-10-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: c5e7fca928d3 ("ASoC: mt6797: add structure define and clock control function for 6797")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260821122840.41266-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/mediatek/mt6797/mt6797-afe-clk.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 6efedf26ade18..6a19af5e66495 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2268,6 +2268,9 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
- 		tgtdev->state = MPI3MR_DEV_REMOVE_HS_STARTED;
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
+diff --git a/sound/soc/mediatek/mt6797/mt6797-afe-clk.c b/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
+index 6f3e6acfcfab2..0ac04d73b7772 100644
+--- a/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
++++ b/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
+@@ -63,21 +63,21 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_INFRA_SYS_AUD], ret);
+-		goto CLK_INFRA_SYS_AUDIO_ERR;
++		return ret;
+ 	}
  
-+	if (tgtdev)
-+		mpi3mr_tgtdev_put(tgtdev);
-+
- 	if (drv_cmd)
- 		goto issue_cmd;
- 	do {
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_INFRA_SYS_AUD_26M]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_INFRA_SYS_AUD_26M], ret);
+-		goto CLK_INFRA_SYS_AUD_26M_ERR;
++		goto CLK_INFRA_SYS_AUDIO_ERR;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_TOP_MUX_AUD]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_TOP_MUX_AUD], ret);
+-		goto CLK_MUX_AUDIO_ERR;
++		goto CLK_INFRA_SYS_AUD_26M_ERR;
+ 	}
+ 
+ 	ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD],
+@@ -93,13 +93,11 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_TOP_MUX_AUD_BUS], ret);
+-		goto CLK_MUX_AUDIO_INTBUS_ERR;
++		goto CLK_MUX_AUDIO_ERR;
+ 	}
+ 
+-	return ret;
++	return 0;
+ 
+-CLK_MUX_AUDIO_INTBUS_ERR:
+-	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_BUS]);
+ CLK_MUX_AUDIO_ERR:
+ 	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD]);
+ CLK_INFRA_SYS_AUD_26M_ERR:
+@@ -107,7 +105,7 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
+ CLK_INFRA_SYS_AUDIO_ERR:
+ 	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_SYS_AUD]);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int mt6797_afe_disable_clock(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
