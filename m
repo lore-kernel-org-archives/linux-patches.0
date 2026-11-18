@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015105;
-	b=DUt4RylHu/3HBdGwnZ5eBZBow+Ns8aD2Px05pw3nzVn/46YDbZq0M99t30cCnrdQLDSm
-	 hkftEVP+XrUA7QEwHhXA89Oc2P890WwZWm4SmPFk1zVexNUCJyt9ZDttk3/W/WQe0HxTo
-	 POxKfComH5OjkvfqLBsMs67uJE1JO0er2m3TMbMlqftCyDmpw23PwIRwwi/ZJ1qGS3/CM
-	 1hSCYMxCQVmC5ub9WlkybVw9PT0R0ogS3TBL+lc96cSvRwn/5TKP2JcqBWfERRpiClQ8y
-	 30323Yb3YuuYLCsCS82F9Sc71DKH5apQSIDxxcb16ETUx4GnN4jCcWE18g7IxPe51tw==
+	t=1795015107;
+	b=Uu7NebidsJDkjVcQBxo+Bam5xUwbdBA7NQgjbM4w1zK5rHlv3r+NSwb71ww+0ObhtYu9
+	 FMGFJNkE0u4uiZW47jXbrB4qcMAt/5+ahXRqEU5TGoWb0F3/ZzEOv1vTgUkttQVf6VSNZ
+	 Pnh8Tg8SPRkLfjqtcAPEc3yttZL1H/I7o8+jYVj2mAT/rGtFn4qlx/GvXcmvobSnH9B5N
+	 sGuLD0i21k4UrH0xefrVxlfUqb645svSThO8em7Bqlf2wSPna182BpZJi5W1BlvDYd2av
+	 NbLjke7PgD1ZW6ykQBstfukLblqRDfYvvy4znW4E75Q901EAeH0pV+0mqJf6OiftLqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FwKRr1xitwnURM8oArG00wL5ffGCxTW5QlWUygyshQA=;
-	b=kVhCNJYuHi0tX73nnMBRFdIkCtDtPzp4mcvK1O1P0fbtNge7zikyso+e22DpAKaCyOX3
-	 JBHXoSBItzvxUmeXMDVBGnmo2JRfcTh6ge2ZDNFmfON64TlRjD3VDvBkxiPAUqud86y9E
-	 T1SM4zA+OG0QWRVTz8q8RFs7OwTmZYdToLBp3bGwtDEQCndSeHHiPUKkwwyIeMbbnwbHr
-	 nOXTqyCR0eaRPRFfXA9ncrwdBI8YxT1uvLBSVFskH/B2k5/+MNP+VIqWBUcQtTcgZ+Gui
-	 ChkvIxmtXbe8+zej1sHi7UXSYqNc6alp895dzUTtkMPzhigfWxgC61r2EyP3OGSJ/rQ==
+	bh=BAD0cOWaisgsWrHfWx1derTSrSezsIUh/m2kilUKT/U=;
+	b=QHxtSTdyA45NiknyJFKIlhNagSH3HQ3i8GG6cC1nHAY8uUfn1+CKoMIubr68juhBG4bV
+	 L/EG0MkURg6J+XX+PdRQ0leSQxVQjHI95X63HCCM7/CSCxYmov/ornqKV0LY8AeReS9FK
+	 TFpqqQpQOrXxhIoV3PQ29z08x/UTVei5ceUDunrjKZCf40TLxlBCifjup4pirCmrjQqoJ
+	 p29l47wsEWGUGW0ah848deHovuo+Jyth5Z6sZYwSrvky33PNHhWGu2UWR61SVRyZV31/L
+	 VUdibGEpDU8GhQjjwBtW1rxuPtTu54yAC1SyVhU23gMECfl6m3pw5/TNU9g5yxm+pqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ar6XZCSa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F1PpMVyi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B0D606A32C;
-	Wed, 18 Nov 2026 15:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D54660A2631;
+	Wed, 18 Nov 2026 15:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ar6XZCSa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125571F000D0;
-	Wed, 18 Nov 2026 15:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F1PpMVyi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5C91F000C7;
+	Wed, 18 Nov 2026 15:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015104;
-	bh=FwKRr1xitwnURM8oArG00wL5ffGCxTW5QlWUygyshQA=;
+	s=korg; t=1795015107;
+	bh=BAD0cOWaisgsWrHfWx1derTSrSezsIUh/m2kilUKT/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ar6XZCSa89yQPh3B3cVMViUVVrSi0WQCouSTSAiShDwXHnKnrbr9wO5HHNv68OKh3
-	 YCkw+Ml4xTKY0b+2GdPuIcJIONDWySvK6oHk6PrqYOPGpw878m8UfRb1M3XZWm7NNW
-	 dNLLgYeRPqR+QdzWp+5ozLbrz6urhJE8xIndKWM4=
+	b=F1PpMVyisiTdyhtZkGpD7yL4C6LijE/V5Px07wSMUnglcGWDSbexfwNAqnOw9U8IL
+	 AAXI5zcd/yEzjs5qRUGdyJnaEtXatA4nSgVOgnSu31g5HkAjC6IVwEUKuJCaRdIJBB
+	 lsZC6F8wK1/pw9digoqOq3/NNF6al1MdYapi8Z8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raveendra Talabattula <raveendra.talabattula@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Sonny Jiang <sonny.jiang@amd.com>,
+	Boyuan Zhang <Boyuan.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0054/2651] drm/komeda: Fix bits parsing of GLB_CORE_ID
-Date: Wed, 18 Nov 2026 15:21:34 +0100
-Message-ID: <20261118150249.898289595@linuxfoundation.org>
+Subject: [PATCH 7.3 0028/2651] drm/amdgpu: Correct VCN V5_0_2 doorbell index setting
+Date: Wed, 18 Nov 2026 15:21:08 +0100
+Message-ID: <20261118150248.989778541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,55 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raveendra Talabattula <raveendra.talabattula@arm.com>
+From: Sonny Jiang <sonny.jiang@amd.com>
 
-[ Upstream commit ec902de0221747094f9ccbb61454e9633fbf282f ]
+[ Upstream commit 66421e37897ddd29c03a3290cd559f7c72622f80 ]
 
-GLB_CORE_ID contains the product and version information returned by the
-hardware. The current macros parses VERSION_MINOR as a 4-bit field and
-VERSION_STATUS as an 8-bit field, which does not match the register
-layout. As a result, the driver reports an incorrect version number.
+Each VCN 5.0.2 instance has 11 doorbells. Use an 11-doorbell when
+calculating the per-instance VCN ring doorbell index.
 
-Fix the parsing macros to match the hardware specification:
-- VERSION_MINOR is 8 bits at [11:4]
-- VERSION_STATUS is 4 bits at [3:0]
-
-Fixes: bd628c1bed79 ("drm/komeda: komeda_dev/pipeline/component definition and initialzation")
-Signed-off-by: Raveendra Talabattula <raveendra.talabattula@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260803142122.4127851-2-raveendra.talabattula@arm.com
+Signed-off-by: Sonny Jiang <sonny.jiang@amd.com>
+Reviewed-by: Boyuan Zhang <Boyuan.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: a56c2536c399 ("drm/amdgpu: cancel idle work in hw_init failure paths for vcn/uvd/vce/jpeg")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/include/malidp_product.h | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/arm/display/include/malidp_product.h b/drivers/gpu/drm/arm/display/include/malidp_product.h
-index 6f954bcdf40ea..f9a3ee7ba4b75 100644
---- a/drivers/gpu/drm/arm/display/include/malidp_product.h
-+++ b/drivers/gpu/drm/arm/display/include/malidp_product.h
-@@ -8,14 +8,18 @@
- #define _MALIDP_PRODUCT_H_
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
+index b9f6ae75ea727..5291ebbc5c3e2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
+@@ -129,7 +129,7 @@ static int vcn_v5_0_2_sw_init(struct amdgpu_ip_block *ip_block)
+ 		ring->use_doorbell = true;
  
- /* Product identification */
-+/* GLB_CORE_ID fields as per HW specification:
-+ * MINOR is 8 bits ([11:4]) and STATUS is 4 bits ([3:0]).
-+ * Update masks/shifts accordingly.
-+ */
- #define MALIDP_CORE_ID(__product, __major, __minor, __status) \
- 	((((__product) & 0xFFFF) << 16) | (((__major) & 0xF) << 12) | \
--	(((__minor) & 0xF) << 8) | ((__status) & 0xFF))
-+	(((__minor) & 0xFF) << 4) | ((__status) & 0xF))
+ 		ring->doorbell_index =
+-			(adev->doorbell_index.vcn.vcn_ring0_1 << 1) + 32 * vcn_inst;
++			(adev->doorbell_index.vcn.vcn_ring0_1 << 1) + 11 * vcn_inst;
  
- #define MALIDP_CORE_ID_PRODUCT_ID(__core_id) ((__u32)(__core_id) >> 16)
- #define MALIDP_CORE_ID_MAJOR(__core_id)      (((__u32)(__core_id) >> 12) & 0xF)
--#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >> 8) & 0xF)
--#define MALIDP_CORE_ID_STATUS(__core_id)     (((__u32)(__core_id)) & 0xFF)
-+#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >>  4) & 0xFF)
-+#define MALIDP_CORE_ID_STATUS(__core_id)     ((__u32)(__core_id) & 0xF)
- 
- /* Mali-display product IDs */
- #define MALIDP_D71_PRODUCT_ID	0x0071
+ 		ring->vm_hub = AMDGPU_MMHUB0(adev->vcn.inst[i].aid_id);
+ 		sprintf(ring->name, "vcn_unified_%d", adev->vcn.inst[i].aid_id);
 -- 
 2.53.0
 
