@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015185;
-	b=xLH3oed0t2CWkR53RPwVI7hOohw4mO+DT05mM+QrAPHRDaHUH+iBXLKbp7Grljh0H0LE
-	 GhOL0TsnsDouCYrxLWOaFw5StAJe7lPkc8mEIZIJ5gkjgLCchtI+Gm8J89qP6ZkejLx2e
-	 YgISktl3kGlYoTN2+Nvk/mT9i8iGMfCT02e9lGlkyebhQ8c3TgSOkymhvzfc6FeYPI2b6
-	 CeAXUv029CIL/BNeCVvqIDIby+AGEf1SzLhK7X/KvV+lik1gwUL83AjlEx1WcQj/3+qOl
-	 /6KBo3xPMMghUsZLyI9FrKLA+T7HQbdjENMnWpXfwFlDt3iM1ccuFAYLgaw5DM2koow==
+	t=1795015188;
+	b=3p0u0DNlP1/x2QDGyj2pP6uDoMhaBGmTLdr9cLQwa/16FrM+UJnxIV3uJzlB0BXzZpYm
+	 h1rW7z9M90YEY14xVlN60hjmRdKsNHxt1uVpp4DmAVjx2YesW2Z4gmiZ68vyzd1jpQLVL
+	 yOGkvZCLh+qsb84MY6AL4Y2YhB/GlkQm7iESatTjnRbqCDqbII61TpPPKNTk2q2ZDqBp0
+	 58i4S3eBK5/2wpzCEUqgdc4PtXaCFYyX6Sf+Mx+a/7kmO8g5wohYY0XP1fOgqF2j37OWd
+	 GY1wugaYBhiJKHC803HOdGWtUwOk03sI2GcoM2jmfBRHuK4q0ZdLyODoGxUu4yTmuqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gVn42sWGLpUNBpzrQBcICepVpBtXSxGl0iEkgDw+vS8=;
-	b=E4F5Vp9AvYVxONxOT1Ar6m0TpniYsTfz0QF9vTQVYD+S4kYp1shqUa/HzMkpKmaju79p
-	 TxVgIjIlriS5s989sGfwrHNW4LCCDc9HGBMOpzTCO9CSi5iou52bsY/UrWlmXSvhLSBRM
-	 L0zjZg4K3SMcnDwatq4glcjV4yASP7xfAlJq06vfQVZSuT2hXItw5xATSjRpeAImcmeXU
-	 ZNtlTYONj30cdPXwIEWB3Jv5pjKUQMsMbeKHHwaF1inWD9H24lcAVJdx8LEm0I8KJ5wiB
-	 0+I8dWEGpx1pRcl4XCN0Kbp6qwKlA0WnFYsHwaTxuSAowlgNmnN/xltdyZ/gylLsa5A==
+	bh=Hf2oc9xLjoT/SjDGEKrllnp2Xp5h9TiaGvrrj8anbjY=;
+	b=kcd8MgWpx7H4XWBUs4yoSQOiEJ5Lgog5FwrId4QroT4c7fPprBn86YwylKpONEYMrNd4
+	 Vp8GGPuCwe8UWLOWvq89Qd2gAmqh5+hrHnIxcVef+dZD9j+15DZ97aees9H0ex5AObuY0
+	 w3SNM+Z9gH3+IbOhPkwtQ8m43MrhPR62F8x4oEmQQAdRyWPVCy8ZDjVXN153qH7a/+fI5
+	 lI+OtDsEO8hrobVbWEccpYHSOUiZfzp6b3tt5YS5yXu58LWLQYmH60wWLJO/C1Kf/QF/6
+	 +y5yNGopX0IydzPrHxrZ9fpzQ9Afw3TFQwtPoF+MJTKs2LAntqMBPz0p5wcgyWUrCtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QM4gbBsU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Of0YYo4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5722B60A2612;
-	Wed, 18 Nov 2026 15:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD8460A2612;
+	Wed, 18 Nov 2026 15:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QM4gbBsU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648331F000C6;
-	Wed, 18 Nov 2026 15:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Of0YYo4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323111F000C5;
+	Wed, 18 Nov 2026 15:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015184;
-	bh=gVn42sWGLpUNBpzrQBcICepVpBtXSxGl0iEkgDw+vS8=;
+	s=korg; t=1795015187;
+	bh=Hf2oc9xLjoT/SjDGEKrllnp2Xp5h9TiaGvrrj8anbjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QM4gbBsUdN65Sw1g35+IXhOEBJdR+YKmNpvZ9Ci1NAsA5+qTy3bXGwRmllo3mrxOf
-	 fuaN87/lj1yZjAljhlM2fRK7MIw6nx5ovKgMS8mhKR3xoRKrO8Ibc3z1cCNh1OGv0l
-	 OIe3nl8Axt9/WHuPhvNPfcGsfX6Dwmom64LVLYKs=
+	b=0Of0YYo4vkY0T7jVlNAmfwFVWc5SqHu5lVjCFWzkXb20xz6bXn2CmVNXhRqynGDnk
+	 99tP4OmZJeAAlUTboD+S91rlfZLihIUt6+YZrRvLARfa2DO7TRKBsod7YopmfqXCL3
+	 RbDKh1yOgCBjCnyetSD2a/x1KyRZWhrmPwa4mAOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Riana Tauro <riana.tauro@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0084/2651] selftests/bpf: Avoid flaky resize value test for percpu data
-Date: Wed, 18 Nov 2026 15:22:04 +0100
-Message-ID: <20261118150250.937991438@linuxfoundation.org>
+Subject: [PATCH 7.3 0085/2651] drm/ras: Cancel and free message on get counter failure
+Date: Wed, 18 Nov 2026 15:22:05 +0100
+Message-ID: <20261118150250.972617767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,237 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 5e875ae9e9ffd5c76c6bdf8982f99de340dd46af ]
+[ Upstream commit 9cc19bb8f2f6886392b9185b96bbef91b2f1a50f ]
 
-The bpf_map__set_value_size() test for percpu data relies on the tail
-'cpu_id' field in the ".percpu" map. The test would fail, when 'cpu_id' is
-not the last field in the map.
+doit_reply_value() directly returns on get counter failure, which results
+in stale sk_buff and genetlink header that aren't cleaned up. Fix it and
+while at it, consolidate error handling using goto.
 
-To avoid the flaky test, factor out a subtest to use a dedicated
-".percpu.arr" map that only has one field 'int arr[1]'. And, skip the
-subtest when fail to load skel with errno E2BIG and the new value size is
-larger than ALIGN(32KiB, PAGE_SIZE).
-
-And, drop 'args' in test_percpu_data_on_cpus(), which isn't used in bpf
-prog side.
-
-And, enhance the test to cover 'set' and 'nums[6]'.
-
-Fixes: 4c9241bd731a ("selftests/bpf: Add tests to verify global percpu data")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260826145613.34182-1-leon.hwang@linux.dev
+Fixes: c36218dc49f5 ("drm/ras: Introduce the DRM RAS infrastructure over generic netlink")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Riana Tauro <riana.tauro@intel.com>
+Link: https://patch.msgid.link/20260818135304.497098-2-raag.jadav@intel.com
+Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/global_data_init.c         | 96 ++++++++++++++-----
- .../bpf/progs/test_global_percpu_data.c       | 10 +-
- 2 files changed, 80 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/drm_ras.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/global_data_init.c b/tools/testing/selftests/bpf/prog_tests/global_data_init.c
-index 5671c31085cd1..7c539cbcf3a1e 100644
---- a/tools/testing/selftests/bpf/prog_tests/global_data_init.c
-+++ b/tools/testing/selftests/bpf/prog_tests/global_data_init.c
-@@ -68,12 +68,9 @@ static void test_percpu_data_on_cpus(struct bpf_map *map, int map_fd, int prog_f
- {
- 	struct test_global_percpu_data__percpu *data = NULL;
- 	int i, err, key = 0, num_online, run = 0;
--	__u64 args[2] = {0x1234ULL, 0x5678ULL};
- 	size_t data_sz;
- 	bool *online;
- 	LIBBPF_OPTS(bpf_test_run_opts, topts,
--		    .ctx_in = args,
--		    .ctx_size_in = sizeof(args),
- 		    .flags = BPF_F_TEST_RUN_ON_CPU,
- 	);
+diff --git a/drivers/gpu/drm/drm_ras.c b/drivers/gpu/drm/drm_ras.c
+index d6eab29a1394c..467a169026fc1 100644
+--- a/drivers/gpu/drm/drm_ras.c
++++ b/drivers/gpu/drm/drm_ras.c
+@@ -201,25 +201,28 @@ static int doit_reply_value(struct genl_info *info, u32 node_id,
  
-@@ -81,7 +78,7 @@ static void test_percpu_data_on_cpus(struct bpf_map *map, int map_fd, int prog_f
- 	if (!ASSERT_OK(err, "parse_cpu_mask_file"))
- 		return;
+ 	hdr = genlmsg_iput(msg, info);
+ 	if (!hdr) {
+-		nlmsg_free(msg);
+-		return -EMSGSIZE;
++		ret = -EMSGSIZE;
++		goto free_msg;
+ 	}
  
--	data_sz = map ? bpf_map__value_size(map) : sizeof(*data);
-+	data_sz = sizeof(*data);
- 	data = calloc(1, data_sz);
- 	if (!ASSERT_OK_PTR(data, "calloc percpu data"))
- 		goto out;
-@@ -109,7 +106,7 @@ static void test_percpu_data_on_cpus(struct bpf_map *map, int map_fd, int prog_f
- 			break;
+ 	ret = get_node_error_counter(node_id, error_id,
+ 				     &error_name, &value);
+ 	if (ret)
+-		return ret;
++		goto cancel_msg;
  
- 		ASSERT_EQ(*runp, ++run, "run");
--		ASSERT_EQ(data->cpu_id[0], i, "cpu_id");
-+		ASSERT_EQ(data->cpu_id, i, "cpu_id");
- 		ASSERT_EQ(data->data, 1, "data");
- 		ASSERT_TRUE(data->set, "set");
- 		ASSERT_EQ(data->nums[6], 0xc0de, "nums[6]");
-@@ -127,7 +124,6 @@ static void test_global_percpu_data_init(void)
- {
- 	struct test_global_percpu_data__percpu init_value = {};
- 	struct test_global_percpu_data__percpu *init_data;
--	const __u32 desired_sz = sysconf(_SC_PAGE_SIZE);
- 	struct test_global_percpu_data *skel = NULL;
- 	size_t init_data_sz;
- 	struct bpf_map *map;
-@@ -163,9 +159,11 @@ static void test_global_percpu_data_init(void)
- 	if (!ASSERT_EQ(bpf_map__type(map), BPF_MAP_TYPE_PERCPU_ARRAY, "bpf_map__type"))
- 		goto out;
+ 	ret = msg_reply_value(msg, error_id, error_name, value);
+-	if (ret) {
+-		genlmsg_cancel(msg, hdr);
+-		nlmsg_free(msg);
+-		return ret;
+-	}
++	if (ret)
++		goto cancel_msg;
  
-+	init_value.set = 1;
- 	init_value.data = 2;
- 	init_value.nums[6] = -1;
- 	init_value.struct_data.i = 2;
-+	init_value.struct_data.set = 1;
- 	init_value.struct_data.nums[6] = -1;
- 	err = bpf_map__set_initial_value(map, &init_value, sizeof(init_value));
- 	if (!ASSERT_OK(err, "bpf_map__set_initial_value"))
-@@ -177,35 +175,24 @@ static void test_global_percpu_data_init(void)
+ 	genlmsg_end(msg, hdr);
  
- 	ASSERT_EQ(init_data->data, init_value.data, "init_value data");
- 	ASSERT_EQ(init_data->set, init_value.set, "init_value set");
-+	ASSERT_EQ(init_data->nums[6], init_value.nums[6], "init_value nums[6]");
- 	ASSERT_EQ(init_data->struct_data.i, init_value.struct_data.i, "init_value struct_data.i");
-+	ASSERT_EQ(init_data->struct_data.set, init_value.struct_data.set,
-+		  "init_value struct_data.set");
- 	ASSERT_EQ(init_data->struct_data.nums[6], init_value.struct_data.nums[6],
- 		  "init_value struct_data.nums[6]");
- 	ASSERT_EQ(init_data_sz, sizeof(init_value), "init_value size");
- 	ASSERT_EQ((void *) init_data, (void *) skel->percpu, "skel->percpu eq init_data");
- 	ASSERT_EQ(skel->percpu->data, init_value.data, "skel->percpu->data");
- 	ASSERT_EQ(skel->percpu->set, init_value.set, "skel->percpu->set");
-+	ASSERT_EQ(skel->percpu->nums[6], init_value.nums[6], "skel->percpu->nums[6]");
- 	ASSERT_EQ(skel->percpu->struct_data.i, init_value.struct_data.i,
- 		  "skel->percpu->struct_data.i");
-+	ASSERT_EQ(skel->percpu->struct_data.set, init_value.struct_data.set,
-+		  "skel->percpu->struct_data.set");
- 	ASSERT_EQ(skel->percpu->struct_data.nums[6], init_value.struct_data.nums[6],
- 		  "skel->percpu->struct_data.nums[6]");
- 
--	ASSERT_GT(desired_sz, sizeof(init_value), "desired_sz");
--	err = bpf_map__set_value_size(map, desired_sz);
--	if (!ASSERT_OK(err, "bpf_map__set_value_size"))
--		goto out;
--	if (!ASSERT_EQ(bpf_map__value_size(map), desired_sz, "percpu value size"))
--		goto out;
--	if (!ASSERT_NEQ(bpf_map__btf_value_type_id(map), 0, "percpu BTF value type"))
--		goto out;
--
--	init_data = bpf_map__initial_value(map, &init_data_sz);
--	if (!ASSERT_OK_PTR(init_data, "resized bpf_map__initial_value"))
--		goto out;
--	if (!ASSERT_EQ(init_data_sz, desired_sz, "resized initial value size"))
--		goto out;
--	if (!ASSERT_EQ(init_data->data, init_value.data, "resized initial value data"))
--		goto out;
--
- 	err = test_global_percpu_data__load(skel);
- 	if (!ASSERT_OK(err, "test_global_percpu_data__load"))
- 		goto out;
-@@ -236,6 +223,67 @@ static void test_global_percpu_data_lskel(void)
- 	test_global_percpu_data_lskel__destroy(lskel);
+ 	return genlmsg_reply(msg, info);
++
++cancel_msg:
++	genlmsg_cancel(msg, hdr);
++free_msg:
++	nlmsg_free(msg);
++	return ret;
  }
  
-+#define PCPU_MIN_UNIT_SIZE (32 << 10)
-+
-+static void test_global_percpu_data_map_resize(void)
-+{
-+	const __u32 page_size = sysconf(_SC_PAGE_SIZE);
-+	const __u32 pcpu_max_value_size = ALIGN(PCPU_MIN_UNIT_SIZE, page_size);
-+	const __u32 desired_sz = page_size * 2;
-+	struct test_global_percpu_data *skel;
-+	const int arr_value = -1;
-+	struct bpf_map *map;
-+	int err, prog_fd;
-+	size_t data_sz;
-+
-+	skel = test_global_percpu_data__open();
-+	if (!ASSERT_OK_PTR(skel, "test_global_percpu_data__open"))
-+		return;
-+
-+	map = skel->maps.percpu_arr;
-+	skel->percpu_arr->arr[0] = arr_value;
-+	err = bpf_map__set_value_size(map, desired_sz);
-+	if (!ASSERT_OK(err, "bpf_map__set_value_size"))
-+		goto out;
-+	if (!ASSERT_EQ(bpf_map__value_size(map), desired_sz, "bpf_map__value_size"))
-+		goto out;
-+	if (!ASSERT_NEQ(bpf_map__btf_value_type_id(map), 0, "bpf_map__btf_value_type_id"))
-+		goto out;
-+
-+	skel->percpu_arr = bpf_map__initial_value(map, &data_sz);
-+	if (!ASSERT_EQ(data_sz, desired_sz, "data_sz"))
-+		goto out;
-+	if (!ASSERT_OK_PTR(skel->percpu_arr, "skel->percpu_arr"))
-+		goto out;
-+	if (!ASSERT_EQ(skel->percpu_arr->arr[0], arr_value, "arr[0]"))
-+		goto out;
-+
-+	err = test_global_percpu_data__load(skel);
-+	if (bpf_map__value_size(map) > pcpu_max_value_size) {
-+		if (ASSERT_EQ(err, -E2BIG, "test_global_percpu_data__load E2BIG"))
-+			/*
-+			 * When the PAGE_SIZE is 64KiB, the new value size will
-+			 * be 128KiB. Creating a percpu_array map with the new
-+			 * value size will fail with -E2BIG due to percpu_array
-+			 * map value size limit 64KiB, which is calculated by
-+			 * PFN_ALIGN(32KiB).
-+			 * Let's skip the test for such case.
-+			 */
-+			test__skip();
-+		goto out;
-+	}
-+	if (!ASSERT_OK(err, "test_global_percpu_data__load"))
-+		goto out;
-+
-+	map = skel->maps.percpu;
-+	prog_fd = bpf_program__fd(skel->progs.update_percpu_data);
-+	test_percpu_data_on_cpus(map, bpf_map__fd(map), prog_fd, &skel->bss->run);
-+	ASSERT_EQ(skel->bss->arr_sum, arr_value * skel->bss->run, "arr_sum");
-+
-+out:
-+	test_global_percpu_data__destroy(skel);
-+}
-+
- static int create_rdonly_percpu_array(void)
- {
- 	LIBBPF_OPTS(bpf_map_create_opts, map_opts,
-@@ -388,6 +436,8 @@ void test_global_percpu_data(void)
- 		test_global_percpu_data_init();
- 	if (test__start_subtest("lskel"))
- 		test_global_percpu_data_lskel();
-+	if (test__start_subtest("map_resize"))
-+		test_global_percpu_data_map_resize();
- 	if (test__start_subtest("rdonly_direct_read"))
- 		test_global_percpu_data_rdonly_direct_read();
- 	if (test__start_subtest("rdonly_direct_write"))
-diff --git a/tools/testing/selftests/bpf/progs/test_global_percpu_data.c b/tools/testing/selftests/bpf/progs/test_global_percpu_data.c
-index 5dc21b3b4cb59..2765cd46e9af0 100644
---- a/tools/testing/selftests/bpf/progs/test_global_percpu_data.c
-+++ b/tools/testing/selftests/bpf/progs/test_global_percpu_data.c
-@@ -8,9 +8,12 @@ int loong SEC(".percpu.looooooooong");
- int data3 SEC(".data.percpu");
- int data2 SEC(".percpu.data");
- 
-+/* Used for testing bpf_map__set_value_size(). */
-+int arr[1] SEC(".percpu.arr");
-+int arr_sum;
-+
- int run;
--/* cpu_id as array to verify map value resizing. */
--int cpu_id[1] SEC(".percpu");
-+int cpu_id SEC(".percpu");
- int data SEC(".percpu") = -1;
- int nums[7] SEC(".percpu");
- bool set SEC(".percpu") = false;
-@@ -34,7 +37,8 @@ int update_percpu_data(void *ctx)
- 	data = 1;
- 	run++;
- 	set = true;
--	cpu_id[0] = bpf_get_smp_processor_id();
-+	cpu_id = bpf_get_smp_processor_id();
-+	arr_sum += arr[0];
- 	return 0;
- }
- 
+ /**
 -- 
 2.53.0
 
