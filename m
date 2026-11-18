@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045586;
-	b=UdMo7fOUFuomda/4pZCM6eWcoCEHZ0EZ2PBJYhG2ThiC+PQAW/2yPCgHAokBPXUq/MoJ
-	 ev+J/gGLYJ0rzgtf/YLzgAHFhQh8Dr0XRPcGK2DYbIn/R6ooPkEyxmpr7QK7CQvtsKWYH
-	 HEVaqjSP5nmV0kfBESZgfL0cRRbYzR5i50SOpvOSH50hxixxCPmSr0kY6oiAC0/AnYg9T
-	 0dbNmM/C9rk1k1rcwSHpJ9lKrhdxWNVimtn6EluEuubtnEWK1YEmgnkh/UOSmgBHIG6TZ
-	 5Tg65ZVeykApPVw4ODKRhS7zqBvYpvq3yczfKm/sAhLj1p8NoY9IwBNHMfINYT0crCQ==
+	t=1795045589;
+	b=Iqfb422doEDtNy7OGqZxIAi9J3U2QnomXn288KeQ7tXB2bV+M6n6vyfjsYSOdA9EC0M7
+	 mRRepV5zUUEIcI8Xbp75Eo0zk3Y57KgR5a6+MgSZ5HaFA1BDw56cnPSvF4O/m5TcVVq2g
+	 gFqm5p5n8O2N2ezz+8EYHaCn+JU0Ds+JGD5CNX8j+yeS9xD9F1sKDzymbFbjy5wzISCBE
+	 piomRlDkAiZyf1ZXxrMt7ayDx6NHWaV/X/GrCDL9EOxzVuxyBr8VTi3LyeC9APTHctJSb
+	 j/GC877pOIt5+DLAA2kz04zVrm6vUlaSmQw+Qa7CjJiiK8Sq6J/s0ZsrkjvkUUBUaTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045589;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rrl4hHqGZ1x7jww71Ipo35xqtJfAPWvfq2JV65Butgk=;
-	b=irwSc8sM0/YsyXzcZbhb3E0XxYr7WDvtFQ1JRfAi8AUTu/nj+2AXFIR6PrCGAsiFMfZT
-	 /xFq5+pyS7pzjlYvVHGHAptczDLIn0J9UKDlOpli3c/WDYj5bDCkhkPZwm633ADB6/gC4
-	 uhuAonf4E4LXw6G6Z3XMypruc1CeJ3HmpSs07Viwe9mtWAvEOKlVMEKXWn8/uwavZeVr4
-	 GfS2moBbcDnL8NIUhj7iCEDrb+yk7han4iir2FXF0DucICs+SYInebgdLE0SIvdSjHBW4
-	 ufvKa24rfE2dgj/XZouReDF410qqlTX7L57Wtk51S5j9hBf/3PJR/ZYKuyoplqumOGw==
+	bh=sZ2E8az48rL2V0YrFQaeupz5TPsVaOy9sAxMAvDDGic=;
+	b=n2B4vfo70oxNqoezsE58YA5ag3EfGVkFQOG3yZddlOEA4ffU4sSyjzJLvrhii929qqSM
+	 PC9h9RE8kU0ryxci0OjnFiWKC9zfMhAA/nThNsbBTJ3PynIEXvzhludQY3PLAh/ukIMaV
+	 AZyyifZR+AZdyMonsoLocHzQ5ToyyptF8fBkRm4CZ6uw/4UoITnTcFmr114uNclFCDr8S
+	 pilrz+QTQAduQ4TBOTp8ENxobON5/b1W6gtZ6XeUAW1dw4whtM6OTc//Rkms4/bxCaptV
+	 JHUFcZG3teRRso4UA/K5l+lpEb2MlZ7huuxyRJ2VIm3Z2qFuqfJJAFCVmPNo/MkHbdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0mQR7ov;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bu4zj4fn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313BF606A32C;
-	Wed, 18 Nov 2026 23:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B1606A338;
+	Wed, 18 Nov 2026 23:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0mQR7ov
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900D01F000C4;
-	Wed, 18 Nov 2026 23:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bu4zj4fn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571AC1F000C7;
+	Wed, 18 Nov 2026 23:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045586;
-	bh=Rrl4hHqGZ1x7jww71Ipo35xqtJfAPWvfq2JV65Butgk=;
+	s=korg; t=1795045588;
+	bh=sZ2E8az48rL2V0YrFQaeupz5TPsVaOy9sAxMAvDDGic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0mQR7ovBkCwLNvSQuhwhv9kj1TIcRnctCIhHNF01Ciz9dcOVxXEaBeFU1X549uQJ
-	 yuMKG0xx/nHg+eQkaYHzfjygQYrDuJ/NGLVkLlh64vJy7PST5sXKB7aiMUAzYDPBnn
-	 3X6mn84sYOLPATdHWPzpC/c27ifuFjBpH5GyvfoI=
+	b=Bu4zj4fnf4e1pCrJ24PQOHs2wwDjYSYASZNDjsjZ3arUclkQVgkXYoWrOnFlblav8
+	 pnCQv3MbTR51DsHyX/J9QB8d7T6Df2dSgLTbW+Q2iluSh6Kru3Gh8PhlVjID7P8aL3
+	 P6N8kXAj7ra0a/C5VsA3uP2zDf0DciZiARJByMV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sungbyeongchan <tjdqudcks0424@naver.com>,
-	Giovanni Vignone <gio@octane.security>,
-	Robert van Eijk <robert@octane.security>,
-	Paolo Gentry <paolo@octane.security>,
-	Shubham Antil <shubham@octane.security>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0975/2857] RDS/IB: validate receive fragment completions
-Date: Wed, 18 Nov 2026 15:33:29 +0100
-Message-ID: <20261118150236.711118643@linuxfoundation.org>
+Subject: [PATCH 6.1 0976/2857] ALSA: seq: oss: Skip events until fully initialized
+Date: Wed, 18 Nov 2026 15:33:30 +0100
+Message-ID: <20261118150236.746223893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -73,82 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Antil <shubham@octane.security>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 65cf6863606b0507a7c3bd1711317e4f5d6b8b7e ]
+[ Upstream commit 68d4a6ea6cc6091a05836f783bc17d525d266d0b ]
 
-rds_ib_process_recv() accounts every receive fragment as contributing
-min(i_recv_data_rem, RDS_FRAG_SIZE) bytes, regardless of the completion
-length. When a completion is shorter than the header-declared amount,
-receive accounting can advance beyond the payload supplied by the
-completion.
+When an OSS sequencer device is opened, it creates a sequencer port,
+then further initializes the internal states like a timer instance,
+etc.  Since the sequencer port is published, an event can be already
+delivered, and this may hit unexpected event handling, which can
+eventually cause a NULL dereference (like the timer start/stop event
+triggered before the timer initialization).
 
-Only an IB_WC_RECV completion has the buffer layout expected by this
-receive path. Other successful completion opcodes must not be interpreted
-as ordinary receive completions.
+For avoiding such a race, introduce a simple guard and skips the event
+processing until the port is fully initialized.
+At releasing the device, in turn, clear this guard, so that any input
+events will be discarded during the teardown.
 
-Reject successful completions with any other opcode before processing
-their length. For ordinary receive completions, require enough payload
-to cover the amount accounted to the fragment before linking its page
-into the incoming message.
-
-This is compatible with the current transmit paths. MSG_ZEROCOPY is
-restricted to RDS/TCP, while RDS/IB copied and page-vector messages use
-full-sized non-final scatterlist entries.
-
-Found during an LLM-assisted source audit and validated under KMSAN with
-a malformed short receive completion.
-
-Reported-by: sungbyeongchan <tjdqudcks0424@naver.com>
-Closes: https://lore.kernel.org/netdev/20261006205204.1322102-1-tjdqudcks0424@naver.com/
-Reported-by: Giovanni Vignone <gio@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Reported-by: Robert van Eijk <robert@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Reported-by: Paolo Gentry <paolo@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Fixes: 1e23b3ee0e94 ("RDS/IB: Receive datagrams via IB")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shubham Antil <shubham@octane.security>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261013025729.40815-1-shubham@octane.security
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261016161930.482309-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_recv.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ sound/core/seq/oss/seq_oss_device.h | 1 +
+ sound/core/seq/oss/seq_oss_event.c  | 3 +++
+ sound/core/seq/oss/seq_oss_init.c   | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/net/rds/ib_recv.c b/net/rds/ib_recv.c
-index 89aef2fffc1ed..6f8c55e49ea21 100644
---- a/net/rds/ib_recv.c
-+++ b/net/rds/ib_recv.c
-@@ -948,6 +948,12 @@ static void rds_ib_process_recv(struct rds_connection *conn,
- 		}
- 	}
+diff --git a/sound/core/seq/oss/seq_oss_device.h b/sound/core/seq/oss/seq_oss_device.h
+index 6c2c4fb9b7537..f0d7bb0e11a94 100644
+--- a/sound/core/seq/oss/seq_oss_device.h
++++ b/sound/core/seq/oss/seq_oss_device.h
+@@ -73,6 +73,7 @@ struct seq_oss_devinfo {
+ 	int cseq;	/* sequencer client number */
+ 	int port;	/* sequencer port number */
+ 	int queue;	/* sequencer queue number */
++	bool initialized;
  
-+	if (data_len < min_t(u32, ic->i_recv_data_rem, RDS_FRAG_SIZE)) {
-+		rds_ib_conn_error(conn,
-+				  "fragment shorter than header-declared length; forcing reconnect\n");
-+		goto done;
-+	}
+ 	struct snd_seq_addr addr;	/* address of this device */
+ 
+diff --git a/sound/core/seq/oss/seq_oss_event.c b/sound/core/seq/oss/seq_oss_event.c
+index 4699c084d018e..fa91eb1233de3 100644
+--- a/sound/core/seq/oss/seq_oss_event.c
++++ b/sound/core/seq/oss/seq_oss_event.c
+@@ -427,6 +427,9 @@ snd_seq_oss_event_input(struct snd_seq_event *ev, int direct, void *private_data
+ 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
+ 	union evrec *rec;
+ 
++	if (!dp || !smp_load_acquire(&dp->initialized))
++		return 0; /* ignored */
 +
- 	list_add_tail(&recv->r_frag->f_item, &ibinc->ii_frags);
- 	recv->r_frag = NULL;
+ 	if (ev->type != SNDRV_SEQ_EVENT_ECHO)
+ 		return snd_seq_oss_midi_input(ev, direct, private_data);
  
-@@ -1003,7 +1009,12 @@ void rds_ib_recv_cqe_handler(struct rds_ib_connection *ic,
- 	 * event is processed.
- 	 */
- 	if (wc->status == IB_WC_SUCCESS) {
--		rds_ib_process_recv(conn, recv, wc->byte_len, state);
-+		if (wc->opcode != IB_WC_RECV)
-+			rds_ib_conn_error(conn,
-+					  "recv completion had unexpected opcode %u, disconnecting and reconnecting\n",
-+					  wc->opcode);
-+		else
-+			rds_ib_process_recv(conn, recv, wc->byte_len, state);
- 	} else {
- 		/* We expect errors as the qp is drained during shutdown */
- 		if (rds_conn_up(conn) || rds_conn_connecting(conn))
+diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
+index 42d4e7535a820..e0e5e2853754d 100644
+--- a/sound/core/seq/oss/seq_oss_init.c
++++ b/sound/core/seq/oss/seq_oss_init.c
+@@ -263,6 +263,7 @@ snd_seq_oss_open(struct file *file, int level)
+ 
+ 	client_table[dp->index] = dp;
+ 	num_clients++;
++	smp_store_release(&dp->initialized, true);
+ 
+ 	return 0;
+ 
+@@ -408,6 +409,7 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
+ 
+ 	client_table[dp->index] = NULL;
+ 	num_clients--;
++	smp_store_release(&dp->initialized, false);
+ 
+ 	snd_seq_oss_reset(dp);
+ 
 -- 
 2.53.0
 
