@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022598;
-	b=gkxyx+qdXJ0xmk/++B7ZGmwN1pu4EWeIoL3wt7NoM9uS3QAHjEYlOfMztFgJ0TieQ0oz
-	 /Amx4XKg3XJ3L+dslMTdfUR0hXrC021rJMZoEg2mvWFLurbjgz5oUV7/vXlRhNqrWIoNd
-	 Qr7OEjjykMKfGBys5rh/v656+N/6IuRtPpP3uk+zS5UkgfKzI4VH24B74NjK8ssTltlsf
-	 zYba+wE/IJUTxb86jQecUCPYqgUAQ5caWv5VGziXclDN0w9A4cdGGXjenEnRwh9njjeRj
-	 WgKBXiQJEg3oCwX7wI82ATz6LS3j6802LGxIRRHWIEGom3rT+DrVKEHmj/C0vk4NEyw==
+	t=1795022600;
+	b=h1WVDpNov7gmzzZpN7B9U6u45FQTBZttTU/SZQ4FN3WL0hllTihdWLYoRKBxGMGS3tRB
+	 vG/CqEEkDRlpUZQwcUQOTH6rcYrG5uqgYmOcxmh1tVTw2I6ZNmbzOGA3Ttb0w8E+Y//yl
+	 vYLoCKp4wwtRAZN5ZOP4+j8PLsa+45xACLfUxAzKnLuqrV5QVebByi9pCDzO3ZoJJQJj2
+	 8bFKI/Mit/3yRotUwIW8Mx7+3jG2SGARxdkbi19S5mf1LLX2gEXcSm0cjcOV8h6mJIsew
+	 vKYG8pRkaREGyU0/apF/KfuQ2yHgvYDjYV3ghEHSGnSOEuyKIQAmRIW8m4Wvy2lJlWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022598;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zS+yITgD9px4VWIFy1OO9OT34qOE5buI/SuyZ7PDaSU=;
-	b=hiBglDKVZXszED9e54snMLYwTtYamnAGDhL0uYpbuIxjyQAQeKkviCM+5u/wKRrRYBME
-	 oo+jAv2MlPvNT2xwzZbf5rthtlAyXvThhT3SVxdSiRqF/55RioMHf0b7GAyqlDJUoprPi
-	 kbPB3rDRww4H+iv9SfYPf3JekHq/kfbvZI0gGvYZoSM6tzOibEnm4JqXHVgqDIwVb/0Rl
-	 yH0Gp61+M7kh354OA4e41bbblGcddlYiLoM0nSW8GnjkafKYy6qkAvfPhZnHX/ITDdCYs
-	 IdB3ryIVhn3LybbO4SG49X9N055BeXLslhX9IyIW8LgdnYah5t3qBiGHK7vNWlaFflQ==
+	bh=8oAvywCKM1LYAt7GdF5z5qOgiVdvAxI1i8RDD4p89ik=;
+	b=LyPW4ZSEmFLpDufyJ0AQ7DZ6SAM47W54jn5NxzfvFEM2wyeCAkm3Lluwj9Ac+qfLfLj7
+	 EeeJpalQmnLUDRPn+FjUZJesiP+Vq0WmTCjTyvDMdQcu38ZS+awU6irR8mVdUwnDQwVq0
+	 RNSPXDiVoxSrRPeJfrfklSBmbqaJd44sBTcJ9Qbu7DJZqYkXs3DE8gGRYFzayShFaGOEK
+	 hdgihkkFKBNW5cIN3LffHdv2mXT9CiANg4drhxg/LVvpm/+d0oa3HltH+EgdPJpVf7cUY
+	 jSBx/JcN2SGlpJg2OIdN3I7wUkeWVfmBhjf+KtUG+LkGeR5DCyLqrpr0hgBsUFiy4TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exKeHfSS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwpM1gui;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5E606A31C;
-	Wed, 18 Nov 2026 17:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DBE606A31C;
+	Wed, 18 Nov 2026 17:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exKeHfSS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD6D1F000C4;
-	Wed, 18 Nov 2026 17:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwpM1gui
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BA81F000C4;
+	Wed, 18 Nov 2026 17:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022597;
-	bh=zS+yITgD9px4VWIFy1OO9OT34qOE5buI/SuyZ7PDaSU=;
+	s=korg; t=1795022600;
+	bh=8oAvywCKM1LYAt7GdF5z5qOgiVdvAxI1i8RDD4p89ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=exKeHfSSzP4IUl7sReHOnMafajcFVq37yXRoKU7ojscdM8PWdyOHJpew/017CsuI/
-	 rSNjYUEkWMzKXASDhmA2AP78TjPGnTfRDjuj4MeiDOCpDzz7q3GQOWb8o+thjKXzDd
-	 E7c2y9+F1/PHMRLal5Ke6k/eQUsCteTAQYRIluZA=
+	b=FwpM1guibgYKGaQjLlWTyTL9MWSOrH/uadcdm51NqxQrKZAeOOtolQs+ksg6hztEn
+	 Uzzdq4mz7PzhQZnu9/H8WkUvbaydNx6pdHlqO3+UCr3u8fsTZnf+iJX8Uhpcl3jp/L
+	 nef017BRnoTbs39Pp5IyFE8l7fJecwxoZ7r71ssA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daejun Park <daejun7.park@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Bartosz Fenski <bartosz@fenski.pl>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0070/2151] xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks
-Date: Wed, 18 Nov 2026 15:30:05 +0100
-Message-ID: <20261118150124.312500982@linuxfoundation.org>
+Subject: [PATCH 6.18 0071/2151] btrfs: raid56: do not verify the content if there is no data checksum
+Date: Wed, 18 Nov 2026 15:30:06 +0100
+Message-ID: <20261118150124.348467623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,131 +70,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit bcf0b7f18ad11e1d410e82ffef678705eff0a317 ]
+[ Upstream commit d00b85308abee300dfb7e1ac642f38bab9ec7492 ]
 
-A client can commit a hole in a LAYOUTCOMMIT, because nfsd does not
-check the extents against its layouts. xfs_iomap_write_unwritten() then
-allocates written blocks there. A large hole overruns the block
-reservation and shuts XFS down. A small one exposes stale data.
+[BUG]
+There is a bug report that fio can fail to sync the data on a degraded
+RAID56 mount:
 
-Refuse such a range with -EIO, using XFS_BMAPI_CONVERT_ONLY.
+  # mkfs.btrfs -m raid1 -d raid5 -f $dev1 $dev2 $dev3
+  # mount $dev1 $mnt
+  # btrfs balance start -d $mnt
+  # umount $mnt
+  # btrfs dev scan -u $dev2
+  # wipefs -fa $dev2
+  # mount -o degraded $dev1 $mnt
+  # fio --name=degraded-write --directory=$mnt --rw=randwrite --fdatasync=4 \
+		--bs=4k --size=512M --randrepeat=1
 
-Link: https://lore.kernel.org/r/20261014130834.GB15773@lst.de
-Fixes: 527851124d10 ("xfs: implement pNFS export operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Moved the completion-call change to the existing address-space operations code because ioend handling had not been split into a separate file. ]
+The run will fail at fsync:
+
+  fio: io_u error on file /mnt/btrfs/degraded-write.0.0: Input/output error: datasync offset=142254080, buflen=0
+  fio: pid=2064, err=5/file:io_u.c:2008, func=io_u error, error=Input/output error
+
+[CAUSE]
+With extra debug output, it shows the problem pretty well:
+
+  rbio=2876243968 faila=0 sectornr=0
+  rbio=2876243968 error=0-15 csum=2 bio=15
+
+The first line shows the rbio's full stripe logical, and stripe/sector
+number when verify_one_sector() failed.
+
+The second line shows more detail about the rbio, the sector range [0, 16)
+is corrupted, which indicates the first data stripe is corrupted, matching
+the missing device.
+
+The important part is that the csum bitmap shows the data csum is only
+for sector number 2, meanwhile the failed verification is at sector
+number 0.
+
+This means we did the checksum verification even if no corresponding
+checksum is populated.
+
+[FIX]
+There is already a similar check at verify_bio_data_sectors(), but
+unfortunately there is no such check at verify_one_sector().
+
+Add the missing check to skip the csum verification if there is no
+corresponding data checksum.
+
+Reported-by: Bartosz Fenski <bartosz@fenski.pl>
+Link: https://lore.kernel.org/linux-btrfs/a72409af-45ef-45df-9970-2e38bcb22ea6@fenski.pl/
+Fixes: 7a3150723061 ("btrfs: raid56: do data csum verification during RMW cycle")
+CC: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ sashal: Adjusted context for the existing struct sector_ptr-based verification using btrfs_check_block_csum(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_aops.c  |  2 +-
- fs/xfs/xfs_file.c  |  2 +-
- fs/xfs/xfs_iomap.c | 20 +++++++++++++++++---
- fs/xfs/xfs_iomap.h |  3 ++-
- fs/xfs/xfs_pnfs.c  |  9 ++++++++-
- 5 files changed, 29 insertions(+), 7 deletions(-)
+ fs/btrfs/raid56.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
-index 4c9afca35fefa..03f432a7938c4 100644
---- a/fs/xfs/xfs_aops.c
-+++ b/fs/xfs/xfs_aops.c
-@@ -156,7 +156,7 @@ xfs_end_ioend(
- 	else if (ioend->io_flags & IOMAP_IOEND_SHARED)
- 		error = xfs_reflink_end_cow(ip, offset, size);
- 	else if (ioend->io_flags & IOMAP_IOEND_UNWRITTEN)
--		error = xfs_iomap_write_unwritten(ip, offset, size, false);
-+		error = xfs_iomap_write_unwritten(ip, offset, size, false, 0);
- 
- 	if (!error &&
- 	    !(ioend->io_flags & IOMAP_IOEND_DIRECT) &&
-diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
-index 2702fef2c90cd..e00b6c2b7af06 100644
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -584,7 +584,7 @@ xfs_dio_write_end_io(
- 	 * they are converted.
- 	 */
- 	if (flags & IOMAP_DIO_UNWRITTEN) {
--		error = xfs_iomap_write_unwritten(ip, offset, size, true);
-+		error = xfs_iomap_write_unwritten(ip, offset, size, true, 0);
- 		goto out;
- 	}
- 
-diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
-index c7dea4242e8bf..b235dac8f79dc 100644
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -619,7 +619,8 @@ xfs_iomap_write_unwritten(
- 	xfs_inode_t	*ip,
- 	xfs_off_t	offset,
- 	xfs_off_t	count,
--	bool		update_isize)
-+	bool		update_isize,
-+	uint32_t	bmapi_flags)
+diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
+index 4d4852f2ba7eb..20eef417b8441 100644
+--- a/fs/btrfs/raid56.c
++++ b/fs/btrfs/raid56.c
+@@ -1788,6 +1788,8 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
  {
- 	xfs_mount_t	*mp = ip->i_mount;
- 	xfs_fileoff_t	offset_fsb;
-@@ -681,8 +682,21 @@ xfs_iomap_write_unwritten(
- 		 */
- 		nimaps = 1;
- 		error = xfs_bmapi_write(tp, ip, offset_fsb, count_fsb,
--					XFS_BMAPI_CONVERT, resblks, &imap,
--					&nimaps);
-+					XFS_BMAPI_CONVERT | bmapi_flags,
-+					resblks, &imap, &nimaps);
-+		if (error == -ENOSR && (bmapi_flags & XFS_BMAPI_CONVERT_ONLY)) {
-+			/*
-+			 * Nothing was mapped: the rest of the range starts
-+			 * with a hole or a delalloc extent. Nothing was
-+			 * changed either, but xfs_iext_count_extend() may
-+			 * have logged the inode, and cancelling a dirty
-+			 * transaction shuts the filesystem down. Commit it,
-+			 * as xfs_alloc_file_space() does on -ENOSR.
-+			 */
-+			error = xfs_trans_commit(tp);
-+			xfs_iunlock(ip, XFS_ILOCK_EXCL);
-+			return error ? error : -EIO;
-+		}
- 		if (error)
- 			goto error_on_bmapi_transaction;
- 
-diff --git a/fs/xfs/xfs_iomap.h b/fs/xfs/xfs_iomap.h
-index ebcce7d494468..7d9fc86fd5567 100644
---- a/fs/xfs/xfs_iomap.h
-+++ b/fs/xfs/xfs_iomap.h
-@@ -15,7 +15,8 @@ struct xfs_zone_alloc_ctx;
- int xfs_iomap_write_direct(struct xfs_inode *ip, xfs_fileoff_t offset_fsb,
- 		xfs_fileoff_t count_fsb, unsigned int flags,
- 		struct xfs_bmbt_irec *imap, u64 *sequence);
--int xfs_iomap_write_unwritten(struct xfs_inode *, xfs_off_t, xfs_off_t, bool);
-+int xfs_iomap_write_unwritten(struct xfs_inode *ip, xfs_off_t offset,
-+		xfs_off_t count, bool update_isize, uint32_t bmapi_flags);
- xfs_fileoff_t xfs_iomap_eof_align_last_fsb(struct xfs_inode *ip,
- 		xfs_fileoff_t end_fsb);
- 
-diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
-index 298fdc9e9f1c3..1409ef8ce2be9 100644
---- a/fs/xfs/xfs_pnfs.c
-+++ b/fs/xfs/xfs_pnfs.c
-@@ -324,7 +324,14 @@ xfs_fs_commit_blocks(
- 					(end - 1) >> PAGE_SHIFT);
- 		WARN_ON_ONCE(error);
- 
--		error = xfs_iomap_write_unwritten(ip, start, length, false);
-+		/*
-+		 * A client may only write to blocks that a layout handed out,
-+		 * and xfs_fs_map_blocks() allocates blocks for any hole in a
-+		 * write layout, so refuse to allocate blocks for a hole or a
-+		 * delalloc extent in the committed range.
-+		 */
-+		error = xfs_iomap_write_unwritten(ip, start, length, false,
-+				XFS_BMAPI_CONVERT_ONLY);
- 		if (error)
- 			goto out_drop_iolock;
+ 	struct btrfs_fs_info *fs_info = rbio->bioc->fs_info;
+ 	struct sector_ptr *sector;
++	const unsigned int total_sector_nr =
++		stripe_nr * rbio->stripe_nsectors + sector_nr;
+ 	u8 csum_buf[BTRFS_CSUM_SIZE];
+ 	u8 *csum_expected;
+ 	int ret;
+@@ -1798,6 +1800,11 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
+ 	/* No way to verify P/Q as they are not covered by data csum. */
+ 	if (stripe_nr >= rbio->nr_data)
+ 		return 0;
++
++	/* No data checksum for this sector. */
++	if (!test_bit(total_sector_nr, rbio->csum_bitmap))
++		return 0;
++
+ 	/*
+ 	 * If we're rebuilding a read, we have to use pages from the
+ 	 * bio list if possible.
+@@ -1808,9 +1815,7 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
+ 		sector = rbio_stripe_sector(rbio, stripe_nr, sector_nr);
  	}
+ 
+-	csum_expected = rbio->csum_buf +
+-			(stripe_nr * rbio->stripe_nsectors + sector_nr) *
+-			fs_info->csum_size;
++	csum_expected = rbio->csum_buf + total_sector_nr * fs_info->csum_size;
+ 	ret = btrfs_check_block_csum(fs_info, sector->paddr, csum_buf, csum_expected);
+ 	return ret;
+ }
 -- 
 2.53.0
 
