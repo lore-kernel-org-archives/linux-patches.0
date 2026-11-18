@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029492;
-	b=f0i6BZvQx1uxb4S2bOpUzSj7xNP/2jKbd62rDWa9VOzAglY/EUb4LU/5YyzgvDnxLJwe
-	 plnpJaI4BIvIBC2y7g0JzPIRcp7Yh7A8SfWGneumj2Q971xyIZYstDMzdGUM9sJTCemiY
-	 UW5i9s/+zoHNa2wwIl8Dn4jOjXYrURVOEt71HlCjA2h0KzYKPlnX5dCetN3+uFD6jy2nc
-	 oMiQF3HFpWr3839kQNvdFc3r+dcSgaTA1VTNa/Y2uCLiHJhzcA/3WRg+eYWDuQY/6HfNy
-	 qQc8WU6dMF8FxizN8rNnlVoh8S+Hnqi0Je3c3SI33rBrAnXXRsBXB3jfLG0eLTL+wWQ==
+	t=1795029495;
+	b=l9TbltJeRaDzOuI6Z6Ir5bqFcEL8CaGVQtjqVoVRtjUSEHveeiHddr6CaNMOPw9iT2bG
+	 6n/S2gXEVX0idlzJkmoDMgfxPbCAVPtITK6L+IkKvSHOFKw7kgXHlft1etxT0ECJHFO56
+	 LB+8LXsx+jiCOAmSHpvdDuBpubfBDzWvfdMHgwVcBq02JtxZN4OOn9PVPZoVDDYAf9ZTC
+	 y6TM5sPNzTniFROyxBy5BqJXLX0Gbi4TEye0luc3nron82Nm8mmsEyesrIfRPCCP5W28R
+	 w/KOoWXLYB2psXNRTs0Jmbsqs4tiJoFo52pEUIL2tE9SSrfeCryoCcAU9uAnRFUMIew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029495;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SnAzqEtoEZotEATLxcL2QQAUvlAlOSbxg/A96lBmfwk=;
-	b=KdssRN0CBXNVimQ/rsH7qk+L+uNOB2qp8PIqMEAzquzcS6rCAWX8mowldLdZGyQzc0ph
-	 4RgUDnMLo1s8u1fThwsN6L05kmIwT5pa+tsyPUsSsvUYfkuImmuTpPRfLiV1tjtxQFLtk
-	 +hthpfP8E6LuuluYlYqIlmQZyX2yrHVrAQ/wuKnvW/vBrez9Zx+q2SozIRT53ykQPHHMY
-	 /EolZtuPhMKymAKc/cJ7NqifNWQw3/n8QLGBDu0OvB/uL9vZ7At0K08qQoec1glgUWZQb
-	 cYJ6RyjiRCReoe9q8sJjoSwLOYxWd7auAES74E6WN8RRaHy+fnBo+wZpsbiERyWcgCA==
+	bh=vqI/7YTbk2sxfFeBXTCm/38y+UusZdCcA7s9ac6ZqwA=;
+	b=P1rPvOY7zhtqriVxJZKgc1q0Xs+H7Yyh6BeII4kpkfIHesSG/k7QJfg94OHFNQ48nqXE
+	 edWMkpJbT6y2Hk4DwiJtWvGBJfO2OiLFAVZmCAcIIafQDERFiBt2zrjpepZFrUsTOQacH
+	 mfPtBSBaBsgUpztrq8t64+IZthYq9B7xuy62+MvJr8E5nMl0OhKlbDykUuj/HIU4vkNYW
+	 5ETN/7r87cQndmN4pYV42wQNRcyEi6AuwO1Jw9OQFX3hyPvTzrWSrmtf04oGiYaWd2Zad
+	 NXDBDlpkMlVN+wNPYNcMW/gSdWpUgVj3heSP7zTjZVG+RpS3TDXsueSEB1PQE96LTnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lC7PnfOR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYopkAZf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766E0606A31C;
-	Wed, 18 Nov 2026 19:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03052606A325;
+	Wed, 18 Nov 2026 19:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lC7PnfOR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B14A1F000C4;
-	Wed, 18 Nov 2026 19:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYopkAZf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EF21F000C4;
+	Wed, 18 Nov 2026 19:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029492;
-	bh=SnAzqEtoEZotEATLxcL2QQAUvlAlOSbxg/A96lBmfwk=;
+	s=korg; t=1795029494;
+	bh=vqI/7YTbk2sxfFeBXTCm/38y+UusZdCcA7s9ac6ZqwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lC7PnfORlBkUi1HRQ/BVAa0rXUijpfOIE8v8KZPvsy0NNImHDHQlWBnjkoMIMyTib
-	 MFv0rPUMrui/eDEPimm3KhfT9+VUC8jJSzeQWxHkaajd9YW7/6KmE0GZ3K5mFAeBeU
-	 9R2xc17e5KEZaVWjDxweNBZ0Ek0e2VoJdyAcnOCU=
+	b=aYopkAZfL1OEqJIh3eZnnbXLt1lCVScrTZmj3Bit5x/LSvm2y5V1sFBlk5dXK0bCj
+	 wL2drdM01eisAcjzLAWa6PRPfEc1MPqqs5z/BlxIOFIPn4GIpVtyNmF9OkiNQzesRp
+	 lQaWoSDLAGshFg0uujDomhBdLJ6sSfDRlx1EeW0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ahmad Fatoum <a.fatoum@pengutronix.de>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0367/1756] ARM: dts: stm32: lxa-mc1: change stdout-path baud rate from 9600 to 115200
-Date: Wed, 18 Nov 2026 15:41:34 +0100
-Message-ID: <20261118150023.006247016@linuxfoundation.org>
+Subject: [PATCH 6.12 0368/1756] ARM: dts: stm32: lxa-tac: change stdout-path baud rate from 9600 to 115200
+Date: Wed, 18 Nov 2026 15:41:35 +0100
+Message-ID: <20261118150023.063788072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit fc3c0ffefc169719316eddb8c36e2427e11ce713 ]
+[ Upstream commit 85bb59fc12ef439b248d5f4faf846d5566b701fe ]
 
 The default baud rate when none is specified is up to the DT consumer.
 
@@ -90,20 +90,20 @@ the barebox-provided command-line is disregarded by GRUB.
 
 Fix this by explicitly setting the baud rate to the correct 115200.
 
-Fixes: 666b5ca85cd3 ("ARM: dts: stm32: add STM32MP1-based Linux Automation MC-1 board")
+Fixes: 518272af37b2 ("ARM: dts: stm32: lxa-tac: add Linux Automation GmbH TAC")
 Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-1-59b60a5069ff@pengutronix.de
+Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-2-59b60a5069ff@pengutronix.de
 Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts | 2 +-
+ arch/arm/boot/dts/st/stm32mp15xc-lxa-tac.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts b/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts
-index eada9cf257be9..b3d8eb57aa24e 100644
---- a/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts
-+++ b/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts
-@@ -33,7 +33,7 @@ backlight: backlight {
+diff --git a/arch/arm/boot/dts/st/stm32mp15xc-lxa-tac.dtsi b/arch/arm/boot/dts/st/stm32mp15xc-lxa-tac.dtsi
+index c87fd96cbd918..05623806277d9 100644
+--- a/arch/arm/boot/dts/st/stm32mp15xc-lxa-tac.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15xc-lxa-tac.dtsi
+@@ -25,7 +25,7 @@ aliases {
  	};
  
  	chosen {
