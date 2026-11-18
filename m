@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043566;
-	b=imRjPqdH+4plCVbHkBpphp3HSHRrXDjVDtFlhy1x8kkeUdZ74SZMNDgFBlFFhMqRYiiZ
-	 h7vDAY02GNsfoyDvSpTUXbj4earXRGFNaA5aKHLwuh8k9Fs0TIVRrO0zJ7ExuW1zIycLz
-	 Ljy0q+cgp3DBv5wKy3tIPT7qOncWvkq3Yo3S3TdsR2DNKa/mqOg4xF5XXUW5ZRO3mSxvX
-	 1/fYUttSp8MbAIC5xfEQ8pQvx/VyFpOpbuEhtYv718eafCH9K64DUC9j3rd63U/7Yj/3q
-	 5HgO9wQY3wDzTHza4anXerELyjKWY7YphtR9ejcIuYHESC1zU5abgpt3MkN6ILsrplg==
+	t=1795043569;
+	b=DfNQydk6Xyo94J7h9UqTAk2D3sslxDQvStFq95oWuG+EoGQ49JpqoI5y1cj68IBxNeIb
+	 cPgfKfnti4NDQbOkBCnks8kyb+/2YwXnLfjBapIk9BDultg4cOd4f8TLdu3qOoUh8urqZ
+	 +vIqO19keiABAdUIVXNMrsBhYJGAEIU6jylH3k7ZuBwi7oXXbk7n7YrhbB/36gN29HQ5E
+	 oBezY0aHq9UBHcMgAJs7+d/efzHOL9zArYLXdcvZuElCAEjdbOHphT24TM4F4qXudFzaP
+	 DcD3VeSQ1Ga1Klumas9p2neoogzJyPLrei406JZYh7R+lMAOfguDEGCCN7dYbdcoNsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rL7uVgaM/xJCFqUqsYRlOxUEnKpSrDdUPx2KqCQ4k3Y=;
-	b=ErgDPAURKnDOdweDm8PYKZZQ0JGALRoo17ADOtauKSTzpgKdWlt/3VUCUHAZClFHnxsA
-	 xXqd/VJ1gkoM1bX9H3b5A+mS4/KA9f1xzOxI68CirvEOZuIkCsdIHtUYXZiFHatW63o7h
-	 6BuXB7mymIydCC+ijZr2OWoRKx3o/OuDqq7IHDz0/eqEAxEgPbWx3pGUwsp/U9i6HNUcY
-	 08wJF0XKCDL8VMrFNuZBOuJ6OCK11zZXA+AKFAA+AZyRjt+Eh9jngrht+GUq9AHr00a/Q
-	 mxtYbpwRfsRnVv+lz9SM/88cUISvMBbWFnlcDWLNL+LK0Xn4XJH64rBNmEtnmYGmjAw==
+	bh=YXbtf1COYJzsJ+shwHEduXhPJ4Apzf135kAKUj4Nt+o=;
+	b=iDCSfowojKmMD+FnEnnt8BkZlXdu360CJdOI8ZQS2FXWh8maeTexC9sJvPKbk+K4NqgA
+	 YrfuJZ94l/MwqilI79p8hGH9LrwJBTHoIlqjlBMU6eBL/3g7AuA8dFV/2+7utUSlVninA
+	 ifL3Osc4mHOBQse/fJ32wDKijL+CUs7qLiGcFIS2AVUqhF9hjG7+sqHce8a5RV+OpJVCF
+	 z+yVUAxNaLSCq2tOKa2EScc9sAgVQjF4xAmnw7/AL4OrlPdBiQjmQKUCabcs/y+yhXD+5
+	 eIF6LdQHOiljEql6C0QXqAraG4v+wmLbYgVmdH6gEOo8LeRgfc/kObHRjDZqs39eX/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zgb+MrNb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="N7j07I/2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F83606A320;
-	Wed, 18 Nov 2026 23:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22881606A325;
+	Wed, 18 Nov 2026 23:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zgb+MrNb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25951F000C4;
-	Wed, 18 Nov 2026 23:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N7j07I/2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F511F000C4;
+	Wed, 18 Nov 2026 23:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043566;
-	bh=rL7uVgaM/xJCFqUqsYRlOxUEnKpSrDdUPx2KqCQ4k3Y=;
+	s=korg; t=1795043569;
+	bh=YXbtf1COYJzsJ+shwHEduXhPJ4Apzf135kAKUj4Nt+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zgb+MrNba6hVLptYOzfCL4c6E4kNtK1xwI0qTEXtdZtT/XJuCbTDSxcrlA+jbR3+V
-	 WANPsAQ6JYv8zedkI3Zwal0rIs9oepQF9N3F+WFzVHYX7B9AKIVpdr+XgbZjVEpcWA
-	 eLblricRAT6xK08T6KBqncyreEXdjMhJF3bDQ5Q8=
+	b=N7j07I/2h5D7p4qAqwk/gI3w0/sJpQEcafZxUTdmKcdnqkc10j9zr72lIpD3Y4QNz
+	 97/tQ5aUrH0PbumTRPYPOTwD4wpKfwMwhArH4enaX4v7AeseGeMw1kn4zvBMRE8tbz
+	 A+8fbHvSYingFcCGFboU3O/SovS+Zo2e46nvSdjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Thomas Huth <thuth@redhat.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0256/2857] ksmbd: notify parent directory leases on child create
-Date: Wed, 18 Nov 2026 15:21:30 +0100
-Message-ID: <20261118150210.651512667@linuxfoundation.org>
+Subject: [PATCH 6.1 0257/2857] smb: server: Free session data in user_session.c with kfree_sensitive()
+Date: Wed, 18 Nov 2026 15:21:31 +0100
+Message-ID: <20261118150210.684984535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,69 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit abe5acb34282206c2a6303d0e09b3165b1addf0e ]
+[ Upstream commit 9a4bd6507c21f66e84dc021705a4b9d84773111e ]
 
-BVT_DirectoryLeasing_ReadWriteHandleCaching requires a parent directory
-lease break notification when another client creates a child in the
-leased directory. A child CREATE without a lease context did not notify
-the parent lease holders because the notification path expected a
-non-NULL lease context.
+struct ksmbd_session contains some arrays with sensitive information, like
+sess_key, smb3encryptionkey, smb3decryptionkey and smb3signingkey. Thus
+let's make sure that this information cannot leak via the heap and use
+kfree_sensitive() to free it.
 
-Allow the parent lease notification helper to handle a NULL child lease
-context and notify matching parent leases. Invoke it after a child is
-created without a lease context while preserving the existing lease-key
-filtering for requests that provide one.
-
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c  | 9 +++++----
- fs/smb/server/smb2pdu.c | 3 +++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ fs/smb/server/mgmt/user_session.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 932e31a20216e..325d9a55ca657 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1175,7 +1175,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 	struct oplock_info *opinfo;
- 	struct ksmbd_inode *p_ci = NULL;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 09c19d1f71e38..39d24dc253a04 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -168,10 +168,10 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
+ 	ksmbd_destroy_file_table(&sess->file_table);
+ 	ksmbd_session_rpc_clear_list(sess);
+ 	free_channel_list(sess);
+-	kfree(sess->Preauth_HashValue);
++	kfree_sensitive(sess->Preauth_HashValue);
+ 	ksmbd_release_id(&session_ida, sess->id);
+ 	ida_destroy(&sess->tree_conn_ida);
+-	kfree(sess);
++	kfree_sensitive(sess);
+ }
  
--	if (lctx->version != 2)
-+	if (lctx && lctx->version != 2)
- 		return;
- 
- 	p_ci = ksmbd_inode_lookup_lock(fp->filp->f_path.dentry->d_parent);
-@@ -1188,9 +1188,10 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 			continue;
- 
- 		if (opinfo->o_lease->state != SMB2_OPLOCK_LEVEL_NONE &&
--		    (!(lctx->flags & SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE) ||
--		     !compare_guid_key(opinfo, fp->conn->ClientGUID,
--				      lctx->parent_lease_key))) {
-+		    (!lctx ||
-+		     (!(lctx->flags & SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE) ||
-+		      !compare_guid_key(opinfo, fp->conn->ClientGUID,
-+			       lctx->parent_lease_key)))) {
- 			if (!atomic_inc_not_zero(&opinfo->refcount))
- 				continue;
- 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 33e0316fe9182..1c13f359ac0cf 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3315,6 +3315,9 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out1;
- 		}
- 	} else {
-+		if (created && !lc)
-+			smb_send_parent_lease_break_noti(fp, NULL);
-+
- 		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE && lc) {
- 			/*
- 			 * Compare parent lease using parent key. If there is no
+ static struct ksmbd_session *__session_lookup(unsigned long long id)
 -- 
 2.53.0
 
