@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018101;
-	b=muo6bzRxJe2bKveh/LbmfuKpp4vaGCtfShv0ilREDS8qj6PYUP8kPANmgEpbWMP5F74x
-	 zC/8AKahpfnH2oBhcZ//xv+pMgcpHrhoh+1lqk3WqsV6dcaLcw7S4coC0QsChylUEbK2+
-	 JXN+IqdQO1IzR0GZgU+xt5pyEZ1VnI6Rh4HidoZed8qipsT+pVKWqcRHcYNkyaf6ZUyH6
-	 DozAcWruZ5Kl2CrPPG6BRzoepju2oe2KkFaGVfKMMTPmyYDSL1F+fNi1x4MQKwo9d9lKz
-	 +BeMSBL0HowajzlCo+4LrNi5eyab8Ui9FharHkC8Z/Z3wV9XFkTljYxukUQuY6FAbUg==
+	t=1795018104;
+	b=g98xK2XmOJ8G7UKwFSSbkpZmmAMIngML6fw9Ozuqoa/TplRaxdbFCiL+oFJrxx4lLhz8
+	 FYsts7PdO++cauoP6YnpDIqWlWNKzg6oa03r+5Lo0zCvCClS4xg+oIPS6Hn2Zpw25XZgY
+	 A0Yu9wG9zdRdBDu1t70Won3+aLJM7NMTiuWfBe8RtZFJfwHXwJO2AAKgBgidjgMkBqgpK
+	 9x4jBc3HmgNtuXpPy8eI1FuFJTOjeNUbrB1ULXXZTFs7a/Yovq5IS+l+uY1Z9wDt4wXW7
+	 dAsUh9JfnAZ1h/VeIXN5/L0v3aLQUGtUEHFKJXSRohLVy8Dujs9M4hOsnCr3K6krf0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZPHadPzTzCUNEJU98t0fCgUtTIqvwVHykgkWgc3As5w=;
-	b=o09XTk54UAlIhhArKklg0MZYS3tn5gsNtSy8oFlsLepU9/vCBbl4FRXNTqSDLovREFYI
-	 j1P1al4TcpNjovWDqraEhbg9Ys8ylB3RZgA91EkGpmq1gMvyO6busRAeZZXQdFGUQC4cw
-	 QH2NkOF6joXhNKpTVmUTpEIDzrPSE5PWAWpNfY57KG15KoYn0BzclC1qhfIwLiO07RiJj
-	 R7gNdG1fSVIodgVTx2Tkp0rSpFSMZLqKSBfPAKe4G5WnjydpvEDfsMLpFFf4iyn0ZE5f+
-	 GBj7Z3XW5bSXVzVz/6ab6eGRjCvNJbxAbhtxoY1KD6is+WJdUNRwzTZ+UBJ5dyKZvgQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=8btEFjSPs5Hmb7KErxB8Eog3AtjmnZaBtmavonSJr7s=;
+	b=2LJ840FFfH3HscLu9RfDYJVtN9798ZvBZo591XDOIr6PsDUnJVDmvgsefLMTw/j2mpTY
+	 eX81OvcVwQQrCTiOt6YWXkDhprU3X0420PRW3DS6krNYLXOt49KrK1KrkiwUBXWFC/NvJ
+	 9DuTHEGgQSfYW9P09VnaRfCjt1U7kchYc7vi1I8n+relduRm9czVp525MetAla6WUyPAx
+	 J8P0lNZ1LGKj2VG3O+1S2tz9p/eBQ6XPEt9D6bG6BE1VAPWUUxWAJFb8ut0GDFjmKdDc0
+	 xHidugi+Yt1I7WEdb213FK7rLIS9oP37FikL0VnutM0L+BVbgVhWIMtQfFtIQhpjgqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qWbTlu1c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIdloTo2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2797C60A2605;
-	Wed, 18 Nov 2026 16:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CDE60A2601;
+	Wed, 18 Nov 2026 16:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qWbTlu1c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780C41F000C4;
-	Wed, 18 Nov 2026 16:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIdloTo2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBAB1F000C4;
+	Wed, 18 Nov 2026 16:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018101;
-	bh=ZPHadPzTzCUNEJU98t0fCgUtTIqvwVHykgkWgc3As5w=;
+	s=korg; t=1795018103;
+	bh=8btEFjSPs5Hmb7KErxB8Eog3AtjmnZaBtmavonSJr7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qWbTlu1csraoTompYibR+F2riSiH7A4sDz/+1dBy1sTwSUgE2uoqvVBTKIHkQkvtj
-	 ibBvT0Prai1UKENkUrYmK6X81RH0/ZkcB17HDu4emprPXn6safRTzZJyRWsbHF4MCH
-	 SulOsFQ7+Y3ygI+GwvZnxswZarP8tuDd9PwDubrI=
+	b=VIdloTo2V+DcWwM2rBBZlvDHEwPSbZpeFblHDJSajCYKZZIu7mZTOrWYgh5NY3/uT
+	 IJz60knTWFmsQrbMzvGaqveTX27r5y5y6FFzCfzw6ElA1IwRuAuw3+E1oSwdnAz9u2
+	 vGALMzWeFEZo1bhzChLF0q8dEZfO4RwewNQmk6d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	Wen Yang <wen.yang@linux.dev>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1113/2651] rv: Use LD_WAIT_SPIN as the reactor lockdep wait type
-Date: Wed, 18 Nov 2026 15:39:13 +0100
-Message-ID: <20261118150328.069316400@linuxfoundation.org>
+Subject: [PATCH 7.3 1122/2651] pps: generators: wake up PPS_GEN_FETCHEVENT readers on unregister
+Date: Wed, 18 Nov 2026 15:39:22 +0100
+Message-ID: <20261118150328.402056134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,68 +62,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wen Yang <wen.yang@linux.dev>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 39ccedfd9e55c95e440c26611a1db750b92b83bf ]
+[ Upstream commit 5b864f8db0bd33216895f3fe0bb1ec245c596c8e ]
 
-rv_react() overrides the lockdep wait type to LD_WAIT_FREE to enforce
-that reactor callbacks take no locks. But callbacks run in the context
-of the triggering tracepoint, which can be preemptible task context on
-any kernel. A timer interrupt firing during the callback makes the
-interrupt-exit path schedule and take rq->__lock (LD_WAIT_SPIN) while
-the LD_WAIT_FREE override is still held, producing a spurious
-"Invalid wait context" warning:
+A reader sleeping in PPS_GEN_FETCHEVENT waits for the next event, but
+no event comes after pps_gen_unregister_source(), so the reader sleeps
+until it gets a signal. A PPS_GEN_FETCHEVENT issued after the
+unregister sleeps the same way.
 
-    [ BUG: Invalid wait context ]
-    context-{5:5}
-    1 lock held by kunit_try_catch/209:
-     #0: (rv_react_map-wait-type-override){+.+.}-{1:1}
-    kunit_try_catch/209 is trying to lock:
-    ffff8a743ed3e8a0 (&rq->__lock){-...}-{2:2}
+Wake up the readers on unregister, and make PPS_GEN_FETCHEVENT fail
+with -ENODEV once the generator is gone, like the other ioctls. The
+wait checks info without info_lock, so clear it with WRITE_ONCE().
 
-Use LD_WAIT_SPIN instead of LD_WAIT_FREE, which causes false-positive
-warnings in preemptible contexts due to scheduler preemption taking
-rq->__lock.
-
-Fixes: 69d8895cb9a9 ("rv: Add explicit lockdep context for reactors")
-Reviewed-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
-Cc: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://lore.kernel.org/r/5586dd00789a0f904cc299cd8889744b8c6f8dc9.1789412799.git.wen.yang@linux.dev
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
+Suggested-by: Rodolfo Giometti <giometti@enneenne.com>
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://patch.msgid.link/20260929124937.51114-5-danishkhateeb03@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/rv/rv_reactors.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/pps/generators/pps_gen.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/rv/rv_reactors.c b/kernel/trace/rv/rv_reactors.c
-index 2f5fc8d18dea4..ff7d478227c32 100644
---- a/kernel/trace/rv/rv_reactors.c
-+++ b/kernel/trace/rv/rv_reactors.c
-@@ -465,7 +465,15 @@ int init_rv_reactors(struct dentry *root_dir)
+diff --git a/drivers/pps/generators/pps_gen.c b/drivers/pps/generators/pps_gen.c
+index 452cc12a96f27..474e17c36458d 100644
+--- a/drivers/pps/generators/pps_gen.c
++++ b/drivers/pps/generators/pps_gen.c
+@@ -103,11 +103,14 @@ static long pps_gen_cdev_ioctl(struct file *file,
+ 		dev_dbg(&pps_gen->dev, "PPS_GEN_FETCHEVENT\n");
  
- void rv_react(struct rv_monitor *monitor, const char *msg, ...)
- {
--	static DEFINE_WAIT_OVERRIDE_MAP(rv_react_map, LD_WAIT_FREE);
-+	/*
-+	 * Reactors must not explicitly take locks, so they should be
-+	 * LD_WAIT_FREE.  However, reactor callbacks can run with preemption
-+	 * enabled, meaning the preempting code (e.g. the scheduler taking
-+	 * rq->__lock at LD_WAIT_SPIN) may violate that constraint.  Use
-+	 * LD_WAIT_SPIN to avoid false-positive lockdep reports.
-+	 * But you should still NOT be using locks in reactors.
-+	 */
-+	static DEFINE_WAIT_OVERRIDE_MAP(rv_react_map, LD_WAIT_SPIN);
- 	va_list args;
+ 		ret = wait_event_interruptible(pps_gen->queue,
+-				ev != pps_gen->last_ev);
++				ev != pps_gen->last_ev ||
++				!READ_ONCE(pps_gen->info));
+ 		if (ret == -ERESTARTSYS) {
+ 			dev_dbg(&pps_gen->dev, "pending signal caught\n");
+ 			return -EINTR;
+ 		}
++		if (!READ_ONCE(pps_gen->info))
++			return -ENODEV;
  
- 	if (!rv_reacting_on() || !monitor->react)
+ 		spin_lock_irq(&pps_gen->lock);
+ 		info.sequence = pps_gen->sequence;
+@@ -238,9 +241,12 @@ static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
+ 			pps_gen->info->enable(pps_gen, false);
+ 			pps_gen->enabled = false;
+ 		}
+-		pps_gen->info = NULL;
++		WRITE_ONCE(pps_gen->info, NULL);
+ 	}
+ 
++	/* Wake up the readers in PPS_GEN_FETCHEVENT, they fail now as well */
++	wake_up_interruptible_all(&pps_gen->queue);
++
+ 	put_device(&pps_gen->dev);
+ }
+ 
 -- 
 2.53.0
 
