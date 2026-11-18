@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048802;
-	b=KMYdl/qC9fLoNiDJ8Ke/xkvG/gunnNy0iRhTmY8p7/OpH4mN3gqSkskdM7Rzc4q3a+pn
-	 MvxRRtxzJSg6TbA/jLHmOskWSFtcWLVR9F+Uw8tlkDJeoV84dxP3vi6KaywowyEzjjMGL
-	 Rbn4955jtE6Ruj0q7AjPJNoC8lpgNGEw6rgyDhhnV5qgRCJmVaL0OWkx1IE/4BP4zg04j
-	 QE4Ly3tBTeOFDdplnWOKL/RAGjVieoTpH6K2wjOtK4JAbrGU/AV1duOpydkZ8+a/fLkzv
-	 h8OZBSXrtMHBtRkVcMkfhqvIsAMJz9nhKg76HQ4nsWcSUPzNHcdJtbUWKRBm8nW8xFQ==
+	t=1795048805;
+	b=b7xdCQyvLogMQNFxVl0TN3/eaatlf4xpULqZjwRgtGWwtblb3535Ebvq2R5IS3bdEUS+
+	 X2D5OotqwEm7nafU4SWeh/Ms+pid6KJVOt6rD3On9Bo6FxvuYVInBnEXm14cgQpMDpfa7
+	 k7y/QN+4xXHDBdyW+rSe9kPEqVi5oH7EVRIpK2lzzcXj98EwCPmkypyLQ4Mc4hBjio2uh
+	 rQ3Ub8J5dUVt2rIL+L39aLJmjpnOiFFJSWGAcjflXuYY0BNwtgjWhee4AP4O3Vgw8sOgk
+	 FbCL8UOCwzbM+uqhs3JWkM1+ISs5LTZeiyvOsTA53JJpBA5h2IDzts27fSszkg+V2Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M49+LQH33HoNirQEdWaKEoKmNabqeom+W4geLns9bWk=;
-	b=Mn0m1UuSPC1dDLAG3iY+TE+H4a5bpdM4BpDoChpBsnj1FgiT7IhVy/zWn1YV6JLsIWvT
-	 WKK9qfC3OBhgSQ2faLWrT9soYvFmgsvzqp6DYiXXOuQYeXA4jy3RviXw056YxnWGW8O1h
-	 wB38hIG721j1ges3iiJ+gn7F5G1DdhBNmvqWVBiqCcSPe24DIIF8ruIkmU5jL0Hxzi9cu
-	 gfO0XzxY4HEMZuCCuA+64ytyJbM9U8RcdQqSzKNOnEj2FCQnKePniaKEucAl2LqZl1Mf4
-	 YGqlviy0OE49eg6gXCCLAsyH2khtnjDl1a46I9GchNY4Yi/PzPqPMdILrWD2ZiF8sQA==
+	bh=IGKEiqH+m+mzu6jdhbvtnRVn+UB8F+0LplaUTWvlj30=;
+	b=UR5CXOletM0idP+/WuS/nZtxombkiCX1KgmuoYrOhxausIWBYZdwBHrQL6WAn4yqRyRZ
+	 PPe3DURxXCZNY1ZFPWEEHTb0jikkuWWAdHvtskgnWIQpahXypqweI7ouYhvDT0+I24fdE
+	 2JSEzWaKelEwH/BGhwQJ358UIvY7NfxBCFxz3AOcl1DJHF7/xzRVqfLSjjD2uEuJMkU6B
+	 CptqddTFxGheGqFSI46E+3DtZ2kutQK2CIvSZjaPjC0HcsK+Gbcfp05vWgwjd6iofsJnK
+	 9Qrv/rzkO+G6r+i7M3Lm91ipWwKTFUexS3KBue1765HC5nr86tcxVnmHeR5ZplFzMHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EmdUzBtM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+cXVMeY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EA7606A320;
-	Thu, 19 Nov 2026 00:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A163606A325;
+	Thu, 19 Nov 2026 00:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EmdUzBtM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578561F000C4;
-	Thu, 19 Nov 2026 00:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+cXVMeY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2A41F000C4;
+	Thu, 19 Nov 2026 00:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048802;
-	bh=M49+LQH33HoNirQEdWaKEoKmNabqeom+W4geLns9bWk=;
+	s=korg; t=1795048805;
+	bh=IGKEiqH+m+mzu6jdhbvtnRVn+UB8F+0LplaUTWvlj30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EmdUzBtMqaVjUgcmBDdRfmg3Qet2D9ugFIMxtWGpjW/2kCJn27O7XLTOm1aZzRBiz
-	 3a9WRPYxKNWiE3RUn/MK7pw8FgPVPtA/vCeVbVLP/90/DM68E5a3IuV5O9CdlDliJ0
-	 dKVmy+oCe7venG+Fs+eSvtTMR97fxJ/nlK0/QZ78=
+	b=U+cXVMeYCLkepTsjRnd1wIn1OLgMOC1NK92S5A2+1L/aOjAuNzr7O/EmTTdCHMj9S
+	 tUywfsoND8bUGf9lf5hneScNhkBS1+ixNlg4gPqCZ7s4I7QiOoDTim0aRLlaChVEHS
+	 RdCK/Vq4SW4NNUu4/hNsR0RMY27kVCRmEk/O3hww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2074/2857] MIPS: Octeon: size the swiotlb for a modular OHCI platform driver
-Date: Wed, 18 Nov 2026 15:51:48 +0100
-Message-ID: <20261118150316.089100477@linuxfoundation.org>
+Subject: [PATCH 6.1 2119/2857] fs/ntfs3: fix slab-out-of-bounds write in attr_insert_range()
+Date: Wed, 18 Nov 2026 15:52:33 +0100
+Message-ID: <20261118150317.702398234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit f1dd1f0c8d595a019be503d40060d25721313b4a ]
+[ Upstream commit bf9a6578e03b065335836e025356b4b9170b9449 ]
 
-plat_swiotlb_setup() raises the swiotlb to 64 MB on OCTEON II with
-memory above 4 GB, because that OHCI can only DMA to 32 bits. The test
-is "#ifdef CONFIG_USB_OHCI_HCD_PLATFORM", which is false when the driver
-is a module - the usual way to build it - so the bump is silently
-skipped.
+When fallocate(FALLOC_FL_INSERT_RANGE) grows a still-resident ntfs3
+attribute, attr_insert_range() shifts the inline data using the insert
+length 'bytes' as both the destination offset and the copy size:
 
-What is left depends on the rest of the function: with PCI enabled the
-"memory past the BAR1 hole" branch happens to ask for the same 64 MB,
-but with CONFIG_PCI off - which is normal on these SoCs when no PCI
-devices are wired - swiotlbsize stays at the PAGE_SIZE it was
-initialised to. A full- or low-speed device on an OCTEON II board with
-more than 4 GB of RAM then has no bounce buffer to speak of.
+  memmove(data + bytes, data, bytes);
 
-Use IS_ENABLED() so a modular OHCI gets the same sizing as a built-in
-one. Seen on a CN6635 board with 8 GB of RAM and
-CONFIG_USB_OHCI_HCD_PLATFORM=m.
+Both are wrong: the shift must start at the insertion point 'vbo' and
+move only the data past it (data_size - vbo). When bytes > data_size the
+memmove runs off the end of the data_size + bytes buffer and overflows
+the adjacent slab object.
 
-Fixes: a8667d706dfa ("MIPS: OCTEON: dma-octeon: fix OHCI USB config check")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Since vbo < data_size is already enforced above, the reworked offsets stay
+within the data_size + bytes buffer and cannot under/overflow.
+
+  BUG: KASAN: slab-out-of-bounds in attr_insert_range (fs/ntfs3/attrib.c:2581)
+  Write of size 512 at addr ffff8880135e8b10 by task exploit/142
+   ...
+   __asan_memmove (mm/kasan/shadow.c:95)
+   attr_insert_range (fs/ntfs3/attrib.c:2581)
+   ntfs_fallocate (fs/ntfs3/file.c:618)
+   vfs_fallocate (fs/open.c:338)
+   __x64_sys_fallocate (fs/open.c:362)
+   ...
+
+Fixes: 9256ec35359f ("fs/ntfs3: Refactoring attr_insert_range to restore after errors")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cavium-octeon/dma-octeon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/attrib.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/cavium-octeon/dma-octeon.c b/arch/mips/cavium-octeon/dma-octeon.c
-index 9fbba6a8fa4c5..c049632fbcc33 100644
---- a/arch/mips/cavium-octeon/dma-octeon.c
-+++ b/arch/mips/cavium-octeon/dma-octeon.c
-@@ -228,7 +228,7 @@ void __init plat_swiotlb_setup(void)
- 		swiotlbsize = 64 * (1<<20);
- 	}
- #endif
--#ifdef CONFIG_USB_OHCI_HCD_PLATFORM
-+#if IS_ENABLED(CONFIG_USB_OHCI_HCD_PLATFORM)
- 	/* OCTEON II ohci is only 32-bit. */
- 	if (OCTEON_IS_OCTEON2() && max_addr >= 0x100000000ul)
- 		swiotlbsize = 64 * (1<<20);
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 0ec6d8406a74c..503b38bd350b7 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -2414,8 +2414,8 @@ int attr_insert_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
+ 			/* Still resident. */
+ 			char *data = Add2Ptr(attr_b, attr_b->res.data_off);
+ 
+-			memmove(data + bytes, data, bytes);
+-			memset(data, 0, bytes);
++			memmove(data + vbo + bytes, data + vbo, data_size - vbo);
++			memset(data + vbo, 0, bytes);
+ 			goto done;
+ 		}
+ 
 -- 
 2.53.0
 
