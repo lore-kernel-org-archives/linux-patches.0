@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052036;
-	b=qOvwDnEAZJP8sT6wOtWiwsuYt3s4aMwqJwFCnJzmdnsPXfvzk1K8HiutKBAEC49MLd7a
-	 wfJszyGFBtDEKSy2amPda1AFx/IzVrL+p1/fM9ynKrZg+iL5rhb1K5Mmc5sMcP9nJnLIh
-	 KlFb7/eOzpdw8sitewAGkG3K031EtBekd3CxdM+rnd5qXgmPO9jKEGf4XjZI+dw+nZ7N1
-	 QP6n04z4hCYgwx7Xye5EfSjU19oxjEh9TDmfXxPoBaMKvmGEMLBd0x4ZNEkr/livanNT5
-	 WmIJlDKMtdbR+VDEdQBZ/1+Ml4CZ8+mzd8fRASbCWit1Qi3aKfITiEoaYSpSCHgtDXg==
+	t=1795052039;
+	b=FA9Ak/Cak5m61VUoZcI3s5kOvFNWUutQBDB6inFQQUygPpGickI7Kta39J6Jf0nv3GHp
+	 vDQeZEY7uSBgkMKK3yfTn78PXVFKch2wamCcdhJAkhBCjzFqw7VmNuMd88eIsxv/xS4+1
+	 gg2MhuaE6NkXNqFSU5x+aVJhY84n51uLjv3oXi9Vyo9nINO04m6bSV6b942csZC2o7QPC
+	 nHetGkjxs7FCXbPdfI+WZg2ZbyHtMfUrYX202s9a+2cmZX8CuskRtmpPXn8nncb+xJY7g
+	 ObXyk5sL8/f/AMNKW7EbyBpr8jAtOl8/B9p7KG7O1opISCPYnz7mlEfcQx5KTjYHUpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X57dvRmViokUzCXjPnx+C4cZU4L3/cd4uYbVkD7KUHo=;
-	b=u7iLfCtMQsD3qW2n9QJR8gvgc8mYeXKt3TDtviFQJJnQfAq/f+w5M8syt4Dr4ipTPS/w
-	 iA2BZDIx7IWTYSMnHyzy6tOEiyESumkx3XqotaovfRlu/EPXmjpsL1hF15BfTSs8dOlh2
-	 PwvdmbMcx6pO52cVOLJiRL27Z9b3TVUgcwpu1PET1aYmSmOfv7fSszhXAVZhZo7W3wuNa
-	 zUoOxmjPgcgVNg4/mA1MkOTN7nEWkC7D8yF94eB7zVYMFzb8YJ25y38iVVUY3WDp8VxTg
-	 8UOmg17SwE9KTqmYqyUiCHhAeTV/ddUFxWme5Nrp8FF/S3aY81FRmvOsA4JgySV0w3Q==
+	bh=EpZ2POEX7zZLRG6wpe+4rDXyXu0ydq05GJfEqjK8MXo=;
+	b=cXxjXCDamhRR6IJQg5js4o2Y47iVQTv+D+v4QN4soDflF6DjCc0bgZL9BbWmF6Q1Ib/N
+	 rO4lhwXw1ZjtNmzDiXQPf17JdWrYyotRIXl8lewlPNriaTnc0FOLKFoAHO6mShqZqaJnl
+	 af5eyVv0177LtSAglonYvc0KcvuG3RreWCXNVujT7slxj0dFesyD7onQYZ8qpvZrOvzra
+	 48ZgV5YFzqEohnJW0tsd71bDyHvirXYP+Bltwb/mCqXZil41LSbbFN4uFvoABOMG0FPB1
+	 qvuFp+NBrO88pW+W1vXXZRg2sll3tPXCqAihNJJOcMLGqam1r58+ecOSFFV8GUYXIAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PWIB4rwf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGYirhh4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40276606A31C;
-	Thu, 19 Nov 2026 01:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15825606A320;
+	Thu, 19 Nov 2026 01:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PWIB4rwf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966041F000CA;
-	Thu, 19 Nov 2026 01:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGYirhh4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F631F000C5;
+	Thu, 19 Nov 2026 01:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052036;
-	bh=X57dvRmViokUzCXjPnx+C4cZU4L3/cd4uYbVkD7KUHo=;
+	s=korg; t=1795052038;
+	bh=EpZ2POEX7zZLRG6wpe+4rDXyXu0ydq05GJfEqjK8MXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PWIB4rwfzyH96/8jEv94wwZsmoCVWLPj3OWp6X44A9vCqVZfFzB+9r3H0LYkAMIin
-	 QOYvsdr9fL+hZwNKNrHsbFojf/CDmIuyMSmylHk2sWduZABj2tFuZ7/w4IxYOC/L8c
-	 3q1jqF6VIQLiXxqsFWZiHO0kzHTebxNuv6PNO0LU=
+	b=yGYirhh4/BIjUCdW447Mo78jczv4JpRtNihksxbIKFonz6h6KzuiFgAIlHPMD8GI8
+	 k+WmseXp5kcEN8vDP6QlhPzd3hthBW1qAP9PjQsB1bXn+dSHQ+AFm+lM9k+7Hl2MXL
+	 DY1RKBQ4St3a+TD6Drqdqcedv0N22tCEZ5Bw/vK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 0371/2214] HID: amd_sfh: Use report type from request node
-Date: Wed, 18 Nov 2026 15:34:07 +0100
-Message-ID: <20261118150025.570681047@linuxfoundation.org>
+	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 5.15 0362/2214] SUNRPC: Reject a socket that already has an svc_sock attached
+Date: Wed, 18 Nov 2026 15:33:58 +0100
+Message-ID: <20261118150025.159665004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,43 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit 85f1bea97f1909f81577cfcf3e4db9017e7f5337 upstream.
+commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
 
-Use report type from request node while sending feature and input reports
-to HID core. The cli_data report type array is never assigned and
-feature reports are sent as input reports.
+Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
+attaches a second svc_sock to one socket. svc_setup_socket() saves
+the socket's callbacks before installing its own, so the second
+attach records svc_write_space() as the old write_space callback.
+svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
+and svc_write_space() then calls itself until the kernel stack is
+exhausted:
 
-Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
-Closes: https://github.com/ublue-os/bazzite/issues/5796
+  BUG: TASK stack guard page was hit at ffffc900037d7ff8
+   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
+   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
+   ... 700 more ...
+   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
+   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
+   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
+   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
+   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
+   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
+   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
+
+svc_data_ready() and svc_tcp_state_change() chain through their saved
+callbacks the same way, so a TCP descriptor added twice recurses on
+the next incoming segment instead. Reaching any of this takes a
+writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
+so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
+
+Reject a socket that already carries sk_user_data. svc_setup_socket()
+overwrites that field unconditionally, so a socket some other
+consumer has claimed is one NFSD would corrupt whether or not the
+callbacks recurse.
+
+Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
 Cc: stable@vger.kernel.org
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
+Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sunrpc/svcsock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -95,7 +95,7 @@ static void amd_sfh_work(struct work_str
- 						 cli_data->feature_report[current_index]);
- 		if (report_size)
- 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
--					 cli_data->report_type[current_index],
-+					 node_type,
- 					 cli_data->feature_report[current_index], report_size, 0);
- 		else
- 			pr_err("AMDSFH: Invalid report size\n");
-@@ -104,7 +104,7 @@ static void amd_sfh_work(struct work_str
- 		report_size = get_input_report(current_index, sensor_index, report_id, in_data);
- 		if (report_size)
- 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
--					 cli_data->report_type[current_index],
-+					 node_type,
- 					 in_data->input_report[current_index], report_size, 0);
- 		else
- 			pr_err("AMDSFH: Invalid report size\n");
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -1372,6 +1372,9 @@ int svc_addsock(struct svc_serv *serv, s
+ 	err = -EISCONN;
+ 	if (so->state > SS_UNCONNECTED)
+ 		goto out;
++	err = -EBUSY;
++	if (so->sk->sk_user_data)
++		goto out;
+ 	err = -ENOENT;
+ 	if (!try_module_get(THIS_MODULE))
+ 		goto out;
 
 
