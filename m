@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061576;
-	b=Fpe9R6Tf0AtNar0n6MDLhq+1ORz5GsSbfe/iEDpkJB1P4/RMGolw7ECMXKvGeEDHKWYL
-	 pCBUzb+a+v4HQeznUEmjTgr65x9Dx4jgmva/sJ6iE2Dv7T6eyUCbCfHo9AVYF+5QMWqbD
-	 t/Sfd4x2XEoSHjIT9++Eiiz9bV5KjpJtY0lSeAH7nPdt0v+RX5uisTmMYGEErNk6Y6Qsw
-	 8vTfpKi7ISsi1lHsZ/ykTqfih5pgd4sMzxaldgBjyhoVY/hq94CGveIDBPSGFUyoeuyOf
-	 Z6FgJ8vbxpeL6y10+COAUrUYeO8XkhZH+LYiQEgYLzmFU2WQQm/gelPOCY92diudc1w==
+	t=1795061579;
+	b=mBUZM5T2snBgMmjfmiSYf/roQx2d5yGqWWkV66of6q5yzHul8yi0qFh8SiyfpisFiBwC
+	 v2wYRgZcZiGKlz5IpEZfTR7Lj2LHsd3ysCURduEgK5D0G7swLOL1bOKfZaaLcGG3aqia8
+	 HRST68hJ8CXOKwIcmBGMdkCLQX6L9mI2ZkTyMwrvCSCcwi6jMZ6c92CjQaI1fzgZ80UBO
+	 O/ERFLg+ELoGTSmCxSjbBbFw2CVE5lfYkd1eaSimFoZa1gSJetHdk6ObCRItklw3m8Kay
+	 d/JO+f6gOv4W+ZcTJzyvOUGlHzuOmOrEyuqz6fHJ/O0CIpF5KXCyjiqpkbpcGWQ9K3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061579;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QeX6X1hhI3H7BFhusOQtTtUdB/y7wKBogjI/GttPOPA=;
-	b=tvrwks9RfT+yYw6JQFq+/S4wi7wsUPznse4DBNgjaDW3kVfZ74HbH10USwpRypOWLe3v
-	 N3T3np5WI/53zv5OeGJyg9o9EcYjXlRJZr8OWZ1p2PmlJzfuceb0F6m/VPKIXw/cBHkCb
-	 ABxMSUvxph1w19ZWFH2S7dTLW3SwLEVE5HSy08uOtHAOcCz3vRuRPwUSFEMBXd/3gw5ER
-	 OS2p6n768xPr8qqcmDqq0sIWLtNqWzZw8iV9X3M6Rn5qGG/E4mow649IDOAHjxNdsnlwb
-	 6V3CcUuvzhumshpS1j6TCnhB2SV/GkElQtBrP3ubF978npFlMvm+LsJn54AEtM3OMyg==
+	bh=u9Ao98khvnzMZHuOU2D5IAKZcExqgSfZ6T/bbwoHOPI=;
+	b=N5E3LzBLjIStj1B+f2LMQlB1iqMzaMFvTfiH3MXkUZ2mlfbnhFFnQJCaEOxPQSrl8FDr
+	 4UjnUp5j/O3Jz17FNzoN4uXGoMMSMV04QUdWftTQubm9Btm87wg/PVPRbvfTpzvyfNAii
+	 //seHihpT5t7uD/TwE7Y/fGx6XuJxThCvYKOqdx8Nz+GiE02CMBAOt601f0rWZdEQPVDQ
+	 V0jUJGA8PsekIuCrUvVoUwYZ7KjEDkdwbw4jbukifFvps2RSjeOKQK7LlqFjg6BlkbX5F
+	 4qBesh/MPvC/I4gBtEVP/rDr/ax3v7dAIuvYOTBW0kUHMFxL215TTK8RhICpEaUI+Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvNOKDN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJN0J9Td;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549A2606A332;
-	Thu, 19 Nov 2026 04:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EBD60A2605;
+	Thu, 19 Nov 2026 04:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvNOKDN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC491F000C7;
-	Thu, 19 Nov 2026 04:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJN0J9Td
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B32E1F000C5;
+	Thu, 19 Nov 2026 04:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061576;
-	bh=QeX6X1hhI3H7BFhusOQtTtUdB/y7wKBogjI/GttPOPA=;
+	s=korg; t=1795061578;
+	bh=u9Ao98khvnzMZHuOU2D5IAKZcExqgSfZ6T/bbwoHOPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ojvNOKDN4SMY0LWf5yjT8KbvhyIkGZjGzY1/G2I1Lyie/88LxC8BLYrFwDa64Ajb1
-	 y+4Y09rK9JAzMBnxc45Dg5Y67tUBVY4DvO3MTqOifqBA9+jv89M9VX1chcaSNzqW86
-	 OylkwvP5yURmZgJkCNN3kpQlKavH8HOX1IFMLQAA=
+	b=WJN0J9TdyM4Y8wE8dYSFlNKofvRUaNHrv0/rrD2goyU3qVV0oo8oblLjOV5aLa5cb
+	 xRq4GblrO3VE7alu5Sxou08NNKyecXscdOJTHP2q5vIG5mfGUAjiC54JCQevI/SJag
+	 qKv98jydNZXqYbM9s0i9InC6LdmEgu60/RDH5tEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1550/1848] ALSA: line6: Fix potential OOB write in line6_capture_copy()
-Date: Wed, 18 Nov 2026 15:59:48 +0100
-Message-ID: <20261118150024.513017968@linuxfoundation.org>
+Subject: [PATCH 5.10 1596/1848] comedi: dmm32at: validate the IRQ supplied by userspace
+Date: Wed, 18 Nov 2026 16:00:34 +0100
+Message-ID: <20261118150026.302869819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,41 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit d69798357b5d562bcda1af488cda3ead4d039f8f ]
+[ Upstream commit 797d56d7f90864e67424f8e82639a9b3aedf37e0 ]
 
-line6_capture_copy() copies the data for the original byte size, but
-the buffer overwrap is checked against the frame size.  Because of it,
-when the data size isn't aligned in frames, the remaining bytes might
-be still copied above the buffer size.
+comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
+it->options[1] is a number chosen by userspace. dmm32at passes it to
+request_irq() without checking it first, which lets an interrupt owned by
+another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
+claimed for this board. When the owner of that interrupt is later
+released the descriptor is freed while this driver's handler is still
+installed on it.
 
-For avoiding the potential OOB write, correct the copied data size in
-line6_capture_copy() to be aligned with frames.
+Every interrupt this board can assert is a legacy ISA one, so the ISA
+range is the right bound; it is also sufficient, because
+mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
+mp_unmap_irq() returns early when it is set.
 
-Fixes: 1027f476f507 ("staging: line6: sync with upstream")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-11-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Bound the value before requesting it, as das16m1.c already does. An
+out-of-range value is ignored rather than rejected, so the board still
+attaches without interrupt support, exactly as it does today when
+request_irq() fails.
+
+Fixes: 3c501880ac44 ("Staging: comedi: add dmm32at driver")
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260909104848.1763-5-yogeshgaur.83@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/capture.c | 3 ++-
+ drivers/staging/comedi/drivers/dmm32at.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
-index 2f7490c8693fa..5d63a329b3b10 100644
---- a/sound/usb/line6/capture.c
-+++ b/sound/usb/line6/capture.c
-@@ -129,7 +129,8 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
- 	} else {
- 		/* copy single chunk */
- 		memcpy(runtime->dma_area +
--		       line6pcm->in.pos_done * bytes_per_frame, fbuf, fsize);
-+		       line6pcm->in.pos_done * bytes_per_frame, fbuf,
-+		       frames * bytes_per_frame);
+diff --git a/drivers/staging/comedi/drivers/dmm32at.c b/drivers/staging/comedi/drivers/dmm32at.c
+index 85a0f58c134ff..a7304c5502c94 100644
+--- a/drivers/staging/comedi/drivers/dmm32at.c
++++ b/drivers/staging/comedi/drivers/dmm32at.c
+@@ -585,7 +585,8 @@ static int dmm32at_attach(struct comedi_device *dev,
+ 		return ret;
  	}
  
- 	line6pcm->in.pos_done += frames;
+-	if (it->options[1]) {
++	/* only ISA interrupts are valid on this board */
++	if (it->options[1] >= 1 && it->options[1] <= 15) {
+ 		ret = request_irq(it->options[1], dmm32at_isr, 0,
+ 				  dev->board_name, dev);
+ 		if (ret == 0)
 -- 
 2.53.0
 
