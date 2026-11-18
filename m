@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027652;
-	b=bR04JFtNG7e2uzha6+J7Ug5GijbEDd1LQsUEo5nUHhW1aQazbSU/t3FoxRB5Fej7szKf
-	 dBdRz7D8zgCruj/mVjSnxEkgdn4+6wGnfEbaMqHskL/4bgHOSm7QePdPLGeZpxHq37rmD
-	 71svWJO2V7ZTVElpUh+kBTaAWnm2YbBqEd+OXKHbpphZQfMkti+1TLIN4C/sIO5ebRd5q
-	 ZjsY1dyEJtdX5xmbjgzPgZksKimXyYBPYJCDT08jPV4cg9J8lu3zfSd2Ox9DaiqUz82Gv
-	 hWRAzzSpETgzt/pxbWzjzHausbb0r61erViZdziFfQpl1g+xphT/AjmV8mRm9xwff1w==
+	t=1795027655;
+	b=IfMW3yfE2i8NEAs6q5ttfx7Qs6P6KengxAV9zjU8iXDzSvzL3kvd4B9bqbtkcctJNqC+
+	 9AZjJCTXlAOfChKtvBOGcN69ijXWeSeGS2JBsGVyWLLLj/ICsZOdBSk/884boKm4TPHKm
+	 PdUF/C2TFgyxuGF2bToFLuhN90ai3d6z3eq15onlR+kZgVBBOF/7i3vl+1RcMDh2I5agw
+	 Nc1hbLMUAiNYN8eRrR4ERkfp1FWloenRpgtFRCtihAsWA5ORs+VjgjpKKhzZ7AK4xPNCU
+	 p6A5qaD7l2s0ev1DaeY6MUqWkXniLdY0CQwUGJ9U4bvyeROjLZzjTQ4+u5SgqOypRmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Bj9gZB1wGB2PpPQdwmioHJE52gMtLYB1ovhICvtgac=;
-	b=01FhcaOQ+3nWfuwside3F9qCvQW7vhIuEE8/I1XSrxxRZIqkMy/WJpzhZFyLeCS1SZuD
-	 N6yaAyarPd1uyYmeV0ORElbgpRBEvWFf8iAcBkMWVBlNaBypRq9e9GQ/jgdh+pVJCQe55
-	 zdPuh42Mv09+kvttC/1Sc3IWhilVkc7Q9tVv2BBjohrQdDRGPrpB/HVgh32hgtftY6Dns
-	 A+bYYbfL1+sfPTlHdr1vju2nDQI7Ja9G3IgZPgLloRahbOmxxOKILD24bSmr5GLfETf0A
-	 j5ZiXd0dCvVr8t7QJ0ckmOPjBcbI5m1n2N+PGvHpyR/g2aaT0VPV4p79FAyoYmqgyYQ==
+	bh=cgXe4cSHLM8moBElbPQZTAmoFlYvVYhVrcXjnKBwnEY=;
+	b=plQpSQsaxSeXAO49d/lA6P8jozcvo5pGCtKP7s09TuOdlFWy1Nel9AAc/bONxxuAdQ+U
+	 Yrl+qx164ZdU7FtSdTnXnk4lTQfumYa/YuacdYUJbbQSwej56XWqH7WlLhGkEB7DpJk6e
+	 JMFQXVLp5axdv0aKz+yDvXDXqJjQMaNQra+MtmnHLcSGF4EH1D0QYKytnuQw5WruLTMvx
+	 +WdE0D7801z8QnEdsxwryubV7nVYOuO3H/eXM+olqXZk8fXlg+L7m1IYXCRar6FAo9yC5
+	 QnXwayBRsd4Cn0BAdlMPTkX6OKw2DvgEoUuNrII59olLGriGPVGwIggWkzK5zxFOrtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rI76T6nf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UaQkz9pa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB4F606A33B;
-	Wed, 18 Nov 2026 18:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1477B606A337;
+	Wed, 18 Nov 2026 18:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rI76T6nf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDD71F000C4;
-	Wed, 18 Nov 2026 18:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UaQkz9pa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D7F1F000C4;
+	Wed, 18 Nov 2026 18:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027652;
-	bh=1Bj9gZB1wGB2PpPQdwmioHJE52gMtLYB1ovhICvtgac=;
+	s=korg; t=1795027654;
+	bh=cgXe4cSHLM8moBElbPQZTAmoFlYvVYhVrcXjnKBwnEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rI76T6nfPNkNENvu6zG1f9B/lQBpQPcYeiRUO8iSd+VoVtuPQGBxTS+AAOzr79aOU
-	 WLtqkTfSrJS6CKexSVvOSdHrofroxaqLXRN1ouaoPoeBIWtQfCnh7x/ljx7wjNhUZ/
-	 TFFSXktG8h6ClccoCqvECLLsG3GR522TgaHVTnI8=
+	b=UaQkz9paJy8xmw1HqZ0B8PTWYOLVhHYc0UUzakmXZ+N3VbKGxy89ESxWqu9dNto2n
+	 tqqMMmik7X+a18pTXIvLbzt+4bb0B30x7mt9T8bQp8Yt1S5exmz19MoNJNYs3/NhlS
+	 eBHjsP56IFoNNvh93BUaldYjyzTO9Hc3hu2j0SEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Rayabharam <anrayabh@linux.microsoft.com>,
-	Jork Loeser <jloeser@linux.microsoft.com>,
-	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Naman Jain <namjain@linux.microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1863/2151] x86/hyperv: move stimer cleanup to hv_machine_shutdown()
-Date: Wed, 18 Nov 2026 15:59:58 +0100
-Message-ID: <20261118150229.669893698@linuxfoundation.org>
+Subject: [PATCH 6.18 1864/2151] kexec: Add helper to report an active kexec reboot
+Date: Wed, 18 Nov 2026 15:59:59 +0100
+Message-ID: <20261118150229.703520628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,58 +72,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jork Loeser <jloeser@linux.microsoft.com>
+From: Shradha Gupta <shradhagupta@linux.microsoft.com>
 
-[ Upstream commit f7ce370b525a02127527b0f54ee877413705a709 ]
+[ Upstream commit 14c73a2b061e494ab6da346ab075b14f2a4b2d06 ]
 
-Move hv_stimer_global_cleanup() from vmbus's hv_kexec_handler() to
-hv_machine_shutdown() in the platform code. This ensures stimer cleanup
-happens before the vmbus unload, which is required for root partition
-kexec to work correctly.
+A shutdown callback in a loadable module may need to distinguish a
+kexec reboot from a normal restart, halt, or poweroff. The Hyper-V
+VMBus driver needs this distinction when moving its kexec cleanup into
+a common syscore shutdown callback.
 
-Co-developed-by: Anirudh Rayabharam <anrayabh@linux.microsoft.com>
-Signed-off-by: Anirudh Rayabharam <anrayabh@linux.microsoft.com>
-Signed-off-by: Jork Loeser <jloeser@linux.microsoft.com>
-Reviewed-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Add kexec_is_in_progress() and export it to GPL modules so the callback
+can remain guarded when VMBus is built as a module. Provide a false
+inline implementation when CONFIG_KEXEC_CORE is disabled.
+
+The helper reports only the normal kexec reboot path. Crash kexec and
+preserve-context kexec do not set this state.
+
+Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Stable-dep-of: 228e21764b38 ("Drivers: hv: Run VMBus kexec cleanup from syscore shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mshyperv.c | 8 ++++++--
- drivers/hv/vmbus_drv.c         | 1 -
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ include/linux/kexec.h | 2 ++
+ kernel/kexec_core.c   | 7 +++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
-index cae0dcd9006bd..183301f27f080 100644
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -195,8 +195,12 @@ void hv_remove_crash_handler(void)
- #ifdef CONFIG_KEXEC_CORE
- static void hv_machine_shutdown(void)
- {
--	if (kexec_in_progress && hv_kexec_handler)
--		hv_kexec_handler();
-+	if (kexec_in_progress) {
-+		hv_stimer_global_cleanup();
+diff --git a/include/linux/kexec.h b/include/linux/kexec.h
+index 8a22bc9b8c6c8..827a5311d97a3 100644
+--- a/include/linux/kexec.h
++++ b/include/linux/kexec.h
+@@ -468,6 +468,7 @@ bool kexec_load_permitted(int kexec_image_type);
+ 
+ /* flag to track if kexec reboot is in progress */
+ extern bool kexec_in_progress;
++bool kexec_is_in_progress(void);
+ 
+ #ifndef page_to_boot_pfn
+ static inline unsigned long page_to_boot_pfn(struct page *page)
+@@ -544,6 +545,7 @@ static inline void *kimage_map_segment(struct kimage *image, int idx)
+ { return NULL; }
+ static inline void kimage_unmap_segment(void *buffer) { }
+ #define kexec_in_progress false
++static inline bool kexec_is_in_progress(void) { return false; }
+ #endif /* CONFIG_KEXEC_CORE */
+ 
+ #ifdef CONFIG_KEXEC_SIG
+diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
+index 08ae3c64caca5..08ed4e14cf39e 100644
+--- a/kernel/kexec_core.c
++++ b/kernel/kexec_core.c
+@@ -22,6 +22,7 @@
+ #include <linux/hardirq.h>
+ #include <linux/elf.h>
+ #include <linux/elfcore.h>
++#include <linux/export.h>
+ #include <linux/utsname.h>
+ #include <linux/numa.h>
+ #include <linux/suspend.h>
+@@ -53,6 +54,12 @@ atomic_t __kexec_lock = ATOMIC_INIT(0);
+ /* Flag to indicate we are going to kexec a new kernel */
+ bool kexec_in_progress = false;
+ 
++bool kexec_is_in_progress(void)
++{
++	return kexec_in_progress;
++}
++EXPORT_SYMBOL_GPL(kexec_is_in_progress);
 +
-+		if (hv_kexec_handler)
-+			hv_kexec_handler();
-+	}
+ bool kexec_file_dbg_print;
  
- 	/*
- 	 * Call hv_cpu_die() on all the CPUs, otherwise later the hypervisor
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 5b55a44c3dd96..1cc2c8695e0bb 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2876,7 +2876,6 @@ static struct platform_driver vmbus_platform_driver = {
- 
- static void hv_kexec_handler(void)
- {
--	hv_stimer_global_cleanup();
- 	vmbus_initiate_unload(false);
- 	/* Make sure conn_state is set as hv_synic_cleanup checks for it */
- 	mb();
+ /*
 -- 
 2.53.0
 
