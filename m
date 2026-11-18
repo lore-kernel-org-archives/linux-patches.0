@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049344;
-	b=2uvIfrGPuDNrbJH//+WGwMztest231hq7EYwPTZxXg9hoCpnYodIOV22H8aoQT/NTT37
-	 AIFd3+ZEuSfqHiRve6jWaGmUzSFmh9L6zFBgTzJNkD3Ytz76S7WdjXdPHc0Ik9CNFs8WO
-	 BpDPtFvszG1VqmnPc+yOEUXlaBdiZjL0tVnXjoM9Qrt6cxmJM/7+buBQ/pLfkI3aL8CCq
-	 yf3qYdM/8mcOe+F5oOcC0TAj6UeHAW6tAddO8k1uqgCOaZwvncDNuLOEWASwoJn+AmoS3
-	 RrXgoZ+0WI32jW1UpgoAWBl2hZ7N6m0f1uY9fRKRhcULGjKxNjj8QBM7yiLoOzHelvw==
+	t=1795049347;
+	b=hqw3HKaBRKWIXD08ghpnV5wVe/Y5PLRJTXsXRpiusmdR2R0SsuoW1mYGUNyxBl5rignr
+	 FOy3QNS62wksKuZOxxmkiDAPNh44NyCptlGxcFIzlN7X9gGnA3hzN9epi3N13ZBY8ojAw
+	 yAmNVBFFH8TLuyU4T6xPabjjRV1Oue9xdKzlused9gNppSUXMNyIp8QnmGb5l61zlJICj
+	 3/udhvYQBfH6U+iPsdSeCcNgEU6E4rqqDSIbpGo7GXf6BavuKpaSLYe23xvY5LeVBxyVH
+	 08tJ0g4gqd3KvkS/1EniZfVUyUsMwqZVblzxsl2EfZDC7Xwv5NBiNA5ntxUgz69w8gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7tlDrvjKvmBkIwL9unLcCcqQmTmuenWlR7yVG5NuDx8=;
-	b=y8MvJxIOZ0eYRWuLGZxbhMt2OJBPhOLpthcjtX9Zq2KZ1EhHx2vgbEmgq7wM+ZEt6Gw6
-	 t/mxtAZAW51lgeExQOxxP8pn3hiQx95AKeoU/MCk/h0skzHaWnSgWL2lK5d3b0o2FG/Ue
-	 rWkU+dJQP6dCgkA4ZO9gYnVDpgLoZYbTxGd0lj0DyjTdnQLyhJ2em4gWaPrttpGqNftso
-	 F9esDmuKhGhhNZVF1DsaZyG9cLK/JgXb5rN7HDubvW4ehpzYrqRSPaiVp2ova/yPiF/mZ
-	 RF7cPfESMMtbg7cnedj+rPYfUXCTr66C0yJd0mJyDDfEq/iNOW/dek011HM6iP4d7FA==
+	bh=bYRuYqUNvbUOgMtdRFfr/74HBABLG9fjCKvB5TdryYs=;
+	b=bi+Uihkg0XJYL7larzZzEN4URmRDydVO6sDyOy722NAhAU21WCxrsFYNrRqRYNIKoWVN
+	 53jpeZK422i8QunXmR4ddtAyGb9s7MTHwNwzsYEmPlGfTjuV0x6QXPcM4U7hhrQvK82n3
+	 UhAG7Hv/twl7T2gXqVcxkPsLpbSAcnaaL9HbpzjYNyjb902XmvhvStSLWVAK6CJKcA/Zm
+	 1ia3fAByDILn5QMz6wp3DnvRcwyansyixDGjzmv7J0iKyQBdFBSf1++SoLyKZCSChGJpw
+	 3QM2kBU/fbqNn0baLz+XuNS8zg+nTE0HXzQvFJA5Z4+D0DLDglCrqrkcuE6bZJ6H8yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSO+hXKL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csfaYNuK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF8160A2600;
-	Thu, 19 Nov 2026 00:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA7660A2604;
+	Thu, 19 Nov 2026 00:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSO+hXKL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19731F000C5;
-	Thu, 19 Nov 2026 00:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csfaYNuK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843EF1F000C4;
+	Thu, 19 Nov 2026 00:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049344;
-	bh=7tlDrvjKvmBkIwL9unLcCcqQmTmuenWlR7yVG5NuDx8=;
+	s=korg; t=1795049347;
+	bh=bYRuYqUNvbUOgMtdRFfr/74HBABLG9fjCKvB5TdryYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSO+hXKLlit8cUE4oafLLxApHocq2WZLkEaAvnKh1LdvCAJr7jYUxFTTsh3nIQYeb
-	 HCFWHytwvnkjMz+FdAFgmv3F757DlMaoQxQlVEWESy1BzFjKpnl/MbDMPyg0O4q/wq
-	 MY4JgxUJmby4kd66oW55uMXxbZxtSCRZ/bWf+/kM=
+	b=csfaYNuKG/94sDnvE6PbOlIu3OGFa+rGuwvIJa+PuL25ce1K8tlSz6tviDHokvRlB
+	 mDtKX2VTOJnGgwDn7Uicsb8dS9QHC0qweIe6YjS0eDkXpvINvi4dDKL5SQpi1z1QC2
+	 nwttJFpNjcRoNvhpE/4RUqeRyMKmMuANmv6kdN5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2277/2857] efi/libstub: Fix error unwind freeing fdt in allocate_new_fdt_and_exit_boot()
-Date: Wed, 18 Nov 2026 15:55:11 +0100
-Message-ID: <20261118150323.440658681@linuxfoundation.org>
+Subject: [PATCH 6.1 2278/2857] dt-bindings: dma: cleanup examples - indentation, lowercase hex
+Date: Wed, 18 Nov 2026 15:55:12 +0100
+Message-ID: <20261118150323.481788591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,62 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit d83fe67339f2032d8facf0fe8a047a4c5d15394f ]
+[ Upstream commit 837b2fafd4cf3e336ab1127c3738c35eba866123 ]
 
-Sashiko says fdt_addr can point to either an allocated fdt or the fdt from
-get_fdt() which is memory owned by FW.
+Cleanup examples:
+ - use 4-space indentation (for cases when it is neither 4 not 2 space),
+ - use lowercase hex,
+ - drop unused node's label.
 
-Only the allocated fdt should be freed on the error unwind path. Use a
-dedicated variable for the allocation's size so that the free does not get
-confused.
-
-Fixes: 4fc8e738ff3e ("efi: libstub: remove DT dependency from generic stub")
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230124081117.31186-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 38d97b1122e0 ("dt-bindings: dma: dma40: Restore disabled-channels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/fdt.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../bindings/dma/snps,dw-axi-dmac.yaml        | 36 +++++++++----------
+ .../bindings/dma/stericsson,dma40.yaml        | 16 ++++-----
+ 2 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
-index 6a337f1f8787b..b7a2d7aa61b4e 100644
---- a/drivers/firmware/efi/libstub/fdt.c
-+++ b/drivers/firmware/efi/libstub/fdt.c
-@@ -229,6 +229,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 	u32 desc_ver;
- 	efi_status_t status;
- 	struct exit_boot_struct priv;
-+	unsigned long fdt_size_allocated = 0;
- 	unsigned long fdt_addr = 0;
- 	unsigned long fdt_size = 0;
+diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+index 67aa7bb6d36aa..18b55a2ec7052 100644
+--- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
++++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
+@@ -114,21 +114,21 @@ additionalProperties: false
  
-@@ -251,12 +252,13 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 		if (strstr(cmdline_ptr, "dtb="))
- 			efi_err("Ignoring DTB from command line.\n");
- 	} else {
--		status = efi_load_dtb(image, &fdt_addr, &fdt_size);
-+		status = efi_load_dtb(image, &fdt_addr, &fdt_size_allocated);
- 
- 		if (status != EFI_SUCCESS && status != EFI_NOT_READY) {
- 			efi_err("Failed to load device tree!\n");
- 			goto fail;
- 		}
-+		fdt_size = fdt_size_allocated;
- 	}
- 
- 	if (fdt_addr) {
-@@ -334,7 +336,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 	efi_free(MAX_FDT_SIZE, *new_fdt_addr);
- 
- fail:
--	efi_free(fdt_size, fdt_addr);
-+	efi_free(fdt_size_allocated, fdt_addr);
- 	if (!efi_novamap)
- 		efi_bs_call(free_pool, priv.runtime_map);
- 
+ examples:
+   - |
+-     #include <dt-bindings/interrupt-controller/arm-gic.h>
+-     #include <dt-bindings/interrupt-controller/irq.h>
+-     /* example with snps,dw-axi-dmac */
+-     dmac: dma-controller@80000 {
+-         compatible = "snps,axi-dma-1.01a";
+-         reg = <0x80000 0x400>;
+-         clocks = <&core_clk>, <&cfgr_clk>;
+-         clock-names = "core-clk", "cfgr-clk";
+-         interrupt-parent = <&intc>;
+-         interrupts = <27>;
+-         #dma-cells = <1>;
+-         dma-channels = <4>;
+-         snps,dma-masters = <2>;
+-         snps,data-width = <3>;
+-         snps,block-size = <4096 4096 4096 4096>;
+-         snps,priority = <0 1 2 3>;
+-         snps,axi-max-burst-len = <16>;
+-     };
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++    /* example with snps,dw-axi-dmac */
++    dma-controller@80000 {
++        compatible = "snps,axi-dma-1.01a";
++        reg = <0x80000 0x400>;
++        clocks = <&core_clk>, <&cfgr_clk>;
++        clock-names = "core-clk", "cfgr-clk";
++        interrupt-parent = <&intc>;
++        interrupts = <27>;
++        #dma-cells = <1>;
++        dma-channels = <4>;
++        snps,dma-masters = <2>;
++        snps,data-width = <3>;
++        snps,block-size = <4096 4096 4096 4096>;
++        snps,priority = <0 1 2 3>;
++        snps,axi-max-burst-len = <16>;
++    };
+diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+index 8bddfb3b6fa0b..e847ec8bcc372 100644
+--- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
++++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+@@ -147,13 +147,13 @@ examples:
+     #include <dt-bindings/interrupt-controller/irq.h>
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
+     #include <dt-bindings/mfd/dbx500-prcmu.h>
+-    dma-controller@801C0000 {
+-      compatible = "stericsson,db8500-dma40", "stericsson,dma40";
+-      reg = <0x801C0000 0x1000>, <0x40010000 0x800>;
+-      reg-names = "base", "lcpa";
+-      interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
+-      #dma-cells = <3>;
+-      memcpy-channels = <56 57 58 59 60>;
+-      clocks = <&prcmu_clk PRCMU_DMACLK>;
++    dma-controller@801c0000 {
++        compatible = "stericsson,db8500-dma40", "stericsson,dma40";
++        reg = <0x801c0000 0x1000>, <0x40010000 0x800>;
++        reg-names = "base", "lcpa";
++        interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
++        #dma-cells = <3>;
++        memcpy-channels = <56 57 58 59 60>;
++        clocks = <&prcmu_clk PRCMU_DMACLK>;
+     };
+ ...
 -- 
 2.53.0
 
