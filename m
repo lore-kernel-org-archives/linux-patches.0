@@ -1,52 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028521;
-	b=VAlp96zcVyjzO7sNO53xinyupuaqKAx0kr5y4uAZ8NZmca5uN2Rq5vlwKzM1hjWNemKA
-	 I8VcDrSJg8vLfE7/AV7uudGU4rkX+2BnNSlgNYiNLlGDq/WrEEfoJz9uh4kQv1ipjnVdp
-	 pgn8ZV3l634OyApiIm2r8npdm027YsWkyTl1u7XKl2cYVfl6Xwcdv/odDunuDnz9cUTjJ
-	 c2MCdhO6W3UAPc2j8f/lKll+8ISk3WJHB0R5FsfDxc9SIH1alQkNigDpDLvPnwryybrxJ
-	 uxnY3ZZvTilWm+4bR89RSLcUwLJ65IRsnYSMdJUg5UsDChVEcuVxN0P1+i290rxQAZQ==
+	t=1795028524;
+	b=xm1geSId6zcEOMeCl7RKQn5e6pfdujkvUmx63LkVeOVpuvOkfZwuOYUSQyU2UbsG3Xx6
+	 Q1uru6ZmN8wP83fx+BMvNhes0xVcbJ08eSrz3eUHptxoXqEw7YMhYMZN9ffJNx+2otc+/
+	 +Ghx49uHro/KB8HrnJ0V8fsom1vi3jji9X61uZ8yd+XNPmMC5Gv3qcqXaEXrzyc5wD25X
+	 jpJ5hn/WNqK/6w8GeCTTsXu3ZjyNABIQxuyvGs83F3IMutKGk6KsZvuT6iHgbIDkDdNd0
+	 kPKhxjCuW/wiawKYq02j2lKSD5eyJXFdH90mf1cpAI2OoX0gZco3ZnriJbHB8vgoHCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028521;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=15XOxQ60OU7Qj0k1bzxji2LmJa+dVx7r2401ZmptgIY=;
-	b=gGLJHACg5YYzWlR7Z+Rz4EkrD9dBxil21hRvYZccBqdxLSruvMbiOkhyOwjNYudbcRq4
-	 Njrhlj4V6fqAFGUqSC7rPWIp/u0cJLZMMkqWMM/W5r7oL9REW7t629i1ETZGF2PMN2WPz
-	 7sjT/OVCLeHL15xhlMNeOBuHqmBGo5FkXtPcdL1sXLIbOA8BRTa/FP5fiPbhMkFBLf+NW
-	 htVi8MYGf6J4dBbpFwXsZYxrH1vXgXrvbYU0qTvEpeZHRmWDzZE1fk3uldRreiQ7kysrm
-	 rGvoet9uASfp+yzMqdk88i0eYXAmcwwqVnrZKx6vDisGgSrfROVeyWwtwHrVx8o0HKA==
+	bh=sfF/1YTYnVMlQHBWYm+5+VhpOEWjSEvvrVy1UDXzNRM=;
+	b=HnU7p0Eyz6JdrdWH12WsJUZ8hXnLL72wAwzWzMmivp6o+uXfDN15t52ea/nkTksTQfyt
+	 lvhVroBsKbvQlRYjGUMuQq+/7FoQLd/x18ZsFJoUJw2h+zlAvOVktJB6ZzIFKZLGfXkml
+	 r23fqcr4l7Sq5HiuKhxFyQ30Rzm0BYxHR2XDb60YC/ZlVneZ9fCDwf9roWCH3zUaKkaiQ
+	 zpGn9ccCGZxV//K278xyf6gxyclKUzQd3HZvbiYhQL1Tjk9D0gq5lUpa2GoefvEptVenD
+	 dHKS6dTkaVTVZc7/Y0wJ2ocS8A3nA652d1mHbkXthPQcjowcnx/opGlrW1U5pbET75w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ll8UJsx6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=miOUfu8G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE5A606A31C;
-	Wed, 18 Nov 2026 19:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FF0606A31C;
+	Wed, 18 Nov 2026 19:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ll8UJsx6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB3A1F000C9;
-	Wed, 18 Nov 2026 19:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=miOUfu8G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FBC1F000C9;
+	Wed, 18 Nov 2026 19:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028521;
-	bh=15XOxQ60OU7Qj0k1bzxji2LmJa+dVx7r2401ZmptgIY=;
+	s=korg; t=1795028524;
+	bh=sfF/1YTYnVMlQHBWYm+5+VhpOEWjSEvvrVy1UDXzNRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ll8UJsx6nRnQP/hbHHaKjleVP+C7xjBf0FDm39tBDZTOBhsU0HYnIjwV31Tz33T4Y
-	 eYv30ix8Ba8+dc8bf92lKAR2u4LOH/NrigVe71lHYbfjl90c3BIGRn1sDwFuUgHvOw
-	 BU3iOTrwLDeyfBU0cf7V/4Uh6wNhIevHko/t1HTQ=
+	b=miOUfu8G/OGRWTHv2xl5557a5Kpwd01BbsaRhcwPFTYY9ZQCySHCUUj2YQ08NmCLv
+	 RW2oGyt/nOE6pAep94bcJN00aExUoJQlRG9+3yJImXQUv41qXOXQ2IKY0tvVi8qFqo
+	 HkDKyozUTlCV2B4hv/yZFupsrPlYOa63T6QU494M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Palacek <William.Palacek@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0012/1756] drm/amdkfd: Validate the control stack of a restored queue
-Date: Wed, 18 Nov 2026 15:35:39 +0100
-Message-ID: <20261118150008.447493013@linuxfoundation.org>
+Subject: [PATCH 6.12 0003/1756] mm/hugetlb: fix endless write fault on a leftover uffd bit
+Date: Wed, 18 Nov 2026 15:35:30 +0100
+Message-ID: <20261118150008.124142327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,162 +86,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 90d91a192751cd9a7d9d2286299bc72ec1c28179 ]
+[ Upstream commit f61e1cf15fb44f9cf89d43d8ef01f926322bb1c4 ]
 
-kfd_criu_restore_queue() takes the control stack size from the
-checkpoint image without the topology check create-queue does in
-kfd_queue_acquire_buffers(), which restore stopped calling in
-commit 1cafa8b29e02 ("drm/amdkfd: Don't acquire buffers
-during CRIU queue restore."). An image size of 0x300000 is accepted and
-sizes the MQD allocation, and 0xFFFFFFFF trips a page allocator warning
-in kmalloc().
+hugetlb_fault() resolves the uffd bit on a write fault only if the VMA is
+registered for userfaultfd write protection, and hugetlb_wp() bails out
+for any entry with the uffd bit set assuming hugetlb_fault() has already
+resolved it.
 
-restore_mqd() also keeps the image's cp_hqd_cntl_stack_size,
-cp_hqd_cntl_stack_offset and cp_hqd_wg_state_offset. With offset > size
-or wave state offset < size, get_wave_state() returns wrapped sizes.
+When a read-only hugetlb entry with the uffd bit set is mapped in a VMA
+that is not registered for uffd-wp, a write fault to it never makes
+progress. If the access comes from the kernel, e.g. read(2) from
+/dev/zero into such page, the task spins in the page fault handler,
+ignores SIGKILL and keeps holding the locks taken by the system call.
 
-Take the per-XCC size from topology, 0 for queues without a control
-stack, and reject larger images. In restore_mqd(), set the size to it
-and bound both offsets as init_mqd() does.
+Such entries should not exist, but an unprivileged user can create them,
+for example with MADV_DONTNEED of a page protected with UFFDIO_RWPROTECT
+or with UFFDIO_COPY in MODE_WP racing with UFFDIO_UNREGISTER.
 
-Fixes: 626f7b3190b4 ("drm/amdkfd: CRIU add queues support")
-Fixes: 42c6c48214b7 ("drm/amdkfd: CRIU checkpoint and restore queue mqds")
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 92249023caee17bfc6f29c71d6aaa5f2298cf507)
-Cc: stable@vger.kernel.org
-[ sashal: Removed the NUM_XCC() multiplier because the existing restore path handles one control stack per image. ]
+Clear the uffd bit when the VMA is not registered for uffd-wp and let the
+fault proceed to hugetlb_wp(), like do_wp_page() does for regular pages.
+
+Note that a FOLL_FORCE write to a page protected with UFFDIO_RWPROTECT in
+a private VMA that was made PROT_NONE now drops the RWP protection of
+that page.
+
+Original fix generated by an LLM and sent in private by Josef.
+
+[rppt@kernel.org: massage commit message]
+[david@kernel.org: convert comment into a TODO]
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-6-42796911043b@kernel.org
+Fixes: 60d5b473d61b ("mm/hugetlb: fix uffd wr-protection for CoW optimization path")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Chris Mason <mason@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted to the existing huge_pte_uffd_wp() and huge_pte_clear_uffd_wp() helper names ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c  |  3 +++
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c  |  3 +++
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c   |  3 +++
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c   |  3 +++
- .../amd/amdkfd/kfd_process_queue_manager.c    | 24 +++++++++++++++----
- 5 files changed, 32 insertions(+), 4 deletions(-)
+ mm/hugetlb.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-index 4a621791da230..99fdbf666c87d 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-@@ -293,6 +293,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 1dd80a5b72b07..e6f913f227e6c 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6516,15 +6516,19 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+ 		goto out_ptl;
  
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 	/* Handle userfault-wp first, before trying to lock more pages */
+-	if (userfaultfd_wp(vma) && huge_pte_uffd_wp(huge_ptep_get(mm, vmf.address, vmf.pte)) &&
++	if (huge_pte_uffd_wp(huge_ptep_get(mm, vmf.address, vmf.pte)) &&
+ 	    (flags & FAULT_FLAG_WRITE) && !huge_pte_write(vmf.orig_pte)) {
+-		if (!userfaultfd_wp_async(vma)) {
++		if (userfaultfd_wp(vma) && !userfaultfd_wp_async(vma)) {
+ 			spin_unlock(vmf.ptl);
+ 			hugetlb_vma_unlock_read(vma);
+ 			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+ 			return handle_userfault(&vmf, VM_UFFD_WP);
+ 		}
  
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-index ca90454b01acc..2f4caf637a065 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-@@ -344,6 +344,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
- 
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
- 
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index 1e220e8810922..0d22a377f3e33 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -416,6 +416,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
- 
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
- 
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-index f0de0893bc597..ae3bd2bb410a5 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-@@ -305,6 +305,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
- 
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
- 
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index bf3c7d055fc33..445fba8e4bbdd 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -26,6 +26,7 @@
- #include <linux/list.h>
- #include "kfd_device_queue_manager.h"
- #include "kfd_priv.h"
-+#include "kfd_topology.h"
- #include "kfd_kernel_queue.h"
- #include "amdgpu_amdkfd.h"
- #include "amdgpu_reset.h"
-@@ -984,7 +985,6 @@ static void set_queue_properties_from_criu(struct queue_properties *qp,
- 	qp->eop_ring_buffer_size = q_data->eop_ring_buffer_size;
- 	qp->ctx_save_restore_area_address = q_data->ctx_save_restore_area_address;
- 	qp->ctx_save_restore_area_size = q_data->ctx_save_restore_area_size;
--	qp->ctl_stack_size = q_data->ctl_stack_size;
- 	qp->type = q_data->type;
- 	qp->format = q_data->format;
- }
-@@ -996,6 +996,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
- {
- 	uint8_t *mqd, *ctl_stack, *q_extra_data = NULL;
- 	struct kfd_criu_queue_priv_data *q_data;
-+	struct kfd_topology_device *topo_dev;
- 	struct kfd_process_device *pdd;
- 	uint64_t q_extra_data_size;
- 	struct queue_properties qp;
-@@ -1032,6 +1033,24 @@ int kfd_criu_restore_queue(struct kfd_process *p,
- 		goto exit;
- 	}
- 
-+	memset(&qp, 0, sizeof(qp));
-+	set_queue_properties_from_criu(&qp, q_data);
-+
-+	/* Per-XCC control stack size from topology, as create-queue requires */
-+	if (qp.type == KFD_QUEUE_TYPE_COMPUTE && pdd->dev->kfd->cwsr_enabled) {
-+		topo_dev = kfd_topology_device_by_id(pdd->dev->id);
-+		if (!topo_dev) {
-+			ret = -EINVAL;
-+			goto exit;
-+		}
-+		qp.ctl_stack_size = topo_dev->node_props.ctl_stack_size;
-+	}
-+
-+	if (q_data->ctl_stack_size > qp.ctl_stack_size) {
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-+
- 	*priv_data_offset += sizeof(*q_data);
- 	q_extra_data_size = (uint64_t)q_data->ctl_stack_size + q_data->mqd_size;
- 
-@@ -1058,9 +1077,6 @@ int kfd_criu_restore_queue(struct kfd_process *p,
- 	mqd = q_extra_data;
- 	ctl_stack = mqd + q_data->mqd_size;
- 
--	memset(&qp, 0, sizeof(qp));
--	set_queue_properties_from_criu(&qp, q_data);
--
- 	ret = kfd_queue_acquire_buffers(pdd, &qp);
- 	if (ret) {
- 		pr_debug("failed to acquire user queue buffers for CRIU\n");
++		/*
++		 * TODO: fix all cases where uffd PTE bits remain in VMAs that
++		 * are no longer registered with uffd.
++		 */
+ 		vmf.orig_pte = huge_pte_clear_uffd_wp(vmf.orig_pte);
+ 		set_huge_pte_at(mm, vmf.address, vmf.pte, vmf.orig_pte,
+ 				huge_page_size(hstate_vma(vma)));
 -- 
 2.53.0
 
