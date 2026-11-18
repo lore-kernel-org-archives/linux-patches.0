@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054627;
-	b=azAlpYeNrY6p/F2qj5EL3PgR+OAy8CoF1IWMrT/dsgwhANnWaqej+A2SnLtHewjyJdhc
-	 0x9A2pzc+foQXRxx2+cM6xwMJlYLKo/1eY9fEyZTa6QixOxrf2uGpGMd55viNMl1xSKCN
-	 4dqzL0cVtLT+FgCLjCLRzJRnRheL41ztxfkOODvNwsYUUiTszedjoeZhTilJlj7IQBliM
-	 Isw8byIIYR/A5w6gEBzq9UchNKebiCcpf8qPjs0hLPnF9jdZkAfmW3tiHBHNvg2ykWqR6
-	 bzr3qucHDDo8EI5MnKDw2YILaOP5lJOwQQbkeBo0pBK7l3vp1Li42yxZiHZJtoW/OrA==
+	t=1795054630;
+	b=UP0oEXvRMDjiA170H3cpjxQWHNbRNU3445zpjxsYlMXap4wRqEQMwaOIA4zbrGdNJcFG
+	 GUEHXis3v96ad5ogHUl3gaFQqzpCSYV+QZoUva7PoHbyjW1V+mkVT4wsoIWV9BR9oASbS
+	 Tu7RKUz/Jd3A8Y2BIlURqlcbKMHZCMa6DBQe1/7O42mZ3c6bjkY3/40i8V/zSnfnlo1Fe
+	 QMVJrT2h4IzHaHlFPnAs9CKQQ0mNb9QVqgpt9cwRZh6XFmwZ7lgqUsbm0MXx+FNGHA3Dl
+	 45T2dDcKlFqDuW6ujUcyxzlFMoOwtvBJGJ2WZsZemc8AjBVWRNzZiHADOFbV3pH3wvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=sEefcr+wDXvfZq1PzuDK+KV9AISIMhQUUKggR4tTIPk=;
-	b=VUnS/4ZKRSdhb6zeXS6poRktKmvxp57otoThpdvRoxSFTHvZM09TYaKTBcMF1Z0+9FC7
-	 aPOOg8rvILlXosSL+HjEDR9XRqUanY7rls0w4iLjDfT2WxwvMhS5tQJAPu6yOAL5txkU5
-	 WutyHHEvnu4UDCmBTZ/xjl76rCAlwoFiznHpgkeE7cHVfXnfaczeYS2hrqQr7YwX44L4n
-	 rw4uGSQmVha/oS3Vsh+dPNOgn6TKDQV8pVob3V4IM6HWVS50fWW/AdQ7AdgnpkkyZEutd
-	 Hb12Wn3scOAlTol+dOi01ukM6jL2K7fWriGE+zf+2+2lTzxbNhHI275Py1iD6k/U4NQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=tvGlKjYe6MEstCnd9PHa+/gQFhflOUMrt/eUakRBM9U=;
+	b=yao/hPwJrMC2z3QDkeISmZHwweKDVPDIE/FH2U/gPugnxenPEWcoC6k7npkA86R6EkK3
+	 iilkvHVQL2TezzfoAfLeY7ndb22rS27DG4PXlSdsvND3DskdBD9T9WF0fNe/d3blHaIPw
+	 3s48aup28lvivo7btUzj8Liv2Xc8e66RHwa2O6lLPVjJdVe7KyHQys4eLCbYflYt42ZWw
+	 sDsvVTiAsa5YQQK+XCn+D5QhIWSNrZAdUzfnyZywKq3uyKY5zS6WeeXCM5Pj14jZJ1oeb
+	 8xwNoUF44MoDrIYloQO98U7318xycCVVMHn8sz5NFTncwD2HkeTVTMJTDSXVYN0aRHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JnE5NtOZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6G2X0f+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F7606A325;
-	Thu, 19 Nov 2026 02:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBC606A320;
+	Thu, 19 Nov 2026 02:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JnE5NtOZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF841F000C4;
-	Thu, 19 Nov 2026 02:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6G2X0f+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915BF1F000C4;
+	Thu, 19 Nov 2026 02:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054627;
-	bh=sEefcr+wDXvfZq1PzuDK+KV9AISIMhQUUKggR4tTIPk=;
+	s=korg; t=1795054630;
+	bh=tvGlKjYe6MEstCnd9PHa+/gQFhflOUMrt/eUakRBM9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JnE5NtOZfcIQ+4JNkW5b0oi9BO2VfQR3h9K5GzUuNcyC/E5qJk15Kxya+wGHCZElN
-	 tZ7djVtR5Dv4nObpYt04Vj8zMxHcOFqHqy0S8Iu56tePRDWhS9Mk8i0NneV9lOFVEH
-	 gHX3oXSqL1KQmZxeqftlXOy03p7U4naEZGdXI4ZU=
+	b=Q6G2X0f+fUQx0XQCgKQzodV6+0VTJOndDictiNXzT0YXSbguNO79rq9ZtFGHAlJyV
+	 jAH0+m93iYBDThkkdf2ScOQA4s0Jn6ZKhks3ItlitEdS/Eu2dzFtEMdP3oGiimBBaB
+	 8mJdXLTGzRhwRPY8ryEjh0pTCmnDWuvClSedKM3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1343/2214] perf jitdump: Fix debug_data and unwinding_data leaks
-Date: Wed, 18 Nov 2026 15:50:19 +0100
-Message-ID: <20261118150105.163406884@linuxfoundation.org>
+Subject: [PATCH 5.15 1344/2214] perf jitdump: Validate code_size against total_size in code load
+Date: Wed, 18 Nov 2026 15:50:20 +0100
+Message-ID: <20261118150105.214669131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,7 +64,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -73,19 +72,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 2bd967f3adcba1d3e54f10b0d8b25f950e4f03fd ]
+[ Upstream commit 06c7cf7a072fcd52e68471628c56630d2bdcc650 ]
 
-jit_repipe_debug_info() overwrites jd->debug_data without freeing the
-previous allocation.  If two consecutive JIT_CODE_DEBUG_INFO records
-appear without an intervening LOAD record consuming the data, the first
-allocation leaks.
+jit_repipe_code_load() reads code_size from the jitdump record and uses
+it to compute a pointer to the code blob:
 
-The sibling jit_repipe_unwinding_info() already frees the old
-jd->unwinding_data before reassignment — add the same pattern to
-jit_repipe_debug_info() using zfree().
+  code = (unsigned long)jr + jr->load.p.total_size - csize;
 
-Also add cleanup of both buffers in jit_close() so they are freed when
-the jitdump session ends, even if no LOAD record consumed them.
+An oversized code_size underflows the pointer arithmetic, causing OOB
+reads into earlier heap memory.  Validate that code_size fits within the
+record (total_size - sizeof(jr->load)) before the pointer computation.
+
+code_size is uint64_t but csize is int; values above INT_MAX wrap
+negative when narrowed into csize, which defeats the bounds check and
+sends the code pointer past the end of the record.  Reject those too.
 
 Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -95,30 +95,38 @@ Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/util/jitdump.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 051a29c29fb81..8157d0c295cf6 100644
+index 8157d0c295cf6..4ba0a87f5facd 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -123,6 +123,8 @@ jit_close(struct jit_buf_desc *jd)
- 	funlockfile(jd->in);
- 	fclose(jd->in);
- 	jd->in = NULL;
-+	zfree(&jd->debug_data);
-+	zfree(&jd->unwinding_data);
- }
- 
- static int
-@@ -649,6 +651,7 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 
- 	memcpy(data, &jr->info.entries, sz);
- 
-+	zfree(&jd->debug_data);
- 	jd->debug_data       = data;
- 
- 	/*
+@@ -9,6 +9,7 @@
+ #include <fcntl.h>
+ #include <unistd.h>
+ #include <inttypes.h>
++#include <limits.h>
+ #include <byteswap.h>
+ #include <sys/stat.h>
+ #include <sys/mman.h>
+@@ -455,6 +456,16 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	csize = jr->load.code_size;
+ 	usize = jd->unwinding_mapped_size;
+ 	addr  = jr->load.code_addr;
++
++	/* code blob lives at the end of the record, validate it fits */
++	if (jr->load.p.total_size < sizeof(jr->load) ||
++	    jr->load.code_size > jr->load.p.total_size - sizeof(jr->load) ||
++	    jr->load.code_size > INT_MAX) {
++		pr_warning("jitdump: invalid code_size %" PRIu64 " (total_size=%u) in code_load record\n",
++			   (uint64_t)jr->load.code_size, jr->load.p.total_size);
++		return -1;
++	}
++
+ 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
+ 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
+ 	count = jr->load.code_index;
 -- 
 2.53.0
 
