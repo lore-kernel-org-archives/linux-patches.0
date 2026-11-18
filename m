@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017723;
-	b=1BuJzKpnPUggVM2DdS0UrjHcXBXTfpJG25tO0hzuZAtTlK47JYCJA8e2OiSTdwbRA3En
-	 NQQKNZMH7zGP4wBUmng1fpsNud2jJPtiAcEIxVl5LejHINDnl4GtgE75z3xyY1Nh6NEKL
-	 Luj08EBRIJztRqK6fuK+gfYgFHViyJUMU6uOhk/FZyS1vNW9yxLzer+e/BNplaw3ICnj3
-	 9WD8o5366Bf9EFPs08OSogFN27zKayN8BqLSDxIKi3/A9BN/r1LdvbHlHLT+33Tq7dNgO
-	 WaZioPRqghPwJocc1m72Wd1HUliAtwEXXlMdFpz80jfpNfRxkMEHJ1kfhKJhs8Xe0lg==
+	t=1795017725;
+	b=mBXvK8lPpaGIPOntB3os/08Q0g1Nt/qf8ZnCIqBYKaol8hlX3J0VYDecDQuiRr7tc+00
+	 HfxhNwITskRzwZ3i9zPIoLZK+XlcImpgrAGhDpjyuTSYdyttT3MUmVpAV9HIYXwfrfFRk
+	 RqZuJtjBDWzOQOD2DbmQQGfNNIo33ckrcZ8YoDhXmIHeu9HdD/H9klexpkhWid8hFI+Zz
+	 Soed6hUowmAoRdeJygcGNpt8FfYtYpjC+v65kw7bQPmYFCJaBtgpBzjl9bKZOzrwy4q/A
+	 7Ps+wqJlxSy7JnV5Ty9Tc1MYMHyF38E1JqGrnkaPPOFkiz96mWRc+XKdwRT9+FQOz2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iqqXKGHgC9X6/5TAuVTeCQiZhK+Y6EDSc50+6FnBSi4=;
-	b=HfcQKomqhNAdB+PcFarhcO99pwoYHglH4GFZ7L4J0VUroewEn84ZZc4UDAdx/JNaEoD1
-	 Fcp2/qkEADcJ5qR3OOwcMDCuP509hkcBOW64r35c5KlJolprr11QuXnUdEHDCq32Mw5/2
-	 7LmTmGGHw5t1YycTFRqEwbjg1hPomGx5R2BdrhXFPP1uG+6ySjeov84zgOx544ibX1m5n
-	 w5f6vCJwsPLEOeG49nyN8/NPhUg5uBgYUjh7qB0owU/tSAXb92Da8VnyLjivFRE02HjJ/
-	 aGNUY+xaiuILKGQ88b8Hf0vmY2jvFMwVDRKmkh09Ss7rZGe+JXorqO6lLMxSKggUAKA==
+	bh=3Ka60MLkGSpqN/bAqVqMTcvjYIw+iwnWAfSGFT+FQp4=;
+	b=ecL7izfv4vRAGajUWR3/MqCKSL4G/iCM97eOPmLvOZfmzbeHILcRFyA99rqglqDLL3mD
+	 hMi3gqtmJ9SPTQdjuhaMdUABbCg57kcJrCx+QxtTaFG2HsTyZSbFarOGiwtV303vtpRYO
+	 3SC887i2BGjWhqH6PwFcTcyEbB43mH2i2o8RkL1ZDiroNlI+IGjhx6TjmulYBCKrTQdPN
+	 MCaerBDrmwYzQiIAas+OiDrJctzrWNvkNXvGKUEnFg/GiqvgvMH9Hxfm+JhmcJQ2zduOS
+	 hFIduswDFQcdb4mvMStaDVOqxiIwMU7wIzbol8T5CpVou7HYz0lg3os51EjiJUL+3qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qs0ewst9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZyfMu3N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21757606A32A;
-	Wed, 18 Nov 2026 16:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC02606A31C;
+	Wed, 18 Nov 2026 16:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qs0ewst9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1021F000C4;
-	Wed, 18 Nov 2026 16:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZyfMu3N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404AE1F000C5;
+	Wed, 18 Nov 2026 16:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017723;
-	bh=iqqXKGHgC9X6/5TAuVTeCQiZhK+Y6EDSc50+6FnBSi4=;
+	s=korg; t=1795017725;
+	bh=3Ka60MLkGSpqN/bAqVqMTcvjYIw+iwnWAfSGFT+FQp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qs0ewst9wCwHKdz0e18SGlrpdmVbaOg1HlZFX9+PvvTkN1b+x5qD9ImjpSx9aG8Lw
-	 7NJ3fWK7eXkvPA2uOiyuMB5Piy4A44yonP1J4ckPgIvpqo7YfTnrq0jK6c8OeVAMJ/
-	 RStdkVcvzAHyooxGdRU37iGh84COlLEgkHon1fVc=
+	b=0ZyfMu3NbuqJ6Fk8mfDXmIZFwnhBIuh58bxZfhvKCXj7hjOV3dbf5pelmqz5BB7Fc
+	 6rEGlXyLjDLAvX0IlmjNn28uLBOEd8/PQ/zarcWJfNuWOpHJSclLVgxO//YbWqytir
+	 PlqQkxaii0x7nsahzvJi84yEygonT6MvyZXvznG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0985/2651] soc: ti: k3-ringacc: Fix DMA ring initialization kernel-doc
-Date: Wed, 18 Nov 2026 15:37:05 +0100
-Message-ID: <20261118150323.363430575@linuxfoundation.org>
+Subject: [PATCH 7.3 0986/2651] fs/ntfs3: fix slab-out-of-bounds write in attr_insert_range()
+Date: Wed, 18 Nov 2026 15:37:06 +0100
+Message-ID: <20261118150323.398523742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,44 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 6c4e6e8f5cf95f7e0d4f04928a9ae70e20c73d4b ]
+[ Upstream commit bf9a6578e03b065335836e025356b4b9170b9449 ]
 
-The heading for k3_ringacc_init_data repeats struct, so kernel-doc
-cannot match it to the declaration. Its three fields are also missing
-descriptions.
+When fallocate(FALLOC_FL_INSERT_RANGE) grows a still-resident ntfs3
+attribute, attr_insert_range() shifts the inline data using the insert
+length 'bytes' as both the destination offset and the copy size:
 
-Use the structure name and describe the firmware handle, device ID,
-and total number of available rings used during DMA ring initialization.
+  memmove(data + bytes, data, bytes);
 
-Fixes: d782298c6f6b ("soc: ti: k3-ringacc: add AM64 DMA rings support.")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://patch.msgid.link/20260923061658.20140-2-kmehltretter@gmail.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Both are wrong: the shift must start at the insertion point 'vbo' and
+move only the data past it (data_size - vbo). When bytes > data_size the
+memmove runs off the end of the data_size + bytes buffer and overflows
+the adjacent slab object.
+
+Since vbo < data_size is already enforced above, the reworked offsets stay
+within the data_size + bytes buffer and cannot under/overflow.
+
+  BUG: KASAN: slab-out-of-bounds in attr_insert_range (fs/ntfs3/attrib.c:2581)
+  Write of size 512 at addr ffff8880135e8b10 by task exploit/142
+   ...
+   __asan_memmove (mm/kasan/shadow.c:95)
+   attr_insert_range (fs/ntfs3/attrib.c:2581)
+   ntfs_fallocate (fs/ntfs3/file.c:618)
+   vfs_fallocate (fs/open.c:338)
+   __x64_sys_fallocate (fs/open.c:362)
+   ...
+
+Fixes: 9256ec35359f ("fs/ntfs3: Refactoring attr_insert_range to restore after errors")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/soc/ti/k3-ringacc.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ntfs3/attrib.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
-index 2de6031b94241..7b7fc237c08f5 100644
---- a/include/linux/soc/ti/k3-ringacc.h
-+++ b/include/linux/soc/ti/k3-ringacc.h
-@@ -254,7 +254,10 @@ u32 k3_ringacc_get_tisci_dev_id(struct k3_ring *ring);
- struct ti_sci_handle;
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index d9f538c31e6ee..7b74adb2e8684 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -2625,8 +2625,8 @@ int attr_insert_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
+ 			char *data = Add2Ptr(attr_b,
+ 					     le16_to_cpu(attr_b->res.data_off));
  
- /**
-- * struct struct k3_ringacc_init_data - Initialization data for DMA rings
-+ * struct k3_ringacc_init_data - Initialization data for DMA rings
-+ * @tisci: TI SCI firmware handle
-+ * @tisci_dev_id: TI SCI device ID of the DMA controller
-+ * @num_rings: Total number of available rings
-  */
- struct k3_ringacc_init_data {
- 	const struct ti_sci_handle *tisci;
+-			memmove(data + bytes, data, bytes);
+-			memset(data, 0, bytes);
++			memmove(data + vbo + bytes, data + vbo, data_size - vbo);
++			memset(data + vbo, 0, bytes);
+ 			goto done;
+ 		}
+ 
 -- 
 2.53.0
 
