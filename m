@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028095;
-	b=fouBhIQaOiN4nir/QxkPnbBeJFF3Q3lursIU+mrbQnp90QtBMMRLO+cYYpwZDVm13w9Y
-	 SkYyoEju9FqS0aDSplNDP7Yovm8vv9BM7NqInoGalTuCC4oMF4cqebQ68VuGYbfMPp6AW
-	 VLCq1+LfvJSatsW01+wdilTgBoEbqaMpvWQ4EWjfYBsPL5a46w3DGkJHt8aua3LymYX6I
-	 rK86BhyVmIbbyE/1dKNexF/Lo5Ae6Ga97IPqLyP0q2Gaw65Xe48l4XArucU/JH9pHsBBv
-	 s1EAv7abms7ehaTAn1aZGTUcEfuW94B3Hf3ZtIh6S1YetXAqzuf19lcg2c388+kWdbg==
+	t=1795028098;
+	b=jQGCuTr5+kyEMW48aEj6AvNyTv0nT8ZmorlO90OuK6wKrvcWkW35a0+Q+wh1QTW1hWdq
+	 b32OZEwi0n1pRTHAqSsKjkJuuXDwYkD64NuULJTYMQT7pPIlNvVBH/hBPhJ0jSa35Vu0w
+	 4aD80TbwzfENR9JlXT0TyWf0GmnVw8FPBRPK/6PDLgGqX8Qv9Kn7zuORhKcnl7cWHXFqG
+	 CGBZFtslrQDf2dRaLJG9j8AE0TY1EqdqtvGh9yg0QARedzhEGvooUqaUpjnW+amAR0DiN
+	 WFEzmYs6VtuUnrs4LebD86/21j3lD6CXXGiJRVof5lJSR6E5YUF+yTVCLTpllkxXoUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xISHwpQQ4KTa9vQVC6CxdcygMMR67rGSiMmvLMHV+VI=;
-	b=ca9y5gE7anqQM6J89S6WlDQ0hprrX3dgHMo498WmC1wtbqTyj7QKsZYL/HnW0YxkyLk4
-	 idVDe4Ei0bE1fZQvMHjwsTH/D+wmNRtL7sgo2WFUUkGU4610A/Lbp6WTL1EXsUGplGdBh
-	 C7Yhm0Vf+XznK2Y3tLfaUzrcp4blHux7DrSUSOLQi3ZBhYAJVQLjhC361baarR7G+HLvE
-	 N1VRAxGNz49IExJ/0URAA2Kv/Sr4OG1UhpbSJgnbeIAyAfPqoC+kXYUOjw3hcYEhiMOwJ
-	 LcD7U29B4hZFb+i7da63Re9158zM/KY/jf1WDockhJ9mpIHvk+4I4CWJM86KM1cyX2A==
+	bh=21L7KbBG/+KML5u2BIb46L338t5rHE0uJPYPqNAzkKE=;
+	b=knGmiBmXSeT6vinVetPWIppavad8b9YdKporuC4+XzrwNne8hODekjlyGPkeBpvkoL1L
+	 4N7qCv1poDaqVqmHWA1eq1Mi4qVaw2g49giKN5IT9wEY7v3wAblC0t7yPz4+1Jn4zoo4v
+	 ZUL7iI3Q8gcuoGh84ktzKzlj2BlZJjE6FQlhzan84VjU2Wh8DkxiVvK7BlxrHz/TmbYkc
+	 YJRwORwXP43z2ix4FYfNYP47luyS3G3x4yn+aRSK7/GMIVm/JbVYFVhDXjFBDotknkfdg
+	 OIYLaw8zc9fKNDxHB8BmZQm4kuBBfsOwBw24dVLrhHyPQjnxMbA00yqSQfLC799YZ2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqwJST4R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uwqg3Wsl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9228E606A31C;
-	Wed, 18 Nov 2026 18:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63031606A31C;
+	Wed, 18 Nov 2026 18:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqwJST4R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37E31F000C4;
-	Wed, 18 Nov 2026 18:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uwqg3Wsl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6EC01F000C4;
+	Wed, 18 Nov 2026 18:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028095;
-	bh=xISHwpQQ4KTa9vQVC6CxdcygMMR67rGSiMmvLMHV+VI=;
+	s=korg; t=1795028098;
+	bh=21L7KbBG/+KML5u2BIb46L338t5rHE0uJPYPqNAzkKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oqwJST4R6Pmz/dejAPo2CnQyuJip6M+rDyspPcR14d7Tx51uV+niz07HmojAc6BhC
-	 /7rUV/MfzffPqDliMLcMaoXCOQ8Zp0Zts1kz5J1hZexBzmKJOV+iL9D3hhSqMpW1sJ
-	 VgxK5jxU7LDBbUKQvIXW9Am6iFzV4ah9JWs5kUyg=
+	b=uwqg3WslJQYGc1NbNOAvSM3cbed9X+BBzVjGDDTy+cFEvut78l2ed1H/FHRD0sL+6
+	 r0k2s1PVq5yknJ5giXELjdvP1ydPHscBAcmOTU/UYxxPSn0Ig1w76l78wPKVkeRXBc
+	 j/LeAydpoyJeQSn+TVItuTi1Ns+Tx63Yo6zPQdzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com,
-	Rongzheng Wang <testwrzwrz@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2023/2151] nvmet: use the enabled transport when disabling a port
-Date: Wed, 18 Nov 2026 16:02:38 +0100
-Message-ID: <20261118150235.428654853@linuxfoundation.org>
+Subject: [PATCH 6.18 2024/2151] kdb: fix memory leak in kdb_setenv() when environment is full
+Date: Wed, 18 Nov 2026 16:02:39 +0100
+Message-ID: <20261118150235.463952504@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,97 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongzheng Wang <testwrzwrz@gmail.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 60385038754ed9fb05dab127b35f88c702252505 ]
+[ Upstream commit 22d59ccad2935b7dea7f818793b739343de433a8 ]
 
-nvmet_disable_port() looks up the transport from the current
-disc_addr.trtype, while nvmet_enable_port() records the transport in
-port->tr_ops.  If trtype is changed while a port is being enabled, the
-port can be removed through a different transport, passing the private
-data of the original transport to the wrong ->remove_port().
+When kdb_setenv() fails to find a free slot in __env[], the function
+returns KDB_ENVFULL without freeing the previously allocated string
+buffer 'ep', leaking memory on every failed call.
 
-The same mismatch is reachable with loop and RDMA: loop add_port()
-leaves port->priv NULL, and RDMA remove_port() dereferences it.
+Add the missing kfree(ep) before returning KDB_ENVFULL.
 
-Use port->tr_ops for removal and serialize trtype changes with
-nvmet_config_sem in nvmet_addr_trtype_store(), so the transport that
-added the port is also the one that removes it.
-
-Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
-Reported-by: syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=c98b21427617af7f547a
-Link: https://lore.kernel.org/all/6acbc835.a150a118.27e199.003c.GAE@google.com/T/
-Signed-off-by: Rongzheng Wang <testwrzwrz@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: a30d4ff8193e ("kdb: remove usage of static environment buffer")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/mbwhul34esbxkdbmlbjaquv5lgyzznn6pdapohry3lsiidbz6n@zucvm5os363q
+Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 16 ++++++++++++----
- drivers/nvme/target/core.c     |  8 +++++---
- 2 files changed, 17 insertions(+), 7 deletions(-)
+ kernel/debug/kdb/kdb_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 5250a517da8bf..2aeae9081ac7c 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -360,10 +360,15 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 		const char *page, size_t count)
- {
- 	struct nvmet_port *port = to_nvmet_port(item);
-+	ssize_t ret = count;
- 	int i;
- 
--	if (nvmet_is_port_enabled(port, __func__))
--		return -EACCES;
-+	down_write(&nvmet_config_sem);
-+
-+	if (nvmet_is_port_enabled(port, __func__)) {
-+		ret = -EACCES;
-+		goto out;
-+	}
- 
- 	for (i = 0; i < ARRAY_SIZE(nvmet_transport); i++) {
- 		if (sysfs_streq(page, nvmet_transport[i].name))
-@@ -371,7 +376,8 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index dddf2b5aad575..f989f23545657 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -341,6 +341,7 @@ static int kdb_setenv(const char *var, const char *val)
+ 		}
  	}
  
- 	pr_err("Invalid value '%s' for trtype\n", page);
--	return -EINVAL;
-+	ret = -EINVAL;
-+	goto out;
- 
- found:
- 	memset(&port->disc_addr.tsas, 0, NVMF_TSAS_SIZE);
-@@ -380,7 +386,9 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 		nvmet_port_init_tsas_rdma(port);
- 	else if (port->disc_addr.trtype == NVMF_TRTYPE_TCP)
- 		nvmet_port_init_tsas_tcp(port, NVMF_TCP_SECTYPE_NONE);
--	return count;
-+out:
-+	up_write(&nvmet_config_sem);
-+	return ret;
- }
- 
- CONFIGFS_ATTR(nvmet_, addr_trtype);
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index ca3444f2ffb70..7cae1543c3a51 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -384,11 +384,13 @@ void nvmet_disable_port(struct nvmet_port *port)
- 
- 	lockdep_assert_held(&nvmet_config_sem);
- 
--	port->enabled = false;
--	port->tr_ops = NULL;
-+	if (!port->enabled)
-+		return;
- 
--	ops = nvmet_transports[port->disc_addr.trtype];
-+	ops = port->tr_ops;
-+	port->enabled = false;
- 	ops->remove_port(port);
-+	port->tr_ops = NULL;
- 	module_put(ops->owner);
++	kfree(ep);
+ 	return KDB_ENVFULL;
  }
  
 -- 
