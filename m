@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038857;
-	b=gn/U/CZpeRmpX09AR3tj/XmlcjhwDm+iLkEx6FB6f4Y1ERCcTDYGM6s5PKaOvDzIhtJa
-	 s07FsNHQ4iUbZLhv5potSUczyPTETThYrTn7ci6Xgg//p1flUtpPYQTvk4bgqyeYAMIZO
-	 DMem/We6CwY7DcHXCKmBSknyPviY8sndZH/rvvQZnm7X0Kq7BoIUWfxVU1LHiPJjYK6nL
-	 V04QrdCDu6BcubzXc4NB1f96WEoqg+iHQjg/BJ4hqEsdHrjz7XSqBoF4WpamoFesXTMc+
-	 xLdT/SnmiKEpTA5MibuPqc7GJ6bXA3NWxzs/bsuaytWJj+PbTi+m546gwlnWYpSFo3Q==
+	t=1795038860;
+	b=vIFRPMukBWLzqks3+y0v8RmjKg2hT1x8xOGAjZm6F0i9KQcbnkYw5scHRIelgfqkO5VG
+	 nAdLN3rDW/YiCrmoWFi/NYKRKH5Mb3n3K88ubHInZUWzY2VZ7HOMuYak/k/LUvhUS4yaq
+	 xwLr+WLz0i23cCBDGFbq7vyn36ALX+xMy9HSvhAgNZk6GTSpNqWNURKdPGRWDC/zzf5/G
+	 suzEolQAz/c6uFlt6t11MTuEfFOcklTwWDjnwjP5yU/w7VNVZR3/Y1PwPLKTi/tHTr+06
+	 YOTqNBBoBrjFiGj9bV2cr0JUp4MZufv4BxLQHQGJbp60C3W+tDza5vK7xOEvTfJecHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j4gNsQKV4h2/mQ/BH0FGLkeQfQ+kMubNRZLkBSo7iq0=;
-	b=giz+SIHz/qBkoe7iJeciRLWlCpYQf7ax4srpdc5ZL/n5rKP/FrBnIwRjgWlPZUx3x+xi
-	 4d+TWsVXq2MlxLj60uE/+uBvpI3FoQwQHqakUEt+INrXQjnNKY6ExjQh6YRxeULiIdXxu
-	 4ZD/ioNrHhKbJ0zjI/t7ocRX+iV1Fz4lUyMxtonuzDT5XryiT2SS84pM7PByDiQO+POvg
-	 EzG6QnfWmPdT4FkdLWYDJcTSDNochaSntUk9xPcLV7zpWJtMOxzfzx0EeH+riGXnkNcGQ
-	 5t/ll7eKc9fatH24oYIlBlnge7T4GvVyf5cvjSr5TG0j4SnQVd/cqeHNLU2LbS3ynIQ==
+	bh=f3mH+PNPBD3qo29R8Fn3lj1+sF0kSEerwIjXlYa5EnA=;
+	b=KSRq0erNz/Q8ZqMgtnJisGw8ryTCOXp298R9LwjqMhsZmlwjJPU8yUUSft0HfIH5rF7x
+	 g1pdvz+AShKehYa9GtD7GXjnOiRIhRdrW9krgI2qAIkYWFxGIUZtvXuEMr2KK3OrN7weE
+	 KQxTr8J3x5YpMmpWdDuP1Evkbubd0xyFXSfy1/lf11HEinpxW6sYdLmfE8Cm9svZlhDI/
+	 5KbfREKIgK8rGSa/jz3GgwC97IMvxEqS0vUaKnUersqcNCddfGYt2vfJZXFHXCmo91we4
+	 aCupOmWvzUWrEUvLJ3i3lJlRHxfCpfcxlxCkpcYghbOOLZdvIB6YBrP1SQyjUS0o8jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3DHoPXF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teUEDNyb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDA6606A320;
-	Wed, 18 Nov 2026 21:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1FB606A32A;
+	Wed, 18 Nov 2026 21:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3DHoPXF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864A61F000C4;
-	Wed, 18 Nov 2026 21:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teUEDNyb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D10E1F000C4;
+	Wed, 18 Nov 2026 21:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038857;
-	bh=j4gNsQKV4h2/mQ/BH0FGLkeQfQ+kMubNRZLkBSo7iq0=;
+	s=korg; t=1795038859;
+	bh=f3mH+PNPBD3qo29R8Fn3lj1+sF0kSEerwIjXlYa5EnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3DHoPXFflsp1Gxe0vUNnJRwxndFu33SZWji+Vv3/g2L/X4pbH3x2w5oncOkgGdy3
-	 SCQ/D//5TzyWtPBFt5sDvp6dW9Rjt5uoBLzEs3BisPTzhCKN68L5T/xDGYh/BPWc8H
-	 JXt/bihHwatdsnJE3SaAExXPs3oXvRL0OgEJ2TdU=
+	b=teUEDNybPeC+fXLXVL26o6omeuqlFsPzyt/ez0am8knsEQt2is1K+hC6in/GyXIci
+	 k4R+fnguCE2nHp6q92q9xahDKFbTrdmA+k8q+9SEWy1Vnp8Hthwt5C+a9YYXkjLzj/
+	 JyGjG49rCU1OaJEUqQuLcjiLh25Y6M/0N1+Fwsd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1892/3318] ocfs2/cluster: hold a reference on the heartbeat thread
-Date: Wed, 18 Nov 2026 15:41:54 +0100
-Message-ID: <20261118150418.763708753@linuxfoundation.org>
+Subject: [PATCH 6.6 1893/3318] alpha: select SYSCTL_EXCEPTION_TRACE
+Date: Wed, 18 Nov 2026 15:41:55 +0100
+Message-ID: <20261118150418.795245110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,99 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit aa2e38aabaae87236290e486a2b77cfa3adfbebe ]
+[ Upstream commit e517a172b77601839e1c52ac4303602e285804bb ]
 
-Since commit 688bc88e2046 ("ocfs2/cluster: keep heartbeat local node
-stable"), o2hb_thread() leaves its loop and returns when the local node
-changes, for example after "echo 0 > node/<name>/local".  The thread was
-started with kthread_run() and nothing holds a reference to its
-task_struct, so the task is freed once it exits, while reg->hr_task still
-points to it.
+Report unhandled user faults the way other architectures do, and hook up
+the debug.exception-trace sysctl that controls the reporting.
 
-Reading the region's pid attribute then reads the freed task, and removing
-the region calls kthread_stop() on it:
+The message gives the faulting address, the PC and the user stack
+pointer, and is rate limited.
 
-  BUG: KASAN: slab-use-after-free in o2hb_region_pid_show+0xb3/0xc0
-  refcount_t: addition on 0; use-after-free.
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:kthread_stop+0xb1/0x390
-
-The thread could already return by itself before, when heartbeat start was
-aborted or on an unclean stop, but the local node change makes it
-reachable from userspace at any time.
-
-Create the thread, take a reference on it and only then wake it, so the
-reference cannot race with the thread exiting.  Drop it with
-kthread_stop_put().
-
-Link: https://lore.kernel.org/20260923010149.14391-1-kmehltretter@gmail.com
-Fixes: 688bc88e2046 ("ocfs2/cluster: keep heartbeat local node stable")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260616074931.3774929-1-zzzccc427%40gmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Cen Zhang <zzzccc427@gmail.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-[ sashal: adjusted context to keep the existing mutex_unlock() before the wait, placing wake_up_process() ahead of it, and the error path goes to out3 instead of out. ]
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260905-arch-kconfig-options-v2-v2-17-83e8245761a2@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/alpha/Kconfig    |  1 +
+ arch/alpha/mm/fault.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 8f089d0b03c5b..536bfa59201e0 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -1956,18 +1956,22 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	atomic_set(&reg->hr_unsteady_iterations, (live_threshold * 3));
- 	o2hb_set_region_stopping(reg, false);
+diff --git a/arch/alpha/Kconfig b/arch/alpha/Kconfig
+index d6968d090d49a..f4b12c6e9ddbb 100644
+--- a/arch/alpha/Kconfig
++++ b/arch/alpha/Kconfig
+@@ -37,6 +37,7 @@ config ALPHA
+ 	select CPU_NO_EFFICIENT_FFS if !ALPHA_EV67
+ 	select MMU_GATHER_NO_RANGE
+ 	select SPARSEMEM_EXTREME if SPARSEMEM
++	select SYSCTL_EXCEPTION_TRACE
+ 	select ZONE_DMA
+ 	help
+ 	  The Alpha is a 64-bit general-purpose processor designed and
+diff --git a/arch/alpha/mm/fault.c b/arch/alpha/mm/fault.c
+index 53e170e965915..63a24afa7a155 100644
+--- a/arch/alpha/mm/fault.c
++++ b/arch/alpha/mm/fault.c
+@@ -28,8 +28,32 @@
+ #include <linux/uaccess.h>
+ #include <linux/perf_event.h>
  
--	hb_task = kthread_run(o2hb_thread, reg, "o2hb-%s",
--			      reg->hr_item.ci_name);
-+	hb_task = kthread_create(o2hb_thread, reg, "o2hb-%s",
-+				 reg->hr_item.ci_name);
- 	if (IS_ERR(hb_task)) {
- 		ret = PTR_ERR(hb_task);
- 		mlog_errno(ret);
- 		goto out3;
- 	}
-+	/* The thread may exit on its own, so pin it before it can run. */
-+	get_task_struct(hb_task);
- 
- 	spin_lock(&o2hb_live_lock);
- 	reg->hr_task = hb_task;
- 	spin_unlock(&o2hb_live_lock);
- 
-+	wake_up_process(hb_task);
++#include <asm/pal.h>
 +
- 	/*
- 	 * Don't hold hr_dev_mutex across the wait, which can take seconds.
- 	 * hr_bdev is already set, so other writers still get -EINVAL.
-@@ -2018,7 +2022,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 		spin_unlock(&o2hb_live_lock);
+ extern void die_if_kernel(char *,struct pt_regs *,long, unsigned long *);
  
- 		if (hb_task)
--			kthread_stop(hb_task);
-+			kthread_stop_put(hb_task);
++int show_unhandled_signals = 1;
++
++static void
++show_signal_msg(struct pt_regs *regs, unsigned long address, int signo,
++		const char *desc)
++{
++	const char *level;
++
++	if (!show_unhandled_signals || !unhandled_signal(current, signo))
++		return;
++	if (!printk_ratelimit())
++		return;
++
++	/* Losing init is fatal, so shout about it.  */
++	level = task_pid_nr(current) > 1 ? KERN_INFO : KERN_EMERG;
++
++	printk("%s%s[%d]: %s at %016lx pc %016lx sp %016lx\n",
++	       level, current->comm, task_pid_nr(current), desc,
++	       address, regs->pc, rdusp());
++	print_vma_addr(KERN_CONT "  in ", regs->pc);
++	printk(KERN_CONT "\n");
++}
  
- 		o2hb_unmap_slot_data(reg);
+ /*
+  * Force a new ASN for a task.
+@@ -223,6 +247,8 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 	mmap_read_unlock(mm);
+ 	/* Send a sigbus, regardless of whether we were in kernel
+ 	   or user mode.  */
++	if (user_mode(regs))
++		show_signal_msg(regs, address, SIGBUS, "bus error");
+ 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address);
+ 	if (!user_mode(regs))
+ 		goto no_context;
+@@ -244,6 +270,9 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 	return;
  
-@@ -2217,7 +2221,7 @@ static void o2hb_heartbeat_group_drop_item(struct config_group *group,
- 	spin_unlock(&o2hb_live_lock);
+  do_sigsegv:
++	show_signal_msg(regs, address, SIGSEGV,
++			si_code == SEGV_MAPERR ? "unmapped access"
++					       : "access violation");
+ 	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
+ 	return;
  
- 	if (hb_task)
--		kthread_stop(hb_task);
-+		kthread_stop_put(hb_task);
- 
- 	if (o2hb_global_heartbeat_active()) {
- 		spin_lock(&o2hb_live_lock);
 -- 
 2.53.0
 
