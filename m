@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054667;
-	b=VHeWFoH+XaDZrxJ8BRF3RgYjWzBySNmpCcfYeKj9OqG6d9H2MWbgbRUdoqYWSdtiBX6j
-	 iuu9ZVhOYg/LPgHZKfpSvqYII6tzo+xS/acAkCZpbgBMSPDKFJaSGskQM3so/WkWuCzCJ
-	 rNR4T/+uKG92ArmI4fx2AhdadKHYv/1n5ThjgSBAvjUmnpM5QfJpLHjlduOXhvFAus6lA
-	 4tLrkYpCnOa9xImKt0jh8wZHLgG39J9XobNjTRDjjbckU5VOzcO/W+NJ4AlN/6mpCwLd0
-	 t+UCqu0lXuLc+WYOJuZBLyvUxc1QaNR4wm7v4h8CPAynULrKyUJ3i1EHrG9hD0eXV9g==
+	t=1795054670;
+	b=waVc3ykGcwbEnrNW0SuvVI3cODKyHhKRACs/fXobcu1PwBW3gXyj9EueZbrjTwz5f5ZH
+	 +lsQkzF24VdxrzaAf+8TtuIHmZWAPjlIrGW5QYhvd1Fh0YO3OOLFH3u0fMFwg1ljOJset
+	 2OziIgohse/HtLmXV35jzXBADzbY7iQMFS03iXZ6aiK4AXQkJDjH4vYPnqxNsJz9nvJIx
+	 xeLBPu4ZJ594f07TYEtTKEIpKFyXiLdBodpjzdObOry+dmaJKV4oply4rZInsHcjo4e49
+	 3G1qKvViCOgkuezGGckiRd3wErH2C6lmTo+B4HGV4+EcNFLAJ+aeTkus5wWq+u/2BiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TQS/2Oh44WAoRILx53dWwzmyGYxQUeQDYdHYzcIn744=;
-	b=ASYCBQ97EH3nFCMrvS/DBdK3gg73mHLIQFIZSB4RM8mzGdBuDW7P3HXdwPKkqIIqW5k1
-	 0uERdN1n/3K++JSHC7A5BhEuZ/tjBWm4qh3GasNg7VLVvSaIGLg6ojv91kANkUfD/bEjU
-	 nwD59/yIY8Ox88UY4ggxYmt/cAv6STVAOXTgjBljUpx1jHAovMODBLAxy0K3tu6WCMBk5
-	 ndz7b7k5KswV7/THpUZH5mivnS6TFBF3rUGuLpcvSMhNbwtEal8XYDgd/mzJ+Wb4CDvFO
-	 6lhNkBUjxloJLjbnELxtkNK4bVcd5HKmV+jSxGqnozbKA5qG5u6uLsk9zqkZM7xfgvg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WxdbeieBbMG+G3s/pXGZCaXMawzJGYuESSFZhXnZXWg=;
+	b=NtoXn2dPU5U9PJV25ayUD11lDqQbMftAcCDVFTx7fPM589h9YvqIdDoXbrQ4GejIGho9
+	 kUnmCoW5t01W9iZskZxQzBT/9Bijk/DyjX8t/j9H3KRnk12MYYK+krpc4mTtg/NSGciA+
+	 aDlbmezAP2jVdEPzpZA3zK136qcsY9OzcXe0FjjIawai/CZU6LT7dZNs+O/Hji8oAL5uu
+	 zEUD76n/re4go1Z8KB3J5vzfykfP8s/VSPlx2WJCA8t2laof0lQ7hbchRpMHo0RFHsGit
+	 btX9eWNOHcbBXXw0ekWDrLWSet8RVAhWJt8TC6r4UcXStZw5Zm5v+GSEeWXkYdqhDaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JpX0SCbw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pZKtVUEF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC80606A31C;
-	Thu, 19 Nov 2026 02:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6867606A320;
+	Thu, 19 Nov 2026 02:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JpX0SCbw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5A21F000C4;
-	Thu, 19 Nov 2026 02:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pZKtVUEF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1464C1F000C4;
+	Thu, 19 Nov 2026 02:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054667;
-	bh=TQS/2Oh44WAoRILx53dWwzmyGYxQUeQDYdHYzcIn744=;
+	s=korg; t=1795054670;
+	bh=WxdbeieBbMG+G3s/pXGZCaXMawzJGYuESSFZhXnZXWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JpX0SCbwr4tp7wza/cDBSTioe4wt1nqXKAUjkV5D6LV2ZkH6ZTfLp09mUIGSuEHSG
-	 JAFt+ogoECCdZRrU8ND9va33oV0FPrAA1jZH9UFzKORh3dDITmISJsVfxeXI5u/sv1
-	 h6nvPAZl3KV0lp/Sxdsun7mTuvoRSa2eFTBfeQC8=
+	b=pZKtVUEF4PWf+coTlr3CwMEYEBM5FTY8WApbHkRBN9mvXJFIH0rStcFUmgkaSoEGZ
+	 2MT0ik0Gv9M8ze7PFKRFWAxXra8IlZdQbYlOYobMtYBny7QAOvDW8P7J/DRoujnuUO
+	 CeT9yNDmSo35ImNRV24fAm3Bjy0NWOC5t7ZG3i4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1356/2214] ASoC: wcd-mbhc-v2: Fix incorrect properties names and typos
-Date: Wed, 18 Nov 2026 15:50:32 +0100
-Message-ID: <20261118150105.666505828@linuxfoundation.org>
+Subject: [PATCH 5.15 1357/2214] pwm: renesas-tpu: Implement .apply() callback
+Date: Wed, 18 Nov 2026 15:50:33 +0100
+Message-ID: <20261118150105.705572889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,65 +63,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 17bca5d55446c1e21944d47354ee2f0b80db36d6 ]
+[ Upstream commit ec00cd5e63f05461ab48128775c73c851c3c2b18 ]
 
-Improves debugging experience.
+To eventually get rid of all legacy drivers convert this driver to the
+modern world implementing .apply().
 
-Fixes: 0e5c9e7ff899 ("ASoC: codecs: wcd: add multi button Headset detection support")
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260823-wcd-dt-typo-fix-v1-1-a71b458e0d31@ixit.cz
-Signed-off-by: Mark Brown <broonie@kernel.org>
+As pwm->state might not be updated in tpu_pwm_apply() before calling
+tpu_pwm_config(), an additional parameter is needed for tpu_pwm_config()
+to not change the implemented logic.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 62cff15fbf2b ("pwm: renesas-tpu: Fix runtime PM reference leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd-mbhc-v2.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pwm/pwm-renesas-tpu.c | 44 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
-index 26f26f442d7cd..4fa0654f24bb7 100644
---- a/sound/soc/codecs/wcd-mbhc-v2.c
-+++ b/sound/soc/codecs/wcd-mbhc-v2.c
-@@ -788,7 +788,7 @@ static int wcd_measure_adc_continuous(struct wcd_mbhc *mbhc)
- 	u8 adc_en;
+diff --git a/drivers/pwm/pwm-renesas-tpu.c b/drivers/pwm/pwm-renesas-tpu.c
+index 4381df90a5270..0d2e87132d212 100644
+--- a/drivers/pwm/pwm-renesas-tpu.c
++++ b/drivers/pwm/pwm-renesas-tpu.c
+@@ -242,7 +242,7 @@ static void tpu_pwm_free(struct pwm_chip *chip, struct pwm_device *_pwm)
+ }
  
- 	/* Pre-requisites for ADC continuous measurement */
--	/* Read legacy electircal detection and disable */
-+	/* Read legacy electrical detection and disable */
- 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC, 0x00);
- 	/* Set ADC to continuous measurement */
- 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_MODE, 1);
-@@ -889,7 +889,7 @@ static int wcd_check_cross_conn(struct wcd_mbhc *mbhc)
- 	if (wcd_mbhc_read_field(mbhc, WCD_MBHC_HPH_PA_EN))
- 		return -EINVAL;
+ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
+-			  int duty_ns, int period_ns)
++			  int duty_ns, int period_ns, bool enabled)
+ {
+ 	static const unsigned int prescalers[] = { 1, 4, 16, 64 };
+ 	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
+@@ -293,7 +293,7 @@ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
+ 	pwm->duty = duty;
  
--	/* Read legacy electircal detection and disable */
-+	/* Read legacy electrical detection and disable */
- 	elect_ctl = wcd_mbhc_read_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC);
- 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC, 0);
+ 	/* If the channel is disabled we're done. */
+-	if (!pwm_is_enabled(_pwm))
++	if (!enabled)
+ 		return 0;
  
-@@ -1325,14 +1325,14 @@ int wcd_dt_parse_mbhc_data(struct device *dev, struct wcd_mbhc_config *cfg)
- 	ret = of_property_read_u32(np, "qcom,mbhc-headset-vthreshold-microvolt",
- 				   &microvolt);
- 	if (ret)
--		dev_dbg(dev, "missing qcom,mbhc-hs-mic-max-vthreshold--microvolt in dt node\n");
-+		dev_dbg(dev, "missing qcom,mbhc-headset-vthreshold-microvolt in dt node\n");
- 	else
- 		cfg->hs_thr = microvolt/1000;
+ 	if (duty_only && pwm->timer_on) {
+@@ -366,13 +366,45 @@ static void tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *_pwm)
+ 	tpu_pwm_timer_stop(pwm);
+ }
  
- 	ret = of_property_read_u32(np, "qcom,mbhc-headphone-vthreshold-microvolt",
- 				   &microvolt);
- 	if (ret)
--		dev_dbg(dev, "missing qcom,mbhc-hs-mic-min-vthreshold-microvolt	entry\n");
-+		dev_dbg(dev, "missing qcom,mbhc-headphone-vthreshold-microvolt entry\n");
- 	else
- 		cfg->hph_thr = microvolt/1000;
++static int tpu_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
++			 const struct pwm_state *state)
++{
++	int err;
++	bool enabled = pwm->state.enabled;
++
++	if (state->polarity != pwm->state.polarity) {
++		if (enabled) {
++			tpu_pwm_disable(chip, pwm);
++			enabled = false;
++		}
++
++		err = tpu_pwm_set_polarity(chip, pwm, state->polarity);
++		if (err)
++			return err;
++	}
++
++	if (!state->enabled) {
++		if (enabled)
++			tpu_pwm_disable(chip, pwm);
++
++		return 0;
++	}
++
++	err = tpu_pwm_config(pwm->chip, pwm,
++			     state->duty_cycle, state->period, enabled);
++	if (err)
++		return err;
++
++	if (!enabled)
++		err = tpu_pwm_enable(chip, pwm);
++
++	return err;
++}
++
+ static const struct pwm_ops tpu_pwm_ops = {
+ 	.request = tpu_pwm_request,
+ 	.free = tpu_pwm_free,
+-	.config = tpu_pwm_config,
+-	.set_polarity = tpu_pwm_set_polarity,
+-	.enable = tpu_pwm_enable,
+-	.disable = tpu_pwm_disable,
++	.apply = tpu_pwm_apply,
+ 	.owner = THIS_MODULE,
+ };
  
 -- 
 2.53.0
