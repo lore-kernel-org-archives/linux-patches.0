@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043856;
-	b=uvDy1PYJz8jRO9w/Gg0JgYqs1xx8UkMbtkHechI63hWHjA5AlJsfWdzvFxOeiFrNUt28
-	 eYNriZwL4nJTJNprxChmLqD4kwOShISIwW3usGeXe4lh3ip3cBGlZ+r4ghvAUufATxzuT
-	 dbVK1ZqE4hR0bX8X4qBHB4rT+ZCay/1DkwGyBqLogyv0/yl5SW8qcZkQRd3nGpTQfZ7ph
-	 Eg/ICdW0mCEAsbbaqOljEcynsWclWSbWto5Wn+VYlqZtVvN4npy/4zm4o2bVlPpfxHQWr
-	 KNYtoHMuqx2yxrkjzLHcEMdH2CvyqafTY4SD3H0+OII+QwD/fI+Mgk80EKMwaZyc9rw==
+	t=1795043859;
+	b=zaiUTfV1IgVNcf/LM7HCLbshPCjfXbO87s7QlX7XH3uKuJAwQOFlWyJTGyCqlHXcghht
+	 nWHLNVKxwT8O2ZgRRrwP5GsbUM5jsThyodFezpezUI5ptQJvfrk2e842gfDDRjyxbkaEP
+	 W9XJCixUlBDrnah45i2tJrpoT+G8WDSYA8itheyFLvYqBXAyfLhCSKPY0WTKe3xIcyoLS
+	 mrdjPEblwAlif3Wp/dmnoIv9ABENryHxTajThX1Cc4UaOS46Iml50rZO38CptwsnN8ahv
+	 lwoNDu47luODqie9laxspuEMgx19V9+vZMXzdzroz4fNx2wYuFnU0QnFDLguPc91RXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=z7DiquK88U3i2gnMaW5ySkw5sy14+cTWzhcPzr2+2as=;
-	b=xZyu3nr686ppg8Sz2Avs5DsD7NmNVa31Q3dD6g7XkaB5fMxL38MWtQzoejhtEv/LxnHE
-	 nHmPYm3HXPnfI84KOB3ZDzTlBmBHlup/uAaaEzthLR469L11FHAWiOfOrFQ0U4UJdn/eV
-	 qMa++abB1SDWfhmmSGL7HLAnIKQiXiSvOspVGXw51fAF0wjgOvgWnBV02eJDDrAbd/p/h
-	 GYlxJBZWiQQ41zY+w7hgfzTJDSsxFKB+Ch0I41+U4Fd64w8FCA2b2xozkNukvX2YBjDzB
-	 fxmD/QraAGHFENhuthA/5Y7PATnW7z3OxsPLtyt0tYNPAWHouBs8OpxGG0IfFG/m/iw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=AFx/rsew+knZcxyEAt7f+3bbyAeWrYrHg3+lz9yv7/Y=;
+	b=QIuljD/+p7xn3SPLuCyo2aqzkAf1VjQYEThfQkq4z3KHnizavfur36JiolNx0dATEXv5
+	 HpNvRMOewBUSJwR6pdNj19Pjm5MShNx8rScgSpiFPau5OmHGBi281LO0983DMgX350O7O
+	 lDJ00f3CMt/sPjaVOoYcYlv1iLhxkVy41+iktPuMNHGF/tIRvI7nF/wje8ActQgIWCO9G
+	 SQ4dlAJLGysvCtqWxJOkNxuzY/zJM+R4STB+Cah4BhjvKjtUoFRORbPS1fq1x+AV1JBdF
+	 D1v1Ggq8RqW8LmswXcScXUMi8WGBog6ZOYu+Oc4/Y43Coq5Lr2YOTwsPlBdon2gA5WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Imxwkvbv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ogZT8pJK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D34606A334;
-	Wed, 18 Nov 2026 23:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915F7606A31C;
+	Wed, 18 Nov 2026 23:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Imxwkvbv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EF41F000C4;
-	Wed, 18 Nov 2026 23:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ogZT8pJK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973E01F000C4;
+	Wed, 18 Nov 2026 23:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043856;
-	bh=z7DiquK88U3i2gnMaW5ySkw5sy14+cTWzhcPzr2+2as=;
+	s=korg; t=1795043859;
+	bh=AFx/rsew+knZcxyEAt7f+3bbyAeWrYrHg3+lz9yv7/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Imxwkvbvs2TgXaVxTFq+gYH/ddmPk+GruxEX8HzH+dZEpEsIx95bBKcDPUHknEIIc
-	 vjZab/LgsKl2FucM8L+v7aM0KXgMCFtF7qmhV/+UX7N3C9PtwDIFb3ZEt0TJtAiIZa
-	 b3UpCSbvZlnNnmSgb4wq3eXymq+/ih+3zW5nnHY4=
+	b=ogZT8pJKTNd9Hg4IiGY/YawMbU3nDlmCd1iODU6IpGcmMvk3tbPKQiixjzT6b7SfP
+	 dJ/4FjTAhOe4cfyqkX6Id8Z7QZySGISPz2dFdvk0QGz3b9Tj/W/O7LGM/3Hd1eNQGs
+	 cgZ5HQV/U+yzRMUfnLTxcV4ulcrPftDbI16UjoMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0323/2857] cxgb4: fix use after free bugs caused by circular dependency problem
-Date: Wed, 18 Nov 2026 15:22:37 +0100
-Message-ID: <20261118150213.075722308@linuxfoundation.org>
+Subject: [PATCH 6.1 0359/2857] platform/x86: think-lmi: Fix certificate thumbprint sysfs output
+Date: Wed, 18 Nov 2026 15:23:13 +0100
+Message-ID: <20261118150214.365341513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,69 +63,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit e50b9b9e8610d47b7c22529443e45a16b1ea3a15 ]
+[ Upstream commit 4f3183f5ae9b8ddfe338d79a96146a05342bbe50 ]
 
-The flower_stats_timer can schedule flower_stats_work and
-flower_stats_work can also arm the flower_stats_timer. The
-process is shown below:
+cert_thumbprint() already returns the accumulated output length, but
+certificate_thumbprint_show() adds that value to count again, making the
+next line use the wrong offset. Errors returned by cert_thumbprint() are
+also ignored and their negative values added to count.
 
------------ timer schedules work ------------
-ch_flower_stats_cb() //timer handler
-  schedule_work(&adap->flower_stats_work);
+Assign the total length to count instead and propagate errors correctly.
 
------------ work arms timer ------------
-ch_flower_stats_handler() //workqueue callback function
-  mod_timer(&adap->flower_stats_timer, ...);
-
-When the cxgb4 device is detaching, the timer and workqueue
-could still be rearmed. The process is shown below:
-
-  (cleanup routine)           | (timer and workqueue routine)
-remove_one()                  |
-  free_some_resources()       | ch_flower_stats_cb() //timer
-    cxgb4_cleanup_tc_flower() |   schedule_work()
-      del_timer_sync()        |
-                              | ch_flower_stats_handler() //workqueue
-                              |   mod_timer()
-      cancel_work_sync()      |
-  kfree(adapter) //FREE       | ch_flower_stats_cb() //timer
-                              |   adap->flower_stats_work //USE
-
-This patch changes del_timer_sync() to timer_shutdown_sync(),
-which could prevent rearming of the timer from the workqueue.
-
-Fixes: e0f911c81e93 ("cxgb4: fetch stats for offloaded tc flower flows")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230415081227.7463-1-duoming@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/20260810120556.149416-2-thorsten.blum@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/think-lmi.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-index dd9be229819a5..d3541159487dd 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-@@ -1135,7 +1135,7 @@ void cxgb4_cleanup_tc_flower(struct adapter *adap)
- 		return;
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index e7605bc97f2b0..035cce8db9eff 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -676,14 +676,27 @@ static ssize_t certificate_thumbprint_show(struct kobject *kobj, struct kobj_att
+ 			 char *buf)
+ {
+ 	struct tlmi_pwd_setting *setting = to_tlmi_pwd_setting(kobj);
++	ssize_t ret;
+ 	int count = 0;
  
- 	if (adap->flower_stats_timer.function)
--		del_timer_sync(&adap->flower_stats_timer);
-+		timer_shutdown_sync(&adap->flower_stats_timer);
- 	cancel_work_sync(&adap->flower_stats_work);
- 	rhashtable_destroy(&adap->flower_tbl);
- 	adap->tc_flower_initialized = false;
+ 	if (!tlmi_priv.certificate_support || !setting->cert_installed)
+ 		return -EOPNOTSUPP;
+ 
+-	count += cert_thumbprint(buf, "Md5", count);
+-	count += cert_thumbprint(buf, "Sha1", count);
+-	count += cert_thumbprint(buf, "Sha256", count);
++	ret = cert_thumbprint(buf, "Md5", count);
++	if (ret < 0)
++		return ret;
++	count = ret;
++
++	ret = cert_thumbprint(buf, "Sha1", count);
++	if (ret < 0)
++		return ret;
++	count = ret;
++
++	ret = cert_thumbprint(buf, "Sha256", count);
++	if (ret < 0)
++		return ret;
++	count = ret;
++
+ 	return count;
+ }
+ 
 -- 
 2.53.0
 
