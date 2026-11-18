@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036847;
-	b=WVfCztrkTiNvPeuxX1ksawFtjAOPtNvAcfoLBwpj5mI++UrQTENygRbEVmdneIPjk338
-	 ku7TIct2+Z4DnfS7mhDu7XpUBAkglxQUjE1Fk+lqNyW/EsWqqubmW0gLyuvtt3Q2dwIZU
-	 Z1ADwOCdhuaqCdX3mJlNAEDjONalt9cnpaXJmmK0eGRZjH6B9VE1bkUG8pi+OqUjWFmqw
-	 fT1ERyE9LNw8QiRc1cH6TZYNrr6xGnOw+yOLjRJKuk/lxa3CZgtdFhvFiXwwNJTqAPO8d
-	 zIMvo+zXfSe9AMalCziQPc4CyMbSZMfjlt/K48fzURJqXyCMgFnQnniA6qYWR0iiIrw==
+	t=1795036850;
+	b=t/uRbLEAR+UqDEvjhB6rvUPdy59zGmTAFEKEaijD22A7gyTZ3AWgQpaLzVOYGukjmlkA
+	 ZIEQ7lsKjrbMgE91DIhgnwBUXLOQUlbuzBcilEqcWgpuXC7cDOuY8ipFPDuwr9mf/2byg
+	 eXpCYcXwieSvgj4coZM5Nfvv+vshr5pTdP4ImP6cRy2anl37hTP3iiHAJXQbCHAgXjfik
+	 g2Ss1L97s+s2XvM+BxU4AU+X/YaPewMUTyRFonjlIx4si5YjzjEFmQ0UGqSXbADNuSNlx
+	 tBcexP3PLMbgkiyMQt1G4jY7Wc72C4MvuVLarmJi3Pqey4mtKGJCvlIwStDwZj3qlqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036850;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XHl0pFBKkFWWcDalxzOprGh+naKZeedfAFu4AGCIphM=;
-	b=oOLp6r13s7W37QD9v3vGS7wug1HKhUluophz98+Ow26gVZqwc9gnHHioyrO/cNWWJmh8
-	 ZwDfDzGQlDYeV6oO6jUIgNsXKOCduVfLxW7qPf/hlZJ4o79ANXcRrtwZp3LOeCkZkYAdL
-	 IPvykIVBMyD91J09c4TEswdaLRde1Np7ge0k62f1TJ+dpNqWqPNwc/seSIyDY1SiY+s8M
-	 vYfiG06rVbom8Q2fhASAFsJYy3N/Wu59DznsSUp/9s2ai80gkvknStcVLJKSiFcpYlr0Q
-	 Cigf5HTtBvh13A1axkkezz2hhzlB2E1afp7gjMKJs71P0iT/FDsUU8bFxxa1fnJMxIg==
+	bh=beq3FVfF6dkpS9gwC4+Zj0Wi1fYfmHWki92buGXgK/0=;
+	b=hNtRJSJNPy5eudpLYeYwmyJCEd9HAm+CMrg0cItZ6TZuXiFuyPv8h80NXfK1cYCPAdm1
+	 NEKZGoUwrjHcUcJsFsP0HHfbMKGFELWKNNDoc7surWGf1Y2cPpNSjsAWdvOj9eq5V8KtI
+	 yJwt3EcyBOH9KGwmAYnrRxHukZ1lYY32+kIPouMPxjLIwRaCQa1JvknHDn1xaVnC1PJ5r
+	 9ASNl/YgzcgpxxthBfZPb6qw8remgNbfG5lpdw/yibtHsK3METeGddI1qVQjuI42ALphs
+	 F9y/IlphZShs44JmTDYzToc5JQBn/S9E3KCVihSrJP5fZ/YJ7F3wIhXwGTgUGrzLdMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/m106m0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPkgg36s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F85606A31C;
-	Wed, 18 Nov 2026 21:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310BC606A32C;
+	Wed, 18 Nov 2026 21:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/m106m0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79331F000C4;
-	Wed, 18 Nov 2026 21:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPkgg36s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5F91F000C5;
+	Wed, 18 Nov 2026 21:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036847;
-	bh=XHl0pFBKkFWWcDalxzOprGh+naKZeedfAFu4AGCIphM=;
+	s=korg; t=1795036850;
+	bh=beq3FVfF6dkpS9gwC4+Zj0Wi1fYfmHWki92buGXgK/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j/m106m0kPPmocCBNE1baCKb+YB83BvzHmoUNi4FIXFOobZAaZwP8An5mD017O9x2
-	 77HFRH4SczxbET8Cm+uB89+s+Ddqu4NcdlxhJNFhVIN23BkmtPyoxnkT705y5nXgof
-	 R0d2xQylPHWkTmTi6KSn4K4cA4J8slbnLfQd+E0Q=
+	b=ZPkgg36sx7orGeL3bQFwtoqqfFce66cLYnH0SExNYjISrezW9yPVoC7TWX7qe9/LJ
+	 eHujdOdkle25ZVHLtZ5N4r0yn1z5bifbIukv+KSP7CLPNIZU0RwLNEuM4Mnokd82j4
+	 ckPqd/tk3QV8m4d14ZIFLhWDJ9mFkltbssyehv3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Alexey Gladkov <legion@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Pufan Jin <cyan2254650260@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1198/3318] ucount: take the rlimit reference before checking the limit
-Date: Wed, 18 Nov 2026 15:30:20 +0100
-Message-ID: <20261118150356.112213356@linuxfoundation.org>
+Subject: [PATCH 6.6 1207/3318] spi: zynq-qspi: fix address buffer corruption and support 4-byte address
+Date: Wed, 18 Nov 2026 15:30:29 +0100
+Message-ID: <20261118150356.380164786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,107 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Pufan Jin <cyan2254650260@gmail.com>
 
-[ Upstream commit b14fcabd34e02c40f72d3cd1e9bd4fd18df40ff1 ]
+[ Upstream commit dc5ca34f5e8dc10c566ef39aa3b1a201a17ca734 ]
 
-inc_rlimit_get_ucounts() takes the reference that pins a ucounts level
-while its rlimit count is non-zero only in the walk whose increment is
-the 0 -> 1 transition, and only after that walk passed the limit check.
-A walk that raises the count from zero and then fails the limit backs
-out without the reference, while a concurrent walk that raised it past
-one keeps its increment and never takes one either:
+In zynq_qspi_exec_mem_op(), when transmitting address bytes, the driver
+iterates over op->addr.nbytes and populates xqspi->txbuf[i]. However,
+xqspi->txbuf is never re-assigned before populating the address, meaning
+it still points to (u8 *)&op->cmd.opcode from the command phase.
 
-  CPU0 (obeys the limit)              CPU1 (overrides it)
-  new = add_return(1) -> 1
-                                      new = add_return(1) -> 2
-                                      new != 1, no get_ucounts()
-  new > max -> dec_unwind
-  sub_return(1) -> 1   (no put)
+This causes two severe issues:
+1. Memory corruption: Writing into xqspi->txbuf writes past the opcode
+   buffer on the stack (which was passed as const struct spi_mem_op *).
+   If opcode is zero, xqspi->txbuf is uninitialized.
+2. In zynq_qspi_supports_op(), operations with op->addr.nbytes > 3 are
+   rejected. When paired with SPI NOR flashes larger than 16MB (such as
+   Winbond W25Q256), spi_nor_spimem_check_read_pp_op() tests 4-byte address
+   support, which fails and causes spi_nor_select_read() to drop all read
+   capabilities, failing probe with -EINVAL (-22).
 
-The count is 1 with no reference held. When CPU1 drops its charge,
-dec_rlimit_put_ucounts() takes the count to 0 and puts a reference
-nobody took, which frees the live struct ucounts, and the user_namespace
-it pins, with kfree_rcu(). The mirror interleaving leaks the reference
-instead.
+The Zynq-7000 QSPI controller hardware in manual I/O mode natively supports
+transmitting 1 to 4 address bytes via its TXD FIFO registers
+(ZYNQ_QSPI_TXD_00_00_OFFSET).
 
-An unprivileged user reaches this on a kernel with CONFIG_USER_NS=y: in
-a user namespace with RLIMIT_SIGPENDING 0, one process taking
-synchronous SIGSEGVs (forced, so override_rlimit is set) races a second
-process in the same namespace and uid that queues real-time signals,
-which obey the limit. The two hold different sighand->siglock but charge
-the same per-namespace SIGPENDING ucounts. Unpatched, with rcuref
-debugging:
+Fix this by introducing a local opaddr[4] buffer in zynq_qspi_exec_mem_op()
+and explicitly setting xqspi->txbuf = opaddr before populating address
+bytes. Also allow up to 4 address bytes in zynq_qspi_supports_op().
 
-  rcuref - imbalanced put()
-  WARNING: lib/rcuref.c:266 at rcuref_put_slowpath+0xf4/0x120
-   put_ucounts+0x5a/0x180
-   do_dec_rlimit_put_ucounts+0x70/0x90
-   __sigqueue_free+0x33/0xc0
-   get_signal+0x56f/0xd20
-   arch_do_signal_or_restart+0x87/0x380
-   irqentry_exit+0x243/0x650
-   asm_exc_page_fault+0x26/0x30
-
-Take the reference on the 0 -> 1 transition before the limit is checked,
-so the walk that raises the count from zero owns that level's reference
-even when its request is rejected, and unwind a rejected level through
-do_dec_rlimit_put_ucounts(), which releases the reference when the count
-returns to 0. The get_ucounts() failure path is unchanged. With the
-patch the same interleaving, forced some 80000 times in a KASAN build,
-produces no warning and no KASAN report.
-
-Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
+Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261019185913.805378-1-nickolai@csail.mit.edu
-Acked-by: Alexey Gladkov <legion@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
+Link: https://patch.msgid.link/20261016130812.282624-1-cyan2254650260@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/ucount.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/spi/spi-zynq-qspi.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/ucount.c b/kernel/ucount.c
-index 0ae13e4b6e9f9..c73d5a38ef7ee 100644
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -318,23 +318,26 @@ long inc_rlimit_get_ucounts(struct ucounts *ucounts, enum rlimit_type type,
+diff --git a/drivers/spi/spi-zynq-qspi.c b/drivers/spi/spi-zynq-qspi.c
+index 3c537b1c0e22d..e565630b9b47d 100644
+--- a/drivers/spi/spi-zynq-qspi.c
++++ b/drivers/spi/spi-zynq-qspi.c
+@@ -229,11 +229,10 @@ static bool zynq_qspi_supports_op(struct spi_mem *mem,
+ 		return false;
  
- 	for (iter = ucounts; iter; iter = iter->ns->ucounts) {
- 		long new = atomic_long_add_return(1, &iter->rlimit[type]);
--		if (new < 0 || new > max)
-+		/*
-+		 * Take the extra reference on the 0 -> 1 transition before the
-+		 * limit check: a rejected walk must not leave a concurrent one
-+		 * holding the surviving increment with no reference.
-+		 */
-+		if (new == 1 && !get_ucounts(iter))
- 			goto dec_unwind;
-+		if (new < 0 || new > max) {
-+			/* undo iter too, releasing the reference taken above */
-+			do_dec_rlimit_put_ucounts(ucounts, iter->ns->ucounts, type);
-+			return 0;
-+		}
- 		if (iter == ucounts)
- 			ret = new;
- 		if (!override_rlimit)
- 			max = get_userns_rlimit_max(iter->ns, type);
--		/*
--		 * Grab an extra ucount reference for the caller when
--		 * the rlimit count was previously 0.
--		 */
--		if (new != 1)
--			continue;
--		if (!get_ucounts(iter))
--			goto dec_unwind;
+ 	/*
+-	 * The number of address bytes should be equal to or less than 3 bytes.
++	 * The number of address bytes should be equal to or less than 4 bytes.
+ 	 */
+-	if (op->addr.nbytes > 3)
++	if (op->addr.nbytes > 4)
+ 		return false;
+-
+ 	return true;
+ }
+ 
+@@ -524,6 +523,7 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
+ 				 const struct spi_mem_op *op)
+ {
+ 	struct zynq_qspi *xqspi = spi_controller_get_devdata(mem->spi->controller);
++	u8 opaddr[4] __aligned(4);
+ 	int err = 0, i;
+ 	u8 *tmpbuf;
+ 
+@@ -549,12 +549,13 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
  	}
- 	return ret;
- dec_unwind:
-+	/* get_ucounts() failed for iter: undo iter without a put */
- 	dec = atomic_long_sub_return(1, &iter->rlimit[type]);
- 	WARN_ON_ONCE(dec < 0);
- 	do_dec_rlimit_put_ucounts(ucounts, iter, type);
+ 
+ 	if (op->addr.nbytes) {
+-		for (i = 0; i < op->addr.nbytes; i++) {
+-			xqspi->txbuf[i] = op->addr.val >>
++		for (i = 0; i < op->addr.nbytes; i++)
++			opaddr[i] = op->addr.val >>
+ 					(8 * (op->addr.nbytes - i - 1));
+-		}
+ 
+ 		reinit_completion(&xqspi->data_completion);
++		xqspi->txbuf = opaddr;
++
+ 		xqspi->rxbuf = NULL;
+ 		xqspi->tx_bytes = op->addr.nbytes;
+ 		xqspi->rx_bytes = op->addr.nbytes;
 -- 
 2.53.0
 
