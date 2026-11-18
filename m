@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043092;
-	b=Onitg8DLxyUfvqbBHgo7OAbUt3+jsYYrN5NdOllQwaPYz9xXnmGnvxNpvYTHWDGvLWqN
-	 mtvTdKGVyLQ0PYH6zplGlz07cAlWIaLPtywuEiHogKrCN2T3p9obIF23dv9OA1eRDHRlY
-	 /rzhMzOMsYf+jsijRIMJPZJm/UfD8Ifesi30c0dkcekeLgByOjVDQlu2EWTZyTQdAylcq
-	 vXhz2XiTe4sQfIAU5g2UtZsq9RW+UA9s4OsuTeXpYJKO03+OOGhVF2NMB63Ctz5OBu9nw
-	 BwRS66MLIiwTER9WbCoFNOH4wR71PG1yPscexm3is+aI4jlT47xxJboY1O5PuptzCuA==
+	t=1795043094;
+	b=0+xGFuhvyI3g5GjpJpP3S5PFu/44iFwOdNbsRzjazyCD8bxYS3AoC4IdNRXrhUCQU75d
+	 UVIn6zvyyB5qw72YCcHmyiUPTPXYsucyFh5SDKaGAtxpYO5uluKTnPRsoRRuiPPTfBhdU
+	 TFUO5JWCvB0o0j3WuO7xpy2KFENB3DJyabXlafhTCcN4EeVTDWno8XyGpQb3g7Sai+zHs
+	 zCeR/VX6dHJ1aRO8CPSAeTV61ALIFPSAMzwOSbblzGTGFXrFVS02pZyfElJKdwTCI8MKf
+	 c8Wfnk27soE3B/R6SPjiqTqx1CJblvDgHxamHgEzygxwek+XqGn2UzRoXhJz4ls2/gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gLMgBzp2Ev1hH3kk03TtWg6srqvF46EqYzTNFKWvfiA=;
-	b=LX6Hz7rwaP4mJa7GERJEkyAf+/CQVffR0pMCFsoGECJa9gys5AZ8L8N0q+rh4uxrgdL2
-	 sVF/vUW1ICu3yipDuFZ92dD4Sll1KO/wYtDI97rLqdfqrRFa1x8Ep2XUZ1RAmAyXhYPfP
-	 EWqhcqAs7a0KGvAzV86t3VbHJm35ubBk6bVf6kM2ctsQEDDAIVHpNEEPenO/VmbC6xHVL
-	 eJsIFdybcdh2nt1BKaOtlgB2VqBuwgM8RKVZ/H1Esj9Azp6YRO32kv/5CxENN6Bo0xTdj
-	 fmgy+JiFJWcrQSf9X61gDUxe9F4Sh+i54zVxQkjt8uB9qFYzv1/gl2Jo5hCi1L3MLYg==
+	bh=ZTImoLPaXZvn8JUOiNkXd8/0XH1Op6n/PxNOxQfy74I=;
+	b=MQK/fbO9FtiR1/r6Qckt4WL7hZa2wC7elImAk6o2ki+iJ04TiP5CQdGxmm4jGa4TSuT1
+	 4LTx7gjytF8Q9LCAqIzkvXjebQtp3QDRjC0Hqg1Ib9gVS6A8hkoIFurCFaVhyChR92bwG
+	 FMBIX1rxZxMu42X+87Y7WpAH81BE7rmk/PZCgz1vvrmTIkKUwlyBXCv/kRGwz2hb7becn
+	 pl+v3eXXLhcOgInMV1M9swvnN5nRa7eQsMjYwVQCV5bSYIyOWJ5z66gYDV8fOeEdmjAan
+	 mq5ZODbDUeWU/uzWO3GLZ8IziEiOKy8zdGd0amb2nvIMGEJjmxDSPBGuOB5HEqqlLMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wqEY/6wi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTQ7rhWH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CF3606A320;
-	Wed, 18 Nov 2026 23:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AD7606A32C;
+	Wed, 18 Nov 2026 23:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wqEY/6wi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5820D1F000C4;
-	Wed, 18 Nov 2026 23:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTQ7rhWH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1907F1F000C4;
+	Wed, 18 Nov 2026 23:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043091;
-	bh=gLMgBzp2Ev1hH3kk03TtWg6srqvF46EqYzTNFKWvfiA=;
+	s=korg; t=1795043094;
+	bh=ZTImoLPaXZvn8JUOiNkXd8/0XH1Op6n/PxNOxQfy74I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wqEY/6wifVIXieIyowTgnh68+2ptjgUU6nYiaMosxhwkKDaUvR0ocCGwa9DhLM59g
-	 6P32hAf+Xu5GBiqHeuhB4Q+PukxvBlNXY08u9dXysvoylFG6JHsTOpWLM74Hm30JwD
-	 raIsQ4nma4LLuFRMIYqdy+tg97c+9xGfbuxaLwus=
+	b=sTQ7rhWH0JsK8zxSArzC2wUSRTSRwjML12mUAmxFmHP7w0YGQ93x3gOF3o4abVtOp
+	 QgCunDisghcomfvNQ7ALlQ4lOfTdkr0UYMDhw/dAcZINEch3973txXuWW9wkefND72
+	 GUdhZp3/K99WYZegBjYVtjX47f5XmNIFAlxyijWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0087/2857] drm/etnaviv: check all modules for idle after reset
-Date: Wed, 18 Nov 2026 15:18:41 +0100
-Message-ID: <20261118150204.418085680@linuxfoundation.org>
+Subject: [PATCH 6.1 0061/2857] remoteproc: core: Full attach detach during recovery
+Date: Wed, 18 Nov 2026 15:18:15 +0100
+Message-ID: <20261118150203.499567785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Tanmay Shah <tanmay.shah@amd.com>
 
-[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
+[ Upstream commit d93ffd549fb4df18c934ca7a47d4128a18c718cb ]
 
-While the FE is an important part of the GPU, which needs to be idle
-after reset, all other modules should be idle after a proper reset.
-Check all present modules for being idle to determine whether the
-reset was successful.
+Current attach on recovery mechanism loads the clean resource table
+during recovery, but doesn't re-allocate the resources. RPMsg
+communication will fail after recovery due to this. Fix this
+incorrect behavior by doing the full detach and attach of remote
+processor during the recovery. This will load the clean resource table
+and re-allocate all the resources, which will set up correct vring
+information in the resource table.
 
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Link: https://lore.kernel.org/r/20260630004806.3835488-2-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index c0410e314dfab..dd1c1391acfcd 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -537,9 +537,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
- 		/* read idle register. */
- 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index fc92de3cc0de2..80ea239394875 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1782,7 +1782,20 @@ static int rproc_attach_recovery(struct rproc *rproc)
+ 	if (ret)
+ 		return ret;
  
--		/* try resetting again if FE is not idle */
--		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
--			dev_dbg(gpu->dev, "FE is not idle\n");
-+		/* try resetting again if any module is not idle */
-+		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
-+			dev_dbg(gpu->dev, "GPU modules not idle\n");
- 			continue;
- 		}
+-	return __rproc_attach(rproc);
++	/* clean up all acquired resources */
++	rproc_resource_cleanup(rproc);
++
++	/* release HW resources if needed */
++	rproc_unprepare_device(rproc);
++
++	rproc_disable_iommu(rproc);
++
++	/* Free the copy of the resource table */
++	kfree(rproc->cached_table);
++	rproc->cached_table = NULL;
++	rproc->table_ptr = NULL;
++
++	return rproc_attach(rproc);
+ }
  
+ static int rproc_boot_recovery(struct rproc *rproc)
 -- 
 2.53.0
 
