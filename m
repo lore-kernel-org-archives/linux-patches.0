@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041100;
-	b=yjy7O+WBo4ECHrP21qYh7yFCXK9MYl8OLF0seUNAaXqZ7mu+Fc7PN3qS1+SdJ2uBOEP7
-	 Xpe5FmgI1VHeOUP8HWNg9IgsmZCMdcdQTcN5FvCndUy4nMtS4k6E9LJXkNqQELXTUMJJo
-	 o68XsPhr10iv8k/vKDJO9zWAAvbSytDjSMCnnwhpbVsMlkYmX4N60UeVZsSVN9rhp4LWm
-	 bZqOxVBukXQNCYb23QuNyD3NuXK/KLclEIKSapHDGHbOOIkS7YRdgbyrtL4zRxcrNbuvo
-	 LBjbVVXKQXckaXB3THXbRb68lGavVz1dbu6RhpF0RFzXCYpKv1Gd6PJy8tz4T80hhaw==
+	t=1795041103;
+	b=5LO3Gu9qiHeYjO2T08/94gFkSjkBreJUoxQrruQFvcrl2wYE5ZZT2IZfoFCnlvtqkm7w
+	 QeVvsR3kzQHcJ9SUXzQ3avQejaalg9J2tMQOA754LIVxJTQtLT6NMTggnXEYFXWagoyUp
+	 R3rFX0EGtAK25awQHQ1tmRQi0DPtDGCi111mJkmp/1yj2oBgfhlENvUjbFEaQAHjDXhzV
+	 Rf+6tRRFXJ26HvvLOeFo3DBN8yvNQddhThcDZZFlqXdsHkh6v6/wcKWiOuSU/bBB3iX9b
+	 Fs9INWxiaLRoZaXoLCoCidkLI6+T8OxtGEFMb5cyZfFs8pxCEI4qYIXcQhhXBjE7/4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xCVEToMua0zguXoqLHPdUMksxHCSgSsIfHp1Ubb3bi4=;
-	b=4uUJm4xDoEPMW75y12+4ZEVq+Sce68zcBFiRQxYfe6mg0l+k0ZEDaKe6UimbeP7jsZxo
-	 ZpJXlHM90XQANDVOXu5S9iIfeN8GFSkU3D1hdLq14MgAH6BfnmKxPxUcLuvAUUldo4r3H
-	 VTcHemeOmnyz5wHAc0hbg7gBn/tfC0HuwyaxnOrfxziiqM+L1stWT+PYLa9AeR2lGupcj
-	 QIwru0mfsMMaRViXQhmqKKAWxg7dfU71mjhlSt5szFHCr8QoCQ5G5e5ZHcuYv9NwsNIUC
-	 addSPLPQmNkYObqCafnP4Ja3l2yOwhiEtoa9J+4g7MUAnnABWjvBN4oVpxp7LM+JLrw==
+	bh=Q184xJWuAR7n0USJDQcS1bqxW2JZAHQ2LS4+GKD5MUM=;
+	b=Db9vrMCtCXe6vgFRaCx3RgFcV64vYkqvztIhOp0YZ5j/d1a6ga3A46bhPRPTWib/Jp9n
+	 tjnY/Mr1zIonZDqAVxE1TjyqwUysmgx3qZowTMrXLBm56Q2ktAXr2MFqOBDP9eAf0b8cF
+	 fRJrYyeE9PVEbKQW0uaoWL5C8QVHcXOwyh7Di96bZ0PX9KsYb0u6jyujPNZ01n409G2kc
+	 VXU7BZSBBoRz8xqx5BZArzqc7cUJMu+CQbDiMnJZY1DRVwIsXSxmrxae+tf3rXAQNeVI2
+	 TvuAKFvZA+v7f66aWjAz+rePsBwzr+cOpEGUuJuVMOVj134zXCDU8LreQJL4wMNxbeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rhuge+Vx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H3SVeoao;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A23C606A31C;
-	Wed, 18 Nov 2026 22:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E032606A320;
+	Wed, 18 Nov 2026 22:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rhuge+Vx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FAA1F000C4;
-	Wed, 18 Nov 2026 22:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H3SVeoao
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9791F000C4;
+	Wed, 18 Nov 2026 22:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041100;
-	bh=xCVEToMua0zguXoqLHPdUMksxHCSgSsIfHp1Ubb3bi4=;
+	s=korg; t=1795041103;
+	bh=Q184xJWuAR7n0USJDQcS1bqxW2JZAHQ2LS4+GKD5MUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rhuge+VxCgmc8VImUrG3Ega7XLlNZRUhiLXCdzvTrvF61DPVcFDbAkn3qVe98Z2tR
-	 ak/v5Mq1zlolsod5uISR4NaGu0+4Da+gyE8Ttb9yC6el8L4kYk/uqn5jfXxko1d2QQ
-	 QETnHHvp5rlriIep25EsiPzHTsiv4LKlaG5W090I=
+	b=H3SVeoaofG1OZGMnXADS5/0JagPWoxNm4syQ2PYuhwoE7t2g9m6N3nzGXiNFd7sfo
+	 9mG3g46LwFxtIPPKXBnbcwrzHEQJtPYTWrXneHsryhoZK0p72JjqooGxGOMImSKf1K
+	 a9a29DvQwdugxUmlYPNTpWpsym/61Qj5cTYxM5Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2693/3318] ALSA: seq: Fix missing direction and ump_group handling in 32bit compat ioctl
-Date: Wed, 18 Nov 2026 15:55:15 +0100
-Message-ID: <20261118150441.734118651@linuxfoundation.org>
+Subject: [PATCH 6.6 2694/3318] ALSA: info: Use guard() for locking
+Date: Wed, 18 Nov 2026 15:55:16 +0100
+Message-ID: <20261118150441.760211428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,68 +69,327 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9d3e19c192b97b4c4c0abcafdbf1edb1e56cee88 ]
+[ Upstream commit 4b72362b1228d9aad684e4fcaa422d9562066fe1 ]
 
-I forgot to cover the two new fields, direction and ump_group, in
-struct snd_seq_port_info for the 32bit compat ioctls of
-SNDRV_SEQ_IOCTL_GET_PORT_INFO & co, which ended up with the garbage
-copies in those fields.  Add the handling of those two fields in the
-compat layer.
+We can simplify the code gracefully with new guard() macro and co for
+automatic cleanup of locks.
 
-Also, avoid over-copying the 64bit snd_seq_port_info but only the first
-part (before the field kernel); this avoids the copy of kernel-space
-garbage value in the reserved field.
+Only the code refactoring, and no functional changes.
 
-Fixes: ff166a9d19fa ("ALSA: seq: Add port direction to snd_seq_port_info")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172533.14667-2-tiwai@suse.de
+Link: https://lore.kernel.org/r/20240227085306.9764-7-tiwai@suse.de
+Stable-dep-of: a3e8eec7692e ("ALSA: info: Fix memory leak at card removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_compat.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ sound/core/info.c     | 93 ++++++++++++++-----------------------------
+ sound/core/info_oss.c | 10 ++---
+ 2 files changed, 33 insertions(+), 70 deletions(-)
 
-diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
-index ee9bfdf781b12..e585b09111991 100644
---- a/sound/core/seq/seq_compat.c
-+++ b/sound/core/seq/seq_compat.c
-@@ -25,7 +25,9 @@ struct snd_seq_port_info32 {
- 	u32 kernel;			/* reserved for kernel use (must be NULL) */
- 	u32 flags;		/* misc. conditioning */
- 	unsigned char time_queue;	/* queue # for timestamping */
--	char reserved[59];		/* for future use */
-+	unsigned char direction;	/* port usage direction (r/w/bidir) */
-+	unsigned char ump_group;	/* 0 = UMP EP (no conversion), 1-16 = UMP group number */
-+	char reserved[57];		/* for future use */
- };
+diff --git a/sound/core/info.c b/sound/core/info.c
+index e2f302e55bbb2..1f5b8a3d9e3b6 100644
+--- a/sound/core/info.c
++++ b/sound/core/info.c
+@@ -105,17 +105,15 @@ static loff_t snd_info_entry_llseek(struct file *file, loff_t offset, int orig)
+ {
+ 	struct snd_info_private_data *data;
+ 	struct snd_info_entry *entry;
+-	loff_t ret = -EINVAL, size;
++	loff_t size;
  
- static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned int cmd,
-@@ -40,7 +42,9 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ 	data = file->private_data;
+ 	entry = data->entry;
+-	mutex_lock(&entry->access);
+-	if (entry->c.ops->llseek) {
+-		ret = entry->c.ops->llseek(entry,
+-					   data->file_private_data,
+-					   file, offset, orig);
+-		goto out;
+-	}
++	guard(mutex)(&entry->access);
++	if (entry->c.ops->llseek)
++		return entry->c.ops->llseek(entry,
++					    data->file_private_data,
++					    file, offset, orig);
  
- 	if (copy_from_user(data, data32, sizeof(*data32)) ||
- 	    get_user(data->flags, &data32->flags) ||
--	    get_user(data->time_queue, &data32->time_queue))
-+	    get_user(data->time_queue, &data32->time_queue) ||
-+	    get_user(data->direction, &data32->direction) ||
-+	    get_user(data->ump_group, &data32->ump_group))
- 		return -EFAULT;
- 	data->kernel = NULL;
+ 	size = entry->size;
+ 	switch (orig) {
+@@ -126,21 +124,18 @@ static loff_t snd_info_entry_llseek(struct file *file, loff_t offset, int orig)
+ 		break;
+ 	case SEEK_END:
+ 		if (!size)
+-			goto out;
++			return -EINVAL;
+ 		offset += size;
+ 		break;
+ 	default:
+-		goto out;
++		return -EINVAL;
+ 	}
+ 	if (offset < 0)
+-		goto out;
++		return -EINVAL;
+ 	if (size && offset > size)
+ 		offset = size;
+ 	file->f_pos = offset;
+-	ret = offset;
+- out:
+-	mutex_unlock(&entry->access);
+-	return ret;
++	return offset;
+ }
  
-@@ -50,9 +54,12 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ static ssize_t snd_info_entry_read(struct file *file, char __user *buffer,
+@@ -238,10 +233,10 @@ static int snd_info_entry_open(struct inode *inode, struct file *file)
+ 	struct snd_info_private_data *data;
+ 	int mode, err;
+ 
+-	mutex_lock(&info_mutex);
++	guard(mutex)(&info_mutex);
+ 	err = alloc_info_private(entry, &data);
  	if (err < 0)
- 		return err;
+-		goto unlock;
++		return err;
  
--	if (copy_to_user(data32, data, sizeof(*data32)) ||
-+	if (copy_to_user(data32, data,
-+			 offsetof(struct snd_seq_port_info32, kernel)) ||
- 	    put_user(data->flags, &data32->flags) ||
--	    put_user(data->time_queue, &data32->time_queue))
-+	    put_user(data->time_queue, &data32->time_queue) ||
-+	    put_user(data->direction, &data32->direction) ||
-+	    put_user(data->ump_group, &data32->ump_group))
- 		return -EFAULT;
+ 	mode = file->f_flags & O_ACCMODE;
+ 	if (((mode == O_RDONLY || mode == O_RDWR) && !entry->c.ops->read) ||
+@@ -257,14 +252,11 @@ static int snd_info_entry_open(struct inode *inode, struct file *file)
+ 	}
  
+ 	file->private_data = data;
+-	mutex_unlock(&info_mutex);
+ 	return 0;
+ 
+  error:
+ 	kfree(data);
+ 	module_put(entry->module);
+- unlock:
+-	mutex_unlock(&info_mutex);
  	return err;
+ }
+ 
+@@ -306,7 +298,6 @@ static ssize_t snd_info_text_entry_write(struct file *file,
+ 	struct snd_info_buffer *buf;
+ 	loff_t pos;
+ 	size_t next;
+-	int err = 0;
+ 
+ 	if (!entry->c.text.write)
+ 		return -EIO;
+@@ -317,34 +308,24 @@ static ssize_t snd_info_text_entry_write(struct file *file,
+ 	/* don't handle too large text inputs */
+ 	if (next > 16 * 1024)
+ 		return -EIO;
+-	mutex_lock(&entry->access);
++	guard(mutex)(&entry->access);
+ 	buf = data->wbuffer;
+ 	if (!buf) {
+ 		data->wbuffer = buf = kzalloc(sizeof(*buf), GFP_KERNEL);
+-		if (!buf) {
+-			err = -ENOMEM;
+-			goto error;
+-		}
++		if (!buf)
++			return -ENOMEM;
+ 	}
+ 	if (next > buf->len) {
+ 		char *nbuf = kvzalloc(PAGE_ALIGN(next), GFP_KERNEL);
+-		if (!nbuf) {
+-			err = -ENOMEM;
+-			goto error;
+-		}
++		if (!nbuf)
++			return -ENOMEM;
+ 		kvfree(buf->buffer);
+ 		buf->buffer = nbuf;
+ 		buf->len = PAGE_ALIGN(next);
+ 	}
+-	if (copy_from_user(buf->buffer + pos, buffer, count)) {
+-		err = -EFAULT;
+-		goto error;
+-	}
++	if (copy_from_user(buf->buffer + pos, buffer, count))
++		return -EFAULT;
+ 	buf->size = next;
+- error:
+-	mutex_unlock(&entry->access);
+-	if (err < 0)
+-		return err;
+ 	*offset = next;
+ 	return count;
+ }
+@@ -369,10 +350,10 @@ static int snd_info_text_entry_open(struct inode *inode, struct file *file)
+ 	struct snd_info_private_data *data;
+ 	int err;
+ 
+-	mutex_lock(&info_mutex);
++	guard(mutex)(&info_mutex);
+ 	err = alloc_info_private(entry, &data);
+ 	if (err < 0)
+-		goto unlock;
++		return err;
+ 
+ 	data->rbuffer = kzalloc(sizeof(*data->rbuffer), GFP_KERNEL);
+ 	if (!data->rbuffer) {
+@@ -386,15 +367,12 @@ static int snd_info_text_entry_open(struct inode *inode, struct file *file)
+ 		err = single_open(file, snd_info_seq_show, data);
+ 	if (err < 0)
+ 		goto error;
+-	mutex_unlock(&info_mutex);
+ 	return 0;
+ 
+  error:
+ 	kfree(data->rbuffer);
+ 	kfree(data);
+ 	module_put(entry->module);
+- unlock:
+-	mutex_unlock(&info_mutex);
+ 	return err;
+ }
+ 
+@@ -549,7 +527,7 @@ int snd_info_card_register(struct snd_card *card)
+  */
+ void snd_info_card_id_change(struct snd_card *card)
+ {
+-	mutex_lock(&info_mutex);
++	guard(mutex)(&info_mutex);
+ 	if (card->proc_root_link) {
+ 		proc_remove(card->proc_root_link);
+ 		card->proc_root_link = NULL;
+@@ -558,7 +536,6 @@ void snd_info_card_id_change(struct snd_card *card)
+ 		card->proc_root_link = proc_symlink(card->id,
+ 						    snd_proc_root->p,
+ 						    card->proc_root->name);
+-	mutex_unlock(&info_mutex);
+ }
+ 
+ /*
+@@ -574,12 +551,11 @@ void snd_info_card_disconnect(struct snd_card *card)
+ 	if (card->proc_root)
+ 		proc_remove(card->proc_root->p);
+ 
+-	mutex_lock(&info_mutex);
++	guard(mutex)(&info_mutex);
+ 	if (card->proc_root)
+ 		snd_info_clear_entries(card->proc_root);
+ 	card->proc_root_link = NULL;
+ 	card->proc_root = NULL;
+-	mutex_unlock(&info_mutex);
+ }
+ 
+ /*
+@@ -703,9 +679,8 @@ snd_info_create_entry(const char *name, struct snd_info_entry *parent,
+ 	entry->parent = parent;
+ 	entry->module = module;
+ 	if (parent) {
+-		mutex_lock(&parent->access);
++		guard(mutex)(&parent->access);
+ 		list_add_tail(&entry->list, &parent->children);
+-		mutex_unlock(&parent->access);
+ 	}
+ 	return entry;
+ }
+@@ -775,9 +750,8 @@ void snd_info_free_entry(struct snd_info_entry * entry)
+ 		return;
+ 	if (entry->p) {
+ 		proc_remove(entry->p);
+-		mutex_lock(&info_mutex);
++		guard(mutex)(&info_mutex);
+ 		snd_info_clear_entries(entry);
+-		mutex_unlock(&info_mutex);
+ 	}
+ 
+ 	/* free all children at first */
+@@ -786,9 +760,8 @@ void snd_info_free_entry(struct snd_info_entry * entry)
+ 
+ 	p = entry->parent;
+ 	if (p) {
+-		mutex_lock(&p->access);
++		guard(mutex)(&p->access);
+ 		list_del(&entry->list);
+-		mutex_unlock(&p->access);
+ 	}
+ 	kfree(entry->name);
+ 	if (entry->private_free)
+@@ -804,15 +777,13 @@ static int __snd_info_register(struct snd_info_entry *entry)
+ 	if (snd_BUG_ON(!entry))
+ 		return -ENXIO;
+ 	root = entry->parent == NULL ? snd_proc_root->p : entry->parent->p;
+-	mutex_lock(&info_mutex);
++	guard(mutex)(&info_mutex);
+ 	if (entry->p || !root)
+-		goto unlock;
++		return 0;
+ 	if (S_ISDIR(entry->mode)) {
+ 		p = proc_mkdir_mode(entry->name, entry->mode, root);
+-		if (!p) {
+-			mutex_unlock(&info_mutex);
++		if (!p)
+ 			return -ENOMEM;
+-		}
+ 	} else {
+ 		const struct proc_ops *ops;
+ 		if (entry->content == SNDRV_INFO_CONTENT_DATA)
+@@ -821,15 +792,11 @@ static int __snd_info_register(struct snd_info_entry *entry)
+ 			ops = &snd_info_text_entry_ops;
+ 		p = proc_create_data(entry->name, entry->mode, root,
+ 				     ops, entry);
+-		if (!p) {
+-			mutex_unlock(&info_mutex);
++		if (!p)
+ 			return -ENOMEM;
+-		}
+ 		proc_set_size(p, entry->size);
+ 	}
+ 	entry->p = p;
+- unlock:
+-	mutex_unlock(&info_mutex);
+ 	return 0;
+ }
+ 
+diff --git a/sound/core/info_oss.c b/sound/core/info_oss.c
+index ebc714b2f46b3..0dbbb80055700 100644
+--- a/sound/core/info_oss.c
++++ b/sound/core/info_oss.c
+@@ -29,20 +29,17 @@ int snd_oss_info_register(int dev, int num, char *string)
+ 		return -ENXIO;
+ 	if (snd_BUG_ON(num < 0 || num >= SNDRV_CARDS))
+ 		return -ENXIO;
+-	mutex_lock(&strings);
++	guard(mutex)(&strings);
+ 	if (string == NULL) {
+ 		x = snd_sndstat_strings[num][dev];
+ 		kfree(x);
+ 		x = NULL;
+ 	} else {
+ 		x = kstrdup(string, GFP_KERNEL);
+-		if (x == NULL) {
+-			mutex_unlock(&strings);
++		if (x == NULL)
+ 			return -ENOMEM;
+-		}
+ 	}
+ 	snd_sndstat_strings[num][dev] = x;
+-	mutex_unlock(&strings);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(snd_oss_info_register);
+@@ -53,7 +50,7 @@ static int snd_sndstat_show_strings(struct snd_info_buffer *buf, char *id, int d
+ 	char *str;
+ 
+ 	snd_iprintf(buf, "\n%s:", id);
+-	mutex_lock(&strings);
++	guard(mutex)(&strings);
+ 	for (idx = 0; idx < SNDRV_CARDS; idx++) {
+ 		str = snd_sndstat_strings[idx][dev];
+ 		if (str) {
+@@ -64,7 +61,6 @@ static int snd_sndstat_show_strings(struct snd_info_buffer *buf, char *id, int d
+ 			snd_iprintf(buf, "%i: %s\n", idx, str);
+ 		}
+ 	}
+-	mutex_unlock(&strings);
+ 	if (ok < 0)
+ 		snd_iprintf(buf, " NOT ENABLED IN CONFIG\n");
+ 	return ok;
 -- 
 2.53.0
 
