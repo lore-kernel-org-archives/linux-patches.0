@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039424;
-	b=GJ/Yf5JkGQbr8mzrMzcjTxKOdSGWze3St08lvs3C6SC3uNp3wriv36WbqmvIylQeuJkP
-	 hitxuGNwXW211SOWymPtidVSp3apfoQNXRQMxVhFOw534SOO6z+AcjikLQOE3L4J0ZUGZ
-	 dMHecxkDtSxOGUFMiKLGOUC6jB8CN2u6HXYpZp4cmcWQwAoFeNvDoZdgqYiVLiWVdykou
-	 esn1jtNsGh2xaaGRFDFVk4oUh440nE2uv+IxgfFVJ2FQ1YYUnvQBsHQHWu2nGXaH89dzU
-	 eCIjfUsgt0JWawe55NZv/uwBlUMlxhh20GwwSsJFQmlDLIctivcRd8z89hhL+hBJHyA==
+	t=1795039426;
+	b=thoK52bhhs/LVRU76l0wCgSsFTV7XTebtrZTY+Xs3ZntpBpLwQKxRBfMKih0FQ0k7o9M
+	 pOtkj/PYiPUE1wvRV9dfWrzi6mt65ujkGy1A0cqCiEeoem0NX4Jaip+thrMMyFMdzoHhM
+	 5hbdpqdP61yndCx7i7UfiC3IbHPXsCF4pcLe+rumupWlpDf+z6OuspcsmQeVbd232N6Yb
+	 xPeysLCEJFMMIxmPlofLT5RoU/T46vYHLwCXK4lJ+7xaiwRAVPkZvbYv84MpvRHeisDn7
+	 IcTbHJp5crmWPHXcUYiu4cx06vPOC9b0QZ2y6vjER61bsKnSoLCnE5Dp/xzakjIDLrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039426;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oQ9RQrIuC1/HimgNNccYE1ztmJf6WjHkbc/nluhzQ/M=;
-	b=pGb5LNYlpuyzrn53qByKPp0/KIBHwmYr3514aa7d7vVq3d9djdjDC/pMsNhG7VQzdAcf
-	 AOtgtp0yeN4+gFsA3DfTS/c1h08cv7PQGVDBqa65PEaqCxuxz4bEhFsa6edLCfkhUqPSi
-	 Zfq8PcvbqWZ6mRPKa8anFMoFib8fDpLCQI40Rzy+vC8RtuHJ87/vklaVfIGTxptAPmVk4
-	 IlBhrqTfCOy8u5vbdgJ6Dxo5004Kw3okrHavQojH6sd6y86o7IWxEFRniiKHFHtnAhKGG
-	 cM5D0npudsGwjHvxPRCgzcdzrtyT2u20gw6VINqkVsLpgQm+mvBoZaVWbP3oYgvFu+A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3yLmcjlOGkQ+j3SzzONFjpVrXApOxPdVSZrbhAVoRnk=;
+	b=3QZaJSxB5jXV3ayVljmpD6xw40kT6bZ8bLEjFnHRcTjPBEmCnUwieHZyFyyR462N6f15
+	 lrG0EDu+f+E+iEt7YdS5RjiEqGCXt9lXQB6lBpxVVSmVGEwPmpG8w8CFI59obZ/jIP58a
+	 NBz1WdDYLtklDkicxsv0AkBuKmjOUmHclXQE9b7rFecJZI77/GSB2q/VS/hBB41wEe5kj
+	 asgUS56BNiblRcstLMVHLEZW2WFukr4s1yXShi5uWwUBKG9oVxiP6BgS/NV+wNAcRfShF
+	 pO5ZobnzqpNtLJ3I7h1oaruIvrhYYdklh2pYwW76xVxS7SLPzssXb14cDNObJiGIYqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jasat9Od;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILhnGBVC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076D0606A337;
-	Wed, 18 Nov 2026 22:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2B4606A31C;
+	Wed, 18 Nov 2026 22:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jasat9Od
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF151F000C7;
-	Wed, 18 Nov 2026 22:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILhnGBVC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC241F000CA;
+	Wed, 18 Nov 2026 22:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039423;
-	bh=oQ9RQrIuC1/HimgNNccYE1ztmJf6WjHkbc/nluhzQ/M=;
+	s=korg; t=1795039426;
+	bh=3yLmcjlOGkQ+j3SzzONFjpVrXApOxPdVSZrbhAVoRnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jasat9OddlYo7z6pGoeSFpAKzkrbnFoa72kj2hwctVi8mWTGgPpRYXh/wxgbiNGfI
-	 1ZuuWrkr6oJPw3mBhADho5IhLKcHZxNAueXhcJb7LgJsEWvy6cxEwnFW8z5Jx8iLpa
-	 L/EyA6/keoZ+gUjdfU2KtlZgua1PaUzD3RGoOI2U=
+	b=ILhnGBVC1L9cMhJ5tug++mowhzzmNjUCV0wX2UVnL3WRleDiZJbLjKk0jBf8xAXHK
+	 VC+zp1TJdJanW4UPdksr6KBr1CFpy6OroNPL2V/apEgI7gdjLHFQ2jgwhYttE9AzQA
+	 D357y2zGFSLG1bWLh40A8LZRCsq8ocCHa1cK059o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Julius Bairaktaris <julius@bairaktaris.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2054/3318] wifi: mac80211: fix swapped fq_overlimit/fq_overmemory in aqm debugfs
-Date: Wed, 18 Nov 2026 15:44:36 +0100
-Message-ID: <20261118150423.678021032@linuxfoundation.org>
+Subject: [PATCH 6.6 2055/3318] memory: brcmstb_dpfe: validate firmware section sizes
+Date: Wed, 18 Nov 2026 15:44:37 +0100
+Message-ID: <20261118150423.712295107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,46 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julius Bairaktaris <julius@bairaktaris.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 25f3f2ff88ae604a3b473b501fc55d58fcb0f5eb ]
+[ Upstream commit e61c1a1103e2617e8f86288368911a8591e35c1e ]
 
-The two scnprintf arguments for fq_overlimit and fq_overmemory are in the
-wrong order, which results in the aqm debugfs file showing the overmemory
-count under the fq_overlimit label and vice versa.
+The firmware header is read before the image has been shown to contain a
+complete header. In addition, the final size check adds two
+firmware-provided u32 section lengths before comparing the result with
+fw->size, so the addition can wrap.
 
-Fixes: 2a4e675d887b ("mac80211: Export fq memory limit information in debugfs")
-Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
-Link: https://patch.msgid.link/20260904090626.92727-1-julius@bairaktaris.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reject images shorter than the fixed header and checksum before reading
+the header. Then derive the available payload length with subtraction and
+require the two declared sections to fill it exactly.
+
+Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260815134559.47888-1-pengpeng@iscas.ac.cn
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memory/brcmstb_dpfe.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
-index 0392f3b28263a..2ca3e41ee8987 100644
---- a/net/mac80211/debugfs.c
-+++ b/net/mac80211/debugfs.c
-@@ -98,8 +98,8 @@ static ssize_t aqm_read(struct file *file,
- 			"RW fq_quantum %u\n",
- 			fq->flows_cnt,
- 			fq->backlog,
--			fq->overmemory,
- 			fq->overlimit,
-+			fq->overmemory,
- 			fq->collisions,
- 			fq->memory_usage,
- 			fq->memory_limit,
+diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
+index 9ac5fefa89f94..6e85508a5a398 100644
+--- a/drivers/memory/brcmstb_dpfe.c
++++ b/drivers/memory/brcmstb_dpfe.c
+@@ -533,9 +533,15 @@ static int __verify_firmware(struct init_data *init,
+ 			     const struct firmware *fw)
+ {
+ 	const struct dpfe_firmware_header *header = (void *)fw->data;
+-	unsigned int dmem_size, imem_size, total_size;
++	unsigned int dmem_size, imem_size;
+ 	bool is_big_endian = false;
+ 	const u32 *chksum_ptr;
++	size_t payload_size;
++
++	if (fw->size < sizeof(*header) + sizeof(*chksum_ptr))
++		return ERR_INVALID_SIZE;
++
++	payload_size = fw->size - sizeof(*header) - sizeof(*chksum_ptr);
+ 
+ 	if (header->magic == DPFE_BE_MAGIC)
+ 		is_big_endian = true;
+@@ -554,13 +560,8 @@ static int __verify_firmware(struct init_data *init,
+ 	if ((dmem_size % sizeof(u32)) != 0 || (imem_size % sizeof(u32)) != 0)
+ 		return ERR_INVALID_SIZE;
+ 
+-	/*
+-	 * The header + the data section + the instruction section + the
+-	 * checksum must be equal to the total firmware size.
+-	 */
+-	total_size = dmem_size + imem_size + sizeof(*header) +
+-		sizeof(*chksum_ptr);
+-	if (total_size != fw->size)
++	/* The data and instruction sections must fill the payload exactly. */
++	if (dmem_size > payload_size || imem_size != payload_size - dmem_size)
+ 		return ERR_INVALID_SIZE;
+ 
+ 	/* The checksum comes at the very end. */
 -- 
 2.53.0
 
