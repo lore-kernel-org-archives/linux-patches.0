@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043637;
-	b=jmubVgE82HYXJYT7oIVCyKHPQC8laED1uObARXcAE3ZmSVstQJ8lcbgG+s544YAxcxER
-	 Fvi0qIjygBOL40LSmoE4vnjx+T6pPhT1CQl6YuXz/X2cridIWPLpbMoakOqoHVhYcwF/A
-	 yxIDtZtteg6mqFC0VFTYE39C1ldPTDSyiZUjzT8JrQYL/1r8NAT9dbsqSgt7MjNYEr6gr
-	 zhfpkvC73OFInqyfjYR7Vo5NHKqvOY13w3WUDgPr1FYaatLO1sI2F+V3/unPY9v/pWq+u
-	 IhpDLozuLkvHjC8xjIxqJ4B3ECtBTEOzCr54fL9lrP9XSWaSXBEnYjhu2tx8WBv5SLQ==
+	t=1795043640;
+	b=VyAWuxaQKOxdjQy0vCc4fQbAm2ft8/XDz9M8adOSQWXdwvRidp8+wx1u2S10e5DFo7Fb
+	 iXAuU7nPYSsPvA39+/hnw4WqG3gyBxyv6Cuw9Wu4tyIvvqRphm0RYSYIwd6zMWvFa4oxL
+	 7utyyD717aUxFYnS+KY4q3z0DUFpXDxIGeieEUXGE6GHt0RpbTDSdydiGTyWtQVg6CUb3
+	 gVqSTd+UDhYrYBGaDSKLbS1PDGzfkXxUvSQTOx2G1yvquJSuIV7gQPKUJkeKcKZZrIKCb
+	 vlsoKPJn+9cIVk1h+UiqOTyu1npLjAh/iqyvNk4L+T6cPLBf5dEDcW+lWnu8v8ipMXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ubs0aHm8o18L0WlFd3uEjlWhpTbvnqgTEUeI9nkIzf0=;
-	b=bf5TuekSkUPnDkAw3Py/AeEkHeSAhUN13Uw/S1zT+TqYjhMNABiNXCZYgiiymLK0aNye
-	 4DvHjRO7ZMZ/UwOBj0Hqs1mjPjH+ajygE4uVDMCEdG0aMbOk38UJvqsAOX0RJ9RLqNhjC
-	 otKtNH39tT8qw6RzZvwqnJxY8Z1QFfV6Q0pVswLK1u5fWh+Ye8pQ2MygNJFHWySmTzjMt
-	 9F6L/f6uFFq8/a8Rsfx4DzV5FrgkvPIS/50nD5Pai5H0a/5GnGFcaokvQHviNh2nZm01/
-	 fiahMuyBNv14o997j037DRTVyfl5P8QVGsv6jp1vNlb7KZGqtdKkMRzrhMUhe+lh6+Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4jTeCdCTpBTURzoF3qcNAP0sOpaf8ezhhZIo7EwBe4o=;
+	b=lK2hQ4M693ejQsdUT3bR1vgDG3jjTIQOMIcxZIMkjaedxtdQiln4ldCvzebqozn5i96F
+	 SPSVHXJrJAx49n90QAOyvlfm8GgoEnK/buXfcIDU14pP8UciUgWaTiUA79ltMIhcigVQk
+	 W29fbWRJSACXXv5Sn2dbbHQsUT4te9vHR+8ekGCGdvnOglC+gBzJrgWuDbDjXo64X0SSQ
+	 pk0ZORbbeAmxnVJZBLF+vqPbL1cZGrUQ69XYrGdcC/dRSJb2z25eHeu6cysxAEI+iOfn3
+	 g9SORsf6rpjpdC2q/cYNBJcVlwkCj9/zPZBOjwxXz6RpFkhjvc2aIbnxEH/T66Jwckg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dC4LIo8+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iGAdIl9l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5AC606A331;
-	Wed, 18 Nov 2026 23:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6039F606A32C;
+	Wed, 18 Nov 2026 23:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dC4LIo8+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48E71F000CB;
-	Wed, 18 Nov 2026 23:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iGAdIl9l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36F21F000C4;
+	Wed, 18 Nov 2026 23:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043637;
-	bh=Ubs0aHm8o18L0WlFd3uEjlWhpTbvnqgTEUeI9nkIzf0=;
+	s=korg; t=1795043640;
+	bh=4jTeCdCTpBTURzoF3qcNAP0sOpaf8ezhhZIo7EwBe4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dC4LIo8+x4WfvMgkvqaR3zDlO4nffsF2TeGhUNVXT9FTIBeXdhoZMwr0RwIHu7lZD
-	 qa9j8bIPSE2tev1U73z1JEi4OXNzjHo/p8n0aMVKvgvAt8kmYXUdRfHi2GBun0q2zb
-	 A9mzw+6m5itR8ISGr7O8M04KuSCUDrPd4p+V8Ddo=
+	b=iGAdIl9lrV5k4WCYBmbS6TdyrwtBKX0ugzJzuHnolxwurzRY6dTLP9XBDSTCdqUp6
+	 mELLPZL0lNqh/+DolyDq55lfBV3p10jLKL5ZKn+HH7kbEbG8yCErEJPtoBf0v5TXU8
+	 oq3lodaqWt9S3FZ/utKY/jRnBMErgmR+8fbjoiX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Andrews <neil@androos.io>,
-	Takashi Iwai <tiwai@suse.de>,
+	David Heidelberg <david@ixit.cz>,
+	Carl Lee <carl.lee@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0240/2857] ALSA: usb-audio: Rename the Audient iD14 monitor mix volume control
-Date: Wed, 18 Nov 2026 15:21:14 +0100
-Message-ID: <20261118150210.090966005@linuxfoundation.org>
+Subject: [PATCH 6.1 0231/2857] nfc: nxp-nci: Add remove on IRQ error
+Date: Wed, 18 Nov 2026 15:21:05 +0100
+Message-ID: <20261118150209.773742805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,98 +67,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Andrews <neil@androos.io>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit 9c0564fcc21aec4f5b7648f61865ce3fc2b84a7f ]
+[ Upstream commit 56345cea6a30dc7a1b036d5fb7900434b4a4c5e8 ]
 
-On the Audient iD14 (2708:0008), feature unit 12 is traced through to
-the Speaker output terminal and is therefore exported as "Speaker
-Playback Volume".  The name fits it badly.  It advertises Volume on
-only four of its six logical channels, which the driver records as
-cmask=0xf, channels=4 on a 6-channel playback stream, and it sits on
-the monitor mixer branch rather than in the direct playback path:
+Add a call to nxp_nci_remove() in nxp_nci_i2c_probe() when the
+request_threaded_irq() fails.
+Previously, IRQ resources were not being freed upon error.
 
-  INPUT_TERMINAL 2 (USB streaming, 6ch) -> EXTENSION_UNIT 51 ->
-    FEATURE_UNIT 10 (no controls) -> OUTPUT_TERMINAL 20 (Speaker)
-
-while FU 12 hangs off MIXER_UNIT 60 and feeds back into
-EXTENSION_UNIT 51.
-
-Userspace adopts the control as the stream's hardware playback volume,
-so any setting below 0 dB attenuates part of the stream and not the
-rest.  Measured over the device's own digital loopback, with one
--12 dBFS tone per channel played straight to hw:, PCM channel 0 is
-unaffected while channel 1 tracks the control: at 107/127 (-20 dB) the
-two read -15.89 and -35.89 dBFS, a 20.00 dB imbalance, and at 127/127
-both read -15.89 dBFS.
-
-Give the unit a non-standard name so that it is no longer taken for
-the stream's master volume.  Dropping the control instead also fixes
-the imbalance, but FU 12 keeps its value across a module reload, so
-dropping it strands a device that is already attenuated with nothing
-able to reset it.  Renaming leaves the monitor gain reachable and that
-recovery path intact.
-
-The mapped name ends in "Playback" because a name from the map
-suppresses the automatic " Playback" but still gets " Volume"
-appended; the control comes out as "Monitor Mix Playback Volume".
-
-Tested on the ACP path with PipeWire, which is where the problem
-reproduces: the control now stays at 127 at every volume setting and
-the imbalance is 0.00 dB, and setting it by hand to 107 and back to
-127 gives 20.00 dB and 0.00 dB as before.
-
-Link: https://lore.kernel.org/linux-sound/0102019fed22f9d3-fa294ec5-02f1-4fd3-b3fa-76efc14331cc-000000@eu-west-1.amazonses.com/T/#u
-Signed-off-by: Neil Andrews <neil@androos.io>
-Link: https://patch.msgid.link/0102019ffcdbb1e6-9b59d3cc-ef05-4df1-8f9f-fb2f425bcda2-000000@eu-west-1.amazonses.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: gkh_clanker_2000
+Cc: David Heidelberg <david@ixit.cz>
+Cc: Carl Lee <carl.lee@amd.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Ian Ray <ian.ray@gehealthcare.com>
+Cc: "Uwe Kleine-König (The Capable Hub)" <u.kleine-koenig@baylibre.com>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/2026070726-observer-fang-9716@gregkh
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/nfc/nxp-nci/i2c.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index ce27fc871f513..8046d5987d5b1 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -505,6 +505,19 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
- 	{}
- };
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index 9b9ca3ced856b..5480cf6925819 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -327,8 +327,10 @@ static int nxp_nci_i2c_probe(struct i2c_client *client,
+ 				 nxp_nci_i2c_irq_thread_fn,
+ 				 irqflags | IRQF_ONESHOT,
+ 				 NXP_NCI_I2C_DRIVER_NAME, phy);
+-	if (r < 0)
++	if (r < 0) {
+ 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
++		nxp_nci_remove(phy->ndev);
++	}
  
-+/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
-+ * and sits on the monitor mixer branch, but it is traced through to the
-+ * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
-+ * then adopts it as the stream's hardware volume, and any setting below 0 dB
-+ * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
-+ * non-standard name so that it is no longer taken for the stream's master
-+ * volume, while remaining reachable for anyone who wants the monitor gain.
-+ */
-+static const struct usbmix_name_map audient_id14_map[] = {
-+	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
-+	{}
-+};
-+
- /*
-  * Control map entries
-  */
-@@ -588,6 +601,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x2573, 0x0008),
- 		.map = maya44_map,
- 	},
-+	{
-+		/* Audient iD14 */
-+		.id = USB_ID(0x2708, 0x0008),
-+		.map = audient_id14_map,
-+	},
- 	{
- 		/* KEF X300A */
- 		.id = USB_ID(0x27ac, 0x1000),
+ 	return r;
+ }
 -- 
 2.53.0
 
