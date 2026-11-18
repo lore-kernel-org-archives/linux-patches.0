@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046988;
-	b=takaWmhbH90RMue7KBwqc5d1Yzi8Tu+S5TepbvkvCrpWA2f5zxDQ/52t8qQOTZg6TcGF
-	 HirJWFpF7mOTKw+oVqp2Rpz3Yb8RHyfcDkBqVuFZLu6drsF4lNa6eCoyQU/JOLtoWlNWQ
-	 luZ2aipEMhz+K2apvak6LWzuhxxhLx59KrDB3+T1JG3fi2FjTH2LmDSCkk0ySxGAKWwp/
-	 6h7CGJgiM6miqd2BMVhl0cbEEeBwIY4MJ/PeUhBYMahD2yOBArv8OyajazeENe5pKMMfn
-	 W+cp+D1ZdlR6v4IHXC5nYbVZl574mLtspRJ8XF6k9j1k5C3cpHIhEd6veruQMovTSHQ==
+	t=1795046991;
+	b=YNxDPw+XfrFNH0l8itrWuB+DrLkcDIfw5SLcU99J4jTKVAsJXPz/+MOE1WIxjMRmuYGq
+	 8NTxTgmIsL+OlUA0YVw3+yNmewtJ+hDwruwS9UwrZyi9wQyTWvP6FxQh6uOLYP+PlRaaE
+	 xBUtR80WSYsQGD6sUYR1xnVctFpVUDfv9yBjh7hf7d2ULj8py0Loq/DrdhiHridTtu5DQ
+	 qRjfer+zGIyLGuLN/fclUhZFbhzrPsY+VcaTx3vQP5/3XhIub7xbTePe0gfNHvKgehbES
+	 LeqQ/kP7CtZ8GZTdnEMY887DWxk5ZQokPqxdx0nQqsbc1R7BsZmpJDOh6Kiem6ABZDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rO3dddopsSvbW36xRl/89V533ktOm1d+XYmAnF9EpAM=;
-	b=FivpsIF9mpTQk3/SeyCHx7kgwg197G2fd4Ebbqbd5YoxoJRiALsrqU1WwA84UhTbypx1
-	 QQUp0zXQ/7ueE/LZsa5J7d4vPQLF1JujmM87p9xSCyBIDidV3VLUVc3J60GUU9N07WVE6
-	 5ofuWlolJN6fAiX5JAexd9ygmGcBnC24mRatUeOt3WytXBWiydqSALj6z06JoTHs/H9aL
-	 7FOBrLNkzQgoAr561Np5oai62urtR7hY+sHnTBEJq54BuXnbAuzt0zA+EBuv/T7qbhKmP
-	 DDbBHQv+qly9nVYqiB4Fu4GSWrfOio0dtOiLzGb3yCW7/X1dDIjAkYz4x0frVDIHJXg==
+	bh=FfWpycVuj+4qI4eeeFc4rbBhu9z7rwtgh5NeaNmdsKE=;
+	b=5q9HegWIREfBwR4XoCfCVhT9zp3KPz4rU00JhBUN6OdcpDKjtmXSrQ8RZ96KnvC+4O/X
+	 GcLXJYD7qXR74vdQV7U3xIUCiLxqfVRxy5HBkOo5CZkCT/FiiOHXFM+HR/kvcwGBRo7Rn
+	 u0YntaZu0qhGyPVSXSaCoVzxLQnOpGnB9CTSmlg2jmvAmccCMj28IZzEOfGUKLOOlXoL7
+	 Pm5WyGSAJ9K4PToUFC03MzYftr/QQB/bTlhUhm5PKSupwUQdu0wyNULnEZ1dnG2gdFd85
+	 nAXC5Ksp3EafFIwni7DRYA1br9MZeQSybMVRq7DCZpAHoBuR1jwmNc+hLeTh397plTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oFrvKXr7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjnL+f0G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD83606A320;
-	Thu, 19 Nov 2026 00:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0F4606A32A;
+	Thu, 19 Nov 2026 00:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oFrvKXr7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8411D1F000C4;
-	Thu, 19 Nov 2026 00:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjnL+f0G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB561F000C4;
+	Thu, 19 Nov 2026 00:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046988;
-	bh=rO3dddopsSvbW36xRl/89V533ktOm1d+XYmAnF9EpAM=;
+	s=korg; t=1795046990;
+	bh=FfWpycVuj+4qI4eeeFc4rbBhu9z7rwtgh5NeaNmdsKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oFrvKXr7txubc/BHovuAhj+yxX+YrpSLojZIU/7NlS8c8wXuVa3PUJ623dAFjR5N7
-	 S6VtGoPoUPWJTC+1FgWC5WoUjzACgmGPCOwDeiNqwoiacVo9FGEQDJhwkCOJaAQZKf
-	 0RzMUImEta4PqKO24Go7+A1rYE5tGxFn9oKjT3R8=
+	b=OjnL+f0Gl3kKaU++X/tIfiJ5IFHWrZopFF2++lDTjBTnwian29rKLUdUXgKWozoI/
+	 w3DjdlPa8sR6uYDpjWbgo6c/cyhhUk7UhofYUvnxeRnTYCy4W6/HReUL0t4igPlJn7
+	 AbCzoFWv/rULn/BUEUtw8FFMG2XhpHStf5qtp3G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1479/2857] mptcp: fix subflow bitfield misuse
-Date: Wed, 18 Nov 2026 15:41:53 +0100
-Message-ID: <20261118150254.562862247@linuxfoundation.org>
+Subject: [PATCH 6.1 1480/2857] serial: 8250_exar: Clear interrupts before registering handler
+Date: Wed, 18 Nov 2026 15:41:54 +0100
+Message-ID: <20261118150254.597939805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,53 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7538fa33bb2f66b8b809ff39d58308be48e197a0 ]
+[ Upstream commit 5bc430afeba5d5101765c1f1a4437a90218b00b9 ]
 
-The subflow status bitfield is protected by the subflow socket lock,
-with one notable exception: the `close_event_done` bit is actually under
-the msk socket lock protection.
+While now there is no issue if IRQ is fired before we clearing
+the interrupts as the handler does the same, but strictly speaking
+it might be problematic if IRQ handler wants to do something more.
 
-As reported by Clashiko [1], flipping the latter bit may corrupt other
-entries in the same bitfield.
+Move clearing interrupt code to be called before registering the
+IRQ handler.
 
-Move the `close_event_done` outside the bitfield, in a 32bit hole.
-
-Link: https://lore.kernel.org/178959153492.22033.1944011998010756543@kernel.org
-Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-2-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adjusted context to place close_event_done after pm_listener instead of fully_established ]
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240219150627.2101198-4-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 33d337816e00 ("serial: 8250_exar: store the GPIO platform device in struct exar8250")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_exar.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index b27f672993605..ce852c8bc524b 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -492,11 +492,13 @@ struct mptcp_subflow_context {
- 		disposable : 1,	    /* ctx can be free at ulp release time */
- 		stale : 1,	    /* unable to snd/rcv data, do not use for xmit */
- 		valid_csum_seen : 1,        /* at least one csum validated */
--		close_event_done : 1,       /* has done the post-closed part */
- 		resetting : 1,	    /* subflow is resetting */
--		__unused : 8;
-+		__unused : 9;
- 	enum mptcp_data_avail data_avail;
- 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
-+	bool	close_event_done;   /* has done the post-closed part,
-+				     * protected by msk socket lock
-+				     */
- 	u32	remote_nonce;
- 	u64	thmac;
- 	u32	local_nonce;
+diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
+index bbca9c501c604..b8efa464f1b3e 100644
+--- a/drivers/tty/serial/8250/8250_exar.c
++++ b/drivers/tty/serial/8250/8250_exar.c
+@@ -718,14 +718,14 @@ exar_pci_probe(struct pci_dev *pcidev, const struct pci_device_id *ent)
+ 	uart.port.irq = pci_irq_vector(pcidev, 0);
+ 	uart.port.dev = &pcidev->dev;
+ 
++	/* Clear interrupts */
++	exar_misc_clear(priv);
++
+ 	rc = devm_request_irq(&pcidev->dev, uart.port.irq, exar_misc_handler,
+ 			 IRQF_SHARED, "exar_uart", priv);
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Clear interrupts */
+-	exar_misc_clear(priv);
+-
+ 	for (i = 0; i < nr_ports && i < maxnr; i++) {
+ 		rc = board->setup(priv, pcidev, &uart, i);
+ 		if (rc) {
 -- 
 2.53.0
 
