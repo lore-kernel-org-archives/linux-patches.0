@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059420;
-	b=h6OnG79aFcnqwgIVgmhTTFCPvPtjrw0cRS41qjrwJX7V/J3l9Sm3bqER403Ic++xbAUo
-	 06cqZcfcwS5fQKBTz4U6BQoGt5NY1uXVxARE9hJiwZrTQRehyPmgHBzBd6LR9cowRQ0B4
-	 XRUpxfAk8lCj2iEQdEpfW0wjuA/zrtwfKUiFDipYVhOBic3fLKuQdSK9adzv7idB/ZkWl
-	 88+HTXPzwnXe8Cq8uz359L81z1GEHRFB+p+jibi3rBimn8SNAy7QNz7NZmuej+JtCYf+c
-	 KF+AlU3cBU2XZEfxiBKpKY1NM7rkgOHoRxgMrS7pgFWwb1oFthxxcjAQw8xSzO4UNuQ==
+	t=1795059422;
+	b=txSfV1fqVDF7vwCDtMzpXBm2QHI771DgHMWk2L1nbQFtRwdqqp0ktKRegHp2aCgspYsD
+	 x8DObt4ePBqEACtdc2neRSiUEianVD5DxYYWqW5AJ0TMcZbkrzi852ff8tRZX2mHxHR96
+	 PTeNjSLA/X3sxu3B+2dXWA1ABcfmTsMl6ZeVtjRfuDra+aDuf7ndC7bvxlop3ojZSE1J0
+	 za+DI2FH7U3USeAK8xLZcelO0vjByan6LUkxS1788CQcFYuRzTBjvU3waTn+zo5MAPozZ
+	 d9GyF+N+uK0q0X+WuKB5EdYoW7CSJCFCFTUc6RtoLJaKaewhQqyLWD1FkRq6XUlm4mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hdWxNnJ77Q/Sm9BGPyvyF4Ufh63GysiKcF2KLSSh3h4=;
-	b=YNTZWw5mmpkoLubvpzXskqtUTCf2aJKWthbV/ZYq1RMXYJQ5irRt8LxlW3h0MQZyd5Af
-	 h5gsX1i6PCwr0ussDMLioh81qIuKb+n7G2stiKk3jPz0uCjGtwv16Y86yn28BcMs0Od39
-	 Y4OU5ZKEm0asceRHkjc7Gic2x1U1ZGuXrbFNhxfZDcW/4+KmLxp/gcsGE0O1YcgEV7JXZ
-	 8l/9xOtwl8gGLgKrAi5UkLeglIaQJ6bRUtkNikUYThWK7+KyLfw9HHupK7Mxkx4UPLXLt
-	 pixNHW8W2xHrBIVIL9iGL2PB7Uiv8tH/nzEC5WxHMRduNE5EELoPu7iJi4z8KiSekvQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Em/WHzX1jzwg3jR5aAlLPi9tuFNKTblUfHG/Fj7AqoA=;
+	b=JchZ2sWHkt0RQlIsue+ASe5RAFyhQ/vbhaEA9mW06hax++CsIKG0KqseoK84cxGii5Rg
+	 QHEGczHYe+Wpfdczkr74CncQiEeW/XqHbSy3BkggOkzIzRta03uQNeA9hb6/3ffDmZriY
+	 SumlUJUs9/PWBwBrPOdXfczhSETj19J2TxvBpt9EPQe34Vvx9dpFzFZ/Ez4lA4WRDnmFh
+	 M5brxYdIZeCyAzw5UCxGb/mJOjsYrXWBF9MWIwx3u9XHvKkWlTopQo0LYcTUyF8xHgVEA
+	 7NNspPVkc9WkSr2HaccED/zaLZ92z5+x3kSfcbPdZHH3Q369wLgVv8kCWsb9yhrY+Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpX5AmId;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wT80613d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E764C606A32F;
-	Thu, 19 Nov 2026 03:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8677D606A32C;
+	Thu, 19 Nov 2026 03:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpX5AmId
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458731F000C4;
-	Thu, 19 Nov 2026 03:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wT80613d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F491F000C4;
+	Thu, 19 Nov 2026 03:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059419;
-	bh=hdWxNnJ77Q/Sm9BGPyvyF4Ufh63GysiKcF2KLSSh3h4=;
+	s=korg; t=1795059422;
+	bh=Em/WHzX1jzwg3jR5aAlLPi9tuFNKTblUfHG/Fj7AqoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GpX5AmIdrXEG/6FfNDpc+wyLClnhUx8GjzQK7/0FK0FZpYPkw+SIXlMpeLdH5SqDI
-	 Jy77udYWtPBU4o8JGmhtWIF8gLlDfD5bHWuVbmXpKMVEFWsIxJxym1C/RoMYxJV5qP
-	 i+Mps+DRFtaoDcvO+bU28j02jJBXuIX9Oc9PJVLo=
+	b=wT80613dJJDuDdsUYsQtn1S6va6mIm02iyisscInWPURQ2xGgXgDfTCqcw2xa/PEv
+	 EbMnIvHRwlpJNP/DY3c2sjTX0xRnWmZSJCdLGSf7A5ZPYeHE8fIW41/ZCEQKU2iQR9
+	 iNJLyigOEtxBheWFTl+ZAzaHqWQdtPOqqKeKIDgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ignat Korchagin <ignat@linux.win>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	stable <stable@kernel.org>,
+	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0834/1848] crypto: ecc - Handle exceptional points in Shamir multiplication
-Date: Wed, 18 Nov 2026 15:47:52 +0100
-Message-ID: <20261118145951.593066033@linuxfoundation.org>
+Subject: [PATCH 5.10 0835/1848] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
+Date: Wed, 18 Nov 2026 15:47:53 +0100
+Message-ID: <20261118145951.630476690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -64,327 +64,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 6fd70bc8bc01a578c7728b7bd1cb5689c62cc5b7 ]
+[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
 
-Shamir multiplication mishandles equal points, opposite points and the
-point at infinity. This rejects valid ECDSA signatures and can accept
-invalid digest/signature tuples when the public key is G or -G. The
-kernel incorrectly rejects 16 valid signatures from Wycheproof.
+When the PPM reports more than one DisplayPort alternate mode for a
+connector, ucsi_ccg_update_altmodes() merges them into a single entry
+in uc->updated[] and sets uc->has_multiple_dp. In that case,
+ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
+GET_CURRENT_CAM command. The response is a single byte holding the
+index of the currently active alternate mode, and it is provided by
+the PPM firmware.
 
-Handle doubling, cancellation and the point at infinity in precomputation
-and accumulation. Add regression tests for P-256 ECDSA and 256/512-bit
-EC-RDSA. The valid vectors are Wycheproof P1363 secp256r1/SHA-256 cases
-60 and 210 converted to X9.62, two constructed ECDSA signatures for
-Q = +/-G with k = 2, and six constructed EC-RDSA signatures for Q = G,
--G and -2G. Also add two invalid P-256 digest/signature tuples for
-Q = +/-G that must return -EKEYREJECTED.
+The function uses this byte directly as an index into uc->orig[], and
+then uses the linked_idx read from that entry as the translated index
+into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
+neither index is checked against that size.
 
-Fixes: 0d7a78643f69 ("crypto: ecrdsa - add EC-RDSA (GOST 34.10) algorithm")
-Cc: stable@vger.kernel.org
+If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
+larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
+uc->orig[]. The byte read from there is then used as the index for
+writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
+read is followed by an out-of-bounds write. This happens without any
+userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
+when handling connector changes.
+
+Fix this by rejecting responses whose index is out of range, printing an
+error and returning -EPROTO, so that the caller cannot accept this.
+Also check linked_idx before using it as an index, so that the write into
+uc->updated[] is always within bounds.
+
+The response is now only processed when the command completed without
+an error. ucsi_sync_control_common() only reads the response when the
+CCI reports command completion, so otherwise the buffer is not filled
+and must not be mistaken for an invalid index.
+
+This bug was found with a Python script that traces where firmware input
+is used.
+
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
+Cc: stable <stable@kernel.org>
+Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
 Assisted-by: LLM
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ignat Korchagin <ignat@linux.win>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: adapted ECC doubling calls and EC-RDSA vectors to older APIs lacking ECDSA and negative-result test support. ]
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: adapted the ucsi_ccg_sync_control() change to ucsi_ccg_read() without CCI status checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecc.c     |  33 +++++++-
- crypto/testmgr.h | 198 ++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 228 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/ecc.c b/crypto/ecc.c
-index 09067e4b320f5..506a89e90a0b4 100644
---- a/crypto/ecc.c
-+++ b/crypto/ecc.c
-@@ -1224,9 +1224,22 @@ static void ecc_point_add(const struct ecc_point *result,
- 	vli_set(result->x, q->x, ndigits);
- 	vli_set(result->y, q->y, ndigits);
- 	vli_mod_sub(z, result->x, p->x, curve->p, ndigits);
-+	if (vli_is_zero(z, ndigits)) {
-+		if (vli_cmp(p->y, q->y, ndigits)) {
-+			/* P + (-P) is the point at infinity. */
-+			vli_clear(result->x, ndigits);
-+			vli_clear(result->y, ndigits);
-+			return;
-+		}
-+		/* The co-Z addition formula does not handle P == Q. */
-+		z[0] = 1;
-+		ecc_point_double_jacobian(result->x, result->y, z, curve->p, ndigits);
-+		goto out;
-+	}
- 	vli_set(px, p->x, ndigits);
- 	vli_set(py, p->y, ndigits);
- 	xycz_add(px, py, result->x, result->y, curve->p, ndigits);
-+out:
- 	vli_mod_inv(z, z, curve->p, ndigits);
- 	apply_z(result->x, result->y, z, curve->p, ndigits);
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index b50933cd4babf..2caef7d02cbb6 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -351,14 +351,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
+ 	return -ETIMEDOUT;
  }
-@@ -1266,21 +1279,37 @@ void ecc_point_mult_shamir(const struct ecc_point *result,
- 	vli_set(rx, point->x, ndigits);
- 	vli_set(ry, point->y, ndigits);
- 	vli_clear(z + 1, ndigits - 1);
--	z[0] = 1;
-+	z[0] = !ecc_point_is_zero(point);
  
- 	for (--i; i >= 0; i--) {
- 		ecc_point_double_jacobian(rx, ry, z, curve->p, ndigits);
- 		idx = (!!vli_test_bit(u1, i)) | ((!!vli_test_bit(u2, i)) << 1);
- 		point = points[idx];
--		if (point) {
-+		if (point && !ecc_point_is_zero(point)) {
- 			u64 tx[ECC_MAX_DIGITS];
- 			u64 ty[ECC_MAX_DIGITS];
- 			u64 tz[ECC_MAX_DIGITS];
+-static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
++static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+ {
+ 	u8 cam, new_cam;
  
-+			if (vli_is_zero(z, ndigits)) {
-+				/* Adding to infinity starts a new accumulator. */
-+				vli_set(rx, point->x, ndigits);
-+				vli_set(ry, point->y, ndigits);
-+				z[0] = 1;
-+				continue;
-+			}
- 			vli_set(tx, point->x, ndigits);
- 			vli_set(ty, point->y, ndigits);
- 			apply_z(tx, ty, z, curve->p, ndigits);
- 			vli_mod_sub(tz, rx, tx, curve->p, ndigits);
-+			if (vli_is_zero(tz, ndigits)) {
-+				if (!vli_cmp(ry, ty, ndigits))
-+					ecc_point_double_jacobian(rx, ry, z,
-+								  curve->p, ndigits);
-+				else
-+					/* Adding opposite points yields infinity. */
-+					vli_clear(z, ndigits);
-+				continue;
-+			}
- 			xycz_add(tx, ty, rx, ry, curve->p, ndigits);
- 			vli_mod_mult_fast(z, z, tz, curve->p, ndigits);
- 		}
-diff --git a/crypto/testmgr.h b/crypto/testmgr.h
-index 45212d077c298..103b45279764b 100644
---- a/crypto/testmgr.h
-+++ b/crypto/testmgr.h
-@@ -646,7 +646,8 @@ static const struct akcipher_testvec rsa_tv_template[] = {
- };
+ 	cam = data[0];
++	if (cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
++			cam);
++		return -EPROTO;
++	}
++
+ 	new_cam = uc->orig[cam].linked_idx;
++	if (new_cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
++			new_cam, cam);
++		return -EPROTO;
++	}
++
+ 	uc->updated[new_cam].active_idx = cam;
+ 	data[0] = new_cam;
++
++	return 0;
+ }
  
- /*
-- * EC-RDSA test vectors are generated by gost-engine.
-+ * EC-RDSA test vectors generated by gost-engine, followed by constructed
-+ * exceptional-point regression vectors.
-  */
- static const struct akcipher_testvec ecrdsa_tv_template[] = {
- 	{
-@@ -797,6 +798,201 @@ static const struct akcipher_testvec ecrdsa_tv_template[] = {
- 	.public_key_vec = true,
- 	.siggen_sigver_test = true,
- 	},
-+	/*
-+	 * Constructed EC-RDSA exceptional-point vectors.
-+	 * With Q = dG, choose k = z1 + d*z2 (mod n), r = x(kG) mod n,
-+	 * e = -r/z2 (mod n), and s = r*d + k*e (mod n).
-+	 * The input digest is e, encoded little-endian.
-+	 */
-+	/* cp256a: Q=G, z1 = 3, z2 = 1. */
-+	{
-+	.key =
-+	"\x04\x40\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x14\x1e\x9f\x9e\x9c\xc9\xac\x22\xb1\xe3\x23\xdf\x2d\x4f"
-+	"\x29\x35\x76\x2b\x3f\x45\x5a\x50\xdf\x27\xda\x9c\x98\xe0\x71\xe4"
-+	"\x91\x8d",
-+	.key_len = 66,
-+	.params = /* OID_gostCPSignA */
-+	"\x30\x13\x06\x07\x2a\x85\x03\x02\x02\x23\x01\x06\x08\x2a\x85\x03"
-+	"\x07\x01\x01\x02\x02",
-+	.param_len = 21,
-+	.c =
-+	"\x1a\xed\x44\xae\xd4\x4a\xed\x44\xae\xd4\x4a\xed\x44\xae\xd4\x49"
-+	"\x32\x67\xe0\x26\x16\xfd\xb7\xaf\xa4\xd7\x3e\x61\xd4\xf9\x7b\x94"
-+	"\xf7\x06\x3e\x70\x63\xe7\x06\x3e\x70\x63\xe7\x06\x3e\x70\x63\xe7"
-+	"\x06\x3e\x70\x63\xe7\x06\x3e\x70\x63\xe7\x06\x3e\x70\x63\xe4\xb7",
-+	.c_size = 64,
-+	.m =
-+	"\xdc\xd3\xfd\x46\xcb\x14\x9d\xe1\x8f\x92\x54\xb2\x0c\xa0\x22\x66"
-+	"\x18\x9c\x8f\xc1\xf9\x18\x9c\x8f\xc1\xf9\x18\x9c\x8f\xc1\xf9\x08",
-+	.m_size = 32,
-+	.algo = OID_gost2012PKey256,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	},
-+	/* cp256a: Q=-G, z1 = 7, z2 = 6. */
-+	{
-+	.key =
-+	"\x04\x40\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x83\xdf\x60\x61\x63\x36\x53\xdd\x4e\x1c\xdc\x20\xd2\xb0"
-+	"\xd6\xca\x89\xd4\xc0\xba\xa5\xaf\x20\xd8\x25\x63\x67\x1f\x8e\x1b"
-+	"\x6e\x72",
-+	.key_len = 66,
-+	.params = /* OID_gostCPSignA */
-+	"\x30\x13\x06\x07\x2a\x85\x03\x02\x02\x23\x01\x06\x08\x2a\x85\x03"
-+	"\x07\x01\x01\x02\x02",
-+	.param_len = 21,
-+	.c =
-+	"\x2a\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
-+	"\x92\x10\x2d\x68\x19\x8f\x22\xd5\x60\xeb\x59\xd6\xf3\xe5\x9e\xc2"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01",
-+	.c_size = 64,
-+	.m =
-+	"\xc3\x9e\xe5\xf3\xd6\x59\xeb\x60\xd5\x22\x8f\x19\x68\x2d\x10\x92"
-+	"\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\x2a",
-+	.m_size = 32,
-+	.algo = OID_gost2012PKey256,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	},
-+	/* cp256a: Q=-2G, z1 = 5, z2 = 2. */
-+	{
-+	.key =
-+	"\x04\x40\x95\xfd\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xff\xff\x14\x1e\x9f\x9e\x9c\xc9\xac\x22\xb1\xe3\x23\xdf\x2d\x4f"
-+	"\x29\x35\x76\x2b\x3f\x45\x5a\x50\xdf\x27\xda\x9c\x98\xe0\x71\xe4"
-+	"\x91\x8d",
-+	.key_len = 66,
-+	.params = /* OID_gostCPSignA */
-+	"\x30\x13\x06\x07\x2a\x85\x03\x02\x02\x23\x01\x06\x08\x2a\x85\x03"
-+	"\x07\x01\x01\x02\x02",
-+	.param_len = 21,
-+	.c =
-+	"\x7f\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xb6\x30\x88\x38\x4c\xad\x68\x80\x22\xc2\x0d\x84\xdb\xb0\xdc\x47"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01",
-+	.c_size = 64,
-+	.m =
-+	"\x49\xdc\xb0\xdb\x84\x0d\xc2\x22\x80\x68\xad\x4c\x38\x88\x30\xb6"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f",
-+	.m_size = 32,
-+	.algo = OID_gost2012PKey256,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	},
-+	/* tc512a: Q=G, z1 = 3, z2 = 1. */
-+	{
-+	.key =
-+	"\x04\x81\x80\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\xa4\xf2\x15\x52\xcb\x89\xa5\x89\xb8\xf5\x35\xc2\x5f"
-+	"\xfe\x28\x80\xe9\x41\x3a\x0e\xa5\xe6\x75\x3d\xe9\x36\xd0\x4f\xbe"
-+	"\x26\x16\xdf\x21\xa9\xef\xcb\xfd\x64\x80\x77\xc1\xab\xf1\xac\x93"
-+	"\x1c\x5e\xce\xe6\x50\x54\xe2\x16\x88\x1b\xa6\xe3\x6a\x83\x7a\xe8"
-+	"\xcf\x03\x75",
-+	.key_len = 131,
-+	.params = /* OID_gostTC26Sign512A */
-+	"\x30\x0b\x06\x09\x2a\x85\x03\x07\x01\x02\x01\x02\x01",
-+	.param_len = 13,
-+	.c =
-+	"\xd8\xc0\xd7\xe3\xfb\xa6\xca\xff\x6a\xd1\xb4\xb4\x82\x1d\x15\x6f"
-+	"\xa7\xc7\xbd\x63\x95\xb8\x29\x0d\xd4\xfa\xb1\x1c\x36\xbd\x32\x8d"
-+	"\x1a\xba\xf1\x2e\xbc\x7b\xf2\x02\x96\xf8\xef\x2a\x5e\x72\x64\x86"
-+	"\x67\x62\xfb\x62\x8e\x83\x53\x63\xb7\xe6\x78\x3c\x42\xd7\x0d\x1d"
-+	"\xb7\xbf\xb8\x09\x56\xc8\x67\x00\x31\xba\x19\x19\x29\xf6\x4e\x30"
-+	"\x1d\x68\x16\x34\x23\x6d\x47\xa6\x0e\x57\x1a\x4b\xed\xc0\xef\x25"
-+	"\x74\x52\xef\x78\xb5\xb9\x8d\xbb\x3d\x9f\x31\x29\xd9\x34\x94\x33"
-+	"\xce\x2a\x3a\x35\xcb\x51\x9c\x91\xe2\xd6\x33\xd7\xb3\x73\xae\x16",
-+	.c_size = 128,
-+	.m =
-+	"\x5f\x04\x9d\x6b\x69\x7d\xf7\xe7\xcb\x1b\x81\x2f\x76\xfe\x20\xcd"
-+	"\x2c\xcc\xd0\x74\x63\xfa\x52\x32\x56\xfb\xd3\x3e\xba\xa5\x93\xb3"
-+	"\xd9\x10\x3f\x12\xb4\xe5\xa8\xf1\x59\xb8\x92\xdc\xcb\xe9\x97\xe2"
-+	"\xcf\xb1\x09\xd6\xe6\xe6\x45\xce\xff\x98\x37\xa9\xf6\x47\x40\x48",
-+	.m_size = 64,
-+	.algo = OID_gost2012PKey512,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	},
-+	/* tc512a: Q=-G, z1 = 7, z2 = 6. */
-+	{
-+	.key =
-+	"\x04\x81\x80\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x23\x0b\xea\xad\x34\x76\x5a\x76\x47\x0a\xca\x3d\xa0"
-+	"\x01\xd7\x7f\x16\xbe\xc5\xf1\x5a\x19\x8a\xc2\x16\xc9\x2f\xb0\x41"
-+	"\xd9\xe9\x20\xde\x56\x10\x34\x02\x9b\x7f\x88\x3e\x54\x0e\x53\x6c"
-+	"\xe3\xa1\x31\x19\xaf\xab\x1d\xe9\x77\xe4\x59\x1c\x95\x7c\x85\x17"
-+	"\x30\xfc\x8a",
-+	.key_len = 131,
-+	.params = /* OID_gostTC26Sign512A */
-+	"\x30\x0b\x06\x09\x2a\x85\x03\x07\x01\x02\x01\x02\x01",
-+	.param_len = 13,
-+	.c =
-+	"\x7f\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\x93\xf3\x4a\x99\x7a\x46\xc4\x88\xb7\xf9\x15\xc6\xa7\x02\xb0\x30"
-+	"\x4d\xa5\x9c\x55\xfd\x69\x5c\x2e\xe5\x66\xd8\xa0\x8f\x88\x59\x37"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03",
-+	.c_size = 128,
-+	.m =
-+	"\x3a\x59\x88\x8f\xa0\xd8\x66\xe5\x2e\x5c\x69\xfd\x55\x9c\xa5\x4d"
-+	"\x30\xb0\x02\xa7\xc6\x15\xf9\xb7\x88\xc4\x46\x7a\x99\x4a\xf3\x93"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f",
-+	.m_size = 64,
-+	.algo = OID_gost2012PKey512,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	},
-+	/* tc512a: Q=-2G, z1 = 5, z2 = 2. */
-+	{
-+	.key =
-+	"\x04\x81\x80\x7c\x13\xea\xd2\xd9\xaf\x82\xb9\x1f\xb2\xfd\xe1\x8d"
-+	"\xf4\x5b\x37\xe4\xf2\x04\x6a\x2a\x1d\x15\x16\x95\x2a\x5d\x40\xcd"
-+	"\xbb\x34\x44\x2f\x2b\x13\x0a\x47\xb0\xf6\xe5\xa5\x58\x3a\xf4\x54"
-+	"\x09\xb0\x1d\xf5\x5c\xf1\xbf\x9d\x86\xa5\x97\xab\x96\x29\x62\xfc"
-+	"\xdc\x89\x3b\x76\x3d\x50\x6e\x8a\xcf\x02\x4c\x74\x0e\x6e\xe0\x1f"
-+	"\x28\xab\x27\x9b\x20\x02\xc8\xc4\x12\xcb\x8a\xe3\xa4\x27\xce\x39"
-+	"\x62\xdf\x35\x6d\xc1\x65\x7f\x7b\x48\x90\x11\x8f\x19\x7c\x1e\x67"
-+	"\x91\x97\xeb\x90\x85\x25\xfc\x86\xb3\x88\x6e\x5c\x57\x1f\x1d\x1d"
-+	"\x3b\xec\x37",
-+	.key_len = 131,
-+	.params = /* OID_gostTC26Sign512A */
-+	"\x30\x0b\x06\x09\x2a\x85\x03\x07\x01\x02\x01\x02\x01",
-+	.param_len = 13,
-+	.c =
-+	"\x7f\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\x93\xf3\x4a\x99\x7a\x46\xc4\x88\xb7\xf9\x15\xc6\xa7\x02\xb0\x30"
-+	"\x4d\xa5\x9c\x55\xfd\x69\x5c\x2e\xe5\x66\xd8\xa0\x8f\x88\x59\x33"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-+	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03",
-+	.c_size = 128,
-+	.m =
-+	"\x39\x59\x88\x8f\xa0\xd8\x66\xe5\x2e\x5c\x69\xfd\x55\x9c\xa5\x4d"
-+	"\x30\xb0\x02\xa7\xc6\x15\xf9\xb7\x88\xc4\x46\x7a\x99\x4a\xf3\x93"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f",
-+	.m_size = 64,
-+	.algo = OID_gost2012PKey512,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	},
- };
- 
- /*
+ static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
+@@ -541,7 +555,7 @@ static int ucsi_ccg_read(struct ucsi *ucsi, unsigned int offset,
+ 	switch (UCSI_COMMAND(uc->last_cmd_sent)) {
+ 	case UCSI_GET_CURRENT_CAM:
+ 		if (uc->has_multiple_dp)
+-			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
++			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
+ 		break;
+ 	case UCSI_GET_ALTERNATE_MODES:
+ 		if (UCSI_ALTMODE_RECIPIENT(uc->last_cmd_sent) ==
 -- 
 2.53.0
 
