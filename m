@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037008;
-	b=3WU9AyIk8FczvlCz5x4dBadtJ8MblUp3TL+P/AZ7dDEp88UauPl4uwH1HMHvJBmImiqY
-	 Ed4jBNzhRa1qYnDMHSJDdGFt6EOgtO7FYcMUlT0TwYdsunie5LFKumf6ZbeU/9cGVzQGz
-	 omkkuij7VJxyW0cYAOfgPxztDBNkP3aW0lwF22QY5GzcWYjK4oIgdhsSHtjUHv8Q1G39R
-	 Yu96DGwNFiqC08JerRa+voQo7uPTQEBytkpdMW1ieiK2Nugv6oXobgOd+nzi212zf6ckk
-	 9tZ0LV8Kl7DpTSkYyaImcrk6W7ZkLMuKZSRUnrmL0STLrLWZafQHdYhOojKhkvgX7dw==
+	t=1795037011;
+	b=Z57fStncAY4Ku91Kusb1RBTlna0SU7ekh7Xnr91HZ4Nq2id0jmo1b5cWX6Bd5YP6JRiQ
+	 ryNYa+b65x9htH4VLu6s3075TSpJrkyF27kEuSVidXB2OM9cy++2nDDMGcoULbljjO0rT
+	 oh6zG2QkA44Oq17rN1HggY3HsvoBYvBKUj1ZD5jkEWKG0QeADmSAv7GxYgnxEAwTY6pvi
+	 3jJlxQug+pCVU8jlw65AmpZe7QkZnmNSpS91py0NOJHT9Jpf5d0XyrmD0T1QtBLpttDek
+	 kmDf5DULi5ONC0w8eaSgKLAZeEYAzSC+oU0wcVzFzmGxUkH9J15bt9pKQvonBKCMbfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I8anrXEn2rV28D0gICDRc7fKi51kFWqeOqP17w3O0V4=;
-	b=azqrIAiRVs3fVpfHIfoc5WX2m0QExyxPM7rGo93LW9VRuVfewZGeo2152/WBPZTYiDlE
-	 RpR8j7NrnZxil/rqpyPxWndX+18lDskLTfNPO7j31mcJynOeI94mPbk1Fe35ohRSc0r3K
-	 m0NLfw1ssQotsJo6Z8pc8ymvCfD2oe85w0gJy7C4gaWuKcidF6dwwUDYgtEMHndzXuVSh
-	 qTophE2sw6qzoILu4qEhaRk/OzxDyUEsm8yRV4bM8rcaUB54oRFJ+wlvC2S9lUagy0mKi
-	 /B/hIKqcxe+XaC/ZoN3gXn6S9s2K51fx9lbQJqRMcXmBFk+wSSqZGU6sV0Wu8uaaIGg==
+	bh=K4RzZ6hQrWmOCnZpTr1YqtN4lfHyeelWQ3xIj6Ar4nw=;
+	b=Syc3q4mJYidprU1lPxdHFPOFhfijA1QOly9NFY247O9mUQqtxHfFyVxY1hyMibxvc/GK
+	 adupzuGbxJX81icJ1YU5g6XAbR5xByUO6J2crndHiX8RhHLCr33KAljGutmFJeCebh2ax
+	 zmozp4rZHIyB5zhaX9ajTEGHYPVf6OVg1N2eAWj2/Q1OP4Hs3p9+xFXmWgtdjPZ6wgcyG
+	 aX/jSVQU79bTVaN6Fbt8pJhEfKaJ6apt+s9nUCEPAhYKMoJ/ZnzKcedRskXDZ9TrQblM3
+	 o2p3H47HvMueozb6C9X2UHA7EPUy7efzuzP0RDjFja0aFD87RHHequL3m5UvvgcaBSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2Pxh2yX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gt9qIRNe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE9B606A31C;
-	Wed, 18 Nov 2026 21:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92205606A338;
+	Wed, 18 Nov 2026 21:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2Pxh2yX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9701F000C4;
-	Wed, 18 Nov 2026 21:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gt9qIRNe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81421F000C6;
+	Wed, 18 Nov 2026 21:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037008;
-	bh=I8anrXEn2rV28D0gICDRc7fKi51kFWqeOqP17w3O0V4=;
+	s=korg; t=1795037011;
+	bh=K4RzZ6hQrWmOCnZpTr1YqtN4lfHyeelWQ3xIj6Ar4nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E2Pxh2yXoFdiAjhd3Eq3Jt6uA4sFUJffeR2ucwqSTkrP44axBxjclbbrKEObiEzVB
-	 smhjbI1xKY+dsPX47TrwVkvrtW/Q2vnPijsLD/N49La0VHXh8xzDojvspB3fE8JeFW
-	 9IOHS7ZmC5/JEC5jwOD8O599R5UhvDOiw9n5k+yU=
+	b=Gt9qIRNehuW53PFv9DrSh729JMFaYGSr3YdkV1zqiaXdRWvn2dMA/jtvfVAjSprCJ
+	 QVsXFwkXU2JaxQEizvg5pWaEDRCe0TqqdndUyrsFl4hSNJ/sZt1/pqY1Kn39fWKWGJ
+	 DNVqOlegBj3eG/yo763mn3fvBsil2sIPAkQE2zrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1262/3318] cpufreq: stats: Fix potential out-of-bounds access in deferred reset
-Date: Wed, 18 Nov 2026 15:31:24 +0100
-Message-ID: <20261118150358.069192836@linuxfoundation.org>
+Subject: [PATCH 6.6 1245/3318] ASoC: qcom: qdsp6: q6afe: fix clk vote response type mismatch
+Date: Wed, 18 Nov 2026 15:31:07 +0100
+Message-ID: <20261118150357.540050589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,53 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 8a702989677216489e471a6f27599da53f753567 ]
+[ Upstream commit f3c7bee984aa0ba2b48a44e16a6f3ec2c27f851e ]
 
-cpufreq_stats_create_table() sets stats->last_index to -1 if policy->cur
-is not in the frequency table. It then stays at -1, because
-cpufreq_stats_record_transition() returns early on old_index == -1 before
-it gets to update last_index.
+The response sent by the firmware when requesting a clock vote (opcode
+AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST) does not actually have
+the same opcode + status payload as APR_BASIC_RSP_RESULT. Rather, it
+returns one single u32 which is the client_handle that must be used in
+future unvote requests for the same clock.
 
-Commit 46a310b80bc2 ("[CPUFREQ] Don't set stat->last_index to -1 if
-the pol->cur has incorrect value.") added that check. However, since
-commit 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to
-cpufreq_stats_record_transition()"), the stats reset is deferred to the
-beginning of cpufreq_stats_record_transition(), before that check, and
-cpufreq_stats_reset_table() ends with an unconditional
-cpufreq_stats_update(). So if the "reset" attribute is written while
-last_index is -1, the next frequency transition accesses
-time_in_state[-1].
+As a result of this type confusion, the status returned by the callback
+to q6afe_vote_lpass_core_hw was actually an out-of-bounds read. It was
+only interpreted as success (0) most of the time due to luck, but there
+are some reports of random errors such as:
 
-Fix it by also returning early on last_index == -1 in
-cpufreq_stats_reset_table().
+[   20.961100] qcom-q6afe aprsvc:service:4:4: AFE failed to vote (3)
+[   20.961131] Failed to prepare clk 'core': -110
 
-Fixes: 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to cpufreq_stats_record_transition()")
-Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027133332.377546-1-zhongqiu.han@oss.qualcomm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix by correctly interpreting the response as a single u32, and actually
+store it as the client_handle to ensure unvote would work correctly.
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/5976946.DvuYhMxLoT@antlia/
+Fixes: 55e07531d922 ("ASoC: q6dsp: q6afe: add lpass hw voting support")
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://patch.msgid.link/20261016063536.598610-1-val@packett.cool
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_stats.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/qcom/qdsp6/q6afe.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
-index 40a9ff18da068..d457848b3eabd 100644
---- a/drivers/cpufreq/cpufreq_stats.c
-+++ b/drivers/cpufreq/cpufreq_stats.c
-@@ -52,6 +52,10 @@ static void cpufreq_stats_reset_table(struct cpufreq_stats *stats)
- 	 * reset_pending accesses in cpufreq_stats_record_transition().
- 	 */
- 	smp_rmb();
-+
-+	if (stats->last_index == -1)
-+		return;
-+
- 	cpufreq_stats_update(stats, READ_ONCE(stats->reset_time));
- }
+diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
+index fcef53b97ff98..1cdc36475a838 100644
+--- a/sound/soc/qcom/qdsp6/q6afe.c
++++ b/sound/soc/qcom/qdsp6/q6afe.c
+@@ -369,6 +369,7 @@ struct q6afe {
+ 	struct q6core_svc_api_info ainfo;
+ 	struct mutex lock;
+ 	struct aprv2_ibasic_rsp_result_t result;
++	uint32_t vote_result;
+ 	wait_queue_head_t wait;
+ 	struct list_head port_list;
+ 	spinlock_t port_list_lock;
+@@ -873,13 +874,14 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+ 	struct aprv2_ibasic_rsp_result_t *res;
+ 	struct apr_hdr *hdr = &data->hdr;
+ 	struct q6afe_port *port;
++	uint32_t *vote_res;
  
+ 	if (!data->payload_size)
+ 		return 0;
+ 
+-	res = data->payload;
+ 	switch (hdr->opcode) {
+ 	case APR_BASIC_RSP_RESULT: {
++		res = data->payload;
+ 		if (res->status) {
+ 			dev_err(afe->dev, "cmd = 0x%x returned error = 0x%x\n",
+ 				res->opcode, res->status);
+@@ -906,8 +908,10 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+ 	}
+ 		break;
+ 	case AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST:
++		vote_res = data->payload;
+ 		afe->result.opcode = hdr->opcode;
+-		afe->result.status = res->status;
++		afe->result.status = 0;
++		afe->vote_result = *vote_res;
+ 		wake_up(&afe->wait);
+ 		break;
+ 	default:
+@@ -1721,6 +1725,8 @@ int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
+ 			       AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST);
+ 	if (ret)
+ 		dev_err(afe->dev, "AFE failed to vote (%d)\n", hw_block_id);
++	else
++		*client_handle = afe->vote_result;
+ 
+ 
+ 	kfree(pkt);
 -- 
 2.53.0
 
