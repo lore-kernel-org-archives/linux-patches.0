@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039535;
-	b=tcOeNyIVBk4rlf8kqegu8tO2U0itfcNXGcKByLQrv4cFR1sRATas/DODtNlCuc0I3+nW
-	 Edko2hvzB+/ORi9yG/D35BhTA7C23HocMGcmIAFDwPbUjNDfBdUrb22EGmpqI8PuWKN9+
-	 N+56omvRfKgZyPuZ5D0HN1wIaatJAo0F10qwu2PEaTlkFOb/bt1a3abwPfL29cUCoJ3iT
-	 VGmfNX+1ciBv4fDlwKZv9faMcJnNXeBgo81CvMnOmw4zTjbqN3yG71I5wF0CriscC+kbJ
-	 bbxw4p/fk5s/nahl1cKyfd84ZAg/lxDIZAyyB1Eq855iJhdbjMtinTjVDss6NW+jG+w==
+	t=1795039538;
+	b=25JbA2klt6/70q/hMbQshjeeapqBKEo711QTYFO8qFxLG59QGR97kweoJDTRE8OVas/j
+	 Bdn0LQxF9dFW9Sf+DN6Y2Lt+V0l+xJ0Afpt/0qjOqUXzNnYyT0fcMFik1a3Qp9rcuokJC
+	 rceIHZ0ePxrzWZCh7nEvxmGDTFyuyxPksXUNLKNydmClINgFKCBmG5U+xNERmtrw5VRSJ
+	 IJXoIwtGKmHul28zBjDUlomCLGCqm7dTbzL7XsGB4mBZM0DnkFgYmOxO2iyGwFvbRRx7V
+	 3b90t0t2W6scUZPkBvgcF5IvK3bunxbvO3uMOUjByRjA+zYbZIdD0+p5zVuMYm4UpwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BLDoy+fH+fvpVWMUzUPdwJ2KQ7tBoAG5CQlaXLmPydQ=;
-	b=AC6WV59vuVW/lO99xdgzNqhD1lkH2BANC93fF/UHF+JyCiL49gVJcCyR+Mt2D7dHo6an
-	 Qz+sIj9aueG4H/LOuOtOhmMJJTM6W3wPQy7T6V+eY1gk+UI2o6XhAIYl3XEVpA5afkYZz
-	 kPV4FT1wB9N0p4l8QkBrkxwzlzYAYsG+HCVK9dWIET67Mm/mi0JNe54r5yFlRnN07NWdl
-	 B6bPRXYiPddKkSi28z0YXxwKR8dSDcF+Bd3pLGQ135cd+uB4HxFCngBwYPd/7aoVCX1pN
-	 fJVtSyYKaD6WMfZw5jFjUqpj8xfDgiRDSIVeIyFv8qFT0vVkyli1MNEvvDaJVkyK6ag==
+	bh=OL+jY+eoqH7RsGmcNatZy+Tn2P8mHbecZBqvl/A/FrA=;
+	b=5GK0JBotIed/Yw0/Tkn1FO7+5tYy4rnVqp8XLaGnDojrp5a6apsXoIS6JFYwAkpoKUUH
+	 EKPua/2xWHjfEcQmm1yQXcCjeToit6ZaPuaO5Cn+dViG4Knqb0YFwrCtQ8Ml5BLFn1+iX
+	 XWNX1Qw1157vhrxmP8EAR5QwzrF6KkOegEZgPwzKUaDRBMDZ/D/mrAMq50VkGAtBfZxTs
+	 vWP3ywyeGxn4kISfEq9pOC1Co1HbQin06/77HcvKLf3N0+riKuTaZBGjGLvlBgKV4OkUO
+	 YK9jX6d/HF777EBbPULubU5faP/lq7QdmFMt/v29IgDVGid8x5pAI7r7ZRdn8ywfvnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yB7eOtch;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhZmzzWx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D753B606A32A;
-	Wed, 18 Nov 2026 22:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C99C606A320;
+	Wed, 18 Nov 2026 22:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yB7eOtch
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68BA1F000C8;
-	Wed, 18 Nov 2026 22:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhZmzzWx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE3A1F000C6;
+	Wed, 18 Nov 2026 22:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039535;
-	bh=BLDoy+fH+fvpVWMUzUPdwJ2KQ7tBoAG5CQlaXLmPydQ=;
+	s=korg; t=1795039538;
+	bh=OL+jY+eoqH7RsGmcNatZy+Tn2P8mHbecZBqvl/A/FrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yB7eOtchutvJEOmpKSogXG8NEYZFgYF4fUp7JEWFLmXF9J1z5H96k7HJ/3vGDKcUa
-	 jwjC+TDS043BTyCnTbDfJiYuVx8NXqHKg+tZr+gcj36NIEl9w7c0TYVEwIDYTFRvYt
-	 sPEymeakh5y1m9WaZ85nwmMGl/CrF80r/jznfMwA=
+	b=fhZmzzWxPQIsOOpn2yHKqojkEBpV+AFmgrG/9a6lOcBmNwog1BljYzkNQtGn+45Dk
+	 aUkeNqlBFM7Sj4EvZaoxx03CZ+bcpq3TAH8WBe9CuDN6uvlF8aojTCBqfP2riodbl/
+	 ctBfoHjEqG9EcE/ja/D+rSTofrEz35Cd+WzLJhig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2133/3318] scsi: mpi3mr: Fix buffer overflow in the BSG target device map
-Date: Wed, 18 Nov 2026 15:45:55 +0100
-Message-ID: <20261118150426.054879452@linuxfoundation.org>
+Subject: [PATCH 6.6 2134/3318] scsi: mpi3mr: Fix out-of-bounds read in PCIe topology change events
+Date: Wed, 18 Nov 2026 15:45:56 +0100
+Message-ID: <20261118150426.083813995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,49 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 203b3072e7aa10d98b3f2b766693ea925cfc571d ]
+[ Upstream commit 7d572b4dc4ed0494e67097d4b7368666655f5c99 ]
 
-The size of the target device map buffer is held in a u16 while the number
-of devices it is derived from is not bounded to fit. With enough devices
-the size wraps, a short buffer is allocated, and the loop that fills it
-writes past the end.
+The number of entries in a PCIe topology change event is used to walk the
+entry array without being compared against the amount of event data that
+was received.
 
-Do the calculation in size_t.
+Bound the entry count to the received event data before use.
 
-Fixes: fb428a2005fc ("scsi: mpi3mr: Fix issues in mpi3mr_get_all_tgt_info()")
+Fixes: 8e653455547a ("scsi: mpi3mr: Add support for PCIe device event handling")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-14-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-15-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 9f846019211a0..55cea461059d5 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -309,7 +309,8 @@ static long mpi3mr_bsg_pel_enable(struct mpi3mr_ioc *mrioc,
- static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
- 	struct bsg_job *job)
- {
--	u16 num_devices = 0, i = 0, size;
-+	u16 num_devices = 0, i = 0;
-+	size_t size;
- 	unsigned long flags;
- 	struct mpi3mr_tgt_dev *tgtdev;
- 	struct mpi3mr_device_map_info *devmap_info = NULL;
-@@ -335,8 +336,8 @@ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
- 		return 0;
- 	}
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 74bfddfd42c09..48dd77a91aa1d 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2554,12 +2554,28 @@ static void mpi3mr_pcietopochg_evt_th(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3_event_data_pcie_topology_change_list *topo_evt =
+ 	    (struct mpi3_event_data_pcie_topology_change_list *)event_reply->event_data;
+ 	int i;
+-	u16 handle;
+-	u8 reason_code;
++	u16 handle, avail_len;
++	u8 reason_code, max_entries, num_entries;
+ 	struct mpi3mr_tgt_dev *tgtdev = NULL;
+ 	struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data = NULL;
  
--	kern_entrylen = num_devices * sizeof(*devmap_info);
--	size = sizeof(u64) + kern_entrylen;
-+	kern_entrylen = (uint32_t)num_devices * sizeof(*devmap_info);
-+	size = sizeof(u64) + (size_t)kern_entrylen;
- 	alltgt_info = kzalloc(size, GFP_KERNEL);
- 	if (!alltgt_info)
- 		return -ENOMEM;
+-	for (i = 0; i < topo_evt->num_entries; i++) {
++	avail_len = event_reply->event_data_length * 4;
++	if (avail_len < offsetof(struct mpi3_event_data_pcie_topology_change_list, port_entry)) {
++		ioc_err(mrioc, "PCIe topology event: event data too small (%u bytes)\n",
++			avail_len);
++		return;
++	}
++	max_entries = (avail_len -
++		      offsetof(struct mpi3_event_data_pcie_topology_change_list, port_entry)) /
++		      sizeof(struct mpi3_event_pcie_topo_port_entry);
++	num_entries = topo_evt->num_entries;
++	if (num_entries > max_entries) {
++		ioc_err(mrioc, "PCIe topology event: num_entries(%d) exceeds max(%d)\n",
++			num_entries, max_entries);
++		return;
++	}
++
++	for (i = 0; i < num_entries; i++) {
+ 		handle = le16_to_cpu(topo_evt->port_entry[i].attached_dev_handle);
+ 		if (!handle)
+ 			continue;
 -- 
 2.53.0
 
