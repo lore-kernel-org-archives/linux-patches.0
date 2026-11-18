@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019475;
-	b=jjMwu6EwV7GEg73i2gXghO0CikQgEkUqmRcyAJ9nEW4xYdhu4brGPVlAZxo1TmAf/6Vt
-	 laTIGJZC12aYnOqrYRIyTVzugw27mP8+iCn8WLQYFLwDn6r2f9Q+eX74YfbZA3njKA0u4
-	 uuNRwif/cS9cb+9z0aWSSB3lnc6mqOZfj19VR9xpc7v9ZMP4ynZoibLVsQpt2bpODgmo7
-	 BrgfOEm8yP1H72bgaCrWmG3GrbXnK62YTUUnIV5SAHYVB8lW3ZWqiwVyShHlVsLkjzwWc
-	 zXgOsgcRXZ+B3B7j2dWFNN23LSepouRJYGy2FAa6xgxjX35NaOkMOfeWXa2N6wzPsiA==
+	t=1795019478;
+	b=kmQQU2sVZCcuHNWzSebOuewNobSpFbfiGHNu/P+Fgg5p8D/68baL2dFD5ZR9QCxHaPBm
+	 6uHF97pVD7I3PLBCRTFJDGn2PZT4bNW6ycrUa5XWdprzni7HP+IQxD2Lu6YRyRR6uGtG+
+	 qv+qR/AoGUW+9jpm7BS3p2kEKyQx9rbR5N3uTlN55i8jxwH/wykDoUYbh052L/eEJ+WRG
+	 Hkp1lRh+Kf3EXDwDobAesrW2GtSE59Y/yHgFMv0jfV6WE0OVAflUvTfJpzpSFsT3et5Nk
+	 pJxNlzJKx8qY8EqjoWdX+Z4Yo42F/5siuSX0p7ZOjhx/yh/YgHxkAT0Dy3N18r/32xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DEB9JLhaDEQDHsxQjSMUBMhShQTBV/zTXhYpZSXbUE8=;
-	b=FQ/y4zJVTEi8H/eWgOMQiudjJnKKBcA164PrNyWfUOB/9DQCn5dP3Xm29lVmhCLky/58
-	 1wMBZxOuccurO+5eP41xh1cvxibn1iRfkDglGiBbYB8L8NxD5Qhz5AT+FvMkDb2r2vJ1k
-	 iIirgXDbMdf7L/AYjBzCrg5rZy7YrKH0ImRiUoLdTs4pK0DchCoPjefvGYnnxfxLWJnKv
-	 iFErGSlMjEoLiWRRf74CAqMQ5o5BpHtlruYyimGqXB/+ybEZfPkWU61HTNeu079aJmYCV
-	 k9oq1HIsntOzFVC+2aKEftzz/9s/W3Zw9X11w8syoXKX0doMqM7nHR1rZ7cHdMhwHwA==
+	bh=1bHDy+UcGjvqPbPkpSmcbIp9EXF9BwL3iGtiq5cQJUw=;
+	b=E6MKuEfubAKve1LH80FmtuUI5NPherTHJx47IndoAjEVO4HwypnEjtDOhdS/n/vavXxF
+	 ZEoRIWCecvmxtAYRN6O+X3ef5RooMO6Kx7oa+XO+bHW9LYFfxZEmLCEcmbiz1M0aM52cA
+	 tTr8+8sSs9Wzkh0F1lYYePPGs1Xeg95Rv1lLTLvq1VMEfA3pnTwQxQdLgHIDpTBXyr97x
+	 rcY8Dj0B/4+ZIGZhiHkTEELzhNyzgYeE4Jp2D8VbGMVR5yCwwIfTPkevXQOm8PAWxI+Yn
+	 1IdhIdIfDu+u6MBlyzSzxgKN1nP6LeZ7IB9HU5SihaYDfXVbOGs4XIQxCwQWHUEAPqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zrku1Dhv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjHH4vtJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BB7606A33F;
-	Wed, 18 Nov 2026 16:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C6D606A7D7;
+	Wed, 18 Nov 2026 16:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zrku1Dhv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C6E1F000C7;
-	Wed, 18 Nov 2026 16:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjHH4vtJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBA61F000C4;
+	Wed, 18 Nov 2026 16:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019474;
-	bh=DEB9JLhaDEQDHsxQjSMUBMhShQTBV/zTXhYpZSXbUE8=;
+	s=korg; t=1795019477;
+	bh=1bHDy+UcGjvqPbPkpSmcbIp9EXF9BwL3iGtiq5cQJUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zrku1Dhv8k+x3mx+KvrQKCsV8xKiXKJNy7hpLli4+0AiNTXNyAWFf3p87S7uw3SIm
-	 2OyKZzo6ODEHbOh6cV7JMfqu0rBa9KDoiPvCdtXrZehngnyAMdIuju4UpVsVwLIxK6
-	 ezMaSrI9A2xKViYbubOep4Ow+0b0Mqr9Ou611QLU=
+	b=hjHH4vtJBhzF9VvpnOEJjsMlDh+fmCl4ClRh94+bmJ/dgMAlz8YS46hl/GK4AZ2os
+	 GaWuiDu3bm9HXkw2x7mFx3htyZxJjhES1YKaYnJn7ZQ7IqfjvGe59qz7hmUHEWMeq4
+	 gtkDZ8zfvt7KQhPM1ZfvUpklGwPLcF4L1nie9Uns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tushar Dave <tdave@nvidia.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1608/2651] mailbox: arm_mhu_db: Remove redundant mbox_controller_unregister() on probe failure
-Date: Wed, 18 Nov 2026 15:47:28 +0100
-Message-ID: <20261118150345.721453294@linuxfoundation.org>
+Subject: [PATCH 7.3 1573/2651] PCI/P2PDMA: Safely terminate ACS redirect lists
+Date: Wed, 18 Nov 2026 15:46:53 +0100
+Message-ID: <20261118150344.561278994@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,45 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 8228ed61b6cbd6e79531c9ebfcad233c35eae562 ]
+[ Upstream commit fa291d6429ebc1efb7fab011f643b842ae5f23f1 ]
 
-mhu_db_probe() registers the mailbox controller via
-devm_mbox_controller_register(), which automatically calls
-mbox_controller_unregister() through devres when the device is removed
-or probe fails. If devm_request_threaded_irq() subsequently fails in
-the channel setup loop, the error path also manually calls
-mbox_controller_unregister(), resulting in a double call that corrupts
-the global mailbox controller list and causes a kernel panic.
+seq_buf marks an overflow by setting len to size + 1. The ACS diagnostic
+path unconditionally writes a terminator to buffer[len - 1], so a path with
+enough ACS ports to fill the 128-byte buffer writes one byte beyond the
+buffer when verbose diagnostics are requested.
 
-Remove the redundant manual call and rely on devres for cleanup.
+Use seq_buf_str() to terminate truncated output safely and remove the final
+semicolon only when the buffer did not overflow.
 
-Fixes: 7002ca237b21 ("mailbox: arm_mhu: Add ARM MHU doorbell driver")
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 52916982af48 ("PCI/P2PDMA: Support peer-to-peer memory")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tushar Dave <tdave@nvidia.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-4-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/arm_mhu_db.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/pci/p2pdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/arm_mhu_db.c b/drivers/mailbox/arm_mhu_db.c
-index a39239e38a479..9f1c7bcfdcb40 100644
---- a/drivers/mailbox/arm_mhu_db.c
-+++ b/drivers/mailbox/arm_mhu_db.c
-@@ -317,10 +317,8 @@ static int mhu_db_probe(struct amba_device *adev, const struct amba_id *id)
- 		err = devm_request_threaded_irq(dev, irq, NULL,
- 						mhu_db_mbox_rx_handler,
- 						IRQF_ONESHOT, "mhu_db_link", mhu);
--		if (err) {
--			mbox_controller_unregister(&mhu->mbox);
-+		if (err)
- 			return err;
--		}
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index 52974809e1e18..c1702426b45b5 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -772,11 +772,13 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
  	}
  
- 	dev_info(dev, "ARM MHU Doorbell mailbox registered\n");
+ 	if (verbose) {
+-		acs_list.buffer[acs_list.len-1] = 0; /* drop final semicolon */
++		/* Drop the final semicolon; the list is not empty here */
++		if (!seq_buf_has_overflowed(&acs_list))
++			acs_list.buffer[acs_list.len - 1] = '\0';
+ 		pci_warn(client, "ACS redirect is set between the client and provider (%s)\n",
+ 			 pci_name(provider));
+ 		pci_warn(client, "to disable ACS redirect for this path, add the kernel parameter: pci=disable_acs_redir=%s\n",
+-			 acs_list.buffer);
++			 seq_buf_str(&acs_list));
+ 	}
+ 	acs_redirects = true;
+ 
 -- 
 2.53.0
 
