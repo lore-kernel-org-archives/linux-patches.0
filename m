@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034180;
-	b=eyl7MJbbsIaRhtp6Z7cyHxcnpuIW1ASo5VyCo3GriFaWstD9RavvsWgUWlu/9RDt3HOi
-	 8m8ST4bbdQu+XkUEM1WAdWGTULW0ra5LHOroiZzA7De16JyGlvnrSZEVuXxbFxLYQomee
-	 ifnQanbTuGGKOopdeOYVkPdxoTYhtm7CnCe8Fmndqflz49q3R+yS1U8cqLdbEliWzZhg9
-	 lI/syhzUM66zr85pBPAOjyEsznoFoTS39gpUPOw753npQpsMeCohw+zDNJ5Xd6i55dl6A
-	 ZT8FNNxI1m1FFWCkjgtIi/HfW42zUZB/p+K3Ki4oTbXqksSymca/huPgo0U66VvjZtQ==
+	t=1795034182;
+	b=Sw5uezRkfyVj9SzbrFDKs/B3oKySduid6VDxhXwtCzxuupuWZb/W9LXbCrfyD4ekfrE9
+	 ktbZJh9HQ/VbpttbWPmoIuzkC6Nhw0X/CNrs5cSCyrncOwj9GP5Yp4OLLOkCLdFvh0O9r
+	 /7DyqHrpy05RYWuuyIIwocTGE9Jl1IZytwM09D9S6/teRCx9ad9+ZourE31qUoHtjunOm
+	 K8d38PZdrUC4A8XUTTg/Cql56E2x55zimFWRACT/zgR29nEE8GSTBGmksqawn11HL/buI
+	 cOsX/czNXJN8vzS4tKawAZdO6o1F4D/2MIlJEzRvEovUGENvtBKKJMbEgk0ZAXcmNRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c0timLJs66uC95i+dv/Fqt/EFHoJou+wb+mAUiOo6Ks=;
-	b=AKGdZptc4kaM7cK+cCt10zjCWDqXo67Tiwth9V+nQiJ0FOnTxGxqX2tUq+Lao7AvRCEM
-	 yYi1k/DZMZ5EppbSEIQL9cEsfGmnNLBPrRxEumloh+qa8eaGUMZzO6C4Cx2OApPMK8HyP
-	 G0L04fs3sbBvyhWbrEJ3zqraXPRLdMLh0cJn14hwnBjoNNgfXSH2QTAcSJwKXCv471MJ3
-	 BT1OhG+CD2OzeFzwdDA/xmy0E5O/ngpj3IKBggnxHS9XkU/GUGCGFEdQ5Hd/93SOoGpM9
-	 m2Q4r3H4uYgtCmTWTgHO23Zc0XNlfG7kwa8j3PuJaDmOEeIdUmkzG4Yd1du8mNdAkhQ==
+	bh=JV/tvTJcKAtnErmiPxFTF7dhdpvvheL+VX87mDWOC2g=;
+	b=zqq7bpJSsOxQHaq4kg8oeB6MVC7GkCIdQJzzkQ/VxpZSV/eRURJacYB98YUNY8AmtHBu
+	 va0vEfppeDqkeKrlGu6LexaXwh+KuwS6R2lVbvBzg7NrfA0gpg7DQi+ec9ulJuwrNBqAy
+	 bFgkEek/4p2qJbnytBUeZFKNH/DBbMBWziBVNbP6vRJgtIyq2I4PZYrVDYbYzatDJ2AF+
+	 QWKbHz/mSSFOBBKOpgKhPcuah2iho4zx28+FDOHCPA2pfZqfiX01K9FsNtW6eNQvk0Xpu
+	 d1bVVoYfXNX2C9Ox/ZGdL5t668zygEG7ydR9mXLIzX4+y9WXTSicefnoSBMC/Ribn7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6SlUz9S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dO0gHpNo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AB3606A331;
-	Wed, 18 Nov 2026 20:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CF2606A33E;
+	Wed, 18 Nov 2026 20:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6SlUz9S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444051F000C5;
-	Wed, 18 Nov 2026 20:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dO0gHpNo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0151F000C4;
+	Wed, 18 Nov 2026 20:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034179;
-	bh=c0timLJs66uC95i+dv/Fqt/EFHoJou+wb+mAUiOo6Ks=;
+	s=korg; t=1795034182;
+	bh=JV/tvTJcKAtnErmiPxFTF7dhdpvvheL+VX87mDWOC2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6SlUz9SR5Gp+NPOPnEpsGPAheaP086iG4y3JXiFuEHHybu9mNTb0rSBlowfV8nqz
-	 97MPe3qf3EJ4OaOCjhT1Xtbz9Fqym9qsS4w0/HPhF5F1gDAxFpuEDyT6RrNiatsVac
-	 /RRoQCoJm5EFgbs+qfBTrrnh/yWofNPnhpFX/cJs=
+	b=dO0gHpNol3/1peoMjHuN5rRNh/YHKxuha9gh9ExUBv0WDVirZNo/iNWIdUxbwaUlS
+	 Qn4s28urzyWvY5qcWHIUM1/+x2yNR4sKsKTsaD2GLb/TnPepAzLUf3sYCQ6d+6Biit
+	 pkic6zbw0AQix1QJATKpNqaeYzzdfAhclvDlvKFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
-	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
+	Neil Andrews <neil@androos.io>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0277/3318] ALSA: hda/intel: Add sanity check for BAR0 size
-Date: Wed, 18 Nov 2026 15:14:59 +0100
-Message-ID: <20261118150323.805459279@linuxfoundation.org>
+Subject: [PATCH 6.6 0278/3318] ALSA: usb-audio: Rename the Audient iD14 monitor mix volume control
+Date: Wed, 18 Nov 2026 15:15:00 +0100
+Message-ID: <20261118150323.844046928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,53 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Neil Andrews <neil@androos.io>
 
-[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
+[ Upstream commit 9c0564fcc21aec4f5b7648f61865ce3fc2b84a7f ]
 
-The recent reports from syzkaller showed that we can bind any wild PCI
-device to HD-audio controller, and if PCI BAR of the device is too
-small, it may lead to a crash, as the driver believes as if the full
-register range were accessible.
+On the Audient iD14 (2708:0008), feature unit 12 is traced through to
+the Speaker output terminal and is therefore exported as "Speaker
+Playback Volume".  The name fits it badly.  It advertises Volume on
+only four of its six logical channels, which the driver records as
+cmask=0xf, channels=4 on a 6-channel playback stream, and it sits on
+the monitor mixer branch rather than in the direct playback path:
 
-For avoiding such a problem, add a safeguard before the actual probe
-to check the available BAR0 size.
+  INPUT_TERMINAL 2 (USB streaming, 6ch) -> EXTENSION_UNIT 51 ->
+    FEATURE_UNIT 10 (no controls) -> OUTPUT_TERMINAL 20 (Speaker)
 
-Note that the threshold (0x200) is chosen to cover all needed
-registers at probing.  But this doesn't mean that it would cover fully
-for all features including the extended ones.
+while FU 12 hangs off MIXER_UNIT 60 and feeds back into
+EXTENSION_UNIT 51.
 
-Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
-Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
-Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
+Userspace adopts the control as the stream's hardware playback volume,
+so any setting below 0 dB attenuates part of the stream and not the
+rest.  Measured over the device's own digital loopback, with one
+-12 dBFS tone per channel played straight to hw:, PCM channel 0 is
+unaffected while channel 1 tracks the control: at 107/127 (-20 dB) the
+two read -15.89 and -35.89 dBFS, a 20.00 dB imbalance, and at 127/127
+both read -15.89 dBFS.
+
+Give the unit a non-standard name so that it is no longer taken for
+the stream's master volume.  Dropping the control instead also fixes
+the imbalance, but FU 12 keeps its value across a module reload, so
+dropping it strands a device that is already attenuated with nothing
+able to reset it.  Renaming leaves the monitor gain reachable and that
+recovery path intact.
+
+The mapped name ends in "Playback" because a name from the map
+suppresses the automatic " Playback" but still gets " Volume"
+appended; the control comes out as "Monitor Mix Playback Volume".
+
+Tested on the ACP path with PipeWire, which is where the problem
+reproduces: the control now stays at 127 at every volume setting and
+the imbalance is 0.00 dB, and setting it by hand to 107 and back to
+127 gives 20.00 dB and 0.00 dB as before.
+
+Link: https://lore.kernel.org/linux-sound/0102019fed22f9d3-fa294ec5-02f1-4fd3-b3fa-76efc14331cc-000000@eu-west-1.amazonses.com/T/#u
+Signed-off-by: Neil Andrews <neil@androos.io>
+Link: https://patch.msgid.link/0102019ffcdbb1e6-9b59d3cc-ef05-4df1-8f9f-fb2f425bcda2-000000@eu-west-1.amazonses.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/usb/mixer_maps.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 059693e03fd96..c96253e591f21 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2164,6 +2164,15 @@ static int azx_probe(struct pci_dev *pci,
- 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
- 	}
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index ce27fc871f513..8046d5987d5b1 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -505,6 +505,19 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
+ 	{}
+ };
  
-+	/* A sanity check against wild device binding;
-+	 * here the range 0x200 is enough for the registers used at probe,
-+	 * but it doesn't mean covering all HD-audio registers
-+	 */
-+	if (pci_resource_len(pci, 0) < 0x200) {
-+		dev_err(&pci->dev, "Too small PCI BAR0\n");
-+		return -EINVAL;
-+	}
++/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
++ * and sits on the monitor mixer branch, but it is traced through to the
++ * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
++ * then adopts it as the stream's hardware volume, and any setting below 0 dB
++ * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
++ * non-standard name so that it is no longer taken for the stream's master
++ * volume, while remaining reachable for anyone who wants the monitor gain.
++ */
++static const struct usbmix_name_map audient_id14_map[] = {
++	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
++	{}
++};
 +
- 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
- 			   0, &card);
- 	if (err < 0) {
+ /*
+  * Control map entries
+  */
+@@ -588,6 +601,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.id = USB_ID(0x2573, 0x0008),
+ 		.map = maya44_map,
+ 	},
++	{
++		/* Audient iD14 */
++		.id = USB_ID(0x2708, 0x0008),
++		.map = audient_id14_map,
++	},
+ 	{
+ 		/* KEF X300A */
+ 		.id = USB_ID(0x27ac, 0x1000),
 -- 
 2.53.0
 
