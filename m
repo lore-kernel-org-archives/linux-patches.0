@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037000;
-	b=l6ZsEl/C8ElA5WJvwsl9rWwdEu1Tz2YD2IfyeH9ZaNa2L0PyYjLyA5kLeUwbY3N3zyZR
-	 k11xGVE1VgVmohY2d0ZEbKacupTCpv36nWkg1lBRBc+Mcjnue0XeWl4lc0IITAEDFli3x
-	 hP+9cNZpndPCUnUk5qYVcVxsbRTomyssJYcK9+fvjlpWhXVQvEBIG0AzDjiufzW8einfE
-	 l/J1K7c0tWuuYulWaDH7C5fnvbSAn2Kd4Ou9Q2nBNQ4mW0ZwYejymYyhLIC1uOAnGwsQt
-	 LDobNOWsY5iIxshwGNOI7l6bDL4aKZHXe/pbbraFVquLYDIq3J7txI4S+ls95YD4viQ==
+	t=1795037003;
+	b=2R36ZXRKC56i7R+UWd2OPBPph3ve/O4vGrmC90ZHHOw6DLorHbOCxPGwQuqKxKYkwiFp
+	 jp0w67HApCLhOZao4bhKTCIfdxdml6GG0dJ2tLEjOlFCKp7x7FOZmEY/n+P+Uia0Hx1WR
+	 9O5QsMBCPEZhF8aiy72Ma7Ke5VcHv7DZ+prjGBOSyfdkDtBjTQImHkeXx9a3tI/Q4zJer
+	 KPF43S0ylnxEMhZuzBhjZCpeF4NByhHg0n8n4jYgoCKxMy6znLi4oSwac9qXjqa2A76A8
+	 Oce6qBaKMZfYaaFqAmlYTckOLE3qkmgAUQmiMPCTD/k9ye2csfQxojUpm/Rr30ksV6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KYML7KG8kLdnM67gLxX907RxgaqLR0iS4jKNsrIzTRc=;
-	b=tJEHgLvYbXXSxghByupHYe+0kHoHaOBAcf0BvzCIGYnGagTlgwPJt/UDrRb1+BPf9+Ob
-	 +AsmBYiAeKySvbNQazL+kDuIJhOm5mZYTQmYGPi12B0nhbIUGCZkQj13Scv6D+Iy8Ym3A
-	 o5gZ2vIITlGtvND9C5HQq4+tWo9prQQ3c52SYeMueTbHb5mB72UqcqCOk5xSh+TI23vRr
-	 wsJDeTcoy0cinjJkL2TIM2Dd0ID5AweoWRSlBWgChRBtRBBmkv3OVz/QnAvuUxJEH0Tcb
-	 gosiqVqOCqzxf57WnduNUoF21hXv+5vdR/nR4iwx1JQEmnQYilx//aQaVYRG3xC74tw==
+	bh=F6ohpccDIfWUJSZjoChlo4wQ/iY5T0iqL2g7ISc0e90=;
+	b=pxuXh9eKwJisX/lhtWZohU0xB5ZnIou5eNXx1wOPqif6HVlb+riBxcdxkoNTxKdeICXc
+	 8fbsd81/MRyqL0SzNebcGHvrTzM7B4BrYx99P4T9ENcNcUfm6Jq2zmcKL3VJEa8oCiYVU
+	 I/dcZHiCRZlPnyYerzqsQyynfJKHUzrzWCkQ6yTNK5UKR97DslybxmQbdgxHmTnGQAU+o
+	 KbqDZmIyK7ITzU6NyuiBzBJ/voiPEuh6nBMy3fYYg2/dLQ5z5Cm/3Peg5S6Z9IK/K0R6Y
+	 rkDNK8iHZn33/UCva9sBIgIJGYNyUBX60qbf8ImpVYUtZgBSRTHpxOSVHXS52EaAEzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPnZdpL6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiZvHUg4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8469E606A31C;
-	Wed, 18 Nov 2026 21:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4E7606A31C;
+	Wed, 18 Nov 2026 21:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPnZdpL6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902091F000C5;
-	Wed, 18 Nov 2026 21:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiZvHUg4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9A21F000C4;
+	Wed, 18 Nov 2026 21:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037000;
-	bh=KYML7KG8kLdnM67gLxX907RxgaqLR0iS4jKNsrIzTRc=;
+	s=korg; t=1795037003;
+	bh=F6ohpccDIfWUJSZjoChlo4wQ/iY5T0iqL2g7ISc0e90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPnZdpL6oUqfqWWWKYSjWK1fdegMlRnqF0xC3viG/HxS/Wib70LxiZ1W7v5rGSJs/
-	 S1KP3PXL4vnj4MjBnKGBVjp+mnRXr0iqbjUC0Mjox86Ttc89zhM6oE7fz/E7vcwqOB
-	 W3Z21/s1xdEMj5LrdJJ+2Dv66PtckKG8MgT/Qia4=
+	b=PiZvHUg47lmjGDkhIpxFeZ1b7u0NG7LAho/pMFs3Mzd/zTREKZQ1F8wzxmgRp3SFd
+	 M90vjYLngrpk4cPYQAaGikozJaDA89BxUml7pyUHoB0gq1qR7vygmu0NUUG/lPoRhx
+	 CFfZYPTOfUqo+pXWhpTWDKIi2hlUr8AmnbCG2Ts0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1259/3318] LoongArch: Fix architectural naming typo for CSR_FWPS_SKIP
-Date: Wed, 18 Nov 2026 15:31:21 +0100
-Message-ID: <20261118150357.971788016@linuxfoundation.org>
+Subject: [PATCH 6.6 1260/3318] LoongArch: Only send SIGTRAP signal if necessary in do_watch()
+Date: Wed, 18 Nov 2026 15:31:22 +0100
+Message-ID: <20261118150358.001475556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,20 +70,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit f322ebfdfda2bce91fb1d3fb0072c735051fed85 ]
+[ Upstream commit f087903018e35d38b8932e18b010ee2e8699d1a1 ]
 
-According to the LoongArch Reference Manual, the single-step 'Skip' bit
-resides in the instruction breakpoint status register (CSR.FWPS), rather
-than the configuration register (CSR.FWPC).
+In do_watch(), the kernel unconditionally forces a SIGTRAP signal at the
+end of the handler via force_sig(SIGTRAP). This is essential for ptrace
+operations, but it severely disrupts standard perf_event usage.
 
-Furthermore, the kernel code comments also explicitly document it as
-"CSR.FWPS.Skip", yet the macro was erroneously defined as CSR_FWPC_SKIP
-and used as such in traps.c and hw_breakpoint.c. This mismatch creates
-architectural naming confusion.
+Under normal perf usage, it is not necessary to force a SIGTRAP signal
+on every hit. Forcing it unnecessarily aborts the target process if no
+user-space signal handler is registered, which violates performance
+monitoring behaviors and injects context switch overheads.
 
-Fix this by renaming the macro from CSR_FWPC_SKIP to CSR_FWPS_SKIP to
-precisely match the manual and comments. Also, update all call sites to
-align with the rectified definition.
+However, a conditional check using only 'current->ptrace' would block
+legitimate user-requested signals when a perf_event is configured with
+'attr.sigtrap = 1' for asynchronous user-space tracking.
+
+Fix this by refactoring breakpoint_handler() and watchpoint_handler()
+to return a boolean status indicating whether any triggered breakpoint
+explicitly requires a signal notification. Update do_watch() to enforce
+the SIGTRAP signal only when the process is actively being debugged via
+ptrace, or when the underlying perf_event infrastructure specifically
+demands it via 'attr.sigtrap'.
 
 Cc: stable@vger.kernel.org
 Fixes: 424421a7f34c ("LoongArch: ptrace: Add hardware single step support")
@@ -91,61 +98,115 @@ Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/loongarch.h | 4 ++--
- arch/loongarch/kernel/hw_breakpoint.c  | 2 +-
- arch/loongarch/kernel/traps.c          | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ arch/loongarch/include/asm/hw_breakpoint.h |  4 ++--
+ arch/loongarch/kernel/hw_breakpoint.c      | 18 ++++++++++++++++--
+ arch/loongarch/kernel/traps.c              |  9 ++++++---
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/loongarch.h b/arch/loongarch/include/asm/loongarch.h
-index ce3fc1666868e..e0072b0e28652 100644
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -1043,8 +1043,8 @@
- #define LOONGARCH_CSR_DERA		0x501	/* debug era */
- #define LOONGARCH_CSR_DESAVE		0x502	/* debug save */
+diff --git a/arch/loongarch/include/asm/hw_breakpoint.h b/arch/loongarch/include/asm/hw_breakpoint.h
+index 5faa97a87a9e2..d202052df8a16 100644
+--- a/arch/loongarch/include/asm/hw_breakpoint.h
++++ b/arch/loongarch/include/asm/hw_breakpoint.h
+@@ -116,8 +116,8 @@ extern void arch_uninstall_hw_breakpoint(struct perf_event *bp);
+ extern int hw_breakpoint_slots(int type);
+ extern void hw_breakpoint_pmu_read(struct perf_event *bp);
  
--#define CSR_FWPC_SKIP_SHIFT		16
--#define CSR_FWPC_SKIP			(_ULCAST_(1) << CSR_FWPC_SKIP_SHIFT)
-+#define CSR_FWPS_SKIP_SHIFT		16
-+#define CSR_FWPS_SKIP			(_ULCAST_(1) << CSR_FWPS_SKIP_SHIFT)
+-void breakpoint_handler(struct pt_regs *regs);
+-void watchpoint_handler(struct pt_regs *regs);
++bool breakpoint_handler(struct pt_regs *regs);
++bool watchpoint_handler(struct pt_regs *regs);
  
- /*
-  * CSR_ECFG IM
+ #ifdef CONFIG_HAVE_HW_BREAKPOINT
+ extern void ptrace_hw_copy_thread(struct task_struct *task);
 diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index bd891b3808a6b..7f69cf361a5e2 100644
+index 7f69cf361a5e2..d009ed780cf02 100644
 --- a/arch/loongarch/kernel/hw_breakpoint.c
 +++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -550,7 +550,7 @@ void hw_breakpoint_thread_switch(struct task_struct *next)
- 		addr = read_wb_reg(CSR_CFG_ADDR, 0, 0);
- 		mask = read_wb_reg(CSR_CFG_MASK, 0, 0);
- 		if (!((regs->csr_era ^ addr) & ~mask))
--			csr_write32(CSR_FWPC_SKIP, LOONGARCH_CSR_FWPS);
-+			csr_write32(CSR_FWPS_SKIP, LOONGARCH_CSR_FWPS);
- 		regs->csr_prmd |= CSR_PRMD_PWE;
- 	} else {
- 		/* Update breakpoints */
+@@ -482,9 +482,10 @@ NOKPROBE_SYMBOL(update_bp_registers);
+ /*
+  * Debug exception handlers.
+  */
+-void breakpoint_handler(struct pt_regs *regs)
++bool breakpoint_handler(struct pt_regs *regs)
+ {
+ 	int i;
++	bool need_sigtrap = false;
+ 	struct perf_event *bp, **slots;
+ 
+ 	slots = this_cpu_ptr(bp_on_reg);
+@@ -494,17 +495,24 @@ void breakpoint_handler(struct pt_regs *regs)
+ 			bp = slots[i];
+ 			if (bp == NULL)
+ 				continue;
++
+ 			perf_bp_event(bp, regs);
++			if (bp->attr.sigtrap)
++				need_sigtrap = true;
++
+ 			csr_write32(0x1 << i, LOONGARCH_CSR_FWPS);
+ 			update_bp_registers(regs, 0, 0);
+ 		}
+ 	}
++
++	return need_sigtrap;
+ }
+ NOKPROBE_SYMBOL(breakpoint_handler);
+ 
+-void watchpoint_handler(struct pt_regs *regs)
++bool watchpoint_handler(struct pt_regs *regs)
+ {
+ 	int i;
++	bool need_sigtrap = false;
+ 	struct perf_event *wp, **slots;
+ 
+ 	slots = this_cpu_ptr(wp_on_reg);
+@@ -514,11 +522,17 @@ void watchpoint_handler(struct pt_regs *regs)
+ 			wp = slots[i];
+ 			if (wp == NULL)
+ 				continue;
++
+ 			perf_bp_event(wp, regs);
++			if (wp->attr.sigtrap)
++				need_sigtrap = true;
++
+ 			csr_write32(0x1 << i, LOONGARCH_CSR_MWPS);
+ 			update_bp_registers(regs, 0, 1);
+ 		}
+ 	}
++
++	return need_sigtrap;
+ }
+ NOKPROBE_SYMBOL(watchpoint_handler);
+ 
 diff --git a/arch/loongarch/kernel/traps.c b/arch/loongarch/kernel/traps.c
-index 0529bd32c1f17..fd1921718fefc 100644
+index fd1921718fefc..d65f6dc420b79 100644
 --- a/arch/loongarch/kernel/traps.c
 +++ b/arch/loongarch/kernel/traps.c
-@@ -787,7 +787,7 @@ asmlinkage void noinstr do_watch(struct pt_regs *regs)
- 			 * instruction. So don't clear llbit and reset CSR.FWPS.Skip until
- 			 * the llsc execution is completed.
- 			 */
--			csr_write32(CSR_FWPC_SKIP, LOONGARCH_CSR_FWPS);
-+			csr_write32(CSR_FWPS_SKIP, LOONGARCH_CSR_FWPS);
- 			csr_write32(CSR_LLBCTL_KLO, LOONGARCH_CSR_LLBCTL);
- 			goto out;
- 		}
-@@ -804,7 +804,7 @@ asmlinkage void noinstr do_watch(struct pt_regs *regs)
- 				 * current pc, If yes, then we should not set the CSR.FWPS.SKIP
- 				 * bit to break the original instruction stream.
- 				 */
--				csr_write32(CSR_FWPC_SKIP, LOONGARCH_CSR_FWPS);
-+				csr_write32(CSR_FWPS_SKIP, LOONGARCH_CSR_FWPS);
- 				goto out;
+@@ -773,6 +773,8 @@ asmlinkage void noinstr do_watch(struct pt_regs *regs)
+ #ifndef CONFIG_HAVE_HW_BREAKPOINT
+ 	pr_warn("Hardware watch point handler not implemented!\n");
+ #else
++	bool need_sigtrap = !!current->ptrace;
++
+ 	if (kgdb_breakpoint_handler(regs))
+ 		goto out;
+ 
+@@ -809,11 +811,12 @@ asmlinkage void noinstr do_watch(struct pt_regs *regs)
  			}
  		}
+ 	} else {
+-		breakpoint_handler(regs);
+-		watchpoint_handler(regs);
++		need_sigtrap |= breakpoint_handler(regs);
++		need_sigtrap |= watchpoint_handler(regs);
+ 	}
+ 
+-	force_sig(SIGTRAP);
++	if (need_sigtrap)
++		force_sig(SIGTRAP);
+ out:
+ #endif
+ 	irqentry_exit(regs, state);
 -- 
 2.53.0
 
