@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060075;
-	b=Y2FECJJg2Nxc9G2J1+AqHcQCYVDa23MVBKK6sOOPGCb2EKAFdE4sL0LAy64qOKnfshYG
-	 VfYZ9KFhE3WIYvbVzIKALk7qKKp/0CfJcrZ1/c7KUBE/pLAtPKBFo/FEvxAZbUTwLSUMK
-	 Zl2JR9gmE/EaqSUhOQFMB/niFbG+/jLc9B602rsGieiNasq6gwzsWUp3e3yVjGjdvWw47
-	 j2esnYA/lB846Im1bHWJT2PvWR2VGJWGpENyzZhYpkSPfb6zuzAwmZfNUHyP2OZzKCp1H
-	 MhebMJAHrIaxeh8pn59ID8FPS4o3f5bFPnoPZd3B08OKug+7pB1nTlFHhdkbWTirmtw==
+	t=1795060078;
+	b=Sw2s0TKXmsCMAbZrijMBRPMS5hTQWebWtm2GTQppECKwGSkr+3bX0J53wT9aCQEPfb1/
+	 BZDjSfFgK6ddiF+tYMBhG0GaGeQFNoSgtWO6Imwxl3DBnARcUaC4PcyY4zSj678EZPkql
+	 nIki1E2RzzcCyLIUcoxl4IVY4i7QNkuPB9vCCGl9aSEkWb9U+1Iw5Ut1oTsWYLD28DHRf
+	 nUaVQTz+tuxsUGpD6vPDIsemlnE4ZtQWTd6Dwj7uv7mZ1fpubTiBQP4UHWGoCqU4JCNx1
+	 fDa1kpzzU9QF9AUMQSzIh6L6mvKgAdBhE24PwOIUbe/RmB/O48MccUlXoQS8sbC83fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RQHjeWUCLkth5N8BNJyxFeyf2RGC9CELwyYFz0Jb3tA=;
-	b=AbMJJ1iDWJPQfY8DsmMt4DzRKO1a5rYsjHNFqV6m9j86BjdQVhN/cIQE/M7szNyRo2Fq
-	 KTWVa3DlbV6GqODkC5AH7RYZ+pR6x540CtXPHcG0j4pzKcir9rD1IWlrFAHI7tGpqyKho
-	 /a884cpaHHF9WfCfBOrf4sxENa0ErL/hm+PQHLNVLWaYT/gW7KY71nvxW1zzqm+6R2iRZ
-	 GKhHUqy81wpgG49hXazJx3BwU02OT0sPMF4iLO62TXZqOIQ4I0AMRESvS7xftl5nTvYFS
-	 84Veh09pB0j5C0wDHWlt+FCHTy+vq+xtBm4zdKOVThM5ht4E1/pNvqihrduQzPtJqJg==
+	bh=M/Scxk33/NeP275vkminBNgfZ02z8BDi3lDedJplBik=;
+	b=iu+1lCy+hidqpsR5bujyeMSZet+DVpv+oN5d9RHLplkpC5f6C0suvANts6BJBj2ggDYl
+	 uj64bwBT4N6fXR+ChhHHsnyVNs2FUE6oUHbFxeD3CWp6oyVTlAyTSN/7jVNOyCGbUPvTH
+	 /PGnKgEZO1u7OL0lqtjwDRVTXBap9SmCGBpGH5FF811SnIWDaYmc7Nsh++tTBhhElyZwa
+	 Fo1sUBaJkYqKVDZYqypeCtDYlYCsoL0GKBp5m9FuOWzA26T/3oK6rAvAlYnqL2BELsbmI
+	 0RQ0Vu9ekiP4Og/J5j2rPMEPd0m1YYYIAq11n/kUWfQ2hWxLtsCRcU4ANAYF2vgmUJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbLtIEhR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLCV15eA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38307606A320;
-	Thu, 19 Nov 2026 03:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F2B606A320;
+	Thu, 19 Nov 2026 03:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbLtIEhR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C8F1F000C4;
-	Thu, 19 Nov 2026 03:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLCV15eA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FE11F000C4;
+	Thu, 19 Nov 2026 03:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060075;
-	bh=RQHjeWUCLkth5N8BNJyxFeyf2RGC9CELwyYFz0Jb3tA=;
+	s=korg; t=1795060077;
+	bh=M/Scxk33/NeP275vkminBNgfZ02z8BDi3lDedJplBik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vbLtIEhRAuYTs8Ejx9kRsc6aqtTxQC+gLDOggkmb+IaCs4K11L7Rb7nUcFf0CjcKx
-	 tdImBSTTnLIXXnIR03ztEdL0dTGiTT3jLAglzIh87i12FYPgLjphpx851Ktd6HQQc+
-	 QYj4/jyqZFwjMI1yHpWu40IGkmPUSO0o6LJa0LwY=
+	b=TLCV15eA4rp/U3Bo0yKPUURWx50iYdjiG73pkD+9xYmdtpo33Y1+6+j/zPaZAqcga
+	 Cmp0SogF3B8cF34guBP95o8l/dLVpLuSTnWl3YiZ5ny/WtC9JT0lbdcIzLskKdJj+/
+	 DZL2xx2hINu6DVVKEYzLKcor5inJFH1bdeI2t9ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1062/1848] aio: fix NULL deref when a fault races ring truncation
-Date: Wed, 18 Nov 2026 15:51:40 +0100
-Message-ID: <20261118150002.025272714@linuxfoundation.org>
+Subject: [PATCH 5.10 1071/1848] nvme: unregister when pr_register() is given a zero new key
+Date: Wed, 18 Nov 2026 15:51:49 +0100
+Message-ID: <20261118150002.744189371@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,95 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit d53b5aa5cfae27e4d236fc0ab9581085d27f7d33 ]
+[ Upstream commit a9d431124fb2e58215daf0299d6fcf47bbc2d6b1 ]
 
-The aio ring lives in a file on the aio pseudo filesystem and the ring
-VMA uses filemap_fault(). aio_ctx_aops doesn't have a ->read_folio
-because aio_setup_ring() puts all folios of the ring into the page
-cache. So a fault on the ring only works as long as it finds its folio
-in the page cache. If it doesn't, filemap_fault() calls ->read_folio
-without checking and we jump to NULL.
+The block layer PR API defines a zero new_key in pr_register() as
+unregistering old_key. nvme_pr_register() sends Replace Reservation
+Key with a zero NRKEY instead. The host stays registered with key 0,
+and its next registration with another key fails with Reservation
+Conflict.
 
-We already fixed this twice this year. A forked child could inherit the
-ring mapping, fixed by commit c03ce4173c7b ("fs: aio: set
-VMA_DONTCOPY_BIT in mmap to fix NULL-pointer-dereference error"). And a
-partial mremap() could leave part of the ring mapped, fixed by
-commit 3adf7ae18bf4 ("fs: aio: reject partial mremap to avoid
-Null-pointer-dereference error"). Both times a VMA outlived the ring and
-the ring file was truncated under it.
+The pNFS SCSI layout client unregisters this way at umount. A later
+mount cannot register and sends all I/O through the metadata server.
 
-There's a third way to get there. kill_ioctx() and the error path of
-ioctx_alloc() unmap the ring with vm_munmap() and ignore the return
-value. If vm_munmap() has to wait for mmap_lock and a fatal signal is
-pending it returns -EINTR and the VMA stays. free_ioctx() then calls
-put_aio_ring_file() which truncates the ring file to zero. A fault that
-passed the i_size check in filemap_fault() before that doesn't find its
-folio anymore, allocates a new one and calls ->read_folio:
+Send Unregister Reservation Key when new_key is zero.
 
-    fault on the ring                 io_destroy() with SIGKILL pending
-    =================                 =================================
-                                      vm_munmap() returns -EINTR
-    filemap_fault()
-      i_size check passes
-                                      free_ioctx()
-                                        put_aio_ring_file()
-                                          truncate_setsize(inode, 0)
-      no folio, allocate a new one
-      filemap_read_folio()
-        ->read_folio == NULL
-
-All that's needed is a second process that shares the mm. If a CLONE_VM
-child calls io_destroy() and gets SIGKILLed while it waits for mmap_lock
-the ring stays mapped for the threads of the parent. Any user can do
-that.
-
-Instead of plugging the routes one by one give the ring a ->read_folio
-that unlocks the folio and returns -EIO. All folios of a live ring are
-in the page cache so a fault can only end up there if the ring was
-truncated. The fault now gets SIGBUS. Nothing else reads the ring file
-and the aio filesystem uses noop_backing_dev_info so there's no
-readahead either.
-
-Making vm_munmap() unkillable in those two places would only close this
-one route and bring back what commit ae7987835643 ("mm: make vm_munmap
-killable") fixed.
-
-Fixes: 36bc08cc0170 ("fs/aio: Add support to aio ring pages migration")
+Fixes: 1d277a637a71 ("NVMe: Add persistent reservation ops")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-1-88f22792f6f7@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: adapted the folio-based read_folio callback to page-based readpage using unlock_page() ]
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: adapted nvme_pr_register() to use the existing old/new parameter names and numeric action codes ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/aio.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/nvme/host/core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index 16ceed755b7e5..8ba65b4ec8fc2 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -455,7 +455,18 @@ static int aio_migratepage(struct address_space *mapping, struct page *new,
- }
- #endif
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 11d7ef36f9670..70784bbf21dc1 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2286,7 +2286,12 @@ static int nvme_pr_register(struct block_device *bdev, u64 old,
+ 	if (flags & ~PR_FL_IGNORE_KEY)
+ 		return -EOPNOTSUPP;
  
-+/*
-+ * filemap_fault() reads a page that it did not find in the page cache. All
-+ * pages of a live ring are there, so the ring was truncated under the fault.
-+ */
-+static int aio_readpage(struct file *file, struct page *page)
-+{
-+	unlock_page(page);
-+	return -EIO;
-+}
-+
- static const struct address_space_operations aio_ctx_aops = {
-+	.readpage	= aio_readpage,
- 	.set_page_dirty = __set_page_dirty_no_writeback,
- #if IS_ENABLED(CONFIG_MIGRATION)
- 	.migratepage	= aio_migratepage,
+-	cdw10 = old ? 2 : 0;
++	if (!new)
++		cdw10 = 1;
++	else if (old)
++		cdw10 = 2;
++	else
++		cdw10 = 0;
+ 	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? 1 << 3 : 0;
+ 	cdw10 |= (1 << 30) | (1 << 31); /* PTPL=1 */
+ 	return nvme_pr_command(bdev, cdw10, old, new, nvme_cmd_resv_register);
 -- 
 2.53.0
 
