@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044186;
-	b=QpwmPAkSKu5/ojBgjHzhXbaY9F3bDPbfsQrcgSxeKWSfyr8EF9d7fb9M6aLdXlqbDBs9
-	 23VBI6oyVVGatVWMxaKPRKiVtzFpzE12oFFRR9bmVBeM1IiEiuHmgJnwHnHu0peMY1SU5
-	 533fstGVzoqjYSICfC1BUok/lcc+NCjRlz6OsvZD0XjiOO33JRUSG/7ctub5fzVAoqORL
-	 3xVrV6nwzBEyeaJreI7Ufc/MqEYFJdu4nYv5cEk5+I6qeT/ZYle8bDnf5LuJjredTW1UY
-	 A3B8E2mAdsS3ffS+RjfKnAnn0jW+5DSzVZQBt7PyP2i4UrA9udxvmO1E5VNvFUKsvgw==
+	t=1795044189;
+	b=JKmrlnlxwToGCVKkMkxuw+6kuAHerxOuu9/6BKtC5Jr4JmOOZefBXZbAPAQseNwvOcoB
+	 R1gExk/vAwLmWdm5LAsNscsX5otaEadnSLmEb+r0brCZj0/FpyXHUTvySd6EYAqnwT6KM
+	 O4vPDFbUWUkOjCERHNtjvPE5Ij5HOvNkFp78b5fhARDqoKWy9PAmeKqizBtzt8nm0S9g3
+	 otuyQMTUeD9rbRMppTE+W6JZG7mGetyPSbbDlCnsG2RAs6NCXyjwgl52rTfsPuVMcfaMy
+	 oh2roJKZ3n4ugXuWFNUq3CWQF3lsU12CaCZBfrcDhbbn0aA2BmTEZD34wrJJiFno7jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A16ulvCepaILxTtCzWL1mgmhUzqWxFqq3aL28V4MGSY=;
-	b=xRduWi8eIMvs9rSwqmG2cZvhWQVsq5NKq8GpA0uPX0OAfgF/nm5bF6KmJpi+VSMKsLAa
-	 /GLBSLEi/kw9FzZXa9S4CBo17UX7D9//lWdD1s8zGYmPstPCJwCzM75BJSLdu8Oj+Dy7f
-	 kyww/gE8VXzAIZKK/UjtjQ0R8LdEhWA2D3HM1A86mIAbXwT4khfSyLUEE7uOtovQn+4L1
-	 BjSUKm8WrpLVGFwpLD1+3I2rwi/icUoCJw9Mrgr/1CMUWR9D60DMB823BFhUIRRjbLe5Z
-	 VFKDGmb11dGWAabIvl8ob6OAxwNmaVREgSRmDPFks/S6brct5QJDCbcuuisNo3xjtbA==
+	bh=5QNXXVOf75RwxMnMGfzIbAID383r+Eh47iim/kTuUpY=;
+	b=qf/sTNeGJM9sIj/rhhj6SmZxQJkTwfAP6cKeXxYJfMS3hIv/557/Vejui7OZQSqI/L1L
+	 cuHvipO3PJX5lHNiwEOqiEZbtdPehDeQM7FpFow5R9eJnA7GA1SKbpqeQfmr6uxtb7jOG
+	 lHdiphww0M+4rAJz4kpu6RSwLlLsd4S5P7SxfuJwT/SoUbWf314NfBFyJuH7cg6xQuSCO
+	 XhMZw5XQtICfp7vP+nNyPDhYR0ptK8+yal1ZonBdSzTLwLFo5E4tOQ1NrWcqURogj2KbR
+	 nFDZs65bFaUwaeVVtpmfPQAx0l0orJOkP+XdJODeyIWSds++s3dngEX384xvCRuJn8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JAYoERW6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XW/p3La6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1634606A32F;
-	Wed, 18 Nov 2026 23:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AAC606A320;
+	Wed, 18 Nov 2026 23:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JAYoERW6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD53D1F000C4;
-	Wed, 18 Nov 2026 23:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XW/p3La6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926591F000C4;
+	Wed, 18 Nov 2026 23:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044186;
-	bh=A16ulvCepaILxTtCzWL1mgmhUzqWxFqq3aL28V4MGSY=;
+	s=korg; t=1795044189;
+	bh=5QNXXVOf75RwxMnMGfzIbAID383r+Eh47iim/kTuUpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JAYoERW6n37sGOlVBQMFhwPNoW72u+4N4jqkEyYLoVWKNIOIa/IlXbOh4AhjUNO8i
-	 9vHWdgTbPJXWG98J6oxXXwpsSKv+T/WMrT6RwmqUFoyerErAakyMUiEvkQlW9p05LB
-	 FhVgx5yC8suLokfkz/z1QBdqJmP912BGvYHhTlzw=
+	b=XW/p3La6J74oImqqWxdrBPNbnPmGL+0VoO0MhuaZ3u6HwObZGD654LCkInc75bxya
+	 Jgvo5+JlJyQKTTsnGD0d5bqemq50NZJjTTQYmwYweweKhHpsRRheQcLit0upLdSKq0
+	 DanzKsiibQPz9ovyI35pjeXQ3sZF2Ca3a2jmk2yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Theo Andersen Carton <andersen.theo@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0479/2857] namespace: check a recursive bind mount for mount namespace loops
-Date: Wed, 18 Nov 2026 15:25:13 +0100
-Message-ID: <20261118150218.685958249@linuxfoundation.org>
+Subject: [PATCH 6.1 0480/2857] drm/amdgpu: skip the noirq suspend reset for a switcheroo-parked GPU
+Date: Wed, 18 Nov 2026 15:25:14 +0100
+Message-ID: <20261118150218.718619202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,128 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Theo Andersen Carton <andersen.theo@gmail.com>
 
-[ Upstream commit c640a01a78e42302879006ed7b7d5a9a943ba815 ]
+[ Upstream commit eadb85cca111152bd334b861fb53747ab851d13a ]
 
-do_loopback() refuses to bind mount the file of a mount namespace that
-is as old as the caller's or older because a mount namespace that holds
-a mount of its own file, or of an ancestor's, would cause a cycle. But
-it only checks the dentry the bind mount starts from. With MS_REC
-everything below it is copied and do_loopback() passes
-CL_COPY_MNT_NS_FILE so mount namespace files below the source are
-copied.
+amdgpu_pmops_suspend_noirq() resets the ASIC unconditionally. When the GPU
+has been parked by vga_switcheroo it has neither power nor a PCIe link, so
+the reset cannot reach it: pci_set_power_state() reports the device as
+inaccessible and amdgpu_asic_reset() returns -EINVAL. A failure there
+aborts the entire noirq suspend phase, and with it the system suspend, so
+the machine cannot sleep at all while the GPU is switched off.
 
-That's fine for a source in the caller's own mount namespace. Every
-mount namespace file in there passed the same check when it was
-bind-mounted. It isn't fine for a source in another mount namespace.
-may_copy_tree() accepts a bind mount of any nsfs or pidfs file no matter
-what mount namespace it lives in so that /proc/<pid>/ns/<ns> and pidfds
-can be bind mounted. If we create a bind-mount stack of mount namespaces
-file descriptors the kernel will copy them irrespective of their
-ancestoral relationship to the mount namespace in question:
+amdgpu_device_prepare(), amdgpu_device_suspend() and amdgpu_device_resume()
+all bail out early on DRM_SWITCH_POWER_OFF. This callback was added later,
+for an unrelated reason, and did not inherit the check. nouveau guards
+every one of its PM callbacks the same way.
 
-  151 146 0:7 net:[4026531833] /tmp/nrc/y rw - nsfs nsfs rw
-  152 151 0:7 mnt:[4026532293] /tmp/nrc/y rw - nsfs nsfs rw
+Bail out the same way here. On a single-GPU system switch_power_state is
+never DRM_SWITCH_POWER_OFF, so this is a no-op there.
 
-Mount 152 is a mount of the mount namespace file of mount namespace
-4026532293 inside mount namespace 4026532293. That namespace and every
-mount in it are leaked... All it takes is a process in an older mount
-namespace that stacks the file and repeating it leaks without limit:
+Found on a MacBookPro11,5, where the Radeon is powered down through
+apple-gmux so that the internal panel can be driven by the iGPU instead.
+Every suspend failed in amdgpu_pmops_suspend_noirq() while the card was
+off; with this check a full S3 cycle completes.
 
-  after control: Shmem:               380 kB
-  child: mount(/proc/self/fd/6, MS_BIND|MS_REC): ok
-  after cycle: Shmem:             65916 kB
-
-do_move_mount() runs check_for_nsfs_mounts() over a detached tree for
-exactly that reason. Do the same for the copy before it is grafted.
-
-Fixes: e149ed2b805f ("take the targets of /proc/*/ns/* symlinks to separate fs")
-Fixes: ef4144ac2dec ("pidfs: allow bind-mounts")
+Fixes: 9e051720f9d3 ("drm/amdgpu: Ensure HDA function is suspended before ASIC reset")
+Signed-off-by: Theo Andersen Carton <andersen.theo@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 539d0558638a6dcc066f1cf592b6b9a52adc8ea4)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-4-be34c83956ae@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Adapted the graft_tree() call to the older three-argument signature and moved check_for_nsfs_mounts() above do_loopback() so it compiles. ]
+[ sashal: Rebased the early-return guard onto this branch's older suspend_noirq body, which has no local r and no reset-domain locking, and placed it before suspend_complete = true. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 50 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index c07e9e857f999..f534ebc90c9cf 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2468,6 +2468,28 @@ static struct mount *__do_loopback(struct path *old_path, int recurse)
- 	return mnt;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 67b5d0017fd04..3b6688d6687b1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2441,6 +2441,14 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
  
-+/*
-+ * Check that there aren't references to earlier/same mount namespaces in the
-+ * specified subtree.  Such references can act as pins for mount namespaces
-+ * that aren't checked by the mount-cycle checking code, thereby allowing
-+ * cycles to be made.
-+ */
-+static bool check_for_nsfs_mounts(struct mount *subtree)
-+{
-+	struct mount *p;
-+	bool ret = false;
++	/*
++	 * A GPU parked by vga_switcheroo has no power and no PCIe link, so the
++	 * ASIC reset below would fail and abort the whole noirq suspend phase.
++	 * Bail out like amdgpu_device_prepare/suspend/resume() already do.
++	 */
++	if (drm_dev->switch_power_state == DRM_SWITCH_POWER_OFF)
++		return 0;
 +
-+	lock_mount_hash();
-+	for (p = subtree; p; p = next_mnt(p, subtree))
-+		if (mnt_ns_loop(p->mnt.mnt_root))
-+			goto out;
-+
-+	ret = true;
-+out:
-+	unlock_mount_hash();
-+	return ret;
-+}
-+
- /*
-  * do loopback mount.
-  */
-@@ -2504,7 +2526,11 @@ static int do_loopback(struct path *path, const char *old_name,
- 		goto out2;
- 	}
- 
--	err = graft_tree(mnt, parent, mp);
-+	/* the copy may carry mount namespace files from below the source */
-+	if (recurse && !check_for_nsfs_mounts(mnt))
-+		err = -EINVAL;
-+	else
-+		err = graft_tree(mnt, parent, mp);
- 	if (err) {
- 		lock_mount_hash();
- 		umount_tree(mnt, UMOUNT_SYNC);
-@@ -2790,28 +2816,6 @@ static inline int tree_contains_unbindable(struct mount *mnt)
- 	return 0;
- }
- 
--/*
-- * Check that there aren't references to earlier/same mount namespaces in the
-- * specified subtree.  Such references can act as pins for mount namespaces
-- * that aren't checked by the mount-cycle checking code, thereby allowing
-- * cycles to be made.
-- */
--static bool check_for_nsfs_mounts(struct mount *subtree)
--{
--	struct mount *p;
--	bool ret = false;
--
--	lock_mount_hash();
--	for (p = subtree; p; p = next_mnt(p, subtree))
--		if (mnt_ns_loop(p->mnt.mnt_root))
--			goto out;
--
--	ret = true;
--out:
--	unlock_mount_hash();
--	return ret;
--}
--
- static int do_set_group(struct path *from_path, struct path *to_path)
- {
- 	struct mount *from, *to;
+ 	adev->suspend_complete = true;
+ 	if (amdgpu_acpi_should_gpu_reset(adev))
+ 		return amdgpu_asic_reset(adev);
 -- 
 2.53.0
 
