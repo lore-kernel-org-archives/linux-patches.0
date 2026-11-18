@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042922;
-	b=lKT4c3AdP2UilJCSmXITox9+XlwSfy8FAjJkIhIPUMetARpuMJNsMIuOVorjxTdvAa7n
-	 nMzCL8CiHe9T1jELliOmX65QFRh2Dl2tQasHX5XP9m7PculhJPhYz4LvcJnWTmF1Zr+qa
-	 X6D5nwHFeCDdFx9Abn2gHnFJPGN6Ln4l6kkfdnkY0eOv+tqO7PCMYaEIYBgZt/eEGOyWt
-	 npgyWaXXpPR+B3pX152h3i3lZjSJOAJRcVWdYd8khLv713h46IUeOaK+BbUWz/AStV9cl
-	 BYIWC64vN+74HOMjs0MbfgQb9jTuiAE8h36cMmLbOdO4Gj3a62s7/yXIQM0+Fy4UwoA==
+	t=1795042924;
+	b=vjHYJ+6r0xJNso445MguK3gZ/fiI32jVX1s1Fn/oljpKtrLDZXP/7AymxaidAvgy0Kjl
+	 KAF1sIi3lkjVCP1L2TTDYUpzRVFIpdIg1cDsQal0lWr3UpKqRVc+oHflu0w4zEEYE9jYU
+	 GFRqQ4jHdHn5zgfIezet3gz92VX3sVBctLpgUWWKUoYk0+Ta6B0WSZ0fTRyDwBfepnjy3
+	 4Pbixo8oiF6aOwx0Z6y/jgncpFsUSBGi2cQ7ghOU4o0IBqf5Og9Ft1mT/ICm63pNxwMpA
+	 1OrLe9XPHavfTmu3NCwAQiATgv6VM6xMSTrWS735mgz+EBW1Uz0Fqp+8LFzGd34yYsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iFyyXnEVtnXANQGta48CMCkrvnkOLxPBV8aVUkxRiV4=;
-	b=mdiSXLjthCCG715izMF+bRuw+YEFeTLOVEItxDMGKNvkxaQGylk+OD695Cm+gU4ugay/
-	 ipBxt9+XjXLbUMhN+ogaJRcWWT2Q/uGBjDbImQnR2+qWE4sE+sreLLkFtAAk9xYQFyioC
-	 lPxqnRTnL4iN1TWUdC+zc7KUMz/vz30/W+eJi2zOLpnGIa0l6rlRIghtW5yPXE8VmLwgS
-	 /Pw30RoaFsQBq1AFoh7lrHQbS8F/6MW5+EzMQykochq0mzz/2JvP37VVFn+mVFC6fvoIg
-	 YWP4hBWAa6n1J7KI6dODyVJ5JV6o2MPblW1siqAd5RclMMLUqWqoVihICaiH3tGnkOQ==
+	bh=DzjRJVYqvmwYZq2sFETbTt8XImWytexF0Mk6V2ixnSo=;
+	b=ebxp9oaIVWPivyghqmNkldcM1YRHq5Kt3ZDpGVRw+04icm2Z19Ci2diGT9Y/59nTtads
+	 fCu0hwPlo1pgsfCS9SbF1O5/mTU4N8QFno+ocv5J4UtMC2TGTegsE1j7RFLuZOaz1DhuI
+	 XUDKXqNZKB2yROTIfO+bFUXyc9tusGnLhD9h5QGGFF8AXKzOxV9r+JhCyDlPbYQ6MHtsj
+	 JoqcQlnmsIWblYsEE3ZW0pkpEywrt1RtDqfp9ihO9/HlZe2TjwDt0W1k2Ri9IEjvpffEL
+	 fRwQR/zkvk11JA5Ut4DXT640jyWjHbHXM7DjD3tLdMifUKb2h6keb18KSb4hz+TiqOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RAU/gG+2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxzkuLMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179F3606A31C;
-	Wed, 18 Nov 2026 23:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8A0606A325;
+	Wed, 18 Nov 2026 23:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAU/gG+2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EF91F000C4;
-	Wed, 18 Nov 2026 23:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxzkuLMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A2A1F000C4;
+	Wed, 18 Nov 2026 23:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042922;
-	bh=iFyyXnEVtnXANQGta48CMCkrvnkOLxPBV8aVUkxRiV4=;
+	s=korg; t=1795042924;
+	bh=DzjRJVYqvmwYZq2sFETbTt8XImWytexF0Mk6V2ixnSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RAU/gG+2a+FAGiSAaQECtSSFLtvpyjr4fc806hhRyzFpRRj94HZGyhONc7bQoMw1M
-	 R/MJ/OFiPz8wlBCkjZC8GKultJxvU0afDPc0ROof+ZMvAn+s8IHrRmhBwac7EcHL5e
-	 2rEHSVUdYmidGq+H+PagAoBNH9/z1AUdbDZrq7Wo=
+	b=hxzkuLMjH9GTf6NO1lKo5HGe+mAZEDf1vBX6NxRPNgi138/4ueQsaBxhGqiUtmS49
+	 JeUNyQl3x3iqtypdbhefMw9epwY3UduXtWeQkU9wicLjnPjHBz6m8VAI3a1t3DYaWX
+	 OGc2B/qj+V/92K+otAtNkchL4TIDXCFFxZApDsxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0028/2857] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
-Date: Wed, 18 Nov 2026 15:17:42 +0100
-Message-ID: <20261118150202.364394702@linuxfoundation.org>
+Subject: [PATCH 6.1 0029/2857] iio: accel: fxls8962af: clamp the device-reported FIFO sample count
+Date: Wed, 18 Nov 2026 15:17:43 +0100
+Message-ID: <20261118150202.400536411@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,69 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
+[ Upstream commit 2f8225b91eb478ca2e9aec8aaef4d229765bcebe ]
 
-hdac_hdmi_dev_probe() gets the HDA link before allocating and
-initializing the HDMI codec private data. Several later error
-paths return directly without dropping the link reference,
-leaving the hlink refcount unbalanced.
+fxls8962af_fifo_flush() transfers the sample count the device reports in
+BUF_STATUS into an on-stack buffer sized for FXLS8962AF_FIFO_LENGTH (32)
+samples, but the count is a 6-bit field (0..63) that is only checked for
+zero. A device, or an attacker on the I2C/SPI bus, reporting 33..63
+overflows the buffer by up to 186 bytes: a stack out-of-bounds write.
 
-Release the link reference on probe failures. Also turn display
-power off if the failure happens after it has been enabled.
+Clamp the count to FXLS8962AF_FIFO_LENGTH before the transfer, mirroring
+the clamp already applied in fxls8962af_set_watermark(). Conforming
+hardware reports at most that many samples and is unaffected.
 
-This issue was dicussed in:
-https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
-I think the paths fixed here are probe failure paths: the device
-has not been fully initialized or bound, and runtime PM suspend
-cannot be relied on to balance the reference taken during probe.
-
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/iio/accel/fxls8962af-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index b9e2e5a960139..f11a60c092cf8 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -2162,8 +2162,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
+diff --git a/drivers/iio/accel/fxls8962af-core.c b/drivers/iio/accel/fxls8962af-core.c
+index 8bd4eef12ac44..4317894947ceb 100644
+--- a/drivers/iio/accel/fxls8962af-core.c
++++ b/drivers/iio/accel/fxls8962af-core.c
+@@ -960,6 +960,8 @@ static int fxls8962af_fifo_flush(struct iio_dev *indio_dev)
+ 	if (!count)
+ 		return 0;
  
- 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
--	if (hdmi_priv == NULL)
-+	if (hdmi_priv == NULL) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENOMEM;
-+	}
++	count = min(count, FXLS8962AF_FIFO_LENGTH);
++
+ 	data->old_timestamp = data->timestamp;
+ 	data->timestamp = iio_get_time_ns(indio_dev);
  
- 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
- 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
-@@ -2172,8 +2174,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
- 	hdmi_priv->hdev = hdev;
- 
--	if (!hdac_id)
-+	if (!hdac_id) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENODEV;
-+	}
- 
- 	if (hdac_id->driver_data)
- 		hdmi_priv->drv_data =
-@@ -2198,6 +2202,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	if (ret < 0) {
- 		dev_err(&hdev->dev,
- 			"Failed in parse and map nid with err: %d\n", ret);
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-+		snd_hdac_display_power(hdev->bus, hdev->addr, false);
- 		return ret;
- 	}
- 	snd_hdac_refresh_widgets(hdev);
 -- 
 2.53.0
 
