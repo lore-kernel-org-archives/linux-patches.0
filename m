@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047333;
-	b=aulCY9H+a9s6iKYY98lmKn4sO1j9wqz6p8w9WPHWLNOWrHCbicGBlEszFCDSrQjFJv2E
-	 1yzJvMho0mrdGCgAaoaHgmdyfhQ0uYC+0jTRBDoyx3nmoZ1+0xGPhh79c0T8icE/Bodkb
-	 BqeOa9rMRd0o6tkfq1BFzW4/VXc5HaQAPHXiTOORXKUXQdgQjE9iaagsORpF9Aduim2tq
-	 KgjgoKGoaShvE9gJMkP3F+2qAf9+RdjJae+nyacKljLFPjsUCVh8xXHLwIvKB2Tf8MMLP
-	 Q0BEKESlAayljXYYONtaQhR37gBEwgbp/Z9st4qA0jwF5S9tJHGBTkmdHRX3bGm/FrA==
+	t=1795047336;
+	b=W+QLSWu8fXLHt99Z7DlYUDWKcUaQFKPUU0nHgazPQfc0guxKKJvZj+k83JvFY/JTMBg0
+	 XNOn/DJHDpzaa6sTzJ/F/j1EH5IRjwSCGy+SYzS1zDnWTQHseOYJj6HhSlmzDWcRwuSeH
+	 KZst3RM3zevkNtyY2Rb/AEcwJjGeCbyLW9xiHPWn02iic0uUXXQTTvIij6zuzd0EBBuOj
+	 VZWmTJbdOShRGJh85nw5hBFdbpGOkEK5Tnhh0fExWvXUwBGACCXVFwsdcAP6/cPlC/iFh
+	 q0kmzfpBOVu1z34WyFQ1UZ5wio2Om/0r7VKtnd9IhECuNAUILOxmZ/eV5r0y93zblag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ceta8psZDasxpbpdRoxCSdmVB6cLmS355uq2ZRW8p4c=;
-	b=rf3dvD9ZnrxUFGYLFMewsKVg1KpXaORMGdQyTvuk+QY4UgQQfNLHcTb1ML6jERSSN8jc
-	 4BRxMpzfaK+sPk3fmXkfdkGhe9zGGwRmAXkGrSN5OoWo6gYXpnjs/GF5YTn2AQw7NZzgS
-	 u7cr1bosNFplFPJfR7RVBYX+Sf4bydGB7A/5Gk8HxAZ5L7346MxN1vh0HfnrwD8V/bEiB
-	 WQ3Us1E4hhC44WB2lNmt2If+5yrGjHYD4QVimmFhgBZLFh9+7S1hhAhqIiD9tnihzrfIz
-	 6jSDx7aBiSsiIJPXPd/fQ37EDG2w/NUIPsvp0mPl+qIYZDEBTDi7pPjViw7eRnw7V/w==
+	bh=/TndBeld5+RdvVrZePo2ppr44fBeLBnbIv+GkkhvbKM=;
+	b=f8ouWLbNTm0bDQdXK/H3Y9oq0onJ5mOnim6h+Cr3Z1CiuVJYYSv2/UzaZ7qKS96GNBtH
+	 9I3nfKn/tB2hg1rpswljECwg6uTO7KvGKt2IdoayAO+smffra3jjtavJJDNGggjk8Kh+I
+	 V/tbHsX32rgspsN9WlLZFO6VQcywvQPZ50HNGNRC9qM63UBYEEtzdS7MVkVh2kl6/AC9q
+	 luvwdMI52yJeq+9g6X2dnJuqDzle5wmTlvyzG9VLBGgUcpc9vnGiXTc8AV5WjKuqmxMcT
+	 yPr5RuqSHrnG+G2cjHwQMNR/6CHGPohC2bS+6oC6EpflMB72SYDksGG8lPqWn2w7eOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weQUvdhk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sh+MnH9x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6098606A325;
-	Thu, 19 Nov 2026 00:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1A0606A31C;
+	Thu, 19 Nov 2026 00:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weQUvdhk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079651F000C4;
-	Thu, 19 Nov 2026 00:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sh+MnH9x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86201F000C4;
+	Thu, 19 Nov 2026 00:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047333;
-	bh=Ceta8psZDasxpbpdRoxCSdmVB6cLmS355uq2ZRW8p4c=;
+	s=korg; t=1795047336;
+	bh=/TndBeld5+RdvVrZePo2ppr44fBeLBnbIv+GkkhvbKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weQUvdhkJ+9nl9Vt1QUrORHWpwh3A7T8EfZVw8VK+5wPDvgc3Uv6lOJFNRvC8tn94
-	 rNZ2/q2Nkd5w3ij6DopqyeZ/RQr25WlObzhuUqzMD9y+VvKmkK1brC+ckSo96x08fS
-	 CKhrA12fugm5iI3TANQeLzpNynZBfx/Wev8+Tzo8=
+	b=Sh+MnH9x8DdO+rdmRc93CxCSb3aFkMlt5hmV6Bh/dzRu3I7C4BYen1VzciXtEGinH
+	 SMZ5rONEeSItEO7Thj1eaimx4FVywS4iBQdm53Ro5UbcIzX6kYqXInx3c7yeRQFFeZ
+	 n9WQOv3KrsFeA8H48u61hiGqJvCIdhwR90XrfqO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armaan Sandhu <armaan.sandhu0504@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Leizhen Zhang <lzsx618@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1594/2857] lib/cmdline: fix get_options() count and overflow with large ranges
-Date: Wed, 18 Nov 2026 15:43:48 +0100
-Message-ID: <20261118150258.767609568@linuxfoundation.org>
+Subject: [PATCH 6.1 1603/2857] assoc_array: dont lose objects when a shortcut is split on a word boundary
+Date: Wed, 18 Nov 2026 15:43:57 +0100
+Message-ID: <20261118150259.085382177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,131 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armaan Sandhu <armaan.sandhu0504@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 5d72266218b1c4dd2917f1df2b86f3b0e0a605c9 ]
+[ Upstream commit 2a62c32760a8fbf464a7388853d19bc62c5cc423 ]
 
-get_range() stops writing once the array is full, but get_options() still
-advances its index by the whole range.  So "1-100" parsed into four ints
-reports 99 numbers, and a range like "0-2147483647" wraps the index
-negative and writes outside the array.
+When assoc_array_insert_mid_shortcut() splits a shortcut at level diff,
+the new shortcut in front of the split, new_s0, gets the first
+round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE) bits of the old shortcut's
+index key, and the bits from diff onwards are then cleared from its
+last word:
 
-Stop once a range fills the array, bail out in validation mode before the
-count overflows, and saturate the range length in get_range().  Add KUnit
-cases; without the fix "0-2147483647" panics the test kernel.
+	blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
+	new_s0->index_key[keylen - 1] &= ~blank;
 
-Only root can supply this input, so this is a robustness fix.
+When diff is a multiple of ASSOC_ARRAY_KEY_CHUNK_SIZE, the shift is 0,
+blank is all ones, and the whole last word is cleared, although all of
+it lies below diff.  A walk then compares the key it is looking for
+against that zeroed word, takes the shortcut to point elsewhere, and
+every object below it can no longer be found.
 
-[akpm@linux-foundation.org: add additional test case from Leizhen]
-Link: https://lore.kernel.org/20261005213945.359905-1-armaan.sandhu0504@gmail.com
-Fixes: 22f2e2801799 ("[PATCH] get_options to allow a hypenated range for isolcpus")
-Signed-off-by: Armaan Sandhu <armaan.sandhu0504@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Leizhen Zhang <lzsx618@gmail.com>
-Reviewed-by: Leizhen Zhang <lzsx618@gmail.com>
-Cc: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <stable@vger.kernel.org>
+assoc_array_insert_into_terminal_node() trims a new shortcut's key the
+same way, and only when the level is not a multiple of the chunk size.
+Do the same here.
+
+Found by a userspace build of the array with a test that inserts, in
+order, string keys whose first word is their length and the rest their
+bytes.  The 102nd key split a shortcut at bit 256, and 76 of the keys
+already in the array could no longer be found; AddressSanitizer also
+reported assoc_array_walk() reading a word past the end of a shortcut's
+index key.  With this change the test passes, and AddressSanitizer and
+UndefinedBehaviorSanitizer report nothing.
+
+Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
+Assisted-by: LLM
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/cmdline.c       | 13 ++++++++++++-
- lib/cmdline_kunit.c | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ lib/assoc_array.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/lib/cmdline.c b/lib/cmdline.c
-index 90ed997d95701..f5dc59b3548e9 100644
---- a/lib/cmdline.c
-+++ b/lib/cmdline.c
-@@ -11,6 +11,7 @@
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index 65409f0d2e0e5..62e35116db19c 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -866,9 +866,11 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
+ 		memcpy(new_s0->index_key, shortcut->index_key,
+ 		       flex_array_size(new_s0, index_key, keylen));
  
- #include <linux/export.h>
- #include <linux/kernel.h>
-+#include <linux/overflow.h>
- #include <linux/string.h>
- #include <linux/ctype.h>
- 
-@@ -26,7 +27,9 @@ static int get_range(char **str, int *pint, int n)
- 
- 	(*str)++;
- 	upper_range = simple_strtol((*str), NULL, 0);
--	inc_counter = upper_range - *pint;
-+	/* Keep the sign of the result when the difference doesn't fit */
-+	if (check_sub_overflow(upper_range, *pint, &inc_counter))
-+		inc_counter = upper_range < *pint ? -1 : INT_MAX;
- 	for (x = *pint; n && x < upper_range; x++, n--)
- 		*pint++ = x;
- 	return inc_counter;
-@@ -122,6 +125,14 @@ char *get_options(const char *str, int nints, int *ints)
- 			range_nums = get_range((char **)&str, pint, n);
- 			if (range_nums < 0)
- 				break;
-+			/* The range didn't fit, so the array is full */
-+			if (!validate && range_nums > n) {
-+				i = nints;
-+				break;
-+			}
-+			/* Leave room for the upper number of the range */
-+			if (range_nums >= INT_MAX - i)
-+				break;
- 			/*
- 			 * Decrement the result by one to leave out the
- 			 * last number in the range.  The next iteration
-diff --git a/lib/cmdline_kunit.c b/lib/cmdline_kunit.c
-index 20d525aa23eda..e720f056c84df 100644
---- a/lib/cmdline_kunit.c
-+++ b/lib/cmdline_kunit.c
-@@ -139,6 +139,44 @@ static void cmdline_test_range(struct kunit *test)
- 	} while (++i < ARRAY_SIZE(cmdline_test_range_strings));
- }
- 
-+static const struct {
-+	const char *in;
-+	int parsed[4];
-+	int validated;
-+} cmdline_test_range_overflow_cases[] = {
-+	{ "1-100",         { 3, 1, 2, 3, },    100,        },
-+	{ "1,5-100,7",     { 3, 1, 5, 6, },    98,         },
-+	{ "1-2147483646",  { 3, 1, 2, 3, },    2147483646, },
-+	{ "0-2147483647",  { 3, 0, 1, 2, },    0,          },
-+	{ "-5-2147483647", { 3, -5, -4, -3, }, 0,          },
-+	{ "2147483647--5", { 0, 2147483647, }, 0,          },
-+	{ "1,0-2147483647", { 3, 1, 0, 1, },   1, },
-+};
-+
-+static void cmdline_test_range_overflow(struct kunit *test)
-+{
-+	unsigned int i, j;
-+
-+	for (i = 0; i < ARRAY_SIZE(cmdline_test_range_overflow_cases); i++) {
-+		const char *in = cmdline_test_range_overflow_cases[i].in;
-+		const int *e = cmdline_test_range_overflow_cases[i].parsed;
-+		/* Two guard elements past the array handed to get_options() */
-+		int r[ARRAY_SIZE(cmdline_test_range_overflow_cases[0].parsed) + 2];
-+		int n;
-+
-+		memset(r, 0, sizeof(r));
-+		get_options(in, ARRAY_SIZE(r) - 2, r);
-+		for (j = 0; j < ARRAY_SIZE(r) - 2; j++)
-+			KUNIT_EXPECT_EQ_MSG(test, r[j], e[j], "Pattern: %s at %u", in, j);
-+		for (; j < ARRAY_SIZE(r); j++)
-+			KUNIT_EXPECT_EQ_MSG(test, r[j], 0, "Pattern: %s out of bound at %u", in, j);
-+
-+		get_options(in, 0, &n);
-+		KUNIT_EXPECT_EQ_MSG(test, n, cmdline_test_range_overflow_cases[i].validated,
-+				    "Pattern: %s (validated)", in);
-+	}
-+}
-+
- static void cmdline_test_next_arg_quoted_value(struct kunit *test)
- {
- 	char in[] = "foo=\"bar baz\" qux=1";
-@@ -203,6 +241,7 @@ static struct kunit_case cmdline_test_cases[] = {
- 	KUNIT_CASE(cmdline_test_lead_int),
- 	KUNIT_CASE(cmdline_test_tail_int),
- 	KUNIT_CASE(cmdline_test_range),
-+	KUNIT_CASE(cmdline_test_range_overflow),
- 	KUNIT_CASE(cmdline_test_next_arg_quoted_value),
- 	KUNIT_CASE(cmdline_test_next_arg_bare_quote_regression),
- 	KUNIT_CASE(cmdline_test_next_arg_mixed_tokens),
+-		blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
+-		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, diff, blank);
+-		new_s0->index_key[keylen - 1] &= ~blank;
++		if (diff & ASSOC_ARRAY_KEY_CHUNK_MASK) {
++			blank = ULONG_MAX << (diff & ASSOC_ARRAY_KEY_CHUNK_MASK);
++			pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, diff, blank);
++			new_s0->index_key[keylen - 1] &= ~blank;
++		}
+ 	} else {
+ 		pr_devel("no pre-shortcut\n");
+ 		edit->set[0].to = assoc_array_node_to_ptr(new_n0);
 -- 
 2.53.0
 
