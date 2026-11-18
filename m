@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032828;
-	b=GCX9dRVUDYuru+GZPxF6rEhUciYXqltDfxvrWiOCb5UXv4M4KqPOO0/uX35b0GeVRShH
-	 HHvQDmXqJ6ktdr7tPcLxuhRkvEoz8RxPFV/2sKtddAaTLhDO24mUutdET/WlAEdH02gC5
-	 XNwCqW1Gc8rUjwE/dTNyliQT8etjh0w0qvKGfQk6qQBTivXSGNyKWIAM56kMOYa3tDMSi
-	 SxoCdcH7ZbMAWuedrHtNHl39ZtQY5mAk8aV+SiylCOAQq/kh6zWDf8zIzcQFMyQs2XmRQ
-	 OyUqI3rSozJ3oLOwBdrW1sLZCx1EuJC5wlECHkApd1FU6tN7gfLexzuWeXFC8WLL+NQ==
+	t=1795032831;
+	b=smt31NTUK0zfkQzDW73GyAHOA/uuBL94KcuEqieiJ2qFMPRU1/Syl9moEdsRu+d6jt0J
+	 0dwz5GB9fCA6pcm1GruubRcG8/TboqThznrykVKMK+J9bYdamzBBX05AckVNUXpL3IPHz
+	 iW7aNgm5W434Obsl81PWsLBKe0LUevYD44u27DGEHFU6s0kH2KimgSJVb+ze2eex7pVkY
+	 LkQb3w0EzThvPR2WkeTf42x1qqLcL5T43c9RgaNkbIeb+BFuDQJK8YRkC5zrwv/Ghwqup
+	 Tj5BeN9f4x7OarLhAPJ0E3rXrEc1IvVq7UtzJIcbPE9WQLZZ538gVAw5GNwQ0Y0E9NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jdwRx7ZpV9bGadKlRyaRpLSAnLTcyhFTDkTIGNCLShU=;
-	b=vkJN30rl1RMt+sIfHL/8R7NVQBnB8HjnI4Lledgft3vBimd62TJDuwXhgLkAgCbjVF3x
-	 1U44UZuezo5mdlnCwU7uB9mFht/hYu78BDGfsRW9K+em8RYvF056L6mDK9lcAumlAM+bh
-	 Bl0K2e2BW4OpzrUmODUcDXDUDCLrYsmCsnqJFNpDK4Lex0LakkOXGLIE3/qAg6+702csb
-	 zGS7H/5wjwYL3BCuoWz8xo+4qqI8evVU4TmPGOZueCl4WTIQstIXurE0z+JwnrjmlzKpm
-	 TuMVDA8xOeF9DRTpuRLT8pkp6OxjtEalcWkPMV4YBobIRSFIK8p3+1Vi19+bnNx8fRg==
+	bh=PYaLPCNbH6hPpvC4KkdFgsv3efRCITNN/ipUIli2Ja8=;
+	b=bv9Oo93rLpwR7Bl46G7QtJ/30hoAsujQbC1ST4o4H70fG9+xZtlSFlytb/PgcE7Z3sUY
+	 gGfAOUtjeRUWBPviBiSmBJ4+Bbv5QSzHriaq4owlnrHQeGn6khlNtPcDGWrz79WmKv+Lv
+	 i5Rzt2GP4k1FIwZhZ+UH+gi6E2oy9cwI7VC2SmvMDWn6JeI9deApmXYUcI068fCABHE45
+	 mQzteHwwIq7whEGywUx08kFXwW2wAiJOVK6DPgFJVg5/QEl9BHp3xuoecsdRzdezgo+x1
+	 ZHK4RWD/DesfnAM8Qj7sJRXWNFIcMu5bsrfQFw2ljEK1DZd1ZTYQi+Vdq3mUPNG5K5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljGZhXvD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsuM9RQ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5CC606A320;
-	Wed, 18 Nov 2026 20:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C67606A32C;
+	Wed, 18 Nov 2026 20:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljGZhXvD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39B31F000C4;
-	Wed, 18 Nov 2026 20:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsuM9RQ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C1B1F000C4;
+	Wed, 18 Nov 2026 20:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032828;
-	bh=jdwRx7ZpV9bGadKlRyaRpLSAnLTcyhFTDkTIGNCLShU=;
+	s=korg; t=1795032831;
+	bh=PYaLPCNbH6hPpvC4KkdFgsv3efRCITNN/ipUIli2Ja8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ljGZhXvD4bXUJnGkGh1RcvkPNesLPDf0KMvKyPcIsyVIgQA6JJNuJMvhLK8EpWprr
-	 2dGOfSTcUqlrwiDYGMBZWVjEfWDmRoK9vzG1IztK7mmvH/EI3o8GUTeuOoRyCVVNIX
-	 SSPWX9HSwxT0zL+CWA7InxPxZJP98O1NOjsExIh4=
+	b=KsuM9RQ33wBMVAD99Rs/EQmdqy0Gv/dRlLnmsNyw4/CUhO+OdMxRFe7OsS1B5Wftm
+	 E3V/2ANFdP4IKC24m6EAJRa3F0XOz/+Ig/aJLV8VwZaOgLIbU6Y0r3YXIymq8T+fOB
+	 RlJH7uHobau+YcusPaIYMHfuNprEJvqi9QQ6ML4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyi Gao <tianyi@cloudflare.com>,
-	Mohsin Bashir <hmohsin@meta.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Bradley Morgan <brads@mainlining.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1513/1756] veth: schedule the peers NAPI after XDP_TX when only GRO is enabled
-Date: Wed, 18 Nov 2026 16:00:40 +0100
-Message-ID: <20261118150109.114820150@linuxfoundation.org>
+Subject: [PATCH 6.12 1549/1756] profiling: fix sampling step on 64-bit big-endian systems
+Date: Wed, 18 Nov 2026 16:01:16 +0100
+Message-ID: <20261118150110.658960076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,50 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyi Gao <tianyi@cloudflare.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit f16b8c6a656e62bfa7bb6a3b876f9ccdaf53bd43 ]
+[ Upstream commit b1d68946a08313895f352af5336623d29739c299 ]
 
-veth_xdp_xmit() queues XDP_TX frames on the peer's ring if the peer has
-NAPI. A peer with GRO enabled and no XDP program also has NAPI.
+read_profile() stores the sampling step in an unsigned long but copies
+only four bytes to userspace.  On 64-bit big-endian systems (not common
+obviously), this copies the upper 32 bits and discards the rest, causing
+/proc/profile to report zero for normal shift values.
 
-veth_xdp_flush() then schedules the peer's NAPI, but only if the peer's
-xdp_prog is set, so for such a peer the frames are never processed.
-Nothing else schedules that NAPI by default.
+Cast to unsigned int so we get the correct 4 bytes, while keeping the
+shift calculation in unsigned long.
 
-Once the ring is full, every XDP_TX frame is dropped, and so are the
-skbs that veth_xmit() queues on the same ring.
+A small C reproducer under qemu-s390x reproduced this and proved the fix
+works for prof_shift=2.
 
-Commit 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before
-xmit of XDP frame") changed the check in veth_xdp_xmit() but not the one
-in veth_xdp_flush(). Make veth_xdp_flush() check the napi pointer
-instead of xdp_prog, as veth_xdp_xmit() does.
-
-Fixes: 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before xmit of XDP frame")
-Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
-Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/20261016214217.16942-2-tianyi@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20261020101225.917959-1-thnkslprpt@gmail.com
+Fixes: 2d186afd04d6 ("profiling: fix shift-out-of-bounds bugs")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 +-
+ kernel/profile.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 0fc14b73d24a2..6f8de3e775033 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -615,7 +615,7 @@ static void veth_xdp_flush(struct veth_rq *rq, struct veth_xdp_tx_bq *bq)
- 	rcv_priv = netdev_priv(rcv);
- 	rcv_rq = &rcv_priv->rq[veth_select_rxq(rcv)];
- 	/* xdp_ring is initialized on receive side? */
--	if (unlikely(!rcu_access_pointer(rcv_rq->xdp_prog)))
-+	if (unlikely(!rcu_access_pointer(rcv_rq->napi)))
- 		goto out;
+diff --git a/kernel/profile.c b/kernel/profile.c
+index 1fcf1adcf4eb0..e7defa90a34c9 100644
+--- a/kernel/profile.c
++++ b/kernel/profile.c
+@@ -156,7 +156,7 @@ read_profile(struct file *file, char __user *buf, size_t count, loff_t *ppos)
+ 	unsigned long p = *ppos;
+ 	ssize_t read;
+ 	char *pnt;
+-	unsigned long sample_step = 1UL << prof_shift;
++	unsigned int sample_step = (unsigned int)(1UL << prof_shift);
  
- 	__veth_xdp_flush(rcv_rq);
+ 	if (p >= (prof_len+1)*sizeof(unsigned int))
+ 		return 0;
 -- 
 2.53.0
 
