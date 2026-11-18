@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053207;
-	b=UNzIDcDwHztc96YHLVoRfNIQCTnIrVRB2Dfl6p724sZqt61KFeuM6FnDhDL6CcdOGQ7g
-	 dmLffRUkpR/SE8cBiADmnWIgX2QwCdjji32UEBWoSSOi27zoF76IKw1RH21ods5GsDUvX
-	 A6B/5A65yUixP+328R9rOargevsPdEY4pMl6//7CiH04PEJC9y5/QxrQ7GGfeDE7PC1SV
-	 0ja2k7xQVgdKoefExlyQIG9S970Us3n5UOYhmRkwnYsnlFPF9dWxh2UhzEJ71zJuWGXHF
-	 1SNxgWA3UtfLiNziY6HAVOA+eLvB1A8sr8awb58VasMZoKPRoAzgfXJpSeV1J9Op6Iw==
+	t=1795053210;
+	b=pdltED50oS4kWgc65SXVPoT5YzuYfLWJAqW1GUQJ6O3y6tFi2ShPQIT0Y1I4T6Ex1bca
+	 jYO4V3V8w4y4YyhvQ9hQYTDhXgzWM9GDYBLReJMljZqMDJUuCMZ2vehw/MKfognho2YCu
+	 hTf/muTasFwcEtDrMP5bvVOyhtEDz/uIeLHpl1rW9OXF0AFq37MK3pNJ1c9b8uy0dCdh7
+	 7rQEjC+rMhzwPJCWbgEaIvkRa2aWdNs6kAOLFnCWWfKsDZkuTldMpijN3btIrc8424zvL
+	 hiXvFfPdh5scraMfxd1qtzDXuges5usTo4geLhhcw/xYVa/EFWgqPBz4e6w0GGta49Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hLuN0cHl51ejlxRaHdDZlhPT38jMsd5IR+l01BnAae4=;
-	b=xxH4A8HGAvuVS3o3Z4BMr5gArWX4AoXOWNxs+xcwlR7J4t/dmttBM5aKPU6wyjMScOQa
-	 sq6eokmnY5leG8um6seIzXM/Ay3b8uc80tU1Ip5fD3Na2Z9DasIW+TBnsbKj2Y6LNbaPb
-	 4bxMId9Mk3NIPYbblOC1nEYrThRUIM4y7Tqy0mm7FPHySVi43zuH8AkH7z8+HnpMB7ynK
-	 RDkwMfhydfAsdu67R4z3dmNm/2PZoz8SV+tJ6bnaZfXG0cpVeJAekMBWgR0oQsG5KIYqm
-	 HjTmhKWGFDNxy7/4rsyh6gEgmhYrUEqjyL+A70ncQzDlZwpebm1nISlmdxnwGbyGdPg==
+	bh=+PY9cvIv720OjbXenIe+OpErv5TjgfhAyL8dMnQ2k7I=;
+	b=quKE1Oo3hWJxmCQrGjYWRRPPItiWLvQba6GvZxNUYUxjmqWYJNuUPYsiD62fnYLTJz54
+	 mDw0WU7h08h5IstYYXx+clpofb8TVeZquaVjjKLcxqzjzEDe4oOLkgg2bZckLDCmZPSV9
+	 83kINUmS4ivDgXaE9C6dbf90XJNjiHZg5jl/qC1uXLMNDoewvx+1Hsgp5hfpaHC4ChvfB
+	 QWpOpmWvzNExrXfHFDtN2hiQujQ1YDNvA6hPO7beiPVKzHOCR9c+JinKcoOeTVqLInQpp
+	 iFKwpFxGAWNYe8C70vGNDek18TWgafqAHYQ6P5gYaa7aq6SK7C5vzrw5gb9A8S+yzfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yupY4AVJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SoSIZgg9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2484E606A31C;
-	Thu, 19 Nov 2026 01:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B4B606A325;
+	Thu, 19 Nov 2026 01:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yupY4AVJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EE11F000C4;
-	Thu, 19 Nov 2026 01:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SoSIZgg9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAF11F000C4;
+	Thu, 19 Nov 2026 01:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053207;
-	bh=hLuN0cHl51ejlxRaHdDZlhPT38jMsd5IR+l01BnAae4=;
+	s=korg; t=1795053209;
+	bh=+PY9cvIv720OjbXenIe+OpErv5TjgfhAyL8dMnQ2k7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yupY4AVJIrO+8aBAYtRBfTGZgs9FZNXO4J3cOIgKu8danlmLrskMUsk8pDT3KT7jx
-	 GU2wRd+vNjQkCZmP7+EeZI4+EFdwQrdixDNVV+Th+XUh3OH9IRSdTj9UWpM5tjSKqi
-	 ZVS7CuagkLj7L86zbyqDRNh2OiG1vl7jX2GP2MAM=
+	b=SoSIZgg9p4f/M5nMKYHlAgn5ubsq/Zj06bc3wchJpWjsXb8KBrMt2SagpZOkrbW52
+	 PZM42tR56werLPxdYUbR/EzBwegL4TI8C9vw1WmImqjmMkAb7n67B9qmv43rhIrz+U
+	 BoEO/GSXas7Wi40hPJvOYKBrEciwLKKSs9ggWOPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhao Zhang <zzhan461@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0790/2214] KVM: x86: Preserve DR6.BLD (Bus Lock Detect) when delivering #DB payload
-Date: Wed, 18 Nov 2026 15:41:06 +0100
-Message-ID: <20261118150043.170851036@linuxfoundation.org>
+Subject: [PATCH 5.15 0835/2214] 9p: fix caches_show() out-of-bounds write
+Date: Wed, 18 Nov 2026 15:41:51 +0100
+Message-ID: <20261118150045.489194206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,112 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Zhao Zhang <zzhan461@ucr.edu>
 
-[ Upstream commit 719a1d58bf43edd03b271df90b67c58c1e9a7da4 ]
+[ Upstream commit 2acd800de8827b7cdce8cb5c2c63b8e8608ec8e3 ]
 
-Preserve Bus Lock Detect if it isn't present in the payload.  Unlike RTM,
-which is explicitly modified on every #DB,  DR6.BLD is modified if and only
-if the #DB is due to a (coincident) Bus Lock Detect.
+The sysfs show handler for /sys/fs/9p/caches appends cache tags with
+snprintf(buf + count, limit, ...) and then advances count and limit by
+the return value. This is incorrect for truncation because snprintf()
+returns the full would-have-been length, not the number of bytes stored.
 
-Per Intel's SDM:
+Once the accumulated output exceeds PAGE_SIZE, count can advance past
+the sysfs buffer and limit can become negative. A later iteration then
+passes an out-of-bounds destination pointer and an oversized size_t
+into snprintf(), leading to an out-of-bounds write.
 
-  Other debug exceptions do not modify this bit.
+Use sysfs_emit_at() for the append instead. It follows the sysfs buffer
+contract and returns the number of bytes actually stored, so the offset
+remains bounded even when the output is truncated.
 
-And AMD's APM
-
-  All other #DB exceptions leave DR6[BLD] unmodified,
-
-Restore the explicit RTM handling that was clobbered by commit
-9a3ecd5e2aa1 ("KVM: X86: Rename DR6_INIT to DR6_ACTIVE_LOW"), as the
-semantics of any given bit are feature specific, i.e. are obviously not
-consistent for active-high versus active-low.  In other words, while the
-bug was technically introduced when support for Bus Lock Detect was added,
-it's really that attempt to genericize handling of active-low bits that set
-KVM up to fail.
-
-Fixes: e8ea85fb280e ("KVM: X86: Add support for the emulation of DR6_BUS_LOCK bit")
+Fixes: 86db0c32f16c ("9p: fix /sys/fs/9p/caches overwriting itself")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930193634.3415089-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: Replaced ex->payload references with the local payload variable. ]
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Co-authored-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Message-ID: <abfb65f4800634dafb08238bba20cb48797e796f.1781908090.git.zzhan461@ucr.edu>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 52 ++++++++++++++++++++++++++--------------------
- 1 file changed, 30 insertions(+), 22 deletions(-)
+ fs/9p/v9fs.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 99f58a57280a4..ccbd27f496488 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -569,30 +569,37 @@ void kvm_deliver_exception_payload(struct kvm_vcpu *vcpu)
- 	switch (nr) {
- 	case DB_VECTOR:
- 		/*
--		 * "Certain debug exceptions may clear bit 0-3.  The
--		 * remaining contents of the DR6 register are never
--		 * cleared by the processor".
--		 */
--		vcpu->arch.dr6 &= ~DR_TRAP_BITS;
--		/*
--		 * In order to reflect the #DB exception payload in guest
--		 * dr6, three components need to be considered: active low
--		 * bit, FIXED_1 bits and active high bits (e.g. DR6_BD,
--		 * DR6_BS and DR6_BT)
--		 * DR6_ACTIVE_LOW contains the FIXED_1 and active low bits.
--		 * In the target guest dr6:
--		 * FIXED_1 bits should always be set.
--		 * Active low bits should be cleared if 1-setting in payload.
--		 * Active high bits should be set if 1-setting in payload.
-+		 * DR6 is a mess.  Reserved/unused bits are fixed-to-1, and so
-+		 * to maintain backwards compatibility with existing software,
-+		 * features that use previously-reserved bits have active-low
-+		 * semantics, i.e. clear the bit when the feature is present in
-+		 * the payload.
-+		 *
-+		 * Further complicating matters, some DR6 bits are preserved by
-+		 * hardware, while others are explicitly modified on every #DB.
-+		 * The trap bits are always set based on the payload, as is the
-+		 * RTM flag (but it's active low).  All other bits are modified
-+		 * if and only if a relevant debug exception occurs, e.g. BD,
-+		 * BS, and BT are never cleared by hardware, and BLD is never
-+		 * set by hardware (when supported, excepting RESET).
- 		 *
--		 * Note, the payload is compatible with the pending debug
--		 * exceptions/exit qualification under VMX, that active_low bits
--		 * are active high in payload.
--		 * So they need to be flipped for DR6.
-+		 * Lastly, the payload does NOT have active-low semantics, e.g.
-+		 * so that it's compatible VMX's pending debug exceptions and
-+		 * qualification fields, and to avoid bleeding the DR6 madness
-+		 * into other KVM code.
-+		 *
-+		 * To compute DR6:
-+		 *
-+		 *  1. "Reset" the bits that are modified on all #DBs
-+		 *  2. Clear active-low bits that are present in the payload.
-+		 *  3. Set active-high bits that are present in the payload.
-+		 *  4. Clear fixed-0 bits.
-+		 *  5. Set fixed-1 bits.
- 		 */
--		vcpu->arch.dr6 |= DR6_ACTIVE_LOW;
--		vcpu->arch.dr6 |= payload;
--		vcpu->arch.dr6 ^= payload & DR6_ACTIVE_LOW;
-+		vcpu->arch.dr6 &= ~DR_TRAP_BITS;
-+		vcpu->arch.dr6 |= DR6_RTM;
-+		vcpu->arch.dr6 &= ~(payload & DR6_ACTIVE_LOW);
-+		vcpu->arch.dr6 |= (payload & ~DR6_ACTIVE_LOW);
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 3a44a77e276b8..d95a4023de65e 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -19,6 +19,7 @@
+ #include <linux/idr.h>
+ #include <linux/slab.h>
+ #include <linux/seq_file.h>
++#include <linux/sysfs.h>
+ #include <net/9p/9p.h>
+ #include <net/9p/client.h>
+ #include <net/9p/transport.h>
+@@ -552,21 +553,14 @@ static ssize_t caches_show(struct kobject *kobj,
+ 			   struct kobj_attribute *attr,
+ 			   char *buf)
+ {
+-	ssize_t n = 0, count = 0, limit = PAGE_SIZE;
++	ssize_t count = 0;
+ 	struct v9fs_session_info *v9ses;
  
- 		/*
- 		 * The #DB payload is defined as compatible with the 'pending
-@@ -601,6 +608,7 @@ void kvm_deliver_exception_payload(struct kvm_vcpu *vcpu)
- 		 * breakpoint), it is reserved and must be zero in DR6.
- 		 */
- 		vcpu->arch.dr6 &= ~BIT(12);
-+		vcpu->arch.dr6 |= DR6_FIXED_1;
- 		break;
- 	case PF_VECTOR:
- 		vcpu->arch.cr2 = payload;
+ 	spin_lock(&v9fs_sessionlist_lock);
+ 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
+-		if (v9ses->cachetag) {
+-			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
+-			if (n < 0) {
+-				count = n;
+-				break;
+-			}
+-
+-			count += n;
+-			limit -= n;
+-		}
++		if (v9ses->cachetag)
++			count += sysfs_emit_at(buf, count, "%s\n",
++					       v9ses->cachetag);
+ 	}
+ 
+ 	spin_unlock(&v9fs_sessionlist_lock);
 -- 
 2.53.0
 
