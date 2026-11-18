@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060261;
-	b=p064yA08tAuYsiV9IR2uLxLb+rJ2jkrQ/IO9Wsr/EqLZTmWMPdTvIPtPedx2cdyDNbXT
-	 XDB5R3keWm9Lved34ir840QKzwbcYjSn/lHmzojluE6OsAIa0N/p83sFxGfoZvNKxA5U7
-	 zG2abSgjB3NFc2NqsdKTxpllKGRMG6cVeuwMCXT9g0GjFIjrLXfPxYvJA0+mIPDEYPa65
-	 8oU8lv2DdouKRP0dQr9FXjsScOTwe6+UAEQVQb7eHrRo1Oao4D9p24/6sWAM0OKB/36Py
-	 ZbzYz7L7282EbnIA+7uG2kcmwBdBnQE83KCp/LXgu0KBbfyXkFVZ1pA+RexeNAOtW8A==
+	t=1795060263;
+	b=hjEeQmgCyyOQ+nQYCOsKRIwbb5XKdTJhfC4+lFYIjA7Uup0S6uR5zj0aYs4GM0qJpZ7C
+	 k2uOK+BTfGdsScBA2J39tvPuuKW/jVyGzgefvxFy3Uu5Knes0Nu+ZRo+HdlaWRpd8uD5s
+	 C/neQ8qR2OUH5ZZ95aQ2ZRrJa4UjaeM0zbqcHKUZ9nzKKDkJTsg3DyIPl/3KIy4J/TfyU
+	 yY6ipzlIwB70DfE7F/Spp6vKtY/36U3GC770Hm1gMSW2A5pJzV8RRVGS/kN3nT24NSCGr
+	 W64UPmCBKqpkdhWFJS9PqZ7iE3OrZnvEYMwq6NMXOcYDXi9z5Dyxr9OmAso+erwvKXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nZVrJrq/3bvtYzDxm+2U2ZFPZJbAIIa5km0XAfDouYM=;
-	b=ufnp/+3G0BMzPUx8CzM8Qv76a0rJtp6RDUFmMO7ic8up6xkzFH5wyEuvGW106bjfElBT
-	 Muz5uWdZbCNy/uqe8PZoTKALmZ5AkIqpw00gAz6o33nsWPPBnMe1C2Y+HpdhtQ85VD5c+
-	 YogZBzeVA9xuttEjKiOsxI1Ov//u35VyyJK2MEhbNqoJWdq2PLrAZ4hn+sBlb3/CAG0/t
-	 kZ/kjDT2cj0J4Hp/0pd2RqSLtaAmAxqpFJV/2knQmv7JUrI1KnAniLsqmhH5Cff4bbzN6
-	 gP+sRiA/M2NiGJZj3YvmaZxZpQ7ZazORjihDeua2egcWzqTcVCq+zktgwI3L7q88bYw==
+	bh=UnXxldjqyCXiobwiM5dQc5cZINBtXVm+OsogUR9pOio=;
+	b=mvjIm01lgen7PFZH/R4qikc0e1krQL2rALqNQjl63IxzULrmC0F/NoxeTS0TS3+ZAcVq
+	 UosagwvnrktMUpAa8ChNkkhT0CWZLNFcAet2sxXdj/YmDAQeECEO4NVfao5EyvgynuoDH
+	 lnfajsLMRbVdYdE+rnMVsZtXXE9vpySosIxxf3JA9QoA52V4TY6GhOgj2apJTG82rEoW/
+	 sS6Ng3LIWwJjmaCfwxMZK+FdjCIb2GCmZDQqa7ifps3RTYzMgTOZPeumQamydUbJ6pmBS
+	 E2tap0IXmcE++kAqG61dhIlgOLyxdxFaUZmjpOhvftNHIuzUJwNFLfUTJLx/mK0YD0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/8rThlO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzllnzsq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5C9606A320;
-	Thu, 19 Nov 2026 03:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5EB606A326;
+	Thu, 19 Nov 2026 03:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/8rThlO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AE01F000C4;
-	Thu, 19 Nov 2026 03:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzllnzsq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CC61F000C4;
+	Thu, 19 Nov 2026 03:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060261;
-	bh=nZVrJrq/3bvtYzDxm+2U2ZFPZJbAIIa5km0XAfDouYM=;
+	s=korg; t=1795060263;
+	bh=UnXxldjqyCXiobwiM5dQc5cZINBtXVm+OsogUR9pOio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/8rThlOmckrmawLYk7ZmUNS2fZ2VcGtSmfAlKyt1vnVQMA9Q9GcqbvrDlt/ieFSC
-	 qZxNPRaN5w+Ul9gGzxFpFkab+t7zOCq+jFManhuVk55addENyEMxpVfaHBYaAv2moZ
-	 /j4BDPhGSj6TK72DEty3NzLj/477sJuy/nl0YDJM=
+	b=kzllnzsq13s7xBp/IHqUdG+931+6L5gnxi+yxUxIRmlFkQA3gdhkpnCYQw1kjVV0X
+	 rUeAsba9OtqtdHezGEQlk/t1AKIGJ5yXUDhrBauYshiqabZlSaqYDvzM8kwMpGtuy5
+	 k36PH7hbduupWkTZSVw6BLCVjz5pV6wVdz+Y0DG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	syzbot+a4cedab706d0a8a3f988@syzkaller.appspotmail.com,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1135/1848] perf jitdump: Validate code_size against total_size in code load
-Date: Wed, 18 Nov 2026 15:52:53 +0100
-Message-ID: <20261118150007.070400715@linuxfoundation.org>
+Subject: [PATCH 5.10 1109/1848] comedi: dt2811: fix shift-out-of-bounds in IRQ check
+Date: Wed, 18 Nov 2026 15:52:27 +0100
+Message-ID: <20261118150005.778901670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,63 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 06c7cf7a072fcd52e68471628c56630d2bdcc650 ]
+[ Upstream commit 471ce96a9c415b8a67bd5081ac2089a458cacc2f ]
 
-jit_repipe_code_load() reads code_size from the jitdump record and uses
-it to compute a pointer to the code blob:
+The IRQ number passed via comedi_devconfig->options[1] is a signed int
+that comes from userspace.  The check `it->options[1] <= 7` does not
+reject negative values, so a negative IRQ number reaches
+`BIT(it->options[1])`, which is undefined behavior and triggers a UBSAN
+shift-out-of-bounds warning:
 
-  code = (unsigned long)jr + jr->load.p.total_size - csize;
+  UBSAN: shift-out-of-bounds in drivers/comedi/drivers/dt2811.c:570:31
+  shift exponent -251 is negative
 
-An oversized code_size underflows the pointer arithmetic, causing OOB
-reads into earlier heap memory.  Validate that code_size fits within the
-record (total_size - sizeof(jr->load)) before the pointer computation.
+Add an explicit lower bound check (`it->options[1] >= 0`) so that only
+valid IRQ numbers 0..7 are accepted before the shift.
 
-code_size is uint64_t but csize is int; values above INT_MAX wrap
-negative when narrowed into csize, which defeats the bounds check and
-sends the code pointer past the end of the record.  Reject those too.
-
-Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: f2975a9b2ab9 ("staging: comedi: dt2811: add async command support for AI subdevice")
+Reported-by: syzbot+a4cedab706d0a8a3f988@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6ab21240.e548f532.1ca396.0018.GAE@google.com/#R
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Tested-by: syzbot+a4cedab706d0a8a3f988@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/02c46315293a26169d2a3862a2047959a1651ef4.1790061387.git.xiaopei01@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/staging/comedi/drivers/dt2811.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 0ca3024622a6a..f11499e3a1989 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -9,6 +9,7 @@
- #include <fcntl.h>
- #include <unistd.h>
- #include <inttypes.h>
-+#include <limits.h>
- #include <byteswap.h>
- #include <sys/stat.h>
- #include <sys/mman.h>
-@@ -427,6 +428,16 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	csize = jr->load.code_size;
- 	usize = jd->unwinding_mapped_size;
- 	addr  = jr->load.code_addr;
-+
-+	/* code blob lives at the end of the record, validate it fits */
-+	if (jr->load.p.total_size < sizeof(jr->load) ||
-+	    jr->load.code_size > jr->load.p.total_size - sizeof(jr->load) ||
-+	    jr->load.code_size > INT_MAX) {
-+		pr_warning("jitdump: invalid code_size %" PRIu64 " (total_size=%u) in code_load record\n",
-+			   (uint64_t)jr->load.code_size, jr->load.p.total_size);
-+		return -1;
-+	}
-+
- 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
- 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
- 	count = jr->load.code_index;
+diff --git a/drivers/staging/comedi/drivers/dt2811.c b/drivers/staging/comedi/drivers/dt2811.c
+index d94d3c64e264b..4b9ce083e189f 100644
+--- a/drivers/staging/comedi/drivers/dt2811.c
++++ b/drivers/staging/comedi/drivers/dt2811.c
+@@ -567,7 +567,7 @@ static int dt2811_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+ 	dt2811_reset(dev);
+ 
+ 	/* IRQ's 2,3,5,7 are valid for async command support */
+-	if (it->options[1] <= 7  && (BIT(it->options[1]) & 0xac)) {
++	if (it->options[1] >= 0 && it->options[1] <= 7 && (BIT(it->options[1]) & 0xac)) {
+ 		ret = request_irq(it->options[1], dt2811_interrupt, 0,
+ 				  dev->board_name, dev);
+ 		if (ret == 0)
 -- 
 2.53.0
 
