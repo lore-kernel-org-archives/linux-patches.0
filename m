@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026588;
-	b=a71uivqIP9MifSjQ97j7X/BzNVDzCos/uByIYpvv0XgxRdfX9LP3e5rHmPFRQVKKZTc+
-	 ypj9O9w4VvL+6vhcZ5/xin6ZvAuPFCCOnrY0g9jRu6J1o4ewjpHanwW1AV/G6m8fo6qaS
-	 ZY6xTx24G9Aig2hsSOmrvFBuPuzoxh56Kf7ruM3LwP6d80joBCzjRDpjMwMcAdS002fwS
-	 Z578RfL23OX9pZuPoAn7YEq78gbXDi0SPcd8UsrUTDP5mfWCJ3VX5/fGbtURA3HnjMb/2
-	 zk3lRsR2PmfB/71y956dGfcSsU6eLf36OThZv/ECu8S91QGvh+ZERs/cBnatIXKoZSw==
+	t=1795026591;
+	b=onhEudANRYmrwvB+BDGSA/f60SRWxQ0N9h+ha9ada5QF9oJnZ8vryB8wXsd5Bmxb3xF6
+	 hUesTs/WH4pa/Juj3f5F2wL9VJS8INmfPLr2b+JkHpZLW/g/EFKovGK6fqgYY0xI1T8hL
+	 KpkAr4zoIxgjMeKn0g99G8CC8EP3SS+bUUdm6pTZeQ1i8wA576K5DGxSAFPGTS15N8jWj
+	 LK7j02OImMyCOn25+m5HPVKZkz1TYMJkD2USgXYRzFkEH/+4dySMATISQeMyhMeeu1q+I
+	 grA6rv0TI9WhqyQr9U5Hx4X4p/E/Lk5stqgw4Lf9w1gDpZdIOt4oSHA3oGPwScU/pJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KVgj81zL8ZvV9ITY5dXEMSJf0KvhF9QzKze8lfNXNWo=;
-	b=rd/psWFCar/VvjQu5m0f2pdigMiyhVKykm2+yB50UKCplgX24hQKa+VF8CWFscx0fdDF
-	 DPGkAgJ6fNCp+OAt+QdzUJ8he4BUXGtNfXeUlkBiFpvAmgs3Z1UBdoB92tiUovA82b8/D
-	 aLIZC0IgoVvpaH5thHgEVl3oSArUYUbM/eU81mhDWONq0HjUvmGgYG6xXM+N1MqPhPqAO
-	 iqlLqm9RUc83qPj0QJaPykYjRY6brhGpg48fmWeFDwK2mILWWgpvpAcvIi5JzvTL7zQ2I
-	 RKKJMcfErDYNq+HCsllNk8Qh2Dg4IY6NZ9FslQO/3TKsaUPbaUgc7GtK8oHLR6CF9/g==
+	bh=lsPhl0FJ2+DflL9ywff2p4T8NIJ5BBD52c7djOxi+So=;
+	b=GCvExMgl4CtZXlDXrGTXxlIFnnGWrOMVRdWGQE6NDzW8Z6BJSKH9gBAlwipr9tn67A3K
+	 agxWeNBLhNxf01Wmn/yxkz+C3ny+mk39zRRBQliBBDjey0ei4wJD0i+Debcv4KIlzQkyp
+	 sAung7ZEOD/YO38s+XmnBc/f8x3CkPKVKbADmvNzKAGClAkw2oHSocCx5UepakOr7bTxB
+	 WayU43oyKyzcBhHh3FtIXO31h0PmWyHfguurf+68DWQ5TrhkdZ/tVVG+2u4qFmY85Yh3f
+	 mm8cJYskaj4QI/CBhnGKEir0pUkhXJgUqV4xpqaPUZYY7/84fA/K/PnxSGw21Sy9Kpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7neW9gB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtX4l18j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2965606A31C;
-	Wed, 18 Nov 2026 18:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFA2606A320;
+	Wed, 18 Nov 2026 18:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7neW9gB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E025C1F000C4;
-	Wed, 18 Nov 2026 18:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtX4l18j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB891F000C4;
+	Wed, 18 Nov 2026 18:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026588;
-	bh=KVgj81zL8ZvV9ITY5dXEMSJf0KvhF9QzKze8lfNXNWo=;
+	s=korg; t=1795026591;
+	bh=lsPhl0FJ2+DflL9ywff2p4T8NIJ5BBD52c7djOxi+So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X7neW9gBHLHzJRWjzcYOtlGdqTkaUK8bbF729EjePH4jMAjg9fWwArMND27IxsqUJ
-	 BQDvyRkzl3nuS0gIEpIF0Lyd3OA+vS9VTtWUvs4X+D1VRMhwmeSiLLStr+NTvlkk1d
-	 LylK8PdC/G3SjlM9yvpLNv6ja0uy3K1Z9BEm9hyk=
+	b=BtX4l18j8zHc8LOjCyGOVBhR7LHD/Zmuna8k63wnKgji1dtFD8Osw43v/7bfnou5v
+	 s5dSkDXo0ZVeKC+Onmswm1Qg2CDwGx1oQIZBOzEOKLj4OVPJwcVQ19jD9qbQPqrVVx
+	 tHRDMwplzJDcLTeWTIFGEGCfLyAFH8kA7nwsWgEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Hao Li <hao.li@linux.dev>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Kees Cook <kees@kernel.org>,
+	Binbin Deng <18983559317@163.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1489/2151] mm/slab: Mark the kmem_buckets_create() context as a Context: section
-Date: Wed, 18 Nov 2026 15:53:44 +0100
-Message-ID: <20261118150216.119099291@linuxfoundation.org>
+Subject: [PATCH 6.18 1490/2151] module: Fix uninitialized count read of unloaded taint tracking record
+Date: Wed, 18 Nov 2026 15:53:45 +0100
+Message-ID: <20261118150216.158411984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,52 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit 655668f0caf32a42fef10aaf31137e52f46a0260 ]
+[ Upstream commit 7a5c13cfdfcb1871050fdbe00ac223993f8925fa ]
 
-kmem_buckets_create() had the same sentence about calling context as
-kmem_cache_create(), but lacked the "Context:" prefix, so kernel-doc
-rendered in the body instead of as a "context" section.
+try_add_tainted_module() allocates the tracking record without zeroing
+it and initializes the fields in this order:
 
-Give it the missing prefix. Additionally fix the "a interrupt" typo
-__kmem_cache_create_args() had.
+	mod_taint = kmalloc_obj(*mod_taint);
+	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
+	mod_taint->taints = mod->taints;
+	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
+	mod_taint->count = 1;
 
-Fixes: b32801d1255be ("mm/slab: Introduce kmem_buckets_create() and family")
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Hao Li <hao.li@linux.dev>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20261014052344.384723-1-kees@kernel.org
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+The record is published by list_add_rcu() before the count field is
+written.  The readers, unloaded_tainted_modules_seq_show() (debugfs,
+under rcu_read_lock()) and print_unloaded_tainted_modules() (panic
+path, under guard(rcu)), traverse the list under RCU and read
+mod_taint->count.  module_mutex, which the writer holds, does not
+exclude RCU readers.
+
+A reader that observes the new node between the list_add_rcu() and
+the count store reads an uninitialized u64 left over from previous
+slab use.  This is a data race and leaks kernel heap residue through
+the debugfs file and the panic message.
+
+The race window is two adjacent instructions; it is reachable when a
+tainted module is unloaded (rmmod) concurrently with a read of
+/sys/kernel/debug/module/unloaded_tainted, or with the module list
+printout of an oops on another CPU.
+
+Fix this by initializing count before the record is published.
+
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
+
+Fixes: 99bd9956551b ("module: Introduce module unload taint tracking")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slab_common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/module/tracking.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 0058d1f25905c..9a95bed7ca39b 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -308,7 +308,7 @@ __kmem_cache_alias(const char *name, unsigned int size, slab_flags_t flags,
-  * &SLAB_TYPESAFE_BY_RCU - Slab page (not individual objects) freeing delayed
-  * by a grace period - see the full description before using.
-  *
-- * Context: Cannot be called within a interrupt, but can be interrupted.
-+ * Context: Cannot be called within an interrupt, but can be interrupted.
-  *
-  * Return: a pointer to the cache on success, NULL on failure.
-  */
-@@ -405,7 +405,7 @@ static struct kmem_cache *kmem_buckets_cache __ro_after_init;
-  *		to/from userspace.
-  * @ctor: A constructor for the objects, run when new allocations are made.
-  *
-- * Cannot be called within an interrupt, but can be interrupted.
-+ * Context: Cannot be called within an interrupt, but can be interrupted.
-  *
-  * Return: a pointer to the cache on success, NULL on failure. When
-  * CONFIG_SLAB_BUCKETS is not enabled, ZERO_SIZE_PTR is returned, and
+diff --git a/kernel/module/tracking.c b/kernel/module/tracking.c
+index 4fefec5b683c6..7f468eea3cb9d 100644
+--- a/kernel/module/tracking.c
++++ b/kernel/module/tracking.c
+@@ -38,8 +38,8 @@ int try_add_tainted_module(struct module *mod)
+ 		return -ENOMEM;
+ 	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
+ 	mod_taint->taints = mod->taints;
+-	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
+ 	mod_taint->count = 1;
++	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
+ out:
+ 	return 0;
+ }
 -- 
 2.53.0
 
