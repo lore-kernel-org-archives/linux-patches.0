@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037646;
-	b=SwPUiIc/xLFfLryTwcB+s0i0VyZbUDHlQ9xmLNiZ624OLXT6EYqW8LpzO8ZKMHObiouE
-	 CGtvSD2RNL3c+RTtMwEyzRnr+kFcJWp//T7vLv+7njQFktIM/OMlBRwa82gWkrj8oQ/RB
-	 o2d+igxNdEFj1nTJrDnjPyC2+ROKbtNwg+H2yALSdTvVhgNyQamISgTinE3xcV3UE/P3l
-	 sqJc+g5v9wEoGyHem+76rvWKBciPUcf8YlKzjqkmC8v2QUAJqLBQr+cbwGb+2VQhxJ1nc
-	 2RDR+RdYodPE+nh+kEWqXRfnVBlGZUteV56s6pKsRTbadvqnzclbXlBEEZjZApmYC9w==
+	t=1795037649;
+	b=z6s4uJdrVo2PsOQuBrJYmB15GFAKtQbTJimKij6XPyAWK50wrSWF46huEOivTEDaCBon
+	 afaGFOzM4mHAsRvp+5Kpib1ShAYxyt+Jn/26YspDJyj5274ToBlxdvlwA4B1v+Z0+SUo+
+	 1ueDkCvEyDrCeguafGFMmXQd18xEAnfpJAhG3VZ2JY5wisap1Vhn5NzlyjgvpHsdJR51s
+	 ZJf/jtw3IHh2XH6ZtIwq8zkmMA+wuib/EKycl6wvpNvDG8ATNLIPBV9eZMW7wn52e/xmI
+	 qZFTT6qNrs9nHBDm8LkhZe4x+22OkMpDp4JPquuii+PWHjrGds8cAtK0/n5MgzVSLEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/+xDXKmUkxCABBNBtBkJoDIjzvcla6pX1TwSmu5+V0Y=;
-	b=SjdsmPgUqsoEPOH+jvTV4Mkz9iaWco6RHj1lcvDOrIaV8SdhV/RngaERNF7+ppYNOnqH
-	 Vkq5ZFoUj6aX9D0l+Ho9KWXrYT5gedQG+pzxJpvDEn4llYgBWw8oe3/233L22C6UzdTuN
-	 KRYOsqP7kD9HskevDWOviSTdnhuBO+qcl/dmlu1dwxo6Mrx5AphUdBMP9moj9VG1drna3
-	 nV5l9I8z7jq6bE3ZO4Rx/h9m8meN9hUtncAJ1JHS6NwWPx1Z7uMHhj51Pmqyy14vBl6Fr
-	 RHJTPHTYEqQGz9DxBAwGtAIFfTeI0e/2SrG63i/AYq6o1r1o9ZZMtMHfllCvOkcpgyQ==
+	bh=5qnmsThdEF8ZPPato2tvc4OTlcsZJAyKKVp60n4S7Zs=;
+	b=g20rWN+5jovc+c6H9L/q3JYj0hzyoHGqWzLSaswCrkmKlTZ43UjxZD0s0X3g8t4M+mx8
+	 WPBgOz79fYL5fyxGnlfK28hwPoSqL4sHXSukIB4jxVkv6FobX7Ql6Zk5IjweJI/pOhyKh
+	 dR1u2aFn4fRGb5v5VaaIZ9X3Qc/PLuwKty4E0AJQBGQ/zCx6IGCfP/5hVSv4LXR2KpIQ1
+	 iaZ6VdBT6iUgDc0AQwfVIm2/LjM+NaBTrfUcDVO0xJs3SO2+i/kj2u7P52EcpYwlFrtQ5
+	 2fKUjBULGjgBwYmNdFg7e+TWd/NO4bGRp5ZQJX8LOi08k7bt2/CHYqXWMLbW8DJ8iWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G831gnbM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P77pMlV6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5394E606A31C;
-	Wed, 18 Nov 2026 21:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF80606A338;
+	Wed, 18 Nov 2026 21:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G831gnbM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49511F000C4;
-	Wed, 18 Nov 2026 21:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P77pMlV6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884AA1F000C4;
+	Wed, 18 Nov 2026 21:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037646;
-	bh=/+xDXKmUkxCABBNBtBkJoDIjzvcla6pX1TwSmu5+V0Y=;
+	s=korg; t=1795037649;
+	bh=5qnmsThdEF8ZPPato2tvc4OTlcsZJAyKKVp60n4S7Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G831gnbMZl765cKylyheNDnnlTcirXqPBFphKElqqyvkXPhXmX1p2vn9ONDWoCWXJ
-	 C0pjlwJElOCrmoy2UbEOUELARNhSSzcxgo5BkE0u5UjeHcCe2zX/gFCiHJ7VTHh/oZ
-	 FBPNXg9N9l3RLb6KS6/eKFyP/l+Tr/SA/TnWGQKI=
+	b=P77pMlV67RV7Eousl5Gqmfnt56S0Ay7S/l5WRv4HEqhwLtqFgtwB+GDGa1GHSMu9w
+	 CsRP16OC3eXkl93mSkAMmU3bBnMQUPO5ISEKtxrCiJew91is3L+IWDoWOSH1bD1pDx
+	 qCZKH6bIDZSZQJs0gen/SxPoAU7rWqKg/K2V4X+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Evanshenf <archwse@gmail.com>,
 	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Qianhai Wu <wuqianhai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1428/3318] drm/loongson: Fix double free on BO initialization failure
-Date: Wed, 18 Nov 2026 15:34:10 +0100
-Message-ID: <20261118150403.574393102@linuxfoundation.org>
+Subject: [PATCH 6.6 1429/3318] drm/loongson: Handle buffer mapping failures when clearing a BO
+Date: Wed, 18 Nov 2026 15:34:11 +0100
+Message-ID: <20261118150403.609874319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,24 +70,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Evanshenf <archwse@gmail.com>
 
-[ Upstream commit f086dbdeb6e56510e158a853d752c6d8ed9e0674 ]
+[ Upstream commit f00d7a241f846b053e89c0bb2285ef5988d4cafc ]
 
-If ttm_bo_init_validate() fails, it drops the buffer object's reference
-and cleans it up through the supplied destroy callback. lsdc_bo_destroy()
-releases the GEM object and frees the enclosing lsdc_bo, so freeing it
-again in lsdc_bo_create() causes a double free on a synchronous failure
-path.
+lsdc_bo_clear() ignores the return value from lsdc_bo_kmap() and writes
+to lbo->kptr unconditionally. When the first mapping of a newly allocated
+buffer fails, kptr is still NULL and the subsequent memset accesses it.
 
-Let TTM own the cleanup after initialization has started and return the
-error directly. Keep the explicit free on drm_gem_object_init() failure,
-which occurs before ownership is passed to TTM.
+Return the mapping error without touching the buffer and propagate it
+from lsdc_gem_object_create(). Install the GEM object functions before
+clearing so that drm_gem_object_put() can release the buffer correctly
+on failure. Do not add the failed object to the tracking list or return
+an uncleared buffer to the caller.
 
-Tested on LS7A2000 by making drm_vma_offset_add() return -ENOSPC for one
-selected dumb-buffer creation. The error reached userspace, the destroy
-callback ran once, and no handle was published or tracked BO retained.
-Normal buffer creation, zeroing, mapping, readback and release passed.
+Imported buffers still skip clearing, and successfully mapped buffers
+are cleared and unmapped as before.
 
-AI assistance was used for the ownership analysis, fix, fault-injection
+Tested on LS7A2000 with a one-shot range error in ttm_bo_kmap(). Its
+-EINVAL return reached userspace, the object was destroyed once, and
+no GEM handle was published. Normal create/map/zero/write/read/close
+cycles passed, with the tracked BO count and VRAM usage unchanged.
+
+AI assistance was used for the lifetime analysis, fix, fault-injection
 tools, build and test execution.
 
 Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
@@ -97,31 +98,84 @@ Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Signed-off-by: Evanshenf <archwse@gmail.com>
 Reviewed-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Qianhai Wu <wuqianhai@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Link: https://patch.msgid.link/20261003093415.e64386de1e64-1-archwse@gmail.com
+Link: https://patch.msgid.link/20261003093415.902f89244043-2-archwse@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/loongson/lsdc_ttm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/loongson/lsdc_gem.c | 12 ++++++++----
+ drivers/gpu/drm/loongson/lsdc_ttm.c | 10 ++++++++--
+ drivers/gpu/drm/loongson/lsdc_ttm.h |  2 +-
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/gpu/drm/loongson/lsdc_gem.c b/drivers/gpu/drm/loongson/lsdc_gem.c
+index 04293df2f0de0..8335dbea6c828 100644
+--- a/drivers/gpu/drm/loongson/lsdc_gem.c
++++ b/drivers/gpu/drm/loongson/lsdc_gem.c
+@@ -164,14 +164,18 @@ struct drm_gem_object *lsdc_gem_object_create(struct drm_device *ddev,
+ 		return ERR_PTR(ret);
+ 	}
+ 
++	gobj = &lbo->tbo.base;
++	gobj->funcs = &lsdc_gem_object_funcs;
++
+ 	if (!sg) {
+ 		/* VRAM is filled with random data */
+-		lsdc_bo_clear(lbo);
++		ret = lsdc_bo_clear(lbo);
++		if (ret) {
++			drm_gem_object_put(gobj);
++			return ERR_PTR(ret);
++		}
+ 	}
+ 
+-	gobj = &lbo->tbo.base;
+-	gobj->funcs = &lsdc_gem_object_funcs;
+-
+ 	/* tracking the BOs we created */
+ 	mutex_lock(&ldev->gem.mutex);
+ 	list_add_tail(&lbo->list, &ldev->gem.objects);
 diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.c b/drivers/gpu/drm/loongson/lsdc_ttm.c
-index bf79dc55afa49..f0562ff87bb22 100644
+index f0562ff87bb22..ce377ea3d8842 100644
 --- a/drivers/gpu/drm/loongson/lsdc_ttm.c
 +++ b/drivers/gpu/drm/loongson/lsdc_ttm.c
-@@ -480,10 +480,8 @@ struct lsdc_bo *lsdc_bo_create(struct drm_device *ddev,
- 
- 	ret = ttm_bo_init_validate(bdev, tbo, bo_type, &lbo->placement, 0,
- 				   false, sg, resv, lsdc_bo_destroy);
--	if (ret) {
--		kfree(lbo);
-+	if (ret)
- 		return ERR_PTR(ret);
--	}
- 
- 	return lbo;
+@@ -393,9 +393,13 @@ void lsdc_bo_kunmap(struct lsdc_bo *lbo)
+ 	ttm_bo_kunmap(&lbo->kmap);
  }
+ 
+-void lsdc_bo_clear(struct lsdc_bo *lbo)
++int lsdc_bo_clear(struct lsdc_bo *lbo)
+ {
+-	lsdc_bo_kmap(lbo);
++	int ret;
++
++	ret = lsdc_bo_kmap(lbo);
++	if (ret)
++		return ret;
+ 
+ 	if (lbo->is_iomem)
+ 		memset_io((void __iomem *)lbo->kptr, 0, lbo->size);
+@@ -403,6 +407,8 @@ void lsdc_bo_clear(struct lsdc_bo *lbo)
+ 		memset(lbo->kptr, 0, lbo->size);
+ 
+ 	lsdc_bo_kunmap(lbo);
++
++	return 0;
+ }
+ 
+ int lsdc_bo_evict_vram(struct drm_device *ddev)
+diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.h b/drivers/gpu/drm/loongson/lsdc_ttm.h
+index 843e1475064e2..df47d9bb0d035 100644
+--- a/drivers/gpu/drm/loongson/lsdc_ttm.h
++++ b/drivers/gpu/drm/loongson/lsdc_ttm.h
+@@ -89,7 +89,7 @@ size_t lsdc_bo_size(struct lsdc_bo *lbo);
+ 
+ int lsdc_bo_kmap(struct lsdc_bo *lbo);
+ void lsdc_bo_kunmap(struct lsdc_bo *lbo);
+-void lsdc_bo_clear(struct lsdc_bo *lbo);
++int lsdc_bo_clear(struct lsdc_bo *lbo);
+ 
+ int lsdc_bo_evict_vram(struct drm_device *ddev);
+ 
 -- 
 2.53.0
 
