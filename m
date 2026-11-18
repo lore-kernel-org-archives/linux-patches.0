@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052489;
-	b=aUNJZhRWMVPzncoEQ3NVNwjWnIknl5vTx+b3Kyb9X7pUcKSChB+I7QnsF8jskCGHxcWE
-	 g/OaInZxl0DY8ZR0ru/lcJcBgIu9Yy1iT5hGz7qNSq9SYvDlqgkgU2AoJzWb5B74Bq9xU
-	 0Fp29dG2m5qSv4mKAI3paHq1TxXYga9EhWLnP6i7ixVXqFuOcSWor0E+KLHohHl6R7h5/
-	 kKiUxuY0+N+bLLySbsR7y+mKfKU/27C8VzWs1l+JKXUOmKkktbBXVdaZa6ulUqfM0k/aX
-	 /HBzXy0lU9EXNprSZ0ggZVwoHOg5ou/Zd2euJCVURauh7D4tTIizwrzKF4Afsjzk2bw==
+	t=1795052491;
+	b=kx6lR0FjtX171luKMs+2wnpLJ8CjnCq/L4hw7VLQSvKjv+a/lf38zO7NPmlMUhkbH+0+
+	 PmF2XU+1R2AvKYqp15Uq/8j1VkuJ+DyP48xFrFGmmjgqWh/aJnsGTkQjMJEk6oYorpQkh
+	 FxVsuQ7WsP9F2lrurP0/uzWfF4MmqRvMHGKqImYlGrD2u8zoO+1DUmn5DsKDmJL9+lFw4
+	 z1hIJmaTt2KgKwU7ri6842Ff8I7FPIF04kKh21aowVJuNxIUdjgiuGtXv/G+Znjr/DqI0
+	 Re2VTydXrMdbU1C5jP6IM3XBsf5G/p4SQVaihzbTUxjGClNPNK4gV51ghjc0l8ujUIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IeqsGpbtnbzSNVJ8wUvrzc8ZjB9NSZHEGyxyiGyUvzs=;
-	b=NS0BLFzEqVci9CzWbW7+rZiz2fLZ9t+3jaY6Z7Vwops5x/yziysOdC5BDOA6GiaI1ndT
-	 fWilLx4PjdVcO9CA3z27MV+UDwHmQjCBkbszS4MzipQSKQecW2iJmmkETBeZ6R7gw9wYo
-	 pJr7DOH4auYptrBtJzAc3UXg9SopH1Xv0apE+ZdWiA6izmMhgYYhJwDQKboAaFLl28n6Y
-	 Aptz56eVvgA5gTDkbDwSyiPOsK/r2xQH2PS9OO+5DKOp7mD/Zush5YGIkKQtT0u+Ec5BE
-	 R7dia6vsBOBzNgSTFSW4trVMFKx9qX9FNBW6oNS5IfftjkBE9gtDKf08SLClHABacPw==
+	bh=ZjthpqyS4349KrnQ1o0iT2KaS2KlOxLeiAkZWtUvKXI=;
+	b=ABohizx2cxzsop4K3neJDMRGdPtJyRzEURPg0gs/UDCrbnoB1O1YEafN7L4kAr6R2xW3
+	 DbOtMRjSlGnlHL0ozokOrtDoRoiTbPv4X2yT2Vba6JuFRqL5tJ4m4aeXuwg3E4K2c2aUw
+	 CP1CgrRP6r2/6amPdKRFGqao6KAHrKIcqHOblgAz6UcQR7BSGPNojJMEgY0b6MqUU6qzM
+	 SF+fEEguNGt+MevjbRPaHfWlaLUD8xMrJDtlwyXRFoZFDNqr2I1kz6jgjGa6MNOFWvdei
+	 mvX3kZt5+2kfsr/oXDEL4w4UMeQTUM4hx6fpn/wt06MsYKmspthkZRC04TZaRu8NcZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l9PhT7KR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHQQlOAQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03890606A320;
-	Thu, 19 Nov 2026 01:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F97606A325;
+	Thu, 19 Nov 2026 01:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l9PhT7KR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5A11F000C4;
-	Thu, 19 Nov 2026 01:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHQQlOAQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27ADE1F000C4;
+	Thu, 19 Nov 2026 01:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052488;
-	bh=IeqsGpbtnbzSNVJ8wUvrzc8ZjB9NSZHEGyxyiGyUvzs=;
+	s=korg; t=1795052491;
+	bh=ZjthpqyS4349KrnQ1o0iT2KaS2KlOxLeiAkZWtUvKXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l9PhT7KRKdb8YpgBtvc89kLRjssvSIpweUdV1hdGXcLC5862KZyeZoSFMyL1Jp1X+
-	 sQoSaF0dX/prj6R/tAPkOYanSdh4YVUTLVaOiWLt/yF3lqBtiGLempplaB28lqbtuA
-	 lyDj/7/7S+V131qTfruYRdeY1rA3QywdBfPI9KCI=
+	b=jHQQlOAQC2iqyCi0n188XL0VlQLAbkDYn/C4GbYYiq71O8NBz4LK95Ee24lhdOY42
+	 0pqCzFKjQpihmrmWr3Bdw+LYXZV3poDlAMdwiUEnR66x72VEbnFBJIyaOrOKx6e0Zm
+	 tSC/B8FjHvBbXzKkgXF7JPxOBL+3Ba8xsKo0B4LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+805630f1453e490427fa@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0575/2214] power: supply: ab8500_fg: Report sub-percent charge changes
-Date: Wed, 18 Nov 2026 15:37:31 +0100
-Message-ID: <20261118150033.953774630@linuxfoundation.org>
+Subject: [PATCH 5.15 0584/2214] USB: gadgetfs: do not WARN about excessively large memory allocations
+Date: Wed, 18 Nov 2026 15:37:40 +0100
+Message-ID: <20261118150034.282174289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,55 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit 4d40dba1815d46c6ef9019ed80e3b998b0fc443d ]
+[ Upstream commit a156148976eac47bee7210097afbb609cafe88b6 ]
 
-The fuel gauge updates bat_cap.mah from the coulomb counter but exposes
-bat_cap.prev_mah through CHARGE_NOW and ENERGY_NOW. It only refreshes
-prev_mah when the rounded integer capacity percentage changes, making the
-momentary properties appear frozen between percentage steps.
+GadgetFS passes an excessively large user input len to kmalloc and kmalloc
+gives a WARN (see below for details).  Suppress it by passing __GFP_NOWARN
+to kmalloc used by both ep_write_iter() and ep_read_iter().  Follow the
+same method as commit 4f2629ea67e72 ("USB: usbfs: Don't WARN about
+excessively large memory allocations").
 
-Refresh prev_mah and notify userspace whenever the new charge remains
-within the currently accepted percentage. If a discharge estimate tries
-to cross upward into a higher percentage, the existing rejection still
-leaves both the reported percentage and charge unchanged.
+kmalloc is used to allocate physically contiguous memory for kernel
+allocations.  For requests larger than KMALLOC_MAX_CACHE_SIZE, kmalloc
+uses the page allocator and can only support up to KMALLOC_MAX_SIZE.  For
+request sizes bigger than KMALLOC_MAX_SIZE, the page allocator can emit a
+WARN because kmalloc allocates an order greater than MAX_PAGE_ORDER.
 
-The AB8500 fuel-gauge implementations in the Samsung-GT-I8160-Codina,
-Samsung-GT-I8160_HD-Codina, Samsung-GT-I8530-Gavini,
-Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle and
-Samsung-SGH-T599-Codina-TMO product trees retain the same percentage-gated
-prev_mah update and contain no finer-grained reporting workaround.
-
-Fixes: 13151631b5bd ("ab8500-fg: A8500 fuel gauge driver")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-2-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lore.kernel.org/DKTTMAS94IMH.2C6ERY0ZIVWVZ@nvidia.com
+Fixes: b3c466ce5129 ("page allocator: do not sanity check order in the fast path")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a820ebc.9ebadd4d.20b15e.001b.GAE@google.com/
+Tested-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/gadget/legacy/inode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index eb7eac23da70f..61235937426d2 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -1374,6 +1374,13 @@ static void ab8500_fg_check_capacity_limits(struct ab8500_fg *di, bool init)
- 		}
+diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
+index 896a3a075b674..437718a4a0f29 100644
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -611,7 +611,7 @@ ep_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		return -EBADMSG;
  	}
  
-+	/* Keep the charge properties current between percentage changes. */
-+	if (di->bat_cap.prev_percent == percent &&
-+	    di->bat_cap.prev_mah != di->bat_cap.mah) {
-+		di->bat_cap.prev_mah = di->bat_cap.mah;
-+		changed = true;
-+	}
-+
- 	if (changed) {
- 		if (di->bm->capacity_scaling) {
- 			di->bat_cap.cap_scale.scaled_cap =
+-	buf = kmalloc(len, GFP_KERNEL);
++	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
+ 	if (unlikely(!buf)) {
+ 		mutex_unlock(&epdata->lock);
+ 		return -ENOMEM;
+@@ -673,7 +673,7 @@ ep_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		return -EBADMSG;
+ 	}
+ 
+-	buf = kmalloc(len, GFP_KERNEL);
++	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
+ 	if (unlikely(!buf)) {
+ 		mutex_unlock(&epdata->lock);
+ 		return -ENOMEM;
 -- 
 2.53.0
 
