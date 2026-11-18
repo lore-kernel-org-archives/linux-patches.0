@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058086;
-	b=wHj6imLHqCkCtNK20mMKxjaVU3OfVE6yTjpgdxzKghcMtSTpO5wRnoNvgPSajahs6YXg
-	 y20RAzspjui6reOqUs/WaYIlraFAGU4INFejx6QN5wMKmt/VlMyfcVONQiz0bOHbYKgtf
-	 EEyx8MsPYuqAEUnV0WP9EZFaT3phRKmf0tLJpW5j2sM0O8RjI3LHL6Ze5TzPACTz/HVQY
-	 vaQDR2uPrwAoO3fNgRXBfEu6GUZ7i6KARd/H3KXyEtZ0jpe5HC3xthPQf8lloWUOVJIa/
-	 a6lOUaWlHBz8ANAJ3+F6dqIATHPVclQokfTASi5s/6tXTdGFCXp2h+570BZCLqKSHMQ==
+	t=1795058089;
+	b=zJe1LgIwszcTUiY4vX7a06x0CGqdD+wudfkjJ2QLqPzqx8trCdZolQr135sygGPLzC8J
+	 trV2i7NIvs7/EGgCEitJi02sjOupI9l83xB0HGuu1BX9gvJFZvi/zPWn1WNna0bnnrO9Z
+	 r5PYlucIfK48zMSLYtVLwpEZlwwqM1fwxhNuBhcJRlFo91EDM/+Gss9YQyVYv8+sNGLUO
+	 ldH+B47a5E2LlH6cS9iiDJpnuL2YbYZpZBuefcar7JfgPPFnui1+SDZbxUFK4CeWJGjGn
+	 bLYtaQwpqqyqg/YaA/6Kts5YUMnEB0ySWU8o4WMMUtTeov4fmKo7kznZbZJNntIj5Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=38UScKs7bF6pirOdN1u6OvYp+GuVXfLlAxDkrwj24Wc=;
-	b=YL6W2T/5cLENt/N9n8o0sOTEBMQJJPlGnQVhZQBV0dct2aSOuKYdo82pPZT+8sX2OyVv
-	 0FaHkaZgghyBPF+D24cU+nt/9lHNUTxGbvFaMwqFlFgxpjLocWNUkoerr+ONr1/EtWbT4
-	 lO5VbGtxpmbb/k0cueeePp6+VL6AnYxCyqkw+8oPkRW3AaqTsetjKtxNDspTKo02aFYlS
-	 G/bPWgiY0tpbcqtHwOQ3uGPZ15kthuyPQyj8O2iRb9u9ToJDRTqzKDM0rkzogkXHbX6Ul
-	 CSYG7WteRG3heIbVWTJb7UJadNO05aWuFmEVYVhGTv/JPjYo+wncvhX59OsBoX4ziWw==
+	bh=QneaNld40T8dqMbGZByKAvRi0QqfYItg+exf1XIQJA4=;
+	b=v+R668+Ygp2ZZ8Vhw4mZfMiNuvTRjnSYBUSiivPKJm45vzC/x9NgUKdWyB60P/0XD212
+	 jZN5CBoTEQSVkcorPgkf45Bj60x6nAwEtfoR88OnJGMV1g6KGOdziMIg/CnWfan+pYCUs
+	 Z5myjlLLuJ2OQVERcch9BviOf9gRBHv0izCy39Iwb+UBxsGEAxbqHzFAwsDg+/SxR3E+y
+	 xiTtytlncDOFE50dGos0OA6aMbUcXAK9/seDJrBxgjrfGV/Jb2dz9gmbMzqE+CMna7eI6
+	 JFItLDEi1ZzNsqvgUyUlJVX207MicZ0dt0cSPz6UXhIOJCPwUo/4elbjkHoRo1Xmq+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNcc7reC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4oBk2A8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B9606A320;
-	Thu, 19 Nov 2026 03:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112E0606A31C;
+	Thu, 19 Nov 2026 03:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNcc7reC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0DD1F000C4;
-	Thu, 19 Nov 2026 03:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4oBk2A8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D251F000C4;
+	Thu, 19 Nov 2026 03:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058085;
-	bh=38UScKs7bF6pirOdN1u6OvYp+GuVXfLlAxDkrwj24Wc=;
+	s=korg; t=1795058088;
+	bh=QneaNld40T8dqMbGZByKAvRi0QqfYItg+exf1XIQJA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QNcc7reCVcMeTNxxyYdcTBK1Pe7yxkIGTZDcG/4lS7Bu8uDcXSnL404UrDwAN9QMA
-	 EPnVxQT3pK9aG/DFfmMfPE+lFVjfc67uhp/kfirN/xRLRpPjZxJhyyzYtZNwkH8KPg
-	 tdz/H1Wx9Mjj/oFdDAStbbCy8d+LJXqoL2iZpXXI=
+	b=v4oBk2A8GT3vJkejZn6z+/jKAFv4rUInGFfS2ccfXmJoI0x3fkalRbqNI1WULuz4h
+	 d+CxrFRI6TYxjeyDQqvG5na3o/Td9Ii0xFFYnG9wBbuHMthhEUkpOWKERGa869QnJG
+	 aCKX4woLMt06yQqbTVhIF2vr6biae4T1ABi2yS10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0361/1848] fs_pin: publish pins with RCU list helpers
-Date: Wed, 18 Nov 2026 15:39:59 +0100
-Message-ID: <20261118145928.249022499@linuxfoundation.org>
+Subject: [PATCH 5.10 0362/1848] thermal: intel: powerclamp: Reject invalid window_size values
+Date: Wed, 18 Nov 2026 15:40:00 +0100
+Message-ID: <20261118145928.279335048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,72 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
+[ Upstream commit 40989202104e498ff9adfb8c575d6cd159f13988 ]
 
-pin_insert() initializes a pin before adding it under pin_lock.  The kill
-paths read the list heads under RCU without taking that lock.  Plain hlist
-insertion does not publish the earlier initialization to those readers.
+window_size_set() sets ret to -EINVAL if new_window_size is outside the
+valid range, but then falls through and still updates window_size to the
+clamped value.
 
-KCSAN weak-memory checking reported acct_on() callback initialization
-racing with pin_kill() after the superblock-list publication.  The
-corresponding LKMM model permits the stale read with plain publication;
-the RCU release/acquire pair forbids it.
+Return -EINVAL immediately and do not update window_size. Also drop the
+now-redundant clamp() call.
 
-Use the RCU hlist add and dereference helpers for both pin lists.
-
-Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d6d71ee4a14a ("PM: Introduce Intel PowerClamp Driver")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260815090136.88540-2-thorsten.blum@linux.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_pin.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/thermal/intel/intel_powerclamp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs_pin.c b/fs/fs_pin.c
-index 47ef3c71ce907..1a508f2167e0a 100644
---- a/fs/fs_pin.c
-+++ b/fs/fs_pin.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/fs.h>
-+#include <linux/rculist.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include "internal.h"
-@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
- void pin_insert(struct fs_pin *pin, struct vfsmount *m)
- {
- 	spin_lock(&pin_lock);
--	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
--	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
-+	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
-+	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
- 	spin_unlock(&pin_lock);
- }
+diff --git a/drivers/thermal/intel/intel_powerclamp.c b/drivers/thermal/intel/intel_powerclamp.c
+index 6e7c230d308f7..1ec805d8dcd23 100644
+--- a/drivers/thermal/intel/intel_powerclamp.c
++++ b/drivers/thermal/intel/intel_powerclamp.c
+@@ -154,9 +154,10 @@ static int window_size_set(const char *arg, const struct kernel_param *kp)
+ 		pr_err("Out of recommended window size %lu, between 2-10\n",
+ 			new_window_size);
+ 		ret = -EINVAL;
++		goto exit_win;
+ 	}
  
-@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
- 	while (1) {
- 		struct hlist_node *p;
- 		rcu_read_lock();
--		p = READ_ONCE(m->mnt_pins.first);
-+		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
- 		if (!p) {
- 			rcu_read_unlock();
- 			break;
-@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
- 	while (1) {
- 		struct hlist_node *q;
- 		rcu_read_lock();
--		q = READ_ONCE(p->first);
-+		q = rcu_dereference(hlist_first_rcu(p));
- 		if (!q) {
- 			rcu_read_unlock();
- 			break;
+-	window_size = clamp(new_window_size, 2ul, 10ul);
++	window_size = new_window_size;
+ 	smp_mb();
+ 
+ exit_win:
 -- 
 2.53.0
 
