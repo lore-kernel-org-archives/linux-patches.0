@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018499;
-	b=1t7xtl3UTYm4Oz5/GZ0Mxz0IR39mC938nJdHA9HzCElOEPSBZtZ6OADeZ3Aw/z3s8iYM
-	 8SxjEz8xNQKe1in8lGmO0QLzY5u7IEei3LLXYzRn+AX8zFRIYYQGM4ZJnpWjVu/3XA6Vu
-	 Zb7fpJYpY62HxNucF2rlUsDB51oLzjE+WtuW62/40gPSnaFR4mETRL8d/RCSNb7AXv+hU
-	 M5NFw8YVNBgZH8ZtYkzWdG3248LKCK0XPX+nzuRZRZC9fK5PDidr+p/G+oltJijhZS/PQ
-	 o+Vge7rOwfSht0tKe6idqRzFHWWEzlpKVLI1Nas0PaJnodTzfV1SpnCKgvJa9h3CXvA==
+	t=1795018502;
+	b=fBS3hjRQhWEyMsc2XdwgG59Wvi7o4WiZjFYU500B+9Ekg4h4XDVdUQcwMi3gCSkXiiGJ
+	 OED3z9uDtW4QIqNTqj/5BcydWEzoxALPJ7dlilW9C06y7RYkI5SR8w3JJ+mMn737Jma+4
+	 +vz9TCe4o0L6HiIJ9upkJCLg376Rs4PEAdq8lfpEGwc4jytS5/3pb/1dqK829pygwW3dy
+	 S0TQMo6XXva7dXz5BXT8pRm+oQDM9mR4oX3XoPJ+EaXXLi9M2if4bYX40Kag/hAw+GswS
+	 oQ5M68+cbXV7FEkEWqEkEERnIZjwoBOhZLHGxf+171ATPkT3AR4Ku6qcJxHLu+PbnWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hzv6i0Kcf5EEsMW3APNB6DKDPdYHm1OCN92q5Jl5yE8=;
-	b=hphZ3YtALxcd++Dj5ZQ/59yNhwX6ldW+VDjYX6S6oZejci31a0XTVhhba+y7XBcTe5tB
-	 mtZbV7oX35mUgNR1ClBog1v4VIx5p+BOR9baY3eXY/8BZZs74ui9sO9sgJUgJRzu7twiu
-	 U5mpN1bVpp+ORDStlc6RXEvRRc2dWZVPGoJPCXtFGVdshpLdDmklIbdrlT+csppHmm1cE
-	 hAIebEF6fe76e0iLUTszjF3dCsYir42c3rTYh74+Lrd6WG+l61iGb7kZ8naELLxpVqVxH
-	 WQa17I2m26Ke4rI2OsGjg+pUo1z/1XBO1XJuJXcaNuF4S+bQJtkUO6Ic+e4hmtxdnuQ==
+	bh=SkrM6I4gu0eVkCOlOnZWLU7mgKoiPbu2wXtAFgnm2a8=;
+	b=ssNvOIkztIwr5nvkI52HQF1CENY5Rwbl8uVCfqIWHoA4V0gxCURDOxFfBdrI7Mln7vUP
+	 x3YkUTwO75QWdiAunCUHVQBX8YVmKwCl/xqzDOXsVyFzi1yoMs9rCt6gKAYlVlhyEB6m8
+	 4tLa2bdy032fyoLuBVaGejdCBVn3PZL1dYTnRLRF7nDEdbxqelajB90N7w16NjswEKle9
+	 KM17ifzCN+8nTK7wsqWkj/zsXJfzbKZGuBdooY0+j0IvU+vvq3PH3RToOjUi5Dam5j6od
+	 3bQbiffkYeV9tZzMNeE0fPNxNAM0JHXUqyOheLFlpGCKqhAV2wXJfoplVdd8UntPKqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOA+3r4K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6DcVh48;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79F9606A33D;
-	Wed, 18 Nov 2026 16:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EB8606A31C;
+	Wed, 18 Nov 2026 16:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOA+3r4K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C791F000C4;
-	Wed, 18 Nov 2026 16:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6DcVh48
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E9A1F000C4;
+	Wed, 18 Nov 2026 16:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018499;
-	bh=hzv6i0Kcf5EEsMW3APNB6DKDPdYHm1OCN92q5Jl5yE8=;
+	s=korg; t=1795018502;
+	bh=SkrM6I4gu0eVkCOlOnZWLU7mgKoiPbu2wXtAFgnm2a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uOA+3r4KnZ1MqSu78cLai4E2zINLe2aZDpuZNmFY6F37iSiLzFTx4RqBSZXmNNXIc
-	 A97gsA8R/5SrYxPS9i0MrX8iIZTEwqiOI/+nOEkexGUwfo5LHeoo2WQm1apuK98y53
-	 +pRk8pnsiRU3VDI06Q6ufHYGXO22WxsSGBFsBcow=
+	b=o6DcVh48wIT2xwEbOC1sF0nPl1fK/9AIDCW/KVBNh0npuYcU1vpEIQZ+LmBYUMHIj
+	 pWl1JCJsIyCYZsIcSpRIEpRrANN69RJF4rgqvkM27WODngQJL2x6YhGbZhQQklE788
+	 AijvU70TAYQ54rkNrcHiG9M+72Y8pnA5NBt+aM8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1222/2651] scsi: core: Rename sense field of struct scsi_failure
-Date: Wed, 18 Nov 2026 15:41:02 +0100
-Message-ID: <20261118150331.994915747@linuxfoundation.org>
+Subject: [PATCH 7.3 1223/2651] scsi: core: Prepare for using combined sense codes
+Date: Wed, 18 Nov 2026 15:41:03 +0100
+Message-ID: <20261118150332.033716005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,451 +72,162 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 45cdf8164237277e52af5d8aa4218c3cb6199bf2 ]
+[ Upstream commit ec5562d3ea803ec45831477129c626b2a22d2e2c ]
 
-Rename the sense field of struct scsi_failure to sense_key. This makes it
-clear that this field stores the sense key, and also unifies this structure
-field names with the names used in struct scsi_sense_hdr.
+In preparation for handling sense codes and their qualifers as a single
+16-bit sense code field, with the values defined as macros in
+include/scsi/scsi_sense.h, modify the definition of the structures
+scsi_failure and scsi_sense_hdr to introduce a 16-bit sense_code field as a
+union with the existing 8-bit asc and ascq fields.
 
-To be consistent with this change, the macro SCMD_FAILURE_SENSE_ANY is
-renamed SCMD_FAILURE_SENSE_KEY_ANY.
+This temporary modification allows accessing either the asc and ascq fields
+individually, or their combination as the 16-bit sense_code field.
 
-Of note is that the definition of the array any_sense_failure_defs in
-scsi_lib_test_any_sense() is modified to change the initialization of the
-result field to use SCMD_FAILURE_RESULT_ANY and add the .sense_key field
-initialization to SCMD_FAILURE_SENSE_KEY_ANY to match the test target case.
+The helper functions scsi_sense_asc(), scsi_sense_ascq() are defined to
+allow accessing the 8-bit ASC and ASCQ values from the sense_code filed of
+struct scsi_sense_hdr. The helper functions scsi_failure_asc() and
+scsi_failure_ascq() provide the same for the sense code field of struct
+scsi_failure.
+
+The helper functions scsi_set_sense_buffer() and scsi_set_sense() are also
+added to wrap calls to scsi_build_sense_buffer() and scsi_build_sense()
+using a 16-bit sense code argument instead of the 8-bit ASC and ASCQ
+arguments.
 
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260908090308.1085097-5-dlemoal@kernel.org
+Link: https://patch.msgid.link/20260908090308.1085097-6-dlemoal@kernel.org
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Stable-dep-of: 63cb3900be26 ("scsi: scsi_debug: Enforce physical block alignment of zoned writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ch.c                           |  2 +-
- drivers/scsi/device_handler/scsi_dh_hp_sw.c |  4 ++--
- drivers/scsi/device_handler/scsi_dh_rdac.c  | 10 ++++-----
- drivers/scsi/scsi_lib.c                     |  6 ++---
- drivers/scsi/scsi_lib_test.c                | 25 +++++++++++----------
- drivers/scsi/scsi_scan.c                    |  8 +++----
- drivers/scsi/scsi_transport_spi.c           |  2 +-
- drivers/scsi/sd.c                           | 20 ++++++++---------
- drivers/scsi/ses.c                          |  8 +++----
- include/scsi/scsi_device.h                  | 12 +++++-----
- 10 files changed, 49 insertions(+), 48 deletions(-)
+ include/scsi/scsi_cmnd.h   |  7 +++++++
+ include/scsi/scsi_common.h | 31 +++++++++++++++++++++++++++++--
+ include/scsi/scsi_device.h | 25 +++++++++++++++++++++++--
+ 3 files changed, 59 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/ch.c b/drivers/scsi/ch.c
-index c36539c83ed1a..cc4532c7782f1 100644
---- a/drivers/scsi/ch.c
-+++ b/drivers/scsi/ch.c
-@@ -190,7 +190,7 @@ ch_do_scsi(scsi_changer *ch, unsigned char *cmd, int cmd_len,
- 	struct scsi_sense_hdr sshdr;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = 3,
-diff --git a/drivers/scsi/device_handler/scsi_dh_hp_sw.c b/drivers/scsi/device_handler/scsi_dh_hp_sw.c
-index 6e8849d7f0a32..3431e1ce95fd9 100644
---- a/drivers/scsi/device_handler/scsi_dh_hp_sw.c
-+++ b/drivers/scsi/device_handler/scsi_dh_hp_sw.c
-@@ -84,7 +84,7 @@ static int hp_sw_tur(struct scsi_device *sdev, struct hp_sw_dh_data *h)
- 				REQ_FAILFAST_TRANSPORT | REQ_FAILFAST_DRIVER;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = SCMD_FAILURE_NO_LIMIT,
-@@ -138,7 +138,7 @@ static int hp_sw_start_stop(struct hp_sw_dh_data *h)
- 			 *
- 			 * Switch-over in progress, retry.
- 			 */
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = 0x04,
- 			.ascq = 0x03,
- 			.allowed = HP_SW_RETRIES,
-diff --git a/drivers/scsi/device_handler/scsi_dh_rdac.c b/drivers/scsi/device_handler/scsi_dh_rdac.c
-index 88c8e36b221e2..75c9cc291e385 100644
---- a/drivers/scsi/device_handler/scsi_dh_rdac.c
-+++ b/drivers/scsi/device_handler/scsi_dh_rdac.c
-@@ -514,33 +514,33 @@ static void send_mode_select(struct work_struct *work)
- 				REQ_FAILFAST_TRANSPORT | REQ_FAILFAST_DRIVER;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = NO_SENSE,
-+			.sense_key = NO_SENSE,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = ABORTED_COMMAND,
-+			.sense_key = ABORTED_COMMAND,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		/* LUN Not Ready and is in the Process of Becoming Ready */
- 		{
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = 0x04,
- 			.ascq = 0x01,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		/* Command Lock contention */
- 		{
--			.sense = ILLEGAL_REQUEST,
-+			.sense_key = ILLEGAL_REQUEST,
- 			.asc = 0x91,
- 			.ascq = 0x36,
- 			.allowed = SCMD_FAILURE_NO_LIMIT,
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index af27fd3df8d46..4901b2dff6538 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -243,13 +243,13 @@ static int scsi_check_passthrough(struct scsi_cmnd *scmd,
- 			continue;
+diff --git a/include/scsi/scsi_cmnd.h b/include/scsi/scsi_cmnd.h
+index 8ecfb94049db5..bf6d69f0249f8 100644
+--- a/include/scsi/scsi_cmnd.h
++++ b/include/scsi/scsi_cmnd.h
+@@ -394,6 +394,13 @@ static inline unsigned scsi_transfer_length(struct scsi_cmnd *scmd)
+ extern void scsi_build_sense(struct scsi_cmnd *scmd, int desc,
+ 			     u8 key, u8 asc, u8 ascq);
  
- 		if (status_byte(failure->result) != SAM_STAT_CHECK_CONDITION ||
--		    failure->sense == SCMD_FAILURE_SENSE_ANY)
-+		    failure->sense_key == SCMD_FAILURE_SENSE_KEY_ANY)
- 			goto maybe_retry;
++static inline void scsi_set_sense(struct scsi_cmnd *scmd, int desc,
++				  u8 key, u16 code)
++{
++	scsi_build_sense(scmd, desc, key, scsi_sense_code_asc(code),
++			 scsi_sense_code_ascq(code));
++}
++
+ struct request *scsi_alloc_request(struct request_queue *q, blk_opf_t opf,
+ 				   blk_mq_req_flags_t flags);
  
- 		if (!scsi_command_normalize_sense(scmd, &sshdr))
- 			return 0;
+diff --git a/include/scsi/scsi_common.h b/include/scsi/scsi_common.h
+index 00c8a16d3cd24..6fb2c290ba33d 100644
+--- a/include/scsi/scsi_common.h
++++ b/include/scsi/scsi_common.h
+@@ -71,8 +71,18 @@ extern u64 scsilun_to_int(struct scsi_lun *);
+ struct scsi_sense_hdr {		/* See SPC-3 section 4.5 */
+ 	u8 response_code;	/* permit: 0x0, 0x70, 0x71, 0x72, 0x73 */
+ 	u8 sense_key;
+-	u8 asc;
+-	u8 ascq;
++	union {
++		struct {
++#if defined(__BIG_ENDIAN)
++			u8 asc;
++			u8 ascq;
++#elif defined(__LITTLE_ENDIAN)
++			u8 ascq;
++			u8 asc;
++#endif
++		};
++		u16 sense_code;
++	};
+ 	u8 byte4;
+ 	u8 byte5;
+ 	u8 byte6;
+@@ -87,10 +97,27 @@ static inline bool scsi_sense_valid(const struct scsi_sense_hdr *sshdr)
+ 	return (sshdr->response_code & 0x70) == 0x70;
+ }
  
--		if (failure->sense != sshdr.sense_key)
-+		if (failure->sense_key != sshdr.sense_key)
- 			continue;
++static inline u8 scsi_sense_asc(const struct scsi_sense_hdr *sshdr)
++{
++	return scsi_sense_code_asc(sshdr->sense_code);
++}
++
++static inline u8 scsi_sense_ascq(const struct scsi_sense_hdr *sshdr)
++{
++	return scsi_sense_code_ascq(sshdr->sense_code);
++}
++
+ extern bool scsi_normalize_sense(const u8 *sense_buffer, int sb_len,
+ 				 struct scsi_sense_hdr *sshdr);
  
- 		if (failure->asc == SCMD_FAILURE_ASC_ANY)
-@@ -2372,7 +2372,7 @@ scsi_mode_sense(struct scsi_device *sdev, int dbd, int modepage, int subpage,
- 	struct scsi_sense_hdr my_sshdr;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = retries,
-diff --git a/drivers/scsi/scsi_lib_test.c b/drivers/scsi/scsi_lib_test.c
-index ae8af0e0047a8..4558dc853e26e 100644
---- a/drivers/scsi/scsi_lib_test.c
-+++ b/drivers/scsi/scsi_lib_test.c
-@@ -17,40 +17,40 @@ static void scsi_lib_test_multiple_sense(struct kunit *test)
- {
- 	struct scsi_failure multiple_sense_failure_defs[] = {
- 		{
--			.sense = DATA_PROTECT,
-+			.sense_key = DATA_PROTECT,
- 			.asc = 0x1,
- 			.ascq = 0x1,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x11,
- 			.ascq = 0x0,
- 			.allowed = SCSI_LIB_TEST_MAX_ALLOWED,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = 0x11,
- 			.ascq = 0x22,
- 			.allowed = SCSI_LIB_TEST_MAX_ALLOWED,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = ABORTED_COMMAND,
-+			.sense_key = ABORTED_COMMAND,
- 			.asc = 0x11,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = SCSI_LIB_TEST_MAX_ALLOWED,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = HARDWARE_ERROR,
-+			.sense_key = HARDWARE_ERROR,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.allowed = SCSI_LIB_TEST_MAX_ALLOWED,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = ILLEGAL_REQUEST,
-+			.sense_key = ILLEGAL_REQUEST,
- 			.asc = 0x91,
- 			.ascq = 0x36,
- 			.allowed = SCSI_LIB_TEST_MAX_ALLOWED,
-@@ -116,8 +116,9 @@ static void scsi_lib_test_any_sense(struct kunit *test)
- {
- 	struct scsi_failure any_sense_failure_defs[] = {
- 		{
--			.result = SCMD_FAILURE_SENSE_ANY,
-+			.sense_key = SCMD_FAILURE_SENSE_KEY_ANY,
- 			.allowed = SCSI_LIB_TEST_MAX_ALLOWED,
-+			.result = SCMD_FAILURE_RESULT_ANY,
- 		},
- 		{}
- 	};
-@@ -129,7 +130,7 @@ static void scsi_lib_test_any_sense(struct kunit *test)
- 		.sense_buffer = sense,
- 	};
- 
--	/* Match using SCMD_FAILURE_SENSE_ANY */
-+	/* Match using SCMD_FAILURE_SENSE_KEY_ANY */
- 	failures.failure_definitions = any_sense_failure_defs;
- 	scsi_build_sense(&sc, 0, MEDIUM_ERROR, 0x11, 0x22);
- 	KUNIT_EXPECT_EQ(test, -EAGAIN, scsi_check_passthrough(&sc, &failures));
-@@ -215,14 +216,14 @@ static void scsi_lib_test_total_allowed(struct kunit *test)
- {
- 	struct scsi_failure total_allowed_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		/* Fail all CCs except the UA above */
- 		{
--			.sense = SCMD_FAILURE_SENSE_ANY,
-+			.sense_key = SCMD_FAILURE_SENSE_KEY_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		/* Retry any other errors not listed above */
-@@ -259,12 +260,12 @@ static void scsi_lib_test_mixed_total(struct kunit *test)
- {
- 	struct scsi_failure mixed_total_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x28,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 0f0f243c25615..6cd77b0592e45 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -658,12 +658,12 @@ static int scsi_probe_lun(struct scsi_device *sdev, unsigned char *inq_result,
- 		 * so anyway.
- 		 */
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x28,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
-@@ -1457,14 +1457,14 @@ static int scsi_report_lun_scan(struct Scsi_Host *shost,
- 	struct scsi_device *sdev;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		/* Fail all CCs except the UA above */
- 		{
--			.sense = SCMD_FAILURE_SENSE_ANY,
-+			.sense_key = SCMD_FAILURE_SENSE_KEY_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		/* Retry any other errors not listed above */
-diff --git a/drivers/scsi/scsi_transport_spi.c b/drivers/scsi/scsi_transport_spi.c
-index 3e3da8c2ff26f..ec3884a6657f6 100644
---- a/drivers/scsi/scsi_transport_spi.c
-+++ b/drivers/scsi/scsi_transport_spi.c
-@@ -112,7 +112,7 @@ static int spi_execute(struct scsi_device *sdev, const void *cmd,
- 			REQ_FAILFAST_DRIVER;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = DV_RETRIES,
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 208b915f25a2c..66664d08c15a0 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -2033,7 +2033,7 @@ static int sd_pr_in_command(struct block_device *bdev, u8 sa,
- 	u8 cmd[10] = { PERSISTENT_RESERVE_IN, sa };
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = 5,
-@@ -2145,7 +2145,7 @@ static int sd_pr_out_command(struct block_device *bdev, u8 sa, u64 key,
- 	struct scsi_sense_hdr sshdr;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = 5,
-@@ -2494,13 +2494,13 @@ sd_spinup_disk(struct scsi_disk *sdkp)
- 	struct scsi_failure failure_defs[] = {
- 		/* Do not retry Medium Not Present */
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x3A,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = 0x3A,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.result = SAM_STAT_CHECK_CONDITION,
-@@ -2817,18 +2817,18 @@ static int read_capacity_10(struct scsi_disk *sdkp, struct scsi_device *sdp,
- 	struct scsi_failure failure_defs[] = {
- 		/* Do not retry Medium Not Present */
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x3A,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = 0x3A,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		 /* Device reset might occur several times so retry a lot */
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.allowed = READ_CAPACITY_RETRIES_ON_RESET,
- 			.result = SAM_STAT_CHECK_CONDITION,
-@@ -4159,21 +4159,21 @@ static int sd_start_stop_device(struct scsi_disk *sdkp, int start)
- 	struct scsi_failure failure_defs[] = {
- 		{
- 			/* Power on, reset, or bus device reset occurred */
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.ascq = 0,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
- 			/* Power on occurred */
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.ascq = 1,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
- 			/* SCSI bus reset */
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.ascq = 2,
- 			.result = SAM_STAT_CHECK_CONDITION,
-diff --git a/drivers/scsi/ses.c b/drivers/scsi/ses.c
-index 4c348645b04ee..454886c245704 100644
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -88,14 +88,14 @@ static int ses_recv_diag(struct scsi_device *sdev, int page_code,
- 	unsigned char recv_page_code;
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = SES_RETRIES,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = SES_RETRIES,
-@@ -145,14 +145,14 @@ static int ses_send_diag(struct scsi_device *sdev, int page_code,
- 	};
- 	struct scsi_failure failure_defs[] = {
- 		{
--			.sense = UNIT_ATTENTION,
-+			.sense_key = UNIT_ATTENTION,
- 			.asc = 0x29,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = SES_RETRIES,
- 			.result = SAM_STAT_CHECK_CONDITION,
- 		},
- 		{
--			.sense = NOT_READY,
-+			.sense_key = NOT_READY,
- 			.asc = SCMD_FAILURE_ASC_ANY,
- 			.ascq = SCMD_FAILURE_ASCQ_ANY,
- 			.allowed = SES_RETRIES,
+ extern void scsi_build_sense_buffer(int desc, u8 *buf, u8 key, u8 asc, u8 ascq);
++
++static inline void scsi_set_sense_buffer(int desc, u8 *buf, u8 key, u16 code)
++{
++	scsi_build_sense_buffer(desc, buf, key, scsi_sense_code_asc(code),
++				scsi_sense_code_ascq(code));
++}
++
+ int scsi_set_sense_information(u8 *buf, int buf_len, u64 info);
+ int scsi_set_sense_field_pointer(u8 *buf, int buf_len, u16 fp, u8 bp, bool cd);
+ extern const u8 * scsi_sense_desc_find(const u8 * sense_buffer, int sb_len,
 diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index 8694eeadd753e..e321471e8ca22 100644
+index e321471e8ca22..11910142ac505 100644
 --- a/include/scsi/scsi_device.h
 +++ b/include/scsi/scsi_device.h
-@@ -514,18 +514,18 @@ extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
+@@ -518,6 +518,7 @@ extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
+  * to match any sense key, ASC, and ASCQ value.
   */
- #define SCMD_FAILURE_STAT_ANY	0xff
- /*
-- * The following can be set to the scsi_failure sense, asc and ascq fields to
-- * match on any sense, ASC, or ASCQ value.
-+ * The following can be set to the scsi_failure sense key, asc and ascq fields
-+ * to match any sense key, ASC, and ASCQ value.
-  */
--#define SCMD_FAILURE_SENSE_ANY	0xff
--#define SCMD_FAILURE_ASC_ANY	0xff
--#define SCMD_FAILURE_ASCQ_ANY	0xff
-+#define SCMD_FAILURE_SENSE_KEY_ANY	0xff
-+#define SCMD_FAILURE_ASC_ANY		0xff
-+#define SCMD_FAILURE_ASCQ_ANY		0xff
+ #define SCMD_FAILURE_SENSE_KEY_ANY	0xff
++#define SCMD_FAILURE_SENSE_CODE_ANY	0xffff
+ #define SCMD_FAILURE_ASC_ANY		0xff
+ #define SCMD_FAILURE_ASCQ_ANY		0xff
  /* Always retry a matching failure. */
- #define SCMD_FAILURE_NO_LIMIT	-1
- 
+@@ -526,8 +527,18 @@ extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
  struct scsi_failure {
  	int result;
--	u8 sense;
-+	u8 sense_key;
- 	u8 asc;
- 	u8 ascq;
+ 	u8 sense_key;
+-	u8 asc;
+-	u8 ascq;
++	union {
++		struct {
++#if defined(__BIG_ENDIAN)
++			u8 asc;
++			u8 ascq;
++#elif defined(__LITTLE_ENDIAN)
++			u8 ascq;
++			u8 asc;
++#endif
++		};
++		u16 sense_code;
++	};
  	/*
+ 	 * Number of times scsi_execute_cmd will retry the failure. It does
+ 	 * not count for the total_allowed.
+@@ -537,6 +548,16 @@ struct scsi_failure {
+ 	s8 retries;
+ };
+ 
++static inline u8 scsi_failure_asc(const struct scsi_failure *failure)
++{
++	return scsi_sense_code_asc(failure->sense_code);
++}
++
++static inline u8 scsi_failure_ascq(const struct scsi_failure *failure)
++{
++	return scsi_sense_code_ascq(failure->sense_code);
++}
++
+ struct scsi_failures {
+ 	/*
+ 	 * If a scsi_failure does not have a retry limit setup this limit will
 -- 
 2.53.0
 
