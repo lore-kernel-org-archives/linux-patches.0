@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045309;
-	b=FfTu43wXedhdVesFm3McKyBrXNzhYSLT1t2EB6pMsZFGF8CZgXwEOhnYhk3K54b25sIU
-	 KxyhVL+co9wzutlVJ75hxo34j0IA2B6L+IUVVVK4F/qAIjk8S0TzJ1tR8SfdQsWEjbvtW
-	 qUCbNhPRr4KPsicAYlKTP2r2/huLwZDtLOuCvvCHj+EKfzspcp7ngqquRwS+NTYbEtlAb
-	 Yj83ZplFrs7FTNOBFTQkjyCz/XBpC8LY6zmOYMpFAbYN74ta8elEQQsjTbGf5g/YKTf99
-	 qaVJUDkVm8F5HGbk0YytXgPZGS5c9kydL8L0RGInAazRGS4PUNj8bYW4BwUoDc/ZxCg==
+	t=1795045312;
+	b=skKvlSUZ8k3OfF3/W+v9sEt9UirK9JU1SdRD8i/T7qaS/aaHbFfx67xpIplYBWyTcMAr
+	 cJD6u8on4BF08MZUDJJgXl14rud+RgdzZY24YxcJotk6jK6EqK9+64EjpVB2I7xZGVrmu
+	 4gfKfFbtrzSe+5tCDsWKIuZyz3G5IeaASIZ+itmdGAZdQDJzoe/ckhGvpKLKJa8jjCPdX
+	 fHWGT1R0CiGBpxZ0HJTk/ib/qo19Z3JIZ5rpORIUSOosX6ZluqwajnFayIvXZ8B7cnO86
+	 3gvQHY/wTm1YC+a7/ualePz8g7z9mOY28Z0xjEYTrOZWccwcYz5xdIpNiddSviyHI4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045309;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045312;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eVWQZPNUuBhj0OPqHk4pQB9VYnbvjkOrzImWQTyLlrY=;
-	b=LxJ/mieMZm8o+EjX/cVPjmxud6+KcIoORFjRPeX8JqOUBQkGkihsHNwAPiDNGf6ZDXMK
-	 fFJQzjcAY00tXxp1wwHZzFHdWrhBuvpfoRNd3q7fNTu/PZ1WsWZWs7TUSjtP2MrYt/NQF
-	 vpqTzSfESbVh5hHZVQAR2f6F8QPv52R+vbTH6Yasamxv6egCObYYbg3hgjr6HkRii/VA9
-	 BDuFzr5QAPeawTuumc7DuchOiR35guHPiewVYSWXBqsHwePT8i5fJbhRqbRTr/Nkmngg/
-	 qdw8JcRDJQf5MIclblUtwmZVOkW7+yRopMDyxD6R7cmcLg/JIvFcsanZdVoyzqx+Mhw==
+	bh=JIV9eO7FBx08/FOwF/tqJvxk19o1cAJllZfRxxiT66A=;
+	b=FL4o1F+FYKoXzXXs+T8Mp4hbAu6mqmOtmOY4xV1lg9fTaSa2XTYygXKA1m/9Ten791H4
+	 ujzwXzsEiWrmXP5/6egUdpy13EUl6DspvZT/aaCycEmAxziT0Z63huRGJXlHTTNPslXfS
+	 KjvVJr1xco8PWrB8h85oOCrRn0MmRFBOBJsEFzFntVCjkrg79Cx+sXqTkxAIx9uX18a5A
+	 McWAPQwAvfWlH9pVi4v2ZeSHVsbUoHY1F3zPBEP7M1ICJwu6T/8jLE9Kkzp5XdtvNZERN
+	 cqOXcwOYXXbPorcMorVd9aUytJUrqWRsc9LLo89zg6F3lsVBmRL6ztILQRB6SdpY3Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sehdlruq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxYtAMSt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68BB606A31C;
-	Wed, 18 Nov 2026 23:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14971606A31C;
+	Wed, 18 Nov 2026 23:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sehdlruq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479B01F000C4;
-	Wed, 18 Nov 2026 23:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxYtAMSt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204881F000C4;
+	Wed, 18 Nov 2026 23:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045308;
-	bh=eVWQZPNUuBhj0OPqHk4pQB9VYnbvjkOrzImWQTyLlrY=;
+	s=korg; t=1795045311;
+	bh=JIV9eO7FBx08/FOwF/tqJvxk19o1cAJllZfRxxiT66A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SehdlruqNa9Sf0r/luHRQ4mHnEM0uFcEJja6aE/1lxVYhuRNJ/Nfl6VkVTYCWsLak
-	 yM24UDro8JkTSoXo+fgKa99PXstMe+YDPEwImPI2pMPqbnE99r72KwDzb23/H2ZMC+
-	 7XTRqW+yMNPPZtiWwEtSc50I9/FDdTW3T20wQeBo=
+	b=FxYtAMStzvVtvmlzL/3bpiBjuXipcDb/cVhL6nbFMtC2ZF97B82ARl0TcEQCL85hy
+	 nnvo2ohPCkcKfSeA15qSvfA56BuXAb1P3OE4ht+aCtsDXAlasjlvxCKbkexYh6UAqF
+	 hpHi0DGSW+OfseLgEjAxHRxh9Xt6TSC4ceLdyW6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0840/2857] ALSA: core: Check shutdown flag at D0 power-state, too
-Date: Wed, 18 Nov 2026 15:31:14 +0100
-Message-ID: <20261118150231.820285738@linuxfoundation.org>
+Subject: [PATCH 6.1 0876/2857] power: supply: ab8500_fg: Accept status from supplied power
+Date: Wed, 18 Nov 2026 15:31:50 +0100
+Message-ID: <20261118150233.105567330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,50 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit ad63c5b62843895e8c3cd7291ed07cc659df0355 ]
+[ Upstream commit 16f506a13b58a55308449bbcbec89c817d619ca2 ]
 
-The snd_power_ref_and_wait() skips the card->shutdown check when the
-card is already in D0 state and immediately returns as successful, by
-assuming the all-green in D0.  This assumption makes the code after
-this sync point behaving as if all power is up and ready, even though
-actually it might have been already at the disconnected state.
+Commit dc77721ea4aa ("power: supply: ab8500: Set typing and props")
+changed the charging algorithm power supply type from battery to unknown
+so userspace would not mistake it for a second battery. The fuel gauge,
+however, processes status changes only from battery-type supplies. It
+therefore never learns that charging started and keeps running its
+discharge state machine.
 
-Add the missing check of shutdown flag there for the more consistent
-behavior.
+The power supply relationship already limits the callback to supplies
+naming the fuel gauge in supplied_to. Accept status from any such supply
+while retaining the battery type checks for battery-specific properties.
 
+The Samsung-GT-I8160-Codina and Samsung-GT-I8160_HD-Codina product trees
+keep the charging algorithm typed as a battery. The
+Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
+Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO alternative
+fuel-gauge drivers instead pass cable state directly. Both approaches
+preserve the charging state handoff that was lost in mainline.
+
+Fixes: dc77721ea4aa ("power: supply: ab8500: Set typing and props")
 Cc: stable@vger.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260929125346.1478631-2-tiwai@suse.de
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-1-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/power/supply/ab8500_fg.c | 60 ++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index 4d8c77deed185..b3a7df3c85df3 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -1146,12 +1146,12 @@ EXPORT_SYMBOL(snd_card_file_remove);
- int snd_power_ref_and_wait(struct snd_card *card)
- {
- 	snd_power_ref(card);
--	if (snd_power_get_state(card) == SNDRV_CTL_POWER_D0)
--		return 0;
--	wait_event_cmd(card->power_sleep,
--		       card->shutdown ||
--		       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
--		       snd_power_unref(card), snd_power_ref(card));
-+	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
-+		wait_event_cmd(card->power_sleep,
-+			       card->shutdown ||
-+			       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
-+			       snd_power_unref(card), snd_power_ref(card));
-+	}
- 	if (card->shutdown) {
- 		snd_power_unref(card);
- 		return  -ENODEV;
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index 71ce28eed463f..327c7a9f31ece 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -2211,42 +2211,36 @@ static int ab8500_fg_get_ext_psy_data(struct device *dev, void *data)
+ 
+ 		switch (prop) {
+ 		case POWER_SUPPLY_PROP_STATUS:
+-			switch (ext->desc->type) {
+-			case POWER_SUPPLY_TYPE_BATTERY:
+-				switch (ret.intval) {
+-				case POWER_SUPPLY_STATUS_UNKNOWN:
+-				case POWER_SUPPLY_STATUS_DISCHARGING:
+-				case POWER_SUPPLY_STATUS_NOT_CHARGING:
+-					if (!di->flags.charging)
+-						break;
+-					di->flags.charging = false;
+-					di->flags.fully_charged = false;
+-					if (di->bm->capacity_scaling)
+-						ab8500_fg_update_cap_scalers(di);
+-					queue_work(di->fg_wq, &di->fg_work);
++			switch (ret.intval) {
++			case POWER_SUPPLY_STATUS_UNKNOWN:
++			case POWER_SUPPLY_STATUS_DISCHARGING:
++			case POWER_SUPPLY_STATUS_NOT_CHARGING:
++				if (!di->flags.charging)
+ 					break;
+-				case POWER_SUPPLY_STATUS_FULL:
+-					if (di->flags.fully_charged)
+-						break;
+-					di->flags.fully_charged = true;
+-					di->flags.force_full = true;
+-					/* Save current capacity as maximum */
+-					di->bat_cap.max_mah = di->bat_cap.mah;
+-					queue_work(di->fg_wq, &di->fg_work);
+-					break;
+-				case POWER_SUPPLY_STATUS_CHARGING:
+-					if (di->flags.charging &&
+-						!di->flags.fully_charged)
+-						break;
+-					di->flags.charging = true;
+-					di->flags.fully_charged = false;
+-					if (di->bm->capacity_scaling)
+-						ab8500_fg_update_cap_scalers(di);
+-					queue_work(di->fg_wq, &di->fg_work);
++				di->flags.charging = false;
++				di->flags.fully_charged = false;
++				if (di->bm->capacity_scaling)
++					ab8500_fg_update_cap_scalers(di);
++				queue_work(di->fg_wq, &di->fg_work);
++				break;
++			case POWER_SUPPLY_STATUS_FULL:
++				if (di->flags.fully_charged)
+ 					break;
+-				}
++				di->flags.fully_charged = true;
++				di->flags.force_full = true;
++				/* Save current capacity as maximum */
++				di->bat_cap.max_mah = di->bat_cap.mah;
++				queue_work(di->fg_wq, &di->fg_work);
+ 				break;
+-			default:
++			case POWER_SUPPLY_STATUS_CHARGING:
++				if (di->flags.charging &&
++				    !di->flags.fully_charged)
++					break;
++				di->flags.charging = true;
++				di->flags.fully_charged = false;
++				if (di->bm->capacity_scaling)
++					ab8500_fg_update_cap_scalers(di);
++				queue_work(di->fg_wq, &di->fg_work);
+ 				break;
+ 			}
+ 			break;
 -- 
 2.53.0
 
