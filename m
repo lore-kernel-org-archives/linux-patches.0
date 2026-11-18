@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035037;
-	b=mUVGceRuqc0n5N8tgT3MDBS/susq2kdrQwF6MFchEOcWXWmadpsZHzm455o5K6fE4Xru
-	 ikAz6VbRxHGp2xZk/LHQ2fY8RCjaluCRwxjiiygMSAte0Cy+h/QA5rqmQhDXiVeu3El/W
-	 wf0UZDr8sQ6PCkOoX/rTcj6k2JtNjR3JR0WWUS1COrLWDnfX1bR0/KsbWlLVXUfYyN5ZR
-	 vo32m3N2bo/6cU+ik6FOp+hfSv0TQW+OSImQeCX5ukeQKCyWbxhVbtI2IZfZVHP21m+1C
-	 WzqZwhgGz3PwArLWYfZndZzJrElLJWPaklFiF58i9r9Jyy28Z3bLlO5EvUz6vxN0g7g==
+	t=1795035040;
+	b=R9tuNtWrJ0E3fllS4wKgu0+fioTzmjWEkkNkRzxLOxFdtP0DOGY3TOJgldGJqYGmjQu0
+	 0UxnZjE/xxvnuE4dVObUtMoiGcB0eDCZrPakUR5HNlweIPZruOa4DxhWGA8WIgApprmKA
+	 bZR7DpkvhDRNcHQzOAT2XSN2CoM/Sfi6yS0wsp2qF6sp4egaRmsiR0yFC4sWjrLTiFfbk
+	 d1izkODXwfxVeaKoKW/4BNHKs2tmyflQi+H9v7DB8kAIy+N51BRk9pkEaKuB9SRW7BC+X
+	 M7tRXFAz11Ub9HCIgwI/ItocjnJbE+Pvr2RjUEgVlMTgu7+Es9PGSb1k2xoPH7ZIxXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035040;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qKP8e5zK/4Ct5FHlwtmlsZYQRt4GBgUlB9hX1xYnb5o=;
-	b=Y/jLw6tlPE1j05tKX2kUFmTzqPziVcs57fSoErZ9KBiTaRpx+enlk1FjGUAGTL+Nq/zx
-	 mdPwiwJ0N8AKOiho42pbKCASoPnOmKN3+gsI1Hp6vsFuuZpOziJpJnSWA4WbPjQf6pcA5
-	 z/OCLQx7CwQzRZgAkOJ8Y39Zw1IYXAMlC8xxH+PwOFLoIhhySDPXDb+8qjzi85gbrD5z7
-	 1yIFgtJ4SZrJBf6D6fmcwXioDtiQXJz2kb1dqG6F/m65pYHh1BzCdsEjc8lu6c1tF/A4n
-	 5tSeyG4S4R3m7Xxz7xmMMfKJ3AJsbipNZuNFQNM1fN3w0F0HqSiThH6iKfMvy83EHaA==
+	bh=e2MnYaAX6SKE93WTLAXsvw6am92lEg+puQKnnIvUdxs=;
+	b=McrdpX4DIRB3KxJS6fQPTT25CyhOCeOgMXKcXBs2OAd7c+LJC0W21ZSA/ce3EqpCIntw
+	 8Ka3bec57HX6qGi34UBvZMFnEvN+FpFNecMfObrJDiqScNw2soZGgwGad3H+IuXgCQ3yC
+	 ZlZr8nzB5PrCLtkvE5WeN7faFlM+SnU6MLua3Yns//LaN1oHqyUuQIhjgOBXrXO7hqEXC
+	 o7XKV+5e71L8Jw+QcV2E4dYuRNDmnMBHCbZ9Kgb2lTHv99kamOpd4aL7M+lobKM3Wkhzu
+	 Ime7LgXjCBQArky8WcxxGgeYoORJ1xvnN2jMrQa9NDKYmyqT8DhqxLYaUpXvUdYUJMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOmscCiY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NryeX8PL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB405606A31C;
-	Wed, 18 Nov 2026 20:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936BA606A31C;
+	Wed, 18 Nov 2026 20:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOmscCiY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7D51F000C4;
-	Wed, 18 Nov 2026 20:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NryeX8PL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC48B1F000C4;
+	Wed, 18 Nov 2026 20:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035037;
-	bh=qKP8e5zK/4Ct5FHlwtmlsZYQRt4GBgUlB9hX1xYnb5o=;
+	s=korg; t=1795035040;
+	bh=e2MnYaAX6SKE93WTLAXsvw6am92lEg+puQKnnIvUdxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xOmscCiYH7c6BT0JHU66gtDx39eKKBSyX09SRgXoBhkEOr+X/fZ4eW5NJcwN47M0/
-	 HN1ohhJX/0fecoCcdRIWwMfwWBRJKuFIBlqid2u13KoXFeLIjau9LnWcl2ReJ29p1e
-	 qs/j9CdgDxoT/4ZZggyIBmzPlBbYN8ivH6o0KLvk=
+	b=NryeX8PLLinpB0RG028l0plF6++FARTI4rZ22DVixb3EGsoTAA8eB4eJyV+M82Puc
+	 Ti9q/HvjDtz4Oz80K+HON7K937i7FNrL+WuuQ4Y0JHiEq3778yW9zbul/BpRkWjBGE
+	 x5nTwlybdmHgKDBoWFPLxJbS7WC8kZzBaruAkmuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0581/3318] x86/ioperm: Prevent NULL dereference on theoretical missing IO bitmap
-Date: Wed, 18 Nov 2026 15:20:03 +0100
-Message-ID: <20261118150334.948101461@linuxfoundation.org>
+	Andreas Wendleder <gonsolo@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 0582/3318] wifi: b43: fix use-after-free in b43_bcma_remove()
+Date: Wed, 18 Nov 2026 15:20:04 +0100
+Message-ID: <20261118150334.987124368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,43 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Andreas Wendleder <gonsolo@gmail.com>
 
-[ Upstream commit 2d36d3b451a94899db9c965adde15492ffe6027a ]
+commit c6c8bc355657115664131b38c53c5ddf7d93b072 upstream.
 
-Outside the IOPL emulation path, the IO bitmap is always expected
-to be allocated when TIF_IO_BITMAP is set. The paranoid WARN_ON_ONCE()
-handles the case where the flag and the pointer got out of sync.
-In this theoretical scenario, which presumes some other bug in the
-code that triggers the WARN_ON_ONCe(), return early, instead of
-continuing and dereferencing a NULL pointer.
+b43_one_core_detach() frees the struct b43_wldev it is given the bus
+device of. b43_bcma_remove() then reads wldev->dev again to free the bus
+device, which is a read of freed memory.
 
-[ mingo: Clarified the changelog. ]
+b43_ssb_remove() does not have the problem: it takes a copy of wldev->dev
+at the start. Do the same here.
 
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Link: https://patch.msgid.link/20260615070115.4720-1-lirongqing@baidu.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 96838d61102a ("b43: Fix memory leaks in b43_bus_dev_ssb_init and b43_bus_dev_bcma_init")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andreas Wendleder <gonsolo@gmail.com>
+Link: https://patch.msgid.link/20261013000124.48605-1-gonsolo@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/process.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/broadcom/b43/main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
-index e3c26cc45f700..4e18baa67e99f 100644
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -472,6 +472,7 @@ void native_tss_update_io_bitmap(void)
- 		if (WARN_ON_ONCE(!iobm)) {
- 			clear_thread_flag(TIF_IO_BITMAP);
- 			native_tss_invalidate_io_bitmap();
-+			return;
- 		}
+--- a/drivers/net/wireless/broadcom/b43/main.c
++++ b/drivers/net/wireless/broadcom/b43/main.c
+@@ -5659,6 +5659,7 @@ static void b43_bcma_remove(struct bcma_
+ {
+ 	struct b43_wldev *wldev = bcma_get_drvdata(core);
+ 	struct b43_wl *wl = wldev->wl;
++	struct b43_bus_dev *dev = wldev->dev;
  
- 		/*
--- 
-2.53.0
-
+ 	/* We must cancel any work here before unregistering from ieee80211,
+ 	 * as the ieee80211 unreg will destroy the workqueue. */
+@@ -5673,14 +5674,14 @@ static void b43_bcma_remove(struct bcma_
+ 		ieee80211_unregister_hw(wl->hw);
+ 	}
+ 
+-	b43_one_core_detach(wldev->dev);
++	b43_one_core_detach(dev);
+ 
+ 	/* Unregister HW RNG driver */
+ 	b43_rng_exit(wl);
+ 
+ 	b43_leds_unregister(wl);
+ 	ieee80211_free_hw(wl->hw);
+-	kfree(wldev->dev);
++	kfree(dev);
+ }
+ 
+ static struct bcma_driver b43_bcma_driver = {
 
 
