@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059395;
-	b=E3qKLcwIPB9N0e7bwuTKQs8CdmPchuDoH+vHcDrKQaG6tWapBrZqoqt8C72s5bm77wcy
-	 4yoJ4+M/eA+5SZraa/30dEeSM+wW4ztWdFCG7RJDq0Pkwb/0j0Q7VLZoYPe+VncnBZjOH
-	 IszfiYOGs/mlSHuihVGITOs1YdKFvT0SHIzr//7sjL6bBLcit7M84cmpvkl+64XmYciNX
-	 M8Lawj+1USPwaYGdHG43nI79aW9CHDhaec/dqPwfoKD9SakIMOzJKhnEaM0911iG43b2u
-	 ur01f6mTW2jinvfT87XcPODAe/VVKL+7l/M1Fu9FkapjpBoffpp5Ms1tUcrPd5f0HVw==
+	t=1795059397;
+	b=GHE1zxHLUTMuku/bTV1UzKnXdtX4qTxYL1sFT+SeDsRZ0cKLIE2fm45i8syeLPVUVfCG
+	 NeYjeIqNAUZpGuFgicXjINqbt+WQspk71QI2/SfihJ7yNNmj66WY/lDN2dDZtBb7CG25m
+	 RDsc6uxzLhLOaVYz7ZmInEaWYBGkCZb6HUw1ugSKobpnMoJu1wHWhfjPsp3G7rE0X3Co+
+	 zQJ0dJ/aWTFB6/0y5laU0f3VEi4p5cxLyJID8CsF6zqM7ZnCGAOZk8pMi4DDlneSkLfsl
+	 MU4Iku1ZaYd+tfxgkHhzHkMSBPY/l/FJdtG57leMEqRkh7HFJoKUZLiwHQfSZZoa72A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2CkvE1xhMwmm59Mj9vp1eBdOhUFBDlR6/U61cRvcFwQ=;
-	b=306IL7p6YnW9qddlVqyn6F6fRN+tYrw/d8wmDXj7kl1wNkZe4BDDTQOgpb/TRrsIkLXv
-	 BB2xUmBav7N87o02x6/Ow5ndTSwR+zu/95NrFBTsCvoprrvy8AenHsaMC3Sd2OnbQl6Xl
-	 MnQZ1xbTR6Xi4OjeDa5hKa6+193Xrnxoo8xEIRu94uTSFm5iNT+W5YU0o3LJQfkM5NcwX
-	 gEeOY5gIxYWiA7P3TXrVM7grsQAf1GBojSDVcG0c8JTK7+0HnEp/Luj984J487bmzm+ii
-	 OYsL2e7FGEKUNgKpZokQaFF/lc7U4JO8EyVUp8j5yHheEQmg1JmzCwui/XdLruVsmJw==
+	bh=YLT655YHaY3adUge667eaJH2TphHompXyxsMMVHauWQ=;
+	b=0R/p2Ox5TPBSoRbQhCEYgpQ0sZP+17a0jz7WR9jjNPvIuChiSGZNp6orJ9XWjmnuOzt1
+	 KGeSCVyQcASBJJMqSIeJceiTkfZvy6DDfGt6UVqJbD2LQalMGMvubrLKzVWaRan/NwuFv
+	 dzoHvmjTmCkrcwa5VsK/dseH5FkndCFz+WZIZ9D5zIBnJj3A+HPb/s+7spo7oWgKo6371
+	 MpBOtQ9jlyvRLgCWppfb5LtjcRENvM0yEn7eUVoEnQLze6FHryfaq+ynrgyhrKuEJ+aIP
+	 08pHUl6iPiSRuqe/By8tfQ204nuZd452NbgBNoH/Ql5ONuM25VpGcgMu3Xdt6iiCj6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPD0gOAY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpfi97ih;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAC3606A325;
-	Thu, 19 Nov 2026 03:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F57606A320;
+	Thu, 19 Nov 2026 03:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPD0gOAY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E501F000C5;
-	Thu, 19 Nov 2026 03:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpfi97ih
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10F31F000C4;
+	Thu, 19 Nov 2026 03:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059394;
-	bh=2CkvE1xhMwmm59Mj9vp1eBdOhUFBDlR6/U61cRvcFwQ=;
+	s=korg; t=1795059397;
+	bh=YLT655YHaY3adUge667eaJH2TphHompXyxsMMVHauWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPD0gOAYLHQ2LXZxnjwYRhnvEutpiB2JGjm24Nj/5AL7y29DjBWBB3J5/q6d4UFjT
-	 RGWtcyN+0rzhmXJyhoOtP36SWSnCVYCqG0QFQAreC5WNrE5WVI/SiQi1pawz6vyBqY
-	 4JhU9qzM58eXp+Jp96bwqPX0vdI4avkj9HvVGQxc=
+	b=qpfi97ih7RApIqQmV3h02FaO5NcXX2vbSPCVBQ/TgJDJad40Lsyu7asOuhKfSIHt2
+	 KNIDNYzpdtehQt/svtpxhQTK0RIcm7pPb0RRZ5Kqtb+e5SAFmtVpNH6n/mqpvv4YNi
+	 8L26DngWNDQDeeXMAd6LwHCLRpRVwdsTjfjUb280=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0799/1848] batman-adv: tt: send ROAM_ADV on each roamed back client
-Date: Wed, 18 Nov 2026 15:47:17 +0100
-Message-ID: <20261118145949.831874880@linuxfoundation.org>
+Subject: [PATCH 5.10 0826/1848] mtd: rawnand: ndfc: fix gcc uninitialized var
+Date: Wed, 18 Nov 2026 15:47:44 +0100
+Message-ID: <20261118145951.311389540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,49 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-commit aff4d5d10f2dcb4a9b604e27414dafa1d51b6406 upstream.
+[ Upstream commit cceca8cb776b03e83985578f84bd730c30d57f70 ]
 
-When a ROAMING_ADV is received for an announced local client,
-batadv_roam_tvlv_unicast_handler_v1() creates a global entry with the
-BATADV_TT_CLIENT_ROAM flag set.
+Now that this can be built with COMPILE_TEST, an unassigned variable was
+found. Set to 0 to fix the W=1 error under GCC.
 
-If the client sends a frame again before the next TTVN commit,
-batadv_tt_local_add_roam() is expected to announce this return via a
-ROAM_ADV frame. But this doesn't happen because the global entry (created
-by the first ROAMING_ADV) carries BATADV_TT_CLIENT_ROAM until the new
-originator announces the client.
-
-Let batadv_tt_local_add_roam() always handle a roamed back client -
-independent of the ROAM flag of the global entry:
-
-* trigger sending of the ROAM_ADV frame(s)
-* remove the (with the roaming) associated global entry
-
-Cc: stable@vger.kernel.org
-Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
-[ adjust code still in batadv_tt_local_add ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606141301.iyVdFgl7-lkp@intel.com/
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Stable-dep-of: 0d66f9895f28 ("mtd: rawnand: ndfc: use devm_platform_ioremap_resource()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/ndfc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 23d34e1b48eec..1065003c99dfd 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -776,7 +776,8 @@ bool batadv_tt_local_add(struct net_device *soft_iface, const u8 *addr,
- 	/* Check whether it is a roaming, but don't do anything if the roaming
- 	 * process has already been handled
- 	 */
--	if (tt_global && !(tt_global->common.flags & BATADV_TT_CLIENT_ROAM)) {
-+	if (tt_global &&
-+	    (roamed_back || !(tt_global->common.flags & BATADV_TT_CLIENT_ROAM))) {
- 		/* These node are probably going to update their tt table */
- 		head = &tt_global->orig_list;
- 		rcu_read_lock();
+diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
+index 0fb4ba93c41e0..b9223cdaa8e34 100644
+--- a/drivers/mtd/nand/raw/ndfc.c
++++ b/drivers/mtd/nand/raw/ndfc.c
+@@ -188,7 +188,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 	const __be32 *reg;
+ 	u32 ccr;
+ 	u32 cs;
+-	int err, len;
++	int err, len = 0;
+ 
+ 	/* Read the reg property to get the chip select */
+ 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
 -- 
 2.53.0
 
