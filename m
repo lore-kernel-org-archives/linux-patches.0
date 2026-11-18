@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043406;
-	b=0uHEi6CggRYIuyXphjkg14m+HUGfa+haBhjPtNLv/GThQsRmk4DdNMNqn7WisQ7rSBck
-	 t+MvjOkij/K25FPvEfMBTXZ5dBxxIsQ+jCwafkksq+nGNH+VYbHse+eM1XckNcxFHZXE3
-	 F/N0KbR78hJYeROakag8R34UL1Yw7wUtdH4YiLLmRehLCytG053KQy0KJDep0TR/XKN1B
-	 ouuiXx8oFg3mfWfF0C8LfivxPe5/t1q8MRheNwMpK8hfMYMWkH2AwQWkuV0j/JnppONu0
-	 YbazWYDNfh8zP7Db3X2wP68MSL5MOQKuKjmOAlMXWe5KS30o9i9WmQX8yyiSRHjp0Gg==
+	t=1795043409;
+	b=34X5042dPk3eXRk9GXIvvz8jfdQQG2kTvfYfBf12DnJum8usWXNlaYayrzYaCCcskiTn
+	 I2V4M3PRdm8l6mIR0S45eBv9QE9DpZ33wgR4ymh0Ojq3vlP9vswVsNI5gkSPcnfEK+nTZ
+	 U8YMShfiBLxv8h2lrRaXr17s7fMBrJu9Wm9aAmh4D8RAXYopFdPPdHyFKCxKd9xK9/zPQ
+	 5aqPH3IaA+Zvn41RCoWP0WFQOgTcP981O5yTtBFc0vvbjW4iwcyibp5uHsRQyzEf48Zau
+	 v4/beN48k9G5yY36gHkhCXbICJ3sX5bW+zgLIQYNvSfONOSD+9s37+210YMWupZE+Jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043409;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oeDZHVjwMwP47TJGg2LodWYB4z7TBIsC5LSE65E0kcI=;
-	b=0mTbtaR7uzSYpCybQvEaQMDYBUXwQS4owKU7rgx5GmFvDEZ7cw6qRUB+p2w0+GEF6KPV
-	 vHeVoTEMVCxw2/XusmdWOFIxKtOjubmfTGThwcpUPwwEZ2dw/0os88LNXBcmIRUBNDHOl
-	 rly0VZhCMXN+CrEmyChiSS7TGLk2L2b0tyXf3JE57tOfUJudXtx9nxslx6nN/VSqhy5zX
-	 JN3htlm/Q9aJs0dmJlRHFuAK43JRsYSiAljvTClyVPpjrHwmUmgbg8mayOxxtpazzyEjK
-	 hmBO/zqWI3koLrUDyq2ud3yFOxFppwFhDCsPAvdzakeF+diRSVWqvd84dwMdgtALaUg==
+	bh=FNV1o1iRPmuPguJBGtrAk5QeP7laJOTYRLc/kJeUTAU=;
+	b=zskkqrO+ojLciyCg1moMrkGXOyHcsX48u7KHHDn3OG4LqmzWxHTndo1157Fz9kzgxOvU
+	 BPgo08bKVkNHhCScT6zX4gmwsZ+vQAvkJ+P/zdFE3h7pZCpDoO0z6tWmiEEMe4iNi/eLs
+	 JBrfzYXE92M2z3GiyupRKC775J68LQpaYA7FeaPMvoT3tDHDgCm86ghP2oRC7kZcpC8YA
+	 DyyF7noL8i9R184pRGbpeOCxfsPtoP7hwUyQJug991EzhzZqZ27HYtc4FrqUdE1UhXQaa
+	 I5C+ia67cX/mCBOJd3bsc/hJDtFPvBr99JpGgn2LsluE8xACfBGCqCTyhw8ciQ1WmAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4TmD85S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McE+BDS5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34480606A320;
-	Wed, 18 Nov 2026 23:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8143606A325;
+	Wed, 18 Nov 2026 23:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4TmD85S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8887A1F000C4;
-	Wed, 18 Nov 2026 23:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McE+BDS5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B201F000C4;
+	Wed, 18 Nov 2026 23:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043406;
-	bh=oeDZHVjwMwP47TJGg2LodWYB4z7TBIsC5LSE65E0kcI=;
+	s=korg; t=1795043408;
+	bh=FNV1o1iRPmuPguJBGtrAk5QeP7laJOTYRLc/kJeUTAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b4TmD85S+OYlj3ZGodIR39SCSO7OG8RK8KWVxLlQNasiI8m5g9owHJavR2Pa5YAAF
-	 rImZjcyLrxK7vCENuUWR2ZvSoICV2gsfjdGYIBz1MBYVZz0zolPOL1vKFk2smyXZDC
-	 wmCiQsT6+pENYdy3rAOxT9sJWPWCC4Ap4MGg5auo=
+	b=McE+BDS5S8m24vazAHp94kAYf0xJZeeJWI1XdGg6wRe4rTEK0y5WfuC/gXC6xq0lh
+	 9gdBkXtrNt93dlsG0uN3YzQos3Lq4XT92NgAR0oEOfqWvdZ2YJL0MinYAJV6WGWY5B
+	 CHQQjtzpnHfuLlLbzLRKKT85+b31713pPHFldmWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Gerd Rausch <gerd.rausch@oracle.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0147/2857] soc: ixp4xx: qmgr: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:19:41 +0100
-Message-ID: <20261118150206.641314655@linuxfoundation.org>
+Subject: [PATCH 6.1 0193/2857] net/rds: fix rds_message leak in the rds_send_xmit() drop path
+Date: Wed, 18 Nov 2026 15:20:27 +0100
+Message-ID: <20261118150208.305035991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +70,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
 
-[ Upstream commit 01479280fa5d4691013bcd64fdfd935117b69769 ]
+[ Upstream commit eb8a59a17f4a8b6f2afb4a8063e99dd96cc3fab0 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+When rds_send_xmit() picks the next message off cp_send_queue it takes
+its own reference with rds_message_addref().  If the message then hits
+the never-retransmit check (RDS_MSG_FLUSH, or an RDMA op that was
+already retransmitted), it is moved to the local to_be_dropped list and
+that reference is dropped after the batch.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+However, if RDS_MSG_ON_CONN has already been cleared, the message is
+not added to to_be_dropped and the reference taken above is never
+dropped: cp_xmit_rm has not been set at this point, so the loop simply
+abandons rm and the rds_message (and everything it pins: pages, MRs,
+notifiers) leaks after an RDMA error.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
+The only other places that clear RDS_MSG_ON_CONN are
+rds_send_path_drop_acked() and rds_send_drop_to(), and both can run
+while rds_send_xmit() has dropped cp_lock between moving the message
+to cp_retrans and re-taking the lock in the never-retransmit check:
+rds_send_path_drop_acked() can ack away a message that already sat on
+cp_retrans - the RDS_MSG_RETRANSMITTED case above - and
+rds_send_drop_to() runs on socket close.  Both unlink the message
+under cp_lock and put their own reference, leaving the xmit-path
+reference stranded.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Message-ID: <20260704121851.63805-1-pengpeng@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Drop the reference directly in that case.
+
+This mirrors Oracle UEK commit "net/rds: fix rds_message memleak in
+rds_send_xmit".
+
+Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+[achender: port to net-next; update commit message, checkpatch nits]
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ixp4xx/ixp4xx-qmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rds/send.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/ixp4xx/ixp4xx-qmgr.c b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-index 291086bb9313e..db3683300f315 100644
---- a/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-+++ b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-@@ -455,6 +455,7 @@ static const struct of_device_id ixp4xx_qmgr_of_match[] = {
-         },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, ixp4xx_qmgr_of_match);
+diff --git a/net/rds/send.c b/net/rds/send.c
+index c2ef236076188..516ebd03c8400 100644
+--- a/net/rds/send.c
++++ b/net/rds/send.c
+@@ -288,9 +288,21 @@ int rds_send_xmit(struct rds_conn_path *cp)
+ 			    (rm->rdma.op_active &&
+ 			    test_bit(RDS_MSG_RETRANSMITTED, &rm->m_flags))) {
+ 				spin_lock_irqsave(&cp->cp_lock, flags);
+-				if (test_and_clear_bit(RDS_MSG_ON_CONN, &rm->m_flags))
+-					list_move(&rm->m_conn_item, &to_be_dropped);
+-				spin_unlock_irqrestore(&cp->cp_lock, flags);
++				if (test_and_clear_bit(RDS_MSG_ON_CONN,
++						       &rm->m_flags)) {
++					/* our ref is put after the batch */
++					list_move(&rm->m_conn_item,
++						  &to_be_dropped);
++					spin_unlock_irqrestore(&cp->cp_lock,
++							       flags);
++				} else {
++					/* already off the conn list; drop
++					 * the ref taken above ourselves
++					 */
++					spin_unlock_irqrestore(&cp->cp_lock,
++							       flags);
++					rds_message_put(rm);
++				}
+ 				continue;
+ 			}
  
- static struct platform_driver ixp4xx_qmgr_driver = {
- 	.driver = {
 -- 
 2.53.0
 
