@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023774;
-	b=hWZRoKFB5c/W8vhN8xU7tNqRr/6rFTC8rxyMyd2hEeCNIieekReqzmv2HoRnbZafzSkP
-	 0B7RYXJjsmvWfQtOr2ZDVy9/zoCOnvJxPM7QH6As+GIvr1iZPKS7b/fOXqfxy5XJ7TSN1
-	 cSQ5hPAY2ap61CwZS664W3QfVFGTZvKEyzu3bx2MiJz66MYJPQYYqOGIbU4zjTQbN1hLw
-	 Ll1imMK6fp5HPpQD7Yaq3JGEjg1m9ycNdw/7QC1g1d/VXKQgxz4NxVkIXSM7thQ4qFpj3
-	 jrjH4AfWdl4KLwKptDAFFvZgRIkIV3bdK+tlrpVKs7rW9aente41xiHYcTHICvLPGmA==
+	t=1795023777;
+	b=ysoncTFTsZMO82uK+NEwpw3NEiSUO2yaGh0kDNPU7VXP+IH0rTDzskuixBBBOPRCd5Bh
+	 GbDy1sKxYLcM196TOfV1LwzGfMRXYdOcp0dOxy1U+9QK67oedq2+J044W9Rc1nC7uVnpg
+	 z1iRH9AkNLu8bpxFUwko4gda6GjItDfL47Z8k0RcLG2hZ79BEFNfY3jXcdPgKHx1HB4Ci
+	 JnP/U4s453vhFDxS7ZnkcTRAHsV5Ll7wfs1vkmBbHHvw6sgdHJ1BQ3p2UqmiN9feLYOvA
+	 TxMdfJTxd5PpRR51X3xLg+wrYAniPr6xybX+qGkGgxdRd/GkXhYzC8HapUedtXXkBfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CDxUMLF5BMm+uoi78O3ehq/mU13cUuJXnlr3wCj0x9w=;
-	b=jDtMi2/IiIGXfOwPcm3NbHiikobYWp5zQwQws6LZs9xWNo4cIA6l+aK41THdeYzUIQYr
-	 AD4OgaAVPjCZEZHwPwoLY09aDOKloRlaicHnmxPrNQtEX4nq15+ZyIIVYgqCqCgXSVxsG
-	 gWTgOlYDrgD4mgxfuCdd+NhqwhP/uKgfGrvYeDgMgOxCCEJYoSsE80iKbBRULyBQewfr6
-	 v3f+Xxcf7Dk3cHycZYBdX0tdzUWJEBsRCcda9cH3EAt1CFHL2dZEbl8tHwkXuXVVu3yBa
-	 gHl1nIGgEhBT+f6CMHjVyYstGRmftey8132osBM0T1ocxkgyxbW8CEGU9ae6SUymcyA==
+	bh=jFhCcu/WL8ojAsXF3Wk5uZrUguMeqxaF9p7wuAkjZ30=;
+	b=OwvzKDSbPi0xVrj96S3qgJhEDYhgartaA50rkLolwh1MsAwOshGi1yBOZJOA9mYVBaQA
+	 FJJHo9hFd0nfVksHWA20nJbM6SBxmToX8JtbNFgei+h2FjYQQTE7B80ZpbinHPJ6iQhgD
+	 AQ4DnIPCAi9s6QbSJrcitYKTT48dHqdhDng0iSrtUqnehdY5TNpOdL5P51nici3I6gGC/
+	 3H42ypb7MsjLX9O0EsdWwtHQGhl0hCdkOWaMrJ1qOB4cK45BHsklZtEOv4wp55fPljjt9
+	 BQ1OmEjuzc5HJmRSBQT1UyDXYkFGk33Zm2pgNsrQAqD5IQu8VOVfqcUonr/oFnQeENg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHHcHhfb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMB80Tm4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6959A606A320;
-	Wed, 18 Nov 2026 17:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CE4606A320;
+	Wed, 18 Nov 2026 17:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHHcHhfb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF831F000C4;
-	Wed, 18 Nov 2026 17:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMB80Tm4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CDF1F000C4;
+	Wed, 18 Nov 2026 17:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023773;
-	bh=CDxUMLF5BMm+uoi78O3ehq/mU13cUuJXnlr3wCj0x9w=;
+	s=korg; t=1795023776;
+	bh=jFhCcu/WL8ojAsXF3Wk5uZrUguMeqxaF9p7wuAkjZ30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iHHcHhfbTAZPWXgPfAV0rr55oaH8yeI2U4lQMy5kBdpVF9RiC6ha2C5jzzIRRX0/9
-	 CFXyiXiPeXlq0mJsMjtJhCSOUKrvaXK8zh9P/DUr17NTM6zRdL45PlltmQKbCz6n8E
-	 P2GFSG39uvvRvYwwojODK75v+vRmOxcCyrJX24WU=
+	b=gMB80Tm4+6SuvmM+gMiw8VO0/r8ALUfSRoHPD4M/lczMDRL45uM6pZ2AOjizD7l3O
+	 2LKvlko4hOpsCX2fX8VdAaNtLHcALJzLAMjSHvp9jPogwNecPXoI8jXV5IGlCnCKOO
+	 +Oy84jgqYxHRtqpACIVJAKzxPVcChHzCcYaCgvYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0472/2151] ASoC: codecs: rt1015: convert to snd_soc_dapm_xxx()
-Date: Wed, 18 Nov 2026 15:36:47 +0100
-Message-ID: <20261118150139.203595642@linuxfoundation.org>
+Subject: [PATCH 6.18 0490/2151] ASoC: SOF: amd: fix amd_sof_acp_probe() error unwind ordering
+Date: Wed, 18 Nov 2026 15:37:05 +0100
+Message-ID: <20261118150139.908512016@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,72 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 8b1c56ae39d3bf304ab0c8de456e8f02081be9ed ]
+[ Upstream commit b6aaef8ca8c305170de83e621c7e16d56731312a ]
 
-This patch converts below functions.
+Call amd_sof_sdw_exit() after free_irq() in the free_ipc_irq error
+label of amd_sof_acp_probe(). Without this, an IRQ that fires between
+sdw context teardown and free_irq() can dereference freed SoundWire
+resources.
 
-dapm->dev					-> snd_soc_dapm_to_dev()
-dapm->card					-> snd_soc_dapm_to_card()
-dapm->component					-> snd_soc_dapm_to_component()
-
-dapm_kcontrol_get_value()			-> snd_soc_dapm_kcontrol_get_value()
-
-snd_soc_component_enable_pin()			-> snd_soc_dapm_enable_pin()
-snd_soc_component_enable_pin_unlocked()		-> snd_soc_dapm_enable_pin_unlocked()
-snd_soc_component_disable_pin()			-> snd_soc_dapm_disable_pin()
-snd_soc_component_disable_pin_unlocked()	-> snd_soc_dapm_disable_pin_unlocked()
-snd_soc_component_nc_pin()			-> snd_soc_dapm_nc_pin()
-snd_soc_component_nc_pin_unlocked()		-> snd_soc_dapm_nc_pin_unlocked()
-snd_soc_component_get_pin_status()		-> snd_soc_dapm_get_pin_status()
-snd_soc_component_force_enable_pin()		-> snd_soc_dapm_force_enable_pin()
-snd_soc_component_force_enable_pin_unlocked()	-> snd_soc_dapm_force_enable_pin_unlocked()
-snd_soc_component_force_bias_level()		-> snd_soc_dapm_force_bias_level()
-snd_soc_component_get_bias_level()		-> snd_soc_dapm_get_bias_level()
-snd_soc_component_init_bias_level()		-> snd_soc_dapm_init_bias_level()
-snd_soc_component_get_dapm()			-> snd_soc_component_to_dapm()
-
-snd_soc_dapm_kcontrol_component()		-> snd_soc_dapm_kcontrol_to_component()
-snd_soc_dapm_kcontrol_widget()			-> snd_soc_dapm_kcontrol_to_widget()
-snd_soc_dapm_kcontrol_dapm()			-> snd_soc_dapm_kcontrol_to_dapm()
-snd_soc_dapm_np_pin()				-> snd_soc_dapm_disable_pin()
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/87bjl94drz.wl-kuninori.morimoto.gx@renesas.com
+Fixes: d948218424bf ("ASoC: SOF: amd: add code for invoking soundwire manager helper functions")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20260910132251.1171943-4-Vijendar.Mukunda@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 98fe8aab04ce ("ASoC: rt1015: make control calibration failures observable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1015.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/sof/amd/acp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/rt1015.c b/sound/soc/codecs/rt1015.c
-index 818b45226b728..bd0b1d3c829dd 100644
---- a/sound/soc/codecs/rt1015.c
-+++ b/sound/soc/codecs/rt1015.c
-@@ -494,9 +494,10 @@ static int rt1015_bypass_boost_get(struct snd_kcontrol *kcontrol,
- static void rt1015_calibrate(struct rt1015_priv *rt1015)
- {
- 	struct snd_soc_component *component = rt1015->component;
-+	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
- 	struct regmap *regmap = rt1015->regmap;
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index df43c6000a063..475b77b8ea309 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -939,6 +939,8 @@ int amd_sof_acp_probe(struct snd_sof_dev *sdev)
  
--	snd_soc_dapm_mutex_lock(&component->dapm);
-+	snd_soc_dapm_mutex_lock(dapm);
- 	regcache_cache_bypass(regmap, true);
- 
- 	regmap_write(regmap, RT1015_CLK_DET, 0x0000);
-@@ -518,7 +519,7 @@ static void rt1015_calibrate(struct rt1015_priv *rt1015)
- 	regcache_cache_bypass(regmap, false);
- 	regcache_mark_dirty(regmap);
- 	regcache_sync(regmap);
--	snd_soc_dapm_mutex_unlock(&component->dapm);
-+	snd_soc_dapm_mutex_unlock(dapm);
- }
- 
- static int rt1015_bypass_boost_put(struct snd_kcontrol *kcontrol,
+ free_ipc_irq:
+ 	free_irq(sdev->ipc_irq, sdev);
++	if (adata->sdw)
++		amd_sof_sdw_exit(sdev);
+ unregister_dev:
+ 	platform_device_unregister(adata->dmic_dev);
+ 	return ret;
 -- 
 2.53.0
 
