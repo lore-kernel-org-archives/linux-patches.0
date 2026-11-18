@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057355;
-	b=AL8i4OtKazLU4/QNVKHfp3/x2mQ3H4ZbPvluu3yikXqbNWJmadPPBQmxVPal7uSpQdJk
-	 h7mzerlhkIoIfeR/EoTHStCqoUCvKoHYJIsmqawoCg7fTd3iu5RyuGvpPhyxckSVdpl9v
-	 067964BTTS/iaHZag+A/5RO7HhbiuvBek1HA+a8/i5W+S6m24rSjogD00lE89j16Hc6uK
-	 a2XVrzNAzhS0cl8dmy+SVvEZc/owEXe+02lF7yqmn4IBcYAVEF1M9MP1OjUOJ6OYpccbg
-	 n64XOdIG5KfJ1THh5MIQ2m6Zgi6pB1vEJXCXhOYFr4A6aQcgs9MgzZoUrMP3GCGGFTg==
+	t=1795057358;
+	b=XxO+FDxZs/XkJyyEhcKY0PwxwcpgSR3Rk4VPJnOf1nZApZrAxmyuJnlaamvaCTRWk28E
+	 tIfNyt3jxXrAduedW+EJO305oIxs3DjQZOz6VKNrYo9ut71O+zrtqF127o1WCrh5+1oxA
+	 AjOOzHm7sCl4YKu4ZTWNYC2h5/ANHhoAqPtI/H/d5elZxaD2qDwgcav+KngHnr7+VFaxN
+	 Ku+lSkPuQ4vgvJnDC22buA4wrWxdRrNaiYcu6qfATtgVPaYUNkeyfJ3r4xLVnSrTIDDVt
+	 LATKjwPvFuLTwy0nGaBMTGxCryMF/5MdT4jXSKlUDrGkw90/YJ7iiSJmOTHNjmY696A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=usiqXPaqP/QUNWZbFeB4LTSbvQa3ckmBxHPq1CYOSUE=;
-	b=onD12/X8wbJH42L4KAiyhup8F1p+wBLKJ75F5JW7LltF3SbFQbCcYoynG9tQLznhvF3s
-	 6EbyfrvOAkOiVhQX/GjvyI6MOpYrNOKz1m4WkreTdWZHiLl1Kaa24LY8MnJneH88C4hL8
-	 HUsy5KslU4Atz6SmODvdczNASLkfnL/xLzNdb9iAsUFajw3OGbVyQmSCO2K2EHMEZt8Am
-	 wMD9rXhxq25JNbIEbQ6Vj7Ouu9NDO6CZoz5Y6F6TdhkUj4z5TAnVg6LAIfVdgU37He5sE
-	 19dOmkiYHrD/6SZPjdcd6xMy0w3j5UJvdqL46KwtFzU3Y1f0BR7i5BZI4yBrnsMPWNQ==
+	bh=Yz18pinGgqhv3rNGZ0hul3KR/DlCXa45ak62PCKou6c=;
+	b=QKs3OwF6ImYF82c0XmtJwiMbmeVShE6cv5edcHBi0yuGLLThLY/P4XsZkB/QR15Jp42F
+	 8CM4l9DdxgFHJM/JrfkflVjIZ9ENfc4QhymJftXmrb6lWvpDAkUEMopbteLM+ygzGE0hb
+	 Tlutianlsxc8gZeFLA20Wq2/aGMJnEP41wYrEOp+yXFzZNoIRo64JvAAPZ+sglSfviHb1
+	 7oJreGiKqCzJBXLBxCjEZjl0Xzv9NSuc69i/tqkf5H7rI0rokVGZRWaB1VSdBC5oiXBvZ
+	 rXXFm/5AOGLXgQ2CDviyKGdVeHyA7uCwbnrWDJObAUUNfujse/zc25Xanj9MgUQWEaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKJrh5bg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CkOYjNkA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BB160A261F;
-	Thu, 19 Nov 2026 03:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C51660A2616;
+	Thu, 19 Nov 2026 03:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKJrh5bg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945541F000C4;
-	Thu, 19 Nov 2026 03:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CkOYjNkA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3041F000C4;
+	Thu, 19 Nov 2026 03:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057355;
-	bh=usiqXPaqP/QUNWZbFeB4LTSbvQa3ckmBxHPq1CYOSUE=;
+	s=korg; t=1795057358;
+	bh=Yz18pinGgqhv3rNGZ0hul3KR/DlCXa45ak62PCKou6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKJrh5bgPaM+BRRlWft4Ubgcid6YVIgMc5VpEqWs3EUHloxB8Q8UKsP1GOqzt/p9n
-	 GnH41IgnJPcaz72MnkkA+4pW82/9AeLrkLNwvOT1mlPPvk02YvYBXSFloRPbXWWPIX
-	 m5/uIO8NMrL4aUNyOl7RRl7QnBatxF1w01ML/Oto=
+	b=CkOYjNkA2M57xi5XDjLe4Ko1ujkmZTkP7GM29eozMCjTtcFA4PcM5RRp4W5pi4yk4
+	 A0oM+mRla6APYroGXfiZ9CD7Qid4hRpLB7cTiSenfV+svEobLj854WtcmZqt5qBuGc
+	 HIPlOjuvEMdqHaTOEfpn/4SLMOqsJx9/jH35BIYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Shahar Tzarfati <shahar.tzarfati@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0094/1848] greybus: manifest: validate string descriptor header
-Date: Wed, 18 Nov 2026 15:35:32 +0100
-Message-ID: <20261118145915.050096756@linuxfoundation.org>
+Subject: [PATCH 5.10 0103/1848] wifi: mac80211: ibss: read deauth reason_code after frame length check
+Date: Wed, 18 Nov 2026 15:35:41 +0100
+Message-ID: <20261118145915.364749791@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,38 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Shahar Tzarfati <shahar.tzarfati@intel.com>
 
-[ Upstream commit 18b6510f642dbcb856c3af8be974d1600f3ba2d3 ]
+[ Upstream commit aa4c0a649903567762edf2bbc7fff608953b3ca4 ]
 
-identify_descriptor() computes a string descriptor size from
-desc->string.length.
+The function was reading reason_code from the frame before validating
+that the frame is at least IEEE80211_DEAUTH_FRAME_LEN bytes long.
 
-Require the descriptor to contain the fixed string descriptor header
-before reading the variable string length. The existing descriptor-size
-check then reports the short descriptor.
+Move the reason_code read to after the length check so the field is
+guaranteed to be present before it is accessed.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706091935.78020-1-pengpeng@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/greybus/manifest.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/ibss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/greybus/manifest.c b/drivers/greybus/manifest.c
-index dd7040697bde9..469da3f39afb4 100644
---- a/drivers/greybus/manifest.c
-+++ b/drivers/greybus/manifest.c
-@@ -122,6 +122,8 @@ static int identify_descriptor(struct gb_interface *intf,
- 	switch (desc_header->type) {
- 	case GREYBUS_TYPE_STRING:
- 		expected_size += sizeof(struct greybus_descriptor_string);
-+		if (desc_size < expected_size)
-+			break;
- 		expected_size += desc->string.length;
+diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
+index 78ae58ec397a0..936b688430e75 100644
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -942,11 +942,13 @@ static void ieee80211_rx_mgmt_deauth_ibss(struct ieee80211_sub_if_data *sdata,
+ 					  struct ieee80211_mgmt *mgmt,
+ 					  size_t len)
+ {
+-	u16 reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++	u16 reason;
  
- 		/* String descriptors are padded to 4 byte boundaries */
+ 	if (len < IEEE80211_DEAUTH_FRAME_LEN)
+ 		return;
+ 
++	reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++
+ 	ibss_dbg(sdata, "RX DeAuth SA=%pM DA=%pM\n", mgmt->sa, mgmt->da);
+ 	ibss_dbg(sdata, "\tBSSID=%pM (reason: %d)\n", mgmt->bssid, reason);
+ 	sta_info_destroy_addr(sdata, mgmt->sa);
 -- 
 2.53.0
 
