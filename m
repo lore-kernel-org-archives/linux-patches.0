@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022143;
-	b=hdSIk01UuYihp34rB181HFdJX00XCjmY3EJPLHbnTPqTo16K+kMxDwdrqKwzv2MM0+UR
-	 jF1+FUxpLtrfGDd8bUq40hWGV9cOJVF1tcHwEuVhW8B5jR21Isx9meMKzIP9PO4ONFLEo
-	 kKU09e9z91hpK44pk4DvpiLAn4uurXD0ZS3aa8f4VOX6f65NgmGmu/gN5hpIPDFtl6Sq0
-	 86JMjnI7C6+8iqGPWDw5fsSon1Fynh5pAwWxsM84NPPhjHwVgAQl9ZrixZvhvq7M1DS2S
-	 cDFvda9kK/TOfrwWLMqngPlFXUhLJNezSZJQJCX6juKpRKwqNyXL0faLc2isy6JFZFg==
+	t=1795022146;
+	b=pJFYukxe4Fy5t+0zdF9tgLZbOglxCPhbJS/KZSXXn80ncTJG+xPm1M2DZOkKCxJkhuZZ
+	 rqaid9LYMbJEOnHb9jCaUQ6LRf6PGJBuH2uNfpXdBoQ5JkwrHr8mTrZMzPl3XJkQimVs4
+	 aiCyHQ+BntxpxYpzoaA7Qu3eGQV8S0CGK5fJ0aSm7YEdyg8zLpoyMftYnSWvcr1JXAKHK
+	 AupmgEYSJqpJGub/yaBXGdwQ+zk87j9cY6U9G2UZfdGFp+SuXu7XGw8/cMYFg5MLo6pdP
+	 Xb7rTKAi49r/FaO90vvenuuCmAlrTJ4JbkrqZqVL1FNp/0HFwlC1ainOig7fxgkGyfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KhDk8MhsTy3KKW4upAyeuGVjt8zUOx56d5jSMdWHR+c=;
-	b=aDJ+gylyglha1NyA+SnTH7WdJGub811RcJTVvktUBoJEV/Q5tiX++nC/31/hB62+fRf4
-	 XkNKzkYu2KwZXfG8j6ga1V7F0963IU6EQIyftEVCYrPqwTtW58CgxNjxhw5cnDgVDuBzA
-	 nwG2mFs8DvJ90A05vRrF+5WECzxICHXzT8o3UGiDkdo9+rzMRCnm/3zIch9i411upw1Og
-	 l30bamHQzdt6zsNe4/e3AYFcx5UVKn6v6xqvE73fjzhZOZguBeZM9qtcC48L2EsF//GMz
-	 fyG2uKMmsiSlOazdptPMgKgLYw2xQyksDO0BJ4aGf5WPUVZ93LOkaVuTFhelQL91ZPw==
+	bh=iB0xq8DNUWcI7xX53IBVWOxYwaVbjrRfjkSEmA2UUP0=;
+	b=22mgdUqqaX+k+m3QU/ZIruO8w6Ngrm7yIGEi2ErGkFv++i+1JGf/W60IujpdwHizrG3w
+	 XlOCrg7zw+sFAGYitWdN+OX1o6YqOHO1fIOzdUPR6/PTVP1L1Z7OkkOPso9Kuxn9c8elp
+	 oJajG4byhB89lHPUR7xbeV6zHcJYb443vHgsDL5ZjHmemUEbEU/ftJs+xK802Dl2Y4iFq
+	 2dGV6FPTefbX0y+0phVJOwjCYTYOkgXJgvdp9Viw6E62VfwR4sCkiUmrMbQpUxmJDFoiR
+	 I9UBzDyNwhsvsXjSKPtSWg3HgrRluY4Ptk9UkEhAaEvpixASbb+ARRM4urVPAfbklNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qlonu7W9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZidu0qS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B98606A32A;
-	Wed, 18 Nov 2026 17:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAC2606A320;
+	Wed, 18 Nov 2026 17:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qlonu7W9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1111F000CC;
-	Wed, 18 Nov 2026 17:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZidu0qS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507CA1F000C5;
+	Wed, 18 Nov 2026 17:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022143;
-	bh=KhDk8MhsTy3KKW4upAyeuGVjt8zUOx56d5jSMdWHR+c=;
+	s=korg; t=1795022145;
+	bh=iB0xq8DNUWcI7xX53IBVWOxYwaVbjrRfjkSEmA2UUP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qlonu7W9B3rc0qsn7ds6mQfoSVGilUJKZIc4O/k+D9vP2X7gTgBqhHdX2n1GI67mO
-	 OgMJXrfnnqaqZPkGaZrhrv2SXZdri7iaLfSLpIZKSnOSu9P5x1bYWmlw5dZxIOBfVN
-	 LLeIxanH3tmIhsh5Ez3GF27fstp8iNUa7++l9SgM=
+	b=vZidu0qSWR+CvgYH2UqO+Q9D2aMy3ih4zVCIN4cIGu7Em7BaC7rf8CoMPeJdJ201L
+	 XuYOrJ6GcWi1NlZNq4K+zMwAVUWDJhyQoJ6GvaEhZ5+20kBKhEZyZwjysWsZfFe7lp
+	 hbbU5FPudkCIscAdGl5EvoCqriDFhbchs7uBSkeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	syzbot+751b587577d0ebca10f2@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2557/2651] tls: Honor O_NONBLOCK in tls_sw_splice_read()
-Date: Wed, 18 Nov 2026 16:03:17 +0100
-Message-ID: <20261118150416.521770019@linuxfoundation.org>
+Subject: [PATCH 7.3 2558/2651] ipv6: Protect multiple routes insertion by table lock.
+Date: Wed, 18 Nov 2026 16:03:18 +0100
+Message-ID: <20261118150416.552385594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,76 +71,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 78ded647d43e335891f981f68c5992a2e763cfcc ]
+[ Upstream commit 4c6fbb1fbafa85029fa789b5b01f39ebcb459d1a ]
 
-tls_sw_splice_read() takes its blocking behavior from
-SPLICE_F_NONBLOCK alone. When splicing from a socket to a pipe,
-do_splice() sets that flag from the pipe's O_NONBLOCK, not the
-socket's. On a nonblocking socket, a splice(2) call without
-SPLICE_F_NONBLOCK therefore sleeps in tls_rx_rec_wait() until a
-record arrives. tcp_splice_read() instead reads sock->file->f_flags
-and returns -EAGAIN.
+syzbot reported the warning below. [0]
 
-Polling first does not avoid the sleep once tls_sw_splice_read()
-consumes zero-length records, as it does after a later patch in this
-series. tls_sw_sock_is_readable() reports the socket readable while
-any record sits on rx_list, including a zero-length record that
-delivers no bytes to the pipe. For TLS 1.3 the strparser announces a
-record before decryption, when its plaintext length is still unknown,
-so the readiness test cannot screen such a record out. A splice that
-consumes the record and waits for the next stalls every connection
-an event loop multiplexes.
+While call_fib6_multipath_entry_notifiers() is called locklessly,
+fib6_siblings could be changed concurrently, leading to the
+warning (and later null-ptr-deref).
 
-An LLM audit of the TLS read paths found this defect.
+Let's protect multiple routes insertion with tb6_lock.
 
-Treat the socket's O_NONBLOCK as nonblocking too. A caller that
-sets O_NONBLOCK on the socket and splices without SPLICE_F_NONBLOCK
-now gets -EAGAIN where the splice blocked before. sendfile(2) from
-a TLS socket changes the same way, because do_sendfile() leaves the
-input file's O_NONBLOCK out of the splice flags. Both now behave as
-they do on a plain TCP socket.
+Along with that, __ip6_ins_rt() and ip6_route_del() are changed
+to fib6_add() and fib6_del().
 
-Fixes: c46234ebb4d1 ("tls: RX path for ktls")
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Link: https://patch.msgid.link/20261027015215.605919-2-kuba@kernel.org
+Note that fib6_del() finally calls rt6_multipath_rebalance(),
+which requires rcu_read_lock().
+
+[0]:
+i != fen6_info->nsiblings
+WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib6_event_init drivers/net/netdevsim/fib.c:831 [inline], CPU#0: syz.0.157/6279
+WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib6_prepare_event drivers/net/netdevsim/fib.c:947 [inline], CPU#0: syz.0.157/6279
+WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1003 [inline], CPU#0: syz.0.157/6279
+WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib_event_nb+0x1029/0x11d0 drivers/net/netdevsim/fib.c:1043, CPU#0: syz.0.157/6279
+Modules linked in:
+CPU: 0 UID: 0 PID: 6279 Comm: syz.0.157 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+RIP: 0010:nsim_fib6_event_init drivers/net/netdevsim/fib.c:831 [inline]
+RIP: 0010:nsim_fib6_prepare_event drivers/net/netdevsim/fib.c:947 [inline]
+RIP: 0010:nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1003 [inline]
+RIP: 0010:nsim_fib_event_nb+0x1029/0x11d0 drivers/net/netdevsim/fib.c:1043
+Code: eb 0d 4d 89 fd e8 b7 c5 6c fa be 01 00 00 00 48 89 df e8 5a 38 85 fd 4d 89 ef 4c 8b 6c 24 20 e9 4a f3 ff ff e8 98 c5 6c fa 90 <0f> 0b 90 e9 db fa ff ff 89 e9 80 e1 07 80 c1 03 38 c1 0f 8c df f0
+RSP: 0018:ffffc900047bef10 EFLAGS: 00010293
+RAX: ffffffff875b59a8 RBX: 0000000000000002 RCX: ffff888079770000
+RDX: 0000000000000000 RSI: 0000000000000002 RDI: 0000000000000001
+RBP: ffffc900047bf0a0 R08: ffff88805c0bb02f R09: 1ffff1100b817605
+R10: dffffc0000000000 R11: ffffed100b817606 R12: dffffc0000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: ffff88802c792000
+FS:  00007f334ba076c0(0000) GS:ffff888123ad0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f334ba06ff8 CR3: 000000007a5b2000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ notifier_call_chain+0x1a5/0x3d0 kernel/notifier.c:85
+ atomic_notifier_call_chain+0xda/0x180 kernel/notifier.c:223
+ call_fib_notifiers+0x31/0x60 net/core/fib_notifier.c:36
+ call_fib6_multipath_entry_notifiers+0xf5/0x160 net/ipv6/ip6_fib.c:428
+ ip6_route_multipath_add net/ipv6/route.c:5542 [inline]
+ inet6_rtm_newroute+0x14f5/0x1a30 net/ipv6/route.c:5664
+ rtnetlink_rcv_msg+0x802/0xc00 net/core/rtnetlink.c:7163
+ netlink_rcv_skb+0x226/0x4a0 net/netlink/af_netlink.c:2572
+ netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+ netlink_unicast+0x7bd/0x940 net/netlink/af_netlink.c:1361
+ netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1916
+ sock_sendmsg_nosec+0x14e/0x190 net/socket.c:800
+ __sock_sendmsg net/socket.c:818 [inline]
+ ____sys_sendmsg+0x54e/0x850 net/socket.c:2715
+ ___sys_sendmsg+0x2a5/0x360 net/socket.c:2769
+ __sys_sendmmsg+0x273/0x4d0 net/socket.c:2858
+ __do_sys_sendmmsg net/socket.c:2885 [inline]
+ __se_sys_sendmmsg net/socket.c:2882 [inline]
+ __x64_sys_sendmmsg+0xa0/0xc0 net/socket.c:2882
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f334ab9e1d9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f334ba07028 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
+RAX: ffffffffffffffda RBX: 00007f334ae26090 RCX: 00007f334ab9e1d9
+RDX: 04000000000001f2 RSI: 0000200000000000 RDI: 0000000000000004
+RBP: 00007f334ac35888 R08: 0000000000000000 R09: 0000000000000000
+R10: 00000000000000fc R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f334ae26128 R14: 00007f334ae26090 R15: 00007ffd96688aa8
+ </TASK>
+
+Fixes: 169fd62799e8 ("ipv6: Get rid of RTNL for SIOCADDRT and RTM_NEWROUTE.")
+Reported-by: syzbot+751b587577d0ebca10f2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6adbaed6.67317f00.38c4bc.001b.GAE@google.com/T/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20261027065247.2871134-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_fib.c |  4 ----
+ net/ipv6/route.c   | 17 +++++++++++++----
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index d1ad31986cf2c..79639ed79821c 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2007,10 +2007,14 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 	struct tls_msg *tlm;
- 	struct sk_buff *skb;
- 	ssize_t copied = 0;
-+	bool nonblock;
- 	int chunk;
- 	int err;
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 9ff761962b45c..ef65dd9870ea3 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1228,9 +1228,7 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 			fib6_nsiblings++;
+ 		}
+ 		BUG_ON(fib6_nsiblings != rt->fib6_nsiblings);
+-		rcu_read_lock();
+ 		rt6_multipath_rebalance(temp_sibling);
+-		rcu_read_unlock();
+ 	}
  
--	err = tls_rx_reader_lock(sk, ctx, flags & SPLICE_F_NONBLOCK);
-+	nonblock = flags & SPLICE_F_NONBLOCK ||
-+		   sock->file->f_flags & O_NONBLOCK;
+ 	/*
+@@ -1274,9 +1272,7 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 						   sibling->fib6_nsiblings - 1);
+ 				WRITE_ONCE(rt->fib6_nsiblings, 0);
+ 				list_del_rcu(&rt->fib6_siblings);
+-				rcu_read_lock();
+ 				rt6_multipath_rebalance(next_sibling);
+-				rcu_read_unlock();
+ 				return err;
+ 			}
+ 		}
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index d989df6ccea5b..b8f51cabca3c9 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4909,8 +4909,10 @@ void rt6_multipath_rebalance(struct fib6_info *rt)
+ 	if (WARN_ON_ONCE(!first))
+ 		return;
+ 
++	rcu_read_lock();
+ 	total = rt6_multipath_total_weight(first);
+ 	rt6_multipath_upper_bound_set(first, total);
++	rcu_read_unlock();
+ }
+ 
+ static int fib6_ifup(struct fib6_info *rt, void *p_arg)
+@@ -5448,6 +5450,7 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
+ 	struct fib6_info *rt_notif = NULL, *rt_last = NULL;
+ 	struct nl_info *info = &cfg->fc_nlinfo;
+ 	struct rt6_nh *nh, *nh_safe;
++	struct fib6_table *table;
+ 	struct fib6_config r_cfg;
+ 	struct rtnexthop *rtnh;
+ 	LIST_HEAD(rt6_nh_list);
+@@ -5534,10 +5537,12 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
+ 	 */
+ 	info->skip_notify_kernel = 1;
+ 
++	table = rt->fib6_table;
++	spin_lock_bh(&table->tb6_lock);
 +
-+	err = tls_rx_reader_lock(sk, ctx, nonblock);
- 	if (err < 0)
- 		return err;
+ 	err_nh = NULL;
+ 	list_for_each_entry(nh, &rt6_nh_list, list) {
+-		err = __ip6_ins_rt(nh->fib6_info, info, extack);
+-
++		err = fib6_add(&table->tb6_root, nh->fib6_info, info, extack);
+ 		if (err) {
+ 			if (replace && nhn)
+ 				NL_SET_ERR_MSG_MOD(extack,
+@@ -5592,11 +5597,13 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
  
-@@ -2024,8 +2028,7 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 	} else {
- 		struct tls_decrypt_arg darg;
+ 	/* success ... tell user about new route */
+ 	ip6_route_mpath_notify(rt_notif, rt_last, info, nlflags);
++
++	spin_unlock_bh(&table->tb6_lock);
+ 	goto cleanup;
  
--		err = tls_rx_rec_wait(sk, flags & SPLICE_F_NONBLOCK,
--				      true, false);
-+		err = tls_rx_rec_wait(sk, nonblock, true, false);
- 		if (err <= 0)
- 			goto splice_read_end;
+ add_errout:
+ 	/* send notification for routes that were added so that
+-	 * the delete notifications sent by ip6_route_del are
++	 * the delete notifications sent by fib6_del() are
+ 	 * coherent
+ 	 */
+ 	if (rt_notif)
+@@ -5606,9 +5613,11 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
+ 	list_for_each_entry(nh, &rt6_nh_list, list) {
+ 		if (err_nh == nh)
+ 			break;
+-		ip6_route_del(&nh->r_cfg, extack);
++		fib6_del(nh->fib6_info, &nh->r_cfg.fc_nlinfo,
++			 RT_DEL_REASON_UNSPEC);
+ 	}
  
++	spin_unlock_bh(&table->tb6_lock);
+ cleanup:
+ 	list_for_each_entry_safe(nh, nh_safe, &rt6_nh_list, list) {
+ 		fib6_info_release(nh->fib6_info);
 -- 
 2.53.0
 
