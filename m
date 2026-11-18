@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031312;
-	b=cZlsuUxOab2MQbiFNTyiEwzEuQ0G9dVJPwnI3u0iaepjHYI3YSDScCU5CEkvodlr7NPR
-	 XgkZGXy59bsRXIojWoPqPfZnWcqMIhNGmUhUDjxG9sgSNnKT+DPPaWikKJtJ1XcD4hHTX
-	 +OmtaofZm8nCLLS0VBbv0kjveYjFkZThGc8gc4OHTURpMbSaEaimtdzTG12RKwF2rwgbv
-	 knILKU6G2ndWpUj2rgLy8KsmleS4LkaogFfTxv4+B1wuA6yyJXTWg1Q2LFGGL0O8JJxdX
-	 nFPf9Z+f2+7dYMp7DfbpmNr8VJxb+xKkKDpfnQg9q9x4B+kqqPXjvkbcojTlPDOIr2w==
+	t=1795031315;
+	b=K2/73fqkLLSP+hj6mHh/4jJCQD7KL93urXgwlpqeeJxnLNo4mInG4e3aTPoq/1Cn+YjG
+	 dpcjrRubZX6m87Q3pkhh4z56pRQOG4W7EXt1wxCykxoaT4n4CVSkfPnAC+BSdJcK+CtWx
+	 muDWaQHLbvHfwLDLNjR9mU0XkZqgFD2OzxMLcTViLQo9e+T3m0uOqmtwrBGTHxhm1HIWX
+	 YIihdmI2M6eezOLJnV67ryZZCNTyyLR37ABkdVXQ7X2/8VOLCj1rJy9tIECLKGnnlsMw8
+	 p9f+r6nZZxw20ObEVWfydDSS1w+MLs1uP8BBJ24xnwXTSAvPN/2JOcKtVMqo6t2bVyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VlUm3aon6VNv1X22l6D+iw1AEEAtE+BzsKDPBkPbg94=;
-	b=4F1nrvJeELWueJQ+KGrqaD68TIc2uB/x1P9LTtVet9+MHuFgfHoq2K0jmR6V1xxAKcBC
-	 eLha/GuNm/lvDGe40x4c0daMiyLEiZTK2aFJ7GNx/RbO77MvdYIfVlm4qGYpBZ/+1s2ju
-	 VvLmgP9+DyxCPYivi2UNhPjFBrxOE+dcwwLbcO6IMYFPVnNGar3ctGWXoxjwrqy7FIA/O
-	 fIOzlqbQxbzkzC2fUWEY138k+21OHeySOw6tb9TfunpbKi9GVEQ59TQUYxyHkHz7CmoVA
-	 vw+4hHIHaP8LrqWOAboiKM7K4GVtb26+T99GNkVUGx67U1qhaNBQ+fwQtE4zulFAYGw==
+	bh=2T3pTvvkgMjiF6V6KhFXPrBPqA78/TBiWnfK3Q4qrS0=;
+	b=OugmpAYRwbgMAuoOiXDWo3H6VbXcPjHQrf0AdUSzs2U/EPusLgkd7K0vVQWW1Okvt0UV
+	 DLs8Sgm5dNoMcGIQgSxqYYJD+YMeCz05G7UVt4pwId90R2kgisHSCLVfExC0SFxQaL7vm
+	 7VDDjIwxrjiJERfIyZf+1tSAfBl8/4VKJwvV0xrHgW/8/3EfqDzZDY4/fpeWPuOROxoxS
+	 PiStXR3WpCjHpD3TuZ4c0QdE2Zg6UYW6vVxs0McVwT/3KncyU/YL6bt25itcXyYqiTkpO
+	 wXYqwYDqy7gXu3FHxJ9eHuqvL1txAzku+qp9KInE8Tb1tI+4mQpNqo3Ju6yQIsjgQLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1Hg67lr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMIftCeR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB18606A31C;
-	Wed, 18 Nov 2026 19:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F03606A33B;
+	Wed, 18 Nov 2026 19:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1Hg67lr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BC91F000C5;
-	Wed, 18 Nov 2026 19:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMIftCeR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7AA1F000C4;
+	Wed, 18 Nov 2026 19:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031312;
-	bh=VlUm3aon6VNv1X22l6D+iw1AEEAtE+BzsKDPBkPbg94=;
+	s=korg; t=1795031315;
+	bh=2T3pTvvkgMjiF6V6KhFXPrBPqA78/TBiWnfK3Q4qrS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1Hg67lruxd2nIUix4w+uwaPdrkRqfBRFQg5JuZNF2AilD8z1g5ucXljflZlyoC3n
-	 iELtXA6zmLW0EeM3aA2PnrEoPhWruvx5LHkh4+UGDTbMmYXo89g7beCDMbYy5FL2ZS
-	 yaJUwn6Us9mHglJyBU9je7dv5VrzP8zKN6ansu4o=
+	b=yMIftCeRJdVyE/AlqDk28nqRhFgyu0eMTpw7awA7xGvHIVURa8jQRC0oJ8rBIhDDK
+	 UvltYUOEbomuuRzUxSPMlNbrISWULLVIamKZjAmcPiETObWJo24yiwamO8x7M1W1sh
+	 Y/O4Rs0UqCXs1QekhunrzgMLt+1KyunloFNlfNGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Cristian Papa <pcristian292@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0972/1756] wifi: mt76: mt7615: validate MCU response lengths
-Date: Wed, 18 Nov 2026 15:51:39 +0100
-Message-ID: <20261118150048.845447637@linuxfoundation.org>
+Subject: [PATCH 6.12 0973/1756] wifi: mt76: feed the station RSSI average from the chain signals
+Date: Wed, 18 Nov 2026 15:51:40 +0100
+Message-ID: <20261118150048.884979924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,74 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Cristian Papa <pcristian292@gmail.com>
 
-[ Upstream commit 356735fc612ea54062eb741ea15fa4ff7df4fc36 ]
+[ Upstream commit e1534fef1ae4df6e16401117394c26dbef84f361 ]
 
-mt7615_mcu_parse_response() reads the common response header before
-checking its size and then consumes command-specific fields after unchecked
-skb_pull() calls. A short firmware response can therefore be read beyond
-its current extent.
+mt76_check_sta() adds status->signal of every received frame to the
+station's RSSI average, wcid->rssi, which mt76_get_min_avg_rssi() reads
+for the dynamic sensitivity of mt7603 and mt7615 and for the gain
+control of mt76x0 and mt76x2.
 
-Validate the common header and each command-specific payload before reading
-it.
+Since commit 4550fb9e9810 ("mt76: improve signal strength reporting"),
+drivers no longer set status->signal: mt76_rx_convert() computes it from
+the chain values when the frame is handed to mac80211, after
+mt76_check_sta() has run. Except on mt7921, which still sets it, the
+average is fed zeros. mt76_get_min_avg_rssi() then returns 0, so mt7603
+and mt7615 leave the sensitivity at its default, and mt76x0 and mt76x2
+fall back to -75 dBm for their gain settings.
 
-Fixes: 0e6a29e477f3 ("mt76: mt7615: add support to read temperature from mcu")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830131049.2097-1-pengpeng@iscas.ac.cn
+Compute the signal from the chain values in mt76_check_sta() as well,
+as mt76_rx_convert() does. On mt7921, the average now follows the same
+combined value that mac80211 gets instead of the strongest chain.
+
+Tested on a TP-Link Archer XR500v with one client, switching between
+the old and the new input every 30 seconds. On the MT7662E (mt76x2),
+the average the AGC works with was -75 dBm, its fallback, with the old
+input and -54 dBm with the new one, while iw reported -54 and -52 dBm
+for the station, and the AGC mostly used its low_gain 2 setting instead
+of 1. On the MT7603E, the station average was 0 with the old input and
+-41 dBm with the new one, while iw reported -42 and -41 dBm. The mt7603
+sensitivity still stayed at its default: a separate bug keeps it from
+leaving 0.
+
+Fixes: 4550fb9e9810 ("mt76: improve signal strength reporting")
+Assisted-by: LLM
+Signed-off-by: Cristian Papa <pcristian292@gmail.com>
+Link: https://patch.msgid.link/20260924032639.28158-1-pcristian292@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 1121c6a243750..ead3370254e4e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -145,6 +145,9 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 77708de932f30..98f05988cd0fc 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -1375,6 +1375,7 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
+ 	struct ieee80211_hw *hw;
+ 	struct mt76_wcid *wcid = status->wcid;
+ 	u8 tidno = status->qos_ctl & IEEE80211_QOS_CTL_TID_MASK;
++	int signal;
+ 	bool ps;
  
- 	rxd = (struct mt7615_mcu_rxd *)skb->data;
-+	if (skb->len < sizeof(*rxd))
-+		return -EMSGSIZE;
-+
- 	if (seq != rxd->seq)
- 		return -EAGAIN;
+ 	hw = mt76_phy_hw(dev, status->phy_idx);
+@@ -1392,8 +1393,9 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
  
-@@ -152,11 +155,15 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		skb_pull(skb, sizeof(*rxd) - 4);
- 		ret = *skb->data;
- 	} else if (cmd == MCU_EXT_CMD(THERMAL_CTRL)) {
-+		if (skb->len < sizeof(*rxd) + (is_mt7663(mdev) ? 8 : 4))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		if (is_mt7663(mdev))
- 			skb_pull(skb, 4);
- 		ret = le32_to_cpu(*(__le32 *)skb->data);
- 	} else if (cmd == MCU_EXT_QUERY(RF_REG_ACCESS)) {
-+		if (skb->len < sizeof(*rxd) + 8 + sizeof(__le32))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		ret = le32_to_cpu(*(__le32 *)&skb->data[8]);
- 	} else if (cmd == MCU_UNI_CMD(DEV_INFO_UPDATE) ||
-@@ -167,12 +174,16 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		   cmd == MCU_UNI_CMD(SUSPEND)) {
- 		struct mt76_connac_mcu_uni_event *event;
+ 	sta = container_of((void *)wcid, struct ieee80211_sta, drv_priv);
  
-+		if (skb->len < sizeof(*rxd) + sizeof(*event))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		event = (struct mt76_connac_mcu_uni_event *)skb->data;
- 		ret = le32_to_cpu(event->status);
- 	} else if (cmd == MCU_CE_QUERY(REG_READ)) {
- 		struct mt76_connac_mcu_reg_event *event;
+-	if (status->signal <= 0)
+-		ewma_signal_add(&wcid->rssi, -status->signal);
++	signal = mt76_rx_signal(status->chains, status->chain_signal);
++	if (signal <= 0 && signal > -128)
++		ewma_signal_add(&wcid->rssi, -signal);
  
-+		if (skb->len < sizeof(*rxd) + sizeof(*event))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		event = (struct mt76_connac_mcu_reg_event *)skb->data;
- 		ret = (int)le32_to_cpu(event->val);
+ 	wcid->inactive_count = 0;
+ 
 -- 
 2.53.0
 
