@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029909;
-	b=JBGUNjPcoLeUWXHgLetepTXWY1wbD/+4jV/4CHFwsTNc8cG6/bteJZ/qQLZoq1OJ+oJq
-	 xcGk+XKhFO9809QYabUBv38fyIIoEP835y5xevkeKkX5Xsyhnj8/pkDrbHjsuir3ZOf1n
-	 AOXCRmuOCwq0KIscYPPo594X3ciAu/bJ2WRoji60fgwNmTg1/fZQ+jbLENclMfqQh03fr
-	 uvU+0T8V/SMM4NEla8NwG7/MtSbv6wcCTbe+uADgN27cl3yQl6ftMqkOoDkGgOkfIOLEC
-	 FEii+8cvaS3UQ/xGuHe1O2MjE7vSnD6xQURsR4GjEKPowl6SO47JZ5/nXvOh5TObaLw==
+	t=1795029912;
+	b=ZN/qY6IbSvIgceh4gJ9htcZwwbJtaf6kLXN3GxC2rGJF3QBEWqo+SQKYpz3kWdAUQROM
+	 Xi5XEF0WiK+0oT4s2L7yX0s9z/riVdHJhrDZN1kuUjP1F5d7XUMbHKIwgBaan2J0h8dy2
+	 HFwpuNxcQqbvqLxN6O2gHY4G1qJohaT4NCD03KJCIVBrfmU0o5TYzu/7/Ub5rUVrU8Zd1
+	 rnnp7pzkxZg6+FiNs5MFTU5c7i6xu4QYSXwW+nB0zrd77UE5qdieNN8VUBGIAqKan+ajy
+	 G/7N++6v64UhU7osKGj8sU0nDlrZTrKJZqY3/n0XZGpG4haNT4dEqYS2kqazgRgAHrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029909;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4vNiXj/9//7y0GFZYyZ/SJ0KPUTruTvp+fIsorf3Aeo=;
-	b=RUJg5eRytqR5J/Iyu0PdEWX7KZSNdAmQhdGdpOzBFDLf01YuLtQnOLHqzVsTBRNjn7pn
-	 yAhhhz7PJmX82AkEgPiZHAo19BODbPYQq28yCP/iGhLK1w+hAR9g5y1RzSmyzYNBev9wa
-	 pmfRtZklQiORPjYeOlNuivcPZQgQreRq+wb/xA9lvgeTgd1MWwInGZykUZrceKi0uRNME
-	 a9UjR7TIz3COl2/v9n22yUO93keTeLRfZUY1rOcKCM6Vw7lOnnHlQNZm4m1PZ1nTaVxs7
-	 4a7+oXs5NVhqdT/+9foirCel92Ec9nGRaQ8SZwp1AxPVRXMHXbq2PH2USY3xXj5NW0g==
+	bh=0B86w9upqn5yusWY1pur+KfeHiPVckP6YV6pawOXAtA=;
+	b=GRkQJA1OOVWkWsIPxTb98dVB4ZZjliFe5u7wmfFnK7LQczVrnF0aCqtuNWfjaenDyRSa
+	 eAbL+RvJaGJuGI1PpHtvPYY3qzL20peyXiubyovZJY9bn/bvTDuQjJtJ6lJpp36U53S6K
+	 UNQf1qkajdPwiCgbDxVXW2o00gjvK5hVioBxEyVMXuy3sOtLKy32KdYTV9W5D2cFMEhZd
+	 s06abLmvBpJvOKq+anCeMNEZg4U79wVwRjaLBfh4Kedn8lROgdPYyv/aULPLkp+E142Ec
+	 ZQVwcfjwfj7buT9p470w8ARG8x1ZYV8kPQlfFbhbOwf2lLP+pNGpEXAuSB/6TwkcBrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LjtGLkym;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1eEwaNL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2D760A6F5A;
-	Wed, 18 Nov 2026 19:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4733060A2628;
+	Wed, 18 Nov 2026 19:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LjtGLkym
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE721F0181C;
-	Wed, 18 Nov 2026 19:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1eEwaNL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9852C1F0089E;
+	Wed, 18 Nov 2026 19:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029909;
-	bh=4vNiXj/9//7y0GFZYyZ/SJ0KPUTruTvp+fIsorf3Aeo=;
+	s=korg; t=1795029912;
+	bh=0B86w9upqn5yusWY1pur+KfeHiPVckP6YV6pawOXAtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LjtGLkymiGsHgMVLkyX5L5Di/wtpeXilGx287nRQih4fxATpmrPJs0hHoNlTw6zHt
-	 uD3XXE8PWrCJqyhBbxoG1OaTmqFKGFqDfKD/y7uQRQ/clMDxcwKWp4IpQvCi92nc6u
-	 yrIxStfaM5NUCr3O/IvJZsLMzLGkrePWENLbnxWk=
+	b=d1eEwaNLkcJ5dMqM2nrOPA67dqfUzevoqxe0biK1zra83Lvidf4/qJTCG0nZpTMAe
+	 cyfyjh9d73iDOUzyrC/Fx1eZkJxoNNhDN+QhNtPq3LyWHLm1L6eKD4TxG2yh4SQiSS
+	 oiTXAwwe0go7WdObl+7HUQYwGNKjzJTvwsYjgEjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0475/1756] fs/ntfs3: check INDEX_ROOT resident size before use in ntfs_read_mft()
-Date: Wed, 18 Nov 2026 15:43:22 +0100
-Message-ID: <20261118150027.803473219@linuxfoundation.org>
+Subject: [PATCH 6.12 0466/1756] ACPI: CPPC: Validate the _CPC package header
+Date: Wed, 18 Nov 2026 15:43:13 +0100
+Message-ID: <20261118150027.392321651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,72 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit d0ac69ce3af4dbae01d4f064b7482f0c5440dbde ]
+[ Upstream commit fb345025f161d17fe7c8a6048c7e80e467fa8ddf ]
 
-When ntfs_read_mft() parses an ATTR_ROOT attribute it computes
+The _CPC NumEntries field includes every package element, including
+NumEntries and Revision. acpi_cppc_processor_probe() nevertheless reads
+those first two elements before checking that they exist and trusts
+NumEntries when walking the remaining elements.
 
-	root = Add2Ptr(attr, roff);
+Reject packages with fewer than two elements and NumEntries values which
+exceed the package count before accessing Revision or iterating over
+register descriptors. Although the specification defines NumEntries as the
+number of package elements, tolerate additional trailing elements because
+ignoring them is safe and avoids rejecting padded firmware.
 
-using the on-disk resident data offset (roff = attr->res.data_off) and
-then dereferences root->type and root->rule, and later passes root on to
-indx_init(). Unlike the ATTR_STD and ATTR_NAME cases, which validate that
-the resident data is large enough (asize >= sizeof(struct X) + roff and
-rsize >= sizeof(struct X)) before accessing it, the ATTR_ROOT case has no
-such check.
+Revision is specified as a BYTE, but the parser assigns its 64-bit AML
+Integer to an unsigned int before validating it. Reject values above U8_MAX
+before conversion so, for example, 0x100000004 cannot truncate to revision
+4.
 
-mi_enum_attr() only guarantees data_off + data_size <= attribute size, so
-a crafted image can set data_off such that root lands at (or past) the end
-of the MFT record's slab allocation while still passing that check (e.g.
-data_size == 0). The subsequent read of root->type is then a
-slab-out-of-bounds read, reported by KASAN when mounting the image:
-
-  BUG: KASAN: slab-out-of-bounds in ntfs_iget5 (fs/ntfs3/inode.c:283)
-  Read of size 4 at addr ffff88800c06a400 by task exploit/142
-  Call Trace:
-   ...  [KASAN report internals]
-   ntfs_iget5 (fs/ntfs3/inode.c:283 fs/ntfs3/inode.c:542)
-   ntfs_fill_super (fs/ntfs3/super.c:1690)
-   get_tree_bdev_flags (fs/super.c:1634)
-   vfs_get_tree (fs/super.c:1694)
-   fc_mount (fs/namespace.c:1198)
-   path_mount (fs/namespace.c:3765 ...)
-   __x64_sys_mount (fs/namespace.c:4174 ...)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  The buggy address is located 0 bytes to the right of
-   allocated 1024-byte region [ffff88800c06a000, ffff88800c06a400)
-   which belongs to the cache kmalloc-1k of size 1024
-
-Validate the resident data size in the ATTR_ROOT case the same way the
-neighbouring cases do, so that a truncated or mis-offset INDEX_ROOT is
-rejected before root is dereferenced.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 337aadff8e45 ("ACPI: Introduce CPU performance controls using CPPC")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260724134251.1632824-1-christian.loehle%40arm.com
+Link: https://sashiko.dev/#/patchset/20260808082644.1251332-1-christian.loehle%40arm.com
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Sumit Gupta <sumitg@nvidia.com>
+Link: https://patch.msgid.link/20260916162805.1039247-2-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/cppc_acpi.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 730c2ab665808..a362ccdcf8065 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -283,7 +283,9 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		break;
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 95ab801679e83..bc8481a8c534b 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -737,6 +737,11 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	}
  
- 	case ATTR_ROOT:
--		if (attr->non_res)
-+		if (attr->non_res ||
-+		    asize < sizeof(struct INDEX_ROOT) + roff ||
-+		    rsize < sizeof(struct INDEX_ROOT))
- 			goto out;
+ 	out_obj = (union acpi_object *) output.pointer;
++	if (out_obj->package.count < 2) {
++		pr_debug("Unexpected _CPC package count (%u) for CPU:%d\n",
++			 out_obj->package.count, pr->id);
++		goto out_buf_free;
++	}
  
- 		root = Add2Ptr(attr, roff);
+ 	cpc_ptr = kzalloc(sizeof(struct cpc_desc), GFP_KERNEL);
+ 	if (!cpc_ptr) {
+@@ -747,12 +752,15 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	/* First entry is NumEntries. */
+ 	cpc_obj = &out_obj->package.elements[0];
+ 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
+-		num_ent = cpc_obj->integer.value;
+-		if (num_ent <= 1) {
+-			pr_debug("Unexpected _CPC NumEntries value (%d) for CPU:%d\n",
+-				 num_ent, pr->id);
++		if (cpc_obj->integer.value < 2 ||
++		    cpc_obj->integer.value > out_obj->package.count) {
++			pr_debug("Invalid _CPC NumEntries (%llu) for package count (%u) on CPU:%d\n",
++				 cpc_obj->integer.value, out_obj->package.count,
++				 pr->id);
+ 			goto out_free;
+ 		}
++
++		num_ent = cpc_obj->integer.value;
+ 	} else {
+ 		pr_debug("Unexpected _CPC NumEntries entry type (%d) for CPU:%d\n",
+ 			 cpc_obj->type, pr->id);
+@@ -762,6 +770,12 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	/* Second entry should be revision. */
+ 	cpc_obj = &out_obj->package.elements[1];
+ 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
++		if (cpc_obj->integer.value > U8_MAX) {
++			pr_debug("Invalid _CPC Revision (%llu) for CPU:%d\n",
++				 cpc_obj->integer.value, pr->id);
++			ret = -EINVAL;
++			goto out_free;
++		}
+ 		cpc_rev = cpc_obj->integer.value;
+ 	} else {
+ 		pr_debug("Unexpected _CPC Revision entry type (%d) for CPU:%d\n",
 -- 
 2.53.0
 
