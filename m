@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018199;
-	b=NgOmGGact+HWw/lNQXxxpSPIlC42xgAhfCVGtqpEfj2aKj76JXFKA5zsZqe1/nQvs0tD
-	 wVCQtGj0G6qLTdqS/wDX6ZmU/XyUcT4cX8N8RnSgAsreJacEomPn6K1lPe697j6lUjwAf
-	 jvpua9I49VmCPh5EWChcIM0MmSpP+0qb3lL9Y6kzWL5WBC4jZ8hPfnv6RPSdO2nVQlry3
-	 NadT+Jao0qrQu0mnHh85UllcprO+ncgiNdR4UAgt2sWEkDjKdyo4yYZaxVW+voGp6Wb+A
-	 03lQhCAoFvH1CmM7Wx1So0gZYWViZCFuuwGjWwOvbGx2p8Y7TVwJHMnAvicV6faxhog==
+	t=1795018202;
+	b=b7E+YIE04REGaixF8YZC5kTTDWxTld9czD5T5ViDRb27g340vEVR7mM+YyhDuJgDPL8E
+	 y/1f6Tj5h5HuYpFxi/jFu7oTBcIzR+GqLE2QjnAtBKiJAhbyN980lBJ9fB8IlVNzwhHkJ
+	 xLlqSfboIhRwuW+FPO8bhYjyrwePKU832Po3cb/Fu080y0cj7WHjKZXzqWoVXIFp5HYIC
+	 ap+KOgJK3HOJWTrUt7xOPhITvDOfPuUVUNe9Iv7L+38YSyXBGS/rPHQNS2vurQrezlKfH
+	 gU1H7de2GsXHLJ0yNywD2odgzc2mF4qrDzgqEwFeiq6TN6390JxEyjSC6/IUN0v5RWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5sudnbnPy/DPr0VqcN8D8KI6EOlX0+ALyj+EHADBfgA=;
-	b=YuBJZOpkPunr6N3lPgoKU1MtRzU9WN12zM7/Ify5kqexmMQuC3yyMc6nZja3PEcBhcWz
-	 cuwtsNY6A8T2W5IUI007SPlPRgVAnjFUy+axdePgB2+0qX8RQA5bKHHOluPRLF6i5J0Ui
-	 JRPRVS9PN6mYtT6+of/AnvJx9vGkCcaA0Zb6yIGjzBfPgBwJjpsUgU2zL0rNzA0NV/XTO
-	 8G79gbMmeyClOeizjk8HWEFldU0++kmNu7dya3dW0hfHW+wkIR6ClcRkOugp/AwH7rBaI
-	 Z/ibeNxXMaV+BDMPZWiCPF1hwfBsej3L1TOVe6Z9KD+49aV7IAM3dmO04101povQ5RQ==
+	bh=D7Prw0RS6V2O00IBPR+r0faJVpP0SquB84yOn6pel6c=;
+	b=qeQCIHuFkE0JaOkPDcRINgR5njnrIcgitsuQopSs/TjjG6JO1YybC6d5SWh/9HbYjzUA
+	 g9eTW1CEDTcb3Vuan24Edefskut45apBwslwShoNqpx+gpVsL58upRzqBgiSaqls2+J4o
+	 WAUC0DpWnWOR812I1j3ldoNPQeIfeAzAdgu+Whl7hOD1ZI5lQwVW25AcfztXa4TzZbd7B
+	 4YK2Pz1b0xXILFUPZTvB+jbK9605Uup1B6TpemHBaKvJo2FY/sdGWYf5gypeo//LD5vXm
+	 fB1wuiL7AE0ZrLkADyDZuaByymoMR+VIFP3YVFwntKLA82CudSSHwS6kXlIhMs9WMTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YAdEt55S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ylNA5Use;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F22606A31C;
-	Wed, 18 Nov 2026 16:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A5E606A320;
+	Wed, 18 Nov 2026 16:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YAdEt55S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB8B1F000C4;
-	Wed, 18 Nov 2026 16:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ylNA5Use
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828271F000C4;
+	Wed, 18 Nov 2026 16:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018199;
-	bh=5sudnbnPy/DPr0VqcN8D8KI6EOlX0+ALyj+EHADBfgA=;
+	s=korg; t=1795018201;
+	bh=D7Prw0RS6V2O00IBPR+r0faJVpP0SquB84yOn6pel6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YAdEt55Ssa94b/SgHTHL1b6EhMwlrY0U+YAWoY6Q5OEAD80OU3Bzt3ekqro1JRUyq
-	 FX4WTN5l+svqE1NvBNGtm1/CPluJtwQ6K+D1aEK/x6SiNI6V7+SKBUxJeLkUNMbUt1
-	 wTY4CpbTP8+duv10AGtHYWPEH2wbnnlDIx+esfrc=
+	b=ylNA5Use2IQsEu/WEc+vHXUYnR73ky9p/4ABMPOHcd8POIkq3ak2vy3TEzm9HKU1L
+	 sEYI1QxiB5O4AF1bgbvL09JP6Rk+XBOa3g94p4LWYqPkP+eYiVtsRZmYQ7MGu8v2qy
+	 +3tBKwrEluhkVB3jyMKpiAkWDK+aZZ3kJn1DIN2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1155/2651] hwrng: intel - return -ENOMEM when kmalloc_obj() fails
-Date: Wed, 18 Nov 2026 15:39:55 +0100
-Message-ID: <20261118150329.590085082@linuxfoundation.org>
+Subject: [PATCH 7.3 1156/2651] drm/panel: fix novatek-nt36536 dependencies
+Date: Wed, 18 Nov 2026 15:39:56 +0100
+Message-ID: <20261118150329.625519310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,33 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a0590c556cdbf88373d38494a23f1503d39b0ab2 ]
+[ Upstream commit f11277810402d0e2f3f8e64618cdb5af2ade8d3f ]
 
-intel_rng_mod_init() incorrectly returns -ENODEV when kmalloc_obj()
-fails. Return -ENOMEM instead.
+The recently added driver requires access to DSC helper code
+and fails to link without that:
 
-Fixes: ee527cd3a20c ("Use stop_machine_run in the Intel RNG driver")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+ld.lld: error: undefined symbol: drm_dsc_pps_payload_pack
+>>> referenced by panel-novatek-nt36536.c:109 (/home/arnd/arm-soc/drivers/gpu/drm/panel/panel-novatek-nt36536.c:109)
+>>>               drivers/gpu/drm/panel/panel-novatek-nt36536.o:(novatek_prepare) in archive vmlinux.a
+
+Add the usual Kconfig dependency.
+
+Fixes: 75a5dbd1f4f7 ("drm/panel: Add Novatek NT36536 panel driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260925130125.3897046-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/intel-rng.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/hw_random/intel-rng.c b/drivers/char/hw_random/intel-rng.c
-index d24e747203c1f..4aa91ee0e5041 100644
---- a/drivers/char/hw_random/intel-rng.c
-+++ b/drivers/char/hw_random/intel-rng.c
-@@ -349,6 +349,7 @@ static int __init intel_rng_mod_init(void)
- 	intel_rng_hw = kmalloc_obj(*intel_rng_hw);
- 	if (!intel_rng_hw) {
- 		pci_dev_put(dev);
-+		err = -ENOMEM;
- 		goto out;
- 	}
- 
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index cbdf7b8f7f7af..67fc671341003 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -669,6 +669,8 @@ config DRM_PANEL_NOVATEK_NT36536
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
++	select DRM_DISPLAY_DSC_HELPER
++	select DRM_DISPLAY_HELPER
+ 	select DRM_KMS_HELPER
+ 	help
+ 	  Say Y here if you want to enable support for Novatek NT36536-based
 -- 
 2.53.0
 
