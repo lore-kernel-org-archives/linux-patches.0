@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041496;
-	b=oI/E9mgQ9OsDkQd6msIWUbZrR5gQK/BXLfqHfDMZ6fCoQireMFEnBvVR4gVT71ShppKo
-	 v7EmrMLNeU2seXAoVwt2785kLrlQ9Yo1GpNHWyG7NRloEgfIH9mO7nRVkCCjOnKf11rBb
-	 N8qfJ9gBDsfSU0lobgf+ePU3lZkJweYn8YoDTMovkSGkE/Yvh5QL77PPixD01DjvK/5uY
-	 TaXyjE8yYYomIUUtMevk+kv96JVHaU3oHWkV0fIZbGCp+ZPwlZL2Jfw4+3Xkftd/4Y4kQ
-	 NVXCh17HVcFeNj2t2k/tbIoi/LZj6Fbl+KguSunNSyTZp/GyM956LU3J9mktIuspSYQ==
+	t=1795041499;
+	b=BKbf3+j9ujSeHlafIlUMQJQOiD4GjGSLY9cdOBd1Ga9yZyi2EOW3tO80a9qNlx6lkQ5+
+	 Zc1OFj5JhNpzuqxaGHc0+QLjQ6W2VOpu7HhFc1jcYVfzcjqeRjsxyjOfK77yMpV1ZurXE
+	 Dhyn9tOSdwFQ6WDmwxXCzlEIVluZ7kHbfqKjIEwUuooWM6oB6cK6GJ8eQTd05T3O/yfIn
+	 02s4hpJlIxtFMtZdeudpZq80Ms4wXmziB4roMZqxlMW2pxwRpFaLYK4IWa1c7eFYGfLVS
+	 RM5UyFlDHpAqe0ZXqBEFY/lWCuWDM6MFdiIBUj1BDhOyqHhNigsnGjhpeL69q0CsQ5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UbN94Fct4klFkxGRzyf4C7BGM2STw0HCyPulGWcUdCs=;
-	b=5UmFlf5gILIwBh3sq9GSZLTQif2hSKc2bnFm7+uR8qPKdccO5IdAVTmvaC5mQX9YW/7A
-	 sI/Z7JbkKzwxbyYz3YNND3qPAB1jl99qIc1at1gXPM9aEqGqe40qDbxaKTjy67FpMkrLX
-	 l0n29L4qQNkJS6BI3qEZGuzX2wDXZvZFS6WHVhmXRM69vyWaVKZbobHE2UCMH7JSPp1wR
-	 4AdT+JaqyD73EHKhVhPpxQLWPxsM9fQZQq14Z4vTAi6XznT3QY0t9Pr+KS6dg/iVQdWeD
-	 LZKI5YuJyZFtgX1Rd8WFQI2ys4KeRmDVkI717R28L/wIFs9vFLTG8XnDSpphn3+C+Qw==
+	bh=jdGJTH5Rj2HUMAVoDRgctNMGupnWjvQ7IRWk37390m8=;
+	b=z0I7uJH9K4/9C3Cf6UdYgysNvioZfZuoHL2mkZ1Bw+Y2NeG9f1GNYLZ/+9HrFZ2mnpeR
+	 F7IHwHEpO1bEISEHxZAIPerdqt0Pvk4i/k9evLzLF6ra74GejusC3cVK7idOHp4mwEztu
+	 JGRiq0HS79x1NoyLl3UlxMVvO8k3kErHvTT+0oyfgpsdukrrXSyBhh8hPuXIdHF6ieoiW
+	 FpmQk7GmlvyKBHckmMOvFYtae6h3O6y1PaXe78Ta/X6kTQcTiVb9Kd7BV5UixwLcjirga
+	 pzA/Di7QwqKyeShrpfJxbducLFB7OTEA4QygPKOKpM/nlPjmNWmECG0tVEeHRAda5Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0O1SW75j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLIKkujn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88600606A982;
-	Wed, 18 Nov 2026 22:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B522606A335;
+	Wed, 18 Nov 2026 22:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0O1SW75j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938D41F000CB;
-	Wed, 18 Nov 2026 22:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLIKkujn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8E31F000C5;
+	Wed, 18 Nov 2026 22:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041496;
-	bh=UbN94Fct4klFkxGRzyf4C7BGM2STw0HCyPulGWcUdCs=;
+	s=korg; t=1795041499;
+	bh=jdGJTH5Rj2HUMAVoDRgctNMGupnWjvQ7IRWk37390m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0O1SW75jHtkqEubZEzYfcxNFzLjj5/fdqC7Pf/VFISn9nZPD7LMZBm5ak8r2fBaO5
-	 L+SgS9ZNtfML5Pze4uFwhsA4rx5jrtiTMJTriEsZx8wceswlH0ftXwzaH6JZmtAM3C
-	 V2UN7qQRX5UoJGyB9nG5z4E1gRMd9bOLrE3UuaKA=
+	b=CLIKkujnEDLY2YW0siFw42n5xOZr+KA0mjrCYUl2EqrP9iKEG2XAbUWUufDN1O39K
+	 3APpSD8759ysX3ntkI41BRi3Ji8Squ7nRsP3+NvbxfJcL7+PS26At08B5JUJybcURN
+	 m7WNR+dIWS1anHt+zftgFHaZC2aU75JhcDX3uQ+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	VEGA <vega@nebusec.ai>,
+	Kyungsik Lee <kyungsik.lee@lge.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2833/3318] sh: sh7785lcr: Register the PCA9564 controller as I2C bus 0
-Date: Wed, 18 Nov 2026 15:57:35 +0100
-Message-ID: <20261118150445.618092081@linuxfoundation.org>
+Subject: [PATCH 6.6 2834/3318] lib: validate in-memory LZ4 chunk length
+Date: Wed, 18 Nov 2026 15:57:36 +0100
+Message-ID: <20261118150445.647658555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,49 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 3b8386ffc0c33b6b5a6a8e64e1487c1adec57dc9 ]
+[ Upstream commit 138a84817df01eda67bb23032ab49c23fe2ffc16 ]
 
-Before commit 44454baa7ca7 ("i2c: Dynamically assign adapter id if it
-wasn't explictly specified"), a negative ID was replaced by zero, and
-I2C bus zero was instantiated. Since that commit, a negative ID is passed
-verbatim, instantiating an I2C bus with a dynamic number. As SH boards
-still use i2c_register_board_info(0, ...) to register I2C devices, they
-rely on the I2C bus being bus zero.
+We found and validated an issue in lib/decompress_unlz4.c.  The bug is
+reachable by a root user through kexec_file_load() with a crafted external
+initrd.
 
-The SH7785LCR is the only SH board whose I2C adapter has a negative ID
-and its PCA9564 controller becomes i2c-1, causing registration of the
-R2025S/D RTC to fail and hwclock not detecting /dev/rtc0.
+unlz4() reads the compressed chunk length from an in-memory initrd and
+passes it to LZ4_decompress_safe().  It only checks the chunk length
+against the allocation size when the input is filled by a callback.
 
-Set the platform device ID to 0 so that the adapter is registered as
-bus zero again.
+Reject an in-memory chunk that extends past the remaining input before
+calling the LZ4 decoder.  This prevents malformed initrds from making
+the decoder read past the mapped archive.
 
-Fixes: 44454baa7ca7 ("i2c: Dynamically assign adapter id if it wasn't explictly specified")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/59c6555c27aa7ba18ee227f9f02c78d15a37605f.1789219453.git.zhilinz@nebusec.ai
+Fixes: e76e1fdfa8f8 ("lib: add support for LZ4-compressed kernel")
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: VEGA <vega@nebusec.ai>
 Assisted-by: LLM
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Kyungsik Lee <kyungsik.lee@lge.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/board-sh7785lcr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/decompress_unlz4.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/sh/boards/board-sh7785lcr.c b/arch/sh/boards/board-sh7785lcr.c
-index 77dad1e511b46..05e2678dfc678 100644
---- a/arch/sh/boards/board-sh7785lcr.c
-+++ b/arch/sh/boards/board-sh7785lcr.c
-@@ -256,7 +256,7 @@ static struct i2c_pca9564_pf_platform_data i2c_platform_data = {
- 
- static struct platform_device i2c_device = {
- 	.name		= "i2c-pca-platform",
--	.id		= -1,
-+	.id		= 0,
- 	.dev		= {
- 		.platform_data	= &i2c_platform_data,
- 	},
+diff --git a/lib/decompress_unlz4.c b/lib/decompress_unlz4.c
+index e6327391b6b66..80bd4ea40f95b 100644
+--- a/lib/decompress_unlz4.c
++++ b/lib/decompress_unlz4.c
+@@ -139,6 +139,10 @@ STATIC inline int INIT unlz4(u8 *input, long in_len,
+ 		if (!fill) {
+ 			inp += 4;
+ 			size -= 4;
++			if (chunksize > size) {
++				error("data corrupted");
++				goto exit_2;
++			}
+ 		} else {
+ 			if (chunksize > LZ4_compressBound(uncomp_chunksize)) {
+ 				error("chunk length is longer than allocated");
 -- 
 2.53.0
 
