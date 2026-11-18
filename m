@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030800;
-	b=SJwSmiw/VJYdnM3VM4BjKw1UCZuhlvq31pC18uNi2KoODrTp7i9g0GLC5v0GBOvu8gT2
-	 osG3vyaO6D0k8Rf+M414w4n17B8u81j3U1wuV38e6vzSh3BTEneHMNKaK1peiHoFhEV+f
-	 5gay5OYnSi45AaAL56pWrnbigzHUj+6oXpE1ed1S3A/0suuxKkPwbLd/t0Zk/VanRyvVs
-	 mzdDPtv6fYLLFDo7Wt5fnOI1ocTv3aFXFSG+lhlh0Yj89Ir425ifoTxxw/lllt5iDIkd4
-	 CRHPkHC8U7xPLXojuF1pzh0OeMfz2yHQ/kcINMV9ys8YE92hSCpv7o0HKxNLi6NBxsQ==
+	t=1795030803;
+	b=JeSFM5B8U2+K/NIfh9xoj4dJlJjftTQsAp3LVkF4Rrhga/eQHVVMglda9PuDLW4IY4fY
+	 0mQC9n7qaSrxoR1NREWlAi+cYxX8GLyj7AH5YWGjBYG7sQds+w1gWdJpogEmqx9r/Rqo1
+	 x23uuz3F66XfULdyiSOZLu6mSqeDIw+TFw5IkKJlCoMMQvVVzdhlKU8iwj8cm+6pgwY1r
+	 M1n5FZOod8FwXkzpnHvwxGQ4vakRtsyXIOp+By6UG+FK1Ncm63TuR3U8NsH+EKMTiP0Dp
+	 zmq3Y5D1UKqKmYFWpZFqAGoOqdkN2lJVVcw+nO7fGCcnolcfOd6BIxRiIRHS3EX8c8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/HAIJ/Csd2OFYbx2SuKtJhTkuSeQ1dB7mYOmjxXbNWc=;
-	b=p+nnPkRWeFdd0eTiXkB0KKS84G95/yHQDnoZ+SXU+vXfj+6zwPtT2rm4V3wwJG/qv8+9
-	 pmUe0HMfSODTT2Ond9yS6Wv7BKZlTtYEqsZaIBNXCsqFsr3/gHLtwKuTr6bCQGBEKmg/o
-	 my9dgbCBsh5wpwPuVurq72rB2G209vnfVLYsT8NPbgrSslWt0YZVX6HEpm3Z50vQqe/RF
-	 a4Da19Shm8KIU4U9bSd5sabsyn4VRsfihYyE2rm4dDn9I8mgvJBsT/Fp/K7WQ3XSmET3h
-	 v+AiAkDDbmyv+6/QwCcYOAeZbyw4g7JvFEhFqEXpLCBPxDz8ap34ZaFiDeBE8pZkZMw==
+	bh=14BZiZ4rPCuuB1jz1jxdK/G7J6ugIsJBkm7APDjgMok=;
+	b=ekVTJS5hA1fayK2iRaIoB5MAPvmbHTkX9zgnBW9/dMatR2Cq2GnPQYU+qU7NvgUV/tcZ
+	 Qm5A/d6BWxqbr8dEcKUMcCBnrpqYv97GlcYODz6UAaQJ6dpedOk/KjwcspgBHl9tvtGpG
+	 jCYM0BKTpM0QKUxps2td+AZEUao+nk9ZSQv0YZPVahVDH03HMB6IVG/v1hYZfaqRhBp3p
+	 mRQcNXVwPWKu1/scYkHvsJWSaIvlNZ/maRS8ufrKaJJx4DcbFARP29wqyv8pg93Gv36Bf
+	 l7P2yXliNCPPhXVzwcIBU3D/KYW7yQMeUAhfrGou7Fif23FinKrfkhqNHbzI6lNmdMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdGfl5Xy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwYwyxI0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB929606A92E;
-	Wed, 18 Nov 2026 19:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A35606C713;
+	Wed, 18 Nov 2026 19:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdGfl5Xy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD1E1F000C4;
-	Wed, 18 Nov 2026 19:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwYwyxI0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6521F000C4;
+	Wed, 18 Nov 2026 19:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030800;
-	bh=/HAIJ/Csd2OFYbx2SuKtJhTkuSeQ1dB7mYOmjxXbNWc=;
+	s=korg; t=1795030803;
+	bh=14BZiZ4rPCuuB1jz1jxdK/G7J6ugIsJBkm7APDjgMok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vdGfl5Xy9LcHgxke5w57wN8xcb5k6W5sS8BH11SxCfZXGYRuYVUHA30ztK8SsYETC
-	 SmOe0RcN3erwRo++0VpVR1w5rCD93mV8DeBkJJKgZ24huHtIJzIea/NkagW8zFIjCe
-	 1iTOAR5pSJLdTM31O3gGraifY1A3brL9ypLGHbHU=
+	b=ZwYwyxI0b3EeD3+RnVeAxGbPs5lB/cC/7Ay03wtOCUG1MPyDHNo0qkhIKt6Sf8Nol
+	 VqaArft7fmQaUmr83bYiAbRVkgup4HglDy+kMkrpgIULqjKqf1pSWGCJ/JxkTryEZa
+	 evymXH+MEsNq0gugJDhUUz8oa/u5q2bl4NdZRUKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 6.12 0792/1756] phy: rockchip: usbdp: Only enable USB3 when not in high-speed mode
-Date: Wed, 18 Nov 2026 15:48:39 +0100
-Message-ID: <20261118150041.234317067@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0793/1756] scsi: scsi_debug: Refuse a negative physblk_exp
+Date: Wed, 18 Nov 2026 15:48:40 +0100
+Message-ID: <20261118150041.281669711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,39 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit fbbf6c85b08008bf68ef49931175edeaa36ba82f ]
+[ Upstream commit a349876633f7a583429367daf16f9a4282118255 ]
 
-Ensure that USB3 mode is not accidently enabled during PHY re-init
-for systems that are configured as high-speed only via DT.
+sdebug_init() refuses a physblk_exp above 15, but the parameter is a signed
+int, so a negative value is accepted. The driver then shifts by it when it
+builds the Block Limits VPD page, which is undefined behaviour, and READ
+CAPACITY (16) reports an exponent of 15 for -1.
 
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/message/20260626212424.C215E1F000E9%40smtp.kernel.org
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-11-8d507cb1174f@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Refuse a negative value as well, and print it as a signed value.
+
+Assisted-by: LLM
+Fixes: ea61fca58c13 ("scsi_debug: Add support for physical block exponent and alignment")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-18-cassel@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index a2af4443fc067..896000513e4b6 100644
---- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
-+++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -974,7 +974,7 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
- 		if (ret)
- 			return ret;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index de54596bbae9b..ee129f23a7c58 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -7809,8 +7809,8 @@ static int __init scsi_debug_init(void)
+ 		return -EINVAL;
+ 	}
  
--		if (udphy->mode & UDPHY_MODE_USB)
-+		if (!udphy->hs && udphy->mode & UDPHY_MODE_USB)
- 			rk_udphy_u3_port_disable(udphy, false);
- 		udphy->phy_needs_reinit = false;
- 	} else if (udphy->phy_needs_reinit) {
+-	if (sdebug_physblk_exp > 15) {
+-		pr_err("invalid physblk_exp %u\n", sdebug_physblk_exp);
++	if (sdebug_physblk_exp < 0 || sdebug_physblk_exp > 15) {
++		pr_err("invalid physblk_exp %d\n", sdebug_physblk_exp);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
