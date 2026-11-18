@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043605;
-	b=HK/GHCxvEj7K+yx67kfhJAhojgshG/q86YI3++Je/ez3K9ZBD7oXXcx0VZ1pi4p73KYt
-	 DXf1Jp7lgPzm7etnG4rFeqWVnUctLqXlRJ3z0W6a9JDcYgyySc3dIhpRMlxuFHSWgJk2H
-	 qcE87T7xII7hKa0QOZqusp0OYxLdiqe744zzXnD/3l7Et/8WgA7Dgd1PtMsXobHlbqRp4
-	 5Gjx8MIUh84h8Sc7mg+xaR+9a5+ctrmNpPyuwSfkJMlyvF3l/R6ZrgyFG7B3o2qnaOZqY
-	 huEAimjj+FouVARV0yy69N0FmNAt6GAqoECFNqkelTRBd8Qye2JCZ2NqJzdSfP3OHxw==
+	t=1795043608;
+	b=eUJbvNNfPNxsh79AK/KR/X/hGdHFRl/N3OUYv/aZJMwHiJFc2BpVvGtyctlOyvz5m24m
+	 nEDKc3/7svgdbBUPMnNk9aHgTc00yhFMxnfmBHNV1L/uQhQgXrptou3emHe68VSUUYSCg
+	 3pNkSpK5tEVL6oT3z6IVFRtgi0Sy5D+zhVuC4CFhm/3R/0O6iN4MZfBdTntr2OiYkP5mn
+	 uX5P88wAv4Q/fg4E2n2QLSu0o3B7wrh0mXAsoOVEXHBFwyuzOFRfuBWZtKgHast/8FwCE
+	 a9IlXwDS+jzbjEKLgHownpiAyS1e3GYBtAUzy+w157irllr1oF28wD15i1PWnUnEI2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UE9KS4ZUcjrz+B2U5KUHpPm6FXBw1gCv/N/dAavk3yg=;
-	b=QGrmdHi+qg5MCQN+9U57hnitjGdj28Aw4TMlIL8Zip18zn7Dwsr17pllGGlp4Ws+C+SL
-	 xAQwpBijjsMqsS6eP8sG0ZoILCZpKZNADOOkrCFQvRor9aqsLYmuuNd2jcFJTix8oakoq
-	 9Nju5e3I5k8c9jDjysa/OokOTjqWyaW+OUQgtT6mdyiSOdu3diWliTZIPIFN4ErKhaJqj
-	 CjCIi1grhYjPga/niYbUdgSYJTvt2LIagatXYR512vipd1dMC/QTIYjNj11i6yE3tgm0V
-	 gAspwcyN912lozttJLu6/M5w2GAUtd/XB0vlydeDw7eIgl9EVINIQGZXM0d5XSw5CNw==
+	bh=tEK26QYKSk5ESMjfw2sJBh/ulJD1+W1whX7BYa2ktn8=;
+	b=Pq8QNSzZRtCfa7oJQsmBeDKsSTpRI5UuHpYqypqbvyZhCnQJoStmQ/+hYH80G/Y/pJsN
+	 iBPCCmj+iDNhf3YFHxdkphODsiWRJ2be0mapxNvWU26Um9+i0G86pvG3UFkjakrD9mwvB
+	 v6zLYPXwvrwIOkkevRP+jWWJdRPSdX55kHPJVvyXOaD/q2ctIBLMlhGAcPpBHqEP2Kbmd
+	 46pf+YWxc+10ZKUTfOfT8JZiMrg0nZizqCD+2q0OWxjBa4zr3lH+ZUqIuAGgJdtHpFoxa
+	 44Pv4UcKWLm8hYoaUDhe4Vtm7FBSI84Nk0jPH99GTOBOHrLLN/gbX9Wysfauv5AG9ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZiOTUfdu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YrKr3IyF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5283606A32C;
-	Wed, 18 Nov 2026 23:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E89606A325;
+	Wed, 18 Nov 2026 23:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZiOTUfdu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EF11F000C4;
-	Wed, 18 Nov 2026 23:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YrKr3IyF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9B01F000C4;
+	Wed, 18 Nov 2026 23:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043605;
-	bh=UE9KS4ZUcjrz+B2U5KUHpPm6FXBw1gCv/N/dAavk3yg=;
+	s=korg; t=1795043608;
+	bh=tEK26QYKSk5ESMjfw2sJBh/ulJD1+W1whX7BYa2ktn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZiOTUfduFR9goM270mmt1g+nFKlenZhU1yyq3kyzLpUUVboly8qWxivk1cG0ap/DR
-	 3M/EIlnP5kL5ygvi8ET3BFb1yGozkq8Vt6jh0o47uftysVWAj+gUcAmWKBj67lf+Ln
-	 0uJNd4AluE0WnufN9tmS3fXVXLkEi2s2ri13v/Fc=
+	b=YrKr3IyFc3AfxvzVjSPw0MeicO06FmOZ4NyjFhOSxbODVgLr2mNfgX7i3ForF0BL0
+	 Bf8AcWilapNB8MZFT7QP7VjZsQSXauDnrM8KGY/OSWAfa4NTCgTgJaraKxyPHtkeBn
+	 6xlLrXq82BqNFMhrtRsDvwEA+3gPDlOAhLsyWl5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Will Porter <mrwillporter@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0269/2857] f2fs: avoid setting SBI_NEED_FSCK on transient resize failure
-Date: Wed, 18 Nov 2026 15:21:43 +0100
-Message-ID: <20261118150211.112981438@linuxfoundation.org>
+Subject: [PATCH 6.1 0270/2857] ALSA: usb-audio: Add iD14 MkI to monitor-mix volume quirk
+Date: Wed, 18 Nov 2026 15:21:44 +0100
+Message-ID: <20261118150211.150531817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,63 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Will Porter <mrwillporter@gmail.com>
 
-[ Upstream commit 258c95150c26a30db1896eacd3bdef26314f2ca1 ]
+[ Upstream commit 17056a36d276a740f09dca723de1bc6aa3eb4ef9 ]
 
-When free_segment_range() fails in f2fs_resize_fs(), no on-disk
-superblock or filesystem metadata has been modified yet, and
-free_segment_range() safely restores all in-memory counters before
-returning.
+Add the iD14 MkI USB ID to the existing audient_id14_map. This
+names feature unit 12 Monitor Mix Playback Volume.
 
-However, the current error recovery path unconditionally sets the
-SBI_NEED_FSCK flag and prints a scary error message on any error,
-forcing an unnecessary and time-consuming fsck.f2fs repair on the
-subsequent mount/reboot.
+Live meter A/B testing on MkI USB ID 2708:0002 reproduced the same
+asymmetric attenuation seen on MkII. At ALSA value 104, the right
+channel was 23.07 dB below the left. At 127, both channels were equal.
 
-Fix this by separating the error recovery path with a dedicated
-recover_user_blocks label to bypass setting SBI_NEED_FSCK on
-free_segment_range() failures.
+The misleading Speaker Playback Volume name causes PipeWire to adopt
+FU12 as the stream master. Reuse the existing map to keep the control
+available while preventing that selection.
 
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Hardware-tested on Bazzite 7.2.0-ogc4.1.fc44.x86_64 with this change
+backported. ALSA exposed Monitor Mix Playback Volume after module load
+and USB reconnect. PipeWire volume changes from 100% to 35% and back
+left all four FU12 values at 127. Channel-isolated left/right playback
+remained balanced after reconnect.
+
+Build-tested with CONFIG_SND_USB_AUDIO=m using the focused sound/usb
+target.
+
+Assisted-by: Codex:gpt-5
+Signed-off-by: Will Porter <mrwillporter@gmail.com>
+Link: https://patch.msgid.link/20260823015353.686080-1-mrwillporter@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/usb/mixer_maps.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 851f55aa37f4e..ce543f07e9eab 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2233,7 +2233,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
- 	if (err)
--		goto recover_out;
-+		goto recover_user_blocks;
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index 8046d5987d5b1..ace4ccad8f51c 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -505,13 +505,13 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
+ 	{}
+ };
  
- 	update_sb_metadata(sbi, -secs);
- 
-@@ -2254,11 +2254,14 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
- 	}
- recover_out:
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
-+		f2fs_bug_on(sbi, err == -EAGAIN);
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
--
-+	}
-+recover_user_blocks:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
-+	if (err) {
- 		spin_lock(&sbi->stat_lock);
- 		sbi->user_block_count += shrunk_blocks;
- 		spin_unlock(&sbi->stat_lock);
+-/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
+- * and sits on the monitor mixer branch, but it is traced through to the
+- * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
+- * then adopts it as the stream's hardware volume, and any setting below 0 dB
+- * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
+- * non-standard name so that it is no longer taken for the stream's master
+- * volume, while remaining reachable for anyone who wants the monitor gain.
++/* Audient iD14 MkI and MkII: FU 12 sits on the monitor mixer branch but is
++ * traced through to the Speaker output terminal, so it is named "Speaker
++ * Playback Volume".  On MkII it controls only 4 of 6 playback channels.  MkI
++ * testing found asymmetric attenuation within the main stereo pair.  Userspace
++ * adopts this control as the stream's hardware volume, causing imbalance below
++ * 0 dB.  Give it a non-standard name so that userspace no longer treats it as
++ * the stream master, while keeping the monitor gain reachable.
+  */
+ static const struct usbmix_name_map audient_id14_map[] = {
+ 	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
+@@ -602,7 +602,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.map = maya44_map,
+ 	},
+ 	{
+-		/* Audient iD14 */
++		/* Audient iD14 MkI */
++		.id = USB_ID(0x2708, 0x0002),
++		.map = audient_id14_map,
++	},
++	{
++		/* Audient iD14 MkII */
+ 		.id = USB_ID(0x2708, 0x0008),
+ 		.map = audient_id14_map,
+ 	},
 -- 
 2.53.0
 
