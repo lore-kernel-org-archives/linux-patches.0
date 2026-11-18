@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019464;
-	b=ATnOu+rSXrw2w/r/MsO/cki4JwsNH0Adyl8AVeLS749pB4YR83fyC/8xvpJwtnMXHCUZ
-	 Rg8Lq+SeIZTq2ukZN8raOry5a8NOnZEy+8GUGuUCjr2md2gmUraLTckUrYNeoGArh61yG
-	 QGzbQldTvR6Z2Drvp73Ey156cgUmh/8Zq8BBtRGtfcMw/8HFGz6KrFTxfRnX8JoKs9WpU
-	 Azzzo0UqVDXRuSfXfJ6ZT5IoxSA7uKtxq8npw3+ILcGIhaXlPoIz+dYWNz3dRTpmS6fhs
-	 2dN2tyFcUkdi/AwM61XpUMjfJVZMQ9SnB9lY/rgVYHC+3Xhzadz8gn7y7V+Wc2LJm1g==
+	t=1795019467;
+	b=KrLU4CL3mUv/yNtl920Ty5VQ6ZnxLMU44FmA0OzLAskXEJiLKHeeYSbvUk0uI9efwi3I
+	 csFl3eWAwPHkG8AprVeky+hMJaiYzMNJXyoYzu0DYGTMi5io95QIjhLxCY4+xydN8IGbm
+	 x1kJKq1+CnL5bs7j0Epk0W1bYqkuPJZCZbIqh5TQ8WtY2SLha6XdSW/BZdcqowiGsSRz9
+	 DWQgeEjrSUP+47supeHE4HuRZkZw4U4SqT69d1UMwLnJrozdCWkrVGhF9InRn73ebEQs6
+	 eT6gkpy2Vx5OafLj4KXQl5ojeKbyO/5aCqH/1ZMhTXLff7f/bKcKsjUXLfycMw6ii/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NVCYlG9/vBPUY6AR4xVYxnumK3+SyDKEggeARM1ZKII=;
-	b=xWASjGNJ1KWHpg1/NgMJF5ZC31q+753sDwujEWMXpL5p/zE5SStXyPuEU/veSk4QyH6T
-	 VBVi1P2l/dMsY8FBo5CvlmzAy2Sqi2OnMGaBCGADHqPFpE7rkx+EkZh6RAM16nr3FU+p9
-	 y+++IQkShCXXMXdRlly2JYUsNgpOUqpBK5G1NoyeWk9Zw5vRGPk1aISQgwJsLQlMKaHoC
-	 jIDK7SgCvJ9LGrlKN9XmlILAQYNMiNXy3dOn5nQF4SCuSKQ3M+1QPzJV6odIcNQrjnLNF
-	 5qeXVz38prgBRN727j1xaCK5vzednm1S6Hr7thFI2EQvN+RpSwybKMjV5AvubPpoWHQ==
+	bh=eayJHqeLiY5TQtBUiSyV2AAdkYk3af3l1UpAIUZfU8w=;
+	b=A4yEs+GJv7lJ8caW50SV54wKPUXtQi42vfyf2rwnX1PZZEjIRtKPT+q35iCHzi0zSB6I
+	 diBqMXQ9AqjQd2gED8PhXw82RTCVkhP5L2atXnZj9ihz8oqSmt4wCesG6VW3wzt7Wc95Z
+	 hbp8WcDkmp/xmwyjuoYYspy1Jn6jugLVGyxknhRxTDScwMF0ClcFxvg84by5olmr2bsQX
+	 zZeKJ3ylIwR9TTM4v28he3DS2y5TtPh2PuFr/iXKzvB2tHzNx4d/y4IQmsJf54b0kpwYR
+	 mJtjQugXgeo6VPt1iE7l1D/9PiSq8IBeVann5Fkzi5paQxtYYyNds788d4XEnMhg4Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YyJz4dQk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SSyeEd+v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387C2606A33F;
-	Wed, 18 Nov 2026 16:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4A2606A7C9;
+	Wed, 18 Nov 2026 16:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YyJz4dQk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB411F000C4;
-	Wed, 18 Nov 2026 16:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SSyeEd+v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE4C1F000C9;
+	Wed, 18 Nov 2026 16:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019464;
-	bh=NVCYlG9/vBPUY6AR4xVYxnumK3+SyDKEggeARM1ZKII=;
+	s=korg; t=1795019466;
+	bh=eayJHqeLiY5TQtBUiSyV2AAdkYk3af3l1UpAIUZfU8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YyJz4dQkE4Zr8X5+fYrPeQtETW6rY0EG/UolkGad9IqG6PZjFGQ9yB8lEHWIr2Pf6
-	 GeffgQKWQITNM/hOPw9er+xmqwkP9Zk+yWWpsea5fIs/9CbDQ/28egWO3+OLDEBaR7
-	 4xqiOLihtr0rgUiCnXv5rgE8DqwSuQLElSbEt5ZA=
+	b=SSyeEd+vMAAohM+/fMA4WQWtUC9SYgqovviLo/Dovd7fhK03lS7VH3SboDM2WiWV+
+	 VTdWEWPliQxrOGF1Q5wrTyRRVyqMMJgVXDyx2Qn/gp3dprAa41+MnQ0qSbusM2x5Ii
+	 24npnVS3xI6zAkhQytcMre+kF+YEf5ngU1iBYgUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Swark Yang <syang@axiado.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1604/2651] mailbox: axiado: fix RX frame draining and error handling
-Date: Wed, 18 Nov 2026 15:47:24 +0100
-Message-ID: <20261118150345.587516532@linuxfoundation.org>
+Subject: [PATCH 7.3 1605/2651] mailbox: axiado: fix debugfs name truncation warning
+Date: Wed, 18 Nov 2026 15:47:25 +0100
+Message-ID: <20261118150345.618002364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,253 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Swark Yang <syang@axiado.com>
 
-[ Upstream commit fe43cf02f416417f2cdf59524abb84356d36d496 ]
+[ Upstream commit 5cefa9bc518f187106c6bba4600e5c6dd61de91f ]
 
-Two RX-path bugs found during bring-up:
+kernel test robot reported a format-truncation warning for the
+snprintf() that builds each channel's debugfs entry name:
 
-1. axiado_rx_thread() previously consumed only one frame per
-   invocation. Multiple frames can accumulate in the FIFO while the
-   threaded handler is running. Split the single-frame handling into
-   axiado_mbox_receive_one_frame() and drain all currently queued
-   frames before returning from the handler. A cond_resched() in the
-   drain loop prevents a continuously-fed channel from monopolizing
-   the CPU.
+  drivers/mailbox/axiado-mailbox.c:325:39: warning: '-errors'
+  directive output may be truncated writing 7 bytes into a region
+  of size between 2 and 11 [-Wformat-truncation=]
 
-2. readl_poll_timeout() waiting for the remainder of a frame can
-   return success either because the required FIFO level was reached
-   or because a FIFO error appeared -- it does not distinguish the
-   two. The old code did not check for that case and could therefore
-   enter the read loop without enough words actually being present.
-   Explicitly inspect the error status after the poll: if an error
-   occurs while waiting for the remainder of an already-started
-   frame, treat that frame as unusable and flush the FIFO to
-   resynchronize, rather than risk delivering incomplete or garbage
-   data to the client.
-
-While here:
-
- - Track whether the handler actually serviced a hardware condition,
-   such as clearing a FIFO error or consuming frame data. Return
-   IRQ_HANDLED whenever something was serviced, even if the FIFO is
-   empty afterward, instead of reporting IRQ_NONE after handling a
-   hardware condition.
-
- - Use readsl() for the RX FIFO payload. The destination is the
-   driver-owned rx_buffer allocated by devm_kzalloc(), so it has
-   suitable alignment for the stream accessor. readsl() is
-   appropriate for copying a sequence of words from the FIFO into
-   that buffer. The TX path intentionally stays on
-   get_unaligned_le32()/writel(): its buffer is supplied by an
-   external mailbox client, the mailbox API gives no guarantee that
-   buffer is naturally aligned, and the TX path also explicitly
-   handles a partial final word.
-
-mbox_free_channel() invokes ->shutdown() before chan->cl is cleared,
-and axiado_mbox_shutdown() calls disable_irq(), which waits for the
-in-flight threaded handler to complete, so no functional change is
-needed for that path.
-
-Verified: builds clean with the aarch64 cross-compiler, passes
-checkpatch.pl, and was regression-tested with live mailbox traffic on
-AX3005.
+AX3005 exposes 16 mailbox channels, so the longest name generated at
+runtime is "chan15-errors" and already fits in the original buffer.
+However, the compiler cannot infer that bound from
+drv_data->num_chans and therefore assumes the unsigned channel index
+may require up to 10 decimal digits. Widen the buffer to 32 bytes,
+which removes the -Wformat-truncation warning with no functional
+change.
 
 Fixes: 14af7a96afa3 ("mailbox: add Axiado AX3005 mailbox driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202608250447.gGkRwNAl-lkp@intel.com/
 Signed-off-by: Swark Yang <syang@axiado.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/axiado-mailbox.c | 114 ++++++++++++++++++++++++-------
- 1 file changed, 89 insertions(+), 25 deletions(-)
+ drivers/mailbox/axiado-mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mailbox/axiado-mailbox.c b/drivers/mailbox/axiado-mailbox.c
-index 3a3cf74218638..aa1dcc1b267d7 100644
+index aa1dcc1b267d7..a87693c639dcf 100644
 --- a/drivers/mailbox/axiado-mailbox.c
 +++ b/drivers/mailbox/axiado-mailbox.c
-@@ -15,6 +15,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/property.h>
-+#include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/unaligned.h>
+@@ -379,7 +379,7 @@ static int axiado_mbox_probe(struct platform_device *pdev)
+ 		return ret;
  
-@@ -36,6 +37,12 @@
- #define AXIADO_MBOX_CSR_ERRORS		(AXIADO_MBOX_CSR_OVERFLOW | \
- 					 AXIADO_MBOX_CSR_UNDERFLOW)
+ 	for (i = 0; i < drv_data->num_chans; i++) {
+-		char name[16];
++		char name[32];
  
-+enum axiado_mbox_frame_result {
-+	AXIADO_MBOX_FRAME_EMPTY,
-+	AXIADO_MBOX_FRAME_OK,
-+	AXIADO_MBOX_FRAME_BAD,		/* malformed/incomplete; FIFO flushed */
-+};
-+
- struct axiado_mbox_data {
- 	u8 num_chans;
- 	u16 msg_size;
-@@ -116,6 +123,13 @@ static int axiado_mbox_send_data(struct mbox_chan *chan, void *data)
- 		return -EBUSY;
- 	}
- 
-+	/*
-+	 * Per-word get_unaligned_le32()/writel(), not writesl(): @data is
-+	 * supplied by whatever client calls mbox_send_message(), and
-+	 * mbox_chan_ops.send_data(void *data) makes no alignment guarantee
-+	 * for that buffer. writesl() dereferences it as a native u32 *,
-+	 * which is unsafe unless alignment is known.
-+	 */
- 	for (offset = 0; offset + sizeof(u32) <= msg_len;
- 	     offset += sizeof(u32))
- 		writel(get_unaligned_le32(buf + offset), priv->mbox_reg);
-@@ -131,31 +145,42 @@ static int axiado_mbox_send_data(struct mbox_chan *chan, void *data)
- 	return 0;
- }
- 
--static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
-+/*
-+ * Read and, if valid, deliver exactly one length-prefixed frame currently
-+ * at the head of the RX FIFO. Does not loop -- the caller decides whether
-+ * to call this again. May clear a pending FIFO error at several points
-+ * below, wherever a new one could plausibly have appeared since the last
-+ * check; each check is a cheap readl() when nothing is pending.
-+ */
-+static enum axiado_mbox_frame_result axiado_mbox_receive_one_frame(struct axiado_channel_data *priv,
-+								    bool *serviced)
- {
--	struct axiado_channel_data *priv = dev_id;
- 	struct mbox_chan *chan = priv->chan;
- 	struct axiado_mbox *mb = dev_get_drvdata(chan->mbox->dev);
- 	u8 *buf = priv->rx_buffer;
- 	unsigned int num_words;
- 	unsigned int remaining;
--	unsigned int i;
- 	u32 msg_len;
- 	u32 word;
- 	u32 csr;
- 	int ret;
- 
- 	/*
--	 * Clear and log/count any pending errors, but don't discard data
--	 * on their account alone: a rejected overflow write doesn't
--	 * corrupt what was already safely queued ahead of it, so let the
--	 * length-based read below decide whether what's here is usable.
-+	 * Don't discard data on a cleared error's account alone: a rejected
-+	 * overflow write doesn't corrupt what was already safely queued
-+	 * ahead of it, so let the length-based read below decide whether
-+	 * what's here is usable. Count clearing a real error as @serviced
-+	 * so the handler reports IRQ_HANDLED whenever it actually handled
-+	 * a hardware condition.
- 	 */
--	axiado_mbox_clear_fifo_errors(priv);
-+	if (axiado_mbox_clear_fifo_errors(priv))
-+		*serviced = true;
- 
- 	csr = readl(priv->csr_reg);
- 	if (csr & AXIADO_MBOX_CSR_EMPTY)
--		return IRQ_NONE;
-+		return AXIADO_MBOX_FRAME_EMPTY;
-+
-+	*serviced = true;
- 
- 	/*
- 	 * The first word contains the total message length in bytes,
-@@ -165,8 +190,12 @@ static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
- 	msg_len = word;
- 	put_unaligned_le32(word, buf);
- 
--	if (msg_len < sizeof(u32) || msg_len > mb->drv_data->msg_size)
--		goto invalid_message;
-+	if (msg_len < sizeof(u32) || msg_len > mb->drv_data->msg_size) {
-+		dev_warn_ratelimited(chan->mbox->dev,
-+				     "Channel %u invalid frame length %u (max %u)\n",
-+				     priv->channel_num, msg_len, mb->drv_data->msg_size);
-+		goto bad_frame;
-+	}
- 
- 	num_words = DIV_ROUND_UP(msg_len, sizeof(u32));
- 	remaining = num_words - 1;
-@@ -182,33 +211,68 @@ static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
- 					  remaining,
- 					  AXIADO_MBOX_RX_POLL_US,
- 					  AXIADO_MBOX_RX_TIMEOUT_US);
--		if (ret)
--			goto incomplete_message;
-+		/*
-+		 * The wait condition above is satisfied by EITHER the
-+		 * expected word count landing OR a FIFO error appearing.
-+		 * ret == 0 only means "didn't time out" - it does not mean
-+		 * the words are actually there. Check @csr for the error
-+		 * bit explicitly; otherwise an underflow can present as
-+		 * "success" and the read loop below pulls words that were
-+		 * never pushed, handing the client garbage.
-+		 */
-+		if (ret || (csr & AXIADO_MBOX_CSR_ERRORS)) {
-+			dev_warn_ratelimited(chan->mbox->dev,
-+					     "Channel %u incomplete frame: got %lu/%u words (%s)\n",
-+					     priv->channel_num,
-+					     FIELD_GET(AXIADO_MBOX_CSR_LEVEL, csr),
-+					     num_words,
-+					     (csr & AXIADO_MBOX_CSR_ERRORS) ?
-+					     "FIFO error" : "timed out");
-+			goto bad_frame;
-+		}
- 
- 		axiado_mbox_clear_fifo_errors(priv);
- 	}
- 
--	for (i = 1; i < num_words; i++) {
--		word = readl(priv->mbox_reg);
--		put_unaligned_le32(word, buf + i * sizeof(u32));
--	}
-+	/*
-+	 * readsl() streams the payload words directly into rx_buffer, which
-+	 * is allocated by this driver via devm_kzalloc() and therefore has
-+	 * suitable alignment for a stream accessor.
-+	 */
-+	readsl(priv->mbox_reg, buf + sizeof(u32), remaining);
- 
- 	axiado_mbox_clear_fifo_errors(priv);
- 
- 	if (READ_ONCE(priv->active))
- 		mbox_chan_received_data(chan, priv->rx_buffer);
- 
--	return IRQ_HANDLED;
-+	return AXIADO_MBOX_FRAME_OK;
- 
--incomplete_message:
--	dev_warn_ratelimited(chan->mbox->dev,
--			     "Channel %u received an incomplete message\n",
--			     priv->channel_num);
--
--invalid_message:
-+bad_frame:
-+	axiado_mbox_clear_fifo_errors(priv);
- 	writel(AXIADO_MBOX_CSR_FLUSH, priv->csr_reg);
- 
--	return IRQ_HANDLED;
-+	return AXIADO_MBOX_FRAME_BAD;
-+}
-+
-+static irqreturn_t axiado_rx_thread(int irq, void *dev_id)
-+{
-+	struct axiado_channel_data *priv = dev_id;
-+	enum axiado_mbox_frame_result result;
-+	bool handled = false;
-+
-+	/*
-+	 * Drain all frames currently queued in the FIFO before returning.
-+	 * Multiple frames may accumulate while the threaded handler is
-+	 * running. cond_resched() prevents a continuously-fed channel from
-+	 * monopolizing the CPU.
-+	 */
-+	do {
-+		result = axiado_mbox_receive_one_frame(priv, &handled);
-+		cond_resched();
-+	} while (result == AXIADO_MBOX_FRAME_OK);
-+
-+	return handled ? IRQ_HANDLED : IRQ_NONE;
- }
- 
- static int axiado_mbox_startup(struct mbox_chan *chan)
+ 		ch_data[i].channel_num = i;
+ 		ch_data[i].chan = &mb->mbox.chans[i];
 -- 
 2.53.0
 
