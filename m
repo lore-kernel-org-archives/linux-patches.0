@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026021;
-	b=0ykoESJeEuuiUhog9AJd+M9UBCVgWlyuy1atT7LG8NsVLU44TWrNtzI/KBcM0ZnWTLNM
-	 DVqpcDJjnVO5yLz/W70FJIoos0fpHmtIopBFgbIXRV/mdWcIkVnDxVAg365ybIB2UaF+4
-	 KbNpGGKj7j2xNsYDSLkLgE7qyucQgGZf2xAQXNWyLmkwNa2yV9knulLptTNFza1/grwM/
-	 Jr+bR8S1SN4Ql0uNTcnNbMEqJneq7nWdQm0xHTtskJgYPz4kQdDavpmb4znIPPfGy34E+
-	 q7QhifsqoTeJEyp2BWU+UfmNUMiE7gnD05/Us9Rt/sra+VGhWTqKly5VfkzwMVW2T+A==
+	t=1795026024;
+	b=M9L5L4uY3SP4lTjpoG3wwJjZrIU2UDF2xbfDBxMR8M2U0Jjx8pyV2w5TDWWEED0oAEct
+	 lLvXE27+Vu4pV9xRYZKwDArhitYxJ1Mlm5GM8Em0IJ7f7Yhr9JGe7hoBXxgH8m3q/qZyG
+	 fN7GiS9P9k9Ojm5GViil4Xoy58vmMQw7MwA+hERp5vhhSzc9LA5X1fA9t+XOiMMgbNnRd
+	 Vn/UJfmrrqFec1e6Wh4PHH4oAOolHiIqJVA2GnEse2kMCdDUyK9GDlVf4+JQRncgkGOIN
+	 RT9rNGiqMqK8jcNu15UWQO9b29Q6RyFQ1VqXCnNlTQEtqGkxMtSTGyzPB4t87htQhpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rYWyvKVSgG23dIjeot8qM+96jfnqtOiHgZVe5TaAhNs=;
-	b=RFwH5IpBKYGDj13yeyC8hCtCIih8/u+Z4N1Qi0gtQWYh62MmNjCW/d48t+XCJsSSNPG1
-	 UfCOCmTir7Y2gQ91+eTYZkJ9Ap7GWJ7WCSiCLhmpWbm/G3BGhbAGFWdPSqMR3fUiUzReX
-	 IGwNKKOkhCH8VtC8LnDs1xWoOlpCST59ouTdIE9ZzqpHK3pvliHI3JOIjInwvYwEb03mp
-	 hy8CGzKZfat7mW62UyKiG4scgphfpFYmyhNQo8tGnZeV47385jKXFVM7xJOm8VTF2B4kn
-	 aznPdpPd4h0G191h79ze5gS79Xn0XbCXZ6UXzyrusxkm+U1aMDipKlk+KamJrTM4GOg==
+	bh=5QXiXvGBuwvMIk4anXcYYTwEPiIn/gKnSsoFv1T/jW0=;
+	b=O7jSoRvvqnEXN4JLRyDC/nafgQg0Ng39ywrgXWhzE5A3qEvJBH20oiHHxHQ2g/D6cR6n
+	 ZBdWj4Qnpk4eYfODatE+aqFW5CsFCTOMHal5R2ah9eMSyFHl735I/Z+MTHPL281SVT9pC
+	 kNRrN5+UaZQCv4wIKSJZ7Weda/cmNslrUh+S/otSldaQZSt0r+FG3gW2cVOQ8bqkIDy+L
+	 tPiP0eeqJeqm66z9rzNchDRKVaFhVUDpvZsSGpBQX7FaIngUR08lGEWvqOT9jnUpQ/mQu
+	 /H7M/Nd0wfhbivNk12fDzrXV0iBWcvngUT9jM6SCCGm3LD6R5o7l++22viEy9fB6WJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcpyokLQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xd9cHwLs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63754606A31C;
-	Wed, 18 Nov 2026 18:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485C2606A31C;
+	Wed, 18 Nov 2026 18:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcpyokLQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3851F000C5;
-	Wed, 18 Nov 2026 18:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xd9cHwLs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986D61F000C4;
+	Wed, 18 Nov 2026 18:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026021;
-	bh=rYWyvKVSgG23dIjeot8qM+96jfnqtOiHgZVe5TaAhNs=;
+	s=korg; t=1795026024;
+	bh=5QXiXvGBuwvMIk4anXcYYTwEPiIn/gKnSsoFv1T/jW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcpyokLQkXeA3l/WNBh4hU729+WvEM+FjnvLFPYYf2nSzQ18zBKDzTURTdReQiQ1I
-	 PwDNDP74RCjWLC3JOGd0T1gH07veFErc0fiJyjum+hwhYDZNP+ltzyV+92Lubid7z1
-	 hbXgNOvNUmjPIf/NOCJx/itg3gEz7jhBDmsxPq54=
+	b=xd9cHwLsMUGHQ/IhOwLZ0/OaH7FyPY01DyTLMcorJAjkC3r7mtqrWSn8/J6UsIJ/g
+	 jXwVZVPhO6npW82hmCusbfxm2MkBpIRvsYE1RKMs5CaCcjtMXxuVQHujG6rbU+X6R3
+	 WC8KDJEPK7/cozEhqJH5/zLq4vtt1uz4EVp/2ZKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1284/2151] ALSA: line6: Reject too small max packet sizes
-Date: Wed, 18 Nov 2026 15:50:19 +0100
-Message-ID: <20261118150208.913570109@linuxfoundation.org>
+Subject: [PATCH 6.18 1285/2151] ALSA: line6: Fix potential OOB write in line6_capture_copy()
+Date: Wed, 18 Nov 2026 15:50:20 +0100
+Message-ID: <20261118150208.949995322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,43 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e2ef553dfe923959632e580bcad8583d922868ac ]
+[ Upstream commit d69798357b5d562bcda1af488cda3ead4d039f8f ]
 
-Although the LINE6 driver has a sanity check for the given max packet
-sizes, it still has an implicit requirement of the minimal size being
-bytes-per-frame; e.g. the impulse test signal assuming the fixed size,
-and when a too small size is specified by a malformed USB descriptor,
-this may lead to an OOB access.
+line6_capture_copy() copies the data for the original byte size, but
+the buffer overwrap is checked against the frame size.  Because of it,
+when the data size isn't aligned in frames, the remaining bytes might
+be still copied above the buffer size.
 
-Change the sanity check conditions to reject too small max packet
-sizes for avoiding the scenario above.
+For avoiding the potential OOB write, correct the copied data size in
+line6_capture_copy() to be aligned with frames.
 
-Fixes: 3450121997ce ("ALSA: line6: Fix write on zero-sized buffer")
+Fixes: 1027f476f507 ("staging: line6: sync with upstream")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-10-tiwai@suse.de
+Link: https://patch.msgid.link/20261008192553.300025-11-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/pcm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/line6/capture.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
-index 8f4b47b6b7190..f46e20ba58435 100644
---- a/sound/usb/line6/pcm.c
-+++ b/sound/usb/line6/pcm.c
-@@ -562,7 +562,11 @@ int line6_init_pcm(struct usb_line6 *line6,
- 	line6pcm->max_packet_size_out =
- 		usb_maxpacket(line6->usbdev,
- 			usb_sndisocpipe(line6->usbdev, ep_write));
--	if (!line6pcm->max_packet_size_in || !line6pcm->max_packet_size_out) {
-+	/* reject max packet sizes smaller than bytes-per-frame;
-+	 * (the magic number 6 is taken from the playback case)
-+	 */
-+	if (line6pcm->max_packet_size_in < 6 ||
-+	    line6pcm->max_packet_size_out < 6) {
- 		dev_err(line6pcm->line6->ifcdev,
- 			"cannot get proper max packet size\n");
- 		return -EINVAL;
+diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
+index f59ec9c4a1a52..ad0588973cbc4 100644
+--- a/sound/usb/line6/capture.c
++++ b/sound/usb/line6/capture.c
+@@ -129,7 +129,8 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
+ 	} else {
+ 		/* copy single chunk */
+ 		memcpy(runtime->dma_area +
+-		       line6pcm->in.pos_done * bytes_per_frame, fbuf, fsize);
++		       line6pcm->in.pos_done * bytes_per_frame, fbuf,
++		       frames * bytes_per_frame);
+ 	}
+ 
+ 	line6pcm->in.pos_done += frames;
 -- 
 2.53.0
 
