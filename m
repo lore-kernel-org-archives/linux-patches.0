@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031643;
-	b=5EgHLaLAJ2zctrziivI+r1IkILCcua8K75fCHnylKTuFVcZRFuqhKJU5HnOIGIR4ZFTv
-	 7LEgysDXsrPypKQRPwSFETlQT7QOVtgELLW+PHfOAdVxpS30ZER2JJE/zOCLQS9b2268s
-	 52XQNBBdwMiwrpjt+DEW4H1tn8/V7l2XVJbSC/6q4gAoYgnKV9nYeDhgUObrD+46zeQfh
-	 FxqsZkpoZCTOnDCtx/it8SXKZJiB2JUFyz6/uN3fWpxikLpaM1NI+2xayHD//iiifUiS9
-	 AlZZyH7/tgGJ5tThXUX/VSD7SXRyMNcf8iJwjkbq2w/8sUPV+yicZH1iezBzszAxjDw==
+	t=1795031646;
+	b=tHlnyema2vgdZyhgino9DRkQUxUVJy+NchDEK0RqZwmb6iNGxHlagrZjHO1YhmnSfJZ6
+	 Sq/7BFJcsv6dJETvWWw+7dj+QaOHEz+ibBhpzdFaKT+rnFyQQczFYS6onxapIipY43XRP
+	 5xFEkqzlswRL9C+sa+RGexwgPO+sDKkDrGyrTmuOJaeIc/WKNr+MXlwh9F3W/zbmwOpP3
+	 D4DDTJNHhJ2VHK/s9yDXaR4Kyqc8v+hUcHn1CRlAd/kca1O9l0IQ3wcNdC06/m1fESOP8
+	 dQBKsuCklEW57ENx3U+67Mxmy0snecRRl/zFZn2fKhl7eXBbCkalou3Ze2IioSUonBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8wB4EoTyT0ZopxapcSulFyjcZHlxWC6dNS2XuUq2X8k=;
-	b=iuAS4ewLphQO0L9MD1j38m7fN7mXLwLrOJtzDEri3FlDrQRtQ5ma5YR3uf8O7jlv6rrl
-	 IzA8sHMle+hFQeAANUip2uRwSuQIiE9lP24ec69UwtD+kVjbwDoTjBcGNjub8uu7KQ5wo
-	 yq7CTWM2As6knHR5/IT6ssmnPQAEGWwUoJQivbJvszwAq1RhASYXoh29JeRTIGqizPduh
-	 lxIbFOOAUU7PHZfMgmi2/QiufDJeKO0VxKEKb5NyUdpP30q5lEg8vM4aio8srhTfbi1EJ
-	 +pCkxjNhzS0ST/MEEN+7cjGkjQeoOTcH0tKvO+ME6snFDcSQAqLtUzVQ+qHUAm3hUKw==
+	bh=liw60Vkk+kYloNXnoLyRN9j9Hgtq7tKQc7ePZ/TEs4A=;
+	b=jwTYtaXtKlTx8oYeJ0lYeSsM4dL2E7NdDy8IdqvWMlZGjuW010w/0CgLqskbiR8+fcPZ
+	 oHQ72tUr5pKya8AxjBYh2gj9TM45SjdkK05OfejMVKJd2+9Gry1kecQLiGj4SdlIu1Icu
+	 /r9PMZxPsxeD2vErGlFxt/VnTj1dw3qFOq/PZcYSgsF6vMTHj5NxTOhPh4G6g2j5dozYM
+	 X7TVfZFhnLewVeuVQ6egJnOi4iBvQOUU8PCxyt3/pyQ4JLutyZrJ/XrbJx5/++2dYoDB3
+	 uAS+2n1NL6tStnKY5KsL7HKppev1LOfygW3+bySjPMMUCq5TDq5rBTklVQN7DtlRNrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynQFKFhV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nhfIGDLl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2116606A31C;
-	Wed, 18 Nov 2026 19:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE805606A320;
+	Wed, 18 Nov 2026 19:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynQFKFhV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A771F000C4;
-	Wed, 18 Nov 2026 19:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nhfIGDLl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CA21F000C4;
+	Wed, 18 Nov 2026 19:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031643;
-	bh=8wB4EoTyT0ZopxapcSulFyjcZHlxWC6dNS2XuUq2X8k=;
+	s=korg; t=1795031646;
+	bh=liw60Vkk+kYloNXnoLyRN9j9Hgtq7tKQc7ePZ/TEs4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ynQFKFhVtT7zD99JldolUtYiQCYK51jdqKF+KP7Eo3FNFCi/zpBY0fFO2p6zKgVdd
-	 ghBcYILqxL9Lgy5Zyv6C5ihnYkytNbuJIaZttcInJmZhadDzSM0DhH2Ap6vq+Vky/M
-	 kDhu2TlPfaM6t+z76qmLMhIyqd3+cUVk7dLWYXfg=
+	b=nhfIGDLlr6ZHhogO58egGRBHXFp+vSd08q6ZhF29lVUFzLeoC/2VoNuE2DoUjMYhc
+	 fWuBZGGq0UD1H0pqZcxBrUvdjRprYkTLV2/mzrAizyQMp7TxCN/OWSzJ9hQShq0rQA
+	 jGzpRzk9MBU/nWWUEjb+NIDf/jz0EDgtgjlxjDKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Keerthy <j-keerthy@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1130/1756] thermal/drivers/ti-soc-thermal: Cancel pending alert work on remove
-Date: Wed, 18 Nov 2026 15:54:17 +0100
-Message-ID: <20261118150055.065145014@linuxfoundation.org>
+Subject: [PATCH 6.12 1104/1756] clocksource/drivers/timer-mediatek: Fix random crash at boot
+Date: Wed, 18 Nov 2026 15:53:51 +0100
+Message-ID: <20261118150054.129318668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,87 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit aaa6c8dec49339710f9fd2a2af5646cf4111dbd4 ]
+[ Upstream commit 8496a1d234e8cf9cb15c4282cb3a11c6550bd242 ]
 
-On a threshold crossing, the talert IRQ handler calls
-ti_thermal_report_sensor_temperature(), which queues the work embedded
-in the sensor's ti_thermal_data on the system workqueue. Nothing ever
-cancels or flushes that work.
+MediaTek bootloaders generally enable APXGPT timers at boot. This means
+that a timer IRQ can sometimes happen between the IRQ line request and the
+configuration of the clock event handler. This leads to a hard crash with
+an instruction abort, branch to pc 0x0 in mtk_gpt_interrupt handler as
+clkevt is null.
 
-ti_bandgap_remove() frees the talert IRQ last. free_irq() waits for a
-running handler, but not for the work the handler has queued. When
-remove returns, devres unregisters and frees the thermal zones and then
-frees the devm-allocated ti_thermal_data, so a work item that is still
-pending runs ti_thermal_work() on freed memory:
+To avoid this issue request the IRQ with IRQF_NO_AUTOEN and enable it
+explicitly after the clock event is configured.
 
-	ti_thermal_work()
-	  data = container_of(work, struct ti_thermal_data, thermal_wq);
-	  thermal_zone_device_update(data->ti_thermal, ...);
+Issue was reported and fix tested on the Lenovo Tab E7 (TB-7104F, mt8167).
 
-Free the talert IRQ before removing the sensors, so that no new work
-can be queued, and cancel the work in ti_thermal_remove_sensor().
-
-This needs an OMAP4460/4470 or OMAP5 SoC (DRA7 has TALERT but no
-->report_temperature, so it never queues the work), a threshold crossing
-just before the driver is unbound or unloaded, and the work still
-pending when devres frees the data.
-
-Found by static analysis tool CodeQL.
-
-Fixes: 445eaf871bf9 ("staging: omap-thermal: common code to expose driver to thermal framework")
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Fixes: a0858f937960 ("clocksource/drivers/timer-mediatek: Convert the driver to timer-of")
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Acked-by: Keerthy <j-keerthy@ti.com>
-Link: https://patch.msgid.link/20260926124931.3599746-1-geoffreyhe2@gmail.com
+Link: https://patch.msgid.link/20261002072115.169250-2-l.scorcia@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/ti-soc-thermal/ti-bandgap.c        | 7 ++++---
- drivers/thermal/ti-soc-thermal/ti-thermal-common.c | 4 ++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/clocksource/timer-mediatek.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/ti-soc-thermal/ti-bandgap.c b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
-index caadfc61be93a..d722b5733336e 100644
---- a/drivers/thermal/ti-soc-thermal/ti-bandgap.c
-+++ b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
-@@ -1077,6 +1077,10 @@ void ti_bandgap_remove(struct platform_device *pdev)
- 	if (!soc_device_match(soc_no_cpu_notifier))
- 		cpu_pm_unregister_notifier(&bgp->nb);
+diff --git a/drivers/clocksource/timer-mediatek.c b/drivers/clocksource/timer-mediatek.c
+index 7bcb4a3f26fb0..e20075b09fab0 100644
+--- a/drivers/clocksource/timer-mediatek.c
++++ b/drivers/clocksource/timer-mediatek.c
+@@ -277,7 +277,7 @@ static struct timer_of to = {
+ 	},
  
-+	/* Stop the alerts first: they queue work on the sensors' data */
-+	if (TI_BANDGAP_HAS(bgp, TALERT))
-+		free_irq(bgp->irq, bgp);
-+
- 	/* Remove sensor interfaces */
- 	for (i = 0; i < bgp->conf->sensor_count; i++) {
- 		if (bgp->conf->sensors[i].unregister_cooling)
-@@ -1093,9 +1097,6 @@ void ti_bandgap_remove(struct platform_device *pdev)
- 	clk_put(bgp->fclock);
- 	clk_put(bgp->div_clk);
+ 	.of_irq = {
+-		.flags = IRQF_TIMER | IRQF_IRQPOLL,
++		.flags = IRQF_TIMER | IRQF_IRQPOLL | IRQF_NO_AUTOEN,
+ 	},
+ };
  
--	if (TI_BANDGAP_HAS(bgp, TALERT))
--		free_irq(bgp->irq, bgp);
--
- 	if (TI_BANDGAP_HAS(bgp, TSHUT))
- 		free_irq(gpiod_to_irq(bgp->tshut_gpiod), NULL);
+@@ -298,6 +298,7 @@ static int __init mtk_syst_init(struct device_node *node)
+ 
+ 	clockevents_config_and_register(&to.clkevt, timer_of_rate(&to),
+ 					TIMER_SYNC_TICKS, 0xffffffff);
++	enable_irq(timer_of_irq(&to));
+ 
+ 	return 0;
  }
-diff --git a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-index 0cf0826b805a9..4bf3b2e0fc682 100644
---- a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-+++ b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-@@ -195,6 +195,10 @@ int ti_thermal_remove_sensor(struct ti_bandgap *bgp, int id)
+@@ -334,6 +335,7 @@ static int __init mtk_gpt_init(struct device_node *node)
+ 					TIMER_SYNC_TICKS, 0xffffffff);
  
- 	data = ti_bandgap_get_sensor_data(bgp, id);
+ 	mtk_gpt_enable_irq(&to, TIMER_CLK_EVT);
++	enable_irq(timer_of_irq(&to));
  
-+	/* Work queued by the talert IRQ must not outlive the data */
-+	if (!IS_ERR_OR_NULL(data))
-+		cancel_work_sync(&data->thermal_wq);
-+
- 	if (!IS_ERR_OR_NULL(data) && data->ti_thermal) {
- 		if (data->our_zone)
- 			thermal_zone_device_unregister(data->ti_thermal);
+ 	return 0;
+ }
 -- 
 2.53.0
 
