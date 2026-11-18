@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022721;
-	b=j3X6g4zd25Gs4lwZL6kBfvPtpsLDOO7qEdWRrNII1cdmzC0i9n0RH1cULm/XGS0QsYu+
-	 9wBwuSwhuJGqr/P8p/pMKMTYs5hb/zOtkdQyOAR6uKSEW/4lqZeWgLrwSyWfdCe+lgkVT
-	 kgHW+AD5dAuQNeL1xGNAFOl90S7lBrl+KcguGSZV1Rd49zOnkNSQQBcjQ72zm4ccFt8GK
-	 sDUrY2wFWZqg8UMoiu9Jrc3ygbH8PNt08aqCLQCwku6z90TRIgqu1wymNLgskplpnpf0W
-	 6Rm2XQ/A7+jW4ulONLY+7Rd9J9cL/RkZb0jl8/MmMX638BAHxBZwTeX07Fb18q3kJog==
+	t=1795022724;
+	b=usmCuGfDa/iFkVDPqIFos7Gnm1B3EZ3euW7Ies0LADW0/v7F+D6PgXpt1lmXRhrzqQA5
+	 N9JAg9ZrxbgsWyitEkHEAfz1EPIB1ijPNZesBDrVd6MD9AYnWJPeAvw+J976sIbTPFfLt
+	 FgRI9BEMGF5WXGCwuz8MQ99kMVuhnut0Ku7/okxbFRzgEn13lrxHWQg6tkhRwebOwbuRW
+	 zQcQOUv3w7sblS9Ro7pkldExdxt/SroUxhlIQ0MRHRdMRYShWgxCQE3vd6x7tcIIG8rQZ
+	 7Iay9sC2lMJps+1FGm+/5Svei5klhZMQHJTFO7SnvSz7risf9DZ8o7KWJiQPdNjCx5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LYa2WtB485HaqmHanMZF5LoB1A04wJtEw6i/UHJvmes=;
-	b=J4lzS0lmfEwv1bFcQJb2sG1njYMrXXB2spkkrv/ihwLDdhlF+AeUPSxwLGn1e5SXWOsi
-	 3/rFUJQuQCZW4m0cGAqRK0XL7Rpqnqwg4aZiAGJD1t3C6S2RDNtBt3S5xyI277TSl4NfJ
-	 vsIfE/sFmTsizOHLaCVkX2yE+Pr8CSq7X6GN8723y8/hiXN0Kr+Bqsiq3CFJEeWCsTaiQ
-	 oKEAyiDacEaA63fxeXBNzBtNhUBXEILth7a5UAD0xGt1Dg+OK8R81mNVxxJp8PgZbyApN
-	 UDosyzODIm2rsi4KogkuaDxaupCHyUYaKyCjsvFHDey6Q09ZqRBPO2TT4z+tXFaQUzQ==
+	bh=RgwhiaPlrQ5TOWn/E+KPNNXSq/Ow2YQiKSJQLQ5v+PY=;
+	b=AsyRCCphfvHedJCmcN0/badr1h2qZAiMxyLjE2oCmBH6OtduP9hxBFjmZCxYcY2GKQtN
+	 H0E8A+9QIz3uwR5BYDrZXjQSpK9afJ090We6Y86i+kyWJCAxUJfaP9tnbGiR5TH4Wsltv
+	 NUeIBJ88SW8/4L6T8iJMCOo/dRAPLMhH4/X2O/JoIcw35eK4frTCEfCXsJ3e5D6RzwYEF
+	 mI6j+2GZ2440GJBvpEfDNRjO5vqCAJ4F6ZHMBZEngvNRy/wCmxH4DvhBwxmOpWsm5TKAv
+	 R3E6wggKAxjOOsvZq6RnxKnj0IE5uM4/qR+nK6MjQsUw+O7nYt/QFZ/ZD4DZkFpVJ7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVXA8o+2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwTCs8P3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFBC606A325;
-	Wed, 18 Nov 2026 17:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF48606A320;
+	Wed, 18 Nov 2026 17:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVXA8o+2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC731F000C4;
-	Wed, 18 Nov 2026 17:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwTCs8P3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AEF1F000C4;
+	Wed, 18 Nov 2026 17:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022721;
-	bh=LYa2WtB485HaqmHanMZF5LoB1A04wJtEw6i/UHJvmes=;
+	s=korg; t=1795022724;
+	bh=RgwhiaPlrQ5TOWn/E+KPNNXSq/Ow2YQiKSJQLQ5v+PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KVXA8o+2eBeidMmm+dpnSqkhBPgFhnMzU8mYZSF5pT8L5La52TlIUYVOI5P6mvuJ5
-	 qJwAsqO3wmShz0ivZyW/Kv+MaG4u18LAPAjnWurlcSN9jU0/hsQdDxNy4kQS3D9w+y
-	 ARSKwOSTPQ6l4W9bdAkrhhFL9h+/nrViJU46R6eA=
+	b=ZwTCs8P3uRmxGqz1G5Lf99D/QlbbbHDuXlwR1vKDs8iKd75vQXsWpEf6456U7Y03h
+	 qtH4bQfmgE2qJOOciJBnd5nHZ5akz/iJJfcX267uDgMNNVku1cXPCuTyn0+VC6d/JR
+	 8+p8TA7C8t4MRpnLYP9pkPPCYaf3D7nqKPr/9poA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0114/2151] rose: clear the other half of a through route a new call takes over
-Date: Wed, 18 Nov 2026 15:30:49 +0100
-Message-ID: <20261118150125.948332790@linuxfoundation.org>
+Subject: [PATCH 6.18 0115/2151] rose: disconnect sockets under their lock when a neighbour goes away
+Date: Wed, 18 Nov 2026 15:30:50 +0100
+Message-ID: <20261118150125.982172641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,89 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-When a Call Request comes in on the LCI of an existing through route,
-for a call other than the one the route was built for, the neighbour
-has evidently lost that call: it gives the LCI out again.
-rose_route_frame() then removes the route and goes on with the new
-call, but says nothing to the neighbour on the other half. That end
-keeps its virtual circuit up with nothing behind it, and its LCI on
-our side is freed while it may still send on it.
+rose_kill_by_neigh() disconnects every socket that uses a neighbour
+whose link has failed, restarted or gone down, holding only
+rose_list_lock. rose_disconnect() stops the timers, purges the queues
+and changes the state of the socket, but its timers and the frames
+received for it work on the same socket under bh_lock_sock() only, on
+other CPUs, and are not kept out by rose_list_lock.
 
-Do as rose_clear_routes_by_neigh() does when a neighbour goes away:
-detach the half that the new call takes over and send a Clear Request
-on the other half. The route stays for that half until its Clear
-Confirmation, which removes it, and its LCI is not given to another
-call meanwhile. The cause is the one given to a socket in the same
-case, network congestion. A route that has no other half left is
-removed as before.
+Disconnect each socket under its lock. rose_rx_call_request() and
+rose_kill_by_device() take the socket lock before rose_list_lock, so
+do as rose_kill_by_device() does: take a reference on the sockets that
+use the neighbour under rose_list_lock, drop it, and lock each socket
+in turn, checking that it still uses the neighbour. The neighbour is
+still taken under rose_list_lock as well: rose_release() takes it under
+that lock while it owns the socket, which bh_lock_sock() does not keep
+out.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 9b1a1d3395bdcf1eca96d3db517eae195d02a632)
+(cherry picked from commit 250c2ad2174f0a1aeb6c306e7bcc259a7fe2178d)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_route.c | 40 ++++++++++++++++++++++++++++++++++++----
- 1 file changed, 36 insertions(+), 4 deletions(-)
+ net/rose/af_rose.c | 48 +++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 30dfbe1f14311..d23f8d30067ba 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -1145,8 +1145,24 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 								    120);
- 					goto out;
- 				}
--				/* Remove an existing unused route */
--				rose_remove_route(rose_route);
-+				/*
-+				 *	Another call on the LCI of a through
-+				 *	route: the neighbour no longer has the
-+				 *	call it was built for.  Clear the other
-+				 *	half, which keeps the route until its
-+				 *	Clear Confirmation, and leave the LCI
-+				 *	to the new call.
-+				 */
-+				if (rose_route->neigh2 != NULL) {
-+					rose_neigh_put(rose_route->neigh1);
-+					rose_route->neigh1 = NULL;
-+					rose_transmit_clear_request(rose_route->neigh2,
-+								    rose_route->lci2,
-+								    ROSE_NETWORK_CONGESTION,
-+								    0);
-+				} else {
-+					rose_remove_route(rose_route);
-+				}
- 				break;
- 			} else if (rose_route->neigh2 != NULL) {
- 				skb->data[0] &= 0xF0;
-@@ -1180,8 +1196,24 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 								    120);
- 					goto out;
- 				}
--				/* Remove an existing unused route */
--				rose_remove_route(rose_route);
-+				/*
-+				 *	Another call on the LCI of a through
-+				 *	route: the neighbour no longer has the
-+				 *	call it was built for.  Clear the other
-+				 *	half, which keeps the route until its
-+				 *	Clear Confirmation, and leave the LCI
-+				 *	to the new call.
-+				 */
-+				if (rose_route->neigh1 != NULL) {
-+					rose_neigh_put(rose_route->neigh2);
-+					rose_route->neigh2 = NULL;
-+					rose_transmit_clear_request(rose_route->neigh1,
-+								    rose_route->lci1,
-+								    ROSE_NETWORK_CONGESTION,
-+								    0);
-+				} else {
-+					rose_remove_route(rose_route);
-+				}
- 				break;
- 			} else if (rose_route->neigh1 != NULL) {
- 				skb->data[0] &= 0xF0;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 5a8585627feb9..916b8aad03d40 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -162,19 +162,52 @@ static void rose_remove_socket(struct sock *sk)
+  */
+ void rose_kill_by_neigh(struct rose_neigh *neigh)
+ {
+-	struct sock *s;
++	struct sock *s, *array[16];
++	bool rescan;
++	int i, cnt;
+ 
++	/*
++	 * Each socket is disconnected under its lock, which its timers and
++	 * the frames received for it hold while they work on it. That lock
++	 * is taken before rose_list_lock elsewhere, so collect the sockets
++	 * first, as rose_kill_by_device() does. rose_list_lock is still
++	 * held around the change of the neighbour, which rose_release()
++	 * takes under it while it owns the socket. A socket done with has
++	 * no neighbour left and is not collected again.
++	 */
++again:
++	rescan = false;
++	cnt = 0;
+ 	spin_lock_bh(&rose_list_lock);
+ 	sk_for_each(s, &rose_list) {
+-		struct rose_sock *rose = rose_sk(s);
++		if (rose_sk(s)->neighbour != neigh)
++			continue;
++		if (cnt == ARRAY_SIZE(array)) {
++			rescan = true;
++			break;
++		}
++		sock_hold(s);
++		array[cnt++] = s;
++	}
++	spin_unlock_bh(&rose_list_lock);
++
++	for (i = 0; i < cnt; i++) {
++		struct rose_sock *rose = rose_sk(array[i]);
+ 
++		bh_lock_sock(array[i]);
++		/* rose_release() takes the neighbour under rose_list_lock */
++		spin_lock_bh(&rose_list_lock);
+ 		if (rose->neighbour == neigh) {
+-			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
++			rose_disconnect(array[i], ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+ 			rose_neigh_put(rose->neighbour);
+ 			rose->neighbour = NULL;
+ 		}
++		spin_unlock_bh(&rose_list_lock);
++		bh_unlock_sock(array[i]);
++		sock_put(array[i]);
+ 	}
+-	spin_unlock_bh(&rose_list_lock);
++	if (rescan)
++		goto again;
+ }
+ 
+ /*
+@@ -721,9 +754,10 @@ static int rose_release(struct socket *sock)
+ 		 * Disconnect before the socket lock is dropped: frames put on
+ 		 * the backlog meanwhile, a Clear Confirmation for one, then
+ 		 * find it in state 0 instead of dropping the neighbour
+-		 * reference a second time. rose_kill_by_neigh() does not take
+-		 * the socket lock: take the neighbour under rose_list_lock, as
+-		 * it does, so that only one of them drops the reference.
++		 * reference a second time. rose_kill_by_neigh() can run while
++		 * the socket is owned here: take the neighbour under
++		 * rose_list_lock, as it does, so that only one of them drops
++		 * the reference.
+ 		 */
+ 		rose_disconnect(sk, 0, -1, -1);
+ 		spin_lock_bh(&rose_list_lock);
 -- 
 2.53.0
 
