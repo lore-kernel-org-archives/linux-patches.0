@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016856;
-	b=X9JqpjSbFashEAckwMylDTZJTqlVBmJMhImoyo5gy5+PDfbzMB58vaDCoohG9grusMp7
-	 ZshnauHqssEBr33wmAxb+YayWFNXcVcuCtXajRMmC74ZuC2xsWbEKQ7u6ZxOMmhKmYTEn
-	 pkz/2nfbv4T1KWvYLnFQxKAsepsxUeLDCdr8+EQxzYeKpjz8R4WqXziibC1vnMNILK6mt
-	 SWu2KIkZwcfB1PZlhPgujxRyS5YzogzcKdus9ANNwhFyGZI5GfJwF2YDGdmsBl3Z3/ApS
-	 9WW9liS9XACpxB1DQw/6kXXWfdGF+9OnfqYu2524QpG+E7YwoU/y1X+1MwI+CMlw9nw==
+	t=1795016859;
+	b=g/PyQl94LC1H37VHlb5TpcNniML5tAUlCMThmmYJFa/NpSA5cTowjGXBZ6PLS4qv5sV1
+	 Fa2a0gJ64ojWSy5sT9GIGjxOY1Nhc1JXRdIoF4Kid05j1aCPePUtDjkBtp+SXmvxzSvsr
+	 KN4zj2naPImWhGA2hyCnVwZDs/4GlT90C6u5BfDnSGUvaJs+qSAZjG1FHOB4yHEBlfZa6
+	 gtPcCofG/cLZCEy6pHHZNPZyeEVYnVajBJJ8BGtpmXBtxcdjW6vJCpBPCAVc1Ra1q1OeG
+	 h8Qb61KtP7kojf/021IZ4b+XcZ2P2XUf3XSA0lfXpk0K7eKqg0aDYcLcujmzqkGbFcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3QYxZBy92BIdnYYutJ+qU7Gzs/WzWEElByOL9PubJac=;
-	b=eEJTfXj8B2INy9nSIcQpUTPwEBrI7IFMDPOfcMul/pw7Pv9N4hJWvfTN3rpHDPqjZYmo
-	 NEDeXenjmye9yh10BFcR0eiIQSQrf8KSG1iuonAY/UuYmfP1rF1l4YsuNk09I32UOQeGf
-	 ZmCMqPFn2qSrcelw9wVIG9RZXosqKObk72x5Lhhg/bC2kQ+O++BVr1FfmUEDKp1R9SVe3
-	 kviFgYN71361RwTN//2qGJZkIxnaZ2UBqBdR1Iw3RB/BRE6E142EytCMSHZ2NJshKEZUf
-	 dAk0BVLTFpT2wmVzaBduZEArCh9kXZ6ZKhMHeVqOUrsfv3uMU/DsbEbZM6/6ZG7Rl8g==
+	bh=tF8Pv3rR8HgqSUS+1ixQY+bSIQz/Y9nYvMXXdGROoeA=;
+	b=bonBRI6Kz35p8b2+1Pnw+CLWHTKsd2i5YPwtTyBUdFM1PbtV0l9qKIzTH7+CMjM+bCyH
+	 1YNcT9wApmxKprpn7YDCJPFS2hQB4SpM/0yf3ke85NEvdXT+T+tDTkxhZVEgsRoejAsP0
+	 W2Ww50bDf0gLUlLJn7iqK8okS55Fos7lYPBcrwX8KOL9Upaq4MUaabkvS6MHWjoCcSox5
+	 IzkTzhFVT4bqZJUQ7Q1/ryqGUe/Nnpur7+YmvrHm3n+dlv3rV0PP3V98mUBx00z7ukwfY
+	 kpQ55Ucb+5L4Wk2T65Q1uiwVGq2gn2NsrmiA/liIt956jlg+YpbJmMfNmfzn+A5+8gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U88186bs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IYoBeyqe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5F5606A320;
-	Wed, 18 Nov 2026 15:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317A8606A331;
+	Wed, 18 Nov 2026 15:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U88186bs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53681F000C4;
-	Wed, 18 Nov 2026 15:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IYoBeyqe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874321F000C4;
+	Wed, 18 Nov 2026 15:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016856;
-	bh=3QYxZBy92BIdnYYutJ+qU7Gzs/WzWEElByOL9PubJac=;
+	s=korg; t=1795016859;
+	bh=tF8Pv3rR8HgqSUS+1ixQY+bSIQz/Y9nYvMXXdGROoeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U88186bsiJ7TuAltnZIpKUHU1eVNam8JcDwOz8+IsrW8LUl5jeIalWh23SKLdxes5
-	 66Ov0d4hELmfNckowT6b3Wv9Zv/Ob4GY1fmfe9IoqOnwGdgjicmMVo4K/B9ru+h6dx
-	 fGUOOC9RPo+JmyyQGwTrxmmCs9moO78+8C8aWEws=
+	b=IYoBeyqe8LLor1aBQUnbW3z1ZrevuU1qKaA0JK6SoITJR0bcWHXPFKtQCIWunfur+
+	 oVxpI4U89x0itY5tne70nxcLh5hwMWnEMiufYPES9n0snJf1hW0go/aNE6K6lM8pTm
+	 Zut5GSZQj86Rq54VkIyNIhE821kp6o/kJ/pUVFe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
-	Lee Jones <lee@kernel.org>,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0650/2651] leds: st1202: Clear unused pattern slots in pattern_set()
-Date: Wed, 18 Nov 2026 15:31:30 +0100
-Message-ID: <20261118150311.085352624@linuxfoundation.org>
+Subject: [PATCH 7.3 0677/2651] x86/asm: Group inline string functions
+Date: Wed, 18 Nov 2026 15:31:57 +0100
+Message-ID: <20261118150312.243553372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,68 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit 119a7d375e5caedaf252198fa64e7df5d7269ab4 ]
+[ Upstream commit 85f11c17b261772cddc4606f98f6c604aded4607 ]
 
-The pattern duration registers are chip-wide while the PWM registers are
-per-channel, so a channel can end up driven by a sequencer timeline it
-never programmed.
+Group the __inline string functions in the same header.
 
-st1202_led_pattern_set() programs only the first len slots. The pattern
-trigger calls pattern_clear() before pattern_set() only once a channel is
-already in PATTERN_TYPE_HW mode, and activating the trigger resets that
-mode, so the first hardware pattern written after every activation skips
-it. If another channel has already programmed a longer pattern,
-durations [len, 8) are still set, and this channel's PWM for those slots
-holds whatever was last written there.
+Use <asm/shared/string.h> since __inline_memcmp() must remain there for use
+by arch/x86/boot/string.c.
 
-That used to be LED_OFF, so a channel stayed dark for the slots it had
-not programmed itself. Since commit d2ca0e2b6d64 ("leds: st1202: Set all
-pattern PWM slots to full after clearing pattern") pattern_clear() leaves
-ST1202_PATTERN_PWM_FULL there, and so does the brightness path since
-commit 7cbe470366bd ("leds: st1202: Fix brightness having no effect while
-pattern mode is active"). The channel now plays its own steps and then
-sits at full brightness for the rest of the sequence.
+No functional changes.
 
-Zero this channel's PWM for the unused slots so it stays dark for the
-remainder of the timeline, as st1202_blink_set() already does for the
-channels it is not driving.
-
-The duration registers are deliberately left alone. All twelve channels
-share them, so clearing them would truncate a longer pattern still
-running elsewhere on the same device. A channel whose pattern is shorter
-than the active timeline therefore keeps the longer period; that follows
-from having a single hardware sequencer and is not something this can
-correct.
-
-Fixes: d2ca0e2b6d64 ("leds: st1202: Set all pattern PWM slots to full after clearing pattern")
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/GV1PR08MB8497E9939E3C0D68401659D0C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-3-08da47943d8e@igalia.com
+Stable-dep-of: b24bc9dec9c8 ("x86/pvh: Really inline memcmp() and memset() to fix unbootable VMs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/include/asm/shared/string.h | 21 +++++++++++++++++++++
+ arch/x86/include/asm/string.h        | 21 +--------------------
+ 2 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 168df5ecf27b7..b34c41d58e44e 100644
---- a/drivers/leds/leds-st1202.c
-+++ b/drivers/leds/leds-st1202.c
-@@ -259,6 +259,12 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
- 			return ret;
- 	}
+diff --git a/arch/x86/include/asm/shared/string.h b/arch/x86/include/asm/shared/string.h
+index 6291653fe629b..6bef90d62a211 100644
+--- a/arch/x86/include/asm/shared/string.h
++++ b/arch/x86/include/asm/shared/string.h
+@@ -2,6 +2,27 @@
+ #ifndef _ASM_X86_SHARED_STRING_H
+ #define _ASM_X86_SHARED_STRING_H
  
-+	for (int pattern = len; pattern < ST1202_MAX_PATTERNS; pattern++) {
-+		ret = st1202_pwm_pattern_write(chip, led->led_num, pattern, LED_OFF);
-+		if (ret != 0)
-+			return ret;
-+	}
++static __always_inline void *__inline_memcpy(void *to, const void *from, size_t len)
++{
++	void *ret = to;
 +
- 	ret = st1202_write_reg(chip, ST1202_PATTERN_REP, repeat);
- 	if (ret != 0)
- 		return ret;
++	asm volatile("rep movsb"
++		     : "+D" (to), "+S" (from), "+c" (len)
++		     : : "memory");
++	return ret;
++}
++
++static __always_inline void *__inline_memset(void *s, int v, size_t n)
++{
++	void *ret = s;
++
++	asm volatile("rep stosb"
++		     : "+D" (s), "+c" (n)
++		     : "a" ((uint8_t)v)
++		     : "memory");
++	return ret;
++}
++
+ /*
+  * Returns:	0 (equal)
+  * 		1 (not equal)
+diff --git a/arch/x86/include/asm/string.h b/arch/x86/include/asm/string.h
+index 9cb5aae7fba9f..dbf59f0d4cca7 100644
+--- a/arch/x86/include/asm/string.h
++++ b/arch/x86/include/asm/string.h
+@@ -8,25 +8,6 @@
+ # include <asm/string_64.h>
+ #endif
+ 
+-static __always_inline void *__inline_memcpy(void *to, const void *from, size_t len)
+-{
+-	void *ret = to;
+-
+-	asm volatile("rep movsb"
+-		     : "+D" (to), "+S" (from), "+c" (len)
+-		     : : "memory");
+-	return ret;
+-}
+-
+-static __always_inline void *__inline_memset(void *s, int v, size_t n)
+-{
+-	void *ret = s;
+-
+-	asm volatile("rep stosb"
+-		     : "+D" (s), "+c" (n)
+-		     : "a" ((uint8_t)v)
+-		     : "memory");
+-	return ret;
+-}
++#include <asm/shared/string.h>
+ 
+ #endif /* _ASM_X86_STRING_H */
 -- 
 2.53.0
 
