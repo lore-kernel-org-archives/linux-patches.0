@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058034;
-	b=kh7JL+d9zK+F5n2Uq8YmRozWZ7uL6qaubQ1YnevRxTLQYSB0GIZ2ays1Zl2/RhcGSGqP
-	 /O1NYhT8nBLevdbwdNfaZC9ebaCo3l3OldwkliXPPXEinuJR1I3tOpgv7ofkp7KrvSQrl
-	 V9GCsix2oSAtyGlLoHHjqy4KXT9yAZoY3pc9ZR81pXQyHAqr49UPwr0bYlj9DD5xJNyfJ
-	 LGR9a1gUy/s4FZbklAjKqyIOWgpfmPr+ukhmrY+yaNocC+qPcfRbyPyFeNvRLLZTzJ3xn
-	 NK9iBGMntY5j+0PE+CT4vttTsQxGrZ1v/ke3VhvrDTfS6QBZyugs/FjwaIgQJL4dBkQ==
+	t=1795058038;
+	b=ViCNd0/tcfcNcPY8uiChjKM9RQXh65pplely4EVIWcdcd/1j3tRmxumkZKDqJlvZ9x9F
+	 Lg8E03KwH5T5xKh5peILfDvTcwjl3do/agHIeOdZX0WbwaNQHEwSRT9ejaCaa8cEi/Zhw
+	 lGYVx6gvHvUOfTGaom8E/w/WHrmBQWSl9ZM4zYXU0dEGoe2MwO7jYW5QPMLJsFXchnqsl
+	 N9cVwrTkoRMlyBIGPeX+iDNQRM3pY811g3AGs0VICCcUEMAHlEINWSYtmyclydDMTCC1/
+	 EHcNRmLQrk+W6G+Vd3u6NSv8eqBg90E1FENimWV7vL4jA3Wp4GhZiAa40N3FSIIDsbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xh2YKI/xQtalzlx7SLVyyc8QJi7yT6TcGKigwY7v2yI=;
-	b=S+JHbGbF/rBdKzg+l+HyJGmHd44IN11Wje4WrYWe3BVQMtUwDDmRYpkpIPZ4JwDUlOZD
-	 prW0QfpHRZ+/erK/pznLaTVW0bwMWcY2xvm1sy1uaN5UKjY1Uya5B5rR0qhJCPCdOdLIJ
-	 FzlV3MaSODUPWLmMK/YaFhI+cGECT3Zpf3CZWC0qYPHm97y0rrQZLwAqcWJN+LNCrMYei
-	 NIhkj5wTSNjxHaCva/P4QP1MHQs4CGnAVjDZJ6nE/xZijX4FxaaevjpltbbOs9Zq+21RL
-	 jyv0Fmp/ydBqPKnSBAviCDfTti6o5mgGIkK6XcrOub/Mgsdq2VZZQ98Ttt7SBWpJcQQ==
+	bh=Wfhp1xu5i9cOYp9RN47KNd0bcC/xI/dwpYqJm8i1uzo=;
+	b=AMM5H2vkPQfaZxQtclFb9PixV26DRiVkArWml8Gl54PhdTDm6uxCPtoke/5Uf2/SmyB+
+	 3+XAe+kjDqFu9fHldL9pv2yF1AsOUDvi2eeDkXqED/feXixRECE40tiGJ+MKwuQATpETi
+	 tGNh5XFaEI4+A0f6IkBWVStAgJB502OyhrVkgUwtHnQl3HikkoTm+ZycB7D3g26FspKIs
+	 jj2NDdRfvRH2wxdRlhLbRuT6w/fAJ93nzcFIJxSK8A64QeKmgirVt0zT7w7hECtx9e0O5
+	 rUKMsWa7iyCcIgQ1gJspDzCHg+S+HJz0VQg3W4bJPGfNCODV/f9x/6cE/AG4D7xOViQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NvaVf/lw";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbe8uXuR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A8B606A31C;
-	Thu, 19 Nov 2026 03:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B67606A31C;
+	Thu, 19 Nov 2026 03:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvaVf/lw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A611F000C4;
-	Thu, 19 Nov 2026 03:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbe8uXuR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57871F000C4;
+	Thu, 19 Nov 2026 03:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058034;
-	bh=Xh2YKI/xQtalzlx7SLVyyc8QJi7yT6TcGKigwY7v2yI=;
+	s=korg; t=1795058037;
+	bh=Wfhp1xu5i9cOYp9RN47KNd0bcC/xI/dwpYqJm8i1uzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvaVf/lwJPcvjMyePbcRlwgvbtfppIqZmC5sUBQfT/7XsPk4tpAHijohYdTBivyu5
-	 N7QtRTVHjZTYW9gjj9dTePIuWjfKJ2BdMOVG3VQityR6WmMDQwDk7BVZHGWWRzQQNi
-	 zwqIEbtMI6qyG+tJzwV57ND7y4vv1YQ4QOlDmu7k=
+	b=lbe8uXuRKo9cW3Ia/MCLw9OdOUctPPEgpFiX33Q11khZ7x675ngH3Bv1+mPYImkg6
+	 cHIOdOlHyoReZbybmsG2xXlHgXYoLPBfHYkqLTtbD1E1oP4e7IWvTEBeVjLHft8bUm
+	 XF2ibcN+rKqHUuUyyF6MvmS7TT/sTkEXuD/mAgpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Igor Putko <igorpetindev@gmail.com>,
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0341/1848] serial: core: shut down initialized port on removal
-Date: Wed, 18 Nov 2026 15:39:39 +0100
-Message-ID: <20261118145926.779725061@linuxfoundation.org>
+Subject: [PATCH 5.10 0342/1848] ovl: set OVL_WHITEOUTS before publishing the upper dir
+Date: Wed, 18 Nov 2026 15:39:40 +0100
+Message-ID: <20261118145926.855317026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,71 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Putko <igorpetindev@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 810d467c11f0c85107874d08dfdd11acba6aa0c0 ]
+[ Upstream commit cbec8610ec5aaf35df50094ff639febc23f20773 ]
 
-When a serial port configured as a console is opened and subsequently
-closed, tty_port_shutdown() skips invoking port->ops->shutdown() because
-port->console is true. As a result, tty_port_initialized() remains true
-and the port's interrupt handler stays registered in the irq subsystem.
+Listing a directory while it is copied up causes a use-after-free of
+the readdir cache.
 
-If the underlying device is later unbound or removed (e.g. via sysfs
-driver unbind or device hot-unplug), serial_core_remove_one_port()
-unregisters the console, frees uport->name via kfree(), and tears down
-the port without shutting it down or freeing its IRQ. Consequently, the
-irqaction descriptor remains registered in genirq with action->name
-pointing to freed memory.
+A merge directory must never be iterated as a real upper directory:
+that mode frees the cache in OVL_I(inode)->cache without looking at
+its refcount, while files opened in merged mode still use it.
+ovl_copy_up_workdir() publishes the upper dentry before it sets
+OVL_WHITEOUTS, and ovl_dir_open() samples both without a lock, so an
+open between the two stores finds the upper directory and takes it
+for a real one.
 
-This triggers a use-after-free read whenever genirq accesses action->name,
-such as when reading /proc/interrupts:
+With a delay between the two stores, an unprivileged process that
+listed a directory during its copy-up saw only "." and "..", and its
+next getdents freed the readdir cache of another descriptor.
 
-  BUG: KASAN: slab-use-after-free in string+0x476/0x570
-  Call Trace:
-   string+0x476/0x570
-   vsnprintf+0x422/0x1300
-   seq_printf+0x...
-   show_interrupts+...
+Fix this by setting OVL_WHITEOUTS before ovl_inode_update(), so that
+ovl_dir_reset() agrees with ovl_dir_open(), and by testing
+OVL_TYPE_MERGE() of the path type in ovl_dir_open(), so that an open
+that observes the upper dentry never iterates a merge dir as a real
+dir, regardless of the order in which it observes the flag.
 
-Fix this by acquiring port->mutex in serial_core_remove_one_port() after
-console unregistration, clearing port->console under the mutex to prevent
-data races with concurrent tty_port_shutdown(), and invoking
-uart_shutdown(NULL, state) if the port remains initialized. This ensures
-that port->ops->shutdown() is called and the IRQ is freed before
-kfree(uport->name).
-
-Reported-by: syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=843bf2f48f4d12e6682e
-Fixes: 761ed4a94582 ("tty: serial_core: convert uart_close to use tty_port_close")
-Fixes: f7048b15900f ("tty: serial_core: Add name field to uart_port struct")
-Signed-off-by: Igor Putko <igorpetindev@gmail.com>
-Link: https://patch.msgid.link/20261003163337.45577-1-igorpetindev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Replaced scoped_guard() with explicit mutex_lock() and mutex_unlock() calls for GNU89 compatibility. ]
+Fixes: b79e05aaa166 ("ovl: no direct iteration for dir with origin xattr")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: test OVL_TYPE_MERGE() instead of smp_rmb() in ovl_dir_open()]
+Link: https://lore.kernel.org/linux-unionfs/CAOQ4uxh-1J2OBjnDVbrrrjy1puSOW0kABvghN85ih6dtKUBTyA@mail.gmail.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[ sashal: adjusted context for dentry-based helper calls and later inode initialization ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/overlayfs/copy_up.c | 2 +-
+ fs/overlayfs/readdir.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 4ffa682203166..ada412490668e 100644
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3090,6 +3090,13 @@ int uart_remove_one_port(struct uart_driver *drv, struct uart_port *uport)
- 	if (uart_console(uport))
- 		unregister_console(uport->cons);
+diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
+index 018867303a93a..07772f54e24f2 100644
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -630,9 +630,9 @@ static int ovl_copy_up_workdir(struct ovl_copy_up_ctx *c)
+ 	if (!c->metacopy)
+ 		ovl_set_upperdata(d_inode(c->dentry));
+ 	inode = d_inode(c->dentry);
+-	ovl_inode_update(inode, temp);
+ 	if (S_ISDIR(inode->i_mode))
+ 		ovl_set_flag(OVL_WHITEOUTS, inode);
++	ovl_inode_update(inode, temp);
+ unlock:
+ 	unlock_rename(c->workdir, c->destdir);
  
-+	mutex_lock(&port->mutex);
-+	port->console = false;
-+
-+	if (tty_port_initialized(port))
-+		uart_shutdown(NULL, state);
-+	mutex_unlock(&port->mutex);
-+
- 	/*
- 	 * Free the port IO and memory resources, if any.
- 	 */
+diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
+index 09a5542723787..6e13cad49ce54 100644
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -937,7 +937,8 @@ static int ovl_dir_open(struct inode *inode, struct file *file)
+ 		return PTR_ERR(realfile);
+ 	}
+ 	od->realfile = realfile;
+-	od->is_real = ovl_dir_is_real(file->f_path.dentry);
++	od->is_real = !OVL_TYPE_MERGE(type) &&
++		      !ovl_test_flag(OVL_WHITEOUTS, inode);
+ 	od->is_upper = OVL_TYPE_UPPER(type);
+ 	file->private_data = od;
+ 
 -- 
 2.53.0
 
