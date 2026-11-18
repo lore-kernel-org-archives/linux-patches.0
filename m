@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031349;
-	b=C2qZc/1lTyWCuNBWQ6SO+6/2kUcbXDJqntEiiHkJ6j126PztMS/cg/21BOiq3REI82XO
-	 ArrIUsx6LB/FbNYuiU5+dcsA8wVKx3wgzuoTpWQ3scLo3QxZULN3KT8m5NPcO0N8UX/Ua
-	 yAONtdLFKspEFfuuffLYPuhQVmnlQz4Vsvo24DLBiT2UKjXqpKmmMd7WyOO9ZfaMw3oyb
-	 Jo/JE2bWqFIAJHHDvB7KyJshq4/5i0GoNLS+xI8inUbmnGKguvQURXcSMtdSQQMEop59q
-	 JnUNpvD1guXTHxRuafqm2p41BKPCrJIIh2shCSl27Wh7VeNpShRjKxEVeaE65+Tw5PQ==
+	t=1795031352;
+	b=AXqPGJ967MNawTGnrhKk8JfB1jOaMHPe20l9Xu/EuKeLjQqndmVSA2yS/jtyc/614fnJ
+	 SbwxTIIemEpMhgIskXr0waoqgskMC7C1HxQN3zxI6irac4gpmyrYIp22uhc+OfFZyaioX
+	 MiDi4YkLV7QVONzR5SplBpkediR2rOCo94IZAFOR2HOGV3tQ63M/VcWDP3P1Im3FqDXSU
+	 BQR/nRr3FE7DZolcJpNHOFNsZFCNSdhZ1dWzEMe9b7DSAGf/fljZ2wsJaNcATIGbfsgop
+	 iKX4SZiTu+vritTEF3+TajnNMa9AL2+2fGDMk6bAcpGFdzEsfbAuguF9yAkmk3/Spvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PYE7Huk/TXvgQGMPOoqZyHX49V2ar3ihlZoQqqipEIU=;
-	b=YFp0hFsO0LvmC3tmiV9GnOaqdlKofV7OqtLlamhuy7e9n0M05/lIFwJLyqOcjMy60k7C
-	 pObg+R75MRHss5O3LJRL+77rTrHjXQ0Idacn/RQ0sj7s6bDkZNcaPXXmkrwYc7zOzHAnz
-	 VsesxzLCLzNysFqzK0pIRGQgdxX15WOfDQ5/WZMuaB7m58SGVtJRHEMdpNtzkKBWyQWYA
-	 U6GIxQupw8FX3d9eE3mXj3X1Lyy1P0G/pe/88MmXJb3i7OVyA/WEK1e1xjQkJe0RXx0pe
-	 SK+sEnNn8BMp8JAAygzTeHS2UmKPMYwu/7bOM4f6/JMYkB0c4FHrW5TghZV1ZWO6Jyg==
+	bh=EgSE6kNtDFwHhOXpAoEC6L6FbAGt2a6MdBtmbKhTwa0=;
+	b=dwRIH9P4+fQOKqLwsogh/d/ZCrYz3cQnPeyB68dA+zJIQVSK6tFY5W8lOY+0YZeLz7Ow
+	 DR2grET2SxGJ7XBwB8Z3I5PS1zfUTnZvBFd9FAcQyaWvvY9h+VyaioFgGQz0le4OTT5pK
+	 us9e0/ymcS5xuf/ufuD7WEN68FhLENRzwUh6poxLUvMVgaRI4Xc9vt1ye2lS32v2U6XQR
+	 2hVArG2AvFm7jqAv/JlK4AvCLuj8cHM2FDS7fBqJklJZLl69J0VX0Mal9LgK1TYt+ztLe
+	 w/tMlTOEouywNyulMrP6exf9LtEhZnM1Iq9BJ9NUtLTrIFjajS75PONlr0tCn+pJ87Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOM+qlJ9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSFrI5Uk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63EF606A320;
-	Wed, 18 Nov 2026 19:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69F8606A320;
+	Wed, 18 Nov 2026 19:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOM+qlJ9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1011F000C4;
-	Wed, 18 Nov 2026 19:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSFrI5Uk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59551F000C4;
+	Wed, 18 Nov 2026 19:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031349;
-	bh=PYE7Huk/TXvgQGMPOoqZyHX49V2ar3ihlZoQqqipEIU=;
+	s=korg; t=1795031352;
+	bh=EgSE6kNtDFwHhOXpAoEC6L6FbAGt2a6MdBtmbKhTwa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zOM+qlJ9Q8hruYYvSFNThaGcBPufFuDJQmHbtoRVRP56J8FzWh04OEQmq9wnVdStb
-	 MeT0IGxmqjZvYqusG0jAk0c9f8z3W1T31HQcN3SxWnzRbtVNBmF/qT/E1dPFZSMkPZ
-	 hDywQbfj1H05SciEpx9xjDgtHW3DJ9/aKvx1YZeg=
+	b=mSFrI5UkbePHBHVEv3J09AvSSsR0Baf9AXRpP2C+sTehw89BEwNCqKW8aXBdYJDDy
+	 Rjt2+P/lrhEBxpOn27BCHh3l5Dv0rWKvR1zNJO/bco7dycVZ8lC7I5zIXLTw7QiT5E
+	 EDPIqLWNnXrf7Gt85Yn00E0LGycfWM/I4l3myExY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aloka Dixit <aloka.dixit@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1028/1756] wifi: mac80211: remove redundant null check in ieee80211_assign_beacon()
-Date: Wed, 18 Nov 2026 15:52:35 +0100
-Message-ID: <20261118150051.010882024@linuxfoundation.org>
+Subject: [PATCH 6.12 1029/1756] wifi: mac80211: fix mbssid/rnr allocation in beacon data
+Date: Wed, 18 Nov 2026 15:52:36 +0100
+Message-ID: <20261118150051.045405050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,36 +67,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 229cf0621950919c38a271ab3c07dfd41dd301d0 ]
+[ Upstream commit baf0d4feed2f0fed8e045f948534a4bd43ae464e ]
 
-The else-if branch condition 'old && old->mbssid_ies' already
-guarantees 'old' is non-NULL. The inner 'old &&' in
-'if (old && old->rnr_ies)' is therefore redundant; remove it.
+These structs are placed after the tail, but that can make
+them unaligned. Change the order so the structs are after
+one another, and then followed by the head/tail/elements.
 
-Signed-off-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261002-csa_cca_fix-v1-2-b83a998aeb44@oss.qualcomm.com
+Assisted-by: LLM
+Fixes: 2b3171c6fe0a ("mac80211: MBSSID beacon handling in AP mode")
+Link: https://patch.msgid.link/20261005224950.2f554b2c7c10.Ie961eb6b1435f956446e052936258758b966c67f@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: baf0d4feed2f ("wifi: mac80211: fix mbssid/rnr allocation in beacon data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/cfg.c | 53 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 31 insertions(+), 22 deletions(-)
 
 diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 1e47db63b5289..c70fb2dbf3f21 100644
+index c70fb2dbf3f21..e08f412e6e1cb 100644
 --- a/net/mac80211/cfg.c
 +++ b/net/mac80211/cfg.c
-@@ -1178,7 +1178,7 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+@@ -1141,6 +1141,7 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 	struct beacon_data *new, *old;
+ 	int new_head_len, new_tail_len;
+ 	int size, err;
++	u8 *pos;
+ 	u64 _changed = BSS_CHANGED_BEACON;
+ 	struct ieee80211_bss_conf *link_conf = link->conf;
+ 
+@@ -1168,20 +1169,16 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 	/* new or old multiple BSSID elements? */
+ 	if (params->mbssid_ies) {
+ 		mbssid = params->mbssid_ies;
+-		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		if (params->rnr_ies) {
+-			rnr = params->rnr_ies;
+-			size += struct_size(new->rnr_ies, elem, rnr->cnt);
+-		}
+-		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
+-							mbssid->cnt);
++		rnr = params->rnr_ies;
  	} else if (old && old->mbssid_ies) {
  		mbssid = old->mbssid_ies;
++		rnr = old->rnr_ies;
++	}
++
++	if (mbssid) {
  		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		if (old && old->rnr_ies) {
-+		if (old->rnr_ies) {
- 			rnr = old->rnr_ies;
+-		if (old->rnr_ies) {
+-			rnr = old->rnr_ies;
++		if (rnr)
  			size += struct_size(new->rnr_ies, elem, rnr->cnt);
+-		}
+ 		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
+ 							mbssid->cnt);
+ 	}
+@@ -1193,26 +1190,38 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 	/* start filling the new info now */
+ 
+ 	/*
+-	 * pointers go into the block we allocated,
+-	 * memory is | beacon_data | head | tail | mbssid_ies | rnr_ies
++	 * pointers go into the block we allocated, the order in memory is
++	 *  - struct beacon_data
++	 *  - struct mbssid_ies (including variable array)
++	 *  - struct rnr_ies (including variable array)
++	 *  - beacon head
++	 *  - beacon tail
++	 *  - mbssid/rnr elements
++	 * so that the structs (which contain pointers) are all aligned
+ 	 */
+-	new->head = ((u8 *) new) + sizeof(*new);
+-	new->tail = new->head + new_head_len;
+-	new->head_len = new_head_len;
+-	new->tail_len = new_tail_len;
+-	/* copy in optional mbssid_ies */
++	pos = (u8 *)(new + 1);
+ 	if (mbssid) {
+-		u8 *pos = new->tail + new->tail_len;
+-
+ 		new->mbssid_ies = (void *)pos;
+ 		pos += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
+-						    mbssid);
+ 		if (rnr) {
+ 			new->rnr_ies = (void *)pos;
+ 			pos += struct_size(new->rnr_ies, elem, rnr->cnt);
+-			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
  		}
++	}
++
++	new->head = pos;
++	new->head_len = new_head_len;
++	pos += new_head_len;
++	new->tail = pos;
++	new->tail_len = new_tail_len;
++	pos += new_tail_len;
++
++	/* copy in optional mbssid_ies */
++	if (mbssid) {
++		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
++						    mbssid);
++		if (rnr)
++			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
+ 		/* update bssid_indicator */
+ 		link_conf->bssid_indicator =
+ 			ilog2(__roundup_pow_of_two(mbssid->cnt + 1));
 -- 
 2.53.0
 
