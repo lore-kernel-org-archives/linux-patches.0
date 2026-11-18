@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062213;
-	b=mAriNxBvnkDMiTTh+nM6ISBWkOiFSuyIi/yKy/f2cycZYXfjvkGc45zAzzgehJVKV4vB
-	 7q+0H0W5pdKSYI4rsMKSVzxgSMhZi7qYUEKAHq6/deYtmdlJd2BadR9t3rNc5wLyTHPUm
-	 FsDevuCtl7gLyBYyOIw3Id3tDA5NuiUrzHISbtzC+e4Y8pSY+kwwdRPKnS1sSCIDNa045
-	 wS8ZmEcvajva+60t9qZNUlggZTsozHQWsKTAMsf3Rs18oKNSWx81CFTXpBfytnjU4vMpm
-	 e9qbGuZblHD67Q/8OA7KAnA3QvP0WUuoPFGSFSPZc+fCgycjJRy9eqO4MEpHOv3oikg==
+	t=1795062216;
+	b=WmCufEA5BHK7p3UKww7VUTdzGKPwif3iwm0cb8xEbxDOIBjsEYDGtvaP6JyBx3/x+RD9
+	 P5fI5E6Y+2NHhyaBGXwr7TQA3am6nvsTGCMetEytO4EcZbzVDWtPLNKJDJIkIbihdiQTw
+	 KBpDUGbFdpbkhNkSUAHR4YPD8sl4FtIfKQM5BD5Hmbmqe0mD9h/mBS2Kl5f7C8YDlG4Gg
+	 Yua3/VIlFsQntpzsdf5mFLFaP38PP/MyXSgQxI8u4B5qQDi4RejAD1zxzKQJXSpIIGJkz
+	 kTK2V+ymVegBmh4Z29u/TxF58KjCyEFsAPw7mRSCKK79XmnvXMSN0nkRggfi7piSTDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=x35/UmiFpLHLaphtgmwugk6xQ0bvAhoa8e9bk/HwH9M=;
-	b=XilWkcQcV8Fu4y3nk/OXLv1cfraFO/ECf9bAlZCVU0uhr67YmUkh0kBPZ8W0N5/e5rG2
-	 Ig6pudbMiCF0gpycjK49j28nWKOuJi9uHL6IOCQzlmnwX8frdxn5hnw8jgyH/caVLBJfn
-	 fbmVMtvFARVUbJW/ezI5G+aC05WpcKPDEw/8sWoBmMeLDm8wZVqZ6VI2GUapRZim3L4GG
-	 Kf87FA8yBqxfnuR39SaDfMgySdjWUi0/5VnCxrQnQco9wRLAle72LFE3a0ZmVW9jFTupO
-	 SRHgkz9/ToMGgTHqwOFdkFYtjpHgKq5jq/50xujXrwlnZWJHlytjCW8xndP+Lcinm2g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=kQ6egJXz7KAg0zQKUQPePtJyY+bRugZq7h3qm4k7vEI=;
+	b=oVGjTZWCoCTjf4PfiC6QubzIFx+CpVy4oaLIdqMYR7fkTxqqHt40UVcmPJsIMr300XW/
+	 EsLhAnAGTKpCIsyqCC76zyE9N15SsVWfW5mAmGWNX2zNjMEvplppPvpYkL+v2mx95ZcoA
+	 Ggw83wSFr5CMl86oxzblTocqlCHqRyxIU2udGX4DqCE6Sf3yUVIHhJ5Brfm91Kp9K50cQ
+	 2AUa+PoKM5UdvBqzL3Yuuxim2I7tN1PhxtKcu0Qbq/dzyJ84RIdHF/Bvh5cSXRCxvUepl
+	 xnM9sWASJR3MjXbRLTC8RI+VfhDMQmZVFsY3oyG9Ieq6egYsuP1ERdYX1xZdryU9TVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isBTtpsA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCscz7xm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBFC606A320;
-	Thu, 19 Nov 2026 04:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AAD606A325;
+	Thu, 19 Nov 2026 04:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isBTtpsA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7461F000C4;
-	Thu, 19 Nov 2026 04:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCscz7xm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E531F000C4;
+	Thu, 19 Nov 2026 04:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062213;
-	bh=x35/UmiFpLHLaphtgmwugk6xQ0bvAhoa8e9bk/HwH9M=;
+	s=korg; t=1795062216;
+	bh=kQ6egJXz7KAg0zQKUQPePtJyY+bRugZq7h3qm4k7vEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isBTtpsAoWG+o0b72W0EkmlU+2m+HQZoLGVGy6QE5BFo3e+VxuzI9V1QO82qAzyVf
-	 asjDZeDXRVxEGOYyOojo2N7p0WU91YkZICg1GjGgXANnFKTCgbfb/7K8oHbKhkwx9T
-	 GcyKDmXxC3WU6dGwuI9H2Mv7Lu4POIqwVDM0UhzM=
+	b=vCscz7xm3ey/9IDwUfV10XxtQuX9YJYtLnI9zU0yYCVvmdF9aAqCktm8tGnBjxREy
+	 2UeBujtTj8vAf3YHkWwwl6/vNPqhEmwZWZt/974glWZ1Nq1JzcVJdAKfTxNyYfighd
+	 D7TtqmnumB0soka8tX+07KzpXUQLoXRpxMcIqG5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.10 1831/1848] nvmet: do not return reserved for empty TSAS values
-Date: Wed, 18 Nov 2026 16:04:29 +0100
-Message-ID: <20261118150036.291106630@linuxfoundation.org>
+	Wang Yan <wangyan01@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 1832/1848] selftests/net: fix EVP_MD_CTX leak in tcp_mmap
+Date: Wed, 18 Nov 2026 16:04:30 +0100
+Message-ID: <20261118150036.328257749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,41 +61,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-commit f31e85a4d7c6ac4a3e014129c9cdc31592ea29f3 upstream.
+commit f4ef35efbb49527293309f668ea73ec5de9b8e7a upstream.
 
-The 'TSAS' value is only defined for TCP and RDMA, but returning
-'reserved' for undefined values tricked nvmetcli to try to write
-'reserved' when restoring from a config file. This caused an error
-and the configuration would not be applied.
+In tcp_mmap.c, both child_thread() and main() allocate an EVP_MD_CTX
+via EVP_MD_CTX_new() when integrity checking is enabled, but neither
+function releases the context.  child_thread() misses the free in its
+common cleanup block, and main() returns without freeing the context.
 
-Fixes: 3f123494db72 ("nvmet: make TCP sectype settable via configfs")
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+This results in a SHA256 context leak on every run that uses the
+‑i (integrity) option.  Add the missing EVP_MD_CTX_free() calls to
+the appropriate cleanup paths to fix the leak.
+
+Fixes: 5c5945dc695c ("selftests/net: Add SHA256 computation over data sent in tcp_mmap")
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Link: https://patch.msgid.link/20260702025949.442523-1-wangyan01@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/configfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/tcp_mmap.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -373,7 +373,7 @@ static ssize_t nvmet_addr_tsas_show(stru
- 				return sprintf(page, "%s\n", nvmet_addr_tsas_rdma[i].name);
- 		}
+--- a/tools/testing/selftests/net/tcp_mmap.c
++++ b/tools/testing/selftests/net/tcp_mmap.c
+@@ -297,6 +297,8 @@ end:
+ 				ru.ru_nvcsw);
  	}
--	return sprintf(page, "reserved\n");
-+	return sprintf(page, "\n");
- }
- 
- static ssize_t nvmet_addr_tsas_store(struct config_item *item,
+ error:
++	if (ctx)
++		EVP_MD_CTX_free(ctx);
+ 	munmap(buffer, buffer_sz);
+ 	close(fd);
+ 	if (zflg)
+@@ -587,6 +589,8 @@ int main(int argc, char *argv[])
+ 		EVP_DigestFinal_ex(ctx, digest, &digest_len);
+ 		send(fd, digest, (size_t)SHA256_DIGEST_LENGTH, 0);
+ 	}
++	if (ctx)
++		EVP_MD_CTX_free(ctx);
+ 	close(fd);
+ 	munmap(buffer, buffer_sz);
+ 	return 0;
 
 
