@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032381;
-	b=kTY2ppQ1zFkJ6CY3JwcNcRPIca5G91wyk8p3jKLx7AWdnFH4Vgo2cvk7sTaYVA21pENI
-	 7RJOeG07JJxQbQXj/uNl9wjGutyQZuoGHBiEobmIplPS68wOyhGx8r7LCv5JflS6XjeP8
-	 YAcI5Z5IVGp60I0j32S9fjJZHiHRiiqurcGwo8cCHjPpIn4ROlRKYlkiE3ScTbGfrcpeQ
-	 PES5wUrGXOtOA2jgYzfZcoXRRuOQgt4SK8FV2xNGuImcYg+xG8w0mCEFz93R/x5cyvY+1
-	 mItUTnPIp2HzOzKdgZOF3Xwoy1116yn0gGcS5rasSlLv3ysrduoSLzb8lkHtvAGa21w==
+	t=1795032384;
+	b=j1nIRdgB8a+z4xQr7YkJdtvyx2BrVpy7fVtd+I9w56mXxfvwJfBkLdaxDnbzBdHKIn+A
+	 PJ94lrZtTR+DX607bkeksbhTuQMcYb0/sP86ZpEmXfWt1t1CQxKyoMCPg1Oq9YxJVDI/N
+	 Y9rM1gln/Cmiy0pnMfwKlJpRewVgATDciM5TmiI6lsYXoc6vw8PXHhzg68Nyxk0dr0uJe
+	 5L14NGcAdyOQsuVHdILqkZcKPWLPpht8zMnV/Y0UCpKKDbdpoO48eenKUI9qevr4oxgQU
+	 f304NYs/Io+64jFVU+wckMZRpznMbdI3m5Qinh6SmR/OZjvd6daVFw4PKtuOQ30aPqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CAsonBIcPoCUsFNuYNZf+8MNQWcDaSYR8eUNlTii648=;
-	b=qZvzRHufeMb08EfbHDI9Iy69IlnAIM7o5RMPqbv3ixkX4FH0wgmDHWuyrPxfxxsd2lSH
-	 F1yGMlo7Tdsirap1LLPpaUn7UEPVX2thOaYQ4yKGQxbcHiIvN35qiTilNvNwrCvOa4Eo3
-	 +9mwWTLrtzx9SPyVtmg9pvSy9nojppX4VbMFVjUlITuKvb1UAlDooMec5BqXqwWFB7Heh
-	 fl3pq6jjgNfX5u7fn+K+Cn80pJ8ntJd8peZxIodX4zurMWUlx7R4xdGxkl+LMtPndsuXu
-	 3PNS2iZeTHrQfz0tWnJv4Hsxgm/jgqI5/PgSqdGwDgBmQnWhwjzwNO+DaHStlU/tx9w==
+	bh=TZQY1E9PL5wLwImcnvrb1LYl1KoEN6wadeXMnWirTv8=;
+	b=IRJ0EeVVsMZbsCcrjZzs8mawmGvldnqZsN7jI3s0KZxF+vPPxlUjNck1WKmTAEo11pz1
+	 S5O9p6b+G9Qgznj33vJz6DCC2whPmWapsYZp8KWjRWr57L4v3+bQUXoQ5GJ1UhiWY2KBP
+	 kFZOVj6XGn5xaE2398ghQ22dzh1Gpjd6emSxFVjg5oiYxVoDw1TzbBy2XXLYnZVwGksAn
+	 jqimmqgv8Y8Aa3Xc27w2g+gw//5qLaySALnYKWHtLXbek2Vo7TXZpdBYAu7Kn3wVbbPED
+	 AznmGVQmgbGgXCYMou/FIPzOr4Xv+Zl9BqFODyK8UYolbK/ZsXkVArwsyrcJHIKq/YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WzBlImuR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SMQig6sw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6450606A32F;
-	Wed, 18 Nov 2026 20:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238E1606A32F;
+	Wed, 18 Nov 2026 20:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WzBlImuR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CDA1F000C4;
-	Wed, 18 Nov 2026 20:06:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SMQig6sw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433451F000C7;
+	Wed, 18 Nov 2026 20:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032381;
-	bh=CAsonBIcPoCUsFNuYNZf+8MNQWcDaSYR8eUNlTii648=;
+	s=korg; t=1795032383;
+	bh=TZQY1E9PL5wLwImcnvrb1LYl1KoEN6wadeXMnWirTv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzBlImuRsO36sxYv4nxATM3Grri+K2vTJjnMvmaG624jeqdeCB2RbVdw50omenLeF
-	 vsDCBCSmzE7RDhX2tZrQZe9tnxoBLdIL0Uv9OvxR766mq6d+HtvfRUmRrUdhxB1Any
-	 w5CCrkJFPxYT7wkcZ7rTD7nRVcLeWVqFjjGPfTRY=
+	b=SMQig6sw35GesP0tHRXhdiXpmp1BvjS5JYQrYP8Y295Bd+Xzls6iG8cZiT1hXGsaQ
+	 LAKFdPIlf0Z4NCWO5oc00aDuBlu216viO6KaQWG7jtuse8d/RXg/ozBptoDYEzqf2E
+	 etfqAxaD/i+ECa1xiP4+TSXEYD+uAaECeptlJZ2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1392/1756] RDMA/core: Reject LAG selection when source MAC lookup fails
-Date: Wed, 18 Nov 2026 15:58:39 +0100
-Message-ID: <20261118150104.564388850@linuxfoundation.org>
+Subject: [PATCH 6.12 1393/1756] RDMA/srp: Avoid reading uninitialized has_port on srp_parse_in() failure
+Date: Wed, 18 Nov 2026 15:58:40 +0100
+Message-ID: <20261118150104.598196841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,69 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit fdfd099222d9de9e2f1b8d69e94494c5489272cc ]
+[ Upstream commit 4b8f20dc8d25f575e8b8bb5abb09ab803a7e1a3f ]
 
-GID deletion can clear the source device association after LAG lookup
-retains the bonding master. Ignoring the resulting L2 lookup failure
-copies uninitialized source MAC bytes into the synthetic hash packet.
+srp_parse_in() returns -ENOMEM without initializing *has_port if
+kstrdup() fails. Only check has_port when srp_parse_in() succeeds.
 
-Read the source MAC before allocating the packet and propagate lookup
-errors to the caller, so failed lookups cannot influence slave selection.
-
-Fixes: bd3920eac133 ("RDMA/core: Add LAG functionality")
-Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-3-60f6da3ddec3@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: bcef5b721568 ("RDMA/srp: Accept again source addresses that do not have a port number")
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Link: https://patch.msgid.link/20261016211509.12973-1-serhatkumral1@gmail.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/lag.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
-index eeae4b0898ee0..f44f59e60a164 100644
---- a/drivers/infiniband/core/lag.c
-+++ b/drivers/infiniband/core/lag.c
-@@ -19,6 +19,11 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 	u8 smac[ETH_ALEN];
- 	bool is_ipv4;
- 	int hdr_len;
-+	int ret;
-+
-+	ret = rdma_read_gid_l2_fields(ah_attr->grh.sgid_attr, NULL, smac);
-+	if (ret)
-+		return ERR_PTR(ret);
- 
- 	is_ipv4 = ipv6_addr_v4mapped((struct in6_addr *)ah_attr->grh.dgid.raw);
- 	hdr_len = ETH_HLEN + sizeof(struct udphdr) + LL_RESERVED_SPACE(netdev);
-@@ -26,7 +31,7 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 
- 	skb = alloc_skb(hdr_len, flags);
- 	if (!skb)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	skb->dev = netdev;
- 	skb_reserve(skb, hdr_len);
-@@ -70,7 +75,6 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 	skb_reset_mac_header(skb);
- 	eth = eth_hdr(skb);
- 	skb->protocol = eth->h_proto = htons(is_ipv4 ? ETH_P_IP : ETH_P_IPV6);
--	rdma_read_gid_l2_fields(ah_attr->grh.sgid_attr, NULL, smac);
- 	memcpy(eth->h_source, smac, ETH_ALEN);
- 	memcpy(eth->h_dest, ah_attr->roce.dmac, ETH_ALEN);
- 
-@@ -86,8 +90,8 @@ static struct net_device *rdma_get_xmit_slave_udp(struct ib_device *device,
- 	struct sk_buff *skb;
- 
- 	skb = rdma_build_skb(master, ah_attr, flags);
--	if (!skb)
--		return ERR_PTR(-ENOMEM);
-+	if (IS_ERR(skb))
-+		return ERR_CAST(skb);
- 
- 	rcu_read_lock();
- 	slave = netdev_get_xmit_slave(master, skb,
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index 13eddbe0841aa..66679798355c2 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -3477,7 +3477,7 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			}
+ 			ret = srp_parse_in(net, &target->rdma_cm.dst.ss, p,
+ 					   &has_port);
+-			if (!has_port)
++			if (ret == 0 && !has_port)
+ 				ret = -EINVAL;
+ 			if (ret < 0) {
+ 				pr_warn("bad dest parameter '%s'\n", p);
 -- 
 2.53.0
 
