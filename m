@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041855;
-	b=c7oM2QXWcMkq6czoZDctq+lq5XU7XrvNovjODhNRNhdnIsia4tOci0nfi+/2tq1QylKL
-	 nwMkPOP9FAoUGfOsnbjGR4eoOTKU1+IKE19kmTCm+y58aHBQC1BsXXiHrFqJ7INsA/1Dg
-	 ANvR9USKZPNJp/fZpWWIV6KRZRNBcLgKZjTwmC24y7OdRRqG7Vly+A3IL83hNqPZr2yun
-	 k5I963SGdV1Eavp/0XL8/Luo7C6kE8jOSqcKm/VAPomVvBKNI3W5s2jBuESG82Gp1a+Rc
-	 oHSCngsG+fdVjov1kHEUFnwTUvXbJsKKVzJ8WLUJy6VVDdad5f75J1AwIpSyPGY/x8g==
+	t=1795041858;
+	b=zZq1+e99Kq2BNApxGPvh6h45axf0qbeUXH13b6MnUgHSVKiPFHHc4qo9gDMQbLk04eM2
+	 6SuYilN4eTclRMEquo8ywkxFOe7lvUiEAoveeWs2lBH2yW4itAKLUQfxAoye2Y4j99AS+
+	 /06iJBSW+12rdNT+RHy/Brt2awvTCCA9h9Ai0Sg3nqp9lHHBUR35N+Z5ss8bO2cKRBd3L
+	 tnjTLhGBDJyJP8qBKeGELb+DlaasRtErKYd+jEwPW4dveZBMNcY8cVrhMsxJgPxYq2kA8
+	 rVA0ONxc7QscW281DKF3kJatTCYtbtvkauqog1MhMPZJSpxN24xwP7D5SpAuiQ1BV9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a30uelIRJ+k3qD8W+PtqCf0w6+viP1FzuS+wB/s+DUQ=;
-	b=5svS+IdJhRTERQzLyGRiRwdGafOvtjAXQc2L1CejYmaTmJx/sezjN0spOfd+u9rf4+w0
-	 mQD4P7+Y5ENw9e5rLWul9ZYq7mqaRJNAhd3UKB51ddtsISchuqjTiV6aKKmfycujCbgAV
-	 oxCK329LV4KOjgxppV12nEMNAAsfEIGJkaFxHr2beAzFvyYggewsnwCEApBTr3BLgYswi
-	 SUwSzMZO3sPKbrdLZAF0mrxRadqQ0K8AdPp1113jaEUsOkQaRgS1UEpK91XNs0s5Axwyo
-	 REAw9jZWGwPdnjcAK4t7+7BKk5kHTl3zIXJ49+rLeT6mBm07pj2l4vDVZVjHtxIyJdA==
+	bh=z+MpyO9n1kn1oyXIv7FbGzNwuz+3HTNSKcTnYAnTUz0=;
+	b=qG6xyhgRxUUFNCQtWKclBfMC3r4n8rX+OTIbZTasvFpaKjVr5tn78l4Q8TiQWopeWnEZ
+	 uICasmY1yNAfK6U/T4BPiqejsEmWQTWN1LRcyZeokk7NQjMlopBnxn8U3Bw+fDhCXhX6q
+	 ZQgh+BE8m9WCms7dVa0O2EbJ/Nknz2DfflYzeZz7Etuc5CZMvZ1FOi8TBGufj05Rjn5YT
+	 NfxoDYgaStsZ5mTSkhqNvIzX2CszpO3ngJtCJhhddheXqsGjOSFvLzjCQrL2PDlEYV4NQ
+	 qFXM22YdVPwhOTqYS0G8V3w0GXe9OlKN8SMtSBsIwaNNMxpX3nMYfmj3LrxcN6hCMdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WnTHD7tD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N7jZ9z0N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021FC606A320;
-	Wed, 18 Nov 2026 22:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C5160A2604;
+	Wed, 18 Nov 2026 22:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WnTHD7tD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574801F000C4;
-	Wed, 18 Nov 2026 22:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N7jZ9z0N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5491F000C4;
+	Wed, 18 Nov 2026 22:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041854;
-	bh=a30uelIRJ+k3qD8W+PtqCf0w6+viP1FzuS+wB/s+DUQ=;
+	s=korg; t=1795041857;
+	bh=z+MpyO9n1kn1oyXIv7FbGzNwuz+3HTNSKcTnYAnTUz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WnTHD7tDNXb29wSRNi0s2NZihibS5T4ChAxBMQitVH+SSy11X3UflSHZo+oLbjgv+
-	 Coy3uHGSx7epybUDCq/xRMWcvNBVfmIeMbPYmFMCgs0PCrei3yDVaxJBJQqBtZeeWs
-	 IVb9PE7TEzrDM0wSi66rtQsu1EFx4qNKp9VJtK00=
+	b=N7jZ9z0NKoX5usrejqQ12htS5H4NtmdIHH+nBpXcm73AAotXQMlmf0l1PSc10G3fo
+	 YvxIn6p/WPILpeixliJAHzIcJlsz9kg5nqrDIhZLYfLhvlNesnwKp7YyNDdaKaw9MG
+	 eWG6BQKBUNVX6MD/8aN30TPR5NYeWkYTtSJ1C8uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2962/3318] ASoC: mediatek: mt8195: Fix ETDM probe error handling
-Date: Wed, 18 Nov 2026 15:59:44 +0100
-Message-ID: <20261118150449.156205145@linuxfoundation.org>
+Subject: [PATCH 6.6 2963/3318] tracing: Print the bucket size as unsigned
+Date: Wed, 18 Nov 2026 15:59:45 +0100
+Message-ID: <20261118150449.184053841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,70 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit ca3ac9a7eec1884bfff2d2dd92caf30f86a9eea7 ]
+[ Upstream commit 387945e8d2f29fa8a28d219af5416e6d3bedc314 ]
 
-Use pm_runtime_resume_and_get() to properly handle runtime PM errors
-during ETDM probe.
+A key's bucket size reads back negative once it exceeds LONG_MAX:
 
-Propagate errors from MCLK configuration and enabling instead of
-ignoring them.
+  # echo 'hist:keys=next_pid.buckets=18446744073709551615' > trigger
+  # cat trigger
+  hist:keys=next_pid.buckets=-1:vals=hitcount:...
 
-Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-16-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+parse_field() takes the size with kstrtoul() and rejects only zero, so the
+whole unsigned long range is accepted and stored, but hist_field_print()
+renders it with %ld.
+
+Print it with %lu.
+
+Link: https://patch.msgid.link/20260914053443.981201-2-donggeunyoo.kernel@gmail.com
+Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 27 ++++++++++++++-------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ kernel/trace/trace_events_hist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-index 66f8468e534a8..b796c1de70379 100644
---- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-@@ -2508,6 +2508,7 @@ static int mtk_dai_etdm_probe(struct snd_soc_dai *dai)
- 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
- 	struct mtk_dai_etdm_priv *etdm_data;
-+	int ret;
- 
- 	dev_dbg(dai->dev, "%s id %d\n", __func__, dai->id);
- 
-@@ -2515,15 +2516,23 @@ static int mtk_dai_etdm_probe(struct snd_soc_dai *dai)
- 		return -EINVAL;
- 
- 	etdm_data = afe_priv->dai_priv[dai->id];
--	if (etdm_data->mclk_freq) {
--		dev_dbg(afe->dev, "MCLK always on, rate %d\n",
--			etdm_data->mclk_freq);
--		pm_runtime_get_sync(afe->dev);
--		mtk_dai_etdm_mclk_configure(afe, dai->id);
--		mtk_dai_etdm_enable_mclk(afe, dai->id);
--		pm_runtime_put_sync(afe->dev);
--	}
--	return 0;
-+	if (!etdm_data->mclk_freq)
-+		return 0;
-+
-+	dev_dbg(afe->dev, "MCLK always on, rate %d\n",
-+		etdm_data->mclk_freq);
-+	ret = pm_runtime_resume_and_get(afe->dev);
-+	if (ret)
-+		return ret;
-+	ret = mtk_dai_etdm_mclk_configure(afe, dai->id);
-+	if (ret)
-+		goto err_put_pm;
-+	ret = mtk_dai_etdm_enable_mclk(afe, dai->id);
-+
-+err_put_pm:
-+	pm_runtime_put_sync(afe->dev);
-+
-+	return ret;
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 8c2bc07154f77..e6259e04ea663 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6184,7 +6184,7 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
+ 		}
+ 	}
+ 	if (hist_field->buckets)
+-		seq_printf(m, "=%ld", hist_field->buckets);
++		seq_printf(m, "=%lu", hist_field->buckets);
  }
  
- static const struct snd_soc_dai_ops mtk_dai_hdmitx_dptx_ops = {
+ static int event_hist_trigger_print(struct seq_file *m,
 -- 
 2.53.0
 
