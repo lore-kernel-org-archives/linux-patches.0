@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043097;
-	b=wbpWXQupqmArw+SWkbqixmiDGlHzmyU+crPt/apkH5orREOEON323CBMx9FBzIRqouG4
-	 J1MZJKfF3YGxWI57TB8mJfgfZASIKoaIh0fL3FamQSKFB0whBeQaCQhEmQvpx3PrVmUf+
-	 OWvFrLUTkOwk7/YymaUaYBzz8KGAQnIINLExPpbhLa0uA2gFqC3HpNEX6eaOrmDytsHNm
-	 jjqyPw1ocap6O4n/7MGsh1MNTny3etuhHqXJOC1pRjwnI2PabK9TGGxI2Ps6kgfUNj7n1
-	 ELbk9Nyzg1t0iKAZRAxdjDZ9t4AQrZfSmjQhKwyxpwI9nZUX+h8TjhdBVZJCxefKhig==
+	t=1795043100;
+	b=QzTDVx5Gp+AMXU+Myf9w0SZLLHSliuERr6L4fa3UKZ00hoHaXh0tuQkwECoTPWEVkG4V
+	 kQ4zaq57P/toOdXkfdbu6eFSXo4FFkw4JXD3FXLyHLVDwsaPun2xV9hI8J+REdB7AkjHp
+	 Mr2ZKnZK4bqu76y9dld3k8iRct/xUQUgT9YKI2cmxSpJyu7hVCKXitEc3CTt15qASRpn3
+	 JJZWFcsGtwW5Ghzr+4ZEfD6Jr2Q3757Qn/Uoj/39AlN1+I/SwmsdwHPFPQcNIO8ayG3C0
+	 wtCQm+UjqjcgvetfCYnEYYZrIEwK8FgNL6ZEb6sIsltDSRChnDK8UQOIZ8uuijizraQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043100;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f6sBRPEvu2GcGvXA53JaYPnv+yJCIjoZXG2K0t4SmPc=;
-	b=DF4ASKU+O6n6fuhdlR+2oaLUPh81/yOZ/+GuU5GdKkwLnUSIDievnRxqGuCCy2mWfmsI
-	 2fdFdSUVGLw8DHvj7c3TTMT3J97yQ+PkxZDHZREFH3wXeBRrGiVIHnFh3mtQqsV0oxps1
-	 /kT6GLrwCAMcTYaBLUls21EnBDhIiQIb+NZ0Duwo3gdO9TYzYWCS23Yr5jWLH3S6OsAf0
-	 Cl3hXugWD1uMDfgveOMqLcIuF8z3z1I+eilcoB+0+c4zU5/DMcsxwQaUFluT4c2T+xIAb
-	 ErWH2N1RA8oWDkJScn+Bi9SazJSxI93mttI7Sf1Uym6UlOpfIL/Q78ik/P6gnVgV6WQ==
+	bh=YTseUtYKfzgA4+oE7D4wnkAkq3ccinJOCHCH5KwPwno=;
+	b=BwwZpD2FJowc3/gNTKDoRj+Y5AUBLxeYhZHAZ25b5iz/8RLQtNOEv+SXlkpAk3jVntDS
+	 37/lKnT3v1A9zE+ttDjNeIkLzEL39vJrMWcaCIKtzM1oKaSfDNvKWefc4x6SzqDTNsfKu
+	 5oI5tZkyOjecQBL1XIugnMYINrL6deOKiLGdjGDGXunMms/Ixsjln8bL3rimx3Ku/7Vz2
+	 Xhx4NWseZ+Qfmtv4BnOfTtkeS6T/XG5ctvU/lZ5lMLPlrydvHkU1PVJByAyzYoQjSkazC
+	 5XLmXXzPK+azTB+NdXQ38EY9+gVu4Z5xN5mXg/sfl0VTgG72fAj/zgWiB5i73mOJZ2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bv4l4RRU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNrRPPcM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770ED606A31C;
-	Wed, 18 Nov 2026 23:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49421606A325;
+	Wed, 18 Nov 2026 23:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bv4l4RRU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2B51F000C4;
-	Wed, 18 Nov 2026 23:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNrRPPcM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E301F000C4;
+	Wed, 18 Nov 2026 23:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043097;
-	bh=f6sBRPEvu2GcGvXA53JaYPnv+yJCIjoZXG2K0t4SmPc=;
+	s=korg; t=1795043100;
+	bh=YTseUtYKfzgA4+oE7D4wnkAkq3ccinJOCHCH5KwPwno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bv4l4RRUlfP77rcDvbsZHnNB4PTQfab6QMAk4KYeqQkygfKS5bu3oViUH9wLxEE9M
-	 2zQnXO1v9Oe3MTjNFGepTxsk+B/T64DrUdzor1qd+OWRWef5v5f5lndSd+EJZVo5pT
-	 efMd7PoJjoVEhpoY+ooqESyOKVAkPPCuUpKpR7kQ=
+	b=WNrRPPcMiZmkM3MDf8FMiQoqhxWODEYfVPyWa2HlUpD78gW+wzNZZfT6TWJV1XCLw
+	 pIxmYtFDdTLuVUV5cvo1W3wf3hVGPZlPirVdUf9RsirvNAUmpob+khu7JSEjTXZ4Ec
+	 4nnKHoQftNbQ0qFrh01Gp/RoGXwyogT/9c9+jr/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jurison Murati <eng.juri@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0088/2857] media: i2c: ov8865: Program the sensor on stream start
-Date: Wed, 18 Nov 2026 15:18:42 +0100
-Message-ID: <20261118150204.456961521@linuxfoundation.org>
+Subject: [PATCH 6.1 0089/2857] media: ivtv: stop VBI start-code scan before short tail
+Date: Wed, 18 Nov 2026 15:18:43 +0100
+Message-ID: <20261118150204.487755182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,105 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jurison Murati <eng.juri@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4e1446ac169a1a621ba90502ab8db3be821fe726 ]
+[ Upstream commit f373cf17fb8e7a530bc6e1e36fc41cb5dab2cdaa ]
 
-The sensor registers are only written in the runtime PM resume
-handler; ov8865_set_fmt() merely stores the requested mode, relying on
-the sensor being runtime suspended between uses so that the next
-resume applies it.
+compress_sliced_buf() scans one byte at a time while testing a four-byte
+VBI start code.  The final iterations can read beyond the remaining
+buffer tail.
 
-That assumption breaks when something keeps the sensor powered. On
-IPU3 platforms, ipu_bridge instantiates the VCM device with a
-DL_FLAG_PM_RUNTIME device link to the sensor, so a userspace process
-holding the VCM subdev open (e.g. wireplumber's camera monitor) pins
-the sensor runtime-active. A subsequent set_fmt() then never reaches
-the hardware: the sensor keeps streaming the mode programmed on the
-last resume while the CSI-2 receiver expects the newly negotiated
-format.
+Stop the scan once fewer than four bytes remain.
 
-On a Surface Book 2 (IPU3, ov8865 + dw9719 VCM), requesting the
-3264x2448 mode while the hardware was left programmed for the
-1632x1224 binned mode makes ipu3-cio2 report "frame sync error" and
-"payload length is 10340352, received 2585088" (exactly one binned
-frame) for every frame, and the inverse case stalls the stream after
-a single frame. Camera applications end up displaying one bogus frame
-forever.
-
-Program the sensor configuration and apply the control values on
-stream start instead, where the negotiated mode is always current,
-and only write the configuration in the runtime PM resume handler
-when resuming with the stream already started.
-
-Signed-off-by: Jurison Murati <eng.juri@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov8865.c | 34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ drivers/media/pci/ivtv/ivtv-vbi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov8865.c b/drivers/media/i2c/ov8865.c
-index 498448b2ba2ab..be0cbed3b57b4 100644
---- a/drivers/media/i2c/ov8865.c
-+++ b/drivers/media/i2c/ov8865.c
-@@ -2617,7 +2617,7 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
- {
- 	struct ov8865_sensor *sensor = ov8865_subdev_sensor(subdev);
- 	struct ov8865_state *state = &sensor->state;
--	int ret;
-+	int ret = 0;
+diff --git a/drivers/media/pci/ivtv/ivtv-vbi.c b/drivers/media/pci/ivtv/ivtv-vbi.c
+index 80478b026d752..279a4d6bece19 100644
+--- a/drivers/media/pci/ivtv/ivtv-vbi.c
++++ b/drivers/media/pci/ivtv/ivtv-vbi.c
+@@ -330,7 +330,7 @@ static u32 compress_sliced_buf(struct ivtv *itv, u32 line, u8 *buf, u32 size, u8
+ 	unsigned lines = 0;
  
- 	if (enable) {
- 		ret = pm_runtime_resume_and_get(sensor->dev);
-@@ -2626,7 +2626,23 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
+ 	/* find the first valid line */
+-	for (i = 0; i < size; i++, buf++) {
++	for (i = 0; i + 3 < size; i++, buf++) {
+ 		if (buf[0] == 0xff && !buf[1] && !buf[2] && buf[3] == sav)
+ 			break;
  	}
- 
- 	mutex_lock(&sensor->mutex);
--	ret = ov8865_sw_standby(sensor, !enable);
-+
-+	/*
-+	 * The sensor may have been kept powered by something else (e.g. the
-+	 * VCM's runtime PM device link on IPU3 platforms), in which case
-+	 * runtime resume did not run and the hardware may still be
-+	 * configured for a previous mode. Always program the negotiated
-+	 * configuration on stream start.
-+	 */
-+	if (enable) {
-+		ret = ov8865_sensor_init(sensor);
-+		if (!ret)
-+			ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
-+	}
-+
-+	if (!ret)
-+		ret = ov8865_sw_standby(sensor, !enable);
-+
- 	mutex_unlock(&sensor->mutex);
- 
- 	if (ret || !enable)
-@@ -2914,15 +2930,15 @@ static int ov8865_resume(struct device *dev)
- 	if (ret)
- 		goto complete;
- 
--	ret = ov8865_sensor_init(sensor);
--	if (ret)
--		goto error_power;
-+	if (state->streaming) {
-+		ret = ov8865_sensor_init(sensor);
-+		if (ret)
-+			goto error_power;
- 
--	ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
--	if (ret)
--		goto error_power;
-+		ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
-+		if (ret)
-+			goto error_power;
- 
--	if (state->streaming) {
- 		ret = ov8865_sw_standby(sensor, false);
- 		if (ret)
- 			goto error_power;
 -- 
 2.53.0
 
