@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018460;
-	b=Gp+6Ky+iv8B0wyhcusGKl8cn/ikU3nxKV0WHEgACq9ti7gDuVbegqKa3Co2Y3B4U7sG2
-	 tB+WTVrGVwfhMXf2U9rgIN5qJP7Ky4CLdx40anbZIC30VBKaQbZA2nFcbp3d9mvBV88pS
-	 qi2h8fmeBK7OTqJ9i7GIsP6XorXfws9Twn9nQ+a3P7xPjiMXvfs4oOBY3+QlbZEQE4TVU
-	 8b1g7bb+egjXlE6FyKzxqinal1WP03MX7d2etMYpE//M9JEU962pRELTE56DTVjLB61kC
-	 XPcjwxrqPzmBmBgGYnUyciPmyygKblj/Z/xF1gV6i6H5vsCgUIf5Rpj297qVM0V39hA==
+	t=1795018463;
+	b=smLkrLjNtsvExhrUvanjvtezKpeGflhUdMKtHavYinEIB3f8SmVNDhGeXMIF18KqbRuk
+	 C8NC6abu8t1Vf78SMsHgGzcOdXzXWXyEYX1F4lJ4LQfjI8KFNszUzGjK9o6wyzigeYtMm
+	 aTerxtbmA2DUoFk64TqEJDMw7/ELsGKSwv9VsHmkjCS3YrM3YBkQrWnUr8uoRp1+ninQy
+	 RgoiPJ1w2Tvxum26FxNfqui8EVlj7RD7c59ga/GPa5Ns/1fKlM2d40H9GpJMzwJschy2U
+	 hxNeSKlvRHJGBClVUTpOFT5KExqab54st14Agnfqd4oZaUv5QIMA1gdbhWeT30zkJcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3K5QnZq5c1NnU1Qfd7GqNWJs9OtjMKq9ryBiAYbwYAE=;
-	b=nzq0cxWVOr+niJpK909Yvvya2SMMIUVWkDXQBsfvPSRccS2/If6UowLP12Y9PGorfSad
-	 WgLZvRh/Va/I0e/eyf10PV6YlZQrz7cviueOdMW2NdeHH93v1u4mlkSfDE24hl0uD+v7t
-	 ueyX+IcnqVup/l34DOM/FBDt3KBnGx0I/T8l76NS/zPeOQeVPlkWnCpLFtxrZeP+5hr+d
-	 YaZ7BBcyFUICWQZBOq5JCPwzfMNi6Z0TiM5e4QHXWVitccesuSTWQe6pIZR2HYqBh0aSr
-	 A2HtBLW8TXFFehfM3OjMEs3ERn0Sfb9CwsvYj4AiuLfnGPNIOej8nsmfKmXlkfWyY4Q==
+	bh=rxyv8Gbd+MNxaetNgad7KW3Uj75Qz4lmpyXj37eDgOw=;
+	b=RT8wTgNwIkFaQKxixZwSI2J7c3iC4Y7aIMNKiRv8OfXvXnMKVgLnkbtw8cpQAEHM8L07
+	 p5rlk8Qc7zPMcMvUgyyO4P3sAv/jImttUJLjWxUqSKxH4BfW2AcPn7HZKLSRaXl1gFf1w
+	 Q6AGeaLxwI+5dl90WeCY8GXTZHP64soqbIGvkTkesY7IREMjGYbWjuBqwD061yz0bdWPM
+	 0YrWNMJ3Rc7BJHFnoQrTUJcMh5cj+SkKpSz6n9wuzhb1gcvOzvzKmcRr1nm06G4IKi/ou
+	 fpUdgLDxEnHnaH9LNwEqcG7kP0brvUIL9mxWmWBAfP98Xjcpm8mjtIb3vxTOBLHAcHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIT5Ku0w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L2/EylYL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F966606A31C;
-	Wed, 18 Nov 2026 16:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41217606A320;
+	Wed, 18 Nov 2026 16:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIT5Ku0w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02BA1F000C4;
-	Wed, 18 Nov 2026 16:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2/EylYL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939D71F000C4;
+	Wed, 18 Nov 2026 16:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018460;
-	bh=3K5QnZq5c1NnU1Qfd7GqNWJs9OtjMKq9ryBiAYbwYAE=;
+	s=korg; t=1795018463;
+	bh=rxyv8Gbd+MNxaetNgad7KW3Uj75Qz4lmpyXj37eDgOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xIT5Ku0wXZQwBrMx/fiM024MGBX1koukocgykQDrWA50/5VzzkVkGq8LjEjNvPfSN
-	 zMWqpp/DwhFwOhneS0SGWmVApQNVT5/pO26TnUif5y/jYIy5jhX9dn9nfltDmHGoCB
-	 aWQpxGw7SUCdAdezi6igI/luH2QNb+l5gjxvMKCc=
+	b=L2/EylYL2e+RrHHlZ3hI8618pJh98v4EBLWJTGgLxws8y4WpOPVlmOZ6bDvbqxR/e
+	 Yd5MHf2iP82lYW6omZpPkYVz2+rX4faZZfeKlTG/ksyZZYVydqmuwz8EbBPlC7S5Zv
+	 dVTRTWG3jLEvWQPB3GDn8E0rvPO+AO3VUGtqJEeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1247/2651] dt-bindings: power: supply: ab8500: Add AB8505 charger
-Date: Wed, 18 Nov 2026 15:41:27 +0100
-Message-ID: <20261118150332.878186052@linuxfoundation.org>
+Subject: [PATCH 7.3 1248/2651] iommu/arm-smmu-v3: Dont rb_erase() a never-inserted stream node
+Date: Wed, 18 Nov 2026 15:41:28 +0100
+Message-ID: <20261118150332.914891431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,138 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 80d28539c1f9baab72210501729d67e3d9daa4b8 ]
+[ Upstream commit 2888520bdcbe0599cfc77b2fad8dc6c95505a3cb ]
 
-AB8500 and AB8505 expose different charger interrupt sets. Add a unique
-AB8505 charger compatible with the AB8500 compatible as its fallback.
-Use the variant-specific string to require the fourteen main and USB
-charger interrupts on AB8500 and the nine USB charger interrupts on
-AB8505.
+arm_smmu_insert_master() skips inserting a stream whose StreamID duplicates
+one the same master already owns (bridged PCI devices can present duplicate
+IDs), leaving that master->streams[i].node zeroed and unlinked from the
+smmu->streams rb-tree.
 
-Also clarify that autopower_cfg describes the AB8500 facility, since the
-corresponding AB8505 register bit is reserved.
+Both the insert error-rollback loop and arm_smmu_remove_master() then call
+rb_erase() on every master->streams[i].node unconditionally. rb_erase() on
+a zeroed node sees a NULL parent, treats the node as the tree root and sets
+root->rb_node = NULL, silently emptying the whole SID tree and breaking SID
+lookups (and DMA) for every other master on the SMMU.
 
-Fixes: eb917497734c ("dt-bindings: power: supply: ab8500: Convert to DT schema format")
+Mark each node with RB_CLEAR_NODE() after sort_nonatomic() reorders the
+array, since sorting relocates the entries and would leave the earlier
+self-referential RB_CLEAR_NODE() pointer stale. An un-inserted node then
+stays RB_EMPTY_NODE() and is skipped in both erase loops; inserted nodes
+are linked by rb_find_add() and erased as before.
+
+Fixes: b00d24997a11 ("iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids")
 Assisted-by: LLM
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260925-ab8500-charger-dt-v3-1-f80b8d295e2d@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../supply/stericsson,ab8500-charger.yaml     | 76 ++++++++++++++-----
- 1 file changed, 56 insertions(+), 20 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
-index 4f19744844e9c..dcffcecaea13b 100644
---- a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
-+++ b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
-@@ -10,12 +10,13 @@ title: AB8500 Charger
- maintainers:
-   - Sebastian Reichel <sre@kernel.org>
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index c6176394fc890..68f1f6e8ba7ef 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -4176,6 +4176,13 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+ 	     sizeof(master->streams[0]), arm_smmu_stream_id_cmp,
+ 	     NULL);
  
--allOf:
--  - $ref: power-supply.yaml#
--
- properties:
-   compatible:
--    const: stericsson,ab8500-charger
-+    oneOf:
-+      - const: stericsson,ab8500-charger
-+      - items:
-+          - const: stericsson,ab8505-charger
-+          - const: stericsson,ab8500-charger
- 
-   monitored-battery: true
- 
-@@ -28,27 +29,15 @@ properties:
- 
-   autopower_cfg:
-     type: boolean
--    description: automatic poweron after powerloss
-+    description: AB8500 automatic poweron after powerloss
- 
-   interrupts:
-+    minItems: 9
-     maxItems: 14
- 
-   interrupt-names:
--    items:
--      - const: MAIN_CH_UNPLUG_DET
--      - const: MAIN_CHARGE_PLUG_DET
--      - const: MAIN_EXT_CH_NOT_OK
--      - const: MAIN_CH_TH_PROT_R
--      - const: MAIN_CH_TH_PROT_F
--      - const: VBUS_DET_F
--      - const: VBUS_DET_R
--      - const: USB_LINK_STATUS
--      - const: USB_CH_TH_PROT_R
--      - const: USB_CH_TH_PROT_F
--      - const: USB_CHARGER_NOT_OKR
--      - const: VBUS_OVV
--      - const: CH_WD_EXP
--      - const: VBUS_CH_DROP_END
-+    minItems: 9
-+    maxItems: 14
- 
-   io-channels:
-     minItems: 2
-@@ -74,6 +63,53 @@ required:
-   - io-channels
-   - io-channel-names
- 
-+allOf:
-+  - $ref: power-supply.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: stericsson,ab8505-charger
-+    then:
-+      properties:
-+        interrupts:
-+          minItems: 9
-+          maxItems: 9
++	/*
++	 * Clear after sorting: RB_CLEAR_NODE() records the node's own address,
++	 * which sort_nonatomic() invalidates by relocating the entries.
++	 */
++	for (i = 0; i < fwspec->num_ids; i++)
++		RB_CLEAR_NODE(&master->streams[i].node);
 +
-+        interrupt-names:
-+          items:
-+            - const: VBUS_DET_F
-+            - const: VBUS_DET_R
-+            - const: USB_LINK_STATUS
-+            - const: USB_CH_TH_PROT_R
-+            - const: USB_CH_TH_PROT_F
-+            - const: USB_CHARGER_NOT_OKR
-+            - const: VBUS_OVV
-+            - const: CH_WD_EXP
-+            - const: VBUS_CH_DROP_END
-+    else:
-+      properties:
-+        interrupts:
-+          minItems: 14
-+          maxItems: 14
-+
-+        interrupt-names:
-+          items:
-+            - const: MAIN_CH_UNPLUG_DET
-+            - const: MAIN_CHARGE_PLUG_DET
-+            - const: MAIN_EXT_CH_NOT_OK
-+            - const: MAIN_CH_TH_PROT_R
-+            - const: MAIN_CH_TH_PROT_F
-+            - const: VBUS_DET_F
-+            - const: VBUS_DET_R
-+            - const: USB_LINK_STATUS
-+            - const: USB_CH_TH_PROT_R
-+            - const: USB_CH_TH_PROT_F
-+            - const: USB_CHARGER_NOT_OKR
-+            - const: VBUS_OVV
-+            - const: CH_WD_EXP
-+            - const: VBUS_CH_DROP_END
-+
- additionalProperties: false
+ 	mutex_lock(&smmu->streams_mutex);
+ 	for (i = 0; i < fwspec->num_ids; i++) {
+ 		struct arm_smmu_stream *new_stream = &master->streams[i];
+@@ -4208,7 +4215,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
  
- examples:
+ 	if (ret) {
+ 		for (i--; i >= 0; i--)
+-			rb_erase(&master->streams[i].node, &smmu->streams);
++			if (!RB_EMPTY_NODE(&master->streams[i].node))
++				rb_erase(&master->streams[i].node,
++					 &smmu->streams);
+ 		kfree(master->streams);
+ 		kfree(master->build_invs);
+ 	}
+@@ -4228,7 +4237,8 @@ static void arm_smmu_remove_master(struct arm_smmu_master *master)
+ 
+ 	mutex_lock(&smmu->streams_mutex);
+ 	for (i = 0; i < fwspec->num_ids; i++)
+-		rb_erase(&master->streams[i].node, &smmu->streams);
++		if (!RB_EMPTY_NODE(&master->streams[i].node))
++			rb_erase(&master->streams[i].node, &smmu->streams);
+ 	mutex_unlock(&smmu->streams_mutex);
+ 
+ 	kfree(master->streams);
 -- 
 2.53.0
 
