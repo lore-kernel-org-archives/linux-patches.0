@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034356;
-	b=XNnMMu3pPWWZuM9XaHtQbElpqOzjZTOwTmM0ILFPNEAllWMuwjLQmuwYGPd6YQqKpU+d
-	 bIzSZpU7z5flHNu4HrGbb9dndsNr/I/cr4yOrPZapuynQbUGAmhPHx6uXtAb9OY7OSVCd
-	 gQoeF9KkpI9mUkO10HDh4T0F+uJUGgpsIbU/Acce1+mKjc8773P+Ue6rjSspok+8SUUtE
-	 bODNOPQBRNEngoWFtq3Tste+Uu4wd4n1swajGL4TH+unoqRNA3cqMDdGaFzSFuVmGhL//
-	 tlHfWbsnwlHsfcTIB/bpUDvOxzGttN5QS42vN492FhVJFdhTfagipO5ZB3vl0LRi3fg==
+	t=1795034359;
+	b=g1wT3b4jXIEJ44PxDN3xmeJ65oqY9k3sVhNOxstAtdhs35THPNZDvuLbczq8gBx2G9j2
+	 QbB1NSesEn+uT4OcMKGi+jxaEVVZHPalookEZNE1c1yXbSthONczv0A6v/WrWJyYh3gE3
+	 CLpPcLbN7iNlNaJ4zCsX1Eal1TuLjCbPyBVKqnjGb4ILo2SAVwv+EAxidfUboFkfoqWPv
+	 +ASFweFvNjvTI/k6F9KGpbekcVJ/j5C5zeHFqvOdM3wwNEdscj2rGWISSqOcbhRgV/gGM
+	 HerapC04S1yJNULM678ZIKk/NNUlczd7KT6e+G/fwl4lIYV2aVjDYtZEaCXPbbHJZkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eNbpUXb2/8i0MuuOF3ogdkOnoZ9Md13p3FhrAQ2ehmM=;
-	b=A+Gt7eWFgWVNqebLyyW30O2JPLLF4AVQK6SO+sYex2niIk9vQZxqiNzIczB0QeEA8rTl
-	 xa84TvXm8lJ8zH1Qp6us0jhT3Sk6c2p7ym+zv9tKaYan2HEeaxit5iKZEpaH8saVRNNfK
-	 WIoB+HjAhjUDxVavdSek9MGTSCAGMJ62m2WH0lWd3Oz76qE/ML+/t4SYhlaep/n4ucj/g
-	 Y6ueVzFutFdd5JhvNYcM6aIYRYB+mDjfcbAkgTh97jxzdQC7KGSNmPa+HaSG9vGPjt8QL
-	 xGO05wmWLwcoVEf664vTVnPidYgU9uGN+IEaH4VsiYh2iW6QywWSnHMkaEocZcDU/3A==
+	bh=nn3hS8FhRan9aIgkakE8ddQzj9006u4VjJde4Ygq+Tw=;
+	b=Erh2WedUcsT5WZx+/4heSG418u83/AdCIUxok6Og2g5cKsh2W24xH/FyrBUrHtfbr4n9
+	 NcdOuMDDb8fWxc74T17YSq+jzeHMmaRKq/yBx4Qafjihqxbt4+juLF5CZ+fB5C8e3N+it
+	 vPRtN6MQJWkZoFeHeDlQ2Ik6p7mxYYJkvLxp+k1TBg6CAcJ86UqwUonW9wKdmpkq6Zwrr
+	 YFuxDN5vJtEtk9DhMAXmEJM4KHjMngx7kq5IuhRirXVio0w2i22PdBj+RvUAzZLPF6Io5
+	 wFq2ZDjmA1AP82k0o4MJYScywD10tUZy20WU90q3Q17MFqEwfOny4bU9qbJ810WbQ3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1eUdaOj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWK8P6iN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C26E606A31C;
-	Wed, 18 Nov 2026 20:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5221B606A320;
+	Wed, 18 Nov 2026 20:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1eUdaOj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0801F000C4;
-	Wed, 18 Nov 2026 20:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWK8P6iN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644CC1F000C4;
+	Wed, 18 Nov 2026 20:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034356;
-	bh=eNbpUXb2/8i0MuuOF3ogdkOnoZ9Md13p3FhrAQ2ehmM=;
+	s=korg; t=1795034358;
+	bh=nn3hS8FhRan9aIgkakE8ddQzj9006u4VjJde4Ygq+Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1eUdaOjZBSopdVnn9YTsvgjrvj3MNCNm7HSHpEKrbkHM64v/6lDeniAIiDUY/Gpc
-	 CGKrG8KqkajX3mBKI0VmadMeoHDQcTaXNETz/VsXA8wiV3J//RyZZadeMqOxWqMq3p
-	 5cipMxGQHH6USwL76xyuvG0jcWj01aHqCR9AJahc=
+	b=uWK8P6iN+QgbB89sBVk3govDw1NknvgVtWN4GgotE5fRkyKkyqBhxBdTse7U05hbE
+	 4+CXNKBgfWLLUc3fbjVMvgzvNQMYw97vwLvmrM9EfbcP/p2+fmGh7vGS8GeJ0mrgbT
+	 ZyXG64A0gdPZjtnwLOowpYGAIr3Llqw3FC1YU9Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jasper Firth <jasper.m.f@hotmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hernan Ganzo <gp@sneemgp.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0341/3318] ASoC: Intel: bytcr_rt5651: Add quirk for Chuwi Hi8 with generic DMI strings
-Date: Wed, 18 Nov 2026 15:16:03 +0100
-Message-ID: <20261118150326.226281511@linuxfoundation.org>
+Subject: [PATCH 6.6 0342/3318] ALSA: hda/realtek: Limit internal mic boost on HP Pavilion 15 (103c:2164)
+Date: Wed, 18 Nov 2026 15:16:04 +0100
+Message-ID: <20261118150326.261679080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,84 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jasper Firth <jasper.m.f@hotmail.com>
+From: Hernan Ganzo <gp@sneemgp.com>
 
-[ Upstream commit c5a8fc2abe05cf6db71f57ff0177fddc59861a1a ]
+[ Upstream commit 786fb6b3f513937f712db5a9ba6a12cbc6982ba9 ]
 
-Some Chuwi Hi8 tablets with model number CWI513 ship with a BIOS
-(American Megatrends 5.11, dated 05/21/2016) whose DMI sys_vendor and
-product_name are both "Default string". The tested unit is labelled
-just "Hi8", but its model number is the same as the existing "Chuwi Hi8
-Pro (CWI513)" entry, and it needs the same quirks. That entry matches on
-sys_vendor "Hampoo" and product_name "X1D3_C806N", so it never applies
-to these units.
+The HP Pavilion 15 with the ALC3227 codec (SSID 103c:2164) exposes the full
+four-step internal mic boost on pin 0x12: nsteps=3 with stepsize=0x2f, that is
+0, 12, 24 and 36 dB. Combined with the ADC capture gain of +30 dB the analogue
+cascade reaches 66 dB, and the internal microphone clips on the ambient noise of
+a quiet room; the upper two steps are unusable at any useful input level. This
+is the defect class ALC269_FIXUP_LIMIT_INT_MIC_BOOST exists for.
 
-Without its quirks the internal speaker, whose amplifier has a
-differential input wired across LOUT left and right, cancels to a faint
-distorted residual for any centred (L == R) content, and the headphone
-channels are swapped.
+The machine matches no SSID quirk and falls through to the pin table, which
+selects ALC269_FIXUP_HP_MUTE_LED_MIC1 through a pin signature shared with
+several other HP models. Add an SSID entry instead, using
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED: the existing fixup that applies
+alc269_fixup_limit_int_mic_boost() and chains to the same mute LED fixup, as
+already done for 103c:218b. The boost becomes 0 or 12 dB and the LED handling is
+unchanged.
 
-Add an entry matching board_vendor "Hampoo" and board_name "Cherry Trail
-CR", plus the BIOS date since those two are too generic on their own.
-drivers/platform/x86/touchscreen_dmi.c already matches the Chuwi HiBook
-the same way.
+Tested on the affected machine by selecting the same fixup through the model
+string (snd-hda-intel.model), which bypasses the SSID and pin tables, with the
+driver confirming the selection:
 
-The quirks are those of the existing Hi8 Pro entry, except for the
-over-current detection scale factor: 1.0 instead of the 0.75 from
-BYT_RT5651_DEFAULT_QUIRKS. With 0.75 and a CTIA headset (inline mic and
-one button), loud speech into the mic, and headphone playback coupling
-onto the mic line, were reported as spurious KEY_PLAYPAUSE presses, one
-of them held for a whole 8 second speech window. With 1.0 the same test
-gave no spurious events, and 3 real button presses were reported as
-exactly 3 press/release pairs.
+  snd_hda_codec_alc269 hdaudioC1D0: ALC3227: picked fixup limit-mic-boost (model specified)
 
-Tested on a unit with the generic DMI strings, with a module built from
-this patch and no quirk module parameter. The quirks were applied via
-the new entry, the card components read "cfg-spk:1 cfg-mic:in2
-cfg-hp:lrswap", and the following all work: speaker, headphone left/right
-order, jack and headset-mic detection, headset button, and the internal
-and headset mics.
+With that, Internal Mic Boost reports Limits 0 - 1 (0 or 12 dB) instead of 0 - 3
+(0 to 36 dB), so alc269_fixup_limit_int_mic_boost() clamps this codec's internal
+mic pin as intended. Note that /proc/asound/card1/codec#0 keeps printing the
+unclamped hardware caps (nsteps=0x03): that file reads codec parameters uncached
+by design, while the fixup overrides the driver's cached parameter that the
+control is built from.
 
-The problem was diagnosed with the help of an AI coding assistant, which
-also drafted this changelog.
+This does not by itself make the default capture volume sane -- the remaining
+12 dB on top of the +30 dB ADC gain is still hotter than this machine's usable
+operating point. It removes the two unusable steps from the hardware range, which
+is what a quirk of this class can do.
 
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Jasper Firth <jasper.m.f@hotmail.com>
-Link: https://patch.msgid.link/20260925-hi8-quirk-v1-1-ffd00b0447f9@hotmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Hernan Ganzo <gp@sneemgp.com>
+Link: https://patch.msgid.link/20260921205538.41192-1-gp@sneemgp.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 2abe47303ecdb..feae35fecb29d 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -409,6 +409,23 @@ static const struct dmi_system_id byt_rt5651_quirk_table[] = {
- 					BYT_RT5651_HP_LR_SWAPPED |
- 					BYT_RT5651_MONO_SPEAKER),
- 	},
-+	{
-+		/* Chuwi Hi8 (CWI513) with a BIOS using generic DMI strings */
-+		.callback = byt_rt5651_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Cherry Trail CR"),
-+			/* Above matches are too generic, add bios-date match */
-+			DMI_MATCH(DMI_BIOS_DATE, "05/21/2016"),
-+		},
-+		.driver_data = (void *)(BYT_RT5651_MCLK_EN |
-+					BYT_RT5651_JD1_1 |
-+					BYT_RT5651_OVCD_TH_2000UA |
-+					BYT_RT5651_OVCD_SF_1P0 |
-+					BYT_RT5651_IN2_MAP |
-+					BYT_RT5651_HP_LR_SWAPPED |
-+					BYT_RT5651_MONO_SPEAKER),
-+	},
- 	{
- 		/* Chuwi Vi8 Plus (CWI519) */
- 		.callback = byt_rt5651_quirk_cb,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4499d4fb1d869..921331681a4ca 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10045,6 +10045,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x164b, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x1586, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x18e6, "HP", ALC269_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x2164, "HP Pavilion 15 Notebook PC", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x218b, "HP", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x21f9, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
+ 	SND_PCI_QUIRK(0x103c, 0x2210, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
 -- 
 2.53.0
 
