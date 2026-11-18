@@ -1,65 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022090;
-	b=ahI5GVcmOojRdFcnvheeyeKm1ed5bInB4/4qcqIaXVRPiMDJjSOB6eu92Of1icX9h73c
-	 lHMRfTXc/WZlCipk1B3wPdZtfeqy5Yr1Z7lKYsCi0Ma4VF6JfG/fiO/qUCUaJIa52Vdw8
-	 ACRjbMOKf94mBGL7AgXZusATsCcEAdBKDxZPmvwX80SwnEAy6JQLxxtiiWWCmgWzvmqnL
-	 uHp/uPj/4CVRS28+MQulO+laxhWlsea7vmhLxUFIpl7znUNryUs9kCnZVjfX86sEQ+EI5
-	 N+vtluCs0cKMdRt4CiPm2JE/7xsu7KtEEqkUY38ziI+EfPrxpa3mjZkdhS6l73+eugQ==
+	t=1795022092;
+	b=D2oGGB3Iylpe3IFBpzq816clw2fywYdBWFJ/rogQ6TCF3jwx8WDzrlGU0rhVlGV0HBoJ
+	 Aj7sIfVvWBw+A9Ol7p2O48K8D5xDtOcBUUvlALFvreqm8x1739oWXF4GoSqeA1GHRXRdc
+	 DqsSFWl1rUk65wataiCqaBAnQ9cPM9GqsY5wriHM5NpqQWBRdNUOkdY7tkF2PYgb9p+Nm
+	 F9IUB1P3fQYpGH8dnsoCiuMqr9Z3VfUQnVxNJZsCq0HKKCK6eni8SoTPjXY0QQrV2kHad
+	 +PBpkvDZ2Ujar7vDmtTQeSaCgTEPgyzfqpY8VvfvTp9acj5ZIx13I7VJrfCkXlP/6Xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3O59MJNo9npyD2PftsXxwvOT/nQ9aF/9RVVOmgH9tiM=;
-	b=WnFFBqMEzgdqtZH7O8nTKDqDgcCLdv60MfB/In6CAB45vsQUVI4a+oYogtdMUhXGFkfu
-	 FXYyK/Ov+sFQ+yRbC3+zAigF4u4XR9iPpOSLd5aULrjDNs22Jf66VTRgceaq88xsO5TX5
-	 V12Tmh4b1bqEfnlSjTDCGvpbmw6gDoFMu0UmqIQuGSqTizb13iBVm7Ghr1Yh4LVXMKPcO
-	 7f3sZlwIjxf1b3WWb4SMGkv7cGTKNS9wh5Ci+FIyEE/gaazSKdTuuL0XkDhruYHByQT+X
-	 zr5kkF5WXqgVQIwc7t3tUX2HXH6ct0H8imQzQFOcRhGEM/iiHk5vinEE+SIYslOIVOw==
+	bh=3WudnvtYwqWUHtThJIuhxYhvFMW22X0HiunfcCTsOn8=;
+	b=QoGSQcVHmeIqhFMj2IHRh+ZwiySLboOGFU0bTJ0Cp820oS2bQpnH9/kbx1IukYvh57Cq
+	 7wiOpmIe+unxltCTZ3m0iZV5pJ6XqJridql/o0gJ1ej/VeIkOeHVSxWP1QAU2MvE38vIl
+	 S+65iFf9olJE2YJgkSyewRY8Vp6iNBJI3eHdLBg73xLvBSfczk0S0E8BUpwGhhXP7vFmK
+	 UTeOYtiSxRNL8B1XA0RXyfY+takXsBaIa8wdRGT01WhbjR2wchE8oiHwyLKD468xqm+SK
+	 yiNdYy0/Ttqr8u8UzFDDbnoPbQeuYZrK3OcaHBC5siwibMzkdWK3U4b4aB8+uG2cGhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLhLjw6S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YD8oYrIC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6878606A32A;
-	Wed, 18 Nov 2026 17:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7998606A33B;
+	Wed, 18 Nov 2026 17:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLhLjw6S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D521F000C4;
-	Wed, 18 Nov 2026 17:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YD8oYrIC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1214A1F000C6;
+	Wed, 18 Nov 2026 17:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022089;
-	bh=3O59MJNo9npyD2PftsXxwvOT/nQ9aF/9RVVOmgH9tiM=;
+	s=korg; t=1795022092;
+	bh=3WudnvtYwqWUHtThJIuhxYhvFMW22X0HiunfcCTsOn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLhLjw6SjUrEFsnGKftRr/IOOOaGoSztKVyEEbYPEXZUe5LyDZuxvdU4UFtZ/K9oL
-	 vFH38LUMpxWnDjSVaw/tFVsOLZof6afMec4kaMT8xTCLieO5GpXyi3nJO4onGfmkM8
-	 TXO2VriGErLv2LqRFd/pnMtUpppDJM6S0Aa9O2VY=
+	b=YD8oYrIC0cUvULeKBmUSK7kaZzpYIoTu8vaEIR5jGoC84MMIAeQ4q5bAi+/LnI344
+	 CwYRouwjuy7YJiIysqUESkHz7uWM5Z4JJvKnixqe1At/5cTCUlvHmuhhS02Ec6FqgO
+	 CbKqHAihcRx85YxieaF/CkWKXvsLwRpUB4sThID0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Faisal Bukhari <faisalbukhari523@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Qinxin Xia <xiaqinxin@huawei.com>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Harkirat Gill <harkirat.gill@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2498/2651] perf parse-events: Include errno.h before kernel headers
-Date: Wed, 18 Nov 2026 16:02:18 +0100
-Message-ID: <20261118150414.744363552@linuxfoundation.org>
+Subject: [PATCH 7.3 2499/2651] drm/amdgpu: re-enable GFXOFF for compute on GFX12
+Date: Wed, 18 Nov 2026 16:02:19 +0100
+Message-ID: <20261118150414.776246591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -81,58 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Harkirat Gill <harkirat.gill@amd.com>
 
-[ Upstream commit 022b0ac5d3e87f87cb7ba42d04d0bc3ddfdd6be4 ]
+[ Upstream commit 6a1dbb006056ad1ce6df0d6d5f2155767c20f410 ]
 
-Building perf against uClibc fails in config_term_common():
+Commit 2affe2bbc997 ("drm/amdgpu: disable gfxoff with the compute
+workload on gfx12") disabled GFXOFF whenever a user-mode compute queue
+exists, as a workaround for an OpenCL test failure. The MES firmware
+issue behind that failure has since been addressed, so the workaround
+is no longer required.
 
-  util/parse-events.c:954:30: error: 'ERANGE' undeclared
+Without this change, idle inference servers that hold a context for
+hours never let the graphics block power down, costing roughly 3-4%
+reported GPU activity and ~3 W per GPU at idle.
 
-The kernel headers included before errno.h pull in asm/errno.h. uClibc's
-bits/errno.h undefines EDOM, EILSEQ and ERANGE before including
-linux/errno.h, but the kernel header include guards prevent these macros
-from being defined again.
+Measured on gfx1200 with an idle HIP process holding one stream and
+two resident KFD queues:
 
-Include errno.h before the kernel headers so ERANGE remains defined.
+  before:  VDDGFX 695 mV, GPU load 2%, ~9-10 W
+  after:   VDDGFX  35 mV, GPU load 0%, ~8 W (idle baseline)
 
-Fixes: 6b9c0261b3fb298b ("perf record: Add ratio-to-prev term")
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Faisal Bukhari <faisalbukhari523@gmail.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Qinxin Xia <xiaqinxin@huawei.com>
-Cc: Thomas Falcon <thomas.falcon@intel.com>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The resident queue count is unchanged in both cases; only GFXOFF
+availability differs. The ocltst runtime suite (40 tests) passes with
+and without this change.
+
+Fixes: 2affe2bbc997 ("drm/amdgpu: disable gfxoff with the compute workload on gfx12")
+Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f6d97ecb68b8623da2f83997a9c8c57a1a9649f9)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
-index 8302be207c1d6..5a84da4548e3e 100644
---- a/tools/perf/util/parse-events.c
-+++ b/tools/perf/util/parse-events.c
-@@ -1,10 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include <linux/hw_breakpoint.h>
- #include <linux/err.h>
- #include <linux/list_sort.h>
- #include <linux/zalloc.h>
- #include <dirent.h>
--#include <errno.h>
- #include <sys/ioctl.h>
- #include <sys/param.h>
- #include "cpumap.h"
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+index ca5860e493a60..6e5709e641c26 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -751,9 +751,8 @@ int amdgpu_amdkfd_submit_ib(struct amdgpu_device *adev,
+ void amdgpu_amdkfd_set_compute_idle(struct amdgpu_device *adev, bool idle)
+ {
+ 	enum amd_powergating_state state = idle ? AMD_PG_STATE_GATE : AMD_PG_STATE_UNGATE;
+-	if ((IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 11 &&
+-	    ((adev->mes.kiq_version & AMDGPU_MES_VERSION_MASK) <= 64)) ||
+-		(IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 12)) {
++	if (IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 11 &&
++	    ((adev->mes.kiq_version & AMDGPU_MES_VERSION_MASK) <= 64)) {
+ 		pr_debug("GFXOFF is %s\n", idle ? "enabled" : "disabled");
+ 		amdgpu_gfx_off_ctrl(adev, idle);
+ 	} else if ((IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 9) &&
 -- 
 2.53.0
 
