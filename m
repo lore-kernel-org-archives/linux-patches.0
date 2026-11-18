@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061973;
-	b=B0WRYByfi7trrFqW1zhQL1CXo1jCfsTEWVHP0oR9HSuXf3TOPN410gygYHpHD8IY0nqg
-	 lhTyAqjwD7xnaHXvxE+LxemCUcsKjlu9lch0RICTknHn7nT2GQ6qgsHwcw4uoEX0zKxBZ
-	 6vhIi5gy+5kdjr6eCeKw2pyExtW12z3r4g6UFaKOAoSf/Mb5Os9yukGj/vsLX7Xmhn0ZX
-	 9cKBwf3i17PCv0HV3IS1pt70QEn0j1WYSO1sV45td1HW0pq38dY6nZTDnk5DK5FDv2kU4
-	 BW4XNxC/SS6xiY0a2wZ9Frt3TjYXu6T7z7UoiR+UVl3LeJax4wNmFDlU6B2w+BpBVLQ==
+	t=1795061975;
+	b=STzkLYHk+VWuFH/fqk9cTZFlEPFWP/nocjSeompZFaA49hUFklFH9YR5XvBlrCUrsqY2
+	 a14i7Hp1/pEFVIavXuxqkgONTSwtJrONxt55MhiabkATatBnKMoizmOctQQnU8bUWqQZI
+	 WjS49z4iIgVSK09I0MmpMUHA/J6PSE+Lv2jEFAsMqfgD0oOGLTSsDA89RJBFHpS3wrtAa
+	 CeccRTXw+k0Xpk7YXtQpoCjHCiTayQfIUjR01Ctj+2hIiD8JeyfMvGzeUvblxI9s3KfEg
+	 +N4g+wtJe59u/od5iruOe/dgqvHbb5Rtic1XoEifeUAGmO0f+GYB3hmXNi6s1gKWdcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pna9LGZcHzLXdO70Pg+svQMfDKcvnNagqMj6ReBgJNE=;
-	b=bFABz6HMm1kyo+CdiOMGjKiRGrASB8wchL1Oxaf+o5m2CzUKilGLBSUdDir4m3KMsHJm
-	 uGJtduLNNsxytjAumMhwW/m3NHFdIAOC0ugxy/O6OLHGhvI7CJtN2zRd8aByQvJfYqBXn
-	 sgZAWzbK41o25oc5EPvKVdXZjiI6hawNE5xuc7dP4JkXXOY3TAzXJcKy2UJQRply08E5l
-	 7HrCdQzU9r3T939+rDE0uv3iiycznmu+NEh/59ZSdvtHI5YBjLs2sJIsNzsusZOcpNLnb
-	 Enw8BUVWRHVwssG6kBS4gVG1qscDXVGF5Xf11CUhexDEOmG1zZxrrgCYECMOFfgoGCw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=SMieMC1DNueFGhcuuzHkPZrHzIvfdn3yMWyGezZhGiA=;
+	b=s4rru3Kv8G8I6BlCFdpx/bRPodsZXi+7C33y7U3JJF7UXgBIsiQUXhLCimLIzgKJ2KIR
+	 TqppmzEnKWRElygtKYwfwwWHVxyfZXVsp6xSYDDH0kY1im4Sa9Y43+CshauEiaKyBes06
+	 /z7Bc2VzyJHosZqrrmCiqTOugdeI/KJKsVTNFwCiDcoBZ5IKg1WGhLT4StA50UHab81Mi
+	 nIBckCGXQrL1l/6KlGusz9KYXkcvtPbyKvDPil++GyscW0yBeDPVHIzqzVFrQazIILVWE
+	 s5RJyczGHsBj8S6tlwD4mZmU7c6qpmiH6EIy8WXPxr27SD2/TGytbF4pYodbSKJj4Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpqNoaw4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CDOYUXD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E536F606A320;
-	Thu, 19 Nov 2026 04:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A46606A320;
+	Thu, 19 Nov 2026 04:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpqNoaw4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462C91F000C4;
-	Thu, 19 Nov 2026 04:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CDOYUXD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BC51F000C4;
+	Thu, 19 Nov 2026 04:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061972;
-	bh=pna9LGZcHzLXdO70Pg+svQMfDKcvnNagqMj6ReBgJNE=;
+	s=korg; t=1795061975;
+	bh=SMieMC1DNueFGhcuuzHkPZrHzIvfdn3yMWyGezZhGiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpqNoaw45E4AdK3K4vRCrEmfiPeuXJTltSDyZvQqspEkd5m4N0cTcAKjVfzfL25kX
-	 Usk2BvLAF08evtY3F8v6PtFH+mrjJcU/0VFT4AyRT7DUEI4yLo3GQSUE5GvOqWWf9f
-	 5vxmqdKCaQD5q2BSng1OklGI6k9XaXMboQwBjNno=
+	b=1CDOYUXDUCYI4i9Z2pdS/fijRIey//Eryv7Yr7iNM3wVbeqS0iMRZ+ixOMJYAvp/5
+	 6ThC5QHWK0Jo9nwIrmv/pBbw/6WwlYi+1NzmSifU3YCX+YE10FL6s/WZdWMjW/rGTC
+	 uIQhVG+0Lau3m0UNiTnDoKJA1gXgqN2aO6Pgb5z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Anil Kaushik <anilkaushikwireless@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1745/1848] platform/x86: ibm_rtl: Fix potential OOB read at signature search
-Date: Wed, 18 Nov 2026 16:03:03 +0100
-Message-ID: <20261118150032.563913803@linuxfoundation.org>
+Subject: [PATCH 5.10 1746/1848] gtp: set a valid genl command in PDP context get and dump replies
+Date: Wed, 18 Nov 2026 16:03:04 +0100
+Message-ID: <20261118150032.599523973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,62 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Anil Kaushik <anilkaushikwireless@gmail.com>
 
-[ Upstream commit f1d81af2521ad504a20481fef12c358d26e6c3a6 ]
+[ Upstream commit 758d8928d2c5d6703da827577cef86d643155236 ]
 
-The loop for signature search fetches 22 bytes of struct ibm_rtl_table
-at each check, while the loop count is calculated in 4 bytes unit,
-which means that, at the last entry, it fetches over the limit.
+gtp_genl_fill_info() stamps the reply with the command its callers pass
+in. gtp_genl_get_pdp() and gtp_genl_dump_pdp() pass nlmsg_type, which in
+a genl message is the dynamically assigned family id rather than a
+GTP_CMD_* value, so replies to a PDP context get or dump carry a
+meaningless command number.
 
-Rewrite the loop to use the byte offset and correct the boundary
-condition check for avoiding the potential OOB access.
+libgtpnl ignores the command and is unaffected, but parsers that check
+it (for example the ynl tooling) treat the reply as an unknown command
+and discard it. Pass GTP_CMD_GETPDP, as gtp_tunnel_notify() already
+passes a real command on the notification path. No uapi change.
 
-Fixes: 15dd100349b8 ("platform/x86: ibm_rtl: fix EBDA signature search pointer arithmetic")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261021064012.457870-1-tiwai@suse.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
+Link: https://patch.msgid.link/20261016093225.1036375-2-anilkaushikwireless@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/ibm_rtl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/gtp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/ibm_rtl.c b/drivers/platform/x86/ibm_rtl.c
-index 10cab7bdfe150..d358d684dfb05 100644
---- a/drivers/platform/x86/ibm_rtl.c
-+++ b/drivers/platform/x86/ibm_rtl.c
-@@ -223,9 +223,9 @@ static const struct dmi_system_id ibm_rtl_dmi_table[] __initconst = {
- };
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 89f46e50d817b..4112bec371024 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1283,7 +1283,7 @@ static int gtp_genl_get_pdp(struct sk_buff *skb, struct genl_info *info)
+ 	}
  
- static int __init ibm_rtl_init(void) {
--	unsigned long ebda_addr, ebda_size;
-+	unsigned long ebda_addr, ebda_size, offset;
- 	unsigned int ebda_kb;
--	int ret = -ENODEV, i;
-+	int ret = -ENODEV;
+ 	err = gtp_genl_fill_info(skb2, NETLINK_CB(skb).portid, info->snd_seq,
+-				 0, info->nlhdr->nlmsg_type, pctx);
++				 0, GTP_CMD_GETPDP, pctx);
+ 	if (err < 0)
+ 		goto err_unlock_free;
  
- 	if (force)
- 		pr_warn("module loaded by force\n");
-@@ -260,9 +260,9 @@ static int __init ibm_rtl_init(void) {
- 		return -ENOMEM;
- 
- 	/* search for the _RTL_ signature at the start of the table */
--	for (i = 0 ; i < ebda_size/sizeof(unsigned int); i++) {
-+	for (offset = 0; offset + sizeof(*rtl_table) <= ebda_size; offset += 4) {
- 		struct ibm_rtl_table __iomem * tmp;
--		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + i*sizeof(unsigned int));
-+		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + offset);
- 		if ((readq(&tmp->signature) & RTL_MASK) == RTL_SIGNATURE) {
- 			phys_addr_t addr;
- 			unsigned int plen;
+@@ -1330,7 +1330,7 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
+ 					    NETLINK_CB(cb->skb).portid,
+ 					    cb->nlh->nlmsg_seq,
+ 					    NLM_F_MULTI,
+-					    cb->nlh->nlmsg_type, pctx)) {
++					    GTP_CMD_GETPDP, pctx)) {
+ 					cb->args[0] = i;
+ 					cb->args[1] = j;
+ 					cb->args[2] = (unsigned long)gtp;
 -- 
 2.53.0
 
