@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044687;
-	b=tEt5i68sIiIJMJ6zAmilLXy7AIgLmLxavgLrSyYCPM+ytqCw3qMLhNlnL+96tKjzzbqX
-	 QGWVUfGet2IBrf8a4HwPJwwZPXUj7vgJgPTrfYEshkt/BZHBEZIA7oo3cix0g9aqXgZ5G
-	 9qbPLf9peLmy1nLIiKIHfH+RyG2SYz/nA0qDOuUo9e7qXKMm+TyNYr4Iga6GTGfAiFb+V
-	 yjKLbMvIxBhZoql5Y6T/gUa8mGIqS8+pN7QuVVUs/ob/kg0Ez6q8zxlmiSlV8VQFbl/Tb
-	 qD//Uc0bQ9DjT1w7zupMfFIOp1rUrU6tdjt50pnuzNNvPGckiDbiGPBidbeYygKOvDQ==
+	t=1795044690;
+	b=gx41HaoviUvcpjgsO92Is4nNNowKDajxSIyfXJKAfkoZ+9CENClR0pQb8qwCcXcCInhX
+	 mpTtFezPhuQ3e9YjgXb/jZkQ0uTYC+LgFcRw1GBTsfZ73b48sr7faZO3U9ifQBl5kOfz8
+	 3Q/1tLkO8QtFa7vTt0MJL0MI7XP0Um7Zb4GIDvZGQPGEo+lHjCc43lO8JZ5443Dez+ztL
+	 kKzGNg9pK5TsnbSq5FE89jiobQQNaJjbiMV2h5Yb12Dgz90rq9vfB6JnRhcUDsW4z+6qC
+	 c93HrEzwWA71WxyEt6qU+AfxqJHJCmNpSEef7wsO8CZuPCPnpuaEB1/iI/tLPOcqFNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044687;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044690;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dIBAxII2Fme63xsaGgg1X1RJnOmGrQs5b6xzzys+Y9o=;
-	b=gyyMcv9uHvyrOIQEd7HiwLXCgoeDEVJ0ASTfJ8Tqg+AVZKOEGj0upOea18crWpJCtF6c
-	 4/IN5lJvgt4owZxNwgjlch095PBv/Rr87HO/Y0NiSj3PwcL3lf7g8PtYAuAyA6oI9THUG
-	 DFrckTyLnx6hj9a8frMurEM2NIFLQHcZZfyOM/8xDfwujE7mulhu6ZMLLP/JSunhsGC7F
-	 dbIIIN+v3g2ceS7RH2wJJOpuK6vMCKvHWnnXzAQvx7G2DDF0Bf+DYVhW5luKmxIYw9LHy
-	 5sV7bCDkgem8rJWFTNgUm9sOXjm5NFnoLhbJF/eeCoUa5lODP8JhkVEZCMfWHVjck+A==
+	bh=yu2R3pVY0h6WcP0Skwm8GRjJCApLEOx6sXhplq69WL0=;
+	b=hGNTSB1mMipE2Cz1gF0rxXQTaWMC6r3XiZEemS3AQfVvrCj8kbJYQ8zIB/zs0EEeAOiI
+	 ujOGT5OgcvRgufUfW8O0PAYbknqK3k87bc+QZUZyJLK9gqw3hgm9REX2nQz/LBl6X0Mou
+	 /37FkPI5Hx65BUD8xSpSYS4B22QjSoM4zcdjxQCOFlqwM5NyJJ7Rz5aQI39N9AYgiAamL
+	 Hu0eBjgU1yt52BP099pHDZzekT46Gza2H4hvkxuVxL7D4L56086GUzuy6W3AxV2/uO0eH
+	 k0DdmGwjvcLPsfP44+pDxmH9PrzFTRwP0J0SFzNo/Pp8yhK1DFulD1DcafUcOM0JSKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tc3EMEIo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPbhmSMg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D249606A31C;
-	Wed, 18 Nov 2026 23:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F158F606A332;
+	Wed, 18 Nov 2026 23:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tc3EMEIo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835521F000C4;
-	Wed, 18 Nov 2026 23:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPbhmSMg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524CC1F000C4;
+	Wed, 18 Nov 2026 23:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044687;
-	bh=dIBAxII2Fme63xsaGgg1X1RJnOmGrQs5b6xzzys+Y9o=;
+	s=korg; t=1795044689;
+	bh=yu2R3pVY0h6WcP0Skwm8GRjJCApLEOx6sXhplq69WL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tc3EMEIoRyTS1Jf0K+aQaSimd+XGqBXX2WtWOjF1PQie9ORhCeSCXRCNFiQYh4M0l
-	 sSr4A5OJaVJGsvBvHIj4Ib5wHfAWzp1qySPvm8GI1UW6+L6Mq3EKWhj1VKAuO3qjBy
-	 edcNGUAKe5TTMb7RJ/HjnIgCgRz03juzvicIcxrE=
+	b=gPbhmSMg1P8+ReHcCTPBbYBhBgluREBp+VPFJAR93rnyYjeGRnKoe407jLTqcviqg
+	 sqrX/CY5Zrh1FATBPQ2EUI25s81fLX4olkyAGXMaztjuHGQv6WQRUimVR+rwP6OOjE
+	 vuswXWeaCBX072IAATzTNNgO/bgTU6/BbzPkwa5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 0655/2857] io_uring/io-wq: no new workers once the exit has begun
-Date: Wed, 18 Nov 2026 15:28:09 +0100
-Message-ID: <20261118150225.141653785@linuxfoundation.org>
+Subject: [PATCH 6.1 0656/2857] io_uring/rsrc: charge buffer arrays and nodes to memcg
+Date: Wed, 18 Nov 2026 15:28:10 +0100
+Message-ID: <20261118150225.176936488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,52 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-Commit 47c68f925062a6013235d06add85a59f7d91e0fb upstream.
+Commit 075d5837bafc317e796548f721b8fbf7add6821d upstream.
 
-io_wq_exit_start() sets IO_WQ_BIT_EXIT, but worker creation task_work
-queued before that stays queued until io_wq_exit_workers() cancels it.
-In between the task runs its task_work while canceling requests, and a
-worker can still get created.
+The io_mapped_ubuf of a registered buffer has one bio_vec per page,
+unless the pages coalesce into huge pages. Huge pages only count against
+RLIMIT_MEMLOCK once per ring, so a buffer that maps the same 2MB folio
+over and over in a way that defeats coalescing gets a full bvec array
+per registration while only the one folio counts as locked. 1GB of that
+registered in 100 slots took several times a 64MB memory.max, with 2.6MB
+charged.
 
-That's a problem for exec. begin_new_exec() calls io_uring_task_cancel()
-after de_thread(), when it's supposedly the only thread left, and
-io_wq_exit_workers() only waits for ->worker_done, which a worker
-completes before do_exit(). So the exiting worker is still in the thread
-group, using the mm, files and sighand, while exec replaces them. Easy
-to hit with a signal pending when create_io_thread() fails and the retry
-gets queued right before execve().
+Allocate the io_mapped_ubuf and the io_rsrc_node with
+GFP_KERNEL_ACCOUNT. An object reused from the ring caches stays charged
+to whoever allocated it first, same as the io_kiocb cache.
 
-Cancel the queued creation task_work as soon as the exit bit is set.
-Pending work that isn't otherwise canceled now ends with -ECANCELED when
-the io-wq is destroyed, rather than depending on whether the task
-happened to run its task_work first.
-
-Fixes: 685fe7feedb9 ("io-wq: eliminate the need for a manager thread")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[axboe: the barrier is already upstream, see 0e5663856b69, only the
- cancel is new]
+Fixes: de2939388be5 ("io_uring: improve registered buffer accounting for huge pages")
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[axboe: 6.1 predates the rsrc node rework, charge the imu kvmalloc() and
+the node kzalloc() instead]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ io_uring/rsrc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1335,6 +1335,12 @@ void io_wq_exit_start(struct io_wq *wq)
- 	set_bit(IO_WQ_BIT_EXIT, &wq->state);
- 	/* Pairs with task_work_add() in io_queue_worker_create(). */
- 	smp_mb__after_atomic();
-+	/*
-+	 * No more workers from here on. The caller is going to run its task
-+	 * work, and on exec a thread that is created now would still be
-+	 * around, exiting, by the time that the caller must be on its own.
-+	 */
-+	io_wq_cancel_tw_create(wq);
- }
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -250,7 +250,7 @@ static struct io_rsrc_node *io_rsrc_node
+ {
+ 	struct io_rsrc_node *ref_node;
  
- static void io_wq_cancel_tw_create(struct io_wq *wq)
+-	ref_node = kzalloc(sizeof(*ref_node), GFP_KERNEL);
++	ref_node = kzalloc(sizeof(*ref_node), GFP_KERNEL_ACCOUNT);
+ 	if (!ref_node)
+ 		return NULL;
+ 
+@@ -1068,7 +1068,7 @@ static int io_sqe_buffer_register(struct
+ 		goto done;
+ 	}
+ 
+-	imu = kvmalloc(struct_size(imu, bvec, nr_pages), GFP_KERNEL);
++	imu = kvmalloc(struct_size(imu, bvec, nr_pages), GFP_KERNEL_ACCOUNT);
+ 	if (!imu)
+ 		goto done;
+ 
 
 
