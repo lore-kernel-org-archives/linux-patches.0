@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054771;
-	b=dETqhvtmsoxUNG+Zrghi+e+BBxoOJ9cq/hDaUxz9w7iNbKm3G0kp8B7e3nGUCvnTUTIQ
-	 9TNTJiGfHDh6lc8psZi1iIhg0eZwYhKuYT263ucgaWM7ETIaeqR98MPqmuNVQwaMj+5V6
-	 FLBldTXLMMxWcjFYrn0xQ89aZIpbQM68JPK+bMcKppk8wiFUkroNipoL9dxxY7KqxRsPG
-	 cGpvbwN45bJc7OKtsyCSCiOhiJTWz0KIOAMrMcyFYTKId9ZQ7Fv5dVbTTmVLe+sA0DUQJ
-	 TPduQ7GeKsa8gH74qDtVtj66SyI6bh6m8WHenGrkT17YtoueoY3OXBsKOA6vq9sIJ0w==
+	t=1795054773;
+	b=RORlhJNt7xfM3BN//P9AETfcYYNrGScuzWZfaerxRvdD/vCpWd3kiNkGOLaZVYIFKSAu
+	 9QMThLKf8hiV8Y0PC54Vy5khIVgBAn8T8OZDC9xsAqwXwEclXXL+iMQ2+tipcLIxmLZ9k
+	 4TCyUDcEuVh0ThGito+yzBGX5nxF7cN3pzGg6zGqYhdH4+Amb8rjOkbv0z1fl5n2ER4Qw
+	 4HSocIJhXMF/deOJNWr2LrhycP2UEuIBxPRxHedYs2XGvXc62F+JVDqRBhIDsGU66tbhz
+	 xH+EFxA/sIiQtKw+LFdnE/rZdLRE3nPpeEB0Ba6/AzNe7AfxSq+Y3mkX/Dno6YfUsxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kTN+j6hB1l+iNtK8grB+Db6SAJE93bZPkaukJfDJ0F4=;
-	b=DNo4/8fH32qWyNbnuUKCr+JH93Tk/creJsay9iLM+yGpVl064Ij6YAGGsEh/kTPe9QAi
-	 VmcXpquRBWmPt+hTuGdsa0skK2Srk2xwGwDl6V2jsPANddgFLkPQvZBoKcoi+VkguGV0a
-	 ZSNxHhSnWHQVx3b0Nlb3VXgFAbvXIxY3Rta/Vv6ZyPFTNR/khqu+U4+gRn8GDd2A5aRSS
-	 x24c2UDx6/cFNEI69w9UFGs5p8PFONaWZZXDFpHysBVfNH8eKM5JLFgKZvuNQwGCC/0j3
-	 JkHKmmOHSx/pDchiGRvNtEWGk7dmB35EIQ3UicsXbWx7uwDr8njvgTUUgURkzCCYaBw==
+	bh=4UbrTMET0lF1f2z6RxxgGgRMBEZsOtGgDGWfcgbj5Eo=;
+	b=EoKBIna67YpwvxpTATm3kZhrfA7paLCfZIS+HHBWqkYjyI1c6lRBl9Mz439i1KHkdJkE
+	 W71q6f57UbZIqIGoj41Nc+bJuMP3MGR7ZMcfIgijGJldrvqrjeEM2ZZPeqklPcqnM8cuC
+	 0cAQj6DIHblcn66/kCmrQFxRrhUBlcvoMUpepQNpaKLXGJC3PVTf9vcpkFESDHH0SXmkW
+	 XX+UVk9Y/nW95WZ5df4xAiuTCmUljMEhtKhkW8QaTfKknQFjiGOgGt+DqNx+DjLcuBt/j
+	 z8ZZgMuhizzaysJUvfjb7V70qvG3otXiRdSJHW0NW0vfCIROoQbVvTq4QvuKW5MgMFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PtYJ2trT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tMPIFeaJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0076C606A32A;
-	Thu, 19 Nov 2026 02:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6141606A32C;
+	Thu, 19 Nov 2026 02:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PtYJ2trT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B32A1F000C4;
-	Thu, 19 Nov 2026 02:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tMPIFeaJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090531F000C5;
+	Thu, 19 Nov 2026 02:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054770;
-	bh=kTN+j6hB1l+iNtK8grB+Db6SAJE93bZPkaukJfDJ0F4=;
+	s=korg; t=1795054773;
+	bh=4UbrTMET0lF1f2z6RxxgGgRMBEZsOtGgDGWfcgbj5Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtYJ2trT/6oriNqTFweXm2d+wDFx8XkeFHegGDLod817NdoP2sTLF1VwR1jYoIEIc
-	 m8PL+344ugdGBu0AUg8gOwuWjdkkciJbmCfq0s7pK9XM/Pg54EG165/gTDYyVNisA0
-	 InwAh46nOJ84nMf4PPjSZHbn64GQzl7d8F37Go1Q=
+	b=tMPIFeaJucFuj4qu/8hC/PgSZ1xvWZWAxYz2Rj9tLH6+DSe8rtL9x3lO+CykWNfhO
+	 HQoO7oCdqgsnc2TaVl5MWf55fBCJxQRvKvU75FxjpPliBtSr8quBhmtyPfnnhQlKM/
+	 wUSEchFn9wg/agNJEXNVoP28ESZmf0XjRqz/e0b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Mark Amirkan <markdamirkan@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1376/2214] dlm: use __le types for dlm header
-Date: Wed, 18 Nov 2026 15:50:52 +0100
-Message-ID: <20261118150106.440960065@linuxfoundation.org>
+Subject: [PATCH 5.15 1394/2214] perf evsel: Validate branch stack before byte swapping
+Date: Wed, 18 Nov 2026 15:51:10 +0100
+Message-ID: <20261118150107.071491534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,703 +70,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-[ Upstream commit 3428785a65dabf05bc899b6c5334984e98286184 ]
+[ Upstream commit 2148e094671b0f6a44f033787b7da4ed14e96c27 ]
 
-This patch changes to use __le types directly in the dlm header
-structure which is casted at the right dlm message buffer positions.
+When perf reads an opposite-endian branch stack, __evsel__parse_sample()
+swaps each entry before checking whether all entries fit in the event. A
+truncated sample can therefore make the swap loop read and write past the
+event boundary.
 
-The main goal what is reached here is to remove sparse warnings
-regarding to host to little byte order conversion or vice versa. Leaving
-those sparse issues ignored and always do it in out/in functionality
-tends to leave it unknown in which byte order the variable is being
-handled.
+A truncated perf.data file makes perf report crash with SIGSEGV. ASan
+reports an out-of-bounds read. A regression test puts an entry just past
+the declared end and shows that its flags are changed before the parser
+returns -EFAULT.
 
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 7bf1aca6d626 ("dlm: validate lock modes in recovery messages")
+Move the bounds check before the byte-swap loop. Valid samples are handled
+as before.
+
+Fixes: 63c12ae2f246dcdc ("perf evsel: Add bitfield_swap() to handle branch_stack endian issue")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Symbolic
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 02f6847e1822 ("perf evsel: Validate RAW sample before byte swapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/dir.c          |  2 +-
- fs/dlm/dlm_internal.h | 10 ++---
- fs/dlm/lock.c         | 95 +++++++++++++++++++++++--------------------
- fs/dlm/member.c       |  2 +-
- fs/dlm/midcomms.c     | 28 ++++++-------
- fs/dlm/rcom.c         | 42 ++++++++++---------
- fs/dlm/requestqueue.c |  7 ++--
- fs/dlm/util.c         | 26 ------------
- fs/dlm/util.h         |  2 -
- 9 files changed, 98 insertions(+), 116 deletions(-)
+ tools/perf/tests/sample-parsing.c | 48 +++++++++++++++++++++++++++++++
+ tools/perf/util/evsel.c           |  3 +-
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/fs/dlm/dir.c b/fs/dlm/dir.c
-index 45ebbe602bbf0..dd363c39c620e 100644
---- a/fs/dlm/dir.c
-+++ b/fs/dlm/dir.c
-@@ -102,7 +102,7 @@ int dlm_recover_directory(struct dlm_ls *ls)
- 			 */
- 
- 			b = ls->ls_recover_buf->rc_buf;
--			left = ls->ls_recover_buf->rc_header.h_length;
-+			left = le16_to_cpu(ls->ls_recover_buf->rc_header.h_length);
- 			left -= sizeof(struct dlm_rcom);
- 
- 			for (;;) {
-diff --git a/fs/dlm/dlm_internal.h b/fs/dlm/dlm_internal.h
-index 5f57538b5d450..c3cfe4be436a8 100644
---- a/fs/dlm/dlm_internal.h
-+++ b/fs/dlm/dlm_internal.h
-@@ -385,15 +385,15 @@ static inline int rsb_flag(struct dlm_rsb *r, enum rsb_flags flag)
- #define DLM_FIN			5
- 
- struct dlm_header {
--	uint32_t		h_version;
-+	__le32			h_version;
- 	union {
- 		/* for DLM_MSG and DLM_RCOM */
--		uint32_t	h_lockspace;
-+		__le32		h_lockspace;
- 		/* for DLM_ACK and DLM_OPTS */
--		uint32_t	h_seq;
-+		__le32		h_seq;
- 	} u;
--	uint32_t		h_nodeid;	/* nodeid of sender */
--	uint16_t		h_length;
-+	__le32			h_nodeid;	/* nodeid of sender */
-+	__le16			h_length;
- 	uint8_t			h_cmd;		/* DLM_MSG, DLM_RCOM */
- 	uint8_t			h_pad;
- };
-diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index 88ef7ad1494e2..0bf22cc598122 100644
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -1566,8 +1566,8 @@ static int _remove_from_waiters(struct dlm_lkb *lkb, int mstype,
- 	}
- 
- 	log_error(ls, "remwait error %x remote %d %x msg %d flags %x no wait",
--		  lkb->lkb_id, ms ? ms->m_header.h_nodeid : 0, lkb->lkb_remid,
--		  mstype, lkb->lkb_flags);
-+		  lkb->lkb_id, ms ? le32_to_cpu(ms->m_header.h_nodeid) : 0,
-+		  lkb->lkb_remid, mstype, lkb->lkb_flags);
- 	return -1;
- 
-  out_del:
-@@ -3547,10 +3547,10 @@ static int _create_message(struct dlm_ls *ls, int mb_len,
- 
- 	ms = (struct dlm_message *) mb;
- 
--	ms->m_header.h_version = (DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
--	ms->m_header.u.h_lockspace = ls->ls_global_id;
--	ms->m_header.h_nodeid = dlm_our_nodeid();
--	ms->m_header.h_length = mb_len;
-+	ms->m_header.h_version = cpu_to_le32(DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
-+	ms->m_header.u.h_lockspace = cpu_to_le32(ls->ls_global_id);
-+	ms->m_header.h_nodeid = cpu_to_le32(dlm_our_nodeid());
-+	ms->m_header.h_length = cpu_to_le16(mb_len);
- 	ms->m_header.h_cmd = DLM_MSG;
- 
- 	ms->m_type = mstype;
-@@ -3844,7 +3844,7 @@ static int send_lookup_reply(struct dlm_ls *ls, struct dlm_message *ms_in,
- 	struct dlm_rsb *r = &ls->ls_stub_rsb;
- 	struct dlm_message *ms;
- 	struct dlm_mhandle *mh;
--	int error, nodeid = ms_in->m_header.h_nodeid;
-+	int error, nodeid = le32_to_cpu(ms_in->m_header.h_nodeid);
- 
- 	error = create_message(r, NULL, nodeid, DLM_MSG_LOOKUP_REPLY, &ms, &mh);
- 	if (error)
-@@ -3883,7 +3883,8 @@ static void receive_flags_reply(struct dlm_lkb *lkb, struct dlm_message *ms)
- 
- static int receive_extralen(struct dlm_message *ms)
- {
--	return (ms->m_header.h_length - sizeof(struct dlm_message));
-+	return (le16_to_cpu(ms->m_header.h_length) -
-+		sizeof(struct dlm_message));
+diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
+index 8fd8a4ef97da1..b2c408b8b7820 100644
+--- a/tools/perf/tests/sample-parsing.c
++++ b/tools/perf/tests/sample-parsing.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <stdbool.h>
++#include <errno.h>
+ #include <inttypes.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -327,6 +328,49 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
+ 	return ret;
  }
  
- static int receive_lvb(struct dlm_ls *ls, struct dlm_lkb *lkb,
-@@ -3917,7 +3918,7 @@ static void fake_astfn(void *astparam)
- static int receive_request_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
- 				struct dlm_message *ms)
- {
--	lkb->lkb_nodeid = ms->m_header.h_nodeid;
-+	lkb->lkb_nodeid = le32_to_cpu(ms->m_header.h_nodeid);
- 	lkb->lkb_ownpid = ms->m_pid;
- 	lkb->lkb_remid = ms->m_lkid;
- 	lkb->lkb_grmode = DLM_LOCK_IV;
-@@ -3965,7 +3966,7 @@ static int receive_unlock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
- static void setup_stub_lkb(struct dlm_ls *ls, struct dlm_message *ms)
- {
- 	struct dlm_lkb *lkb = &ls->ls_stub_lkb;
--	lkb->lkb_nodeid = ms->m_header.h_nodeid;
-+	lkb->lkb_nodeid = le32_to_cpu(ms->m_header.h_nodeid);
- 	lkb->lkb_remid = ms->m_lkid;
- }
++static int test_truncated_branch_stack(void)
++{
++	struct perf_event_attr attr = {
++		.sample_type = PERF_SAMPLE_BRANCH_STACK,
++	};
++	struct {
++		struct perf_event_header header;
++		u64 nr;
++		struct branch_entry entry;
++	} input = {
++		.header = {
++			.type = PERF_RECORD_SAMPLE,
++			.size = sizeof(input.header) + sizeof(input.nr),
++		},
++		.nr = 1,
++	};
++	struct perf_sample sample;
++	struct evsel *evsel;
++	u64 flags = 1;
++	int err;
++
++	input.entry.flags.value = flags;
++	evsel = evsel__new(&attr);
++	if (!evsel)
++		return -1;
++
++	evsel->sample_size = __evsel__sample_size(attr.sample_type);
++	err = __evsel__parse_sample(evsel, (union perf_event *)&input,
++				    &sample, /*needs_swap=*/true);
++	perf_sample__exit(&sample);
++	evsel__put(evsel);
++
++	if (err != -EFAULT) {
++		pr_debug("truncated branch stack returned %d, expected -EFAULT\n", err);
++		return -1;
++	}
++	if (input.entry.flags.value != flags) {
++		pr_debug("truncated branch stack modified data past the event\n");
++		return -1;
++	}
++	return 0;
++}
++
+ /**
+  * test__sample_parsing - test sample parsing.
+  *
+@@ -343,6 +387,10 @@ int test__sample_parsing(struct test *test __maybe_unused, int subtest __maybe_u
+ 	size_t i;
+ 	int err;
  
-@@ -3974,7 +3975,7 @@ static void setup_stub_lkb(struct dlm_ls *ls, struct dlm_message *ms)
- 
- static int validate_message(struct dlm_lkb *lkb, struct dlm_message *ms)
- {
--	int from = ms->m_header.h_nodeid;
-+	int from = le32_to_cpu(ms->m_header.h_nodeid);
- 	int error = 0;
- 
- 	/* currently mixing of user/kernel locks are not supported */
-@@ -4088,7 +4089,7 @@ static int receive_request(struct dlm_ls *ls, struct dlm_message *ms)
- 	int from_nodeid;
- 	int error, namelen = 0;
- 
--	from_nodeid = ms->m_header.h_nodeid;
-+	from_nodeid = le32_to_cpu(ms->m_header.h_nodeid);
- 
- 	error = create_lkb(ls, &lkb);
- 	if (error)
-@@ -4188,7 +4189,7 @@ static int receive_convert(struct dlm_ls *ls, struct dlm_message *ms)
- 		log_error(ls, "receive_convert %x remid %x recover_seq %llu "
- 			  "remote %d %x", lkb->lkb_id, lkb->lkb_remid,
- 			  (unsigned long long)lkb->lkb_recover_seq,
--			  ms->m_header.h_nodeid, ms->m_lkid);
-+			  le32_to_cpu(ms->m_header.h_nodeid), ms->m_lkid);
- 		error = -ENOENT;
- 		dlm_put_lkb(lkb);
- 		goto fail;
-@@ -4242,7 +4243,7 @@ static int receive_unlock(struct dlm_ls *ls, struct dlm_message *ms)
- 	if (lkb->lkb_remid != ms->m_lkid) {
- 		log_error(ls, "receive_unlock %x remid %x remote %d %x",
- 			  lkb->lkb_id, lkb->lkb_remid,
--			  ms->m_header.h_nodeid, ms->m_lkid);
-+			  le32_to_cpu(ms->m_header.h_nodeid), ms->m_lkid);
- 		error = -ENOENT;
- 		dlm_put_lkb(lkb);
- 		goto fail;
-@@ -4379,7 +4380,7 @@ static void receive_lookup(struct dlm_ls *ls, struct dlm_message *ms)
- {
- 	int len, error, ret_nodeid, from_nodeid, our_nodeid;
- 
--	from_nodeid = ms->m_header.h_nodeid;
-+	from_nodeid = le32_to_cpu(ms->m_header.h_nodeid);
- 	our_nodeid = dlm_our_nodeid();
- 
- 	len = receive_extralen(ms);
-@@ -4402,7 +4403,7 @@ static void receive_remove(struct dlm_ls *ls, struct dlm_message *ms)
- 	uint32_t hash, b;
- 	int rv, len, dir_nodeid, from_nodeid;
- 
--	from_nodeid = ms->m_header.h_nodeid;
-+	from_nodeid = le32_to_cpu(ms->m_header.h_nodeid);
- 
- 	len = receive_extralen(ms);
- 
-@@ -4493,7 +4494,7 @@ static int receive_request_reply(struct dlm_ls *ls, struct dlm_message *ms)
- 	struct dlm_lkb *lkb;
- 	struct dlm_rsb *r;
- 	int error, mstype, result;
--	int from_nodeid = ms->m_header.h_nodeid;
-+	int from_nodeid = le32_to_cpu(ms->m_header.h_nodeid);
- 
- 	error = find_lkb(ls, ms->m_remid, &lkb);
- 	if (error)
-@@ -4645,8 +4646,8 @@ static void __receive_convert_reply(struct dlm_rsb *r, struct dlm_lkb *lkb,
- 
- 	default:
- 		log_error(r->res_ls, "receive_convert_reply %x remote %d %x %d",
--			  lkb->lkb_id, ms->m_header.h_nodeid, ms->m_lkid,
--			  ms->m_result);
-+			  lkb->lkb_id, le32_to_cpu(ms->m_header.h_nodeid),
-+			  ms->m_lkid, ms->m_result);
- 		dlm_print_rsb(r);
- 		dlm_print_lkb(lkb);
- 	}
-@@ -4825,8 +4826,8 @@ static void receive_lookup_reply(struct dlm_ls *ls, struct dlm_message *ms)
- 		/* This should never happen */
- 		log_error(ls, "receive_lookup_reply %x from %d ret %d "
- 			  "master %d dir %d our %d first %x %s",
--			  lkb->lkb_id, ms->m_header.h_nodeid, ret_nodeid,
--			  r->res_master_nodeid, r->res_dir_nodeid,
-+			  lkb->lkb_id, le32_to_cpu(ms->m_header.h_nodeid),
-+			  ret_nodeid, r->res_master_nodeid, r->res_dir_nodeid,
- 			  dlm_our_nodeid(), r->res_first_lkid, r->res_name);
- 	}
- 
-@@ -4838,7 +4839,7 @@ static void receive_lookup_reply(struct dlm_ls *ls, struct dlm_message *ms)
- 	} else if (ret_nodeid == -1) {
- 		/* the remote node doesn't believe it's the dir node */
- 		log_error(ls, "receive_lookup_reply %x from %d bad ret_nodeid",
--			  lkb->lkb_id, ms->m_header.h_nodeid);
-+			  lkb->lkb_id, le32_to_cpu(ms->m_header.h_nodeid));
- 		r->res_master_nodeid = 0;
- 		r->res_nodeid = -1;
- 		lkb->lkb_nodeid = -1;
-@@ -4872,10 +4873,10 @@ static void _receive_message(struct dlm_ls *ls, struct dlm_message *ms,
- {
- 	int error = 0, noent = 0;
- 
--	if (!dlm_is_member(ls, ms->m_header.h_nodeid)) {
-+	if (!dlm_is_member(ls, le32_to_cpu(ms->m_header.h_nodeid))) {
- 		log_limit(ls, "receive %d from non-member %d %x %x %d",
--			  ms->m_type, ms->m_header.h_nodeid, ms->m_lkid,
--			  ms->m_remid, ms->m_result);
-+			  ms->m_type, le32_to_cpu(ms->m_header.h_nodeid),
-+			  ms->m_lkid, ms->m_remid, ms->m_result);
- 		return;
- 	}
- 
-@@ -4969,11 +4970,13 @@ static void _receive_message(struct dlm_ls *ls, struct dlm_message *ms,
- 
- 	if (error == -ENOENT && noent) {
- 		log_debug(ls, "receive %d no %x remote %d %x saved_seq %u",
--			  ms->m_type, ms->m_remid, ms->m_header.h_nodeid,
-+			  ms->m_type, ms->m_remid,
-+			  le32_to_cpu(ms->m_header.h_nodeid),
- 			  ms->m_lkid, saved_seq);
- 	} else if (error == -ENOENT) {
- 		log_error(ls, "receive %d no %x remote %d %x saved_seq %u",
--			  ms->m_type, ms->m_remid, ms->m_header.h_nodeid,
-+			  ms->m_type, ms->m_remid,
-+			  le32_to_cpu(ms->m_header.h_nodeid),
- 			  ms->m_lkid, saved_seq);
- 
- 		if (ms->m_type == DLM_MSG_CONVERT)
-@@ -4983,7 +4986,7 @@ static void _receive_message(struct dlm_ls *ls, struct dlm_message *ms,
- 	if (error == -EINVAL) {
- 		log_error(ls, "receive %d inval from %d lkid %x remid %x "
- 			  "saved_seq %u",
--			  ms->m_type, ms->m_header.h_nodeid,
-+			  ms->m_type, le32_to_cpu(ms->m_header.h_nodeid),
- 			  ms->m_lkid, ms->m_remid, saved_seq);
- 	}
- }
-@@ -5050,18 +5053,20 @@ void dlm_receive_buffer(union dlm_packet *p, int nodeid)
- 		return;
- 	}
- 
--	if (hd->h_nodeid != nodeid) {
-+	if (le32_to_cpu(hd->h_nodeid) != nodeid) {
- 		log_print("invalid h_nodeid %d from %d lockspace %x",
--			  hd->h_nodeid, nodeid, hd->u.h_lockspace);
-+			  le32_to_cpu(hd->h_nodeid), nodeid,
-+			  le32_to_cpu(hd->u.h_lockspace));
- 		return;
- 	}
- 
--	ls = dlm_find_lockspace_global(hd->u.h_lockspace);
-+	ls = dlm_find_lockspace_global(le32_to_cpu(hd->u.h_lockspace));
- 	if (!ls) {
- 		if (dlm_config.ci_log_debug) {
- 			printk_ratelimited(KERN_DEBUG "dlm: invalid lockspace "
- 				"%u from %d cmd %d type %d\n",
--				hd->u.h_lockspace, nodeid, hd->h_cmd, type);
-+				le32_to_cpu(hd->u.h_lockspace), nodeid,
-+				hd->h_cmd, type);
++	err = test_truncated_branch_stack();
++	if (err)
++		return err;
++
+ 	/*
+ 	 * Fail the test if it has not been updated when new sample format bits
+ 	 * were added.  Please actually update the test rather than just change
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 3c9637a991971..365effb524b32 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2497,6 +2497,8 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 			e = (struct branch_entry *)&data->branch_stack->hw_idx;
  		}
  
- 		if (hd->h_cmd == DLM_RCOM && type == DLM_RCOM_STATUS)
-@@ -5091,7 +5096,7 @@ static void recover_convert_waiter(struct dlm_ls *ls, struct dlm_lkb *lkb,
- 		ms_stub->m_flags = DLM_IFL_STUB_MS;
- 		ms_stub->m_type = DLM_MSG_CONVERT_REPLY;
- 		ms_stub->m_result = -EINPROGRESS;
--		ms_stub->m_header.h_nodeid = lkb->lkb_nodeid;
-+		ms_stub->m_header.h_nodeid = cpu_to_le32(lkb->lkb_nodeid);
- 		_receive_convert_reply(lkb, ms_stub);
++		OVERFLOW_CHECK(array, sz, max_size);
++
+ 		if (swapped) {
+ 			/*
+ 			 * struct branch_flag does not have endian
+@@ -2512,7 +2514,6 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 				e->flags.value = evsel__bitfield_swap_branch_flags(e->flags.value);
+ 		}
  
- 		/* Same special case as in receive_rcom_lock_args() */
-@@ -5213,7 +5218,7 @@ void dlm_recover_waiters_pre(struct dlm_ls *ls)
- 			ms_stub->m_flags = DLM_IFL_STUB_MS;
- 			ms_stub->m_type = DLM_MSG_UNLOCK_REPLY;
- 			ms_stub->m_result = stub_unlock_result;
--			ms_stub->m_header.h_nodeid = lkb->lkb_nodeid;
-+			ms_stub->m_header.h_nodeid = cpu_to_le32(lkb->lkb_nodeid);
- 			_receive_unlock_reply(lkb, ms_stub);
- 			dlm_put_lkb(lkb);
- 			break;
-@@ -5224,7 +5229,7 @@ void dlm_recover_waiters_pre(struct dlm_ls *ls)
- 			ms_stub->m_flags = DLM_IFL_STUB_MS;
- 			ms_stub->m_type = DLM_MSG_CANCEL_REPLY;
- 			ms_stub->m_result = stub_cancel_result;
--			ms_stub->m_header.h_nodeid = lkb->lkb_nodeid;
-+			ms_stub->m_header.h_nodeid = cpu_to_le32(lkb->lkb_nodeid);
- 			_receive_cancel_reply(lkb, ms_stub);
- 			dlm_put_lkb(lkb);
- 			break;
-@@ -5591,7 +5596,7 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
- {
- 	struct rcom_lock *rl = (struct rcom_lock *) rc->rc_buf;
- 
--	lkb->lkb_nodeid = rc->rc_header.h_nodeid;
-+	lkb->lkb_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
- 	lkb->lkb_ownpid = le32_to_cpu(rl->rl_ownpid);
- 	lkb->lkb_remid = le32_to_cpu(rl->rl_lkid);
- 	lkb->lkb_exflags = le32_to_cpu(rl->rl_exflags);
-@@ -5606,8 +5611,8 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
- 	lkb->lkb_astfn = (rl->rl_asts & DLM_CB_CAST) ? &fake_astfn : NULL;
- 
- 	if (lkb->lkb_exflags & DLM_LKF_VALBLK) {
--		int lvblen = rc->rc_header.h_length - sizeof(struct dlm_rcom) -
--			 sizeof(struct rcom_lock);
-+		int lvblen = le16_to_cpu(rc->rc_header.h_length) -
-+			sizeof(struct dlm_rcom) - sizeof(struct rcom_lock);
- 		if (lvblen > ls->ls_lvblen)
- 			return -EINVAL;
- 		lkb->lkb_lvbptr = dlm_allocate_lvb(ls);
-@@ -5643,7 +5648,7 @@ int dlm_recover_master_copy(struct dlm_ls *ls, struct dlm_rcom *rc)
- 	struct dlm_rsb *r;
- 	struct dlm_lkb *lkb;
- 	uint32_t remid = 0;
--	int from_nodeid = rc->rc_header.h_nodeid;
-+	int from_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
- 	int error;
- 
- 	if (rl->rl_parent_lkid) {
-@@ -5733,7 +5738,8 @@ int dlm_recover_process_copy(struct dlm_ls *ls, struct dlm_rcom *rc)
- 	error = find_lkb(ls, lkid, &lkb);
- 	if (error) {
- 		log_error(ls, "dlm_recover_process_copy no %x remote %d %x %d",
--			  lkid, rc->rc_header.h_nodeid, remid, result);
-+			  lkid, le32_to_cpu(rc->rc_header.h_nodeid), remid,
-+			  result);
- 		return error;
+-		OVERFLOW_CHECK(array, sz, max_size);
+ 		array = (void *)array + sz;
  	}
- 
-@@ -5743,7 +5749,8 @@ int dlm_recover_process_copy(struct dlm_ls *ls, struct dlm_rcom *rc)
- 
- 	if (!is_process_copy(lkb)) {
- 		log_error(ls, "dlm_recover_process_copy bad %x remote %d %x %d",
--			  lkid, rc->rc_header.h_nodeid, remid, result);
-+			  lkid, le32_to_cpu(rc->rc_header.h_nodeid), remid,
-+			  result);
- 		dlm_dump_rsb(r);
- 		unlock_rsb(r);
- 		put_rsb(r);
-@@ -5758,7 +5765,8 @@ int dlm_recover_process_copy(struct dlm_ls *ls, struct dlm_rcom *rc)
- 		   a barrier between recover_masters and recover_locks. */
- 
- 		log_debug(ls, "dlm_recover_process_copy %x remote %d %x %d",
--			  lkid, rc->rc_header.h_nodeid, remid, result);
-+			  lkid, le32_to_cpu(rc->rc_header.h_nodeid), remid,
-+			  result);
- 	
- 		dlm_send_rcom_lock(r, lkb);
- 		goto out;
-@@ -5768,7 +5776,8 @@ int dlm_recover_process_copy(struct dlm_ls *ls, struct dlm_rcom *rc)
- 		break;
- 	default:
- 		log_error(ls, "dlm_recover_process_copy %x remote %d %x %d unk",
--			  lkid, rc->rc_header.h_nodeid, remid, result);
-+			  lkid, le32_to_cpu(rc->rc_header.h_nodeid), remid,
-+			  result);
- 	}
- 
- 	/* an ack for dlm_recover_locks() which waits for replies from
-diff --git a/fs/dlm/member.c b/fs/dlm/member.c
-index 731d489aa323e..0dacddc63f556 100644
---- a/fs/dlm/member.c
-+++ b/fs/dlm/member.c
-@@ -20,7 +20,7 @@
- 
- int dlm_slots_version(struct dlm_header *h)
- {
--	if ((h->h_version & 0x0000FFFF) < DLM_HEADER_SLOTS)
-+	if ((le32_to_cpu(h->h_version) & 0x0000FFFF) < DLM_HEADER_SLOTS)
- 		return 0;
- 	return 1;
- }
-diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index ae71f13c91e4f..cb96c1f01eac9 100644
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -373,13 +373,12 @@ static int dlm_send_ack(int nodeid, uint32_t seq)
- 
- 	m_header = (struct dlm_header *)ppc;
- 
--	m_header->h_version = (DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
--	m_header->h_nodeid = dlm_our_nodeid();
--	m_header->h_length = mb_len;
-+	m_header->h_version = cpu_to_le32(DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
-+	m_header->h_nodeid = cpu_to_le32(dlm_our_nodeid());
-+	m_header->h_length = cpu_to_le16(mb_len);
- 	m_header->h_cmd = DLM_ACK;
--	m_header->u.h_seq = seq;
-+	m_header->u.h_seq = cpu_to_le32(seq);
- 
--	header_out(m_header);
- 	dlm_lowcomms_commit_msg(msg);
- 	dlm_lowcomms_put_msg(msg);
- 
-@@ -402,13 +401,11 @@ static int dlm_send_fin(struct midcomms_node *node,
- 
- 	m_header = (struct dlm_header *)ppc;
- 
--	m_header->h_version = (DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
--	m_header->h_nodeid = dlm_our_nodeid();
--	m_header->h_length = mb_len;
-+	m_header->h_version = cpu_to_le32(DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
-+	m_header->h_nodeid = cpu_to_le32(dlm_our_nodeid());
-+	m_header->h_length = cpu_to_le16(mb_len);
- 	m_header->h_cmd = DLM_FIN;
- 
--	header_out(m_header);
--
- 	pr_debug("sending fin msg to node %d\n", node->nodeid);
- 	dlm_midcomms_commit_mhandle(mh);
- 	set_bit(DLM_NODE_FLAG_STOP_TX, &node->flags);
-@@ -1007,11 +1004,10 @@ static void dlm_fill_opts_header(struct dlm_opts *opts, uint16_t inner_len,
- 				 uint32_t seq)
- {
- 	opts->o_header.h_cmd = DLM_OPTS;
--	opts->o_header.h_version = (DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
--	opts->o_header.h_nodeid = dlm_our_nodeid();
--	opts->o_header.h_length = DLM_MIDCOMMS_OPT_LEN + inner_len;
--	opts->o_header.u.h_seq = seq;
--	header_out(&opts->o_header);
-+	opts->o_header.h_version = cpu_to_le32(DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
-+	opts->o_header.h_nodeid = cpu_to_le32(dlm_our_nodeid());
-+	opts->o_header.h_length = cpu_to_le16(DLM_MIDCOMMS_OPT_LEN + inner_len);
-+	opts->o_header.u.h_seq = cpu_to_le32(seq);
- }
- 
- static void midcomms_new_msg_cb(void *data)
-@@ -1453,7 +1449,7 @@ static void midcomms_new_rawmsg_cb(void *data)
- 		switch (h->h_cmd) {
- 		case DLM_OPTS:
- 			if (!h->u.h_seq)
--				h->u.h_seq = rd->node->seq_send++;
-+				h->u.h_seq = cpu_to_le32(rd->node->seq_send++);
- 			break;
- 		default:
- 			break;
-diff --git a/fs/dlm/rcom.c b/fs/dlm/rcom.c
-index 6cba86470278a..b956b7e416c85 100644
---- a/fs/dlm/rcom.c
-+++ b/fs/dlm/rcom.c
-@@ -34,10 +34,10 @@ static void _create_rcom(struct dlm_ls *ls, int to_nodeid, int type, int len,
- 
- 	rc = (struct dlm_rcom *) mb;
- 
--	rc->rc_header.h_version = (DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
--	rc->rc_header.u.h_lockspace = ls->ls_global_id;
--	rc->rc_header.h_nodeid = dlm_our_nodeid();
--	rc->rc_header.h_length = mb_len;
-+	rc->rc_header.h_version = cpu_to_le32(DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
-+	rc->rc_header.u.h_lockspace = cpu_to_le32(ls->ls_global_id);
-+	rc->rc_header.h_nodeid = cpu_to_le32(dlm_our_nodeid());
-+	rc->rc_header.h_length = cpu_to_le16(mb_len);
- 	rc->rc_header.h_cmd = DLM_RCOM;
- 
- 	rc->rc_type = type;
-@@ -127,10 +127,10 @@ static int check_rcom_config(struct dlm_ls *ls, struct dlm_rcom *rc, int nodeid)
- {
- 	struct rcom_config *rf = (struct rcom_config *) rc->rc_buf;
- 
--	if ((rc->rc_header.h_version & 0xFFFF0000) != DLM_HEADER_MAJOR) {
-+	if ((le32_to_cpu(rc->rc_header.h_version) & 0xFFFF0000) != DLM_HEADER_MAJOR) {
- 		log_error(ls, "version mismatch: %x nodeid %d: %x",
- 			  DLM_HEADER_MAJOR | DLM_HEADER_MINOR, nodeid,
--			  rc->rc_header.h_version);
-+			  le32_to_cpu(rc->rc_header.h_version));
- 		return -EPROTO;
- 	}
- 
-@@ -227,7 +227,7 @@ static void receive_rcom_status(struct dlm_ls *ls, struct dlm_rcom *rc_in)
- 	struct dlm_rcom *rc;
- 	struct rcom_status *rs;
- 	uint32_t status;
--	int nodeid = rc_in->rc_header.h_nodeid;
-+	int nodeid = le32_to_cpu(rc_in->rc_header.h_nodeid);
- 	int len = sizeof(struct rcom_config);
- 	struct dlm_msg *msg;
- 	int num_slots = 0;
-@@ -289,12 +289,14 @@ static void receive_sync_reply(struct dlm_ls *ls, struct dlm_rcom *rc_in)
- 	if (!test_bit(LSFL_RCOM_WAIT, &ls->ls_flags) ||
- 	    rc_in->rc_id != ls->ls_rcom_seq) {
- 		log_debug(ls, "reject reply %d from %d seq %llx expect %llx",
--			  rc_in->rc_type, rc_in->rc_header.h_nodeid,
-+			  rc_in->rc_type,
-+			  le32_to_cpu(rc_in->rc_header.h_nodeid),
- 			  (unsigned long long)rc_in->rc_id,
- 			  (unsigned long long)ls->ls_rcom_seq);
- 		goto out;
- 	}
--	memcpy(ls->ls_recover_buf, rc_in, rc_in->rc_header.h_length);
-+	memcpy(ls->ls_recover_buf, rc_in,
-+	       le16_to_cpu(rc_in->rc_header.h_length));
- 	set_bit(LSFL_RCOM_READY, &ls->ls_flags);
- 	clear_bit(LSFL_RCOM_WAIT, &ls->ls_flags);
- 	wake_up(&ls->ls_wait_general);
-@@ -336,8 +338,9 @@ static void receive_rcom_names(struct dlm_ls *ls, struct dlm_rcom *rc_in)
- 	int error, inlen, outlen, nodeid;
- 	struct dlm_msg *msg;
- 
--	nodeid = rc_in->rc_header.h_nodeid;
--	inlen = rc_in->rc_header.h_length - sizeof(struct dlm_rcom);
-+	nodeid = le32_to_cpu(rc_in->rc_header.h_nodeid);
-+	inlen = le16_to_cpu(rc_in->rc_header.h_length) -
-+		sizeof(struct dlm_rcom);
- 	outlen = DLM_MAX_APP_BUFSIZE - sizeof(struct dlm_rcom);
- 
- 	error = create_rcom_stateless(ls, nodeid, DLM_RCOM_NAMES_REPLY, outlen,
-@@ -375,8 +378,9 @@ static void receive_rcom_lookup(struct dlm_ls *ls, struct dlm_rcom *rc_in)
- {
- 	struct dlm_rcom *rc;
- 	struct dlm_mhandle *mh;
--	int error, ret_nodeid, nodeid = rc_in->rc_header.h_nodeid;
--	int len = rc_in->rc_header.h_length - sizeof(struct dlm_rcom);
-+	int error, ret_nodeid, nodeid = le32_to_cpu(rc_in->rc_header.h_nodeid);
-+	int len = le16_to_cpu(rc_in->rc_header.h_length) -
-+		sizeof(struct dlm_rcom);
- 
- 	/* Old code would send this special id to trigger a debug dump. */
- 	if (rc_in->rc_id == 0xFFFFFFFF) {
-@@ -464,7 +468,7 @@ static void receive_rcom_lock(struct dlm_ls *ls, struct dlm_rcom *rc_in)
- {
- 	struct dlm_rcom *rc;
- 	struct dlm_mhandle *mh;
--	int error, nodeid = rc_in->rc_header.h_nodeid;
-+	int error, nodeid = le32_to_cpu(rc_in->rc_header.h_nodeid);
- 
- 	dlm_recover_master_copy(ls, rc_in);
- 
-@@ -500,10 +504,10 @@ int dlm_send_ls_not_ready(int nodeid, struct dlm_rcom *rc_in)
- 
- 	rc = (struct dlm_rcom *) mb;
- 
--	rc->rc_header.h_version = (DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
-+	rc->rc_header.h_version = cpu_to_le32(DLM_HEADER_MAJOR | DLM_HEADER_MINOR);
- 	rc->rc_header.u.h_lockspace = rc_in->rc_header.u.h_lockspace;
--	rc->rc_header.h_nodeid = dlm_our_nodeid();
--	rc->rc_header.h_length = mb_len;
-+	rc->rc_header.h_nodeid = cpu_to_le32(dlm_our_nodeid());
-+	rc->rc_header.h_length = cpu_to_le16(mb_len);
- 	rc->rc_header.h_cmd = DLM_RCOM;
- 
- 	rc->rc_type = DLM_RCOM_STATUS_REPLY;
-@@ -631,7 +635,7 @@ void dlm_receive_rcom(struct dlm_ls *ls, struct dlm_rcom *rc, int nodeid)
- 		break;
- 
- 	case DLM_RCOM_LOCK:
--		if (rc->rc_header.h_length < lock_size)
-+		if (le16_to_cpu(rc->rc_header.h_length) < lock_size)
- 			goto Eshort;
- 		receive_rcom_lock(ls, rc);
- 		break;
-@@ -649,7 +653,7 @@ void dlm_receive_rcom(struct dlm_ls *ls, struct dlm_rcom *rc, int nodeid)
- 		break;
- 
- 	case DLM_RCOM_LOCK_REPLY:
--		if (rc->rc_header.h_length < lock_size)
-+		if (le16_to_cpu(rc->rc_header.h_length) < lock_size)
- 			goto Eshort;
- 		dlm_recover_process_copy(ls, rc);
- 		break;
-diff --git a/fs/dlm/requestqueue.c b/fs/dlm/requestqueue.c
-index e89e0ff8bfa3a..3692fbd218d56 100644
---- a/fs/dlm/requestqueue.c
-+++ b/fs/dlm/requestqueue.c
-@@ -32,7 +32,8 @@ struct rq_entry {
- void dlm_add_requestqueue(struct dlm_ls *ls, int nodeid, struct dlm_message *ms)
- {
- 	struct rq_entry *e;
--	int length = ms->m_header.h_length - sizeof(struct dlm_message);
-+	int length = le16_to_cpu(ms->m_header.h_length) -
-+		sizeof(struct dlm_message);
- 
- 	e = kmalloc(sizeof(struct rq_entry) + length, GFP_NOFS);
- 	if (!e) {
-@@ -42,7 +43,7 @@ void dlm_add_requestqueue(struct dlm_ls *ls, int nodeid, struct dlm_message *ms)
- 
- 	e->recover_seq = ls->ls_recover_seq & 0xFFFFFFFF;
- 	e->nodeid = nodeid;
--	memcpy(&e->request, ms, ms->m_header.h_length);
-+	memcpy(&e->request, ms, le16_to_cpu(ms->m_header.h_length));
- 
- 	mutex_lock(&ls->ls_requestqueue_mutex);
- 	list_add_tail(&e->list, &ls->ls_requestqueue);
-@@ -81,7 +82,7 @@ int dlm_process_requestqueue(struct dlm_ls *ls)
- 
- 		log_limit(ls, "dlm_process_requestqueue msg %d from %d "
- 			  "lkid %x remid %x result %d seq %u",
--			  ms->m_type, ms->m_header.h_nodeid,
-+			  ms->m_type, le32_to_cpu(ms->m_header.h_nodeid),
- 			  ms->m_lkid, ms->m_remid, ms->m_result,
- 			  e->recover_seq);
- 
-diff --git a/fs/dlm/util.c b/fs/dlm/util.c
-index 58acbcc2081ad..66b9a123768df 100644
---- a/fs/dlm/util.c
-+++ b/fs/dlm/util.c
-@@ -20,24 +20,6 @@
- #define DLM_ERRNO_ETIMEDOUT	       110
- #define DLM_ERRNO_EINPROGRESS	       115
- 
--void header_out(struct dlm_header *hd)
--{
--	hd->h_version		= cpu_to_le32(hd->h_version);
--	/* does it for others u32 in union as well */
--	hd->u.h_lockspace	= cpu_to_le32(hd->u.h_lockspace);
--	hd->h_nodeid		= cpu_to_le32(hd->h_nodeid);
--	hd->h_length		= cpu_to_le16(hd->h_length);
--}
--
--void header_in(struct dlm_header *hd)
--{
--	hd->h_version		= le32_to_cpu(hd->h_version);
--	/* does it for others u32 in union as well */
--	hd->u.h_lockspace	= le32_to_cpu(hd->u.h_lockspace);
--	hd->h_nodeid		= le32_to_cpu(hd->h_nodeid);
--	hd->h_length		= le16_to_cpu(hd->h_length);
--}
--
- /* higher errno values are inconsistent across architectures, so select
-    one set of values for on the wire */
- 
-@@ -85,8 +67,6 @@ static int from_dlm_errno(int err)
- 
- void dlm_message_out(struct dlm_message *ms)
- {
--	header_out(&ms->m_header);
--
- 	ms->m_type		= cpu_to_le32(ms->m_type);
- 	ms->m_nodeid		= cpu_to_le32(ms->m_nodeid);
- 	ms->m_pid		= cpu_to_le32(ms->m_pid);
-@@ -109,8 +89,6 @@ void dlm_message_out(struct dlm_message *ms)
- 
- void dlm_message_in(struct dlm_message *ms)
- {
--	header_in(&ms->m_header);
--
- 	ms->m_type		= le32_to_cpu(ms->m_type);
- 	ms->m_nodeid		= le32_to_cpu(ms->m_nodeid);
- 	ms->m_pid		= le32_to_cpu(ms->m_pid);
-@@ -133,8 +111,6 @@ void dlm_message_in(struct dlm_message *ms)
- 
- void dlm_rcom_out(struct dlm_rcom *rc)
- {
--	header_out(&rc->rc_header);
--
- 	rc->rc_type		= cpu_to_le32(rc->rc_type);
- 	rc->rc_result		= cpu_to_le32(rc->rc_result);
- 	rc->rc_id		= cpu_to_le64(rc->rc_id);
-@@ -144,8 +120,6 @@ void dlm_rcom_out(struct dlm_rcom *rc)
- 
- void dlm_rcom_in(struct dlm_rcom *rc)
- {
--	header_in(&rc->rc_header);
--
- 	rc->rc_type		= le32_to_cpu(rc->rc_type);
- 	rc->rc_result		= le32_to_cpu(rc->rc_result);
- 	rc->rc_id		= le64_to_cpu(rc->rc_id);
-diff --git a/fs/dlm/util.h b/fs/dlm/util.h
-index d46f23c7a6a00..cc719ca9397e4 100644
---- a/fs/dlm/util.h
-+++ b/fs/dlm/util.h
-@@ -15,8 +15,6 @@ void dlm_message_out(struct dlm_message *ms);
- void dlm_message_in(struct dlm_message *ms);
- void dlm_rcom_out(struct dlm_rcom *rc);
- void dlm_rcom_in(struct dlm_rcom *rc);
--void header_out(struct dlm_header *hd);
--void header_in(struct dlm_header *hd);
- 
- #endif
  
 -- 
 2.53.0
