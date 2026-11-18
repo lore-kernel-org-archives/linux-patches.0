@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060410;
-	b=LN31zv76l08c5oiuhFK9vM7Wa8G3DWn5jcxS2jUUl73RWmAIaxUWkiDIU0/ehT0Np+tW
-	 MaUFHq2sJvgtLAPRr3nw+HRAby3NVttolNjH96KpJKDkQnU2fvRjjXAZR37J8jODEDtAw
-	 Gbg0NXNPWXvkO7CCfXEQLi3Rx8M9Kgapq3TgPn2pX32bXFuxwogL2i2uGyWm31bPmZkr4
-	 WAzKi9BB4i2IhTVC+w6WjuICKRXfA8/xHNyqYo3vYXGx0Z8wN6uVyB4QGkHQJkqteseBC
-	 9mj4W0gcmL1AyVaqGe4gaolOrfJffzTemDLd4kE/d6taeukNmrNvOnZmeksIQqWtlvg==
+	t=1795060413;
+	b=gGpwelaTUAC9ZY/b+ad0cIkI53hmWDz80ytLhAqbwgJxa837KgJN39SU5VEYFr0UfSsD
+	 SWzguB1vnfSLfBM8hWQQEwWFkQYAn0MHRmYsTSZ7WOOMYAMjIRFotoBZHP3CxAGhTWRWd
+	 HgZDSH5LEAn+2jjACFMLxbyrfZFo2hlF24HATgiDVOPs3SsutxP+l7+WW8Z3y0IFV5saG
+	 Z/eC79ILwZYDGANPdfCC8x0SmZEYbLNSjunhifydlAyXopbc2lHdsNzvVus+oHn04sZZV
+	 dQTR6Il3355lJaJ/Tw8TNEz/F4bt+wF2STfso1gpN+jbtkSn56sjvm7hUP/162iUA7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BfpbdVh36vZsQNhc+RzXVOgCpczga05tj8yr2m+7P48=;
-	b=ixzDF2NWwTAYVMgVj/NIEUdLL38NZTgm7oTfjcb7UecV3Uwj46zJqrRCfW2XECVx14+o
-	 YwOiwDeZLIcdWeB/ToZRhfQ2s7R4SvT/JQ45euNvZZIfD+ASMkH1tcsabY4GjX3AA1s/Z
-	 4CKERO8IG6zhLzpV09TwL++PA8K+Ap1WWHxy+JVy+FD3f10tOw9rTqJqUD33++3Afaskf
-	 llnMa90xcplB4yAKmYShGpbHbbTpwB2h8eGJWhRjshQrLxkFDEJn9VoGEo1ZgS4bcwDri
-	 wyHisOlJlCn9cOBgaWG/f+o8FZeYiE6JkjRnE/cfvVS+7yQlcXgM3BQRnrUPcL4DVvg==
+	bh=Y+tIgs+aK+c/PfJDxSjHaWuoSHYKpgN7pWVnZINvdTo=;
+	b=r68+xGP3zRmJWFTjF13BlINrXj6PpwpdPuYgbbREq2pXLtlwNW2i4ROFGHrckLWC+wKg
+	 U7cL9VwFbXNeQGzOpyzomx6tCsOhtQWXbKcVJd4mv/bOI6TxvVr2XrdhwkY0mvyHo2rv2
+	 KMO9O+Sm+XfWTt3pGSmwVsOF/cwJBmoD2+cc3XmDjWn3mXQZ4lEC1cJfMv7D9C0lQSmsP
+	 X3wXetlQ0pAc+atzKQuyAdgj21P8/RyyVyli4U+RONhfyozOoRhccQV+Ti2Qt5MZCbqPw
+	 is3cz6845+0lQDlSt5m5RhGfwfjMLcyXzSzmF+WkSi+FS6+jL2BqOZs0drdUTHqR4qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIP+B5Ev;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzKgAD47;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4185606A32A;
-	Thu, 19 Nov 2026 03:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBD8606A320;
+	Thu, 19 Nov 2026 03:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIP+B5Ev
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C531F000C4;
-	Thu, 19 Nov 2026 03:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzKgAD47
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4671F000C4;
+	Thu, 19 Nov 2026 03:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060410;
-	bh=BfpbdVh36vZsQNhc+RzXVOgCpczga05tj8yr2m+7P48=;
+	s=korg; t=1795060413;
+	bh=Y+tIgs+aK+c/PfJDxSjHaWuoSHYKpgN7pWVnZINvdTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIP+B5EvMdJ3qfmD5cGZne7GCWWbfmQr2w//jQ2YYyIKleUD2H9O5CdMoP8kMkt0D
-	 xv6cLgQyDkG5w82C89CtA4ZuO5tn0Ehbk6kaNZWjxK7d7LnRcDV6QtiIqCj7o83saq
-	 ohvpo302xDQHotw11zEymq2sqWfQNAKB25a8CCPs=
+	b=qzKgAD47DIInZyaC6Onb6E+DMRt2p/anz5S/Nj4qhmbHwzBEE0Zoobm56xKoV4G8S
+	 DgMJwwzZlTeT1A4RjIEEBLdCt0QBYMELIVDYsonTeElaBr33zaS4UFmpznGbXvS/Ah
+	 KAgP8jPzEyLJRY8hT4WhlUJuH76stuNmIji+6NS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Golla Nagendra <nagendra.golla@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1188/1848] dmaengine: zynqmp_dma: Fix chan probe/remove error handling
-Date: Wed, 18 Nov 2026 15:53:46 +0100
-Message-ID: <20261118150009.245966268@linuxfoundation.org>
+Subject: [PATCH 5.10 1189/1848] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
+Date: Wed, 18 Nov 2026 15:53:47 +0100
+Message-ID: <20261118150009.279576879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,117 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Golla Nagendra <nagendra.golla@amd.com>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit 0266dac57019201a14a81245d22750ab221d6c66 ]
+[ Upstream commit b70ab341088b2114dcbc7be868588f3e97893e6a ]
 
-Keep the real platform_get_irq() error by returning ret directly, stage
-IRQ setup via a local ret variable, and assign chan->irq only after
-devm_request_irq() succeeds.
+The MCDMA BD format differs between memory-to-device (MM2S) and
+device-to-memory (S2MM) directions, but the driver was using generic
+'status' and 'sideband_status' fields for both. This led to incorrect
+residue calculations when the hardware updates direction-specific fields.
 
-Initialize chan->irq to -1 and initialize chan->common.device_node
-before it may be touched by teardown. In channel remove, free IRQ only
-for valid IRQ numbers and delete the channel node only when it is linked.
+Refactor the descriptor structure to use unions with direction-specific
+field mappings, and update the residue calculation logic to select the
+correct status field based on DMA direction.
 
-Register the channel node only after successful IRQ setup. On channel
-probe failure in zynqmp_dma_probe(), route cleanup through the existing
-free_chan_resources teardown path.
+This matches the hardware descriptor layout and fixes incorrect
+residue reporting.
 
-Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
-Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260814045616.1661199-4-nagendra.golla@amd.com
+Link: https://patch.msgid.link/20260818174151.1608971-2-srinivas.neeli@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 504dc00415c30..bc1f497732bc4 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -207,7 +207,7 @@ struct zynqmp_dma_desc_sw {
-  * @desc_pool_p: Physical allocated descriptor base
-  * @desc_free_cnt: Descriptor available count
-  * @dev: The dma device
-- * @irq: Channel IRQ
-+ * @irq: Linux IRQ number, or -1 when not registered
-  * @is_dmacoherent: Tells whether dma operations are coherent or not
-  * @tasklet: Cleanup work after irq
-  * @idle : Channel status;
-@@ -873,10 +873,11 @@ static void zynqmp_dma_chan_remove(struct zynqmp_dma_chan *chan)
- 	if (!chan)
- 		return;
- 
--	if (chan->irq)
-+	if (chan->irq >= 0)
- 		devm_free_irq(chan->zdev->dev, chan->irq, chan);
- 	tasklet_kill(&chan->tasklet);
--	list_del(&chan->common.device_node);
-+	if (!list_empty(&chan->common.device_node))
-+		list_del(&chan->common.device_node);
- }
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index b5b0a73e80020..5ef9f53e37cfd 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -217,6 +217,7 @@
+ #define XILINX_MCDMA_IRQ_ERR_MASK		BIT(7)
+ #define XILINX_MCDMA_BD_EOP			BIT(30)
+ #define XILINX_MCDMA_BD_SOP			BIT(31)
++#define XILINX_MCDMA_BD_HW_SIZE			64
  
  /**
-@@ -893,13 +894,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 	struct resource *res;
- 	struct device_node *node = pdev->dev.of_node;
- 	const struct zynqmp_dma_config *match_data;
--	int err;
-+	int err, ret;
+  * struct xilinx_vdma_desc_hw - Hardware Descriptor
+@@ -271,8 +272,10 @@ struct xilinx_axidma_desc_hw {
+  * @buf_addr_msb: MSB of Buffer address @0x0C
+  * @rsvd: Reserved field @0x10
+  * @control: Control Information field @0x14
+- * @status: Status field @0x18
+- * @sideband_status: Status of sideband signals @0x1C
++ * @mm2s_ctrl_sideband: Sideband control info for mm2s @0x18
++ * @s2mm_status: Status field for s2mm @0x18
++ * @mm2s_status: Status field for mm2s @0x1C
++ * @s2mm_sideband_status: Sideband status for s2mm @0x1C
+  * @app: APP Fields @0x20 - 0x30
+  */
+ struct xilinx_aximcdma_desc_hw {
+@@ -282,10 +285,17 @@ struct xilinx_aximcdma_desc_hw {
+ 	u32 buf_addr_msb;
+ 	u32 rsvd;
+ 	u32 control;
+-	u32 status;
+-	u32 sideband_status;
++	union {
++		u32 mm2s_ctrl_sideband;
++		u32 s2mm_status;
++	};
++	union {
++		u32 mm2s_status;
++		u32 s2mm_sideband_status;
++	};
+ 	u32 app[XILINX_DMA_NUM_APP_WORDS];
+ } __aligned(64);
++static_assert(sizeof(struct xilinx_aximcdma_desc_hw) == XILINX_MCDMA_BD_HW_SIZE);
  
- 	chan = devm_kzalloc(zdev->dev, sizeof(*chan), GFP_KERNEL);
- 	if (!chan)
- 		return -ENOMEM;
- 	chan->dev = zdev->dev;
- 	chan->zdev = zdev;
-+	chan->irq = -1;
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	chan->regs = devm_ioremap_resource(&pdev->dev, res);
-@@ -933,22 +935,26 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 	INIT_LIST_HEAD(&chan->pending_list);
- 	INIT_LIST_HEAD(&chan->done_list);
- 	INIT_LIST_HEAD(&chan->free_list);
-+	INIT_LIST_HEAD(&chan->common.device_node);
- 
- 	dma_cookie_init(&chan->common);
- 	chan->common.device = &zdev->common;
--	list_add_tail(&chan->common.device_node, &zdev->common.channels);
--
- 	zynqmp_dma_init(chan);
--	chan->irq = platform_get_irq(pdev, 0);
--	if (chan->irq < 0)
--		return -ENXIO;
--	err = devm_request_irq(&pdev->dev, chan->irq, zynqmp_dma_irq_handler, 0,
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
-+		return ret;
-+
-+	err = devm_request_irq(&pdev->dev, ret, zynqmp_dma_irq_handler, 0,
- 			       "zynqmp-dma", chan);
- 	if (err)
- 		return err;
- 
-+	chan->irq = ret;
-+
- 	chan->desc_size = sizeof(struct zynqmp_dma_desc_ll);
- 	chan->idle = true;
-+	list_add_tail(&chan->common.device_node, &zdev->common.channels);
-+
- 	return 0;
- }
- 
-@@ -1104,7 +1110,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
- 	ret = zynqmp_dma_chan_probe(zdev, pdev);
- 	if (ret) {
- 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
--		goto err_disable_pm;
-+		goto free_chan_resources;
+ /**
+  * struct xilinx_cdma_desc_hw - Hardware Descriptor
+@@ -994,9 +1004,11 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					   struct xilinx_aximcdma_tx_segment,
+ 					   node);
+ 			aximcdma_hw = &aximcdma_seg->hw;
+-			residue +=
+-				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
+-				(aximcdma_hw->status & chan->xdev->max_buffer_len);
++			residue += aximcdma_hw->control & chan->xdev->max_buffer_len;
++			if (chan->direction == DMA_DEV_TO_MEM)
++				residue -= aximcdma_hw->s2mm_status & chan->xdev->max_buffer_len;
++			else
++				residue -= aximcdma_hw->mm2s_status & chan->xdev->max_buffer_len;
+ 		}
  	}
  
- 	p->dst_addr_widths = BIT(zdev->chan->bus_width / 8);
 -- 
 2.53.0
 
