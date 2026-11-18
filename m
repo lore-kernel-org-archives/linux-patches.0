@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015387;
-	b=2bZcxzQFbH0LnqclkTkSbtU3ghIB+2nZ9Xa43MmLVAjeQgonqdP7uJWLuOG5l93Ts9id
-	 3iJxtYnXnzndK7iXB0VEGoFDThpkrBAY3HkajKBTmfnUOGFj+uld07QcCpPwUTFMk6eJ5
-	 fdiliWhHckC1moeitB6v8XgBzVsiBSTGMO0w7LgdzrGHEFTF3CuHcZEBHm52N8v96tOy3
-	 qwY4Q1MybSaUXkZDvux0PEUK94Fzil/hgyCkcN7JMmUzQ0IjhkFZigOYIcrFuTUrUeLgF
-	 QrCRqg1jaKLnxNcQsYCCct8lttV6iSQb5RA1Q4i0yaRtsL7kaMF5rJzT26o+ZYTEgWw==
+	t=1795015389;
+	b=L4dr9nTrxEBhm7C7QbfuaZIy5vvggQanI1hziI4i0xY4abHYXN8f8/9+XVeOxRjXJDeT
+	 046S9jKjLGxvY9N6PNaxJiG24VTyrVGMvdYJbxMpncWXjUy7E+QCXLh+cdv4KwXqIt7km
+	 2AG5QtqyINwgtG2EoNwU2oejM1sVcJx0Urno6ITgJcCABv2N4KT929XtyCjU80Cm5ndyB
+	 MqZqqiVVKe+MY+7tBB2ZHGo52O+kClSkuZmvMGteCDZbgzsG6vaFbsmtgDH1hrCAekquO
+	 tUrI88OSvmh2wsiHh+IanJdm7exw47cvHQv5URZN/8svIeZ0DO/yjPt62Tn7cfaYghw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015387;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IV4VMM4GRcFjASL9hAWA1DADjuksYx7vCTaqZExvp3Q=;
-	b=ZN11Zp73Esg/exytp1wprbcVCMyGOi1aJJEilOh9/nZ0mobiACszzInAjb1lco2bKg5i
-	 hjILF30xo5olZk42QTOs0KhBVwEKnRzrrPQAaxHvoVHVEMbnXr/vDMAxIYNJqrVX8ac75
-	 B0x8rJ1XmB+mTAy/GvKRlBelYadI3B63Bq+0XiW0pQe3419Brq0pP1VV0Mif85OoLTJck
-	 XZhTf/jUx01lXkS7jm4m0eDHJUAXcNnggRXIwnO+aRUWD1OjZYyptp01m1KYKlO/QudIH
-	 Wf9pMLblrcrAxZRrRsleVmzM6z5VsgAo/Xv9NkousR5AQXQbYj1fYKSPvAjyqq3W8Pw==
+	bh=z8HWyIUxkBPZtS345M2nLfWK4Dlpgse+QH61F9k4As0=;
+	b=g4VBp/5f9VryqrOC1Zaol6PUtZqsCJvyzLVM9ZPycn/nn7pASFdiAmKDNNYmOCyvwGRI
+	 K2ROui0/uDXkeKMnt12/uFBEgHRIWrmFGQZwgmcRs8bKsauXAv++mkcAsGEfSXOMmKjZx
+	 OMpoVSCjJLiayZrZ/Si+7lfAzN2ksY0bfyz18Sl2ZYc1WlFPK9EOOaRzkQKFdPSkcmfCd
+	 xNsVLSpxYCf0cwNjkMfdIaRKqw8ovhbbYTZgEyqkB62C1x+z1ymkj7JHpDnQJE0KsDL+r
+	 bFd6EShXtOnmoNLzqOBkAwgkpeJbHqTIDUP9edUlM3xWdr2epT2lIw7k0+HEMW/+M6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ReoO+QDR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ww5I1vpd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074B8606A31C;
-	Wed, 18 Nov 2026 15:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E6E606A31C;
+	Wed, 18 Nov 2026 15:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ReoO+QDR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1BE1F000C6;
-	Wed, 18 Nov 2026 15:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ww5I1vpd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7CA1F000C4;
+	Wed, 18 Nov 2026 15:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015386;
-	bh=IV4VMM4GRcFjASL9hAWA1DADjuksYx7vCTaqZExvp3Q=;
+	s=korg; t=1795015389;
+	bh=z8HWyIUxkBPZtS345M2nLfWK4Dlpgse+QH61F9k4As0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ReoO+QDR1eFeDs+biyWjo7ELbAAoN07g3fmsjyRqmo568s1EaFU829znOTms8O5WI
-	 NCJbR+NUqtUs31ph6Jy4wDgy+uCcHgXAUt5JrwhfJtFAlnOsH39mkNaIx5CVcFYHsg
-	 33V6+Ub/WxCdzBVXqDN3EKlXDsDKl0Bbd3mhWXHY=
+	b=Ww5I1vpd08r+vKjaLpm2TXXf0nemdW6SXHqMxK3CvBZ6SMXExkUX7C5/u0Gz4Dw+U
+	 fansTjOO4x/xL293apYOjksonpUom9ArbvEnJCBqsxolJjOA/mE6CkGmLNxij5m6WR
+	 CntHI4CSMyinBk+RXf17im2HrO0bSserXTs/L+HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gongwei Li <ligongwei@kylinos.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Janne Grunau <j@jannau.net>,
+	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0154/2651] wifi: rtw89: coex: Fix wrong constant check of GPIO MUX signal
-Date: Wed, 18 Nov 2026 15:23:14 +0100
-Message-ID: <20261118150253.397139968@linuxfoundation.org>
+Subject: [PATCH 7.3 0119/2651] arm64: dts: apple: t6030: Fix cpus node indentation
+Date: Wed, 18 Nov 2026 15:22:39 +0100
+Message-ID: <20261118150252.157443292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gongwei Li <ligongwei@kylinos.cn>
+From: Sven Peter <sven@kernel.org>
 
-[ Upstream commit fc17fd87d9f210850f81e547ee88eba89d6f2d50 ]
+[ Upstream commit 1c7e2a0cfc902932da41a93202f196a2dab18b71 ]
 
-In _fw_set_gpio(), the check for an invalid GPIO signal uses `sig == 0xff`.
-However, _get_gpiosig_for_ver() never returns 0xff. Both of its failure
-branches return BTC_DBG_NUM (defined as 32) when the requested signal is
-unsupported for the current firmware version.
+Drop the extra space indentation of the closing brace of the cpus node.
 
-Check the result against BTC_DBG_NUM instead, the same as _show_gpio_dbg()
-already does.
-
-Fixes: 5c90259b9748 ("wifi: rtw89: coex: complete GPIO debug configuration handler")
-Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260826031959.2555359-1-13875017792@163.com
+Fixes: e81af013dbdd ("arm64: dts: apple: Initial T6030 (M3 Pro) device trees")
+Reviewed-by: Janne Grunau <j@jannau.net>
+Link: https://patch.msgid.link/20260830-b4-apple-dts-fixes-v1-2-cc20f8445754@kernel.org
+Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/coex.c | 2 +-
+ arch/arm64/boot/dts/apple/t6030.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/coex.c b/drivers/net/wireless/realtek/rtw89/coex.c
-index 5a9dc4d8a00ba..12bd5539e8c6d 100644
---- a/drivers/net/wireless/realtek/rtw89/coex.c
-+++ b/drivers/net/wireless/realtek/rtw89/coex.c
-@@ -3365,7 +3365,7 @@ static void _fw_set_gpio(struct rtw89_dev *rtwdev, u8 type, u32 val)
- 		gpio->mux.data.dlen = CXDGPIO_SET_L2;
- 		gpio->mux.data.sig = _get_gpiosig_for_ver(rtwdev,
- 							  FIELD_GET(GENMASK(7, 0), val));
--		if (gpio->mux.data.sig == 0xff)
-+		if (gpio->mux.data.sig >= BTC_DBG_NUM)
- 			return;
- 		gpio->mux.data.gpio = FIELD_GET(GENMASK(15, 8), val);
- 		l2_h2c = gpio->mux.fmt;
+diff --git a/arch/arm64/boot/dts/apple/t6030.dtsi b/arch/arm64/boot/dts/apple/t6030.dtsi
+index dda9568af11f9..5ff12edfc5532 100644
+--- a/arch/arm64/boot/dts/apple/t6030.dtsi
++++ b/arch/arm64/boot/dts/apple/t6030.dtsi
+@@ -208,7 +208,7 @@ l2_cache_1: l2-cache-1 {
+ 			cache-unified;
+ 			cache-size = <0x1000000>;
+ 		};
+-	 };
++	};
+ 
+ 	timer {
+ 		compatible = "arm,armv8-timer";
 -- 
 2.53.0
 
