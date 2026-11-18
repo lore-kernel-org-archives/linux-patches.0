@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045625;
-	b=NAtyCMxSjDsRz/sZtOXMfGoylcbWSyxhvqD8RsED6z0oG5AoaUsJnfbaI+LWUglKt1IW
-	 BqchTJ/H/mnCSr8KApKnKpRhU+Eo4qowWLF504LThBodMrcDQP43Dr/xm7k/N+nmZ2wmH
-	 dsbTVMH/gKD1/2vYFxU/8pvewJn398DWDSSe5LFWVqqf1U/OJdLOkg00LRDpvF6yxh3/w
-	 bh7AWBnaxL0XcgX7HrH0aB1xXIgAMdXmp+R9GfNKjtcW4fUbMK8vp2uXvMStBdC+QxXGI
-	 FWY6mIF9XAuntReeMCu6o9dzUDvDSaqerWVvY+ycMdeaKiZT1xo0hvFVurnBfH7wXxw==
+	t=1795045628;
+	b=mFGpthq2r8XKAEWU2I/vSRLJr1u8MfNkSHEW2ypJkkpl6el+4DAw9SBfChM4spOy7aDs
+	 ukxIqL0BRYCnMd6idxfiRrF6D3vzjkuwshFyx5jbTLlYkR5TH9r0JQADyYRUAU7xUqMsq
+	 KCnAH3COT2oCxoj8ZztzdVlyHmJ8J/a8LXh5HxFSGc6xubZPudayhVL231/ADWzPsgWZW
+	 8UKHIe3WuBkIRD4GQldfDQctY0MFPtFvWQmxE8lZqnjhjYS7g5OolcbyubwQsgVocAto9
+	 GqnS0TFsblyUmOmR7916eG3XCdeSoCcA2HZTYhzKqib8Tyow7EA7bWmTEjAXkJgFA2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045628;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DOBU8SZSq8OV4TRe+ItRhXan9kSaZSex6UQBroLiNbA=;
-	b=NriJX0rvHgaXT9xuekzF1NDzOmJ8WDLi2ir6ybO9M01mO3WmtM9UC4Fdxlfz3Uk0oDjz
-	 VSwJcltDSYuO8lRHJerjQDSsSWVXSJSPX95XEgSDcpJBEL/rRaFZDnCkyjuYB2P6qcCyN
-	 /RVSbmskOI/QhxOCvsJnJ5csr9O1pqFuiBZgvuAnyY5gq+62VunPoP+mPyhlKpl4mCAsz
-	 tqsNBwk2i4abszvTSBjub7yQQPzJ1w+5/X1P7NYZQSvqduSgB3NLiOArIIHsuWZcNZsgO
-	 2lIImz/RQCdLvfyBEkV9glDelRSupvpixPPzf0A3M3wNB5/hwV9tUgMXEGCKl5X85Qw==
+	bh=K7WwgQwaFjpUYlp+pa5CKrN3LKEb4ExIpZoMeC/tN0M=;
+	b=42wmz3tpfedlryTlsYP1pwXKRQReBdFFf77vQ8LQPzZLqqLYXIZcEOvRYPwdS484lcH4
+	 b4vAGJf45/nusibS+Iabex7LAboldY79NdEw3fK/3rxH5hYOi1MMDSIUvuJGMMTLXiDZI
+	 J1OOK163KGj7FyIKONYudOoHBPwiQhJlN3M7MaXduc1Q3x0p7Ap+zyy67hwlXehGP2v36
+	 awxMBwG88qIFTXz8qm/6ZiKgMVTuV62M425lK9nDDyFmU9uK+3zn9AExGlMtcV3wB+Kb3
+	 3v2Q1uEm8CRlzBwR8AYuXa0i6oCXbyLZA5NwMfsbCATzV4tQZT5yYc3UBM747n5BJJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2suNqwlg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuR1iR5a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387F0606A32F;
-	Wed, 18 Nov 2026 23:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E300B606A31C;
+	Wed, 18 Nov 2026 23:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2suNqwlg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD0D1F000C4;
-	Wed, 18 Nov 2026 23:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuR1iR5a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B95A1F000C4;
+	Wed, 18 Nov 2026 23:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045625;
-	bh=DOBU8SZSq8OV4TRe+ItRhXan9kSaZSex6UQBroLiNbA=;
+	s=korg; t=1795045627;
+	bh=K7WwgQwaFjpUYlp+pa5CKrN3LKEb4ExIpZoMeC/tN0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2suNqwlg4ZMzbZsJwjrT1yJ7g9Ey4QltL8aQzuVnAuivFoh6NgnGC/TIW+ynh+2jE
-	 TBRneUXzEGRAoClXrXHNXDNEOB48VVxRIzbXjDtQc/DbGfLr8v+rIlJ5rXJVtr1ZxP
-	 0zXlIbvScUnw9runjV9tp/i/uqYvoNcYcwEDsTls=
+	b=kuR1iR5aYklzCNfem/iGuUdbh5gKQaQjdIruEeuY4J3YttvuzOE/ASbPpaX4b+KEX
+	 MIT6Z23zHs0v11A72O4RZjlFmfTUwKTEJsWDk81Bp8LmF7yqO+OIG5xGWkI248x11/
+	 R0nLZV3WMQZi7SdwNCcGQ4jAQG9jxMHujQbsFKtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0950/2857] ARM: 9491/1: alignment: restore uaccess state on emulation fault
-Date: Wed, 18 Nov 2026 15:33:04 +0100
-Message-ID: <20261118150235.813422405@linuxfoundation.org>
+Subject: [PATCH 6.1 0941/2857] PCI: rockchip-host: Do not attempt 5.0 GT/s retraining
+Date: Wed, 18 Nov 2026 15:32:55 +0100
+Message-ID: <20261118150235.485256940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,200 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-[ Upstream commit 80dafbcb705cead6d25cb821cf29c47da8860c8c ]
+[ Upstream commit 2a1e6c382fb7567679c07bd6a7060fefc7a5edc9 ]
 
-The alignment handlers enable access to user memory while emulating
-unaligned instructions. If a checked access faults, its exception table
-fixup jumps to the handler's fault label and bypasses uaccess_restore().
-This leaves DOMAIN_USER as DOMAIN_CLIENT with SW domain PAN, or leaves
-TTBR0 page table walks enabled with TTBR0 PAN, while the fault is handled.
+Drop the 5.0 GT/s Link Speed retraining from Rockchip PCIe Root Complex
+Mode Operation, so-called host driver.
 
-An ARM926 QEMU test using LDMIA across an unmapped page boundary reports
-DOMAIN_USER=1 at TYPE_FAULT before this change and DOMAIN_USER=0 after it.
-SW domain PAN is the default on ARMv5, ARMv6, and non-LPAE ARMv7 builds.
+The reason is that Shawn Lin from Rockchip has reiterated that there may be
+danger of "catastrophic failure" in using their PCIe with 5.0GT/s speeds.
 
-Keep the saved uaccess state at function scope and track whether it was
-saved. Restore it at the fault label only when needed. Paths that did not
-enable user access continue to skip the restore.
+While Rockchip has done so informally without issuing a proper errata, and
+the particulars are thus unknown, this may cause data loss or worse.
 
-Assisted-by: Codex:gpt-5.6-sol
+This change is corroborated by RK3399 official datasheet [1], which states
+maximum link speed for this platform is 2.5 GT/s.
 
-Fixes: 274e91b81ed2 ("ARM: alignment: fix alignment handling for uaccess changes")
+[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
+
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Reported-by: Dragan Simic <dsimic@manjaro.org>
+Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/68f6353e3a2ea4914de36c42b6906e41282adad3.1781622998.git.geraldogabriel@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/alignment.c | 51 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 14 deletions(-)
+ drivers/pci/controller/pcie-rockchip-host.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index ee264737be6d2..41f1497e2fd28 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -341,6 +341,8 @@ static int
- do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_half += 1;
- 
-@@ -364,10 +366,11 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned long val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get16t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		/* signed half-word? */
- 		if (instr & 0x40)
-@@ -375,14 +378,17 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- 
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put16t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
+diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
+index de521ad927c40..cf591101625dd 100644
+--- a/drivers/pci/controller/pcie-rockchip-host.c
++++ b/drivers/pci/controller/pcie-rockchip-host.c
+@@ -337,26 +337,6 @@ static int rockchip_pcie_host_init_port(struct rockchip_pcie *rockchip)
+ 		goto err_power_off_phy;
  	}
  
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -391,6 +397,8 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
- 	unsigned int rd2;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 	int load;
- 
- 	if ((instr & 0xfe000000) == 0xe8000000) {
-@@ -425,26 +433,30 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (load) {
- 		unsigned long val, val2;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
- 		get32t_unaligned_check(val2, addr + 4);
- 
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		regs->uregs[rd] = val;
- 		regs->uregs[rd2] = val2;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
- 		put32t_unaligned_check(regs->uregs[rd2], addr + 4);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
-  bad:
- 	return TYPE_ERROR;
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -452,6 +464,8 @@ static int
- do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_word += 1;
- 
-@@ -469,18 +483,22 @@ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
-  trans:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned int val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -502,6 +520,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd, rn, correction, nr_regs, regbits;
- 	unsigned long eaddr, newaddr;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	if (LDM_S_BIT(instr))
- 		goto bad;
-@@ -547,7 +567,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- #endif
- 
- 	if (user_mode(regs)) {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
- 			if (regbits & 1) {
-@@ -559,7 +580,7 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 					put32t_unaligned_check(regs->uregs[rd], eaddr);
- 				eaddr += 4;
- 			}
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	} else {
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
-@@ -581,6 +602,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 	return TYPE_DONE;
- 
- fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	regs->ARM_pc -= correction;
- 	return TYPE_FAULT;
- 
+-	if (rockchip->link_gen == 2) {
+-		/*
+-		 * Enable retrain for gen2. This should be configured only after
+-		 * gen1 finished.
+-		 */
+-		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
+-		status &= ~PCI_EXP_LNKCTL2_TLS;
+-		status |= PCI_EXP_LNKCTL2_TLS_5_0GT;
+-		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
+-		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+-		status |= PCI_EXP_LNKCTL_RL;
+-		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+-
+-		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
+-					 status, PCIE_LINK_IS_GEN2(status), 20,
+-					 500 * USEC_PER_MSEC);
+-		if (err)
+-			dev_dbg(dev, "PCIe link training gen2 timeout, fall back to gen1!\n");
+-	}
+-
+ 	/* Check the final link width from negotiated lane counter from MGMT */
+ 	status = rockchip_pcie_read(rockchip, PCIE_CORE_CTRL);
+ 	status = 0x1 << ((status & PCIE_CORE_PL_CONF_LANE_MASK) >>
 -- 
 2.53.0
 
