@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053507;
-	b=XsEIGsjNDFIR1X8DvYCWftse3aa9qfnoWrgBZkKfS+8CoUP9FBSZ0esRipVBPuZNLaSu
-	 worG86IvAemDbC6mCegLwE0YCzWac7CkOCiss8DtNKLtuxE79Y53uwT7e/Qh1ddcaegxY
-	 kr1K58iwNvpJf2CMjB0YRtxNQHFXVXmHxh3lsCfuJwfOIcp4O4MjBn/zo1ArHWK8YT8lD
-	 xzsFQQSeK9/Pm+dDjDNS5UT+ircIpkIrKL4OG3pN/flRUQ/Vho3y/mBRrL5CpKmmaxqW6
-	 XltVMFaii2rdbBewkCuJA6uujt317uuROTffR1Nm60YEnu8N9gg4GO12VD819osp4yQ==
+	t=1795053509;
+	b=5g7HzxXIWTDVE7AYR4Ev3f5RZOTXRI8/p85eXgcEnDqY3rVYBBqwv52yMlV546/gmJOG
+	 nHxzfevtUU5jYmB9OiMiR86j6oSQhtw3H4SBYGHkRdku46jHQnmNWL5tEoxLRjmLJ4Jx2
+	 kOepsmzwiENPyKcV6PTX7BzrLmpcd7ah88h48Oalmy41QGOYvAV1tC1N9GzSeONcNa8jc
+	 8iJawBicGtCNyAQVy2kXNFNcXS3tsQ2HhEhk4ZfU5Q8DT1FDai51az3s1A/dNgSe4lpK/
+	 UM/zUz1wlszW99jjt9OzYm4W1AHMoGNhY7wXnP9hlm7eUF31JGUW3p50OpS945IGUOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HaRDLiwc5iA/XaL1AG8px/gSePtCRIIxRp8eUy2ZHiQ=;
-	b=X2oIHEWg52AAAV52gFIMBRFjBRnpE7YU0MVVYYMyLzn3fe62up93BhsFY4agX6bXL6nq
-	 xgCgiyDcOuDCxc0thWEwAxxpJb2rXrbPpdWD1oKX2Rirqo19gTOk1tsM5OvjwG5qBQvju
-	 TG0mCTmk12iTcJlMC5TXxIRTiPUY5xMRYQuCDjWZBtmMWny3TOlU7SBq5/CmwZF3xCEl2
-	 Q17MGDhaXD80wnDZgU8jZiaLFQmuMGavppI2k+gsNgqzkSHkk1Q40D/g4bNIWJqw3I5wM
-	 APMmV6/yqzysjYnoLLXtHmopRBOYKSJyFg5jKPxXMEsysywSM+Z3V0G1jO7g/ILa4ow==
+	bh=p/ZsVrQa6L8VeENPQPfvOcWz1lVqiFg8Uvopv2pipOM=;
+	b=HfOMvlr4I44cceK/ejQmzT9vExLpSxiLl2iYEWw4/s9jEqasdq3zv570tO1FhcPGeX2+
+	 C1fb54x6V6Eb0N9+tdIyas2TecErXOAjJU51g3O5deQ4wVJJ9ZO44kdf3obDw+ICQ+o2e
+	 6O8+V+nsoR6t8wPJY3UBuy2I0HPZnJamN7+SszgjOPzRl5bLo1eE3rrQ/Q5cXXV5vFulM
+	 dysqPcAl4FhjrMi0PIZfD65MTHQsGYbvgCOTdymjk2pIV/yyaSuzQRgzm3gEYkJcWac5V
+	 1t+1eKNUtRW2YZUyKOXZZ7bSUiK579BOrob8LyD+1mVEHaCpjP3BZ15o0EW27cz3Bkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TcpvBCXi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HEjMZb7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF062606A32A;
-	Thu, 19 Nov 2026 01:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDF7606A31C;
+	Thu, 19 Nov 2026 01:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TcpvBCXi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F071F000C4;
-	Thu, 19 Nov 2026 01:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HEjMZb7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113F71F000C4;
+	Thu, 19 Nov 2026 01:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053506;
-	bh=HaRDLiwc5iA/XaL1AG8px/gSePtCRIIxRp8eUy2ZHiQ=;
+	s=korg; t=1795053509;
+	bh=p/ZsVrQa6L8VeENPQPfvOcWz1lVqiFg8Uvopv2pipOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TcpvBCXi0rqK3Xmni09LkTi99W0VECVmGGsBboNllAGI//IdDM3XNQampaTxnBtjF
-	 Ib43VylGHHXxgRSxDr7mi3WEt51weMJDu9beeE5EKCksjEuZ3laCtG3POIGl8JO5YF
-	 LLPLYy8gAuvQHIAxXesPQdsb2hs/bnLQCUDvlU08=
+	b=2HEjMZb7FGKNKmZmcpa/Z7j3lxNdHYkbo63uV0biJFTK5EiGGZ9DGnDXIHqXO4wp2
+	 CCP5F27Ykh70YIDLC2ehQsRs8nXiQ+vgEBmv4v7AEm9Z9vED87RjpzSobRgJgm37nW
+	 aP8o96DiQ7EPibEM366vEsvWCE4xXV396+TO43KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0945/2214] ata: libata-scsi: reject data-in commands with a data-out buffer
-Date: Wed, 18 Nov 2026 15:43:41 +0100
-Message-ID: <20261118150050.149233390@linuxfoundation.org>
+Subject: [PATCH 5.15 0946/2214] tracing/histograms: Verify event_call identity when updating synth_event refcount
+Date: Wed, 18 Nov 2026 15:43:42 +0100
+Message-ID: <20261118150050.186471893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,92 +68,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
+[ Upstream commit 3403d9bb27ebc3572bd048620746b4414e073bf9 ]
 
-SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
-scatterlist can then contain pages pinned without write access.
-ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
-in the reported case, the copy tried to write the shared zero page
-and faulted in the kernel.
+In event_hist_trigger_parse() and hist_unreg_all(), the histogram
+registration and unregistration paths look up find_synth_event() using
+trace_event_name(file->event_call) and adjust se->ref if a match is
+found.
 
-The same mismatch can affect SG_IO commands translated by libata.
-ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
-the receive buffer even if the drive aborts the command. For ATAPI,
-the successful INQUIRY completion also rewrites the buffer in
-atapi_fixup_inquiry().
+Because find_synth_event() only compares the event basename, registering
+or removing a histogram on a non-synthetic trace event whose basename
+matches a synthetic event erroneously modifies the synthetic event's
+reference count.  If a histogram is registered on the non-synthetic
+event before the synthetic event is created and removed afterwards,
+se->ref is decremented without a matching increment, allowing the
+synthetic event to be freed while an active histogram action still holds
+a pointer to it.
 
-Reject these mismatched commands before the buffer is written or the
-command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
-the CDB itself can be valid; the supplied transfer direction is wrong.
+Introduce find_synth_event_call() to verify that &se->call matches
+file->event_call before adjusting se->ref.
 
-Backport notes: Use the older five-argument ata_scsi_set_sense()
-interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
-The older ata_scsi_rbuf_fill() takes struct ata_scsi_args;
-get the device and command from args, and reject before copying.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
+Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20261019120730.2342739-1-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[Lee: Context conflict in event_hist_trigger_func() - no functional change]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ kernel/trace/trace_events_hist.c  | 11 +++--------
+ kernel/trace/trace_events_synth.c | 10 ++++++++++
+ kernel/trace/trace_synth.h        |  1 +
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 7725910eca0b6..81ed39f68c148 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1766,6 +1766,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	if (xlat_func(qc))
- 		goto done;
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 223b38f9ac0e4..c8e57b6e28fdb 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5797,7 +5797,6 @@ static void hist_unreg_all(struct trace_event_file *file)
+ 	struct event_trigger_data *test, *n;
+ 	struct hist_trigger_data *hist_data;
+ 	struct synth_event *se;
+-	const char *se_name;
  
-+	/*
-+	 * A data-out request may contain pages pinned without write access.
-+	 * Reject a translated data-in command before issuing it, since its
-+	 * completion handler may write to the buffer even if the device fails.
-+	 */
-+	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
-+		     ata_is_data(qc->tf.protocol) &&
-+		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
-+		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		goto done;
-+	}
+ 	lockdep_assert_held(&event_mutex);
+ 
+@@ -5810,8 +5809,7 @@ static void hist_unreg_all(struct trace_event_file *file)
+ 			list_del_rcu(&test->list);
+ 			trace_event_trigger_enable_disable(file, 0);
+ 
+-			se_name = trace_event_name(file->event_call);
+-			se = find_synth_event(se_name);
++			se = find_synth_event_call(file->event_call);
+ 			if (se)
+ 				se->ref--;
+ 
+@@ -5834,7 +5832,6 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
+ 	struct event_trigger_ops *trigger_ops;
+ 	struct hist_trigger_data *hist_data;
+ 	struct synth_event *se;
+-	const char *se_name;
+ 	bool remove = false;
+ 	char *trigger, *p;
+ 	int ret = 0;
+@@ -5931,8 +5928,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
+ 		}
+ 
+ 		cmd_ops->unreg(glob+1, trigger_ops, trigger_data, file);
+-		se_name = trace_event_name(file->event_call);
+-		se = find_synth_event(se_name);
++		se = find_synth_event_call(file->event_call);
+ 		if (se)
+ 			se->ref--;
+ 		ret = 0;
+@@ -5973,8 +5969,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
+ 	if (ret)
+ 		goto out_unreg;
+ 
+-	se_name = trace_event_name(file->event_call);
+-	se = find_synth_event(se_name);
++	se = find_synth_event_call(file->event_call);
+ 	if (se)
+ 		se->ref++;
+ 	/* Just return zero, not the number of registered triggers */
+diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
+index 62d146254f470..ba5647204d3e5 100644
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -848,6 +848,16 @@ struct synth_event *find_synth_event(const char *name)
+ 	return NULL;
+ }
+ 
++struct synth_event *find_synth_event_call(struct trace_event_call *call)
++{
++	struct synth_event *se;
++	const char *name;
 +
- 	return ata_scsi_qc_issue(ap, qc);
- 
- done:
-@@ -1802,6 +1814,12 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
- 	struct scsi_cmnd *cmd = args->cmd;
- 	unsigned long flags;
- 
-+	/* A data-out request may contain pages pinned without write access. */
-+	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
-+		ata_scsi_set_sense(args->dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return;
-+	}
++	name = trace_event_name(call);
++	se = find_synth_event(name);
++	return se && &se->call == call ? se : NULL;
++}
 +
- 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
+ static struct trace_event_fields synth_event_fields_array[] = {
+ 	{ .type = TRACE_FUNCTION_TYPE,
+ 	  .define_fields = synth_event_define_fields },
+diff --git a/kernel/trace/trace_synth.h b/kernel/trace/trace_synth.h
+index 43f6fb6078dbf..d4ebf01b70492 100644
+--- a/kernel/trace/trace_synth.h
++++ b/kernel/trace/trace_synth.h
+@@ -37,5 +37,6 @@ struct synth_event {
+ };
  
- 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
-@@ -2629,6 +2647,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
+ extern struct synth_event *find_synth_event(const char *name);
++extern struct synth_event *find_synth_event_call(struct trace_event_call *call);
  
- 	qc->complete_fn = atapi_qc_complete;
- 
-+	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
-+	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
-+	    scmd->cmnd[0] == INQUIRY) {
-+		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return 1;
-+	}
-+
- 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
- 		qc->tf.flags |= ATA_TFLAG_WRITE;
+ #endif /* __TRACE_SYNTH_H */
 -- 
 2.53.0
 
