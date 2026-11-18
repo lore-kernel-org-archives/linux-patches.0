@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017074;
-	b=2IQ6FHMJBU88CSFHdXTpD3+yGjFNIhaJWe5Ose4lKvxj5OenTlOm7kNwh2Jt7aIxGT7i
-	 oi185eQd5HSpG42fu04N7fLeP1TKP7UrWC4WP/vEsEObuqFhvY7+pPGk10TAH7kFMdomh
-	 nq3XBk7UG0sVxtePlvFZA4bqXiqZ/Xsb55AExFhIh3I3waqwnUxxdHwU8ju430HlyatBB
-	 efORFQaxXwlKb/0cUcaxJMUC58kM9etrDSBx1WQeIYGy9W8bHrsDzjcEiyJnrUYSvHbFY
-	 AxffDrhaoDZQYyfkgDz26+daczYH9rT4rvlKs5Qw8Q7n1fU1qg3mNQDi8klR0tgFBPw==
+	t=1795017077;
+	b=pL+7UJ44IkVJ9gvEvGhOa0+rSd+zAR6py7LCt/orrjzwbcDDMlnMJKg838L84l3A9ekV
+	 wtmz+7A7eVVNM2q4s0cumTeR6i3ubmWetEYKrJG1hxbH2ni9AmUtWqhA/QoXFrOCH2iNM
+	 rAxM9NKQiOHIF4F7LGYwOTnegtGJQCjw8N5KZWIiMjUxRZMJW3w1riYNnVL6YR3cVE05x
+	 MougdBs4fqjppsv/lHZzmYwzgZ/K4fblnTKLAzmC/BgUgvGX6PZxlE+QaQJoxi3A7dAv9
+	 rhbVtu162hFgWynw/ph7CCO0J3XP8uIfMLUKAAoGLDViuaMy2hNpNR3eVp3G1ZNW1+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/j1cJR7E6A/caM23ZmD3ggp6F4Xjvf1s55IcmV/3KHU=;
-	b=KgbLPBME7FDzlcMx3vOr2QJebttjCKKvdE3dVZGEffcV/pFtWBYvxXksZunnZwhEMirK
-	 xd+o9Unchk4eNu1Z/X5TDRaRO7JdkrPRUTBmdIEceDyvpJcfYu+ZO2wHRGESgpZoTMxY3
-	 uPOpgVia/+zpnUccwSyaaECpsbmh/pjIzMvuu2yQb/tFn3NBu4CfH7+8/15Lf8INYRNyW
-	 SxVCGK07vfjEtqo8thgqoscenB2b3GW7gBUJx4Y1n9GO+gLYZPjxrBPclxWANrM96ylfI
-	 dTPiOcffWsAiAgZvZPrBvLCATqVAegmM9wOCU20COpWDGI/pCOpqpsE6HqIzFsLiqvw==
+	bh=Jyvj5nq/ssT0ni3dxcTvj9ArgZwX1Gd9ZY1kJdkg3AU=;
+	b=jBljQfH8OHgMBfoJRDR8nwq6mab2I/VUnV4XCJKZRWfFt/eihRB0ym5DnVCOuwzf+wla
+	 CdgfJPV0GhQllcbzK0EALpdTP/VjIBZj8MN69eSINGMqqMAWHdHGuXiUI4LHBRPOZvFBz
+	 80YZKBbusJltSEVQdVFxgVxDr5WmgaKL9P/lsE2GFfHc6kXVtvv9aGxvvwIc769eC2bjk
+	 v3ajYAfsvhlVasmkycMdrfZnr5qnUpDRfu1AMQDaj9H5VVjB4/X+1ut3Bw6zKo9vU+3Ko
+	 8vZ3JdjLoi69M5sl8s6OIen7zBcv57TiRiAQBWQDU5G/eM3rNsrcS0q7V1XGFKVAwxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaTPGcPu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xuIk4Ue/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C936D606A32A;
-	Wed, 18 Nov 2026 15:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4CF606A31C;
+	Wed, 18 Nov 2026 15:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaTPGcPu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F8A1F000CA;
-	Wed, 18 Nov 2026 15:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuIk4Ue/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DE71F000C7;
+	Wed, 18 Nov 2026 15:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017074;
-	bh=/j1cJR7E6A/caM23ZmD3ggp6F4Xjvf1s55IcmV/3KHU=;
+	s=korg; t=1795017077;
+	bh=Jyvj5nq/ssT0ni3dxcTvj9ArgZwX1Gd9ZY1kJdkg3AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gaTPGcPuMxrVfHNKHwwTFi0EDLP+qXzjieCMt2R2E0UWbwUAu8gpKglwAUXLPUmK4
-	 2GX5UDlvF3M3AVbFYvrmeicdeZYiDeFHL0OWeBGgpnu5w2R/9a0liJVRTklJjHPvu9
-	 /Z9xJY+h2tSji75oZaNxhhylZ82KS7LUL4FKFcgo=
+	b=xuIk4Ue/Jc2JRMbAFjKWkH1Q7T9c5zKv+/Y/NPLr+S2Ah9IkeJUpFt9ctywGGNEvr
+	 Cf5fAhyEQ0eWSJGWY8++zyvsKErHtGPIbA7CdoKG5hEO7uCMxlwuA0MOfH73zbzkO0
+	 3LGFS9zUhwBfOnchRLE/QaBnZvLXj1r6p56wCye0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>,
-	Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0755/2651] clk: qcom: Fix CLK_GLYMUR_GPUCC default and CLK_GLYMUR_EVACC duplicate
-Date: Wed, 18 Nov 2026 15:33:15 +0100
-Message-ID: <20261118150315.060820611@linuxfoundation.org>
+Subject: [PATCH 7.3 0756/2651] clk: qcom: fix SM6115 lpasscc register offset
+Date: Wed, 18 Nov 2026 15:33:16 +0100
+Message-ID: <20261118150315.097435520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,47 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 748f9caa7ab158598295f6c195e8a2bcbbace841 ]
+[ Upstream commit 689364ac19e4680e09d100c743f8797da127609a ]
 
-Commit 6b150572bb76 ("clk: qcom: Add defaults for desired arm64 drivers")
-missed adding a defaults for CLK_GLYMUR_GPUCC and created a duplicated
-for CLK_GLYMUR_EVACC instead. The original patch series did't have this
-problem and was introduced during the merge. Fix this by removing the
-duplicate and adding a default for CLK_GLYMUR_GPUCC.
+For some reason we ended with incorrect register offset for soundwire tx
+controller reset and the regmap register max was also incorrect it was
+0x1000 instead of 0x12000 which is full register range for this IP.
 
-Fixes: 6b150572bb76 ("clk: qcom: Add defaults for desired arm64 drivers")
-Signed-off-by: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
-Reviewed-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260821045214.2623299-2-sivansh.gupta@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This was somehow compenseated in DT reg property which got it working so
+far.
+
+Fix this by correcting the actual offset and max registers as per SoC
+documentation.
+
+Fixes: b076b995e225 ("clk: qcom: Add SM6115 LPASSCC")
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/3a4e8d1115a46c45cb34193b6ceeb02891fdf716.1790114902.git.srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/lpasscc-sm6115.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index d1fc9bf87126b..283cca5aca0e9 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -73,7 +73,6 @@ config CLK_GLYMUR_DISPCC
- config CLK_GLYMUR_EVACC
- 	tristate "Glymur EVA Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
--	default m if ARCH_QCOM
- 	select CLK_GLYMUR_GCC
- 	default m if ARCH_QCOM
- 	help
-@@ -96,6 +95,7 @@ config CLK_GLYMUR_GPUCC
- 	tristate "Glymur Graphics Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
- 	select CLK_GLYMUR_GCC
-+	default m if ARCH_QCOM
- 	help
- 	  Support for the graphics clock controller on Glymur devices.
- 	  Say Y if you want to support graphics controller devices and
+diff --git a/drivers/clk/qcom/lpasscc-sm6115.c b/drivers/clk/qcom/lpasscc-sm6115.c
+index 226dc02fc42da..fcc1512d4a991 100644
+--- a/drivers/clk/qcom/lpasscc-sm6115.c
++++ b/drivers/clk/qcom/lpasscc-sm6115.c
+@@ -34,7 +34,7 @@ static const struct qcom_cc_desc lpass_audiocc_sm6115_reset_desc = {
+ };
+ 
+ static const struct qcom_reset_map lpasscc_sm6115_resets[] = {
+-	[LPASS_SWR_TX_CONFIG_CGCR] = { .reg = 0x100, .bit = 1, .udelay = 500 },
++	[LPASS_SWR_TX_CONFIG_CGCR] = { .reg = 0xc100, .bit = 1, .udelay = 500 },
+ };
+ 
+ static struct regmap_config lpasscc_sm6115_regmap_config = {
+@@ -42,7 +42,7 @@ static struct regmap_config lpasscc_sm6115_regmap_config = {
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+ 	.name = "lpass-tcsr",
+-	.max_register = 0x1000,
++	.max_register = 0x12000,
+ };
+ 
+ static const struct qcom_cc_desc lpasscc_sm6115_reset_desc = {
 -- 
 2.53.0
 
