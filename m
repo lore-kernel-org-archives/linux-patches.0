@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044122;
-	b=GndmPl/PLIRJV/d+XSg5HjMPn24ITrKbUzqGV6N7JwLckrDA8dW8YA6H0jLmsKOTVjd5
-	 Qt8R9vQHHi8iKQLJLIUMec5/APP/2YV/gwQSpc2MTjIunu8Bja3pIiAW6z+6iF+hgct81
-	 O3r+uvxUvigRfwAWtILIUP+PIxo9Wi34Fi25lD+RuOZUaR0jacc3e0SnpoEPBEFUmEbNe
-	 TZgodBUp5TMJ8MlhDeR0/YTuI9MkYZ5iNIr4u6n2N+OBuMZYcO+LB8ZfIFAMa9uFyaKIP
-	 CeaXIdgOXyumP+Qbf0tKZ5mwGPrNKQRVP/LEGmz8DuTtVxalz0zBznVkXZKmVw9Cg5A==
+	t=1795044125;
+	b=f/9//4hIKQgnYBISgQpOAaxWevGU9C9DrtO9obvdQHaMdms8fEx3xiUIA2tbnxsg3FYV
+	 lAObl112H6Ymuvgjvv7mhI2GWE3lTOMpK5ZUi7sJYFKIT0lKVznhqYhHxR25XDk93jpDY
+	 TMf1y7cpKGpJfkPktxC8NrV7pj2MktRzTnkvZ+Tpo92oNlGsoxlEzf9/8PgClOyL0Oj6a
+	 ns+lKRg7fz1bZLzK4Y73vovHfzplGrCR3B7/xJv0W3eGqTyg8GtxJaZQ9aapXIrtMLtFh
+	 Rn3unCIaCcIUw+d8WmHk1sLnYbV3CqpGiLB7SO5RfIqZBBUaC4bgyispsAbEBInrCkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NTrTs7vGWVALgHMjXaiFKQBEn4jiraE1Oazm5tv0gr4=;
-	b=tXflDO8L/+xqhe68xgaA1l+Kl2qmqYmafFWFfGXN0r2UhHjWZpWEcWCamDFVePNZZuYe
-	 5/1Pr+4pJ9D+ZhLOC8mxh5Cs+Z1i1ENTBVCCNbAldQJYRPww+a25FAtuhQ7mQSjtRrAkX
-	 hbyaVRZpuMVAGH4aOcryTBXsSCbxe+3YbLOoefcb4mEKkzMqDpiLQ+j4B2fBaiFSweoWH
-	 qHK632RNGEP1+6UVWAxShXdwcodVhNGZpsu5F+oo9SxGIh2gely+VCd9Fx1FKOP2w9pQc
-	 9ZErg2B2obdRtHkEvH5Vn1ObWQa+QIllzGqroGTOq8Od0xz+HwN+G60yPcbiSiZ4PeA==
+	bh=dh3Roembz+yXOXP7bRGM1lo4fSmfbXilcRG+WOxBUwQ=;
+	b=NOCPTJZKueaOV+FzMuUtBJpRQrHcJ7nsAxdPRFdgy0hyuPpKI4ZxC8464FSEiczIe+3E
+	 FjZz/6niwG+rQBZ7yWuvS7EboC1TMKuLNIDuhem10XBivJhmT6ldczEhLTV2HAQ1OV0MX
+	 3nvL6AueyHPkmPYXase6nS3YrM8uyMB33KMFCbqrOqAxI8uZdxpRJN7D/hWtGYnI+Mghv
+	 acubg/evh55M+hOhu+8jCAvpbs8BPgziAZJb/qHFN57y1dLcGwKWXVBSN6rrGhwdDnw+g
+	 fYsaxILNX9r/LlasZKJXoHegiYIH66P5d2MBONxf7LIcSQy4SUhOCkmMHnFRSPmH+7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXcpFEaq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okPzxOMJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F566606A325;
-	Wed, 18 Nov 2026 23:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C5F606A32C;
+	Wed, 18 Nov 2026 23:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXcpFEaq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8551F000C4;
-	Wed, 18 Nov 2026 23:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okPzxOMJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FC21F000C4;
+	Wed, 18 Nov 2026 23:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044122;
-	bh=NTrTs7vGWVALgHMjXaiFKQBEn4jiraE1Oazm5tv0gr4=;
+	s=korg; t=1795044125;
+	bh=dh3Roembz+yXOXP7bRGM1lo4fSmfbXilcRG+WOxBUwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXcpFEaqevwmdnrCEIWXjKg0X1IEukhDsC3Iboe+olSwJmPp5l3Ae87A79D4u1WFJ
-	 cUsf1o7Qspf0cIEZaSnohNuhfZ06TzJbDS23Ij61crum3/VlXSysUBnNLh1tt4NN58
-	 EeVJm6NGjyYl8+SCM2PfmHspZLVARtJyim9pCO4o=
+	b=okPzxOMJOvALudhR1n+zqP8x0tY7I3/5ElAywmEbVNHUMRVKXlG+RsE8XOEfAvAY3
+	 Ui8j3bMBnvtbM4ZLnsOFn6UokD9JlkYPQyUoEaGu/8E9fCVMSWhUSX1hTv7E4g/ICa
+	 qdEC0sccNc9pPR9P5ChQX2y3l1459fNf93+E4irA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
+	stable@kernel.org,
 	Johan Hovold <johan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.1 0453/2857] serial: fix ioctl hangup race
-Date: Wed, 18 Nov 2026 15:24:47 +0100
-Message-ID: <20261118150217.691434870@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0454/2857] serial: abort TIOCMIWAIT on hangup
+Date: Wed, 18 Nov 2026 15:24:48 +0100
+Message-ID: <20261118150217.769574352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,177 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 8ca59f7baee7c72cf7729950b4ab2e7f910c9549 ]
+[ Upstream commit eb35b73e133686e5b999eb7130c4e3d22fe03089 ]
 
-The tty ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+Add the missing hangup check to the TIOCMIWAIT wait loop to avoid going
+back to sleep (indefinitely) after being woken on hangup.
 
-Add the missing checks to make sure the port has not been hung up before
-accessing the hardware to avoid issues like kernel panic due to
-unclocked accesses.
-
-Note that TIOCGSERIAL, TIOCGICOUNT do not access hardware and are
-therefore not affected by the race.
-
-Also note that the initialised check in uart_set_ldisc() added by commit
-2f70e49ed860 ("serial_core: Check for port state when tty is in error
-state") should have been done under the port lock to avoid racing with
-uart_do_autoconfig().
-
-Fixes: 04f378b198da ("tty: BKL pushdown")
-Cc: stable@kernel.org	# 2.6.26
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/r/20260904115542.E20D11F00A3D@smtp.kernel.org
+Cc: stable@kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910130816.642699-3-johan@kernel.org
+Link: https://patch.msgid.link/20260910130816.642699-5-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Replaced the upstream guard()/scoped-guard locking with explicit mutex_lock/unlock and goto out, and reordered port->mutex and port ref in two wait paths to avoid a deadlock with port removal. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 52 +++++++++++++++++++++++---------
- 1 file changed, 38 insertions(+), 14 deletions(-)
+ drivers/tty/serial/serial_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 69845f9e7aea0..0efcebcd9991d 100644
+index 0efcebcd9991d..eda883862fcdf 100644
 --- a/drivers/tty/serial/serial_core.c
 +++ b/drivers/tty/serial/serial_core.c
-@@ -816,7 +816,7 @@ static int uart_set_info(struct tty_struct *tty, struct tty_port *port,
- 	upf_t old_flags, new_flags;
- 	int retval = 0;
+@@ -1251,6 +1251,11 @@ static int uart_wait_modem_status(struct tty_struct *tty, struct uart_state *sta
+ 			break;
+ 		}
  
--	if (!uport)
-+	if (!uport || tty_io_error(tty))
- 		return -EIO;
- 
- 	new_port = new_info->port;
-@@ -1120,7 +1120,7 @@ static int uart_break_ctl(struct tty_struct *tty, int break_state)
- 
- 	mutex_lock(&port->mutex);
- 	uport = uart_port_check(state);
--	if (!uport)
-+	if (!uport || tty_io_error(tty))
- 		goto out;
- 
- 	if (uport->type != PORT_UNKNOWN && uport->ops->break_ctl)
-@@ -1149,7 +1149,7 @@ static int uart_do_autoconfig(struct tty_struct *tty, struct uart_state *state)
- 		return -ERESTARTSYS;
- 
- 	uport = uart_port_check(state);
--	if (!uport) {
-+	if (!uport || tty_io_error(tty)) {
- 		ret = -EIO;
- 		goto out;
- 	}
-@@ -1204,7 +1204,7 @@ static void uart_enable_ms(struct uart_port *uport)
-  * FIXME: This wants extracting into a common all driver implementation
-  * of TIOCMWAIT using tty_port.
-  */
--static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
-+static int uart_wait_modem_status(struct tty_struct *tty, struct uart_state *state, unsigned long arg)
- {
- 	struct uart_port *uport;
- 	struct tty_port *port = &state->port;
-@@ -1215,14 +1215,26 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
- 	/*
- 	 * note the counters on entry
- 	 */
-+	mutex_lock(&port->mutex);
- 	uport = uart_port_ref(state);
--	if (!uport)
-+	if (!uport) {
-+		mutex_unlock(&port->mutex);
- 		return -EIO;
-+	}
-+
-+	if (tty_io_error(tty)) {
-+		mutex_unlock(&port->mutex);
-+		ret = -EIO;
-+		goto out_deref;
-+	}
-+
- 	spin_lock_irq(&uport->lock);
- 	memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
- 	uart_enable_ms(uport);
- 	spin_unlock_irq(&uport->lock);
- 
-+	mutex_unlock(&port->mutex);
-+
- 	add_wait_queue(&port->delta_msr_wait, &wait);
- 	for (;;) {
- 		set_current_state(TASK_INTERRUPTIBLE);
-@@ -1251,6 +1263,7 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
- 	}
- 	__set_current_state(TASK_RUNNING);
- 	remove_wait_queue(&port->delta_msr_wait, &wait);
-+out_deref:
- 	uart_port_deref(uport);
- 
- 	return ret;
-@@ -1568,7 +1581,7 @@ uart_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
- 	 */
- 	switch (cmd) {
- 	case TIOCMIWAIT:
--		ret = uart_wait_modem_status(state, arg);
-+		ret = uart_wait_modem_status(tty, state, arg);
- 		break;
- 	}
- 
-@@ -1629,15 +1642,15 @@ static void uart_set_ldisc(struct tty_struct *tty)
- {
- 	struct uart_state *state = tty->driver_data;
- 	struct uart_port *uport;
--	struct tty_port *port = &state->port;
--
--	if (!tty_port_initialized(port))
--		return;
- 
- 	mutex_lock(&state->port.mutex);
- 	uport = uart_port_check(state);
--	if (uport && uport->ops->set_ldisc)
-+	if (!uport || tty_io_error(tty))
-+		goto out;
-+
-+	if (uport->ops->set_ldisc)
- 		uport->ops->set_ldisc(uport, &tty->termios);
-+out:
- 	mutex_unlock(&state->port.mutex);
- }
- 
-@@ -1652,7 +1665,7 @@ static void uart_set_termios(struct tty_struct *tty,
- 
- 	mutex_lock(&state->port.mutex);
- 	uport = uart_port_check(state);
--	if (!uport)
-+	if (!uport || tty_io_error(tty))
- 		goto out;
- 
- 	/*
-@@ -1817,14 +1830,25 @@ static void uart_wait_until_sent(struct tty_struct *tty, int timeout)
- 	 * 'timeout' / 'expire' give us the maximum amount of time
- 	 * we wait.
- 	 */
--	while (!port->ops->tx_empty(port)) {
-+	for (;;) {
-+		bool done;
-+
-+		uart_port_deref(port);
-+		mutex_lock(&state->port.mutex);
-+		port = uart_port_ref(state);
-+		done = !port || tty_io_error(tty) || port->ops->tx_empty(port);
-+		mutex_unlock(&state->port.mutex);
-+		if (done)
++		if (tty_io_error(tty)) {
++			ret = -EIO;
 +			break;
++		}
 +
- 		msleep_interruptible(jiffies_to_msecs(char_time));
- 		if (signal_pending(current))
- 			break;
- 		if (timeout && time_after(jiffies, expire))
- 			break;
- 	}
--	uart_port_deref(port);
-+	if (port)
-+		uart_port_deref(port);
- }
+ 		schedule();
  
- /*
+ 		/* see if a signal did it */
 -- 
 2.53.0
 
