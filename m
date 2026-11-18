@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041699;
-	b=YWbSpaoT4sKQIJ/B+jhkvLgLfJj/q3FDyyIi051FPwoQ5k9wWJJyzKUFBtV8XtTPv1kr
-	 ixBXI9PbEOhJdexzzYgNbUF4AonUT/Faycdbbo2XwECtfHgLPgdVn3juAQXfbZCW4WuIo
-	 0AuoaqHMZ1A/gP4tLLsfBLct+DwawCF9uy25mOgZNpL19z6U0S9kSB/A8IWhdDYXhgGNK
-	 bmdSdfuBt7AB3NVPg72xGV15xa3djTA8hHDT/knbddh/N8IpvxY7O4eWQ9tO5gpk6bRc5
-	 mG8c8QV6ECxuygP68FW2jafq2SMuS+PapkR7UszzgdOPLUiqKQgwUNRIUE4KT7moAQw==
+	t=1795041702;
+	b=xRti75w42RtuTku214KgAwoKqRvfrt7f6nswu98Waw9451d4uIKJ+nLficCUzLB7YMP3
+	 +oImDG9b9Rrs72zB45UPrXiKG2Y5UKh8LnM7ILyaLMrdm639Kx6+CjHMJiSF8MRW6xY+t
+	 6YaEw8FSFQ+YaZ9vnYfZNo9RzlPIZZaY+D5BIqEEgWUKjdSGOZTCjiVxaHfiRMHwqRTh0
+	 VK3GsMpqjzC+jzXDoZ9fQO2t18ur9C1AykncPiRRnhWeyc1ur5MAZ4/zDXd8EHuv7m2CP
+	 yQxrrkJMeTZaR+gW6mXNO3bHmkYZdvtgCiV+zRjAH3msXzjpHHGv2lILErIlDnoIECw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041702;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ksRv0mjE9q6RMHdjyAkQvLXhggWWJLtNvDkrv5/Rozk=;
-	b=QatpjEskvQW+tG1RscqFHsiT/O5roWRO7SEzGnxTLLrxsayEDRTyoSFfGzEMwi4nmcNx
-	 y7s3rw2ULvrhRZ9p7tFLcX7UkV0/x01k/6OIRT7Umz6013GlimJY5c5eVsVfgG9gCc544
-	 L0eAnMLmhSH+YQ6vKx+sdnwoX0ENccGpipqkQkmbG3coFTqUfivrXb2ke+WVdrB8Q7Jcj
-	 iaSsjN08NPfuCWIUAT52dcLTPfeRHePjoEbJ7paBwmDOFgZ7f7JH9hzK7KKVIG9nn6ewF
-	 vahBrhyt0l/xcYFdSETxUW8VQgKxPiYvwUy9ZUSCGleF5KqSs65DAtI+cIdxO/EGDvg==
+	bh=rzrMZVOMksgiRWvfqUgzInEQDsdXgU33Dc0vLmQ1Zf0=;
+	b=0TDSN/DLkb8EGdEcOcDEgtOAh9yIKzt8JkYlGU+4bAlPXK0btLtE0p4yvobZfcExbU3Q
+	 aJ+XMPn4CjU85uSJmH6Ang/06Jqq7XpYr+4CBoVLK6RUc4oJGoaUJlOFoNZuSfU6vgUmr
+	 eODIKG74Z2MR4FFfX5ALTp03LfTHs8H1/XDYw+DhKOBpEAv7n8jt1/ad6KPiiKvBTiy6I
+	 Oj6Q4YCrGpouCJBD2Yxt1cIV+zDm5KrGc8vcb56EXeq/Dam2IyWjwc9ajmyMAo1sEf3BR
+	 50ALCXgA8Gaf6L3yJVlhGMffR+sLZ4Vl0SBlpiXfrbe2hQQAR1gqAR/TY/tyOr4KMeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fy5eCQqW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Awed6d1i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7FA606A31C;
-	Wed, 18 Nov 2026 22:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7AD606A31C;
+	Wed, 18 Nov 2026 22:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fy5eCQqW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0616D1F000C4;
-	Wed, 18 Nov 2026 22:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Awed6d1i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81C11F000C4;
+	Wed, 18 Nov 2026 22:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041699;
-	bh=ksRv0mjE9q6RMHdjyAkQvLXhggWWJLtNvDkrv5/Rozk=;
+	s=korg; t=1795041702;
+	bh=rzrMZVOMksgiRWvfqUgzInEQDsdXgU33Dc0vLmQ1Zf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fy5eCQqWwUSmgyWyO8ySJed17BGAiQMBJuCJxnnFuiAnAlM6ipxMcuCvQn83JUFco
-	 ff9bFsG9jhq7CtYT3viX8VX6vg7cHSU3d5BrGulBowpGLqNNsbg9wo+DGWQJW1J+Dl
-	 AGzVofQmFbLuwUzNn9ZN+cVxzO3zEfbMkTqbZn7g=
+	b=Awed6d1iQyLfWLDPLoRZg8pnXSwcauH0YIDguhWBbz2904KbZc0u5VEdOCY+uOe1j
+	 Id0CZel4VjLUfAC4FFhy3L0rrgGrOTk3kUXW+xnSVVgWvW6oyI3fPzSzqH1h+6QtUS
+	 wJXxXRGH10ol43ARChObO7tvQm8QLUNr4OSOdhqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
+	Dawei Li <dawei.li@shingroup.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2908/3318] irqchip/gic-v3-its: Dont free the tables of an enabled ITS
-Date: Wed, 18 Nov 2026 15:58:50 +0100
-Message-ID: <20261118150447.699916004@linuxfoundation.org>
+Subject: [PATCH 6.6 2909/3318] irqchip/gic(v3): Replace gic_irq() with irqd_to_hwirq()
+Date: Wed, 18 Nov 2026 15:58:51 +0100
+Message-ID: <20261118150447.728816968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,55 +69,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Dawei Li <dawei.li@shingroup.cn>
 
-[ Upstream commit d09b36d8e0e60f35bd1cd7d63aadc6dfad61700c ]
+[ Upstream commit d22083a5f09b2066728a91f3abb71284451247b1 ]
 
-its_probe_one() enables the ITS before its_init_domain(), the last step
-that can fail, and the unwind from there frees the tables and the
-command queue without disabling it. The kernel comes up with an enabled
-ITS pointing at freed pages.
+GIC & GIC-v3 share same gic_irq() implementations, both of which serve
+exact same purpose as irqd_to_hwirq(). irqd_to_hwirq() is a generic and
+top level API of the interrupt subsystem, it's independent of any chip
+implementation.
 
-Enable the ITS last. Nothing reaches the new domain before then: this
-runs from init_IRQ(), and the ITS joins its_nodes only after the enable.
+Replace gic_irq() with irqd_to_hwirq() and convert struct irq_data::hwirq
+to irq_hw_number_t explicitly.
 
-Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260925085000.753400-3-fuad.tabba@linux.dev
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240122085716.2999875-3-dawei.li@shingroup.cn
+Stable-dep-of: 13ce14ca41a3 ("irqchip/gic: Fix UBSAN shift-out-of-bounds in GIC helpers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-gic-v3.c | 19 +++++++------------
+ drivers/irqchip/irq-gic.c    | 27 ++++++++++++---------------
+ include/linux/irq.h          |  2 +-
+ 3 files changed, 20 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 1447d91cf6f7f..bf16e8f11539f 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5263,16 +5263,18 @@ static int __init its_probe_one(struct its_node *its)
+diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
+index 6c7943c516eb0..90e72f95609cc 100644
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -174,11 +174,6 @@ static enum gic_intid_range get_intid_range(struct irq_data *d)
+ 	return __get_intid_range(d->hwirq);
+ }
+ 
+-static inline unsigned int gic_irq(struct irq_data *d)
+-{
+-	return d->hwirq;
+-}
+-
+ static inline bool gic_irq_in_rdist(struct irq_data *d)
+ {
+ 	switch (get_intid_range(d)) {
+@@ -547,7 +542,7 @@ static int gic_irq_nmi_setup(struct irq_data *d)
+ 	 * A secondary irq_chip should be in charge of LPI request,
+ 	 * it should not be possible to get there
+ 	 */
+-	if (WARN_ON(gic_irq(d) >= 8192))
++	if (WARN_ON(irqd_to_hwirq(d) >= 8192))
+ 		return -EINVAL;
+ 
+ 	/* desc lock should already be held */
+@@ -584,7 +579,7 @@ static void gic_irq_nmi_teardown(struct irq_data *d)
+ 	 * A secondary irq_chip should be in charge of LPI request,
+ 	 * it should not be possible to get there
+ 	 */
+-	if (WARN_ON(gic_irq(d) >= 8192))
++	if (WARN_ON(irqd_to_hwirq(d) >= 8192))
+ 		return;
+ 
+ 	/* desc lock should already be held */
+@@ -622,7 +617,7 @@ static bool gic_arm64_erratum_2941627_needed(struct irq_data *d)
+ 
+ static void gic_eoi_irq(struct irq_data *d)
+ {
+-	write_gicreg(gic_irq(d), ICC_EOIR1_EL1);
++	write_gicreg(irqd_to_hwirq(d), ICC_EOIR1_EL1);
+ 	isb();
+ 
+ 	if (gic_arm64_erratum_2941627_needed(d)) {
+@@ -642,19 +637,19 @@ static void gic_eoimode1_eoi_irq(struct irq_data *d)
+ 	 * No need to deactivate an LPI, or an interrupt that
+ 	 * is is getting forwarded to a vcpu.
+ 	 */
+-	if (gic_irq(d) >= 8192 || irqd_is_forwarded_to_vcpu(d))
++	if (irqd_to_hwirq(d) >= 8192 || irqd_is_forwarded_to_vcpu(d))
+ 		return;
+ 
+ 	if (!gic_arm64_erratum_2941627_needed(d))
+-		gic_write_dir(gic_irq(d));
++		gic_write_dir(irqd_to_hwirq(d));
+ 	else
+ 		gic_poke_irq(d, GICD_ICACTIVER);
+ }
+ 
+ static int gic_set_type(struct irq_data *d, unsigned int type)
+ {
++	irq_hw_number_t irq = irqd_to_hwirq(d);
+ 	enum gic_intid_range range;
+-	unsigned int irq = gic_irq(d);
+ 	void __iomem *base;
+ 	u32 offset, index;
+ 	int ret;
+@@ -680,7 +675,7 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
+ 	ret = gic_configure_irq(index, type, base + offset, NULL);
+ 	if (ret && (range == PPI_RANGE || range == EPPI_RANGE)) {
+ 		/* Misconfigured PPIs are usually not fatal */
+-		pr_warn("GIC: PPI INTID%d is secure or misconfigured\n", irq);
++		pr_warn("GIC: PPI INTID%ld is secure or misconfigured\n", irq);
+ 		ret = 0;
  	}
  
- 	gits_write_cwriter(0, its->base + GITS_CWRITER);
-+
-+	err = its_init_domain(its);
-+	if (err)
-+		goto out_free_collection;
-+
-+	/* Enable last: the unwind frees memory an enabled ITS may access */
- 	ctlr = readl_relaxed(its->base + GITS_CTLR);
- 	ctlr |= GITS_CTLR_ENABLE;
- 	if (is_v4(its))
- 		ctlr |= GITS_CTLR_ImDe;
- 	writel_relaxed(ctlr, its->base + GITS_CTLR);
+diff --git a/drivers/irqchip/irq-gic.c b/drivers/irqchip/irq-gic.c
+index 2c6c50348afd1..95cc1416407e5 100644
+--- a/drivers/irqchip/irq-gic.c
++++ b/drivers/irqchip/irq-gic.c
+@@ -162,11 +162,6 @@ static inline void __iomem *gic_cpu_base(struct irq_data *d)
+ 	return gic_data_cpu_base(gic_data);
+ }
  
--	err = its_init_domain(its);
--	if (err)
--		goto out_free_collection;
+-static inline unsigned int gic_irq(struct irq_data *d)
+-{
+-	return d->hwirq;
+-}
 -
- 	raw_spin_lock(&its_lock);
- 	list_add(&its->entry, &its_nodes);
- 	raw_spin_unlock(&its_lock);
+ static inline bool cascading_gic_irq(struct irq_data *d)
+ {
+ 	void *data = irq_data_get_irq_handler_data(d);
+@@ -183,14 +178,16 @@ static inline bool cascading_gic_irq(struct irq_data *d)
+  */
+ static void gic_poke_irq(struct irq_data *d, u32 offset)
+ {
+-	u32 mask = 1 << (gic_irq(d) % 32);
+-	writel_relaxed(mask, gic_dist_base(d) + offset + (gic_irq(d) / 32) * 4);
++	u32 mask = 1 << (irqd_to_hwirq(d) % 32);
++
++	writel_relaxed(mask, gic_dist_base(d) + offset + (irqd_to_hwirq(d) / 32) * 4);
+ }
+ 
+ static int gic_peek_irq(struct irq_data *d, u32 offset)
+ {
+-	u32 mask = 1 << (gic_irq(d) % 32);
+-	return !!(readl_relaxed(gic_dist_base(d) + offset + (gic_irq(d) / 32) * 4) & mask);
++	u32 mask = 1 << (irqd_to_hwirq(d) % 32);
++
++	return !!(readl_relaxed(gic_dist_base(d) + offset + (irqd_to_hwirq(d) / 32) * 4) & mask);
+ }
+ 
+ static void gic_mask_irq(struct irq_data *d)
+@@ -220,7 +217,7 @@ static void gic_unmask_irq(struct irq_data *d)
+ 
+ static void gic_eoi_irq(struct irq_data *d)
+ {
+-	u32 hwirq = gic_irq(d);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 
+ 	if (hwirq < 16)
+ 		hwirq = this_cpu_read(sgi_intid);
+@@ -230,7 +227,7 @@ static void gic_eoi_irq(struct irq_data *d)
+ 
+ static void gic_eoimode1_eoi_irq(struct irq_data *d)
+ {
+-	u32 hwirq = gic_irq(d);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 
+ 	/* Do not deactivate an IRQ forwarded to a vcpu. */
+ 	if (irqd_is_forwarded_to_vcpu(d))
+@@ -293,8 +290,8 @@ static int gic_irq_get_irqchip_state(struct irq_data *d,
+ 
+ static int gic_set_type(struct irq_data *d, unsigned int type)
+ {
++	irq_hw_number_t gicirq = irqd_to_hwirq(d);
+ 	void __iomem *base = gic_dist_base(d);
+-	unsigned int gicirq = gic_irq(d);
+ 	int ret;
+ 
+ 	/* Interrupt configuration for SGIs can't be changed */
+@@ -309,7 +306,7 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
+ 	ret = gic_configure_irq(gicirq, type, base + GIC_DIST_CONFIG, NULL);
+ 	if (ret && gicirq < 32) {
+ 		/* Misconfigured PPIs are usually not fatal */
+-		pr_warn("GIC: PPI%d is secure or misconfigured\n", gicirq - 16);
++		pr_warn("GIC: PPI%ld is secure or misconfigured\n", gicirq - 16);
+ 		ret = 0;
+ 	}
+ 
+@@ -319,7 +316,7 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
+ static int gic_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu)
+ {
+ 	/* Only interrupts on the primary GIC can be forwarded to a vcpu. */
+-	if (cascading_gic_irq(d) || gic_irq(d) < 16)
++	if (cascading_gic_irq(d) || irqd_to_hwirq(d) < 16)
+ 		return -EINVAL;
+ 
+ 	if (vcpu)
+@@ -796,7 +793,7 @@ static void rmw_writeb(u8 bval, void __iomem *addr)
+ static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
+ 			    bool force)
+ {
+-	void __iomem *reg = gic_dist_base(d) + GIC_DIST_TARGET + gic_irq(d);
++	void __iomem *reg = gic_dist_base(d) + GIC_DIST_TARGET + irqd_to_hwirq(d);
+ 	struct gic_chip_data *gic = irq_data_get_irq_chip_data(d);
+ 	unsigned int cpu;
+ 
+diff --git a/include/linux/irq.h b/include/linux/irq.h
+index 77fb0c510119a..500e6956ebec0 100644
+--- a/include/linux/irq.h
++++ b/include/linux/irq.h
+@@ -179,7 +179,7 @@ struct irq_common_data {
+ struct irq_data {
+ 	u32			mask;
+ 	unsigned int		irq;
+-	unsigned long		hwirq;
++	irq_hw_number_t		hwirq;
+ 	struct irq_common_data	*common;
+ 	struct irq_chip		*chip;
+ 	struct irq_domain	*domain;
 -- 
 2.53.0
 
