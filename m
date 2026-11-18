@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019942;
-	b=TrNQBH7a/6b94NIrw1AzEX/G+0afFWvTH1PYCPn371DmVjsrUTiHXfotZHf6rjJDHbbu
-	 MPJYoCjCnhS2DE5NGpMGEkXQrLlEB4zZ7lgm5ZAzn6LsaymT4kvM0dFlDcUhEaBFrLOWw
-	 3ocSG2a2DPahZrvG56UjPrODWZc79sMq10wjkYhAZmpONWb6b/dA4O7/KCQhllOgVDMrT
-	 KHCp5YmD4Hvc9ykAZKrEcDW33Jr6vqJj/v3cv60qYX77mveTou4NhhV6Zb/h60dNXy/dP
-	 OnNBuKzFr5ZKsQuvwcAxwD3jTl+iqAUVRqT3hClBXRZgQo6FXitLbe5DyXWkA5NRjRg==
+	t=1795019945;
+	b=PgNYzAfMWUdz5eAw8lqDNSxuqTJNRu7xBTJ9yyZ3kpRG0NvCLhIXzsCaxQnu6qTGIDd6
+	 M3+4O1UzOMXvz0X1ljZ4TYqCY5dJ3wju73hoFw9OB0fMaFGw6JAYujU9repABDSDdbsat
+	 4CKdPsC9HdjkgArE16esA4XmY+AUmg3lpi8ekkjg+mJk93dfIiOMgpgU69ieEYJ/4Zn7T
+	 6fZZenq352W8yyjBegsahqoxzYeyyJsw59ssOpka6iW8SKlYMlz12wN185gySWi5Jwc7m
+	 gxH4Hbd4FmG0bDD+A9+sFR9JWbpLwqyqGOCBkFlsXv/bD1STsSBhSTR+KW1dk3DZXMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AD9OA4umql66zT35V75joXc1CCEeIRprjq4PIb6YbAM=;
-	b=yQwko5jeaJSJo2skH2WL+Wvv7k5aQVr7okHgJKcNk6+Opilxl78cHd3EKY1wcQuU4MiK
-	 DerlOuMrBVeGsX+jIrymVePqIGfZlmecmBSKddqdY0Nkgvas8zRB7yotdMXDm554P+KqC
-	 W4yjOqZrXURsps/w9rNHN1VpuZCuVfnZv30dfZ9P7YPjLrYdTxKsVDpVoIjFVd7UmdRhi
-	 kzgnZkQ7NiQ0Ju2/dONV01Ka6cLMuMYk8tH78rHfwawGwZYK0u8ZoiWrnERHe6uziQ32W
-	 6FQfvuylQWC+kqVKZQbfN/kd+i+wq2fHVzD6+sVglXInYpqjOVxWobt7HvfyKqhbvlA==
+	bh=pKhsI+bAtl3dtHn4JP5+h3XbqhO7FSrWom5B9hp/lug=;
+	b=ityXlNxTlgwityXVukunNH1nL5wb5f1Ccpi5Zvvaixv8RcgcjQEIDN6iR1RJSHID0qZa
+	 aHTLNQg1XwRylDOCDyVOABugc8Hl1HVAb3b+xvxUN05rRSDIRZR3DH9hE0jC3LfS7KGLc
+	 jou681u64tIQnlG1dlsIXM38M4502a7eH8J4KzLx44dfyP3e1s4uhIn1zBUMflCIw+WQc
+	 idksttyDGVtVB6OpeEDDrWwXGwWZMLHSc85MLTvNwfOa3iJyBdJm7xi+kUdmarqG9NTG9
+	 XutsUKNmRo8RLcTLC6XwnBipTHk2ZdmtSHzH6t8NBpVbW+BYgJ7Ww0wUfwP+04kYUsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTlahqtq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZbqYcTtu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A17606A335;
-	Wed, 18 Nov 2026 16:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C390606A31C;
+	Wed, 18 Nov 2026 16:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTlahqtq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227141F000C8;
-	Wed, 18 Nov 2026 16:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZbqYcTtu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D351F000C4;
+	Wed, 18 Nov 2026 16:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019942;
-	bh=AD9OA4umql66zT35V75joXc1CCEeIRprjq4PIb6YbAM=;
+	s=korg; t=1795019945;
+	bh=pKhsI+bAtl3dtHn4JP5+h3XbqhO7FSrWom5B9hp/lug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LTlahqtqn6S2+/aj76ideiyNYYJm4HfJH9nA/Lv/dwL0qFt2z0qp8itKTC0nAwSR+
-	 CYJA0vC+xMZO//SOjviVBRQBs/+SLG8de1zuD0aoCBm0XSnQNMwKtIqFABLPnhEvZ1
-	 S7Cc4hYtWRBhk5iaJIOkbY6ZfGuDe/ZXMZeMySC0=
+	b=ZbqYcTtuWWCJJQM6wOjBMwXdo1NhSiHZ+LGVS+3IpoNFo46B57yD7FaZyYc/72gpA
+	 0bAXB8xVYgzzR1C2JFUBAvLAYY5CMi1zOFvRFFJTbc71hPF94HhuY1yAJcDem7wQ7+
+	 z92nh5V+i40AYX7Z0+Hb3EeAg2ecKj5JLCOOLUo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Yao Sang <sangyao@kylinos.cn>,
+	Kanchan Joshi <joshi.k@samsung.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1774/2651] nvmet-auth: reject undersized AUTH_SEND payloads
-Date: Wed, 18 Nov 2026 15:50:14 +0100
-Message-ID: <20261118150351.258281527@linuxfoundation.org>
+Subject: [PATCH 7.3 1775/2651] nvme: pass partition flags to passthrough checks
+Date: Wed, 18 Nov 2026 15:50:15 +0100
+Message-ID: <20261118150351.289306332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,63 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Yao Sang <sangyao@kylinos.cn>
 
-[ Upstream commit c9359401036e8294c007a10e8c8d8da7030fcc76 ]
+[ Upstream commit 6908a702955929b0876baac9fdc57070780a76f0 ]
 
-nvmet_execute_auth_send() allocates and copies the initiator-supplied
-transfer length, then reads auth_type and auth_id through a common DHCHAP
-message pointer.  The existing zero and transfer-length checks do not
-ensure that both common-header bytes are present.
+nvme_user_cmd() handles NVME_IOCTL_IO_CMD on namespace block devices,
+including partitions. It receives flags identifying a partition, but
+passes 0 to nvme_cmd_allowed(), bypassing the partition guard and
+allowing unprivileged passthrough commands to access sectors outside
+the partition.
 
-An unauthenticated NVMe/TCP initiator can complete ICReq and admin CONNECT,
-then send AUTH_SEND with tl equal to one.  KASAN reports a one-byte slab
-out-of-bounds read when auth_id is loaded.
+Pass flags to the permission check, rejecting unprivileged commands on
+partitions.
 
-Reject payloads that do not cover the common auth_type/auth_id header
-before allocating or parsing them.  The one-byte trigger and
-header-minus-one boundary were cleanly rejected in three fixed fresh-boot
-runs.  Exact-header, valid DHCHAP, wrong-type, mismatch, and zero-length
-controls remained clean, and a following valid AUTH_SEND on the same
-connection received a response.  The touched source is unchanged at
-0c2669a9f4a1d607e7591ae50ccf3c432a0aff08, where the patch applies and
-builds cleanly.
-
-The demonstrated impact is unauthenticated pre-authentication target-kernel
-denial of service.  No disclosure, controlled write, RCE, or LPE was
-demonstrated.  The source reproducer and complete logs are available on
-request and are not included in this public report.
-
-OpenAI Codex assisted source inspection, test design, patch drafting, and
-evidence organization.
-
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Assisted-by: LLM
+Fixes: 313c08c72ee7 ("nvme: don't allow unprivileged passthrough on partitions")
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Signed-off-by: Yao Sang <sangyao@kylinos.cn>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index d9dab0cda3b06..edff0eed18884 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -301,6 +301,12 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 		nvmet_check_transfer_len(req, tl);
- 		return;
- 	}
-+	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
-+		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
-+		req->error_loc =
-+			offsetof(struct nvmf_auth_send_command, tl);
-+		goto done;
-+	}
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index 6539d47500986..f2904c7fe0abc 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -343,7 +343,7 @@ static int nvme_user_cmd(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
+ 	c.common.cdw14 = cpu_to_le32(cmd.cdw14);
+ 	c.common.cdw15 = cpu_to_le32(cmd.cdw15);
  
- 	d = kmalloc(tl, GFP_KERNEL);
- 	if (!d) {
+-	if (!nvme_cmd_allowed(ctrl, ns, &c, 0, open_for_write))
++	if (!nvme_cmd_allowed(ctrl, ns, &c, flags, open_for_write))
+ 		return -EACCES;
+ 
+ 	if (cmd.timeout_ms)
 -- 
 2.53.0
 
