@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029844;
-	b=2Ct8gUtLAunyp1rEXyL3zKoXiLKawbC9AiKh+VjwU/W2AXW/zJXcT7aTvvENJjbK/5xg
-	 +O1n39LPm0qBEaYj4ZxaPBihT+/kSrx/3WSzIWUnt7hou/YdpOmzoXVD+mHRQJ7Dzpxmj
-	 CoL8H8Sw4ETglIMiuECEld4OdxnRjmSxiztcPgoA4FqwnQt1J7qpAKxSzITtsFDqt2f3m
-	 Os2lAhnINS2Mmjxf6duDbQB52VhE6K6E5/SmSIED5Yp5idA8QRKIxu63/IH/ySCrEZjox
-	 zBrSw73g1sN1JPi65nSoUoVMkGsLlXf8+yo1io6RoxntWeuK9+16uaASVUzxcBfQXlw==
+	t=1795029847;
+	b=Ol+wWy94BpYJVAYJUHRpB4AXuHAVjcGiUCX9mN6Shedbl6S6DmHO2HQPzL4RRR4Kx/Dg
+	 ifWOlt417i6QK+eP5vUJJlxF5y/KZ6Smii/KxSbzaCR0d8jZ7GC0by9wMwHIm7/RKidjw
+	 0alhk1B/zReBnHVEzq7vnGifkd4n0k/onL1XrBxDet+zUvn1PGKMl6jhhERkvHcx4U4cK
+	 9P1+fq76r5uE1qMxWW6Le7811RYyc4mTqcMPeHJr/2l02K9GcJoOGSs/8dfq9bg0JvQSN
+	 V9fHaX3F4Gx9AAcwmz4anfLg4rv4aPIuVZBhIvW4oVoeBqqQiwuWjwzmNj3wutloMUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5P/fv4yGI+4H5iFp08f0osnfqEox4naD4MAHfOy2lgo=;
-	b=AVPkLVTBLMcRdLeUDfoguHdl4kHnowGLYRH4SWmFljomBjQdPAz5e7Akc/7Y+qZu8hry
-	 LbZp/Cm2CKcrXMRTmRYL19DkZJ01xNtFGVI6Hu2SAN4SCDPLJtF1sZ+SqmDT9hLB+2SGI
-	 aRa2ohSuVizru6D5/s/Z6NCLEJl6g0D2PoZwyF9TiizdzNcvEvF1oOUxbttsy0gNe04GK
-	 /lne57RIgFsy3WoRFpE7n+00GOSyqYRasz/641tqoSB/+0ob0Ofw2iw5nxg7SV9UyyM8l
-	 X7u8Zy4RhgNATk+Ecw+QBnpZnEONeAnobwprmY/066OzVAyaT4yK5qGsT6P+PpMEKQQ==
+	bh=KC8rlucVCv9zzs0eUjhnNyjQBMGaB4jhTCcKGS/K1ak=;
+	b=gd8MSENmmNniueZVpX/54VKi04GXIvpBxLJOOnrTPDlZalK98a8qg1t3c1wVKAC0mHCB
+	 jHfnvq8LRmF6JxUNvgpxhDDmJ3ebZxmZG6fmxAm7xJQ6TiH8fTN1mgyYHIf1/y4diZTdW
+	 F5Rekmt1jWt3/fgOdgymxhuDTeVpZOfD5uR3rAyVsS69oleh5Qtibefy/de/beo6FCJjx
+	 JkhSJcFkDxUXLgyByNaAhktLWCddhQwqijTu9jmm/Z/Xe+HzM0z+u3WiPUzHFGhgXUauZ
+	 fT/Q8Ogx7BhAEMm61eMp7H+RY4+0AKL+oo45DZ41qK31Ga52ibBvTdSQA09BO9pbhvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+3D4P2B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6FSsF2j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9D9606A31C;
-	Wed, 18 Nov 2026 19:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CE4606A31C;
+	Wed, 18 Nov 2026 19:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+3D4P2B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB42A1F000C4;
-	Wed, 18 Nov 2026 19:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6FSsF2j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1E11F000C4;
+	Wed, 18 Nov 2026 19:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029844;
-	bh=5P/fv4yGI+4H5iFp08f0osnfqEox4naD4MAHfOy2lgo=;
+	s=korg; t=1795029846;
+	bh=KC8rlucVCv9zzs0eUjhnNyjQBMGaB4jhTCcKGS/K1ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i+3D4P2BMFzL+1elAZifQGq+NzOLLxgjtO7x3eA8TzbRmn9J16fxG2aP+pv+29awf
-	 teLHAmEUOvHYfNWVzGIq5N8+eohPbYWe+mLAbFch9eVDJBmMpkpPOwIsFV+zThaIsD
-	 OLdta1whqIMoE9LiyKzAt84KtRvSO2uHwSR2l7Ls=
+	b=W6FSsF2jQYflfA8qN0CI5wg3vw69IVSLmE/W0iv6Utz1FjXISUUnk1fextXApvqB3
+	 f83PGOKdlGwH3hZ2pciMpp98ggd7MT2PKlJg7yL11jDNoY+lYJTarxJemVdMAnsHJv
+	 z/1EI7Rh8GsBbQaTAqk39cwm1Y8MngUzG6Qv2+k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0494/1756] perf annotate-data: Show the sample count in the data-type browser
-Date: Wed, 18 Nov 2026 15:43:41 +0100
-Message-ID: <20261118150028.760860192@linuxfoundation.org>
+Subject: [PATCH 6.12 0495/1756] RDMA/core: Fix partial copy of IPv6 flow_lbl in LAG hash skb
+Date: Wed, 18 Nov 2026 15:43:42 +0100
+Message-ID: <20261118150028.801893361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,44 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 9db4e9d6cc7c7d318fb6d6bb73abe3fed27385a8 ]
+[ Upstream commit b63d21631f836528ef660d7b5a0d84890ff6dbd5 ]
 
-The data-type browser has a samples view, selected with -n (or with
-annotate.show_nr_samples), in which browser__write_overhead() prints a
-local nr_samples variable that is initialized to zero and never
-updated, so every member is listed as having no samples while the
-period and percent columns for the same entry are filled in.
+rdma_build_skb() constructs a synthetic IPv6 header for LAG slave
+selection and copies the flow label from the AH attribute:
 
-Print the histogram entry's own count instead.
+	memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
+	       sizeof(*ip6h->flow_lbl));
 
-This predates the load/store counter split, so fix it ahead of that
-patch: the split then only has to adapt a line that is already correct,
-and this fix can be picked on its own.
+ipv6hdr.flow_lbl is __u8[3], so sizeof(*ip6h->flow_lbl) dereferences the
+array to a single __u8 and yields 1.  The memcpy therefore copies only
+the first byte of the flow label, leaving flow_lbl[1] and flow_lbl[2]
+uninitialised in the skb buffer (alloc_skb() does not zero the data).
+The resulting LAG hash is computed over one byte of real flow-label
+data and two bytes of kmalloc residue, so IPv6 RoCEv2 traffic on a
+bonded interface can be steered to the wrong slave.
 
-Fixes: d001c7a7f4736743 ("perf annotate-data: Add hist_entry__annotate_data_tui()")
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Use sizeof(ip6h->flow_lbl) (the array, 3 bytes) so the whole flow label
+is copied.
+
+Fixes: bd3920eac1331 ("RDMA/core: Add LAG functionality")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260916120926.1761-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/annotate-data.c | 2 +-
+ drivers/infiniband/core/lag.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/ui/browsers/annotate-data.c b/tools/perf/ui/browsers/annotate-data.c
-index cd562a8822b7f..e5677aaa651ce 100644
---- a/tools/perf/ui/browsers/annotate-data.c
-+++ b/tools/perf/ui/browsers/annotate-data.c
-@@ -370,7 +370,7 @@ static void browser__write_overhead(struct ui_browser *uib,
- 	u64 period = hist->period;
- 	double percent = total->period ? (100.0 * period / total->period) : 0;
- 	bool current = ui_browser__is_current_entry(uib, row);
--	int nr_samples = 0;
-+	int nr_samples = hist->nr_samples;
- 
- 	ui_browser__set_percent_color(uib, percent, current);
- 
+diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
+index 8fd80adfe833e..eeae4b0898ee0 100644
+--- a/drivers/infiniband/core/lag.c
++++ b/drivers/infiniband/core/lag.c
+@@ -59,7 +59,7 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
+ 		ip6h->version = 6;
+ 		ip6h->nexthdr = IPPROTO_UDP;
+ 		memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
+-		       sizeof(*ip6h->flow_lbl));
++		       sizeof(ip6h->flow_lbl));
+ 		memcpy(&ip6h->saddr, ah_attr->grh.sgid_attr->gid.raw,
+ 		       sizeof(struct in6_addr));
+ 		memcpy(&ip6h->daddr, ah_attr->grh.dgid.raw,
 -- 
 2.53.0
 
