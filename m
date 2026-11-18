@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044192;
-	b=AynIlaY09w/AmzIQQUy2/k9twuC+VuMpG0j+A6V2as7BUAgChGGfNHMj1Nb1sW+YTUFX
-	 /O7k/khP41Ka9F/OO0ZPxrkfoB5+ZeXynW9Y22on2b2Rkfh5K+JIO2Pfx3BKpMGsR0L4i
-	 iL5Enm4yfMoMn2M2G9m0smw4aBLryJawjqRQhOk146qEKL6MmVnp03LtfBKRjgiLyXH5f
-	 SeL++N0v4m6b+mx0k/Dse4LfIEkWjLY5kVLBjARWZfL5QahCXueaN5/ASoTI/Oc9q0O6u
-	 lyYAYrspUV2ZwPqVmcwfhIufXhVvpNZ2ZpopiVc/mOwn8C2VwVkcDmxfmvHnKMTTbaw==
+	t=1795044194;
+	b=F9wmpZjI/uTn6oCuBJAQus0RLnwpqoiYo15Jx95R3IH30XqvhWyg3CRR83+xV/OYT8xT
+	 UItNIk4HnZ1ofzF6Hjb0LBl5XhWiVsPRrMn3DM19/Ln0klOe9OzTkzQlqXHdLnTycXeOG
+	 5M/5g/RTe/1kzkps4JSR9nRS66HdcedzVatWjqU/8hR7spZrC2LSlZGPd9c/Hscug1j2/
+	 90XDEfM1cnPyMQIWMVc1xom+NYnG8MqvYZRwIFRLAEcQEean5hGfzdsoIPwpbqlJPSd2D
+	 xpiFRZT2sx4L8e56jVbA+v3IcfnHKx5R67RgT8mouNtRAtjwW108sHScedJWvpMyYKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i8a+QAzNQWFJiuACs5j3FibFq3OHApQSZZSxuRsd/60=;
-	b=ELK6/5pKSdUqDl1eBvjsKfcxNGqLosIm+ZoNPufOlBXwRtgur0K+3ooqErx7X8xqEcs2
-	 Mv9/DvvyekGWK+Ud/ikl6+ypzmNk92/h4VEWu5t6lGa61fhaJ5tlmNKhrVtprYKClCmRX
-	 Fyjhz+8sOOPRY2juO3sc0qqmn8ZSqSR7841CLt8FIpLoOO2r5LbmIPo4exmvCNhnwSVzV
-	 Miy4juEmPu0/nz4skz8uceAjY+/yTPZrfmjU0Kt8nZKLkoHN/GEzhqM88bdZLiaXeAY+X
-	 H63QR539RnqJ6smqgg7xktbnXVgOsjAzdLBPIJ+jJ59gdjZN1RV5s6Jg5Yh0acbjV/w==
+	bh=PSGv6lnSyFJSRwGrmNFjuH9HflThaT+e4utx+fWz6Rc=;
+	b=Gl4GNrAu1zS9tWYZ57jLWvdkv1nqnHAwJaqo/H9nXetnn5CShQIxHkVeAdIU97rKKCEa
+	 /byoWgChuezNqcT1zdVObrnAt97Ty6iPn2X1KR8bszF8oQfgkANOo+BYjoqdrVhNIYLPA
+	 nUQA8YV8A2vBIlPyIhInZS5PEG5Igv1xwMENco0kFjDzL90MFIyZnJgQ2wsWRGN+xboGH
+	 eHyuerzgm9uI4EAo6a94lELiWXW831xjCQA74Er7dHTU5rtzxPWyK3c4hZN3rB6hMLoBe
+	 NUky2YUMYrBl2A0Am2kMkk2iQItdqq5Lkzy5zLrBfKGWAPKzX1jDDVsTreQBBjlSEsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1tBogKa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc3ssslA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2511E606A330;
-	Wed, 18 Nov 2026 23:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC52D606A325;
+	Wed, 18 Nov 2026 23:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1tBogKa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631181F000C5;
-	Wed, 18 Nov 2026 23:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc3ssslA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3885C1F000C4;
+	Wed, 18 Nov 2026 23:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044191;
-	bh=i8a+QAzNQWFJiuACs5j3FibFq3OHApQSZZSxuRsd/60=;
+	s=korg; t=1795044194;
+	bh=PSGv6lnSyFJSRwGrmNFjuH9HflThaT+e4utx+fWz6Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D1tBogKatO17gj62LyVQE+JT+n6H+1Vr1ov04uym6T1bq8otKrv3aPVdrTNL+x/Ed
-	 6aJLlDPRryfGkt3NnKWvp242rH/8eDjMd7XcNJl3lp6uMU7pWZeMOhgrefZjQL43yh
-	 2PHaZav4Q2neSVxJeca5IZCbzTHG3HYVw/dYimXE=
+	b=hc3ssslAsxwDD5X+wZrbYKUFIG1tHfXMbmWYJkPbRuTx+VlLkphoLG7xRRuFmTUcm
+	 tY/C8oYM19+K/L/T1bSSNvuTD2V0UZA1R9FPqW6XoVnLV11mZMqFP/Cg+f9NaF/dkq
+	 3AWxrheVxRkRHsgotphuodNDPhOsCtg/k3oYXAGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0481/2857] drm/amd/display: guard dc_sink dereferences in MST mode validation
-Date: Wed, 18 Nov 2026 15:25:15 +0100
-Message-ID: <20261118150218.758512266@linuxfoundation.org>
+Subject: [PATCH 6.1 0482/2857] namespace: never expire a locked mount
+Date: Wed, 18 Nov 2026 15:25:16 +0100
+Message-ID: <20261118150218.794755556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,54 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 217f64f348c90cba62164e7ff38e0ccf78a5ca09 ]
+[ Upstream commit f78ddcc872248c7aa1d7e904928441a0be4c6d5d ]
 
-dm_dp_mst_is_port_support_mode() reads
-aconnector->dc_sink->dsc_caps... for the DSC branch-throughput check,
-and get_conv_frl_bw()'s HDMI-PCON FRL-bandwidth path reads
-aconnector->dc_sink->edid_caps.max_frl_rate, both without a NULL
-check. dc_sink is cleared asynchronously on MST unplug, and both
-functions run from paths that the driver's own comments document as
-racing that teardown: the connector probe worker's ->mode_valid
-callback and a compositor's atomic check, neither of which holds the
-MST manager lock that the teardown path uses. The former does have an
-existing dsc_aux NULL check, but dsc_aux isn't reliably cleared in
-every path that clears dc_sink, so it doesn't cover this.
+Locked mounts are special. They protect the underlying files and
+directories from being revealed. do_umount() refuses to unmount locked
+mounts but shrink_submounts() doesn't.
 
-Fail the port-support check and skip the FRL conversion path when the
-sink is already gone.
+A shrinkable mount can become locked once the owner of a user namespace
+puts it beneath a locked mount with MOVE_MOUNT_BENEATH. The locked
+property now moves to the mount at the bottom making it possible to
+unmount the top mount.
 
-Fixes: f04d275d94e1 ("drm/amd/display: add mst port output bw check")
-Fixes: 5c9b8b27a883 ("drm/amd/display: Tie FRL support into amdgpu_dm")
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7c3db8da4e039698ae198c870712428644e965c7)
+So umount() of an unlocked ancestor now expires the bottom mount first
+and the covered directory is revealed:
+
+  move_mount(c -> x/hidden, MOVE_MOUNT_BENEATH) = 0
+  the cover after the lock moved:  umount2(x/hidden) = 0
+  the holder of the lock:          umount2(x/hidden) = EINVAL
+  the root of the copy, busy:      umount2(x) = EBUSY
+  reads x/hidden/secret: "covered-by-root"
+
+So leave a locked mount alone as it dies together with its parent. A
+plain umount() of an unlocked mount with a locked one below it is EBUSY
+from now on. It's the same for any other locked child. A lazy umount
+still takes the whole tree.
+
+mark_mounts_for_expiry() never sees a locked mount. lock_mnt_tree()
+leaves a mount on an expiry list alone and nothing else puts a locked
+one on such a list. Add an assert for this.
+
+Fixes: 5ff9d8a65ce8 ("vfs: Lock in place mounts from more privileged users")
+Fixes: c62a4766937e ("move_mount: transfer MNT_LOCKED")
 Cc: stable@vger.kernel.org
-[ sashal: Dropped the hunk for the missing get_conv_frl_bw(), and placed the dc_sink NULL check just before the first dc_sink use, after the #if declaration blocks. ]
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-8-dd44b89d44ce@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Used WARN_ON_ONCE instead of the missing VFS_WARN_ON_ONCE for the new assertion, and placed it at the loop top since the is_mounted() check it followed is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/namespace.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 94c83a707acc6..92ed349c43d91 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1671,6 +1671,9 @@ enum dc_status dm_dp_mst_is_port_support_mode(
- 	}
- #endif
- 
-+	if (!aconnector->dc_sink)
-+		return DC_FAIL_BANDWIDTH_VALIDATE;
-+
- 	/* check is mst dsc output bandwidth branch_overall_throughput_0_mps */
- 	switch (stream->timing.pixel_encoding) {
- 	case PIXEL_ENCODING_RGB:
+diff --git a/fs/namespace.c b/fs/namespace.c
+index f534ebc90c9cf..cb3b702de4447 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3221,6 +3221,8 @@ void mark_mounts_for_expiry(struct list_head *mounts)
+ 	 *   cleared by mntput())
+ 	 */
+ 	list_for_each_entry_safe(mnt, next, mounts, mnt_expire) {
++		/* lock_mnt_tree() leaves expirable mounts alone */
++		WARN_ON_ONCE(IS_MNT_LOCKED(mnt));
+ 		if (!xchg(&mnt->mnt_expiry_mark, 1) ||
+ 			propagate_mount_busy(mnt, 1))
+ 			continue;
+@@ -3249,7 +3251,8 @@ EXPORT_SYMBOL_GPL(mark_mounts_for_expiry);
+  */
+ static bool shrink_submount(struct mount *mnt)
+ {
+-	if (propagate_mount_busy(mnt, 1))
++	/* not the kernel's to remove either */
++	if (IS_MNT_LOCKED(mnt) || propagate_mount_busy(mnt, 1))
+ 		return false;
+ 	touch_mnt_namespace(mnt->mnt_ns);
+ 	umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
 -- 
 2.53.0
 
