@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028513;
-	b=XY7pSAWyjyc008HFq0+BKuPi2/boO5xN8jTAg6RM8sfEHYqHrI5AC7PyhVF5t/+akXor
-	 xByULRHKdqj8bReNgUvBV1jumFW8rKmF79ydg19il57M/fp7bdtFLLZSnNwmnqxtmRgJl
-	 tFnSB8vx5a8D4AwvH8p9NB0QndtIociDnyKEq4bcnWmG1eyG3vykNH5w3ApeqLkccpv0f
-	 y1RTstzBS7C0pz9hgidlAOzm0eWOUY4KzZzSgtzO95UYSqapnhHimbwhjBpA1KnhCNzcq
-	 LMz4dPZpe0ZZzFgM2OAovPmDLQMOUxStAkgHukkETqCUHQKOXqX5E0oCpXJF9dyEzyg==
+	t=1795028516;
+	b=fiEuA562hnXBQdshzSHNAEi0DKUS9VW1Q8t1KoOhuj35FwrzvWeFCxm1rStJQHb5c43v
+	 FrgIGjQ+GX4wmXyUQR19kA5IpvGK51HD+rQ0qYkHDhDSIKP0RCuZYbJL3OwcKMdqyXGUl
+	 UVIm1S2iGUjADG38DQsrHZ7xOnXJIAZxP6izhN1Rs2dAUdfeB8M3NqsXW/d35hl6bz4yW
+	 5MVJ6XoMDxIVr1ZBy8cSczMboHlzBtsJOLvOgWappfOsWXG8AqQTzmhtR7dTwh/JPX81Q
+	 1rJI7k044Mp69I0EBzOGPrkUQTL1xrTKE5ASbyXDcbr+5oAhoNbLpYS5TlfOj88HdMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028513;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uHdSt4hUGN+9p2kOuK2O3fHKYuOK0vkl+nPljEqHGVY=;
-	b=uQJYeU25+qL2uT3y11T2ne+Y2USr6y78QPCLtWnH/qF/WgWKsyQPee4i4V3XYpp7dGRl
-	 Lz80swsTsj8IRT9AsSgXaJCvFJnZGtGSTuo4Biyct7ub2BqVtsDYcSfv+N/XbOpNroVmF
-	 0C1xa13tx1oFJI1KG/zS45d7EAHf1WX1sVEAuD4cb0O8MLdJudzboJJOj2/U2mU2Hf19j
-	 zPZbXGJPFI5kWAWwniMgSlZMKTlmwz5KTtqMGe+RjrrVFnS+U94KP02oxQguHuHcauz4u
-	 uDTIu3ZjqJ8ovOj+Bxf1gT2EGvse5Yi0Ct+Lt7XMq+D62KSvRK+gB6FkJgjRP7EhQHg==
+	bh=jWLRjrH3rbUTcL721LiERxH7pHm42Et2Okj0AhDpO00=;
+	b=VfibCukECZI8+DuApX+fHW7HThDNKnAjkTrEGYr7OzWKT5S5BuYCjRv8DT3wle4oWq5y
+	 OuOiCxkonlS317b1URB5o0Inj2hs5RlWCptsVnwwAVH4GykTmQnotyoESTVigLPrUs/Nk
+	 CvjAAE2VWIqJYAukKgoVeIYitp8NXkLsn4Vsj+BwcV1cW7NRFIjxZWKxLO64LRGEiKC/M
+	 MFj7ZZpUWdTjrw+O68ScM8iF2Q5gm2NxDTZ+ayHuHzlG2K/H51a4yF1GoRIr75pNbLLls
+	 0mC9AbMAHHR/5tOydOEdbd/HKWHoMSCgLsBRP7pUnQr5CqMrDhFa9Qvw1hS4ZrSRR3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1BN3qhE0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VdrTyTol;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FFC606A339;
-	Wed, 18 Nov 2026 19:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EA3606A334;
+	Wed, 18 Nov 2026 19:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1BN3qhE0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DC71F000C4;
-	Wed, 18 Nov 2026 19:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VdrTyTol
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BCB1F000C4;
+	Wed, 18 Nov 2026 19:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028512;
-	bh=uHdSt4hUGN+9p2kOuK2O3fHKYuOK0vkl+nPljEqHGVY=;
+	s=korg; t=1795028515;
+	bh=jWLRjrH3rbUTcL721LiERxH7pHm42Et2Okj0AhDpO00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1BN3qhE0fVwXpsjRygztuokLw/DARc5EtFGFYA61ifd8fmnGkPG3LrIwMXiAtij9F
-	 Sl+FyvBtwTWAF+dHUd/l9kiDWzJyD+FDLLF3xaaLoohlaLX5XbB+nIBGaCFWh3hgOb
-	 +U8pX/VJlV2iq1kP8NVdI7MQI2Sz5rm2vAvN2sTk=
+	b=VdrTyToldVetR85BeXkkW/XBzYGWqFBbnI68T43ZDImZDUpbyh/wCZQailfSRfOQs
+	 7pAdUTn8AA9thzr6UEtxDUk3BbHAg4+cvstQ2caPK0SBRPxotERpRrThgUVozOWkgv
+	 SnOLJk/5ISBNCf7omCmrOj33ZMF90k/RGfL3z7f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Priyank Rathod <rathodpriyank@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0009/1756] PCI/AER: Fix memory leak in aer_recover_work_func() when pci_dev is missing
-Date: Wed, 18 Nov 2026 15:35:36 +0100
-Message-ID: <20261118150008.337877312@linuxfoundation.org>
+Subject: [PATCH 6.12 0010/1756] fbcon: Rebuild rotated font buffer on font change
+Date: Wed, 18 Nov 2026 15:35:37 +0100
+Message-ID: <20261118150008.374519323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,82 +69,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Priyank Rathod <rathodpriyank@google.com>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit d4c842c3af5bc52b3ca0b8a7f116114e43b6ba44 ]
+[ Upstream commit e4b6b865d45d8dafb6c6f28c8a993a5b4431d25a ]
 
-When ACPI APEI/GHES processes PCIe AER error records, it allocates memory
-for aer_capability_regs (entry.regs) from ghes_estatus_pool and queues the
-entry into aer_recover_ring.
+fbcon_rotate_font() caches a rotated copy of the console font in
+par->rotated.buf. The buffer is sized from the font's width, height
+and charcount, and is rebuilt in fbcon_init(), fbcon_switch() and
+fbcon_modechanged(), but not in fbcon_do_set_font().
 
-In aer_recover_work_func(), items are popped from aer_recover_ring via
-kfifo_get(). If pci_get_domain_bus_and_slot() fails to find a matching
-pci_dev, the code previously executed 'continue', bypassing the call to
-ghes_estatus_pool_region_free(). As a result, the memory allocated for
-entry.regs from ghes_estatus_pool was leaked.
+When the font is changed through KDFONTOP, the new geometry is
+installed and vc_resize() redraws before the buffer is rebuilt. The
+rotated putcs/cursor ops then index the old buffer with the new cell
+size; KASAN reports a slab-out-of-bounds read in soft_cursor().
 
-This is reachable whenever the device reported by firmware is not (or is no
-longer) present in the PCI device tree, e.g. after hot-removal or when
-firmware reports an error for a device the kernel never enumerated.
+Rebuild the buffer for the visible console before the redraw, as the
+other callers do: select the console's blitting state with
+set_blitting_type() (which also uploads the new font's map on
+tile-blitting hardware), then rebuild. Background consoles keep
+their rebuild at fbcon_switch() time, as the buffer is shared per
+framebuffer and must not be updated for a console that is not being
+displayed.
 
-Refactor aer_recover_work_func() to ensure ghes_estatus_pool_region_free()
-is called unconditionally for every dequeued entry, releasing the pool
-memory even when pci_dev is missing.
+To ensure a correct rollback when the rebuild or the following
+vc_resize() fails, save the rotated font state, clear it before
+rebuilding, and restore it in the error path of
+fbcon_do_set_font().
 
-Fixes: e2abc47a5a1a ("ACPI: APEI: Fix AER info corruption when error status data has multiple sections")
-Signed-off-by: Priyank Rathod <rathodpriyank@google.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260928-b4-fix-aer-memleaks-v5-2-ba6b94c9c9a6@google.com
-[ sashal: Adjusted patch context to preserve existing pr_err() logging instead of upstream pr_err_ratelimited(). ]
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: adapted rotated font handling to the older fbcon_par layout with individual cache fields and a direct rotate_font callback ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aer.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 57 ++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index 229853e9d565e..44fac6c2f437e 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -1150,13 +1150,12 @@ static void aer_recover_work_func(struct work_struct *work)
- 	while (kfifo_get(&aer_recover_ring, &entry)) {
- 		pdev = pci_get_domain_bus_and_slot(entry.domain, entry.bus,
- 						   entry.devfn);
--		if (!pdev) {
-+		if (!pdev)
- 			pr_err("no pci_dev for %04x:%02x:%02x.%x\n",
- 			       entry.domain, entry.bus,
- 			       PCI_SLOT(entry.devfn), PCI_FUNC(entry.devfn));
--			continue;
--		}
--		pci_print_aer(pdev, entry.severity, entry.regs);
-+		else
-+			pci_print_aer(pdev, entry.severity, entry.regs);
- 		/*
- 		 * Memory for aer_capability_regs(entry.regs) is being allocated from the
- 		 * ghes_estatus_pool to protect it from overwriting when multiple sections
-@@ -1166,13 +1165,15 @@ static void aer_recover_work_func(struct work_struct *work)
- 		ghes_estatus_pool_region_free((unsigned long)entry.regs,
- 					      sizeof(struct aer_capability_regs));
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index e582314f1ccc3..eabe5cc227457 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2427,6 +2427,12 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+ 	u8 *old_data = vc->vc_font.data;
+ 	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	u8 *saved_fontdata = NULL, *saved_fontbuffer = NULL;
++	u32 saved_fd_size = 0;
++	int saved_cur_rotate = 0;
++	bool rotated_saved = false;
++#endif
  
--		if (entry.severity == AER_NONFATAL)
--			pcie_do_recovery(pdev, pci_channel_io_normal,
--					 aer_root_reset);
--		else if (entry.severity == AER_FATAL)
--			pcie_do_recovery(pdev, pci_channel_io_frozen,
--					 aer_root_reset);
--		pci_dev_put(pdev);
-+		if (pdev) {
-+			if (entry.severity == AER_NONFATAL)
-+				pcie_do_recovery(pdev, pci_channel_io_normal,
-+						 aer_root_reset);
-+			else if (entry.severity == AER_FATAL)
-+				pcie_do_recovery(pdev, pci_channel_io_frozen,
-+						 aer_root_reset);
-+			pci_dev_put(pdev);
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+@@ -2446,6 +2452,33 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	else if (!vc->vc_hi_font_mask && charcount == 512)
+ 		set_vc_hi_font(vc, true);
+ 
++	/*
++	 * Select the console's blitting state and update the rotated font buffer
++	 * to match the new font, so that the rendering below does not use a
++	 * cache that was built for the old font. Clear the cached state so
++	 * the rebuild allocates a fresh buffer; the old state is kept until
++	 * the font change can no longer fail.
++	 */
++	if (con_is_visible(vc)) {
++		set_blitting_type(vc, info);
++		if (par->rotate_font) {
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++			saved_fontdata = par->fontdata;
++			saved_fontbuffer = par->fontbuffer;
++			saved_fd_size = par->fd_size;
++			saved_cur_rotate = par->cur_rotate;
++			par->fontdata = NULL;
++			par->fontbuffer = NULL;
++			par->fd_size = 0;
++			par->cur_rotate = 0;
++			rotated_saved = true;
++#endif
++			ret = par->rotate_font(info, vc);
++			if (ret)
++				goto err_out;
 +		}
++	}
++
+ 	if (resize) {
+ 		int cols, rows;
+ 
+@@ -2462,11 +2495,28 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 		update_screen(vc);
  	}
+ 
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	if (rotated_saved)
++		kfree(saved_fontbuffer);
++#endif
+ 	if (old_userfont && (--REFCOUNT(old_data) == 0))
+ 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
+ 	return 0;
+ 
+ err_out:
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	/*
++	 * Drop the buffer built for the new font and restore the saved
++	 * state.
++	 */
++	if (rotated_saved) {
++		kfree(par->fontbuffer);
++		par->fontdata = saved_fontdata;
++		par->fontbuffer = saved_fontbuffer;
++		par->fd_size = saved_fd_size;
++		par->cur_rotate = saved_cur_rotate;
++	}
++#endif
+ 	p->fontdata = old_data;
+ 	vc->vc_font.data = old_data;
+ 
+@@ -2486,6 +2536,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
+ 		set_vc_hi_font(vc, false);
+ 
++	/*
++	 * Re-select the blitting type, which re-uploads the font map on
++	 * tile-blitting hardware.
++	 */
++	if (con_is_visible(vc))
++		set_blitting_type(vc, info);
++
+ 	return ret;
  }
  
 -- 
