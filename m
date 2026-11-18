@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040601;
-	b=j7fg23okdjfZ2DVJXfAG2UVX07fWNVB7vq7BMt4SGVPnlmJdQkDIXmYW1gYIRLuSeu89
-	 00NjON8WxfmQ6nDZD2uaZFvT4wJs8lg8LQL5iYGlus9oA5H9Er269eM5kZDzLzN4tUITd
-	 Sp1wKB6qIz5dYR+hELwAlqde98xAUWvjSMoqDK8XrqBlJnh2XbALBPE2v/zqoJYT2huKN
-	 yBil5+RZfRKNmlai0uHDuAvxPDJ/byWYDAr+yPSoMQtRr3WbGEQD+/gDoYr/PxCeLMXuc
-	 Ek0mNIfMpT+Kmtt/X1ytsASudUSmcbaJ3Dti9zmOKxjMpi6nIuO13ISyLui2jXH0JjA==
+	t=1795040604;
+	b=CTKKBdyuksVq26NhSmMsncfzgUNsVUiae+ghB5tVRfvZi9qGdOWta0BUkNvjEtisDuK6
+	 L8RwTaz51wqd6Gug8MQzC9hGisPcy4SonyUw8QGTc7z6nMEv0lOMK/zSBFzrPENQanHG9
+	 akKoNVIG6u8/Q3/alLOh9KmCb99c3xatcxIm6uF3XQGL0BqC9KqMLhTJlphO6ejFMuBEJ
+	 Xdmo/7nZlV4iI/8KSe91tL7f+mRLgVmYIiFEqfOduUipvSibWFNaUFUsZiPbo9xHwLeQe
+	 Wpasn5rkD9t55nFVB/hTYkM7Mz4EMJFICyPeY2C8ViP/2FQab6w2dSyaXIULOuFeVhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aTiqHigKgOc/Krwsi6gZF81YJryd+5H1rd3ozAgR2FY=;
-	b=h/ML5fTcO4sMJ3KWadj3Jjn+3zBqZ54dkpl1ykt1IteITDHgoTEqKyWSbPfJ0JyD4bxc
-	 EiaGSlDl9j8z2FjB//hB7hHLbGRH07Zqzai17VpvZVDUNUnf5OHUMAos/9N2U4n8xU9jh
-	 tJkT1O4QF9mJTE4x7Pmi/jesENtnDNQFVIeJqBQuzXap8/84haWHdw0JQg2w6ubtrotom
-	 sHCnqlUhbtzBUBRm2xVCR50ve/wxlCZO0HgOEPXP22dFB+RUgtOpugSxFjDTbIaNWWfOQ
-	 dK8BAaZNiZ7NK/NaQB09vdXdtzE/4f9FJZsMiXoDEe1X1LfGJ8f0BycRm2jQr+tnXRQ==
+	bh=qCYZRoRltOadSajQ8+jmPaArSaBqtN543bHw/ccNY7A=;
+	b=bavBqgP48nVfOuKR7uSw9uiFSoWOgi7TVQffs5FP7RKXnZsKwnmMR/ctgVKvxkxwKAlj
+	 UzeWl8gMLHVmlHMP72VRQzGa1cujr1jHnrD5y81Ij7v452DbdC7ozdpvf7dW3FcvW5NIy
+	 AxEvNbqgkf/5Iikw9aGv4SPmqK4O537c2OGxVrxvpVmJkLFpVxHU20Xi9kp75XWGRNVR9
+	 ePv4mBQ0mNvUc0d+Ci63aipjBaX1jHpqIbN+MmahUyQJ+4bRdmMCJdCalUDxn01S8OxlU
+	 P8HMdBvQmXc+qJRnPm4ie+jIOnP/NmtXJcwncgZmEixNs/3RH1hflBBhXnD5gSSDJ4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UG3fnc4L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1Y2WWYb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDEB606A320;
-	Wed, 18 Nov 2026 22:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D23606A320;
+	Wed, 18 Nov 2026 22:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UG3fnc4L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55F61F000C4;
-	Wed, 18 Nov 2026 22:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1Y2WWYb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822131F000C4;
+	Wed, 18 Nov 2026 22:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040601;
-	bh=aTiqHigKgOc/Krwsi6gZF81YJryd+5H1rd3ozAgR2FY=;
+	s=korg; t=1795040604;
+	bh=qCYZRoRltOadSajQ8+jmPaArSaBqtN543bHw/ccNY7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UG3fnc4LOb4moG67aZbiZYQrQ939LZv8aI0ooJf6z3CXmzp/PYFGnCudU1pMQFVmL
-	 N96nCl8Ng8sPnwYQ3a1F+cxufIoEazlXILjP/w/x/14nhPaPO2vr5xHl1EzUEnqUDR
-	 0yETqve0fiyq8/S/BLdkRqk5GYs0YoV35LJbtmuU=
+	b=D1Y2WWYbqt82k7E1Wgb9didS3jUefabMRJ/HMI2d74uVpQ7Klih3JYZStegV0y3H5
+	 3VyARw13OIAqLNF636ZfDtbUYSr9zbJ7aFw4ALcA47YGk74/fma54iJRKlBQWVNX+C
+	 5mitjwiusUkqvsXsoion3ivMIKeDsYNyBCpVhtz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Thorsten Blum <blum@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2515/3318] ALSA: ump: Avoid dereference with max_src_size=0
-Date: Wed, 18 Nov 2026 15:52:17 +0100
-Message-ID: <20261118150436.828948995@linuxfoundation.org>
+Subject: [PATCH 6.6 2516/3318] hwrng: intel - return -ENOMEM when ioremap() fails
+Date: Wed, 18 Nov 2026 15:52:18 +0100
+Message-ID: <20261118150436.854905278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,38 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit b61a2369085fd995c8ad44245d3fbd45b1216f71 ]
+[ Upstream commit 4c3ca7c8c152278332590bfd3df1b0f086364759 ]
 
-safe_copy_string() refers the source pointer for a NUL terminator
-before verifying the source size.  When max_src_size=0, it may
-dereference wrongly.  Fix the verification order.
+intel_init_hw_struct() incorrectly returns -EBUSY when ioremap() fails.
+Return -ENOMEM instead.
 
-Only hypothetical hardening, and we see no actual issue in the current
-code, as they are all valid sources.
-
-Fixes: e3f035edadcc ("ALSA: ump: Copy FB name string more safely")
-Link: https://patch.msgid.link/20261002081823.680131-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c24c95a085c6 ("[PATCH] fix Intel RNG detection")
+Signed-off-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/hw_random/intel-rng.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index 70c74207b6c0f..14085bbb16034 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -66,7 +66,7 @@ static void safe_copy_string(void *dst, size_t max_dst_size,
+diff --git a/drivers/char/hw_random/intel-rng.c b/drivers/char/hw_random/intel-rng.c
+index 94f7116e96682..789a5c709ba87 100644
+--- a/drivers/char/hw_random/intel-rng.c
++++ b/drivers/char/hw_random/intel-rng.c
+@@ -318,8 +318,8 @@ PFX "RNG, try using the 'no_fwh_detect' option.\n";
+ 	}
  
- 	if (!max_dst_size--)
- 		return;
--	for (s = src; max_dst_size && *s && max_src_size--; s++) {
-+	for (s = src; max_dst_size && max_src_size-- && *s; s++) {
- 		if (!isascii(*s) || !isprint(*s))
- 			continue;
- 		*d++ = *s;
+ 	intel_rng_hw->mem = ioremap(INTEL_FWH_ADDR, INTEL_FWH_ADDR_LEN);
+-	if (intel_rng_hw->mem == NULL)
+-		return -EBUSY;
++	if (!intel_rng_hw->mem)
++		return -ENOMEM;
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
