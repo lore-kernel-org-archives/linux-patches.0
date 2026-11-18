@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046397;
-	b=QeGMyVeMog9jKhNFr2DvXv5R5JzmM0d9Kc/bJb/X1E91hbnJ1WH9QPJkVZCkmcVfrNGP
-	 MKipOoFz1U6hmIYbbNXhYm6fqWs0bL9leJCNnBKuSZsdtjfiphX/+qxLD7e8BuF1zsn3b
-	 w/fXpbn/UILC/DK1wXkibyMxAwCPSv9bo7u1r0EJ0W8p7vthVmybUmuDg6X0nEvqMf5+1
-	 EGJuwOFGXBNfncBVIxGu7xAm/YVBHSgwd4EeDzNJ0X054KrM9kYe9wrjYHAxgih4CwfVv
-	 4ZoCVIK13N1MPSxHrX07qnngV0OD2b4LGH/prSgkMAvMKySSlhXBf0F8H9lMuXCx2aw==
+	t=1795046399;
+	b=X3/9oinFYlaFgl2W8p0DvrlMhA8V43q989bvtU9HfeZKR1gq9xrlb7/LRMKt7/vhRJGW
+	 vPNEpkEeAAduDWwLWHo/RoT+G4whqiROsyQI8sIIKE1H3OowoV0Nb3/2u1D+zw9znGRV8
+	 QOXwK8tYna1Yj3KRT95hQdgSOvQdwcmIQz0zLP6GRdYVc3nypLyKe1vH4pqkNW6EJzZWq
+	 tVQm9YK4rH6zdAwBV5Vzl5/rYPTgxujET89S9Od2GmJhmUQ5pFiSisDhtHVo+1doZ9Do1
+	 LGK+ZpGuRvnshERIEFSrTfDbNelO/q9LKfYNQpiesWsKDEKrNg9wtqDnYUY/WMIbAww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lTlatybL0beVF85WKFx7taeddDP3Bf2F+1JBuw0I54Q=;
-	b=J64cf7p7ffyHrKqZurNVUGQ5FtlNJVsNz20Kb8CInYRLewnB2bAxP1zKB6brjtaOZOvb
-	 nDvdoNafTaYZWb41h89WvrE4DVM6gPjHSeA+d3MBjsbbB9Idm5AyZYzo4rA5phvrXsslL
-	 4+ZAPx7pVxM1axcLrD7t41i81fX5/kCN4qb8isXpP+ZdMGnJykVKLtTlJBeHAyTZnyRtX
-	 DVfCtOVTFw2pl/Rtxf6F9BnUsvmw/EMvsSXUCfbyalb0fKBenMgO/cZwe9LSf8jrW/LGg
-	 TyuXG7JZQC17Ao8fFwuof4GEV2ViHoj/93QLIEjVTFKXXPnaYCifowAMmRS5S7apK+g==
+	bh=ZTVblYmvanQCeLVgn3E7nucJb5JZdNf3qrj+81S+mGQ=;
+	b=Q75sZafS8AQwslvww97We/XIlZgzxyRP1ZSt4a5oqgxM2OzNyFymjt+jWOghi3dFd96S
+	 jWzxO6vJdlEh1JlOP/nnj8cEA6KDQs611gUuZo1wsLOu9bt7QwrXh/+fJdNZ58uo5D6QY
+	 reGJrrtji9uJ85lFuvOw79fnGhH593vMJjfz2u+rSLLSlOdMjlVeYSvsJwcqhx3SokGAA
+	 TzunvkL2yTlRHF53fFYwUX6QNGTWPCMHFWYsDNCsBBz912TR77xT6d+jXG4fC+44NawXh
+	 Xb4FEr0KyGzyOpT8DQ/QcDHIF/QSXl/AEQPgljssSpHk1qxBnijSxPUo+1E8OA3FCFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t6t/kt6s";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DyNxo8hr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0836F606A320;
-	Wed, 18 Nov 2026 23:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53FB606A31C;
+	Wed, 18 Nov 2026 23:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6t/kt6s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CD51F000C5;
-	Wed, 18 Nov 2026 23:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DyNxo8hr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235231F000C4;
+	Wed, 18 Nov 2026 23:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046396;
-	bh=lTlatybL0beVF85WKFx7taeddDP3Bf2F+1JBuw0I54Q=;
+	s=korg; t=1795046399;
+	bh=ZTVblYmvanQCeLVgn3E7nucJb5JZdNf3qrj+81S+mGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t6t/kt6srsDk3jtYUCLUHhgnDyfWbyV59qfx9BedIDJfBlKSOE5uQLauCFOblw/g6
-	 680/87MwAj5ytiTID9n+eA9ujPFBZrkiIIzmvpjv76YeSVk5tJo7COb7OMHcvORNel
-	 IFwydwuhXmJld6sfpHuDMKc0rI+jdWqh/nGkdKUU=
+	b=DyNxo8hrnoy6lp5ueSH7UyQkE80zpXg161aHOVEsvC9SLM8Ha7jSl8RnrSfYIJO7f
+	 QZUHNpyHVJbSvF0SQY3rmVMpr+vofn4hrp19vytI1PJjf9XDiYf1w8epjUKCuYzi1F
+	 tEaYuaKkld6gCe6N6WKB+HkRmbEpexA+FlLPDEBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Esben Haabendal <esben@geanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1266/2857] drm/bridge: nwl-dsi: Cleanup endpoint mux control selection
-Date: Wed, 18 Nov 2026 15:38:20 +0100
-Message-ID: <20261118150247.110675643@linuxfoundation.org>
+Subject: [PATCH 6.1 1267/2857] drm/bridge: nwl-dsi: Limit LCDIF specific sync override
+Date: Wed, 18 Nov 2026 15:38:21 +0100
+Message-ID: <20261118150247.144666327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,68 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit 8dad0ebd822f54102aadc6ca4f0f8777112d175d ]
+[ Upstream commit 54a88d9afcca66221d14f438d0960472984968ec ]
 
-Using the endpoint define values makes it more clear that the argument to
-mux_control_try_select() must be valid state integers, and not something
-that looks like a boolean.
+When using DCSS with NWL, overriding the mode flags to enforce active high
+sync is preventing the use of active low with downstream bridges, such as
+ti-sn65dsi83, which will not see such mode flags set by the panel.
 
-The endpoint value is kept, as it will be used in a following patch that
-changes behavior slightly based on which endpoint is selected.
-
+Fixes: 44cfc6233447 ("drm/bridge: Add NWL MIPI DSI host controller support")
 Cc: stable@vger.kernel.org
 Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-1-b6d1d3d2d356@geanix.com
+Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-2-b6d1d3d2d356@geanix.com
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/nwl-dsi.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/nwl-dsi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
-index 6dc2a4e191d71..54902adec3b03 100644
+index 54902adec3b03..a9e939bc8c21b 100644
 --- a/drivers/gpu/drm/bridge/nwl-dsi.c
 +++ b/drivers/gpu/drm/bridge/nwl-dsi.c
-@@ -110,6 +110,8 @@ struct nwl_dsi {
- 	int error;
- 
- 	struct nwl_dsi_transfer *xfer;
-+
-+	unsigned int endpoint;
- };
- 
- static const struct regmap_config nwl_dsi_regmap_config = {
-@@ -1089,13 +1091,12 @@ static int nwl_dsi_parse_dt(struct nwl_dsi *dsi)
- static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+@@ -824,10 +824,13 @@ static int nwl_dsi_bridge_atomic_check(struct drm_bridge *bridge,
+ 				       struct drm_connector_state *conn_state)
  {
- 	struct device_node *remote;
--	u32 use_dcss = 1;
- 	int ret;
+ 	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
++	struct nwl_dsi *dsi = bridge_to_dsi(bridge);
  
- 	remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
- 					  NWL_DSI_ENDPOINT_LCDIF);
- 	if (remote) {
--		use_dcss = 0;
-+		dsi->endpoint = NWL_DSI_ENDPOINT_LCDIF;
- 	} else {
- 		remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
- 						  NWL_DSI_ENDPOINT_DCSS);
-@@ -1104,11 +1105,12 @@ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
- 				      "No valid input endpoint found\n");
- 			return -EINVAL;
- 		}
-+		dsi->endpoint = NWL_DSI_ENDPOINT_DCSS;
- 	}
+ 	/* At least LCDIF + NWL needs active high sync */
+-	adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
+-	adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
++	if (dsi->endpoint == NWL_DSI_ENDPOINT_LCDIF) {
++		adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
++		adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
++	}
  
- 	DRM_DEV_INFO(dsi->dev, "Using %s as input source\n",
--		     (use_dcss) ? "DCSS" : "LCDIF");
--	ret = mux_control_try_select(dsi->mux, use_dcss);
-+		     (dsi->endpoint == NWL_DSI_ENDPOINT_DCSS) ? "DCSS" : "LCDIF");
-+	ret = mux_control_try_select(dsi->mux, dsi->endpoint);
- 	if (ret < 0)
- 		DRM_DEV_ERROR(dsi->dev, "Failed to select input: %d\n", ret);
- 
+ 	/*
+ 	 * Do a full modeset if crtc_state->active is changed to be true.
 -- 
 2.53.0
 
