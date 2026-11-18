@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045002;
-	b=0scLYs4GB201IkXfaoJDRc+8SeQpGmvTuOBHawQGyWjiTPFYhmFSSl3kmXbsKr/Ib1R+
-	 ltgrQJrotVS1tCNc7TGjoPZXQQ2qFrr3WwziAk7XQXrF7g/6uFhKk/Az3rpit7UkDLWu2
-	 vD2Hv69Ygsjlau9orzVSX5WfQYiWFLinHqKm5k77UAfhXydx8CtQdcjMm9qRZtyyIy4xf
-	 l0DD7zmcqgZksKMtaz4D9rnbegJzko1ZaOUOyP6jlH9K/ml0NwXfHwGG3Vhfy8nOFy1L2
-	 VfORpZN0kJc4NaG4BmlISus77lkDafVvTzJtLhoqDQyNYfWszEVZT5zgvZQgcp1vfwQ==
+	t=1795045005;
+	b=iKblTvfqL7amn06kRRl1LXh8Jcyw/4ARSvDJrcVzXyak1xMANGpuoQh0q1gTCZn5Z45o
+	 hmEI1ZKVT3ByZ7vcQBIYAQ8FBRySLpaTioP16rke79mWnc4iZzhp9OrU0IUg4EJqRm06W
+	 u656/gOeSR/HMBGivpL3UZkK0XpGyy3Tn7a4xm23DkNrFNiUsCAznuSaetXqpWI8/4QA0
+	 L2gXd/oB6snpuajHfb+KoJaJajxRlnMyMDevq93nEAsClSn63RjEGta2RX9wct77E8HEi
+	 djgCXy4I6vOTjOcF/yX6i29CUB6eKhMWiCGhASMdrucYv5VQ7UyErgH8UW7cCOwJx+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EbWcxVRpL7SM/10x7+1DapWCuCb/CxFVKz29O+YnHbw=;
-	b=L+ilrHwe9xTIWRH8AjMrnEQ68HYNUbHPDtblUCqDdx3VsK9M8I0SfLaSNEGpfBjTys1c
-	 9cXB1Ji9o9SoMELhXXo37oBv/E5ZqO1sVgQHT9uY21Bn2ZSfzxxzWt2WS40mX+jb/kwR3
-	 3W2/eJ3GyXdhWifKSqtgAF9a/Z6V7VFTYH6Q4yQ3ALwmgJyPWpNGKlio87YMwXBUm17p7
-	 q1y6Fc8dMBqxg5NVKqd8lVH5eGcSe3o5w1e06AvYUfICnSRM/lZYmsFd4objDE8G66QfD
-	 ZiKX/2kLddDT1Ljo//SLoT0aS0tpe6jIJA7oIOLO9m42HP+PljeSN5IeSCs/NHsAHxw==
+	bh=aw6h4TQlqFUXKD5Hu+Tp+dbS2QcNfdXJD/HBi56JT/c=;
+	b=KulXPavxKWt4nOXYlGNn0CuWaVTjeapZ4c4mnHy+fc2BjfHaJMXwGtPcBLoOcV7VygKQ
+	 vgqGitoduqzA2Zab5kUdRZS/Yvh/lrYS+CDf4TokMYpjlIICCc9LB3NtbUeyRyCva1y4z
+	 rEfWZuM5sA3Cq+qkJ1M+/Bk4VgxmgBNfH2hASeL4WSpI4kLbzFP2LibSc/TPnLYHjlv9A
+	 kKDyFdjyqygypukqWAl1buOsponB1M7EMjOKktnBeSnZ2a0pFyBk5MNnR8KGWfaVdQ73J
+	 vSwXtyScNZYYYYHbUE/jmCuK/X2rqQ6qtLrwzfYhCdfRw2Hjsfwffk5HPvGWtcL5igA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNrE9CE6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fL+1xroQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E712A606A32C;
-	Wed, 18 Nov 2026 23:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDA2606A330;
+	Wed, 18 Nov 2026 23:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNrE9CE6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480C31F000C4;
-	Wed, 18 Nov 2026 23:36:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fL+1xroQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FDA1F000C4;
+	Wed, 18 Nov 2026 23:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045001;
-	bh=EbWcxVRpL7SM/10x7+1DapWCuCb/CxFVKz29O+YnHbw=;
+	s=korg; t=1795045004;
+	bh=aw6h4TQlqFUXKD5Hu+Tp+dbS2QcNfdXJD/HBi56JT/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNrE9CE6/jLpaSudXtGu/4d8LRUlpdis+RpXlMUduiwMWaevbSWmZDD4UbCDcUrmk
-	 osX7kP/fcG0iuzHRf+KXpHwQJibc2RaRLRxkffqE1/a7CQddvf/X/XoDgMmZqaV8Lq
-	 XthRcPkconaQ9XCRyW37Rq+up+CClsXGFMXzeB6o=
+	b=fL+1xroQOUtMzOSdvgImhggX90b300Mjx/Lo6u+srH+LyeLYfwPElA5YTpSPFAzFy
+	 2IYzbLpXKZ8kcB9Zv8kv0E+5dVZbdp7sl8PomjjaOftI4Gwot/iWXIRsbhCxONvHK4
+	 9xwz/QClmKvXbZeGzyBQeOS+ZDuhU6Jbfr3koJmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Sterba <dsterba@suse.com>,
+	stable@kernel.org,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0767/2857] affs: validate blocks before freeing them
-Date: Wed, 18 Nov 2026 15:30:01 +0100
-Message-ID: <20261118150229.174569549@linuxfoundation.org>
+Subject: [PATCH 6.1 0768/2857] f2fs: compress: fix to handle race between truncate and writeback
+Date: Wed, 18 Nov 2026 15:30:02 +0100
+Message-ID: <20261118150229.211191942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 78ea2058abf3ee053c0bd9c1b9a77304cb4ae58b ]
+[ Upstream commit c0337e331b065074ce20e4258a578e07dd7e4083 ]
 
-affs_free_block() accepts block numbers from on-disk file block tables
-when truncating or unlinking files. The function currently rejects only
-block numbers greater than s_partition_size before subtracting
-s_reserved and using the result to index the in-memory bitmap descriptor
-array.
+fsstress reports a kernel BUG in f2fs_truncate_partial_cluster():
 
-That check still accepts reserved blocks and the one-past-end block at
-s_partition_size. A crafted image can therefore make the subtraction
-underflow or make the computed bitmap index equal to s_bmap_count,
-leading to an out-of-bounds access on s_bitmap before the bitmap block is
-read and updated.
+kernel BUG at fs/f2fs/compress.c:1238!
+RIP: 0010:f2fs_truncate_partial_cluster+0x292/0x2a0
+Call Trace:
+ <TASK>
+ f2fs_truncate+0xf6/0x210
+ f2fs_setattr+0x6b7/0x770
+ notify_change+0x33b/0x520
+ do_truncate+0xc2/0xf0
+ vfs_truncate+0x153/0x1d0
+ ksys_truncate+0x78/0xd0
+ __x64_sys_truncate+0x16/0x20
+ do_syscall_64+0xbe/0x540
 
-Use the existing AFFS block validity helper so freeing uses the same
-range as block reads and writes: s_reserved <= block < s_partition_size.
+The root cause is that Thread A (truncate) and Thread B (background
+writeback or fsync) can race as follows:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Thread A                             Thread B
+- f2fs_setattr
+ - f2fs_truncate
+  - f2fs_truncate_blocks
+   - f2fs_truncate_partial_cluster
+    - f2fs_is_compressed_cluster
+      return 1
+                                     - f2fs_write_cache_pages
+                                      - f2fs_write_multi_pages
+                                       - f2fs_write_raw_pages
+                                        - f2fs_write_single_data_page
+                                          dn.data_blkaddr != COMPRESS_ADDR
+                                          (cluster converted to normal)
+    - f2fs_prepare_compress_overwrite
+     - f2fs_is_compressed_cluster
+       return 0
+     - return 0
+    - f2fs_bug_on(sbi, err == 0): BUG!
+
+Writeback path does not acquire i_gc_rwsem or filemap_invalidate_lock.
+When a compressed cluster fails compression during writeback, it is
+overwritten with raw data blocks. If Thread A checked
+f2fs_is_compressed_cluster() before the conversion, but calls
+f2fs_prepare_compress_overwrite() after the conversion,
+f2fs_prepare_compress_overwrite() returns 0 because the cluster is no
+longer a compressed cluster.
+
+To fix this, remove the f2fs_bug_on() and retry checking the cluster status
+when f2fs_prepare_compress_overwrite() returns 0, so that it can fall back
+to f2fs_do_truncate_blocks() to handle it as a normal cluster.
+
+Cc: stable@kernel.org
+Fixes: 3265d3db1f16 ("f2fs: support partial truncation on compressed inode")
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/compress.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/affs/bitmap.c b/fs/affs/bitmap.c
-index 5ba9ef2742f6e..f400b28eea28d 100644
---- a/fs/affs/bitmap.c
-+++ b/fs/affs/bitmap.c
-@@ -46,7 +46,7 @@ affs_free_block(struct super_block *sb, u32 block)
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 37a684c682c7b..7baefaf13e144 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1191,6 +1191,7 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
+ 							log_cluster_size;
+ 	int err;
  
- 	pr_debug("%s(%u)\n", __func__, block);
++repeat:
+ 	err = f2fs_is_compressed_cluster(inode, start_idx);
+ 	if (err < 0)
+ 		return err;
+@@ -1202,12 +1203,11 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
+ 	/* truncate compressed cluster */
+ 	err = f2fs_prepare_compress_overwrite(inode, &pagep,
+ 						start_idx, &fsdata);
+-
+-	/* should not be a normal cluster */
+-	f2fs_bug_on(F2FS_I_SB(inode), err == 0);
+-
+-	if (err <= 0)
++	if (err < 0)
+ 		return err;
++	else if (err == 0)
++		/* the cluster became non-compressed one due to race case */
++		goto repeat;
  
--	if (block > sbi->s_partition_size)
-+	if (!affs_validblock(sb, block))
- 		goto err_range;
- 
- 	blk     = block - sbi->s_reserved;
+ 	if (err > 0) {
+ 		struct page **rpages = fsdata;
 -- 
 2.53.0
 
