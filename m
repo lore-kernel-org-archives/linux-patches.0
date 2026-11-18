@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029472;
-	b=ag8hUc1yoAm3fgf8pAVbBJWCHHgr7WEkXucKEi028yBvnnKV6p6vTCdwjI0yTxT2qDfF
-	 011SncQCLG6z4f989rHnUlHIkJ7+4peSBNhjy3O9uWK2mn/EXqTAGb74vaotTCEdYNnRt
-	 Df8iT++MczTU07dPvX9wBLFV1Yt7awfOcS/XCyjNUGSDVsmJJDh0Y3LxbUgHOXyuOLW1n
-	 k65/R18kq24GROTGHNnyGKJdQNybVSq2pLTOyCpn/X8/umciwSpvKk744oLIznmtRvfy1
-	 mc3Aw95X9sPVSs7hEq0o69VR9YGuM4Gd9sNdP3PCNqrUJD/J/PlWhNP0k97xSw9exPg==
+	t=1795029475;
+	b=0DUkYBlkQ9WNbhVJAyOMpyO/eOBBvg0FU4F7Vw7O2CIxUxVpblYVTC/sLnhx7fvFs/oV
+	 hWx3YDJjlFgluqaR/GdROboIkmK6iv1afrHCxRAIxJO6O95XfBnKKKVlMU2F7OqvFrMA4
+	 1F9AFnUIXoWywb4EAPYwtNxI2t2pBnw062r0Zq2FZNnvLo9YwAGt+emWtMfxTQizSjfum
+	 KiMFE12nya3d6Qc7KSgXBT0MgPl+mFCIFiS0oG2Lii4mX+0AKRxiwYXJMNvFlamHT/2cm
+	 z18nMeo5aBMH2wUcdI7CkfCfJjZsUOWrcdTRiLnLWr2fK3OEQKvbFGGjTo4Rpp2xfNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029475;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ydK8oh5dTt8N5ElyOcVpGApy0x9d+zowubGgu5cY5zs=;
-	b=yUekKKQwXXxiuw2FwgmBxPDNgsTepeTVNbaJZ/M3BnzQAlMJ7ZWh2Z6CEqOHUDUZ1ZAO
-	 Vl7WOxShGMOG13xgkaQKYfEwcORL+xv3WPR7d58QHenvboOLOqsGQbybL9EGnKlZfql0G
-	 adQ2PpGCvUC3sCl8uGfcskgJfkHkcRWiYe9wM3F17SvpMIqith8ZNOgUyWY1cxqGlqS5l
-	 Wh9XIot/N/p0fEhVXVHob4gR2NIxj91K0tmrnpPx5ZS2MpqPGSkAXfDw65CdetjRGdrVA
-	 OAONxiv7CFDZIsrffp7isnm0qZuC0RZRYAuuZW/lzKcnqCmSDEFCNTk1KGK1sxB1l4Q==
+	bh=Yd52TzCjZzUf4yA6HTw+6LIjLXj7x0ISvUlDi+/c10E=;
+	b=t+JcWCRWlsVNAILq7HX3riUdZfFdBFTe3wsnpUI3Yf8hdX4lcPgpcu2NSJA/opZ2XfxY
+	 zMzc7SI2kTYhOoX75obPI5kreGPPR24suO/m8F75mN8Ye0PY0aayuh8WGFTek1TCs63Px
+	 xrFt+k3vgGnKEvLamo44jkHe826xEoKW54tn+q5LPmDSbIwRUKs5XefpriZ/g8D+O09an
+	 wwJcg/y7ya1gpUPBzj9JnxsgfpKv3d6mkYztH74K7TM1xdOhHnMuARTqbEyecMOjvFLOg
+	 3/zeyxrpxUkwhjlSuNEuz21VQ8uIrfENo1C+aWEdVJqqSW5zmqlxGhxInX2m8yvAc1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZ25xC4q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbGRyphU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D78E606A325;
-	Wed, 18 Nov 2026 19:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73760606A332;
+	Wed, 18 Nov 2026 19:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZ25xC4q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4261F000C4;
-	Wed, 18 Nov 2026 19:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbGRyphU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8043D1F000C4;
+	Wed, 18 Nov 2026 19:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029472;
-	bh=ydK8oh5dTt8N5ElyOcVpGApy0x9d+zowubGgu5cY5zs=;
+	s=korg; t=1795029475;
+	bh=Yd52TzCjZzUf4yA6HTw+6LIjLXj7x0ISvUlDi+/c10E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZ25xC4ql/uVe6GGsIwAWFKbMVWy8dBSGTHO7ailOs5FSkDgwWjV+NUjgLQlWNjXI
-	 UoyRhdirEDy3TlZBkdz3ouBkUE0dWGfDsL9NiKMDacTq9otLhDD/IQnFqyfRNnA6BJ
-	 aMLwA4RQ3bDuzPG7UKQgQms/YZncc0sdOU7CcdWI=
+	b=bbGRyphUyWqAWld47Ao4Qf2kPt1Ua6Bxc5RD/DivfC6iS9Z0HdHRfx2DNCPgc7aGI
+	 dMX2RnFgz5WUOhD6whd0stEQPGPbroOUSW4u72QajFR+VCG/HB4SwoYy07Mzr+zWcm
+	 VJxsvSjGoVvBH/7ImCk9pQyON6+2W28Dj8WPIMK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0360/1756] ACPI: glue: Fix up and adjust acpi_unbind_one()
-Date: Wed, 18 Nov 2026 15:41:27 +0100
-Message-ID: <20261118150022.658408698@linuxfoundation.org>
+Subject: [PATCH 6.12 0361/1756] thermal: gov_power_allocator: Fix NULL pointer dereference in update_tz()
+Date: Wed, 18 Nov 2026 15:41:28 +0100
+Message-ID: <20261118150022.694953327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,80 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 693546852656075e0247ac637b05625ead134eff ]
+[ Upstream commit d3515092f1bff9cfb4d99ea82dcd4ac66f32f50d ]
 
-Since none of the acpi_unbind_one() callers check its return value and
-it always returns 0 anyway, make it void.
+power_allocator_update_tz() unconditionally derives the trip descriptor of
+params->trip_max as below,
+  const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
+and then walks td->thermal_instances. However, params->trip_max is allowed
+to be NULL and in that case the list walk dereferences a bogus pointer
+derived from NULL which oops the kernel.
 
-Also notice that unlocking physical_node_lock for the given ACPI device
-should be carried out before dropping the reference to it in case that
-reference is the last one (highly unlikely), so rearrange the code to
-make that happen.
+get_governor_trips() picks trip_switch_on and trip_max out of the trip
+table of the zone. When the zone has neither a passive nor an active trip
+point, last_active is NULL and params->trip_max is left NULL. This is an
+explicitly supported configuration, as documented in the function
+get_governor_trips() as below,
+  If there are no passive or active trip points, then the governor won't
+  do anything. In fact, its throttle function won't be called at all.
 
-Fixes: 3e3327837c18 ("ACPI: Use list_for_each_entry() in acpi_unbind_one()")
+Return early from power_allocator_update_tz() when params->trip_max is NULL
+and only compute the trip descriptor after that check. There is nothing to
+update in that case anyway, with no trip_max and there are no thermal
+instances for the governor to account for, num_actors stays zero and
+total_weight is irrelevant.
+
+Fixes: 912e97c67cc3 ("thermal: gov_power_allocator: Move memory allocation out of throttle()")
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20260822114236.15998-1-sumeet4linux@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/10940500.nUPlyArG6x@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/glue.c     | 10 ++++++----
- include/acpi/acpi_bus.h |  2 +-
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/thermal/gov_power_allocator.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
-index a194f30876c59..cc9ee8cb820fc 100644
---- a/drivers/acpi/glue.c
-+++ b/drivers/acpi/glue.c
-@@ -316,13 +316,13 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- }
- EXPORT_SYMBOL_GPL(acpi_bind_one);
- 
--int acpi_unbind_one(struct device *dev)
-+void acpi_unbind_one(struct device *dev)
+diff --git a/drivers/thermal/gov_power_allocator.c b/drivers/thermal/gov_power_allocator.c
+index 90b4bfd9237bc..da7da3ab07558 100644
+--- a/drivers/thermal/gov_power_allocator.c
++++ b/drivers/thermal/gov_power_allocator.c
+@@ -655,10 +655,15 @@ static void power_allocator_update_tz(struct thermal_zone_device *tz,
+ 				      enum thermal_notify_event reason)
  {
- 	struct acpi_device *acpi_dev = ACPI_COMPANION(dev);
- 	struct acpi_device_physical_node *entry;
+ 	struct power_allocator_params *params = tz->governor_data;
+-	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
++	const struct thermal_trip_desc *td;
+ 	struct thermal_instance *instance;
+ 	int num_actors = 0;
  
- 	if (!acpi_dev)
--		return 0;
++	if (!params->trip_max)
 +		return;
- 
- 	mutex_lock(&acpi_dev->physical_node_lock);
- 
-@@ -337,15 +337,17 @@ int acpi_unbind_one(struct device *dev)
- 			sysfs_remove_link(&acpi_dev->dev.kobj, physnode_name);
- 			sysfs_remove_link(&dev->kobj, "firmware_node");
- 			ACPI_COMPANION_SET(dev, NULL);
 +
-+			mutex_unlock(&acpi_dev->physical_node_lock);
++	td = trip_to_trip_desc(params->trip_max);
 +
- 			/* Drop references taken by acpi_bind_one(). */
- 			put_device(dev);
- 			acpi_dev_put(acpi_dev);
- 			kfree(entry);
--			break;
-+			return;
- 		}
- 
- 	mutex_unlock(&acpi_dev->physical_node_lock);
--	return 0;
- }
- EXPORT_SYMBOL_GPL(acpi_unbind_one);
- 
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index f46464d1430a2..0f1a84481279e 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -720,7 +720,7 @@ struct acpi_bus_type {
- int register_acpi_bus_type(struct acpi_bus_type *);
- int unregister_acpi_bus_type(struct acpi_bus_type *);
- int acpi_bind_one(struct device *dev, struct acpi_device *adev);
--int acpi_unbind_one(struct device *dev);
-+void acpi_unbind_one(struct device *dev);
- 
- enum acpi_bridge_type {
- 	ACPI_BRIDGE_TYPE_PCIE = 1,
+ 	switch (reason) {
+ 	case THERMAL_TZ_BIND_CDEV:
+ 	case THERMAL_TZ_UNBIND_CDEV:
 -- 
 2.53.0
 
