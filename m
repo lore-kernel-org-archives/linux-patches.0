@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051719;
-	b=0L3mK7LVbcBwCcxAf1oAYLjtLOU5xhoqGBT/Lu/dcKT/sMUYTy3y//pLYrg0rczXjELX
-	 wUEx2GZnQI7uJnkxbaytglmyOLsPwEP/l4G0gt6z8yZmw+9ENC8O4g35omk3lZizOXlLV
-	 BLwR0mPLYrmGGBHY7dL3oBDU/I4naH5LGvFQFWnsyecsOvnHSjzRgXquqYrP4kV++6VNp
-	 YTmvvacyUbzDRH0J9L696n1OHk2Ej6jtf2Y8vnVunSliJPGrk9NjaxNc2yCky9LOU7aiL
-	 Lk4/hejo42kl6sjL+2q47l+vjq/xI11Cp/hH4KM07GWaYYH0rB4ciQ6/G0H/kt2sw4w==
+	t=1795051722;
+	b=yKE+d8P+5PHfs7yCWMcTYpcYu2S7iPbV8ZlgM/INEJsHc5UHZUyvjNJPu6KOJwd4V7yK
+	 dpb3go6q2ecGutlbqc2sSxj9igjk4KZOsd3ajaxskLGys3fsGQTh9dDuM3IzWKmzKqph2
+	 GtilUqeT21x9hCws0Lmxl1HLBIY7mYQo0+AYBqzgZxSPsy1nKONmsemLtzbz/zu2elrq2
+	 Xoq0KmZ70OU2ravkU/JJ4ZJJZUea297HRMAhsP8Wffk542ZHIeg41aL7SzP9nFbdDkMFK
+	 R2VIgUdhp5MoCgwoDZWdmFZBIwM2Y/W27kuJtVeT3h59JkYp5LZxC+stRd433jSVbFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cu08CVspIZ71zlC9R4hDzZSFoV9/xl9bmXpArVIgLSM=;
-	b=QM+JIJI2KasNcqZErMWCssHuhh2fv6TILueQrifhu0Y9uTZZxCyqJ5cnHy7I/L5FCEJG
-	 rIcgIV95vLrWqfGB87MsRkFEHgHUAvvwIsJ8K+aB+pYZY0sClK7xljameKwTgt27l3Q2A
-	 jozIJ254G/qG/uyWUVVBXi2KTY4Ylybgu8QGs+M1YGqb8PKAytYjOGGcw9FS7szynZAc3
-	 gkGVIjEdJ7CTD/dXe2LLVWkiz9mpaJTyCYrVQ+DXN6wkU7Y8REodi4C3ETjTL/AsE96MO
-	 5JcM+hLu2Ulq9POp+C4CDPEQSNcmFjfSOGtBdqh6VXvbIN66t/HS/weQC9oEmFk+6hA==
+	bh=Hh0ksF/y1Jiw5mpG3Mgk9EhnHk/XepQ9gMLd1Vo4tlo=;
+	b=ffY++PxDEAuQ/ee2jZmTRSl7SF58IaF7W59yDHu9MhL5h0YctDAjp0FXaP8Snzgc9+T/
+	 +MsvkcIaK8akgdrf4HmsY1nZ1Hi2BQuEVoujB80FIcs0bkQdgmhcL+T5NODNR2Q5zFGG/
+	 hDgK/jOMyybHMJ1NYWYhDbbn3lbAiViEMAYu+L+lrBgeUFqLKr8+8p4tnLafYGWEwYu3y
+	 4dEaKyJnCHXyiqrSAe6WqzCDZLFu/kRE6/qdEno2oo/bkUW3p9zjKthLw52CBC1WkA7Us
+	 46CMrCcK8w+9v9iJXU/JWSojaJcPgzluxegqbOrYeWe2UzIYWvQ+72/jH4sxJrAv29A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhftjFQM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aA1p8tGg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967E7606A31C;
-	Thu, 19 Nov 2026 01:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9CF606A31C;
+	Thu, 19 Nov 2026 01:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhftjFQM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75361F000C4;
-	Thu, 19 Nov 2026 01:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aA1p8tGg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2561F000C4;
+	Thu, 19 Nov 2026 01:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051719;
-	bh=Cu08CVspIZ71zlC9R4hDzZSFoV9/xl9bmXpArVIgLSM=;
+	s=korg; t=1795051722;
+	bh=Hh0ksF/y1Jiw5mpG3Mgk9EhnHk/XepQ9gMLd1Vo4tlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MhftjFQM1N0+ATyPonRq9fVPeq3FHc9/0Cx4XlOeBjpO7eCkt/pcodA9v54jPoHHK
-	 xH4Y9Rcx/eah8YgVhv4H3X8WvW2EE+m3Q8w39N/TxheJdCjKEZjZZoScd/FW0lLcFG
-	 Pq28OtH+E+4GjaIJcyhae7xy9KJdp/gzIPXBtF0M=
+	b=aA1p8tGg3qQ2c1s5bEsk7IRKzlpTXZHmu6c04Ta5/vPagTKrLYROgDB6XFL4Swwm9
+	 srwc0G5yIQ3yW1J+6utOSYUg68mf5dfmibOBIUCI/1duVB4Bu9fWiz9bbwHMHijanZ
+	 UEIY6WqV4VDJ5HBP7ilJ7JbDkm7xsqq9thppsz8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 0306/2214] fbdev: atmel_lcdfb: Prevent FIFO work after removal
-Date: Wed, 18 Nov 2026 15:33:02 +0100
-Message-ID: <20261118150022.412726532@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 0262/2214] media: go7007: only set audio_enabled if go7007_snd_init() succeeded
+Date: Wed, 18 Nov 2026 15:32:18 +0100
+Message-ID: <20261118150020.588820465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,85 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 20b3b97cf89cb381bf07516090d99399cc9b91fd upstream.
+commit 2eacf058d2dbb0ae3aaf576459da9e5f2b6bbfbd upstream.
 
-The LCD controller IRQ schedules sinfo->task to recover from a FIFO
-underflow.  Probe currently requests the IRQ before initializing the
-work, so an early interrupt can schedule an uninitialized work item.
+go7007_register_encoder() sets go->audio_enabled before calling
+go7007_snd_init() and discards its return value.  go7007_snd_init()
+assigns go->snd_context only on success, so a failed ALSA setup leaves
+audio_enabled set with snd_context still NULL.  The disconnect path tests
+audio_enabled and calls go7007_snd_remove(), which dereferences
+snd_context unconditionally.
 
-The probe error path and remove path cancel the work before freeing the
-IRQ.  A FIFO-underflow interrupt can schedule the work again after that
-cancellation.  framebuffer_release() may then free sinfo while the work
-is still pending.
+go7007_snd_init() returns -ENODEV once its never-decremented static card
+counter reaches SNDRV_CARDS, so SNDRV_CARDS attach/detach cycles arm the
+next attach; no memory pressure is needed.
 
-KASAN reported a use-after-free in atmel_lcdfb_task() when an underflow
-interrupt occurred during removal.  With the IRQ freed before the work
-was cancelled, the same test completed without a kernel diagnostic.
+Set go->audio_enabled only once go7007_snd_init() has succeeded.
 
-Initialize the work before requesting the IRQ.  In both cleanup paths,
-free the IRQ before cancelling the work so that it cannot be scheduled
-again after cancellation.
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  Workqueue: usb_hub_wq hub_event
+  RIP: 0010:go7007_snd_remove (drivers/media/usb/go7007/snd-go7007.c:273)
+  Call Trace:
+   go7007_usb_disconnect (drivers/media/usb/go7007/go7007-usb.c:1336)
+   usb_unbind_interface (drivers/usb/core/driver.c:461)
+   device_remove (drivers/base/dd.c:618)
+   device_release_driver_internal (drivers/base/dd.c:1349)
+   bus_remove_device (drivers/base/bus.c:664)
+   device_del (drivers/base/core.c:3965)
+   usb_disable_device (drivers/usb/core/message.c:1478)
+   usb_disconnect
+   hub_event (drivers/usb/core/hub.c:5966)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: d22579b83735 ("atmel_lcdfb: FIFO underflow management")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/atmel_lcdfb.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/media/usb/go7007/go7007-driver.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/video/fbdev/atmel_lcdfb.c
-+++ b/drivers/video/fbdev/atmel_lcdfb.c
-@@ -1171,6 +1171,9 @@ static int __init atmel_lcdfb_probe(stru
- 	/* Initialize PWM for contrast or backlight ("off") */
- 	init_contrast(sinfo);
+--- a/drivers/media/usb/go7007/go7007-driver.c
++++ b/drivers/media/usb/go7007/go7007-driver.c
+@@ -306,10 +306,9 @@ int go7007_register_encoder(struct go700
+ 	if (ret < 0)
+ 		return ret;
  
-+	/* Some LCDC recovery operations require process context. */
-+	INIT_WORK(&sinfo->task, atmel_lcdfb_task);
-+
- 	/* interrupt */
- 	ret = request_irq(sinfo->irq_base, atmel_lcdfb_interrupt, 0, pdev->name, info);
- 	if (ret) {
-@@ -1178,10 +1181,6 @@ static int __init atmel_lcdfb_probe(stru
- 		goto unmap_mmio;
- 	}
- 
--	/* Some operations on the LCDC might sleep and
--	 * require a preemptible task context */
--	INIT_WORK(&sinfo->task, atmel_lcdfb_task);
--
- 	ret = atmel_lcdfb_init_fbinfo(sinfo);
- 	if (ret < 0) {
- 		dev_err(dev, "init fbinfo failed: %d\n", ret);
-@@ -1217,8 +1216,8 @@ reset_drvdata:
- 	dev_set_drvdata(dev, NULL);
- 	fb_dealloc_cmap(&info->cmap);
- unregister_irqs:
--	cancel_work_sync(&sinfo->task);
- 	free_irq(sinfo->irq_base, info);
-+	cancel_work_sync(&sinfo->task);
- unmap_mmio:
- 	exit_backlight(sinfo);
- 	iounmap(sinfo->mmio);
-@@ -1255,6 +1254,7 @@ static int __exit atmel_lcdfb_remove(str
- 		return 0;
- 	sinfo = info->par;
- 
-+	free_irq(sinfo->irq_base, info);
- 	cancel_work_sync(&sinfo->task);
- 	exit_backlight(sinfo);
- 	atmel_lcdfb_power_control(sinfo, 0);
-@@ -1263,7 +1263,6 @@ static int __exit atmel_lcdfb_remove(str
- 	clk_put(sinfo->lcdc_clk);
- 	clk_put(sinfo->bus_clk);
- 	fb_dealloc_cmap(&info->cmap);
--	free_irq(sinfo->irq_base, info);
- 	iounmap(sinfo->mmio);
-  	release_mem_region(info->fix.mmio_start, info->fix.mmio_len);
- 	if (platform_get_resource(pdev, IORESOURCE_MEM, 1)) {
+-	if (go->board_info->flags & GO7007_BOARD_HAS_AUDIO) {
++	if ((go->board_info->flags & GO7007_BOARD_HAS_AUDIO) &&
++	    go7007_snd_init(go) == 0)
+ 		go->audio_enabled = 1;
+-		go7007_snd_init(go);
+-	}
+ 	return 0;
+ }
+ EXPORT_SYMBOL(go7007_register_encoder);
 
 
