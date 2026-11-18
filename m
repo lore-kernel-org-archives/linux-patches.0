@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027067;
-	b=TPL0ubi1dt8YdJ8+oNr4Ow6uFAU3Fg9YzQ3HmewQGUXRnI+x/M8rbsPMQlMKYoepsVi2
-	 HPiVxYjGgG6ZsrzR01F+2E1oJCXebZsH/8ozz3C40qiQ1FV6bkrAPoPSZPt0yl7qEmILZ
-	 ilNHrv0tBpP++GERdALu/SLmlMvkJh+TYDAHQdqF9SPlWFWjYUadaNlvtpBNgVjcrwzZi
-	 +SV5kEtX/mVESIk6szUC4Nz+ZZBK/Zx/h45xfwVtN3TDzDdjW3z/Gb6l4WgsI1oUnNg6P
-	 NV3ZsGsvJq1xBjUrjkd4aa96pwUWq4uS+ANxixKSrZibqgFXLnc/Q8Axb8O7REaTgpQ==
+	t=1795027069;
+	b=lR5oGhFqMYzUhGKdvUEoffQxoUs8mxtb0wQCvFR6FtQRAmaPaoXjsDB5WBDqC9RKl2yh
+	 3FtIjMocPUZ3fnZ/vvClYfjzTA0KQoFH6T2IkOmME208203MvzXTfl59e/R73NmyRVLtv
+	 NTvza4ifAE0lrwP67QULzDWCxBZLbtTHqYOcU5BR4BBYocplE8OmuTGNoWKtMbBB3UrY1
+	 zsfg2mMqPNAQ+HDn1XMKKK5mc0rLvIyObzOtSI3C4T6Xalpm0skG1Pk6+xZ/vVOGik9Cq
+	 YzDyFrgAJwiDSFr5jCrnGJFHpkzDKHIxqrQ808aGE18kQHTQFKuW8wiemu1ElgItIXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kd85A7Wj7Qd0DW83cKYHppJvMooYOzqDW+yqpyBe688=;
-	b=pixF2fV5LPbwfGzHZAawPBREO9Ul/YhqU0tAnd4KGKTsa96m7gRdpE8wvH2o/DUMtPPH
-	 T06vPT2T0y5c3l4IJyrBo48MkGpJITrbH+e+0V/BYa05tTc2F6sG7UuttCwg+hxfllxVu
-	 wdlIImhXmE5Lvwf6BtkuQdUJtb15XOWPziE2a4fDQoRBVCvq7vACxKJmpSpi+kVmv7I28
-	 HCE42auQjmSsslSuMyClA1430WzzP5Drr9CBkcdFa+UqGAqRqKTZtOGDycG+tkFm4vHcE
-	 XUIEv2vG3CsPBLTVtBr+KxZtIYY9PZWSMmYH5zVnEe2/ZAHXb326oeRfZdJnDkTsTGw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CoWQXySkyvD1KytpWY/WNNYYAzr50kuHOroYsB4slP8=;
+	b=cnvJcrqZf1eByQpK23wyyPV5KFOHGzXNS5u3/GVEJggn7NHgDMi7iwNPEQQhHzKCshLD
+	 WkYwaudjHzVUFZcXnTMbV1zmjXr3lqHncVJqaYYunQKjY/in863l4SO4w55vb6Y1mPjwH
+	 2BjuqwcdBu201EjUt51bWhTEEDWxgiA6ULFJALpsKgi479HiRd2gNgihXe0NvIBSp0G3p
+	 nj6oyAt+OHEgKGDCCN6Y7hNdzj2iXc2MCm6/6qknFZtoOpdf3xvFkocuK7+YhqBXMmYmi
+	 axpeyL31UJDTeYEwxqgZc7xH7uQjTE/MJdbHDiy7dA1FHWHYxENRH5OiThn7FRAAfxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8Wd7VBH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBE0cllI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1944606A32A;
-	Wed, 18 Nov 2026 18:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF96606A335;
+	Wed, 18 Nov 2026 18:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8Wd7VBH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F71D1F000C4;
-	Wed, 18 Nov 2026 18:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBE0cllI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F4A1F000C4;
+	Wed, 18 Nov 2026 18:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027066;
-	bh=kd85A7Wj7Qd0DW83cKYHppJvMooYOzqDW+yqpyBe688=;
+	s=korg; t=1795027069;
+	bh=CoWQXySkyvD1KytpWY/WNNYYAzr50kuHOroYsB4slP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8Wd7VBHMIQls47CvU8/hlgQLYItxcrTSPaBBhLTnmnjtK/WLBuXF6vodHEe2k1Rw
-	 FMvT4VWAw51qISCJ5LBh+RMkpc3ZDwGtAmwMFvfDMk183RR+WeasWB1ZyTPMk4KOf9
-	 S1UhOTrLtzNqWp6Mv1gT9JusPnaB7HYV+zN6VwJw=
+	b=GBE0cllIMzeH6Obw1TfTRglyTPCoWmx3dGPgLtwC/edVmjbLHK5W6KRom7fEDjHoC
+	 CKMvYaR61OKd6j1zBTE44p5tgvYl/6vpAsuMrjnH7u39GCqFs1Q5TqwSS9EhEJPgCK
+	 9feTwWG3A92EbabxE8pyX+eo/Eb4bxwWQBs3A4qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1659/2151] bpf: Prevent task work context reuse while irq_work is busy
-Date: Wed, 18 Nov 2026 15:56:34 +0100
-Message-ID: <20261118150222.275981986@linuxfoundation.org>
+Subject: [PATCH 6.18 1660/2151] macsec: prevent AES-GCM nonce reuse after packet number wrap
+Date: Wed, 18 Nov 2026 15:56:35 +0100
+Message-ID: <20261118150222.312138784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,108 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit a36d9afe8d923ca00dd2001409f420202ee672da ]
+[ Upstream commit 94d51c59f0a872c57cb8daa1964ec033d77a79fb ]
 
-A bpf_task_work context can return to STANDBY before its scheduling
-irq_work handler returns.  Both callback completion and task_work_add()
-failure can publish STANDBY while the irq_work is still BUSY.  A new
-round can then reinitialize and queue the same irq_work on another CPU
-while the old handler is still running.
+After allocating the last valid packet number, MACsec wraps next_pn to
+zero and deactivates the transmit SA. This happens for both 32- and
+64-bit types of packet numbers (at values 0xffffffff and
+0xffffffffffffffff, respectively).
 
-One concrete interleaving is:
+TX packets that were still getting processed during deactivation keep
+being processed and then receive packet numbers. The first gets 0 and
+is correctly dropped, but next_pn is incremented to 1, which makes the
+next packet take number 1. It then does not get dropped and may induce
+a reuse of the AES-GCM nonce corresponding to value 1.
 
-  1. CPU 0 successfully queues ctx->work with task_work_add() and pauses
-     before its SCHEDULING-to-SCHEDULED cmpxchg.
+This race affects TX packets that have already passed the SA activity
+check: packets that observe the inactive SA are correctly dropped.
+Reactivating the SA after PN wrap without a packet number can also
+cause nonce reuse. Keep next_pn at 0 after wrap, even if the SA is
+reactivated, so further packet number allocations return 0 and the
+corresponding packets are dropped.
 
-  2. The target task on CPU 1 completes the callback, resets ctx->task
-     and publishes STANDBY.
-
-  3. CPU 2 starts a new round, changes STANDBY to PENDING and queues the
-     same irq_work.  The new handler changes PENDING to SCHEDULING, but
-     task_work_add() returns -ESRCH because its target task has exited.
-     The handler has not yet reset the context or rolled back the state.
-
-  4. CPU 0 resumes and changes the new round's SCHEDULING to SCHEDULED,
-     even though no task work was queued for that round.
-
-  5. The new handler resets ctx->task, but its SCHEDULING-to-STANDBY
-     cmpxchg fails.  The context remains SCHEDULED with a NULL task, and
-     subsequent attempts to acquire this context fail with -EBUSY.
-
-  6. Map-value deletion observes SCHEDULED and queues asynchronous
-     cancellation, which passes the NULL ctx->task to task_work_cancel().
-
-Overlapping invocations also share one BUSY bit.  An invocation can clear
-that bit while the other invocation is still running.
-
-Initialize the scheduling irq_work when the context is created and stop
-reinitializing it for each round.  After claiming the context with the
-STANDBY-to-PENDING cmpxchg, check BUSY and reject reuse with -EBUSY if a
-previous invocation is still in progress.  Checking after the cmpxchg
-orders the BUSY read after the STANDBY publication.
-
-No irq_work has been queued for the attempted round at this point, so
-the rejection can roll PENDING back to STANDBY.  Use cmpxchg for that
-rollback to preserve FREED if a concurrent deletion has published it.
-Once BUSY clears, scheduling can be retried.
-
-Fixes: 38aa7003e369 ("bpf: task work scheduling kfuncs")
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://patch.msgid.link/20261012061915.231254-4-luyun_611@163.com
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20261008080625.360063-2-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/macsec.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 12f21abb0ea20..8476f9bab6bc3 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -4123,6 +4123,7 @@ static struct bpf_task_work_ctx *bpf_task_work_fetch_ctx(struct bpf_task_work *t
- 	memset(ctx, 0, sizeof(*ctx));
- 	refcount_set(&ctx->refcnt, 1); /* map's own ref */
- 	ctx->state = BPF_TW_STANDBY;
-+	init_irq_work(&ctx->irq_work, bpf_task_work_irq);
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index ef1d65d98a34b..20497bc2bb8c2 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -482,6 +482,9 @@ static pn_t tx_sa_update_pn(struct macsec_tx_sa *tx_sa,
+ 	spin_lock_bh(&tx_sa->lock);
  
- 	old_ctx = cmpxchg(&twk->ctx, NULL, ctx);
- 	if (old_ctx) {
-@@ -4165,6 +4166,18 @@ static struct bpf_task_work_ctx *bpf_task_work_acquire_ctx(struct bpf_task_work
- 		bpf_task_work_ctx_put(ctx);
- 		return ERR_PTR(-EBUSY);
- 	}
-+	/*
-+	 * STANDBY can be published before the previous scheduling irq_work
-+	 * returns. Claim PENDING before checking BUSY to order the check after
-+	 * that publication. No irq_work has been queued for this attempt yet,
-+	 * so reject reuse and roll back to STANDBY while BUSY is set. Preserve
-+	 * FREED if deletion wins the rollback race.
-+	 */
-+	if (unlikely(irq_work_is_busy(&ctx->irq_work))) {
-+		(void)cmpxchg(&ctx->state, BPF_TW_PENDING, BPF_TW_STANDBY);
-+		bpf_task_work_ctx_put(ctx);
-+		return ERR_PTR(-EBUSY);
-+	}
+ 	pn = tx_sa->next_pn_halves;
++	if (unlikely(pn.full64 == 0))
++		goto out;
++
+ 	if (secy->xpn)
+ 		tx_sa->next_pn++;
+ 	else
+@@ -489,6 +492,8 @@ static pn_t tx_sa_update_pn(struct macsec_tx_sa *tx_sa,
  
- 	/*
- 	 * If no process or bpffs is holding a reference to the map, no new callbacks should be
-@@ -4214,7 +4227,6 @@ static int bpf_task_work_schedule(struct task_struct *task, struct bpf_task_work
- 	ctx->map = map;
- 	ctx->map_val = (void *)tw - map->record->task_work_off;
- 	init_task_work(&ctx->work, bpf_task_work_callback);
--	init_irq_work(&ctx->irq_work, bpf_task_work_irq);
+ 	if (tx_sa->next_pn == 0)
+ 		__macsec_pn_wrapped(secy, tx_sa);
++
++out:
+ 	spin_unlock_bh(&tx_sa->lock);
  
- 	irq_work_queue(&ctx->irq_work);
- 	return 0;
+ 	return pn;
 -- 
 2.53.0
 
