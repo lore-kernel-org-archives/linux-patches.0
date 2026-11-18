@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015389;
-	b=L4dr9nTrxEBhm7C7QbfuaZIy5vvggQanI1hziI4i0xY4abHYXN8f8/9+XVeOxRjXJDeT
-	 046S9jKjLGxvY9N6PNaxJiG24VTyrVGMvdYJbxMpncWXjUy7E+QCXLh+cdv4KwXqIt7km
-	 2AG5QtqyINwgtG2EoNwU2oejM1sVcJx0Urno6ITgJcCABv2N4KT929XtyCjU80Cm5ndyB
-	 MqZqqiVVKe+MY+7tBB2ZHGo52O+kClSkuZmvMGteCDZbgzsG6vaFbsmtgDH1hrCAekquO
-	 tUrI88OSvmh2wsiHh+IanJdm7exw47cvHQv5URZN/8svIeZ0DO/yjPt62Tn7cfaYghw==
+	t=1795015392;
+	b=ab7Oi4aJcLVeEPm+vHTTDybmrhf1s/Siw9/bofbG/I0U0cjVYkt6w0rIVCXQleinQXAB
+	 274QFXjpX4oDMSu1mvsNByeajZaanL6W93UBQ3xbOndQ52aO6PT9/pdaJpouCN99hJV+S
+	 glaxdxKATSiabDGTfkHYThroaFbeFuk6dYNrbZk4G1tu6E1NqrxnkuFDBPRniwwvgBomU
+	 8p/T+oS9L+TNvjJbCQMLpPjKwENZxGjpttYAKwD9hItadw1BCQ6pjtvLcD8wK8DoPLcrE
+	 jsc7l2rhNh7oFQzNGbebf2xwdKhtv+7bZkZH/UUtWEATQ9q2iX23+qP6QvL6gyQ3ZcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z8HWyIUxkBPZtS345M2nLfWK4Dlpgse+QH61F9k4As0=;
-	b=g4VBp/5f9VryqrOC1Zaol6PUtZqsCJvyzLVM9ZPycn/nn7pASFdiAmKDNNYmOCyvwGRI
-	 K2ROui0/uDXkeKMnt12/uFBEgHRIWrmFGQZwgmcRs8bKsauXAv++mkcAsGEfSXOMmKjZx
-	 OMpoVSCjJLiayZrZ/Si+7lfAzN2ksY0bfyz18Sl2ZYc1WlFPK9EOOaRzkQKFdPSkcmfCd
-	 xNsVLSpxYCf0cwNjkMfdIaRKqw8ovhbbYTZgEyqkB62C1x+z1ymkj7JHpDnQJE0KsDL+r
-	 bFd6EShXtOnmoNLzqOBkAwgkpeJbHqTIDUP9edUlM3xWdr2epT2lIw7k0+HEMW/+M6A==
+	bh=bHvpJBzqKxevo/gaZp1k7mRr+LHqEOHS1PTiWeM6r7w=;
+	b=onJ+HI5Ef3l7LwnQ/mg1K8iX1AYJC60aRwuSNORb9u7/xYyVKbR8SHADtv1Hp3RtBpmm
+	 orfhI0xtVs4f27rSboJVu6SpMEH8kyCSYvDZYnYVMG2yNAxiPeTcHsn8lWp9nelMYcAfW
+	 MvOuo93uf76JmoJ8I29I4jCu+NmPH3Vk/v93kn/En0rIqguTnSzPKozggCGThS8goJOC1
+	 t90x5M8TJ0VxhUI4NBwETOOkcY/5bFhkdXFawX6DWJhlPA82X9THo3J1z3QfTDpBrbyJm
+	 1Vu6NBicsTj8OsrwKHbaMSGKue0SJta5T4r8mlsizQuDdSeKaV4c6lP8vcoBOuL35LQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ww5I1vpd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cm4Xufcv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E6E606A31C;
-	Wed, 18 Nov 2026 15:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A286606A31C;
+	Wed, 18 Nov 2026 15:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ww5I1vpd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7CA1F000C4;
-	Wed, 18 Nov 2026 15:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cm4Xufcv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD17A1F000C4;
+	Wed, 18 Nov 2026 15:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015389;
-	bh=z8HWyIUxkBPZtS345M2nLfWK4Dlpgse+QH61F9k4As0=;
+	s=korg; t=1795015392;
+	bh=bHvpJBzqKxevo/gaZp1k7mRr+LHqEOHS1PTiWeM6r7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ww5I1vpd08r+vKjaLpm2TXXf0nemdW6SXHqMxK3CvBZ6SMXExkUX7C5/u0Gz4Dw+U
-	 fansTjOO4x/xL293apYOjksonpUom9ArbvEnJCBqsxolJjOA/mE6CkGmLNxij5m6WR
-	 CntHI4CSMyinBk+RXf17im2HrO0bSserXTs/L+HI=
+	b=cm4XufcvM5kWnwj9BXwgv7bVFitWk2lMPV16T4/uVWSF1j7syanDgQ8On8Q7uM0A3
+	 VPOYbdxC/Ksi/VSVq+7BUlWS+wrLKkl7JPpe0cfcVx9r0/QVF00moYn0DDO7eKnXqi
+	 a6HOClCmY/mcHjEetTExz6l9s75D9aVjJhiAdlwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Sven Peter <sven@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0119/2651] arm64: dts: apple: t6030: Fix cpus node indentation
-Date: Wed, 18 Nov 2026 15:22:39 +0100
-Message-ID: <20261118150252.157443292@linuxfoundation.org>
+Subject: [PATCH 7.3 0155/2651] wifi: mm81x: fix type bugs handling sdio_readl/writel()
+Date: Wed, 18 Nov 2026 15:23:15 +0100
+Message-ID: <20261118150253.434869654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,34 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 1c7e2a0cfc902932da41a93202f196a2dab18b71 ]
+[ Upstream commit 37f018809909dfc99646b1b1f79c2b3968e7890a ]
 
-Drop the extra space indentation of the closing brace of the cpus node.
+The sdio_readl() and sdio_writel() functions, instead of returning kernel
+error codes, instead stores the error codes in a parameter.  These caller
+functions pass should pass an int pointer to store the error code but
+instead pass a signed long.
 
-Fixes: e81af013dbdd ("arm64: dts: apple: Initial T6030 (M3 Pro) device trees")
-Reviewed-by: Janne Grunau <j@jannau.net>
-Link: https://patch.msgid.link/20260830-b4-apple-dts-fixes-v1-2-cc20f8445754@kernel.org
-Signed-off-by: Sven Peter <sven@kernel.org>
+This will not work on big endian systems.  On little endian systems
+passing a ssize_t means negative error codes are converted to positive
+values near UINT_MAX.  This doesn't cause a problem at runtime because
+in mm81x_sdio_reg32_write() the error codes are discarded and we always
+return -EIO.  In mm81x_sdio_reg32_read() the high bits are truncated
+away so the positive value is re-converted back to negative and the
+code works as intended.
+
+Either way, passing an int is the correct thing and is a cleanup.
+
+Fixes: b1906cea00b0 ("wifi: mm81x: add mm81x Wi-Fi HaLow driver")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/aoa7Hj1W7ETOrOzO@stanley.mountain
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/apple/t6030.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/morsemicro/mm81x/sdio.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t6030.dtsi b/arch/arm64/boot/dts/apple/t6030.dtsi
-index dda9568af11f9..5ff12edfc5532 100644
---- a/arch/arm64/boot/dts/apple/t6030.dtsi
-+++ b/arch/arm64/boot/dts/apple/t6030.dtsi
-@@ -208,7 +208,7 @@ l2_cache_1: l2-cache-1 {
- 			cache-unified;
- 			cache-size = <0x1000000>;
- 		};
--	 };
-+	};
+diff --git a/drivers/net/wireless/morsemicro/mm81x/sdio.c b/drivers/net/wireless/morsemicro/mm81x/sdio.c
+index 96fce187dd352..65277399bf189 100644
+--- a/drivers/net/wireless/morsemicro/mm81x/sdio.c
++++ b/drivers/net/wireless/morsemicro/mm81x/sdio.c
+@@ -381,7 +381,7 @@ static int mm81x_sdio_dm_read(struct mm81x *mors, u32 address, u8 *data,
  
- 	timer {
- 		compatible = "arm,armv8-timer";
+ static int mm81x_sdio_reg32_write(struct mm81x *mors, u32 address, u32 val)
+ {
+-	ssize_t ret = 0;
++	int ret = 0;
+ 	u32 original_address = address;
+ 	struct mm81x_sdio *sdio = (struct mm81x_sdio *)mors->drv_priv;
+ 	struct sdio_func *func1 = sdio->func->card->sdio_func[0];
+@@ -391,7 +391,7 @@ static int mm81x_sdio_reg32_write(struct mm81x *mors, u32 address, u32 val)
+ 
+ 	address &= 0x0000FFFF;
+ 	sdio_writel(func1, (__force u32)cpu_to_le32(val),
+-		    (__force u32)cpu_to_le32(address), (int *)&ret);
++		    (__force u32)cpu_to_le32(address), &ret);
+ 	if (ret)
+ 		goto error;
+ 
+@@ -411,7 +411,7 @@ static int mm81x_sdio_reg32_write(struct mm81x *mors, u32 address, u32 val)
+ static int mm81x_sdio_reg32_read(struct mm81x *mors, u32 address, u32 *val)
+ {
+ 	u32 value;
+-	ssize_t ret = 0;
++	int ret = 0;
+ 	struct mm81x_sdio *sdio = (struct mm81x_sdio *)mors->drv_priv;
+ 	struct sdio_func *func1 = sdio->func->card->sdio_func[0];
+ 
+@@ -419,8 +419,7 @@ static int mm81x_sdio_reg32_read(struct mm81x *mors, u32 address, u32 *val)
+ 					 MM81X_CONFIG_ACCESS_4BYTE);
+ 
+ 	address &= 0x0000FFFF;
+-	value = sdio_readl(func1, (__force u32)cpu_to_le32(address),
+-			   (int *)&ret);
++	value = sdio_readl(func1, (__force u32)cpu_to_le32(address), &ret);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
