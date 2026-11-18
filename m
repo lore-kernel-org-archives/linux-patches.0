@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024592;
-	b=DmiIr4bab50F8B08+nxAiU04EIxlpeC1G3hDMcZkB0y/kTAmBXQ1g5DfMp8hpytJvPb/
-	 mX0H/3lHXgD5mCjx4lTpw09wpqlfR0THedwavvOcLNd9UkunWoCSpcbw3hDUib1LQWLpS
-	 xDa+d2vpdnNXLoo2/7062F3Y8Y8P84nk8hEt1wKjueuq+ylxI+HPcyC85Vz8tb7ZD3twr
-	 7wZrldv9Y/R2NIOZiojRNKRa7g+DxxWdepX159OjuhVx69j4UG6dMLMqE2dfMY+2x1uL8
-	 69Tq1nNf3/LSjpri0kLtppwL4zqts9KiuLriV0LDhQTeJrl+hn3eWcpaMFTatQPER0w==
+	t=1795024595;
+	b=wz/0YGVFrofNHQcwXViqo9C5oj4I7W5hJF59yx44ZwL+6nxvfuP6bsg6aEu96hW7Dm0n
+	 TldpZSTMXceQ8NuSlSNP0PAAUXu3Y/09ZgxufYWv6FeSJ21KzVbX5IIa4/b7iY5hTc2vc
+	 IQgRVY1xmhd1rGSM7juX44y3azG62DrUmYxs/g7yVkFcvxjQ0XpP35Y1meUk93RHkU5fU
+	 957uaSgYCWnSJQtVkWRsXOWa29hg03tr98U78RwPS5FaEvQxbDhmK6HF8E+aLg5O7lVCv
+	 R+zO3DSL6USTLLcNASsdvnnn503alHkMOckhGFcvPDJrS2UwvetsEvViHJ9tFYloIFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Tb3WWqS5M5GRuZYMAeP+qCFpxUXlPJbf69ENR+SmvA=;
-	b=xQTMrJaGXzYoE+qNdiOe2mHcb6uS52TzdiD/z3gKKWMq2omOJxrQFF5kfsskBd0TuIhD
-	 f1cvXDd07FckU+xpkXTBmaxoayKUqAzJOqhgykRFZIsO5c09VL9sm5EUF/8f2yQIqdk2c
-	 NrI72hd5aeoEF7io/Xj7tCUUqJwtU8+c6cP9s17EDXMfDg5OsxjaNfas6VGat85Sbfmry
-	 cQB7WYjOnnTKMMX2frHLge5Gw3Gm9Wrfyp3Wqa8sCNuPvK1hNZFqam+ADFFyoapgJ0OO+
-	 7T2bUM6nnXR/gXZuHZU8JSvyS5E+6JF/056KV9YmE7Izc7BQn+rbvLcYzGGRf/Hu+wQ==
+	bh=jP5QSwDtKLD6WK26wmN4mNpFDinIrg2OxP35ROZCe5M=;
+	b=Yie/kdsTrl83OgUzls7RToX+Qc6TAOH5WrZUT0ZsX6SSJhvH0c9x0VQ3+5knFiJ2uW4/
+	 p5nfqLxP1wgt+WqQe4aFO/6XJvvHFXDYvesu0FMLNTncOuwtIXUEMuC0gybZV1ufXg73k
+	 cZWa1QapBjmzarqvzNm6wjgnWx0sSlFJGwypkkKy7Bzy5BQ0cP8OouI1X++l1HCs24S/m
+	 Bc8/AAozKY1U8iEUmGsLYK47X0d5NntpBGNQqFp3DdS3ZAhI7Bz0aIkBbga9sz1nRDSBq
+	 z/RvzMGvcLU2OZx94XW/DM7ohSulEey+iKOEQSfulXMixmiyGV0SUOS+8udOB4vO3sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mow7Vcte;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNN0dX7T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5DB606A31C;
-	Wed, 18 Nov 2026 17:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E37606A320;
+	Wed, 18 Nov 2026 17:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mow7Vcte
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FB51F000C4;
-	Wed, 18 Nov 2026 17:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNN0dX7T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B801F000C4;
+	Wed, 18 Nov 2026 17:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024592;
-	bh=6Tb3WWqS5M5GRuZYMAeP+qCFpxUXlPJbf69ENR+SmvA=;
+	s=korg; t=1795024595;
+	bh=jP5QSwDtKLD6WK26wmN4mNpFDinIrg2OxP35ROZCe5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mow7VcteuN7rj8ZNfr1a+Ku5mLHRS1/QpJKxskz0hyVUyH9xdVS//XoOejf2wC11h
-	 AQ6a/pE1TYoRp9Y4yruS92TSCugYc2s0MrR3sre/ySIb9j1DvRs546hpxthq1Lfp4i
-	 +BKGfnClyqo87WrfNr7UbqJuq9cU0idFxOgpEtiM=
+	b=BNN0dX7TSdeVvsdV2fV7qk31GKaUThAHQOut1oSwoCoJ/oFlaE2e/svPVgRdy5uyT
+	 +gtyqUlRjvFGqrWJQ6f4ICqt/q7iniU5suUqPTNHs9jLH1BItF2L3/qcyBpNW4iN0m
+	 O7EhedGM0xMTTrpXPaftkzoo3Kp7+5+FHk9xl74s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0739/2151] clk: qcom: gcc-qcs615: Fix GCC_CPUSS_GNOC_CBCR offset
-Date: Wed, 18 Nov 2026 15:41:14 +0100
-Message-ID: <20261118150148.952825277@linuxfoundation.org>
+Subject: [PATCH 6.18 0740/2151] wifi: ath12k: avoid double DMA unmap of held monitor RX buffers
+Date: Wed, 18 Nov 2026 15:41:15 +0100
+Message-ID: <20261118150148.999956654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,37 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 51ff9ffa18758c465a1a67ca36a78c2a8a5f3b2e ]
+[ Upstream commit febe1f8cbccc3434790bfc4d94d40c9dbd803065 ]
 
-According to the documentation, the offset GCC_CPUSS_GNOC_CBCR is 0x48004.
-Drop the extra zero, otherwise we land outside of regmap range.
+ath12k_dp_cc_cleanup() assumes that every rx_desc_info entry with a
+non-NULL skb still has an active DMA mapping and therefore always
+calls dma_unmap_single() before freeing the skb.
 
-Fixes: 39d6dcf67fe9 ("clk: qcom: gcc: Add support for QCS615 GCC clocks")
-Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260924-clk-qcom-gcc-qcs615-fix-cpuss-gnoc-offset-v2-1-67275f94aaec@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This assumption is not true for the monitor RX path.
+ath12k_wifi7_dp_rx_mon_mpdu_pop() may DMA-unmap a buffer and mark
+rxcb->unmapped before returning early to hold the MSDU for later
+reprocessing. In that state desc_info->skb remains populated, so
+module removal can trigger a second dma_unmap_single() from
+ath12k_dp_cc_cleanup().
+
+IOMMU reports the issue as:
+  dma_unmap_phys()
+  dma_unmap_page_attrs()
+  ath12k_dp_cc_cleanup()
+  ath12k_dp_cmn_device_deinit()
+  ath12k_core_stop()
+
+Skip dma_unmap_single() when rxcb->unmapped is already set and free
+the skb directly.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916060325.854-7-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcs615.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/dp.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcs615.c b/drivers/clk/qcom/gcc-qcs615.c
-index 5b3b8dd4f114b..0f3c326e4769c 100644
---- a/drivers/clk/qcom/gcc-qcs615.c
-+++ b/drivers/clk/qcom/gcc-qcs615.c
-@@ -3000,7 +3000,7 @@ static int gcc_qcs615_probe(struct platform_device *pdev)
- 	qcom_branch_set_clk_en(regmap, 0x71004); /* GCC_GPU_CFG_AHB_CLK */
- 	qcom_branch_set_clk_en(regmap, 0xb004); /* GCC_VIDEO_AHB_CLK */
- 	qcom_branch_set_clk_en(regmap, 0xb040); /* GCC_VIDEO_XO_CLK */
--	qcom_branch_set_clk_en(regmap, 0x480040); /* GCC_CPUSS_GNOC_CLK */
-+	qcom_branch_set_clk_en(regmap, 0x48004); /* GCC_CPUSS_GNOC_CLK */
+diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
+index 4a54b8c353111..f89dd62a117a0 100644
+--- a/drivers/net/wireless/ath/ath12k/dp.c
++++ b/drivers/net/wireless/ath/ath12k/dp.c
+@@ -1180,10 +1180,11 @@ static void ath12k_dp_cc_cleanup(struct ath12k_base *ab)
+ 				if (!skb)
+ 					continue;
  
- 	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
- 				       ARRAY_SIZE(gcc_dfs_clocks));
+-				dma_unmap_single(ab->dev,
+-						 ATH12K_SKB_RXCB(skb)->paddr,
+-						 skb->len + skb_tailroom(skb),
+-						 DMA_FROM_DEVICE);
++				if (!ATH12K_SKB_RXCB(skb)->unmapped)
++					dma_unmap_single(ab->dev,
++							 ATH12K_SKB_RXCB(skb)->paddr,
++							 skb->len + skb_tailroom(skb),
++							 DMA_FROM_DEVICE);
+ 				dev_kfree_skb_any(skb);
+ 			}
+ 
 -- 
 2.53.0
 
