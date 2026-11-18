@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051753;
-	b=iJSQ49z512cCYLC4G05pwz2Gn3KU20zHh+bjI0u00DBNwi4PuZvw/ChSUStBniGYAvP1
-	 EjHI8Z3+5qmYFeCwi3Nz/zKk4KBlkFq6EAn5DjESMa86BvTUXm/Ivj+oRkbF+ScxjSJvp
-	 rU1uv4l6dIrHakEAyZ5meINnn/F9SSo8mZPZco/1NTDcH4oM7+YPCHb5A1uZTKD+4XtYi
-	 lY3lTQqi9QVL8jfreX8p1hFH4d2NFvm6HNtygLFPVoX36IRbH+7LRuodYhRvYVS6GNeTq
-	 rBk4UIp0mvCCF0z92TBFvGf6ay5CgICakj2JkYisBBszP/C5eTdt785pvq4rZQbMs4A==
+	t=1795051755;
+	b=ysp7NZP4f4rwOJfZJ4hc32Lmi/trf5tfRKO9dDDprrl4/9LJimuPxflyyoEFICLpuwcC
+	 28/EVZ8NDnWiqpol2+dSK04bbDW3hLhBJC60X70eyJjJR7cJrYiP6lEQpKwHO63Zwuugb
+	 2LNBdr0d9oza5jD6DdFw4p4H/Jd8Ndj2vlEyaEBMNW27ifKck9B65F49fVF4TXyyQ9ltP
+	 +8aoQJP9+adfxd9hmzgT9QKEMd6K3qJKusflqg3SWV42Nm/BoWP3X471XDLPo2EHqnaqG
+	 f+kiOKrC8fGV69dRrSv3okNm62aXKSLQ5Z4vI7THpjxeme14FoQs0fyx9Gou5NQPAiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nMGtoDHYWxxScPw60spG0ElWu/252rnN03CtsWiZGrc=;
-	b=2Lf/xzq0DWgYadsNaRX/eeyvUzA6+CuKTy6ReHysPwojnNTv7CnQngZOkSw+LyJDkegy
-	 0mHXrihGMN5Wj822I4QNVLcm7PBLdU0K/vnjlD4aRu0KEo7NqLRyxwgb2WYlyPkxfBmYv
-	 ZSQzbQqoamw7t9D+CChx2fjHD/33R9ZjqMpq+OWgvWkXgSkdNjcBeAcFeUr7X2YuTpJZm
-	 6UndZ1mZ1kTaDsen5xn14sLrrBjmdMTTnQZNflCMkW/WeLsyQ6jSEeQoCxifdnaJmVXPR
-	 n5amPTOVSktlzD4GY7RO3/89F4Te0U+XbWKIhdSCk+bczpeEZqiQIrE0L3aEdzVm0Ig==
+	bh=hh9SQ00v4T2CQthHICVz4UjE2i+xsH2rN74hzQ/z+5o=;
+	b=g9ktIWpIjB+OPwWidQXeKzVr5UrUKl71X0crfBkx1GJiQqP2hW4gu45ReLM03qgCcjyg
+	 F3g58xt5V67qWYLQdJjDxr20EHjvekZOJxljCyMfwORHuMmPjI5a3RgGSBHvMZ2suLWha
+	 Lmw2DRx8XHIFgCsD4/ANcuvwFO8l/E4+VXfRt4PNfEH8TBRgIix67NJhV37IGh6ejqGOp
+	 Swazi9EussDM9UK3zPaEJuzKHO5XqBwIj5kyIZMvTv4XN0lm4xR67Ajs3YgXw5w+L/WZI
+	 bJQkHJoQMzsksv0LLH0Ia49ba0f/NFauJIg7VhftE/9JOaq7YDJshmtx0t1ZdU3iEtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b5oDNEm/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=03LsnSp9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B9F606A320;
-	Thu, 19 Nov 2026 01:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E34606A31C;
+	Thu, 19 Nov 2026 01:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b5oDNEm/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CF71F000C4;
-	Thu, 19 Nov 2026 01:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=03LsnSp9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FAD1F000C4;
+	Thu, 19 Nov 2026 01:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051753;
-	bh=nMGtoDHYWxxScPw60spG0ElWu/252rnN03CtsWiZGrc=;
+	s=korg; t=1795051755;
+	bh=hh9SQ00v4T2CQthHICVz4UjE2i+xsH2rN74hzQ/z+5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5oDNEm/lGQM5+6tFmdaHso1fF9nC5bNLz4aoQnvr2GAgYsck9JcGub2pCRiSGh0w
-	 ax9drpap71pa8Jh43n+017JuKIVqViZkASd0tTuFs760Qz5mruSycnMLmf18DzL0ML
-	 N7Jcf+IG4LP4fS1aMhWXTEjad9xROmYF+42WXQbw=
+	b=03LsnSp9vdysGqgR4YwwbHBdfBAWB5OpuSS9NnJSenCJPjVI/6tuVX2Qk7j0stPky
+	 m05xoCaoXJ0T143F7XMHLpHbUmSajxuCvL4TG21FsQ2CoRem68OxLaneJTFG9X2uHa
+	 eH4cqwqFpeyG6hLTeaGIkFKy7Gb/IHYLpSyX16Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,13 +46,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
-	Yufan Chen <ericterminal@gmail.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Kees Cook <kees@kernel.org>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
 	Jia-Ju Bai <baijiaju1990@gmail.com>,
 	jjzuming@gmail.com
-Subject: [PATCH 5.15 0321/2214] ocfs2/heartbeat: unlink live slots when their node is missing
-Date: Wed, 18 Nov 2026 15:33:17 +0100
-Message-ID: <20261118150023.120598934@linuxfoundation.org>
+Subject: [PATCH 5.15 0322/2214] ocfs2/dlm: hold a lock reference across grant AST enqueue
+Date: Wed, 18 Nov 2026 15:33:18 +0100
+Message-ID: <20261118150023.177703839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -76,129 +77,218 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 3ccd24c3f7a577b84a532cb027f1378385b82ef6 upstream.
+commit 71743471204e21113295c786e5cfa570294234a4 upstream.
 
-o2hb_shutdown_slot() returns immediately when its node is no longer in the
-configfs registry.  A slot can still be linked in o2hb_live_slots when
-that lookup fails.  Region teardown or startup-error cleanup then frees
-the slot array without removing its embedded list member.
+A newly granted remote lock must remain alive until its grant AST is
+queued.  dlmlock_master() publishes the lock on res->granted with its base
+and queue references, then drops res->spinlock before calling
+dlm_queue_ast().  The resource's reserved AST count does not retain the
+lock itself.
 
-With the same peer live in another region, the next list update can follow
-a predecessor into the freed array.  Reusing the node number can also make
-a later insertion encounter that stale member.
+This can fail when a peer dies with an immediately grantable CREATE
+buffered on its socket.  O2NET's node-down callback flushes receive work
+before DLM cleanup, but the flush only waits for work queued on entry.  A
+data-ready callback that already selected the socket container can queue
+new receive work after the flush advances its work color.  Socket shutdown
+does not discard bytes already queued for TCP receive.
 
-Always remove the slot under o2hb_live_lock, even when node lookup fails.
-Preserve aggregate membership accounting and the last-region DOWN
-callback: the existing callback interface explicitly permits a NULL node
-for DOWN events.  Only drop the node reference when lookup returned one.
-This closes both normal release and startup-abort paths without changing
-the publication or callback locking protocol.
+The late receive work and DLM node-down cleanup can interleave as
+follows (the lock reference operations shown are before this fix):
 
-Also require a configured node before admitting a new live slot in
-o2hb_check_slot().  The early live-bitmap check is not held through
-admission: the last live slot in another region can be removed in between.
-Without a node, admission can then queue an UP event with a NULL argument
-and hit the event helper's BUG_ON.  Existing live slots can still leave
-and generate NULL-node DOWN events.
+  Socket data-ready        Node-down thread         Receive worker
+  -----------------        ----------------         --------------
+  o2net_data_ready()
+    select sc under
+    callback read lock
+                           o2net_disconnect_node()
+                             queue shutdown
+                             begin flush; new color
+    queue sc_rx_work
+    in the new color
+    release callback lock
+                             shutdown socket
+                             flush returns
+                                                    read buffered CREATE
+                                                    dlmlock_master()
+                                                      lock res->spinlock
+                                                      add lock to granted
+                                                      unlock res->spinlock
+                           DLM node-down cleanup
+                             lock res->spinlock
+                             dlm_free_dead_locks()
+                               unlink lock
+                               put queue/base refs
+                               free lock
+                             unlock res->spinlock
+                                                    dlm_queue_ast()
+                                                      __dlm_queue_ast()
+                                                      read lock->lockres
+                                                      (use-after-free)
 
-A controlled probe-instrumented test reproduced this while stopping one of
-two regions after removing the peer from configfs.  Its KASAN report
-includes:
+DLM cleanup holds res->spinlock while dlm_free_dead_locks() drops the
+queue and base references.  The CREATE handler no longer holds that
+spinlock when __dlm_queue_ast() reads the lock, before taking its AST list
+reference.
 
-  BUG: KASAN: slab-use-after-free in __list_del_entry_valid_or_report+0x1e0/0x210
-  Read of size 8 at addr ffff888106a4ac60 by task o2hb-pmbd0058_b/497
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x93/0xd0
-   print_report+0xce/0x630
-   kasan_report+0xe0/0x110
-   __list_del_entry_valid_or_report+0x1e0/0x210
-   o2hb_do_disk_heartbeat+0x1591/0x2c50
-   o2hb_thread+0x1ed/0xe70
-   kthread+0x351/0x460
-   ret_from_fork+0x659/0x940
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-  Allocated by task 491:
-   kasan_save_stack+0x33/0x60
-   kasan_save_track+0x14/0x30
-   __kasan_kmalloc+0xaa/0xb0
-   __kmalloc_noprof+0x2de/0x780
-   o2hb_region_dev_store+0x7c2/0x1b60
-   configfs_write_iter+0x2f9/0x4f0
-   vfs_write+0x639/0x1010
-   ksys_write+0x111/0x200
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  Freed by task 491:
-   kasan_save_stack+0x33/0x60
-   kasan_save_track+0x14/0x30
-   kasan_save_free_info+0x3b/0x60
-   __kasan_slab_free+0x5f/0x80
-   kfree+0x308/0x580
-   o2hb_unmap_slot_data+0x1db/0x330
-   o2hb_region_release+0x14b/0x4f0
-   config_item_cleanup+0x14b/0x230
-   config_item_put+0x79/0x90
-   configfs_rmdir+0x58a/0x910
-   vfs_rmdir+0x2e8/0x820
-   filename_rmdir+0x3b1/0x520
-   __x64_sys_rmdir+0x4b/0x70
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Take a temporary lock reference under res->spinlock when a grant AST will
+be queued, and drop it after dlm_queue_ast().  This keeps the lock alive
+across cleanup until the AST path has taken its own reference, without
+reversing the existing AST/resource lock order.
 
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0058-v2-9446113c2b16c817c538@gmail.com
-Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in __dlm_queue_ast+0x8a4/0xc00
+    Read of size 8 at addr ffff88810ead5940 by task kworker/u16:3/52
+
+    CPU: 3 UID: 0 PID: 52 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: o2net o2net_rx_until_empty
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? __dlm_queue_ast+0x8a4/0xc00
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? __dlm_queue_ast+0x8a4/0xc00
+     kasan_report+0xe0/0x110
+     ? __dlm_queue_ast+0x8a4/0xc00
+     __dlm_queue_ast+0x8a4/0xc00
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_raw_spin_lock+0x130/0x270
+     ? __pfx___dlm_queue_ast+0x10/0x10
+     ? __pfx_do_raw_spin_lock+0x10/0x10
+     ? _raw_spin_unlock_irqrestore+0x45/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lockdep_hardirqs_on_prepare+0xeb/0x1a0
+     dlm_queue_ast+0x46/0x70
+     dlmlock_master+0x51f/0xf50
+     ? __pfx_dlmlock_master+0x10/0x10
+     ? dlm_create_lock_handler+0x2b2/0x870
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     dlm_create_lock_handler+0x35b/0x870
+     ? __pfx_dlm_create_lock_handler+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kvm_clock_get_cycles+0x31/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_dlm_create_lock_handler+0x10/0x10
+     o2net_rx_until_empty+0x1dae/0x32c0
+     ? reacquire_held_locks+0xdd/0x200
+     ? __pfx_o2net_rx_until_empty+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+
+    Allocated by task 52:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_slab_alloc+0x89/0x90
+     kmem_cache_alloc_noprof+0x20b/0x5c0
+     dlm_new_lock+0x39/0x5f0
+     dlm_create_lock_handler+0x16e/0x870
+     o2net_rx_until_empty+0x1dae/0x32c0
+     process_one_work+0x9a8/0x1b40
+     worker_thread+0x65c/0xe40
+     kthread+0x351/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    Freed by task 603:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kmem_cache_free+0x242/0x580
+     dlm_lock_release+0x1df/0x2f0
+     dlm_lock_put+0x51/0x80
+     __dlm_hb_node_down+0x15be/0x2710
+     dlm_hb_node_down_cb+0x6c/0xa0
+     o2hb_run_event_list+0x34a/0x500
+     o2hb_do_disk_heartbeat+0x1a07/0x2950
+     o2hb_thread+0x1ed/0xdc0
+     kthread+0x351/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    The buggy address belongs to the object at ffff88810ead5900
+     which belongs to the cache o2dlm_lock of size 184
+    The buggy address is located 64 bytes inside of
+     freed 184-byte region [ffff88810ead5900, ffff88810ead59b8)
+
+    [Page and shadow memory dumps omitted.]
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0043-v5-1ad07df761ff49638789@gmail.com
+Fixes: 2c5c54aca9d0 ("ocfs2/dlm: Add missing dlm_lock_put()s")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Cc: Kees Cook <kees@kernel.org>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
 Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
 Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/ocfs2/dlm/dlmlock.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -820,8 +820,11 @@ static void o2hb_shutdown_slot(struct o2
- 	int queued = 0;
+--- a/fs/ocfs2/dlm/dlmlock.c
++++ b/fs/ocfs2/dlm/dlmlock.c
+@@ -138,6 +138,8 @@ static enum dlm_status dlmlock_master(st
+ 					  res->lockname.len)) {
+ 			kick_thread = 1;
+ 			call_ast = 1;
++			/* Keep the lock alive through AST enqueue. */
++			dlm_lock_get(lock);
+ 		} else {
+ 			mlog(0, "%s: returning DLM_NORMAL to "
+ 			     "node %u for reco lock\n", dlm->name,
+@@ -166,10 +168,12 @@ static enum dlm_status dlmlock_master(st
+ 	wake_up(&res->wq);
  
- 	node = o2nm_get_node_by_num(slot->ds_node_num);
--	if (!node)
--		return;
-+	/*
-+	 * The node may have been removed from the node table while this
-+	 * region's slot is still linked.  The list member must still be
-+	 * removed before the region releases its slot array.
-+	 */
+ 	/* either queue the ast or release it */
+-	if (call_ast)
++	if (call_ast) {
+ 		dlm_queue_ast(dlm, lock);
+-	else
++		dlm_lock_put(lock);
++	} else {
+ 		dlm_lockres_release_ast(dlm, res);
++	}
  
- 	spin_lock(&o2hb_live_lock);
- 	if (!list_empty(&slot->ds_live_item)) {
-@@ -843,7 +846,8 @@ static void o2hb_shutdown_slot(struct o2
- 	if (queued)
- 		o2hb_run_event_list(&event);
- 
--	o2nm_node_put(node);
-+	if (node)
-+		o2nm_node_put(node);
- }
- 
- static void o2hb_set_quorum_device(struct o2hb_region *reg)
-@@ -978,7 +982,7 @@ static int o2hb_check_slot(struct o2hb_r
- fire_callbacks:
- 	/* dead nodes only come to life after some number of
- 	 * changes at any time during their dead time */
--	if (list_empty(&slot->ds_live_item) &&
-+	if (node && list_empty(&slot->ds_live_item) &&
- 	    slot->ds_changed_samples >= O2HB_LIVE_THRESHOLD) {
- 		mlog(ML_HEARTBEAT, "Node %d (id 0x%llx) joined my region\n",
- 		     slot->ds_node_num, (long long)slot->ds_last_generation);
+ 	dlm_lockres_calc_usage(dlm, res);
+ 	if (kick_thread)
 
 
