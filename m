@@ -1,58 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031762;
-	b=NvxPBj6G/JoK+IqY7op902YcEtm+gYhxWSY4Tus/kqbz6upefrqUaOr2PVejqFMyAItS
-	 AHQ3vQK7zyzi1RlwEqQ/0Wey7bAcb48kUPP2gHvHQu2yAjQMa1KuPckzfp9irSuzHfGbx
-	 i8fiRgkGS2r9dkKdWcvcA9SaoLhZL3V8r+LggXYUFTQtdKIcx1tSWoGl8Fy3KZvpqN0wx
-	 xaYlgNbAxbF8u0k28divApIrVxqB/Rjb8xQRUSsbxbFelxvuRaEqt/PSTJdYF3Y/cmOy9
-	 or4Pu16F3Kb/5qZoJzQRFbt4k2feuknUFDQQRYDCOvsgGeLcxA7lUoi2suUFmvHqNVg==
+	t=1795031764;
+	b=ZsR4uVGh3WvlPjc9vP7nM/Ir08KnJYByl04zjA2QnM5llQbwv2kxFmnksh05RR1ke0UP
+	 f4DRC+WdQDCBqxHJ9dso8lCoExXh2UghSbQ0p1itk80XA1a4TisQUVAg08mara5EgtzP0
+	 amPPj6y2R8UV4dwHGqeLtB+6IiadZb20d25D9EUEp8XybHQcTfKxtdbxTvREXnxvQnsis
+	 I7OrsEJofINm18nMSrLfIr54UOf/Lc/sAyc8iI+EXw98cBlgbVczWpi8fy47uJJtAt/dX
+	 P2e2ViunYzs2nbzcP4GcAZiOqrC7Y/t6zcYb4Ot05ZE+S1pOcM7QnfRbqDpT5V6FRhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JWN/XzwCJl84KHWO0+OiWNA1cJMMy6OGvcfYcxaS0zI=;
-	b=msbvDzivukxM39bZpNHQn7nb90fLrTRp5hguYy7tT1lZ+E/4HYHdWizAA5eMvTDrqmtW
-	 vtlTCf++r4pHWstlqR9kHZVqW+qa38K9jrezZFLaoM4vGh9fI2bhHdMK631wRaw+qnE5Y
-	 2G2Y+MZWcNEOSe2oRRR0nqc8iVSv2nIR6dchrCwFMt2dKjHgQHtTjvYr2pGaUCDWhq3RR
-	 FAyK4A9DWt05YYzM8JcqoPktauD+itF9zF0xOR1TM9zF3JjpQ2q+oE9lD3nBNgdfoRmvI
-	 D/X75pjHGLjWVe1xo62lk9cae+Ixm4S/hPT6HgnK8LemNsGEml3uWyhopGJBb6cfA/Q==
+	bh=3faxL59EJVfpUWsRtc/s3ZTPCj+Yo5cSoGhyH6Bu+hM=;
+	b=pM0/iXB8Y5/NXzh0HgcMwOUa3xtrQhnEZTP0Syrnr4ArB5q0pprNOh5IqAL6cUoAc6Aq
+	 8+tk0LQAv/70+jJo0FRYYfrm5JBURwJOh/EeFU71ZzXFYw+s2Va1VHGgX3VZIGRGXCpVR
+	 eEReMvwh08ThM/Iq8jpc72Lp9bZT6vPysSxiZ/PAufrf7cnfyuPrPNJ7V/t85JSZ1m1r+
+	 j+oXTpUCPKxn0Ijo7SAq75MP+DIQ53XSreJlU1vqOpGuYaG+SYrEjI38S3w88fI/6/zi2
+	 vHm45eSuKPeZRL4G+TOLO1J+wl/tmcxdusagdah002g+mYBopo7a6P5GwR3PDXl+9Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+uJR7eG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WllcprAM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D52606A32C;
-	Wed, 18 Nov 2026 19:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF900606A31C;
+	Wed, 18 Nov 2026 19:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+uJR7eG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D81F000C4;
-	Wed, 18 Nov 2026 19:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WllcprAM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AA61F000C4;
+	Wed, 18 Nov 2026 19:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031761;
-	bh=JWN/XzwCJl84KHWO0+OiWNA1cJMMy6OGvcfYcxaS0zI=;
+	s=korg; t=1795031763;
+	bh=3faxL59EJVfpUWsRtc/s3ZTPCj+Yo5cSoGhyH6Bu+hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+uJR7eGSuq03E4Sm3+EXZ09I0CBFLr38uCnEVcxvSp5BwsAslHgYmXSFdXs/3AXH
-	 xm96tVnMHS0jZNYcvgFYUTXYuUnPDqLNmgMCn4POSBbFZGkLeMqhmpcxrLmOWeG5+b
-	 euito8443HWTxRS722LlVEwW2plN+7L1bIW4I1H8=
+	b=WllcprAMFGl31Nbm6W7NA5BSVbpkLbIklDdcf9FKVkpbbo2Tj03xSricJ3uk2QL8l
+	 Bmu8JW018Fdvz4pZVAWrp9O6UXCfz+AVokfALd6WXoIr6e0DfOpvROSQq4F8pu6LV6
+	 jHevMXKdQgDHzF7PTkIRbJRPqcEMLxx1Ms+FpYOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+03aaa576f1daa1c1f2f0@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <david@davidgow.net>,
+	Rae Moar <raemoar63@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1172/1756] ocfs2: validate chunk and block counts of the local quota file
-Date: Wed, 18 Nov 2026 15:54:59 +0100
-Message-ID: <20261118150056.616704029@linuxfoundation.org>
+Subject: [PATCH 6.12 1173/1756] resource, kunit: stop selecting GET_FREE_REGION
+Date: Wed, 18 Nov 2026 15:55:00 +0100
+Message-ID: <20261118150056.653000780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -74,90 +75,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b10ef5d2c2083ea4c40e963c10a73a154793c5d4 ]
+[ Upstream commit 7c3f4d699f34535285d0ceb184927d71543d0064 ]
 
-ocfs2_local_read_info() trusts dqi_chunks and dqi_blocks from the local
-quota file header.  If dqi_blocks is too small,
-ocfs2_extend_local_quota_file() computes a bogus chunk length, extends the
-file, and maps logical block dqi_blocks, which is already in the inode's
-metadata cache (the header or a chunk header read at mount).  sb_getblk()
-returns that cached buffer and ocfs2_set_new_buffer_uptodate() hits
-BUG_ON(ocfs2_buffer_cached()):
+RESOURCE_KUNIT_TEST selects GET_FREE_REGION even when no other option
+needs it. Remove the selection to follow the dependency rule in
+Documentation/dev-tools/kunit/style.rst.
 
-  kernel BUG at fs/ocfs2/uptodate.c:509!
-  ocfs2_extend_local_quota_file+0x45c/0x1100
-  ocfs2_create_local_dquot+0x8ac/0xb50
-  ocfs2_acquire_dquot+0x614/0xae0
-  ocfs2_get_init_inode+0xe9/0x1b0
-  ocfs2_mkdir+0x174/0x430
+Skip resource_test_region_intersects() when GET_FREE_REGION is disabled.
+GET_FREE_REGION has no prompt, so configurations without a production
+consumer cannot enable it. Most configurations will therefore skip this
+case; this is intentional. The union and intersection tests remain
+available.
 
-ocfs2_local_quota_add_chunk() has the same exposure.
+Since kunit_skip() does not return, the compiler drops the reference to
+the unavailable alloc_free_mem_region(), as in the CONFIG_OF_ADDRESS
+check in drivers/of/of_test.c.
 
-Reject a header whose counts don't fit the chunk layout or exceed i_size.
-
-Reproduced with a crafted image (dqi_blocks = 1, chunk 0 dqc_free = 0);
-syzbot has no reproducer for this report.
-
-Link: https://lore.kernel.org/20260920140710.43938-1-ngocthang2710.1999@gmail.com
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Link: https://lore.kernel.org/20260926002651.87267-1-kmehltretter@gmail.com
+Fixes: 99185c10d5d9 ("resource, kunit: add test case for region_intersects()")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+03aaa576f1daa1c1f2f0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=03aaa576f1daa1c1f2f0
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Tested-by: Bradley Morgan <brads@mainlining.org> # Power10
+Assisted-by: LLM
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <david@davidgow.net>
+Cc: Rae Moar <raemoar63@gmail.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/quota_local.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ kernel/resource_kunit.c | 3 +++
+ lib/Kconfig.debug       | 1 -
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
-index a52bf3895ae25..6bb549863c9c7 100644
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -245,6 +245,25 @@ static void ocfs2_release_local_quota_bitmaps(struct list_head *head)
- 	}
- }
+diff --git a/kernel/resource_kunit.c b/kernel/resource_kunit.c
+index b8ef75b99eb2f..a44ab80a8cb75 100644
+--- a/kernel/resource_kunit.c
++++ b/kernel/resource_kunit.c
+@@ -225,6 +225,9 @@ static void resource_test_region_intersects(struct kunit *test)
+ 	struct resource *parent;
+ 	resource_size_t start;
  
-+/* Check that the on-disk chunk and block counts match the file layout */
-+static int ocfs2_check_local_quota_info(struct inode *inode,
-+					unsigned int chunks,
-+					unsigned int blocks)
-+{
-+	u64 chunk_len = ol_chunk_blocks(inode->i_sb) + 1;
-+	u64 min_blocks = chunks ? 1 + chunk_len * (chunks - 1) + 1 : 1;
-+	u64 max_blocks = 1 + chunk_len * chunks;
++	if (!IS_ENABLED(CONFIG_GET_FREE_REGION))
++		kunit_skip(test, "CONFIG_GET_FREE_REGION is disabled");
 +
-+	if (blocks >= min_blocks && blocks <= max_blocks &&
-+	    blocks <= i_size_read(inode) >> inode->i_sb->s_blocksize_bits)
-+		return 0;
-+
-+	return ocfs2_error(inode->i_sb,
-+			   "Quota file %llu has bad info: %u chunks, %u blocks\n",
-+			   (unsigned long long)OCFS2_I(inode)->ip_blkno,
-+			   chunks, blocks);
-+}
-+
- /* Load quota bitmaps into memory */
- static int ocfs2_load_local_quota_bitmaps(struct inode *inode,
- 			struct ocfs2_local_disk_dqinfo *ldinfo,
-@@ -733,6 +752,11 @@ static int ocfs2_local_read_info(struct super_block *sb, int type)
- 	oinfo->dqi_blocks = le32_to_cpu(ldinfo->dqi_blocks);
- 	oinfo->dqi_libh = bh;
- 
-+	status = ocfs2_check_local_quota_info(lqinode, oinfo->dqi_chunks,
-+					      oinfo->dqi_blocks);
-+	if (status < 0)
-+		goto out_err;
-+
- 	/* We crashed when using local quota file? */
- 	if (!(oinfo->dqi_flags & OLQF_CLEAN)) {
- 		rec = OCFS2_SB(sb)->quota_rec;
+ 	/* Find an iomem_resource hole to hold test resources */
+ 	parent = alloc_free_mem_region(&iomem_resource, RES_TEST_TOTAL_SIZE, SZ_1M,
+ 				       "test resources");
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 5a6415cfd8284..ea40711c74f36 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2613,7 +2613,6 @@ config RESOURCE_KUNIT_TEST
+ 	tristate "KUnit test for resource API" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
+ 	default KUNIT_ALL_TESTS
+-	select GET_FREE_REGION
+ 	help
+ 	  This builds the resource API unit test.
+ 	  Tests the logic of API provided by resource.c and ioport.h.
 -- 
 2.53.0
 
