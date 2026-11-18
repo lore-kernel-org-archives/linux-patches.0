@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036839;
-	b=1/bKO0E8CbWD/l9l68CPiQPSWng37dqFtuzunZg59SzX72NXR0lofiq8X4lwtvKlzFew
-	 pibF6eLRqK0fNGRswWJbYmKwKIbG7keqDaEDhDQmfQAMdRqgt4kY6rmRGYwMUKQKlmwLW
-	 QBwLJftOb9XfGXEC5CybDut45VqkKbjG17A+oJLk0UYeK+89RdABqpslB7E4uLhmiwcp0
-	 r+PhQhHFeUYPDQSohMsWVr0B4Gw9GeNgEQ3moErFN/U9PdgVwctKrwtWFJGW+N9NkESr9
-	 FkzoddLgZzzjoBMHMcvBiB3HcIFrIOTLMucS1Dzl/KDx0ZInx9BV2w0dbnJ3wh0EAjg==
+	t=1795036841;
+	b=gMiDkPujMLxOyfyXiMtUZ2UQA/dkqBawYMWSjn1m7/18SQm56plQcDg8jjtq/HYrlSds
+	 a+spOm24h8BfdHAsracd7eJQAxtB/BqkB1FkJtIi6qZJh+Cdxtv2WMFmqswXHub/LFoy4
+	 c14PI2VjQPHF9x/5m1D2penOG/cPm4cGxVTDodO5u1C9Te/LfwckFTqNFJaz7RlI8nAFc
+	 dVCv5fcXQrs6jNbCwSywXDPklJa+xQy2Z4A8uxbqVKh4fQQEQGt2tgKgA1KJOJVxtrIQ8
+	 v+SArCvDa2ED1tfO5KnHMObApQzTl8De+kTrkUznMEEmaP5LtFGFnSDTXdNlxkx7Hpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qUxLznC0YXcRUXLblHTFvulzIV9sU4K9ATlyIZSQk0c=;
-	b=If8L1UQc3D1Dd6iG85czHLuBnsFFFTqQ9uVG8Szx7sQBICH6UvN0OsQaDDFd9tw7zrXW
-	 0GiFe8V63wS1mKEXJrdo7MLnbld9jXBdgNt0KlJY1nl4tyI2m4Jy7b8OVy0GD8Kqo9RUx
-	 ag+Q9EFRiynhV70iyrw7LIOSWCBGQSUcqQvDL0gwg4WBcZ+VBFq/DDtaEvKLvlYQfIfEn
-	 HR9/zHjHQ7MhnsUCUja8MO4iMUXsYylnsh8EuSxmbrUnc+oMU7HLnojgdiEXh9m4dF1tA
-	 Sr8bucKTOCATpyxd0bpEIzO0Gh2q1L4ZIasbt3kX7qyJUpGTSgFp6pk6fIf9pijV+iA==
+	bh=4SwMBfQDSpttshBbLTkxCQTAdByazO8tyq+ZdtJZsgw=;
+	b=dk172YncW1UblZW1uGLNiEjSMlhujxDlF3gCdcO7EI2kCSoRGCBuOlmFx0D+q9Ky7Rcc
+	 lt3xY7dA5JUYcmHnI6RT8IHyamlsgM8CP2dQ8oyeotWQkIege3/pTeuy+5TtO+12ep/Rw
+	 9D6j+LHbeBeMWp2QNAxJvC9qMsGnGcFUJZR4Ejo2lFS54w56+aUApcN/+infR+KwJG1Yl
+	 slf150beCu0Bvm09Kp+0XHftAhBhpgUuNr+RWBvnw8U5MPRranCxrmvVWYBn6oFfDAJ8D
+	 i5wSMwDoAPX8kr+cMU8fc8IQ0URqjnPGO89fwrvxPKbeDMTfzddfWKQvOFujxiDkcHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="V/RP39T6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vv6pTIDX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9D8606A31C;
-	Wed, 18 Nov 2026 21:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71BA606A31C;
+	Wed, 18 Nov 2026 21:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V/RP39T6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7391F000C4;
-	Wed, 18 Nov 2026 21:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vv6pTIDX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399C81F000C4;
+	Wed, 18 Nov 2026 21:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036839;
-	bh=qUxLznC0YXcRUXLblHTFvulzIV9sU4K9ATlyIZSQk0c=;
+	s=korg; t=1795036841;
+	bh=4SwMBfQDSpttshBbLTkxCQTAdByazO8tyq+ZdtJZsgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/RP39T6/ztDQyocpPdW8KTUl6KlMVGHVHrSNjfMLXGEVLldNUbfbntujmC6cvajs
-	 jLwV2oxw/dfoaTxTu7WGi6P5EBCcl2meCgE42hJn838ufAszZatt/5n3NX1GDk2SrP
-	 JnxZk1I0vDrZ1qn9TqlLDxLnkJTaD9mnvO9kO5y4=
+	b=vv6pTIDXvN5Q7I+VkjCv+fo6mo+5+NAnfhnqSkTNZu5hdExHPg0TmIpopbUmNu7zv
+	 x//HtTfB+mi9AXt2AwVVeIeyw6THNTeccNhFsLmLGmG2//PnUu4xbCyW9NVdC/Crp9
+	 3hJVU3wIlG77DyCaXcCi3uA89V1PnNFldqUiF4ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1161/3318] platform/x86/amd/pmc: Fix RTC reference leak in amd_pmc_verify_czn_rtc()
-Date: Wed, 18 Nov 2026 15:29:43 +0100
-Message-ID: <20261118150354.940985121@linuxfoundation.org>
+Subject: [PATCH 6.6 1162/3318] hwmon: (sht3x) Return the consumed count for heater writes
+Date: Wed, 18 Nov 2026 15:29:44 +0100
+Message-ID: <20261118150354.973653657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,88 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 22b9306f1fcf86f80b55f05f08d10a9951ba970a ]
+[ Upstream commit 817ac527100c8e20684211eb919ffd6d875adc7a ]
 
-amd_pmc_verify_czn_rtc() opens the RTC with rtc_class_open(), which
-takes both a device reference and a module reference on the RTC
-driver. The matching release is rtc_class_close(), and it is never
-called. Every return path after the device has been opened, the ones
-that return 0 as well as the ones that report an error, leaves both
-references behind, so each S0i3 suspend leaks them.
+heater_enable_store() returns the result of i2c_master_send(), which is
+the two-byte command length on success rather than the sysfs input
+count. This can report more bytes than were supplied, or a partial write
+for a fully processed input. For example, writing "on\n" returns two
+instead of three, so a caller retrying the remaining newline gets
+-EINVAL even though the heater command succeeded. Retrying the remainder
+of "off\n" can also send the heater-off command twice.
 
-Release the reference with a __free() cleanup on the declaration,
-which covers every return path without adding labels.
+Return count after a complete command transfer. Preserve negative I2C
+errors and return -EIO for nonnegative incomplete transfers, so a
+zero-message transfer is not reported as a successful zero-byte write.
+Keep the existing boolean parsing, command selection and locking.
 
-rtc_class_close() does not accept a NULL argument, so the cleanup
-helper has to guard against one: rtc_class_open() may fail and the
-declaration still has to be cleaned up.
-
-Found by code review.
-
-Fixes: 59348401ebed ("platform/x86: amd-pmc: Add special handling for timer based S0i3 wakeup")
+Fixes: 50c22cd154e5 ("hwmon: (sht3x) add humidity heater element control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20261011121759.3267678-1-make_ruc2021@163.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261019154718.2328055-1-pocj8ur4in@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c | 5 +++--
- include/linux/rtc.h                | 2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/hwmon/sht3x.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
-index 6b67f8517d90d..19abca2e46763 100644
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -14,6 +14,7 @@
- #include <linux/acpi.h>
- #include <linux/bitfield.h>
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/debugfs.h>
- #include <linux/delay.h>
- #include <linux/dmi.h>
-@@ -746,7 +747,6 @@ static int amd_pmc_wa_irq1(struct amd_pmc_dev *pdev)
+diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
+index 0f757ef4bbe99..c2c5fccc97edf 100644
+--- a/drivers/hwmon/sht3x.c
++++ b/drivers/hwmon/sht3x.c
+@@ -540,7 +540,10 @@ static ssize_t heater_enable_store(struct device *dev,
  
- static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
- {
--	struct rtc_device *rtc_device;
- 	time64_t then, now, duration;
- 	struct rtc_wkalrm alarm;
- 	struct rtc_time tm;
-@@ -762,7 +762,8 @@ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
- 	if (pdev->major < 64 || (pdev->major == 64 && pdev->minor < 53))
- 		return 0;
+ 	mutex_unlock(&data->i2c_lock);
  
--	rtc_device = rtc_class_open("rtc0");
-+	struct rtc_device *rtc_device __free(rtc_class_close) =
-+		rtc_class_open("rtc0");
- 	if (!rtc_device)
- 		return 0;
- 	rc = rtc_read_alarm(rtc_device, &alarm);
-diff --git a/include/linux/rtc.h b/include/linux/rtc.h
-index 4c0bcbeb1f00c..8117fd0f62a54 100644
---- a/include/linux/rtc.h
-+++ b/include/linux/rtc.h
-@@ -13,6 +13,7 @@
- #define _LINUX_RTC_H_
+-	return ret;
++	if (ret != SHT3X_CMD_LENGTH)
++		return ret < 0 ? ret : -EIO;
++
++	return count;
+ }
  
- 
-+#include <linux/cleanup.h>
- #include <linux/types.h>
- #include <linux/interrupt.h>
- #include <linux/nvmem-provider.h>
-@@ -198,6 +199,7 @@ extern void rtc_update_irq(struct rtc_device *rtc,
- 
- extern struct rtc_device *rtc_class_open(const char *name);
- extern void rtc_class_close(struct rtc_device *rtc);
-+DEFINE_FREE(rtc_class_close, struct rtc_device *, if (_T) rtc_class_close(_T));
- 
- extern int rtc_irq_set_state(struct rtc_device *rtc, int enabled);
- extern int rtc_irq_set_freq(struct rtc_device *rtc, int freq);
+ static int update_interval_read(struct device *dev)
 -- 
 2.53.0
 
