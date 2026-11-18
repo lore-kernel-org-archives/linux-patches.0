@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028682;
-	b=PlrRX8tSrsv/DHvfETVvztUWjM69BNwLTWLV2V0alYpNh6xzlQoEI/BXxKMEw+ucmZq3
-	 az2MY6bDi+7uZSN6V9lUPhTRHM8XBiNn2cK0r6K/Ednfg+Vo4dqpHKHfKv0EMN6TGthT3
-	 TFETW5qmJKISlTnWG+pzwXZFoOIxyO64AXG3gJjmd8k3JFFqdqjo12ZsjiEMuTTT9QmxC
-	 wnSFD0Ok4GOhgH7h8NnimzO79yCuaLxNGogMRCE18cJFEbAmW2F53Ua+Q8AAY8sg5jr6g
-	 eJQ/3CcsHAKjWKN3v50XDgrhZEQEDME+imnAS4iz6oqFOM+/s3kPNRC9RnTqjwJbuYQ==
+	t=1795028685;
+	b=oMmVmhQz1HmAjOiN0b9i1eNx51s0m7WpGzlXRSykUUW7HE0lXmH/XYeZX6WHIkuce1k+
+	 FtWp7pdt3DRgdnzqRXogru7Hh1VsMn9z0ag56SIZDEXzafrFD2ik4lqIS3uErYCs6PC8y
+	 9VukKO0+oiCqfibfFAl5aJsYfwyUZPCOMD4OFTdvhhq2qePZ5l74xMfu+VO+XxAP00a5j
+	 JuIn7FX+WItmbOanlTfWoJNhye6jmvgpNWyI3nYO9ZDeSZZDML3Vc73S4+sxfN/umQnbv
+	 kJ5XRbRMulkoOwMNFMWycya+OZTSaCgSZZHvgS0uQP+2IIkkAnIVOBxaKH9zWC82Jtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VdG0LZIMQiPpn3OIUzdwBn7R5CWxR5NXwFSVOPC5RS4=;
-	b=3wNk78lwbo0vGgv6ZHfQVeZHcgOhNg9NgrRdu1N4K0KFhk/sz8+DQvzGy2HZQdzIYyYP
-	 fULwIka6AnsvXZRpN2rJqNjZfkbWv4AADd23cDtLSSYg7w6wjx3sK2kkNRtrhTSavt17+
-	 YeBh58Bay6P+s6jQmJFe9/BoA5Jh8YkcTWFnSFr9zQqTS/jV7FbGTo6S+jUTEvUJ345bX
-	 x3aIXrVObGwKbiVtHuX0y3Uorub/FySmqqY/H8crXmnVUM8EuHDJkz2Hp9O9rJBrULH8V
-	 KQ+OlEx99no9nBUBUVd+tZUJGZgFUUffH89791L4r5oSMaLc9Fln9lA6h6fKS/EK/dA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=m1dw0TmBuclfm3feVIEEt1CsLs11pzXFuFi558kqF04=;
+	b=KBu5gnVFdIpazLGon3al6LIahhuW1RgqqH6ttWRWBvX6uqHhMKPJI0sHvy8zJ4hR9XFi
+	 2QcfHNWrXI1KyRMxW9mNBFAkH/HjWqrB3Y8gk16afmkNjsLfq3SsFkJtqfFBULErFs4cJ
+	 DliGY4y5KVw0h76moCe+2qVNCOAuYTtAYP8t+TOrpzuCgWov11E+Jln8t4IEIy/24xZJ6
+	 YH4a8u9NTcZcf4/yWYrPKfWR75rD2o+WrorCXpKEt3NC2NBSd3c/Kayrwd1GirF1crD37
+	 rJ1aLXzzTkaZL55jvy/BBZXBjZQqJ3ogy3SclqVF2cvSrSR6SAw8rG1AyPH152nnU3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMV3bwRk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2J/RU8ZV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980F6606A320;
-	Wed, 18 Nov 2026 19:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C7606A31C;
+	Wed, 18 Nov 2026 19:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMV3bwRk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64BE1F000C7;
-	Wed, 18 Nov 2026 19:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2J/RU8ZV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F111F000C4;
+	Wed, 18 Nov 2026 19:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028682;
-	bh=VdG0LZIMQiPpn3OIUzdwBn7R5CWxR5NXwFSVOPC5RS4=;
+	s=korg; t=1795028685;
+	bh=m1dw0TmBuclfm3feVIEEt1CsLs11pzXFuFi558kqF04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AMV3bwRk9s2V/PXnnKkKGcOEGTsIeEs0hNlyA5k27f8B11O7UfTzqGnOI11JuIKaT
-	 +c3syi6jnyaAon45RKBeEnBErnL9lQ7nVaaV9cY5jT59JSSNj19nBDj6yUed8SBBfI
-	 eASkK6nVxjZaEF85243cbsKkyP3TcnwJIEEdTRkU=
+	b=2J/RU8ZVXkEgesokVRguvL4MYQCr5lA2cF9Uaa8idNrywoJMkpJAYBMbvpzEMd4nI
+	 GhAt8KXZy+UMwSUHM+gQYzXaAg60tFAkPBt94ifKQ//nffiagRioof2/v8ZyoYyQoe
+	 /ucIt4SZtGHVH/XcSRMuMhIYaZnziuXXTvNhTVAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0083/1756] hwmon: (tmp108) Add helper function tmp108_common_probe() to prepare I3C support
-Date: Wed, 18 Nov 2026 15:36:50 +0100
-Message-ID: <20261118150011.577167418@linuxfoundation.org>
+Subject: [PATCH 6.12 0084/1756] hwmon: (tmp108) Fix initial conversion delay and wait until ready
+Date: Wed, 18 Nov 2026 15:36:51 +0100
+Message-ID: <20261118150011.614954173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,103 +62,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 700f3250198d51093884254220a96777a922dd47 ]
+[ Upstream commit 7cd60538073e465310c94b2a2f0ea8d2f03768ef ]
 
-Add help function tmp108_common_probe() to pave road to support i3c for
-P3T1085(NXP) chip.
+In tmp108_common_probe(), the driver only adds the 30 ms conversion delay
+(TMP108_CONVERSION_TIME_MS) to ready_time if the sensor was previously in
+TMP108_MODE_SHUTDOWN. However, the TMP108 hardware defaults to continuous
+conversion mode (TMP108_MODE_CONTINUOUS) upon power-on reset, including
+immediately after enabling the vcc supply regulator during probe, while
+the temperature register retains its power-on reset value of 0x0000 (0°C)
+until the first conversion completes. Because the initial mode is not
+shutdown, the delay is bypassed and early reads via thermal zone
+registration or sysfs before the first conversion finishes return an
+uninitialized 0°C reading.
 
-Use dev_err_probe() to simplify the code.
+In addition, returning -EAGAIN from tmp108_read() while waiting for a
+conversion to complete after probe or resume can trigger an unnecessary
+tight retry loop in callers or fail initial reads.
 
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Message-ID: <20241112-p3t1085-v4-1-a1334314b1e6@nxp.com>
+Unconditionally set ready_time to TMP108_CONVERSION_TIME_MS ahead in
+tmp108_common_probe(), track ready_time as ktime_t, and wait for the
+remaining conversion time in tmp108_read() using usleep_range() instead
+of returning -EAGAIN.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 66e1c9171339 ("hwmon: Add Texas Instruments TMP108 temperature sensor driver.")
+Cc: stable@vger.kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 7cd60538073e ("hwmon: (tmp108) Fix initial conversion delay and wait until ready")
+[ sashal: Adjusted structure context to account for the missing tmp108_params structure and params member. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp108.c | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ drivers/hwmon/tmp108.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
-index 18e7c9d9bcbb8..d95957d808e1b 100644
+index d95957d808e1b..310f8cae1fd84 100644
 --- a/drivers/hwmon/tmp108.c
 +++ b/drivers/hwmon/tmp108.c
-@@ -323,33 +323,19 @@ static const struct regmap_config tmp108_regmap_config = {
- 	.use_single_write = true,
+@@ -14,7 +14,7 @@
+ #include <linux/of.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
+-#include <linux/jiffies.h>
++#include <linux/ktime.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ 
+@@ -73,7 +73,7 @@
+ struct tmp108 {
+ 	struct regmap *regmap;
+ 	u16 orig_config;
+-	u64 ready_time;
++	ktime_t ready_time;
  };
  
--static int tmp108_probe(struct i2c_client *client)
-+static int tmp108_common_probe(struct device *dev, struct regmap *regmap, char *name)
- {
--	struct device *dev = &client->dev;
- 	struct device *hwmon_dev;
- 	struct tmp108 *tmp108;
--	int err;
- 	u32 config;
--
--	if (!i2c_check_functionality(client->adapter,
--				     I2C_FUNC_SMBUS_WORD_DATA)) {
--		dev_err(dev,
--			"adapter doesn't support SMBus word transactions\n");
--		return -ENODEV;
--	}
-+	int err;
+ /* convert 12-bit TMP108 register value to milliCelsius */
+@@ -94,6 +94,7 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
+ 	struct tmp108 *tmp108 = dev_get_drvdata(dev);
+ 	unsigned int regval;
+ 	int err, hyst;
++	s64 delay;
  
- 	tmp108 = devm_kzalloc(dev, sizeof(*tmp108), GFP_KERNEL);
- 	if (!tmp108)
- 		return -ENOMEM;
+ 	if (type == hwmon_chip) {
+ 		if (attr == hwmon_chip_update_interval) {
+@@ -123,12 +124,10 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
  
- 	dev_set_drvdata(dev, tmp108);
--
--	tmp108->regmap = devm_regmap_init_i2c(client, &tmp108_regmap_config);
--	if (IS_ERR(tmp108->regmap)) {
--		err = PTR_ERR(tmp108->regmap);
--		dev_err(dev, "regmap init failed: %d", err);
--		return err;
--	}
-+	tmp108->regmap = regmap;
- 
- 	err = regmap_read(tmp108->regmap, TMP108_REG_CONF, &config);
- 	if (err < 0) {
-@@ -383,13 +369,30 @@ static int tmp108_probe(struct i2c_client *client)
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+-		/* Is it too early to return a conversion ? */
+-		if (time_before64(get_jiffies_64(), tmp108->ready_time)) {
+-			dev_dbg(dev, "%s: Conversion not ready yet..\n",
+-				__func__);
+-			return -EAGAIN;
+-		}
++		/* Wait if it is too early to return a conversion */
++		delay = ktime_us_delta(tmp108->ready_time, ktime_get());
++		if (delay > 0)
++			usleep_range(delay, delay + 1000);
+ 		err = regmap_read(tmp108->regmap, TMP108_REG_TEMP, &regval);
+ 		if (err < 0)
+ 			return err;
+@@ -357,11 +356,8 @@ static int tmp108_common_probe(struct device *dev, struct regmap *regmap, char *
  		return err;
  	}
  
--	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
-+	hwmon_dev = devm_hwmon_device_register_with_info(dev, name,
- 							 tmp108,
- 							 &tmp108_chip_info,
- 							 NULL);
- 	return PTR_ERR_OR_ZERO(hwmon_dev);
+-	tmp108->ready_time = get_jiffies_64();
+-	if ((tmp108->orig_config & TMP108_CONF_MODE_MASK) ==
+-	    TMP108_MODE_SHUTDOWN)
+-		tmp108->ready_time +=
+-			msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
++	tmp108->ready_time = ktime_add_ms(ktime_get(),
++					  TMP108_CONVERSION_TIME_MS);
+ 
+ 	err = devm_add_action_or_reset(dev, tmp108_restore_config, tmp108);
+ 	if (err) {
+@@ -408,8 +404,8 @@ static int tmp108_resume(struct device *dev)
+ 
+ 	err = regmap_update_bits(tmp108->regmap, TMP108_REG_CONF,
+ 				 TMP108_CONF_MODE_MASK, TMP108_MODE_CONTINUOUS);
+-	tmp108->ready_time = get_jiffies_64() +
+-			     msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
++	tmp108->ready_time = ktime_add_ms(ktime_get(),
++					  TMP108_CONVERSION_TIME_MS);
+ 	return err;
  }
  
-+static int tmp108_probe(struct i2c_client *client)
-+{
-+	struct device *dev = &client->dev;
-+	struct regmap *regmap;
-+
-+	if (!i2c_check_functionality(client->adapter,
-+				     I2C_FUNC_SMBUS_WORD_DATA))
-+		return dev_err_probe(dev, -ENODEV,
-+				     "adapter doesn't support SMBus word transactions\n");
-+
-+	regmap = devm_regmap_init_i2c(client, &tmp108_regmap_config);
-+	if (IS_ERR(regmap))
-+		return dev_err_probe(dev, PTR_ERR(regmap), "regmap init failed");
-+
-+	return tmp108_common_probe(dev, regmap, client->name);
-+}
-+
- static int tmp108_suspend(struct device *dev)
- {
- 	struct tmp108 *tmp108 = dev_get_drvdata(dev);
 -- 
 2.53.0
 
