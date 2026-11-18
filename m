@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040073;
-	b=cd4oWgSdR00NRFeCN4L/pLlo1pRSGlnvfnIdSZy1QKSHaGePguyZaCguU0LmnuLyCMVk
-	 S16tSNnJeIU4TpTWEXo/Yk8AwucmOy3tzpBo4KRyF8X412fRfVOVB+h1xqvdu4LEn/0kC
-	 cB3Ab4kZNveGVQB+Hyg9QpYw0Avw+zGORJpUaoYjSj6cTCOBxeSsWVUhM1u5GFiwijJr+
-	 Vv+WVFNLixuZOvo39K7srNZfbXt73hvjE8B1F9un5T2k8mD3qqNMhiamq2OCaFVAA+xob
-	 fA3aJOAdOAgVwiyR6UVtWckxB6FBBz1NvQ/8/zSjIuFpZXGXGmAhjrVsWK8q3xw1EVA==
+	t=1795040076;
+	b=gBRYXTSp9wYh4HVxtoXTIqvrukpJksQJrizAX2ABOVps8M7TFaX+eaJXXH7vq1uAkFdv
+	 JI4JVX3bMFv0SqT5rYqla4dYw0eHUiNeA+KcYrUxdwUHfP8lkRDV3jl05YTjfizTdiOEE
+	 DJK78INHoa4jyMuCVWyWhunmcxFb3ryRvo4eF5Y9S7VsDgegS/7g2/4FZTQZNYps7y7V0
+	 zS1QaJ/Iv8XiAk1T/yo+SRd44I4dB9O6LFUXZUU2+cEvcFQJPOZhTketQESd1rFphOY7Y
+	 QhClCn0xP8knwLJMy1Uoyod1jfOR0cBYG/XYXwPm0bLpXsKevD8A/INwS746zLZwNlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040076;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fzzipzNCpMdB8iv5i6FgUy8x18BcD3QzsFgTPqLih/8=;
-	b=NiD6upEueIX5VNeCg8TP82JSO3FeVQL1eGPPkCclltpbol7qnsPn7NBO7oFYwZg5fcwW
-	 FLQTCgTV+CcbfROPmuzIvGlNnWoixSvRgxP18DOuumTQOps46ItDXuh0foO+qM/Boder9
-	 B0uLFN0fRUIlr8QQkWn1nBFU3VoA7Ao17g/zT3wIUvBbE1l9GWs+9Ip+rRvknYtjjsLaz
-	 W1i3bwxJg3JerH0a6sNjyJHy3o6HOK0ZI/CLRoqdHiB/HgzGI6KbEWqlb/WXNPkCoeFhm
-	 9pCmZczTS6jdYxIc4Eh6VJU3RhOZeUDjZ/w3Od5hMHvDiPygCH+8QsXdC9BG703Gqtg==
+	bh=42EcRA4P/DYTbEdbeNbSP8lX7bMDPnQHw9IAHpv9ux0=;
+	b=K6Pdg/zWsq7eIDtoIb1UJ+nJ+ZQl0JhdcBPhpKWY3i4vF3BX7pfAqvmYGWAFpjnobLXN
+	 NIJE5wvM3mxWooi0gZzw2Iahm4uIMFoYWVZR3mGjQym8JYI+HdKu1qCGUaiobNd52YbLa
+	 RmNcnwhJoeBEgdvjoC/nbD32sCkw5Jhah3N6Makwgg9jZujWn90pLk/OAkTJZ9MIdlL+i
+	 wrVIguImXu0vuJYUhAdCB9jYKR/UV4l1euFmUxmB7vFXN1d1lmFf61C2/2BAQEQgdfARf
+	 AzLXdNcT6vPWW23e1lexpf4ZR0rBCL3qmhdSjZMATZf8L8d0IT9k+fLrgS2vF3lL+5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCHzvhWy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1gK53CE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98528606A31C;
-	Wed, 18 Nov 2026 22:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA62606A325;
+	Wed, 18 Nov 2026 22:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCHzvhWy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B791F000C4;
-	Wed, 18 Nov 2026 22:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1gK53CE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF3D1F000C4;
+	Wed, 18 Nov 2026 22:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040073;
-	bh=fzzipzNCpMdB8iv5i6FgUy8x18BcD3QzsFgTPqLih/8=;
+	s=korg; t=1795040076;
+	bh=42EcRA4P/DYTbEdbeNbSP8lX7bMDPnQHw9IAHpv9ux0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vCHzvhWypZv+GyteoI6m14B0UXSSz4b3fWfoMYsK6uyqt0R3XVajGDoBRyxrKLpYT
-	 UYVMNj+UjP5xPcACmTkc1+jm4vQ0ed0Ww9KveIlM2O2VBmJgBFYBw2Z7ML8NweKhME
-	 VDH3g9oOA+pGvM227hKHchviL1OQ0uQ21+EgRQzA=
+	b=W1gK53CEjEs0+AcLczoVpCbXgZZs8H9eO/HbUwzeyoXicOMIUUEBCSwXOE5YzEr8B
+	 6VAKhaKpJVY/nNi71zYOXbR5bwX1kXcJ/XFAG6vz1Q7n4QTrBxzp2NTqaHqEjWjqeQ
+	 +cO6EsVA01tE4C/nbc3hXRPZCH1Q9FO+r1wH+B+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2328/3318] serial: sifive: fix off-by-one in console port bounds check
-Date: Wed, 18 Nov 2026 15:49:10 +0100
-Message-ID: <20261118150431.497537706@linuxfoundation.org>
+Subject: [PATCH 6.6 2329/3318] dt-bindings: Add vendor prefixes
+Date: Wed, 18 Nov 2026 15:49:11 +0100
+Message-ID: <20261118150431.523137139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,43 +68,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit bf961847813d9edcb5a9c089714069428d141fa9 ]
+[ Upstream commit 714ff69c331c005c9cd05d69d3c6fe9da20ef687 ]
 
-sifive_serial_console_ports[] is sized SIFIVE_SERIAL_MAX_PORTS (8), so
-valid indices are 0..7. The bounds check in sifive_serial_probe() uses
-"id > SIFIVE_SERIAL_MAX_PORTS", which lets id == 8 pass and causes an
-out-of-bounds write in __ssp_add_console_port() through
-sifive_serial_console_ports[ssp->port.line].
+These vendor prefixes are used by some routers supported
+by e.g. OpenWrt.
 
-Fix the check to use >= instead, matching the check already used in
-sifive_serial_console_setup().
+- ADI Engineering is a US telecom equipment company.
 
-Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Link: https://patch.msgid.link/20260827014524.19375-1-min_halo@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- Arcom Controllers is a US manufacturer of repeaters.
+
+- Freecom Gmbh is a german telecom equipment company.
+
+- Gemtek Technology is a Taiwan telecom company.
+
+- Gateway Communications was a telecommunication company,
+  now acquired by HKT Limited/PCCW.
+
+- Goramo Gorecki is a privately owned Polish telecom
+  company.
+
+- U.S. Robotics Corporation, known through their brand name
+  USRobotics is generally referred to as "USR" so use this
+  prefix for the company's device tree bindings.
+
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20231007-ixp4xx-usr8200-v3-1-ec46edd1ff0e@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: aa906abf611c ("dt-bindings: vendor-prefixes: add Free Mobile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sifive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/tty/serial/sifive.c b/drivers/tty/serial/sifive.c
-index e86b00873d0ea..1b2477347ec06 100644
---- a/drivers/tty/serial/sifive.c
-+++ b/drivers/tty/serial/sifive.c
-@@ -940,7 +940,7 @@ static int sifive_serial_probe(struct platform_device *pdev)
- 	}
- 
- #ifdef CONFIG_SERIAL_SIFIVE_CONSOLE
--	if (id > SIFIVE_SERIAL_MAX_PORTS) {
-+	if (id >= SIFIVE_SERIAL_MAX_PORTS) {
- 		dev_err(&pdev->dev, "too many UARTs (%d)\n", id);
- 		return -EINVAL;
- 	}
--- 
-2.53.0
-
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -59,6 +59,8 @@ patternProperties:
+     description: AD Holdings Plc.
+   "^adi,.*":
+     description: Analog Devices, Inc.
++  "^adieng,.*":
++    description: ADI Engineering, Inc.
+   "^advantech,.*":
+     description: Advantech Corporation
+   "^aeroflexgaisler,.*":
+@@ -127,6 +129,8 @@ patternProperties:
+     description: Arasan Chip Systems
+   "^archermind,.*":
+     description: ArcherMind Technology (Nanjing) Co., Ltd.
++  "^arcom,.*":
++    description: Arcom Controllers
+   "^arctic,.*":
+     description: Arctic Sand
+   "^arcx,.*":
+@@ -486,6 +490,8 @@ patternProperties:
+     description: FocalTech Systems Co.,Ltd
+   "^forlinx,.*":
+     description: Baoding Forlinx Embedded Technology Co., Ltd.
++  "^freecom,.*":
++    description: Freecom Gmbh
+   "^frida,.*":
+     description: Shenzhen Frida LCD Co., Ltd.
+   "^friendlyarm,.*":
+@@ -498,6 +504,8 @@ patternProperties:
+     description: FX Technology Ltd.
+   "^gardena,.*":
+     description: GARDENA GmbH
++  "^gateway,.*":
++    description: Gateway Communications
+   "^gateworks,.*":
+     description: Gateworks Corporation
+   "^gcw,.*":
+@@ -512,6 +520,8 @@ patternProperties:
+     description: GE Fanuc Intelligent Platforms Embedded Systems, Inc.
+   "^gemei,.*":
+     description: Gemei Digital Technology Co., Ltd.
++  "^gemtek,.*":
++    description: Gemtek Technology Co., Ltd.
+   "^genesys,.*":
+     description: Genesys Logic, Inc.
+   "^geniatech,.*":
+@@ -534,6 +544,8 @@ patternProperties:
+     description: Shenzhen Huiding Technology Co., Ltd.
+   "^google,.*":
+     description: Google, Inc.
++  "^goramo,.*":
++    description: Goramo Gorecki
+   "^gplus,.*":
+     description: GPLUS
+   "^grinn,.*":
+@@ -1454,6 +1466,8 @@ patternProperties:
+     description: United Radiant Technology Corporation
+   "^usi,.*":
+     description: Universal Scientific Industrial Co., Ltd.
++  "^usr,.*":
++    description: U.S. Robotics Corporation
+   "^utoo,.*":
+     description: Aigo Digital Technology Co., Ltd.
+   "^v3,.*":
 
 
