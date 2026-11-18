@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028948;
-	b=KqJErXfdhYtckPL6b4wdmgRRy2nTTOy5tT1lQBXNIWrwk4X+6K5jN7AIM+i9Jtmm6F7p
-	 /hRp4oXkBhH8WqzEXTdc8tc2u/s3Bv6uQI3vTWQpl93J1MKrIg49/dikQJewsHda2DtJy
-	 sIOLOAszoxvNNpaL7/oApFcszkwEt+qdE9wX0I5Rt6iXMT/4BVXTfME5F6WDQzg1i+lOc
-	 xwXBGqSCk3JZH2q6ClmOP/QuqlclkBGS5gv7Oj/SSrnyppz9SRwgA2NDbl1aAdNTF9b2P
-	 GSCAI6Ff41TAR9MBy6OPh+FhrslsktVc/10Z78IrvHDI07b3sa+Sv38tDFYLl+1oSHA==
+	t=1795028951;
+	b=LTAscHYYNaSU6Trug5tixXP7zDMF7+130b/daA6W75czpRV7oz8cIV6SuSHdLZSjQ5O0
+	 8BD6HCIL9FXjxf3abZ5uzmiV+7arPHwEkegkK3rOKV9NEwNFTAiVnRbdSQaOvQETqudGq
+	 dlYrGTaSnIRWcpF9IpMBrbrTR95CnZlJX6I/4b4WcPv0Pu10YKY5TpFKJl7F8u7x8hXsB
+	 loopl1CBvhbWm/6kmFCZbQNCHVSVJoRQ1FkGRoh3oeo5LyFAP13XKS15UQzJYlya4h3sz
+	 VoMs0ybNcgUnQlASf7LSfIFeZHpsqetp1Oo+b4D0TIK0qTANYj1GwHVbj1wwmjK+upw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OUTkSfbXcbdk814nQH9+s1q7lbSufYXXmqjyTqkRqZs=;
-	b=sRdfKEh3pddwF+5f1WsqBnM2MTptfji+m5j0gEjIuucgzvOOjUT2EAaT2s+QuGzENUB8
-	 Y/i0oWFWJrcK5NO7P63jzs5MY8Z2ciaXoI11Gr8FxJYQX+h9ra3Lepvv4Rg21jRn6V05l
-	 o8KAZnnM1Awey2CzXfer6GDwUUunmSxJNMW2zmy2pefUIgUv4D5J1bC9Ujovk0boJEAdn
-	 hMszXEmi8IXngR+4scdHqUTidMGslWC3dj/iYjODosElPMEb9FJKK96wDsMmB+T/5lbZG
-	 hbE1aoFYDVhRBieDAE/DS4qdL8YD954IXw6LY+8Mnkfw2c1wy4ZSFGe1YqgnGzaSP2A==
+	bh=jGUdJ8QLHpqF3hhhRX2SDBXwCgfViCI+QemkaEzhZhE=;
+	b=O9RKBCPB9Pyd1wZlZSux67AN50mg+guSLaorHYFVFp/B9WTEJfKhL3fV5o5+vfGo6+Oa
+	 8iK5fHKXehAIFHjzSW/huFXM49VcAVoJuwI5vbPohZZYUW1wnceM9QIVfBggSHd57gLIT
+	 iRpDazZizyo7qbgP8Em6xvUTZ+hBE6CpIK65saRNwUplVrvcwJzAPZRQIUtMJszbl65Z+
+	 ZzQx1TcaaNTjpyXyshqZmeIajWFb3FPejqPn/XMt6QXMdWaK/YziRTWUyMZSJdmUp25yL
+	 Limt7dUmMIYuyeLyAA6bfvf4Or3TDYFoTgvROT6RxlF1aer70h6wPExQ/m74R/GDeeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cBmuhZcM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPNZF46X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6346C606A33D;
-	Wed, 18 Nov 2026 19:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5061D606A335;
+	Wed, 18 Nov 2026 19:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cBmuhZcM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1D31F000C4;
-	Wed, 18 Nov 2026 19:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPNZF46X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4C81F000C4;
+	Wed, 18 Nov 2026 19:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028948;
-	bh=OUTkSfbXcbdk814nQH9+s1q7lbSufYXXmqjyTqkRqZs=;
+	s=korg; t=1795028951;
+	bh=jGUdJ8QLHpqF3hhhRX2SDBXwCgfViCI+QemkaEzhZhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cBmuhZcMtVXDBjh19s+SHR/NJNxKTclCE2b2enI6O9XVgfUD4ZS0jqzu94jtU7Bs7
-	 YcjuiQ+5nSB+R7MtXbHXs0Pz3/Nm1aiTYNwBGlnRnv3xWSkIaxRCe8/SvJKkYEmfuK
-	 B+Dn80Z1cpzIquaiKv69wLucsetBy5zWmTjMLFX4=
+	b=RPNZF46XN21Ch8+zqlftcHRg9SIOf2o0pYag16RCAdR571o8Yx4tFBMIufFvQPmbV
+	 8rK5HhBvoFdjpL8DxKeO2nYXV4C+giioKNUKtCqFVn5m56ANTq+A/Gr6sjdwnd9JzD
+	 7aiiBU7/nlYBdXBvEUzZy/vSlx33/rHowJOARmLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
+	Shujath Mohd <shujath@outlook.in>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0177/1756] remoteproc: qcom_q6v5_adsp: Fix double jiffies conversion in adsp_start()
-Date: Wed, 18 Nov 2026 15:38:24 +0100
-Message-ID: <20261118150015.498627897@linuxfoundation.org>
+Subject: [PATCH 6.12 0178/1756] arm64: dts: qcom: sdm845-sony-xperia-tama: Fix Bluetooth UART pinctrl
+Date: Wed, 18 Nov 2026 15:38:25 +0100
+Message-ID: <20261118150015.531349746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,48 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Shujath Mohd <shujath@outlook.in>
 
-[ Upstream commit f559ef6316971fe39dc5f5edd6a483429ba03768 ]
+[ Upstream commit cd0f33393882e2554d46e8e068ab95d00593f385 ]
 
-adsp_start() computes 5 * HZ, an already-converted jiffies count, and
-passes it into msecs_to_jiffies(), which expects milliseconds --
-reinterpreting the value and shrinking the intended timeout. Every
-other caller (q6v5_start() in qcom_q6v5_mss.c, qcom_pas_start() in
-qcom_q6v5_pas.c) passes msecs_to_jiffies(5000) directly, matching
-qcom_q6v5_wait_for_start()'s kerneldoc, which documents @timeout as
-already being in jiffies.
+Use the 4-pin UART6 pinctrl configuration for the WCN3990 Bluetooth
+controller on Sony Xperia Tama devices.
 
-On CONFIG_HZ=250 this shrinks the intended 5 second timeout to
-~1.25 seconds, causing a DSP that legitimately takes 2-3 seconds to
-signal ready to be spuriously torn down as a boot failure.
+This enables the UART hardware flow control required for reliable
+Bluetooth communication at higher baud rates.
 
-Fix by passing msecs_to_jiffies(5000) directly, matching every other
-caller.
+Fixes: d54331131cde ("arm64: dts: qcom: sdm845-sony-xperia-tama: Add bluetooth")
+Fixes: 30a7f99befc6 ("arm64: dts: qcom: Add support for SONY Xperia XZ2 / XZ2C / XZ3 (Tama platform)")
 
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Fixes: dc160e449122 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
+Signed-off-by: Shujath Mohd <shujath@outlook.in>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260831-b4-adsp_start_jiffies_fix_upstream-v1-1-9f8cf85ea220@oss.qualcomm.com
+Link: https://lore.kernel.org/r/PUZPR01MB51413F6FF89A8FA82A9B2755C3A02@PUZPR01MB5141.apcprd01.prod.exchangelabs.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 13c9898447b2d..a9caa028a7397 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -430,7 +430,7 @@ static int adsp_start(struct rproc *rproc)
- 		goto disable_adsp_clks;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+index b02a1dc5fecd6..4c01c43023fdd 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+@@ -758,6 +758,8 @@ int-pins {
+ };
  
--	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5 * HZ));
-+	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
- 	if (ret == -ETIMEDOUT) {
- 		dev_err(adsp->dev, "start timed out\n");
- 		goto disable_adsp_clks;
+ &uart6 {
++	pinctrl-0 = <&qup_uart6_4pin>;
++
+ 	status = "okay";
+ };
+ 
 -- 
 2.53.0
 
