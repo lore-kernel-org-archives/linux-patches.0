@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030109;
-	b=MZLvLZMZBs5rBs6I6JMyqx1kczDat+uBs6CACXheNo0ghM1rl9U8OEOoq1z1HOXBZuw6
-	 ZALk+GIN5/LmS8CdU+vIhgnLt1kKBj4WjcATitIRaL7GolMi4br0O+DHOXqeTClo7D0aZ
-	 dqM6mSoM6F/RIu/727EBCDaqyVvEQnM3StuD4z1dnSD8xCvnqt82+KDf+dEziiKk3RNni
-	 AQVj9igj2FgMEdWOIKfie+mfc0rQeQjpKGZTRl45iPq18ehbhqLNgIQNV7vugiTG4ZNLv
-	 1wtZbzrsAR0oxCXtEff3XfH62kaWGwzmuJMu02NxdPKrc7F7v4+ExCYn3+e8O9uciCw==
+	t=1795030112;
+	b=ONqGv6xMEOsBV2JTU3IyLsgScy2kj1ybrEapDxBBmaMRCA1TB8T2GIkzrkem/5rq4OcG
+	 n/DSl4v1K3gP5oBiEJx0E+AXDrfz4Q3f2l5Mn2XYnABsVDy/dFZ8nJPWhUaoCbhRiSqcp
+	 kNV1GB4eSQzYUJwAl9SlzMR1mY5HelnEmCaOmc0y2lYBttiPVglF416lhCLgrAJ8Qfl5u
+	 jLywm1B3xSrOenNmCkKghkFLcYpTynFLfuysJqCajrHuq98VZEl4Hv/GuGTFHlKOYb5hf
+	 kSbzbf19fQGWFCERrGKcHrWt2hiMMpFvPchzLWQjzdoac+bhCQnxIldiZYzz1lXY2SA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ApgaGTx8XDCRbSKQUYKJdyjKTVVIedJ3SkkK7SaLl0c=;
-	b=tujW4+wpDsAaLwHQApY9a2zmvdYkRBObXZUuNmSTfhlACT2nEXdAkEnbRE9Wr9cHlNi5
-	 WlsbAVlam07Rq9mZRdGEWMeZeD547KbDy+tB09bLKCAcHR3YoQx4eKfXHLvT96hP1/KY1
-	 UFrw2YjBRuyNsra+jVJ1T+evXy+nWhTFYA4M92zCE4gOfELnQDtYrEd8o6qhx1pHFuF5H
-	 vH7S446gizXaOHTa5K84iC7HtnX7J5pRBxB+Bl2dWMiOnkSBOFx13SRnoqKPF+tWyEiO2
-	 ptCmRrgpgOcGaay6qWydCbJrICeOzoHavUtQwXXmf19lSo2aoMNgvDj9JUPaoa5c2Bg==
+	bh=haMjeQNkj+m0n12r7M4alNn/NMoxjwg/A9aj6mPIn2s=;
+	b=rTBLtBd9gfuxvEhN2HV0bp03vLsMeTIK4cO0vzYS4cIOnI+LEAXo7M/vWHFCVLq87Api
+	 Z5/MwWvkdK35freHeqFSu8C9x1XTYJ5BUZLW8QB1EfsF5tJB5dmw/lUCpTNGmUBPXf40m
+	 aPZRFXdUaBrqyXHCz8w+p+ZhfUKQgZRwcgjW5F/FI/mlnVuJit0VPbhtNpJj5y0EoM7nK
+	 xnep7anWcIq0PqriQ2yUfbGf9po2+O3r6uDAPv2UIN5jazhc8mJ9zR+j8ncH1v5R/ayfz
+	 bocnVR2431Tw04CiBrGBKW8UYlAbDEv/wOcJ/nD8xwAYb0NjIKoNsA5CkcLucY1UJMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWcVXF3A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SgVSWVpq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C03606A7D4;
-	Wed, 18 Nov 2026 19:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD560606A93E;
+	Wed, 18 Nov 2026 19:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWcVXF3A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD0B1F000C5;
-	Wed, 18 Nov 2026 19:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SgVSWVpq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0867E1F000C8;
+	Wed, 18 Nov 2026 19:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030109;
-	bh=ApgaGTx8XDCRbSKQUYKJdyjKTVVIedJ3SkkK7SaLl0c=;
+	s=korg; t=1795030112;
+	bh=haMjeQNkj+m0n12r7M4alNn/NMoxjwg/A9aj6mPIn2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWcVXF3AFu6wIjUSXv6oYQdfjWLlSThFGOQRJX7u4UxCb3zC4/pB+IubgKKrz0HcT
-	 V5RMicjCqkhgYrc56cC3XX5OpXlTGk/lUBQxe3sXDuv7wRSsEe5uwEBaTeumuFGQmU
-	 MjHWZxvNJo7EpSQ87KMQPW84LPCUSHgElo5hKwDM=
+	b=SgVSWVpqJclgXimKPEmXpZsAMv5ILs+pgUkUcl0AZH0KzlO1PqlmX4auUXWJA7+tW
+	 hEJ0FmS1TxrBSERuNVfDMUiz7p9rq6QdYnejP8y0irNNjMyEq4sSDTDiAvacGsjGRX
+	 mMgs3xFPzJ6tM1vd5ivntSg3QNfzlK9RnFGOaCWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyou Li <tianyou.li@intel.com>,
-	Wangyang Guo <wangyang.guo@intel.com>,
-	Jiebin Sun <jiebin.sun@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0587/1756] perf c2c: Fix documented default coalesce fields
-Date: Wed, 18 Nov 2026 15:45:14 +0100
-Message-ID: <20261118150032.387329287@linuxfoundation.org>
+Subject: [PATCH 6.12 0588/1756] mtd: block: prevent reclaim I/O during request processing
+Date: Wed, 18 Nov 2026 15:45:15 +0100
+Message-ID: <20261118150032.425412588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -76,43 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiebin Sun <jiebin.sun@intel.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit b36a6f180baad35a962677ae181681ca60dda35b ]
+[ Upstream commit d498b2ddda99eed28cde177b1620dbcea246a1c4 ]
 
-The default coalesce fields dropped pid in favor of iaddr, but the man
-page still documents the old pid,iaddr default. Update it to match the
-command.
+The blktrans request callbacks run under dev->lock and may allocate
+memory with GFP_KERNEL. For example, mtdblock_writesect() uses vmalloc()
+to allocate its eraseblock cache. Direct reclaim can then recurse into
+block I/O and deadlock on resources held by the request being processed.
+syzbot reports a circular locking dependency involving the device mutex
+and fs_reclaim.
 
-Fixes: 423701a0c8d754d9 ("perf c2c: Change the default coalesce setup")
-Reviewed-by: Tianyou Li <tianyou.li@intel.com>
-Reviewed-by: Wangyang Guo <wangyang.guo@intel.com>
-Signed-off-by: Jiebin Sun <jiebin.sun@intel.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Thomas Falcon <thomas.falcon@intel.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Commit d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC") removed PF_MEMALLOC
+from the MTD request thread. That flag had prevented direct reclaim,
+so its removal made allocations during request processing eligible for
+reclaim without excluding I/O.
+
+Wrap request processing in mtd_queue_rq() in a NOIO scope. This covers
+both the request and background callbacks, including allocations made
+by lower MTD drivers, and prevents reclaim from initiating filesystem
+or block I/O.
+
+Fixes: d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC")
+Assisted-by: Codex:gpt-6-astra
+Reported-by: syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e08e0a15269eefa87790
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Documentation/perf-c2c.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtd_blkdevs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/perf/Documentation/perf-c2c.txt b/tools/perf/Documentation/perf-c2c.txt
-index 856f0dfb8e5a3..d744b43769a0b 100644
---- a/tools/perf/Documentation/perf-c2c.txt
-+++ b/tools/perf/Documentation/perf-c2c.txt
-@@ -304,7 +304,7 @@ output fields set for cacheline offsets output:
-              Code address, Code symbol, Shared Object, Source line
-   dso   - coalesced by shared object
+diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
+index ee7e1d9089861..25c930f20ee61 100644
+--- a/drivers/mtd/mtd_blkdevs.c
++++ b/drivers/mtd/mtd_blkdevs.c
+@@ -18,6 +18,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/hdreg.h>
+ #include <linux/mutex.h>
++#include <linux/sched/mm.h>
+ #include <linux/uaccess.h>
  
--By default the coalescing is setup with 'pid,iaddr'.
-+By default, coalescing uses `iaddr`.
+ #include "mtdcore.h"
+@@ -167,6 +168,7 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 				 const struct blk_mq_queue_data *bd)
+ {
+ 	struct mtd_blktrans_dev *dev;
++	unsigned int noio_flags;
  
- STDIO OUTPUT
- ------------
+ 	dev = hctx->queue->queuedata;
+ 	if (!dev) {
+@@ -174,10 +176,13 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 		return BLK_STS_IOERR;
+ 	}
+ 
++	/* Reclaim must not recurse into I/O while processing requests. */
++	noio_flags = memalloc_noio_save();
+ 	spin_lock_irq(&dev->queue_lock);
+ 	list_add_tail(&bd->rq->queuelist, &dev->rq_list);
+ 	mtd_blktrans_work(dev);
+ 	spin_unlock_irq(&dev->queue_lock);
++	memalloc_noio_restore(noio_flags);
+ 
+ 	return BLK_STS_OK;
+ }
 -- 
 2.53.0
 
