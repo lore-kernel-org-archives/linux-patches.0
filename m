@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027101;
-	b=j9jffn3wO1QBRCH7EoQestT3RksUQx0AnwOd8CbtrieirAxjtN0nFNML7boeKmOPaoj9
-	 lVlsPkYK1w2J0qFNge/A2PnJypkNzw7rPoeO/Ub4IFqdI2nHMytDO5h3UsaNR0AbuayEo
-	 6xi422I5/1/Wx4C+RIUSQA5j5zKFlQ9aV0MJH/i6FW28W1cuZtIBXS+lR5io8xEQcdLOA
-	 rw1dJ9IZwosZu/SFwGNxOmoCahzOow8HTyXLOPi0R9XE/OEmCjJs97QR/z8IGbQ8Bl6Dc
-	 wHkLZYtjwDzO7jdxxoey7ND5MtavH5xIwmyIGcqCN/IIbttxK+hdIDYH00W3h92BfLA==
+	t=1795027103;
+	b=w9wQRNYm2oVGLRI8LhvignwuLZIfYpMDSVWaJaUOHaHFJ699C1dSCxOPeIH90n/CWsvn
+	 Ipbg0F6lpj6dOR3csdEqQXdNweYegFURvZwuLjOIuqE0yCsjrQitFVYFnIa8DJjgDE1F6
+	 g415zwxCEUPOk5oLdex97eG+qfGYBsvKhYZVPqeiHkekLbrf9VdFRdB2voJO30ZlaCo8A
+	 UofBKlKkhcGxvkUg3l0iPqWJaSvbtZLmNcsKCEPOxfo6YkFBcibe75ehHO2LxAy/Dw1uo
+	 Gwv6KUOgdy9MS74Mm7YPARY4yPBnNaOGGllM8Y1jQqPEQ3WgwivqF6iljOm+sBDx4VQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JoSoB6cdn1BxSBeLSWxQz+gvx/z1fA7g2ZQpndHOmjU=;
-	b=U2L0iEnBrfusuLIXJRRFx7a4SHIYh5arjy/0hj3mYwATn6gEqZmHGwSK+K9N/BttA5z2
-	 MIRG/L3AyD7P1+kV2RB2QIBJTB3NH5UYdvcJFBKlE3ZVOLuKYlpjlAlR2ObhPohIZp59f
-	 Ez+QZj/uNJmsyFeNR2IvvD5PQUxYvjg/wgQXFCY0rytds/15VthSKa/uoJ5TH0guycJ7l
-	 FOOYlMNTqWp1+ge0eMH/2O2zrijfcK2m6DyeLkjeb4msV2UrRjFcUzA2wZBizZ+H0R4XW
-	 tfv2B062OliF3ou+xSHDgVOgTu07VAB0DGErBql+8QnLMeZ/WF5G1P7gwaGZ8nGdjvA==
+	bh=CoKW0/4vxMWRAdVR2cWQqntMUrytjfqxvw4Eh2FRSVE=;
+	b=UOwWkgnwSHV8fNpv5twQmC82EyjfX0Z6VpPe5VluSIYiyKsTqwQkz1GpVrWd0VFXw2kx
+	 I0tKNj/RNtDHK0Ur3S1SRqflcGC1YUGP6gsM2OdRNfbSoRYybOIyf4tJXSDtMagG+vlnN
+	 IEYK0rAsOcC7oJoLrS0OGjn/St25z5V+TpRwZ6AotR7eFUFKEyF5M1MIRiPkKuDzhTGtb
+	 JC+n9VsMuLyHUdlDFonkftReDL+Gc4ysQwRF9EFhN3dfWI5xTka2bQ225t6Fa0UewyBL4
+	 dg/GKa3WF6Y736+BP+q5SEA0Qb7r3wOyA3pOFOyj3X053dcJXCyg0tm8GqDxZ5bOF2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOEcafcS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0jwh2TF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06125606A325;
-	Wed, 18 Nov 2026 18:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D553D606A31C;
+	Wed, 18 Nov 2026 18:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOEcafcS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4FB1F000C5;
-	Wed, 18 Nov 2026 18:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0jwh2TF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311841F000C5;
+	Wed, 18 Nov 2026 18:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027100;
-	bh=JoSoB6cdn1BxSBeLSWxQz+gvx/z1fA7g2ZQpndHOmjU=;
+	s=korg; t=1795027103;
+	bh=CoKW0/4vxMWRAdVR2cWQqntMUrytjfqxvw4Eh2FRSVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gOEcafcS9G7TqeV/Xw/E9FPblzc2C9Q7b/TdBKShkZmIPh4ujS//iAUFgvlYlWcJR
-	 mIMUpq4gqRZdb0nNEYQeBfI+o+26jfRxVLqa38A3nRvkV9kzZIm67pGSE10FjWBo7P
-	 7FWW9O42qdoqsRVREQ32prNMu3iN5rPaxL7rNqs0=
+	b=w0jwh2TFDDllOSBLih0VkH8mugOav2p4lsDjU3GAjFTbwb3TKirH/NKp6A5/yLdZF
+	 jk3uYQSR6YVr2iUF0q/ivmPRu1aQcr/U6oyT5shzOulb8OrDcGzN86m3xqpZnY97Da
+	 LqZ7KAxEJNx18xunkVXb9Jzi8zm0zvrNsNCw7RxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1670/2151] ALSA: vmaster: Protect follower lookup and setup
-Date: Wed, 18 Nov 2026 15:56:45 +0100
-Message-ID: <20261118150222.671061293@linuxfoundation.org>
+Subject: [PATCH 6.18 1671/2151] selftests/bpf: Record only the test ICMP echo in tc8 of tc_netkit_scrub
+Date: Wed, 18 Nov 2026 15:56:46 +0100
+Message-ID: <20261118150222.705282400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,181 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit db2db2dec96e24d067cc5692ac5eec35830ee8d9 ]
+[ Upstream commit 17f6fc3ad257b0ad7a11f276a5c0f57e0bdf3f4a ]
 
-A control selected by snd_ctl_add_followers() must remain alive until
-_snd_ctl_add_follower() has copied it and installed its wrapper. The
-lookup returns a raw pointer without retaining the control, and neither
-the short-lived list lookup lock nor the fast lookup protects later use.
+tc_netkit_scrub attaches tc8 to the primary netkit device, sends an ICMP
+echo with a mark and a priority through it, and checks the mark and the
+priority that tc8 saw against what the scrub mode lets through.
 
-If a kernel client adds followers to a live virtual master while another
-client removes or replaces a published follower, the following order is
-possible, with the card and master kept alive:
+tc8 records the mark and priority of every packet it sees, and the
+device also carries what the system sends on its own once the device
+is up, like IPv6 neighbor discovery or the mDNS of avahi-daemon. When
+such a packet goes out after the echo, it overwrites what tc8 recorded,
+and the test finds a mark and a priority of 0. Record only IPv4 ICMP
+packets in tc8.
 
-  Follower setup                      Control removal
-  snd_ctl_add_followers()
-    snd_ctl_find_id_mixer()
-      return follower
-                                      snd_ctl_remove()
-                                        down_write(controls_rwsem)
-                                        __snd_ctl_remove()
-                                          unlink follower
-                                          snd_ctl_free_one(follower)
-                                        up_write(controls_rwsem)
-    _snd_ctl_add_follower()
-      read follower->count
+tc_netkit_scrub run 100 times on a bpf-next kernel with KASAN enabled,
+x86_64 VM with 32 vCPUs and avahi-daemon running, before and after this
+patch:
+            before                                  after
+  outcome   2 of 100 failed (mark and priority 0)   0 of 100 failed
 
-Removal completes after lookup returns and before setup reads the
-control. Since setup holds neither controls_rwsem nor a reference, the
-count read and subsequent control copies can access freed memory.
-
-Hold controls_rwsem for writing across the lookup and follower setup.
-This prevents removal or replacement from freeing the selected control
-until wrapper installation is complete. Write ownership also excludes
-control callbacks while setup changes the callback and private fields.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in _snd_ctl_add_follower+0x452/0x520
-    Read of size 4 at addr ffff888107957d50 by task loadmodule/491
-
-    CPU: 3 UID: 0 PID: 491 Comm: loadmodule Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-    Tainted: [O]=OOT_MODULE
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? _snd_ctl_add_follower+0x452/0x520
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? _snd_ctl_add_follower+0x452/0x520
-     kasan_report+0xe0/0x110
-     ? _snd_ctl_add_follower+0x452/0x520
-     _snd_ctl_add_follower+0x452/0x520
-     snd_ctl_add_followers+0x153/0x2b0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_snd_ctl_add_followers+0x10/0x10
-     ? __might_fault+0x135/0x190
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __might_fault+0x14e/0x190
-     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
-     fixture_write+0x174/0x1f0 [pmbd_vmaster_fixture]
-     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
-     ? __pfx___might_resched+0x10/0x10
-     proc_reg_write+0x1fb/0x2d0
-     vfs_write+0x25a/0x1010
-     ? __pfx_proc_reg_write+0x10/0x10
-     ? kmem_cache_free+0x242/0x580
-     ? __pfx_vfs_write+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? putname+0x93/0xe0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_sys_openat2+0x12a/0x1b0
-     ? __pfx_do_sys_openat2+0x10/0x10
-     ksys_write+0x111/0x200
-     ? __pfx_ksys_write+0x10/0x10
-     ? irqentry_exit+0xbe/0x820
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f0b835a9687
-    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    RSP: 002b:00007ffc82ea0360 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-    RAX: ffffffffffffffda RBX: 00007f0b83517780 RCX: 00007f0b835a9687
-    RDX: 0000000000000005 RSI: 0000564f8a21d074 RDI: 0000000000000003
-    RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-    R13: 00007ffc82ea04f0 R14: 00007f0b83755000 R15: 0000564f8a21ed78
-     </TASK>
-
-    Allocated by task 485:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_noprof+0x2d7/0x770
-     snd_ctl_new+0x51/0x190
-     snd_ctl_new1+0x13c/0x650
-     0xffffffffc04011b5
-     do_one_initcall+0xf3/0x4e0
-     do_init_module+0x281/0x8e0
-     load_module+0x658c/0x7cc0
-     init_module_from_file+0x15b/0x180
-     idempotent_init_module+0x22d/0x770
-     __x64_sys_finit_module+0xd2/0x160
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 492:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     __snd_ctl_remove+0x2ac/0x3d0
-     snd_ctl_remove+0x46/0x70
-     fixture_write+0x1ae/0x1f0 [pmbd_vmaster_fixture]
-     proc_reg_write+0x1fb/0x2d0
-     vfs_write+0x25a/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff888107957d00
-     which belongs to the cache kmalloc-192 of size 192
-    The buggy address is located 80 bytes inside of
-     freed 192-byte region [ffff888107957d00, ffff888107957dc0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x107957
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000423c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000100010 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff888107957c00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff888107957c80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff888107957d00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                     ^
-     ffff888107957d80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888107957e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-    ==================================================================
-
-Fixes: ae07eb9bf23e ("ALSA: vmaster: Add snd_ctl_add_followers() helper")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-6c0b7e841529ddd0b21a-v2-b53dbcd593a7a4bd9582@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 716fa7dadf11 ("selftests/bpf: Extend netkit tests to validate skb meta data")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261016-selftests-bpf-tc-netkit-scrub-v2-1-b484a7ce2a63@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/vmaster.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/bpf/progs/test_tc_link.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
-index f8d5b96d6e312..a06fdd3ac40f6 100644
---- a/sound/core/vmaster.c
-+++ b/sound/core/vmaster.c
-@@ -288,6 +288,8 @@ EXPORT_SYMBOL(_snd_ctl_add_follower);
-  *
-  * Adds the multiple follower kcontrols with the given names.
-  * Returns 0 for success or a negative error code.
-+ *
-+ * Note that this function takes card->controls_rwsem lock internally.
-  */
- int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
- 			  const char * const *list)
-@@ -295,6 +297,7 @@ int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
- 	struct snd_kcontrol *follower;
- 	int err;
+diff --git a/tools/testing/selftests/bpf/progs/test_tc_link.c b/tools/testing/selftests/bpf/progs/test_tc_link.c
+index 630f12e51b075..2a91793674dd5 100644
+--- a/tools/testing/selftests/bpf/progs/test_tc_link.c
++++ b/tools/testing/selftests/bpf/progs/test_tc_link.c
+@@ -4,6 +4,8 @@
  
-+	guard(rwsem_write)(&card->controls_rwsem);
- 	for (; *list; list++) {
- 		follower = snd_ctl_find_id_mixer(card, *list);
- 		if (follower) {
+ #include <linux/bpf.h>
+ #include <linux/if_ether.h>
++#include <linux/in.h>
++#include <linux/ip.h>
+ #include <linux/stddef.h>
+ #include <linux/if_packet.h>
+ #include <bpf/bpf_endian.h>
+@@ -119,11 +121,19 @@ SEC("tc/egress")
+ int tc8(struct __sk_buff *skb)
+ {
+ 	struct net_device *dev = BPF_CORE_READ((struct sk_buff *)skb, dev);
++	struct iphdr iph = {};
+ 
++	if (skb->protocol != __bpf_constant_htons(ETH_P_IP))
++		goto out;
++	if (bpf_skb_load_bytes(skb, sizeof(struct ethhdr), &iph, sizeof(iph)))
++		goto out;
++	if (iph.protocol != IPPROTO_ICMP)
++		goto out;
+ 	seen_tc8 = true;
+ 	mark = skb->mark;
+ 	prio = skb->priority;
+ 	headroom = BPF_CORE_READ(dev, needed_headroom);
+ 	tailroom = BPF_CORE_READ(dev, needed_tailroom);
++out:
+ 	return TCX_PASS;
+ }
 -- 
 2.53.0
 
