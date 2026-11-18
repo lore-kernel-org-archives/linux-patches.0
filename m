@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031797;
-	b=r11INJLXwemARWZR4/lA1NaUbe8x9JDkSFJx/uew0lRaQHZDxmIE167arxu+iUaFCQVx
-	 XqPiEikW3kSK96OlGpFLMohvCBs08g25ATkr4iGbskwF41npENKRuzek7R36Ie1mk8jBe
-	 C8ORGFwYTkPxN/LMsQYJGZ+PSnARybrbwe4J46rOftAOSrRMimI/qgPdW7P628ritA8Mp
-	 cEREa1bCae6zYU9PKRHKrtSkiA064TbxuAYpc88yq+Z/OROrIevv8VDf0YE3dUJOT9o17
-	 N3RTx5h6l3ydJIXT/5AY67jCS0xfy2E+10dZ+T0qF+JN62NlInBeAgljgA143YrzlDg==
+	t=1795031800;
+	b=4iDxgWmauVWydyloph6HXqcX5QXSEUvi/j/cYbgKMbckCqgbnZWNjEHE9wFdssDfXl+P
+	 Y1MgqVf/5MN5dpdxlj3uSHfhN/gUcRUe+LMaUiDltvHI/sHtHPjH84xXeXPu/8CIFjb4h
+	 K//RXfXpWuS57keHEEWRoMM3uLgHqvqB3EseDmln14wLtL45Ocy0Ys9fDvpLspqn8GIYC
+	 fVyjgeRZDW8uUiuYaCWoF+YhT+ckJhEG0RQ5dMaWYIv46QxBeiOAmO00Wsf0AYmCRb3IT
+	 t98Xi5CWDxCYV6I7VUEDv4Qkc0SlHuHK18I/c98Bhsj5qw56G/qGoTTVirEDhJRJ1qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dFVihI9OOahQGJaf4toG79HYa6f8TK4q8d3/Xxih3bA=;
-	b=3Uyubw9SJjy+LGC79Ia8VnzOuh9gCxW5tWrlYXJyN8/5P0XenJSMKN+hMYQW53+nteWG
-	 d5cFmdisQ2sjjhH2LrrzTmueyLXd1KghL9T4vrlTijntDn2gecvr0X+7zegMVQDE6KFyl
-	 VKMD8M6UL4qASkcmXYReRjSIlcUhsQ5RlrwP8sK6VkG280IXH4LOTl5boma1vBs0YpyAh
-	 29Ll7DWA4rIfaHNclgvezXcBaJi1BUqoCQp3FtbyEhwWu7RAqh5a478VI88GmDbXL5U9f
-	 EfsDdVViodEI+Jpdyhnl3JTifgi7bmWYXI4Q8haOjiOyskOm6vi1NICLUNhmXlJR58Q==
+	bh=2vON+hkEJOqXyavYCT3o9FFRE/DWrrOy7/n1DRONaM0=;
+	b=ipSQCuVeJRZ63aQ8MqN2XVigMPGD2ZOXztlXLmcvMm2mfVYXQ9hubGuMMqzZ3KZXDq8d
+	 FnIMEh3UhfXm7JYnG2wpeWd6j/TQfgGmMW8txePtDbbcRBhDlLl3eHB2YCr46kqiZZXUM
+	 fdHI8j3xmRUW/UV0pyX7b8rCVkR3Ieg8dDzRCQ6LbIsv767AzZran6b/0MDZ4itsItJCm
+	 OoT2ITqkZAokf79jCHc9KssyO4KDwER662BQN/Lsl78GZU9Xt7nRuc/pS+7MNvJAEuA5D
+	 lmT6eOyO1x5dmFXt/mMybYBa1ex2xfGNC3ukDTCnVSAnExxAhauOtzpIPiMbFFVKqaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4sgvyQL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ4e9jAI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC214606A325;
-	Wed, 18 Nov 2026 19:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B51606A320;
+	Wed, 18 Nov 2026 19:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4sgvyQL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AC11F000C4;
-	Wed, 18 Nov 2026 19:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ4e9jAI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73911F000C4;
+	Wed, 18 Nov 2026 19:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031797;
-	bh=dFVihI9OOahQGJaf4toG79HYa6f8TK4q8d3/Xxih3bA=;
+	s=korg; t=1795031800;
+	bh=2vON+hkEJOqXyavYCT3o9FFRE/DWrrOy7/n1DRONaM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4sgvyQLseNl1osZU+HrthIz37+1l7PYeMEPzwAKdsS2xaKKK6bCYPIT5380lOWrG
-	 GnEbt2d/Bvq6CQYusPrJdKY7oukkfSStOSGEYCJhKBz26uhAd/k3y/U6yzYYqX46N5
-	 my7G46ZpoBYfCF+XUIUQhQaczJqOIysLt2MDE1nY=
+	b=cZ4e9jAIK1Jz8y1nVYskQ5Dtb5h4oO8AwwTmBOGL6jMPD8i6TsxE1kBNZe86PBO4r
+	 eV33fTd+xvaRYrjb7Ay9XY3dUUij50mhhHDICL7eBw0UofK5cDW0hvMfonAzVAdRIM
+	 R0fJ8nTjama7l00QVuzo8P0Ia/kO64iUiNta1Ids=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Mingxuan Guo <gmx472@qq.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1184/1756] mm, slab: add kerneldocs for common SLAB_ flags
-Date: Wed, 18 Nov 2026 15:55:11 +0100
-Message-ID: <20261118150057.040490094@linuxfoundation.org>
+Subject: [PATCH 6.12 1149/1756] firmware: cs_dsp: clear dsp->running on the cs_dsp_run() error path
+Date: Wed, 18 Nov 2026 15:54:36 +0100
+Message-ID: <20261118150055.784927555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,165 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Mingxuan Guo <gmx472@qq.com>
 
-[ Upstream commit b6da940130579769a42605b2c7f529b6f14ef1f8 ]
+[ Upstream commit ad6be54d13496a0b5c6d1edeea99504e438cdb7a ]
 
-We have many SLAB_ flags but many are used only internally, by kunit
-tests or debugging subsystems cooperating with slab, or are set
-according to slab_debug boot parameter.
+cs_dsp_run() sets dsp->running = true once the core has been started, but
+the error path below it only stops and disables the core, leaving the flag
+set.  The first thing that can fail after that point is the post_run client
+hook, and it is reachable in mainline: wm_adsp registers
+wm_adsp_event_post_run(), which can fail in wm_adsp_buffer_init().
 
-Create kerneldocs for the commonly used flags that may be passed to
-kmem_cache_create(). SLAB_TYPESAFE_BY_RCU already had a detailed
-description, so turn it to a kerneldoc. Add some details for
-SLAB_ACCOUNT, SLAB_RECLAIM_ACCOUNT and SLAB_HWCACHE_ALIGN. Reference
-them from the __kmem_cache_create_args() kerneldoc.
+The core is then stopped and disabled, but dsp->running still reads true,
+and that stale state is acted on elsewhere: cs_dsp_coeff_write_ctrl() and
+cs_dsp_coeff_read_ctrl() talk to the DSP when ctl->dsp->running is set, and
+client drivers use the flag to decide whether the firmware is up (cs35l41
+checks cs_dsp.running before its early events and on hibernate/resume).
 
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Stable-dep-of: 655668f0caf3 ("mm/slab: Mark the kmem_buckets_create() context as a Context: section")
+The flag cannot simply be moved below the hook: post_run hooks such as
+wm_adsp_event_post_run() read controls while they run, and
+cs_dsp_coeff_read_ctrl() only goes to the DSP when the flag is set.
+
+Clear the flag on the error path, before the core is stopped - the order
+cs_dsp_stop() already uses.
+
+Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
+Signed-off-by: Mingxuan Guo <gmx472@qq.com>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/tencent_B839C5A92D762B5717B9637A5CFA0841C608@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/slab.h | 62 ++++++++++++++++++++++++++++++--------------
- mm/slab_common.c     | 14 +++++++++-
- 2 files changed, 55 insertions(+), 21 deletions(-)
+ drivers/firmware/cirrus/cs_dsp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/slab.h b/include/linux/slab.h
-index 7b58cc1844303..e21a6fb06e9f0 100644
---- a/include/linux/slab.h
-+++ b/include/linux/slab.h
-@@ -78,7 +78,17 @@ enum _slab_flag_bits {
- #define SLAB_POISON		__SLAB_FLAG_BIT(_SLAB_POISON)
- /* Indicate a kmalloc slab */
- #define SLAB_KMALLOC		__SLAB_FLAG_BIT(_SLAB_KMALLOC)
--/* Align objs on cache lines */
-+/**
-+ * define SLAB_HWCACHE_ALIGN - Align objects on cache line boundaries.
-+ *
-+ * Sufficiently large objects are aligned on cache line boundary. For object
-+ * size smaller than a half of cache line size, the alignment is on the half of
-+ * cache line size. In general, if object size is smaller than 1/2^n of cache
-+ * line size, the alignment is adjusted to 1/2^n.
-+ *
-+ * If explicit alignment is also requested by the respective
-+ * &struct kmem_cache_args field, the greater of both is alignments is applied.
-+ */
- #define SLAB_HWCACHE_ALIGN	__SLAB_FLAG_BIT(_SLAB_HWCACHE_ALIGN)
- /* Use GFP_DMA memory */
- #define SLAB_CACHE_DMA		__SLAB_FLAG_BIT(_SLAB_CACHE_DMA)
-@@ -88,8 +98,8 @@ enum _slab_flag_bits {
- #define SLAB_STORE_USER		__SLAB_FLAG_BIT(_SLAB_STORE_USER)
- /* Panic if kmem_cache_create() fails */
- #define SLAB_PANIC		__SLAB_FLAG_BIT(_SLAB_PANIC)
--/*
-- * SLAB_TYPESAFE_BY_RCU - **WARNING** READ THIS!
-+/**
-+ * define SLAB_TYPESAFE_BY_RCU - **WARNING** READ THIS!
-  *
-  * This delays freeing the SLAB page by a grace period, it does _NOT_
-  * delay object freeing. This means that if you do kmem_cache_free()
-@@ -100,20 +110,22 @@ enum _slab_flag_bits {
-  * stays valid, the trick to using this is relying on an independent
-  * object validation pass. Something like:
-  *
-- * begin:
-- *  rcu_read_lock();
-- *  obj = lockless_lookup(key);
-- *  if (obj) {
-- *    if (!try_get_ref(obj)) // might fail for free objects
-- *      rcu_read_unlock();
-- *      goto begin;
-- *
-- *    if (obj->key != key) { // not the object we expected
-- *      put_ref(obj);
-- *      rcu_read_unlock();
-- *      goto begin;
-- *    }
-- *  }
-+ * ::
-+ *
-+ *  begin:
-+ *   rcu_read_lock();
-+ *   obj = lockless_lookup(key);
-+ *   if (obj) {
-+ *     if (!try_get_ref(obj)) // might fail for free objects
-+ *       rcu_read_unlock();
-+ *       goto begin;
-+ *
-+ *     if (obj->key != key) { // not the object we expected
-+ *       put_ref(obj);
-+ *       rcu_read_unlock();
-+ *       goto begin;
-+ *     }
-+ *   }
-  *  rcu_read_unlock();
-  *
-  * This is useful if we need to approach a kernel structure obliquely,
-@@ -147,7 +159,6 @@ enum _slab_flag_bits {
-  *
-  * Note that SLAB_TYPESAFE_BY_RCU was originally named SLAB_DESTROY_BY_RCU.
-  */
--/* Defer freeing slabs to RCU */
- #define SLAB_TYPESAFE_BY_RCU	__SLAB_FLAG_BIT(_SLAB_TYPESAFE_BY_RCU)
- /* Trace allocations and frees */
- #define SLAB_TRACE		__SLAB_FLAG_BIT(_SLAB_TRACE)
-@@ -180,7 +191,12 @@ enum _slab_flag_bits {
- #else
- # define SLAB_FAILSLAB		__SLAB_FLAG_UNUSED
- #endif
--/* Account to memcg */
-+/**
-+ * define SLAB_ACCOUNT - Account allocations to memcg.
-+ *
-+ * All object allocations from this cache will be memcg accounted, regardless of
-+ * __GFP_ACCOUNT being or not being passed to individual allocations.
-+ */
- #ifdef CONFIG_MEMCG
- # define SLAB_ACCOUNT		__SLAB_FLAG_BIT(_SLAB_ACCOUNT)
- #else
-@@ -207,7 +223,13 @@ enum _slab_flag_bits {
- #endif
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index ea452f1908542..ff1d0793a7ca0 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -2872,6 +2872,8 @@ int cs_dsp_run(struct cs_dsp *dsp)
+ 	return 0;
  
- /* The following flags affect the page allocator grouping pages by mobility */
--/* Objects are reclaimable */
-+/**
-+ * define SLAB_RECLAIM_ACCOUNT - Objects are reclaimable.
-+ *
-+ * Use this flag for caches that have an associated shrinker. As a result, slab
-+ * pages are allocated with __GFP_RECLAIMABLE, which affects grouping pages by
-+ * mobility, and are accounted in SReclaimable counter in /proc/meminfo
-+ */
- #ifndef CONFIG_SLUB_TINY
- #define SLAB_RECLAIM_ACCOUNT	__SLAB_FLAG_BIT(_SLAB_RECLAIM_ACCOUNT)
- #else
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index f8e81c1602d98..88f1c07fa13ff 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -285,11 +285,23 @@ __kmem_cache_alias(const char *name, unsigned int size, slab_flags_t flags,
-  * @object_size: The size of objects to be created in this cache.
-  * @args: Additional arguments for the cache creation (see
-  *        &struct kmem_cache_args).
-- * @flags: See %SLAB_* flags for an explanation of individual @flags.
-+ * @flags: See the desriptions of individual flags. The common ones are listed
-+ *         in the description below.
-  *
-  * Not to be called directly, use the kmem_cache_create() wrapper with the same
-  * parameters.
-  *
-+ * Commonly used @flags:
-+ *
-+ * &SLAB_ACCOUNT - Account allocations to memcg.
-+ *
-+ * &SLAB_HWCACHE_ALIGN - Align objects on cache line boundaries.
-+ *
-+ * &SLAB_RECLAIM_ACCOUNT - Objects are reclaimable.
-+ *
-+ * &SLAB_TYPESAFE_BY_RCU - Slab page (not individual objects) freeing delayed
-+ * by a grace period - see the full description before using.
-+ *
-  * Context: Cannot be called within a interrupt, but can be interrupted.
-  *
-  * Return: a pointer to the cache on success, NULL on failure.
+ err:
++	dsp->running = false;
++
+ 	if (dsp->ops->stop_core)
+ 		dsp->ops->stop_core(dsp);
+ 	if (dsp->ops->disable_core)
 -- 
 2.53.0
 
