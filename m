@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050803;
-	b=RkBgKAxs4N8j7eh1FclxDJspB1Lxuk7FTg2r9do6yM72Pw1wOAJf2+90s80F1P1Ng8xg
-	 hBLxJZbBVasTzX7S2hFymjIDXD+kgTEi4I4Dz/Y1HX8QZGyI3uESzLJBr69bWPH2Hkf3w
-	 63NF/Hu3UnH7A7tKZntPCI0UtxbvSQr6gHBjbk8XGQo6w0wCSDkcc45JtVLSvUFc8kjZT
-	 HAPejCn1K6WCkO6C3NAuAJIRf8wAC+2orE/WlcjKW0g34vqHnSERyOLAvr8aMgJZHSWjt
-	 oGxoGZiMAlwKnMkMVfirOSqCLV5snnRWkHW49MxXt/5xGRqkMY24HbZ83k04LtIxzVQ==
+	t=1795050806;
+	b=T5cuSwtBXlNWx9z/ICweYTljC6v6FTLWEOuujCyOQ7CI49fYcgSijR2cyuwp2OxJ+tfR
+	 +Jt8G7sTRZjxEnIRdk2GVXNfQkKXu+oHizf3cev8YzgDen4G2sEF5435o4Rwf6xygnlYl
+	 UMw/+RXlTzof6Qg0GrrgyuynLY/xrrAO9Fcg+Y87GXbpjDkmLCh7DvvuMd+s4fL0zzBQx
+	 NzI1zx8cXd7xZkomj9wV2YspDIOt2FmnzdkILkqSUIftKr8ypQOOE4iZYn84kcBpfaQeI
+	 2mANc+UPdB3lVG1hLRCjdZA6Fd8NHMrT+iuPgCShxN9IPyNN26JJ6dQL39uteZ7nYFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wyl+ov1+aVoGVuANptcMgeEZOq0BLZ6znHypt8i1POQ=;
-	b=ShqKXgJJIu/+8PLRSR5kh0Bk08DUgD4PgPnF5iQlO2S3cR6ZSchtoGg1rvHIRQUrBzU0
-	 KNHxntRGixzQsXjuOvkNOZBaKf3xGvJqtfkDUEOumYp95aza2NoZ3EasTgSUwJufPl0+u
-	 P6cqmKuSrR7D2W+MbvKyol+l+Uygy4M6dv9GJUylhfHg95iFG9a4Fiav9Tj7JrLQCoIxo
-	 dpuX5Dkl5KSVK9IBTu8pN9d2/HFFH6Tz/tlcSO8mIg9cUmYV+n8TYU19dbiIjtFiIP03L
-	 g1CzWoVtS+fI5ZPK3pkwzf3222/G97HzaAXXQsBbX1P0JxRNLiZYD91a3z+VSAHnRxg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=f5APuip3XfM0V9fTvF8W5TimfXVUm9jhoPa1aq+MGsU=;
+	b=sRi4+N4KcLoAmuCjhuwe6eO/Gdo8Rj6dTnxdN8TFOZzvNC6OyyAZ+Vad8P1ME9mVrgb+
+	 BAgaPCbAMGuy+K+czA2eVlq6kYXYf3aupJ3PvaijgIspU9IjajMyeYgOwD5c2tsqEQuNH
+	 3Am/VPGmG+6d2cxQdG4AaFW4a7r18XthIZagjseaAwzs1fvDqvz1Bueq7EDM/KV2X1SAB
+	 wLVlpH4VV1EWjP2F84iyBiifIcwIxjlmFJJgiKlDBMSiTJ8qh165WHWWP+AFKG5iIMXDO
+	 bWS/bI6r+g5a3n41gWOhLSkiMeqE8Krg8D6SvFBlHNM2o9Yds3ZmfRw3qi1+MA/DquA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qFW/Urwp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SCnp6rrA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312EB606A32C;
-	Thu, 19 Nov 2026 01:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081CC606A320;
+	Thu, 19 Nov 2026 01:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFW/Urwp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAD41F000C4;
-	Thu, 19 Nov 2026 01:13:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SCnp6rrA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581AA1F000C4;
+	Thu, 19 Nov 2026 01:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050803;
-	bh=wyl+ov1+aVoGVuANptcMgeEZOq0BLZ6znHypt8i1POQ=;
+	s=korg; t=1795050805;
+	bh=f5APuip3XfM0V9fTvF8W5TimfXVUm9jhoPa1aq+MGsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qFW/UrwpsbknOLNsDsT+6s39TPs9+by1vKB9zXk8fY7TYLZB+6DlYx8yjyZL4k/PD
-	 Hd31x20B9wDFxf3bfRVYRLBL3kOSPFNqgJn+2HE8WdwsnDBnEuiEMAbZ3b2U3fIguH
-	 OkHmj2Y2r1WbjkzqZOWeZ5lpzdc5lkjECkAdIRC8=
+	b=SCnp6rrA+W5AuoAy8/VgIUAG2dTPcEp1Eu7QQImpcRKpMU+qJEJ0w10Camvthv/GA
+	 dVg4yQ+U5CH50SSNMTaUnEXwHUXte3fC7girNUiLJlDnByE7E3EZM4wQAg1dxzBEvw
+	 8FwtElE45fiHIZjjwGkGtHGBbCngYqoFky9aMLPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Bart Van Assche <bvanassche@acm.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Hans Holmberg <hans.holmberg@wdc.com>,
-	Dennis Maisenbacher <dennis.maisenbacher@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2801/2857] block: Allow using bio_attempt_back_merge() internally
-Date: Wed, 18 Nov 2026 16:03:55 +0100
-Message-ID: <20261118150342.444119824@linuxfoundation.org>
+	Hannes Reinecke <hare@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.1 2837/2857] nvmet-auth: reject incomplete DHCHAP messages
+Date: Wed, 18 Nov 2026 16:04:31 +0100
+Message-ID: <20261118150343.723428508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,78 +63,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit dd850ff3eee428b4e1276bd51263dd937643ba19 ]
+commit 29e027774324dbd5321a67bbd16840e8f7bcd189 upstream.
 
-Remove "static" from the definition of bio_attempt_back_merge() and
-declare this function in block/blk.h to allow using it internally from
-other block layer files. The definition of enum bio_merge_status is
-also moved to block/blk.h.
+Commit c9359401036e ("nvmet-auth: reject undersized AUTH_SEND
+payloads") only ensures that AUTH_SEND has auth_type and auth_id
+before nvmet_execute_auth_send() starts parsing the payload, but the
+DHCHAP path reads t_id before it verifies message lengths. A two-byte
+DHCHAP NEGOTIATE payload can therefore still trigger an OOB read that
+KASAN reports as:
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_send
+  Read of size 2 at addr ffff8880030d8364
+
+Require the payload to cover the minimum DHCHAP message length
+before parsing it.
+
+Fixes: c9359401036e ("nvmet-auth: reject undersized AUTH_SEND payloads")
+Cc: stable@vger.kernel.org
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
-Tested-by: Dennis Maisenbacher <dennis.maisenbacher@wdc.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20240408014128.205141-6-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 9531230ee1fc ("blk-mq: don't bring back flags of a completed request")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-merge.c | 8 +-------
- block/blk.h       | 8 ++++++++
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index b90c413c83c44..e72ddcc0e7d60 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -974,13 +974,7 @@ static void blk_account_io_merge_bio(struct request *req)
- 	part_stat_unlock();
- }
- 
--enum bio_merge_status {
--	BIO_MERGE_OK,
--	BIO_MERGE_NONE,
--	BIO_MERGE_FAILED,
--};
--
--static enum bio_merge_status bio_attempt_back_merge(struct request *req,
-+enum bio_merge_status bio_attempt_back_merge(struct request *req,
- 		struct bio *bio, unsigned int nr_segs)
- {
- 	const blk_opf_t ff = bio_failfast(bio);
-diff --git a/block/blk.h b/block/blk.h
-index 75316eab02470..db6232c5be60f 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -251,6 +251,14 @@ unsigned long blk_rq_timeout(unsigned long timeout);
- void blk_add_timer(struct request *req);
- const char *blk_status_to_str(blk_status_t status);
- 
-+enum bio_merge_status {
-+	BIO_MERGE_OK,
-+	BIO_MERGE_NONE,
-+	BIO_MERGE_FAILED,
-+};
-+
-+enum bio_merge_status bio_attempt_back_merge(struct request *req,
-+		struct bio *bio, unsigned int nr_segs);
- bool blk_attempt_plug_merge(struct request_queue *q, struct bio *bio,
- 		unsigned int nr_segs);
- bool blk_bio_list_merge(struct request_queue *q, struct list_head *list,
--- 
-2.53.0
-
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -247,7 +247,7 @@ void nvmet_execute_auth_send(struct nvme
+ 		nvmet_check_transfer_len(req, tl);
+ 		return;
+ 	}
+-	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
++	if (tl < sizeof(struct nvmf_auth_dhchap_failure_data)) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+ 			offsetof(struct nvmf_auth_send_command, tl);
 
 
