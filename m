@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053151;
-	b=QcJ4OAfOZ4hME6z+mhtGdhyYouwFv0STm0rDn+kF9ps81Zpr1Ednahx9hS64IZd6lnmO
-	 VkoZwGD1MBfU6hRVGuI6/716o1b6MhBMyM6SW9cbr0WKa7zoKr81L3ZLcfmv82ZmSZ1wU
-	 eDaoDVkdDm3sgbglxMEUUkLd+UZBMT3Tys+d/7MLABTcrJi9eXXu3iMsACvIqpiKVEufT
-	 nLT8pLWvWuIc2XBfpkXKHrQqevMi8Jj6xu2L6CQT4oFK7hQOcFH9SXkwMCDeOL+64xA8a
-	 7L23+xedDiFhkfjrdNRUn/tln+tmmSu/7ohtyyv6Ild8hs4D0iH+JKbab54BGJjc3IA==
+	t=1795053154;
+	b=zfRTEcomabw5egEbvZ6ESTb85W8buwgTkpyrXAA09KfZjY9M1hbOJg17l3L70G4Y0nXz
+	 hPWBo6d//1uZw8nsp+pejMqlm32ZegtXwMdhivpf9IR9EM6klu69PxRkvrI3OtNmOfwR/
+	 +dgOSZDX4AUnxLa5gPqLfS6dMKruywdgo1lpm1PVJmWta5PINXqPKAhRg+mzibRWRYUa+
+	 JyNLWMZHQjKpUm6fzZwbfeIoF4D5fpBLyuXyUg/yCPoWIlIwi0trFXK2/rKMiavuV/7b8
+	 ZzC+v5nLYuVb51P/vzhdvWXa4q1jcJZZsIWn3Hn6MfXH9MiUyeXnvY8/wU4zREGS8Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053151;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ikLpLdHBtHb+YG19uaOG7WIstszMPvQUNjKD56ZKOOI=;
-	b=idOrq5HGpss/0UY7BOas0e37JpuaoBK5H8xD8L/aDZR6z7kIYLuWPm3t7NU0gDsj7L6+
-	 /+/Ng3TWLD2srEdN2x2yEWcEtx4L1FedjilY7Xn5nip0xWUH6TQSvr9oCHxCHxjqIwmgY
-	 DYjACSgACU/ZUAVX4jkBRxjeOnzbNk6QjV8+txvPqlMtuURPwinJsPF93D/yto4frNlF2
-	 JmcpBQ0eYrv1/23IR06InJHUqnG8dzKisOAg3nBOJvL3kkEmOD9OrjJ9arCBAOjCZ4h49
-	 43bjeO/QCkJWXq8sSYkrAU91nGTycAOvn7DL7BaJqNuGEh99BHt27wDU//gsA9BAUiw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3ZUPnPNtU23AyOwG7Z5pjzgDwu3VxOjeQ6ZbWzfKYsY=;
+	b=V4/BDbTSldMRYaowvWXOFJL2c4OM4F7Nixll5CByLwgVlqTnOoWs0Rg/ztaJ/SthNbDm
+	 0vQlRffxfvH4kK45MAQl09mbpF5KEHAuK7CzCOx2A4nyewtQZmGQ7P5za3+mHUP2v4Bj6
+	 3HME1FR+3NAXVmahBDACS8r9DxXvC8rSYICZRLqq85h4v0dv39MmKwSecaQn6gYiqxgI2
+	 pl1VeZ7dIZSo5pzXfuVcBR3C02ZQC0wm0RfXrZVs0gcbCZSxL79GENly1/O3NBlyqiy8V
+	 LlC6KNkLTtLiVuABJG5w1K85TM+mbXAPXZHJH/HrRgQfTLyHcLFdZjDvqKVKhian37w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wvN4G3LL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZTYWqdX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20566606A31C;
-	Thu, 19 Nov 2026 01:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3817606A32F;
+	Thu, 19 Nov 2026 01:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wvN4G3LL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739DF1F000C4;
-	Thu, 19 Nov 2026 01:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZTYWqdX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA4B1F000C4;
+	Thu, 19 Nov 2026 01:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053151;
-	bh=ikLpLdHBtHb+YG19uaOG7WIstszMPvQUNjKD56ZKOOI=;
+	s=korg; t=1795053153;
+	bh=3ZUPnPNtU23AyOwG7Z5pjzgDwu3VxOjeQ6ZbWzfKYsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wvN4G3LLEAKBOWKBsceosJSClCtAlxBoX9dgMjP4MaG2y2jDnEqFwXZBthE2YF1oK
-	 LWrxmdUhv9JNWaKLa3Ndpc3vYrdGnG0G9aqYX+glFTs8IdZ3Sawn5jWxRFMbK7peil
-	 K3tydNZ1JnYrjJ9IlrWgIyn0YM4BrdErl1vJEHus=
+	b=iZTYWqdXh8QllWOv1mT/okwuqmPyk6C10OYqXyP8UWvX0r35sQYLLjqoKdNAujoWG
+	 z7uucnonBrzje335n3mSk7ROU+w/LUeUidHzODNWY3UqdWAvMHfbIB4AvOPkHxljpy
+	 Fzawg215wJyegYkfyyl9do3339aczmRKaY7nhTdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0816/2214] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
-Date: Wed, 18 Nov 2026 15:41:32 +0100
-Message-ID: <20261118150044.200293826@linuxfoundation.org>
+Subject: [PATCH 5.15 0817/2214] pwm: tiehrpwm: Clear period on disable to allow reconfiguration
+Date: Wed, 18 Nov 2026 15:41:33 +0100
+Message-ID: <20261118150044.245087808@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,58 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
+[ Upstream commit e74b9a7ee50071aad25d3989bf985292f90b0c6e ]
 
-bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
-holding one opcode byte, up to four address bytes and one spare
-byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
-bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
-bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
-unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
-becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
-stack and pushes the leaked bytes into the hardware TXRAM.
+Both channels share one period register, so ehrpwm_pwm_config() rejects a
+period differing from the sibling's period_cycles[]. That value was cleared
+only in .free(), not in .disable(), so a stopped channel kept blocking the
+sibling from switching to a new frequency. Clear it in .disable() too.
 
-Reject operations whose dummy phase does not fit the remaining byte
-of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
-back to the generic SPI path instead of overrunning the buffer.
+Testcase:
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
-Cc: stable@vger.kernel.org # 4.18+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Adapted for 5.15.y: this tree returns -ENOTSUPP instead of -EOPNOTSUPP. ]
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+  cd /sys/class/pwm/pwmchip0; echo 0 > export; echo 1 > export
+  for p in pwm0 pwm1; do
+    echo 1000000 > $p/period; echo 500000 > $p/duty_cycle
+    echo 1 > $p/enable; echo 0 > $p/enable; echo 2000000 > $p/period
+  done
+  echo 1 > pwm0/enable	# before: -EINVAL, after: succeeds
+
+Fixes: 01b2d4536f02 ("pwm: pwm-tiehrpwm: Fix conflicting channel period setting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20260929120806.2790355-1-alexander.sverdlin@siemens.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-tiehrpwm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index bca7ac570b94a..2c8f0d9717945 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1025,8 +1025,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
- 	u32 addr = 0, len;
- 	u_char *buf;
+diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
+index 3fef7d7987736..9a6e30e56e6ee 100644
+--- a/drivers/pwm/pwm-tiehrpwm.c
++++ b/drivers/pwm/pwm-tiehrpwm.c
+@@ -386,6 +386,9 @@ static void ehrpwm_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
  
-+	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
- 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
--	    op->data.dir != SPI_MEM_DATA_IN)
-+	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
- 		return -ENOTSUPP;
+ 	/* Disable clock on PWM disable */
+ 	pm_runtime_put_sync(chip->dev);
++
++	/* A disabled channel must not constrain the sibling's period */
++	pc->period_cycles[pwm->hwpwm] = 0;
+ }
  
- 	buf = op->data.buf.in;
+ static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
 -- 
 2.53.0
 
