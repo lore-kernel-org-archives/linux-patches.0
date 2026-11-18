@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033403;
-	b=tvDJRMmRdTSRvSI8IBGgGYtIDberXUgmktHCUpLcbDwZYt6ko/zG7L9R00LTE1Lb64pT
-	 TQ+0wZL0LlIPRVMfvNDWnm0Y5NJpYaWMWzqopqg2PHEQUm8/ACtu7I8x34fNY7wsS10nm
-	 PnLQ9JehV5u3gOuW41W0NaNUjP+dLAkrnELCij7ms64aWi0OkxH5znSLISZ9BEiR2FmKr
-	 9gYAD44F2wWlHNuuQ3oxInrAR8LTlSW3Os/vLYm8BxUgnMMOlyU2Rsg0keYLhbhpIwQ3w
-	 aFM4w4P5BuFaAxL58gjUsP7elcbxypyMlFYXOG3rfsHuE0Kdb9iOCQX87+JRGc/w8Zg==
+	t=1795033406;
+	b=Fp3dEIjCblC+vtLRAPwMt/G/xjrWH0kDXba1NwR1WhFYAGeHW4Kuwz7UVO/uln8/qN48
+	 3rTUgh1dNszbMU+cwEN/goqss30+awryl0sEC5z9eUOwNJznBZXbGDi3orU//UU+ME6ro
+	 PlQWXKjTZZiOubfv1LAmiCfJsHQB/M64mAY0o5Uq4KSewn3YtDrcxwPv1oGHAjN8T5tTU
+	 9gA9H//Uss228pZX3aa1o+24sazafDLixeAWotkQzpbLWdrQiyM2qHd+QwkOvdJZMdCVH
+	 SffRf5JfOgzA/8kVD/6Y4e2zwi2uq51BahC3vsCeOOCCNpet+BlmopzqSye8cf/7d0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033403;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HeOkXVcczdbQijMnw3Ey4rLMDR1e66prKVEyhfHWB2I=;
-	b=hBENT3A+BEFkUhzIqjqsljT1CiiMrVAQG5/jir0WIKbfkKCtSslkeDOGDVR7gX4Wd31Y
-	 l1pGjNAuWl8nGHLc5yCzRJ18QMJhO7TZW2C3SCiPxsYcfPrqmTWZmnQId/7OalNSOTl/W
-	 VRQwghBwRPWWIlHCdCrxiC99vOaXiGMJnvDNY+x4Tl9TxK9qyAFsPkDi3Fo3kWYhBPJzz
-	 U5gSkYSTTWeP5FngB2D5Aa+YsftVpHRYYbpkaiuI68XEzto2MZwBD7Tpy+aDYaChLUvgi
-	 Y4w7GKmVKzi6iUyrTpnYHPY4S9hCfBU/wsZzRw4dSTL0SQ688QToMSc8cJkcJKsQp4w==
+	bh=SMrV9yFD2Ht/7ubbq/l/abTVPQyK/ArHITNhKv1oGyE=;
+	b=Q4T6C9F9eEY8pzWHHTeKdSTHxPxPVS0455QXlz7fHG6vzBt0rdisVtOZY8w1xQ6aMiXY
+	 isBZ1GcSuFr7OyXknWYCLAbUcAkbFLc0TXq/KvAX6ShPe/n1JxgSNX8jYxw0rl8NrkHsC
+	 9J75goXPw/iKxGwfEnwerFJTbKoxc8gVeGJZ1t3u3fwGtCCp9j6ETovIwmfB2sMC9CQGH
+	 R96dc9KHXUBWyFA4O7T/tQ8yva1IZftzbDrAL63FPCtONR5l1R8Q2t2I9kcxsVL1pHRC+
+	 NJ90X13EFT71KLZ9apcrqZmsBIDrG4vEGjM59/TyWSgIe24TJLlIL+hIoKZrQ44rS6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFskAFWs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbAgmvJ2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84905606A335;
-	Wed, 18 Nov 2026 20:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A9E606A32F;
+	Wed, 18 Nov 2026 20:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFskAFWs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56EF1F000C4;
-	Wed, 18 Nov 2026 20:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbAgmvJ2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AF01F000C4;
+	Wed, 18 Nov 2026 20:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033403;
-	bh=HeOkXVcczdbQijMnw3Ey4rLMDR1e66prKVEyhfHWB2I=;
+	s=korg; t=1795033406;
+	bh=SMrV9yFD2Ht/7ubbq/l/abTVPQyK/ArHITNhKv1oGyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tFskAFWsloqlDLMA6X9CCTMy9jMg+Yi91OisKEG0C77NnK3seSNADKSY0RbF1aSK3
-	 zI2T+UB93qt/eEmwEnK3DhAoJDaHToYGDws7tUeV8hZ9+Lg0zxMoS1YOFO1kIKxaGU
-	 WN+7e3l9Mb1UHbSuQWRSvODG2ZNTlf1uXZWxPfmQ=
+	b=BbAgmvJ2dDCNaalVGyNuhE/SagxwjBGB0OdvMJQMwDgFgx0fPtF4FKLPTsyZty9Zc
+	 FuFBttz7rCfBI+1CGY195qTvtqYLEaFm6O8y8C8NBoAcKIaSCQ7+GxbaQZKnLBnfL0
+	 8B8dK5pxNw2fP3RoeHvOgqIXGC0PedZvdIenEPfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.12 1756/1756] apparmor: avoid potential double free when remapping DFA tables
-Date: Wed, 18 Nov 2026 16:04:43 +0100
-Message-ID: <20261118150119.431173036@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.12 1739/1756] perf tools: Fix compile error on sample->user_regs
+Date: Wed, 18 Nov 2026 16:04:26 +0100
+Message-ID: <20261118150118.778533271@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,51 +68,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit 7ccd884a5e5386f4c7d98625113f4924f70286b4 upstream.
+commit 20600b8aab734877740d5292c0cdd5ccb6c7beb7 upstream.
 
-When unpacking a DFA, aa_dfa_unpack() stores a table in dfa->tables
-before attempting to remap a 16-bit table to 32-bit.
+It's recently changed to allocate dynamically but misses to update some
+arch-dependent codes to use perf_sample__user_regs().
 
-However, remap_data16_to_data32() frees the original table when
-allocation of the new table fails. This leaves the corresponding
-dfa->tables entry pointing to freed memory. If the unpacking then
-fails, dfa_free() attempts to free the same table again.
-
-Only publish the table to dfa->tables after any required remapping
-has completed successfully, so that dfa->tables never contains a
-pointer to a table that has already been freed.
-
-Fixes: 9208c05f9fdf ("apparmor: add support for 2^24 states to the dfa state machine.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: dc6d2bc2d893a878 ("perf sample: Make user_regs and intr_regs optional")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250214191641.756664-1-namhyung@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/match.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/perf/arch/arm/tests/dwarf-unwind.c      |    2 +-
+ tools/perf/arch/arm/util/unwind-libdw.c       |    2 +-
+ tools/perf/arch/csky/util/unwind-libdw.c      |    2 +-
+ tools/perf/arch/loongarch/util/unwind-libdw.c |    2 +-
+ tools/perf/arch/powerpc/tests/dwarf-unwind.c  |    2 +-
+ tools/perf/arch/powerpc/util/unwind-libdw.c   |    2 +-
+ tools/perf/arch/riscv/util/unwind-libdw.c     |    2 +-
+ tools/perf/arch/s390/util/unwind-libdw.c      |    2 +-
+ 8 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -401,7 +401,6 @@ struct aa_dfa *aa_dfa_unpack(void *blob,
- 		/* check for duplicate table entry */
- 		if (dfa->tables[table->td_id])
- 			goto fail;
--		dfa->tables[table->td_id] = table;
- 		data += table_size(table->td_lolen, table->td_flags);
- 		size -= table_size(table->td_lolen, table->td_flags);
+--- a/tools/perf/arch/arm/tests/dwarf-unwind.c
++++ b/tools/perf/arch/arm/tests/dwarf-unwind.c
+@@ -46,7 +46,7 @@ static int sample_ustack(struct perf_sam
+ int test__arch_unwind_sample(struct perf_sample *sample,
+ 			     struct thread *thread)
+ {
+-	struct regs_dump *regs = &sample->user_regs;
++	struct regs_dump *regs = perf_sample__user_regs(sample);
+ 	u64 *buf;
  
-@@ -418,9 +417,9 @@ struct aa_dfa *aa_dfa_unpack(void *blob,
- 				if (!table)
- 					goto fail;
- 			}
--			dfa->tables[table->td_id] = table;
- 			break;
- 		}
-+		dfa->tables[table->td_id] = table;
- 		table = NULL;
- 	}
- 	error = verify_table_headers(dfa->tables, flags);
+ 	buf = calloc(1, sizeof(u64) * PERF_REGS_MAX);
+--- a/tools/perf/arch/arm/util/unwind-libdw.c
++++ b/tools/perf/arch/arm/util/unwind-libdw.c
+@@ -8,7 +8,7 @@
+ bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
+ {
+ 	struct unwind_info *ui = arg;
+-	struct regs_dump *user_regs = &ui->sample->user_regs;
++	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
+ 	Dwarf_Word dwarf_regs[PERF_REG_ARM_MAX];
+ 
+ #define REG(r) ({						\
+--- a/tools/perf/arch/csky/util/unwind-libdw.c
++++ b/tools/perf/arch/csky/util/unwind-libdw.c
+@@ -10,7 +10,7 @@
+ bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
+ {
+ 	struct unwind_info *ui = arg;
+-	struct regs_dump *user_regs = &ui->sample->user_regs;
++	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
+ 	Dwarf_Word dwarf_regs[PERF_REG_CSKY_MAX];
+ 
+ #define REG(r) ({						\
+--- a/tools/perf/arch/loongarch/util/unwind-libdw.c
++++ b/tools/perf/arch/loongarch/util/unwind-libdw.c
+@@ -10,7 +10,7 @@
+ bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
+ {
+ 	struct unwind_info *ui = arg;
+-	struct regs_dump *user_regs = &ui->sample->user_regs;
++	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
+ 	Dwarf_Word dwarf_regs[PERF_REG_LOONGARCH_MAX];
+ 
+ #define REG(r) ({							\
+--- a/tools/perf/arch/powerpc/tests/dwarf-unwind.c
++++ b/tools/perf/arch/powerpc/tests/dwarf-unwind.c
+@@ -46,7 +46,7 @@ static int sample_ustack(struct perf_sam
+ int test__arch_unwind_sample(struct perf_sample *sample,
+ 			     struct thread *thread)
+ {
+-	struct regs_dump *regs = &sample->user_regs;
++	struct regs_dump *regs = perf_sample__user_regs(sample);
+ 	u64 *buf;
+ 
+ 	buf = calloc(1, sizeof(u64) * PERF_REGS_MAX);
+--- a/tools/perf/arch/powerpc/util/unwind-libdw.c
++++ b/tools/perf/arch/powerpc/util/unwind-libdw.c
+@@ -16,7 +16,7 @@ static const int special_regs[3][2] = {
+ bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
+ {
+ 	struct unwind_info *ui = arg;
+-	struct regs_dump *user_regs = &ui->sample->user_regs;
++	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
+ 	Dwarf_Word dwarf_regs[32], dwarf_nip;
+ 	size_t i;
+ 
+--- a/tools/perf/arch/riscv/util/unwind-libdw.c
++++ b/tools/perf/arch/riscv/util/unwind-libdw.c
+@@ -10,7 +10,7 @@
+ bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
+ {
+ 	struct unwind_info *ui = arg;
+-	struct regs_dump *user_regs = &ui->sample->user_regs;
++	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
+ 	Dwarf_Word dwarf_regs[32];
+ 
+ #define REG(r) ({						\
+--- a/tools/perf/arch/s390/util/unwind-libdw.c
++++ b/tools/perf/arch/s390/util/unwind-libdw.c
+@@ -11,7 +11,7 @@
+ bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
+ {
+ 	struct unwind_info *ui = arg;
+-	struct regs_dump *user_regs = &ui->sample->user_regs;
++	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
+ 	Dwarf_Word dwarf_regs[ARRAY_SIZE(s390_dwarf_regs)];
+ 
+ #define REG(r) ({						\
 
 
