@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056538;
-	b=nEWHigCs7yUbnHQ8jDw3I50TFaTni1WtnSJShXmMmCsONKZ6+iomzuEUEvd+oGo92MXa
-	 Tcm1h+VUPkSCLSeRJoUWphRl2ZWf0o8p0fSnoChqIWyzUf+4ubUYt3T/7n/6XrljpZ2+E
-	 xvx1rPMLrC8QKRobcsLgtgmPFVgErUwnRqU4FQHl0Ob9nxcqz4SESBn9ojsxrHs7/4Mqz
-	 Vp2GhgpXXcotquqDBocPQMZAcXmt/PCvaO4ZT3xnBvfLY4eer8RGDOizflSW3SNCDt6ML
-	 AiE6F6ZULVfHS54bZBBOCrPzMcqVNFNocBEe3NWHFxaiAZXn4T83F003htwKDC8QZ5w==
+	t=1795056541;
+	b=4EOPVHaSDoJGKcSWsQ+y2uGU2Ee9GjcBPY0P5Rcn5LYHp9P0ZK9HNcOAkfFX0IDyRNDx
+	 WENrWpW1QZ8IVJPd9aUPXHhQnnqOIn8eDQQwxJTe7oU/s0Czl+RpRD8ohxMsJs8z52K1N
+	 drQG+Dk1OAVmExogRpBnlYXhLNM50E5eTDRf3Vp1gxNCf03kjSWrF3Ll16erb2UnWdkl5
+	 bKxzpGhUraiCL5rop8rlu7sgykXZJyHttHZDwqhIviQRWbpHSVp1rM9WZmZss1/e8Xaqz
+	 5WVwFhkdBxgczph81XgVbVVMggkTtfaWBxJXqvrafOY1+EK3yFEV9cRvXvoiYuj6zpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H9TSQ4KB5D4wKNjuzQthCPWWImoyN++WeSG0jBwyz/Y=;
-	b=Uz9oWvf20IjnTsNW7Hrt1sHJXRUrjGUBwN48x8URrq8i7BLN0qjis/ZTNViUS95V20cm
-	 R6EgV4HRnikiObUBpZrNuDuK2mGsIGAtuRekIv7l+D2k3L4Ywh0lbikekrWa43esjGNIH
-	 rsc0NqsnPED2Ziw52iDoippCw/zk8cuxG7gqBaXVVv/ohQYZ/TYL49bRfXwSI6Cjyy5Hz
-	 EV85+nBDMcwP+rv9q/WJ13QrLDiWOp75hzEQlG2zHKxkAu3kU48md4UyhmFFb3/6YzYcx
-	 kC2gZrhWjLes5GBK5RlzjKYQjbMtAb+CRSpta901N1LGt3CFb2NouFtH0bjq1/Fa8aQ==
+	bh=iY7TL4PexP+/jJxkqd14HJcpdfWwzB+WrHD+wXDL3K0=;
+	b=sph39a2899JfOYSjitJHr/HIo8rbzbFCP2NcjmruaVNCcMtnZeuz903BF1Gjn1xZMh+5
+	 /eDtQydEtSuBPFd6P+sqdUX6PeqbGLisRYMRdB+9qxSwpjd0HNLJHlZaDygQZU8yEU9CS
+	 JdaecvHzNMzdySGJJ5XCSxCWk/VS+2Vfuf7VxYx4HLNxwVwk4/hlRB0XY7qycbFH9wWQW
+	 C/UpLZnD1UpEVdxyJaLz9M4JJBjH+ru081CtVG6pGGHFOAfuS5X4fQLWRxPaYA6LZoEjz
+	 oftcomQK9sNwixmNDCDlFyt7pguRriZJRLogvWHPr5ezDb6O/HFTB8CvMRmD7klxLug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anOuikZ7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIYT31jo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC63606A31C;
-	Thu, 19 Nov 2026 02:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA8C606A31C;
+	Thu, 19 Nov 2026 02:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anOuikZ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2F51F000C4;
-	Thu, 19 Nov 2026 02:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIYT31jo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977691F000C4;
+	Thu, 19 Nov 2026 02:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056538;
-	bh=H9TSQ4KB5D4wKNjuzQthCPWWImoyN++WeSG0jBwyz/Y=;
+	s=korg; t=1795056541;
+	bh=iY7TL4PexP+/jJxkqd14HJcpdfWwzB+WrHD+wXDL3K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=anOuikZ7xw/pMPqGvEENe/CvydTQHKwnU9xnZf2ozdAvIII1vNgnb+dX5KDFYdcZW
-	 rpssXiw8UAlv38RWGMBrKuVLIq9ueiSlJsgpou2bX98AdBzX3pvFkVMDnFlZiD4sH8
-	 KdbLLAXT/XmTNDLfIW/icTjKUFTUvt6id+kfBpHQ=
+	b=QIYT31joNOeVBRs04ieAmwF69ePi09la5DmPHicBCKR/w2pBloGGV5xdmX/0TucKE
+	 pTQV6V1UUH6BrXdGeUjvysbquQMNBvC8AUpoll5ztt3NA3iygRTLHJT/UNEAYU9goS
+	 u9ALSlt2F2UpxtXpUwnfck2v1uvUs4HdqtwILDMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2022/2214] bpf: Update the SRH state if End.B6 fails late
-Date: Wed, 18 Nov 2026 16:01:38 +0100
-Message-ID: <20261118150131.638664312@linuxfoundation.org>
+Subject: [PATCH 5.15 2023/2214] bpf: Clear sk_refcnt of a clone before its storage is linked
+Date: Wed, 18 Nov 2026 16:01:39 +0100
+Message-ID: <20261118150131.688072822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,58 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 427e751a231aa781441d51c42e716905ee348099 ]
+[ Upstream commit 22f100bd013458836c3d0eaf8050b854d7534a66 ]
 
-For SEG6_LOCAL_ACTION_END_B6 and END_B6_ENCAP bpf_lwt_seg6_action() looks
-for the SRH again only if bpf_push_seg6_encap() has succeeded. That
-function pushes the new header, for which the head of the skb is
-reallocated if it has not got the room, and then looks up the route to the
-first segment. If there is none, it returns an error, and the pointer to
-the SRH in seg6_bpf_srh_states still points into the old head, which has
-been freed.
+sk_clone() sets sk_refcnt of the new socket some lines behind
+bpf_sk_storage_clone(). But the elements which that function copies are
+linked to their maps at once, and an element leads to its owner: the
+iterator over a sk_storage map hands the owner to its program.
+bpf_sk_storage_get() with BPF_SK_STORAGE_GET_F_CREATE and
+bpf_sk_storage_delete() rely on refcount_inc_not_zero() to tell whether
+they may touch the socket.
 
-The program goes on behind the error. bpf_lwt_seg6_store_bytes() and
-bpf_lwt_seg6_adjust_srh() read the SRH through that pointer.
+sk_refcnt is in the part of struct sock which sock_copy() leaves out, and
+sk_prot_alloc() does not clear a clone unless init_on_alloc is on. It is
+zero in an object which has been a socket before, and anything in one
+which has not. If it is not zero, a helper gets a reference which
+refcount_set() wipes out, and the helper's sock_put() then drops one of
+the two references of the new socket, which is freed too early:
 
-Look for the SRH whatever bpf_push_seg6_encap() says.
+  IPv4: Attempt to release TCP socket in state 1
+  BUG: KASAN: slab-use-after-free in __raw_spin_lock_init+0x47/0x90
 
-Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+In the meantime the helper changes a storage which bpf_sk_storage_clone()
+fills without taking its lock.
+
+Nothing else can find the clone at this point. Say that it is not alive
+yet, before the first element is linked. Sockets whose parent has no
+storage are left alone.
+
+Fixes: a50a85e40c59 ("bpf: Expose bpf_sk_storage_* to iterator programs")
+Suggested-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-14-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-15-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/bpf_sk_storage.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index a3712d4068e8f..e8bb5d9b9a2fa 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6273,8 +6273,8 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
- 			return -EBADMSG;
- 		err = bpf_push_seg6_encap(skb, BPF_LWT_ENCAP_SEG6_INLINE,
- 					  param, param_len);
--		if (!err)
--			bpf_update_srh_state(skb);
-+		/* The header can be in place although err says otherwise */
-+		bpf_update_srh_state(skb);
+diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
+index 9db272dd1d8af..ca9f74736bf89 100644
+--- a/net/core/bpf_sk_storage.c
++++ b/net/core/bpf_sk_storage.c
+@@ -197,6 +197,13 @@ int bpf_sk_storage_clone(const struct sock *sk, struct sock *newsk)
+ 	if (!sk_storage || hlist_empty(&sk_storage->list))
+ 		goto out;
  
- 		return err;
- 	case SEG6_LOCAL_ACTION_END_B6_ENCAP:
-@@ -6282,8 +6282,8 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
- 			return -EBADMSG;
- 		err = bpf_push_seg6_encap(skb, BPF_LWT_ENCAP_SEG6,
- 					  param, param_len);
--		if (!err)
--			bpf_update_srh_state(skb);
-+		/* The header can be in place although err says otherwise */
-+		bpf_update_srh_state(skb);
- 
- 		return err;
- 	default:
++	/*
++	 * The maps lead to newsk as soon as an element is linked, but
++	 * sk_clone() sets sk_refcnt only later.  Until then it holds whatever
++	 * the slab object held before: no reference can be had yet.
++	 */
++	refcount_set(&newsk->sk_refcnt, 0);
++
+ 	hlist_for_each_entry_rcu(selem, &sk_storage->list, snode) {
+ 		struct bpf_local_storage_elem *copy_selem;
+ 		struct bpf_local_storage_map *smap;
 -- 
 2.53.0
 
