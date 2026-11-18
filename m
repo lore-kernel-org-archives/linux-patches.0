@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054347;
-	b=hHtgOUMq7EBOrGuIKTJJkIIePevFbiv6cUt4m6hahPLa/ASm3+aV34tWMfjeLgLsXL6a
-	 R7aQ6SYpLcX0/V95bffruYZ3IoR5zhykx00gARxN6MRjlqI2DfDhLmlaakmpvqrNPq0+B
-	 v4k4cGiACbCcxjo3O9enXrzLGebZPZNsgtooVjfmrPdQkTc1HYk57jbE1wUYtSp3gzaci
-	 DaPvbiqBpau0A+nwZgwTEGNHXdn0+JIXBTTKHQmTVlI0hgjwWGmgaOdF5B/NtluhtYIY4
-	 hxc5uWGSFXJL/KYMBcv3GNtk0x+kzhsBLrRgGWPplfjTrLvMd6PxbfO5DSPLxbpvyAA==
+	t=1795054350;
+	b=L1kAHVt2q3ZUQr6EoY8Sp2q4Hrt/Te7W3SB9c6qI8ohRxqwRSV/SSdo68t2FLiqMQ1kl
+	 J3FINnwUXz6CPyqXN1qv4XrWSVu3OKYdv/NjUrv/lpXtO+s4Ey2JtdTrKwAaQl2VA8ljI
+	 U9ZRO52eo8PUqDXPK8xlD1OEjk6Yi1EQgjnsQMNp8ijVuj/OZo0GW+NbYgVVf3KkYGuaz
+	 F3mPKN0Co6rNLnDr6kU8mhb7lPefhT2geOoB9X3nTym2Qfeel1BQOQhPwnWtY+KM0v/4s
+	 TOC+FZTss9QmZxC4c2VEx674xZ2w6OJCOWj0TA0rMJOIytvIAm/hrNx//J2SG8AXMHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7iGlOWH0dPDrS/derk2rRP3G4DFjeYRNvDPcZETD7L4=;
-	b=GqKXPyhPOpXvoG6nzdhRl6vKKnEk++lqAc98v8fU6Z7ZX34+ZK+QlJsT/6ZjFCIy7dot
-	 eJQ/F4GgyopH8YmKSAkiP7pSSuHOQC2VYMxBBR8mXlNs5ez50iKGsxhaUhPJrCxoKEqNp
-	 Xqi30gkhKAicBZ4DCW/jZP7sVkwG5lc/RxYWB6tkop8i/XpTSDMPHvBny0FGmIHlFQE6p
-	 rxFZZSbeYsqP4ZXf+ulHEbHJWaVdOrjJ5yR2UXmVZFaBrG1dE7oZeAVZUrsHzqoi0dUSf
-	 yCRN+CJe/WZtV2G42Klcq+HteaTwikuNU++GyvaVVITNuROtPTPCe9UAL/vSUXoAtSg==
+	bh=HPM7SSxtdtJbaxldmENkzCc3mYHzf8OTs6ou0e+MCXg=;
+	b=crFx0sUxEe/HrcyBXyjuTBW/cC5BXkQJCoMWmT/Kj7GbhNREKRap/OYS1MFVqcSdZRul
+	 pNKt0hBiDmuIs1NPXL6+FqzL9/N9Bji4PV+oAMwQnMrj1sQUtsBJoTiIt2x7ZepBsZMs9
+	 xd/F/wRB3lNQa37qsPzLKrHdy3LBHT2Apb1Xk/1W7ZCj+WDe70vMHTl3Hi5t/wz7evtI+
+	 6RDca0zsiJQsdYdmcFqgt195RmpAeyIn+H/taS1zmpDStyg5DBzr5MJQ5lo7pg9VBYA+w
+	 5aeDHsPp/NrCA+ejr4CwwgiBz8Qn0aZaEjelVSkCLxEuq1OU9WUKx82ui8JQVICKl0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1n6e4J6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fHivah6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1F9606A331;
-	Thu, 19 Nov 2026 02:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65D8606A337;
+	Thu, 19 Nov 2026 02:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1n6e4J6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CDD1F000CA;
-	Thu, 19 Nov 2026 02:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fHivah6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F196B1F000C4;
+	Thu, 19 Nov 2026 02:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054346;
-	bh=7iGlOWH0dPDrS/derk2rRP3G4DFjeYRNvDPcZETD7L4=;
+	s=korg; t=1795054349;
+	bh=HPM7SSxtdtJbaxldmENkzCc3mYHzf8OTs6ou0e+MCXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1n6e4J6yK1ycWThrVM6CBQAxSQsJM4Li1R6BVNoI1WObgVPfL776PhahNInWRYUd
-	 w6ey2ojKzkMJzWG/Q4+tCGndsxt6kZaaZ1oZYHmx70mzmD6RQnHJcm8rC5g1lCRl+T
-	 FvVAo6Fk4riY8rHmTxVewR1pGSDuUtZhe/tAcOCI=
+	b=2fHivah6UhcEtTZR/HbIqPT0K7pwSBmMYm7jOllFyCC56srj8D/za9+AncA8iUmkx
+	 fO7Yua3JLRlIEkB5TIS6MB6A1p2Ozn2109QJOcDPWEcESI3U12XVnb93keOaqrUGpT
+	 /THrajuaf3T4RFfSObC7tQqLx7qsVAhdc/dFzNcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Stanley Jhu <stanleyjhu@google.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1240/2214] scsi: ufs: core: Remove an always-false WARN_ONCE()
-Date: Wed, 18 Nov 2026 15:48:36 +0100
-Message-ID: <20261118150101.328637029@linuxfoundation.org>
+Subject: [PATCH 5.15 1241/2214] apparmor: on failed load ensure profile files are removed before parent
+Date: Wed, 18 Nov 2026 15:48:37 +0100
+Message-ID: <20261118150101.365682158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,43 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit cd37a69c367b6a5f685db0ac7d01f08545081a30 ]
+[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
 
-The WARN_ONCE() in ufshcd_poll() can never fire. completed_reqs is set to
-~tr_doorbell & hba->outstanding_reqs on the line above, and
-hba->outstanding_reqs cannot change in between because ufshcd_poll() holds
-hba->outstanding_lock. So completed_reqs & ~hba->outstanding_reqs is always
-zero. Remove it. No functional change.
+The load interface does not guarantee the order profiles are loaded.
+When a parent is loaded after its child, and the load fails, the
+current code will issue a warning, and leak a dentry.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Link: https://patch.msgid.link/20261022034443.3034432-2-stanleyjhu@google.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: adapted ufshcd_poll() context to the equivalent code in ufshcd_transfer_req_compl() ]
+For the loaded set of profiles, ensure that on failure list is ordered
+is traversed in reverse so any children processed after their parent
+is freed first. We do not need to deal with the cases where the
+children are processed before their parent, because either a parent
+outside the list already exists or a dummy parent outside of the list
+is created, and the list walk will not put those parents before their
+children.
+
+Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 3 ---
- 1 file changed, 3 deletions(-)
+ security/apparmor/policy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 39e2fb416ec29..1a33618c43285 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -5322,9 +5322,6 @@ static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba,
- 	spin_lock_irqsave(&hba->outstanding_lock, flags);
- 	tr_doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
- 	completed_reqs = ~tr_doorbell & hba->outstanding_reqs;
--	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
--		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
--		  hba->outstanding_reqs);
- 	hba->outstanding_reqs &= ~completed_reqs;
- 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
- 
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index dd8439e9cf55b..de6ccef62e968 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1126,8 +1126,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	 * them yet, and leaving them behind would leak the new profiles
+ 	 * (their dents pin the proxy) and make the next load at the same,
+ 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
++	 * ensure children (which are at the end of the list are removed
++	 * before their parent
+ 	 */
+-	list_for_each_entry(tmp, &lh, list) {
++	list_for_each_entry_reverse(tmp, &lh, list) {
+ 		if (!tmp->old)
+ 			__aafs_profile_rmdir(tmp->new);
+ 	}
 -- 
 2.53.0
 
