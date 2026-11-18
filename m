@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037843;
-	b=QPV3zeEMtg00YrS4MGaFJtyAAf2kcjP/JqhgTCdSt/j9mpQGYvTUi0VBowPNrwz6dzVo
-	 iSf5+YRq5n4iyV+cuAZ3KZZIxJ1oEZUI2jNaQPzCHUXuClEhlQXvYeSUiyBluYiBxIjMm
-	 y4f1Uk6KwIU6X+8nIALmpsZDY7UCuAEHrt3vQ5FzoqZaxkqyIddIxVg8R0Asvv7LApVEb
-	 SO7sJQQgJenVf3TkkyQ7iWEgma8UteDwyBC5/IJq2j7w0NwilLgOb9jsljgNqKwQIUgaV
-	 bn688h3Q4DRVoM4l3l9jBE25l1IVxVvIOZ4Zk/wHzN2cZyyhIMMOgpTsRzGWf+vNz5w==
+	t=1795037846;
+	b=e9GmRQT7LCkqnboK2OrtvB1bOyfwlgRT+Ldkb+FQcFmOb1L1dgFhJJjGrQ968GOsG4B3
+	 TsuSMjfLQ6ZNrTx/mjou9lqdWMhvNMG8ECNNGCslBTJm036EnoXSOHK6ke5Fi7GR85O63
+	 251XTGD/pTL+cO/VU/2KYmJq19ewXuuPfoLqgiVUosV8cgGy+/kUtHem7QGod2PFtxi1n
+	 nXvJX7f2zVS1zpMUs7IQhSE0O1wa41PK79Z6qBd6iKluu1akW11T6P/VqbDZRnL9XbhtL
+	 vlXCuZJSjI9qvuQOV11wjk3sfGg/tDMMJj992Nbq9UDp455cu1R3cRftIc1pU9oa34Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fzXLei0qQJsH7NplUIEAkYTdTLb5GRvntqimVsvEtJ4=;
-	b=O4ecoapvkicS75oza98+nhnf2NVp6vlLIdyNVjjRn1s48Ji5//HPaeQkcFoLiFTmAV8H
-	 kYT3WeYDxHCgj0gO+BoWmxYdeUp6tF/yyM09oRIl7bENAGncZCxnfZJmFzUtlhFtNykvj
-	 Wy2HwpsRFFY/ctN5K179jpKqS0XiHmOeAJtIWVrdRtje5SzIVQtulq6ZkU7V0zw/nGGTj
-	 2b75ukJZFmfzKyHTwMa5BfHB0o7M8lYtAueLLKjvJmEpoxtJv6DfS9ABbh4CYkQDg0vX7
-	 /Bf1+7A7MGqdbIp+jKD7pnBqkhNmRqZEPm7Bacf5SC/rZL2lFg/+IS96Bq31lfzr0lg==
+	bh=DFs7ZLAwbpW/bLLmiOMoDKQDgTzl5Gw3tfZedv20EtY=;
+	b=TWOlcvqfprDXFui+7SijSQkqWDPFW6pFn7CQrpJwBODo3noECrmTRx7z7NLEpm9utUIR
+	 cBBPkP9eUyMiFlP/Tdks0Tr6YkdtSo5FONatODLlxl/m7nUpwJm5aQ6TR9Wh1I5Dy/sde
+	 ZsTh17nWQZ3CoG75FjPdpfSlZwsS1UdfAgKxIUl0+3Z0VgMOMbtoK/k6tiD/rocynxwnj
+	 3hNwQFgJJR/8khMpyIL0uwl9Rqbb9rV+uInLW143+e34a685h8LcCFcIeAY3Da2fRIoDH
+	 n633JHak5sZEo1gNYNVHIm50TQVi7yxakO944Gm2Gu5nNKUg4anMTA4TDviWtHYTCRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ttu6cxv2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOqoNt2s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B36B606A31C;
-	Wed, 18 Nov 2026 21:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED70B606A32C;
+	Wed, 18 Nov 2026 21:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ttu6cxv2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923811F000C4;
-	Wed, 18 Nov 2026 21:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOqoNt2s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE661F000C4;
+	Wed, 18 Nov 2026 21:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037843;
-	bh=fzXLei0qQJsH7NplUIEAkYTdTLb5GRvntqimVsvEtJ4=;
+	s=korg; t=1795037845;
+	bh=DFs7ZLAwbpW/bLLmiOMoDKQDgTzl5Gw3tfZedv20EtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ttu6cxv27qyW5EftX1JP1uXzjzshi9pTG2jqgnSmcsHWVq9ijQLj+jq+qE0BtAQtm
-	 M3h6CllRhu5htsu4hsEtgTBr5VuzqfLaT90+oD6awXj+lswD8b3nNSWoEkmbUvpLJZ
-	 dab2fqYRKO7iFQIVd1OkKesVdcFRPh58L+yz1cIY=
+	b=MOqoNt2szVWHGXMOLONeDpP/JXBVQytRRKZ+VSZrojBPZJ/bEMwGbUmdscSmBfkA6
+	 WxIg5/C0QrWQ5oHpjOPESTckW1Ap7oWKeCSpzubhqRjS/D662v5JkaLUkvI8L9ULAO
+	 bTvsvsPoQzsq0VKbCrH6gO3CPaEVnH3Ijt+RfPaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 1537/3318] nvme-pci: add NVME_QUIRK_DMAPOOL_ALIGN_512 for KIOXIA XG10d
-Date: Wed, 18 Nov 2026 15:35:59 +0100
-Message-ID: <20261118150407.084653359@linuxfoundation.org>
+	Rosen Penev <rosenp@gmail.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1538/3318] drm/nouveau/nvkm: clear use.enabled when subdev init fails
+Date: Wed, 18 Nov 2026 15:36:00 +0100
+Message-ID: <20261118150407.114975593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,44 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit c64d9b2c1f4fd1d8fa52dab37b48428a99c4d58d ]
+From: Rosen Penev <rosenp@gmail.com>
 
-The KIOXIA XG10d reads past the end of a PRP list that completely fills
-a 256 byte small pool block. When that block is the last one in its
-dmapool page, the read lands on the next page, which usually isn't
-mapped. The IOMMU faults it and the controller craps itself:
+[ Upstream commit a1f7f37417bacf2eaf80a8ce6b598b1fa56f8906 ]
 
-  arm-smmu-v3 arm-smmu-v3.0.auto: event: F_TRANSLATION client: 0001:09:00.0 sid: 0x20900 ssid: 0x0 iova: 0xff7fe000 ipa: 0x0
-  nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS=0xffff
+On Kepler boards without the video decode falcon firmware installed
+(msvld/mspdec/msppp), every other VA-API decode attempt binds to an
+engine with no ucode loaded. The submitted work never completes, which
+leads to a context switch timeout, a channel recovery that cannot reset
+the engine, and eviction waits on fences that never signal. The process
+ends up stuck in D state, or killed by SIGBUS when it touches a buffer
+evicted after the wait times out:
 
-Filling the block requires a slightly larger write, and those became common
-with commit 2e8e30b3cf9f ("Revert "nvme-pci: clamp max_hw_sectors based on
-DMA optimized limitation"").
+  msvld: unable to load firmware data
+  msvld: init failed, -19
+  fifo: SCHED_ERROR 0a [CTXSW_TIMEOUT]
+  vo[5444]: channel 14 killed!
+  WARNING: drivers/gpu/drm/nouveau/nvkm/engine/fifo/runl.c:117 at nvkm_runl_rc+0x2a4/0x3b0 [nouveau]
+  [TTM] Buffer eviction failed
+  WARNING: drivers/gpu/drm/nouveau/nouveau_bo.c:1092 at nouveau_bo_move_ntfy.part.0+0x9b/0x100 [nouveau]
 
-Do what we do for other disks and use 512 byte aligned small pool blocks
-for this controller.
+Tracing nvkm_subdev_ref() and nvkm_subdev_init_() shows the pattern:
+a reference taken with enabled=0 runs nvkm_falcon_init(), which
+returns -ENODEV; the next reference sees enabled=1 and succeeds
+without running it.
 
-Cc: stable@vger.kernel.org # 6.4.x
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Clear use.enabled when init() fails, so that every later reference
+retries init and fails cleanly.  The other readers of use.enabled are
+fini() handlers that use it to skip teardown, which they now also do
+after a failed init().
+
+On a GK107 (Quadro K1100M) without video firmware, playing H.264 with
+mpv --hwdec=auto: without this patch the GPU channel is killed within a
+minute and mpv hangs; with it, VA-API decoder creation fails, mpv falls
+back to software decoding, and no faults are logged.
+
+Fixes: 8478cd5a740a ("drm/nouveau/nvkm: add locking to subdev/engine init paths")
+Cc: stable@vger.kernel.org
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20261101200428.16959-1-rosenp@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/core/subdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 33069ab67b8ea..931645a1a60ec 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3558,6 +3558,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		 .driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1344, 0x6004),	/* Micron 4100AT */
- 		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
-+	{ PCI_DEVICE(0x1e0f, 0x0032),	/* KIOXIA XG10d */
-+		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
- 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
- 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
- 	{ PCI_DEVICE(0x1c5c, 0x174a),   /* SK Hynix P31 SSD */
+diff --git a/drivers/gpu/drm/nouveau/nvkm/core/subdev.c b/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
+index 6c20e827a069a..3ceca50fd8d43 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
+@@ -145,6 +145,7 @@ nvkm_subdev_init_(struct nvkm_subdev *subdev)
+ 		ret = subdev->func->init(subdev);
+ 		if (ret) {
+ 			nvkm_error(subdev, "init failed, %d\n", ret);
++			subdev->use.enabled = false;
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.53.0
 
