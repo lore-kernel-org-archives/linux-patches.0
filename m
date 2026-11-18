@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040555;
-	b=QKALFnOelqt/fOPrsPk94JtrggSCc26RbnkRr7WuifwUDLkDuthlfipy5NoNOj7eEGvx
-	 ykgTn3CJpr5f2Nh+AU8+fqhw3RZOWY235VuEE/Go86TU040XBoI43M2WbWb0LLQwSNjM9
-	 rRITUK6OZBms/YrYPQP7NcAVXCWLQNSnXsr1KyfC2l15gwFrTLUQwJ4vF8Uel1p6/R4v7
-	 SRr30nt/eBtzCBXo+AhCFWOk4ha6Qr68OgvRtYDyaf3vCClQX29qYqG+xsTnf5ckUnaJk
-	 fBS/N5ABsBf/qr7nYmv+9A9w19sZaV+CXbrykallvuP5o6ll/hNIkZIAJ7CNmck7h/Q==
+	t=1795040559;
+	b=f59nN5v/LwI9k6GXSRg/L3+7Mjv45uthwhQXEjNgWf9xKi4u1rjsbZDwbIGvPWJceflK
+	 ApduuivwvA/H8XJRT6r7/3T0kBFIr8JK+RyQWhfayjskMXAGBhI0+mR0zaCBijdj5nV1R
+	 vbKtBNQZ6CzXTOIJoUnMDEo9ehyew1fMtfOh/A5IX3ysPLniGqGKmuXC9ISm3Ap0Gue2D
+	 qsVWL9m6CTBNc6Q9WGbXZStOBHDtjk+S8mXlDQUBSHdcYId0wpruQ1bZjpqfodmwujY1F
+	 YumJY8RbQw+gXyA9m9zfI8F/sD2SX7RKkWj85bE67Hzh82VC0wuU8h9bCMNiNZGNIOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AuTvwHREXW/K2oBLC/AUIN2QQzX87KjJYHj3TNGzhEg=;
-	b=h3ljBiZf9KtYSMOvGIf8C6L9t/RFpyoqnLHuArHWKPpTA81qHOBZMvpX3qEpPJ3FAJAX
-	 iFzafNt77FyWiP6OOU2FxTCcNqrm54vcmZd9/oOOGPaWjyUi2WdgvgsoHdikIbLzzL7px
-	 OfczaX7K+/eiIJCxdrDs0fLXNRX5msPI++PJrhf47dU2xOdyfQUSS08JGpVeDRdZAMxlu
-	 v9dtzhNQMXInB5i/S6JWZUwiNe0vwLAlnIcV9EY+RRobRjA0u82kvzEihPY3C8xXlP6js
-	 P845ye8fJb3DWjRCNH0t4keaZ/gzn5rIN5FyV77psMPrqvw+Rnlk3llGY7Rajow79Rw==
+	bh=GZWXehk5T1pfvekDxYxNDn8QmShK7ESGyoDujtxf1+Q=;
+	b=kZ2aPG62fySF+Zbx1Urx+HXFVE56uoMvr21105iNDYVpAOhXnX4sy2x06Z6looGhPk3X
+	 faM6eXfAIou+iLOAsDblsFVN75YGiXlo3PE/zTZXCKtO9DEARhZudxjypOPQ97dE6IheS
+	 kRZg0dXiXi5cgFuTqA3YC47vsSQZF9Z9+vknuDMZbdyOnjxeRHvh8HhW2BM5wXbTZITNu
+	 M7nVaMJwWwqhAXGTc1UF8XMEli9bWsQzWTVj+IkVTVk2s35em5r5woQrJ89VIiHUwF7Kg
+	 0Qnk34VwsDXmph92NdncijNCv+R43V6plcK5u+LZMw1pAbFE+Q+O+vVvH75mvgT5nwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S2KtmcGh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDu0oSX6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D33606A320;
-	Wed, 18 Nov 2026 22:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815F2606A336;
+	Wed, 18 Nov 2026 22:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S2KtmcGh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9701F000C4;
-	Wed, 18 Nov 2026 22:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDu0oSX6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64831F000C7;
+	Wed, 18 Nov 2026 22:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040555;
-	bh=AuTvwHREXW/K2oBLC/AUIN2QQzX87KjJYHj3TNGzhEg=;
+	s=korg; t=1795040559;
+	bh=GZWXehk5T1pfvekDxYxNDn8QmShK7ESGyoDujtxf1+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S2KtmcGh1P1h7IwdsVBX2PEbdoiAaapj4Y+NIbjBrCjRNh2I83/6TmedgO+qLLUcB
-	 LSxGS9MiVi5HMY+BVRUfZjXIq6stzYoATh9hisvNVO8P44mECQVStSez7mQNR+Qyr4
-	 v7L4v9cw9+LLocmibr7hgk1h1SwJ/z3kUhMhVwY4=
+	b=YDu0oSX6kGS2HL4jEBnkZVQWm0o5B7JUdjEXsB3GnhNmbDat7CuFPUWxBlOmJw80T
+	 0G5YDR3Q3+/8o60RjZ3BWwOUMudUy0DHObDWSQ1QOhTl3Ib9mbbqcg/QdAhwk02bzg
+	 vA0/W19AVm2CCZ+cLGoosER0RzNCPO4ysYyaqMqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2492/3318] ARM: vexpress: fix device_node refcount leak in vexpress_smp_dt_prepare_cpus()
-Date: Wed, 18 Nov 2026 15:51:54 +0100
-Message-ID: <20261118150436.147512771@linuxfoundation.org>
+Subject: [PATCH 6.6 2493/3318] ipv6: sr: restruct ifdefines
+Date: Wed, 18 Nov 2026 15:51:55 +0100
+Message-ID: <20261118150436.179026966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,50 +71,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 27b98d331f1dcebe088ab51a7061a387a7440cb2 ]
+[ Upstream commit a79d8fe2ff8e78e549dc86cc853a61b029404871 ]
 
-vexpress_smp_dt_prepare_cpus() obtains a reference to the SCU device
-node via of_find_matching_node() and passes it to of_iomap(), but never
-calls of_node_put() on it. of_iomap() does not take ownership of the
-node, so the reference is leaked. The function is the .smp_prepare_cpus
-hook invoked once from the __init SMP bring-up path, so this is a
-one-shot leak of a single refcount during boot, with no functional
-impact.
+There are too many ifdef in IPv6 segment routing code that may cause logic
+problems. like commit 160e9d275218 ("ipv6: sr: fix invalid unregister error
+path"). To avoid this, the init functions are redefined for both cases. The
+code could be more clear after all fidefs are removed.
 
-Annotate scu with the __free(device_node) cleanup attribute so the
-reference is released when the function returns.
-
-Found while reviewing a CodeQL report for vexpress_flags_set() on the
-same SMP bring-up path.
-
-Fixes: d2606f81d563 ("ARM: vexpress: Simplify SMP operations for DT-powered system")
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260925173252.933705-3-geoffreyhe2@gmail.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Suggested-by: Simon Horman <horms@kernel.org>
+Suggested-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240529040908.3472952-1-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: f9cb4d296d81 ("seg6: fix HMAC validation when an extension header precedes the SRH")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-versatile/platsmp-vexpress.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/seg6.h      |  7 +++++++
+ include/net/seg6_hmac.h |  7 +++++++
+ net/ipv6/seg6.c         | 33 +++++----------------------------
+ 3 files changed, 19 insertions(+), 28 deletions(-)
 
-diff --git a/arch/arm/mach-versatile/platsmp-vexpress.c b/arch/arm/mach-versatile/platsmp-vexpress.c
-index 1ee3c45e71c99..b810ad50b98ce 100644
---- a/arch/arm/mach-versatile/platsmp-vexpress.c
-+++ b/arch/arm/mach-versatile/platsmp-vexpress.c
-@@ -61,8 +61,8 @@ static const struct of_device_id vexpress_smp_dt_scu_match[] __initconst = {
+diff --git a/include/net/seg6.h b/include/net/seg6.h
+index af668f17b3988..82b3fbbcbb935 100644
+--- a/include/net/seg6.h
++++ b/include/net/seg6.h
+@@ -52,10 +52,17 @@ static inline struct seg6_pernet_data *seg6_pernet(struct net *net)
  
- static void __init vexpress_smp_dt_prepare_cpus(unsigned int max_cpus)
+ extern int seg6_init(void);
+ extern void seg6_exit(void);
++#ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ extern int seg6_iptunnel_init(void);
+ extern void seg6_iptunnel_exit(void);
+ extern int seg6_local_init(void);
+ extern void seg6_local_exit(void);
++#else
++static inline int seg6_iptunnel_init(void) { return 0; }
++static inline void seg6_iptunnel_exit(void) {}
++static inline int seg6_local_init(void) { return 0; }
++static inline void seg6_local_exit(void) {}
++#endif
+ 
+ extern bool seg6_validate_srh(struct ipv6_sr_hdr *srh, int len, bool reduced);
+ extern struct ipv6_sr_hdr *seg6_get_srh(struct sk_buff *skb, int flags);
+diff --git a/include/net/seg6_hmac.h b/include/net/seg6_hmac.h
+index 2b5d2ee5613e8..24f733b3e3fe9 100644
+--- a/include/net/seg6_hmac.h
++++ b/include/net/seg6_hmac.h
+@@ -49,9 +49,16 @@ extern int seg6_hmac_info_del(struct net *net, u32 key);
+ extern int seg6_push_hmac(struct net *net, struct in6_addr *saddr,
+ 			  struct ipv6_sr_hdr *srh);
+ extern bool seg6_hmac_validate_skb(struct sk_buff *skb);
++#ifdef CONFIG_IPV6_SEG6_HMAC
+ extern int seg6_hmac_init(void);
+ extern void seg6_hmac_exit(void);
+ extern int seg6_hmac_net_init(struct net *net);
+ extern void seg6_hmac_net_exit(struct net *net);
++#else
++static inline int seg6_hmac_init(void) { return 0; }
++static inline void seg6_hmac_exit(void) {}
++static inline int seg6_hmac_net_init(struct net *net) { return 0; }
++static inline void seg6_hmac_net_exit(struct net *net) {}
++#endif
+ 
+ #endif
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index 203bff1a6556c..c175d6cb57897 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -21,9 +21,7 @@
+ #include <net/genetlink.h>
+ #include <linux/seg6.h>
+ #include <linux/seg6_genl.h>
+-#ifdef CONFIG_IPV6_SEG6_HMAC
+ #include <net/seg6_hmac.h>
+-#endif
+ 
+ bool seg6_validate_srh(struct ipv6_sr_hdr *srh, int len, bool reduced)
  {
--	struct device_node *scu = of_find_matching_node(NULL,
--			vexpress_smp_dt_scu_match);
-+	struct device_node *scu __free(device_node) =
-+		of_find_matching_node(NULL, vexpress_smp_dt_scu_match);
+@@ -440,13 +438,11 @@ static int __net_init seg6_net_init(struct net *net)
  
- 	if (scu)
- 		scu_enable(of_iomap(scu, 0));
+ 	net->ipv6.seg6_data = sdata;
+ 
+-#ifdef CONFIG_IPV6_SEG6_HMAC
+ 	if (seg6_hmac_net_init(net)) {
+ 		kfree(rcu_dereference_raw(sdata->tun_src));
+ 		kfree(sdata);
+ 		return -ENOMEM;
+ 	}
+-#endif
+ 
+ 	return 0;
+ }
+@@ -455,9 +451,7 @@ static void __net_exit seg6_net_exit(struct net *net)
+ {
+ 	struct seg6_pernet_data *sdata = seg6_pernet(net);
+ 
+-#ifdef CONFIG_IPV6_SEG6_HMAC
+ 	seg6_hmac_net_exit(net);
+-#endif
+ 
+ 	kfree(rcu_dereference_raw(sdata->tun_src));
+ 	kfree(sdata);
+@@ -523,41 +517,28 @@ int __init seg6_init(void)
+ 	if (err)
+ 		goto out_unregister_pernet;
+ 
+-#ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ 	err = seg6_iptunnel_init();
+ 	if (err)
+ 		goto out_unregister_genl;
+ 
+ 	err = seg6_local_init();
+-	if (err) {
+-		seg6_iptunnel_exit();
+-		goto out_unregister_genl;
+-	}
+-#endif
++	if (err)
++		goto out_unregister_iptun;
+ 
+-#ifdef CONFIG_IPV6_SEG6_HMAC
+ 	err = seg6_hmac_init();
+ 	if (err)
+-		goto out_unregister_iptun;
+-#endif
++		goto out_unregister_seg6;
+ 
+ 	pr_info("Segment Routing with IPv6\n");
+ 
+ out:
+ 	return err;
+-#ifdef CONFIG_IPV6_SEG6_HMAC
+-out_unregister_iptun:
+-#ifdef CONFIG_IPV6_SEG6_LWTUNNEL
++out_unregister_seg6:
+ 	seg6_local_exit();
++out_unregister_iptun:
+ 	seg6_iptunnel_exit();
+-#endif
+-#endif
+-#ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ out_unregister_genl:
+-#endif
+-#if IS_ENABLED(CONFIG_IPV6_SEG6_LWTUNNEL) || IS_ENABLED(CONFIG_IPV6_SEG6_HMAC)
+ 	genl_unregister_family(&seg6_genl_family);
+-#endif
+ out_unregister_pernet:
+ 	unregister_pernet_subsys(&ip6_segments_ops);
+ 	goto out;
+@@ -565,13 +546,9 @@ int __init seg6_init(void)
+ 
+ void seg6_exit(void)
+ {
+-#ifdef CONFIG_IPV6_SEG6_HMAC
+ 	seg6_hmac_exit();
+-#endif
+-#ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ 	seg6_local_exit();
+ 	seg6_iptunnel_exit();
+-#endif
+ 	genl_unregister_family(&seg6_genl_family);
+ 	unregister_pernet_subsys(&ip6_segments_ops);
+ }
 -- 
 2.53.0
 
