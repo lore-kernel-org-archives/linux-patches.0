@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029785;
-	b=VUPqU58LheETF/zqYL2+F+xmX1LCy8JjxS06BOXFg4dmxVCl7kVKH2oBLSWc0xyIqNwI
-	 lAcX7vnQIDWtNMARE/+tUagFMBEnMFYcIufN/KgS7WHZIO6knRHzWzJ2H52x1ZofVOB+G
-	 JSkTB7uhIqrmw5fGQyraAqnWEu3mo7Bz6aFwujkG726HrDxus7rtz/3jedz5rY8zjAjI5
-	 Ras1Rx0HWoxmhRQczorIcb6zh3hRheH14k1HWqhCcdNH59VlAnuStu1qNkUbtlVcAmI4e
-	 bnKIxaHCa6xPKCzO/ypKMQ0ndZ9bkuiQg35ZZDBI47osaMPvPgtnSSnw1wEZJ+hoWoQ==
+	t=1795029787;
+	b=LfqBLRFj9NtZ0ae7VcfBz0qhkptywQ2fZKxfoklJp3MHVaqKlH2QOC9ERCnBVGBoOE8N
+	 wiOhdpDZYyprzjeFyRN+nJQyjXExGRzXvHWWG8UakWBMvJ5v4ViShBDAj1RzdOqEG8S++
+	 g2NU3nJV75e4JXZhPHp/WTTMSxywlOIXQgDq7SFgGcaTq/iBVlfLG/W2sLwgWSL6jvx2u
+	 ArqVD12QqXhDuwoLgrcsrxetPTXZAKB7PLlbJ8Jf8N2JYEZLY9ywSDwpwT5SYy8pNcAg1
+	 1gi+EaIpjVj6gEjhe8lCPduv9WzrV8pwxB5pE2mls7bN88eybQowP2nOrDuCBVLFQnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZOIf7SRa7LQ0rw00idGiZDc9umEYkfVyQkmnqYjD+XM=;
-	b=YOwjtypg/+Y7aY4CgMmKoA8QHRsYCkQr44Dil+q3ZLWbIZO3erQ3y8uJcyN4b4zcLxP7
-	 n+hCY8f5kMvmBFebEuQzfLybNoE2WUPmitRDPWxjSusk2eoUyRapNSSOymE4Jg9jIY8l6
-	 by3PDzQzFfQA1yb4p1OmTfapHZvm8g3dFVJ6k52v2oNZ1YdSb8VBwUFT+x85ABxAN+TjO
-	 ALBe/NCioMx/vxp3I3y/nbm0G/gTpIfk62eR7jG3xGUjOn9+JyQCiGQgyB3U44HbYMh6l
-	 KhMdWJaXkCAywz3ngmG9v0884VCnhdyjZEEzUkwo49c7Y5rWRrEetQVRTGAxKeO4VlQ==
+	bh=rrSDxoJGR7YWU3dnFMUkDph/+UzzOk/exRefuOjeXWc=;
+	b=OYZRfNe6LYRZSPZLDahR9MaByLKh7u8Uuv9p/L5jTgAz6TF7zgexCqP7jAlGSK27Dado
+	 yDJYLJE9aZy+d5rEPi3l1sNKqZkwBmwuXF9NWVUgsjjNBtrjMjrbIkVwNTLMt4lXwkumk
+	 S8Nan7V7Nv5dmwG1tjcRFMZyshbd2Vv5LTqfrrsD4txmJhGaBFftb8zeCvZFPIz/1eR1u
+	 XZsDeDU6qozH2MF1aG3Vs2nmchy3y3tqCteCCzMIlqEbYMiJ3gMYz4xOIAyf4MpjgyHpk
+	 xCecbMtJn9qhqaPHfMeasGLCImZjZObF2jACRNdAf0SZY4i4x7QjoECw7jzweJjtvww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d6PHzCUQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHy4JcRc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61D5606A31C;
-	Wed, 18 Nov 2026 19:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1BF606A31C;
+	Wed, 18 Nov 2026 19:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d6PHzCUQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460D81F000C4;
-	Wed, 18 Nov 2026 19:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHy4JcRc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A441F000C5;
+	Wed, 18 Nov 2026 19:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029784;
-	bh=ZOIf7SRa7LQ0rw00idGiZDc9umEYkfVyQkmnqYjD+XM=;
+	s=korg; t=1795029787;
+	bh=rrSDxoJGR7YWU3dnFMUkDph/+UzzOk/exRefuOjeXWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6PHzCUQEufUjZxiVxEyFL8+5NoUH+1AyNfgGM2jvJUS1wXDkKvT4TlvZmlwnPyXw
-	 zONMfQfccHIfhwQxpegzTGEkJrVoIOhBJW+6H6Q2t/ZjUsm917mwp5K0KAGiH9K6sS
-	 ndQqUEVpoSgvMy6dzNihy45UuaMiQGigJ+G860qw=
+	b=tHy4JcRcGI/KynkOVmKIho6vyaZY5AddEHYGsusRLdXIS8HPNIsqbge66kwlASgL5
+	 OxpE1E8aO3CRzboeoLVLu6etGCd7afZUh7kF41w9c5pX1wC6NkUWFzQmNQXd5hZz6Y
+	 30dCXD/dRGW8fePB6pSTFsOfr6UwWTPKyW2RUUbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0421/1756] mm/gup_test: safely calculate GUP batch size
-Date: Wed, 18 Nov 2026 15:42:28 +0100
-Message-ID: <20261118150025.528988337@linuxfoundation.org>
+Subject: [PATCH 6.12 0467/1756] spi: mxic: fix ps_clk leak in runtime resume
+Date: Wed, 18 Nov 2026 15:43:14 +0100
+Message-ID: <20261118150027.432569564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,65 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Sharma <sarthak.sharma@arm.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 44817a536aaa5bfac0d316242e93e489d0a69d5f ]
+[ Upstream commit 648e3c436032b675b339662ea9c0edd9221add76 ]
 
-__gup_test_ioctl() calculates the end of a GUP batch using:
+mxic_spi_runtime_resume() enables ps_clk before calling
+mxic_spi_clk_enable(). If the latter fails, ps_clk was not
+disabled.
 
-next = addr + nr * PAGE_SIZE;
+Unwind ps_clk with clk_disable_unprepare() before returning
+the error.
 
-If nr is too large, it can cause next to overflow and wrap around.
-If it wraps, the next > end check is bypassed and a large value
-of nr is passed to the GUP call, even though the pages array was
-allocated according to gup->size. This can lead to out of bounds writes.
-
-Also, when fewer than PAGE_SIZE bytes remain, the calculated batch
-contains zero pages. The code still calls GUP functions with pages + i,
-which can point past the allocated array.
-
-Calculate nr by taking the minimum of the number of pages per call and
-the pages remaining in the address range. Reject zero sized and non
-page aligned gup->size values and zero nr_pages_per_call value.
-
-Fixes: 64c349f4ae78 ("mm: add infrastructure for get_user_pages_fast() benchmarking")
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Link: https://patch.msgid.link/20260915102524.125758-1-sarthak.sharma@arm.com
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: b942d80b0a39 ("spi: Add MXIC controller driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260902-mxic-v1-1-76806325826d@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup_test.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/spi/spi-mxic.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/mm/gup_test.c b/mm/gup_test.c
-index c9e7c1cf5b080..6de8064090ea1 100644
---- a/mm/gup_test.c
-+++ b/mm/gup_test.c
-@@ -109,7 +109,8 @@ static int __gup_test_ioctl(unsigned int cmd,
- 	bool needs_mmap_lock =
- 		cmd != GUP_FAST_BENCHMARK && cmd != PIN_FAST_BENCHMARK;
+diff --git a/drivers/spi/spi-mxic.c b/drivers/spi/spi-mxic.c
+index 7f88bf8d3764c..5a7d2c674252b 100644
+--- a/drivers/spi/spi-mxic.c
++++ b/drivers/spi/spi-mxic.c
+@@ -734,7 +734,13 @@ static int __maybe_unused mxic_spi_runtime_resume(struct device *dev)
+ 		return ret;
+ 	}
  
--	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
-+	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX || !gup->size ||
-+	    !gup->nr_pages_per_call || !PAGE_ALIGNED(gup->size))
- 		return -EINVAL;
- 	if (check_add_overflow((unsigned long)gup->addr,
- 			       (unsigned long)gup->size, &end))
-@@ -132,11 +133,9 @@ static int __gup_test_ioctl(unsigned int cmd,
- 		if (nr != gup->nr_pages_per_call)
- 			break;
- 
-+		nr = min_t(unsigned long, nr, (end - addr) / PAGE_SIZE);
+-	return mxic_spi_clk_enable(mxic);
++	ret = mxic_spi_clk_enable(mxic);
++	if (ret) {
++		clk_disable_unprepare(mxic->ps_clk);
++		return ret;
++	}
 +
- 		next = addr + nr * PAGE_SIZE;
--		if (next > end) {
--			next = end;
--			nr = (next - addr) / PAGE_SIZE;
--		}
++	return 0;
+ }
  
- 		switch (cmd) {
- 		case GUP_FAST_BENCHMARK:
+ static const struct dev_pm_ops mxic_spi_dev_pm_ops = {
 -- 
 2.53.0
 
