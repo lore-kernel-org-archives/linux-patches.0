@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039552;
-	b=LJ43/CSw5Vt3P8rKF/bU8VxCs9nJzt4IwkvAe67WrGGoeLda003k80uRF/wwUTuAQHCa
-	 aniii7pBhnDcErkgABjt2IHNEMCnNrINA3c9W6dFhGmqbpoECaS86u7EaItMFDmxZh4cG
-	 KqqFeZU7y2NWy2GkZjaI4BDQ0L/g7lYvixjPXsQVCbtLg3yc/W7e7hq9EvyOHQ2UyIFBp
-	 g/hjw4SfU/EJ6OehmSD3fpDOMvAkVkvD3CKKBps7GOsvRzDYkf7yUUjGZvJcEF+vdf63A
-	 DWUZG2G/9j5HXe+B4oWiD7B0zbfg8/qMRaXeV6m3be8DXII751kSI6wKxsuvZDmuY0w==
+	t=1795039555;
+	b=Rq34r/47vZHh7jO5X/5sW1FkntLX+g+WIOSvBlgtdnaY/mIaVrsEyS8rdOxMQ6oNWEpF
+	 gUOcXPMqhaQj3IIyq7cokP5GGWkp/7wSA6FvNG0BmktYYhNN+2eYwfqDdzBvAEOvPm0a3
+	 6+o/blhKrnO9HOR8DoHSpmRwsluYCGxPdKoM1AFpcNQjpMF4u6kvLCJz4Lu3d3GiWWSYN
+	 6GL1kfOT9zFjMNNtKDaZBeTjfnrMPNOMBHNXz9ephvH6IX6QfbL4Ab8Uze+cte/jC3pYZ
+	 YQXGWQF3/K0sh4XdjSHWn0ai38zuIN3TE+Xs/BdfQ8RhyJX642WwRlLCREIY3XxgtIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=tWowUUu1Qv4ju12unLEoXf9na0hS5oiI8H1lbafhN3o=;
-	b=AS7Dh0Jovh99Gewv6+uot6Zf5xvVHiTEYWV45r2aMnskKNwg4rjl5F3jsxtOLGkunxTK
-	 Iqt8/JkaVO3jYlMyiMoBVgYJeANeKI6k39ifW3bRAaCUpkl7uiXY5uKE9sQiT0+0bDsx+
-	 ygKhAq3qw1imAPIXNSVhXyhuTJUw0e7TSi7R6Arrto3KGRRiuaql8C1Kck9pNUhxJbaoW
-	 755nO9tv4a6IgFiuZm9eqhTp/KFa4YHUfCPQFgVsDwMxRaaytOI4iwA4xL//d+hyxBuI3
-	 483Ai9orkD8cZVBQ7a9zRDhj/wMz/wUXHNIJEL2Ty6zps4NsP3JR1EzbGP93Pj1Dhtw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DhSzBFn0+PdIwDe+Fb4UC3a6b4dfJQ27WuQwB4M5AUs=;
+	b=nukO4550LejmSX6vFY8ihQd83hDYNuptXzI3nLIHUvhWCusykoSgghxN1VX6zXklUF5O
+	 CykYZAinSdiap8VTdVEw+rHHfepJ2k2OtRhWcpyVIVVlkC0OA+VbWRnilsQeJosOnd6UO
+	 Oku9aKDQuzOFoSlWmABM6/aVrUIr8b5Qd/1Q1R2NloBZSPG73J+OqCdU4mEtDQZ3TiZFb
+	 Cg6yq0KO9TMvahf5FsA/w7qMuVW3LAcpOEU7MjRW8aizQe6H+P7OfzgonDCwIVo9Z8FtZ
+	 TjqQCKgF+S/lo7K+IzqYVWugOltanc6FSJGRGm9XTbGSDjoBGngU4IRdtAZsoN4NlcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CyakUujV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omgzc7WY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3DA606A325;
-	Wed, 18 Nov 2026 22:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B363606A320;
+	Wed, 18 Nov 2026 22:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CyakUujV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49FD1F000C4;
-	Wed, 18 Nov 2026 22:05:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omgzc7WY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA721F000C4;
+	Wed, 18 Nov 2026 22:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039552;
-	bh=tWowUUu1Qv4ju12unLEoXf9na0hS5oiI8H1lbafhN3o=;
+	s=korg; t=1795039554;
+	bh=DhSzBFn0+PdIwDe+Fb4UC3a6b4dfJQ27WuQwB4M5AUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CyakUujVT9tnowMk21o1TSigAQxyEnNEMxsQHne+7VCfka1nUZFoOBID7nw4jmfLG
-	 nYakp+PcU1i8ZXRtrpTGCBICr1mH0ZsqztQUbpXDXbbwABYHMb9EyOnCc0vT8nUyP2
-	 4nF4aFdyzk5/KkORkG1qhabj9Y8Olb2HyEKEPms8=
+	b=omgzc7WYAgVn7ZCwiUpXYpRjDlcvUcI19lwpfox9V0H0+8fOCPiP8s6Pm4aluGk4p
+	 IU6SDCWGtWJaTMaRYBcRaXTS+sxvbIPuWXUflP37f4xYLvTjpyCFRxqwS9kWZ76mmI
+	 RSeDby1h9dR1Ep1Lgz5eOec7Oc2iP+eHTAIYwWeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ian Gallagher <cdine@cdine.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2099/3318] dmaengine: zynqmp_dma: drop redundant label
-Date: Wed, 18 Nov 2026 15:45:21 +0100
-Message-ID: <20261118150425.058128125@linuxfoundation.org>
+Subject: [PATCH 6.6 2100/3318] ACPI: button: Add lid_init_state quirk for Razer Blade Stealth 13 (Early 2020) RZ09-0310
+Date: Wed, 18 Nov 2026 15:45:22 +0100
+Message-ID: <20261118150425.086449095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,48 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vinod Koul <vkoul@kernel.org>
+From: Ian Gallagher <cdine@cdine.org>
 
-[ Upstream commit 08f04d5ab868bc28d3115f7406499e8e5d1d1765 ]
+[ Upstream commit f16c512a07b954aa3b0b3c580e7abb5dd4f5e703 ]
 
-Commit 3f30db282c28 ("dmaengine: zynqmp_dma: Fix chan probe/remove error
-handling") dropped the use of err_disable_pm label causing warning:
+This patch adds a quirk mapping for the "Blade Stealth 13 (Early 2020) -
+RZ09-0310" laptop, which exhibits the same issue as the following two
+related products already accounted for in this file.
 
-drivers/dma/xilinx/zynqmp_dma.c: In function ‘zynqmp_dma_probe’:
-drivers/dma/xilinx/zynqmp_dma.c:1171:1: error: label ‘err_disable_pm’ defined but not used [-Werror=unused-label]
- 1171 | err_disable_pm:
+ - Razer Blade Stealth 13 Late 2019
+ - Blade Pro 17 (Early 2020) - RZ09-0329
 
-Drop it
+Summary of the issue this fixes:
+The firmware's _LID method still returns "closed" after resume when the
+lid was opened during S3, causing systemd-logind to suspend the system
+again within several seconds (15-40) after waking.
 
-Fixes: 3f30db282c28 ("dmaengine: zynqmp_dma: Fix chan probe/remove error handling")
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260903170357.1711462-1-vkoul@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ian Gallagher <cdine@cdine.org>
+
+Link: https://patch.msgid.link/90ab9b58-da8b-4ffc-bd4b-adf7590545a9@app.fastmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/acpi/button.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 7d4aa37bc38bb..400b086f7295a 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -1158,7 +1158,6 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
- 
- free_chan_resources:
- 	zynqmp_dma_chan_remove(zdev->chan);
--err_disable_pm:
- 	if (!pm_runtime_enabled(zdev->dev))
- 		zynqmp_dma_runtime_suspend(zdev->dev);
- 	pm_runtime_disable(zdev->dev);
+diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
+index 9449580e48429..a7c65c615c3ba 100644
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -141,6 +141,18 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Razer Blade Stealth 13 early 2020, when the lid is opened
++		 * while suspended the open notification is lost and _LID keeps
++		 * returning closed after resume, causing spurious re-suspends.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Stealth 13 (Early 2020) - RZ09-0310"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{
+ 		/*
+ 		 * Samsung galaxybook2 ,initial _LID device notification returns
 -- 
 2.53.0
 
