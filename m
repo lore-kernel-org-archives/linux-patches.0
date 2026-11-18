@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054478;
-	b=U+rHGPDnxv5Gcy+Gi1GNcdy56e/yX6JH4wechaU59k8OsBxazD1WdSvowJCT3Mkv3jz/
-	 SN44TtmMixtTl7qHhe133TMxZ0avVsZY9M5zu6vCGRceLCiB1EV+Nmmy96FvZbyU5Ti7N
-	 1clIxefUxW0yFNJNFMNmJRrsIFEDyYChaQqutO2qk0RlM8ZgPfuymwzmFGINVz0EaWW+D
-	 OWBzcDNrkfnK3hZwxuridcErIQ/8UueHToutkAqSraEZeSOMwzG3YySKrQN1hqzJ+Tm3S
-	 TtuAwNlHQZdR4xfzzyB4QwhCPqZrfp0Ac7GWctXO9W+8WeRc/j8svsYuFtI/26NSKGw==
+	t=1795054480;
+	b=oiQ64+YYZL/UgWSXcVcFEX9syjECUME1/zrOu98Mt80HTKp+WjI/cKzlXRKLfF7vx9Kz
+	 1M3cPGvKIk9utDFOJS7Lwlawr0RWRxuh3qrE5/Wvl7A/4jj9u81uM28A6W+GNk3aBfW1i
+	 8mGqcrkuo1Qd3gIQLumpi19mEGzBflsQGt4I3cVQqQHXJiUnxI4VeAo2aDJPIgcJUSRaa
+	 z1vVEfpb39brV2PcNF/oo28ZXLgkucvR2UbiJgvUdkTU+cUVblh4wAe4PLjzqJM5+GwVz
+	 fJiEwPbQhPd9pmUP3ut2C7iBEVPx1rgraIVDLKW3ITvEQwVlNtyxyHS4QSCNfxmbUrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054480;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cS1CTNLZ6fohVlYG9X8+bhHsm6ohFEHklpkWPmEP/1E=;
-	b=WlTHnKuM/NTQwZTE8zCadgvCjVDj0NM290AI/3AB7S2gIVOlVnsq4xsksgyCrFwXaJaS
-	 GzXNzVfUzaiW5ocFYQ+ayGR3mcm958iY9nlJ4aW9+2eXSxLndgrO1V4l75y6DEfrtiwOq
-	 0rPOXE0KosVOSJSq2cLydy++8vjB52NgLzyVyENL7axsL/KK77w9efgjQK6qOdxfODtMq
-	 bWXw+BZSVQFmHeLUez4niafG2h4tgEhmT7c8SBbxpQYlqdSK6acTnBGlNIveA+mYHyOUx
-	 XbzlQCmsgzUDBsA+FLI1WkcxI1oYGDZ1OeLE+9N6S961l4ZOE5BPVcBJQ8wp0ZvB74A==
+	bh=JkfpDgmlao2ZSjxD475JFRryBKzK4Klt8hEDYcGiwlQ=;
+	b=P7Ko3HKL/Xp5WQLnd2hKQakKTa2gONSW7huEWzJNCn7D1P3HdnUiF19iVi1s085mQyDt
+	 RmJEeJAdYVSCq4T+y6qeXLVyDVu4TrsREFetNsmARICvIXPWDaR6G72wTido7kVBMa8qw
+	 3646OnfrznyYRVneAwojftLV+FSqrSjLhtxDMnR3oUKX/4wy7Lmv6TNv9qx2vxxnJlNdG
+	 mtLpP2MiSoTgcCLU+t7C9tDXDOMdOBXxi2gkeYgG9yKdyiuQnzaNO4e2WXgFwUUQHLhvO
+	 3MGQ6QdEdWmY14uSro6xqr+YhDAWinT9R/r2KDI85t5bn1Rr7MqY4bw7AOYUwtQCsDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YdrsKcAe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w49oL1b7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25802606A320;
-	Thu, 19 Nov 2026 02:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB583606A320;
+	Thu, 19 Nov 2026 02:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YdrsKcAe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7BF1F000C4;
-	Thu, 19 Nov 2026 02:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w49oL1b7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE981F000C4;
+	Thu, 19 Nov 2026 02:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054478;
-	bh=cS1CTNLZ6fohVlYG9X8+bhHsm6ohFEHklpkWPmEP/1E=;
+	s=korg; t=1795054480;
+	bh=JkfpDgmlao2ZSjxD475JFRryBKzK4Klt8hEDYcGiwlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YdrsKcAed6xZo+hG+uSgFtpi54x+Rat9ROR9iIwcabYQny+QlPJnDLSuIKliUwh13
-	 lNYDQv3MYCB+cWyy5fJ+DlkRn6e0rzEP5CwzT5cboTPropQahXVAApd/9du/ojhxtV
-	 prliuwjq9q/9KRvtYLpnLF5Kn/HO2iOuNLwjOMu0=
+	b=w49oL1b72YXhYH8kxwYgRpq9dhrx6uUa/zfPGwctJ3nPlR+hNjw3QVm36nxNURl6S
+	 t+2Tivb1JUwB2+PgH1I+RfhS7zejOcXn8yoC2JhnvwPa+FWyYveaBaUQdECIZzTif0
+	 6ji1H6A+ThbiPOMU1PMMpaOocBdXNEBmeqPfH8ZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1286/2214] mm/rmap: handle device-exclusive entries in folio_referenced_one()
-Date: Wed, 18 Nov 2026 15:49:22 +0100
-Message-ID: <20261118150103.025495398@linuxfoundation.org>
+Subject: [PATCH 5.15 1249/2214] backing-file: always end a queued write
+Date: Wed, 18 Nov 2026 15:48:45 +0100
+Message-ID: <20261118150101.653196923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -74,72 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit f3c493d2f42b5f44a5c134d8d7ea7f960caf5e2c ]
+[ Upstream commit 627cdcbc2a2eceb0452078a0c14370f9f1f17a91 ]
 
-page_vma_mapped_walk() can return non-present device-exclusive entries,
-but folio_referenced_one() passes them to PTE young-bit accessors that
-require present PTEs.
+Writes to a loop device with direct I/O on an overlay file make the
+next freeze of the upper filesystem hang for ever.
 
-We must neither call clear_flush_young_ptes_notify() nor
-folio_pte_batch() with non-present entries. For example, clearing the
-young bit on non-present PTEs can corrupt the entry: on arm64
-PTE_AF overlaps the swap type, so clearing it turns a device-exclusive
-entry into an ordinary swap entry.
+Every kiocb_start_write() needs a kiocb_end_write(). For a write that
+is queued, vfs_iocb_iter_write() leaves the end to the completion, and
+backing_aio_rw_complete() only calls kiocb_end_write() when IOCB_WRITE
+is set in the flags copied from the submitter. In-kernel submitters
+such as loop do not set that flag, so each queued write keeps the
+freeze protection of the backing filesystem.
 
-folio_pte_batch() will VM_WARN_ON_FOLIO.
+Direct writes to a loop device with direct I/O backed by an overlay
+file left fsfreeze of the ext4 upper filesystem, and a later touch
+there, blocked in D state. It takes write access to the node of the
+loop device, which root has by default, to attach the file and to write.
 
-Apply the same approach as the previous fixes to e.g., damon_ptep_mkold():
-treat these entries as old from the CPU's perspective and obtain their
-young state through the MMU notifier.
+The fix used here is to mark a write in struct backing_aio and to call
+kiocb_end_write() on completion of every marked write.
 
-Skip PTE batching and MGLRU look-around for non-present entries, and
-don't modify non-present PTEs.
+Reproduced under qemu without KVM, on v7.3-rc6-21-g602042bf29f6 with
+earlier fixes of this series applied, with and without this change,
+once each. The kernel was not changed for the run. With this change
+fsfreeze finished in about a second. Not run: the nvmet and LIO file
+backends, which do not set IOCB_WRITE either, FUSE passthrough, and an
+xfs upper filesystem.
 
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Fixes: 2406a307ac7d ("ovl: implement async IO routines")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-9-d6437171ecc3@kernel.org
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted folio_referenced_one() changes to page_referenced_one() using single-PTE operations because batching and MGLRU are absent ]
+Signed-off-by: Chris Mason <mason@kernel.org>
+[amir: use aio->is_write to explicitly mark a write aio]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20261029180319.2852090-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Adapted backing-file write tracking to overlayfs's shared cleanup handler, preserving its existing freeze-protection release logic. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/rmap.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/overlayfs/file.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/rmap.c b/mm/rmap.c
-index 24da8320a6015..544999a055c49 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -797,8 +797,19 @@ static bool page_referenced_one(struct page *page, struct vm_area_struct *vma,
- 		}
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index 49d3feded593f..3fb7bfd00b88c 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -19,6 +19,7 @@ struct ovl_aio_req {
+ 	struct kiocb iocb;
+ 	refcount_t ref;
+ 	struct kiocb *orig_iocb;
++	bool is_write;
+ };
  
- 		if (pvmw.pte) {
--			if (ptep_clear_flush_young_notify(vma, address,
--						pvmw.pte)) {
-+			pte_t pteval = ptep_get(pvmw.pte);
-+			bool young = false;
-+
-+			/*
-+			 * PFN swap PTEs, such as device-exclusive ones, that
-+			 * actually map pages are "old" from a CPU perspective.
-+			 * The MMU notifier takes care of any device aspects.
-+			 */
-+			if (pte_present(pteval))
-+				young = ptep_clear_flush_young(vma, address, pvmw.pte);
-+			young |= mmu_notifier_clear_flush_young(vma->vm_mm, address,
-+								address + PAGE_SIZE);
-+			if (young) {
- 				/*
- 				 * Don't treat a reference through
- 				 * a sequentially read mapping as such.
+ static struct kmem_cache *ovl_aio_request_cachep;
+@@ -265,7 +266,7 @@ static void ovl_aio_cleanup_handler(struct ovl_aio_req *aio_req)
+ 	struct kiocb *iocb = &aio_req->iocb;
+ 	struct kiocb *orig_iocb = aio_req->orig_iocb;
+ 
+-	if (iocb->ki_flags & IOCB_WRITE) {
++	if (aio_req->is_write) {
+ 		struct inode *inode = file_inode(orig_iocb->ki_filp);
+ 
+ 		/* Actually acquired in ovl_write_iter() */
+@@ -394,6 +395,7 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 				     SB_FREEZE_WRITE);
+ 		real.flags = 0;
+ 		aio_req->orig_iocb = iocb;
++		aio_req->is_write = true;
+ 		kiocb_clone(&aio_req->iocb, iocb, get_file(real.file));
+ 		aio_req->iocb.ki_flags = ifl;
+ 		aio_req->iocb.ki_complete = ovl_aio_rw_complete;
 -- 
 2.53.0
 
