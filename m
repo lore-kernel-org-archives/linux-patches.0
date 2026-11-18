@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039100;
-	b=cMVY5DZMOyoeIpb2Kfy4HUXH/yUSdL6CczfSQ/2alU+RGd0H85fGgE9BufbY1TdhoGpX
-	 0NSJ8B110e3s0RLRlnS9162qCQDOx8kNLQF9MjXf5zqJ4Vo7+PV41xl5T+jG68iSfCpRb
-	 YTQ2Z0t6ns83kWr3DYhzPHfp8y9Vyc3iXGgXUgNb3zPWrjP23wOtSKPYyAtBahESJr+Ct
-	 FFjEEp9rPIHOd2ielV4PzXk4F0nyhr1Yg4PBYpKROPY/ugmu3+0cTMRKBKPpuV175duLm
-	 qQFNcH0Ig1BKqcOU0ka2UuF+AzV+6hVCBof4BzUl9wM6+OLeb2z52OAPiO7fiCDyeMQ==
+	t=1795039103;
+	b=NnM7C/eofB+9TbOxRFDlrDIebfSP9E3fwKKXMCabST3IBgJUZmNyShZnoCM3iuqzgwhz
+	 LmyB6O4/hgyzZLKj0ofVYi91gM8iMfOsvDJiINJlCkVZQadefsBRQ1CCpZ5RzwCIjOnap
+	 3q3PYnUCjRfcoh6pz2HBxM3vxxUjBQtztaySQhqUXLZA1VJSlQvjGrTLa+cf09xHrq8QH
+	 mCVtaUFaLdqQ/xOKe7hLm09zBjvNKguM7VHyYcFQJBlxW6cCIcOevAYJZwtkNqgD5LloN
+	 AYHSQHo0QeAGiQ997Uvyf/U9LlfuvBLrtRXjgGCQegCdQbXg4VPWP+3he6yNgesASng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q9a5NIO3Sg9wgBlX31kdnfOaUFkXGgIwUyBtYEdWqJc=;
-	b=wEc2tLMP84tYm6YH2tZnEcdz0HNswJvv5OkOlou3gEn5GfhohvE82IW76LlYSrkI+p3d
-	 kOFPfqxAhdAt+FnPGQR8MzzPzCN9ZEFNo2gbAiOhyPOABNzZhZj0GbsPM3kZuliXKBHyT
-	 hVfS601HthxHMsCFKAwpRDAKGMYiIh2Ahe0qAwF19s4gj6iVumUZOFx7IfTOVmGvDio8l
-	 nBUyc+bCK2BlJ9oJkxszkgdcYySAd32Cx7cRsJlQXa6vw5Cbv4A8OIIaVqV7yxShzW2Lx
-	 DqBjnh1f9dJOXieu8HaQTIU3u8NMrQ27YagmU8cnw7yiiOhLPE9dgj/MQWDZ9MI0VeA==
+	bh=rTyV/Fq+EKbyIfWLvCzeDVOpS8/DhAr84tOvfxTxkSo=;
+	b=FJASRO06xNu1M/2KzXitwQVefivQrhIkZoTMOdXd1FnC7SXT0zcTVijPRfP3jP97s8Pa
+	 54vP0ptNIscBgVZJOhqmq2exR3lyx7IJYwR0OawVaGpf4qFzNNZ9YEWIxFbVekPRnrlAz
+	 7rnQDDRBPb4m8x4EyIQqr5Aj7HdzHAwzf1pOCN7o+Qxujb0awyQtrW1kHHW1TYFgaVpUq
+	 bSzQb0QJi5Br4vDUU+RuRaTaV61STNpXAYJNqY5OXhp2zyG/WNDd+nWPMrqScMkkcOGhu
+	 xQeLjdDZvX2ojyE7fiXmHTq8+c62wOto/I+tqTVS9WuSqXdtReObIhMh5TKS7k1hO1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSbv65x3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oaQ4FWEH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C432606A32C;
-	Wed, 18 Nov 2026 21:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422FD606A335;
+	Wed, 18 Nov 2026 21:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSbv65x3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B766A1F000C4;
-	Wed, 18 Nov 2026 21:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oaQ4FWEH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFD01F000C4;
+	Wed, 18 Nov 2026 21:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039100;
-	bh=Q9a5NIO3Sg9wgBlX31kdnfOaUFkXGgIwUyBtYEdWqJc=;
+	s=korg; t=1795039103;
+	bh=rTyV/Fq+EKbyIfWLvCzeDVOpS8/DhAr84tOvfxTxkSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mSbv65x3kjYsT5GGRlZCyHGCNbhhFa77AzuXNfZBv7FHJFLO3Ui8YrcUEkL4GAnns
-	 YnTjQX3jcIK+dar39J4wq/30AyIu8UC+OEmfLhJtCj4zwoHR5qMoY3/nkefaUHDUH4
-	 fstwxfHRxG7eLecddJVm+iUKXz7B7IoLlwSBwXds=
+	b=oaQ4FWEHphgQ32sHJ2PoWaeIxXALx0xCI3Q44n7ghctzaGv8fSop4XDRYZ2KNdN9Q
+	 Qb/c64f/0p1vCWV7jIT7twMu87+O1E2VRqBdBZsJPpLV5s4prb0YBpMTVxr5b5ZEi9
+	 5Ut88J2m2krYlpH8YnlD1E2ArcDV304qk0tBEkQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Wei Wang <wvw@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1962/3318] arm64: suspend: Save and restore TPIDR2_EL0 across CPU suspend
-Date: Wed, 18 Nov 2026 15:43:04 +0100
-Message-ID: <20261118150420.947009161@linuxfoundation.org>
+Subject: [PATCH 6.6 1980/3318] x86/microcode/AMD: Move the no-revision fixup to get_patch_level()
+Date: Wed, 18 Nov 2026 15:43:22 +0100
+Message-ID: <20261118150421.472361917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,70 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Wang <wvw@google.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit beeec04046227eba42b7cc5ab32498aa43da9632 ]
+[ Upstream commit 098bcea71b8d257d80b0037b97b66070806600a5 ]
 
-TPIDR2_EL0 is a live EL0 register on systems with SME, but
-cpu_do_suspend()/cpu_do_resume() don't preserve it. Its value is
-UNKNOWN after a warm reset, so the task that initiates suspend can
-return to userspace with a corrupted TPIDR2_EL0.
+On machines which don't have microcode applied yet, the revision is 0.
+However, this doesn't work with the Zen family/model/stepping patch
+arithmetic. So move the fixup to the patch level getter function and
+this way make sure the patch level is always proper and thus the
+arithmetic always works.
 
-Save and restore it alongside TPIDR_EL0 and TPIDRRO_EL0. The new slot
-fits in existing padding, so sizeof(struct cpu_suspend_ctx) is
-unchanged.
+And now that it can be called on any family, make this Zen-only.
 
-Fixes: a9d691585950 ("arm64/sme: Implement support for TPIDR2")
-Cc: stable@vger.kernel.org
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Wei Wang <wvw@google.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Assisted-by: claude/claude-opus-4-6
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20260530024213.86137-1-bp@kernel.org
+[ sashal: Moved the "no current revision" fixup from need_sha_check() into the existing get_patch_level(), which here lacks the upstream debug/hypervisor branch and sits before ucode_rev_to_cpuid(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/suspend.h | 2 +-
- arch/arm64/mm/proc.S             | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/amd.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
-index eb60c97355530..2cc5fb405769c 100644
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
+index 70be98a6ab9e7..8f117ef095bbf 100644
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -223,11 +223,6 @@ static bool need_sha_check(u32 cur_rev)
+ {
+ 	u32 cutoff;
  
--#define NR_CTX_REGS 14
-+#define NR_CTX_REGS 15
- #define NR_CALLEE_SAVED_REGS 12
+-	if (!cur_rev) {
+-		cur_rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
+-		pr_info_once("No current revision, generating the lowest one: 0x%x\n", cur_rev);
+-	}
+-
+ 	cutoff = get_cutoff_revision(cur_rev);
+ 	if (cutoff)
+ 		return cur_rev <= cutoff;
+@@ -299,6 +294,13 @@ static u32 get_patch_level(void)
+ 	u32 rev, dummy __always_unused;
  
- /*
-diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
-index 51c48ac29ad5d..574136a35ea21 100644
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -105,6 +105,10 @@ SYM_FUNC_START(cpu_do_suspend)
- alternative_if ARM64_HAS_TCR2
- 	mrs	x2, REG_TCR2_EL1
- 	str	x2, [x0, #104]
-+alternative_else_nop_endif
-+alternative_if ARM64_SME
-+	mrs_s	x2, SYS_TPIDR2_EL0
-+	str	x2, [x0, #112]
- alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
-@@ -152,6 +156,10 @@ alternative_if ARM64_HAS_TCR2
- 	ldr	x2, [x0, #104]
- 	msr	REG_TCR2_EL1, x2
- alternative_else_nop_endif
-+alternative_if ARM64_SME
-+	ldr	x2, [x0, #112]
-+	msr_s	SYS_TPIDR2_EL0, x2
-+alternative_else_nop_endif
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
++	if (!rev) {
++		if (x86_family(bsp_cpuid_1_eax) < 0x17)
++			return rev;
++
++		rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
++		pr_info_once("No current revision, generating the lowest one: 0x%x\n", rev);
++	}
  
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
+ 	return rev;
+ }
 -- 
 2.53.0
 
