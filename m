@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052926;
-	b=QnI3arQuGPTdWHYWVFfsosZ9wY7xkcpRjPXJohq8uSQELFFqGVNR/YXhQEMBeLfK1yQ/
-	 LuYjImf243/49b6oxG5ageuFUgqwI2axV1zxqZay7zVImb1Wf8QPsW6Eq6hxjEWLIQN6C
-	 x3gnnAn/gJgiDfk+UDoUSi6DufqNdx/Gf+KHX7oE30TpAMZgANWDXvG9pN+pGdmPE2FYq
-	 KF7FkgxOf7noF9BJ/qUt7yCJOLDh7YgqOpp5lr0VZf9vZwYbrChQCoXn3w292MLYAHpav
-	 KqCmR/HH/CR4zV6zYEfP+FQ/TbrflzKi0uN5URPzZWLrttD+IbQCITa34HlgH08DWbA==
+	t=1795052929;
+	b=nbHI09NY/mPorZ1wn95FA2OrRtRJMPfLRrJlQkXDQ7t9bMzUzWmr9B8mxpfv3TGk4xE0
+	 uV/Mmz6DvO462tJBJixPr0PYuEIwzT1HchwOE8emQCQxgGT5gYoaH6zr32z9nhORk3xS1
+	 KELfT9YifHNgk6dxy0MFmqnW7uhhVgDP5d28wKHM1IwEYjajXp+3y22U6OONpydCGE8Gb
+	 Di/MVr8tbwESxahmF+JJHizTKj3wObTY0CCGYW7qhgBG5cbB3c8V3T/z4JD1QW+F/poRR
+	 V8vBQ9IfW66Kny4df9NvEfDtfApu0nYtd4xZkDjKjTHjeSS7mg1l7A+vXB/BY5upyPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ra0FHgYBihsTUhasSpDDzIbx2LDMl2tsmVI+1Y5ZTfM=;
-	b=yoYlFTIzi+e/3ipkZkf9BTBumbUVG8y3UMGSZlD7fssafTu1ZWdUiBmO/DPA7qN9etc2
-	 MAFaw9rm/YAmNM0cSabPux6V4F4yRoLuqcRqV9bdS1jMxjD/9Cxdd6D8SK2Tn3Rm67hFF
-	 p3UduYf0b3ptERw4L8OqtHxn4St8qI2rtPptoWXJSeFn3EbIYfbATRc7gHkaog7LKfPe2
-	 10RVQeNQr6RzBZSEjxpv6TJXXJJ7xILxUTsxSls9/fKS+H2cOObBYDOBVG6WAkn3BIU3/
-	 3UfQ0fzf/P83xQ6LPUibTn7vEyPMIclBI0nsdfzFlsOpgjg9gEZKdIba6CoGd7taO6Q==
+	bh=Tx8i+PEJBez7U8PQoMa4QJ5OSU0XJyJdrNpUx5772cI=;
+	b=BxlXxp37YjwPtLIEfZ+eGlcg54Rmv0VowydTF5SmqAxUAQxO4M35ydWpmgkr9KAbQLGr
+	 +56B0Dc9T2qnaK/aMBhbYO34OmBGc+RpGDLYBI36L88mqVLa4sizMw8Psp6cKTRV8g2vt
+	 Lyit0be6cIqMO5dN8PEB2sd0hvzgYMnzHj27gNfh7u+V/pVXLE9NjJJQJiy4v9DBHSTYu
+	 WaTrRwjN42V6jkA2LfIELSau42eO9swuqNbKSxJbAqJEx6VFOTo9tL8IglRCDNsxq9IR8
+	 kmjUfb8GWe7tRscf8t0TjVLYwnke7112zmID80k106HICMmliNJ9WhkjwS1KTUd3B1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e/7Z4zJ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hatM9Gur;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBFB606A32C;
-	Thu, 19 Nov 2026 01:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6DB606A320;
+	Thu, 19 Nov 2026 01:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e/7Z4zJ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D661F000C4;
-	Thu, 19 Nov 2026 01:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hatM9Gur
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA52D1F000C4;
+	Thu, 19 Nov 2026 01:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052926;
-	bh=ra0FHgYBihsTUhasSpDDzIbx2LDMl2tsmVI+1Y5ZTfM=;
+	s=korg; t=1795052929;
+	bh=Tx8i+PEJBez7U8PQoMa4QJ5OSU0XJyJdrNpUx5772cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e/7Z4zJ/6BayAA2sKGe+C//3yU89bgzXm+ZFrtC0nVpiZSrQitHZqq6yCJUMT523h
-	 V0aEAWe5jqwmBv2nHhTlzuXnIfUoQ0e+DaAE66VERUrwqsQg3bwEV55wr6KUa7nQrp
-	 IpVCu0lTYpnu3ESX0ydA/XLyhLEWBd3fuJnsS40A=
+	b=hatM9GurOkpVgRahJdpUt7Z/3w/ph2KyrkJynrsukGvvcgNCNpp47H/DSjkGX4JoD
+	 D1ud/yq9aamZsgLL+nB7IQrT2lN97UtYxHgAGWSh1qyEKbBLfoJNinjFjHFgkLN2aH
+	 ONtWsBxjin6SLM70oKOiQ/VCsJ1MDAE7kKHbAf7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0687/2214] ocfs2: reserve value tree metadata when moving an xattr into the inode
-Date: Wed, 18 Nov 2026 15:39:23 +0100
-Message-ID: <20261118150039.221093429@linuxfoundation.org>
+Subject: [PATCH 5.15 0688/2214] writeback: reset dirtied_when when switching wbs
+Date: Wed, 18 Nov 2026 15:39:24 +0100
+Message-ID: <20261118150039.256721754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,77 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit f5aee8ae5f85f8dfa78160e5c4963494319cdd64 ]
+[ Upstream commit 13b9a606dd0a6cf9bac12894c97b9546d22a7425 ]
 
-ocfs2_calc_xattr_set_need() charges no metadata for the case where an
-xattr living in an xattr block or bucket moves back into the inode:
+When switching a dirty inode to another wb, inode_do_switch_wbs() puts
+it at the newest end of the target b_dirty list instead of searching
+for its sorted position. This requires updating dirtied_when, which
+move_expired_inodes() uses to decide where to stop scanning.
 
-        if (old_in_xb) {
-                if (ocfs2_xattr_can_be_in_inode(inode, xi, xis)) {
-                        clusters_add += new_clusters;
-                        credits += ...;
-                        if (!ocfs2_xattr_is_local(xe))
-                                credits += ocfs2_calc_extend_credits(...);
-                        goto out;
-                }
-        }
+However, the switch updates dirtied_time_when instead. This leaves
+b_dirty out of order and can make the scan stop before reaching older
+inodes. It also resets the lazytime expiration timestamp, potentially
+delaying timestamp writeback.
 
-The credits for extending a value tree are there but the matching blocks
-are not, so meta_add stays 0, ocfs2_init_xattr_set_ctxt() skips
-ocfs2_reserve_new_metadata_blocks() and ctxt->meta_ac is left NULL.
+Update dirtied_when instead, preserving both the constant-time insertion
+and the lazytime expiration timestamp. Correct the field name in the
+comment and document the distinction between the two inode timestamps.
 
-This is the shape commit 0cdc7dde00ec ("ocfs2: fix missing metadata
-reservation for large xattrs") fixed for the xattr block case, and it is
-reached the same way: namevalue_size() charges a value larger than
-OCFS2_XATTR_INLINE_SIZE as only OCFS2_XATTR_ROOT_SIZE, so
-ocfs2_xattr_can_be_in_inode() accepts a new value that will be stored
-outside.  ocfs2_xa_prepare_entry() installs a value root from def_xv and
-grows it, and once the cluster allocator is fragmented enough to need a
-second extent ocfs2_add_clusters_in_btree() finds the root full with no
-meta_ac at all and answers RESTART_META.  ocfs2_xattr_extend_allocation()
-turns that into -ENOSPC, or into a BUG_ON() without that commit, and
-ocfs2_xa_cleanup_value_truncate() takes its !orig_clusters arm, dropping
-the entry and leaking the clusters already handed out until fsck.ocfs2
-reclaims them.
-
-Reserve for the value tree here too.  The entry moves back into the inode
-rather than into a new xattr block, so unlike the create side of
-meta_guess this needs no block of its own.
-
-Link: https://lore.kernel.org/20261010113454.1420939-3-joseph.qi@linux.alibaba.com
-Fixes: 78f30c314a74 ("ocfs2/xattr: Reserve meta/data at the beginning of ocfs2_xattr_set.")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 9a6ebbdbd412 ("writeback: Avoid excessively long inode switching times")
+Cc: stable@vger.kernel.org
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20261016115230.3640770-2-sunjunchao@bytedance.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/fs-writeback.c  | 6 +++---
+ include/linux/fs.h | 4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index bf4265e754a5b..dc6afdb669f18 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -3147,6 +3147,14 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
- 				credits += ocfs2_calc_extend_credits(
- 							inode->i_sb,
- 							&def_xv.xv.xr_list);
-+			/*
-+			 * A value too big to stay inline is only charged as
-+			 * OCFS2_XATTR_ROOT_SIZE above, so it can still need a
-+			 * value tree of its own.  No xattr block is allocated
-+			 * on this path, so the tree is all we reserve for.
-+			 */
-+			if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
-+				meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
- 			goto out;
- 		}
- 	}
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index aff9f0613495a..c6c2dad201564 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -427,12 +427,12 @@ static bool inode_do_switch_wbs(struct inode *inode,
+ 		if (inode->i_state & I_DIRTY_ALL) {
+ 			/*
+ 			 * We need to keep b_dirty list sorted by
+-			 * dirtied_time_when. However properly sorting the
++			 * dirtied_when. However properly sorting the
+ 			 * inode in the list gets too expensive when switching
+ 			 * many inodes. So just attach inode at the end of the
+-			 * dirty list and clobber the dirtied_time_when.
++			 * dirty list and clobber the dirtied_when.
+ 			 */
+-			inode->dirtied_time_when = jiffies;
++			inode->dirtied_when = jiffies;
+ 			inode_io_list_move_locked(inode, new_wb,
+ 						  &new_wb->b_dirty);
+ 		} else {
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 41b3ebe4e8e71..a6845fdc73cf9 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -679,7 +679,9 @@ struct inode {
+ 	unsigned long		i_state;
+ 	struct rw_semaphore	i_rwsem;
+ 
+-	unsigned long		dirtied_when;	/* jiffies of first dirtying */
++	/* Timestamp for writeback list ordering and age checks (jiffies). */
++	unsigned long		dirtied_when;
++	/* Start time for deciding when lazytime updates need writeback (jiffies). */
+ 	unsigned long		dirtied_time_when;
+ 
+ 	struct hlist_node	i_hash;
 -- 
 2.53.0
 
