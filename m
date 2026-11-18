@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033741;
-	b=rZlExnv2a+9r24QcTciZdFHzANOKWTPe96I1dy64z2wUVBJsPm43I9m1cvkM+GOqJBhc
-	 4V8RagSLMc0F/WQ1H0b9H1k2NUEAqm6LhUAs5CR3xT7E8aEOFenbWRZbMxzt4ZwhoxChz
-	 859W3pLNv1CnPFhWGS8xWlihMgZdKt8nd+BCW3E1JW7Rchl50TeEI1naJa8khqtc0C/Gp
-	 6apFbF/FNoFjfzLidYz4MtIpdNYDdfg7L3eCcAytnvbl5DpcOtEe5L/2yffTWuL6R1BbA
-	 +5HeK+VNonvi4e1hTcV/FUAs14knv8Hy0ewUojryixGr7BhyG7MeydFQscF3B/YmMwQ==
+	t=1795033744;
+	b=gyYofYaSXnfsPfCD7UE0byWrPmNSnA1aAVSl1/EUJ4ngBtHKEYbRUde3jvo//oKbImj5
+	 fcQG9VvAMgmR7weHKia6ZjOhJwvh0LIwnkE5roMPndpSDaSHMCY2FKyMeKi/FTY/x6dmv
+	 xlHhATmGe7hDXNy2b1Un4grZBcf8G9/i6E/Ke87AykGDce9m2JBOS0jEl4ZOerMdBmiet
+	 alkFq1DNO1TfZe94EHVL83e/DeEMcADZ1NRaUhf3d5KZZ2jewPThjj7iV2SXwZe6MQV+m
+	 NGchYOv2D2sl+Os5ANb8va6jPIg8JmBtj25B+Q7jZH2/2b36i0lO2DNfYz5STMZ3tXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eQ1gzVRx0laIZOXPeAD65bZOWtgUQLMyoU/Gf5bHOPI=;
-	b=bAK1jC0CCKIWxlDQ0Hxu4fom+PnnDcb/lKUmsZXayDAJQm4cZMjvM+2Xb3mI6J+raO90
-	 KzQdvLJSIc//d4pFYZsWJC2XFeQjPTsrVFuCF65ip7WdxDz0IhjUOS7hqnMQh9Ca6DTed
-	 JKFt57wmIIvtPxxFOblCvksl4ezqyVshiukgxUJ69jwUrqwth3jvx520r6QkLakSIPUCF
-	 JS2gi8oIdkl2gtseYmoSXHlAEjzqIRN90f0YGnX75k2CXYt83vidrzWc0101cCObLe2af
-	 PcskcXqHDXBWH5zzXw/M/8NIsqNky51TgFhi7mQY9Kx5+wRODy7DS023lTkOE5TIFmw==
+	bh=tSbcqKI+Ymn1wp2Uam+ZlkT3PdyTFoBaBhk8gvNsYdI=;
+	b=WhX/YMQLpi7fPFlWbZd7BQpSZmZ9rSctslFGwK0h8pbbt1AxSol3uDMiM/iBaezTWlcr
+	 jsFEL0NMEWZFBUM2CScrCGIWV7lQcGmwDHkv2oNUewodVvGd5pmz826XBNrJKPAwe3e5s
+	 0YVXmbIs+HVEtN9HbuCNd8TWhOVKXoqIjgEKhKdKZJxwAMHPHM3IwQerxRTEhx1i8UV47
+	 YKKSCdoWgqpoUhHr8h7qvOwyqSgLgCzCuJcEsEvvPEfQAlv/tawLS/9rjS2kJaxyYDP4Y
+	 EgatMg0EGmSuWXZRHP7frkm8rhiG56mU/AvL/dOg2BJZcLgKyxJf+uBqyYcb7TRIapg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3EnRB8s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxbSayVA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CD7606A32F;
-	Wed, 18 Nov 2026 20:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4301C606A31C;
+	Wed, 18 Nov 2026 20:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3EnRB8s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EAF1F000C9;
-	Wed, 18 Nov 2026 20:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxbSayVA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DFD1F000C4;
+	Wed, 18 Nov 2026 20:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033740;
-	bh=eQ1gzVRx0laIZOXPeAD65bZOWtgUQLMyoU/Gf5bHOPI=;
+	s=korg; t=1795033743;
+	bh=tSbcqKI+Ymn1wp2Uam+ZlkT3PdyTFoBaBhk8gvNsYdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L3EnRB8s4MYlR7jGVu33wS0kt32MVuJKqstKFU6M77uxSHH1ySOYXkzATlHApCTJb
-	 +3VWa9Kxdmpk3bOUxAadQhA7hrjlKjqImc1kNmR4fBOc6uIBa1U0W3Hlny7qYqNcfn
-	 8wgywUJq98TM1kRlZ5kFd5xNkB54iWHjruDMjruo=
+	b=WxbSayVAJlFz6l+27m/ImDzT4yQ43MUATdgwIkAY8DzMKzD8iN4oUhOG2jhmWL1cD
+	 oDThvkqODdoToJ8N0RROihULp9xjovxitvVb2uqT9cay6Zy21lZFynLJ4oCj4ZD64S
+	 lZ7gBYbJHd+YDrtbYtBRoN2Zp9JD69GmEGV4b21M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Kyle Mahlkuch <kmahlkuc@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0115/3318] scsi: qla2xxx: Handle INTx not connected while passing through
-Date: Wed, 18 Nov 2026 15:12:17 +0100
-Message-ID: <20261118150317.751498433@linuxfoundation.org>
+Subject: [PATCH 6.6 0124/3318] comedi: pcm818: Fix sanity check in interrupt handler
+Date: Wed, 18 Nov 2026 15:12:26 +0100
+Message-ID: <20261118150318.070335361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,63 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 7268e509b43ac1734e1bdb7d18553f7e1080dfb4 ]
+[ Upstream commit 956e8478261a575d1e87490f2e5db1788b8c209d ]
 
-The PCI_INTERRUPT_PIN reports if the device supports the INTx.  However,
-when the device is assigned to a guest via vfio, the PCI_INTERRUPT_PIN
-is set to 0 (i.e none) if the line is not connected and/or the platform
-cannot route the interrupt.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-In such cases, the guest PCI_INTERRUPT_PIN is 0 and the port number
-becomes -1 (255, uint8_t underflow) for qla[25|27|28]xx and qla2031
-devices.  The flt_region_nvram is never set, and subsequently the LUN
-detection fails.  Below warnings show the NVRAM configuration failure:
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing the dev->read_dev pointer which may be NULL if
+dev->attached is false.  Move the check to avoid the possible null
+pointer dereference.
 
- []-0073:1: Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100.
- []-0074:1: Falling back to functioning (yet invalid -- WWPN) defaults.
- []-0076:1: NVRAM configuration failed.
-
-Handle this case and set the port_no to devfn like its done everywhere
-else.
-
-Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN if no pdev->irq")
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>
-Link: https://patch.msgid.link/177885270578.1573.14283751510936407585.stgit@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-9-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/comedi/drivers/pcl818.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
-index cac01f733492b..d343bda31f827 100644
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -2818,11 +2818,16 @@ qla2x00_set_isp_flags(struct qla_hw_data *ha)
- 	else {
- 		/* Get adapter physical port no from interrupt pin register. */
- 		pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
--		if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
--		    IS_QLA27XX(ha) || IS_QLA28XX(ha))
--			ha->port_no--;
--		else
--			ha->port_no = !(ha->port_no & 1);
-+		if (ha->port_no == 0) {
-+			/* None of INT[A|B|C|D] may be virtualized by vfio */
-+			ha->port_no = PCI_FUNC(ha->pdev->devfn);
-+		} else {
-+			if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
-+			    IS_QLA27XX(ha) || IS_QLA28XX(ha))
-+				ha->port_no--;
-+			else
-+				ha->port_no = !(ha->port_no & 1);
-+		}
+diff --git a/drivers/comedi/drivers/pcl818.c b/drivers/comedi/drivers/pcl818.c
+index c5b60616967e6..4a61760d1be8f 100644
+--- a/drivers/comedi/drivers/pcl818.c
++++ b/drivers/comedi/drivers/pcl818.c
+@@ -534,13 +534,14 @@ static irqreturn_t pcl818_interrupt(int irq, void *d)
+ 	struct comedi_device *dev = d;
+ 	struct pcl818_private *devpriv = dev->private;
+ 	struct comedi_subdevice *s = dev->read_subdev;
+-	struct comedi_cmd *cmd = &s->async->cmd;
++	struct comedi_cmd *cmd;
+ 
+ 	if (!dev->attached || !devpriv->ai_cmd_running) {
+ 		pcl818_ai_clear_eoc(dev);
+ 		return IRQ_HANDLED;
  	}
  
- 	ql_dbg_pci(ql_dbg_init, ha->pdev, 0x000b,
++	cmd = &s->async->cmd;
+ 	if (devpriv->ai_cmd_canceled) {
+ 		/*
+ 		 * The cleanup from ai_cancel() has been delayed
 -- 
 2.53.0
 
