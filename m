@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059969;
-	b=CPR1xuM5BZ/yPenQSshRFwAsOKGK/tSi61XJah8+KN/xqKYTlLi8+LNQTr4QdVZyLFO/
-	 i4ldOdRRgKped8Rls0iLFS1U/kcRF15LrcIR9+sPJGRyLSGSX3CJj21z3t2d4AsgA+Vwi
-	 ebwJBz+6OB+/t3+OxRtcXAWoanKAluNptu6UKkUyZq4hw9x4gEPOtTzcvcE2HxSgYtvnL
-	 eeqa9yqdQl1h36DF+lPbw5bh5Ql6ngAMCk1+G/7yz6hNI8U+m1dYHIrNX3xXn/y11gpRn
-	 CHetPyRKtjN2ROXINi5U80LsYRN9QRBZk8SOyg+RYbAPstAlBro6zQBMyYpeY4lRg1Q==
+	t=1795059972;
+	b=XRLZQGAK24iwBBstqEE0NQJU9YzOp/hwl2fb7GnOrCx6yE3ZXNc7DMLp4JQpg+RR66Vp
+	 WYxguvxatODcQwX5xyIi7ykePMADVi01mxGFDBl0qeCKZTk0lZUzKAKOUtamnM8z1FyT+
+	 lwtN8RpKQcq+KxqyTK4ATbIkZCsz6sLXFU+gXhlSxQWPmQ4z0ZiffjZNR0ID78MjlzRqu
+	 80HlM4V7sR+HRQ/tQ0RKUjo4WAajBVnJ9AYuT69JGz4eUlEOjQORItWUkYNkmStjk8dJZ
+	 UiXERx2ieTcT/dBXpfgY9M4VaDi9EFQpNsDET/rjWS3b/T8IMxOugBLiKH0xgqymh9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pXWriRUtg7GduRWX6V2B5IzKKxBCB7O7WZAV9aFfOZU=;
-	b=dYQb76d2XWV2mMWkd5ASnJELUYWPYcqOIgqerg39e05HDaOb8km+QRY4sTz/OQh2spHG
-	 nK+szi3zsFp2gw/dyVP/D0SMGCownCbrD8e7RLoF3Ee91aKju6h793zRc958CB0IDTT+W
-	 1hUO2j1OEwCbbKKKiZsQyVbXkeokYcG4qSBac+z2ByqaGoUIqP/Gc6VEtggOJwE/oVZQ5
-	 W3O6xC/6GZnPZM4mHKNB3qv8xJuHHFqLZCi//YLFqeyQs1o4nKGF87CqJZtWcliMhq9Fz
-	 avWjx31zkRDqR216aSmmCwzHxiJl3XtEHPEbKg76BeAEQXNR7xTNORal+d5WY76ENfQ==
+	bh=z2eT6SACOPxKe7b3/DtH0B8Up3Usbd1ZhoNRXQP/Cyo=;
+	b=fTq3F8m8cIBLfKql2fOL3okUen/B3mAd4bkA+8/PKjLlhMgVec3gr+dWynVnqbAdSf2F
+	 dqrv+17EDWlXBWQYQRCmMGCxPuK6xHb3yFzRhC9hfamL6ZP6lkRV3SWzReqt8Wfp9q6BB
+	 MW9UE/K516bt8Bf8XgdaGCckPS2rV37TbVmFVUBVOKFIb7i+Sg9L0aVL9E5YV7biCpHVn
+	 YK8FLAD+FVBxWRk53r3x913CE2i8zyUQUr60MF60m1PMP/dsdRLZRfzVAo0PGRu0GL2HO
+	 zEd3e5neO8RT6x5jJNChcF4RVsjifQIUVgKGjjgUGZVEJg3t7BlX7KAGp8mVihmQXhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M9Gofqyp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiJoivVq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D9B606A325;
-	Thu, 19 Nov 2026 03:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8870606A32C;
+	Thu, 19 Nov 2026 03:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M9Gofqyp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921D81F000C4;
-	Thu, 19 Nov 2026 03:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiJoivVq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488351F000C6;
+	Thu, 19 Nov 2026 03:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059969;
-	bh=pXWriRUtg7GduRWX6V2B5IzKKxBCB7O7WZAV9aFfOZU=;
+	s=korg; t=1795059971;
+	bh=z2eT6SACOPxKe7b3/DtH0B8Up3Usbd1ZhoNRXQP/Cyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9GofqypPzgubJCrxq6Upg6Ito1s6IQ/ukb5GvP+6LQnxwx2k+vbewqZMQOpnQWci
-	 cz9PDgtKRksysMgKw1v+5qukVYCpMwrpLtGGohsv26gk23p/+sLnVA21g5LSq9iSnG
-	 KqxfLkkWdWpa6LzfMVku3m4WtldWSqVhWOEqY+rM=
+	b=XiJoivVq9B7JdsadNvbuxgr8G3f8gpPBbndTzf3gCZ5Xij7EgnLyz+h/P/yIN+niq
+	 dO4UCaceZSNHz/CpvG+p3ktAr7xU5Wd70FY5fdao8dYfXoi7hzi/TAiAuWaJ2OJ08Z
+	 aG7jntrv/Gw+aBhWldtwbJHv9EeXh8SXRUiqdL00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>,
+	Aleksa Sarai <aleksa@amutable.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1032/1848] switch procfs from d_set_d_op() to d_splice_alias_ops()
-Date: Wed, 18 Nov 2026 15:51:10 +0100
-Message-ID: <20261118150000.586159532@linuxfoundation.org>
+Subject: [PATCH 5.10 1033/1848] proc: dont let an entry below /proc/<pid>/net be a mountpoint
+Date: Wed, 18 Nov 2026 15:51:11 +0100
+Message-ID: <20261118150000.621211232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,129 +69,246 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit ec169ef86ba45389b353189cf1fc06461163f667 ]
+[ Upstream commit eeecea75ece2ba894bee4d3c53ed2e40abda8f0e ]
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Stable-dep-of: eeecea75ece2 ("proc: don't let an entry below /proc/<pid>/net be a mountpoint")
+proc_net_d_revalidate() always returns 0 so that a dentry below
+/proc/<pid>/net is never reused after setns(). So lookup_fast() will end
+up calling d_invalidate(), which unhashes the dentry and detaches every
+mount on it, in every mount namespace; including locked mounts.
+
+Then lookup_slow() creates a new dentry for the same entry. So a mount
+on /proc/<pid>/net/dev succeeds and goes away with the first lookup of
+the name by anybody with search permission on the directory. Given it's
+0555 that's everyone's grandma. A mask on such a name hides nothing as
+the repro below shows.
+
+Treat those entries like I did fd/, fdinfo/ and map_files/ and refuse to
+mount on them in the first place. It's nonsensical theater otherwise:
+
+  procnet net/dev stat
+
+  // SPDX-License-Identifier: GPL-2.0
+  /*
+   * procnet: cover an entry of /proc/<pid>/ with a bind mount, lock the mount,
+   * then look the name up.
+   *
+   * The first task stays alive, <pid> is its pid. The "container" task has its
+   * own mount namespace. There it binds a mask on /proc/<pid>/<name>. It drops to
+   * uid 1000 and enters a new user namespace with a new mount namespace, so that
+   * the mask is locked. Then one task looks the name up:
+   *
+   *   stat    the container calls stat() on the name
+   *   umount  the container calls umount2(MNT_DETACH) on the name
+   *   nobody  a task with uid 65534 in the first namespaces calls stat()
+   *
+   * The container lists its mounts before and after (that does not look the
+   * name up) and then reads the name. MASK is fine. Anything else means that
+   * the lookup uncovered the entry.
+   *
+   * usage: procnet <name> stat|umount|nobody
+   *   name "status" is the control, "net/dev" is a file below net, "net/stat" is
+   *   a directory below net
+   */
+  #define _GNU_SOURCE
+  #include <dirent.h>
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <sched.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <time.h>
+  #include <unistd.h>
+  #include <sys/mount.h>
+  #include <sys/prctl.h>
+  #include <sys/stat.h>
+  #include <sys/wait.h>
+
+  #define WORK "/run/pn"
+
+  static char target[128];
+
+  static void die(const char *what)
+  {
+  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
+  	exit(2);
+  }
+
+  static void write_str(const char *path, const char *s, int flags)
+  {
+  	int fd = open(path, O_WRONLY | flags, 0644);
+
+  	if (fd < 0 || write(fd, s, strlen(s)) < 0)
+  		die(path);
+  	close(fd);
+  }
+
+  /* list the mounts below /proc without a lookup of the target */
+  static void mounts(const char *when)
+  {
+  	char line[512];
+  	FILE *f = fopen("/proc/self/mountinfo", "r");
+  	int n = 0;
+
+  	if (!f)
+  		die("mountinfo");
+  	while (fgets(line, sizeof(line), f)) {
+  		if (!strstr(line, " /proc/"))
+  			continue;
+  		printf("container: %s: mount: %s", when, line);
+  		n++;
+  	}
+  	fclose(f);
+  	if (!n)
+  		printf("container: %s: nothing is mounted below /proc\n", when);
+  }
+
+  static void show(const char *when, int isdir)
+  {
+  	char buf[48] = "";
+  	int fd;
+
+  	if (isdir) {
+  		struct dirent *de;
+  		DIR *d = opendir(target);
+  		int hit = 0;
+
+  		if (!d) {
+  			printf("container: %s: opendir(%s) = %s\n", when, target, strerror(errno));
+  			return;
+  		}
+  		printf("container: %s: readdir(%s) =", when, target);
+  		while ((de = readdir(d))) {
+  			if (de->d_name[0] == '.')
+  				continue;
+  			printf(" %s", de->d_name);
+  			hit |= strcmp(de->d_name, "MASK");
+  		}
+  		closedir(d);
+  		printf("%s\n", hit ? "   <-- HIT" : "");
+  		return;
+  	}
+  	fd = open(target, O_RDONLY);
+  	if (fd < 0) {
+  		printf("container: %s: open(%s) = %s\n", when, target, strerror(errno));
+  		return;
+  	}
+  	if (read(fd, buf, sizeof(buf) - 1) < 0)
+  		die("read");
+  	close(fd);
+  	if (strchr(buf, '\n'))
+  		*strchr(buf, '\n') = 0;
+  	printf("container: %s: read(%s) = \"%s\"%s\n", when, target, buf,
+  	       strncmp(buf, "MASK", 4) ? "   <-- HIT" : "");
+  }
+
+  int main(int argc, char **argv)
+  {
+  	const char *name = argc > 1 ? argv[1] : "net/dev";
+  	const char *op = argc > 2 ? argv[2] : "stat";
+  	int isdir = !strcmp(name, "net/stat");
+  	int to_host[2], to_cont[2];
+  	struct stat st;
+  	pid_t pid;
+  	char c;
+
+  	setvbuf(stdout, NULL, _IOLBF, 0);
+  	snprintf(target, sizeof(target), "/proc/%d/%s", getpid(), name);
+  	if (unshare(CLONE_NEWNS) || mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
+  		die("unshare");
+  	mkdir(WORK, 0755);
+  	if (mount("W", WORK, "tmpfs", 0, NULL))
+  		die("mount W");
+  	write_str(WORK "/mask", "MASK", O_CREAT);
+  	mkdir(WORK "/maskdir", 0755);
+  	write_str(WORK "/maskdir/MASK", "MASK", O_CREAT);
+  	if (pipe(to_host) || pipe(to_cont))
+  		die("pipe");
+
+  	pid = fork();
+  	if (pid < 0)
+  		die("fork");
+  	if (!pid) {
+  		if (unshare(CLONE_NEWNS))
+  			die("container unshare");
+  		if (mount(isdir ? WORK "/maskdir" : WORK "/mask", target, NULL, MS_BIND, NULL)) {
+  			printf("container: bind the mask on %s: %s\n", target, strerror(errno));
+  			exit(0);
+  		}
+  		printf("container: bind the mask on %s: ok\n", target);
+  		if (setgid(1000) || setuid(1000) || prctl(PR_SET_DUMPABLE, 1))
+  			die("setuid");
+  		/* lock the mount: a new user namespace with a copy of the tree */
+  		if (unshare(CLONE_NEWUSER | CLONE_NEWNS))
+  			die("container userns");
+  		write_str("/proc/self/setgroups", "deny", 0);
+  		write_str("/proc/self/uid_map", "0 1000 1", 0);
+  		write_str("/proc/self/gid_map", "0 1000 1", 0);
+  		mounts("before");
+  		errno = 0;
+  		if (!strcmp(op, "stat")) {
+  			stat(target, &st);
+  			printf("container: stat(%s): %s\n", target, strerror(errno));
+  		} else if (!strcmp(op, "umount")) {
+  			umount2(target, MNT_DETACH);
+  			printf("container: umount2(%s, MNT_DETACH): %s\n", target, strerror(errno));
+  		} else if (write(to_host[1], "g", 1) != 1 || read(to_cont[0], &c, 1) != 1) {
+  			die("sync");
+  		}
+  		mounts("after");
+  		show("after", isdir);
+  		exit(0);
+  	}
+  	close(to_host[1]);
+  	if (read(to_host[0], &c, 1) == 1) {
+  		pid_t p2 = fork();
+
+  		if (!p2) {
+  			if (setgid(65534) || setuid(65534))
+  				die("setuid");
+  			errno = 0;
+  			stat(target, &st);
+  			printf("nobody: uid %u: stat(%s): %s\n", getuid(), target, strerror(errno));
+  			exit(0);
+  		}
+  		waitpid(p2, NULL, 0);
+  		if (write(to_cont[1], "g", 1) != 1)
+  			die("sync");
+  	}
+  	waitpid(pid, NULL, 0);
+  	return 0;
+  }
+
+Fixes: 1fde6f21d90f ("proc: fix /proc/net/* after setns(2)")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261024-work-procfs-fixes-v1-1-46b03c3a8fac@kernel.org
+Acked-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Aleksa Sarai <aleksa@amutable.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/base.c        | 9 +++------
- fs/proc/generic.c     | 8 ++++----
- fs/proc/internal.h    | 3 +--
- fs/proc/namespaces.c  | 3 +--
- fs/proc/proc_sysctl.c | 7 +++----
- 5 files changed, 12 insertions(+), 18 deletions(-)
+ fs/proc/generic.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index b4e58fb07f484..7a54625bc35f2 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -2685,8 +2685,7 @@ static struct dentry *proc_pident_instantiate(struct dentry *dentry,
- 		inode->i_fop = p->fop;
- 	ei->op = p->op;
- 	pid_update_inode(task, inode);
--	d_set_d_op(dentry, &pid_dentry_operations);
--	return d_splice_alias(inode, dentry);
-+	return d_splice_alias_ops(inode, dentry, &pid_dentry_operations);
- }
- 
- static struct dentry *proc_pident_lookup(struct inode *dir, 
-@@ -3422,8 +3421,7 @@ static struct dentry *proc_pid_instantiate(struct dentry * dentry,
- 	set_nlink(inode, nlink_tgid);
- 	pid_update_inode(task, inode);
- 
--	d_set_d_op(dentry, &pid_dentry_operations);
--	return d_splice_alias(inode, dentry);
-+	return d_splice_alias_ops(inode, dentry, &pid_dentry_operations);
- }
- 
- struct dentry *proc_pid_lookup(struct dentry *dentry, unsigned int flags)
-@@ -3719,8 +3717,7 @@ static struct dentry *proc_task_instantiate(struct dentry *dentry,
- 	set_nlink(inode, nlink_tid);
- 	pid_update_inode(task, inode);
- 
--	d_set_d_op(dentry, &pid_dentry_operations);
--	return d_splice_alias(inode, dentry);
-+	return d_splice_alias_ops(inode, dentry, &pid_dentry_operations);
- }
- 
- static struct dentry *proc_task_lookup(struct inode *dir, struct dentry * dentry, unsigned int flags)
 diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index ab9f499fc749f..98d88b504478d 100644
+index 98d88b504478d..f4fe4c0809772 100644
 --- a/fs/proc/generic.c
 +++ b/fs/proc/generic.c
-@@ -262,10 +262,10 @@ struct dentry *proc_lookup_de(struct inode *dir, struct dentry *dentry,
+@@ -261,9 +261,10 @@ struct dentry *proc_lookup_de(struct inode *dir, struct dentry *dentry,
+ 		inode = proc_get_inode(dir->i_sb, de);
  		if (!inode)
  			return ERR_PTR(-ENOMEM);
++		/* never reused and so never a mountpoint for long */
  		if (de->flags & PROC_ENTRY_FORCE_LOOKUP)
--			d_set_d_op(dentry, &proc_net_dentry_ops);
--		else
--			d_set_d_op(dentry, &proc_misc_dentry_ops);
--		return d_splice_alias(inode, dentry);
-+			return d_splice_alias_ops(inode, dentry,
-+						  &proc_net_dentry_ops);
-+		return d_splice_alias_ops(inode, dentry,
-+					  &proc_misc_dentry_ops);
+-			return d_splice_alias_ops(inode, dentry,
+-						  &proc_net_dentry_ops);
++			return proc_splice_unmountable(inode, dentry,
++						       &proc_net_dentry_ops);
+ 		return d_splice_alias_ops(inode, dentry,
+ 					  &proc_misc_dentry_ops);
  	}
- 	read_unlock(&proc_subdir_lock);
- 	return ERR_PTR(-ENOENT);
-diff --git a/fs/proc/internal.h b/fs/proc/internal.h
-index 56fc4197d92b8..cda48c98ec8cd 100644
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -339,7 +339,6 @@ static inline void pde_force_lookup(struct proc_dir_entry *pde)
- static inline struct dentry *proc_splice_unmountable(struct inode *inode,
- 		struct dentry *dentry, const struct dentry_operations *d_ops)
- {
--	d_set_d_op(dentry, d_ops);
- 	dont_mount(dentry);
--	return d_splice_alias(inode, dentry);
-+	return d_splice_alias_ops(inode, dentry, d_ops);
- }
-diff --git a/fs/proc/namespaces.c b/fs/proc/namespaces.c
-index 203d3363e3d5a..9f4bb90a536e6 100644
---- a/fs/proc/namespaces.c
-+++ b/fs/proc/namespaces.c
-@@ -125,8 +125,7 @@ static struct dentry *proc_ns_instantiate(struct dentry *dentry,
- 	ei->ns_ops = ns_ops;
- 	pid_update_inode(task, inode);
- 
--	d_set_d_op(dentry, &pid_dentry_operations);
--	return d_splice_alias(inode, dentry);
-+	return d_splice_alias_ops(inode, dentry, &pid_dentry_operations);
- }
- 
- static int proc_ns_dir_readdir(struct file *file, struct dir_context *ctx)
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index b7e3d36737cfe..2b233e04f53b8 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -524,9 +524,8 @@ static struct dentry *proc_sys_lookup(struct inode *dir, struct dentry *dentry,
- 			goto out;
- 	}
- 
--	d_set_d_op(dentry, &proc_sys_dentry_operations);
- 	inode = proc_sys_make_inode(dir->i_sb, h ? h : head, p);
--	err = d_splice_alias(inode, dentry);
-+	err = d_splice_alias_ops(inode, dentry, &proc_sys_dentry_operations);
- 
- out:
- 	if (h)
-@@ -683,9 +682,9 @@ static bool proc_sys_fill_cache(struct file *file,
- 			return false;
- 		if (d_in_lookup(child)) {
- 			struct dentry *res;
--			d_set_d_op(child, &proc_sys_dentry_operations);
- 			inode = proc_sys_make_inode(dir->d_sb, head, table);
--			res = d_splice_alias(inode, child);
-+			res = d_splice_alias_ops(inode, child,
-+						 &proc_sys_dentry_operations);
- 			d_lookup_done(child);
- 			if (unlikely(res)) {
- 				if (IS_ERR(res)) {
 -- 
 2.53.0
 
