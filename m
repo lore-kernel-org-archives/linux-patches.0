@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043328;
-	b=FUXDegjwMml+8d4jmOscXI01MeIaJKKjuJI+wI7ptiJ6AS0DMOiLApOoNOUZa5XQbZw7
-	 uForXsFdT2bbsZlrgZe7w8/QujLLBrUsFGSWRPqN3Nny1ixFqBQsUXdHhGMSVWLWTMpUz
-	 yUGyeE+RPF2L8NL9CrFDZjlogq0hMhn65qz05RCSc5aUNEcY1QYmrrwX0B0aCPT1V4deD
-	 bMsSBZ9NfQQ4iSAqPnf5Fo9SasoSKOXv9UV8U3ml89Qg/483Zc6oeimqajEfd4DfIbv/N
-	 XkuvScR07c5O01gHYekePl9gT+BUoKQ+8B0kaUjAcC2ppZsl82MmuDZGZO+bzCu9YGw==
+	t=1795043330;
+	b=283e4JN9EfeA09564dwZdnN+88uJWHgQUNo+r5LLb0ZGeNtAh6aGBTPpWOS5Nk8AC3vY
+	 5hbjOlgfxeiCoNoBSgYLyO/d6yucq4cqAsCie9mRvEumHpElBxNawovKbnO/Nai3s9AIS
+	 LoEO6Anj6jYJExtWb72BQf7A8nzj9gAvWXGfVM0VkDeDq7KCNsp7ULoLXipAd4Obl2qtD
+	 eeYyE5NHcxeKN22/0TBiPJ6xXfgzUOK335cPMCMkuo4NjpzZXh5nhERrxBPr1cM+H2lsA
+	 e8I6qO9ksIVHOB9TIXpAofiVvFVRnJk+/ayXyqKEymOdGEua6MF4j5DrK363NPyUyPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9avYHlXpRI6l+bRwstMn8zWLyoMc6MN6FDInAMfamus=;
-	b=QJaBtKonsaK2hBlaH0+nh/5j6F3UG2lSe/lpFZ5DQazwlrAXfu3P9L+KhhvyIHDSQm52
-	 pkgIuIFd39bM7FaP8jfSXrTA1npNH5LxSPKoj8jGNcUQLhiqy3TgkCGE/AtTuTCMBWp2O
-	 neFIsDGUCTtnpMWxt12lkZQfaoX46/r1y6+u2JSuyIf0Uj2UPoMVnyViERTZj/NYHUlQq
-	 Sy3fxJKQlv7LN2YHS8FG0WnCPlHcFPrMcw0D57IV4mMVrVKxi6sztxxUASwZUTinLwCfc
-	 6m0cU5GniS7m/AGEbyYN+llmy+qEpmVssbmBBo0UykGink/IFfwccukhBNr81mD1iyg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=TwmJUY9paNm2Jc7n9Pl1Zg0LWblI4mXRpjwW2cMonhQ=;
+	b=FInJlrcnc9ixy3h07YaDhkjmp8blPEYNa7DHBgOcwkRm7dH6rVLyeojtAFIXr6+uoLC4
+	 7US70Y8cDoi2FYYJ6Ay61edjSX3J7aV9oeZFmzjbk2jGQXPaCh5TaF1cLdOMG8NtQmvwL
+	 cjGsegwVykOfNEU2izZw3a6r+Ywuw/D566eaaswFSZTznbtd7CF6hJXlSpCUQYN6lMdlP
+	 lyAgyQe7QsulYM5VjkL6eOgNwgajN3CEzlAW0CgHXxF7Mtazz+UdXkBA9zisrKC6cbN5b
+	 Fv8Rh4L5uyHRweMzR89j5EWZSb5WYSL3pUP/HbBVHr1qz5SvyqIqC7w+HMba55a9qow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCpdFF5Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnHK3CvX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C967606A31C;
-	Wed, 18 Nov 2026 23:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD83606A32A;
+	Wed, 18 Nov 2026 23:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCpdFF5Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA2A1F000C4;
-	Wed, 18 Nov 2026 23:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnHK3CvX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BB81F000C4;
+	Wed, 18 Nov 2026 23:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043327;
-	bh=9avYHlXpRI6l+bRwstMn8zWLyoMc6MN6FDInAMfamus=;
+	s=korg; t=1795043330;
+	bh=TwmJUY9paNm2Jc7n9Pl1Zg0LWblI4mXRpjwW2cMonhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aCpdFF5Zey8VcCbXrtCMqWd9D3lrL17tsmeVWIJvSqt6q+xPjluYJVQkTIWOK73i4
-	 Znapt53D/CcK3g9A9fX+qypaM8UVc9/CWjV3NGI0i0rt8zRmW+3vjl8Y1/dx/BRjZG
-	 OLUFhYsqejbzIb7G/WFq0/vdQLnQGE8KYomc7n9M=
+	b=mnHK3CvXkCALqvKt1EnoY8T2OBZAuSyntCHdaFzNElk7egoGHmhUmoqFzz2oXbziq
+	 BafWN87AjgHmLDdDc4UoPZtFZZ94zYapyeLR63YN7DGq46bN6tx/kgK5s9DYM1/FoE
+	 0Qjnv0r7Nw9SPuXgoR6EDC9HIjiL3SPIPT6mEQDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?=EC=9D=B4=EC=83=81=ED=98=B8?= <kudo3228@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0171/2857] regulator: rt6245: Restore state on enable failure
-Date: Wed, 18 Nov 2026 15:20:05 +0100
-Message-ID: <20261118150207.510967802@linuxfoundation.org>
+Subject: [PATCH 6.1 0172/2857] romfs: detect hard link cycles
+Date: Wed, 18 Nov 2026 15:20:06 +0100
+Message-ID: <20261118150207.546813374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,49 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: 이상호 <kudo3228@gmail.com>
 
-[ Upstream commit e95a0a309ca02bf26dc937cdeb3fe2a235c65f63 ]
+[ Upstream commit d30b5a954e0a4dcc16bba9c310c13709a6169a52 ]
 
-Currently, if regcache_sync() fails after the enable GPIO has been
-asserted, the driver returns with enable_gpio still set high and
-regcache_cache_only() left disabled. This leaves the device state
-inconsistent with the disabled state, where the enable GPIO is low and
-cache_only is enabled.
-On failure, restore the original state by setting cache_only back to
-true and driving the enable GPIO low before returning the error.
+romfs_iget() follows on-disk hard link entries until it reaches a non-hard
+link inode:
 
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	pos = be32_to_cpu(ri.spec) & ROMFH_MASK;
+
+The target position is image-controlled, and the loop does not detect
+cycles. A crafted romfs image can make the root inode a hard link. The hard
+link can point back to itself and leave mount(2) spinning in the kernel.
+
+Reject excessive hard link indirection with -ELOOP. Normal romfs images do
+not need long hard link chains. This bounds corrupted-image traversal.
+Propagate romfs_iget() errors from lookup because hard link traversal can
+now fail with -ELOOP.
+
+Signed-off-by: 이상호 <kudo3228@gmail.com>
+Link: https://patch.msgid.link/20260701220729.822112-1-kudo3228@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rt6245-regulator.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/romfs/super.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/regulator/rt6245-regulator.c b/drivers/regulator/rt6245-regulator.c
-index cb22a207e9fff..051b444224bb7 100644
---- a/drivers/regulator/rt6245-regulator.c
-+++ b/drivers/regulator/rt6245-regulator.c
-@@ -49,8 +49,11 @@ static int rt6245_enable(struct regulator_dev *rdev)
+diff --git a/fs/romfs/super.c b/fs/romfs/super.c
+index 3bc993634321a..29fce318cdabb 100644
+--- a/fs/romfs/super.c
++++ b/fs/romfs/super.c
+@@ -250,6 +250,8 @@ static struct dentry *romfs_lookup(struct inode *dir, struct dentry *dentry,
+ 			if ((be32_to_cpu(ri.next) & ROMFH_TYPE) == ROMFH_HRD)
+ 				offset = be32_to_cpu(ri.spec) & ROMFH_MASK;
+ 			inode = romfs_iget(dir->i_sb, offset);
++			if (IS_ERR(inode))
++				return ERR_CAST(inode);
+ 			break;
+ 		}
  
- 	regcache_cache_only(regmap, false);
- 	ret = regcache_sync(regmap);
--	if (ret)
-+	if (ret) {
-+		regcache_cache_only(regmap, true);
-+		gpiod_direction_output(priv->enable_gpio, 0);
- 		return ret;
-+	}
+@@ -272,6 +274,8 @@ static const struct inode_operations romfs_dir_inode_operations = {
+ 	.lookup		= romfs_lookup,
+ };
  
- 	priv->enable_state = true;
- 	return 0;
++#define ROMFS_MAX_HARDLINK_DEPTH 64
++
+ /*
+  * get a romfs inode based on its position in the image (which doubles as the
+  * inode number)
+@@ -283,6 +287,7 @@ static struct inode *romfs_iget(struct super_block *sb, unsigned long pos)
+ 	struct inode *i;
+ 	unsigned long nlen;
+ 	unsigned nextfh;
++	unsigned int depth = 0;
+ 	int ret;
+ 	umode_t mode;
+ 
+@@ -299,6 +304,9 @@ static struct inode *romfs_iget(struct super_block *sb, unsigned long pos)
+ 		if ((nextfh & ROMFH_TYPE) != ROMFH_HRD)
+ 			break;
+ 
++		if (++depth > ROMFS_MAX_HARDLINK_DEPTH)
++			return ERR_PTR(-ELOOP);
++
+ 		pos = be32_to_cpu(ri.spec) & ROMFH_MASK;
+ 	}
+ 
 -- 
 2.53.0
 
