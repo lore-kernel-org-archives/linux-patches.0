@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048465;
-	b=AHansm34HD82it/brudFChTGVXiXE/LwgF03nG6YdHZ0j52PphwDJzdLBNxk+txY7X3E
-	 bQzW4EeCSpa0y5rgyJ/Mg6Nkk87e6qS7DiA+D5kDheaoCXrU87OFU5KIsdQPxDl59BxjC
-	 tjHPv6xEJ2Z+7ZsGPNk+xVe/iMear+u/qMfAaKTGtTADu8l2gOl92nEhQn6oU3708Ou8R
-	 Gou5u5LKEQ+hl/E9Cal9u+dqwMVNEluqwmevsAj2jSqKofUDnOsLQ7scPvFqVSUqxVO/Q
-	 /cz6IHsVXjEoFUpvtPkkvXVvEUfl6Bb3980T+ZvlI4SJXNhpBeNMYrA4yXlVF2DwYjw==
+	t=1795048468;
+	b=2MsojE/wo3TLbolhxNe5P+9gui3+79a4dhVCHmKo2xpP+0WR6nncNLvgIfizkWv5o3N7
+	 5S9ymmP6Tnfj1rocIpRdmXSytxBJyFL7U2MfK3u4IlOE3B/EqaSFkHkL+GmQmHLurJ6oy
+	 ZK2PNzhzyhFwpQI+G+UqwdFV4QSmo1JsVqvqYLWPT0cAcYrjfyZ9fxWlGzUSc9nadnQgp
+	 RslSNQLuWMOeupX9qFllMFaXqyUcm9ilcaJjlVaJu4dnHqXcbWaiU6nKCEyzLug8ZcWkq
+	 WE8XMQVpeAHyF+bT1UzHb+KnIP+nRYcHXqJzRXEFheP+5MmeBAvhn3ZlBk3ZZU9YMgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GFMb77v48OM3/aOWfUFT9znV1pJaIsGKJc5VLYI4GDM=;
-	b=J4TBNo3d0jIPfAcObhwE8LuH9T1/hCjchYP5GawqPHgY/d23TfGfOFzdW7HCsMvfD/z1
-	 HcLAq6xWekDB7Atl3JDe/OOAa0qZvmuz7xgGRlI8Mcq1Sj4GF2qjSDUTdPSAksByLzjc3
-	 Ue43EY2/2IOGbknYCAItghGA6bw46wolDEYUlsjfNbO6EPe0CqAfWQAFCHTi9b1mNrKPN
-	 W8LqNffhlEGlq/8CykMLkRZN6zgiFQyVOsDX+xaKL1kp1jfw7HhkEEbCMOJLttpLZw/Sv
-	 SjlXmjBi5PaetmGPGn5DpUfC2cUjVL71s3WmzRGgN9tmQql1BzvoHSTburpvzMca77Q==
+	bh=VNOY6Y7zcM4zCW7jKb6bC4jse5T5ivA20/UdsK2z/ZM=;
+	b=lt65Xc1UNnrWK03WeDTYDe73scmBblRJ4srFdtQcZ7wvO5aVT8flstbl6aTOZzx77lOO
+	 WNqLGC7u3BEWoHFY/f8VxBPWg4AsV9BhaGTTel1lkZuMAqnC3s+zFX4i+Vhvvcp51Gs64
+	 cQRqk+gsDVqSeXis5bqJ7RmF2jyO5M8agbWucJO5ECC2L1vkx5GWGIDzJBly7qBtWnnoZ
+	 0PpExsTdQAwRM7RvLMB6P/xYMrV2asxcxkVVOWV1d+6spxB87yFOQYiBymXFnoUN3Z+sR
+	 9jLOLSE4ec9wgZRatBSlL0I9mWqfbMOrFyEUWG0j2N3ERlqN+Tf9z4lacuD4iSQoS9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1XAgjivI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3cMgEtR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5BA606A32A;
-	Thu, 19 Nov 2026 00:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B457606A31C;
+	Thu, 19 Nov 2026 00:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1XAgjivI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61321F000C4;
-	Thu, 19 Nov 2026 00:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3cMgEtR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C48E1F000C4;
+	Thu, 19 Nov 2026 00:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048465;
-	bh=GFMb77v48OM3/aOWfUFT9znV1pJaIsGKJc5VLYI4GDM=;
+	s=korg; t=1795048468;
+	bh=VNOY6Y7zcM4zCW7jKb6bC4jse5T5ivA20/UdsK2z/ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1XAgjivIxN/jA6+AhsbhMm+j3dxzR67GkzDk6TFY80slAU26VrVyfkNeRemDP/OK9
-	 j1Rf0ziUCZ2VVMvjFmW8XInuo5zkezJlemWOj/fSPbrUa99dkCMiaEghTod8A0HKQ3
-	 iBCrO+33Fk4ZvDvaJWh1VJs9EEO3rww1/AJQ9Kbw=
+	b=k3cMgEtR57/VP+wQDMg3NxWCVtzkVPNU42KtDW6zQoMMxwjZI2j6iYo0yuSCyEPNJ
+	 fh28G7GCdlEULh03CILuQ3QSXrOYjha66/bUPvtsMiOd3s3NveE5TktBB4CevKsPZh
+	 xpqeIAjAy7Gj1Juzk7+rmq8WVqdiMt6cQAG7biJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2005/2857] RDMA/siw: Fix qp use-after-free in siw_get_base_qp()
-Date: Wed, 18 Nov 2026 15:50:39 +0100
-Message-ID: <20261118150313.589320499@linuxfoundation.org>
+Subject: [PATCH 6.1 2006/2857] crypto: hisilicon/hpre - remove dma_free_coherent on NULL req->dst in ECDH
+Date: Wed, 18 Nov 2026 15:50:40 +0100
+Message-ID: <20261118150313.628285838@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit ef15197f81ffedf29560edf2221199d92fd83dc2 ]
+[ Upstream commit 5b87f619cc5c0a55dcd85ce97974e3f5b9333b7b ]
 
-The reference taken by siw_qp_id2obj() is dropped before the address
-of the embedded ib_qp is taken from the QP.  If that reference was
-the last one the QP is freed and the pointer returned to the iwarp
-core is dangling; the core only pins the QP with iw_add_ref() after
-the call has returned.
+In hpre_ecdh_hw_data_clr_all(), req->dst is always NULL because
+hpre_ecdh_dst_data_init() sets hpre_req->dst = NULL before mapping
+the user buffer with dma_map_single(). The dma_free_coherent() call
+on req->dst is therefore dead code. Remove it.
 
-Copy the pointer while the reference is still held.
-
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260916184400.2093106-1-vulab@iscas.ac.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index f45600d169ae7..f8cee147455aa 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -243,8 +243,11 @@ static struct ib_qp *siw_get_base_qp(struct ib_device *base_dev, int id)
- 		/*
- 		 * siw_qp_id2obj() increments object reference count
- 		 */
-+		struct ib_qp *base_qp = &qp->base_qp;
-+
- 		siw_qp_put(qp);
--		return &qp->base_qp;
-+
-+		return base_qp;
- 	}
- 	return NULL;
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index d13e8c228b702..d874490180bfc 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1441,8 +1441,6 @@ static void hpre_ecdh_hw_data_clr_all(struct hpre_ctx *ctx,
+ 	if (unlikely(dma_mapping_error(dev, dma)))
+ 		return;
+ 
+-	if (req->dst)
+-		dma_free_coherent(dev, ctx->key_sz << 1, req->dst, dma);
+ 	if (dst)
+ 		dma_unmap_single(dev, dma, ctx->key_sz << 1, DMA_FROM_DEVICE);
  }
 -- 
 2.53.0
