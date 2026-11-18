@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024817;
-	b=ThNOzctG7PPJgfmWJRwjXvrcPjWgn2lpNg6vxLPWrytUwi3zUvwjGjeBXqLvrRejQoaM
-	 uolQG9cjg9C/loTjAaKoIasbMydiiHeJGRAEy8JX8TRFmxcBJCiou1j7Dk7Ib5Z0kILsP
-	 jr86Sn+z1AqadrSPklWNNrBD6mHTIUo2j7+hUKDi5D/K3RShPTn15phmb4fc8yUFKymXb
-	 rtYVdepgprneu1N6wYMfodzDn92h/MwkxNDj7QyFeR1CeAMUhbLXI4R4en27wyd7/h8T/
-	 6iA/WuwKk8LFz75sm66Ppv7T8wTsJiENRqKvq4yatm/2Ei2CeL0BdJksS0uOQGaHYIQ==
+	t=1795024820;
+	b=O5snyJvW1gt26G0AL3H3FRNXmUSd/ELORcVwvB+AQTnIY8fNELHJ8c1BzDt1wDCdqMBr
+	 p8qkzY/drua0URy0SAmwFel488o1DRngKC1QFlFKK+6jLcx0HSb2e9b1VgGIsKq8YEVme
+	 +pw1ITo+qKmyHPKlqcI5qOtnSVspjrzAxAHHv7PIoss2IWMRhjfjqBMwZAP04qNI+Km4H
+	 JTU8eUirXwylQkIhFIMfygerEbatnbn8JziIlOOa7Vv3O56YyNPkwpFqQFaMn8P6NYwH3
+	 Esr//mvwYiB/77+63NIIWSvCfPKDdaX2hQg2Wqb52LfFD77ReM5OyPU9p3ZgpgZaEpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=coWZPiRNLSrXflgGOUFWVbNDRbkUK5ShIIOjy98JiZs=;
-	b=EkDNpE+AtpBP5ssHgmT04EbOwK2Z2ZXdUzR0avzAndlW631F6eQMmGePe/BM94pI3Z2H
-	 HORXVdU1B0HqGKeXZB3e+MB/RtYgcsBcOO8VsVa5WgaaOQR6wd1+GZYKW3uICVYv3/F0B
-	 LB583NJ2+ld2D13w/3oW6Eoazycz0AxJ4FJ/ZY4HUgMQI/VplGIi7NPR7ytACZaaZKIyF
-	 gEAtvD6quPUlCWcRVJwu6+3gmFdQ8Koy7azKCvBYjTb9yuOM1kgKGj5D1t7ePPhwmL9Cj
-	 XZl15rEtL5yjWMLATRtxdwPHZbMX73JU8yTTOvZoNtROmgymsLLB+MtpQ1/x1KBecZQ==
+	bh=XEztKZDzA+zv2NbmWsNoJPyICpkVw5bXrIX43VNz3f0=;
+	b=YwRXYuhZvFWqoKO1tf+94J0CcGqh68oFFHPkZEtDTy3nYrEMRgDfgTCg9erP9xhrrvn5
+	 gjZkrC6dbvKQFZcRRlIMY/NJhYV/bMa0gJ8ladltc8nxwkwm9P90ULYIodS7hZZoINZn7
+	 AlovFCiu0OT8PgcRAzsExG04tAqsuGdP894vv9QSReEkWDQG2zEL+bU8QA1e/0XulWHPA
+	 Png6mh3jR0Gca2U1O8zsOzJvO+lp7hCEVii/90Ld/xoQjlZi20gBQu9hqLcivfAiaWkoL
+	 4qDh0xafg01Ypa51UE5XRTQL/1jwu1Vphg0u9oEDFRBd6R3w0CkoNw85726s4U3oSJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=khoAVu+P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFHROnmq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AE3606A334;
-	Wed, 18 Nov 2026 18:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BA7606A331;
+	Wed, 18 Nov 2026 18:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=khoAVu+P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720841F000C4;
-	Wed, 18 Nov 2026 18:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFHROnmq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540D31F000C4;
+	Wed, 18 Nov 2026 18:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024817;
-	bh=coWZPiRNLSrXflgGOUFWVbNDRbkUK5ShIIOjy98JiZs=;
+	s=korg; t=1795024819;
+	bh=XEztKZDzA+zv2NbmWsNoJPyICpkVw5bXrIX43VNz3f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khoAVu+PIxwu5oMWRf46VbgW/9+FV26HKTvmkVOEs5SRs1M81Hp96kHfrpF4GAUOI
-	 Dk9rTY7vCS5qHayjead7bpCQqc/+RWnu88lf+YKlcl6ky0ND/iACTSSZhM63cLJoGE
-	 oFB5m7CtqunKtVOxHGDbuUzOVvcJalrlpxn+0rjY=
+	b=pFHROnmqKA1R76oOrSFjzghRKJ97M3VmS6tfHmfJ6GU5JrWKrDVq21EuJnpY70+Zo
+	 ApkPgYOAJWUQwUzJBDQS3aC0SqfjVLHqVEcsVRCxd5/xeQAbENT0wMMm7o8+8x6YvA
+	 NFVdmFYh6bObQFa6HgZI6qQVwH3t+buUPULCfftc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0858/2151] RDMA/bnxt_re: Detect wrong sge_len passed for inline
-Date: Wed, 18 Nov 2026 15:43:13 +0100
-Message-ID: <20261118150153.487672304@linuxfoundation.org>
+Subject: [PATCH 6.18 0859/2151] RDMA/bnxt_re: Validate SRQ max_sge at create time
+Date: Wed, 18 Nov 2026 15:43:14 +0100
+Message-ID: <20261118150153.519115196@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,37 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 81551ece0864c346080d241719d458c93f0e7fc9 ]
+[ Upstream commit 1894ed9a664d19c190ce1bd2146759efbae77e4b ]
 
-Avoid handling wrong sge_len by adding extra check
-to see if the passed length is more than the inline
-size supported.
+bnxt_re_create_srq() stored attr.max_sge into srq->qplib_srq.max_sge
+unvalidated, which defeats the num_sge check in
+bnxt_re_post_srq_recv() since that check compares against this same
+attacker-chosen value. Reject max_sge > dev_attr->max_srq_sges at
+create time, and clamp dev_attr->max_srq_sges to BNXT_STATIC_MAX_SGE
+since SRQ WQEs use the fixed-size SGE array.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 ++++++++
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 0252cd6711a1a..7c8aad8a12405 100644
+index 7c8aad8a12405..656b39753f353 100644
 --- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
 +++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -2777,8 +2777,9 @@ static int bnxt_re_copy_inline_data(struct bnxt_re_dev *rdev,
- 				wr->sg_list[i].addr;
- 		sge_len = wr->sg_list[i].length;
+@@ -1897,6 +1897,14 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 		goto exit;
+ 	}
  
--		if ((sge_len + wqe->inline_len) >
--		    BNXT_QPLIB_SWQE_MAX_INLINE_LENGTH) {
-+		if (sge_len > BNXT_QPLIB_SWQE_MAX_INLINE_LENGTH ||
-+		    ((sge_len + wqe->inline_len) >
-+		    BNXT_QPLIB_SWQE_MAX_INLINE_LENGTH)) {
- 			ibdev_err(&rdev->ibdev,
- 				  "Inline data size requested > supported value");
- 			return -EINVAL;
++	if (srq_init_attr->attr.max_sge > dev_attr->max_srq_sges) {
++		ibdev_err(&rdev->ibdev,
++			  "Create SRQ failed - max_sge %d exceeds supported %d",
++			  srq_init_attr->attr.max_sge, dev_attr->max_srq_sges);
++		rc = -EINVAL;
++		goto exit;
++	}
++
+ 	if (srq_init_attr->srq_type != IB_SRQT_BASIC) {
+ 		rc = -EOPNOTSUPP;
+ 		goto exit;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index 408a34df26672..5036cc2c2cd6f 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -160,7 +160,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw)
+ 
+ 	attr->max_srq = le16_to_cpu(sb->max_srq);
+ 	attr->max_srq_wqes = le32_to_cpu(sb->max_srq_wr) - 1;
+-	attr->max_srq_sges = sb->max_srq_sge;
++	attr->max_srq_sges = min_t(u32, sb->max_srq_sge, BNXT_STATIC_MAX_SGE);
+ 	attr->max_pkey = 1;
+ 	attr->max_inline_data = attr->max_qp_sges * sizeof(struct sq_sge);
+ 	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
 -- 
 2.53.0
 
