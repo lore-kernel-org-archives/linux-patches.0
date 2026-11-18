@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059974;
-	b=JcgR/4vi1I3z/hOnYjrKvFKCwrq3w2F8Z3KPqg4yt4pEoT0ogzO3bTF+d6G1W2GHUQdi
-	 x/JJWX7hVtFcsXBQVwu5h3babkBDMGGEnc1gsSvlLOEtJXepAtiKmyEepe3/BkrK5sw8v
-	 Vkex4376Jhg04qQ412VHBWxlf3AXXKnlgltJN+dKFf0J41B86ASp5Oqle4TlOxS9V5fXS
-	 cGIQ0Oe8MyXd9xmeYCqpFzkpnkq0qZOO3qjbFnSJfa+59IlYOSAwkqX0ep8i6tQEkoO6b
-	 13GM3SiblCuU1QgQLgMeWwljzzvCDx30YT7GQ3TMEdetmcF/3ja29hyoqvBUw5/09tw==
+	t=1795059977;
+	b=Q/30uAHAQasDvFajzLyBjcMTV1KBeyzGCOEkRddu2jHyOyiGIXkxpKPQNoPS1DzhFOyR
+	 CHYGqjOAbedoqxmRoj2ZEDJfW4tXNWihApkdZatSm5G5l7YwpvKKyFon6TDCaAST1UrED
+	 LQxHDDMYwRfar87Ky+GMr3QzXWx/UEJXosrH7FR75bjOmJm4Od4moaBOi/Slp+jXbH7dg
+	 XJilVuRWgqDY8X7ibpjGKZONxCtGmxgbg4Kmqhe0MmXWO1r/QWQjWGvWI3RJWFufz/RhV
+	 8HaaEWyPrv1JHpiYm8CDcEJLkkErbW0213TcRKAIAaI16vH4VgkRSscycg4i9oAAOuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uHPT7w+yGbQOzg5pCzx+/LtR8+fGUsh+miZe+mdSTyQ=;
-	b=ugGzGEDyTLiF8f0pI4ztDJW//TQgOm7t3R0hkU54IhucApDCXHdoPG69Rrq3IOXebBNC
-	 La24kAY0aziEBVbrp0xuNLDkyTktefhv3rGOI2nKWx55qVU8gIyg8UONHy5eORc8igTO2
-	 xYDY9qhxmawu5J0TO/tNcbKdpFqDmUDt+a5/RMDoJMgQXAT7/yvbhJ8Q0NvQETsh1Z5la
-	 28fnvU03GnOIjCP4VtU4UqZwIkZ1D0ND9oaexeNh5FY6q5biZu24o4MZubNNZyL0xduD7
-	 hRabjlMOQGAGSMNxeYsJdxSiqfr6hcnDg5kL4m6yADSfVIXaLv8KwURQPiBYrhsDgBg==
+	bh=MvUkig/edSre8zQB+W38ot5ZDTqjnJzk+GB4dkNrZf4=;
+	b=jrpxYhS5aSkK6Y35ptgYAGYvud1eethJicAbH4CHtdzydOz+TM2nV2l0tHyDsi5fO/n9
+	 8haSPrEmypCxCuA6pK/QXKEIF9RQRdy0aZP++wxvVJ0IdmY+PpD8Bw8XroOUkE9QzLuOC
+	 9Lv+P8FRX4KZK5r3oEl8hXIn6gvHwwOLvOYBmHrRumk7WOnU+2hnrvbPvEyLXg7L8TmtU
+	 5siAszgVxgukhEVDXEkRyT51hCRwUt1lpcZq4iXkm2s/dxbOXK919yMUdqNFNajvsomrB
+	 Pm9Vu4bjivgut+fAGnlTyaG/FxTDkwRY9SqJyVlVme7tjWbo8jyxdNK4RHRpjo50ZNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdqKFwbR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6ZJW5Xh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D66606A325;
-	Thu, 19 Nov 2026 03:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8068606A32A;
+	Thu, 19 Nov 2026 03:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdqKFwbR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C921F000C6;
-	Thu, 19 Nov 2026 03:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6ZJW5Xh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BDD1F000C5;
+	Thu, 19 Nov 2026 03:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059974;
-	bh=uHPT7w+yGbQOzg5pCzx+/LtR8+fGUsh+miZe+mdSTyQ=;
+	s=korg; t=1795059977;
+	bh=MvUkig/edSre8zQB+W38ot5ZDTqjnJzk+GB4dkNrZf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CdqKFwbR274mGk0ks1zkMNYZ8T2RiCz1ZRkbBtCKJsh6umP1Y2/sXtTn4LiZ+7lgZ
-	 9YRo/mE338wiwqEHvfp75KadMzlfIro9o4ntAu4wKyWWcc+TuG3cV6g4RE/HDIPPev
-	 6zSNiiP7X0CLhOGCRXRoUvbwmqpVuqbbs3fWcX1U=
+	b=s6ZJW5Xh5l197DAcT4yX1hTk+btV0VeQ1hOxaGUwqQgH9sOxIZ99vvdRnrnrtCsMk
+	 ilXt5wPpuFRaneLAq5bj2aY68y6Vh2KtX/Yp23WI73nRxwN6B7kzEFKzdbr371wFns
+	 O48DQ0Vch4Wz80LjNRC1z6sY71mJRM2ONxrp2xcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Labelle <southampton.jake.labelle@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1034/1848] nilfs2: validate directory position after llseek in readdir
-Date: Wed, 18 Nov 2026 15:51:12 +0100
-Message-ID: <20261118150000.657331864@linuxfoundation.org>
+Subject: [PATCH 5.10 1035/1848] mm/userfaultfd: wake waiters when registration modes are removed
+Date: Wed, 18 Nov 2026 15:51:13 +0100
+Message-ID: <20261118150000.693067060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,94 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jake Labelle <southampton.jake.labelle@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit de7f49c12566cc5c7437a2f26c6c754b9d4d5648 ]
+[ Upstream commit 4eee9c389b072e161549d46dcb1ae10b0222717e ]
 
-nilfs_readdir() uses ctx->pos, which userspace can set to an arbitrary
-value via llseek, as an offset into the directory folio and parses
-whatever bytes sit there as a directory entry.  A position pointing
-into the middle of an entry -- or at unused bytes of a corrupted image
-that the page validator never inspected -- makes dir_emit() copy up to
-255 (name_len) bytes from a bogus entry, possibly reading past the end
-of the folio and returning unrelated memory contents to userspace.
+UFFDIO_REGISTER can replace MISSING or MINOR tracking without waking
+faults that are already queued. For example, switching an anonymous
+range from MISSING to WP leaves a missing-fault waiter asleep until
+userspace explicitly wakes it.
 
-Snap unaligned positions onto a valid entry boundary by walking the
-rec_len chain from the chunk start before parsing, as ext2 does in
-ext2_validate_entry().
+When a registration change removes a UFFD mode, wake waiters in the
+affected interval after updating the VMA. The VMA is write-locked at
+this point, so no new faults can queue under the old modes and woken
+threads cannot retry until mmap_write_unlock(). Waiters for retained
+modes in the same interval may also wake and refault.
 
-[ryusuke: fixed offset wrap-around in nilfs_validate_entry() and
- conformed AI tag to guidelines]
+The hang reproduces for MISSING-to-WP and MINOR-to-MISSING transitions,
+with both read and unread fault events.
 
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Assisted-by: Claude:claude-mythos-5
-Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-[ sashal: adjusted helper insertion context to follow nilfs_set_de_type() instead of nilfs_next_entry() ]
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-25-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: replaced unavailable __VM_UFFD_FLAGS with VM_UFFD_MISSING | VM_UFFD_WP ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ fs/userfaultfd.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index 3d7e692f3e7f1..2ff8f8d3c3d6d 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -265,11 +265,27 @@ static void nilfs_set_de_type(struct nilfs_dir_entry *de, struct inode *inode)
- 	de->file_type = nilfs_type_by_mode[(mode & S_IFMT)>>S_SHIFT];
- }
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index 6773227fbe889..21c32d941f4a9 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1394,6 +1394,9 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
  
-+static inline unsigned int
-+nilfs_validate_entry(char *base, unsigned int offset, unsigned int mask)
-+{
-+	struct nilfs_dir_entry *de = (struct nilfs_dir_entry *)(base + offset);
-+	struct nilfs_dir_entry *p =
-+		(struct nilfs_dir_entry *)(base + (offset & mask));
+ 	ret = 0;
+ 	do {
++		const bool any_mode_removed = vma->vm_flags &
++			(VM_UFFD_MISSING | VM_UFFD_WP) & ~vm_flags;
 +
-+	while ((char *)p < (char *)de) {
-+		if (p->rec_len == 0)
-+			break;
-+		p = nilfs_next_entry(p);
-+	}
-+	return (char *)p - base;
-+}
+ 		cond_resched();
+ 
+ 		BUG_ON(!vma_can_userfault(vma, vm_flags));
+@@ -1442,6 +1445,16 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
+ 		vma->vm_flags = new_flags;
+ 		vma->vm_userfaultfd_ctx.ctx = ctx;
+ 
++		/* Retry faults for removed modes while the VMA is write-locked. */
++		if (any_mode_removed) {
++			struct userfaultfd_wake_range range = {
++				.start = start,
++				.len = vma_end - start,
++			};
 +
- static int nilfs_readdir(struct file *file, struct dir_context *ctx)
- {
- 	loff_t pos = ctx->pos;
- 	struct inode *inode = file_inode(file);
- 	struct super_block *sb = inode->i_sb;
-+	unsigned int chunk_size = nilfs_chunk_size(inode);
- 	unsigned int offset = pos & ~PAGE_MASK;
- 	unsigned long n = pos >> PAGE_SHIFT;
- 	unsigned long npages = dir_pages(inode);
-@@ -288,6 +304,24 @@ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
- 			ctx->pos += PAGE_SIZE - offset;
- 			return -EIO;
- 		}
-+		/*
-+		 * ctx->pos comes from userspace via llseek and may point
-+		 * into the middle of an entry -- or at unvalidated bytes
-+		 * of a crafted image. offset is only nonzero here on the
-+		 * very first iteration (subsequent pages always start at
-+		 * offset 0, which -- like any chunk boundary -- is always
-+		 * a legitimate entry start, since no rec_len chain crosses
-+		 * a chunk boundary). Snap a non-chunk-aligned offset onto
-+		 * a real entry boundary by walking the chain from the
-+		 * enclosing chunk's start, as ext2 does; otherwise
-+		 * dir_emit() copies name_len bytes from a fake entry,
-+		 * reading past the end of the folio.
-+		 */
-+		if (offset & (chunk_size - 1)) {
-+			offset = nilfs_validate_entry(kaddr, offset,
-+					~(chunk_size - 1));
-+			ctx->pos = ((loff_t)n << PAGE_SHIFT) + offset;
++			wake_userfault(ctx, &range);
 +		}
- 		de = (struct nilfs_dir_entry *)(kaddr + offset);
- 		limit = kaddr + nilfs_last_byte(inode, n) -
- 			NILFS_DIR_REC_LEN(1);
++
+ 	skip:
+ 		prev = vma;
+ 		start = vma->vm_end;
 -- 
 2.53.0
 
