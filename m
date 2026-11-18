@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020917;
-	b=uHR5oM6b8mnCdWwzvVtaO4gfuZ6PPR3gW+Ncen/uXsBd45OqQJfBHy5HTqEFSBKxT1/Q
-	 hWHyJjtGPjln7PUh+d7XrfB0yInQ9xXDEE1uhds5b3xgNrnHWVhhoPwS+D6nx7Awq2N95
-	 4xK83Qi8kgzRpqFatutO6gBllhMK06py39OAIZyPLTgNCWDilTXsUKWowMHhSh6OF0w/a
-	 Whmspe28kwfpuB8yRYqTIPBN/C5Lnxohhxnd8ZVb1wGyocg0KW9MpVMcOl6bcRwsYT6IA
-	 ZglipyWhemahifoeHiY1Y65v28QjQhG7csnyE9islDdq183tqqJjo9DtsrpnaUqO7og==
+	t=1795020920;
+	b=oYX4f/Ggg3LIwTCzysXcnpPYRaS/5/EVKkFicxs7+rphJRPD88aMSIZdkGbp22dtL1jn
+	 AjzfsFVEPLus4AC41vLwN5L1wI4DD9DaT8xLTJ8Jlz9J/dGHaqXtfljh7s0k61u4ITtyK
+	 R/r5apPAatux1MjjuekSMSvWBzKXIKVtu3vZoHH/Pw+ntpHqXyIHa4bIWWBVMAF94gagC
+	 LJ9lj5h/ky26ph3rtUKqL0Bp7oTC2Vpyiy+Tk7HZmiMSY5MmJcRJxI/vgk7y/qJCaXzBv
+	 6qPrdVS15f/iQLSSbpLC94K8hxR5slmi7tON13XaufLwL9U4kqmqSIpuRwV5C+9F4lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m5Xngg/VW9TSccjmtD7zp5d2sLhc/CMfA87ArYIUK3Y=;
-	b=ijsr/14vgr3tUJ/oLEKPdYi/B0617LF2eQ/ctxankzpB4P2WUH6/vcxwHcAqRZJD7O7P
-	 I2AQ7Ydn/zGEPP4F3lo2jd8mBJ4SSLI7zZHsYcnoNY1LVrEczQm56NEpcWQhUqebmv8N/
-	 nnDU/cV3UKvyP/QxRdhQ6epmZS8kDye5/Z2SRYzNROYWrEk40Cdtzyz61lZ8HHGg1LaWC
-	 roqnE5Xt/dWTKLo6zHsONWJ5i4uzfnF7A10kNO11V1NhNr9WSe9qjjHFqXTvZq8lKpD94
-	 KiweCc6bO9VeiAh/oNKJrZ6UgpTY1fxmdEx+XMQdBgKw5/Ze+Fw1bfi9LsGS/7PkPGA==
+	bh=TKDzqNdQGDxcvnDmX7MouM4wDwUtqd1otxZFlH16ha4=;
+	b=2Ibku0uN9BV12L7vuulhU6bSpv4R+joLKv46Tby3RKD9EaAQAfmIE8iD7soae60NkciR
+	 tsVEuciS87q89eDEelDjWMerHcOWYE1ho3IBsWv233bhxKNsLY2zPTJQGK2P7Dn0Jck3+
+	 G9RVraha8CyJDhU9AkJJWHkfzc6g3j83xJAGLBgqJd9ahnVX71nh4fCyhPppDT95O9EmT
+	 k9pCHXQeHzJqaVK13E/lUAHNcOi/Lv8Wzx1XuCfuMz095xJ/zY+mvhLxud679ooabHDjJ
+	 7fyLsxCQlYZ8kPlVoepmFk0Ju445oGQ7im+5/yZS5DZnZKGOdAiA69ncg5LvQmSsZoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WSRKJxsJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6KSNj7x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F519606B596;
-	Wed, 18 Nov 2026 16:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55455606A331;
+	Wed, 18 Nov 2026 16:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WSRKJxsJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25E41F000C8;
-	Wed, 18 Nov 2026 16:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6KSNj7x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A478A1F000C5;
+	Wed, 18 Nov 2026 16:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020917;
-	bh=m5Xngg/VW9TSccjmtD7zp5d2sLhc/CMfA87ArYIUK3Y=;
+	s=korg; t=1795020920;
+	bh=TKDzqNdQGDxcvnDmX7MouM4wDwUtqd1otxZFlH16ha4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WSRKJxsJA7R0YxACfQAkZOIwCl/QNPuGuTWD+oihBfzzazXOP0+Csz0GRpOGjtwH7
-	 RZfZ4b3bdrafl0IsL7vvjCy6dm7uhvzvp8td5QQVvwkGIVFvsq7nY6ZG7er6ffYkps
-	 6RTu9YDLRec0iglu0OumonlhO3mz+l7us0sUvpTQ=
+	b=z6KSNj7xNXUoWIVK9xhzWoNOBNtEdutsgqnPXmU7ODPowFfw2bsAKjefhID0ycpUt
+	 K2w2pE/LArnBVI4PigztIXSDcHn6HDOTBTOV0jGA2lfXqOGBSdwnoZ2P0QcngZQIb9
+	 utyWygUwmzOHpg33h3V7Dw8wjIbxfIkJ+gGc8JIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2122/2651] bpf: Dont let an extension reach further into the context than its target
-Date: Wed, 18 Nov 2026 15:56:02 +0100
-Message-ID: <20261118150402.311290892@linuxfoundation.org>
+Subject: [PATCH 7.3 2123/2651] bpf: Keep values of a dead owner for sleepable programs
+Date: Wed, 18 Nov 2026 15:56:03 +0100
+Message-ID: <20261118150402.344456062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,63 +68,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit fcbfa99aa657627528b75e7dc1023bcb0b84e558 ]
+[ Upstream commit f693030a187b56a3946b36521bb90d785f906669 ]
 
-How large the context of a raw tracepoint, tracepoint or syscall program
-is depends on what the program is attached to, or is run with.
-bpf_probe_register(), perf_event_set_bpf_prog() and the test runs compare
-that with max_ctx_offset of the program.
+bpf_local_storage_destroy() frees the elements of an owner behind a plain
+RCU grace period, on the ground that no program can refer to an owner that
+goes away.  But the pointer that bpf_task_storage_get() and its like
+return stays valid for the verifier after the program has released the
+owner, or has left the bpf_rcu_read_lock() section it had the owner from.
+A sleepable program is in no RCU read side critical section, so it can
+write to the value after the owner has died and the element was freed:
 
-An extension of the program, or of one of its global functions, gets the
-same context.  How far it reaches is noted in its own max_ctx_offset, which
-nobody looks at.  On a tracepoint with one argument it reads the stack
-behind the arguments, in a test run the memory behind the context, or
-from NULL if there is none:
+  BUG: KASAN: slab-use-after-free in _copy_from_user+0x42/0xa0
+  Write of size 8 at addr ffff8880074404a8 by task lsuaf/55
 
-  BUG: KASAN: stack-out-of-bounds in bpf_prog_954b5d2051843629_ts28_ext_far+0x7e/0x113
-  Read of size 8 at addr ffffc90000def7b8 by task ts28/104
+Free the element behind an RCU Tasks Trace grace period if sleepable code
+may use the map.  A program that a map is bound to was loaded, and counted
+in map->sleepable_refcnt, before it got a value from the live owner, and
+stays counted until a grace period behind its last run.
 
-  BUG: KASAN: slab-out-of-bounds in bpf_prog_954b5d2051843629_ts28_ext_far+0x7e/0x113
-  Read of size 8 at addr ffff88810712c3e8 by task ts28/104
+A program can also get at a storage map by a lookup in an outer map.  Then
+only the outer map is counted, its programs can come after the inner map
+was put into it, and can hold on to the inner map after it was taken out.
+So note in a map that it has been an inner map, and treat it like one with
+sleepable users from then on.
 
-Refuse to attach an extension that reaches further than the program which
-it extends.  A program that leaves the context to its extensions has to
-touch as much of it as they do.
+The same goes for what the special fields of the value hold.  The page of
+a uptr has to stay pinned, and a kptr which the program stores after the
+owner has died has to be released.  Leave the fields, and the smap that it
+takes to free them, to bpf_selem_free_trace_rcu(), as bpf_selem_unlink()
+does.  bpf_local_storage_map_free() waits for that callback, and leaves
+smap alone if it comes across such an element.
 
-Fixes: be8704ff07d2 ("bpf: Introduce dynamic program extensions")
+Elements of such maps now wait for sleepable programs that are running
+when their owner dies.  Other maps are freed as before.
+
+Fixes: dcf456c9a095 ("bpf: Fix usage of trace RCU in local storage.")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-3-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-4-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/linux/bpf.h            |  1 +
+ kernel/bpf/bpf_local_storage.c | 31 +++++++++++++++++++++++++------
+ kernel/bpf/map_in_map.c        |  7 +++++--
+ 3 files changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index ffd6802706d4f..de04cd266a422 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3831,6 +3831,19 @@ static int bpf_tracing_prog_attach(struct bpf_prog *prog,
- 		err = -EINVAL;
- 		goto out_unlock;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 8bc7800d90add..191b2fede27fc 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -337,6 +337,7 @@ struct bpf_map {
+ 	bool frozen; /* write-once; write-protected by freeze_mutex */
+ 	bool free_after_mult_rcu_gp;
+ 	bool free_after_rcu_gp;
++	bool was_inner_map;
+ 	atomic64_t sleepable_refcnt;
+ 	s64 __percpu *elem_count;
+ 	u64 cookie; /* write-once */
+diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
+index 4f471e0620d2c..94b1858ff32d9 100644
+--- a/kernel/bpf/bpf_local_storage.c
++++ b/kernel/bpf/bpf_local_storage.c
+@@ -350,7 +350,8 @@ int bpf_selem_unlink(struct bpf_local_storage_elem *selem)
+ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
+ 				    struct bpf_local_storage_map_bucket *b)
+ {
+-	bool in_map_free = !!b, free_storage = false;
++	bool in_map_free = !!b, free_storage = false, sleepable_users = false;
++	bool keep_fields = false;
+ 	struct bpf_local_storage *local_storage;
+ 	struct bpf_local_storage_map *smap;
+ 	unsigned long flags;
+@@ -360,17 +361,26 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
+ 	smap = rcu_dereference_check(SDATA(selem)->smap, bpf_rcu_lock_held());
+ 
+ 	if (smap) {
++		/* A map that is freed, or NULL here, has no program left. */
++		sleepable_users = !in_map_free &&
++				  (atomic64_read(&smap->map.sleepable_refcnt) ||
++				   READ_ONCE(smap->map.was_inner_map));
+ 		b = b ? : select_bucket(smap, local_storage);
+ 		err = raw_res_spin_lock_irqsave(&b->lock, flags);
+ 		if (!err) {
+ 			/*
+ 			 * Call bpf_obj_free_fields() under b->lock to make sure it is done
+ 			 * exactly once for an selem. Safe to free special fields immediately
+-			 * as no BPF program should be referencing the selem.
++			 * as no BPF program should be referencing the selem, unless it
++			 * is sleepable: see below.
+ 			 */
+ 			if (likely(selem_linked_to_map(selem))) {
+ 				hlist_del_init_rcu(&selem->map_node);
+-				bpf_obj_free_fields(smap->map.record, SDATA(selem)->data);
++				if (sleepable_users)
++					keep_fields = true;
++				else
++					bpf_obj_free_fields(smap->map.record,
++							    SDATA(selem)->data);
+ 				unlink++;
+ 			}
+ 			raw_res_spin_unlock_irqrestore(&b->lock, flags);
+@@ -385,7 +395,15 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
+ 		 * with selem1 as raw_res_spin_lock_irqsave() returns -ETIMEDOUT.
+ 		 */
+ 		WARN_ON_ONCE(err && in_map_free);
+-		if (!err || in_map_free)
++		/*
++		 * A sleepable program can still use, and fill, the fields of a value
++		 * that it got before it let go of the owner. As for bpf_selem_unlink(),
++		 * bpf_selem_free_trace_rcu() frees them, and takes smap for that:
++		 * map_free() waits for this RCU read side critical section and then
++		 * for the callback. It must not take smap away from an selem that
++		 * destroy() has unlinked from the map.
++		 */
++		if (in_map_free ? err || unlink : !err && !keep_fields)
+ 			RCU_INIT_POINTER(SDATA(selem)->smap, NULL);
  	}
-+	/*
-+	 * The size of these contexts depends on what the program is attached
-+	 * to, or run with. That is compared with max_ctx_offset of the program,
-+	 * and nobody looks at the one of its extensions.
-+	 */
-+	if (prog->type == BPF_PROG_TYPE_EXT &&
-+	    (tgt_prog->type == BPF_PROG_TYPE_RAW_TRACEPOINT ||
-+	     tgt_prog->type == BPF_PROG_TYPE_TRACEPOINT ||
-+	     tgt_prog->type == BPF_PROG_TYPE_SYSCALL) &&
-+	    prog->aux->max_ctx_offset > tgt_prog->aux->max_ctx_offset) {
-+		err = -EINVAL;
-+		goto out_unlock;
+ 
+@@ -432,11 +450,12 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
+ 	 *
+ 	 * The owner that map_free() takes an selem from is alive: sleepable code, which
+ 	 * is in no RCU read side critical section, may be walking its list for another
+-	 * map.
++	 * map.  And it can still use a value that it got before it let go of an owner
++	 * that destroy() is called for.
+ 	 */
+ 	if (unlink == 2 ||
+ 	    atomic_cmpxchg(&selem->state, SELEM_UNLINKED, SELEM_TOFREE) == SELEM_UNLINKED)
+-		bpf_selem_free(selem, !in_map_free);
++		bpf_selem_free(selem, !in_map_free && !sleepable_users);
+ 
+ 	if (free_storage)
+ 		bpf_local_storage_free(local_storage, !in_map_free);
+diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
+index d2cbab4bdf644..edad013d260c7 100644
+--- a/kernel/bpf/map_in_map.c
++++ b/kernel/bpf/map_in_map.c
+@@ -106,10 +106,13 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
+ 		return ERR_PTR(-ENOTSUPP);
+ 
+ 	inner_map_meta = map->inner_map_meta;
+-	if (inner_map_meta->ops->map_meta_equal(inner_map_meta, inner_map))
++	if (inner_map_meta->ops->map_meta_equal(inner_map_meta, inner_map)) {
+ 		bpf_map_inc(inner_map);
+-	else
++		/* Its users are those of the outer maps from now on */
++		WRITE_ONCE(inner_map->was_inner_map, true);
++	} else {
+ 		inner_map = ERR_PTR(-EINVAL);
 +	}
  
- 	err = bpf_link_prime(&link->link.link, &link_primer);
- 	if (err)
+ 	return inner_map;
+ }
 -- 
 2.53.0
 
