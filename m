@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020828;
-	b=k93HRKNONNUXsg6WNMjHglOalAky/956Ovsa3jYjViRudWDzfJxwQz/ZKT1MmeZLfi5k
-	 NJXF92F6IEPxUJeK065u5XmD32Fzs9pGZA6Jh3a8PG6S9Hpye1H+AGbzepd9+wpXjBjtW
-	 gY7EZ54nlvmUd5p8u+gGvf5CMs2mBR5gIgwamgKf7H0LB5nIBBNUnGCW2NKMAsxN3RWrz
-	 5qQiK4jb3lontAdWFjbjNrwTp+LW6jLLxOVLs7rB7Nv56NxXdJtB2HlEPnJwL4iOmAcI/
-	 7moOYpVn0HqGLkw1J9OugzW3q66CQ3P3XpoQm8KE875s+XDaqg96C3XcvGoxf4cwg2Q==
+	t=1795020831;
+	b=tQHPMza9F4FKiSajtSLKtJAKsIQiGzPe0NUZ8ML8uhs9FDu22G/1P3VZDDgokQAHW1nc
+	 VcpV/YNQCKM+5ixaHoDjKvcdXYvNWVsnKlWV9yHkM9sBdroUOVJeFLFEetFzufJR7kZR+
+	 4h4zqlV4DS8y24mnBh6ns0HKqJTM/99tEettJSvO3GaoMtV/UoHkyOSJ73lHQgpcxDOL3
+	 9ERfFaMyg1wfQ9KHOetJzcnsU8W04XGhOknUY4Mo2R6UHT+a52N0VggEJyzi+iIMcwQFw
+	 N9aRDyVzM25x7r0tZVsxe3POUU+ysg9uJgBd4y6ArqAh+0WvUY80ldgoJu/H0uj9Wdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oQPTgehLSN5mcp7Q/snpXI8qgt4OYJpX44ZcXoOcyU8=;
-	b=oTnHh7tSbJvHg2teoB7B+x1nPwQg5BdAW9jnNswwKlD53HqJp04q/2QNIOGjAYrIwdm5
-	 KPIs9MxkbRHvQ5ihPX5t5U5kImI4qSPyxyT/rCsfvFbQ5jV2C4etEpGdJIzAvR8kgmcii
-	 9LcytIR4ErJ2HKuHylFbFAET9/m0lHnOuPDxrsrTK8+98hQobwuDBq4LpnmJVwakSoY3H
-	 MbWE6d9gud+lUrQu/oziSgNAj4yuz/LANz6CVD8fsOWQmijXjRe5XtiWLhVPuT5mCG0mC
-	 aZLvg/euFgvA5sdBM4SZfw0/pDaoSAOXD3Wz8Bnd0IEGZiFXA4IZslIelNSXurRg1GA==
+	bh=CA4EXBPdDts8e3zE2sob0638sdqQ3LmUkaVxjW3eguM=;
+	b=tmUln0Nn4CektuSmWj4yHmg7740RkZnDXvYOnxMVMIM7xlAvb/PpjN10B1L6LufkkpWo
+	 nVnMJcEYEmg0/wHL7p1c+4pYSxrpe5Ll7oLVh5nfpnh92+R8sOOEc1e/DcwNkWFadTMXh
+	 rx5ygLPCW/mEJtvE/Fb9ZUGEnYlBLN3Pf5VqEKRlId1ikgl9BUryKESR4ftRQ6TZKepfw
+	 qj/eDy4pfre2Gu0/ZAUfHpFGDnhGICEKaglj+Nmg+sNlmtLt2/CARQ9BXVUqyj99+LH99
+	 ulf6UiX0Z7fl5Z4TYj//6kkxk5gW883p+MM2l2LuidbXlUg0QLz69/xwd9L1lGJJnNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXT2xn8T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJwdd1oY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D2060A260D;
-	Wed, 18 Nov 2026 16:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5909860A2612;
+	Wed, 18 Nov 2026 16:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXT2xn8T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A6C1F000C4;
-	Wed, 18 Nov 2026 16:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJwdd1oY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777D31F000C6;
+	Wed, 18 Nov 2026 16:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020828;
-	bh=oQPTgehLSN5mcp7Q/snpXI8qgt4OYJpX44ZcXoOcyU8=;
+	s=korg; t=1795020831;
+	bh=CA4EXBPdDts8e3zE2sob0638sdqQ3LmUkaVxjW3eguM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXT2xn8Twx+kZC6ibijx+Dvnt6PQAEiCqeJSKSUE1/rA0ZG6AefNNdacwX3vguqyE
-	 zCc0jXHbJGw+LNvU5NQpVPBkr89QgKtCEMXLO0adDDQezZkaTB+L+AkF/wQ25elkwv
-	 ZLKfwkpeOrHTn41JgIevJXf4khDHjzRdyXQaAZC0=
+	b=BJwdd1oY4i8CoUkjGPAZHnARakD2uvo+yYUEitD7uP5YArFY0YOB5Mv3qEnTkF7/Q
+	 CKxtaq//ub/O5TfRm+ZdJFNA7zbFAzDh9o09WjEy+IHaDvuvpT1d3Mnn1yMlH/SIVu
+	 jqf+21DJexQVK8XWgwjIdToOlovFr6PMgW5OQOg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2089/2651] bpf: Report non-sleepable kfunc programs accurately
-Date: Wed, 18 Nov 2026 15:55:29 +0100
-Message-ID: <20261118150401.226632141@linuxfoundation.org>
+Subject: [PATCH 7.3 2090/2651] bpf: Forbid sleeping in hash map for_each callbacks
+Date: Wed, 18 Nov 2026 15:55:30 +0100
+Message-ID: <20261118150401.259199467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,189 +68,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit dac3b7a30d7e5384a61ee46f476dc2c45ceb9453 ]
+[ Upstream commit 9bdd5e7f5d8313fa1f3a210621b4007bb5ad0ec6 ]
 
-A sleepable kfunc call can fail either because the program is not
-sleepable or because an otherwise sleepable program has entered a
-non-sleepable critical section. check_kfunc_call() checks these
-conditions separately. The first check is only gated by in_sleepable(),
-so the shared diagnostic can blame an active RCU, preemption-disabled,
-IRQ-disabled, or locked region even though leaving that region would not
-make the program sleepable. Adding a second diagnostic entry point only
-to force the program context would duplicate the API.
+A sleepable program (e.g. SEC("syscall"), lsm.s, fentry.s) can pass a
+callback to bpf_for_each_map_elem() on a hash map and call a sleepable
+helper or kfunc such as bpf_copy_from_user() from it. The verifier
+accepts this, but at run time the callback is invoked from inside an RCU
+read-side critical section:
 
-Reject the call once based on in_sleepable_context(). Teach the shared
-bpf_diag_ctx_forbidden() reporter and non_sleepable_context_description()
-to consider active RCU, preempt, IRQ, and lock regions only when the
-program is sleepable, and to fall back to the non-sleepable program
-otherwise. A non-sleepable program can still hold that context state, so
-relying on the existing no-context fallback alone would keep blaming the
-critical section.
+    bpf_for_each_hash_elem()
+      rcu_read_lock();
+      callback_fn(map, key, val, ctx, 0);
+        bpf_copy_from_user()       <- may fault and sleep
+      rcu_read_unlock();
 
-Select the suggestion at the kfunc, helper, and global-function sites
-according to that cause, and choose between the two existing kfunc
-verifier messages the same way, so a sleepable program is told to leave
-the critical section and a non-sleepable program is told to become
-sleepable.
+bpf_each_rhash_elem() does the same for BPF_MAP_TYPE_RHASH. Sleeping
+there triggers the "Voluntary context switch within RCU read-side
+critical section!" warning, delays grace periods, and with
+CONFIG_PREEMPT_RCU=n silently ends the read-side critical section that
+the bucket walk relies on.
 
-This avoids a diagnostic-only wrapper while retaining context history for
-sleepable programs that enter a forbidden region.
+Synchronous callbacks are verified with the caller's state, so
+kernel/bpf/verifier.c:in_sleepable_context() only looks at the program's
+sleepability and the locks the program took itself, and does not know
+that the helper holds rcu_read_lock() around the callback.
 
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+With a SEC("syscall") program whose callback reads a page that has to be
+read from disk first:
+
+  BUG: sleeping function called from invalid context at include/linux/uaccess.h:169
+  RCU nest depth: 1, expected: 0
+   __might_fault+0x29/0x80
+   _copy_from_user+0x26/0x90
+   bpf_copy_from_user+0x23/0x60
+   bpf_prog_17d44fa39eebd6cc_cb+0x35/0x46
+   bpf_for_each_hash_elem+0xdb/0x280
+
+Fix by marking the callback frame of hash map iteration as running under
+RCU and making in_sleepable_context() false while such a frame is on the
+call stack, so sleepable helpers, kfuncs and global functions are
+rejected there as inside bpf_rcu_read_lock(). The rules for trusting RCU
+protected pointers are left alone, which is conservative and keeps
+callbacks that verify today and do not sleep working. The flag is
+compared in func_states_equal() so that pruning never mixes the two
+contexts. Array map callbacks run without any lock and keep the caller's
+context.
+
+Fixes: 314ee05e2fc6 ("bpf: Add hashtab support for bpf_for_each_map_elem() helper")
+Fixes: 818e00848227 ("bpf: Implement iteration ops for resizable hashtab")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/2e42a1a2bf45f4d2aba7495bdc9f147558055740e2f3c8b9dae255f6c57fc13c@mail.kernel.org/
-Link: https://patch.msgid.link/20260924170646.2366016-5-memxor@gmail.com
-Stable-dep-of: 9bdd5e7f5d83 ("bpf: Forbid sleeping in hash map for_each callbacks")
+Link: https://patch.msgid.link/20261017163745.3341787-3-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/diagnostics.c | 21 +++++++-------
- kernel/bpf/verifier.c    | 62 ++++++++++++++++++++++++----------------
- 2 files changed, 48 insertions(+), 35 deletions(-)
+ include/linux/bpf_verifier.h |  5 +++++
+ kernel/bpf/states.c          |  3 +++
+ kernel/bpf/verifier.c        | 28 +++++++++++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/diagnostics.c b/kernel/bpf/diagnostics.c
-index ffca5723b287e..67cd75d1cf382 100644
---- a/kernel/bpf/diagnostics.c
-+++ b/kernel/bpf/diagnostics.c
-@@ -1088,16 +1088,17 @@ void bpf_diag_ctx_forbidden(struct bpf_verifier_env *env, u32 insn_idx,
- 	const char *constraint, *context;
- 	u32 depth;
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index fac29ea44b930..1446091539443 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -337,6 +337,11 @@ struct bpf_func_state {
+ 	bool in_async_callback_fn;
+ 	bool in_exception_callback_fn;
+ 	bool no_stack_arg_load;
++	/*
++	 * The helper invokes this callback under rcu_read_lock(), so the
++	 * callback and its callees run in an RCU read-side critical section.
++	 */
++	bool in_rcu_callback_fn;
+ 	/* For callback calling functions that limit number of possible
+ 	 * callback executions (e.g. bpf_loop) keeps track of current
+ 	 * simulated iteration number.
+diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+index b7ca2e07a807d..f28b11c189085 100644
+--- a/kernel/bpf/states.c
++++ b/kernel/bpf/states.c
+@@ -952,6 +952,9 @@ static bool func_states_equal(struct bpf_verifier_env *env, struct bpf_func_stat
+ 	if (!old->no_stack_arg_load && cur->no_stack_arg_load)
+ 		return false;
  
--	if (env->cur_state->active_rcu_locks)
--		ctx_kind = BPF_DIAG_CONTEXT_RCU;
--	else if (env->cur_state->active_preempt_locks)
--		ctx_kind = BPF_DIAG_CONTEXT_PREEMPT;
--	else if (env->cur_state->active_irq_id)
--		ctx_kind = BPF_DIAG_CONTEXT_IRQ;
--	else if (env->cur_state->active_locks)
--		ctx_kind = BPF_DIAG_CONTEXT_LOCK;
--	else
--		ctx_kind = BPF_DIAG_CONTEXT_NONE;
-+	ctx_kind = BPF_DIAG_CONTEXT_NONE;
-+	if (env->cur_state->in_sleepable) {
-+		if (env->cur_state->active_rcu_locks)
-+			ctx_kind = BPF_DIAG_CONTEXT_RCU;
-+		else if (env->cur_state->active_preempt_locks)
-+			ctx_kind = BPF_DIAG_CONTEXT_PREEMPT;
-+		else if (env->cur_state->active_irq_id)
-+			ctx_kind = BPF_DIAG_CONTEXT_IRQ;
-+		else if (env->cur_state->active_locks)
-+			ctx_kind = BPF_DIAG_CONTEXT_LOCK;
-+	}
- 
- 	depth = diag_context_depth(env, ctx_kind);
- 	opts = (struct bpf_diag_history_opts) {
++	if (old->in_rcu_callback_fn != cur->in_rcu_callback_fn)
++		return false;
++
+ 	for (i = 0; i < MAX_BPF_REG; i++)
+ 		if (((1 << i) & live_regs) &&
+ 		    !regsafe(env, &old->regs[i], &cur->regs[i],
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 25cec4556e61a..2ee66a02ac95d 100644
+index 2ee66a02ac95d..2cb34276313cf 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -10020,11 +10020,16 @@ static int check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 		}
+@@ -10172,6 +10172,19 @@ static int set_map_elem_callback_state(struct bpf_verifier_env *env,
+ 	if (err)
+ 		return err;
  
- 		if (env->subprog_info[subprog].might_sleep && !in_sleepable_context(env)) {
-+			const char *suggestion;
-+
- 			verbose(env, "sleepable global function %s() called in %s\n",
- 				sub_name, non_sleepable_context_description(env));
-+			if (in_sleepable(env))
-+				suggestion = "Move the call outside the critical section, or use a non-sleepable function.";
-+			else
-+				suggestion = "Mark the program sleepable if the program type allows it, or use a non-sleepable function.";
- 			operation = bpf_diag_fmt(env, "sleepable global function %s()", sub_name);
--			bpf_diag_ctx_forbidden(env, *insn_idx, operation,
--				"Move the call outside the critical section, or use a non-sleepable function.");
-+			bpf_diag_ctx_forbidden(env, *insn_idx, operation, suggestion);
- 			return -EINVAL;
- 		}
- 
-@@ -10872,14 +10877,16 @@ static inline bool in_sleepable_context(struct bpf_verifier_env *env)
- 
- static const char *non_sleepable_context_description(struct bpf_verifier_env *env)
- {
--	if (env->cur_state->active_rcu_locks)
--		return "rcu_read_lock region";
--	if (env->cur_state->active_preempt_locks)
--		return "non-preemptible region";
--	if (env->cur_state->active_irq_id)
--		return "IRQ-disabled region";
--	if (env->cur_state->active_locks)
--		return "lock region";
-+	if (in_sleepable(env)) {
-+		if (env->cur_state->active_rcu_locks)
-+			return "rcu_read_lock region";
-+		if (env->cur_state->active_preempt_locks)
-+			return "non-preemptible region";
-+		if (env->cur_state->active_irq_id)
-+			return "IRQ-disabled region";
-+		if (env->cur_state->active_locks)
-+			return "lock region";
++	switch (map->map_type) {
++	case BPF_MAP_TYPE_HASH:
++	case BPF_MAP_TYPE_PERCPU_HASH:
++	case BPF_MAP_TYPE_LRU_HASH:
++	case BPF_MAP_TYPE_LRU_PERCPU_HASH:
++	case BPF_MAP_TYPE_RHASH:
++		/* Hash tables run the callback under rcu_read_lock(). */
++		callee->in_rcu_callback_fn = true;
++		break;
++	default:
++		break;
 +	}
- 	return "non-sleepable prog";
++
+ 	callee->in_callback_fn = true;
+ 	callee->callback_ret_range = retval_range(0, 1);
+ 	return 0;
+@@ -10869,10 +10882,22 @@ int bpf_get_helper_proto(struct bpf_verifier_env *env, int func_id,
+ 	return *ptr && (*ptr)->func ? 0 : -EINVAL;
  }
  
-@@ -10971,12 +10978,17 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 	}
- 
- 	if (fn->might_sleep && !in_sleepable_context(env)) {
-+		const char *suggestion;
++/* Is any frame on the current path a callback that runs under RCU? */
++static bool in_rcu_callback(struct bpf_verifier_env *env)
++{
++	struct bpf_verifier_state *state = env->cur_state;
++	int i;
 +
- 		verbose(env, "sleepable helper %s#%d in %s\n", func_id_name(func_id), func_id,
- 			non_sleepable_context_description(env));
-+		if (in_sleepable(env))
-+			suggestion = "Move the helper call outside the critical section, or use a non-sleepable helper.";
-+		else
-+			suggestion = "Mark the program sleepable if the program type allows it, or use a non-sleepable helper.";
- 		operation = bpf_diag_fmt(env, "sleepable helper %s#%d",
- 					 func_id_name(func_id), func_id);
--		bpf_diag_ctx_forbidden(env, insn_idx, operation,
--			"Move the helper call outside the critical section, or use a non-sleepable helper.");
-+		bpf_diag_ctx_forbidden(env, insn_idx, operation, suggestion);
- 		return -EINVAL;
- 	}
- 
-@@ -13941,11 +13953,20 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 	}
- 
- 	sleepable = bpf_is_kfunc_sleepable(&meta);
--	if (sleepable && !in_sleepable(env)) {
--		verbose(env, "program must be sleepable to call sleepable kfunc %s\n", func_name);
-+	if (sleepable && !in_sleepable_context(env)) {
-+		const char *suggestion;
++	for (i = 0; i <= state->curframe; i++)
++		if (state->frame[i]->in_rcu_callback_fn)
++			return true;
++	return false;
++}
 +
-+		if (in_sleepable(env)) {
-+			verbose(env, "kernel func %s is sleepable within %s\n",
-+				func_name, non_sleepable_context_description(env));
-+			suggestion = "Move the kfunc call outside the critical section, or use a non-sleepable kfunc.";
-+		} else {
-+			verbose(env, "program must be sleepable to call sleepable kfunc %s\n",
-+				func_name);
-+			suggestion = "Mark the program sleepable if the program type allows it, or use a non-sleepable kfunc.";
-+		}
- 		operation = bpf_diag_fmt(env, "sleepable kfunc %s", func_name);
--		bpf_diag_ctx_forbidden(env, insn_idx, operation,
--			"Mark the program sleepable if the program type allows it, or use a non-sleepable kfunc.");
-+		bpf_diag_ctx_forbidden(env, insn_idx, operation, suggestion);
- 		return -EACCES;
- 	}
+ /* Check if we're in a sleepable context. */
+ static inline bool in_sleepable_context(struct bpf_verifier_env *env)
+ {
+-	return !in_rcu_cs(env);
++	return !in_rcu_cs(env) && !in_rcu_callback(env);
+ }
  
-@@ -14045,15 +14066,6 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 			invalidate_rcu_protected_refs(env);
+ static const char *non_sleepable_context_description(struct bpf_verifier_env *env)
+@@ -10886,6 +10911,7 @@ static const char *non_sleepable_context_description(struct bpf_verifier_env *en
+ 			return "IRQ-disabled region";
+ 		if (env->cur_state->active_locks)
+ 			return "lock region";
++		return "callback running under rcu_read_lock";
  	}
- 
--	if (sleepable && !in_sleepable_context(env)) {
--		verbose(env, "kernel func %s is sleepable within %s\n",
--			func_name, non_sleepable_context_description(env));
--		operation = bpf_diag_fmt(env, "sleepable kfunc %s", func_name);
--		bpf_diag_ctx_forbidden(env, insn_idx, operation,
--			"Move the kfunc call outside the critical section, or use a non-sleepable kfunc.");
--		return -EACCES;
--	}
--
- 	if (in_rbtree_lock_required_cb(env) && (rcu_lock || rcu_unlock)) {
- 		verbose(env, "Calling bpf_rcu_read_{lock,unlock} in unnecessary rbtree callback\n");
- 		return -EACCES;
+ 	return "non-sleepable prog";
+ }
 -- 
 2.53.0
 
