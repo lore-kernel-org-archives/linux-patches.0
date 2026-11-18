@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033826;
-	b=sg/MObLorIsjuLCZB0VvLEzP6hhU6COGteEycqu/Rcw6Ad5u4rGdHEzwNJuQhavkOE44
-	 2WZxMKsuVSGHP3r4IeLEhNqlKB5Q0KW5fomN77R6CgwRz7vF8Tt9VICAiduWMUDZw75wo
-	 E6LWdej0EAn80Lr4muRes9rbjcOhj9iHvAW7MVebyeBpq61F62WsBe1OgqjxJVa8VIqAm
-	 sjKD1SuBjr4Rh/7aPBAp6kLcIItkVvOolmckf7MYZmacOVUZNYoUpjNbdA1ayfxF1tIMq
-	 uDjeMvrNw37alRe1Qxh5403SMrTrOxG7T6posGBBr8AMLdOz63SNECh9xL6Ci1dM8DA==
+	t=1795033829;
+	b=4H878fXtWwDhBt9weHb4qnOrcSBadtNkPggZ/oeBmimjplC8Y37oJ52Cex+7VOebFm6M
+	 zLJUJmWYQFPGA3wJpAbBZWgYJN8aT6y3VzGYmv/WOdDeqwl05gJSeZLBuelIjaOSYovRS
+	 U/siap6v6D51GW+8f3nBx5BhZPqTmgHUbO7kBHxsMcDYTWHy7uvADuEzUBRQ9uiHcVM9S
+	 P0QkYXXMonhf4zI1TufT6zSgI+/qhM70rO3BoF8/OXXAS0YDewb5IkaMkVet6fkG255iv
+	 erxbC5iyzH9u3sxh9+MnZ7dC0Fy2JGhzsBS136oLAC0b0cuNb3mWFY7MjPDpPeDP8bA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YuErk976MncQrp26b3TfohrVzpexnTdfhxBy/E3264g=;
-	b=Km7RGai9/7r1E6ySCyGrmVocqmQjRV07YNCe1SJwihYNTk55ddYd9/DhtrdaLHwmGnyA
-	 sjcaixj26d9UXASGx8OHSzs0KC4fP54ORGf4Docnd2qyGgFzB3xF2DnXJEE6gDN222MSC
-	 lveMHKUBgDUPooPGnGVgZTw7USeeIeecp5i3p9Nu650wZoAMackCxLiurFzgQVKeeqp8P
-	 6lotgAIGOFzO3LLBmKebRT9FzxB4mHoxahR3vanPQMNPrqlhzVhTRZjisojUbbXKwyOL/
-	 1cHETkiUvxlYzi4mQ6HYy6dNnJjEOIora8eEyDr3BZtOvEhnJOPrQpAAj21DSIGPb0A==
+	bh=6Q5yhRuewQIYid/dUrBDnBlXnWe2ek6N/DAiOq78SBg=;
+	b=TM5VNVc4XMhf5ra05GIm2KiymWSkYaIrbD8afb1784RyZ1QyLSk/hZj0reUFc9ztDO9M
+	 C8miDdBtpL20FW3axiScc6EgpwhMYjLIXOfbY02qtZEGxU8l2BRg/avPzC1eBlzcBUIEn
+	 ym4amT27bjPey09W5NUZwSXt1pc50vKzhN59b4fRtfhenjw0AbJYO/2RLFReOaIgfMbON
+	 KtsKZIF2yHyA1geuy+nwTFyniznl19wggIyQgIUZ+lgg2MdcUSQ1Guj4ihouVvTMJCZMt
+	 QYMs3vqKu3PQjdBSsgNVcihihjMcieC2+sr62WAtcB8tysN44gm7GrX4uey5UG6DLIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ya5gnKkV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sxEDqLgr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E942606A325;
-	Wed, 18 Nov 2026 20:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FFF606A32A;
+	Wed, 18 Nov 2026 20:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ya5gnKkV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFE71F000C4;
-	Wed, 18 Nov 2026 20:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sxEDqLgr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CD61F000C4;
+	Wed, 18 Nov 2026 20:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033826;
-	bh=YuErk976MncQrp26b3TfohrVzpexnTdfhxBy/E3264g=;
+	s=korg; t=1795033828;
+	bh=6Q5yhRuewQIYid/dUrBDnBlXnWe2ek6N/DAiOq78SBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ya5gnKkVpAOgqZ2V9EAhifJqlb9p8hrwwnGXRkvkzsjFJxA2DQM0IOc3uGX0FHkZB
-	 by9KBXxTaJB9Kk91JsM+jOfquMETJflZ1dOPxcRYQUVtq1creG1Npi4VXIrS+TlANX
-	 hGhEydyfkFqQ2tjnn6A9M0srQ4eM/CA+1n4JsR0I=
+	b=sxEDqLgr81IwRChmj9GONKaRqNjmGYRRYVBZ/J/qBUyNhEm00ar3Tvw3wyDHxc2Tc
+	 KErhwDZWlHu3F+EgcSSE4tdxb01MEy+/zFWAMWQDqQ3Bznj48WCie3dr6boJ6dxmBT
+	 /nWwRHBmkHrqLAxb98DImxxH7tTh6XZX9NgwxMEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Shahar Tzarfati <shahar.tzarfati@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0151/3318] ext4: set EXT4_STATE_NO_EXPAND in ext4_evict_inode
-Date: Wed, 18 Nov 2026 15:12:53 +0100
-Message-ID: <20261118150319.048718430@linuxfoundation.org>
+Subject: [PATCH 6.6 0152/3318] wifi: mac80211: ibss: read deauth reason_code after frame length check
+Date: Wed, 18 Nov 2026 15:12:54 +0100
+Message-ID: <20261118150319.083276400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,40 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Shahar Tzarfati <shahar.tzarfati@intel.com>
 
-[ Upstream commit 2c0e4fb511f97467dafc91b6afb3414100289081 ]
+[ Upstream commit aa4c0a649903567762edf2bbc7fff608953b3ca4 ]
 
-An inode being evicted will never need its extra isize expanded.  Set
-EXT4_STATE_NO_EXPAND before ext4_mark_inode_dirty() in ext4_evict_inode()
-to make this explicit and prevent any unnecessary work in
-ext4_try_to_expand_extra_isize().
+The function was reading reason_code from the frame before validating
+that the frame is at least IEEE80211_DEAUTH_FRAME_LEN bytes long.
 
-This also provides defense-in-depth for the s_writepages_rwsem deadlock
-during mount-time orphan cleanup, ensuring the expand path is blocked
-for inodes under eviction regardless of how they are reached.
+Move the reason_code read to after the length check so the field is
+guaranteed to be present before it is accessed.
 
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260623061903.2148767-2-yun.zhou@windriver.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/ibss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 4253c9a757e98..b7fda0c0bd6a3 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -251,6 +251,7 @@ void ext4_evict_inode(struct inode *inode)
- 	if (ext4_inode_is_fast_symlink(inode))
- 		memset(EXT4_I(inode)->i_data, 0, sizeof(EXT4_I(inode)->i_data));
- 	inode->i_size = 0;
-+	ext4_set_inode_state(inode, EXT4_STATE_NO_EXPAND);
- 	err = ext4_mark_inode_dirty(handle, inode);
- 	if (err) {
- 		ext4_warning(inode->i_sb,
+diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
+index 2474feb149b3a..a0f6ce86afe17 100644
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -934,11 +934,13 @@ static void ieee80211_rx_mgmt_deauth_ibss(struct ieee80211_sub_if_data *sdata,
+ 					  struct ieee80211_mgmt *mgmt,
+ 					  size_t len)
+ {
+-	u16 reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++	u16 reason;
+ 
+ 	if (len < IEEE80211_DEAUTH_FRAME_LEN)
+ 		return;
+ 
++	reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++
+ 	ibss_dbg(sdata, "RX DeAuth SA=%pM DA=%pM\n", mgmt->sa, mgmt->da);
+ 	ibss_dbg(sdata, "\tBSSID=%pM (reason: %d)\n", mgmt->bssid, reason);
+ 	sta_info_destroy_addr(sdata, mgmt->sa);
 -- 
 2.53.0
 
