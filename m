@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052841;
-	b=obXFH0rMxbyGzGiFyJQE6SnzIAGcghtEXiE0Qo9sqzM0m37HbIoYqfoJbEgp1peV8EQv
-	 1hFW1EtwtuDtX8mwbwh2COhrNKwmLh3SSVfEAFm6A5uSfgNYEnFft5lY/kmiGMMI3LKv0
-	 5dHJCdRe8t/BrAs+RbPqlUqmJ1y9RAsjTfORWrLXJqw99wdl9c8P7AX5lJVyBta5KHMUi
-	 epnaAru3MPtVlQxwyawIbybfrydZc732y+dFc2VoiQGZH8GAY/9vuHY9JvWeSks5QRNJz
-	 YM6io5skv1ZjNLgvUobXqoCyiFJNod4Nh4hkQ1VTgpPOYTTs9iJ8WUjUApkAPDr9ejQ==
+	t=1795052844;
+	b=HBSzn1KnQZWKlvbYwoqgl14n2r9VuzauBpNKsolACRZd3Jpk/L5qiyhWWdbT5yF/Ilxh
+	 fEglxc2cCJtK5XOGA2y/kmwadE0jNshZ6mOV2rWf/cTm5auQelQ3PNLt/ME1gV6PBaMbp
+	 tKeBqqJtR5SnlTaw2RpzGTT64lagBG4d8FID/UMD/Fy4d/nj2pnU3MZMqtByaBHDEfmuV
+	 /Atl/Yu86eAydUQdqrbgY02j1cE0ZPMZiEJsXvzn+RGTFBpXFu7KBFsQDMOskecSeiGWI
+	 jZS7/QeLlYLkEKJZewYxCxh33ForlJLx6XbkLEYCoeqBtedp0oVjovPhRFqFDuDL2pQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mtEYTwFlOwxkn7zpwyiCFj2ZuPtBMblELrJm1gbtK4w=;
-	b=lQzQ8ZyxW2aqnTK9P/UCR1Al2tY5pB8rd3blm/GB0k0pOnBwZG1RTjjizXmGQ6g2DIzc
-	 sI168ccSeo+a7Su45FNvpwXHeViw/Hf555cY7y2XDucO+sddXio+mKxp+O9+K+d74DiiK
-	 CTGl99FZZECNLOUulN9VABg97hSD4qIGMn8oTyj4I67StEQvk4adDIhmmm+NoGmxTtPgg
-	 UYprnwrSXbfouygPHPxhGa+pqmWzeV6SrMhSBVXaAERKbrr7/kT5ADrgMPQ8kwRMRMlsc
-	 JtcOmcx7EZfewBAh4NeHvdUgNU0B5hcD/pbugs2gi/aU1qnRmEm0rBEaJ4ji79OLqEA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zBmUW7G4wgAFSUe1NzYFFfbJGCgzKowlbEAPpXT5lec=;
+	b=uDZDMIfsUFedVv1EXwtGeMu1Xsawv45moCNokBKybanQqjVlkXmdCMYtKR84OMrpRfnq
+	 5r0a70gbd9fQU66QAhSqVmC2hrVwREy7b6eBDgm4vNVhSuTdMnVyHM6pWc7sAcYPXz3bH
+	 aNnTZpZ+eJeQ1h3phbgPtq7Ka47swzE59Xhw6NsqKJOLfvyp5lITsnGcqX9zMPiTOm1oN
+	 PoJZS6CGu/gwVKBy0SPSP1u+2hv9WqxFwzq2hRdEsoer973/+/T+3d9VV/MlZgUmHuedU
+	 pEvqNns1kUGqzIUuUCgUODkE6s2bbZ+raqSiqT9FJN60RfrWnMPF4gvztGmsHTyoUAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmCc7dY5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csRWqokY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3502606A32C;
-	Thu, 19 Nov 2026 01:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F75606A31C;
+	Thu, 19 Nov 2026 01:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmCc7dY5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF1A1F000C4;
-	Thu, 19 Nov 2026 01:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csRWqokY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CA41F000C4;
+	Thu, 19 Nov 2026 01:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052841;
-	bh=mtEYTwFlOwxkn7zpwyiCFj2ZuPtBMblELrJm1gbtK4w=;
+	s=korg; t=1795052844;
+	bh=zBmUW7G4wgAFSUe1NzYFFfbJGCgzKowlbEAPpXT5lec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmCc7dY5SYzMzctE+rlzxNnNAPU3KuiMFFgit6mghlNW4wIeYEsKYJl3MqcZM2ERA
-	 YrlQv6ktmLTIcpywRsqSt7NE2kQDu2RgICt8ghJChvLRwKpgr7+ehTJe1zhaoQvnxH
-	 lpVqLwssFZ6KMVpsStUqqyHVx9WwUN+JOCWiYBBs=
+	b=csRWqokYL3o9vrL1WaTzAdtpTC0WPn14a2Yr2YzzneXUfoSqvKWUJwPV21e+Sh0HC
+	 RCMmA/WZZqbfGsKXgo7CgNxOQOh4m71HiSjmmGmKq/q9NcxJx/CPve7EHyx+rE6CIW
+	 V0k3IzfeQk8C6y2uQmyNIJPFBaj/N99MMzUGNWEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	Li Ximo <lixicaicai@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0707/2214] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
-Date: Wed, 18 Nov 2026 15:39:43 +0100
-Message-ID: <20261118150040.084883194@linuxfoundation.org>
+Subject: [PATCH 5.15 0708/2214] timers/itimer: Keep a nonzero value at CPU timer expiry
+Date: Wed, 18 Nov 2026 15:39:44 +0100
+Message-ID: <20261118150040.119244876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,82 +62,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Haoran <haoranwangsec@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
+[ Upstream commit ef60f61208a30eb5b941b707debdf04517271b4f ]
 
-list_first_entry() does not return NULL on an empty list; it returns a
-bogus pointer computed by container_of() from the list head.
-atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
-and later takes its first entry with list_first_entry(), assuming
-atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
-drops the return value of fb_add_videomode() — unlike every other
-fallible call in the same function — so if fb_add_videomode() fails
-(its internal kmalloc can return -ENOMEM under memory pressure or
-fault injection), the list stays empty while of_init() reports
-success. The probe path then dereferences the bogus pointer in
-fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
-pointer lands inside the contiguous fb_info allocation, this may not
-fault immediately; instead it silently reads adjacent memory as a
-struct fb_videomode and programs garbage timing parameters into the
-LCD controller. This was found by code audit; we do not have Atmel
-hardware to reproduce it.
+get_cpu_itimer() returns a zero remaining time when the sampled CPU time
+is exactly equal to the nonzero expiry. This makes an armed ITIMER_VIRTUAL
+or ITIMER_PROF timer appear disarmed.
 
-Fix this on two levels: check the return value of fb_add_videomode()
-in atmel_lcdfb_of_init() so the failure is propagated (root cause),
-and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
-check that fails probe gracefully with -EINVAL (defense in depth),
-consistent with the surrounding error handling which bails out to
-stop_clk.
+The cputime cleanup replaced cputime_le(), which implements <=, with <.
+Restore the inclusive comparison so the equality case returns TICK_NSEC,
+like the overdue case and set_process_cpu_timer().
 
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Reported-by: Li Ximo <lixicaicai@gmail.com>
+Fixes: 648616343cdb ("[S390] cputime: add sparse checking and cleanup")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/20261020223957.87842-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ kernel/time/itimer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
-index f2b63f13e2444..707a0a0cd74e7 100644
---- a/drivers/video/fbdev/atmel_lcdfb.c
-+++ b/drivers/video/fbdev/atmel_lcdfb.c
-@@ -1032,7 +1032,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
- 	if (ret < 0)
- 		goto put_display_node;
+diff --git a/kernel/time/itimer.c b/kernel/time/itimer.c
+index dc5b1d92e2466..677b67812fee3 100644
+--- a/kernel/time/itimer.c
++++ b/kernel/time/itimer.c
+@@ -60,7 +60,7 @@ static void get_cpu_itimer(struct task_struct *tsk, unsigned int clock_id,
+ 		thread_group_sample_cputime(tsk, samples);
+ 		t = samples[clock_id];
  
--	fb_add_videomode(&fb_vm, &info->modelist);
-+	ret = fb_add_videomode(&fb_vm, &info->modelist);
-+	if (ret < 0)
-+		goto put_display_node;
- 
- put_display_node:
- 	of_node_put(display_np);
-@@ -1100,8 +1102,13 @@ static int __init atmel_lcdfb_probe(struct platform_device *pdev)
- 	}
- 	atmel_lcdfb_start_clock(sinfo);
- 
--	modelist = list_first_entry(&info->modelist,
--			struct fb_modelist, list);
-+	modelist = list_first_entry_or_null(&info->modelist,
-+					    struct fb_modelist, list);
-+	if (!modelist) {
-+		dev_err(dev, "no video mode available\n");
-+		ret = -EINVAL;
-+		goto stop_clk;
-+	}
- 	fb_videomode_to_var(&info->var, &modelist->mode);
- 
- 	atmel_lcdfb_check_var(&info->var, info);
+-		if (val < t)
++		if (val <= t)
+ 			/* about to fire */
+ 			val = TICK_NSEC;
+ 		else
 -- 
 2.53.0
 
