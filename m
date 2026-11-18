@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042324;
-	b=SXJJ1dBcZbAWQrQ6Po8NcN2zKCahAC1XnjEAac4BmaLB3wnkLFNVlB3KTFPvN+o/gQn2
-	 roH1WRzF7bPk17MHgYYax5g6TodclgOH+L5jldav5IQugRPu7n5T78F9EYrYNWTZuFrLh
-	 FHXkPIm9ewEaqcY5eu+dmKDPVvohI9CluZHnQWYMIWBxHA97Sfc1sk6cKmX6Diorwtofk
-	 3XBQSZYYvTFpBSa2cmBOix+cUCDux7a/nrRu20E9xApQRdK5MBGy9a5nHMyG25ygTCEDl
-	 TArmXtK0eWIWBY1ZFW0zggRsbxz/fcPLv4l/nRMfitS2/yZovoSQBmgJiezZ8gwIlEQ==
+	t=1795042327;
+	b=2ZsGBfjZHLwSzPH9YfRGvCnhkvD8/YrAXKcpqLvnZBJwF69ZLmgiKgERIemS9jsvFD6/
+	 bAcQqWrI6/vSa8T5vd3shuj+FJZEw3/CvTuJK+8y8CSvLqjf4HBJ9JVPCKKpame7JRugG
+	 lr473PyBmeit5asEZ1W1dnfHz1H6T3AOZjzJvRsfxCKvpa7tmOVLlFmLvm+jkkutnYYo+
+	 7aSYY1KOiU29U3gItrD8bgZQfWpYUMNJJ+SUmdQa3l7P69creV8xWrwcX2+CM3N/GZkQO
+	 nqr1VCgd3nmdfFOnEiyM96u1yZ4NyQve7wi7nJvacMJmVymnnjhB2KqldDBJmw0nFOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042327;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pj9TgOjU2qiCi3HwW+LzyhDhlyQLx43JCJOVGPkgVwI=;
-	b=1Bw1Gt+EeV8I6SCrPnxC3f+loDAqoibrI6SMT3lgX1+ClvrL662KUZvrtylDsKPV65FT
-	 VYH4xmiNjAXtgO6OpfQLkUrYmjni10vqNgz8io5eyHl8e+2vK4flJhXgnLI4f2eGkreWz
-	 yPnSMXYIpwnWCAr8jCZRt9NKO498D8tkuEZbRA+fsufHHx0/i9POkNO9V0WbN5kihcCqK
-	 Z3cIG/owfsr1nK2qOO/UgOHZkdXhAhxWZL9ZN74gY/dxS2lTglzrcMpbTDKybZ7NP78ge
-	 jLxz81SCFG5RzMPHjcRoWXmz74wtsGra3z7cT6qAvTyh+6Os1/Ul+m7HxT053oUKwZQ==
+	bh=N/F/OAxhYZzTfC4cOiW0qdV/V3IqNR0aIZ+w4Q8lYNU=;
+	b=DqeQG0ldpPfBnmqNKuDZGjrY902KW091StOB2TZFUCFyTuL5406d6kdPhjAWZZ93kdy9
+	 zFxncxKADb/nYFQ0SGQWcN/eGUohbJPTdbrQEaF6jlpbuOgvQZAFpi/cJz9bsM0BK3HKc
+	 0yGeNDq4JnVunq38KW+HJb7gyymdXdUvZQsRyKjTXNqDXW9M7XRHiJbaHIsuWZf8YpxkG
+	 0fjeWm+8urAkFTXssEZNHgQXuqUUTADBT4nhkOheDp2SlUC5PhykV3GpT00Ow01Uv+M2b
+	 /2P0qMEala+bfn8mM5IhKJlBpDc5uHZXiw5f0Fx6AhtBo4HepiiRyTogVSMRtu23Ffw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zYq2zLsV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n7QRMZVF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBBF606A325;
-	Wed, 18 Nov 2026 22:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D496606A31C;
+	Wed, 18 Nov 2026 22:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zYq2zLsV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B681F000C4;
-	Wed, 18 Nov 2026 22:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n7QRMZVF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22401F000C4;
+	Wed, 18 Nov 2026 22:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042324;
-	bh=pj9TgOjU2qiCi3HwW+LzyhDhlyQLx43JCJOVGPkgVwI=;
+	s=korg; t=1795042327;
+	bh=N/F/OAxhYZzTfC4cOiW0qdV/V3IqNR0aIZ+w4Q8lYNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zYq2zLsVHtp/5QcHKpfURk3MNQLJm9FFGkF2h6r01Y14DUzXNnYo+dikwrzD/oOUP
-	 YLGKT2tO3dHoTO03nEr+rMyXGIzOkDx9n7QjG+vyOAKAPRiHbZtw5RuqjSAg0O6KKD
-	 EYToaDx8aEhkpA/Z/zZUQ7SavAFvF9X8VHhUxy0U=
+	b=n7QRMZVFxpQ6XncQL1fYBPxnf15aD86B5RJmNNTpU09PAE6ZikuHQVuQAlTcHfsEK
+	 FZK9EenPgNhK/xxEFQ/l0CLNy3toaDRAtL9coCiNLrN+3imjrCWj744ognf9IAnMhR
+	 whX0/tpm5+KOG9/pJ4psymx4e/S4YOKxDo85cIKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Binbin Deng <18983559317@163.com>,
+	Simon Horman <horms@kernel.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3113/3318] ASoC: wm8994: dont lose the AIF clock ratio when staying at 32kHz SYSCLK
-Date: Wed, 18 Nov 2026 16:02:15 +0100
-Message-ID: <20261118150453.350234186@linuxfoundation.org>
+Subject: [PATCH 6.6 3131/3318] tipc: fix use-after-free of broadcast reception link at node release
+Date: Wed, 18 Nov 2026 16:02:33 +0100
+Message-ID: <20261118150453.835831458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,160 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit 693574504051a19383640cfb99524a6b69e4624f ]
+[ Upstream commit 473167593f42551ce6b00c05cee8cd20309d45ac ]
 
-When SYSCLK drops below 50kHz, the AIFnCLK rate ratio is saved and
-temporarily lowered to 128fs for accessory detection, then restored
-once SYSCLK gets fast enough again. The ratio is however saved again
-on each clock reconfiguration done while SYSCLK is still slow, which
-overwrites the original ratio with the 128fs one.
+When the last reference to a tipc_node is dropped, the node itself is
+deferred to the RCU callback tipc_node_free(), but the nested broadcast
+reception link, n->bc_entry.link, is kfree()d synchronously in
+tipc_node_kref_release(), before call_rcu(), and the pointer is never
+cleared.  Readers that obtained the node from node_list and then
+dereference bc_entry.link deep into the link (tipc_link_name() in
+tipc_nl_node_reset_link_stats(), bcl->name/stats in
+tipc_nl_add_bc_link() on the link dump path) therefore touch freed
+memory although the enclosing node stays alive for a full grace period.
+The sibling per-bearer links get "kfree + NULL" under the node write
+lock in tipc_node_clear_links(); the broadcast entry was missed.
 
-This happens on the Exynos4412 Trats2 board, which set MCLK2 as SYSCLK
-twice during the card probe and then configure FLL1 while still running
-from MCLK2. Once SYSCLK is switched to FLL1, the 128fs ratio is
-"restored", so AIF1 is left configured for 48kHz at 128fs while being
-clocked at 256fs. If any digital path is powered up before a stream
-reconfigures the AIF, the codec raises FIFO error interrupts every
-10ms, flooding the kernel log:
+The race is reachable through the node cleanup timer: once a peer has
+been unreachable for NODE_CLEANUP_AFTER (300 s), tipc_node_timeout() ->
+tipc_node_cleanup() unlinks the node under the write lock, and the
+final tipc_node_put() at the caller runs outside node_list_lock, so the
+kfree executes in timer softirq context, concurrently with genl dump/
+reset walkers that hold only rcu_read_lock().  (A netlink "peer remove"
+cannot race those walkers itself: tipc_genl_family has no parallel_ops,
+so all doit/dumpit calls serialize on the global genl lock.)
 
- wm8994-codec wm8994-codec: FIFO error
+Reproduced in a QEMU/KVM guest running v7.3.0 with KASAN and
+PREEMPT(full): 10 TIPC peer namespaces on veth bearers, bearer removal
+staggered so the 300 s node cleanup timers expire while other tasks
+loop link dumps with the broadcast filter and reset-link-stats lookups.
+KASAN hit within two cleanup cycles:
 
-Save the original ratio only when entering the low SYSCLK mode. While
-at it, move the code duplicated in _wm8994_set_fll() and
-wm8994_set_dai_sysclk() to a common helper.
+  BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
+  Read of size 1 at addr ffff88800b54a004 by task poc_eth/371
+   strlen+0x85/0xa0
+   tipc_nl_add_bc_link+0x2f9/0xd40
+   __tipc_nl_add_node_links+0x10c/0x140
+   tipc_nl_node_dump_link+0x8d5/0xd50
+  Freed by task 0:
+   kfree+0x121/0x380
+   tipc_node_timeout+0xa33/0xcf0
+   run_timer_softirq+0x144/0x250
+   sysvec_apic_timer_interrupt
 
-Fixes: 6730049a4763 ("ASoC: wm8994: Lower AIFnCLK divisor when dropping to 32kHz")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-3-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+with the freed object being the kmalloc-1k tipc_link allocated by
+tipc_link_bc_create() during peer discovery.  The same defect fires in
+strcmp() called from tipc_nl_node_reset_link_stats().
+
+Move the kfree of n->bc_entry.link into the tipc_node_free() RCU
+callback so the broadcast link lives exactly as long as the enclosing
+node.  All readers are covered: the netlink walkers are inside
+rcu_read_lock(), and the packet reception path reaches the node via
+tipc_node_find(), whose kref defers kref_release itself.
+
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.
+
+Fixes: d25a01257e42 ("tipc: fix crash during node removal")
+Assisted-by: GLM-5.3 coccinelle
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20261019104352.488347-1-18983559317@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 94 +++++++++++++++++----------------------
- 1 file changed, 40 insertions(+), 54 deletions(-)
+ net/tipc/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 7c3b29464af1f..5a40294ad3fa2 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -2210,6 +2210,44 @@ static int wm8994_get_fll_config(struct wm8994 *control, struct fll_div *fll,
- 	return 0;
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index f2d83169fe221..4db3780777a6a 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -305,6 +305,7 @@ static void tipc_node_free(struct rcu_head *rp)
+ #ifdef CONFIG_TIPC_CRYPTO
+ 	tipc_crypto_stop(&n->crypto_rx);
+ #endif
++	kfree(n->bc_entry.link);
+ 	kfree(n);
  }
  
-+/*
-+ * If SYSCLK is less than 50kHz adjust AIFnCLK dividers for detection,
-+ * restoring the original ones once SYSCLK is fast enough again.
-+ */
-+static void wm8994_update_aif_clk_rate(struct snd_soc_component *component)
-+{
-+	struct wm8994_priv *wm8994 = snd_soc_component_get_drvdata(component);
-+
-+	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
-+		/* Don't overwrite the saved dividers with the 128fs ones */
-+		if (!wm8994->aifdiv[0]) {
-+			dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
-+
-+			wm8994->aifdiv[0] = snd_soc_component_read(component,
-+								   WM8994_AIF1_RATE)
-+				& WM8994_AIF1CLK_RATE_MASK;
-+			wm8994->aifdiv[1] = snd_soc_component_read(component,
-+								   WM8994_AIF2_RATE)
-+				& WM8994_AIF1CLK_RATE_MASK;
-+		}
-+
-+		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
-+				    WM8994_AIF1CLK_RATE_MASK, 0x1);
-+		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
-+				    WM8994_AIF2CLK_RATE_MASK, 0x1);
-+	} else if (wm8994->aifdiv[0]) {
-+		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
-+				    WM8994_AIF1CLK_RATE_MASK,
-+				    wm8994->aifdiv[0]);
-+		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
-+				    WM8994_AIF2CLK_RATE_MASK,
-+				    wm8994->aifdiv[1]);
-+
-+		wm8994->aifdiv[0] = 0;
-+		wm8994->aifdiv[1] = 0;
-+	}
-+}
-+
- static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
- 			  unsigned int freq_in, unsigned int freq_out)
+@@ -312,7 +313,6 @@ static void tipc_node_kref_release(struct kref *kref)
  {
-@@ -2444,33 +2482,7 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+ 	struct tipc_node *n = container_of(kref, struct tipc_node, kref);
  
- 	configure_clock(component);
- 
--	/*
--	 * If SYSCLK will be less than 50kHz adjust AIFnCLK dividers
--	 * for detection.
--	 */
--	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
--		dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
--
--		wm8994->aifdiv[0] = snd_soc_component_read(component, WM8994_AIF1_RATE)
--			& WM8994_AIF1CLK_RATE_MASK;
--		wm8994->aifdiv[1] = snd_soc_component_read(component, WM8994_AIF2_RATE)
--			& WM8994_AIF1CLK_RATE_MASK;
--
--		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
--				    WM8994_AIF1CLK_RATE_MASK, 0x1);
--		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
--				    WM8994_AIF2CLK_RATE_MASK, 0x1);
--	} else if (wm8994->aifdiv[0]) {
--		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
--				    WM8994_AIF1CLK_RATE_MASK,
--				    wm8994->aifdiv[0]);
--		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
--				    WM8994_AIF2CLK_RATE_MASK,
--				    wm8994->aifdiv[1]);
--
--		wm8994->aifdiv[0] = 0;
--		wm8994->aifdiv[1] = 0;
--	}
-+	wm8994_update_aif_clk_rate(component);
- 
- 	return 0;
+-	kfree(n->bc_entry.link);
+ 	call_rcu(&n->rcu, tipc_node_free);
  }
-@@ -2588,33 +2600,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
  
- 	configure_clock(component);
- 
--	/*
--	 * If SYSCLK will be less than 50kHz adjust AIFnCLK dividers
--	 * for detection.
--	 */
--	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
--		dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
--
--		wm8994->aifdiv[0] = snd_soc_component_read(component, WM8994_AIF1_RATE)
--			& WM8994_AIF1CLK_RATE_MASK;
--		wm8994->aifdiv[1] = snd_soc_component_read(component, WM8994_AIF2_RATE)
--			& WM8994_AIF1CLK_RATE_MASK;
--
--		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
--				    WM8994_AIF1CLK_RATE_MASK, 0x1);
--		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
--				    WM8994_AIF2CLK_RATE_MASK, 0x1);
--	} else if (wm8994->aifdiv[0]) {
--		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
--				    WM8994_AIF1CLK_RATE_MASK,
--				    wm8994->aifdiv[0]);
--		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
--				    WM8994_AIF2CLK_RATE_MASK,
--				    wm8994->aifdiv[1]);
--
--		wm8994->aifdiv[0] = 0;
--		wm8994->aifdiv[1] = 0;
--	}
-+	wm8994_update_aif_clk_rate(component);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
