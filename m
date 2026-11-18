@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030154;
-	b=CSAWEumAB7RAh9QJAyPV3uychad56SY+VlhqFg72kcR4fz88cMpNhCsOYvrKsy2jClKq
-	 NM5Xv8pzIpEgGhd5PaaQJ/nImXJu62rcBnf7JU0R46w2u8K6Z8H/iyxWiwqKoBQSfuzq5
-	 5Zl2MHKDg+dzvEmnBbWUFhPFNz+e1pvGdGrqJdmPR7CjYXIqSIr+mVC9EuyH+zN2hO5lB
-	 GbjUVUSbEFOjWXpn2IP4EWZjCKTkwcJn/kAKQ9Q3KRkCD3qb4e1rr1PKeiAzMO3I7bSbU
-	 0x9IuEIIeQKxLjgKXrVjG9TgF8Rvs89Mjj9XIdm8gomGedn0GzUqXgrxC6LKfOHDbdw==
+	t=1795030157;
+	b=l0oEIw2NTnG1umz7fOD00btaIoCxPW+GoLj5MgsEaUQUVzAkRlZ0X6qaGXTPUkaqXk+t
+	 L7PCqdHrV3DP/G7hz+9/Sp3+XeCc5ezK3oKeGQHAkppaWqaY/HOMQaxNbTwyXvLP5i4E/
+	 W7XKY83VSDFrhiNlrR/TH6aHbo5sO4fIVHndliB3suFvoZlSBoiqSwRvHm/8qtSqNQltg
+	 6Thq9NiSdc0U2aYwU4LkR61Wc0ntV0re4hnDkCSiDs2MDHQn9oH4e3eX6XwVXp3EPaopL
+	 ZX6CMlUgf6W7VhTbRAGhZtE2GFTXS1rSpDzjggiEbnmV2u9quamHV6T08j6M6DCridg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=V52og9Al7xA6xT6UUFp4pjXU3GZ+hf1t23vN8Szq6Ko=;
-	b=PiN7kKt34BDVepsAKVgX4xiCM4Q8E8SUkcKA//E2K+kE3F/ugJHQPtpHSPE3cuH58T67
-	 r0wVczttgu4RybL8sO/K7KWlE3SdANCcwNyozXamnPOV4huNC8w8ulDi30NxfY2tTnROp
-	 MxL8oevNZ0RPQW/9NP2eJzuPXwGvn99CvGPakmU0EK0NxVXVlfO9wuq/wQlJ/gCZk/av+
-	 1wJmh9GYBeUyUgjMp9qyZrb1SLGbaLeYYEBxeCGEG2cGOCr2T2DDwiBp5VeeYrgLnxYJC
-	 7Uxq/DEkXfQPxiR6hBIeRfASBbDRBdg1+Tzn9Ey5ECphcwIehhtKLVyPt6Sjj1eb4Lw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ZexqndTlKF1FXGl8Rbf/tW6H9u8RfzHYyb4vz4HSDCc=;
+	b=MD8oxd6gR5evCI4lzZj0B4oLkchkADbr1qInQ4Ennl3llJrLIKs5k8WrW2GQsVK1WK3H
+	 QitWRF9Tq0jZ7d8XkVAp+bE9BIyDXvkzG2A4Lk/oxu5pF9oxzeeV/LgGVc7qVu4NmLn92
+	 +aH4cdeDhMONsmPHf+Ybh8vJzKH+QFAne7E1yt75r2WQfQcQ6JKUbnMGgTUuBWw8bvoBx
+	 lHK5bTk4wLtQe7hp/tIe5QuEzWIiHgzyz0qiDcMmkT6cZltNjuwrshXuahIqJYCosA3Z+
+	 s7CBHKYM/v449v7pa2sS0dDmbO4HrUGRuye+ax5z3JO7cZP6kGCYOQg5KOAddABPAqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C63CszoH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9Vn5DW+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88D8606C42C;
-	Wed, 18 Nov 2026 19:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AC8606C707;
+	Wed, 18 Nov 2026 19:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C63CszoH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC391F000C4;
-	Wed, 18 Nov 2026 19:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9Vn5DW+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2A91F000CA;
+	Wed, 18 Nov 2026 19:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030154;
-	bh=V52og9Al7xA6xT6UUFp4pjXU3GZ+hf1t23vN8Szq6Ko=;
+	s=korg; t=1795030157;
+	bh=ZexqndTlKF1FXGl8Rbf/tW6H9u8RfzHYyb4vz4HSDCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C63CszoHiVgxO6ZiPx1+e5NGRT3Yn4i5dnpUvhobmNm6tcxG5pHOVdNSHDX+jdy2l
-	 VOxN+h9F2gydCpts+YGWbGomo7Npm04FfPBlx3s7OtheWHYlbxbviewyfA6QO+ayNS
-	 ScI9nvBtMqwXNfQ8567QpiE7znmdgQqdop18YxEs=
+	b=q9Vn5DW+4EGF81prFhs3E1V2qLKl7zmBx11k+N7Zh0CRoBCYPT617UtYL/9VvY+b2
+	 mC9C1ZsaYLc47YrNE+MqqDlnYhhZtU1b4aFxKrL4dp+lAn+wbv+DNtz8cj5sEp3nia
+	 7KKwaRslc4TCyPsAWcCN5UYlPnt/qQn0qBcuDdGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0562/1756] bpf: Adjust bpf_func to account for CFI offset in bpf_jit_free on riscv
-Date: Wed, 18 Nov 2026 15:44:49 +0100
-Message-ID: <20261118150031.461751878@linuxfoundation.org>
+Subject: [PATCH 6.12 0563/1756] ASoC: fsl_asrc: check the second front-end DMA channel
+Date: Wed, 18 Nov 2026 15:44:50 +0100
+Message-ID: <20261118150031.499874865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,48 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 93df8ae3267f19bf0c1135d26a0e21145dd0ea1c ]
+[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
 
-When CFI is enabled, the actual BPF program entry point is shifted
-forward by a CFI preamble. During bpf_jit_free(), this shifted pointer
-causes the wrong ro_header to be fetched, leading to a potential invalid
-memory free.
+The temporary Front-End DMA request can fail independently of the
+persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
+returned NULL pointer is immediately used to read its private data.
 
-Fix this by subtracting cfi_get_offset() from prog->bpf_func to
-correctly restore the original JITed allocation address before freeing.
+Check the temporary channel and release the previously acquired
+persistent Front-End channel on failure. Clear its slot so a later
+hw_free cannot release it twice. ASoC marks a component's hw_params
+only after success and skips unmarked components during rollback, so
+returning an error alone would leak the earlier channel.
 
-Fixes: e63985ecd226 ("bpf, riscv64/cfi: Support kCFI + BPF on riscv64")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Acked-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20260923144216.934701-1-pulehui@huaweicloud.com
+Detected by static analysis and reviewed with AI-assisted source auditing.
+
+Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
-index 43cba6b657b72..56921fdf8f52d 100644
---- a/arch/riscv/net/bpf_jit_core.c
-+++ b/arch/riscv/net/bpf_jit_core.c
-@@ -262,6 +262,7 @@ void bpf_jit_free(struct bpf_prog *prog)
- 			kfree(jit_data->ctx.offset);
- 			kfree(jit_data);
- 		}
-+		prog->bpf_func = (void *)prog->bpf_func - cfi_get_offset();
- 		hdr = bpf_jit_binary_pack_hdr(prog);
- 		bpf_jit_binary_pack_free(hdr, NULL);
- 		WARN_ON_ONCE(!bpf_prog_kallsyms_verify_off(prog));
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index c96369da6aec9..aba20404c7d71 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -246,6 +246,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
+ 
+ 		/* Get DMA request of Front-End */
+ 		tmp_chan = asrc->get_dma_channel(pair, dir);
++		if (!tmp_chan) {
++			dma_release_channel(pair->dma_chan[!dir]);
++			pair->dma_chan[!dir] = NULL;
++			return -EINVAL;
++		}
+ 		tmp_data = tmp_chan->private;
+ 		pair->dma_data.dma_request2 = tmp_data->dma_request;
+ 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
 -- 
 2.53.0
 
