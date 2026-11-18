@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025166;
-	b=FRYWC3BQKpxHv2d+biSZGvCq37N0wRrPekIA4mk7NfcQlCuB1KdRgF3DaaHepToidpCu
-	 xNLDgBDc3UaRpWVIPtlT6aeidQElToLu4Jd9HGa+6Xhfa5uVqwpdMLgo7Sxm3dUF7vLHk
-	 wVaoGYk9rNG9t+UkwIsIoBoJqquAqsWR5nU6YGP3wF4F73mRNDczCXKxZj1cCLEIDXkQh
-	 mn0qfvnqgXMXH80DYkZs3nvIUEdfK/7Z0v4/T2m/d4BGhqZaCOIjpdxciT9tJbMvJo16h
-	 ZfXqc+6YLil6pUyidcY07+K6xnmFoW1sP+7wSZc69DC7I1i9OsZJAy5Pd/bAsb0Tybw==
+	t=1795025169;
+	b=lptSs5urbD4zMgAXbfYiyq6VhT9J8Ddzm077lssCJN1ctkOIUrEYYMzgKbD2IbXcQgPu
+	 QvfMwUAi9Oau07eNGv2m4x4lTUv7fRdtT8FIBykcZ7BaGUSCYOJye1081jWngu0t6m+qY
+	 n6Fx8lySk0yYKXwViF+/7ExgkMBYKOoUFDXq4ekxPye0cneqhxLNsHdNcO2J+c+hT/bnZ
+	 YUWbn5grJtd/gwE0mGUeuGInvWWMWCoec+lQoFWlueRn4FVLYnZXl7UYktrag0IiVo/Mq
+	 AeWM2oIQefsX5OeR/5scCjHPlrvKkV0dVxdACqjvkbTkqZC6/JfIKKVSmWkNpkBwU6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fiUg5Ds3d8yQxdokh3XZsgskWHhY6I8DR5xZpReisz4=;
-	b=M60D9S2u3hK9hTezppStxTkwL/JnQDT14y0aqJBFtUfKPzTVPAMtXLwIHw9K3mqtxiYE
-	 WVrIiySQXIM0fT3ZoB4jsUEZspM7sC1bnepdMBrbQlZkrAhaii2Uk+hHa/3ncTzyX0NAP
-	 q5PLPqR4YMcxlaP5bLdgLgGlMw85VGmBVM8XJ1DO2uPMEyPLc4jc6uZNcLylCjPS6Bs8n
-	 IhjCSAJt7YDe75LpKvT86NhjmceTh11rQ6v/O77UR1Cz/xdnvT+CwHZ1oSsUPHBiFysTm
-	 ppfuWe6tu2ZcLuEcd2BIJ5IjTTXerTyefhfZhn0N0YlPVPYYLfHpR/9gjzdbbdlZ0tg==
+	bh=NHACfddgMWIIXMRw2jW7m8DqUkxhE/9qLspY2/qqalY=;
+	b=Othq1dsFulEnCsURLtCHIOj1thuZXB0G64bB68qHo14VIcCLjbyiXzR5qMMoMYoR8hI7
+	 ShGKnSEXvLYNbyy77Q8RKZChvycTb1d1tLFjvmzuUS90FEplrDy/+dE+DLVfPUiYqZqEJ
+	 xYWKxxRhmFpsEywqv0fHCm4l9NsVtYuDrpZE//98Rhkr1Np9EsnSQ/09ww6wCjhzWK++8
+	 QTV4hBzGxEBUk93wzAWkFJajUXHLmWBcwL/oFjWfXShqOvMvbKfDp53S8LhjQet9cvtH5
+	 3Jb0dmMWR1zI+MHwKCmp8C0CXI6dz1hvMSYvmABktwH1ectXaQA2RraQV9ARLzc6jxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kl+HJtfq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B18RiLLj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5545B606A331;
-	Wed, 18 Nov 2026 18:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA1C60A260B;
+	Wed, 18 Nov 2026 18:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kl+HJtfq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E071F000C4;
-	Wed, 18 Nov 2026 18:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B18RiLLj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE861F000C4;
+	Wed, 18 Nov 2026 18:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025166;
-	bh=fiUg5Ds3d8yQxdokh3XZsgskWHhY6I8DR5xZpReisz4=;
+	s=korg; t=1795025169;
+	bh=NHACfddgMWIIXMRw2jW7m8DqUkxhE/9qLspY2/qqalY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kl+HJtfqY3Twf7tS6kabqXosERDVEojl4cZnciOlHQska+mVSQ0KACN6bmRPJflfZ
-	 oUGSJJGxng2O4tYSKRWLozmTd3UcoY9Y+A583LHSUFUnS7fmus/57E//y3lPeThK6u
-	 Kb+TNeNiaSUeyAntitBw6fgZocfp/qZeqIa+DdQs=
+	b=B18RiLLj3J8JR9GkxNuhbAUEoF5qsncjJI1UkeWMNK6Di9SKorWM6wgvnQTpC2ioT
+	 DzBjFEOXoGlnClkLiMGcbocclihxVhOruZWOTvQ/LK/6o8Fh34kmCoG1bzLLwo4Pig
+	 lR4ABmGwBASiyTgw0Er1zjI+X7m3TFz32wRqm25k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Oleg Keri <okerixx@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0984/2151] soc/tegra: flowctrl: Release OF node reference on error
-Date: Wed, 18 Nov 2026 15:45:19 +0100
-Message-ID: <20261118150158.324085431@linuxfoundation.org>
+Subject: [PATCH 6.18 0985/2151] drm/msm/dp: dont report link training success after a reinit
+Date: Wed, 18 Nov 2026 15:45:20 +0100
+Message-ID: <20261118150158.357571687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,46 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Oleg Keri <okerixx@gmail.com>
 
-[ Upstream commit 4eaed7ea6ab36e1160d660b05551702c36dfed6c ]
+[ Upstream commit a47987366e7fc2c05aeffc97f8e1f776e583f792 ]
 
-tegra_flowctrl_init() obtains a reference from
-of_find_matching_node() and currently releases it only after
-of_address_to_resource() succeeds.
+When every training attempt fails, the retry loop in
+msm_dp_ctrl_on_link() ends on a successful
+msm_dp_ctrl_reinitialize_mainlink(), leaving rc at 0. The caller then
+enables the stream on an untrained link and the display stays dark.
 
-Release the reference before checking the resource conversion result so
-the error path is balanced as well.
+The retry counter only reaches zero in that case, so treat it as a
+training failure.
 
-Fixes: 1fd09e5d884a ("soc/tegra: Add initial flowctrl support for Tegra132/210")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Signed-off-by: Oleg Keri <okerixx@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/756528/
+Link: https://lore.kernel.org/r/20260925125314.16563-1-okerixx@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/flowctrl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/soc/tegra/flowctrl.c b/drivers/soc/tegra/flowctrl.c
-index 221202db33130..d5c3af586d31f 100644
---- a/drivers/soc/tegra/flowctrl.c
-+++ b/drivers/soc/tegra/flowctrl.c
-@@ -195,11 +195,14 @@ static int __init tegra_flowctrl_init(void)
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 2ff7db77a82b6..bcbfd7f9d84b1 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -2361,6 +2361,9 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+ 		return rc;
  
- 	np = of_find_matching_node(NULL, tegra_flowctrl_match);
- 	if (np) {
--		if (of_address_to_resource(np, 0, &res) < 0) {
-+		int err = of_address_to_resource(np, 0, &res);
++	if (!link_train_max_retries)
++		rc = -ETIMEDOUT;
 +
-+		of_node_put(np);
-+
-+		if (err < 0) {
- 			pr_err("failed to get flowctrl register\n");
- 			return -ENXIO;
- 		}
--		of_node_put(np);
- 	} else if (IS_ENABLED(CONFIG_ARM)) {
+ 	if (rc == 0) {  /* link train successfully */
  		/*
- 		 * Hardcoded fallback for 32-bit Tegra
+ 		 * do not stop train pattern here
 -- 
 2.53.0
 
