@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043392;
-	b=AZ/fEbGKpzxjIp5nT0gbzaheseo3eL58CipA4xmp/H0TaXHxHydHEyr9ebUnS55Q3dNt
-	 QKjxwFLCea17G/2dUm8SRqIk1KDK+klG6YowQF0SEAU5ZRu0XTPICY/VamWblr2k9Tghf
-	 THPZhZt1psbkqcATNNvIKq3RUgRQUKsOVPImsb3f4gxMDdss8F/kBePmaqZ0D1iMNiou7
-	 Sq3qcT08shWmlfUIyWa8Dd6aPvD6AfRDCL3SwknncwJmHnBqzJ7q8uLKZYTs4Qw23B+Oj
-	 1KdAnl5OvszjNnq/2/dQYnaNVCbPYOZ1U+f1P9CtwRCGdQR5IA6wSLCPIPw3HbzEJmA==
+	t=1795043395;
+	b=D+sc5ux0hBi7cpkjN4fn73xKPEvlSLkPJj/mWYDoKXqvIPWLjI4Ad2NN8QAtfkJEvnIH
+	 bXCitZJyChwfrxqXBvEmtfOSfSxq2DAXN3OIU+o48E2mMShoao3+oqWCv1cvQh0dIafuU
+	 o4L357b5fBKEX7H1by+fSwFSwGmwt2XYRxZTF3Wv/8aNQ/TrW/uzyCeS2RMysY0tGKauq
+	 XgJvFsKR3Bva2zRm3mSItfxwfIUwh+Qb8pGClPA9rsOLsV1uVl4kNOgJIdR6Y6RshJ52R
+	 2cq7BubLzwVQTSRE3GOnNeVOlcwopUQDniH3xBWLWe0Ta6ikWB+RMCzcH5Y9phi9NRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+P+VOcMDH7cHqArPJjunSYRq+iIhKxJ8sr1yWhZFU9A=;
-	b=CSbDFQT/HZaukUVrrmPoTTD8P5lGtl5pI72F6UF71h89s/PiLz8UO6Az1dgJ1F+wjef2
-	 myD63u0DPnSJ6U4GuwJDLAHqQLfednsekbAdfmWZzSECHKHaESjTs3MrX6xjEEKwGChmD
-	 pYnVLd68xpXKfaPFgWVdWXCUOy6u/KhLneh0t/u0af0Q41mt+IbEe6tciDDQY5Aq2SoS5
-	 zbAnQ0gvWz9Ohp9Vsr5R63C1MyAXfYnCv2kmTDZvsH0Sap+Tl0JNjTL/Mst7AtxE000ye
-	 nWagjslhIQ9EV85Aa0/bb/PoWKfPL9Nx2jrYJW5VmT2lW33lWogB4dF9Ryr8erKs8oQ==
+	bh=Ypm9JonQH5uDndR3zZF337BhBQFD/rC0MXUmdlLo/Vs=;
+	b=NwcD0quOcadWl40QpFO5jWA95u1d4QeSmsA+1vK/j+sFUAOPCZqizGpUZzEiiqV0uYO1
+	 gC38hP08+RUdRRl9RjIsgzcR1KX6hDsp09vEv9ZKu4b5wH50mJHfL3hTh/WNTuGj6Qe1l
+	 FAVmrHaDUKXMUi6AiTuxaZd37GXX/usRcRioyg8kTObpqKENol5m3y/o67qKeNaeKi3qk
+	 rYw4I6imW2TAl0/kmyTbObNfmsQqwQkzBLiOxM9z3l8FaKVK2K03DjGZY/DCNhcXDWRyL
+	 pgSGMZhbaOddCMdyWnDRTsPoVdulDYWJGTTJ76hEtVO/6in8IPPYln8ueZgpglILZVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YelYeWVC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIkBmzpk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDDD606A325;
-	Wed, 18 Nov 2026 23:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085D7606A32A;
+	Wed, 18 Nov 2026 23:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YelYeWVC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6211F000C4;
-	Wed, 18 Nov 2026 23:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIkBmzpk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3F51F000C4;
+	Wed, 18 Nov 2026 23:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043392;
-	bh=+P+VOcMDH7cHqArPJjunSYRq+iIhKxJ8sr1yWhZFU9A=;
+	s=korg; t=1795043394;
+	bh=Ypm9JonQH5uDndR3zZF337BhBQFD/rC0MXUmdlLo/Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YelYeWVC2fb1xVCk8yojqSEXggBAJPcP8n7gwrv7UFwIGphtiT6OEFAZPIy3/OblQ
-	 MWQOex0dLezWMkF4N4+TjwOzw7vdj376YZRHr5ts5VrjaHs7bIUmpneEuOhik0BE/g
-	 s6FxD+zjM05ZkZzRaECjK0aqQh7+IqyHFrMtZZ94=
+	b=WIkBmzpkwmIQx4apN/qnEoD2AunEVaFAnwIUjdu9o07USjYwei6YNY2Zycg3qoH+4
+	 AN6+i1QQLPZM6RcILijv5t07FN+7FjMQ+HLF+Z4rSFElj/HywG4Aj8o4QrbFwV53dc
+	 ucprkAorj4x29ke4m6yIME/AR0IqS5cO/O8ALs/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Senjin <senjin@hatchling.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0152/2857] fs/ntfs3: load ATTR_BITMAP run extents from $MFT extension records
-Date: Wed, 18 Nov 2026 15:19:46 +0100
-Message-ID: <20261118150206.818218426@linuxfoundation.org>
+Subject: [PATCH 6.1 0153/2857] firmware: imx: scu: manage mailbox channels and global handle
+Date: Wed, 18 Nov 2026 15:19:47 +0100
+Message-ID: <20261118150206.853691708@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,58 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e31886cb6e0e14cf65e27da0bf1a422ff419d893 ]
+[ Upstream commit 55c748d596f841a18cf659ce0999f64029a5c88c ]
 
-When $MFT's ATTR_BITMAP attribute is heavily fragmented, its run list
-can span multiple MFT extension records (attribute list entries with
-vcn > 0). The non-primary segment handler in ntfs_read_mft() only
-processed ATTR_DATA extension segments for MFT_REC_MFT, silently
-skipping any ATTR_BITMAP segments. This left sbi->mft.bitmap.run
-incomplete, causing wnd_init() to fail with -ENOENT when wnd_rescan()
-tried to look up a VCN not covered by the truncated run list.
+imx_scu_probe() requests mailbox channels with the non-managed
+mbox_request_channel_byname() helper and then publishes sc_ipc through
+the global imx_sc_ipc_handle.  Later probe failures, including child
+population failure, can leave the channels and global handle live after
+the probe has failed.
 
-Observed on a 16 TB NTFS volume (0xFFFFFEFF total clusters) whose MFT
-bitmap run list was split across 97 extents in extension records.
-wnd_rescan() successfully looked up VCNs 0-122 from the runs loaded
-from the base record, then failed at VCN 123 (the last cluster of the
-bitmap) whose run was only present in an extension record.
+Register devres actions to free each mailbox channel and clear the global
+handle.  Also depopulate partially created child devices when
+devm_of_platform_populate() reports an error.
 
-Fix by extending the MFT_REC_MFT special case to also handle
-ATTR_BITMAP extension segments, storing their runs into
-sbi->mft.bitmap.run the same way the primary segment does.
-
-Signed-off-by: Senjin <senjin@hatchling.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/firmware/imx/imx-scu.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index e38f8fac1130b..ba1395c78313c 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -125,10 +125,16 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
+index fa25c082109ac..d724c0973a29b 100644
+--- a/drivers/firmware/imx/imx-scu.c
++++ b/drivers/firmware/imx/imx-scu.c
+@@ -81,6 +81,17 @@ static int imx_sc_linux_errmap[IMX_SC_ERR_LAST] = {
  
- 	if (le && le->vcn) {
- 		/* This is non primary attribute segment. Ignore if not MFT. */
--		if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
-+		if (ino != MFT_REC_MFT)
-+			goto next_attr;
+ static struct imx_sc_ipc *imx_sc_ipc_handle;
+ 
++static void imx_scu_free_mbox_chan(void *data)
++{
++	mbox_free_channel(data);
++}
 +
-+		if (attr->type == ATTR_DATA)
-+			run = &ni->file.run;
-+		else if (attr->type == ATTR_BITMAP)
-+			run = &sbi->mft.bitmap.run;
-+		else
- 			goto next_attr;
- 
--		run = &ni->file.run;
- 		asize = le32_to_cpu(attr->size);
- 		goto attr_unpack_run;
++static void imx_scu_clear_handle(void *data)
++{
++	if (imx_sc_ipc_handle == data)
++		imx_sc_ipc_handle = NULL;
++}
++
+ static inline int imx_sc_to_linux_errno(int errno)
+ {
+ 	if (errno >= IMX_SC_ERR_NONE && errno < IMX_SC_ERR_LAST)
+@@ -321,6 +332,11 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 		dev_dbg(dev, "request mbox chan %s\n", chan_name);
+ 		/* chan_name is not used anymore by framework */
+ 		kfree(chan_name);
++
++		ret = devm_add_action_or_reset(dev, imx_scu_free_mbox_chan,
++					       sc_chan->ch);
++		if (ret)
++			return ret;
  	}
+ 
+ 	sc_ipc->dev = dev;
+@@ -328,6 +344,9 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 	init_completion(&sc_ipc->done);
+ 
+ 	imx_sc_ipc_handle = sc_ipc;
++	ret = devm_add_action_or_reset(dev, imx_scu_clear_handle, sc_ipc);
++	if (ret)
++		return ret;
+ 
+ 	ret = imx_scu_soc_init(dev);
+ 	if (ret)
+@@ -340,7 +359,11 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 
+ 	dev_info(dev, "NXP i.MX SCU Initialized\n");
+ 
+-	return devm_of_platform_populate(dev);
++	ret = devm_of_platform_populate(dev);
++	if (ret)
++		of_platform_depopulate(dev);
++
++	return ret;
+ }
+ 
+ static const struct of_device_id imx_scu_match[] = {
 -- 
 2.53.0
 
