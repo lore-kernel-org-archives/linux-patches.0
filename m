@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048833;
-	b=OwBL0xIQ6+rqT3dOlyEX7UQLM4gOk3uXlIyPs5CBw3c31ROReUXqkzP5lVnMRjm1swc4
-	 l60eLe0ODBIZYF06SmmuHuCMEZBYBPv5BW5q6J4ZalWi+JhIiJMjUqO0KDehjfKETTTu6
-	 Vw3V6bRwrXdQ3x5NRdFnf/gfjd1fHJmsjkgeGW4mcis42rouCEy335bOK6/Uo9evAnv5h
-	 PrU5BcQszJM6w80UxlZlq3il9ZEowsOjNItElCHnlfqFoOh6acfRnmUooQ5aAG3eESBU6
-	 q30DFDU/e+VuIT3ZkSHsDr1jldwAvBTHWyL/s8rvOmDLjWadOUqi7e0ejQQwd1z97eQ==
+	t=1795048836;
+	b=u+4HiLJIaex7M71cdxfdS/fDKrQ9wAB/8Llvs5bn4QIzXuLxjaeKa+/+0HOdzRee98Nm
+	 BqwMQMk5Nn+RIRqHtPX0XnFeY3QzS+z9grGJi8xRepDgWqiJOgozOwduQ7/XRPPqIK6PT
+	 5y4fRyu1oEWWsfIu6WYpjTHM0+u4yTBqDL4CeoeTBQpBQ/w1i4zaRA07/7T+KjbqBK0+s
+	 DSPT6m5f4AekNtc+HFjbz163i3zZ49NE+GCmKol36TrMC7qkCjlZQhwmJ7kKxMQ3NPvY+
+	 khVDj8oLnma678wp0BbWWvZV69fy0D4QqX+UNx8hp6i/S8GTB9FpRU8RoOAklNpWkCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5oHerjm/wFk4uW901rKPDZeeh/OjyUTUXItscVcOaio=;
-	b=sHzLVZ34Tk8eoIhdzHtyxShoL2+rZRg3HD8vgmoyssDmcvykmKHzYEJQwA/o2OPXUflQ
-	 iLq4OtgfKkUAFNmfIG2Lw8VBgUCoW6knsggl1CWbSCZNQhNemPR8EnJK0ScPK8ukEWIcV
-	 692ffZPAzaYQeCjSsTuBlxWVju++LyAEaJcbSTztjTQn6qMqivjGR1oAmcbIejlkK4pKI
-	 ZW73zchgyMMtqt+HKnW3CINsW32AYNYqN1CYa9yBP8LrJUYsu+7w1JfCtuQnjwIvZtLVE
-	 /WaFPvd7tv/V2flYZyJCe1fCINyYBnwer20v7bARfrAl87Ga2hujaBxTWtOWzepRI+A==
+	bh=6OhQoAFANgIkh4ttgcqR7QHpR3+33V5frTAM/6KnAJw=;
+	b=AlRSXNe7SOG5IUy+6TRCIUwmUyVgFKpXZja2YHEpDLEWFExQeft6hdUrJ7zlQcOvsiWa
+	 8vhyKfDwELMj9jE78Ao9FoDkwS13sBuvfjT76kbtC9AfH3lo6jYSS8lGDEErZz5mrZf+W
+	 oKIlxojiR3hd/89hhEcrUfwJH+SkfH2AltY6/+OfipmmcJ4AqkTmx3JufCUGZfBMHWoh9
+	 JhIwbGl/GgUTdZhVcrZULstCDpNa1C7W1ZiCrsWDMecNH/cesjsryuyKGtbAPZQcT4s8u
+	 MvB6hG9Q27gn/rmGzShxepicR80WBA+w5QeQis7oDILF9QOQeiYWn/fEKCWUxJ4haMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwJwulm0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdFHtNBZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EEF606A320;
-	Thu, 19 Nov 2026 00:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A14606A320;
+	Thu, 19 Nov 2026 00:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwJwulm0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58E21F000C4;
-	Thu, 19 Nov 2026 00:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdFHtNBZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10FE1F000C4;
+	Thu, 19 Nov 2026 00:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048833;
-	bh=5oHerjm/wFk4uW901rKPDZeeh/OjyUTUXItscVcOaio=;
+	s=korg; t=1795048836;
+	bh=6OhQoAFANgIkh4ttgcqR7QHpR3+33V5frTAM/6KnAJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwJwulm0/6mc+ymHU+lJ8qz+Qkae3zgbn25X4jHctAVnHt28I6IruRP0EL/J7OBt3
-	 vxy/I3KReVWRllxurvm19x9+rwbfz6PwYO4IBbj7bnsg4SgWjb5LYD9fGZRBiMaAWP
-	 5f/jd+fW9Cmx5oxcNYlZB4AGzOITtH02z9plSHL4=
+	b=EdFHtNBZuyu9DNV+7hSRNrF30oM9R3asqIolwlQgAmWBTvltyENEP1Tgj/lacdZqP
+	 QqcV7sf7S6UPUbtFaEvgvqx8z5RpZrgg1Yu3JPqN0rAuxZuzh4P7jtrbNiXoCw8lRH
+	 VJrne/XxDeMhl6ydTxONpjMRBHZ+XQcuIK+YcTss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Quanye Yang <quanyeyang@proton.me>,
-	Jack Wang <jinpu.wang@cloud.ionos.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2137/2857] RDMA/rtrs-clt: Dont WARN on unexpected info-response opcode
-Date: Wed, 18 Nov 2026 15:52:51 +0100
-Message-ID: <20261118150318.350009460@linuxfoundation.org>
+Subject: [PATCH 6.1 2120/2857] RDMA/mlx5: Restore mr->pi_mr after temporary stack-local assignment
+Date: Wed, 18 Nov 2026 15:52:34 +0100
+Message-ID: <20261118150317.736525605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,49 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanye Yang <quanyeyang@proton.me>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 49c5691ad76f000e66c4f2635d5f196db5d038f9 ]
+[ Upstream commit 9728effe43d8fc4d58e12b697d0d6127355abdd5 ]
 
-The info-response receive is posted for a SEND.  The completion
-opcode comes from the peer, so RDMA WRITE with Immediate is a
-legal WC on that WQE even though it violates the RTRS handshake.
+In handle_reg_mr_integrity, when mr->pi_mr is NULL (physical-address
+optimization path), the code points mr->pi_mr at a stack-local pa_pi_mr
+so set_pi_umr_wr can read it during this call. The pointer is never
+restored, so after the function returns mr->pi_mr dangles at a freed stack
+frame. A second IB_WR_REG_MR_INTEGRITY posted on the same MR without
+remapping reads the stale pointer and dereferences it.
 
-WARN_ON(wc->opcode != IB_WC_RECV) treats that peer-controlled
-field as an internal invariant and panics with panic_on_warn.
-Treat a non-SEND completion as a handshake failure: log it and
-keep the existing CONNECTING_ERR cleanup.
+Save the original pi_mr (captured at function entry) and restore it on
+the out path.
 
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Link: https://patch.msgid.link/r/20260921-rtrs-fix-rtrs-clt-info-rsp-done-v1-1-c64281ed97c0@proton.me
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://lore.kernel.org/linux-rdma/CA+0ovCge-K+hcGHXZ4R3Ww5+cg159uxHBeVbKeUSLBRSMT8OWA@mail.gmail.com/
-Signed-off-by: Quanye Yang <quanyeyang@proton.me>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 2563e2f30acb ("RDMA/mlx5: Use PA mapping for PI handover")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260919100848.2442-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/wr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 1e8317690488e..83bb8f2872453 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -2499,7 +2499,12 @@ static void rtrs_clt_info_rsp_done(struct ib_cq *cq, struct ib_wc *wc)
- 			  ib_wc_status_msg(wc->status));
- 		goto out;
- 	}
--	WARN_ON(wc->opcode != IB_WC_RECV);
-+	if (wc->opcode != IB_WC_RECV) {
-+		rtrs_err(clt_path->clt,
-+			 "Path info response has unexpected opcode %d\n",
-+			 wc->opcode);
-+		goto out;
-+	}
+diff --git a/drivers/infiniband/hw/mlx5/wr.c b/drivers/infiniband/hw/mlx5/wr.c
+index 737db67a9ce1d..5965d61e92d96 100644
+--- a/drivers/infiniband/hw/mlx5/wr.c
++++ b/drivers/infiniband/hw/mlx5/wr.c
+@@ -925,6 +925,7 @@ static int handle_reg_mr_integrity(struct mlx5_ib_dev *dev,
+ 	qp->next_fence = MLX5_FENCE_MODE_INITIATOR_SMALL;
  
- 	if (wc->byte_len < sizeof(*msg)) {
- 		rtrs_err(clt_path->clt, "Path info response is malformed: size %d\n",
+ out:
++	mr->pi_mr = pi_mr;
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
