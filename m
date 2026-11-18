@@ -1,52 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042535;
-	b=lWqp7Tyj/r63YYUc3QaUMw77vyA1ejgh5Rp3ai/DJ+UlQ8CbY1dX0efmDeQXnY7ZcRg1
-	 PCbe/JiGSqSux+nWPvYaDhTFtqHD1UtriLnde+UyxnAZZzbwD7ecTeADf98c67SaX213B
-	 oRkIG0HJrFGnAER17/uw4pbpeXHfcCN923eVQloRxyD5dYebBA97jBvAv9SoLBwujHgul
-	 Y0DNWGMqyTHyvLgmxh6hzjk/ngwZ8RTRvpDyXjkzy1psrcOdDEJgM4dEm+eETplgIZsmM
-	 kBdkq7Ahk1TakAtBKWVukZzP5QDtot+aYF3ZVRohAfQxVFhISoMyjKRiqnlL2F0US4g==
+	t=1795042538;
+	b=HkTQGyuucv9tamab6KzFrgs2ZKMqWNaFVjtiHuHhpI2XvGhbzLSgNfeR3rIlpyHpx0yL
+	 YRmNOnFCqvfR7cdqXhbKlKepRgk1efjXTrCxAlDVowKZ4TNteF/uJQOYV2xmKP9c2OIKv
+	 wPxCWLWaBzYAJg3LJOQBgFWClmtfQywpBpk9NSVSGjMDDV6eRr6Ok8PZNINXg9J+/kij9
+	 hsZisIiuIifMhwlyhgUWDC+XAiz2nxkF1rhgseY5KhSr5GLN1qA2RNUBvaX0RNCUNuF/L
+	 99WEkvINCDwg4Z6nLzc+y+4sKOCBI8xdVr8v4HUfqdPN3ILHhus3TXTTAYG73uFL0rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XLQAW2QxwIJ+urR9h9i3g7cJWVbVDP643B1ERCQNLxU=;
-	b=PY8EoTGWvAKSRGZbYb6ztUVJPRbw6sPMrDNOPM+7i7kbtuFLZIKamsB6C+8JJpP+37XN
-	 oirN9TAOIQx4HjX1J8LhLv0mkCNhhBtprSIHtdFSZZ1bGFrgNK/ngV44vcaXeP2e9tJr/
-	 QDj5zk+jl5QtAl44eJg93GAzyHHCsGBH8qqLchlawZJ1pq7QgWjoFFauFccxcZ6AQa8T9
-	 gh15d8haXL2majIDBKxSjWn3BSaTtE6cBmk32W3cjzlURzsWoplBCTHDQIHbHIR6L7S88
-	 DrhGM7Z1U/bbGJQDeEwqxc2U0E3tP7VM/lqJLQxo6eDBjb/yDssysM4xwoVP/v/5cFQ==
+	bh=xSPLpqHiqAOPe23TXxaZDfwL10m6WMJcb6/A8YV6jD0=;
+	b=tAQa5RuQcVKNPHAwXtJL14nXDOd4l9sl2aFZivGaFyVVCFNBF/5eBRpsaMmZXr3qDRsD
+	 SvWdZ8mxis2pwXGrHux6ApBWJ2sZEJVW3W69auLN9q97FtK0GqCr6lWjtyng8lL6KpSJ8
+	 PzzQRMVeVLto5HswV1l89o9xBcRMvtP1PzTeyB6/S7NkwYK+6w4zOSXwJMvRYQ1hupWaD
+	 te2xK2vw/P+vjkLh6GH6dy8VEqOOhh+yLRdEiT332IUDa5FI2I4igHMECfpFH7eeU2kRV
+	 TJq0HbuD2tJ8PXTO0tfbeSPROpdh9Sz3fdgMfBv90QTUx21pOEFAdjtNxA+5/kdMtQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThsQFBAo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UAHFwV2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1CA606A31C;
-	Wed, 18 Nov 2026 22:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3344606A31C;
+	Wed, 18 Nov 2026 22:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThsQFBAo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF2C1F000C4;
-	Wed, 18 Nov 2026 22:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UAHFwV2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198B91F000C4;
+	Wed, 18 Nov 2026 22:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042535;
-	bh=XLQAW2QxwIJ+urR9h9i3g7cJWVbVDP643B1ERCQNLxU=;
+	s=korg; t=1795042537;
+	bh=xSPLpqHiqAOPe23TXxaZDfwL10m6WMJcb6/A8YV6jD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ThsQFBAo0M9RZRf7m4WBg01anlFVJMm8fwflDtt1lbsHuYnaS3DhjEwLNb/i8FZjX
-	 lGhaFPrWIf5eIncgxRhOW4OBQHewGd6+XauPPgWfgxMLepKaeSSJwoqJCzPAXkIiKb
-	 ij5RD49BpoOgPD5Ehna1bW3z+SAp9h6IcUukSMe4=
+	b=2UAHFwV2aTo/HXEPWO2E7j31sFbk6M/1sPodp4h5BwPFRXz0Wyv9V+84K48qWUDEp
+	 XLUemhMy9mVYUaYaa+Tb+LKOENm5imgzo4s4Q6CZIa3irAYtn/3adnx3lNYTrNi17O
+	 WbCjW8VI3BHfh8tstOnOup5t0Phm3icQOviVIwQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ayushman Rout <ayushmanrout27@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Paul Moses <p@1g4.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3155/3318] bpf: Use memmove() to load bytes from an skb and an xdp_buff
-Date: Wed, 18 Nov 2026 16:02:57 +0100
-Message-ID: <20261118150454.512883909@linuxfoundation.org>
+Subject: [PATCH 6.6 3199/3318] perf mmap: Use the head selected by read_init
+Date: Wed, 18 Nov 2026 16:03:41 +0100
+Message-ID: <20261118150455.735236205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,74 +79,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ayushman Rout <ayushmanrout27@gmail.com>
+From: Paul Moses <p@1g4.org>
 
-[ Upstream commit b93cf2c8a0552b544e90e25802e4bf989987d29d ]
+[ Upstream commit 022c64992af554cfd8c564bff86100fb5ed98678 ]
 
-bpf_dynptr_read() on an skb or xdp dynptr ends in bpf_skb_load_bytes()
-or bpf_xdp_load_bytes(). The destination can be a slice of the same
-packet, so it can overlap the source, which memcpy() does not allow.
-On x86 with FSRM memcpy() copies forward, so a destination above the
-source gets the first bytes repeated:
+perf_mmap__push() reads the producer head before calling
+perf_mmap__read_init(), which reads it again to select the range to
+copy.
 
-  p = bpf_dynptr_slice_rdwr(&ptr, 8, NULL, 64);
-  bpf_dynptr_read(p, 64, &ptr, 0, 0);
+If the producer advances between those reads, push() copies through the
+newer head but stores the earlier head in prev. The next drain starts at
+that earlier position and can write the same records to perf.data again.
 
-leaves bytes 8-71 of the packet as bytes 0-7 repeated, not bytes 0-63.
-Reproduced with BPF_PROG_TEST_RUN on both an xdp and a tc program.
+Use the head selected by read_init(): end for forward buffers and start
+for overwrite buffers. Save it before the copy loop advances start so
+prev matches the range that was copied.
 
-Use memmove(), as the store side does since commit 1db084f42884
-("bpf: Use memmove() to store bytes in an skb") and commit ab08863c58b1
-("bpf: Use memmove() to store bytes in an xdp_buff"). A read that spans
-xdp frags still goes through bpf_xdp_copy_buf() and is not changed
-here.
-
-bpf_skb_load_bytes_relative() has the same pattern and is reachable
-from tc and sk_filter programs, so use memmove() there as well.
-Reproduced with BPF_PROG_TEST_RUN on a tc program: loading into a
-slice at offset 8 gave wrong bytes before the change and correct
-bytes after.
-
-Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
-Signed-off-by: Ayushman Rout <ayushmanrout27@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261022112312.31563-1-ayushmanrout27@gmail.com
+Fixes: 8872481bd04850b1 ("perf mmap: Introduce perf_mmap__read_init()")
+Signed-off-by: Paul Moses <p@1g4.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/util/mmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index ce6014191ed05..5f020d8c9c2b4 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1764,7 +1764,7 @@ BPF_CALL_4(bpf_skb_load_bytes, const struct sk_buff *, skb, u32, offset,
- 	if (unlikely(!ptr))
- 		goto err_clear;
- 	if (ptr != to)
--		memcpy(to, ptr, len);
-+		memmove(to, ptr, len);
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index 49093b21ee2da..4d3e351ccf553 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -324,7 +324,7 @@ int mmap__mmap(struct mmap *map, struct mmap_params *mp, int fd, struct perf_cpu
+ int perf_mmap__push(struct mmap *md, void *to,
+ 		    int push(struct mmap *map, void *to, void *buf, size_t size))
+ {
+-	u64 head = perf_mmap__read_head(&md->core);
++	u64 head;
+ 	unsigned char *data = md->core.base + page_size;
+ 	unsigned long size;
+ 	void *buf;
+@@ -334,6 +334,7 @@ int perf_mmap__push(struct mmap *md, void *to,
+ 	if (rc < 0)
+ 		return (rc == -EAGAIN) ? 1 : -1;
  
- 	return 0;
- err_clear:
-@@ -1846,7 +1846,7 @@ BPF_CALL_5(bpf_skb_load_bytes_relative, const struct sk_buff *, skb,
- 	ptr = start + offset;
++	head = md->core.overwrite ? md->core.start : md->core.end;
+ 	size = md->core.end - md->core.start;
  
- 	if (likely(ptr + len <= end)) {
--		memcpy(to, ptr, len);
-+		memmove(to, ptr, len);
- 		return 0;
- 	}
- 
-@@ -4132,7 +4132,7 @@ BPF_CALL_4(bpf_xdp_load_bytes, struct xdp_buff *, xdp, u32, offset,
- 	if (!ptr)
- 		bpf_xdp_copy_buf(xdp, offset, buf, len, false);
- 	else
--		memcpy(buf, ptr, len);
-+		memmove(buf, ptr, len);
- 
- 	return 0;
- }
+ 	if ((md->core.start & md->core.mask) + size != (md->core.end & md->core.mask)) {
 -- 
 2.53.0
 
