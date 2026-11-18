@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046938;
-	b=c31fm1GztTN336tjI6Kk+iieGzlkrjcukwvTG72/j2/SFOSoTaxRsCv3wp2UH5owd18C
-	 jDxHz/m8QKmeNTbOceZsdKlngFSGDjkJVDgPLgz+g6kNQNGXYJ/P5C9KWDn4/rrsKvOez
-	 4YVyBoicTyvlfqOhTEqDq1OC1R5ONMprBLGyvBjMpQ7ZOKH6nSyJ8SOn8Z28XKByUWFth
-	 yfE3NAZxZVZQNPwsn7HPiI0JYB3xVVrh90BLDWG7lnC7F8YFbBiSPxBPH0+1hZc1CpDaW
-	 zu66YQ2kOdysYDoDZayKEuNL33nWyomkIeKv4Td0ES9W3IaR5DNz+xvOtC6xzmviw6A==
+	t=1795046941;
+	b=evL7vBZ8flqFns0qrbKGw+Ibe9H1xv8cZsoKvDK+xxxgAw2fzKFmALUziYbvu/WgVzWM
+	 NQZoGbQYWId4eyF7J/OSbHH/2Qt/okc0ocBoxGD/luJ2ya8v54F0A+GSmnnEcO/SDAETo
+	 SzSkHWoGSHUb55oVfRA6xBeyWoPM+H0uj/hjYytDQMJtx3Tjhiijo37jQ0+psZt3n5eAe
+	 it2bxNHJhR0Y39KhVW1dQ47fwjK/JOgUiw1tpj5H/NaK3ka3qfWARQscGfdUrRQXMlm8Z
+	 D4TZBIwsptDbHw+2MRIlF9cW9YmDtLysADdKnZbIWTVq+X7d8UyPvM8ouBtzQHIsdkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046938;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=farX2g/iDMLuirItaVsc9p5enDi4UbGGuGC7VdB4SMk=;
-	b=StBJv1oGcUdCUTzdU46kpAmVetfL3PocpR1f92g1TSltuOOnKbv8z8Oznh0IBamMyKhD
-	 JJBNlnAvTEbYFbq6o+KS3TDf+SSpuYiRE2oFJHOP2QVp5ECnD3N7Orn6HGq1vs3wPab+x
-	 me4uenIlQPCohaEH466GCUfT8pKSdLBJ0kg40THBJAgzWAHBxWEUHSs518EM7nFnbd2pe
-	 Lenw2PyXRXP+kW/uBc20N7brqdKfcPy5NkQIaakKZThjLuoo3U5oXii7Cm2Likc/JN8VP
-	 RKnv6uYqXfpAGhSJ43kUlkWvbKO2xwQ1iGwALXrHmzfdhBfbk/vJ7SpJBwKr34kzQZA==
+	bh=8iXdIhzfmaD9NjnsRD5QwWJ8Rp3VT1HJnWMCeDQn/h8=;
+	b=24XlL4zrUwawYRiwotIFVVPZPwhenQGwhV4GFgiExj9vpKfq1GFPEzgQa3THygckWInn
+	 s4zBs3iBFe15pB/5ftzDVFJwUlthazC5JI8rKBtWY0/GqCV1bGCA4IMe8yUj3frB7ThIZ
+	 yi/cpm7BwiN5yX3KrrcpruKt5N/NoicEm4sxxfnwo3jRiPSRRBK/FS2gmqvXUCtn73hjz
+	 UD27+R58Mrdr1EXkz41HLSIBg+7G19lZaXT8dR0RBQyw74M+vj0R9piO5iOVLMYjPejqN
+	 1fXwl2cfL6Tklep4lVx+LHBjjwTiCtyIujhkLOnGQCcGHf6AcAXU04riVvRimWtbRXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vabrsB7D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7CB+sUT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FC3606A325;
-	Thu, 19 Nov 2026 00:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2409E606A320;
+	Thu, 19 Nov 2026 00:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vabrsB7D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E731F000C5;
-	Thu, 19 Nov 2026 00:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7CB+sUT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18101F000C4;
+	Thu, 19 Nov 2026 00:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046938;
-	bh=farX2g/iDMLuirItaVsc9p5enDi4UbGGuGC7VdB4SMk=;
+	s=korg; t=1795046941;
+	bh=8iXdIhzfmaD9NjnsRD5QwWJ8Rp3VT1HJnWMCeDQn/h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vabrsB7DMISZTP7GH9Q4xahnpPACpRMSEXcwCNfgxaVA1/4N3d0Jz+cfg9VU5eCTn
-	 by7hlfx83EO2Rqh37LGMkSx9m3Kobis2kWFAEahozeDm8C4Ofp7fOVnkEt91yyVTsr
-	 g2bsS0BsWW5rEXQpNw1k9Qz5zBOsU5sNO7pru+Ko=
+	b=x7CB+sUTghY5NvflRRIIkYJWa4XJT2Yqnot5oNYV80cMkbKj8+LM910tW1Ez4MxG/
+	 ojppf7tQC0h27zMHX8vfdLNGG3F2moJRyHIImLLMORn2SWqCnQ4MXyrdCoBG5fdd1o
+	 uHCbCTxnsW5fktLoFlX/mVYyP+tb1YA4EhQwAsh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Verdonck <tom.verdonck@inspiral.be>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Chao Yu <chao@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Nanzhe Zhao <zhaonanzhe@xiaomi.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1423/2857] hwmon: (tmp108) Fix jiffies wraparound in conversion-ready check
-Date: Wed, 18 Nov 2026 15:40:57 +0100
-Message-ID: <20261118150252.558379560@linuxfoundation.org>
+Subject: [PATCH 6.1 1459/2857] f2fs: remove mappedtodisk flag usage in mmap write path
+Date: Wed, 18 Nov 2026 15:41:33 +0100
+Message-ID: <20261118150253.848224216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,81 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Verdonck <tom.verdonck@inspiral.be>
+From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
 
-[ Upstream commit 6b8b1d1d7bc7e579b53fc7c3293b787d68de702a ]
+[ Upstream commit b3c9843589257631bac18f30655e82d88970688a ]
 
-tmp108 records a one-shot deadline in ->ready_time at probe (and resume)
-and, on every temperature read, refuses the read with -EAGAIN while
-time_before(jiffies, ready_time) is true, in order to skip the initial
-conversion.
+PG_mappedtodisk was inherited from the nobh/buffer-head era.  However,
+f2fs has no buffer heads and the flag is no longer meaningful.  The only
+user of the flag is the "no holes" shortcut in f2fs_vm_page_mkwrite(),
+which makes mmap write faults skip marking the folio dirty.  Moreover,
+it causes the following race condition with filesystem freezing:
 
-->ready_time is an unsigned long compared with time_before(), whose
-signed difference is only meaningful while the two values are within
-LONG_MAX jiffies of each other. Because ->ready_time is set once and
-never refreshed, jiffies keeps advancing away from it, and after 2^31
-jiffies the difference flips sign. On a 32-bit HZ=100 kernel that
-happens ~248.5 days after boot: time_before() then permanently reports
-"not ready" and the driver returns -EAGAIN on every read, without ever
-touching the sensor, until the next reboot. The continuous-mode path,
-which sets ->ready_time to jiffies with no added conversion delay, wraps
-the same way.
+ CPU0 (write fault)     CPU1 (freeze_super)
+ ----                   ----
+ f2fs_vm_page_mkwrite()
+ sb_start_pagefault()
+ /* shortcut: no dirty */
+ sb_end_pagefault()
 
-Store the deadline as a 64-bit jiffies value and compare it with
-get_jiffies_64()/time_before64(), which does not wrap in any practical
-uptime.
+                        sb_wait_write(SB_FREEZE_PAGEFAULT)
+                        /* no waiter, passes */
+                        sync_filesystem()
+                        /* folio not dirty, skipped */
 
-Fixes: 66e1c9171339 ("hwmon: Add Texas Instruments TMP108 temperature sensor driver.")
+ finish_fault()
+ /* PTE writable */
+ fault_dirty_shared_page()
+ folio_mark_dirty()
+ /* dirty folio on a frozen fs */
+
+It will also skip APP_MAPPED_IO iostat/REQ_TIME updates and post-EOF
+folio zeroing.
+
+Remove this shortcut in f2fs_vm_page_mkwrite() and stop setting it in
+f2fs_read_single_page().
+
+Reported-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/linux-f2fs-devel/496b913c-eb81-4fa8-be72-c6a06a10aba2@kernel.org/
+Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Fixes: fbfa2cc58d53 ("f2fs: add file operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
-Link: https://patch.msgid.link/525fa49d8c50922344fa53e22be5e6133c9bbb62.1790358356.git.tom.verdonck@inspiral.be
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: adjusted probe context from tmp108_common_probe() to tmp108_probe() ]
+Signed-off-by: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: adapted folio-based mappedtodisk flag removals to the equivalent page-based APIs ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp108.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/f2fs/data.c | 1 -
+ fs/f2fs/file.c | 6 ------
+ 2 files changed, 7 deletions(-)
 
-diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
-index acb4ba750b09c..4807c7e8fe609 100644
---- a/drivers/hwmon/tmp108.c
-+++ b/drivers/hwmon/tmp108.c
-@@ -73,7 +73,7 @@
- struct tmp108 {
- 	struct regmap *regmap;
- 	u16 orig_config;
--	unsigned long ready_time;
-+	u64 ready_time;
- };
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index c07077f0b56d4..691f32c720a38 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2158,7 +2158,6 @@ static int f2fs_read_single_page(struct inode *inode, struct page *page,
+ got_it:
+ 	if ((map->m_flags & F2FS_MAP_MAPPED)) {
+ 		block_nr = map->m_pblk + block_in_file - map->m_lblk;
+-		SetPageMappedToDisk(page);
  
- /* convert 12-bit TMP108 register value to milliCelsius */
-@@ -124,7 +124,7 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
- 	switch (attr) {
- 	case hwmon_temp_input:
- 		/* Is it too early to return a conversion ? */
--		if (time_before(jiffies, tmp108->ready_time)) {
-+		if (time_before64(get_jiffies_64(), tmp108->ready_time)) {
- 			dev_dbg(dev, "%s: Conversion not ready yet..\n",
- 				__func__);
- 			return -EAGAIN;
-@@ -371,7 +371,7 @@ static int tmp108_probe(struct i2c_client *client)
- 		return err;
- 	}
+ 		if (!f2fs_is_valid_blkaddr(F2FS_I_SB(inode), block_nr,
+ 						DATA_GENERIC_ENHANCE_READ)) {
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index bde1c9cfe1df4..8f94cd81944f1 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -134,12 +134,6 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	/* wait for GCed page writeback via META_MAPPING */
+ 	f2fs_wait_on_block_writeback(inode, dn.data_blkaddr);
  
--	tmp108->ready_time = jiffies;
-+	tmp108->ready_time = get_jiffies_64();
- 	if ((tmp108->orig_config & TMP108_CONF_MODE_MASK) ==
- 	    TMP108_MODE_SHUTDOWN)
- 		tmp108->ready_time +=
-@@ -405,7 +405,7 @@ static int tmp108_resume(struct device *dev)
- 
- 	err = regmap_update_bits(tmp108->regmap, TMP108_REG_CONF,
- 				 TMP108_CONF_MODE_MASK, TMP108_MODE_CONTINUOUS);
--	tmp108->ready_time = jiffies +
-+	tmp108->ready_time = get_jiffies_64() +
- 			     msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
- 	return err;
- }
+-	/*
+-	 * check to see if the page is mapped already (no holes)
+-	 */
+-	if (PageMappedToDisk(page))
+-		goto out_sem;
+-
+ 	/* page is wholly or partially inside EOF */
+ 	if (((loff_t)(page->index + 1) << PAGE_SHIFT) >
+ 						i_size_read(inode)) {
 -- 
 2.53.0
 
