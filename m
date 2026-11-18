@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016713;
-	b=R+D8mJ1dB2bejkfIdNbQN2+b2VTbiaI/bw4qisEmiLg1gKt1cZ9nDD9nZIR/vkMCWSms
-	 xJICGkCfeXtXcsyGwhtVC0k5So1OEJ7we9i+GbdKo218iBXp0KOshjRvGCZd5sf/lKX+u
-	 Gxd/UPcs2sSK/L0XPrRNZ+vxmEPEMgkhHfxJBUaNYtObeQNrFJgN0uDAL6iOFoFgW4Jzi
-	 A5+1N10c/RrYJLqXlJ+9ALBYfl6rLe/8MoIEEQ33cUP1/VS5DMiBLKp55LwM8pfaDdWJL
-	 ynsONjllW/VdFfilRkb173IpW4QdHx2Wuq0wCUIMHlX65KIeo0HumdRnpa5WdwUX4FQ==
+	t=1795016715;
+	b=pDzQNvL5xiEw7Squ8/Vo70nR7PSyqTLE8t0JcrSbU186VcCTXsO15Clx1x4l87WMGgoV
+	 5MS6Wtwz8B2H2459o4HqEWOq8Gbj0ZlhC/AV51oVcMR0aLgFiKx/9G3hVaQMRYu9LTWJU
+	 94yDYEnbpdBflHz6fwcduAGC+MdIGFIiv3YfbPcTeybhizlm2B8z2+qtWFEYvUdhhcRNj
+	 cE9fzoajiMC2shsDeI5F+X5T6ak4070T/OJ5V9tDQzUhFkzf2ZHuahp23gYisXu9Qtmah
+	 0i710W/JVqnhLlrGnRhHyWYG6vXWSVMh5b2eIjjPegpLXgvyjBKFS2aSwYdyOfIoq5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016715;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=37ESFnXzdZDPluWYxLEe+QlW7lDiYEZge5bhlsLzk5w=;
-	b=SL5qLuG6gp9v/jC9T4JbZufhPJ30sf9QyuW+JrHyyAgSXpT8bCAk6ifew8MOmCGh5kIe
-	 4X9Au5bY7jZ2vUZ4C8+YBF/LFn66tpwDR7BcAQEPTWjC5cjyMqeiWvoOwrE3w7CGyk+NV
-	 wJsLp7n/9+gupTgkxmLa7KKTcGtwVG+oWJdj+hVMnVMBic6wuTDn7rAwfX9/AXhXiwv2W
-	 r52fgjuEeEJm2By6GkIIvKOvC9sM8Bj7+lkM71DJfUDXlvvCTjAEBw7vfxRs1wx1KWsjz
-	 lXPTYTFqVHz0UV2xnG+CTvjD/MtpvMj9xfRipwNM6Yp4KAHYdtXljiN3yKz4zczYMgw==
+	bh=wif+88wFoKB8qkCKBO0hZoK4vfhbNkc0o8VEPN/Hstw=;
+	b=rSUtbTk/PZhBTojfE2FDZfJLA8AIOXD4AkPvqbS0nIlUb1GoyPMMWeYW7OEXLMtnKlml
+	 rdsyJdMCaHehuNwxZDpQZGjwosxltLFm+a/zAtzZt435+KUuQEXoZRMZIzvcoNWM4lknm
+	 42P1i4MvVgR1OhCOuuy1HRGSFnxzXEMGSV8dwQGfwhllDdm2WRZriLwF3R8+ckYalioz8
+	 ah6kh3khl0UDxdGKS92aXHcXR8q4nWeLr8DDhzugYdU0AxZ7P8HD+hRZ1xXoOFXTywyGZ
+	 TD8RnhhN/+aABp6e/nAlEVS87OcftqNhOzgU887s1Q7ZHbfrJpaMyINIABoyAwd+C2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNnZwh6s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgiaFYbH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCCD606A332;
-	Wed, 18 Nov 2026 15:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD6F60A2606;
+	Wed, 18 Nov 2026 15:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNnZwh6s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287251F000C4;
-	Wed, 18 Nov 2026 15:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgiaFYbH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F209A1F000C4;
+	Wed, 18 Nov 2026 15:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016712;
-	bh=37ESFnXzdZDPluWYxLEe+QlW7lDiYEZge5bhlsLzk5w=;
+	s=korg; t=1795016715;
+	bh=wif+88wFoKB8qkCKBO0hZoK4vfhbNkc0o8VEPN/Hstw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kNnZwh6sCP/fUIPQjGtTZkLuQVtkL8nYS4dQvjdqpx5G7CzbjzZSvN4KZaXNBpSHV
-	 jYmFmPbrkX4TG1TcbU0kY0CNHvvQo/Goaa/+cokoA07Z2A/YMEj4s4HMhgLjCEnKtK
-	 Cg852dN21lm7W+5KhuPoVSrs0ipJlleO3ySEYa0M=
+	b=WgiaFYbHWIuPibSbU4jv2KomCzBRObbebh8+RH4TA/+3QVtp7H/X1PVZdDQwC4nlm
+	 RsviNQj4QaEeCcdtUTPZSi5qd9ihfDK8Gpq+GaSocftFRVwgiNS14eGUBe+W8ZVyfh
+	 4MUUEV32zw5780ikvDeh3YOOGCyrE+PpylL/4ZuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0626/2651] i3c: Restrict HDR modes to those supported by the bus and target
-Date: Wed, 18 Nov 2026 15:31:06 +0100
-Message-ID: <20261118150310.229018470@linuxfoundation.org>
+Subject: [PATCH 7.3 0627/2651] pstore: dont leave an ERR_PTR in the ramoops zone pointer
+Date: Wed, 18 Nov 2026 15:31:07 +0100
+Message-ID: <20261118150310.265080068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,177 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit b968be9e719302c6d74beb16224e9d956d26433d ]
+[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
 
-I3C v1.1.1 Table 9 defines which HDR Modes are permitted for each Bus
-Configuration.  A Mixed Slow / Limited Bus permits no HDR Modes because
-Legacy I2C Devices without a 50 ns SCL spike filter cannot be shielded
-from HDR traffic.  A Mixed Fast Bus permits HDR-DDR and HDR-TSL, but not
-HDR-TSP, since of the two Ternary Modes only HDR-TSL is defined for a Bus
-that also has Legacy I2C Devices.
+ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
+returns the error without clearing it when initialization fails.
+ramoops_probe() then cleans up through ramoops_free_przs(), which hands
+*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
+and dereferences it, crashing the kernel.
 
-However, both i3c_device_get_supported_xfer_mode() and the transfer
-validation in i3c_dev_do_xfers_locked() currently consider only the
-controller's hdr_cap.  Since hdr_cap reflects controller capability
-rather than bus or target constraints, HDR Modes can be advertised and
-used even when the bus configuration forbids them.  Likewise, HDR Modes
-unsupported by the target may be reported as available.
+Clear *prz before returning so that cleanup sees a NULL zone.
 
-Add i3c_dev_supported_xfer_modes_locked(), which derives the usable
-transfer modes from the intersection of:
-
-  - HDR Modes supported by the controller
-  - HDR Modes allowed by the bus configuration
-  - HDR Modes supported by the target
-
-Use this helper both when reporting supported transfer modes and when
-validating transfers, ensuring that the advertised and permitted modes
-remain consistent.
-
-GETHDRCAP is queried only when I3C_BCR_HDR_CAP is set, so a target
-without that bit is treated as supporting no HDR Modes.
-
-i3c_device_get_supported_xfer_mode() now takes the normal-use bus lock
-in order to access the device descriptor, matching
-i3c_device_get_info().
-
-Also fix the kernel-doc reference to enum i3c_xfer_mode.
-
-Fixes: 256a21743d91 ("i3c: Add HDR API support")
-Assisted-by: GitHub-Copilot:claude-opus-5
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260920151248.46936-17-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/device.c    | 15 ++++++++---
- drivers/i3c/internals.h |  2 ++
- drivers/i3c/master.c    | 57 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 69 insertions(+), 5 deletions(-)
+ fs/pstore/ram.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i3c/device.c b/drivers/i3c/device.c
-index f1ba363b22a17..4df4682af1504 100644
---- a/drivers/i3c/device.c
-+++ b/drivers/i3c/device.c
-@@ -301,16 +301,23 @@ i3c_device_match_id(struct i3c_device *i3cdev,
- EXPORT_SYMBOL_GPL(i3c_device_match_id);
+diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+index 2eb0d4fa21869..aa056d0395a4d 100644
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -604,6 +604,7 @@ static int ramoops_init_prz(const char *name,
+ 	if (IS_ERR(*prz)) {
+ 		int err = PTR_ERR(*prz);
  
- /**
-- * i3c_device_get_supported_xfer_mode - Returns the supported transfer mode by
-- *					connected master controller.
-+ * i3c_device_get_supported_xfer_mode - Returns the transfer modes supported by
-+ *					the connected master controller and @dev,
-+ *					and allowed by the bus configuration.
-  * @dev: I3C device
-  *
-  * Return: a bit mask, which supported transfer mode, bit position is defined at
-- *	   enum i3c_hdr_mode
-+ *	   enum i3c_xfer_mode
-  */
- u32 i3c_device_get_supported_xfer_mode(struct i3c_device *dev)
- {
--	return i3c_bus_to_i3c_master(dev->bus)->this->info.hdr_cap | BIT(I3C_SDR);
-+	u32 modes;
-+
-+	i3c_bus_normaluse_lock(dev->bus);
-+	modes = i3c_dev_supported_xfer_modes_locked(dev->desc);
-+	i3c_bus_normaluse_unlock(dev->bus);
-+
-+	return modes;
- }
- EXPORT_SYMBOL_GPL(i3c_device_get_supported_xfer_mode);
- 
-diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
-index 86a36b951e0d5..9a6936e2c6608 100644
---- a/drivers/i3c/internals.h
-+++ b/drivers/i3c/internals.h
-@@ -18,6 +18,8 @@ bool i3c_bus_rpm_ibi_allowed(struct i3c_bus *bus);
- void i3c_bus_normaluse_lock(struct i3c_bus *bus);
- void i3c_bus_normaluse_unlock(struct i3c_bus *bus);
- 
-+u32 i3c_dev_supported_xfer_modes_locked(struct i3c_dev_desc *dev);
-+
- int i3c_dev_setdasa_locked(struct i3c_dev_desc *dev);
- int i3c_dev_do_xfers_locked(struct i3c_dev_desc *dev,
- 			    struct i3c_xfer *xfers,
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 215a22f2c7b61..b6a95a1708eec 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -938,6 +938,61 @@ static int i3c_bus_set_mode(struct i3c_bus *i3cbus, enum i3c_bus_mode mode,
- 	return 0;
- }
- 
-+/*
-+ * I3C v1.1.1 Section 5.1.2.4 Table 9 lists the HDR Modes each Bus
-+ * Configuration allows.  A Mixed Slow / Limited Bus has Legacy I2C Devices
-+ * without a 50 ns spike filter, so there is no way to hide any HDR Mode from
-+ * them.  Of the two Ternary Modes, only HDR-TSL is defined for a Bus that
-+ * also has Legacy I2C Devices; HDR-TSP is defined for a Pure Bus.
-+ */
-+static u32 i3c_bus_hdr_modes(struct i3c_bus *bus)
-+{
-+	switch (bus->mode) {
-+	case I3C_BUS_MODE_PURE:
-+		return BIT(I3C_HDR_DDR) | BIT(I3C_HDR_TSP) | BIT(I3C_HDR_TSL);
-+	case I3C_BUS_MODE_MIXED_FAST:
-+		return BIT(I3C_HDR_DDR) | BIT(I3C_HDR_TSL);
-+	case I3C_BUS_MODE_MIXED_LIMITED:
-+	case I3C_BUS_MODE_MIXED_SLOW:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static u32 i3c_dev_hdr_modes(struct i3c_dev_desc *dev)
-+{
-+	if (!(dev->info.bcr & I3C_BCR_HDR_CAP))
-+		return 0;
-+
-+	return dev->info.hdr_cap;
-+}
-+
-+/**
-+ * i3c_dev_supported_xfer_modes_locked() - Get the transfer modes usable with a
-+ *					   device
-+ * @dev: I3C device descriptor
-+ *
-+ * The HDR Modes the controller and @dev both support, restricted to those the
-+ * bus configuration allows.  SDR is always supported.
-+ *
-+ * The bus lock must be held in normal use mode.
-+ *
-+ * Return: a bit mask of &enum i3c_xfer_mode values.
-+ */
-+u32 i3c_dev_supported_xfer_modes_locked(struct i3c_dev_desc *dev)
-+{
-+	struct i3c_master_controller *master = i3c_dev_get_master(dev);
-+
-+	/*
-+	 * master->this->info.bcr is ignored because it describes the master's
-+	 * target capability, not its controller capability.
-+	 */
-+	return (master->this->info.hdr_cap &
-+		i3c_bus_hdr_modes(&master->bus) &
-+		i3c_dev_hdr_modes(dev)) | BIT(I3C_SDR);
-+}
-+
- static struct i3c_master_controller *
- i2c_adapter_to_i3c_master(struct i2c_adapter *adap)
- {
-@@ -3861,7 +3916,7 @@ int i3c_dev_do_xfers_locked(struct i3c_dev_desc *dev, struct i3c_xfer *xfers,
- 	if (!master || !xfers)
- 		return -EINVAL;
- 
--	if (mode != I3C_SDR && !(master->this->info.hdr_cap & BIT(mode)))
-+	if (mode != I3C_SDR && !(i3c_dev_supported_xfer_modes_locked(dev) & BIT(mode)))
- 		return -EOPNOTSUPP;
- 
- 	return master->ops->i3c_xfers(dev, xfers, nxfers, mode);
++		*prz = NULL;
+ 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
+ 			name, sz, (unsigned long long)*paddr, err);
+ 		return err;
 -- 
 2.53.0
 
