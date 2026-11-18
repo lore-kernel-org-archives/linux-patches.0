@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015314;
-	b=k8x+RITOaG+sGv7zXZVYKctxgzElIDyM88EWMnXVMOfiCJcfK5Myb0b8p9jBUI8V7B9Y
-	 d5cb/6XHgCv2iec70nj9g+NVtTXvFSrlXv86JYdjoe33o5AMA+9t+k+sFv+bTqX846Xx1
-	 bUTGerdJrhDrAvAkxaZZYUmqgTVAXD5EsXxRHv1B7eS4wTX489MjCkxAxZs7JL6CdQJrq
-	 a5ulGxIw05K/CA66UA7ZfM9QOqFVAMJRkxBLXdsVf0ZKxc3w1pM2HqiiI+FfA+ZpA3bfE
-	 XNDRmdJkRWezAAXur5DtKksyvHyzadv/f2PcAR3t9Y+PkGSt+l24wLKf0s2LHUv35Aw==
+	t=1795015317;
+	b=rjAybnIR1B+vDez/lLpjsVoAlNHXDfa+brV2HOVPiwLX8qREcLDAvK5FATNxUEbKlkYq
+	 sMfBMNMW8VeBFIA6J0hrD+DZmcf6hY83O9Pq9diK5IscwwdjFjAmWE4eEL7IxCvmT/1wN
+	 SeqLzR512c/0QdSRDBl32tl/Jnc/kKsbpJ7nBthao5kelNILosyyW9ukvSN7eSBv8+Zl2
+	 dIyS6eolzQ1TRatsRPCbm5j2QWfzn8lFfDd44MVFuU3NzHYh1S0ei5je4sqGpHNUvbf12
+	 81ceqT8HPf/c1LZzW01rNrQFuo9/ERbdZcl3lypXzZohtkOE6F9kWDMrPOwmTzRd+dA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7V5Dd1LcmQPsBZF2mK2uPOmGTMxvevrkZxDka4THDYI=;
-	b=deDOO38OP8zLoDZ2xa3+YmdQ3gh/RbuAXB2x5vcBYIpDOBlwRkAEZrfPSYGd1dBxIpNe
-	 i+cv1o8qN4zjSuwZFermZem4Hk6NcqhJWYefPldIeMegZIV6/H6A5Wf3p69Y9mumheHn8
-	 njRYdrpNfRhfxxp1Q7/hp//AXrpfBxvWytpi2yva1DjN2lzD2w4zrM3wqebxhs66CPw1F
-	 6kwNqEpxwyXWKD/BV4niJWuDHEhg4LscT2dijQK7YWTKIUy1CRkBBitRufxniBYM9Doea
-	 4VmwPIipLSaOFuRG1Eg0lAwD2uBE+y+f/4sTCbS1zbEBTQDYD+WwZozqHSfJwc4bP/A==
+	bh=6YK7K94zKeGDdUyNPh4kfd3uR9QkqWhbxxC4XfA+yn0=;
+	b=0nN2MFj9i4aJ1bsw1n5Bltey+bzgpxvEzDBIGGlVH7BXWb59kZaOwU+Hb79rnc20U/jz
+	 q9nAlb5l95Cc+zujEq6jQ4f/MESOVitCWNAqyQKtOrEJSYsPxd4aEJtUY5UtrqG+fqqoD
+	 5XSoco1raD8/28gc7RTqW2QfT4Nmf8CQZ9wAhF75zT+NOj1icgrWDPYm/sxDXlU6Vy31q
+	 5HmSGGAYMO8+DVK8wuaLmnRe7SxBK+Fp/DzXqkQflzCA3Cd5Xlt4Ds+itj7cxUZZwOzdj
+	 Au1QStTWV7PXMyZYoHRfhv6ICQX6gqG0+wydyCpzuLYUsff2EwpvDvDVB8C0bgHyOsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2pJZqP6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xLqSvN7z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E346606A31C;
-	Wed, 18 Nov 2026 15:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405F0606A32F;
+	Wed, 18 Nov 2026 15:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2pJZqP6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52771F000C7;
-	Wed, 18 Nov 2026 15:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xLqSvN7z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FFC1F000C4;
+	Wed, 18 Nov 2026 15:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015314;
-	bh=7V5Dd1LcmQPsBZF2mK2uPOmGTMxvevrkZxDka4THDYI=;
+	s=korg; t=1795015317;
+	bh=6YK7K94zKeGDdUyNPh4kfd3uR9QkqWhbxxC4XfA+yn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2pJZqP6UINXEIq0rK/Jx7gdnDZFNOTrSQdcy63PdzieTqkfFcNji/4zHV0N5a3Fz
-	 ZQ55qjd1WxRcp09RJj4P952CBJEtVcz/j+lzybfLDLen6DKrd0Xn5PoQkcBFwCWazf
-	 c/RfWDx6acYgP7zDwjjZvT4iRnueIAlE2nTfTdsE=
+	b=xLqSvN7z7fjc02bF7QOEimljHR7WMJF9v8zEMpSLcaTQiAKxw/p2uXaXOjmGhJEua
+	 MuYjs/YMPKbxzyjFEV7A+l1zGZ1AtqcO/JvZub0JhGC2Oj4qIF2JKSZEiyjqrw+Evq
+	 MuGJlTxAAW72UrE+EfcEcNkNvkL2CAajCdalsjEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0130/2651] remoteproc: xlnx: Initialize mailbox work before requesting channels
-Date: Wed, 18 Nov 2026 15:22:50 +0100
-Message-ID: <20261118150252.537264922@linuxfoundation.org>
+Subject: [PATCH 7.3 0131/2651] dt-bindings: clock: qcom,milos-camcc: Add missing power-domains support
+Date: Wed, 18 Nov 2026 15:22:51 +0100
+Message-ID: <20261118150252.572962776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,90 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit 5ca7dea7cb2e47f42c15ac7206c5e0cba23d292d ]
+[ Upstream commit e0f335a4e17f5c80b24b8bd2060802bac072775c ]
 
-zynqmp_r5_setup_mbox() installs zynqmp_r5_mb_rx_cb() as the mailbox RX
-callback before requesting the mailbox channels, but initializes
-ipi->mbox_work only after both channels have been requested. Once the RX
-channel is active, a notification delivered before the late INIT_WORK()
-would make the callback queue an uninitialized work item.
+The Milos camera clock controller requires the CX and MX power
+domains, along with their performance state votes, to be enabled
+before the clock controller can be accessed.
 
-Initialize the work item before requesting channels. Also drain the work
-before freeing the mailbox state, after the channels have been released so
-no new callbacks can queue it. Use the same drain before freeing ipi from
-the channel request error paths, since the callback is already published
-there as well.
+Document the 'power-domains' and 'required-opps' properties and add
+them to the required properties list and example. Since these
+properties become required for the already-documented qcom,milos-camcc
+compatible, this is an ABI break for any devicetree using this binding
+without specifying them.
 
-This issue was found by our static analysis tool and then confirmed by
-manual review of the mailbox setup sequence. The callback is published
-before the channel requests complete, so the work item should be ready
-before the mailbox provider can invoke it.
-
-A QEMU PoC modeled a mailbox notification delivered after the RX callback
-became reachable but before the delayed INIT_WORK(). DEBUG_OBJECTS reported
-queueing an uninitialized work item from the zynqmp_r5_setup_mbox() path.
-
-This is sent as an RFC because the practical trigger depends on the ZynqMP
-IPI mailbox provider and firmware delivery timing. If the provider cannot
-invoke the RX callback until after setup returns, this is a defensive
-lifecycle cleanup rather than a reachable race on current systems.
-
-Fixes: 5dfb28c257b7 ("remoteproc: xilinx: Add mailbox channels for rpmsg")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260818101201.1603947-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: dbb9d53b7197 ("dt-bindings: clock: qcom: document the Milos Camera Clock Controller")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260806-eliza-mm-cc-v9-v10-1-6ba52dd14343@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/xlnx_r5_remoteproc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../bindings/clock/qcom,milos-camcc.yaml      | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/remoteproc/xlnx_r5_remoteproc.c b/drivers/remoteproc/xlnx_r5_remoteproc.c
-index c685bb5fa62c3..d47fbf143acde 100644
---- a/drivers/remoteproc/xlnx_r5_remoteproc.c
-+++ b/drivers/remoteproc/xlnx_r5_remoteproc.c
-@@ -318,6 +318,8 @@ static struct mbox_info *zynqmp_r5_setup_mbox(struct device *cdev)
- 	if (!ipi)
- 		return NULL;
+diff --git a/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
+index 707b25d2c11e6..c4aba40e316ca 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
+@@ -29,9 +29,21 @@ properties:
+     items:
+       - description: Interconnect path to enable the MultiMedia NoC
  
-+	INIT_WORK(&ipi->mbox_work, handle_event_notified);
++  power-domains:
++    items:
++      - description: CX power domain
++      - description: MX power domain
 +
- 	mbox_cl = &ipi->mbox_cl;
- 	mbox_cl->rx_callback = zynqmp_r5_mb_rx_cb;
- 	mbox_cl->tx_block = false;
-@@ -329,6 +331,7 @@ static struct mbox_info *zynqmp_r5_setup_mbox(struct device *cdev)
- 	ipi->tx_chan = mbox_request_channel_byname(mbox_cl, "tx");
- 	if (IS_ERR(ipi->tx_chan)) {
- 		ipi->tx_chan = NULL;
-+		cancel_work_sync(&ipi->mbox_work);
- 		kfree(ipi);
- 		dev_warn(cdev, "mbox tx channel request failed\n");
- 		return NULL;
-@@ -339,13 +342,12 @@ static struct mbox_info *zynqmp_r5_setup_mbox(struct device *cdev)
- 		mbox_free_channel(ipi->tx_chan);
- 		ipi->rx_chan = NULL;
- 		ipi->tx_chan = NULL;
-+		cancel_work_sync(&ipi->mbox_work);
- 		kfree(ipi);
- 		dev_warn(cdev, "mbox rx channel request failed\n");
- 		return NULL;
- 	}
- 
--	INIT_WORK(&ipi->mbox_work, handle_event_notified);
--
- 	return ipi;
- }
- 
-@@ -364,6 +366,8 @@ static void zynqmp_r5_free_mbox(struct mbox_info *ipi)
- 		ipi->rx_chan = NULL;
- 	}
- 
-+	cancel_work_sync(&ipi->mbox_work);
++  required-opps:
++    items:
++      - description: CX performance point
++      - description: MX performance point
 +
- 	kfree(ipi);
- }
+ required:
+   - compatible
+   - clocks
++  - power-domains
++  - required-opps
  
+ allOf:
+   - $ref: qcom,gcc.yaml#
+@@ -43,6 +55,7 @@ examples:
+     #include <dt-bindings/clock/qcom,milos-gcc.h>
+     #include <dt-bindings/interconnect/qcom,icc.h>
+     #include <dt-bindings/interconnect/qcom,milos-rpmh.h>
++    #include <dt-bindings/power/qcom,rpmhpd.h>
+     clock-controller@adb0000 {
+         compatible = "qcom,milos-camcc";
+         reg = <0x0adb0000 0x40000>;
+@@ -51,6 +64,12 @@ examples:
+                  <&gcc GCC_CAMERA_AHB_CLK>;
+         interconnects = <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
+                          &mmss_noc SLAVE_MNOC_HF_MEM_NOC QCOM_ICC_TAG_ALWAYS>;
++
++        power-domains = <&rpmhpd RPMHPD_CX>,
++                        <&rpmhpd RPMHPD_MX>;
++        required-opps = <&rpmhpd_opp_low_svs>,
++                        <&rpmhpd_opp_low_svs>;
++
+         #clock-cells = <1>;
+         #reset-cells = <1>;
+         #power-domain-cells = <1>;
 -- 
 2.53.0
 
