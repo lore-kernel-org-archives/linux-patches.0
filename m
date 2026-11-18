@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019018;
-	b=nCIZ7aEHt71VFvybDQXYxNRhNQ7Cm2BDxwety1D/gMLYp1atjJQtAGeAInOYoUy9MoGj
-	 PFn5h2oW/dUWPa6AsLM/2LsqoIWrctllL11pk7k0jZAlpSO8r/F8R6TvSH7DuZf3ijOew
-	 BpfCt2aG0TxixZ2yzcBzLP6P02A1r37ceVaVrWaAzbS6dklPFb2q67YURS4m7+RyUjpho
-	 8XwB2p4CT0STbKxEDvejBLGOoYqsX3J/o//rDtVCR0y0DXdSS73gn7OAz6LeFBqavd6k4
-	 kLPvUkI4c4pvpPYM9glkcmA0nMyDLJCsYnfHjtKKSpCOPQtAYIHLyjyWQrOo/Hnaxmg==
+	t=1795019021;
+	b=Xnr4i37Y/Ybohw5wJR4V3bYmpqMD9bDhDcH93ey8jfWcUl8EH3C+nGVQP10NMrElVh1m
+	 17s0caYo1akgE8vDZgxy/GiGFxht9Sim/5txyw2jPOpXKJmmCjhbUm+AemuINaD3CFfZR
+	 fZ68eIhgL61iCXvnPdufL0HbZ3yJZeBkZiogDtNshG4JrbDSSS7qJVo3BOd/1kZAZtp/V
+	 ve9payuTwysGapIq3SNdDCL2mSjIZwMZDtOL5Z/8M1rQ1E5f7mF1dDqSbKVv7cAMFuC1L
+	 oQwJXvd3wBVF6UQRUBor2SpoSpq30fN1G6qyTX2QnXiT4il77nMfs2vnx1J7yEAU9RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019021;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9t4w45YNVvB5qfplvseAH2Qw8CURWhJMeRXdhLsYZmg=;
-	b=xWkhUamGkshCNXKBdeTvktJ5MzMzyZKYC4Oxf+Ar79ogEznIPKEKqz9OyUBXtQRDFKyd
-	 u3RsB5jZzsIU9GwRhL/1MGwkM1VNKt4ADINEl/RsnDCpXcYoJsHP2mTw2ZHIB5goKEBJY
-	 0jMUnqprXE4hj48sLn5B+EMWq9Mvq1sUmEMtN2A6oVBX9FEHCHTN3sIKCG9Wo+z7ozco8
-	 QZqdxs4K8lg6kirDe2M/vDEWKxGp+uNT2b1NnMejMgMjbVBlCw8Ok4OwHZKm99fLDJxya
-	 BYGCKM2AvJr9PJT0glNzYeOBCzxnq3mAi7R96Z15fMiJ81jI0Fq7oFo6bg6NBHyuP8g==
+	bh=b065G5JIIlqhjuUu+/TXswL95LQ1QdDi+9P4ROV94ss=;
+	b=acC/aSFCZd7+QgpNjd8xfIDgtUh2Ne4uCPGS8qUJUYCHhnLBjWYXSiUuFHygnrFHJ1NE
+	 OlAy25MlZhmH0KtPjdxOUz5ewtYi2vSgOk6pqYknT8RTSXcsxcxb+h6k2jPYCgaaTYybx
+	 ukc3YymemabDGH3CXwUtOLQ3JqgrXDuit9O8VgQ4RIWrjI96WlmRZUQM2CE/6JOOQ3hzC
+	 4eop+16j8ouSkBgU92rCFLpsM5iuSRNSCPr6E775VnxNth5A01yI+akTKxOWZSLs071bk
+	 oZEIyCFn/+0iId5yZ77dud+ek0WhtuXRkR4ujghFQEBv2W+b5IsgAdIqyivaCf/eHEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eiqAMsWi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LtW8/Qqk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C59606A31C;
-	Wed, 18 Nov 2026 16:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11267606A335;
+	Wed, 18 Nov 2026 16:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eiqAMsWi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C5F1F000C6;
-	Wed, 18 Nov 2026 16:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtW8/Qqk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA621F000C6;
+	Wed, 18 Nov 2026 16:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019018;
-	bh=9t4w45YNVvB5qfplvseAH2Qw8CURWhJMeRXdhLsYZmg=;
+	s=korg; t=1795019020;
+	bh=b065G5JIIlqhjuUu+/TXswL95LQ1QdDi+9P4ROV94ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eiqAMsWiPit0ZDcGGCNhg5xAMnevcYLMA/snfwgsxCRRMqa4r3UuDbPloZRz1ITsP
-	 LqUKVShok6sqC2UmaeXdWIotGp+MTUFrjf7/wwkAZ6nWlgqeKN3pYMe3vP6l2qlNPQ
-	 Vw+hHz1QHRg+2MLW5WE2DVrSOohI0y7wOsBgCBNU=
+	b=LtW8/QqkfTZVTWvb5bBzyYLn8aVZr09S35ps+/oMXvHWVOkY0vbq30dBJ7o1cSar0
+	 p4B/b71lZKZ7jmc6LsJInYfEem8cWHPCWM8qxkuqW9rlnQPZ/Gf13RNhigTRLR9+u6
+	 nDFlZWAbEqjQUd52DCs+5W+kycL7+fFx4pqkwHt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Andrei Rusu de Castro <arc@empyreal.works>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Jonas Hort <jonas.hort@posteo.de>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1447/2651] wifi: mt76: mt7996: add NET_AIROHA dependency
-Date: Wed, 18 Nov 2026 15:44:47 +0100
-Message-ID: <20261118150340.138975395@linuxfoundation.org>
+Subject: [PATCH 7.3 1448/2651] wifi: mt76: mt7925: keep MLD membership consistent during link add
+Date: Wed, 18 Nov 2026 15:44:48 +0100
+Message-ID: <20261118150340.172487298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,57 +70,252 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Andrei Rusu de Castro <arc@empyreal.works>
 
-[ Upstream commit 29329dfa41de31f8adc7ff0aac0abccb555bb738 ]
+[ Upstream commit dd3f17ef69ed6d0085cd94a15b9dec227b4ebfb1 ]
 
-MT7996E fails to link as build-in when NET_AIROHA=m:
+mt7925_mac_link_sta_add() sends an ASSOC update for the primary WCID
+before sending the update for a new secondary WCID. The new link is
+published in msta->link[] and msta->valid_links only after both commands
+succeed.
 
-WARNING: unmet direct dependencies detected for MT76_NPU
-  Depends on [m]: NETDEVICES [=y] && WLAN [=y] && WLAN_VENDOR_MEDIATEK [=y] && (NET_AIROHA_NPU [=y]=y [=y] || MT76_CORE [=y]=NET_AIROHA_NPU [=y]) && (NET_AIROHA [=m] || !NET_AIROHA [=m])
-  Selected by [y]:
-  - MT7996_NPU [=y] && NETDEVICES [=y] && WLAN [=y] && WLAN_VENDOR_MEDIATEK [=y] && MT7996E [=y] && (NET_AIROHA_NPU [=y]=y [=y] || MT76_CORE [=y]=NET_AIROHA_NPU [=y])
-arm-linux-gnueabi-ld: drivers/net/wireless/mediatek/mt76/npu.o: in function `mt76_npu_init':
-npu.c:(.text.mt76_npu_init+0x4c): undefined reference to `airoha_ppe_get_dev'
-arm-linux-gnueabi-ld: npu.c:(.text.mt76_npu_init+0xf8): undefined reference to `airoha_ppe_put_dev'
+Selecting the secondary entry from the subject of each command gives
+the primary STA_REC_MLD one link and the secondary STA_REC_MLD two
+links. Enumerating published links alone still omits the pending link
+from the primary command. Firmware-bound command captures reproduce
+this n=1/n=2 sequence during a secondary addition.
 
-Add another dependency to prevent this configuration, with an explicit
-special case to allow the NPU to be used while the PPE code is stubbed
-out with NET_AIROHA=n.
+Build each MLD TLV from the station's published links and an explicit
+pending link. Pass the initialized pending link through both add-time
+station updates, including the update whose subject is the primary.
+Keep the primary first, bound entries by the firmware array, and skip
+links without station and BSS state. Other update callers have no
+pending link.
 
-Fixes: 377aa17d2aed ("wifi: mt76: mt7996: Add NPU offload support to MT7996 driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260928145210.3153783-1-arnd@kernel.org
+This leaves msta->link[] publication after successful link setup and
+preserves the existing add-failure cleanup. The pending pointer is used
+synchronously to populate the command, not stored in shared state.
+
+Fixes: ff643b81bc38 ("wifi: mt76: mt7925: pass mlink and mconf to sta_mld_tlv()")
+Link: https://lore.kernel.org/linux-wireless/066b30cc-a9e6-4aeb-964d-71551e8ea3ef@posteo.de/
+Signed-off-by: Andrei Rusu de Castro <arc@empyreal.works>
+Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Tested-by: Jonas Hort <jonas.hort@posteo.de>
+Link: https://patch.msgid.link/20261004-mt7925-mld-v2-248bb5e6404f@empyreal.works
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/Kconfig        | 1 +
- drivers/net/wireless/mediatek/mt76/mt7996/Kconfig | 1 +
- 2 files changed, 2 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7925/mac.c   |  2 +-
+ .../net/wireless/mediatek/mt76/mt7925/main.c  | 16 +++---
+ .../net/wireless/mediatek/mt76/mt7925/mcu.c   | 53 +++++++++++++++----
+ .../wireless/mediatek/mt76/mt7925/mt7925.h    |  3 +-
+ 4 files changed, 54 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/Kconfig b/drivers/net/wireless/mediatek/mt76/Kconfig
-index 2ca96e0527c02..a4ece38f938df 100644
---- a/drivers/net/wireless/mediatek/mt76/Kconfig
-+++ b/drivers/net/wireless/mediatek/mt76/Kconfig
-@@ -40,6 +40,7 @@ config MT792x_USB
- config MT76_NPU
- 	tristate
- 	depends on NET_AIROHA_NPU=y || MT76_CORE=NET_AIROHA_NPU
-+	depends on NET_AIROHA=y || NET_AIROHA=n || MT76_CORE=NET_AIROHA
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index 2e34e950e111d..7af996abe2940 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1503,7 +1503,7 @@ mt7925_vif_connect_iter(void *priv, u8 *mac,
+ 					    true, NULL);
+ 		mt7925_mcu_sta_update(dev, NULL, vif,
+ 				      &mvif->sta.deflink, true,
+-				      MT76_STA_INFO_STATE_NONE);
++				      MT76_STA_INFO_STATE_NONE, NULL);
+ 		mt7925_mcu_uni_add_beacon_offload(dev, hw, vif, true);
+ 	}
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 0308bfc403d2e..27eb7cc5a752a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1005,7 +1005,7 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
+ 	    link_sta == mlink->pri_link) {
+ 		ret = mt7925_mcu_sta_update(dev, link_sta, vif,
+ 					    mlink, true,
+-					    MT76_STA_INFO_STATE_NONE);
++					    MT76_STA_INFO_STATE_NONE, NULL);
+ 		if (ret)
+ 			goto out_pm;
+ 	} else if (ieee80211_vif_is_mld(vif) &&
+@@ -1027,19 +1027,19 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
  
- source "drivers/net/wireless/mediatek/mt76/mt76x0/Kconfig"
- source "drivers/net/wireless/mediatek/mt76/mt76x2/Kconfig"
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig b/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig
-index 5742bce12fbb5..3c51b402f44e1 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig
-@@ -17,5 +17,6 @@ config MT7996_NPU
- 	bool "MT7996 (PCIe) NPU support"
- 	depends on MT7996E
- 	depends on NET_AIROHA_NPU=y || MT76_CORE=NET_AIROHA_NPU
-+	depends on NET_AIROHA=y || NET_AIROHA=n || MT76_CORE=NET_AIROHA
- 	select MT76_NPU
- 	default n
+ 		ret = mt7925_mcu_sta_update(dev, mlink->pri_link, vif,
+ 					    pri_mlink, true,
+-					    MT76_STA_INFO_STATE_ASSOC);
++					    MT76_STA_INFO_STATE_ASSOC, mlink);
+ 		if (ret)
+ 			goto out_pm;
+ 
+ 		ret = mt7925_mcu_sta_update(dev, link_sta, vif,
+ 					    mlink, true,
+-					    MT76_STA_INFO_STATE_ASSOC);
++					    MT76_STA_INFO_STATE_ASSOC, mlink);
+ 		if (ret)
+ 			goto out_pm;
+ 	} else {
+ 		ret = mt7925_mcu_sta_update(dev, link_sta, vif,
+ 					    mlink, true,
+-					    MT76_STA_INFO_STATE_NONE);
++					    MT76_STA_INFO_STATE_NONE, NULL);
+ 		if (ret)
+ 			goto out_pm;
+ 	}
+@@ -1247,7 +1247,7 @@ static void mt7925_mac_link_sta_assoc(struct mt76_dev *mdev,
+ 	memset(mlink->airtime_ac, 0, sizeof(mlink->airtime_ac));
+ 
+ 	mt7925_mcu_sta_update(dev, link_sta, vif, mlink, true,
+-			      MT76_STA_INFO_STATE_ASSOC);
++			      MT76_STA_INFO_STATE_ASSOC, NULL);
+ 
+ 	mt792x_mutex_release(dev);
+ }
+@@ -1307,7 +1307,7 @@ static void mt7925_mac_link_sta_remove(struct mt76_dev *mdev,
+ 	mt76_connac_pm_wake(&dev->mphy, &dev->pm);
+ 
+ 	mt7925_mcu_sta_update(dev, link_sta, vif, mlink, false,
+-			      MT76_STA_INFO_STATE_NONE);
++			      MT76_STA_INFO_STATE_NONE, NULL);
+ 	mt7925_mac_wtbl_update(dev, mlink->wcid.idx,
+ 			       MT_WTBL_UPDATE_ADM_COUNT_CLEAR);
+ 
+@@ -1978,7 +1978,7 @@ mt7925_start_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 
+ 	err = mt7925_mcu_sta_update(dev, NULL, vif,
+ 				    &mvif->sta.deflink, true,
+-				    MT76_STA_INFO_STATE_NONE);
++				    MT76_STA_INFO_STATE_NONE, NULL);
+ out:
+ 	mt792x_mutex_release(dev);
+ 
+@@ -2123,7 +2123,7 @@ static void mt7925_vif_cfg_changed(struct ieee80211_hw *hw,
+ 	if (changed & BSS_CHANGED_ASSOC) {
+ 		mt7925_mcu_sta_update(dev, NULL, vif,
+ 				      &mvif->sta.deflink, true,
+-				      MT76_STA_INFO_STATE_ASSOC);
++				      MT76_STA_INFO_STATE_ASSOC, NULL);
+ 		mt7925_mcu_set_beacon_filter(dev, vif, vif->cfg.assoc);
+ 
+ 		if (ieee80211_vif_is_mld(vif))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 5b9c9d8d3b2cc..ebf454bf1eda9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -2065,14 +2065,18 @@ mt7925_mcu_sta_mld_tlv(struct sk_buff *skb,
+ 		       struct ieee80211_vif *vif,
+ 		       struct ieee80211_sta *sta,
+ 		       struct mt792x_bss_conf *mconf,
+-		       struct mt792x_link_sta *mlink)
++		       struct mt792x_link_sta *mlink,
++		       struct mt792x_link_sta *pending)
+ {
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 	struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
+ 	struct mt792x_dev *dev = mvif->phy->dev;
++	unsigned long valid = msta->valid_links;
+ 	struct mt792x_bss_conf *mconf_pri;
+ 	struct sta_rec_mld *mld;
++	unsigned int link_id;
+ 	struct tlv *tlv;
++	u8 max_links;
+ 	u8 cnt = 0;
+ 
+ 	/* Primary link always uses driver's deflink WCID. */
+@@ -2101,11 +2105,38 @@ mt7925_mcu_sta_mld_tlv(struct sk_buff *skb,
+ 	mld->link[cnt].wlan_id = cpu_to_le16(msta->deflink.wcid.idx);
+ 	mld->link[cnt++].bss_idx = mconf_pri->mt76.idx;
+ 
+-	/* Optionally encode the currently-updated secondary link. */
+-	if (mlink && mlink != &msta->deflink && mconf) {
+-		mld->secondary_id = cpu_to_le16(mlink->wcid.idx);
+-		mld->link[cnt].wlan_id = cpu_to_le16(mlink->wcid.idx);
+-		mld->link[cnt++].bss_idx = mconf->mt76.idx;
++	max_links = ARRAY_SIZE(mld->link);
++
++	/* A link being added is not set in msta->valid_links yet */
++	if (pending && pending != &msta->deflink)
++		valid |= BIT(pending->wcid.link_id);
++
++	for_each_set_bit(link_id, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
++		struct mt792x_link_sta *mlink_sec;
++		struct mt792x_bss_conf *mconf_sec;
++
++		if (cnt == max_links)
++			break;
++
++		if (link_id == msta->deflink_id)
++			continue;
++
++		mlink_sec = mt792x_sta_to_link(msta, link_id);
++		if (!mlink_sec && pending && link_id == pending->wcid.link_id)
++			mlink_sec = pending;
++		if (!mlink_sec || mlink_sec == &msta->deflink)
++			continue;
++
++		mconf_sec = rcu_dereference_protected(mvif->link_conf[link_id],
++						      lockdep_is_held(&dev->mt76.mutex));
++		if (!mconf_sec)
++			continue;
++
++		if (cnt == 1)
++			mld->secondary_id = cpu_to_le16(mlink_sec->wcid.idx);
++
++		mld->link[cnt].wlan_id = cpu_to_le16(mlink_sec->wcid.idx);
++		mld->link[cnt++].bss_idx = mconf_sec->mt76.idx;
+ 	}
+ 
+ 	mld->link_num = cnt;
+@@ -2124,7 +2155,8 @@ mt7925_mcu_sta_remove_tlv(struct sk_buff *skb)
+ 
+ static int
+ mt7925_mcu_sta_cmd(struct mt76_phy *phy,
+-		   struct mt76_sta_cmd_info *info)
++		   struct mt76_sta_cmd_info *info,
++		   struct mt792x_link_sta *pending)
+ {
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)info->vif->drv_priv;
+ 	struct mt76_dev *dev = phy->dev;
+@@ -2165,7 +2197,7 @@ mt7925_mcu_sta_cmd(struct mt76_phy *phy,
+ 		if (info->state != MT76_STA_INFO_STATE_NONE) {
+ 			mt7925_mcu_sta_mld_tlv(skb, info->vif,
+ 					       info->link_sta->sta,
+-					       mconf, mlink);
++					       mconf, mlink, pending);
+ 
+ 			mt7925_mcu_sta_eht_mld_tlv(skb, info->vif, info->link_sta->sta);
+ 		}
+@@ -2190,7 +2222,8 @@ int mt7925_mcu_sta_update(struct mt792x_dev *dev,
+ 			  struct ieee80211_vif *vif,
+ 			  struct mt792x_link_sta *mlink,
+ 			  bool enable,
+-			  enum mt76_sta_info_state state)
++			  enum mt76_sta_info_state state,
++			  struct mt792x_link_sta *pending)
+ {
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 	int rssi = -ewma_rssi_read(&mvif->bss_conf.rssi);
+@@ -2208,7 +2241,7 @@ int mt7925_mcu_sta_update(struct mt792x_dev *dev,
+ 	info.wcid = &mlink->wcid;
+ 	info.newly = state != MT76_STA_INFO_STATE_ASSOC;
+ 
+-	return mt7925_mcu_sta_cmd(&dev->mphy, &info);
++	return mt7925_mcu_sta_cmd(&dev->mphy, &info, pending);
+ }
+ 
+ int mt7925_mcu_set_beacon_filter(struct mt792x_dev *dev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
+index cc4270863ebd4..ef72b50e1a7c7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
+@@ -291,7 +291,8 @@ int mt7925_mcu_sta_update(struct mt792x_dev *dev,
+ 			  struct ieee80211_vif *vif,
+ 			  struct mt792x_link_sta *mlink,
+ 			  bool enable,
+-			  enum mt76_sta_info_state state);
++			  enum mt76_sta_info_state state,
++			  struct mt792x_link_sta *pending);
+ int mt7925_mcu_set_chan_info(struct mt792x_phy *phy, u16 tag);
+ int mt7925_mcu_set_tx(struct mt792x_dev *dev, struct ieee80211_bss_conf *bss_conf);
+ int mt7925_mcu_set_eeprom(struct mt792x_dev *dev);
 -- 
 2.53.0
 
