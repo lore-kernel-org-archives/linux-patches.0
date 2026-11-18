@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044108;
-	b=GnxMb2r+3dScBjgCl2jFICU4IUNxRXkK5+hmXN1mNousmMX2F8E/DMag0gId7lxtvX4A
-	 P9PBYF/LlnHZ5YK/1XotyySx/ldG0KbEPJJTabiXwgxC5fDivAnqD+v1vXzThvbKGks2e
-	 wYtCpg41nR2u60dh3Ml+ZcAJ7+ZUolYkYaAK6Ufwb041uXCIuWkQ32KpJPqTwFEm+IwHA
-	 p3mFhsHBYBhXRZvTCpSNkZ55IyIjXx8ehfQyQ8+H/V4mDBCCagF9I7mzPDF5A6vTCUrxO
-	 vv90Miz5SMBO/gVIHckEjA0CFwHb6wgPVgE/ci5m1/SRsG0aiUz3MLoucIeeXVvGkrQ==
+	t=1795044111;
+	b=pSXmUoIt2EwSDPB+kghCbLaiUHpftaqqGm/cXPA5ksEG/tvNKEGBD8x8YTIdzfHWwRt7
+	 mQ4bsdevVbjvRrJ5vj5s4jCjpPywaSYGYQJT3rmKrBfx/ji1sMFCb8QjeNUL7+W8a9iPe
+	 yjcTgSlu0ZwaXq10CHL1ZD5/PzWHyAwv0KPNoJnOyTTHhHBe/JpRsG/yXpqYGBJ3WLI1v
+	 1peWtL3WFH8PuE43t4dkAYa5CLaZmvCbyK7V8JBFWsWHaGJAwfQ/yakbqtKi4O5Jeusrx
+	 Fq1RNoTKKYRhXawbfXRoEDaX6lzMEX2kmpFcixMTz36zBVPH2RLssX6uxtzbHqAIQWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h3pxGv5zFGLOOersS7RMli25ml9Db161vt9GOZQGlB8=;
-	b=FFqinHAMEdY/kVzxRB4UWGBmiU9q49tW2c30qJa2/yCmI01QknUGV0HyqGks/M9mVszF
-	 duiYo++ncLUbYXAS/M1Buml/CEhbW77furizGWWNvD8rBRHkSvugU4Vb/5ECJ/wGlzHKE
-	 0l5F4wLYWA+QT/67cNdqQD9EFfJsBwNX9B5xzn/tXQw/SqsEVuyxLN+XFxzFOVmaXLRqi
-	 sgGhd3S7TZK39OH7gV+uiESEZbE4ZwRM0LcfF/d59MQzwwnD6YYTZnf55jLZhZ1xvIe3K
-	 4Fzkof2FHbhF6WMdj0KLKcMLa8TOmFyoQG7/mvKKHkVS6nHyNyQjH1SiKy5o1wA593A==
+	bh=e/znxfPhJbjmArlLi6u+a8jpYmt46wWBvhFsMr9rL6o=;
+	b=Us2UaaNn5LI8NdX/fPc6kG8onu6z0y9rEpfmdt532ZEciKm0yChM/lI88y4tdQ6gUKRv
+	 dRc7peMtANXlLJ+8I+kW69tJV8dYQUUuboouDUtXhWT33eaLAYNHS0TO52KekeowvvFxe
+	 6HxcthrutHDQBDM67XVizYxM7YjLpZlIHPecX6CSB9OaPNzIbvVZPezYvHAOfI0mOJf+p
+	 hbGoADBv4k5u9XQJULqDcV1fd+uiB0P47Edc9ypWFKvK7h5m2L6RAvn4Svc43Qb59Ng+7
+	 jVjWgslhPLD8gxKx9JvwyAuD8NlXZ+zucoWQefSEpdH4SdhjOQqIm259QC3SiYN85+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViU3k3Iy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o8Lm0SeE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B0C606A31C;
-	Wed, 18 Nov 2026 23:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B5C606A320;
+	Wed, 18 Nov 2026 23:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViU3k3Iy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4031F000C4;
-	Wed, 18 Nov 2026 23:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o8Lm0SeE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780E51F000C4;
+	Wed, 18 Nov 2026 23:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044108;
-	bh=h3pxGv5zFGLOOersS7RMli25ml9Db161vt9GOZQGlB8=;
+	s=korg; t=1795044111;
+	bh=e/znxfPhJbjmArlLi6u+a8jpYmt46wWBvhFsMr9rL6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ViU3k3IyLuLlkPkuGbV20Y/JV7FTmlNPYVEg2h8I1S+Owyf9HQGwEb4KozkGWGE3k
-	 9HsgFxnEGfCy6d1NC9oWdFnm+/eDBfcTKOaUtmuZH7giYwkv9befRL7RSuy42t52oL
-	 FASO98W47mchGU3kDlnSfGKlfeHjSl/MxZnXDBB0=
+	b=o8Lm0SeEIVxuW0DSAKz5PocurCKmBEtSrAOqVLqVqA1ixrAYURJtXxCOy4cXyHHBu
+	 5UlKt1+EwE6ldwsUA3e6RR1AbqxppLvFFk2yB5PrYZiF89gpvtwm0bila6ndJcMgBd
+	 +akB9n7H+T+VmAvk1B+SmIqNYh+ZfvzIIhiiIU8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinwoo Lee <rkskek9254@gmail.com>,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
+	mst@redhat.com,
+	jasowangio@gmail.com,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0449/2857] KVM: x86: Fill kvm_run exit fields in common get_nested_state_pages() error paths
-Date: Wed, 18 Nov 2026 15:24:43 +0100
-Message-ID: <20261118150217.544518014@linuxfoundation.org>
+Subject: [PATCH 6.1 0450/2857] virtio_net: copy zerocopy frags in start_xmit without NAPI
+Date: Wed, 18 Nov 2026 15:24:44 +0100
+Message-ID: <20261118150217.583489165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,115 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit c1214f293d77c6e425a379f90d09bdb4815993a8 ]
+[ Upstream commit 07e1a9408b6c2f9d0cfb757b67dabb52da7a32b2 ]
 
-Fill kvm_run with "internal error, emulation" in the common error handling
-paths for getting nested state pages, as requiring each check to manually
-fill kvm_run is error prone and requires a non-trivial amount of copy+paste.
+Virtio-net without NAPI frees completed skbs lazily on the next
+start_xmit. Senders waiting for in-flight zerocopy buffers can
+deadlock if they cannot transmit more packets, as then no
+completed packets will be freed.
 
-Specifically, both SVM and VMX fail to fill kvm_run if load_pdptrs() fails,
-and SVM fails to fill kvm_run if kvm_hv_verify_vp_assist() fails.  If those
-flows fail, the *best* case scenario is that KVM will exit to userspace
-with KVM_EXIT_UNKNOWN.  The worst case scenario is that KVM exits with a
-stale exit_reason and confuses userspace.
+When !use_napi, virtio-net already calls skb_orphan to avoid waiting
+up for transmitted skbs to be freed. For zerocopy packets that
+require deep copying on orphan (i.e. those that do not set
+SKBFL_DONT_ORPHAN, such as PACKET_TX_RING), call skb_orphan_frags
+before orphaning to release the buffers.
 
-Note, SVM never exits to userspace if something goes sideways when dealing
-with vmcb12 assets while emulating VMRUN, i.e. lack of SVM-specific code is
-not a bug.
+This fixes the tpacket_snd slot reuse bug on skb_orphan for
+virtio-net, and prevents PACKET_TX_RING from running out of slots.
 
-Fixes: 0f85722341b0 ("KVM: nVMX: delay loading of PDPTRs to KVM_REQ_GET_NESTED_STATE_PAGES")
-Fixes: 232f75d3b4b5 ("KVM: nSVM: call nested_svm_load_cr3 on nested state load")
-Fixes: 3f4a812edf5c ("KVM: nSVM: hyper-v: Enable L2 TLB flush")
+This fix also touches vhost_net zerocopy packets, which also do not
+set SKBFL_DONT_ORPHAN. This is fine: vhost_net packets only encounter
+virtio-net in nested virtualization, and only if napi_tx is
+explicitly disabled (it has been default-enabled since Linux 4.12).
+In that rare case, copying the frags is desirable anyway to prevent
+holding guest descriptors pinned across unbounded intervals.
+
+This is a prerequisite for the next patch, which converts
+PACKET_TX_RING to standard zerocopy completion. Without this patch
+first, a bounded ring sender can stall indefinitely behind a
+virtio-net virtqueue that cannot reclaim.
+
+Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
 Cc: stable@vger.kernel.org
-Reported-by: Jinwoo Lee <rkskek9254@gmail.com>
-Closes: https://lore.kernel.org/all/20260813043932.3214460-1-rkskek9254@gmail.com
-Reported-by: Stefan Teodorescu <fane@google.com>
-Link: https://patch.msgid.link/20260921211608.1030158-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: Adapted to older helper names and field locations (nested_svm_vmrun_msrpm, nested_ops call, vmx->nested.nested_run_pending) and dropped the kvm_hv_verify_vp_assist() lines that don't exist here. ]
+Cc: mst@redhat.com
+Cc: jasowangio@gmail.com
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260919004748.1463985-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adapted to the older start_xmit(): used dev->stats.tx_dropped++ instead of DEV_STATS_INC and added a kick_vq label before the combined kick check, dropping the extra kick assignment. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |  7 +------
- arch/x86/kvm/vmx/nested.c | 15 +++++----------
- arch/x86/kvm/x86.c        |  3 +++
- 3 files changed, 9 insertions(+), 16 deletions(-)
+ drivers/net/virtio_net.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index a35fc16ba3841..877a878cae7ab 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1729,13 +1729,8 @@ static bool svm_get_nested_state_pages(struct kvm_vcpu *vcpu)
- 		if (CC(!load_pdptrs(vcpu, vcpu->arch.cr3)))
- 			return false;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 23362ef9cb8c3..9773a64c5dba8 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1910,6 +1910,13 @@ static netdev_tx_t start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	} while (use_napi && kick &&
+ 	       unlikely(!virtqueue_enable_cb_delayed(sq->vq)));
  
--	if (!nested_svm_vmrun_msrpm(svm)) {
--		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
--		vcpu->run->internal.suberror =
--			KVM_INTERNAL_ERROR_EMULATION;
--		vcpu->run->internal.ndata = 0;
-+	if (!nested_svm_vmrun_msrpm(svm))
- 		return false;
--	}
- 
- 	return true;
- }
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 15e8491a455f3..38649d769b416 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3220,10 +3220,6 @@ static bool nested_get_vmcs12_pages(struct kvm_vcpu *vcpu)
- 		} else {
- 			pr_debug_ratelimited("%s: no backing for APIC-access address in vmcs12\n",
- 					     __func__);
--			vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
--			vcpu->run->internal.suberror =
--				KVM_INTERNAL_ERROR_EMULATION;
--			vcpu->run->internal.ndata = 0;
- 			return false;
- 		}
- 	}
-@@ -3287,11 +3283,6 @@ static bool vmx_get_nested_state_pages(struct kvm_vcpu *vcpu)
- 	if (!nested_get_evmcs_page(vcpu)) {
- 		pr_debug_ratelimited("%s: enlightened vmptrld failed\n",
- 				     __func__);
--		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
--		vcpu->run->internal.suberror =
--			KVM_INTERNAL_ERROR_EMULATION;
--		vcpu->run->internal.ndata = 0;
--
- 		return false;
- 	}
- 
-@@ -3693,8 +3684,12 @@ static int nested_vmx_run(struct kvm_vcpu *vcpu, bool launch)
- 
- vmentry_failed:
- 	vmx->nested.nested_run_pending = 0;
--	if (status == NVMX_VMENTRY_KVM_INTERNAL_ERROR)
-+	if (status == NVMX_VMENTRY_KVM_INTERNAL_ERROR) {
-+		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
-+		vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
-+		vcpu->run->internal.ndata = 0;
- 		return 0;
++	if (!use_napi &&
++	    unlikely(skb_orphan_frags(skb, GFP_ATOMIC))) {
++		dev->stats.tx_dropped++;
++		dev_kfree_skb_any(skb);
++		goto kick_vq;
 +	}
- 	if (status == NVMX_VMENTRY_VMEXIT)
- 		return 1;
- 	WARN_ON_ONCE(status != NVMX_VMENTRY_VMFAIL);
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 1eb49a6b33497..3ada359a116b3 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10655,6 +10655,9 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
++
+ 	/* timestamp packet in software */
+ 	skb_tx_timestamp(skb);
+ 
+@@ -1960,6 +1967,7 @@ static netdev_tx_t start_xmit(struct sk_buff *skb, struct net_device *dev)
  		}
- 		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
- 			if (unlikely(!kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu))) {
-+				vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
-+				vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
-+				vcpu->run->internal.ndata = 0;
- 				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
- 				r = 0;
- 				goto out;
+ 	}
+ 
++kick_vq:
+ 	if (kick || netif_xmit_stopped(txq)) {
+ 		if (virtqueue_kick_prepare(sq->vq) && virtqueue_notify(sq->vq)) {
+ 			u64_stats_update_begin(&sq->stats.syncp);
 -- 
 2.53.0
 
