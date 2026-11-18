@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059152;
-	b=1J/e8W44eRr9dzaYF1POaUIuVv3O2ILzKq0Zfzbg8IF/GnsMz18Aa3akuPhzC1NXTtnl
-	 AoxGLvTqHwZnEONG99VwUK0WiY1A6JWPjZ0beJab9OzXLili9SIEkonja3nfE6QtdEn+t
-	 I71yU3ILWR4XJjm/0KG2N39nngpGovozi178vGm40AtxU1XoOYq/j/ROCFiHXEsoW5/8n
-	 zNL46eQltj/PK2Eu/ahaFrSIauXXiYguAq4/8O1xAs/0/tdBxgTEUsjIcfamVjnZyJQD7
-	 2vJTsvNu2ygDg/zzOOfylOlHxo6ZmN8UbWe99vZun0UFyszF6D3fETJ2bT+Lo5R+aFA==
+	t=1795059154;
+	b=EjwREmy8Rh9dSHPxiT2dFOq4VtRw40SkQWkDI++uEy9zXvr32+1j1IcgvyYd+bHOLpds
+	 I36EVpzjOmwDY6cGknRmpsqfJJ/67BB7a2/7eXEFT3OMKdTWekPfCBWvKJz5WShKi2ea5
+	 Eq7ZrCXztqAot/qvyMo/S4ogY9MUF746dtYiW4cHvpyscSVwIMj3kXcT8Qs+4lh2gUIC8
+	 7PEy4V6fMAfk6scRO7kc4vzOXeODY4AMmVwYghu+KAvt4ICvNX30s5z/piNSGkYjgO9kV
+	 mqbhS0C2sdhjIy62WnmfvEXWgU7K2VoMEAzKHCX81yjAhRY6Hr7UNIcmvlW0ZfS06rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6vWDSzBz6ylBGBbe4NFzq8HvDmzZKn8sozOwW/YvaCU=;
-	b=Y4A6Xn6+v4ZPOoOoFlaCV3F2wJol564gjJ/OISDT7iHDRm/HOBi6jnhf8h/FCzSLZSQ+
-	 WUXFhvdbzUcNVYGlAVw02u5vkIjb26+KfcTO21O8sFFdXcSobwfT8YNBKYC0MQ2CZI3s8
-	 brkIkZCOCnMKVVXFCwP/VEkvUVI8D9KM6wjeO2pZqNi0HCr7gC8h+RfUbNclkErxbWN40
-	 cMj0ivDIRQabg1phmDp0IWaoViRkHhtTWqSrEXm/LCnyir1GYQgkuBi4K8gUMZMB1oqkJ
-	 E5EXHkR/jkULWyUsmTiVd001Mm8+hiK6Cbmx+B9TpoMZJcV4pcW+rjyowAjBJALwDzw==
+	bh=OwggkdaMOVOMXymJ93skLo/mMWCZHOwiBE8itqmX1U4=;
+	b=C2XZCGscX9uz32CD4cooLFtdKKZ6pCmbNaNIiP6hmzEuvnzvSYeZ6fqU+ZVF1xLXr1Hb
+	 7qbFQs2zILbZoMFPP4X3f6gQ+euadpHm0cdfTU+FDcwNYymxJOV4dcmWfivRsB0t6w7td
+	 /xPCoM1z4h4qmINpt+Fwm9drrraSkhdySh6rG8tmB21K9WiSt9KuVJfsvsPKdDg3hTZB7
+	 54tgLXiaRd4ZrdjsfJu0WNCAN/poPiStDewgu8O6J0rttPduxhjzk9WEfoxHn1lHKkRbT
+	 pf+tVfjRfH5TyOjawEi+WKZm6mhIYKmm8VXp3ypvnm7+uKQCVDAv0xI5rCwCZKd3euw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W4AeGVtm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPTQKVu4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6413606A31C;
-	Thu, 19 Nov 2026 03:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8068F606A31C;
+	Thu, 19 Nov 2026 03:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W4AeGVtm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20191F000C4;
-	Thu, 19 Nov 2026 03:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPTQKVu4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3551F000C4;
+	Thu, 19 Nov 2026 03:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059151;
-	bh=6vWDSzBz6ylBGBbe4NFzq8HvDmzZKn8sozOwW/YvaCU=;
+	s=korg; t=1795059154;
+	bh=OwggkdaMOVOMXymJ93skLo/mMWCZHOwiBE8itqmX1U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4AeGVtmSEiWPvKJgaE51NdM/2AjmX0AWwCG+YIqVFhk2nAh4pensBJT9N2n9FHpO
-	 Vyi/jBsAZJfjtyOraetMuh5jagGwoy7186+yt0+737HtpSYwCxNz2F1sac992mkWzJ
-	 EFjaXeHll+4Cm7MYEGL6LabHZCJ9EGC8dGCGBUM4=
+	b=fPTQKVu4oiss1vci2PZtefoXDPg0VdVNJi9VX9bp2AC8WSVWMVhpEna5iAl2a2gxh
+	 u/5fSA6OMuA1SMAHP/W4W85j+QuTsesItsBXlbHUsOMtrkSo2doG+HUueoh9Cjbrf+
+	 iTryCM7Bq2CwvpBb7WZW5hPOBtroNAwVKogoDivQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Simpson <chris@nilk.net>,
+	Alex Kazinsky <a.kazinsky@ideco.ru>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0739/1848] ALSA: hda/realtek: Enable bass speakers on Alienware m17 R3
-Date: Wed, 18 Nov 2026 15:46:17 +0100
-Message-ID: <20261118145947.301311986@linuxfoundation.org>
+Subject: [PATCH 5.10 0740/1848] ALSA: cs46xx: Handle SCB creation failures before dereferencing
+Date: Wed, 18 Nov 2026 15:46:18 +0100
+Message-ID: <20261118145947.334900375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,53 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Simpson <chris@nilk.net>
+From: Alex Kazinsky <a.kazinsky@ideco.ru>
 
-[ Upstream commit eb296114d5ba4d335a640dbbbbc9618fded0ffe7 ]
+[ Upstream commit 023d3e1176202339cd94a3d732e3aec74e36ba22 ]
 
-The Alienware m17 R3 (ALC289, PCI SSID 1028:09d1) has a second speaker
-pair, the bass speakers, on pin 0x17, which the BIOS leaves unconnected
-(0x411111f0). No PCI SSID quirk matches the machine, so it gets
-ALC269_FIXUP_DELL4_MIC_NO_PRESENCE from the fallback pin quirk table,
-and only the speakers on pin 0x14 play.
+With CONFIG_PM_SLEEP enabled, cs46xx_dsp_create_scb() can return NULL
+if kmemdup() fails to allocate the SCB data saved for resume.
+cs46xx_dsp_scb_and_task_init() and _dsp_create_generic_scb() dereference
+the returned pointer without checking it, causing a NULL pointer
+dereference on allocation failure.
 
-Use ALC289_FIXUP_DUAL_SPK, as on the Alienware x16 R2 and Dell XPS 15
-9510/9520: it sets pin 0x17 up as a speaker on DAC 0x02, so one volume
-control covers both pairs, and chains to
-ALC269_FIXUP_DELL4_MIC_NO_PRESENCE, so the headset mic setup is
-unchanged.
+Check both return values before accessing the SCB descriptors.
+Return -ENOMEM when creating the null SCB fails and propagate NULL
+from _dsp_create_generic_scb().
 
-Tested on an Alienware m17 R3 (BIOS 1.38.0), Linux 7.3 with this change
-applied: the bass speakers play, and volume and mute cover both pairs,
-also after suspend and resume. Headphones and a headset mic were not
-tested.
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+static analysis tool.
 
-I used Claude Code (Claude Opus 5.5) to find the unused pin, pick the
-existing fixup and write this patch and changelog; I did the listening
-tests myself.
-
+Fixes: 41116e926cb9 ("ALSA: cs46xx - Fix suspend/resume with new DSP")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Chris Simpson <chris@nilk.net>
-Link: https://patch.msgid.link/20261029-alc289-m17r3-v1-1-5d3eac605e7a@nilk.net
+Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
+Link: https://patch.msgid.link/20261030142529.415697-1-a.kazinsky@ideco.ru
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/cs46xx/dsp_spos.c         | 2 ++
+ sound/pci/cs46xx/dsp_spos_scb_lib.c | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 25573c62e86d1..4edd1e022797d 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9170,6 +9170,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1028, 0x097e, "Dell Precision", ALC289_FIXUP_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1028, 0x098d, "Dell Precision", ALC233_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x09bf, "Dell Precision", ALC233_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x09d1, "Alienware m17 R3", ALC289_FIXUP_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1028, 0x0a2e, "Dell", ALC236_FIXUP_DELL_AIO_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1028, 0x0a30, "Dell", ALC236_FIXUP_DELL_AIO_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1028, 0x0a58, "Dell", ALC255_FIXUP_DELL_HEADSET_MIC),
+diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
+index 5d7c38a0ac7be..1712fb7c0148c 100644
+--- a/sound/pci/cs46xx/dsp_spos.c
++++ b/sound/pci/cs46xx/dsp_spos.c
+@@ -1109,6 +1109,8 @@ int cs46xx_dsp_scb_and_task_init (struct snd_cs46xx *chip)
+ 
+ 		null_scb.entry_point = null_algorithm->address;
+ 		ins->the_null_scb = cs46xx_dsp_create_scb(chip, "nullSCB", (u32 *)&null_scb, NULL_SCB_ADDR);
++		if (!ins->the_null_scb)
++			return -ENOMEM;
+ 		ins->the_null_scb->task_entry = null_algorithm;
+ 		ins->the_null_scb->sub_list_ptr = ins->the_null_scb;
+ 		ins->the_null_scb->next_scb_ptr = ins->the_null_scb;
+diff --git a/sound/pci/cs46xx/dsp_spos_scb_lib.c b/sound/pci/cs46xx/dsp_spos_scb_lib.c
+index 1f90ca723f4df..af5c78e3fd200 100644
+--- a/sound/pci/cs46xx/dsp_spos_scb_lib.c
++++ b/sound/pci/cs46xx/dsp_spos_scb_lib.c
+@@ -285,7 +285,8 @@ _dsp_create_generic_scb (struct snd_cs46xx *chip, char * name, u32 * scb_data, u
+ 	dev_dbg(chip->card->dev, "dsp_spos: creating SCB <%s>\n", name);
+ 
+ 	scb = cs46xx_dsp_create_scb(chip,name,scb_data,dest);
+-
++	if (!scb)
++		return NULL;
+ 
+ 	scb->sub_list_ptr = ins->the_null_scb;
+ 	scb->next_scb_ptr = ins->the_null_scb;
 -- 
 2.53.0
 
