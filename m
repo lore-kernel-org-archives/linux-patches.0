@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037955;
-	b=Og6Obo9bNptl+ZNX7axEv4KqdzsDWdPlH5YXjyIu0HMpqW7xMXGJINoSph1ahuRYmiyr
-	 mYN61az1TZliTp8IxVk7g/5AqqPFOjmmOBfNRT6C8/dfKfkRqoNx3zDfwVS/EoHIO/c18
-	 FyaTycttz+F/P71cBrUG+KODFui0QanvWqHS6ksb4rin8ZWRQw0Nk/Jlp2ZEO+hWe6wG8
-	 NFfwl4rGC86zZTSTtQR43G+17a+16eSS4wusaT/jgCz5a/ijg1pVQuPaNuteCfh9kLQ1D
-	 bEilMQwhNKCzpoy94ZUKgo30wuM7p+llg1EPEtIy1Obhl2PyVZRtK3V2JIvLnBRCWEA==
+	t=1795037958;
+	b=AtWJ8ZN62u7q88/IMpOLmjj8a65yxpC83ybBsZH3uEY9UdaHY4bVU0F2UeCQL0X52oOa
+	 19pz9WbWtH30S3KLPzM0d0MxgdLc4xfannofb44TKxvYMW36DgURKxfJp4lEvLbXmbEUd
+	 8mFsPt0MATySKz8ZuOsv1Ltrqstq6ouNdxhu9uqG5c4bQjP09HDcKTIyBYFhLk7AU3tJq
+	 cCORtX42ZvNWsM6DrLKHo7AWpR87aDQOMq87PGiGStCa+Y98ysol8y6ar3V7ld3E+E34Q
+	 K8MNffC96ilN9QWkfX2ipZoOTy7RbzElIluiMWgT7z8UxejkgJjTrN3I3bV/Qg6FFpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Far86TA/54XF1GAOpdRuOOcRPEuvzUP0H4yAKh5Z/QI=;
-	b=mCeC8RP+dysePAsUix6O21UFAH5MuOVpsmzD3CZPKyI+TWTR3IgJLSU8dHK2TlvXJ00X
-	 JFI+BTQAgY1BkpIRETW9c7x5cFzIroCP3RtbzdhtPZymsqsuZmC0JClPQIpSJ311adK/8
-	 Gp9zFuPSEP0FvBNZJ/+QQ1Rd8pYT8qeCK6erKcUB03AD1pJ3yqpqvimVWw1HMA5TjJuxv
-	 NaXd1vXXN2R+uoBJEcxbjjxd9RjDzAVAVI4ZxTRirgp0daFLSWu3EjwFvGnX8aTdmFdzM
-	 keSpXKsEKKQwSn+ZDn8XfG61Twfez0ijsXYv8xCei+CjMoLMa9QW80fIBuTKPhC5yJQ==
+	bh=+oXO43TIJpEWur4L11OFkxAYVdc6GtFdCDoiGsRPr4E=;
+	b=cBdcmk5NWmPUfrQGpv/2sIgLp6vcdqO46M9EJoaCdz/iEh1l9ZJYp1meWG6WWEcx+mne
+	 tdn8LgJ8kKdgEuggr/aJ1p+MpkXN30Ur/EHf/sdJIcNuRWzQ8iqMrHTdbCmz25ou3Cw1v
+	 WcWar+7FJFGJ6Vqel0zmEJrx6kFvH2sLnSbDIAh4vrT0GsGRjPYc4p8LYrswVIvGGi5kL
+	 Mhtf/ysAMqMTTw6AouVcwsNAywnYLdqpU/fnhtJk7i3h7M3hN8iCgZxR1dfhS4YukCYVd
+	 VIaOzV2+yYC6deAQsFl5xe3kLxEbgJYHut7KFFVnQl1VU8adeCtcFQtjg53DX8b6haw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TS+EnZD7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zUlUgnpN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA455606A31C;
-	Wed, 18 Nov 2026 21:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D20F606A325;
+	Wed, 18 Nov 2026 21:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TS+EnZD7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC301F000C4;
-	Wed, 18 Nov 2026 21:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zUlUgnpN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E6D1F000C4;
+	Wed, 18 Nov 2026 21:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037955;
-	bh=Far86TA/54XF1GAOpdRuOOcRPEuvzUP0H4yAKh5Z/QI=;
+	s=korg; t=1795037958;
+	bh=+oXO43TIJpEWur4L11OFkxAYVdc6GtFdCDoiGsRPr4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TS+EnZD7HiwEYiYBuzX7TbsP6rlLwUEBHikybP0khY5YesE14idTCVqb1ph0leWJD
-	 llO/mBWtSMwrcohhW4iJw5YrU8Ol3/nNvNUCmNIxyrPmaWAW4iU8UDJTBKwkUjlKkr
-	 jH/WtQ8V9kUcSpDT0fFl0sk4OenQnFIbL7OwHAPM=
+	b=zUlUgnpNBshoNxmIYO4uQ+zbSdcW9Xo2+jLZOjPzruLDfzIbYWK8BEuTXk2nFcUNc
+	 qXCklBxJFybAyCr6rgy4c8JfDEyYYEJrZlbT9T+yRsjxF9RACrMMBRPF+H0SOvk2yL
+	 N+tZjfU6w1RDcNdU5the+BbKPqEtff4IjqkyHqDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1559/3318] MIPS: sgi-ip32: Mask MACE PCI interrupts in CRIME only
-Date: Wed, 18 Nov 2026 15:36:21 +0100
-Message-ID: <20261118150407.799360827@linuxfoundation.org>
+Subject: [PATCH 6.6 1577/3318] can: raw, isotp: copy socket options outside of lock_sock()
+Date: Wed, 18 Nov 2026 15:36:39 +0100
+Message-ID: <20261118150408.427326780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,121 +68,272 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 4e65c502b8975e7c3c3d84aba59cd04af1dd6b8a ]
+commit 43c973a0887d3d7b2ee0a446603c97bf0f38c58e upstream.
 
-Masking PCI interrupts in the MACE PCI control register overwrites the
-error and arbitration enables set at init, and a read-modify-write can
-hang CRIME 1.1 machines under DMA load. Enable the slot interrupts once
-and mask them in CRIME.
+The CAN_RAW and CAN_ISOTP specific socket options are copied from and
+to user space while holding lock_sock(). A copy that faults or stalls,
+e.g. on a userfaultfd or FUSE backed mapping, holds lock_sock() for its
+whole duration.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+raw_notify() and isotp_notify() take lock_sock() of a socket that is
+bound to the vanishing device while holding RTNL. As the CAN_RAW
+options can also be changed on a bound socket, a stalled copy can block
+RTNL on an unregistration or namespace change of the bound device.
+Before "can: protect the receive lists with a per-device lock",
+raw_setsockopt() even held RTNL itself during the copy. CAN_ISOTP only
+copies its options for unbound sockets, which isotp_notify() skips
+without taking lock_sock().
+
+Keep the user space copies out of the locked sections: Check the option
+name and length and copy the option values, including the CAN_RAW_FILTER
+filters, to kernel memory before lock_sock(). raw_setsockopt_locked()
+and isotp_setsockopt_locked() get the copied values directly and drop
+their now redundant length checks and copies. As a side effect, a
+failing copy can not leave partially overwritten options behind
+anymore. In raw_getsockopt() duplicate the filters under lock_sock() and
+copy them to user space after release_sock().
+
+As the option name and length are now checked before lock_sock(), the
+order of the checks in isotp_setsockopt() and accordingly the order of
+the returned error values changes. This is in line with POSIX, which
+does not define an order in which multiple error conditions are
+detected and reported.
+
+The generic SOL_SOCKET options in sk_setsockopt() are not affected by
+this patch.
+
+Fixes: c18ce101f2e4 ("[CAN]: Add raw protocol")
+Fixes: 1e5185c09058 ("can: raw: add locking for raw flags bitfield")
+Cc: stable@vger.kernel.org # depends on "can: protect the receive lists with a per-device lock"
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-4-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ backport to 6.6: This tree has no raw_setsockopt_locked() from commit
+  1e5185c09058 ("can: raw: add locking for raw flags bitfield").
+  raw_setsockopt() already copies all option values from user space
+  before lock_sock() here, so only the raw_getsockopt() and isotp parts
+  apply. raw_getsockopt() uses copy_to_user() and put_user() instead of
+  the getsockopt_iter interface in this tree. Duplicate the filters
+  under lock_sock() and copy them with copy_to_user() after
+  release_sock(). Also move the put_user() of the needed filter space
+  for -ERANGE behind release_sock(), which upstream writes to the kernel
+  side opt->optlen. ]
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/pci-ip32.c      |  7 ++++--
- arch/mips/sgi-ip32/ip32-irq.c | 45 +++--------------------------------
- 2 files changed, 8 insertions(+), 44 deletions(-)
+ net/can/isotp.c | 100 +++++++++++++++++++++++++++---------------------
+ net/can/raw.c   |  25 +++++++++---
+ 2 files changed, 76 insertions(+), 49 deletions(-)
 
-diff --git a/arch/mips/pci/pci-ip32.c b/arch/mips/pci/pci-ip32.c
-index 7ae89d0c70990..30aca6f76563d 100644
---- a/arch/mips/pci/pci-ip32.c
-+++ b/arch/mips/pci/pci-ip32.c
-@@ -125,10 +125,13 @@ static int __init mace_init(void)
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 69366f9575070..ad99d1543b164 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1681,8 +1681,8 @@ static int isotp_getname(struct socket *sock, struct sockaddr *uaddr, int peer)
+ 	return ISOTP_MIN_NAMELEN;
+ }
+ 
+-static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
+-			    sockptr_t optval, unsigned int optlen)
++static int isotp_setsockopt_locked(struct socket *sock, int optname,
++				   const void *val)
  {
- 	PCIBIOS_MIN_IO = 0x1000;
+ 	struct sock *sk = sock->sk;
+ 	struct isotp_sock *so = isotp_sk(sk);
+@@ -1693,11 +1693,7 @@ static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
  
--	/* Clear any outstanding errors and enable interrupts */
-+	/*
-+	 * Clear any outstanding errors and enable interrupts.  PCI interrupts
-+	 * are masked in CRIME, so the per-slot enables stay on.
-+	 */
- 	mace->pci.error_addr = 0;
- 	mace->pci.error = 0;
--	mace->pci.control = 0xff008500;
-+	mace->pci.control = 0xff0085ff;
- 
- 	printk("MACE PCI rev %d\n", mace->pci.rev);
- 
-diff --git a/arch/mips/sgi-ip32/ip32-irq.c b/arch/mips/sgi-ip32/ip32-irq.c
-index e21ea1de05e31..5bf3c4796527d 100644
---- a/arch/mips/sgi-ip32/ip32-irq.c
-+++ b/arch/mips/sgi-ip32/ip32-irq.c
-@@ -162,38 +162,6 @@ static struct irq_chip crime_edge_interrupt = {
- 	.irq_unmask	= crime_enable_irq,
- };
- 
--/*
-- * This is for MACE PCI interrupts.  We can decrease bus traffic by masking
-- * as close to the source as possible.	This also means we can take the
-- * next chunk of the CRIME register in one piece.
-- */
+ 	switch (optname) {
+ 	case CAN_ISOTP_OPTS:
+-		if (optlen != sizeof(struct can_isotp_options))
+-			return -EINVAL;
 -
--static unsigned long macepci_mask;
--
--static void enable_macepci_irq(struct irq_data *d)
--{
--	macepci_mask |= MACEPCI_CONTROL_INT(d->irq - MACEPCI_SCSI0_IRQ);
--	mace->pci.control = macepci_mask;
--	crime_mask |= 1 << (d->irq - CRIME_IRQ_BASE);
--	crime->imask = crime_mask;
--}
--
--static void disable_macepci_irq(struct irq_data *d)
--{
--	crime_mask &= ~(1 << (d->irq - CRIME_IRQ_BASE));
--	crime->imask = crime_mask;
--	flush_crime_bus();
--	macepci_mask &= ~MACEPCI_CONTROL_INT(d->irq - MACEPCI_SCSI0_IRQ);
--	mace->pci.control = macepci_mask;
--	flush_mace_bus();
--}
--
--static struct irq_chip ip32_macepci_interrupt = {
--	.name = "IP32 MACE PCI",
--	.irq_mask = disable_macepci_irq,
--	.irq_unmask = enable_macepci_irq,
--};
--
- /* This is used for MACE ISA interrupts.  That means bits 4-6 in the
-  * CRIME register.
-  */
-@@ -301,8 +269,8 @@ static struct irq_chip ip32_maceisa_edge_interrupt = {
- 	.irq_unmask	= enable_maceisa_irq,
- };
+-		if (copy_from_sockptr(&so->opt, optval, optlen))
+-			return -EFAULT;
++		memcpy(&so->opt, val, sizeof(so->opt));
  
--/* This is used for regular non-ISA, non-PCI MACE interrupts.  That means
-- * bits 0-3 and 7 in the CRIME register.
-+/* This is used for regular non-ISA MACE interrupts.  That means bits 0-3
-+ * and 7-15 in the CRIME register.
-  */
+ 		/* no separate rx_ext_address is given => use ext_address */
+ 		if (!(so->opt.flags & CAN_ISOTP_RX_EXT_ADDR))
+@@ -1722,55 +1718,37 @@ static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
+ 		break;
  
- static void enable_mace_irq(struct irq_data *d)
-@@ -438,20 +406,13 @@ void __init arch_init_irq(void)
- 	mips_cpu_irq_init();
- 	for (irq = CRIME_IRQ_BASE; irq <= IP32_IRQ_MAX; irq++) {
- 		switch (irq) {
--		case MACE_VID_IN1_IRQ ... MACE_PCI_BRIDGE_IRQ:
-+		case MACE_VID_IN1_IRQ ... MACEPCI_SHARED2_IRQ:
- 			irq_set_chip_and_handler_name(irq,
- 						      &ip32_mace_interrupt,
- 						      handle_level_irq,
- 						      "level");
- 			break;
- 
--		case MACEPCI_SCSI0_IRQ ...  MACEPCI_SHARED2_IRQ:
--			irq_set_chip_and_handler_name(irq,
--						      &ip32_macepci_interrupt,
--						      handle_level_irq,
--						      "level");
--			break;
+ 	case CAN_ISOTP_RECV_FC:
+-		if (optlen != sizeof(struct can_isotp_fc_options))
+-			return -EINVAL;
 -
- 		case CRIME_CPUERR_IRQ:
- 		case CRIME_MEMERR_IRQ:
- 			irq_set_chip_and_handler_name(irq,
+-		if (copy_from_sockptr(&so->rxfc, optval, optlen))
+-			return -EFAULT;
++		memcpy(&so->rxfc, val, sizeof(so->rxfc));
+ 		break;
+ 
+ 	case CAN_ISOTP_TX_STMIN:
+-		if (optlen != sizeof(u32))
+-			return -EINVAL;
+-
+-		if (copy_from_sockptr(&so->force_tx_stmin, optval, optlen))
+-			return -EFAULT;
++		so->force_tx_stmin = *(const u32 *)val;
+ 		break;
+ 
+ 	case CAN_ISOTP_RX_STMIN:
+-		if (optlen != sizeof(u32))
+-			return -EINVAL;
+-
+-		if (copy_from_sockptr(&so->force_rx_stmin, optval, optlen))
+-			return -EFAULT;
++		so->force_rx_stmin = *(const u32 *)val;
+ 		break;
+ 
+-	case CAN_ISOTP_LL_OPTS:
+-		if (optlen == sizeof(struct can_isotp_ll_options)) {
+-			struct can_isotp_ll_options ll;
+-
+-			if (copy_from_sockptr(&ll, optval, optlen))
+-				return -EFAULT;
++	case CAN_ISOTP_LL_OPTS: {
++		const struct can_isotp_ll_options *ll = val;
+ 
+-			/* check for correct ISO 11898-1 DLC data length */
+-			if (ll.tx_dl != padlen(ll.tx_dl))
+-				return -EINVAL;
++		/* check for correct ISO 11898-1 DLC data length */
++		if (ll->tx_dl != padlen(ll->tx_dl))
++			return -EINVAL;
+ 
+-			if (ll.mtu != CAN_MTU && ll.mtu != CANFD_MTU)
+-				return -EINVAL;
++		if (ll->mtu != CAN_MTU && ll->mtu != CANFD_MTU)
++			return -EINVAL;
+ 
+-			if (ll.mtu == CAN_MTU &&
+-			    (ll.tx_dl > CAN_MAX_DLEN || ll.tx_flags != 0))
+-				return -EINVAL;
++		if (ll->mtu == CAN_MTU &&
++		    (ll->tx_dl > CAN_MAX_DLEN || ll->tx_flags != 0))
++			return -EINVAL;
+ 
+-			memcpy(&so->ll, &ll, sizeof(ll));
++		memcpy(&so->ll, ll, sizeof(*ll));
+ 
+-			/* set ll_dl for tx path to similar place as for rx */
+-			so->tx.ll_dl = ll.tx_dl;
+-		} else {
+-			return -EINVAL;
+-		}
++		/* set ll_dl for tx path to similar place as for rx */
++		so->tx.ll_dl = ll->tx_dl;
+ 		break;
++	}
+ 
+ 	default:
+ 		ret = -ENOPROTOOPT;
+@@ -1784,13 +1762,49 @@ static int isotp_setsockopt(struct socket *sock, int level, int optname,
+ 
+ {
+ 	struct sock *sk = sock->sk;
++	union {
++		struct can_isotp_options opt;
++		struct can_isotp_fc_options rxfc;
++		struct can_isotp_ll_options ll;
++		u32 stmin;
++	} val;
++	unsigned int size;
+ 	int ret;
+ 
+ 	if (level != SOL_CAN_ISOTP)
+ 		return -EINVAL;
+ 
++	/* copy the option values from user space before lock_sock() */
++	switch (optname) {
++	case CAN_ISOTP_OPTS:
++		size = sizeof(val.opt);
++		break;
++
++	case CAN_ISOTP_RECV_FC:
++		size = sizeof(val.rxfc);
++		break;
++
++	case CAN_ISOTP_TX_STMIN:
++	case CAN_ISOTP_RX_STMIN:
++		size = sizeof(val.stmin);
++		break;
++
++	case CAN_ISOTP_LL_OPTS:
++		size = sizeof(val.ll);
++		break;
++
++	default:
++		return -ENOPROTOOPT;
++	}
++
++	if (optlen != size)
++		return -EINVAL;
++
++	if (copy_from_sockptr(&val, optval, size))
++		return -EFAULT;
++
+ 	lock_sock(sk);
+-	ret = isotp_setsockopt_locked(sock, level, optname, optval, optlen);
++	ret = isotp_setsockopt_locked(sock, optname, &val);
+ 	release_sock(sk);
+ 	return ret;
+ }
+diff --git a/net/can/raw.c b/net/can/raw.c
+index ead9e2713a27d..d3c8bf057ccee 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -777,31 +777,44 @@ static int raw_getsockopt(struct socket *sock, int level, int optname,
+ 		return -EINVAL;
+ 
+ 	switch (optname) {
+-	case CAN_RAW_FILTER:
++	case CAN_RAW_FILTER: {
++		struct can_filter *filter = NULL;
++		int fsize = 0;
++
+ 		lock_sock(sk);
+ 		if (ro->count > 0) {
+-			int fsize = ro->count * sizeof(struct can_filter);
++			fsize = ro->count * sizeof(struct can_filter);
+ 
+ 			/* user space buffer to small for filter list? */
+ 			if (len < fsize) {
+ 				/* return -ERANGE and needed space in optlen */
+ 				err = -ERANGE;
+-				if (put_user(fsize, optlen))
+-					err = -EFAULT;
+ 			} else {
+ 				if (len > fsize)
+ 					len = fsize;
+-				if (copy_to_user(optval, ro->filter, len))
+-					err = -EFAULT;
++				/* copy to user space after release_sock() */
++				filter = kmemdup(ro->filter, len, GFP_KERNEL);
++				if (!filter)
++					err = -ENOMEM;
+ 			}
+ 		} else {
+ 			len = 0;
+ 		}
+ 		release_sock(sk);
+ 
++		if (err == -ERANGE) {
++			if (put_user(fsize, optlen))
++				err = -EFAULT;
++		} else if (filter) {
++			if (copy_to_user(optval, filter, len))
++				err = -EFAULT;
++			kfree(filter);
++		}
++
+ 		if (!err)
+ 			err = put_user(len, optlen);
+ 		return err;
++	}
+ 
+ 	case CAN_RAW_ERR_FILTER:
+ 		if (len > sizeof(can_err_mask_t))
 -- 
 2.53.0
 
