@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033760;
-	b=hJKNIEjiUacGEHfd80iGLTDP2Tk8T0FiTktpvqYc1rgouaizcwvvvnFiV7+Hg+xqlG1I
-	 BUO/BLH1Lh9QibZftQ3skAmQW7nrXtFrXbvqA19wluzucZWsx6hBMUelJ7PxBn2M7DmvB
-	 Cr6VRMPeRbiCl8Woas6VL+7SFijjEICtv5hjH9AVAriY1qfVziOP/be1IkOVT03smTeV4
-	 HOHvzGI29VH3wjO2S1iD910IeJ4bfjb28V07HtywykG1w/bD9hGcrxfxJd6C6WCHDKa4h
-	 cE4V9fHeIJ7Cu2H2SAsUsQa6G/4EqUVSPR0AvlV2EU/5j1LnPAa0t2PE1s1cxZk3Ieg==
+	t=1795033763;
+	b=E4xFSyr2ngiDfcupAOpa6O3xqtnGU8VM+gkgcSFWZ9Oo15fZxtGRiFVNHefpHGKaZ+3E
+	 c2UKRYAT1g3ToXYoWP/fRsR4DMfHFFIthRqLX1TTdnqKqIO63DIVGZbP+BFaaKAJqIffY
+	 umsNDFUcssNU7T2M2f9igbbErHWUokVpf/N5ClPS/H1ei1O2f6N1mjVQLcvy+0TdlHryB
+	 ZI15ZYIznSber1rfSBr5Ce9pLRSPnFcMYOEZu56Fl/lzm4RtjHXGXdL/vQAjTlWgxofBS
+	 lbiiKYg1eoG/sV4XygEKFXHveM7P8gJLAr3Szue6Fl94JMJLdTbeTiclvFKXgOYcXnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nDFp2BmLILfVfnIh7U9w+7huSRQVx1tMmKbjHnr/i7g=;
-	b=AMD2KWRDCJnBJbI9bDItcYnAbfoqmDciN8JlaWcL5aMslkm4JyB1VY44dLdwE9B6ugkO
-	 VoDcyr5ICtDAw8kM5tY1Os1AZqhjbCyGzwcvnnlOK5dqy6Ismo7wgYjzk8M+Xpho9mjXC
-	 gRJJE79gPgo2qXQkG3RQtSa+DEsjYYIJTSGnBo0F4lXCw1SLwqQyL/ioHeYMI7w+esymL
-	 hMSEskIPdNOaWwwQKah6ueC3gvSXVjBau/duxygNTvns4enOfOtE+4VrCKsfY1t56FHrk
-	 Hw/Wl+8a5dTN2mDWp4gmU3UKi+MjmP8JfkOXvO5d23tPMK/1aYP6vkPVJsdzJqeBsQg==
+	bh=PSJPV/rDbRHCesE4+W/d7Hw5CADridF2wdwJq4mS4z4=;
+	b=jJkrvWjXwA53P3FSinMPd0I5GNcfn1eEkNLUX2LtUi8ITjeKzke6KvKdWwDl4bflXtMd
+	 69H2VsjSYNK5Osi/ug9jcUKDYzv7TEK/PX2PQoP6joZexOdNA+TUXYbNod5eA+zf2UvIG
+	 i3XJfVRBWQiQkX+hNgkjHaMatInD9PNJU5rNSeFidFwJLzTIDvl0ZrCeONMIFw3yGI0/T
+	 xoQnKaxsL8IXx2uhvL6uHoEJlvJzFOa/ZImjYoxqVtY5zshjCkG0HXTnv573cYLSdzzCh
+	 wk8bReg8j/XoJXt4cQQYvwF5JSrQh5l6Mw9EZvY2QKmR0uwoSAlirqnIH4C/aFpJ0lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdIX848U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aW4A0D+K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B38606A32C;
-	Wed, 18 Nov 2026 20:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9F060A2600;
+	Wed, 18 Nov 2026 20:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdIX848U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D697A1F000C5;
-	Wed, 18 Nov 2026 20:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aW4A0D+K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0481F000CB;
+	Wed, 18 Nov 2026 20:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033760;
-	bh=nDFp2BmLILfVfnIh7U9w+7huSRQVx1tMmKbjHnr/i7g=;
+	s=korg; t=1795033763;
+	bh=PSJPV/rDbRHCesE4+W/d7Hw5CADridF2wdwJq4mS4z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wdIX848UiGuhzkmBvKwaXQ/CMb5ztCA+Qwi7P1ERcoTQvWIx7H5EKfuUFJOMuLJgC
-	 7HAKuz2tuIh9d0RZnThvdwBqeNnsq6y6FiXgOH4uxBKbpxBHOpZaoiRuwiNHaWUmc9
-	 vW8UMTXaK/kJwaAArPHq9ddvzDUpRqovR2jRcnnQ=
+	b=aW4A0D+KvSTkSyzRE8+tmdV83X0bhoXjcQwLJL4QSomuSPrtuBBxAwS9n6XNmj20E
+	 sDRidy3B3dhjQqMIsUq4tNcuPgKrqvGUjIc5xRu6wH7R/LtLqTsFn8QzQ18TARrdm1
+	 9o+SrfQMniFh0HK2cimSOSK6DAbAiLzcYIbijd6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0130/3318] comedi: pcmmio: Add sanity check to interrupt handler
-Date: Wed, 18 Nov 2026 15:12:32 +0100
-Message-ID: <20261118150318.284785388@linuxfoundation.org>
+Subject: [PATCH 6.6 0131/3318] comedi: pcm816: Fix sanity check in interrupt handler
+Date: Wed, 18 Nov 2026 15:12:33 +0100
+Message-ID: <20261118150318.319485746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,43 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit ea72e2fc9026f375314421ddfa4dbdc49432a899 ]
+[ Upstream commit 4fdac5090ce3616283216d9a1d2b9664e8e20747 ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing the devpriv->dma pointer which may be NULL if
+dev->attached is false.  Move the dereference of the devpriv->dma
+pointer after dev->attached has been checked to avoid the possible null
+pointer dereference.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcmmio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/comedi/drivers/pcl816.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/pcmmio.c b/drivers/comedi/drivers/pcmmio.c
-index c2402239d5513..db9cb3fedb48d 100644
---- a/drivers/comedi/drivers/pcmmio.c
-+++ b/drivers/comedi/drivers/pcmmio.c
-@@ -362,6 +362,9 @@ static irqreturn_t interrupt_pcmmio(int irq, void *d)
- 	unsigned int triggered;
- 	unsigned char int_pend;
+diff --git a/drivers/comedi/drivers/pcl816.c b/drivers/comedi/drivers/pcl816.c
+index a5e5320be648c..fc7b4ece9d115 100644
+--- a/drivers/comedi/drivers/pcl816.c
++++ b/drivers/comedi/drivers/pcl816.c
+@@ -242,7 +242,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
+ 	struct comedi_subdevice *s = dev->read_subdev;
+ 	struct pcl816_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[dma->cur_dma];
++	struct comedi_isadma_desc *desc;
+ 	unsigned int nsamples;
+ 	unsigned int bufptr;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
- 	/* are there any interrupts pending */
- 	int_pend = inb(dev->iobase + PCMMIO_INT_PENDING_REG) & 0x07;
- 	if (!int_pend)
+@@ -257,6 +257,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
+ 		return IRQ_HANDLED;
+ 	}
+ 
++	desc = &dma->desc[dma->cur_dma];
+ 	nsamples = comedi_bytes_to_samples(s, desc->size) -
+ 		   devpriv->ai_poll_ptr;
+ 	bufptr = devpriv->ai_poll_ptr;
 -- 
 2.53.0
 
