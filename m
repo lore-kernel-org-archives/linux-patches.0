@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044300;
-	b=bfZiNnNu9EWrtohvNdIs384CxmncgCqmicFaNtLmbNe9wZS2dlx9I2OGN5OsT1HOhzNL
-	 Ia6mYtd6SRFNf2L4wcjtfYLZqO6IaAOkpOU/kIk0lcDimhTzKhhUkY073R+5fhztctkrT
-	 yM64SyJut8jwXuC27QYx/j/yhV6pkUMDA4WfGsncqDf0nFoTmfwjGKAk518F/Z3p9j96i
-	 pVsBQ/2N1328P0fDk4S1+d+6CvpzwC/pvs8Jr64jpBdpAA+D33gorQxz90PCGTKbFCF4+
-	 5z4GxRo/yayFQq59JiBp0xZ2l6f5VLYjR9btlWWP6WNo3VxaaOyGihmXYPWnnP8EEQw==
+	t=1795044303;
+	b=JnGz1yUSlizzmx0Bz1Dd+9cv5MFrGEZK56waV2J9LiXPZ4iQ6SqOd3UPAQw+piiNqyRp
+	 Mm1jPpqwbtF8qoS4UM52caGCtjx4bC2EfRPhy3o2PkimzOxiavBWPC1+J8EhY6kVd020z
+	 JKMOLv3beq+1y5gYrUtgWxQk/Yh8qqpFlXulrImfi5gDUIqz9JWocDjkmLzo9/JRbrHQO
+	 9osP9BlpD2sHI7vyYO08ton3Jt8db4Ti5TFtETsk9LP7SE73gMqtHuuk3bneqLuh63z7q
+	 Zd/HppCnbumIOv2N46/MYAbgH48OFytJtaxECU51kVu08bFVckQbvjws5lZ6OljyDxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=86REJPejbupGntKzP9RWzmdAYpMg80OVRYOLhIiWyfM=;
-	b=JNlk1hBaa+xV7n+mshqEMMbwboHfksBoI8ULHGTKymrpeRgnv3EkMaPZT4tWSUh744l6
-	 QjflsFXGjUycWGb9eSRJHe2+caQHpJd4/o+eirj0lxLu19+i4IcNcvC6qYbh/XUj2CTQx
-	 K1Q29FcS8aooFQxR1Jc7HqXLnsZYdBEh07RmEiCEFL9lllU820OgZKn6r7b+Rn1P4RAgO
-	 tj6snll3BlE4ilU6lPvcgCZzv6ubKn/2+JbpHsA49MdApKCnuSWOlWD29EkSPuzJYWnAH
-	 qH4RkiuWl7Gj69oHmsfPRnnpCR5xNw0MCo7XiC3mOu5kX6SVPuTv6929/C0YTONBjww==
+	bh=O/u80BT8sRt8EMOIlBWvScChc+NYnvVZ3OSPuUNvn98=;
+	b=oxSoWGHz0F+m9lcLj6Oy46Np/ilvOagicaNcbuBoMKICtzLgPyKhUmFywPUQmfuSkyB+
+	 hPwW1hxX9s407yCiP2L1qeSPwfAz9+Pv7PxFH8+ByyRsPS0gM6PJFok59b2sZW9UZKUjF
+	 P+JCXGBTEpnypePjr19YKY+EVdmSgBvmTNiyHgEHUPTin0uYFmHfTOw5mjCeNxoPEsXw9
+	 2hEd3Xx24SNCAF4YBTSASc9ECPCZBBwDwWmVDODYz6y1KcpZzi8BBMi3yNhfMQEt8ASkh
+	 ZF+AP9iXm/7NoXQmhgIQVpNpaZinGUtVBrSDFxdmFX9fO9nfZXcOuyEycdsEg9PR4yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tcQhpXJ0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtxEaJ+o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6554606A325;
-	Wed, 18 Nov 2026 23:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5954F606A325;
+	Wed, 18 Nov 2026 23:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tcQhpXJ0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFDA1F000C4;
-	Wed, 18 Nov 2026 23:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtxEaJ+o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D4D1F000C4;
+	Wed, 18 Nov 2026 23:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044300;
-	bh=86REJPejbupGntKzP9RWzmdAYpMg80OVRYOLhIiWyfM=;
+	s=korg; t=1795044303;
+	bh=O/u80BT8sRt8EMOIlBWvScChc+NYnvVZ3OSPuUNvn98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tcQhpXJ09hZGdHa3dlEXByU3gj0HIWh0o5kfeOaevOpWQx4PhR6ipc3MzrF/Io3WW
-	 nV69Aq6aGZGpys0SsOL/918ubAbrmuaJeQHuxmg/j8OObYGRydZHA1mJqFpshShz/I
-	 Mqkf4Dr1CYuVVwpoGFr3nHVnOoCQDkJ7U/0A4fUY=
+	b=FtxEaJ+oDKmQIiLy1nMwNkryqyV2wpayC5fOTveM6RmuVCcCN10Qr17K4WTD07u4i
+	 QtPTqw2n0TcISOy2o+Lm6NVAdYNfuHsca/VoMPY9X5KqH5VZGgBce3gNY/9wiNfndf
+	 GCVyKltbrUFXm8gu6FkWoKHPsPCtBrcrdKjy6vuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.1 0515/2857] ksmbd: preserve unreadable named streams on open
-Date: Wed, 18 Nov 2026 15:25:49 +0100
-Message-ID: <20261118150220.007513953@linuxfoundation.org>
+Subject: [PATCH 6.1 0516/2857] ksmbd: reserve space for the UTF-16 terminator in stream info
+Date: Wed, 18 Nov 2026 15:25:50 +0100
+Message-ID: <20261118150220.047225997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,64 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 80c816c047f7cae3c99cc75740c1f5d2c4d97b45 upstream.
+commit a025c4991a7d83edc4dd339e3ea86d8ff6226eca upstream.
 
-A write-only client can open an existing named stream with FILE_OPEN_IF
-without permission to read the underlying file. The case-insensitive
-lookup finds the xattr name, but querying its value length then fails
-with -EACCES. smb2_set_stream_name_xattr() treats every negative result
-as a missing stream and replaces the existing xattr with an empty value.
+smb_strtoUTF16() always writes a terminating zero UTF-16 unit after the
+converted characters, but get_file_stream_info() budgets only
+sizeof(struct smb2_file_stream_info) + streamlen * 2 for a stream entry
+and sizeof(struct smb2_file_stream_info) + 7 * 2 for the trailing
+"::$DATA" entry. When an entry exactly fills the 448-byte small response
+buffer, the terminator is written two bytes past the allocation.
 
-A failed xattr list is not proof that the stream is absent either:
-for example, -ENOMEM can lead to the same empty replacement. Preserve
-listing errors and create a stream only for -ENOENT or -ENODATA. The
-latter can occur if the xattr is removed between listing its name and
-querying its value. Return other lookup errors without changing the
-stream.
+Reserve one extra UTF-16 unit in both budget checks. The terminator is
+not part of the wire format, so the reported lengths are unchanged.
 
-A write-only FILE_OPEN now reports access denied instead of name not
-found. FILE_OVERWRITE_IF and FILE_SUPERSEDE on an unreadable stream
-also fail instead of appearing to replace it. Stream writes and EOF
-changes already need to read the old value, so such handles cannot
-update the stream after opening either.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    2 ++
- fs/smb/server/vfs.c     |    6 +++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2533,6 +2533,8 @@ static noinline int smb2_set_stream_name
- 				     xattr_stream_size);
- 	if (rc >= 0)
- 		return 0;
-+	if (rc != -ENOENT && rc != -ENODATA)
-+		return rc;
+@@ -4837,7 +4837,8 @@ static void get_file_stream_info(struct
+ 				     ":%s", &stream_name[XATTR_NAME_STREAM_LEN]);
  
- 	if (fp->cdoption == FILE_OPEN_LE) {
- 		ksmbd_debug(SMB, "XATTR stream name lookup failed: %d\n", rc);
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1804,7 +1804,11 @@ ssize_t ksmbd_vfs_casexattr_len(struct u
- 	ssize_t value_len = -ENOENT, xattr_list_len;
+ 		next = sizeof(struct smb2_file_stream_info) + streamlen * 2;
+-		if (next > buf_free_len) {
++		/* smbConvertToUTF16() also writes a terminating UTF-16 unit. */
++		if (next + sizeof(__le16) > buf_free_len) {
+ 			kfree(stream_buf);
+ 			break;
+ 		}
+@@ -4859,7 +4860,7 @@ static void get_file_stream_info(struct
  
- 	xattr_list_len = ksmbd_vfs_listxattr(dentry, &xattr_list);
--	if (xattr_list_len <= 0)
-+	if (xattr_list_len < 0) {
-+		value_len = xattr_list_len;
-+		goto out;
-+	}
-+	if (!xattr_list_len)
- 		goto out;
- 
- 	for (name = xattr_list; name - xattr_list < xattr_list_len;
+ out:
+ 	if (!S_ISDIR(stat.mode) &&
+-	    buf_free_len >= sizeof(struct smb2_file_stream_info) + 7 * 2) {
++	    buf_free_len >= sizeof(struct smb2_file_stream_info) + (7 + 1) * 2) {
+ 		file_info = (struct smb2_file_stream_info *)
+ 			&rsp->Buffer[nbytes];
+ 		streamlen = smbConvertToUTF16((__le16 *)file_info->StreamName,
 
 
