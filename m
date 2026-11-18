@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044075;
-	b=Myf5RcejZhCu7DKUqU4P36k4QgXoJL3tuT6g8ZiuDksznzDcUfKl48F4X5Oc9LZON2+l
-	 snKlDO2UJCowcInvcmnP1IyKBV415VijbOc/jGAkyORk5SJR551iH/Amj8twhM6+5H1rP
-	 jBgpTRLMB91rs7gARNFA00fDQmD9r1cKvU+ZgTGk/an1cDIivWPM+NDE0z3L9QnGIw3GO
-	 etCwclP18osNgMVURyGlD6suj1ckSX3sWaw8g2ajX8MEU7/tY7+MZRjpaseOFwPdIqPJs
-	 DC/eRmfAZeV2I68hzBr80Gl6WVkfzG1ATC4770JDElv7LGIGPvm5q5cBunW/aa8qleQ==
+	t=1795044077;
+	b=vW60CSa4jyqRb3kTxY9N8s/p24dFgpbXgw2V7j7IMmnfoLUgS1YhZWVVug8IR/liIlr8
+	 bsFoBUilFBEnOwE+fmACSwPO8b91pOAgt0N93njgBHRx2lJ36QuPWvsQDeZoP3JhBXHZT
+	 6I0kNlWWnvw72KCsSCwqYMDoEIv3Mr3wiIbBDVTCuXTCwXkjhP/qIif3Bl4aZSBHq3f9X
+	 xKPBhiTJCDWU7ErN17+DpBqtrr+yqhcqF2y4nLQ3/qr0n9p/VsUD/QqG/VXMdolkVO71i
+	 EV14bXuT1xtuRfsi9YrXo2B9OnDcR/Q/JJBfPTPpJQtdzsmQdji99Y7ihODB22IQ2DQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sQ+F5PRQyjdsI3KNfSmksYizzr04EZpaZw62bNYMr+A=;
-	b=rDr5M7BGW/ZLR5cUVBHsqA2MfKBZ9DKvU4NjvfDkG4nVRPLfMMmHR9j7ohQyHCD8IS5Y
-	 NV1P72E+46W+xqo3RguXDj8LkS4fa058MiBVH8Avp+TIEUryQ4XqC7L33pjpwv07Uv4i0
-	 XXU5kdiA1ViDOoQP/QTy5fNoyDfs9ealOJpfGhq43hHYr8As7fQczFff5/LnM72J8J2T4
-	 a7UhrTVqj2U91qlrwUwTXC9fOyHuRRk8DtBwBfVSVnsb9sjABKAwcuvSwWHGP/KzCjUUO
-	 S1GBDkcr+bQK2XE7CWQSitVKdIOXtQRzdglyY37k7g/NAn2DDzIfn1uxmT8/d+dHaVA==
+	bh=XBoFSnbXaZxIDb6+j/Dn8r4DqdO/FPvY5Y/yZX0Gh28=;
+	b=vCjM7tBc0xEUVrAyBtVRdlyytpy44cK9N66eSEBszcZZuwwWZ0fmSQVIz5eGkYWCl7Ju
+	 15CaDG5/N7rc/2VnXd3MVxEZ7wr2ySrGXi5NBetqKjCSHiqiSYuP/EQvVpLaXcjvF3Agj
+	 U9lWOSeUgX3M/fiS6jBIs13NYcVOrObAqz5ej3M77sIdZYktSeOC9U054Mrwz9u1Wim2e
+	 xpMlohMpjGeWYvOvvICxjAXnkh7r5h655mY3WELO79llzwElhIRApUkEAxyh8akSjbqSV
+	 LF7YdRZJA2o0qCp9p+uJ7rp4K3tzs8vILsxMxOVEVfLOLT/W7OzJLghsvH8Dn9VtItg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vDNc0r7C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsAId7Ba;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3444E606A31C;
-	Wed, 18 Nov 2026 23:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D825B606A320;
+	Wed, 18 Nov 2026 23:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vDNc0r7C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851191F000C4;
-	Wed, 18 Nov 2026 23:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsAId7Ba
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C76E1F000C4;
+	Wed, 18 Nov 2026 23:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044075;
-	bh=sQ+F5PRQyjdsI3KNfSmksYizzr04EZpaZw62bNYMr+A=;
+	s=korg; t=1795044077;
+	bh=XBoFSnbXaZxIDb6+j/Dn8r4DqdO/FPvY5Y/yZX0Gh28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vDNc0r7CTqNaMB+XaA5q/NTYnE+mrQWmXp8vBdiRahNOSANyr71nVU6k/h4ih+9OW
-	 yCeIZoinBvweK/weIry5bNc9WDWaqWZwYzbIfGSy1q8ELWAhJjuROQaCz1HdiLOLye
-	 Z6yQ764GtKUGFCLA/Ck7yT9C+jxaS8tPbjqjVJrU=
+	b=YsAId7Ba2sAbNSUY7OhRunet/92skTQGk6gZ8V7RaOIzyaNVYJja20bzjlYYZy26E
+	 0tb/bHEtM8Nu/0zg5vshm/7cNUKqJ4duQg1Vu1JuDqObNGWfGPl2fIFw/je5uJcF+E
+	 EFgliyHuTPg02K1pvM4TPvAurhr1W6cJG8/OK6aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Russell <kent.russell@amd.com>,
-	David Francis <David.Francis@amd.com>,
+	Chengjun Yao <Chengjun.Yao@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0438/2857] drm/amdkfd: Avoid integer underflow in EOP ring size calculation.
-Date: Wed, 18 Nov 2026 15:24:32 +0100
-Message-ID: <20261118150217.149393852@linuxfoundation.org>
+Subject: [PATCH 6.1 0439/2857] drm/amdgpu: fix rmmio iounmap skipped on device removal
+Date: Wed, 18 Nov 2026 15:24:33 +0100
+Message-ID: <20261118150217.183554847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,85 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Chengjun Yao <Chengjun.Yao@amd.com>
 
-[ Upstream commit 8ee521b8b189799e361d4233c5180ba56656d4d4 ]
+[ Upstream commit 5155002b03b24ba3ef91c5c313b8cf0171b24904 ]
 
-The low 6 bits of cp_hqd_eop_control store the base-2 logarithm
-of the EOP ring size. This was calculated as
+amdgpu_pci_remove() calls drm_dev_unplug() before fini_sw(), so
+drm_dev_enter() is already false there and the iounmap() guarded by it
+is skipped. This .remove path runs on both hot-unplug and plain rmmod,
+so the register BAR ioremap mapping leaks one instance per unload.
 
-order_base_2(q->eop_ring_buffer_size / 4) - 1
+Unmap rmmio unconditionally (guard only on non-NULL) and drop the now
+unused idx.
 
-But order_base_2 can in theory return 0, so this could underflow
-(although in practice the ring buffer size cannot be less than 4096).
-
-Change this to
-
-order_base_2(q->eop_ring_buffer_size / 8)
-
-using properties of logarithms.
-
-Also add to the above comment to make the mathematics more clear.
-
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: David Francis <David.Francis@amd.com>
+Fixes: 62d5f9f7110a ("drm/amdgpu: Unmap MMIO mappings when device is not unplugged")
+Signed-off-by: Chengjun Yao <Chengjun.Yao@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f0f43fcf8b2b3a924cad9444340921c96ed5f634)
+(cherry picked from commit dd6f86a97260e5207d3329ad03aa89fdad61b1e6)
 Cc: stable@vger.kernel.org
-[ sashal: Dropped the q->eop_ring_buffer_size ? size-zero guard from the context, since this tree lacks it, and applied only the order_base_2(size / 8) fix plus the comment in the v9 and vi files. ]
+[ sashal: Removed the unused idx declaration and kept amdgpu_device_doorbell_fini() inside the new if (adev->rmmio) block, since this tree's guarded block also had that call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 6 +++++-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c | 5 ++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index eaf084acb706f..8d6b022d4af17 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -237,6 +237,10 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
- 		1 << CP_HQD_IB_CONTROL__IB_EXE_DISABLE__SHIFT;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 25748ca1c3d5c..81eb14997d923 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4189,7 +4189,6 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
  
- 	/*
-+	 * The lowest 6 bits of eop_control store the EOP ring size. If
-+	 * their value is X, the ring size is 2^(X + 1) dwords, or
-+	 * 2^(X + 3) bytes.
-+	 *
- 	 * HW does not clamp this field correctly. Maximum EOP queue size
- 	 * is constrained by per-SE EOP done signal count, which is 8-bit.
- 	 * Limit is 0xFF EOP entries (= 0x7F8 dwords). CP will not submit
-@@ -244,7 +248,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
- 	 * is safe, giving a maximum field value of 0xA.
- 	 */
- 	m->cp_hqd_eop_control = min(0xA,
--		order_base_2(q->eop_ring_buffer_size / 4) - 1);
-+		order_base_2(q->eop_ring_buffer_size / 8));
- 	m->cp_hqd_eop_base_addr_lo =
- 			lower_32_bits(q->eop_ring_buffer_address >> 8);
- 	m->cp_hqd_eop_base_addr_hi =
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-index 530ba6f5b57ea..fc9dffd20d466 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-@@ -204,6 +204,9 @@ static void __update_mqd(struct mqd_manager *mm, void *mqd,
- 			mtype << CP_HQD_IB_CONTROL__MTYPE__SHIFT;
+ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ {
+-	int idx;
+ 	bool px;
  
- 	/*
-+	 * The lowest 6 bits of eop_control store the EOP ring size. If
-+	 * their value is X, the ring size is 2^(X + 1) dwords, or
-+	 * 2^(X + 3) bytes.
- 	 * HW does not clamp this field correctly. Maximum EOP queue size
- 	 * is constrained by per-SE EOP done signal count, which is 8-bit.
- 	 * Limit is 0xFF EOP entries (= 0x7F8 dwords). CP will not submit
-@@ -211,7 +214,7 @@ static void __update_mqd(struct mqd_manager *mm, void *mqd,
- 	 * is safe, giving a maximum field value of 0xA.
- 	 */
- 	m->cp_hqd_eop_control |= min(0xA,
--		order_base_2(q->eop_ring_buffer_size / 4) - 1);
-+		order_base_2(q->eop_ring_buffer_size / 8));
- 	m->cp_hqd_eop_base_addr_lo =
- 			lower_32_bits(q->eop_ring_buffer_address >> 8);
- 	m->cp_hqd_eop_base_addr_hi =
+ 	amdgpu_device_ip_fini(adev);
+@@ -4221,12 +4220,10 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 	if ((adev->pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA)
+ 		vga_client_unregister(adev->pdev);
+ 
+-	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
+-
++	if (adev->rmmio) {
+ 		iounmap(adev->rmmio);
+ 		adev->rmmio = NULL;
+ 		amdgpu_device_doorbell_fini(adev);
+-		drm_dev_exit(idx);
+ 	}
+ 
+ 	if (IS_ENABLED(CONFIG_PERF_EVENTS))
 -- 
 2.53.0
 
