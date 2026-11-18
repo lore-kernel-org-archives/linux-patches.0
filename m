@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044328;
-	b=1uLdxgecxV7kQNT1n9wz4qHB4bxPCNNY3t2ahZr/+gx9gTSPta5DLcHfMGQqLnLbyvYU
-	 w6/YghUcBicO/OV5JR1ZVA6OjH+FX+SYNv2Xoq3lA0gJimSc5BmtYhQBuURFqN+p+Kr/Y
-	 sw6GC4ufBFAOfFN48YVpj9eB13W5fhTCl08mY1ZDiAb/2c49b/CbZzi+gVoMhMql+qDch
-	 vxcy2aoqPwZ7ra5sJBGhnOXdcFPuMFZeOjPKRIjXiwtY6C5wIU5/SjRLB5QF1Gzun8yUE
-	 xng/4JzQMPlGC3wSeHPwv0SAvd5e2s+EP62UcZlUsqP85bAkQWURYJVUXGiugqxMsJA==
+	t=1795044331;
+	b=UfPssJnd8XEGDaBot0MgJXnapmGQkWQBhDeWwajm+5dUOqlgSVl58cIk44MzCzDX1nJB
+	 JYE4XiXfkqRwwuQYNaAo3gxiY1SWKg+v0LoRxWP06mz8q7pkwZatrCWk6bMGFVpIRzPJB
+	 dSlNkU8C+PRTzkYGyrHwi+uu0PkKFxBIAnSg+DPVehDMvvtdwXle9z8U5F8bYRgxoYfVJ
+	 p9yMqO7MxJgi71UnrWMdsu5Gvn6xH4fbQsowOKLMN18BhE9EhVafQ5QYGEFSjLbQHc0Jq
+	 yBx5SuhDtsBj44j8AG9WerYzUCER1l+gYbvmYpoCNou0x/dxdN1rfEsEy4s1TtO73ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HNc/cITgKWKtIDR6V8YTPvlSuCAay8/7QYyr/rbXSKE=;
-	b=IkmyhOZ0oyGu1uJDg0FuHUQoaAX7IP1vAGQO6UpiWk7LwtvgU44sJtFTpCbdI9CdUwVW
-	 5D8g0PJ8B4Lvlknw5yyW9H0ApzqlVTztycAqVuVqMc1tN0uxedWuS7cppxuVO3Iocq8pr
-	 OO6CGD/lattDd/rvk9MnCEPCZ5enyTVT2ZXjL515fBmodFf1My+Of73Y/0GH9gUA6gYSC
-	 eAqYLg/DmgJBlJgD3ac25IgWr781CXoqoyKLJJafluHSNx4BTdHrjqnzawLYsYOSCwiGF
-	 Dgw5jnWkOxixm1cF6nNs3vl2WuGAHcBYUMCBcRAnxemwMtfk1df07wJZjx7NZPLktTw==
+	bh=AhpIKL6aU1YF8R2ErM9G3vZZwwwLb8QG46Ov5+Kg6aQ=;
+	b=lZ0yeYqB2GY7X/p9RFphO6aozLSXUX3B6HN+BEcw2l4hQCoA5eaq2uE1XuemRQ0T/rXs
+	 1bhd9b/mlm3tUJEwH6fUmKhvQ2lNl0f8fHSgS3RDDvpI8eZxA6Xpq8law+0We6HaLZFfL
+	 0r8Ob5Ky0UsRxejzlp4Cuc1bIBJP4po+yp6ntdr1sjLI5GjiQjWUkGUD7JTDeFJvW/06d
+	 7soEtC76AmqXtc3vrbNZLGK4lqaXsllVFTkg1nJ/pNVdQ9CChvlOEgpyacmesxMUUVf+3
+	 Omy8RSQ8KjPawYoUbzS2A2TNtA3HC8plxzdFXZE8m/8CbOzQmRadcakfeYNto9bnlWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dcNkQSE9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cxeaxbvv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608A7606A31C;
-	Wed, 18 Nov 2026 23:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069CD606A31C;
+	Wed, 18 Nov 2026 23:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dcNkQSE9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FC01F000C4;
-	Wed, 18 Nov 2026 23:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cxeaxbvv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0931F000C4;
+	Wed, 18 Nov 2026 23:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044328;
-	bh=HNc/cITgKWKtIDR6V8YTPvlSuCAay8/7QYyr/rbXSKE=;
+	s=korg; t=1795044330;
+	bh=AhpIKL6aU1YF8R2ErM9G3vZZwwwLb8QG46Ov5+Kg6aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dcNkQSE98MtfiOPJNd+o6rxHEzk0Q9NII5N3JZ0HOtdVmgN8pNBxJjHCXZIoHpajp
-	 fHB0IcOReoS74uK3cv4MC+kOkkRWi8xdo7kGwrfIUQAwEqGPOP4nnQ+hRdPgdjfzKc
-	 f9tigmyXOvhHYQkVXXd+J3aEs4GqzV99k2BMtclc=
+	b=Cxeaxbvv7PsmLwNIPoBi4mCDJ8GIVsIONSEQnVIhFQtbKrY2V+FL3HfFVbQIueN7f
+	 09ozAFWFmjMqqSLJ9di0Y2zPyf+jPNEvioNdfnHDpiTtwpubDWfXMBTDJwLunRs0id
+	 Ddk1Ocm6+ODfU97exdWfUCQk+ATreos0W/rVxZmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijing Yin <yzjaurora@gmail.com>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0529/2857] SUNRPC: fix netns use-after-free in write_gssp()
-Date: Wed, 18 Nov 2026 15:26:03 +0100
-Message-ID: <20261118150220.518468168@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.1 0530/2857] smb: client: fix use-after-free in cifs_ses_add_channel()
+Date: Wed, 18 Nov 2026 15:26:04 +0100
+Message-ID: <20261118150220.556193515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,108 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijing Yin <yzjaurora@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit e7a8721b7edb54a157623f9e31d71345333b5fb9 upstream.
+commit 031278577380e7875d95aed81a2b2bcac39be923 upstream.
 
-While fuzzing with a customized syzkaller, I hit a refcount warning in
-xprt_alloc(), reached from a write to /proc/net/rpc/use-gss-proxy:
+The error path of cifs_ses_add_channel() calls cifs_put_tcp_session()
+before cifs_chan_clear_need_reconnect().  The latter reaches
+cifs_ses_get_chan_index(), which dereferences server->terminate; if
+the put was the final reference, TCP_Server_Info is already freed and
+this is a use-after-free.  Same put-then-use pattern as the recently
+fixed sibling in commit 717e0a25036b ("cifs: Fix server use-after-free
+in cifs_chan_skip_or_disable()").
 
-  refcount_t: addition on 0; use-after-free.
-  WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xf8/0x120
-  CPU: 0 PID: 10404 Comm: syz.0.17 Not tainted 7.3.0-rc1-00096-gcfebfd3db73d
-  Call Trace:
-   <TASK>
-   xprt_alloc+0x83f/0x9d0
-   xs_setup_xprt+0xaf/0x3c0
-   xs_setup_local+0x47/0x7f0
-   xprt_create_transport+0x16c/0x730
-   rpc_create+0x38e/0x7f0
-   gssp_rpc_create+0xe2/0x180
-   set_gssp_clnt+0xba/0x1b0
-   write_gssp+0x200/0x310
-   proc_reg_write+0x240/0x330
-   vfs_write+0x2aa/0x1050
-   ksys_write+0x12a/0x250
-   do_syscall_64+0x117/0x750
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+Move the put last, but do not read chan->server after dropping
+chan_lock: chan points into ses->chans[], and once chan_count is
+decremented a concurrent add_channel can reuse the slot and overwrite
+the pointer, so the put would act on the new channel's server.  Cache
+the pointer under chan_lock, clear the reconnect bit and decrement
+chan_count while still holding the reference, and release it after
+the unlock.
 
-create_use_gss_proxy_proc_entry() stores the struct net pointer as the
-proc entry's private data without taking a reference on it, and an open
-file descriptor does not pin the namespace either, as procfs only pins
-the proc_dir_entry. write_gssp() reads that pointer back with
-pde_data() and hands it to set_gssp_clnt(), which reaches xprt_init():
+This issue was discovered by Tencent CodeBuddy Security.
 
-	xprt->xprt_net = get_net_track(net, &xprt->ns_tracker, GFP_KERNEL);
-
-get_net_track() -> get_net() -> refcount_inc() is unconditional, so
-rpc_create() assumes its caller holds a reference on args.net.
-write_gssp() does not.
-
-Dropping the last ns.count reference does not make the file go away.
-__put_net() only queues cleanup_net() on a workqueue, and the
-remove_proc_entry() that fences off further writes runs from the
-rpcsec_gss pernet .exit method, that is, from inside cleanup_net(). A
-write landing between those two points increments a refcount that is
-already zero. cleanup_net() does not re-read ns.count, so the namespace
-is freed anyway and the rpc_xprt -- along with the AF_LOCAL socket
-opened for it -- is left pointing at freed memory. The resurrected
-count is visible to the rest of that teardown too: with
-CONFIG_IPV6_MROUTE the same cleanup_net() worker then trips
-!mr_can_free_table() in ip6mr_free_table(), which tests check_net() on
-the namespace it is freeing.
-
-It reduces to opening /proc/net/rpc/use-gss-proxy inside a new network
-namespace, calling setns() back to the original one to drop the last
-reference, and then writing "1" to the still-open descriptor.
-
-Take the reference in write_gssp() itself and refuse the write when the
-namespace is already gone. This is what procfs does for every other
-/proc/net file: get_proc_net() is maybe_get_net(PDE_NET(PDE(inode)))
-and seq_open_net() returns -ENXIO when it fails. PDE_NET() cannot be
-reused here because the parent directory /proc/net/rpc carries no
-namespace pointer. Adding a .pre_exit to rpcsec_gss_net_ops so the
-entry is removed earlier would only narrow the window, since pre_exit
-also runs from cleanup_net().
-
-Live namespaces are unaffected: a write still returns the error from
-set_gssp_clnt(), a write of "2" still returns -EINVAL, and reads are
-untouched.
-
-Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
+Fixes: ee1d21794e55a ("cifs: handle when server stops supporting multichannel")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
-Link: https://patch.msgid.link/20260907085435.644076-1-yzjaurora@gmail.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ fs/smb/client/sess.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1449,10 +1449,18 @@ static ssize_t write_gssp(struct file *f
- 		return res;
- 	if (i != 1)
- 		return -EINVAL;
-+
-+	/*
-+	 * Neither the proc entry nor an open descriptor pins @net, so it
-+	 * might already be dying when rpc_create() takes its reference.
-+	 */
-+	if (!maybe_get_net(net))
-+		return -ENXIO;
-+
- 	res = set_gssp_clnt(net);
--	if (res)
--		return res;
--	res = set_gss_proxy(net, 1);
-+	if (!res)
-+		res = set_gss_proxy(net, 1);
-+	put_net(net);
- 	if (res)
- 		return res;
- 	return count;
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -650,12 +650,13 @@ cifs_ses_add_channel(struct cifs_sb_info
+ 
+ out:
+ 	if (rc && chan->server) {
+-		cifs_put_tcp_session(chan->server, 0);
++		struct TCP_Server_Info *pserver;
+ 
+ 		spin_lock(&ses->chan_lock);
++		pserver = chan->server;
+ 
+ 		/* we rely on all bits beyond chan_count to be clear */
+-		cifs_chan_clear_need_reconnect(ses, chan->server);
++		cifs_chan_clear_need_reconnect(ses, pserver);
+ 		ses->chan_count--;
+ 		/*
+ 		 * chan_count should never reach 0 as at least the primary
+@@ -663,6 +664,7 @@ out:
+ 		 */
+ 		WARN_ON(ses->chan_count < 1);
+ 		spin_unlock(&ses->chan_lock);
++		cifs_put_tcp_session(pserver, 0);
+ 	}
+ 
+ 	free_xid(xid);
 
 
