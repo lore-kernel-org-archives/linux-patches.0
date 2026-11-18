@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023064;
-	b=c5qPwebZwmbVA/2Gxz593tMcFTffYD6c8pJXYFul4f95iggIAH57cCC9/pPhhDM+UtWf
-	 JlR+C7fOkuhZVItfDeioNBE87xV0LPfxZPgzQkWsrUx7y9iVGfjOLLScGc2KLSigxbLYg
-	 G4xZ8gehZkcTd4EmiZ5q6YDilosJoTEBM6WVenjoBqSthtXZVXRYUTDXcVp3M0wQvbxAK
-	 /YWd7iM7MTh/6V/d6blqgSp4b9dGr4DZ6E7So40D5f1TwmWdm5cbNxBEJfloJD6qldxJl
-	 ktzC6x8gywHiWgfqLqFy9WP1Fz6BWCC7QbgpPwAYuX+qMNpEb0qzBuX/VBQJp8lRsPg==
+	t=1795023067;
+	b=40aIo7d9tLlI/OT4XIwE2fL4GmiG9b9a3TzZh1MRNyi49sUlM4QgIIMybF9lfjEKIBBv
+	 lU6WL+nu8cbv8/gGml1lnS0PZDKkb63r3GlpybDQDBvsnI26K44BmktjygMRpKMkwg4iQ
+	 DPMmqIHYBBU91lFCaiwJg5uS6FUTx2T5hQgydMJ2aquddZFWbshmEjeIo1+/5UMRBZ1+3
+	 R9khGu4Cjy2PSP0j+VsgWwP7kRg9KwyO0cjKt0Zv3fSxY8dI502i4jpJDdFcGAV4oqmYY
+	 fhyy5VOStASZANxuAW5ce3gldLj/u0BFZgwdY07igZQSSDBZ69Wojxo0kiicby3MREg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023067;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yo+3lVoLhYnq6nBlUx+vwzDyOup7p5QY6qBeniKGEAY=;
-	b=rqX0CLw3iz/aYnitPfw77zR/6ayChW/VTVwQo+pv26T3a+biE1s8HBiYxRTxEHbjPQAg
-	 +mnFImfGK/y6aNUViVmsPNHX9b6JgENaCmfC3D99duZ+59yLwyQejjDl6WUq8/8jWR40e
-	 UYqGEwRU9yJR1n6c+6UIWdnh648nBVnh2vlnKgEKn1+u1MwYsqv9Gfjezj58Eg3Jrtwhz
-	 XZEF0qxv8lzyDMN2nJAuNkpYQ2Ms8vbBoFOgEasZ2/z6sraTzk4ddBhG7Z8md16n2g/iy
-	 5RPuzwrn5aJEqasAIzlsaakHbnzYqVwJO0uCiBaxeXtrUnckmvfm+1YQh9E5RhnfxKw==
+	bh=ZHyzvrzQkW0kSqiFC6Xjv0XvLsFcbqKpVObXeJZhIMw=;
+	b=OxjVbd4XyX/VgzlXASA3dqltC7/8i/eGSePT1Bul8XQCY6kffMYHGWbzMtgKqFfF+nrn
+	 70QUTlNu3yabSaQKgkUtyHOAoKE7lKGCSFEK7MMvj92PV5mtcYrwhU1qujwQsKB2ZDyUq
+	 Cv6N7aiF77pecBWOFlStEYosboSlESyAS1n3aJxd2lcqew9jzkpQh5K4Imw/RXgiTMlhy
+	 0eBfmuD62ujV+p2hOesi2CATt6sK2fKnh/ukEsyv9o/ybdffTvUQ2NY9rLJiVm0mrKlKY
+	 B+eiZcqq3gsrfdoXZC5aqhC+wzrnQMkKzArd41q+bZeAkVcI+aU3C8ROLii30PtEjgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oC+kqlUE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kGObohbs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA83606A31C;
-	Wed, 18 Nov 2026 17:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753F1606A31C;
+	Wed, 18 Nov 2026 17:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oC+kqlUE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300541F000C4;
-	Wed, 18 Nov 2026 17:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kGObohbs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF85A1F000C4;
+	Wed, 18 Nov 2026 17:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023064;
-	bh=yo+3lVoLhYnq6nBlUx+vwzDyOup7p5QY6qBeniKGEAY=;
+	s=korg; t=1795023067;
+	bh=ZHyzvrzQkW0kSqiFC6Xjv0XvLsFcbqKpVObXeJZhIMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oC+kqlUEXjd7fYNKOkTs6uwO8Nlhxm7bPzYiNsOzoB6blf6oB7X8uAcH3zS6Fe4ep
-	 5Tr4z22avg0Tsrq8Z/Ty8cmrD9hKQWDZ93HSyU5Y3AjoSDsazvxfpZVJnrKo668Fdb
-	 4ujKwZXAYxHgS9dFw5GFDiXUGjx5xGDDeeyTO7VI=
+	b=kGObohbsnYlJ+0QXiYbdkNIOBxkBBJh0QEhHsh7FNi2dI4NPrlkaTu3C4+S2T9X2O
+	 BcU72srUBhekW+jI2FGqko+z6hogkPmFCj4S7fzNp9KfiZfDGqIuvXh6TLhWqb5LNi
+	 b35yzQGVkC60tF1fv5zA5SALZUB93aTGK/BMZmOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Anup Patel <anup@brainfault.org>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0234/2151] irqchip/riscv-imsic: Use GENMASK for base address masks
-Date: Wed, 18 Nov 2026 15:32:49 +0100
-Message-ID: <20261118150130.302610984@linuxfoundation.org>
+Subject: [PATCH 6.18 0190/2151] microblaze: CCF: fix refcount leak
+Date: Wed, 18 Nov 2026 15:32:05 +0100
+Message-ID: <20261118150128.705282229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,72 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit bd7d57a03c4b0fa3b0291ec64d688ebfed5edffc ]
+[ Upstream commit aeedf85beac51c7cd8f7bf4c918a0104dfdb8b78 ]
 
-The IMSIC DT binding allows riscv,guest-index-bits up to 7 and
-riscv,hart-index-bits up to 15. On RV32, guest-index-bits=7 and
-hart-index-bits=13, together with the 12-bit IMSIC page offset, is a
-binding-valid layout that consumes a 32-bit low-address mask.
+Every value returned from of_clk_get() is supposed to be cleaned up
+via clk_put() once not needed anymore.
 
-The parser accepts this equality case because it rejects only values
-larger than the remaining bit budget. The base address canonicalization
-then builds the low-address mask with BIT(sum) - 1. When sum is 32 on
-RV32, that expression shifts an unsigned long by its full width.
-
-Keep the legal equality layout and express the mask with GENMASK(sum - 1,
-0) instead. The existing parser bounds guarantee that sum - 1 is below
-BITS_PER_LONG at both mask sites.
-
-Fixes: 21a8f8a0eb35 ("irqchip: Add RISC-V incoming MSI controller early driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://patch.msgid.link/20260718040000.004.929c1ef2-caplitmus-rv@iscas.ac.cn
+Fixes: c1120542b99a ("microblaze: Add support for CCF")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Link: https://patch.msgid.link/20260526184105.18962-4-grandmaster@al2klimov.de
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-imsic-state.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/microblaze/kernel/cpu/cpuinfo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-riscv-imsic-state.c b/drivers/irqchip/irq-riscv-imsic-state.c
-index dc95ad856d80a..e42be461ae670 100644
---- a/drivers/irqchip/irq-riscv-imsic-state.c
-+++ b/drivers/irqchip/irq-riscv-imsic-state.c
-@@ -7,6 +7,7 @@
- #define pr_fmt(fmt) "riscv-imsic: " fmt
- #include <linux/acpi.h>
- #include <linux/cpu.h>
-+#include <linux/bits.h>
- #include <linux/bitmap.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-@@ -779,9 +780,9 @@ static int __init imsic_parse_fwnode(struct fwnode_handle *fwnode,
- 		return -EINVAL;
+diff --git a/arch/microblaze/kernel/cpu/cpuinfo.c b/arch/microblaze/kernel/cpu/cpuinfo.c
+index cd9b4450763b0..32c508e85408a 100644
+--- a/arch/microblaze/kernel/cpu/cpuinfo.c
++++ b/arch/microblaze/kernel/cpu/cpuinfo.c
+@@ -133,6 +133,7 @@ void __init setup_cpuinfo_clk(void)
+ 		cpuinfo.cpu_clock_freq = fcpu(cpu, "timebase-frequency");
+ 	} else {
+ 		cpuinfo.cpu_clock_freq = clk_get_rate(clk);
++		clk_put(clk);
  	}
- 	global->base_addr = res.start;
--	global->base_addr &= ~(BIT(global->guest_index_bits +
--				   global->hart_index_bits +
--				   IMSIC_MMIO_PAGE_SHIFT) - 1);
-+	global->base_addr &= ~GENMASK(global->guest_index_bits +
-+				       global->hart_index_bits +
-+				       IMSIC_MMIO_PAGE_SHIFT - 1, 0);
- 	global->base_addr &= ~((BIT(global->group_index_bits) - 1) <<
- 			       global->group_index_shift);
  
-@@ -860,9 +861,9 @@ int __init imsic_setup_state(struct fwnode_handle *fwnode, void *opaque)
- 		}
- 
- 		base_addr = mmios[i].start;
--		base_addr &= ~(BIT(global->guest_index_bits +
--				   global->hart_index_bits +
--				   IMSIC_MMIO_PAGE_SHIFT) - 1);
-+		base_addr &= ~GENMASK(global->guest_index_bits +
-+				      global->hart_index_bits +
-+				      IMSIC_MMIO_PAGE_SHIFT - 1, 0);
- 		base_addr &= ~((BIT(global->group_index_bits) - 1) <<
- 			       global->group_index_shift);
- 		if (base_addr != global->base_addr) {
+ 	if (!cpuinfo.cpu_clock_freq) {
 -- 
 2.53.0
 
