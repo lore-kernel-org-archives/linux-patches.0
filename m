@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027972;
-	b=N8xJcBusMFRMF6SPqaAOqDezR4n6m27rX2kRMoa6Fmm6mIGosGSTg5c5wSgrqjshDbEP
-	 AHWprwpetyoNDAjAHYWCLIZ0FgAN5boSoKDkubLNKJ8YZQipkZcvBquiF65w99FPvMFpH
-	 ZIYbvICRw1Cm3mtTVrIGQaDSIO9+XKyvlrlzcK6eDvovxTSdl/qgCzTJQmeId0K8+wC8s
-	 JcuWyOc7/h5fWSU81xPmYDRQz7gi9ejp4szlMDl8UdPx3Jph21Y3kPgcpyvFVFFDFfni+
-	 tUF/IGgmldKfkfBxbVza5zovFbdJOZEPNjzRJ9HxHC+i2nTtPXcEbg+WbMH83oSdNew==
+	t=1795027975;
+	b=o6P2wHBElmPwC8C9LsjlZUHpIo136muMbGzy19h2hg9Gh+7PKMvZFggYfGOMSq24qwAo
+	 9owqzGmsAxHiu9PDmeQMXwCXudUcijcCzKiE7XobOsn93Ge8/DMN3/3H2YG3+XWlkNTd1
+	 TBT67h56HNAWfahCExY9NINlqstNdKsJnQT97dIJ7MWdAw9bYptQHdOWGFn1tUHYeTMoE
+	 oxeQ2novSKbVFzoA/O3g8jbyH3YPJsFZdj3sXtNJK1PwTqKn49jJj5zvR+fBh/M3b+4kk
+	 FGdh+NEdZoX9clf3dftzeniZ+4/RQdRGeYXCZylyQVsEyaWFyxUstb+saF653AU3Skw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mo/c3VCawk7n90IHiE20ukkoHoP9qadBXqUa92RYaTc=;
-	b=vtl2WLvdKLdV5DaSmNagzTplKBKjWQTozGbHPJIiG1ScMpPPefm5hNfj0UzCQJ1DGieY
-	 9Fj5K6Y+ME0Pc/J6XPrYnKfbTMretLtmIHRpvy0dIjkUvGztc6zNDFGZWPQI8/4+8eXRT
-	 iDP1+tzIbcyXelrIqAavOn16VidmQJZbvKP7b1n23O5xhAPLEk98eORpBroa0MYLZ+GKO
-	 19uw1bxiKTrp9lPbwgL8PgwV197Od0zlXfqo/Eic7+P4cyd/DHS1Xnj8nigjuujfuSQIQ
-	 BMBgpmIP661D0XoXcqt7QgyEwRER1EtEAMcb2yAe6EQakKjwcFCTG0ZX75ZeZVl2tqg==
+	bh=WWFATRUXppzkYz7Xx/qRi+6aABV1gVZ3Wjbub0CV/5o=;
+	b=s64xT4qtb/J1UpIoyru3eJXjxh+f3yUI0WZDu5mqUv2WnvN4gkS7VF/6f+KvN5m4GYdo
+	 hy/sAOuO75VKno9m/0SsosYZICLWnVjd/VpebjuTun0pzKfWVLJWnat0fi87Enet/PeOV
+	 tsnmn6YH3T3lj0xYdNFzrcsxf1JYTp+fGj/Mw7ZXtXxiUKrXTnGKaqeMEY6DRkDEvG0Qu
+	 uD8WDn8kjZwym5c+CMUfEXHOwp9LFNDLUaOLgkPmTpwzFXbrJiel1LaNElRqF9DWNfh1a
+	 o+BH2OXTvaRWE1qUuP+/4/zrgiqL0owxw71mKPlPWggDQIiiSecoRSFNg1fA7oS1NDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=acOvLKZ2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/inYA10";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50CF606A32A;
-	Wed, 18 Nov 2026 18:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB93606A31C;
+	Wed, 18 Nov 2026 18:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=acOvLKZ2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BE41F000C4;
-	Wed, 18 Nov 2026 18:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/inYA10
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FEA1F000C4;
+	Wed, 18 Nov 2026 18:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027972;
-	bh=Mo/c3VCawk7n90IHiE20ukkoHoP9qadBXqUa92RYaTc=;
+	s=korg; t=1795027975;
+	bh=WWFATRUXppzkYz7Xx/qRi+6aABV1gVZ3Wjbub0CV/5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=acOvLKZ22mYRebeKKl30v8+OjaQGuiSedwRHOd0kTnEHJvhxUeO2Sd2t3Yca0fK8D
-	 YcdQmJQCn1pY96n2mkbQviEHgmEIYSSlD7BXedfwihFWSyaNFP6LTbkrD6Xk4kn9MA
-	 NW+W7X/Ub9sm9ci1LMn+SlNF989I6eFH5QG0Ci9Q=
+	b=v/inYA101m68jm+fgKQJlcPCeKF1qq3zkJY+ErSt5DgiNvLtTYpbRTmOuJStvt0wd
+	 pEOKKAGdmQ6SyxBXnO23gYDGqQGWLBa/EiMkHD7Zvu3ydkEdI/cdmIH70keFqqLXOR
+	 9WHxV/3z5Pxy3FBOz4Ogpc1k/smpBhOt0J77SBVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Fernandez <gabriel.fernandez@foss.st.com>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1979/2151] clk: stm32: fix clock array size for STM32MP21
-Date: Wed, 18 Nov 2026 16:01:54 +0100
-Message-ID: <20261118150233.828973023@linuxfoundation.org>
+Subject: [PATCH 6.18 1980/2151] clk: cdce925: Size the PLL child name buffer for any int
+Date: Wed, 18 Nov 2026 16:01:55 +0100
+Message-ID: <20261118150233.864275124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,52 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 40e5d379cc19fa7fa477414087df5e915d5e843f ]
+[ Upstream commit e9e6b4dc303dff637ef725aca4f4968d7600798b ]
 
-STM32MP21_LAST_CLK is used as the number of entries of the onecell
-clk_hw array allocated in stm32_rcc_clock_init(), and as the bound of
-the clock IDs it can hold. It was wrongly set to CK_SCMI_KER_ETR (112),
-which belongs to the SCMI clock ID range, whereas the RCC clock IDs
-go up to CK_KER_STM (289).
+The PLL child node name is built from "PLL%d" in a 6 byte stack buffer.
+The PLL index is bounded by the chip's num_plls, at most 4, but GCC
+cannot see that bound and, with W=1, warns that the formatted string
+may not fit.
 
-As a result the array is too small, and registering a clock whose ID
-is greater than 111 writes past the end of the allocated clk_hw array
-(hws[cfg_clock->id] = hw), and consumers requesting such a clock
-get rejected or read out of bounds.
+Make the buffer large enough to hold any int and use snprintf() with
+sizeof() so the size stays tied to the declaration.
 
-Define STM32MP21_LAST_CLK as CK_KER_STM + 1 so that the array covers
-all the RCC clock IDs.
-
-No device tree node uses the STM32MP21 RCC driver yet, so there is no
-need to backport this patch to stable kernels.
-
-Fixes: 37ae8501cdb0 ("clk: stm32: introduce clocks for STM32MP21 platform")
-Signed-off-by: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
-Link: https://patch.msgid.link/20261012131859.215240-1-gabriel.fernandez@foss.st.com
+Fixes: 19fbbbbcd3a3 ("Add TI CDCE925 I2C controlled clock synthesizer driver")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20261014-cdce925-truncate-child-name-v1-1-00136be00c49@baylibre.com
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/stm32/clk-stm32mp21.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/clk-cdce925.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/stm32/clk-stm32mp21.c b/drivers/clk/stm32/clk-stm32mp21.c
-index bdb17419908c8..961a228d8c640 100644
---- a/drivers/clk/stm32/clk-stm32mp21.c
-+++ b/drivers/clk/stm32/clk-stm32mp21.c
-@@ -17,8 +17,8 @@
- #include <dt-bindings/clock/st,stm32mp21-rcc.h>
- #include <dt-bindings/reset/st,stm32mp21-rcc.h>
- 
--/* Max clock binding value */
--#define STM32MP21_LAST_CLK	CK_SCMI_KER_ETR
-+/* Number of RCC clock bindings (highest RCC clock ID + 1) */
-+#define STM32MP21_LAST_CLK	(CK_KER_STM + 1)
- 
- /* Clock security definition */
- #define SECF_NONE		-1
+diff --git a/drivers/clk/clk-cdce925.c b/drivers/clk/clk-cdce925.c
+index 0b2ad21e6e4d3..384eb9227b75c 100644
+--- a/drivers/clk/clk-cdce925.c
++++ b/drivers/clk/clk-cdce925.c
+@@ -625,7 +625,12 @@ static int cdce925_probe(struct i2c_client *client)
+ 	int i;
+ 	int err;
+ 	struct device_node *np_output;
+-	char child_name[6];
++	/*
++	 * The PLL number isn't a compile time constant so GCC can't infer
++	 * the number. Make the stack buffer large enough to hold any int
++	 * so Wformat-truncation does not complain.
++	 */
++	char child_name[15];
+ 	struct regmap_config config = {
+ 		.name = "configuration0",
+ 		.reg_bits = 8,
+@@ -697,7 +702,7 @@ static int cdce925_probe(struct i2c_client *client)
+ 			dev_err(&client->dev, "Failed register PLL %d\n", i);
+ 			goto error;
+ 		}
+-		sprintf(child_name, "PLL%d", i+1);
++		snprintf(child_name, sizeof(child_name), "PLL%d", i + 1);
+ 		np_output = of_get_child_by_name(node, child_name);
+ 		if (!np_output)
+ 			continue;
 -- 
 2.53.0
 
