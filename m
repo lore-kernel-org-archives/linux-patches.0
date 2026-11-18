@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060609;
-	b=Cwz9kKZYPhGp3w7SXMlmne5tYl5vv/Uv1h9x3cOQNPqRHvvU6bkmT2iG3kMEtNwHSKnH
-	 9VeZuJrXsOdCUqOfYRsj24H87+GSnJF4jdWCoCuWaBQfetfAwgxMwiAzbUiGn296sLDzK
-	 zZBg6XQ82uwS+syAnOmMmkD9REj4ZNnX2o3WzBaLR3SXm8ZF4QZB0UWf+AiyxZ7zzOJDY
-	 Eq1xJhzue3P20uQX7aq9nCs4k2Brw9udknCMHy6cl9+XCvhuJPRZVda4A3AzS5I/RJ3Rh
-	 LkUU6mlyQcyedNK0MMI2PIbRCsycZ93c6XoBHjvOLEjPoLrOtTUqZwtqSFGJAhn8zJg==
+	t=1795060612;
+	b=KuhlVdyQkpXgbWvFkuicroUIOldFgyf+QAd7NL/bG/HgMeNzif1r/c5IT1+XsQ3OJX0g
+	 7TH1pMNsA/H5ncjIblsyrtszZYhJATzHj7N4IhTfEcsetP0KjLnBaLa4nOnCMA2DrZKFk
+	 H/AOJUHMlgIusJmUx7Da+tN2GkY86eZoGtIpHL2tnU1jptNytfi3LdBk6Y/iw/62L3XKw
+	 gBYMMyUq43lqVmwxMy4HjxxD4RxZ6f1m/QwVPBwAtWFkgSb7g2WVQZ6wgqluVx+SwX9U4
+	 3YU4Or+8v7RkovLRCkryUw3McCK847eDTs/rLSUe3IDbjLn41CfMZZ2kXClnGsqZ8KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D9ewG1KJaqj4ZZOyOcc2xbUe62xwljy09Q9K5L+I/jQ=;
-	b=scRp+WLW5nTZ0oIRJ4nHHxoYdB4xJOuf/EqpceJUoFkW//GLfMPmRruQPRtNFmPypQk7
-	 fTD/JBJtZzg0VKmaTFcHJ1L42VCAuXPqKTARnlBeLAVT0lZ+j8m/4yijK21CjTE14uF9A
-	 FckOX25A79iJUx4yioKHKiLHoAEc9Yne7jfcXPmQRySQd95YIdAcHhJ9sDuuy5CVokrTP
-	 eENwktXFHMGYP3J/tYT33S6e4COS3paQIe5J3bh5z5SqlckSPLaVNmmZFNrvCQHjL8Y/m
-	 1x6s11Iv1mm4xrZdeGC4p2ly1QlWRrbQMdRBi83S0QjteZODCZe1iXCujXGT3znH/Ag==
+	bh=fS2LtH+KoPeR+/UKEJp/3CZTJhIpBOI8t6EoruS3IuA=;
+	b=R6Li4vY2Ymfpwxwe56Fa2JvnT0oxZsiTE3aNMgB38CGjKv2Gr5rPKPahS6uNyk2cmgWB
+	 ilMbuJZWhe2lvFjevhYDE+Jcu0TIwQxAfAtDfe6EVaLSMipACnxiAxSfBuMfrXPLSIcyQ
+	 cBuLY83GOGIJJJxpBt3Sr59eym3eP7ZREFbjugxdIiCE5jfeG2FiM0rZPNDIFMUxIEs1U
+	 nJlj+36eTf3D4QPFAIcd1mrdShbO6BIyNv4vxyrx+pZ1lxtArLzwVh5ACHtAsAMkmOEDh
+	 3gsYx3vxgePYVBZ15P8o+dGSKz/Af5TjeznKIHhV0hUuMfXNTAtRkesm5wvQhGyVFHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GTEht3SH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fD5pRHQ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4458D606A325;
-	Thu, 19 Nov 2026 03:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0938F606A320;
+	Thu, 19 Nov 2026 03:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GTEht3SH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719691F000C4;
-	Thu, 19 Nov 2026 03:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fD5pRHQ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152651F000C4;
+	Thu, 19 Nov 2026 03:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060608;
-	bh=D9ewG1KJaqj4ZZOyOcc2xbUe62xwljy09Q9K5L+I/jQ=;
+	s=korg; t=1795060611;
+	bh=fS2LtH+KoPeR+/UKEJp/3CZTJhIpBOI8t6EoruS3IuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTEht3SHhWQqFritC92HmQOy95fDYPbZUFrbC9HjxbcxluxtVLdVJrIAdKRIkCP4H
-	 uPA4hCYO2qPcQYO43yGfyjls02IaWXHYQFT2lmUwhxroaZli0W6960Kaxw0X74xPOy
-	 N7PtB9WaRhRuE0VZY/CHb2z+9Rrvf7xgD/l3Gye0=
+	b=fD5pRHQ0TaogjqXuS6mc8N3l6Z1IKeHFTFx+tW7+qm1OCqXA847x9Fn8oVhXutlSY
+	 L0q5fL43KgVd3/qbd14dwU5Z8oBTP+tcFjsOak4r9lwq2QfTWe2aQMGIYeTeNEd4od
+	 r1v74iyEtUlsORgxwq+ReYGH2gv7u/5e58+WHRsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1260/1848] mm/gup_test: reject wrapped user ranges
-Date: Wed, 18 Nov 2026 15:54:58 +0100
-Message-ID: <20261118150012.473006595@linuxfoundation.org>
+Subject: [PATCH 5.10 1261/1848] mm/gup_test: safely calculate GUP batch size
+Date: Wed, 18 Nov 2026 15:54:59 +0100
+Message-ID: <20261118150012.508623168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,69 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Sarthak Sharma <sarthak.sharma@arm.com>
 
-[ Upstream commit e8ae6fd67021fafa9205330b3b248c9fc7216e0b ]
+[ Upstream commit 44817a536aaa5bfac0d316242e93e489d0a69d5f ]
 
-gup_test accepts an address and size from the debugfs ioctl and repeatedly
-compares against addr + size.  If that addition wraps, the loop can be
-skipped and the ioctl returns success with size rewritten to zero.
+__gup_test_ioctl() calculates the end of a GUP batch using:
 
-Compute the end address once with overflow checking and use that checked
-end for the loop bounds.
+next = addr + nr * PAGE_SIZE;
 
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Link: https://lore.kernel.org/20260609004814.1240586.6294d614ac80.gup-test-range-end-wrap@trailofbits.com
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 44817a536aaa ("mm/gup_test: safely calculate GUP batch size")
+If nr is too large, it can cause next to overflow and wrap around.
+If it wraps, the next > end check is bypassed and a large value
+of nr is passed to the GUP call, even though the pages array was
+allocated according to gup->size. This can lead to out of bounds writes.
+
+Also, when fewer than PAGE_SIZE bytes remain, the calculated batch
+contains zero pages. The code still calls GUP functions with pages + i,
+which can point past the allocated array.
+
+Calculate nr by taking the minimum of the number of pages per call and
+the pages remaining in the address range. Reject zero sized and non
+page aligned gup->size values and zero nr_pages_per_call value.
+
+Fixes: 64c349f4ae78 ("mm: add infrastructure for get_user_pages_fast() benchmarking")
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Link: https://patch.msgid.link/20260915102524.125758-1-sarthak.sharma@arm.com
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup_test.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ mm/gup_test.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/mm/gup_test.c b/mm/gup_test.c
-index 59472ea6aa394..340fc9bb6d0f9 100644
+index 340fc9bb6d0f9..cdf30cfcba139 100644
 --- a/mm/gup_test.c
 +++ b/mm/gup_test.c
-@@ -71,11 +71,15 @@ static int __gup_test_ioctl(unsigned int cmd,
- 	unsigned long i, nr_pages, addr, next;
- 	int nr;
- 	struct page **pages;
-+	unsigned long end;
- 	int ret = 0;
+@@ -76,7 +76,8 @@ static int __gup_test_ioctl(unsigned int cmd,
  	bool needs_mmap_lock =
  		cmd != GUP_FAST_BENCHMARK && cmd != PIN_FAST_BENCHMARK;
  
--	if (gup->size > ULONG_MAX)
-+	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
-+		return -EINVAL;
-+	if (check_add_overflow((unsigned long)gup->addr,
-+			       (unsigned long)gup->size, &end))
+-	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
++	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX || !gup->size ||
++	    !gup->nr_pages_per_call || !PAGE_ALIGNED(gup->size))
  		return -EINVAL;
- 
- 	nr_pages = gup->size / PAGE_SIZE;
-@@ -91,13 +95,13 @@ static int __gup_test_ioctl(unsigned int cmd,
- 	i = 0;
- 	nr = gup->nr_pages_per_call;
- 	start_time = ktime_get();
--	for (addr = gup->addr; addr < gup->addr + gup->size; addr = next) {
-+	for (addr = gup->addr; addr < end; addr = next) {
+ 	if (check_add_overflow((unsigned long)gup->addr,
+ 			       (unsigned long)gup->size, &end))
+@@ -99,11 +100,9 @@ static int __gup_test_ioctl(unsigned int cmd,
  		if (nr != gup->nr_pages_per_call)
  			break;
  
++		nr = min_t(unsigned long, nr, (end - addr) / PAGE_SIZE);
++
  		next = addr + nr * PAGE_SIZE;
--		if (next > gup->addr + gup->size) {
--			next = gup->addr + gup->size;
-+		if (next > end) {
-+			next = end;
- 			nr = (next - addr) / PAGE_SIZE;
- 		}
+-		if (next > end) {
+-			next = end;
+-			nr = (next - addr) / PAGE_SIZE;
+-		}
  
+ 		/* Filter out most gup flags: only allow a tiny subset here: */
+ 		gup->flags &= FOLL_WRITE;
 -- 
 2.53.0
 
