@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051455;
-	b=yelLSNHdlbqub/TQ8SHzV/y9COkSQv/UGzWg34xsLXGDH5m9ZK6IDGj3ENxwcruRi49L
-	 gk93gBVRi6Oot+R8PDRzuHOaD+3NbjIv2ICPUgHuU50dkVNrFqJIELutSW7JOBeHCZu97
-	 pkB6g0As+Sm9l+Ngy2LFFdYHY1d+dPjEQMuw7UdETuq9s+v5vHVzdJ0HVRuGrkPH9Hr/d
-	 V2X8qAqh4ItUyJXmFt3rSXW32Hb0OTFBEwqxILkW1f0Gcqa5w5QVYTn8fsR7byMu13HoY
-	 yReUZnE445o7a7BjCk5cirFEr4iDzdRjkor/ErJwpEekqLe8gEUxuc15fJfbRNtzIoA==
+	t=1795051457;
+	b=XugJ9riDwqKT5WSUGi7lcI74yzWLTg2CZWWochRtXNuulqZg+6P6pjy78wtcxMCe17Pv
+	 bQKcnyLm2J7i+Y4t/gO1usz8LZ4uNGFjF9TYSkzeGRQhLg6U5FiTA5+EZicfbUNhLCxqp
+	 Y43BcHmiMT9Kc7PJsApad0ZqI5xEhI19CXB4/1Sp6xOU81PW+cj5c6VHjgW6s7ZJKjof6
+	 0JrUejQ8bcyLJBjLAGE6Ni7M+silJGrh++a7Webf0jvQDOIVFJfcod27AUUvyaMBGjf40
+	 e6dqMWMb8AvUK/IYYHqalgGwosJ23jUXPJu0aoNbHGIqABBI7uAC6A5oeafFf6DLuEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TKwZCUUsmTm0OPWEJXh5r9OePnOPSsUPHQsG8mnv2V0=;
-	b=II2blkNbgGyUIQeo8gaJZ8VpW61RJnk45Asz3EdRTueBFrf8GkG/KCcT/sVeuF6kQ0Lb
-	 4ODCMExkEQVtuwYza45fZbifkk6tN8CL4a9WaxJuC3/nRfp0JcZYLwUxTx1B8XD6lal1O
-	 F794sZIVvBm7Cyg/rygvKw5FB5sMU+NbyqaCv/vYZUcyA9s5EMnrhFs4t4813MXXa8mxx
-	 4ABPqsgktMefzjRW2CV6QCin4BM1yulgFBQlK+VOrqxOsb1s8gMNBpDbqMYh+ZxzDdJXm
-	 fzg5TQf4uBbq9z7VUaHLdiIGMnQCws5Fhk/CqcfnkSptO1aUBq3Lr18dl6cT5U2zGmw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yW9cdBsp7xo43PSEGMJvk6dCaeKeiLmbpZyLyNnmqTY=;
+	b=KFDQ6Yr6VvCw3uvJi4RG/IQ9I7S33NwNgNQQAyA0W+PA8EPK6wM4Vq9+wjuxX3I0wW6Q
+	 HLiXgsReRbSzzA/1+cVjYRfPhh+yhvSUmisfaWsMKPSBLxlj5uo2PWj6nWyD+0cGHIHH5
+	 AzXry9FA81SK5rQ3XCbga2vxcLtATfRMt9W7GLXRyY+tCOFR1Ok3DN25FLYzAVeC1oLrJ
+	 11U3KCGebIPeLbgYoZxsFII8ollBFJIvYxSaTxM9fIMpUPk8IdraraDBqQsDKMu07rEyT
+	 ij/2672JrY3n2gYD36kRJqfD9dzlDF5YyWX1bS9Vra+py1y5/flTEj4XgSLa/P1nCNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0h57217;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xPPKKOg5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DED1606A31C;
-	Thu, 19 Nov 2026 01:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD889606A31C;
+	Thu, 19 Nov 2026 01:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0h57217
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE111F000C4;
-	Thu, 19 Nov 2026 01:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xPPKKOg5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCEC1F000C5;
+	Thu, 19 Nov 2026 01:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051455;
-	bh=TKwZCUUsmTm0OPWEJXh5r9OePnOPSsUPHQsG8mnv2V0=;
+	s=korg; t=1795051457;
+	bh=yW9cdBsp7xo43PSEGMJvk6dCaeKeiLmbpZyLyNnmqTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M0h572177AjyTvs9J466ijmv84RTAE0UtKAh6o6RBnAXk/MMRQRFVIMe+MzvnavsE
-	 j5sFAxmHNSSEzC3MnuR+v44ExzyG6lAYotOFzAEybzthE6yWeMoheRVPWjenujrmrp
-	 3C1u7uW0Y/JFWn/MSnMYM115F/OAbzNhfp9/iEf8=
+	b=xPPKKOg5IZyXaDYipNXsODhhJiyupuP3Fx7GgCFfETudeACwZS7283i90kc+Y955V
+	 7oB9+ber/6fMU5iVTkNjdNwlxO6ESvUMJb24obejgZ+xWRRw+/P/YkFeYcWi+vXMXn
+	 RXFFZDbGXI68t/RmspXJA4xn0wLQnZSlEDwHJS/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0170/2214] net/rds: hold the socket while an rds_mr references it
-Date: Wed, 18 Nov 2026 15:30:46 +0100
-Message-ID: <20261118150016.886938428@linuxfoundation.org>
+Subject: [PATCH 5.15 0208/2214] ksmbd: protect private extended attributes
+Date: Wed, 18 Nov 2026 15:31:24 +0100
+Message-ID: <20261118150018.519885428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,138 +61,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9079adef042c1e7a6141dcdfd3041acd30607297 ]
+[ Upstream commit 4ea46ea602fc7055eee4b5b0e84f90f22da7f7e7 ]
 
-Each rds_mr stores a bare back pointer to the socket that created it
-(mr->r_sock) but takes no reference on it.  When the mr is destroyed it
-references the rs. Hence, provisions must be made to avoid the rs
-being destroyed before all mrs referencing it have been destroyed.
+SMB clients can currently create an EA named NTACL because SMB EAs are
+mapped into the user namespace while the ksmbd security descriptor is
+stored as security.NTACL. Allowing the reserved logical name makes the
+server-private ACL metadata appear writable through the SMB EA API.
 
-The MR itself is refcounted, and in-flight messages legitimately hold
-MR krefs that can outlive the socket: rds_release() drops the rb-tree
-references via rds_rdma_drop_keys(), but a send completion arriving
-afterwards drops the final message reference from the CQ handler and
-ends up in
+Reject NTACL, DOSATTRIB, and DosStream-prefixed EA names without regard
+to case. Filter the same private names from EA query results so stale or
+externally-created user namespace attributes cannot be exposed.
 
-  rds_message_purge()
-    __rds_put_mr_final()
-      rds_destroy_mr()   -> takes rs->rs_rdma_lock
+This fixes smb2.ea.acl_xattr when acl_xattr_name is configured as
+NTACL.
 
-dereferencing a socket that may already have been freed.
-
-Oracle UEK fixed the same use-after-free ("rds: Add proper refcnt when
-an RDS MR references an RDS Socket") after seeing crashes of the form:
-
-  PF: supervisor write access in kernel mode
-  _raw_spin_lock_irqsave+0x4a/0x6a
-  __rds_put_mr_final+0x2c/0xe0 [rds]
-  rds_message_purge+0x13c/0x150 [rds]
-  rds_message_put+0x39/0x54 [rds]
-  rds_ib_send_cqe_handler+0x147/0x3dd [rds_rdma]
-
-To fix this, take a socket reference when an MR is created and drop it
-when the final MR kref goes away.  The reference cycle is broken by
-rds_release(), which always runs rds_rdma_drop_keys() on close.  So the
-socket reference held by an MR never prevents release, it only delays
-sk_free() until the last MR user is done.
-
-The hold sits next to kref_init() at both allocation sites -
-__rds_rdma_map() and the on-demand-paging path in
-rds_cmsg_rdma_args() - so every MR owns exactly one socket reference
-from the moment it becomes kref-managed.  For that to work on the ODP
-path, its get_mr() error handling is converted from a bare kfree() to
-kref_put(..., __rds_put_mr_final), with r_trans_private cleared first
-since it holds an ERR_PTR there; both sites then tear down through
-the same path and a future error-path change cannot silently leak or
-double-drop the reference.
-
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-[achender: port to net-next (sock_hold/sock_put in place of the UEK
- rds_sock_addref/rds_sock_put helpers); also balance the reference on
- the rds_cmsg_rdma_args() ODP path and unify its error path with
- __rds_put_mr_final(); update commit message]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-3-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma.c | 14 +++++++++++++-
- net/rds/rds.h  |  5 ++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/net/rds/rdma.c b/net/rds/rdma.c
-index ba23bc5628d02..f3b6a7b554f88 100644
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -117,6 +117,7 @@ void __rds_put_mr_final(struct kref *kref)
- 	struct rds_mr *mr = container_of(kref, struct rds_mr, r_kref);
- 
- 	rds_destroy_mr(mr);
-+	sock_put(rds_rs_to_sk(mr->r_sock));
- 	kfree(mr);
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 88ce1b3d0f97d..e1aab1b256575 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -2363,6 +2363,22 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
+ 	return err;
  }
  
-@@ -243,7 +244,11 @@ static int __rds_rdma_map(struct rds_sock *rs, struct rds_get_mr_args *args,
- 	kref_init(&mr->r_kref);
- 	RB_CLEAR_NODE(&mr->r_rb_node);
- 	mr->r_trans = rs->rs_transport;
-+	/* The MR can outlive its socket: a socket reference is held
-+	 * until the final kref is dropped in __rds_put_mr_final().
-+	 */
- 	mr->r_sock = rs;
-+	sock_hold(rds_rs_to_sk(rs));
++static bool smb2_is_private_ea(const char *name, size_t name_len)
++{
++	if (name_len == SD_PREFIX_LEN &&
++	    !strncasecmp(name, SD_PREFIX, SD_PREFIX_LEN))
++		return true;
++	if (name_len == DOS_ATTRIBUTE_PREFIX_LEN &&
++	    !strncasecmp(name, DOS_ATTRIBUTE_PREFIX,
++			   DOS_ATTRIBUTE_PREFIX_LEN))
++		return true;
++	if (name_len >= STREAM_PREFIX_LEN &&
++	    !strncasecmp(name, STREAM_PREFIX, STREAM_PREFIX_LEN))
++		return true;
++
++	return false;
++}
++
+ /**
+  * smb2_set_ea() - handler for setting extended attributes using set
+  *		info command
+@@ -2404,6 +2420,10 @@ static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
+ 			rc = -EINVAL;
+ 			break;
+ 		}
++		if (smb2_is_private_ea(eabuf->name, eabuf->EaNameLength)) {
++			rc = -EACCES;
++			break;
++		}
  
- 	if (args->flags & RDS_RDMA_USE_ONCE)
- 		mr->r_use_once = 1;
-@@ -762,7 +767,12 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
- 			RB_CLEAR_NODE(&local_odp_mr->r_rb_node);
- 			kref_init(&local_odp_mr->r_kref);
- 			local_odp_mr->r_trans = rs->rs_transport;
-+			/* The MR can outlive its socket: a socket
-+			 * reference is held until the final kref is
-+			 * dropped in __rds_put_mr_final().
-+			 */
- 			local_odp_mr->r_sock = rs;
-+			sock_hold(rds_rs_to_sk(rs));
- 			local_odp_mr->r_trans_private =
- 				rs->rs_transport->get_mr(
- 					NULL, 0, rs, &local_odp_mr->r_key, NULL,
-@@ -771,7 +781,9 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
- 				ret = IS_ERR(local_odp_mr->r_trans_private);
- 				rdsdebug("get_mr ret %d %p\"", ret,
- 					 local_odp_mr->r_trans_private);
--				kfree(local_odp_mr);
-+				local_odp_mr->r_trans_private = NULL;
-+				kref_put(&local_odp_mr->r_kref,
-+					 __rds_put_mr_final);
- 				ret = -EOPNOTSUPP;
- 				goto out_pages;
- 			}
-diff --git a/net/rds/rds.h b/net/rds/rds.h
-index 6090a6045379a..a411e9ba60a43 100644
---- a/net/rds/rds.h
-+++ b/net/rds/rds.h
-@@ -299,7 +299,10 @@ struct rds_mr {
- 	unsigned int		r_invalidate:1;
- 	unsigned int		r_write:1;
+ 		memcpy(attr_name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN);
+ 		memcpy(&attr_name[XATTR_USER_PREFIX_LEN], eabuf->name,
+@@ -4432,17 +4452,13 @@ static int smb2_get_ea(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 		if (strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
+ 			continue;
  
--	struct rds_sock		*r_sock; /* back pointer to the socket that owns us */
-+	struct rds_sock		*r_sock; /* socket that owns us; counted
-+					  * reference, dropped by
-+					  * __rds_put_mr_final()
-+					  */
- 	struct rds_transport	*r_trans;
- 	void			*r_trans_private;
- };
+-		if (!strncmp(&name[XATTR_USER_PREFIX_LEN], STREAM_PREFIX,
+-			     STREAM_PREFIX_LEN))
+-			continue;
+-
+ 		if (req->InputBufferLength &&
+ 		    strncmp(&name[XATTR_USER_PREFIX_LEN], ea_req->name,
+ 			    ea_req->EaNameLength))
+ 			continue;
+ 
+-		if (!strncmp(&name[XATTR_USER_PREFIX_LEN],
+-			     DOS_ATTRIBUTE_PREFIX, DOS_ATTRIBUTE_PREFIX_LEN))
++		if (smb2_is_private_ea(&name[XATTR_USER_PREFIX_LEN],
++				       name_len - XATTR_USER_PREFIX_LEN))
+ 			continue;
+ 
+ 		if (!strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
 -- 
 2.53.0
 
