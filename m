@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017532;
-	b=EH0AJVQhxOkUgsJe8Rl7cDE3GGIRAhD9XE9o4fhmpvjst6czx2pQ+/5UlNEMeWZPyTff
-	 efMb84ldZ1C40dJ0mhbQDcBipRozR1THitJCtljVULqZ4DfBn3iz92dk0RhoPVd+bkT9g
-	 AbvfV71e6s2gTowJHsO3P/z3ssAFU88lVJXmSVexIGExQ37NRof0CLwlQFRqrwTOcYCNJ
-	 dRLCSUChwYLGrsB4XCEoTEFG/9w0tdAaVPSewSKRAiJbZRJijQ6i8V0U1HI+S11sucIjI
-	 hpnpfNOFTADv3EUr9+UQ15FjtiyF+igm3FPHbinzew7Z8sBvCHFrVyOdIro5b2ZsQcA==
+	t=1795017535;
+	b=lsLck7fol9mTmjGiuEvrPfKbMLYEdfj/9plzjTqNGlbYl5RgRHiy/kp/jqaCS2+/cbDx
+	 ViU03pYkRh4WM17LUXHXLH9yqpQ7tNNZnaaFu3TQp99jESt+xJlevJyb4xyYZFD6cdCp5
+	 8yxg8nmK8p5usuu8OfXbHMVRDbbiQEPNCNXAzXZbCUPP8GFVCR1cPAUlE0yUHgDHx3Ux+
+	 X9hIpES3qZqOJjS6R2OBxPqymrFAXu2yCARs3cUCr2UkAgpcvFSVfBb2ljBEbXVEFqElP
+	 FLaoWjWTVWBJqg8khBZ3bWZSLRCIXyTVaap8D75z908jE5HjoMhPIiIrIlcaIF+JTzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q6r77grM5C0uKWWR0jvn/V04qCOJk4hc9BAsol98PMQ=;
-	b=yd4m2datDpNgijRUL/3tIuVGL4bT4NH1SMvQcQiMzkbUrFYtZwQonL/fZZsrqCh2tICT
-	 kMNnym3i5uFDz+a8a9ep+98zP8jET8443ZD4E9vC3hDy4nLKm+Wb/dnB96bF2T6jqZL4B
-	 EFh00LDgjaq64s0eY5H6PmBksWSqAiAdGJcEA3SEhUqqomzIgH+11Je8xf6u+lFsRmJgW
-	 VRy+T1Jbff8mO1EHKI71fnH/mIjZIwAuXb8BgmJ/5n2R4bkTDVQZ9F/zxE4Hx9QhCrwd2
-	 DFbdWwiGfyGifUfTuktChK4krEUpy9cP6MBEq+XGmvg8yGLsGXUDbaLP8IvkLcRXiAg==
+	bh=bV0a29puUMUgFKcwx3kzLQgASGnvcTy4ZJ1c0YCykTM=;
+	b=ZOsBC8coaJvEcXRTeRyxylKoeC0XZdUdz9OOTLcc+S64SgCgR97nvMUsKx8G50TdXo8p
+	 E2wyYOeKnanIqMy8DIl5D/YN5vxdmRNBsrUkcIsSdfUL8PU6lxtCmci3gWKopMP7qkd4M
+	 BDH9nKWC2X1JbtvDsg3EpuJpw3wYoQRp/aMSzccV0O2PKGJ/kbL/A6OIf06HLcnSd9zBd
+	 oz+JkfjiGFDzLkiXT7dXTA5FEVrgdwUx3QzD9ZFUHxEku22IsBFjnKTPp0Ts2rW5dNWyG
+	 XGBKIwaMODKUbl0nShRKTgvE6niSjOgrYXU53iV9CmMbDssgiNu1xJQasAFPGT9za8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nYGzllbx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mpIheYh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80F0606A31C;
-	Wed, 18 Nov 2026 15:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A51D606A339;
+	Wed, 18 Nov 2026 15:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nYGzllbx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CE31F000C7;
-	Wed, 18 Nov 2026 15:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mpIheYh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19B11F000C9;
+	Wed, 18 Nov 2026 15:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017532;
-	bh=q6r77grM5C0uKWWR0jvn/V04qCOJk4hc9BAsol98PMQ=;
+	s=korg; t=1795017535;
+	bh=bV0a29puUMUgFKcwx3kzLQgASGnvcTy4ZJ1c0YCykTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nYGzllbx+5kRfXESZenRsNBa5ZRDSqnJjqugQ+/GO2DTvTNcdAu0IB2f5/Wzn8t9Z
-	 OVbHlu+1CzJcc4Hioiq9gZWHHgozopyIbbJzmJ4M+xPkFu5deI/j9wLB0rwJcwjPdt
-	 2LI+v5p6YX1hqBfYZaogN+QusJb2Oo2DROq62+Fw=
+	b=2mpIheYhO/aEuXay9taCIpI5RKaxuJSGVa1iR66W+JcYAQ4CbfkKsJt6NmwrmRQvj
+	 jI4npDzJsnIAkYat4bQpfkAMhEaze+peu9aR7b3fYrW4l7jdg2w4pE62gMUcgCs49f
+	 Zf8p19X6zuvhZKW1IzBK1wVCu2J7lsao3dAaWpjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0911/2651] kbuild: Remove alignment on .modinfo section
-Date: Wed, 18 Nov 2026 15:35:51 +0100
-Message-ID: <20261118150320.683770658@linuxfoundation.org>
+Subject: [PATCH 7.3 0920/2651] arm64: dts: qcom: sm8150: Use SM8150_CX for the SDHC power domain
+Date: Wed, 18 Nov 2026 15:36:00 +0100
+Message-ID: <20261118150321.014963733@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,73 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 36d4a11b56aa98da4b4652a2e34d229ffcf36070 ]
+[ Upstream commit 475aab59d9870d250f521e202d191899c50a3ded ]
 
-Commit d50f21091358 ("kbuild: align modinfo section for Secureboot
-Authenticode EDK2 compat") aligned .modinfo because it appeared in the
-x86_64 compressed kernel image after commit 3e86e4d74c04 ("kbuild: keep
-.modinfo section in vmlinux.unstripped"), breaking boot.
+Replace the raw power-domain index of SDHC2 with the SM8150_CX binding
+constant, which is the correct power domain in this case.
 
-Commit 8678591b4746 ("kbuild: Split .modinfo out from ELF_DETAILS")
-properly addresses .modinfo appearing in unexpected contexts like
-compressed images by moving it out of ELF_DETAILS and explicitly
-specifying its location in every architecture's vmlinux linker script or
-discarding it where it may appear elsewhere.
-
-Effectively revert commit d50f21091358 ("kbuild: align modinfo section
-for Secureboot Authenticode EDK2 compat") and its follow up fix,
-commit a26a6c93edfe ("kbuild: Strip trailing padding bytes from
-modules.builtin.modinfo"), as they are no longer necessary in the
-current tree. This simplifies future cleanups.
-
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260918005142.GA1585590@ax162/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Stable-dep-of: a98db7418797 ("kbuild: keep .modinfo when vmlinux is linked with --gc-sections")
+Fixes: 876644c76034 ("arm64: dts: qcom: sm8150: Add support for SDC2")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260914-qcom-tie-cx-to-gcc-v4-0-9d5a606ada33@oss.qualcomm.com?part=45
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-dts-qcom-sm8150-sdhc-use-mss-for-pd-index-v2-1-a8610199483d@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h |  2 +-
- scripts/Makefile.vmlinux          | 10 ----------
- 2 files changed, 1 insertion(+), 11 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index b2988aa12f664..26201821ea7ff 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -855,7 +855,7 @@
- 		KLP_SYMID
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 94a3b02cb2897..e83fe8daa7c29 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3574,7 +3574,7 @@ sdhc_2: mmc@8804000 {
+ 			iommus = <&apps_smmu 0x6a0 0x0>;
+ 			qcom,dll-config = <0x0007642c>;
+ 			qcom,ddr-config = <0x80040868>;
+-			power-domains = <&rpmhpd 0>;
++			power-domains = <&rpmhpd SM8150_CX>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
  
- #define MODINFO								\
--		.modinfo : { *(.modinfo) . = ALIGN(8); }
-+		.modinfo : { *(.modinfo) }
- 
- #ifdef CONFIG_GENERIC_BUG
- #define BUG_TABLE							\
-diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
-index fcae1e432d9ad..6833b517cacb6 100644
---- a/scripts/Makefile.vmlinux
-+++ b/scripts/Makefile.vmlinux
-@@ -102,18 +102,8 @@ vmlinux: vmlinux.unstripped FORCE
- # modules.builtin.modinfo
- # ---------------------------------------------------------------------------
- 
--# .modinfo in vmlinux.unstripped is aligned to 8 bytes for compatibility with
--# tools that expect vmlinux to have sufficiently aligned sections but the
--# additional bytes used for padding .modinfo to satisfy this requirement break
--# certain versions of kmod with
--#
--#   depmod: ERROR: kmod_builtin_iter_next: unexpected string without modname prefix
--#
--# Strip the trailing padding bytes after extracting .modinfo to comply with
--# what kmod expects to parse.
- quiet_cmd_modules_builtin_modinfo = GEN     $@
-       cmd_modules_builtin_modinfo = $(cmd_objcopy); \
--                                    sed -i 's/\x00\+$$/\x00/g' $@; \
-                                     chmod -x $@
- 
- OBJCOPYFLAGS_modules.builtin.modinfo := -j .modinfo -O binary
+ 			status = "disabled";
 -- 
 2.53.0
 
