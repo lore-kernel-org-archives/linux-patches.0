@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048414;
-	b=qyxKSVZswyC/bJTMC04/IEAmuT2lQFgXFEKRt4V2CLxVxJGwNUxx2fWpMNuj5ss63Ik0
-	 Kfb7D/V3daTTp6vrtIZPqbRPRAdlVXfNgrnvTWeDyd+n/bsOsfj7ScuCQPvD+w7hakQly
-	 J55SfrJ7aO7yGzy4S6reXU9Lq74OcmS+UyAZ9klhBITv1DUJMUdTBRWxsYY9e78wZS4ck
-	 eYkMEFndR4zcgLM+IVr1bsb2yVcLBouhUCbeQxhRCAh2G9b+3QtYWxZpFvIAXFlq6T1Uk
-	 CdQYU2C9g6SLyfj9A3QFsqIfd793iGDkDjgg2UNJsx1ZdXlwcHGIecimM8C/V7TXMTQ==
+	t=1795048417;
+	b=MNB9lMhQ93yWvZwRRgR/F21+freoRd3tFYToi+XzmJOKRoYyDiHet1dn7s0TARI5XhnL
+	 AXlqTHbc9AKKhldi6gmEgLbAW2U5ZmXamlFiUZEcjxdbHyhxSFxqniH4JyGoZWL1eq1P1
+	 yGtOdnQLltOSKCV3A9el629M/tWGzDCmRf9OW2S2kR2+5pv1Ugoumb5jDAk2RApCUTexd
+	 YSnDHzJnsdAfgrFJTOL+A95ViVZpLXTh3gkJNgUGj2YVaYl/9qrMG/O2uyriJQXg5OXK6
+	 sSawkTb2v0rOZqk6dxMp9t0FiH8F7dN+i1pcdLCQgJX2y4lH+5H3FxG7ThQs+1X5UrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b//cvBMvLPuhRMDA/B8hjtyKjZp6q1dwQrcd6imZJXU=;
-	b=nTXQEyArjK3hndeYGKz7HtkxWuh9cGHj28F3IlWZGoW5z1dE8y9b2VjjzMPctQ6YPv0h
-	 6VTUzgBK1hR7jPBWTvAJ4xcdAaRwgS1NNWQXIcW9SwVvsXEEdz0aTMB3CgCuPABBLwj8R
-	 J6IafKcjbvTV3BzkcGQQDmyWudOZl/ACpNfDVWR1kcN4rOBshbNKfX/ihIKQTxBkpXlXD
-	 cmvPAbRkZeH4VgDNjo+zyG4Ej6mzpz0/jFWoTdxUhw0rKnJgkgwlUSNTYcz4dD8o0Q/5b
-	 2CvTVw5YVhpsN66FhyiEzFaG92NUKUQlGXyItnNp1tz4oCQL5NKdSZI+DLxXVGazosg==
+	bh=zNVUL2fjDx3CafzM21G58M0VdteBwIbBh+T0F73Ur3Y=;
+	b=Oek6lxi6QXklodm+CqzbI/3wtXL6KuGxHDLEB199zHpc7kykUs7ZrapxUE0RZ5NZ8ML2
+	 IzNMYyTYeCFTcLZQf0PT5KQxdWATKJ1yJDBjPgwQiPctvMraCBx9dm5UZbLmb2L1TGZ0P
+	 ywsN+hr6zoRpBZhobETZ0DQYTQN4AM6wRY2YicTU/uwo6gQjmhXR+297nC0NChdwAG9Zj
+	 wZIsc+yqIjD48id84oBqLkOS/JAD+xbtdySD96gZ7amUD+67MNeuDaUIAGIUtG5C+BLYx
+	 1r+lDEUJGlycGureFuxj+sE71JQGxUJnpRYplsNbYDFVPt1T9bRBmv+VPUrWA1sTvEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQt3MSGt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dMxWlDct;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B9F606A325;
-	Thu, 19 Nov 2026 00:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AE8606A339;
+	Thu, 19 Nov 2026 00:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQt3MSGt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2606E1F000C4;
-	Thu, 19 Nov 2026 00:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dMxWlDct
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36321F000C4;
+	Thu, 19 Nov 2026 00:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048414;
-	bh=b//cvBMvLPuhRMDA/B8hjtyKjZp6q1dwQrcd6imZJXU=;
+	s=korg; t=1795048417;
+	bh=zNVUL2fjDx3CafzM21G58M0VdteBwIbBh+T0F73Ur3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xQt3MSGtR2HSR37WLcQWOIqzR0Kral2QzJIJLQx7aZfkoTMf3/SIXu1SB+vpLg/kJ
-	 yX0saw2gLbl7+hXSH1hdK1b6yO1pWMHjAFGS3Hy01xFx5yuUYOv0qudNtmLH+r+/K4
-	 gHmRCnBGqTtiiMl1kkGSqp2RTvh1eCvN4jusN42Y=
+	b=dMxWlDct0o1EAtNaLgy28h+BJ5ArLC+hdqE3KmipdiGBqk8c8TxQ/FKZ8ruX5NmSq
+	 IFGLNitwpivxz2RrHm29i72dhxPplMXdzGgAE7hZ4p539VkaN5nrQx9bkd/pbGY98t
+	 Ud78xFvTZCGU8xEc9tokNXWWqAOb+oey3BwRCo80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1984/2857] dt-bindings: vendor-prefixes: add vendor prefix for Nexperia B.V.
-Date: Wed, 18 Nov 2026 15:50:18 +0100
-Message-ID: <20261118150312.816136579@linuxfoundation.org>
+Subject: [PATCH 6.1 1985/2857] dt-bindings: vendor-prefixes: add NewVision vendor prefix
+Date: Wed, 18 Nov 2026 15:50:19 +0100
+Message-ID: <20261118150312.851437176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,35 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 819a3e62d37a2fe73c1e7f241f2ac086042e7757 ]
+[ Upstream commit a2f79d7f140c8e01b719d9404e4a4eaa2c849ede ]
 
-Document the vendor prefix for the semiconductor company Nexperia B.V.
+NewVision (also sometimes written as New Vision) is a company based in
+Shenzen that manufactures ICs for controlling LCD panels.
 
-The company website is https://www.nexperia.com/
+https://www.newvisiondisplay.com/
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260921-topic-sm8x50-nex10000ub-v2-1-eeeaf9b0c913@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221111203130.9615-2-macroalpha82@gmail.com
+Stable-dep-of: cb81a22504f4 ("dt-bindings: vendor-prefixes: Add vendor prefix for Teclast")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index fdcfda32bc923..655d56b06efd0 100644
+index 655d56b06efd0..2da6ca65e722f 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -891,6 +891,8 @@ patternProperties:
+@@ -889,6 +889,8 @@ patternProperties:
+     description: Shenzhen Netxeon Technology CO., LTD
+   "^neweast,.*":
      description: Guangdong Neweast Optoelectronics CO., LTD
++  "^newvision,.*":
++    description: New Vision Display (Shenzhen) Co., Ltd.
    "^nexbox,.*":
      description: Nexbox
-+  "^nexperia,.*":
-+    description: Nexperia B.V.
-   "^nextthing,.*":
-     description: Next Thing Co.
-   "^newhaven,.*":
+   "^nexperia,.*":
 -- 
 2.53.0
 
