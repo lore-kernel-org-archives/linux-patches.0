@@ -1,55 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045694;
-	b=W32Vz7XV+jm6+TQ9edEI4zCs9kJpg9ee6BhCMZ2ryfob3MV794LrKnwccbxFZb0WZe/C
-	 XhLpIl3Kz6uGrtXuf+BkhQkCEWrZuwm6i4HGDHF0VVUMpXjIWFj0te/lyHir8FiDARyEE
-	 YmjCybl+v8MvTBio/yz2A7+6lhVf38xdUSCVHui0pqzK0RG2be/Hvs65Efoo6dPEonjZX
-	 W1XaFycuWwTDVdUN8kfBxIsC+R8Ty22qGrA1RbG1flHLX4tQt+Eln4AbqkwZg9NUAYrUo
-	 3SOpqZn3FcmH8MY1DPJ+LYESU7559+ha+3gG5Si9EMRjyiygbjLioQ8WGCXc7R6flsg==
+	t=1795045697;
+	b=QheQUHq1lmFMmKH8xGj1H0i+3qyTqmWQsxDCaX0BYSte6C3ks+sv7ZinXDOZDTBnAZsn
+	 BoKjsuNSbfDLYqrjSe3XeWz9WvjEcfaRQmMxDO5gEPyVML7vBHde92PP8OoBveFIQ1vjN
+	 2pfvgnfT0d0Cr/hrmq6vyOw3ywxo8isCaM6ScEaYnLSJdVDlOd/KLSXrgdOyF+SutTJ+l
+	 V1N7UNh6+dVwacHm7pohsbsGKCpu7G2n5I5gIbx/GDvOpW2/dUY0knA3MiyEhfBn+Yce4
+	 5m79axGvpZawb/RDC6tiXlYOYeBwWdOSoabBmBAF7j5F6yu61ToBaPNwzHxYL9Uz8xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rBr+0y1F3jUiewghbdpOiTndlD9GF2snnsA1cbsVSVo=;
-	b=B0x/a6cmt8d/m6VGYK09ComfAqFm59R5QqSgImN/wPlAxhEksYMtGURwE1xnq6d0T8sr
-	 WU/Xd2c0jOaH3lFDE0QICaumlU/Y63BFOHlAEr86/I0zZ5h3fhPk6sS7RrSCQi3YcYE3Y
-	 us9bmLfrbUl2omL51UWMWNlt8Pb0Euk1zJNJZRJ5Ue5FDZg8T7D1ELOHz+YYXJr5yo/sy
-	 mPZk/d7LAFcWcPrMXSlirRYOtcaykqYzCRNiHXeXjUEGhjfOkMWDiKZbR4Y6qtPaHe0Lf
-	 h185fNzRAEPHCLcWe9hYqUuWpIjQ2ffGkx7HhBZfzplhx5TqFVSlzdlH8ndPandT3RA==
+	bh=sQTqAuYr+XMOpvePN5xwu7sa8oUgLqGoxuajOLEMEDc=;
+	b=LkYEavRpguPbM3CEvv7EWRoFXsQp71zV+41cW/j99LYJux64GAVVJ7N4ZJ3ozOVG9htv
+	 eTQl/d74bX+9qRbl6dNMxKMaIXUlRlwVYZ+y9sKUkjrpWkstSAvuVKZJo0MFvjlZCTk6J
+	 2gMkYluutnJlFarua/xzUN4mfUxv0LVwp85xE+ZZ/BONCA8iHk3Er0HCALhLR4BXHofxr
+	 UDN/eSoYPLiQZ3vTfEdNgzyU1hqDTmFSYkwtQF4YseM3arVIBtggrXMiBKfQ0TwOCCytZ
+	 5uaJAwYaq8LjmGLvLJW5Kf5eN3zHcG/0nesGyAcuQJxmK3HjVYogaoYGNPsHRckkaKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2S9qNgrE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXBGYkQs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD79D606A320;
-	Wed, 18 Nov 2026 23:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E67606A320;
+	Wed, 18 Nov 2026 23:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2S9qNgrE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15D41F000C4;
-	Wed, 18 Nov 2026 23:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXBGYkQs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD581F000C4;
+	Wed, 18 Nov 2026 23:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045694;
-	bh=rBr+0y1F3jUiewghbdpOiTndlD9GF2snnsA1cbsVSVo=;
+	s=korg; t=1795045697;
+	bh=sQTqAuYr+XMOpvePN5xwu7sa8oUgLqGoxuajOLEMEDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2S9qNgrE1dqk8cLlHMWZi6WxskZn/Q29VQM4UnhsoLwk6qIIRIXjAyVyXyFwkxeUS
-	 MTTOIJM4Ho+jaZYG+3aaGNiPLVQSlzGoXG14LM3UB4I3TqTt7SPoYiii4ZDXunS3nj
-	 /7ou4JVBvMbJNG61oa+MIRwPuSiUcG4flCKqCe2I=
+	b=DXBGYkQs/dw9bbUQRC/8++N4XT6fuahLvEKqqncNolmYrK9g02mO66ms+LcBJDUjq
+	 kj/OnPORYCCRHltznuyelqxIVkGpQdvJWb8kJDsqWclNNL0o9bbj47Iud6p+G8QocU
+	 w15/G0fljkYo+fMR+mtOAqkfWUzMh5unyVhWmpi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Yufan Chen <ericterminal@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Kees Cook <kees@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1014/2857] ocfs2: reserve value tree metadata when moving an xattr into the inode
-Date: Wed, 18 Nov 2026 15:34:08 +0100
-Message-ID: <20261118150238.106489390@linuxfoundation.org>
+Subject: [PATCH 6.1 1015/2857] ocfs2/cluster: initialize heartbeat regions before publishing them
+Date: Wed, 18 Nov 2026 15:34:09 +0100
+Message-ID: <20261118150238.141566656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,77 +79,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit f5aee8ae5f85f8dfa78160e5c4963494319cdd64 ]
+[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
 
-ocfs2_calc_xattr_set_need() charges no metadata for the case where an
-xattr living in an xattr block or bucket moves back into the inode:
+A region on o2hb_all_regions must have an initialized config item and
+name. o2hb_heartbeat_group_make_item() currently links the zeroed region
+under o2hb_live_lock, drops the lock, and only then initializes hr_item.
+The lock therefore protects the list without protecting initialization
+from readers of the published item.
 
-        if (old_in_xb) {
-                if (ocfs2_xattr_can_be_in_inode(inode, xi, xis)) {
-                        clusters_add += new_clusters;
-                        credits += ...;
-                        if (!ocfs2_xattr_is_local(xe))
-                                credits += ocfs2_calc_extend_credits(...);
-                        goto out;
-                }
-        }
+With global heartbeat enabled, a DLM_QUERY_REGION from the current
+joining node can pass the existing-domain and protocol checks while a
+configfs mkdir creates another region. The DLM locks are not taken by
+the constructor, and the network worker does not take the configfs
+subsystem mutex. The following ordering is possible:
 
-The credits for extending a value tree are there but the matching blocks
-are not, so meta_add stays 0, ocfs2_init_xattr_set_ctxt() skips
-ocfs2_reserve_new_metadata_blocks() and ctxt->meta_ac is left NULL.
+  Configfs mkdir                     O2net receive worker
+  --------------                     --------------------
+  Allocate reg
+  Lock o2hb_live_lock
+  Link into o2hb_all_regions
+  Unlock o2hb_live_lock
+                                     dlm_query_region_handler()
+                                       dlm_match_regions()
+                                         o2hb_get_all_regions()
+                                           Lock o2hb_live_lock
+                                           Copy 32 bytes from NULL name
+                                           Unlock o2hb_live_lock
+  config_item_init_type_name()
 
-This is the shape commit 0cdc7dde00ec ("ocfs2: fix missing metadata
-reservation for large xattrs") fixed for the xattr block case, and it is
-reached the same way: namevalue_size() charges a value larger than
-OCFS2_XATTR_INLINE_SIZE as only OCFS2_XATTR_ROOT_SIZE, so
-ocfs2_xattr_can_be_in_inode() accepts a new value that will be stored
-outside.  ocfs2_xa_prepare_entry() installs a value root from def_xv and
-grows it, and once the cluster allocator is fragmented enough to need a
-second extent ocfs2_add_clusters_in_btree() finds the root full with no
-meta_ac at all and answers RESTART_META.  ocfs2_xattr_extend_allocation()
-turns that into -ENOSPC, or into a BUG_ON() without that commit, and
-ocfs2_xa_cleanup_value_truncate() takes its !orig_clusters arm, dropping
-the entry and leaking the clusters already handed out until fsck.ocfs2
-reclaims them.
+The query thus dereferences NULL. Initialize hr_item before linking the
+region so the existing list lock also orders name initialization before
+any reader. Reject a failed name allocation, since the initialization
+helper does not propagate that error.
 
-Reserve for the value tree here too.  The entry moves back into the inode
-rather than into a new xattr block, so unlike the create side of
-meta_guess this needs no block of its own.
+Use config_item_put() on initialized constructor failures to release the
+name and respect references retained by o2hb_region_pin(). Initialize
+the list heads, mutex and delayed works needed by o2hb_region_release()
+before any such put, and leave the list node self-linked after rollback.
+Keep the existing handler drain before removing a failed published item.
 
-Link: https://lore.kernel.org/20261010113454.1420939-3-joseph.qi@linux.alibaba.com
-Fixes: 78f30c314a74 ("ocfs2/xattr: Reserve meta/data at the beginning of ocfs2_xattr_set.")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+KASAN report as below:
+
+    ==================================================================
+    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
+    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
+
+    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: o2net o2net_rx_until_empty
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     kasan_report+0xe0/0x110
+     ? o2hb_get_all_regions+0xbb/0x1f0
+     kasan_check_range+0x105/0x1b0
+     __asan_memcpy+0x23/0x60
+     o2hb_get_all_regions+0xbb/0x1f0
+     dlm_query_region_handler+0x4c2/0xc20
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kvm_clock_get_cycles+0x31/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     o2net_rx_until_empty+0x1a50/0x3200
+     ? reacquire_held_locks+0xdd/0x200
+     ? __pfx_o2net_rx_until_empty+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
+Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ocfs2/cluster/heartbeat.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index bf4265e754a5b..dc6afdb669f18 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -3147,6 +3147,14 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
- 				credits += ocfs2_calc_extend_credits(
- 							inode->i_sb,
- 							&def_xv.xv.xr_list);
-+			/*
-+			 * A value too big to stay inline is only charged as
-+			 * OCFS2_XATTR_ROOT_SIZE above, so it can still need a
-+			 * value tree of its own.  No xattr block is allocated
-+			 * on this path, so the tree is all we reserve for.
-+			 */
-+			if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
-+				meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
- 			goto out;
- 		}
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 706a8c2de09e8..e7229d755dcbe 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -2115,6 +2115,18 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
  	}
+ 	reg->hr_node_num = O2NM_MAX_NODES;
+ 
++	INIT_LIST_HEAD(&reg->hr_all_item);
++	mutex_init(&reg->hr_arming_mutex);
++	reg->hr_stopping = true;
++	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
++	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
++	INIT_LIST_HEAD(&reg->hr_handler_list);
++	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
++	if (!config_item_name(&reg->hr_item)) {
++		ret = -ENOMEM;
++		goto put_item;
++	}
++
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_region_num = 0;
+ 	if (o2hb_global_heartbeat_active()) {
+@@ -2123,26 +2135,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
+ 			spin_unlock(&o2hb_live_lock);
+ 			ret = -EFBIG;
+-			goto free;
++			goto put_item;
+ 		}
+ 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	}
+ 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
+ 	spin_unlock(&o2hb_live_lock);
+ 
+-	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
+-
+ 	/* this is the same way to generate msg key as dlm, for local heartbeat,
+ 	 * name is also the same, so make initial crc value different to avoid
+ 	 * message key conflict.
+ 	 */
+ 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
+ 		name, strlen(name));
+-	mutex_init(&reg->hr_arming_mutex);
+-	reg->hr_stopping = true;
+-	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
+-	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+-	INIT_LIST_HEAD(&reg->hr_handler_list);
+ 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
+ 			sizeof(struct o2hb_nego_msg),
+ 			o2hb_nego_timeout_handler,
+@@ -2165,10 +2170,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
+ remove_item:
+ 	spin_lock(&o2hb_live_lock);
+-	list_del(&reg->hr_all_item);
++	list_del_init(&reg->hr_all_item);
+ 	if (o2hb_global_heartbeat_active())
+ 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	spin_unlock(&o2hb_live_lock);
++put_item:
++	config_item_put(&reg->hr_item);
++	return ERR_PTR(ret);
+ free:
+ 	kfree(reg);
+ 	return ERR_PTR(ret);
 -- 
 2.53.0
 
