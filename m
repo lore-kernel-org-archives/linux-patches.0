@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020121;
-	b=V06UozIrpT3ECMbYSCFxKe3AWphkF2gO5CsSrtJP3CI2jxUiFsMOzavCLbcYK4hFUVrs
-	 CfT7HbLRDGTLrlgPtPWDqnznn+PGyhcSLWpOTSkEZ5KJR9u5VgeUgFHzYPuhdItpXJpZu
-	 /RY9kEVJrHPAH8Z5K+6sMhwn4A+HqZiK2LFpu9qSqTPdGjggtpfoB1Bi6DYR1TOKorq4q
-	 H37DnY2Ub0AwljGwr9Lz8wu9/RXfoD/+VAE4UKXXSkRR1uBmNhKKcKoqX2tcC/FJ1eCsk
-	 eYw5GODYuTFlVX/xh5dX88gd5wiaDTQf1HijSF1U4I6N8/xiXN58GfyaIGMXPSY0pPA==
+	t=1795020124;
+	b=gtAkWVrtWeks8mSTk+Yhgvf6f2GOfPM2iwVRp5WQL5iT5D6dZf/rTrN9RVnIO9A7mBTZ
+	 unulHyoW7lMya0s+GjfZZLedZK95eBXAKq39eRY+FPY0daD+uPnHDWhqrWs0ZuL4piePH
+	 kWNSc/q4h60yUqVQxwZxGHeV+2s5/An9hS0ICOMHc6Qvx9wECuyX33tHEDxKYt4fQeoLK
+	 sijLtx2VGk+2nm2DWWWgLWiXtaJBsBy4XkFaFvpZ3ogOZdcJiVZljeh7IWsdDkdTZCmY/
+	 +hxsi3YTqFkDRRiciYnpCjImHr/ZDUszo/W9r+9Dynean+rSH1+JquycdEOJCiq8RRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yrQqPSQPu38Ytiq5FBfqNH8DJTlXYiIPU+rf9ehRDoU=;
-	b=PmHBgjFbdODe58TRr2Nv4huNf0eZY05AJvzIPDBW6nT22FCNCGZtQ+RhmijHTRJL9qhB
-	 6kbk/AxY7hAsZoMRjpF2WmdvSc6B2W8icvw7Hss3gZJISicUzU3p/A7v7g1I71MLc+Vf0
-	 bd3B1pozxN/hZyYVfupNaH5SKQUnMVYbBqz/zWPyPKIrHsVlH22wL04Me6ukezIrMocJ5
-	 BpK2HBxGTXipF2LroGZLGVI0yZ/iN+fnzBzZz5qyRsLrh4MsqVDYvBInOMPrGHzTX2AjN
-	 DIg34YdV98OjijrNlbgPvemUhgDNmOhQnKEBEYQSNHT/gr69Wg8hCHWMwqFtI6YgITg==
+	bh=vgo88AKPLhIKUvSqGh9tbCBYOUKFtE4z81PxKapZ1kw=;
+	b=kjlVgMxzTQjkWTjVXXUMc8RzpdD2i1GR2r2G0bTNgPktRxHyTO4mURDzKypVUo8g0uPM
+	 IJmwAFCmGyBJyk3R8CXD142SSUz5x5HXePixyYXRmiVSRCiLq1X8yzGBVZ30G94lR1zFx
+	 U8C8awLQdCm8pVhntU/8BLDvnBIPluvHDUeiW6CPH2u9V6w+IyLft0jdCGhQhiqZ97ujy
+	 abAq9TR634IMwzostfLvMElgtuNKGSEU3VWtBL29cYJAUmBrSKKhDd+MOxExxFH+5ydq3
+	 7u4vqnu3loikcnHyIeMyDyNRUhAgBUqnVQnCvsUG1hEMbvEJOySKtHG+nJi6naI9q2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NA0d8IVk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCQzKJ3c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6343D606A331;
-	Wed, 18 Nov 2026 16:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6698060A2602;
+	Wed, 18 Nov 2026 16:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NA0d8IVk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17821F000C4;
-	Wed, 18 Nov 2026 16:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCQzKJ3c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C8E1F000C4;
+	Wed, 18 Nov 2026 16:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020121;
-	bh=yrQqPSQPu38Ytiq5FBfqNH8DJTlXYiIPU+rf9ehRDoU=;
+	s=korg; t=1795020123;
+	bh=vgo88AKPLhIKUvSqGh9tbCBYOUKFtE4z81PxKapZ1kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NA0d8IVkceEy0eHjIVX0LxPnwZu+PWlkZIsB9AeNKngKKCXAyZik+3jQtqyvgeuvR
-	 v37gr8yArsOE0RQ4D5I6gsIksHxihVbUBsp1L0ophynfxKZVhioLxT/37TnqM/87NQ
-	 HPbZNb+oW75muDGfPkoQBJIbuGjLxdnMqrcnBvlU=
+	b=WCQzKJ3c6lQwIT814iVk7nHnYpMbynXOGj/oaLNoJgLEjhH/uNS7biptAYzZcevvf
+	 7hQ8V7NBGXpP3LMd4PQt+am26JDFaln6oQwJHDP6+4c46x4ASx4wvLTDcEmHNDVdkd
+	 9X61VhCIcrGRfld/72Xo62tNkLlHvK6Tg/NDzuDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Binbin Deng <18983559317@163.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1788/2651] ASoC: atmel-i2s: fix MCK generator error handling
-Date: Wed, 18 Nov 2026 15:50:28 +0100
-Message-ID: <20261118150351.709324930@linuxfoundation.org>
+Subject: [PATCH 7.3 1833/2651] module: Fix uninitialized count read of unloaded taint tracking record
+Date: Wed, 18 Nov 2026 15:51:13 +0100
+Message-ID: <20261118150353.103886207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,54 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit 2e2da92de9bffd2cdbb9a2558fe60de7f1bb09e3 ]
+[ Upstream commit 7a5c13cfdfcb1871050fdbe00ac223993f8925fa ]
 
-Disable the gclk and reset the MCK configuration when an error occurs
-while enabling the MCK generator.
+try_add_tainted_module() allocates the tracking record without zeroing
+it and initializes the fields in this order:
 
-This prevents the gclk from remaining enabled after a failed clock
-configuration.
+	mod_taint = kmalloc_obj(*mod_taint);
+	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
+	mod_taint->taints = mod->taints;
+	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
+	mod_taint->count = 1;
 
-Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The record is published by list_add_rcu() before the count field is
+written.  The readers, unloaded_tainted_modules_seq_show() (debugfs,
+under rcu_read_lock()) and print_unloaded_tainted_modules() (panic
+path, under guard(rcu)), traverse the list under RCU and read
+mod_taint->count.  module_mutex, which the writer holds, does not
+exclude RCU readers.
+
+A reader that observes the new node between the list_add_rcu() and
+the count store reads an uninitialized u64 left over from previous
+slab use.  This is a data race and leaks kernel heap residue through
+the debugfs file and the panic message.
+
+The race window is two adjacent instructions; it is reachable when a
+tainted module is unloaded (rmmod) concurrently with a read of
+/sys/kernel/debug/module/unloaded_tainted, or with the module list
+printout of an oops on another CPU.
+
+Fix this by initializing count before the record is published.
+
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
+
+Fixes: 99bd9956551b ("module: Introduce module unload taint tracking")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ kernel/module/tracking.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index d9ad262ec44de..f28808d980ce6 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -466,11 +466,21 @@ static int atmel_i2s_switch_mck_generator(struct atmel_i2s_dev *dev,
- 	mr |= ATMEL_I2SC_MR_IMCKMODE_I2SMCK;
- 	ret = regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, mr);
- 	if (ret)
--		return ret;
-+		goto err_disable_gclk;
- 
- 	/* Finally enable the I2S Master Clock generator. */
--	return regmap_write(dev->regmap, ATMEL_I2SC_CR,
--			    ATMEL_I2SC_CR_CKEN);
-+	ret = regmap_write(dev->regmap, ATMEL_I2SC_CR, ATMEL_I2SC_CR_CKEN);
-+	if (ret)
-+		goto err_reset_mr;
-+
-+	return 0;
-+
-+err_reset_mr:
-+	regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, 0);
-+err_disable_gclk:
-+	clk_disable_unprepare(dev->gclk);
-+
-+	return ret;
+diff --git a/kernel/module/tracking.c b/kernel/module/tracking.c
+index 9033ff54c4e27..9e8902600c326 100644
+--- a/kernel/module/tracking.c
++++ b/kernel/module/tracking.c
+@@ -38,8 +38,8 @@ int try_add_tainted_module(struct module *mod)
+ 		return -ENOMEM;
+ 	strscpy(mod_taint->name, mod->name, MODULE_NAME_LEN);
+ 	mod_taint->taints = mod->taints;
+-	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
+ 	mod_taint->count = 1;
++	list_add_rcu(&mod_taint->list, &unloaded_tainted_modules);
+ out:
+ 	return 0;
  }
- 
- static int atmel_i2s_trigger(struct snd_pcm_substream *substream, int cmd,
 -- 
 2.53.0
 
