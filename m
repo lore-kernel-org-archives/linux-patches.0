@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035362;
-	b=yY5REYr63Z+G0Z/ZxX+yOuPK622vvCnGE89G63m9RT3w8+XmTvuOBGPxob+WMLSbzd7g
-	 GvtUJUl+60DC2BOotM+hFK+0HbSXFMhoByV+qdtXWitPrxSq/k2u4+NDAAExfPkzhsqsS
-	 QveAaJnI/vLHQEj9vUiZoO0uLBcS3g3Y3DA8qDOe3+H3roZf6n6mMV4bhgEnsnyAJ23FD
-	 bqZXrFBTcGJRYM4jd6BVAQ0JlcCZrrkyuZ6HPxwxJ3o0ALDHW9EwUAxkJVAsJ7CAbbKzM
-	 dYbIIGOqjdnrAmC18+Gi6DUDBQTQHTK/URIweSgMzVIESsXuw8V/rKOe/17OGuT6J+A==
+	t=1795035365;
+	b=sWqPf+WbhEtnY2kRnu+lHsNPky4BD5LPX+c/8VB/hQ+GLQgDxgR0sS89aU1j9xyd5+mR
+	 QET0asvEqIOUnHYHrQ3apR59HYvYZXwceyx9DvlhrMH159T3aNb6+eFPzsEyfvmx1qUyC
+	 NCwM2OFIsrkt0CPWbpf7ejTQS1HFiuv65oFbqn9Q1QwXu4Giw1I5YCOKksLEtI+9P/Zm1
+	 d3pn9jZ5EJbac8paYBFFkRpQ35hA1FS2RWpVUwTYJ/X027Sv0uQ/QyDajNcb5laPAUNwZ
+	 hgZycqpM31S9qcz8bw8HJJRut0TWAPO0Yye9X9zPagNFNhMj3QV56TnrI4eXVoqyGPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ovr2H8Ro+f80DWC3zj3W638i3TU4ulWrBJZXgK+vAmI=;
-	b=oqjjwb+t1zlXApX759QXLUFi6bAGdCkhT39lynLaeNL4xNgj5A8T9eFHiuMogI1KXEE7
-	 XoIFICyoyHQYGk/CHGSFV/4XvlXfCvbGtxpHVFBC7/Mliy2dL4kZ15xpAwL0BP7Bjz2c0
-	 gGLiubUvwB2AKhMVxT0i1Yfs5H7OthvNlMU1EYZewnQ6bhAdf1ho/79WAiXD+V9s1PLvv
-	 xUei30As9QtyOtuxLKOWjMsIbpeyDBCeiJIZJv2gBUg7blCS4Ylxr0u5Nr4V2CJ26vnlE
-	 PTmjD3Wb/E23t7Qa2yluOsEHtu2dVv1UqLqk3jOfOrKL51CJtWiCZgOVPodKFWwGe+g==
+	bh=bt/ensvgRkiOvTwOzfNzSYUMIYmstq+FNBG7QwxxR00=;
+	b=OdLZ10QeA+RPqwYxw/J+/7TvkzGD+C6RUCQfk6ngqEWaMU0oAc5RbOb3fb8SUVlrs5ph
+	 x47cx5OAovKJLXjBMNZ+O8rToXBIdCJwjqz/YxikvPuiHjgziMuan02Ja7etbPHljZJhY
+	 XtL+0uecy0av5mKH5IyNNVNdX0PcLhoMlR5so713T2CCtDr0PNCLLL0BDSO7YHoC9ZIJG
+	 1aSd7Z03Y+ntskGitQOxhm8eLezKS0M5HSnmtAI+oXup+60PqajEi8f0bYbZsBvKBNDCP
+	 /61AAx14XXKxlpspoovKH65qf4NnPRB9lYQyhIAcIzHeEStk4eTMdzqv2QLmDPRvULA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h2M/M9o6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X88KyuGN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB806606A31C;
-	Wed, 18 Nov 2026 20:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6530F606A31C;
+	Wed, 18 Nov 2026 20:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2M/M9o6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7EB1F000C4;
-	Wed, 18 Nov 2026 20:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X88KyuGN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90BB1F000C4;
+	Wed, 18 Nov 2026 20:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035362;
-	bh=ovr2H8Ro+f80DWC3zj3W638i3TU4ulWrBJZXgK+vAmI=;
+	s=korg; t=1795035365;
+	bh=bt/ensvgRkiOvTwOzfNzSYUMIYmstq+FNBG7QwxxR00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h2M/M9o6rlvFJ4hMfYck2henk3C7sxslTxaAOwJNkaeYXN12mMNZ8SnZX87J7u1Bn
-	 z2eG99A43QqvHdk9sWEHgfm7hnQMNG6fCsR8bGGKDfm79dacG5wRz3nYoyRQl5Uv6L
-	 qFUQnmj9T2v5FiOIBd8fBJZs9sPFjFt2CRg5xBvk=
+	b=X88KyuGNtvhv5e69wokXvRsEeegys35I43LQZ2DXXitBH+JjWNL/TpB04KLoyiRHv
+	 o8RT6UGZ8NQfIw2fqyEyOa2HNpXvEXKNy9WN9xjwms4KYnrAoQtCB+XxXFeL6BBZtk
+	 kKGqrVKemf1wA857Z80Pdc3dzk9R1Zjg9k7A9i6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Xin Liu <bird@lzu.edu.cn>,
 	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.6 0676/3318] smb: client: dont resurrect an exiting tcon from cached dir workers
-Date: Wed, 18 Nov 2026 15:21:38 +0100
-Message-ID: <20261118150338.438538202@linuxfoundation.org>
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>
+Subject: [PATCH 6.6 0677/3318] smb: client: fix buffer overflow in SMB2_tcon()
+Date: Wed, 18 Nov 2026 15:21:39 +0100
+Message-ID: <20261118150338.480958137@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,118 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit d58e7b40908a8a57755811d5b37af1df3380278f upstream.
+commit 73cc469b0ff7551f8537ea919709973e6dc4f514 upstream.
 
-cfids_laundromat_worker() bumps tcon->tc_count for every expired open
-cfid and queues cached_dir_offload_close() without checking whether the
-tcon is already being torn down.  Racing with the final cifs_put_tcon(),
-the tcon comes back from zero and gets torn down twice:
+In SMB2_tcon(), unc_path is allocated with a fixed buffer size of
+MAX_SHARENAME_LENGTH * 2 bytes (672 bytes). However, the user-controlled
+UNC path (tree) length is passed to cifs_strtoUTF16(), which assumes the
+destination buffer is large enough and writes strlen(tree) + 1 UTF-16 code
+units.
 
-  T1                                  T2
-  cifs_put_tcon()
-   --tc_count == 0, TID_EXITING
-   tconInfoFree()
-    free_cached_dirs()
-     cancel_delayed_work_sync()       cfids_laundromat_worker()
-                                       ++tc_count == 1
-                                       queue_work(serverclose_wq)
-    kfree(tcon->origin_fullpath)
-    kfree(tcon)
-                                      cached_dir_offload_close()
-                                       close_cached_dir()  [UAF]
-                                       cifs_put_tcon()
-                                        tconInfoFree()     [double free]
+Commit 62a1a439e0fd ("cifs: clean up handling of unc= option") removed the
+length check on UNC mount options, allowing mount paths to exceed
+MAX_SHARENAME_LENGTH while retaining the fixed-size buffer allocation in
+SMB2_tcon(). Consequently, an oversized UNC string causes cifs_strtoUTF16()
+to write past the end of the heap object, resulting in a slab-out-of-bounds
+write. Furthermore, if a tree exceeds MAX_TREE_SIZE characters, strscpy()
+truncates it in cifs_tcon::tree_name, causing subsequent reconnects or
+failovers to fail.
 
-cached_dir_lease_break() also bumps tc_count without tc_lock, racing with
-the laundromat's locked update.
+Fix this by first verifying that the length of tree does not exceed
+MAX_TREE_SIZE, returning -EINVAL if it does. Then, dynamically allocate
+unc_path based on the length of tree so that it safely accommodates all
+UTF-16 code units for paths within MAX_TREE_SIZE.
 
-Take the tcon reference through a helper that refuses once the tcon is
-TID_EXITING or its refcount has dropped to zero.  Queued put_work and
-close_work then always hold a tcon reference, so tconInfoFree() can't
-run before they finish and free_cached_dirs() doesn't need to flush any
-workqueue.  If the laundromat can't get a reference, put the cfid back on
-the dying list for free_cached_dirs() to free; its handle goes away with
-the tree connection.
-
-The lease break path finds the tcon on ses->tcon_list under
-cifs_tcp_ses_lock, so it can't see TID_EXITING, but it now takes tc_lock.
-
-Fixes: 3fa640d035e5 ("smb: During unmount, ensure all cached dir instances drop their dentry")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Fixes: 62a1a439e0fd ("cifs: clean up handling of unc= option")
 Cc: stable@vger.kernel.org
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Closes: https://bugtracker.nebusec.ai/f/3292
+Assisted-by: LLM
+Suggested-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+[pc: remove unused MAX_SHARENAME_LENGTH]
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |   30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fs/smb/client/smb2pdu.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -614,6 +614,17 @@ void invalidate_all_cached_dirs(struct c
- 	spin_unlock(&cfids->cfid_list_lock);
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2024,8 +2024,6 @@ static inline void cifs_stats_fail_inc(s
+ 	cifs_stats_inc(&tcon->stats.smb2_stats.smb2_com_failed[code]);
  }
  
-+static bool cached_dir_get_tcon(struct cifs_tcon *tcon,
-+				enum smb3_tcon_ref_trace trace)
-+{
-+	guard(spinlock)(&tcon->tc_lock);
-+	if (tcon->status == TID_EXITING || tcon->tc_count <= 0)
-+		return false;
-+	++tcon->tc_count;
-+	trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count, trace);
-+	return true;
-+}
-+
- static void
- cached_dir_offload_close(struct work_struct *work)
+-#define MAX_SHARENAME_LENGTH (255 /* server */ + 80 /* share */ + 1 /* NULL */)
+-
+ /* These are similar values to what Windows uses */
+ static inline void init_copy_chunk_defaults(struct cifs_tcon *tcon)
  {
-@@ -663,6 +674,9 @@ int cached_dir_lease_break(struct cifs_t
- 		    !memcmp(lease_key,
- 			    cfid->fid.lease_key,
- 			    SMB2_LEASE_KEY_SIZE)) {
-+			if (!cached_dir_get_tcon(tcon,
-+						 netfs_trace_tcon_ref_get_cached_lease_break))
-+				break;
- 			cfid->has_lease = false;
- 			cfid->time = 0;
- 			/*
-@@ -673,9 +687,6 @@ int cached_dir_lease_break(struct cifs_t
- 			cfid->on_list = false;
- 			cfids->num_entries--;
+@@ -2056,7 +2054,15 @@ SMB2_tcon(const unsigned int xid, struct
+ 	if (!server || !tree)
+ 		return -EIO;
  
--			++tcon->tc_count;
--			trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
--					    netfs_trace_tcon_ref_get_cached_lease_break);
- 			queue_work(cfid_put_wq, &cfid->put_work);
- 			spin_unlock(&cfids->cfid_list_lock);
- 			return true;
-@@ -789,12 +800,13 @@ static void cfids_laundromat_worker(stru
+-	unc_path = kmalloc(MAX_SHARENAME_LENGTH * 2, GFP_KERNEL);
++	total_len = strlen(tree);
++	if (total_len > MAX_TREE_SIZE) {
++		cifs_server_dbg(VFS | ONCE,
++				"%s: tree name exceeded %u characters\n",
++				__func__, MAX_TREE_SIZE);
++		return -EINVAL;
++	}
++
++	unc_path = kmalloc((total_len + 1) * sizeof(*unc_path), GFP_KERNEL);
+ 	if (unc_path == NULL)
+ 		return -ENOMEM;
  
- 		dput(dentry);
- 		if (cfid->is_open) {
--			spin_lock(&cfid->tcon->tc_lock);
--			++cfid->tcon->tc_count;
--			trace_smb3_tcon_ref(cfid->tcon->debug_id, cfid->tcon->tc_count,
--					    netfs_trace_tcon_ref_get_cached_laundromat);
--			spin_unlock(&cfid->tcon->tc_lock);
--			queue_work(serverclose_wq, &cfid->close_work);
-+			if (cached_dir_get_tcon(cfid->tcon,
-+						netfs_trace_tcon_ref_get_cached_laundromat)) {
-+				queue_work(serverclose_wq, &cfid->close_work);
-+				continue;
-+			}
-+			scoped_guard(spinlock, &cfids->cfid_list_lock)
-+				list_add_tail(&cfid->entry, &cfids->dying);
- 		} else
- 			/*
- 			 * Drop the ref-count from above, either the lease-ref (if there
 
 
