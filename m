@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039555;
-	b=Rq34r/47vZHh7jO5X/5sW1FkntLX+g+WIOSvBlgtdnaY/mIaVrsEyS8rdOxMQ6oNWEpF
-	 gUOcXPMqhaQj3IIyq7cokP5GGWkp/7wSA6FvNG0BmktYYhNN+2eYwfqDdzBvAEOvPm0a3
-	 6+o/blhKrnO9HOR8DoHSpmRwsluYCGxPdKoM1AFpcNQjpMF4u6kvLCJz4Lu3d3GiWWSYN
-	 6GL1kfOT9zFjMNNtKDaZBeTjfnrMPNOMBHNXz9ephvH6IX6QfbL4Ab8Uze+cte/jC3pYZ
-	 YQXGWQF3/K0sh4XdjSHWn0ai38zuIN3TE+Xs/BdfQ8RhyJX642WwRlLCREIY3XxgtIA==
+	t=1795039558;
+	b=YA0Rl7ZYhw5RkMQuDKdTW07C3kS9GYvipZ/26+eK+9yBnwye4xU5Iq9/zWBynQPWx1Ps
+	 cMmEu2Mfi1dgrp2Ko5eoe86a2wd5Qr8L57ybRjE6Ubis+RwBAS3+hjPNTGCjrTC71RPdo
+	 2Ar6Zc6+CJbaWnBlaoZwre2qDSEntCg1oSzafSVKoS0qh8QRsKbRHaxB8sFowVr1ZukCW
+	 V95yHqikILOkl4gFSLG+s459r8E0tUH/J1HedDkxVGAlfojm9PfIqckSBywR0xaPu+e8v
+	 e7890oMrNmuJQqbDZ7WUnUKt51GBrLzmj740FgGkuCvf9H9yGLwbjZIJ0ImJcvp6www==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DhSzBFn0+PdIwDe+Fb4UC3a6b4dfJQ27WuQwB4M5AUs=;
-	b=nukO4550LejmSX6vFY8ihQd83hDYNuptXzI3nLIHUvhWCusykoSgghxN1VX6zXklUF5O
-	 CykYZAinSdiap8VTdVEw+rHHfepJ2k2OtRhWcpyVIVVlkC0OA+VbWRnilsQeJosOnd6UO
-	 Oku9aKDQuzOFoSlWmABM6/aVrUIr8b5Qd/1Q1R2NloBZSPG73J+OqCdU4mEtDQZ3TiZFb
-	 Cg6yq0KO9TMvahf5FsA/w7qMuVW3LAcpOEU7MjRW8aizQe6H+P7OfzgonDCwIVo9Z8FtZ
-	 TjqQCKgF+S/lo7K+IzqYVWugOltanc6FSJGRGm9XTbGSDjoBGngU4IRdtAZsoN4NlcQ==
+	bh=mc+JsxxfEOVjVlveaFHOlRwyK/0UrDcALN/gfqFT6Jo=;
+	b=FFB2lWX2tLzSMtlR0mhi0QTrbLKHKiBsDPl4cnTxJSL58SliUjaF8eSByrVRRWwYDwJL
+	 fwQZtiy5HKv8tbSFGsGD7x9xWQFbm17eMKGL6t9op71cPMTHVrZOsCRntNWLMztRAfzqd
+	 6T4Hrz9J9bAsAzusf5wTtRHio7B7fs+XSvpONCwkO1Gl1wwO1goD4WaYMzSLJwz+XKGES
+	 0tLKUg3xQzJ0GRPRq0JUnTTqM2eQTT1mtQmxtUO2qKbDANaFoGPiU3PilH6cs8x0gC8bb
+	 EfJExtytPspXKEjEWzCi5+vV3J3QZ3RbXS4ZKUbJhsxzrg/kXf3O5rPNlQI6pVIkj8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omgzc7WY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hA2BkKFx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B363606A320;
-	Wed, 18 Nov 2026 22:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD70606A31C;
+	Wed, 18 Nov 2026 22:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omgzc7WY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA721F000C4;
-	Wed, 18 Nov 2026 22:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hA2BkKFx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499BC1F000C4;
+	Wed, 18 Nov 2026 22:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039554;
-	bh=DhSzBFn0+PdIwDe+Fb4UC3a6b4dfJQ27WuQwB4M5AUs=;
+	s=korg; t=1795039557;
+	bh=mc+JsxxfEOVjVlveaFHOlRwyK/0UrDcALN/gfqFT6Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omgzc7WYAgVn7ZCwiUpXYpRjDlcvUcI19lwpfox9V0H0+8fOCPiP8s6Pm4aluGk4p
-	 IU6SDCWGtWJaTMaRYBcRaXTS+sxvbIPuWXUflP37f4xYLvTjpyCFRxqwS9kWZ76mmI
-	 RSeDby1h9dR1Ep1Lgz5eOec7Oc2iP+eHTAIYwWeY=
+	b=hA2BkKFxH6T/r6YjvVarsHmvsIrqhCyJ229OWEuvzkDTLp6U8lZ5AjybBuBD5FIn9
+	 jFasGtXpqZGbJ40f6VT6jPpeK9TyC9UrnvQxHBQw+qNpIZn8SGUURUfoolKz9Ro1Xh
+	 15Hd4MoqDqFJvDqzJTBz0TpwS2ticN8TQqVvw0Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Gallagher <cdine@cdine.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Peixin Xie <peixin.xie@linux.spacemit.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2100/3318] ACPI: button: Add lid_init_state quirk for Razer Blade Stealth 13 (Early 2020) RZ09-0310
-Date: Wed, 18 Nov 2026 15:45:22 +0100
-Message-ID: <20261118150425.086449095@linuxfoundation.org>
+Subject: [PATCH 6.6 2101/3318] ACPI: PM: Drop parent state update from acpi_device_get_power()
+Date: Wed, 18 Nov 2026 15:45:23 +0100
+Message-ID: <20261118150425.114516829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,54 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Gallagher <cdine@cdine.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f16c512a07b954aa3b0b3c580e7abb5dd4f5e703 ]
+[ Upstream commit 5636eebb7bb1c6f06f0058d48353686304d4bb47 ]
 
-This patch adds a quirk mapping for the "Blade Stealth 13 (Early 2020) -
-RZ09-0310" laptop, which exhibits the same issue as the following two
-related products already accounted for in this file.
+The parent state update in acpi_device_get_power(), that occurs when the
+child device turns out to be in D0 and the parent's power state is still
+unknown, is highly questionable because it may cause the reference
+counters of the power resources used by the parent in D0 (if any) to
+underflow when the parent goes into a low-power state later.  Moreover,
+there is no reason to do it on reads from the real_power_state sysfs
+attribute of the child.
 
- - Razer Blade Stealth 13 Late 2019
- - Blade Pro 17 (Early 2020) - RZ09-0329
+That check had been added by commit 8f7412a792bc ("ACPI / PM: Infer
+parent power state from child if unknown, v2") before starting to
+handle the "missing _PSC and no power resources" case directly in
+acpi_bus_init_power(), as of commit b3785492268f ("ACPI / PM: Do not
+power manage devices in unknown initial states").  It is not necessary
+any more and commit b3785492268f should have removed it.
 
-Summary of the issue this fixes:
-The firmware's _LID method still returns "closed" after resume when the
-lid was opened during S3, causing systemd-logind to suspend the system
-again within several seconds (15-40) after waking.
+Drop it now.
 
-Signed-off-by: Ian Gallagher <cdine@cdine.org>
-
-Link: https://patch.msgid.link/90ab9b58-da8b-4ffc-bd4b-adf7590545a9@app.fastmail.com
+Fixes: b3785492268f ("ACPI / PM: Do not power manage devices in unknown initial states")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Peixin Xie <peixin.xie@linux.spacemit.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/5147279.31r3eYUQgx@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/button.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/acpi/device_pm.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
-index 9449580e48429..a7c65c615c3ba 100644
---- a/drivers/acpi/button.c
-+++ b/drivers/acpi/button.c
-@@ -141,6 +141,18 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
- 		},
- 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
- 	},
-+	{
-+		/*
-+		 * Razer Blade Stealth 13 early 2020, when the lid is opened
-+		 * while suspended the open notification is lost and _LID keeps
-+		 * returning closed after resume, causing spurious re-suspends.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Stealth 13 (Early 2020) - RZ09-0310"),
-+		},
-+		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
-+	},
- 	{
- 		/*
- 		 * Samsung galaxybook2 ,initial _LID device notification returns
+diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
+index 3b4d048c49417..cfc9700142959 100644
+--- a/drivers/acpi/device_pm.c
++++ b/drivers/acpi/device_pm.c
+@@ -75,15 +75,14 @@ static int acpi_dev_pm_explicit_get(struct acpi_device *device, int *state)
+ int acpi_device_get_power(struct acpi_device *device, int *state)
+ {
+ 	int result = ACPI_STATE_UNKNOWN;
+-	struct acpi_device *parent;
+ 	int error;
+ 
+ 	if (!device || !state)
+ 		return -EINVAL;
+ 
+-	parent = acpi_dev_parent(device);
+-
+ 	if (!device->flags.power_manageable) {
++		struct acpi_device *parent = acpi_dev_parent(device);
++
+ 		/* TBD: Non-recursive algorithm for walking up hierarchy. */
+ 		*state = parent ? parent->power.state : ACPI_STATE_D0;
+ 		goto out;
+@@ -119,16 +118,6 @@ int acpi_device_get_power(struct acpi_device *device, int *state)
+ 			result = psc > ACPI_STATE_D2 ? ACPI_STATE_D3_HOT : psc;
+ 	}
+ 
+-	/*
+-	 * If we were unsure about the device parent's power state up to this
+-	 * point, the fact that the device is in D0 implies that the parent has
+-	 * to be in D0 too, except if ignore_parent is set.
+-	 */
+-	if (!device->power.flags.ignore_parent && parent &&
+-	    parent->power.state == ACPI_STATE_UNKNOWN &&
+-	    result == ACPI_STATE_D0)
+-		parent->power.state = ACPI_STATE_D0;
+-
+ 	*state = result;
+ 
+  out:
 -- 
 2.53.0
 
