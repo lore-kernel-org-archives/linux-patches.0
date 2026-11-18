@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023690;
-	b=WC19FBic31z49dUO9r9tZB1/qbSSigcx1wXuZ5Vsr3GWSn4lB08BJNVmPMcsDjQ6enel
-	 mjJENpLRe+gadf7yz7FznyeJti0XeddZhjJFNq9NsS/3AdSYDP0lCKmsXCyFm6DjZSoaQ
-	 nhgBQhlBy+gNW3OL6PeyBV/hBumOgze26YkOeoeBx8zomuY0I5iEPPUim3lu1Ee4hq4+C
-	 EPIuF3vu+r8o2RTZhaOPPXXT2TeanVrORLwSifTlsGWD+VSCm2K4Q0DWMcY5/U2RHdxOg
-	 o+Jg9wD4lc5pm/l9uX+mvA8J+M1ZKrFWjQXgw/cdyDzWnAk5eB8pAhBRMaEfpbTxCnA==
+	t=1795023693;
+	b=Q3GU2MB85x+x4icmCbHTdNCut1SCLhvyOoSBbmcV1o1VvB3dsAcUpG5QxfYarsL+D3so
+	 xjpbJm9kmUqib+hK8w974Ej6BfVooxZJps7nwEKDudAoVb/VB3XuF2PdDoDe+MZZEz4IM
+	 Nbk7kDJB1OkLG2qUx81vtSAvB6z4iteyNQc6FMG4tTpvQnJAp7PRodGdFAwn1RoPfFyPj
+	 gECdRo8KRpUT/g8iKN2LHSTf3Ur6rqOzraWNhKiscUvbHkbLNkNxaZPSJEjbyF/AHXwx3
+	 MHtHs4tygKHBd85X764j+BsxFIS+grQuKCy9pZPtrOIx+lSgPH3s3PtSTZ+SZ/uaCag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MLpo9L6yZ8XJ7peIPZK3ZWJ9xbf18Jb3MJYpX48eHGc=;
-	b=hrBVyL0wS/PCbcYJeFup05WwjUGnYfcsffEbYuDrP+hfKlgCHY5C5Ltu1kArGwBMH0M2
-	 hJN2l+xUTxvJNmorVaJjE4n8MxH85rwD0CQdXVSF2Ovi5Q2U30A5GpjS5HJV13rRU1oHa
-	 O+Iu/KwzzoWNs9QH04GN68YKvK3A5ELbH5qrbXdiO+1978j6sEanOsh8TgHsgIP5ygByc
-	 62kGIV9cdmoi7NwtjHl5DlOqg9V16pAMpsIj/EXLFVGBdUM5VL1yVTdf9bYbtUX6w3mgI
-	 4p+giEhv1v6U4ipoVgIqkeqLugYx73D9a26Cm1YYOqu3oh6tQwoXy7MCxmqGTMsrVdA==
+	bh=ErodMqTQogDpnRO67WxPagMW+OaYcO69cB/NUPJNWTg=;
+	b=AhCPtOLgfqyEjC8c6R254l9O9l4Az48V3VKR2Ff+5XdNlBr07I7Z7IbEvMcrxNB4P1+X
+	 TWXhGedhtX/J3q4u3KyS26TRG+TqzZZHRKbmVEhoKiDPoEBxYP1HJgl02UfTof7CMS4/Z
+	 GUHDwyvbBcFIIDkZAfA+eGF4gc5XByPpug3bztj5F68mNhm0lE7jcpWf2cws6T0JyqiLE
+	 8F1Cox/s6UYhgbU/b3lXoJ+GSGXMvQw7yGa/zkY0TItCDLsHQMZcyzHgTbGsI1XjP36IO
+	 gl9VTFZFaDBMkQCyBhA0d2v/1EYh8m9fD56f8UbMf1fLnFRXjItw7YZe+r4SBeMw4ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRIdsPpU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSQa7gon;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F17A606A320;
-	Wed, 18 Nov 2026 17:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B25606A325;
+	Wed, 18 Nov 2026 17:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRIdsPpU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705091F000C4;
-	Wed, 18 Nov 2026 17:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSQa7gon
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443771F000C4;
+	Wed, 18 Nov 2026 17:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023690;
-	bh=MLpo9L6yZ8XJ7peIPZK3ZWJ9xbf18Jb3MJYpX48eHGc=;
+	s=korg; t=1795023692;
+	bh=ErodMqTQogDpnRO67WxPagMW+OaYcO69cB/NUPJNWTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRIdsPpUOcnLVvQMeAfAZmRXue7BSwKdXCoEtxWDQ7MzqAQao+4Aodfqkny/LP/NX
-	 PYQqe4sZ397NO0o0JzSmHkUjwLfqouDcyjr2vpCsYxAIwDHtA2vMBS9urOMLNUv1Hu
-	 JimJFbNXpwLB5R/vet2tyEDE/1cN9lBHfYGgLAwU=
+	b=aSQa7gonEKfYKggO5t4TSPRo9zpo3v+2JzLdHfyyGIf8orrFJZzMagh4JdQcFrYBZ
+	 L18D7YkcovVgVQdiERxL08gkUnh+ebgUWTXa32CAfFXPmWv21Wv+HDQsSRwIxdz1Rq
+	 /nUlqB1cmNiMTL5rmHZhYPwWoKBSsZnl1e2IVJMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0458/2151] wifi: rtw88: sdio: zero the padding added to a TX transfer
-Date: Wed, 18 Nov 2026 15:36:33 +0100
-Message-ID: <20261118150138.707682608@linuxfoundation.org>
+Subject: [PATCH 6.18 0459/2151] ntfs3: fix out-of-bounds read in ntfs_read_mft()
+Date: Wed, 18 Nov 2026 15:36:34 +0100
+Message-ID: <20261118150138.745897197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,73 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit b81ead28aeb1fd9bc3b0de4e20342b6b538ac658 ]
+[ Upstream commit 7a374d9be8267834dc534e55f01e5e01765cab4c ]
 
-rtw_sdio_write_port() rounds the transfer up with sdio_align_size() and
-then hands that length to sdio_memcpy_toio() while the skb still only
-holds skb->len bytes. The difference, between one and 511 bytes, is read
-from beyond the end of the frame and transmitted. Whether it stays
-inside the skb's allocation depends on how much tailroom the skb happens
-to have, so this is at best sending uninitialised memory over the air.
+ntfs_read_mft() walks the attributes of an MFT record and, for each
+FILE_NAME attribute, compares the resident on-disk name with the name
+being looked up.  The only size check before the compare is
+rsize >= SIZEOF_ATTRIBUTE_FILENAME, which covers the fixed header up to
+and including name_len, but not the variable-length name that follows it.
 
-Pad the skb up to the transfer size first. __skb_pad() zeroes the added
-bytes, reallocates a cloned skb rather than writing into a buffer a
-clone still shares, and leaves skb->len alone, so nothing else in the
-transmit path has to change.
+name_len comes straight from disk and is not validated against the
+resident data_size.  A crafted image can set name_len large while keeping
+data_size at the header size, so ntfs_cmp_names_cpu() reads name_len
+le16 characters past the end of the MFT record buffer:
 
-It must not free the skb on failure: rtw_sdio_write_data() frees the skb
-itself and rtw_sdio_process_tx_queue() requeues it, so both callers
-still own it and would double free.
+  BUG: KASAN: slab-out-of-bounds in ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+  Read of size 2 at addr ffff888031879c00 by task a.out
+   ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+   ntfs_iget5 (fs/ntfs3/inode.c:209)
+   dir_search_u (fs/ntfs3/dir.c:265)
+   ntfs_lookup (fs/ntfs3/namei.c:85)
+   __lookup_slow (fs/namei.c:1915)
+   lookup_slow (fs/namei.c:1932)
+   path_lookupat (fs/namei.c:2278)
+   vfs_statx (fs/stat.c)
+   vfs_fstatat (fs/stat.c)
+   __do_sys_newfstatat (fs/stat.c)
 
-Found while reworking this path for the RTL8723BS. Measured on RTL8723BS
-hardware, padding the transfer costs about 2% observable over transfer:
-uplink is 19.5 to 19.8 Mbit/s padded against 20.9 to 21.1 Mbit/s unpadded
-in an interleaved A/B, with scans, reconnection and a UDP flood clean in
-both. The other SDIO parts sharing this path are untested; I have only the
-RTL8723BS.
+  Allocated by task:
+   mi_init (fs/ntfs3/record.c)
+   ntfs_iget5 (fs/ntfs3/inode.c)
+   dir_search_u (fs/ntfs3/dir.c)
+   ntfs_lookup (fs/ntfs3/namei.c)
 
-Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260909074556.55709-5-luka.gejak@linux.dev
+Check that the name fits in the resident data before using it.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/ntfs3/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index e35de52d8eb43..2fa8563940fa8 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -636,6 +636,7 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
- 			       enum rtw_tx_queue_type queue)
- {
- 	struct rtw_sdio *rtwsdio = (struct rtw_sdio *)rtwdev->priv;
-+	size_t pad_size;
- 	bool bus_claim;
- 	size_t txsize;
- 	u32 txaddr;
-@@ -646,6 +647,17 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
- 		return -EINVAL;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 99fdba7b403cb..e9ac5c5c7239d 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -208,6 +208,11 @@ static struct inode *ntfs_read_mft(struct inode *inode,
  
- 	txsize = sdio_align_size(rtwsdio->sdio_func, skb->len);
-+	pad_size = txsize - skb->len;
+ 		names += 1;
+ 		fname = Add2Ptr(attr, roff);
 +
-+	if (pad_size > 0) {
-+		/*
-+		 * __skb_pad() must not free the skb on failure: both callers
-+		 * still own it, one requeues it and the other frees it.
-+		 */
-+		ret = __skb_pad(skb, pad_size, false);
-+		if (ret)
-+			return ret;
-+	}
++		/* Make sure the full name fits in the resident data. */
++		if (rsize < fname_full_size(fname))
++			goto out;
++
+ 		if (fname->type == FILE_NAME_DOS)
+ 			goto next_attr;
  
- 	ret = rtw_sdio_check_free_txpg(rtwdev, queue, txsize);
- 	if (ret)
 -- 
 2.53.0
 
