@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026119;
-	b=rjV+gB51Iz/3kQkRqnhZoE7MIY63zFpD0TBMgTsJnu8aWeg0Yv8vIPTyC59QvC3rrdqa
-	 5HELm+qGFCYnVn3Qpnx+GEIZUbj+qL5QGgCN57GAlOM7WD24+B/yilJrdzjEiMqJHjslC
-	 GaYSyxZlkh9ecLmp6nfgG8jUR8zFRjijjO3pnYiAm/YCPZuYQxlIkL/tFwS0uz0TFDOuM
-	 ATmWqZ7QbHOXC8n33vxixzCEXmEFFREgtuFFzFSHr/SKTR6nRhkFpjzHJxYnWLG3KQkdt
-	 jwwZloWUOLX3Y3kYVeTWWjUps5rNGSYxFqABoyP/upCLKHXTEo/hfsQhQI9NQeRKuig==
+	t=1795026122;
+	b=zpXKOsEe7sZ4/517eFILqnDoC3Usaey0BS8hgWAGQZM5V1RCe8r3puTRlTLWfvkRhVT6
+	 8pvAZ9GkcLQ6jpniuBFfvjV4s0CmnyE/m1gK1LpNDckpAn3acmyv1c2CvnX0IThF40uOC
+	 FizgjRdRLw3rerPi169FRa7HsRJjDQMfyxAf4RrTJIFVRYZzelG18EkZSxt1G52G+vFPO
+	 SOaym74BlKTIpK+VOk3ULIRF/C940RWtLnisAZVNrMB+ulSqIzKLXGBBQBh+rEBbq/KJy
+	 Ktetni4boqnShwsdKbo5uj1a4YVcSP065BKIqbKfY9YOhhJw8dFSkDpcheMVt30QQ0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jBSRNQL1xa3IcD/8KDXdpXn2DDjg1AE/eoxovUSffRQ=;
-	b=xufKo7zzfpbNNJY9JWz8G9GVzjQD0V7zFA755RCmRQz6fpNjrEG0HguSsxBwq/TIUaLS
-	 1yGid2VvU7ikzxAAdP+fdUE+U1RGhhwntqr4K5P8hHcLLRhioBe6xJxmLs1uFAb5eNFdU
-	 h8nlMRxvVU97RU5aLZH3uY9dAwzed4NUR7c6/pGC8p9IfloI4oCM6TVW6VnP5wdj4Y1Id
-	 5w2oi28PUMMJTuspNObpIHST4NIwXdy4ellfozL8UY1rNW4ffPGJaOZe94sKiom/B45XA
-	 oprV5KDNqzoBWPf6Y1modmbIzSh5YOD/L06Mp9+sywcvlk9mXePmqzn74i1NAKnyfug==
+	bh=FQ1EcLWCepM3MJrx/yAspy3DJPlYMyCe1TcV5ai0SCA=;
+	b=qIDtzsaDJETv75JA9GadKM//w/yqZZXRuHWY+yEf/ufDXXkZcCP7rcYpjzLAbNSdMSmX
+	 xac9V/ij+NPlroNzWdQaUkj+26ufbVINzDcUVqjG4xkImC9op8HngjprSIcdl783T6Vou
+	 dvQovklY8f2TsVJEWloI9RP7Nr9V1wGsnHWYrt/BfSWWmUVZomQMx58dZdRucUWnTW9CR
+	 2OXP++NjsiFBjsEyW47+/wnSAO7GBf7cWgT3HhHCDCHN0aBNWlUlxyO8qOXaJo359jcA6
+	 V8WS11wsUy3OBB4qgJqJZ+Ad1yVY9LWnB1ITAfZ8B4msoxfx+rOCL5Cso7yOurabH9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUzjm0sm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+Vg1puw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28588606A320;
-	Wed, 18 Nov 2026 18:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108CB606A32C;
+	Wed, 18 Nov 2026 18:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUzjm0sm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751B11F000D0;
-	Wed, 18 Nov 2026 18:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+Vg1puw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2C81F000C4;
+	Wed, 18 Nov 2026 18:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026119;
-	bh=jBSRNQL1xa3IcD/8KDXdpXn2DDjg1AE/eoxovUSffRQ=;
+	s=korg; t=1795026121;
+	bh=FQ1EcLWCepM3MJrx/yAspy3DJPlYMyCe1TcV5ai0SCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUzjm0smibgD1tLqZdMwQIT7FyPOXHKxSICb21xiPXyp3kF76K8A7KE6g3U9yrWRg
-	 9ocX0oR5T6QyLKFKHzz+hoMxx6BgfDW7fdBi/T7n6BIOIOjOUzjw6Ut+NbcUOtzC8+
-	 rWxA3uAbSWYkC6le2s2RjF1/aD7lYpvX2wYK4J1Q=
+	b=d+Vg1puwF8IKfAM1DsSOQV/DUPYl9Z2uPaNk4UfEva/M7wDlJQIWdQLJUutS/Qj9r
+	 7cEdezOgo1iKRofgp7PKTF+qiRiTckiMEv8Tz7ffLk2wMflwDmjbBV+JDe4gPwEfvj
+	 Dki0xbwbMQyzhV6rhfa55qT3RHehkIoUfxYqg8SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Pu Lehui <pulehui@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Changyul Lee <lcy8047@gmail.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1320/2151] bpf, riscv: Fix stack-passed arguments for indirect trampolines
-Date: Wed, 18 Nov 2026 15:50:55 +0100
-Message-ID: <20261118150210.174805727@linuxfoundation.org>
+Subject: [PATCH 6.18 1321/2151] xhci: dbc: lock the minor IDR on registration failure
+Date: Wed, 18 Nov 2026 15:50:56 +0100
+Message-ID: <20261118150210.210039298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,74 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit b4a1ecae94ae803fcd75fb16a7653ff86b64ed8b ]
+[ Upstream commit 47f4e983b5de7616fb11d5f537fc9a605387d136 ]
 
-store_args() reads stack-passed arguments relative to FP assuming the
-trampoline was entered through the fentry call from a traced function. In
-that path, the trampoline pushes the parent frame before establishing its
-final FP, so the incoming stack arguments start at FP + 16.
+dbc_tty_minors is protected by dbc_tty_minors_lock when entries are
+allocated and during normal device removal. The registration error path
+removes an entry without taking that lock. Different DbC instances have
+separate event work items, so this removal can race with an IDR update
+for another instance.
 
-An indirect trampoline for a struct_ops callback is called through a
-function pointer. Its prologue allocates only the trampoline frame and sets
-FP to the incoming SP. The RISC-V ABI places the first stack argument at
-that incoming SP, so the arguments start at FP, not FP + 16. Every
-stack-passed argument of a callback with more than eight argument slots is
-therefore read two slots late.
+Take the same mutex around the error-path removal.
 
-Pass the prologue-dependent offset to store_args(), using zero for a direct
-struct_ops trampoline and 16 for the fentry path.
-
-Fixes: 6801b0aef79d ("riscv, bpf: Add 12-argument support for RV64 bpf trampoline")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260930083522.1914145-2-pulehui@huaweicloud.com
+Fixes: e1ec140f273e ("xhci: dbgtty: use IDR to support several dbc instances.")
+Reported-by: Changyul Lee <lcy8047@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20261009151624.618967-6-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci-dbgtty.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index 3e4eea261ab96..480a5262f1477 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -883,7 +883,8 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
- 	return ret;
- }
+diff --git a/drivers/usb/host/xhci-dbgtty.c b/drivers/usb/host/xhci-dbgtty.c
+index fda5ccaba27a9..979bfd904dc03 100644
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -535,7 +535,9 @@ static int xhci_dbc_tty_register_device(struct xhci_dbc *dbc)
+ err_free_fifo:
+ 	kfifo_free(&port->port.xmit_fifo);
+ err_exit_port:
++	mutex_lock(&dbc_tty_minors_lock);
+ 	idr_remove(&dbc_tty_minors, port->minor);
++	mutex_unlock(&dbc_tty_minors_lock);
+ err_idr:
+ 	xhci_dbc_tty_exit_port(port);
  
--static void store_args(int nr_arg_slots, int args_off, struct rv_jit_context *ctx)
-+static void store_args(int nr_arg_slots, int args_off, int stack_args_off,
-+		       struct rv_jit_context *ctx)
- {
- 	int i;
- 
-@@ -891,8 +892,8 @@ static void store_args(int nr_arg_slots, int args_off, struct rv_jit_context *ct
- 		if (i < RV_MAX_REG_ARGS) {
- 			emit_sd(RV_REG_FP, -args_off, RV_REG_A0 + i, ctx);
- 		} else {
--			/* skip slots for T0 and FP of traced function */
--			emit_ld(RV_REG_T1, 16 + (i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
-+			emit_ld(RV_REG_T1, stack_args_off +
-+				(i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
- 			emit_sd(RV_REG_FP, -args_off, RV_REG_T1, ctx);
- 		}
- 		args_off -= 8;
-@@ -1127,7 +1128,12 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
- 	emit_li(RV_REG_T1, nr_arg_slots, ctx);
- 	emit_sd(RV_REG_FP, -nregs_off, RV_REG_T1, ctx);
- 
--	store_args(nr_arg_slots, args_off, ctx);
-+	/*
-+	 * A direct struct_ops call has its first stack argument at the incoming
-+	 * SP, which the trampoline keeps as FP. The fentry path pushes the
-+	 * parent frame first, so its incoming stack arguments start at FP + 16.
-+	 */
-+	store_args(nr_arg_slots, args_off, is_struct_ops ? 0 : 16, ctx);
- 
- 	/* skip to actual body of traced function */
- 	if (flags & BPF_TRAMP_F_SKIP_FRAME)
 -- 
 2.53.0
 
