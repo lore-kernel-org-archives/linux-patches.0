@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060739;
-	b=tABKbeWLNEgB9k9qDwoixITpI2+/Sf1Q0le7oO733UeMzxg7xUOck7DpODxhmd2rFMsc
-	 TkkS0dzlD/jVItlpLwaHsK6MEQ5fARN1yr+uKh+BH/vDg0ontISAH8ksL/iT4QTXsbzAU
-	 EG2R3LPb+v3MrOJ0/Vaj2f1YQg8ResJb6R/JavHqLq/eCho7RVdl6ZuhOZyTbUOAPKx0B
-	 LjQiQKk/nhEpE5qfIT78jdA1T0FW3j6isJs9d9m3pYRLd/T1ySy0HNINQsu0PeHFR9aHW
-	 CPmTyLqR02hM5XrWl+quD1AkxeCpInmQVJouxeC+MeO9rQsgCh8wJGGzNzEmcuyIsHQ==
+	t=1795060742;
+	b=JXtmFW3YczNQTkxO5i6goMeGJkQxztNs0yN3vtrbd+qyla9zfMxh1HQ+04QiB3upuAqI
+	 9sIbymDd3NvH9j5yKnuj28ukC7WhKH3Ip3KTN44Vmb5xzGBa/H2d1TgMkROZIkhW89T9I
+	 839YKexu5c786Ht3bKclaOMomS+fwARGWwvasbYg7dXc5k1/IRT8H8mmmdCAHzDOaTZBx
+	 Rt3fk5y+X7CGbe1Q+BOxYyJRpD8droKPAsc0KD99UlpnkU6QQuDM+G+I0moqL6lJMvck5
+	 ziwOrxrDWzndepHfnEQvhcvdCuv94mhDVvpqTEOHlgjBd0cKV9e+oVIoTWenXZNbEdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zzh/1I5U598qGw8yft4u2Ue+hUb/QnTEup1g5EdakSI=;
-	b=o9VbE6gjQoBBTOzmB5hI3bagYNumJFzz7H6tsWMH97K0FHcYeTQwGq4Qko//VXC3CvGy
-	 I8FC6hl77BNbKfUPxdfCTK9kqE7N7DHMJp6lgxgc5NnFu6VEuts8GlXIyzFHgr/9nv388
-	 BAJyTfvEDCmmwtinGjmG7dTGHDDT1+uxholBJRagrYCECqit8A8aOVTqY4Z9NPWwUI1BG
-	 ivSwCaAcUZ+/gH729AHvxX+xw4psSKFU2MLyfvOj2ciK8XJlQgxFAAeuvmWMOzHu5NJ7d
-	 C1X4dCJDx3hJMinNFUiviy2BELhSeBMPTp49WRblc+KbqexgxL/Aei1X82cdUCWP8Wg==
+	bh=X2ep0UHew+ROeaXEUHtcn8/imc9yDLXUmHon64R6MLE=;
+	b=mVQRNP3HJVDafLkqvu1LRV95A8iaTbXPQZYX3vXSX3Q5Da8R4zD+I4lXoJXUwjhPk82b
+	 CXN59UTc5Tq1QVEIX+RUiuS2+2hVGYxDGgAapVQKrNT2tNlt7vC4+843D3ozBGo/B8P7n
+	 zxhLivcqXyZpFeLVsYQCcTyNL+I3jkkGrojhtXOUNfIM54V4jCA4pfG7e/5VAq/RPgJEB
+	 ZZjRfwWSQ8KgIbmrP/ECY7gkDj1zTQH0l3uoIr7e3i2An7AIeiOsDmXV2cYI0w9wu4F16
+	 1uLjUzdcK3IFXESYSnCT1bsguHjuTV4Q52E42/1LZthQ5x3tcMV80DHVRnd27vCqwEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itFP2sV5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCqUAc8n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3E2606A326;
-	Thu, 19 Nov 2026 03:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475CC606A32A;
+	Thu, 19 Nov 2026 03:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itFP2sV5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF37B1F000C4;
-	Thu, 19 Nov 2026 03:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCqUAc8n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4641F000C4;
+	Thu, 19 Nov 2026 03:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060739;
-	bh=Zzh/1I5U598qGw8yft4u2Ue+hUb/QnTEup1g5EdakSI=;
+	s=korg; t=1795060742;
+	bh=X2ep0UHew+ROeaXEUHtcn8/imc9yDLXUmHon64R6MLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itFP2sV5bay0+ZrSWDnZS0pKTNpbkLgTeLnfQ6DvNRnUca4cH8ZUKXjPKV0drgc5J
-	 Fd5NwNw8AQG3bmNDXhtXVsGO8CZjGqZmKE0+pxtUn0A92m8nE/AQBdbQBQST5ybj42
-	 dVQuNh2loXB3Ro3jATCf4azgJT9+sKBB+DHKLJXQ=
+	b=pCqUAc8nYwJ7ni21fxVWv6vke6p/HPhX7FMs1sHmU57mDdSJBq+MLCr48F+RYEL7x
+	 MhnkZc8RDiXp0xiRaSZyfQFncTGnnc+qKsIrqnJWH1z9sulM0c/miGs5LdTDPm0r85
+	 H8dsRe1+7Iw6PRDrxqr5W3pBCX4ZfXxgmcISgk5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1307/1848] swim: use blk_mq_alloc_disk
-Date: Wed, 18 Nov 2026 15:55:45 +0100
-Message-ID: <20261118150014.193757037@linuxfoundation.org>
+Subject: [PATCH 5.10 1308/1848] swim: simplify using blk_cleanup_disk() on swim_remove()
+Date: Wed, 18 Nov 2026 15:55:46 +0100
+Message-ID: <20261118150014.233124755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,87 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Luis Chamberlain <mcgrof@kernel.org>
 
-[ Upstream commit 51fbfedfcc86273eded52f05a2c1aa75e91df8ff ]
+[ Upstream commit b76a30c254d987b4ae7d47415081121d4c0a7423 ]
 
-Use the blk_mq_alloc_disk API to simplify the gendisk and request_queue
-allocation.
+We can simplify swim_remove() by using one call instead of two,
+just as other drivers do. Use that pattern.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
-Link: https://lore.kernel.org/r/20210602065345.355274-13-hch@lst.de
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20210927220302.1073499-8-mcgrof@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 994a778d9665 ("swim: Configure parameter memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 34 ++++++++++++++--------------------
- 1 file changed, 14 insertions(+), 20 deletions(-)
+ drivers/block/swim.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index b10052eacce77..0fa87c9c6206c 100644
+index 0fa87c9c6206c..34a63fda9c9f1 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -824,23 +824,20 @@ static int swim_floppy_init(struct swim_priv *swd)
- 	spin_lock_init(&swd->lock);
+@@ -940,9 +940,8 @@ static int swim_remove(struct platform_device *dev)
  
  	for (drive = 0; drive < swd->floppy_count; drive++) {
--		struct request_queue *q;
--
--		swd->unit[drive].disk = alloc_disk(1);
--		if (swd->unit[drive].disk == NULL) {
--			err = -ENOMEM;
-+		err = blk_mq_alloc_sq_tag_set(&swd->unit[drive].tag_set,
-+				&swim_mq_ops, 2, BLK_MQ_F_SHOULD_MERGE);
-+		if (err)
- 			goto exit_put_disks;
--		}
- 
--		q = blk_mq_init_sq_queue(&swd->unit[drive].tag_set, &swim_mq_ops,
--						2, BLK_MQ_F_SHOULD_MERGE);
--		if (IS_ERR(q)) {
--			err = PTR_ERR(q);
-+		swd->unit[drive].disk =
-+			blk_mq_alloc_disk(&swd->unit[drive].tag_set,
-+					  &swd->unit[drive]);
-+		if (IS_ERR(swd->unit[drive].disk)) {
-+			blk_mq_free_tag_set(&swd->unit[drive].tag_set);
-+			err = PTR_ERR(swd->unit[drive].disk);
- 			goto exit_put_disks;
- 		}
- 
--		swd->unit[drive].disk->queue = q;
--		swd->unit[drive].disk->queue->queuedata = &swd->unit[drive];
- 		swd->unit[drive].swd = swd;
+ 		del_gendisk(swd->unit[drive].disk);
+-		blk_cleanup_queue(swd->unit[drive].disk->queue);
++		blk_cleanup_disk(swd->unit[drive].disk);
+ 		blk_mq_free_tag_set(&swd->unit[drive].tag_set);
+-		put_disk(swd->unit[drive].disk);
  	}
  
-@@ -848,6 +845,7 @@ static int swim_floppy_init(struct swim_priv *swd)
- 		swd->unit[drive].disk->flags = GENHD_FL_REMOVABLE;
- 		swd->unit[drive].disk->major = FLOPPY_MAJOR;
- 		swd->unit[drive].disk->first_minor = drive;
-+		swd->unit[drive].disk->minors = 1;
- 		sprintf(swd->unit[drive].disk->disk_name, "fd%d", drive);
- 		swd->unit[drive].disk->fops = &floppy_fops;
- 		swd->unit[drive].disk->events = DISK_EVENT_MEDIA_CHANGE;
-@@ -866,14 +864,10 @@ static int swim_floppy_init(struct swim_priv *swd)
- 	do {
- 		struct gendisk *disk = swd->unit[drive].disk;
- 
--		if (disk) {
--			if (disk->queue) {
--				blk_cleanup_queue(disk->queue);
--				disk->queue = NULL;
--			}
--			blk_mq_free_tag_set(&swd->unit[drive].tag_set);
--			put_disk(disk);
--		}
-+		if (!disk)
-+			continue;
-+		blk_cleanup_disk(disk);
-+		blk_mq_free_tag_set(&swd->unit[drive].tag_set);
- 	} while (drive--);
- 	return err;
- }
+ 	unregister_blkdev(FLOPPY_MAJOR, "fd");
 -- 
 2.53.0
 
