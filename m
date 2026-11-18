@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049632;
-	b=hJXzFbhrVl0RG4pv8huzCJEV7VKGIkyjxo15jsvmzKnHQl/D3SRTjkZ0FLX6JpTDT2EG
-	 oKM716ANZsLtKsSp4nFNLLwXIcOMIjoiFJmvThO32RGkqTExIJp2hspe1f2+jxqqwU2xk
-	 RiakaCuWTwNI2t9inBacc8AO1TTEUh2KxzO+6Wx6qLgrewV5H1mC60P+sZL7Ln61amssz
-	 NH0L66ffaW2BM67RbsKd3G2sHtIo0UISVt64NgB77lJwMdcN7uc40gI89puJe0barts2A
-	 ExTCl2DqoaAp+9b2Tv+wIuA/+1M+2xcEsyBvrdDpxWFCOyUMzWVj1c6fkUFFZplca4A==
+	t=1795049635;
+	b=x3dMAxR3UuYDRkwd5S2z2OkiasujMmMNzfC8CaDRq2IbPAXY39BUea3eGndWVQImDqyM
+	 X5vvc0IuLoT7hOXQg2K9+akbQ3ZYUpi9E1UdziDwsCigOpcCg0Y52IaoUskyIXu19ju+p
+	 JtD7pqrCZ3jjAW/T4j6FzH9vOg/+NZG6Uq0E6MzNS+19HprBNl6vb2lYzsnK1cBV6pBJL
+	 EjZczRlC0vC8kF7+bdopzFvh72VlPPRexAlRCxZuJyWft4JEejKax0KfTW/+CilEHuXYU
+	 ZKqBfSDqn5co5j76ge8VmIVCuj8o5peL+vS/qw5UjXO9AWbGAjL13Ia1qAcQe9XIGIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049635;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P7WHQuClNiO9V0xdCr4cF6JQ+BlMdBtFgqsKkVtjFX4=;
-	b=HQJzB7CqzoZJqoar/QlvERxolVJRm7cAVySHZDWVWwYH8UEH7n8Zyk+NkswsPyKcOyRU
-	 5bmb6+t0HJ6EnjhZb6DcSOntwJzF5Y/PZrvsh83Mb1S4d30N/CgPy4fgDUYTZ2RSvHZVe
-	 jVt7AfGLGZyc306wM9S46wsEsNZfFllirBiIkle5lhguE6DgeilrkAvFCbT3ZXLJVTtsM
-	 qkaWOkWrKPMSyIvmgdPaZ5D5RpP91LFaQrMj9VyHjz1dGtWjC6rtKV+Fn0maggwB/Um2V
-	 CXh7KVBDwIafQig0gB5jw2Ny5glRrXPTg0l5qn7+Ac4xfZBlf/bPNseGBk0nlYcb/eg==
+	bh=7r1oakzVtBELMYxhcvyXj7ha49FlQClPT8XUxylTyMU=;
+	b=lde7mGorALB6f6QiPxY/uovMDx+JotQWMrXADU2R8VcXJEw71zsca1xf851RLNgpegDW
+	 vPg76qv2JhQ3AkgooH4sqCE9so+ngWvi7Td2kbDe6ejk7JsOi0Sy3UurhJYjITXGDxQEs
+	 YrLqD0aATh1bT6gm0khqGbrWTNB/kBdRwSImUByE3Kv9UlaVIgVR5Ojt6LNEr73mMciq/
+	 4SKUKXsMTh+PjOsRwTZbwXemOEjlCB6n/6XGcHONrp4uxzGXRdQRuOlYr+Yf7D3tjKWUl
+	 dLgDmN7rtkTz34EMp3h68j7nJ6gLwRzYU5tUcOEqSnKQz8IL8nFvz7eqNVVNY48S2BA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBSva+Td;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OhxjvniV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A250E606A32C;
-	Thu, 19 Nov 2026 00:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDAA606A31C;
+	Thu, 19 Nov 2026 00:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBSva+Td
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AD91F000C4;
-	Thu, 19 Nov 2026 00:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OhxjvniV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC49C1F000C4;
+	Thu, 19 Nov 2026 00:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049632;
-	bh=P7WHQuClNiO9V0xdCr4cF6JQ+BlMdBtFgqsKkVtjFX4=;
+	s=korg; t=1795049635;
+	bh=7r1oakzVtBELMYxhcvyXj7ha49FlQClPT8XUxylTyMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yBSva+Td+3y+oygs5dr+iuHdBJ9U7CmbzxLxXcpMhGndL4eHQ9We1aPcnKrLr1Xa+
-	 2cmwI5hbMW1PY4lq8dTE67pDHtIVR0rGuEPbA7AK/3LJxKojPieXQ8rTIzHWJDt4Sv
-	 8q491pn1oYimSUGV8v0MzHl+cChG0ZhHVaTS7/Lo=
+	b=OhxjvniVRtKBgie9Vz2C82vuM08hv0Ac6eAp4DK20CvhuwTWBNxk1NF+0SHybJoiU
+	 13YAHJNPBefAmeVJrzuEZkqeoKWvHJEKxdAsTudEJ11df/ZHsx+JfDPfOstwnwDFVI
+	 i+hbp5wpJ+TDVHctblb1m9jfaI0oNobwFouBZ2pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2422/2857] bus: arm-cci: Drop cci-control-port node reference in __cci_ace_get_port()
-Date: Wed, 18 Nov 2026 15:57:36 +0100
-Message-ID: <20261118150328.759195584@linuxfoundation.org>
+Subject: [PATCH 6.1 2405/2857] serial: max310x: simplify probe() and remove() error handling
+Date: Wed, 18 Nov 2026 15:57:19 +0100
+Message-ID: <20261118150328.137718148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 810ccc792193909ba9bbb4246e0eb0de14dad724 ]
+[ Upstream commit 5d888f1c32e2281843d58eef963e3ebd625b77a9 ]
 
-__cci_ace_get_port() looks up the device's "cci-control-port" node with
-of_parse_phandle(), which returns the node with its reference count
-raised, and only compares the pointer against the probed ports.  Neither
-the match nor the no-match return releases it.
+Simplify error handling and only call uart_remove_one_port() if line bit
+is set, instead of having to manually set s->p[i].port.dev to NULL.
 
-Drop the reference on both paths once the comparison is done.
-
-Fixes: ed69bdd8fd9b ("drivers: bus: add ARM CCI support")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://lore.kernel.org/r/20260923164122.596910-1-oss.patchbox@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240118152213.2644269-10-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4efacb600bf9 ("serial: max310x: fix breaks not reaching the wire in RS485 mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/arm-cci.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/tty/serial/max310x.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
-index ab9b49451f8f2..25a741e48573f 100644
---- a/drivers/bus/arm-cci.c
-+++ b/drivers/bus/arm-cci.c
-@@ -167,9 +167,12 @@ static int __cci_ace_get_port(struct device_node *dn, int type)
- 	cci_portn = of_parse_phandle(dn, "cci-control-port", 0);
- 	for (i = 0; i < nb_cci_ports; i++) {
- 		ace_match = ports[i].type == type;
--		if (ace_match && cci_portn == ports[i].dn)
-+		if (ace_match && cci_portn == ports[i].dn) {
-+			of_node_put(cci_portn);
- 			return i;
-+		}
+diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
+index d08970f73cbe1..204ea3d16a41f 100644
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -1448,10 +1448,9 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
+ 
+ 		/* Register port */
+ 		ret = uart_add_one_port(&max310x_uart, &s->p[i].port);
+-		if (ret) {
+-			s->p[i].port.dev = NULL;
++		if (ret)
+ 			goto out_uart;
+-		}
++
+ 		set_bit(line, max310x_lines);
+ 
+ 		/* Go to suspend mode */
+@@ -1487,10 +1486,8 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
+ 
+ out_uart:
+ 	for (i = 0; i < devtype->nr; i++) {
+-		if (s->p[i].port.dev) {
++		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
+ 			uart_remove_one_port(&max310x_uart, &s->p[i].port);
+-			clear_bit(s->p[i].port.line, max310x_lines);
+-		}
  	}
-+	of_node_put(cci_portn);
- 	return -ENODEV;
- }
+ 
+ out_clk:
+@@ -1508,8 +1505,10 @@ static void max310x_remove(struct device *dev)
+ 		cancel_work_sync(&s->p[i].tx_work);
+ 		cancel_work_sync(&s->p[i].md_work);
+ 		cancel_work_sync(&s->p[i].rs_work);
+-		uart_remove_one_port(&max310x_uart, &s->p[i].port);
+-		clear_bit(s->p[i].port.line, max310x_lines);
++
++		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
++			uart_remove_one_port(&max310x_uart, &s->p[i].port);
++
+ 		s->devtype->power(&s->p[i].port, 0);
+ 	}
  
 -- 
 2.53.0
