@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017117;
-	b=f1sMR3dswF+wzs57/gfe8du2By/tJvduHlE8Zl3hRXjJkgh9ZizuvwSMm5+9JV0olGzF
-	 NkrKxmDtdBPzNfCjsxkyCKZZw8Y7kwB0NV94d0FYVnIrIvp0NVr6VFftoMRMWVQ0pKLCr
-	 fY2x2cez4Xn0dNqCBfWCvZKyLEW3xuojBzxo/WvEmU1oRIgSruvPzl69SjNZe7jCH3m2S
-	 nh3kR0UoGwAsKvfi8b+O+4TShrGh2R3PzDGjRQ+zaZgkidLbJPlEmEld/58Uwskg8+L0L
-	 CRqbUG2jTIHhGmh6hSU5WUfN+aPcbdux9lVdtfq53GbXNpQcbZudcXMgC3diJ1LDbSA==
+	t=1795017120;
+	b=0qStduMb++5R+WXXh+GYdHF+ngU/RE6ChQaODbPfU8AHJxnRV6KSh94mCWBmEtmknUUy
+	 B2xGp7+J1A3B++4JDXzBQei2hOmxWsje0+y6VryNTg+OcO7hCH/Xt7bLEJS+t5nXt83ET
+	 pRJDclf7KoL9IzcQwoNPNzionIenHS2FhQXSBpyYf3F4sISjwMNRcFcRxgqZp53MVujJx
+	 biZxvfwwQTt+GEf/IF4//i1mV0HAY48fTVUXUiOkPCDWTOFQ5zFExKlIaywnRJF32lZ38
+	 PR77E6zWYMl7Nyf9Ti8Zk0vUn9ShUNh2HqQHGtfvWeqZNebYt8C4698StiHVFb4WJyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9EmbFilZlsIop8V5fXHaHgQTm7bmCTf+l2GJHZt/J9Y=;
-	b=wJyfhTI8/b7aAM99Zio93BrAzOVs9ZEG4g7evK4HNAmGdWfYWCE/C/V5v+kGV4pinBGk
-	 5kcGXwZChwsA0sEdR/gnQrC/dBj5hKEvEMzDyfDfdX9Hyk2H6eheVnuyA7MCVyjNQ/2ws
-	 dCCblq2afOc/6onP8al0RP/LFXwlP3r6xnG15wh7P0nEBd+miIQE9DyOlR+57NeS6W7ka
-	 6jVyjUbvzNSIEJ+zTD22O2mNHWmpF0DwXe/fI9y+loe+49Otx+I+Vy5Ff/etK1ZszYbAC
-	 CHfP83UNl2aLB9eXBEmmm8OyqeYN2jcHCxc1Z9cZv9zv15QVbKMOPaIjJKCR1Ai0vVA==
+	bh=zNO0hB+WhbYHCaqNm33BBQ9C9Pv3lnd4scs1ezuqHNE=;
+	b=QvQPi7RO2GHWhzdSIX+wJFlbEP1r/QyziiLS1ah5gB7pnZJ4ldwcJ9/ZzSyqdeI/300C
+	 PZhkX2WhzrZv/CLmMLjXBQInb6D7VmK8FrrKVsiQsHc/Bf5Z8ydgTAlclCiW6qtn34nsu
+	 3aom8h5BGj21Lj9DGkPfSSVxGTH3L+WhxfYEdCKJzDGVmMpH4fQebyMHafOI4KC1+Fuqz
+	 DP8RpkJvuy2RxcmuGqTAyc/w3eImRIGTYZJSe3F5o0+PqxvzMw3AlTfAohBjNjIsnEyp6
+	 avJvm6juPWZgzxTBoF7qKgTNgebFFjjq0YBqlIBH70K7XUyJkYng6/xzeoKzjm4RsyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brAcXoin;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FBJQsYY/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119C1606A334;
-	Wed, 18 Nov 2026 15:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B52606A31C;
+	Wed, 18 Nov 2026 15:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brAcXoin
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF011F000C5;
-	Wed, 18 Nov 2026 15:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FBJQsYY/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0204B1F000C4;
+	Wed, 18 Nov 2026 15:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017116;
-	bh=9EmbFilZlsIop8V5fXHaHgQTm7bmCTf+l2GJHZt/J9Y=;
+	s=korg; t=1795017120;
+	bh=zNO0hB+WhbYHCaqNm33BBQ9C9Pv3lnd4scs1ezuqHNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=brAcXoincZQ36ONPwbvT6iGVHHQp/JbC9hSBeBi2OFZKzCCVANTzX99v60XbxniGU
-	 T4gz/lRdmo1dQgG/6OCyWUQLJDKVaGg9kbgASVYieUHOTdhfRt1tqwoThwoUxniPzI
-	 JpOD0BcmcuGe4GT7kxb0ohLeGK9RIV2OIzP+MFII=
+	b=FBJQsYY/JE19udSaXFTg/FxI7+Ypj6Oes3lOREuO5m4IBpBdD27mHlLRGt/4KMrSB
+	 aMG6f+sujKItlNM+xE0QhYE0wguLlS6yJfYEkDeW00bpDSqDiyAOGCQd72sgvi972/
+	 jd2z+hU8aAcq0IjLXiylKdi1kucljnFYiePeAzaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0769/2651] arm64: dts: renesas: r9a09g087: Drop unwired ADC interrupts
-Date: Wed, 18 Nov 2026 15:33:29 +0100
-Message-ID: <20261118150315.571007846@linuxfoundation.org>
+Subject: [PATCH 7.3 0770/2651] iommufd: Fix iommufd_hw_capabilities reference in kernel-doc
+Date: Wed, 18 Nov 2026 15:33:30 +0100
+Message-ID: <20261118150315.605512456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,70 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 84cfe37c261eef10ea4030ae75bc038e04ae26a1 ]
+[ Upstream commit 54dadb030c7e2350957855d3995de05ae02c2e66 ]
 
-Remove the compare match and compare mismatch interrupts from the ADC
-device nodes, as these interrupts are not wired to the GIC according to
-the hardware manual Rev.1.30.
+The kernel-doc comment of struct iommu_hw_info refers to
+iommu_hw_capabilities, which does not exist. The name is
+iommufd_hw_capabilities. Say iommufd_hw_capabilities.
 
-Fixes: 4ed27b4fdeb1 ("arm64: dts: renesas: r9a09g087: Add ADCs support")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260921110144.44425-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 7623683857e5 ("iommufd: Add capabilities to IOMMU_GET_HW_INFO")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260911231850.20737-1-kmehltretter@gmail.com
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g087.dtsi | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ include/uapi/linux/iommufd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-index 03b976d93e105..b4c156774c9a2 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-@@ -1261,11 +1261,9 @@ adc0: adc@90014000 {
- 				     <GIC_SPI 699 IRQ_TYPE_EDGE_RISING>,
- 				     <GIC_SPI 700 IRQ_TYPE_EDGE_RISING>,
- 				     <GIC_SPI 701 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 702 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 851 IRQ_TYPE_EDGE_RISING>,
--				     <GIC_SPI 852 IRQ_TYPE_EDGE_RISING>;
-+				     <GIC_SPI 702 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "adi", "gbadi", "gcadi",
--					  "cmpai", "cmpbi", "wcmpm", "wcmpum";
-+					  "cmpai", "cmpbi";
- 			clocks = <&cpg CPG_CORE R9A09G087_CLK_PCLKL>,
- 				 <&cpg CPG_MOD 206>;
- 			clock-names = "adclk", "pclk";
-@@ -1283,11 +1281,9 @@ adc1: adc@90014400 {
- 				     <GIC_SPI 704 IRQ_TYPE_EDGE_RISING>,
- 				     <GIC_SPI 705 IRQ_TYPE_EDGE_RISING>,
- 				     <GIC_SPI 706 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 853 IRQ_TYPE_EDGE_RISING>,
--				     <GIC_SPI 854 IRQ_TYPE_EDGE_RISING>;
-+				     <GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "adi", "gbadi", "gcadi",
--					  "cmpai", "cmpbi", "wcmpm", "wcmpum";
-+					  "cmpai", "cmpbi";
- 			clocks = <&cpg CPG_CORE R9A09G087_CLK_PCLKL>,
- 				 <&cpg CPG_MOD 207>;
- 			clock-names = "adclk", "pclk";
-@@ -1305,11 +1301,9 @@ adc2: adc@80008000 {
- 				     <GIC_SPI 709 IRQ_TYPE_EDGE_RISING>,
- 				     <GIC_SPI 710 IRQ_TYPE_EDGE_RISING>,
- 				     <GIC_SPI 711 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 855 IRQ_TYPE_EDGE_RISING>,
--				     <GIC_SPI 856 IRQ_TYPE_EDGE_RISING>;
-+				     <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "adi", "gbadi", "gcadi",
--					  "cmpai", "cmpbi", "wcmpm", "wcmpum";
-+					  "cmpai", "cmpbi";
- 			clocks = <&cpg CPG_CORE R9A09G087_CLK_PCLKL>,
- 				 <&cpg CPG_MOD 225>;
- 			clock-names = "adclk", "pclk";
+diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+index 63a86354e822f..010f47f7d3d23 100644
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -776,7 +776,7 @@ enum iommufd_hw_info_flags {
+  * @out_data_type: Output the iommu hardware info type as defined in the enum
+  *                 iommu_hw_info_type.
+  * @out_capabilities: Output the generic iommu capability info type as defined
+- *                    in the enum iommu_hw_capabilities.
++ *                    in the enum iommufd_hw_capabilities.
+  * @out_max_pasid_log2: Output the width of PASIDs. 0 means no PASID support.
+  *                      PCI devices turn to out_capabilities to check if the
+  *                      specific capabilities is supported or not.
 -- 
 2.53.0
 
