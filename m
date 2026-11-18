@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030012;
-	b=H+Hc35ruMMtAs6+d5VbSri7LT4LJQ07E+UaUeHJjo7qyP0TWm53c29dWSVdZqk5Vrv/Q
-	 p0vkU/wuhXWzmEKVeG0rRc+B3dsABsriKcrRv7IIhMs9uAU9a8H1INprEaHBWl3QtEL0O
-	 FJgCqjsBgGjv+GeqwhS0CS4bRkPcm4LDK0kmFJ/kDctVbKZPyKlsvpLH0ExFWrwYrjic+
-	 qZl2KZM9DskryHUKt0R2j7LpRcpl9M0BXUYF8vE7PbG5KTQb9DkIYlFPiJJTnPOAsdh+A
-	 2K/UFUgJqZqa5KRx0OwDcAFIvP7Ps34fC/kls0fokv9wWTQv+/uH1IALW4K7SqOEpgA==
+	t=1795030014;
+	b=T7hSHv5lvMiHAqcFgP/+nBwQf0hmRA6pr+vsjzCCadAAT6oQ8T+SXCZn+mv1+a0JArXl
+	 gphMme1MF0NBwAG6rE48i1RhS//y1NcHXQ+HBdQYcv1X/5nkuSpZTlm2w0a/1fVP1wuko
+	 Ph7MLrDl328xv5qw9/AYPl1GGGVlBN5ASu8szeGrSNUK69tgSeTCdcuShAAySLB4VAVpD
+	 V9gf97TkkuKDMBu+vTr+lm6JiC16DPiDYWPUgaqavvcHfwV6XvooXeKub75MDMHNWbXrT
+	 ryMcC1crn2y+PKqA9KKHnbwekTlm2jYjm1M6Sjzmk5p7C6i7pxeKio9WrQbKsaBqjjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=t8PIW8DFKK1kS478Z8XH5jADoCYNW+I2wprKX6NscnM=;
-	b=rq97DiJhO6YtcYtfFwHf+KHgp2mlyNZzUOELUu0aQJUIg9AmFOtIagkJOsx369o4NOxs
-	 zBG7PcJAO+gifTC/GTh9GPLOplLxJbzNzXLkQswYEtDhqP7B8ByOhjhsj1inEEi/5WaVD
-	 lGtfx2IUWLvxf9Pu5E3wkeUhYkZVeTkYQxakIHX93LzpKYWwFbBFbZ33uhcrWDdJaOz/L
-	 Dgw9iiXx5YzlmJVVZP4gvcncZU6HXdIJCJ4m1h8IrZ7ITclofBKv+mVeaJK14kESku4ZM
-	 IsM2+ZnyqlDwl1vkn25gPxnaT/mVKYsRISY92jOJfRtoAug43tNz78YFw0NlWnWof3A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VUNoXGPkuZdHno70lfAj2TCPSbh3tBtWQWqr1z7WSgs=;
+	b=eXATnZT9e10RbuUy5JYlwpu6ztw8R9kud2/yBQ0A+Hn/bfmN32Fcz7zzNjHFqE5V2+33
+	 nlHGxfssGLIv284n8pY3VKAEGec0m9p5LKlaOlOC779GpuNidyp5iSujMoqwT3kHCj6QG
+	 dLzRVucdCXByV4zpFzDgNDzwc+tJOVC2KAkYJIuuv4zASasjo/samOZFaSQr129z2gRdS
+	 jiUcQclC4050EBAwJ1zy+iIoBqlnW6LKAolENHd0IhYQJwT+m077WjgJDdJFZdx2UD/Kd
+	 4yhAKruTO+96ZlnoI0MQ/Jz8fQMAvLxN3jobtwTojNmNnPSRZypTU4qexMaOXG9vZgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPmVeQZj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VrCcmf4A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FF4606A31C;
-	Wed, 18 Nov 2026 19:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96A0606A31C;
+	Wed, 18 Nov 2026 19:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPmVeQZj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F81F000C5;
-	Wed, 18 Nov 2026 19:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VrCcmf4A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4A01F000C4;
+	Wed, 18 Nov 2026 19:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030011;
-	bh=t8PIW8DFKK1kS478Z8XH5jADoCYNW+I2wprKX6NscnM=;
+	s=korg; t=1795030014;
+	bh=VUNoXGPkuZdHno70lfAj2TCPSbh3tBtWQWqr1z7WSgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QPmVeQZjTE2EI7HTOb9Wu4cGyHEjP/BzJgcEHK0ePoylA9YE+hBm7icehP2f1JrnG
-	 F8jPo1hzxQcYrwq5dGM4NwFWHSZP5ZxmcULguBokf7MilEmcA8r+UjZ99hXpKaehUz
-	 EHoKYu5cBRK04ZXlWpMu11Kf2Q3zDOSge68GkfI0=
+	b=VrCcmf4Aw8xnpO0N5Z0oVjGpytJWjBDS7OSQEUC4zTi8QkAltCAUoozXH5ugBWS0R
+	 O2vgkVLzoY4fXqruzANk9n23+icLAlH87JPGYNrSpY3F0vaVSbj0EK2YzE1hrzJDCC
+	 N298bYb3PInD2l86lSHrDb2t02U2oWxy4pcmlfu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Hui Su <sh_def@163.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0551/1756] tools/nolibc: fix WIFSIGNALED() for status 0
-Date: Wed, 18 Nov 2026 15:44:38 +0100
-Message-ID: <20261118150031.054070978@linuxfoundation.org>
+Subject: [PATCH 6.12 0552/1756] bpftool: Fix CPU IDs in per-CPU map output
+Date: Wed, 18 Nov 2026 15:44:39 +0100
+Message-ID: <20261118150031.089924456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,50 +62,380 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 368fae47c6cae28a312c5dc86e5bdb8f9369fd26 ]
+[ Upstream commit dbf8cef936c7783ca909c38097a69f73173a19a7 ]
 
-WIFSIGNALED() needs the subtraction to wrap around for status 0, so that
-only 1 to 0xff, a terminating signal with or without the core dump flag,
-pass the check. But status is an int, and 0 - 1 is -1, which is less
-than 0xff. A child that exits with 0 is therefore reported as both
-exited and killed, and a caller that tests WIFSIGNALED() first sees
-"killed by signal 0".
+bpftool uses dense per-CPU value-buffer slots when printing per-CPU map
+values. It also uses the slot index as the CPU ID, which produces
+incorrect labels when the possible CPU mask is sparse, such as 0,2-3.
 
-Make the subtraction unsigned, as musl does in the same macro.
+Parse the possible CPU mask and use the corresponding logical CPU ID in
+plain, JSON, and BTF-formatted output. Keep the dense slot index for
+accessing the per-CPU value buffer.
 
-Fixes: 8c934d4822c7 ("tools/nolibc: add helpers for wait() signal exits")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260923205622.1123270-2-danishkhateeb03@gmail.com
-[Thomas: Drop stable@ Cc]
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Pass the parsed CPU count together with the CPU ID array so that the
+printed CPU IDs and loop bounds come from the same possible-CPU mask.
+Propagate CPU-ID lookup and map output errors through the shared output
+path to its callers.
+
+Fixes: 71bb428fe2c1 ("tools: bpf: add bpftool")
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://lore.kernel.org/bpf/20260813155131.1022745-3-sh_def@163.com/
+Link: https://lore.kernel.org/bpf/20260923004243.969919-2-sh_def@163.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/types.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/bpf/bpftool/common.c | 40 ++++++++++++++++
+ tools/bpf/bpftool/main.h   |  1 +
+ tools/bpf/bpftool/map.c    | 95 +++++++++++++++++++++++++-------------
+ 3 files changed, 103 insertions(+), 33 deletions(-)
 
-diff --git a/tools/include/nolibc/types.h b/tools/include/nolibc/types.h
-index 9d606c7138a86..30cc9fad57ecf 100644
---- a/tools/include/nolibc/types.h
-+++ b/tools/include/nolibc/types.h
-@@ -108,7 +108,7 @@
- #define WEXITSTATUS(status) (((status) & 0xff00) >> 8)
- #define WIFEXITED(status)   (((status) & 0x7f) == 0)
- #define WTERMSIG(status)    ((status) & 0x7f)
--#define WIFSIGNALED(status) ((status) - 1 < 0xff)
-+#define WIFSIGNALED(status) ((status) - 1U < 0xff)
+diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
+index 0a764426d9358..e25291ce96c18 100644
+--- a/tools/bpf/bpftool/common.c
++++ b/tools/bpf/bpftool/common.c
+@@ -29,6 +29,7 @@
+ #include <bpf/bpf.h>
+ #include <bpf/hashmap.h>
+ #include <bpf/libbpf.h> /* libbpf_num_possible_cpus */
++#include <bpf/libbpf_internal.h>
+ #include <bpf/btf.h>
  
- /* standard exit() codes */
- #define EXIT_SUCCESS 0
+ #include "main.h"
+@@ -650,6 +651,45 @@ unsigned int get_possible_cpus(void)
+ 	return cpus;
+ }
+ 
++int get_possible_cpu_ids(int **cpu_ids)
++{
++	const char *possible_cpus_file = "/sys/devices/system/cpu/possible";
++	bool *mask = NULL;
++	int mask_sz, nr_cpus = 0;
++	int *ids = NULL;
++	int i, res;
++
++	*cpu_ids = NULL;
++
++	res = parse_cpu_mask_file(possible_cpus_file, &mask, &mask_sz);
++	if (res) {
++		p_err("failed to parse possible CPU mask: %s", strerror(-res));
++		return res;
++	}
++
++	for (i = 0; i < mask_sz; i++)
++		nr_cpus += mask[i];
++
++	ids = calloc(nr_cpus, sizeof(*ids));
++	if (!ids) {
++		p_err("mem alloc failed");
++		res = -ENOMEM;
++		goto out;
++	}
++
++	for (i = 0, nr_cpus = 0; i < mask_sz; i++) {
++		if (mask[i])
++			ids[nr_cpus++] = i;
++	}
++	*cpu_ids = ids;
++	ids = NULL;
++	res = nr_cpus;
++out:
++	free(ids);
++	free(mask);
++	return res;
++}
++
+ static char *
+ ifindex_to_name_ns(__u32 ifindex, __u32 ns_dev, __u32 ns_ino, char *buf)
+ {
+diff --git a/tools/bpf/bpftool/main.h b/tools/bpf/bpftool/main.h
+index 9eb764fe4cc8b..f1aead1096338 100644
+--- a/tools/bpf/bpftool/main.h
++++ b/tools/bpf/bpftool/main.h
+@@ -203,6 +203,7 @@ void print_hex_data_json(uint8_t *data, size_t len);
+ 
+ unsigned int get_page_size(void);
+ unsigned int get_possible_cpus(void);
++int get_possible_cpu_ids(int **cpu_ids);
+ const char *
+ ifindex_to_arch(__u32 ifindex, __u64 ns_dev, __u64 ns_ino, const char **opt);
+ 
+diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
+index cbfcd4330a91b..4192fc61da2e3 100644
+--- a/tools/bpf/bpftool/map.c
++++ b/tools/bpf/bpftool/map.c
+@@ -70,7 +70,7 @@ static void *alloc_value(struct bpf_map_info *info)
+ 
+ static int do_dump_btf(const struct btf_dumper *d,
+ 		       struct bpf_map_info *map_info, void *key,
+-		       void *value)
++		       void *value, const int *cpu_ids, int cpu_cnt)
+ {
+ 	__u32 value_id;
+ 	int ret = 0;
+@@ -93,15 +93,15 @@ static int do_dump_btf(const struct btf_dumper *d,
+ 		jsonw_name(d->jw, "value");
+ 		ret = btf_dumper_type(d, value_id, value);
+ 	} else {
+-		unsigned int i, n, step;
++		unsigned int step;
++		int i;
+ 
+ 		jsonw_name(d->jw, "values");
+ 		jsonw_start_array(d->jw);
+-		n = get_possible_cpus();
+ 		step = round_up(map_info->value_size, 8);
+-		for (i = 0; i < n; i++) {
++		for (i = 0; i < cpu_cnt; i++) {
+ 			jsonw_start_object(d->jw);
+-			jsonw_int_field(d->jw, "cpu", i);
++			jsonw_int_field(d->jw, "cpu", cpu_ids[i]);
+ 			jsonw_name(d->jw, "value");
+ 			ret = btf_dumper_type(d, value_id, value + i * step);
+ 			jsonw_end_object(d->jw);
+@@ -130,7 +130,8 @@ static json_writer_t *get_btf_writer(void)
+ }
+ 
+ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+-			     unsigned char *value, struct btf *btf)
++			     unsigned char *value, struct btf *btf,
++			     const int *cpu_ids, int cpu_cnt)
+ {
+ 	jsonw_start_object(json_wtr);
+ 
+@@ -150,12 +151,12 @@ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+ 			};
+ 
+ 			jsonw_name(json_wtr, "formatted");
+-			do_dump_btf(&d, info, key, value);
++			do_dump_btf(&d, info, key, value, cpu_ids, cpu_cnt);
+ 		}
+ 	} else {
+-		unsigned int i, n, step;
++		unsigned int step;
++		int i;
+ 
+-		n = get_possible_cpus();
+ 		step = round_up(info->value_size, 8);
+ 
+ 		jsonw_name(json_wtr, "key");
+@@ -163,10 +164,10 @@ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+ 
+ 		jsonw_name(json_wtr, "values");
+ 		jsonw_start_array(json_wtr);
+-		for (i = 0; i < n; i++) {
++		for (i = 0; i < cpu_cnt; i++) {
+ 			jsonw_start_object(json_wtr);
+ 
+-			jsonw_int_field(json_wtr, "cpu", i);
++			jsonw_int_field(json_wtr, "cpu", cpu_ids[i]);
+ 
+ 			jsonw_name(json_wtr, "value");
+ 			print_hex_data_json(value + i * step,
+@@ -183,7 +184,7 @@ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+ 			};
+ 
+ 			jsonw_name(json_wtr, "formatted");
+-			do_dump_btf(&d, info, key, value);
++			do_dump_btf(&d, info, key, value, cpu_ids, cpu_cnt);
+ 		}
+ 	}
+ 
+@@ -245,7 +246,7 @@ print_entry_error(struct bpf_map_info *map_info, void *key, int lookup_errno)
+ }
+ 
+ static void print_entry_plain(struct bpf_map_info *info, unsigned char *key,
+-			      unsigned char *value)
++			      unsigned char *value, const int *cpu_ids, int cpu_cnt)
+ {
+ 	if (!map_is_per_cpu(info->type)) {
+ 		bool single_line, break_names;
+@@ -273,9 +274,9 @@ static void print_entry_plain(struct bpf_map_info *info, unsigned char *key,
+ 
+ 		printf("\n");
+ 	} else {
+-		unsigned int i, n, step;
++		unsigned int step;
++		int i;
+ 
+-		n = get_possible_cpus();
+ 		step = round_up(info->value_size, 8);
+ 
+ 		if (info->key_size) {
+@@ -284,9 +285,9 @@ static void print_entry_plain(struct bpf_map_info *info, unsigned char *key,
+ 			printf("\n");
+ 		}
+ 		if (info->value_size) {
+-			for (i = 0; i < n; i++) {
+-				printf("value (CPU %02u):%c",
+-				       i, info->value_size > 16 ? '\n' : ' ');
++			for (i = 0; i < cpu_cnt; i++) {
++				printf("value (CPU %02d):%c",
++				       cpu_ids[i], info->value_size > 16 ? '\n' : ' ');
+ 				fprint_hex(stdout, value + i * step,
+ 					   info->value_size, " ");
+ 				printf("\n");
+@@ -739,7 +740,7 @@ static int do_show(int argc, char **argv)
+ 
+ static int dump_map_elem(int fd, void *key, void *value,
+ 			 struct bpf_map_info *map_info, struct btf *btf,
+-			 json_writer_t *btf_wtr)
++			 json_writer_t *btf_wtr, const int *cpu_ids, int cpu_cnt)
+ {
+ 	if (bpf_map_lookup_elem(fd, key, value)) {
+ 		print_entry_error(map_info, key, errno);
+@@ -747,7 +748,7 @@ static int dump_map_elem(int fd, void *key, void *value,
+ 	}
+ 
+ 	if (json_output) {
+-		print_entry_json(map_info, key, value, btf);
++		print_entry_json(map_info, key, value, btf, cpu_ids, cpu_cnt);
+ 	} else if (btf) {
+ 		struct btf_dumper d = {
+ 			.btf = btf,
+@@ -755,9 +756,9 @@ static int dump_map_elem(int fd, void *key, void *value,
+ 			.is_plain_text = true,
+ 		};
+ 
+-		do_dump_btf(&d, map_info, key, value);
++		do_dump_btf(&d, map_info, key, value, cpu_ids, cpu_cnt);
+ 	} else {
+-		print_entry_plain(map_info, key, value);
++		print_entry_plain(map_info, key, value, cpu_ids, cpu_cnt);
+ 	}
+ 
+ 	return 0;
+@@ -830,6 +831,8 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 	void *key, *value, *prev_key;
+ 	unsigned int num_elems = 0;
+ 	struct btf *btf = NULL;
++	int *cpu_ids = NULL;
++	int cpu_cnt = 0;
+ 	int err;
+ 
+ 	key = malloc(info->key_size);
+@@ -842,6 +845,14 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 
+ 	prev_key = NULL;
+ 
++	if (map_is_per_cpu(info->type)) {
++		cpu_cnt = get_possible_cpu_ids(&cpu_ids);
++		if (cpu_cnt < 0) {
++			err = cpu_cnt;
++			goto exit_free;
++		}
++	}
++
+ 	if (wtr) {
+ 		err = get_map_kv_btf(info, &btf);
+ 		if (err) {
+@@ -873,7 +884,8 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 				err = 0;
+ 			break;
+ 		}
+-		if (!dump_map_elem(fd, key, value, info, btf, wtr))
++		if (!dump_map_elem(fd, key, value, info, btf, wtr,
++				   cpu_ids, cpu_cnt))
+ 			num_elems++;
+ 		prev_key = key;
+ 	}
+@@ -890,6 +902,7 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ exit_free:
+ 	free(key);
+ 	free(value);
++	free(cpu_ids);
+ 	free_map_kv_btf(btf);
+ 
+ 	return err;
+@@ -1032,17 +1045,30 @@ static int do_update(int argc, char **argv)
+ 	return err;
+ }
+ 
+-static void print_key_value(struct bpf_map_info *info, void *key,
+-			    void *value)
++static int print_key_value(struct bpf_map_info *info, void *key,
++			   void *value)
+ {
+ 	json_writer_t *btf_wtr;
+ 	struct btf *btf;
++	int *cpu_ids = NULL;
++	int cpu_cnt = 0;
++	int err = 0;
+ 
+-	if (get_map_kv_btf(info, &btf))
+-		return;
++	if (map_is_per_cpu(info->type)) {
++		cpu_cnt = get_possible_cpu_ids(&cpu_ids);
++
++		if (cpu_cnt < 0) {
++			err = cpu_cnt;
++			goto out;
++		}
++	}
++
++	err = get_map_kv_btf(info, &btf);
++	if (err)
++		goto out;
+ 
+ 	if (json_output) {
+-		print_entry_json(info, key, value, btf);
++		print_entry_json(info, key, value, btf, cpu_ids, cpu_cnt);
+ 	} else if (btf) {
+ 		/* if here json_wtr wouldn't have been initialised,
+ 		 * so let's create separate writer for btf
+@@ -1052,7 +1078,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
+ 			p_info("failed to create json writer for btf. falling back to plain output");
+ 			free_map_kv_btf(btf);
+ 			btf = NULL;
+-			print_entry_plain(info, key, value);
++			print_entry_plain(info, key, value, cpu_ids, cpu_cnt);
+ 		} else {
+ 			struct btf_dumper d = {
+ 				.btf = btf,
+@@ -1060,13 +1086,16 @@ static void print_key_value(struct bpf_map_info *info, void *key,
+ 				.is_plain_text = true,
+ 			};
+ 
+-			do_dump_btf(&d, info, key, value);
++			do_dump_btf(&d, info, key, value, cpu_ids, cpu_cnt);
+ 			jsonw_destroy(&btf_wtr);
+ 		}
+ 	} else {
+-		print_entry_plain(info, key, value);
++		print_entry_plain(info, key, value, cpu_ids, cpu_cnt);
+ 	}
+ 	free_map_kv_btf(btf);
++out:
++	free(cpu_ids);
++	return err;
+ }
+ 
+ static int do_lookup(int argc, char **argv)
+@@ -1110,7 +1139,7 @@ static int do_lookup(int argc, char **argv)
+ 	}
+ 
+ 	/* here means bpf_map_lookup_elem() succeeded */
+-	print_key_value(&info, key, value);
++	err = print_key_value(&info, key, value);
+ 
+ exit_free:
+ 	free(key);
+@@ -1390,7 +1419,7 @@ static int do_pop_dequeue(int argc, char **argv)
+ 		goto exit_free;
+ 	}
+ 
+-	print_key_value(&info, key, value);
++	err = print_key_value(&info, key, value);
+ 
+ exit_free:
+ 	free(key);
 -- 
 2.53.0
 
