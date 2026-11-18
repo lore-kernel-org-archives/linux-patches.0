@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048697;
-	b=1zm9LLG57uWyiXwD25Dufw+eVpM6t/ODbyHdts5hWKmUkGkPfuAQeBajv48I+Xfh1KlT
-	 IDSvSr7ZD+Q9q7FY+XDhWN3L9sdR1+8cppm9gQVatDCsNknSuTD0W53HW5GHwEQ5pfvqT
-	 BiFZl+cRk3UJgBrInCnH0O/ji+bn4/VKuyT2SNzfa/bcvbTPmX/OWYQMC8NiFAYiawq6a
-	 OiYM8Nj2QGCLRNWRXLUhPFJ9W+PdmmKY7VQZmoYvlZs9sv3lGK9Jit3QwhF88elA6IK/C
-	 etgAmTYmqAhoP9PZTBPMhYAab5mRxNxB98SfcMQV7kZwYiylmHgzG8v/TnFAjm5yZeg==
+	t=1795048699;
+	b=ioY3m0uuGqC/TQ784Re5rsTpBF+EFCSegbqGkNVGlntijmj3hU6ozJJXUXCYk3nsjIiv
+	 PV63LNFZhoQ1l/WDctbRzQ7YRbkfsSAVBYm679IqFFrj70VEVwodJ73oIzpROT1P/Yz++
+	 Ue0hVuYwnVGrVwm+vUeke8enXIc4Gtd/A1KILCMShhAWg8AoKzNo18jtKomFA28vy56sU
+	 X74fXgS0nstXax9Iz5R6aP0XAxlguxWPncwfPvZ73qbIgaRYYsn8J1+oUHROubDzARNfu
+	 bjEX02LpbdlU2CvI08l3O5xRPPkqnhrUq0VkC/EVO07HZkeARC3rA1+os1tlsTJyfpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048699;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1h12OI4+Pz0DDbQSrJvg9gazQizGG1AYaVNAYNtEsoY=;
-	b=5juBfQz4Naafe3Nci/Vj6cYDbJF1KVdm4JW0kKJ9zDKXCJBL9gO5Wvb1dNq9XOeVhFad
-	 2oxsjeRBHxy9PRrm+6zacAE4wKLb6cU2A3mP3xqOtp4x0ukDGUquhkWmgDAFLEyCXLTW2
-	 +e4cAXolW3wMwp4LDANZL4wbc6J20LoKoIAOY44vg3msrMcVBWUBKyvHN3FdlfqZ1hvHL
-	 bYjdJdSlPf1XeLXMjup7IggNr5d4mssZoheWH6FzLBLKvlFS+lL4DuHcMewf6XNelsv9I
-	 KcQVei9j5Or0WQAOlwTmMgm+wJfl8gWtIi0uGF2L/GhGCtewKaMb0yKuVMtY6GYWeog==
+	bh=xaGR1LWllbgoukR5vHJC/yYKGLdy+qXTRKUKN65BESE=;
+	b=wn5mkFtMfHVfK3FwCMimK9bFrkV+FWnego2TrlDrO1yXHXQNOK2sBDgM31Qd8qcKOasZ
+	 TmbAnqMHNoc+QHu/X+qD0IzCX030DdIjQYUXu3jm1ReGeTlsyv0iDcJtRvo/Z0CEb4rww
+	 ki6Q2Q1O3PoOTIp11na99sdu5tQtGM788Xitl5NBzjiCbM7H0HoBi3pz6xpMqkkGPdArZ
+	 Kx/bwVP9PGNYmeAZhSr53TKHmwPXuiXntfpTURyEddRoROVOkt3XY6j0aHDGSQuzJ9zpi
+	 wpcvhcPdmrdkHmw+TD6BBn/XicJqXsEx6k8wFbabf2X+8rvbZaK7BE+hDxTchlz9sMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SGpnKu3K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrOrgWdg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CA7606A320;
-	Thu, 19 Nov 2026 00:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48C6606A320;
+	Thu, 19 Nov 2026 00:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SGpnKu3K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521131F000C4;
-	Thu, 19 Nov 2026 00:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrOrgWdg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3071F000C4;
+	Thu, 19 Nov 2026 00:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048696;
-	bh=1h12OI4+Pz0DDbQSrJvg9gazQizGG1AYaVNAYNtEsoY=;
+	s=korg; t=1795048699;
+	bh=xaGR1LWllbgoukR5vHJC/yYKGLdy+qXTRKUKN65BESE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SGpnKu3KKa+UyRikDjLRC8hMt0F2W1HzUr27HIiR/BFMQbl08orpXAwxNiBtVMret
-	 Fh0ItJZpx9hfEzcT+cH1geyl43pi2IqaGGPQWkebUWO6K78YPc/rm3HDys26Bs1cO7
-	 KlaLyhoUbRkgb/REgCyTuCE/ZO+lJVusJkbDXwY0=
+	b=mrOrgWdgGBmujqNsogPfJMca902UodSuI6U8ZBdlyAiJMQx+dprqOyuGtUVuhNBAB
+	 fqvVn/I5S68xI3rujNePdjcSMrvZuWLsFvcTLxgl/bQ1VIQhGQIvq0wHmjByofQqYH
+	 HnmzFr3vEqGMVWDZ57Ys92pnJspfYgqVDWQR41tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yibo Tan <lhfff@tju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2088/2857] RDMA/mlx5: Initialize QP/RQ/SQ resource refcount before publishing it
-Date: Wed, 18 Nov 2026 15:52:02 +0100
-Message-ID: <20261118150316.588285751@linuxfoundation.org>
+Subject: [PATCH 6.1 2089/2857] ASoC: amd: acp-es8336: Use an owned codec device reference
+Date: Wed, 18 Nov 2026 15:52:03 +0100
+Message-ID: <20261118150316.624593272@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,53 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-[ Upstream commit 829a0e65deff3f826a7870a52404aeaf1a3fec3f ]
+[ Upstream commit c257e3bcb36f4597d6dbb6fbc546e466ef53e385 ]
 
-create_resource_common() inserted the resource into the radix tree
-before its initialization was complete. A firmware EQE in that window
-finds a zero refcount_t and calls refcount_inc() on it; the refcount API
-treats this as a use-after-free, saturates the counter, and permanently
-breaks the resource's lifecycle tracking.
+acpi_get_first_physical_node() returns a borrowed device pointer. If the
+pa-enable GPIO lookup fails, st_es8336_late_probe() puts that pointer
+despite not owning a reference. A later physical-node teardown can then
+release the device while device_del() is still using it.
 
-Move the initialization before the radix_tree_insert().
+This was reproduced on current mainline with the real static late-probe
+callback and normal platform-device unregister. The GPIO lookup returned
+-EPROBE_DEFER and KASAN reported a slab-use-after-free in device_del(),
+with the object freed by acpi_unbind_one().
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-15-yishaih@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Use acpi_bus_get_primary_device(), which obtains a stable device
+reference under the physical-node lock, and release it at callback exit
+with scoped cleanup. Keep the reference callback-local because late probe
+can be retried; registering one devres action per attempt would accumulate
+references.
+
+The same KASAN guest with this change reached the same -EPROBE_DEFER and
+unregister path without KASAN, WARNING, Oops or panic. The test directly
+invoked the production callback and did not emulate a complete ASoC card or
+physical AMD hardware.
+
+Fixes: 02527c3f2300 ("ASoC: amd: add Machine driver for Jadeite platform")
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Link: https://patch.msgid.link/20260922185057.954150-2-lhfff@tju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qpc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/amd/acp-es8336.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
-index 24787ad71a947..4617eeb8ecffb 100644
---- a/drivers/infiniband/hw/mlx5/qpc.c
-+++ b/drivers/infiniband/hw/mlx5/qpc.c
-@@ -160,6 +160,10 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
- 	int err;
+diff --git a/sound/soc/amd/acp-es8336.c b/sound/soc/amd/acp-es8336.c
+index 0b4a6e84e3bea..903478949b6b7 100644
+--- a/sound/soc/amd/acp-es8336.c
++++ b/sound/soc/amd/acp-es8336.c
+@@ -31,7 +31,6 @@
  
- 	qp->common.res = rsc_type;
-+	refcount_set(&qp->common.refcount, 1);
-+	init_completion(&qp->common.free);
-+	qp->pid = current->pid;
-+
- 	spin_lock_irq(&table->lock);
- 	err = radix_tree_insert(&table->tree,
- 				qp->qpn | (rsc_type << MLX5_USER_INDEX_LEN),
-@@ -168,10 +172,6 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
- 	if (err)
- 		return err;
+ static unsigned long acp2x_machine_id;
+ static struct snd_soc_jack st_jack;
+-static struct device *codec_dev;
+ static struct gpio_desc *gpio_pa;
  
--	refcount_set(&qp->common.refcount, 1);
--	init_completion(&qp->common.free);
--	qp->pid = current->pid;
--
+ static int sof_es8316_speaker_power_event(struct snd_soc_dapm_widget *w,
+@@ -194,6 +193,7 @@ static const struct acpi_gpio_mapping acpi_es8336_gpios[] = {
+ 
+ static int st_es8336_late_probe(struct snd_soc_card *card)
+ {
++	struct device *codec_dev __free(put_device) = NULL;
+ 	struct acpi_device *adev;
+ 	int ret;
+ 
+@@ -216,7 +216,6 @@ static int st_es8336_late_probe(struct snd_soc_card *card)
+ 	if (IS_ERR(gpio_pa)) {
+ 		ret = dev_err_probe(card->dev, PTR_ERR(gpio_pa),
+ 				    "could not get pa-enable GPIO\n");
+-		put_device(codec_dev);
+ 		return ret;
+ 	}
  	return 0;
- }
- 
 -- 
 2.53.0
 
