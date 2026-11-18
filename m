@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041482;
-	b=N4X/iM+3bCp1LXm8sx3RUTEaP4DQrxjfTMzfFDMJOnYLzrvRAomdnnkV9AKGxwEOBPX6
-	 zCCGmSo1Fd2lbkvBPlTx89juAVcKgZMrdgQzZEdshue6P86YNdjLCTIrzW2+mj7SIFvhb
-	 gdGW6cT3yTcGT0u/70qHRgf/Z5vFM1DOnPwRh/SqboAFZz+YY51XTEV9LizIp6whpahD7
-	 aw8QYVZ8spaxDu/BpzD2N3QhOypuK5qPyyxdyLyd4hczjavrN2TUnqximmOQUZcxm0LtY
-	 2IYu//m/hBgochiHdasjT9lkAfEjSJkndPYKqHRdyKGn279HKC53SZlEl90LDk+7Psg==
+	t=1795041485;
+	b=3cvYjc2Z2fqKUFcJB9hxNNTCs6Uf6R/+Wu7zsgIV+EJ/8EL5am5aaXqut9nkhKL1TU8H
+	 KPLtYSl6jg+tUcMwkOL0TIgCesWl/KpkF6v1+P2kSEQhcYvbBC/LQJQj8SqEbpVPLDfOO
+	 Ogc4FVB9okIhy00YWh2meAXOnB1ocIxaQm0xye0a1Xrgl2iDl7OR0ZlT4LzWe1uAaFRG/
+	 dWOqXTR+tvYzrJvBKx8yfDAE+p9GkK0FEaBiQJe9WAI4OhvqK5ObxT4JAnEhtsyynmXnf
+	 dOCzYIc6/aEwrS2PBAw8G7I/Rgs8M9PcsbPcgztyedssJ9y0UHyeIuAZL166g9rEzOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041482;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041485;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cs5Pjq42o7ocLuFL0SHcP4YiFZNfumfd+uvtanQUBa0=;
-	b=AOLJUirbwceO7ER6j9LxHerWkvlvhMT3QMda+yr74IV1gKE+LAlchRIiwOrtYA32gKmi
-	 7cqFqjNykeT4k2cwwyNLqxf4bgA/wO5uj31R3kDR7dIhgc+qG0na7+b9++fOE9txJjc1X
-	 O/35b/xL0FdQWsDSZVWA+VPFmppQksVmN/6qGL1U7UxbdjVrjjNaROCCy4NeVxK4Hz6Xu
-	 I0MbH8XKyrFkut3XLKLNjuTIXJzq8EWwg7SN7WFScBwc/OtdLsPHCy/Bhv1NQRfEev/LB
-	 EUB7HLxMJBE9Nff4npeu/vBaCEjOkQWZ/xxWrEhLJodkkmgfu4cbrDnuiUxnEGSQPUA==
+	bh=+NogD+UPcrtZlzb+XjQVE06EbpPFRTxQvPA/KkRMGN4=;
+	b=bjvseKIEyJKyLl5ZYcGFFam1CScVr3pQiMXYhE99XH6rPp7d56o1Nujqy+UpblGuN8d4
+	 Ec00CxIa63K3yqyF6wC6/sdrcHb8GSmqiLWm2iIpOqDmnkNkfgD83OdJauINjLrpnMqZN
+	 VPHJjezu4jZIROhPjeNgSY/RaFJR4/ht86G3Ey02tkmbZHPkYiHVYOqB+tXbYJIBBbIdY
+	 t1cgjruNkSJIOEEj4MvmCbahb4eLsIrMTHmKQDDjKAC6xLZsDhVrRTD+QhKj3qggclNN+
+	 yEkSl6qgXNcEmrOXKiRUA3ymqSGLNJXzBzaCoHk4W1aI8ARMi0KdYokpUkT6w9+wjhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJCam1TB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORj6M9zY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C980606A6C8;
-	Wed, 18 Nov 2026 22:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72504606A332;
+	Wed, 18 Nov 2026 22:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJCam1TB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02581F000C6;
-	Wed, 18 Nov 2026 22:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORj6M9zY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7470B1F000C6;
+	Wed, 18 Nov 2026 22:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041482;
-	bh=Cs5Pjq42o7ocLuFL0SHcP4YiFZNfumfd+uvtanQUBa0=;
+	s=korg; t=1795041485;
+	bh=+NogD+UPcrtZlzb+XjQVE06EbpPFRTxQvPA/KkRMGN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CJCam1TBKEkVudBicQUWUWKEQYzAilntqe/ZZ5KEgzfp8h7EDOwq7C09LGotXZ2pA
-	 ce7D+pbSGNtsnc90Qvhjj20tV2qtT/TiEGlqPE04WYosqqWj0D875TOs0hgwU2gkwX
-	 +rhlzSUtxVg7ZLejvSCZEPrKsMNgTlKyP0YouCEI=
+	b=ORj6M9zYLgqS3mmM7Yso0/Gf7GR03UdCv+b+FnEMYhG+24oUoMuhz8cqoO+4QXGRQ
+	 uXRfX0MiFI1Rcml3BKifIpPCiqIG7PJV/oy0AT+ZPQMKoc/KSKKwaBUfAtGN1t7s1k
+	 3oB9RJskWS8TbPNqYLRtABWT0PW/1V6nHkUZhNqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2829/3318] ASoC: intel: atom: Fix .shutdown() being skipped on rollback
-Date: Wed, 18 Nov 2026 15:57:31 +0100
-Message-ID: <20261118150445.505388808@linuxfoundation.org>
+Subject: [PATCH 6.6 2830/3318] ASoC: atmel-i2s: fix MCK generator error handling
+Date: Wed, 18 Nov 2026 15:57:32 +0100
+Message-ID: <20261118150445.532836451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,37 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit e3bb575811042ca30ac9b7b4dacc74aab8efa512 ]
+[ Upstream commit 2e2da92de9bffd2cdbb9a2558fe60de7f1bb09e3 ]
 
-snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from sst_media_open(). ASoC only marks the DAI as started when
-.startup() returns 0, so .shutdown() can be skipped on rollback.
+Disable the gclk and reset the MCK configuration when an error occurs
+while enabling the MCK generator.
 
-Return 0 explicitly on success.
+This prevents the gclk from remaining enabled after a failed clock
+configuration.
 
-Fixes: 4889a8a73f65 ("ASoC: intel: atom: Use __free(kfree) for stream pointer")
-Fixes: 6cc0f4e63994 ("ASoC: Intel: mfld_pcm: move stream handling to dai_ops")
+Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261008103831.542533-20-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261002043856.97295-2-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/atom/sst-mfld-platform-pcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/atmel/atmel-i2s.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/intel/atom/sst-mfld-platform-pcm.c b/sound/soc/intel/atom/sst-mfld-platform-pcm.c
-index b5a6a262fe817..201a280edcc0f 100644
---- a/sound/soc/intel/atom/sst-mfld-platform-pcm.c
-+++ b/sound/soc/intel/atom/sst-mfld-platform-pcm.c
-@@ -355,7 +355,7 @@ static int sst_media_open(struct snd_pcm_substream *substream,
+diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
+index 6c20c643f3218..e26d6cf864dec 100644
+--- a/sound/soc/atmel/atmel-i2s.c
++++ b/sound/soc/atmel/atmel-i2s.c
+@@ -466,11 +466,21 @@ static int atmel_i2s_switch_mck_generator(struct atmel_i2s_dev *dev,
+ 	mr |= ATMEL_I2SC_MR_IMCKMODE_I2SMCK;
+ 	ret = regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, mr);
+ 	if (ret)
+-		return ret;
++		goto err_disable_gclk;
  
- 	stream = NULL;
- 
--	return ret_val;
+ 	/* Finally enable the I2S Master Clock generator. */
+-	return regmap_write(dev->regmap, ATMEL_I2SC_CR,
+-			    ATMEL_I2SC_CR_CKEN);
++	ret = regmap_write(dev->regmap, ATMEL_I2SC_CR, ATMEL_I2SC_CR_CKEN);
++	if (ret)
++		goto err_reset_mr;
++
 +	return 0;
++
++err_reset_mr:
++	regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, 0);
++err_disable_gclk:
++	clk_disable_unprepare(dev->gclk);
++
++	return ret;
  }
  
- static void sst_media_close(struct snd_pcm_substream *substream,
+ static int atmel_i2s_trigger(struct snd_pcm_substream *substream, int cmd,
 -- 
 2.53.0
 
