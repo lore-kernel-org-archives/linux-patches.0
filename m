@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023270;
-	b=ycYnAA9FVcghoNsGr13k387dXR6JCq9sd1ZkSsJVGId0pj/1pogC6OhyKM5kNpBmwh92
-	 wlnO/qql4kuwde5lgM93NSn/YXAO1sx7/aEwTIF0ZjHyR7JbcnHAnqK//NJ/LtA/6dWoY
-	 jJb+K9BKI8qBSl3PA2BFoTUBJXRMqaLFAdAty8RjKUAT7wzv5peqdL2v6x3STreVgR5o/
-	 5KhhcGURlZZehlxI+nTZ4lGnv3ri2Qqk8maOr4XQ6uKGoxKjotuGQbk0rBV8svvuWG2IP
-	 NihWwnjIX0bVhhbo9T5pw8u5NzRxSEaU7iblHACSknmT4fQM9xyyfmwZyRPC5o22fJQ==
+	t=1795023273;
+	b=uxaJ7H1l7WnLE3rsiFNcZwAhH2bLtyXVW8sMm8wTU1lXhG2EDC1MtYbFzX1D//rpzGyu
+	 FZLBSiw/xgrcuf8Wn2uj00jUbLqXebyjrjLUfDovD2l70Bwuhu1Swd4AHpOykHWwox63e
+	 bi6MR9E+A5E4UEgf+/4Bm6eFr6DqyS5Y2s62jLgdgBIc2fQPSwi1AiAwVunXjReTgSs+I
+	 laETaJLl+p5ajJGHn1lGa9WUT8MWbleAOuSvmkUMIZNpuQCHLZ6aUXreNIlbADNVnYuwb
+	 MtLmOMoka7mwGqiCldA078PRalMZWaz6CXnVWSGGB53xTh+Qt/Yhhv2j7V17Qlla7yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tyLGsSt+YDdNbRFbpGJpVijcutRsn+GaTC6KTvpmFbQ=;
-	b=ILYp8dTxnxiD/DIhak3nHenFbfSHv6x0+bhCFfQwRQGfOgCkwIhDzrHXfIOTu8+lGiBM
-	 Cs6j8KbjVhvx8MeKPcN3kZwggZ2Y5ULHPrWwBCm+bwykCG9FQr1QvmkMnXve0BTqNDoB3
-	 +r44zi9+KlL4D6kl11jEB1eEGK3szm5s+BGNuXfrThNyngUPyHtOvZcPc3V1bGtZtDbd0
-	 5GTlaRsbOIFqVG++cpyDXMDHa8R5tNN4TIVDNnm4jxNmixXwJnWJ4LsEpDCjJ+c+raEfM
-	 Lr0iZCbUvQTft4X0wYdIc7NyvtHBK0WOkwGVIU+gaqGw5u6dcEafUxj0CBqDGYsxgRA==
+	bh=f6NeLZ1AzdS8ZJSb0Q9pKOt6TMq2Xb6tn5GSsnwGLHM=;
+	b=De9UeNWYqySt5gS8aRK+3PSuKD3pvkjGOSElrGnRJDHCQ1DwP0IdncQ/u4RIL/7X9rr8
+	 E9t0i3DxPg/qaJ4gxPR5orgTF1LPvQ8Y4uKSgU+x/oa2+pXbLmMNH3snjayjeAJOSNLDa
+	 CPw+ZWpPW8TZpX1nD0Tp15PGYIh7DY8DPeJRzDjkh86vx8iR6iANCzapMJr83PCe7lPIK
+	 1iX9NWaNyQjGhmshPm2BSRDYsaWaHiiuptUHXHf8+jBWjxzlTBQhBXUKh74bNveXymIui
+	 IqK/xrXGSb0IEqz/CMDBVXXAshN/Ef8RAhWCcTKyYxFkudIqzbnPujmMs/l5kf9w63A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RfBXRia;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7QnyrL9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257AB606A320;
-	Wed, 18 Nov 2026 17:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88840606A325;
+	Wed, 18 Nov 2026 17:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RfBXRia
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2381F000C4;
-	Wed, 18 Nov 2026 17:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7QnyrL9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2721F000C4;
+	Wed, 18 Nov 2026 17:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023270;
-	bh=tyLGsSt+YDdNbRFbpGJpVijcutRsn+GaTC6KTvpmFbQ=;
+	s=korg; t=1795023272;
+	bh=f6NeLZ1AzdS8ZJSb0Q9pKOt6TMq2Xb6tn5GSsnwGLHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0RfBXRiaBW6ULhQlEo/a/Tt2nNlbi0EMWEICC8q5rS9kkvCWdsElSAKioV803S52Z
-	 18KMBgs7qqDKh/PPKe45d/9CHeV1d1AJPTThy9rJ8VWKsMzLbvDVDNZQ1KmENEZ8SC
-	 05KnkFxVklNRjeRxZrx8Oop1B0vJJIGAgCKNJrKM=
+	b=g7QnyrL98zQTirsxHhpWOOQjPpriFIVxa237e3w3Qyqj4pZyVyUZpnaKnwEXslGVO
+	 zSummncq68RwzXilbeikeG2T5SRpwuXSFq0VbiYuypY2efbggYUW4VA15fSfzCfqZf
+	 cS6Hp8A5BPq8hYEGIJWh05BG629Q0Uer+lXNYs3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Peixin Xie <peixin.xie@linux.spacemit.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0310/2151] ACPI: PCI: Introduce acpi_dev_get_pci_dev()
-Date: Wed, 18 Nov 2026 15:34:05 +0100
-Message-ID: <20261118150133.202474981@linuxfoundation.org>
+Subject: [PATCH 6.18 0311/2151] ACPI: scan: Stop calling acpi_bus_init_power() early
+Date: Wed, 18 Nov 2026 15:34:06 +0100
+Message-ID: <20261118150133.262276686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,99 +71,268 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 9d4f0ecb87fd939207682ec30dcaf128d43f07fb ]
+[ Upstream commit 2f4ddf2bd1baf0ee3c8542ec6f382a3585cae607 ]
 
-Some acpi_get_pci_dev() callers already have a struct ACPI device for
-which they want to get the struct pci_dev pointer of the associated
-PCI device, so they don't need to look for one.
+There is a problem, introduced by commit 9d9bcae47fd5 ("ACPI: delay
+enumeration of devices with a _DEP pointing to an INT3472 device")
+inadvertently, that devices with missing dependencies may be put
+into power state D0 prematurely [1].
 
-For this reason, add acpi_dev_get_pci_dev() that will get a PCI device
-for a given ACPI one (if possible) and turn acpi_get_pci_dev() into
-a static inline helper passing the acpi_fetch_acpi_dev() return value
-directly to acpi_dev_get_pci_dev().
+Namely, acpi_bus_init_power() called by acpi_bus_get_power_flags()
+during the early initialization of ACPI device objects, may discover
+that all of the power resources needed by the given device to be in
+power state D0 are initially on, so it will reference count those
+power resources and transition the device into D0.  Later, if
+acpi_bus_attach() running for that device notices that it has missing
+dependencies, the enumeration of it will be deferred and its
+power_manageable flag will be cleared, even though it is still in D0
+at that point.
 
-No intentional functional impact.
+After the dependencies in question have been met, acpi_bus_attach()
+runs again for the device and now it calls acpi_bus_init_power() that
+takes additional references to the power resources used by the device
+in D0.  These additional references prevent the power resources from
+being turned off when the device goes into D3hot/D3cold.
 
+Another problem, related to the previous one, is that ACPI power state
+initialization may be carried out for devices whose parents are not
+ready for enumeration which may lead to initialization ordering issues.
+
+To address both, stop calling acpi_bus_init_power() from
+acpi_bus_get_power_flags(), but also take the initialization of
+PCI devices into account, which needs to be done because they
+are initialized and bound to their ACPI companions before
+acpi_bus_attach() is called for the latter.
+
+To that end, notice that acpi_power_up_if_adr_present() is used for
+powering-up PCI devices in D3cold before walking the bus in order to
+discover them and the initial ACPI power state of those devices needs
+to be known for this purpose, so add an acpi_bus_init_power() invocation
+to that function.  [The debug statement printed by it duplicates the
+debug statements printed during the acpi_bus_init_power() execution, so
+drop it.]
+
+Moreover, since the ACPI companions of PCI devices are associated with
+the corresponding PCI devices found on the bus before acpi_bus_attach()
+is called for them, it is not necessary or even useful to skip them in
+acpi_bus_attach() due to an ACPI status mismatch, so avoid doing that
+and complain if the ACPI status does not match the observed situation.
+
+Also use the ACPI power state tracking to decide whether or not
+the device's power state needs to be initialized in acpi_bus_attach()
+instead of using the "initialized" flag of the ACPI device object
+for this purpose, which is fragile and inconvenient, and clear the
+power_manageable flag on failure in acpi_bus_init_power() (additionally,
+poison the device ACPI power state as "invalid" if the initialization of
+it fails).  That allows the clearing of the power_manageable flag for
+devices with unmet dependencies to be dropped.
+
+While at it, add a debug message pringing statement to
+acpi_bus_init_power() to facilitate diagnostics.
+
+Fixes: 9d9bcae47fd5 ("ACPI: delay enumeration of devices with a _DEP pointing to an INT3472 device")
+Link: https://lore.kernel.org/linux-acpi/20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com/ [1]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/3430928.44csPzL39Z@rafael.j.wysocki
-Stable-dep-of: 2f4ddf2bd1ba ("ACPI: scan: Stop calling acpi_bus_init_power() early")
+Tested-by: Peixin Xie <peixin.xie@linux.spacemit.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/2295263.irdbgypaU6@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pci_root.c     | 22 +++++++++++-----------
- include/acpi/acpi_drivers.h |  9 +++++++--
- 2 files changed, 18 insertions(+), 13 deletions(-)
+ drivers/acpi/device_pm.c | 62 ++++++++++++++++++++++++++++++++--------
+ drivers/acpi/scan.c      | 40 +++++++++++++++++---------
+ 2 files changed, 76 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
-index 34b53dc892b21..cd36373663643 100644
---- a/drivers/acpi/pci_root.c
-+++ b/drivers/acpi/pci_root.c
-@@ -294,20 +294,20 @@ struct acpi_pci_root *acpi_pci_find_root(acpi_handle handle)
- EXPORT_SYMBOL_GPL(acpi_pci_find_root);
+diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
+index 2b0d248f6394e..62bce1ae8c1d6 100644
+--- a/drivers/acpi/device_pm.c
++++ b/drivers/acpi/device_pm.c
+@@ -23,6 +23,8 @@
+ #include "fan.h"
+ #include "internal.h"
  
++#define ACPI_D_STATE_INVALID	ACPI_D_STATE_COUNT
++
  /**
-- * acpi_get_pci_dev - convert ACPI CA handle to struct pci_dev
-- * @handle: the handle in question
-+ * acpi_dev_get_pci_dev - Get a struct pci_dev for a given ACPI device
-+ * @adev: Target ACPI device.
-  *
-- * Given an ACPI CA handle, the desired PCI device is located in the
-- * list of PCI devices.
-+ * Find the PCI device associated with @adev, if any, and bump up its reference
-+ * counter.
-  *
-- * If the device is found, its reference count is increased and this
-- * function returns a pointer to its data structure.  The caller must
-- * decrement the reference count by calling pci_dev_put().
-- * If no device is found, %NULL is returned.
-+ * Callers are responsible for dropping the PCI device reference obtained by
-+ * this function.
-+ *
-+ * Return: The struct pci_dev pointer of a reference-counted PCI device on
-+ * success or NULL on failure.
-  */
--struct pci_dev *acpi_get_pci_dev(acpi_handle handle)
-+struct pci_dev *acpi_dev_get_pci_dev(struct acpi_device *adev)
- {
--	struct acpi_device *adev = acpi_fetch_acpi_dev(handle);
- 	struct acpi_device_physical_node *pn;
- 	struct pci_dev *pci_dev = NULL;
- 
-@@ -328,7 +328,7 @@ struct pci_dev *acpi_get_pci_dev(acpi_handle handle)
- 
- 	return pci_dev;
+  * acpi_power_state_string - String representation of ACPI device power state.
+  * @state: ACPI device power state to return the string representation of.
+@@ -293,24 +295,28 @@ int acpi_bus_set_power(acpi_handle handle, int state)
  }
--EXPORT_SYMBOL_GPL(acpi_get_pci_dev);
-+EXPORT_SYMBOL_GPL(acpi_dev_get_pci_dev);
+ EXPORT_SYMBOL(acpi_bus_set_power);
  
- /**
-  * acpi_pci_osc_control_set - Request control of PCI root _OSC features.
-diff --git a/include/acpi/acpi_drivers.h b/include/acpi/acpi_drivers.h
-index b14d165632e76..3f9e16f44b2bd 100644
---- a/include/acpi/acpi_drivers.h
-+++ b/include/acpi/acpi_drivers.h
-@@ -59,14 +59,19 @@ int acpi_pci_link_free_irq(acpi_handle handle);
- struct pci_bus;
- 
- #ifdef CONFIG_PCI
--struct pci_dev *acpi_get_pci_dev(acpi_handle);
-+struct pci_dev *acpi_dev_get_pci_dev(struct acpi_device *adev);
- #else
--static inline struct pci_dev *acpi_get_pci_dev(acpi_handle handle)
-+static inline struct pci_dev *acpi_dev_get_pci_dev(struct acpi_device *adev)
+-int acpi_bus_init_power(struct acpi_device *device)
++static int acpi_device_init_power(struct acpi_device *device)
  {
- 	return NULL;
- }
- #endif
+ 	int state;
+ 	int result;
  
-+static inline struct pci_dev *acpi_get_pci_dev(acpi_handle handle)
+-	if (!device)
+-		return -EINVAL;
+-
+-	device->power.state = ACPI_STATE_UNKNOWN;
+-	if (!acpi_device_is_present(device)) {
+-		device->flags.initialized = false;
+-		return -ENXIO;
+-	}
+-
+ 	result = acpi_device_get_power(device, &state);
+ 	if (result)
+ 		return result;
+ 
++	/*
++	 * If the current power state of the device is D0 and it has a parent
++	 * whose power state is not ignored, and the parent's power state
++	 * initialization has failed, the parent's power state can be updated to
++	 * D0 for consistency.
++	 */
++	if (!device->power.flags.ignore_parent && state == ACPI_STATE_D0) {
++		struct acpi_device *parent = acpi_dev_parent(device);
++
++		if (parent && parent->power.state == ACPI_D_STATE_INVALID)
++			parent->power.state = ACPI_STATE_D0;
++	}
++
+ 	if (state < ACPI_STATE_D3_COLD && device->power.flags.power_resources) {
+ 		/* Reference count the power resources. */
+ 		result = acpi_power_on_resources(device, state);
+@@ -340,9 +346,36 @@ int acpi_bus_init_power(struct acpi_device *device)
+ 		state = ACPI_STATE_D0;
+ 	}
+ 	device->power.state = state;
++
++	acpi_handle_debug(device->handle, "Initial power state: %s\n",
++			  acpi_power_state_string(state));
++
+ 	return 0;
+ }
+ 
++int acpi_bus_init_power(struct acpi_device *device)
 +{
-+	return acpi_dev_get_pci_dev(acpi_fetch_acpi_dev(handle));
++	int result;
++
++	if (device->power.state != ACPI_STATE_UNKNOWN)
++		return 0;
++
++	/*
++	 * The ACPI device power state can be only initialized once.  If this
++	 * fails, ACPI power management will not be used for the device going
++	 * forward.
++	 */
++	result = acpi_device_init_power(device);
++	if (result) {
++		device->flags.power_manageable = 0;
++		device->power.state = ACPI_D_STATE_INVALID;
++		acpi_handle_info(device->handle,
++				 "Initial power state undetermined, ACPI PM disabled\n");
++	}
++
++	return result;
 +}
 +
- /* Arch-defined function to add a bus to the system */
+ /**
+  * acpi_device_fix_up_power - Force device with missing _PSC into D0.
+  * @device: Device object whose power state is to be fixed up.
+@@ -464,8 +497,13 @@ static int acpi_power_up_if_adr_present(struct acpi_device *adev, void *not_used
+ 	if (!(adev->flags.power_manageable && adev->pnp.type.bus_address))
+ 		return 0;
  
- struct pci_bus *pci_acpi_scan_root(struct acpi_pci_root *root);
+-	acpi_handle_debug(adev->handle, "Power state: %s\n",
+-			  acpi_power_state_string(adev->power.state));
++	/*
++	 * This is done during the PCI root initialization which occurs before
++	 * acpi_bus_attach() is called for the device, so the ACPI power state
++	 * of the device needs to be initialized here.
++	 */
++	if (acpi_bus_init_power(adev))
++		return 0;
+ 
+ 	if (adev->power.state == ACPI_STATE_D3_COLD)
+ 		return acpi_device_set_power(adev, ACPI_STATE_D0);
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index c382bed50d6cb..3893e44005f40 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -19,6 +19,7 @@
+ #include <linux/kthread.h>
+ #include <linux/dmi.h>
+ #include <linux/dma-map-ops.h>
++#include <linux/pci.h>
+ #include <linux/platform_data/x86/apple.h>
+ #include <linux/pgtable.h>
+ #include <linux/crc32.h>
+@@ -1145,8 +1146,7 @@ static void acpi_bus_get_power_flags(struct acpi_device *device)
+ 			device->power.states[ACPI_STATE_D3_COLD].flags.valid = 1;
+ 	}
+ 
+-	if (acpi_bus_init_power(device))
+-		device->flags.power_manageable = 0;
++	device->power.state = ACPI_STATE_UNKNOWN;
+ }
+ 
+ static void acpi_bus_get_flags(struct acpi_device *device)
+@@ -2269,38 +2269,50 @@ static int acpi_scan_attach_handler(struct acpi_device *device)
+ static int acpi_bus_attach(struct acpi_device *device, void *first_pass)
+ {
+ 	bool skip = !first_pass && device->flags.visited;
++	struct pci_dev *pci;
+ 	acpi_handle ejd;
+ 	int ret;
+ 
+ 	if (skip)
+ 		goto ok;
+ 
++	device->flags.initialized = true;
++
+ 	if (ACPI_SUCCESS(acpi_bus_get_ejd(device->handle, &ejd)))
+ 		register_dock_dependent_device(device, ejd);
+ 
+ 	acpi_bus_get_status(device);
+-	/* Skip devices that are not ready for enumeration (e.g. not present) */
+-	if (!acpi_dev_ready_for_enumeration(device)) {
+-		device->flags.initialized = false;
++	/*
++	 * If the given ACPI device object has been already associated with a
++	 * PCI device found on the bus, its status is effectively "present and
++	 * enabled", and dependencies are not tracked for PCI devices, so it is
++	 * not necessary or even useful to check the device's readiness in that
++	 * case.
++	 */
++	pci = acpi_dev_get_pci_dev(device);
++	if (pci) {
++		acpi_handle_debug(device->handle, "PCI companion %s found\n",
++				  pci_name(pci));
++
++		if (!acpi_device_is_present(device))
++			pci_info(pci, FW_BUG "ACPI status differs from reality\n");
++
++		pci_dev_put(pci);
++	} else if (!acpi_dev_ready_for_enumeration(device)) {
++		/* The device is not ready (e.g. not present), so skip it. */
+ 		acpi_device_clear_enumerated(device);
+-		device->flags.power_manageable = 0;
+ 		return 0;
+ 	}
++
+ 	if (device->handler)
+ 		goto ok;
+ 
+ 	acpi_ec_register_opregions(device);
+ 
+-	if (!device->flags.initialized) {
+-		device->flags.power_manageable =
+-			device->power.states[ACPI_STATE_D0].flags.valid;
+-		if (acpi_bus_init_power(device))
+-			device->flags.power_manageable = 0;
++	acpi_bus_init_power(device);
+ 
+-		device->flags.initialized = true;
+-	} else if (device->flags.visited) {
++	if (device->flags.visited)
+ 		goto ok;
+-	}
+ 
+ 	ret = acpi_scan_attach_handler(device);
+ 	if (ret < 0)
 -- 
 2.53.0
 
