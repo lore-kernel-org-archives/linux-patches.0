@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032732;
-	b=ZrNGHRvuOvfteZEvIMuFPF8U74ea0qqFkiL/SkGOXkKG7ocQd7oKY6Al/e+GMGJE9nSj
-	 B4sXuIFgBA3vkvdNVCuss1cQhxqJ/5jo0cFO17m/+ifyV4/X85uZkaCGqVxAHbG5i7qnK
-	 rV8KCE0zEjwipG6eROyynZzLlSp+32yat3El8JhR+a6TbXT93b76bKSZgleIGHd1Lzh4W
-	 Yp4KGjx4vozi4P6YamADYJo84twffNFtPhuBVRRVuOTzgvQgb/z1obavSLX1Kj605NVQn
-	 SQ/1tNaJ8mNY5SYb5rQSTpfizubcRIqp6jDC4/We/RI4E3uWFCVzsEniZgcGg0tq1tA==
+	t=1795032734;
+	b=gS6RykAlNAF6tXOtwRl4NPBQe9zuUNpBvENqvBc09CF3MU8H3uIuZkeno5s71LmhYWjr
+	 8rCnDIcwVfeiz3xvQ4iRRtjUT57UP4WKxD71hP2nrao8INICcEprQgEiDm5RY8jXPv1WK
+	 4IyW653gNNNxPJ523JiehL74jNixvo9Orj5r0ptRM5nmRU2Qok+3Fk1h/++H9ytiv/xTO
+	 JCOIakCpnT3YEMcTMIlhKC64fvKaECp0oBxkqTh5qf0pTX9hM2HQCVqwBAHLpQzprbZgh
+	 rmpMHA8GxqGNH5ROFBzRJ4UoAohwFkR15hZZJttXGYGN8MzgRAo7zq3jhHcSsfTMmUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8a+R43dXurZR3hy7zvi9fbGfeKXxI8OaPfltAfSwIkE=;
-	b=zvyYQAK3Zw/pkk1dewkl24xzKjdf4V6RZsSvXgjyuWRwgi4kGtN+7u8ITEitmatLgBVr
-	 TZKmyV8em5qZpuF+vTRO6IUN62rY6PjWp65o+A5Q/JolHk/veGuKDdeEnWDjlOOE6MvFi
-	 QOoJAUW4QGclUsjE4obGNPfS1ZDWMb8dGuTKLUo6sCcDVV2Jf392JCmG5UGHcly+c0RJJ
-	 DzmpmoZbvV4RzZYMveaTjc4Z15ruhY8GthJbyoZSc3AsSABkNMT2rVzeMiHWzgXfpyzCL
-	 D75FT9jOVKo2JoQWFAEZptsTd1grDFKqZt9IT9E54nm/1LPaNDU2Ht20mpGL3D4v14A==
+	bh=yNM+feNzYCnrd7Y8joA2umdOLo0ZkXoAvy5akAFTkuY=;
+	b=q947mcLB0UVZDD58C7x5IPRyCm3ecPAOTJZwUJ7+//nk7I0iopzL2ZonD9kuldy5ZzAL
+	 ok2aurhAxmB6ZzwjHq7k3Rr7kPU1cO4XeemYp1UohZEcnfgJ/wni7H7x+wSadAc7TGSZO
+	 PA+DAd6Z6Dmbk96Jx1GMxT/wT/lJ7lliJjGiNELTSSaDG5khYr8wxcsDhUL3v8YKzmi9Q
+	 49oDAacDTxDkXt4TcmkSjZJ0OH2taYeS24tTkpt24G1dFExi9K12vRxhY24pyWuUCyJsM
+	 TAMeKEE/Z7pJ3LzscztRyTzbSE6cKkZH4XNvbswbUBh/hUgvZJ203GTS2ShZKlBmrzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1EPJsyK0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kjZe0a/q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151F3606A31C;
-	Wed, 18 Nov 2026 20:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CC4606A31C;
+	Wed, 18 Nov 2026 20:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1EPJsyK0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664891F000C4;
-	Wed, 18 Nov 2026 20:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjZe0a/q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326201F000C4;
+	Wed, 18 Nov 2026 20:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032731;
-	bh=8a+R43dXurZR3hy7zvi9fbGfeKXxI8OaPfltAfSwIkE=;
+	s=korg; t=1795032734;
+	bh=yNM+feNzYCnrd7Y8joA2umdOLo0ZkXoAvy5akAFTkuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1EPJsyK0VD/+YZzyWfV+oiAxOTsVTYZCgysrhzXzwMVBocBqYHMgVh/6DC3L1LX7g
-	 5OfwoQZOkyby4QxiNi6wbW/85LZESM6GH+juHsCAMk3btnEU5s+xIps+GVLuPvFDc3
-	 XSWVNlAdkHtjjEod9DUfyvCYPRDf5YVhbPJlHzp0=
+	b=kjZe0a/qJI6FlQ7EMR7KIw6jBqEnRzHc7LtsL1LTImHMj1pOsy/l8pdWyJN+mPnfH
+	 rWJNWXFZJ/p/b8QerPk9AqafmLg/H19OPNh57AOLTmMK6TcQJArw6+WcfOg3NSSNh0
+	 EuTu5xzcOEsrWdwVB6rVf/R8aZj8IWma7REAZmL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Eric Joyner <eric.joyner@amd.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1462/1756] ipv6: Hold RCU when emitting route hardware flags notification
-Date: Wed, 18 Nov 2026 15:59:49 +0100
-Message-ID: <20261118150107.257947242@linuxfoundation.org>
+Subject: [PATCH 6.12 1510/1756] ionic: free port_info when probe fails after the port is set up
+Date: Wed, 18 Nov 2026 16:00:37 +0100
+Message-ID: <20261118150109.011503748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,93 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Eric Joyner <eric.joyner@amd.com>
 
-[ Upstream commit 7c9cb1edaf8fd8e1af25e39741e603500986ef66 ]
+[ Upstream commit 4e15e0a941ce901d51b5f203713fa90feee9c4d3 ]
 
-fib6_info_hw_flags_set() is called by drivers from process context
-without RTNL or RCU. When the route uses a nexthop object,
-rt6_nlmsg_size() and rt6_fill_node() access the nexthop's RCU protected
-nexthop info and group pointers via rcu_dereference_rtnl(), resulting in
-suspicious RCU usage splats [1].
+ionic_probe() allocates the port_info DMA buffer via ionic_setup_one()
+-> ionic_port_init(). If probe then fails anywhere after that, it
+unwinds through err_out_pci, which never calls ionic_port_reset();
+ionic_dev_teardown() and ionic_clear_pci() do not touch port_info, and
+so the buffer is leaked. The call was lost when the setup code was
+moved into ionic_setup_one().
 
-Fix by holding RCU while sizing and filling the notification, like
-fib_alias_hw_flags_set() already does. Switch to GFP_ATOMIC for the skb
-allocation accordingly.
+Since ionic_remove() already frees the port_info DMA buffer with
+ionic_port_reset(), call that on the probe error path too. Every path
+to err_out_pci runs after ionic_setup_one() succeeded, so the BARs are
+still mapped and the firmware gets a PORT_RESET before the buffer is
+freed, the same order as in ionic_remove().
 
-Reproducer:
-
- # echo "10 0" > /sys/bus/netdevsim/new_device
- # sysctl -wq net.ipv6.fib_notify_on_flag_change=1
- # sysctl -wq net.ipv4.nexthop_compat_mode=1
- # ip -6 nexthop add id 1 blackhole
- # ip -6 route add 2001:db8:1::1/128 nhid 1
-
-[1]
-WARNING: suspicious RCU usage
-7.3.0-rc7-virtme-g191aa41548b2 #38 Not tainted
-net/ipv4/nexthop.c:1539 suspicious rcu_dereference_check() usage!
-[...]
-Workqueue: events nsim_fib_event_work
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
- lockdep_rcu_suspicious.cold (kernel/locking/lockdep.c:6972)
- nexthop_for_each_fib6_nh (net/ipv4/nexthop.c:1539 (discriminator 16))
- rt6_nlmsg_size (net/ipv6/route.c:5728)
- fib6_info_hw_flags_set (net/ipv6/route.c:6503)
- nsim_fib6_rt_add (drivers/net/netdevsim/fib.c:671 drivers/net/netdevsim/fib.c:694)
- nsim_fib6_rt_insert (drivers/net/netdevsim/fib.c:759)
- nsim_fib_event_work (drivers/net/netdevsim/fib.c:856 drivers/net/netdevsim/fib.c:889 drivers/net/netdevsim/fib.c:1493)
- process_one_work (kernel/workqueue.c:3396)
- worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
- </TASK>
-
-Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/netdev/179152182668.434549.18232968419539498055@kernel.org/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20261019140337.2886875-2-idosch@nvidia.com
+Fixes: 0de38d9f1dba ("ionic: extract common bits from ionic_probe")
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-2-57232013fd79@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 0acb2d18e82fc..3af35b9728459 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6356,7 +6356,9 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
- 	if (!net->ipv6.sysctl.fib_notify_on_flag_change)
- 		return;
- 
--	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_KERNEL);
-+	rcu_read_lock();
-+
-+	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_ATOMIC);
- 	if (!skb) {
- 		err = -ENOBUFS;
- 		goto errout;
-@@ -6369,10 +6371,13 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
- 		goto errout;
- 	}
- 
-+	rcu_read_unlock();
-+
- 	rtnl_notify(skb, net, 0, RTNLGRP_IPV6_ROUTE, NULL, GFP_KERNEL);
- 	return;
- 
- errout:
-+	rcu_read_unlock();
- 	rtnl_set_sk_err(net, RTNLGRP_IPV6_ROUTE, err);
- }
- EXPORT_SYMBOL(fib6_info_hw_flags_set);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+index f5dc876eb5009..57a21a3fe66a8 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+@@ -392,6 +392,7 @@ static int ionic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ err_out_free_irqs:
+ 	ionic_bus_free_irq_vectors(ionic);
+ err_out_pci:
++	ionic_port_reset(ionic);
+ 	ionic_dev_teardown(ionic);
+ 	ionic_clear_pci(ionic);
+ 	ionic_debugfs_del_dev(ionic);
 -- 
 2.53.0
 
