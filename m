@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017739;
-	b=RU7Z3LFQctlh+ZvCqwLoEx3xGhlqYcJ6KRmWILefiuF9IyM4wwkKIqG1bcQ0VXSSGtZn
-	 63VNecSoJueOFRYV6+X8h4iEiBNss6rOYePWa90hZq+owoVV0PaWNfn8/FfBzrhn3YldB
-	 HbkPPxAd7F2KrGTie9HKCPSJbXGNeIt0y8U3r6K3RvZrMoXP6PspWFNWGiWFN04TfPs/f
-	 P2gRp4AomweyYqrpEHhg/IQs9eS+gUqQ386H00wbOEEh0b/pCVnTOpGZU+/Jc82nowXzI
-	 ULzrbRUS62ZsLZd412/Z7wWs71xD7WOxL//St2FVkIItR1OkKnJs1eT9CJqtDyVeS4A==
+	t=1795017741;
+	b=Orm55RA9uSZzu2xAjFK1JyqfkAK+/1rX18rItiOV3V7aJZyw+YUPpya4s9p/GSqJjO6R
+	 3/tZTRCz+BDp+UEOQw3CJ+hmSqj6G2APKzxPzHmGGIesH/JyHoqGafgMp8p04Lc1Ib252
+	 AX4I9WY4ZBY3TcfvDYRHZlBPsODQkzMsuwyr34sa7G2Yzx/5XadwLQy7krrBwab+k/Sk8
+	 UTlI8uiQm2vuVa5y0lSaaalbHtmxewXO5jBiw/ROkJQwqZzAjou3CuhnEI0XA1LELpTpR
+	 1U4XPLnu4usAq4ZKGpjIwEfXwyZUh0HHnxqtFmMBUDsVrCexyoL/5eDonDJLGPUGUyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+jrFf4KINjB9ekVc/MFIhFpHM3cS3oC6HvjTQ4kp1Us=;
-	b=E8tjI3fsUz57MRirpAfFmvRBWPR07QH/WOePnnZVVkpa9Sx/deDVtXQrlf7eBO3J8YF6
-	 gjOHpSoT341e5BS/+9ivTrFjcPJjkuDZbjCN0eZtg+T3rRXdqNEgUYVWdzaS9hIk4QPXU
-	 O2NwJ/fJdmzLsC5K3RjwumpY69qsf/GU9u8PqNHgodI2rHAEp+6QHPVLCXPfZwGTUsbBY
-	 aW/iYxNRi4Xl1h6VoN1epP8Ea5F/ZV/3bMpVnaHIRlFm9WBg6d+0SPTdIk1WjiAAyZ64s
-	 EymJfHLjilqk0TuhpfxmLLmyy7j/YvLCXuPIkSgB3YdPQP5it150j2ghROEakVvoeuQ==
+	bh=m773r1o8KZKQKEt55EfvVpPzNzy8aQhEvV/uU8ARa4k=;
+	b=YVuJ6xEjRLsciy6F0eJXcQOzZd+RcC8IPwKUnTzneH71APyPoReNs/9hF2559oo22kQ1
+	 bgFtJcOg7zR2E1qwlcTxrWV/wzNog5HpPSp2oB+0z8mKpMWtwqZit8iNll6dFJwFZRyZ2
+	 kAMhSDJCzSxXYdWw6tMMbig5loT9lfCrbpKbrl3cSAyQcVF/qzYR8GcyfyafIUhKiG316
+	 L+CNe8H49Bwmr21el3iuotjt7sZHY6S5VdoBC8KWJzscvp2Qrasy9AQMrKyrrd4Gie5HQ
+	 G11Z6Mt25vJECXZtjpA3piaBO1IiYrDnMlmtZAfg05FCBRC1wqtk3hS2Z+xrL/pH+qw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/J6pEZH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1o4UI6C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052C9606A325;
-	Wed, 18 Nov 2026 16:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC74606A31C;
+	Wed, 18 Nov 2026 16:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/J6pEZH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042731F000C4;
-	Wed, 18 Nov 2026 16:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1o4UI6C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B781F000C4;
+	Wed, 18 Nov 2026 16:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017738;
-	bh=+jrFf4KINjB9ekVc/MFIhFpHM3cS3oC6HvjTQ4kp1Us=;
+	s=korg; t=1795017741;
+	bh=m773r1o8KZKQKEt55EfvVpPzNzy8aQhEvV/uU8ARa4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/J6pEZHDH5YM4l+KudJPMg6GjzQdUTu58n8sEQa0EJkft46BmaEXs/3CEQw1l2sq
-	 0R5BSy9ADnhTy2uYZmg4hhz2RP1wRMEUP08naV7uWeP+lJ2UqBR9feLi2Pg2dd8nq7
-	 Pr86kUfpo9WbejFVXl+bqnUHm7rxqhWkvn1YZbQ0=
+	b=l1o4UI6Ces3Tyg5E9UFOuS/RYccpElNY8F2tyhOUommth0uNJMS8zmU8FCt7ccsVR
+	 Hm9lRlg1TU7gaSrrTElRDp05eRRssQuUvG43mW3gAndx/1DBdJBE7NQCAUgECfwUdc
+	 IyiHGxbWgKfoWS+IANJFN4cxGgeaaVw3j4oUEOe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0990/2651] IB/isert: Dont share drop_cmd_list across concurrent connection teardowns
-Date: Wed, 18 Nov 2026 15:37:10 +0100
-Message-ID: <20261118150323.543680355@linuxfoundation.org>
+Subject: [PATCH 7.3 0991/2651] arm64: dts: imx8dxl-evk: fix reserved memory node names for remoteproc
+Date: Wed, 18 Nov 2026 15:37:11 +0100
+Message-ID: <20261118150323.579856518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit d30e9b1bc47bd9be4b2fc97b0e4074bc02c4203a ]
+[ Upstream commit c4e5f1a143799651aba2c4f66860b63b56786306 ]
 
-isert_put_unsol_pending_cmds() declares drop_cmd_list as a static
-LIST_HEAD, so the list is shared across all invocations of the function.
-It is called from isert_wait_conn(), the per-connection .iscsit_wait_conn
-transport callback, which runs independently for each connection during
-teardown.
+The imx_rproc driver uses node names to identify reserved memory regions.
+It checks for "vdev0buffer" to skip mapping, "rsc-table" to locate the
+resource table, and "vdev" prefix to filter vdev regions.
 
-conn->cmd_lock only protects each connection's own conn_cmd_list, not the
-shared drop_cmd_list.  If two connections tear down at the same time, both
-threads list_move_tail() commands into the same drop_cmd_list without any
-mutual exclusion, and then both iterate and list_del/put it concurrently.
-This corrupts the linked list and can double-free iscsit_cmd structures.
+Rename the reserved memory nodes to use the expected names so the driver
+can correctly identify and handle each region.
 
-Make drop_cmd_list a stack-local list, matching the pattern already used
-in isert_free_np().
-
-Fixes: 3e03c4b01da3 ("iser-target: Put the reference on commands waiting for unsol data")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260921031100.2199-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ee39dbd9a6cb ("arm64: dts: imx8dxl-evk: add imx8dxl_cm4, lsio mu5, related memory region")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8dxl-evk.dts | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index e69db43370ff9..efa8d7b7844c9 100644
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -2583,7 +2583,7 @@ static void
- isert_put_unsol_pending_cmds(struct iscsit_conn *conn)
- {
- 	struct iscsit_cmd *cmd, *tmp;
--	static LIST_HEAD(drop_cmd_list);
-+	LIST_HEAD(drop_cmd_list);
+diff --git a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
+index 0ede0c7ed422c..71eff3efa6d32 100644
+--- a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
+@@ -29,7 +29,7 @@ imx8dxl-cm4 {
+ 		clocks = <&clk_dummy>;
+ 		mbox-names = "tx", "rx", "rxdb";
+ 		mboxes = <&lsio_mu5 0 1 &lsio_mu5 1 1 &lsio_mu5 3 1>;
+-		memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
++		memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+ 				<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
+ 		power-domains = <&pd IMX_SC_R_M4_0_PID0>, <&pd IMX_SC_R_M4_0_MU_1A>;
+ 		fsl,resource-id = <IMX_SC_R_M4_0_PID0>;
+@@ -65,32 +65,32 @@ linux,cma {
+ 			linux,cma-default;
+ 		};
  
- 	spin_lock_bh(&conn->cmd_lock);
- 	list_for_each_entry_safe(cmd, tmp, &conn->conn_cmd_list, i_conn_node) {
+-		vdev0vring0: memory0@90000000 {
++		vdev0vring0: vdev0vring0@90000000 {
+ 			reg = <0 0x90000000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		vdev0vring1: memory@90008000 {
++		vdev0vring1: vdev0vring1@90008000 {
+ 			reg = <0 0x90008000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		vdev1vring0: memory@90010000 {
++		vdev1vring0: vdev1vring0@90010000 {
+ 			reg = <0 0x90010000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		vdev1vring1: memory@90018000 {
++		vdev1vring1: vdev1vring1@90018000 {
+ 			reg = <0 0x90018000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		rsc_table: memory-rsc-table@900ff000 {
++		rsc_table: rsc-table@900ff000 {
+ 			reg = <0 0x900ff000 0 0x1000>;
+ 			no-map;
+ 		};
+ 
+-		vdevbuffer: memory-vdevbuffer@90400000 {
++		vdev0buffer: vdev0buffer@90400000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0x90400000 0 0x100000>;
+ 			no-map;
 -- 
 2.53.0
 
