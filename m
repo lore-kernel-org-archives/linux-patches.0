@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034404;
-	b=AYVfbNfxyE4tSnkaPoqH/m/X56IYZCjIrd81zf3jqC8P0tPVA4TOVPmrYtZFkXwXut1a
-	 d96vXX6VNXe62peRQ/UDrGDVi7ukcG5tvY+VYK2jMj181kHel+Peh+6mV89cfdhWL0FsP
-	 jdprz5Lu6SbbyWc4FbX0ifz9nY2tr5WXTSRtHBDeH713jlNVi3MQV9qQsmt3FMYcTUo/F
-	 Cq69tixKNDfUaB1Rddl8uwLXxGZbgZjaiqiZj7wYWkNRHTd9eBTODrg62Cnq748eulyiA
-	 rFPJ2rMCYwiANehRdHUmyy4lPiI5v1KQymLlT5ooNl6W4wEwf2IP27J5y8rTn6nK8ag==
+	t=1795034407;
+	b=E6eEncXMoYjyoh6m8NGvLrP93qgzsjLFIe9KCZQdqJ+LFFWrYO3MgoLeKHx4uHqW+zRJ
+	 ppRVJ5jJ0AQMoCrmRYAWOlB9ItEGwIHf3ADGwT1VeI0gNRCRXNLHxJqDpZqUaZFMzwIkp
+	 rXiYeouWjnP9jUxK84ldktPW2HIMtC2/ElX9q7nQFTdG6XkpDqZ+W7ylZaRC6Z3uHwZOe
+	 irnFEWV7snOcs6ETDpftCGt9gedmi3RUeOf6il2R+I9kXlTE3QRDyaPMamej42ldfjb0j
+	 5jqAHQ3ExHshcWS+dW2hL/jO97c2CNC0Rpk3jTgm39VjPuNEYEJivbe13eiDTXNjj4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SjFGVOnHvrKr3Zvu6v7qjFR00nK7iRgO9ZXt/Fq2aco=;
-	b=UQk1D4bl791ZSH/BIYUs98Q3pdoDkntHo674RQIEIflem8M5mhGfsSCxJNRzp9RPgoqy
-	 sRpxCyHM0FWW47aJo8JOIKpzzPNogeOaldjKmZNMrbwn8u9zx+cnI1Ys/KzpPEqAecMHm
-	 s0wit2AFsRcQKq/QU1is8bqsnScbNSz8eYepCelapRVGZOrDzFKqFAZ6/gupj8AkFL+Ha
-	 v2l1jm7aBeg9dBgbA0ARmG724OQI6xXmlSBLh7E5TEhJxNAg2nswjzEClU1uI3hUBryiU
-	 2PIyEBzNQ/Jh6HfMuNa8zvFqrvh0i9ier/sPmrxWIDBRCAO0QNPThLO+c3bWqi3wsNg==
+	bh=bR2MJ2A+/9Vcg2kiicEGv2FxSIT9xCgDjBgUhDOTeGI=;
+	b=TFFqRPqnBelsmV0NaXWmDarlHWBQSTf2My91U3Hp//Log1TLaKCGkpNPRkCa7nT0wFrU
+	 JQEQjvwUumWX3ScAcDByNjgb70eEKWf64Y6oKNf79P7fFXy1xQ7CY2cNmXSK0RHYELIOw
+	 h9ABeKC5qy2X7rdOICrp8Ub6HZv6/P2yifSZdfD3v4pKrhGCHPc5EkVdQtSqK+g969cJr
+	 AziwjoKLpO/r7NQgAngP9wLM45ptU1/2vpn2EyJCCE9KRvDcbtk85bH2eWhBiK40s7Raz
+	 XbTTQk/7kgI4dD+QOE7DnN1qSFuhmnfubhC/w/ClcFG/GKtOg5B0IETRSylU/kLQfyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mLsL4fUQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSWwn2O5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87526606A31C;
-	Wed, 18 Nov 2026 20:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E543606A31C;
+	Wed, 18 Nov 2026 20:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mLsL4fUQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB591F000C4;
-	Wed, 18 Nov 2026 20:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSWwn2O5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8E41F000C4;
+	Wed, 18 Nov 2026 20:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034403;
-	bh=SjFGVOnHvrKr3Zvu6v7qjFR00nK7iRgO9ZXt/Fq2aco=;
+	s=korg; t=1795034406;
+	bh=bR2MJ2A+/9Vcg2kiicEGv2FxSIT9xCgDjBgUhDOTeGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mLsL4fUQrCRrZpgtUF6IZAq+n/BdWhabn7EX5+IhqXh6uetXIzn/AKWLulGJ9k2mC
-	 FTdHuygF/YBD3sBXBzdmR9UlRtAKhwGX6M3pYuNoaLEMKACbEzxWfnPpUp+MICibFO
-	 auzS83juCL2NQ47rRPlBXEqXWrdgYqWsQIGHmjak=
+	b=GSWwn2O51xsZnJ36rAbYOTlBa2Uvdl/0JAtYibO342dqq38aN+OnvVBy5SeCVUCQP
+	 OTyn2+VdKB+l+L48BIdM7BtWBPew9M5C5Ddf0RGb7gp+btPggdxj7NXOqznyM9dAiE
+	 L6h+p3JNirv8Q/wADhpXEHaihWEAn7QHzPmDFwiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Victor Chibotaru <tchibo@google.com>
-Subject: [PATCH 6.6 0357/3318] kcov: ignore an out-of-range comparison count in write_comp_data()
-Date: Wed, 18 Nov 2026 15:16:19 +0100
-Message-ID: <20261118150326.818518228@linuxfoundation.org>
+	Mehmet Aysel <mehmet4ysel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0331/3318] ASoC: amd: acp-config: Add HVY-WXX9/M1060 DMI quirk
+Date: Wed, 18 Nov 2026 15:15:53 +0100
+Message-ID: <20261118150325.854305550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,82 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Mehmet Aysel <mehmet4ysel@gmail.com>
 
-commit f5263bee9eb84d2388fd7555a18d518e17226894 upstream.
+[ Upstream commit 032bb633e0c34a88b70a4bfc65ebd4e2b510f706 ]
 
-write_comp_data() reads the comparison record count from area[0] and uses
-it to index the coverage buffer:
+Add DMI match table entry for HUAWEI HVY-WXX9 board, product version
+M1060, a MateBook D16 2021 (Ryzen 5 4600H) revision not covered by the
+existing M1010/M1020/M1040 entries. This board uses the same
+FLAG_AMD_LEGACY / ACP_PCI_DEV_ID configuration as the other HVY-WXX9
+variants.
 
-	area = (u64 *)t->kcov_area;
-	max_pos = t->kcov_size * sizeof(unsigned long);
-
-	count = READ_ONCE(area[0]);
-
-	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
-	start_index = 1 + count * KCOV_WORDS_PER_CMP;
-	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
-	if (likely(end_pos <= max_pos)) {
-
-The buffer is mmap'd writable into the collecting process, so count is
-under its control and end_pos <= max_pos is its only bound.  A count that
-wraps the u64 multiply leaves end_pos below max_pos, so the check passes
-while the record store lands 24 bytes before the buffer, in the unmapped
-vmalloc guard page, and faults:
-
-  BUG: unable to handle page fault for address: ffa0000000b60fe8
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  Oops: 0002 [#1] SMP KASAN NOPTI
-  RIP: 0010:write_comp_data+0x7e/0xa0
-  ...
-  Kernel panic - not syncing: Fatal exception
-
-Bound count first: only max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP)
-records fit, so a larger count is not a valid index and is dropped.
-kcov_move_area() bounds the same untrusted count this way, and no count
-the end_pos <= max_pos check accepts reaches that limit, so no valid
-record is lost.
-
-kcov is a root-only debugfs file (debugfs_create_file_unsafe("kcov", 0600,
-...)) and write_comp_data() exists only under
-CONFIG_KCOV_ENABLE_COMPARISONS, so this is a local, debug-kernel
-robustness fix: the process corrupts its own buffer and the kernel oopses.
-It crosses no privilege boundary.  Additional details at [1]
-
-Link: https://lore.kernel.org/20260917104306.22145-1-fangxy@xiaopeng.com [1]
-Fixes: ded97d2c2b2c ("kcov: support comparison operands collection")
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Victor Chibotaru <tchibo@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>
+Link: https://patch.msgid.link/20260825092432.56292-1-mehmet4ysel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcov.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/amd/acp-config.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -252,6 +252,14 @@ static void notrace write_comp_data(u64
+diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
+index f27c275800091..5ca8001fa420f 100644
+--- a/sound/soc/amd/acp-config.c
++++ b/sound/soc/amd/acp-config.c
+@@ -61,6 +61,20 @@ static const struct config_entry config_table[] = {
+ 			{}
+ 		},
+ 	},
++	{
++		.flags = FLAG_AMD_LEGACY,
++		.device = ACP_PCI_DEV_ID,
++		.dmi_table = (const struct dmi_system_id []) {
++			{
++				.matches = {
++					DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "HUAWEI"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HVY-WXX9"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "M1060"),
++				},
++			},
++			{}
++		},
++	},
+ };
  
- 	count = READ_ONCE(area[0]);
- 
-+	/*
-+	 * area[0] is writable by the collecting process, so count cannot be
-+	 * trusted. Bound it to the records that fit, as kcov_move_area()
-+	 * does, so the end_pos multiply below cannot wrap past its check.
-+	 */
-+	if (count >= max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP))
-+		return;
-+
- 	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
- 	start_index = 1 + count * KCOV_WORDS_PER_CMP;
- 	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
+ int snd_amd_acp_find_config(struct pci_dev *pci)
+-- 
+2.53.0
+
 
 
