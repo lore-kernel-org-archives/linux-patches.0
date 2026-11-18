@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059583;
-	b=sfZYgsnjzlDe7JWEs50wIjfXR4SYnrUmvC/A3vjEG4qcC21KIWuU5uVDGUW8NtObyEGb
-	 M205YMhBduPrNNbMBY78fJtzh89PexkOZqrAk7uSH8hgcWKmaFMqQrqQ5WlhJbHazjidz
-	 t+UISEJT5wc25R6KQI3NsAUmjW/9ZHYg0YKci3jjVuvzgA2A8Ty2YXK7IJUzeh17bGh9b
-	 KGyO2VTkSccoFKWi+c4/HSmM//FJhdoM023yzifyPNyiZa6WCXjCkQ+YFXFKG7p8kDlpO
-	 SlvVSyurIuPLU1jmsJTFDdFYg6RyDer5UkpyLT430gsuMJAvGo6WDBKsD76x+F6Y58g==
+	t=1795059586;
+	b=DGlRL0372znzkgimuF/Da+sZatI80N7fVDT3TQkX6CsotrDGGys/4uI28WaTxEsBU+AY
+	 Qm7eOvXu8JZ/lxS/S+JXCQCd7B8GXKMQMacaT6Yc0DzB09QYsUqVJyZs5o1StJ0l5V0SB
+	 71hb1A0gGJJlgbQiRIwGwZ1r3UwGKQSYIb7K+u4tXdZAIt4pQ56tmljWcyqeMyBDo4OrX
+	 2r3l71Dkc97BCPEutsrvAyZ518BmhEejhZ1V2oNuABaDDwvxujDZFfyYuAtmb/o5P4If5
+	 +mW2RJJ9JBf4lIX7LUXrIIknpEh3Kv7pbbWWocqPhPabXIbqhxkXno60xP2Uj26Os0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RSQz+BGb9EPkiO+r5WXoRwgThoBFNtHwhzT/HF9a1VQ=;
-	b=kPfYs9JZbsjK5LPEUMnfptqykdUPlNpjlNbyCByUWwo1HQuJaGENAv1k/Q4mGO/oXxOb
-	 BA80hFmfMnHVScK2OwX6HrNVNpokZZntVziYEgpx9JVgyOg3Us8OyjaJFLn3hblfkFTBF
-	 CZzqmdCqJcVahukeYzz4ycbak7xW0gvrnwxwSuGw+LS0iEpxy5MblT6VgU0DeqEuFF9zA
-	 rdEWV7twKqpxBePPVo6XELWf22GbsCEVLwoV1yUgbp8oINtwXodBnIPoymUhPLDi9b3sR
-	 rgRHQ9BBh7v+d4Gn0PSL67ei7vpROBx/wHX9Z+LHXbwt9SjwZaEF/FHMudPRt4emSfg==
+	bh=zF1wYqvLigrTINedFwqM2k4SFyd1BIG4X3xK4bspwnU=;
+	b=lk/i2GLrcNYHP0nU79tudVEih5IBhrC0H2EElVzQuU3EKgcHuGZnA/2cnjz8PG6i/taa
+	 7vrhsdoU5HzAKv+d7kxwg4YtvAe2qVPkzUDFiBGmv36DurLRnKQCnyYUXJO34npI1Lvz1
+	 EYlarL3sv0Cat/9sSHG+0ngupNJJz/XTgZYDFJaSUVXxcb6Zze9fX7VdEXdUMUn14/ePx
+	 HUzHgHWGMVeBAgq/o+suGR3T3zU8hnHeSJF433eQLBJpeZ7zwkv8UF71pGJxJC1RHSCVP
+	 mgJEGKngBCBegsvCnJcb1EABCYiKsCJsKRJJT6K2atIgqFJ0r6YdWGMwEa+HKZO0sdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwW0KG88;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKe2OzpQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BE5606A326;
-	Thu, 19 Nov 2026 03:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557D360A2619;
+	Thu, 19 Nov 2026 03:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwW0KG88
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDC11F000C6;
-	Thu, 19 Nov 2026 03:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKe2OzpQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5BA1F000C6;
+	Thu, 19 Nov 2026 03:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059583;
-	bh=RSQz+BGb9EPkiO+r5WXoRwgThoBFNtHwhzT/HF9a1VQ=;
+	s=korg; t=1795059586;
+	bh=zF1wYqvLigrTINedFwqM2k4SFyd1BIG4X3xK4bspwnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WwW0KG882ixOMA6DdxtIyEKA9F2ohh6S7g9gsy9K2HzBd5n/sjqUjRY6z9kiEZ3wJ
-	 rCzecW00s1dD+d+L5Dk4Eae4QMJMrWBHwvXA5MsEIqDNRkvKGHp2eZ0Hx51l73RClH
-	 dNiQh30TxdVrRb0psI4euy1pt9qoxtI9wXKsJbo8=
+	b=NKe2OzpQ4PQuhNzcOYdRj7zxe2x+AndcFKdCAj8LQLwU/C73puWXqileNfaRLdUuO
+	 iH1fgZOZCKKGuiOZ+18UC0QP/48CTctFuwWz+so3A2HPr3+koEbbsCnKQ+bm5T/RGN
+	 C/mHUHWBwzWdgnQbfWLVfmDXq+Xx/ykPwujq+t3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Andrey Misiurov <andrey.misyrov@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0886/1848] iommu/dma: Catch scatterlist length overflows
-Date: Wed, 18 Nov 2026 15:48:44 +0100
-Message-ID: <20261118145953.575416443@linuxfoundation.org>
+Subject: [PATCH 5.10 0895/1848] fbdev: core: Initialize modelist in framebuffer_alloc()
+Date: Wed, 18 Nov 2026 15:48:53 +0100
+Message-ID: <20261118145954.072210131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,65 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Andrey Misiurov <andrey.misyrov@gmail.com>
 
-[ Upstream commit 1c8f6308e557f32412e9d4678b3f029f47f6d9aa ]
+[ Upstream commit 0c9cb9321cb3863b52bdea4b8ae5a27705762c9e ]
 
-It is possible, when a very large mapping uses only one
-scatterlist, that padding overflows scatterlist's length field.
-This results in:
- 1) silently wrapping the value
- 2) smaller than desired mappings produced by iommu_map_sg
- 3) leaving mapped bytes in memory (no iommu_unmap)
+framebuffer_alloc() returns zeroed memory, so info->modelist starts out
+with NULL next and prev pointers. The list head is initialized only
+later, by fb_videomode_to_modelist() or by do_register_framebuffer().
 
-Address this issue by adding overflow detection for scatterlist
-length field.
+The "fix potential memory leak" commits listed below added
+fb_destroy_modelist(&info->modelist) to the probe error paths of s3fb,
+tdfxfb, tridentfb, i740fb and carminefb. These paths can run before
+the list head is initialized:
 
-Fixes: 809eac54cdd6 ("iommu/dma: Implement scatterlist segment merging")
+ - s3fb, tdfxfb, tridentfb and i740fb call fb_videomode_to_modelist()
+   only after a successful EDID read, and tridentfb can also hit the
+   error path on an ioremap() or kmalloc() failure before that;
+ - carminefb jumps to the error path when fb_find_mode() fails, before
+   its fb_videomode_to_modelist() call.
+
+fb_destroy_modelist() then dereferences the NULL head. Reproduced on
+Debian 12 (6.1.180) by binding s3fb to a VGA device without EDID and
+forcing fb_alloc_cmap() to fail:
+
+  s3fb 0000:00:03.0: cannot allocate colormap
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:fb_destroy_modelist+0x10/0x80
+  Call Trace:
+   s3_pci_probe.cold+0x12b/0x2bf [s3fb]
+   local_pci_probe+0x41/0x80
+   pci_device_probe+0xc3/0x240
+   really_probe+0xde/0x380
+   __driver_probe_device+0x84/0x150
+   driver_probe_device+0x1f/0x90
+   __driver_attach+0xce/0x1c0
+   bus_for_each_dev+0x87/0xd0
+   bus_add_driver+0x1ae/0x200
+   driver_register+0x89/0xe0
+   do_one_initcall+0x59/0x220
+   do_init_module+0x4a/0x1f0
+
+Initialize the list head in framebuffer_alloc(), so info->modelist is
+always a valid, possibly empty, list and fb_destroy_modelist() is safe
+on every error path. Keep the lazy initialization in
+do_register_framebuffer(), as drivers that embed struct fb_info rather
+than calling framebuffer_alloc() still depend on it.
+
+Fixes: 3b0ed04bc852 ("fbdev: s3fb: fix potential memory leak in s3_pci_probe()")
+Fixes: bb019d755366 ("fbdev: tdfxfb: fix potential memory leak in tdfxfb_probe()")
+Fixes: 7a35ec619d9a ("fbdev: tridentfb: fix potential memory leak in trident_pci_probe()")
+Fixes: 5936063409af ("fbdev: i740fb: fix potential memory leak in i740fb_probe()")
+Fixes: 6fcca16a2b19 ("fbdev: carminefb: fix potential memory leak in alloc_carmine_fb()")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-[ sashal: adapted overflow handling to use an unsigned int cast comparison while preserving zero-on-failure returns ]
+Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: adjusted framebuffer_alloc() context due to the missing info->blank initialization ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dma-iommu.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbsysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 62dd195d88062..321c2f34de4dc 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -864,6 +864,8 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
- 		sg_dma_len(s) = s_length;
- 		s->offset -= s_iova_off;
- 		s_length = iova_align(iovad, s_length + s_iova_off);
-+		if (s_length != (unsigned int)s_length)
-+			goto out_restore_sg;
- 		s->length = s_length;
+diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
+index 65dae05fff8e6..30798dc64aa89 100644
+--- a/drivers/video/fbdev/core/fbsysfs.c
++++ b/drivers/video/fbdev/core/fbsysfs.c
+@@ -56,6 +56,7 @@ struct fb_info *framebuffer_alloc(size_t size, struct device *dev)
  
- 		/*
-@@ -880,7 +882,17 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
- 		 *   time through here (i.e. before it has a meaningful value).
- 		 */
- 		if (pad_len && pad_len < s_length - 1) {
--			prev->length += pad_len;
-+			unsigned int new_prev_len;
-+
-+			/*
-+			 * For large mappings spanning multiple GBs we
-+			 * may not be able to fit all needed padding into
-+			 * sg->length.
-+			 */
-+			if (check_add_overflow(prev->length, pad_len, &new_prev_len))
-+				goto out_restore_sg;
-+
-+			prev->length = new_prev_len;
- 			iova_len += pad_len;
- 		}
+ 	info->device = dev;
+ 	info->fbcon_rotate_hint = -1;
++	INIT_LIST_HEAD(&info->modelist);
  
+ #if IS_ENABLED(CONFIG_FB_BACKLIGHT)
+ 	mutex_init(&info->bl_curve_mutex);
 -- 
 2.53.0
 
