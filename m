@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043449;
-	b=MMeW18CoBeepJ2f+b9quXOOia/710zdaUZS55wT1GvAymuZyidsDe6m/vCjTrckuVrk6
-	 Baxck3wvbzrsPRT0zVTNetyzMKBqIjVfTkPdF/Zo8cGsY8CdPeEbMqLI1h4TaeKEhEQGv
-	 lSLs0NrcabY6+LDZRp/IkhxKuGvSJw6pDC+bTHE3qKRj0cTtlVnZ6MgeAdmOAeXdhY98M
-	 pQfzlT0GTrL+EIW3zmVpiQeF4gvSaCsS98pBg5EuWvLxxRHHl/G4ILMp0A8aFW5860MuU
-	 zeltNDHFwjPrVm7ExdbUsr00sRHBPHIgwaLrODTGgh2SbjJ7hbJ9Z+D8eOezS6MXxdA==
+	t=1795043452;
+	b=GkePWtpAX7BBQ6XgXBEznTxHcHCg+NnITIJjSY1S/pfpnpixbtY5jemj8t1/ASZjbzY1
+	 mWSAvBgb46gUlvEf3Jxh07tF/gIZmWVK40L5bqxsuuc0CmAIM/V8Wb7kJa8W5bav4RLaT
+	 gKiHxMVFhOKNmQIGuQs45h1PwgJMUnTH4lcGhEne1KhtmCCp9rtPKRJ3VDiT7Ow+3Rdfr
+	 tczK/RHDTQ0pUXMEHqYT5kgIeEtxxCYdrnCznlZMC8Nxi8eMFppwKxpSlvOC9GTSOvpKp
+	 AVtwr7d9lYvxg3y80NKsmRwnCCXVnEHGlLO7YtsWHVRCztChZ5AIFeLPyzMnzg1MxOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043452;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L8AOGSkHyNgyGIETBAgq7IJWJH6jJaXDQaHZ468Jnos=;
-	b=PCSS3S7UkhbtMmx3g+TP6QkjOogmMk5NXamCRVca1o1+2VNbu2qwikJv5Lf62llOvTs7
-	 25I+fD6pQnZgYQckrVQWJRmarkNDAIZGopswud3Kw8h6i1wQKCn33DO+jG59B8laH5q33
-	 VsLt7vYwXL7Cv1Lif1RDK7UGZqYrdd15Hxvnzankydfwv1ZlQFJXg0QusYOFqa1gEYwSJ
-	 FvpHMtkKqbjBItw18L5Or92NCt37OujILsPl03+Rs/FQbfB6r4cwiRipznGU6O97/7C8a
-	 xoPHtyZHYaENaYn4ZF+6Myq5u/cgKSo1+Y3y7sh02H9TYnJt417XhB/43gedvlT6bMQ==
+	bh=dvBokTEdtnAFY9YMQkqskLqf6JMiBfdiBF6VbzxKms8=;
+	b=GPRtVk0bih8jzbMCjmfJKK+g+bTFqk2E+VC6Zwx1cda7D5FP5yxRN6F58t+4RMB0S8Lx
+	 dyS6BV1KpRk/d6BJllt9JOXYl81O3ZUe+RaDXkSMojp2lySLHeaExEWKk5oaa5JE7JFUz
+	 d6qcbsQiu/z3L6KxzmK0tYe12JyTVnr4AMoaZVWNJe8/PIGh/Bei6Sl05yZq0/hMFac9D
+	 kTt3NTi2f0w2Vr5qE4KlqweGoS4FjRGfEOI4GafpwibWtIS3FbmBGPXCT3NJ1wSn0j0Oh
+	 tBUkvFJQ4z/3hv18g7fZMDn2rbWZi1cwrz53TwOrQIgcVzclm1lNm8KSCPzTyLcWFdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=szN+2rnd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fC7MPbUE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF35D606A335;
-	Wed, 18 Nov 2026 23:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197CF606A335;
+	Wed, 18 Nov 2026 23:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=szN+2rnd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF3E1F000C7;
-	Wed, 18 Nov 2026 23:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fC7MPbUE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A311F000C4;
+	Wed, 18 Nov 2026 23:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043449;
-	bh=L8AOGSkHyNgyGIETBAgq7IJWJH6jJaXDQaHZ468Jnos=;
+	s=korg; t=1795043452;
+	bh=dvBokTEdtnAFY9YMQkqskLqf6JMiBfdiBF6VbzxKms8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=szN+2rndoKQvRBwjiJd7WEZwhPVe2cV2Cmfg9ggsfxEdT7s7H8liH/ZXGa6X98xkq
-	 cTXrgNh29GnVdWuSBavwwLJZ3eJ+dIbRxRssAONCFxr8nlCMRK5qX/l7FX5SQm85PH
-	 78IaBLVPTa4W32pv29uugE9su0EGb164fmPivKsM=
+	b=fC7MPbUETwdPRa1Gs+Z+YKcXymeNjY6AAq34namA2H69KIhqI/vQSwnRdpIBSliaX
+	 /+5GZ9hYMQFv3y+znZ/Ah9VkVdNGVFDGNDWHHknhRWAePKB2WsEuwdVyfPROztRj2V
+	 T0ZO8KTY97HIpsjBbi+KKah/tYT3k/hGB1okZgO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0214/2857] ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA
-Date: Wed, 18 Nov 2026 15:20:48 +0100
-Message-ID: <20261118150209.168827604@linuxfoundation.org>
+Subject: [PATCH 6.1 0215/2857] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
+Date: Wed, 18 Nov 2026 15:20:49 +0100
+Message-ID: <20261118150209.204766351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,36 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit f2d08f3651fb12634347fef2c41687a807a7dcba ]
+[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
 
-On the ASUS Vivobook S14 S5406SA (subsystem 0x104310c4, Lunar Lake
-platform) with an ALC294 codec, the headset microphone (3.5mm jack)
-fails to capture any audio. Adding the ALC2XX_FIXUP_HEADSET_MIC
-quirk resolves the issue and restores proper headset mic recording.
+In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
+h_adapter into common->bt_adapter before hci_alloc_dev() and
+hci_register_dev() are called. If either of these fails, h_adapter
+is freed but common->bt_adapter remains a non-NULL dangling pointer.
 
-Link: https://github.com/thesofproject/linux/issues/5729
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
+This causes a deterministically reachable use-after-free when the
+device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
+is enabled. The following software-only trigger paths exist:
+
+  1. SDIO driver .remove  (rsi_disconnect)
+  2. USB  driver .disconnect (rsi_disconnect)
+  3. SDIO driver .shutdown (rsi_shutdown)
+  4. Hibernation .freeze  (rsi_freeze)
+
+All four paths check:
+    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
+        rsi_bt_ops.detach(bt_adapter);  // use-after-free
+
+coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
+called, and is not cleared on attach failure. Since set_bt_context()
+already wrote bt_adapter before the failure, the deinit paths see a
+non-NULL dangling pointer and proceed to detach it.
+
+Fix this by moving set_bt_context() after hci_register_dev() succeeds.
+On failure paths bt_adapter stays NULL, and the deinit callers correctly
+skip the detach call.
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btrsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 5fbc25888f3ac..de300e360ca93 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10132,6 +10132,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 0c91d7635ac39..eb136488db093 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -117,7 +117,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		return -ENOMEM;
+ 
+ 	h_adapter->priv = priv;
+-	ops->set_bt_context(priv, h_adapter);
+ 	h_adapter->proto_ops = ops;
+ 
+ 	hdev = hci_alloc_dev();
+@@ -146,6 +145,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		goto err;
+ 	}
+ 
++	ops->set_bt_context(priv, h_adapter);
++
+ 	return 0;
+ err:
+ 	h_adapter->hdev = NULL;
 -- 
 2.53.0
 
