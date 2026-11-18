@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020861;
-	b=UkA+/klyUtjl+dEFBj44ojmoCIdfOM8U3fIRbZWI5VbdQLnst8umrCfwumfNVyJocFKL
-	 MyJRnemCV3OgYPj6O0GZAYZk/ZVm6w0kq/CBHgLJaWhuM/jozqk1NRYrDY2kwFTMcKSJx
-	 tfDCNApsr2Y1a1Vr3vxlUM9qua1ahE+o6EEqGDgZEsZU5QCpgRhZutZoNWIEbIJH3LcKd
-	 US2fyoK6/qAzw6s/XNuybHzrsOdhd21Zg7qWm1lRaXmRq0C5mBdPsDR4F0omSwHJIT978
-	 T625WDhy/sP58Rw3Ny0ZmOCk3LNOhgXxZtAS9XMgYG9B1/9yUO+pgGjThBkg/CUH1Hw==
+	t=1795020864;
+	b=BtCFvZByNQK7Hil0JkgVFB6ldE2PiwLpahDMQ0paHVolVZy0XCckX6/uUfk+k97n9Z3f
+	 tFhimjKt8qlgNghPT94Ewz2Q47+c9HawUkDN9YRBKTa/QUEKcFV8eDFgf8Z3pS+u7YQID
+	 EV9NdivYQltEnrISbe64UkrcDwNNMAbH8KiVumBro85Por1kkLxHdlJC92IyfS/q9WVPT
+	 vWwZhC2Plt9WqY2ngz6XU5l/s0DTW3ffv9alW72UFSQPY6kbCCK0XktcJD5iVimlpJ1oK
+	 nDCSOLnGTgJdz8cGKHH3W909DnjEo+ZrgxBIS7FpcRjZ4CO5rlR2sjjMBT7GzNPH3vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SEWkwokLMhTtzynUaUOyxWwEyqpyBJzR7nrICGynh30=;
-	b=WwqVfC3NeumRcxGkIO80AFXDC6PWPanc9ygj1/8VdPlH1QWlDHKPNGJvRnufFEcxWSg3
-	 blUNLII9S5tpbcwB0cHRYm85yD8Bk9WjT8c5RMf4ha8NesnAQ9VwJGeSjCkPSniqzcCXP
-	 4184Lw0kjBG4t39vfVt4VSlqA4bSZAj/gXu7Fot0sD4pvKNgX/e3CcDPG1rkZW7+qap9B
-	 Ye2ApHYSmoqZ/+dyIl1RvWvkUjiiteWUvzNPv3HzeF+rYnMTNf3RkeEiNm7kQYsqlPD3S
-	 dsai3cyzl1uhM+sRNxVPwvdfqj9PMoPu9A5EmjUCZVj66fvGvVYL2Nn57CiLI8oFudg==
+	bh=ewaINX4zR1WKCvLQ/C/Dds6RKRSeqod977ECR1j47l4=;
+	b=f/1m1QznJaRi1hwfFCxLROhFNeJh2TgSngl3lS0xA8v40tQ7D4agHTAg2gFuuYxcpgk6
+	 UgwTssKk7aPvzk5izXZE0bu2ff5VieEUD64M7AEn+khBpNhl574zufV7Fik1ISGpCUGrI
+	 +lwZf4Qb/k3+3UeWezhRd7mpPm05t4nR79lu5zxvaxj8OlD8GdZJ6DoIjHF1FZuaLTS8v
+	 NbACtkpatch3022cbGchDUpQNGF/QOkfyZ+BmTV5s8hd2CVgONXtdHb/Bbu1GXmanfh5C
+	 nY6ULC9NcMzUe7Bh5OVg8HPU5eo2RpY1chOfaWGkWyOv75TOdR6kbbK+ksOcnrb2kMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZXTwo3f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfETFH1E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B823C606B587;
-	Wed, 18 Nov 2026 16:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBE3606A320;
+	Wed, 18 Nov 2026 16:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZXTwo3f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146D31F000C4;
-	Wed, 18 Nov 2026 16:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfETFH1E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A891F000C4;
+	Wed, 18 Nov 2026 16:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020861;
-	bh=SEWkwokLMhTtzynUaUOyxWwEyqpyBJzR7nrICGynh30=;
+	s=korg; t=1795020864;
+	bh=ewaINX4zR1WKCvLQ/C/Dds6RKRSeqod977ECR1j47l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZXTwo3fKHKN/VKKa7Ljor8Nn+TCHYBf6CJ9OWhCN2wAORz9w5wdNX2xyGUd5UOtE
-	 IQsESDTMFdmo0YgCHqds/FzFqCXKvoRpPbgylosCGzi6CoqEgtA6CylTO9O8loK8Iy
-	 2WorPXRodO7u0gWssyZxRZNPDYoWBKd+RLPaWfE4=
+	b=FfETFH1EkKoQzYgNtg6Sz/LOTrOvQmTFXfbLIdf55DMQ3JDCdOMEUnJtgbChBPZqE
+	 TQi+1STeobqZe7Shk+fw3QNqod438PyQXn5MtRL33L0xGfmb3BrfqKclIHnVR7n+Q5
+	 HuzSEO/PZeKndzfL+dGd+o+MFIJiP5k5qaJZgybQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2060/2651] bpf, x86: Pass a trampolines stack arguments by the calling convention
-Date: Wed, 18 Nov 2026 15:55:00 +0100
-Message-ID: <20261118150400.222951317@linuxfoundation.org>
+Subject: [PATCH 7.3 2051/2651] ima: reject a kexec buffer whose declared size exceeds the buffer
+Date: Wed, 18 Nov 2026 15:54:51 +0100
+Message-ID: <20261118150359.912361121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,128 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit 9f9c30435ca92cddb37e67cda46ec02e26dd0a07 ]
+[ Upstream commit ceb24c7052cc4649e3b52a51a7cca7dfe4896cec ]
 
-A trampoline on a function of a program that can tail call keeps the
-tail call counter pointer by pushing rax after allocating its frame.
-When it calls the original function, for fexit, fmod_ret or fsession,
-the push sits between the stack arguments and the return address, which
-the x86-64 calling convention does not allow. For example, in
+ima_restore_measurement_list() parses the measurement list persisted across
+kexec.  It computes the parse end directly from the blob:
 
-	run() -> call_stack() -> callee_stack(a, b, c, d, e, f, g, h)
-	run() -> subprog_tail() -> bpf_tail_call()
+	bufendp = buf + khdr->buffer_size;
 
-callee_stack() is not on the path to the tail call, so the verifier
-allows its stack arguments g and h. fexit on it builds, with T the
-trampoline's rbp:
+khdr->buffer_size is a u64 read straight from the persisted buffer.  The
+only length checks in the function are size >= sizeof(*khdr), version == 1
+and count -- none relates buffer_size to size, the actual buffer size the
+caller (ima_load_kexec_buffer()) obtained from the ima-kexec-buffer region.
+ima_parse_buf() bounds every field read to bufendp, so a blob whose
+internal buffer_size exceeds the real size makes the parse loop read past
+the end of the buffer (CWE-125).
 
-	T-120  h                  save_args()
-	T-128  g                  save_args(), RSP after sub rsp, 128
-	T-136  tail_call_cnt_ptr  push rax, RSP at the call
-	T-144  return address     call orig_call
+The buffer's memory range is validated against addressable RAM by
+commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
+against memory bounds") and commit c5489d04337b ("x86/kexec: add a
+sanity check on previous kernel's ima kexec buffer"), but the blob's
+own declared size is never clamped to it.  Reject a buffer_size larger
+than size before the loop.
 
-and callee_stack() finds the counter pointer where g belongs, at 8(%rsp)
-on entry, and g where h belongs.
+This is on the boot-time kexec-restore path (__init) and the buffer comes
+from the previous kernel, so triggering it requires control of the
+persisted buffer; it is an out-of-bounds read only.
 
-Keep the pointer in a slot of the frame instead, so that the stack
-arguments sit right above the return address again:
-
-	T-120  tail_call_cnt_ptr  mov [rbp - 120], rax
-	T-128  (pad to 16)
-	T-136  h                  save_args()
-	T-144  g                  save_args(), RSP at the call
-	T-152  return address     call orig_call
-
-Fixes: 324c3ca6eed6 ("bpf,x86: Implement JIT support for stack arguments")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261016183044.1132751-1-yonghong.song@linux.dev
+Fixes: 94c3aac567a9 ("ima: on soft reboot, restore the measurement list")
+Assisted-by: copilot-cli:claude-opus-4-6 frama-c
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ security/integrity/ima/ima_template.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 476d77acd031b..10f68ee7c9e68 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -3413,9 +3413,9 @@ static int invoke_bpf_mod_ret(const struct btf_func_model *m, u8 **pprog,
- 	return 0;
- }
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index 7034573fb41e9..2467caefbd70c 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -450,6 +450,11 @@ int ima_restore_measurement_list(loff_t size, void *buf)
+ 		return -EINVAL;
+ 	}
  
--/* mov rax, qword ptr [rbp - rounded_stack_depth - 8] */
--#define LOAD_TRAMP_TAIL_CALL_CNT_PTR(stack)	\
--	__LOAD_TCC_PTR(-round_up(stack, 8) - 8)
-+/* mov rax, qword ptr [rbp - off] */
-+#define LOAD_TRAMP_TAIL_CALL_CNT_PTR(off)	\
-+	__LOAD_TCC_PTR(-(off))
- 
- /* Example:
-  * __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev);
-@@ -3485,6 +3485,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- {
- 	int i, ret, nr_regs = m->nr_args, stack_size = 0;
- 	int regs_off, func_meta_off, ip_off, run_ctx_off, arg_stack_off, rbx_off;
-+	int tcc_off = 0;
- 	struct bpf_tramp_nodes *fentry = &tnodes[BPF_TRAMP_FENTRY];
- 	struct bpf_tramp_nodes *fexit = &tnodes[BPF_TRAMP_FEXIT];
- 	struct bpf_tramp_nodes *fmod_ret = &tnodes[BPF_TRAMP_MODIFY_RETURN];
-@@ -3535,11 +3536,12 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 	 *
- 	 * RBP - run_ctx_off [ bpf_tramp_run_ctx ]
- 	 *
-+	 * RBP - tcc_off   [ tail_call_cnt_ptr ]  BPF_TRAMP_F_TAIL_CALL_CTX
-+	 *
- 	 *                     [ stack_argN ]  BPF_TRAMP_F_CALL_ORIG
- 	 *                     [ ...        ]
- 	 *                     [ stack_arg2 ]
- 	 * RBP - arg_stack_off [ stack_arg1 ]
--	 * RSP                 [ tail_call_cnt_ptr ] BPF_TRAMP_F_TAIL_CALL_CTX
- 	 */
- 
- 	/* room for return value of orig_call or fentry prog */
-@@ -3570,6 +3572,11 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 	stack_size += (sizeof(struct bpf_tramp_run_ctx) + 7) & ~0x7;
- 	run_ctx_off = stack_size;
- 
-+	if (flags & BPF_TRAMP_F_TAIL_CALL_CTX) {
-+		stack_size += 8;
-+		tcc_off = stack_size;
++	if (khdr->buffer_size > size) {
++		pr_err("attempting to restore a corrupted measurement list");
++		return -EINVAL;
 +	}
 +
- 	if (nr_regs > 6 && (flags & BPF_TRAMP_F_CALL_ORIG)) {
- 		/* the space that used to pass arguments on-stack */
- 		stack_size += (nr_regs - get_nr_used_regs(m)) * 8;
-@@ -3627,7 +3634,8 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 		EMIT4(0x48, 0x83, 0xEC, stack_size);
- 	}
- 	if (flags & BPF_TRAMP_F_TAIL_CALL_CTX)
--		EMIT1(0x50);		/* push rax */
-+		/* mov QWORD PTR [rbp - tcc_off], rax */
-+		emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -tcc_off);
- 	/* mov QWORD PTR [rbp - rbx_off], rbx */
- 	emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_6, -rbx_off);
- 
-@@ -3688,7 +3696,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 			/* Before calling the original function, load the
- 			 * tail_call_cnt_ptr from stack to rax.
- 			 */
--			LOAD_TRAMP_TAIL_CALL_CNT_PTR(stack_size);
-+			LOAD_TRAMP_TAIL_CALL_CNT_PTR(tcc_off);
- 		}
- 
- 		if (flags & BPF_TRAMP_F_ORIG_STACK) {
-@@ -3752,7 +3760,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 		/* Before running the original function, load the
- 		 * tail_call_cnt_ptr from stack to rax.
- 		 */
--		LOAD_TRAMP_TAIL_CALL_CNT_PTR(stack_size);
-+		LOAD_TRAMP_TAIL_CALL_CNT_PTR(tcc_off);
- 	}
- 
- 	/* restore return value of orig_call or fentry prog back into RAX */
+ 	bitmap_zero(hdr_mask, HDR__LAST);
+ 	bitmap_set(hdr_mask, HDR_PCR, 1);
+ 	bitmap_set(hdr_mask, HDR_DIGEST, 1);
 -- 
 2.53.0
 
