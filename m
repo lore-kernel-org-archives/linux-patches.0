@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050842;
-	b=iZQCa/puHY4YiV+GisxVQ1J3neG2QdOMwiU2PokZYyZrdf+qOyFJdtDTDcp/rPMPMGq5
-	 rOtgDbb2raeY0fZfzMnu3uaD6neFeBEALT7BgJn6rUxnOb9Ik2ElJ9z78eccRgglDjY9x
-	 UTU3WMVpSG+c7wN+T9nyyRpgHTwBED8TfGOKQ9+tb5d/SQ9IBfv/TY/PhsKn3WDLzwDlJ
-	 EQrqP0Zlm2pOrcubebkXmuLxRXOIbf4sEKBDKJwFM1jp/FG7U30PZdnPaFoY/hmXd18Nq
-	 vM5t9oupFu3Ff0gH2U+JUws12UGYaQnVOGacQlNHsASkunftpe0NKXC1aygcJnCKDVA==
+	t=1795050845;
+	b=IT3/ax0Fa8ssPIvu4wt7YiHp+pVrQwIE7W1Pwe8bpCcJS7eFL6X9g2rrvBuPDZWepvwW
+	 algU9vkBCGeGAJP+N5kVDvn8BhZ/WKYtbfEyi0Je6iowUbqUhzIWN3i33ZOzhGKUOOst0
+	 0Q38Y4ouhNHi/xt0Ycd8DpxL4i3KkyD+WQNqRQBLACkIngdRsAJIEIjtcApZDP3IuIh+M
+	 3wM2IjVRIfqsHLO+wdJja9DO14JfH12dJWfCqvmelwqd2ncvKtQ/1ZqHcpPpxx62xfYph
+	 FgO3CdRapcPLSazyPjIvsXzBcccQ1FeTYMnX21mJQEI5jhyBhnbwp46viHxEkTalpZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tA9zSy9HhfXJXBT0BFVC+9/9v5r3zQdQylFT+Asyr4Q=;
-	b=N8FJbfNe6ok3Vzy4ZIQVD1Y2xY/bGpX8cFzcTPztTGJPuZD0IalVEgmphf5cBWkoLWJf
-	 auDVGspLI5GY1PWd4EOi6V/zYBn04BOXnuf63ce58sLd3JE8zrAQ8QCHFGh1184LG6HR9
-	 ibGP5hNtcFrW0iSQwv5KfnQ1YMJ/SC3j/T/5NtcawXViCzENUCiPs3euNJZUB77xoMYKw
-	 iBLgmecM3Luh/PO/Y1C22cruEpVTtH9TlHIsODRiT14jjRWbcpceNtlGamNcB5AyKxE5r
-	 nHUHR9FnPYgJnmhK0RIipwKeQp315YEzaIicXLBwQ0md6vtpM/AMwuxgzc59EiUaO9A==
+	bh=CAN3nkKaLMjiIWhMXT00bWuGYITLnTQyPGT+mmmJ1iU=;
+	b=DNwj5Qu4M6qWSe0/IFQWH0RXE3X4oHt4V8k91rGpMnzlTuGo16mkXgRJQ+OU/oKJREHT
+	 MW9Hl4rnauY3pQA1yvWG1NPmlZbz8AsFaf2pIAVCHiLYQeWGFRiFg9RJPKjSi0bR0CysB
+	 X0JJczYOflZWzLhbaOZ1OM+sYviXNdYPuQQhiP+kEZ61LVW+XJFLcXak7iPH7dDzV7oGW
+	 +I78fglb/6uRbKja+QHCFM7SsrepPCBKc7lHo2G0ikq+3YGr2ODfB9ZY+japBquQVvz1z
+	 K/UbutmDw+Prj4f+2gOgcTBRcu4mC/xpSGUbbUZAb8UFhoT/M1EQbZb0FIBqNwt+FvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GICx8pr8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tCHzkBeP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB701606A32F;
-	Thu, 19 Nov 2026 01:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF56B606A320;
+	Thu, 19 Nov 2026 01:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GICx8pr8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671971F000C4;
-	Thu, 19 Nov 2026 01:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tCHzkBeP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C15A1F000C5;
+	Thu, 19 Nov 2026 01:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050842;
-	bh=tA9zSy9HhfXJXBT0BFVC+9/9v5r3zQdQylFT+Asyr4Q=;
+	s=korg; t=1795050845;
+	bh=CAN3nkKaLMjiIWhMXT00bWuGYITLnTQyPGT+mmmJ1iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GICx8pr8Vvx/D0KZKDsWE+e2f0piilhJfL5xlgcpmnUNO4j282omvsSfxqrwal+Qe
-	 KEA0QMaZ49NPzgaa3LfjyremhKuFOwPSmRaLIvH9i01YtQy4u2tHVuJQWc6hQN2Pgx
-	 45XMJHFFSKPMlqK/ixic+5x4W8L3gCYLadSpGYZ8=
+	b=tCHzkBeP/kzE6MbMpoAoLgYiNziCqyAhsW3H6Kzh1ndtLSnBmS/ln85/tByW9kksU
+	 eh7/YfLRJdhEUssVlHen6A6/tje9ucadzEpsO/QOvenphaFpS/TV8yhUA+5cc6xaEC
+	 5Y/aPJTJwbDTeYU3wFylwnQsqZcrU4H4lSzFn2aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 2853/2857] cleanup: Remove address space of returned pointer
-Date: Wed, 18 Nov 2026 16:04:47 +0100
-Message-ID: <20261118150344.307284842@linuxfoundation.org>
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	lihuisong@huawei.com,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 2854/2857] ACPI: PCC: Fix race condition by removing static qualifier
+Date: Wed, 18 Nov 2026 16:04:48 +0100
+Message-ID: <20261118150344.341368440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,55 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-commit f730fd535fc51573f982fad629f2fc6b4a0cde2f upstream.
+commit f103fa127c93016bcd89b05d8e11dc1a84f6990d upstream.
 
-Guard functions in local_lock.h are defined using DEFINE_GUARD() and
-DEFINE_LOCK_GUARD_1() macros having lock type defined as pointer in
-the percpu address space. The functions, defined by these macros
-return value in generic address space, causing:
+Local variable 'ret' in acpi_pcc_address_space_setup() is currently
+declared as 'static'. This can lead to race conditions in a
+multithreaded environment.
 
-cleanup.h:157:18: error: return from pointer to non-enclosed address space
+Remove the 'static' qualifier to ensure that 'ret' will be allocated
+directly on the stack as a local variable.
 
-and
-
-cleanup.h:214:18: error: return from pointer to non-enclosed address space
-
-when strict percpu checks are enabled.
-
-Add explicit casts to remove address space of the returned pointer.
-
-Found by GCC's named address space checks.
-
-Fixes: e4ab322fbaaa ("cleanup: Add conditional guard support")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240819074124.143565-1-ubizjak@gmail.com
+Fixes: a10b1c99e2dc ("ACPI: PCC: Setup PCC Opregion handler only if platform interrupt is available")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: lihuisong@huawei.com
+Cc: 6.2+ <stable@vger.kernel.org> # 6.2+
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20251210132634.2050033-1-zhangpengjie2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cleanup.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/acpi_pcc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/cleanup.h
-+++ b/include/linux/cleanup.h
-@@ -118,7 +118,7 @@ static inline class_##_name##_t class_##
- #define DEFINE_GUARD(_name, _type, _lock, _unlock) \
- 	DEFINE_CLASS(_name, _type, if (_T) { _unlock; }, ({ _lock; _T; }), _type _T); \
- 	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
--	{ return *_T; }
-+	{ return (void *)(__force unsigned long)*_T; }
+--- a/drivers/acpi/acpi_pcc.c
++++ b/drivers/acpi/acpi_pcc.c
+@@ -53,7 +53,7 @@ acpi_pcc_address_space_setup(acpi_handle
+ 	struct pcc_data *data;
+ 	struct acpi_pcc_info *ctx = handler_context;
+ 	struct pcc_mbox_chan *pcc_chan;
+-	static acpi_status ret;
++	acpi_status ret;
  
- #define DEFINE_GUARD_COND(_name, _ext, _condlock) \
- 	EXTEND_CLASS(_name, _ext, \
-@@ -175,7 +175,7 @@ static inline void class_##_name##_destr
- 									\
- static inline void *class_##_name##_lock_ptr(class_##_name##_t *_T)	\
- {									\
--	return _T->lock;						\
-+	return (void *)(__force unsigned long)_T->lock;			\
- }
- 
- 
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
 
 
