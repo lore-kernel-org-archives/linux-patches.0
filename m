@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061479;
-	b=sQWDnwUkG9BQBwe+WIs5TxYAPiF1zcF1KMe/nDLHAe9td7ObhMi9ag+NGhfoUe/pppJe
-	 a3W1SdfWNL7cXkzyiLjpjRayUZQMcDrt8UwBbNRW5qKkIiqTqSUt4py1XRczujwx1KlQw
-	 K2CtHcYXalgUO6sIaUtMiRH6NMC5TQLDrNAt0d9DTMW2Pm4PP6r1WTMXn4HCp99bzCaOV
-	 JlOop4TInG2LW3xI90qXHfqv7ewcEENPpH4kC3yj9ZC3JQHfFSpu3pbtjxR6GApFCPra6
-	 Qvjed4QMMlQrtWXuN3tXmbtbg8i8q2zcLyv9PagrkcogABH2v0tW8Ev8wFMTPYOY/MA==
+	t=1795061481;
+	b=T7tx6p4sETeN7ACl7KyYQEUwEbZbi+KsDjalBENnMShEJQKFueMKLRZ8A4IiODf1GYQ1
+	 XTY5gSLrDjf/GaUDRwr8qlcFd577gcZu1/hgi3V9eaXSP9AsWWZzMWLBHknR4crWqeutG
+	 rKuWj585ErV1+OEGaXqGtyUipTw8l30IZ+3ZvqLFpRbMfBelnwcCq8fq523lAFr2tdqxs
+	 HHJT5bRSdiSTwMkVLdXxA7ancEXfmzIFcSbRzXEp6iuNEEhvZ/+/DNTuJg+61KWXh5t0c
+	 Y/hu6ddMVDmIOe9+aAArL1irRfv5nHF0kw5fmUT8xX3f7Fy7UE6cbC5vPY/wanB+f4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=57+ca2qjI0mQUVE11l7+dD0tq8NgIfYfszQIuUbSvYU=;
-	b=orh2rKr2c7h0LAHHLx9OfR/fsXLf6MMDXuUGV3XhQpJY4jkSfdPAfrvjKSqu0Uq5PaMH
-	 58EmfRpqu+gFCqNE7qTyH6QiTk9rw0EzJ1KS9LUcRj54wZgxrTH2yqz3tXbPbBkZhpxGI
-	 xTNv85w0LQEI99naBsSqWORHe1rc07RADOQM5z5uFhpccUB1K6v5oaWTWmVX/Z/lSF73Q
-	 UF8VmyQ8dQBynHx2r7c8w5CBtvKdkMBMU719eQEk7WaaqX8n7sVpgiGYJmXgGnQ/mSu0u
-	 qwJDVreQK86TVO3xe4JNyv+1cdg3S6dd3fc1AdzFQN91qD4pK3RTq+p1q9rjYiRRI+A==
+	bh=Dl7iqTzHzufu+4/wyxeA5SZx//TW39gxKuPAKSA9vrU=;
+	b=s9tvds9FoclFwxx77Bdkl7a4nZn3U+QOtOCRqc4X2rOi51WaFNYoFsm65t7Ntn2W4lht
+	 NsyBZXbmKOfUwco9qBbCuctplRnh/WApbuPnxTvopniF2AViU3ahohhVAP8HU8JHd/gZg
+	 WvBEDkTrMfz3PqPQ1ZnZNSCGBY9nAF1eYAHQDWXBYwFZ8njiTCJAJc97xyYNYbW2/4Gtd
+	 bOIDf8oKdANvlFvvsdzHcAt44QqL1dcaecND6aZbtSVSk16HgGekfVkltyGOzCF8q07fP
+	 9zOZve334hlUgCnKNoiWuVkl7oiBlQnT/6Ih8opx0vEzGKcYPYH37CVda9uieR2rBHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=deEwD+v8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcQdwR8z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA985606A337;
-	Thu, 19 Nov 2026 04:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D44606A32A;
+	Thu, 19 Nov 2026 04:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=deEwD+v8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE1B1F000C5;
-	Thu, 19 Nov 2026 04:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcQdwR8z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80EC1F000C4;
+	Thu, 19 Nov 2026 04:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061478;
-	bh=57+ca2qjI0mQUVE11l7+dD0tq8NgIfYfszQIuUbSvYU=;
+	s=korg; t=1795061481;
+	bh=Dl7iqTzHzufu+4/wyxeA5SZx//TW39gxKuPAKSA9vrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=deEwD+v8JnFO6UTZxcOqCu/pPFomZDvltCGMjH61gWPak5jPq230ho3kuUe6+ReAn
-	 LTYmK9A3W9xJAsHQ7uZbVrXN44CPbxJ7hrzZ5cGc4BVhfsaKBfcK2ojS6vxnhjKJQj
-	 /4fc764ki6L6CRyhJeXqLclUNS1XD9d2rfN/q1pY=
+	b=JcQdwR8zk5eucM4FEJDfY6I1ax8BvGrtAs9ibIJMoExDq/96uDI+KrN/HW+30oFCU
+	 vtD0uCUGa4boe2CVlC00JcxiO0yNrGo4qWsr/gfrdVSQUrs9HS5ipcWan6LPiuNiIS
+	 j2wMOh9EVrmR/iv3RZnh7HSF3M7I2GGTLqagh5Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1568/1848] rcutorture: Fix divide-by-zero with fwd_progress_div=1
-Date: Wed, 18 Nov 2026 16:00:06 +0100
-Message-ID: <20261118150025.210845257@linuxfoundation.org>
+Subject: [PATCH 5.10 1569/1848] wifi: ath10k: avoid IDR mutation during TX cleanup
+Date: Wed, 18 Nov 2026 16:00:07 +0100
+Message-ID: <20261118150025.248671305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,59 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <kunwu.chan@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 5b748d8aa6833f2dec3f545311be69a2064bc6d1 ]
+[ Upstream commit 1c1a208e65a08191901cfded3bbccc4a54e4a75c ]
 
-When fwd_progress_div=1, the forward-progress test computes:
-  sd4 = (sd + div - 1) / div = sd
-  dur = sd4 + torture_random(&trs) % (sd - sd4) = sd4 + % 0
+ath10k_htt_flush_tx_queue() walks pending_tx with idr_for_each().
+Its callback calls ath10k_txrx_tx_unref(), which removes the current
+entry from pending_tx through ath10k_htt_tx_free_msdu_id().
 
-The modulo operation with a zero divisor triggers an integer
-division by zero (undefined behavior at the C level, #DE trap on x86),
-causing a kernel Oops and panic. On x86_64, this manifests as:
+idr_for_each() keeps radix-tree iterator state across the callback.
+Removing the current entry can therefore invalidate that state and
+make the remaining walk unsafe.
 
-  rcu_torture_fwd_prog_nr: Starting forward-progress test 0
-  Oops: divide error: 0000 [#1] SMP PTI
-  RIP: 0010:rcu_torture_fwd_prog+0x90b/0x1160
-  R12: 0000000000000000
+Use idr_for_each_entry(), which starts a fresh lookup after each
+callback.  The current entry can then be removed safely, while the
+following idr_destroy() continues to release the IDR itself.
 
-The existing guard only handles non-positive values. However,
-fwd_progress_div=1 also makes the random range empty because
-sd4 == sd.
-
-Change the guard to reject values below 2. The forward-progress test
-only reaches this calculation when stall_dur() is positive, so
-sd = stall_dur() + 1 >= 2. For fwd_progress_div >= 2, sd4 < sd,
-ensuring that sd - sd4 is at least 1.
-
-Keep the existing fallback to the default value of 4 for invalid
-values.
-
-Verified with QEMU/KVM: a 138-second run with fwd_progress_div=1
-completed 81 forward-progress test cycles without a crash.
-
-Fixes: 1b27291b1ea4f ("rcutorture: Add forward-progress tests for RCU grace periods")
-Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: 89d6d83565e9 ("ath10k: use idr api for msdu_ids")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261003092104.520135-2-yaojiale02@163.com
+[changed ath10k_htt_tx_clean_up_pending() signature]
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/htt_tx.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 5c4bdbe76df04..d182e1ab2aab4 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -2176,7 +2176,7 @@ static int __init rcu_torture_fwd_prog_init(void)
- 	}
- 	if (fwd_progress_holdoff <= 0)
- 		fwd_progress_holdoff = 1;
--	if (fwd_progress_div <= 0)
-+	if (fwd_progress_div < 2)
- 		fwd_progress_div = 4;
- 	rfp = kzalloc(sizeof(*rfp), GFP_KERNEL);
- 	if (!rfp)
+diff --git a/drivers/net/wireless/ath/ath10k/htt_tx.c b/drivers/net/wireless/ath/ath10k/htt_tx.c
+index 5f67da47036cf..cedb15d5626f0 100644
+--- a/drivers/net/wireless/ath/ath10k/htt_tx.c
++++ b/drivers/net/wireless/ath/ath10k/htt_tx.c
+@@ -504,9 +504,8 @@ int ath10k_htt_tx_start(struct ath10k_htt *htt)
+ 	return ret;
+ }
+ 
+-static int ath10k_htt_tx_clean_up_pending(int msdu_id, void *skb, void *ctx)
++static void ath10k_htt_tx_clean_up_pending(int msdu_id, struct ath10k *ar)
+ {
+-	struct ath10k *ar = ctx;
+ 	struct ath10k_htt *htt = &ar->htt;
+ 	struct htt_tx_done tx_done = {0};
+ 
+@@ -516,8 +515,6 @@ static int ath10k_htt_tx_clean_up_pending(int msdu_id, void *skb, void *ctx)
+ 	tx_done.status = HTT_TX_COMPL_STATE_DISCARD;
+ 
+ 	ath10k_txrx_tx_unref(htt, &tx_done);
+-
+-	return 0;
+ }
+ 
+ void ath10k_htt_tx_destroy(struct ath10k_htt *htt)
+@@ -534,8 +531,13 @@ void ath10k_htt_tx_destroy(struct ath10k_htt *htt)
+ 
+ static void ath10k_htt_flush_tx_queue(struct ath10k_htt *htt)
+ {
++	struct sk_buff *msdu;
++	int msdu_id;
++
+ 	ath10k_htc_stop_hl(htt->ar);
+-	idr_for_each(&htt->pending_tx, ath10k_htt_tx_clean_up_pending, htt->ar);
++
++	idr_for_each_entry(&htt->pending_tx, msdu, msdu_id)
++		ath10k_htt_tx_clean_up_pending(msdu_id, htt->ar);
+ }
+ 
+ void ath10k_htt_tx_stop(struct ath10k_htt *htt)
 -- 
 2.53.0
 
