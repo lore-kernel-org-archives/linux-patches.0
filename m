@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015631;
-	b=tO3/qd1invPDbVIyhToahqs9hLJbnYZpigalPwSQNAVXOQaLHHev4iy+dzXebIU/gQ8x
-	 /XY+sV4GewCeDsSRkg/3Vq7GRuz/BbJvVBELgR1vp+nTToMAa8OlURZV2z2GeX0hOFF7R
-	 2aNX+OINqCGWNWucaf4wKH8XOUXfjFN3R54x/c2xgSDBTsvi4msmfOLI3eDG6sU2iF0MJ
-	 33PxjdVJFNPdsVYCcmm147ZaJ9ztTi1rdakoF4mUmAExDO42wSsWEYeME33r1eWcvAOIl
-	 DWp4on48uBdafwakAdgsirpskp0f60LGq2b8gDlVkzevWiD22tfxxc3nBBvB+3iWigw==
+	t=1795015634;
+	b=EChDPXjSY9p/+b7HiT5uK95E/Q3+Tf44YNLRv/tWnXkzjgH2YPsQ60QIsAep7tCY8yJN
+	 mpVA0H+EVP3BBoOSekHAFiS4BlQVTu4MyqmVKXcaqLLLloO6vCYp8WtoE/gSkzUXtRlgL
+	 DGeDemdXiKkz/3oMKy5qoMU9Gd3/KowD0HE2A6YTkurhHJuAIk83nNwgMS1vDvm08jYrD
+	 Vg7cgmQBnNxha8azr3AtTiuirExv/azn/S+PI0stKXQsiQkZXFZUovEAylAc6S/4t60Me
+	 RpJzImKHNlctzoyTvYyrBbCWGoYyFO8kA8f9gv2W11HDICtSNlXfbjSs/3rMOIQw+dA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p+epphEixRRAtUpWo43ZcVwGH8Gv8yQEu1V1alAN3I8=;
-	b=Cs+0nUxbb2IXLdZNg7exM1edA9vAZanYcOKkyDgv6PB+LLbUx4NGxdayqoy4zns2dmv8
-	 cp7DYrbireQKLZx4hMkk2xGhJkWhM8J+HCf6zu04xQ4zNcZufXKIW/aJpKUMU1oqQrkci
-	 9+sFTyLIjljaxRxHudof2GtzGPxQXw2X+BFE1LMsY1Wk8u//6fW7JIyrRwrj0ChDajwS1
-	 9/Soj5d41QL0rQMsdjnKdYxtRgH8W5P0lc3jtsQs0ZrfY0X7omKLRzFtjM0Hp+m1qSxcO
-	 3TNtE+bJwk3f+oqJhspsNbGzjVZDrQiBu9mwm2ruj77IOTUoq1rfuyszmOnxBumVdmQ==
+	bh=NiyoPTnBfRTDCGWJYiLqJ3ZzvyuM9fOB6S6n1HA+z2A=;
+	b=tP9noeNmQFFtShAVchDWP5aQqIadXkgFzXdAH78Ao+AwnaDq9SdU8TelLyPtkSZlVlJf
+	 94nlkML+ixPZi/FeTRviEisqG3Mnad8U8q3gZZwliZzL8cBG3T4X+kbk8zIu1wlGfqkLW
+	 40GeXlSBW7fYNFnJOTzBjNl3lAElHSpeenOnsGV154jdGPdqugDrbeHjdyO7LSBk5MY9T
+	 Nxa0lG2b2DnQ1efZnW8/v3++1SdtP6QYAxQlA9w5G0x/oHNJTB/eFR1Axnb0GykXdZeR0
+	 Gn58VxH8EvFOqzwJYgTlRQmPH1r6icpvAYa9LJZlUEIhHxZOd/BUxXidFi8T2Ob67fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AF4au27F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBPZnh4Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACBD606A32C;
-	Wed, 18 Nov 2026 15:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0C7606A31C;
+	Wed, 18 Nov 2026 15:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AF4au27F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D9A1F000C8;
-	Wed, 18 Nov 2026 15:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBPZnh4Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717A31F000C4;
+	Wed, 18 Nov 2026 15:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015631;
-	bh=p+epphEixRRAtUpWo43ZcVwGH8Gv8yQEu1V1alAN3I8=;
+	s=korg; t=1795015633;
+	bh=NiyoPTnBfRTDCGWJYiLqJ3ZzvyuM9fOB6S6n1HA+z2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AF4au27FjvsK4gkMfzmFEnBxX4aQp3PCUDya26/5jJsWRU067pfKZOvRr5kPYjuWj
-	 4ts2mYN5NjQdzMPejfjkNL42JLehlz8B1zyKl2jif+WynKKjHUnXkMyIpye1cFglJk
-	 qR1w+62AHh5K87E3/so0ihSQfzUtLGzEZ9B1dXro=
+	b=yBPZnh4ZXM6BUVwz66Y5UwjM75rEMZTk6nKItkRutHlCheg5p8SkYZRDAPqXUOi59
+	 HS57nd6Rb9XX7JlQmbLvx7YwPbYAKUnD/Gv3W1zHOW+jYp1FgCvwHBeFETxZCWpXG9
+	 akBrObUDZkjZrAmbF7CDTQBmxT2Rp5VO5FlToqKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot@kernel.org,
-	Hanjun Guo <guohanjun@huawei.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0241/2651] ACPI: APEI: GHES: Validate memory error section length before payload access
-Date: Wed, 18 Nov 2026 15:24:41 +0100
-Message-ID: <20261118150256.534590845@linuxfoundation.org>
+Subject: [PATCH 7.3 0242/2651] ACPI: APEI: GHES: Bound AER info copy and sanitize software metadata
+Date: Wed, 18 Nov 2026 15:24:42 +0100
+Message-ID: <20261118150256.572378459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,98 +74,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 10338c9085b4939a428a8dc78d2bbf62c161278b ]
+[ Upstream commit 9c3ad3bfff20d2d7a0c9614db2a58e78123bf0ce ]
 
-ghes_do_proc() hands the CPER_SEC_PLATFORM_MEM payload to the report chain,
-arch_apei_report_mem_error() and ghes_handle_memory_failure() without
-checking gdata->error_data_length. All three read validation_bits and
-physical_addr, at offsets 0 and 16, so a shorter section reads past the
-record.
+ghes_handle_aer() copies sizeof(struct aer_capability_regs) out of the
+fixed 96-byte pcie_err->aer_info. The struct is larger, so the copy reads
+past the section, and it fills the software-only header_len and flit fields
+of the embedded struct pcie_tlp_log from firmware bytes.
+pcie_print_tlp_log() uses both to bound a loop over dw[], so a large value
+walks past the array. Nothing checks the section can hold a struct
+cper_sec_pcie either.
 
-Check the length once in ghes_do_proc(), before any consumer runs. Take the
-73-byte struct cper_sec_mem_err_old as the floor: older firmware
-legitimately emits that UEFI 2.1/2.2 layout, and it makes validation_bits
-safe to read.
-
-The fields from "extended" on are absent from that layout, so also require
-whatever length the validation bits claim. Derive it per field rather than
-demanding the full 80 bytes: rank needs only 76, and the BANK_GROUP and
-BANK_ADDRESS bits describe "bank" at offset 38, which every record carries.
-Testing the whole mask against one size, as cper_print_mem() does, gets it
-wrong both ways.
+Validate error_data_length, zero the destination, and map aer_info onto the
+struct as extlog_print_pcie() does: copy up to the four Header Log DWORDs,
+then place the TLP Prefix Log from its own offset. The rest stays zero,
+covering header_len and flit.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=7
-Fixes: ca104edc1784 ("ACPI, APEI, GHES: Cleanup ghes memory error handling")
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=3
+Fixes: 7e077e6707b3 ("PCI/ERR: Handle TLP Log in Flit mode")
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-12-dave.jiang@intel.com
+Link: https://patch.msgid.link/20260904172337.1409775-13-dave.jiang@intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 41 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/acpi/apei/ghes.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 6dd2ee025963f..094d112535551 100644
+index 094d112535551..4e7df028a0b8c 100644
 --- a/drivers/acpi/apei/ghes.c
 +++ b/drivers/acpi/apei/ghes.c
-@@ -929,6 +929,28 @@ static void ghes_log_hwerr(int sev, guid_t *sec_type)
- 	hwerr_log_error_type(HWERR_RECOV_OTHERS);
+@@ -642,11 +642,14 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
+ #ifdef CONFIG_ACPI_APEI_PCIEAER
+ 	struct cper_sec_pcie *pcie_err = acpi_hest_get_payload(gdata);
+ 
++	if (gdata->error_data_length < sizeof(*pcie_err))
++		return;
++
+ 	if (pcie_err->validation_bits & CPER_PCIE_VALID_DEVICE_ID &&
+ 	    pcie_err->validation_bits & CPER_PCIE_VALID_AER_INFO) {
++		struct aer_capability_regs *aer_info;
+ 		unsigned int devfn;
+ 		int aer_severity;
+-		u8 *aer_info;
+ 
+ 		devfn = PCI_DEVFN(pcie_err->device_id.device,
+ 				  pcie_err->device_id.function);
+@@ -664,13 +667,25 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
+ 						  sizeof(struct aer_capability_regs));
+ 		if (!aer_info)
+ 			return;
+-		memcpy(aer_info, pcie_err->aer_info, sizeof(struct aer_capability_regs));
++
++		/*
++		 * Map aer_info onto the struct as extlog_print_pcie() does:
++		 * copy up to the four Header Log DWORDs, then place the TLP
++		 * Prefix Log from where the hardware keeps it. The rest stays
++		 * zero, so firmware cannot drive the pcie_print_tlp_log() loop
++		 * over dw[] out of bounds.
++		 */
++		memset(aer_info, 0, sizeof(struct aer_capability_regs));
++		memcpy(aer_info, pcie_err->aer_info,
++		       offsetof(struct aer_capability_regs, header_log) +
++		       PCIE_STD_NUM_TLP_HEADERLOG * sizeof(u32));
++		memcpy(aer_info->header_log.prefix,
++		       pcie_err->aer_info + PCI_ERR_PREFIX_LOG,
++		       sizeof(aer_info->header_log.prefix));
+ 
+ 		aer_recover_queue(pcie_err->device_id.segment,
+ 				  pcie_err->device_id.bus,
+-				  devfn, aer_severity,
+-				  (struct aer_capability_regs *)
+-				  aer_info);
++				  devfn, aer_severity, aer_info);
+ 	}
+ #endif
  }
- 
-+/*
-+ * The fields from "extended" on are absent from the 73-byte UEFI 2.1/2.2
-+ * layout that older firmware still emits. Return the length needed for the
-+ * fields the validation bits claim, so over-claiming is rejected without
-+ * rejecting an honest short record.
-+ */
-+static u32 ghes_mem_err_min_len(u64 validation_bits)
-+{
-+	u32 len = sizeof(struct cper_sec_mem_err_old);
-+
-+	if (validation_bits & (CPER_MEM_VALID_ROW_EXT | CPER_MEM_VALID_CHIP_ID))
-+		len = offsetof(struct cper_sec_mem_err, rank);
-+	if (validation_bits & CPER_MEM_VALID_RANK_NUMBER)
-+		len = offsetof(struct cper_sec_mem_err, mem_array_handle);
-+	if (validation_bits & CPER_MEM_VALID_CARD_HANDLE)
-+		len = offsetof(struct cper_sec_mem_err, mem_dev_handle);
-+	if (validation_bits & CPER_MEM_VALID_MODULE_HANDLE)
-+		len = sizeof(struct cper_sec_mem_err);
-+
-+	return len;
-+}
-+
- static void ghes_do_proc(struct ghes *ghes,
- 			 const struct acpi_hest_generic_status *estatus)
- {
-@@ -954,6 +976,25 @@ static void ghes_do_proc(struct ghes *ghes,
- 		if (guid_equal(sec_type, &CPER_SEC_PLATFORM_MEM)) {
- 			struct cper_sec_mem_err *mem_err = acpi_hest_get_payload(gdata);
- 
-+			/*
-+			 * Check once for all three consumers below. The 73-byte
-+			 * UEFI 2.1/2.2 layout is the floor, matching
-+			 * cper_estatus_print_section() and making
-+			 * validation_bits safe to read.
-+			 */
-+			if (gdata->error_data_length <
-+			    sizeof(struct cper_sec_mem_err_old))
-+				continue;
-+
-+			/* Then require what the claimed fields actually need. */
-+			if (gdata->error_data_length <
-+			    ghes_mem_err_min_len(mem_err->validation_bits)) {
-+				pr_warn_ratelimited(FW_WARN GHES_PFX
-+						    "memory error section too small (%u) for the fields it claims\n",
-+						    gdata->error_data_length);
-+				continue;
-+			}
-+
- 			atomic_notifier_call_chain(&ghes_report_chain, sev, mem_err);
- 
- 			arch_apei_report_mem_error(sev, mem_err);
 -- 
 2.53.0
 
