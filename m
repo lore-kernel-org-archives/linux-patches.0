@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016242;
-	b=Yvz9vnl9w18iHWDipCG8P/YWoATIwBWeWlXUuYzN25JramfyAqbIeXCBznW9uwcE9AQG
-	 guUnd0EsbfokX/khAbUDSlVx9vnG31M3OFCjRHhIzhASsklMq3lHAz4/ELZDLOI87PL0G
-	 R1Oo1LYO2VWcOVciXrDvFV0Ut7Uixtpnc96y2/i4jOkhDwgENwbemhJLqD24R3agLBG8r
-	 QDVzHYaLylgMkFVf8XPsEPO5jHnJupQ0U0dmMkq/x2np/r/lwg4qjmdxZDtJ9fihO+Zc+
-	 zfOT2L0Ek0cPCDaYFEXUW1CzD/was3swV3iITcNq0YW1D3uIt0zRU2AQwCrtjxStb/Q==
+	t=1795016245;
+	b=jfUuKiMPhBHVEeRtmtSkAWvmpAxvB53y1HLJ4OoU/7/+Sldof2nkuH4/xFZBsbvNbmII
+	 LLlXPCwRq2UGbLCn/fdhCon7hrabDuNYPLJVdCGIJ6n8aZguCmgFwT+KxYk7sjVUGTGBE
+	 yoYZcRxGUKG5DkoQEPTeWr2v/lyzpQkQKcBA3ipA4uj7wp+fBq3DYKJ+qf1KG1iyfDcS5
+	 7u3F1fx9RfcErtwIOkUe9p0TZAM/cto45Pk1gTZZpK8VqeD/iXMJ/sXRYEeOv9qz+t5PB
+	 /S+7xP3v6Z3siUsUBckIn82pkcH5as152r5tQa7tWNiBGMoA1oicxIOi3EgBxTyGzLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016242;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=kS944m1CdKjOUVg7AGfJAktRDI6aM/lphbtMuNX3h3c=;
-	b=aCTlBbvo3rejPQTktkgZrZTl5mFdOeZ0W+3n2Nav8TfD/+E7uTJv0MoBW5KQRe5p5PCq
-	 Nr2GkFlRP2zM+HMkMMyFrUb6wrafsWhaR6P5UK8wL8t6+vIJC3jDdwSBHAXLvlai8V29x
-	 hBvELXWjG2kOIQR6tyBE7Lg/03ZN17CfCSPEhJViQ7eQbApIijb26PvDl1tuFMY2Ed7ZL
-	 MFR0MEmjzp+3KJ95+dNuqhn0i8cXZUaT4FUcc63bDG3rlW/OcVVErEnjIjJtKGdf/zFmO
-	 GqKaFr3Wg3orMxNiyFNmN9/stOQP7PoqLNfhE/o3jgfZyjwAiVRrqv233brk2/q6PUg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4YUnRDepzqiHUlfieFaKgV5p6h4NeQcjCsEaStZpv2c=;
+	b=Ke5QTEHDVWXL7dgvheO8FdTrZSNSWCGnPjqNThRRB/UrfGrjQ8ODLsLiO92TglPHZYgd
+	 +aX6tiRRV4HFjHmYLNU4J3S81f+VZUoxD+o4xMoTWMA9LoWMumuuQtRlpuQmnxB/SDBsM
+	 AD1U42bTXanAGQeIrfxk6MJa5jGszqeqpfxauINmhIJtRURBeyh9FQv9dXMZ6XiZpPBXY
+	 Mt+bRMNhhf1BGfl7fuDlAdgDDCexmiIvgy9EojvLrX4TRIENZgnfEGM9lUtNaLUAxqbmU
+	 LEXsBClNCI/SAANj5XZFRK3Ew89hjbV2sUrgBCurqJZJ7PlGCHuRKObXqwFYp+UdCCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LuFa+UA1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lL8LSQ9J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774F3606A325;
-	Wed, 18 Nov 2026 15:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85684606A333;
+	Wed, 18 Nov 2026 15:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LuFa+UA1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B7D1F000CA;
-	Wed, 18 Nov 2026 15:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lL8LSQ9J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCAC1F000C4;
+	Wed, 18 Nov 2026 15:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016242;
-	bh=kS944m1CdKjOUVg7AGfJAktRDI6aM/lphbtMuNX3h3c=;
+	s=korg; t=1795016245;
+	bh=4YUnRDepzqiHUlfieFaKgV5p6h4NeQcjCsEaStZpv2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LuFa+UA1RvO9BQvBxgLp39Uqudupu6HCL5z9khu1AG+Rels9R+j+leMoWLBw6nslL
-	 XYqC9fPjzJx2X6oM7IaAQl60N1e+uKbTVNcn40pvnKzbY3nvdlhrnCEA0yCyA2QSuA
-	 9gu1apxN5VRbhL4zkt7hrsCjVzjlvBlrnS7Los3I=
+	b=lL8LSQ9JFnF4ryiPzz5o+gWBZy4LeXc3Dxn2zLVVYg2PXyxKaoqIw8a5XunR7qHNp
+	 oEbzl23nNBfp6hvBs6JHwz6gbNPus5VTEXb+yHMpyGni1Q9iQ/V58eDfnF9xZ1zhJm
+	 nbGJ9U4y1Q3a3edAE8hW9fuKLcSWoXRAyPivKZNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0458/2651] dma-fence: Fix dma_fence_enable_signaling() reference in kernel-doc
-Date: Wed, 18 Nov 2026 15:28:18 +0100
-Message-ID: <20261118150304.291812934@linuxfoundation.org>
+Subject: [PATCH 7.3 0459/2651] block,iomap: fix protection information verification with initial bvec offset
+Date: Wed, 18 Nov 2026 15:28:19 +0100
+Message-ID: <20261118150304.327338073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,46 +63,184 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 65221358b6a6ea5128accbaa6117565ab8e24aa1 ]
+[ Upstream commit 7de79a5ffe338b959be8cd862292596ac9f7848b ]
 
-The kernel-doc comment of dma_fence_is_signaled_locked() refers to
-dma_fence_enable_sw_signaling, which was renamed to
-dma_fence_enable_signaling by commit 9370a5c664e8 ("dma-buf: rename
-dma_fence_enable_sw_signaling"). Say dma_fence_enable_signaling.
+When reconstructing a bvec_iter from an ioend for protection information
+verification, iomap currently ignores the offset into the initial
+bio_vec.
 
-Fixes: 9370a5c664e8 ("dma-buf: rename dma_fence_enable_sw_signaling")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260911221100.7079-1-kmehltretter@gmail.com
+This can't happen for buffered I/O or direct I/O to user addresses, but
+is exercised by splice on O_DIRECT file descriptors or when using the
+loop driver in direct I/O mode.
+
+Fortunately the only file system PI user (XFS) currently always bounce
+buffers, so this can't actually be triggered yet.  But we'll want to make
+the bounce buffering conditional soon, for which this needs to be fixed.
+
+Store the initial offset in struct iomap_ioend, and pass a
+pre-constructed bvec_iter to fs_bio_integrity_verify.  For the
+synchronous read case the fix is even simpler as this path can
+simply stash away the original bvec_iter.
+
+Fixes: 0bde8a12b554 ("block: add fs_bio_integrity helpers")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20260909060924.1102037-10-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-fence.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/bio-integrity-fs.c      | 13 +++++--------
+ fs/iomap/bio.c                |  4 +++-
+ fs/iomap/ioend.c              | 14 ++++++++++----
+ include/linux/bio-integrity.h |  3 +--
+ include/linux/iomap.h         |  8 ++++++++
+ 5 files changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
-index ffa99b930843e..dd07d128adc3b 100644
---- a/include/linux/dma-fence.h
-+++ b/include/linux/dma-fence.h
-@@ -507,7 +507,7 @@ dma_fence_test_signaled_flag(struct dma_fence *fence)
-  * Returns true if the fence was already signaled, false if not. Since this
-  * function doesn't enable signaling, it is not guaranteed to ever return
-  * true if dma_fence_add_callback(), dma_fence_wait() or
-- * dma_fence_enable_sw_signaling() haven't been called before.
-+ * dma_fence_enable_signaling() haven't been called before.
-  *
-  * This function requires &dma_fence.lock to be held.
-  *
+diff --git a/block/bio-integrity-fs.c b/block/bio-integrity-fs.c
+index 692403dfa047b..dd6c85530913a 100644
+--- a/block/bio-integrity-fs.c
++++ b/block/bio-integrity-fs.c
+@@ -52,14 +52,10 @@ void fs_bio_integrity_generate(struct bio *bio)
+ }
+ EXPORT_SYMBOL_GPL(fs_bio_integrity_generate);
+ 
+-int fs_bio_integrity_verify(struct bio *bio, sector_t sector, unsigned int size)
++int fs_bio_integrity_verify(struct bio *bio, struct bvec_iter *data_iter)
+ {
+ 	struct blk_integrity *bi = blk_get_integrity(bio->bi_bdev->bd_disk);
+ 	struct bio_integrity_payload *bip = bio_integrity(bio);
+-	struct bvec_iter data_iter = {
+-		.bi_sector	= sector,
+-		.bi_size	= size,
+-	};
+ 
+ 	if (!bip || !(bip->bip_flags & BIP_CHECK_FLAGS))
+ 		return 0;
+@@ -71,9 +67,10 @@ int fs_bio_integrity_verify(struct bio *bio, sector_t sector, unsigned int size)
+ 	 * bio.  Requires the submitter to remember the sector and the size.
+ 	 */
+ 	memset(&bip->bip_iter, 0, sizeof(bip->bip_iter));
+-	bip->bip_iter.bi_sector = sector;
+-	bip->bip_iter.bi_size = bio_integrity_bytes(bi, size >> SECTOR_SHIFT);
+-	return blk_status_to_errno(bio_integrity_verify(bio, &data_iter));
++	bip->bip_iter.bi_sector = data_iter->bi_sector;
++	bip->bip_iter.bi_size =
++		bio_integrity_bytes(bi, data_iter->bi_size >> SECTOR_SHIFT);
++	return blk_status_to_errno(bio_integrity_verify(bio, data_iter));
+ }
+ 
+ static int __init fs_bio_integrity_init(void)
+diff --git a/fs/iomap/bio.c b/fs/iomap/bio.c
+index ee85b009c5c13..eed19277f0267 100644
+--- a/fs/iomap/bio.c
++++ b/fs/iomap/bio.c
+@@ -169,6 +169,7 @@ int iomap_bio_read_folio_range_sync(const struct iomap_iter *iter,
+ {
+ 	const struct iomap *srcmap = iomap_iter_srcmap(iter);
+ 	sector_t sector = iomap_sector(srcmap, pos);
++	struct bvec_iter saved_iter;
+ 	struct bio_vec bvec;
+ 	struct bio bio;
+ 	int error;
+@@ -178,10 +179,11 @@ int iomap_bio_read_folio_range_sync(const struct iomap_iter *iter,
+ 	bio_add_folio_nofail(&bio, folio, len, offset_in_folio(folio, pos));
+ 	if (srcmap->flags & IOMAP_F_INTEGRITY)
+ 		fs_bio_integrity_alloc(&bio);
++	saved_iter = bio.bi_iter;
+ 	error = submit_bio_wait(&bio);
+ 	if (bio_integrity(&bio)) {
+ 		if (!error)
+-			error = fs_bio_integrity_verify(&bio, sector, len);
++			error = fs_bio_integrity_verify(&bio, &saved_iter);
+ 		fs_bio_integrity_free(&bio);
+ 	}
+ 	bio_uninit(&bio);
+diff --git a/fs/iomap/ioend.c b/fs/iomap/ioend.c
+index c2891d640e827..edc4509300d7f 100644
+--- a/fs/iomap/ioend.c
++++ b/fs/iomap/ioend.c
+@@ -25,6 +25,7 @@ struct iomap_ioend *iomap_init_ioend(struct inode *inode,
+ 	ioend->io_parent = NULL;
+ 	INIT_LIST_HEAD(&ioend->io_list);
+ 	ioend->io_flags = ioend_flags;
++	ioend->io_bvec_offset = bio->bi_iter.bi_offset;
+ 	ioend->io_inode = inode;
+ 	ioend->io_offset = file_offset;
+ 	ioend->io_size = bio->bi_iter.bi_size;
+@@ -319,6 +320,13 @@ ssize_t iomap_add_to_ioend(struct iomap_writepage_ctx *wpc, struct folio *folio,
+ }
+ EXPORT_SYMBOL_GPL(iomap_add_to_ioend);
+ 
++static int iomap_ioend_integrity_verify(struct iomap_ioend *ioend)
++{
++	struct bvec_iter data_iter = BVEC_ITER_IOEND(ioend);
++
++	return fs_bio_integrity_verify(&ioend->io_bio, &data_iter);
++}
++
+ static u32 iomap_finish_ioend(struct iomap_ioend *ioend, int error)
+ {
+ 	if (ioend->io_parent) {
+@@ -336,10 +344,8 @@ static u32 iomap_finish_ioend(struct iomap_ioend *ioend, int error)
+ 
+ 	if (!ioend->io_error &&
+ 	    bio_integrity(&ioend->io_bio) &&
+-	    bio_op(&ioend->io_bio) == REQ_OP_READ) {
+-		ioend->io_error = fs_bio_integrity_verify(&ioend->io_bio,
+-			ioend->io_sector, ioend->io_size);
+-	}
++	    bio_op(&ioend->io_bio) == REQ_OP_READ)
++		ioend->io_error = iomap_ioend_integrity_verify(ioend);
+ 
+ 	if (ioend->io_flags & IOMAP_IOEND_DIRECT)
+ 		return iomap_finish_ioend_direct(ioend);
+diff --git a/include/linux/bio-integrity.h b/include/linux/bio-integrity.h
+index 0ea2a8bf7efb7..a954c97be0b33 100644
+--- a/include/linux/bio-integrity.h
++++ b/include/linux/bio-integrity.h
+@@ -151,7 +151,6 @@ void bio_integrity_setup_default(struct bio *bio);
+ unsigned int fs_bio_integrity_alloc(struct bio *bio);
+ void fs_bio_integrity_free(struct bio *bio);
+ void fs_bio_integrity_generate(struct bio *bio);
+-int fs_bio_integrity_verify(struct bio *bio, sector_t sector,
+-		unsigned int size);
++int fs_bio_integrity_verify(struct bio *bio, struct bvec_iter *data_iter);
+ 
+ #endif /* _LINUX_BIO_INTEGRITY_H */
+diff --git a/include/linux/iomap.h b/include/linux/iomap.h
+index bc7ae6327dbf8..9273378b37d0d 100644
+--- a/include/linux/iomap.h
++++ b/include/linux/iomap.h
+@@ -500,6 +500,7 @@ sector_t iomap_bmap(struct address_space *mapping, sector_t bno,
+ struct iomap_ioend {
+ 	struct list_head	io_list;	/* next ioend in chain */
+ 	u16			io_flags;	/* IOMAP_IOEND_* */
++	u32			io_bvec_offset;	/* offset into first bvec */
+ 	struct inode		*io_inode;	/* file being written to */
+ 	size_t			io_size;	/* size of the extent */
+ 	atomic_t		io_remaining;	/* completetion defer count */
+@@ -517,6 +518,13 @@ static inline struct iomap_ioend *iomap_ioend_from_bio(struct bio *bio)
+ 	return container_of(bio, struct iomap_ioend, io_bio);
+ }
+ 
++#define BVEC_ITER_IOEND(_ioend)				\
++{							\
++	.bi_sector	= (_ioend)->io_sector,		\
++	.bi_size	= (_ioend)->io_size,		\
++	.bi_offset	= (_ioend)->io_bvec_offset,	\
++}
++
+ struct iomap_writeback_ops {
+ 	/*
+ 	 * Performs writeback on the passed in range
 -- 
 2.53.0
 
