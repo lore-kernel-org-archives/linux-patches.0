@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022990;
-	b=E8K74+uAgK/bTTZEUVVfdeLuC/a2mvB5GnH+PXo2k0Z84y7Lc2VJkaYaq3Nfz5VJQ0Lw
-	 4fAKRq0cTGn5vdIApL6IAB7gKLTUfPNzcjsuXw3EJ8FcR9N8HDJH5apZSOdaQarHAs8VT
-	 pH8nhvz6gOEbuerJs0r/fa3NI+6tJ0J0oErF1waerjQd2BIBPCHDHMtbJ+BJOSS5wtHNP
-	 R5dVd21QiwhsgTM4VUre0OHbI87HzbLkAQ50EGZVfTHDxv69lNKAdLnglWbsqbvwyBs8m
-	 gz48t8ozt19qrwp2ouRqu6dbmczEic+YwLQF+7pIBuQHN/bs5AuhdsLIqOJaHLmfwWw==
+	t=1795022992;
+	b=NjUDPu34fSaniu+ShLqaNf/CXMlWlvkgZFDcMLOz7/JbkB9BiUsmV9TyZdaqyLz5VNqB
+	 6mIfPhTUTbOsHcTkasmBSnD8/Jdz7UMXWbKRN1111qNA3Xp+ZZwSIrNrrwoZT+039YPC7
+	 vvjlGp7BsmZyzjfPvWZCZ8bIXstgxFwo1aU2lPUytqBt71B5E9HzY9kC8RokTJYAxwKna
+	 p7mNryncApCcWhyiZm6Ni0IEnjEsaW+jMyF2mQeqzpGaDerkqMU72fwhqxjgJZ0JCCYEF
+	 eNoWNjQxT6aSq161XoVL7kx71CWGcCJN302XrnlmM5/Mwt9wAF6FVY4luand2DlcM5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=czzWrGNj7S/aL4/pf6omUgw3WKXGXozPkSLaKFP1sTs=;
-	b=DYxz/Rvn1GjB0h6tCsl6aZBnjl4FTJGRLCJWeQNqZ+Tt0R/9KzhPAyi5rWfFn4Fx/5Cl
-	 pWiLxmBxFmBmqfAhGhcVRjkn4LqYJHbhj6Jzna0tKG2lqezewXIZwyMi2pT0JmCVZWCIV
-	 ETQjiAw/2ur70TBvw3ByKdNBMyMv0W9WT+55Rvnh4UNJK3i4+LAg5cv+Ig6JAn/D+ANEC
-	 uxeGL5vfAULeB8jFKzvDOk+Gw8SI3+L8qxAHoKye7iV4dOmhE+tJ7XAfgcFJU6mcHawQi
-	 P6cVXZwfXOYfk1uds4ess0p9crmCUay2DNENJ0rWd3noz5oi7hp+wh8svEVRMWKkVDQ==
+	bh=Gqql6TeVWeilEQAZgVQeNpw8TovcY92qAk4zn6HIPc0=;
+	b=xzy67U8OVZomm+oUVK1Hc5CBeBs7efXIgkyXnI55u1I8mxFeMyVUHKYydhp51WZKgqE5
+	 ZthN+1oCQAC9izCamBpOEfBHhVU39LZ5n+PwjjL731AwVvhAK/CqVrWtjXMYrrPeO11pS
+	 iPRmYvEkvw8kVr009/h/JPnYi2Sdo8GTHVDmcQNARdrTzteXIyuHFkuFTZxmab5ZCjnne
+	 5omlvE9qvgzBcbUMvpiL5ue/4dzEkvSsmRfNAdqvp4Uyou5b1ME3u8+Ynugjl/HH4pzN9
+	 DJCkzNkf4IuRekIgO62j5d0QozLoRqa4fV9Q0caQ3p0b9hjzMQv+m7Y6EML8S4auKSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnpIyBqn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWF3SZlg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75CD606A31C;
-	Wed, 18 Nov 2026 17:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5888606A320;
+	Wed, 18 Nov 2026 17:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnpIyBqn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D721F000C4;
-	Wed, 18 Nov 2026 17:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWF3SZlg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080351F000C4;
+	Wed, 18 Nov 2026 17:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022989;
-	bh=czzWrGNj7S/aL4/pf6omUgw3WKXGXozPkSLaKFP1sTs=;
+	s=korg; t=1795022992;
+	bh=Gqql6TeVWeilEQAZgVQeNpw8TovcY92qAk4zn6HIPc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZnpIyBqno2hhTkhBLjZ9993pk5AjrSzugpaAVJkmiQYczCKQ8H9tufyXfbZMXiXnN
-	 7zU+ycu01CBlVSCVr2nN/8+a8W/Vvo5O+k2sl3Xcj3eZC7coWNCNKlXgTX6cA5y9nM
-	 YuDlcGzjG9MzPG0FXvtukH9qdJB1AgJ+GEw3XIqc=
+	b=yWF3SZlg4OTiSw4bvOhU/ZBEU/0b0i4OlYfbCSAKb0Mp5EktwdRCCjNnhUtjvKyIH
+	 ThZf7Dm0xkCkN9olXOKI3Q4SfbfZPWf8JstXLsFoKbdt6zcaH8T+Dr5A2BuwbHWK+F
+	 p1/VQd9MChl3Zhd6bDV1+qXU8inHlaYgnU6+8K6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0209/2151] dmaengine: fsl_raid: dont invoke client callback under desc_lock
-Date: Wed, 18 Nov 2026 15:32:24 +0100
-Message-ID: <20261118150129.395044004@linuxfoundation.org>
+Subject: [PATCH 6.18 0210/2151] dmaengine: fsl_raid: avoid free_q underflow in free_chan_resources
+Date: Wed, 18 Nov 2026 15:32:25 +0100
+Message-ID: <20261118150129.430967935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,69 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 62c267ce97444f8a381f2bb3cd5d534eb362c540 ]
+[ Upstream commit d805aa5b6088b193debabaa80cc0991bfa2bd057 ]
 
-fsl_re_dequeue() holds re_chan->desc_lock while calling
-fsl_re_desc_done(), which synchronously invokes the DMA client completion
-callback via dmaengine_desc_get_callback_invoke(). If that callback
-submits new work (e.g. fsl_re_tx_submit()), it tries to reacquire the
-same desc_lock and deadlocks on the spinlock.
+fsl_re_free_chan_resources() loops alloc_count times calling
+list_first_entry() on free_q without checking whether the list still
+has entries. If descriptors remain un-acked or pending in submit_q /
+active_q / ack_q when the channel resources are freed, free_q becomes
+smaller than alloc_count and list_first_entry() returns the list head,
+causing list_del() to corrupt the list head and dereference a bogus
+pointer.
 
-Collect completed descriptors into a local list under the lock, then
-release the lock and invoke the callbacks before moving the descriptors
-to the ack queue.
+Walk free_q with list_for_each_entry_safe() until it is empty,
+decrementing alloc_count per freed descriptor, instead of relying on
+the alloc_count count.
 
 Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
 Assisted-by: opencode:hy3-free
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260718053010.3074329-1-rosenp@gmail.com
+Link: https://patch.msgid.link/20260718235227.385108-1-rosenp@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl_raid.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/dma/fsl_raid.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 6aa97e258a557..ad77694520e9e 100644
+index ad77694520e9e..fa8e40fdb005c 100644
 --- a/drivers/dma/fsl_raid.c
 +++ b/drivers/dma/fsl_raid.c
-@@ -162,6 +162,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
- 	struct fsl_re_hw_desc *hwdesc;
- 	unsigned long flags;
- 	unsigned int count, oub_count;
-+	LIST_HEAD(completed);
- 	int found;
+@@ -613,18 +613,15 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
+ static void fsl_re_free_chan_resources(struct dma_chan *chan)
+ {
+ 	struct fsl_re_chan *re_chan;
+-	struct fsl_re_desc *desc;
++	struct fsl_re_desc *desc, *_desc;
  
- 	fsl_re_cleanup_descs(re_chan);
-@@ -182,8 +183,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
- 		}
- 
- 		if (found) {
--			fsl_re_desc_done(desc);
--			list_move_tail(&desc->node, &re_chan->ack_q);
-+			list_move_tail(&desc->node, &completed);
- 		} else {
- 			dev_err(re_chan->dev,
- 				"found hwdesc not in sw queue, discard it\n");
-@@ -196,6 +196,17 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
- 			 FSL_RE_RMVD_JOB(1));
+ 	re_chan = container_of(chan, struct fsl_re_chan, chan);
+-	while (re_chan->alloc_count--) {
+-		desc = list_first_entry(&re_chan->free_q,
+-					struct fsl_re_desc,
+-					node);
+-
++	list_for_each_entry_safe(desc, _desc, &re_chan->free_q, node) {
+ 		list_del(&desc->node);
+ 		dma_pool_free(re_chan->re_dev->cf_desc_pool, desc->cf_addr,
+ 			      desc->cf_paddr);
+ 		kfree(desc);
++		re_chan->alloc_count--;
  	}
- 	spin_unlock_irqrestore(&re_chan->desc_lock, flags);
-+
-+	/* Invoke the client callbacks outside the channel lock. The callback
-+	 * may submit new work which re-acquires desc_lock, so holding it here
-+	 * would deadlock.
-+	 */
-+	list_for_each_entry_safe(desc, _desc, &completed, node) {
-+		fsl_re_desc_done(desc);
-+		spin_lock_irqsave(&re_chan->desc_lock, flags);
-+		list_move_tail(&desc->node, &re_chan->ack_q);
-+		spin_unlock_irqrestore(&re_chan->desc_lock, flags);
-+	}
- }
  
- /* Per Job Ring interrupt handler */
+ 	if (!list_empty(&re_chan->free_q))
 -- 
 2.53.0
 
