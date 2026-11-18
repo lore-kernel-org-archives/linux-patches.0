@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059110;
-	b=AN1CiRRGjRHhG1ojg7pMCbikVOFWnQYMzyQLmYoBLUb2SDdvmlPyLj4QCLlS3rWhZ9th
-	 1DHjpcnBrgDr8tpO5+LsObvF1osFig8meAOWEcMGv5zZhpcXy9A1kDsf1mJM6Wt/eldui
-	 SOMGTkNGiHHFllONVhrOrfGM5eTRA74bCVITskVdMIDo1RF5QJJj7ZWimvCQ9o8QQfLU9
-	 Qz3usdTGQjBJwPh2rQ2bb52XFsxmPrxiyv1NwkYFZwojFDUESb6wDL5xrh1Lfgw+1KjvO
-	 VLULLMDRs0AXjvezoaEBiBzMT0nRyWfKJ9KKBS3MJKdkS6Sx7U2GNLCV2RDH8aYtJzw==
+	t=1795059112;
+	b=cw++40Mg7YSELo1iURd1eAHCKVwndJGivCp+hivY6E/ksvlOwnuwj5FLYvQNKI9Wt8gM
+	 epB8wDtbvPkbzixnv8+l0Tp6efy9u6bvtUrWfh2xwyhbM+o9k0Z6eqyIw7ickxH5BQZ1X
+	 +nK1Kblaxchmj92ZZEgb7kZfSWYVwXOFEv9BfYYVF+qCgQI2O6+lMG4ntMQNyWKknCkK7
+	 0qRzWWlsLGmnNMxzJGXSdNTrRuCcJo2UqvfKl/HOj4BOW5elh8So77Gl3NbvmhQndq5+V
+	 3Q3qK2+EQyC3QnDN9QNx8W20CUmDpxb7kwzBzvaViFARPSHzsW7/gTnTAHm6ySmccvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MbbElvyduHGcu0l8LbXuASIEij5QbwsTT22cc6APwj8=;
-	b=Nh9m2u1lGnb6wOnT3gQ++OCKPElfYh9qxeOTc5hoCQshyko8AhKcXC2t7NyU6nqVrJSy
-	 oJwJW+YaQtPcm2d+DklcC0LUu1dHwwDnFceHy+U0BuPkdWSSAjDGxgcjqg4l4vP0IdTf/
-	 e/CkXqijIZRg/mgVEL/Retenld1pFat05TYJzHxZZfpU6p5gzSqXjv37e/qgAGD+isWRs
-	 GjZd8nimZnZo+fV5/TnuyIELxE9PFMHmhR6MPxB7+FDnSruPkcr1dV9pbU7dzKuUM0ry8
-	 0mkauUgM/TL/MyKNb6fyG23IIrDyha1uHxeLiLjSYvfGDsxSZgTrLgI3KOXWjWeqJLg==
+	bh=hQ6NZcJp+Me0yO3hDrso8OnbOqad93JDhkMmjaL3Oqk=;
+	b=DgXdOPOePjhADeILGwTuNkJth8zfp8fjOcIuCH3/lkeNo9FeCjNpaITmBoyRCjnFfKx7
+	 2+0elmGxAeVuJWLlPPTN9SR+SVFtSHK1U5PdHWKcCtDQZHg2m8DH3twzUTW3Fa1Gl7bw8
+	 pA1mNrgcnFjMb446WKhifiFUF/MjblWVOiy6Mk76GgTrVPWmv+kAzbIiGHatVE9YqhT4M
+	 LPtrwvqk4dyh3xu77797nGtzied/0nAaWMT6O5+cMT714WiwGDv0xrP+w5DiUJKslWB+z
+	 wChL+igTDJcPaPnd2M2sL299DKr3mjnShGKGDCfL2xTEeGOze88mlNGBtDXNQ8l2cTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j9h6GWVo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhhAh2FL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A87606A32A;
-	Thu, 19 Nov 2026 03:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A370F60A2607;
+	Thu, 19 Nov 2026 03:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j9h6GWVo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C771F000C4;
-	Thu, 19 Nov 2026 03:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhhAh2FL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118881F000C4;
+	Thu, 19 Nov 2026 03:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059109;
-	bh=MbbElvyduHGcu0l8LbXuASIEij5QbwsTT22cc6APwj8=;
+	s=korg; t=1795059112;
+	bh=hQ6NZcJp+Me0yO3hDrso8OnbOqad93JDhkMmjaL3Oqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j9h6GWVoNY32SPYp13YK7k7bNkbERNbgnC6+JO7F5I2L7ZExNVVbP6YO45+QAw8+s
-	 PhMV2GMAgAsOmXBWQwYTVk360q1XBhGL7L/Kn/2XerdAU9dGPNMw23g90s/QQNjA79
-	 5HWb6vMCuaVlbT6xaLcXmmGBr02Ea5dnsxDHKPYA=
+	b=xhhAh2FLzY4pVarPAZwQMkMHrQrgjP3Ot1+sfmckFm8Plg45wtGF4e2h5/uuR4UR4
+	 UHu+PcEGisvEtsCcm4vUoDdDTDCTM3SXGajkWkx8Wj9qohtVtVKsDqOlcfVRHQYQWy
+	 LaNscvJ3jpMNwtipkFG3drXi0wGaALrpeWYaoUD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0726/1848] can: proc: reset pkg_stats atomics individually
-Date: Wed, 18 Nov 2026 15:46:04 +0100
-Message-ID: <20261118145946.394778077@linuxfoundation.org>
+Subject: [PATCH 5.10 0709/1848] ocfs2: do not read the entry array of an empty xattr block
+Date: Wed, 18 Nov 2026 15:45:47 +0100
+Message-ID: <20261118145945.566423367@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,138 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 12297f855bbd943847cb8893a3614caef5a9c2a8 ]
+[ Upstream commit cd7c3563a98fe8c984463d83772e518cb7e68356 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-converted several members of struct can_pkg_stats to atomic_long_t and
-updated the hot TX/RX and procfs read paths to use atomic_long_*()
-helpers. However, can_init_stats() still clears the whole struct with
-memset().
+ocfs2_cp_xattr_block_to_bucket() sizes the name and value area it has to
+carry over from the block's last entry, so an empty block makes it read
+xh_entries[-1].  That lands on the header, where xe_name_offset overlaps
+xh_name_value_len, and block storage never maintains that field, so it
+reads as 0 and the copy runs from the header to the end of the block.
 
-can_init_stats() is reached from can_stat_update() in timer context and
-also from the procfs reset path. Those paths can run while the TX/RX hot
-paths are concurrently updating rx_frames, tx_frames, matches and their
-*_delta counters. Hitting the whole-struct memset() in that window
-performs plain writes to fields that otherwise follow an atomic_long_t
-access contract, which can lose or mix live statistics updates.
+The bucket that comes out has xh_count 0 but a name_value_len of
+blocksize less the header, and a matching xh_free_start that claims
+those bytes are in use -- nearly the whole bucket with the common 4K
+block size -- while the last block of the bucket holds a copy of the old
+block's bytes.  Nothing but a trace event reads xh_name_value_len, the
+copied bytes came from the same inode and were wiped before the entry
+was removed, and ocfs2_defrag_xattr_bucket() recomputes xh_free_start,
+so this corrupts the header rather than leaking anything.
 
-This issue was found by source-level API-misuse analysis looking for
-whole-object resets left behind after atomic_long_t conversions, then
-manually audited on Linux v6.18.21.
+Leave the bucket empty instead, carrying over the hash the block was
+keyed by, since ocfs2_add_new_xattr_bucket() and
+ocfs2_xattr_bucket_find() both read xh_entries[0] of an empty bucket.
+That read is the exception ocfs2_xa_remove_entry() documents rather than
+a new out of bounds access.
 
-Replace the whole-struct memset() with a helper that resets the
-atomic_long_t counters via atomic_long_set() and clears the derived
-scalar statistics explicitly. This preserves the existing reset
-semantics for scalar fields while restoring atomic access discipline for
-the live counters.
+A block reaches the conversion empty when truncating an external value
+back fails partway through: the "reusing" and "overwriting" callers of
+ocfs2_xa_cleanup_value_truncate() remove the entry without setting
+ctxt->set_abort, so ocfs2_xattr_block_set() sees a plain -ENOSPC and
+converts.  The "growing" caller does set it, and the block form makes a
+single attempt with no defragment and retry in between, so that is the
+only route here.
 
-Build-tested by compiling net/can/proc.o on x86_64 netdev/main.
-Runtime-tested with a QEMU + vcan setup on Linux v6.18.21 by driving
-concurrent traffic and reset_stats reads, which reproduced inconsistent
-exported statistics before the fix.
-
-[Hartkopp] can_stat_update() also read the *_delta counters at the
-beginning and cleared them with atomic_long_set() at the end. Increments
-from the hot path in between were lost for both the current and the next
-interval. Use atomic_long_xchg() to fetch and clear the *_delta counters
-in one atomic step instead.
-
-On x86_64 atomic_long_set() is a plain store like memset(), so the
-memset() is an actual problem only on architectures with lock-based
-atomics (e.g. parisc). The inconsistencies seen on x86_64 come from the
-*_delta handling and from the stale snapshots, which are fixed in "can:
-proc: skip stats calculation after reset in can_stat_update()". As
-before, the counters are reset one at a time and the derived scalar
-statistics use plain stores.
-
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-5-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/20261024151012.1059683-7-joseph.qi@linux.alibaba.com
+Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/proc.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ fs/ocfs2/xattr.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 550d46d1c60a4..d21f4eab1cba9 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
-  * af_can statistics stuff
-  */
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -4241,6 +4241,21 @@ static void ocfs2_cp_xattr_block_to_buck
+ 		memset(bucket_block(bucket, i), 0, blocksize);
  
-+static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
-+{
-+	atomic_long_set(&pkg_stats->rx_frames, 0);
-+	atomic_long_set(&pkg_stats->tx_frames, 0);
-+	atomic_long_set(&pkg_stats->matches, 0);
-+
-+	pkg_stats->total_rx_rate = 0;
-+	pkg_stats->total_tx_rate = 0;
-+	pkg_stats->total_rx_match_ratio = 0;
-+
-+	pkg_stats->current_rx_rate = 0;
-+	pkg_stats->current_tx_rate = 0;
-+	pkg_stats->current_rx_match_ratio = 0;
-+
-+	pkg_stats->max_rx_rate = 0;
-+	pkg_stats->max_tx_rate = 0;
-+	pkg_stats->max_rx_match_ratio = 0;
-+
-+	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->matches_delta, 0);
-+}
-+
- static void can_init_stats(struct net *net)
- {
- 	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
- 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
  	/*
--	 * This memset function is called from a timer context (when
-+	 * This stats reset is called from a timer context (when
- 	 * can_stattimer is active which is the default) OR in a process
- 	 * context (reading the proc_fs when can_stattimer is disabled).
- 	 */
--	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
-+	can_reset_pkg_stats(pkg_stats);
- 	pkg_stats->jiffies_init = jiffies;
- 
- 	rcv_lists_stats->stats_reset++;
-@@ -125,9 +148,10 @@ void can_stat_update(struct timer_list *t)
- 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
- 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
- 	long matches = atomic_long_read(&pkg_stats->matches);
--	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
--	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
--	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
-+	/* fetch and clear values for 'current rate' calculation */
-+	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
-+	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
-+	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
- 
- 	/* restart counting in timer context on user request */
- 	if (user_reset)
-@@ -176,11 +200,6 @@ void can_stat_update(struct timer_list *t)
- 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
- 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
- 
--	/* clear values for 'current rate' calculation */
--	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->matches_delta, 0);
--
- 	/* restart timer (one second) */
- 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
- }
--- 
-2.53.0
-
++	 * An empty block has no names or values to carry over, and the
++	 * xh_entries[count - 1] below would be xh_entries[-1].  Leave the
++	 * bucket empty, but carry over the hash ocfs2_xa_remove_entry() left
++	 * in the block's xh_entries[0] so that the bucket still holds the key
++	 * it is looked up by.
++	 */
++	if (!count) {
++		xh->xh_num_buckets = cpu_to_le16(1);
++		xh->xh_free_start = cpu_to_le16(OCFS2_XATTR_BUCKET_SIZE);
++		xh->xh_entries[0].xe_name_hash =
++			xb_xh->xh_entries[0].xe_name_hash;
++		return;
++	}
++
++	/*
+ 	 * Since the xe_name_offset is based on ocfs2_xattr_header,
+ 	 * there is a offset change corresponding to the change of
+ 	 * ocfs2_xattr_header's position.
 
 
