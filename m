@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041242;
-	b=N5R10ATS5vbYrPhV3o9U67wxjUHc0fqWpgtUsTQbP/HJUMu7VhM94/Wu2/PdpE1IHb9S
-	 HiqoFXRFJEN3zRNeXKDS0AZ9rt/k7lEONaIPUqYl8LNTO7PKX5j7MxNktjDuDOLUYaRBJ
-	 RUhJ6FpyglI1OhnkEmBi86NwGvlHYy+75jS9lvKPKJDOAcfvkZOH7R6HSJHQ136A5lnzW
-	 T1qNOpdFrVeGQwnpbXtRpGK7wIedypRbNx1ed2SSuS/CaxVkanIAdprRNOkvEXPucQXEv
-	 QVlqhdF+2IZS6RC8mS1JwsyIJnd8Uoe0fY3yBRAekCw8yBqfTG0zmSLosZeoqFFk8Pw==
+	t=1795041244;
+	b=QyDI9FQbyKfC18ZrOy0kps6QW+872jAD/oc7fJbW42f6ISmntv1hIcC3IrS+PEuG/PHE
+	 tGJcEJ30bASppCbyFHT5Nb/UuUCB7fhcddjLY/PySr0k0rZffCOPPmqN+Cll6Bt2NWOgT
+	 spjEObpGpfM67jvQL8XNWvxcNTd+xKB2Y1t6ZVFDlZOMU0vR8DBTQV5XJ3NS5Uki8VoY2
+	 AYJ3YwJSwO5c9bfawYRwQdB3bsloMlO8BB7jwCIA3rWm+SFYJ2KcdMkgb5Bun8PlgkMkX
+	 R9k1AhneG18ux/8g/lv7oT63r1Ggiixby9P4S2TdRBEbaOE9FfASHtFJBLldszHqMwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041242;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+PaVYxGaDs1BY2c9x97Do5heFdPdxyYA3E5fBeTzO0w=;
-	b=s6tbhhlU0CbGdbcMGe8zSkFy/wacYDeRfLqYweUKakn2tXJtvkWfhrioM4f659B7vUdv
-	 2gHH2kIs367lWiB/3SmSj0+06FPwh/JGxBFqoxflPdn3SOmXJXl6e1rYDaC+wQj6i86N6
-	 AUe500zMOTmInkU8HMlwb7Xcsnd3QR0MebzoAGHvn03gfeDVbTVg6j0KDDqtMUYCJ5D3k
-	 OSeTsttP9fNKIk4Yi9R88PGVTkFA17B7Hfa7uhTvopbhgrNGM+LTsmm6hSYuiW6Tqaiki
-	 itTeCNnoaU/B0U3OxZMssD5gGxD0afL/LjO/8TCgKGZn4990ueXARWgxeCFImtaDAoA==
+	bh=/TSWnaFpjK+AxnbPX2FmPnt/ly0tARDay2JkrJNJg3o=;
+	b=PLFUhInGRY0FzI6V0JlvThhaY6Xt+QwKPlXY1fUzMLcN5JFugQf/RNwUVZviW6fHamL8
+	 CMmT/q7NbRt85ZO4k6ftG78M4tPRHpDShDxVqQ5IRO0uJnS5TN6LZ3PjCVIQqEiXTNf7B
+	 Xdst2EkHG8Jfe2sOpxFHV2GE3M2ANBx/8+5jjqcURMc/RFUixlswlddjCsUvuk3V8myau
+	 wAU0QJVxIF13lmxnRQCcGlpGbF2GkR+g9qQdbp8yDaKrrtKZ+3FomLqp+71ejEU9lcpnZ
+	 0qquvECUk7KUfZs9iVbbgvwlFDUrGA0T4KToOook/kMbbfQS78DMyvr7XAmtPnNdCeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFBrQFU6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5ztubOz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C124606A320;
-	Wed, 18 Nov 2026 22:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8005606A31C;
+	Wed, 18 Nov 2026 22:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFBrQFU6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623C61F000C4;
-	Wed, 18 Nov 2026 22:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5ztubOz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F97E1F000C4;
+	Wed, 18 Nov 2026 22:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041241;
-	bh=+PaVYxGaDs1BY2c9x97Do5heFdPdxyYA3E5fBeTzO0w=;
+	s=korg; t=1795041244;
+	bh=/TSWnaFpjK+AxnbPX2FmPnt/ly0tARDay2JkrJNJg3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFBrQFU6ttG6rDtujr1+ZS/5N2INpcKwz1fQ4caEgpyA3cXzLvrm1UEXbgb44Obvv
-	 FWfYz3lRQvJYv87DBGDmCebs1L8JkrGp9C/Y9lgHS24gESKn5emmHSech1DZvSi5jg
-	 rz3es8KmrCnFdCcBI8f4nfEiyTZurLUTGI15hzhE=
+	b=a5ztubOzHX0GlQ7kTKH8Pzf/I6tGRrEX97q+IDhW6Tu4P3da9A4CvAxBw0d+LX67L
+	 v6uRtueclpu8icqWEqhzzn4lVoEPB98srmoUU4zSPHjiwBhiMKqrAnYEXR87dAH6gX
+	 KautUZjq/OPqKP8hbOt7u+B8cF4Hciqbwd3l250o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2716/3318] wifi: mac80211: fix mbssid/rnr allocation in beacon data
-Date: Wed, 18 Nov 2026 15:55:38 +0100
-Message-ID: <20261118150442.344125536@linuxfoundation.org>
+Subject: [PATCH 6.6 2743/3318] block: use iomap_dirty_folio for block devices
+Date: Wed, 18 Nov 2026 15:56:05 +0100
+Message-ID: <20261118150443.066541281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,113 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit baf0d4feed2f0fed8e045f948534a4bd43ae464e ]
+[ Upstream commit be1e33eda3e6699e57ed3fe6e34078f115b4a1ec ]
 
-These structs are placed after the tail, but that can make
-them unaligned. Change the order so the structs are after
-one another, and then followed by the head/tail/elements.
+With CONFIG_BUFFER_HEAD=n, block devices are written back through iomap,
+but def_blk_aops uses filemap_dirty_folio, which only sets PG_dirty. It
+does not set the per-block dirty bits in the folio's iomap_folio_state,
+so iomap_writeback_folio() finds no dirty range, submits no I/O and
+clears PG_dirty, resulting in data loss.
 
-Assisted-by: LLM
-Fixes: 2b3171c6fe0a ("mac80211: MBSSID beacon handling in AP mode")
-Link: https://patch.msgid.link/20261005224950.2f554b2c7c10.Ie961eb6b1435f956446e052936258758b966c67f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Other iomap users set .dirty_folio to iomap_dirty_folio, which marks the
+folio's blocks dirty before calling filemap_dirty_folio().
+
+This is only observable with block size < folio size. With a single
+block there is no iomap_folio_state to get out of sync and
+iomap_writeback_folio() marks the whole folio dirty itself. For a
+page-aligned device, this may require using the BLKBSZSET ioctl to set
+the block size, which requires CAP_SYS_ADMIN. A device whose size is not
+page aligned already gets a sub-page block size from
+set_init_blocksize(), so no ioctl and no privilege is needed.
+
+To reproduce, on a device with a sub-page block size, write a known
+pattern with O_DIRECT, mmap the same range, store to it, msync() and
+fsync(), then read it back with O_DIRECT. A reproducer is available at
+[1].
+
+[1] https://gist.github.com/tzussman/18ab05cba4b3fdc79cce0a69d1fd05b4
+
+Fixes: 925c86a19bac ("fs: add CONFIG_BUFFER_HEAD")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260730-blk-dontcache-v7-0-3e8e6850068d%40columbia.edu?part=5
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-1-307939c387df@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 53 +++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 22 deletions(-)
+ block/fops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index a6f53af5a8f09..ae477600b9f53 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1127,6 +1127,7 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 	struct beacon_data *new, *old;
- 	int new_head_len, new_tail_len;
- 	int size, err;
-+	u8 *pos;
- 	u64 _changed = BSS_CHANGED_BEACON;
- 	struct ieee80211_bss_conf *link_conf = link->conf;
+diff --git a/block/fops.c b/block/fops.c
+index 088143fa9ac9e..0daa21b0369eb 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -493,7 +493,7 @@ static int blkdev_writepages(struct address_space *mapping,
+ }
  
-@@ -1154,20 +1155,16 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 	/* new or old multiple BSSID elements? */
- 	if (params->mbssid_ies) {
- 		mbssid = params->mbssid_ies;
--		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		if (params->rnr_ies) {
--			rnr = params->rnr_ies;
--			size += struct_size(new->rnr_ies, elem, rnr->cnt);
--		}
--		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
--							mbssid->cnt);
-+		rnr = params->rnr_ies;
- 	} else if (old && old->mbssid_ies) {
- 		mbssid = old->mbssid_ies;
-+		rnr = old->rnr_ies;
-+	}
-+
-+	if (mbssid) {
- 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		if (old->rnr_ies) {
--			rnr = old->rnr_ies;
-+		if (rnr)
- 			size += struct_size(new->rnr_ies, elem, rnr->cnt);
--		}
- 		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
- 							mbssid->cnt);
- 	}
-@@ -1179,26 +1176,38 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 	/* start filling the new info now */
- 
- 	/*
--	 * pointers go into the block we allocated,
--	 * memory is | beacon_data | head | tail | mbssid_ies | rnr_ies
-+	 * pointers go into the block we allocated, the order in memory is
-+	 *  - struct beacon_data
-+	 *  - struct mbssid_ies (including variable array)
-+	 *  - struct rnr_ies (including variable array)
-+	 *  - beacon head
-+	 *  - beacon tail
-+	 *  - mbssid/rnr elements
-+	 * so that the structs (which contain pointers) are all aligned
- 	 */
--	new->head = ((u8 *) new) + sizeof(*new);
--	new->tail = new->head + new_head_len;
--	new->head_len = new_head_len;
--	new->tail_len = new_tail_len;
--	/* copy in optional mbssid_ies */
-+	pos = (u8 *)(new + 1);
- 	if (mbssid) {
--		u8 *pos = new->tail + new->tail_len;
--
- 		new->mbssid_ies = (void *)pos;
- 		pos += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
--						    mbssid);
- 		if (rnr) {
- 			new->rnr_ies = (void *)pos;
- 			pos += struct_size(new->rnr_ies, elem, rnr->cnt);
--			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
- 		}
-+	}
-+
-+	new->head = pos;
-+	new->head_len = new_head_len;
-+	pos += new_head_len;
-+	new->tail = pos;
-+	new->tail_len = new_tail_len;
-+	pos += new_tail_len;
-+
-+	/* copy in optional mbssid_ies */
-+	if (mbssid) {
-+		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
-+						    mbssid);
-+		if (rnr)
-+			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
- 		/* update bssid_indicator */
- 		link_conf->bssid_indicator =
- 			ilog2(__roundup_pow_of_two(mbssid->cnt + 1));
+ const struct address_space_operations def_blk_aops = {
+-	.dirty_folio	= filemap_dirty_folio,
++	.dirty_folio		= iomap_dirty_folio,
+ 	.release_folio		= iomap_release_folio,
+ 	.invalidate_folio	= iomap_invalidate_folio,
+ 	.read_folio		= blkdev_read_folio,
 -- 
 2.53.0
 
