@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062222;
-	b=AzNo8qiitvcPjMpt1iVVrM6vaPJFMsuWLzh5oxZLeIe/DrBjWaOhdifTaTCscGRHszS6
-	 f9FjA6kBB577pWzgfItadhzgj5tAcgXYsDhTNKgalKHSzD3oWGxPPt5g9S8C07yW9NAg9
-	 AyzyYp0cZUDuaBSuUd9q6aXWLmzVTgKuEyNa4RnrZZXj6o/dI9n/ebc5jNoaHtluAeFyg
-	 KO4n3Iwo4rKbh9QzBmFKbjGxbd//6u4v7VaEjy1XLZrB8gQv4crfGlS1aD6U76f/jEdE8
-	 Gpx3GowBNzNBChh3SjsQPH6BcYpI0eyJ/uCwXF6oueruHdcFHUJBd0r93lSAsGGKAaA==
+	t=1795062225;
+	b=E8LsZ9HQ5lQ/IUNHM5OMfGvh4oUNeb17N96m1kc0sqFTBI+iqGws/Jm1S63WLj1gwD+F
+	 4uMgBzYt17K19Eegd0sx74HPDw+Sy9XFJsShtQU62lNp1f6aUqc0si95E3uPqrlw2N1en
+	 a6Pr5V9F/gLwEnIQA1HL47bfjQl58Gn0zFh9t8j2+g1EwNncLRfALlSXrYKv0oDeX/Xvd
+	 6S2KCpu0IGVtMQrmnDt7FaSndILsOfrNI1thPvcNl5G7Y/GiUvqZ7R+Aqwolh9yhFKYIX
+	 GjB1fMq4j218xBbsO3oCtI5VZ0QwDpWvhKSFOM5RO5MyA+MbB09NHmZX+Vaiu/XZqpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062222;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q/OZ9vGiInQ1tKlbulDTxfF1ZR1gUu1AY3TpOsdH+k4=;
-	b=Gu5oyOnU8DXRp0ESGTD+/mmi5B3sKQD4jDeaN5m9tnS6tkw9JvxzQ2KMHaul2TAPr68S
-	 j6Aa+UKn2ANvESqNbFUYSYc3+eEOjBMi/8Nw0/9sq9E4drY8ccn2Nu4OkKJhoAl14KXpc
-	 SgkjQPcpe6ypb4Q9GwNDH/iR8wt4SeEyIHm+sDfVz54KMGTVq+jVkjCjXSQevBoaMasWI
-	 q/f1GcFE+EZTukUXRJUz45v+vBoCGjnsaOK9rSVhyVm8As3WXCDxFYh9ss98Ozg+ISWC5
-	 dOcb6Hn+SW/70IOD1drYKUr8mQketKkSnsoF7zYr/p2g1HJ5Fae8L95sQWlZPF5dyVQ==
+	bh=Yv1k9FEbP5UzEg9XHceLqzYR3zDSlyTu95mtNRICBK0=;
+	b=IUpK3hRa8+vdN2g/dyz/Rg97ueJD49G9ocWVIGunNMz8jf61UPD4uUHiGvhbOzxwID4D
+	 4YO06GT3SXvm5j5GcchBFQOWOHWOZD+EsWcUVrDASDKuT09BdMqI+B4wS//kVjrINvDUJ
+	 f8BjAgIEi+JJ1ndRh/XgkMn3Q8huwnGBTyays+kqeNBLGbLeUPRdOwpoYZWf/fp6LNDrX
+	 NmJ4wBjKkbB2AkMKWFOQC8mwugv+1+kHklcyrW1hn989zDQQSrsFjW4wKUvoc+euegS43
+	 6FPbR9NMaO061C2A7LlQb/HxzSCeKJuHUn7PcDiiUbjPnK3+K4HzC95ua5DoGcpBzYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TrsTuSp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1D1JPDRC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E666606A326;
-	Thu, 19 Nov 2026 04:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB5E606A32C;
+	Thu, 19 Nov 2026 04:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TrsTuSp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF9A1F000C4;
-	Thu, 19 Nov 2026 04:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1D1JPDRC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461D31F000C4;
+	Thu, 19 Nov 2026 04:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062221;
-	bh=q/OZ9vGiInQ1tKlbulDTxfF1ZR1gUu1AY3TpOsdH+k4=;
+	s=korg; t=1795062224;
+	bh=Yv1k9FEbP5UzEg9XHceLqzYR3zDSlyTu95mtNRICBK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1TrsTuSpYDNUboQRtLgwObff2CrqiUi1MKRsAMnS/sKC8+JMXQJ8hBfG9z7+1r8GB
-	 k8O/fKxfCV7dhsl3Q1ImMZZleFdu4kjXMgYBTnTFKefnMk63wWxQpYb28NEz1nylBv
-	 +0WSTFXpeQJ92/DXnjWzSvhSB/w+WtWP5k7SvWMg=
+	b=1D1JPDRCLTCP7YGFhB4yPjQdiui48ApwTBqrR3mALuv5eqC2cIpk5gCsqCQlviJLG
+	 JDOTZj8AbGfNhWew9EOrrZsJa48DodPbEMGzzdrEZpjzF87prQ9EwV5qD5RV0cHWqL
+	 vTA02JysJED2DQipa8GrfckfSE5HnqE0SyLx2Zds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Yoann Congal <yoann.congal@smile.fr>
-Subject: [PATCH 5.10 1834/1848] printk: Fix LOG_CPU_MAX_BUF_SHIFT when BASE_SMALL is enabled
-Date: Wed, 18 Nov 2026 16:04:32 +0100
-Message-ID: <20261118150036.400636248@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 1835/1848] software node: Fix device_add_software_node()
+Date: Wed, 18 Nov 2026 16:04:33 +0100
+Message-ID: <20261118150036.435413041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,68 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoann Congal <yoann.congal@smile.fr>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 320bf43190514be5c00e11f47ec2160dd3993844 upstream.
+commit 2a92c90f2ecca4475d6050f2f938a1755a8954cc upstream.
 
-LOG_CPU_MAX_BUF_SHIFT default value depends on BASE_SMALL:
-  config LOG_CPU_MAX_BUF_SHIFT
-  	default 12 if !BASE_SMALL
-  	default 0 if BASE_SMALL
-But, BASE_SMALL is a config of type int and "!BASE_SMALL" is always
-evaluated to true whatever is the value of BASE_SMALL.
+The function device_add_software_node() was meant to
+register the node supplied to it, but only if that node
+wasn't already registered. Right now the function attempts
+to always register the node. That will cause a failure with
+nodes that are already registered.
 
-This patch fixes this by using the correct conditional operator for int
-type : BASE_SMALL != 0.
+Fixing that by incrementing the reference count of the nodes
+that have already been registered, and only registering the
+new nodes. Also, clarifying the behaviour in the function
+documentation.
 
-Note: This changes CONFIG_LOG_CPU_MAX_BUF_SHIFT=12 to
-CONFIG_LOG_CPU_MAX_BUF_SHIFT=0 for BASE_SMALL defconfigs, but that will
-not be a big impact due to this code in kernel/printk/printk.c:
-  /* by default this will only continue through for large > 64 CPUs */
-  if (cpu_extra <= __LOG_BUF_LEN / 2)
-          return;
-Systems using CONFIG_BASE_SMALL and having 64+ CPUs should be quite
-rare.
-
-John Ogness <john.ogness@linutronix.de> (printk reviewer) wrote:
-> For printk this will mean that BASE_SMALL systems were probably
-> previously allocating/using the dynamic ringbuffer and now they will
-> just continue to use the static ringbuffer. Which is fine and saves
-> memory (as it should).
-
-Petr Mladek <pmladek@suse.com> (printk maintainer) wrote:
-> More precisely, it allocated the buffer dynamically when the sum
-> of per-CPU-extra space exceeded half of the default static ring
-> buffer. This happened for systems with more than 64 CPUs with
-> the default config values.
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/all/CAMuHMdWm6u1wX7efZQf=2XUAHascps76YQac6rdnQGhc8nop_Q@mail.gmail.com/
-Reported-by: Vegard Nossum <vegard.nossum@oracle.com>
-Closes: https://lore.kernel.org/all/f6856be8-54b7-0fa0-1d17-39632bf29ada@oracle.com/
-Fixes: 4e244c10eab3 ("kconfig: remove unneeded symbol_empty variable")
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Yoann Congal <yoann.congal@smile.fr>
-Link: https://lore.kernel.org/r/20240505080343.1471198-2-yoann.congal@smile.fr
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: e68d0119e328 ("software node: Introduce device_add_software_node()")
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/swnode.c    |   26 +++++++++++++++++---------
+ include/linux/property.h |    2 +-
+ 2 files changed, 18 insertions(+), 10 deletions(-)
 
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -715,8 +715,8 @@ config LOG_CPU_MAX_BUF_SHIFT
- 	int "CPU kernel log buffer size contribution (13 => 8 KB, 17 => 128KB)"
- 	depends on SMP
- 	range 0 21
--	default 12 if !BASE_SMALL
--	default 0 if BASE_SMALL
-+	default 0 if BASE_SMALL != 0
-+	default 12
- 	depends on PRINTK
- 	help
- 	  This option allows to increase the default ring buffer size
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -869,25 +869,33 @@ EXPORT_SYMBOL_GPL(fwnode_remove_software
+ /**
+  * device_add_software_node - Assign software node to a device
+  * @dev: The device the software node is meant for.
+- * @swnode: The software node.
++ * @node: The software node.
+  *
+- * This function will register @swnode and make it the secondary firmware node
+- * pointer of @dev. If @dev has no primary node, then @swnode will become the primary
+- * node.
++ * This function will make @node the secondary firmware node pointer of @dev. If
++ * @dev has no primary node, then @node will become the primary node. The
++ * function will register @node automatically if it wasn't already registered.
+  */
+-int device_add_software_node(struct device *dev, const struct software_node *swnode)
++int device_add_software_node(struct device *dev, const struct software_node *node)
+ {
++	struct swnode *swnode;
+ 	int ret;
+ 
+ 	/* Only one software node per device. */
+ 	if (dev_to_swnode(dev))
+ 		return -EBUSY;
+ 
+-	ret = software_node_register(swnode);
+-	if (ret)
+-		return ret;
++	swnode = software_node_to_swnode(node);
++	if (swnode) {
++		kobject_get(&swnode->kobj);
++	} else {
++		ret = software_node_register(node);
++		if (ret)
++			return ret;
+ 
+-	set_secondary_fwnode(dev, software_node_fwnode(swnode));
++		swnode = software_node_to_swnode(node);
++	}
++
++	set_secondary_fwnode(dev, &swnode->fwnode);
+ 
+ 	return 0;
+ }
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -492,7 +492,7 @@ fwnode_create_software_node(const struct
+ 			    const struct fwnode_handle *parent);
+ void fwnode_remove_software_node(struct fwnode_handle *fwnode);
+ 
+-int device_add_software_node(struct device *dev, const struct software_node *swnode);
++int device_add_software_node(struct device *dev, const struct software_node *node);
+ void device_remove_software_node(struct device *dev);
+ 
+ #endif /* _LINUX_PROPERTY_H_ */
 
 
