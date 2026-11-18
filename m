@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030944;
-	b=Qbght75UbldTCh3pX83ulntmzWHzRFqvbRGZ2uOGhbdnZ5JKlFC/9Qg3prdn/oPV6Nqs
-	 7OvKQbnFrTZsGKFPCPG3XqXjcX6gO6//Zq9NXJ57idofXZ5w7vO3yEK3t1b+Er+2OrDCE
-	 ay2lhoyKM7DANEOjTTlVCl6Kn4k57wuzwl3P7aFLWIHUa0Nm8dYrbzHYhb5CNqhDTdPt8
-	 S2vHK1dGl2Htwgmkt9ohUiU2e81N8m4Fh+9kBda25dMgkHxtysvrGI2x/6o+CnFWN83o3
-	 okgtxt1HncdwNq/kokqdSaZ14luDWnlQKi3vwLz7Sn3MOt5xdQX3yjPMqHewLeUFoEA==
+	t=1795030947;
+	b=uLqpsrU7St45e3vkSDxCnqwkD8utaTOADLgpsADx0A4MgeUS+Gmf6Nyf2Ba7FOvdinis
+	 RLKdb4eXvW8UaxfGNSCYHNdT5bBKAdwrGMfndVzpSyR0elZbIoDr39zFbbOdbdNeV4ARU
+	 RsS9KcVpo+dNRisi77Xb1pvOhcUWgOu3BdpTtHAiFOhErvgdhaGX0duEWNQStifaR4uB2
+	 Wu28PelWEy/kf7YN9zcMWyJO7ejM3mU3pDMvFSVBp4e/uwFO5Zu//QsrH73qnsZHeP/Qk
+	 nscP0OjpOBgPyDnRdJSryXvBFZqLnBJhRWkjUBXNNog0zpNrcMRkEWw97t6LMUOapcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030947;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P8ZTy7fyTeOfEX9y86dSLfsUXn55SeehUOz6F1u0P9U=;
-	b=J2/c+BPZfIELfvyLhjQbHUOtBmU4dD/t9pkoI9dVdxmuQIJgeMrUIDHWEkMVKSnl8NNB
-	 eUC1+q4YB+u6UkfQfPs1aywX8ZClUzzJzKUd9p69qek/ZzCCBbiSqSZK56cox0G4vt2fz
-	 sXiIH+Xa6DoDRxdhQQdfba1gG6PFweZLQdEPMZa4MByVb3mbW2M+17yL5k8Fv0h6d2h/k
-	 rXo9O73xMPEGW7I+e7GMAFX37L/qDGYy2yOjSsOU7zk8eAeJYDiTKz2o9fW5nDyQ+S9jM
-	 Hzpxia5LvKxo0g31iXY3KC/nHSKQAiy7JeXHrhtWYrPcGpGG/yl9FHk9hHsv3VUNcTg==
+	bh=Nk8mAYyRifN2Y4ljjTsARAcMeEggMbX9fHUhk5yxI4k=;
+	b=bwDpeO1g5kg9h37MDKovb9Xu2WTakfjmgAQJgRJhK8yDkP2YrjW/ZAQcBV5eHXt4sfU2
+	 TzSqM4v4Y7YZxez4Wp/uiq683Z95d1O8+aHTVD0VdBsbFwwMF6wOGKJvXvXMIRWyY/7yP
+	 Bf7iHOKNGfi2CcjJnUIATZHqJHtZjbuePeTqku7JXXIFopFYcN33J1RRZx2Fnl+ZgGFDO
+	 f6V+SeArofSXbH10asredBEq8BiZKGkv6m3yezZhr7iYU73Au723zNKKcHO/y1kedCYPJ
+	 QHgpwGCiwLx+jnHoFT9NjFgDQ/R64Wbni4g50EYbP7bcbRj/xe7CvpIQcolZsv4dfgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KynLVf8p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QeG1YAKY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A46606A325;
-	Wed, 18 Nov 2026 19:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C9C606A325;
+	Wed, 18 Nov 2026 19:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KynLVf8p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B911F000C5;
-	Wed, 18 Nov 2026 19:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QeG1YAKY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3321F000C6;
+	Wed, 18 Nov 2026 19:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030944;
-	bh=P8ZTy7fyTeOfEX9y86dSLfsUXn55SeehUOz6F1u0P9U=;
+	s=korg; t=1795030947;
+	bh=Nk8mAYyRifN2Y4ljjTsARAcMeEggMbX9fHUhk5yxI4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KynLVf8pUlHJGxn9VSoiIcSwuFb7yg2kta/CYv9MMmy/75g+8fp1GjqBShbqDkzNz
-	 aHMw4Wn3HHIMy/rt0p1s5TqDr0Mdbzm+SPNjzr5yyaFnQ8xky1YB8rl3rGCx30ZgY7
-	 kuV93qWViyoyyoM1rNfWt7iRwnz2vxo8qi5USHzU=
+	b=QeG1YAKYcTxQSHptZBI1x7q8mi8P2zuraWLr3wxvAHiVkI95r/9TrLrQURkefBueX
+	 cuycnfUnKjcOv/fogi6FpLSqV0r/gQJT++Y4QlD8fscOie4w7UyLMIp766hyqz2XZ6
+	 0a7KOaDZh2auZffF4saQPoKnBubbNLjA572OFogY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Roman Demidov <roman.demidov.nn@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0831/1756] power: supply: ab8500_charger: Fix AC charger re-enable
-Date: Wed, 18 Nov 2026 15:49:18 +0100
-Message-ID: <20261118150042.582354465@linuxfoundation.org>
+Subject: [PATCH 6.12 0877/1756] drm/msm/a6xx: fix use-after-free of OPP in a6xx_pm_resume
+Date: Wed, 18 Nov 2026 15:50:04 +0100
+Message-ID: <20261118150044.309872666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,49 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Roman Demidov <roman.demidov.nn@gmail.com>
 
-[ Upstream commit 3e1d2517347f6bb72f74e63ec77d1634385fbf21 ]
+[ Upstream commit 8128ae7af6b4dc95e486c5c0a80839a069df578e ]
 
-The AC check-enable callback passes the embedded USB charger object to
-ab8500_charger_ac_en(). That helper derives the parent with the AC
-charger offset, so the wrong object yields an invalid ab8500_charger
-pointer.
+The OPP reference obtained via dev_pm_opp_find_freq_ceil() is dropped
+with dev_pm_opp_put() before being passed to dev_pm_opp_set_opp(). If
+the reference count reaches zero, the OPP object may be freed, leading
+to a use-after-free when dev_pm_opp_set_opp() dereferences it.
 
-Pass the AC charger object when re-enabling AC charging.
+Fix the order of calls: first use the OPP to set the required
+performance state, then release the reference.
 
-Fixes: bc6e02871402 ("power: supply: ab8500: Standardize CV voltage")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-7-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/757104/
+Message-ID: <20260929142103.81854-1-roman.demidov.nn@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 5da3b12d9f0bb..b3b1fd7f82f2b 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -1778,7 +1778,7 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
- }
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 4bae3813d90b5..4dc095f74c32b 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1879,10 +1879,10 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+ 		ret = PTR_ERR(opp);
+ 		goto err_set_opp;
+ 	}
+-	dev_pm_opp_put(opp);
  
- /**
-- * ab8500_charger_ac_check_enable() - enable usb charging
-+ * ab8500_charger_ac_check_enable() - enable AC charging
-  * @charger:	pointer to the ux500_charger structure
-  * @vset_uv:	charging voltage in microvolt
-  * @iset_ua:	charger output current in micrompere
-@@ -1817,7 +1817,7 @@ static int ab8500_charger_ac_check_enable(struct ux500_charger *charger,
- 			return ret;
- 		}
+ 	/* Set the core clock and bus bw, having VDD scaling in mind */
+ 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
++	dev_pm_opp_put(opp);
  
--		ret = ab8500_charger_ac_en(&di->usb_chg, true, vset_uv, iset_ua);
-+		ret = ab8500_charger_ac_en(&di->ac_chg, true, vset_uv, iset_ua);
- 		if (ret < 0) {
- 			dev_err(di->dev, "failed to enable AC charger %d\n",
- 				__LINE__);
+ 	pm_runtime_resume_and_get(gmu->dev);
+ 	pm_runtime_resume_and_get(gmu->gxpd);
 -- 
 2.53.0
 
