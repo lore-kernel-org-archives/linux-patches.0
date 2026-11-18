@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035628;
-	b=2u1rLKcFishE+Tq+arrO076NyC1DOkQ9CjuIaNq9Ep04xqD2ztrLH0kfky29b4gjMHVn
-	 NQ+AjXlni9iHuQR7MN2ZH7X2RtxKHfSnt8Wsj2jMGI5Fc87W0hJC7OkUWyEbSNib84ody
-	 z63NK66s7l5FogyxW6VkgINdsTotjPM1nNMCWC5zJH0NmyuF0kNXw4g9srq26R+8kAZFg
-	 9Xpkt7L/dieIo+6al9+FsMZimtynWi627Kw5tQbg2ScQLwXZLOG3hVJ+lZlYcXG4ruuXZ
-	 /m/kAIyyK/1rm1Iis6W3P3aQK3UAoVj4UqMUrgJZbps9ccr+wIEIdoBqbQLQOGRSfHw==
+	t=1795035631;
+	b=2PTkwam2FK9jd/xXsbk+Mug0cCTAHAcKezgYP2wCF2B6KC1Yamk2wqvYCh2F8y4OA0/4
+	 RU8L22Q9GywikfwG5j1pshOud/oL6uOs0nyCngpt9toL/YUeCqIjFXj3G0oTNHtNSGevP
+	 g1s2k2HJ/Grj4+qX6ntv6BZO+3vxVBoaTAVJq+y7udk4Wk9DgcHquSiyf0BJP+WZvw12p
+	 TDmmkf4hf+7cXCpNG5d1drMemFnbknK/t4Tustvqdh/vofQKydzEH785bZlfnVmmaKBzJ
+	 OcoxhZ3GvRfPVbmwcsYU00oxj3ndRwLAWu9TPBdBbVK3k9Q0hlSGbHxXi3h7G0+1VdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/SSXKC5vMbxPTUQZ9xIJPalsH1ZH1yPsDU5MjWl37aI=;
-	b=TxRplHenJV8Kgr8XY4f+FTlrK/dfxu168EPvbY9CW9Zaqx39ehKY+k9ycwbec2Q4BQD1
-	 wvhT5L0zjDBBTw399bHNR7i7uhnUmOSZlgUoVxF4C2bEiHC3JFVxUNRrgdE+ZLkOiWPVc
-	 ogsBqKgaPUq8cpaGJloSfcwf3gokfXs8qfCvlDuYFHgAbvcYa1LOn4m9BYZUpPPpcLgbf
-	 R7YSPpmnaDLj4+3ukg7kedosSN8nq541NkxgVt5UWBt/1VT80RaPR5Ud7wfw7ldUBEBbB
-	 jGE0Y+xxzHfy3u1FLEU2ZTzGNVuPAon6cfrGHFDBZfJNG8GZE31qhqLODNbMdGXx83g==
+	bh=i/aNouvi/24rOXm3PPZ/gllcwMRTnfAyqKGf9iCQRVM=;
+	b=zySKUf+eZALh56R5wWUmUy6dWbpTgshTbmeZE5JjaIhWhJ7k3af9ALqFTuzy6+C5Y1aS
+	 vGp6isG0M/SYphaLhAL7/Exek7q1iHyqI0KrE7s1FwbAiJGjrOwEol39n1wNsXjK5dIGJ
+	 ZOjNcqw7MwLx1SxONXuwdAnlDsZS3XZHIXSnbBInYmo3eeEVzZq01kzQQGqLvxZBVEmdC
+	 14Kq6/rgPEcXpn4VDayegWjDfbiidrqC+vrxmo+rltgff5jxmRCGNkFJTwywdBY0icI3i
+	 eE6mJkxYi/qciUJUSNctO4PQfl6427sOIrBpHfhNafj3c17OtMpG7Cp+9S7Thf+DhjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IR2KSnEH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tj91SgVN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BEB606A325;
-	Wed, 18 Nov 2026 21:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5611A606A320;
+	Wed, 18 Nov 2026 21:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IR2KSnEH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE861F000C4;
-	Wed, 18 Nov 2026 21:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tj91SgVN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBF51F000C4;
+	Wed, 18 Nov 2026 21:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035628;
-	bh=/SSXKC5vMbxPTUQZ9xIJPalsH1ZH1yPsDU5MjWl37aI=;
+	s=korg; t=1795035630;
+	bh=i/aNouvi/24rOXm3PPZ/gllcwMRTnfAyqKGf9iCQRVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IR2KSnEH+K43Di9QhaAceBaNOwPTDVlpGcjTkW3tEOPPeEibmp+quf7SW4JCpCp+W
-	 ySKv6Bg76TezmjenUg6IQBRozqPHUctRvtzbHK8Rfx2Fh3242fUCdSccaystraPLFw
-	 LwQJlBUcc+SAURKAnsrmtnTzuM1hpBLyx4oDyFvM=
+	b=tj91SgVNyEtD20ImLRUl6C7jmykdKTQHN23KuNTY6bOn+OnhUu11VLuRHNob2LlrY
+	 +wb+WDvZZUUO3WADJfEk7YEguTsPSPyfLD9Ae1XL7XOFWBd2dpIRWJsmwnQ1kjXQhV
+	 LHXuRVXaur/VAakrj9g75K8PCOIwPEj/RIjptFi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0771/3318] ksmbd: fix named stream write and EOF handling
-Date: Wed, 18 Nov 2026 15:23:13 +0100
-Message-ID: <20261118150341.900754347@linuxfoundation.org>
+Subject: [PATCH 6.6 0772/3318] inet: reject unhashed sockets during established lookups
+Date: Wed, 18 Nov 2026 15:23:14 +0100
+Message-ID: <20261118150341.934532721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,182 +70,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 02165c8d402392278a5cd2cf97645ed73a7ad4a1 ]
+[ Upstream commit 4e2b3ef19e0e04adca38442f07dd6bc93c712bf1 ]
 
-An SMB WRITE to an existing named stream can silently discard data after
-its written range. ksmbd stores streams as xattr values, but the write
-path passes offset + count as the length of the replacement xattr even
-when the old stream is longer. Writing 26 bytes at offset 0 to a 60-byte
-stream reports 26 bytes written while discarding the remaining 34 bytes.
+TCP established ehash lookups are lockless. The socket caches involved
+use SLAB_TYPESAFE_BY_RCU, so memory can be reused before an RCU reader
+that retained its old address has finished.
 
-Keep the existing xattr length when an in-place write ends before EOF.
-Reject writes that cross XATTR_SIZE_MAX rather than storing only the
-portion that fits while reporting the full requested count.
+After a tuple match, __inet_lookup_established() and
+__inet6_lookup_established() acquire a reference and repeat the tuple
+check. They do not check whether the new object is hashed. If the
+address is reused for a socket with the same tuple, the lookup can
+acquire a reference to the new object and return it while its nulls node
+is unhashed.
 
-Commit 4ea0bb8aaedf ("ksmbd: handle set/get info file for streamed file")
-intentionally skipped ordinary inode truncation for stream handles: an
-EOF SetInfo on an ADS had truncated the base file. That fixed the base
-file corruption but left stream EOF changes reporting success without
-resizing the stream. Handle these requests by resizing only the stream
-xattr; the base file size remains untouched. Zero-fill stream extensions.
-This is needed alongside the write fix: a short write's accidental
-truncation previously masked an ignored explicit EOF change. The stream
-resize helper returns xattr errors directly rather than using the
-base-file truncate path's EBADF conversion.
+A PoC that drives reuse with a SYN cookie request socket reproduced the
+crash. The new request socket is unhashed and has a NULL rsk_listener.
+A lookup that had loaded the address of the old request socket acquired
+the reference published by tcp_get_cookie_sock() and returned the new
+object. tcp_v4_rcv() then read sk_state through the NULL listener.
 
-Fixes: f44158485826 ("cifsd: add file operations")
-Fixes: 4ea0bb8aaedf ("ksmbd: handle set/get info file for streamed file")
+The resulting crash was:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000012
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  ...
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 7.3.0-00591-g0e135910deec #1 PREEMPT(lazy)
+  ...
+  RIP: 0010:tcp_v4_rcv+0x44e/0x1280
+  ...
+  R10: 0000000000000001 R11: 00000000024ca8c0 R12: 0000000000000000
+  ...
+  CR2: 0000000000000012 CR3: 0000000103d50004 CR4: 0000000000770ef0
+  ...
+  Call Trace:
+   <IRQ>
+   ? raw_local_deliver+0xae/0x240
+   ip_protocol_deliver_rcu+0x2d/0x180
+   ip_local_deliver_finish+0x84/0x100
+   ip_sublist_rcv_finish+0x5f/0x70
+   ip_sublist_rcv+0x12a/0x1d0
+   ip_list_rcv+0xfd/0x130
+   __netif_receive_skb_list_core+0x223/0x250
+   netif_receive_skb_list_internal+0x1d2/0x2c0
+   ? try_fill_recv+0x39/0x7b0
+   napi_complete_done+0x74/0x170
+   virtnet_poll+0x445/0x600
+   __napi_poll+0x27/0x1e0
+   net_rx_action+0x2fe/0x3b0
+   handle_softirqs+0xc2/0x2c0
+   __irq_exit_rcu+0x74/0xd0
+   common_interrupt+0x7f/0x90
+   </IRQ>
+  ...
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+After taking a reference, check whether the nulls node is unhashed in
+both IPv4 and IPv6 established lookups. If it is unhashed or the tuple
+no longer matches, drop the reference and restart the lookup.
+
+Lookups racing with the TIME_WAIT hashdance, or with a request being
+replaced by its child, now restart and find the new socket instead of
+returning the old one.
+
+Request sockets that were never inserted into ehash can have a nonzero
+refcount, and a stale lookup can hold a transient reference. Therefore,
+when SYN cookie, Fast Open, and request migration paths fail after
+setting a nonzero refcount, release the references held by those paths
+with reqsk_put() instead of freeing the request directly.
+
+Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Used fp->filp->f_pos instead of the unavailable fp->stream.pos to store the stream write position. ]
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261029214219.1035176-2-imv4bel@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |  2 ++
- fs/smb/server/vfs.c     | 72 ++++++++++++++++++++++++++++++++++++-----
- fs/smb/server/vfs.h     |  1 +
- 3 files changed, 67 insertions(+), 8 deletions(-)
+ net/ipv4/inet_connection_sock.c | 10 +++++++---
+ net/ipv4/inet_hashtables.c      |  5 +++--
+ net/ipv4/syncookies.c           |  2 ++
+ net/ipv4/tcp_input.c            |  4 +++-
+ net/ipv6/inet6_hashtables.c     |  4 +++-
+ 5 files changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 7780602738631..2041811fedce9 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6549,6 +6549,8 @@ static int set_end_of_file_info(struct ksmbd_work *work, struct ksmbd_file *fp,
- 
- 	newsize = le64_to_cpu(file_eof_info->EndOfFile);
- 	inode = file_inode(fp->filp);
-+	if (ksmbd_stream_fd(fp))
-+		return ksmbd_vfs_stream_truncate(fp, newsize);
- 
- 	/*
- 	 * If FILE_END_OF_FILE_INFORMATION of set_info_file is called
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index ec0a48b3f0850..3d1cfcfdfb627 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -417,23 +417,21 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 	const struct cred *saved_cred;
- 	char *stream_buf = NULL, *wbuf;
- 	struct mnt_idmap *idmap = file_mnt_idmap(fp->filp);
--	size_t size;
-+	size_t size, write_end;
- 	ssize_t v_len;
- 	int err = 0;
- 
- 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
- 		    *pos, count);
- 
--	if (*pos >= XATTR_SIZE_MAX) {
-+	if (*pos < 0 || *pos >= XATTR_SIZE_MAX) {
- 		pr_err("stream write position %lld is out of bounds\n",	*pos);
- 		return -EINVAL;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index af4c46d841a7f..89adcd9711fed 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1120,10 +1120,14 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	 */
+ 	if (nreq) {
+ 		__NET_INC_STATS(net, LINUX_MIB_TCPMIGRATEREQFAILURE);
++		/* The timer was not armed, drop its reference here. */
++		reqsk_put(nreq);
+ no_ownership:
+ 		reqsk_migrate_reset(nreq);
+ 		reqsk_queue_removed(queue, nreq);
+-		__reqsk_free(nreq);
++		/* Drop the temporary reference and the one reserved for ehash. */
++		reqsk_put(nreq);
++		reqsk_put(nreq);
  	}
  
--	size = *pos + count;
--	if (size > XATTR_SIZE_MAX) {
--		size = XATTR_SIZE_MAX;
--		count = XATTR_SIZE_MAX - *pos;
--	}
-+	if (count > XATTR_SIZE_MAX - *pos)
-+		return -EFBIG;
-+	write_end = *pos + count;
+ drop:
+@@ -1404,7 +1408,7 @@ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
  
- 	saved_cred = override_creds(fp->filp->f_cred);
- 	v_len = ksmbd_vfs_getcasexattr(idmap,
-@@ -446,6 +444,8 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 		err = v_len;
- 		goto out_revert;
+ 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 			reqsk_migrate_reset(nreq);
+-			__reqsk_free(nreq);
++			reqsk_put(nreq);
+ 		} else if (inet_csk_reqsk_queue_add(sk, req, child)) {
+ 			return child;
+ 		}
+@@ -1460,7 +1464,7 @@ void inet_csk_listen_stop(struct sock *sk)
+ 					__NET_INC_STATS(sock_net(nsk),
+ 							LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 					reqsk_migrate_reset(nreq);
+-					__reqsk_free(nreq);
++					reqsk_put(nreq);
+ 				}
+ 				rcu_read_unlock();
+ 
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index ed253aa1f5d3f..f3430f96db0c3 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -518,8 +518,9 @@ struct sock *__inet_lookup_established(struct net *net,
+ 		if (likely(inet_match(net, sk, acookie, ports, dif, sdif))) {
+ 			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 				goto out;
+-			if (unlikely(!inet_match(net, sk, acookie,
+-						 ports, dif, sdif))) {
++			if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
++				     !inet_match(net, sk, acookie, ports, dif,
++						 sdif))) {
+ 				sock_gen_put(sk);
+ 				goto begin;
+ 			}
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index 349e96d029c3d..3140c7742b30f 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -215,6 +215,8 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
+ 
+ 		bh_unlock_sock(child);
+ 		sock_put(child);
++		reqsk_put(req);
++		return NULL;
  	}
-+	/* Preserve the tail of an existing stream on an in-place write. */
-+	size = max_t(size_t, v_len, write_end);
+ 	__reqsk_free(req);
  
- 	if (v_len < size) {
- 		wbuf = kvzalloc(size, GFP_KERNEL);
-@@ -474,13 +474,69 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 	if (err < 0)
- 		goto out;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 8a6d7dac50b26..e911ad30d9a75 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7257,7 +7257,9 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
+ 			bh_unlock_sock(fastopen_sk);
+ 			sock_put(fastopen_sk);
+-			goto drop_and_free;
++			/* tcp_disconnect() already dropped one reqsk ref. */
++			reqsk_put(req);
++			goto drop;
+ 		}
+ 		READ_ONCE(sk->sk_data_ready)(sk);
+ 		bh_unlock_sock(fastopen_sk);
+diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
+index b0e8d278e8a9b..e755e90999654 100644
+--- a/net/ipv6/inet6_hashtables.c
++++ b/net/ipv6/inet6_hashtables.c
+@@ -75,7 +75,9 @@ struct sock *__inet6_lookup_established(struct net *net,
+ 		if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 			goto out;
  
--	fp->filp->f_pos = *pos;
-+	fp->filp->f_pos = write_end;
- 	err = 0;
- out:
- 	kvfree(stream_buf);
- 	return err;
- }
- 
-+/**
-+ * ksmbd_vfs_stream_truncate() - change the length of a named stream
-+ * @fp:		stream file handle
-+ * @newsize:	new stream length
-+ *
-+ * Resize the stream xattr without changing the base inode size.
-+ *
-+ * Return: 0 on success, otherwise a negative error code
-+ */
-+int ksmbd_vfs_stream_truncate(struct ksmbd_file *fp, loff_t newsize)
-+{
-+	const struct cred *saved_cred;
-+	struct mnt_idmap *idmap = file_mnt_idmap(fp->filp);
-+	char *stream_buf = NULL, *new_buf = NULL;
-+	ssize_t v_len;
-+	int err;
-+
-+	if (newsize < 0)
-+		return -EINVAL;
-+	if (newsize > XATTR_SIZE_MAX)
-+		return -EFBIG;
-+
-+	saved_cred = override_creds(fp->filp->f_cred);
-+	v_len = ksmbd_vfs_getcasexattr(idmap, fp->filp->f_path.dentry,
-+				       fp->stream.name, fp->stream.size,
-+				       &stream_buf);
-+	if (v_len < 0) {
-+		err = v_len;
-+		goto out;
-+	}
-+	if (v_len == newsize) {
-+		err = 0;
-+		goto out;
-+	}
-+
-+	new_buf = stream_buf;
-+	if (newsize > v_len) {
-+		new_buf = kvzalloc(newsize, GFP_KERNEL);
-+		if (!new_buf) {
-+			err = -ENOMEM;
-+			goto out;
-+		}
-+		if (v_len)
-+			memcpy(new_buf, stream_buf, v_len);
-+	}
-+
-+	err = ksmbd_vfs_setxattr(idmap, &fp->filp->f_path, fp->stream.name,
-+				 new_buf, newsize, 0, true);
-+	if (new_buf != stream_buf)
-+		kvfree(new_buf);
-+out:
-+	kvfree(stream_buf);
-+	revert_creds(saved_cred);
-+	return err;
-+}
-+
- /**
-  * ksmbd_vfs_write() - vfs helper for smb file write
-  * @work:	work
-diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
-index d0e05eca8616e..397dd2dd09886 100644
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -82,6 +82,7 @@ int ksmbd_vfs_read(struct ksmbd_work *work, struct ksmbd_file *fp, size_t count,
- int ksmbd_vfs_write(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		    char *buf, size_t count, loff_t *pos, bool sync,
- 		    ssize_t *written);
-+int ksmbd_vfs_stream_truncate(struct ksmbd_file *fp, loff_t newsize);
- int ksmbd_vfs_fsync(struct ksmbd_work *work, u64 fid, u64 p_id);
- int ksmbd_vfs_remove_file(struct ksmbd_work *work, const struct path *path);
- int ksmbd_vfs_link(struct ksmbd_work *work,
+-		if (unlikely(!inet6_match(net, sk, saddr, daddr, ports, dif, sdif))) {
++		if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
++			     !inet6_match(net, sk, saddr, daddr, ports, dif,
++					  sdif))) {
+ 			sock_gen_put(sk);
+ 			goto begin;
+ 		}
 -- 
 2.53.0
 
