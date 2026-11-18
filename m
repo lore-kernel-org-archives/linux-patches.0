@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021654;
-	b=QyzdfC2qiTiyF8RN4ATUZVjyq9r0hlDDFO0LK8v4lMPIQYY/8r2qrnQFnB1uuU8hxm5H
-	 1tOcBTjmUUSNt3Is3PshIcpKxhJJiFhzsNVsWVnwmf9Y6/02myt5d10kzbip36md1tpar
-	 RonQoybseTlBc3uobqQw40vhT2yFPai/AVXKIGlZyUpC3Ab3IoWJzbr7xJxDRDS4tGgaQ
-	 gFrDODRBklIOlCw8OYF9FnHkdSMLw+TzWhtiZ4b2iz0YWdAXnmoEdn531AUV8DK7UsWFZ
-	 tQib6JxY97t9JWoo8w+mFlfC6zeJcZvtkXGypUKKc9pJucevHlTB2yY+QkHXkmPN7Uw==
+	t=1795021657;
+	b=sx6KHUY8sGTLViJtnbGfHpDg70IUBwuY94QoOXt4j9JpoPGUSEgYSqA1X5fIFt3yCAav
+	 eRaqj0T4NMuuFGS/+WiccrsKd6aOXmIIRIGG7q4g9xNJVDtNlXIm8dTo2L0ppUUCHvfy+
+	 TXdVHxGBzEwHL00SixeieneAz02who9F8UrRsDrn4B2dqEZTR6MhnjN16jbOIWROlMySk
+	 ouUTBVk/drt20XlzfZju5fP38wNzrHnlQCMy86FDzzGl+vjY/4s/PU4vp/dUEbxNas3Lu
+	 s8fK6ugre3RM2Cgn7vQeUldGFnYvMjLJ7GmyXwVJygf5+1WzTAc2OLmkG2TxOovL8GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021657;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gcEo3DGVXspYLIKOzwyVQ9tIvnCJiUryVX+URZrQKhg=;
-	b=3NNVZ3iCM3aFHjUG1sVGkOQV73PbDLC8u2A3hgsIudUtkV/M6sO9AJA/873U3Q8rTl7W
-	 sartpkq9bipTtX0727iTDjATZN9gxZ97ETQIIxRFuE14ARwxxGONgcUX0VBYxFt7NRsJX
-	 7wd2X/Jc49R3bef00/E8RBoERGWSB6msrlwmowEm6h9BZscn/qN/BD1f/LB02srOhHSWD
-	 tuvtLQ11x1bmMLJh6Rf9myAQtWR3OES9/dcU9qXV3L4CW3pfB/HYm2VLsxLTtCZvbBGkB
-	 z2bcL/CZMFrJzXPS22XRk3FLQJqy8+BvcGnq+5JKkndUH5PKly4egzWyYBX4UPWG43g==
+	bh=0vzYh3K9E24XEHa81Go0dalbsKnquRXCIxRxguNIWuk=;
+	b=s/EHfU9TgHeTAaOaofO+IgZ3NlwxX2kuLHId9aTG9F0KBMZbKfJiwF8h2IYUzGaY0S5b
+	 BQADmonpbLD7RRYkkzYK2K0Ovnz0WVwHg6XYca1GoiHgeQI5hSfbdMop4IwJ2XJw1UbXV
+	 H7s9nMjl+cLNJ6wyKuJAQfQaZ/skAb/lzT6qgEmUC7CAKc4mIFXjyyH+caIVnrorkbXni
+	 m93/9EekDevRk4WtwQLfU+mz3i2thcDjWNVVQfSzoOrt8MnLwZriDXu2xIQO2oAng3aCk
+	 ICZGACm/UQtdm2zOp2fdVZJNftFDW2jDCRYcUj85tCiiDpS9eg28H/YyZC4/0JpExww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw9GpO55;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y9+h/OWL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B5A606A325;
-	Wed, 18 Nov 2026 17:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127C6606A31C;
+	Wed, 18 Nov 2026 17:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw9GpO55
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F951F000C6;
-	Wed, 18 Nov 2026 17:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9+h/OWL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2591F000C4;
+	Wed, 18 Nov 2026 17:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021654;
-	bh=gcEo3DGVXspYLIKOzwyVQ9tIvnCJiUryVX+URZrQKhg=;
+	s=korg; t=1795021656;
+	bh=0vzYh3K9E24XEHa81Go0dalbsKnquRXCIxRxguNIWuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jw9GpO55ablOx58JELsRu8TbgOq+44OnxMx8/c/r/zh6eIHQnIrAT3IR0St1BHS6Y
-	 PyhKJ1qRDnrInRRfp6RrHBLLwxMZatdr4HL9NGW9IU3STEcKjZi4edDrCAq3upbO5d
-	 4CGZDpiWMSp5rWEpJo9LTpAyUP6xYkRYrzKwkLOc=
+	b=Y9+h/OWL5U1QtyjTjGltPqW5DBmnssM9bekFXM55ToBh2JjwWvMolOParIP/KogHd
+	 /ZEQz23v93L4HGeTAKMO6MP2guGssUeyI20FKdo3Kkf1dU53TB2eAeH7XFKgOw8Zbl
+	 soZq/Z6ISGAI2+HALllQJ03xyTXZIlFldWEblR2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Thelen <gthelen@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Nandor Kracser <nandor@riptides.io>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2384/2651] selftests/net: tcp_mmap: remove unused -k option and keepflag
-Date: Wed, 18 Nov 2026 16:00:24 +0100
-Message-ID: <20261118150411.259245805@linuxfoundation.org>
+Subject: [PATCH 7.3 2385/2651] tls: avoid field-spanning write when copying crypto info
+Date: Wed, 18 Nov 2026 16:00:25 +0100
+Message-ID: <20261118150411.290687824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,61 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Thelen <gthelen@google.com>
+From: Nandor Kracser <nandor@riptides.io>
 
-[ Upstream commit 5536d5553f274c8baa77c44854c9091657213970 ]
+[ Upstream commit c43c1c24f3cdc0d2d3f59e5686573ac3129637aa ]
 
-Commit aacb0c2e524c ("selftests: net: tcp_mmap must use
-TCP_ZEROCOPY_RECEIVE") removed the only read of keepflag in child_thread(),
-leaving the file-scope keepflag variable set by the -k option in main() but
-never read. This triggers a Clang 23 warning:
+do_tls_setsockopt_conf() copies the cipher-specific part of the crypto
+info to crypto_info + 1, where crypto_info points at the 4-byte info
+member of union tls_crypto_context. When optval is a kernel sockptr,
+copy_from_sockptr_offset() is a memcpy(), and FORTIFY_SOURCE bounds the
+destination by that member:
 
-  tcp_mmap.c:91:12: error: variable 'keepflag' set but not used
-  [-Werror,-Wunused-but-set-global]
+  [    6.948348] memcpy: detected field-spanning write (size 52) of single field "dst" at include/linux/sockptr.h:49 (size 0)
+  [    6.948480] WARNING: include/linux/sockptr.h:49 at tls_setsockopt+0x9b2/0xa30, CPU#1: init/1
+  [    7.001355] Call Trace:
+  [    7.003146]  do_sock_setsockopt+0xb0/0x190
+  [    7.003975]  __sys_setsockopt+0x76/0xc0
+  [    7.005368]  do_syscall_64+0xda/0x4b0
 
-Remove the unused keepflag variable and the dead -k getopt option.
+tls_setsockopt() gets a kernel sockptr whenever a cgroup setsockopt BPF
+program is attached, even one that leaves the option alone, because
+__cgroup_bpf_run_filter_setsockopt() passes optval on in a kernel
+buffer. With a no-op program on the root cgroup, a plain TLS_TX
+setsockopt() with AES-GCM-256 triggers the warning above on an x86_64
+build with CONFIG_FORTIFY_SOURCE.
 
-Fixes: aacb0c2e524c ("selftests: net: tcp_mmap must use TCP_ZEROCOPY_RECEIVE")
-Signed-off-by: Greg Thelen <gthelen@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261021152658.2618709-1-gthelen@google.com
+Copy into the union at offset sizeof(struct tls_crypto_info) instead.
+crypto_ctx already points at the right union for both the first set
+and the TLS 1.3 rekey (tmp) case, and the address is unchanged.
+
+Fixes: a7b75c5a8c41 ("net: pass a sockptr_t into ->setsockopt")
+Signed-off-by: Nandor Kracser <nandor@riptides.io>
+Link: https://patch.msgid.link/20261021073233.16720-1-nandor@riptides.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tcp_mmap.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/tls/tls_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tcp_mmap.c b/tools/testing/selftests/net/tcp_mmap.c
-index 487ae659a1f18..86241bed7f086 100644
---- a/tools/testing/selftests/net/tcp_mmap.c
-+++ b/tools/testing/selftests/net/tcp_mmap.c
-@@ -85,7 +85,6 @@ static int rcvbuf; /* Default: autotuning.  Can be set with -r <integer> option
- static int sndbuf; /* Default: autotuning.  Can be set with -w <integer> option */
- static int zflg; /* zero copy option. (MSG_ZEROCOPY for sender, mmap() for receiver */
- static int xflg; /* hash received data (simple xor) (-h option) */
--static int keepflag; /* -k option: receiver shall keep all received file in memory (no munmap() calls) */
- static int integrity; /* -i option: sender and receiver compute sha256 over the data.*/
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 2d1cde3f61886..f13faafe58d20 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -701,8 +701,8 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
+ 		goto err_crypto_info;
+ 	}
  
- static size_t chunk_size  = 512*1024;
-@@ -456,7 +455,7 @@ int main(int argc, char *argv[])
- 	int sflg = 0;
- 	int mss = 0;
- 
--	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:i")) != -1) {
-+	while ((c = getopt(argc, argv, "46p:svr:w:H:zxP:M:C:a:i")) != -1) {
- 		switch (c) {
- 		case '4':
- 			cfg_family = PF_INET;
-@@ -490,9 +489,6 @@ int main(int argc, char *argv[])
- 		case 'x':
- 			xflg = 1;
- 			break;
--		case 'k':
--			keepflag = 1;
--			break;
- 		case 'P':
- 			max_pacing_rate = atoi(optarg) ;
- 			break;
+-	rc = copy_from_sockptr_offset(crypto_info + 1, optval,
+-				      sizeof(*crypto_info),
++	rc = copy_from_sockptr_offset((u8 *)crypto_ctx + sizeof(*crypto_info),
++				      optval, sizeof(*crypto_info),
+ 				      optlen - sizeof(*crypto_info));
+ 	if (rc) {
+ 		rc = -EFAULT;
 -- 
 2.53.0
 
