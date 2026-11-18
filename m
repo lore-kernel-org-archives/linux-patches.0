@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045091;
-	b=4UHm2EkTWMCOsPGGGgHetD36uYVu+0Y/dCHKR4aAobDjSg3wicGt8i5YWxSrcUQd4iYe
-	 Qy4+pPZkQCTo1Nz3V/8lHy6N1DHYWEVP/brtARgFeUepex0p3T0EOzoDrhanMbDk9YDdd
-	 fb6ZQs0bOezz9HYOfpKVEiXpy7Q+y9J/umOjAjmUCzxKtukY6TZ1gh66oWUl/DKH7t2LE
-	 39XnEINqIyiU9QABWE1zGXKVtMtGHxZAmAIhyKQySaKlSxwt8IliurYCsY0yUdkNgCwgS
-	 TiqEMnEcPAKafbkDreCO/i1tQwBKKTkFoCjLlvmTdJ6MAcZzlW6aGYLdBaqL7wiUL+g==
+	t=1795045094;
+	b=zp7PWnrc8ZA//WSE5g4S3pfowjjtJBPVyBI7cU/fARh1M/2A/XF/05RtkmtUjveqLEl+
+	 X+VShiiFXMMnChim2afFkAAO2weuy6R6pr7ylr3VBNHjd43GIVM39nt/9u/sP84Mkx8sa
+	 5TpL+0+vadF1edNpk5IA1qrnVBX6Npp76Xkg0AYnp92KCqvKVwPxO92d8xFu+0bSiuo26
+	 3yQ5PDrTMoLPmZ4WWyAS0bqiuHQWV/fdMsEa7aVIXsJK+PzU2HVz6YCjRz/U4REB1Phjj
+	 y6e3ORyFRGT1oDqKI3JJcWtIt+dW4SpojJN+J1zLlRQ43Os+tJEdpAdVuCGDTy24ecw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bkrU/bYlrdSy10FWyfkwXxPug0pFlBigBqKUffVNW98=;
-	b=l4jPqG37tbXTyhueOsTalksBPxoxfXEYxUQo9RMy3+YX2/KB7PoUd2xaCcmn6oJTvbCh
-	 B6cRyKFMqhk1vuhN5HkPmSgcpQlMjy0jPcboZB7gyzC8nSmcOPG96cBtjy0YKcDoXeGxi
-	 hKak7itDTmzIIbCdkLEdddUJ0v3v2Q5cal5iaDOwmZVa0Xp/SYjctw4gdcARB6XNJ2Et/
-	 QeSLNcdAodU1s6VL2ltbZH0vb/A7jGRPC2n+R6unS0ybhpdeayInk0Od2noyuaRB+Sq61
-	 zTLK+mBZ4Bi+NGZSz0HEfI3mJ1TkUZpW+367+QaWcYWkC4ELoW2W/UhZlXevdx35DWw==
+	bh=ZolQWTXNRfcEiSS9KNHpr0UDFPsEBZ6QL/sHV0ylRlU=;
+	b=TRL7AC/ICGjbAZ7siSMzEXl+DIFWmdSlNGPaO5jDrkDc4CUjPeM1Ld0zO7QqvfFnw4Vt
+	 6o76W7zCaCLHryCczvwnTmwnurt+KQqoEUTbWRJe8tdYE8YQC//JfwBeIiEUT6xnY/Sn1
+	 I0ER1mDfKoMrYnmbEXPqnLlYGCaYDIFXExWAO8ltflsoDRRcmShQIDBtRDFBtpyw+lJZV
+	 PzNVObV2qBklD8tAeQ+g/fORDG44Jiz8FOFwV106fbu1jcg9NMheJCQTppioZYwi4qQ2P
+	 +CxleLi51OqHUzfFo+Oeiyr3tBuUWr13+gFVLCk35J7yUallUcgMQ7XaHPZrxGY2Q8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dW0oOqFd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Mk0FagZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46980606A325;
-	Wed, 18 Nov 2026 23:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB93606A32A;
+	Wed, 18 Nov 2026 23:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dW0oOqFd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7FB1F000C6;
-	Wed, 18 Nov 2026 23:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Mk0FagZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3AB1F000C4;
+	Wed, 18 Nov 2026 23:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045091;
-	bh=bkrU/bYlrdSy10FWyfkwXxPug0pFlBigBqKUffVNW98=;
+	s=korg; t=1795045094;
+	bh=ZolQWTXNRfcEiSS9KNHpr0UDFPsEBZ6QL/sHV0ylRlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dW0oOqFdsLHjwCLSi7vWitAVGCaxd6VUDi3tEjvXifBxFIPDnqbWcAEP6wB/mX24y
-	 5eW0q0P/j+VaNv/LXi14vTVkfEm+3iyr3jsObxklsJ+WARrrMDICAus04+CVBk5vbA
-	 ZsbM9tNSFs67tzG+WVEaF/q0vJZGf3faYO53ZKiE=
+	b=0Mk0FagZTsnWvZT3q1Qt3DLtDOl20WdOeIdgzH8izuD9LJcVlsACfqe8RxYQ3vbhp
+	 w7mxK/jGMchixMTSUpAE9a/3airjTHzJNFJ5ldB0n3rSCqXPh7se4KJchm/oA4Bu14
+	 t3wF6zLb5mHBbIGCigsO+PmMzSQGRtK9lrQkQ6+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0801/2857] crypto: hisilicon/hpre - return -EOVERFLOW for small ECDH output buffer
-Date: Wed, 18 Nov 2026 15:30:35 +0100
-Message-ID: <20261118150230.415177136@linuxfoundation.org>
+Subject: [PATCH 6.1 0784/2857] regulator: core: Fix c_rdev reference leak in regulator_resolve_coupling()
+Date: Wed, 18 Nov 2026 15:30:18 +0100
+Message-ID: <20261118150229.796879240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,37 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 232804a5ed70a8ace32c46d341d438aeba54bc67 ]
+[ Upstream commit c41b69e9f76fd9632662714c1d37860468e8d773 ]
 
-hpre_ecdh_msg_request_set() returns -EINVAL when the output buffer
-is too small, after setting req->dst_len to the required size.
--EINVAL is misleading because the caller can retry with a larger
-buffer. Return -EOVERFLOW as other kpp implementations do.
+of_parse_coupled_regulator() returns the coupled regulator with its
+device reference incremented, but regulator_resolve_coupling() returns
+without dropping it when the coupled regulator belongs to a different
+coupler, leaking the reference.
 
-Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
+Fixes: d8ca7d184b33 ("regulator: core: Introduce API for regulators coupling customization")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917142535.2156720-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index 8169eda341c78..7aada55a9c6f6 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -1483,7 +1483,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 52fb31ed59e48..44ae5fb8dad36 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5405,6 +5405,7 @@ static void regulator_resolve_coupling(struct regulator_dev *rdev)
+ 		if (c_rdev->coupling_desc.coupler != coupler) {
+ 			rdev_err(rdev, "coupler mismatch with %s\n",
+ 				 rdev_get_name(c_rdev));
++			put_device(&c_rdev->dev);
+ 			return;
+ 		}
  
- 	if (req->dst_len < ctx->key_sz << 1) {
- 		req->dst_len = ctx->key_sz << 1;
--		return -EINVAL;
-+		return -EOVERFLOW;
- 	}
- 
- 	tmp = kpp_request_ctx(req);
 -- 
 2.53.0
 
