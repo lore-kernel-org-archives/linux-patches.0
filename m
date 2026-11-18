@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057140;
-	b=AckUU8h5LTa+/7ea3gkY6yD0t/eO6nS4Fy9MLV/lXDlUeg2twKh1aw5mWOT6576i16Nx
-	 jWb4nb4WjRMY99CIQYbqXVc6v4In8QSnyPpZrUB7lojCcwTlYNPZY+vyROYq69q4XnlAP
-	 128iMRbwe5B9mosH97692JExCxsoPaoAX2L15UsaEBrKjY5F1tHZFDvZiQRfYmL/++hN9
-	 g5ARsEiRDE9p/QPzEwPl1/7joAYzaZiDPqaJMxURxms1xBU5AKbGb+AyTr6I/ThH4RDFR
-	 +sQo7mnw6Ed6AuzQwBheUigaKeq84FHnm4VWmztxKwHGlS1FEK0a6+skeA2FXmk3bjA==
+	t=1795057142;
+	b=FhX0y/KFNoRI/S964US9s5/6O24UyKg0vuHHwj755gH2LPMR1p4yLCxGXq8mn4ymOKyN
+	 1FHwqYnuyU7c//276VxkI+gX6qdJVQFf6WJX+ky0E1jaav9pP1+7jIq93xJieKLpjuaVP
+	 xtmHaaL13oNx+9Q6KKh9+Zn+bwAuzT7YwkUVFzbXA5TpB/lGOSsQyo0l60jCGBrWPFvWz
+	 ePLfwXMJkb5hYGaW+zMh0kwwD5wUU+gkcarAtJalCvM6swLApZpomzVY2MdB35i8vSdbL
+	 Vexjj02v06U9rji8ktLhFPulw8S5+3I0XwbgIZWBDf7aiaRXSyx7FwJxlsid4/j8Xvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=wdYG6ec4TnSeSy3n0QkCzVHR4k6IsdZZxI8pfBUPLHU=;
-	b=Ql2eHRgSeKbALQBShFTfcTSttLjOLvMf0ky4b6T/JRTfoGhFcNJb26ukAHLsrIiodIWZ
-	 bJCD9P3YsEPv5BWgkXMS8GQQFd+oMGR90w1echqhPwGJ13IBGo8KtrGDQ3rQkzlrlsrG+
-	 JmH9aipDhtOh0Wk/NWL/feLiuHnHKzDlWx1suUV9oPzuHDITnflCZ6RBbPObwHMM7Gcww
-	 6D/mS+OLV5YRnc/9cqwW9MAFN9rpcw/+piJ9jCxgV+JoHaSYazJOKA5gKxCNa8Mmn1QoO
-	 GQipjxvus4F0FRLdCjbSJ1uE61A/l1NbIcPrZeaRH9DixzXoW8Kcf75YRXbha4ohnVQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=MpYL9KTE90tlpuJ/BCMrNN56kQ0+upOxmydLhFIzBi8=;
+	b=gjABmWmWUk4+IHZh2lKgZ9HRZ1fB6uALwmKRNWHLHH3GDKkTx9elGLldd05qNhdzxFLB
+	 lCgYKR6F4+bvGM+1FyvkN9F9v6oRc+7k1ipnECsD9nl/aA5NzPXNK8w9PMme6xyuuTQCy
+	 hv0TRCHX4r1+MkLFFTK6fVG6YMV40z7MhOR6KpdjBo5p6T9MVby5gvyC6C0XtMLnwqW4q
+	 hJ0Ox8oYdqgARP8Zx7g5Xk7AVZp9+gAsW8QrfOHOgXmESTcPZIHnHaPXWT/g2tEZK9h2e
+	 7DHEpwRsLMcG5RVCpUDrUFCMzcuzJVqy7kWYhJsqzVEj8MZaiFhzHPJFo6/DTwc2MfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY3EUDUD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfAz3Ahz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D3B606A31C;
-	Thu, 19 Nov 2026 02:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4743606A32A;
+	Thu, 19 Nov 2026 02:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY3EUDUD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425141F000C4;
-	Thu, 19 Nov 2026 02:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfAz3Ahz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060A21F000C4;
+	Thu, 19 Nov 2026 02:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057139;
-	bh=wdYG6ec4TnSeSy3n0QkCzVHR4k6IsdZZxI8pfBUPLHU=;
+	s=korg; t=1795057142;
+	bh=MpYL9KTE90tlpuJ/BCMrNN56kQ0+upOxmydLhFIzBi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rY3EUDUDAscwnLHR2JsW5mSrbv/i6PpBILEN/z+F37xwd7iI3Hy4eJgTNkiDN18SA
-	 fZRtMfwPbpS21TwqKmRKDi46BXFBD6jz8Kig82JhgF46qsHWyUYiAvAx+q3Pmpgnn2
-	 SU9QDJ+5ctjCxAuusk58MfvEAQset9aSQD2+W+/Y=
+	b=dfAz3AhzodOgN7ydSiAwe1YCR5g0j797zf2JKI3jvouTrUzG5NeZCImjfCsUy/hgm
+	 6ITYKNRF5StvoFtZ+vh6b+Yfzpmf4KkcNGkMEOhKigz0MKoMkW7LV5QwJjG2Ioor+K
+	 rhCDO0P8i17zt+jasB/b3oBrwVJD3c269Td0+Yys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 0025/1848] drm/amdgpu: Limit BO list entry count to prevent resource exhaustion
-Date: Wed, 18 Nov 2026 15:34:23 +0100
-Message-ID: <20261118145912.116752809@linuxfoundation.org>
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0026/1848] drm/rockchip: dw_hdmi: Use resume_early pm ops for system suspend
+Date: Wed, 18 Nov 2026 15:34:24 +0100
+Message-ID: <20261118145912.167897296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,61 +62,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse.Zhang <Jesse.Zhang@amd.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-commit 6270b1a5dab94665d7adce3dc78bc9066ed28bdd upstream.
+[ Upstream commit af3a9eadc11896f6677bcb7102bfb7c84be48d2d ]
 
-Userspace can pass an arbitrary number of BO list entries via the
-bo_number field. Although the previous multiplication overflow check
-prevents out-of-bounds allocation, a large number of entries could still
-cause excessive memory allocation (up to potentially gigabytes) and
-unnecessarily long list processing times.
+rockchip_drm_sys_resume()/drm_mode_config_helper_resume() is called
+before the resume pm ops of dw-hdmi. This result in an atomic_enable()
+before dw_hdmi_rockchip_resume()/dw_hdmi_resume() is called.
 
-Introduce a hard limit of 128k entries per BO list, which is more than
-sufficient for any realistic use case (e.g., a single list containing all
-buffers in a large scene). This prevents memory exhaustion attacks and
-ensures predictable performance.
+Resume (without changes):
+- rockchip_drm_sys_resume()
+  - drm_mode_config_helper_resume()
+    - atomic_enable()
+- dw_hdmi_rockchip_resume()
+  - dw_hdmi_resume()
+    - dw_hdmi_init_hw()
 
-Return -EINVAL if the requested entry count exceeds the limit
+Change to use resume_early pm ops for system suspend to ensure pm ops
+for dw-hdmi is run before rockchip-drm pm ops. Also fix a possible NULL
+pointer dereference timing issue while at it.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 688b87d39e0aa8135105b40dc167d74b5ada5332)
-Cc: stable@vger.kernel.org
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Resume (with changes):
+- dw_hdmi_rockchip_resume_early()
+  - dw_hdmi_resume()
+    - dw_hdmi_init_hw()
+- rockchip_drm_sys_resume()
+  - drm_mode_config_helper_resume()
+    - atomic_enable()
+
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Tested-by: Heiko Stuebner <heiko@sntech.de> #rk3328
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260518193748.2482823-12-jonas@kwiboo.se
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-@@ -35,6 +35,7 @@
+diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+index 91e28fcdd22e9..3041f76d8fc78 100644
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -592,17 +592,18 @@ static int dw_hdmi_rockchip_remove(struct platform_device *pdev)
+ 	return 0;
+ }
  
- #define AMDGPU_BO_LIST_MAX_PRIORITY	32u
- #define AMDGPU_BO_LIST_NUM_BUCKETS	(AMDGPU_BO_LIST_MAX_PRIORITY + 1)
-+#define AMDGPU_BO_LIST_MAX_ENTRIES	(128 * 1024)
- 
- static void amdgpu_bo_list_free_rcu(struct rcu_head *rcu)
+-static int __maybe_unused dw_hdmi_rockchip_resume(struct device *dev)
++static int __maybe_unused dw_hdmi_rockchip_resume_early(struct device *dev)
  {
-@@ -230,6 +231,9 @@ int amdgpu_bo_create_list_entry_array(st
- 	const uint32_t bo_number = in->bo_number;
- 	struct drm_amdgpu_bo_list_entry *info;
+ 	struct rockchip_hdmi *hdmi = dev_get_drvdata(dev);
  
-+	if (bo_number > AMDGPU_BO_LIST_MAX_ENTRIES)
-+		return -EINVAL;
-+
- 	/* copy the handle array from userspace to a kernel buffer */
- 	if (likely(info_size == bo_info_size)) {
- 		info = vmemdup_array_user(uptr, bo_number, info_size);
+-	dw_hdmi_resume(hdmi->hdmi);
++	if (hdmi)
++		dw_hdmi_resume(hdmi->hdmi);
+ 
+ 	return 0;
+ }
+ 
+ static const struct dev_pm_ops dw_hdmi_rockchip_pm = {
+-	SET_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume)
++	SET_LATE_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume_early)
+ };
+ 
+ struct platform_driver dw_hdmi_rockchip_pltfm_driver = {
+-- 
+2.53.0
+
 
 
