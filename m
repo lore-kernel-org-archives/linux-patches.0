@@ -1,54 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051941;
-	b=Qenkbfz+BIBMoBaNWstlBUldRIPQOLfJsrcn1QQfU40huRyG2cad39B4ihc8HT6Wljks
-	 9rEsCMqYXHiIrL3sPeMQEg33jX7VlCDS6MFJ0/U9jyS9V0d8LtFz8oXyosgidAmSIAzC/
-	 vV8pOCgojSLRD50Xl2qvPsgk2Klto0LOwYBA8W4wqWSWEpAy6LI1ozLQUCxdVcVd/hwaM
-	 CFjN3l3OVdCs+EAfNkJRIxkJZxFi6i7JN7GzyNgwP5hnxj8HLtmgnQhjdPZKOq24niSFI
-	 gPdy0i+z17ItGRHCnxgsDglRUgpgVn71wb48VPhdcWKefr+M3v0i/2ux26OElrVdEpQ==
+	t=1795051943;
+	b=oGgQsViCuKgM4Fmeri0h/AfmwPCtnvXYFBsXB/+wPZtAWoT+Y97dN/UH+3n+1q3RN3hF
+	 7lodVXfISZ42O3tiS4NkveuL7BnqVrqVhHwU2/veIkE9Kc7tFbbzThoc1xZigEypH1gkh
+	 sxHiMzBv3m/VGsGL9sFz2dd22RLZYfN7qBGhNnQee9YxoZH3x25aztV8qP8SaujPIGu07
+	 O4GUuU14GO11hxjrfu6zj4P5mJacyUjhSRklOXCpEjw6LXY6sbCZL+D3/IqE3r6uV7zpp
+	 A1ecBSExFIarGV8oXBPKhu2/PA7g/hGG32WFMtPvqlCs78jVfJihoda9IvpiG8i2TJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JDpnYaog61dQTRZ6n/2vwSPjG74qrt0wkdO2p7E7Dtw=;
-	b=rMJZZyVBMDCn2Ncola5pE30ask8ohALIVVC+esg18HAPALbKo7R3cS6yO4bcbe6FuwZ7
-	 G7bT00Kcmz/CG5NQM1TTWsEvW58HNCHPqHjs+hEycVR+x0X4ElwroGA5Zysh6CTDdgaQj
-	 cxkM5m9qGAnTv2QK3ihPItfSnU5IROwZBzAvvt2wW8m3rjKHrW6KU+rJ9kevDWeNiGzIr
-	 RSMAVo+KQ9TbW15z4vAmT8RWAaNE7ez37lzabaW57XVpc4nHutHKpUK5BDzamtZNBAvOB
-	 QvaCzN62XIJgFeUWUqFRPIO0EzqXoTvD2t4+vWg4hXTBbHdjiyIP/e5oDesnz2qyPeA==
+	bh=XVrgpsgOo0vHtMR8UFPOQMzVfUSz9UhGhtgBEGJHX9c=;
+	b=rBYIEX2uKLanU0Ap3bfBpUF+q6DsHwcKpGi8hvtkM1OetKsH6Aaoy5oVAg2mWJrxIIia
+	 DD90sFZFZ04pc3+qmu11nV7GgyrRQiFpW0bGi29QcCyi4ZLOFMVoNhLgV5u0iXRr86KiY
+	 39Oqiv0rV1EKuoHZqaWZUjFCH+XnhzXIWPdtEwEQQ8yzTPeN345YVk0yrJShIvVED6hNy
+	 sFHB6Gc5oW8H+o5UPUP5W1R9MY2A0+iYxoN5LR51Xf7PEaSpyyq4Ruzf6r4PYu22VcFTZ
+	 teFF2FVUpjNVncdPmbMWTveB2/mczNYmykU1J9qNA58k6Darqu/b69m1IEYx8A9Eetw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fugLb8rK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1qiv1fqE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EF7606D68C;
-	Thu, 19 Nov 2026 01:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2FA606A332;
+	Thu, 19 Nov 2026 01:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fugLb8rK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A081F000C4;
-	Thu, 19 Nov 2026 01:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1qiv1fqE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D291F000C4;
+	Thu, 19 Nov 2026 01:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051940;
-	bh=JDpnYaog61dQTRZ6n/2vwSPjG74qrt0wkdO2p7E7Dtw=;
+	s=korg; t=1795051943;
+	bh=XVrgpsgOo0vHtMR8UFPOQMzVfUSz9UhGhtgBEGJHX9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fugLb8rK0qfT9T4ASnX3x0x6k+nz3B0PfFYTUy2/8A5Y7i6KzlIIRTlmkaZBGKK/N
-	 JSBVmqAFt6YKazHdQ5qH1r3NrrF6vRVU1+f1hzEL+vsMGJqOGM4g9DyBFgNJawx0t1
-	 FN/oX6qyf9uDYLdsqbgKYdnfRFh1ntboZQyL6WEw=
+	b=1qiv1fqEVqKO61G1ZE34Y/+oHzkhhGq6IfQNaUeQeJdBSK6FnoLNqEmhFbOeJTDBG
+	 O8zULUx5O8/b6g5UE+oK8HCngzONa2EdFG8s/3togyt+ippsKNtzjM3VrvUEEafZHW
+	 uMV0vSaO1Z/74d8K2MNcZyZXBEc3Fj4T2rMF6OiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Yang Wang <lkevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 0387/2214] drm/amdgpu/powerplay: Align get_tonga_state_array() header with prototype
-Date: Wed, 18 Nov 2026 15:34:23 +0100
-Message-ID: <20261118150026.159470482@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 0388/2214] netfilter: conntrack: always lower timeout for non-closing RST packets
+Date: Wed, 18 Nov 2026 15:34:24 +0100
+Message-ID: <20261118150026.196885537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,45 +66,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 4986757d3207383c052689532e505edccc6df7c8 upstream.
+commit 73df81b38cb7f70a347a97370386378a86e53019 upstream.
 
-The function header above get_tonga_state_array() still refers to
-check_powerplay_tables() and does not describe all of the function
-parameters.
+The existing check might extend the timeout if the ESTABLISHED timeout
+has been tuned to be lower than UNACK via sysctl. Reported by sashiko.
 
-Update it to match the current function prototype and include the
-missing parameter description.
-
-Fixes: 1ac24df78c56 ("drm/amd/pm: Validate Tonga PowerPlay state array bounds")
-Cc: Yang Wang <kevinyang.wang@amd.com>
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Yang Wang <lkevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: bf80e6802273 ("netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conntrack_proto_tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-@@ -1502,11 +1502,12 @@ static int init_thermal_controller(
- }
- 
- /**
-- * check_powerplay_tables - Private Function used during initialization.
-- * Inspect the PowerPlay table for obvious signs of corruption.
-+ * get_tonga_state_array - Get the Tonga state array from the PowerPlay table.
-  * @hwmgr: Pointer to the hardware manager.
-  * @powerplay_table: Pointer to the PowerPlay Table.
-- * Exception:  2 if the powerplay table is incorrect.
-+ * @state_array: Pointer to the returned Tonga state array.
-+ *
-+ * Return: 0 on success, negative error code on failure.
-  */
- static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
- 	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
+--- a/net/netfilter/nf_conntrack_proto_tcp.c
++++ b/net/netfilter/nf_conntrack_proto_tcp.c
+@@ -1222,7 +1222,8 @@ int nf_conntrack_tcp_packet(struct nf_co
+ 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
+ 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
+ 	else if (unlikely(index == TCP_RST_SET &&
+-			  new_state == TCP_CONNTRACK_ESTABLISHED))
++			  new_state == TCP_CONNTRACK_ESTABLISHED) &&
++		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
+ 		timeout = timeouts[TCP_CONNTRACK_UNACK];
+ 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
+ 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
 
 
