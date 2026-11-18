@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039252;
-	b=JNKhCcU11iGFOaVu6/d8eKFnj1rlhiFZzlmuYaHvHtMBHXEOELHZHfVpJ/XbiUIORSqR
-	 iFxEnOdIw/CyxI4xDj2yIau/zpczKy+hJoDtRDQfIhj+LzHw3/2PR1zoMclzHlsx/jOx2
-	 WtcyObXdD5ZQB10rk9JmgZjCa002gr+jDsBKg4sG/0YTjJ57d9jbEV4sil0pv+C+4R7g+
-	 LInFRk8nqeQaKm4QApNo0qFcXsITmvVeiqrEGgm8ys9+zzXwcBfx3uTorM4AY0uXMudv+
-	 wUlOKrKag8ezo6wiri/TFcbe0R0fP1ANBGqcx6/QVBIiiEWDLeQm2ZiAAvFkY9Kiy+Q==
+	t=1795039255;
+	b=v6NRBh3nSoy/Qvnr7DiBmYMC/JdPbvVkUyFmXxcV/NJ6Fav43SG2sP5uaQberrqh3LtZ
+	 DqfPxaSubk6Rqa1tL+ygjzjaoLcjpAIVcCgVHRMjfnFB/GTUZw5g5jkDZFdjNTQirhi6B
+	 /L3QVYU6Ru5xuSzpNlrWcInQgDI7X2wzbwjAI23UkL+P7itzWvHhg69cPq5F4xKkuq5Rs
+	 gl9ZvKulZQTlYsHDdvwqFPt0UHb/l9l/k05yqw9tC9aJAadySFfm35ad/fW/MFG3IvrP9
+	 vLULukj5VNpRbHzwzz+yTPYRePnJKRoJT16rLYXdo28V1JIHY/5Y/0dMPgXRzCwjyLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mDz5NT313nRNLbxPuJla5VsRd5vNu2Q0CV97bJZuN+w=;
-	b=p6bkg+ZmlLED9R5axXZDgyrqd7IN9XxBjHuz6mMP9CpBsH8wXgAsCCyGoE/jDbKpmNFV
-	 I4r0uVewhfVVFfEprq+6BXNvqGjR9ITkTVRMrIah7BErWkQ/LL1OZ6MHc4LPaSABq/7ah
-	 0QJzXa3TgJTT+a3RpaPmeqOqMeB9m/V3nhV/uFOfnQZSlZAqxwRTNfRkT7twNQOJOTUwS
-	 fAnDQFPwikUP4x4udEt6BCIf/4Mq8gizhc1uDW7a3eUfnjYfAOYZ5ovpCbUspXMxYqm7Y
-	 xFdgxsbvPI7VS/Cuee8AD7rFUO++SyC2+djrsYIEGu9zjOfhwFKwIqDZvBABwUpmagQ==
+	bh=2jMK2gZBFJd210aX1QgHKvnqI1ipUUn2K6PIO+GkUDc=;
+	b=Sze1KX3GKcNBjme9xmCDRlr7+QyCYc99T8bFxHRj0MA9UyF/0EJ+NFpw9OOgMC8W740F
+	 3fMKCv8ZD9LK6EO95SU2VQNgpgXDPX10zrmJ4w6J/xOx4yiLHwPSxdhl+M5tMIPGYJQxf
+	 GOEo2McbJkglTO2elfFVZzUuboYtZrmUf2W5vGWHUkw/4xel7DcYgkdpsQkND2Yqd77YB
+	 oGH4IBJyQwzAHNpHCfwgicB15vXSxqHPoqB4j1DSKnG8Nb2HxH1ukQGOGl/+tJ39+KoT2
+	 faUOfcRlF5zsozh6V/s22LG/GExSdEg6k8/6uhsIlnX2KE/d4EfhFwwU44p48guuUEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jL7kljns;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNCdovR7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5EA606A320;
-	Wed, 18 Nov 2026 22:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C52606A31C;
+	Wed, 18 Nov 2026 22:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jL7kljns
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2646F1F000C4;
-	Wed, 18 Nov 2026 22:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNCdovR7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4ACF1F000C4;
+	Wed, 18 Nov 2026 22:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039252;
-	bh=mDz5NT313nRNLbxPuJla5VsRd5vNu2Q0CV97bJZuN+w=;
+	s=korg; t=1795039255;
+	bh=2jMK2gZBFJd210aX1QgHKvnqI1ipUUn2K6PIO+GkUDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jL7kljnstFphCZ9jfp5wvrDZAFwCEa2WgxNSrxgyOPaVODQ2j2QG6VDSN7TTJ/c+R
-	 6Q/41XIdqtP2vzJRoi6ZP0PLVKQOlN9v7mxYJ/XOvByI2L7mSmLSJleJX+HVl6qFFe
-	 xJegjecJVvKsSjcwZ3h8quoAsyTDyzuCGHuh6hDE=
+	b=DNCdovR7Pp0IZn3YHgA9miew854qdAHUxH+bGKlGHtHmpljD70fjc6Hy3zHW/vbe1
+	 sDPfgIpoSh52ct8ltorgsTLXYF0LLlbcYK/BCyflBQQMhWXqZAIHb+1B49Ds7bIKAW
+	 ipVSyMbq0KYn0I0g0E0/sX/p61tYMpPSE8dkQNBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Faure <boris@fau.re>,
-	Vinod Koul <vkoul@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2034/3318] soundwire: intel: initialise quirk_mask before reading it
-Date: Wed, 18 Nov 2026 15:44:16 +0100
-Message-ID: <20261118150423.064188200@linuxfoundation.org>
+Subject: [PATCH 6.6 2008/3318] perf jitdump: Fix funlockfile on unlocked stream in jit_open() error path
+Date: Wed, 18 Nov 2026 15:43:50 +0100
+Message-ID: <20261118150422.289251937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Faure <boris@fau.re>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ee8a8cfe4e8d3c67456e554c988017c252710a25 ]
+[ Upstream commit bfde6848c1e24fd979d0138c57c1cc28c35093c3 ]
 
-sdw_master_read_intel_prop() declares quirk_mask without an initialiser
-and ignores the return value of fwnode_property_read_u32(). When a BIOS
-does not describe "intel-quirk-mask" for a link, the property read leaves
-the variable untouched and stack garbage decides whether
-SDW_INTEL_QUIRK_MASK_BUS_DISABLE is honoured, so the link may be marked
-hw_disabled at random.
+If the malloc() for the initial read buffer fails, jit_open() jumps to
+the error label which calls funlockfile(jd->in).  However, flockfile()
+is called later in the function, so at this point the stream was never
+locked.  Calling funlockfile() on an unlocked stream is undefined
+behavior per POSIX.
 
-Initialise it to 0, matching is_link_enabled() in
-sound/hda/core/intel-sdw-acpi.c.
-Found by code inspection, not observed at run time.
+Split the error path into two labels: 'error' (after flockfile) calls
+funlockfile before cleanup, 'error_noflock' (before flockfile) skips
+the unlock.
 
-Fixes: 395713d8ca43 ("soundwire: intel: handle disabled links")
-Signed-off-by: Boris Faure <boris@fau.re>
-Link: https://patch.msgid.link/20260820212220.226912-1-boris@fau.re
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_auxdevice.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/jitdump.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index bdfff78ac2f81..d5d0a4c4ae145 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -124,7 +124,7 @@ static int sdw_master_read_intel_prop(struct sdw_bus *bus)
- 	struct sdw_master_prop *prop = &bus->prop;
- 	struct fwnode_handle *link;
- 	char name[32];
--	u32 quirk_mask;
-+	u32 quirk_mask = 0;
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index 37aa6729ab0f2..f35b68d796bab 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -156,7 +156,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
  
- 	/* Find master handle */
- 	snprintf(name, sizeof(name),
+ 	buf = malloc(bsz);
+ 	if (!buf)
+-		goto error;
++		goto error_noflock;
+ 
+ 	/*
+ 	 * protect from writer modifying the file while we are reading it
+@@ -244,8 +244,9 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ 
+ 	return 0;
+ error:
+-	free(buf);
+ 	funlockfile(jd->in);
++error_noflock:
++	free(buf);
+ 	fclose(jd->in);
+ 	return retval;
+ }
 -- 
 2.53.0
 
