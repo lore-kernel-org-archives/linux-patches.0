@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019937;
-	b=vGJARhcbv/CndkQM5gVoC9/zON+HfODUQlJlUPRvXbsCEtkOBiX7AXTqJV9sEZ3nHFwQ
-	 mWwmOlSZ7CNwjgVm41YB/JiH3QiqhF6FMLvS02UPg3P7hlgIYDTNvmzfxNlvjoa5J1fqT
-	 VeFTaSDo4yQLPjKA9f+6MjNP3nyUidprGlqI4dD2FZVHhXTkxJvkERaVTp271Nkb3QhJF
-	 uolWD9yQE6KVslgwZthb56HyROm6y9TQkz4e9bt7IdSzxtiOnWunuVOHfY1X1cESLBEEx
-	 VNHFN0cuKD/22jue4riTRcZbHjt31NKMDNXqCPkrdLojL1cJlWwJ2PE9bfAvoF1nBug==
+	t=1795019940;
+	b=qs88QYTCZd3dOBME9Zvu4YYct62K74YDHnwogNlNn5cT8yEVH8VPPKZrBs3weGW/qltr
+	 tNakgDeTF2SNtkHc1OvsmZmFhgcTu6oQvaYJelfVmox1WpiC65T9BL7/z4NiH9/fD3eMi
+	 1BjRrxZELocWR1QfgjlhRyiHLvfnLcuna1gBC7jhS8PxP4ygvgt2i4nJ8yaNScL1xyonm
+	 1aXl+Yzuay0CZlkvzheeA+4rKLo2qY7XXMvu+lzyePFAgcXPQTm+tYfzH9kvmmVhjs5th
+	 QIQ9uco7i6uXClZaI5+aQDTn6DaXzE+HkVai934nuV0QvEodHS1fYjAgHAPWztgb2RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bkh6efqOEmF+GlZvxb/ZlHltAuR190NM/pvWqTT+EGY=;
-	b=W2F6hg4RpDz5cjicxnSEOxu6z94dkzpiXAD4lqy0kijBVkq3DCmzA5NyKCHg5YfVsnLW
-	 opJaWQT/FYwvHscuJvoKu1jWuLtHTwz6GwihoF/BIHLem3rAWpu/mcxEQQy0sIHstNxaN
-	 Z4lu0ER0XT3pjM31JCnlC0bFctXOcyN7+Ve6b5fi23fxrtX6I831pCGcStvGVoAX+B3Jg
-	 w7HDZsRMVql+QvIYFgmrMr872iLjQDWv/fXdXZQjwXJCxlLrB2J06kDV9BWnBipWpRAo0
-	 1mAa6CkD4G2GcJgxk+5EAZF6o8QVwcsDizdC0jR4h3ASdpfb96wwKScXLGgrlBFIc+g==
+	bh=NptCdp6ALL7kcPLSE3h0Vqailg9YdZPiYC0YYEP/8bQ=;
+	b=Dt/OiqgQczq7O7tDaHsglYBm/vVERppzwVcbpc62MeUxCpkivi8rBF76ODgHP28Yq8/Z
+	 +0kcHZbmW9Nrl5SUsfHBQZUkioje5N/Rkk0ioiDGxRay1LHkY8fcrBCX9gkZ+PjV3Xhdn
+	 QffAGjdSDYZVDDh4YORpxN5gp2tRQL60eC7hMUNQM7shTga1v5CcyAh4QSEwBMapmmBo5
+	 Ubaus7T1GbNxd2WuOXu2Za7sqyZ2/fpyNfNX/yQ9NwJmp5oq60+mPzDmQBziTq74DAgsG
+	 30osIgVh2/VDSjiFpmYJn4YhueeOmOlkyE/IN1X9JsQXLLTG+WPvHJDhvFCFQhtSVfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2hPuDXX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lr3O5PdK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549B2606A320;
-	Wed, 18 Nov 2026 16:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E862606A325;
+	Wed, 18 Nov 2026 16:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2hPuDXX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB811F000C4;
-	Wed, 18 Nov 2026 16:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lr3O5PdK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4011F000C4;
+	Wed, 18 Nov 2026 16:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019937;
-	bh=bkh6efqOEmF+GlZvxb/ZlHltAuR190NM/pvWqTT+EGY=;
+	s=korg; t=1795019939;
+	bh=NptCdp6ALL7kcPLSE3h0Vqailg9YdZPiYC0YYEP/8bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B2hPuDXXPqSBq3bwoert5EcTtpgA4ShlIywTUTcRejyELuuxUMY929iM8OyU98XCM
-	 SMSefq+X7/ZnBLDTBPEXz2v0nlKXrbpXcq1bFmjofBKjWOR7oG3ZQcuLDP4UWqh1Us
-	 GD5uz6LcxzrVmnoqMA5Clvv0yPH/vCNS4PcBFz20=
+	b=Lr3O5PdKV838EfHy5aACSsJRyDnxmvRlMlWlx6nigBI4/8i9uliuxVozAtdyre27Y
+	 euhzLIAHEsMGQH4ibvHK9mphmBVl+NOmXbUngcuGlopraWKThW6KZP+Kiw2lPrFjmn
+	 C5Vau3kofqFah+CJlBvzhVTqNBiDF1yzYFDfXJ48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com,
-	Daniel Wagner <dwagner@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Palla Raghunath <raghunathpalla.0209@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1773/2651] nvmet-fc: dont drop the last assoc reference in nvmet_fc_delete_ctrl()
-Date: Wed, 18 Nov 2026 15:50:13 +0100
-Message-ID: <20261118150351.228162024@linuxfoundation.org>
+Subject: [PATCH 7.3 1747/2651] clk: qcom: mmcc-msm8996: Fix FD AHB clock register offset
+Date: Wed, 18 Nov 2026 15:49:47 +0100
+Message-ID: <20261118150350.424009522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,91 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palla Raghunath <raghunathpalla.0209@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 165301b5e2fd765fa05ea1044bbca8ba79820197 ]
+[ Upstream commit 7cb2d65286b817d8d7e26f454a9c374d65e87072 ]
 
-syzbot hit a recursive locking report on subsys->lock when a subsystem
-is unlinked from an FC port.
+The FD AHB clock branch register is at offset 0x3b74, not 0x3ba74.
+The incorrect offset exceeds the regmap maximum of 0xb008, so regmap
+rejects accesses to it and the clock cannot be enabled.
 
-nvmet_port_del_ctrls() holds subsys->lock while it calls ->delete_ctrl()
-for each controller. nvmet_fc_delete_ctrl() grabs a reference on the
-association, queues del_work and then drops the reference. If del_work
-gets to run to completion before that put, ours is the last reference.
-Freeing the assoc tears down the queues, the last nvmet_cq_put() drops
-the last ctrl reference, and nvmet_ctrl_free() goes for subsys->lock
-again:
+Correct both the enable and halt register offsets so the driver can
+enable the branch and check its status.
 
-  WARNING: possible recursive locking detected
-  ...
-   nvmet_ctrl_free+0xa6/0x8e0 drivers/nvme/target/core.c:1766
-   nvmet_cq_put+0x158/0x200 drivers/nvme/target/core.c:848
-   nvmet_fc_target_assoc_free+0x418/0x2220 drivers/nvme/target/fc.c:1173
-   nvmet_fc_delete_ctrl+0x717/0x7e0 drivers/nvme/target/fc.c:1581
-   nvmet_port_del_ctrls+0xfb/0x150 drivers/nvme/target/core.c:311
-   nvmet_port_subsys_drop_link+0x1e8/0x310 drivers/nvme/target/configfs.c:1119
-
-It's a real hang, not only a lockdep warning. I reproduced it with
-fcloop by putting an msleep() before the put: rm on the configfs link
-gets stuck in D state for good.
-
-I don't think we need that reference at all. del_work does
-list_del_rcu() and synchronize_rcu() before it drops the initial
-reference, so an assoc we find on assoc_list can't go away before
-rcu_read_unlock(). nvmet_fc_schedule_delete_assoc() doesn't sleep, so
-just call it inside the RCU section and get rid of the get/put. If the
-assoc is already being deleted, terminating is set and the call is a
-no-op, which matches what happened before when the get failed.
-
-With the same msleep() in place the patched kernel unlinks cleanly and
-the assoc is freed from the workqueue.
-
-Fixes: 4049dc96b8de ("nvmet-fc: defer cleanup using RCU properly")
-Reported-by: syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=da94a51633758d13bd63
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: LLM
+Fixes: c252659770db ("clk: qcom: Add MSM8996 Multimedia Clock Controller (MMCC) driver")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-msm8996-fix-fd-ahb-offset-v1-1-a575e1b9112c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/mmcc-msm8996.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 9b46e16641ed4..2b7dc3f03912d 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1567,8 +1567,14 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
- 		list_for_each_entry_rcu(assoc, &tgtport->assoc_list, a_list) {
- 			queue = assoc->queues[0];
- 			if (queue && queue->nvme_sq.ctrl == ctrl) {
--				if (nvmet_fc_tgt_a_get(assoc))
--					found_ctrl = true;
-+				/*
-+				 * No assoc reference here: we're called with
-+				 * subsys->lock held, and if del_work beat us,
-+				 * our put would free the ctrl under that lock.
-+				 * RCU keeps the assoc alive until unlock.
-+				 */
-+				nvmet_fc_schedule_delete_assoc(assoc);
-+				found_ctrl = true;
- 				break;
- 			}
- 		}
-@@ -1576,11 +1582,8 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
+diff --git a/drivers/clk/qcom/mmcc-msm8996.c b/drivers/clk/qcom/mmcc-msm8996.c
+index 3426e3dde9247..ef7bde361fc38 100644
+--- a/drivers/clk/qcom/mmcc-msm8996.c
++++ b/drivers/clk/qcom/mmcc-msm8996.c
+@@ -3133,9 +3133,9 @@ static struct clk_branch fd_core_uar_clk = {
+ };
  
- 		nvmet_fc_tgtport_put(tgtport);
- 
--		if (found_ctrl) {
--			nvmet_fc_schedule_delete_assoc(assoc);
--			nvmet_fc_tgt_a_put(assoc);
-+		if (found_ctrl)
- 			return;
--		}
- 
- 		spin_lock_irqsave(&nvmet_fc_tgtlock, flags);
- 	}
+ static struct clk_branch fd_ahb_clk = {
+-	.halt_reg = 0x3ba74,
++	.halt_reg = 0x3b74,
+ 	.clkr = {
+-		.enable_reg = 0x3ba74,
++		.enable_reg = 0x3b74,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "fd_ahb_clk",
 -- 
 2.53.0
 
