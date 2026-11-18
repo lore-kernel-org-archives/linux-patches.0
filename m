@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058395;
-	b=gxn2y5bGSxz29QijyUi7Bm6EV/Z/wmMembLetc3Rcc41WeV7DR0in74+fxL2I/FKj4X5
-	 D7zKjo/J1fahxnuMyTE5M2sfvUZIJTf2pYsfvVKD1K1offuI3uVOmEaGIn7ujy5TThwcY
-	 Lno+X/l0C1fne2UpsSc19yvW55i/xl2zWPizfwrSpKt0VXoFBasTNrsyj08t0qMj4N1dX
-	 IkRA3jIRIYJpeGyTKkJq0khwPpiV6lSfjwm9q+Ylv+nDL3TLq14s9gzQCkIS/bHxNFWfS
-	 xQ5MnQxxDnxHZrVA44zF2YVTmC3+FTiMZ9GIEwFWSVZeo5d73AR8gjHEETmAN2cM7oA==
+	t=1795058398;
+	b=ACsj/dTLy74C012OpVAg9LqOUlFYhK8CE2zUuSK2UV9D7aWFxpYXiQbfXZZVUPaTAQfp
+	 GRk+7/+ip21FfpWyOAZDSt2DInZyjX2vGdFjouiIKPTo2TjkyIDvI8MpEWFnIOaygm82l
+	 e0CMdsl65SMSd6ge6iiR9fMLHirYOYgsqQXGoAztNhKsm4v75al2VF0JxA5BDFmd8z3Gl
+	 uN6njlazs34KnNPIrMk4xGcalOBeH5V3cp4CKLjMpkJyJX2sYarS3hDx61dT6B5df47op
+	 hSzWRdKKyWk/sMO195C7PszOBBDIa5UqvfNBNQq6lwmWpeyWbQ2bkL8AOq7kKrTzIUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2iuuKHMveoFnJI0VBFHbxVTOTvHzKf9Gv14vBK5WQv0=;
-	b=R2/m7dxbcK1pfE0Iqrnt6QNXio7jayygRCtmW7MCrPrgG4W3D277oFF5Z5zIYNpIEozZ
-	 t78I/YMLxiJqkQ3K1yjEYpISAS4pb0g/6X9KWEvqO+A+gAwey2TfpxsELUnlPqJ9gEi1o
-	 Z048ygak9A6tm0Aq5GkVncYwXkr4M4rFBbRpWLjGftGKs/P5WGzv7AnfGGqicE6XNtRbH
-	 1sB6c+6WiBagt9dDzwaDgYyyUsUhSjELKOD14w/pcmwyVekqAjbu8I/xMPMAv5Z6T9PVp
-	 lQYT+pv4F6oK/NIPv0UQAF3AUaHipkOKVV5/oovSyRDcc88PUR6IfeAW1UadWpUReIg==
+	bh=0eUps4pE6+b6fUshbT7iuBAObiMzRDc//8lJ+Xzd99Q=;
+	b=RWS0nDdYTHERer+C0JmIY/5Sf+rRB5Tx6HlKFFR4yxYEGJ4+sgtpQaecIPNVah7YAXVX
+	 xypst0HXviUbW2JBu6/unvgJBrEvDjqRZL5c9cYQ5NMl+OpQ+a4uXposLW4J52h+o0D3F
+	 fhwAEKpQjR85uw3j1J4dxwc0ZFXDjQ3ejLFG+qx/KSeIqSYaixpNcjIDbjwotUOtpQbJc
+	 alk+rUy4jo+5/5zynbQi0eFBGlvy6HsAJsxadhKs+VN8UX7Y0R90lE+tAl7TeSmspbmaL
+	 FaEH7wGMU0iX5KY2omjSkqFdJuoOcJ1QuFtI4D4JamvjqADsPwY+97sfQ4um1N/rjpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPRz4M2R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0DVVlo1B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C64606A326;
-	Thu, 19 Nov 2026 03:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBC0606A325;
+	Thu, 19 Nov 2026 03:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPRz4M2R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095311F000C6;
-	Thu, 19 Nov 2026 03:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0DVVlo1B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0AA1F000C4;
+	Thu, 19 Nov 2026 03:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058395;
-	bh=2iuuKHMveoFnJI0VBFHbxVTOTvHzKf9Gv14vBK5WQv0=;
+	s=korg; t=1795058398;
+	bh=0eUps4pE6+b6fUshbT7iuBAObiMzRDc//8lJ+Xzd99Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPRz4M2RPy64PVLt2SPXG/OMILUOId6TM7w/5CCFrwG7RHVCKyGmryteuJce7Dtuq
-	 bp97bvttOFRT75Px3ZX5w1d/pfR5FbwvQGdq3iipKnivaD5TC7WCYHdCT/aZ4VnkxZ
-	 Jeft6OuwFPDs2Caff35ONPvTGGOQvu5ffvavg2z4=
+	b=0DVVlo1BkR0cwAzJaKz0Cub7Ikz3CkECx/O/bqA5WD3e0DsujsE6Sshmxjk41s6s4
+	 YEwA23FBA635VZ9ANHljz/ZhPi8dtrWpVTzugHmNbU1UwmgJBdNG+dMPFquKj9QV5A
+	 sWfWz4HQSwN2WKeaNQ3w5rIBCvnRTiQSFkvbA7w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0443/1848] MIPS: mm: do not write a huge TLB entry when the probe misses
-Date: Wed, 18 Nov 2026 15:41:21 +0100
-Message-ID: <20261118145932.816896312@linuxfoundation.org>
+Subject: [PATCH 5.10 0470/1848] svcrdma: Grant credits from the clamped sc_max_requests
+Date: Wed, 18 Nov 2026 15:41:48 +0100
+Message-ID: <20261118145934.012871955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,88 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 0cb17268887e1df5c425ea052f5146b42d126323 ]
+[ Upstream commit b7037e5da3fb81abcd6309daecb112f1d5926760 ]
 
-__update_tlb() probes for the 8K pair at the address it is given and,
-for a huge pmd, writes the huge entry with tlbwi at the probed index or
-with tlbwr when the probe misses. That works only if the caller passes
-the faulting address, so that the probe finds the 4K entry the refill
-handler loaded for the faulting page and the huge entry replaces it.
+svc_rdma_accept() computes sc_fc_credits from sc_max_requests before
+the Receive Queue depth is checked against the device's max_qp_wr.
+When that check lowers sc_max_requests, the credit grant keeps the
+original value, so the server advertises more credits than it has
+Receives posted. A client that uses the full grant overruns the
+Receive Queue, and the connection is lost with an RNR error.
 
-update_mmu_cache_pmd() is not called that way. do_set_pmd() has always
-passed the huge-aligned address, and since commit ebcfc63d6bca ("mm:
-abstract THP allocation") the anonymous THP fault path does too
-(map_anon_folio_pmd()). The probe then misses the stale 4K entry, which
-sits at the faulting page somewhere else in the 2 MB range, tlbwr adds
-a huge entry next to it, and the TLB holds two entries matching the
-faulting address. Octeon raises "Machine Check exception - caused by
-multiple matching entries in the TLB" on the next refill of that page;
-a process on a CN63XX board died this way within a second of start, on
-the first anonymous THP of its bss.
+Set sc_fc_credits after the clamp so the grant matches the number
+of Receives the server posts.
 
-Skip the write when the probe misses. The refill and TLBL/TLBS handlers
-probe the faulting address themselves and rewrite the stale entry with
-the huge one (they also set the software young bit), so the entry is
-installed on the next access at the cost of one exception.
-
-Fixes: fd062c847a8c ("MIPS: TLB support for hugetlbfs.")
+Fixes: fc2e69db82c1 ("svcrdma: Clean up comment in svc_rdma_accept()")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://patch.msgid.link/20260828135036.796842-2-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index 2e4b4668afd89..7273e997dd209 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -332,6 +332,19 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
- 	/* this could be a huge page  */
- 	if (pmd_huge(*pmdp)) {
- 		unsigned long lo;
-+
-+		/*
-+		 * The probe above only covers the 8K pair at @address, and
-+		 * a huge mapping is installed with the huge-aligned address
-+		 * while the refill that started the fault left a 4K entry
-+		 * for the faulting page elsewhere in the range. Writing the
-+		 * huge entry to a random index would leave two entries
-+		 * matching the faulting address; leave it to the refill and
-+		 * TLBL/TLBS handlers, which probe the faulting address.
-+		 */
-+		if (idx < 0)
-+			goto out;
-+
- 		write_c0_pagemask(PM_HUGE_MASK);
- 		ptep = (pte_t *)pmdp;
- 		lo = pte_to_entrylo(pte_val(*ptep));
-@@ -339,10 +352,7 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
- 		write_c0_entrylo1(lo + (HPAGE_SIZE >> 7));
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index 1041ea72b3613..1c8d392c35f8f 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -397,7 +397,6 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 	newxprt->sc_max_requests = svcrdma_max_requests;
+ 	newxprt->sc_max_bc_requests = svcrdma_max_bc_requests;
+ 	newxprt->sc_recv_batch = RPCRDMA_MAX_RECV_BATCH;
+-	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
  
- 		mtc0_tlbw_hazard();
--		if (idx < 0)
--			tlb_write_random();
--		else
--			tlb_write_indexed();
-+		tlb_write_indexed();
- 		tlbw_use_hazard();
- 		write_c0_pagemask(PM_DEFAULT_MASK);
- 	} else
-@@ -375,6 +385,9 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
- 			tlb_write_indexed();
+ 	/* Qualify the transport's resource defaults with the
+ 	 * capabilities of this particular device.
+@@ -418,6 +417,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 		newxprt->sc_max_bc_requests = 2;
  	}
- 	tlbw_use_hazard();
-+#ifdef CONFIG_MIPS_HUGE_TLB_SUPPORT
-+out:
-+#endif
- 	htw_start();
- 	flush_micro_tlb_vm(vma);
- 	local_irq_restore(flags);
+ 
++	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
++
+ 	/* Estimate the needed number of rdma_rw contexts. The maximum
+ 	 * Read and Write chunks have one segment each. Each request
+ 	 * can involve one Read chunk and either a Write chunk or Reply
 -- 
 2.53.0
 
