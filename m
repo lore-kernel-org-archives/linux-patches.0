@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048840;
-	b=gYoS5+fFXlhCP9qSLx7JAVl8Gv2D8Vkf3UPSzvYkffIkEY84l+dqqhFSZS8qcJp0qqOg
-	 tIX+Wx7ETRusC/gvOjEilJz6WYUC/duUXGaHkAtUS/+EwF3/ez4IWHOHlOFIqrkAbu3dy
-	 pM3PwSTcnagUKPogioemHd24TshXNCoQF8Z/hwjFnfBJFc5k9MHLpn9YgKzGgmhapFS7y
-	 vP7wLI+qVf+gLIriwL94YrirGPCynR98vJBngtj8x0M5fOC6kp7iyyrZnxm9DKBtqCvQg
-	 sk8q+hhCiXKiStkdKJ+KHVe+Sci7yguW2iU2z0usFOVQuQ4Fyk5kCO0gSfTaq8almpw==
+	t=1795048843;
+	b=rmC7WTKTQiuAnS5m7bQcMQUJ0pV3coVlO/FqzJBHvon8Dk3nH7qTfkUZLEVVXhgtyI2o
+	 RS6TzQUxoX57t0U8Ho53uGn+c0/FN4RdkFC0ZnAKj4TchNMO9ijrqD64ZSyDMOCMGLmSG
+	 7/JnHho/4UWWmkCFKOQ3rqm0KWvIhkIcM57Jmi5I4gNIBQ5HjErGPLw3nXg76zWIQvZag
+	 wgtm+SV2cbHsbCUojVAjxZ8d9vg6brIf8o6MPoBSjTwHgmOlVsawIgOQOwYA0yN5MQOL4
+	 B94uC6YD0fzrQT0uf0pWjaDRd+diKZ4yIeKR/El8CpTzXxLSjSCovEiRvaXGUQIgmqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SSrpZBapF5GVu3q9hi8AlRovsFTcgk/8GMVSeTJrsEc=;
-	b=xP1DD5WHB2WGl0p5lY+znYu424FTuj9bw2HzcMipmI1OPEy6ZtR6zvN72MQZxqWX/yr9
-	 tzg5San7ecZNb2XDsb1HndBc7uMPgd6gkNYutAHFtiKQPxtj4LFPpI25u68S/+n5kpD39
-	 yLlgHAARBJKedSVCYlL2mfB440gbykdwjNpA/y4F56x56dcJwWlXrFJ13xrICal1vF1u8
-	 n7jRFceEtPnRUYAiDsBtduhZ99wCb7fOgO6DQUauB/kSaBVilf2Sv+Y8eXu4NnxFQLLRo
-	 zydsd6crebNwq+1qNRuAG02/bEEesbNIsE5c5rUdmA2EhhBfrwrMCF3vUpNXCS9OfMQ==
+	bh=syjrjdR7FPM8VskTh6jAUKysfvrhlS3Xb8rTFL1moxk=;
+	b=r8Cz16gUiWdRJg+/l1XflalGU9SJk6aqnUsAl6HMQSMsxnPhCjfb6FmomE9n9xHyicS8
+	 DkGJPUOQM9GD24CaH6DhWJIgUwnB4ahD4pPtHQiTq9+gY2nq1DQCuw/sT4GsDNxo517OK
+	 TQgLVJMkbbGhPcqqqw6A2fHAoKqq0lHbTgOOFz32go9uba3lAdrk/j1NA2M69KE1ynTXr
+	 KZpyoxF0mFt4XTFhecU68R6ZIsPwTIAu50lwnAVEoCdCszl7UwgMtLaIqhvAnHa9Af/bZ
+	 W/VqUj9fTQh4HCX9dhKDkhOLdAHtiS2+LBJg6Zmda97M/KalDSiGJZtF035zSrEMS5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZ70MNrH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAJ30Ron;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB803606A333;
-	Thu, 19 Nov 2026 00:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0DA606A32F;
+	Thu, 19 Nov 2026 00:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZ70MNrH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF10D1F000C6;
-	Thu, 19 Nov 2026 00:40:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAJ30Ron
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C3A1F000C6;
+	Thu, 19 Nov 2026 00:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048840;
-	bh=SSrpZBapF5GVu3q9hi8AlRovsFTcgk/8GMVSeTJrsEc=;
+	s=korg; t=1795048843;
+	bh=syjrjdR7FPM8VskTh6jAUKysfvrhlS3Xb8rTFL1moxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZ70MNrH77qHh+JjcRnRDleLYs1LaXyAekFbRQ4tyoyTXQVoQeFBrXOnmrAgWop7d
-	 TblzL0jGP6VNUCfAS3LPC8g+10Ug2bzm3CqbCSOlUac53ZDWtYbJyowFH8SZytT2/S
-	 QMkLm/4nWntJoBhgz1UmPX4W5k6Sw/Ve/vxPd4Ps=
+	b=zAJ30RonUyV08irR+84W/J3DZEkQqkXZEPBN/Wmkj8g2hoUuoF+bku0p/ICYXAvJ8
+	 0LV3EQGN0FvCNnb8fBDIeer9Vg9W7V981yYoabFkJV1I4scNFqYaTSqAM1ZTaRPLQX
+	 +SiespFbD60ObMqcBME0POUf2KN4noRySLjMzQmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Quanye Yang <quanyeyang@proton.me>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2138/2857] selftests/timers: clocksource-switch: Fix unchecked open()/read()
-Date: Wed, 18 Nov 2026 15:52:52 +0100
-Message-ID: <20261118150318.385818483@linuxfoundation.org>
+Subject: [PATCH 6.1 2139/2857] RDMA/rtrs-clt: Validate peer-supplied IO completion msg_id
+Date: Wed, 18 Nov 2026 15:52:53 +0100
+Message-ID: <20261118150318.419270954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,88 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 348f54c435bf3177baa78201952810b255d44b30 ]
+[ Upstream commit c1fcde82f7b68181553af7efb4410df04109a9a8 ]
 
-get_clocksources() and get_cur_clocksource() open and read the
-clocksource sysfs files without checking the return values and without
-NUL-terminating the buffer.
+process_io_rsp() indexes clt_path->reqs[] with the 19-bit msg_id
+taken from a WRITE_WITH_IMM immediate. That value is chosen by the
+peer. The only check was WARN_ON(msg_id >= queue_depth), which still
+lets a completion run after free_path_reqs() has set reqs to NULL,
+or against a slot whose FRWR is already gone. Either path
+dereferences req->mr and can GPF; KASAN reports a null-ptr-deref at
+offsetof(struct rtrs_clt_io_req, mr).
 
-If open() fails, read() is called on fd -1 and returns -1, which is
-stored in a size_t as SIZE_MAX.  The token-scanning loop in
-get_clocksources() then walks past the uninitialized stack buffer,
-reading and writing out of bounds.  Even on success the buffer is not
-NUL-terminated, so a fully read buffer makes the inner scan run past the
-data, and get_cur_clocksource() lets change_clocksource() call strlen()
-on a non-terminated buffer.
+Treat a missing reqs array, an out-of-range msg_id, or a req
+without an MR as a protocol error and recover the connection.
 
-Check the open()/read() results, use ssize_t for the read length,
-NUL-terminate the buffer, and close the fd in get_cur_clocksource().
-
-Fixes: 7290ce1423c3 ("selftests/timers: Add clocksource-switch test from timetest suite")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260825064605.472889-1-fffsqian@163.com
+Link: https://patch.msgid.link/r/20260923-rtrs-warning-inrtrs-clt-rdma-done-v1-1-0827a9a77c0b@proton.me
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/r/CA+0ovCiJZz6O8LzsS9Dq1-JE1OE1L_OTA6Mr-WratpUE6jczHw@mail.gmail.com
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/timers/clocksource-switch.c     | 23 ++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
-index 83faa4e354e38..4e7f81ffe0a35 100644
---- a/tools/testing/selftests/timers/clocksource-switch.c
-+++ b/tools/testing/selftests/timers/clocksource-switch.c
-@@ -40,16 +40,23 @@
- int get_clocksources(char list[][30])
- {
- 	int fd, i;
--	size_t size;
-+	ssize_t size;
- 	char buf[512];
- 	char *head, *tmp;
- 
- 	fd = open("/sys/devices/system/clocksource/clocksource0/available_clocksource", O_RDONLY);
-+	if (fd < 0)
-+		return 0;
- 
--	size = read(fd, buf, 512);
-+	size = read(fd, buf, sizeof(buf) - 1);
- 
- 	close(fd);
- 
-+	if (size <= 0)
-+		return 0;
-+
-+	buf[size] = '\0';
-+
- 	for (i = 0; i < 10; i++)
- 		list[i][0] = '\0';
- 
-@@ -74,11 +81,21 @@ int get_clocksources(char list[][30])
- 
- int get_cur_clocksource(char *buf, size_t size)
- {
-+	ssize_t len;
- 	int fd;
- 
- 	fd = open("/sys/devices/system/clocksource/clocksource0/current_clocksource", O_RDONLY);
-+	if (fd < 0)
-+		return -1;
-+
-+	len = read(fd, buf, size - 1);
-+
-+	close(fd);
-+
-+	if (len <= 0)
-+		return -1;
- 
--	size = read(fd, buf, size);
-+	buf[len] = '\0';
- 
- 	return 0;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 83bb8f2872453..7e592e3c04c6c 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -489,18 +489,22 @@ static int rtrs_post_send_rdma(struct rtrs_clt_con *con,
+ 					    imm, flags, wr, NULL);
  }
+ 
+-static void process_io_rsp(struct rtrs_clt_path *clt_path, u32 msg_id,
++static bool process_io_rsp(struct rtrs_clt_path *clt_path, u32 msg_id,
+ 			   s16 errno, bool w_inval)
+ {
+ 	struct rtrs_clt_io_req *req;
+ 
+-	if (WARN_ON(msg_id >= clt_path->queue_depth))
+-		return;
++	if (!clt_path->reqs || msg_id >= clt_path->queue_depth)
++		return false;
+ 
+ 	req = &clt_path->reqs[msg_id];
++	if (!req->mr)
++		return false;
++
+ 	/* Drop need_inv if server responded with send with invalidation */
+ 	req->need_inv &= !w_inval;
+ 	complete_rdma_req(req, errno, true, false);
++	return true;
+ }
+ 
+ static void rtrs_clt_recv_done(struct rtrs_clt_con *con, struct ib_wc *wc)
+@@ -562,7 +566,8 @@ static void rtrs_clt_rkey_rsp_done(struct rtrs_clt_con *con, struct ib_wc *wc)
+ 		if (WARN_ON(buf_id != msg_id))
+ 			goto out;
+ 		clt_path->rbufs[buf_id].rkey = le32_to_cpu(msg->rkey);
+-		process_io_rsp(clt_path, msg_id, err, w_inval);
++		if (!process_io_rsp(clt_path, msg_id, err, w_inval))
++			goto out;
+ 	}
+ 	ib_dma_sync_single_for_device(clt_path->s.dev->ib_dev, iu->dma_addr,
+ 				      iu->size, DMA_FROM_DEVICE);
+@@ -634,7 +639,13 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			w_inval = (imm_type == RTRS_IO_RSP_W_INV_IMM);
+ 			rtrs_from_io_rsp_imm(imm_payload, &msg_id, &err);
+ 
+-			process_io_rsp(clt_path, msg_id, err, w_inval);
++			if (!process_io_rsp(clt_path, msg_id, err, w_inval)) {
++				rtrs_err(clt_path->clt,
++					 "Invalid IO rsp: msg_id %u queue_depth %zu\n",
++					 msg_id, clt_path->queue_depth);
++				rtrs_rdma_error_recovery(con);
++				return;
++			}
+ 		} else if (imm_type == RTRS_HB_MSG_IMM) {
+ 			WARN_ON(con->c.cid);
+ 			rtrs_send_hb_ack(&clt_path->s);
 -- 
 2.53.0
 
