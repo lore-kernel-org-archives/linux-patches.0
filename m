@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028541;
-	b=MRSjEfyFLtt3E0HAjB04BI/gMnL3aapzzos0ntvAfZi5PdAV634WgZV+t0awuh3THxuQ
-	 JgjXmJbagx12ZBeOVrlyFrSF2sXqRoevctNVZf+EhgIw5XW4wKNhDJkajO1I193Z8J5n1
-	 CazOnCtQRPR8dLtv6VK0WU0jY3ySB1VRPC/VwpqkWJSGbYEslZbmPJ4/J1q/AR+9sfnSX
-	 joNLURLsyvnhySJLXSCw5x94GfkiV4fJLBbJIbw1Xpd4E/QOLZnfKA2VSav+hpoQX1BM3
-	 ufj4sT5bH2aGhgTm7VXoDhPGv6pNYSUI3qUrVlubJrgcTfYt5JfdOcUJr742jkQiE7A==
+	t=1795028544;
+	b=rXgtZsC6TJaGgZSQpkMklxvI7UFL5SJaVUXwHus6SPPSyoqEEZiUOyuAjbhpX/2owtLp
+	 798oz3DyZHMhMRqswHSUH1yG/+VAw+5XiR4Sk/+dGudvLJEx7uHtJciM1qXwcaaljvZhM
+	 57iU1vjuhRD/oL9ahkE1xFalwusU68p7hVQaVAxJJ0ezLAiDfPmrIRKy9oMLwYPL169+t
+	 /YBUm0lQOEryR+6L6HRpweU9FRY0gdh48kdan9B5Sm0f4RewVWzl3ceZEaoz1rH2gDFrY
+	 sHSyXuVvHwPVJ+RyvJBNt4vVCD/CQ8foc/2cFPVtasYySDFUugOVPkpZ/zGKawyDgIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=USwK2v6sYuvKKBzE/eWG31USYjKd1RG1Y1HCb8jg9eg=;
-	b=KGpeamtkBug+C57gZQK9J1ky0T8CUaDr08CguaVjD2dELZTFc03/qH9RqMyzYMLOPmUe
-	 Ci1xRK4UfYBqidcUYDuUP1f3ljSoUrsaiR1wdFzxJoZuS7qP8SDpfxvy5cjxAeGPX28u4
-	 LlsEYaxfBpwUZMLDGaZ/Qj17hzZ1slMQrzaNS7zT9wqgiCszmGcIqxlKbAuzCz+lV+Z7k
-	 D7PO2WCAh4tOCN6Hw7z1A1eYmU7NMR/BO9OTsmDXz4BPXrA78yfE0RMgqxY/JruKyQwu2
-	 aDeVj1mGCJpQp/tTuYksgvNkwdkOxBw0QZu35ZoqFNGUunDnUq/mxnMc50YA091T4FA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=WNcD4kKMu/+ZVwgNEBH/RXCgjtFXY12ycCL8qL5dKtM=;
+	b=M2llomf+zfKsbIS50pk3UxKlzJh/SaLbg0/cqvjJDEL7tvAZFLFKSbQdpQ0r2PUctkOU
+	 FZfOf+0IxFXOhXXhIgyr4Yp6ROSAXrfTIqtuF+E0ejPRRMe2q+QVXgzM0p5JyVuC0JYVs
+	 JH9FvBtlUbILZR7wjgubGNC1sKerz+Q9eLpz/dRLflCMn/ocAjjO2PAYAXogRnG+8YU25
+	 YNyaW7kZSV3Z4IEjdvnrba4FBVvN24u9QnBHR+O2n/yP+ZVwZxhbZUgpYU15N6o4974kp
+	 x3fR84zpbu+oXwhdJ4TQqVqKDdaxnIY3LoQcVZOuZ8kNFhExLh1LWrt5TPw5VuveXmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZqZbzLf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d59bM+Ww;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECF6606A320;
-	Wed, 18 Nov 2026 19:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C22606A31C;
+	Wed, 18 Nov 2026 19:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZqZbzLf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB02F1F000C4;
-	Wed, 18 Nov 2026 19:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d59bM+Ww
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF011F000C4;
+	Wed, 18 Nov 2026 19:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028541;
-	bh=USwK2v6sYuvKKBzE/eWG31USYjKd1RG1Y1HCb8jg9eg=;
+	s=korg; t=1795028544;
+	bh=WNcD4kKMu/+ZVwgNEBH/RXCgjtFXY12ycCL8qL5dKtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZqZbzLfXvkRB8hRTNGBPeTH/z2yQX4sFWWWIGGP2U4xFL46ZyYzoKbFqE6fZXXxQ
-	 LWDdp7iFBsiM8/5mTgoOGGjBmHf9ycTbpbSCL1Pk9N26+iEjWpG27bWuz/TQ5Cj545
-	 fjHPIvAOSCeTJOQS6G8S43xZfPW2jHxir01PeD0E=
+	b=d59bM+WwbajJ+vmTodfyURj8HWr45TIto892dj9cDaMeEp+SkRaCdq5zt4N4uWeN+
+	 yH4dQ/MLZ+4w+mgAebjdiXhWvPEsazsjEI4jaOIxR/n3YdLzCUaycmweNfvUxbSQzi
+	 6lSOR2Yoj+HDpGJnGg5I7FqlTF8OiVOj4WaVZ2pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0033/1756] drm/amdgpu: drop the gang leader reference when freeing gang jobs
-Date: Wed, 18 Nov 2026 15:36:00 +0100
-Message-ID: <20261118150009.179615023@linuxfoundation.org>
+Subject: [PATCH 6.12 0034/1756] apparmor: fix profile leak when a policy load fails
+Date: Wed, 18 Nov 2026 15:36:01 +0100
+Message-ID: <20261118150009.215376629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,99 +62,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Georgia Garcia <georgia.garcia@canonical.com>
 
-[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
+[ Upstream commit ce94927fa4173fcc1eca27bdc65a140064c8f1e6 ]
 
-Every job of a gang except the leader holds a reference to the
-scheduled fence of the leader in job->gang_submit. Only
-amdgpu_job_free(), used for jobs which never ran, drops it, so for every
-gang submission which completes the scheduler fence of the leader, and
-with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
-for the leader only after drm_sched_job_cleanup() cleared the scheduler
-fence, so a leader freed there drops a reference it never took.
+The error paths of aa_replace_profiles() and aa_unpack() do not break
+the refcount cycle between label and proxy. They just aa_put_profile()
+the new profiles, which drops the label refcount from 2 to 1, and the
+proxy keeps the profile alive. Every failed atomic policy load
+(e.g. "profile can not be replaced", or a later profile in the blob
+failing to unpack) leaks every new profile in the set, along with its
+proxy, rules and its loaddata reference.
 
-On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
-drm_sched_fence is merged into by 60 to 180 objects each time, while
-100 GFX only submissions don't.
+The leak is usually not visible from userspace, because the raw_data
+directory for a failed load is not created, but it becomes visible
+when the blob is deduplicated onto an existing loaddata, which then
+keeps its policy/raw_data/<rev> directory forever.
 
-Use amdgpu_job_free() for the jobs the scheduler frees too, and check
-for the gang leader there before drm_sched_job_cleanup() clears the
-scheduler fence. As the scheduler clears the entity of the jobs it
-picked up, check for the scheduler fence instead to tell whether the job
-needs cleaning up.
+Add aa_put_unpublished_profile(), which drops the profile's own proxy
+before putting the profile, and use it on those error paths. The
+proxy of an unpacked profile is always freshly allocated and not
+referenced by anything else before the profile is published, so
+putting it is safe.
 
-Keep freeing the remaining IBs with amdgpu_job_free_resources() after
-drm_sched_job_cleanup(), so that it frees them with the hardware fence or
-right away and not with the scheduler fence, which nobody signals for
-jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
-
-v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
-    free the remaining IBs with the scheduler fence
-v3: drop the comments (Christian)
-v4: free the IBs with amdgpu_job_free_resources() again (Christian)
-
-Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
-Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
+Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
 Cc: stable@vger.kernel.org
-[ sashal: adjusted cleanup context for an embedded hw_fence instead of separately allocated hardware and VM fences ]
+Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+[ sashal: Adjusted helper insertion context to retain the existing non-const AUDIT_MODE() parameter. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ security/apparmor/include/policy.h | 20 ++++++++++++++++++++
+ security/apparmor/policy.c         |  3 +++
+ security/apparmor/policy_unpack.c  |  4 +++-
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-index 0abc38bb242ca..348a38ee36bb4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -274,17 +274,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
- 
- static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
- {
--	struct amdgpu_job *job = to_amdgpu_job(s_job);
--
--	drm_sched_job_cleanup(s_job);
--
--	amdgpu_sync_free(&job->explicit_sync);
--
--	/* only put the hw fence if has embedded fence */
--	if (!job->hw_fence.base.ops)
--		kfree(job);
--	else
--		dma_fence_put(&job->hw_fence.base);
-+	amdgpu_job_free(to_amdgpu_job(s_job));
+diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
+index e85824c90f430..47199bead884b 100644
+--- a/security/apparmor/include/policy.h
++++ b/security/apparmor/include/policy.h
+@@ -382,6 +382,26 @@ static inline void aa_put_profile(struct aa_profile *p)
+ 		kref_put(&p->label.count.count, aa_label_kref);
  }
  
- void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
-@@ -305,13 +295,14 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
- 
- void amdgpu_job_free(struct amdgpu_job *job)
- {
--	if (job->base.entity)
-+	if (job->gang_submit != &job->base.s_fence->scheduled)
-+		dma_fence_put(job->gang_submit);
++/**
++ * aa_put_unpublished_profile - put a profile that was never made visible
++ * @p: profile  (MAYBE NULL)
++ *
++ * A newly allocated profile and its proxy reference each other
++ * (proxy->label holds a label refcount). That cycle is normally broken
++ * when the profile is replaced or removed, which redirects the proxy.
++ * A profile that is discarded before being added to the policy tree
++ * never goes through either path, so break the cycle here, otherwise
++ * the profile, its proxy and its rawdata are leaked.
++ */
++static inline void aa_put_unpublished_profile(struct aa_profile *p)
++{
++	if (p && p->label.proxy) {
++		aa_put_proxy(p->label.proxy);
++		p->label.proxy = NULL;
++	}
++	aa_put_profile(p);
++}
 +
-+	if (job->base.s_fence)
- 		drm_sched_job_cleanup(&job->base);
+ static inline int AUDIT_MODE(struct aa_profile *profile)
+ {
+ 	if (aa_g_audit != AUDIT_NORMAL)
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index c9ffb1eec7a7c..62345fad007c3 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1403,6 +1403,9 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	}
+ 	list_for_each_entry_safe(ent, tmp, &lh, list) {
+ 		list_del_init(&ent->list);
++		/* new was never added to the policy tree */
++		aa_put_unpublished_profile(ent->new);
++		ent->new = NULL;
+ 		aa_load_ent_free(ent);
+ 	}
  
- 	amdgpu_job_free_resources(job);
- 	amdgpu_sync_free(&job->explicit_sync);
--	if (job->gang_submit != &job->base.s_fence->scheduled)
--		dma_fence_put(job->gang_submit);
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 61d7ef232f320..0928c064ee9f9 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -1512,11 +1512,13 @@ int aa_unpack(struct aa_loaddata *udata, struct list_head *lh,
  
- 	if (!job->hw_fence.base.ops)
- 		kfree(job);
+ fail_profile:
+ 	kfree(ns_name);
+-	aa_put_profile(profile);
++	aa_put_unpublished_profile(profile);
+ 
+ fail:
+ 	list_for_each_entry_safe(ent, tmp, lh, list) {
+ 		list_del_init(&ent->list);
++		aa_put_unpublished_profile(ent->new);
++		ent->new = NULL;
+ 		aa_load_ent_free(ent);
+ 	}
+ 
 -- 
 2.53.0
 
