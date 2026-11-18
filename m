@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056038;
-	b=QPJQ/mV3ES+VXhhHwTPJGn3q7K57qKd6rUJQh7hoJ0s0G3lLKvNoV/oBcrhSkKMzxcTm
-	 pcgbMP9SElE90Mlq5QDkoz1C5EaZ3wZ8VPsRYpVVCzyWiELCxo5HKfQIPWSZWItZbTlJB
-	 KBn+cH3JUQicXAIOY5FlRj26q78wxe1ec4n4abxqTJiTS7h9MKEBn1jxH/DPEYvieaxXH
-	 Z2nZWUIbiUrAAfy7mwuWGU0GBsRsUsqkcj99zdqmxFPyPVk46IPRXYkjxd83mR18AQxkW
-	 IlX9nmtVGGyERsOSeS00D/uNOCHpWCA1uu7d96MYVdgJbuLfjteRLAzGCTUgOLSkRkA==
+	t=1795056040;
+	b=yuWGWVA3CIzTPcx9iJLuh+9/5sQt6uQpNgCpN0JvPZXDotTKvEmDMn0EK28xhuB6SGS2
+	 nCsE4VnAqTJCEwAgxAs28D0SS14ginN6J0/jTdIeFCzhULAHunjsZry3vM67ZOLRohxzr
+	 RO7kHuomvUJN9aDoupGYk4uBZvVnkP+HraND2igqthuYed74FTHTcIN4hdktRe8zPdqV5
+	 xpA+V4HGZCh2At4aYRchFP5Qd8L0U1ecWRdkiS7mWjGS0rL7n1INfTqvmnawkGlMvesMd
+	 b/VzUYOgWju4gfelPIzwI9mq6nzKSou4W5r/XRLc2V1aicI62nc7XAS8r1gxQb9KI6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056038;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056040;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=41XxRNsYHMXOr1/rTSb4+g3PhQ/3ezWSJAoFpTc5vyo=;
-	b=eebsjoAt8Jyyi0ce6qQlHxLIPoHES8iCTAu8UtA5zYZsnIMHHCr78zs+30K5u5fCcri5
-	 oZ8FfI7c5eEmnNzemfLOqEqxrNqoDxkhMZeUK7pttIeWxSbIbi0Afb+7Y7BIoG5rYQW9i
-	 um+4D0VFa8gO3PJSZVhVL5XEYbMVv69gaBOkQHjLyQUfiB6Tv4ImBLzreimLUPYO8E9G8
-	 7mNx8I2PdoWzBhGasauYLv08C4al968WaSz+VJ2GEN9m186LGoy/ej6oJV3J1HpMSyfdY
-	 7UcJ4GHI7pA6TxMRSr3o7Qk1RNuLW3f++uBYjvfa1nQ53A4BaIFDOpvafJy7ztD1QdQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4naayZUxfqDMIAJ85UobQ2rFy9/hHybTaMJTD5b9TaM=;
+	b=RCAyl/OWbMAdKgv9dKnqW/4eJp80t+EPiHqxXpj9ByvHOL9qz4c7q8dLtOpZujipdEgP
+	 RhBwP6ffFkdFvhicySSaGjf5yWUiVgQkACYnM13bIzI55vTcPMpVhLb88iA07ZFGitM4X
+	 T9Wb+ACxpm2xL5NARLbs6GvOiIdyNGNam/oR1x4SBpQX8K5/2AsPo04xgNa9EmC0i3VWj
+	 mFhvG4rjuihBq5mECyFPY0BT5HwgLgWobkI8UJJ+pg6URVdAAOduafuELjFBcEkm/lT32
+	 o4tL06ZeFEp1ztODqmjr3zX2p417qI9jdtVVTYC6i7ae8mrZ4rVU/2kDesHTS44nEJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=od9P2Ery;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7b8xfBR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E8F606A320;
-	Thu, 19 Nov 2026 02:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95466606A31C;
+	Thu, 19 Nov 2026 02:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=od9P2Ery
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0741F000C4;
-	Thu, 19 Nov 2026 02:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7b8xfBR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1291F000C4;
+	Thu, 19 Nov 2026 02:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056037;
-	bh=41XxRNsYHMXOr1/rTSb4+g3PhQ/3ezWSJAoFpTc5vyo=;
+	s=korg; t=1795056040;
+	bh=4naayZUxfqDMIAJ85UobQ2rFy9/hHybTaMJTD5b9TaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=od9P2EryMOVVuTSeV8Sx0xMOB5tDaPcuAPxajUvsdNo5TDn/RL9NpdXS0znWgvBbi
-	 ynr5oRrRLXKWTyd7PztBNc5b9lfyS+N8NTfN/0Y8GUMB3TV6pA3yR/lOQUj0E+uFNP
-	 5U6w1prnzBN0JBrGuCAtn2VbbFxYEGqn6EGprzDk=
+	b=U7b8xfBRhwQUBwKzAp5VHy4UZodRDPwnqD68UTg82PjK1ZKEYe0qj4+jv3LmhXkbO
+	 RQ6Bnec1myk1A5TCXBqITA1mZPv18EELLAeu47J0+j1m6J9H5pBWN7e7dfnJ+MxDA3
+	 R6g44HH1MDM55GnjYgjh7DyX6eZCLgTz6w3pPsvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1844/2214] drm/panfrost: Explicitly enable MMU interrupts at device init
-Date: Wed, 18 Nov 2026 15:58:40 +0100
-Message-ID: <20261118150125.179738648@linuxfoundation.org>
+Subject: [PATCH 5.15 1845/2214] ACPI: PCI: pci_link: clear driver_data before free
+Date: Wed, 18 Nov 2026 15:58:41 +0100
+Message-ID: <20261118150125.215815225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,67 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
+[ Upstream commit 691c33289b4d7a50b6fe1e03918bfbc21d4641c5 ]
 
-Because the device must be in a position to accept jobs between the time
-drm_dev_register() is called and autosuspend first kicks in, there's a very
-narrow window inbetween during which jobs targeting the tiler buffer
-object would time out, since the device's PM status is 'Active', but no MMU
-interrupts were enabled at device initialisation time.
+acpi_pci_link_remove() frees the link object without clearing the ACPI
+device's driver_data pointer. The ACPI device survives hot-removal and
+can later be retrieved by acpi_fetch_acpi_dev(), leaving callers with a
+dangling pointer.
 
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Clear driver_data before freeing the link.
+
+Fixes: db89b4f0dbab ("ACPI: catch calls of acpi_driver_data on pointer of wrong type")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+[ rjw: Subject tweak ]
+Link: https://patch.msgid.link/20260925155846.2381956-1-yaojiale02@163.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/acpi/pci_link.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-index b5ee076c2841f..9c9a22eb8392a 100644
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -211,6 +211,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
- 	WARN_ON(atomic_read(&mmu->as_count) < 0);
- }
+diff --git a/drivers/acpi/pci_link.c b/drivers/acpi/pci_link.c
+index cb7b900d9466c..068034ccc4445 100644
+--- a/drivers/acpi/pci_link.c
++++ b/drivers/acpi/pci_link.c
+@@ -782,6 +782,7 @@ static void acpi_pci_link_remove(struct acpi_device *device)
+ 	list_del(&link->list);
+ 	mutex_unlock(&acpi_link_lock);
  
-+static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
-+{
-+	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
-+	mmu_write(pfdev, MMU_INT_MASK, ~0);
-+}
-+
- void panfrost_mmu_reset(struct panfrost_device *pfdev)
- {
- 	struct panfrost_mmu *mmu, *mmu_tmp;
-@@ -228,8 +234,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
- 
- 	spin_unlock(&pfdev->as_lock);
- 
--	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
--	mmu_write(pfdev, MMU_INT_MASK, ~0);
-+	panfrost_mmu_enable_interrupts(pfdev);
- }
- 
- static size_t get_pgsize(u64 addr, size_t size)
-@@ -733,6 +738,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
- 		return err;
- 	}
- 
-+	panfrost_mmu_enable_interrupts(pfdev);
-+
- 	return 0;
++	device->driver_data = NULL;
+ 	kfree(link);
  }
  
 -- 
