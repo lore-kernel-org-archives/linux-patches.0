@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058262;
-	b=Sg/Y3+/ncJdZi6s0C8nb3DWy9DoOgNorqD10QtZ2lDRycgBbGImi33mEw1L6SCMLouwn
-	 e51eTVpbsZPmNv7EVAsSKkEqqj8eiAi4a5t8xGSLvVXVs89v/XISUfdBN5d8gyY/JTiEW
-	 hWQ6lLGfQihiROmdudB2UyGbwTjy3x4M9dF8qZum0UBHt11mWwEo0VcwlEE3QFS8EGfzG
-	 45ksQ+iDU5iK+N96S2lLwwExLg9dlW+wqcIumEs16+nIp0bU/URyR3yPKmMIFieCHu0W6
-	 bb32aBvYx4b22ZnbseiE7KzNuay05a8/9j0tKsaSB2jQBJlfc3iyTffJkWqQLC0/79Q==
+	t=1795058265;
+	b=NBpQlqlEaKjOqKeZMkoJGU1UKSm17PNZx7dhiu96Mg9/BVguCtQyvXTSpNCsqPYViXhz
+	 aHs/6AeK//6HUT94NlZ6mTnaN9X7+8qhsbkMV6hWL/Cu9LngT1xZFGt87or/Ahn1s6JFQ
+	 RbOkCH3y+13F+S3cIPNuenQVULWG0ioGxq8+Cyi+V7cu+3Tk+vYf3L0qqVxhJW+MOm0j5
+	 SlZrMQFCwmky0pa1VZAxv4v1casfN+6T20g4D4kfH/Wo1K6fWz/RLxztJjOshfLQTyPmh
+	 qqIMvdG89IE7E11t2lIIXGg6vTWbTxK24oH819dCljX+sXCSV3WPAKg0sCRM3x9/fIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+IS2CJG68VenyIm7y9xKEEIsHK0trHcfVYhkALU+5ww=;
-	b=SnaZjztJYDi8K76ML6Da7fJidwYa1yzqM+iPCytcXIU2l6u7XMGJUOUJ2bWENyasBwRE
-	 umPheqGuO306WqSIfjvqAuog9/0C1kLNrqNop9Ij0K8wW6RrasoX7mbwNxxEsSapnVWCN
-	 bLhUDH4VTROaYeoTtikjgukNLmhUNxnxm4hqQXBlnQuIXPv2hpchpPeZ/P3YWEV3NmAp/
-	 smL0/iF/ShKloBDGfyfAr0r9zEFbFcqSt4OQRjLCEkpwFg/HN/dxMU2euhbACPLUYlUbB
-	 /pQh4aFF3ruHJJiXYmoXtGIp3WqSzEQL7BwIarTz8wuTUFYjEgVwBQ17noJEBWe5qSg==
+	bh=CRo6wUairNtJKnVkiy8RZ62jAsBajKt2W08+uxzKsEc=;
+	b=mjbkw2buuBkI8qz/Av53ZYNMgP5lT2CqOKxuIL9MVFwR9w6u/VDwEcDBwk/P7n/hZiyu
+	 3gSTjxNUWn2E9gONR9Pd1MLjY6N4rOFOW9WEIA/yB+2f8zItYyvmuwlDY1y7gWapmU7fL
+	 39Jl0NE1tiQKXpdvjQWvVg7TTFac5E0kf+HjimrWQ7j+hPzLSsFj3Oz1gJjuNsV+sGEpC
+	 2BnrXL9BAVhLtib2qbPSeKZWFJfovh6SIWH6y6rsWUS4sApJ/d0JwEJ9HQ/m9b2eMlD9J
+	 /CyUX7WhsNdAsjLuVoAKhjXfPh+ga0U/v5OXyIW50A/dcLyjqfGjWLbhvDhXFBr0wBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzgi+5dd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NGX/59t0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57672606A325;
-	Thu, 19 Nov 2026 03:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF43606A31C;
+	Thu, 19 Nov 2026 03:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzgi+5dd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C221F000C4;
-	Thu, 19 Nov 2026 03:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGX/59t0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888531F000C4;
+	Thu, 19 Nov 2026 03:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058262;
-	bh=+IS2CJG68VenyIm7y9xKEEIsHK0trHcfVYhkALU+5ww=;
+	s=korg; t=1795058265;
+	bh=CRo6wUairNtJKnVkiy8RZ62jAsBajKt2W08+uxzKsEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzgi+5ddigs+Ojc+riJMI4+07GnGhQkq41zRcjM3qW2ZkkkWmBZhx8khpfmtwMK1d
-	 8W27heSwsUbp9yl3HZoRiRWTBPGlD9l8AVgMq0J6hNNMWkHH5CZtJC5AccRxjjgPcx
-	 6ddSxeI9zT3pbSPW4wyhmDg6VzfdQgzipix1YjdQ=
+	b=NGX/59t0s4z7/RWDc+Lzzp6iKZMKXRhHnflClXXjLT/kKVmPEUtbIFEfOJSSG9i8L
+	 gL8IZa7bNWsZubnxwLmj/LEX+FTPTrkWunhIn0H44WvDnd02Q2ZRlAe0MoHQGUewJh
+	 bHNKxY3R8oqkzKWG2KgO1rB4aDuzyUtbKMiROg0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0423/1848] media: go7007: unregister the I2C adapter on USB probe failure
-Date: Wed, 18 Nov 2026 15:41:01 +0100
-Message-ID: <20261118145931.842497576@linuxfoundation.org>
+Subject: [PATCH 5.10 0424/1848] media: cx18: Disable PCI device on probe failure
+Date: Wed, 18 Nov 2026 15:41:02 +0100
+Message-ID: <20261118145931.890543385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,18 +71,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 14165cd16fa7c233aec6a407b56b304e7a283911 ]
+[ Upstream commit 2aefbc29765641e1e1a26b96cee194ac7d34ff49 ]
 
-USB probe failures after I2C adapter registration free the backing
-go7007 structure without unregistering the adapter.
+cx18_setup_pci() enables the PCI device but does not disable it when
+DMA mask setup or the memory-region reservation fails. Later probe
+failure paths release the region without balancing the enable either.
 
-If i2c_adapter_online is set, unregister the adapter before releasing
-USB resources so that I2C client removal can still use its callbacks.
+Unwind the enable inside cx18_setup_pci() when that helper fails after
+enabling the device. Once setup succeeds, disable it in the probe
+cleanup after releasing the memory region. Setup failures skip that
+cleanup, so each successful enable is balanced exactly once.
+
+Keep the existing error codes and normal removal path unchanged.
 
 This issue was identified during our ongoing static-analysis research
 while reviewing kernel code.
 
-Fixes: 59aea928d57f ("[media] go7007: don't continue if firmware can't be loaded")
+Fixes: 1c1e45d17b66 ("V4L/DVB (7786): cx18: new driver for the Conexant CX23418 MPEG encoder chip")
 Cc: stable@vger.kernel.org
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
@@ -91,22 +96,47 @@ Assisted-by: OpenAI:GPT-5.6
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/go7007-usb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/pci/cx18/cx18-driver.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/go7007/go7007-usb.c b/drivers/media/usb/go7007/go7007-usb.c
-index 6a0733c5925fc..ff479d6495c45 100644
---- a/drivers/media/usb/go7007/go7007-usb.c
-+++ b/drivers/media/usb/go7007/go7007-usb.c
-@@ -1326,6 +1326,8 @@ static int go7007_usb_probe(struct usb_interface *intf,
- 	return 0;
+diff --git a/drivers/media/pci/cx18/cx18-driver.c b/drivers/media/pci/cx18/cx18-driver.c
+index 95aed00f353bd..650c502f6d711 100644
+--- a/drivers/media/pci/cx18/cx18-driver.c
++++ b/drivers/media/pci/cx18/cx18-driver.c
+@@ -807,12 +807,12 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
+ 	}
+ 	if (pci_set_dma_mask(pci_dev, DMA_BIT_MASK(32))) {
+ 		CX18_ERR("No suitable DMA available, card %d\n", cx->instance);
+-		return -EIO;
++		goto err_disable_device;
+ 	}
+ 	if (!request_mem_region(cx->base_addr, CX18_MEM_SIZE, "cx18 encoder")) {
+ 		CX18_ERR("Cannot request encoder memory region, card %d\n",
+ 			 cx->instance);
+-		return -EIO;
++		goto err_disable_device;
+ 	}
  
- allocfail:
-+	if (go->i2c_adapter_online)
-+		i2c_del_adapter(&go->i2c_adapter);
- 	go7007_usb_release(go);
- 	kfree(go);
- 	return -ENOMEM;
+ 	/* Enable bus mastering and memory mapped IO for the CX23418 */
+@@ -836,6 +836,10 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
+ 		   cx->pci_dev->irq, pci_latency, (u64)cx->base_addr);
+ 
+ 	return 0;
++
++err_disable_device:
++	pci_disable_device(pci_dev);
++	return -EIO;
+ }
+ 
+ static void cx18_init_subdevs(struct cx18 *cx)
+@@ -1122,6 +1126,7 @@ static int cx18_probe(struct pci_dev *pci_dev,
+ 	cx18_iounmap(cx);
+ free_mem:
+ 	release_mem_region(cx->base_addr, CX18_MEM_SIZE);
++	pci_disable_device(pci_dev);
+ free_workqueues:
+ 	destroy_workqueue(cx->in_work_queue);
+ err:
 -- 
 2.53.0
 
