@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016892;
-	b=AQROTRFcL4/uyOQ8Zxkp/JRPnlnevQNJ/fZbZzDLzUVgLR7WISfnZLHlAdyd3kvAFgan
-	 iAFOe8LasSvE8fB8w1JE46tV2lut9dvPYFNmAF9fTtnllv/7w0fOMROSJki9s9UH8vdkA
-	 bUa1/Mrj7lBzZmAiJ3fgMk2tqkFqP2oNbgESi2jX3blFdAyUqNcOyZ5Hou4vp5/dRR0CT
-	 J0uBkn4W/6FtySpgbNOarrWZxIg6quraSmatVIDexFH3ADvtgYo0YPnLDb90rBBibafA5
-	 j4FN9kLj1r91OtWbFvRUEaetRaetxcjtHc74yca+VBaT1DZ0bE8ipHOr5CjNEuS8SCg==
+	t=1795016895;
+	b=285skYMEK0sVADe4638mvfFKLW10/GDWySMHipVs4rxKwCyo9SBMxob9z01V6PFSUybH
+	 rYqWu2eVo2savauvpvl46H98eIp+Rh91fhNsNzkA78jbQsd7ZsjtGcGSIdglZRXglNUXw
+	 iEwTfxxzQ2h12orSdAaalTguGpRQnZZCZe9TptJU2B6NqlBTF5FXspgRIECFtgIxaxqqt
+	 OiI8JxSF7OZzbbuUAaTUaLVeESMxSAV+UmoyyS26+cW0MSxPdh7BDvQ7Ga8nm2AdCTWTo
+	 G/yBpcQ93A9FD/fkCTjDng3w8DXIadqxZZERthfwJHY1gtZWPBB1qjXQhYCmEfk18aA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=wOayBHYz97Ksu5FFHfyN7m0VekMvHcraZkTgJfWkZP4=;
-	b=1/q0e08AZ1kCSOL6hNFCYWz+H98LsukT3KfM0xkx5riXBt3rNq6GgNCAc+MdZS/ccgCY
-	 4Jgy0o3CpCEjAthaeCnW9cnjViPdBB4iD0IXYfNh54dIaw8Hsscn92VKISXlrzqQVxzBO
-	 MAVIc2QPvTM3gAF9QrC/kErZ3K2BdHZRmHLQkdhRNMmIp3ew6zquVnmkOM8fL7f/2i0/F
-	 HMuv/iLu9cmYMZqjVlAEZDp3xkPmw19CwhyyuUfGF/IEpRX4p5VYbJRz8ongKtMaBnYWN
-	 +szAQqBFzoCrccWta5BlhqbDR4ul4N15txhZwC75S3G8iBkij6OrWZzTOl0G4bY+GYQ==
+	bh=S46Au7jC0GWH2Adfk3MmlY931I/Bn0TPcVsnjLOTpQI=;
+	b=RObfTr7B6RQd3GENmgugJwyNXmBVosB9AY562tMEWCXUO48FgRSq5cNCjnKksfU0f51E
+	 7D1NfRiFrcCGusbmVGpgvRn8X2XbRelLVnAfemI4vM767JClgE0OZVU5o3zl1lz5Amaz4
+	 7inAgN3+qtcvt6TDQi9tKVreCthfD1NuDqlwWf7BKb0JzKYvM3+Q6i6LUqKswD4ihjQUA
+	 sSYrNURykr1SayjVtTdAKVy9z2e+CTqPYyn8LVFGmVoV8b3Kdmzb6ewdpf6+vIHDHHbS0
+	 7dUYCmtmQ/vii3xAAz8rFKaReS+7HtFRIVAAYW/mi7vSy5CAtQ8TNNvXyZHynpkvgHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfofmQvp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O9/yv9v3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC97606A320;
-	Wed, 18 Nov 2026 15:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59E8606A320;
+	Wed, 18 Nov 2026 15:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfofmQvp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3303B1F000C4;
-	Wed, 18 Nov 2026 15:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9/yv9v3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1152F1F000C4;
+	Wed, 18 Nov 2026 15:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016892;
-	bh=wOayBHYz97Ksu5FFHfyN7m0VekMvHcraZkTgJfWkZP4=;
+	s=korg; t=1795016895;
+	bh=S46Au7jC0GWH2Adfk3MmlY931I/Bn0TPcVsnjLOTpQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfofmQvp36T/ftBckBn+31wP+U/ZiSujAO/Q48Ysog9ZIGx9v9UYfa7mZUaRkq8OG
-	 3no45Lvmxy+wqf7plBt1Vipxqqt/ReEcxEXBQkijhk83XI/EMeo+U9dpWrd7CuZlit
-	 AgJ95wxu7REGk640AF6+RMsYsmAEaHA1pqxK9m40=
+	b=O9/yv9v3ml/MCDPibEscy+qj1Pe4BKDI9adffZ38C7Xfmf+OtgmKx5TptaWfUA7gH
+	 fZl9H/kk1VppGb9BBr3OnYpZpeUyIceHCl90bkHhfDBMDRQ4Pej3m/Xe3egGJSkUTA
+	 6xW665D4vOl7IOR4MKVmnI3uDjl2zcmMu8eWpsvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0688/2651] crypto: asymmetric_keys/x509 - copy X.509 TBS for data signature algorithms
-Date: Wed, 18 Nov 2026 15:32:08 +0100
-Message-ID: <20261118150312.622033807@linuxfoundation.org>
+Subject: [PATCH 7.3 0689/2651] crypto: asymmetric_keys/pkcs7 - Check all signers before waiving authattrs rejection
+Date: Wed, 18 Nov 2026 15:32:09 +0100
+Message-ID: <20261118150312.659118900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,50 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 2618f76b277cef3df8ebdff403b05705f5f8a36d ]
+[ Upstream commit 553c623a12f4928a2889cf1bba0bd8885f0bdd4f ]
 
-For signature algorithms operating on a message rather than a digest,
-x509_get_sig_params() points sig->m directly into cert->tbs.
-cert->tbs is the preparsed add_key() payload.  The syscall wipes and frees
-it on return, while the instantiated key retains public_key_signature.
+pkcs7_check_authattrs() only looks at the first SignerInfo when deciding
+whether rejection of authenticated attributes may be waived.  For the
+remaining signers it checks only that authenticated attributes are either
+present on all signers or absent from all of them.
 
-A later KEYCTL_LINK into an asymmetric restricted keyring therefore passes
-a dangling message pointer to ML-DSA.  KASAN reports a slab-use-after-free
-in mldsa_verify(), with allocation and free provenance both leading to
-__do_sys_add_key().  Reuse is also an integrity issue: bytes occupying the
-freed object become the authenticated message instead of the certificate's
-own TBSCertificate.
+This means an unmatched ML-DSA signer can be placed first, followed by a
+trusted RSA, ECDSA, or ECRDSA signer.  Verification skips the unmatched
+signature and accepts the later trusted signer.  The first signer still
+leaves the waiver enabled for the whole message, so the non-ML-DSA signer
+can use an exception intended only for ML-DSA.
 
-Give the signature object its own copy of the TBS, as is already done for
-a precomputed digest, and release it through the existing m_free contract.
+Check each SignerInfo's public-key algorithm before leaving the waiver
+enabled.
 
-Fixes: f3eccecd782d ("pkcs7: Allow the signing algo to do whatever digestion it wants itself")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Fixes: 91db696adea4 ("pkcs7: Allow authenticatedAttributes for ML-DSA")
 Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/x509_public_key.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ crypto/asymmetric_keys/pkcs7_parser.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/crypto/asymmetric_keys/x509_public_key.c b/crypto/asymmetric_keys/x509_public_key.c
-index 25cf8ac7f2579..5c9165a83f914 100644
---- a/crypto/asymmetric_keys/x509_public_key.c
-+++ b/crypto/asymmetric_keys/x509_public_key.c
-@@ -53,9 +53,11 @@ int x509_get_sig_params(struct x509_certificate *cert)
+diff --git a/crypto/asymmetric_keys/pkcs7_parser.c b/crypto/asymmetric_keys/pkcs7_parser.c
+index 6e3ffdac83ace..7f00e45a33cf6 100644
+--- a/crypto/asymmetric_keys/pkcs7_parser.c
++++ b/crypto/asymmetric_keys/pkcs7_parser.c
+@@ -111,6 +111,12 @@ static int pkcs7_check_authattrs(struct pkcs7_message *msg)
+ 		if (!!sinfo->authattrs != want)
+ 			goto inconsistent;
  
- 	if (sig->algo_takes_data) {
- 		/* The signature algorithm does whatever passes for hashing. */
--		sig->m = (u8 *)cert->tbs;
-+		sig->m = kmemdup(cert->tbs, cert->tbs_size, GFP_KERNEL);
-+		if (!sig->m)
-+			return -ENOMEM;
- 		sig->m_size = cert->tbs_size;
--		sig->m_free = false;
-+		sig->m_free = true;
- 		goto out;
- 	}
- 
++#ifdef CONFIG_PKCS7_WAIVE_AUTHATTRS_REJECTION_FOR_MLDSA
++		if (sinfo->authattrs &&
++		    strncmp(sinfo->sig->pkey_algo, "mldsa", 5) != 0)
++			msg->authattrs_rej_waivable = false;
++#endif
++
+ 		if (!sinfo->authattrs &&
+ 		    sinfo->sig->algo_takes_data)
+ 			sinfo->sig->hash_algo = "none";
 -- 
 2.53.0
 
