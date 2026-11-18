@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032213;
-	b=MrV5FpipCDL63hv6favyYk8lLqKE7aEVBqydaRllD2KrO7lBHaVCAQVLXOwAsTy44Jh+
-	 dyPd74++QYHfLQtPHf5V7oC2U2AofAek11t4QULX57oVk9TPJjPbiGPoHdfw8RkPOTm1t
-	 yAjRgK2zJDNxBfDAaO5xPRY5fbU8n5PxRwqXcpPdiY5SMk4sO/fvYFGXmGUFOOb+GatGO
-	 INipKTPW7imvIwzIZU5uea48ST5WAo0S6UTF18XarYUrWtX+745Fb3vjEclRr/1xTPbw8
-	 j51d3QxRHx42ih7MWeiKz2hDHAEg6kc5WciPDfGEbQQ2cDHNyaZYxr/Um7zU7b+IAXQ==
+	t=1795032216;
+	b=tfrU9fcdatyK4BQfxD1ZygJUebNTSVnhaFA1GhtuyYW/uSirRVYZPoB90KDOFEPp/s+I
+	 5HMabXjpd4y0z7jOztxaq41I/f4ZqoSJ0KxV/yVxzFFusABkJ585NM0ew3WytouAti1eX
+	 X4cW5RDMPEYyYSQNeYy/QYp287aBvOFuWhXFXFdNTrjZXFMKKtLcLGyv2EJPPC9vvS+/W
+	 CYyrp3W4HPqegwClZ+OsF8MKnG84H63Dk9XGnJ6QWQ13pPedjIak8u1ULwPg+joH2bXbw
+	 7i8yXQFlhSSu3pCcQp1xA1XJfS7ZkC+N1DLpheI8Ehg0WHM3ardbahsRh7ZAVdiM2kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C6eYVUnJOQZeFpu8HSbv2jHkMRa/oP2DZcJOq0isLqw=;
-	b=j/9J/VckId3/rOBGaaY66kgpBEn2OXnNGjNVjX8b/dYtujF1VumoIpzrfv2VprbQ1yZi
-	 /3gk9jkV7hFUMuujBqrGGD6bOMkaHvmOrclnkGuF8RVRm/rZDy4OS6+xhSfKPKyumPNAX
-	 I1QM/N3/Xv/ODSYiVg9NgwbMC1C5YQfohDZ13fX8W6oeNPdh4zE8/y2ixJdB/V2CDYBIN
-	 1NnTy7WUEvaFRRIoXmIY2FSoRcx3ifSkOvf5d5hGByLI4KQHvlTcMamsPbwnk2JuQjxDL
-	 lksk0AFrtOumpYe9/8GqZiKmcYAV0TBBLzzjgvRJrWMZD2l7DMVma0hcN398CAo5cCg==
+	bh=VQRZEqpAZmiwle/hQF0ZR2jQHmrBIRZ7/FlWRh2LGBk=;
+	b=KjwE1+060HiDmkPVMOCXkuYFloxGoaYWlADrUPtaq473zajhzfl3gF5WJWg2iEha48hG
+	 u7mfJxtYHAsqkO94AmYHShxiz8SqAywjhrRlGIkrE/P5pSvlIkTEB+fVtJCtDGEFImNG/
+	 Hs2PzFI8G2qR+9CBVo1JgSJYVsQZE3TEe4oON/3ZnNFlj3UJIBqLV0T/biwMPpxNzx93v
+	 cyxcxLc0YK4nUsufGgvamrjpLQiXdSlWqrOcw6u3yVX2hUmkGvjEUA4eZ3StPN+qYqTPf
+	 9ecgrbFhE5thKGpeDM3cHX3UWkCTj3B/GpeyOzXe/hLS9lu1AslK4Xkwo6GSnuVXMUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsV7yqU7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Tpakkgq/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D72606A320;
-	Wed, 18 Nov 2026 20:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF61E606A320;
+	Wed, 18 Nov 2026 20:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsV7yqU7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBD51F000C4;
-	Wed, 18 Nov 2026 20:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tpakkgq/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E571F000C4;
+	Wed, 18 Nov 2026 20:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032212;
-	bh=C6eYVUnJOQZeFpu8HSbv2jHkMRa/oP2DZcJOq0isLqw=;
+	s=korg; t=1795032215;
+	bh=VQRZEqpAZmiwle/hQF0ZR2jQHmrBIRZ7/FlWRh2LGBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CsV7yqU7gJk+Vv+fe7qqtWKklM3r8aTSUsxtLPdS41v6xMm6G7NgXRx+wI8fNBKyJ
-	 0/kzT/bXxasgopQJD9zo+jvKZFJCKK9ku6oWmUelN2JuvTX+e8YKXSHNRZzJO6lnNO
-	 Foz2FGj1oby0bsYdRBIdAuBMxuLoCxI87uTkniL8=
+	b=Tpakkgq/mqEOiQMa0KF0KK9NO3ELPP00ng7S0QsrJrljJ00joedfGZndkqiKry3iG
+	 kj4HSP/SYWDofs1wpj9jZOBOb2oE2FkbwDmIuTGSrMb+Zio23HbUoACP4SNnTpGVsF
+	 Ktz3jwA2cP7abZxsUJHWqiYY52xVVCzrV1V1AtLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1325/1756] dax/bus: Return errors for invalid mapping targets
-Date: Wed, 18 Nov 2026 15:57:32 +0100
-Message-ID: <20261118150102.165483406@linuxfoundation.org>
+Subject: [PATCH 6.12 1334/1756] selftests/bpf: Expect at least one kprobe miss in missed/perf_kprobe
+Date: Wed, 18 Nov 2026 15:57:41 +0100
+Message-ID: <20261118150102.480706030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,59 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit df6cc0a24717c38ac81b5ba1e839c35e74e667dc ]
+[ Upstream commit 34d527e513c9a3f3a00f1ddf03fe06f493da14d0 ]
 
-After the DAX configuration locking was converted to rwsems, successful
-lock acquisition leaves rc set to zero in mapping_store(). Two error
-paths can return this stale value: an unbound region driver and a
-misaligned range size. The sysfs write therefore reports success without
-allocating the requested range.
+missed_kprobe attaches test1 to bpf_fentry_test1 and test2 to
+bpf_kfunc_common_test, which test1 calls. test_missed_perf_kprobe()
+expects the kprobe of test2 to miss exactly one run, the one test1
+triggers, since kprobes don't nest.
 
-Return -ENXIO when the region driver is not bound and -EINVAL when the
-range size is misaligned.
+The test is not serial, and the kprobe on bpf_fentry_test1 is global.
+Any other test that does bpf_prog_test_run() on a fentry/fexit program
+calls bpf_fentry_test1() and thereby fires test1, which calls
+bpf_kfunc_common_test() from kprobe context. The kprobe of test2 then
+counts an extra miss, and the test reads 2 instead of 1.
 
-Fixes: c05ae9d85b47 ("dax/bus.c: replace driver-core lock usage by a local rwsem")
-Assisted-by: LLM
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260924025035.1265035-2-songmuchun@bytedance.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Expect at least one miss, as missed_kprobe_recursion does since commit
+08a7078feacf ("selftests/bpf: Improve missed_kprobe_recursion test
+robustness").
+
+Fixes: 01e4ae474e39 ("selftests/bpf: Add test for missed counts of perf event link kprobe")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-missed-perf-kprobe-v1-1-c9d0f75f6f99@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/bus.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/missed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dax/bus.c b/drivers/dax/bus.c
-index fde29e0ad68b1..53d4f5ac29cc2 100644
---- a/drivers/dax/bus.c
-+++ b/drivers/dax/bus.c
-@@ -1180,7 +1180,7 @@ static ssize_t mapping_store(struct device *dev, struct device_attribute *attr,
- 		return rc;
- 	if (!dax_region->dev->driver) {
- 		up_write(&dax_region_rwsem);
--		return rc;
-+		return -ENXIO;
- 	}
- 	rc = down_write_killable(&dax_dev_rwsem);
- 	if (rc) {
-@@ -1189,8 +1189,12 @@ static ssize_t mapping_store(struct device *dev, struct device_attribute *attr,
- 	}
+diff --git a/tools/testing/selftests/bpf/prog_tests/missed.c b/tools/testing/selftests/bpf/prog_tests/missed.c
+index 03dfae9ab014e..a990034fcdf18 100644
+--- a/tools/testing/selftests/bpf/prog_tests/missed.c
++++ b/tools/testing/selftests/bpf/prog_tests/missed.c
+@@ -36,7 +36,7 @@ static void test_missed_perf_kprobe(void)
  
- 	to_alloc = range_len(&r);
--	if (alloc_is_aligned(dev_dax, to_alloc))
-+	if (!alloc_is_aligned(dev_dax, to_alloc)) {
-+		dev_dbg(dev, "%s: size: %zu misaligned\n", __func__, to_alloc);
-+		rc = -EINVAL;
-+	} else {
- 		rc = alloc_dev_dax_range(dev_dax, r.start, to_alloc);
-+	}
- 	up_write(&dax_dev_rwsem);
- 	up_write(&dax_region_rwsem);
+ 	ASSERT_EQ(info.type, BPF_LINK_TYPE_PERF_EVENT, "info.type");
+ 	ASSERT_EQ(info.perf_event.type, BPF_PERF_EVENT_KPROBE, "info.perf_event.type");
+-	ASSERT_EQ(info.perf_event.kprobe.missed, 1, "info.perf_event.kprobe.missed");
++	ASSERT_GE(info.perf_event.kprobe.missed, 1, "info.perf_event.kprobe.missed");
  
+ cleanup:
+ 	missed_kprobe__destroy(skel);
 -- 
 2.53.0
 
