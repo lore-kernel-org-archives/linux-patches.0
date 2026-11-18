@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019868;
-	b=DLMR7kN6fUlP2bOXZBeowiDmPsQ5uWZv3egrJX94oI1fN+3pWb//0i+NcWdGo4jNc44T
-	 Uq1100wW/8d6JJnZxa/66XEITwZIM3/VzpqAIf7cuPEaXA3jleQ6qJXDVF3aUk0IU/Vqe
-	 5VFRtO5DTJrGZoFX5VBqJYFw+H3eA7jRtPJJR88gNhM2Pqa8dJ3pL/btt3zUkCV74iNL3
-	 QO2jM3lwPneE0J2Pv0djwD0SQgEp5zUNhskwtmKDl/8jXaKDhT7Ne+VpEfnJ9ea+XQrpN
-	 25L084r2Yphx6yE3ruKPdxhx0Ngwfr7GAV9LDtWuhKMhGAWYmQijXjBPex9wjGwjGVg==
+	t=1795019871;
+	b=SRKzSdvuUHRiyn5nHoevrsxjSO2cipad2jmYsrS6Ef9+4vUzgx44EbCwOMu7VnQ/HfIF
+	 goZV3lifR9IAfMFgiSPnSS/ZezCYhghzgykPclZ670veZ/e2mWC0d4W1yC6bJUykW3TLx
+	 tQsAcKffnf9kK3i43G6hY52rYA1tolHRSyGW0/cP0+c6traDSJaaWHGHu7E/eB7GwFe9N
+	 7EqRRtTEho6dhd77wck26tflujDewoo/p5VJzlwFXej0zkgGa/y1qh/lyItbo1WVv2xEw
+	 TI4Lxs7Sgwbk9EHkXKdJavCHZ5wL3Z0XSDRf9VRS095iRirFtOMaX1n4XxNJK2L/U/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H/1qZRNtpQVQfSPbtew2NFiFj7XvL/zBidleJx68GBM=;
-	b=irvhbOx57mhlhS1XG7EuX8sBD1esZwh/X5RX5GVbd63aDkCsaPnTVgs/OoHDB6VWIdxi
-	 yzp4JBJKUXygDMtTbvxGrDY7T3D+u/0VCaUKcquWdzh3EqDwx9zVUfLSHeell0emDzvPk
-	 dduwqzDR9r+Zv5Cdn4NyYpQoPgCBickR0jG2PD4zm1BGx2yXU0XuHXWW/jpMNCZgoYuHY
-	 Vp7miY66DVvDgzSMP1ytHyH2wB4rKJ+RFYC2vODBdMV3GRBN5QeN1O8ZJXFRP77y5rvYB
-	 oJPdJC6dRDTx+GgrNxlwuRT8RfMAtCJiGWvZpkCRsXaA4QEP5tg9xDw7k0iHwKGs9Xw==
+	bh=OLvOpvlgM7dT1OKRri4Cw2D5JBWBunBfDL+UTwUcR9Q=;
+	b=hUeO9URqAJs7P1eZ5mI3sduf/3AI9WwIhWZ0iG8ae6n37JeBtg5KvQWUTXy3GDP0A75G
+	 tHf46/z/yKgXeq+CO7qHjN3zDo1WvM5+v2gwqQWRdrFVZ9ogcGCH6xH4TbqIQ4aGw4573
+	 76zoTOO8H6DTiryEgP2ORusy3hCObYN2I+50xV2MUQu86r/dfsi2aVud86qt2yXHbZQyB
+	 VqrWkR/yiw65nyIQN/x6+GO9zMg1/0zKIbNGdfe+HOtyuMUjxfzQpAR6XW0EAPUqa0THg
+	 STgLha2fDrKA4q6xNMPYDbIH15dJLzsaQOvshpS749hxKOpWLcLhTPkdfhQYFppUY8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdA1fAf+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhfJrHUz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14969606A331;
-	Wed, 18 Nov 2026 16:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14672606A31C;
+	Wed, 18 Nov 2026 16:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdA1fAf+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6368E1F000C4;
-	Wed, 18 Nov 2026 16:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhfJrHUz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E911F000C4;
+	Wed, 18 Nov 2026 16:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019867;
-	bh=H/1qZRNtpQVQfSPbtew2NFiFj7XvL/zBidleJx68GBM=;
+	s=korg; t=1795019870;
+	bh=OLvOpvlgM7dT1OKRri4Cw2D5JBWBunBfDL+UTwUcR9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdA1fAf+bkfET8AeiJlO0llZ3SqRLVuFF/M7RvztppPPCg2RyNwhaZssZ/FpUSU6i
-	 XJMWEpzrouHfpk/bUhe0SINBsojh1/aZF9V5FcEv520z3svIvi3SCKnTlkHI+oMmY4
-	 AUaq88JFYpNXMKETDhbDSJYjG7r44CkVQ8o3TfnA=
+	b=LhfJrHUzbKDuWptqC8c8moMEAUREcWbPh1o6KnD5dN4hzexbMRssMV+1CoSD7XLi5
+	 vQ5wBuNE17jNaI2OqDKf9lHj3AUzQ6DK7F08/nEsdOx5Cnb8FoZV0dGO0BnSy6HJtl
+	 p1w4/as8QZw3oGWCw4E9QK+k+nIBFOwvk8evzqMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chien Wong <m@xv97.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1708/2651] wifi: mac80211: fix encryption tailroom
-Date: Wed, 18 Nov 2026 15:49:08 +0100
-Message-ID: <20261118150349.126529035@linuxfoundation.org>
+Subject: [PATCH 7.3 1709/2651] wifi: mac80211: reserve MME tailroom for protected beacons
+Date: Wed, 18 Nov 2026 15:49:09 +0100
+Message-ID: <20261118150349.162233611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,40 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Chien Wong <m@xv97.com>
 
-[ Upstream commit c49f54fd2abff08964677db8fdc1674c713ab42c ]
+[ Upstream commit 48002331da85c7c962cfbc09c8bd84d219a6fe1c ]
 
-BIP-CMAC-256 and BIP-GMAC append a 26-byte MME but mac80211
-currently reserves only 18 bytes of encryption tailroom.
+Beacon protection appends an MME to beacons, but the skb
+allocation does not reserve tailroom for it. If the available
+tailroom is too small, the crypto path drops the beacon.
 
-Generating 26-byte MME may happen to work because the actual skb
-tailroom can exceed the requested amount. For example, dev_alloc_skb()
-rounds the allocation to kmalloc size buckets or alignment boundaries,
-and the extra space may cover the 8-byte shortfall.
+Two factors often mask this: the 256-byte TIM reservation is
+rarely fully used, and dev_alloc_skb() may round up the
+allocation, leaving extra tailroom. Neither guarantees enough
+room for the MME.
 
-Reserve enough tailroom for the 26-byte MME.
+Reserve enough room for the largest MME.
 
-Fixes: 56c52da2d554 ("mac80111: Add BIP-CMAC-256 cipher")
+Fixes: 0a3a84360b37 ("mac80211: Beacon protection using the new BIGTK (AP)")
 Signed-off-by: Chien Wong <m@xv97.com>
-Link: https://patch.msgid.link/20261012140738.70178-2-m@xv97.com
+Link: https://patch.msgid.link/20261012140738.70178-3-m@xv97.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 43f7971e99abb..cdd2581d7f59d 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -52,7 +52,7 @@ struct ieee80211_mesh_fast_tx;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 4e23f89867e35..0492205459f0a 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5769,7 +5769,8 @@ __ieee80211_beacon_get_ap(struct ieee80211_hw *hw,
  
- /* Required encryption head and tailroom */
- #define IEEE80211_ENCRYPT_HEADROOM 8
--#define IEEE80211_ENCRYPT_TAILROOM 18
-+#define IEEE80211_ENCRYPT_TAILROOM 26 /* current max: GMAC/CMAC-256 MME */
+ 	skb = dev_alloc_skb(local->tx_headroom + beacon->head_len +
+ 			    beacon->tail_len + 256 +
+-			    local->hw.extra_beacon_tailroom + mbssid_len);
++			    local->hw.extra_beacon_tailroom + mbssid_len +
++			    IEEE80211_ENCRYPT_TAILROOM);
+ 	if (!skb)
+ 		return NULL;
  
- /* power level hasn't been configured (or set to automatic) */
- #define IEEE80211_UNSET_POWER_LEVEL	INT_MIN
 -- 
 2.53.0
 
