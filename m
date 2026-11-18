@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049574;
-	b=fFxRUGCc8DKDzmvrAFXI9moP1UEqB5NHKMmHtWN5JH9/O/ZQOoQTSjDErdUT5j//ojNv
-	 lgpuAUfc7/22HEug45KZ3EXlBWkaQa1bnklI/BfZyow0EtKgYvzc3u523rrxk7qumZjs/
-	 tgqRqAQ34AOnQrtJn4aCS+zefc9dGgA8AmdeqPTJ+7yTrf/pn+2fa5tsDumzowMxk3AMW
-	 pc80k13mQOPG7eLYwWoC/+8+2PXLLGjWnvOO4bP+2JFy0zn6WWq3KUMzaGhUkJ8jbZfbj
-	 LX8nQyklvOhTj0Xo2RJj7FSMrBLXGtKHJOQzLwnFaYTI/mqqrv9ZVyGXNVmmDGORHFQ==
+	t=1795049577;
+	b=SP3Bhn2hz+USjVj4ozeVu2ZaR29MTLjdbpYSsTNF97CP+ABvP1ey8LsCVv2TRmsS3UII
+	 EPqrNxteBXse9UQTMgc98pvQzQwo1SJ9Ns+ime0vML6TrENvQxb8yHSXWUEStToBeRPBw
+	 xBR6PnYVX+HqKHniLFYKVzq0Y9DfX1851QgOZkndwsg0gUJck6gp8pfB2W26BGAMRnPk6
+	 hEeqwcS2hV5jlMRHlldDqsp0+zYwrWuS26GRTRFRAZw6bW71Uzv7NPrvs6OZMRlfsoFYi
+	 7oFjWLRwgCUWHbOGTtZWRe1Ka0ZTgUCKByN/SM9+svPeWFa4aAmx8v8ui6HPyRidmmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049574;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8LOlZLjhHoJ5Q/wBLcPBTHpXezqwRFpnoawH+xG79rg=;
-	b=eBBMYrPsgcGy9iw7kepf2JfeS531sPHKNij/kw3i88qL3NaAn1Jt1QreXyfRba0pF9ge
-	 z8y7GS4EvDaCZKzwT4Ba9wUO4dPGZdMNe6hJPBumIkaCUc4i4nihwCiTTeIORJEtNZGk1
-	 zwyg4ZBADYH7hNEVGE+XjQW7E9cJGieDDtbhLcf8Kj+U3V0G8Ab6Xy4y+rF5FUPo5FTIa
-	 C7od3H2NdGwez6TVQaa3/IA//XIaz+qdzcAaDLvKcdNu+J174/DRhrqDRh8DzWmQIgaLK
-	 m7UsdnWxMZGRls2SEF4n4s4BVDD1U+v2l/gImmZsIUhTKDuSakIFHMoZZasZW08slRA==
+	bh=UHBweowZy67Z4/yrO11ezipFk+ihGzCfDE1hDYfVVd4=;
+	b=txvhbVc3IRAs5Xobcp5qSs7URyi6n2QhW1A6Ike3gMsg73tzLnXQqSJRiGIM84cpkA2F
+	 Uk2T9ydynqh2+5ZL5Kj9HjsYm6K3NH5pDaHIjrFYDz8Pa+aTlTHIXsWJrn7hQnSMWankx
+	 oFjJdsXfDLc1sVadk1LWxVOHTE599DnTC7rJ63e1k/yIbzCa1TWs7fKlDxOKRW0vlTAnH
+	 HWA8uBexsykC2vJhnxjThqERyjMwc1cG3UGOrDqCF3GELWVWbRnuik99byDezsJtgkeQO
+	 TBWdHdJRD46FZa9/R/e1tgYPs8/wVb7uj+vKBMK/tzw91DXmTSzFrl6t2kr6KxhDpdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uh6lucU4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XqdSfbkj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7035F606A32F;
-	Thu, 19 Nov 2026 00:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE77606A331;
+	Thu, 19 Nov 2026 00:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uh6lucU4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEFFD1F000C5;
-	Thu, 19 Nov 2026 00:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XqdSfbkj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CA41F000C4;
+	Thu, 19 Nov 2026 00:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049574;
-	bh=8LOlZLjhHoJ5Q/wBLcPBTHpXezqwRFpnoawH+xG79rg=;
+	s=korg; t=1795049577;
+	bh=UHBweowZy67Z4/yrO11ezipFk+ihGzCfDE1hDYfVVd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uh6lucU4+Zz09V8Jk6iXPLnES8d5tdbdy+3pJ2HZiQbmhm75JfTT+KPVNOjj9/JDP
-	 2detuVuvyq2H4cWMqdBFQ9b6OULYRdHfBgw8M8FSYWMlKfK7ePti8s38F07rfP+P1T
-	 KPkyAABfiNrfR1K4Xuev3F2eN3WfbPlNPyqMAPSs=
+	b=XqdSfbkj18AWDcJYdXZJWLxOJsDTY4aD+X2PDJS7Yf0crSVrDBrbqzOeYJjPZmgF4
+	 /NOsX/9c9fVZtj495iVA82v6YESJ6jQ4t/lcwgKqwJ+equntAOV9SRLYCxSXecblDB
+	 Do/clec6gKuzluRF6niCcSpRJL176cvhyw0r8iVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2363/2857] RDMA/mlx5: Cancel software CQ notifications before teardown
-Date: Wed, 18 Nov 2026 15:56:37 +0100
-Message-ID: <20261118150326.603219775@linuxfoundation.org>
+Subject: [PATCH 6.1 2399/2857] tcp_bic: fix divide by zero on max_increment == 0
+Date: Wed, 18 Nov 2026 15:57:13 +0100
+Message-ID: <20261118150327.899875659@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,37 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit a0ab2bb269e7fd8523f87950b91a42a36c7f8f2a ]
+[ Upstream commit 8edbf6c23363563e508a61f3f26f4e4b6eec9dd5 ]
 
-GSI completions queue notify_work to invoke the CQ completion handler.
-CQ destruction drains hardware events and core polling, but does not
-cancel this software notifier.
+max_increment is how many packets cwnd can grow per RTT, so 0 makes
+no sense, and bictcp_update() divides by it.
 
-Fixes: 25361e02c448 ("IB/mlx5: Generate completions in software")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20261008141209.6923-1-prathameshdeshpande7@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reject values below 1 when the parameter is written.
+
+Fixes: 83803034f423 ("[TCP]: Add TCP BIC congestion control module.")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261008092641.140777-2-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/tcp_bic.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 3d50fd28b227f..997bb9e245979 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -1052,6 +1052,9 @@ int mlx5_ib_pre_destroy_cq(struct ib_cq *cq)
- 	struct mlx5_ib_dev *dev = to_mdev(cq->device);
- 	struct mlx5_ib_cq *mcq = to_mcq(cq);
+diff --git a/net/ipv4/tcp_bic.c b/net/ipv4/tcp_bic.c
+index 58358bf92e1b8..08f58cdeb7f80 100644
+--- a/net/ipv4/tcp_bic.c
++++ b/net/ipv4/tcp_bic.c
+@@ -27,15 +27,25 @@
+ 					  */
  
-+	if (!cq->uobject)
-+		cancel_work_sync(&mcq->notify_work);
+ static int fast_convergence = 1;
+-static int max_increment = 16;
++static unsigned int max_increment = 16;
+ static int low_window = 14;
+ static int beta = 819;		/* = 819/1024 (BICTCP_BETA_SCALE) */
+ static int initial_ssthresh;
+ static int smooth_part = 20;
+ 
++static int max_increment_set(const char *val, const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 1, INT_MAX);
++}
 +
- 	return mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
- }
- 
++static const struct kernel_param_ops max_increment_ops = {
++	.set = max_increment_set,
++	.get = param_get_uint,
++};
++
+ module_param(fast_convergence, int, 0644);
+ MODULE_PARM_DESC(fast_convergence, "turn on/off fast convergence");
+-module_param(max_increment, int, 0644);
++module_param_cb(max_increment, &max_increment_ops, &max_increment, 0644);
+ MODULE_PARM_DESC(max_increment, "Limit on increment allowed during binary search");
+ module_param(low_window, int, 0644);
+ MODULE_PARM_DESC(low_window, "lower bound on congestion window (for TCP friendliness)");
 -- 
 2.53.0
 
