@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020588;
-	b=BUcYk+4GJ0S6QKyCRH4Zg2D+BZMd1y6c3nKbXNKabhxwzFx2Pe1pdicYT37Za1ALZjb0
-	 Cwgrdx8pQGxbH0UdOqCFw1w3CPbjrwj1jaf5U6+Huv1iKpTuxOpjVODyIdCFCIo+iBiG9
-	 QuG6WX+fzniQ86WqW/hdBUj2O91ipNvrgNnVNYhUOpABblTIUNOAxMZzmPJvkTNvWHT31
-	 Nt1M6H3h9CCKwHX6MpX09seTRdnogU4sqDDsdAubtug0VRFUiDhr6HV+E0jI8KJEH/Pna
-	 A4i38rDmscIf1h84X8cLVJnsmjX1n42Br98LRKxjVymTT1i2ymy4rbhSaCt6HqpYx+A==
+	t=1795020591;
+	b=bySqtWPyBrIn8f+AAGRZNxL4LMrywW2naXZ5A0/u2T39Pkb+5cUSSmymSEVZk2Vdhnlp
+	 8ipHj3cTgtYJUEBwXzfEtxs+1IOJOVaIdZI5xxAbxqIRjyK46CtGpPsLDoqh5/nhCADSO
+	 crC53eZ6MvkokW2lOIxW9K1tPq3DF1nJbk8/AwlfQZgBC1ZvNtyGkFQFSL8bJfex/mVFp
+	 zBVQab850V4dLZ9f/bYEu04baxbdd+6luzyq4w65ATK1OWAYwNUbfdnxdT8MnKq2jABRk
+	 bD2tlJ3QMUsOBzccugoFSwCF3GXYujSKCT0OnBempeaMYj7XbA2VOvt0pY6tODdG9Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OZNdJCzIMZYI0+tLzhIsyftz2D8g7CBc+VqOleRaKYw=;
-	b=GITFSDo8/JDgpKXl36GvSXiC8jL62L4PnkduTswIos+HzuZrKvmgPScawzbIZvnbGZ6E
-	 zhkXOJTDZs74lOqIrKoJw/6sDYs86rWS5UqSqpd4YwY0oTxRilfYzvp21iI+F1lTtEXGQ
-	 zG48SoQe2gixXhFyPFY9eqR+h694vGI3khlaVJcOOdwuOVQiGvAqRNY38CIBCrm7Y1VEq
-	 vEyqbQjO2zu04SQv5lS/skrw/HB1ZXqwH6lBdmLiOd8buiaaiWrZsB8Fe9FEEkxq12iHL
-	 c9kA9qcTamXZNAVlwHwb053PgStbjtfctQvO7JzN5vSaFE4bp1DjQHdUgZ12Y6afLIw==
+	bh=L/3CpbBdiHRiNDiAMpYKmHQr9ccO92TXyXuPz06eRzY=;
+	b=SnEgyHKUNXx7GPc5U4JUR6tNx7Z8IyRpH/guv/aozzCg+ha44HD+Xz5v8QNHNNWqVx5Y
+	 la6NSnAFeogNaHl14VJBbccQLFSx//GGVYPqLCgnsRDIqdxfLSoAxYWBz61z0ao1Vm35t
+	 MX8iqCkKcWt9uBF+4/jMEdllAcqvDmyWpdEpfUyT5MBtgXq7gUeooGScE6X0dE940dYq/
+	 mvYI/LttMB/GbhvnSpJp5LX1vN6yJjMAmP+plwd1FRHqigKDSNYWRlQZNaaX/v1/QjPGn
+	 E5bGv+uboM7p7s7yxHud3QqEp6G/0sb2KbeRdNnEnSwJJ78J1YYFv62J6a2R/hZQi/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a2ev3UVt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4W7UQ5E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D791B606A31C;
-	Wed, 18 Nov 2026 16:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4E5606A31C;
+	Wed, 18 Nov 2026 16:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a2ev3UVt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367761F000C4;
-	Wed, 18 Nov 2026 16:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4W7UQ5E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F406A1F000C4;
+	Wed, 18 Nov 2026 16:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020588;
-	bh=OZNdJCzIMZYI0+tLzhIsyftz2D8g7CBc+VqOleRaKYw=;
+	s=korg; t=1795020591;
+	bh=L/3CpbBdiHRiNDiAMpYKmHQr9ccO92TXyXuPz06eRzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a2ev3UVthpHAPQApjebp87tWksQeVNO7uLZJWkkKyNSzjvcMDvWvHLC+G1/dqO/ua
-	 FLzHZ3tGvAaH6VM2UE+qOnOZj1dgeoi5JI9cpLCoQuWGxyA0X1lp0pY3WOL2JEoBpb
-	 4h66M+KI89agmVXdR6cPi0j/FPlJ4aFDYyc2CeE0=
+	b=r4W7UQ5EM7+F3sXZ63trhZESKIFk10UN7ffZu/bMqWSm1SiIRmfzRANC93Ez+URCo
+	 Vhgys3a5bfZQUyUDCrpChhfjw/4L+arkjijQpXpP5v8uK00rfZsWhWUGVyPH3EliY1
+	 MfXM2YGfgKDjL+suPMXClxYlir3ff3RFn7ALjBWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2004/2651] ASoC: mediatek: mt8195: Fix HDMI TX startup error handling
-Date: Wed, 18 Nov 2026 15:54:04 +0100
-Message-ID: <20261118150358.443442300@linuxfoundation.org>
+Subject: [PATCH 7.3 1969/2651] PCI: endpoint: pci-epf-vntb: Track link state from both sides
+Date: Wed, 18 Nov 2026 15:53:29 +0100
+Message-ID: <20261118150357.361045833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,58 +69,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 1d6f1785d90334b66809a57ebfc40a5b1cfa80ec ]
+[ Upstream commit f9eabc48327fae33cf0a02a8f312c24505dc413b ]
 
-Check and propagate errors when enabling the clock gate and MCLK
-during HDMI TX/DP TX startup.
+The control-region link status is currently updated only by
+COMMAND_LINK_UP and COMMAND_LINK_DOWN from the HOST. The virtual
+NTB link callbacks are empty. Consequently, the HOST can see the link as
+up before the VHOST has enabled it, and ntb_link_disable() on the VHOST
+leaves LINK_STATUS_UP set without notifying either NTB client.
 
-If MCLK enabling fails, disable the clock gate that was already
-enabled before returning the error.
+ntb_netdev can hide this device-level state bug because ntb_transport uses
+a separate per-QP LINK_DOWN_FLAG message. Use ntb_tool to observe the
+device link state directly:
 
-Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-15-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+After bringing both sides up, start one waiter on each side:
+
+  HOST# echo N > /sys/kernel/debug/ntb_tool/<H-device>/peer0/link_event
+  VHOST# echo N > /sys/kernel/debug/ntb_tool/<V-device>/peer0/link_event
+
+While both waiters are blocked, disable the link on the VHOST:
+
+  VHOST# echo N > /sys/kernel/debug/ntb_tool/<V-device>/link
+
+Without this patch, the link-disable command succeeds, but peer0/link
+remains Y on both sides and neither waiter returns.
+
+Track HOST and VHOST enablement separately and report the effective link
+as up only when both sides have enabled it, as pci-epf-ntb does for its
+two physical hosts. Both NTB clients observe this effective state, so
+notify both sides only when it changes, including the side whose request
+completes the transition. Serialize the two paths because HOST commands
+run from delayed work while the VHOST callbacks may run concurrently.
+
+With this patch, peer0/link changes to N on both sides and both waiters
+return.
+
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20261014071448.2473208-1-den@valinux.co.jp/
+Link: https://patch.msgid.link/20261015142716.3452900-1-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 98 +++++++++++++++----
+ 1 file changed, 78 insertions(+), 20 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-index 1270fcac6b3f4..11317cdd14abc 100644
---- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-@@ -2321,13 +2321,25 @@ static int mtk_dai_hdmitx_dptx_startup(struct snd_pcm_substream *substream,
- 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
- 	int cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(dai->id);
-+	int ret;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 07ba338732d4e..bebdd93a067c0 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -41,6 +41,7 @@
+ #include <linux/delay.h>
+ #include <linux/io.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/slab.h>
  
--	if (cg_id >= 0)
--		mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+	if (cg_id >= 0) {
-+		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+		if (ret)
-+			return ret;
-+	}
+ #include <linux/pci-ep-msi.h>
+@@ -147,7 +148,10 @@ struct epf_ntb {
+ 	u16 vntb_pid;
+ 	u16 vntb_vid;
  
--	mtk_dai_etdm_enable_mclk(afe, dai->id);
-+	ret = mtk_dai_etdm_enable_mclk(afe, dai->id);
-+	if (ret)
-+		goto err_disable_cg_clk;
+-	bool linkup;
++	/* Serialize HOST and VHOST link state changes. */
++	struct mutex link_lock;
++	bool host_link_enabled;
++	bool vhost_link_enabled;
  
- 	return 0;
+ 	/*
+ 	 * True when doorbells are interrupt-driven (MSI or embedded), false
+@@ -183,24 +187,55 @@ static struct pci_epf_header epf_ntb_header = {
+ 	.interrupt_pin	= PCI_INTERRUPT_INTA,
+ };
+ 
++static void epf_ntb_update_link(struct epf_ntb *ntb)
++{
++	u16 link_status = READ_ONCE(ntb->reg->link_status);
 +
-+err_disable_cg_clk:
-+	if (cg_id >= 0)
-+		mt8195_afe_disable_clk(afe, afe_priv->clk[cg_id]);
++	/* The link is usable only after both sides have enabled it. */
++	if (ntb->host_link_enabled && ntb->vhost_link_enabled)
++		link_status |= LINK_STATUS_UP;
++	else
++		link_status &= ~LINK_STATUS_UP;
++
++	WRITE_ONCE(ntb->reg->link_status, link_status);
++}
++
++static int epf_ntb_notify_link(struct ntb_dev *ndev)
++{
++	struct pci_epf *epf = ntb_ndev(ndev)->epf;
++	int ret;
++
++	ntb_link_event(ndev);
++
++	ret = pci_epc_raise_irq(epf->epc, epf->func_no, epf->vfunc_no,
++				PCI_IRQ_MSI, EPF_IRQ_LINK + 1);
++	if (ret)
++		dev_err(&epf->dev, "Failed to raise link event IRQ: %d\n", ret);
 +
 +	return ret;
++}
++
+ /**
+- * epf_ntb_link_up() - Raise link_up interrupt to Virtual Host (VHOST)
++ * epf_ntb_set_link_enabled() - Set HOST link enablement
+  * @ntb: NTB device that facilitates communication between HOST and VHOST
+- * @link_up: true or false indicating Link is UP or Down
+- *
+- * Once NTB function in HOST invoke ntb_link_enable(),
+- * this NTB function driver will trigger a link event to VHOST.
++ * @enabled: true when the HOST has enabled the link
+  *
+  * Returns: Zero for success, or an error code in case of failure
+  */
+-static int epf_ntb_link_up(struct epf_ntb *ntb, bool link_up)
++static int epf_ntb_set_link_enabled(struct epf_ntb *ntb, bool enabled)
+ {
+-	if (link_up)
+-		ntb->reg->link_status |= LINK_STATUS_UP;
+-	else
+-		ntb->reg->link_status &= ~LINK_STATUS_UP;
++	bool notify;
++
++	scoped_guard(mutex, &ntb->link_lock) {
++		notify = ntb->host_link_enabled != enabled &&
++			 ntb->vhost_link_enabled;
++		ntb->host_link_enabled = enabled;
++		epf_ntb_update_link(ntb);
++	}
++
++	if (notify)
++		return epf_ntb_notify_link(ntb->ntb);
+ 
+-	ntb_link_event(ntb->ntb);
+ 	return 0;
  }
  
- static void mtk_dai_hdmitx_dptx_shutdown(struct snd_pcm_substream *substream,
+@@ -325,16 +360,14 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
+ 		ctrl->command_status = COMMAND_STATUS_OK;
+ 		break;
+ 	case COMMAND_LINK_UP:
+-		ntb->linkup = true;
+-		ret = epf_ntb_link_up(ntb, true);
++		ret = epf_ntb_set_link_enabled(ntb, true);
+ 		if (ret < 0)
+ 			ctrl->command_status = COMMAND_STATUS_ERROR;
+ 		else
+ 			ctrl->command_status = COMMAND_STATUS_OK;
+ 		goto reset_handler;
+ 	case COMMAND_LINK_DOWN:
+-		ntb->linkup = false;
+-		ret = epf_ntb_link_up(ntb, false);
++		ret = epf_ntb_set_link_enabled(ntb, false);
+ 		if (ret < 0)
+ 			ctrl->command_status = COMMAND_STATUS_ERROR;
+ 		else
+@@ -1472,11 +1505,29 @@ static int vntb_epf_peer_mw_get_addr(struct ntb_dev *ndev, int idx,
+ 	return 0;
+ }
+ 
++static int vntb_epf_set_link_enabled(struct ntb_dev *ndev, bool enabled)
++{
++	struct epf_ntb *ntb = ntb_ndev(ndev);
++	bool notify;
++
++	scoped_guard(mutex, &ntb->link_lock) {
++		notify = ntb->vhost_link_enabled != enabled &&
++			 ntb->host_link_enabled;
++		ntb->vhost_link_enabled = enabled;
++		epf_ntb_update_link(ntb);
++	}
++
++	if (notify)
++		return epf_ntb_notify_link(ndev);
++
++	return 0;
++}
++
+ static int vntb_epf_link_enable(struct ntb_dev *ntb,
+ 			enum ntb_speed max_speed,
+ 			enum ntb_width max_width)
+ {
+-	return 0;
++	return vntb_epf_set_link_enabled(ntb, true);
+ }
+ 
+ static u32 vntb_epf_spad_read(struct ntb_dev *ndev, int idx)
+@@ -1636,7 +1687,7 @@ static u64 vntb_epf_link_is_up(struct ntb_dev *ndev,
+ {
+ 	struct epf_ntb *ntb = ntb_ndev(ndev);
+ 
+-	return ntb->reg->link_status;
++	return READ_ONCE(ntb->reg->link_status);
+ }
+ 
+ static int vntb_epf_db_clear_mask(struct ntb_dev *ndev, u64 db_bits)
+@@ -1654,7 +1705,7 @@ static int vntb_epf_db_clear(struct ntb_dev *ndev, u64 db_bits)
+ 
+ static int vntb_epf_link_disable(struct ntb_dev *ntb)
+ {
+-	return 0;
++	return vntb_epf_set_link_enabled(ntb, false);
+ }
+ 
+ static struct device *vntb_epf_get_dma_dev(struct ntb_dev *ndev)
+@@ -1797,6 +1848,10 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ 		goto err_bar_alloc;
+ 	}
+ 
++	ntb->host_link_enabled = false;
++	ntb->vhost_link_enabled = false;
++	ntb->reg->link_status = 0;
++
+ 	ret = epf_ntb_epc_init(ntb);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize EPC\n");
+@@ -1882,7 +1937,7 @@ static int epf_ntb_probe(struct pci_epf *epf,
+ {
+ 	struct epf_ntb *ntb;
+ 	struct device *dev;
+-	int i;
++	int ret, i;
+ 
+ 	dev = &epf->dev;
+ 
+@@ -1893,6 +1948,9 @@ static int epf_ntb_probe(struct pci_epf *epf,
+ 	epf->header = &epf_ntb_header;
+ 	ntb->epf = epf;
+ 	ntb->vbus_number = 0xff;
++	ret = devm_mutex_init(dev, &ntb->link_lock);
++	if (ret)
++		return ret;
+ 
+ 	INIT_WORK(&ntb->peer_db_work, vntb_epf_peer_db_work);
+ 	disable_work(&ntb->peer_db_work);
 -- 
 2.53.0
 
