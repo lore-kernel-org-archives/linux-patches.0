@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015077;
-	b=WJrGEt07EbdoNGXFjRPZ2CSqlgd4wJ2ceUsfdaw98NCyhHsQUhPPczqtJhA7BQc1TOBT
-	 NgmI/SHryFRYGvS2iS5xSd149Wst745cpCFHiHNQ3LE5jtOfl3pZd4JMi0Qqr+VJGh1+E
-	 ypFExpIcWG4wezxYbyIF8b+mqjh5ADnJf94/xG3JoJUHNXUgJ4MZ9PMztGsGJ41HbSoZg
-	 X2gYfKYngEqNqWFaEwNFeRV4w2p4LnWwdR4z6I1w5yQ1apd5iZAYIF/2u/OBmUlBHfmff
-	 fvb5EHg6ZT/0eTnuYtYnZStA3goFfR3psQxQxh7Cv0al5IiKFycMCkDseZNV3XM4n9g==
+	t=1795015080;
+	b=J4hWW/EcrxCzsfq7HrFym36+tyfXBw2+LlzQ83DefdMFlcGTR882d1/uVrFjlMsGVIEj
+	 S+kOhfhxIV7Y9evnvNblbaJtF1O7IuG+ACYfG9kujP8KLhChXKT+2OCPWCOO0voWUKTrg
+	 DCImRdAE+ynUhVjP2iSzFOjxzvcheBU8/CA8Jp0WFeuzx0V8MC3olA5leN6gGNIEqRv1+
+	 ITql6trwIariP+pP4uAMacwwFmmpPC+kD/lCjWfx1nZyAlXPJpYd44Z4o9mHVrF9gUjZ7
+	 JmwFLQhLtR5JuL5Pq/O+qD9aliDNQJEQKsu+lxJuQ7MPz1bJwBUDl328zIBpCVrtRsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HW9RCj6yzjr00Xl0sLiysp4ZUeBgNSE67yWFm1PAcpg=;
-	b=qARrrjWQssAF2z5tw667iTJN+WppTWLB9VaSYhN5zp/oe4AIkHqw1g8ItqtsO3CGbsGY
-	 mGd3O6TZiYJ1C72uG02t0Nqv0tZcZo/fdL25HIzzp8lvGCl+u/hrpBqxVt38Ftuo4ZbfH
-	 bDhOqjViv9Dsppj2ySsJlkhjgHtvSfITjZH9B5ncsLsigd9P/Q3nI13yGeomRVWkL1LLd
-	 L0+teeaH916odDNYPZrgxguyaqb8vkEISuKv/YYVP4VELj7J4AzTkVtgqE+7fFQTyN0b3
-	 wWb1CmYeRCZdpe2JdD1+N/Ue+UquC/1X1VAlqTy6sDRtYFB06CoBpLh+wUvoXl7074g==
+	bh=3+X66afHC88H82BDCCxd1DAU5ShxRlcc6APhmHC8IhU=;
+	b=U3fpJm/ud3apw8U/qpArP7O4aOoZPfFYRwMdbgbfwaBKFjMvETHFgeIbql4318+rIBdT
+	 zWN35RaelgUgstKaHqbDG7A5NTysq1btYVIVrvde0v+cv1Gt53BNYBsCNYPqpf42uLuRP
+	 Bcc+R8xTFwFXfl70Fo5c4Vilt/TWEnjMsA5B2cpZy20glDhiP+jcpvMYcq4SHpzwz7czc
+	 PgD4217vznr0qQhceXBaVcnwRp8PdxLzXKq3bnKMwM2o3F0znFe7IB70ZVF/Z3hcMuAIL
+	 ry9+MpX1Z6XuXLVsP/M0/gafymu3LX+dcP/5gOSC4fFkrHqQrLz9B3jAx14LlMw92mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n6v8wRiW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNyLNsGr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A471B606A320;
-	Wed, 18 Nov 2026 15:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C391606A32F;
+	Wed, 18 Nov 2026 15:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n6v8wRiW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65CB1F000C4;
-	Wed, 18 Nov 2026 15:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNyLNsGr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986041F000C4;
+	Wed, 18 Nov 2026 15:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015077;
-	bh=HW9RCj6yzjr00Xl0sLiysp4ZUeBgNSE67yWFm1PAcpg=;
+	s=korg; t=1795015080;
+	bh=3+X66afHC88H82BDCCxd1DAU5ShxRlcc6APhmHC8IhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n6v8wRiW5a1Gxb76RKD7T7nec2cWuT0fBxr6odMSQ0QUJp/qxy0v7GuKsNJw8XlOd
-	 eHsfMtVsWS4m3/OeKmi+kfCR0D1qzZCk4Nio3W/2HCNlToO25hZ+vy1s8vKUSyuZtg
-	 EsJUQuKRXRxaWGP5TgdGzNFXRW/YWbO4N0DN4Nvw=
+	b=ZNyLNsGrVJFaGVSvj6PalD+rNHKqEtjJa7B7pZhMRpvQwIk7P+UjTaDfSTyjCnnv6
+	 E7YS9iilZ7AqmiRXamczXljbbRInUIYXBKap9GSiXTB0/aCZReWej2mDSh1rlnbqzo
+	 LnFmEVik8FWrQ3CMBGxdVoQYL0fnSboVqfp0BSHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sonny Jiang <sonjiang@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0027/2651] drm/amdgpu: Config VCN instance for soc_v1_0"
-Date: Wed, 18 Nov 2026 15:21:07 +0100
-Message-ID: <20261118150248.956235370@linuxfoundation.org>
+Subject: [PATCH 7.3 0045/2651] ASoC: SDCA: re-enable IRQ on pm_runtime_force_suspend failure
+Date: Wed, 18 Nov 2026 15:21:25 +0100
+Message-ID: <20261118150249.583675616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,38 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonny Jiang <sonjiang@amd.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit ab2fb550bc1fabd96c948fdbebbc05f61a9810d6 ]
+[ Upstream commit d34a818a331f7e270fa9dc3db3d96f6a0d4fa7ab ]
 
-Set up the default VCN instance mask and related instance counts during
-soc_v1_0 SOC configuration, before IP discovery is enabled.
+The SoundWire IRQ was disabled before pm_runtime_force_suspend() but
+never re-enabled when the force suspend failed, leaving the codec
+unable to receive interrupts.
 
-Signed-off-by: Sonny Jiang <sonjiang@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: a56c2536c399 ("drm/amdgpu: cancel idle work in hw_init failure paths for vcn/uvd/vce/jpeg")
+Fixes: 2d877d0659cb ("ASoC: SDCA: Add basic SDCA class driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Assisted-by: LLM
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261020073856.1177749-4-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc_v1_0.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/sdca/sdca_class.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c b/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
-index 43e92e2a85e89..37e2068b6fda2 100644
---- a/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
-@@ -849,6 +849,11 @@ int soc_v1_0_init_soc_config(struct amdgpu_device *adev)
- 	adev->sdma.sdma_mask = sdma_mask;
- 	adev->sdma.num_instances = NUM_XCC(adev->sdma.sdma_mask);
- 
-+	adev->vcn.harvest_config = 0;
-+	adev->vcn.num_inst_per_aid = 1;
-+	adev->vcn.inst_mask = 1;
-+	adev->vcn.num_vcn_inst = hweight32(adev->vcn.inst_mask);
-+
- 	ret = soc_v1_0_xcp_mgr_init(adev);
- 	if (ret)
+diff --git a/sound/soc/sdca/sdca_class.c b/sound/soc/sdca/sdca_class.c
+index c5d6cf9896545..3cabed663008c 100644
+--- a/sound/soc/sdca/sdca_class.c
++++ b/sound/soc/sdca/sdca_class.c
+@@ -216,6 +216,7 @@ int sdca_class_system_suspend(struct sdca_class_drv *drv)
+ 	ret = pm_runtime_force_suspend(drv->dev);
+ 	if (ret) {
+ 		dev_err(drv->dev, "failed to force suspend: %d\n", ret);
++		enable_irq(drv->sdw->irq);
  		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
