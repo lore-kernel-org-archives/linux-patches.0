@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020903;
-	b=Pr1ll0QiYj71HwlHL1j/0sidp+3kfztKuOnHQwfiKKFnxIlTTmIRyia6z63on0WDUeI2
-	 91XNr9cvHtdxqasSImqVQ7N9JFMJAFQJ0dvcAg4OPwDP24jQijIeB6cg96l7MPwWkLpSV
-	 tMgJqEzGVYeg17S9bWLA8l/pMmojwjsuWQfno8QCBP6MTlOVH9rTc7WjM/+Vjz7llZ+Cz
-	 YCMCUs1ORWamYo6zEA417v+dhejxO9yVK+hT2DmzmuKlnltdq0xaQXtb+InBL4jVP6YsB
-	 VFo7hzdzw7c5YC/PsulnwZJ4Btg5wpxkxuRokkM7qZCCo1NPd/lgloOtM8fUKjbBg8Q==
+	t=1795020906;
+	b=NcgW3XcCyYaRFaFJeEx4gLyV4iY4IdjAboFrQ5GKI3cb5Ox6K3A5qLiIEnMg7pW1zpHr
+	 GdASwPAIwJNFkg2Xk+EJIYttRHaEHzK3vZq2JIcbDKTRcNFZ3gi5zODf+jPd9PHMYSDZF
+	 e2aASkXCETmUc0at2w8YZHOpJRbRIDqQUM18/LE6/TcnOymMvr8CKdhNzXjDu7vY3IjSy
+	 /i5Or2lC2apEAjaguVZmyOsgkwVw0SgrbLX53VtiKjOYw+il05Ofbjm9VxLhkS2Ds+KlV
+	 ba+Gmx40wZgamWQjBtZohm4c5HdKv/J/Bl2Vy/PKZbNdqq3m6L3YVAaEe+F01Spf0yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pk23Mr9xz+P/BOCS07sVBl6RhsZpNGhGtmTJD9Q0I/Q=;
-	b=ArJcd975C955yhuxlQdMiv5VsNwC33dKEj3Y08FBNIXe22tQNoeE04RZpK32Fr3znOoJ
-	 5L1UA2ez3wlI+yeyWy+HWoplOTp3dN+zUTqsB0ncPY2iZKjz86x5UHhgy21br5u8oEMzJ
-	 qpeAKGTNzlOwc2nHCXGf+Uyf5Laj9UxKfHEe/34t9gkAIjJxnZbxrq4627dNyeW+7azUg
-	 Ip2kY3xz2VUfJpLj8kwZvrTiNtnPLRFeZ4p2bpNQlbgFKhh8qjQviEQerSKCyEgX9X/qJ
-	 /DZVeCpVOdHUfxleKL1EujrwsfVe7HX9TlPjXzjNYCMwxLW/CkrpH2pGqY2dhYmcFZQ==
+	bh=oZGhUNs+dGCsCXxSVDHl9ghD3D2INw7jryazB/Jf+j8=;
+	b=dGT+XNu+/JlXENgSjTpxvHuHHbojbbeLiKPRY1wGV/xu1u0gnBakbLemRLaemOCSRG+L
+	 omyOmWthhdnEEsU+uXWsLZJeMQXQnLz2j5fuHjtz3/K9ECIVSrDnVAWyl3yoZlt+f2FGL
+	 JYgt9gzG0XE7jM1+egQtyhewzWjyWIAQ5CqVv2yusdIlUvApqdL/Oh/dYG8I/wyk8qCzo
+	 s5+TMEHMdlM7TaVR9Oz+htiDhZCNCMPkkbh3S5C6iugT9pwH5WSnMot6IZ74dQQvi4eaU
+	 0aGUHP0Xo9V8mg6dW4aLGfB+Pr7/H+4bZKuLa099cOyKYBNnXggfdCeYJB1hS1toT7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DU7tvfiy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=taTwmf7f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CE860A2605;
-	Wed, 18 Nov 2026 16:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729A0606B584;
+	Wed, 18 Nov 2026 16:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DU7tvfiy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855E71F000C4;
-	Wed, 18 Nov 2026 16:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=taTwmf7f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A76E1F000C4;
+	Wed, 18 Nov 2026 16:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020903;
-	bh=Pk23Mr9xz+P/BOCS07sVBl6RhsZpNGhGtmTJD9Q0I/Q=;
+	s=korg; t=1795020906;
+	bh=oZGhUNs+dGCsCXxSVDHl9ghD3D2INw7jryazB/Jf+j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DU7tvfiyBPGHuAeUk53+m1bx+R7AcFRg3DUH5Tg0XsGoBeGg3ObYZZxSe5bar+/Ux
-	 NAABsK5o/QvSuc55YOs5N5QrW1ZBemcpN7nOO60Ds37e3dLgrNh+fr208v2DnthCda
-	 Lod7g8xN+IozVc8iA9g/wAEfii5/90EPf0gIiCVU=
+	b=taTwmf7f5oiRjgOnizaYXE1dJirn+ZzI9v3akdQVPlJ+1cqjimGherb5n8g/Gytrc
+	 f0AOCep0V+IildcC8g30/QkTzc+s0PuznRnukGGjQKwM4Lu2ccQ2T37yDGNOw/lRsb
+	 kLehsZFdKHt2bJJLg8CXcfBDvzb/uH+kCrnxf8Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Vega <vega@nebusec.ai>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2117/2651] power: supply: qcom_battmgr: report full batteries
-Date: Wed, 18 Nov 2026 15:55:57 +0100
-Message-ID: <20261118150402.148608270@linuxfoundation.org>
+Subject: [PATCH 7.3 2118/2651] netfilter: conntrack: fix unlikely UaF in gc worker
+Date: Wed, 18 Nov 2026 15:55:58 +0100
+Message-ID: <20261118150402.183518482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,73 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 6c8098e04ee4d233399e40e7311715844910f8f8 ]
+[ Upstream commit 9836164821a46af07428bb2a5e14137bf0c7bd6e ]
 
-The SC8280XP battery-status response has no explicit full state. When a
-battery reaches its full capacity on external power, neither the charging
-nor discharging bit is set. The driver consequently reports "Not
-charging", which can make userspace show the system as battery powered.
+When early-drop scan is enabled, gc_worker() reads tmp->ct_net, resolves
+cnet with nf_ct_pernet(), and reads cnet->count with RCU read lock held but
+before acquiring a reference to tmp.
 
-Use the response's power-online bit and the reported capacity to identify
-a battery that is full while externally powered. Preserve "Not charging"
-for a battery whose charging is inhibited below its full capacity.
+Its unlikely but possible that the worker gets preempted before reading
+cnet->count while nf_conntrack_cleanup_net_list manages to unlink all
+conntracks and returns in the mean time.
+This allows for the pernet memory to get free'd.
 
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
-Assisted-by: LLM
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261008-battmgr-full-v1-1-4f5485a9c421@oss.qualcomm.com
-[put variable definition in Reverse-Christmas-tree order]
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+On resume, use after free would occur when the worker reads cnet->count.
+
+This can be solved either via another synchronize_rcu() in
+nf_conntrack_cleanup_net_list or via cheaper flush_work().  If work
+wasn't running no race can happen as next call cannot observe
+already-unlinked conntrack objects.
+
+This is an LLM finding with no reproducer, but it appears to be correct.
+
+Fixes: c6dd940b1f74 ("netfilter: allow early drop of assured conntracks")
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ net/netfilter/nf_conntrack_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 99ae0920f7264..636d6f6acecc5 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -1277,6 +1277,7 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
- 					   size_t len)
- {
- 	unsigned int opcode = le32_to_cpu(resp->hdr.opcode);
-+	unsigned int power_state;
- 	unsigned int source;
- 	unsigned int state;
- 	size_t payload_len = len - sizeof(struct pmic_glink_hdr);
-@@ -1327,19 +1328,24 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
- 			return;
- 		}
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index d0d9e5ea84a09..6cba999e80561 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -2507,6 +2507,11 @@ void nf_conntrack_cleanup_net_list(struct list_head *net_exit_list)
+ 		goto i_see_dead_people;
+ 	}
  
-+		battmgr->status.capacity = le32_to_cpu(resp->status.capacity) * 1000;
-+		battmgr->status.power_now = le32_to_cpu(resp->status.rate) * 1000;
-+		battmgr->status.voltage_now = le32_to_cpu(resp->status.battery_voltage) * 1000;
-+		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
++	/* must wait for current scan loop, worker also looks at
++	 * struct nf_conntrack_net, which is about to be free'd.
++	 */
++	flush_work(&conntrack_gc_work.dwork.work);
 +
- 		state = le32_to_cpu(resp->status.battery_state);
-+		power_state = le32_to_cpu(resp->status.power_state);
- 		if (state & BIT(0))
- 			battmgr->status.status = POWER_SUPPLY_STATUS_DISCHARGING;
- 		else if (state & BIT(1))
- 			battmgr->status.status = POWER_SUPPLY_STATUS_CHARGING;
-+		else if ((power_state & BIT(0)) &&
-+			 battmgr->info.last_full_capacity &&
-+			 battmgr->status.capacity >= battmgr->info.last_full_capacity)
-+			battmgr->status.status = POWER_SUPPLY_STATUS_FULL;
- 		else
- 			battmgr->status.status = POWER_SUPPLY_STATUS_NOT_CHARGING;
- 
--		battmgr->status.capacity = le32_to_cpu(resp->status.capacity) * 1000;
--		battmgr->status.power_now = le32_to_cpu(resp->status.rate) * 1000;
--		battmgr->status.voltage_now = le32_to_cpu(resp->status.battery_voltage) * 1000;
--		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
--
- 		source = le32_to_cpu(resp->status.charging_source);
- 		qcom_battmgr_sc8280xp_set_online(battmgr->ac_psy, &battmgr->ac.online,
- 						 source == BATTMGR_CHARGING_SOURCE_AC);
+ 	list_for_each_entry(net, net_exit_list, exit_list) {
+ 		warn_on_keymap_list_leak(net);
+ 		nf_conntrack_ecache_pernet_fini(net);
 -- 
 2.53.0
 
