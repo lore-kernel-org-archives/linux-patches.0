@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054038;
-	b=gjLmcLmu2XNwVoaayCqTr7NTipCKoYKBI9Z5pM7VaF0orZvYqywMEao4GjuLugZFXLOx
-	 j8KhzQUv9BqTt6AqWAp9elD7rgUVHspBQkbNoR6GhQ2ckHGm0VpJaO0QclnO9qR/4azBg
-	 u1NFkQCGyA8+pWiF+J3lF6rGD3OwAe85OW/TZyz9ok7RNLJzK1UkTweBDVj7c3A1zQV78
-	 nz2YeDRkogfOappMr1CxGmnsfazWrCHWO7QK1eQwmdjiM1UtB7LmdQfocYMw1wuRC2b4O
-	 kn/JlMY3v2B1h5nNHBW0eJsrzRJshVpkQ9Cg4lHwVUBHkTZQnqh2htPfbJvWoOl5sLg==
+	t=1795054041;
+	b=YDlTZ/GGwX3OunTKhiPe+DwPkWbXLvt8Q9z/M2W2jfadhIdS7aK5H3IzUkxQwqcKdKtH
+	 Yu7ui0QLKyvguOmFscLM/+YyLWXu0/EySNOLmEo7adrSi7g1obh8z2I5F0cV1iVzCBpd4
+	 dD+cpyo2yPgibYGhf/+QmrxxDKw/Briv0i0bENGAvB6MusmnMVAOVuEml1E8h8eUr/Sum
+	 wpHezUJPyZwVvuSWdFPvfy8jF7fvDlRJSFmxM3citHgQqBaFGUBwR/I4G/mdgRgU7SB8O
+	 lTYXeJY++T6Kw0Is/3zFDMlt5HkC9J7KOrPs4lnggOInh1lVrd++WWVT1M2Yl2G5i0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054038;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X7w7Rg4fwEdIf8pgVPCnbC5O2iIVFBJWQ1gZ5Xh3mm8=;
-	b=Fv4wk8khQP+2zjiiIZ9OPPJ1b/wU1ZacSkY4Hdxfan/Kot6ZDoxYefZIg4/pHAPoz8yP
-	 jVLrbQ8YjAOyw4OpvJ/bes8ph7tO73asKw+OPT5W/U1ZAWxJXonYF+LQ0mrtO4v7d/+u1
-	 Uujs+zTfHyIksukLld3SlT9e1N55j3lTRtBeeNrB9PPOsXBjClpUXXGORcFN5Akc4/EAB
-	 9Dwh9wiLyGDbzugsw9x7dKPjR8pET+YYcK+u1cFTAfc5ChI7p5RZFNjAWMks4RJWFTUhc
-	 h2Y2aNsDgHdqk6IpOE22vxGBqGW78QBtSNNP1H1ZXj4FiJkK6cKdUTCg2pTcVzjo2qQ==
+	bh=qkEEzgia5mG4IoI9T8AIN1YZq3L5gD1d++ZicCo1HJ4=;
+	b=qVER1m72yC9XVet18J4gRbHZfkpvoKlELtU20toyehfoZtcaQnokERQOvNeACFL5Hnjf
+	 bTYK5teDudGC18i46prIPwal6TqAroHq0B8iHdFwMaxZc5zKvqkoUe8w28Fr8bDzUhDpR
+	 d02UBddXfqCEIIIeSGdcbtZbIWTqbFRRVnyULmH/PyiWJYB5UYHt+HSvLSpZMkpZR+nab
+	 JpqYyY08qO/484mfheehVpkfDb2F6IrP+GQJRnh9tw0NWqPFTdvyCfuXorx9qcln08zK/
+	 hXNu1G0pWbK6lDae7FXOORdx10fG2g0gZpzp8ROFcIuia0dD+wcxFwchT2mo+xf+LlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f3xi8vq6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSbwSvam;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A44606A32A;
-	Thu, 19 Nov 2026 02:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2812A606A325;
+	Thu, 19 Nov 2026 02:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f3xi8vq6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FFD1F000C4;
-	Thu, 19 Nov 2026 02:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSbwSvam
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A67A1F000C4;
+	Thu, 19 Nov 2026 02:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054038;
-	bh=X7w7Rg4fwEdIf8pgVPCnbC5O2iIVFBJWQ1gZ5Xh3mm8=;
+	s=korg; t=1795054041;
+	bh=qkEEzgia5mG4IoI9T8AIN1YZq3L5gD1d++ZicCo1HJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f3xi8vq6jwEggK/qGdMxlc+lydBNGszcELOmlXT+1O8af47Ahj4E6jJKbOsRbSx1M
-	 jBqSjLZgMi+MJAiei2osyE97kJy1WiCiy4ZNYbk3jf8obaqrmvqJhIlaacix7B9mVa
-	 ReMP6tVwGHLd+md5br2BwlkgmGQk4l0i4ZOcoVxs=
+	b=iSbwSvamECdJ9uLz+BvZV+utArLWTcNXW6Wb5yqajYAi+L3RxFDYTnQdUE3glZy7r
+	 StkMSnZpi9LzP7hx79y1kLDCTvYyWLoSdX47F9C4Qcor9YBQNio6XFS07voXU7bpRY
+	 ttkLechd2bOG5DsH9tfPyWjGCe4IY87TEge0S1Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolaos Karaolidis <nick@karaolidis.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	Maxime Ripard <maxime@cerno.tech>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1133/2214] fs: dont lose inodes that another LRU walker is isolating
-Date: Wed, 18 Nov 2026 15:46:49 +0100
-Message-ID: <20261118150057.374262554@linuxfoundation.org>
+Subject: [PATCH 5.15 1134/2214] ASoC: tlv320aic32x4: div: Switch to determine_rate
+Date: Wed, 18 Nov 2026 15:46:50 +0100
+Message-ID: <20261118150057.411871403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,69 +73,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolaos Karaolidis <nick@karaolidis.com>
+From: Maxime Ripard <maxime@cerno.tech>
 
-[ Upstream commit 8dc4116041e2b377e5e1b62ba98b37636f9f3968 ]
+[ Upstream commit 2b6c9b0eee89379fda238d543c5acf098a2ac5a5 ]
 
-When inode_lru_isolate() finds an unused inode that still has page
-cache, it sets I_LRU_ISOLATING, drops i_lock and the list_lru lock,
-invalidates the page cache, clears the flag again and returns
-LRU_RETRY so that the restarted walk can free the inode.
+The tlv320aic32x4 divider clocks implements a mux with a set_parent
+hook, but doesn't provide a determine_rate implementation.
 
-Another walker of the same list can reach the inode in that window.
-It sees a non-zero i_state and takes the inode off the LRU, as it
-would an inode that is in use. Page cache deletion requeues the inode
-once the mapping is shrinkable, so this is harmless if it happens
-before the last deletion. If it happens after, nothing puts the inode
-back: it stays in memory, unused, clean and without page cache, out
-of reach of the shrinker and of drop_caches, until it is looked up
-again or the filesystem is unmounted.
+This is a bit odd, since set_parent() is there to, as its name implies,
+change the parent of a clock. However, the most likely candidate to
+trigger that parent change is a call to clk_set_rate(), with
+determine_rate() figuring out which parent is the best suited for a
+given rate.
 
-Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode
-lru traversing context") the pin was an i_count reference, and the
-final iput() put the inode back on the LRU.
+The other trigger would be a call to clk_set_parent(), but it's far less
+used, and it doesn't look like there's any obvious user for that clock.
 
-Skip inodes that are being isolated and leave them to the walker that
-pinned them, which restarts its walk once it has unpinned them.
+So, the set_parent hook is effectively unused, possibly because of an
+oversight. However, it could also be an explicit decision by the
+original author to avoid any reparenting but through an explicit call to
+clk_set_parent().
 
-The window is reached by any unused inode with page cache on
-CONFIG_HIGHMEM kernels, and otherwise by inodes whose page cache is a
-single shadow entry at index 0. On an i386 HIGHMEM guest, eight
-concurrent "echo 2 > /proc/sys/vm/drop_caches" over 2000 freshly read
-one-page ext4 files leave roughly 400 of the inodes off the LRU per
-round; on x86_64, with the files' pages first evicted through
-memory.reclaim, 3 to 4 per round. With this patch, none in either case.
+The driver does implement round_rate() though, which means that we can
+change the rate of the clock, but we will never get to change the
+parent.
 
-Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
-Link: https://patch.msgid.link/20261009142431.713875-1-nick@karaolidis.com
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Replaced inode_state_read(inode) with direct inode->i_state access. ]
+However, It's hard to tell whether it's been done on purpose or not.
+
+Since we'll start mandating a determine_rate() implementation, let's
+convert the round_rate() implementation to a determine_rate(), which
+will also make the current behavior explicit. And if it was an
+oversight, the clock behaviour can be adjusted later on.
+
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://lore.kernel.org/r/20221018-clk-range-checks-fixes-v4-67-971d5077e7d2@cerno.tech
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 8cf9607d2d85 ("ASoC: tlv320aic32x4: Prevent division by zero in divider callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/tlv320aic32x4-clk.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 2e03403ed50c0..34e0a0482bff2 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -812,6 +812,12 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
- 	if (!spin_trylock(&inode->i_lock))
- 		return LRU_SKIP;
+diff --git a/sound/soc/codecs/tlv320aic32x4-clk.c b/sound/soc/codecs/tlv320aic32x4-clk.c
+index 2f78e6820c75a..96979243d3a6a 100644
+--- a/sound/soc/codecs/tlv320aic32x4-clk.c
++++ b/sound/soc/codecs/tlv320aic32x4-clk.c
+@@ -326,16 +326,17 @@ static int clk_aic32x4_div_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				AIC32X4_DIV_MASK, divisor);
+ }
  
-+	/* Another walker is dropping its page cache, leave it to that one */
-+	if (inode->i_state & I_LRU_ISOLATING) {
-+		spin_unlock(&inode->i_lock);
-+		return LRU_SKIP;
-+	}
-+
- 	/*
- 	 * Referenced or dirty inodes are still in use. Give them another pass
- 	 * through the LRU as we canot reclaim them now.
+-static long clk_aic32x4_div_round_rate(struct clk_hw *hw, unsigned long rate,
+-				unsigned long *parent_rate)
++static int clk_aic32x4_div_determine_rate(struct clk_hw *hw,
++					  struct clk_rate_request *req)
+ {
+ 	unsigned long divisor;
+ 
+-	divisor = DIV_ROUND_UP(*parent_rate, rate);
++	divisor = DIV_ROUND_UP(req->best_parent_rate, req->rate);
+ 	if (divisor > 128)
+ 		return -EINVAL;
+ 
+-	return DIV_ROUND_UP(*parent_rate, divisor);
++	req->rate = DIV_ROUND_UP(req->best_parent_rate, divisor);
++	return 0;
+ }
+ 
+ static unsigned long clk_aic32x4_div_recalc_rate(struct clk_hw *hw,
+@@ -354,7 +355,7 @@ static const struct clk_ops aic32x4_div_ops = {
+ 	.prepare = clk_aic32x4_div_prepare,
+ 	.unprepare = clk_aic32x4_div_unprepare,
+ 	.set_rate = clk_aic32x4_div_set_rate,
+-	.round_rate = clk_aic32x4_div_round_rate,
++	.determine_rate = clk_aic32x4_div_determine_rate,
+ 	.recalc_rate = clk_aic32x4_div_recalc_rate,
+ };
+ 
+@@ -382,7 +383,7 @@ static const struct clk_ops aic32x4_bdiv_ops = {
+ 	.set_parent = clk_aic32x4_bdiv_set_parent,
+ 	.get_parent = clk_aic32x4_bdiv_get_parent,
+ 	.set_rate = clk_aic32x4_div_set_rate,
+-	.round_rate = clk_aic32x4_div_round_rate,
++	.determine_rate = clk_aic32x4_div_determine_rate,
+ 	.recalc_rate = clk_aic32x4_div_recalc_rate,
+ };
+ 
 -- 
 2.53.0
 
