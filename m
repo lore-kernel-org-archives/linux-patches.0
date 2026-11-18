@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042811;
-	b=b4Q4shQsDxwoyFB1FghifPl/w+RJxsFSpORTSjfQOaAHjfRKXIGjNBynqv1Cqfw9nU/9
-	 QLOezepFeoMORhgyz2kilZ0YoXqcy+Hnh2vgXi2Ed3VUvdlCHbakpEaZzf7uojiWztpo7
-	 fPvzW6n8DrsQ3/82LsFBLISrhLRt0sU+7cL7kUeLhg5/peheYRwhb0UZyapUmhtplmxNa
-	 ZudPMDZYvNb7II0hwUrchHOgF2gAoL8/5fpRgr6fZvUT/FJHtRf1zayHj4171jvLZLP8J
-	 VAhdPHBiIsKHYzRqTr09BrcO1ZA5baEyc26KWFtB8yO/Rho/IjYBF+UaQjKnG0A+sIA==
+	t=1795042814;
+	b=Z3gzAiSJPLgRkGQyeMJQ3ODqrn/4B5XHfB5FNz0PP6PPbIThRhoq/Ky/Fa9IkNO35+Dy
+	 YNtJwPP57CfMR3pdiwsCCYsldo8IZ/7WAs+E+QlvijcTCtM8406iI4nrFWt+7qR6FtEMo
+	 tzEKo4XEE+s/gm/JgDTDaZtqdB69Uced5sdX6ijLmWE47X8HyXjgH7i7ewyTZgOAbJBwc
+	 M7Nqx4vuE9MbyX6BbZabrlqHQ8QzDA3yjxC4CLIvwjAtObhJWbXgULavnSnAV3RHvX22Y
+	 bX5mCKw1LDfjiuyktZ5gXDQD+Hozsk2xSz5Db7DvVIuEIJGB86/CzNb1dk+O6avFiXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UYjasaRDrPI0v6M8RR7iAT5tXi/DqLTdNJ87gVSVy1w=;
-	b=iXK4DJ2FBsYcKvlKoRUcuTU6a3/beFYpM0gxRdHI85NXbFseRK3ZHBRr+JAGMDGfa8hn
-	 BmJDfjfsgB8e4Tob7kYh/XrxY241uRQtExU3j/KTLglYLUD9TMA1W+/FH4Afjy2czaVYt
-	 ktdF+mYmkQMXNxPIj0VpFZI9rQyqas9Ke6xhX3MY0zlaDVYeOHxS/u9qQhj4vgIZyFms8
-	 BLAY3FhUFD4aBmUvEgN+I7Bf5NgVAMBMVz+t2VbUvwwq8xOA3EZsklm3+8xwii0o+5Bjv
-	 aA8tP07i2wzS7u+W1MN247xPlHvJW6cjCrLc2LVlKImN/A37AHWlZedlKycGfvAoZZw==
+	bh=kG5hUXwh5SAYxp6zdjcN1oO124+VDaijCsqMMkczv58=;
+	b=azzHod1hK0lhkBPZBQtHYTpcX15yOqG0jyByHpMWsqw/3OjIZEuwmT9WAq2C2Svu0Hax
+	 FRgw6eoChIVOSooW67fEBQrNBSSqoNgTKmyzS5JmnCi9EXnV0PHITQu8DN3FUQVVjYkLZ
+	 D+i+XSvG3X1Z/mU3N2DxXo7L1Zng1A/1qq9f+WFx1UqhUzIxbDu5Rgf6OiKor9Z4VGfda
+	 TQiUrnBu5JMah5wRBYtgz5Xtowl5alRvpsCQmJJ37ZkwdutdtHEL54YS9lSi0rfkRc5+T
+	 uqB8WlLd0ZvrtStFkachIITcaJ4JANpSLcce8bOdsoF5o4xTqQaEvk9AaemwuqU8qdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxJN3618;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNWKIVDI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED3606A32F;
-	Wed, 18 Nov 2026 23:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F87606A336;
+	Wed, 18 Nov 2026 23:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxJN3618
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E35B1F000C5;
-	Wed, 18 Nov 2026 23:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNWKIVDI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F3E1F000C4;
+	Wed, 18 Nov 2026 23:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042810;
-	bh=UYjasaRDrPI0v6M8RR7iAT5tXi/DqLTdNJ87gVSVy1w=;
+	s=korg; t=1795042813;
+	bh=kG5hUXwh5SAYxp6zdjcN1oO124+VDaijCsqMMkczv58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AxJN3618os8VXldPkeipcJfbecHsBrmUrWBmV5TqqkE0KJeOzfiWyMzvrPAoRLVu5
-	 VXz5tsIXxpa7lCM95IN/UkDA38HW+GU9+hf03RZvAYV5duSgYPG/waNuwAGO6UX8zM
-	 6jL1/N45/Nlm/thHgIsolhuhxhUExc56Jw8rx5Bw=
+	b=jNWKIVDIFLq/kSY2SI/oqQMA4YvkGAV8fsvlQb4UzJohpvNdKK8twCMXfyRHUg6Kq
+	 4qeWO7pusle5S6SG+BBmsUqO6KB0fskqdqTpIeViyDtUrN0K8P2s10EJTVh7waeuMF
+	 u/IqViq8mIKlbaJbAFEsMTpH+thhSN3+fNJA88vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 3304/3318] smb: align durable reconnect v2 context to 8 byte boundary
-Date: Wed, 18 Nov 2026 16:05:26 +0100
-Message-ID: <20261118150458.711474981@linuxfoundation.org>
+	Xiao Liang <shaw.leon@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 3287/3318] tun: drop batched packets while the device is down
+Date: Wed, 18 Nov 2026 16:05:09 +0100
+Message-ID: <20261118150458.216068141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,34 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharath SM <bharathsm@microsoft.com>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-commit 05f5e355cf783b30bd6eb3dec17ed1a8b3cfa95c upstream.
+[ Upstream commit 8f44631ba02afe9fff2f0a0fb66560ab19df87fd ]
 
-Add a 4-byte Pad to create_durable_handle_reconnect_v2 so the DH2C
-create context is 8 byte aligned.
-This avoids malformed CREATE contexts on reconnect.
-Recent change removed this Padding, adding it back.
+tun_sendmsg() handles TUN_MSG_PTR batches from vhost-net by calling
+tun_xdp_one() instead of tun_get_user(). But this path does not check
+IFF_UP, allowing packets from a guest to be injected into the host
+receive path while the device is administratively down.
 
-Fixes: 81a45de432c6 ("smb: move create_durable_handle_reconnect_v2 to common/smb2pdu.h")
+Check IFF_UP in tun_xdp_one() before running XDP or building an skb.
+Drop the packet when the device is down, matching tun_get_user().
 
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 043d222f93ab ("tuntap: accept an array of XDP buffs through sendmsg()")
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261027101830.85327-1-shaw.leon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/common/smb2pdu.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/tun.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -1318,6 +1318,7 @@ struct create_durable_handle_reconnect_v
- 	struct create_context_hdr ccontext;
- 	__u8   Name[8];
- 	struct durable_reconnect_context_v2 dcontext;
-+	__u8 Pad[4];
- } __packed;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 5403ff1da23da..c3349bcff7ab1 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2483,6 +2483,12 @@ static int tun_xdp_one(struct tun_struct *tun,
+ 		return -EINVAL;
+ 	}
  
- /* See MS-SMB2 2.2.14.2.12 */
++	if (unlikely(!(READ_ONCE(tun->dev->flags) & IFF_UP))) {
++		put_page(virt_to_head_page(xdp->data));
++		dev_core_stats_rx_dropped_inc(tun->dev);
++		return -EIO;
++	}
++
+ 	xdp_prog = rcu_dereference(tun->xdp_prog);
+ 	if (xdp_prog) {
+ 		if (gso->gso_type) {
+-- 
+2.53.0
+
 
 
