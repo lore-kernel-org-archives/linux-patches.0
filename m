@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031543;
-	b=nQfbpuZI/EiaFYO7yawzwHPwSxZUbDb1jRoaGq7qJQWEgIR9YbpbQZ/FA+mQqTemmsB6
-	 eTZE5aVi2YGJ6R8h7VsRke5U0WIoyZ43F5+gFzTiltzwcMzrvazb37ZpJkjMraVrkZLhB
-	 nvU5cCqpThJM/9L31mMWa8DAr3V/jbs/5DF+Qh6PAAbgGjmSUKxUSPKQcMsoDiA76t3b7
-	 81souRKcKEkdXpJ4BpT7fU+zFQoCDrIMsA0G7KLvbb/cXFdZXSdPrQ8DRyS2Mt0WpmJWr
-	 7TYkjb+q7WO/RS81wDdsGLZ/amU33SW8bkuKbPmE3K7Y5vQGVDQZXuTXa0+Zs6uPnpQ==
+	t=1795031546;
+	b=P1IAtsJ2cbj/R7Y7PUq5yMZ5QXg+iJoI0PzTv4uJ05yGoNq9KSEPGetYnzX82WGiv8N2
+	 7NzF0ysmkmH1FrNL7Xl5pDDrXPyhmrxpjnwMUJyAy1AwE+fMstidcxfT2smD8W62qnEYn
+	 zay1TeUoboeTfl3NYzpjyHBeKr9ItgmzgTTYcXCnObsqdK0EBxp1kZKqk5FRzbqJVlzBs
+	 QqH2gOQAWnrMdQkKTZcSmQfBYwvRGfpt2IO8jTYKboSJm+fo7S8tcZQnvjOzauJpHlMjT
+	 VoWgIjjvWNK2+J0ByMdZSrNXI1CnX6hMTW/Dy9xiggnf5ON0DVthkGan81VxCBtl+aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Px9yUg5ervarnDzN3ni6RTzpqZw2hdtnh8IWxDBEVtg=;
-	b=eoShQvn9hRfaiy2S1RFCwob8dv0UY5ysQlIoaZEgRS4VYwHSGSoEmKVXLPCEJuHyX/PL
-	 6MLPHGVAKKOwGKL8dCyYUL2A7aW+XFe0xdPqYBgzRzb0iNFwVjR7ZvEYNEq3EYdJMZHn7
-	 LmpBAaVILCpywBDa9Qya+e0bad/pvL9kUO5prT9GeoHHlGs7pU+lG7ElkXooamwq9eWJf
-	 R0kE6EUTHClJl9pr8RjI2+iXbAr4wDz1nIk1pcoDaiSHw1hUFfC5cNM0zAbA0wsT8WUhS
-	 Yy3ZyMD8XNyKBLGnN+G4d1Uu+VB6R0csOt50RUvgG/tg1qYzH44UoUzZhD6ntsEm7cQ==
+	bh=jScYvz+kR+YZo3Ck67KjOF4EdSUIa2SIY6DgDfizT1Y=;
+	b=FwOv0hlL13uqkpfKWZ/sebSekTxC5e/ZXRsKKzpZcbuaBP3qfswtosS9hebmaITkO5Tb
+	 tVO5oO/bSNGwvhAAOfzTNpwRyQ/umLkF+gNq0EfWc9w0HNX4NgDs6uRJ4oh5Ocr1ZDRKw
+	 9WUuv//nI7s35uzkR1jZNMqjdpoitYeyAazPIwKckJucHqTc+GM/k9vn52hleAB4GGrev
+	 N/XXshtGbdLIM9XoBQd8QcQNtx9Wf7mr0/V0XCscNicl6TOqCzS7J9mHc73QRgsDZoSIb
+	 m9bCNJoBpsl2IP8YFdqSl2sexM2VNSFmvdDtOIih7HHSGBCzNmOjOseFPwyT/SLpmEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stpPcQL3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fglssc2/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5994D606A325;
-	Wed, 18 Nov 2026 19:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538E5606A325;
+	Wed, 18 Nov 2026 19:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stpPcQL3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A422F1F000C4;
-	Wed, 18 Nov 2026 19:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fglssc2/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A211F1F000C4;
+	Wed, 18 Nov 2026 19:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031543;
-	bh=Px9yUg5ervarnDzN3ni6RTzpqZw2hdtnh8IWxDBEVtg=;
+	s=korg; t=1795031546;
+	bh=jScYvz+kR+YZo3Ck67KjOF4EdSUIa2SIY6DgDfizT1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=stpPcQL3WBNyXN/wsbdYXzVlLiF4nrrLTS/j0NmX4WIEEkFlvLWOuccieYeLgvi10
-	 EXjIoTRNm8yXRdtEqg0Hs2pmmGXvx7x3X9R1XYQ6h1zNNi/6fSzTVeSCm4HAcnIET5
-	 ja8FvIWaYtKrKH3gDEHe8FPenGWyJXWjzLnwM/hU=
+	b=Fglssc2/G4/nq4coGgyKiKhLOKrbfsdTOj9zIMqQt8Xj1fEOfmKZFrg8UZ1bfK1Bn
+	 D6wBR2k+hN8n5D5iMwIClNGe7mdda7rPszrJf9+gwo5VEPbiBDL5SudutqdqeipyZ1
+	 /v1np6VLO5AwWZbOzDm4fUQmybS2+/Mw83zuiWcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daasaradhi Mannava <daasaradhimannava@gmail.com>,
+	Aleksandrova Alyona <aga@itb.spb.ru>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1094/1756] platform/x86: msi-ec: Report valid charge thresholds when unset
-Date: Wed, 18 Nov 2026 15:53:41 +0100
-Message-ID: <20261118150053.775224118@linuxfoundation.org>
+Subject: [PATCH 6.12 1095/1756] platform/x86: intel_telemetry: initialize default trace verbosity
+Date: Wed, 18 Nov 2026 15:53:42 +0100
+Message-ID: <20261118150053.810906525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,57 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daasaradhi Mannava <daasaradhimannava@gmail.com>
+From: Aleksandrova Alyona <aga@itb.spb.ru>
 
-[ Upstream commit a102207eaf4a18c60c2ffbdc421ad3d30bfed591 ]
+[ Upstream commit 1b55ec81926eb7f6e4fad692fa4040a569e9daf7 ]
 
-The charge thresholds are computed by subtracting a fixed offset from
-the raw EC value. When no charge limit has been set, the EC can hold a
-value below range_min (0x80 on an MSI GL65 Leopard 9SCXK), and reading
-the sysfs attributes returns nonsense:
+telemetry_def_get_trace_verbosity() returns success without initializing
+the output verbosity value.
 
-  charge_control_start_threshold: -10
-  charge_control_end_threshold:   0
+The default telemetry operations are installed when the core driver is
+initialized and again by telemetry_clear_pltdata() when the platform
+driver is removed. The telemetry debugfs files can remain available after
+the platform driver removal.
 
-Both attributes are documented to be within 0 - 100, and an end
-threshold of 0 wrongly suggests that charging is disabled.
+A subsequent read of pss_trace_verbosity or ioss_trace_verbosity calls
+telemetry_get_trace_verbosity(), which may use the default callback and
+return success without setting verbosity. The uninitialized value is then
+passed to seq_printf().
 
-The store path already rejects values outside range_min..range_max.
-Apply the same range to the show path and report the maximum threshold
-for any value outside of it.
+Validate the output pointer and initialize the default verbosity to zero
+so callers never use an uninitialized value after a successful call.
 
-Tested on an MSI GL65 Leopard 9SCXK (EC firmware 16U8EMS2.100) with
-the EC holding 0x80: the attributes now read 90 and 100.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 392cacf2aa10 ("platform/x86: Add new msi-ec driver")
-Assisted-by: LLM
-Signed-off-by: Daasaradhi Mannava <daasaradhimannava@gmail.com>
-Link: https://patch.msgid.link/20260916174812.11496-1-daasaradhimannava@gmail.com
+Fixes: 378f956e3f93 ("platform/x86: Add Intel Telemetry Core Driver")
+Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
+Link: https://patch.msgid.link/20260917110812.2831-1-aga@itb.spb.ru
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-ec.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/x86/intel/telemetry/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
-index 0cec54d497d1e..e00c4ed7d7b3c 100644
---- a/drivers/platform/x86/msi-ec.c
-+++ b/drivers/platform/x86/msi-ec.c
-@@ -1197,6 +1197,15 @@ static ssize_t charge_control_threshold_show(u8 offset,
- 	if (result < 0)
- 		return result;
- 
-+	/*
-+	 * The EC may hold an out-of-range value (e.g. 0x80) when no charge
-+	 * limit has been set. Report the maximum threshold instead of a
-+	 * meaningless (possibly negative) percentage.
-+	 */
-+	if (rdata < conf.charge_control.range_min ||
-+	    rdata > conf.charge_control.range_max)
-+		rdata = conf.charge_control.range_max;
+diff --git a/drivers/platform/x86/intel/telemetry/core.c b/drivers/platform/x86/intel/telemetry/core.c
+index e4be40f73eebf..6a1e9df26ba1b 100644
+--- a/drivers/platform/x86/intel/telemetry/core.c
++++ b/drivers/platform/x86/intel/telemetry/core.c
+@@ -51,6 +51,10 @@ static int telemetry_def_get_eventconfig(
+ static int telemetry_def_get_trace_verbosity(enum telemetry_unit telem_unit,
+ 					     u32 *verbosity)
+ {
++	if (!verbosity)
++		return -EINVAL;
 +
- 	return sysfs_emit(buf, "%i\n", rdata - offset);
++	*verbosity = 0;
+ 	return 0;
  }
  
 -- 
