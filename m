@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024972;
-	b=SKHlscwwQHDr4+RGF+SDzNn1nwl8/EN0dfjYYiQhzn4GI3pS3+7yceJ5G9CJ8s3czYgW
-	 iO7wjr2CoD0FL7Lk8JYntEBapznB2Ktk/R/hSubbS1TyYWun03/egOtjKMKc6Sy2SS/H3
-	 J1oEsYzaoiHs1kU/J1AyX8gzyS1Rt+/ZEZDN2JmvP3TfJ9C9EE9wv4JzOOUtgd8+oXq/3
-	 qSs7QJNDs/zl3p8sShGWpuBuZ4ynIr51ZN8fBiO4KPOOksnEWx2GYJPM6Rwg/uHTn3UUJ
-	 eBQlW9zV4WNDmSjIN6KeI6Yzp+kGBfXQTtVXuXGZL9GbKfr1vMUi8oUQQ4pOB6UKfwg==
+	t=1795024974;
+	b=NvGT5x/vYu1nfqwTMLiX5Z2Ylc7P+Ff33fElOEeEqOwtHPBrU/Nm1YTppgUymXShKBkV
+	 VlT5SNlhVBQPQCCdAHNwlDgZERYDnBelcz3PbwO9hL3xaAG+vhH60wcp1yPF8xNQSU33C
+	 NHSv9kBm6T7nGyvDBy58B4zeprZmtyXr0ttc+g5Ks8HBzEYJrpEb3qJsuTLTfGc2ry5c/
+	 zYWu/v1xKTaIft1ae8jimjk1c65Xcs5Oy9Ixz7spxk3ES49Ly6ZDmXWyMR7CrqjhrTOMh
+	 COW5s3dVPubVTX7CPMzJSpFsoW+lEMAVFz2W1p3NsBNsZpWlWFd54BdOPkX6PXxV9zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XN+hnncIQ9JYb9Ork02QNWpSvldxXBIL5N/tsCObdFM=;
-	b=dybfFAZZ7+FjluF3FX7wT0PJ7Usc4dR8ZCYMxVKz/lbM9KFkE5nKcwlL8NlluAS/iYi8
-	 7/ohIyJA65FDj+VQAdqxvlaLO6GIUQwXBW2pAIi4I+DcDzbpDEgyy/NushO9Xn3bAdoh7
-	 wsnjTU8ZxAc4/6hlTauLpUHqdJ+Ff/2+FFvue1ACtxR1cJtmvmC+f2+KRrfHkXrtr7YSw
-	 RXVv0Q8y/z54w0t+wkddO4WV0VGIcYzto6mxjV3ToGlI1x2xW06I8sqipss16Jjb/xQGv
-	 bW/bnCe42R6hnc2zae/gX+3EBrqNDvDxhfCanMeVI+Flixo0vRiUY6Rpqla/+KMvJ/A==
+	bh=eE74+xD2s1fbryu9MFnKKEBY6033rR2FEwRffYxcjJ4=;
+	b=A9YYHxtv0Xs0bDzXuYX7KY6z9Z6tQuBM7CqmyMeeW7g5k6h4xn6tcAFSklZdcNNkoQxy
+	 C6PQCiqdMqAGqoItZP6FE3xsiOx60hCHswyua6GV3AnCcDEsTKbwIdxNnYG1W6wQ5BmCp
+	 Iq3qt/eU4pWQefxvMQcfVpHW8eCLZEEngn1r1WPLYIdV7f0Nr9xNwUdf9Mu+OeSyblcwd
+	 ALQyVYquoU8WCNYQuIdIr0CgGnLfgH7x4cnQNvpGQGkx/b4irFfHnw57Mx9THmUAAPjI9
+	 mUMBsddda0yCDI0AZZd5mBHuBYeHxf4tbrPAeGymAQ8g14vG78tx30usbTPtD8SSILQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wRT3lL/h";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lLP1Vz3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF08606A31C;
-	Wed, 18 Nov 2026 18:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC91606A320;
+	Wed, 18 Nov 2026 18:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRT3lL/h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513DB1F000C4;
-	Wed, 18 Nov 2026 18:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lLP1Vz3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125651F000C4;
+	Wed, 18 Nov 2026 18:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024971;
-	bh=XN+hnncIQ9JYb9Ork02QNWpSvldxXBIL5N/tsCObdFM=;
+	s=korg; t=1795024974;
+	bh=eE74+xD2s1fbryu9MFnKKEBY6033rR2FEwRffYxcjJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRT3lL/h27jVN1pRavXM9wSj1WR0K6oTgA6OKdIm9CP550xFxv03m3OBHzgmFObr3
-	 bNzHTPUbkRa9WOMDFffmCP8ES5Yeoqiy1uzYE1C2NtdYYD5T1DiTrg7Cc96jR+M+KL
-	 /iL2tiTGQIZ3hYepa+n10HGSeQLK0QYXNnEJHKWY=
+	b=2lLP1Vz30yTExJjkdUjr9YGLwGsIcUWy4Z2ABnFJOveKXw3S3FKKKh5zvi58Ofpzu
+	 NiXAoSPL8GbYpIEmEkWg1D5Uzsvb5owsH2Xt8R7UK//8KnEQxAYbtF1whPavtUsxmT
+	 DHu1UsP+9NeRMjo6SZWJngnlFdJ7BwcMXOextrS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
 	Brian Masney <bmasney@redhat.com>,
+	Pengpeng Hou <hppiscas@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0873/2151] clk: ti: adpll: unregister OF clock provider on remove
-Date: Wed, 18 Nov 2026 15:43:28 +0100
-Message-ID: <20261118150153.999202986@linuxfoundation.org>
+Subject: [PATCH 6.18 0874/2151] clk: si5351: fail prepare when PLL reset times out
+Date: Wed, 18 Nov 2026 15:43:29 +0100
+Message-ID: <20261118150154.031889839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,41 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 4c943ddfc24340f1b899762b1ff35c38306b7a35 ]
+[ Upstream commit b6685c30d15cd7f28c40b2daaeacc00f21b2f12a ]
 
-ti_adpll_probe() registers the driver's onecell clock provider with
-of_clk_add_provider().  The remove path only frees the clock resources,
-leaving the provider registered after the backing data has been torn
-down.
+The clock prepare path requests a PLL reset when the platform data
+requires a deterministic output phase. The reset helper logs polling
+errors but returns no status, so prepare still enables the output and
+reports success when the reset did not complete.
 
-Unregister the OF clock provider before freeing the ADPLL resources so
-the provider no longer points at released driver data after device
-removal.
+Return the poll result to prepare, restore the output power-down bit on
+failure, and leave the output disabled. XTAL and CLKIN inputs continue
+to bypass PLL reset successfully.
 
-Fixes: 21330497f303 ("clk: ti: Add support for dm814x ADPLL")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+The issue was found by our static-analysis tool.
+
+Fixes: 5142cbcea324 ("clk: si5351: Wait for bit clear after PLL reset")
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/adpll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/clk-si5351.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
-index 8885d28face50..0d729c9980a55 100644
---- a/drivers/clk/ti/adpll.c
-+++ b/drivers/clk/ti/adpll.c
-@@ -925,6 +925,7 @@ static void ti_adpll_remove(struct platform_device *pdev)
- {
- 	struct ti_adpll_data *d = dev_get_drvdata(&pdev->dev);
- 
-+	of_clk_del_provider(d->np);
- 	ti_adpll_free_resources(d);
+diff --git a/drivers/clk/clk-si5351.c b/drivers/clk/clk-si5351.c
+index e755db545e2ee..6cffdd009612f 100644
+--- a/drivers/clk/clk-si5351.c
++++ b/drivers/clk/clk-si5351.c
+@@ -907,7 +907,7 @@ static int _si5351_clkout_set_disable_state(
+ 	return 0;
  }
  
+-static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num)
++static int _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num)
+ {
+ 	u8 val = si5351_reg_read(drvdata, SI5351_CLK0_CTRL + num);
+ 	u8 mask = val & SI5351_CLK_PLL_SELECT ? SI5351_PLL_RESET_B :
+@@ -918,7 +918,7 @@ static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num
+ 	switch (val & SI5351_CLK_INPUT_MASK) {
+ 	case SI5351_CLK_INPUT_XTAL:
+ 	case SI5351_CLK_INPUT_CLKIN:
+-		return;  /* pll not used, no need to reset */
++		return 0;  /* pll not used, no need to reset */
+ 	}
+ 
+ 	si5351_reg_write(drvdata, SI5351_PLL_RESET, mask);
+@@ -931,6 +931,8 @@ static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num
+ 	dev_dbg(&drvdata->client->dev, "%s - %s: pll = %d\n",
+ 		__func__, clk_hw_get_name(&drvdata->clkout[num].hw),
+ 		(val & SI5351_CLK_PLL_SELECT) ? 1 : 0);
++
++	return err;
+ }
+ 
+ static int si5351_clkout_prepare(struct clk_hw *hw)
+@@ -947,8 +949,18 @@ static int si5351_clkout_prepare(struct clk_hw *hw)
+ 	 * Do a pll soft reset on the parent pll -- needed to get a
+ 	 * deterministic phase relationship between the output clocks.
+ 	 */
+-	if (pdata->clkout[hwdata->num].pll_reset)
+-		_si5351_clkout_reset_pll(hwdata->drvdata, hwdata->num);
++	if (pdata->clkout[hwdata->num].pll_reset) {
++		int ret;
++
++		ret = _si5351_clkout_reset_pll(hwdata->drvdata, hwdata->num);
++		if (ret) {
++			si5351_set_bits(hwdata->drvdata,
++					SI5351_CLK0_CTRL + hwdata->num,
++					SI5351_CLK_POWERDOWN,
++					SI5351_CLK_POWERDOWN);
++			return ret;
++		}
++	}
+ 
+ 	si5351_set_bits(hwdata->drvdata, SI5351_OUTPUT_ENABLE_CTRL,
+ 			(1 << hwdata->num), 0);
 -- 
 2.53.0
 
