@@ -1,63 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795022233;
-	b=M05P+iZ2BgqdcnlM3ate+Evwucq3uglLcBcF8DQ98xbwbOK/mwRrwzhbilJPZbtVRv1m
-	 CcsVhp+yHyJ6cXFOZ7uogWIrI/0D8SmkuIdCnzPlrcCa9xbcgDi8PNJ8fvgVzk75PbDPA
-	 +FEDWPSdUFGQwrQvYyIHvGMFgiFsApyFDbSJ/+oolZ77Gvprn7UkyyGy4juoZMdokWAS1
-	 D4RIWKo5PeipmXYDkjKtJbGyEJiNr+iC+VTFM6Vtt3FXQs0gMaX3CkxSpRwATVmgeiMNU
-	 2p7/YJPuY/OvWmUGrVsVD5gVFrmmpxXq6Zk5mNv71KLAj1MuMXensn1AGXwcYBZu59Q==
+	b=KIjg2kUSWc/1ZGAuhmNPB/1rRJbZz94yyAZCNYW73S76WEKDHNynF0KpUhktbvCjPqFh
+	 6SfUHU8qTySdGxbxuGh4jkdhVfW/AV80UuA5h7Ov6kndxBeQRqvL8ES9bTiDjgglop7OC
+	 XVOf45GWji5QwR91SBLsWsJ4bEX/Q3X7B3tKGiEuIX2S88Jj9hjpBE4RGutpRfYfiUwe7
+	 3I9xNNduDpoEgmbU/c1+xg2nnROzXqE8FNcfwceNCmyoecdzs4tWV/L31xeRtRLCGg4Xq
+	 1QUtdqTglrR8dAfgTczhdycp1dksdyzOG2bDq5Wp+Cj+r2raT4z3c7/+w8dhJvvvbLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795022233;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Last-TLS-Session-Version;
-	bh=JwzpYCQn/l6SzPxUmJU+YOvPOIewTFubouB7LMjAbDw=;
-	b=SiotauVnEVIuIC/dP7jD4IMsbp/G/YumG8rDnJQ1MZ+PY1J/wQ0fhfYl/OvptqdttmG4
-	 iEdTTTMHPT7jvmN+oY7jCG8WQayo7ahcI69rwmfeaQnsC9SU/rUIFVSd0waVdIKI5u7AA
-	 J1ON9WHJSYJUCz1TOeREx1BWfUfECXrZNECGcVXAn3JlJQYPPbICinE1Y0LMzqssS24O4
-	 tm4LMOlSdfu8uynB2y+ol8jixRq8zkPMFOpdo/T0d50XYGERw/Tt0dbJ/Mz8DrRSH4aK3
-	 n6jDJrYBHWfXdlDkLTgv06BYQ7I4tHPNJoA+rHLygpLzDpjmhUlsVMOq8Nb3fFlS9Sg==
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=eEuOoi2C5B46xUHkuuwlDQNhC2ajSM9w/jEZNpncaVc=;
+	b=PvHB8VHAPzUWKm2PtHLue+XmnIIGw5t7BRVKhwinXgh9U7Bh3M9HnvIlQE3j27bK7Lc5
+	 0dzDUpgFqZFkh5e5L/DCP3ekYp7UnyrWza++wB9MUaKV8L4BAnoleZvrLwI8Z14XpEO6U
+	 NQIN2myxqyZ19LXN4trHRKvJ5y8tnxhP+o7FdfRH8vszTRU/zdXlECQpS6faVH1dT9I6z
+	 yoju5YCwrVkQcUn7vRjX1zaRgg3hZpbaqs7bBngu8kJKReyyY5Zy3iOoDajISku2WJBRn
+	 bESkQ+gN3W6XyXw9IVWHpLwiaKkcQxXD8tSOVZAyLodlGs5n4pB2GvGDzrEKIQkWdpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nabladev.com;
-	spf=pass smtp.mailfrom=nabladev.com;
-	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=Aqj4Nd3U;
-	arc=none smtp.remote-ip=178.251.229.89
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="V5ly/2sN";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4021A606A32F
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:17:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4021A606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942B9606A32F;
+	Wed, 18 Nov 2026 17:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=Aqj4Nd3U
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9139410F9C1;
-	Wed, 18 Nov 2026 18:17:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1795022226;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=JwzpYCQn/l6SzPxUmJU+YOvPOIewTFubouB7LMjAbDw=;
-	b=Aqj4Nd3UXK6bUXOvekAurpfgjdH9vJkpCCH9Bi4tIJmpUPYZrCpfhCLd8XpNIqI/ggVwlK
-	hXVg+6Fee6pK/KuQUUpLlW5+AMQPoft6PVMlzHj+RZZ386dkRxO09ExAgUjRDcKhtLgwXd
-	LvmVfYZ5tXLERMBkiOFeO0T/KDzHIknZuTrRdVhDdGRgk66HlouamyWlU+otR0Tzozjas8
-	OU+FZERbZ0O+DlLmxt2MAxD4oYrHep2W3DcGSPJBBlWXL5UXaSHUne8NhiEi3VhtCmciqJ
-	y2lDlYyfVzUl0oTJUuis2dHJyqKOidmKq2Ux8oRCvELUAw4BZgYcp3phFUNqkQ==
-Date: Wed, 18 Nov 2026 18:17:02 +0100
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.3 0000/2651] 7.3.6-rc1 review
-Message-ID: <av3djrju6lGWQD9K@duo.ucw.cz>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V5ly/2sN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58471F000C5;
+	Wed, 18 Nov 2026 17:17:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795022233;
+	bh=eEuOoi2C5B46xUHkuuwlDQNhC2ajSM9w/jEZNpncaVc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=V5ly/2sNI8cCHofopgx8B1vMX3kx0tvGEmDyEc6oLFfuffjQQJKTuzzEXS+w8TH/l
+	 TlVnykH01VSdJ/wAW68y+LBAomSy7duaN3W36Ct9T7yCo2EmbsgMpZzppRfZZ3154M
+	 khbLptRTXmdUmBT7dl29VlPgr8TdMoOPVfBse6MQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Josef Bacik <josef@toxicpanda.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2590/2651] blk-mq: free the bitmaps of tags in the SRCU callback
+Date: Wed, 18 Nov 2026 16:03:50 +0100
+Message-ID: <20261118150417.517101336@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,100 +63,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="H5QXGylTV+YzbXtC"
-Content-Disposition: inline
-In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+7.3-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Josef Bacik <josef@toxicpanda.com>
+
+[ Upstream commit 10b249e9b05eed0c4c65b9b89dfc2cf33d68d19a ]
+
+Commit ad0d05dbddc1 keeps struct blk_mq_tags and the requests until the
+iterators under tags_srcu are gone, but the two bitmaps they walk are
+still freed right away. When the number of hardware queues shrinks,
+blk_mq_tagset_busy_iter() may be about to walk tags that
+__blk_mq_update_nr_hw_queues() frees. sbitmap_free() clears the map
+pointer, so that's a NULL dereference or a use-after-free, depending on
+the timing.
+
+Free the bitmaps with the rest in the callback.
+
+Fixes: ad0d05dbddc1 ("blk-mq: Defer freeing of tags page_list to SRCU callback")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-44-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ block/blk-mq-tag.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
+index 6e01309226716..04805808ccf9b 100644
+--- a/block/blk-mq-tag.c
++++ b/block/blk-mq-tag.c
+@@ -611,17 +611,17 @@ static void blk_mq_free_tags_callback(struct rcu_head *head)
+ 		kmemleak_free(page_address(page));
+ 		__free_pages(page, page->private);
+ 	}
++	/* An iterator may walk the bitmaps for as long as it may see the tags */
++	sbitmap_queue_free(&tags->bitmap_tags);
++	sbitmap_queue_free(&tags->breserved_tags);
+ 	kfree(tags);
+ }
+ 
+ void blk_mq_free_tags(struct blk_mq_tag_set *set, struct blk_mq_tags *tags)
+ {
+-	sbitmap_queue_free(&tags->bitmap_tags);
+-	sbitmap_queue_free(&tags->breserved_tags);
+-
+ 	/* if tags pages is not allocated yet, free tags directly */
+ 	if (list_empty(&tags->page_list)) {
+-		kfree(tags);
++		blk_mq_free_tags_callback(&tags->rcu_head);
+ 		return;
+ 	}
+ 
+-- 
+2.53.0
 
 
---H5QXGylTV+YzbXtC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hi!
-
-> This is the start of the stable review cycle for the 7.3.6 release.
-> There are 2651 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-We see a build failure here.
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/3084792704
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-7.3.y
-
-Best regards,
-									Pavel
-
-
-In file included from ./include/linux/device.h:31,
-1965
-16:37:20
-                 from ./include/linux/pci.h:38,
-1966
-16:37:20
-                 from drivers/pci/controller/pcie-iproc-bcma.c:8:
-1967
-16:37:20
-drivers/pci/controller/pcie-iproc-bcma.c: In function 'iproc_bcma_pcie_probe':
-1968
-16:37:20
-drivers/pci/controller/pcie-iproc-bcma.c:72:45: error: 'devm_pci_alloc_host_bridge_release' undeclared (first use in this function); did you mean 'devm_pci_alloc_host_bridge'?
-1969
-16:37:20
-   72 |         ret = devm_add_action_or_reset(dev, devm_pci_alloc_host_bridge_release,
-1970
-16:37:20
-      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1971
-16:37:20
-./include/linux/device/devres.h:181:41: note: in definition of macro 'devm_add_action_or_reset'
-1972
-16:37:20
-  181 |         __devm_add_action_or_reset(dev, action, data, #action)
-1973
-16:37:20
-      |                                         ^~~~~~
-1974
-16:37:20
-drivers/pci/controller/pcie-iproc-bcma.c:72:45: note: each undeclared identifier is reported only once for each function it appears in
-1975
-16:37:20
-   72 |         ret = devm_add_action_or_reset(dev, devm_pci_alloc_host_bridge_release,
-1976
-16:37:20
-      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1977
-16:37:20
-./include/linux/device/devres.h:181:41: note: in definition of macro 'devm_add_action_or_reset'
-1978
-16:37:20
-  181 |         __devm_add_action_or_reset(dev, action, data, #action)
-1979
-16:37:20
-      |                                         ^~~~~~
-1980
-16:37:20
-make[5]: *** [scripts/Makefile.build:290: drivers/pci/controller/pcie-iproc-bcma.o] Error 1
-1981
-16:37:20
-make[5]: *** Waiting for unfinished jobs....
-1982
-16:37:20
-  CC      net/core/net-traces.o
-
-Best regards,
-							Pavel
-
---H5QXGylTV+YzbXtC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCav3djgAKCRAw5/Bqldv6
-8t3IAJ4gVZa3TvIWdbjNlHQPDinSgvZDZQCdFLuooXCOwJRDwnLV9vG60+uD/qI=
-=LORK
------END PGP SIGNATURE-----
-
---H5QXGylTV+YzbXtC--
