@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030515;
-	b=aX7zJOxEdNb/7VembRO589eKzIwrhhMfjINGvqGQK1NqtDEbl97jp4vnmphqLmoRdPbj
-	 SOruIKX4KvdcXO+W2cWsaz7gu6UiW5EhJZ/B8QKgiRKUZ2gLMtDyG/gBvHV5Gzd9ptEAh
-	 UmpDcN94+vsjV6bdHdXNgE3VAotEZBlslKmE7OO7CScwvQapHCHFw23gsVNpa49/lkwoV
-	 sLWt8qTDd6n/6wtHS5ac8SfFbgMnsNcY5fcQlEH8VXjSIF1osMU8x48mztmfahhn11HYP
-	 TiR43E/glXnClDZfyL2b8agumNmY7Nhhsv8wYOMNRfx5EMgARdty4rfmMWi0LFhsWrA==
+	t=1795030518;
+	b=iQ2Sa/KNj/V/YzrcLJvlYLmTqQYsRz3q3H6UdkiF/WnVFtTfg7+0Z78hn6H3lyVcvv5A
+	 sPqI1J5rsdBJIe7h4SWPYi7VK3sK3g3mvBzf5QAxm2al7murGzhuIOJRhpZ3cx5o/ck60
+	 A55l7EO16fzU9gWrsxo5EcSxsIdK5hxAbZmmDRNY0d2MssQhKkfa6v9ztscEGlAozLFSs
+	 tHgH3HxrxxECv00JRJKppAXc8dsoDd8wqY1iugEIT48kDzJjEpDz3cfn8Uw/iPrnKF0tP
+	 747OVRSiQjoTH1a1wVL9ynb0JMAtH7qTli410YjqUfRegZCaxxkp5oK6hHvPTMQCEDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cHQvXEwfF7Zk/gJbqfAeKkDJuCYzXq0xdJ7qNFIp7y4=;
-	b=odnEvzgNlsN+HeE5ksky5bCd3E+UkbP6Y4GpPjP4s2OJD50LH8yXF2PPjULhy/G54m6C
-	 X/h9swCt66yNrAba8YUmW+L3FPN7VOMwt5D6JN+RyQIPlxl1/YBhU2yNN8ix7RS47p2Vy
-	 ysLSXWqLFpBHuOz8FDyhvg0Y5lC3kDAXcq8+zYOJJz57Z0xU/9GJc8YclV+2Qkp/x/Kql
-	 vV0d4IT+mn+PMKo+vyce0ic14Vq40YX9VX1BNgIm3yh1/umr+zf+8hQBfSyK23cade6z4
-	 Gtbwy0pqxDrsXUHO/WiujZ11SGHvUSkunVnDNYqB7Y31GF5mZsldRNZ956jmHT54shA==
+	bh=2LSRKPOvPbgYJXKmLfuzFVkCz/GbLdG3Qu58Tg8LNTQ=;
+	b=U9c3Jy9T6+SE/DnSq3tU0PLQg+5aG+G4lVnQ6Kh0TYhivYHbjOEMhbcYw43bJBYuvUsS
+	 VSWcYF+4eUdr0VZSGvgGR7L0al0WcXFFEuroYNBW2VioQfDwcilpJwbbP0mMKg0O55s+8
+	 qEszVkx7usZi9vpIyfssVrtouehbHm24cPxyOQQG9ctj4BoTyNXqHKB+qDfWI1xN49VvQ
+	 UJufm92vLAyXEoF6WjQR9EKPvzkfPa9dC/Q7lGmyG1FeyXR6Ios0OnEWCoFfK5oqd96oX
+	 AvVVRh9HWX9NxHhD3fTT/YE49JGr+5dcq4RTdt+Snjw8KeMu8m7f5SA9BaP87o6haZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruSyMbur;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9qdn4U2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50560606BB50;
-	Wed, 18 Nov 2026 19:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A04606BB50;
+	Wed, 18 Nov 2026 19:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruSyMbur
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B071F000C4;
-	Wed, 18 Nov 2026 19:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9qdn4U2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795941F000C5;
+	Wed, 18 Nov 2026 19:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030515;
-	bh=cHQvXEwfF7Zk/gJbqfAeKkDJuCYzXq0xdJ7qNFIp7y4=;
+	s=korg; t=1795030518;
+	bh=2LSRKPOvPbgYJXKmLfuzFVkCz/GbLdG3Qu58Tg8LNTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruSyMbur/vaoMNS3qZH+x5vDfb7+BKsqWXw67Al7wCg/DJM/EgT2utaJr5lTm1UD2
-	 3uVfUZwVPfoY5I0FoPMmc2GFDCiQve8lKyydo56AAKmvrdOHXhGuIQGs9gSdgueicB
-	 Mfk9n+D1bPEN2OLmfPPHdyAskof/6OIPV5cs7kVs=
+	b=x9qdn4U2jnrbUKKIWDvU9ZnJnuUkytOKnCVtCTi5J2STE9TrUCR9DrptKsbStlztA
+	 CQg8n33DPLWAWPQkLX/EaQHavFvbD9KujR50UOBOOMRF5YW297pKMsgcX5VQJMxQP/
+	 j4rzeBO9MlAWE4XRwvw1hkY2nIkzDKSmgK5utP24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0730/1756] rtc: ftrtc010: fix clock resource leak on probe failure
-Date: Wed, 18 Nov 2026 15:47:37 +0100
-Message-ID: <20261118150038.730659770@linuxfoundation.org>
+Subject: [PATCH 6.12 0731/1756] rtc: ftrtc010: use devm clock APIs to fix use-after-disable in remove
+Date: Wed, 18 Nov 2026 15:47:38 +0100
+Message-ID: <20261118150038.763190029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,51 +71,143 @@ Content-Transfer-Encoding: 8bit
 
 From: Liu Dalin <liudalin@kylinsec.com.cn>
 
-[ Upstream commit c60478875a445dee1206aad6285c18cd8c91f7f2 ]
+[ Upstream commit d41ee317c9907d714014d0d5e4726fbd6acf338e ]
 
-When devm_rtc_register_device() fails, ftrtc010_rtc_probe() returns
-the error directly without releasing clocks obtained via
-clk_prepare_enable(). This leaks both extclk and pclk resources,
-which may prevent subsequent probe attempts or module removal.
+The driver mixes devm_rtc_register_device() with manual clock
+disabling in ftrtc010_rtc_remove(). Because the RTC device was
+registered via devm, it remains registered until devres cleanup
+runs after .remove() returns. An unprivileged process holding an
+open /dev/rtc0 file descriptor could issue ioctl(RTC_RD_TIME)
+during this window, triggering MMIO reads on clock-gated hardware
+and causing a synchronous external abort.
 
-Capture the return value and jump to the error handling path to
-properly release clocks via clk_disable_unprepare().
+Replace devm_clk_get() + clk_prepare_enable() with
+devm_clk_get_enabled() to tie clock lifecycle to devres. Remove
+the manual .remove() callback and the corresponding error handling
+labels in ftrtc010_rtc_probe().
 
-Fixes smatch warnings:
-- drivers/rtc/rtc-ftrtc010.c:189 ftrtc010_rtc_probe() warn:
-  'rtc->extclk' from clk_prepare_enable() not released on lines: 183.
-- drivers/rtc/rtc-ftrtc010.c:189 ftrtc010_rtc_probe() warn:
-  'rtc->pclk' from clk_prepare_enable() not released on lines: 183.
-
-Fixes: fdcfd854333b ("rtc: rework rtc_register_device() resource management")
-Assisted-by: smatch:2.0 [static analysis]
+Fixes: 1d61d2592c1f ("rtc: ftrtc010: Rename to Faraday FTRTC010")
+Assisted-by: Sashiko AI [static analysis]
 Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
 Reviewed-by: Linus Walleij <linusw@kernel.org>
 Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/AC51B5F2C5FFEBB0+20260827080320.3351155-2-liudalin@kylinsec.com.cn
+Link: https://patch.msgid.link/0238203A74C9B9F6+20260827080320.3351155-3-liudalin@kylinsec.com.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ftrtc010.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-ftrtc010.c | 67 +++++++++-----------------------------
+ 1 file changed, 16 insertions(+), 51 deletions(-)
 
 diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-index 02608d3784958..f398d6dc85ae4 100644
+index f398d6dc85ae4..2f610a0fc6e9b 100644
 --- a/drivers/rtc/rtc-ftrtc010.c
 +++ b/drivers/rtc/rtc-ftrtc010.c
-@@ -181,7 +181,11 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+@@ -120,51 +120,33 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 	platform_set_drvdata(pdev, rtc);
+ 
+-	rtc->pclk = devm_clk_get(dev, "PCLK");
+-	if (IS_ERR(rtc->pclk)) {
++	rtc->pclk = devm_clk_get_enabled(dev, "PCLK");
++	if (IS_ERR_OR_NULL(rtc->pclk)) {
+ 		dev_err(dev, "could not get PCLK\n");
+-	} else {
+-		ret = clk_prepare_enable(rtc->pclk);
+-		if (ret) {
+-			dev_err(dev, "failed to enable PCLK\n");
+-			return ret;
+-		}
++		return PTR_ERR_OR_ZERO(rtc->pclk);
+ 	}
+-	rtc->extclk = devm_clk_get(dev, "EXTCLK");
+-	if (IS_ERR(rtc->extclk)) {
++	rtc->extclk = devm_clk_get_enabled(dev, "EXTCLK");
++	if (IS_ERR_OR_NULL(rtc->extclk)) {
+ 		dev_err(dev, "could not get EXTCLK\n");
+-	} else {
+-		ret = clk_prepare_enable(rtc->extclk);
+-		if (ret) {
+-			dev_err(dev, "failed to enable EXTCLK\n");
+-			goto err_disable_pclk;
+-		}
++		return PTR_ERR_OR_ZERO(rtc->extclk);
+ 	}
+ 
+ 	rtc->rtc_irq = platform_get_irq(pdev, 0);
+-	if (rtc->rtc_irq < 0) {
+-		ret = rtc->rtc_irq;
+-		goto err_disable_extclk;
+-	}
++	if (rtc->rtc_irq < 0)
++		return rtc->rtc_irq;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	if (!res) {
+-		ret = -ENODEV;
+-		goto err_disable_extclk;
+-	}
++	if (!res)
++		return -ENODEV;
+ 
+ 	rtc->rtc_base = devm_ioremap(dev, res->start,
+ 				     resource_size(res));
+-	if (!rtc->rtc_base) {
+-		ret = -ENOMEM;
+-		goto err_disable_extclk;
+-	}
++	if (!rtc->rtc_base)
++		return -ENOMEM;
+ 
+ 	rtc_dev = devm_rtc_allocate_device(dev);
+-	if (IS_ERR(rtc_dev)) {
+-		ret = PTR_ERR(rtc_dev);
+-		goto err_disable_extclk;
+-	}
++	if (IS_ERR(rtc_dev))
++		return PTR_ERR(rtc_dev);
+ 
+ 	rtc_dev->ops = &ftrtc010_rtc_ops;
+ 
+@@ -179,29 +161,13 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 	ret = devm_request_irq(dev, rtc->rtc_irq, ftrtc010_rtc_interrupt,
+ 			       IRQF_SHARED, pdev->name, dev);
  	if (unlikely(ret))
- 		goto err_disable_extclk;
+-		goto err_disable_extclk;
++		return ret;
  
--	return devm_rtc_register_device(rtc_dev);
-+	ret = devm_rtc_register_device(rtc_dev);
-+	if (ret)
-+		goto err_disable_extclk;
-+
-+	return 0;
+ 	ret = devm_rtc_register_device(rtc_dev);
+ 	if (ret)
+-		goto err_disable_extclk;
++		return ret;
  
- err_disable_extclk:
- 	clk_disable_unprepare(rtc->extclk);
+ 	return 0;
+-
+-err_disable_extclk:
+-	clk_disable_unprepare(rtc->extclk);
+-err_disable_pclk:
+-	clk_disable_unprepare(rtc->pclk);
+-	return ret;
+-}
+-
+-static void ftrtc010_rtc_remove(struct platform_device *pdev)
+-{
+-	struct ftrtc010_rtc *rtc = platform_get_drvdata(pdev);
+-
+-	if (!IS_ERR(rtc->extclk))
+-		clk_disable_unprepare(rtc->extclk);
+-	if (!IS_ERR(rtc->pclk))
+-		clk_disable_unprepare(rtc->pclk);
+ }
+ 
+ static const struct of_device_id ftrtc010_rtc_dt_match[] = {
+@@ -217,7 +183,6 @@ static struct platform_driver ftrtc010_rtc_driver = {
+ 		.of_match_table = ftrtc010_rtc_dt_match,
+ 	},
+ 	.probe		= ftrtc010_rtc_probe,
+-	.remove		= ftrtc010_rtc_remove,
+ };
+ 
+ module_platform_driver_probe(ftrtc010_rtc_driver, ftrtc010_rtc_probe);
 -- 
 2.53.0
 
