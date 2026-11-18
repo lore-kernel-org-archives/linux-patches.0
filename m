@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033639;
-	b=lxZoWPQvezlOaletBQoGnkknuQnOk0ZNMVnqQLBFEGqPzR4AXQE/GBXhcl5uqN9i46hr
-	 UwqiOF7gFZO0h903Eu7lqDt435+aWXeHWG5/FWwAYiUutkE3CTlG4RLV8hQYqOsfPo2gu
-	 4xoTNFi+9GzQFN4T7dFYZBNXjvJRLyKTRz4RlDwOX1ToCvoxg/nJu9yn/lG5QWrtN3y9G
-	 6wErjfY0fVXl9nPUuIOhU6c3Dk0C4FvZE9umB7f/S63prn7XA29QizWSF3GlEaVzi9VZv
-	 hLnasqr26lFP1T8LwsWVIrjFqVeM32teKnV2BgXyxMJjcW2pe2kDKhjM2FjmIrcGeYQ==
+	t=1795033641;
+	b=ge0xIoKc+ZD+wNORNpIIQJNR5qPPl/GPYp5MIyMGuenoztR/Psp7lcyw/oP94OsMtI6x
+	 DA7fVaW8nsr0c/VF6n8lRMY302+/u2wql5A3zXrqiw9q4mGfxxaJFNDlJ7o4Jvux9BPMU
+	 xVimsopRKF8lb94dlk8BjMADFhD7nXDZld9CngX8RVvCKhU4aC/g4dhuWHF2f3VXL28IF
+	 wt38Q3Di7aumH6wTm9fDqsRmRhBdAAyHwLfoMZ48rO2edrcOcgtYpRNpoaAvtucM2t92E
+	 Qz+RjognedWE4cCLtWYLR2vUKtliXUqJaSMWO1rDYUVcw7oDlx7Dmozt3ztXUDucYhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q6O5l3rgn8ibmDbt5Ino0LcP4O2hWSs2Hc8pZXS4b1g=;
-	b=fleT4plInvZDYwHwBuiLsD/zU84mM5+KBujs/GYZ17eKD9Gb+oBDC1XljJK6IkqsCj03
-	 7hVx3NLkhXHqCJKjSEK8rl569yA/IEtxcbNrXMBrsqiTIrdGDNg57/KKmEiTa08zArBcb
-	 SV4mAxYrEtSKuzmDjhugYcy0EZaYxLHBotFx0yLUIYPr/O0HN6utGz8hDfSTdTr7fenaS
-	 m5A9r78DsKxI4M8ncm4CP9lfeB+8Y7LUSdbdwh6awlCV9oMk2qrs3ch1Wkset2O23aIww
-	 7I7R87TGfihgbs7uu1L5eJPfJim7LoA1rwX4t59sArGHzYmXJPKmw5poUSel3ot6HDQ==
+	bh=3OSZ/UmbKd8/zbW9qR7b7+pWtlZT9K/SiEoS3ALxzmY=;
+	b=Tt67t9YbXOYDWW+OWK/XPZGtJixsZZW3gYCPXsuDeRDG90J8W/tdC6ZoTeGIlIHJds4N
+	 S/CphNug1RnqL3HdpURcFeV11KO7vyGs3MZ9VAQ/p8EW8R068AGpMW4IrE7DnbdAuHUg8
+	 GNemrQ6yK1kLRToCIto376tCr78VpGUUKcLmFpuq/uOsQQvERDVvLLdmWx6Ho1RrlNljg
+	 Bh2yJyVR0Zk/IeVHnmyyJKKYbs2LniAm9UjxUa2G5UnghvwgSjesbxgZl16/nMuDCBJqu
+	 3F0JCTztBbx2WZ9dgBQ4iGT5UgBb/DwNOTGQjGgfiFI3zFFVzHvxuBa9JpdJ6yjgUWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O82tz4Ls;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbwqMbBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290CE606A31C;
-	Wed, 18 Nov 2026 20:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF49606A31C;
+	Wed, 18 Nov 2026 20:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O82tz4Ls
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305BF1F000C4;
-	Wed, 18 Nov 2026 20:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbwqMbBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029991F000C4;
+	Wed, 18 Nov 2026 20:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033638;
-	bh=Q6O5l3rgn8ibmDbt5Ino0LcP4O2hWSs2Hc8pZXS4b1g=;
+	s=korg; t=1795033641;
+	bh=3OSZ/UmbKd8/zbW9qR7b7+pWtlZT9K/SiEoS3ALxzmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O82tz4Ls1239QlDan6BjPWjygszhgLNyxkL+/r+vwAUqOrQkcPhSeWmPDG6r1oumC
-	 KWhhRHoGgJF/VXcGv+/JP2kCzB8Y34NKkJ0Zn4gj/PGUqn2+tWn3bEvxTNDuPDCjkJ
-	 lIvYBC3SgMnRQNXXPnPybP3Js6arJS0v+L69FaK0=
+	b=IbwqMbBDU9TzLqYoKOgeS7F4a5hV3ltM8ufYJdvgX1J5W7M1BsPGoERC5HFSCs0ky
+	 ffXWQFSK/T0ofAUigQHQsTsmJX5a5Ng2PxASmVG+qh6J70zjGfiA5go6Ywe7ZL9cvh
+	 ob0UkN6YcmzALsLfrDjOQxMEzco8oTQhVNXdpPjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0087/3318] media: v4l2-tpg: reduce stack usage for kasan builds
-Date: Wed, 18 Nov 2026 15:11:49 +0100
-Message-ID: <20261118150316.738317823@linuxfoundation.org>
+Subject: [PATCH 6.6 0088/3318] mmc: block: reject invalid perdev_minors before division
+Date: Wed, 18 Nov 2026 15:11:50 +0100
+Message-ID: <20261118150316.771574706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit c49cdaafa443ccf861a72d3191121294742c28c7 ]
+[ Upstream commit 5253aee00a4383cb0482d5e99bde48b8054ae2c0 ]
 
-tpg_fill_plane_buffer() is a rather complex function. While there is
-nothing wrong with it per se, I have run into corner cases with clang-22
-on s390 using KASAN that makes it run out of registers and blow the
-stack warning limit from excessive spills:
+The mmcblk.perdev_minors module parameter is parsed as a signed int and
+is used during mmc_blk_init() to compute the number of supported block
+devices.
 
-drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2629:6: error: stack frame size (1560) exceeds limit (1536)
-      in 'tpg_fill_plane_buffer' [-Werror,-Wframe-larger-than]
- 2629 | void tpg_fill_plane_buffer(struct tpg_data *tpg, v4l2_std_id std,
+Passing perdev_minors=0 makes the init path divide by zero when it
+computes max_devices. Negative values are invalid as well and would make
+max_devices negative before it is later used as an IDA limit.
 
-Forcing the two largest callees out of line completely avoids the problem
-and prevents all the register spills, with the stack usage for each function
-going down to a few bytes for the local variables.
+Reject non-positive perdev_minors values before registering any mmcblk
+resources.
 
-Arguably this is a problem caused by clang rather than the code, but
-a noinline_for_stack annotation is an easy workaround.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/v4l2-tpg/v4l2-tpg-core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/mmc/core/block.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
-index ded11cd8dbf7c..9ff4499677221 100644
---- a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
-+++ b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
-@@ -2346,9 +2346,11 @@ static void tpg_fill_params_extras(const struct tpg_data *tpg,
- 			(params->is_60hz ? V4L2_FIELD_TOP : V4L2_FIELD_BOTTOM);
- }
- 
--static void tpg_fill_plane_extras(const struct tpg_data *tpg,
--				  const struct tpg_draw_params *params,
--				  unsigned p, unsigned h, u8 *vbuf)
-+/* noinline to work around clang KASAN issues */
-+static noinline_for_stack void
-+tpg_fill_plane_extras(const struct tpg_data *tpg,
-+		      const struct tpg_draw_params *params,
-+		      unsigned p, unsigned h, u8 *vbuf)
+diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+index f53f0bf4ae60c..3b1309b04aa69 100644
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -3149,6 +3149,11 @@ static int __init mmc_blk_init(void)
  {
- 	unsigned twopixsize = params->twopixsize;
- 	unsigned img_width = params->img_width;
-@@ -2483,9 +2485,9 @@ static void tpg_fill_plane_extras(const struct tpg_data *tpg,
- 	}
- }
+ 	int res;
  
--static void tpg_fill_plane_pattern(const struct tpg_data *tpg,
--				   const struct tpg_draw_params *params,
--				   unsigned p, unsigned h, u8 *vbuf)
-+static noinline_for_stack void
-+tpg_fill_plane_pattern(const struct tpg_data *tpg, const struct tpg_draw_params *params,
-+		       unsigned p, unsigned h, u8 *vbuf)
- {
- 	unsigned twopixsize = params->twopixsize;
- 	unsigned img_width = params->img_width;
++	if (perdev_minors <= 0) {
++		pr_err("mmcblk: invalid minors per device: %d\n", perdev_minors);
++		return -EINVAL;
++	}
++
+ 	res  = bus_register(&mmc_rpmb_bus_type);
+ 	if (res < 0) {
+ 		pr_err("mmcblk: could not register RPMB bus type\n");
 -- 
 2.53.0
 
