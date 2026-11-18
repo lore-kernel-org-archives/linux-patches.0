@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050478;
-	b=kYuLXPefVV2KjxfbOgEIOvUt/yI3Nban2zew1D5a0tZDvzoOVaiJ3jyKYymFkvVADy7b
-	 pBxuRI6+4ecug1nm51Anidry28zxfWqn1UYRt1FfBwMAgobbW8X254XBTQNyk8SLELs1N
-	 S4ICQnuAEYDq2y726YXzQL7JJTPHwhnS3BHnOD0Z5uJm5KQ4pNvmimqA30BupCSYoYBen
-	 65edRJMqGR2W19DhcXZ39QXVP0wiPC+H9DIr3TL4icRWeC3Lv4Xyqb6MDxvhviOzq4TOv
-	 vurraUd505vrdKptts/NQi5Wrqz2qADAgFqBeKCE6OufTcTbcrbuQjYbOzD2q13LqNA==
+	t=1795050481;
+	b=kr9qsdmjwLkckfj2n5m1Kxwy0UqLlPmSnT+HgL6r72Zd9+5GXcHittQ9yv11fgOfMEDH
+	 TnpPl3wVpyA5RR5+NoiDq7zqelfs6SPhU3EsyPywhJKEs0by3Ampz42O2M7ZpAWAek2Bm
+	 urnfIe5KXdcwP79Y2vQTW+35CM/nMOnIKFy4ku7rtciFRuZjPVNoj5YeP+UjFuXMG+ic8
+	 7IDY88EUS/iAucKakBit/ks2PYxpgZTS0yhvubmi+LOMKAYswMSOF4SqmnW6C7oOEMim7
+	 iuwrbnAAdnk84k31nKW62idfwQR9qIGJbxugdaGZCzSiHeyvP1uU5QKLjR8q97zvWrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m64OW8+J5qSxsCvFyjjws5serNvU9/mt1hXDD2HLyXw=;
-	b=AMeX2pLH9xUVohPnozEYIujeV2QUiFgB8NWDCIpR1m4GXFHLwpQsA2NfpOQUsPvLzPdy
-	 wwWJFfobPwhX6dYVl75GqUHpri9fsCARlsylcU/DFCdDWDmJgKrWCyTSlUkB70PYu1Jsi
-	 BOOmCXa5Xud1jK46vIAMrEkna03/R3PgHbi9fAcukcRVOS5zm5LsyUH7u3xlxFAALkNJS
-	 Bz1YtQ4prwnHMYGHsKwrK2rKDj+xn+9opJgj18lVeb7tlIP/DpFi8v9V0EhfeDdPskL0A
-	 MzGES9ILnMznr060YgaQQCFEJXK8cTIQyB9p4w90ztojWspJoEdRpfhKORxx90aVSGg==
+	bh=SdvxFSlgSTcFbR2eYvfIu9VwIHh3zITisUNXxdc8fjI=;
+	b=qOP1QlKvY4qu8Ad1nQmGaAZhWWgq5285+vLW9dkx9O2wC+b7w5soTuqJ6eQGNI2cvUm5
+	 jZypYBT2z2uffp9BFVMlwCYBWHN2Hhrz9dVEclGBgCbeK9qQVIGDcJwZ8hG8JDmGBlVed
+	 S/HyLADEcmJm69spkuQrhyibD3idwo7zU3X6YFzynT89quv3MaNOJd90zWGD79s+3JXMe
+	 4STggTV8HvTtvl3cNIQC2fOzZZ/+bXABdxt4KzeCsuhqnD1RsIFMKHYzrSbh3l2lLQmT4
+	 /SLKpT+uUUemzQm0buyEmt8zevpKH12AIkj/dh31t92bcEJ5xdSC55OVcNwKGFz91RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0EOe3WN/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ikF8oj79;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA01C606A320;
-	Thu, 19 Nov 2026 01:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78814606A31C;
+	Thu, 19 Nov 2026 01:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0EOe3WN/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4E31F000C4;
-	Thu, 19 Nov 2026 01:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ikF8oj79
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21EA1F000C4;
+	Thu, 19 Nov 2026 01:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050478;
-	bh=m64OW8+J5qSxsCvFyjjws5serNvU9/mt1hXDD2HLyXw=;
+	s=korg; t=1795050481;
+	bh=SdvxFSlgSTcFbR2eYvfIu9VwIHh3zITisUNXxdc8fjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0EOe3WN/j3VtfvwKLQHDEavAqRKmAD6k2YTrMbknswG3mawWascwtdrQxnF8J2+Xh
-	 zTuq/MZ7JOMKDnEvGln5E/hVINSwI0DfDDFpgAd2qToA6qASnWkwaF/X/CLdpnDnwo
-	 mN60T/owzlQ377kujgSvP5q/MCKQaZFOBqKTuJIM=
+	b=ikF8oj79kb3BaU9hLCgQ3oK1I2g1VgMcL4Tz2ZowSOPw5HaVyznkzUNpEZI1yZFNf
+	 6inWdd9O8p5JumporZxVnD//+OtF0M1klbx44P6fkf/fyobE4/S3sj4BT5Wc5uBmHe
+	 5Gi0fI22EwgIhfsWFnGKPcSU+tFgQi8EQKosBWyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Alan Maguire <almagui@kernel.org>,
+	Edward Adam Davis <eadavis@sina.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com,
+	Bradley Morgan <brads@mainlining.org>,
+	Pingfan Liu <kernelfans@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2723/2857] bpf: Propagate btf_add_type() errors in btf_check_all_metas()
-Date: Wed, 18 Nov 2026 16:02:37 +0100
-Message-ID: <20261118150339.662795428@linuxfoundation.org>
+Subject: [PATCH 6.1 2724/2857] kernel/reboot: avoid potential deadlocks during suspension
+Date: Wed, 18 Nov 2026 16:02:38 +0100
+Message-ID: <20261118150339.702130171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,65 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Edward Adam Davis <eadavis@sina.com>
 
-[ Upstream commit fb2b27d214c3b88d926a303267dd83cfdb428b13 ]
+[ Upstream commit 66644b992f25f6a33775788c8b69a8bb3d41ad67 ]
 
-btf_check_all_metas() ignores the return value of btf_add_type(), so a
-type that could not be registered is silently dropped while the loop
-keeps walking over the type section.
+Invoking reboot with LINUX_REBOOT_CMD_SW_SUSPEND causes kernel/reboot.c
+to acquire system_transition_mutex and invoke hibernate(). hibernate()
+calls lock_system_sleep(), which sets PF_NOFREEZE on current and attempts
+to acquire system_transition_mutex again, potentially hitting:
 
-Both failure modes are reachable:
+WARNING: possible recursive locking detected
+--------------------------------------------
+syz.3.5755/5950 is trying to acquire lock:
+ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: lock_system_sleep+0x49/0x70 kernel/power/main.c:71
 
-  - -E2BIG.  Once the types array reaches its capacity (BTF_MAX_TYPE),
-    every following btf_add_type() fails the same way, so
-    btf_check_all_metas() still returns 0 and the BTF object is created
-    with btf->nr_types capped while hdr->type_len claims more records.
+but task is already holding lock:
+ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
+ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
 
-  - -ENOMEM.  btf->nr_types is not incremented and the array is not
-    grown, so the next type is recorded at the slot of the dropped one
-    and btf->types[] stays off by one with respect to the type ids for
-    all remaining types.  btf_type_by_id() then returns the wrong type
-    for those ids for the whole lifetime of the object, and the last
-    type is silently left unresolved.
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-Propagate the error so that the object is rejected instead.
+       CPU0
+       ----
+  lock(system_transition_mutex);
+  lock(system_transition_mutex);
 
-Fixes: 69b693f0aefa ("bpf: btf: Introduce BPF Type Format (BTF)")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
-Acked-by: Alan Maguire <almagui@kernel.org>
-Link: https://patch.msgid.link/20261022064727.747304-1-yangfeng59949@163.com
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+locks held by syz.3.5755/5950: 1, last CPU#0:
+ #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
+ #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
+
+Call Trace:
+ lock_system_sleep+0x49/0x70 kernel/power/main.c:71
+ hibernate+0x162/0x680 kernel/power/hibernate.c:784
+ __do_sys_reboot kernel/reboot.c:816 [inline]
+
+Move the suspension operation outside the scope protected by lock
+system_transition_mutex.
+
+Link: https://lore.kernel.org/20261020010559.23031-1-eadavis@sina.com
+Fixes: 55f2503c3b69 ("PM / reboot: Eliminate race between reboot and suspend")
+Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=1f0fbc2561b3e5d51b91
+Tested-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: Pingfan Liu <kernelfans@gmail.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/reboot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 7695a851372a0..11ea48f12bb1d 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -4643,6 +4643,7 @@ static int btf_check_all_metas(struct btf_verifier_env *env)
- 	struct btf *btf = env->btf;
- 	struct btf_header *hdr;
- 	void *cur, *end;
-+	int err;
+diff --git a/kernel/reboot.c b/kernel/reboot.c
+index f4a2721e47724..41f0beac0fcb9 100644
+--- a/kernel/reboot.c
++++ b/kernel/reboot.c
+@@ -775,8 +775,8 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
  
- 	hdr = &btf->hdr;
- 	cur = btf->nohdr_data + hdr->type_off;
-@@ -4657,7 +4658,10 @@ static int btf_check_all_metas(struct btf_verifier_env *env)
- 		if (meta_size < 0)
- 			return meta_size;
+ #ifdef CONFIG_HIBERNATION
+ 	case LINUX_REBOOT_CMD_SW_SUSPEND:
+-		ret = hibernate();
+-		break;
++		mutex_unlock(&system_transition_mutex);
++		return hibernate();
+ #endif
  
--		btf_add_type(env, t);
-+		err = btf_add_type(env, t);
-+		if (err)
-+			return err;
-+
- 		cur += meta_size;
- 		env->log_type_id++;
- 	}
+ 	default:
 -- 
 2.53.0
 
