@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049710;
-	b=Lh7wyA8SETBFpBGc1sLBsjCPMz3L0VMCZACoh72kVAClF27yWSUCMg5GWwn2VsbnJ2WJ
-	 xcp/hT320Ia7LlLl2nbFmYOvtwopjPCHENipIcuh+WWqwR7LG8A8nYLeUaMkh5676mjpO
-	 a/9UNihVdlWWAreNdrRuJIjbJdrswwq5VZOry2MR7pkSSz7WMzvyr33tVQwjD+wNIwQfQ
-	 tPRKxUoFzxRi7E/VcOZiXUciTPycZMNxR7/2M7nCt7caBkFYhj/3gA2KLL3sdn2rBCamB
-	 XBjuldD5WOAMu0l6QYdxU/LyHDygsHN3yncJBuNeODN9Al3vEDVu/cHX2lpIsO0JNug==
+	t=1795049713;
+	b=S1BfB8MnyGnWmCkMAWK0PdiXrnLmi3Q7MSBOyB/d6hPCMFNuOvOozMQ+aJMQfZ/EPKDc
+	 9ISc8vGa5yIMuoLSH9RKywOi/NgogdLRqnX1Wf4ZNIzraEPMvXAY7qUISFE3oJvy+EulR
+	 Lo0OQDieanWpl1im1FoGbYQso218DWpNkWtkePokmPQSYSZVaCI75Oo8A412ZBc6PV3bC
+	 96Z64R2nsAhZORE0OxdlRUKvptbLCfU+/W2Xez4LPJLYMl/IQQiFYwI5I0SOMjBi91iNH
+	 FD/AOGTr0eX5F4AzgIw/M4IAEaHPF3z7vxNWRkqyP1ymSZ43UmyFGoPr4Vw0mPrUoFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049710;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049713;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EELGl6SkdT5DohGysLEq86Oxs4n0iMM8o6WpKzLzApU=;
-	b=UGNkpjv/H9GUremnnlhlNP+XWNRoyXUSzTPSZj0vX5QPtQXrbXXVhy7qEC0UV6a8Jqal
-	 t28LMwEINuIGvBFcJLElhU4NmdnCLMYNbotnRh9X3e1tXc5zN8JsWzV7VgCv/8yMmQZR9
-	 8XOAePoDPe4Da19Fs/QsiW5Ev093O8uRFFVpFw8ToXJQ3y48U1kJ48N4DCNI7Oo4MKmyz
-	 r914k9hTYGhsctTCn7ECHHq0auePqWBavbxkr7cS3pNWD7EDD+5B0w8zXv0pJAZg4eY3g
-	 +tm0AxomZ0V9luQcQ/8uE/oHsfgA7iDl8R9cjaDTB2R7PIp1XKuhfybXzNnZg6K+gbQ==
+	bh=J4mFC/ZVvehSdCdD88HygVyeyCUS/TR5dkbDCdMMzGc=;
+	b=ImFghW39oZIzDJFwnYPvZ3XvHfwT7FGfGA6q1hF6m/+rehyJdltSqgK1UUXTwflMUCiG
+	 vKPvtsPUSbMDlk6F3BmgrirwUE93tm+fDE8aZHtSCr86ELFNFewBN7ca4f9eyVYnfKncv
+	 uYIgf50FpUvxEc82wCSZpXkrFhDS5wvXCX2wIsjoHHbqm5TKTd9p4tijMLjbvJxV4rlO1
+	 eB+xvEnXuE6rs28fgCNTCJsCOvbQZIdqz5cK3QX9meucg5jnGQWQxyBChr5Xvp8yjcR25
+	 lXDH0ywNSP0QcET/+BzGQU+RZz91u+tMY7ZGyopXVInMeEMtwi9xauBzznEXGB/abcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ADJkFmHq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0x+BW3n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE86F606A325;
-	Thu, 19 Nov 2026 00:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCDD606A325;
+	Thu, 19 Nov 2026 00:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ADJkFmHq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C821F000C4;
-	Thu, 19 Nov 2026 00:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0x+BW3n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD9C1F000C4;
+	Thu, 19 Nov 2026 00:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049710;
-	bh=EELGl6SkdT5DohGysLEq86Oxs4n0iMM8o6WpKzLzApU=;
+	s=korg; t=1795049713;
+	bh=J4mFC/ZVvehSdCdD88HygVyeyCUS/TR5dkbDCdMMzGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADJkFmHqWrNVaHX+UUwZWG5WE8O/GbtBTyD5+nrul8wAUTvr1qKMCXiybVrJ4tiD4
-	 yUHaJSzwobqK4545crBjctlD1fTbTnOEHV9iaoFz99HjHBQWOw5AMHD1Lvo9Cp1lQk
-	 CRrN9bcl85klc0MqhvHEQD9mYraYKKshuTHbPPkY=
+	b=O0x+BW3nRwYB1TO3mv4XVDObKpigDQSNtdoaVaNdwrYz2qfNP0AV+ERwXUW2tCT7u
+	 ZS0nzB4tXI4zhnLR7D7gcKhihrmVm5XNEwKBAz643IUwJYgwOBqF8Mfes0UMwnrIJp
+	 oHKEnL1mevpZuXhVtGYO/zymB/noEVahWkj3kPj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2408/2857] serial: max310x: fix breaks not reaching the wire in RS485 mode
-Date: Wed, 18 Nov 2026 15:57:22 +0100
-Message-ID: <20261118150328.245244312@linuxfoundation.org>
+Subject: [PATCH 6.1 2409/2857] serial: max310x: centralize the RS485 transceiver programming
+Date: Wed, 18 Nov 2026 15:57:23 +0100
+Message-ID: <20261118150328.280978574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,149 +69,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 4efacb600bf98b13e0659f05afa4549795277e35 ]
+[ Upstream commit 56051740bf9720335a1a56e87a99e3491c33ce54 ]
 
-The chip's auto-RTS (MODE1.TRNSCVCTRL) asserts the RS485 transceiver
-only while FIFO data is shifting out, and a break is not FIFO data: on
-an RS485 port a requested break sets the TX break bit but the
-transceiver is never enabled, so the break never reaches the wire.
-Break-led protocols cannot work at all.
+The HDPIXDELAY RTS delays and the MODE1 auto-transceiver enable are
+programmed in three places - the rs485-config worker, startup() and
+break_ctl()'s break-off restore - each with its own copy of the
+register sequence. Move the sequence into a helper,
+max310x_set_rts_ctl_params(), together with the tx_break guard that
+keeps the MODE1 write away from a break in progress; the break-off
+restore reapplies the current configuration through the same helper.
 
-Disable auto-RTS for the break duration and drive RTS manually via the
-LCR RTS bit, then restore auto-RTS when the break ends. Track the break
-in tx_break and leave MODE1 alone in the rs485-config worker while it
-is set - a TIOCSRS485 arriving mid-break would otherwise re-enable
-auto-RTS on top of the manual RTS and release the transceiver before
-the break ends; break_ctl() restores auto-RTS from the then-current
-configuration when the break completes. The worker runs under
-port->mutex - break_ctl() and set_termios() already do - so the
-tx_break test and the MODE1 write cannot straddle a break starting or
-ending, and startup() clears tx_break alongside the latched TXBREAK
-bit, since a port can be closed with a break still asserted.
+No functional change intended. The copies differed only in that
+startup() clamped the delays to the 4-bit field while the worker wrote
+them unclamped; the helper clamps, and the difference is unreachable
+while rs485_config() still rejects delays above 15 ms with -ERANGE.
+Break-off additionally rewrites HDPIXDELAY with the values it already
+holds, a no-op on the wire.
 
-Only the break assertion is gated on RS485 being enabled; the restore
-at break end runs unconditionally and derives MODE1 from the current
-configuration. Returning early for a port whose RS485 was disabled
-mid-break - that reconfigure is deferred like any other - would leak
-the manually driven RTS and leave the transceiver holding the bus
-indefinitely after the break ends. On a non-RS485 port the restore is
-a no-op: nothing else writes the LCR RTS bit.
-
-Fixes: 55367c620aed ("serial: max310x: Add support for RS-485 mode")
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-2-6ba881f81e1f@vaisala.com
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-3-6ba881f81e1f@vaisala.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 7784d6aee59a ("serial: max310x: fix RS485 delays being programmed as bit-times")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 49 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 47 insertions(+), 2 deletions(-)
+ drivers/tty/serial/max310x.c | 85 ++++++++++++++++++++----------------
+ 1 file changed, 47 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 887451a2e215a..cc05799903646 100644
+index cc05799903646..f173568115829 100644
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -283,6 +283,7 @@ struct max310x_one {
- 	struct work_struct	md_work;
- 	struct work_struct	rs_work;
- 	struct regmap		*regmap;
-+	bool			tx_break;	/* break_ctl() owns the transceiver */
- 
- 	u8 rx_buf[MAX310X_FIFO_SIZE];
- };
-@@ -655,6 +656,12 @@ static void max310x_batch_read(struct uart_port *port, u8 *rxbuf, unsigned int l
- 	regmap_noinc_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
+@@ -897,6 +897,38 @@ static void max310x_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ 	schedule_work(&one->md_work);
  }
  
-+static void max310x_rts_ctl(struct uart_port *port, bool rts_state)
++/*
++ * Program the chip's RS485 RTS timing (HDPIXDELAY) and the auto
++ * transceiver control (MODE1) from the current configuration. The
++ * rs485-config worker, startup() and break_ctl()'s break-off restore
++ * each carried their own copy of this sequence.
++ */
++static void max310x_set_rts_ctl_params(struct max310x_one *one)
 +{
-+	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_RTS_BIT,
-+			    rts_state ? MAX310X_LCR_RTS_BIT : 0);
-+}
++	struct uart_port *port = &one->port;
++	unsigned int delay;
++	u8 mode1 = 0;
 +
- static void max310x_handle_rx(struct uart_port *port, unsigned int rxlen)
- {
- 	struct max310x_one *one = to_max310x_port(port);
-@@ -892,9 +899,32 @@ static void max310x_set_mctrl(struct uart_port *port, unsigned int mctrl)
- 
- static void max310x_break_ctl(struct uart_port *port, int break_state)
- {
-+	struct max310x_one *one = to_max310x_port(port);
++	delay = (clamp(port->rs485.delay_rts_before_send, 0U, 15U) << 4) |
++		clamp(port->rs485.delay_rts_after_send, 0U, 15U);
++	max310x_port_write(port, MAX310X_HDPIXDELAY_REG, delay);
 +
-+	one->tx_break = break_state;
++	if (port->rs485.flags & SER_RS485_ENABLED)
++		mode1 = MAX310X_MODE1_TRNSCVCTRL_BIT;
 +
- 	max310x_port_update(port, MAX310X_LCR_REG,
- 			    MAX310X_LCR_TXBREAK_BIT,
- 			    break_state ? MAX310X_LCR_TXBREAK_BIT : 0);
-+
-+	/*
-+	 * The chip's auto-RTS asserts the transceiver only while FIFO data is
-+	 * shifting out, and a break is not FIFO data. Disable auto-RTS for the
-+	 * break duration and drive RTS manually so the break reaches the wire;
-+	 * restore auto-RTS when the break ends.
-+	 */
-+	if (break_state) {
-+		if (!(port->rs485.flags & SER_RS485_ENABLED))
-+			return;
-+		max310x_port_update(port, MAX310X_MODE1_REG,
-+				    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
-+	} else {
-+		max310x_port_update(port, MAX310X_MODE1_REG,
-+				    MAX310X_MODE1_TRNSCVCTRL_BIT,
-+				    (port->rs485.flags & SER_RS485_ENABLED) ?
-+				    MAX310X_MODE1_TRNSCVCTRL_BIT : 0);
-+	}
-+	max310x_rts_ctl(port, break_state);
- }
- 
- static void max310x_set_termios(struct uart_port *port,
-@@ -1016,6 +1046,13 @@ static void max310x_rs_proc(struct work_struct *ws)
- 	struct max310x_one *one = container_of(ws, struct max310x_one, rs_work);
- 	unsigned int delay, mode1 = 0, mode2 = 0;
- 
-+	/*
-+	 * Serialize against break_ctl() and set_termios(), which run under
-+	 * port->mutex: the tx_break test below and the MODE1 write must not
-+	 * straddle a break starting or ending.
-+	 */
-+	guard(mutex)(&one->port.state->port.mutex);
-+
- 	delay = (one->port.rs485.delay_rts_before_send << 4) |
- 		one->port.rs485.delay_rts_after_send;
- 	max310x_port_write(&one->port, MAX310X_HDPIXDELAY_REG, delay);
-@@ -1027,8 +1064,14 @@ static void max310x_rs_proc(struct work_struct *ws)
- 			mode2 = MAX310X_MODE2_ECHOSUPR_BIT;
- 	}
- 
--	max310x_port_update(&one->port, MAX310X_MODE1_REG,
--			MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
 +	/*
 +	 * A break owns the transceiver: break_ctl() disabled auto-RTS and
-+	 * drives RTS manually, and restores it when the break ends. Leave
-+	 * MODE1 alone meanwhile or the break goes undriven mid-way.
++	 * drives RTS manually, and restores it from the current
++	 * configuration when the break ends. Touching MODE1 here would
++	 * release the transceiver mid-break.
 +	 */
-+	if (!one->tx_break)
-+		max310x_port_update(&one->port, MAX310X_MODE1_REG,
-+				    MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
- 	max310x_port_update(&one->port, MAX310X_MODE2_REG,
- 			MAX310X_MODE2_ECHOSUPR_BIT, mode2);
- }
-@@ -1051,6 +1094,7 @@ static int max310x_rs485_config(struct uart_port *port, struct ktermios *termios
- 
- static int max310x_startup(struct uart_port *port)
++	if (one->tx_break)
++		return;
++
++	max310x_port_update(port, MAX310X_MODE1_REG,
++			    MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
++}
++
+ static void max310x_break_ctl(struct uart_port *port, int break_state)
  {
-+	struct max310x_one *one = to_max310x_port(port);
- 	unsigned int val;
+ 	struct max310x_one *one = to_max310x_port(port);
+@@ -919,10 +951,7 @@ static void max310x_break_ctl(struct uart_port *port, int break_state)
+ 		max310x_port_update(port, MAX310X_MODE1_REG,
+ 				    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
+ 	} else {
+-		max310x_port_update(port, MAX310X_MODE1_REG,
+-				    MAX310X_MODE1_TRNSCVCTRL_BIT,
+-				    (port->rs485.flags & SER_RS485_ENABLED) ?
+-				    MAX310X_MODE1_TRNSCVCTRL_BIT : 0);
++		max310x_set_rts_ctl_params(one);
+ 	}
+ 	max310x_rts_ctl(port, break_state);
+ }
+@@ -1044,36 +1073,23 @@ static void max310x_set_termios(struct uart_port *port,
+ static void max310x_rs_proc(struct work_struct *ws)
+ {
+ 	struct max310x_one *one = container_of(ws, struct max310x_one, rs_work);
+-	unsigned int delay, mode1 = 0, mode2 = 0;
++	unsigned int mode2 = 0;
  
- 	max310x_power(port, 1);
-@@ -1060,6 +1104,7 @@ static int max310x_startup(struct uart_port *port)
- 	 * closed with a break still asserted, and set_termios() no longer
- 	 * rewrites it.
+ 	/*
+ 	 * Serialize against break_ctl() and set_termios(), which run under
+-	 * port->mutex: the tx_break test below and the MODE1 write must not
++	 * port->mutex: the tx_break-guarded register writes must not
+ 	 * straddle a break starting or ending.
  	 */
-+	one->tx_break = false;
- 	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
+ 	guard(mutex)(&one->port.state->port.mutex);
  
- 	/* Configure MODE1 register */
+-	delay = (one->port.rs485.delay_rts_before_send << 4) |
+-		one->port.rs485.delay_rts_after_send;
+-	max310x_port_write(&one->port, MAX310X_HDPIXDELAY_REG, delay);
++	max310x_set_rts_ctl_params(one);
+ 
+-	if (one->port.rs485.flags & SER_RS485_ENABLED) {
+-		mode1 = MAX310X_MODE1_TRNSCVCTRL_BIT;
++	if (one->port.rs485.flags & SER_RS485_ENABLED &&
++	    !(one->port.rs485.flags & SER_RS485_RX_DURING_TX))
++		mode2 = MAX310X_MODE2_ECHOSUPR_BIT;
+ 
+-		if (!(one->port.rs485.flags & SER_RS485_RX_DURING_TX))
+-			mode2 = MAX310X_MODE2_ECHOSUPR_BIT;
+-	}
+-
+-	/*
+-	 * A break owns the transceiver: break_ctl() disabled auto-RTS and
+-	 * drives RTS manually, and restores it when the break ends. Leave
+-	 * MODE1 alone meanwhile or the break goes undriven mid-way.
+-	 */
+-	if (!one->tx_break)
+-		max310x_port_update(&one->port, MAX310X_MODE1_REG,
+-				    MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
+ 	max310x_port_update(&one->port, MAX310X_MODE2_REG,
+-			MAX310X_MODE2_ECHOSUPR_BIT, mode2);
++			    MAX310X_MODE2_ECHOSUPR_BIT, mode2);
+ }
+ 
+ static int max310x_rs485_config(struct uart_port *port, struct ktermios *termios,
+@@ -1117,21 +1133,14 @@ static int max310x_startup(struct uart_port *port)
+ 	max310x_port_update(port, MAX310X_MODE2_REG,
+ 			    MAX310X_MODE2_FIFORST_BIT, 0);
+ 
+-	/* Configure mode1/mode2 to have rs485/rs232 enabled at startup */
+-	val = (clamp(port->rs485.delay_rts_before_send, 0U, 15U) << 4) |
+-		clamp(port->rs485.delay_rts_after_send, 0U, 15U);
+-	max310x_port_write(port, MAX310X_HDPIXDELAY_REG, val);
+-
+-	if (port->rs485.flags & SER_RS485_ENABLED) {
+-		max310x_port_update(port, MAX310X_MODE1_REG,
+-				    MAX310X_MODE1_TRNSCVCTRL_BIT,
+-				    MAX310X_MODE1_TRNSCVCTRL_BIT);
++	/* Configure the RS485 RTS timing and the RS485/RS232 mode bits. */
++	max310x_set_rts_ctl_params(one);
+ 
+-		if (!(port->rs485.flags & SER_RS485_RX_DURING_TX))
+-			max310x_port_update(port, MAX310X_MODE2_REG,
+-					    MAX310X_MODE2_ECHOSUPR_BIT,
+-					    MAX310X_MODE2_ECHOSUPR_BIT);
+-	}
++	if (port->rs485.flags & SER_RS485_ENABLED &&
++	    !(port->rs485.flags & SER_RS485_RX_DURING_TX))
++		max310x_port_update(port, MAX310X_MODE2_REG,
++				    MAX310X_MODE2_ECHOSUPR_BIT,
++				    MAX310X_MODE2_ECHOSUPR_BIT);
+ 
+ 	/* Configure flow control levels */
+ 	/* Flow control halt level 96, resume level 48 */
 -- 
 2.53.0
 
