@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022519;
-	b=h2U8+GMrcDIe29p5NyhzvM9ZKZFXEETgzPPEUM2tPu1oD1snrT84YR+u159iA0ImLwA1
-	 /8gN/0cZplySVomo1j3zZnymK26nXL3R0cUOnaW8gqFrE6RmR6iIo+y02dzMX9WIt2iVw
-	 H1UiavARWkVbkV/PB3RaSfQk/o8umv7zPbbGf/5UVBWab93OoOsYhLKsIcMmjKK2uCPv3
-	 VKZNks1ETjM+xAvMGmSqqxWc6eGvWhR8aVHubRltAd6sS+f4G01X3ZOArlj09m+aadEFR
-	 Dtg3hwdVLwrhFkYPtFGFIoVsdlG+xWvj4sjcZqM+GLw0t1hCWgNz/oIixG1F4ks2hnw==
+	t=1795022522;
+	b=26hcrJz0GAUu5F0/mu5z0YjXhCV/OPfzUNzNJFMFkuUO0EQM1DkmRz6F8CqAL/e3GZyi
+	 DBoo/Zhfz5hbgJuCZ4M5wB5ucfFwc8x6DQGijabXcZNzrK/3LSpaxpi7E0pMqUI42VwZx
+	 wIub7ptu0AqU76m8w6mdO9R/37GinKBaGbYwS1DJ8JhAQBqFjGgn3H8gGzWya0dwYP3+b
+	 ecxIIMlDZoGQlA7NxxcXDF78UQdwW7RWxiC3TJ/NLIoJhGV87tW1ZP2/bkD9tKbiypiHf
+	 AjiZknsAHC1rN27TMsMYsHOvbP07R6eJaEQgZOKEaLDYfUaJcxuvfMzhFa0hzYqjFwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cylHTxcyzaXTV4D4nOjrXhxF15iurNs9B7/mRy5Tzj4=;
-	b=HQ5iL4/yCeglHG4VYU8fmXvXPoKUhs01UPi2BrjdhqIkjjuDhIRy51m8ICliHhLUFOSf
-	 kwWWcB7XMk+XVhVxY+/cgIujr9ze6zIJS3wgZuhzzRx/Cy2KLi4bXaQN/KFVwKhnOBujj
-	 RTrgVdTsrU3ALTnGNhKXLIwBvWYT30UH7bo/itfquUI3k6NnPgWvgmVWMTS7h1oZ6/vQ7
-	 Vba5sp2tlEuJhipxP1vWFIbeVb4l17iYwcoLgM18QWyBsxdNVwkQeXD+ZKMepkbrOzeC8
-	 TZ1pC9tR1BiRR+H/2scl9APzOwJON5IohjvDAkr1QFPhbt1jLSu+7yuDt3bRy9gCKtA==
+	bh=5Be9C3zqr/c2fq88yKvc6RLqWcsiLSliu8cSvndk1h8=;
+	b=oEsH6qZji8qJdGdcut9ohW6CBy7Fs3EDtXn2Oo3wLfz20uqmBbTDehDR+gNmBAEsRWBs
+	 yD4TIMZN9QRHP1ODX0/uAxwqHtbGJHmjx2RPE/YpE1j6TZVM/jRs5jXO3t1UD1UbLaDNc
+	 TflpkYXP7QlglWAem8zCFbHzvHK7eS8bwnJEf7EhQz3a+uiEVRiZLs8u1rA7vi9Hnv9Iz
+	 Zv+8y0+HNZ/nHsw4zUavRvvX5tqfTJJ+y43UOj3ZwtPW/kV9YVpP0InvB2PRV01qfoQEq
+	 RC/gYV20PgUtDc+Rtd/Y/RsrBvleYXz5jgwoBAO2i9ocsntIDZV6/53my02nk1/91rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usdJHE5K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OAev9/cb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFAF606A32F;
-	Wed, 18 Nov 2026 17:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4199606A32F;
+	Wed, 18 Nov 2026 17:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usdJHE5K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306661F000CE;
-	Wed, 18 Nov 2026 17:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAev9/cb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35EC1F000C5;
+	Wed, 18 Nov 2026 17:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022519;
-	bh=cylHTxcyzaXTV4D4nOjrXhxF15iurNs9B7/mRy5Tzj4=;
+	s=korg; t=1795022522;
+	bh=5Be9C3zqr/c2fq88yKvc6RLqWcsiLSliu8cSvndk1h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=usdJHE5KJyPPyfTr6YJnIjqF6Mo6/E0CMOcx71/sClbsOqkvb62IfPMfy+EjkwAMO
-	 31C7ClWwicRnlY3rK+DaMnsGiA84/zs6YBN8x0kV03U1mjqdG2JJzTtrlto7vP+8hO
-	 Jd35zArMItMHSdiq0hFaTJKxEosEemH6vGxpbKNA=
+	b=OAev9/cbUoapFPlUotzRBchpJhHuR+5OA8ZCqqwjweGLSoW/xtBN3D07Lhvu8F/NH
+	 JCT72JCZdTMZPctv0B5xTiJbiAuNHkZlLsHLimlbkcTKCJvoa9o9R8bp9gPwedvITG
+	 Z/sqKmL+VmOPqpQ2iXEnc3Ndu4IZ5yS7VfpoHVMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0041/2151] apparmor: fix profile leak when a policy load fails
-Date: Wed, 18 Nov 2026 15:29:36 +0100
-Message-ID: <20261118150123.194772291@linuxfoundation.org>
+Subject: [PATCH 6.18 0042/2151] hwmon: (chipcap2) Drop unnecessary include files
+Date: Wed, 18 Nov 2026 15:29:37 +0100
+Message-ID: <20261118150123.231831096@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,104 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgia Garcia <georgia.garcia@canonical.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit ce94927fa4173fcc1eca27bdc65a140064c8f1e6 ]
+[ Upstream commit 4c8d758d4ebff3780d09599f2c8db5d6af3ca2af ]
 
-The error paths of aa_replace_profiles() and aa_unpack() do not break
-the refcount cycle between label and proxy. They just aa_put_profile()
-the new profiles, which drops the label refcount from 2 to 1, and the
-proxy keeps the profile alive. Every failed atomic policy load
-(e.g. "profile can not be replaced", or a later profile in the blob
-failing to unpack) leaks every new profile in the set, along with its
-proxy, rules and its loaddata reference.
+The driver does not perform any locking, does not execute or use any sleep
+related functionality, and does not allocate memory. Drop the unnecessary
+include files.
 
-The leak is usually not visible from userspace, because the raw_data
-directory for a failed load is not created, but it becomes visible
-when the blob is deduplicated onto an existing loaddata, which then
-keeps its policy/raw_data/<rev> directory forever.
-
-Add aa_put_unpublished_profile(), which drops the profile's own proxy
-before putting the profile, and use it on those error paths. The
-proxy of an unpacked profile is always freshly allocated and not
-referenced by anything else before the profile is published, so
-putting it is safe.
-
-Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 8c02722be2ca ("hwmon: chipcap2: synchronize ready IRQ state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/policy.h | 20 ++++++++++++++++++++
- security/apparmor/policy.c         |  3 +++
- security/apparmor/policy_unpack.c  |  4 +++-
- 3 files changed, 26 insertions(+), 1 deletion(-)
+ drivers/hwmon/chipcap2.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
-index 69e6c93d2ff04..50dcf0147ae2b 100644
---- a/security/apparmor/include/policy.h
-+++ b/security/apparmor/include/policy.h
-@@ -408,6 +408,26 @@ static inline void aa_put_profile(struct aa_profile *p)
- 		kref_put(&p->label.count.count, aa_label_kref);
- }
- 
-+/**
-+ * aa_put_unpublished_profile - put a profile that was never made visible
-+ * @p: profile  (MAYBE NULL)
-+ *
-+ * A newly allocated profile and its proxy reference each other
-+ * (proxy->label holds a label refcount). That cycle is normally broken
-+ * when the profile is replaced or removed, which redirects the proxy.
-+ * A profile that is discarded before being added to the policy tree
-+ * never goes through either path, so break the cycle here, otherwise
-+ * the profile, its proxy and its rawdata are leaked.
-+ */
-+static inline void aa_put_unpublished_profile(struct aa_profile *p)
-+{
-+	if (p && p->label.proxy) {
-+		aa_put_proxy(p->label.proxy);
-+		p->label.proxy = NULL;
-+	}
-+	aa_put_profile(p);
-+}
-+
- static inline int AUDIT_MODE(const struct aa_profile *profile)
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index 6026514a763d1..6d564199729ce 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -82,7 +82,6 @@ struct cc2_data {
+ 	struct completion complete;
+ 	struct device *hwmon;
+ 	struct i2c_client *client;
+-	struct mutex dev_access_lock; /* device access lock */
+ 	struct regulator *regulator;
+ 	const char *name;
+ 	int irq_ready;
+@@ -575,8 +574,6 @@ static int cc2_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
  {
- 	if (aa_g_audit != AUDIT_NORMAL)
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 230d8428b4d31..e582df9327037 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1434,6 +1434,9 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	}
- 	list_for_each_entry_safe(ent, tmp, &lh, list) {
- 		list_del_init(&ent->list);
-+		/* new was never added to the policy tree */
-+		aa_put_unpublished_profile(ent->new);
-+		ent->new = NULL;
- 		aa_load_ent_free(ent);
- 	}
+ 	struct cc2_data *data = dev_get_drvdata(dev);
  
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 8dc2adedc7ae1..3e16612d2284e 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -1556,11 +1556,13 @@ int aa_unpack(struct aa_loaddata *udata, struct list_head *lh,
+-	guard(mutex)(&data->dev_access_lock);
+-
+ 	switch (type) {
+ 	case hwmon_temp:
+ 		return cc2_measurement(data, type, val);
+@@ -617,8 +614,6 @@ static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 	if (val < 0 || val > CC2_RH_MAX)
+ 		return -EINVAL;
  
- fail_profile:
- 	kfree(ns_name);
--	aa_put_profile(profile);
-+	aa_put_unpublished_profile(profile);
+-	guard(mutex)(&data->dev_access_lock);
+-
+ 	switch (attr) {
+ 	case hwmon_humidity_min:
+ 		cmd = CC2_W_ALARM_L_ON;
+@@ -712,8 +707,6 @@ static int cc2_probe(struct i2c_client *client)
  
- fail:
- 	list_for_each_entry_safe(ent, tmp, lh, list) {
- 		list_del_init(&ent->list);
-+		aa_put_unpublished_profile(ent->new);
-+		ent->new = NULL;
- 		aa_load_ent_free(ent);
- 	}
+ 	i2c_set_clientdata(client, data);
  
+-	mutex_init(&data->dev_access_lock);
+-
+ 	data->client = client;
+ 
+ 	data->regulator = devm_regulator_get_exclusive(dev, "vdd");
 -- 
 2.53.0
 
