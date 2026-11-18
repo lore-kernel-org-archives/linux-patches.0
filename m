@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022250;
-	b=1Q1YP6ehjsuztVSPm/puChytVulIoQ/IIdumAJxT7ggcIgDLjRYAQUSy6HeAancEgqsw
-	 Of4j5WfxKW1YM7CUQZosoK9JbAD7Wx65bkdnzbEBPHoCceEpb31Il5wNAjwisFpBrYQBH
-	 8uMI6QFSrfjr5NrgGWvVWgCZdhPkRkBKR0qcu7pMEyp+8emI8pL0KSFjY5a7prlWY3+wi
-	 m7Q3GRe1EX4MqkHYalRg4VhziVW2euEVz5YERCHwjvx7TA5K35pPRtqulEN+6J3pszmfo
-	 LW6O8wUppaFzwIk6PxmJ9kUtxPV0TOTgqiQIfJ2Lwi0AoTv5tB/ZJFHpIbvwqvPFGGw==
+	t=1795022253;
+	b=otwaTsBNxB20i7DQllhzLQhoSJi20sbj3itSxjdRrS87PaVDU+VJo5nCecNziCcRX1c+
+	 ZSx3BN9NvpWFX8yjKQZPL1dYYwnFZiGVNlJNqz7Zg3jWNaLbXxvA40MTcEGpoHfntXy4r
+	 tm3lpq60lklGs0WxT2x8vqzcNpC5Idv0FAREuAmmO5HaunFQBJphXeumR0bJjjHXHSUJg
+	 iTtqq9Dwf+P6hGLQarfDYxCnva7lfCZJTRZ0RUviaqO5vTaTWVhamsL4krriD8f1dmGMj
+	 7rnStqaL2EAY3UjwMHs2zpNm7MdH2QtAE5XXkmXEWm+FoswvUcugyTz4IRqvk45eiPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=in7/q4khMWe62H10KJe9+6UDTpyUqbUy6X19eXsLlYk=;
-	b=bRg8b8knyRoy/GDfFD8pCAtI8XiQ8OIUiZ6C/hhEXm9740p45ARrrwHfNuhhhQWNVdeq
-	 46ghdRQnyZeRv8jTInA+yVx47EAZIbY88ToDlxyG2z2DwTj7JtsRgBAaM5q1A+a9h/MRN
-	 zWSjq1IYR4kMSHmWKnyYud+A/6d8Go+uGxYmNubuHxS61WgfcFDKkU/efC9XTM9VeOXWX
-	 umeOmJsEFyCmWt9ZeEe/CTfM1eg+mgzbzw5+fY/BDk2bk4YI3rQic35yQJ/HJSfGxhJ0J
-	 w3yTbB9DLKkzCB1cqZjNnh3I4lgws5EFu9hIWVb0NkGQgYfuuFTsSdiUrw5gNJIlbmg==
+	bh=tBU83PJMtSVlkt6BQ94YNXrKH3ZY6+npKL3JSTOf4HE=;
+	b=j1HvA4H5INB1He2ISSwYcnsggnEbX8s1+G82ExrpRLZPu8hKqsfvpNzoJVUfDafTahgW
+	 81aa2y6tFN+zOfRM3KvqeWsfYj+IgP8iDTvidpPa9byizsxnfFrbFcGs7N+loZhy695x2
+	 Vt3X8qFaUuZXkuHw2cmoxu+Tl/QcjUe2JjfZbovI9TML60LEd8JBiFtF9bm+vKuM+d05R
+	 xyO50ybCSEB/UewTuE2z11sd854zfTb11OWHb/PhBaPbqaHeNhTMCODHIgN5Wj00zMBSS
+	 4DHjaAHxCzJ+okWvTV+Dcj8n5HX60d8q7uV3ZvLmO52bOsMMm6z+gEodipZ9mlz4zAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdZMX+4X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TWw3MiE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39756606A320;
-	Wed, 18 Nov 2026 17:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4369606A32F;
+	Wed, 18 Nov 2026 17:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdZMX+4X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6571F000C4;
-	Wed, 18 Nov 2026 17:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TWw3MiE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495C91F000C4;
+	Wed, 18 Nov 2026 17:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022250;
-	bh=in7/q4khMWe62H10KJe9+6UDTpyUqbUy6X19eXsLlYk=;
+	s=korg; t=1795022252;
+	bh=tBU83PJMtSVlkt6BQ94YNXrKH3ZY6+npKL3JSTOf4HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cdZMX+4XPFfWzBkhPFGwHDjKjGlmep655f+K52la+ASzHaM0F5ewc9sKkmPPT6nDN
-	 34G9sYx7FlIz4YWqmw/xUZqdEjAjPJjJHtJclNdTja2dzWNN7NNffWUMlu5SZWmjGW
-	 eS8Or+x9FflL8aVXI94T8Ci+02bsZssRCDO6uuLs=
+	b=0TWw3MiE+tzRz+rQ1kgnLT/MD8NvzO1sXwWxP1gTzLyDp/xL+k2QvEFMpGr+bcuDE
+	 mujx2/ZE/LYNKCdhnEnUFYczdbvcktanDnP6Ao/1F2w3kBixK+ngImGfHI+shgelO2
+	 RN13fFjdym/r/OYgVVwJPXmRC6fCdXLuoF5Yz5zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2596/2651] rnbd-srv: fix use-after-free on two CLOSE messages
-Date: Wed, 18 Nov 2026 16:03:56 +0100
-Message-ID: <20261118150417.715948398@linuxfoundation.org>
+Subject: [PATCH 7.3 2597/2651] rnbd-srv: publish the sess_dev at the end of OPEN
+Date: Wed, 18 Nov 2026 16:03:57 +0100
+Message-ID: <20261118150417.770346168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,56 +72,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 4912dab88baa5f7034dc9e38807804d470ae5438 ]
+[ Upstream commit 08ebf69c78a02afb39b7728f3358c09bc4cf067d ]
 
-process_msg_close() looks the sess_dev up with a kref, drops it right
-away, and only then takes the session mutex for the teardown. A session
-has several connections handled by different workers, so two CLOSE
-messages for the same ID both finish the lookup before either one tears
-the sess_dev down, and the second one works on freed memory. Any host
-that can open a device on the server can do that.
+rnbd_sess_dev_alloc() stores the empty sess_dev in the XArray as its
+first step. An IO message with the new ID from another connection can
+find it before bdev_file is set, or hold a reference while a failing
+OPEN frees it after a mere RCU grace period. Both are reachable from any
+host that can open a device.
 
-Take the mutex first and look the ID up with xa_load() under it. The
-second CLOSE then finds nothing.
+Reserve the ID with a NULL entry and store the sess_dev once nothing can
+fail anymore. The error path still erases the ID, and no longer needs
+synchronize_rcu().
 
 Fixes: 2de6c8de192b ("block/rnbd: server: main functionality")
 Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
 Cc: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-40-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-41-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/block/rnbd/rnbd-srv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index 1e3de82fd70b7..1cfa2c5807597 100644
+index 1cfa2c5807597..1c80e8fe02671 100644
 --- a/drivers/block/rnbd/rnbd-srv.c
 +++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -360,14 +360,15 @@ static void process_msg_close(struct rnbd_srv_session *srv_sess,
+@@ -431,7 +431,7 @@ static struct rnbd_srv_sess_dev
+ 	if (!sess_dev)
+ 		return ERR_PTR(-ENOMEM);
  
- 	trace_process_msg_close(srv_sess, close_msg);
+-	error = xa_alloc(&srv_sess->index_idr, &sess_dev->device_id, sess_dev,
++	error = xa_alloc(&srv_sess->index_idr, &sess_dev->device_id, NULL,
+ 			 xa_limit_32b, GFP_NOWAIT);
+ 	if (error < 0) {
+ 		pr_warn("Allocating idr failed, err: %d\n", error);
+@@ -802,6 +802,13 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
+ 	list_add(&srv_sess_dev->dev_list, &srv_dev->sess_dev_list);
+ 	mutex_unlock(&srv_dev->lock);
  
--	sess_dev = rnbd_get_sess_dev(le32_to_cpu(close_msg->device_id),
--				      srv_sess);
--	if (IS_ERR(sess_dev))
--		return;
--
--	rnbd_put_sess_dev(sess_dev);
 +	/*
-+	 * Each teardown of a sess_dev runs under srv_sess->lock and erases the
-+	 * ID, so an entry that is found under the lock is alive.
++	 * Nothing fails from here on, so let I/O messages find the sess_dev.
++	 * The ID is reserved, so this store allocates nothing.
 +	 */
- 	mutex_lock(&srv_sess->lock);
--	rnbd_srv_destroy_dev_session_sysfs(sess_dev);
-+	sess_dev = xa_load(&srv_sess->index_idr,
-+			   le32_to_cpu(close_msg->device_id));
-+	if (sess_dev)
-+		rnbd_srv_destroy_dev_session_sysfs(sess_dev);
- 	mutex_unlock(&srv_sess->lock);
- }
++	xa_store(&srv_sess->index_idr, srv_sess_dev->device_id, srv_sess_dev,
++		 GFP_KERNEL);
++
+ 	rnbd_srv_info(srv_sess_dev, "Opened device '%s'\n", srv_dev->name);
  
+ 	kfree(full_path);
+@@ -813,7 +820,6 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
+ 
+ free_srv_sess_dev:
+ 	xa_erase(&srv_sess->index_idr, srv_sess_dev->device_id);
+-	synchronize_rcu();
+ 	kfree(srv_sess_dev);
+ srv_dev_put:
+ 	if (open_msg->access_mode != RNBD_ACCESS_RO) {
 -- 
 2.53.0
 
