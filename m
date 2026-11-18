@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023510;
-	b=wtDiW8tfS8Y/KjnsG5gPX+112r0cZ1PuQlGVKuKd4sJRue7UMeyqyOruiXUmOANlKj5I
-	 AA/692Od8weZHDFslEyoORxsyfUhnwIK5nLyNyZZhTbEcbJ8I33jL0u/vWaOEU5CnOHSh
-	 +T/R2ehWkS/0T/xzSEc9wot2C1GFdf5SCi6qRk0gDGy6O7aAap9Ae6f/G2LUrMZeWMg34
-	 8znjQzFeFPgvU5rS02SwzVfPjps6qspPcZJVBOjzsUP196OFGfT2t/WAEt5wqImHsWoRv
-	 YvHAbGAXpQnQCGITwDbFELU10AIFMyCIqLCy96VAkqQX8KcuwNLErbVfp8B9J1IauvA==
+	t=1795023512;
+	b=CePJ+7sJ6WdnPJ4kt2O/t/ZBDTd9qCUW3o1coovhrM0xFfRLLF43d6iTxTeMOnYU3gPK
+	 f4EVQV3jVNy6j84qH3EogtNshZBayiCo2AbOks1NlKiMIg93g2ZBmT4CCGamhgyu0uAxT
+	 jV7xzbyWEm0/HD7XJMSWw/DD0u9JoIhU4D1hq5S1aMj6PPOiN6i1xEVnUeDAnQlF2UPQ8
+	 VppjfeJLsCqZ67pIhLn8tN6gWsl2yZVmyUbA/dZRmr2eiXVAa5Je5tfNRYvw71ZvJXbSF
+	 kuVdrxoEsI8A0adDXVvMLkNWvpXY8or6TZ/K0dxStayNbn4KtuIDCcWVj5fY13taMZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ezrlotu7AZxr4kv6LDGRDJD6KRXp0G9/tee/eiubiJA=;
-	b=qRyvxlRbzK4gQebQQlR9Ib6a7+RH71cshAvPeTpo880n+3dHcwVZyi6smBR/R9xogbCz
-	 nlot2zag3P+fra5wMtR/fr2kd113kNPpPHApMKH0YwfdQc4WAk2gNV3z8amC0ig4lS5KZ
-	 jxGr7wH6ifCJTRrfNfj4lsZYsh3BOdft7Rp+JLNA3IVY5sr5csGLW5QlnSAlU+e9ijK6a
-	 bAR/yY7bVhSEOVQH9G7ktWl6EQAXN/eAmpU1rQBDroMzOq7Vs8tO3+gk6/47ctc3uYTkO
-	 XB3YRwo1EBbKDI+eUET3Bfzg9P3N7YB5qZW3ixjrAmFIvsmiI0LTLTJlx+AmptKIvxQ==
+	bh=3mhTAkGOsOhrP0KF0YGrxIfhFOQJ4Obdrra1LqKgffM=;
+	b=fkRlBGdJhShqluqgB7dOn1QoVUyuweahB3MVC3AsSxbmcgPaOmbxF6//FhI2JFFAYRla
+	 T1lB8z0P5kWk8w9vypBehN1Cvv5czHQ3P7jIzXA6Jcf8riJNi8Q8q40MX3zmnKAm49IeC
+	 OE7vdj7Tc48uqgUOMBQy8fp5n3l7aT34vCyQ83CAegTgoiCoPj7qSDFQz8wjvZDzhx+Eh
+	 b4JRqP0XUN5yJ6O2D0bx2ufhxUmMx5gG8Gt6ZqQsQcALUIIrfLMue+oJhww/uy/i4gHFz
+	 xp9fgO6PnYGzkbAFHk4AtoBbT5huoSqA6od4MtGocb9CW6P0ZQUa+ckGT7VE/QFmqgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4NF4jsr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrnuESpz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321E4606A330;
-	Wed, 18 Nov 2026 17:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0A1606A31C;
+	Wed, 18 Nov 2026 17:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4NF4jsr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3372C1F000C4;
-	Wed, 18 Nov 2026 17:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrnuESpz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9E71F000C7;
+	Wed, 18 Nov 2026 17:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023509;
-	bh=Ezrlotu7AZxr4kv6LDGRDJD6KRXp0G9/tee/eiubiJA=;
+	s=korg; t=1795023512;
+	bh=3mhTAkGOsOhrP0KF0YGrxIfhFOQJ4Obdrra1LqKgffM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B4NF4jsr1hee7ESU9dTzj92LvUUZ0GHy2XZujRSeG0a+sKv5BjR2jK/aCslQ/CPwo
-	 nfpQhGD9iJHz7l8sTFhpb7IkiBtWwSkdBgo6TSPcF6aj/icEEMg5wlhtp9eFNrICJl
-	 dPK0IpGffhJxA0sFB6wvbEJKPZKBxy/+M/3csEck=
+	b=wrnuESpzNNmL4acRkwHA+1+zNC/rV+OspJE3Lp9a1OmUSq4bnYjXZK0BtAEh3QxZl
+	 twH4CjmFYUCH0fGiRb2Mh3jAGd5P1RJTtoJWWChfyxDyXq91dzaCqNT+HSse7sxZbJ
+	 rG2k8HFejjno4/cUzBdthQ8TZOSUq5TE+/0J7b9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0396/2151] cpuidle: menu: Remove single state handling
-Date: Wed, 18 Nov 2026 15:35:31 +0100
-Message-ID: <20261118150136.490531855@linuxfoundation.org>
+Subject: [PATCH 6.18 0397/2151] cpuidle: menu: Do not return a disabled idle state
+Date: Wed, 18 Nov 2026 15:35:32 +0100
+Message-ID: <20261118150136.528147527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,37 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 93983a9f3beea791c21d77c2425488ad327d4fda ]
+[ Upstream commit d594187cafd5ad65afc5f00242f8fa20e1d8c0f1 ]
 
-cpuidle systems where the governor has no choice because there's only
-a single idle state are now handled by cpuidle core and bypass the
-governor, so remove the related handling.
+When idle state 0 is disabled and the PM QoS latency constraint is
+zero (latency_req == 0), the first branch of the || in the early-return
+condition of menu_select() is taken immediately, so state 0 is returned
+regardless of its disable flag.
 
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-[ rjw: Rebase on top of the cpuidle changes merged recently ]
-Link: https://patch.msgid.link/20260216185005.1131593-5-aboorvad@linux.ibm.com
+Address this by making the !disable check a prerequisite for the entire
+early-return condition, so that when state 0 is disabled the normal
+state selection loop is used instead, which already skips disabled
+states.
+
+Fixes: 53812cdc9100 ("cpuidle: menu: Move the latency_req == 0 special case check")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Link: https://patch.msgid.link/20260827094820.3900062-1-luoxueqin@kylinos.cn
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: d594187cafd5 ("cpuidle: menu: Do not return a disabled idle state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/governors/menu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index c6052055ba0f9..899ff16ff1fe2 100644
+index 899ff16ff1fe2..d50fb883f75ca 100644
 --- a/drivers/cpuidle/governors/menu.c
 +++ b/drivers/cpuidle/governors/menu.c
-@@ -281,7 +281,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+@@ -281,10 +281,10 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
  		data->bucket = BUCKETS - 1;
  	}
  
--	if (drv->state_count <= 1 || latency_req == 0 ||
-+	if (latency_req == 0 ||
- 	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
- 	      latency_req < drv->states[1].exit_latency_ns) &&
- 	     !dev->states_usage[0].disable)) {
+-	if (latency_req == 0 ||
+-	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
+-	      latency_req < drv->states[1].exit_latency_ns) &&
+-	     !dev->states_usage[0].disable)) {
++	if (!dev->states_usage[0].disable &&
++	    (latency_req == 0 ||
++	     data->next_timer_ns < drv->states[1].target_residency_ns ||
++	     latency_req < drv->states[1].exit_latency_ns)) {
+ 		/*
+ 		 * In this case state[0] will be used no matter what, so return
+ 		 * it right away and keep the tick running if state[0] is a
 -- 
 2.53.0
 
