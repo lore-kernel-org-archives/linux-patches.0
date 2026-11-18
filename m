@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044633;
-	b=U27I3A+y6QoLhwZnbWvfum5XNR0G706d3wNhpn5SS334sVeOkRQ8HpodZZG57LOkGu7H
-	 L6xMGXIPsEHcybLDEE2FSO3o4N0sSigQ5vg9gyVgvDHORRCUE6nxKAbLMaNRIdHGVnE2m
-	 4Yk8uXFxFv2PqrwU/UQsfwDiCAR9b9HCArZBv1gwEs596TpRMa64fv6GLxJJpM6KYq7up
-	 IU3azw8WtpdcVYNKr9oA5JbYIwHju2eDH5/jI+KlueuQ2eA1BdF7kDebxj4wycdt0l5w9
-	 l42GE8wIC3LFMztnA7Pgyg5c11n29qwL+3g4C23PkpD2EuU06YqHHY9Jn0e01o8XyfA==
+	t=1795044636;
+	b=1/8Gx4eYkfmZ64Xg5vDb8TKUC0AzNfC9m3OQvjbeng5GP4BJ9RWuhZ7XCOltFUOjY+P+
+	 Ocj/YG3Stq1R88n3DqEqHIBXzBr73uGQ0wBZ2w39eJYa5eCJwVxUFa1MAmyJK1xBUwKcj
+	 plfVCEIsqVVnk1NAC4MG2SbowRycmQXIQMquuecBR8SD3J84CIsTLvG1Jes3SgGowXcfu
+	 9slJHngRdNa3aOF8xMh75LFq0/tkSKlg3+KlzJsRKSWiawomlfBfCoiaibtQSz0ngmNFR
+	 YhTIwcSWKVRyMs7A1xaTw2KzkwAli+hXOKZ9dg5eN38GkHXazFUMQaa9cBwLR0+0Mpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ViolQc+V7BfyTpFL9NGYWu5hfrJSlv69RV7oS4HVd4c=;
-	b=wRbWAoauH8nDJHN65UGHoEzLRBx7RgQYxnlFjMDULNbWRqWArHI85krTryIli6I6U4af
-	 bqZZxtGwQjEF1trZOCfjIEav+Ijh9l1v4h/RY2cz8ts3dcpkMrwepApFwsvlhUMOGMqsy
-	 KDo/DUgnjVaCyp/BX1sbp6b2kwPiVmJi/fwdqZ+wVbyxqIbnwRtUt2JfZ0emahMI60VJs
-	 H8m5qBmWKyU9u8Xed568Q1gD1R1V0Sfk6V3tolD5cucuATZX3tZ+5KvSV74hPnd4fifpt
-	 7tPUpr1p6P7H1IerYjELKoJw+g1AHNTIlyR2q8bwarJoBkZCt4kxzrNfApzsmMomQuQ==
+	bh=spDhx9B7mEH+beKu95oEbaUDs567EiiwungSVpH8v60=;
+	b=jw2SOhqDmfuoY6rdvnb03wwxJQ2b9rpHpBFImcsxYELKg9fUwQc+jgvvM44yoOKVLE/l
+	 Mj8AF38LhJpzCuVUpF45JVj8XavR/YcPshBqFchl4Z5BbexEKwgB6B9htykCdd4xjhXqx
+	 5bS/Bc1PAqjqoOmvCIAcUR2GW9C0OJ07cuLHrC9yjKL9UasVbEHCJaFPG0L/qgofhkysX
+	 HBgPlCs0812Y/w/AMMp5B/vEmtoA2QW6Gzkq9K8XG7PQMXgUnIyW8Qg36AXnLPSofVZ9n
+	 2AbH/RCjkgCTpax/0XT+C9zb790hGJvP+RuVjCaPqCkFZgtH5xwv0cDtbPex4U6jwbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwfAlNq5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqXizG2b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B711A606A336;
-	Wed, 18 Nov 2026 23:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A181760A2602;
+	Wed, 18 Nov 2026 23:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwfAlNq5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161F01F000C7;
-	Wed, 18 Nov 2026 23:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqXizG2b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00071F000C9;
+	Wed, 18 Nov 2026 23:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044633;
-	bh=ViolQc+V7BfyTpFL9NGYWu5hfrJSlv69RV7oS4HVd4c=;
+	s=korg; t=1795044636;
+	bh=spDhx9B7mEH+beKu95oEbaUDs567EiiwungSVpH8v60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jwfAlNq5SrZdwpdDgR98BFTJG83z+wCQVM5nnNstdggH9z1/5PGnm4cotnvX6QV7k
-	 yJyab4fAQb0SlIHApKxtqYxfG/GfUXW1ah3KvIX3PWuYulPIkrU/7ftXz+RyUN9XyK
-	 S0vSRQ1b2XuND4NmOYPoltlsS32pnQw+m0IMySsM=
+	b=sqXizG2b6QejFLqEHKhUSxJghLE5cLcjwvfN++AagRRl8ActqFH9357W9m/X9ySor
+	 /s69qITKYSgbuZlPAMgdtFDbAXEjARubtnXVNbhHj8YbaXA0MZCMNcsEYlZmIWKM1v
+	 bsEY/aWqatzzRfhqC9rZv4r/fw6AINRIZ1i4mUKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 0638/2857] HID: mcp2221: validate response report length
-Date: Wed, 18 Nov 2026 15:27:52 +0100
-Message-ID: <20261118150224.485573744@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 0639/2857] HID: picoLCD: check for fb_deferred_io_init() error
+Date: Wed, 18 Nov 2026 15:27:53 +0100
+Message-ID: <20261118150224.525542309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,42 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 1ae40774d386b7a51e4799200106429a7e14e8ec upstream.
+commit feade898fc958ff355101adf12d5632272e64220 upstream.
 
-MCP2221 responses are 64-byte reports, but mcp2221_raw_event() currently
-accepts any report of at least four bytes.  Several response handlers read
-far beyond that minimum.  In particular, the I2C status response reads
-offset 20 and copies ADC samples starting at offset 50.  Other GPIO, SRAM,
-and flash response handlers also access fixed offsets beyond byte three.
+fb_deferred_io_init() allocates deferred I/O state, populating
+info->fbdefio_state, or leaving it NULL if an error occurs.
 
-The HID core invokes raw_event callbacks before validating the report
-length, so a truncated response can cause an out-of-bounds read.  Require a
-complete protocol report before dispatching any response handler.
+Currently picolcd_init_framebuffer() ignores its return value.
 
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw_event length validation to hid-asus.
+Therefore if an error arises in fb_deferred_io_init() (for instance, due
+to an allocation failure) info->fbdefio_state is left NULL.
 
-Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+When the file is subsequently opened, fb_open() will dereference a NULL
+pointer (calling fb_deferred_io_open()).
+
+Fix this by checking for the error.
+
+Also correct cleanup ordering - defio is initialised after the sysfs file,
+so cleanup defio first.
+
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-picolcd_fb.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -748,7 +748,7 @@ static int mcp2221_raw_event(struct hid_
- 	u8 *buf;
- 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
+--- a/drivers/hid/hid-picolcd_fb.c
++++ b/drivers/hid/hid-picolcd_fb.c
+@@ -558,17 +558,23 @@ int picolcd_init_framebuffer(struct pico
+ 		goto err_cleanup;
+ 	}
  
--	if (size < 4)
-+	if (size < sizeof(mcp->txbuf))
- 		return 0;
+-	fb_deferred_io_init(info);
++	error = fb_deferred_io_init(info);
++	if (error) {
++		dev_err(dev, "failed to initialize deferred I/O\n");
++		goto err_sysfs;
++	}
++
+ 	error = register_framebuffer(info);
+ 	if (error) {
+ 		dev_err(dev, "failed to register framebuffer\n");
+-		goto err_sysfs;
++		goto err_defio;
+ 	}
+ 	return 0;
  
- 	switch (data[0]) {
++err_defio:
++	fb_deferred_io_cleanup(info);
+ err_sysfs:
+ 	device_remove_file(dev, &dev_attr_fb_update_rate);
+-	fb_deferred_io_cleanup(info);
+ err_cleanup:
+ 	data->fb_info    = NULL;
+ 
 
 
