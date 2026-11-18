@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021049;
-	b=FK1JQsNdp/mJZqcLWzZhnIvZbrGjuclVefoqIWAWd57M/4HPDVEmu2MZid9RGpTZujlF
-	 BLxAeTED+9pQmKmmhgao+IiCLVOS3ZSECVPTaUWaT9D5iSrYm8nLa4A3SLgppQA/o68TL
-	 aeGGsKDHHGy1i7NwGy9VvjW3ttbAVDXtKvOnpyTfLCmSw5f0D9BuFunuHriMNUUU+U996
-	 /4rhNGwc1Ql96Z+ZcXVqzaWKqqJBjxGjWOc6kBvtdv2dDtyKwVcQD44rLDbL8+TkKjyDi
-	 cnC3EI2Fkmud9S2XR3MlNDv5B4oGEAsSLLf0q1w8J3qWB/1G5mQU+/t+2KdaWn1dg9Q==
+	t=1795021052;
+	b=x7BU1kybnjfL1RTA9vFNRCadiAwdFULaUHz1rXQo9KrwNkvtJPH/LFcEo/j9cgKjSCnQ
+	 Ak4t0A4SVoTqcPBvFgnZOUy0xnX4l52npBvMmAuORsulIk+cHOge1An51+HerI6uBi7rP
+	 g6Ebs4q9y3guVmYqqt9OX4QCc+ryst8HcwvS6yv/wgC9TXV2Gc8bg/ZMLSVxPNloAzF3B
+	 sg5DLiKFuiJUbYbKMEWTf2WMSYrEnW/oNtFLd+N8C1f1tSJxmJgSljqpQZZ3l0Sv9FoEE
+	 Ys+zzMeGWsXYvnGx/F0OpUPK4b5RtgXbny/yvou75lzwoxmiojCiOdFvGK5x2hv3ahg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1gOcSouQZu0FMSgi24dJkrfWL50x8cvqm/CzTKs6Rgo=;
-	b=XVUOMqGSgxUDckSjdXQVqgp2UytTd1kzhkjwPmeR5iwLmyowXPI/U8i+VEL+hlsKIhk4
-	 4dp1Cs1izRy+iM900MSEn6Kve4tIYTizf8FppjjH+iXprZcGu1iZijJsHdo2e5tdbFsX7
-	 0Acis5kqtHyWUDhYxH4WYZQoI6AM7uLGf2TgtB7b08sLOOZq8BLegcZHp7ycv3SZN3/Ie
-	 0Ih/mBIk/PIec3jdIwyXRYZX2FRyQ+ug46W8UVHxTmOiG9D97Px+0dW/nnK3bZX6ZS4iY
-	 VmXiMpukRbs22lYZPjTRX6YGOnPn7GCw6cA04ndNNvf0I6c6WZhrVPR+tRkOwr4gUOg==
+	bh=R61gMC6eIWlXk25F8ljhbUyMZ9v2lqCCqEMRCxYaliQ=;
+	b=gKaCL2z5Q1fzs/1oR9YGAvUeznTEXhS4bhpbg5/EHLYwUOXzuDI0wZltxVAJwzX7e/8t
+	 bJtn4LvriiHhxwoMUTiIJlmVMCk+Fw8xdT8TyW7wVqSF706EeHXQR6LqyB2iSp0R0BkvU
+	 DZZEJ1DRHrxELKpeAMieQd0Rk0m++tvH/X/4/QKEs6VXpCnYjaHJcEsWb1Z7WS05l7B5/
+	 hraTMc4fgYdLaplS/2B2/dv586V6fJHbJy7jm19UOFVH78sBJJPZdNVoWFUNzaD51EB71
+	 HnTfLP3SKYqTvEKj/Sdn5y7nxjej8lKY/oelFGunDvV4ZQK9U6hvzRzkmpHk0F+pwqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cwe/RQbG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7xY0sLn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CD060A261F;
-	Wed, 18 Nov 2026 16:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE190606A330;
+	Wed, 18 Nov 2026 16:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwe/RQbG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883D91F000C9;
-	Wed, 18 Nov 2026 16:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q7xY0sLn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BBD1F000C4;
+	Wed, 18 Nov 2026 16:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021049;
-	bh=1gOcSouQZu0FMSgi24dJkrfWL50x8cvqm/CzTKs6Rgo=;
+	s=korg; t=1795021051;
+	bh=R61gMC6eIWlXk25F8ljhbUyMZ9v2lqCCqEMRCxYaliQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cwe/RQbG1xBSHg9xAF0NSMy173ItPszJN7kYAr3skUcAsRhEKTeWa5wgZ4ZUvH+F1
-	 ZqmnO+Wx1LQuEOmpAX8z7DtEnUJPcKoLdJ0ROt7Tl4HPg616IWrS6AzzgIUpM9aXQH
-	 TrFXUpcVgKhVOljLKIFOBNgo9KfNJ5gBpMttE0fM=
+	b=Q7xY0sLnvEWZnegthrX7HhafeWuA0W4TUjQZUMP9VN/8c1iLgi7QNUeIpPvsOcrx0
+	 C/hwc3NkZid7aaCbql25cIzuRTMCY5QEnU8tHuU7LL0bBU/KIpnCoqYLCDN6VzKvWe
+	 FZG95tILiKGacYm5nrK9GcDXGkFO304C+vqXYlKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Zhiwei Zhang <202275009@qq.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2142/2651] RDMA/rxe: Clear pkt->qp before the early drop exits in rxe_rcv()
-Date: Wed, 18 Nov 2026 15:56:22 +0100
-Message-ID: <20261118150402.973545638@linuxfoundation.org>
+Subject: [PATCH 7.3 2169/2651] ALSA: pcm: Remove channel-map controls before freeing substreams
+Date: Wed, 18 Nov 2026 15:56:49 +0100
+Message-ID: <20261118150403.901401975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,116 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiwei Zhang <202275009@qq.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 7d7214b39b14c9763c14445b139f63369063b65e ]
+[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
 
-rxe_rcv() puts pkt->qp at its drop label, but leaves pkt->qp
-uninitialized on the two paths that take an early goto:
+A late HDA codec bind on an already registered card builds new PCMs
+before registering them. add_std_chmaps() publishes generic channel-map
+controls during this BUILD stage. If an earlier chmap succeeds and a
+later allocation fails, probe cleanup frees the BUILD PCM while the
+card's control device remains accessible.
 
-	if (unlikely(skb->len < RXE_BTH_BYTES))
-		goto drop;
+These generic controls are added directly by snd_pcm_add_chmap_ctls();
+snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
+devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
+substreams before free_chmap() withdraws their generic control:
 
-	if (rxe_chk_dgid(rxe, skb) < 0)
-		goto drop;
+  Late HDA codec bind / rollback        Control GET on the live card
+  ------------------------------       ----------------------------
+  hda_codec_driver_probe()
+    snd_hda_codec_build_pcms()
+      PCM is BUILD
+    snd_hda_codec_build_controls()
+      add_std_chmaps()
+        publish an earlier chmap
+        later allocation: -ENOMEM
+    snd_hda_codec_cleanup_for_unbind()
+      snd_hda_ctls_clear()
+        generic chmap remains
+      codec_release_pcms()
+        snd_device_free()
+          BUILD: skip dev_disconnect
+          snd_pcm_free_stream()
+            kfree(substream)
+                                       snd_ctl_elem_read()
+                                         down_read(controls_rwsem)
+                                         pcm_chmap_ctl_get()
+                                           walk freed substream
+            free_chmap()
+              snd_ctl_remove()
+                wait for GET
+                                         up_read(controls_rwsem)
 
-	pkt->opcode = bth_opcode(pkt);
-	pkt->psn = bth_psn(pkt);
-	pkt->qp = NULL;		<- too late for the gotos above
-	...
-drop:
-	if (pkt->qp)
-		rxe_put(pkt->qp);
+The control read lock cannot protect a substream already freed before
+control removal starts. The failure above occurs before
+snd_card_register(), so the PCM has not transitioned out of BUILD.
 
-pkt points into skb->cb, which rxe does not own at this point: the
-network stack has used that space for its own state.  For IPv6,
-ip6_rcv_core() memsets inet6_skb_parm and then writes
+Move free_chmap() before the substream free loop. Its snd_ctl_remove()
+withdraws the control and drains readers under controls_rwsem before any
+substream is released. Normal registered-device disconnect already
+removes the control, so the later call remains harmless on that path.
 
-	IP6CB(skb)->nhoff = offsetof(struct ipv6hdr, nexthdr);
-
-at offset 14, so the qword at cb + 8, which is where pkt->qp lives,
-reads back as 0x0006000000000000 for every IPv6 packet.
-
-Any IPv6 datagram to port 4791 whose payload is shorter than the BTH
-takes the first goto and reaches the drop label with that value, so
-rxe_put() runs refcount_dec_and_test() on 0x0006000000000150 and the
-kernel faults, in softirq, on a non-canonical address:
-
-	general protection fault, probably for non-canonical address
-	0x0006000000000150: 0000 [#1] PREEMPT SMP
-	RIP: 0010:__rxe_put+0x.../...
-	Call Trace:
-	 <IRQ>
-	 rxe_rcv+0x.../... [rdma_rxe]
-	 rxe_udp_encap_recv+0x.../... [rdma_rxe]
-	 udp_queue_rcv_one_skb
-	 ...
-	Kernel panic - not syncing: Fatal exception in interrupt
-
-The fault happens in softirq, so it panics even with panic_on_oops=0,
-and with panic=0 the machine hangs until it is power cycled.  A remote
-sender only needs to send an empty UDP datagram to port 4791; no RDMA
-connection, GID or other state is involved and the rxe socket is bound
-in init_net.
-
-IPv4 is not affected: ip_rcv_core() memsets the whole inet_skb_parm, so
-the pkt->qp slot is zero there.
-
-Fix by clearing pkt->qp before the first early exit.  pkt->qp is only
-ever assigned a reference-owning value by hdr_check() and
-rxe_rcv_mcast_pkt(), both of which run after this point, so the put at
-the drop label stays balanced.
-
-The ordering has been unsafe since the driver was merged: the two early
-gotos have preceded pkt->qp = NULL in every version since 8700e3e7c485.
-
-Testing done: the driver was built and run on a 6.2 vendor tree that
-carries this code, where a single 0-byte IPv6 datagram to port 4791
-reproduced the panic above (that tree does not pull the UDP header in
-rxe_udp_encap_recv(), so payloads of 0..3 bytes reach the first goto
-there, versus 0..11 on mainline).  With this change, the same packets
-are dropped as intended and tracing the drop label shows pkt->qp is 0
-on every path that reaches it.  Not done: the mainline tree was not
-built in the environment used to prepare this, and the reproducer is
-left out of this message on purpose - both are available on request.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Zhiwei Zhang <202275009@qq.com>
-Link: https://patch.msgid.link/tencent_FBB0EE9F592FD21FD4B0F3BFAD3336765209@qq.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_recv.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/core/pcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_recv.c b/drivers/infiniband/sw/rxe/rxe_recv.c
-index 2c90387aa1266..e1d90633f0851 100644
---- a/drivers/infiniband/sw/rxe/rxe_recv.c
-+++ b/drivers/infiniband/sw/rxe/rxe_recv.c
-@@ -320,6 +320,14 @@ void rxe_rcv(struct sk_buff *skb)
- 	struct rxe_dev *rxe = pkt->rxe;
- 	unsigned int skblen = skb->len - skb_network_offset(skb);
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index c2c032946d97f..7e2874cf2ff27 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -819,6 +819,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
+ 	/* free all proc files under the stream */
+ 	snd_pcm_stream_proc_done(pstr);
  
-+	/*
-+	 * pkt lives in skb->cb, which the network stack has already used
-+	 * for its own state: for IPv6 the qword holding pkt->qp holds
-+	 * inet6_skb_parm.nhoff.  The drop label puts pkt->qp, so clear
-+	 * it before the first early exit.
-+	 */
-+	pkt->qp = NULL;
++	/* Drain channel-map callbacks before freeing the substreams. */
++	free_chmap(pstr);
 +
- 	if (unlikely(skb->len < RXE_BTH_BYTES))
- 		goto drop;
- 
-@@ -328,7 +336,6 @@ void rxe_rcv(struct sk_buff *skb)
- 
- 	pkt->opcode = bth_opcode(pkt);
- 	pkt->psn = bth_psn(pkt);
--	pkt->qp = NULL;
- 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
- 
- 	/*
+ 	substream = pstr->substream;
+ 	while (substream) {
+ 		substream_next = substream->next;
+@@ -833,7 +836,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
+ 		kfree(setup);
+ 	}
+ #endif
+-	free_chmap(pstr);
+ 	if (pstr->substream_count)
+ 		put_device(pstr->dev);
+ }
 -- 
 2.53.0
 
