@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023673;
-	b=hp47z4FAG+M7l75PpqLdig1en+fdKbAshkeD2BMSF4E/gmD4T3gUAf43H9Jm7dXHvWBq
-	 0iK1vcMExXiGaOCfCdsJwr0a333hSqnkBFLI7MVLZOFnz0fLKMtHGKGzMWKxYrNOMNKTp
-	 AOQt0Zit97dkIB4RjRI1pjrR6fC781d99e7GiAjzh7KYqfhprZhQiGKglG3CxlXllM9I1
-	 II+plABnRZuS0vbvsMiwKtkmnlxvLFmO/UeNuS/hFLmZlESx9cY5aSwLZmAFtK9Nv/4p2
-	 WQrNvkQzoNVARgglAaJaHS9kkaTQAzpAp32lbZlHU4oefuLH81JhMacuujFg+iXvrLQ==
+	t=1795023676;
+	b=zzqxMD+XbWZp8a/e4NzDztefBet6SCG6cl/KVDJGSwH/tTdJz+TJjGIufSu+svueFej0
+	 CLTQiJXJ3AqLZR5ZGkDw7EwLrvBTCbFbH2XfExdeJAQfNwEEU2U/+QR2JcN67AuovuN0e
+	 T4JIZBLIpW1avZj7cZJ3+Dke9XC/POB3Uf2X25Av1pGBHtdKLFI8aVRsO8l0WZxmPXHZc
+	 TJaSN0us7rxMtLyI9vHQlMeLh8Fr/cdxfJ1rstaBvjX2YQbXYtNvrUwX4amkNMhTzwNvZ
+	 JRdknSbAD9Cykd5a2lpgm7uXpqwdRLlW8iJm+m5NQtkxtWlXdMoFQJFvJy9eHT+cgQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023676;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=maeVynRrN8pSLIzPbNJ9Q6/EK8trBTKQyI7pDXo1ICc=;
-	b=hxhpvyvwLToAUXZT15X5k3Pukf7GnYF4Yjo5w2XhRt4GwB+d8sZ5X8xD4nS7sgRHkMp+
-	 KPKy576zoRKdP8vGj7CWJDz2TEPTLm6ODqvStuqyHY73OXL9ONnBXZhAtwXUA4kqNJhst
-	 VgRpNkTlqxsbjsTGNctjeQxOVtIYa4o8Vw1mPU/e8ESrSc+L/LzGAHTfykOuIMM/xvqkK
-	 +AyuGaPci0wEeaVhb8ogTu3qcUQ0CKuResRp7Z0p5F3O0pRLxLuUS0CkMj8ze34Vl6F74
-	 5fbwspR5sxBaUQazfhkFI4+/9dP7gFL2XTYJSkd6sT0v0SwNSFnQkVguvjyQWmoNWBQ==
+	bh=bD/5NJZRjk8+4j85Ebgtl0k0ixdAhlvGb78cuKTAsOM=;
+	b=DL9NUyvZm0566KJoC4OREc6viYZJEDEvxTQXpZBxln49pA8A2HL5F6HaojS8/OXyE5ss
+	 6FJ3LaFxMYX7K3+Aeh7BP6gEfu8C+g4zHxy/YKSt/PrUnxLpytRw0gWedyWzvDLagHCEz
+	 BJ5heVzYCWXKWDJk1w5OzIlpsEHK0ep+r4jm7mRSnTcJ0HLFS/kldpUakryI5hkhBAnRr
+	 M349GIj93t2JThbSCeBjhogu9BjrOV1oWMq18moUGpcKmWp7/eu6yqbPx+fVIWNafKIS9
+	 uj21dT1vPMZAxoBvLJVAs2o5YAs1UJiDzJ31XbTBftYTLW4fMn9B2J2dir4jz8FVZNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JCpR1Rvt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jUAkQqjA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B0F606A320;
-	Wed, 18 Nov 2026 17:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B6B606A31C;
+	Wed, 18 Nov 2026 17:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JCpR1Rvt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB8B1F000C7;
-	Wed, 18 Nov 2026 17:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jUAkQqjA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551DB1F000C7;
+	Wed, 18 Nov 2026 17:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023673;
-	bh=maeVynRrN8pSLIzPbNJ9Q6/EK8trBTKQyI7pDXo1ICc=;
+	s=korg; t=1795023675;
+	bh=bD/5NJZRjk8+4j85Ebgtl0k0ixdAhlvGb78cuKTAsOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCpR1RvtpMbOLD31lcSn6rrHLl8sgPJI58hyCYpM4KRBq0qEmZ9wqWLS4lVdezpGp
-	 cZNE32bVNUI16WUapTE4xfMm5EGed1v5Tpc+B+5YL/IEXYuMpje9L++ckHMGlcVzoG
-	 e8jtgqV+HJ8V5MUCTaE28Mm60I4VmDG6pLpKIMj8=
+	b=jUAkQqjABwzHkML4m8+4WyasunqwDnltcYE0j/74n1VmT/k85Rp1wL8FK+9/P/gpg
+	 qme3oD+sj0NNaWideQLxinwGflnk/Bsr/ynpykfTz7QrSHpo7GkLGoXDEkCtVdGnJG
+	 Pv2qLQVZ3Xhspir/JG+AeyIoUaHJn3zkg01FOWXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yonghao Zhang <hyz3367@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0453/2151] block: Fix the thaw_bdev reference in bdev_freeze() kernel-doc
-Date: Wed, 18 Nov 2026 15:36:28 +0100
-Message-ID: <20261118150138.531018948@linuxfoundation.org>
+Subject: [PATCH 6.18 0454/2151] remoteproc: core: Set trace buffer name for diagnostics
+Date: Wed, 18 Nov 2026 15:36:29 +0100
+Message-ID: <20261118150138.565577169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,39 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Yonghao Zhang <hyz3367@gmail.com>
 
-[ Upstream commit e14c3379be86854c203de1e0fdfdeaa0b45509df ]
+[ Upstream commit e23eab619b0d2dd796618406ba25da62f4d539a2 ]
 
-The kernel-doc comment of bdev_freeze() refers to thaw_bdev, which was
-renamed to bdev_thaw by commit 982c3b305843 ("bdev: rename freeze and
-thaw helpers"). Say bdev_thaw.
+rproc_trace_read() (in remoteproc_debugfs.c) prints the name of a
+trace buffer whose device address could not be resolved, but nothing
+ever assigns trace_mem.name, so that the diagnostics always prints
+an empty string:
 
-Fixes: 982c3b305843 ("bdev: rename freeze and thaw helpers")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Link: https://patch.msgid.link/20260911233415.31271-1-kmehltretter@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+	Trace  not available
+
+Copy the generated "trace%d" name into the memory entry, so the
+diagnostics identifies the buffer failed to translate.
+
+Fixes: a987e6b91a5a ("remoteproc: fix trace buffer va initialization")
+Assisted-by: Claude-Code:glm-5.3
+Signed-off-by: Yonghao Zhang <hyz3367@gmail.com>
+Link: https://lore.kernel.org/r/20260911081810.740028-1-hyz3367@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/remoteproc_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 00345746e34f8..3acf3e9d33739 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -277,7 +277,7 @@ EXPORT_SYMBOL(sync_blockdev_range);
-  * The reference counter (bd_fsfreeze_count) guarantees that only the last
-  * unfreeze process can unfreeze the frozen filesystem actually when multiple
-  * freeze requests arrive simultaneously. It counts up in bdev_freeze() and
-- * count down in bdev_thaw(). When it becomes 0, thaw_bdev() will unfreeze
-+ * count down in bdev_thaw(). When it becomes 0, bdev_thaw() will unfreeze
-  * actually.
-  *
-  * Return: On success zero is returned, negative error code on failure.
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 1e277333de871..eae7b0b2b43a7 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -579,6 +579,9 @@ static int rproc_handle_trace(struct rproc *rproc, void *ptr,
+ 	/* create the debugfs entry */
+ 	trace->tfile = rproc_create_trace_file(name, rproc, trace);
+ 
++	/* keep the name for the diagnostic in rproc_trace_read() */
++	strscpy(trace->trace_mem.name, name, sizeof(trace->trace_mem.name));
++
+ 	list_add_tail(&trace->node, &rproc->traces);
+ 
+ 	rproc->num_traces++;
 -- 
 2.53.0
 
