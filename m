@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038071;
-	b=tzsK5ITcN3ZtRwbFHEUwPU5TGm+kWHZ6e8Wowz2SQx7dv9+8+JSVRwvgxPetKkFjkI8+
-	 Dduu+yv9P8C8EE7KjGw2AphgNJ0iys9SJr8eH6ILExs2CcURHDMV8B7zZcKRvxkeuX/n0
-	 eUZBaC5G/CYFiOPEGsCVHGYE62ICt7B5l8+cBCX3/Vk303FOAce6CLO3cC4WbDtoE5jFM
-	 CqpcfnIBsBRzVfOZg2BcN6K72HZvQyfW2QW+AZhpvRzmQ+G4XtD6WDEZMDCTA98s5vlfm
-	 pfZlwDT/34NaGNJnoeNCdfVDl9V0pTVWZcvPhh9GYpx3W1kFtqAWQ2q+xw8MP7C8/aA==
+	t=1795038074;
+	b=1rtByQNR0m/DhhdN8EXqpdEpXmBv/y+fp6wIUE+2+SnCHP/hDmFigu6exMS9d3ZbjQ1R
+	 ukFSedwrXSJDBAtkEyF7jzvhCjrqufU7F4SJuVMF+VWJPeAhXTs/0ZYHF/FrFvBa1WqOs
+	 GpEhwSzlJpoDeLGCoMlVK5F1nFxO5o9q4/CCJtmn7ZwrHZpC9gJpU/0t9M7g87Faiv6JZ
+	 pFU4twnIgW0kyNfEDNRrXOJ2ia4HhEBdm0axZTuidz0RObH5VlQlL44yfAg4GsEm5SYtQ
+	 hkgbffOrFdbs36sVVz69yytvlXE7poe4bSUBMWnN1vrkIJzEtl2mfftE7fp9yu5k0EA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yVIu9NbKM5luphMV+Hbvhn+Uy6cRJZROI6wyRDpeuDk=;
-	b=u7zkSh5rqJL4tRocWabc97gwDLordQbd+8BCLZglLA40wwu/B91TQAUdPnAsKrBSiEMQ
-	 gybWgl4QezHfJBKM3dAgbcmsCMt1kOFPcrTQoCbH3EmRD66CuR1XjfFzL7bRUBPGGb9S6
-	 o7YWTu5Elkbqy3WubL6IyJprIHilLKm+YEc169mSAeWyYviHXz6wZBYdndx5S6sYDOW1w
-	 U4nGsTME/2012OzvlswAvYA6hig0Uun7YVroyg8E/hFzgo2jiO25Ecpm4l5Ntoytj/oNa
-	 8u/AHsDvLlRdH46okN5sUQUYi3u6Xar7Bmlj45mrOJYd+HKSjh/MzggarBt0pVtxcmg==
+	bh=uiREoQSbn9s1/Pl2yQATCvt8FJ9+azQh6IbrZCyNg3Y=;
+	b=XhUpEy6MSZ17RvB4lZhfcAtIoTmAC5jMeCZE9JCV50vXSTB+NMZxnTDEjVqZ3oRPw274
+	 32a5j4zz8gn7HdOT4+qovTmgKHbJSiCiNLkiJYMucBE8nAm2BY0kvQpHR45z3F/Gf9Kl0
+	 LHqb84tau/RidxDteZ66Kqn+RP+L6CoO1Xhkr1B3twhFiWasemH/PeD8IOEeOogaoSVXK
+	 TIVqKW/+Q6CQIyDjEXfnFJyVOr887qmRr5GNINkNhxVSWgojzeUZZ9Sd5A0T2ePSQ3J+M
+	 +I0Doc+C3jV7nl7WFOMWUqSilkckokiBywViX1wsINXfjEzOE6I5IKPBUs836u2ae7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6gTsaEP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxvRB29a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DA5606A31C;
-	Wed, 18 Nov 2026 21:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3653606A330;
+	Wed, 18 Nov 2026 21:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6gTsaEP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F851F000C4;
-	Wed, 18 Nov 2026 21:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxvRB29a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03A21F000C4;
+	Wed, 18 Nov 2026 21:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038071;
-	bh=yVIu9NbKM5luphMV+Hbvhn+Uy6cRJZROI6wyRDpeuDk=;
+	s=korg; t=1795038074;
+	bh=uiREoQSbn9s1/Pl2yQATCvt8FJ9+azQh6IbrZCyNg3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6gTsaEPvbr0a4Lra2vu80EhSBOHdU7x6/HuZEVOQE15NdCdY5poRfRmUQGa58rwX
-	 4TsDwvnbiY3FR/Emnqu8So2UxAPL5qgDqgWj44mj6PqI4IWqECnDjojuGHvN5SYf6p
-	 EqZFcCm4s3TMrmwPOQtCBxSS63/hlZbi9oJBln7g=
+	b=GxvRB29aTT8IS8CCDMHxIZ4uDELK0MsIeHc0IATZhFLFW4kB2VnywOPB7rHCRQHxA
+	 3dX4PUADqMc8yyywWMWiByFbu0fxENNQq06uEb1E634INCQKDkkG7D+3hqE2DvIuaF
+	 jjuPWeVhLorKsupnSaazaYLZqGXjDmwRcRK0DukQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1617/3318] media: microchip-isc: fix SBGGR10 Bayer pattern
-Date: Wed, 18 Nov 2026 15:37:19 +0100
-Message-ID: <20261118150409.703560695@linuxfoundation.org>
+Subject: [PATCH 6.6 1618/3318] arm64: dts: qcom: ipq9574: Wire up USB3 PHY PIPE clock to GCC
+Date: Wed, 18 Nov 2026 15:37:20 +0100
+Message-ID: <20261118150409.732839045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,50 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-[ Upstream commit bb96c78c5f87072913f8825faebe64bf711a503c ]
+[ Upstream commit 117d8d40be1ded4f35f3252efa83607a7134d5e0 ]
 
-SBGGR10 was mapped to ISC_BAY_CFG_RGRG instead of ISC_BAY_CFG_BGBG,
-causing red/blue channel swap.
+Connect the QMP PHY USB3 output to GCC so the USB3 PHY pipe clock can
+propagate to the USB controller.
 
-Fixes: 1e8f401474d6 ("media: atmel: atmel-isc: reworked driver and formats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: a98bfb31f676 ("arm64: dts: qcom: ipq9574: Add USB related nodes")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921-ipq_clk_changes-v1-4-d242e3d49648@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[ sashal: adjusted GCC node context for placeholder PCIe clock inputs and power-domain cells ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/microchip/microchip-sama5d2-isc.c | 2 +-
- drivers/media/platform/microchip/microchip-sama7g5-isc.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-index 9b74c92ca6eb8..a5d9d37b4c40f 100644
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -148,7 +148,7 @@ static struct isc_format sama5d2_formats_list[] = {
- 		.fourcc		= V4L2_PIX_FMT_SBGGR10,
- 		.mbus_code	= MEDIA_BUS_FMT_SBGGR10_1X10,
- 		.pfe_cfg0_bps	= ISC_PFE_CFG0_BPS_TEN,
--		.cfa_baycfg	= ISC_BAY_CFG_RGRG,
-+		.cfa_baycfg	= ISC_BAY_CFG_BGBG,
- 	},
- 	{
- 		.fourcc		= V4L2_PIX_FMT_SGBRG10,
-diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-index 15ec519f61870..ee4f66526bd60 100644
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -157,7 +157,7 @@ static struct isc_format sama7g5_formats_list[] = {
- 		.fourcc		= V4L2_PIX_FMT_SBGGR10,
- 		.mbus_code	= MEDIA_BUS_FMT_SBGGR10_1X10,
- 		.pfe_cfg0_bps	= ISC_PFE_CFG0_BPS_TEN,
--		.cfa_baycfg	= ISC_BAY_CFG_RGRG,
-+		.cfa_baycfg	= ISC_BAY_CFG_BGBG,
- 	},
- 	{
- 		.fourcc		= V4L2_PIX_FMT_SGBRG10,
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+index 82e4fd5eb388f..8a5df358d459d 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -285,7 +285,7 @@ gcc: clock-controller@1800000 {
+ 				 <0>,
+ 				 <0>,
+ 				 <0>,
+-				 <0>;
++				 <&usb_0_qmpphy>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
 -- 
 2.53.0
 
