@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049268;
-	b=u5PghmCWT4w4smP3EaUv5aebRWvtZtCsUC3tIb3HZRB+gtDJhprQn+J/UE74G5vBV45T
-	 Bt09dWtwlNfbiRi3/PPFXA+d1VtV8MK3SbAd5+LWi4jG06w5EAPSAk92YemMIKFEnDv0+
-	 dw9kmLZHQ6hbSQId368DekEB2VFwX7GTcf9wBWe7vcdk97lopBACKIfgYQQq4y3BktQ7/
-	 STDymA6cPULPToxMiKmNhZM4ho72X52molPvMqFmFx6lTwyRfXvSnbMN+fVRJCJefBQBP
-	 cSgcc/rQGQ9aQ1w20BISUDToADnMJHxcvp7XCiYq/kg2Vfebb+9siSV2KacHmRoYzJg==
+	t=1795049271;
+	b=DlDRkhfrpLcPGotafk7xI0HNDvdUNBgDoiBwUoWXz+ws5c4PvIBg/ae3U3IqeHJqjX3C
+	 yjaTGaTQYUW8J82sHHpoSEuq4ZiKS02lNVD2ipjb80uH8V8tNKIe2k5yCYLoU6vt4Yr7g
+	 /lcNo9d59c3GsgHXme6C5FKoZVcoUEcWm9SFQQSCWmfpTbbm3uPV7tp16vVRkYpNdITdW
+	 KLACt0aprVuS0E1u8SGY+AXYaN0D2zoMdY+RMftINSJ+EEwvW9078s0xTGgADxsjbfEU6
+	 +SBBDiKcmrN9MDwZ5EcSJB94zAkWx4SP6tDkQlSP8xwi1A6ASz/1aBqMmH8fRWaXp0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049268;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049271;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7rpl8AnChyGKSSQV3ULOy0LisWC7Yi7PNvxYMArPyGY=;
-	b=EiQi/CsQSrWIvRXY0S7/xHTY9rVkiaJuLHNAeZtkZ7idUIl/MBGG0zbi/lNbdfYpwF0c
-	 PZv/SBYPx4d7d6aOgckfI+AqhYgZVTX3mW6KRiARqTxijd8GwAPUiSLj5k49lPpfZm1EH
-	 czM98Gk6Gtgbjh2sSc7vBRq7MRSXLnn7zXm3CwuBnjup1UCiFBxZ27dZvyBgMV6hD0nal
-	 FG+bSkqsRnmdpJzVot90Oyj6EsmF1oMwmjFL9ZvRCwN9TqsPj7HYpojZYUZ7r1E8sjePw
-	 NOWGganlESHBvJvDrjCSujtVXzbneTqkIRNwfCItI2YIEB8jUH0s01QPwnhltFnEi5g==
+	bh=oFARAQtePLMfHzgOE139ETJwpKPZY9oqA3tgVB0imaU=;
+	b=RSvp5IHGnddQQKFgxAdy8xPFY9m8MDKtgHOTQNFIXC5tj69mlUjNLGgaZcIVZcKS04yz
+	 l1THPVzP5aIK6Nf5tw3lmhjHZzECk00pfQBqSEeeyGQCVE7aBkCxT1ro8cKP4hymE6S3C
+	 0M3E9cjMWRcxv5Z9bgQpiiyhFa3OLkhzl1ksB2VfEY+5FBuRAEjK3aPS/TbDNM+JkGEaC
+	 g2yRwSEMjyPxn1IUsZr2rOmpe5SwTdwNXzReF5wdFJInVcjyfLFRFcWsbRPCNzfYn+TC9
+	 h4dHozPzPAQUsg+T3zGtJgZJnOyfA8hVNkTnNt9DqoLjwbc1+8sDJPBGkzQ4vP14VVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZXDHJOI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PzlRwcIJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F3F606A31C;
-	Thu, 19 Nov 2026 00:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7780C606A320;
+	Thu, 19 Nov 2026 00:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZXDHJOI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225C41F000C4;
-	Thu, 19 Nov 2026 00:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PzlRwcIJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61431F000C4;
+	Thu, 19 Nov 2026 00:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049268;
-	bh=7rpl8AnChyGKSSQV3ULOy0LisWC7Yi7PNvxYMArPyGY=;
+	s=korg; t=1795049271;
+	bh=oFARAQtePLMfHzgOE139ETJwpKPZY9oqA3tgVB0imaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZXDHJOIGz1bDDq3iFVCX0A1QR/1ad5CGjSQ9ATkaF6REP0ZQ49bHIKK3XZzMOWli
-	 l4klpV6xoJkrWI+FIUrNv6ybMMn8BsPUy1NIvZOJXW2mnmAO9kE0Ko8OLF36Eo1lmo
-	 qY4K/R59sA33r8/bEeGUW+cbDzez3OEYndGxI1eM=
+	b=PzlRwcIJ9S3NnyyIEq5HFXEamIRWkM8vyBssBBFJpXdVtwSyW15ZUPSFDyitcsRf3
+	 zhiZAfisPblsNjRdsAieMJgYkcpIatCwNQB91jgE/SAxakj2Xuc1OttsOwqUGuIUoo
+	 YWvy+KlitEdn+ghRng9x6HyWIftt7tbtX61RowgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilson Felipe Pereira <wfelipe@google.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2291/2857] init/main: fix false-positive kernel panic on environment variable overwrite
-Date: Wed, 18 Nov 2026 15:55:25 +0100
-Message-ID: <20261118150323.965586205@linuxfoundation.org>
+Subject: [PATCH 6.1 2292/2857] ocfs2: reject inconsistent xattr bucket during defrag
+Date: Wed, 18 Nov 2026 15:55:26 +0100
+Message-ID: <20261118150324.005016398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,60 +74,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilson Felipe Pereira <wfelipe@google.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 51e766bcd35e706d8df29dd0fac98871fdced261 ]
+[ Upstream commit bd40b997f04542869afeabe94f2cf1a016fc9bfa ]
 
-In unknown_bootoption(), the limit checking for environment variables sets
-panic_later *before* checking if the variable already exists in envp_init.
+ocfs2_defrag_xattr_bucket() has two mlog_bug_on_msg() checks that assume
+the name/value pairs in a bucket are disjoint and that xh_free_start is
+not below the compacted region.
 
-If a user passes exactly MAX_INIT_ENVS custom variables and then
-overwrites the final variable by matching its key, it causes a
-false-positive hard panic on boot despite not actually exceeding the array
-bounds or increasing the total variable count.
+ocfs2_validate_xattr_bucket() only checks each entry in isolation, so a
+corrupt bucket holding overlapping entries, or one with an inflated
+xh_free_start, passes validation and then hits BUG() in defrag when a
+setxattr triggers it.
 
-Swapping the order of these checks allows the duplicate check to break out
-of the loop before the panic flag is erroneously latched.
+Defrag works on a linear copy of the bucket and does not touch the real
+blocks before the copy back, so the checks can return an error instead of
+calling BUG().
 
-To verify, boot a VM with 31 custom variables (filling the array up to its
-limit of 32) and then overwrite the very last variable:
-
-  ENV_VARS=$(for i in {1..31}; do echo -n "var$i=$i "; done)
-  qemu-system-x86_64 -kernel bzImage -append "$ENV_VARS var31=overwrite"
-
-Without this patch, the kernel crashes instantly with:
-  Kernel panic - not syncing: Too many boot env vars at 'var31=overwrite'
-
-With this patch, the kernel safely overwrites the variable and boots.
-
-Link: https://lore.kernel.org/20260818045357.4123784-3-wfelipe@google.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
+Link: https://lore.kernel.org/20260903131313.2396208-3-joseph.qi@linux.alibaba.com
+Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ocfs2/xattr.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/init/main.c b/init/main.c
-index 168d11ff45d7e..86f0cdcd3d050 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -533,12 +533,12 @@ static int __init unknown_bootoption(char *param, char *val,
- 		/* Environment option */
- 		unsigned int i;
- 		for (i = 0; envp_init[i]; i++) {
-+			if (!strncmp(param, envp_init[i], len+1))
-+				break;
- 			if (i == MAX_INIT_ENVS) {
- 				panic_later = "env";
- 				panic_param = param;
- 			}
--			if (!strncmp(param, envp_init[i], len+1))
--				break;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index df29b1807c37f..6a462fef115fc 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -4564,16 +4564,22 @@ static int ocfs2_defrag_xattr_bucket(struct inode *inode,
+ 			memmove(bucket_buf + end - len,
+ 				bucket_buf + offset, len);
+ 			xe->xe_name_offset = cpu_to_le16(end - len);
++		} else if (end < offset + len) {
++			ret = ocfs2_error(inode->i_sb,
++					  "Defrag check failed for bucket %llu\n",
++					  (unsigned long long)blkno);
++			goto out;
  		}
- 		envp_init[i] = param;
- 	} else {
+ 
+-		mlog_bug_on_msg(end < offset + len, "Defrag check failed for "
+-				"bucket %llu\n", (unsigned long long)blkno);
+-
+ 		end -= len;
+ 	}
+ 
+-	mlog_bug_on_msg(xh_free_start > end, "Defrag check failed for "
+-			"bucket %llu\n", (unsigned long long)blkno);
++	if (xh_free_start > end) {
++		ret = ocfs2_error(inode->i_sb,
++				  "Defrag check failed for bucket %llu\n",
++				  (unsigned long long)blkno);
++		goto out;
++	}
+ 
+ 	if (xh_free_start == end)
+ 		goto out;
 -- 
 2.53.0
 
