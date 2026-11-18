@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035519;
-	b=iUFpBBp7chU5DrMM9aVu4uSsj1fMD5YnOWj2WGiu/bcrg6kwFrZiA6aUhxLGfW9ut8jE
-	 5qvyTOZW8Jkaf/N300lE1qe5Z2f9LZS31qNPV0Gew2zddd6MJaGrKBrdRENucLsSH9BAG
-	 GwBvt7N03nkVmCclYPVRRvSEqgdygJoZmQrSstJmGKFkxm+D9Bz9NtNbsjEgxYcWIvB5G
-	 nrq5q3NJ77rg4JiSdrUmZB1phJ2i5KHaRvuJKBp8AB1hko/FgSwd9ME4ML2onKAQxYFC4
-	 yRW+mcyXimUxDLHEveWw+xAF9MV5MUmhYI8TFo9ITDUj3+A3N9XBaPF3vYXL9fSdIoA==
+	t=1795035521;
+	b=SRU8Pbz/npxbBaB2MnHbeHx7ZbGBtilOWR9FXCy3befQWxBl858Bkjg9zg4s8xwKDYre
+	 yUCQc29sPmfZTfIcHX85MiwQP0FyC1LK8ViZDPiVXwqTwj/1PeaPOwSZ7F3v/03G90NI0
+	 d9o6Adq/VcORQ+V6aHhPOn2e+NiWncSiO+uwTixNm+Z85aDAF8OS4W7NhkOJ12ExoY2Dq
+	 5zcWjdI2bnx647QB71fhLUYD3W2O7WgQJx+RsXvXVF2SOmWs5FhEzpUsm6Hhm3TLLlQJ2
+	 tkhVfBC95ADpeT9qJb1sWO4oaTogk3kjYBq8Yeux7dg/qvRQKPqxP4gqkBfPDOQ9qNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yl7weRM0SJaClfvFHXQmhZFnkv2y4Q77NdxSrJGtSXg=;
-	b=hiwPLoi5nU1LEFb9OxfpxNZfSVQBoxmoTuahlw9P9aea+t5f1oKTM9LcHSB6/rw3fXx8
-	 rpzd140iKxv7P8FVMVJr6t9esIPig/my5+ufun+ViecR/CY9SU8XwuCpMldGkb7Z0foT/
-	 UnxRtxvpn3Gsaf8/D6A4rjvW7a5nGhLzx+w1NNRWV0MRX347ENl9FFlvUNOexXNZhnFo8
-	 JvWYC483sUWuFMCDlip8CUa6KibEzI92D734HgMo1JF8wnB44N2ksiBuUcHxQfpQflpmS
-	 xiYBag20vXQ6UD7sXYSSzh4lEmXp3q+m8I/lVBi4IlBIzYxtug8Lbwaubdk1cSw7z0A==
+	bh=3knK/8FqSX6aoB/ZWJIz1lMqoC1V2RaQr0qV/wlLjos=;
+	b=oOes/piIIKksWL3qvDop0fa1nNiNX/SSb0/5hgouA9O9CdGeu+8YJl7v9v/nAeU69/oU
+	 vywKoAzp2edpt7Ix+9+P/IOWrRoOCn+YP1x6iWIRP1Zx30kWT9Pb3sVTtfk75+MJnqzy0
+	 aLdopiNNpMbvyANk0D4fgg5CwTO/cUBeYRILWRlP/d8RKiV32SeNh+w1k7P8E/QnEUoP1
+	 i0vyHfUBONABiCMG5IRKGv+3+efTvF0vpRXNi3k29/1geogiDSOrHhTlWtTIbWS3wv2Ck
+	 XMXeU7S3PKBzx4QMxQimRlpaP2bG+RRCW/Py2KrnJDthBOeU0NC3mV62oWCzoTg6YRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wO6h3Rhr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k70uHVNk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F7F606A31C;
-	Wed, 18 Nov 2026 20:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9546E606A31C;
+	Wed, 18 Nov 2026 20:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wO6h3Rhr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDA71F000C4;
-	Wed, 18 Nov 2026 20:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k70uHVNk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9F81F000C4;
+	Wed, 18 Nov 2026 20:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035518;
-	bh=Yl7weRM0SJaClfvFHXQmhZFnkv2y4Q77NdxSrJGtSXg=;
+	s=korg; t=1795035521;
+	bh=3knK/8FqSX6aoB/ZWJIz1lMqoC1V2RaQr0qV/wlLjos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wO6h3Rhr1dL3B5iOXxK6PPCK9//RZ8lDxP3U1jaZoJmnzGc7Yy57kzHJAceyOhJYm
-	 RkiOQQ/p1qi5atouOE6nYm4YqCqWrxyIvTJMwQGt8sloMco58kXZGOB31D94r3Adk9
-	 f2JTKcyY2ykwc5bvaAxU28O5dFfW2W5LU+AnD3Qs=
+	b=k70uHVNkbnebfbZNInUOUgqEy4b6SlXKt6ix37XoQW+Q3HFOIeSGTEeVB5DKgqt8h
+	 DmxQW16epBqgxACZqFuMlFrHSIgkZsHemhrbC7diPaKYCKtkH566AS2XzCJeiaSVoW
+	 Wm1wuQLurmtBHzYMK78t+5l8BoNrR2IoWMHoPDq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0732/3318] HID: picoLCD: check for fb_deferred_io_init() error
-Date: Wed, 18 Nov 2026 15:22:34 +0100
-Message-ID: <20261118150340.502021843@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 0733/3318] HID: pxrc: reject short input reports
+Date: Wed, 18 Nov 2026 15:22:35 +0100
+Message-ID: <20261118150340.542440524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,63 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit feade898fc958ff355101adf12d5632272e64220 upstream.
+commit 0deb22da5a8c6663c3e071f55fd7d7e3189f5517 upstream.
 
-fb_deferred_io_init() allocates deferred I/O state, populating
-info->fbdefio_state, or leaving it NULL if an error occurs.
+The HID core invokes raw_event callbacks before validating the report
+length.  pxrc_raw_event() reads byte seven and writes bytes one and seven
+without checking that the report contains those bytes.
 
-Currently picolcd_init_framebuffer() ignores its return value.
+A one-byte input report reproduced the first invalid access under KASAN:
 
-Therefore if an error arises in fb_deferred_io_init() (for instance, due
-to an allocation failure) info->fbdefio_state is left NULL.
+  BUG: KASAN: slab-out-of-bounds in pxrc_raw_event+0x161/0x260
+  Read of size 1 by task hidtrigger/90
+  Call Trace:
+   pxrc_raw_event+0x161/0x260
+   kasan_report+0x139/0x170
 
-When the file is subsequently opened, fb_open() will dereference a NULL
-pointer (calling fb_deferred_io_open()).
+Require all eight bytes before reading or rewriting the report.
 
-Fix this by checking for the error.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
 
-Also correct cleanup ordering - defio is initialised after the sysfs file,
-so cleanup defio first.
-
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Fixes: acc3e34613da ("HID: Add driver for PhoenixRC Flight Controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-picolcd_fb.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hid/hid-pxrc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-picolcd_fb.c
-+++ b/drivers/hid/hid-picolcd_fb.c
-@@ -557,17 +557,23 @@ int picolcd_init_framebuffer(struct pico
- 		goto err_cleanup;
- 	}
+--- a/drivers/hid/hid-pxrc.c
++++ b/drivers/hid/hid-pxrc.c
+@@ -55,6 +55,9 @@ static int pxrc_raw_event(struct hid_dev
+ {
+ 	struct pxrc_priv *priv = hid_get_drvdata(hdev);
  
--	fb_deferred_io_init(info);
-+	error = fb_deferred_io_init(info);
-+	if (error) {
-+		dev_err(dev, "failed to initialize deferred I/O\n");
-+		goto err_sysfs;
-+	}
++	if (size < 8)
++		return 0;
 +
- 	error = register_framebuffer(info);
- 	if (error) {
- 		dev_err(dev, "failed to register framebuffer\n");
--		goto err_sysfs;
-+		goto err_defio;
- 	}
- 	return 0;
- 
-+err_defio:
-+	fb_deferred_io_cleanup(info);
- err_sysfs:
- 	device_remove_file(dev, &dev_attr_fb_update_rate);
--	fb_deferred_io_cleanup(info);
- err_cleanup:
- 	data->fb_info    = NULL;
- 
+ 	if (priv->alternate)
+ 		priv->slider = data[7];
+ 	else
 
 
