@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031199;
-	b=cLSxaC2IV3iMMwLIH6IdHKX/JKF/OBxxxJ2jqr/AMeblNbuZfNamYJZHQupmzHAnF2qX
-	 jbAZVW9l/6XnHEF72wUhxX3vglOZ30X8ffAuV/JBAnvclvY8uF/UvFT7cOixClMJoewiJ
-	 fNPPyQ4kw/kD2JSeT6luY6Ob41cNwu4FkV2fK2ZBiCA9aDVlKTX2SIhoW+CWY1AG7dcoi
-	 WzG8IUq6nkjY3EHBcLVXwjTi1aMObzBhsydWzVR7do5XT+kmeW4ZRZc9GZ25lP5CIzjuv
-	 cG3kEl9XRa7ls6UHCzeBSkG8hziN15nBWQd02oLV5sL+MV7q0tgo2OT+GujZ3AO6pcw==
+	t=1795031201;
+	b=M5dAe/mPprW2bGfFeFDTyRpsn0QHL3d2V5vRpIC149VvQt0RjFTsFjcxjJy8Fw5hQMki
+	 Q1VkEyIuCdYOk9rDBXHgTYgI+qmZH2q1LVDH/y56PZOOEh4aHqFtwKiuQFJDiJxT//jdy
+	 HttifxqIKTBGco6VPvot34rHO7G/xacYyqY9q6T+Wu06Xrb+njQtOJ40heu2dzOFMXyM1
+	 OMpvXwyj8RTK91ZinmUgqOHaZI2w4J7klcs9ws1wPzvwtNSssi8JlKFcdGnXnGb6iLjcW
+	 zWpvip78yB0VfXNjqdMJn1rGlzvOPEnZnue68lUlRUBxzz+CGtKUYiytyDuCdt0O/0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031201;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hsKnxL2xQcA4eKZdlyGhxRfXnqzY22Ku9y/D2W0sU14=;
-	b=SOZdyqvoaDWcM3mfUZG/5hzPuYgPlGSizRMgXFm3KJ3kQdXMvJEoZehhDXqODP1dXayT
-	 qa/7d9XnCk3no5C23Br/BANsK+NC++o0fU32yj/9mBDlyPTT3gb8TF7MipFB2HBMv5aVF
-	 chO5QYDovxwo4yPRh6tPX+zeujKBuKyUaw9VQpBIJRmxN5aeCMRiPJM2cfkGL1WT22T8X
-	 U3xaEDHt2//45SelDG8xGCSccQNO3TiMb5ue+nlH/L8K8rhIeWB7jl3TJcSfTo6XfCFux
-	 awvU65hqs3MHIYuPtgRN+yDk7ger0F/meYS/P0+YO4I3JTpjGXseeZ3v30bpNPPpVxw==
+	bh=1wDIxyhice7/CtwZ7LXJGnU7ZOuIlFI/9QYoUQ1U+wE=;
+	b=kd5HfAU9XzXojXt1WJMSWgAn6Lf8ul1oNn5vOtPhHEGRHQE99At76mYpEyFPl1gjxaSK
+	 BJF3PvE/4yvhysTj/udks41HP9j74FJn0fP+GvLs1WXwBB4BjSFyEl9l5VjcSShAC7uEx
+	 vdLBL2fblMzC17I7/OCnPRDpzBi/QrO/2YZJsch6NlNWTScaou+Eu8riYEYTR83obgINp
+	 55hbeeIM7m/+ugBgO1pce1ZNCi2nk32LGBzgKOSzjjPNyVx7SS8XVTibW8f5R08h1yv2G
+	 iaFKARuDookxnb5pTbVR9oMyfjWwRyMFca9G+ABdMXGvYWGjjYqWMzWCd+Fmrt4wUrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDYLwisy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/Xt1E/6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB05606A320;
-	Wed, 18 Nov 2026 19:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C054660A2609;
+	Wed, 18 Nov 2026 19:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDYLwisy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717471F000CA;
-	Wed, 18 Nov 2026 19:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/Xt1E/6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279281F000D2;
+	Wed, 18 Nov 2026 19:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031199;
-	bh=hsKnxL2xQcA4eKZdlyGhxRfXnqzY22Ku9y/D2W0sU14=;
+	s=korg; t=1795031201;
+	bh=1wDIxyhice7/CtwZ7LXJGnU7ZOuIlFI/9QYoUQ1U+wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yDYLwisyV1QUpvoDyVD+/zk4zj/WFacpX28F97Nn2oppnu3CkhL0b7jYPExGUAfco
-	 BIlOZNEc4W1gQ4lyQd48CDfdRrqXG7gp+/UDSZA2LKUCH+DE2nXxWPMi/12QPSghjn
-	 Q1TYl1YpzCNTtjgEzb+bjHfjVBD/01KWMSFtZ5v4=
+	b=t/Xt1E/6h4MrOu0TofEpT1bLO+MBRYjogNzXMIz1cRspXkmliJgwlpk1APzYInru+
+	 KGPVf9CH006voUJNlGL7sDcLqLji4ngWfb6uxBGdUKjo3mF3MRIBY1Jd2p0DymOJYv
+	 0qwyP75lRWDXqdaklBP4kK4l7xBHpeyMRd01sBxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0967/1756] wifi: mt76: usb: fix source overread in mt76u_copy
-Date: Wed, 18 Nov 2026 15:51:34 +0100
-Message-ID: <20261118150048.633508172@linuxfoundation.org>
+Subject: [PATCH 6.12 0976/1756] ASoC: rockchip: rockchip_i2s: Handle runtime PM resume failures in set_fmt
+Date: Wed, 18 Nov 2026 15:51:43 +0100
+Message-ID: <20261118150048.997177639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,65 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit d435130cdd064b901d8ce5ada0322298e6a86a49 ]
+[ Upstream commit e9eb1854d16136006c6fe94c927b54b2b264b429 ]
 
-mt76u_copy() rounds up len to a multiple of four and uses the rounded
-length as the bound for memcpy() from the source buffer. When the
-caller's length is not four-byte aligned, the final copy reads up to
-three bytes past the source buffer.
+rockchip_i2s_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-Keep the original length for the source copy and zero the remaining
-bytes in the transmit buffer so that the hardware access width remains
-four-byte aligned.
-
-Fixes: 9446248669968 ("mt76: speed up usb bulk copy")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925150556.2304003-2-yaojiale02@163.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 53ca9b9777b9 ("ASoC: rockchip: i2s: Fix regmap_ops hang")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903112739.373621-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/usb.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ sound/soc/rockchip/rockchip_i2s.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
-index b39dbf22dfc1d..317b3ee648ea8 100644
---- a/drivers/net/wireless/mediatek/mt76/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/usb.c
-@@ -160,8 +160,10 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
- {
- 	struct mt76_usb *usb = &dev->usb;
- 	const u8 *val = data;
--	int ret;
- 	int current_batch_size;
-+	int len_aligned;
-+	int copy_len;
-+	int ret;
- 	int i = 0;
+diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
+index 4315da4a47c15..358caa5d1544b 100644
+--- a/sound/soc/rockchip/rockchip_i2s.c
++++ b/sound/soc/rockchip/rockchip_i2s.c
+@@ -244,7 +244,9 @@ static int rockchip_i2s_set_fmt(struct snd_soc_dai *cpu_dai,
+ 	unsigned int mask = 0, val = 0;
+ 	int ret = 0;
  
- 	/* Assure that always a multiple of 4 bytes are copied,
-@@ -169,12 +171,16 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
- 	 * See: "mt76: round up length on mt76_wr_copy"
- 	 * Commit 850e8f6fbd5d0003b0
- 	 */
--	len = round_up(len, 4);
-+	len_aligned = round_up(len, 4);
- 
- 	mutex_lock(&usb->usb_ctrl_mtx);
--	while (i < len) {
--		current_batch_size = min_t(int, usb->data_len, len - i);
--		memcpy(usb->data, val + i, current_batch_size);
-+	while (i < len_aligned) {
-+		current_batch_size = min_t(int, usb->data_len, len_aligned - i);
-+		copy_len = min_t(int, current_batch_size, len - i);
-+		memcpy(usb->data, val + i, copy_len);
-+		if (copy_len < current_batch_size)
-+			memset(usb->data + copy_len, 0,
-+			       current_batch_size - copy_len);
- 		ret = __mt76u_vendor_request(dev, MT_VEND_MULTI_WRITE,
- 					     USB_DIR_OUT | USB_TYPE_VENDOR,
- 					     0, offset + i, usb->data,
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
+ 	mask = I2S_CKR_MSS_MASK;
+ 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
+ 	case SND_SOC_DAIFMT_BP_FP:
 -- 
 2.53.0
 
