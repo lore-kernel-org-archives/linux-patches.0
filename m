@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028185;
-	b=1CHZ+WjqRWggbzETPVpBAEyFgnYYSnJaYik+aYG6IzrqWoNyn7uGYp727aB44QY4Hsgf
-	 Mc0nvp7KuuCdFYQZmVWfr2K5hhPawyBUUdBwd8nhcXzxOsu5Fm7dw1JhMP6YW4RuCa9C/
-	 yI9W2MmQc9usFG1nBc9IbEWwitkJ+mp86xPobkqRqH3lNXYfiTVJZhQyzXX0EKLxMbs0p
-	 /ndmny+5A+2Z90vnuvrFKOM7aSP1JJJBlYYAyML9Kec39aMVnhcMJMhYR57JbVdiUfS0s
-	 mnWUwC6hKX59BxMRJZNEhLEeNxzz2VjBcqSoCS22zymBv0hdJWiub/f46Fe7hBzQpSg==
+	t=1795028188;
+	b=nfo8ykJ1DjTj4RZPkCXZJpX13Vx9lF1W6kYBe3Qa5CFIIjIdtS5Spf7+jRqRtuca1RhM
+	 17GPX0bWg6Gc4/Z8Y1OJJSdsI/vrqgckwjrlemDcCggs7xvj099A+3GNc+L+Sd6ipD3HE
+	 NfTOEE4AY9twlwqh3dj8r97dixyunBN1JY7j+rF/Y26Br+ZiUDI4ErsvrhKkqCVLYNqrs
+	 EUXfl/vWtX5JBYj0zd19mlEhVAnmfQN7satd2TSmNeZRSJSXap3Ov6iGIi0tkNTpi0Lz3
+	 2JFNDkBpY+TSj7b9jw/pZ22xSEhnyqr0k+k/fVXhOBDQKTgHhDtZ1FAC+zBz5lDbKEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ez8bQgTl+1dPql1eUvo0V0h5u2C3dMDS4rOV6JF8Mak=;
-	b=xMTZYnB4ifX7EQq0t18TvM9GTncR/uH+CYNPq+hYxj1oQo/xm+FoaEdgWN9H8sw2PEBT
-	 aQHraF0+ELWmSwYRdqPVAV3qIZm/Cn7YW1ZfvaExUrWgNNMg/HxF15OImKvudERKXeEsA
-	 ZmNWifeuUUhDTQiQcB+BxTN5M+NBcCFLOC1R+VxJLM4F25yMeUHTx7kNG3gRBMdWiKHCp
-	 G2v5DNr/0WYwIHLExK+QiHJhj7Vv8KtT2JjprN2FLE7dhIFqBUkQM1eJSdoVt04GQcAnm
-	 ORx7Lhkga8PeDMmKXX2c6t7koKuxtPjciq2QVQ5oBC8aGIWNuJFnIZPNpuRHesk8eyw==
+	bh=Ll06TSZjVcoq3LmOk29XE6D53Sehl2OX0+Q5/FklAMY=;
+	b=cJBDZIkQ1WavUJI14eJ72cWVD38SzHO1q4JAQtGa4nsZdyC2lwMKxNQLNnVnkg/HUj8q
+	 IcWgdELcaku1yx50Qt9GqjLDlKLClSyl7LNj6WWprSNN3GmK6/yRoXQAUaQlC8Dc5pk3z
+	 nRBGfYtsLwBk3+TsE1RizCMLc5rhyOCa0Dzq/hwRU++yJQu29RGKoT4l8NJ5SNZcGDzXC
+	 sApsLHizHVmqI70zP/7NM8kpJ6eNdHi9jXZxkfrhOhfIYrUWhAhUdnMULkGbIpn3y52/A
+	 KMthIDQ/yIfdtIqsKOkOG3HTUAv/VpdCS9UPbdsX1/8TxB1WSzeeQ6pAiJxPDhGZ/QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5amm29g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KyI01rLu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31269606A31C;
-	Wed, 18 Nov 2026 18:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D25606A320;
+	Wed, 18 Nov 2026 18:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5amm29g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824691F000C4;
-	Wed, 18 Nov 2026 18:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KyI01rLu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BB91F000C4;
+	Wed, 18 Nov 2026 18:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028185;
-	bh=ez8bQgTl+1dPql1eUvo0V0h5u2C3dMDS4rOV6JF8Mak=;
+	s=korg; t=1795028187;
+	bh=Ll06TSZjVcoq3LmOk29XE6D53Sehl2OX0+Q5/FklAMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E5amm29gqLdbjtXI/UuXJzEiTO4Jxh5kD6ISk6PnNjbXcV90EPapwrRpaoQvH91hd
-	 fijNQJMhpDZr9AmFT7YhEBrj3PdEg/9p7pdZU+bLkpnQ8xfStwWRNsELXBVNcyhfZG
-	 VrIlKj9zE/Yg++iR7Pk3Qk735PyjplDPlbjfK6SA=
+	b=KyI01rLuuHcNRWjgo4eeNykDQxSMWjUjk0o0riscP2ACT6tCQdXmxPd2l93h41XIt
+	 Upo4EjvmBj+xwTcmRMRuudURxG3efV2clsw+jfCdE5PACSQ5hgE/i8uRI8SzjKjp6q
+	 xmy8f82PPHKR42mYBcNhjclFqFc4CfSsyTeTsFsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkui Xiao <xiaolinkui@kylinos.cn>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2056/2151] net: bridge: netlink: do not clear the vlan info dump error
-Date: Wed, 18 Nov 2026 16:03:11 +0100
-Message-ID: <20261118150236.619669121@linuxfoundation.org>
+Subject: [PATCH 6.18 2057/2151] net/mlx5: Only set num_doorbells on a fully initialized SF
+Date: Wed, 18 Nov 2026 16:03:12 +0100
+Message-ID: <20261118150236.654814577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkui Xiao <xiaolinkui@kylinos.cn>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit fcc00b15cb21a6de76826e5012b2c758505f5e65 ]
+[ Upstream commit fa503935c2d6603856dafff0a0852631ab6e9503 ]
 
-br_fill_ifinfo() assigns the result of br_fill_vlan_tunnel_info() over
-the result of br_fill_ifvlaninfo() or br_fill_ifvlaninfo_compressed()
-instead of only running the second helper when the first one succeeded.
+The validation for the num_doorbells devlink param rejects values
+greater than num_channels. For lightweight SFs, this ends up accessing
+a NULL priv->eq_table, leading to a crash.
 
-When the vlan information no longer fits in the skb but the port has no
-vlan mapped to a tunnel dst, br_fill_vlan_tunnel_info() walks the vlan
-list and returns 0 without touching the skb. The -EMSGSIZE is lost,
-br_fill_ifinfo() completes a message whose IFLA_AF_SPEC is truncated,
-and the dump carries on to the next interface instead of stopping, so
-userspace silently sees an incomplete vlan list.
+Fix that by rejecting setting num_doorbells on uninitialized SFs.
 
-Only fill the tunnel information when the vlan information was filled
-successfully.
-
-This was flagged as a pre-existing issue in the Sashiko review of the
-net-next series, which noted that the VLAN fill result is overwritten
-before it is tested (see the Link tag below). Not triggered or tested.
-
-Fixes: efa5356b0d97 ("bridge: per vlan dst_metadata netlink support")
-Link: https://lore.kernel.org/bridge/ed1de95e-e112-4076-93f0-6f7668e657ad@blackwall.org/T/#u#5
-Signed-off-by: Linkui Xiao <xiaolinkui@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20261027085200.1501599-1-xiaolinkui@126.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 11bbcfb7668c ("net/mlx5e: Use the 'num_doorbells' devlink param")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026084503.4122732-1-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
-index 69d6b70b9e5e8..818b588fdf83e 100644
---- a/net/bridge/br_netlink.c
-+++ b/net/bridge/br_netlink.c
-@@ -534,7 +534,7 @@ static int br_fill_ifinfo(struct sk_buff *skb,
- 		else
- 			err = br_fill_ifvlaninfo(skb, vg);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index 055ee020c56f4..7e436d32d69f7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -541,6 +541,12 @@ static int mlx5_devlink_num_doorbells_validate(struct devlink *devlink, u32 id,
+ 	u32 val32 = val.vu32;
+ 	u32 max_num_channels;
  
--		if (port && test_bit(BR_VLAN_TUNNEL_BIT, &port->flags))
-+		if (!err && port && test_bit(BR_VLAN_TUNNEL_BIT, &port->flags))
- 			err = br_fill_vlan_tunnel_info(skb, vg);
- 		rcu_read_unlock();
- 		if (err)
++	if (mlx5_dev_is_lightweight(mdev)) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Setting num_doorbells requires full device initialization; reload the device first");
++		return -EOPNOTSUPP;
++	}
++
+ 	max_num_channels = mlx5e_get_max_num_channels(mdev);
+ 	if (val32 > max_num_channels) {
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
 -- 
 2.53.0
 
