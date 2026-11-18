@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042434;
-	b=bsV5MeXYGo3QQ8TYJ7CnmR3dsfpn2n+RKjxswOgjqjnW9uPbahfAk1BViL190UaFnqIR
-	 mM51utulcC0+FnOLJPvdY2nGPkwGDzEWEz0QEvPFMig30cRyzmSpKjj3iiZK/S549KW8B
-	 C6p3b5FutHwKg49/peD8hQyaZq0VUgXR9UeF6E84iQZKE43Bm+7WrXLrg0OIu2L7UIgkw
-	 UyIzqaBKvfugnr8HLWKhaZ8RMdwM9C+DTpadj5PY8ttlTvN7IdX5AIcH2l38Z1HgUdWdk
-	 rzQUBcnJPCMe9DWU7tOW+DmQGUQaVzxfK33aPHF3j19VF80jwk9H93L6fiUtxVZ4RSA==
+	t=1795042437;
+	b=mvtAzyhxrRrQnCpXemkKxjExorfJ9ZJxl+vaNozM1GMHA7+HIWSSLdAeHQpsDfVxBfu3
+	 huJN+SNxWOLrj8JsP8GP7f1A9po9cZAtvLnYS9hYrwcFgIMZxCPbZO6GqGfa+I70kHK+5
+	 zl04pwgZ35iEg/eRjIHmSY6tAi2b9qpcC3pTyK4xRgmWFZGPO8YnuVnUl0igEv9wu4RWY
+	 Ev2U4RA7R5tBlHz+Df3inDMNZH6QHe0YqRKVMcKqlsCzYVRERZNpajpTygF4zjY+BecUG
+	 qvGmFDbcdSZ+RHot884YgItJb/33ZS6Zz2SUYZFkZmA+cyE9rMZX/qVp1mOs/v0T8Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6opQv1FEhcGCDJAbpxNK8gli9KpDbkT2yGjaxx/JEfo=;
-	b=tGxl24vEzS4ukLu/3rSCxU7j8FJ/vAz3r0ggJoD+CK7HMSBcdxaF8vVmBi6kY50HGALE
-	 zC2mqEJ5DSpFRt6liFeMsQ/wcaZfW5qsx4kfL2e+QK7aK+WbbvJvOmMqzFfv9X9YXI0AB
-	 FbJDDGURkg2MYLL4luHISS8xhJmrQ9nzkWMuZ4P1pnMLScKVTJGQxBFuisKwb1ne0lSgf
-	 8kOEDQxhHgf2XKGXUOJk4q2ucFyoeblyIsU06ep22plDQc+KYb1DLwKpkZG/nqBPpNGNd
-	 qV6adM/N/cP/JUPpoFlwWHInBSAk5DYFA4mJ1f3NE19deYqZhyd1ysIkslOzlvvcqvw==
+	bh=hjSFyPR2NZdFcOT1AUyzbp3IMwqv3YYQzNfQCxJbmZM=;
+	b=EObIYlTlYgdLLRoQCB608J2lL76CZBdIGPxinjMF5HO0Bif41EO6sgHNDTJULBM0w+R/
+	 JXxYauAlGdadfah/9kQ6Qix8ESNatICr6gxqmuabJYtfzId35cy3bL01WzdTR1QjrpOoy
+	 P+LEozil7a4CV/EqYoQe35gqhR5Dj3Nc4OmQnIUGGSlEkERN9dEfkxMeise2/N2R+bYWs
+	 UeE9qiPJT+2JOUXb5zx6J5RKmMmytEVvia/xKSmRzuWt/MimUMCY3/f2xcKxoCOA30Ocg
+	 PhV3HCj4eL2hmrDzbkEifa2jiwQlHWgJlxtSKFeB1xbwkG4TQVSUWwW1Pw754LVpY7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqnKZicz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VitPUUD/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26F9606A31C;
-	Wed, 18 Nov 2026 22:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F68606A31C;
+	Wed, 18 Nov 2026 22:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqnKZicz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034E11F000C4;
-	Wed, 18 Nov 2026 22:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VitPUUD/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB87A1F000C4;
+	Wed, 18 Nov 2026 22:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042434;
-	bh=6opQv1FEhcGCDJAbpxNK8gli9KpDbkT2yGjaxx/JEfo=;
+	s=korg; t=1795042437;
+	bh=hjSFyPR2NZdFcOT1AUyzbp3IMwqv3YYQzNfQCxJbmZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dqnKZiczLZZKKPuPHBlnt8m1FGixKvUaHUm1pD8vcumBaVSZFDFEr2klXf6I0dP/k
-	 xcXvj1LCgUbVQuNT/lu4rW5uOlDQBbIuDJgICng1qoaV6Ibx3IWnJ0yIEqoYXWpMH9
-	 I0JZ9fVK64cA5KqBXLbokCG0XtFaWLpQRkuur18M=
+	b=VitPUUD/kdodO3xAS1ofjpkqmIuQRn4TXvKYo/GCnjBLwvZMRerYnzM0KPqnveR6h
+	 +tSPE338w1+glnGT+9apVh6jLHWSohvVV9wWKPlahsIxFTj7bnp5j9r6aSLpW5fWVE
+	 CAcOE5IS+BbFZU+9y/RkcuoabTSQvcNMklMw/SI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terrence Adams <tadamsjr@google.com>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3170/3318] block: advance iterator after copy-in for SG_DXFER_TO_FROM_DEV
-Date: Wed, 18 Nov 2026 16:03:12 +0100
-Message-ID: <20261118150454.932611465@linuxfoundation.org>
+Subject: [PATCH 6.6 3171/3318] thermal: Fix CPU mask truncation in power limit trace event
+Date: Wed, 18 Nov 2026 16:03:13 +0100
+Message-ID: <20261118150454.963953315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,56 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: TJ Adams <tadamsjr@google.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 82e72ea18d0af724914c31a1f274c1aef452aad0 ]
+[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
 
-When a passthrough request uses transfer direction SG_DXFER_TO_FROM_DEV,
-bio_copy_user_iov() sets up a temporary iterator iter2 with
-data_source = ITER_SOURCE to copy user data into the bio pages before
-execution.
+num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
+Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
+higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
+bitmap on a 64-bit system, dropping CPU 64.
 
-bio_copy_from_iter(bio, &iter2) copies the data and advances iter2, but
-the original iter is never advanced. Consequently, iov_iter_count(&i)
-remains non-zero in the caller loop in blk_rq_map_user_iov():
+Use nr_cpumask_bits for both sizing and copying the bitmap.
 
-	i = *iter;
-	do {
-		if (copy)
-			ret = bio_copy_user_iov(rq, map_data, &i, gfp_mask);
-...
-	} while (iov_iter_count(&i));
-
-Because i is never advanced, blk_rq_map_user_iov() loops indefinitely,
-continually allocating bios and consuming map_data pages until it
-exhausts pages and fails with -EINVAL.
-
-Fix this by calling iov_iter_advance(iter, bio->bi_iter.bi_size) in the
-map_data && map_data->from_user branch after bio_copy_from_iter().
-
-Fixes: 13f3956eb568 ("block: Fix WARNING in _copy_from_iter")
-Signed-off-by: Terrence Adams <tadamsjr@google.com>
-Assisted-by: LLM
-Acked-by: Christian A. Ehrhardt <lk@c--e.de>
-Link: https://patch.msgid.link/20260929160813.1599129-1-tadamsjr@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-map.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/thermal/thermal_trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-map.c b/block/blk-map.c
-index 0aadbaf7a9ddd..eba5a37cae81e 100644
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -218,6 +218,7 @@ static int bio_copy_user_iov(struct request *rq, struct rq_map_data *map_data,
- 		ret = bio_copy_from_iter(bio, &iter2);
- 		if (ret)
- 			goto cleanup;
-+		iov_iter_advance(iter, bio->bi_iter.bi_size);
- 	} else {
- 		if (bmd->is_our_pages)
- 			zero_fill_bio(bio);
+diff --git a/drivers/thermal/thermal_trace.h b/drivers/thermal/thermal_trace.h
+index 459c8ce6cf3b0..1af97af2a3be0 100644
+--- a/drivers/thermal/thermal_trace.h
++++ b/drivers/thermal/thermal_trace.h
+@@ -117,7 +117,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
+ 	TP_ARGS(cpus, freq, cdev_state, power),
+ 
+ 	TP_STRUCT__entry(
+-		__bitmask(cpumask, num_possible_cpus())
++		__bitmask(cpumask, nr_cpumask_bits)
+ 		__field(unsigned int,  freq      )
+ 		__field(unsigned long, cdev_state)
+ 		__field(u32,           power     )
+@@ -125,7 +125,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
+ 
+ 	TP_fast_assign(
+ 		__assign_bitmask(cpumask, cpumask_bits(cpus),
+-				num_possible_cpus());
++				nr_cpumask_bits);
+ 		__entry->freq = freq;
+ 		__entry->cdev_state = cdev_state;
+ 		__entry->power = power;
 -- 
 2.53.0
 
