@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060634;
-	b=IY/Ehj1Yo541hkaH23QCz/i9Q+nu6dTPwooaNGvW8lQZN3Ir8WlAboJGR9pCYnvDaMfg
-	 soqQG4Jkuqt/wNgfzXvyhZjcBUnuiZJCdp1/urni9eA/buKAbh3VOPspP1oAYAmGBoZCi
-	 mPVJ0+1C0ImpaF3LWGb508K2AMCrGF/W7XQpf5RJj/M6TzS4ZeNPbctF3qAZc0AvlmZlX
-	 tmMOPkj91v1eHAmah4QA2R+yc3P0M1ajnaQY1fXVze9Yf16BtIEMqR75PUs2om98vxkdC
-	 KmIFjyBKMQgAjN9ObcWJW790ryFLz2Ukdd5s+8kqtL/4sFpIVWBYxSnRWEh4sTEsVlw==
+	t=1795060636;
+	b=QsBVVmxrvu6qEetTzZhSFCvPb8DWZyYpaTFcOZBnK8JJ1Iuv4bC5g5qQHIoDk+yIBtVR
+	 oeLjtmzoVHCaccIR1UZyo8xsXpdZ4tLru37MFUEsCap6EduIfbV80Yn7kGenXMKbymzSV
+	 2BXzzuEg6BtzxjydPI8LO+vdrqVBaSsexKKJWsESGV4gL+GyR+1CsQBZuoCd56Gox2Kxs
+	 vpHThjWw3ExHopbXStIzj3vn8zBbvya0l0egeyd4lY7tQaLmKoj0L/Yw6bKtnixpaQ6Df
+	 uQemO/lw0Luipw5otbAr2KLOQIVzhELKgvQ0XUvYtq3dha7A3uG+KdHj8HVR0tQDcmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OrAdEIlyEVz6RZsSOZwIeeamqdSfI67SINKgQHs7Um4=;
-	b=qJJrlRwNk3SIlFPj6UmgZnrhcIfbrNBjkkv6CPYDB1KQa9adwGLJGTu5kXfhp3cCXllK
-	 diFN/GooH8XDyGE199dvtWjBQD/kPNz6ToX7EP7TLO7J1sdTOTGJc8mqMj6IPGvQgnYbT
-	 zWL3hlgghxzkfAAi/PSrLJdsjefCvM2rIBxoyXACA3Ua2qPwVKy7WwrT6f93+hTAp79g+
-	 7fbKDWbQ/cCHDHHicDHvYuDgdZkp/84A0d7dRZ84fgm6a1svgJuVh1eBJspvvu5jTAqGO
-	 cYVkaByEXY2ttPNZtHSTpVly77TrG7u1iytZ+PDVhQSqnMTAYMrYhujMvW3Pgkhc0GA==
+	bh=dCTaZ9cI5gMkDQjwtl2kS8UEcQhoFzF8cbYmlQdCFoY=;
+	b=AkQziM0UGRq7V2bdFGFB2P6xArNJaNsxN5r8QG0+aJYbn76g3PAg8wdJSXjKIQ3p1RVz
+	 TU1TIE1kqOOyH1UPeW/sMX9J2df7IHi1zMd4qo66I1/ZRE/K6SgmXOIM30h5f5BGhHNqT
+	 d9z3Is+4Sxc4TiYLCWW0T2ORDA+rPrk29dyLad0jG58/LbbJDLz87hiyRjAljCwBGYsUS
+	 x4Hl0wIETrLQn4OWSg3cxzdGH1zMP88siqDsYgkkiEbgiJBNIUdvi7hIkM5D5CRl7kQ8f
+	 AUKdYgg+LctD66uueSSCY5GpORK7RGxO+5ASiHny3Zui8Z3aXkCXWRCf2zkNMnZIilA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncASa3df;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmTl63nd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E225D606A338;
-	Thu, 19 Nov 2026 03:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52E6606A326;
+	Thu, 19 Nov 2026 03:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncASa3df
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC101F000C4;
-	Thu, 19 Nov 2026 03:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmTl63nd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0672F1F000C4;
+	Thu, 19 Nov 2026 03:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060633;
-	bh=OrAdEIlyEVz6RZsSOZwIeeamqdSfI67SINKgQHs7Um4=;
+	s=korg; t=1795060636;
+	bh=dCTaZ9cI5gMkDQjwtl2kS8UEcQhoFzF8cbYmlQdCFoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncASa3dfJaiTwDESmoMaAt1xP6pMqyXZlbHu2z1MA51YxyF1UxbeTBqIqEqCTtu7e
-	 s0DLgHFq6W+6xICBkw2cUalb8SU28uDW8rD5aOk5o1RszeKPTpB/SynH2ndrag7LnF
-	 /7UPnrW7n8Cxsk/TOCv4qfgfdg9NNM4SbQnxLiDE=
+	b=UmTl63ndKDT7IYBUrsVh4/ZWTdiVDKetwGN6m3r3CCmuiB+zEFCSYvfabw2KBNm0W
+	 66c/JlMBJCEKWe21P+/0of4Z7xeHHvSfxqevzK7TZK0CIIchfFSd8t6Oc1Nzg7snz1
+	 Kh3n4qifJmML58kwMo4rOTWX40SIquFkdaHUecwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1242/1848] x86/svm: Avoid sign extension of SVM_EVTINJ_VALID in 64-bit expressions
-Date: Wed, 18 Nov 2026 15:54:40 +0100
-Message-ID: <20261118150011.828921354@linuxfoundation.org>
+Subject: [PATCH 5.10 1269/1848] clk: milbeaut: Return divider update timeouts
+Date: Wed, 18 Nov 2026 15:55:07 +0100
+Message-ID: <20261118150012.786413941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,70 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit c5991239b148d40d4981901968b3a6a838ff517b ]
+[ Upstream commit 92d0998090d1716ee6b47174c10eb9415a12fca8 ]
 
-SVM_EVTINJ_VALID is defined as (1 << 31), i.e. as an int with the sign
-bit set. Whenever it is used in a 64-bit expression the int is sign
-extended, so bits 63:32 end up set as well. Two 64-bit users are
-affected.
+m10v_clk_divider_set_rate() logs when the hardware does not clear its
+write-valid request, but still returns success to the clock framework. It
+also uses the sleeping poll helper while holding the divider spinlock.
 
-verify_exception_info() uses the macro as a mask against a 64-bit value
-when it sanity checks hypervisor supplied exception information:
+Use the atomic poll helper under the lock and return its timeout so the
+rate change is not reported as successful before the hardware accepts it.
 
-	u64 info = ghcb->save.sw_exit_info_2;
-	...
-	if ((info & SVM_EVTINJ_VALID) &&
+The issue was found by our static-analysis tool and manually reviewed.
 
-The mask is 0xffffffff80000000, so the check also passes when any bit of
-the error code in 63:32 is set while the valid bit itself is clear.
-
-svm_vmgexit_inject_exception() builds the value that KVM hands to an
-SEV-ES guest in GHCB SW_EXITINFO2:
-
-	u64 data = SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_EXEPT | vector;
-
-For vector == X86_TRAP_GP this yields 0xffffffff8000030d instead of
-0x000000008000030d. The field uses the EVENTINJ format, which holds the
-error code in bits 63:32, so KVM asks the guest to inject #GP with an
-error code of 0xffffffff. Linux guests only consume the error code when
-SVM_EVTINJ_VALID_ERR is set, which it is not here, so they are not
-affected in practice, but the value KVM writes is not the one it intends.
-
-Use BIT() instead, as is already done for most single bit definitions in
-this header. Every other user applies the macro to a u32, where the
-resulting bits are unchanged.
-
-Opportunistically give SVM_EVTINJ_VALID_ERR the same treatment, there's
-zero reason to open code BIT().
-
-Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
-Fixes: c3392d0ab714 ("KVM: SVM: Provide helpers to set the error code")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Link: https://patch.msgid.link/20260908053722.3917934-1-nagachaithanya9911@gmail.com
-[sean: use BIT() for SVM_EVTINJ_VALID_ERR as well]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 6a6ba5b55a72 ("clock: milbeaut: Add Milbeaut M10V clock controller")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/svm.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/clk-milbeaut.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
-index f8fad50502ad6..b6e48bfff0bb0 100644
---- a/arch/x86/include/asm/svm.h
-+++ b/arch/x86/include/asm/svm.h
-@@ -347,8 +347,8 @@ struct vmcb {
- #define SVM_EVTINJ_TYPE_EXEPT (3 << SVM_EVTINJ_TYPE_SHIFT)
- #define SVM_EVTINJ_TYPE_SOFT (4 << SVM_EVTINJ_TYPE_SHIFT)
+diff --git a/drivers/clk/clk-milbeaut.c b/drivers/clk/clk-milbeaut.c
+index 80b9d78493bcd..eacc37f5b0bbd 100644
+--- a/drivers/clk/clk-milbeaut.c
++++ b/drivers/clk/clk-milbeaut.c
+@@ -411,8 +411,8 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				unsigned long parent_rate)
+ {
+ 	struct m10v_clk_divider *divider = to_m10v_div(hw);
+-	int value;
+ 	unsigned long flags = 0;
++	int value, ret = 0;
+ 	u32 val;
+ 	u32 write_en = BIT(divider->width - 1);
  
--#define SVM_EVTINJ_VALID (1 << 31)
--#define SVM_EVTINJ_VALID_ERR (1 << 11)
-+#define SVM_EVTINJ_VALID	BIT(31)
-+#define SVM_EVTINJ_VALID_ERR	BIT(11)
+@@ -434,8 +434,10 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
  
- #define SVM_EXITINTINFO_VEC_MASK SVM_EVTINJ_VEC_MASK
- #define SVM_EXITINTINFO_TYPE_MASK SVM_EVTINJ_TYPE_MASK
+ 	if (divider->write_valid_reg) {
+ 		writel(M10V_DCHREQ, divider->write_valid_reg);
+-		if (readl_poll_timeout(divider->write_valid_reg, val,
+-			!val, M10V_UPOLL_RATE, M10V_UTIMEOUT))
++		ret = readl_poll_timeout_atomic(divider->write_valid_reg, val,
++						!val, M10V_UPOLL_RATE,
++						M10V_UTIMEOUT);
++		if (ret)
+ 			pr_err("%s:%s couldn't stabilize\n",
+ 				__func__, clk_hw_get_name(hw));
+ 	}
+@@ -445,7 +447,7 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	else
+ 		__release(divider->lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static const struct clk_ops m10v_clk_divider_ops = {
 -- 
 2.53.0
 
