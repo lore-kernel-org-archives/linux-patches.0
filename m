@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028648;
-	b=DlSrDteLE6x2f6iHU7hdAMrqbFaqoIIgU1NSZIYDJQ6zl5stVfvZZCG40n9yKtVesBtt
-	 Imgp2Nmo7W8NwhmMMAHVqqDWezKzdo6jxTHinefCZUgh31ynWipktRZKOja2ItegVTdmx
-	 WHuYok67twX9xxI6ZjptRAjMLaXXUUI1/cIuL/EVKVtGigDz/V9ClNfOcX4oJxHWIBhZ3
-	 Mi6ufpd5rLjty4rp5QqParnljS3+vzMrvQ/kjId842DfPQqWu2AkWs5NfKeBhV7Eh53TP
-	 qtV/NR4KiAxs/4IANAa+D+zSToXyam+XVY8II8sCpSzLmb9wOQp8HsUWn9FBTIgbz4g==
+	t=1795028651;
+	b=15+6oRJRdR1m+UjErXuFQiolCET5DqhhSgF3rlNOyc4sgbkI74n35ZLvxHorr43BSdh7
+	 VI/T+5YoMcgPFoOWlRb65bQd2X0I382zJ1UuXF/utvrIcDnHNTAzwtQ+ppgT4/uKRoDUF
+	 W79Ayk71mvY2Y3bsKy3fjrk4iAJ379l4+3LvWYnS4/RMSa4Diu48s/TwDabdbGFDIRfsz
+	 inJZksXoV+hXcLEI+9PjsysAbstpymo+xMOsrPOX3FAmjt2Zs83CHiO8WhRs/4XDh1NyG
+	 lRBalKX1pH2stnNYCnIT87StKYp5Uu3GnQQHRtdxgQzcvr2VjpOzAFk+MtXWL/TAz+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VMFsoPbDD29HGfeHcQSac6SOo0+ZZtzS4AnCIcEHYrU=;
-	b=c3O6xj47gS+9zw0tIGnG4WxzxI+Oa2cDRaNs5h8jdeZJ1peB9oKrffj76A6fUDP2CH1a
-	 ebrl9zeMjEQe928FmoRUy76dxVyw9i0h5/ebb3r+14F4AU6fG/3piDR0oiwCzGWOHRqKG
-	 3msxKESLDHAKfaRrInsATIiVeBssj0zkbO5VywxizTM/8HH7RnTzt+34tKSrA8a9ysB11
-	 srobLEqv9mGam2KwpkydLKE3B5MsWO/UEq7OJ3NNEML0BI0d04WqFkKiqtDdA5+xOdnhz
-	 YfN+OXtQcA8OoYPnivvPpt3043IpnL9G6XW/RRdKKYnyHJZkaDOps4XuuJ0Bg7O8F+w==
+	bh=c5y5BNd3BWuCe/Eam0bF9SrqwujHVv7C/Wt9UswiUhQ=;
+	b=eSFzMbB8j/FRo3uZqKwjAJ6wB0Z2LHDcGTflyPyhoru2TbEzFzHUTI147q/eR/r23mAm
+	 QHuZj79hnewlrvRWIXrm/sejXfBIfncj3TF8HrQtrCYddf24S3TP1CHvXxSCO9ZxGXqCn
+	 dykDfqkSxbzzihQ1Rf2rtKgPd82V6QrCjxSfiDni9VZOJP5LM5z3iSYUDtCnCAhMSfebb
+	 b9o0wuBMRKRhTkEIHqrlo+Vt4N5iM++wlMnetIP/ybHL1xxIgTxHRLZWDWqb8ID/nrv58
+	 JuKblwrI01C+Tl+cuVEGhxwTad7cO9Bf63mwQtZw/rblQXE63c1c0L7Wtb+2elEzDAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pPuDYjme;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zlp/YIT6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC966606A335;
-	Wed, 18 Nov 2026 19:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7CD606A320;
+	Wed, 18 Nov 2026 19:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pPuDYjme
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D2F1F000C5;
-	Wed, 18 Nov 2026 19:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zlp/YIT6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7841F000C5;
+	Wed, 18 Nov 2026 19:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028648;
-	bh=VMFsoPbDD29HGfeHcQSac6SOo0+ZZtzS4AnCIcEHYrU=;
+	s=korg; t=1795028651;
+	bh=c5y5BNd3BWuCe/Eam0bF9SrqwujHVv7C/Wt9UswiUhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPuDYjme44VJClllgso0dzTv2UEJ4mvF2RHW2ZLHTJWxdk9X5O3Kz6MmRLwyAMmd0
-	 oHkVdSPkECY2EGvxnaOQNdC7LHm/78sHdhHIgZv0BdjW4JlOpDVKNXYgGHokO87Pmg
-	 Y/LYYVbR+Iw6sGLGtjPpVQqzeGRqvttiuAkAy5XY=
+	b=Zlp/YIT6z5Tn0XwsVNgQfcB/jnDaDEcFp+J+AgMfWlJtEl39hFBH2e97m55u87eD8
+	 ufWiH6FtOYwvu5BmWDKOmR6a9dxyxaiax/jsvbYQQAcBsCDK8jp2iM3N7MvPuKxLA1
+	 gUc4iaTiZchMXUPPzh69YV6LSEYFJLrxwKSaCAtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Edvard Conrad <edvard@tuta.io>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0027/1756] ovl: inherit FMODE_NONOTIFY when opening directory realfiles
-Date: Wed, 18 Nov 2026 15:35:54 +0100
-Message-ID: <20261118150008.962551007@linuxfoundation.org>
+Subject: [PATCH 6.12 0028/1756] mm/memory-tiers: unregister empty tiers outside memory_tier_lock
+Date: Wed, 18 Nov 2026 15:35:55 +0100
+Message-ID: <20261118150008.998263831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,70 +70,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 323899b4ed233d5b6e2fc160c16fbf39cf0317da ]
+[ Upstream commit 500624f28eca441e35f978979ccfb373202fefd3 ]
 
-When fanotify hands a listener an fd for a permission event on an
-overlay directory, ovl_dir_open_realfile() opens the real directory via
-dentry_open(), not backing_file_open(), so the lower open could still
-raise FS_OPEN_PERM and deadlock a listener that also marks the backing
-filesystem.
+When offlining a node's last memory empties its tier,
+clear_node_memory_tier() calls device_unregister() while holding
+memory_tier_lock. A concurrent sysfs read can hold a kernfs active
+reference and block in nodelist_show() on that mutex. device_unregister()
+then waits in kernfs_drain() for the read to finish and release its active
+reference, while the reader waits for the offlining task to release the
+mutex.
 
-Export dentry_open_nonotify() and call it from ovl_path_open_realfile()
-when the overlay user file must not generate events.  Ordinary
-ovl_path_open() callers are unchanged.
+Return the node's former tier from clear_node_memory_tier(), making the
+helper more similar to set_node_memory_tier(), which also returns a
+memory_tier pointer. Let the caller unlink an empty tier under
+memory_tier_lock before rebuilding demotion targets, then unregister its
+device after dropping the lock.
 
-Reported-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Closes: https://lore.kernel.org/all/20261030-welpen-anbinden-nullen-b2432cee1d10@brauner/
-Fixes: 130fdbc3d1f99 ("ovl: pass correct flags for opening real directory")
+Fixes: 9832fb87834e ("mm/demotion: expose memory tier details via sysfs")
 Cc: stable@vger.kernel.org
-Tested-by: Edvard Conrad <edvard@tuta.io>
-Link: https://lore.kernel.org/ltp/P5Iny41--F-9@tuta.io/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: Replaced dentry_open_nonotify() with dentry_open() using __FMODE_NONOTIFY. ]
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-46-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adapted node notifications to the existing memory-notifier API using arg->status_change_nid instead of nn->nid. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/readdir.c | 10 +++++++++-
- fs/overlayfs/util.c    |  2 +-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ mm/memory-tiers.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index 5d912f887aac7..843c3d5168f4e 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -869,9 +869,17 @@ static struct file *ovl_dir_open_realfile(const struct file *file,
+diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+index fc14fe53e9b75..a8733cd8d554b 100644
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -561,21 +561,14 @@ static struct memory_tier *set_node_memory_tier(int node)
+ 	return memtier;
+ }
+ 
+-static void destroy_memory_tier(struct memory_tier *memtier)
++static struct memory_tier *clear_node_memory_tier(int node)
  {
- 	struct file *res;
- 	const struct cred *old_cred;
-+	int flags = O_RDONLY | (file->f_flags & O_LARGEFILE);
-+
-+	/*
-+	 * Inherit FMODE_NONOTIFY from a fanotify permission fd so a listener
-+	 * that also watches the real filesystem does not deadlock.
-+	 */
-+	if (FMODE_FSNOTIFY_NONE(file->f_mode))
-+		flags |= __FMODE_NONOTIFY;
+-	list_del(&memtier->list);
+-	device_unregister(&memtier->dev);
+-}
+-
+-static bool clear_node_memory_tier(int node)
+-{
+-	bool cleared = false;
+ 	pg_data_t *pgdat;
+ 	struct memory_tier *memtier;
  
- 	old_cred = ovl_override_creds(file_inode(file)->i_sb);
--	res = ovl_path_open(realpath, O_RDONLY | (file->f_flags & O_LARGEFILE));
-+	res = ovl_path_open(realpath, flags);
- 	revert_creds(old_cred);
+ 	pgdat = NODE_DATA(node);
+ 	if (!pgdat)
+-		return false;
++		return NULL;
  
- 	return res;
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 723672073b1e3..4c0881f0b75e0 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -652,7 +652,7 @@ struct file *ovl_path_open(const struct path *path, int flags)
- 	struct mnt_idmap *real_idmap = mnt_idmap(path->mnt);
- 	int err, acc_mode;
+ 	/*
+ 	 * Make sure that anybody looking at NODE_DATA who finds
+@@ -593,14 +586,10 @@ static bool clear_node_memory_tier(int node)
+ 		synchronize_rcu();
+ 		memtype = node_memory_types[node].memtype;
+ 		node_clear(node, memtype->nodes);
+-		if (nodes_empty(memtype->nodes)) {
++		if (nodes_empty(memtype->nodes))
+ 			list_del_init(&memtype->tier_sibling);
+-			if (list_empty(&memtier->memory_types))
+-				destroy_memory_tier(memtier);
+-		}
+-		cleared = true;
+ 	}
+-	return cleared;
++	return memtier;
+ }
  
--	if (flags & ~(O_ACCMODE | O_LARGEFILE))
-+	if (flags & ~(O_ACCMODE | O_LARGEFILE | __FMODE_NONOTIFY))
- 		BUG();
+ static void release_memtype(struct kref *kref)
+@@ -873,6 +862,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+ {
+ 	struct memory_tier *memtier;
+ 	struct memory_notify *arg = _arg;
++	bool empty = false;
  
- 	switch (flags & O_ACCMODE) {
+ 	/*
+ 	 * Only update the node migration order when a node is
+@@ -884,9 +874,16 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+ 	switch (action) {
+ 	case MEM_OFFLINE:
+ 		mutex_lock(&memory_tier_lock);
+-		if (clear_node_memory_tier(arg->status_change_nid))
++		memtier = clear_node_memory_tier(arg->status_change_nid);
++		if (memtier) {
++			empty = list_empty(&memtier->memory_types);
++			if (empty)
++				list_del(&memtier->list);
+ 			establish_demotion_targets();
++		}
+ 		mutex_unlock(&memory_tier_lock);
++		if (empty)
++			device_unregister(&memtier->dev);
+ 		break;
+ 	case MEM_ONLINE:
+ 		mutex_lock(&memory_tier_lock);
 -- 
 2.53.0
 
