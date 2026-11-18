@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061736;
-	b=j0Cw/BC/DIFUxuBJDBSIkq/4716ClK4wLzDB4mNYJz34eX1gevXbABoQn8gSJAvdC0VR
-	 jCXIYPCOB3utviqYF1/aqLM/GcAxj6eY90RFGmRxqOw5vKt8jTUzbig0dxFOdjaIvy+WT
-	 fYbgl6pIO8CIFDxROHcSMEbNhjLgthUIem8ZUBhoe3LVbndLmnILg/o5uEqPh+rNltNZi
-	 0icUnRLOPmqGxh8dyv6njYDf5aoXj35GXrodOW6Atce2h3P0GqDQSfO63uBfDWS+A8Et0
-	 TkVwHslZ+Qmq0o6KcQ3VPV3NZ/s0kEzeCPCkMaeW+lN/aIVdcycCWQX4Jsdd1YDxVDA==
+	t=1795061738;
+	b=InnrtGscNWfoyoCY4xch5hRH7zTV3CCUTXs6A4cSTEsXtI4YaHk6fyE3Lyb9RFyc1QrT
+	 4pY1gK5kFUfRNfN9vYL4tg3CWGPc9C8ROZ2v4BjxILH4sRjJ3AHNB6qgmeXYww7wwt0Ut
+	 ufSdwmNEYLjGVJPtFP6kHIwvIwUmTGWg8YJ+YkG024WfktX6QGFAdvT86AsjrYZzyPRaw
+	 BX5Fw9/yg6IaaM4bxvPM5nwM1uWghYjpcNIEyr1GIpZlahdfjmuo867NEn/bnu1vFvZAD
+	 eIVxLzG0FVw+cFFmDMD/3Htslu9YDS4WZhjbW8J4eGby80aYvPnUgak4tc3OndGYnjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IdXxCPo1Zs8B/4UJDwAd0Nh4+EVfqYvgPNhaz2bxaig=;
-	b=C0Vkf4csUX2QqpBfDaOb/ob4iAXfd4letiZ6yCV3fWML6Lr3cI4uilDTwyv9+vC4R+xr
-	 lps862ZQEOno0B+gLr79koTjqhEskq6KFFeSDH5Vnl5mI6ifGjfrx0e2GoyQaw9w0XIQh
-	 /Env8sV1sB2sBDvN6x8SO2ScSnOzozJbe9zvwfDM+nPG5pa/hx9KAIIUil1tm9fryXPvA
-	 Z0K9v2cilhovxYD2GXfhm4JgzYv7234UiKk2pKiPXOPC1Z/SuuVS8eH0Mp5XxDVhFhkxe
-	 2nj7O0pZbFX3N74YImgZHStQbp7wwfuLM3tJpqOPfETrsPJ2UxUeaeEMsNh0kOEkDqA==
+	bh=8VzhVBEZSaOJvLbUHco3UVr6o9Pnq+J1If7C9vRGLAQ=;
+	b=tkpltqUmIRF7Ui9EZYH4t2ErPJym+wJM/xpxb5wj/a2ey6AA1k7BGM4Qy1nlnYiC7KNR
+	 l5po5DdEPpe4JGz2Fm/Od7YV+wnsB3LvcOdZfII/f8qMe6dHhqgu8KZDwlcm88K7hVP/I
+	 oORP/X2lQlWOtv4RGsrxck0aoXuOCwPrxbEp+RWX1folK0sTsKpujBQaMiL+A9n9e8h5A
+	 DCG+0ZMrgz1Z/CqlC9Dmh7h0OCj+oX5xqtwJwjL8ZnPHZaHhHbsRBFA9BIQoztIUfmXh2
+	 yW0nETlOzzO7E9G8aYJm7IuTQQX9oL6OACBUNSLc0pydl2Eg06LG1B4g5gj3ZgpSUhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZSyNoTr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QZbW3HoZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C849606A320;
-	Thu, 19 Nov 2026 04:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB6E606A326;
+	Thu, 19 Nov 2026 04:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZSyNoTr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710E61F000C4;
-	Thu, 19 Nov 2026 04:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QZbW3HoZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4841F000C4;
+	Thu, 19 Nov 2026 04:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061736;
-	bh=IdXxCPo1Zs8B/4UJDwAd0Nh4+EVfqYvgPNhaz2bxaig=;
+	s=korg; t=1795061738;
+	bh=8VzhVBEZSaOJvLbUHco3UVr6o9Pnq+J1If7C9vRGLAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JZSyNoTrLbRWHCQgmU1H/EOUb3u0EkPKVLB7/SYwC8Dd1eIU7uHBU9gdT/ZwJllUP
-	 G/XJUDgpNMIrUMyXC/SHU8RmTNffv0QZwpQ2jSDfTzNvaUqVxfYkjva5bquBJq3S9P
-	 k49z8IaBdxPs9oqURgeu4J8E9UFe1tlgOTuJCkSk=
+	b=QZbW3HoZH6+9q4xMrBDOQI12qKs0YThtiUBXbeLq/NtfSx7k3wdZ+WNKLPlkPlQvl
+	 MMKS9ukJBXibpP18zj3vGrmNnO0TiZht0c5KO5hNPDyQmgnuGwcV5LtmuSQMEtHvIC
+	 9iJGgngKyJrcywCP9y5po9q5lD4//lwLnskWWFUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	John Popplewell <john.popplewell@nmc2.ai>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1659/1848] net: axienet: free outstanding TX buffers in axienet_dma_bd_release()
-Date: Wed, 18 Nov 2026 16:01:37 +0100
-Message-ID: <20261118150029.188608061@linuxfoundation.org>
+Subject: [PATCH 5.10 1660/1848] IB/IPoIB: Cancel normal flush work on device stop
+Date: Wed, 18 Nov 2026 16:01:38 +0100
+Message-ID: <20261118150029.274550721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,172 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Maimon <maimon.sagi@gmail.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 0c20cb4cfb40cf270d6c4c2c2ff5e5d72322644a ]
+[ Upstream commit 66196a559be5963b1ced18418c876caf9bfb76e6 ]
 
-axienet_dma_bd_release() walks the RX ring to unmap and free every
-receive buffer before releasing it, but frees the TX descriptor ring
-with dma_free_coherent() alone.  Any descriptor that
-axienet_free_tx_chain() had not yet reclaimed still holds its skb and
-its streaming DMA mapping, and both are lost.
+ipoib_ib_dev_flush_normal() can race with ipoib_stop() because the normal
+flush work does not run under RTNL.
 
-axienet_stop() disables TX NAPI and stops the DMA engine before calling
-it, so nothing reclaims those descriptors afterwards.  Bringing the
-interface down while frames are in flight therefore leaks up to
-lp->tx_bd_num skbs and mappings each time.
+Before commit a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in
+ipoib_stop()"), ipoib_stop() flushed ipoib_workqueue after clearing
+IPOIB_FLAG_ADMIN_UP and before calling ipoib_ib_dev_down(). This ensured
+that any in-flight flush work completed before ipoib_ib_dev_down()
+performed the final clear of IPOIB_FLAG_OPER_UP.
 
-axienet_dma_err_handler() already walks the TX ring this way before it
-restarts the DMA engine: it unmaps every descriptor whose cntrl is still
-set - axienet_free_tx_chain() clears it on reclaim - frees any skb still
-attached, and clears the descriptor.  Move that loop into a helper,
-axienet_free_tx_bufs(), and call it from axienet_dma_bd_release() too.
-This relies on axienet_stop() having stopped the DMA engine first, as
-the RX walk in the same function already does.  The helper frees the
-skbs with dev_kfree_skb_any(), as drops: in the error handler, which
-runs from a workqueue, that frees them directly rather than deferring
-them to softirq as dev_kfree_skb_irq() did.
+After that commit removed the workqueue flush to avoid a deadlock with
+workqueue tasks taking RTNL, a normal flush can continue running
+concurrently with ipoib_stop() after IPOIB_FLAG_ADMIN_UP has been
+cleared.
 
-The walk must not run on a ring that is not there.  axienet_open() does
-not check the result of the reset that runs axienet_dma_bd_init(), so
-when that reset fails tx_bd_v is either still NULL or, after an earlier
-close, points at the ring that close freed.  Clear tx_bd_v and rx_bd_v
-once their rings are freed, and skip the walk when tx_bd_v is NULL.
-That also ends the second dma_free_coherent() of a stale ring which the
-same path already did.  On the axienet_dma_bd_init() error path the TX
-ring has just been allocated zeroed, so the walk does nothing.
+The flush may observe IPOIB_FLAG_ADMIN_UP set and continue running while
+ipoib_stop() clears IPOIB_FLAG_ADMIN_UP and brings the device down. The
+flush can then call ipoib_ib_dev_up() and set IPOIB_FLAG_OPER_UP again
+after the device has already been stopped:
 
-This was reported by the Sashiko AI review bot.
+  flush_normal (ipoib_workqueue)    ipoib_stop() (RTNL held)
+  ------------------------------    ------------------------
+  test_bit(ADMIN_UP) == 1
+                                    clear_bit(ADMIN_UP)
+                                    ipoib_ib_dev_down()
+                                      clear_bit(OPER_UP)
+  ipoib_ib_dev_up()
+    set_bit(OPER_UP)
 
-Tested on the AXI Ethernet MAC of an ADVA TimeCard X2 (PCIe card, with
-the built-in AXI DMA): traffic passes, and after each of ten down/up
-cycles and five module reloads, all made with traffic running and each
-running axienet_dma_bd_release(), traffic resumes and nothing is logged.
-The leak itself was not measured, and neither the failed-reset paths nor
-axienet_dma_err_handler() were exercised.
+This leaves the interface with ADMIN_UP clear and OPER_UP set. During
+device removal, ipoib_ndo_uninit() waits in destroy_workqueue() while
+holding RTNL, while ipoib_mcast_carrier_on_task() may keep retrying
+rtnl_trylock() as long as OPER_UP remains set, resulting in a deadlock.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Reviewed-by: Joe Damato <joe@dama.to>
-Assisted-by: LLM sparse
-Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261007034620.1360542-1-maimon.sagi@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cancel the normal flush work from ipoib_stop() after clearing
+IPOIB_FLAG_ADMIN_UP and before bringing the device down. A pending normal
+flush is canceled, while an already running flush is allowed to finish
+before ipoib_ib_dev_down() performs the final transition to OPER_UP
+clear.
+
+Only the normal flush needs this synchronization. The heavy flush is
+already serialized with ipoib_stop() by RTNL, while the light flush does
+not bring the device back up and therefore cannot recreate this race.
+
+Fixes: a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in ipoib_stop()")
+Reported-by: John Popplewell <john.popplewell@nmc2.ai>
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20261014-ipoib-cancel-work-v1-1-6c0faac016b8@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 74 +++++++++++++------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index fa3e2bbee7905..765e3294b573a 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -176,6 +176,46 @@ static dma_addr_t desc_get_phys_addr(struct axienet_local *lp,
- 	return ret;
- }
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+index 6e61c256bb746..cebf84039f9ac 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+@@ -186,6 +186,13 @@ static int ipoib_stop(struct net_device *dev)
  
-+/**
-+ * axienet_free_tx_bufs - Release the buffers still held by the TX ring
-+ * @lp:		Pointer to the axienet_local structure
-+ *
-+ * Unmap every descriptor whose mapping is still live, free any skb still
-+ * attached, and clear the descriptor for reuse.  axienet_free_tx_chain()
-+ * clears cntrl when it reclaims a descriptor, so a non-zero value means
-+ * the mapping is live.  The DMA engine must be stopped.
-+ */
-+static void axienet_free_tx_bufs(struct axienet_local *lp)
-+{
-+	struct axidma_bd *cur_p;
-+	u32 i;
-+
-+	for (i = 0; i < lp->tx_bd_num; i++) {
-+		cur_p = &lp->tx_bd_v[i];
-+		if (cur_p->cntrl) {
-+			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
-+
-+			dma_unmap_single(lp->dev, addr,
-+					 (cur_p->cntrl &
-+					  XAXIDMA_BD_CTRL_LENGTH_MASK),
-+					 DMA_TO_DEVICE);
-+		}
-+		/* not reclaimed by axienet_free_tx_chain(), so a drop */
-+		if (cur_p->skb)
-+			dev_kfree_skb_any(cur_p->skb);
-+		cur_p->phys = 0;
-+		cur_p->phys_msb = 0;
-+		cur_p->cntrl = 0;
-+		cur_p->status = 0;
-+		cur_p->app0 = 0;
-+		cur_p->app1 = 0;
-+		cur_p->app2 = 0;
-+		cur_p->app3 = 0;
-+		cur_p->app4 = 0;
-+		cur_p->skb = NULL;
-+	}
-+}
-+
- /**
-  * axienet_dma_bd_release - Release buffer descriptor rings
-  * @ndev:	Pointer to the net_device structure
-@@ -189,11 +229,18 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 	int i;
- 	struct axienet_local *lp = netdev_priv(ndev);
+ 	clear_bit(IPOIB_FLAG_ADMIN_UP, &priv->flags);
  
--	/* If we end up here, tx_bd_v must have been DMA allocated. */
-+	/* tx_bd_v is NULL if axienet_dma_bd_init() did not get as far as
-+	 * allocating it, and is cleared below once the ring is freed;
-+	 * dma_free_coherent() accepts NULL.
++	/* Normal flush runs without RTNL and may bring the device back
++	 * up. Cancel it before the device down transition.
++	 * Heavy flush is already serialized by RTNL and must not be
++	 * waited on here while RTNL is held.
 +	 */
-+	if (lp->tx_bd_v)
-+		axienet_free_tx_bufs(lp);
++	cancel_work_sync(&priv->flush_normal);
 +
- 	dma_free_coherent(lp->dev,
- 			  sizeof(*lp->tx_bd_v) * lp->tx_bd_num,
- 			  lp->tx_bd_v,
- 			  lp->tx_bd_p);
-+	lp->tx_bd_v = NULL;
+ 	netif_stop_queue(dev);
  
- 	if (!lp->rx_bd_v)
- 		return;
-@@ -224,6 +271,7 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 			  sizeof(*lp->rx_bd_v) * lp->rx_bd_num,
- 			  lp->rx_bd_v,
- 			  lp->rx_bd_p);
-+	lp->rx_bd_v = NULL;
- }
- 
- /**
-@@ -1722,29 +1770,7 @@ static void axienet_dma_err_handler(struct work_struct *work)
- 	axienet_mdio_enable(lp);
- 	mutex_unlock(&lp->mii_bus->mdio_lock);
- 
--	for (i = 0; i < lp->tx_bd_num; i++) {
--		cur_p = &lp->tx_bd_v[i];
--		if (cur_p->cntrl) {
--			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
--
--			dma_unmap_single(lp->dev, addr,
--					 (cur_p->cntrl &
--					  XAXIDMA_BD_CTRL_LENGTH_MASK),
--					 DMA_TO_DEVICE);
--		}
--		if (cur_p->skb)
--			dev_kfree_skb_irq(cur_p->skb);
--		cur_p->phys = 0;
--		cur_p->phys_msb = 0;
--		cur_p->cntrl = 0;
--		cur_p->status = 0;
--		cur_p->app0 = 0;
--		cur_p->app1 = 0;
--		cur_p->app2 = 0;
--		cur_p->app3 = 0;
--		cur_p->app4 = 0;
--		cur_p->skb = NULL;
--	}
-+	axienet_free_tx_bufs(lp);
- 
- 	for (i = 0; i < lp->rx_bd_num; i++) {
- 		cur_p = &lp->rx_bd_v[i];
+ 	ipoib_ib_dev_down(dev);
 -- 
 2.53.0
 
