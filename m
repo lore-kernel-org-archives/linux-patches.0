@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046628;
-	b=er/PpfZA8jy5yXwfpy0A/KFrg2CsY3vID8Cx2+G+aF6aFWpqwanldkWpXLYZAJkTUvv1
-	 sR40NIL13nvsV2Ro9/ebDefVv+/HgdG/AgdSWGiptyjIdmzCi7ftyOEdvyteUtRMZqDqV
-	 L8lpVvZ1h+HU8OQYzui1UE/D/Y/1N619LLK4DKLIphrnP4AfgUWmNoHRIooc0+KnrGrD1
-	 un0oQ7dpVj+FDLOyhmgvV0ZOwpZaeqP9b8TCOgRg4sT9o7CYC+bd/l7HTrISqlS0KrMZn
-	 mmwXf3pq0O8wAceZkpZGzXozYcYHbGG8n/YU/eQyrZe1eRLLkkB7A70Bi926dZOz2Rg==
+	t=1795046631;
+	b=V6Kqc5Lubdew4cKUZwM9wKWX5jqh3Zocsj3/mrOn9iQwvN4cnDqDqx0HmMnAuc785yYF
+	 KUvJw0r6V+iZkH8LCPQ9uW360Bx4ahQ37v+zvksTAW/8FsXaMdC3hsGoDot5ptUZlU0c3
+	 BLn9VgEdo73nbI+QkHVbF9vhPQB+S3NbZECr0A0An2jMHV7isYvQDbPx2fpgrelK0whWV
+	 zDFdBCqN5WNmWk2VSiXtrA0BGze/PZRBGzRDZRZrYy8GcWMo7whhXiLUjMLS5JDTfG3d0
+	 nTgv5+T4HOcI0qowO/QbIfA5LjpWNZdGyKSBc6p1AXddsb8O7sac2fBYtYmEfpxfs4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iUW4b+txL2bveff4Ku3bw0MMIv+DHmgvJp0ipwSIC/A=;
-	b=ksiQWZVaoeAce5YmnvA88smDyGRMCqMZ0A8wKQ9+4hgMLfi27a8MPVd4F/6uvSd2ONhS
-	 Ly+9Trx3jE1kcFma2mEaWmXfCmGZUtL11Uc4CjOHkkDt9PpGqnXylaHksd0GiTcVH8Mbb
-	 xJALLaMWg1XhY5EdaI5KSpqlIXkRVYCtNVanHWmNedyI/6pDirI2QqZ7NaRmWegYpEBsi
-	 j/MyBSMVEW0YFJZjYxpinsKbh+vv3vCCBVHP8FGQCD0NIcmoAcEYh2prI64hIOha29utz
-	 2ROjw9sgrTBBC27Py2aZHZk+gM3+sbU4/3+aSk1T0zVbv/nDd7nYytYEaVRMsf3fh8A==
+	bh=RAvVN9Jr/Txult3pujvIIc0w3tARcyaUWKzZ/aAHx8A=;
+	b=bW83Lf51xhPU1D1RVyAPTtxUBT7JsSY/PpZx5xCEvfn1ZY7GjDqlXBPg4Dn20AWFzD2R
+	 CHALZeqJk4/lrFe4lvwhYNukdtFUbkXOCPSYCHfjhvt+HAginRv0NytOHDNZEXytA3Kc1
+	 nLUnzdc3VAGZLieOSEeRsuQqhnvvoglItXBZ6atAy8wYnDcJWdInqMzWaUvoYwlmbg/5X
+	 uwJWpzqh2ItcH6epjUdMO1ydcFrg6lA9i4rqvS7qedGvhyBb88JyRUP+7Q07GXlO0Mbrm
+	 vc4XqCelxdCZW0bUOHoQxObBNKc+8fF8zOC1ruPu079NyB4R8ZWWpRVRFdGQyhVn3yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVuJrGFv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jvchKe/k";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF98606A31C;
-	Thu, 19 Nov 2026 00:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF34606A32C;
+	Thu, 19 Nov 2026 00:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVuJrGFv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B421F000C4;
-	Thu, 19 Nov 2026 00:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvchKe/k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E961F000C4;
+	Thu, 19 Nov 2026 00:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046628;
-	bh=iUW4b+txL2bveff4Ku3bw0MMIv+DHmgvJp0ipwSIC/A=;
+	s=korg; t=1795046631;
+	bh=RAvVN9Jr/Txult3pujvIIc0w3tARcyaUWKzZ/aAHx8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PVuJrGFvsfSSerDix3OaGsnCl/H2XtKp6bzQGvuiKaDOT+mPMRe2+4LOkgAWFLplb
-	 /G/LXrgJilfES9lCzgKM1PrXgaviFsT3s7fFk5g9PHR9svBQiLHLl7VWdjHtxYTAac
-	 8dzo2jt7dbBi737t73flv3qsfI3eBYSjFIoJBulo=
+	b=jvchKe/kdRO5pwjR9ab2NWLe02JCCJtGmD/jY/I5PhJRZSIPEA99sOKkg3StHyXKQ
+	 vPRkHDOSKrUcYSSL0qqq1/fvjV+NZIFwnx74BvHWvuEOnZjuw6BthZLAZhxjeCxVCG
+	 hUUUytKCRcz45MGEmpdUcHQn04duWXLbABTWvuUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Eric Biggers <ebiggers@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1350/2857] lib/crypto: mips: Disable Octeon SHA code on little-endian kernels
-Date: Wed, 18 Nov 2026 15:39:44 +0100
-Message-ID: <20261118150250.025127960@linuxfoundation.org>
+Subject: [PATCH 6.1 1351/2857] blk-mq: end the request if getting a keyslot fails
+Date: Wed, 18 Nov 2026 15:39:45 +0100
+Message-ID: <20261118150250.059910452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,95 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit dd2a4edb26e1c78823c50ba10c42f2d3de2e5ec4 upstream.
+commit e67cb6ed40e7f45912b63d7d575f18dfd2ebc98a upstream.
 
-Kernels built for the MIPS64-based Cavium Octeon SoCs are normally
-big-endian, but little-endian builds are also supported.  Currently, the
-SHA-1, SHA-256, and SHA-512 code using the Octeon crypto co-processor is
-enabled in both builds.
+When blk_crypto_rq_get_keyslot() fails, blk_mq_submit_bio() ends the bio
+by hand and frees the request. By then blk_mq_bio_to_request() has done
+the IO accounting, which blk_mq_free_request() doesn't undo, so the
+in_flight counter never drops and iostat shows a device that is 100%
+busy. If the bio went through zone write plugging the zone stays plugged
+as well, and every later write to it waits forever.
 
-This code is untestable without the hardware.  However, based on the
-code itself, it is implausible that it computes hash values correctly in
-little-endian builds.  Such builds write many incorrect values to COP2:
+Use blk_mq_end_request() like the dispatch path does for a request the
+driver rejected, after marking it for zone write plugging.
 
-  - SHA-1 and SHA-256: The 64-bit integer that contains the last two
-    32-bit message words of each block is written to COP2 entirely
-    byte-reflected, due to missing endianness conversion in
-    octeon_sha1_start() and octeon_sha256_start() to compensate for
-    using native 64-bit loads from the message bytes.  This differs from
-    all the earlier message words which are written correctly.
+Move the call to blk_zone_write_plug_init_request() before
+blk_crypto_rq_get_keyslot() so that it doesn't need to be duplicated.
+It doesn't depend on the keyslot.
 
-    Furthermore, the state is written to COP2 with each 32-bit word
-    byte-reflected within each 64-bit integer, due to incorrect use of
-    64-bit endianness conversion in write_octeon_64bit_hash_dword() when
-    the state is kept in memory in native-endian 32-bit words.
-
-  - SHA-512: All the 64-bit message words are written to COP2
-    byte-reflected, due to missing endianness conversion in
-    write_octeon_64bit_block_sha512() and octeon_sha512_start().  The
-    SHA-512 state words seem to be written correctly.
-
-Big-endian kernels aren't affected by these bugs.  These bugs also
-aren't new; this code has been broken on little-endian ever since it and
-Octeon little-endian support were first added in v4.1.
-
-Commit d2a948d2db68 ("MIPS: Octeon: Make octeon-md5 driver
-endian-agnostic") made the MD5 code work on little-endian kernels by
-adding 64-bit endianness conversions to the COP2 macros used by MD5
-(some of which are shared by SHA-1 and SHA-256, despite those algorithms
-keeping the state words in native-endian instead of MD5's little-endian,
-causing some of the strange behavior described above).  However, SHA-1,
-SHA-256, and SHA-512 were never fixed to work on little-endian kernels.
-
-Therefore, disable the Octeon SHA-1, SHA-256, and SHA-512 code in
-little-endian kernels.  This causes the generic code that actually
-computes hash values correctly to be used instead.
-
-Fixes: 82be2dcfa6a1 ("crypto: octeon - add SHA1 module")
-Fixes: c3d0def62001 ("crypto: octeon - add SHA256 module")
-Fixes: fbaa4dfd51a0 ("crypto: octeon - add SHA512 module")
+Fixes: 99dc422335d8 ("block: support to account io_ticks precisely")
+Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
 Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261022054450.20746-1-ebiggers@kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261029200110.1328103-1-ebiggers@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Backport to 6.1.y: dropped the part related to
+  bio_zone_write_plugging(), which doesn't exist on this branch. ]
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/crypto/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ block/blk-mq.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/mips/crypto/Kconfig b/arch/mips/crypto/Kconfig
-index 9003a5c1e879f..f8ddfcf47575b 100644
---- a/arch/mips/crypto/Kconfig
-+++ b/arch/mips/crypto/Kconfig
-@@ -32,7 +32,7 @@ config CRYPTO_MD5_OCTEON
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index db8a0d852d993..25dfedc77fbba 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3030,9 +3030,7 @@ void blk_mq_submit_bio(struct bio *bio)
  
- config CRYPTO_SHA1_OCTEON
- 	tristate "Hash functions: SHA-1 (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA1
- 	select CRYPTO_HASH
- 	help
-@@ -42,7 +42,7 @@ config CRYPTO_SHA1_OCTEON
+ 	ret = blk_crypto_rq_get_keyslot(rq);
+ 	if (ret != BLK_STS_OK) {
+-		bio->bi_status = ret;
+-		bio_endio(bio);
+-		blk_mq_free_request(rq);
++		blk_mq_end_request(rq, ret);
+ 		return;
+ 	}
  
- config CRYPTO_SHA256_OCTEON
- 	tristate "Hash functions: SHA-224 and SHA-256 (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA256
- 	select CRYPTO_HASH
- 	help
-@@ -52,7 +52,7 @@ config CRYPTO_SHA256_OCTEON
- 
- config CRYPTO_SHA512_OCTEON
- 	tristate "Hash functions: SHA-384 and SHA-512 (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA512
- 	select CRYPTO_HASH
- 	help
 -- 
 2.53.0
 
