@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050646;
-	b=g8rCYqDBMTk4wyB4IEMaAgcBPzl6D/W9uS6isLkGjBguTz6f1MO/2ntMl4qrUgiQCSyR
-	 KZDduixB5kglkY8rb0be6OckqScjlpXk4025VsjNYYz3HqJLA2iCufNWsMIZyyTlvYJUa
-	 fPiDZUDOKOrFkh5bkLv1hSpPoQyDzJPVrVmvFwEMa2qyQSVpq3i/ElPprS0Vv8lpRO51F
-	 xCdkYGK7FU/Ar7ovsxwASvy7G3MHfka3t/aqRnuHqI/YM7ELnbB9AAMryHwXQnZHRbnaJ
-	 m/JoBJ9BC4bWY13R8NHWbsFBYVTYZatcK+QXoFCvuQkYvgc9ln9th0Z7dSYn3GtF7Lw==
+	t=1795050649;
+	b=05671UlxspBIIY/ABsyr8Ku+bvXDnX/7pMavsphgN9FOE02YNHttrZfNYYDOxPBRuZn8
+	 vTLwW1li7cSrHFhAJ2PQa317gQdCjD2Wqvg54TQZ1p2ZsNZ4iVU69Lur4XH/+XPC8EPcm
+	 GsebcTa50BlWj6rz5DFPwWR0YiOvlcpJFCLCBhGTFQ3+prPvGYHgMxCvTZEQVlbsSgVIu
+	 rmk9q2O9zk35cyta41Mmp+dRRdDPhVA6MbTzsVBG8W3pQFVKtvmbgPxksQ6Q3wn2EJeaV
+	 EzljgUuNOAFsz/6HamlK31lbvkEfUJKdiX+OZDpprKMVfyGh7O6ONTZTl4ONu5/nwmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GSmH3TpbAbfOxJXL0tDZUevjtRAck86uHTo8cYad0zI=;
-	b=j4hfOa0oczcALEV6c5nqHPsit2T7zvWOzN442iC3bSHbQHpn7NOUxQI5ps3W/hQEOgWh
-	 wwmkDTPTTdEBGvR1HT3hixkSIJOs604VxKXJX87QTIPY9gcT3zMgptQXTl6cTGadwWRsQ
-	 gxypLMl07eTeAoLzkehQgXNVxgWEDMuS977ONakWBmRelszYuLhl05sv3ZFvYQhmUKZFd
-	 EvHemQ/vJbUK4Usd9n01TSVGYVluc6bsZb9Bq3nbu37BjnKhkI7Ud539YRX7tXB9f0+dY
-	 jldM2qI2zjDNV5kpnSgwWekiCjVso4w+JHsDOmPoUJ5GdDvlXnE1hbeHIIAemgRutQw==
+	bh=RGEX9STOHod5RODTK3QRICZ/2AVNeDD1lji2tMJNnXg=;
+	b=Nwk3O/SZRsI/Ha24dfHPLpIUpm2DR5b9rL95SjsbVpoCysyFTY8IDuLuSYBecIHjw7Az
+	 6miRI0U4giRACjBKE3nLmDxxvwPdOhR3Gb4k+8NH6C3vpkSA9tesu2jn9IL4+iivWWieg
+	 RWxTQiKMho0mNqjk1tFD/UQiWAHa3vi7IryPkMieGNx8d3LEL94AW7shlnKer0zF84r3B
+	 obFSz+oHRn8ygo1joi/xzDsgmlqUb0a+K1c/0HJrmX89PRm7CMN0V07EhF4xdbU+4fb54
+	 l4LkSum6CcPEHNVuEJvFt93roMAVGDgZXHD1PiUFPx00v2n2k4UYu5sb6htIbfe/+ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1+SafUi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0MiTvfO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B3A606A31C;
-	Thu, 19 Nov 2026 01:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BA6606A320;
+	Thu, 19 Nov 2026 01:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1+SafUi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EE51F000C5;
-	Thu, 19 Nov 2026 01:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0MiTvfO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E0F1F000C4;
+	Thu, 19 Nov 2026 01:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050646;
-	bh=GSmH3TpbAbfOxJXL0tDZUevjtRAck86uHTo8cYad0zI=;
+	s=korg; t=1795050649;
+	bh=RGEX9STOHod5RODTK3QRICZ/2AVNeDD1lji2tMJNnXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1+SafUiPv+hyE4+AKxsaSaf7Fb3GmI3onbH7dnk+gO/sNcuMgd5ashsE0so/137N
-	 8ih/OgoJf2Zk/Y+P58Mennm1kRD/RFzYQrkr5icdwVddnv5I9knWUWUaddkhGVpgQe
-	 z3oX1C4W2KTiS2neXKbRqLO2N2smlao8/371ufAY=
+	b=Q0MiTvfOeaH4/QMea1/HbuB/yfWbDrDbihmW9Fd+e3gG5+4Zq8jBi0zKjCfpsHLG7
+	 U36Vats0VaFi7VjdI7VAMzu1p5Jtrt5hXhYs+9un0cRvGbDQvSLz34kt/sZpMPum+p
+	 WjvdvuBCAduPQbsWktY75NS7OijyiE87v28A66o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2782/2857] blk-cgroup: fix root io.stat byte counts on 32-bit
-Date: Wed, 18 Nov 2026 16:03:36 +0100
-Message-ID: <20261118150341.775045258@linuxfoundation.org>
+Subject: [PATCH 6.1 2756/2857] x86_energy_perf_policy: Cleanup: Check fseek() in VM path
+Date: Wed, 18 Nov 2026 16:03:10 +0100
+Message-ID: <20261118150340.838767879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,44 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit e335b853d919f2c6246ca0993115285742a2acc1 ]
+[ Upstream commit 2778dc35d40e7e84c134ca4cab1376fa58208f80 ]
 
-blkcg_fill_root_iostats() shifts the unsigned long sector counts by 9
-before adding them to the u64 byte counts, so on 32-bit the contribution
-of a CPU wraps every 4GB. Widen before the shift.
+Add return value validation for fseek() and ensure consistent
+resource cleanup on all error paths in err_on_hypervisor().
 
-Fixes: ef45fe470e1e ("blk-cgroup: show global disk stats in root cgroup io.stat")
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-14-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0936cdfbb527 ("tools/power x86_energy_perf_policy: Input/output error in a VM")
+Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../x86/x86_energy_perf_policy/x86_energy_perf_policy.c     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 4c86003bf4445..b65aaf585f04d 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -937,11 +937,11 @@ static void blkcg_fill_root_iostats(void)
- 				cpu_dkstats->ios[STAT_DISCARD];
- 			// convert sectors to bytes
- 			tmp.bytes[BLKG_IOSTAT_READ] +=
--				cpu_dkstats->sectors[STAT_READ] << 9;
-+				(u64)cpu_dkstats->sectors[STAT_READ] << 9;
- 			tmp.bytes[BLKG_IOSTAT_WRITE] +=
--				cpu_dkstats->sectors[STAT_WRITE] << 9;
-+				(u64)cpu_dkstats->sectors[STAT_WRITE] << 9;
- 			tmp.bytes[BLKG_IOSTAT_DISCARD] +=
--				cpu_dkstats->sectors[STAT_DISCARD] << 9;
-+				(u64)cpu_dkstats->sectors[STAT_DISCARD] << 9;
- 		}
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 2545f64d5f43b..f26c6dd0d6c14 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -661,7 +661,11 @@ void err_on_hypervisor(void)
  
- 		flags = u64_stats_update_begin_irqsave(&blkg->iostat.sync);
+ 	flags = strstr(buffer, "flags");
+ 	rewind(cpuinfo);
+-	fseek(cpuinfo, flags - buffer, SEEK_SET);
++	if (fseek(cpuinfo, flags - buffer, SEEK_SET) != 0) {
++		fclose(cpuinfo);
++		free(buffer);
++		err(1, "Failed to seek in /proc/cpuinfo");
++	}
+ 	if (!fgets(buffer, 4096, cpuinfo)) {
+ 		fclose(cpuinfo);
+ 		free(buffer);
 -- 
 2.53.0
 
