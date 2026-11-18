@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039521;
-	b=m6IUZi17RdNtNXN+eVH15Xf0ltawfmYNTC7RKbGv7fN9t9FEb5Q1a1XTDPGJRMKcNQHe
-	 TxpsozkgS/zrXe5cjkKCxAYhPtI5xp1flCHHuih2k/UqfeOJOeorXAwhxbuKwhMWITpi3
-	 NKNEXmKoKMMT7enqHDiq4Tgqdtq+oRbV/At6gtn1/8aZKKE10yUjs95PtfdJ/iRjGDs/Y
-	 K7XpaqryM1BMRdfu+fwwHOmZH9qCexaen6jx4F37Xcq118sgcp4pSckK6J5BSL3N4P1JE
-	 Olopfrn3Lg/q0Q25sOULYGrkk7cIxwFO0Eri4aCVRdWKrBHCNamF7ZManVT2jTo051w==
+	t=1795039524;
+	b=Wf5ST0CH8SQT/hRx0a60aG+ESIFlYREF37NnZ5SD0L5/stIYJVf2utWWUlq9tTxpdA8e
+	 ZK8ZKNRYACSFokl6cYjzUFgY3HQN2jxUcgH6wlC2m8vOM6SNfy4Azo+eJh9jiFlAkVDd/
+	 M7YzTybbfz3HGgC20l3/unrBCI9DNL+ji2rwz92BRD+YxrTYjZpxp2IiXwcfZd7DL5ASP
+	 BJSKlm+M6PS+OKTdeMshGifnMpJ2isrkWdzAB0OSnef8TY9tWB+oi9Jw8l3Al47Q7e2SF
+	 tpJ/nML/894VfzamsrGZZ3ggtj+61RDyj3NMCVdlt63LJbTYI/ADP1+PCWyuT3+Ic5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039521;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UoeO2AdWGahrFg8vz96GMk457H7OltPnKj87w1xOGXk=;
-	b=NXxl9y4ZPepTbQHA2qpSXf0Hlod0e4V+Op8zQwzgwCV+9IxkVMlw85/n40+1EuYqSlT9
-	 Uhcr/zC/fD5u4tly0FzclZw4lj0EWOVeJFdDAGYcPsLSYpYQknqYBHoPXafPoYbqMBAjR
-	 iP0hY/zesnHopdHwPeYleca8i7qM3eWLRmMQ2BiVASQHfCBDfMxEUH3kNSiHSOkBGdirK
-	 5sQssZqnGEcAtYsSZESF+KqyFkjhJCXS/yV+gR9DpAIu/nrLe/Q29wlGyFBpVx4JPOSTM
-	 7X6IOPxkP6bVfi5OICxMNgeIOKpmQB4Ju3grHKT/KI1MDIQmNBFRkaHyKABwAN+qqRQ==
+	bh=GPyAfz7OJRDMM9ju6gFPTHHhMxo5Ba+Bnl4vabZEpyM=;
+	b=rojgYTQIgA7zyY1usXcnlsV4VIk0a/bLPCkyv+9bfFvyj1DqgewtNXKc9tJCLpP83aM2
+	 aWf8jXFwXbkn6x+7TZN2klkbGBOOG6SYgrZtzE+NONftB6Eej1CnodkzXbEVZypsnMOuG
+	 anQKnhvFkKjVRbFQjZ+/TX7jNJ0Rw33NT3bpMMe4H2mDNpcXaMVE/OptkYhebPL1b+9/j
+	 OY+oRWL6V8s+ZFClo/2ecLoondl2Rr+MJYV84NdzK8XtaKtOcaFaW987q0nlBjRJesRQe
+	 XKHkDb4+cWiY1un+N2kPXLSumupEa6B7CUGVQC42GEYiaYKYr/fK2hHQkXb3VNwNITA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kP7zovHK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JD4N6lHI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5D7606A32F;
-	Wed, 18 Nov 2026 22:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929CD606A31C;
+	Wed, 18 Nov 2026 22:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kP7zovHK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C161F000C4;
-	Wed, 18 Nov 2026 22:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JD4N6lHI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E221F000C4;
+	Wed, 18 Nov 2026 22:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039521;
-	bh=UoeO2AdWGahrFg8vz96GMk457H7OltPnKj87w1xOGXk=;
+	s=korg; t=1795039524;
+	bh=GPyAfz7OJRDMM9ju6gFPTHHhMxo5Ba+Bnl4vabZEpyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kP7zovHK/xYe/FdLRrw8HDTC7knmGLG0mhLJr8VHIvq5rmFOfvmK3wst0ib+7pPHn
-	 iNQQ1Pw/rBJDuAFcOBn90LAf/UKtqw4pbtpGoYv0k60UrhQxvEAcaUFCvetV/7uhKz
-	 5E1AlMUPJGCkHsW5KymI7JCsRAeohZHO7WAAXnxo=
+	b=JD4N6lHIk057IHcNH+sBYUAQcp/FuJYdHnrrtdS2aFq1eGHVwVz3F/ES0Wf5J5aUW
+	 eKVR9ojUA1q6eFjU+EeWWncndG7buHvlpqLWjniaXoL4qcAclJtpLcjnysIuYcMNfw
+	 jXQTxBmdaO9wJ2ubM1WqtTeXiTcsl1KoAq/tQJO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2129/3318] scsi: mpi3mr: Fix device loss during enclosure reboot due to zero link speed
-Date: Wed, 18 Nov 2026 15:45:51 +0100
-Message-ID: <20261118150425.930039939@linuxfoundation.org>
+Subject: [PATCH 6.6 2130/3318] scsi: mpi3mr: Rename log data save helper to reflect threaded/BH context
+Date: Wed, 18 Nov 2026 15:45:52 +0100
+Message-ID: <20261118150425.960029297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,92 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit d6c8e8b7c98c3cb326515ef4bc5c57e16ac5ae4e ]
+[ Upstream commit d0d19250ed81907eac707be8221eb31e5b96b647 ]
 
-During enclosure reboot or expander reset, firmware may report a link
-speed of 0 in "Device Add" events while the link is still coming up.
-The driver drops such devices, leaving them missing even after the link
-recovers.
+Log data events can be processed from BH and threaded contexts.  Rename
+the save helper to document its intended usage and improve readability
+of the event handling flow.
 
-Fix this by treating link speed 0 as 1.5 Gbps during device addition so
-the device is exposed to the OS. The actual link speed will be updated
-later when link-up events arrive.
-
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20250820084138.228471-2-chandrakanth.patil@broadcom.com
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://patch.msgid.link/20260116060719.32937-3-ranjan.kumar@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 77554f01187d ("scsi: mpi3mr: Fix out-of-bounds read of event data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c        |  8 ++++----
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 11 +++++++++--
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr.h     | 2 +-
+ drivers/scsi/mpi3mr/mpi3mr_app.c | 4 ++--
+ drivers/scsi/mpi3mr/mpi3mr_os.c  | 7 ++++++-
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
+index 51ad4164a5d5c..ad7947521b24b 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -1350,7 +1350,7 @@ void mpi3mr_pel_get_seqnum_complete(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3mr_drv_cmd *drv_cmd);
+ int mpi3mr_pel_get_seqnum_post(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3mr_drv_cmd *drv_cmd);
+-void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
++void mpi3mr_app_save_logdata_th(struct mpi3mr_ioc *mrioc, char *event_data,
+ 	u16 event_data_size);
+ struct mpi3mr_enclosure_node *mpi3mr_enclosure_find_by_handle(
+ 	struct mpi3mr_ioc *mrioc, u16 handle);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
+index 6ef3a8b1f805b..9f846019211a0 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_app.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+@@ -1434,7 +1434,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job, unsigned int *reply
+ }
+ 
+ /**
+- * mpi3mr_app_save_logdata - Save Log Data events
++ * mpi3mr_app_save_logdata_th - Save Log Data events
+  * @mrioc: Adapter instance reference
+  * @event_data: event data associated with log data event
+  * @event_data_size: event data size to copy
+@@ -1446,7 +1446,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job, unsigned int *reply
+  *
+  * Return:Nothing
+  */
+-void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
++void mpi3mr_app_save_logdata_th(struct mpi3mr_ioc *mrioc, char *event_data,
+ 	u16 event_data_size)
+ {
+ 	u32 index = mrioc->logdata_buf_idx;
 diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 2656c6a3de8bb..8c663d237bd91 100644
+index 8c663d237bd91..20bcc3e5bb0ed 100644
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -1952,8 +1952,8 @@ static void mpi3mr_fwevt_bh(struct mpi3mr_ioc *mrioc,
- 	if (!fwevt->process_evt)
- 		goto evt_ack;
+@@ -1858,7 +1858,7 @@ static void mpi3mr_pcietopochg_evt_bh(struct mpi3mr_ioc *mrioc,
+ static void mpi3mr_logdata_evt_bh(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3mr_fwevt *fwevt)
+ {
+-	mpi3mr_app_save_logdata(mrioc, fwevt->event_data,
++	mpi3mr_app_save_logdata_th(mrioc, fwevt->event_data,
+ 	    fwevt->event_data_size);
+ }
  
--	dprint_event_bh(mrioc, "processing event(0x%02x) in the bottom half handler\n",
--	    fwevt->event_id);
-+	dprint_event_bh(mrioc, "processing event(0x%02x) -(0x%08x) in the bottom half handler\n",
-+			fwevt->event_id, fwevt->evt_ctx);
- 
- 	switch (fwevt->event_id) {
- 	case MPI3_EVENT_DEVICE_ADDED:
-@@ -2991,8 +2991,8 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
+@@ -2963,6 +2963,11 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
  	}
- 	if (process_evt_bh || ack_req) {
- 		dprint_event_th(mrioc,
--			"scheduling bottom half handler for event(0x%02x),ack_required=%d\n",
--			evt_type, ack_req);
-+		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
-+		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
- 		sz = event_reply->event_data_length * 4;
- 		fwevt = mpi3mr_alloc_fwevt(sz);
- 		if (!fwevt) {
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index 5c10713a9dabc..e717d90cc15b1 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -410,9 +410,11 @@ static void mpi3mr_remove_device_by_sas_address(struct mpi3mr_ioc *mrioc,
- 			 sas_address, hba_port);
- 	if (tgtdev) {
- 		if (!list_empty(&tgtdev->list)) {
--			list_del_init(&tgtdev->list);
- 			was_on_tgtdev_list = 1;
--			mpi3mr_tgtdev_put(tgtdev);
-+			if (tgtdev->state == MPI3MR_DEV_REMOVE_HS_STARTED) {
-+				list_del_init(&tgtdev->list);
-+				mpi3mr_tgtdev_put(tgtdev);
-+			}
- 		}
- 	}
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
-@@ -2058,6 +2060,8 @@ int mpi3mr_expander_add(struct mpi3mr_ioc *mrioc, u16 handle)
- 				link_rate = (expander_pg1.negotiated_link_rate &
- 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_MASK) >>
- 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_SHIFT;
-+				if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
-+					link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
- 				mpi3mr_update_links(mrioc, sas_address_parent,
- 				    handle, i, link_rate, hba_port);
- 			}
-@@ -2367,6 +2371,9 @@ int mpi3mr_report_tgtdev_to_sas_transport(struct mpi3mr_ioc *mrioc,
- 
- 	link_rate = mpi3mr_get_sas_negotiated_logical_linkrate(mrioc, tgtdev);
- 
-+	if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
-+		link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
+ 	case MPI3_EVENT_DEVICE_INFO_CHANGED:
+ 	case MPI3_EVENT_LOG_DATA:
 +
- 	mpi3mr_update_links(mrioc, sas_address_parent, tgtdev->dev_handle,
- 	    parent_phy_number, link_rate, hba_port);
- 
++		sz = event_reply->event_data_length * 4;
++		mpi3mr_app_save_logdata_th(mrioc,
++			(char *)event_reply->event_data, sz);
++		break;
+ 	case MPI3_EVENT_ENCL_DEVICE_STATUS_CHANGE:
+ 	case MPI3_EVENT_ENCL_DEVICE_ADDED:
+ 	{
 -- 
 2.53.0
 
