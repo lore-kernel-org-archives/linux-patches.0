@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015634;
-	b=EChDPXjSY9p/+b7HiT5uK95E/Q3+Tf44YNLRv/tWnXkzjgH2YPsQ60QIsAep7tCY8yJN
-	 mpVA0H+EVP3BBoOSekHAFiS4BlQVTu4MyqmVKXcaqLLLloO6vCYp8WtoE/gSkzUXtRlgL
-	 DGeDemdXiKkz/3oMKy5qoMU9Gd3/KowD0HE2A6YTkurhHJuAIk83nNwgMS1vDvm08jYrD
-	 Vg7cgmQBnNxha8azr3AtTiuirExv/azn/S+PI0stKXQsiQkZXFZUovEAylAc6S/4t60Me
-	 RpJzImKHNlctzoyTvYyrBbCWGoYyFO8kA8f9gv2W11HDICtSNlXfbjSs/3rMOIQw+dA==
+	t=1795015636;
+	b=Sw3k8deIUMgEiBdjqAYiw33SdITI1kQT8mvWQwtVUwzx0JqiVNzNXpiRWSKNRpdbV7KC
+	 RenoTvE2Mrr+yUAEy8ouhbUYlMCbRV12Th4QtdlTC7QxkZZ9beIxXyeMXcaQsUArjYaLs
+	 jB4PPRLkg03+OJDJ680eJJiOY+X/gG+QqcTjOW06xOprLESaZsp0ysBoqDDw4XaG6uM8v
+	 36fp2upTpZL83J/ECWcXVhdH4RlHdGJmWtj4mhe2e0hiOcDiZwxa0J0qoz1V1UEH2pfoJ
+	 46UEzHt6l/gppnWR2x6MNTpotRcN81cR6bOd8uo7azTVcKuJMCqNriSQga6ycOkhygA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NiyoPTnBfRTDCGWJYiLqJ3ZzvyuM9fOB6S6n1HA+z2A=;
-	b=tP9noeNmQFFtShAVchDWP5aQqIadXkgFzXdAH78Ao+AwnaDq9SdU8TelLyPtkSZlVlJf
-	 94nlkML+ixPZi/FeTRviEisqG3Mnad8U8q3gZZwliZzL8cBG3T4X+kbk8zIu1wlGfqkLW
-	 40GeXlSBW7fYNFnJOTzBjNl3lAElHSpeenOnsGV154jdGPdqugDrbeHjdyO7LSBk5MY9T
-	 Nxa0lG2b2DnQ1efZnW8/v3++1SdtP6QYAxQlA9w5G0x/oHNJTB/eFR1Axnb0GykXdZeR0
-	 Gn58VxH8EvFOqzwJYgTlRQmPH1r6icpvAYa9LJZlUEIhHxZOd/BUxXidFi8T2Ob67fg==
+	bh=Dmi6aqDenm2zZd47ojnos3nbJfhj2uOVSt8Wc+H3C80=;
+	b=lHfyNNEKXkFJ5cmm2tfOLMxj7ms81XNKMCd4lBAFVy/6dLl5UC7GhZywqyvRb4LNwQNS
+	 EmaTv8yAjk1GtXM79tV4VYCemrJXNJ02u3rL044H0yffRUZqBadycnCEVlmXOZvLba40l
+	 HNUlWu1ZOjis+M8fxWXk2I5UQskFFZLrlmmKnJCu8AS9yamxS2gXGBmPAT7c6/4f12NIC
+	 1gTjnzTQJR02CN3A7IEso3k3r0cMfoHlaV2fbevuzECr21xPfFpK+J8YcHUH/TG69F/O1
+	 vdD6lvuHyBNgtyU9TDNc8c4VXfYn8jpx8RmXUx/w2pAiLujBLl3fRbs6027yOYLgXxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBPZnh4Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABThbCZ5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0C7606A31C;
-	Wed, 18 Nov 2026 15:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A4D606A333;
+	Wed, 18 Nov 2026 15:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBPZnh4Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717A31F000C4;
-	Wed, 18 Nov 2026 15:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABThbCZ5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED581F000C8;
+	Wed, 18 Nov 2026 15:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015633;
-	bh=NiyoPTnBfRTDCGWJYiLqJ3ZzvyuM9fOB6S6n1HA+z2A=;
+	s=korg; t=1795015636;
+	bh=Dmi6aqDenm2zZd47ojnos3nbJfhj2uOVSt8Wc+H3C80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yBPZnh4ZXM6BUVwz66Y5UwjM75rEMZTk6nKItkRutHlCheg5p8SkYZRDAPqXUOi59
-	 HS57nd6Rb9XX7JlQmbLvx7YwPbYAKUnD/Gv3W1zHOW+jYp1FgCvwHBeFETxZCWpXG9
-	 akBrObUDZkjZrAmbF7CDTQBmxT2Rp5VO5FlToqKg=
+	b=ABThbCZ5ExtVUqJjuEXxub/ibjG2xo7QjCtevBmNyz7oJIJ648yD3Ki6A4NOqLuek
+	 YV8YOx0HE7cycVfj/zga76n1RoXMTv8A0b2flmyG4omjLKLXGE3YpFz2V0tD/2Z/u4
+	 zKXfGCmu2oUkwYVhhc0jhZeGDdfVbpckpqOOMafo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Alison Schofield <alison.schofield@intel.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0242/2651] ACPI: APEI: GHES: Bound AER info copy and sanitize software metadata
-Date: Wed, 18 Nov 2026 15:24:42 +0100
-Message-ID: <20261118150256.572378459@linuxfoundation.org>
+Subject: [PATCH 7.3 0207/2651] wifi: mac80211: dont seed an S1G stas last_rate
+Date: Wed, 18 Nov 2026 15:24:07 +0100
+Message-ID: <20261118150255.329371688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,87 +68,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit 9c3ad3bfff20d2d7a0c9614db2a58e78123bf0ce ]
+[ Upstream commit 00f623647c331d31df8629af958f7582a7fc874c ]
 
-ghes_handle_aer() copies sizeof(struct aer_capability_regs) out of the
-fixed 96-byte pcie_err->aer_info. The struct is larger, so the copy reads
-past the section, and it fills the software-only header_len and flit fields
-of the embedded struct pcie_tlp_log from firmware bytes.
-pcie_print_tlp_log() uses both to bound a loop over dw[], so a large value
-walks past the array. Nothing checks the section can hold a struct
-cper_sec_pcie either.
+When initialising the rate control system, ieee80211_s1g_sta_rate_init()
+is called for S1G stations during association where it initialises a
+last rate of type STA_STATS_RATE_TYPE_S1G but does not initialise
+nss, mcs bw etc. Since the last_rate no longer has a value equivalent
+to STA_STATS_RATE_INVALID, the invalid rate will be decoded and
+the NL80211_STA_INFO_RX_BITRATE flag will be set.
 
-Validate error_data_length, zero the destination, and map aer_info onto the
-struct as extlog_print_pcie() does: copy up to the four Header Log DWORDs,
-then place the TLP Prefix Log from its own offset. The rest stays zero,
-covering header_len and flit.
+As a result, there is a period during association before the first
+data frame is rx'ed where the seeded value is overwritten by
+ieee80211_rx_h_sta_process() while this invalid last_rate lives. If
+the sta is desroyed during this process, nl80211_put_sta_rate() will
+call into cfg80211_calculate_bitrate() and attempt to calculate
+the bitrate using the invalid last_rate leading to a WARN:
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=3
-Fixes: 7e077e6707b3 ("PCI/ERR: Handle TLP Log in Flit mode")
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-13-dave.jiang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+4,336,675067400,-;------------[ cut here ]------------
+4,337,675067524,-;WARNING: net/wireless/util.c:1960 at cfg80211_calculate_bitrate+0x4d8/0x8b0 [cfg80211], CPU#3: kworker/u16:3/874
+4,338,675068176,-;invalid rate bw=0, mcs=0, nss=0
+[snip loaded modules]
+4,341,675068954,-;Hardware name: BCM2711
+4,342,675068961,-;Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
+4,343,675069386,-;Call trace:
+4,344,675069392,-; unwind_backtrace from show_stack+0x10/0x14
+4,345,675069440,-; show_stack from dump_stack_lvl+0xa8/0xb8
+4,346,675069475,-; dump_stack_lvl from __warn+0x90/0x224
+4,347,675069517,-; __warn from warn_slowpath_fmt+0x130/0x1a8
+4,348,675069559,-; warn_slowpath_fmt from cfg80211_calculate_bitrate+0x4d8/0x8b0 [cfg80211]
+4,349,675070005,-; cfg80211_calculate_bitrate [cfg80211] from nl80211_put_sta_rate+0x48/0x590 [cfg80211]
+4,350,675070819,-; nl80211_put_sta_rate [cfg80211] from nl80211_put_sta_info_common+0x4f4/0xd50 [cfg80211]
+4,351,675071616,-; nl80211_put_sta_info_common [cfg80211] from nl80211_send_station.constprop.0+0x114/0x424 [cfg80211]
+4,352,675072427,-; nl80211_send_station.constprop.0 [cfg80211] from cfg80211_del_sta_sinfo+0xc4/0x368 [cfg80211]
+4,353,675073222,-; cfg80211_del_sta_sinfo [cfg80211] from __sta_info_destroy_part2+0x108/0x2c0 [mac80211]
+4,354,675074178,-; __sta_info_destroy_part2 [mac80211] from sta_info_destroy_addr+0x4c/0x88 [mac80211]
+4,355,675075243,-; sta_info_destroy_addr [mac80211] from ieee80211_destroy_assoc_data+0x194/0x2d8 [mac80211]
+4,356,675075920,-; ieee80211_destroy_assoc_data [mac80211] from ieee80211_rx_mgmt_assoc_resp+0x220/0x1d4c [mac80211]
+4,357,675076558,-; ieee80211_rx_mgmt_assoc_resp [mac80211] from ieee80211_iface_work+0x1c0/0x5d0 [mac80211]
+4,358,675077187,-; ieee80211_iface_work [mac80211] from cfg80211_wiphy_work+0x110/0x368 [cfg80211]
+4,359,675077763,-; cfg80211_wiphy_work [cfg80211] from process_one_work+0x260/0x868
+4,360,675078022,-; process_one_work from worker_thread+0x1bc/0x3ec
+4,361,675078042,-; worker_thread from kthread+0x120/0x154
+4,362,675078060,-; kthread from ret_from_fork+0x14/0x20
+4,363,675078074,-;Exception stack(0xf0ac1fb0 to 0xf0ac1ff8)
+4,364,675078081,-;1fa0:                                     00000000 00000000 00000000 00000000
+4,365,675078088,-;1fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+4,366,675078093,-;1fe0: 00000000 00000000 00000000 00000000 00000013 00000000
+4,367,675080226,-;irq event stamp: 15780967
+4,368,675080287,-;hardirqs last  enabled at (15780975): [<c050c154>] __up_console_sem+0x50/0x60
+4,369,675080395,-;hardirqs last disabled at (15780982): [<c050c140>] __up_console_sem+0x3c/0x60
+4,370,675080497,-;softirqs last  enabled at (15780966): [<c0476f14>] handle_softirqs+0x398/0x650
+4,371,675080608,-;softirqs last disabled at (15780939): [<c0477388>] __irq_exit_rcu+0x150/0x1f0
+4,372,675080715,-;---[ end trace 0000000000000000 ]---
+
+To fix, we can simply not seed this psuedo rate. It was originally
+implemented to avoid errornous paths that S1G shouldn't take, but those
+have since been fixed / cleaned up. While we are here, we also don't
+need to initialise the tx side's last rate with
+IEEE80211_TX_RC_S1G_MCS (which is equivalent to
+IEEE80211_TX_RC_VHT_MCS). The entire tx reporting side does not
+support S1G widths and is assumed to be handled by the driver so
+we can just remove the entire function.
+
+Fixes: 12bf8fad4ca3 ("mac80211: initialize last_rate for S1G STAs")
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260827054456.254573-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ net/mac80211/ieee80211_i.h |  1 -
+ net/mac80211/mlme.c        | 14 +++++---------
+ net/mac80211/rate.c        |  1 -
+ net/mac80211/s1g.c         |  8 --------
+ 4 files changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 094d112535551..4e7df028a0b8c 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -642,11 +642,14 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
- #ifdef CONFIG_ACPI_APEI_PCIEAER
- 	struct cper_sec_pcie *pcie_err = acpi_hest_get_payload(gdata);
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 9374c2942489c..e624e2b17415b 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -2388,7 +2388,6 @@ ieee80211_he_op_ie_to_bss_conf(struct ieee80211_vif *vif,
+ 			const struct ieee80211_he_operation *he_op_ie_elem);
  
-+	if (gdata->error_data_length < sizeof(*pcie_err))
-+		return;
-+
- 	if (pcie_err->validation_bits & CPER_PCIE_VALID_DEVICE_ID &&
- 	    pcie_err->validation_bits & CPER_PCIE_VALID_AER_INFO) {
-+		struct aer_capability_regs *aer_info;
- 		unsigned int devfn;
- 		int aer_severity;
--		u8 *aer_info;
- 
- 		devfn = PCI_DEVFN(pcie_err->device_id.device,
- 				  pcie_err->device_id.function);
-@@ -664,13 +667,25 @@ static void ghes_handle_aer(struct acpi_hest_generic_data *gdata)
- 						  sizeof(struct aer_capability_regs));
- 		if (!aer_info)
- 			return;
--		memcpy(aer_info, pcie_err->aer_info, sizeof(struct aer_capability_regs));
-+
-+		/*
-+		 * Map aer_info onto the struct as extlog_print_pcie() does:
-+		 * copy up to the four Header Log DWORDs, then place the TLP
-+		 * Prefix Log from where the hardware keeps it. The rest stays
-+		 * zero, so firmware cannot drive the pcie_print_tlp_log() loop
-+		 * over dw[] out of bounds.
-+		 */
-+		memset(aer_info, 0, sizeof(struct aer_capability_regs));
-+		memcpy(aer_info, pcie_err->aer_info,
-+		       offsetof(struct aer_capability_regs, header_log) +
-+		       PCIE_STD_NUM_TLP_HEADERLOG * sizeof(u32));
-+		memcpy(aer_info->header_log.prefix,
-+		       pcie_err->aer_info + PCI_ERR_PREFIX_LOG,
-+		       sizeof(aer_info->header_log.prefix));
- 
- 		aer_recover_queue(pcie_err->device_id.segment,
- 				  pcie_err->device_id.bus,
--				  devfn, aer_severity,
--				  (struct aer_capability_regs *)
--				  aer_info);
-+				  devfn, aer_severity, aer_info);
- 	}
- #endif
+ /* S1G */
+-void ieee80211_s1g_sta_rate_init(struct sta_info *sta);
+ bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb);
+ void ieee80211_s1g_rx_twt_action(struct ieee80211_sub_if_data *sdata,
+ 				 struct sk_buff *skb);
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 3c31c16860ab7..d1c847dcce2ff 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6347,7 +6347,6 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
  }
+ 
+ static int ieee80211_mgd_setup_link_sta(struct ieee80211_link_data *link,
+-					struct sta_info *sta,
+ 					struct link_sta_info *link_sta,
+ 					struct cfg80211_bss *cbss)
+ {
+@@ -6362,11 +6361,9 @@ static int ieee80211_mgd_setup_link_sta(struct ieee80211_link_data *link,
+ 	memcpy(link_sta->addr, cbss->bssid, ETH_ALEN);
+ 	memcpy(link_sta->pub->addr, cbss->bssid, ETH_ALEN);
+ 
+-	/* TODO: S1G Basic Rate Set is expressed elsewhere */
+-	if (cbss->channel->band == NL80211_BAND_S1GHZ) {
+-		ieee80211_s1g_sta_rate_init(sta);
++	/* S1G does not use basic rates */
++	if (cbss->channel->band == NL80211_BAND_S1GHZ)
+ 		return 0;
+-	}
+ 
+ 	sband = local->hw.wiphy->bands[cbss->channel->band];
+ 
+@@ -7107,7 +7104,7 @@ static bool ieee80211_assoc_success(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
+ 
+-		err = ieee80211_mgd_setup_link_sta(link, sta, link_sta,
++		err = ieee80211_mgd_setup_link_sta(link, link_sta,
+ 						   assoc_data->link[link_id].bss);
+ 		if (err)
+ 			goto out_err;
+@@ -9699,8 +9696,7 @@ static int ieee80211_prep_connection(struct ieee80211_sub_if_data *sdata,
+ 			goto out_err;
+ 		}
+ 
+-		err = ieee80211_mgd_setup_link_sta(link, new_sta,
+-						   link_sta, cbss);
++		err = ieee80211_mgd_setup_link_sta(link, link_sta, cbss);
+ 		if (err) {
+ 			rcu_read_unlock();
+ 			sta_info_free(local, new_sta);
+@@ -11090,7 +11086,7 @@ ieee80211_process_ml_reconf_resp(struct ieee80211_sub_if_data *sdata,
+ 			goto disconnect;
+ 		}
+ 
+-		if (ieee80211_mgd_setup_link_sta(link, sta, link_sta,
++		if (ieee80211_mgd_setup_link_sta(link, link_sta,
+ 						 add_links_data->link[link_id].bss))
+ 			goto disconnect;
+ 
+diff --git a/net/mac80211/rate.c b/net/mac80211/rate.c
+index e910f03af7775..f75257a190643 100644
+--- a/net/mac80211/rate.c
++++ b/net/mac80211/rate.c
+@@ -57,7 +57,6 @@ void rate_control_rate_init(struct link_sta_info *link_sta)
+ 
+ 	/* TODO: check for minstrel_s1g ? */
+ 	if (sband->band == NL80211_BAND_S1GHZ) {
+-		ieee80211_s1g_sta_rate_init(sta);
+ 		rcu_read_unlock();
+ 		return;
+ 	}
+diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
+index bd7baf4818367..4b70afa6e6d78 100644
+--- a/net/mac80211/s1g.c
++++ b/net/mac80211/s1g.c
+@@ -9,14 +9,6 @@
+ #include "ieee80211_i.h"
+ #include "driver-ops.h"
+ 
+-void ieee80211_s1g_sta_rate_init(struct sta_info *sta)
+-{
+-	/* avoid indicating legacy bitrates for S1G STAs */
+-	sta->deflink.tx_stats.last_rate.flags |= IEEE80211_TX_RC_S1G_MCS;
+-	sta->deflink.rx_stats.last_rate =
+-			STA_STATS_FIELD(TYPE, STA_STATS_RATE_TYPE_S1G);
+-}
+-
+ bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb)
+ {
+ 	struct ieee80211_mgmt *mgmt = (struct ieee80211_mgmt *)skb->data;
 -- 
 2.53.0
 
