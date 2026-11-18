@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036420;
-	b=PLUSYrXeF3aOn1G7bm+QrR7Nu9VDPEqon7VRnHCmRzY+/fO3dD9V426q3x2HE3Xa6kQX
-	 1iVOzRywQUXcOi4zC96kkgU3InsFozaMy4a2dkJsFNiVFNZ1jkWGNBN6aBEF6KGZqJJiX
-	 EpYwqlEUa4pzYVHshZ5qkWEb/0SUVDIsbnFqlaoColNWUtgBAFxSt2ly+y/WcwN9vx70y
-	 c9MjAVY/zSYhCfDRPM/Ne/WC9jnepGxLsA7cQLFp8BK7FWkUrL77T4N2dD/h9CUwGwLWb
-	 c67Gc2yUjAtuY2gHbGJ+0Y57l7hlmRK/XV62eECC/zumLTXr/xm45oELvaBChoMP5WQ==
+	t=1795036422;
+	b=jDuzB2r37W0SWFau6rw6EEVRWFRW+IuuQHHeZacIIlkpxGou9/9DoCmOdbZteeO2AE3B
+	 p39t9wq0235feXvz9WkS0MxTzBjUW50ccLdlRdi2wihRmF9USXJMq2B5a9AZZ32YnUZMp
+	 pt1sNHK7U8AsaxIJyiveCtSWSGyS9/eIUGfFvRkpoo04ht5QDpOrBN1lM1I2neIWVVebl
+	 qCJg9+g9hdVxinzKk9Vim1KIAtqznACY5z8vNAOElA2GTjwWOEt7fjQo6zy2BNYbZfMDC
+	 0Epg2KPdSSYImW1F7aQBdphaQsG30jhKPTAHkdNTZAKlL+RtG+g0ROhFwfO8OPfXEFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6r0WGmUBNV2A+MwsasBGd7zckWrjjjVup4OIZfJTP0A=;
-	b=yBGNiYnMiIPjhOtwFxTX0OdfhnfnuBYcItEkAFVbzLEgVDb+j4jE1kyB3MVvjB4vo1FT
-	 kjIAdICy1k8NWv7IyypaV5G8zb+WAmTs+vY/MzcJmb9eEXijS282FoSX/lmMWELpV8ylP
-	 HofEg1w+UcNIfpz7gyIc2StVzcz7oOgiCMXmu22lrwX1djD8qqjehVTd5aJSZQ8EZK0Dr
-	 iEATsTsCpV1rvhkX59Y+YhXsQg5CHfb+/zfpuzd4hm6uHiBwn/poe8oooVaKENNE/TmXA
-	 kEyEtXm5JP0aRehgVg0gf+37Qoi+NGWtOmGbCSAOTy+LMHdisMj5pmy4GbrFhD+cDiQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=clhKa/38kZJb5APVblseG16BSGpaHgZjisg30Z45qK8=;
+	b=VYU9lGBIX/5ZKRY4AUCrSU7z3JZDMlDOJJ7ZmUt8fUJdUGSMGdfX+ikyQoeJPiioBdrD
+	 sUwuVXNrUNH/LciKJK8neSlW3xiOeIiPiFcJHW782IkKA1Q3Ew4LMv9MhFtyPt1vl4Nwc
+	 eBLClueJTt8uxWSfLZQQsa2Z3VLGmVqtVm/ZZVxGdODtgcFfi3qE6m7jFE11OsR6zrlrj
+	 uZ2CadXfwbAB1gy/4qZNtOlLjkE4j4v/6gYxtiqm6y9oV1kW03J0IFP3cYor265r4wep+
+	 4UyAvji2crsvtd6eDKMQWwNVBiiExH5V5gbkyQ9jV/IHxpDzUjwy4yINYGN+vz1tsYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYA4n9He;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ukC/W1jE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075E4606A337;
-	Wed, 18 Nov 2026 21:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C360A2604;
+	Wed, 18 Nov 2026 21:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYA4n9He
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2721F000C4;
-	Wed, 18 Nov 2026 21:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukC/W1jE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CB31F000C7;
+	Wed, 18 Nov 2026 21:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036419;
-	bh=6r0WGmUBNV2A+MwsasBGd7zckWrjjjVup4OIZfJTP0A=;
+	s=korg; t=1795036422;
+	bh=clhKa/38kZJb5APVblseG16BSGpaHgZjisg30Z45qK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DYA4n9HeC3b2EwXy3S5qDZhRkCos7qLR60xeCZM55DAh71W2a3zr+msxcjsCu/3SN
-	 QH734s/nl/9KeVZ/pwXfjVPWfG4Tl3pkUQ7FEdnmwTuZZdeqZEOHBxJQe8ptp1ca1A
-	 QZpVOx+q4i4hjqhJXHMbwpMnypZrJbGOvX3cAP14=
+	b=ukC/W1jEk7K+a/Ek7rGUK2YjKKn+/W4JQvzCiR7mR0lsA+y9m4aD0/WC6cvkuAJl5
+	 e6ZDKZVtvJsGCDmEtpCUKpBVV9p1AobM3bNZ0lw2yAj6S54QIV9yvWdXhHuLo3UfBY
+	 A8LPe9qA/K+FqLPjN4ofAaNWRrdbK1H6Saz4OvUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Priyank Rathod <rathodpriyank@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1052/3318] drm/ttm: return an error when kmapping a BO without pages
-Date: Wed, 18 Nov 2026 15:27:54 +0100
-Message-ID: <20261118150351.488779442@linuxfoundation.org>
+Subject: [PATCH 6.6 1017/3318] PCI/AER: Fix memory leak in aer_recover_queue() on kfifo buffer overflow
+Date: Wed, 18 Nov 2026 15:27:19 +0100
+Message-ID: <20261118150350.393615913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,88 +63,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Priyank Rathod <rathodpriyank@google.com>
 
-[ Upstream commit fd485d47437ba1700dd47205a63b9f389a00aa36 ]
+[ Upstream commit 07938f8a3cbf3e9cc27553b8982e2d56c15b354a ]
 
-ttm_tt objects for imported sg tables (ttm_bo_type_sg, set up by
-ttm_sg_tt_init() with TTM_TT_FLAG_EXTERNAL) only have DMA addresses and
-no pages array. ttm_bo_kmap() and ttm_bo_vmap() still dereference
-ttm->pages for them, so a driver that tries to CPU map such a BO oopses
-instead of getting an error:
+When ACPI APEI/GHES processes PCIe AER error records, it allocates memory
+for aer_capability_regs (aer_regs) from ghes_estatus_pool and passes it to
+aer_recover_queue() to be enqueued into aer_recover_ring.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:ttm_bo_kmap+0x26c/0x300 [ttm]
-  Call Trace:
-   amdgpu_bo_kmap+0x89/0xb0 [amdgpu]
-   amdgpu_userq_fence_read_wptr+0x116/0x170 [amdgpu]
-   amdgpu_userq_signal_ioctl+0x3fe/0xbb0 [amdgpu]
+If kfifo_in_spinlocked() fails due to a buffer overflow,
+aer_recover_queue() logged an error message but returned without freeing
+aer_regs. Because the entry was rejected and never inserted into the queue,
+aer_recover_work_func() could never dequeue or free it, leaking the
+allocated ghes_estatus_pool memory.
 
-Return -EINVAL in that case, like ttm_bo_kmap_try_from_panic() already
-checks for a missing pages array.
+aer_recover_queue() returns void, so the caller ghes_handle_aer() cannot
+free the buffer itself: ownership is transferred to the AER code, which
+until now only released it on the success path.
 
-Fixes: 75a57669cbc8 ("drm/ttm: add ttm_sg_tt_init")
+Free aer_regs via ghes_estatus_pool_region_free() when
+kfifo_in_spinlocked() fails on buffer overflow.
+
+Fixes: e2abc47a5a1a ("ACPI: APEI: Fix AER info corruption when error status data has multiple sections")
+Signed-off-by: Priyank Rathod <rathodpriyank@google.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Link: https://patch.msgid.link/20261009103419.4122940-1-Jesse.Zhang@amd.com
+Link: https://patch.msgid.link/20260928-b4-fix-aer-memleaks-v5-1-ba6b94c9c9a6@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo_util.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/pci/pcie/aer.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
-index 64606104551cd..876af03b71edf 100644
---- a/drivers/gpu/drm/ttm/ttm_bo_util.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
-@@ -355,6 +355,10 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index 628ca8a597061..bdf7e32529f99 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -1051,11 +1051,14 @@ void aer_recover_queue(int domain, unsigned int bus, unsigned int devfn,
+ 	};
  
-+	/* Imported sg tables only come with DMA addresses, no pages to map. */
-+	if (!ttm->pages)
-+		return -EINVAL;
-+
- 	if (num_pages == 1 && ttm->caching == ttm_cached &&
- 	    !(man->use_tt && (ttm->page_flags & TTM_TT_FLAG_DECRYPTED))) {
- 		/*
-@@ -392,7 +396,7 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
-  *
-  * Returns
-  * -ENOMEM: Out of memory.
-- * -EINVAL: Invalid range.
-+ * -EINVAL: Invalid range or the BO has no pages to map.
-  */
- int ttm_bo_kmap(struct ttm_buffer_object *bo,
- 		unsigned long start_page, unsigned long num_pages,
-@@ -465,7 +469,7 @@ EXPORT_SYMBOL(ttm_bo_kunmap);
-  *
-  * Returns
-  * -ENOMEM: Out of memory.
-- * -EINVAL: Invalid range.
-+ * -EINVAL: Invalid range or the BO has no pages to map.
-  */
- int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
- {
-@@ -512,6 +516,9 @@ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
- 		if (ret)
- 			return ret;
- 
-+		if (!ttm->pages)
-+			return -EINVAL;
-+
- 		/*
- 		 * We need to use vmap to get the desired page protection
- 		 * or to make the buffer object look contiguous.
+ 	if (kfifo_in_spinlocked(&aer_recover_ring, &entry, 1,
+-				 &aer_recover_ring_lock))
++				 &aer_recover_ring_lock)) {
+ 		schedule_work(&aer_recover_work);
+-	else
++	} else {
+ 		pr_err("buffer overflow in recovery for %04x:%02x:%02x.%x\n",
+ 		       domain, bus, PCI_SLOT(devfn), PCI_FUNC(devfn));
++		ghes_estatus_pool_region_free((unsigned long)aer_regs,
++					      sizeof(struct aer_capability_regs));
++	}
+ }
+ EXPORT_SYMBOL_GPL(aer_recover_queue);
+ #endif
 -- 
 2.53.0
 
