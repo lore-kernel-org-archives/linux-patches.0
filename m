@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062280;
-	b=p9cB82HUGHlqupJj73R969Ph9guDcspnWkf15Zm2G4QN6xHV2xRTItEv9WmYDLxJ0Ck+
-	 jBZFnmIjKJkooBn2SzWTdDRB66ODWavgzvSjqzEM3MRaUi1TXViNRfhMMmgD/+SUhtOCu
-	 hX7O4+DgZM4pHEBrPjGnLer6KhjwAftwO1nOSBleWmWgz8w2VxttxJZodp6qJBp/3jT7h
-	 hOoA9GA17DTkKfHdiezu7LbzEY1L1mfjxYTOuiM8pwNTE4EvPLMo3cN+xLn+SqVb5akif
-	 GwgBC/lxvMH/1xx3wSdIj24eBCSjmPe67dMCt6wWbfE2j/ZDPs15VIzuaPpvmcbQQRw==
+	t=1795062283;
+	b=pjj6rgxTZlWp3uiinStQcXJoJsE9o+WQOsemHOQWkR6YIEmtDHC5fQ5+4sDZSfkM3Yn0
+	 W820DxC32QURcV30GP3IxraGYTv2rou4lqEiDOC1GcgksZvhWxt2QNV3DawAVaID6T1u6
+	 rOcaNL8fVaVUnrlPYm71GFYk/rFblDdBbzZD16Qq5wK33DGfTBsqr4Q8GohvkVhs0s8pr
+	 LWpF8/pGa5nnX+v8JcFiB3vVnIXC/TC2IErnOQSuBZkFD27ohycty2leUvv9M+UseXyZy
+	 2cYqjk2zmokUAm6/v2sDs5Tth0GS7BLINhtNo0dhBPOBxfgLQfu+CONQSSbr64d/IQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gyJHF/S9loRmRPwySkJL69N49A/Vap1n1qv8YaRjkqs=;
-	b=zuAK31A/z/a3w+nhEay3umH6ryqF3F6qMjkGxO7ppnmljjCTvI3BnYWNbBlfLWhrlnnl
-	 Ii7z2/GuAI+IBONqZK19NjCpH+DrjTDAphSVRrZfcW1WJ9ua8MaiL+GWypm1ldFuBn8aL
-	 x62ARVRjERLzA0j2Ui+CX3qWAYHTuQvOK2qqj/lrKoB0szKOuMAOSZN0pgpIzEK/NUuyg
-	 WUcCpwzIh5/4Uhlxf7NW8v/EeR+LoJr+8gFJeyQ9W4kYszs6eZG2ogWADeUzm4SuGwK9E
-	 SaFCTg7SXjJldhjTfA5Lkh884oGZfMUN7vflqzgyF2vW7/I/MBnJSxL5VRRrLGdIZWQ==
+	bh=u22ASmKEcm9dxyjMpucqboOa7T4zxjPfA7wEy1paBdw=;
+	b=s7P5CG3rksqKJxWdOQKGva76WaO2jpoH/HODqruhCeQd5jIA52IxT27hx53U8X1Qp+yj
+	 21IuK/wxpSYuJqvcu7+ZTW4pjit2Z0Y5NOrZHzS0qfCM8W567tYxcHX0ptIZZBIKO0bnU
+	 nrK1HVQ0yya/Qf62WynKFif3W00UzJw/98+DFw06IqY66LqNz8pbtCS7K1m9LIjmThjGj
+	 VPKvd2nzqRuLDMO8c0vzCwSb4YZKxshO9z2WuhEHnZr6dPuPx3ZBig6xFcmzyRYQr2TwU
+	 gsca6A/JaAHg+y7s2OuRXmAL6bp5CU+BoK3x3ohApSidvy0kR87IisHxy83Dm03uQvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+3dviUq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIR4bHlf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46518606A325;
-	Thu, 19 Nov 2026 04:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FE7606A325;
+	Thu, 19 Nov 2026 04:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+3dviUq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D9E1F000C4;
-	Thu, 19 Nov 2026 04:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIR4bHlf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3091F000C4;
+	Thu, 19 Nov 2026 04:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062280;
-	bh=gyJHF/S9loRmRPwySkJL69N49A/Vap1n1qv8YaRjkqs=;
+	s=korg; t=1795062282;
+	bh=u22ASmKEcm9dxyjMpucqboOa7T4zxjPfA7wEy1paBdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+3dviUqkUnWbKL8QMKAJC2L8DdvdrFQLL/SKSzb8YxYr1EkP27cTsjekg6ZlCwGq
-	 cd46/hifB3VT7ztZQ+O+ImrBQ18D6QrtLMP8nhJ91PwGIkU/AyLlfkdbylgLDJPvsk
-	 gnu73LhpuRxusCsWXhJNXoRmcHCKNjyPgw5vq6gg=
+	b=MIR4bHlfuRKrQ2VpqEYVq4WN3O3XNNOqOAbxSt6lvwNKXpR+kBUbimcSSUsTpQCdf
+	 XCtcBLdIiRZweJiMsK+FiJCiq62oy2HEwpmKU2ZilCyBMA7wTq5QtrnZweRCulxke3
+	 se5lzuPEazBtv8beIMV4GsIUIFtzYnLniqiHJ1BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 1825/1848] irqchip/gic-v3-its: Fix over allocation in itt_alloc_pool()
-Date: Wed, 18 Nov 2026 16:04:23 +0100
-Message-ID: <20261118150036.074040672@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Xiaoyan Li <lixiaoyan@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 1826/1848] selftests/net: fix typo in tcp_mmap
+Date: Wed, 18 Nov 2026 16:04:24 +0100
+Message-ID: <20261118150036.111931853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,37 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit bc88d44bd7e45b992cf8c2c2ffbc7bb3e24db4a7 upstream.
+commit 905a9eb5f636f3312964b162362e4d6ca4e37378 upstream.
 
-itt_alloc_pool() calls its_alloc_pages_node() to allocate an individual
-page to add to the pool (for allocations <PAGE_SIZE). However the final
-argument of its_alloc_pages_node() is the page order not the number of
-pages. Currently it allocates two pages and leaks the second page.
-Fix it by passing 0 instead (1 << 0 = 1 page).
+kernel test robot reported the following warning:
 
-Fixes: b08e2f42e86b ("irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor")
-Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/1f6e19c4-1fb9-43ab-a8a2-a465c9cff84b@arm.com
-Closes: https://lore.kernel.org/r/ed65312a-245c-4fa5-91ad-5d620cab7c6b%40nvidia.com
+All warnings (new ones prefixed by >>):
+
+   tcp_mmap.c: In function 'child_thread':
+>> tcp_mmap.c:211:61: warning: 'lu' may be used uninitialized in this function [-Wmaybe-uninitialized]
+     211 |                         zc.length = min(chunk_size, FILE_SZ - lu);
+
+We want to read FILE_SZ bytes, so the correct expression
+should be (FILE_SZ - total)
+
+Fixes: 5c5945dc695c ("selftests/net: Add SHA256 computation over data sent in tcp_mmap")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304042104.UFIuevBp-lkp@intel.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Xiaoyan Li <lixiaoyan@google.com>
+Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230405071556.1019623-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    2 +-
+ tools/testing/selftests/net/tcp_mmap.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -264,7 +264,7 @@ static void *itt_alloc_pool(int node, in
- 		if (addr)
- 			break;
+--- a/tools/testing/selftests/net/tcp_mmap.c
++++ b/tools/testing/selftests/net/tcp_mmap.c
+@@ -206,7 +206,7 @@ void *child_thread(void *arg)
  
--		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 0);
- 		if (!page)
- 			break;
+ 			memset(&zc, 0, sizeof(zc));
+ 			zc.address = (__u64)((unsigned long)addr);
+-			zc.length = min(chunk_size, FILE_SZ - lu);
++			zc.length = min(chunk_size, FILE_SZ - total);
  
+ 			res = getsockopt(fd, IPPROTO_TCP, TCP_ZEROCOPY_RECEIVE,
+ 					 &zc, &zc_len);
 
 
