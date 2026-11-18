@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050125;
-	b=ZL/Dc8rxTBqfynZb1agkeX9cF4yR8s1vsWAMT6ooxelGGvUUn2eL2rqv2AeBDH+oaQ2y
-	 qhLJR3z4vDjQ7Uzz455qczIL1nBXfBp11pW6bcU+bvquIBo+VqzdEO1Jkv0gWm2ewi4Dy
-	 m/BMydeF/Zg7Z1D8WJFpGkrt+lioVe0R/qcn/L0FWPrTOII4oyEWBV2gN3AssEYoi2z2M
-	 hQ5eV+7qwnJgbvNjh0RJ23gAhDr3e9vXOxe24LLndBYlAlrzkOJfDQ3o/wuxjR05A/NSX
-	 svqC27QWAE7X8hxxyIh6m5XBLgdbypBAiMqP7MdZViyHHhsSEdvMPqHFtiEueVzeOGw==
+	t=1795050127;
+	b=jHtdTlNI6Gg+oZGfagSxgRFWlnlkn1DY3tHnCe6gifWm4mvgAuRkz+wRh0urCG3iX+qK
+	 yJlsQkt5mG4PZOJUeNZJVPJCj5DB1237uaK11gyy92HqfDjfaZLLT6m0V0UBEyxvrawvy
+	 QLu6gPN/laXZjwtwODfpRi54bp/SVRXr1epawLcmLIZHhPmzzDC/LektKg+cV0680a+uf
+	 sV6981vMUb2AaqcO8yx3US6CrNXTkXvaOZlCs3jq11Us6m2+Tk6+lS0llMpObqRGvK7nU
+	 GdpnkwJDAISVJxoIJBlTNoApMKQXqSw58ksM+DnMrsu/aTHl1fxnbDdpqPVIp/zMPdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r5VD3vkOuo3OIa/J+67o9q+QDb52yQTY9TONr4i7xVQ=;
-	b=VQLxhXsf74ik9KprBi8RTO0SRN+8LLKB2Gt3OP6AbRBDfi9G/18tbASc3oyEd6DmOa6B
-	 X2ZzBeGOs6w/s4Lur8wOSwKyAbJ2J1+CQGchGERNFTyRN+uf2zeXJu8P0FaV13aNGSZ6e
-	 T1X0OngLdFa+uskSYZbsO/IvIENVPHsmd7AOgSaIhD2THE1OjEw2fEoPiYcIS6+LvceEz
-	 J2U+/N6WgUudr+udyOgK7M1RLPeiVtFafGML+UFXRgbhbuefU4h4/oZ/J8RGXcWwAtq0L
-	 +HSUgShNopXeeiJP63MgK3wCLi2yf9jVA0uEv+4k5bEraagp5OzL7IWnuek1gFT5D5w==
+	bh=Mex8rPjsdB5TeQ2UFWdxcIqS/CkABmoWiOG3rrtG3Lc=;
+	b=SEnvAemWs3LfrQOH5TXpXJGZLjP3npiOUuW2S92Wch/q6aVMnrbV0H3JELFhX5NEwCI3
+	 DhxSrWTIqfo6cdlmqBJQZAn/uEP0P82XnsNo+XxWmJ+4mDavTXXvPxS/ixtfxi2HrqoQx
+	 cLa2Dj5MAtQKdp0EWHxr4CRnt6lRU35wxlrpHIHw4ePUhY1TEOHtXyOmHcH926lcBkQPg
+	 o3JEUk2ZcrisbJfDtv076sT1Adj30JGD/wYaX8YSnSoeZI0I4NPqeusqnT5ppNJcFY5KO
+	 Q2U0kyZl8RYoWcNBbnR6dhgGyAMubYhaRtNDkEtJF/OYisYUGF/y+Sw3xMhK+TFRJhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iYIS5jlZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XpswRKUy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BED606A320;
-	Thu, 19 Nov 2026 01:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D51606A320;
+	Thu, 19 Nov 2026 01:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iYIS5jlZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C741F000C4;
-	Thu, 19 Nov 2026 01:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XpswRKUy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3C11F000C4;
+	Thu, 19 Nov 2026 01:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050124;
-	bh=r5VD3vkOuo3OIa/J+67o9q+QDb52yQTY9TONr4i7xVQ=;
+	s=korg; t=1795050127;
+	bh=Mex8rPjsdB5TeQ2UFWdxcIqS/CkABmoWiOG3rrtG3Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iYIS5jlZLBR3Hr40u54z8G1Ju29JYYOidCcuHZU330YbhzsCxZKsmihtaN6zJyGsT
-	 J8ZnAM0U6lJpzJN6sP2BrNIM2bP+axk3kTYsYnxxiZEYl9s2glI9mHYcj28rf9VNKO
-	 i+caGZSNqULKAHqD7aBahpXzNAAhUe2OVqG/bRMU=
+	b=XpswRKUyPw0ApVqhZAAdYomoHsXhOXNuE25ToPLUb15TX3jPpS2mFsQHpnCU+s0Ke
+	 Vb7tkt2Te2h2hU5sF+aAPftbzYRU9lkcESDvlb65FzjDvYkkH6KAmkJnbC7T61UbVV
+	 mgUM+N8pD7XJumr+z3BrN/eRbYbxR3dPVKtD6Urc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2597/2857] selftests: netfilter: fix return value in zone subtest
-Date: Wed, 18 Nov 2026 16:00:31 +0100
-Message-ID: <20261118150335.047066015@linuxfoundation.org>
+Subject: [PATCH 6.1 2580/2857] ASoC: codecs: sta32x: Fix definition of Ch2 and Ch3 Volume Bypass controls
+Date: Wed, 18 Nov 2026 16:00:14 +0100
+Message-ID: <20261118150334.391957152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,105 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit a20a01ae89813ef493dc416d69f2b2ad17afb54c ]
+[ Upstream commit ea53ab9003d8655cf7e94428de3006e86fbd06a0 ]
 
-zone subtest prints FAIL, but did not set 'ret=1', so kselftest
-framework reports success.
+Each channel's master volume bypass (CxVBP) is in its own
+configuration register, C2CFG and C3CFG, not in C1CFG, which holds the
+channel 1 bit.
 
-While at it, also fail when "nft -f" returns an error.
-
-Noticed thanks to a (broken) local patch that should have caused this
-selftest (resp. the kselftest framework) to report a failure.
-
-Fixes: 33b8aad21ac1 ("selftests: netfilter: add a vrf+conntrack testcase")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: c034abf6e503 ("ASoC: add STA32X codec driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/8576f091aa0fe172ce43f28dacd6a1bf638258c6.1792135144.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/netfilter/conntrack_vrf.sh      | 25 ++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ sound/soc/codecs/sta32x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/netfilter/conntrack_vrf.sh b/tools/testing/selftests/netfilter/conntrack_vrf.sh
-index 073e8e62d350b..e099221acbcc7 100755
---- a/tools/testing/selftests/netfilter/conntrack_vrf.sh
-+++ b/tools/testing/selftests/netfilter/conntrack_vrf.sh
-@@ -88,7 +88,7 @@ busywait $BUSYWAIT_TIMEOUT listener_ready "$ns1"
- # as decided by the first iteration of the ruleset.
- test_ct_zone_in()
- {
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- table testct {
- 	chain rawpre {
- 		type filter hook prerouting priority raw;
-@@ -109,6 +109,12 @@ table testct {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load testct nft ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	ip netns exec "$ns1" ping -W 1 -c 1 -I veth0 "$IP0" > /dev/null
- 
- 	# should be in zone 1, not zone 2
-@@ -117,6 +123,7 @@ EOF
- 		echo "PASS: entry found in conntrack zone 1"
- 	else
- 		echo "FAIL: entry not found in conntrack zone 1"
-+		ret=1
- 		count=$(ip netns exec "$ns0" conntrack -L -s $IP1 -d $IP0 -p icmp --zone 2 2> /dev/null | wc -l)
- 		if [ "$count" -eq 1 ]; then
- 			echo "FAIL: entry found in zone 2 instead"
-@@ -141,7 +148,7 @@ test_masquerade_vrf()
- 
- 	ip netns exec "$ns0" conntrack -F 2>/dev/null
- 
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- flush ruleset
- table ip nat {
- 	chain rawout {
-@@ -162,6 +169,12 @@ table ip nat {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load ip nat nft ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
- 		echo "FAIL: connect failure with masquerade + sport rewrite on vrf device"
- 		ret=1
-@@ -188,7 +201,7 @@ EOF
- test_masquerade_veth()
- {
- 	ip netns exec "$ns0" conntrack -F 2>/dev/null
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- flush ruleset
- table ip nat {
- 	chain postrouting {
-@@ -197,6 +210,12 @@ table ip nat {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load ip nat postrouting ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
- 		echo "FAIL: connect failure with masquerade + sport rewrite on veth device"
- 		ret=1
+diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
+index 29af9595dac19..8d2b1395822a7 100644
+--- a/sound/soc/codecs/sta32x.c
++++ b/sound/soc/codecs/sta32x.c
+@@ -465,8 +465,8 @@ SOC_SINGLE("Ch2 Tone Control Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_TCB_SHIF
+ SOC_SINGLE("Ch1 EQ Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_EQBP_SHIFT, 1, 0),
+ SOC_SINGLE("Ch2 EQ Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_EQBP_SHIFT, 1, 0),
+ SOC_SINGLE("Ch1 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
+-SOC_SINGLE("Ch2 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
+-SOC_SINGLE("Ch3 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
++SOC_SINGLE("Ch2 Master Volume Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
++SOC_SINGLE("Ch3 Master Volume Bypass Switch", STA32X_C3CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
+ SOC_ENUM("Ch1 Limiter Select", sta32x_limiter_ch1_enum),
+ SOC_ENUM("Ch2 Limiter Select", sta32x_limiter_ch2_enum),
+ SOC_ENUM("Ch3 Limiter Select", sta32x_limiter_ch3_enum),
 -- 
 2.53.0
 
