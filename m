@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051205;
-	b=xc6r4rNTFASbudgnsWNAhecSN1325l+y1mu9vHang17RhPdi4JoQ9dP/2vnz4TR20wJq
-	 SVSnRXwAG02b0Zf7PyxAkRbKXjzzNrzRMJ7amenFX7Vxs4JOG6EpeOzETFJ7UU2Ok7iZT
-	 TEjbk7VKFOUv8JhCYa0ll6zQt7p87Z88ICJGndTeQJNo70QNhmkasTBXEOzCq/223beXk
-	 3l/p8wR1khnrnTnZvQ1NtEJD523puTFsOVxEdezjLePujU3kDgHnVEIiYlgLkmAxblGrw
-	 qDEuq056NJlP4zvlehOC93p42Y8XihQD8bE1mO2b4M+joRlThd0yaYioD4m6EaWzZhQ==
+	t=1795051207;
+	b=eBfoqVYz4ZaUR8BaPRbb6P0goV4abC1v5+p563R+CEAl0NcyPXkck+W3ZRNgM7sBq883
+	 O1Zr35EiHUO9vuhasnN3tNoKV3HnEjx6Q6OyJLaCangEUpztrqT8dRxMCLNnuVJSVZg51
+	 uPJrlQe1Af2npr5CrJ3Dqm9Ad86vpe+wLOKcavFYj7MqsCEnxfRDwVrGUQJsrGa3UsDur
+	 u/8VNDJAwoetQiTVr/WF0fGoICamCSX7ogN2/+CpP99BnAMVodDcBvSsVzkU5I0QLDSUj
+	 jtyCkPTh09TapAODmHJjYSQDU5AGWLYQyz0eesk1I6I4Gll+LBPpp6eXnv2Cq/GIA+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uFUBfsYoPEg5Di/b9uOgxPLVo/ps2+3EOAQhwYL35zM=;
-	b=Ee+TUafCZcD/t71mTvzt938X+lEjLadejFdXffmzlRXHDGbc2aLgwcABVIcOghnXii+E
-	 9Kl+kSK7cgKkXdpK5cCvG0Y5jm0jGK6zIkZoDAiV5q4azAq0SP6J/cSBokxqGw3+d7cwU
-	 5XWvLF4CodLaFICXr0N2Si7L92sKfbqE6KW0wrLD7JKlX32WPeIq8QpfZYdxLoT8VLXcY
-	 EkFjqU9Nd0OT/J0/3XHF1FiJ61+/WxTtCX17JAIFWCzPa/Ipu2IxvfpC6v77U5d1IEDtp
-	 z8bbxJry7e04gePRZYExXMbfZftFftYVGXaPKVuHUjhGTxLJjDoaj37G5faqaJats+A==
+	bh=URIvgAQ0Iu2xJ2Io3f+cfBqcC8gKz00aKTuj0V/3bs8=;
+	b=eJ7jNywKhs870rdUK2Qb3F65NxrA7XXujtFAj82KLMGGmIFUwpsGuYHtDXKXzfYqTZYx
+	 kuSyf7M1weauw7grK5ZDcci7T0FP3qjiol1AuYMq5s61wlJKdUHRr3zE0PchfGlTqcelv
+	 pDA4jUOPC5dpJ67EEheoeagsQzk1x/E9Fn0s/VAm00w54AZ6VtYPGcPwj2PPd8NWvf+8a
+	 ivrN7VkSK/EOPEcFQanFRy4oSfqZ1fCQvizdZaZAMWYbnK7YDFaHtq0URPNmkHAywOVpn
+	 zmRbmbY/2PvlJoEjay8Gc32mC9hoSiIyDcZaEyuuFL3IMy/yb8yVmauEM5f421/8eoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q0kbuz8U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPysM3uF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E806E606A320;
-	Thu, 19 Nov 2026 01:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC456606A33B;
+	Thu, 19 Nov 2026 01:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q0kbuz8U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CFA1F000C4;
-	Thu, 19 Nov 2026 01:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPysM3uF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D961F000C4;
+	Thu, 19 Nov 2026 01:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051204;
-	bh=uFUBfsYoPEg5Di/b9uOgxPLVo/ps2+3EOAQhwYL35zM=;
+	s=korg; t=1795051207;
+	bh=URIvgAQ0Iu2xJ2Io3f+cfBqcC8gKz00aKTuj0V/3bs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0kbuz8UOlrrntfOdYJCSUM4vK6NPny4vQT8k0wdIiB8g39qyNk/MqjxyqjYsTI3u
-	 SAIEeamwFxL33VxL21KIogLNd4p3AKPgd7MatGyHj6XbCjL7mGCrsvnpDG9mgXNPp5
-	 UEgKa+dqpyYZaDOXkHxW0O30j4dkvJQ7KL4xw25o=
+	b=PPysM3uFVAqxjIOnEt4+rCIU1rfUhBAmFgKVgkVRr1SutorwYhUnC0QQkKtd0MuVS
+	 /f0nYYPmxvqqUzz1wIorHByC65XClxSB/cmhNtuzi5mMEFYi0g1Ff2whB3m4b14JXl
+	 cM1C2Y2bHTg3U9NCtYeTf5L56u7Cl46MpliFOrHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Schocher <hs@nabladev.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0124/2214] drm/panel: simple: Add Kyocera tcg070wvlq panel
-Date: Wed, 18 Nov 2026 15:30:00 +0100
-Message-ID: <20261118150015.127907344@linuxfoundation.org>
+Subject: [PATCH 5.15 0125/2214] iommu/qcom: Check pm_runtime_resume_and_get() return in probe
+Date: Wed, 18 Nov 2026 15:30:01 +0100
+Message-ID: <20261118150015.196349642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,41 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Schocher <hs@nabladev.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 900517da69afca6f72dacf14278aee3b65275507 ]
+[ Upstream commit e910315ae08a23bc953daed10b1c518abac1df49 ]
 
-Commit 922fb2db0287 ("dt-bindings: display: simple: Add Kyocera
-tcg070wvlq panel") added the compatible string for the Kyocera
-tcg070wvlq panel to the devicetree bindings documentation
-(panel-simple.yaml), but the corresponding entry was not added
-to the panel-simple driver.
+The SMMU_INTR_SEL_NS register write in qcom_iommu_device_probe() uses
+pm_runtime_get_sync() without checking the return value. If runtime
+resume fails the subsequent writel_relaxed() would access hardware with
+clocks potentially disabled.
 
-Add the missing compatible entry to the driver.
+Switch to pm_runtime_resume_and_get() which handles the usage-count
+cleanup on failure, check the return value, and unwind the already
+registered iommu device on error.
 
-Signed-off-by: Heiko Schocher <hs@nabladev.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260721041935.757240-1-hs@nabladev.com
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 754549f11a2ac..bd86d15bfeaea 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -4775,6 +4775,9 @@ static const struct of_device_id platform_of_match[] = {
- 	}, {
- 		.compatible = "koe,tx31d200vm0baa",
- 		.data = &koe_tx31d200vm0baa,
-+	}, {
-+		.compatible = "kyo,tcg070wvlq",
-+		.data = &lg_lb070wv8,
- 	}, {
- 		.compatible = "kyo,tcg121xglp",
- 		.data = &kyo_tcg121xglp,
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index cf1408a1b781e..67844abcff027 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -854,13 +854,17 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+ 
+ 	if (qcom_iommu->local_base) {
+-		pm_runtime_get_sync(dev);
++		ret = pm_runtime_resume_and_get(dev);
++		if (ret)
++			goto err_iommu_unregister;
+ 		writel_relaxed(0xffffffff, qcom_iommu->local_base + SMMU_INTR_SEL_NS);
+ 		pm_runtime_put_sync(dev);
+ 	}
+ 
+ 	return 0;
+ 
++err_iommu_unregister:
++	iommu_device_unregister(&qcom_iommu->iommu);
+ err_sysfs_remove:
+ 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+ err_pm_disable:
 -- 
 2.53.0
 
