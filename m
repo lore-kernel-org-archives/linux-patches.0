@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026082;
-	b=tprEMVIWAwPFNKgPhODGt5F50FYzlC7/eoQLt1O6y6eXOEp1aZNYoBQo52IuhRXtrZiV
-	 s/oR/Gw+NMjHTiATl8nYgKjVeFiB4CSfhNvVWF/F4OYL+BAILj2QeTPZ+oG9OZV3xLdtH
-	 3RBGd235+vFrG4UKA1GlOZaAhOx7jolMF1Zh4u8JWRzwt/py1zPmKAm60htNuLSdJWLK8
-	 OHfNvx0fw5Of9o2XCBSrLXZPylsKaojUTVRNh19Tn4mD35wTyrHb9oeCYq+jL7AGvejHy
-	 nNh8x+zjXhtaVIGR/LOJ4iWjAkgrCHHD7Yjt4aJ/uKS/JW7dYQuWEOD8qqqJhySTuxQ==
+	t=1795026085;
+	b=pwNRSxatDR78eT66ShShPAsNoDM6AzxGA2/rF3hv9uFvJkf1I6Es6Kg/qW5+RFSlupg7
+	 zgSLRXDXlqB7EDCbMhOcuL4nl+bkWrbklPkm7155Dq7hYMB1PO35e/PHJieq8CUV+mEvR
+	 F/NDOpDyvPfbPT/NQq9KQJ+Bsd+xTaiaZAB04DWszyHDM8Ke7nVjtNf03Chkvs2hk0pPS
+	 WTBJqOOGM9ztloBsq0q57WAW/KHvPjIWHgpxPx9Tr7ClxzV75une/0RV+zQ09Y50Pmrhj
+	 MVEa6HVV0eXW0dTi0QwfmhgM9Wd5IHijMBgx7oRN+31gZn+qdE8U6oAIhQweO3czDlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uo8xr1g1Qc89Gx7znFBmw7jgxSIl6JIYprmc3SzRWRw=;
-	b=wJsJplCM95NNPExoHQxIPm8kcNGxkwDkvUPBTfhZe9FUWFUbvFIENIR/fxFhfRbuItqH
-	 cxs1HWhDX7krTaoMlkHuhoduE62RQUFbK4bb4nhcihlVmhj1+mkPPg6MrLMadR2HiNQQY
-	 lZaIUj1hpvHYxxEUl3+nwSwC/9rkPlfQaMQKlGuqfaQdNSHyZfYQYmWXuOv06pbiv75cP
-	 XzJ+qzUeZaefAcftdNF3zHP8lJEO0HW/WFs0FxVKuN7IE0tAIL8SEak9XmuQ5eZjC+UXk
-	 immrbfhHjvFcMAZLhiuoUJ+cy1WNkRRvEk7Zz0TmVyWquksc32Lk42Leb53m33J1H4Q==
+	bh=EtScv+aX9LmX8dNoZoAwMTrXL1XUHzFwD852M0F5WdY=;
+	b=bIndBF2hskh75WYkXQJP2JbPkW0c3tF4xvQcZtnssy+MyTfiAubuewcy+iMrG/M9XOK/
+	 jkowmneTHY5RGmPvI0jtQVzQvLu6Cn6sHHURtIz1xz3YwWxfOFlih4DoXG7B/nAfeRZCz
+	 6MiMkiX31ssERHUuL6Ul0vQYVqFtYjNQZrGfzhqoql+xD6Vbn6Sdw66556IvXRxRm6J2K
+	 Tv20MB6RGaYtkTqThd89ItynIjVEk+ZtGuSHS+0cby6vgqQWrZEL1ZaLZTC0I3ks0BIbo
+	 Mjl9MFvEfCW7OVbweQpGDAveke/X3U+irNglSlUIfdbcfOCgJV91QS+NbppvXwET6iA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2KdKQ+E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FNPp173X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFD0606A31C;
-	Wed, 18 Nov 2026 18:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC85606A320;
+	Wed, 18 Nov 2026 18:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2KdKQ+E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158AD1F000C4;
-	Wed, 18 Nov 2026 18:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FNPp173X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D563A1F000C4;
+	Wed, 18 Nov 2026 18:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026082;
-	bh=Uo8xr1g1Qc89Gx7znFBmw7jgxSIl6JIYprmc3SzRWRw=;
+	s=korg; t=1795026085;
+	bh=EtScv+aX9LmX8dNoZoAwMTrXL1XUHzFwD852M0F5WdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x2KdKQ+EgH9pgCIXijjazy+ZHU7u8Jpqz7eM0Ji+aCIJWqcu7ilvjFMcL1eyVz/Bl
-	 Z9BSZF2/MmHGUdSQunHiFMJsbuCZpoAYbjBJy77DpCd1/fZxRovYbJdCPUemb0ds2L
-	 +STJNB8Goie6bgR4LrYILDALJgxLOAeduZwVSl3g=
+	b=FNPp173Xa4FQiVJrTDJv5tAZD62j0Ajg3Ez3sD5PDSvA6XDfzgvYlvJO7XkXXS8j/
+	 8AhvuU8tsfzcIBZ2zBd2Bu4V0pqYgdM9W6T6lqpa8sQdWJ6ZrPnDmOFq8OeW6tCDIF
+	 QG9Urj/HbfxLK/OKy7qUpdWZhhBhWTHo/fEHeo/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ting-Han Hou <ue081723@gmail.com>,
+	Simon Glass <sjg@chromium.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1308/2151] clang-tools: Import os for broken pipe handling
-Date: Wed, 18 Nov 2026 15:50:43 +0100
-Message-ID: <20261118150209.746766263@linuxfoundation.org>
+Subject: [PATCH 6.18 1309/2151] scripts/make_fit: Ignore schema checks when decomposing DTBs
+Date: Wed, 18 Nov 2026 15:50:44 +0100
+Message-ID: <20261118150209.785347460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,36 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Ting-Han Hou <ue081723@gmail.com>
 
-[ Upstream commit d26ab84593e63bc5395ed9b518502830fda3367c ]
+[ Upstream commit 3bf2237f59af842e546fa4b2c146198db95d1519 ]
 
-The BrokenPipeError handler in run-clang-tools.py calls os.open() and
-os.dup2() without importing os. If this handler is reached, it raises
-NameError instead of redirecting stdout and exiting with status 1.
+With CHECK_DTBS enabled, Kbuild appends a schema validation command to
+the fdtoverlay command saved in a composite DTB's .cmd file. When DTB
+decomposition is requested, process_dtb() treats every word after -i as
+an input file, including the semicolon and the validator arguments.
+FIT generation then fails with FileNotFoundError while opening or
+checking the size of those words as files.
 
-Import os so the handler can work as intended.
+Limit the input list to the fdtoverlay command before extracting its
+arguments. This preserves the base DTB and overlay order and ignores
+the subsequent schema validation command.
 
-Fixes: 87c7ee67deb7 ("scripts: handle BrokenPipeError for python scripts")
+Fixes: 17c31aded9a1 ("scripts/make_fit: Support decomposing DTBs")
 Assisted-by: LLM
 Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Link: https://patch.msgid.link/20261009175836.2277-1-ue081723@gmail.com
+Reviewed-by: Simon Glass <sjg@chromium.org>
+Link: https://patch.msgid.link/CA+NtrhQBK8uW32qO3dXxVxO1GSN-0EJfyJ16tnyx0o52T17WtQ@mail.gmail.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/clang-tools/run-clang-tools.py | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/make_fit.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/clang-tools/run-clang-tools.py b/scripts/clang-tools/run-clang-tools.py
-index f31ffd09e1eab..116deb66cfad2 100755
---- a/scripts/clang-tools/run-clang-tools.py
-+++ b/scripts/clang-tools/run-clang-tools.py
-@@ -12,6 +12,7 @@ compile_commands.json.
- import argparse
- import json
- import multiprocessing
-+import os
- import subprocess
- import sys
+diff --git a/scripts/make_fit.py b/scripts/make_fit.py
+index 1683e5ec6e675..34528e4a40e35 100755
+--- a/scripts/make_fit.py
++++ b/scripts/make_fit.py
+@@ -240,7 +240,8 @@ def process_dtb(fname, args):
  
+         if 'scripts/dtc/fdtoverlay' in cmd:
+             # This depends on the structure of the composite DTB command
+-            files = cmd.split()
++            # Ignore any subsequent commands, such as schema validation
++            files = cmd.split(';', 1)[0].split()
+             files = files[files.index('-i') + 1:]
+         else:
+             files = [fname]
 -- 
 2.53.0
 
