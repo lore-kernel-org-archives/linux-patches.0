@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028364;
-	b=ioV0wDIuTyJaMUvzAH68eg0oqLVSPe3CtU1PNuZosOdEL+e0G7vWnOjCmR5MO0FnCX6P
-	 hJUem/mpj8mIo+xj3ZeD5r45EjX62OBXQu65hO1XtYEp47SVXngFfMGv18Pk5lAbdLFHO
-	 NfQN3ed5gqgP9Upot4WyiA/Fm/LbmXd59EuH/4xV/cq45+ZCM+wPJvYFt6a2ut5rfce6b
-	 2TqfwXkGqrI+Ps684DVV2pV++l0psxmK40A6BYJa5eWslEyPoPwwuEWbfjaN+behG6ABq
-	 EODsJ9l3uPsYz8RsNYJ9g0Rczh0REocfHebQ7C+a+SY1ZvpkSt7r8+NTC5JHHJLpajg==
+	t=1795028367;
+	b=iwytBWsMtLQlOWwXNYRqEI4VByt2OXseDvX/oqRrEAsWQeWKUb29J6FlgBoiizsXg6Gt
+	 qvRvQsoH6ef9D8Lh/YCbT69b9kEy2qOY5dW/UiHtHJpxa0JKFSxGg8St1/hnpP/smkYNS
+	 t2qpL6DnOdQGHMUJT39p6jGVvMTkXcDIiSGwub+Pc77jxfmpDoePfMgB508Dud8tkoF5B
+	 J2JQxzTbbC3lXAIDUzr9bjCobz6uUECM90u9uWv09xFsQT5o1cenaUw1MNmzfGbHuu9Xs
+	 BN7Z4AS9/8gsEA4bBTxYD3zydcREiDnrlHJJmHf2cZWHUnJHUn3uM/IJ5Z6RhRrao8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028364;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028367;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FRSyc4Fso5A2yk4BjxJB3sf9S/Kx++0m409xUcRT43I=;
-	b=tpp4d1ZMlhnLSCJDATA55xk4wtYaRR1MG587hEeicarSasN6dRvKNv5tyqueLGR92vqM
-	 t4Sv/c0idwhgqmtnrMebF2Pnsxg5Wff9P0o1cOWiHirFa/jc4GJcJf1/tlHDQmzmGgjCg
-	 Vvq/ZWInWXhEQj5G+OqYf9k85NltClV80fowmCakRORXvUgvxXwHu8MfdFR48tx03/7qG
-	 b33rsnjftEEYgdV09FBeNypIuOwPeAg/ouk/0elkGhi7EvDvF9drSECayYDrdOLm0jBu7
-	 XHocoGqjcXxGuwXNxhEIXv17QOIcos18p4YWk2um1WCWK2RlK7cbOAgwBhW5IOfGlow==
+	bh=creIMuBGoRSpZQUJN2Ons5OJQoXpf6aGvmkP/L5GWys=;
+	b=R8HequJy6jyHLjhED9Eie6ubO9svwFcNplUvqQvH1w985wVio8reMR9HKMEDuNmxeML6
+	 vLDGBHmsrmh+iXIeEaq2aBreUHThjq4xeGb0A85dvYZIFChSAhpABMB4Ruvq8D8woblNw
+	 JDvnMr9S1Jb5zYmeZpw4I89G1a8A7S9mopV3+6eZ1dIUeSyXXC0yVPXrtI/XXEo9shbv2
+	 QL9HGXbO7EQ96v0tE32MM3AjoPJ7/p1V2r95Qkn4+qAqwn3a6g9kXau/p4bZK5lTtwfI/
+	 HzNUEhn9f8IzJptWJFhFSD3W2S4h0jTQ8aESQ2bzTnMW/BKXiFPmUBDgmhkwU2ZrN/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C8Y24LZf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SDbuTyg/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD49B606A31C;
-	Wed, 18 Nov 2026 18:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664BA606A31C;
+	Wed, 18 Nov 2026 18:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C8Y24LZf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6561F000C4;
-	Wed, 18 Nov 2026 18:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDbuTyg/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3901F000C4;
+	Wed, 18 Nov 2026 18:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028364;
-	bh=FRSyc4Fso5A2yk4BjxJB3sf9S/Kx++0m409xUcRT43I=;
+	s=korg; t=1795028367;
+	bh=creIMuBGoRSpZQUJN2Ons5OJQoXpf6aGvmkP/L5GWys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8Y24LZf7P/dgtfMIwKUL6etKXp9Q6N15BBxO3JPg/CdB3K632FJygLilNdPYPn1H
-	 Wr0Qbk36B8qXMk8WMTaCS/bD5/WACQGyrNhxAZmgb7E53uUzQeJu2pp5QNNdD3Ooaf
-	 h+rUf61rIAJVMx4YqU1bZ8YzAY5xtBgr9BqY8Kts=
+	b=SDbuTyg/G6BlZ32QFGwPa+GlUX+BOVKVDw38ClgS06MC/5YQBrsLB7jCRmyYh8h31
+	 9fwf8VNMrTPvsggC7kvUu8khDJ/VwTWz6QWo23EcRXpZuzoD9ecEcVOZuXbXPlhBat
+	 NxC79+oO6N1CJVU9bQukxtpvZeNIbr/bYw1oEG8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2118/2151] apparmor: advertise that sctp is being mediated
-Date: Wed, 18 Nov 2026 16:04:13 +0100
-Message-ID: <20261118150238.846772052@linuxfoundation.org>
+Subject: [PATCH 6.18 2119/2151] tun: drop batched packets while the device is down
+Date: Wed, 18 Nov 2026 16:04:14 +0100
+Message-ID: <20261118150238.881593828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,32 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-[ Upstream commit 35b8ab3f36ac0fcd8fc910da0bed889b6c75c426 ]
+[ Upstream commit 8f44631ba02afe9fff2f0a0fb66560ab19df87fd ]
 
-Enable the test harness to detect that the kernel should be properly
-mediating sctp.
+tun_sendmsg() handles TUN_MSG_PTR batches from vhost-net by calling
+tun_xdp_one() instead of tun_get_user(). But this path does not check
+IFF_UP, allowing packets from a guest to be injected into the host
+receive path while the device is administratively down.
 
-Fixes: 7a82f9a06459f ("apparmor: fix check SCTP bind, and connect permission checks")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Check IFF_UP in tun_xdp_one() before running XDP or building an skb.
+Drop the packet when the device is down, matching tun_get_user().
+
+Fixes: 043d222f93ab ("tuntap: accept an array of XDP buffs through sendmsg()")
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261027101830.85327-1-shaw.leon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/net.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/tun.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/security/apparmor/net.c b/security/apparmor/net.c
-index 6376a86f82e17..e8b60f1b6810f 100644
---- a/security/apparmor/net.c
-+++ b/security/apparmor/net.c
-@@ -23,6 +23,7 @@
- struct aa_sfs_entry aa_sfs_entry_network[] = {
- 	AA_SFS_FILE_STRING("af_mask",	AA_SFS_AF_MASK),
- 	AA_SFS_FILE_BOOLEAN("tcp-fast-open",		1),
-+	AA_SFS_FILE_BOOLEAN("sctp",		1),
- 	{ }
- };
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index ff1f69589a66a..afb02752b257f 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2417,6 +2417,12 @@ static int tun_xdp_one(struct tun_struct *tun,
+ 		return -EINVAL;
+ 	}
  
++	if (unlikely(!(READ_ONCE(tun->dev->flags) & IFF_UP))) {
++		put_page(virt_to_head_page(xdp->data));
++		dev_core_stats_rx_dropped_inc(tun->dev);
++		return -EIO;
++	}
++
+ 	xdp_prog = rcu_dereference(tun->xdp_prog);
+ 	if (xdp_prog) {
+ 		if (gso->gso_type) {
 -- 
 2.53.0
 
