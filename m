@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028623;
-	b=PiiT7iBqPIryCZ4NGIlb5arCbz1NCzWWvVkB/TP4mPldMAb/f+od5q9uMiYIwv3+uj/W
-	 HCh5sMz1v/x6zTfpRXUMbUSh78sKV+KsCXeAYq8tNkffCz8h4o9sEAPD5x5nemI/knWO6
-	 +mg0uC190AaiHp6faNZy0Op9fC6SsWdRPeWlAOXA7FXa9+m9gepO4JWGF2mBUupuL5U71
-	 pG49eR45HuEiWartD6BTWaGsOhvGQyvvDtYQ5mxCkWejBJLh+lHkicv414DPj2m7WYS0G
-	 dai7N9+tP/jgajlyan8iieVB0IxeCO2DhEL4oGksaj8yRvqvmPEsHzEfr0w+Yp5IjxQ==
+	t=1795028626;
+	b=kn41NkenlEhvrYPWb5ozTe1jkw/KBgMo0NfnunQeeAeQujAepsgiujXL/VrtX9QSDd79
+	 sGOkWFMEeidBB+Yaewq8PpfFdM6JFo1oyEaZHWKsTWMTSev0Oqraebfim5d0UES8yONCZ
+	 dKxI8Z34BBXIprU1/B6zQPVFopOJC8nGUTiXXKA82ZvGxfRZ8ROZTAdIVMCPEBiqLbEqn
+	 zHGIwk6T6YWq5gC2BXKSH44usTcisOZZTdmzILpfvxr5wdH1nnVbcNJ6Uvk2/Cq2AdqsX
+	 Q8djdRRe3xYoXRQxvucn041fjxF96FttzQi/Jl/+J++sbbjdznPxs6iImELf70lvM5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=86j9raYZjPMAWJVn2lJRRRSsdgDNSW/VG1WKAZ4O16U=;
-	b=ksCuhK+x/RxwhGK34pAneAnbv2btQFG9T1/talYW/Cr6P+hCBlAxAS8rHvf//bQnc4ck
-	 bSwSA+/Me1Q8ruSdB+kTLFcNC0TsmsW9r/e/rCJ1wVs7yFtoiFWE77q8m2B45dSVYFzgb
-	 tiqxbThb8LQ+hRL2Mn0huQzs9UHUv7YNBHxwQCpktBTt4tUobbxNhH4wLV67O3iW+OF7w
-	 EruJbTGjCJFbZ0re0XCL312po3SE10H+lyn3kg0HPog8WDZofp16aZZy2Z7d/YH+8z+uJ
-	 NP8IuH/YZLXeCY8d7aJlxHDtZRGepTUBHtiEQUWE9XPnNIIwoDE2zyG5rz5iYDM+wQA==
+	bh=OLYVu5fqs2h7Vn/R/KCo4/wYy6udOfZ7NSFawYrlTks=;
+	b=RpcG6/1ho2+crR5Bz/D8K12euM2t9/Gc78ATGBbtUyKcD0zCKxkj9m3fKVmhB8L+0VwH
+	 1wk2T5UnWM/M+SDe8pmEQ4ZZWG1DBUNDoKllpfAme08saAf5f1GvHIItNFFjX8U3Ozfaa
+	 H7jFJ8sDqw8LzgGm/oSZBadJoK1EXaCA3jDiUsZyGhyANlReO1hRmpla3yjOyjRHu9GCd
+	 sPB2Kg9LPDhxtegLvabHKkeViascVX1y0oAw3Z7Du4SyfZkjR2sjLJ8WZI0wBghiSg8n6
+	 u7vH882tYO04FtBKLXz77TLpmMvHJmdIVfgNaMylxuLypwk/8iwnuW+GYoQq1mtzRwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLXS0MFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fg+tcuy1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C8060A2601;
-	Wed, 18 Nov 2026 19:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC3D606A32F;
+	Wed, 18 Nov 2026 19:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLXS0MFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC46C1F000C5;
-	Wed, 18 Nov 2026 19:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fg+tcuy1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AFC1F000C4;
+	Wed, 18 Nov 2026 19:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028623;
-	bh=86j9raYZjPMAWJVn2lJRRRSsdgDNSW/VG1WKAZ4O16U=;
+	s=korg; t=1795028626;
+	bh=OLYVu5fqs2h7Vn/R/KCo4/wYy6udOfZ7NSFawYrlTks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLXS0MFHskJVa8e9plVVZ7NwfJvEbuFIDcOFk6WvSq57Yg0HxQLZPwInruLmCzR/R
-	 GVzqO0xu+YJzX7MhmsdF7MHyskt3956rtPPn2O59THZUWsiAsKOdIZZBaYr2GebkSA
-	 3nYKxwx2z5OBNecaQO4E/w23W4cDiZ+cc0oJ9rkM=
+	b=Fg+tcuy1vKYfczHqpi088YIh/rWnCCxLUkZqSsGFmEBz8E9imht/pqaGcGoQo2Zap
+	 TBYOZsrCa0aEFUh2SZzk9UbI6wlnJZ4Cu2CwUKb6WZ03WwXSutrBze/E1Z855sIt6v
+	 DRAcmrHm7a0qBhmIZPLTPT/EszVmaYq01MPXS8yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0059/1756] ocfs2: validate move extents against a stable EOF
-Date: Wed, 18 Nov 2026 15:36:26 +0100
-Message-ID: <20261118150010.710000634@linuxfoundation.org>
+Subject: [PATCH 6.12 0060/1756] hwmon: (chipcap2) Switch to guard() for mutext handling
+Date: Wed, 18 Nov 2026 15:36:27 +0100
+Message-ID: <20261118150010.750048180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -74,172 +68,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 84db6619cb702c37cf848b450c21b9c9706b0775 ]
+[ Upstream commit 232ba88182083b4410df41cf310c9a16b84e547e ]
 
-The move-extents range must be bounded by the inode size used for extent
-movement.  ocfs2_ioctl_move_extents() checks and clamps the request before
-taking the local inode and cluster locks in ocfs2_move_extents().  It also
-uses separate i_size_read() calls for the range check and subtraction.
+Switch to guard() for mutex handling to simplify the code, getting rid
+of the 'ret = x, break; return ret;' construct and return the result
+of the operation instead.
 
-A concurrent truncate can invalidate the first check and make the later
-unsigned subtraction underflow:
-
-  Move-extents ioctl                  Truncate
-  ------------------                  --------
-  check me_start <= i_size
-                                      take inode and cluster locks
-                                      shrink EOF below me_start
-                                      release locks
-  compare me_start + me_len with EOF
-  set me_len = EOF - me_start
-    [unsigned underflow]
-  acquire inode and cluster locks
-  select extents using the bad range
-
-A truncate after clamping can also leave the range extending beyond EOF.
-Conversely, the cached size may be smaller than the size refreshed when
-the cluster inode lock is acquired.  Early validation can then reject a
-valid start or permanently shorten the requested length and threshold.
-The me_start + me_len comparison can also wrap for a large input length.
-
-Validate and adjust the original request once, after inode_lock(), the
-exclusive rw lock and ocfs2_inode_lock() have stabilized and refreshed the
-size.  Read EOF once, reject a start beyond it, and bound the length by
-EOF minus start.  Normalize the threshold using the same EOF snapshot.
-This keeps zero as the default-threshold sentinel until validation uses
-the size that will govern extent movement.
-
-Move goal validation after range adjustment as well.  Its allocation-group
-capacity check uses me_len and must see the EOF-clamped length.  Both
-validation failures use the existing inode-lock unwind path before any
-extent movement or transaction starts.
-
-Range errors now reach the ioctl's normal copyout path, as goal errors
-already did.  Unlike the old early rejection, a failed copyout can
-therefore override -EINVAL with -EFAULT.
-
-Link: https://lore.kernel.org/pm-ocfs2-move-extents-isize-rrw-v6-395bdee84ea81149068e@gmail.com
-Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: inlined the upstream range-validation helper into ocfs2_move_extents() to avoid adding a new function ]
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: bed5f0c075eb ("hwmon: chipcap2: serialize access to the alarm indicators")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/move_extents.c | 62 ++++++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ drivers/hwmon/chipcap2.c | 63 ++++++++++++----------------------------
+ 1 file changed, 18 insertions(+), 45 deletions(-)
 
-diff --git a/fs/ocfs2/move_extents.c b/fs/ocfs2/move_extents.c
-index decf14ea21478..279726e5f7cfe 100644
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -906,8 +906,10 @@ static int __ocfs2_move_extents_range(struct buffer_head *di_bh,
- static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index 6a69c7699594b..2572710fb2384 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -13,6 +13,7 @@
+ 
+ #include <linux/bitfield.h>
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/completion.h>
+ #include <linux/delay.h>
+ #include <linux/hwmon.h>
+@@ -573,55 +574,40 @@ static int cc2_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 		    int channel, long *val)
  {
- 	int status;
-+	u64 i_size;
- 	handle_t *handle;
- 	struct inode *inode = context->inode;
-+	struct ocfs2_move_extents *range = context->range;
- 	struct ocfs2_dinode *di;
- 	struct buffer_head *di_bh = NULL;
- 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
-@@ -932,6 +934,35 @@ static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
- 		goto out_rw_unlock;
+ 	struct cc2_data *data = dev_get_drvdata(dev);
+-	int ret = 0;
+ 
+-	mutex_lock(&data->dev_access_lock);
++	guard(mutex)(&data->dev_access_lock);
+ 
+ 	switch (type) {
+ 	case hwmon_temp:
+-		ret = cc2_measurement(data, type, val);
+-		break;
++		return cc2_measurement(data, type, val);
+ 	case hwmon_humidity:
+ 		switch (attr) {
+ 		case hwmon_humidity_input:
+-			ret = cc2_measurement(data, type, val);
+-			break;
++			return cc2_measurement(data, type, val);
+ 		case hwmon_humidity_min:
+-			ret = cc2_get_reg_val(data, CC2_R_ALARM_L_ON, val);
+-			break;
++			return cc2_get_reg_val(data, CC2_R_ALARM_L_ON, val);
+ 		case hwmon_humidity_min_hyst:
+-			ret = cc2_get_reg_val(data, CC2_R_ALARM_L_OFF, val);
+-			break;
++			return cc2_get_reg_val(data, CC2_R_ALARM_L_OFF, val);
+ 		case hwmon_humidity_max:
+-			ret = cc2_get_reg_val(data, CC2_R_ALARM_H_ON, val);
+-			break;
++			return cc2_get_reg_val(data, CC2_R_ALARM_H_ON, val);
+ 		case hwmon_humidity_max_hyst:
+-			ret = cc2_get_reg_val(data, CC2_R_ALARM_H_OFF, val);
+-			break;
++			return cc2_get_reg_val(data, CC2_R_ALARM_H_OFF, val);
+ 		case hwmon_humidity_min_alarm:
+-			ret = cc2_humidity_min_alarm_status(data, val);
+-			break;
++			return cc2_humidity_min_alarm_status(data, val);
+ 		case hwmon_humidity_max_alarm:
+-			ret = cc2_humidity_max_alarm_status(data, val);
+-			break;
++			return cc2_humidity_max_alarm_status(data, val);
+ 		default:
+-			ret = -EOPNOTSUPP;
++			return -EOPNOTSUPP;
+ 		}
+-		break;
+ 	default:
+-		ret = -EOPNOTSUPP;
++		return -EOPNOTSUPP;
  	}
+-
+-	mutex_unlock(&data->dev_access_lock);
+-
+-	return ret;
+ }
  
-+	i_size = i_size_read(inode);
-+	if (range->me_start > i_size) {
-+		status = -EINVAL;
-+		mlog_errno(status);
-+		goto out_inode_unlock;
-+	}
-+
-+	if (range->me_len > i_size - range->me_start)
-+		range->me_len = i_size - range->me_start;
-+
-+	/*
-+	 * The default threshold for defragmentation is 1 MiB, which
-+	 * matches the maximum OCFS2 cluster size.
-+	 */
-+	if (!range->me_threshold)
-+		range->me_threshold = 1024 * 1024;
-+
-+	if (range->me_threshold > i_size)
-+		range->me_threshold = i_size;
-+
-+	/* The goal check depends on the adjusted range length. */
-+	if (!context->auto_defrag) {
-+		status = ocfs2_validate_and_adjust_move_goal(inode, context->range);
-+		if (status) {
-+			mlog_errno(status);
-+			goto out_inode_unlock;
-+		}
-+	}
-+
- 	/*
- 	 * rememer ip_xattr_sem also needs to be held if necessary
- 	 */
-@@ -1024,49 +1055,18 @@ int ocfs2_ioctl_move_extents(struct file *filp, void __user *argp)
- 		goto out_free;
+ static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 		     int channel, long val)
+ {
+ 	struct cc2_data *data = dev_get_drvdata(dev);
+-	int ret;
+ 	u16 arg;
+ 	u8 cmd;
+ 
+@@ -631,41 +617,28 @@ static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 	if (val < 0 || val > CC2_RH_MAX)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&data->dev_access_lock);
++	guard(mutex)(&data->dev_access_lock);
+ 
+ 	switch (attr) {
+ 	case hwmon_humidity_min:
+ 		cmd = CC2_W_ALARM_L_ON;
+ 		arg = cc2_rh_to_reg(val);
+-		ret = cc2_write_reg(data, cmd, arg);
+-		break;
+-
++		return cc2_write_reg(data, cmd, arg);
+ 	case hwmon_humidity_min_hyst:
+ 		cmd = CC2_W_ALARM_L_OFF;
+ 		arg = cc2_rh_to_reg(val);
+-		ret = cc2_write_reg(data, cmd, arg);
+-		break;
+-
++		return cc2_write_reg(data, cmd, arg);
+ 	case hwmon_humidity_max:
+ 		cmd = CC2_W_ALARM_H_ON;
+ 		arg = cc2_rh_to_reg(val);
+-		ret = cc2_write_reg(data, cmd, arg);
+-		break;
+-
++		return cc2_write_reg(data, cmd, arg);
+ 	case hwmon_humidity_max_hyst:
+ 		cmd = CC2_W_ALARM_H_OFF;
+ 		arg = cc2_rh_to_reg(val);
+-		ret = cc2_write_reg(data, cmd, arg);
+-		break;
+-
++		return cc2_write_reg(data, cmd, arg);
+ 	default:
+-		ret = -EOPNOTSUPP;
+-		break;
++		return -EOPNOTSUPP;
  	}
+-
+-	mutex_unlock(&data->dev_access_lock);
+-
+-	return ret;
+ }
  
--	if (range.me_start > i_size_read(inode)) {
--		status = -EINVAL;
--		goto out_free;
--	}
--
--	if (range.me_start + range.me_len > i_size_read(inode))
--			range.me_len = i_size_read(inode) - range.me_start;
--
- 	context->range = &range;
- 
--	/*
--	 * ok, the default theshold for the defragmentation
--	 * is 1M, since our maximum clustersize was 1M also.
--	 * any thought?
--	 */
--	if (!range.me_threshold)
--		range.me_threshold = 1024 * 1024;
--
--	if (range.me_threshold > i_size_read(inode))
--		range.me_threshold = i_size_read(inode);
--
- 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
- 		context->auto_defrag = 1;
- 
- 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
- 			context->partial = 1;
--	} else {
--		/*
--		 * first best-effort attempt to validate and adjust the goal
--		 * (physical address in block), while it can't guarantee later
--		 * operation can succeed all the time since global_bitmap may
--		 * change a bit over time.
--		 */
--
--		status = ocfs2_validate_and_adjust_move_goal(inode, &range);
--		if (status)
--			goto out_copy;
- 	}
- 
- 	status = ocfs2_move_extents(context);
- 	if (status)
- 		mlog_errno(status);
--out_copy:
- 	/*
- 	 * movement/defragmentation may end up being partially completed,
- 	 * that's the reason why we need to return userspace the finished
+ static int cc2_get_irqs(struct cc2_data *data, struct device *dev)
 -- 
 2.53.0
 
