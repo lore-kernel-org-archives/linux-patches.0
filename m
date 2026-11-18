@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029737;
-	b=hQF0sCspTZmUW73QfJYkjKHWxJzZku0CnA5d/e+Ig2/pO5q6AEsptA3R3KlEJNowS5zZ
-	 V0XRZpvJjqoCTvA/6SFx7JFKV2jrDE3zSglXW5hYvGu8qpJs8B1HPx4VKbEScxq8znzEK
-	 +f05tPk3oVrKB0A9zpffIth7OhMTvdegh/HznVuUWDenKcPkDsHOWZ6krQLNb275Nwkly
-	 4LwEmXI9wxB47j6OmuWSQowsvOZw4LV7vo3Eb2Qj/eLe1qzbdn1mUSvY43zKK5Dx76o/l
-	 w+9MiX2Qu58CvNbpZzlkL2UyZeTYmSCmrIDDxQ1I1A8nHnJklPklRKSJoHUa6NsTHpA==
+	t=1795029740;
+	b=MpUPylh4WoN8Wv5foCFZenie8FDGfj9rWa6Nn5wzxwVMf/LuX/+/tNGODql/IExpfGox
+	 /2B0L8Bf2jP20EMlZJV5d+Swgrc11CB0u2F4UNqoiIrElRfbDyVCsLOZnYb3fcd2aVsN2
+	 InOYIpaPe+CrBjTUaHlbQ40bSk579NoPFl3srvf0dvo9pJtOiVTLSM0uDaiC+3Z559Ct1
+	 5bxMTY0YfQMPl6bH3UJo3m2mnpan2FZMKyAQtdBy9I9On3RMd0q6Dn3iyfsKgGwY03q4F
+	 V3my8TLRk3tgFfkL2ggQiM4Tg8xoW4b8NhJxASnqpPc64EnLs+MM6eHFPaudkXJeEtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v+NiAfUluoIF2cRZchVwy9LKeN2vOEs8g43DaTpBWt0=;
-	b=ksEB3SdHj9/Zl8UTWOjK0lMTDdrPVn+pLWnlQXNrNhhZHFf98pCdaoPgNrpFt7angWWR
-	 COytpxAcdl5r8skzB2i4+yjr+4G3y0w9JIIaeJQVyvU6H4lmLqH4dKz6K0kzjevTZ7+Xb
-	 hmcZTtB2MOLw8TlQseKIUbjrgfKDWdIQMIOMXIz/FxgPFnjfr0yapNMAiQLjriUIrG8GV
-	 ijFtyG2IHNT3yIN6MYWwefbNs22S//9ibX2qf5NS1Ys1LhyoTJYAMa7u2if6SvWipVOt4
-	 lOfc5G8smwUHMw1Og21j6FVeZF0eK8AQVvPbvkQBFW1Lrbbktt3vd1+YGLdVLyTCjng==
+	bh=4grSnu5+LnRpBhWomfcoTVHBH2k8RAA1a8XdcMcTHPw=;
+	b=hZMj8Ek7M1Vy8qNu7exZmtHGVfWgTF5ve3Qn4IyareQJxXWgWj5VX5is9HBOPCIUgvmm
+	 eU9p6mQoPGCgZPIB5K3u5Zgd7qRzKUjYpXVS40priDFpC7+YngHFxrvcFDHyAzVloBlgj
+	 ULrOMsfTHUIpCxMLnnMObBWH5TsSKEQv7qcB6HxS8f2GpE7Zt3+YHkZ31ESPjn/NtN57V
+	 UGjl+meEGYP8WJAvy0J6U8KDwnVC08WOnoJQGNC7EMpuWjYHCUK7ABAkmzKByjrhMl7Zw
+	 9hIYA7QdtzbRjq39JIwYUFl9aBi/TMbuEMj6jhAGtdjL7PuB9+ZEWhpAw9KJ2KdI3Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ws8vIPeT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ic3ISyDn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7A8606A320;
-	Wed, 18 Nov 2026 19:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB09606A32F;
+	Wed, 18 Nov 2026 19:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ws8vIPeT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A951F000C6;
-	Wed, 18 Nov 2026 19:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ic3ISyDn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0851F000C5;
+	Wed, 18 Nov 2026 19:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029737;
-	bh=v+NiAfUluoIF2cRZchVwy9LKeN2vOEs8g43DaTpBWt0=;
+	s=korg; t=1795029739;
+	bh=4grSnu5+LnRpBhWomfcoTVHBH2k8RAA1a8XdcMcTHPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ws8vIPeTmpL+d+NkoOWFTxP4ymmS1yb4CuUV6O5eGeGv2elZgiddTmVW5CzElbzVf
-	 svT2C3w1rfKvxZLJgSM3S4pywjb+gwZjQwMscE42z7fmc00b18SB2XPm6Gs3i/9Mf5
-	 kFLyVLpJT8lyjGAtjlTyVw0Gza6KiZ1Z2KnPWK5o=
+	b=Ic3ISyDnz0lQRd4ZXVDxmzRSYGsQ+KAIQkF0/3CbOQadN8/yT21o/1jxxq2kMDQm/
+	 OBq/ViUHkw0UXOIgzWvSghsC8kAIlWzLGLfisf1FduFSILmFcPu1lPuE+bpca40MWy
+	 Wq3H5GtwEW3SCLjoisqDMeOfvS8DnYdSziBi711g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Julian Braha <julianbraha@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0455/1756] kconfig: fix extra output from savedefconfig on out-of-range defaults
-Date: Wed, 18 Nov 2026 15:43:02 +0100
-Message-ID: <20261118150026.896782258@linuxfoundation.org>
+Subject: [PATCH 6.12 0456/1756] cxl/pci: Skip reset detection for DVSEC emulated decoders
+Date: Wed, 18 Nov 2026 15:43:03 +0100
+Message-ID: <20261118150026.934338629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,244 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
+[ Upstream commit 17ff3a9fd8669ea53fe83a7013871f30214d5537 ]
 
-The Kconfig interpreter currently allows defaults that are outside of the
-range bounds.
+HDM decoders are emulated from the DVSEC range registers in two cases:
+(a) the component registers expose no HDM decoder capability, or (b) the
+capability is present but the DVSEC ranges were the ones in use at driver
+load.
 
-In these cases, the 'sym_validate_range' function will adjust the default
-value to the nearest range bound. For example, see this example:
+After an FLR or SBR, __cxl_endpoint_decoder_reset_detected() reads the HDM
+decoder Committed bit for every decoder marked enabled, emulated ones
+included. In case (a) regs.hdm_decoder is NULL and the read oopses. In case
+(b) the Committed bit was never set, so a reset gets reported that never
+happened.
 
-  config A
-    int
-    range 1 2
-    default 16
+Use the absence of cxld->commit to elide the check for emulated decoders.
 
-Here, since the default value of 16 is greater than the bounds, the
-effective default value gets adjusted down to the upper bound, 2.
+Case (b) tested under QEMU: a reset on an endpoint driven down the DVSEC
+emulation path no longer reports a reset or strips the decoder flags.
 
-However, 'savedefconfig' writes non-default values, and without being
-aware of the automatic adjustment to the range bound, it would write: A=2
-
-This limitation is also documented in a comment: "The following fails to
-handle the situation where a default value is further limited by the valid
-range."
-
-To resolve this, let's factor out the default-range adjustment logic from
-the existing 'sym_validate_range' function into its own
-'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
-that it compares against the effective value.
-
-Adds tests, accordingly.
-
-Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
-Assisted-by: Codex:gpt-5.6-sol
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 934edcd436dc ("cxl: Add post-reset warning if reset results in loss of previously committed HDM decoders")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-cxl/20260811113608.2815625-1-kanie@linux.alibaba.com/
+Link: https://patch.msgid.link/20260831110449.719086-1-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c                      | 39 ++++++++----
- .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
- .../tests/savedefconfig_range/__init__.py     |  8 +++
- .../kconfig/tests/savedefconfig_range/config  |  7 +++
- .../savedefconfig_range/expected_defconfig    |  0
- 5 files changed, 102 insertions(+), 12 deletions(-)
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+ drivers/cxl/core/pci.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index 453721e66c4eb..3aadd9a97a1dd 100644
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -145,7 +145,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
- 	return strtoll(sym->curr.val, NULL, base);
- }
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index 6a3f2fe772bef..17157238b3156 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -700,6 +700,15 @@ static int __cxl_endpoint_decoder_reset_detected(struct device *dev, void *data)
+ 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
+ 		return 0;
  
--static void sym_validate_range(struct symbol *sym)
-+/*
-+ * Return the nearest range bound for an out-of-range default value.
-+ * Return NULL if the value is valid or the symbol has no active range.
-+ */
-+static struct symbol *sym_get_near_range_bound(struct symbol *sym,
-+					  const char *value)
- {
- 	struct property *prop;
- 	struct symbol *range_sym;
-@@ -160,21 +165,31 @@ static void sym_validate_range(struct symbol *sym)
- 		base = 16;
- 		break;
- 	default:
--		return;
-+		return NULL;
- 	}
- 	prop = sym_get_range_prop(sym);
- 	if (!prop)
--		return;
--	val = strtoll(sym->curr.val, NULL, base);
-+		return NULL;
-+	val = strtoll(value, NULL, base);
- 	range_sym = prop->expr->left.sym;
- 	val2 = sym_get_range_val(range_sym, base);
- 	if (val >= val2) {
- 		range_sym = prop->expr->right.sym;
- 		val2 = sym_get_range_val(range_sym, base);
- 		if (val <= val2)
--			return;
-+			return NULL;
- 	}
--	sym->curr.val = range_sym->curr.val;
++	/*
++	 * Decoders emulated from the DVSEC range registers have no commit
++	 * callback and no HDM decoder registers to consult.
++	 */
++	if (!cxld->commit) {
++		dev_warn(dev, "DVSEC emulated decode may have been cleared by reset\n");
++		return 0;
++	}
 +
-+	return range_sym;
-+}
-+
-+static void sym_validate_range(struct symbol *sym)
-+{
-+	struct symbol *range_sym;
-+
-+	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
-+	if (range_sym)
-+		sym->curr.val = range_sym->curr.val;
- }
- 
- static void sym_set_changed(struct symbol *sym)
-@@ -778,7 +793,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
- const char *sym_get_string_default(struct symbol *sym)
- {
- 	struct property *prop;
--	struct symbol *ds;
-+	struct symbol *ds, *range_sym;
- 	const char *str = "";
- 	tristate val;
- 
-@@ -796,11 +811,6 @@ const char *sym_get_string_default(struct symbol *sym)
- 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
- 			break;
- 		default:
--			/*
--			 * The following fails to handle the situation
--			 * where a default value is further limited by
--			 * the valid range.
--			 */
- 			ds = prop_get_symbol(prop);
- 			if (ds != NULL) {
- 				sym_calc_value(ds);
-@@ -844,6 +854,11 @@ const char *sym_get_string_default(struct symbol *sym)
- 	default:
- 		break;
- 	}
-+
-+	range_sym = sym_get_near_range_bound(sym, str);
-+	if (range_sym)
-+		str = range_sym->curr.val;
-+
- 	return str;
- }
- 
-diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-new file mode 100644
-index 0000000000000..fd59d9082ed5b
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-@@ -0,0 +1,60 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+# Static default and range values
-+
-+config INT_DEFAULT_ABOVE_RANGE
-+	int
-+	range 1 1
-+	default 16
-+
-+config INT_DEFAULT_BELOW_RANGE
-+	int
-+	range 4 8
-+	default 2
-+
-+# Default and range values determined by other options
-+
-+config RANGE_UPPER_BOUND
-+	int
-+	default 3
-+
-+config INT_DYNAMIC_RANGE
-+	int
-+	range 0 RANGE_UPPER_BOUND
-+	default 4
-+
-+# Hex
-+
-+config HEX_DEFAULT_ABOVE_RANGE
-+	hex
-+	range 0x10 0x20
-+	default 0x40
-+
-+# Implicit default value of 0
-+
-+config INT_IMPLICIT_DEFAULT_ZERO
-+	int
-+	range 1 4
-+
-+# Conditional range
-+
-+config USE_FIRST_RANGE
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_RANGE
-+	int
-+	range 1 2 if USE_FIRST_RANGE
-+	range 3 4 if !USE_FIRST_RANGE
-+	default 3
-+
-+# Conditional default
-+
-+config USE_DEFAULT
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_DEFAULT
-+	int
-+	range 1 2
-+	default 3 if USE_DEFAULT
-diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-new file mode 100644
-index 0000000000000..961454be732c2
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-@@ -0,0 +1,8 @@
-+# SPDX-License-Identifier: GPL-2.0
-+"""Test savedefconfig with numerical defaults outside of ranges."""
-+
-+
-+def test(conf):
-+    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
-+                          out_file='defconfig') == 0
-+    assert conf.config_matches('expected_defconfig')
-diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
-new file mode 100644
-index 0000000000000..d939cfe5fd349
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/config
-@@ -0,0 +1,7 @@
-+CONFIG_INT_DEFAULT_ABOVE_RANGE=1
-+CONFIG_INT_DEFAULT_BELOW_RANGE=4
-+CONFIG_INT_DYNAMIC_RANGE=3
-+CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
-+CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
-+CONFIG_INT_CONDITIONAL_RANGE=2
-+CONFIG_INT_CONDITIONAL_DEFAULT=2
-diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
-new file mode 100644
-index 0000000000000..e69de29bb2d1d
+ 	cxlhdm = dev_get_drvdata(&port->dev);
+ 	hdm = cxlhdm->regs.hdm_decoder;
+ 	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
 -- 
 2.53.0
 
