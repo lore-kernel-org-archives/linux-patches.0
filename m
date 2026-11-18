@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053564;
-	b=A8idec1x4HpZRP0V+lJcX6FrN0wXHB+ufASvMYMkLuYZkAVfPi8lJX8uIEUsIIyv3s8O
-	 26/5hOpe0YThIaVR54zdE1OdeOEVy1uwXDyKmSEy0wCvH1C5BXOlPbPrWbQsb9fjHYTkx
-	 t7I3wkyO6v5RsiRvRdJ793zVP3aRD7xzZb7Q9tjBHwPKuEc0HrFS2LgVU5YNZIoSWKo1N
-	 D9O0varO5U32c181saRZADhhG57akKv5547TE56/9+KcAx7BInmseJfyqqnCytkz+Ulax
-	 rjVWi/+6Q9L3+7+0ICtRfkS8oNSQAJRL0D1P1Y+L1Z+aZy0EcSp8otBjJ1FRpOVLd6A==
+	t=1795053567;
+	b=BiiB1SGQhIORC02ZBfxcVwyBA6vE8S0yAm/4hqf856HADMQ6xLsjaGUCr7conrUpXj8Z
+	 9P0wUUP+QjDBv1uwjIU3XcL1RZN4IntDoW1wPf1oM02FVxMipaJ4puVH0y96+Btf0B6tJ
+	 ym+zoMbxQHj+sEArH5Q3/64k59xsDkp7pc4xdDlRUOojaCwxafxD1RRAUafH4wIsJ8aJN
+	 8kNFbhokWXd60WIiqxw0Ih3v+HgwvEcTR689xdfKisBDEcUBzxzfqkr1PkfppXFClfUaO
+	 OEmSHVX6ONk8AU20mx6TImJE7EmFLLcmb2HEpHTNwnak+7f/mUevj2WQA9iRW1WobIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HStfY8vtvVs+n0LGaYuHmceud6/ltSsF+om6/7MK3mY=;
-	b=IzDLVCPCikG68jv+1juESKdgaMmyKzAllS/wRep9minne13RDN87Nt+ggFmpK4duPHYe
-	 8ctT3Hoj3MOVJmHCtdx42CNyfmvb2vAPBqMXsq+EyktWi5wLE/RmrPkyWXU7ORyqyuJQ2
-	 dDM7BuhMeqqwPq7ZUU3wquusNKRKch1jN6/R8GR9KISFvhZNhNKmTT6gwcZTZ1TASZrRt
-	 1tMU2NOew4uK+52rVF+M281qYF2OVOx/sGE4OlWre2X0rLnZfNIg+oxJNdjzYQUefupww
-	 i2l2jejCq1cn5qZ7i+P6blhKISwfToVfRcY5VQmpl3qvbanMbtf0v2MpKrB6iQ1XMLQ==
+	bh=KFGXhP1ysHUsOVMotRoGGor+oh7J57au+PUdWRCXFWs=;
+	b=Lsj2NziOZWqUQ+/LmtsjzAW3enE6qWhQ999ku7bIrI/gjttxCv3zuZGIAWXg7VekIbNu
+	 h01BnbhHoKUzxqOSD8vON/1FCYLZL1TXKmeoGavsqp/TS9aoM1M3he5wtCjj/22P4ipCu
+	 cHIkIhyM1+NbekaGpc6ojTwA/5OTsUVTP9SgzxA1yjVnmIqsaNLOdlLrFLMowJNgKGyO5
+	 LL+fhhQ/hKcBREq3+vsFtNTYSNvsDInI7uaW8jL4X4zjOYbA7rMoGhfpDi7NHws1e56DL
+	 TqjfZ2AzC/mkwc6p8+ZP3IYNm3Y0XS5Dy2SuIbRaLBmoMA9ySkpr7q3UaXQlaOI/CUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wa1yEWhh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qpv6p8BF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892EC606A325;
-	Thu, 19 Nov 2026 01:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8CB606A31C;
+	Thu, 19 Nov 2026 01:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wa1yEWhh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70F91F000C4;
-	Thu, 19 Nov 2026 01:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qpv6p8BF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EE31F000C5;
+	Thu, 19 Nov 2026 01:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053564;
-	bh=HStfY8vtvVs+n0LGaYuHmceud6/ltSsF+om6/7MK3mY=;
+	s=korg; t=1795053567;
+	bh=KFGXhP1ysHUsOVMotRoGGor+oh7J57au+PUdWRCXFWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wa1yEWhh+EY/RsGChVffBk6sXQf+n9FU0HRacntlaTpxfM09pvfT9vsx76YwDeuH5
-	 xmORwx0QCaZN7RVW0azrADYmiUpgmo5WrSPFjKRxbA2VLGNliHT2NNI2f5GR1tZBAX
-	 ibh/RRXIu5uyBiB5wgvmDAMzkeUsfIyKaoUu2XLM=
+	b=Qpv6p8BFIAf/HjZyOxX/OnD1WnPPwY54uUGzNa7zdeIOJIYSXEPT0YxwpNhnaXoHz
+	 jWl/QeE5i5sp/MZ4Q2f8bTRh/vmGeNgsgZBoTwNbpb5Y1TjebszanaxnPvCMojiS/1
+	 oGkNEz71lqne5MQ/vHkaRaV4jUS+gcGVQdiV/AUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0963/2214] batman-adv: stop originator purge worker before freeing TT
-Date: Wed, 18 Nov 2026 15:43:59 +0100
-Message-ID: <20261118150050.829157613@linuxfoundation.org>
+Subject: [PATCH 5.15 0964/2214] batman-adv: tt: only transmit local ROAM flag together with DEL
+Date: Wed, 18 Nov 2026 15:44:00 +0100
+Message-ID: <20261118150050.861316933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,54 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit f89eda5a9ccf82cba06b085b42ebc4886b8dfe9e upstream.
+commit 10f24f058417024a2c19cb8d88a6a0678a58a21b upstream.
 
-batadv_mesh_free() releases the translation tables via batadv_tt_free()
-before batadv_originator_free() stops orig_work. The purge worker can
-therefore still run while the TT is torn down. When an originator times
-out, batadv_purge_orig_ref() calls batadv_tt_global_del_orig(), which
-loads tt.global_hash and walks all buckets while taking their locks:
+BATADV_TT_CLIENT_ROAM is part of BATADV_TT_REMOTE_MASK but on the wire it
+only has a defined meaning together with BATADV_TT_CLIENT_DEL: the
+originator no longer serves the client because it roamed to another node.
+Such a DEL is only relevant for events (non-full table requests).
 
-  CPU0                          CPU1
-  batadv_tt_free()              batadv_purge_orig()
-                                  batadv_tt_global_del_orig()
-                                    hash = ...tt.global_hash;
-    batadv_tt_global_table_free()
-      batadv_hash_destroy(hash);
-                                    spin_lock_bh(&hash->list_locks[i]);
+An ADD carrying ROAM is processed (by accident) by the receiver like a
+ROAMING_ADV: a newly created global entry is marked as roaming and is
+excluded from the global CRC. But the sender includes it in its local CRC.
 
-Disable orig_work at the beginning of batadv_mesh_free(), directly after
-the mesh was marked as deactivating. The second
-disable_delayed_work_sync() in batadv_originator_free() is harmless because
-it is free'd anyway.
+But such a behavior doesn't make sense for non-ROAM_ADV because a new TTVN
+is meant as announced commit of the local TT table of a node and should
+therefore not be used to create a temporary (roam) global entry in a node.
+
+At the moment, such an ADD with the BATADV_TT_CLIENT_ROAM flag set can
+happen due to two mechanisms:
+
+batadv_tt_local_valid() copies all flags of the local entry into a full
+table response. It is not synchronized with batadv_tt_local_mark_removed().
+An entry which was marked as ROAM|PENDING by a ROAMING_ADV is still part of
+the current TTVN and is sent with the ROAM flag set. The receivers then
+create a roaming global entry for it and detect a CRC mismatch, which
+causes them to request the full table again.
+
+The same can happen for an ADD change which is queued for an entry which
+(still) has the ROAM flag set. For example when only the dynamic WIFI or
+ISOLA flags were updated.
+
+It is not triggered by batadv_send_other_tt_response() because
+batadv_tt_global_valid() is already taking care of filtering out
+BATADV_TT_CLIENT_ROAM entries.
+
+For the two problematic announcement mechanism, only send the ROAM flag of
+local entries together with a DEL.
+
+This only fixes the ROAM marking of the global entry and the resulting CRC
+mismatch. When the requester of the full table is the node which sent the
+ROAMING_ADV, the still announced entry will (independent of the ROAM flag)
+cause batadv_tt_global_purge_local() to remove the requester's own (new)
+local entry for the client. This is not addressed here.
 
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260708091821.314516-1-sw%40simonwunderlich.de?part=3
-Fixes: 9d31b3ce8168 ("batman-adv: fix potential TT client + orig-node memory leak")
-[ Switch to cancel_delayed_work_sync() ]
+Fixes: 27b37ebfa2d2 ("batman-adv: correctly pass the client flag on tt_response")
+Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
+[ Context, use direct tt_common_entry->flags access ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/batman-adv/translation-table.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index 6d3d15332ff9e..717c4a1985fb5 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -262,6 +262,11 @@ void batadv_mesh_free(struct net_device *soft_iface)
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 65b0d2284eaed..a6c92a34b999b 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -470,7 +470,6 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
+ 	if (!tt_change_node)
+ 		return;
  
- 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+-	tt_change_node->change.flags = flags;
+ 	memset(tt_change_node->change.reserved, 0,
+ 	       sizeof(tt_change_node->change.reserved));
+ 	ether_addr_copy(tt_change_node->change.addr, common->addr);
+@@ -478,6 +477,15 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
  
-+	/* the originator purge worker accesses (among others) the TT tables
-+	 * and must therefore be stopped before any of them are freed
+ 	del_op_requested = flags & BATADV_TT_CLIENT_DEL;
+ 
++	/* the ROAM flag is only meaningful for the receiver in combination
++	 * with a DEL. An ADD with ROAM would be interpreted as a roaming
++	 * advertisement
 +	 */
-+	cancel_delayed_work_sync(&bat_priv->orig_work);
++	if (!del_op_requested)
++		flags &= ~BATADV_TT_CLIENT_ROAM;
 +
- 	batadv_purge_outstanding_packets(bat_priv, NULL);
- 	batadv_tp_stop_all(bat_priv);
++	tt_change_node->change.flags = flags;
++
+ 	/* check for ADD+DEL or DEL+ADD events */
+ 	spin_lock_bh(&bat_priv->tt.changes_list_lock);
+ 	list_for_each_entry_safe(entry, safe, &bat_priv->tt.changes_list,
+@@ -2757,8 +2765,12 @@ static bool batadv_tt_local_valid(const void *entry_ptr,
+ 	if (tt_common_entry->flags & BATADV_TT_CLIENT_NEW)
+ 		return false;
  
++	/* the entry is (still) announced. A ROAM flag of an entry which is
++	 * pending to be removed must not be transmitted. Otherwise, the
++	 * receiver would handle it like a roaming advertisement
++	 */
+ 	if (flags)
+-		*flags = tt_common_entry->flags;
++		*flags = tt_common_entry->flags & ~BATADV_TT_CLIENT_ROAM;
+ 
+ 	return true;
+ }
 -- 
 2.53.0
 
