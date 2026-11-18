@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015861;
-	b=rk1Hi7ni2GIosCL8KY8QBW9TQDQsxGwWpym6qWfKUZAk7rYrFReZvmv/OURVjDUOBBb7
-	 iyea2KwPFOC4LdXQ7jjefnnB5P66/sAdsqAAjAejcgEy5/y/7ZeA3qRd9aaq9J+Gh56T6
-	 NbCk8YUo3zvTbSsGBVuG3YQIVHoL4bCX9Kb/3WwfuTky0dvpZJlTM0nv6BADnioHlwMBi
-	 kOaXKA+aCh5zIwfsU/teIkcA8eW+cvM/+FGu4bg9rRsofdhDh6+x6hONYRp1BkdSR0rEi
-	 qD1CjwWdchOhSKDF0m6E1Wzo2mitWMEnIRAwUH6x4S7sgw6DyZ/kzLy4KDvI7dVh4Kw==
+	t=1795015864;
+	b=ONitvm0jX430W5JN9jLXRP5iC1J5qfXCqrK189yVhLBzyJOnr9Xhu5+782F6M02GTebB
+	 Kx+eLKQ+Vc1XdVAJEvcSoAhZ0heL5O84EP3C19y6v268dQ04Xs8E7eda5aXxN8Oz4G1rE
+	 vo0an4v4UzkV7qlKVOR37AyGkOFvYPHlsXqaY1YZ8JPYptNRHT9dTt6cJdGPueX4dJpO0
+	 v3X8r7X6SdNNxgB50mpSz7VS9FH2xPAgZFkj0qF/M2VToXqkzd5jR/LqndtH8GxOZn2mW
+	 RRZvDwb3BZ3MGfGbl9jq8jDGNgzVSODASqOmgJlAie5ROgggvPUv6J5f89oUiVKtijQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8qhZs/GBYeJCJ7/JtsBjuUjcmNN5JmPIsVB3tD397xE=;
-	b=RY0DfpCYnB6sGhY5yb2oI1YYH8QPpmEX3WROvJ4xeCtNmrDd13uFSJqHBUGrTxW1z6/g
-	 jU4XnZ16IG6pLi80Gz5MVLKcJRzdKKxOKtrJAGLWrJBE57WLQtEju+NhMD+I0dDt2xxPg
-	 CsDvACQzTzAV76hL0vcG/9vBvbCMflCtq70ovI8xav0g1oo5tkHhk+L1r9qCLzESe8ox5
-	 YRrYx1YUqQTWY20F8/jn+ZyLM7xCoP8mbfWHlWSOESp9KofH3EG9GMavMyC+h4aCycl9K
-	 er7BXsh4et8c1T5LxtgF668vo1PX8zrmlDScOp1VT3wg20MdS8Xn10YYZV7jluYm9AQ==
+	bh=WKw04XY2eijIx0yVGNQ30P0o+wDBeO66Yf4A53QnXnw=;
+	b=NkoQsAsmFW4LyuHua0gbKP2ZNvoYAQ5vyyfNk6bBoUWeosuJ2kD1dyy6R+TuhWGQvwUu
+	 EAyKeEZziIZ5CyEroqK9K9rEVHfo+aFmUxNvcfzvsOYn2hbBbWO9kDU0zU0qrCjLZ59Mm
+	 uDiY53zcxZrV+HiUtPpQwg1iQbqOsw/IgCT5ldhifrgWbBHv0+hJg5ISrC1Lh33MkD9nE
+	 oseSu89Sp0JiEjaBTolu44nN8gwXj7BKDfunjIPwlX39kjLc2Bmiz5dWpbqZuodNqVF77
+	 ppcGGLUd+ztmJpaUr2QNggeQUfb9swhTnN0HqsmJa6NZCHlK9tSbYkj79NAONjqW+pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vHAyZMly;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oITEbadS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C175660A2601;
-	Wed, 18 Nov 2026 15:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CE7606A320;
+	Wed, 18 Nov 2026 15:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vHAyZMly
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269B71F000CF;
-	Wed, 18 Nov 2026 15:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oITEbadS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFCD1F000C8;
+	Wed, 18 Nov 2026 15:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015861;
-	bh=8qhZs/GBYeJCJ7/JtsBjuUjcmNN5JmPIsVB3tD397xE=;
+	s=korg; t=1795015864;
+	bh=WKw04XY2eijIx0yVGNQ30P0o+wDBeO66Yf4A53QnXnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vHAyZMlyU79O5YCcCaOWCLz4texJvlM0ji//JfURgdWkXcNwvNtqgnuBYqt0xMeAY
-	 gnxHFpAMb5tW6AClGbpQ63/bseG58QWYTcSGPg2dbLjNYDpiFEeqvglphK7K23n9Sw
-	 XDh98kNCq1IYwKo786eRMDzrLXY6Sz3O/ykx0Oco=
+	b=oITEbadSy1UiSxLfaSr6sIVYC7BkPVap/4pacZ0rIFVbUhVrsBlWxkEevnIa0q5ob
+	 yi+/qbvDiw21CL6X/2VAokjHIQWP2NNkUWAj/IVDGNaCm6RtcYwtUki/GjSQWpzvXZ
+	 JOtBTvgXzTgiXAfAan9/M0ifsRwKk49nIDhti9mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <superm1@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
+	Kaustabh Chakraborty <kauschluss@disroot.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0323/2651] cpufreq/amd-pstate-ut: Fix amd_pstate_ut_check_freq failure with Requested CPU Min frequency BIOS option
-Date: Wed, 18 Nov 2026 15:26:03 +0100
-Message-ID: <20261118150259.496835643@linuxfoundation.org>
+Subject: [PATCH 7.3 0324/2651] power: supply: s2mu005-battery: return errors from dev_err_probe() in probe
+Date: Wed, 18 Nov 2026 15:26:04 +0100
+Message-ID: <20261118150259.532375500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,134 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit a23fca4ae137ec8e7620cc4f00b468b89cf5a7bd ]
+[ Upstream commit 38c8b37600b63db724c9c21d18d9989359353cc4 ]
 
-Since commit 608a76b65288 ("cpufreq/amd-pstate: Add support for the
-"Requested CPU Min frequency" BIOS option"), amd-pstate driver sets
-policy->min to frequency corresponding to bios_min_perf if a valid BIOS
-programmed min frequency value is detected.
+s2mu005_fg_i2c_probe() calls dev_err_probe() when devm_mutex_init() or
+devm_request_threaded_irq() fails, but drops the return value and
+carries on, finally returning 0. A failed probe is then reported as a
+success: the device stays registered with an uninitialized mutex and
+without its IRQ handler installed.
 
-amd_pstate_ut_check_freq expects policy->min to always match
-lowest_nonlinear_freq which does not hold true on platforms with user
-configured BIOS min freq.
+Return the error from dev_err_probe() in both places so that the probe
+fails and the driver core logs the error state properly.
 
-Update the test case to compare policy->min to bios_min_freq on
-platforms that set it. Final comparison is adjusted to account for
-insane values by clamping the result within the supported frequency
-range.
-
-While at it, move freq_to_perf() and perf_to_freq() helpers to internal
-header to allow their use from amd-pstate-ut.
-
-Reviewed-by: Mario Limonciello <superm1@kernel.org>
-Fixes: 608a76b65288 ("cpufreq/amd-pstate: Add support for the "Requested CPU Min frequency" BIOS option")
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://lore.kernel.org/r/20260909102650.4582-1-kprateek.nayak@amd.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Fixes: aa2132799817 ("power: supply: add support for S2MU005 battery fuel gauge device")
+Cc: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Kaustabh Chakraborty <kauschluss@disroot.org>
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://patch.msgid.link/20260827020539.22837-1-min_halo@163.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate-ut.c | 23 ++++++++++++++++++++++-
- drivers/cpufreq/amd-pstate.c    | 13 -------------
- drivers/cpufreq/amd-pstate.h    | 14 ++++++++++++++
- 3 files changed, 36 insertions(+), 14 deletions(-)
+ drivers/power/supply/s2mu005-battery.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
-index e23773680e050..c2c1a166b3a9e 100644
---- a/drivers/cpufreq/amd-pstate-ut.c
-+++ b/drivers/cpufreq/amd-pstate-ut.c
-@@ -226,11 +226,14 @@ static int amd_pstate_ut_check_freq(u32 index)
- 	for_each_online_cpu(cpu) {
- 		struct cpufreq_policy *policy __free(put_cpufreq_policy) = NULL;
- 		struct amd_cpudata *cpudata;
-+		union perf_cached perf;
+diff --git a/drivers/power/supply/s2mu005-battery.c b/drivers/power/supply/s2mu005-battery.c
+index 53de6605b4922..a76154e5a0917 100644
+--- a/drivers/power/supply/s2mu005-battery.c
++++ b/drivers/power/supply/s2mu005-battery.c
+@@ -262,7 +262,7 @@ static int s2mu005_fg_i2c_probe(struct i2c_client *client)
  
- 		policy = cpufreq_cpu_get(cpu);
- 		if (!policy)
- 			continue;
-+
- 		cpudata = policy->driver_data;
-+		perf = READ_ONCE(cpudata->perf);
+ 	ret = devm_mutex_init(dev, &priv->monout_mutex);
+ 	if (ret)
+-		dev_err_probe(dev, ret, "failed to initialize MONOUT mutex\n");
++		return dev_err_probe(dev, ret, "failed to initialize MONOUT mutex\n");
  
- 		if (!((policy->cpuinfo.max_freq >= cpudata->nominal_freq) &&
- 			(cpudata->nominal_freq > cpudata->lowest_nonlinear_freq) &&
-@@ -242,7 +245,25 @@ static int amd_pstate_ut_check_freq(u32 index)
- 			return -EINVAL;
- 		}
+ 	psy_desc = device_get_match_data(dev);
  
--		if (cpudata->lowest_nonlinear_freq != policy->min) {
-+		if (perf.bios_min_perf) {
-+			u32 bios_min_freq = perf_to_freq(perf, cpudata->nominal_freq,
-+							 perf.bios_min_perf);
-+
-+			/*
-+			 * User set bios_min_freq cannot be trusted to
-+			 * be within the driver limits. Clamp it similar
-+			 * to cpufreq_verify_within_cpu_limits().
-+			 */
-+			bios_min_freq = clamp_t(u32, bios_min_freq,
-+						     policy->cpuinfo.min_freq,
-+						     policy->cpuinfo.max_freq);
-+
-+			if (bios_min_freq != policy->min) {
-+				pr_err("%s cpu%d bios_min_freq=%d policy_min=%d, they should be equal!\n",
-+					__func__, cpu, bios_min_freq, policy->min);
-+				return -EINVAL;
-+			}
-+		} else if (cpudata->lowest_nonlinear_freq != policy->min) {
- 			pr_err("%s cpu%d cpudata_lowest_nonlinear_freq=%d policy_min=%d, they should be equal!\n",
- 				__func__, cpu, cpudata->lowest_nonlinear_freq, policy->min);
- 			return -EINVAL;
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 28b9d4d062b98..a6f96d812c5db 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -145,19 +145,6 @@ static struct quirk_entry quirk_amd_7k62 = {
- 	.lowest_freq = 550,
- };
+@@ -277,7 +277,7 @@ static int s2mu005_fg_i2c_probe(struct i2c_client *client)
+ 					s2mu005_handle_irq, IRQF_ONESHOT,
+ 					psy_desc->name, priv);
+ 	if (ret)
+-		dev_err_probe(dev, ret, "failed to request IRQ\n");
++		return dev_err_probe(dev, ret, "failed to request IRQ\n");
  
--static inline u8 freq_to_perf(union perf_cached perf, u32 nominal_freq, unsigned int freq_val)
--{
--	u32 perf_val = DIV_ROUND_UP_ULL((u64)freq_val * perf.nominal_perf, nominal_freq);
--
--	return (u8)clamp(perf_val, perf.lowest_perf, perf.highest_perf);
--}
--
--static inline u32 perf_to_freq(union perf_cached perf, u32 nominal_freq, u8 perf_val)
--{
--	return DIV_ROUND_UP_ULL((u64)nominal_freq * perf_val,
--				perf.nominal_perf);
--}
--
- static int __init dmi_matched_7k62_bios_bug(const struct dmi_system_id *dmi)
- {
- 	/**
-diff --git a/drivers/cpufreq/amd-pstate.h b/drivers/cpufreq/amd-pstate.h
-index 9f5a81976eae0..578465187b7ae 100644
---- a/drivers/cpufreq/amd-pstate.h
-+++ b/drivers/cpufreq/amd-pstate.h
-@@ -159,6 +159,20 @@ enum amd_pstate_mode {
- 	AMD_PSTATE_GUIDED,
- 	AMD_PSTATE_MAX,
- };
-+
-+static inline u8 freq_to_perf(union perf_cached perf, u32 nominal_freq, unsigned int freq_val)
-+{
-+	u32 perf_val = DIV_ROUND_UP_ULL((u64)freq_val * perf.nominal_perf, nominal_freq);
-+
-+	return (u8)clamp(perf_val, perf.lowest_perf, perf.highest_perf);
-+}
-+
-+static inline u32 perf_to_freq(union perf_cached perf, u32 nominal_freq, u8 perf_val)
-+{
-+	return DIV_ROUND_UP_ULL((u64)nominal_freq * perf_val,
-+				perf.nominal_perf);
-+}
-+
- const char *amd_pstate_get_mode_string(enum amd_pstate_mode mode);
- int amd_pstate_get_status(void);
- int amd_pstate_update_status(const char *buf, size_t size);
+ 	return 0;
+ }
 -- 
 2.53.0
 
