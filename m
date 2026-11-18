@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027964;
-	b=cAzFkZNAGBhA8MzGXUft4jXph+j5deZ9WgJruN3HdIVI+XgpX42aIKGJTZQhpmVj2oKJ
-	 RVC0BXhcDgn62gO1wTnCcohj3aJMxU4pJ0QsdhjkQvrGxQKu5Ao3Md8cstR8Vxd3w+XE7
-	 68/YjdV3s5jyfu9IbkOalyiXa2ZVX8cTlOMVzErPq/nraBNQdEAoDlAPFJ02CHB0KNnyN
-	 sAAVnY4zKgJIDUyL9knFD83y0njXTLpaf0zB1MXM580bJ+1RE1BY7L3TkXOqe1Szuet9S
-	 1USEUGOf+SwupL6sz2z8l9Su1I33yJSsQcuo+YM+BYRuZA+ukCHIlYyytpH/fhQ1v6A==
+	t=1795027967;
+	b=K8ZXetq411/EFyqhD4zMY7403hYQ5EV72UZWMiSVi6CYU2RSA3s4wWn7nvSu0cpnyLUm
+	 ZfQbhfCbdtBWaNd8CSuFpSzDsOOaVXOVAaPLliTVu+FzvzfmjK1BZY/GGoH0PXh241Cju
+	 eCinFi7U0QsB2Hpa/7xfN2Usc2KHj2epKKNnPAxt1OnbmtOZWr+lAyYPsqg8q5b6yNL/h
+	 uMiYL0UApGdXh32YlUiCnQBHIX8BtezhhKLzHvnfsznn5KZ5ER+kZvBgkfBIrZN6qpvTp
+	 Js/ALuX7oXA1zlsZUs+LFkwah1y59csAHwSoTDE7McHsweYIAra4rjYeBjkJlSDlEjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5QmoldJ7EyYqx7gG7Qk1oD9UQP/cBsyH0tdJJM40o+8=;
-	b=CsLlYxkobXohb+eOMoVqNWLegIE58+z9zK9UTnnoXUVUB7oACSbQxjPbq3huZNMXL2D1
-	 UOC/rX8zjKnAPSNMlDvA4V5uRNIFz5zp5pWvkzdfkzipeox5EgiVF93WMvzC6Q/+oehpI
-	 D3QyH/GKcQP5FRYGYEObdDRUsqxKetbNuu8Jb68tiLhaeuEb3ay/hvHdTLJ8ZloIUOufb
-	 3e/VMcpZH8SUkqbsvpuuIuf/Hvi4qD7FnAuB42SWM7Nezd8ZtV6/eOFk2X+vn2WpssyYR
-	 bYojAik8Y+VTjx8sb8COu1JY/wFC3M5JAv4EiRG+HWUyxI1ttY3YMyZCwdofdWA8p4Q==
+	bh=ybo7bZTMbNTpxYc68u5/1alhbBEus2oqFc+qMu+F5dY=;
+	b=SimEV4FDc4U2jyvcnbx/9Spqez50QMN0P0RjelkFHabc/qAjvRJJX+Y+qKJsqUNi8Ddx
+	 5JLqHMBk2CxQZK3vGjGcsspXtJaALPrAOBq0PLYXZd5KlFOTrntouXh8xyIkKMRn2lIKX
+	 QOLTVdiMsU8+JPKkNtiMCjdVRhXp5ciofwL0NEd++k1SloIvx/9qKpdqm/Tf7eGOm6yrc
+	 qox0sMszyd/r8RVUuvblYhvD+2b6TB4YReCBOafuXPcTPicq8dGv/Oa3e6E2MA90RcUp6
+	 QDnGabvMIeISHV9QO+Yu8Tcfisp/z2ELdxaVTT6BMvAkhXckNPOaliAFxq1bgTRARPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yjgkAjpk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6xTmduQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54EB606A331;
-	Wed, 18 Nov 2026 18:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0637606A31C;
+	Wed, 18 Nov 2026 18:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yjgkAjpk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E0C1F000C4;
-	Wed, 18 Nov 2026 18:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6xTmduQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BC61F000C4;
+	Wed, 18 Nov 2026 18:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027964;
-	bh=5QmoldJ7EyYqx7gG7Qk1oD9UQP/cBsyH0tdJJM40o+8=;
+	s=korg; t=1795027967;
+	bh=ybo7bZTMbNTpxYc68u5/1alhbBEus2oqFc+qMu+F5dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yjgkAjpk1ASt1l5GMs7U+GvkTobgvzko4Kqc6UKSnishhLGw5UFXxqS1YA7TtonK9
-	 +qqEqpdOkjV8e5Nasdtf5TJ7ZQl9pQQLByJR9PH6XOtiQsl2g7P3qG/u0VHZvVJVw7
-	 lWTlDqgzSGT9wBHb/K6O8Q4H60WrCsR3Vur7veTY=
+	b=M6xTmduQrBGt2kS32quzAr2Xi53Ayr3nICibtJ/r72PlCLYDqSk8dXT3d5U49bdDc
+	 9Ff0/RrqJFQPdiB9aMOFN+HmqttazHKpd0NRiUXTJWt1JxeAh+GbvFfcCftdTorlNy
+	 qB1eTCxgJ5vluXh4Pp5irA8ZPYlP3cFcPb2Qdir0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	alex todadze <todadzealexi19@proton.me>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1976/2151] net: stmmac: fix rx checksum offload with extended descriptors
-Date: Wed, 18 Nov 2026 16:01:51 +0100
-Message-ID: <20261118150233.722302386@linuxfoundation.org>
+Subject: [PATCH 6.18 1977/2151] ipmr: clear skb->cb[] in reg_vif_xmit()
+Date: Wed, 18 Nov 2026 16:01:52 +0100
+Message-ID: <20261118150233.758736585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,171 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: alex todadze <todadzealexi19@proton.me>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 72ee27b97986f4d331fe1c26e4333f12738d982f ]
+[ Upstream commit 389952e8776a4663044df2ae3e8987a9e81964cf ]
 
-With extended descriptors, bit 0 of RDES0 is the Extended Status
-Available flag. enh_desc_get_rx_status() still reads it as the payload
-checksum error bit of the checksum offload table, so every IP frame that
-has extended status is reported as csum_none and its checksum is
-verified again in software.
+reg_vif_xmit() hands the skb to ipmr_cache_report() as an
+IGMPMSG_WHOLEPKT report. When the mroute socket has IP_PKTINFO
+enabled, ipmr_cache_report() calls ipv4_pktinfo_prepare() on the
+original skb, which reads skb->cb[] as IPCB.
 
-When extended status is available, take the result from RDES4 instead.
-A TCP, UDP or ICMP payload with no IP header error, no payload error and
-no checksum bypass is a good frame. Everything else keeps the status
-from RDES0. Since RDES4 now decides the checksum status, read it after
-the own bit with dma_rmb(). While at it, fix the IP payload type mask,
-which covered bits 6:2 instead of 2:0 and had no users.
+By the time the pimreg device transmits the packet, skb->cb[] is not
+IPCB anymore: qdisc_pkt_len_init() overwrites IPCB(skb)->iif with
+qdisc_skb_cb(skb)->pkt_len, and any qdisc installed on the device or a
+tc BPF program writing skb->cb[] fills the area holding the IP options
+and IPCB(skb)->flags.
 
-Tested on a Siflower SF19A2890 (GMAC 3.70) with the board as the iperf3
-endpoint. TCP receive goes from 326 to 378 Mbit/s with one stream and
-from 259 to 329 Mbit/s with four, and CPU use while receiving 200 Mbit/s
-drops from 26.6% to 21.5%. In stmmac_rx(), frames with a bad TCP, UDP or
-ICMP checksum, over IPv4 and IPv6 and including fragmented UDP, are
-still passed up as CHECKSUM_NONE and dropped by the stack.
+For locally generated packets routed out pimreg (they carry an rtable
+dst), the mroute socket can therefore receive a bogus ipi_ifindex
+(the packet length), and the l3mdev slave test in
+ipv4_pktinfo_prepare() is driven by stale qdisc data.
 
-Fixes: c24602ef8664 ("stmmac: support extend descriptors")
-Signed-off-by: alex todadze <todadzealexi19@proton.me>
-Link: https://patch.msgid.link/20261020-stmmac-rx-csum-v2-1-330c8d0951ea@proton.me
+Clear IPCB before building the report, as done for IPv6 in
+commit 238164201431 ("ip6mr: clear skb->cb[] in reg_vif_xmit()").
+The skb is freed right after, so nothing else depends on its control
+block.
+
+Fixes: bb7403655b3c ("ipmr: support IP_PKTINFO on cache report IGMP msg")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261025111337.142787-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/descs.h   |  6 ++++-
- .../net/ethernet/stmicro/stmmac/enh_desc.c    | 25 +++++++++++++++++--
- drivers/net/ethernet/stmicro/stmmac/hwif.h    |  6 ++---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 19 ++++++++++----
- 4 files changed, 45 insertions(+), 11 deletions(-)
+ net/ipv4/ipmr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/descs.h b/drivers/net/ethernet/stmicro/stmmac/descs.h
-index 49d6a866244f4..4fc5f69aeaa98 100644
---- a/drivers/net/ethernet/stmicro/stmmac/descs.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/descs.h
-@@ -123,7 +123,7 @@
- #define	ETDES1_BUFFER2_SIZE_SHIFT	16
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 5133fd14029e2..06c981accf3ca 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -547,6 +547,11 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	DEV_STATS_ADD(dev, tx_bytes, skb->len);
+ 	DEV_STATS_INC(dev, tx_packets);
  
- /* Extended Receive descriptor definitions */
--#define	ERDES4_IP_PAYLOAD_TYPE_MASK	GENMASK(6, 2)
-+#define	ERDES4_IP_PAYLOAD_TYPE_MASK	GENMASK(2, 0)
- #define	ERDES4_IP_HDR_ERR		BIT(3)
- #define	ERDES4_IP_PAYLOAD_ERR		BIT(4)
- #define	ERDES4_IP_CSUM_BYPASSED		BIT(5)
-@@ -154,6 +154,10 @@
- #define RDES_PTP_SIGNALING		0xa
- #define RDES_PTP_PKT_RESERVED_TYPE	0xf
- 
-+#define RDES_EXT_PAYLOAD_UDP		0x1
-+#define RDES_EXT_PAYLOAD_TCP		0x2
-+#define RDES_EXT_PAYLOAD_ICMP		0x3
++	/* skb->cb[] holds qdisc/tc state at this point, not IPCB.
++	 * ipmr_cache_report() reads it as IPCB to build IP_PKTINFO.
++	 */
++	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
 +
- /* Basic descriptor structure for normal and alternate descriptors */
- struct dma_desc {
- 	__le32 des0;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
-index 937b7a0466fca..963579518405c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
-@@ -114,8 +114,25 @@ static int enh_desc_coe_rdes0(int ipc_err, int type, int payload_err)
- 	return ret;
- }
- 
--static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
--				    struct dma_extended_desc *p)
-+static int enh_desc_ext_rx_csum(u32 rdes0, u32 rdes4, int status)
-+{
-+	u32 type = FIELD_GET(ERDES4_IP_PAYLOAD_TYPE_MASK, rdes4);
-+
-+	if (status != csum_none || !(rdes0 & RDES0_FRAME_TYPE))
-+		return status;
-+	if (!(rdes4 & (ERDES4_IPV4_PKT_RCVD | ERDES4_IPV6_PKT_RCVD)) ||
-+	    (rdes4 & (ERDES4_IP_HDR_ERR | ERDES4_IP_PAYLOAD_ERR |
-+		      ERDES4_IP_CSUM_BYPASSED)))
-+		return status;
-+	if (type != RDES_EXT_PAYLOAD_UDP && type != RDES_EXT_PAYLOAD_TCP &&
-+	    type != RDES_EXT_PAYLOAD_ICMP)
-+		return status;
-+
-+	return good_frame;
-+}
-+
-+static int enh_desc_get_ext_status(struct stmmac_extra_stats *x,
-+				   struct dma_extended_desc *p, int status)
- {
- 	unsigned int rdes0 = le32_to_cpu(p->basic.des0);
- 	unsigned int rdes4 = le32_to_cpu(p->des4);
-@@ -175,7 +192,11 @@ static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
- 			x->l4_filter_match++;
- 		if ((rdes4 & ERDES4_L3_L4_FILT_NO_MATCH_MASK) >> 26)
- 			x->l3_l4_filter_no_match++;
-+
-+		status = enh_desc_ext_rx_csum(rdes0, rdes4, status);
- 	}
-+
-+	return status;
- }
- 
- static int enh_desc_get_rx_status(struct stmmac_extra_stats *x,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index ba36f1aa8c8a4..ab49143b058ee 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -75,8 +75,8 @@ struct stmmac_desc_ops {
- 	/* Return the reception status looking at the RDES1 */
- 	int (*rx_status)(struct stmmac_extra_stats *x,
- 			 struct dma_desc *p);
--	void (*rx_extended_status)(struct stmmac_extra_stats *x,
--				   struct dma_extended_desc *p);
-+	int (*rx_extended_status)(struct stmmac_extra_stats *x,
-+				  struct dma_extended_desc *p, int status);
- 	/* Set tx timestamp enable bit */
- 	void (*enable_tx_timestamp) (struct dma_desc *p);
- 	/* get tx timestamp status */
-@@ -139,7 +139,7 @@ struct stmmac_desc_ops {
- #define stmmac_rx_status(__priv, __args...) \
- 	stmmac_do_callback(__priv, desc, rx_status, __args)
- #define stmmac_rx_extended_status(__priv, __args...) \
--	stmmac_do_void_callback(__priv, desc, rx_extended_status, __args)
-+	stmmac_do_callback(__priv, desc, rx_extended_status, __args)
- #define stmmac_enable_tx_timestamp(__priv, __args...) \
- 	stmmac_do_void_callback(__priv, desc, enable_tx_timestamp, __args)
- #define stmmac_get_tx_timestamp_status(__priv, __args...) \
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 4a811a1d586a0..98e6d2cc544ce 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5407,9 +5407,13 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
- 		if (!buf->xdp)
- 			break;
- 
--		if (priv->extend_desc)
--			stmmac_rx_extended_status(priv, &priv->xstats,
--						  rx_q->dma_erx + entry);
-+		if (priv->extend_desc) {
-+			/* Read the extended status after the own bit */
-+			dma_rmb();
-+			status = stmmac_rx_extended_status(priv, &priv->xstats,
-+							   &rx_q->dma_erx[entry],
-+							   status);
-+		}
- 		if (unlikely(status == discard_frame)) {
- 			xsk_buff_free(buf->xdp);
- 			buf->xdp = NULL;
-@@ -5602,8 +5606,13 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 
- 		prefetch(np);
- 
--		if (priv->extend_desc)
--			stmmac_rx_extended_status(priv, &priv->xstats, rx_q->dma_erx + entry);
-+		if (priv->extend_desc) {
-+			/* Read the extended status after the own bit */
-+			dma_rmb();
-+			status = stmmac_rx_extended_status(priv, &priv->xstats,
-+							   &rx_q->dma_erx[entry],
-+							   status);
-+		}
- 		if (unlikely(status == discard_frame)) {
- 			page_pool_put_page(rx_q->page_pool, buf->page, 0, true);
- 			buf->page = NULL;
+ 	/* Pairs with WRITE_ONCE() in vif_add() and vif_delete() */
+ 	ipmr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
+ 			  IGMPMSG_WHOLEPKT);
 -- 
 2.53.0
 
