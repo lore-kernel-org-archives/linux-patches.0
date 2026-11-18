@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043122;
-	b=D/eDt9P0TbpP+jf1zzB6EY7FtMlZO6tHPBd+f0WvsbSz4XZvKMZ6roZb5dIJK2zmtlUf
-	 PMUMApDUR99D675zoanQwGBYJnHgLKYoW5O0BjP/vbJKrkr+G5vEGxElXIutW0G4zuZsm
-	 1Tuk2viASF2+O3HpfauVomiatPv/N0F95nDwzWThfOEGmtHCENEVLqY4PI2pAUeNEcAML
-	 VBHaMKGoBep6AKqkswK1iu82aL0L2oux6uqnWS+Kc1NWTF5JYFSM4o1W+sn6LBfIbU79Q
-	 jNEgvbJnCM+i7uKCWWOdUwzTo/ixvnYHctDGWbC8i/Ptm02IABBpKpBihqrX4LfQpNQ==
+	t=1795043125;
+	b=Ub01O3/GSBRdqIPK5SP090N++3w/IRyy2hCpytuzvainXfJczaDdlEbDKHxvn5iAxxCe
+	 G6QTvx16RhQPopuCmkAXUaVXKQQ/GBUnA+GwalPKOjmohEoxoPpjrf876303e30PtM4Dy
+	 D69iflfJaCcUw0KS/0kCSTfubzUogLAH9pwernlScnOg1TShDzv+QKod0WTexq3IxamcO
+	 TUXVu7eYg8iy+wKCKRcKdtEh8kjhb0qOnYnkqxML7MnLz5OBi6PrAxCryRt6VmkULNle+
+	 7Yt6mgWpGGA4C8DQL+CLxnrmh0WChzraWORZJqhIV/XZW1FYv0LZPYhClqodhmoY8Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U1vfSclSloh3W4ORWC9wcc2Asy/80R0nOUsVeX9GI04=;
-	b=l4VOxX9CzLdNCSrBVADDDQ3YLS60GNCIKgx4Ztw4F+szTXxKOXhhu1qsqQLJ0mDeEXSq
-	 v9E4kzwBEvP9+rYhwy/LtT5Oqu9cakOJvJmYicGbK0rRe/I8FVdD14NdGUrMsF69r69jP
-	 GH4AGp8khzSbIyR8Uwih0jgMOf5YsCIYvi3dUzHsODvzKDQF48aWGsuqknmr6rp957GOF
-	 5WvW9D2vF0h5RtK8aQewOP6d1HdBJVKmi3HMEbx4sf1GZzBN628dG/PqJ9yng5f1k+kRb
-	 Oo6v3zbjxMfiF0Kj2X3AWfnC7NS8nMqCdhaE25/ruGeny25Lw7UENM3HucLSAyBCgrg==
+	bh=u1NeLMNHyPTZUn1WMv8NnWU+Lxav7y51WgsOfu7hSiQ=;
+	b=fhaLQNsD5KzqTvmFp5uRzTKKQYVLNeFKa5vDwPCzl/E+2XHKVMgha3U3a23T5B+i8B/3
+	 xEBv5JkI7ycMMx7PglBFHTcu/VKjKB47/VOF8RF6DY3nIimNlo5Ip2oIcSXold7FgCCuh
+	 gGrkmhufOITbhxn2o0Cvl7t2/JoJuyxN6y5s6Tj3x1AtRYm4eRy++MM2TJcHM0xRWgFVV
+	 5YydpqKx29ZlKNnedUmJSm4Z+p/fW/NjS4gVuD0Do1V0cKVNrfKkQDKumv+c/CxquFvNF
+	 5uw4JdZOuXrD4qeRVnsGxDhgapIGWn7eJKRLwpFF5liPxfQDTlGNfRDbA7sZvajBXCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0PecpWzR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRHWg14c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA4A606A31C;
-	Wed, 18 Nov 2026 23:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7F4606A31C;
+	Wed, 18 Nov 2026 23:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0PecpWzR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BF01F000C4;
-	Wed, 18 Nov 2026 23:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRHWg14c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859F01F000C4;
+	Wed, 18 Nov 2026 23:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043122;
-	bh=U1vfSclSloh3W4ORWC9wcc2Asy/80R0nOUsVeX9GI04=;
+	s=korg; t=1795043125;
+	bh=u1NeLMNHyPTZUn1WMv8NnWU+Lxav7y51WgsOfu7hSiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0PecpWzR/RihbnIpvCpawAuOSk6KADlbgva6h206gaFl8tcCkpsP9D8268/+/b2Dh
-	 MLKqHpdhTMh9SE1SyW8M2E7+Kj6lLJeN5rWqFCVDGPHWApzI5xD3oVGDW/4r8tgmgr
-	 vKjCiMOKh9P/lzYJFkYBVpqB4o/eBMOah69IFb3I=
+	b=iRHWg14cqykSRzV+8uaFimXVoB5gWe0qh9HIN/JcFA1mFaOeAQY4b88Eg62iWzjX3
+	 BwugKQNkx731JRBnbgSfDvHN1M6UvSepgLJEoub4SgACGIy+E8+B1AAAtOqkep/YXx
+	 uUIcOJLeAz6p7QqvlwZfmYX15K2KajWuto5YDYeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Kyle Mahlkuch <kmahlkuc@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0097/2857] scsi: qla2xxx: Handle INTx not connected while passing through
-Date: Wed, 18 Nov 2026 15:18:51 +0100
-Message-ID: <20261118150204.756065585@linuxfoundation.org>
+Subject: [PATCH 6.1 0062/2857] nvme: zns: cap zone report nr_zones by DMA buffer size
+Date: Wed, 18 Nov 2026 15:18:16 +0100
+Message-ID: <20261118150203.537184138@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,63 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 7268e509b43ac1734e1bdb7d18553f7e1080dfb4 ]
+[ Upstream commit 09c9062d4f62199a634a45e2bb9e6e8e572cc78c ]
 
-The PCI_INTERRUPT_PIN reports if the device supports the INTx.  However,
-when the device is assigned to a guest via vfio, the PCI_INTERRUPT_PIN
-is set to 0 (i.e none) if the line is not connected and/or the platform
-cannot route the interrupt.
+With Partial Report (PR=1), the Number of Zones (NZ) field in the report
+header must equal the number of zone descriptors fully transferred in the
+DMA buffer (ZNS Command Set Specification Rev 1.2, section 3.4.2).
 
-In such cases, the guest PCI_INTERRUPT_PIN is 0 and the port number
-becomes -1 (255, uint8_t underflow) for qla[25|27|28]xx and qla2031
-devices.  The flt_region_nvram is never set, and subsequently the LUN
-detection fails.  Below warnings show the NVRAM configuration failure:
+nvme_ns_report_zones() does not cap the parse loop by max_in_buf derived
+from buflen.  Cap nz with min3() over the device-reported count, nr_zones -
+zone_idx, and max_in_buf.
 
- []-0073:1: Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100.
- []-0074:1: Falling back to functioning (yet invalid -- WWPN) defaults.
- []-0076:1: NVRAM configuration failed.
-
-Handle this case and set the port_no to devfn like its done everywhere
-else.
-
-Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN if no pdev->irq")
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>
-Link: https://patch.msgid.link/177885270578.1573.14283751510936407585.stgit@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/nvme/host/zns.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
-index 38e2b31237025..d1d42e03adbfc 100644
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -2813,11 +2813,16 @@ qla2x00_set_isp_flags(struct qla_hw_data *ha)
- 	else {
- 		/* Get adapter physical port no from interrupt pin register. */
- 		pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
--		if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
--		    IS_QLA27XX(ha) || IS_QLA28XX(ha))
--			ha->port_no--;
--		else
--			ha->port_no = !(ha->port_no & 1);
-+		if (ha->port_no == 0) {
-+			/* None of INT[A|B|C|D] may be virtualized by vfio */
-+			ha->port_no = PCI_FUNC(ha->pdev->devfn);
-+		} else {
-+			if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
-+			    IS_QLA27XX(ha) || IS_QLA28XX(ha))
-+				ha->port_no--;
-+			else
-+				ha->port_no = !(ha->port_no & 1);
-+		}
- 	}
+diff --git a/drivers/nvme/host/zns.c b/drivers/nvme/host/zns.c
+index 12316ab51bda6..18cb12931af71 100644
+--- a/drivers/nvme/host/zns.c
++++ b/drivers/nvme/host/zns.c
+@@ -180,7 +180,7 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 	struct nvme_zone_report *report;
+ 	struct nvme_command c = { };
+ 	int ret, zone_idx = 0;
+-	unsigned int nz, i;
++	unsigned int max_in_buf, nz, i;
+ 	size_t buflen;
  
- 	ql_dbg_pci(ql_dbg_init, ha->pdev, 0x000b,
+ 	if (ns->head->ids.csi != NVME_CSI_ZNS)
+@@ -190,6 +190,9 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 	if (!report)
+ 		return -ENOMEM;
+ 
++	max_in_buf = (buflen - sizeof(struct nvme_zone_report)) /
++		sizeof(struct nvme_zone_descriptor);
++
+ 	c.zmr.opcode = nvme_cmd_zone_mgmt_recv;
+ 	c.zmr.nsid = cpu_to_le32(ns->head->ns_id);
+ 	c.zmr.numd = cpu_to_le32(nvme_bytes_to_numd(buflen));
+@@ -209,7 +212,8 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 			goto out_free;
+ 		}
+ 
+-		nz = min((unsigned int)le64_to_cpu(report->nr_zones), nr_zones);
++		nz = min3((unsigned int)le64_to_cpu(report->nr_zones),
++			  nr_zones - zone_idx, max_in_buf);
+ 		if (!nz)
+ 			break;
+ 
 -- 
 2.53.0
 
