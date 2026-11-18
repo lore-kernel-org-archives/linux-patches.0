@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025276;
-	b=Gyx3Ag49OP5Oqf/xuA/RDxMo+IQpqIhO6g79bpDKcpkrqZ4xY6HPcbUyAJekNxGj148m
-	 3BHKQ8HXj57eHyISqXP+OutEvY+w+/n4VqAEtFXoHG/r+4ncGeM281tQOCKn1FG1UGhn0
-	 ok3s2awHmM2L+AXZ6EzUy6IwDgE9DaRals47Kx5AYcBXgqzAc1HwJA3dz1Tt1UKYRC3Nu
-	 1yTH5SISffMykb8j8QVWN2wzSoPY+nd021YHpGJtUh5gT5bSSfudNZGFJhF/v9jaULUIN
-	 uFWi44EYMXRwRL1xoOc8jnXrhBQsa/REiuwtoWg7SM30QuFrv+NUEO8BsLUjC8Jn1RA==
+	t=1795025278;
+	b=mb7WjUpd18V+D/VkbYDBXBRBvS+lf8rgS/4hyaNrE94ITw+IGM8HQY2TkBcbGbMzjzt+
+	 Vji8hMU7mQi1FExjpzYBhIekjpijOzoq+SO4zpL6/OR8Y80TyUCTCdKjDz2Lfn8VOwU/b
+	 BhWXjkguXlTbYCugt7dVxjihMfcD3+4bmlBZ5QLvV6yLtJw8rMPc7WuUNlZsXtQZvGKxq
+	 CeB+FZgFNZCRB8NR7kfQ7qyPND6PRo+iNyvHB2ghZdvXjsnE3TMFpVob0PWLkuVXkESq9
+	 N2Tei+/UhKd8ew1r7pWGuV+WJRCB0sYeZ3eVbW3j4B8DUUn7TCvxPKcZCaqGmYkRbsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=boUvDESlOf82/icP12QkatGVpVakBje3rQ+dqYRZX0g=;
-	b=RJ23tAmJwp1SWFEHqmXAhL+kHYwnyibbBKwpYsWg5LeBHxqtL/J7DF/lbN0G6fHV6lUn
-	 IjxKwtkdWVtDpB0lpD5RnmyXryCff0mWifhJZBya5fbt+80B610Q/2UmhYU3HGn+sRMT2
-	 w4SONF2kn0ZSnALOTzyOLnT3dFuEeJFSLZM1LgPvF1/dGAVw7abiesqtPs2DPycKnw9zZ
-	 FOOK7+UIMTz6gSMPQluvm12sAEBr9ZE40LK0BgJAa8Q1pclodQvWLFkkykMM388DLk90q
-	 dDlaBYGaMdGMM3AhHvUvpJGE1RrOSJtafHiJB6dBmWZCVgg3pB9s7rGItg9zjTbOMEQ==
+	bh=NVPOXqrUyDvUu5oXhQdYWVX1aSHA0aapnL8guLKDuB4=;
+	b=k4Xg4za9pDSdRKyPP1XY0LcqyhBiJuBoGGSTAKHya0kqs/aYzvpKLveVsHdA1GdRN9/d
+	 /jnxGxTliJfI/qJrbbLHyLAVHETF9cIUkXz99f2qa0Fgg3NjPcsK06UAl9O3oNw0a8Ihq
+	 JBoHgMaoh5e5jzKePiD66jLSQ10wpwCis7qJgZ/0GqWJ1bFCZBBQ9Ts96gJSQWu0QKgqs
+	 eX30jgG6t39gn1q4NurkQOHlcOB9E2+PbPMkDItgwjKgLtVcUeuGxOCgLBWd8fgbvW3GN
+	 cbBFf4TlR+1dNSMyclcy0+1AuNkhiHA8VtQeSaoMSuho2EyxI8mDLcnqd+puPNnZnug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aGthq+Mv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GZUi/ak+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A1A606A333;
-	Wed, 18 Nov 2026 18:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE823606A33A;
+	Wed, 18 Nov 2026 18:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aGthq+Mv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6F21F000C5;
-	Wed, 18 Nov 2026 18:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZUi/ak+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D64A1F000C7;
+	Wed, 18 Nov 2026 18:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025275;
-	bh=boUvDESlOf82/icP12QkatGVpVakBje3rQ+dqYRZX0g=;
+	s=korg; t=1795025278;
+	bh=NVPOXqrUyDvUu5oXhQdYWVX1aSHA0aapnL8guLKDuB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aGthq+Mv7BQufzkuFdIVYyPld6vn+7racGw+x3ZDzc73CNicKpTts4R8HY+cdl1E/
-	 EYOYRap/ePjKd2lbD3cP45rdV9yFA7BefU2bIHZO6KeykleF87vG7sw7kP2s5UTPkh
-	 IBNq5TtfG1LNpIdrzeH7XIlXlMfo6CPRIf+SnOEM=
+	b=GZUi/ak+X8D5JaBYWgR7ebU1NoVH/3Fjr18QJorOvFKKP63F6HQPh5lYR8DT11uo5
+	 ewf3emkBvl8ZrJ+n6ODCSG13abCzCFrADGpjr7Uynm2kyQ+6ma+7H4fcwTDgpQ8rwf
+	 Dcp1Xsjt8kLhaZV2ywPfXg3ZgY+w5hzeSMODC9/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Matthias Brugger <mbrugger@suse.com>,
 	Hal Feng <hal.feng@starfivetech.com>,
+	Maud Spierings <maud_spierings@hotmail.com>,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0980/2151] riscv: dts: starfive: Add common board dtsi for VisionFive 2 Lite variants
-Date: Wed, 18 Nov 2026 15:45:15 +0100
-Message-ID: <20261118150158.185042262@linuxfoundation.org>
+Subject: [PATCH 6.18 0981/2151] riscv: dts: starfive: Correct pwm nodes
+Date: Wed, 18 Nov 2026 15:45:16 +0100
+Message-ID: <20261118150158.218406758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,121 +71,193 @@ Content-Transfer-Encoding: 8bit
 
 From: Hal Feng <hal.feng@starfivetech.com>
 
-[ Upstream commit 2ad6d71a0de8b44e6803f11936398b55643c81aa ]
+[ Upstream commit 2186ec5f59c23fcf0bf896ca0543b6a1135d7bb5 ]
 
-Add a common board dtsi for use by VisionFive 2 Lite and
-VisionFive 2 Lite eMMC.
+Each of the StarFive JH7100/JH7110 SoCs has 8 OpenCores PTC IP
+cores. One OpenCores PTC IP core can output one PWM channel.
+Change the register size to 0x10, since an OpenCores PTC IP
+has only 4 32-bit registers: CNTR, HRC, LRC and CTRL.
 
-Acked-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Tested-by: Matthias Brugger <mbrugger@suse.com>
+Fixes: 8d01f741a046 ("riscv: dts: starfive: jh7110: Add PWM node and pins configuration")
+Fixes: 5e598b99fedf ("riscv: dts: starfive: jh7100: Add PWM node and pins configuration")
 Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+Tested-by: Maud Spierings <maud_spierings@hotmail.com>
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Stable-dep-of: 2186ec5f59c2 ("riscv: dts: starfive: Correct pwm nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../jh7110-starfive-visionfive-2-lite.dtsi    | 161 ++++++++++++++++++
- 1 file changed, 161 insertions(+)
- create mode 100644 arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi
+ .../boot/dts/starfive/jh7100-common.dtsi      | 28 ++++++--
+ arch/riscv/boot/dts/starfive/jh7100.dtsi      | 67 ++++++++++++++++++-
+ .../boot/dts/starfive/jh7110-common.dtsi      | 27 ++++++--
+ .../boot/dts/starfive/jh7110-milkv-mars.dts   |  6 +-
+ .../dts/starfive/jh7110-milkv-marscm.dtsi     |  6 +-
+ .../dts/starfive/jh7110-pine64-star64.dts     |  6 +-
+ .../jh7110-starfive-visionfive-2-lite.dtsi    |  6 +-
+ .../jh7110-starfive-visionfive-2.dtsi         |  6 +-
+ arch/riscv/boot/dts/starfive/jh7110.dtsi      | 67 ++++++++++++++++++-
+ 9 files changed, 198 insertions(+), 21 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi
-new file mode 100644
-index 0000000000000..f8797a666dbf5
---- /dev/null
-+++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi
-@@ -0,0 +1,161 @@
-+// SPDX-License-Identifier: GPL-2.0 OR MIT
-+/*
-+ * Copyright (C) 2025 StarFive Technology Co., Ltd.
-+ * Copyright (C) 2025 Hal Feng <hal.feng@starfivetech.com>
-+ */
-+
-+/dts-v1/;
-+#include "jh7110-common.dtsi"
-+
-+/ {
-+	vcc_3v3_pcie: regulator-vcc-3v3-pcie {
-+		compatible = "regulator-fixed";
-+		enable-active-high;
-+		gpio = <&sysgpio 27 GPIO_ACTIVE_HIGH>;
-+		regulator-name = "vcc_3v3_pcie";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
+diff --git a/arch/riscv/boot/dts/starfive/jh7100-common.dtsi b/arch/riscv/boot/dts/starfive/jh7100-common.dtsi
+index ae1a6aeb0aeaa..85106545090ea 100644
+--- a/arch/riscv/boot/dts/starfive/jh7100-common.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7100-common.dtsi
+@@ -199,13 +199,23 @@ GPO_I2C2_PAD_SDA_OEN,
+ 		};
+ 	};
+ 
+-	pwm_pins: pwm-0 {
+-		pwm-pins {
++	pwm0_pins: pwm0-0 {
++		pwm0-pins {
+ 			pinmux = <GPIOMUX(7,
+ 				  GPO_PWM_PAD_OUT_BIT0,
+ 				  GPO_PWM_PAD_OE_N_BIT0,
+-				  GPI_NONE)>,
+-				 <GPIOMUX(5,
++				  GPI_NONE)>;
++			bias-disable;
++			drive-strength = <35>;
++			input-disable;
++			input-schmitt-disable;
++			slew-rate = <0>;
++		};
 +	};
-+};
 +
-+&cpu_opp {
-+	/delete-node/ opp-375000000;
-+	/delete-node/ opp-500000000;
-+	/delete-node/ opp-750000000;
-+	/delete-node/ opp-1500000000;
-+
-+	opp-312500000 {
-+		opp-hz = /bits/ 64 <312500000>;
-+		opp-microvolt = <800000>;
-+	};
-+	opp-417000000 {
-+		opp-hz = /bits/ 64 <417000000>;
-+		opp-microvolt = <800000>;
-+	};
-+	opp-625000000 {
-+		opp-hz = /bits/ 64 <625000000>;
-+		opp-microvolt = <800000>;
-+	};
-+	opp-1250000000 {
-+		opp-hz = /bits/ 64 <1250000000>;
-+		opp-microvolt = <1000000>;
-+	};
-+};
-+
-+&gmac0 {
-+	starfive,tx-use-rgmii-clk;
-+	assigned-clocks = <&aoncrg JH7110_AONCLK_GMAC0_TX>;
-+	assigned-clock-parents = <&aoncrg JH7110_AONCLK_GMAC0_RMII_RTX>;
++	pwm1_pins: pwm1-0 {
++		pwm1-pins {
++			pinmux =  <GPIOMUX(5,
+ 				  GPO_PWM_PAD_OUT_BIT1,
+ 				  GPO_PWM_PAD_OE_N_BIT1,
+ 				  GPI_NONE)>;
+@@ -359,9 +369,15 @@ &osc_aud {
+ 	clock-frequency = <27000000>;
+ };
+ 
+-&pwm {
++&pwm0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pwm0_pins>;
 +	status = "okay";
 +};
 +
-+&i2c0 {
-+	status = "okay";
++&pwm1 {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pwm_pins>;
++	pinctrl-0 = <&pwm1_pins>;
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7100.dtsi b/arch/riscv/boot/dts/starfive/jh7100.dtsi
+index 7de0732b8eabe..90438df1f74d3 100644
+--- a/arch/riscv/boot/dts/starfive/jh7100.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7100.dtsi
+@@ -360,9 +360,72 @@ watchdog@12480000 {
+ 				 <&rstgen JH7100_RSTN_WDT>;
+ 		};
+ 
+-		pwm: pwm@12490000 {
++		pwm0: pwm@12490000 {
+ 			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
+-			reg = <0x0 0x12490000 0x0 0x10000>;
++			reg = <0x0 0x12490000 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm1: pwm@12490010 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12490010 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm2: pwm@12490020 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12490020 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm3: pwm@12490030 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12490030 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm4: pwm@12498000 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12498000 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm5: pwm@12498010 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12498010 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm6: pwm@12498020 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12498020 0x0 0x10>;
++			clocks = <&clkgen JH7100_CLK_PWM_APB>;
++			resets = <&rstgen JH7100_RSTN_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm7: pwm@12498030 {
++			compatible = "starfive,jh7100-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x12498030 0x0 0x10>;
+ 			clocks = <&clkgen JH7100_CLK_PWM_APB>;
+ 			resets = <&rstgen JH7100_RSTN_PWM_APB>;
+ 			#pwm-cells = <3>;
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-common.dtsi b/arch/riscv/boot/dts/starfive/jh7110-common.dtsi
+index 5dc15e48b74b1..d91672a0478dd 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-common.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110-common.dtsi
+@@ -359,9 +359,14 @@ uboot@100000 {
+ 	};
+ };
+ 
+-&pwm {
++&pwm0 {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pwm_pins>;
++	pinctrl-0 = <&pwm0_pins>;
 +};
 +
-+&mmc1 {
-+	max-frequency = <50000000>;
-+	keep-power-in-suspend;
-+	non-removable;
-+};
-+
-+&pcie1 {
-+	vpcie3v3-supply = <&vcc_3v3_pcie>;
-+	status = "okay";
-+};
-+
-+&phy0 {
-+	motorcomm,tx-clk-adj-enabled;
-+	motorcomm,tx-clk-100-inverted;
-+	motorcomm,tx-clk-1000-inverted;
-+	motorcomm,rx-clk-drv-microamp = <3970>;
-+	motorcomm,rx-data-drv-microamp = <2910>;
-+	rx-internal-delay-ps = <1500>;
-+	tx-internal-delay-ps = <1500>;
-+};
-+
-+&pwm {
-+	status = "okay";
-+};
-+
-+&spi0 {
-+	status = "okay";
-+};
-+
-+&syscrg {
-+	assigned-clock-rates = <0>, <0>, <0>, <0>, <500000000>, <1250000000>;
-+};
-+
-+&sysgpio {
-+	uart1_pins: uart1-0 {
-+		tx-pins {
-+			pinmux = <GPIOMUX(22, GPOUT_SYS_UART1_TX,
-+					      GPOEN_ENABLE,
++&pwm1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pwm1_pins>;
+ };
+ 
+ &spi0 {
+@@ -572,12 +577,22 @@ GPOEN_ENABLE,
+ 		};
+ 	};
+ 
+-	pwm_pins: pwm-0 {
+-		pwm-pins {
++	pwm0_pins: pwm0-0 {
++		pwm0-pins {
+ 			pinmux = <GPIOMUX(46, GPOUT_SYS_PWM_CHANNEL0,
+ 					      GPOEN_SYS_PWM0_CHANNEL0,
+-					      GPI_NONE)>,
+-				 <GPIOMUX(59, GPOUT_SYS_PWM_CHANNEL1,
 +					      GPI_NONE)>;
 +			bias-disable;
 +			drive-strength = <12>;
@@ -194,67 +265,178 @@ index 0000000000000..f8797a666dbf5
 +			input-schmitt-disable;
 +			slew-rate = <0>;
 +		};
-+
-+		rx-pins {
-+			pinmux = <GPIOMUX(23, GPOUT_LOW,
-+					      GPOEN_DISABLE,
-+					      GPI_SYS_UART1_RX)>;
-+			bias-pull-up;
-+			drive-strength = <2>;
-+			input-enable;
-+			input-schmitt-enable;
-+			slew-rate = <0>;
-+		};
-+
-+		cts-pins {
-+			pinmux = <GPIOMUX(24, GPOUT_LOW,
-+					      GPOEN_DISABLE,
-+					      GPI_SYS_UART1_CTS)>;
-+			input-enable;
-+		};
-+
-+		rts-pins {
-+			pinmux = <GPIOMUX(25, GPOUT_SYS_UART1_RTS,
-+					      GPOEN_ENABLE,
-+					      GPI_NONE)>;
-+			input-enable;
-+		};
 +	};
 +
-+	usb0_pins: usb0-0 {
-+		power-pins {
-+			pinmux = <GPIOMUX(26, GPOUT_HIGH,
-+					      GPOEN_ENABLE,
-+					      GPI_NONE)>;
-+			input-disable;
-+		};
-+
-+		switch-pins {
-+			pinmux = <GPIOMUX(62, GPOUT_LOW,
-+					      GPOEN_ENABLE,
-+					      GPI_NONE)>;
-+			input-disable;
-+		};
-+	};
-+};
-+
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>;
++	pwm1_pins: pwm1-0 {
++		pwm1-pins {
++			pinmux = <GPIOMUX(59, GPOUT_SYS_PWM_CHANNEL1,
+ 					      GPOEN_SYS_PWM0_CHANNEL1,
+ 					      GPI_NONE)>;
+ 			bias-disable;
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-milkv-mars.dts b/arch/riscv/boot/dts/starfive/jh7110-milkv-mars.dts
+index fdaf6b4557da9..58da60edc18ae 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-milkv-mars.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-milkv-mars.dts
+@@ -41,7 +41,11 @@ &phy0 {
+ 	motorcomm,tx-clk-adj-enabled;
+ };
+ 
+-&pwm {
++&pwm0 {
 +	status = "okay";
 +};
 +
-+&usb0 {
-+	dr_mode = "host";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&usb0_pins>;
++&pwm1 {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-milkv-marscm.dtsi b/arch/riscv/boot/dts/starfive/jh7110-milkv-marscm.dtsi
+index 25b70af564eea..e7a318f1f1757 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-milkv-marscm.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110-milkv-marscm.dtsi
+@@ -74,7 +74,11 @@ &phy0 {
+ 	motorcomm,tx-clk-adj-enabled;
+ };
+ 
+-&pwm {
++&pwm0 {
 +	status = "okay";
 +};
 +
-+&usb_cdns3 {
-+	phys = <&usbphy0>, <&pciephy0>;
-+	phy-names = "cdns3,usb2-phy", "cdns3,usb3-phy";
++&pwm1 {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-pine64-star64.dts b/arch/riscv/boot/dts/starfive/jh7110-pine64-star64.dts
+index 31e825be2065a..160b2d6e4b3c2 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-pine64-star64.dts
++++ b/arch/riscv/boot/dts/starfive/jh7110-pine64-star64.dts
+@@ -68,7 +68,11 @@ &phy1 {
+ 	motorcomm,tx-clk-100-inverted;
+ };
+ 
+-&pwm {
++&pwm0 {
++	status = "okay";
 +};
++
++&pwm1 {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi
+index f8797a666dbf5..85b56a72dff7a 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2-lite.dtsi
+@@ -74,7 +74,11 @@ &phy0 {
+ 	tx-internal-delay-ps = <1500>;
+ };
+ 
+-&pwm {
++&pwm0 {
++	status = "okay";
++};
++
++&pwm1 {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
+index 5f14afb2c24dc..5296175b869c0 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
+@@ -49,7 +49,11 @@ &pcie1 {
+ 	status = "okay";
+ };
+ 
+-&pwm {
++&pwm0 {
++	status = "okay";
++};
++
++&pwm1 {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/starfive/jh7110.dtsi b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+index 6e56e9d20bb06..f4868c2c476db 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110.dtsi
+@@ -846,9 +846,72 @@ i2stx1: i2s@120c0000 {
+ 			status = "disabled";
+ 		};
+ 
+-		pwm: pwm@120d0000 {
++		pwm0: pwm@120d0000 {
+ 			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
+-			reg = <0x0 0x120d0000 0x0 0x10000>;
++			reg = <0x0 0x120d0000 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm1: pwm@120d0010 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d0010 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm2: pwm@120d0020 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d0020 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm3: pwm@120d0030 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d0030 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm4: pwm@120d8000 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d8000 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm5: pwm@120d8010 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d8010 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm6: pwm@120d8020 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d8020 0x0 0x10>;
++			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
++			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
++			#pwm-cells = <3>;
++			status = "disabled";
++		};
++
++		pwm7: pwm@120d8030 {
++			compatible = "starfive,jh7110-pwm", "opencores,pwm-v1";
++			reg = <0x0 0x120d8030 0x0 0x10>;
+ 			clocks = <&syscrg JH7110_SYSCLK_PWM_APB>;
+ 			resets = <&syscrg JH7110_SYSRST_PWM_APB>;
+ 			#pwm-cells = <3>;
 -- 
 2.53.0
 
