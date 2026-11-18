@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041952;
-	b=gtSVimCIuJtvFkqC9AHfvUccBaP7fruz+M35CdKafGpwrLApZupqUpyow4uMUcQtA2aH
-	 k56UoWhUIgLHMamYjl7Iagvgsmi4a3KvpnYXXyJkh1O+66VEyehU2v48yDixuDLbbROTX
-	 dr2BxdlmdaxkiWxnLoZoBTPT7kk3i5Gsv4B8s9AjPEW3BIEaDbVEBxQ7xkkAExCmrdndP
-	 4lrcyNm3jMyTE33JNguDgobeDgiEgtGexpnmPXmOrijwxSPxHgM4b/e3Fnk9JQ5Pt5Pmu
-	 ukQM8PeES5iLBAXzTxWIzYaWihR/vBUlsPZCnHjpGcMLq1F2aiMct4FB8JoY+9YPJ0A==
+	t=1795041955;
+	b=ynBWuIawbrfxoerRkXj2XoZmkuCXbwUty9b680YTNyJbspYRv1P5y/YX8/Xk6M9l8zZl
+	 JhJ8fNV/7/IB1akpr9g4pMzGHjSj2SlhG7Z3lWQJc7uxTUwsUsKAGB2xh5IWFH8bHGrab
+	 jivVlLC+ulKA80guUoq6c93cNXchabPeHQSIEqO4+QP0FBikB9XszYDzIA22j1b2F86vj
+	 DwCZCbLt5v2Anj0EugpdQ01lsyb2m6yYa+tdkTQdoWqH8QQYktnfZogGWlfcdYplFXAbN
+	 1Ut+qfFN8xzgylhTi5gb1ZaJBTOZCZg1fjT5btN7rvedf/lclfIonkhJ10Bz6IXygIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041952;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cnbaijyr55isr4uLzTx9ceq+t/P+rf9Vo+YYni0Xa5I=;
-	b=lLD/h8NzXTuHpSqHQNSeT79lfoQhrD8DXel9snS0bGIh3Whl2MpY7lBk0KL38SPda70k
-	 62Sh/kGtSO5RgmlZplpgKAl0Bs0HNbk0HX218pkiARSvJaelfn4oSsApdTi0z06EtNHVl
-	 Sz/q/9mG+vnTxlj2kLJxI9UhwVwlrJfWa4xR52/6aPNhuBF8UVIV1JRUkiOvTPJEFcS1S
-	 z5Y/Qmx5nv5XzkcOFb5B5Lqb4bdHVSrs0guZRpm6PI9SZBs9QHT8QVOrMNW/Fw+X9YFBe
-	 mGkC6qKCJe4pe7GFYPxdjLBUppqRJK6OwJRUjWwzkMiLwLqyM3nAHp9J4Nm5g4nyjVw==
+	bh=ZbVdKhwjzeGagAgmAAm9RN87VfFAqeQ2x2XENIXxOq0=;
+	b=N5swrCE7jBCht7w+bFoNR1U/q4mfw1nVUUfSS0Si102yZst1JrNpTv7i7783juwSJF6Z
+	 WYKJVl1LNpJCM9YzY1PdWaBoL/DusdGGShp4sted/kwrE+XJj/PwM5mO03HTdPwwS8WUu
+	 QEpc5Th8yzkFmwYLCVjSfwfrFQk4sZHnv75seYTD/gRsXo5ur9Wnuq0Sk1NMf1cqnKPhT
+	 QuWkfXbBfcg7Oe8G1kjRT2xj3hjDqAbnurJyv78cQZdIrjocXlBu4zh6p4Vpbz5VEUmDI
+	 93pVnm+KWwLlP7hF8dRA+q9uoA+YkBXOnPYmDFFG9gKk2eAF99V2e9/l5D4VK+fxEqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CaC4vl8F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mroma9DB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94953606A320;
-	Wed, 18 Nov 2026 22:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58299606A332;
+	Wed, 18 Nov 2026 22:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CaC4vl8F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96211F000C5;
-	Wed, 18 Nov 2026 22:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mroma9DB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1761F000C5;
+	Wed, 18 Nov 2026 22:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041952;
-	bh=cnbaijyr55isr4uLzTx9ceq+t/P+rf9Vo+YYni0Xa5I=;
+	s=korg; t=1795041955;
+	bh=ZbVdKhwjzeGagAgmAAm9RN87VfFAqeQ2x2XENIXxOq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CaC4vl8FizRae9CyGQe2vfeifiyxt+3xYRYznWVMsTsgkJzi2FBUjebrILMqffjDs
-	 VsWPahwWajbZWMLnMuy6n/LB4xnQ0XKkRDrqzhGX+WZFElspc4HA2+ukio3xC1dXv+
-	 mNFbzXL+9Rk202S/8v64R2pG2f3+FKwwADyEldGg=
+	b=mroma9DBkNBvtRgGzc7FVqkbgpSinmZ08+IGTi35Ba0eCvosrXkVopzTHpLH1+2Xx
+	 SnVvGIglgaWKwxeDQ8rqxkiV7thAEFbyXay6VhwmZxsrXhHx6sjbvTqJwqwe3XB64d
+	 EZDr+dxIqxNUbf5GXzcKN0NNJQPKql93i/XAWwBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2998/3318] bpf: Validate the SRH which End.DT6 uncovers in End.BPF
-Date: Wed, 18 Nov 2026 16:00:20 +0100
-Message-ID: <20261118150450.202082725@linuxfoundation.org>
+Subject: [PATCH 6.6 2981/3318] ima: reject a kexec buffer whose declared size exceeds the buffer
+Date: Wed, 18 Nov 2026 16:00:03 +0100
+Message-ID: <20261118150449.706001860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,71 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit e8b084646b946cc6f7976365588035947a296184 ]
+[ Upstream commit ceb24c7052cc4649e3b52a51a7cca7dfe4896cec ]
 
-input_action_end_bpf() validates the SRH of a packet and pulls it into the
-head before the program runs. If the program decapsulates the packet with
-bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6), bpf_update_srh_state()
-looks for a routing header in the inner packet and takes it for the new
-SRH as it is.
+ima_restore_measurement_list() parses the measurement list persisted across
+kexec.  It computes the parse end directly from the blob:
 
-Nobody has looked at that header, and whoever has sent the packet has
-written it. ipv6_find_hdr() finds it in a fragment of the skb as well, but
-hdrlen is then read at that offset from skb->data, past the end of the
-head. The header need not be an SRH, and its hdrlen need not fit into the
-packet, but it is marked as valid, and bpf_lwt_seg6_adjust_srh() and
-bpf_lwt_seg6_store_bytes() check their offsets against it.
+	bufendp = buf + khdr->buffer_size;
 
-A program which then adds a TLV at the end of the SRH, where hdrlen has it,
-makes bpf_lwt_seg6_adjust_srh() move and write memory behind the head of
-the skb, as far as the sender likes within the 2 KB that hdrlen can say:
+khdr->buffer_size is a u64 read straight from the persisted buffer.  The
+only length checks in the function are size >= sizeof(*khdr), version == 1
+and count -- none relates buffer_size to size, the actual buffer size the
+caller (ima_load_kexec_buffer()) obtained from the ima-kexec-buffer region.
+ima_parse_buf() bounds every field read to bufendp, so a blob whose
+internal buffer_size exceeds the real size makes the parse loop read past
+the end of the buffer (CWE-125).
 
-  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x185/0x240
-  Read of size 2088 at addr ffff888107d6f09e by task srh/102
-  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x1b5/0x240
-  Write of size 8 at addr ffff888107d6f8be by task srh/102
+The buffer's memory range is validated against addressable RAM by
+commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
+against memory bounds") and commit c5489d04337b ("x86/kexec: add a
+sanity check on previous kernel's ima kexec buffer"), but the blob's
+own declared size is never clamped to it.  Reject a buffer_size larger
+than size before the loop.
 
-Use seg6_get_srh(), which pulls and validates the header. Without a valid
-SRH the state says that there is none, and the packet goes its way as
-before. The pull can move the head, so compute the data pointers behind
-it.
+This is on the boot-time kexec-restore path (__init) and the buffer comes
+from the previous kernel, so triggering it requires control of the
+persisted buffer; it is an out-of-bounds read only.
 
-Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-12-alexei.starovoitov@gmail.com
+Fixes: 94c3aac567a9 ("ima: on soft reboot, restore the measurement list")
+Assisted-by: copilot-cli:claude-opus-4-6 frama-c
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ security/integrity/ima/ima_template.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index ac1d7a8a29760..432856e47f61c 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6583,15 +6583,15 @@ static void bpf_update_srh_state(struct sk_buff *skb)
- {
- 	struct seg6_bpf_srh_state *srh_state =
- 		this_cpu_ptr(&seg6_bpf_srh_states);
--	int srhoff = 0;
- 
--	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0) {
--		srh_state->srh = NULL;
--	} else {
--		srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
-+	/* Behind a decapsulation this is a header that nobody has looked at */
-+	srh_state->srh = seg6_get_srh(skb, 0);
-+	if (srh_state->srh) {
- 		srh_state->hdrlen = srh_state->srh->hdrlen << 3;
- 		srh_state->valid = true;
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index 04c49f05cb74f..0a802072490a3 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -449,6 +449,11 @@ int ima_restore_measurement_list(loff_t size, void *buf)
+ 		return -EINVAL;
  	}
-+	/* it may have been pulled into the head */
-+	bpf_compute_data_pointers(skb);
- }
  
- BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
++	if (khdr->buffer_size > size) {
++		pr_err("attempting to restore a corrupted measurement list");
++		return -EINVAL;
++	}
++
+ 	bitmap_zero(hdr_mask, HDR__LAST);
+ 	bitmap_set(hdr_mask, HDR_PCR, 1);
+ 	bitmap_set(hdr_mask, HDR_DIGEST, 1);
 -- 
 2.53.0
 
