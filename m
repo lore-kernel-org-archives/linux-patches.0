@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027084;
-	b=4BHA9sRpGlwa5aKoWWTrRikCSUtHMr+Vw9UbcDYdxMm9kHDGaGS1kJTOGcuOV3GoVRUL
-	 Coz3m9GZx+dpkW4BnHPLB08EUFa96/Pxfcf487VhF32Xn+t6LOIA0GgyXm8j1DgIKd9Zj
-	 vQnNoPSOeIgGO68wRAZCws6MASSSZn4EYi1OIt8pL/Y7VuY2KMvG9bRwwDm09WV+TSjsB
-	 FqTE2+P/sBa88p76FIWIKKBDEIZqw9gD0vazMcvc8h8l01G68UeKAqENo6/GsTGpyBdeQ
-	 vx9SZTuqdfBHbQoXsoEqewKEmfXd5GM49QvtJfbOluKR6VgWh5FjNkeFzxgwaDQm21A==
+	t=1795027087;
+	b=xICU3VfxECCvQSqg4g6i7A+hkk5bzNpLIZ/Eo9JRDBHmAF9F6biduy1qBtm7BzToSJDs
+	 02q+Q1HsiGUzmRI+tERHvGWr8ZqHMexd14bWDoY56uwI8xHYRZAvZKmMsoCuIC8kelcl+
+	 cZzrpjlHKdAYJJ2MRAqZZ0qtVt9R6yIzTDykMMwHiLh8NpEukCT8xw92AFCl51/dKVx2Y
+	 wYBGtVkPx5il+m6f9BbIeDfYhDb4d2HLa3NlSfv853/rsUn7jz/EXOopt4P6Gmb/WMmwr
+	 3BFdJ4BNY19VdWocQSwyqOpI0WX84yqwBlRIZPDnW97E5EB7LjPCEMxdNVH2ItHYa3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027084;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027087;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fcubPuZVnndk+Gf9UhwAb3zHKkac86nDNatqdB+LEGw=;
-	b=gwRVdtwmjtQaQrAwcahax6Cdqf+6H3FB8Ea+L1kRFM+VOiPQlu83EzG7MnAdJdnuPpoq
-	 /ZBVeL0Ii7vIL8fzXZ6cTAlLax5xJa0kOEr+u1fqP7bZo5jQFbiPsbutEdUFxwfrc5B5A
-	 34am77UiDj6oEnHvcv/D9e9Xldiedp0UOkRaDjwwthXT2i5iTG+K7QR88xawdKpAau6mt
-	 HsLfN6edq0V6nCTo1X00PgjUkd42zdJTPuM6A8ZIoIcCXXARY0pEMUy5VZ3Ar1b1gTJ6o
-	 E4qLQsByJpHBJpmMfBJ+pKQ1WRFUDFkfwUXB2hZYHiWQVT3Dy04FrFTvp7EsOlzIYAw==
+	bh=qnpOTiQw/NJ/Jd6pV60+6gr3rJF2Sivb3SV9JQ7LbJY=;
+	b=k8MMESNppAeF+BDrfEUzDaROOFnTfdZq+qJrRHzDv3CJZKx/nnFvxxOGVxtS5/SkSaU7
+	 vFj5hhaWzTovo969uz6Uu7egYKtE2zXEGmR8hdeM+mYc8NOsbQT+08ZSxhHyB96z2nDwj
+	 APx/RcKav2sP8uHOEkODur78wCcOxAkHJMHi+FHwghGHvOo+TLcNJ3ne1+DGan7DG3Lld
+	 Q7eyB9m98k814KA6YIwhWqP4BYMeFDv5+PsgvCf214DZeZCx6znSJOvzxp6QJXlfHrpXN
+	 BeJMeWRm71EKkzDh4D5ZcYHL39+7yj6AmvPogmpoV+ttxwdwHHK5ATxnsuaHrP+rxNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXaSsSgC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Bi4c8/sn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B0606A31C;
-	Wed, 18 Nov 2026 18:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16984606A31C;
+	Wed, 18 Nov 2026 18:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXaSsSgC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460A81F000C4;
-	Wed, 18 Nov 2026 18:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bi4c8/sn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244481F000C4;
+	Wed, 18 Nov 2026 18:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027083;
-	bh=fcubPuZVnndk+Gf9UhwAb3zHKkac86nDNatqdB+LEGw=;
+	s=korg; t=1795027086;
+	bh=qnpOTiQw/NJ/Jd6pV60+6gr3rJF2Sivb3SV9JQ7LbJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXaSsSgC8QT8Fp3mvgbR376qgmqEd6e1Zz/Rr8IvHhyzuS6+b5ApHiqCJpysS2sgH
-	 YOTtgdB5pAV5ibq6e4ls+bUEuD4HbscGy8vJL0jCUUXp5w8mnZ797sndoC/Kve4K4R
-	 VR8bAn/rj6MOqipzAOslzeeynrRySCrli28aPkh4=
+	b=Bi4c8/snANsRh+dYB2Iq1DJlpjE6h9i0M8v0oIMsgoW6rsw0aMrbRWNvOuqck1Grj
+	 QMDVh5vpaTb9AK0xj9lhEmGpkHh58wh+cUCpTTa1y4soj61nsH/4pt91Q8dHvnp05e
+	 Pap6YsO/4K/n64JYLLK7QJJWgOkvs2/OPsGhD6RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baul Lee <baul.lee@xbow.com>,
+	Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1664/2151] ipv4: use RCU protection in inet_netconf_get_devconf()
-Date: Wed, 18 Nov 2026 15:56:39 +0100
-Message-ID: <20261118150222.454816397@linuxfoundation.org>
+Subject: [PATCH 6.18 1665/2151] net: use the full socket in sk_mc_loop()
+Date: Wed, 18 Nov 2026 15:56:40 +0100
+Message-ID: <20261118150222.490849933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,119 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>
 
-[ Upstream commit b2039a6dd36b5c89142bfb95bc0205be8abcc600 ]
+[ Upstream commit 31b564f70d8819a1c11d0fd504fe582fc0e0f0cf ]
 
-inet_netconf_get_devconf() runs without RTNL. It uses dev_get_by_index()
-and in_dev_get() to pin the device and its in_device while the reply is
-allocated and filled.
+sk_mc_loop() is called from ip_mc_output() and ip6_finish_output2()
+with skb->sk, which is not always a full socket:
 
-in_dev_get() is not safe for a lockless caller. Since commit 9d40c84cf5bc
-("net: devinet: Reduce refcount before grace period"), inetdev_destroy()
-drops the final reference before the RCU grace period. A reader can load
-dev->ip_ptr, then call refcount_inc() on a zero refcount after
-in_dev_free_rcu() has been queued, and keep using the in_device once it
-has been freed.
+- Since commit ca6fb0651883 ("tcp: attach SYNACK messages to request
+  sockets instead of listener"), a SYNACK is attached to its request
+  socket.
 
-None of these references are needed. An in_device is freed after an RCU
-grace period, ipv4_devconf is embedded in it, and
-inet_netconf_fill_devconf() does not sleep.
+- Since commit 79636038d37e ("ipv4: tcp: give socket pointer to control
+  skbs"), an ACK or RST sent by ip_send_unicast_reply() on behalf of a
+  TIME_WAIT socket is attached to the timewait socket.
 
-Allocate the skb first, then perform the lookup and the fill under
-rcu_read_lock(), using dev_get_by_index_rcu() and __in_dev_get_rcu(),
-like inet_netconf_dump_devconf() already does.
+When such a packet uses a multicast route, inet_test_bit(MC_LOOP, sk)
+reads inet_flags past the end of the request or timewait socket.
 
-Fixes: bbcf91053bb6 ("inet: do not use RTNL in inet_netconf_get_devconf()")
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Closes: https://lore.kernel.org/netdev/20260815172032.79740-1-baul.lee@xbow.com/
+This happens for instance when a SYN with a multicast source address
+reaches a listener, after being looped back with its dst attached, so
+that ip_rcv_finish_core() skips the martian source check. A raw
+IP_HDRINCL socket sending to a local address does this, as does
+re-injection by nft dup or the iptables TEE target. The destination
+can also come from a source route option, or from a route of type
+multicast covering a unicast prefix.
+
+BUG: KASAN: slab-out-of-bounds in sk_mc_loop+0x111/0x170
+Read of size 8 at addr ffff88800f2b7f10 by task repro-raw/470
+Call Trace:
+ <IRQ>
+ sk_mc_loop+0x111/0x170
+ ip_mc_output+0x355/0x930
+ ip_build_and_send_pkt+0xb87/0xc50
+ tcp_v4_send_synack+0x500/0x6f0
+ tcp_conn_request+0x2135/0x2d90
+ tcp_v4_conn_request+0xa5/0x210
+ tcp_rcv_state_process+0x136e/0x6920
+ tcp_v4_do_rcv+0x339/0xb10
+ tcp_v4_rcv+0x34ab/0x3ab0
+ ip_protocol_deliver_rcu+0x6e/0x3e0
+ ip_local_deliver_finish+0x34d/0x510
+ ip_local_deliver+0x1bc/0x310
+ ip_rcv+0x390/0x410
+ __netif_receive_skb_one_core+0x199/0x1e0
+ process_backlog+0x239/0x680
+ __napi_poll+0xb5/0x650
+ net_rx_action+0x980/0xd60
+ handle_softirqs+0x17f/0x590
+ do_softirq+0x3f/0x60
+ </IRQ>
+
+The buggy address belongs to the object at ffff88800f2b7d60
+ which belongs to the cache request_sock_TCP of size 312
+The buggy address is located 120 bytes to the right of
+ allocated 312-byte region [ffff88800f2b7d60, ffff88800f2b7e98)
+
+Use sk_const_to_full_sk(), which restores the behavior from before
+the two commits above: a request socket uses the setting of its
+listener, and a timewait socket gets the default (loop back), as the
+per-cpu control socket used before had.
+
+Fixes: ca6fb0651883 ("tcp: attach SYNACK messages to request sockets instead of listener")
+Fixes: 79636038d37e ("ipv4: tcp: give socket pointer to control skbs")
+Signed-off-by: Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>
+[edumazet: rewrote the changelog, added the TIME_WAIT case]
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Tested-by: Cen Zhang <zzzccc427@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/CAAVpQUA5FEMWV1R4vy2+uzQc+_iLDaz4m-D6kfKYngGf2sE0Eg@mail.gmail.com
-Link: https://patch.msgid.link/20261009074906.729877-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261012101029.927296-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/devinet.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ net/core/sock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
-index 942a887bf0893..5374aa7e1ffa1 100644
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -2278,8 +2278,8 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
- 	struct net *net = sock_net(in_skb->sk);
- 	struct nlattr *tb[NETCONFA_MAX + 1];
- 	const struct ipv4_devconf *devconf;
--	struct in_device *in_dev = NULL;
--	struct net_device *dev = NULL;
-+	struct in_device *in_dev;
-+	struct net_device *dev;
- 	struct sk_buff *skb;
- 	int ifindex;
- 	int err;
-@@ -2291,7 +2291,13 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
- 	if (!tb[NETCONFA_IFINDEX])
- 		return -EINVAL;
- 
-+	skb = nlmsg_new(inet_netconf_msgsize_devconf(NETCONFA_ALL), GFP_KERNEL);
-+	if (!skb)
-+		return -ENOBUFS;
-+
- 	ifindex = nla_get_s32(tb[NETCONFA_IFINDEX]);
-+
-+	rcu_read_lock();
- 	switch (ifindex) {
- 	case NETCONFA_IFINDEX_ALL:
- 		devconf = net->ipv4.devconf_all;
-@@ -2301,36 +2307,29 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
- 		break;
- 	default:
- 		err = -ENODEV;
--		dev = dev_get_by_index(net, ifindex);
--		if (dev)
--			in_dev = in_dev_get(dev);
-+		dev = dev_get_by_index_rcu(net, ifindex);
-+		if (!dev)
-+			goto out_unlock;
-+		in_dev = __in_dev_get_rcu(dev);
- 		if (!in_dev)
--			goto errout;
-+			goto out_unlock;
- 		devconf = &in_dev->cnf;
- 		break;
- 	}
- 
--	err = -ENOBUFS;
--	skb = nlmsg_new(inet_netconf_msgsize_devconf(NETCONFA_ALL), GFP_KERNEL);
--	if (!skb)
--		goto errout;
--
- 	err = inet_netconf_fill_devconf(skb, ifindex, devconf,
- 					NETLINK_CB(in_skb).portid,
- 					nlh->nlmsg_seq, RTM_NEWNETCONF, 0,
- 					NETCONFA_ALL);
-+out_unlock:
-+	rcu_read_unlock();
- 	if (err < 0) {
- 		/* -EMSGSIZE implies BUG in inet_netconf_msgsize_devconf() */
- 		WARN_ON(err == -EMSGSIZE);
- 		kfree_skb(skb);
--		goto errout;
-+		return err;
- 	}
--	err = rtnl_unicast(skb, net, NETLINK_CB(in_skb).portid);
--errout:
--	if (in_dev)
--		in_dev_put(in_dev);
--	dev_put(dev);
--	return err;
-+	return rtnl_unicast(skb, net, NETLINK_CB(in_skb).portid);
- }
- 
- static int inet_netconf_dump_devconf(struct sk_buff *skb,
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 83a0bcacb44f3..857790b478e97 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -768,6 +768,7 @@ bool sk_mc_loop(const struct sock *sk)
+ {
+ 	if (dev_recursion_level())
+ 		return false;
++	sk = sk_const_to_full_sk(sk);
+ 	if (!sk)
+ 		return true;
+ 	/* IPV6_ADDRFORM can change sk->sk_family under us. */
 -- 
 2.53.0
 
