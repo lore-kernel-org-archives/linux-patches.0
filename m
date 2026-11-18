@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047065;
-	b=EEZD5+RHNKOmjycRaMLmANKBPGQtHivXn5yZELdHSTaYZjS82SsPfkj2dR3EB7663cCU
-	 aBMOnC3tkibsQRiSIIneRU3fhvf83igSfhPNdd4t1nypkWxnvEw+LXZWUT/IRHZfNvm3w
-	 ZDx2TfPsKifadomEq1mGkSfLlfxOp290ICJcSkjwLiAPde33xLvTlHWEPBgNDqZG+3QIg
-	 MLn9iwb0p0h3LQTP67xFDJZNa4vhAFryq4LHAH9x1kJ3YaUmAPwb/K8L9UAh3wor5uGgR
-	 XYZhoteyqeMZXiaeMyG6k6AUAC6IB/+KZEon9H1n9lNgwMSIzHAGbljOYLylfxicDAA==
+	t=1795047068;
+	b=nn40Hy/1lWOzv/Q3NxSqqsP9vok3vtkPU7naWXteM4lwOl0NF/ixKW+YttZDCuMQ5xUO
+	 ZxidC5dgXBSd3YfpKump5sUbVRoqlweVOXoCjl3LKBGGh22mKYHEXUOnpF2U3rmsC2yw6
+	 uTEutLvi1HzNACWZQxAqohJYw0y6LsOiABWcYYHL6oDH1ai9Lawqd9DxJGfOz/8TnKC2K
+	 VkEAe0XU/Qhhzx6Re3g6RUDe0FjchDW1ODTYfgZe8vJySDP6uZCeLT6rMbXeXQiGWoHHg
+	 zSda1SwqX2LKwjClknh0GEBUPx+uSDiZse8EDnHgh67ztiK6/Yy/XW69LHkVNsdFU+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K0VS3WLR5ly1dqBLPPp9oPWgfMEqyl+cSUh4/gzoOf0=;
-	b=dMbDodcr4r7eHX1czc4lwviL5LteSAY3URiBblN1c+o69T77iyN6YGsxx8ZqiYS6uLaW
-	 g4+S3q+V1uCnydgDQL089L8mI77pdmOcIlM6lmaydlJwPA7pv31kOAZhv+ILxW2yDMnoK
-	 c8JqqzYBukAZpwPQZ2LlcEtH08/kRQtDPuswmgHSZBrog7JiLCKxrS/7GxmvREk4v/ye0
-	 5NVzgjlbMu+Yo0Iw6+LtcGO3oSoGFae7blqO4SKyKVpdk7RP1opusOjIDm9nlLoopDTRH
-	 87HSg8SAJRw3HSqayhmsecFqlRDFTLfz0Yaq0eAWJUtUryuXkcVzlJMnerlBe8VIO5w==
+	bh=/sRYej8csscaKQgnnxAm45Wv9o8pG3cJBxceav/2BB8=;
+	b=aOpkwZjITZCm5r+c2E1SEAoedVvwTZS6XwkNCNBN7rQR+R0ZX72Nt220PUDQGOSONlbI
+	 D0BkXhzhC9xgiJWBVYjtxQbloNj3LrzbUM6uLweQNtMWFYNBC+g2GUAyE/o32S7tXfFHH
+	 SpSRm0QG8IQ0XUrKnEoJloTCesgBAl4tuBNrFuanj0GIkReSbXSxIgOAYTTwo0Qw1FxFB
+	 0TlJ+zFml/zuh86tBvbrLFR8lpK4unU7A1ZfImkQXpASnukLd+swawhGlBNfG49wZJ+qe
+	 DKtswCfcurTOJk4hpr/7yIht69ajJzQcdjKM9tglPdwCjxNIwbxE2PLuyNIA/EY6t4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWrhcup0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JA9cKThv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511AB606A31C;
-	Thu, 19 Nov 2026 00:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AD4606A330;
+	Thu, 19 Nov 2026 00:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWrhcup0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D331F000C4;
-	Thu, 19 Nov 2026 00:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JA9cKThv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624571F000C4;
+	Thu, 19 Nov 2026 00:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047065;
-	bh=K0VS3WLR5ly1dqBLPPp9oPWgfMEqyl+cSUh4/gzoOf0=;
+	s=korg; t=1795047067;
+	bh=/sRYej8csscaKQgnnxAm45Wv9o8pG3cJBxceav/2BB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWrhcup0TkdcjtTNVD+Be2szpNiW9FbL1D+xHZq2MTIdJFvyZGUcIcF+bJOuFyMfB
-	 AtaywJiCuaGDrQ4SnGDUUNUr80GJU5K3SOAmBrg9l4XD5IqpbiyUlszjvJTKpTS7aH
-	 uQ8AMXIusee/QGCn6UbEhh4qNVYSpOOqV53kUoHI=
+	b=JA9cKThvVnER23phD7HGvOeqzvdkAkDhN7R9NN9Bf0qfrcKcNBKw53SOeRFL7EvU+
+	 srGeuZDG1B0tOnrYsP4Ae8e1dSQsXoqLtWAzsShLIYjfeyEQaINoZhNYp4lnMaJu0Y
+	 3g442OsIoJgzBE1YDQjSPeyvRKC2qGZ9gt3iqu5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chao Leng <lengchao@huawei.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1503/2857] mm/mlock: use a long for the page count in mlock_fixup()
-Date: Wed, 18 Nov 2026 15:42:17 +0100
-Message-ID: <20261118150255.453026947@linuxfoundation.org>
+Subject: [PATCH 6.1 1504/2857] block: set the disk capacity to 0 in blk_mark_disk_dead
+Date: Wed, 18 Nov 2026 15:42:18 +0100
+Message-ID: <20261118150255.489356639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -73,87 +73,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 3ae91e3079b1504ef162b2884454d5f1421f4eb9 ]
+[ Upstream commit 71b26083d59cd4ab22489829ffe7d4ead93f5546 ]
 
-mlock_fixup() adjusts mm->locked_vm, an unsigned long, by the number of
-pages whose VM_LOCKED state it changes, but computes that number in an
-int:
+nvme and xen-blkfront are already doing this to stop buffered writes from
+creating dirty pages that can't be written out later.  Move it to the
+common code.
 
-	int nr_pages;
-	...
-	nr_pages = (end - start) >> PAGE_SHIFT;
-	...
-	mm->locked_vm += nr_pages;
+This also removes the comment about the ordering from nvme, as bd_mutex
+not only is gone entirely, but also hasn't been used for locking updates
+to the disk size long before that, and thus the ordering requirement
+documented there doesn't apply any more.
 
-When a single VMA range of 2^31 pages (8 TiB with 4 KiB pages) or more
-is locked or unlocked, the count is truncated to 32 bits and then
-sign-extended, so locked_vm is changed by the wrong amount, while
-munmap(), mremap() and the other paths that maintain locked_vm use the
-full unsigned long page count.
-
-Such a range is reachable on 64-bit architectures with a 47-bit or
-larger user address space (x86_64, arm64 with 48-bit VA, riscv64 Sv48)
-by a task with CAP_IPC_LOCK or a raised RLIMIT_MEMLOCK, which do_mlock()
-checks against the full untruncated length.  It costs nothing with
-MAP_NORESERVE and MLOCK_ONFAULT/MCL_ONFAULT, since then no page is
-populated.  On x86_64, after
-
-	p = mmap(NULL, 8UL << 40, PROT_READ | PROT_WRITE,
-		 MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
-	mlock2(p, 8UL << 40, MLOCK_ONFAULT);
-
-VmLck in /proc/self/status reads 18446744065119617024 kB instead of
-8589934592 kB; munmap() of the region then subtracts the true size and
-leaves VmLck at 18446744056529682432 kB instead of 0.  With 16 TiB,
-locked_vm is not changed at all, VmLck stays 0 kB, and after the task
-drops CAP_IPC_LOCK or lowers RLIMIT_MEMLOCK, mlock(), mmap(MAP_LOCKED)
-and the other mlock_future_ok() and account_locked_vm() users enforce
-RLIMIT_MEMLOCK against that count, so they let the task lock memory
-beyond its limit (or, in the 8 TiB case, refuse every further lock).
-The error persists for the life of the mm; unlocking the range in pieces
-skews it further.  The wrong count is per-mm accounting only: it does
-not change which pages are locked.
-
-The int has been there since before git history (the variable was named
-"pages" until it was renamed in 2.6.28); every other updater of
-locked_vm uses an unsigned long or long count.  Make nr_pages a long,
-which holds the page count of any user range and its negation, so the
-existing sign handling is unchanged.
-
-Found by formal verification of mm/mlock.c against the kernel binary.
-
-Link: https://lore.kernel.org/20261014131358.780240-1-nickolai@csail.mit.edu
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Assisted-by: LLM
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adjusted context for the older mlock_fixup() signature and local variable declarations ]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chao Leng <lengchao@huawei.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20221101150050.3510-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 61b6d1df1d62 ("xen-blkfront: Fix IO race during unplug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mlock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/genhd.c                | 5 +++++
+ drivers/block/xen-blkfront.c | 1 -
+ drivers/nvme/host/core.c     | 7 +------
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/mm/mlock.c b/mm/mlock.c
-index 0124022f0f379..8fa8e871ccbf8 100644
---- a/mm/mlock.c
-+++ b/mm/mlock.c
-@@ -406,7 +406,7 @@ static int mlock_fixup(struct vm_area_struct *vma, struct vm_area_struct **prev,
- {
- 	struct mm_struct *mm = vma->vm_mm;
- 	pgoff_t pgoff;
--	int nr_pages;
-+	long nr_pages;
- 	int ret = 0;
- 	vm_flags_t oldflags = vma->vm_flags;
+diff --git a/block/genhd.c b/block/genhd.c
+index ee6dc7feccc6f..f06195e53571c 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -595,6 +595,11 @@ void blk_mark_disk_dead(struct gendisk *disk)
+ 	blk_queue_flag_set(QUEUE_FLAG_DYING, disk->queue);
+ 	set_bit(GD_DEAD, &disk->state);
+ 	blk_queue_start_drain(disk->queue);
++
++	/*
++	 * Stop buffered writers from dirtying pages that can't be written out.
++	 */
++	set_capacity_and_notify(disk, 0);
+ }
+ EXPORT_SYMBOL_GPL(blk_mark_disk_dead);
  
+diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
+index df0eaf15a4ddd..7ad03bcd9f274 100644
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -2134,7 +2134,6 @@ static void blkfront_closing(struct blkfront_info *info)
+ 	if (info->rq && info->gd) {
+ 		blk_mq_stop_hw_queues(info->rq);
+ 		blk_mark_disk_dead(info->gd);
+-		set_capacity(info->gd, 0);
+ 	}
+ 
+ 	for_each_rinfo(info, rinfo, i) {
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 9521126738940..61a34581ca70a 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -5337,10 +5337,7 @@ static void nvme_stop_ns_queue(struct nvme_ns *ns)
+ /*
+  * Prepare a queue for teardown.
+  *
+- * This must forcibly unquiesce queues to avoid blocking dispatch, and only set
+- * the capacity to 0 after that to avoid blocking dispatchers that may be
+- * holding bd_butex.  This will end buffered writers dirtying pages that can't
+- * be synced.
++ * This must forcibly unquiesce queues to avoid blocking dispatch.
+  */
+ static void nvme_set_queue_dying(struct nvme_ns *ns)
+ {
+@@ -5349,8 +5346,6 @@ static void nvme_set_queue_dying(struct nvme_ns *ns)
+ 
+ 	blk_mark_disk_dead(ns->disk);
+ 	nvme_start_ns_queue(ns);
+-
+-	set_capacity_and_notify(ns->disk, 0);
+ }
+ 
+ /**
 -- 
 2.53.0
 
