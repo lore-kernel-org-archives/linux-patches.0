@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054843;
-	b=5b1+Lu7ymcHzCxD18qiIK4w0LEpwp+t8OvwRB4qYc+fxxE2vM9f15XdLL806vMFTmQ7q
-	 5ApMZ+vehGus3oujHZ7u+gRKDSsARB/IusbbGmApHldYoDXjzAHi6tmRrZFu+VSNWIprT
-	 zsDq7umjkFMjMKJcfZp2W0JsWPiNNj2IK/aYrJrIZ/ZZd7b/rOop3k26Meuz2R2xx1/Uo
-	 o0DPGILQY7qRM7iHgfJjELM5ZcoB3HAUrv0p+FuV1BKOHt2vNrwJRfQM3948ydpMGVKqk
-	 u6ApzKQa2PKA+UTvankQtAr4hUN6jL/nMIcKRa1Y14Pb9TX0Mwf3beVlEdPl+vUL4Jg==
+	t=1795054846;
+	b=IiQoekoHyqqZMUpkWGXy6aZ2sbxr4tWXFrEu5GaDNKiCdfSsPqqzIVCLuRI5188HWXI7
+	 O+uZ8boHWETgTFq8eKJhKFceRtfnTlYGOuhGITV4x7hCYfjkzEZjR0oPCPDX0KQQjQWO/
+	 AZxakO0JwpeDXo63dk2bFmUMMTwtXLG/iFx/339lk6ZVFCP4t024pL3dx+mP6vXPpG/JD
+	 47xlrv97alm6NNBuOg6alyhORuaSl9NUz1zpfFnUSob6NxwQQnSyqPunlBAajTGpN8ZKP
+	 OXhD778vAUltnR5GCdfEQpErRuPH/zT7fXjqRoAF3Va3F3YPgAuxFJhYALSZeA/s05Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ykOGaU0nbfdUT3j1EzYiyvPfPdsCQUyRWUHZ7zJxino=;
-	b=GOo0hTT390/chvKbKoxGflBHXwyGAKBl6CRnAA1nBM91I5aJCUcoK60iUwRNNq7U/PZo
-	 ashTNo4varngHHPOBVv/itWFjo69a7HAbQQvw+omoWZL1s2LZji7IXr3VBe2udtMaLQaN
-	 F5XNtrMoBR/VHVuqHSDVFS5tsmC1C3wkwqUCyjC5t/i1ESeW4AHxKLUtl0fqfrOr188YE
-	 tiDTKzJtWBkZ8Z7B91UwzokoJVmGJOMBqme/DLhqgHDMYC6NmwNEzIsnj3c2EoXMMtPsM
-	 8Lk8sKOXSzDXE1GwDZtsDanLDoXgbY77zuIVcuzXltQVuXkdMFRdhgFRJEw5SWVXgJQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yzMfmtcPCdKSZYqdrNNofMGSNtQKBcu1agJTwk/WcOs=;
+	b=yYoIheRfOc5jULa04RXB7a9ciM1LF+gcfKu/va4MyJoU8bx965iN9mjIiZbZDbhMlC/h
+	 0KzvTYH7eNHXUVLbm1kD7WONlT6ClaoWVtYkyTpr4Pb9+ZS6AdJYuMZrhFpsphechAoMR
+	 PtqXwQDDXMF3W5Y9IetLyCO8RYyL7ge1+b0BtZOouJToC9dPdn9RtqOIbCRy8D83LSglR
+	 Epi53RDJyJ0HSEnhenQdMVghiiT+mCU67V41pxPi8JnEo5Xyj1mrK8tivTDzBo1jCsfUi
+	 eoKRHk0tCjt+GEgkPqO78rYTOT7p5e2Xv1f8oKfhruRX39lvbbW+Q/BiHa2KN7R/S4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uGl3RD1z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mJ4xjY+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAFF606A325;
-	Thu, 19 Nov 2026 02:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2525F606A320;
+	Thu, 19 Nov 2026 02:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uGl3RD1z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957F91F000C4;
-	Thu, 19 Nov 2026 02:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mJ4xjY+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713F81F000C4;
+	Thu, 19 Nov 2026 02:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054843;
-	bh=ykOGaU0nbfdUT3j1EzYiyvPfPdsCQUyRWUHZ7zJxino=;
+	s=korg; t=1795054846;
+	bh=yzMfmtcPCdKSZYqdrNNofMGSNtQKBcu1agJTwk/WcOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uGl3RD1zQC2wnB9VHlhllePss4Az/6Lhv7O6cWn5ijsmf/39nfHiw8BuObiaPlgaW
-	 MXCB4hyeiUtuB5ze51fyY5BRpEUVzvVA63u3UwChkeZv3foGPk3A+cUKSovnpBGyqE
-	 p6biHoFH760lqFyOYmhYm0pdkS64Ei+n0ZfXVVpk=
+	b=2mJ4xjY+x7Um5FGgyEXfNcyjzEx8vGgf9M9bp4i3Zj5XiqND1987zpPMRAuPKCT8b
+	 Ns+Y+kLLFom9aGPU5Jy+xLYEqzSoc70k2elqrkcIqgos71KW4cYSASgJzwn0jEjevt
+	 ZbO3pmCg47Zq5L3b+pe4UwtV1fFT1vA5hrA759R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Rosen Penev <rosenp@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1417/2214] dmaengine: zynqmp_dma: drop redundant label
-Date: Wed, 18 Nov 2026 15:51:33 +0100
-Message-ID: <20261118150107.911995759@linuxfoundation.org>
+Subject: [PATCH 5.15 1379/2214] dmaengine: fsl_raid: dont invoke client callback under desc_lock
+Date: Wed, 18 Nov 2026 15:50:55 +0100
+Message-ID: <20261118150106.542016768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,48 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vinod Koul <vkoul@kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 08f04d5ab868bc28d3115f7406499e8e5d1d1765 ]
+[ Upstream commit 62c267ce97444f8a381f2bb3cd5d534eb362c540 ]
 
-Commit 3f30db282c28 ("dmaengine: zynqmp_dma: Fix chan probe/remove error
-handling") dropped the use of err_disable_pm label causing warning:
+fsl_re_dequeue() holds re_chan->desc_lock while calling
+fsl_re_desc_done(), which synchronously invokes the DMA client completion
+callback via dmaengine_desc_get_callback_invoke(). If that callback
+submits new work (e.g. fsl_re_tx_submit()), it tries to reacquire the
+same desc_lock and deadlocks on the spinlock.
 
-drivers/dma/xilinx/zynqmp_dma.c: In function ‘zynqmp_dma_probe’:
-drivers/dma/xilinx/zynqmp_dma.c:1171:1: error: label ‘err_disable_pm’ defined but not used [-Werror=unused-label]
- 1171 | err_disable_pm:
+Collect completed descriptors into a local list under the lock, then
+release the lock and invoke the callbacks before moving the descriptors
+to the ack queue.
 
-Drop it
-
-Fixes: 3f30db282c28 ("dmaengine: zynqmp_dma: Fix chan probe/remove error handling")
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260903170357.1711462-1-vkoul@kernel.org
+Link: https://patch.msgid.link/20260718053010.3074329-1-rosenp@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/fsl_raid.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index efaef1d7e37dc..91cded336257a 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -1134,7 +1134,6 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index fdf3500d96a9e..562a3a3f75f16 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -161,6 +161,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 	struct fsl_re_hw_desc *hwdesc;
+ 	unsigned long flags;
+ 	unsigned int count, oub_count;
++	LIST_HEAD(completed);
+ 	int found;
  
- free_chan_resources:
- 	zynqmp_dma_chan_remove(zdev->chan);
--err_disable_pm:
- 	if (!pm_runtime_enabled(zdev->dev))
- 		zynqmp_dma_runtime_suspend(zdev->dev);
- 	pm_runtime_disable(zdev->dev);
+ 	fsl_re_cleanup_descs(re_chan);
+@@ -181,8 +182,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 		}
+ 
+ 		if (found) {
+-			fsl_re_desc_done(desc);
+-			list_move_tail(&desc->node, &re_chan->ack_q);
++			list_move_tail(&desc->node, &completed);
+ 		} else {
+ 			dev_err(re_chan->dev,
+ 				"found hwdesc not in sw queue, discard it\n");
+@@ -195,6 +195,17 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 			 FSL_RE_RMVD_JOB(1));
+ 	}
+ 	spin_unlock_irqrestore(&re_chan->desc_lock, flags);
++
++	/* Invoke the client callbacks outside the channel lock. The callback
++	 * may submit new work which re-acquires desc_lock, so holding it here
++	 * would deadlock.
++	 */
++	list_for_each_entry_safe(desc, _desc, &completed, node) {
++		fsl_re_desc_done(desc);
++		spin_lock_irqsave(&re_chan->desc_lock, flags);
++		list_move_tail(&desc->node, &re_chan->ack_q);
++		spin_unlock_irqrestore(&re_chan->desc_lock, flags);
++	}
+ }
+ 
+ /* Per Job Ring interrupt handler */
 -- 
 2.53.0
 
