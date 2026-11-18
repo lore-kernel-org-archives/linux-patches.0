@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026454;
-	b=tkz2ChOeFZXR6R/oKmaBl4HiRC4KDNVPj1OrEgwN0xScrh8VAIjFyA27vwfyUU84/tsP
-	 QjvcyNCPP8aPaOTJ5G5pTjSXm+KxZEPpbQ446hwnaY3jeOH44f/fevnilMOwjfVB/bf2w
-	 hNXk0PnMaPTuyLVa2bn1rIxe9KN8v2kCtA2L4bQXjK3RPGrZDfXe6uDwRrvcibeUJUe3/
-	 l0l/gAGcACvbtvRDTs5kL8n9YYDaEpSVSOATHWt+u8j4hjxYWZjGAQ4BH7WSTlqszQ9K0
-	 iCInqtVmD5mToI+XxOsneqsbzwi5AE3wzGwPo870dMPUFT88wvnOmaROfebYyGRCuPw==
+	t=1795026457;
+	b=OMKTofMUhyDezwS9weXZEHZhRrda0P9WZUsFz40+kNDuWKNqrNTsCktqGk3EeM/oad67
+	 jPFWMG2ACBPgJixhcsDbhCHDFVTbzG/P0KYVdXE6UVdknN1hMlfi+uJWicnKf+DiiyTez
+	 IrTouGH2OHjakgfQFtRMgH9GWDGgT+PVh6DH/LksWn96ftZgqrtNk5IFAS93bBtyy8NMU
+	 hI+Siq1nsIWIxM+JGdY1xNmkXQRJGp9OK/Vkp9/T82wqMGNFZWvkBOz6+Si3b04ePSRTt
+	 nNEvbvFhB9teFs3jFy7Hgg6vS4bOQ9KN7F3yRAeI4rQNyxWWs6q+89ZAXGJWR7DOfYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=INPmbHPrXL1JN79hNFrIqXDhOjNWsM/bBBkOfTAwzRY=;
-	b=XEtZlgZqFSc0fFKJu1h23aJAqkcT8jwZv07OHgPERLAQJx6l5koKCpT/nBQEt8X1kWFY
-	 T9EZe0Z/PrEfUzU7WakByc9quSq2M3QO1in1UUHrEtGBtYw1XiDW/z55ytvMaOLFeFth+
-	 yQTFcxcHQZZ80cx06h3bveT8rc6mLIiu3iIvhabA/KQHtcZOoe2SVVZVIjPotAclsK5ce
-	 OdScZ37DYLnW4l8ZBiJquTQPJUMnwL85J3zTkWTNiQxyzGAtUXcXBLKMRy7BmcKd/q79I
-	 W2J14r30v+oo0qlWGry3HFKKYSq0eE/CA+uVYQAyygNjQ/uP3qZwC91yGNRHzHd4A5g==
+	bh=00YNuV56XQIYmRJf29UC0cJZr7mEalCaVp3lON6NLkI=;
+	b=XcJlhIuPoXtfG9lfCzXSd7PPvrejVCWSEbO6tG9qAi7vHGI23m+uQBxFrPMVLvcHxkRG
+	 UsnDSBxhGDyYAkZ862e60Ikr4+L4mas9i2PUdsQqjsVfVnHVydTV4ISkjNIE7MDxkRLbx
+	 PCcmEB2TtyJgChs6slKUcbISGqrKTrtgE3o3so8Grka9RShtWHss6IUgp5LmnkcICMdbr
+	 HCxGYK5c6yHOOYDKgZtr31FsPaw7l+xfNCVN4xKSVMB0Dl4gnVGsD73O/iLN9DVjQYjTk
+	 ehTgQpHknbiAmK+IEgfbWJv1YFjCzsmwIUtbLQsN/sCd1L/jt26NZrQHOCAqm/9zEpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKxdTZSt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRoZ58s9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6123E60A2604;
-	Wed, 18 Nov 2026 18:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D8A606A332;
+	Wed, 18 Nov 2026 18:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKxdTZSt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92861F000C4;
-	Wed, 18 Nov 2026 18:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRoZ58s9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C7E1F000C4;
+	Wed, 18 Nov 2026 18:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026454;
-	bh=INPmbHPrXL1JN79hNFrIqXDhOjNWsM/bBBkOfTAwzRY=;
+	s=korg; t=1795026457;
+	bh=00YNuV56XQIYmRJf29UC0cJZr7mEalCaVp3lON6NLkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eKxdTZSt6Quq6lTouoNgRi6wVray2dxFmb9TqF9aPJmgoXdO3oNhhMYRgTrlM6DX6
-	 4VSb+G6k+yHt37VhalBQdLrActVvsbxOQRSZWjMV4h6+onWqEr0D6VU2nEeNY0p5IQ
-	 oISjTRboacatQcegmMQALvhUgzDQdKq7sax1APdI=
+	b=CRoZ58s9x8lpCGf5s7sDlRhFXtLCKjyunyLprPV3wY6ceAwcLQQYj+9b6nCv1QXMI
+	 ImZ2YN7QK3NAmC4ln32jQ4Yo4dABqPSrLLSMe8eU6rLFiBf8otPg33wWVhaPTupM1q
+	 BSCwOiYEIZg6shEUmUNez/jdPps/OihY/gztvMjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Alex Williamson <alex@shazbot.org>,
+	syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Palla Raghunath <raghunathpalla.0209@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1441/2151] hisi_acc_vfio_pci: fix NULL dereference in reset_prepare on PF passthrough
-Date: Wed, 18 Nov 2026 15:52:56 +0100
-Message-ID: <20261118150214.428381588@linuxfoundation.org>
+Subject: [PATCH 6.18 1442/2151] nvmet-fc: dont drop the last assoc reference in nvmet_fc_delete_ctrl()
+Date: Wed, 18 Nov 2026 15:52:57 +0100
+Message-ID: <20261118150214.465348530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,75 +71,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Palla Raghunath <raghunathpalla.0209@gmail.com>
 
-[ Upstream commit e1d2d60b1f50296828d3f7ff26c45d1a90f142ef ]
+[ Upstream commit 165301b5e2fd765fa05ea1044bbca8ba79820197 ]
 
-When a PF is bound to the driver via driver_override and passed
-through to a VM, its pf_qm stays NULL. The PCI error handler
-reset_prepare() runs during open_device through
-pci_try_reset_function(), before the mig_ops gate, and dereferences
-the NULL pf_qm for the timeout log, crashing the kernel.
+syzbot hit a recursive locking report on subsys->lock when a subsystem
+is unlinked from an FC port.
 
-Move the mig_ops check to the entry of reset_prepare() and
-aer_reset_done() so non-migration devices skip the QM_RESETTING
-coordination. The dev local resolved &qm->pdev->dev before the
-gate, so open code it at the dev_err() call where qm is known
-valid. Also clear set_reset_flag together with QM_RESETTING in
-aer_reset_done(); the flag was never cleared before, so a later
-timed-out reset could release a foreign lock.
+nvmet_port_del_ctrls() holds subsys->lock while it calls ->delete_ctrl()
+for each controller. nvmet_fc_delete_ctrl() grabs a reference on the
+association, queues del_work and then drops the reference. If del_work
+gets to run to completion before that put, ours is the last reference.
+Freeing the assoc tears down the queues, the last nvmet_cq_put() drops
+the last ctrl reference, and nvmet_ctrl_free() goes for subsys->lock
+again:
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Fixes: a22099ed7936f ("hisi_acc_vfio_pci: fix VF reset timeout issue")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Link: https://lore.kernel.org/r/20261013071929.3988687-2-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+  WARNING: possible recursive locking detected
+  ...
+   nvmet_ctrl_free+0xa6/0x8e0 drivers/nvme/target/core.c:1766
+   nvmet_cq_put+0x158/0x200 drivers/nvme/target/core.c:848
+   nvmet_fc_target_assoc_free+0x418/0x2220 drivers/nvme/target/fc.c:1173
+   nvmet_fc_delete_ctrl+0x717/0x7e0 drivers/nvme/target/fc.c:1581
+   nvmet_port_del_ctrls+0xfb/0x150 drivers/nvme/target/core.c:311
+   nvmet_port_subsys_drop_link+0x1e8/0x310 drivers/nvme/target/configfs.c:1119
+
+It's a real hang, not only a lockdep warning. I reproduced it with
+fcloop by putting an msleep() before the put: rm on the configfs link
+gets stuck in D state for good.
+
+I don't think we need that reference at all. del_work does
+list_del_rcu() and synchronize_rcu() before it drops the initial
+reference, so an assoc we find on assoc_list can't go away before
+rcu_read_unlock(). nvmet_fc_schedule_delete_assoc() doesn't sleep, so
+just call it inside the RCU section and get rid of the get/put. If the
+assoc is already being deleted, terminating is set and the call is a
+no-op, which matches what happened before when the get failed.
+
+With the same msleep() in place the patched kernel unlinks cleanly and
+the assoc is freed from the workqueue.
+
+Fixes: 4049dc96b8de ("nvmet-fc: defer cleanup using RCU properly")
+Reported-by: syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=da94a51633758d13bd63
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/nvme/target/fc.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index f141f21566c52..e2ef4e872124b 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -1173,14 +1173,16 @@ static void hisi_acc_vf_pci_reset_prepare(struct pci_dev *pdev)
- {
- 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
- 	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
--	struct device *dev = &qm->pdev->dev;
- 	u32 delay = 0;
- 
-+	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
-+		return;
-+
- 	/* All reset requests need to be queued for processing */
- 	while (test_and_set_bit(QM_RESETTING, &qm->misc_ctl)) {
- 		msleep(1);
- 		if (++delay > QM_RESET_WAIT_TIMEOUT) {
--			dev_err(dev, "reset prepare failed\n");
-+			dev_err(&qm->pdev->dev, "reset prepare failed\n");
- 			return;
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 89edffeb10626..bf39e4af43166 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1572,8 +1572,14 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
+ 		list_for_each_entry_rcu(assoc, &tgtport->assoc_list, a_list) {
+ 			queue = assoc->queues[0];
+ 			if (queue && queue->nvme_sq.ctrl == ctrl) {
+-				if (nvmet_fc_tgt_a_get(assoc))
+-					found_ctrl = true;
++				/*
++				 * No assoc reference here: we're called with
++				 * subsys->lock held, and if del_work beat us,
++				 * our put would free the ctrl under that lock.
++				 * RCU keeps the assoc alive until unlock.
++				 */
++				nvmet_fc_schedule_delete_assoc(assoc);
++				found_ctrl = true;
+ 				break;
+ 			}
  		}
+@@ -1581,11 +1587,8 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
+ 
+ 		nvmet_fc_tgtport_put(tgtport);
+ 
+-		if (found_ctrl) {
+-			nvmet_fc_schedule_delete_assoc(assoc);
+-			nvmet_fc_tgt_a_put(assoc);
++		if (found_ctrl)
+ 			return;
+-		}
+ 
+ 		spin_lock_irqsave(&nvmet_fc_tgtlock, flags);
  	}
-@@ -1193,12 +1195,14 @@ static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
- 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
- 	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
- 
--	if (hisi_acc_vdev->set_reset_flag)
--		clear_bit(QM_RESETTING, &qm->misc_ctl);
--
- 	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
- 		return;
- 
-+	if (hisi_acc_vdev->set_reset_flag) {
-+		clear_bit(QM_RESETTING, &qm->misc_ctl);
-+		hisi_acc_vdev->set_reset_flag = false;
-+	}
-+
- 	mutex_lock(&hisi_acc_vdev->state_mutex);
- 	hisi_acc_vf_reset(hisi_acc_vdev);
- 	mutex_unlock(&hisi_acc_vdev->state_mutex);
 -- 
 2.53.0
 
