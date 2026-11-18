@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054837;
-	b=cf9UQy3gOjGAO3HWFyf1cPQeL5SnXArV2woctcRt/yzdtWz+U8yn0997si6R+YElr/0I
-	 cfhM5txEDD5LPFCFhjfTI/qnttYG/lfscFfRpgUz1oeQxoYzp29lQFjP7LKW1AIwGJY4G
-	 /kmhjTqepkKXDidqAtsVYf+0LpnVLr4f9852ZRGcJCZ8pBnTi/csGNT/Va45+6AioVReE
-	 QRvAqkkBtyknrocwrkSGKBVUVlMi2Ykg3XNYcQb27oDZmweX4mQR8lGnY+nQgj5eT5/K9
-	 06gdO3z1QEzvpz531vuzJPZ1b8JToH9LgNqfLh2OwdxypqL3uIgIeoWveE+L/HLCI/Q==
+	t=1795054840;
+	b=STnajddEWMavEX70nwjgyE+knQOVUTGaRSZG8kqLeT47XEQhTXVc7+6/IPDpvq+UPbwn
+	 EGigg9EfkS5tCBZJKNoG54MtZCkTk0IgULIYpu0ON9Mv0sGgVaDdFval2H1SNUXWfq3+L
+	 BNqBWvqmFK1TvOHVipA5EZqRTw1U435G3pCpCmXNylpkIGwvvArHRn0n2jvYibxtyzocg
+	 RPRYBBEpGukkBtLBgyH3RMvUVK4UQpv9BAowhdy81f3iRAwGtv1L7A0VUKcCxFltkZQoH
+	 HhMMO7DK+nUk1BeoTz58kONcEETyb7ttaMq67yxDfz02suUkXSnv5kDE6qlibm8zGyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C7UicRgtmrdkCt+Y7QDFB0Cx8KE96113ZTxqdYJhVB4=;
-	b=mVhSImbBhzoUax5761qwiiKEGAI2kj8Yh9mPJBcg4rWYagzj1Y8zb7W6SWyvAmCLJKqc
-	 TBm2jJZxky1x1v3V29BVr/mubztk9Uqy0T48eR3mrHKsrdQUnMVrr7HF7yXiLhM45b+Ze
-	 ni1JZ5QPaV9zklgY4+cMi8KuKNsYAn7+7tppAP1wmLQvKaXAE6t5Z52H4rLuIfwXLv4zf
-	 M2jcklRbScLfSL/HQ1drfpCd2fCS78GZ6uDkTAEqfowABrc8UiCm0b5TZj9PxqxInPLOX
-	 vL9IKhXNOYsOajzNTu5bWE3nutcH4cJqZtRp16lJVUqZ3JkVfeTUr2g8xFlVIdObXOQ==
+	bh=9t9eDgb5um11M0R/BoQvpe14a8EdeZ0RtCpLFxVxGgw=;
+	b=uoU+crMzQnUG13lAygHNlDjyBJwPDl2hpwYPSZBsaknTzBAGx7nokGypfQdF9FxtLvpH
+	 M8frFho1purWOzynHxNtoWQjzpI9DrMeBaJsN7wQxIqpGPvGBoejz/vjFSMZQuagU3Af8
+	 d8WsnWqHEG9iPLgWD7oGHGOtldGshUi0uE8EQUBb9mwG8DKX6SNFnqJ0vT7HZAQPlvV5D
+	 PeZWD19qiK97Di4QEkukGt9Ai+eKr27Tgu2Oo+ZZSJEpHSOsE4XD9CqGHUDfThIU6FqYT
+	 tz+SlYfYSADSnRJ0I6DhGD9pedZuKdbkgYZxBwYq6TXpfOAsK4rkcBYqwLUUcxLwVFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fo+4+o8E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PLR/fbl1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE056606A325;
-	Thu, 19 Nov 2026 02:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF28606A31C;
+	Thu, 19 Nov 2026 02:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fo+4+o8E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A101F000C4;
-	Thu, 19 Nov 2026 02:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLR/fbl1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BAE1F000C4;
+	Thu, 19 Nov 2026 02:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054837;
-	bh=C7UicRgtmrdkCt+Y7QDFB0Cx8KE96113ZTxqdYJhVB4=;
+	s=korg; t=1795054840;
+	bh=9t9eDgb5um11M0R/BoQvpe14a8EdeZ0RtCpLFxVxGgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fo+4+o8Efb/NLD0URKSg5E7z10Ug4N5xjzuVjnIbjrR9ijTcKRIIMD+V4yyiE8/QO
-	 p+6PJPayKCoPWDzQN9D6PPKqVB1hF+aY7I1YRD2Z2Et6HwgvZxPXWRm8Z+59/7+EQ0
-	 GA7hK1ED1aq1idtT19K9AeoXLuHxiYhz6Ti+cmmU=
+	b=PLR/fbl1OxZZ6zrqiBUoyvbiVDIDnPO/PY8era6nqFXc4B+reF3KThZ7kUWBN3ZIc
+	 Am7Iax4OfF6DPd3xZhuiNxdzxtyTF6K+S+SHHnZTB0y5yrgAEnBTiNlZwkgLKgYXSe
+	 2HSn63LRTQ1wa3N9YoH2zD+AnqScDmWL1w+Ta/fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1415/2214] dmaengine: xilinx_dma: Freeup active list based on descriptor completion bit
-Date: Wed, 18 Nov 2026 15:51:31 +0100
-Message-ID: <20261118150107.844869428@linuxfoundation.org>
+Subject: [PATCH 5.15 1416/2214] dmaengine: xilinx_dma: Move descriptors to done list based on completion bit
+Date: Wed, 18 Nov 2026 15:51:32 +0100
+Message-ID: <20261118150107.876333501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,52 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit 7bcdaa65810212c999d21e5c3019d03da37b3be3 ]
+[ Upstream commit 5b585cc8778185ae7a7c9903f8cd70d562b91282 ]
 
-AXIDMA IP in SG mode sets completion bit to 1 when the transfer is
-completed. Read this bit to move descriptor from active list to the
-done list. This feature is needed when interrupt delay timeout and
-IRQThreshold is enabled i.e Dly_IrqEn is triggered w/o completing
-interrupt threshold.
+In AXI MCDMA, xilinx_dma_complete_descriptor() walks the channel's
+active_list and unconditionally moves every entry to the done_list. The
+MCDMA IOC interrupt handler invokes this function on every
+interrupt-on-completion, but with interrupt coalescing (IRQThreshold > 1)
+an IOC interrupt may fire after only a subset of the queued descriptors
+have actually been processed by the hardware. As a result, descriptors
+whose completion bit is not yet set in the BD status were being reported
+as completed to client drivers.
 
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/1691387509-2113129-6-git-send-email-radhey.shyam.pandey@amd.com
+Add a check for the descriptor completion bit before moving entries from
+the active list to the done list, using the appropriate direction-
+specific status field (s2mm_status for DMA_DEV_TO_MEM, mm2s_status for
+DMA_MEM_TO_DEV).
+
+This mirrors the AXIDMA fix in commit 7bcdaa658102 ("dmaengine:
+xilinx_dma: Freeup active list based on descriptor completion bit").
+
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260818174151.1608971-3-srinivas.neeli@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 5b585cc87781 ("dmaengine: xilinx_dma: Move descriptors to done list based on completion bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/dma/xilinx/xilinx_dma.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 2c6c048797279..9ecf42b3b12d9 100644
+index 9ecf42b3b12d9..d2feeba84a66b 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -180,6 +180,7 @@
- #define XILINX_DMA_CR_DELAY_SHIFT	24
- #define XILINX_DMA_BD_SOP		BIT(27)
- #define XILINX_DMA_BD_EOP		BIT(26)
-+#define XILINX_DMA_BD_COMP_MASK		BIT(31)
- #define XILINX_DMA_COALESCE_MAX		255
- #define XILINX_DMA_NUM_DESCS		255
- #define XILINX_DMA_NUM_APP_WORDS	5
-@@ -1727,6 +1728,14 @@ static void xilinx_dma_complete_descriptor(struct xilinx_dma_chan *chan)
- 		return;
- 
- 	list_for_each_entry_safe(desc, next, &chan->active_list, node) {
-+		if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
-+			struct xilinx_axidma_tx_segment *seg;
+@@ -1735,6 +1735,17 @@ static void xilinx_dma_complete_descriptor(struct xilinx_dma_chan *chan)
+ 					      struct xilinx_axidma_tx_segment, node);
+ 			if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
+ 				break;
++		} else if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
++			struct xilinx_aximcdma_tx_segment *seg;
++			u32 status;
 +
 +			seg = list_last_entry(&desc->segments,
-+					      struct xilinx_axidma_tx_segment, node);
-+			if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
++					      struct xilinx_aximcdma_tx_segment,
++					      node);
++			status = (chan->direction == DMA_DEV_TO_MEM) ?
++				seg->hw.s2mm_status : seg->hw.mm2s_status;
++			if (!(status & XILINX_DMA_BD_COMP_MASK))
 +				break;
-+		}
+ 		}
  		if (chan->has_sg && chan->xdev->dma_config->dmatype !=
  		    XDMA_TYPE_VDMA)
- 			desc->residue = xilinx_dma_get_residue(chan, desc);
 -- 
 2.53.0
 
