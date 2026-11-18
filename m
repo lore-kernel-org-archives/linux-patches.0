@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061015;
-	b=5gJqi814I5p4zYql08arLJMSPc6y2Rb+GQM5eDbziJfO/2e9v5Av5sUny9y5Y3T57WoL
-	 cYWzzPGgbezwmKfN2hq3sdZOQ32lBIaNbLAOzUpCeiouJIDD9DuYq8xmsKI9dkqw/5i2r
-	 qWmQZ2wJ77WTWVO8UxXLYzkn93QL2KDuZ2hcdqj3cCEuCehamfkxRIBibxbjI0hIdmclg
-	 IfiEiZJd64bBOgvQFSeLcpim91JtuUFZBEjQKKJw4D3udYAFuet8cXvgbbQbknCryfVeC
-	 gGMH0Hj5PNR7x2e2yXxfemLkUC9mBD9v2IghfoZ8vkrrMk2WDkRbk5YAf4qqZc/UiBw==
+	t=1795061018;
+	b=325aaCY8wBM2gS21WFqes9OVatzpaHnJ3bG6hVqyTkjVCSDThTjYjGmjFjdTEdLM5OBu
+	 oqDplos6+ReHGf5RunTOH+TmmG1a07dFxcbQe7+UG4nV7r1WnZ2ZAAubeP5rBJ4vvfpgz
+	 DK+MVIxPYsTDbDmGfZg2hSkmHRneAejtEx2e/PJzmIIH6IlwA8sH119fpV5ghltoXuyXG
+	 vE+Vv/bsH0N4TuzJB8eElMqqHbiB85kcL26NBW0Y7qf+twZvWL9TFTA+ZFLBEYP74865A
+	 WNn12K5otb3XLVADx8iIxK/ZCkdYdFdHCztAOLGEm+QqPACBF7CwGMT8l4bmP9iLF/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cQmx5Cj+f9T6iqdm2Itxo4VmFXzOL2sWU3vDQCer2ic=;
-	b=v25sAL+QOR5tpYDFc4psoResLB28IM1ncI19ehlcdcvMBviESLXLWu4hQNQB41OLlPQ/
-	 FKUpOSVUONqIndSnHhTG4U259nLJfSoGGZNyZIxfCiZfnJbp50EsazWI23v6eNCm11ZOW
-	 vjYI2n7vWaKqQW/XTUPCaDrhQ2hmc2+bH+kM+A7TqZoKLOrpiAOKm1g7mInZj5v5l/30R
-	 vF7FNqKDeE5JiQK0+Z0VzzkoMKGiWw5EV5SLMudpU1LdZ+h/Q7bZ4HBGYhSXzzCj618Aj
-	 k/hjJQTIcYhA3z95+x6Fd6fgeg+VlB8oKDEualD3E9lI8VBwTn6I1vvU0+JTjiLpeig==
+	bh=dD/WNnK6fdcHCgIHUtrZ12nUqg5EneI2w7Jk0aiJCVQ=;
+	b=ODFfg+iU8JGJyc+/Sr40kzToUtRXNMIVFTJwDdFA6NVkbQnY2vIun+Ui3kCYtc4uSdtu
+	 xnqgSxPvo491SOLtgDUXy6shFkQ+xhRe4uvTskVr4ieG0/zWxfN/BmaVJJ6ZSfHlxMuHn
+	 BZxX6G8A9B9HLNyXUVnAvoceIcg3gpZFIbvSie3VVMTM+/OmlQAoj5XqJ9S7F4b1N6Iqa
+	 IvEnyZxnEY6qTIGYVcRQKtBdVH8wk9Aq+LSQCyXWWFCQovw+62es9hsVpuniF5XTZC9cf
+	 OQIl1fyV9UOxMWBkGzwRqQ1tFY+EN9jfdkXL77+IrbgnnxHxIxLrkCizmZu0zu+T3wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSpcQwkJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCEJCKgH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48042606A32A;
-	Thu, 19 Nov 2026 04:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A608606A320;
+	Thu, 19 Nov 2026 04:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSpcQwkJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD151F000C4;
-	Thu, 19 Nov 2026 04:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCEJCKgH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1DD1F000C4;
+	Thu, 19 Nov 2026 04:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061015;
-	bh=cQmx5Cj+f9T6iqdm2Itxo4VmFXzOL2sWU3vDQCer2ic=;
+	s=korg; t=1795061018;
+	bh=dD/WNnK6fdcHCgIHUtrZ12nUqg5EneI2w7Jk0aiJCVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QSpcQwkJRb/9g94nWASlJBPG9H3/C5P4ADBKj0i6je5tVPt/SCSQcr0fqsdstm8i6
-	 n1rXAdStXddJjzAMnXR1jaDBvgMIZgITH9iM6TiS165qtaqt+w+i/7/6R2uHsSelLl
-	 7cTCNRPgNNKmiWTD8fzuD+CQQV1ZZK65/KLEcrX8=
+	b=pCEJCKgHIycYax+n3Ekg0l6xuu+7UT947dXF4nwBi+a4+/z5rDGt0sW3swWAyOvv4
+	 bzcmWJ4kbTyn5/iGLZgHUigwvelK5pUheF/NhVUaLRSRGRaOH3bPYvUsoujZE1NDB6
+	 LeooJihA3RdCGC3xOJ3fDpiWW+w9PAccx/Jbelhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1402/1848] IB/mad: fix UAF and double-free in RMPP receive reassembly
-Date: Wed, 18 Nov 2026 15:57:20 +0100
-Message-ID: <20261118150018.220930483@linuxfoundation.org>
+Subject: [PATCH 5.10 1403/1848] clk: ti: adpll: unregister OF clock provider on remove
+Date: Wed, 18 Nov 2026 15:57:21 +0100
+Message-ID: <20261118150018.257816503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,97 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dairui Zhang <zhangdairui@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
+[ Upstream commit 4c943ddfc24340f1b899762b1ff35c38306b7a35 ]
 
-mad_rmpp_recv.state is protected by two locks that do not exclude
-each other: recv_timeout_handler() (port workqueue) uses agent->lock,
-continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
-the check-then-set sequence on the state word:
+ti_adpll_probe() registers the driver's onecell clock provider with
+of_clk_add_provider().  The remove path only frees the clock resources,
+leaving the provider registered after the backing data has been torn
+down.
 
-  T1 (CQ softirq)              T2 (port workqueue)
-  continue_rmpp()
-    lock(rmpp_recv->lock)
-    state == ACTIVE  [passes]
-                               recv_timeout_handler()
-                                 lock(agent->lock)
-                                 state = TIMEOUT
-                                 list_del(&rmpp_recv->list)
-                                 unlock(agent->lock)
-                                 destroy_rmpp_recv()
-                                   wait_for_completion()
-                                   [blocks on T1's ref]
-    state = COMPLETE
-    unlock(rmpp_recv->lock)
-    complete_rmpp()
-      queue cleanup_work (+10s)
-    deref()
-                               [unblocks]
-                               kfree(rmpp_recv)
-                               ib_free_recv_mad(done_wc)
+Unregister the OF clock provider before freeing the ADPLL resources so
+the provider no longer points at released driver data after device
+removal.
 
-  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
-        freed rmpp_recv -> UAF write and double free; nothing can
-        cancel that cleanup_work anymore, the entry is already off
-        agent->rmpp_list. done_wc is also returned to
-        ib_mad_complete_recv() and freed again -> UAF read and
-        double free.
-
-Reaching this requires sending MADs to a kernel RMPP agent from the
-InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
-manager responses whose SLID/GID/TID are not authenticated on the
-fabric, and legacy user_mad agents registered without
-IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
-MAD with an attacker-chosen TID, no in-flight send required. The
-attacker controls segment timing and can run many transactions in
-parallel (agent->rmpp_list has no cap), so landing the
-microseconds-wide receive critical section on the 40-second timeout
-boundary is a matter of patience, not luck.
-
-Unify state transitions under rmpp_recv->lock in
-recv_timeout_handler(), keeping list manipulation under agent->lock
-(which preserves the agent->lock -> rmpp_recv->lock ordering used
-by continue_rmpp()). State check/set in both paths is then
-serialized, so the loser of the race always observes the final
-state and bails out. recv_cleanup_handler() needs no change: with
-transitions serialized, a cleanup_work can only be pending after
-COMPLETE, in which case the timeout handler exits early.
-
-The race is as old as the RMPP implementation itself.
-
-Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
-Assisted-by: LLM
-Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
-Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 21330497f303 ("clk: ti: Add support for dm814x ADPLL")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad_rmpp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/clk/ti/adpll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
-index e0573e4d04040..d5eeeaf74ce87 100644
---- a/drivers/infiniband/core/mad_rmpp.c
-+++ b/drivers/infiniband/core/mad_rmpp.c
-@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
- 	struct ib_mad_recv_wc *rmpp_wc;
- 	unsigned long flags;
+diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
+index bb2f2836dab22..798e4835ce71e 100644
+--- a/drivers/clk/ti/adpll.c
++++ b/drivers/clk/ti/adpll.c
+@@ -947,6 +947,7 @@ static int ti_adpll_remove(struct platform_device *pdev)
+ {
+ 	struct ti_adpll_data *d = dev_get_drvdata(&pdev->dev);
  
--	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
-+	spin_lock_irqsave(&rmpp_recv->lock, flags);
- 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
--		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
-+		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
- 		return;
- 	}
- 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
-+	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
-+
-+	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
- 	list_del(&rmpp_recv->list);
- 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
++	of_clk_del_provider(d->np);
+ 	ti_adpll_free_resources(d);
  
+ 	return 0;
 -- 
 2.53.0
 
