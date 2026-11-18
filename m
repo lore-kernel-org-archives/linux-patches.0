@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028584;
-	b=ww4KzyrliVjr8y7R7IZ3UXoq5jayyota8TvT+AcRs/S+uZg858esWvkoppaM+HDkVBxc
-	 pLSayLVqyMaihUJzCVyddHCi4y6GP++z/qhGpG5+lpsQGOtNcdodQ3LGb2NvEtlWkW4F5
-	 olEma4saSLieclD3C/Wr3/MQuruRadR+ybIRTN94zZydUrdoPXs8V9SsZARVzsjjJ1Wq0
-	 MEfdiPzzXcKidEZUQ3Cg1q1lRXH9eKURyHSJAHcm2fxj8Hm8GZqQSCiWaSn9VAFeLHPWh
-	 8aByods/DsE4WdScy0CTtoggE8Ro3rGvf/mTnF3kjKXx5G33ufJiAcRtdzCfVuEbIGg==
+	t=1795028586;
+	b=fjPSHnVPYtzEacJOWCj1IVuIVuQiATM8dkjifvGh2ZprdwgcVyeMPWBCIez3KAF3U3yv
+	 e/uaX48A8eHP/ShDMPv8oM+i0TkacXHLe57+VYNYn8Hzzxacp3auraKzgzgeCaHQuRyrG
+	 ySbvLzRYiTTF/wqtIUWBSVKDbUgXIgfN+0IGXGEiOJcy7w7K2F3FVApZWVhkoXYG1e50x
+	 pZonu8iMOPGqvCJejNSB71JZGfRusGHQVvQstjv7VgbGS7wsysd6rJipCTTYdeO9t0ir+
+	 eRPf0pG7MeLLkgauUsODeX43ZpEXh2dSI9rIIhkyvkGTV49mPcOIFm7oeNhscxzQEfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qqXi7L4NBdGRoll73f0OjwnLuieEAxsIB7QXiaIR0Fo=;
-	b=yBwqS27OpXUUzPYRcAPM+Dv2JGwIILxuZgfIhqxUiFWoGDUbmMSFkuCOX62Yl7kbi4k9
-	 Dn+5PBoeWQdCpzPldeZqMXF+r3rFSBFzwGA1S/XnkiFUj1baPzIEsmjBxqYo8VkJxKwBL
-	 T4Anfydkcgwqy+QcOHmLZLvcns22zMqO9IKyHP5KVWFiccEuMy44QJT+ur91DH+Qu6yUN
-	 7b/Ui6pqSunc/9L0fa+SA5YYIPIpCtaD4yoFpZ2d1S2lOqEB98zH/u2M2c6NCoSwKko0Y
-	 fudNtne0jI30D+xz4mwp+uWEBqSCsB/J+sRqI1ZgzXHA2mvPY6jN16HQ2jpDqo2xZkQ==
+	bh=H6ID6TlRYurhBTkz/fw19mDgZ7+vtrGQg8Ie1jQ/hcQ=;
+	b=3x2NieouaRXw7hPLToCxmp4shzDjdmja/xUEdF3lfY4CwDs+Hdf60F9hWtQsLqyWMLmd
+	 Gp/56wV1IXboOmeHRi4cqNwvhRRqoRfKS2QyaiJfaxbLrdaL1GJgmuWexbjn8pYaZ2QQj
+	 gN2G1+kleOIBhN4rb0lw99RelXD/j2Sgw8Hjc0bNHfMIv2fAy/f49m/zAejDnExHdCWcq
+	 HjfCIbBTkZpCfldTXn4eifuEQEcvFmnR4iu+Qt6h9kH2TzNRCtTVGdZO/4WjyqRFku3pV
+	 JQ6/aUoMlOsPrsPo4xT0hm9Jk6yi8ROiGGcLsIQSx9Q7GZZHQrkosB9QR+kD8/RLd3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNNW3zwh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=glDMNyii;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAEB606A31C;
-	Wed, 18 Nov 2026 19:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB35C606A31C;
+	Wed, 18 Nov 2026 19:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNNW3zwh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B961F000C4;
-	Wed, 18 Nov 2026 19:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=glDMNyii
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4EA1F000C4;
+	Wed, 18 Nov 2026 19:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028583;
-	bh=qqXi7L4NBdGRoll73f0OjwnLuieEAxsIB7QXiaIR0Fo=;
+	s=korg; t=1795028586;
+	bh=H6ID6TlRYurhBTkz/fw19mDgZ7+vtrGQg8Ie1jQ/hcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNNW3zwhi5ej4ahCmrGrBcXapXWFKJZpCX1GBF3ycC/Q91bJBKnXsRVAVMQLJqDIt
-	 UbvzcSGUJbVivM1lXjlR3U32Z/yTQkMVYIn8KyzqwDfse0iqEYFb11Ut4xPSRUK9jW
-	 t5y5NZ6ArKPptMKgax8l3VRSYZFMmLFztTPvjSAM=
+	b=glDMNyii0hSx7L3i88GsYvCkU1QIKDF6jbqSU1yEGRACE8SFBwA02ZjTDPkZFmcQ3
+	 0dFrnDnBMLwMsMtmqGCaZ6TOxMiqW+lN2a2OU4sTroDyyPg2c2XRXiLGZta6/Dqnhh
+	 dNasf9ipdDrfzdhps4qN0lSLmOuwge95kegurVPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0047/1756] hwmon: (sht15) Stop deferred work before releasing its resources
-Date: Wed, 18 Nov 2026 15:36:14 +0100
-Message-ID: <20261118150010.108746523@linuxfoundation.org>
+Subject: [PATCH 6.12 0048/1756] mm/mremap: fix moving PUD leaves
+Date: Wed, 18 Nov 2026 15:36:15 +0100
+Message-ID: <20261118150010.155654632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,106 +72,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 5eab1e7f7ed12893f3864fe46ffcd5a41a752d6a ]
+[ Upstream commit 440c8779757f09f290770b1d361dc1516a9d0b3e ]
 
-The IRQ handler and regulator notifier can leave work pending after a
-measurement or notification completes. Neither work item is drained before
-its resources are released on removal or probe failure.
+pud_none_or_clear_bad() only really works on page tables. PUD leaves
+confuse the check and make us clear the page table entry and print a
+warning.
 
-Disable read_work before freeing the IRQ, since the worker can re-enable
-it. Use request_irq()/free_irq() for explicit teardown. Unregister the
-regulator notifier before cancelling update_supply_work and disabling the
-regulator. Apply the same ordering to probe failures.
+Since commit aed877c2b4257 ("device/dax: properly refcount device dax pages
+when mapping"), this also leaks device-DAX folio references, mapcounts
+and RSS accounting, resulting in "Bad rss-counter state" warnings on exit.
 
-Fixes: 251eb40f5ccd ("hwmon: sht15 humidity sensor driver")
+Allow PUD leaves in get_old_pud(). If a PUD leaf cannot be moved as a
+whole or the move fails, split it. This unmaps it with proper accounting
+instead of treating the leaf entry as a PMD table.
+
+Keep using pud_trans_huge() for now, in the future this code should be
+cleaned up to just check for PUD leaves.
+
+Fix generated by an LLM and sent by Josef Bacik in private.
+
+Fixes: a00cc7d9dd93 ("mm, x86: add support for PUD-sized transparent hugepages")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261024014044.27853-1-mhun512@gmail.com
-[groeck: Dropped obsolete 'Assisted-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: fallthrough after splitting ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-32-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adapted pagetable_move_control-based calls to individual arguments while retaining explicit pud_devmap() checks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht15.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ mm/mremap.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/sht15.c b/drivers/hwmon/sht15.c
-index 48bcd362c4808..8af2336052b0e 100644
---- a/drivers/hwmon/sht15.c
-+++ b/drivers/hwmon/sht15.c
-@@ -31,6 +31,7 @@
- #include <linux/bitrev.h>
- #include <linux/gpio/consumer.h>
- #include <linux/of.h>
-+#include <linux/workqueue.h>
+diff --git a/mm/mremap.c b/mm/mremap.c
+index d4666f1ab5939..079127769ea3a 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -47,7 +47,8 @@ static pud_t *get_old_pud(struct mm_struct *mm, unsigned long addr)
+ 		return NULL;
  
- /* Commands */
- #define SHT15_MEASURE_TEMP		0x03
-@@ -976,25 +977,22 @@ static int sht15_probe(struct platform_device *pdev)
- 		goto err_release_reg;
- 	}
+ 	pud = pud_offset(p4d, addr);
+-	if (pud_none_or_clear_bad(pud))
++	if (!pud_trans_huge(*pud) && !pud_devmap(*pud) &&
++	    pud_none_or_clear_bad(pud))
+ 		return NULL;
  
--	ret = devm_request_irq(&pdev->dev, gpiod_to_irq(data->data),
--			       sht15_interrupt_fired,
--			       IRQF_TRIGGER_FALLING,
--			       "sht15 data",
--			       data);
-+	ret = request_irq(gpiod_to_irq(data->data), sht15_interrupt_fired,
-+			  IRQF_TRIGGER_FALLING, "sht15 data", data);
- 	if (ret)
- 		goto err_release_reg;
- 	disable_irq_nosync(gpiod_to_irq(data->data));
- 	ret = sht15_connection_reset(data);
- 	if (ret)
--		goto err_release_reg;
-+		goto err_free_irq;
- 	ret = sht15_soft_reset(data);
- 	if (ret)
--		goto err_release_reg;
-+		goto err_free_irq;
+ 	return pud;
+@@ -624,12 +625,11 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+ 		if (!new_pud)
+ 			break;
+ 		if (pud_trans_huge(*old_pud) || pud_devmap(*old_pud)) {
+-			if (extent == HPAGE_PUD_SIZE) {
+-				move_pgt_entry(HPAGE_PUD, vma, old_addr, new_addr,
+-					       old_pud, new_pud, need_rmap_locks);
+-				/* We ignore and continue on error? */
++			if (extent == HPAGE_PUD_SIZE &&
++			    move_pgt_entry(HPAGE_PUD, vma, old_addr, new_addr,
++					   old_pud, new_pud, need_rmap_locks))
+ 				continue;
+-			}
++			split_huge_pud(vma, old_pud, old_addr);
+ 		} else if (IS_ENABLED(CONFIG_HAVE_MOVE_PUD) &&
+ 			   extent == PUD_SIZE && uffd_supports_move) {
  
- 	ret = sysfs_create_group(&pdev->dev.kobj, &sht15_attr_group);
- 	if (ret) {
- 		dev_err(&pdev->dev, "sysfs create failed\n");
--		goto err_release_reg;
-+		goto err_free_irq;
- 	}
- 
- 	data->hwmon_dev = hwmon_device_register(data->dev);
-@@ -1007,9 +1005,13 @@ static int sht15_probe(struct platform_device *pdev)
- 
- err_release_sysfs_group:
- 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
-+err_free_irq:
-+	disable_work_sync(&data->read_work);
-+	free_irq(gpiod_to_irq(data->data), data);
- err_release_reg:
- 	if (!IS_ERR(data->reg)) {
- 		regulator_unregister_notifier(data->reg, &data->nb);
-+		cancel_work_sync(&data->update_supply_work);
- 		regulator_disable(data->reg);
- 	}
- 	return ret;
-@@ -1023,12 +1025,16 @@ static void sht15_remove(struct platform_device *pdev)
- 	hwmon_device_unregister(data->hwmon_dev);
- 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
- 
-+	disable_work_sync(&data->read_work);
-+	free_irq(gpiod_to_irq(data->data), data);
-+
- 	ret = sht15_soft_reset(data);
- 	if (ret)
- 		dev_err(&pdev->dev, "Failed to reset device (%pe)\n", ERR_PTR(ret));
- 
- 	if (!IS_ERR(data->reg)) {
- 		regulator_unregister_notifier(data->reg, &data->nb);
-+		cancel_work_sync(&data->update_supply_work);
- 		regulator_disable(data->reg);
- 	}
- }
 -- 
 2.53.0
 
