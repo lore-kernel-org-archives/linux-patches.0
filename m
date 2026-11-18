@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042188;
-	b=31UTs3+5RLY1h1Gryo+Ceq0Ra3MMAyyjRqOleOC5vvleWY2ER5z55WaUXO2SAR0T7JcZ
-	 RyNkXyyqqOjnzcCuyXFi5e3Ex3JJp8iHxAH/dzOF0KklyXCuTktUHafM5doLhpM9jBmh6
-	 RoMMNzwjsTTCDK/sMgX4cth5gPcIyXBV6J77HdLhoDKPRSEh81vndPwDOTdPQe/S2EofC
-	 2yJEgrH3khA315bO+kvAfLvo+mLtduLqtCGmKwqbJvv3Lkpdyp7lzTTztMiMfihT72rL4
-	 xtksBZq8jzxAUnt7ArDOKe7pSy2Ctx0LFJ049W3Qy3o0JQ+s2Usbsw4oVY1jV29W6IQ==
+	t=1795042191;
+	b=iIS1pLZ79zVxa5RbjrQQQ6jqoINpHAm7gIWqQDcxPZ9fTxN03dtfzLQxTKx357QXvUiX
+	 pwRw5ZDRp24Wnz/9MelelG/IwhR7E+4CWZewjp81qpyKizI0aVgSOYERwSjs0zahbgJEj
+	 T9vP5f5IwPBRA3kcEjZ6vKnvqjPvY6f3sGY0JPdsw8HaevcRRk+jneHqC2/YrZcCXmaNI
+	 g2TQK5XfrinZswS7yOQlgMwwSXVsIRZePCEjGeb95ldpGiCOzfU61bN3ukPNW7DqFq5Ij
+	 ajTfIOIHTmqiEgCFUO0MwjSAQ/EPY4xkgM6gCu/q8UjDRotsKcamN2ic1W6FNy/78nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TjFHOLFqIYmdirFZ4qe5G+kHGkvSOcMFo45wpFrwDGY=;
-	b=D0++wowsZ98q1BwV3EBGFizuCl4P6LbXDsqYsVxr4gJS67OMXx/cUvJs+VS7dYy+5q1Z
-	 THCFtwu9Zi9ApneGuwLaoYEBNlkQLr6OUiyY363jDaLZB363uigfphz9h13d7GlPAvN7H
-	 SFexGrg31IY2iw6vzBiPrAdZNjDXuBestedI7IztJ91lJyGc0TdYp5sj5PDAK2TfPj9lv
-	 m+CDgoG8sgfgOhbbIzD9i8h/qyP+p3U4tlkVeJ3LhEeTL2MHn0In5aGDfYiy42Hu4M9p1
-	 jRM22d17ls4IuIpz1h/wU+NCRQolMTvt8JubqNdWTtY8BWDQXQS+XpGoMuc9a3jr8aQ==
+	bh=mnV9aLyZfk96Soz6PmhtAS2T2+OQKUBrIsKtkrZsqeg=;
+	b=w6zSiW+U4gfw8Kozj10ajq+LEkl0yqcxjDACZXH3uFpILw+SEaRQz3142ll0M9qPQQH3
+	 LKZgWXwwjp7GFqsoYNbkAuFy9LgSjSs7f2goZayutRpNmpLzSZ+b9GohbUlOZV5Y1hmY0
+	 AZRSZzh/wqXOtyKpzTi65ngo+I5QKVLyRQn92ERyNpM+X+fh1xZn6NRXsnViI98hwINz0
+	 /hPbeNIzgIn74nlQq6WMZ2kaBB7kkeKE8kbUKbWg5FFozlha6tjb6xTNvESU/8dIo16ju
+	 astnZpg50OKGGULldQSj52Y8Z7cFNEidxP5jhP9rqD+7zAklZN4zxQ6XgfRL5kouCJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0Hm/mDEl";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AhOCbw44;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CD7606A31C;
-	Wed, 18 Nov 2026 22:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918E5606A31C;
+	Wed, 18 Nov 2026 22:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Hm/mDEl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9991F000C4;
-	Wed, 18 Nov 2026 22:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AhOCbw44
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9791F000C4;
+	Wed, 18 Nov 2026 22:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042188;
-	bh=TjFHOLFqIYmdirFZ4qe5G+kHGkvSOcMFo45wpFrwDGY=;
+	s=korg; t=1795042191;
+	bh=mnV9aLyZfk96Soz6PmhtAS2T2+OQKUBrIsKtkrZsqeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Hm/mDElKZmKDw4b9/Qf/48tgOmabck+KnoJXIXuGthHutdeo+Tdxul/Oq3S3QgiM
-	 /qiKDPQBf943LCsLSqWfErCUB1dQ6Fvq1Jolis3YjVGTamvf9KwSL9HGjIw4rfyWXY
-	 RnBIJEQ1DJoQsupab2ImPD5N5SLLpMuFP1CmRkvs=
+	b=AhOCbw44bQmRosG4bNsCbSs2RLsLT15Eu5O+TgSq4kYhn8F9jwFAfAsKeeuoVP8S6
+	 7rXhs8/B/Rf02QpmCT87wcziziRC+7UJn3wCiVekB1mdk6nXfeNJId4C4jpXOyDT9D
+	 0JNeJGuPKeXEFlBU3kERHLovznkeKpLCoBhuJRDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3082/3318] ipv6: Hold RCU when emitting route hardware flags notification
-Date: Wed, 18 Nov 2026 16:01:44 +0100
-Message-ID: <20261118150452.524343716@linuxfoundation.org>
+Subject: [PATCH 6.6 3083/3318] team: reject CAN, IEEE 802.15.4 and 6LoWPAN devices in team_port_add
+Date: Wed, 18 Nov 2026 16:01:45 +0100
+Message-ID: <20261118150452.552254689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,93 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 7c9cb1edaf8fd8e1af25e39741e603500986ef66 ]
+[ Upstream commit 9043be310c6a4c5e57f7bba4b9870554eac7aa96 ]
 
-fib6_info_hw_flags_set() is called by drivers from process context
-without RTNL or RCU. When the route uses a nexthop object,
-rt6_nlmsg_size() and rt6_fill_node() access the nexthop's RCU protected
-nexthop info and group pointers via rcu_dereference_rtnl(), resulting in
-suspicious RCU usage splats [1].
+When the first port has a non-Ethernet type, team_setup_by_port()
+copies port_dev->type to the team device while netdev_priv() of the
+team device still holds a struct team. Several L2 stacks identify their
+devices by dev->type alone and then access type specific data that the
+team driver never sets up:
 
-Fix by holding RCU while sizing and filling the notification, like
-fib_alias_hw_flags_set() already does. Switch to GFP_ATOMIC for the skb
-allocation accordingly.
+- CAN protocols rely on the CAN mid-layer private data (ml_priv)
+- IEEE 802.15.4 code dereferences ieee802154_ptr and the mlme ops in
+  ml_priv
+- the 6LoWPAN netdev notifier writes through lowpan_dev(dev) on
+  NETDEV_DOWN and reads it on NETDEV_UP/NETDEV_CHANGE
 
-Reproducer:
+Enslaving such a device (e.g. vxcan, wpan0, lowpan0) therefore leads to
+NULL pointer dereferences or to writes into struct team.
 
- # echo "10 0" > /sys/bus/netdevsim/new_device
- # sysctl -wq net.ipv6.fib_notify_on_flag_change=1
- # sysctl -wq net.ipv4.nexthop_compat_mode=1
- # ip -6 nexthop add id 1 blackhole
- # ip -6 route add 2001:db8:1::1/128 nhid 1
+This is the same problem that syzbot reported for the bonding driver
+with a vxcan device enslaved to a bond master, which crashed in
+can_rx_unregister() and was fixed by commit 8ba68464e478 ("bonding:
+refuse to enslave CAN devices"). The team driver has the same gap.
 
-[1]
-WARNING: suspicious RCU usage
-7.3.0-rc7-virtme-g191aa41548b2 #38 Not tainted
-net/ipv4/nexthop.c:1539 suspicious rcu_dereference_check() usage!
-[...]
-Workqueue: events nsim_fib_event_work
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
- lockdep_rcu_suspicious.cold (kernel/locking/lockdep.c:6972)
- nexthop_for_each_fib6_nh (net/ipv4/nexthop.c:1539 (discriminator 16))
- rt6_nlmsg_size (net/ipv6/route.c:5728)
- fib6_info_hw_flags_set (net/ipv6/route.c:6503)
- nsim_fib6_rt_add (drivers/net/netdevsim/fib.c:671 drivers/net/netdevsim/fib.c:694)
- nsim_fib6_rt_insert (drivers/net/netdevsim/fib.c:759)
- nsim_fib_event_work (drivers/net/netdevsim/fib.c:856 drivers/net/netdevsim/fib.c:889 drivers/net/netdevsim/fib.c:1493)
- process_one_work (kernel/workqueue.c:3396)
- worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
- </TASK>
+Reject ARPHRD_CAN, ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR and
+ARPHRD_6LOWPAN devices in team_port_add().
 
-Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/netdev/179152182668.434549.18232968419539498055@kernel.org/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20261019140337.2886875-2-idosch@nvidia.com
+Link: https://lore.kernel.org/all/b58d98e0-8fe3-4e4e-b8a5-c1c7e647ccca@hartkopp.net/
+Link: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95 # bonding splat
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261019155407.61487-1-socketcan@hartkopp.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/team/team_core.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index bbc5b400a27e7..970af77d58461 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6340,7 +6340,9 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
- 	if (!net->ipv6.sysctl.fib_notify_on_flag_change)
- 		return;
- 
--	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_KERNEL);
-+	rcu_read_lock();
-+
-+	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_ATOMIC);
- 	if (!skb) {
- 		err = -ENOBUFS;
- 		goto errout;
-@@ -6353,10 +6355,13 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
- 		goto errout;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 91abda19a3be0..e9bce9cabf7ae 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1167,6 +1167,17 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		return -EINVAL;
  	}
  
-+	rcu_read_unlock();
++	if (port_dev->type == ARPHRD_CAN ||
++	    port_dev->type == ARPHRD_IEEE802154 ||
++	    port_dev->type == ARPHRD_IEEE802154_MONITOR ||
++	    port_dev->type == ARPHRD_6LOWPAN) {
++		NL_SET_ERR_MSG(extack,
++			       "CAN, IEEE 802.15.4 and 6LoWPAN devices can't be added as a team port");
++		netdev_err(dev, "Device %s is CAN, IEEE 802.15.4 or 6LoWPAN. These device types can't be added as a team port\n",
++			   portname);
++		return -EINVAL;
++	}
 +
- 	rtnl_notify(skb, net, 0, RTNLGRP_IPV6_ROUTE, NULL, GFP_KERNEL);
- 	return;
- 
- errout:
-+	rcu_read_unlock();
- 	rtnl_set_sk_err(net, RTNLGRP_IPV6_ROUTE, err);
- }
- EXPORT_SYMBOL(fib6_info_hw_flags_set);
+ 	if (netif_is_team_port(port_dev)) {
+ 		NL_SET_ERR_MSG(extack, "Device is already a port of a team device");
+ 		netdev_err(dev, "Device %s is already a port "
 -- 
 2.53.0
 
