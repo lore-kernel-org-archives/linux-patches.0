@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020068;
-	b=yqDSMrw508hygy+Mxe7yxbWxxHIrC6d7hqV2lPYuK8sZQO5bpL8j0ZtC1EiHS88fgWZK
-	 rySJPmdU4YBRdDl7cUgD1KoJOuiqmaYDIzvNm2bTQeNP+KTkew/xcpkA+ET55xeocepVP
-	 PNAM3GYh9Vo0O74k67oE5umtV0rVy6vultId+BaAanLIGUTxOxjOT83UuHzu+me3bwfzq
-	 tUWxnkS2j6dPyVvxRFkoQOgptDOdTbugWCIPiEBIeeja0+OjM4XxcDVGiYKksOspU/4je
-	 WbUS2Yb4Rn7zHYSFVt+LoSz5geY+4pt/K3HviI+rHST3c1TuOh0elOfwiKafH+W4jow==
+	t=1795020070;
+	b=awVbYBySAUW3FqAmxOev+XUvsy48m0gOJ354OmA/xT92wo2mCHAfhdMid3H/yuoBPEQu
+	 q8oPDj27yuQ4eyrTEwMCEic09m5ijL2BhgxWLhbIzJnX/8tY3QZNgkz92hTPVuMJyT0WI
+	 jOXSlbMRFaPDGnFXudnycRd9XW1LyG6d4+475cAIoWee9mZq5U35YgPdYinc0CA9f6dqR
+	 B5R2JKg+wyIFp7+MD0ROp3LhfriDgJyd+1DzpgLwSZNQqK/GziWX+9eJbUqiBJCvF/dW6
+	 8NebcGhVh6N6Aasj6ebLJ29Nrx3o3YC3P3Y4qWmtT+o8Q2wmVdWAmRQRHjFQBsKkpQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aWFW5KVBgwG75CDxkNPTRfGYsFPGJF6wdCiYvRrlmG8=;
-	b=3ePtR8VVmU0cSPZ0wIN4QaNSW6CmZu7CsIiwfA+lPMR/NeLSr1xI7hBmNKFp9+wJdEmh
-	 vXZzAuvJAUZFPiPrZHqfopR83AqeE7KX8vwa+9Wr5pzzhGcWZVf3RPQGWuMkJSe7QElus
-	 F8SzvyBqoFZSYlo97F0C0zeCh3c5nFFXz5TsbmwITo8FTm72LI1iWK9SRs9dOzeb45Kie
-	 5uXCeKsNOQu0sxXkvJzFm2ELSbtps5Vv8c159C/edi70MuG+S5+P5E6ySq63QZAJiXqyf
-	 KnsIROtj4y9SW54ax6t6Qc5LfnaK8HxyNajoQE7DOxqNGnFdnIX6nJrfnIfl4V+T43Q==
+	bh=YZfy0IyxQVUv3txeQe9kzvzBFQF+Y+Wyj26HuQy8Ljw=;
+	b=pY/BIJMMZ6dPknlBjnlOZj85EsuidNzUhKHLI3WAPQy4WQ+CURYPxX62dWUOa0c9HqDx
+	 01TA5KqS9eHxTumIL6+glGep8vxoTFC56vX3atKyQhKIZqfN3nzDytFosjkLfdAAihI0a
+	 QgxWQywesSal4Fe4lqPqwBovWHCuhMOPpj9Tb8WrM1t6ErMVJUF7NO2O0KNeP6wCs9uUJ
+	 aTJ8v6TXrF013w1xcCqpAyoNPI/ufkW9KPbzCnqc2iNSMjO971PFej6y/rJIMIfVvMSZF
+	 wNJISdYV6POztdLNGhPdaX/qO1pSAYe3HDdbtLBHUisIliLq29Iv2+J8+vSAz6YCvMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI2hFY6M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQz8cpLW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE7606A320;
-	Wed, 18 Nov 2026 16:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45C4606A320;
+	Wed, 18 Nov 2026 16:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI2hFY6M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803FD1F000C9;
-	Wed, 18 Nov 2026 16:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQz8cpLW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394C51F000C4;
+	Wed, 18 Nov 2026 16:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020068;
-	bh=aWFW5KVBgwG75CDxkNPTRfGYsFPGJF6wdCiYvRrlmG8=;
+	s=korg; t=1795020070;
+	bh=YZfy0IyxQVUv3txeQe9kzvzBFQF+Y+Wyj26HuQy8Ljw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DI2hFY6MKMyWJGAnA3pNLSxsf75vrtvDQO4wEzsHsvuKZMAUE7DKedTJtQ7PhpvDz
-	 ILuAdwT8J6dlAM784HRav6pUHef18dZR3wOpBdwzZyUbLrEZtcCeK0VvKHm0X/T5di
-	 WJES2r7qxmwlv/hV0ZrCVWgQ+wfsSOsV2mJZW4uc=
+	b=rQz8cpLWQke+3yQqeqwZX8Wu23/fK49ROxe0umPc70RZw2TsNiLIm15KnicqM9/hu
+	 XpJuBoYeDmJ3Myg/nkhNBk/u0vqsDT9Zk2DCs2zUQfvRBm/aULNO+bfur2/RIB6IrC
+	 SlTE0mq9msttWgA3VhS6R7KZanc1FYLgxo73muNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1819/2651] ALSA: jack: Fix kctl free at error in snd_jack_kctl_new()
-Date: Wed, 18 Nov 2026 15:50:59 +0100
-Message-ID: <20261118150352.677016445@linuxfoundation.org>
+Subject: [PATCH 7.3 1820/2651] ALSA: pcm: Protect delay DMA sync in forward and rewind, too
+Date: Wed, 18 Nov 2026 15:51:00 +0100
+Message-ID: <20261118150352.706574221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,36 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f421be924fec67f74bb0b6988ea8f0a3480df2a7 ]
+[ Upstream commit d5096bb9beacb448091c1c9541432021dd5c1fcd ]
 
-When an error happens in snd_jack_kctl_new(), it tries to free the new
-kcontrol element via snd_ctl_free_one().  But snd_ctl_free_one()
-releases only the memories, and the internal linked list and hash
-entries still remain, which may lead to bogus accesses to user.
+Like the previous fix for snd_pcm_delay() (in the commit 50f413b83b31
+"ALSA: pcm: Protect delay DMA sync against concurrent HW_FREE"), the
+snd_pcm_dma_buffer_sync() call in snd_pcm_forward() and
+snd_pcm_rewind() needs the similar protection against the concurrent
+hw_free action for avoiding potential UAFs.
 
-Replace with the correct destructor, snd_ctl_remove(), for clearing
-the whole resources of the given kcontrol, instead.
-
-Fixes: 9058cbe1eed2 ("ALSA: jack: implement kctl creating for jack devices")
+Fixes: a25684a95646 ("ALSA: memalloc: Support for non-contiguous page allocation")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261013120528.52586-2-tiwai@suse.de
+Link: https://patch.msgid.link/20261013120528.52586-4-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/jack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/pcm_native.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/core/jack.c b/sound/core/jack.c
-index 5cc9c42de9811..d9132b885ea3c 100644
---- a/sound/core/jack.c
-+++ b/sound/core/jack.c
-@@ -453,7 +453,7 @@ static struct snd_jack_kctl * snd_jack_kctl_new(struct snd_card *card, const cha
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index d2298bf6518a2..e36737ef53aed 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -3072,11 +3072,15 @@ static snd_pcm_sframes_t rewind_appl_ptr(struct snd_pcm_substream *substream,
+ static snd_pcm_sframes_t snd_pcm_rewind(struct snd_pcm_substream *substream,
+ 					snd_pcm_uframes_t frames)
+ {
++	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	snd_pcm_sframes_t ret;
  
- 	return jack_kctl;
- error:
--	snd_ctl_free_one(kctl);
-+	snd_ctl_remove(card, kctl);
- 	return NULL;
+ 	if (frames == 0)
+ 		return 0;
+ 
++	/* Keep the DMA buffer alive through the sync below. */
++	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
++		return -EBUSY;
+ 	scoped_guard(pcm_stream_lock_irq, substream) {
+ 		ret = do_pcm_hwsync(substream);
+ 		if (!ret)
+@@ -3085,17 +3089,22 @@ static snd_pcm_sframes_t snd_pcm_rewind(struct snd_pcm_substream *substream,
+ 	}
+ 	if (ret >= 0)
+ 		snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_DEVICE);
++	atomic_dec(&runtime->buffer_accessing);
+ 	return ret;
+ }
+ 
+ static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
+ 					 snd_pcm_uframes_t frames)
+ {
++	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	snd_pcm_sframes_t ret;
+ 
+ 	if (frames == 0)
+ 		return 0;
+ 
++	/* Keep the DMA buffer alive through the sync below. */
++	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
++		return -EBUSY;
+ 	scoped_guard(pcm_stream_lock_irq, substream) {
+ 		ret = do_pcm_hwsync(substream);
+ 		if (!ret)
+@@ -3104,6 +3113,7 @@ static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
+ 	}
+ 	if (ret >= 0)
+ 		snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_DEVICE);
++	atomic_dec(&runtime->buffer_accessing);
+ 	return ret;
  }
  
 -- 
