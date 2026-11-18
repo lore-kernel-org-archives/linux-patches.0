@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032690;
-	b=2fKuE1p/6ahyQhQ8Oc7e9z0VMVbcgETnm0RoK/S0gMxR9vnnzdeUOoi47zQn0UcRITKd
-	 L7x008ABytfJOV/6YGgrlKuep9on/nb1O2PFdjOzdaguONZytebwOWi8sAlcgj6TFrcSn
-	 ZW89zU/+nehW2UItyNfN2hGyQYNo+RwLEdokZRWFaep8AkB/bH42GqwkxdihvgBbc4oPN
-	 Vth+NDz/tjqA8inxS5xkfG6MN9FQY7BqPJ9uJKOrrw/0Xt2spqC5qeFlR//hW7a5EQWWj
-	 sm51aSTQ7JcVBaCymug6tu4k2wM18YnO2DG8NbkuhrClYNl4cKC3MDZXFkbKFAbYcOQ==
+	t=1795032693;
+	b=A4D+iPXy3yLYckCXotQ5V4breuQ3tJ6lcJ1tJgh40dhGbR4ORGETXtdrtzkzV2uMRIkS
+	 apuSU9crszw6Dke5+j1kSz0QQ5t1D4WsW5SPdRRbTXN1w4lZrhi5i8M7UXgxxtnR/zXU7
+	 XDP41dQVtj9zpC17p6mZCED74Ql/EzRtVAt3JzDIEx0ynbwetqS9xz54t28FmCGVJKopv
+	 HA79lH9l6eU19PHD+CD4UCw54Eb25xB8xa5GvsyerajA5KQxDZTR50U5WC49/wNc0gici
+	 t/gW/bZ1nspoElPFj34km6qJZyAJaBToGtZ3ZHJmEEyfIHFwZVANBjMrk6UTbr+HHGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LH1YP7j1i6838EcxZrA00C3uKrJoJbZ21cXBLR4PNRE=;
-	b=cORXmhfUpDhx/laxCxpEBu0nRAK97dq9Bv/7jz6LK8KfSca5rqILVutyyk10LF98+4D4
-	 y8SMe3MPcNFaMGfsVVMs3RT0joZ2vfZ0d2WD7hwp/Z/lvpKUF2GO2ZpxDaGK/HEvF95gd
-	 WOuIz3PfnRiugeQySHofeon4vjZzx2/+dfiCXQdcyiT2grHOXvoPrjKwBUyXzgVJMHoxB
-	 r+ycxgnt2mQxsb1dNSA0p7RlFRG9I5E+m2dIQpmAw9AicfsBFZ8mRNae2TKngYStddngF
-	 KTZxqVz2SffgcZ093Q8ueeLVvaHUPdo291APLhahEaSGHSQhbQVg8VAn1+67RIWbg3w==
+	bh=bGRN/+UUHLk666aw+UYziPB+m3Bl3THV6JmkFKcn+Jc=;
+	b=zDmuWraOnbDQVWqvtIIReCLQ+EqImC/C80HkU7GlpOgDiyJjvZZZKvRPrxrBtVazpdVR
+	 ajW5hL9G6Nz/VN0evLTRFchBAnLpdIzHODfxxhE7OGnNcMDh1z0tcNWhD5daSkl04sivG
+	 meud6GblLxUQ1SnhMEHOeQvSwMeXvwymh3yVRg/dgO0Nh5PSpn/gVDLQdmP5KRobhHFHs
+	 CUuIMferdBbdq7WCVd+7law/UyHJ6D18tXq9aUk6pITU3/Q3vQp1p/hWCQGYvKQmOTKj7
+	 MunKD5ci/U42BvIb3ER+1W5qzfZEUfeF6qg5CXg8HIqmFh30TWy0iL/9Eelj5ZyMNLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hEzbMBBM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Hboz1OH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37148606A320;
-	Wed, 18 Nov 2026 20:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34B4606A334;
+	Wed, 18 Nov 2026 20:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hEzbMBBM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892C11F000C4;
-	Wed, 18 Nov 2026 20:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Hboz1OH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA411F000C4;
+	Wed, 18 Nov 2026 20:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032690;
-	bh=LH1YP7j1i6838EcxZrA00C3uKrJoJbZ21cXBLR4PNRE=;
+	s=korg; t=1795032692;
+	bh=bGRN/+UUHLk666aw+UYziPB+m3Bl3THV6JmkFKcn+Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hEzbMBBMPU+UX22XyoncydjTxd/Ih/AQk6OpFR3bmc0vcdSPa31OslQjE9kMhj2aM
-	 aYTRh0eWKqMA7Ni0BmzzOHI0skMlKGIZOUD2Uf2R6qZZVDJa/hekk19jrJunoCtcBM
-	 f/6t+6RYpORF8RoT+RKYRqATzOTLGL0BRihg/AAM=
+	b=2Hboz1OH72m7Es55z61BzgSZxYhBUG7OQa/GnxT2goPvmn+UN1Iw/SQBNJlKaAkY/
+	 vQz3J0SLq8JbCtinV6v/42knll59DnkmoqiYRzn2U0sUps9ftf85B6n0+OWxGkkLzc
+	 kF5Ngktb4X6o49elL2v3fVrcFnCOP7ZsIS5Nmg3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Dmitry Ilvokhin <d@ilvokhin.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1500/1756] sh: Select BINFMT_FLAT_NO_DATA_START_OFFSET for !MMU
-Date: Wed, 18 Nov 2026 16:00:27 +0100
-Message-ID: <20261118150108.652142105@linuxfoundation.org>
+Subject: [PATCH 6.12 1501/1756] perf c2c: Fix memory leaks on output fields
+Date: Wed, 18 Nov 2026 16:00:28 +0100
+Message-ID: <20261118150108.684166621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,58 +72,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waldemar Brodkorb <wbx@openadk.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit f45711b39e03ff5e80b60dcc1fd34b3fc7d3d36c ]
+[ Upstream commit 7d0fe18bc905a4bf59271e2f7ecc95479caebd7b ]
 
-binfmt_flat offsets the in-memory start of the data segment by
-MAX_SHARED_LIBS words and then aligns it to FLAT_DATA_ALIGN, so FLAT_FLAG_RAM
-binaries end up with a gap between text and data (commit 2217b9826246
-("binfmt_flat: revert "binfmt_flat: don't offset the data start"")).
+The perf_hpp_list was not freed after use.  Let's add it for the main
+c2c hists list in perf c2c report and a local list in print_pareto().
 
-SH position-independent code finds the GOT with a PC-relative mova of
-_GLOBAL_OFFSET_TABLE_, which assumes data follows text directly, as elf2flt
-lays out the image. With the gap, the GOT register points below the real GOT,
-so every GOT load reads the neighbouring slot and gets a wrong pointer. On a
-J2 (sh2eb, no MMU) this made userland crash or hang right after start-up.
-In my case the data was moved up by 0x20 bytes.
+Previously it was detected by ASAN like below.
 
-Commit 04d82a6d0881 ("binfmt_flat: allow not offsetting data start") added
-CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET for architectures that cannot
-tolerate such a gap; currently only riscv !MMU selects it. Select it on SH
-as well when building without an MMU.
+  =================================================================
+  ==42183==ERROR: LeakSanitizer: detected memory leaks
 
-Tested on a J2 board (Numato Mimas V2, sh2eb, no MMU) with Linux 7.3 and
-FLAT binaries built with elf2flt: with this change the data segment starts
-exactly at the end of text and init runs.
+  Indirect leak of 1064 byte(s) in 7 object(s) allocated from:
+      #0 0x7f17334ef24f in calloc (/lib64/libasan.so.8+0xef24f) (BuildId: 61e8165ca90f7a4f06b73f064a938c76deaae079)
+      #1 0x0000005fa099 in zalloc  ../../lib/zalloc.c:8
+      #2 0x0000004faf6d in get_format  tools/perf/builtin-c2c.c:1978
+      #3 0x0000004fb45e in c2c_hists__init_output  tools/perf/builtin-c2c.c:2004
+      #4 0x0000004fb7de in __hpp_list__parse  tools/perf/builtin-c2c.c:2047
+      #5 0x0000004fbae9 in hpp_list__parse  tools/perf/builtin-c2c.c:2085
+      #6 0x0000004fee13 in print_pareto  tools/perf/builtin-c2c.c:2563
+      #7 0x0000004ffcd7 in perf_c2c__hists_fprintf  tools/perf/builtin-c2c.c:2708
+      #8 0x000000500ab5 in perf_c2c_display  tools/perf/builtin-c2c.c:2949
+      #9 0x0000005045c3 in perf_c2c__report  tools/perf/builtin-c2c.c:3522
+      #10 0x000000505caa in cmd_c2c  tools/perf/builtin-c2c.c:3676
+      #11 0x0000005df50e in run_builtin  tools/perf/perf.c:383
+      #12 0x0000005df9b1 in handle_internal_command  tools/perf/perf.c:436
+      #13 0x0000005dfd7f in run_argv  tools/perf/perf.c:480
+      #14 0x0000005e02d6 in main  tools/perf/perf.c:581
+      #15 0x7f1729450680 in __libc_start_call_main (/lib64/libc.so.6+0x3680) (BuildId: 85075e2ae2e13352a1413d41c327dacf6461526c)
+      #16 0x7f1729450797 in __libc_start_main@GLIBC_2.2.5 (/lib64/libc.so.6+0x3797) (BuildId: 85075e2ae2e13352a1413d41c327dacf6461526c)
+      #17 0x000000409c34 in _start (tools/perf/perf+0x409c34) (BuildId: 36a64600776d92e4ab7dfd5ca20c92280d72a645)
 
-Without the patch bootup fails with:
-[   12.080472] Fixing up unaligned userspace access in "init" pid=1 pc=0x(ptrval) ins=0x6583
-[   12.123609] Fixing up unaligned userspace access in "init" pid=1 pc=0x(ptrval) ins=0x6583
-[   12.175153] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00007f00
+  SUMMARY: AddressSanitizer: 1064 byte(s) leaked in 7 allocation(s).
 
-Fixes: 2217b9826246 ("binfmt_flat: revert "binfmt_flat: don't offset the data start"")
-Signed-off-by: Waldemar Brodkorb <wbx@openadk.org>
-Assisted-by: LLM
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: c75540e3160fb586 ("perf c2c report: Add dimension support")
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-c2c.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/arch/sh/Kconfig b/arch/sh/Kconfig
-index 04ff5fb9242ed..21a9fa2d93ef6 100644
---- a/arch/sh/Kconfig
-+++ b/arch/sh/Kconfig
-@@ -15,6 +15,7 @@ config SUPERH
- 	select ARCH_MIGHT_HAVE_PC_PARPORT
- 	select ARCH_WANT_IPC_PARSE_VERSION
- 	select ARCH_NEED_CMPXCHG_1_EMU
-+	select BINFMT_FLAT_NO_DATA_START_OFFSET if !MMU
- 	select CPU_NO_EFFICIENT_FFS
- 	select DMA_DECLARE_COHERENT
- 	select GENERIC_ATOMIC64
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index 15e1fce71c722..850aa3b7d3fec 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -2076,6 +2076,11 @@ static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
+ 	return hpp_list__parse(&c2c_hists->list, output, sort);
+ }
+ 
++static void c2c_hists__exit(struct c2c_hists *c2c_hists)
++{
++	perf_hpp__reset_output_field(&c2c_hists->list);
++}
++
+ #define DISPLAY_LINE_LIMIT  0.001
+ 
+ static u8 filter_display(u32 val, u32 sum)
+@@ -2475,7 +2480,7 @@ static void print_pareto(FILE *out)
+ 	ret = hpp_list__parse(&hpp_list, cl_output, NULL);
+ 
+ 	if (WARN_ONCE(ret, "failed to setup sort entries\n"))
+-		return;
++		goto out;
+ 
+ 	nd = rb_first_cached(&c2c.hists.hists.entries);
+ 
+@@ -2489,6 +2494,9 @@ static void print_pareto(FILE *out)
+ 		c2c_he = container_of(he, struct c2c_hist_entry, he);
+ 		print_cacheline(c2c_he->hists, he, &hpp_list, out);
+ 	}
++
++out:
++	perf_hpp__reset_output_field(&hpp_list);
+ }
+ 
+ static void print_c2c_info(FILE *out, struct perf_session *session)
+@@ -3105,12 +3113,12 @@ static int perf_c2c__report(int argc, const char **argv)
+ 	err = setup_nodes(session);
+ 	if (err) {
+ 		pr_err("Failed setup nodes\n");
+-		goto out_session;
++		goto out_hists;
+ 	}
+ 
+ 	err = mem2node__init(&c2c.mem2node, &session->header.env);
+ 	if (err)
+-		goto out_session;
++		goto out_hists;
+ 
+ 	err = setup_callchain(session->evlist);
+ 	if (err)
+@@ -3197,6 +3205,8 @@ static int perf_c2c__report(int argc, const char **argv)
+ 
+ out_mem2node:
+ 	mem2node__exit(&c2c.mem2node);
++out_hists:
++	c2c_hists__exit(&c2c.hists);
+ out_session:
+ 	perf_session__delete(session);
+ out:
 -- 
 2.53.0
 
