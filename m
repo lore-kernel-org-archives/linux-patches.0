@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033096;
-	b=3bvMIeuCTVTuR4Dx9wHK1yCL5FwsQoWF+4toehXJI57ZxAEJzMMcPQF29S2dJnFZpFyh
-	 hs6FzIehaKB47cQ/cQq4jQuv2ws/PqQOn4qNPYLUYQq2fdaGEwcY1XGn/w0mM5ZAmoMEE
-	 4gJF/eMsVjYYj6QvDSs0Ylen30/djqT96xwVdsXXcMKmx+Wigk4tfhgM7XsBHC12LnoaS
-	 QUFsRrMK3tCdoEHCbpoJ9UeoA8Syy5cLjmAowwojA3WRk28Mbb/+QD+47qVsxC1pRm3lH
-	 F/zS60pYqb20wj+Qft05TIs9no1FbipfYT81FiiqfjT55XQPKwfVdzgTjJY9dOLSF7A==
+	t=1795033099;
+	b=uz/9X895f1NFe1u59yDcQrbl+bwoctBuJCFNoMdzh+AD3uvJajKOU3lT4vYsJ79ndDbb
+	 mBm0GVLhZB6ZN8JrENajOInEFr3V+SErzlDz150fI77AUsPgd5VYerAqux0KMlGAawL6i
+	 gn2u9I72IzRv/ZYXwjk8xYm1DOk/M7YjCrWoC6qGb7Gn6ib97rK9Nln+xvx9q8y4j+aoC
+	 89mmBnwhwb2ibJ/4XYMi3l1jTAHGfMS8EFnq+mE5iXISBC1+h1zeuzMS2XoCJlx1RtCS8
+	 myUBAMFIxidoYeo9lj5A7jbk0P4t4NCYsaaoryCJx19AELZDrXWaM4ePO89AJ01OVKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J713OdkdE8NdZtjZ6bjAznWdUJ/PgUI6ESJa45vBNRc=;
-	b=GpqkeCJU8/VN2ve8SDM4EvOLS+npxD0vZVb6kxXt1qFBgF3w3gx3hgNJYDn0sB+OcmUO
-	 yv06Uv1XOP0xO5oHI2P6jXJCAgVhd8RMJYT2U/WQmJB4B12quZ7E/NLsEGwb1PbBeXNrl
-	 J0vBpEAMJ08IhHhJyypkmBU94ju808+bkZ5aSxdAK5xO+WsiKCxN31pTIt0XajJvE6mXM
-	 JDUYHIMvEBk2xkofwU6myxrUF67iWnbkCMA8k5cu7mZpVkPxHMzGFkxq2HrQBkeEx0+rM
-	 i8irFCIRV9P5WPSS09ZyFiyUMQfwHZL12CH4o6OYwbgmGWWFubA5w1kbNU9PB5ThIUg==
+	bh=sAM6KejkDXrqdfxuSVxT70UqK7dRwGmyw/HBHbdrFOw=;
+	b=2UmxySnj4y8E0GHb72NBcqN1JOg71Jv79wzBRZ6GZ5ShEiwcsidRUIjYqcqmAbv2zCyX
+	 GzRSzN5ULJpOaTINijbA/ClJ1d0hTw0elsQ9Xbh6QMcFZcmzCBXSc08oyXp1SctQ1rzfw
+	 ctNTCDQ9/DLpNvjVyyjtGaU/qBVhV+bY5lCn2tqiIQBarYldt0YmVu4PH/m1ymM0rveMd
+	 gnz/uc1hhKFRk/NGYA2GmrQbGSBwtuFLC8C42eIuszPebcAUYACN20hDHnpHzwLmMLp7t
+	 LQbyaF2qJdr+mL5j9x0W6Mm0Ad2mNmlccRge2GO70HF9tkVoY+AeBpwBzE6EGL7U9Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qiYZfnLn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ilFhInXl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5953606A32C;
-	Wed, 18 Nov 2026 20:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE86606A31C;
+	Wed, 18 Nov 2026 20:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qiYZfnLn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AA21F000C5;
-	Wed, 18 Nov 2026 20:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ilFhInXl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4671F000C4;
+	Wed, 18 Nov 2026 20:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033096;
-	bh=J713OdkdE8NdZtjZ6bjAznWdUJ/PgUI6ESJa45vBNRc=;
+	s=korg; t=1795033099;
+	bh=sAM6KejkDXrqdfxuSVxT70UqK7dRwGmyw/HBHbdrFOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qiYZfnLnbXDRtFB5CAfpvUF68ot3lU31rvIO3jcxLPGdj4v4ckqMxNPgIZzJdsrnX
-	 Xo3evYAYyVqEvP+B/BCeUedfJVtt+guX0o2oHhPc5frSpXZ1bhsRifFZYjmTUHg14M
-	 xSy6t786E0kEvpnOqxfi5504/V6fFOsQlbOE/xOA=
+	b=ilFhInXlioj0AeTN534pE8wjzcuBwfR/wK0X1L5GR32wMr7zXcgStxN4UHUc7kIHw
+	 kF5D0lFp/pspgXLLtlF/3ci5aHyVxQDKduhRs4Qa5JWPIW1MpHEWuPbFUEEUHFjcI4
+	 Wgp27Z/r3SO+eVCFLgLxvAVUG+YN2yLbh7UdLu0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1604/1756] net: lan966x: do not warn on MAC entries that are not port destined
-Date: Wed, 18 Nov 2026 16:02:11 +0100
-Message-ID: <20261118150113.737233095@linuxfoundation.org>
+Subject: [PATCH 6.12 1605/1756] x86_energy_perf_policy: Fix optarg keyword matching
+Date: Wed, 18 Nov 2026 16:02:12 +0100
+Message-ID: <20261118150113.777642941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,60 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 2cffcf1aeabb187e4f08fe4f5363128a3c45d786 ]
+[ Upstream commit 0177067d195a4757149f6702af191987377c71c3 ]
 
-lan966x_mac_irq_handler() scans the rows of the MAC table that the
-analyzer reports as changed, reads back all four columns of each row and
-treats ANA_MACACCESS.DEST_IDX as a port number.
+Replace strncmp() with strcmp() for exact string matching in
+parse_optarg_string().  Exact keyword matching is safer and clearer.
+This prevents accidental matches with longer strings
+like "performance-foo".
 
-Before this patch, a destination index above num_phys_ports hits a
-WARN_ON(). The driver installs such entries itself:
-lan966x_mac_cpu_learn() uses PGID_CPU, and L2 multicast entries use a
-general-purpose PGID. A row holding one of them is read back whenever
-another entry in the same row is learned or aged out, so the scan warns
-in normal operation, repeatedly once the MAC table is busy.
-
-Skipping such a column is already the right behaviour. Drop the
-WARN_ON() and keep the bounds check as a plain filter.
-
-Found by an AI code review agent. Reproduced on a lan9668 board by
-bridging two ports with a 10 s ageing time and sending three rounds of
-2048 new source MACs: the base kernel warned 42 times from
-lan966x_mac_irq_process(), the fixed kernel did not warn.
-
-Fixes: 5ccd66e01cbe ("net: lan966x: add support for interrupts from analyzer")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-mac-warn-v1-1-9c885f9cbda9@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4beec1d75196 ("tools/power x86_energy_perf_policy: support HWP.EPP")
+Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../x86_energy_perf_policy/x86_energy_perf_policy.c  | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c b/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
-index baa3a30c039f4..96bb0a16ac08d 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
-@@ -447,7 +447,7 @@ static void lan966x_mac_irq_process(struct lan966x *lan966x, u32 row,
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 891738116c8b2..2545f64d5f43b 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -312,22 +312,22 @@ int parse_optarg_string(char *s)
+ 	int i;
+ 	char *endptr;
  
- 			lan966x_mac_process_raw_entry(&raw_entries[column],
- 						      mac, &vid, &dest_idx);
--			if (WARN_ON(dest_idx >= lan966x->num_phys_ports))
-+			if (dest_idx >= lan966x->num_phys_ports)
- 				continue;
+-	if (!strncmp(s, "default", 7))
++	if (strcmp(s, "default") == 0)
+ 		return OPTARG_NORMAL;
  
- 			/* If the entry in SW is found, then there is nothing
-@@ -501,7 +501,7 @@ static void lan966x_mac_irq_process(struct lan966x *lan966x, u32 row,
+-	if (!strncmp(s, "normal", 6))
++	if (strcmp(s, "normal") == 0)
+ 		return OPTARG_NORMAL;
  
- 		lan966x_mac_process_raw_entry(&raw_entries[column],
- 					      mac, &vid, &dest_idx);
--		if (WARN_ON(dest_idx >= lan966x->num_phys_ports))
-+		if (dest_idx >= lan966x->num_phys_ports)
- 			continue;
+-	if (!strncmp(s, "power", 9))
++	if (strcmp(s, "power") == 0)
+ 		return OPTARG_POWER;
  
- 		spin_lock(&lan966x->mac_lock);
+-	if (!strncmp(s, "balance-power", 17))
++	if (strcmp(s, "balance-power") == 0)
+ 		return OPTARG_BALANCE_POWER;
+ 
+-	if (!strncmp(s, "balance-performance", 19))
++	if (strcmp(s, "balance-performance") == 0)
+ 		return OPTARG_BALANCE_PERFORMANCE;
+ 
+-	if (!strncmp(s, "performance", 11))
++	if (strcmp(s, "performance") == 0)
+ 		return OPTARG_PERFORMANCE;
+ 
+ 	i = strtol(s, &endptr, 0);
 -- 
 2.53.0
 
