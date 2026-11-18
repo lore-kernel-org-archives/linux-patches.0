@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055485;
-	b=nfNYCG6PkdGDjgmTQB2aSDO7fsthZETi5U5bgh5oSEtoEYWA82UwJHwBgnwsSHDzcj5s
-	 1mC5WIbb3rhtk9Ccxjp9VnR95eQzlLyKJkoo/40Pi7fVl4Gf+hOMr8isWjSa8RqT6pbfb
-	 IeqjelCyiqwKlK9actzGr89PYUX/7xDL9mKrw03lCt6c5w6vAu2tyLg6H/ashiFm/ge7a
-	 9v/wJtQuvxCrJ20GBtwxt3Wc1QHyV9ZyXcn8EiXBNHd30A1U9ZO67kAIef2lGkc6Jp/Bs
-	 sybMIKzDtf8h60Rc6IFSBUHwDBKpIAs/dVZ9KpCv2st62bd1MUHf8HjR0u4no5UMrIQ==
+	t=1795055488;
+	b=PBB4Jt0T3FkrmvzGZNN6BAtLsrma2Cv1vrK5LmVX/eWQB1eBJNYjAi39GAEJpyxoFprx
+	 +bwwUNX1621g2D3EgUqc4hOy2FHR6DQbl5LJbTwCjnda6ZvXOwA24fMZVKDFhsLPCFFeV
+	 YTITyeRNKyz2GE5xnNouorEaxUqhn7Qa7ke0WKxSKNC9hl6qMaF6X1UMWa+zgAe4UFLN4
+	 717GbmVS5BPsuhBgpOMLTqcHqdXVYFzad0b/pGnxWtJUhQYs0r18zlVXcfTnRS9cXLFjN
+	 4bXjDGKGH87YOJOe4uFvdWe4MG/uHXz3mmvpoUYdniLy3f0fJCFbTufT7PEVVjEYFdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lMUQ8FWzjVULPquvnIjJA61P5HnMVxzI3jnVF8mJaGY=;
-	b=eE9bDssaHJamc3XOOCFW4nt5IiiC4W9/Y5yyu2EhxgHZqIoAJYAbhRMKlsm6ufaXVFpj
-	 mYOy3Wlwhlc5Qp7HYiL6PVxm3CG4JVwTWlAouL/OEkw2AaWHTssWbFp/xPqtxCEyHGIDc
-	 +J7H7757CoOU4MgmmbmcNLrGsH1nsCISRES6flXr0/vsqVH2ubKkkmYiUjIqQGrh3K3Bn
-	 7OMOFXcAvZzPe3gPrpyo1h96DqSi5mUTrTu1cRJ2US5taIHNxt+uOzJctHSTu/lmr2Ox/
-	 LNzKa7zlNTz0WGNbJPvMCBVaQ5noO5XpkXshmVNkGOpoduHZlqafOwA1J4OddPM7kRA==
+	bh=w7V4o8HhVQNSX8waInTnlpuinbHTo4KfQLdkm0sq1Pg=;
+	b=1VXE4bQCYyN4nUnH/iQq+gb2p3Wx2+eM/+8cHIo+5OFjUxg8GEgIV/N4SF/locHQ9Yru
+	 ub0p+z4RjHX0ubZdcHeJSUyxngx4g0yXEygC7GEYg1Az2YI+VCAc/WL8cua37NCFBMX1z
+	 DWhboQB2MAXWd1ZL7oP6BfMjyXPMq2dcIMPdnIyLLs1DCkWMcDZtyl08hJ2ZrUuzyQ/Ne
+	 MSLecn/2ihkCS8I+3xKWVVPIpGmBdsgq4tDJfVqnuZ7WFL5bquAqbb6xyGc96yxCbx3sK
+	 wZ7wNEvi1Hw/MvDmsi++G2kbNxgkBBSsZS7tgYuxph53bS2xAw5EltA/c8QmzBw4ktg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QXvUEyEq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1x7e0pIH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9C6606A320;
-	Thu, 19 Nov 2026 02:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B72606A31C;
+	Thu, 19 Nov 2026 02:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QXvUEyEq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ABF1F000C4;
-	Thu, 19 Nov 2026 02:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1x7e0pIH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637341F000C4;
+	Thu, 19 Nov 2026 02:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055485;
-	bh=lMUQ8FWzjVULPquvnIjJA61P5HnMVxzI3jnVF8mJaGY=;
+	s=korg; t=1795055487;
+	bh=w7V4o8HhVQNSX8waInTnlpuinbHTo4KfQLdkm0sq1Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXvUEyEq3QWgbZzYKLjFspnrsWKUSB8BZlN/PirfiJAEfy92R15rvw2HlAzCXCx/e
-	 JkNXd7eZzQ2UfX6/5stFxRZUjRc1CiUpgTTxag2Pxu1I6AuXKrbU4kpeGpLLMviWmu
-	 zXvhdLdEdbjwh0UaJ7mHPW9U4AyWMVLlJ6DurvcU=
+	b=1x7e0pIHmsradPGQdjnUwsycOSEjOSnNIKE5LwchfBbwp6iF5hlowvEm6vV0uEr/J
+	 b4qyq+6Zzr5ECFae01YXb5nIdXqiYtlWIA2IVICuXIyXPGAYuC1LshqvqSEbUXX0T9
+	 yg6808QEyHFt0AhVqgBfG7CS70UNwh4TC2nnpLmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1649/2214] ASoC: mediatek: mt8192: mt8192-afe-gpio: Use guard() for mutex locks
-Date: Wed, 18 Nov 2026 15:55:25 +0100
-Message-ID: <20261118150117.868821515@linuxfoundation.org>
+Subject: [PATCH 5.15 1650/2214] ASoC: mediatek: mt8192: Propagate errors in mt8192_afe_gpio_request()
+Date: Wed, 18 Nov 2026 15:55:26 +0100
+Message-ID: <20261118150117.913728590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,50 +70,167 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 14edf39daefbf7aa689ea2bb8811a85c498e0ff6 ]
+[ Upstream commit 411be3902fa8f879db6f2f55d0c15507efe09c92 ]
 
-Convert the explicit mutex_lock()/mutex_unlock() pair to guard(mutex)
-to simplify the locking logic and automatically release the mutex on
-all exit paths.
+Currently, mt8192_afe_gpio_request() ignores the return values from
+mt8192_afe_gpio_select() and other helper functions. If configuring
+a GPIO state fails, the function still returns 0, hiding the failure
+from callers.
 
-This changes the mutex release point from immediately before dev_warn()
-to automatic cleanup at scope exit. However, the affected path only emits
-a warning and immediately returns -EINVAL, without any further processing.
+Fix this by capturing and returning the error codes properly.
 
+Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260610102021.83273-6-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260918133912.133799-8-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 411be3902fa8 ("ASoC: mediatek: mt8192: Propagate errors in mt8192_afe_gpio_request()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-gpio.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-gpio.c | 74 +++++++++++----------
+ 1 file changed, 40 insertions(+), 34 deletions(-)
 
 diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
-index 165663a78e36a..88dca80cd69c7 100644
+index 88dca80cd69c7..8e4013a18d8a2 100644
 --- a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
 +++ b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
-@@ -209,7 +209,7 @@ static int mt8192_afe_gpio_adda_ch34_ul(struct device *dev, bool enable)
+@@ -209,98 +209,104 @@ static int mt8192_afe_gpio_adda_ch34_ul(struct device *dev, bool enable)
  int mt8192_afe_gpio_request(struct device *dev, bool enable,
  			    int dai, int uplink)
  {
--	mutex_lock(&gpio_request_mutex);
-+	guard(mutex)(&gpio_request_mutex);
++	int ret;
++
+ 	guard(mutex)(&gpio_request_mutex);
  	switch (dai) {
  	case MT8192_DAI_ADDA:
  		if (uplink)
-@@ -297,11 +297,9 @@ int mt8192_afe_gpio_request(struct device *dev, bool enable,
+-			mt8192_afe_gpio_adda_ul(dev, enable);
++			ret = mt8192_afe_gpio_adda_ul(dev, enable);
+ 		else
+-			mt8192_afe_gpio_adda_dl(dev, enable);
++			ret = mt8192_afe_gpio_adda_dl(dev, enable);
+ 		break;
+ 	case MT8192_DAI_ADDA_CH34:
+ 		if (uplink)
+-			mt8192_afe_gpio_adda_ch34_ul(dev, enable);
++			ret = mt8192_afe_gpio_adda_ch34_ul(dev, enable);
+ 		else
+-			mt8192_afe_gpio_adda_ch34_dl(dev, enable);
++			ret = mt8192_afe_gpio_adda_ch34_dl(dev, enable);
+ 		break;
+ 	case MT8192_DAI_I2S_0:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S0_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S0_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S0_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S0_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_1:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S1_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S1_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S1_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S1_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_2:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S2_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S2_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S2_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S2_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_3:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S3_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S3_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S3_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S3_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_5:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S5_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S5_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S5_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S5_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_6:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S6_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S6_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S6_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S6_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_7:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S7_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S7_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S7_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S7_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_8:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S8_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S8_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S8_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S8_OFF);
+ 		break;
+ 	case MT8192_DAI_I2S_9:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S9_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S9_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S9_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_I2S9_OFF);
+ 		break;
+ 	case MT8192_DAI_TDM:
+ 		if (enable)
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_TDM_ON);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_TDM_ON);
+ 		else
+-			mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_TDM_OFF);
++			ret = mt8192_afe_gpio_select(dev, MT8192_AFE_GPIO_TDM_OFF);
+ 		break;
+ 	case MT8192_DAI_VOW:
+ 		if (enable) {
+-			mt8192_afe_gpio_select(dev,
+-					       MT8192_AFE_GPIO_VOW_CLK_ON);
+-			mt8192_afe_gpio_select(dev,
+-					       MT8192_AFE_GPIO_VOW_DAT_ON);
++			ret = mt8192_afe_gpio_select(dev,
++						     MT8192_AFE_GPIO_VOW_CLK_ON);
++			if (ret)
++				break;
++			ret = mt8192_afe_gpio_select(dev,
++						     MT8192_AFE_GPIO_VOW_DAT_ON);
+ 		} else {
+-			mt8192_afe_gpio_select(dev,
+-					       MT8192_AFE_GPIO_VOW_CLK_OFF);
+-			mt8192_afe_gpio_select(dev,
+-					       MT8192_AFE_GPIO_VOW_DAT_OFF);
++			ret = mt8192_afe_gpio_select(dev,
++						     MT8192_AFE_GPIO_VOW_CLK_OFF);
++			if (ret)
++				break;
++			ret = mt8192_afe_gpio_select(dev,
++						     MT8192_AFE_GPIO_VOW_DAT_OFF);
  		}
  		break;
  	default:
--		mutex_unlock(&gpio_request_mutex);
  		dev_warn(dev, "%s(), invalid dai %d\n", __func__, dai);
- 		return -EINVAL;
+-		return -EINVAL;
++		ret = -EINVAL;
  	}
--	mutex_unlock(&gpio_request_mutex);
  
- 	return 0;
+-	return 0;
++	return ret;
  }
+ EXPORT_SYMBOL(mt8192_afe_gpio_request);
 -- 
 2.53.0
 
