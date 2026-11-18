@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047339;
-	b=i104rKivhQyI63dZpHiFUPKKPNUUgJ5MijpXM01Xg9bK3QCee8S7j5sU0AcrR8VxW2bM
-	 E1g7P0UpHbQrAKLT/UE6Bj4WyovlsobbIjNbmlK1ZjDlHAcMVE33YpZE+lreJyqRZvF25
-	 I0eYOOiO+RN/kr4bcmFmhehK6kx+W/kUakeega3AyIBUJhi4ToWuv7ODXHV963tiMPulO
-	 gC0xdAitUCjZlgV5F/AGAC33d/Ve6S6fO9pCDvj0Ej+okh9NjOJoV5mr0bleD36TpAbRY
-	 jV56X+Wd8jSPbXpAZW4HMMYNTURDaUiTR6SQBqMqJspHwCz6j6ONCc5+qLNFms/JvYQ==
+	t=1795047342;
+	b=i6R/rWuvDLs8zlA4KXKPYeYi9nFpORTK3Wv0E9OK1WCoLOUDEAfaePTebuymEn8qFgNg
+	 lvoXi/okrLWYYOnCKmtdgBG237WBlb89mcZQeK2njPZJJRzX3c3d5asrpHsNrIauHCNQC
+	 wXFmFsaRE1uWgf19Vj7i9fAz4e+eGd1uPg8K03bKqFA2jy6e8DabSvlIqHJCj2e8lNhKy
+	 OjrQy0HvabyQtm3GYCYL2HHXP5enTxjs/ePfYJ6U2IWzt6FIKA2ND4A6Hnub17mU0rh3d
+	 /VQZu+enZ+fqCOZIPS9PHR415Yux9rhDPLuj6bF2/IVyCAe2XdZesrPjfULkPvIlAUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gDoz4H8SrA6fYbX/Qv1WWGS0NqZ2UXOo9mGEa4Xg4nE=;
-	b=YqyCxu6nDk1KnCozzOiuxu9kACxxBk1LomMPWLqXTkIzDsDfgw+5qSx5k58oGuoF2z9f
-	 DB0PjwxKnmqg1P+JY+cIUoekrk+VMmYZeJUdjWARlFc2RqNCFvRVkkCbXvmS/PYhV1y4b
-	 62ZRg5phoH6NRmepkabkKywPNS1HpHHoyaEH3FcEnuv0xpyoyyThJummyf7aZ/W4DplLs
-	 i1JXRcNOqLW6BK4QvBZunAtJWU9Sqs1D7V15trcaMY2Q3lsQ7Akwh/G9WkIKApe7SmTrC
-	 spno4PBettBXcglldkVb9g+ET0E4/q3WADgRPlw2iwzj3ne3kl22aS3xVl+4K5d1OnQ==
+	bh=e3xGffC8Vf7CdfEnIAdTf53ZMtCc6dF6bFxClC6nJLs=;
+	b=o/xPWZMcBO87gaynhtf1YZUlPRXDQST4KNFaoPrhwNALki9IupVd6j3lbnbtTysrav+Z
+	 I7ZQJro0Cc525CcVK3bqJsHZ7GbaBLir1trUO3vsY6wyDmwO8MRYjvPbbMJaCYYLeuXYJ
+	 hLI0LltQVnDmXlOWV4BFHFqb5Y08m/+8ZTiz1gNVEaKSahgSsTcZ+EmNhQ5DagWU4wg8K
+	 jV5YfshvYKbXpV1EaDjHnoZqAPlb34H8THNxhOeTE5jkssJ6CgzQYX0IIdDjwP6VDj032
+	 Uo02MaWgeaYqR1KbPNUvQSTOiAA/F6HsiiTZ4Ffy4y+2NlqyuLNoLz3XLmMjXYsY4Qw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pOE2SasY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNVx72vV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA8A606A31C;
-	Thu, 19 Nov 2026 00:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194B5606A320;
+	Thu, 19 Nov 2026 00:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pOE2SasY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7981E1F000C4;
-	Thu, 19 Nov 2026 00:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNVx72vV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3222E1F000C4;
+	Thu, 19 Nov 2026 00:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047339;
-	bh=gDoz4H8SrA6fYbX/Qv1WWGS0NqZ2UXOo9mGEa4Xg4nE=;
+	s=korg; t=1795047341;
+	bh=e3xGffC8Vf7CdfEnIAdTf53ZMtCc6dF6bFxClC6nJLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pOE2SasY11u5PxLPrsBwmznhg/UVGRW/s+YDecY2ZaD7mASb0iuID54r0vsGURnwb
-	 4tnOUVeyWA4RWZwHqHiMATPmSZuBffyr5yHWnuzb2OwbkMAbaOnQCgF5kuTR6UmQ3A
-	 GPOKla0lIyTFUS1cHHV5Vnl0j6ZL82IFlRqBvzHs=
+	b=tNVx72vVe3gUHcpScuN6MN3Xjz9qXCr47UddqboxAxIVccJHdCIYLc4+3/G/tHmxr
+	 a048H15AvZVeeRHW64C9HWENH7dYFqSxGTdGyfZBxnS984ymbEYc28BhQQ22jSBW9q
+	 EA6S5AfojE701RECGPIViAa4EQQN/2NjqEPl4RzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1604/2857] assoc_array: dont lose objects when a root shortcut is split at level 4
-Date: Wed, 18 Nov 2026 15:43:58 +0100
-Message-ID: <20261118150259.122693465@linuxfoundation.org>
+Subject: [PATCH 6.1 1605/2857] assoc_array: move in-place insertion into a function of its own
+Date: Wed, 18 Nov 2026 15:43:59 +0100
+Message-ID: <20261118150259.154024316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,61 +70,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 20b436c1ae8d37032f888c725915729830dc52f2 ]
+[ Upstream commit a624a7ce7d85b514d949b6c7a049f43ac96f3257 ]
 
-assoc_array_insert_mid_shortcut() takes level, the level of the node
-holding the shortcut as assoc_array_walk() reports it, and adds
-ASSOC_ARRAY_LEVEL_STEP to get the level of a node in that shortcut's
-place.  If the new key first differs from the shortcut no further in
-than that, no shortcut is made in front of the split, and new_n0 takes
-the old shortcut's place directly.
+assoc_array_insert_into_terminal_node() is over 300 lines and does four
+jobs, joined by gotos: putting the new leaf in place of a matching one
+or in a free slot, working out the segment of each leaf, splitting the
+node, and replacing the node with a shortcut.  The last two share the
+function's tail, which installs the replacement where the node was.
 
-A shortcut at the root is held by no node.  assoc_array_walk() reports
-level 0 for it, and whatever takes its place is the root, which is read
-at level 0.  So when the new key first differs from a root shortcut in
-bits 4-7, diff is 4, no shortcut is made in front, and new_n0, whose
-slots are indexed by bits 4-7, becomes the root and is indexed by bits
-0-3.  Objects already in the array can no longer be found, and the new
-one lands in a slot its key does not select.
+Move the jobs into functions of their own, one per commit, starting with
+the two cases that need no new node: assoc_array_insert_in_node().
 
-Eighteen keys are enough: seventeen that agree on bits 0-7 make the root
-a shortcut, and one that agrees with them on bits 0-3 only splits it.
-Three of the eighteen objects can then not be found, and inserting one
-of those keys again adds a second object instead of replacing it.
+No functional change.
 
-Only add the step for a shortcut that hangs from a node.  A root
-shortcut split at level 4 then gets a shortcut in front of the split
-that ends at level 4, as assoc_array_insert_into_terminal_node() already
-makes when the leaves of a full root node first differ there.
-
-Found by a userspace test that builds a shortcut ending at every level
-and splits it at every level inside it, from the root and from a node:
-every split of a root shortcut at level 4 failed, and nothing else did.
-
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
 Assisted-by: LLM
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Tested-by: David Howells <dhowells@redhat.com>
 Reviewed-by: David Howells <dhowells@redhat.com>
+Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/assoc_array.c | 68 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 43 insertions(+), 25 deletions(-)
 
 diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 62e35116db19c..e7c9a2f513114 100644
+index e7c9a2f513114..a9295e8ca5d4d 100644
 --- a/lib/assoc_array.c
 +++ b/lib/assoc_array.c
-@@ -843,7 +843,8 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
- 	 * zero length - otherwise we just connect the new node directly to the
- 	 * parent.
- 	 */
--	level += ASSOC_ARRAY_LEVEL_STEP;
-+	if (shortcut->back_pointer)
-+		level += ASSOC_ARRAY_LEVEL_STEP;
- 	if (diff > level) {
- 		pr_devel("pre-shortcut %d...%d\n", level, diff);
- 		keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+@@ -470,33 +470,17 @@ static bool assoc_array_insert_in_empty_tree(struct assoc_array_edit *edit)
+ }
+ 
+ /*
+- * Handle insertion into a terminal node.
++ * Insert into a terminal node without changing its shape, if that can be
++ * done: in place of a leaf with the same index key, or in a free slot.
+  */
+-static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+-						  const struct assoc_array_ops *ops,
+-						  const void *index_key,
+-						  struct assoc_array_walk_result *result)
++static bool assoc_array_insert_in_node(struct assoc_array_edit *edit,
++				       const struct assoc_array_ops *ops,
++				       const void *index_key,
++				       struct assoc_array_node *node)
+ {
+-	struct assoc_array_shortcut *shortcut, *new_s0;
+-	struct assoc_array_node *node, *new_n0, *new_n1, *side;
+ 	struct assoc_array_ptr *ptr;
+-	unsigned long dissimilarity, base_seg, blank;
+-	size_t keylen;
+-	bool have_meta;
+-	int level, diff;
+-	int slot, next_slot, free_slot, i, j;
+-
+-	node	= result->terminal_node.node;
+-	level	= result->terminal_node.level;
+-	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
+-
+-	pr_devel("-->%s()\n", __func__);
++	int free_slot, i;
+ 
+-	/* We arrived at a node which doesn't have an onward node or shortcut
+-	 * pointer that we have to follow.  This means that (a) the leaf we
+-	 * want must go here (either by insertion or replacement) or (b) we
+-	 * need to split this node and insert in one of the fragments.
+-	 */
+ 	free_slot = -1;
+ 
+ 	/* Firstly, we have to check the leaves in this node to see if there's
+@@ -514,7 +498,6 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 			pr_devel("replace in slot %d\n", i);
+ 			edit->leaf_p = &node->slots[i];
+ 			edit->dead_leaf = node->slots[i];
+-			pr_devel("<--%s() = ok [replace]\n", __func__);
+ 			return true;
+ 		}
+ 	}
+@@ -526,7 +509,42 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 		pr_devel("insert in free slot %d\n", free_slot);
+ 		edit->leaf_p = &node->slots[free_slot];
+ 		edit->adjust_count_on = node;
+-		pr_devel("<--%s() = ok [insert]\n", __func__);
++		return true;
++	}
++
++	return false;
++}
++
++/*
++ * Handle insertion into a terminal node.
++ */
++static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
++						  const struct assoc_array_ops *ops,
++						  const void *index_key,
++						  struct assoc_array_walk_result *result)
++{
++	struct assoc_array_shortcut *shortcut, *new_s0;
++	struct assoc_array_node *node, *new_n0, *new_n1, *side;
++	struct assoc_array_ptr *ptr;
++	unsigned long dissimilarity, base_seg, blank;
++	size_t keylen;
++	bool have_meta;
++	int level, diff;
++	int slot, next_slot, free_slot, i, j;
++
++	node	= result->terminal_node.node;
++	level	= result->terminal_node.level;
++	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
++
++	pr_devel("-->%s()\n", __func__);
++
++	/* We arrived at a node which doesn't have an onward node or shortcut
++	 * pointer that we have to follow.  This means that (a) the leaf we
++	 * want must go here (either by insertion or replacement) or (b) we
++	 * need to split this node and insert in one of the fragments.
++	 */
++	if (assoc_array_insert_in_node(edit, ops, index_key, node)) {
++		pr_devel("<--%s() = ok [in node]\n", __func__);
+ 		return true;
+ 	}
+ 
 -- 
 2.53.0
 
