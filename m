@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054497;
-	b=Qy/oXZpqgZQuzeqnc9tbK0QBgcfl9qOTWf3T/yov7z+9eygVUnMPvpL2sT+D/xtZJW2H
-	 pbdDVEfblrYjFqk/D0T9N7yPHY/ESNtz6lNuD1a4aCZC1U3ZZHf4J8mjlkFvjO4+kcGjG
-	 wfoRBpRHpq+AuBKTeVP/RJt8lZ7PV9CxVhZmaYwjRHAs0byfdzQebRstm/m1PwLD2GF1g
-	 V9Ylvve1xkp+xWjGu6YaIbNaD5PdYyeKZoSkiP4LIQj6j4nuQGpn381l7QrNBHyGvudt6
-	 rYGeLYDxfJ0hrqWJ/o7h+KwKs9fnOTIjvFZEq2upy/Iqt8GpuGKaiV6+7hsT8h4uwBQ==
+	t=1795054500;
+	b=pMQ2XVTUZya8SHqePcrp7VhujsZ/uOqet44a1UBGqFr8i7DkHLR6U7DmWpe9NulF+T8T
+	 dqoC8cmWPdX6Xi54MHrJiMFZcYwD57XmYnePkyc1SGGFUfLAQsCimqgQHgHnVBL9jbAUW
+	 6mGDvZzROs7oM3VV80RsZZmZUlVdCgFxnurqfRU4yfgEDDzUnicoSlXws6RxfIEUE2m0v
+	 fYLI5ibATKHmbDY78P3VVcP1jBSrIpAOtEY5rz3N4tKJtWnQOom7sP+zS8nQ7ULCJbxgp
+	 TqAOzr4WBCuCmJM/iMMr+QxA2SSy8GAACuA9LFc6EA/GVg0uEwuxYRW2BnglmucVn6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+XwjWkS2FoA+Z120GXEOA8rbm2hcIs1kqKBPWZmSDLA=;
-	b=iHDJhFHuYjFPZbA3wE2Ca0n1jXwvpWBgwRjBVPkvFT74B2ghXPti/7PXvCf1gvAp3MWd
-	 76Qam2J3ApQHLMr7h1fRqYOa2353bVFf+E6xwtHlhpeJdAeGwzrzixORsxnyvxzogYhfu
-	 1KOFWjuNraz4ZMqK46fay/jUuCMa7HsmCTgEWtkwc5mqgQteLEPzq2+ET8kXOWJcyIgRW
-	 IwKzGxLGinypGrQwUVZSw7G/TdBk6TBMFfbDMvwlXf/UFrA8VRwIxdNwfMQlRP8Ri/dR6
-	 u5Yq5QDfUdvclqbWl0ScNNQCCVIuIlOBhj6jPxhfJZGqQ4fETUom/V7KOVV3rA6lOEA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yYLZrhPVByHh7iHY+MIdeaSJLHqZ0c3zIyofl0SUdIs=;
+	b=w8uN/AdWtMIjuzcxjuLgOjBTKkWQdeKZcwHIVdcjPOeOFmbRlA8jIC+u23Js+SCNMZkb
+	 7MoVVOV1Yds+4dzZqkuCnQVBkLKv2EG7Yo+CtXCabhz7NoTmdBldrEr3WkdbnT5X7CDtU
+	 TT3M6PGaIhbSu5OZVgKwYIM7q/2TFHwxZXlK4E4iKRyfZGpi8aAFIqtVCrHrICp0dA6HY
+	 Smn0z3NjXqKKFyiO5qRZec1ED/kxaM1Q6zALRcm7DyJeaFYJyuY3YIMN+71xYFmvxQuba
+	 buNi+VmFH1z2VioJHgKKkEhs67A+kH8BuY0plVpVnJnx6p+PyLWgPTYjKfFPJlVnOFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuYXvXHy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DH4cMkY9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819F7606A31C;
-	Thu, 19 Nov 2026 02:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F5B606A325;
+	Thu, 19 Nov 2026 02:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuYXvXHy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32C31F000C5;
-	Thu, 19 Nov 2026 02:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DH4cMkY9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E0F1F000C5;
+	Thu, 19 Nov 2026 02:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054497;
-	bh=+XwjWkS2FoA+Z120GXEOA8rbm2hcIs1kqKBPWZmSDLA=;
+	s=korg; t=1795054500;
+	bh=yYLZrhPVByHh7iHY+MIdeaSJLHqZ0c3zIyofl0SUdIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zuYXvXHygECTSr+HWgfC7p/ElKqC2yEyMibPk9uA9BVeR9FWx9Hoyu5LX3ueuo9gP
-	 8+W7rTm1n202p8P3RuTAA0r1qsSB0zqKJDGZGlBsOnNpSQ+zX3hIKtOWQaVPN+q+ME
-	 giq2h1VhGq2uWDhFHSFAtN/TA1RXjZaauk7DO5lE=
+	b=DH4cMkY9om+TKegm4IKQRbWXHo/yn2BlTOaYtX3/GZ9wBhE6Q05sEcyUI0aVCzDfh
+	 NrEJvGZfyBC8J4s/KHhkojgFdvn2E7Vq1k/nEqBG9csmtC3O3/itedG+980DlbL/2b
+	 kLl3LeazVmIcartmxyBi3cU0vHyrZjJxJHpg/6Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Zhou Qiuyue <n0ps1edzz@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1288/2214] hwmon: (coretemp) Check for NULL platform device in hotplug callbacks
-Date: Wed, 18 Nov 2026 15:49:24 +0100
-Message-ID: <20261118150103.092060344@linuxfoundation.org>
+Subject: [PATCH 5.15 1297/2214] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
+Date: Wed, 18 Nov 2026 15:49:33 +0100
+Message-ID: <20261118150103.426254136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,72 +63,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Zhou Qiuyue <n0ps1edzz@gmail.com>
 
-[ Upstream commit 0f9c7ed3b5009a037e5533eac03a0d4d45ecf1f0 ]
+[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
 
-coretemp_get_pdev() returns NULL when topology_logical_die_id(cpu) is
-negative (such as -ENODEV or -ERANGE from topology_get_logical_id() on a
-firmware/hardware APIC ID mismatch) or exceeds max_zones (for example,
-under asymmetric or anomalous ACPI die topologies where
-topology_max_packages() * topology_max_dies_per_package() is smaller
-than the logical die count).
+rawv6_send_hdrinc() caches the route before handing the skb to
+l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
+the original route, leaving the cached pointer stale.
 
-Commit 6d03bbff456b ("hwmon: (coretemp) Simplify platform device
-handling") pre-allocated zone_devices[0 .. max_zones - 1] during module
-init and dropped the NULL checks on pdev in coretemp_cpu_online() and
-coretemp_cpu_offline(), passing pdev unconditionally to
-platform_get_drvdata(). When coretemp_get_pdev() returns NULL,
-platform_get_drvdata(pdev) dereferences &pdev->dev and triggers a kernel
-NULL pointer dereference.
+The function later dereferences that pointer for statistics accounting
+and as the output device passed to NF_HOOK(). Its RCU read-side critical
+section starts after l3mdev_ip6_out(), so it cannot prevent the old route
+from being reclaimed in between.
 
-Check for a NULL pdev and return 0 in both coretemp_cpu_online() and
-coretemp_cpu_offline() before calling platform_get_drvdata(). Returning
-0 in coretemp_cpu_online() ignores the unmapped CPU without blocking CPU
-bringup or tearing down valid thermal zones on other dies.
+Reload the route from the current skb destination after
+l3mdev_ip6_out() returns.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 6d03bbff456b ("hwmon: (coretemp) Simplify platform device handling")
+KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
+allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
+the related RCU callback queued from vrf_l3_out().
+
+Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
 Cc: stable@vger.kernel.org
-Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: adjusted insertion context from the housekeeping check to the existing DTHERM feature check ]
+Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+[ sashal: Replaced the unavailable dst_rt6_info() helper with a direct cast to struct rt6_info *. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv6/raw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index d8ab0175f16b1..abc6ab90e9298 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -619,6 +619,9 @@ static int coretemp_cpu_online(unsigned int cpu)
- 	if (!cpu_has(c, X86_FEATURE_DTHERM))
- 		return -ENODEV;
- 
-+	if (!pdev)
-+		return 0;
-+
- 	pdata = platform_get_drvdata(pdev);
- 	if (!pdata->hwmon_dev) {
- 		struct device *hwmon;
-@@ -670,6 +673,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index c3719e5ac89fc..2d72f5c5d8381 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -650,6 +650,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
+ 	if (unlikely(!skb))
  		return 0;
  
- 	/* If the physical CPU device does not exist, just return */
-+	if (!pdev)
-+		return 0;
++	/* l3mdev_ip6_out() may have replaced the skb dst. */
++	rt = (struct rt6_info *)skb_dst(skb);
 +
- 	pd = platform_get_drvdata(pdev);
- 	if (!pd->hwmon_dev)
- 		return 0;
+ 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
+ 	 * in the error path. Since skb has been freed, the dst could
+ 	 * have been queued for deletion.
 -- 
 2.53.0
 
