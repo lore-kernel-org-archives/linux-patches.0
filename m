@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024864;
-	b=CVIuhiJEIBBOdW3SeVE9UKdlD1IjwDp6fzexKhiyLojwzhv4+Crj88o+DTW7b8/X/PPK
-	 rsKr3V7hyITcUwecZRG7YZctzMEtmfdZ2oBXB9O6z0VASOebldRMs9xBMmQlmj+exO1BT
-	 fSOeyc1s0tZt/648jnhkKY/YsJKfA+OpRcyLdAZeDTBeGFkhsN4H9ht7MQq2EFTecMbe4
-	 K23/D/rVBngNCPFelbwq7MH9PTemrgePuSc8ojBvyKuRz8CM+ztHCfoDb3bpk9J3GTZEb
-	 iwMJpXIVU1yOKNYCXZN/03g2hKKMeORdmWBdOt/mYmPkjXyNIPahG2Mh6NUwNEedgFw==
+	t=1795024868;
+	b=ouGE7HY6SwJhWbBBSVkVHFpng7MyC0xvl4yUAfiJFHHdLE9lRAu7KoWgnHuG84p1WRkd
+	 zfTGbtRtzrQHHOrkWNw8ERdQmpYZuh/7YTMDhV4Tk5z455uzNFGzdy2uM9FiE8WNtddvp
+	 8D1UYuNWj+67AoVj1hxkn0K075szVA+phMzzRazf0sHxD3egyb0SzP6f/2/V70iuMnz/m
+	 64BslX234tPcPoZFlN8/1ZkmSDl2P+gpw5VS/XxCc4uH0ILFfgcT9hAwXRAfPhLalgBqV
+	 +SdKxGwA9tJIZpIiG/SOvKWJz92snrUaKI/L9p9Gu1gTxLs60bMHyyrwO5VbEYhyAIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hXpGbYHB4BQf8mmf+4DC4gizPKxnQNav4PHO3J5yicI=;
-	b=uCkAuiD8ll2DJ7lNT4dPl9umFlhJUqCJnZj7m/spNUgAa+W1H8F3NXCT8pKzWo+0d1hB
-	 BS0R4c4758Sy+7p3deyocfcjfa11azaVZs+iTGJiifGPZ1k0A0wL4UrrhRtsUximrwUrM
-	 dG2X+5/dKchXOAimSSVX+xXKabBFnMrMThEaemqtpYFaNWZKjhTR+X5VkxmESOZ/IKqwk
-	 zlPKk+BtmWUwzMcr54VoCSw4YnI4ruapA3KfrZYsoQibQjPdQAdmhJlDK2R5OTfQM15HD
-	 DTWqHd7BSGMsO4wGjLfmP80ZelSPmtTSOpfjyg/2G/NSA5GqJef2AnhgKE4Zgj4pX7g==
+	bh=bZDaKN8QHeB6ErnNoVeMQCObMjh/PMKSdI0GC9DYIeI=;
+	b=fmf09eBTgD2yEprWEcXeqF4yYskvFh8YEog2KTUnvhZtE5QAYqf+7oXvJ1IdLgXP7vI/
+	 JkrWy7zdl1CfTCPZquGN9hc34unFDDRdGhi74OqUiEykxaM4aZjMa1o9A1/n7RnN0W8aT
+	 tLhWgfV3wGAv1FlQdpKEXupE+ragqAX79mEh9kQ90XWDVZH7T9vYD1lSie1SJ9P53crvc
+	 x25BprIJStOLFOPRKo+T1NAE9BZ8iYQhGBDX1LrZSiLWqHUI+36CO3/Pwzjg0iMqXvBux
+	 x5YNWUmz3XEIXSv3K0/ueGHzIPOHWvo84yXoXDQJHArFSemF6lWO4zCg3R1NMZDEMwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/mU7JP1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+S5kK7o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC7E606A320;
-	Wed, 18 Nov 2026 18:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D602C606A320;
+	Wed, 18 Nov 2026 18:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/mU7JP1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5F11F000C4;
-	Wed, 18 Nov 2026 18:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+S5kK7o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBE91F000C4;
+	Wed, 18 Nov 2026 18:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024864;
-	bh=hXpGbYHB4BQf8mmf+4DC4gizPKxnQNav4PHO3J5yicI=;
+	s=korg; t=1795024867;
+	bh=bZDaKN8QHeB6ErnNoVeMQCObMjh/PMKSdI0GC9DYIeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/mU7JP1bysQiY3UlyjRqFpaXbPPCIXTU2b04F6W9Hk6DllVdaCQTKduAl/0iGhDj
-	 yhSLXj3VgzmRFiHtlNZLyk4hl6w8q5t0XgSJi+My1f+rqB/TS06tIe+tdNkeOtW0gQ
-	 8o9My/kOzBvDD/Nir8d5BeSoScanOogb7DlBEb68=
+	b=0+S5kK7onmJ32LbkP1spzIwWarvV+goKhCZk+LVJRnQZBr4ZiTaZl6Mer8eq1cIvd
+	 33hiSR2QSKqfDcw2bQRixhMOVXtHjstnaetAhEshY0RvbVx5BFYa6qtsCHEgMH4+em
+	 81S/pu3s8cZLuS83esw5sdOXv3xix9wU8t8ZOS9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Abhijit Gangurde <abhijit.gangurde@amd.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0877/2151] RDMA/rxe: Reject prefetch of a non-ODP MR
-Date: Wed, 18 Nov 2026 15:43:32 +0100
-Message-ID: <20261118150154.228814833@linuxfoundation.org>
+Subject: [PATCH 6.18 0878/2151] RDMA/ionic: Fix XArray initialization to use XArray flags
+Date: Wed, 18 Nov 2026 15:43:33 +0100
+Message-ID: <20261118150154.281174692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,73 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Abhijit Gangurde <abhijit.gangurde@amd.com>
 
-[ Upstream commit 66f18a749a3eeeb19f0b7812ecbe8b1ac18d73ec ]
+[ Upstream commit 2eca9c14e66a1f71c089fe5c3afb2d339da3023a ]
 
-rxe_ib_advise_mr_prefetch() and rxe_ib_prefetch_sg_list() look up the MR
-by lkey and hand it to rxe_odp_do_pagefault_and_lock() without checking
-that it is an ODP MR. That path runs to_ib_umem_odp() on mr->umem, and
-for a non-ODP MR mr->umem is a plain struct ib_umem from ib_umem_get(),
-so the container_of() in to_ib_umem_odp() lands past the end of the
-object and ib_umem_odp_map_dma_and_lock() reads its ib_umem_odp fields
-out of bounds.
+xa_init_flags() takes XArray flags (XA_FLAGS_*), not gfp flags, even
+though the parameter is typed gfp_t. Passing GFP_ATOMIC leaves both
+lock-type bits clear, so xa_lock_type() resolves to XA_LOCK_NORMAL for
+qp_tbl and cq_tbl.
 
-lookup_mr() validates the lkey, PD, access and state but not the MR
-type, and IB_UVERBS_ADVISE_MR_ADVICE_PREFETCH is accepted for any MR.
+Both tables are used with the IRQ-safe accessors: xa_store_irq() with
+GFP_KERNEL from process context, and xa_lock_irqsave() from the event
+queue path. When a store needs to grow the tree, __xas_nomem() drops
+the lock using the recorded lock type before allocating:
 
- BUG: KASAN: slab-out-of-bounds in ib_umem_odp_map_dma_and_lock+0x884/0x8a0
- Read of size 8 at addr ffff88810a3ebcf0 by task advi/921
-  ib_umem_odp_map_dma_and_lock+0x884/0x8a0
-  rxe_ib_advise_mr+0x543/0xad0
-  ib_uverbs_handler_UVERBS_METHOD_ADVISE_MR+0x446/0x530
-  ib_uverbs_cmd_verbs+0x2b3c/0x3b20
-  ib_uverbs_ioctl+0x1e3/0x310
- Allocated by task 921:
-  __ib_umem_get_va+0x13e/0xae0
-  rxe_mr_init_user+0x2ae/0xb00
-  rxe_reg_user_mr+0x337/0x510
- The buggy address belongs to the object at ffff88810a3ebc80
-  which belongs to the cache kmalloc-96 of size 96
+	if (gfpflags_allow_blocking(gfp)) {
+		xas_unlock_type(xas, lock_type);
+		xas->xa_alloc = kmem_cache_alloc_lru(...);
+		xas_lock_type(xas, lock_type);
+	}
 
-Ask lookup_mr() for IB_ACCESS_ON_DEMAND in both the synchronous and
-the asynchronous prefetch arm. mr->access carries that flag only for
-an MR registered as ODP, so the existing
-(access & mr->access) != access test rejects a plain MR and the
-prefetch fails with -EINVAL.
+With XA_LOCK_NORMAL that is a plain spin_unlock(), so the sleeping
+GFP_KERNEL allocation runs with interrupts still disabled by
+xa_store_irq(), and lockdep annotates the lock with the wrong class.
 
-Fixes: 3576b0df1588 ("RDMA/rxe: Implement synchronous prefetch for ODP MRs")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/20260923-rxe-advise-mr-v3-v3-2-95e1a4077e4d@doyensec.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+GFP_ATOMIC also happens to set __GFP_HIGH (0x20), which collides with
+XA_FLAGS_ACCOUNT (32U) and silently enables memcg accounting of the
+XArray nodes.
+
+Use XA_FLAGS_LOCK_IRQ so the lock type matches how the tables are
+actually accessed.
+
+Fixes: e8521822c733 ("RDMA/ionic: Register device ops for control path")
+Signed-off-by: Abhijit Gangurde <abhijit.gangurde@amd.com>
+Link: https://patch.msgid.link/20260925093638.3032149-1-abhijit.gangurde@amd.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_odp.c | 4 ++--
+ drivers/infiniband/hw/ionic/ionic_ibdev.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_odp.c b/drivers/infiniband/sw/rxe/rxe_odp.c
-index 995c1cb5c958e..567b1cb96a950 100644
---- a/drivers/infiniband/sw/rxe/rxe_odp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_odp.c
-@@ -476,7 +476,7 @@ static int rxe_ib_prefetch_sg_list(struct ib_pd *ibpd,
- 		struct rxe_mr *mr;
- 		struct ib_umem_odp *umem_odp;
+diff --git a/drivers/infiniband/hw/ionic/ionic_ibdev.c b/drivers/infiniband/hw/ionic/ionic_ibdev.c
+index 73a616ae35023..40e8faf82437e 100644
+--- a/drivers/infiniband/hw/ionic/ionic_ibdev.c
++++ b/drivers/infiniband/hw/ionic/ionic_ibdev.c
+@@ -314,8 +314,8 @@ static struct ionic_ibdev *ionic_create_ibdev(struct ionic_aux_dev *ionic_adev)
  
--		mr = lookup_mr(pd, IB_ACCESS_LOCAL_WRITE,
-+		mr = lookup_mr(pd, IB_ACCESS_LOCAL_WRITE | IB_ACCESS_ON_DEMAND,
- 			       sg_list[i].lkey, RXE_LOOKUP_LOCAL);
+ 	ionic_fill_lif_cfg(ionic_adev->lif, &dev->lif_cfg);
  
- 		if (!mr) {
-@@ -542,7 +542,7 @@ static int rxe_ib_advise_mr_prefetch(struct ib_pd *ibpd,
+-	xa_init_flags(&dev->qp_tbl, GFP_ATOMIC);
+-	xa_init_flags(&dev->cq_tbl, GFP_ATOMIC);
++	xa_init_flags(&dev->qp_tbl, XA_FLAGS_LOCK_IRQ);
++	xa_init_flags(&dev->cq_tbl, XA_FLAGS_LOCK_IRQ);
  
- 	for (i = 0; i < num_sge; ++i) {
- 		/* Takes a reference, which will be released in the queued work */
--		mr = lookup_mr(pd, IB_ACCESS_LOCAL_WRITE,
-+		mr = lookup_mr(pd, IB_ACCESS_LOCAL_WRITE | IB_ACCESS_ON_DEMAND,
- 			       sg_list[i].lkey, RXE_LOOKUP_LOCAL);
- 		if (!mr) {
- 			mr = ERR_PTR(-EINVAL);
+ 	ionic_init_resids(dev);
+ 
 -- 
 2.53.0
 
