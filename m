@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041924;
-	b=x6z7PrQ1lio5K712vJh3agijE/sGS/T7t2HE0qV20dn9JWwMTrIVPZiGPq/TSKrX1jQo
-	 R1RCBwn5jhDLcAhyA90slEHxbm/sOAE4SYt+MjmSMXWFFIuYagAQzqM+AN52n6VAc4vjt
-	 aquItfKDV1GQvwnjT8VefUSTRGi39wstfE6V9rKSkPpbAXIc9pT9YigfRV9IVnoTt6wX0
-	 yEff2KQksvkxdoFYmjUxGprrRW3AuenN/+M2/3zCo71LqjQ0mLRpyCxZlzaEVatS2aI93
-	 OjcbN6HpXdaJjmZnXN3PRpuwvNEvdYNnDcgtQGBziBlg4d32afvsLsCGqHf3g3tFPfw==
+	t=1795041927;
+	b=zy5oXT7QoJFbgdgRCy7CdNTSXur31ZxjsQh7RTiQxDhqOm7tR0N99AeKZBUK7m/05qRt
+	 g+1pDuTkPGslBvIfG57v3Y0Iogd0XFZI0VkYZz2Cy8HTvqUESOYvViUJuThH5ox0KPCWd
+	 r+7beqeNonhRnjk4vjFAhp6ZP9tN1Z5BQ+H1JztrtqC9sfJF0dU/uyraWC44+dORGy7bU
+	 QVZ3JizUtxdCDN0by3ywCEHBdu7fwmdxjU8PfxcafevVUL0vP38LpTQj9JHM38dsgswLV
+	 WWfKoyLoVTHCZRcMbfoH7wFIscUwsTjZ6npMYVYZncbBTbuk7/Nnb/7B9QX6VDhNkpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U6nvtB5QdmQur9Y+j8XvhBb+ljk7Ln0bhUFWxJHcclg=;
-	b=vZFfv2u0n7ju0ucww394Fy/vFYjt1CQ6crroJvoVDFHb5cwCTRKCXyxPJ1NAkrUmou1f
-	 HfwltlY2mrrA+UdfQd3K0LFqFVd3Qr98DeiMma6vGSwUIC7kTcLSTakw6LS49MwO5mSVr
-	 CMAA+oj+jRIjeOXV8CVPjQb5lenOzVrPIvOORUtKqvFIJUPxHkG3n8f/7bbyu+OGIRXSC
-	 o0vmuPl4b7XdJZrkdR4cTm8PH7e0WHTm9/pHqQS8OMDYPNWZjMnyhcoRbzGgcJipOozNd
-	 Cr8+pzbjP3qXsUQnctku2rjmFPmLfByiCwXNsNn3z1JnpX7h4mvI4AjT0U6krQDrUlw==
+	bh=qh8ch+EYvn+Dvn5sDp+B4APH7bxtb23tnouWWLmkg9w=;
+	b=cA4fBTOERDrGGTz1QYcqtu1W6UG0lxJAwoP9MyygMnBvCLiLye++jtgLc9Xj8X7YQlaB
+	 SpQjFY6U5ZL11MXCvbpwlCnGLEchfTeNKOOJzltxTs6o9EE4NHLK17SK4Jn+bk3JCrIGh
+	 wgELR85vHQiJP1AAdqkePJRV/CGEEL/WjnKwGE2Cs4/Na7uU7PBKAMiMHD+E8RrkW85Du
+	 3rKupoOmWc9lfylyJlfP70dsd72ddv6p4AkrH/kY+idrEaC86ElPaBIgvFZkwTvQOI/qq
+	 XNwud4fSu+LUWDEMCEdFIOMPlsFt6NWjXNWWTN5138gHzcMLW/qAkl/7pm810gWPumw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YpmfjM9W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUUFtALY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98351606A31C;
-	Wed, 18 Nov 2026 22:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB69606A320;
+	Wed, 18 Nov 2026 22:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YpmfjM9W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6E61F000C4;
-	Wed, 18 Nov 2026 22:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUUFtALY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02111F000C4;
+	Wed, 18 Nov 2026 22:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041924;
-	bh=U6nvtB5QdmQur9Y+j8XvhBb+ljk7Ln0bhUFWxJHcclg=;
+	s=korg; t=1795041927;
+	bh=qh8ch+EYvn+Dvn5sDp+B4APH7bxtb23tnouWWLmkg9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YpmfjM9WJHayy+xoApHBTr7l9HcZVwNyUNAhvvCBTfOTmmSIwQz2AaVWrapHEvTrz
-	 IqypYeQ8HwM19OelHUo8LXlu2rJEVsJz/MlnmfOOzNkZBgN+kYwiDIJNb+95LG4/ja
-	 c8Wr6eRkbWzy3Fg3M3Vy+IMq+ZRZxeuEgUa8HtWk=
+	b=sUUFtALYxOmUAmFQnFj5jPSYZbzzZTXXWcgSFJ0OiGMFY0PId5OURT5f3iMnyWlle
+	 oasbCHt670f4QnDnu8omzGkhBiC7rkBDzWYDIm6CyET81kxvV6lcjVr1n1FwksP3V9
+	 gQuoeSgMb7i+buEIVWzMH9YBaiZBmo6HjoYaA7ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2980/3318] blk-iocost: account zone append completions in latency stats
-Date: Wed, 18 Nov 2026 16:00:02 +0100
-Message-ID: <20261118150449.675613481@linuxfoundation.org>
+Subject: [PATCH 6.6 2989/3318] calipso: update payload_len when removing the CALIPSO option
+Date: Wed, 18 Nov 2026 16:00:11 +0100
+Message-ID: <20261118150449.939215197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,55 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit c38975c427cc3d3f6eb66a36143893be5cdf4ebd ]
+[ Upstream commit 00accbd9d5021b942a16078bd5717d7865f6971c ]
 
-ioc_rqos_done() only accounts READ and WRITE completions, so zone
-append completions are excluded from the latency window: the vrate
-feedback loop cannot see ZA-induced latency, leaving it unable to
-respond to device saturation caused by zone appends.  Similarly,
-calc_size_vtime_cost_builtin() does not classify zone append as a
-write operation.
+calipso_skbuff_delattr() removes the CALIPSO option from the hop-by-hop
+extension header, or the whole extension header if CALIPSO is its only
+option, and pulls the skb by the removed length.  It never updates
+ipv6hdr->payload_len, so after a successful removal the header still
+claims the original length.
 
-Charging (the cost model) and feedback (the latency window) are
-separate mechanisms, so this is not covered by the previous patch
-that prices zone appends.
+calipso_skbuff_setattr() already adjusts payload_len by the length it
+adds; the delete path was missed.
 
-Treat zone append as WRITE for both latency accounting and cost
-classification.
+This is reached on the forward path when a packet carrying CALIPSO is
+sent to a destination mapped to an unlabeled NetLabel domain.  The
+forwarded packet then has a payload_len larger than its real payload
+by the removed length (8 to 264 bytes), and the receiver drops it as
+truncated.  So removing the label on the forward path has been broken
+for every packet that is not resegmented later (SYN, UDP, ICMPv6...).
 
-Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260922043856.2020116-4-cui.tao@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Adjust payload_len after the header is moved.  BIG TCP packets carry
+payload_len == 0 (see ipv6_set_payload_len()), and ipv6_payload_len()
+then falls back to skb->len, so leave them alone.
+
+Tested with client, router and server network namespaces on one kernel
+(arm64, QEMU): SELinux permissive with a minimal mdp-generated policy
+(network_peer_controls=1), "netlabelctl calipso add pass doi:16", the
+default NetLabel mapping left unlabeled, IPv6 forwarding on the router.
+The client sends 5 UDP datagrams with a CALIPSO hop-by-hop option
+(DOI 16, set through IPV6_HOPOPTS) to the server through the router:
+
+  before: router Ip6OutForwDatagrams 5, server receives 0,
+          server Ip6InTruncatedPkts 5
+  after:  router Ip6OutForwDatagrams 5, server receives 5,
+          server Ip6InTruncatedPkts 0
+
+Fixes: 2917f57b6bc1 ("calipso: Allow the lsm to label the skbuff directly.")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Link: https://patch.msgid.link/179147329205.58079.5847298721173675285@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/calipso.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 6e3082cb90dab..185f2b82dab99 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2592,6 +2592,7 @@ static void calc_size_vtime_cost_builtin(struct request *rq, struct ioc *ioc,
- 	case REQ_OP_READ:
- 		*costp = pages * ioc->params.lcoefs[LCOEF_RPAGE];
- 		break;
-+	case REQ_OP_ZONE_APPEND:
- 	case REQ_OP_WRITE:
- 		*costp = pages * ioc->params.lcoefs[LCOEF_WPAGE];
- 		break;
-@@ -2828,6 +2829,7 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
- 		pidx = QOS_RLAT;
- 		rw = READ;
- 		break;
-+	case REQ_OP_ZONE_APPEND:
- 	case REQ_OP_WRITE:
- 		pidx = QOS_WLAT;
- 		rw = WRITE;
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 971b1c5301b2d..60f921edbc71b 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1432,6 +1432,10 @@ static int calipso_skbuff_delattr(struct sk_buff *skb)
+ 		skb_pull(skb, delta);
+ 		memmove((char *)ip6_hdr + delta, ip6_hdr, size);
+ 		skb_reset_network_header(skb);
++		ip6_hdr = ipv6_hdr(skb);
++		/* BIG TCP packets have payload_len == 0 */
++		if (ip6_hdr->payload_len)
++			be16_add_cpu(&ip6_hdr->payload_len, -delta);
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
