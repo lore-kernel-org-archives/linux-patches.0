@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061523;
-	b=oyZhgq9I7cf5pj0/t6HJK4VdlaC1pi+C3wBxI/yi4m9C5uRvM4noUZ6L03Q69pvvRloF
-	 DGi2MkoHlc5a4SS3Et9WODNkT4ffhbq0htdqrHTj0MHVZRmT1UlZJApDyFGmVjG/AV8mb
-	 l6xb6F8OK6EI8R5/GQDppgJ7IEMSZnIrH4RJvoR88EN4ksjx1ET0lInldwlTRH8xuSiWZ
-	 7ZD1+qTUx4ijOn7XqhDL8GA0dfjuUUnsqEmuELOoxKwMcgMp2yhcxgzga66njd4BEhjV1
-	 vXrKx/fEFPNRg44fNsLf02mw3p21yiYWNLPasq/ppEaQym5n9n8/g3hhMB+zayECDRQ==
+	t=1795061526;
+	b=s/cgz/KclhFQv7TrbFMD4Fe+yHmjp0tHeRAHHTSME7gVCOFdrzeXxKVCf3QUUKZrQzZn
+	 x5AppmUKRHezOt7+LK5i7ur9NkEa9mX0NPHOOnvjd0XQBWQSRRJvr6t4QMk3c9ygn3ntK
+	 VkcSh1SwmXqEdD65gzAOWm8NRox2DnHS82LO6yUGK0UsfZuXd7fCKf4VKiu+rL5P3CRq1
+	 3men0+Lxeh8SGjVubLVPMAYWjZC6ivKTCuzr40csxU9TktdKCq9ahafCLyE5JfC6+zkqK
+	 Q6S4EveZgki08v/sjTQtI6SQZFaPVRBQwOW3toZM0K0OC1ASiKcB9lkZVxKuQJHllnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061526;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K2h0ZhoD/w9day+MOEr89fuIaDiYopMqirIQSFg7ZNM=;
-	b=hLQfKA6NRvQ1SKPU9ylqFaHTYY9yU+mb9kxudhg9Q/2fM1BPfPYuhGJ5gs43rAse9zI6
-	 5GxifhJjkqUu8cXLOvyu7AkF0LDlWb1KIyWxYM7W05IbaLt6xY13Oh1vSsGg8RgoF7IxB
-	 OCV6XLpVAWkNq6Ql6KCb886MxuUeky5hTonhtnmPxqC6HRMUG5LoU4ujtIA6SuTrChdRO
-	 R3tSovkoio7TCq65H47RAx5WBV9zuUHvUh3Qm7nScdgs9515/BzFtLc7pWyfNKVAAhwRv
-	 twtzhSwhaHMOFdQlwsAXuu1u4yF0qxe2hBonfiFLz65zyY46TNtouKMeFUuRslK4pdg==
+	bh=zD7WCyXzfS6nEFOkVZQVxZI12yv2m4D3PR9Act09pZA=;
+	b=G5OZWYdORw9xhAXguvzUT42lAxmZlETxJ3eJkvF2D7AyEBziqyR+92BWyCwGh2vKyguB
+	 7QV37TNyKDbkv8tjVNZm/tWC9VZg6Aztlgn5Hawmy0hmqmTKudIv+vlzK/UtiqG/AnX+O
+	 2mZrNat8xkctJXrse1CMGGgUx79/Yz6Qc+zoyu2IfFE0/Wh0zMo4i8IYPEmvCHuzajypY
+	 I9aw/+kSWKgCqIrqiCXoAby5QrbdiGavs0y5bezvI/pu2TtAb8rC8495n8rxMKZ4ANGS7
+	 v8/eHX5fulGxcuKxPxvKJMPyzK5cPkyqImO1qahyxQr+sgzONEJ792vOLLVHelEe9vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkjgtzlI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHSMV+ji;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E8B60A2604;
-	Thu, 19 Nov 2026 04:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C50C60A2603;
+	Thu, 19 Nov 2026 04:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkjgtzlI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012CC1F000C4;
-	Thu, 19 Nov 2026 04:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHSMV+ji
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA0F1F000C4;
+	Thu, 19 Nov 2026 04:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061523;
-	bh=K2h0ZhoD/w9day+MOEr89fuIaDiYopMqirIQSFg7ZNM=;
+	s=korg; t=1795061526;
+	bh=zD7WCyXzfS6nEFOkVZQVxZI12yv2m4D3PR9Act09pZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QkjgtzlIWqzQzOgB8QwQ5tEEvUaiLAcnvI4ICalPyM8V9sYEgAddgWtB0AatsFKQH
-	 Qq4oJBvMcFYKpKIbpYl9LnFN3fZcX1sDTB66nkUM1pQSdM3TMb742GFSY57QH6XDCz
-	 LjuO84GUPsw8dGhXQ+k/ElOY5/PNkPn++hqC7wPs=
+	b=hHSMV+jiXqbg2S7ScaTvLi6hID1v0Yn64BKawm1LHMFL+vZ1xlY9Pi4woiq8KuSE5
+	 7NT90Wrrg3rr5hpF4OHkItx1ae38Tup5YGAqcb0kbfwVX3xKiz3jnESHsihWTzSSSY
+	 d3Y9to/eDIS2WJHVN+ogJVS2d4B8lhIDbdveERys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1582/1848] tcp_hybla: fix divide by zero on rtt0 == 0
-Date: Wed, 18 Nov 2026 16:00:20 +0100
-Message-ID: <20261118150025.792183048@linuxfoundation.org>
+Subject: [PATCH 5.10 1583/1848] serial: max310x: dont clobber the TX break bit in set_termios
+Date: Wed, 18 Nov 2026 16:00:21 +0100
+Message-ID: <20261118150025.829673725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,56 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit f09eb97322b16a6f709a47599c95b62f786905f9 ]
+[ Upstream commit 3b2de448ec0332c1cb8c38b4c5ff0c8e860befbc ]
 
-rtt0 is the reference RTT in ms, so 0 makes no sense, and
-hybla_recalc_param() divides by it right from hybla_init().
+A TX break asserted with TIOCSBRK ends early, with no error reported,
+as soon as any termios change lands on the port: a break is a state
+that must hold until TIOCCBRK, but max310x_set_termios() overwrites
+the whole LCR register, and LCR also carries the TX break bit that
+break_ctl() drives. No concurrency is required - a baud or parity
+change from the same process ends the break just as well, and
+break-led protocols lose their break with nothing in the logs.
 
-Reject values below 1 when the parameter is written. Also cap it at
-U32_MAX / USEC_PER_MSEC, since rtt0 * USEC_PER_MSEC can wrap to 0 on
-32-bit. An rtt0 above that (about 71 minutes) makes no sense anyway.
+Update only the LCR bits that are derived from termios and leave the
+TX break and RTS pin control bits untouched. Since nothing clears a
+break when a port is closed with the break still asserted - the tty
+core sends no break-off on release, and the unconditional write here
+was the accidental recovery - clear TXBREAK in startup(), the same way
+8250 does.
 
-Fixes: 835b3f0c0d7e ("[TCP]: Add TCP Hybla congestion control module.")
-Fixes: 740b0f1841f6 ("tcp: switch rtt estimations to usec resolution")
-Reported-by: VEGA <vega@nebusec.ai>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261008092641.140777-3-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f65444187a66 ("serial: New serial driver MAX310X")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-1-6ba881f81e1f@vaisala.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_hybla.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/tty/serial/max310x.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_hybla.c b/net/ipv4/tcp_hybla.c
-index be39327e04e6c..1ba48641b2191 100644
---- a/net/ipv4/tcp_hybla.c
-+++ b/net/ipv4/tcp_hybla.c
-@@ -26,8 +26,20 @@ struct hybla {
- };
+diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
+index 9cbfaa0c0b051..8a706ab80706d 100644
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -154,6 +154,8 @@
+ #define MAX310X_LCR_FORCEPARITY_BIT	(1 << 5) /* 9-bit multidrop parity */
+ #define MAX310X_LCR_TXBREAK_BIT		(1 << 6) /* TX break enable */
+ #define MAX310X_LCR_RTS_BIT		(1 << 7) /* RTS pin control */
++/* LCR bits owned by termios; TX break and RTS are driven elsewhere */
++#define MAX310X_LCR_TERMIOS_MASK	GENMASK(5, 0)
  
- /* Hybla reference round trip time (default= 1/40 sec = 25 ms), in ms */
--static int rtt0 = 25;
--module_param(rtt0, int, 0644);
-+static unsigned int rtt0 = 25;
-+
-+static int rtt0_set(const char *val, const struct kernel_param *kp)
-+{
-+	/* avoid rtt0 * USEC_PER_MSEC overflow */
-+	return param_set_uint_minmax(val, kp, 1, U32_MAX / USEC_PER_MSEC);
-+}
-+
-+static const struct kernel_param_ops rtt0_ops = {
-+	.set = rtt0_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(rtt0, &rtt0_ops, &rtt0, 0644);
- MODULE_PARM_DESC(rtt0, "reference rout trip time (ms)");
+ /* IRDA register bits */
+ #define MAX310X_IRDA_IRDAEN_BIT		(1 << 0) /* IRDA mode enable */
+@@ -962,8 +964,12 @@ static void max310x_set_termios(struct uart_port *port,
+ 	if (termios->c_cflag & CSTOPB)
+ 		lcr |= MAX310X_LCR_STOPLEN_BIT; /* 2 stops */
  
- /* This is called to refresh values for hybla parameters */
+-	/* Update LCR register */
+-	max310x_port_write(port, MAX310X_LCR_REG, lcr);
++	/*
++	 * Update LCR register. Leave the TX break bit alone: it is driven by
++	 * break_ctl(), and a whole-register write here would end a break in
++	 * progress.
++	 */
++	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TERMIOS_MASK, lcr);
+ 
+ 	/* Set read status mask */
+ 	port->read_status_mask = MAX310X_LSR_RXOVR_BIT;
+@@ -1083,6 +1089,13 @@ static int max310x_startup(struct uart_port *port)
+ 
+ 	s->devtype->power(port, 1);
+ 
++	/*
++	 * Clear a latched break: nothing clears TXBREAK when a port is
++	 * closed with a break still asserted, and set_termios() no longer
++	 * rewrites it.
++	 */
++	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
++
+ 	/* Configure MODE1 register */
+ 	max310x_port_update(port, MAX310X_MODE1_REG,
+ 			    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
 -- 
 2.53.0
 
