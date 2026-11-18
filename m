@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051039;
-	b=vwKz6gXofwcuwQbuEMalQcdi0Yl7Jzf1UofAUHq17TZWIzk35oqqQBH2qb/eez4YLOS/
-	 Pt8W74TPSjAOQ+n3Kg01i80o6QsfNmwoTe54JLGajt7nTbs6Oys8J+jrBiS5JyD9AVHg9
-	 AdUSR+GjjVu4JZGX6QPTeedYQh+MnUHaEHUdt5oQ74OzOl24qHywCruNjn4WiiqINp0uF
-	 Iqg5RDbVFat7fnJVfn8Eh5Npxgn5hv++PQHCnlHFca6lcDYS+XTiDRQvPuPXX/kqdqz2G
-	 RaRTofLBd4aQQhc0vbPrbomqhtw8GYDcDtrPU3QEpbBKdq4OkUQwfD8JbOkp47eQYEg==
+	t=1795051042;
+	b=X5z8LZGwdTZ368DzFUTqkrFqXp18OaqKcJc3jNOOpo0VWp+xuYnh1OP7KNB9l+hDObcU
+	 iHmvfiZWoikobdPx5jhbQDU+4luaaAcT5ZdAfdqsb7AczQPA02zjyVVAKaFOo4p8j84gN
+	 iuH3Fuem5D9r8ulTaWOZocod1+L+clMdJZRHg6TeJXBoDqY4cw3Vjof02GDDmRIK6uK4u
+	 pQWp6rY879wpUoh2mMobjFUElScmYyjKyCc/VbyC5f6de/7zNZVwahCM6ERHRBPqHYSim
+	 NhqIDuKIrezNpwHJ/bbyVXcyQ8yq0seAj/rYPrthymMV652dV6Cqdle7YVwrm0o05OA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dDJ9iYxvn6rW4tPAGxAUopAC5OIJKbXb8lw2+qlcayk=;
-	b=xGrrbGxHlXul/IRkTTLmPvJBIvbU7KIZ8MA53M424IllW0zqFVjZdDLL6nB6RBxGNqUY
-	 hvdEFOKMnsFe9OIWxzyMHXcfiaQ1uvDXTa4bmEOjBe6G0B1Q8XS6IhgGxNTk7mAKarWQY
-	 V1NnPJlAv16DPxaJzzd+wPLBfLn2YnTesS4zKFJucbhU88chU0zA8a74AC1/MH3EgKAhg
-	 o89l7qva6ico21pUBNhizu2Oqvkmn3VVXjYcZRWc4nEg1T7v8MOi1W6ilp52aJHFI9PUv
-	 pBobv70FkTnbmfP27con8Opinc7huwknoyPMzd0DHrzYonN9DArKVCMxwsyfNXHud4w==
+	bh=WZ5BEH8m1ZoR84WjSOGJALQTXPNQ3x9h8Hof0xkEr1U=;
+	b=FjjOyu3DXPv0qZatlrDNyD72hIjk8j3WXLyRDqZECyF6G/dLYDFRXkp08qAhb5r6uDJ2
+	 p5knfTJ90vMWB3jGLMdfCkUNcXx43zwHx3JKUwPEPJzWq232bk2WIpX/0mA6kBQ9jBJQX
+	 GE6YrVrpdTkrO10nnk+u5+EUnsMkztZwTSqMak1YsuSUpvZK1jdCKBevfdhoH0KXNYFX6
+	 YiSEGM737A0eM7p/RrA0ilQioJHgeWDVBKlrINJfHLq24668tCOmQxVsmxlOqzjzVha6P
+	 4IqaaAr6uxXdS6YJV5U6e3jijwh1iF++zYTc1dKkO0iCY3/KStlHOKAnJ6o97T0pxJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ArC9W8Ob;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EqBbwETv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B7C606A32A;
-	Thu, 19 Nov 2026 01:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B51A606A32A;
+	Thu, 19 Nov 2026 01:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ArC9W8Ob
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20A81F000C4;
-	Thu, 19 Nov 2026 01:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EqBbwETv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8BF1F000C4;
+	Thu, 19 Nov 2026 01:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051039;
-	bh=dDJ9iYxvn6rW4tPAGxAUopAC5OIJKbXb8lw2+qlcayk=;
+	s=korg; t=1795051042;
+	bh=WZ5BEH8m1ZoR84WjSOGJALQTXPNQ3x9h8Hof0xkEr1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ArC9W8ObmG1ufg1mj7lJlejOlYV/kGPrggdOAMVDAZbVyVMU1ybxJl/qNngTFv31T
-	 ODvx1fKbfVimsBFFDgABwcXfkpdzGjUAG67Yo4XA/+70FKKOnBPC0QLY/MPh2Ds33/
-	 8d6LR52AHL77sa0jjGv4XwLBUG1T+lS2BwMbRttA=
+	b=EqBbwETvCQJSORZjHDHMTHC+tRFVnorZdm3S7pIfTnII93bV1vqjU/nBj8+4QtKuo
+	 ztUD8U8/n8p4Rkx2Xz+i4sklLkAKrl6l403qQuwx7qSmwgzyOhXs7ljZNwwmcVLTfD
+	 HVOorJ0dMYGziQ8084/peWclY0CwCsgE7FmFFx1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0067/2214] usb: fsl_qe_udc: check qe_alloc_request() failure in ch9getstatus()
-Date: Wed, 18 Nov 2026 15:29:03 +0100
-Message-ID: <20261118150012.686141832@linuxfoundation.org>
+Subject: [PATCH 5.15 0041/2214] drm/amd/pm: validate vega10 profile mode inputs
+Date: Wed, 18 Nov 2026 15:28:37 +0100
+Message-ID: <20261118150011.704850939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,49 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 612551bf7cf7113b8bbd5e8c1eea86d9427c2f95 ]
+[ Upstream commit bf939f2a1687ef4ab815640096357f8ef5bd5fb6 ]
 
-qe_alloc_request() may return NULL on allocation failure. ch9getstatus()
-passes the return value directly to container_of() and then immediately
-dereferences the resulting qe_req pointer. Check the allocation result
-before using it and stall the control request on failure.
+Check for out of range profile modes and custom params that exceed 8 bits.
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260620120631.2894977-1-haoxiang_li2024@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fsl_qe_udc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
-index 8bf767a80dd42..6c1402890ff9b 100644
---- a/drivers/usb/gadget/udc/fsl_qe_udc.c
-+++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
-@@ -1941,6 +1941,7 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
- 			u16 index, u16 length)
- {
- 	u16 usb_status = 0;
-+	struct usb_request *usb_req;
- 	struct qe_req *req;
- 	struct qe_ep *ep;
- 	int status = 0;
-@@ -1981,8 +1982,11 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+index 7d0cf2a6d2d54..60accc56a1178 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -5227,6 +5227,11 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
+ 	uint8_t min_active_level;
+ 	uint32_t power_profile_mode = input[size];
  
--	req = container_of(qe_alloc_request(&ep->ep, GFP_KERNEL),
--					struct qe_req, req);
-+	usb_req = qe_alloc_request(&ep->ep, GFP_KERNEL);
-+	if (!usb_req)
-+		goto stall;
++	if (power_profile_mode > PP_SMC_POWER_PROFILE_CUSTOM) {
++		pr_err("Invalid power profile mode %u\n", power_profile_mode);
++		return -EINVAL;
++	}
 +
-+	req = container_of(usb_req, struct qe_req, req);
- 	req->req.length = 2;
- 	req->req.buf = udc->statusbuf;
- 	*(u16 *)req->req.buf = cpu_to_le16(usb_status);
+ 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
+ 		if (size != 0 && size != 4)
+ 			return -EINVAL;
+@@ -5242,6 +5247,10 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
+ 				return -EINVAL;
+ 		}
+ 
++		if ((input[0] & ~0xFF) || (input[1] & ~0xFF) ||
++		    (input[2] & ~0xFF) || (input[3] & ~0xFF))
++			return -EINVAL;
++
+ 		data->custom_profile_mode[0] = busy_set_point = input[0];
+ 		data->custom_profile_mode[1] = FPS = input[1];
+ 		data->custom_profile_mode[2] = use_rlc_busy = input[2];
 -- 
 2.53.0
 
