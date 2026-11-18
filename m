@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034771;
-	b=aHwUzMeytPiF+a8SFdVsWn21R1IfBHjxQ/8+ho1bc6lvlqU6F9kDuTQPDfqky2aKsi2m
-	 wfGwC+TpimN9gF2Zur7Ya9cTX/MMBcmfu7YPJMkfNGsJNtYrZZf+UIfmE42tttTkfzEfD
-	 kiV+g9OAbckt0xlZqnnU+v/1F7aBpzpA8xzCHUPTisf86nZhODNgos3vhNVf62Gpq2kqF
-	 0ylKbfQPzf9c8Q62k52uyy0librUL9hcVoN0cS4rghUMPhZkKDyaajQMqpW1KJ6+l1L6C
-	 /0JAG9sCX44g0LnVyXvoxwOchH4qVfZj61SIJ2R6+RzVnJcC8YzaL4gzKbFVvF5H51w==
+	t=1795034774;
+	b=XjENyZACsvfzkw+tn82UrRWYLdu1l5KkZUPCldvNgsmt1gSdWY8bBwsJGUGMBRemzac+
+	 SylyDfZKUu+azT/m2svBGu2AO3dMAVbC6stv7Eck2PNvQlBHLvvJK7GyxOE/EzXxJOsDO
+	 hI7B8cTGCfQ/LM4VrvHoRpqJ6SMRl8aB9CCo+JxkMI4Ncw5qTo07Y2X1gztHNXPhIUEBB
+	 jbbcjmSfOUDxi6d40u5+he5oO0wzZXpVjO09nD9uEzp7/QueNByPaOEy6YImWTxbLV0Pk
+	 oFl0HBItVRMRmksbMRaQfLirEytZ88vEzIWMND+VGMpPDw/IYjZfdq5x1/uiqPP9q/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NmQNS48h9RW9j+zrErFDD/tHnHXVUDNvTQFe9Fyo858=;
-	b=Q4fGKdK9Y4o3QgPmiMTJGpLG4r1CgzNrSN8kQRyypgkEgFrb8dSw5aU2TpHdIAehQdCt
-	 tnFar9aUbFsrAfvmI/Y0gjPfqzaluqMgsg0DDr2aQYcpP1gEKxiuQmjRvOYy+dw00KAXl
-	 oaxh2DDrES0wx8q4F+ol7I4fHQLIDh8bMrYbYuZptGpWOR4vyMjjsMHAJPTvubPW0pDmS
-	 SlOkAV2a7pyeVboT6Iwb170if2P84s2v3UiQ9sycCKPwW1P6Q5U+iOM7ERJL/djvkudQ8
-	 SbIM3IuNNv7XH2WjGjMi/RU6q23RsK97U2wrQ4uoMaSZ76xzyDEEsJfXDAcuf9TnnEA==
+	bh=xihTJQyidNXVPkme9yj9zONLGrbA/vRXaoHUPJlf0Dc=;
+	b=S6JtRYxYcg2i1P1+vuRgnWOj7GVu1jZq8GTZ2D/eHmOGHRoBGSt4BYQugb6rxZkDFZS4
+	 MJT0Cck713jVfcPbNeVfIhYHKPNqZ0L2FEIABizi+T26OSxVuV4HLkMKlvUgJZ/7GfB04
+	 ciULbjLy6ox7ZvzVSQOB/GexWGay8mzMi09GRANtwe3g3qENNTLg0bTbmgN/16o4hvnJD
+	 b0UjFyeYpzP53TYt0aM7juQC5r97V5BQvf8/CIkBj8ZWf8wG7NvFQqsYnJ/ZYExkeznU7
+	 y0t49AwI6f8iQ+h77cxj27mKAPpPsVBCdP2sUMWkKNUnVTF705+N6VTA/XTRgmkcTOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rlk5V2MJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i16NVpYM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D824C606A31C;
-	Wed, 18 Nov 2026 20:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96382606A31C;
+	Wed, 18 Nov 2026 20:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rlk5V2MJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE701F000C4;
-	Wed, 18 Nov 2026 20:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i16NVpYM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2F41F000C4;
+	Wed, 18 Nov 2026 20:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034771;
-	bh=NmQNS48h9RW9j+zrErFDD/tHnHXVUDNvTQFe9Fyo858=;
+	s=korg; t=1795034774;
+	bh=xihTJQyidNXVPkme9yj9zONLGrbA/vRXaoHUPJlf0Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rlk5V2MJKEL7zuTT2Tg4hL1Ut7Yl8oygvXmyiQ1MIQQssZzY1H8F+JHQoAa4aLDYL
-	 t98YV/rQn2flau1n2Kg/vYZN6xQi+3EfHquzhWICTCUAFuzQMOlkBrU9d+lik/5cc0
-	 hJCX4/feD67dUlHqZZ/9mdj88EcoEbpTR3P9RECA=
+	b=i16NVpYMHwr93e4qMy0LEsXnMeui5AJVJFa5w4+6t9BiI1Ce0+Rj7xLgan2srwu6d
+	 E9NAukElJXqtVFtSFPLqhiAdof9HVHor38man2a3so9eeUE/EmlIgqe8rnatgnqekY
+	 U6z5478tEyEoYDCZdcblv7uBqHUXi8Ky04oETtNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0438/3318] vsock/vmci: validate packet source for connected sockets
-Date: Wed, 18 Nov 2026 15:17:40 +0100
-Message-ID: <20261118150329.824523909@linuxfoundation.org>
+Subject: [PATCH 6.6 0439/3318] ipv6: Fix redirect exception creation for UDP/RAW sockets
+Date: Wed, 18 Nov 2026 15:17:41 +0100
+Message-ID: <20261118150329.860454381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,128 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit ad9a7da3fa39c2d616ec0dd3cf6e30531d032fe7 ]
+[ Upstream commit cd51b74bdd0b75aedf255dc67306a16dd057f7ee ]
 
-vmci_transport_recv_stream_cb() looks up sockets first by the full source
-and destination tuple, then by destination only in the bound table. The
-fallback can select a non-listening socket without checking whether the
-packet came from its stored peer.
+When an ICMP Redirect Message is matched to a socket, both IPv4 and IPv6
+verify that the source IP of the ICMP packet is the current gateway for
+the quoted packet. Both also pass the socket's bound device as the
+expected nexthop device.
 
-This was reproduced with two VMCI contexts. A RST from the context not
-stored in a TCP_SYN_SENT socket reset that socket after it was selected by
-the destination-only lookup.
+The difference is that IPv4 treats "oif=0" as "any", whereas IPv6 always
+requires an exact match (see ip6_redirect_nh_match()), since the gateway
+address is usually a link-local address.
 
-VMCI can process notification packets in bottom-half context when the
-socket is not owned by user context, or defer packets to a workqueue. Use
-vsock_check_source() after taking the socket lock in the bottom-half path,
-and recheck after lock_sock() in the workqueue path. Listening sockets
-continue to accept packets from any source.
+Therefore, when an IPv6 UDP/RAW socket is not bound to a device, the
+above verification fails and an exception is not created. This also
+happens when the socket is bound to a VRF, as l3mdev_update_flow()
+resets the oif to 0.
 
-Reply with a RST addressed from the received packet before dropping a
-source that fails validation. This preserves the existing reset behavior
-for bound non-listening and concurrently closed sockets without directing
-the reset to a connected socket's stored peer.
+Fix this by passing the ifindex of the ingress device as the expected
+nexthop device. This is consistent with the existing callers of
+ip6_redirect(). Note that for ICMPv6 Redirect Message packets the VRF
+driver does not reset skb->dev to the VRF device, so skb->dev is
+correct, even when it is a VRF port.
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/20260814121255.6B5001F000E9@smtp.kernel.org/
+Fixes: b55b76b22144 ("ipv6:introduce function to find route for redirect")
 Cc: stable@vger.kernel.org
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
-Link: https://patch.msgid.link/20260826003929.966160-3-4ncienth@gmail.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828192344.2596928-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Context adjusted because sk_uid(sk) doesn't exist here, so the changed line is applied with the direct sk->sk_uid field access this tree uses. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/vmci_transport.c | 34 ++++++++++++++++++++++++++++------
- 1 file changed, 28 insertions(+), 6 deletions(-)
+ net/ipv6/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
-index 4f02a6f269cdb..d1bc2ec3d21fa 100644
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -676,11 +676,13 @@ static int vmci_transport_recv_stream_cb(void *data, struct vmci_datagram *dg)
- 	struct vmci_transport_packet *pkt;
- 	struct vsock_sock *vsk;
- 	bool bh_process_pkt;
-+	bool drop_pkt;
- 	int err;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index baa43c7f03005..aa8092413e944 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3231,7 +3231,7 @@ void ip6_redirect_no_header(struct sk_buff *skb, struct net *net, int oif)
  
- 	sk = NULL;
- 	err = VMCI_SUCCESS;
- 	bh_process_pkt = false;
-+	drop_pkt = false;
- 
- 	/* Ignore incoming packets from contexts without sockets, or resources
- 	 * that aren't vsock implementations.
-@@ -757,17 +759,29 @@ static int vmci_transport_recv_stream_cb(void *data, struct vmci_datagram *dg)
- 	bh_lock_sock(sk);
- 
- 	if (!sock_owned_by_user(sk)) {
--		/* The local context ID may be out of date, update it. */
--		vsk->local_addr.svm_cid = dst.svm_cid;
-+		if (sk->sk_state != TCP_LISTEN &&
-+		    !vsock_check_source(vsk, &vmci_transport, &src)) {
-+			drop_pkt = true;
-+			err = VMCI_ERROR_NO_ACCESS;
-+		} else {
-+			/* The local context ID may be out of date, update it. */
-+			vsk->local_addr.svm_cid = dst.svm_cid;
- 
--		if (sk->sk_state == TCP_ESTABLISHED)
--			vmci_trans(vsk)->notify_ops->handle_notify_pkt(
--					sk, pkt, true, &dst, &src,
--					&bh_process_pkt);
-+			if (sk->sk_state == TCP_ESTABLISHED)
-+				vmci_trans(vsk)->notify_ops->handle_notify_pkt(sk, pkt, true,
-+									       &dst, &src,
-+									       &bh_process_pkt);
-+		}
- 	}
- 
- 	bh_unlock_sock(sk);
- 
-+	if (drop_pkt) {
-+		if (vmci_transport_send_reset_bh(&dst, &src, pkt) < 0)
-+			pr_err("unable to send reset\n");
-+		goto out;
-+	}
-+
- 	if (!bh_process_pkt) {
- 		struct vmci_transport_recv_pkt_info *recv_pkt_info;
- 
-@@ -892,6 +906,7 @@ static void vmci_transport_recv_pkt_work(struct work_struct *work)
+ void ip6_sk_redirect(struct sk_buff *skb, struct sock *sk)
  {
- 	struct vmci_transport_recv_pkt_info *recv_pkt_info;
- 	struct vmci_transport_packet *pkt;
-+	struct sockaddr_vm src;
- 	struct sock *sk;
- 
- 	recv_pkt_info =
-@@ -900,6 +915,12 @@ static void vmci_transport_recv_pkt_work(struct work_struct *work)
- 	pkt = &recv_pkt_info->pkt;
- 
- 	lock_sock(sk);
-+	vsock_addr_init(&src, pkt->dg.src.context, pkt->src_port);
-+	if (sk->sk_state != TCP_LISTEN &&
-+	    !vsock_check_source(vsock_sk(sk), &vmci_transport, &src)) {
-+		vmci_transport_reply_reset(pkt);
-+		goto out;
-+	}
- 
- 	/* The local context ID may be out of date. */
- 	vsock_sk(sk)->local_addr.svm_cid = pkt->dg.dst.context;
-@@ -929,6 +950,7 @@ static void vmci_transport_recv_pkt_work(struct work_struct *work)
- 		break;
- 	}
- 
-+out:
- 	release_sock(sk);
- 	kfree(recv_pkt_info);
- 	/* Release reference obtained in the stream callback when we fetched
+-	ip6_redirect(skb, sock_net(sk), sk->sk_bound_dev_if,
++	ip6_redirect(skb, sock_net(sk), skb->dev->ifindex,
+ 		     READ_ONCE(sk->sk_mark), sk->sk_uid);
+ }
+ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
 -- 
 2.53.0
 
