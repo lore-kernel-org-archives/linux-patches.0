@@ -1,58 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028662;
-	b=eiJjAUain3A0HRmOQGWPz0wt+03j84vWA1yH3wcjT3STqc5H0HVmkflm6oV36WXDEsdQ
-	 57nv1PEKyNoAM8cbtV5bGI+dZ43emBv5CYo22YTpkXTf5wpJyfbLA8QueOjLSOLQ2z20b
-	 WXn5GSf6YP4exOIFvACMc/Y51o9EZySzCTP6Zl7CqGta0YVPe8nYnt7D/4I0fXSsMouZi
-	 ziztyEXYSLR6FVtx9BC8p+ozceIe4WVvMDSuKwOvVw5JDwUAqwIMgWEj5bW3Wpjvx+z7q
-	 FLMQ2VPi25WvYdCZ+yuTj32oi5mPFmgQCCTBKLxRqDU7jqoHXgSQ0Oji2J3A9BL/7Og==
+	t=1795028665;
+	b=yUBPqaemHflao9yYtpobVn40p8wcCecM2PNFTjtyKLBp9nuKFYBh/hyFuCh20WJ61CCm
+	 4EGRwc7aDDF5GgGEq9KXhg+xpdNd2ecpXsF9stvdIakNUJnYJ930u9KTStQVp4ricItS5
+	 FHZfrqjFRNqhtUUn4YsKrIZsqm4zBNLLRZcPbJjk6i/RYYCxQ+pYRIkdPEz6bMd6qo0BL
+	 zgcsIet/+g+v3U9FjGseSzum3x751mpHLCkv9UzBUPK2zvuVfmfcmRwS01hox8nwZ3/Dc
+	 M35d0/6sIW1TPVjADP40U9MASelKzAxXcD7X5VfBq29zdKPB2nYnkYWEEhKwJOSGmkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028665;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NlFgDspWDpyBnhjkBPaNcUEyIGhOy8roogBNZqtSvDc=;
-	b=otSMpkbQAoFFRqd2d/8z7/QkoBFU58/Z2GviYvXepWVLKFw8ot7ojRZHg00kq8OdcN6/
-	 DelmLmeoF4D5Ac84HfVK9n3DSEpnIivUw2yPtTuw5LNWlIqMKPLqw/rJEz4AvebznQWkD
-	 Greg4ebav9og7I3qWXzqDu+dawtWjht/Y8Nnl56N5MkYl6FDKn4mMK8A/m4GTo56Wdm6m
-	 +m7NoiZAQ3jsuDdxi0v7rvUCQYU8f4T2h6pn29RcFbtiy8o0KsdZF4+gS9MoOj8zK/LJ9
-	 LAdNG02PexKUqHZwEfTI3reehpO9Oj+rfWwN3yQ9HwzAeS74DIGTjp4OGlUyDtNZN1Q==
+	bh=cuQ2TSWbKudWGcawrS6EYoH2Bo+EzUeT/TVO20QZTvY=;
+	b=Fk7Qhb0QCz1uAntRZZVPenWgihFf2nneSNRvXDyF9cICTj2EJ4/aUfLFVcQ4hKDsEPy/
+	 gAS5NXSXevSDsEV0+lsaEwOuQK5jWEBRUXkxq+unXP9+rsJI9kQXnJywWVRa6SnC4dp3h
+	 +C3PLLf8Ii/eWFv4OMHGxmA29nIPMpt6V9zcScuNYmNXjklxHlhi5VS+DM2ATdC2EypAr
+	 ge2oFsoe6zgyPLYV10O9l+oFylQENyWYh5hGfwPqARCKLyCp1Kl/V5t3esi2R1et3h3W3
+	 papz4RCdm5EHhYErzkUkfrDY5dCwkozptxcTCJFxg28+cBS1WuKY7X9C5y+1MlptFRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r6fhvwKm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyQUrPDg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89CC606A31C;
-	Wed, 18 Nov 2026 19:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B11E606A320;
+	Wed, 18 Nov 2026 19:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r6fhvwKm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5571F000C4;
-	Wed, 18 Nov 2026 19:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyQUrPDg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A011F000C4;
+	Wed, 18 Nov 2026 19:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028662;
-	bh=NlFgDspWDpyBnhjkBPaNcUEyIGhOy8roogBNZqtSvDc=;
+	s=korg; t=1795028665;
+	bh=cuQ2TSWbKudWGcawrS6EYoH2Bo+EzUeT/TVO20QZTvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6fhvwKmCp1Omg99FQPjO1/iIvEaGp/AQLoiISWH8YdmhxSYXPogPVHP7T61V/qX4
-	 tF3tl3ojOj7bzkkp46SMnruWS+f+xaIYW9iLtsdqMyWc8o/0xroholokjwtMb9n2Jr
-	 NM8fMYN2Dp2CI4asEAPCFW5EpMNDRRubMKxEjVCU=
+	b=FyQUrPDgcKnspY1dVYGAnOBsFyV166544MtoKYL85MFS8FRg+IYE9r8IliNxAkT7U
+	 f/YjYHA1cYnTe45mnzFLy/Pw4zCmc4bQsb4qw9BxfPRZQMte4gQvKgomS+vivxm4Yy
+	 f/2v14y4EhkFCWWlFQfSM9q8Z+jqFDR0BIUt2MUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Sharma <adi.sharma@zohomail.in>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Liam Howlett <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Mike Rapoport <rppt@kernel.org>,
 	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Chuanhua Han <hanchuanhua@oppo.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0076/1756] mm/memory: update stale locking comments for fault handlers
-Date: Wed, 18 Nov 2026 15:36:43 +0100
-Message-ID: <20261118150011.326777047@linuxfoundation.org>
+Subject: [PATCH 6.12 0077/1756] mm: fix address wraparound when scanning large folio PTEs
+Date: Wed, 18 Nov 2026 15:36:44 +0100
+Message-ID: <20261118150011.361185468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -74,167 +82,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Sharma <adi.sharma@zohomail.in>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 214f9ab72ce6e16120c20ad670389656f059e685 ]
+[ Upstream commit f681d4580d5c3c749f623cda722a21aefd3147b3 ]
 
-Update the comments for wp_page_copy(), do_wp_page(), do_swap_page(),
-do_anonymous_page(), __do_fault(), do_fault(), handle_pte_fault(),
-__handle_mm_fault(), and handle_mm_fault() to concisely clarify that they
-can be entered holding either the mmap_lock or the VMA lock, and that the
-lock may be released upon returning VM_FAULT_RETRY.
+numa_rebuild_large_mapping() and do_swap_page() can be tricked into
+generating an address wraparound, crashing the kernel. All that's required
+is to map a tail page of a large folio close enough to the start/end of
+the address space to e.g., make
 
-Additionally, make the following corrections:
-- In do_anonymous_page(), correct the outdated claim that the function
-  is entered with the PTE "mapped but not yet locked". Since
-  handle_pte_fault() unmaps the empty PTE before routing to
-  do_pte_missing(), the comment now correctly states it is entered
-  with the PTE unmapped and unlocked.
-- In __do_fault(), update the stale reference from __lock_page_retry()
-  to __folio_lock_or_retry().
+	unsigned long addr_start = addr - (nr << PAGE_SHIFT);
 
-Link: https://lore.kernel.org/20260424092217.263648-1-adi.sharma@zohomail.in
-Signed-off-by: Aditya Sharma <adi.sharma@zohomail.in>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
+to wrap around.
+
+Let's fix it by providing a better helper, folio_scan_range(), that
+takes care of staying within VMA and page table boundaries while
+handling possible wraparounds.
+
+There are some nasty details, like not being able to use pmd_addr_end()
+in this context. Add some helpful comments for these cases.
+
+Link: https://lore.kernel.org/20261014-folio_pte_scan_range-v2-1-00cf9bbaa364@kernel.org
+Fixes: d2136d749d76 ("mm: support multi-size THP numa balancing")
+Fixes: 508758960b8d ("mm: swap: entirely map large folios found in swapcache")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: f681d4580d5c ("mm: fix address wraparound when scanning large folio PTEs")
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Chuanhua Han <hanchuanhua@oppo.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 55 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 29 insertions(+), 26 deletions(-)
+ mm/memory.c | 50 ++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 14 deletions(-)
 
 diff --git a/mm/memory.c b/mm/memory.c
-index 4e6c893b18b38..d7f74ee122328 100644
+index d7f74ee122328..37b039cc7ba39 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -3322,8 +3322,8 @@ vm_fault_t __vmf_anon_prepare(struct vm_fault *vmf)
-  * Handle the case of a page which we actually need to copy to a new page,
-  * either due to COW or unsharing.
-  *
-- * Called with mmap_lock locked and the old page referenced, but
-- * without the ptl held.
-+ * Called with either the VMA lock or the mmap_lock held (see FAULT_FLAG_VMA_LOCK)
-+ * and the old page referenced, but without the ptl held.
-  *
-  * High level logic flow:
-  *
-@@ -3657,9 +3657,9 @@ static bool wp_can_reuse_anon_folio(struct folio *folio,
-  * though the page will change only once the write actually happens. This
-  * avoids a few races, and potentially makes it more efficient.
-  *
-- * We enter with non-exclusive mmap_lock (to exclude vma changes,
-- * but allow concurrent faults), with pte both mapped and locked.
-- * We return with mmap_lock still held, but pte unmapped and unlocked.
-+ * We enter with either the VMA lock or the mmap_lock held (see
-+ * FAULT_FLAG_VMA_LOCK) and pte both mapped and locked. We return with
-+ * the same lock still held, but pte unmapped and unlocked.
-  */
- static vm_fault_t do_wp_page(struct vm_fault *vmf)
- 	__releases(vmf->ptl)
-@@ -4199,12 +4199,12 @@ static struct folio *alloc_swap_folio(struct vm_fault *vmf)
+@@ -4198,6 +4198,34 @@ static struct folio *alloc_swap_folio(struct vm_fault *vmf)
+ 
  static DECLARE_WAIT_QUEUE_HEAD(swapcache_wq);
  
++/*
++ * Get the address range in which a folio might be mapped, assuming its pages
++ * are mapped consecutively and the folio page at the given idx is mapped at
++ * the given address.
++ */
++static void folio_pte_range(const struct folio *folio,
++		const struct vm_area_struct *vma, unsigned long addr,
++		unsigned long idx, unsigned long *start, unsigned long *end)
++{
++	/* Stay within the page table and VMA boundaries. */
++	const unsigned long pmd_start = addr & PMD_MASK;
++	const unsigned long pmd_end = pmd_start + PMD_SIZE;
++	const unsigned long lower = max(pmd_start, vma->vm_start);
++	/*
++	 * We cannot use pmd_addr_end(), as it does not clamp reliably. To
++	 * avoid wraparounds, compute using the inclusive end.
++	 */
++	const unsigned long upper = min(pmd_end - 1, vma->vm_end - 1) + 1;
++	const unsigned long offset = idx << PAGE_SHIFT;
++
++	/*
++	 * Avoid start/end addresses wrapping by not adding/subtracting more
++	 * than the lower/upper limits would allow.
++	 */
++	*start = addr - min(addr - lower, offset);
++	*end = addr + min(upper - addr, folio_size(folio) - offset);
++}
++
  /*
-- * We enter with non-exclusive mmap_lock (to exclude vma changes,
-- * but allow concurrent faults), and pte mapped but not yet locked.
-+ * We enter with either the VMA lock or the mmap_lock held (see
-+ * FAULT_FLAG_VMA_LOCK), and pte mapped but not yet locked.
-  * We return with pte unmapped and unlocked.
-  *
-- * We return with the mmap_lock locked or unlocked in the same cases
-- * as does filemap_fault().
-+ * When returning, the lock may have been released in the same cases
-+ * as done by filemap_fault().
-  */
- vm_fault_t do_swap_page(struct vm_fault *vmf)
+  * We enter with either the VMA lock or the mmap_lock held (see
+  * FAULT_FLAG_VMA_LOCK), and pte mapped but not yet locked.
+@@ -4445,16 +4473,15 @@ vm_fault_t do_swap_page(struct vm_fault *vmf)
+ 	address = vmf->address;
+ 	ptep = vmf->pte;
+ 	if (folio_test_large(folio) && folio_test_swapcache(folio)) {
+-		int nr = folio_nr_pages(folio);
+-		unsigned long idx = folio_page_idx(folio, page);
+-		unsigned long folio_start = address - idx * PAGE_SIZE;
+-		unsigned long folio_end = folio_start + nr * PAGE_SIZE;
++		const int nr = folio_nr_pages(folio);
++		const unsigned long idx = folio_page_idx(folio, page);
++		unsigned long folio_start, folio_end;
+ 		pte_t *folio_ptep;
+ 		pte_t folio_pte;
+ 
+-		if (unlikely(folio_start < max(address & PMD_MASK, vma->vm_start)))
+-			goto check_folio;
+-		if (unlikely(folio_end > pmd_addr_end(address, vma->vm_end)))
++		folio_pte_range(folio, vma, address, idx, &folio_start,
++				&folio_end);
++		if (unlikely((folio_end - folio_start) >> PAGE_SHIFT != nr))
+ 			goto check_folio;
+ 
+ 		folio_ptep = vmf->pte - idx;
+@@ -5542,16 +5569,11 @@ static void numa_rebuild_large_mapping(struct vm_fault *vmf, struct vm_area_stru
+ 				       struct folio *folio, pte_t fault_pte,
+ 				       bool ignore_writable, bool pte_write_upgrade)
  {
-@@ -4737,9 +4737,10 @@ static struct folio *alloc_anon_folio(struct vm_fault *vmf)
- }
+-	int nr = pte_pfn(fault_pte) - folio_pfn(folio);
++	const unsigned long idx = pte_pfn(fault_pte) - folio_pfn(folio);
+ 	unsigned long start, end, addr = vmf->address;
+-	unsigned long addr_start = addr - (nr << PAGE_SHIFT);
+-	unsigned long pt_start = ALIGN_DOWN(addr, PMD_SIZE);
+ 	pte_t *start_ptep;
  
- /*
-- * We enter with non-exclusive mmap_lock (to exclude vma changes,
-- * but allow concurrent faults), and pte mapped but not yet locked.
-- * We return with mmap_lock still held, but pte unmapped and unlocked.
-+ * We enter with either the VMA lock or the mmap_lock held (see
-+ * FAULT_FLAG_VMA_LOCK), and pte unmapped and unlocked.
-+ * We return with the lock still held, but pte unmapped and unlocked.
-+ * If VM_FAULT_RETRY is returned, the lock may have been released.
-  */
- static vm_fault_t do_anonymous_page(struct vm_fault *vmf)
- {
-@@ -4857,9 +4858,10 @@ static vm_fault_t do_anonymous_page(struct vm_fault *vmf)
- }
+-	/* Stay within the VMA and within the page table. */
+-	start = max3(addr_start, pt_start, vma->vm_start);
+-	end = min3(addr_start + folio_size(folio), pt_start + PMD_SIZE,
+-		   vma->vm_end);
++	folio_pte_range(folio, vma, addr, idx, &start, &end);
+ 	start_ptep = vmf->pte - ((addr - start) >> PAGE_SHIFT);
  
- /*
-- * The mmap_lock must have been held on entry, and may have been
-- * released depending on flags and vma->vm_ops->fault() return value.
-- * See filemap_fault() and __lock_page_retry().
-+ * Either the VMA lock or the mmap_lock must have been held on entry
-+ * (see FAULT_FLAG_VMA_LOCK) and may have been released depending on
-+ * flags and vma->vm_ops->fault() return value.
-+ * See filemap_fault() and __folio_lock_or_retry().
-  */
- static vm_fault_t __do_fault(struct vm_fault *vmf)
- {
-@@ -5423,11 +5425,11 @@ static vm_fault_t do_shared_fault(struct vm_fault *vmf)
- }
- 
- /*
-- * We enter with non-exclusive mmap_lock (to exclude vma changes,
-- * but allow concurrent faults).
-- * The mmap_lock may have been released depending on flags and our
-+ * We enter with either the VMA lock or the mmap_lock held (see
-+ * FAULT_FLAG_VMA_LOCK).
-+ * The lock may have been released depending on flags and our
-  * return value.  See filemap_fault() and __folio_lock_or_retry().
-- * If mmap_lock is released, vma may become invalid (for example
-+ * If the lock is released, vma may become invalid (for example
-  * by other thread calling munmap()).
-  */
- static vm_fault_t do_fault(struct vm_fault *vmf)
-@@ -5755,10 +5757,11 @@ static vm_fault_t wp_huge_pud(struct vm_fault *vmf, pud_t orig_pud)
-  * with external mmu caches can use to update those (ie the Sparc or
-  * PowerPC hashed page tables that act as extended TLBs).
-  *
-- * We enter with non-exclusive mmap_lock (to exclude vma changes, but allow
-- * concurrent faults).
-+ * On entry, we hold either the VMA lock or the mmap_lock
-+ * (see FAULT_FLAG_VMA_LOCK).
-  *
-- * The mmap_lock may have been released depending on flags and our return value.
-+ * The mmap_lock or VMA lock may have been released depending on flags
-+ * and our return value.
-  * See filemap_fault() and __folio_lock_or_retry().
-  */
- static vm_fault_t handle_pte_fault(struct vm_fault *vmf)
-@@ -5841,8 +5844,8 @@ static vm_fault_t handle_pte_fault(struct vm_fault *vmf)
- 
- /*
-  * On entry, we hold either the VMA lock or the mmap_lock
-- * (FAULT_FLAG_VMA_LOCK tells you which).  If VM_FAULT_RETRY is set in
-- * the result, the mmap_lock is not held on exit.  See filemap_fault()
-+ * (see FAULT_FLAG_VMA_LOCK).  If VM_FAULT_RETRY is set in
-+ * the result, the lock is not held on exit.  See filemap_fault()
-  * and __folio_lock_or_retry().
-  */
- static vm_fault_t __handle_mm_fault(struct vm_area_struct *vma,
-@@ -6072,9 +6075,9 @@ static vm_fault_t sanitize_fault_flags(struct vm_area_struct *vma,
- 
- /*
-  * By the time we get here, we already hold either the VMA lock or the
-- * mmap_lock (FAULT_FLAG_VMA_LOCK tells you which).
-+ * mmap_lock (see FAULT_FLAG_VMA_LOCK).
-  *
-- * The mmap_lock may have been released depending on flags and our
-+ * The lock may have been released depending on flags and our
-  * return value.  See filemap_fault() and __folio_lock_or_retry().
-  */
- vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
+ 	/* Restore all PTEs' mapping of the large folio */
 -- 
 2.53.0
 
