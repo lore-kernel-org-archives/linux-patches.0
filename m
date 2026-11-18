@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037191;
-	b=C08U6jekYZQpmyT2k4+mjkA9MQ+Veu438CTQ/zSI2Zfta1Ccz9pUzYM0FzfN6ZD0TSGy
-	 mXCc3HZJKmtmWhTOUiKt1rpRNNUFEora0YwvxLcSij5QRebDOXPWV0sZLv67FdMn58ZFB
-	 tbPaMB1osJ6Hk0LEuQz6seGR+E2Svhc6tC1b58hVrcVhHqu+4KyhYVhwKiJNkx4en5XB3
-	 dGJfIK1slFYbxE2p6gz1v7uGdKl7MU48lb32E/WLk6fZWo9mnRW3mehx5b6J7dVsokXDK
-	 xKrgLiLeJ5i/cCGzTeZnUU8goqqlFFjjGYPvyilEPPibnWaZQQRefQkrDa5DfNuMRmA==
+	t=1795037195;
+	b=AUdbXdMbxOj8hzs7YeFn1AsKskgMjDQevV+mdBb+TfeazNtaje8EAyjYpIwuMsAmcKTc
+	 SmWT7Qvb/7OltVOlovC5wwGDKBSGPuAyNMBZG32WxGTOmxwpqg5YfCV+EIK+YuKvWQReG
+	 oGU384IlwvoT+YQR5sdDATx+Di51MG8fwcNt091t47JSlzg4Xyonm23L/7jmR6Wj+2+Ot
+	 lvR+j+wvbCv3OU63h/4nzOFZcscb/WGtwNV/rbNM+9mLoVpjRwjrvbdymXN6g8hkP/dKf
+	 dlbmboTM600wCMhNg0tfKMHl95l6/q1SupMINt6M3InN5sHvYjSvS6kk4z/4p4BJ55A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xVniKY2VhKKsJtJV9cOtILTdo5ehjgf7wkR5n2jPghY=;
-	b=Y8nDLX+40XrRntHXIiPE+IGP/BUQfI07Ywqw0HHJZtSclNxgm1z/OQ5WtvLEp7CpsXJc
-	 gAyzd0FpKO/Of5AcgtazBhaWB17mZpvnBiYbOdFtrdwYJCD3Mkkxp8zppoAUgo2bItXEB
-	 GgN9njFrScdGyaKKc75LCdcy/XGgP3PJlusL6uOiswPMDhnWCYICZgtTRUcaeH7lvd5+M
-	 j2a2OzviFeN9bbC6pLWB3j4ob24PnvfIqbHPqoB0cUnbEWIzxaGHUHDWdAIVbcbpUbFzt
-	 2QaKnXmo4XOl6j5c5zPO/T8ZLlOgDHMd4hsjcX7GoP0/fO2DNIny5Apy/mc8qpfu74g==
+	bh=MKz5THxQLHSEk5t0k0FYxz2Ec0lFwIcoZClExbfmn/I=;
+	b=TF1vwEycJawd3H0W0ogvroTxN8U3YJoWTJytCgdQBuu5CVoN82Q1m0u1W3DbbC+jI+oO
+	 CmKz3PsXhYqtstuzATMUITJJwrdcHy9TVClKrEDxwxh+Icah7mSkOXa47a/cSZ2t8yx2k
+	 I+wskguRq0Nlr+Hhrvv6hcLqFCpXQSluYAG8zCaM5BObZgR4Komz+lH5EO9MzvsQDWy68
+	 o34QsQ9vyNgVt6aYe0/ONAU/FN2MV2u2D+StveTuuXgp0yfop1MKlgMpNmBc38TNFY9Do
+	 4AZlb2u7Z9aK9Txje+jOcbEERfj65Fs1uDAt+1EvmoMwgS+JF0hdQtLwcNEajHAqDIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giZnFp84;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euk3hHuv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D663B606A320;
-	Wed, 18 Nov 2026 21:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFDD606A320;
+	Wed, 18 Nov 2026 21:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giZnFp84
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3E41F000C4;
-	Wed, 18 Nov 2026 21:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euk3hHuv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8251F000C4;
+	Wed, 18 Nov 2026 21:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037191;
-	bh=xVniKY2VhKKsJtJV9cOtILTdo5ehjgf7wkR5n2jPghY=;
+	s=korg; t=1795037195;
+	bh=MKz5THxQLHSEk5t0k0FYxz2Ec0lFwIcoZClExbfmn/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=giZnFp84xZVUD6nYApdKEkvzbS1YUqCh5H8kGlL5gf+VMX16dZpFcs+fZ3wL5Inu5
-	 HjdxDnR4ln8caofKpuO+LPOqTl8nMAoUsFc9oz6qrfbSjqM1vfS8ZZ2acQ56Sbhzwq
-	 obIw6llybPt5tTEfGJcrU374X7zZII7HBLiIWeNI=
+	b=euk3hHuvhiWLdzlLk4Ybc2vIkqSNOKn/miXwCHjyFPBen09rXrPEN9pdVDoPSQniv
+	 9iJTUJdKiIuut+McJ8gjtWHzMRh7NpqzKiKHSpUJjNoLxxT9h/ZJPkCPOu5LEaVGwo
+	 BTV6SzxIsE8uNYg0N0+yf20kQj4ces8LKhoyQEPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1324/3318] NFSD: Map flex file layout IDs through the requests user namespace
-Date: Wed, 18 Nov 2026 15:32:26 +0100
-Message-ID: <20261118150400.040611018@linuxfoundation.org>
+Subject: [PATCH 6.6 1325/3318] afs: Fix afs to abort the rxrpc call on send error
+Date: Wed, 18 Nov 2026 15:32:27 +0100
+Message-ID: <20261118150400.072047778@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,176 +74,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit f913d5d2130a584d1a027ffe3dfd88b6be2e0540 ]
+[ Upstream commit 3e6af08a571fe2943a006acf3e890f36322602bc ]
 
-nfsd4_ff_proc_layoutget() and nfsd4_ff_encode_layoutget() translate
-the file's owner and group with init_user_ns, but every other identity
-nfsd places on the wire goes through nfsd_user_namespace(). When the
-transport carries a credential from a non-initial user namespace, the
-flex file layout reports host-global IDs. The client copies those IDs
-into the AUTH_SYS credential it presents to the data server, and
-svcauth_unix_accept() resolves that credential in the transport's
-namespace, so data server I/O runs under an identity unrelated to the
-file's owner.
+Fix afs_send_empty_reply() and afs_send_simple_reply() to always try to
+abort the rxrpc call rather than just aborting on -ENOMEM and otherwise
+abandoning it.  If the call is already complete due to network failure or a
+received abort, this will do nothing.
 
-Switching to the request's namespace introduces a second hazard.
-from_kuid() returns (uid_t)-1 when the target namespace has no
-mapping for the owner, and the IOMODE_READ arm adds one to that
-result to derive an identity for which the data server denies
-writes. The addition would wrap to zero, handing the client uid 0
-instead of an identity distinct from the owner.
+Also make afs_make_call() always abort on send error; again, it does
+nothing if the rxrpc call is already dead.
 
-Translate both IDs in nfsd4_ff_proc_layoutget(), which has the
-svc_rqst, and carry the wire values in struct pnfs_ff_layout.
-from_kuid_munged() substitutes overflowuid for an unmapped owner and
-thus never returns (uid_t)-1, so the increment cannot wrap to zero.
-
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260720141442.783935-1-cel@kernel.org?part=3
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260720163724.810227-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
-[ sashal: Added the missing rqstp argument throughout the proc_layoutget callback interface so nfsd4_layoutget() can pass the request to layout implementations. ]
+Fixes: 08e0e7c82eea ("[AF_RXRPC]: Make the in-kernel AFS filesystem use AF_RXRPC.")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261006133011.531806-6-dhowells@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: adapted rxrpc_kernel_send_data() calls to retain the explicit length argument ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/blocklayout.c       |  4 ++--
- fs/nfsd/flexfilelayout.c    | 24 ++++++++++++++----------
- fs/nfsd/flexfilelayoutxdr.c |  4 ++--
- fs/nfsd/flexfilelayoutxdr.h |  5 +++--
- fs/nfsd/nfs4proc.c          |  2 +-
- fs/nfsd/pnfs.h              |  4 ++--
- 6 files changed, 24 insertions(+), 19 deletions(-)
+ fs/afs/rxrpc.c               | 49 +++++++++++++-----------------------
+ include/trace/events/rxrpc.h |  2 +-
+ 2 files changed, 18 insertions(+), 33 deletions(-)
 
-diff --git a/fs/nfsd/blocklayout.c b/fs/nfsd/blocklayout.c
-index cedca5a07e65f..a7d50f85a6753 100644
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -18,8 +18,8 @@
+diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
+index 523272b86ad46..02bb3ad472eec 100644
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -442,10 +442,8 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
+ 	return;
  
- 
- static __be32
--nfsd4_block_proc_layoutget(struct inode *inode, const struct svc_fh *fhp,
--		struct nfsd4_layoutget *args)
-+nfsd4_block_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
-+		const struct svc_fh *fhp, struct nfsd4_layoutget *args)
+ error_do_abort:
+-	if (ret != -ECONNABORTED)
+-		rxrpc_kernel_abort_call(call->net->socket, rxcall,
+-					RX_USER_ABORT, ret,
+-					afs_abort_send_data_error);
++	rxrpc_kernel_abort_call(call->net->socket, rxcall,
++				RX_USER_ABORT, ret, afs_abort_send_data_error);
+ 	if (call->async) {
+ 		afs_see_call(call, afs_call_trace_async_abort);
+ 		return;
+@@ -872,6 +870,7 @@ void afs_send_empty_reply(struct afs_call *call)
  {
- 	struct nfsd4_layout_seg *seg = &args->lg_seg;
- 	struct super_block *sb = inode->i_sb;
-diff --git a/fs/nfsd/flexfilelayout.c b/fs/nfsd/flexfilelayout.c
-index 0bc52e6bec394..3c6a80c010957 100644
---- a/fs/nfsd/flexfilelayout.c
-+++ b/fs/nfsd/flexfilelayout.c
-@@ -14,19 +14,20 @@
- #include <linux/sunrpc/addr.h>
+ 	struct afs_net *net = call->net;
+ 	struct msghdr msg;
++	int ret;
  
- #include "flexfilelayoutxdr.h"
-+#include "auth.h"
- #include "pnfs.h"
- #include "vfs.h"
+ 	_enter("");
  
- #define NFSDDBG_FACILITY	NFSDDBG_PNFS
+@@ -884,21 +883,13 @@ void afs_send_empty_reply(struct afs_call *call)
+ 	msg.msg_controllen	= 0;
+ 	msg.msg_flags		= 0;
  
- static __be32
--nfsd4_ff_proc_layoutget(struct inode *inode, const struct svc_fh *fhp,
--		struct nfsd4_layoutget *args)
-+nfsd4_ff_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
-+		const struct svc_fh *fhp, struct nfsd4_layoutget *args)
- {
-+	struct user_namespace *userns = nfsd_user_namespace(rqstp);
- 	struct nfsd4_layout_seg *seg = &args->lg_seg;
- 	u32 device_generation = 0;
- 	int error;
--	uid_t u;
+-	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
+-				       afs_notify_end_reply_tx)) {
+-	case 0:
+-		_leave(" [replied]");
+-		return;
+-
+-	case -ENOMEM:
+-		_debug("oom");
++	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
++				     afs_notify_end_reply_tx);
++	if (ret < 0) {
+ 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
+-					RXGEN_SS_MARSHAL, -ENOMEM,
+-					afs_abort_oom);
+-		fallthrough;
+-	default:
+-		_leave(" [error]");
+-		return;
++					RXGEN_SS_MARSHAL, ret,
++					afs_abort_send_error);
++		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
+ 	}
+ }
  
- 	struct pnfs_ff_layout *fl;
+@@ -910,7 +901,7 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
+ 	struct afs_net *net = call->net;
+ 	struct msghdr msg;
+ 	struct kvec iov[1];
+-	int n;
++	int ret;
  
-@@ -49,13 +50,16 @@ nfsd4_ff_proc_layoutget(struct inode *inode, const struct svc_fh *fhp,
- 	fl->flags = FF_FLAGS_NO_LAYOUTCOMMIT | FF_FLAGS_NO_IO_THRU_MDS |
- 		    FF_FLAGS_NO_READ_IO;
+ 	_enter("");
  
--	/* Do not allow a IOMODE_READ segment to have write pemissions */
--	if (seg->iomode == IOMODE_READ) {
--		u = from_kuid(&init_user_ns, inode->i_uid) + 1;
--		fl->uid = make_kuid(&init_user_ns, u);
--	} else
--		fl->uid = inode->i_uid;
--	fl->gid = inode->i_gid;
-+	fl->uid = from_kuid_munged(userns, inode->i_uid);
-+	fl->gid = from_kgid_munged(userns, inode->i_gid);
-+
-+	/*
-+	 * Do not allow an IOMODE_READ segment to have write permissions.
-+	 * The group is left intact so group-readable files stay readable;
-+	 * nfsd_setuser() squashes an unmapped uid to the export's anon ID.
-+	 */
-+	if (seg->iomode == IOMODE_READ)
-+		fl->uid++;
+@@ -925,21 +916,15 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
+ 	msg.msg_controllen	= 0;
+ 	msg.msg_flags		= 0;
  
- 	error = nfsd4_set_deviceid(&fl->deviceid, fhp, device_generation);
- 	if (error)
-diff --git a/fs/nfsd/flexfilelayoutxdr.c b/fs/nfsd/flexfilelayoutxdr.c
-index c05d1d3e20210..4bfdfee1bf9ce 100644
---- a/fs/nfsd/flexfilelayoutxdr.c
-+++ b/fs/nfsd/flexfilelayoutxdr.c
-@@ -32,8 +32,8 @@ nfsd4_ff_encode_layoutget(struct xdr_stream *xdr,
+-	n = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
+-				   afs_notify_end_reply_tx);
+-	if (n >= 0) {
+-		/* Success */
+-		_leave(" [replied]");
+-		return;
+-	}
+-
+-	if (n == -ENOMEM) {
+-		_debug("oom");
++	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
++				     afs_notify_end_reply_tx);
++	if (ret < 0) {
+ 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
+-					RXGEN_SS_MARSHAL, -ENOMEM,
+-					afs_abort_oom);
++					RXGEN_SS_MARSHAL, ret,
++					afs_abort_send_error);
++		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
++		_leave(" [error]");
+ 	}
+-	_leave(" [error]");
+ }
  
- 	fh_len = 4 + xdr_align_size(fl->fh.size);
- 
--	uid.len = sprintf(uid.buf, "%u", from_kuid(&init_user_ns, fl->uid));
--	gid.len = sprintf(gid.buf, "%u", from_kgid(&init_user_ns, fl->gid));
-+	uid.len = sprintf(uid.buf, "%u", fl->uid);
-+	gid.len = sprintf(gid.buf, "%u", fl->gid);
- 
- 	/* data server entry: deviceid + efficiency + stateid + fh list +
- 	 * user + group + flags + stats_collect_hint
-diff --git a/fs/nfsd/flexfilelayoutxdr.h b/fs/nfsd/flexfilelayoutxdr.h
-index 8e195aeca0237..3e2dc4d070f8d 100644
---- a/fs/nfsd/flexfilelayoutxdr.h
-+++ b/fs/nfsd/flexfilelayoutxdr.h
-@@ -35,8 +35,9 @@ struct pnfs_ff_device_addr {
- struct pnfs_ff_layout {
- 	u32				flags;
- 	u32				stats_collect_hint;
--	kuid_t				uid;
--	kgid_t				gid;
-+	/* Values to encode; nfsd4_ff_proc_layoutget() has mapped these */
-+	u32				uid;
-+	u32				gid;
- 	struct nfsd4_deviceid		deviceid;
- 	stateid_t			stateid;
- 	struct nfs_fh			fh;
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 47701ffdaf661..04aaefafd8dac 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2306,7 +2306,7 @@ nfsd4_layoutget(struct svc_rqst *rqstp,
- 	if (atomic_read(&ls->ls_stid.sc_file->fi_lo_recalls))
- 		goto out_put_stid;
- 
--	nfserr = ops->proc_layoutget(d_inode(current_fh->fh_dentry),
-+	nfserr = ops->proc_layoutget(rqstp, d_inode(current_fh->fh_dentry),
- 				     current_fh, lgp);
- 	if (nfserr)
- 		goto out_put_stid;
-diff --git a/fs/nfsd/pnfs.h b/fs/nfsd/pnfs.h
-index 4f4282d4eeca4..c29de1795b2cb 100644
---- a/fs/nfsd/pnfs.h
-+++ b/fs/nfsd/pnfs.h
-@@ -29,8 +29,8 @@ struct nfsd4_layout_ops {
- 	__be32 (*encode_getdeviceinfo)(struct xdr_stream *xdr,
- 			struct nfsd4_getdeviceinfo *gdevp);
- 
--	__be32 (*proc_layoutget)(struct inode *, const struct svc_fh *fhp,
--			struct nfsd4_layoutget *lgp);
-+	__be32 (*proc_layoutget)(struct svc_rqst *rqstp, struct inode *inode,
-+			const struct svc_fh *fhp, struct nfsd4_layoutget *lgp);
- 	__be32 (*encode_layoutget)(struct xdr_stream *,
- 			struct nfsd4_layoutget *lgp);
- 
+ /*
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index 8cbec303cb505..1dbeabf143347 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -20,10 +20,10 @@
+ 	/* AFS errors */						\
+ 	EM(afs_abort_general_error,		"afs-error")		\
+ 	EM(afs_abort_interrupted,		"afs-intr")		\
+-	EM(afs_abort_oom,			"afs-oom")		\
+ 	EM(afs_abort_op_not_supported,		"afs-op-notsupp")	\
+ 	EM(afs_abort_probeuuid_negative,	"afs-probeuuid-neg")	\
+ 	EM(afs_abort_send_data_error,		"afs-send-data")	\
++	EM(afs_abort_send_error,		"afs-send-error")	\
+ 	EM(afs_abort_unmarshal_error,		"afs-unmarshal")	\
+ 	/* rxperf errors */						\
+ 	EM(rxperf_abort_general_error,		"rxperf-error")		\
 -- 
 2.53.0
 
