@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030552;
-	b=vNDVoc3GoMNi17Je8HSoXRhnBt5HarHnClZ0rt/2kx89NoLi3knAnSlwoRrM4qP6xc49
-	 Y5qIrxScfTr/2BVpSpMeM2HnskgpO3oCFEm9P/S/cMXEhACO58iAOmy6sumAJSVTO471o
-	 4JgyV/rgWhsbwQuVvXryRGRLTxw6jcwsZH+bLzQurryIZLTn4Fwet59CX+rNSuj2slm0f
-	 OpMS7/oNJr6q0Sp5EItj3iiJC4lpmeE0ECv64aHU2ftfg/GDV3aa2iWeIZn+vUuynCjJ8
-	 G2T4XU4NFMjLAtjTdzZjxI/Zg8xHYbm0nT8UVv/w1VloxP5Nz/H58Wu39Nnyi6nhqcw==
+	t=1795030555;
+	b=wLHdBlHXmFEtQO+xpRgiXvKUAIH0Hl03lZ4Ema4eBjrCvfQUR/wBRhnoGqOfyFmep2CC
+	 9Ge37PqEYByX8JmAoe12e5CvFolnCmFnjxw4SZfwn6D+O8mrtU018cI3mQWmXUb0HY8NT
+	 QdyQjtac8fAm8fpZVbfz1Gn+iyBcdVKg+BmnpKizA8JhYxh6OyqZSyK4gkpqz31Ll73hk
+	 ICBvqIDz9E0ug/DpfqBwBawJcMuZzbN3io5b6AfHy0D/3n4aU9Sq8ApjSBxAqXT2bz58I
+	 zV+cx4lOyUwVlIoypD9qD1ySKWtJ71nnRTn7wx0rjLs6CzGBOM/m65Lmsr1M4hbjNhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d+3A+BjHntEPsMIEVuYeKeT7f9Md8IfTJgGjLK+lnvI=;
-	b=pFEDC0rcndf/ajzfLiKx8GQiCaaG5xDi9KhgrZycdpH+nt4G82Jk1excCq/Xc3Jhr0lQ
-	 8FGaP0mNXy886TV0J1qtLvV8RTT/QG2dJkadOzVRjLcNWcfkj84hg/jHhTHbs6xIB8otI
-	 tNaVAdZ4wFkQ25dI3fhj0H+8lRubLrrPi5lAB0np9nwz0nLxY3BMpNewlMJQzJa7XtgTw
-	 8dRW8T+astpLHOhnUytZ1pHs+WdKtKMuZhqS55WlvawUAe9TPbr80j2gwKCkX9fVTF/Zy
-	 2RzfY7b7AkfYmTMd6Yj1nPBz5/7Y0gfOIXyTS+O/9MSqD2XEEjNhOyFDij3qhqxe3Aw==
+	bh=y7M9vrouzcS/OQH2dGQX47/ABXnJAUpzDMj0DTMUVzo=;
+	b=YJ4DOFa8W6XeQo8r4sPQoQ8JEoWjUwWUgF7xlBRM17/EgqYtLg1y6GMe/SPYhlvZ8P1H
+	 s2Gl3akpXvAvWNKqil0ZEPlgIET3mUCX5oOyApm2NwQPQfZIUjEQEcK4ltMdqQR22jL+T
+	 oqO8DrEgsbGpnXIyYgh1MuCMh0vXnVK9EJgVIQQSAloY2yEkMsbaOYljQWVz1m6IU0FeF
+	 6wKYADNA93cgNgMC3Q2sLv3gBZUX4AsyDBfELlxVvJ0Eu3flnkKycTqh2C2LnB7wjqiTE
+	 0zpvYyz7izeatxFRu4HrfWhBf924Zw0MuaGWZWXrUkLd04a1AJCc/BQW/hif9Ee4WnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ROENRwBA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlsINcfp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08580606C733;
-	Wed, 18 Nov 2026 19:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1508A606D355;
+	Wed, 18 Nov 2026 19:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ROENRwBA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6111F000C7;
-	Wed, 18 Nov 2026 19:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlsINcfp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B02A1F000C4;
+	Wed, 18 Nov 2026 19:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030551;
-	bh=d+3A+BjHntEPsMIEVuYeKeT7f9Md8IfTJgGjLK+lnvI=;
+	s=korg; t=1795030554;
+	bh=y7M9vrouzcS/OQH2dGQX47/ABXnJAUpzDMj0DTMUVzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROENRwBAZWrWHuaElJ2nRFZqzoRZrTaOs3MWxgBbpeBvXKCq5VQXW98aoyFvCy/uI
-	 XoXPFTr3YNI5BxU8+033uZN5ZEyePnNppLUPVIHtYVkGbGx0XIWJtPryzq145Fkkkg
-	 6IOBSb3FH6cC5RMrdov4ez5Y91mxauAcrZXkbLQ8=
+	b=tlsINcfpH412rK9nJLadtnofpmf/OvmyNgJSV/vvTfHq7himDqJPCJ8cpmdjIV38D
+	 NBg5p/aqRArEuuoGiHSCpDdXtFD6Lm54zgFhz+8AqcWozujBhqCdOFW/03RRBclqKN
+	 IBpzLw+A2DoiTO4v28Gh/KrfB6FJW5oD9XsKqeTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jasper Wise <jaspwise@amazon.co.uk>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0738/1756] misc: nsm: mark device ready before registering the hwrng and misc device
-Date: Wed, 18 Nov 2026 15:47:45 +0100
-Message-ID: <20261118150039.007205319@linuxfoundation.org>
+Subject: [PATCH 6.12 0739/1756] misc: nsm: fix CBOR short-length decoding
+Date: Wed, 18 Nov 2026 15:47:46 +0100
+Message-ID: <20261118150039.037347205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,64 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jasper Wise <jaspwise@amazon.co.uk>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit e15596e84c818a2b727d2a7cf742a29331e44c43 ]
+[ Upstream commit 6edddc1d101bfd5cafc94ca2dffaf13e4394662d ]
 
-nsm_device_probe() registers an hwrng provider and /dev/nsm.
-hwrng_register() can make this the current RNG, and the hwrng fill kthread
-finds it through the RCU-protected get_current_rng() rather than under the
-rng_mutex that hwrng_register() holds, so it can be in nsm_rng_read()
-offering buffers and kicking the queue before probe has returned.
+CBOR encodes byte-string lengths from 0 through 23 directly in the
+additional-information field. cbor_object_get_array() only handles 23,
+so shorter byte strings leave array_len uninitialized. Reserved values
+28 through 30 and the unsupported indefinite-length encoding also fall
+through without assigning it.
 
-The driver never calls virtio_device_ready(), so DRIVER_OK is set on its
-behalf by virtio_dev_probe(), only once probe has returned. The virtio
-spec is explicit about that ordering in 3.1 Device Initialization:
-  |  The driver MUST NOT send any buffer available notifications to the
-  |  device before setting DRIVER_OK.
+parse_resp_get_random() then uses the indeterminate value for bounds
+checking and as the byte count returned to the hwrng core. This can
+reject a valid short response or report an incorrect amount of entropy.
 
-A device that waits for DRIVER_OK before servicing the queue therefore
-leaves that read unanswered.
+Decode the complete inline-length range and reject unsupported values.
+Extended definite-length encodings retain their existing behavior, and
+the existing size and INT_MAX checks continue to bound the returned
+slice.
 
-Set DRIVER_OK once the virtqueue exists and before either interface is
-registered, so that the queue is usable by the time anything that can reach
-it is published; commit f5866db64f34 ("virtio_console: enable VQs early")
-and commit 1d774589f924 ("i2c: virtio: mark device ready before registering
-the adapter") do the same for the same reason. The err_hwrng and err_misc
-paths then unwind a device that is live, so reset it before deleting the
-virtqueue - the core only adds VIRTIO_CONFIG_S_FAILED to the status when
-probe fails, it does not reset.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
 Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
-Signed-off-by: Jasper Wise <jaspwise@amazon.co.uk>
-Link: https://patch.msgid.link/20260813083752.581981-1-jaspwise@amazon.co.uk
+Assisted-by: unnamed:claude-opus-4.8 typestate
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260815151745.3758574-1-ruoyuw560@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/nsm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/misc/nsm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/misc/nsm.c b/drivers/misc/nsm.c
-index c3b474450d159..ba43946b9e39a 100644
+index ba43946b9e39a..d303f48af2bdb 100644
 --- a/drivers/misc/nsm.c
 +++ b/drivers/misc/nsm.c
-@@ -440,6 +440,8 @@ static int nsm_device_probe(struct virtio_device *vdev)
+@@ -117,7 +117,7 @@ static int cbor_object_get_array(u8 *cbor_object, size_t cbor_object_size, u8 **
+ 	array_len_p = &cbor_object[1];
  
- 	mutex_init(&nsm->lock);
+ 	switch (cbor_short_size) {
+-	case CBOR_SHORT_SIZE_MAX_VALUE: /* short encoding */
++	case 0 ... CBOR_SHORT_SIZE_MAX_VALUE: /* short encoding */
+ 		array_len = cbor_short_size;
+ 		break;
+ 	case CBOR_LONG_SIZE_U8:
+@@ -132,6 +132,8 @@ static int cbor_object_get_array(u8 *cbor_object, size_t cbor_object_size, u8 **
+ 	case CBOR_LONG_SIZE_U64:
+ 		array_len = be64_to_cpup((__be64 *)array_len_p);
+ 		break;
++	default:
++		return -EFAULT;
+ 	}
  
-+	virtio_device_ready(vdev);
-+
- 	/* Register as hwrng provider */
- 	nsm->hwrng = (struct hwrng) {
- 		.read = nsm_rng_read,
-@@ -472,6 +474,7 @@ static int nsm_device_probe(struct virtio_device *vdev)
- err_misc:
- 	hwrng_unregister(&nsm->hwrng);
- err_hwrng:
-+	virtio_reset_device(vdev);
- 	vdev->config->del_vqs(vdev);
- err_init_vq:
- 	return rc;
+ 	if (cbor_object_size < array_offset)
 -- 
 2.53.0
 
