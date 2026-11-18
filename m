@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053618;
-	b=zuBfWMRnKI9xkASaXWP98+UlNu8UCqGLY5+T6E2LbRdY1dBUoUmXgdfTvLiPftqYHXUd
-	 ySx7qFNwX6tMNNWZT/HwPk1MyULzjoLRiy2ofO/oN6+ymavWNvWPSBeWQLuoYtoVLTqVO
-	 KYzn7siRYS3qKmsulw4elImQn9nBp29rtTcAB/gh0/6505ZuAssPdQPpwUsgCzDrMLgY7
-	 TLSO8W1SpE5giUeOwj4BsIvbMnZJdn8x7tadWE3plWLUnsy+8yXrSmslXyeCMkwSCrdpk
-	 f3FINTaFXxMYVxpCiZONPwvgOVgFZIR50gDFRxeeVw917rZS+KiRSeugohXQlP8U4Hw==
+	t=1795053621;
+	b=kAtfA7S4ONdR7A3hMst6KdKS63gVw88FkhyiV5qte279qn0FLyWxmuay8CtgtW8qVG4P
+	 fKI3ZBACQNW6VDtv55d1gYMg73wYyMwZdFx69FdQBc+ZxUyDiKvNz2JsUMa8aXFTzCUO8
+	 9/RLd0Z1PGYAGwF7rUrZ9cUDGjMeO2C/9U4tj4Kx3j1WuMC5cHkHIaZEAeZRiKbp3PD1y
+	 KgLgAIfEv9ECZ0k9i6+EbOyrHJPOGaNJBlThAcAPbRVihS2lVxVs8DHhmc3KFzApqF+1i
+	 Gtk9gtS2gucFQDXH/aNV5BGfDcZrZ3bjQ7gadlhWGVs7jbVZniGXChQRUTV+6lpr5HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jojB0VRxFyGYA7ulDuRxVzrh8EReNo01W1oqaGPw8Tk=;
-	b=cQr0fxsCV2S61I+vwrFl/hRFtoSdQnJnyzlbiPuPE4WTsyo+BBu5Jt6H1R5NY2ocHQ+i
-	 O0ll0rCeep92n5w9GG1fG405XyXAWrtMLELy14bqLFhqEp6WkYd+OL6jnSnUb4UPRPWoZ
-	 b4WVEmasD6deZ5qFksXqPphb1ZDskyhbx4SCk77cyNio1KwSYjksVn8uV+Ca2vXmdxgEp
-	 g7GvA//CXdbx+FVN9bqpMf6mRtm5u+10lKt6F8zHMnbx2W0kGJ6c27PogS44uPVF35OCr
-	 poPPqdgKx5v036486plEE1cq8NFEFwi7k5JD5WBxQuKtbczYWauwJIOF1yV2mxtLVVQ==
+	bh=cw6j9exrKSmntXtidzoOnUBhTS3APrVyQN29qSRFH3E=;
+	b=FvkNVD9qfY23ezl3t6WcSfZfgTx0BrLdqtu36ANUA2eUg9zh81FGYwAidGIwp9URznhc
+	 cfBwsCGb7fdJ2Y2EDNU4QFUtqNxn7mTaENQjmfXzzg4u3q0O9f++tGZgqwOY1c7tI7muC
+	 4kD9rICpu+dgnTGN9zyInuD5svEyW1OCaMeU12En2wpXIJpYE02vWwiSnrcFghTIw/tb4
+	 rcEFD9RI282Oa0fjp/VJdbxhF4xLmj6tVDKcatxkno6TS5EzFVnlAhdXYyyLN8e2u1j+T
+	 3E8pn5mItJZID5q6hH0Z5LHhwu5CZBf6Zm1NSZNqko6jriTShThBs/Panc8npML/wGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=riMOQv9Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fqOdf1XT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80030606A325;
-	Thu, 19 Nov 2026 02:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F10606A31C;
+	Thu, 19 Nov 2026 02:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=riMOQv9Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECD51F000C4;
-	Thu, 19 Nov 2026 02:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fqOdf1XT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909961F000C4;
+	Thu, 19 Nov 2026 02:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053618;
-	bh=jojB0VRxFyGYA7ulDuRxVzrh8EReNo01W1oqaGPw8Tk=;
+	s=korg; t=1795053621;
+	bh=cw6j9exrKSmntXtidzoOnUBhTS3APrVyQN29qSRFH3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=riMOQv9QdHLczVXK24XzkGyWct/u6oB+9NbUrLbjjllbAQV53pZL2kTIATPpB5h7c
-	 mJNk7vc0VrOsTS0zz3nRIP4iW8RZBRviLIq8VPfUh/tPF+gYhYJTqZ10bptBaF047i
-	 DfjH7j18yLQ0TCZDyFM/oIlOf7OMYub1dP7+DjbU=
+	b=fqOdf1XT72SOsANjNmvgzFHBOSFlf3HQTtpHxdgca4dFDn354FdREnd5OYzNqJyfZ
+	 PoJ6i7arsymYlWMMI5FLveCDkFxl0CiBGEbqJeIOBY+qfL3uMgkmCgBoKhUvNnJXBT
+	 LoIIILWzVohlpdd2/2TOWK199iOMgf281GHCNWok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Frey <sf@techfak.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0942/2214] vxlan: Stop rejecting dynamic FDB entries with a nexthop ID
-Date: Wed, 18 Nov 2026 15:43:38 +0100
-Message-ID: <20261118150050.039386966@linuxfoundation.org>
+Subject: [PATCH 5.15 0933/2214] can: protect the receive lists with a per-device lock
+Date: Wed, 18 Nov 2026 15:43:29 +0100
+Message-ID: <20261118150049.688399239@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,226 +69,788 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 7308ef8b4a6779a39f68d053c19b53a5c584a663 ]
+commit 0f3ad9ab40e3dad06d5c0693806e07935ceedbc3 upstream.
 
-Commit 98fc57d16744 ("vxlan: reject dynamic fdb entries that reference a
-nexthop id") started rejecting FDB entries that point to FDB nexthops
-unless they are configured as "permanent" or "static". The intent was to
-prevent such entries from being aged out by vxlan_cleanup(), which runs
-without RTNL and can therefore race with other VXLAN devices that modify
-the same per-nexthop FDB list.
+The receive lists of a CAN device are located in the device's
+can_ml_priv and travel with the device when it is moved to another
+network namespace. But they are protected by the per-netns
+rcvlists_lock. So can_rx_unregister() needs dev_net(dev) to pick the
+right lock and silently returns when the passed namespace does not
+match dev_net(dev) anymore.
 
-However, FRR installs remote MACs that are behind a multihomed Ethernet
-Segment (EVPN-MH) as dynamic FDB entries that point to an FDB nexthop
-group. Since the above commit, these entries are rejected and traffic
-towards the corresponding MACs is flooded to all the remote VTEPs.
+isotp_release() and bcm_release() leave their notifier list before they
+take any lock that serializes against the netdev notifier, which runs
+under RTNL. When the bound device is moved to another namespace in this
+window, the notifier skips the socket and the release path has to remove
+the filters itself. isotp_release() passes the socket's namespace, which
+does not match dev_net(dev) anymore. bcm_rx_unreg() passes dev_net(dev),
+which can_rx_unregister() reads again for its check, so a namespace
+change between both reads makes the check fail as well. In both cases
+can_rx_unregister() silently returns. As can_rx_register() stores
+rcv->sk without a reference, the remaining receivers point to the freed
+socket (isotp) or the freed op (bcm):
 
-These entries are also marked as externally learned ("extern_learn")
-and are therefore skipped by vxlan_cleanup(), but exempting externally
-learned entries from the checks is not enough: vxlan_cleanup() reads
-the state and flags of an entry without the hash lock, so an entry that
-is concurrently changed from dynamic and externally learned to static
-can still be aged out.
+  BUG: KASAN: use-after-free in isotp_rcv+0x1570/0x24d0
+  Read of size 1 at addr ffff888118130552 by task isotp_ns_uaf/578
+   can_rcv_filter+0x4af/0x8c0
+   can_receive+0x28d/0x3c0
+   can_rcv+0x2a9/0x310
+   __netif_receive_skb_one_core+0x21a/0x260
+   process_backlog+0x210/0x760
 
-Instead, remove the checks added by the above commit and make
-vxlan_cleanup() skip FDB entries that point to FDB nexthops. Such
-entries can only be configured from user space, cannot be learned and
-cannot roam, so there is no reason to age them out. The nexthop pointer
-of an FDB entry is set before the entry is linked and is only cleared
-after it was unlinked and an RCU grace period has passed, so it can be
-checked without the hash lock.
+Besides this, the lists of a device are protected by the rcvlists_lock
+of the namespace that is passed in. Callers which pass dev_net(dev) read
+it at different times, so the same lists may be modified under the locks
+of different namespaces while the device is moved.
 
-Adjust the test cases added by the above commit and add a test case
-that checks that dynamic FDB entries that point to FDB nexthops are not
-aged out. Without the fix:
+Taking RTNL in these release paths is no option: raw_bind(),
+raw_setsockopt() and raw_release() already hold RTNL while adding and
+removing up to CAN_RAW_FILTER_MAX filters per socket, which unprivileged
+users can trigger repeatedly and which makes RTNL a global bottleneck.
 
- # ./fib_nexthops.sh -t "ipv4_fdb_grp_fcnal ipv6_fdb_grp_fcnal"
+Instead fix the root cause and add a spinlock to struct
+can_dev_rcv_lists, which protects the receive lists of a CAN device or
+the 'any' CAN device lists of a namespace. It is initialized in
+can_set_ml_priv(), which is used by all CAN network devices. With this,
+can_rx_unregister() finds the subscription independently of the
+current namespace of the device. The protocols keep the device valid
+with their tracked references. The per-netns rcvlists_lock only protects
+the receive list statistics anymore, and CAN_RAW, CAN_BCM and CAN_ISOTP
+pass the namespace that has been used for can_rx_register().
 
- IPv4 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [FAIL]
- TEST: Fdb mac add with nexthop group and extern_learn               [FAIL]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [FAIL]
- [...]
+So isotp_release() and bcm_release() now remove their filters correctly
+without RTNL, and raw_release(), raw_setsockopt(), raw_bind() and
+isotp_bind() do not need RTNL anymore and add and remove their filters
+under lock_sock(). To serialize bind() with NETDEV_UNREGISTER, bind()
+publishes the device inside the RCU section of its lookup, and
+raw_notify() and isotp_notify() recheck the bound device under lock_sock().
+As RTNL does not keep NETDEV_DOWN out of bind() anymore, bind() checks
+IFF_UP after publishing the bound device, with a barrier pair against
+raw_notify() and isotp_notify(), so a down transition during bind() is
+still reported with ENETDOWN.
 
- IPv6 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [FAIL]
- TEST: Fdb mac add with nexthop group and extern_learn               [FAIL]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [FAIL]
- [...]
-
- Tests passed:  44
- Tests failed:   6
- Tests skipped:  0
-
-With the fix:
-
- # ./fib_nexthops.sh -t "ipv4_fdb_grp_fcnal ipv6_fdb_grp_fcnal"
-
- IPv4 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [ OK ]
- TEST: Fdb mac add with nexthop group and extern_learn               [ OK ]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [ OK ]
- [...]
-
- IPv6 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [ OK ]
- TEST: Fdb mac add with nexthop group and extern_learn               [ OK ]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [ OK ]
- [...]
-
- Tests passed:  50
- Tests failed:   0
- Tests skipped:  0
-
-Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
-Fixes: 98fc57d16744 ("vxlan: reject dynamic fdb entries that reference a nexthop id")
+Fixes: 20bab8b88baa ("can: isotp: fix use-after-free race with concurrent NETDEV_UNREGISTER")
+Fixes: 8e8cda6d737d ("can: initial support for network namespaces")
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://lore.kernel.org/linux-can/CEA6A38A-2646-4ADA-95B4-CBAE2F301A8E@doyensec.com/
 Cc: stable@vger.kernel.org
-Reported-by: Sascha Frey <sf@techfak.net>
-Closes: https://lore.kernel.org/netdev/20261028142928.GA8406@techfak.de/
-Tested-by: Sascha Frey <sf@techfak.net>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20261030133750.28668-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ idosch: fixed a small conflict in vxlan_fdb_add(), adjusted the
-  vxlan_cleanup() hunk to the per-bucket FDB iteration in this tree and
-  open-coded the wait in fdb_entry_aged() since slowwait() is not
-  available to fib_nexthops.sh in this tree ]
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-3-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ backport to 5.15: Adapt the can_pernet_init() context to kzalloc() as
+  this tree has no kzalloc_obj(). so->dev and ro->dev hold untracked
+  references with dev_hold() in this tree. raw_setsockopt() has no
+  raw_setsockopt_locked() split from commit 1e5185c09058 ("can: raw: add
+  locking for raw flags bitfield") in this tree, so remove the RTNL
+  locking from the CAN_RAW_FILTER and CAN_RAW_ERR_FILTER cases directly.
+  Keep the NULL check for dev_put() in raw_bind() and use sock_net(sk)
+  in raw_release(). dev->reg_state is a bitfield in this tree, so it is
+  read without READ_ONCE(). ]
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c              | 14 ++-----
- tools/testing/selftests/net/fib_nexthops.sh | 46 +++++++++++++++------
- 2 files changed, 37 insertions(+), 23 deletions(-)
+ include/linux/can/can-ml.h |   3 ++
+ include/net/netns/can.h    |   2 +-
+ net/can/af_can.c           |  39 +++++++++-----
+ net/can/bcm.c              |  43 +++++----------
+ net/can/isotp.c            |  89 +++++++++++++++++++------------
+ net/can/raw.c              | 106 +++++++++++++++++++++++++------------
+ 6 files changed, 166 insertions(+), 116 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 162a329be4477..ee002e790b289 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1070,12 +1070,6 @@ static int vxlan_fdb_update_existing(struct vxlan_dev *vxlan,
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/include/linux/can/can-ml.h b/include/linux/can/can-ml.h
+index 8afa92d15a664..f10444c6115f2 100644
+--- a/include/linux/can/can-ml.h
++++ b/include/linux/can/can-ml.h
+@@ -45,6 +45,7 @@
+ #include <linux/can.h>
+ #include <linux/list.h>
+ #include <linux/netdevice.h>
++#include <linux/spinlock.h>
  
--	if (rcu_access_pointer(f->nh) &&
--	    !(state & (NUD_PERMANENT | NUD_NOARP))) {
--		NL_SET_ERR_MSG(extack, "Cannot make a nexthop fdb dynamic");
--		return -EOPNOTSUPP;
--	}
--
- 	/* Do not allow an externally learned entry to take over an entry added
- 	 * by the user.
- 	 */
-@@ -1328,11 +1322,6 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
- 	if (err)
- 		return err;
+ #define CAN_SFF_RCV_ARRAY_SZ (1 << CAN_SFF_ID_BITS)
+ #define CAN_EFF_RCV_HASH_BITS 10
+@@ -53,6 +54,7 @@
+ enum { RX_ERR, RX_ALL, RX_FIL, RX_INV, RX_MAX };
  
--	if (nhid && !(ndm->ndm_state & (NUD_PERMANENT | NUD_NOARP))) {
--		NL_SET_ERR_MSG(extack, "A nexthop fdb cannot be dynamic");
--		return -EINVAL;
--	}
--
- 	if (vxlan->default_dst.remote_ip.sa.sa_family != ip.sa.sa_family)
- 		return -EAFNOSUPPORT;
- 
-@@ -3031,6 +3020,9 @@ static void vxlan_cleanup(struct timer_list *t)
- 			if (f->flags & NTF_EXT_LEARNED)
- 				continue;
- 
-+			if (rcu_access_pointer(f->nh))
-+				continue;
-+
- 			timeout = READ_ONCE(f->used) + vxlan->cfg.age_interval * HZ;
- 			if (time_before_eq(timeout, jiffies)) {
- 				netdev_dbg(vxlan->dev,
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index 68183d840e2f3..4d40f6e76eb08 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -396,6 +396,20 @@ stop_ip_monitor()
- 	return $rc
+ struct can_dev_rcv_lists {
++	spinlock_t lock; /* protects the receive lists and entries */
+ 	struct hlist_head rx[RX_MAX];
+ 	struct hlist_head rx_sff[CAN_SFF_RCV_ARRAY_SZ];
+ 	struct hlist_head rx_eff[CAN_EFF_RCV_ARRAY_SZ];
+@@ -74,6 +76,7 @@ static inline struct can_ml_priv *can_get_ml_priv(struct net_device *dev)
+ static inline void can_set_ml_priv(struct net_device *dev,
+ 				   struct can_ml_priv *ml_priv)
+ {
++	spin_lock_init(&ml_priv->dev_rcv_lists.lock);
+ 	netdev_set_ml_priv(dev, ml_priv, ML_PRIV_CAN);
  }
  
-+fdb_entry_aged()
-+{
-+	local mac=$1
-+	local dev=$2
-+	local i
+diff --git a/include/net/netns/can.h b/include/net/netns/can.h
+index 52fbd8291a962..720d0f4141a2c 100644
+--- a/include/net/netns/can.h
++++ b/include/net/netns/can.h
+@@ -28,7 +28,7 @@ struct netns_can {
+ 
+ 	/* receive filters subscribed for 'all' CAN devices */
+ 	struct can_dev_rcv_lists *rx_alldev_list;
+-	spinlock_t rcvlists_lock;
++	spinlock_t rcvlists_lock; /* protects the rcv_entries(_max) stats */
+ 	struct timer_list stattimer; /* timer for statistics update */
+ 	struct can_pkg_stats *pkg_stats;
+ 	struct can_rcv_lists_stats *rcv_lists_stats;
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index 5943543284b5c..63b8fea52d0fb 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -462,9 +462,10 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+ 	if (!rcv)
+ 		return -ENOMEM;
+ 
+-	spin_lock_bh(&net->can.rcvlists_lock);
+-
+ 	dev_rcv_lists = can_dev_rcv_lists_find(net, dev);
 +
-+	for i in $(seq 20); do
-+		$BRIDGE fdb get to $mac dev $dev self &> /dev/null || return 0
-+		sleep 1
-+	done
++	spin_lock_bh(&dev_rcv_lists->lock);
 +
-+	return 1
-+}
+ 	rcv_list = can_rcv_list_find(&can_id, &mask, dev_rcv_lists);
+ 
+ 	rcv->can_id = can_id;
+@@ -478,6 +479,9 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+ 	hlist_add_head_rcu(&rcv->list, rcv_list);
+ 	dev_rcv_lists->entries++;
+ 
++	spin_unlock_bh(&dev_rcv_lists->lock);
 +
- check_nexthop_fdb_support()
++	spin_lock_bh(&net->can.rcvlists_lock);
+ 	rcv_lists_stats->rcv_entries++;
+ 	rcv_lists_stats->rcv_entries_max = max(rcv_lists_stats->rcv_entries_max,
+ 					       rcv_lists_stats->rcv_entries);
+@@ -509,6 +513,14 @@ static void can_rx_delete_receiver(struct rcu_head *rp)
+  *
+  * Description:
+  *  Removes subscription entry depending on given (subscription) values.
++ *  The receive lists of a CAN device are protected by a per-device lock,
++ *  so the subscription is found even when the device has been moved to
++ *  another network namespace after can_rx_register(). The caller has to
++ *  ensure that @dev stays valid, e.g. by holding a reference to @dev or
++ *  RTNL. @net should be the namespace that has been used for
++ *  can_rx_register(). It selects the 'any' CAN device lists for
++ *  @dev == NULL and is otherwise only used for the receive list
++ *  statistics, which become imprecise when another namespace is passed.
+  */
+ void can_rx_unregister(struct net *net, struct net_device *dev, canid_t can_id,
+ 		       canid_t mask, void (*func)(struct sk_buff *, void *),
+@@ -522,12 +534,10 @@ void can_rx_unregister(struct net *net, struct net_device *dev, canid_t can_id,
+ 	if (dev && !can_get_ml_priv(dev))
+ 		return;
+ 
+-	if (dev && !net_eq(net, dev_net(dev)))
+-		return;
++	dev_rcv_lists = can_dev_rcv_lists_find(net, dev);
+ 
+-	spin_lock_bh(&net->can.rcvlists_lock);
++	spin_lock_bh(&dev_rcv_lists->lock);
+ 
+-	dev_rcv_lists = can_dev_rcv_lists_find(net, dev);
+ 	rcv_list = can_rcv_list_find(&can_id, &mask, dev_rcv_lists);
+ 
+ 	/* Search the receiver list for the item to delete.  This should
+@@ -547,26 +557,26 @@ void can_rx_unregister(struct net *net, struct net_device *dev, canid_t can_id,
+ 	 * a warning here.
+ 	 */
+ 	if (!rcv) {
++		spin_unlock_bh(&dev_rcv_lists->lock);
+ 		pr_warn("can: receive list entry not found for dev %s, id %03X, mask %03X\n",
+ 			DNAME(dev), can_id, mask);
+-		goto out;
++		return;
+ 	}
+ 
+ 	hlist_del_rcu(&rcv->list);
+ 	dev_rcv_lists->entries--;
+ 
++	spin_unlock_bh(&dev_rcv_lists->lock);
++
++	spin_lock_bh(&net->can.rcvlists_lock);
+ 	if (rcv_lists_stats->rcv_entries > 0)
+ 		rcv_lists_stats->rcv_entries--;
+-
+- out:
+ 	spin_unlock_bh(&net->can.rcvlists_lock);
+ 
+ 	/* schedule the receiver item for deletion */
+-	if (rcv) {
+-		if (rcv->sk)
+-			sock_hold(rcv->sk);
+-		call_rcu(&rcv->rcu, can_rx_delete_receiver);
+-	}
++	if (rcv->sk)
++		sock_hold(rcv->sk);
++	call_rcu(&rcv->rcu, can_rx_delete_receiver);
+ }
+ EXPORT_SYMBOL(can_rx_unregister);
+ 
+@@ -804,6 +814,7 @@ static int can_pernet_init(struct net *net)
+ 		kzalloc(sizeof(*net->can.rx_alldev_list), GFP_KERNEL);
+ 	if (!net->can.rx_alldev_list)
+ 		goto out;
++	spin_lock_init(&net->can.rx_alldev_list->lock);
+ 	net->can.pkg_stats = kzalloc(sizeof(*net->can.pkg_stats), GFP_KERNEL);
+ 	if (!net->can.pkg_stats)
+ 		goto out_free_rx_alldev_list;
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 266faffd84000..f5888b2481545 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -910,7 +910,7 @@ static void bcm_remove_op(struct bcm_op *op)
+ static void bcm_rx_unreg(struct net_device *dev, struct bcm_op *op)
  {
- 	$IP nexthop help 2>&1 | grep -q fdb
-@@ -480,14 +494,18 @@ ipv6_fdb_grp_fcnal()
- 	log_test $? 0 "Fdb mac add with nexthop group and static state"
+ 	if (op->rx_reg_dev == dev) {
+-		can_rx_unregister(dev_net(dev), dev, op->can_id,
++		can_rx_unregister(sock_net(op->sk), dev, op->can_id,
+ 				  REGMASK(op->can_id), bcm_rx_handler, op);
  
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
--	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+	log_test $? 0 "Fdb mac add with nexthop group and dynamic state"
+ 		/* mark as removed subscription */
+@@ -936,21 +936,10 @@ static int bcm_delete_rx_op(struct list_head *ops, struct bcm_msg_head *mh,
+ 			/* disable automatic timer on frame reception */
+ 			op->flags |= RX_NO_AUTOTIMER;
  
--	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
--	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
--	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self dynamic extern_learn"
-+	log_test $? 0 "Fdb mac add with nexthop group and extern_learn"
+-			/*
+-			 * Don't care if we're bound or not (due to netdev
+-			 * problems) can_rx_unregister() is always a save
+-			 * thing to do here.
+-			 */
+ 			if (op->ifindex) {
+-				/*
+-				 * Only remove subscriptions that had not
+-				 * been removed due to NETDEV_UNREGISTER
+-				 * in bcm_notifier()
+-				 *
+-				 * op->rx_reg_dev is a tracked reference taken
+-				 * when the subscription was registered, so it
+-				 * stays valid here even if a concurrent
+-				 * NETDEV_UNREGISTER already unlisted the dev.
++				/* Only remove subscriptions that had not been
++				 * removed in bcm_notify(). op->rx_reg_dev keeps
++				 * the device's receive lists accessible.
+ 				 */
+ 				if (op->rx_reg_dev)
+ 					bcm_rx_unreg(op->rx_reg_dev, op);
+@@ -1880,6 +1869,7 @@ static int bcm_release(struct socket *sock)
+ 	list_del(&bo->notifier);
+ 	spin_unlock(&bcm_notifier_lock);
  
--	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
--	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+	run_cmd "$IP link set dev vx10 up type vxlan ageing 1"
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:18 dev vx10 dst 2001:db8:91::11 self dynamic"
-+	fdb_entry_aged 02:02:00:00:00:18 vx10
-+	log_test $? 0 "Fdb mac without nexthop group aged out"
++	/* bcm_notify() can not access this socket anymore */
+ 	lock_sock(sk);
+ 
+ #if IS_ENABLED(CONFIG_PROC_FS)
+@@ -1893,29 +1883,20 @@ static int bcm_release(struct socket *sock)
+ 		bcm_remove_op(op);
+ 	}
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+-		/*
+-		 * Don't care if we're bound or not (due to netdev problems)
+-		 * can_rx_unregister() is always a save thing to do here.
+-		 */
++	list_for_each_entry(op, &bo->rx_ops, list) {
+ 		if (op->ifindex) {
+-			/*
+-			 * Only remove subscriptions that had not
+-			 * been removed due to NETDEV_UNREGISTER
+-			 * in bcm_notifier()
+-			 *
+-			 * op->rx_reg_dev is a tracked reference taken
+-			 * when the subscription was registered, so it
+-			 * stays valid here even if a concurrent
+-			 * NETDEV_UNREGISTER already unlisted the device.
++			/* Only remove subscriptions that had not been removed
++			 * in bcm_notify(). op->rx_reg_dev keeps the device's
++			 * receive lists accessible.
+ 			 */
+ 			if (op->rx_reg_dev)
+ 				bcm_rx_unreg(op->rx_reg_dev, op);
+-		} else
++		} else {
+ 			can_rx_unregister(net, NULL, op->can_id,
+ 					  REGMASK(op->can_id),
+ 					  bcm_rx_handler, op);
+-
++		}
++		cond_resched();
+ 	}
+ 
+ 	synchronize_rcu();
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 4caf83d694a0a..cd9bb26294205 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1080,7 +1080,7 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ 	int off;
+ 	int err;
+ 
+-	if (!so->bound || READ_ONCE(so->tx.state) == ISOTP_SHUTDOWN)
++	if (!READ_ONCE(so->bound) || READ_ONCE(so->tx.state) == ISOTP_SHUTDOWN)
+ 		return -EADDRNOTAVAIL;
+ 
+ 	/* claim the socket under so->rx_lock: this serializes the claim
+@@ -1125,7 +1125,7 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ 	/* so->bound is only checked once above - a wakeup may have
+ 	 * unbound/rebound the socket meanwhile => recheck
+ 	 */
+-	if (!so->bound) {
++	if (!READ_ONCE(so->bound)) {
+ 		err = -EADDRNOTAVAIL;
+ 		goto err_out_drop;
+ 	}
+@@ -1356,7 +1356,7 @@ static int isotp_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK | MSG_CMSG_COMPAT))
+ 		return -EINVAL;
+ 
+-	if (!so->bound)
++	if (!READ_ONCE(so->bound))
+ 		return -EADDRNOTAVAIL;
+ 
+ 	flags &= ~MSG_DONTWAIT;
+@@ -1431,11 +1431,11 @@ static int isotp_release(struct socket *sock)
+ 	list_del(&so->notifier);
+ 	spin_unlock(&isotp_notifier_lock);
+ 
+-	rtnl_lock();
+ 	lock_sock(sk);
+ 
+ 	/* remove current filters & unregister
+-	 * tracked reference so->dev is taken at bind() time with rtnl_lock
++	 * the tracked reference so->dev keeps the device's receive lists
++	 * accessible, even after a namespace change
+ 	 */
+ 	if (so->bound && so->dev) {
+ 		if (isotp_register_rxid(so))
+@@ -1450,11 +1450,9 @@ static int isotp_release(struct socket *sock)
+ 	}
+ 
+ 	so->ifindex = 0;
+-	so->bound = 0;
++	WRITE_ONCE(so->bound, 0);
+ 	so->dev = NULL;
+ 
+-	rtnl_unlock();
+-
+ 	/* Always wait for a grace period before touching the timers below.
+ 	 * A concurrent NETDEV_UNREGISTER may have already unregistered our
+ 	 * filters and cleared so->bound in isotp_notify() without waiting
+@@ -1520,7 +1518,7 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (!addr->can_ifindex)
+ 		return -ENODEV;
+ 
+-	rtnl_lock();
++	/* lock_sock() serializes the binding with isotp_notify() */
+ 	lock_sock(sk);
+ 
+ 	if (so->bound) {
+@@ -1546,19 +1544,24 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		goto out;
+ 	}
+ 
+-	dev = dev_get_by_index(net, addr->can_ifindex);
+-	if (!dev) {
+-		err = -ENODEV;
+-		goto out;
+-	}
+-	if (!can_get_ml_priv(dev)) {
++	/* Publish the device inside the RCU section of the lookup: When it
++	 * is unlisted concurrently, either isotp_notify() sees so->dev after
++	 * synchronize_net() or the lookup fails. Check the device before
++	 * publishing it.
++	 */
++	rcu_read_lock();
++	dev = dev_get_by_index_rcu(net, addr->can_ifindex);
++	if (!dev || !can_get_ml_priv(dev))
+ 		err = -ENODEV;
+-		goto out_put_dev;
+-	}
+-	if (READ_ONCE(dev->mtu) < so->ll.mtu) {
++	else if (READ_ONCE(dev->mtu) < so->ll.mtu)
+ 		err = -EINVAL;
+-		goto out_put_dev;
++	if (!err) {
++		dev_hold(dev);
++		WRITE_ONCE(so->dev, dev);
+ 	}
++	rcu_read_unlock();
++	if (err)
++		goto out;
+ 
+ 	/* switch to new settings */
+ 	so->ifindex = dev->ifindex;
+@@ -1585,35 +1588,39 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		}
+ 	}
+ 
+-	/* report a down device only for a successful bind() */
+-	if (!(dev->flags & IFF_UP))
+-		notify_enetdown = 1;
+-
+-	so->bound = 1;
++	WRITE_ONCE(so->bound, 1);
+ 
+ 	/* bind() ok -> hold a reference for so->dev so that isotp_release()
+ 	 * can safely reach the device later, even if a concurrent
+ 	 * NETDEV_UNREGISTER has already unlisted it by ifindex.
+ 	 */
+-	so->dev = dev;
+ 	dev_hold(so->dev);
+ 
++	/* Either isotp_notify() sees so->dev on NETDEV_DOWN or we see the
++	 * cleared IFF_UP, pairs with isotp_notify()
++	 */
++	smp_mb();
++	if (!(READ_ONCE(dev->flags) & IFF_UP))
++		notify_enetdown = 1;
 +
-+	run_cmd "$BRIDGE fdb get to 02:02:00:00:00:16 dev vx10 self"
-+	log_test $? 0 "Fdb mac with nexthop group not aged out"
+ out_put_dev:
+-	if (err)
+-		so->ifindex = 0; /* reset on failed bind() */
++	/* revert so->ifindex and so->dev on failed bind() */
++	if (err) {
++		so->ifindex = 0;
++		WRITE_ONCE(so->dev, NULL);
++	}
  
- 	run_cmd "$IP -6 ro add 2001:db8:101::1/128 nhid 66"
- 	log_test $? 2 "Route add with fdb nexthop"
-@@ -574,14 +592,18 @@ ipv4_fdb_grp_fcnal()
- 	log_test $? 0 "Fdb mac add with nexthop group and static state"
+-	/* remove potential reference from dev_get_by_index() */
++	/* remove reference from the device lookup */
+ 	dev_put(dev);
+ out:
+-	release_sock(sk);
+-	rtnl_unlock();
+-
+ 	if (notify_enetdown) {
+ 		sk->sk_err = ENETDOWN;
+ 		if (!sock_flag(sk, SOCK_DEAD))
+ 			sk_error_report(sk);
+ 	}
  
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
--	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+	log_test $? 0 "Fdb mac add with nexthop group and dynamic state"
++	release_sock(sk);
 +
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self dynamic extern_learn"
-+	log_test $? 0 "Fdb mac add with nexthop group and extern_learn"
+ 	return err;
+ }
  
--	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
--	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
--	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+	run_cmd "$IP link set dev vx10 up type vxlan ageing 1"
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:18 dev vx10 dst 10.0.0.3 self dynamic"
-+	fdb_entry_aged 02:02:00:00:00:18 vx10
-+	log_test $? 0 "Fdb mac without nexthop group aged out"
+@@ -1809,12 +1816,21 @@ static void isotp_notify(struct isotp_sock *so, unsigned long msg,
+ 	if (!net_eq(dev_net(dev), sock_net(sk)))
+ 		return;
  
--	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
--	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+	run_cmd "$BRIDGE fdb get to 02:02:00:00:00:16 dev vx10 self"
-+	log_test $? 0 "Fdb mac with nexthop group not aged out"
+-	if (so->dev != dev)
++	if (msg == NETDEV_DOWN)
++		smp_mb(); /* pairs with isotp_bind(), see raw_notify() */
++
++	/* lockless fast path, see raw_notify() */
++	if (READ_ONCE(so->dev) != dev)
+ 		return;
  
- 	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
- 	log_test $? 2 "Route add with fdb nexthop"
+ 	switch (msg) {
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
++		if (so->dev != dev) {
++			release_sock(sk);
++			break;
++		}
++
+ 		/* remove current filters & unregister */
+ 		if (so->bound) {
+ 			if (isotp_register_rxid(so))
+@@ -1829,16 +1845,19 @@ static void isotp_notify(struct isotp_sock *so, unsigned long msg,
+ 		}
+ 
+ 		so->ifindex = 0;
+-		so->bound  = 0;
+-		so->dev = NULL;
+-		release_sock(sk);
++		WRITE_ONCE(so->bound, 0);
++		WRITE_ONCE(so->dev, NULL);
+ 
+ 		sk->sk_err = ENODEV;
+ 		if (!sock_flag(sk, SOCK_DEAD))
+ 			sk_error_report(sk);
++		release_sock(sk);
+ 		break;
+ 
+ 	case NETDEV_DOWN:
++		if (!READ_ONCE(so->bound))
++			break;
++
+ 		sk->sk_err = ENETDOWN;
+ 		if (!sock_flag(sk, SOCK_DEAD))
+ 			sk_error_report(sk);
+diff --git a/net/can/raw.c b/net/can/raw.c
+index 6e515f3460f7b..62adfa4b5d00a 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -85,6 +85,7 @@ struct raw_sock {
+ 	int bound;
+ 	int ifindex;
+ 	struct net_device *dev;
++	struct net_device *bind_dev; /* hint for raw_notify(), no reference */
+ 	struct list_head notifier;
+ 	int loopback;
+ 	int recv_own_msgs;
+@@ -192,6 +193,7 @@ static int raw_enable_filters(struct net *net, struct net_device *dev,
+ 	int i;
+ 
+ 	for (i = 0; i < count; i++) {
++		cond_resched();
+ 		err = can_rx_register(net, dev, filter[i].can_id,
+ 				      filter[i].can_mask,
+ 				      raw_rcv, sk, "raw", sk);
+@@ -226,9 +228,11 @@ static void raw_disable_filters(struct net *net, struct net_device *dev,
+ {
+ 	int i;
+ 
+-	for (i = 0; i < count; i++)
++	for (i = 0; i < count; i++) {
+ 		can_rx_unregister(net, dev, filter[i].can_id,
+ 				  filter[i].can_mask, raw_rcv, sk);
++		cond_resched();
++	}
+ }
+ 
+ static inline void raw_disable_errfilter(struct net *net,
+@@ -273,16 +277,31 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 		       struct net_device *dev)
+ {
+ 	struct sock *sk = &ro->sk;
++	struct net_device *bind_dev;
+ 
+ 	if (!net_eq(dev_net(dev), sock_net(sk)))
+ 		return;
+ 
+-	if (ro->dev != dev)
++	if (msg == NETDEV_DOWN)
++		smp_mb(); /* IFF_UP is cleared before, pairs with raw_bind() */
++
++	/* Lockless fast path, ro->bind_dev covers a concurrent bind().
++	 * Read it before ro->dev, pairs with smp_store_release() in
++	 * raw_bind(). A stale ro->bind_dev only costs a lock_sock().
++	 */
++	bind_dev = smp_load_acquire(&ro->bind_dev);
++	if (READ_ONCE(ro->dev) != dev &&
++	    (msg != NETDEV_UNREGISTER || bind_dev != dev))
+ 		return;
+ 
+ 	switch (msg) {
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
++		if (ro->dev != dev) {
++			release_sock(sk);
++			break;
++		}
++
+ 		/* remove current filters & unregister */
+ 		if (ro->bound) {
+ 			raw_disable_allfilters(dev_net(dev), dev, sk);
+@@ -294,13 +313,13 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 
+ 		ro->ifindex = 0;
+ 		ro->bound = 0;
+-		ro->dev = NULL;
++		WRITE_ONCE(ro->dev, NULL);
+ 		ro->count = 0;
+-		release_sock(sk);
+ 
+ 		sk->sk_err = ENODEV;
+ 		if (!sock_flag(sk, SOCK_DEAD))
+ 			sk_error_report(sk);
++		release_sock(sk);
+ 		break;
+ 
+ 	case NETDEV_DOWN:
+@@ -349,6 +368,7 @@ static int raw_init(struct sock *sk)
+ 	ro->bound            = 0;
+ 	ro->ifindex          = 0;
+ 	ro->dev              = NULL;
++	ro->bind_dev         = NULL;
+ 
+ 	/* set default filter to single entry dfilter */
+ 	ro->dfilter.can_id   = 0;
+@@ -396,13 +416,15 @@ static int raw_release(struct socket *sock)
+ 	list_del(&ro->notifier);
+ 	spin_unlock(&raw_notifier_lock);
+ 
+-	rtnl_lock();
+ 	lock_sock(sk);
+ 
+-	/* remove current filters & unregister */
++	/* remove current filters & unregister
++	 * the tracked reference ro->dev keeps the device's receive lists
++	 * accessible, even after a namespace change
++	 */
+ 	if (ro->bound) {
+ 		if (ro->dev) {
+-			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
++			raw_disable_allfilters(sock_net(sk), ro->dev, sk);
+ 			dev_put(ro->dev);
+ 		} else {
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
+@@ -421,7 +443,6 @@ static int raw_release(struct socket *sock)
+ 	sock->sk = NULL;
+ 
+ 	release_sock(sk);
+-	rtnl_unlock();
+ 
+ 	sock_put(sk);
+ 
+@@ -443,14 +464,25 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (addr->can_family != AF_CAN)
+ 		return -EINVAL;
+ 
+-	rtnl_lock();
++	/* lock_sock() serializes the binding with raw_notify() */
+ 	lock_sock(sk);
+ 
+ 	if (ro->bound && addr->can_ifindex == ro->ifindex)
+ 		goto out;
+ 
+ 	if (addr->can_ifindex) {
+-		dev = dev_get_by_index(sock_net(sk), addr->can_ifindex);
++		/* Publish the device inside the RCU section of the lookup:
++		 * When it is unlisted concurrently, either raw_notify() sees
++		 * ro->bind_dev after synchronize_net() or the lookup fails.
++		 */
++		rcu_read_lock();
++		dev = dev_get_by_index_rcu(sock_net(sk), addr->can_ifindex);
++		if (dev) {
++			dev_hold(dev);
++			/* pairs with smp_load_acquire() in raw_notify() */
++			smp_store_release(&ro->bind_dev, dev);
++		}
++		rcu_read_unlock();
+ 		if (!dev) {
+ 			err = -ENODEV;
+ 			goto out;
+@@ -460,9 +492,6 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 			goto out_put_dev;
+ 		}
+ 
+-		if (!(dev->flags & IFF_UP))
+-			notify_enetdown = 1;
+-
+ 		ifindex = dev->ifindex;
+ 
+ 		/* filters set by default/setsockopt */
+@@ -481,7 +510,7 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+ 			if (ro->dev) {
+-				raw_disable_allfilters(dev_net(ro->dev),
++				raw_disable_allfilters(sock_net(sk),
+ 						       ro->dev, sk);
+ 				/* drop reference to old ro->dev */
+ 				dev_put(ro->dev);
+@@ -492,25 +521,33 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
+ 		/* bind() ok -> hold a reference for new ro->dev */
+-		ro->dev = dev;
++		WRITE_ONCE(ro->dev, dev);
+ 		if (ro->dev)
+ 			dev_hold(ro->dev);
++
++		if (dev) {
++			/* Either raw_notify() sees ro->dev on NETDEV_DOWN or
++			 * we see the cleared IFF_UP, pairs with raw_notify()
++			 */
++			smp_mb();
++			if (!(READ_ONCE(dev->flags) & IFF_UP))
++				notify_enetdown = 1;
++		}
+ 	}
+ 
+ out_put_dev:
+-	/* remove potential reference from dev_get_by_index() */
++	/* remove reference from the device lookup */
+ 	if (dev)
+ 		dev_put(dev);
+ out:
+-	release_sock(sk);
+-	rtnl_unlock();
+-
+ 	if (notify_enetdown) {
+ 		sk->sk_err = ENETDOWN;
+ 		if (!sock_flag(sk, SOCK_DEAD))
+ 			sk_error_report(sk);
+ 	}
+ 
++	release_sock(sk);
++
+ 	return err;
+ }
+ 
+@@ -566,17 +603,19 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 				return -EFAULT;
+ 		}
+ 
+-		rtnl_lock();
+ 		lock_sock(sk);
+ 
++		/* The reg_state check is only a shortcut: On a concurrent
++		 * unregistration or namespace change raw_notify() waits for
++		 * lock_sock() and removes the filters set here.
++		 */
+ 		dev = ro->dev;
+-		if (ro->bound && dev) {
+-			if (dev->reg_state != NETREG_REGISTERED) {
+-				if (count > 1)
+-					kfree(filter);
+-				err = -ENODEV;
+-				goto out_fil;
+-			}
++		if (ro->bound && dev &&
++		    dev->reg_state != NETREG_REGISTERED) {
++			if (count > 1)
++				kfree(filter);
++			err = -ENODEV;
++			goto out_fil;
+ 		}
+ 
+ 		if (ro->bound) {
+@@ -613,7 +652,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 
+  out_fil:
+ 		release_sock(sk);
+-		rtnl_unlock();
+ 
+ 		break;
+ 
+@@ -626,15 +664,14 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		err_mask &= CAN_ERR_MASK;
+ 
+-		rtnl_lock();
+ 		lock_sock(sk);
+ 
++		/* lockless shortcut, see CAN_RAW_FILTER */
+ 		dev = ro->dev;
+-		if (ro->bound && dev) {
+-			if (dev->reg_state != NETREG_REGISTERED) {
+-				err = -ENODEV;
+-				goto out_err;
+-			}
++		if (ro->bound && dev &&
++		    dev->reg_state != NETREG_REGISTERED) {
++			err = -ENODEV;
++			goto out_err;
+ 		}
+ 
+ 		/* remove current error mask */
+@@ -656,7 +693,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 
+  out_err:
+ 		release_sock(sk);
+-		rtnl_unlock();
+ 
+ 		break;
+ 
 -- 
 2.53.0
 
