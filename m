@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056647;
-	b=X2F2sK2g6YzOGTKPKn7bGn22/cH55nXl8tPEJrFAMMpk1BbLbYRIls1N3lafLBCjCRPB
-	 DFD5/sKJVRh0CCRNp736tPJ9ahfVjd7JX7lTJuQGrGgYq5ipEH8mY9O6kthNvHK08L+b8
-	 FkFyivZphPgSk5pkFDjNlN2p1XpxXDxdlnz79ABVnfOt74nRibs+MkhxLabQq9LTM/46m
-	 QDPccAg9JwL0WBGN6o1D35lgUnfbg+k/N1sYUkkcwkIyVw1Kwe778Dl0d+r105TV7dbZZ
-	 BGyujHao3n/tfXt4k/j8f3NOtf5ifU0ZAWuKTsleASCxz03dF4DW0C2BkzGyjRm6S8Q==
+	t=1795056649;
+	b=MZiPfa6m/VUGKH+yyLN8WVyZbySKTiG8YNe6erHE0gep6dZHPpeFnjwrgHNNMV/OoG02
+	 ezL/HrW9Zvk8+OijXH1jQ2MMGSGUq/rXvEzUgUKZK4LkBKP5GyGPC/qyi+vbyRO/C2TjX
+	 dnFGscxnc0LXdNAR8gD4T1MoXJTEAsh1PMfC52s4urLJ6PovjASXZ/H/1O0C2z61sPToO
+	 f0hTESGc81V8WoEsd8/gxACDVG07wPbIhVAzT4w5IgsGUPMOKb8+QQRehS1YIGNb7S29P
+	 kOVJplZuCge5RsXyw4AuGBZX+5huyJssEi/4WIbo+FvhxQNweNatc8xMmQ+sgtN6tmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056647;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B0d+mt6OBLLapUumHSfBIoohBqvImx2ob0b8CM1nWCo=;
-	b=ysQL3NKSn5zYWwCLC85qUIdIuTYueOsD/l3844DEOkDeTMqu4v/18YumtkcWjpz9ke1I
-	 ySOiE8KuirPs2lbvG5JMN63QFBxDMHmJx8EOQw2ZdwdQLgv1AyVnM/1MZC3lhBC/WNAea
-	 4tcRY++ZZtnRlZpXhW4YEk9JvlRrwyOouS7eF/TBqvSBpxFbbZd/BnHvsTUc0u+IFu280
-	 iS95417RGXtJu0kovZBHxNFjSxPTZXdbzfJptptrv8Yi0TZzD1lkHoF3ZX4c/X3J/I/vl
-	 /JO6mpNsJAV5NF1X56Q0EqHDeqcsS+g+RV+AFhCUG+/Y+702JkZ/pmx54aoZyqvYcYg==
+	bh=19dmL2ozWNZzbZXe8v26RgavFEhFRWzh5rq4B/6MEcI=;
+	b=aaf4+aWSXlPy2ZBUlcCgGzMjZDLHKAtdwAhbCRLoLo3OUwIsn7PwJcc/iEat39lQQ5X2
+	 OQa1h3jHH5QC1fLOWI3+3tyrS58ZC3TZRG4B3O2RXyH/FutvM2O2Nyf9mDgInLZGhIKL6
+	 i92v45iMpXMofsDa1zFJsHb+10ndCDpclh0o7aMRn3Kc6FWRA8wi3x+12Wc5rMvLeP3up
+	 5vQFTBvW7N50DqsBSxFEmTM8iS02RDklU33mWDGqUCQxHNEosUUadGrBbYSOK3hq54tOY
+	 w6bQnmT+CzEgvmpZa3Ce9CV3uGDIB5SM4vUjMfMdrg/9b7CtabsjogBO/SEmzZp9TwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eI3pvQVS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGepKc87;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184F6606A320;
-	Thu, 19 Nov 2026 02:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9659606A31C;
+	Thu, 19 Nov 2026 02:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eI3pvQVS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0A81F000C5;
-	Thu, 19 Nov 2026 02:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGepKc87
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5A91F000C4;
+	Thu, 19 Nov 2026 02:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056647;
-	bh=B0d+mt6OBLLapUumHSfBIoohBqvImx2ob0b8CM1nWCo=;
+	s=korg; t=1795056649;
+	bh=19dmL2ozWNZzbZXe8v26RgavFEhFRWzh5rq4B/6MEcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eI3pvQVStCoWmDu7zvS/6XUZXj6i9iXrWNvvzmqiCs/CqsZitw5g3yF6Co7oaTsfI
-	 heSule2tvK4k7zlq0Hc0TWXkF81xH79Uwzy1FSTdMklYGMC0fXuqWw4Nfd8uBfUr2L
-	 JqvnXNyP39YjvXv9E702i2lNZKgXnLNkmdy+OjIo=
+	b=PGepKc87I9eFQX4uPEKtT+ITpy2rCor0XFt3dsVaztFIWgbsIutud/h0I7ZWUI/1e
+	 F3CQXZlKnHt+Qh7IhQ4lIG8O8WCDmfa/Mjz9gUC3YPKWjO34wiS/chwRWuz+oCQ7/G
+	 xN75LVQ1b6uPc1yq6syRs5eY+RSHMk5bHDjNebAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tangmeng <tangmeng@uniontech.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2062/2214] timers: Move timer sysctl into the timer code
-Date: Wed, 18 Nov 2026 16:02:18 +0100
-Message-ID: <20261118150133.150169833@linuxfoundation.org>
+Subject: [PATCH 5.15 2036/2214] RDMA/core: Remove device argument from rdma_build_skb()
+Date: Wed, 18 Nov 2026 16:01:52 +0100
+Message-ID: <20261118150132.191437181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,150 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tangmeng <tangmeng@uniontech.com>
+From: Yunsheng Lin <linyunsheng@huawei.com>
 
-[ Upstream commit efaa0227f6c6a5073951b20cf2f8c63c4155306c ]
+[ Upstream commit 05195dcb43504e381bf383e837fc935aac4258cc ]
 
-This is part of the effort to reduce kernel/sysctl.c to only contain the
-core logic.
+'device' argument is never used since rdma_build_skb()
+is introduced, so remove it.
 
-Signed-off-by: tangmeng <tangmeng@uniontech.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20220215065019.7520-1-tangmeng@uniontech.com
-Stable-dep-of: e7cad586d732 ("timers: Clear pending_map on CPU hotplug")
+Link: https://lore.kernel.org/r/20220826143215.18111-1-linyunsheng@huawei.com
+Signed-off-by: Yunsheng Lin <linyunsheng@huawei.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: fdfd099222d9 ("RDMA/core: Reject LAG selection when source MAC lookup fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/timer.h |  8 -------
- kernel/sysctl.c       | 11 ---------
- kernel/time/timer.c   | 53 +++++++++++++++++++++++++++++++------------
- 3 files changed, 38 insertions(+), 34 deletions(-)
+ drivers/infiniband/core/lag.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/timer.h b/include/linux/timer.h
-index 00ee960be028b..9162f275819a7 100644
---- a/include/linux/timer.h
-+++ b/include/linux/timer.h
-@@ -217,14 +217,6 @@ extern void init_timers(void);
- struct hrtimer;
- extern enum hrtimer_restart it_real_fn(struct hrtimer *);
+diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
+index fc1dd6b5bf5ef..c18642accfce5 100644
+--- a/drivers/infiniband/core/lag.c
++++ b/drivers/infiniband/core/lag.c
+@@ -7,8 +7,7 @@
+ #include <rdma/ib_cache.h>
+ #include <rdma/lag.h>
  
--#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
--struct ctl_table;
--
--extern unsigned int sysctl_timer_migration;
--int timer_migration_handler(struct ctl_table *table, int write,
--			    void *buffer, size_t *lenp, loff_t *ppos);
--#endif
--
- unsigned long __round_jiffies(unsigned long j, int cpu);
- unsigned long __round_jiffies_relative(unsigned long j, int cpu);
- unsigned long round_jiffies(unsigned long j);
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index ac16c3084c96c..869f05d418ccf 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -2588,17 +2588,6 @@ static struct ctl_table kern_table[] = {
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
--#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
--	{
--		.procname	= "timer_migration",
--		.data		= &sysctl_timer_migration,
--		.maxlen		= sizeof(unsigned int),
--		.mode		= 0644,
--		.proc_handler	= timer_migration_handler,
--		.extra1		= SYSCTL_ZERO,
--		.extra2		= SYSCTL_ONE,
--	},
--#endif
- #ifdef CONFIG_BPF_SYSCALL
- 	{
- 		.procname	= "unprivileged_bpf_disabled",
-diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index fdf178204775d..c943f0c123aa7 100644
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -44,6 +44,7 @@
- #include <linux/slab.h>
- #include <linux/compat.h>
- #include <linux/random.h>
-+#include <linux/sysctl.h>
- 
- #include <linux/uaccess.h>
- #include <asm/unistd.h>
-@@ -223,7 +224,7 @@ static void timer_update_keys(struct work_struct *work);
- static DECLARE_WORK(timer_update_work, timer_update_keys);
- 
- #ifdef CONFIG_SMP
--unsigned int sysctl_timer_migration = 1;
-+static unsigned int sysctl_timer_migration = 1;
- 
- DEFINE_STATIC_KEY_FALSE(timers_migration_enabled);
- 
-@@ -234,7 +235,42 @@ static void timers_update_migration(void)
- 	else
- 		static_branch_disable(&timers_migration_enabled);
- }
--#else
-+
-+#ifdef CONFIG_SYSCTL
-+static int timer_migration_handler(struct ctl_table *table, int write,
-+			    void *buffer, size_t *lenp, loff_t *ppos)
-+{
-+	int ret;
-+
-+	mutex_lock(&timer_keys_mutex);
-+	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
-+	if (!ret && write)
-+		timers_update_migration();
-+	mutex_unlock(&timer_keys_mutex);
-+	return ret;
-+}
-+
-+static struct ctl_table timer_sysctl[] = {
-+	{
-+		.procname	= "timer_migration",
-+		.data		= &sysctl_timer_migration,
-+		.maxlen		= sizeof(unsigned int),
-+		.mode		= 0644,
-+		.proc_handler	= timer_migration_handler,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_ONE,
-+	},
-+	{}
-+};
-+
-+static int __init timer_sysctl_init(void)
-+{
-+	register_sysctl("kernel", timer_sysctl);
-+	return 0;
-+}
-+device_initcall(timer_sysctl_init);
-+#endif /* CONFIG_SYSCTL */
-+#else /* CONFIG_SMP */
- static inline void timers_update_migration(void) { }
- #endif /* !CONFIG_SMP */
- 
-@@ -251,19 +287,6 @@ void timers_update_nohz(void)
- 	schedule_work(&timer_update_work);
- }
- 
--int timer_migration_handler(struct ctl_table *table, int write,
--			    void *buffer, size_t *lenp, loff_t *ppos)
--{
--	int ret;
--
--	mutex_lock(&timer_keys_mutex);
--	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
--	if (!ret && write)
--		timers_update_migration();
--	mutex_unlock(&timer_keys_mutex);
--	return ret;
--}
--
- static inline bool is_timers_nohz_active(void)
+-static struct sk_buff *rdma_build_skb(struct ib_device *device,
+-				      struct net_device *netdev,
++static struct sk_buff *rdma_build_skb(struct net_device *netdev,
+ 				      struct rdma_ah_attr *ah_attr,
+ 				      gfp_t flags)
  {
- 	return static_branch_unlikely(&timers_nohz_active);
+@@ -86,7 +85,7 @@ static struct net_device *rdma_get_xmit_slave_udp(struct ib_device *device,
+ 	struct net_device *slave;
+ 	struct sk_buff *skb;
+ 
+-	skb = rdma_build_skb(device, master, ah_attr, flags);
++	skb = rdma_build_skb(master, ah_attr, flags);
+ 	if (!skb)
+ 		return ERR_PTR(-ENOMEM);
+ 
 -- 
 2.53.0
 
