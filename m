@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061654;
-	b=HkKIAd6YBgASxZLJARBLvNl4CHaWSCMrxz9+ONFMC4pJl9nf4CeX7gtPnUxTfZuiRgq0
-	 XKCXpvt17PeG1tTOH8Hq+SzvYjmUrQfUWg3obzuF9r0sQos3k3OrkPKr8HkASwDY2flXJ
-	 wK/XlgyAkNmZy8pSW1ZuRG+JWJpx3iYlYQ9vylACQzEwV4zNReuYEM28XfxrhFw6x7AO1
-	 MuObbf7OdM/iBwi7LQpDUCYyr1Fs77mKxlw0OZBRL+AY7utIW4SyLzDFlX2DiuvS+rokj
-	 wP4g5aPITuaIa5DfJdGv/pSr3avft43LzvPk04tFfkiyNbtpNWXN5ZkBDxsV4eNRJnw==
+	t=1795061657;
+	b=cMNMxs2jjvNKgDL7jdB6qzLwpPEuxbcRkmZtezJJ1pHbR+Nch93HqR7TlGIYVQbSl2LN
+	 ZK4FsmzpZJ1eMtz76//HYkgMXqlYnt5nMauWkSuVHnLYAoV9Uhb+1Ca5gKZzwIIOAWidO
+	 1VUwAkInVCKZUF4wwL70fCQo0s2yv9RHn+ZOihCmJAQN+y2wnitM9rxLK9o86Dnq1Bl9z
+	 dNlHclzS4EKdKnV9icJfWVSLIZ3rn49YL5tHxy1WvFhq5M/XeGeL+hG/N3USTr2qrbmxj
+	 3T89D/2v+A4OkZrMx4sHigLBUxtQChKw8hMp2FjHEgngE5A69ipBG5MKd+SNUBewC6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061657;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rDxjhU4ugMyyP4KISjxiR18OFQSeI+zYbbsubK6f0OI=;
-	b=Qcb6O43Q1REpFRdYddQcFw79M99gcKtW1JqbB35dubP/ClwW2HTXsXkKSiPe3pAgIGNY
-	 Q3JmpEc2Ycb67QVGA1UwU1A3RoKflGNswXoDk0Ab5bTS2GldlikpQji4+aYNrOGDxVknk
-	 SId39pF2kBjoOEWIQR4MdjeF7wmqDI6+fxDxCTr+6Yy1S/klS3oF0CjMiRLY92EWHcZkl
-	 g2ekLHRXYAwf1yl0RaZo50TtIcoLqGKOPzajVJ6i3H8YdEl77aUpNhV5Pt8FnPFsdQ8MB
-	 84n5UoGoYMyhbjCa5tWmYtTYrsybnsz/sqPkIdkOrEQOmulsfreEEBgQqdiwLvUaDYw==
+	bh=zpMy/B0SK1vbj7y/qAg+Mna5FFZlwjviLbGfPiMZcuw=;
+	b=DFToKcFd4Pgzxmp9OeSamhvSksEUZQJXLsHek4fYTLwYBD/AakDqvz3eNj2KbytGFTme
+	 KI76jOKGc6mthuFkTKU9hJ4slCR4JvmZ250oFcYzNbxCIKVHONhujIC9loQO3GlOMmLNE
+	 SQNn8W3slT4OmJF3IosQNhNBN7DdwAH6oYS3a9zv/ieVnnjD1qdZCWt9vff2S92+qHvc8
+	 mODPVrJZgSK31SRqa8A5JnOZV+1UQfYTbOfJzO+thyYlFTUnquqchcu+aGCQ/FF8s2Kzz
+	 D1gVI6zkZS4SeuQCYs9aKzw4eQoUSad+23CGJGv93fgPfvL95jGO1sAURTVsSfO9Q/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImlnERGv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXeBRP2M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9830D606A320;
-	Thu, 19 Nov 2026 04:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59665606A336;
+	Thu, 19 Nov 2026 04:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImlnERGv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6861F000C5;
-	Thu, 19 Nov 2026 04:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXeBRP2M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD861F000C5;
+	Thu, 19 Nov 2026 04:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061654;
-	bh=rDxjhU4ugMyyP4KISjxiR18OFQSeI+zYbbsubK6f0OI=;
+	s=korg; t=1795061657;
+	bh=zpMy/B0SK1vbj7y/qAg+Mna5FFZlwjviLbGfPiMZcuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImlnERGvvPf2oSJvdprzXgvfZwEtONg8bZwv+RAurTyCz3YcdZFtoU68j46Q1ZnUD
-	 EDgof+wPRV6KtdxrmHEggq4S8EW8tmKPmMZDmucjgtroxVaGFkk6LAZhYnz76PK3q+
-	 Nl0Z1gBkRmyfRgtz0rEj4tt2E/BhlKtnyeEu+0hY=
+	b=lXeBRP2M09ALk4wpTx2otERZmaGVlNMzLkXG/p3CnO19CUnjKkK1bBEMPkjwsxC3y
+	 9VFNZwpSWXD63GddMgGfWMtyPCal7Kl0k2qVnmx7yAcqSf1B9n73qfihdKd1kcHrMD
+	 DgJxioh1LTxi3t/vYeKGUyD3KBykfKJYy5lcgi/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1629/1848] ipvs: fix buffer overflow when sending sync messages
-Date: Wed, 18 Nov 2026 16:01:07 +0100
-Message-ID: <20261118150027.748167899@linuxfoundation.org>
+Subject: [PATCH 5.10 1630/1848] ALSA: pcm: Unlink substreams before releasing them
+Date: Wed, 18 Nov 2026 16:01:08 +0100
+Message-ID: <20261118150027.815531136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,120 +68,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 3e3fe49e8678c1a3d535ed02f32a9a6e80674263 ]
+[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
 
-Sashiko reports for possible heap buffer overflow when
-generating sync message for the v0 and v1 message formats.
-We should read the cp->flags only once because another
-CPU can concurrently set the SEQ_MASK between the two
-reads.
+A closing PCM substream can remain in its linked group after the
+driver close callback has freed its private data. With two configured
+dummy capture substreams on the same PCM device, linked with LINK,
+PREPARE on the surviving substream can still visit the closing member:
 
-Note that IPVS does not set the SEQ_MASK anymore for the
-ip_vs_ftp.c helper starting from commit 7f1c40757951
-("IPVS: make FTP work with full NAT support") (2.6.36+),
-so the problem should not be reproducible.
+  Final close of A                   PREPARE on linked B
+  ----------------                   -------------------
+  snd_pcm_drop(): group -> SETUP
+  do_hw_free(A)
+  dummy_pcm_close(A): free dpcm
+                                     Take snd_pcm_link_rwsem for reading
+                                     Walk the group, including A
+                                     dummy_pcm_prepare(A)
+                                       Read freed timer_ops
+  pcm_release_private(A)
+    snd_pcm_unlink(A)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260903004149.1037028-1-pablo%40netfilter.org
-Link: https://sashiko.dev/#/patchset/20260909111338.44357-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Unlink at the start of final substream release, before dropping the
+stream or releasing driver resources. The link write lock waits for
+an existing group PREPARE, and unlink removes the closing member from
+later group actions. Keep the existing stop synchronization in
+do_hw_free() before the driver resources are freed.
+
+Make unlink independent of the pcm_release callback so OSS substreams
+are covered too. Remove the native-only unlink callback and its
+registration, while retaining the callback hook for OSS cleanup.
+
+The existing KASAN report below records the freed timer_ops read in
+dummy_pcm_prepare().
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
+    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? dummy_pcm_prepare+0xb7/0xc0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? dummy_pcm_prepare+0xb7/0xc0
+     kasan_report+0xe0/0x110
+     ? dummy_pcm_prepare+0xb7/0xc0
+     dummy_pcm_prepare+0xb7/0xc0
+     snd_pcm_do_prepare+0x71/0xb0
+     snd_pcm_action_group+0x505/0xb30
+     snd_pcm_action_nonatomic+0xab/0x150
+     snd_pcm_common_ioctl+0x1bf5/0x3a50
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_vfs_ioctl+0x1f5/0x1280
+     ? __pfx_do_vfs_ioctl+0x10/0x10
+     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
+     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
+     ? __fput+0x5ba/0xa60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     snd_pcm_ioctl+0x76/0xb0
+     ? __pfx_snd_pcm_ioctl+0x10/0x10
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x41ee8d
+    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
+    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
+    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
+    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
+    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
+    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
+     </TASK>
+
+    Allocated by task 488:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     dummy_hrtimer_create+0x4a/0x170
+     dummy_pcm_open+0xe7/0x730
+     snd_pcm_open_substream+0x926/0x1580
+     snd_pcm_open+0x28d/0x6d0
+     snd_pcm_capture_open+0x82/0xe0
+     snd_open+0x1ec/0x3e0
+     chrdev_open+0x21f/0x660
+     do_dentry_open+0x5c8/0x1300
+     vfs_open+0x87/0x390
+     path_openat+0x2460/0x3cd0
+     do_file_open+0x21e/0x470
+     do_sys_openat2+0xf4/0x1b0
+     __x64_sys_openat+0x136/0x1e0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 490:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     dummy_hrtimer_free+0x72/0xe0
+     dummy_pcm_close+0x9f/0xd0
+     snd_pcm_release_substream.part.0+0x104/0x310
+     snd_pcm_release+0x106/0x240
+     __fput+0x39f/0xa60
+     fput_close_sync+0xff/0x200
+     __x64_sys_close+0x8c/0xf0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    ==================================================================
+
+Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ sound/core/pcm_native.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index 57a9f3542f171..bb30d4f5edc2a 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -544,13 +544,15 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	struct ip_vs_sync_conn_v0 *s;
- 	struct ip_vs_sync_buff *buff;
- 	struct ipvs_master_sync_state *ms;
--	int id;
-+	u32 flags, seq_mask;
- 	unsigned int len;
-+	int id;
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 322dd71b60e9a..874c13a69022c 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2706,18 +2706,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
+ 	return 0;
+ }
  
- 	if (unlikely(cp->af != AF_INET))
+-static void pcm_release_private(struct snd_pcm_substream *substream)
+-{
+-	if (snd_pcm_stream_linked(substream))
+-		snd_pcm_unlink(substream);
+-}
+-
+ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ {
+ 	substream->ref_count--;
+ 	if (substream->ref_count > 0)
  		return;
-+	flags = READ_ONCE(cp->flags);
- 	/* Do not sync ONE PACKET */
--	if (cp->flags & IP_VS_CONN_F_ONE_PACKET)
-+	if (flags & IP_VS_CONN_F_ONE_PACKET)
- 		return;
  
- 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
-@@ -565,8 +567,8 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	id = select_master_thread_id(ipvs, cp);
- 	ms = &ipvs->ms[id];
- 	buff = ms->sync_buff;
--	len = (cp->flags & IP_VS_CONN_F_SEQ_MASK) ? FULL_CONN_SIZE :
--		SIMPLE_CONN_SIZE;
-+	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
-+	len = seq_mask ? FULL_CONN_SIZE : SIMPLE_CONN_SIZE;
- 	if (buff) {
- 		m = (struct ip_vs_sync_mesg_v0 *) buff->mesg;
- 		/* Send buffer if it is for v1 */
-@@ -598,9 +600,9 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	s->caddr = cp->caddr.ip;
- 	s->vaddr = cp->vaddr.ip;
- 	s->daddr = cp->daddr.ip;
--	s->flags = htons(cp->flags & ~IP_VS_CONN_F_HASHED);
-+	s->flags = htons(flags & ~IP_VS_CONN_F_HASHED);
- 	s->state = htons(cp->state);
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
-+	if (seq_mask) {
- 		struct ip_vs_sync_conn_options *opt =
- 			(struct ip_vs_sync_conn_options *)&s[1];
- 		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
-@@ -636,6 +638,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	int id;
- 	__u8 *p;
- 	unsigned int len, pe_name_len, pad;
-+	u32 flags, seq_mask;
- 
- 	/* Handle old version of the protocol */
- 	if (sysctl_sync_ver(ipvs) == 0) {
-@@ -648,6 +651,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- sloop:
- 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
- 		goto control;
-+	flags = READ_ONCE(cp->flags);
- 
- 	/* Sanity checks */
- 	pe_name_len = 0;
-@@ -675,7 +679,8 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- #endif
- 		len = sizeof(struct ip_vs_sync_v4);
- 
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK)
-+	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
-+	if (seq_mask)
- 		len += sizeof(struct ip_vs_sync_conn_options) + 2;
- 
- 	if (cp->pe_data_len)
-@@ -721,7 +726,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	/* Set message type  & copy members */
- 	s->v4.type = (cp->af == AF_INET6 ? STYPE_F_INET6 : 0);
- 	s->v4.ver_size = htons(len & SVER_MASK);	/* Version 0 */
--	s->v4.flags = htonl(cp->flags & ~IP_VS_CONN_F_HASHED);
-+	s->v4.flags = htonl(flags & ~IP_VS_CONN_F_HASHED);
- 	s->v4.state = htons(cp->state);
- 	s->v4.protocol = cp->protocol;
- 	s->v4.cport = cp->cport;
-@@ -745,7 +750,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 		s->v4.vaddr = cp->vaddr.ip;
- 		s->v4.daddr = cp->daddr.ip;
++	snd_pcm_unlink(substream);
++
+ 	snd_pcm_drop(substream);
+ 	if (substream->hw_opened) {
+ 		if (substream->runtime->status->state != SNDRV_PCM_STATE_OPEN)
+@@ -2794,8 +2790,6 @@ static int snd_pcm_open_file(struct file *file,
+ 		return -ENOMEM;
  	}
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
-+	if (seq_mask) {
- 		*(p++) = IPVS_OPT_SEQ_DATA;
- 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
- 		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
+ 	pcm_file->substream = substream;
+-	if (substream->ref_count == 1)
+-		substream->pcm_release = pcm_release_private;
+ 	file->private_data = pcm_file;
+ 
+ 	return 0;
 -- 
 2.53.0
 
