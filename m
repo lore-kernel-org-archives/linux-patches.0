@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031042;
-	b=UGfpMJZC10/kXS6P6mEZUr8peCLUMnTO2hp9E9fvUV4Tb9rJqMi2PJh6jKoZVdl9YKfs
-	 jlvevXAXzmnA6KfrU1Ae8o/KH4m3BPv3x5o6f1hhuSac5brTOFXz0h5HJVdKthSZeGFxg
-	 zLm9+b0uj7nGjtV7Pgi2schI1ISz9d8yLLvdqUTbc/UKv/vsIPYTZjFAoXeKtKqsdZ54X
-	 +JqzQZp+/YklAEzgV3TH8j0v52vV1kOD9T1j991nuFw/PkOfOjysCmLu6GnhSvrS3BtpU
-	 2enejl6ufpVmA0M9EubBgRnNEKWTesI4tE0cSsS5J+lJ//GrXYXQEqz1XhO0UvWnHQg==
+	t=1795031045;
+	b=awbw049+3UoVxsKpHmVsx8kfiuavqFQutw4ZZaIJQRsVrdstR4uJ8V2aaEuK5zVET4nU
+	 rJIr/nKCh25kyvuZQhRLzxhHT9BccoO1Jdscc7RQtPmqFLtMg0p4fWzfVYJq2yhN7esxx
+	 q0pzEEKB99RhKHYtLHSsk2Op8KwQ/8uZe2ER/JLplWN/N3mNTxBcgCpeLfY7Jq5s4gjbo
+	 mGwRdmCYx2vP+hCiTJQwco5a9mCCvWnLGTrRycGRK/VQyB7PHHj/p8gjBoBCkI6/d13bL
+	 pfbzd2+uBkfsApyrmd6reYVvWw31aruEqQ+Z8zLlOA6oTFvgF5Qmy1wCQBmr5xEOoaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OfiXNt9h7nT3c3gPdCEdzIMQdgP6UNm7efFdzHrpF+A=;
-	b=h4pqycWfmrQagisFpSbHswcavEPkrHSeujG1UuFxe56zPW3hZsydNfcn7cATu4USMzJH
-	 j9/FgkixcqiSM0CqWfLQiBW+gxC25S84QXWoLoQM40n6nr4af7qDSe18P+nb8mrJkAUmU
-	 uuCqGBXnfVnm744/Af2irEB0gxeCMwhj7D9lF3koXF3kWqZ9iNTbKIdV5ErmWWHtvOhLw
-	 DCnV2C4Zf36B0sl0hJ1B8T8RCfCb2unBar0Zx8hzS3xX2mmLRyA2nB3fRAt19zNpmnMgZ
-	 3aAjKlqdcsN91gMc9jAMMWAcyA/WwX5iqL4A6qh/+hRZfHJ9XXFyMjsO32Dr+NVgNuA==
+	bh=rj8CtQXsgZa8hmhv9mAjBgum4xZixHWUV+8HsyWLaEc=;
+	b=Bii4MaS8pplToglBQCT4jf+49E77frd37ycWW/EIQWwcqX5OhomFwWHVpF8jFdNQTPdB
+	 NusDtAlg0clvJ12iyS/SXKtvgrzZRyJdc76sO0LkTmvBRsx/NsagHs+ml8esCH5allJr5
+	 DUCCQ8CMbcsqHpNG4wGpF7o2yjE/dtFyAF8j6TXU9jAlQ+w6moz3D9mNhWjy4FlG0CjNA
+	 jOJtuCVKheADzuiZbjFA8Y1kJO5eugjjXDVVQS4CjJoSSV4SIM2b+1zB59zygWs8/W0oP
+	 MWG0PBp44ksu57ICYjVhQlduj9Et0d2U6Fpst/20UP8T7/4EqulrwaI43KJ4zhamddg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgW7ejzz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gJW1VepL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C93606A31C;
-	Wed, 18 Nov 2026 19:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96789606A31C;
+	Wed, 18 Nov 2026 19:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgW7ejzz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208101F000C4;
-	Wed, 18 Nov 2026 19:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gJW1VepL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCEB1F000C4;
+	Wed, 18 Nov 2026 19:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031042;
-	bh=OfiXNt9h7nT3c3gPdCEdzIMQdgP6UNm7efFdzHrpF+A=;
+	s=korg; t=1795031045;
+	bh=rj8CtQXsgZa8hmhv9mAjBgum4xZixHWUV+8HsyWLaEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kgW7ejzz/CxUZR2d7lHoUELlpHivk6Ne6XFgJccHhj+D4StUBS1x1F1ZRXL3TP+be
-	 awt5AHrJ95cAUkBYLnqP0eeCttY8wxKlJaJL7gWrg0uH2uUs3uVsAGiTzUQN0eVJb9
-	 Uoz1BcUmzMJfeEHN55kBR2jYQCNdNOVBvGgb+Uyw=
+	b=gJW1VepLCwPvxifBHMBK58UEsHjBxuYlO6+8Do+TacM0iTZBgK+uJ1fIps0Tq4jsd
+	 IqsveZEDI0pvrwlLVKyv8tEiJSlMZn5NtMdDPPxQBjWYuhwsGiH1mvP8KvMJlk7Hpg
+	 D+mHBSet4mYVHicy3iC+9WcJCZwZ3rlz8exYgNGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0916/1756] efi/libstub: Simplify GOP handling code
-Date: Wed, 18 Nov 2026 15:50:43 +0100
-Message-ID: <20261118150046.461169779@linuxfoundation.org>
+Subject: [PATCH 6.12 0917/1756] efi/libstub: Simplify PCI I/O handle buffer traversal
+Date: Wed, 18 Nov 2026 15:50:44 +0100
+Message-ID: <20261118150046.498347718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,260 +69,141 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 60a34085c36d6eb292c1e03bc355b1aa3a74a689 ]
+[ Upstream commit 90534e689d2e52202c276ade5cf1dfc13d9e116f ]
 
-Use the LocateHandleBuffer() API and a __free() function to simplify the
-logic that allocates a handle buffer to iterate over all GOP protocols
-in the EFI database.
+Use LocateHandleBuffer() and a __free() cleanup helper to simplify the
+PCI I/O handle buffer traversal code.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/efi.h              |  3 ++
- drivers/firmware/efi/libstub/efi-stub.c | 28 +++++-------
- drivers/firmware/efi/libstub/efistub.h  |  9 ++--
- drivers/firmware/efi/libstub/gop.c      | 57 +++++++++----------------
- drivers/firmware/efi/libstub/x86-stub.c | 17 +-------
- 5 files changed, 40 insertions(+), 74 deletions(-)
+ drivers/firmware/efi/libstub/pci.c      | 33 ++++++-------------------
+ drivers/firmware/efi/libstub/x86-stub.c | 29 +++++-----------------
+ 2 files changed, 13 insertions(+), 49 deletions(-)
 
-diff --git a/arch/x86/include/asm/efi.h b/arch/x86/include/asm/efi.h
-index 222410af815cf..dc8fe1361c18e 100644
---- a/arch/x86/include/asm/efi.h
-+++ b/arch/x86/include/asm/efi.h
-@@ -250,6 +250,9 @@ static inline u32 efi64_convert_status(efi_status_t status)
- #define __efi64_argmap_allocate_pool(type, size, buffer)		\
- 	((type), (size), efi64_zero_upper(buffer))
- 
-+#define __efi64_argmap_locate_handle_buffer(type, proto, key, num, buf)	\
-+	((type), (proto), (key), efi64_zero_upper(num), efi64_zero_upper(buf))
-+
- #define __efi64_argmap_create_event(type, tpl, f, c, event)		\
- 	((type), (tpl), (f), (c), efi64_zero_upper(event))
- 
-diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index 438c7aed2d287..52b7029707642 100644
---- a/drivers/firmware/efi/libstub/efi-stub.c
-+++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include <linux/efi.h>
-+#include <linux/screen_info.h>
- #include <asm/efi.h>
- 
- #include "efistub.h"
-@@ -53,25 +54,16 @@ void __weak free_screen_info(struct screen_info *si)
- 
- static struct screen_info *setup_graphics(void)
+diff --git a/drivers/firmware/efi/libstub/pci.c b/drivers/firmware/efi/libstub/pci.c
+index b0ba372c26c55..1dccf77958d3a 100644
+--- a/drivers/firmware/efi/libstub/pci.c
++++ b/drivers/firmware/efi/libstub/pci.c
+@@ -16,36 +16,20 @@
+ void efi_pci_disable_bridge_busmaster(void)
  {
--	efi_guid_t gop_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
--	efi_status_t status;
--	unsigned long size;
--	void **gop_handle = NULL;
--	struct screen_info *si = NULL;
-+	struct screen_info *si, tmp = {};
+ 	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+-	unsigned long pci_handle_size = 0;
+-	efi_handle_t *pci_handle = NULL;
++	efi_handle_t *pci_handle __free(efi_pool) = NULL;
++	unsigned long pci_handle_num;
+ 	efi_handle_t handle;
+ 	efi_status_t status;
+ 	u16 class, command;
  
--	size = 0;
--	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
--			     &gop_proto, NULL, &size, gop_handle);
--	if (status == EFI_BUFFER_TOO_SMALL) {
--		si = alloc_screen_info();
--		if (!si)
--			return NULL;
--		status = efi_setup_gop(si, &gop_proto, size);
--		if (status != EFI_SUCCESS) {
--			free_screen_info(si);
--			return NULL;
--		}
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, &pci_proto,
+-			     NULL, &pci_handle_size, NULL);
+-
+-	if (status != EFI_BUFFER_TOO_SMALL) {
+-		if (status != EFI_SUCCESS && status != EFI_NOT_FOUND)
+-			efi_err("Failed to locate PCI I/O handles'\n");
+-		return;
 -	}
-+	if (efi_setup_gop(&tmp) != EFI_SUCCESS)
-+		return NULL;
-+
-+	si = alloc_screen_info();
-+	if (!si)
-+		return NULL;
-+
-+	*si = tmp;
- 	return si;
- }
- 
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index 21986fd151426..154d15901a1c6 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -4,6 +4,7 @@
- #define _DRIVERS_FIRMWARE_EFI_EFISTUB_H
- 
- #include <linux/compiler.h>
-+#include <linux/cleanup.h>
- #include <linux/efi.h>
- #include <linux/kernel.h>
- #include <linux/kern_levels.h>
-@@ -313,7 +314,9 @@ union efi_boot_services {
- 		void *close_protocol;
- 		void *open_protocol_information;
- 		void *protocols_per_handle;
--		void *locate_handle_buffer;
-+		efi_status_t (__efiapi *locate_handle_buffer)(int, efi_guid_t *,
-+							      void *, unsigned long *,
-+							      efi_handle_t **);
- 		efi_status_t (__efiapi *locate_protocol)(efi_guid_t *, void *,
- 							 void **);
- 		efi_status_t (__efiapi *install_multiple_protocol_interfaces)(efi_handle_t *, ...);
-@@ -1052,6 +1055,7 @@ void efi_puts(const char *str);
- __printf(1, 2) int efi_printk(char const *fmt, ...);
- 
- void efi_free(unsigned long size, unsigned long addr);
-+DEFINE_FREE(efi_pool, void *, if (_T) efi_bs_call(free_pool, _T));
- 
- void efi_apply_loadoptions_quirk(const void **load_options, u32 *load_options_size);
- 
-@@ -1081,8 +1085,7 @@ efi_status_t efi_parse_options(char const *cmdline);
- 
- void efi_parse_option_graphics(char *option);
- 
--efi_status_t efi_setup_gop(struct screen_info *si, efi_guid_t *proto,
--			   unsigned long size);
-+efi_status_t efi_setup_gop(struct screen_info *si);
- 
- efi_status_t handle_cmdline_files(efi_loaded_image_t *image,
- 				  const efi_char16_t *optstr,
-diff --git a/drivers/firmware/efi/libstub/gop.c b/drivers/firmware/efi/libstub/gop.c
-index 8eef63c48288d..a4b3d18f91da8 100644
---- a/drivers/firmware/efi/libstub/gop.c
-+++ b/drivers/firmware/efi/libstub/gop.c
-@@ -461,25 +461,25 @@ setup_pixel_info(struct screen_info *si, u32 pixels_per_scan_line,
- 	}
- }
- 
--static efi_graphics_output_protocol_t *
--find_gop(efi_guid_t *proto, unsigned long size, void **handles)
-+static efi_graphics_output_protocol_t *find_gop(unsigned long num,
-+						const efi_handle_t handles[])
- {
- 	efi_graphics_output_protocol_t *first_gop;
- 	efi_handle_t h;
- 
- 	first_gop = NULL;
- 
--	for_each_efi_handle(h, handles, efi_get_handle_num(size)) {
-+	for_each_efi_handle(h, handles, num) {
- 		efi_status_t status;
- 
- 		efi_graphics_output_protocol_t *gop;
- 		efi_graphics_output_protocol_mode_t *mode;
- 		efi_graphics_output_mode_info_t *info;
 -
--		efi_guid_t conout_proto = EFI_CONSOLE_OUT_DEVICE_GUID;
- 		void *dummy = NULL;
- 
--		status = efi_bs_call(handle_protocol, h, proto, (void **)&gop);
-+		status = efi_bs_call(handle_protocol, h,
-+				     &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID,
-+				     (void **)&gop);
- 		if (status != EFI_SUCCESS)
- 			continue;
- 
-@@ -499,7 +499,8 @@ find_gop(efi_guid_t *proto, unsigned long size, void **handles)
- 		 * Once we've found a GOP supporting ConOut,
- 		 * don't bother looking any further.
- 		 */
--		status = efi_bs_call(handle_protocol, h, &conout_proto, &dummy);
-+		status = efi_bs_call(handle_protocol, h,
-+				     &EFI_CONSOLE_OUT_DEVICE_GUID, &dummy);
- 		if (status == EFI_SUCCESS)
- 			return gop;
- 
-@@ -510,16 +511,22 @@ find_gop(efi_guid_t *proto, unsigned long size, void **handles)
- 	return first_gop;
- }
- 
--static efi_status_t setup_gop(struct screen_info *si, efi_guid_t *proto,
--			      unsigned long size, void **handles)
-+efi_status_t efi_setup_gop(struct screen_info *si)
- {
--	efi_graphics_output_protocol_t *gop;
-+	efi_handle_t *handles __free(efi_pool) = NULL;
- 	efi_graphics_output_protocol_mode_t *mode;
- 	efi_graphics_output_mode_info_t *info;
-+	efi_graphics_output_protocol_t *gop;
-+	efi_status_t status;
-+	unsigned long num;
- 
--	gop = find_gop(proto, size, handles);
+-	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, pci_handle_size,
+-			     (void **)&pci_handle);
 +	status = efi_bs_call(locate_handle_buffer, EFI_LOCATE_BY_PROTOCOL,
-+			      &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, NULL, &num,
-+			      &handles);
-+	if (status != EFI_SUCCESS)
-+		return status;
++			     &pci_proto, NULL, &pci_handle_num, &pci_handle);
+ 	if (status != EFI_SUCCESS) {
+-		efi_err("Failed to allocate memory for 'pci_handle'\n");
++		efi_err("Failed to locate PCI I/O handles\n");
+ 		return;
+ 	}
  
--	/* Did we find any GOPs? */
-+	gop = find_gop(num, handles);
- 	if (!gop)
- 		return EFI_NOT_FOUND;
- 
-@@ -551,29 +558,3 @@ static efi_status_t setup_gop(struct screen_info *si, efi_guid_t *proto,
- 
- 	return EFI_SUCCESS;
- }
--
--/*
-- * See if we have Graphics Output Protocol
-- */
--efi_status_t efi_setup_gop(struct screen_info *si, efi_guid_t *proto,
--			   unsigned long size)
--{
--	efi_status_t status;
--	void **gop_handle = NULL;
--
--	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, size,
--			     (void **)&gop_handle);
--	if (status != EFI_SUCCESS)
--		return status;
--
--	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, proto, NULL,
--			     &size, gop_handle);
--	if (status != EFI_SUCCESS)
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, &pci_proto,
+-			     NULL, &pci_handle_size, pci_handle);
+-	if (status != EFI_SUCCESS) {
+-		efi_err("Failed to locate PCI I/O handles'\n");
 -		goto free_handle;
+-	}
 -
--	status = setup_gop(si, proto, size, gop_handle);
+-	for_each_efi_handle(handle, pci_handle, efi_get_handle_num(pci_handle_size)) {
++	for_each_efi_handle(handle, pci_handle, pci_handle_num) {
+ 		efi_pci_io_protocol_t *pci;
+ 		unsigned long segment_nr, bus_nr, device_nr, func_nr;
+ 
+@@ -81,7 +65,7 @@ void efi_pci_disable_bridge_busmaster(void)
+ 		efi_bs_call(disconnect_controller, handle, NULL, NULL);
+ 	}
+ 
+-	for_each_efi_handle(handle, pci_handle, efi_get_handle_num(pci_handle_size)) {
++	for_each_efi_handle(handle, pci_handle, pci_handle_num) {
+ 		efi_pci_io_protocol_t *pci;
+ 
+ 		status = efi_bs_call(handle_protocol, handle, &pci_proto,
+@@ -107,7 +91,4 @@ void efi_pci_disable_bridge_busmaster(void)
+ 		if (status != EFI_SUCCESS)
+ 			efi_err("Failed to disable PCI busmastering\n");
+ 	}
 -
 -free_handle:
--	efi_bs_call(free_pool, gop_handle);
--	return status;
--}
+-	efi_bs_call(free_pool, pci_handle);
+ }
 diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
-index f77d6fd7e1154..76e611ffadccb 100644
+index 76e611ffadccb..b11c46215a81f 100644
 --- a/drivers/firmware/efi/libstub/x86-stub.c
 +++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -406,24 +406,11 @@ static void setup_quirks(struct boot_params *boot_params)
- 
- static void setup_graphics(struct boot_params *boot_params)
+@@ -119,37 +119,23 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
+ static void setup_efi_pci(struct boot_params *params)
  {
--	efi_guid_t graphics_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
--	struct screen_info *si;
--	efi_status_t status;
--	unsigned long size;
--	void **gop_handle = NULL;
--
--	si = &boot_params->screen_info;
--	memset(si, 0, sizeof(*si));
--
--	size = 0;
--	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
--			     &graphics_proto, NULL, &size, gop_handle);
--	if (status == EFI_BUFFER_TOO_SMALL)
--		status = efi_setup_gop(si, &graphics_proto, size);
-+	struct screen_info *si = memset(&boot_params->screen_info, 0, sizeof(*si));
+ 	efi_status_t status;
+-	void **pci_handle = NULL;
++	efi_handle_t *pci_handle __free(efi_pool) = NULL;
+ 	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+-	unsigned long size = 0;
+ 	struct setup_data *data;
++	unsigned long num;
+ 	efi_handle_t h;
  
-+	efi_setup_gop(si);
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
+-			     &pci_proto, NULL, &size, pci_handle);
+-
+-	if (status == EFI_BUFFER_TOO_SMALL) {
+-		status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, size,
+-				     (void **)&pci_handle);
+-
+-		if (status != EFI_SUCCESS) {
+-			efi_err("Failed to allocate memory for 'pci_handle'\n");
+-			return;
+-		}
+-
+-		status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
+-				     &pci_proto, NULL, &size, pci_handle);
+-	}
+-
++	status = efi_bs_call(locate_handle_buffer, EFI_LOCATE_BY_PROTOCOL,
++			     &pci_proto, NULL, &num, &pci_handle);
+ 	if (status != EFI_SUCCESS)
+-		goto free_handle;
++		return;
+ 
+ 	data = (struct setup_data *)(unsigned long)params->hdr.setup_data;
+ 
+ 	while (data && data->next)
+ 		data = (struct setup_data *)(unsigned long)data->next;
+ 
+-	for_each_efi_handle(h, pci_handle, efi_get_handle_num(size)) {
++	for_each_efi_handle(h, pci_handle, num) {
+ 		efi_pci_io_protocol_t *pci = NULL;
+ 		struct pci_setup_rom *rom;
+ 
+@@ -169,9 +155,6 @@ static void setup_efi_pci(struct boot_params *params)
+ 
+ 		data = (struct setup_data *)rom;
+ 	}
+-
+-free_handle:
+-	efi_bs_call(free_pool, pci_handle);
  }
  
--
- static void __noreturn efi_exit(efi_handle_t handle, efi_status_t status)
- {
- 	efi_bs_call(exit, handle, status, 0, NULL);
+ static void retrieve_apple_device_properties(struct boot_params *boot_params)
 -- 
 2.53.0
 
