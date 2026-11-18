@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038454;
-	b=FsG3xVy7EoCuvcCKW8GXrt6+wFOpydH7LBmuy1Th2Bg0xs9LmvuQyFvr4OrFO3FPmeM5
-	 bMpudLQeyG6fznAyBadzhtwTpqH8WwY8LhR4nvP1unofGl5zpZCkZS40dWMglWzsFPrbo
-	 RrCVKh3gzJ8UE3OzlTKhnYGlQhzsnT7aOiZ77VMw7pHpwqacJxLo4cty8XkYEuUArgL9x
-	 Rzgh43VhFa6RZibsoU24VNBBoiioJjMNQzZ51i4U0hW6oGB+J+Dsnpq7TsunZk+Wveqff
-	 8g1qRabk9WSrGKOyX6mGwCEGBiII9mAw5EYXJCgcLv56QuUTzhcZhos5GDlcmkXtjxA==
+	t=1795038457;
+	b=FPR/et0N6TC9tVnbr2HAFr74gcM3XiRDQV8YbVIA7M7K5YIIGxSYjynDgwAM0w671m0s
+	 Nrl6+dm6UYP7ELl/zhAp3M9nPp6rURaaXGSsQcUgy+7rOUkL0vtjLs16TMRpxSu+xVtHC
+	 JYX+z0pc7jtsfTQlo15c6KqVeMJjsbIg8u/JxrVxNlz0kU++ZMmuWqEpbkt/9orykR2Y9
+	 A/EvlCFbPs0BgA7NykqymtnDY5wqv7u3XReP9MFCAhM3TpEZStVY1ic/onA49oW5nQ2gU
+	 ap2nOiRg8S5TeLGUGAnHatL0TM1LYBijvCORblIpOcL/ECvJ2rk5anlUPHr9lA4l5lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0aOj4uoFJTrZv6VcK/QCjb8kNMffNBRF6RmtkFUgaPw=;
-	b=DeEiCO1ClDKN43dgVUw2fD2YpT75tPkt8SMRsFW0MNwLWQjJW4JOQVjilemfrauGi4pN
-	 P9u1f7+Spk3/YZON3HFKgLUZS/ZSBhQ0+mGJCeBcQ2wN02FjqK82h6OmwbTwBhMxMc990
-	 uAuk/wIsYGlhkhq7pzVt1zzey9SfPNPMPHNkMzEXApxLfoUbk085qTAxHTuJ1r79Ok7gh
-	 9Esh1uRAVHhthO056T4veKhWzExJDvtm0ZrIJbTZV+Duk40ryg6ZVgTFMrJgnM7+SdJIG
-	 bbQFTeIV7sxY/6mtwLp0fysxsCw8R3KV66NfIMBM97pLifoNtqR1eiJqwpKs7TqqoJw==
+	bh=+IPL28HwQp86M55mN7/Lu+SMB/XNrVHbnvO4Ug6lXJE=;
+	b=IRWjMpHhgGXuuHPh2Efx6pXqVz47Xa8QiQ0X2IO/TLfEMCRWt18NeGg8ixIS7z9oEFJj
+	 UhlixILivZG5FBUKRBFG40aYzP/mb0UGAyoTjceEBW47H6F/xKDLtOtHs1Zzmpfhp/3ek
+	 UiGpDc0VG8cSOQ9DgKA+llmW4WtDf69R1HgXvBz8cKjc7kULoB+5rjDzUCWk5vaXitMA1
+	 VZSjS+xa2Cq6l3jg+oyVJVLtoFMODb9gp2UUsmtMwpYfjWvc50CFq2c37LEmeDWy2rjQk
+	 jbj0d3YfjlAQt5U4dvPpMXsJjCnOBfX2i3r+EChr766lcktRzs8c0nRfOIRvMusSJMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvcEM7US;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P62ZfoQa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2031E606A320;
-	Wed, 18 Nov 2026 21:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1EF606A320;
+	Wed, 18 Nov 2026 21:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvcEM7US
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDC91F000C4;
-	Wed, 18 Nov 2026 21:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P62ZfoQa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556AA1F000C4;
+	Wed, 18 Nov 2026 21:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038454;
-	bh=0aOj4uoFJTrZv6VcK/QCjb8kNMffNBRF6RmtkFUgaPw=;
+	s=korg; t=1795038456;
+	bh=+IPL28HwQp86M55mN7/Lu+SMB/XNrVHbnvO4Ug6lXJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JvcEM7USurXmap+O5jBjPZZwoz67kyGf0G2Rx4NPnmSsbq9cA1xJWl94EvJ9izS6a
-	 id3wEGgg2liLyMNHrBaeJYGU4nVCG/lRRrFC7vodh528UBlcXb8JmIUeNGfe5QYY+F
-	 ka12VIDTdgSy0kskhp9LPi44OwIkKZoHhTZMk0Rg=
+	b=P62ZfoQa3FPnWClutR6s2m0QO8kI0e346jwZmIg8xQ6uBp55QVomBvtqp0EYF/led
+	 vFzku8/uP3jECj308jRHmGKr+T/32Wf5DMlSI3GQltLKQT3bqG3XssJ1myhNbYfqSF
+	 LDs1LSg6SIs2IQ1fn67vxCZZjlcPXY++8rPeF2oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1750/3318] ALSA: emux: prune unused parameter from snd_soundfont_load_guspatch()
-Date: Wed, 18 Nov 2026 15:39:32 +0100
-Message-ID: <20261118150414.360475062@linuxfoundation.org>
+Subject: [PATCH 6.6 1751/3318] ALSA: emux: fix validation of snd_emux.num_ports
+Date: Wed, 18 Nov 2026 15:39:33 +0100
+Message-ID: <20261118150414.389763521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,92 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit 3f3e0dfc83d586fe9204936fccae771754a9dbc2 ]
+[ Upstream commit 19061f35b3eaf4925960be44d870244b99df8d1d ]
 
-The `client` parameter was not used, so eliminate it from the call
-chain.
+Both bounds had off-by-one errors.
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Message-ID: <20240406064830.1029573-3-oswald.buddenhagen@gmx.de>
+Message-ID: <20240406064830.1029573-4-oswald.buddenhagen@gmx.de>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Stable-dep-of: 34e3e04b8a17 ("ALSA: emux: Fix UAF of soundfont zones at note-on")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soundfont.h     | 2 +-
- sound/synth/emux/emux_hwdep.c | 3 +--
- sound/synth/emux/emux_oss.c   | 3 +--
- sound/synth/emux/soundfont.c  | 7 +++----
- 4 files changed, 6 insertions(+), 9 deletions(-)
+ sound/synth/emux/emux_seq.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/sound/soundfont.h b/include/sound/soundfont.h
-index e445688a4f4f9..98ed98d89d6de 100644
---- a/include/sound/soundfont.h
-+++ b/include/sound/soundfont.h
-@@ -89,7 +89,7 @@ struct snd_sf_list {
- int snd_soundfont_load(struct snd_sf_list *sflist, const void __user *data,
- 		       long count, int client);
- int snd_soundfont_load_guspatch(struct snd_sf_list *sflist, const char __user *data,
--				long count, int client);
-+				long count);
- int snd_soundfont_close_check(struct snd_sf_list *sflist, int client);
+diff --git a/sound/synth/emux/emux_seq.c b/sound/synth/emux/emux_seq.c
+index b227c7e0bc2ac..1adaa75df2f6a 100644
+--- a/sound/synth/emux/emux_seq.c
++++ b/sound/synth/emux/emux_seq.c
+@@ -65,11 +65,11 @@ snd_emux_init_seq(struct snd_emux *emu, struct snd_card *card, int index)
+ 		return -ENODEV;
+ 	}
  
- struct snd_sf_list *snd_sf_new(struct snd_sf_callback *callback,
-diff --git a/sound/synth/emux/emux_hwdep.c b/sound/synth/emux/emux_hwdep.c
-index 81719bfb8ed73..fd8f978cde1c6 100644
---- a/sound/synth/emux/emux_hwdep.c
-+++ b/sound/synth/emux/emux_hwdep.c
-@@ -27,8 +27,7 @@ snd_emux_hwdep_load_patch(struct snd_emux *emu, void __user *arg)
- 
- 	if (patch.key == GUS_PATCH)
- 		return snd_soundfont_load_guspatch(emu->sflist, arg,
--						   patch.len + sizeof(patch),
--						   TMP_CLIENT_ID);
-+						   patch.len + sizeof(patch));
- 
- 	if (patch.type >= SNDRV_SFNT_LOAD_INFO &&
- 	    patch.type <= SNDRV_SFNT_PROBE_DATA) {
-diff --git a/sound/synth/emux/emux_oss.c b/sound/synth/emux/emux_oss.c
-index d8d32671f7038..04df46b269d37 100644
---- a/sound/synth/emux/emux_oss.c
-+++ b/sound/synth/emux/emux_oss.c
-@@ -205,8 +205,7 @@ snd_emux_load_patch_seq_oss(struct snd_seq_oss_arg *arg, int format,
- 		return -ENXIO;
- 
- 	if (format == GUS_PATCH)
--		rc = snd_soundfont_load_guspatch(emu->sflist, buf, count,
--						 SF_CLIENT_NO(p->chset.port));
-+		rc = snd_soundfont_load_guspatch(emu->sflist, buf, count);
- 	else if (format == SNDRV_OSS_SOUNDFONT_PATCH) {
- 		struct soundfont_patch_info patch;
- 		if (count < (int)sizeof(patch))
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index eed47e4830248..77144fe221cf2 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -944,8 +944,7 @@ int snd_sf_vol_table[128] = {
- 
- /* load GUS patch */
- static int
--load_guspatch(struct snd_sf_list *sflist, const char __user *data,
--	      long count, int client)
-+load_guspatch(struct snd_sf_list *sflist, const char __user *data, long count)
- {
- 	struct patch_info patch;
- 	struct snd_soundfont *sf;
-@@ -1127,11 +1126,11 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
- /* load GUS patch */
- int
- snd_soundfont_load_guspatch(struct snd_sf_list *sflist, const char __user *data,
--			    long count, int client)
-+			    long count)
- {
- 	int rc;
- 	lock_preset(sflist);
--	rc = load_guspatch(sflist, data, count, client);
-+	rc = load_guspatch(sflist, data, count);
- 	unlock_preset(sflist);
- 	return rc;
- }
+-	if (emu->num_ports < 0) {
++	if (emu->num_ports <= 0) {
+ 		snd_printk(KERN_WARNING "seqports must be greater than zero\n");
+ 		emu->num_ports = 1;
+-	} else if (emu->num_ports >= SNDRV_EMUX_MAX_PORTS) {
+-		snd_printk(KERN_WARNING "too many ports."
++	} else if (emu->num_ports > SNDRV_EMUX_MAX_PORTS) {
++		snd_printk(KERN_WARNING "too many ports. "
+ 			   "limited max. ports %d\n", SNDRV_EMUX_MAX_PORTS);
+ 		emu->num_ports = SNDRV_EMUX_MAX_PORTS;
+ 	}
 -- 
 2.53.0
 
