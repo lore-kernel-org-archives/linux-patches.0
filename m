@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051017;
-	b=G2Co47+R/BHzKsF5OgfodCplBuf7gP/KzPvsg0EasSq6Z6Gx/E4FxFTAtuGqLqDhs6b/
-	 MwzJQtaUuuhDAy1WerdOi3z9zZ3ELRwE+d+WaGBhai+wHtZirfWqJwSaxWGFKcgbtp7na
-	 o8/WR86VM4166k6ok1OX0YAma/IxiwUnJTxOmpSYNm7qajFwzKG/Wtal58RbsNFbuOgdR
-	 jAkAqdimPAjlU0etQQCCC6X0/43/g9E+dFeEf3utieR+Dqc9HtyDGT//A4VnINE35TVeC
-	 9dW1c4HouhD2dHDfoZ0AtYiKaOi0vT7YLkxq/OCFQYapzU43zRC4eP1K+A5xc73kf+w==
+	t=1795051020;
+	b=bqLRblYPpE1xwO9bFa6iWXzBbCZm7eizapH0Y5vgzESHZSn/T4GBVXhxUOnDzhRw95Dm
+	 GDa6OAivvy6idjmRb9qFAcCo5Q+XIw/DJQ316ufWSzYlESeBu4hbk/eB053g2mJy/jjyo
+	 SixUiCHpLTYLKEoI2EMCB8y0rLMNiAXSvpTPHAJf+mY5y+n1eeSRcbdgSkCTPaeoV/SdP
+	 cV7nFSrmpXNaTYi6Wwu/Rp7KKXH8wxSQDIuLqXYPXJwPojiF0NeLnV3UvLYiSvmDoKRFS
+	 RCAMR9nVwJt6FzOsGmJgQyfikbaAOi5ummwh8nM00gOKfvFKVukII/dD64NZV6z1ySA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XWRYClXn22gWX5TbUndNhevPfIaOYc1FNM50KCftEfc=;
-	b=pqhYqFmnhwmASAmTWEd8yi+qGd9wXG0Ph6vlzEls0vM3akBY2MfRveLGlXb3+KUHxmRS
-	 CO7YuihAQf7YYiOT+1adaMFRZd3PJHIiJJRJK1pEn2/Xvo23jujKkUxNaT4xZF/Rgcn9n
-	 sy1U9aGgGQhSg7fAA6nxtuM8dWEaeprNIG43muf8Cr4D8nXQf0kTLo73zZvQV8ZzAItlg
-	 BYKPE/0dR34cV9ZGOVeWSHZhtB48hfwzr4qtNRrk2X9rQMaMsoVGsxFMwaIxHsxVD9tzW
-	 l0nBzoOnQcJJYGMku/5dhrAoC+3nY29yN9ylxQ9LIub2K/mEgKGQAV6QzLQ0OKO/v+A==
+	bh=FhBfMHkKgXk97gJbb4V5XuSNnz4F9vEdj3wQya1ftaE=;
+	b=fXDFe7THV/pP1DJjshHcZgI+UftvsV33bQahyXin7mOT+L938AO3KOOWPiSn69uIgzPp
+	 4YbdCYYilzPyEopHGfsT+UstBuHSFaU1MITHr7Tvfz35TxIL317gbydVxqdlbbjbeaiNc
+	 lfoYEcv+PxjdwhMHnJkVPNWBUvJKV2rdmWviepGrKJMb09BLolX3373DYn9o2nLvJQ1PQ
+	 coTLXKW5d6rZHdJMBUQQOV09nWyCNCF1zzV5Mx89JIhm/qtZDYpJl8Cnscio/ScYN1MSb
+	 xUbBgQJgcQd78ZqBK9MpJ9E/OhamMcVNXJNae7VYWAHf4vGHyYVAis5Or319uCjR7sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k5REF40G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jk4dFkNo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7A1606A32C;
-	Thu, 19 Nov 2026 01:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2662B606A325;
+	Thu, 19 Nov 2026 01:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k5REF40G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826961F000C4;
-	Thu, 19 Nov 2026 01:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jk4dFkNo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5091F000C4;
+	Thu, 19 Nov 2026 01:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051017;
-	bh=XWRYClXn22gWX5TbUndNhevPfIaOYc1FNM50KCftEfc=;
+	s=korg; t=1795051019;
+	bh=FhBfMHkKgXk97gJbb4V5XuSNnz4F9vEdj3wQya1ftaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k5REF40GSNQbTZEn3tnfn5L45bPEuWC14Pl7l/FsYXiw9lrqkSBR8ofPsvulkA6fk
-	 xvkUG/JyD5eMomIbGzeId4KGV0q28Ut+FJ5F+dS5YLpDarxCNDZY/2hDh/EEG9zOGU
-	 TP0G1uy7yHq+nZtyJ3dG+xU9RO+TDMKhYQWGT8Jo=
+	b=Jk4dFkNoia9Xa5b2PzerfhfcBCfjRBGg/tbuOEnVyhsEkDtQ9t5xqC1Ox5jxyPk7j
+	 xeJMuzpzRiAn7QkZUKRU2sDoK5bsWxh9oX0IYESW54ESft1prRk81WCGVFdkrsjrPS
+	 aNYdVOrKwmZ3apOtN7klpkQDRf0S9/6ltErqwmwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0059/2214] clk: sunxi-ng: fix ccu probe clock unregister on error
-Date: Wed, 18 Nov 2026 15:28:55 +0100
-Message-ID: <20261118150012.383527645@linuxfoundation.org>
+Subject: [PATCH 5.15 0060/2214] nvme: zns: cap zone report nr_zones by DMA buffer size
+Date: Wed, 18 Nov 2026 15:28:56 +0100
+Message-ID: <20261118150012.422611399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,75 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 81f4ddc9f7e0c11d3e9d24d0f30023845a02f7ee ]
+[ Upstream commit 09c9062d4f62199a634a45e2bb9e6e8e572cc78c ]
 
-When registering clocks with sunxi_ccu_probe(), the number of ccu_clocks
-and the number of hw clocks might be different, eventhough they usually are
-the same.
+With Partial Report (PR=1), the Number of Zones (NZ) field in the report
+header must equal the number of zone descriptors fully transferred in the
+DMA buffer (ZNS Command Set Specification Rev 1.2, section 3.4.2).
 
-If they are different, it could lead to out-of-bound access or registered
-clock left behind on error.
+nvme_ns_report_zones() does not cap the parse loop by max_in_buf derived
+from buflen.  Cap nz with min3() over the device-reported count, nr_zones -
+zone_idx, and max_in_buf.
 
-Use a different variable when iterating on hw clocks so every registered
-clock, and only those, gets unregistered on error.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/r/20260629131254.7E34C1F00A3A@smtp.kernel.org
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260706-a733-rtc-v4-3-f330728db3d3@baylibre.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_common.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/nvme/host/zns.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_common.c b/drivers/clk/sunxi-ng/ccu_common.c
-index 88cb569e58358..45e106db1fef9 100644
---- a/drivers/clk/sunxi-ng/ccu_common.c
-+++ b/drivers/clk/sunxi-ng/ccu_common.c
-@@ -90,7 +90,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- 			   const struct sunxi_ccu_desc *desc)
- {
- 	struct ccu_reset *reset;
--	int i, ret;
-+	int i, j, ret;
+diff --git a/drivers/nvme/host/zns.c b/drivers/nvme/host/zns.c
+index d95010481fce0..aff269e1c5398 100644
+--- a/drivers/nvme/host/zns.c
++++ b/drivers/nvme/host/zns.c
+@@ -177,7 +177,7 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 	struct nvme_zone_report *report;
+ 	struct nvme_command c = { };
+ 	int ret, zone_idx = 0;
+-	unsigned int nz, i;
++	unsigned int max_in_buf, nz, i;
+ 	size_t buflen;
  
- 	ccu->desc = desc;
+ 	if (ns->head->ids.csi != NVME_CSI_ZNS)
+@@ -187,6 +187,9 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 	if (!report)
+ 		return -ENOMEM;
  
-@@ -104,8 +104,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- 		cclk->lock = &ccu_lock;
- 	}
- 
--	for (i = 0; i < desc->hw_clks->num ; i++) {
--		struct clk_hw *hw = desc->hw_clks->hws[i];
-+	for (j = 0; j < desc->hw_clks->num ; j++) {
-+		struct clk_hw *hw = desc->hw_clks->hws[j];
- 		const char *name;
- 
- 		if (!hw)
-@@ -117,7 +117,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- 		else
- 			ret = of_clk_hw_register(node, hw);
- 		if (ret) {
--			pr_err("Couldn't register clock %d - %s\n", i, name);
-+			pr_err("Couldn't register clock %d - %s\n", j, name);
- 			goto err_clk_unreg;
++	max_in_buf = (buflen - sizeof(struct nvme_zone_report)) /
++		sizeof(struct nvme_zone_descriptor);
++
+ 	c.zmr.opcode = nvme_cmd_zone_mgmt_recv;
+ 	c.zmr.nsid = cpu_to_le32(ns->head->ns_id);
+ 	c.zmr.numd = cpu_to_le32(nvme_bytes_to_numd(buflen));
+@@ -206,7 +209,8 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 			goto out_free;
  		}
- 	}
-@@ -145,8 +145,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- err_del_provider:
- 	of_clk_del_provider(node);
- err_clk_unreg:
--	while (--i >= 0) {
--		struct clk_hw *hw = desc->hw_clks->hws[i];
-+	while (--j >= 0) {
-+		struct clk_hw *hw = desc->hw_clks->hws[j];
  
- 		if (!hw)
- 			continue;
+-		nz = min((unsigned int)le64_to_cpu(report->nr_zones), nr_zones);
++		nz = min3((unsigned int)le64_to_cpu(report->nr_zones),
++			  nr_zones - zone_idx, max_in_buf);
+ 		if (!nz)
+ 			break;
+ 
 -- 
 2.53.0
 
