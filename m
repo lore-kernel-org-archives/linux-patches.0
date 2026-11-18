@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040830;
-	b=Cr2irKGpjlGmqrh92ssmMpK9pHVRibRIm5YaTotedJs4/3cCUvqn3IY45c0pJ/nPgpMj
-	 7I44aWXWhdoCn1un9YY1Bwf7FmA1JVdXNYbtafy5O2qx3hBASCfM5MlFa4E2kqQ1eyWbd
-	 RqXWKuFitikx1gaEgdG86V6xXxt53jeeiuAwR1RsTogsO/q7NHOYF9heeZfXeTn8PkAgQ
-	 X4Ayc7NcoUfZXP9oVAr7Ppc1Mhm+mxMFVFPUDmI96JKKd0zKFx/D8dXqE5MdGBiClOQ4G
-	 DELPv8zPd7I198ftYMK8UhDYvOuTV5A9X7bh1eQJz1fkgs1An1N19YLhNcPtJs5jH6Q==
+	t=1795040833;
+	b=dHW4Q0ErN4iRuZyrPCW/fMDd3ix+ftBmzyJQX1qLWcJEx+56r2rkvNbnycd68Q2khL/B
+	 iXvsg9UAWnYFotXQhO0AbQykya44tX+HCo1hzBTnrPyQR1BhCX3mxjJFAlOVDp9s9Zi8G
+	 Lll0b2Hcpl3zKpf74hVtRe7dAilnP8S0/m/vLtd8OUWFtvkYcu0IcmF1egOZvi+Zy8WNL
+	 WGnGgCdQNXr/v3JsCD4dft9S5hXl19GJPrR0zH+QMyfCpLjtRfUsrz1ycjUP58xpWmTl6
+	 Fpwhv3OnpjqqHkbzG7qi/ThSAKrCvc/wPIhvi6nqwhF034QB0nVVYy+bmfeEF0oMdvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+h1NnF2ax8M37SqxIs+lCl+tyrVt8Mbx5kPCclKYYuI=;
-	b=uMxt01WZD4HBiAkTtQn5rtSuLFOCVVA/bCsjZ8Sxq8SfxSl8QdQ2Fijwdedh1+1HbYqK
-	 d0LWjLSJe2QFmzTLxxfET2oNlo8avkwjEefi3nFTALvUIYRUs+tZaF2aFQqyNn1aewxxF
-	 4oflkZgKtkNtlFgr1sB4bxU0E/2kvFx6P+Wy8vK6P+KxD0lQ6C9RFfJDHGY6K1FXZ024m
-	 weEOj9MjkusK5R1YrnATYOdXxciVHNkM2ru8jDDxpLoMaCL+sJ26jF6/OvgcTbwjdJUgM
-	 b7jxPkJjnSahPgIvvLws8cf8EzCTWVKDPfWs78MzLEfAF3DXZo7s3yxmiZP3jJwUkgQ==
+	bh=nb/xlBzyijW8v7KFQfroDfQNN9GDfaMvIOSgBliDYFs=;
+	b=a50RlTjneT+KZSNmfy4UsBDM2KhEfBw2uc/gOrLFlU3i75kiRC7qb5XgCGBt+6BRAOUD
+	 FNF9wFVgts7qLKc9B9Dbb/zLOnHlwziZf6FxaUCE5aU48ixbqCqmw9j85mO/ghNjzFnYK
+	 Odq0IsPo/RmKeBiItwOAaSe6rZcDBLMmohFxdmXrcnebuN5+6U4aE2a2VzTcX6shxvYND
+	 4tXdos5zr1GWERGTXGpgigUuy5RAexu+6I/Ns0Vo6gq8Y8M2G+wP3/CHAusEeC0qHAt3O
+	 8ZNNYR4z0gndbCjCvd2VviOXxnc+Vcyi6WLXL80kfiv6P088S0zzjbgwvN0KtjcvSew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZbXHrd5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UAMT0mIZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19A0606A31C;
-	Wed, 18 Nov 2026 22:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8448D606A31C;
+	Wed, 18 Nov 2026 22:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZbXHrd5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139E01F000C4;
-	Wed, 18 Nov 2026 22:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UAMT0mIZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A4A1F000C4;
+	Wed, 18 Nov 2026 22:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040830;
-	bh=+h1NnF2ax8M37SqxIs+lCl+tyrVt8Mbx5kPCclKYYuI=;
+	s=korg; t=1795040833;
+	bh=nb/xlBzyijW8v7KFQfroDfQNN9GDfaMvIOSgBliDYFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VZbXHrd58eupTNAhIPqx/rqKbz+WZOAXxyRCGK6FZ2U3lAsPeG9MarPMYW+ulocLE
-	 bag1Mc58jUkKA7OOCyxa9nllnXiD0Ql6uytWr7xqZIKJeK2lRYAIW/hKElk2HDN24L
-	 t0ZO6vnYBfA7gwFiWdghlexQbsJFhXuPIAwWkgos=
+	b=UAMT0mIZj4ccpvF7+Zwia8dvHDXzxV2+Ts3UKv0/kB9SvZp2Mutw3c2kLUd/wpC7L
+	 Aryb0cjumVwuNL6O4tppI4fKJ9Lk7dOmZ8Mx6rxtcZWf0h+zgL4igt81yLgUuuYk9H
+	 mT+7uIIqU+efyqvkkda+jxJbN+F0L8FKKjXN5NH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	"Denis Efremov (Oracle)" <efremov@linux.com>,
+	Roman Demidov <roman.demidov.nn@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2598/3318] floppy: unregister platform device on add_disk failure
-Date: Wed, 18 Nov 2026 15:53:40 +0100
-Message-ID: <20261118150439.106419540@linuxfoundation.org>
+Subject: [PATCH 6.6 2599/3318] drm/msm/a6xx: fix use-after-free of OPP in a6xx_pm_resume
+Date: Wed, 18 Nov 2026 15:53:41 +0100
+Message-ID: <20261118150439.138192712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,54 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Roman Demidov <roman.demidov.nn@gmail.com>
 
-[ Upstream commit f1e72d80ad4ac5ff3573796d07bd1a1e74909f94 ]
+[ Upstream commit 8128ae7af6b4dc95e486c5c0a80839a069df578e ]
 
-The change referenced by the Fixes tag reverted a previous fix because
-that fix added incorrect cleanup for the platform_device_register()
-failure path.
+The OPP reference obtained via dev_pm_opp_find_freq_ceil() is dropped
+with dev_pm_opp_put() before being passed to dev_pm_opp_set_opp(). If
+the reference count reaches zero, the OPP object may be freed, leading
+to a use-after-free when dev_pm_opp_set_opp() dereferences it.
 
-However, reverting the whole change also removed the cleanup for a later
-failure path. If platform_device_register() succeeds but device_add_disk()
-fails, the current floppy platform device has already been registered and
-registered[drive] has been set.
+Fix the order of calls: first use the OPP to set the required
+performance state, then release the reference.
 
-The common out_remove_drives path uses while (drive--), so it starts from
-the previous drive and does not unregister the current one. As a result,
-the platform device registered for the failing drive is leaked.
-
-Unregister the current platform device directly on the device_add_disk()
-failure path, where platform_device_register() is known to have
-succeeded. Leave the platform_device_register() failure path unchanged.
-
-Fixes: 895a9b37917d ("Revert "floppy: fix reference leak on platform_device_register() failure"")
-Fixes: 47d34aa2d211 ("floppy: add error handling support for add_disk()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708105703.747262-1-lgs201920130244@gmail.com
-Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/757104/
+Message-ID: <20260929142103.81854-1-roman.demidov.nn@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index aaf346bdf408f..18a83e992aea5 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -4733,8 +4733,11 @@ static int __init do_floppy_init(void)
- 
- 		err = device_add_disk(&floppy_device[drive].dev,
- 				      disks[drive][0], NULL);
--		if (err)
-+		if (err) {
-+			platform_device_unregister(&floppy_device[drive]);
-+			registered[drive] = false;
- 			goto out_remove_drives;
-+		}
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 58233ca8d1d39..fe223823deae8 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1948,10 +1948,10 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+ 		ret = PTR_ERR(opp);
+ 		goto err_set_opp;
  	}
+-	dev_pm_opp_put(opp);
  
- 	return 0;
+ 	/* Set the core clock and bus bw, having VDD scaling in mind */
+ 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
++	dev_pm_opp_put(opp);
+ 
+ 	pm_runtime_resume_and_get(gmu->dev);
+ 	pm_runtime_resume_and_get(gmu->gxpd);
 -- 
 2.53.0
 
