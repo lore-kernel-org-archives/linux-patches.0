@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018831;
-	b=RsDGK248WJh5fRYLal7jiSDScpdk3cXnYb0QfFTpia9pDZqm3/CT8dQY99kmFQFSfGei
-	 +yjE18G9MeAlMz2q6qafzSznP5TYXcDN471mH0365Haeh6g5SXYKOPASulM8RK/pSYA5n
-	 FpBZ4YvxvHS873DmVbRZKC9OLpINTX2SMpLFtbwbvL3Pm3xumqFtv62tqPhHaMoXGpdCf
-	 jQb2UGvYHuo8qmUmmTXBQnedOLLwa/oOL/5N3pYUVFgW5/qOv7Bd9Nrb5OjI0LKA4DUE5
-	 FTf2OrMSRB+57gPLFP8mjsiEkW0j8NSChIg4wI0C/ICZbSDabBVwZAjekT6WsYe7jCA==
+	t=1795018834;
+	b=rvV1xUUsAsZUI4uw2XlUr7nUP3J1/MuPglIJx9kVwzEzXDCaneW4WnGqYqLCOtYUIfHK
+	 P48/eUb+lVnirjwJnXmb0lq0vjT5Bl35TCr2lMqGv5dFnUqNfYC0rhP37JLRa6PwO0O5m
+	 TFxXNkijN/4FscGk5oqfp/TqLxnlsgzeMuiU5Y64CrCb5CuEH/unUzyZWXKMS32FSVKsP
+	 duP2pZp8Q3UY3gzZaQaXoTB4KBTCApwLKtr6uvHK8elMyaBakI7lO+IAQJOJtNRxRI88B
+	 BDHKubNAY//LzUCts6UMweeOGIqiFoyBtcr50/LJkvKK+nZOdIsPw+L5sWfI/tZUR0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TmQiUPyiwlUfWdeO5CNA9K4NaEleRvycqwYYoiZgK5M=;
-	b=hqdupmhdQvcxhgaRs37MXqsXbrHNEelGgzJ1/DANFstD56rt8bZJl+NAs/9DPwxvxkqs
-	 5D4FokjRkyirPue3JO2aV+1n3YBhUKCgTFg00KtzZXn/4IS1qewQeAzaLIp9+BnkqzOJf
-	 z0+HkSXtxPGCO5TPm+eLWdl2FBXJ8c1JUipOUmZS0z3IDiWt3ZJnJpl1yWglpvmsJdFWJ
-	 uvMcjJNxC4nXbgatQ8lO3SKFq/hHO3OGgiroz9Se0MsKjJOnHt2B/tMZ8vVcC28jNvKMW
-	 2QIKPcu5ebMCrbU5INqRBJbOMGw0QnFRFo7E3eBItJmWT9xzKIA0+/2xX3Z/NdhfbXQ==
+	bh=d3vAjhdbv7DNtBf9HVYYwg6CqkKrtZhSkhO19GJDUYM=;
+	b=zyuQcxcUuULSCfjfrfLZ4hbyQYl3RqZtZIXK02Yc649BQiRLzczb6J371fVuy6Wx8Yt7
+	 7bK372kym+ESA3y5Mjo5TB7Ypb6SpD3QHDucdUS2JCAJjAw0OfX8SoO3qZK71QEiXQ8e9
+	 Zh0RkSoO9cBgD51cliXL8BGV2EJ1tUMAk+627mCjZCAx5+YT4W0Z99NS8fNFRwm7KATbv
+	 we8oleVniM2uUWp38gI35WxVixW7QzsIZSaFi48SMFD8/kg5yZBL2hu+2XENu0CaUhUv2
+	 rygH7CSvfxewAL1umJDpFsicnEwEgCM1Rr7PVJUl3tzuRrCNVPh2CewCzGURQjWFYXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g378j7oR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdBdSKAU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB42606A31C;
-	Wed, 18 Nov 2026 16:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89877606A31C;
+	Wed, 18 Nov 2026 16:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g378j7oR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC751F000C4;
-	Wed, 18 Nov 2026 16:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdBdSKAU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE831F000C4;
+	Wed, 18 Nov 2026 16:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018831;
-	bh=TmQiUPyiwlUfWdeO5CNA9K4NaEleRvycqwYYoiZgK5M=;
+	s=korg; t=1795018834;
+	bh=d3vAjhdbv7DNtBf9HVYYwg6CqkKrtZhSkhO19GJDUYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g378j7oR14mpoR9pozimETrWsZHGtNUbPRuPPlY7jhx3K6IYxJ9FH+yCKf8Nut3Rj
-	 pFe7p0r8RWtAD8AcONh23TB0nJwahZSAuwP3CLpHmpnPh6RqLt7BsOLO1CZFBAGqsh
-	 D2Cm2g4G/ZYCubYg0PomDQznKUZO1CdW1tg3S6cQ=
+	b=EdBdSKAUMECvK9VXYXEIQk8bWon2aQJp66TWckGB0XVBv5pYtS/Wcq37iOTp8OKtG
+	 YTaGIhZBPcMqaaY/m8DSaAMM9OWKGIoLRuAcRGYfp52nIe+KnlUqBJt4gfhmnqlsxS
+	 sM9VT+pvo5B7CN97QYa7ZLL4q5chusW4OMmTO9hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jonas Rebmann <jre@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1379/2651] spi: spi-sun4i: sun4i_spi_transfer_one(): fix transfers for SUN4I_FIFO_DEPTH
-Date: Wed, 18 Nov 2026 15:43:39 +0100
-Message-ID: <20261118150337.671684432@linuxfoundation.org>
+Subject: [PATCH 7.3 1380/2651] spi: spi-sun4i: sun4i_spi_fill_fifo(): always apply A10 FIFO fill level workaround
+Date: Wed, 18 Nov 2026 15:43:40 +0100
+Message-ID: <20261118150337.703776484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,54 +71,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit f3ce7a3ca82bd9cda9ef61250aeff65fe6b44809 ]
+[ Upstream commit ee109e2bbea0986f6ad34bfbcba90fce36f17538 ]
 
-In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX-FIFO is
-filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around timeouts
-observed on A10s SoCs.
+In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX FIFO is
+filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around
+timeouts observed on A10s SoCs.
 
 Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
-size") added support for transfers larger than the FIFO size. But this
-commit only enabled the TX-FIFO empty interrupt for transfers larger
-than the FIFO (= 64) bytes.
+size") added support for transfers larger than the FIFO size. This
+commit did not consider the A10 workaround (limit the TX FIFO fill
+size to SUN4I_FIFO_DEPTH - 1 (= 63) bytes) for refilling the TX FIFO
+in the IRQ handler.
 
-This breaks transfers with exactly 64 bytes: the TX-FIFO is only filled
-with 63 bytes but the interrupt to refill the FIFO is not triggered. The
-problem can be reproduced with the following command:
+To apply the workaround independent from where sun4i_spi_fill_fifo()
+is called, remove the length argument from the function and directly
+take the max fill level of SUN4I_FIFO_DEPTH - 1 into account when
+calculating the free space in the FIFO.
 
-| spidev_test -D /dev/spidev0.1 -S 64 -s 20000000 -I 1
-|
-| [ 7797.548745] spi_master spi0: spi0.1: timeout transferring 64 bytes@20000000Hz for 110(100)ms
-| [ 7797.557237] spidev spi0.1: SPI transfer failed: -110
-| [ 7797.562308] spi_master spi0: failed to transfer one message from queue
-| [ 7797.568936] spi_master spi0: noqueue transfer failed
-
-To fix the problem enable the TX-FIFO interrupt if the total TX length
-is larger than SUN4I_FIFO_DEPTH - 1 (= 63) bytes.
+Due to the lack of HW this patch has not been tested on an A10 SoC,
+but on an A20 SoC. It was not possible to reproduce the timeout on the
+A20.
 
 Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-1-9fe919d5cecf@pengutronix.de
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-2-9fe919d5cecf@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sun4i.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index d5c16392cd4d7..2e23244539053 100644
+index 2e23244539053..3649bcabcc9a7 100644
 --- a/drivers/spi/spi-sun4i.c
 +++ b/drivers/spi/spi-sun4i.c
-@@ -322,7 +322,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
- 					 SUN4I_INT_CTL_RF_F34);
- 	/* Only enable Tx FIFO interrupt if we really need it */
--	if (tx_len > SUN4I_FIFO_DEPTH)
-+	if (tx_len > SUN4I_FIFO_DEPTH - 1)
- 		sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TF_E34);
+@@ -142,15 +142,21 @@ static inline void sun4i_spi_drain_fifo(struct sun4i_spi *sspi, int len)
+ 	}
+ }
  
- 	/* Start the transfer */
+-static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi, int len)
++static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi)
+ {
+ 	u32 cnt;
++	int len;
+ 	u8 byte;
+ 
+-	/* See how much data we can fit */
+-	cnt = SUN4I_FIFO_DEPTH - sun4i_spi_get_tx_fifo_count(sspi);
++	/*
++	 * See how much data we can fit
++	 *
++	 * Filling the FIFO fully causes timeout for some reason
++	 * at least on spi2 on A10s
++	 */
++	cnt = SUN4I_FIFO_DEPTH - 1 - sun4i_spi_get_tx_fifo_count(sspi);
+ 
+-	len = min3(len, (int)cnt, sspi->len);
++	len = min_t(int, cnt, sspi->len);
+ 
+ 	while (len--) {
+ 		byte = sspi->tx_buf ? *sspi->tx_buf++ : 0;
+@@ -311,12 +317,8 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	sun4i_spi_write(sspi, SUN4I_BURST_CNT_REG, SUN4I_BURST_CNT(tfr->len));
+ 	sun4i_spi_write(sspi, SUN4I_XMIT_CNT_REG, SUN4I_XMIT_CNT(tx_len));
+ 
+-	/*
+-	 * Fill the TX FIFO
+-	 * Filling the FIFO fully causes timeout for some reason
+-	 * at least on spi2 on A10s
+-	 */
+-	sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH - 1);
++	/* Fill the TX FIFO */
++	sun4i_spi_fill_fifo(sspi);
+ 
+ 	/* Enable the interrupts */
+ 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
+@@ -373,7 +375,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
+ 
+ 	/* Transmit FIFO 3/4 empty */
+ 	if (status & SUN4I_INT_CTL_TF_E34) {
+-		sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH);
++		sun4i_spi_fill_fifo(sspi);
+ 
+ 		if (!sspi->len)
+ 			/* nothing left to transmit */
 -- 
 2.53.0
 
