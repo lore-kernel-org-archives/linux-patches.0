@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028258;
-	b=vCeWrZjUVVkTJBitKvE2hhbkLc2vYc6PQGUAynjqmZGJDXFy+fNboHcUfDbIEUKyd5YX
-	 EmARciwFCIhUpO+PZrjADXvOn5L1OnJvItMqHTYF0ksEQNhfxDpcPO1uGi1G31RJjpUAO
-	 nvGmPLa0FpwfQQ6upBvouBJYzVQN/aCm/SYhNSs5UBB3EEj7cFPFNr9DYbPtujCQFROwm
-	 65EZymN//24T3wh819lO32/JPnbEs3t4l3qsCscgpPf/B4fvgh9bEg2VAo2M/3nRU5Bi3
-	 yTAji3D7bukXmmrMjRqHmE21AkM0z4Ukg8h+fjAflkm/MZRNcSeqHx5Smd8Pagl70TA==
+	t=1795028261;
+	b=JBAZ5qalW1xTtQXW/Kt6JZEKqhPbKDhTzBpKhVo+v2ZyZKPbCDCb8qB6aTF2Nk61tCXO
+	 cmqszFPiPCEKicTJSJDo7rI/Qw/AJC+rIYGuXOKwD4KwqtB7RlGuJC5rwMjGXQnMEbVAL
+	 0Zc0f3lF4IhGHsMKz8Yei/2gQOqhsQUgoVQ4ah6OuUIYeQ/YpTcCODsi0Z9DA4faOTZ+t
+	 tI6zY1W85sLgTeukO3HweVAaAbxn5+7drMzEoWqpkh6mAMaEvVMuDzmhJja+EPZDVK5pt
+	 ajRdAdkMV0pdr4SQt1ooxLY9RLBmawXOn6FOydt/0shHm21Vig+E/uFLrPTmNJlSnSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8g2r+39woUfeFBAm8uM1F2kkydhLeJVSSashK90FApQ=;
-	b=nyxDumUZBy9QW6ewXOq0yM++oeNWoo5uc1iNhA1w7RIC2dxZCjv0wGkNdprW8rYbmZgE
-	 o3eMePlijbWzyw0INjCYwB91iYVdpgOLaPX6c5DQZ3MOns8o/SxYANyughLVgEelvpJO+
-	 6jyy58BBSJjvqIUuo/mxk1CvaXa9qbMww1C1AtS84vbdk04RZQEdhnSghukH4BymB2Xza
-	 yPP+L/rEXxPC/dnvUYapoFlMnsggZ5hYBa4hMXGYdzF24iGQiPaxTEKv3jrN4y8CLeJM9
-	 NmpwCb6TiH8f+dct04x0NfZX8H0T4Tyor3DBHOEGGgcTRkiKdCu3uVZzdzNwUcIRrzw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6DoF5jL9K8EwXKgWD3GqMcbRPoPE7i6WCnR+A8PRdqM=;
+	b=yyOP5PNNv5zfItVfUtrYBfFY3vEiDQsfRvu3bJQ/NEb4scbepF8QFMw2i9PwDKq4e7J9
+	 49iSCj2NomgmF+x6cI8BK+Prh+V5jLEPRaMZEYI53qyT1I4y7fYnu5BC0JpysgXmfVZq+
+	 N32BpOzPZMLmljTbYGjLkmLslX9BkzQXrxjDJUkpynCKwiV+LIUsOlkBUQu+im+sEMsDA
+	 26vV839lvu4vmpVwWoWZND+wh337e9SzhXE6BxZwrQ/GOg0tpaOzoMj1SD2fyMJLbsWJi
+	 8AsywlxlwHQapcKK3UVahc7QD9vhvfoZDtZE57VEadm3YLwt4d4U44FqHi6+mtqGB8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q59GrvU0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YB5NzUs+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4A4606A31C;
-	Wed, 18 Nov 2026 18:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A04606A32C;
+	Wed, 18 Nov 2026 18:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q59GrvU0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21831F000C4;
-	Wed, 18 Nov 2026 18:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YB5NzUs+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9382E1F000C4;
+	Wed, 18 Nov 2026 18:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028258;
-	bh=8g2r+39woUfeFBAm8uM1F2kkydhLeJVSSashK90FApQ=;
+	s=korg; t=1795028261;
+	bh=6DoF5jL9K8EwXKgWD3GqMcbRPoPE7i6WCnR+A8PRdqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q59GrvU0WxV5tP4D4rPzrD49CryKVA53HcFuVHzgoQaB0v9u4jApywtynbbv2vIwm
-	 SoPySzbxNZGjFbQ/NvzsDVvdYIqpanQXWmHf1jSXDaYGPZ9XZ2DLUw3K46kxAPT5Ea
-	 +YOEQPpzXfIP8VChWQgkOfNec2DS1WCZ3MXpzs0w=
+	b=YB5NzUs+wcSTEMQ7DGhE6DHbrOmOe8yWk6oqhKUqRwMpLnfMPv/BO1NbaDeM0WQU4
+	 ULK7UApL8gRGJFcsAVvCNQXBnb5UFcsFogAhCKuq3gzGvQiJ1dVV7jxxYn+YHKPThh
+	 7KOXT8QrSqv8Ga1nYNnnJpUnHDOO3gnWcddBRKR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Philipp Reisner <philipp.reisner@linbit.com>,
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Hannes Reinecke <hare@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2080/2151] blk-mq: free the bitmaps of tags in the SRCU callback
-Date: Wed, 18 Nov 2026 16:03:35 +0100
-Message-ID: <20261118150237.483200519@linuxfoundation.org>
+Subject: [PATCH 6.18 2081/2151] drbd: stop the start_resync timer of a dying device
+Date: Wed, 18 Nov 2026 16:03:36 +0100
+Message-ID: <20261118150237.517698055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,6 +65,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -71,54 +74,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 10b249e9b05eed0c4c65b9b89dfc2cf33d68d19a ]
+[ Upstream commit a439d3fe3ec2bfe0b4ccb77973ae97949bcf46ec ]
 
-Commit ad0d05dbddc1 keeps struct blk_mq_tags and the requests until the
-iterators under tags_srcu are gone, but the two bitmaps they walk are
-still freed right away. When the number of hardware queues shrinks,
-blk_mq_tagset_busy_iter() may be about to walk tags that
-__blk_mq_update_nr_hw_queues() frees. sbitmap_free() clears the map
-pointer, so that's a NULL dereference or a use-after-free, depending on
-the timing.
+start_resync_timer gets armed for up to a second and nothing ever
+deletes it, so drbd_destroy_device() can free the device with the timer
+pending. Shut it down where request_timer is shut down.
 
-Free the bitmaps with the rest in the callback.
-
-Fixes: ad0d05dbddc1 ("blk-mq: Defer freeing of tags page_list to SRCU callback")
+Fixes: 370a43e7982d ("drbd: Work on the Ahead -> SyncSource transition")
+Cc: Philipp Reisner <philipp.reisner@linbit.com>
+Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
+Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-44-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-13-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-tag.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/block/drbd/drbd_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index d168c0a080e3c..4e4da442bf940 100644
---- a/block/blk-mq-tag.c
-+++ b/block/blk-mq-tag.c
-@@ -605,17 +605,17 @@ static void blk_mq_free_tags_callback(struct rcu_head *head)
- 		kmemleak_free(page_address(page));
- 		__free_pages(page, page->private);
- 	}
-+	/* An iterator may walk the bitmaps for as long as it may see the tags */
-+	sbitmap_queue_free(&tags->bitmap_tags);
-+	sbitmap_queue_free(&tags->breserved_tags);
- 	kfree(tags);
- }
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 1f6ac9202b66a..00726f9c35106 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2159,6 +2159,7 @@ void drbd_destroy_device(struct kref *kref)
+ 	struct drbd_peer_device *peer_device, *tmp_peer_device;
  
- void blk_mq_free_tags(struct blk_mq_tag_set *set, struct blk_mq_tags *tags)
- {
--	sbitmap_queue_free(&tags->bitmap_tags);
--	sbitmap_queue_free(&tags->breserved_tags);
--
- 	/* if tags pages is not allocated yet, free tags directly */
- 	if (list_empty(&tags->page_list)) {
--		kfree(tags);
-+		blk_mq_free_tags_callback(&tags->rcu_head);
- 		return;
- 	}
+ 	timer_shutdown_sync(&device->request_timer);
++	timer_shutdown_sync(&device->start_resync_timer);
  
+ 	/* paranoia asserts */
+ 	D_ASSERT(device, device->open_cnt == 0);
 -- 
 2.53.0
 
