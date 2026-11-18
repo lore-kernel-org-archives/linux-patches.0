@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044977;
-	b=lQYaUWsyMS8w4i6+pvKS56G7HRnxlLIqsFpgygD2A8AsyRllTr+XT1aGFciIrky6egt5
-	 3ZCX1Om0tm6cQAljHIqDXyBMqnSLQjQakcUePuHxYtXUYOWtFRAMwQF3MWyRoMKf9TwLu
-	 fZrAgySA99zFaGdArHgW9R8Z9NfVLVNwBXcqZ+76sQpz1+8Dw5F9L7tPS2sHi6ziPfVVI
-	 Wgfn8v+ySCR29643vZ9bk1RjwdTufcfLjo4Ko9AqmOjy5mTsAmZWK8uyRbmw6zKO3I4eq
-	 fkczuiYiGU/yl8v505RXx+BnScTk99B3gJZHAzdDUoud6Z9WTOApuN2kB5FfxsxpDVQ==
+	t=1795044979;
+	b=RyVuyj6YWgxZlIjQN8J1wROCm7SqnLci1FXe6cTHJyp9dbG556TaXE8VHmZ1IgeiiLnw
+	 b4JveAIA4oST4NhdLSmmMg8xDEc1DIDX94grRl9K843zUJq14NZQjTyK5/dtw5KlmGb6O
+	 DMkNRpPWvgBNJBoo/uNg40GvJBvz8XUn6uZBqMVVxt3FcmxBzfwiASVUcVARnoIYDAS6B
+	 aEkrxH+sDc+3sCgNDyTKZMX480qIzO3F62k6H1SfBL1fDbYgQBg28RQ+74dvF8wNEbap3
+	 2RlsoIiCdr8jggX1/4kDux4SaxBwGJt4Rk/LQpxZbyTQnnGgN/XS2aLlUpsx9Immgvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6ff5QEESrrYtgGELk0EPOyU5TddLwyhw8Apk4bNiQy8=;
-	b=frC/np8we12tuvm3mqcPc/3us3v7bumI+0sGiDgAgwcfcg2rKoGCE72O7sqNP84orKk9
-	 kB3KcTWNWucj5i3GbtuGRmq9Jd+fNdwgJvmiJcUKc1b2yPTHmbzKG/QgHw8D8Wt/UfoIW
-	 Zf8WTigAV9XVekakDva+UslPnBOtFceHyugfCXqEgnHtMBEIj0wCaD0XYaGeCk3yAU5+z
-	 OUk+isJeW2DsjvHcOunBrSogIEftp8H6SrYS7EN/woLPEzISkRYBI04tQFsynjmu5kJx3
-	 Kf6z3ViE6LAo3o47tKwM8Z7bVJ80T+I0hxuegKX3aY141VjPc4FsbTt7OmhtF7izOqQ==
+	bh=iAHuULnrwRz5j/xjg2BO/cq5yBXDmbKA8TzTt5i2Ybw=;
+	b=CC6rgRv8HpSmqroR3z+SmiyKkXlaOFkGeqVj0QZbvfMxHE8zOtrCUlCQbHP3+Jm/lGXM
+	 Bl9f7Izrtp0dn9w+KN1CFuyc+GACABlxvi/gXAUb93/ZyxP/HHX2NbNoU+IdSLPbk+M5f
+	 9xn9ZFb7Sf3eVpmgOWbvqgwgjNRhrIoPP4Hyr+Zh2h6lY5D6RzQV1qmHkbjajcuRjRfXX
+	 xU+Jp7t9vA587QNJ7EG+5A+KEL5ugXHYxJR9/75KJOLMII4e0hjCyD1Sv97freS55kfks
+	 MQNqX5LS8T5KvPIkcIbr4pNLADjAJfNgDbqh6eGXKQ3VwEeIKZxx0UvMLPsAAtRPchA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4zs6Tai;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wf25oOh7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162A1606A320;
-	Wed, 18 Nov 2026 23:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74C8606A320;
+	Wed, 18 Nov 2026 23:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4zs6Tai
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2743F1F000C4;
-	Wed, 18 Nov 2026 23:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wf25oOh7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC7E1F000C4;
+	Wed, 18 Nov 2026 23:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044976;
-	bh=6ff5QEESrrYtgGELk0EPOyU5TddLwyhw8Apk4bNiQy8=;
+	s=korg; t=1795044979;
+	bh=iAHuULnrwRz5j/xjg2BO/cq5yBXDmbKA8TzTt5i2Ybw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4zs6Tai/01ASZVsI+FEvCG9QbeWm6y9C3zp0q7qkEcpvLCCFILOZu8tCvMOF3noh
-	 All/vjbareHsCv1gAp6KWt4S11YYIwbx1vUcfVAha6E0OHHD+Z3eOtnuWlYy8Ndni/
-	 Pv8PpyHZJC6G8xGRpodk8/2j1Nz5IJ+/WyOptdfI=
+	b=Wf25oOh7qC2snWUgRXANOpjixrtc7yuB4doxMhxggq9k6cbY7T/TXH8hop0312Fac
+	 X7/6ES6bFfBSbfIGZsmevMJ+3ahWxFbLBJKvYUc67XerryWpQGFJ/HrEzq4HOvbBGo
+	 5XQJJbCPNfPWCMkgxc1r1MzMlUxjrgqfCfdc4HJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	stable@kernel.org,
+	syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com,
+	Maxim Skokov <skokovmaksimevg@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0732/2857] fs_pin: publish pins with RCU list helpers
-Date: Wed, 18 Nov 2026 15:29:26 +0100
-Message-ID: <20261118150227.906371985@linuxfoundation.org>
+Subject: [PATCH 6.1 0759/2857] media: vivid: round the height down to the vertical subsampling factor
+Date: Wed, 18 Nov 2026 15:29:53 +0100
+Message-ID: <20261118150228.879780651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,72 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Maxim Skokov <skokovmaksimevg@gmail.com>
 
-[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
+[ Upstream commit a2ec28dd2a88d0721fc4a30242861e2be01d4023 ]
 
-pin_insert() initializes a pin before adding it under pin_lock.  The kill
-paths read the list heads under RCU without taking that lock.  Plain hlist
-insertion does not publish the earlier initialization to those readers.
+syzbot reports a vmalloc out-of-bounds write in the test pattern
+generator:
 
-KCSAN weak-memory checking reported acct_on() callback initialization
-racing with pin_kill() after the superblock-list publication.  The
-corresponding LKMM model permits the stale read with plain publication;
-the RCU release/acquire pair forbids it.
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2617 [inline]
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_buffer+0x2063/0x4160 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
+Write of size 720 at addr ffffc900038f9d50 by task vivid-000-vid-c/6017
 
-Use the RCU hlist add and dereference helpers for both pin lists.
+The reproducer requests a 720x49 NV12 capture format, i.e. an odd
+height for a format whose chroma plane is vertically subsampled.
 
-Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+The buffer size is derived from the height by a truncating division:
+
+	sizes[p] = (tpg_g_line_width(&dev->tpg, p) * h) /
+		   dev->fmt_cap->vdownsampling[p] +
+		   dev->fmt_cap->data_offset[p];
+
+For a single buffer holding both planes tpg_g_line_width() returns
+720 + 720 / 2 = 1080, so 1080 * 49 = 52920 bytes get allocated.
+
+tpg_fill_plane_buffer() however emits one chroma line for every two
+luma lines, i.e. DIV_ROUND_UP(49, 2) = 25 lines, and thus needs
+49 * 720 + 25 * 720 = 53280 bytes. The memcpy() of the last chroma
+line runs 360 bytes past the end of the buffer.
+
+An odd height is not meaningful for a 4:2:0 format in the first place,
+since the chroma plane would have to hold half a line. Rather than
+fixing up each of the ~10 sites that divide the height by
+vdownsampling[], round the height down to a multiple of the vertical
+subsampling factor where it enters the driver. Adjusting the format is
+what TRY_FMT/S_FMT are for, and it keeps every later division exact.
+
+Formats without vertical subsampling are unaffected and keep accepting
+odd heights.
+
+Tested with the syzbot reproducer, which no longer triggers the splat,
+and by streaming NV12, NV21, YUV420, YVU420 and YUYV at heights 47,
+48, 49, 51, 480, 481 and 1081. v4l2-compliance gives identical results
+before and after (48 of 50 succeeded on the vivid device in both
+cases; the two failures are pre-existing and unrelated).
+
+Fixes: ddcaee9dd4c0 ("[media] vivid: add support for single buffer planar formats")
+Cc: stable@kernel.org
+Reported-by: syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cb43e758a4dc84dd467f
+Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_pin.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/fs_pin.c b/fs/fs_pin.c
-index 47ef3c71ce907..1a508f2167e0a 100644
---- a/fs/fs_pin.c
-+++ b/fs/fs_pin.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/fs.h>
-+#include <linux/rculist.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include "internal.h"
-@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
- void pin_insert(struct fs_pin *pin, struct vfsmount *m)
- {
- 	spin_lock(&pin_lock);
--	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
--	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
-+	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
-+	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
- 	spin_unlock(&pin_lock);
- }
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index 11b7498a3b539..4b8764f4819d7 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -589,6 +589,7 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
+ 	const struct vivid_fmt *fmt;
+ 	unsigned bytesperline, max_bpl;
+ 	unsigned factor = 1;
++	unsigned int vdiv = 1;
+ 	unsigned w, h;
+ 	unsigned p;
+ 	bool user_set_csc = !!(mp->flags & V4L2_PIX_FMT_FLAG_SET_CSC);
+@@ -641,6 +642,18 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
+ 		mp->height = r.height / factor;
+ 	}
  
-@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
- 	while (1) {
- 		struct hlist_node *p;
- 		rcu_read_lock();
--		p = READ_ONCE(m->mnt_pins.first);
-+		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
- 		if (!p) {
- 			rcu_read_unlock();
- 			break;
-@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
- 	while (1) {
- 		struct hlist_node *q;
- 		rcu_read_lock();
--		q = READ_ONCE(p->first);
-+		q = rcu_dereference(hlist_first_rcu(p));
- 		if (!q) {
- 			rcu_read_unlock();
- 			break;
++	/*
++	 * The chroma planes of vertically subsampled formats hold
++	 * height / vdownsampling lines. If the height is not a multiple of
++	 * the subsampling factor, then the buffer size calculations round
++	 * that number down while the test pattern generator rounds it up,
++	 * so the generator writes one line past the end of the buffer.
++	 * Round the height down to keep both in sync.
++	 */
++	for (p = 0; p < fmt->planes; p++)
++		vdiv = max(vdiv, fmt->vdownsampling[p]);
++	mp->height = rounddown(mp->height, vdiv);
++
+ 	/* This driver supports custom bytesperline values */
+ 
+ 	mp->num_planes = fmt->buffers;
 -- 
 2.53.0
 
