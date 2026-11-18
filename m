@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035407;
-	b=yrAEH/mtj3Hrn3PMhRXsdd7EGTzeOInTK0ETDfg8EBvUxbHCFfETMPqVaTdv1JAwVu4a
-	 JRxb2JGi31C3nMJfjSDq3sfOY4ha2ecBNyamC8R8aFYyK2vgKFhmuLz7bEJmq6epsNIi3
-	 Reb3L1Lb2r2EUbGCLddaIay1restJA4tBrx13mWcJk8XryH9mU+slcCzcZ7PY9/rmi9M/
-	 7VE9x0LUPQxL84eB4imKLFjeGo4H7dv//oO8mWq0virPpDIO/+TiD3nwL+6uMU0tT0nio
-	 v1ivZr32wR6ld/dgyk5fQxDBRJD+q9ndJLVVGyN/Q6sDjjaiMAdUJMkBQNlZ5ITC1hw==
+	t=1795035410;
+	b=J3R8O024Ogj5K1FTj8JjBOUnodNqvP2D/filNtSgdjMq4FpKhVLKXsv7SIg9oGu261w9
+	 sqSyTrgMW9qVg/W7lzeCDOXD4DgfkRBoI5Z4c9nEyvK7w6nqeF/DSh2ByW/TSX4XJ0bkj
+	 ID4DRHO2IXDIa0WMras+9JKjKCqCtkGBSMsnFCLLMTNoCb7KrmbQL/GolcULKhleUtt5c
+	 6+RgIZKl+960ut40WieZQhskTX6xxjSVNbq+1zmwGj1V8FDeJ/TUlGd0dc/VJMcCi4Gdb
+	 WHARTQ9J/2iRj0lRoG18pWC5Bez8YUc/gImdOIyHQf3MdkUmFgNPhAnwBaeqMo/eBdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035407;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kJijNBTp6H64kTvWsJp/IbRdo53WTpMn4/H6IQf6Avs=;
-	b=SIeeE+gSZbpicWSKHPHgJRG1vkKwe2n69l9Yw4Bsr6V1YOM71Fsa5760W7/JhSHkeg6s
-	 1XwoXK7eTWP3QJ9x6oqy37M5bU46PfF84oQx9NlPxHxdaA1DXXbyrLBPzyAcIeqKM4kCr
-	 1wK83t3WrmW58z+ptmTa3ceXq5Lk7oJjKIafvIJcv1Uy0LLNKkJp/N6e40FIoUqvV125+
-	 S9C9aoM8/hAS/xI8bWNMLU7AJ/GCQf/zkGu7KIEpB02qIOzAmSOBraUmKx734NmHlCe+k
-	 s2Sw4wrKdzfVdSWr7QzAaTUXcZrTjlNc/v+iH4qEra4qgRTsUkIymZUAgL4sDtIMDzQ==
+	bh=itMzT1U8WfpR4IBANscACbRu4bQEWUyHa6xGJ9hXJVo=;
+	b=U9iCCp+iR+BwvsNYWxsCMLVg/VscEyR9S/qwtiG6yLpI6a9Usia3FZuB0tHX/yJGdRcZ
+	 aZs+pgwItLMOV+qh76V+7ELyOANZ4eoz+D0wpALMu1Nrn6DefetEVEC7BGrSOXzMPNa6D
+	 QOjV9hBWPw0G+FBJz84C79Ry0Jpy5xCGPkxF55mn8oFmeOWGHEn5fiYYYljArRdetjrYZ
+	 tVFwNf792zOwecuQ0gbHC+SfGObkdQBxqMMrUyM4acekloBJ/wFvOoIm199vS8cGlxBaj
+	 QKtaMOc4uRmSpZ5qP49Abi8fQZK/HPrzBIan6VSLOQAoV7DSHy7OTWS7XpQKcFvUK1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJVfBGUL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eRFtHDEn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF97606A31C;
-	Wed, 18 Nov 2026 20:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B570606A31C;
+	Wed, 18 Nov 2026 20:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJVfBGUL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF461F000C4;
-	Wed, 18 Nov 2026 20:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eRFtHDEn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBDB1F000C4;
+	Wed, 18 Nov 2026 20:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035407;
-	bh=kJijNBTp6H64kTvWsJp/IbRdo53WTpMn4/H6IQf6Avs=;
+	s=korg; t=1795035410;
+	bh=itMzT1U8WfpR4IBANscACbRu4bQEWUyHa6xGJ9hXJVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJVfBGULsgtoIDw4yv4JWglupRD7rfaJOFMp1PEXtE7MwasqgIi9GmnjdgfdYx6Vo
-	 WvbxMxqc4LLUGqXt/zueRr3OF2UZFgRljga2DdvoN6nNF/zhNRpVzzSntLmc+//9mg
-	 ZQ+goaxsz6owjmglT8q3dUxy+kUDsiVOk1gYEABk=
+	b=eRFtHDEn15YzCEaf9toeowz+BB3Y6Fqq2XiWdHpGzDDqJ0DoPhH1BSLO9mvxOHasu
+	 dKB00n53+6RClvlTv/WcXQgNqgduaIeqpKWMN0XKmUztuqowpSgvP17R4RPvFtJSbR
+	 mOYZEVcrcab6AHI8Mwesqicke8NXDt2yZD1+9mT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0691/3318] nfsd: Fix id-to-name cache entry leak in idtoname_parse()
-Date: Wed, 18 Nov 2026 15:21:53 +0100
-Message-ID: <20261118150338.994848954@linuxfoundation.org>
+	co+24c7c12d69e63c6d@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 0647/3318] smb: client: stop processing a read response after a receive error
+Date: Wed, 18 Nov 2026 15:21:09 +0100
+Message-ID: <20261118150337.402899563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 8ca3b74c0c447af17d0e27e76658a3d4cae3c5ba upstream.
+commit 51efca72345acdbedc4af76782d464bd15ba50ff upstream.
 
-idtoname_lookup() returns the id-to-name cache entry with a new
-reference. The name is parsed between the lookup and the update call,
-and when the parsed name is malformed (negative length or longer than
-IDMAP_NAMESZ), idtoname_parse() jumps to the error label without
-dropping the reference returned by idtoname_lookup(), leaking the cache
-entry.
+cifs_read_iter_from_socket() may call cifs_reconnect() before returning an
+error.  The reconnect path aborts pending mids and invokes their callbacks.
+The callback can then release the cifs_io_subrequest containing rdata.
 
-Release the reference with cache_put() before taking the error exit.
+cifs_readv_receive() nevertheless continues after a negative return and may
+dereference rdata in cifs_readv_discard().  KASAN reports the resulting
+UAF:
 
-Fixes: f9ecc921b5b5 ("[PATCH] knfsd: Use new cache code for name/id lookup caches")
+  BUG: KASAN: slab-use-after-free in cifs_readv_receive
+  Read of size 4 by task cifsd
+  cifs_readv_receive (fs/smb/client/transport.c:1284)
+  cifs_demultiplex_thread (fs/smb/client/connect.c:1355)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
+
+  Freed by task 148:
+  netfs_put_subrequest (fs/netfs/objects.c:267)
+  netfs_read_collection (fs/netfs/read_collect.c:460)
+  netfs_wait_for_in_progress (fs/netfs/misc.c:462)
+
+Return the socket error immediately, as this path did before the iterator
+conversion.  This also avoids adding a negative length to total_read.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260917163154.2162438-1-vulab@iscas.ac.cn
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Reported-by: co+24c7c12d69e63c6d@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4idmap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/transport.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -252,8 +252,10 @@ idtoname_parse(struct cache_detail *cd,
- 	/* Name */
- 	error = -EINVAL;
- 	len = qword_get(&buf, buf1, PAGE_SIZE);
--	if (len < 0 || len >= IDMAP_NAMESZ)
-+	if (len < 0 || len >= IDMAP_NAMESZ) {
-+		cache_put(&res->h, cd);
- 		goto out;
-+	}
- 	if (len == 0)
- 		set_bit(CACHE_NEGATIVE, &ent.h.flags);
- 	else
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1862,6 +1862,8 @@ cifs_readv_receive(struct TCP_Server_Inf
+ #endif
+ 		length = cifs_read_iter_from_socket(server, &rdata->iter,
+ 						    data_len);
++	if (length < 0)
++		return length;
+ 	if (length > 0)
+ 		rdata->got_bytes += length;
+ 	server->total_read += length;
 
 
