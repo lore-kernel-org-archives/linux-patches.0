@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023245;
-	b=2mNX04tCMbETrTFbZL8e8ekh7PhRold8kplK8bSA3y0A9cgPYJjgmbkfaR63XF9rAFkA
-	 yDiN2p7A6D7dLwxQqsEtsN+wH63oGPGkn11Kn2Bo1BHg6Z3fp6m/lqehS532SqbVajBqu
-	 +VAVPqgkjxHRVZLaWm90u0VYRPonrH0ECEZsrby1xbXGF7l9c9R9H2EtcZ3J9bwhnHYbQ
-	 Dvyq0rePjay/23z2ZpRPwJqaQL6Y0jZxriYCnMEOxqt4IMnLkTo64J+4BAthGous8sQbu
-	 ySUDQxXwNOar40J89skHFF7zoRcpqPHy1Xj7crACvjFcviJEC94PzV/Y4PVadH0YMAA==
+	t=1795023248;
+	b=EqUu1/JP4tnPzhFymw1c8uh+rGR9atrvmTDqiXZIQnNMDLuDihgV220WRzO7J0gp7QzJ
+	 xQRVHQ06fLI7XGK6NuS0C3NEKr0Bo7lY97lmGogTo91Wunw8ui6FLLW4KHo88rAgqcAO9
+	 FOlYsRMZElLkDdNfB0XGBShczlv9VXTLH6/OWWo74vdJm7oc0ZD045rMOY+RQB6hLlpN+
+	 KhJy1LNNd9BkGLzwGlTf2hbOtIoikRkE0TmG2g+LZ/tqEmbM6GLKT+B2vFffS81HmWbIk
+	 ONZNl4UtPZpDrw1vbq7J+eh6hHQUkXW3TdBjVQdQwmHC8h74rqR3j/FWtI+rADwbO1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5XHMptjgZpzTX8zhr37r6AtlNLpir6rfmRPhfRrUEyw=;
-	b=HSQp4VRT4GncYNvDAu3ZwnK5usmaP/JzuQDshkwZ0c+B7HzS9SyCshMujR3p+Pfd7Pkn
-	 YzTf3ezDG8r5ypNEgzsJdqmDG9ok4yvEkQ5dvqVgqhy3l/fiQJzGXwyD6fdr7G4vruBtV
-	 /crwM7B7dSED29KRbflEl7ae7DFMAY8OAmlguueOmW02/7+lFctSv4dtu43mEJKQzo5I5
-	 iNWVyAA1syz8AvnQwfgQlua2qJG3DCYW7guGb0K4aqtdy2RsynMwBurIFyBf77EAG8wzT
-	 GAATm3BBpomrcYQkCr4ZR8bXNyqXXBOJ7jl4+14IZcaLE704sj7LcGcJVDZrvPZzAcQ==
+	bh=WyULJHYx2wE7HeOPApqttxPX4Y2FGoKn6BXQ/GG/8/M=;
+	b=xO+aW5D9cLgkbft8xZC0G0JJWSCrYMG+JdYOODT5rfVP5HWQeypllYu3GErSzBZri2/5
+	 aK1jEZ3TXHLXTPvjys3LWFNyFvabVlJI9WaBH0gw2+gQNnKuuIKSBA7vEAWXzDnEWlmvC
+	 vjAbqw4wCpLXqd3PoXe5WVNFyip5Dvu78lMFEmj7vWfmcGK79h03NT3Nc9pbQg0bVztq/
+	 ypp6v4olaUjtXrg2aI3mHlEc08PwDFA7Vgjokxl1dtMlsN4N/nEfXA5zLy6v0fDiZpjT+
+	 9RMyjSEYkiocQ0ni6MHdPiVHUvhGhRvEQ1p4sOuONLnXYClESNG4FYtiWLr3ojwCG8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uw83vB9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Viyc7OwX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EFD606A32A;
-	Wed, 18 Nov 2026 17:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665BF606A325;
+	Wed, 18 Nov 2026 17:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uw83vB9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E171F000C4;
-	Wed, 18 Nov 2026 17:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Viyc7OwX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9671F000C4;
+	Wed, 18 Nov 2026 17:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023245;
-	bh=5XHMptjgZpzTX8zhr37r6AtlNLpir6rfmRPhfRrUEyw=;
+	s=korg; t=1795023248;
+	bh=WyULJHYx2wE7HeOPApqttxPX4Y2FGoKn6BXQ/GG/8/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uw83vB9G26aITkMZRuFU8jEVqzsomX6eB5FiDJGUOZ/R3TQhKQx8Ggh+5pc7f4vDS
-	 cajbvhhg31iNYmIM/hOiBCLqVmilGYMP5ZKLw7dZQcJBNc0KyrG+RyiPlwxZFxKyOd
-	 eBRQ0p3TafmBWyrqwkQ0jVSMv1xNRAqhuPCEFkiQ=
+	b=Viyc7OwX+7mcVG6vFkmxUv1vHHyzkG/uyouKwKwodGMr/NeBijnG0ceCRMBTUuJlw
+	 LhdCrK0tZJL4G0c4nalCWyFOXtiY1iNH2pVf0Ox9rLGJmTrODnejdGXu71VVuao2T1
+	 vOadMoc5YYqUXfKD8zT9HJ0q379GKOW8JQQGRN+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0302/2151] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
-Date: Wed, 18 Nov 2026 15:33:57 +0100
-Message-ID: <20261118150132.917077390@linuxfoundation.org>
+Subject: [PATCH 6.18 0303/2151] dmaengine: xilinx_dma: Move descriptors to done list based on completion bit
+Date: Wed, 18 Nov 2026 15:33:58 +0100
+Message-ID: <20261118150132.951783629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,91 +72,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit b70ab341088b2114dcbc7be868588f3e97893e6a ]
+[ Upstream commit 5b585cc8778185ae7a7c9903f8cd70d562b91282 ]
 
-The MCDMA BD format differs between memory-to-device (MM2S) and
-device-to-memory (S2MM) directions, but the driver was using generic
-'status' and 'sideband_status' fields for both. This led to incorrect
-residue calculations when the hardware updates direction-specific fields.
+In AXI MCDMA, xilinx_dma_complete_descriptor() walks the channel's
+active_list and unconditionally moves every entry to the done_list. The
+MCDMA IOC interrupt handler invokes this function on every
+interrupt-on-completion, but with interrupt coalescing (IRQThreshold > 1)
+an IOC interrupt may fire after only a subset of the queued descriptors
+have actually been processed by the hardware. As a result, descriptors
+whose completion bit is not yet set in the BD status were being reported
+as completed to client drivers.
 
-Refactor the descriptor structure to use unions with direction-specific
-field mappings, and update the residue calculation logic to select the
-correct status field based on DMA direction.
+Add a check for the descriptor completion bit before moving entries from
+the active list to the done list, using the appropriate direction-
+specific status field (s2mm_status for DMA_DEV_TO_MEM, mm2s_status for
+DMA_MEM_TO_DEV).
 
-This matches the hardware descriptor layout and fixes incorrect
-residue reporting.
+This mirrors the AXIDMA fix in commit 7bcdaa658102 ("dmaengine:
+xilinx_dma: Freeup active list based on descriptor completion bit").
 
 Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
 Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260818174151.1608971-2-srinivas.neeli@amd.com
+Link: https://patch.msgid.link/20260818174151.1608971-3-srinivas.neeli@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 94d2e5398dd69..20dc3f4a15c9a 100644
+index 20dc3f4a15c9a..797b7b9e7a814 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -223,6 +223,7 @@
- #define XILINX_MCDMA_IRQ_ERR_MASK		BIT(7)
- #define XILINX_MCDMA_BD_EOP			BIT(30)
- #define XILINX_MCDMA_BD_SOP			BIT(31)
-+#define XILINX_MCDMA_BD_HW_SIZE			64
- 
- /**
-  * struct xilinx_vdma_desc_hw - Hardware Descriptor
-@@ -277,8 +278,10 @@ struct xilinx_axidma_desc_hw {
-  * @buf_addr_msb: MSB of Buffer address @0x0C
-  * @rsvd: Reserved field @0x10
-  * @control: Control Information field @0x14
-- * @status: Status field @0x18
-- * @sideband_status: Status of sideband signals @0x1C
-+ * @mm2s_ctrl_sideband: Sideband control info for mm2s @0x18
-+ * @s2mm_status: Status field for s2mm @0x18
-+ * @mm2s_status: Status field for mm2s @0x1C
-+ * @s2mm_sideband_status: Sideband status for s2mm @0x1C
-  * @app: APP Fields @0x20 - 0x30
-  */
- struct xilinx_aximcdma_desc_hw {
-@@ -288,10 +291,17 @@ struct xilinx_aximcdma_desc_hw {
- 	u32 buf_addr_msb;
- 	u32 rsvd;
- 	u32 control;
--	u32 status;
--	u32 sideband_status;
-+	union {
-+		u32 mm2s_ctrl_sideband;
-+		u32 s2mm_status;
-+	};
-+	union {
-+		u32 mm2s_status;
-+		u32 s2mm_sideband_status;
-+	};
- 	u32 app[XILINX_DMA_NUM_APP_WORDS];
- } __aligned(64);
-+static_assert(sizeof(struct xilinx_aximcdma_desc_hw) == XILINX_MCDMA_BD_HW_SIZE);
- 
- /**
-  * struct xilinx_cdma_desc_hw - Hardware Descriptor
-@@ -1025,9 +1035,11 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
- 					   struct xilinx_aximcdma_tx_segment,
- 					   node);
- 			aximcdma_hw = &aximcdma_seg->hw;
--			residue +=
--				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
--				(aximcdma_hw->status & chan->xdev->max_buffer_len);
-+			residue += aximcdma_hw->control & chan->xdev->max_buffer_len;
-+			if (chan->direction == DMA_DEV_TO_MEM)
-+				residue -= aximcdma_hw->s2mm_status & chan->xdev->max_buffer_len;
-+			else
-+				residue -= aximcdma_hw->mm2s_status & chan->xdev->max_buffer_len;
+@@ -1770,6 +1770,17 @@ static void xilinx_dma_complete_descriptor(struct xilinx_dma_chan *chan)
+ 					      struct xilinx_axidma_tx_segment, node);
+ 			if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
+ 				break;
++		} else if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
++			struct xilinx_aximcdma_tx_segment *seg;
++			u32 status;
++
++			seg = list_last_entry(&desc->segments,
++					      struct xilinx_aximcdma_tx_segment,
++					      node);
++			status = (chan->direction == DMA_DEV_TO_MEM) ?
++				seg->hw.s2mm_status : seg->hw.mm2s_status;
++			if (!(status & XILINX_DMA_BD_COMP_MASK))
++				break;
  		}
- 	}
- 
+ 		if (chan->has_sg && chan->xdev->dma_config->dmatype !=
+ 		    XDMA_TYPE_VDMA)
 -- 
 2.53.0
 
