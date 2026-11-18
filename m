@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034807;
-	b=I+O38KVLg2cFKTqR2TCiBZYJXikZTc+WXYac0PFaGneEMWWchYgePqq1KTE7rjsaJerT
-	 DnUXY9fWqHWVFii4acBdzl/RkWn3C4z8+NwRzgzXwPe2Ag4lCvq4TPwye1zDHcySCwSlD
-	 FhxE48BGcDdIn0uDzouACP/DLyY+E402aLdXYdeBmp60r4KGpPBMxbYXJvA3rVNh4dZhI
-	 m8vCBKg6TWxz/MbWqflSxDbsAaMnKmGIdw676mLcvf1yMnnAGQQXgSVYXvYm0xqLouZqU
-	 RhETj9az+pTK9VSqoMly0OsPLLcy0/7dyxKOOZSoETUhQNumWAWl1W+4kV+UgUeapBQ==
+	t=1795034810;
+	b=kx1Mio8CgyNeASEDeTTKEyFRkyXZ/KAMELiu92yDRkKJm0AYii+UNgEK/PA3JfsnpU5z
+	 Bs67hO43vMc0Oc7ZgdyRhrbGnSlQp1CUe93GWxWQdQgd4Y3d6FCuWpxSF2eMr4vNNdIJT
+	 xRf5W1IXt+Iv+lF5XZmTsk3b2E243MsjoM70FWt0JfzqUuXGQw3HwOVj1KaMykzbE98X2
+	 cwNm0uO/sblYcFKmtTSmq+VFK+mlERd77KVBx9dd4BjHnZ4nXG5hCTbyy1srBUxaVAAI6
+	 TBPBvL5INqGtVugNxlpEREJV1jx2+lVabp+xynsUPtmU4YaI0g12MlR3oQCxjjUkHlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034810;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gETdRqf1HWSlrigP48CnMuk48cKrtvi9GPL+chR9FPw=;
-	b=naOILZKPADLOMcxvacAFcbdPScpWpvs/39ircgn0BJLzbGv7FVYf8tLJ9nenRS89ylBC
-	 eoU4+l19IQnwaWcg24Q96dkAJjfBSpnFlqXNP/qfHJNdJY8htUPiriDPAO3dJWNLjudUc
-	 mDjuRFr0fPR+tWxXNkQ9WVdcfk2jj9M15a1AgCj+F4ohMZsQNDqbwn/xPgYBKC+adUjWR
-	 DqMNYDMpR/WGotg7VjcqTtfC4vVU87KAkVKTKKrAL0uBqARhVBiNj11jpzxniJua5ahcG
-	 gy7wv47tvUliXgLryiq5Jr6xpkz7qN78USuso0xycsJxfLIcZ8yBmQmzybCTlY+7tuQ==
+	bh=AqjOr2l5XZzAtoeu6YLfdQsnoecwe9LBOArRdxVsS+4=;
+	b=j5pO0L/j0r6d4DwgNNS3QOWJxMpowICdcSb81jkZlOvfaKnBJd03rkRWv/x83YiWtc+C
+	 Veq/DmoyKxgG+Tc81u20jHroHSHRWR4LNwmko6uIoFq8PaxQcc3wuErDM5PWbj/7ghM/M
+	 wRDYiqhvHGu5mCyHbC/UgckugHRufnQKd9ZLAH2UlzE5Yup7YRtdsykf2oxfRxvOlywpz
+	 rJb3VWciSvKp1V81Rkr3Dxo0UY27jN64oeGpRSlir0DXLwrylry/Kd3IgLIr5YVFxOVbk
+	 qgMaDtuUtxkLYoWt/fQwZuns/wgD8x8rn29Wagoi6z2gbZm6UzMg4dVKh39RuZXVEDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JKIpoNi/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw7KR4+J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802BA606A320;
-	Wed, 18 Nov 2026 20:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CA9606A32A;
+	Wed, 18 Nov 2026 20:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKIpoNi/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A431F000C5;
-	Wed, 18 Nov 2026 20:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw7KR4+J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A846A1F000C4;
+	Wed, 18 Nov 2026 20:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034807;
-	bh=gETdRqf1HWSlrigP48CnMuk48cKrtvi9GPL+chR9FPw=;
+	s=korg; t=1795034810;
+	bh=AqjOr2l5XZzAtoeu6YLfdQsnoecwe9LBOArRdxVsS+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKIpoNi/Rh5lkDe4uBMMYOVUQBanp5owXVMwIZn1J+iMZ7UjHmchjfzvjvERlOpDV
-	 RU1uh5gQBx3vIqmO1iNjKl7TcFqZAFiGzWaH+FBMO+MBIaO+JZZRY9BWKGveGI20aR
-	 m8SkghSrukJjbkzCSM6O7WiADjVeI5WTil83k7WQ=
+	b=Jw7KR4+JXyHaCXRzIaf942xjOx5e30sHDc5jk74KjgDpiaYOE9TsQ+LhsFV2CVHUA
+	 fXQMPDfGT6cjgVjvf/FjCaNEL/jglgwGvgukFOwpkymzdZP188a2jz6xzpCDG/mZMo
+	 SlZCXwxjjtOMZ/gfsKBxai+9Frc4rtJoFZoZwZKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Katherine Leaver <kleaver@janestreet.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0502/3318] packet: use ubuf_info completion for TX_RING packets
-Date: Wed, 18 Nov 2026 15:18:44 +0100
-Message-ID: <20261118150332.126604202@linuxfoundation.org>
+Subject: [PATCH 6.6 0485/3318] Bluetooth: ISO: release unused CIS holds after channel attach
+Date: Wed, 18 Nov 2026 15:18:27 +0100
+Message-ID: <20261118150331.524022100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,268 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit 9518405613863d0bf0700927a21367f5942cf058 ]
+[ Upstream commit 0fcd4dad555c96e0bd3a1b8c569f989be85c7341 ]
 
-tpacket_snd sends skbs with frags pointing into its ring slots. Slots
-are released when skb->destructor is called.
+hci_bind_cis() and hci_connect_cis() return one hci_conn hold for the
+ISO layer.  A new channel association consumes that hold, which is
+eventually released by iso_conn_free().
 
-A call to skb_orphan calls skb->destructor before the skb is freed.
-This can cause the slot to be reused while still linked into the skb.
+There are two cases where iso_chan_add() does not create an association:
+it returns success when the socket is already attached to the same
+iso_conn, and it returns -EBUSY when another socket is attached.  The
+hold returned for the current call is unused in both cases.  This occurs
+when deferred setup calls iso_connect_cis() again for its existing
+socket, or when another socket attempts to reuse the CIS.
 
-Switch to standard zerocopy completion (ubuf_info) so the slot is only
-released once all references to the payload are freed or copied.
-Restore skb->destructor to standard sock_wfree.
+Detect the idempotent case while the connection is locked and release
+the unused hold after iso_chan_add().  Also release it on -EBUSY.  Do not
+drop it for other errors: a newly allocated iso_conn releases the
+transferred hold when its last temporary reference is put.
 
-The ubuf_info completion callback can be called with a NULL skb, but
-only from net_zcopy_put and related API, used by zerocopy implementations
-that hold their own reference on the uarg, such as MSG_ZEROCOPY. This
-uarg is only ever completed from skb_zcopy_clear, so skb is always set.
-
-To prevent userspace from aliasing in-flight state on shared ring
-slots, allocate tpacket_uarg per packet, rather than per slot. This
-adds a small allocation to the transmit path. Use standard kmalloc to
-allow backporting to stable kernels.
-
-The uarg holds an sk_wmem_alloc reference, rather than an sk_refcnt
-reference. packet_free_tx_ring waits on sk_wmem_alloc before freeing
-the ring pages. Always allocate vec->deferred for tx_ring so page-backed
-rings also wait on sk_wmem_alloc when skb_copy_ubufs drops page refs
-before calling tpacket_ubuf_complete.
-
-Drop the tx_ring.pg_vec test that tpacket_destruct_skb performed before
-accessing the slot. The sk_wmem_alloc reference now guarantees that the
-slot is valid. The test is also not sufficient by itself, as it reads
-pg_vec without pg_vec_lock, so it can race with packet_set_ring.
-
-As a result a slot is released when its payload is copied, which can
-be before transmission (e.g., in skb_orphan_frags_rx). If copied
-before skb_tx_timestamp() is called, no slot timestamp is recorded,
-similar to when skb_orphan() was called early in the datapath before
-this patch.
-
-Revert the now unused previous skb_zcopy_.._nouarg infra.
-
-Depends on commit 992cc9f94ca9 ("net/packet: defer vmalloc TX_RING
-free until skbs finish").
-
-Reported-by: Katherine Leaver <kleaver@janestreet.com>
-Reported-by: Bjoern Doebel <doebel@amazon.de>
-Closes: https://lore.kernel.org/netdev/20260909085542.3370986-1-doebel@amazon.de/
-Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
+Fixes: 69997d50ec57 ("Bluetooth: ISO: handle bound CIS cleanup via hci_conn")
 Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260919004748.1463985-3-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Replaced ubuf_info ops->complete with the older callback pointer, used kzalloc() instead of kzalloc_obj(), and kept the older skb priority/mark/tstamp context in tpacket_fill_skb(). ]
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Dropped the iso_conn_put(conn) call and the missing bdaddr_t/u8 locals from the context, since this tree has no iso_conn refcounting, keeping only the new already_attached check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 19 +-------
- net/packet/af_packet.c | 98 ++++++++++++++++++++++++++----------------
- 2 files changed, 61 insertions(+), 56 deletions(-)
+ net/bluetooth/iso.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 171775202bd93..8153b96c4977c 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1749,22 +1749,6 @@ static inline void skb_zcopy_set(struct sk_buff *skb, struct ubuf_info *uarg,
- 	}
- }
- 
--static inline void skb_zcopy_set_nouarg(struct sk_buff *skb, void *val)
--{
--	skb_shinfo(skb)->destructor_arg = (void *)((uintptr_t) val | 0x1UL);
--	skb_shinfo(skb)->flags |= SKBFL_ZEROCOPY_FRAG;
--}
--
--static inline bool skb_zcopy_is_nouarg(struct sk_buff *skb)
--{
--	return (uintptr_t) skb_shinfo(skb)->destructor_arg & 0x1UL;
--}
--
--static inline void *skb_zcopy_get_nouarg(struct sk_buff *skb)
--{
--	return (void *)((uintptr_t) skb_shinfo(skb)->destructor_arg & ~0x1UL);
--}
--
- static inline void net_zcopy_put(struct ubuf_info *uarg)
- {
- 	if (uarg)
-@@ -1787,8 +1771,7 @@ static inline void skb_zcopy_clear(struct sk_buff *skb, bool zerocopy_success)
- 	struct ubuf_info *uarg = skb_zcopy(skb);
- 
- 	if (uarg) {
--		if (!skb_zcopy_is_nouarg(skb))
--			uarg->callback(skb, uarg, zerocopy_success);
-+		uarg->callback(skb, uarg, zerocopy_success);
- 
- 		skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY;
- 	}
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index baf39b937fb5b..2509f878cffad 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2584,26 +2584,6 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 	goto drop_n_restore;
- }
- 
--static void tpacket_destruct_skb(struct sk_buff *skb)
--{
--	struct packet_sock *po = pkt_sk(skb->sk);
--
--	if (likely(po->tx_ring.pg_vec)) {
--		void *ph;
--		__u32 ts;
--
--		ph = skb_zcopy_get_nouarg(skb);
--
--		ts = __packet_set_timestamp(po, ph, skb);
--		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
--
--		packet_dec_pending(&po->tx_ring);
--		complete(&po->skb_completion);
--	}
--
--	sock_wfree(skb);
--}
--
- static int __packet_snd_vnet_parse(struct virtio_net_hdr *vnet_hdr, size_t len)
- {
- 	if ((vnet_hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
-@@ -2643,27 +2623,52 @@ static int packet_snd_vnet_parse(struct msghdr *msg, size_t *len,
- 	return 0;
- }
- 
-+struct tpacket_uarg {
-+	struct ubuf_info	ubuf;
-+	struct packet_sock	*po;
-+	void			*ph;
-+};
-+
-+static void tpacket_ubuf_complete(struct sk_buff *skb, struct ubuf_info *uarg,
-+				  bool success)
-+{
-+	struct tpacket_uarg *tu = container_of(uarg, struct tpacket_uarg, ubuf);
-+	struct packet_sock *po = tu->po;
-+	void *ph = tu->ph;
-+	__u32 ts;
-+
-+	DEBUG_NET_WARN_ON_ONCE(!skb);
-+
-+	if (!refcount_dec_and_test(&uarg->refcnt))
-+		return;
-+
-+	ts = __packet_set_timestamp(po, ph, skb);
-+	__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
-+
-+	packet_dec_pending(&po->tx_ring);
-+	complete(&po->skb_completion);
-+
-+	kfree(tu);
-+	sk_free(&po->sk);
-+}
-+
- static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
--		void *frame, struct net_device *dev, void *data, int tp_len,
-+		struct net_device *dev, void *data, int tp_len,
- 		__be16 proto, unsigned char *addr, int hlen, int copylen,
- 		int hard_header_len,
- 		const struct sockcm_cookie *sockc)
- {
--	union tpacket_uhdr ph;
- 	int to_write, offset, len, nr_frags, len_max;
- 	struct socket *sock = po->sk.sk_socket;
- 	struct page *page;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 217ba98b053b1..cc1267cec8229 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -407,6 +407,7 @@ static int iso_connect_cis(struct sock *sk)
+ 	struct iso_conn *conn;
+ 	struct hci_conn *hcon;
+ 	struct hci_dev  *hdev;
++	bool already_attached;
  	int err;
  
--	ph.raw = frame;
--
- 	skb->protocol = proto;
- 	skb->dev = dev;
- 	skb->priority = READ_ONCE(po->sk.sk_priority);
- 	skb->mark = READ_ONCE(po->sk.sk_mark);
- 	skb->tstamp = sockc->transmit_time;
- 	skb_setup_tx_timestamp(skb, sockc->tsflags);
--	skb_zcopy_set_nouarg(skb, ph.raw);
- 
- 	skb_reserve(skb, hlen);
- 	skb_reset_network_header(skb);
-@@ -2803,6 +2808,7 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
- 	struct virtio_net_hdr vnet_hdr;
- 	bool has_vnet_hdr = false;
- 	struct sockcm_cookie sockc;
-+	struct tpacket_uarg *uarg;
- 	__be16 proto;
- 	int err, reserve = 0;
- 	void *ph;
-@@ -2933,7 +2939,7 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
- 				err = len_sum;
- 			goto out_status;
- 		}
--		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
-+		tp_len = tpacket_fill_skb(po, skb, dev, data, tp_len, proto,
- 					  addr, hlen, copylen, hard_header_len,
- 					  &sockc);
- 		if (likely(tp_len >= 0) &&
-@@ -2965,7 +2971,24 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
- 			virtio_net_hdr_set_proto(skb, &vnet_hdr);
- 		}
- 
--		skb->destructor = tpacket_destruct_skb;
-+		uarg = kmalloc(sizeof(*uarg), GFP_KERNEL);
-+		if (unlikely(!uarg)) {
-+			if (likely(len_sum > 0))
-+				err = len_sum;
-+			else
-+				err = -ENOMEM;
-+			goto out_status;
-+		}
-+		uarg->po = po;
-+		uarg->ph = ph;
-+		uarg->ubuf.callback = tpacket_ubuf_complete;
-+		uarg->ubuf.flags = SKBFL_ZEROCOPY_FRAG;
-+		refcount_set(&uarg->ubuf.refcnt, 1);
-+
-+		/* Hold a sk_wmem_alloc reference until completion */
-+		refcount_inc(&po->sk.sk_wmem_alloc);
-+		skb_zcopy_init(skb, &uarg->ubuf);
-+
- 		__packet_set_status(po, ph, TP_STATUS_SENDING);
- 		packet_inc_pending(&po->tx_ring);
- 
-@@ -4532,21 +4555,20 @@ static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring
- 	vec->len = block_nr;
- 	pg_vec = vec->pg_vec;
- 
-+	if (tx_ring) {
-+		vec->deferred = kzalloc(sizeof(*vec->deferred),
-+					GFP_KERNEL | __GFP_NOWARN);
-+		if (!vec->deferred)
-+			goto out_free_pgvec;
-+		vec->deferred->vec = vec;
-+		INIT_DELAYED_WORK(&vec->deferred->work,
-+				  packet_free_pg_vec_work);
-+	}
-+
- 	for (i = 0; i < block_nr; i++) {
- 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
- 		if (unlikely(!pg_vec[i].buffer))
- 			goto out_free_pgvec;
--
--		if (tx_ring && !vec->deferred &&
--		    is_vmalloc_addr(pg_vec[i].buffer)) {
--			vec->deferred = kzalloc(sizeof(*vec->deferred),
--						GFP_KERNEL | __GFP_NOWARN);
--			if (!vec->deferred)
--				goto out_free_pgvec;
--			vec->deferred->vec = vec;
--			INIT_DELAYED_WORK(&vec->deferred->work,
--					  packet_free_pg_vec_work);
--		}
+ 	BT_DBG("%pMR -> %pMR", &iso_pi(sk)->src, &iso_pi(sk)->dst);
+@@ -470,7 +471,13 @@ static int iso_connect_cis(struct sock *sk)
+ 		goto unlock;
  	}
  
- out:
++	iso_conn_lock(conn);
++	already_attached = iso_pi(sk)->conn == conn && conn->sk == sk;
++	iso_conn_unlock(conn);
++
+ 	err = iso_chan_add(conn, sk, NULL);
++	if (already_attached || err == -EBUSY)
++		hci_conn_drop(hcon);
+ 	if (err)
+ 		goto unlock;
+ 
 -- 
 2.53.0
 
