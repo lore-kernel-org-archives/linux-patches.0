@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040595;
-	b=VytLBQpDV6CpdR2jVsNcjoetyxMVSTcI4HDLl2Tvou0QfOfeBA3Nv2BQ1dQmTGM0g7Pg
-	 i3xR+T9njHHvq5eF9XeVEQsxHnBFcT+Tuwy7/ilU4a+TCPQNuLFa0eVUahCyrIyDSsFD2
-	 rY1fJmOP4J4m5HdaHQ7x9Pu8KznDgq0vUPQbmNm2/K7s16bonIFJRrkqWDSU7hf/0Mjs1
-	 aYitf8omWLeyYXRtSns7e1sG6FjajjjWNCgMaqHNO4Zr7sUd5obLjpANXKVPsyhN5teSd
-	 i5XtOs7ee/5ChxMz4P0K4jSa3t5G8f0Aa5DeYtdW/zphGsmrusX90bSb74EuGgbBjPw==
+	t=1795040598;
+	b=QdiOZK0GjyVo7lA+IcHo5LWS4Ktfp9wc4OOWw9QFtGFoRx+QNZ0Xedv8R6A5Lx0BiaO8
+	 YSKBqs+w+PGoCM+MKpXcXzHrbF0MRWxTI6ui3bJBInxgB4InDPHXU6yqUtNPKrQc45arf
+	 o6k2ejpdYsIjwebVxzhNsgK3yiroW08ERvi2m87gBOyQsSyMjQKacaoRdAtZ/o95Wkbm4
+	 4BKoUIjjDRBNrx0G7yboxWP2iXSyj/CVL5G4nfcpg5cDMVX4CjdyES8r1qNBvO1KvG964
+	 b9wG1Kt71k/CiKkSgg9NYBvqp9Iwi1JOApZN3e0tUhVcFsLc8HItrz+fyyUAbKUF4cA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=jGnECW5XxDno7kYd7VD4mm+3kNFukgZk8PLji8PUzQs=;
-	b=0RduZPfdhbBVBYT2Ww1A3S8DX3nJWVXb1Ea69cLz2vjGhiFQ836TjGlReEku99u84uyP
-	 cTLQbdvA30Sl8b7wU5tYBmhwPSJ40Ndo1YfmDNX3KaLnjxhNgMrwwx6zIlHFnmi+M1Ibw
-	 w4a4PoRuN8JPVSVKtfZEDhT+XEI1dRqGkOuyPyjsb2APO9kMU1KdMBi/F94fkIorvIA2p
-	 H6+4sXBTOdoJaddgINKYOVECy2ccpZwBxcb2MXUVqkHHDE+41RQPdqLIC24Cf6DAdkn67
-	 NKv0Cc3E45QJsiLttGeXPdARUz+X74TmxDAMq7hAD8K2LbN3P8sIFFSA0gNw8hLquWg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Kg72rZBWQuWXXtWRA0xcT6KIaCofqiM42909WOoHfQ0=;
+	b=pR7jzNmNwICqFDQD0G8u3qmhXPQRuIh+ioQDer49W8vjL5hSMkv739RQouctSvKqF+4K
+	 aB/rwJKlnykN5AmEyTptBq+oznMgylGesYdjBsftf3DOcADIvO18R0cS3KsRWtmegfBSL
+	 XHtU6kVS0Hk7gewlLe4OFZtrNiJCkFSOsys4ZZoTkjimFB7nFQ18xeozduFBJoIL32GGM
+	 /PKV3qctw5yR87Yw1o1n7xOPsj1Bvmj4xpB0j2z7rblmusem/y+EKRNdEqWbHt4U7xpCB
+	 t+fhVmnO+UkBwrc3L1X2o02E3OUYIdL/LRYoVCAZoO/+yFQ0ljMoOmnfQldqc3rzWFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4ktaMrB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzRQMomV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8E5606A320;
-	Wed, 18 Nov 2026 22:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8E6606A325;
+	Wed, 18 Nov 2026 22:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4ktaMrB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD521F000C4;
-	Wed, 18 Nov 2026 22:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzRQMomV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7281F000C4;
+	Wed, 18 Nov 2026 22:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040595;
-	bh=jGnECW5XxDno7kYd7VD4mm+3kNFukgZk8PLji8PUzQs=;
+	s=korg; t=1795040598;
+	bh=Kg72rZBWQuWXXtWRA0xcT6KIaCofqiM42909WOoHfQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4ktaMrB6zhOJ4BPAmO3AAz4+qnKo/PUZvQX+3P+MoC3N0Ui51/en3DwpQlmv6/gZ
-	 LlKyUvzDSa+uWk0ebY7OuoGtZyjTHqzMV8knNevvFBXzdrbpR6vAlrKqXzEJC3wtWq
-	 4Fb/C56WON+L5Vr4qePyjJgjS28uCdjCQg1bxD28=
+	b=fzRQMomVHStveff8wPBOyN/iLB1kiKL4IfDfnlKHItfMMpcg7pSPSwJsy1N0KMcRv
+	 j4zkCHgevEffkCHRbI94iDwTFSj/tQA8ZVp56lAhDEAiv3qgB05FKLJxGif2b6Y5ma
+	 wD/dC9ry6qdndWkYG6PDvamvIR1exjS7rZFeNe38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2514/3318] rtc: ftrtc010: fix integer overflow in time calculation
-Date: Wed, 18 Nov 2026 15:52:16 +0100
-Message-ID: <20261118150436.799446743@linuxfoundation.org>
+Subject: [PATCH 6.6 2497/3318] debugfs: make debugfs_create_str() read-only
+Date: Wed, 18 Nov 2026 15:51:59 +0100
+Message-ID: <20261118150436.297786765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,65 +61,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 32f04694fa87b8ac9fa58f9ceb2dc6cbc476e2a1 ]
+[ Upstream commit 5ec78be9552035e1e71de218f968c03c44181bf0 ]
 
-In ftrtc010_rtc_read_time() and ftrtc010_rtc_set_time(), all
-variables (offset, days, hour, min, sec) are u32. The expression
-"days * 86400 + hour * 3600 + min * 60 + sec" is evaluated in
-32-bit arithmetic, which silently wraps around for dates beyond
-approximately year 2106 (U32_MAX / 86400 ≈ 49710 days).
+debugfs_create_str() supports replacing the backing string from userspace.
+Concurrent writers can race and free the same old string twice.
 
-In ftrtc010_rtc_read_time(), perform the addition in 32-bit
-arithmetic first to preserve two's complement wrapping for negative
-offsets, then cast the result to timeu64_t. In
-ftrtc010_rtc_set_time(), cast individual u32 operands to timeu64_t
-before multiplication to prevent overflow in the right-hand side
-of the offset calculation.
+All writable in-tree users have been converted to local file operations.
+Remove the generic write support from debugfs_create_str(), and refuse to
+create a file when the caller passes write permission bits.
 
-Fixes: 1d61d2592c1f ("rtc: gemini/ftrtc010: rename driver and symbols")
-Assisted-by: Sashiko AI [static analysis]
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/42C8FBD59AA34EA9+20260827080320.3351155-4-liudalin@kylinsec.com.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This makes unsupported writable use visible instead of silently creating a
+file with different permissions.
+
+Fixes: 86b5488121db ("debugfs: Add write support to debugfs_create_str()")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20260807100053.1089834-4-chenyichong@uniontech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ftrtc010.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/debugfs/file.c | 81 ++++++-----------------------------------------
+ 1 file changed, 10 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-index fb66228039b8b..29c2441c5927e 100644
---- a/drivers/rtc/rtc-ftrtc010.c
-+++ b/drivers/rtc/rtc-ftrtc010.c
-@@ -73,7 +73,7 @@ static int ftrtc010_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
- 	offset = readl(rtc->rtc_base + FTRTC010_RTC_RECORD);
+diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
+index a9097a6c7b5a3..73da0f12b9e68 100644
+--- a/fs/debugfs/file.c
++++ b/fs/debugfs/file.c
+@@ -908,98 +908,37 @@ ssize_t debugfs_read_file_str(struct file *file, char __user *user_buf,
+ 	return ret;
+ }
  
--	time = offset + days * 86400 + hour * 3600 + min * 60 + sec;
-+	time = (timeu64_t)(offset + days * 86400 + hour * 3600 + min * 60 + sec);
+-static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
+-				      size_t count, loff_t *ppos)
+-{
+-	struct dentry *dentry = F_DENTRY(file);
+-	char *old, *new = NULL;
+-	int pos = *ppos;
+-	int r;
+-
+-	r = debugfs_file_get(dentry);
+-	if (unlikely(r))
+-		return r;
+-
+-	old = *(char **)file->private_data;
+-
+-	/* only allow strict concatenation */
+-	r = -EINVAL;
+-	if (pos && pos != strlen(old))
+-		goto error;
+-
+-	r = -E2BIG;
+-	if (pos + count + 1 > PAGE_SIZE)
+-		goto error;
+-
+-	r = -ENOMEM;
+-	new = kmalloc(pos + count + 1, GFP_KERNEL);
+-	if (!new)
+-		goto error;
+-
+-	if (pos)
+-		memcpy(new, old, pos);
+-
+-	r = -EFAULT;
+-	if (copy_from_user(new + pos, user_buf, count))
+-		goto error;
+-
+-	new[pos + count] = '\0';
+-	strim(new);
+-
+-	rcu_assign_pointer(*(char __rcu **)file->private_data, new);
+-	synchronize_rcu();
+-	kfree(old);
+-
+-	debugfs_file_put(dentry);
+-	return count;
+-
+-error:
+-	kfree(new);
+-	debugfs_file_put(dentry);
+-	return r;
+-}
+-
+ static const struct file_operations fops_str = {
+ 	.read =		debugfs_read_file_str,
+-	.write =	debugfs_write_file_str,
+-	.open =		simple_open,
+-	.llseek =	default_llseek,
+-};
+-
+-static const struct file_operations fops_str_ro = {
+-	.read =		debugfs_read_file_str,
+-	.open =		simple_open,
+-	.llseek =	default_llseek,
+-};
+-
+-static const struct file_operations fops_str_wo = {
+-	.write =	debugfs_write_file_str,
+ 	.open =		simple_open,
+ 	.llseek =	default_llseek,
+ };
  
- 	rtc_time64_to_tm(time, tm);
+ /**
+- * debugfs_create_str - create a debugfs file that is used to read and write a string value
++ * debugfs_create_str - create a debugfs file that is used to read a string value
+  * @name: a pointer to a string containing the name of the file to create.
+  * @mode: the permission that the file should have
+  * @parent: a pointer to the parent dentry for this file.  This should be a
+  *          directory dentry if set.  If this parameter is %NULL, then the
+  *          file will be created in the root of the debugfs filesystem.
+- * @value: a pointer to the variable that the file should read to and write
+- *         from. This pointer and the string it points to must not be %NULL.
++ * @value: a pointer to the variable that the file should read from. This
++ *         pointer and the string it points to must not be %NULL.
+  *
+  * This function creates a file in debugfs with the given name that
+- * contains the value of the variable @value.  If the @mode variable is so
+- * set, it can be read from, and written to.
++ * contains the value of the variable @value.  The file can be read from.
++ * Writable files are not supported; if @mode contains write permission bits,
++ * no file is created.
+  */
+ void debugfs_create_str(const char *name, umode_t mode,
+ 			struct dentry *parent, char **value)
+ {
+ 	if (WARN_ON(!value || !*value))
+ 		return;
++	if (WARN(mode & 0222,
++		 "%s() does not support writable files\n", __func__))
++		return;
  
-@@ -93,7 +93,8 @@ static int ftrtc010_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
- 	day = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+-	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
+-				   &fops_str_ro, &fops_str_wo);
++	debugfs_create_file_unsafe(name, mode, parent, value, &fops_str);
+ }
+ EXPORT_SYMBOL_GPL(debugfs_create_str);
  
--	offset = time - (day * 86400 + hour * 3600 + min * 60 + sec);
-+	offset = time - ((timeu64_t)day * 86400 + (timeu64_t)hour * 3600 +
-+			 (timeu64_t)min * 60 + (timeu64_t)sec);
- 
- 	writel(offset, rtc->rtc_base + FTRTC010_RTC_RECORD);
- 	writel(0x01, rtc->rtc_base + FTRTC010_RTC_CR);
 -- 
 2.53.0
 
