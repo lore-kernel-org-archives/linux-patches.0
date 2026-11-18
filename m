@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037741;
-	b=QT8DcqWm0Shx8x0rQ80Y7j46mj6kl45eXNOj14SurREO/RXTqRDRGwvkZZZSoMJM1ofU
-	 5TMUid1HdUYX7TPFEuVBYA2G5QLluRV0VxJt6C1K9Nrr7FIlG4AFCB6P3JndO9018m2QZ
-	 4lvpyhP7DZ5uT6PEo9pycF+1NoaScra8/TdhHfOQ298fI0oxFvV1hEdkBFyi/fRbnVi9Z
-	 slrkt3zNdgICRQoelQ8EHEi3R1qYPmLjPwWN9umq+70uvcJ1QR8PD6mQ64n6JlwtrYpgv
-	 CFuujuEERs1FLps5dnrPsJkRFrYaUvNX0p8XElXDT516hakJNzSKybZjXfq03ghdhOA==
+	t=1795037744;
+	b=yyHWS8+bxg8LP3tcnxi6SSfjjT+ST09dEBPx49ekcjLfvxDKXPxTIJP1w2cfzIjlXd0W
+	 7vK8VqiYcr1idHiclRxscoFhMqLIFe5TmzJ2RsZiXcbK0I6Rc/96ucC3DQVI64PiJEgRQ
+	 sq/ClF8LaHgOKLEs+nJ87G0prAL7QtQW1ef69kuf75z/gwMYERPRuOcX7y1J315kqDcW/
+	 ulBWHtuSikm1MicaTnYpfK4L4FiDFosFq4blp92G5lr2TkUtY5JBnEZmxEjkoCizQydD+
+	 /W3dZ0zaABRwdtC7CREEFnnFOQP8WTd40FcvbbI1PnLazlVG0KqseQ9/vVzS3U9LVkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oGh7FB7JAaZkcsX3TTTxSbGSd/g2XRjVQjRMRo2sLSE=;
-	b=a4lHjVawL10gt7a5hDkM0hKC1VATxDeutKGu6p61LHUMFEtlxZJjzPXwAqP0nJy0y5eM
-	 EPGRQl88tRIMGU6XzFjI2BfTlxyKxBvebln/Xhg9SpAjCcIbqSwI+cORbb7plnfSgrwrx
-	 BAanOc67/AdolYlLfO9b4P9CPKbVKhxYdwMOH+yaHl4R74rlxYwU7F4zckLnuXGQMi49n
-	 ugUjD2VbRpojHtaVMVECvQInJPfBygpH1NQY38fqcnkrXApncsKS1eFKgqhjV1KvfOBoX
-	 zZkLBIt7A9BarsLfREXrPFsOvGbdsh+BJ5K8geO3TyS1sgxnTr65Fqzk+9lQEgFS/BA==
+	bh=GPOeGNhTsle7MpYV22eVVOOK5qNUz1sjfzS5eHPtqg0=;
+	b=TWZo3ZTqTq9JcuI693YS++J9XCQHx8V7lx7fnzi9bfzN5pD9wqbfXkpjKIRr2vicLv35
+	 nU52/IrHkpBNpJI2qFlXSc9n458FwFlsCFLgGTZlVGQ6Elt8coNBehSKMY4mVNBbx8Vcr
+	 zBYcDW56Aljv6I8BEQdFzzWnht2buWx0lw9wd0fAEvxUBisNFzURYKNKjmfw45fm/t7pQ
+	 ZGmjX2D8rbdEeeBv2huIznsbLhoysK9v+mFU6BYPcFx0PB6WZ2Hm9gVcmIWSVntCvXLyQ
+	 FhRBTiuWNd4NZ5FXJZO5At3VIBkYQs9lmG/Fwrj733Hmflx3ADBvME3vHnmnhTBx7gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lIofoKyW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZIFknfo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6247606A31C;
-	Wed, 18 Nov 2026 21:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61706606A325;
+	Wed, 18 Nov 2026 21:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lIofoKyW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071C51F000C5;
-	Wed, 18 Nov 2026 21:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZIFknfo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CD61F000C5;
+	Wed, 18 Nov 2026 21:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037741;
-	bh=oGh7FB7JAaZkcsX3TTTxSbGSd/g2XRjVQjRMRo2sLSE=;
+	s=korg; t=1795037744;
+	bh=GPOeGNhTsle7MpYV22eVVOOK5qNUz1sjfzS5eHPtqg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lIofoKyW7hITMtCP1DACBbXFInnHKAPDSgK/42Essxqtf5FPkyqLOTXPRbYDs3uCd
-	 rR6R7W6gjlnqaBxIg1zGZJNIL67QFIjfh1GOok/hBcKLsSogRGFt2DthuHGSVEuhU7
-	 er7h+dAPE7SAopGtCuzbnGtkRv+ESezVhFfUee4Y=
+	b=VZIFknfoSEDYfcspRMaG/Ai7+xX9V96vlcyQmc0zSc3bw7794xuf8Se863HBziNXj
+	 Q3pfIYvoWHKuclZ8j15wPxXh8XpOVl+a6Mp9J1f2tmIkQRRezbEzYDSPD//03ueF15
+	 Rcr8AxGMKWAGqeSXAlslDMPEW0g0ByzF8QvCtyII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reid Downing <skibletz@gmail.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Zhe Liu <liuzhe1@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1502/3318] xfs: fix wrong compat fields in xfs_ioctl32_bstat_copyin()
-Date: Wed, 18 Nov 2026 15:35:24 +0100
-Message-ID: <20261118150405.978898376@linuxfoundation.org>
+Subject: [PATCH 6.6 1503/3318] blk-iocost: account flush sequence latency only once
+Date: Wed, 18 Nov 2026 15:35:25 +0100
+Message-ID: <20261118150406.009534771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,38 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reid Downing <skibletz@gmail.com>
+From: Zhe Liu <liuzhe1@kylinos.cn>
 
-[ Upstream commit b7eb276a39b14e685c2fe578f8ac22fc48ff9e6c ]
+[ Upstream commit e9804489e27dd6e33aec5511fe3780ff3009f57f ]
 
-bs_blocks and bs_xflags were both read from bstat32->bs_size.
-Read each one from its own field instead.
+A flush sequence with a DATA phase can complete its original request
+twice. Both completions invoke ioc_rqos_done(), causing the request to
+contribute two latency samples and adding the same queue wait time
+twice. This gives such requests disproportionate weight compared to
+ordinary writes, distorting the device-wide latency and queue wait
+feedback used to adjust iocost's virtual time rate.
 
-Fixes: e94fc4a43e5c39 ("[XFS] Add compat handlers for swapext ioctl")
-Cc: stable@vger.kernel.org # v2.6.29
-Signed-off-by: Reid Downing <skibletz@gmail.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Skip requests marked RQF_FLUSH_SEQ in ioc_rqos_done(). The flag is set
+when the request enters the flush machinery and is still set when the
+data phase completes; blk_flush_restore_request() clears it before the
+final completion, so accounting happens only once, after the whole
+sequence finishes. The remaining sample covers the request's lifetime
+through any postflush, and its queue wait time is accumulated only
+once.
+
+Fixes: 7caa47151ab2e ("blkcg: implement blk-iocost")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261102061802.408173-1-liuzhe1@kylinos.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_ioctl32.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-iocost.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/xfs/xfs_ioctl32.c b/fs/xfs/xfs_ioctl32.c
-index ee35eea1ecce6..7a4d6ebb97cd7 100644
---- a/fs/xfs/xfs_ioctl32.c
-+++ b/fs/xfs/xfs_ioctl32.c
-@@ -122,8 +122,8 @@ xfs_ioctl32_bstat_copyin(
- 	    xfs_ioctl32_bstime_copyin(&bstat->bs_atime, &bstat32->bs_atime) ||
- 	    xfs_ioctl32_bstime_copyin(&bstat->bs_mtime, &bstat32->bs_mtime) ||
- 	    xfs_ioctl32_bstime_copyin(&bstat->bs_ctime, &bstat32->bs_ctime) ||
--	    get_user(bstat->bs_blocks,	&bstat32->bs_size)	||
--	    get_user(bstat->bs_xflags,	&bstat32->bs_size)	||
-+	    get_user(bstat->bs_blocks,	&bstat32->bs_blocks)	||
-+	    get_user(bstat->bs_xflags,	&bstat32->bs_xflags)	||
- 	    get_user(bstat->bs_extsize,	&bstat32->bs_extsize)	||
- 	    get_user(bstat->bs_extents,	&bstat32->bs_extents)	||
- 	    get_user(bstat->bs_gen,	&bstat32->bs_gen)	||
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 99efec392dec6..874618b6e1769 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2819,6 +2819,9 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
+ 	if (!ioc->enabled || !rq->alloc_time_ns || !rq->start_time_ns)
+ 		return;
+ 
++	if (unlikely(rq->rq_flags & RQF_FLUSH_SEQ))
++		return;
++
+ 	switch (req_op(rq)) {
+ 	case REQ_OP_READ:
+ 		pidx = QOS_RLAT;
 -- 
 2.53.0
 
