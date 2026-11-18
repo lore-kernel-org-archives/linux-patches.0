@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045536;
-	b=e/KsCga00TLwR+QidVcsOONm4vHMYJXjZ+gawrHwnSeFMHxHgVU1na/c8zyrsC1rDOHS
-	 ASzRpZ/tSearnr8OucxfaA1v/FAfeDbdaOUtURkcO3to4pvrGfGO5t0XmkZo2IhlIFJW9
-	 fdU/e4xgukrwvT3m9H9/GMA7jf4KR2XiA49NPEZVPAUGMScx1/yzQSbGubQovQG5SHYHZ
-	 YCbfY8S7ioTmy07iLPT7CyQOj3c6oOOVDNPQ4rQ8U8g5Pw3I0nAjXwHNF0JPWdr8ymBCC
-	 k7Dy0pVmCFQhYkGkobj+bnCgQi+ubn7WfVS7ulRxtsKCtkKSvd6g+puM+lWA+vIrQhQ==
+	t=1795045539;
+	b=bowK4Mm2CPvRQAgW+6rkyJUFDsYmooIyrMIhFCSWoMWtMlW6htt/P5ZsLi4rSR/3MkEM
+	 /7JGMAnqgSj4yGP9tHKHgyucapNHqvt9I0zH/SBxa52xlLwaHnxw3ZLelBL458uac7Q8q
+	 EFHN6m07/hfgqabBPXFHSr7DSZR8oc+Ol5cshnFcf4doyFqCr7wPtCEfFkqneGIQv2PNK
+	 b5GwMXgYokN4dzs+742Ed5aLolic9jMtgIF1yQZpo0KegbvlKgRNdYx+MFGxhdi53gzgb
+	 tXiMFUaM94xtZgonw9Y0OLU7tgGuAwDqg3YusPsC6Snl8RC6rOxdGrcwtav+EKQdPiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XUsOfW3bjpP9eIccY9Ix+XlEk2FfEZXZz7fxvXZrN0g=;
-	b=BWzIA5bN6AZvtExzYOmucMia6gMJXzSXoQLRmouO8RYBSVqAy407NhhKeoUMTdY+v/WK
-	 CtH4ezHfuatfeBpfvjqcet5ePv9zAnxfT2peFyDYS0oHkWTsTCDPlfIHxcse+2YjuOgCf
-	 slXMlCoqCS6U+jBHwsgmG0epPTZblLMc9evKy3x/8br3OewauOe1guR3PNp9scT6lSNi+
-	 L6frQwHVGpIWzmBzVmSC5Q9MMxc8iOil+HLqKluX0rvJGrnDnwES1+2TstBM3skrS+/CC
-	 i68SrtOFcBUmeN3OGUT/Fmh+QyNDyx3LNeH4qfqrkcw48N8i9TzOuGqUnydQWzJZWBg==
+	bh=VDEuCehc+tZh+YjePramtwrlJgjD6m+GI67la4nOUeM=;
+	b=jzTCbwKZz/Et6XDPxu+0bMlrutgvWzjduGt6krLIXLjTJI0z+0GFnxBYfhU0AAHTEvsV
+	 93keA37AyPq3K3wvvSo1LYPvmdeA+3IovAQBJV6pq3xnMr1GWmd+WGkcnWpkYvOKcrGeG
+	 VWShXbIoG1j7cc8E38Xywj6TapnFeElHKKMn6USs/5cYJGvt8cauaXa6N/OcuhPgwZmKW
+	 LucVcjwoDf96Qt5lMfBjQyoJdIemWx9XrqfBQW2t25QQCPTv3f2m+PUcIqJqUZ0rYfwQI
+	 nObfwTpeKyupKfVTlfCucnH8nQ1nlYfSxO0VR3eBhN05fzyrdeTWK4LBf+lFZjXrL7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1kRDENm6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLpMpzMU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB09606A32A;
-	Wed, 18 Nov 2026 23:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDCD606A32C;
+	Wed, 18 Nov 2026 23:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1kRDENm6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8A91F000C4;
-	Wed, 18 Nov 2026 23:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLpMpzMU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F68C1F000C4;
+	Wed, 18 Nov 2026 23:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045536;
-	bh=XUsOfW3bjpP9eIccY9Ix+XlEk2FfEZXZz7fxvXZrN0g=;
+	s=korg; t=1795045539;
+	bh=VDEuCehc+tZh+YjePramtwrlJgjD6m+GI67la4nOUeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1kRDENm6m9fIG+aqxuUlqEGbdVTUYdlIitWvsEYrBwsz8MPMjxKzwEFjwETYvJ/X3
-	 oyDUJBVRi6zl7jsUVqTtV55QwcxhsIoo8xlzozgRBpvkRTOvBo1sfpCMGs0f9honQ/
-	 VY0WZ3Gco24VqTaC9edtSbq414nDTgduaRT2Nnz0=
+	b=KLpMpzMUpXVfzdmxyAB5k2Q8RQfryjjL6fTu7RDK3zQE6tJlgk5r+baSEPVO7wNGs
+	 zqW/ZmTYDTQmtoAqObyUvqhCBjt+HKteZ2TnKcOszw6Wy7VQLCwO3W5gE28VeU4gun
+	 psuQqfinAHxBEz6E9VLvDsETY6tHFEllW51lk8UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0959/2857] irqchip/mchp-eic: Fix clock reference leak in mchp_eic_probe()
-Date: Wed, 18 Nov 2026 15:33:13 +0100
-Message-ID: <20261118150236.130762582@linuxfoundation.org>
+Subject: [PATCH 6.1 0960/2857] spi: jcore: fix divide-by-zero when speed_hz is zero
+Date: Wed, 18 Nov 2026 15:33:14 +0100
+Message-ID: <20261118150236.167864568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,51 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit af9c707eb065a7d48eb92dc15acdb4346acf5db0 ]
+[ Upstream commit 7db773075501248893c22b11bedc6745d6d0be45 ]
 
-of_clk_get_by_name() returns the clock with an elevated reference count
-that mchp_eic_probe() keeps for the lifetime of the driver, but none of
-the probe error paths drops it, so the reference is leaked whenever
-probe fails after the clock has been obtained.
+jcore_spi_baudrate() computes hw->clock_freq / 2 / speed without
+validating speed. The SPI core fills transfer.speed_hz from
+spi->max_speed_hz when it is zero, and jcore_spi_probe() never sets
+host->max_speed_hz, so the clamp in __spi_setup() is skipped. A
+spi_device created via the sysfs new_device interface (or a DT node
+without spi-max-frequency) therefore has max_speed_hz == 0, and any
+SPI_IOC_MESSAGE transfer reaches jcore_spi_baudrate() with speed == 0,
+causing a division by zero and a kernel panic.
 
-Put the reference in the error cleanup.  The clk_prepare_enable()
-failure path must jump there directly as it cannot call
-clk_disable_unprepare() on a clock that was never enabled.
+Clamp speed to a minimum of 1 Hz before the division so the divisor is
+never zero. The computed divider then truncates to the register field
+width and the transfer simply runs at the slowest supported rate.
 
-Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916190349.2094401-1-vulab@iscas.ac.cn
+Verified by inspection of the __spi_setup() clamp and
+__spi_validate()'s speed_hz handling; the division-by-zero path
+requires the J-Core controller, which was not available.
+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Fixes: 2cb1b3b3ac0a ("spi: add driver for J-Core SPI controller")
+Cc: stable@vger.kernel.org # 4.9+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261014-spi-jcore-divzero-v1-1-a8205d30f2d1@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mchp-eic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-jcore.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
-index 7f84c736d2827..77f44d4cf30eb 100644
---- a/drivers/irqchip/irq-mchp-eic.c
-+++ b/drivers/irqchip/irq-mchp-eic.c
-@@ -228,7 +228,7 @@ static int mchp_eic_init(struct device_node *node, struct device_node *parent)
- 
- 	ret = clk_prepare_enable(eic->clk);
- 	if (ret)
--		goto unmap;
-+		goto clk_put;
- 
- 	for (i = 0; i < MCHP_EIC_NIRQ; i++) {
- 		struct of_phandle_args irq;
-@@ -264,6 +264,8 @@ static int mchp_eic_init(struct device_node *node, struct device_node *parent)
- 
- clk_unprepare:
- 	clk_disable_unprepare(eic->clk);
-+clk_put:
-+	clk_put(eic->clk);
- unmap:
- 	iounmap(eic->base);
- free:
+diff --git a/drivers/spi/spi-jcore.c b/drivers/spi/spi-jcore.c
+index 74c8319c29f17..e8b8e160d2e34 100644
+--- a/drivers/spi/spi-jcore.c
++++ b/drivers/spi/spi-jcore.c
+@@ -84,6 +84,8 @@ static void jcore_spi_baudrate(struct jcore_spi *hw, int speed)
+ {
+ 	if (speed == hw->speed_hz)
+ 		return;
++	if (speed <= 0)
++		speed = 1;
+ 	hw->speed_hz = speed;
+ 	if (speed >= hw->clock_freq / 2)
+ 		hw->speed_reg = 0;
 -- 
 2.53.0
 
