@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025723;
-	b=RjFxeMGPA7nHy22r/+FAeGqfCtqkUzlFoBaGB4Tc3J0H84ZpCpspFpwimBsIJjVaJL0O
-	 awcldyCb2iOid7yogUkz4UFyZ2dUuAWmQzfjv6gfv+jLgKfiKQJK9vVGQGXPBvDuwNTRp
-	 Hse1OMREfCfYsZgR+U5Q2gTVIoK/UxSTCVRDfgWeHQ97ij+vDjS8YWCbUcrN3zXE5zpFm
-	 4DWReFGTVwaqVE10seyh7ZFgdxuQUhD+L/Jn0Mai97eutomMfr0PPtbbj51clcPp3EGfQ
-	 BiEFdmKVRnHOlBcNMbR9RGL+GOBrs2kAtSTXI+npZ0lrjzOFjztzwX7uP46m7Vhmm9w==
+	t=1795025726;
+	b=kGUdzsw2vRYWg8XPsnPqyfMhx6P6zc/nopKe1aFN2VUanI2EFjxoBObVHxjqy+E0DDGM
+	 kasu6hDDUp1widBaH05Wkzw32I4Xnru8hglZ+xdm6mft6XYpLo5w2nKidhfw0CNINbn+w
+	 vVHLprTcAYHmgdOPLa3TJdAQwAGAzuKQPR9uJo0rKpzmYhi0bbw9PfQ8wxPbpBPqmmLbq
+	 GfUS/AxQgwFtw4CVhBqatrvMqlKOwApXGD0eSG1LT3x2BkDsl6w2B+cKPGuL3BFJVQVHC
+	 N0bsp3GBtPwkRaLfwC3oqLXcL/JdsnuG0NJwMSMIQbuRii2pYGYgQDvSZrqyjMPTv4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025726;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O73BCMYsQslati0GDvOvNI3CtCvaXh5tpM49pfVPK68=;
-	b=Cn843cN6y2/806fgrEUOoXvVLNC6GbI3yy3Dh4J6pDaed6o9885SanQDS47CDjo+yKVn
-	 ltlEmdEIKX979coDAyc+7n6mmyk0tKPMQEIXmw5YKgAT0Q+rgN9rjTd3jQ5nXuIGkBL3Y
-	 JngCdbHXt5bOkSfZ9sT60MlNnaZgAMSviqfvSuekB6joTWBqNRyIfT8hvPQmhHIEyh39t
-	 GE3PKKVyElGD1taQa7vxYQQ88kHbGVAOpnyLgbqKjd9sM1v86qry+2kHgCuLdGdNCXstP
-	 XDfylDrEkxeuDaI/56JDfChny2VNwZH9IAew3EsqHYiiY2GfUL9TGUGU1ujbE34WuIw==
+	bh=JeduzL5l5pizxxcLVHIdmemeWrnBUOYh/LXZpmKvstY=;
+	b=Naj6uo8uyDYOFI4YAharohKI6h8XXOly+cDw8C/ZliaoAUoHlAaMWfR2w0cuT7OaYMfS
+	 FgtbwvNfgDU3LdlSik6MaNTtRhaTwluY/JC8FWn01biojg5y1DixFiBVuVMYfZfZafAz9
+	 9JxoNgYzNkMrSmATYk12hCgWGSZRniBjVUMOHzwZDKtZn4He1iAN4fbJFmKKi4o1+8QpA
+	 G8ZTidImjuWrybBq0nP5jNVmzVDkx8xyyFxuXw19Y+qSkceMaE6gYXnHGl/KoI81qHoPh
+	 QYoAFDYYZUQJaRtuUPVdgfEOYbUccfAqbAZAHUiC3paBcsxXLWO6r/MIvAFeP+nwH4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BswvpvV7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HKqXrPRb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA218606A330;
-	Wed, 18 Nov 2026 18:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671D9606A32F;
+	Wed, 18 Nov 2026 18:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BswvpvV7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8BD1F000C4;
-	Wed, 18 Nov 2026 18:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HKqXrPRb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE71A1F000C4;
+	Wed, 18 Nov 2026 18:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025723;
-	bh=O73BCMYsQslati0GDvOvNI3CtCvaXh5tpM49pfVPK68=;
+	s=korg; t=1795025726;
+	bh=JeduzL5l5pizxxcLVHIdmemeWrnBUOYh/LXZpmKvstY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BswvpvV7gGeIEa25lzFfLVwUMWg/L8A300IQQBW9ohzxhKLtRZ+kfyYcbO1+O5qxe
-	 InKuYwEoeIq9Xh5qwpO24WGrzCcOav0FLoDhKGFxt3wxk1xbqdjL9t8WcM2VZgYBBp
-	 B4GL7bLTfen7juebx5/bHSLW92LlPsn6RC0fdyd8=
+	b=HKqXrPRbAyrOECVM5T6DvpmDAIwCHrTKBEt7LeA6L4UOgW0GDgWUmaB8bcLegKNE9
+	 9DcxCQWStPAz5+MrBcM0PbaMml8o2tGwJuK2O8ejtvwQYgHIg/tYt5Zwnjzul55fM4
+	 ZbiHLlWwnv5SzMRKoXe4JYobAu31NyPg3uKjO8F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilson Felipe Pereira <wfelipe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1180/2151] init/main: fix false-positive kernel panic on environment variable overwrite
-Date: Wed, 18 Nov 2026 15:48:35 +0100
-Message-ID: <20261118150205.113198722@linuxfoundation.org>
+Subject: [PATCH 6.18 1154/2151] efi/riscv: libstub: Dont set image_size in handle_kernel_image()
+Date: Wed, 18 Nov 2026 15:48:09 +0100
+Message-ID: <20261118150204.208938841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,60 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilson Felipe Pereira <wfelipe@google.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 51e766bcd35e706d8df29dd0fac98871fdced261 ]
+[ Upstream commit fd4465f49b53c7379d10610f8edb71f77366a5b7 ]
 
-In unknown_bootoption(), the limit checking for environment variables sets
-panic_later *before* checking if the variable already exists in envp_init.
+Sashiko points out the image_size should only be set if image_addr was
+reassigned to some allocated memory. If image_size is not zero then the
+caller will free the image_addr pointer.
 
-If a user passes exactly MAX_INIT_ENVS custom variables and then
-overwrites the final variable by matching its key, it causes a
-false-positive hard panic on boot despite not actually exceeding the array
-bounds or increasing the total variable count.
+efi_kaslr_relocate_kernel() never works like that, if it changes
+image_addr to allocated memory the free is done through reserve_size.
 
-Swapping the order of these checks allows the duplicate check to break out
-of the loop before the panic flag is erroneously latched.
-
-To verify, boot a VM with 31 custom variables (filling the array up to its
-limit of 32) and then overwrite the very last variable:
-
-  ENV_VARS=$(for i in {1..31}; do echo -n "var$i=$i "; done)
-  qemu-system-x86_64 -kernel bzImage -append "$ENV_VARS var31=overwrite"
-
-Without this patch, the kernel crashes instantly with:
-  Kernel panic - not syncing: Too many boot env vars at 'var31=overwrite'
-
-With this patch, the kernel safely overwrites the variable and boots.
-
-Link: https://lore.kernel.org/20260818045357.4123784-3-wfelipe@google.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b7ac4b8ee73d ("riscv: libstub: Implement KASLR by using generic functions")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/libstub/riscv-stub.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/init/main.c b/init/main.c
-index 71977bd3bc3c0..6985bf93b055d 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -540,12 +540,12 @@ static int __init unknown_bootoption(char *param, char *val,
- 		/* Environment option */
- 		unsigned int i;
- 		for (i = 0; envp_init[i]; i++) {
-+			if (!strncmp(param, envp_init[i], len+1))
-+				break;
- 			if (i == MAX_INIT_ENVS) {
- 				panic_later = "env";
- 				panic_param = param;
- 			}
--			if (!strncmp(param, envp_init[i], len+1))
--				break;
- 		}
- 		envp_init[i] = param;
- 	} else {
+diff --git a/drivers/firmware/efi/libstub/riscv-stub.c b/drivers/firmware/efi/libstub/riscv-stub.c
+index e7d9204baee31..725b634c51791 100644
+--- a/drivers/firmware/efi/libstub/riscv-stub.c
++++ b/drivers/firmware/efi/libstub/riscv-stub.c
+@@ -37,17 +37,14 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
+ 	kernel_codesize = __init_text_end - _start;
+ 	kernel_memsize = kernel_size + (_end - _edata);
+ 	*image_addr = (unsigned long)_start;
+-	*image_size = kernel_memsize;
+-	*reserve_size = *image_size;
++	*reserve_size = kernel_memsize;
+ 
+ 	status = efi_kaslr_relocate_kernel(image_addr,
+ 					   reserve_addr, reserve_size,
+ 					   kernel_size, kernel_codesize, kernel_memsize,
+ 					   efi_kaslr_get_phys_seed(image_handle));
+-	if (status != EFI_SUCCESS) {
++	if (status != EFI_SUCCESS)
+ 		efi_err("Failed to relocate kernel\n");
+-		*image_size = 0;
+-	}
+ 
+ 	return status;
+ }
 -- 
 2.53.0
 
