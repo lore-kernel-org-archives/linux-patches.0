@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039266;
-	b=P3qRJKIYUElm0XpQXJUd6ewNyGxViPLagedzsLt9IyP0ITK1wTuu4U21pqvB6qZKDv7n
-	 Mb+LpIIfLrQrFU9V5ZNxV8RO8nEm0Bd6R9p46sd5oJ90wlw1r3NkEpKElSBLBa5Cry61l
-	 80X7kGYUQKfjN3lpb3PFBYafpn8QDga5kybAb701Cvo2HKazh8wnFY+E4d4WhF1lKhQE/
-	 brkYAuyvwMKIVdL/VZV88jeR+OTnuV9OiNPlt5e3jgQknhBDiFj/8cXMNfbtIfpFMSaG4
-	 KvR3oS+6K54LxHyn8qU2gZ1Yji1hxD+eCj61jrmuNlwf+nQ2pHKbR+tzm8LHcX5XMXA==
+	t=1795039269;
+	b=Rr+6s7GCqBDyTIbtVGZHl0bqKB53PaqjR4Z0OZMyqvZEhff3AgngS6Vy9DSZiHRgJSJg
+	 3pIeV3nraJRvQLqB9GnvJcllrNTAZV4nWds+FrqYjQQsl7/Ib8/VeFePeQ4bZk3lNj+ii
+	 LqqpSmmpvxJ+77sCQg1rWTIyLcUI9fCt3SrZrAUoh8dueD5HA//E4h1/cUECE7wJr3LBU
+	 EHClt55wWh2nQ4+LY+rlZjC2EJQcJbpUW32EBKgj8F5Bh3lG1v4TYQljuQ2fNBGgNti54
+	 /R9/cvnYlYXNg7jZDxduIE1peFKpBZgl8gkxGhDuohnNQBYENDdy5Exm9PC4VaichFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039266;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QBEtNj4LgZQeenPOEQ8ZmOKj3K0GRSmw4lGUKLk6Rt0=;
-	b=g0qp8VMgseEPw+MNI4yyLb610h5fPsXsVHtXNxqbn6TvwWeZk1dsgQLtTAyTFvtUyUAu
-	 6ye0vHsgtpLEiIqoUjAHJ9WpvYWNqDVw2i0AHTNVV+oYNv62L/7CIqLiWD4jc2bNHy2W4
-	 DzZoOdNh7qKKJmaDszp9h6Ad4BHRQehJ8/XHKNKNJE9NsvQtYzPgNvBXQOS9aSZCfb8hU
-	 WSTL8/gG1h7OHjgimGJN6jNMinMTKEZyfqROP517OFvwNzESSAOxhSJCplpgL3fhw83tD
-	 qlxRuIhBsG7mmyYPe7cLo6wV4ds2gDAs3Tga3O3OYq97NF66VO+RB1qaCDGqvDOVlDw==
+	bh=PJEF8zuscHVGSxsQLhAqwD5vb5iOD2XDffHfhLfK/JM=;
+	b=R3OutLKOi6KCGjrxRFEcH11CALLbDFI42p7vTE5hqyFpgRM1P+Fk2OV3eCJlxJAqFlCg
+	 cw4+pIYoQ2U1B+ghL5C7f5OXfGyZ7wA6C85e8NlT3GPy8aN6NynsKsdAkxfTTKbIQ1iGb
+	 v6zBX2du7Fx5TiHfXJDCtMRAp2dq3Rt+GVtFWFppScQwmBen68ZwRXOuqekqwgjs6bPMg
+	 IsvMA7MJ+xiqsib1a3Euea5nrr82vzvfPiW4StyoFeCcpnh/fTUEgTp+CcklN9EC98i/h
+	 G3qLi+KGHKXL6i7nP3wKNt/9aqlCSx2F8hOtnI55o/tMHTNji5FG8ic/n5Hx3ESEmqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zmbRuJpp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxRs1crt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55756606A32A;
-	Wed, 18 Nov 2026 22:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3CD606A31C;
+	Wed, 18 Nov 2026 22:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zmbRuJpp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C241F000C4;
-	Wed, 18 Nov 2026 22:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxRs1crt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCDA1F000C4;
+	Wed, 18 Nov 2026 22:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039266;
-	bh=QBEtNj4LgZQeenPOEQ8ZmOKj3K0GRSmw4lGUKLk6Rt0=;
+	s=korg; t=1795039269;
+	bh=PJEF8zuscHVGSxsQLhAqwD5vb5iOD2XDffHfhLfK/JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zmbRuJppKHy6uOcbLisz6PJW+qtLULjryTb4lD6Dpc2dt6mDzgxsU5xunWYKzpkHM
-	 jnW9J2qz+NlSAipLxe6c40RgW8Md6m16fkhMRj5PnuXZWNb/E/W4Yw0KTxcwtPbkmG
-	 yzbHKZJ5SJPFPVaHBpEunVc9w/E+BsafNnkvXu4Y=
+	b=pxRs1crt0IldCq5wreSjYttcKWPzzmhJUJPBrs0lS2DqSf2/xYewwZpFlXktVQO4C
+	 89Iz0MZuefGU6u2GIQg50nPszRfgikJoyUwoy0azBF2x9eg8xMyu2AziuZYf27p0Ew
+	 HexVodq8YVf4qwWr2Ai/yaaabkQWtcT33JTq2w4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2038/3318] remoteproc: imx_dsp_rproc: Drop extra space
-Date: Wed, 18 Nov 2026 15:44:20 +0100
-Message-ID: <20261118150423.182628368@linuxfoundation.org>
+Subject: [PATCH 6.6 2039/3318] remoteproc: imx_dsp: Acquire runtime PM before adding carveouts
+Date: Wed, 18 Nov 2026 15:44:21 +0100
+Message-ID: <20261118150423.212504232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,48 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 8049dc7b631e33a42d8413fe48b043113afa914c ]
+[ Upstream commit 13df1fa4f1a30571442eda64c73d6cac7b9b5c95 ]
 
-Drop extra space between return and zero.
+The prepare callback publishes DSP carveouts before acquiring the
+runtime-PM reference that establishes required clocks and mailbox state.
+A PM failure therefore leaves the prepare transaction partially
+published.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Tested-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20251119-imx-dsp-2025-11-19-v4-5-adafd342d07b@nxp.com
+Acquire runtime PM first and drop that reference if carveout
+construction fails, so a failed prepare does not add resources before
+its hardware prerequisite.
+
+Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260830133310.6926-1-pengpeng@iscas.ac.cn
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Stable-dep-of: 13df1fa4f1a3 ("remoteproc: imx_dsp: Acquire runtime PM before adding carveouts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_dsp_rproc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/imx_dsp_rproc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-index 85a51b1ceb72a..491c5a48770f8 100644
+index 491c5a48770f8..1aa5920160e29 100644
 --- a/drivers/remoteproc/imx_dsp_rproc.c
 +++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -694,7 +694,7 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
+@@ -686,14 +686,17 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
+ 	struct device *dev = rproc->dev.parent;
+ 	int ret;
  
- 	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0)
++		return ret;
++
+ 	ret = imx_dsp_rproc_add_carveout(priv);
+ 	if (ret) {
+ 		dev_err(dev, "failed on imx_dsp_rproc_add_carveout\n");
++		pm_runtime_put_sync(dev);
+ 		return ret;
+ 	}
  
--	return  0;
-+	return 0;
+-	pm_runtime_get_sync(dev);
+-
+ 	return 0;
  }
  
- /* Unprepare function for rproc_ops */
-@@ -702,7 +702,7 @@ static int imx_dsp_rproc_unprepare(struct rproc *rproc)
- {
- 	pm_runtime_put_sync(rproc->dev.parent);
- 
--	return  0;
-+	return 0;
- }
- 
- /* Kick function for rproc_ops */
 -- 
 2.53.0
 
