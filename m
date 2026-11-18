@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049230;
-	b=rS8xuUIqTdFEnKkUcwb9G223DFiug6besyOoJb/03Wak3AFSm2rApRKg7gAYIxZn5w5a
-	 yqzos3VxkATQg+a5+ShWeDaZFR1ZaBiFTu3uQ27RrzjLVdSwdKyvymVkLkL27mXlxHV/N
-	 VG04FE0gdEEv/1z6BTaRexhNuQxlq/PxVTu72oRoV0oHgog/r39VCN0NFHvIXKTMOCHam
-	 AjcghUXgcEw5u4F3icRIAdGwYuSeaXUPupoYxDnK5jhqBD9bdtu1I9POnFNIECSg0kY5t
-	 mabk4TovhAAgjQg9iiz3w3KoJWqbh08WPn1wdXsygFmXcKU3ENj4qN9z88WPTcibamw==
+	t=1795049233;
+	b=LpTJP/ZGK2orHY5niAuFgI8B9LVid3DEuic+bA1ir682T1ZR1vEt9SiTIpJW8d8R1OhI
+	 lZicEZc9KmQzVsQjz96Ye57iulurcBkGcKHUQ0ivmcqN+vh8ipeLSl/TUobA6jKay5owN
+	 NrtuAz4w/xoQnGMI1K66jwwqvKN1C/kX7h3v2+WD+xQ6OSQCuqzB2PmVlZ/h8zgDcRiT2
+	 05c61zeBu14xDuuUh028rVEB7i6jjLQv71DoThpk7G/dKWizCEFGEqESWiBHjNukAOXcR
+	 SEYCgk98OysJIdybo4WRHKbDM63wb4rJlHUXpHa4JjJjGNhfYIUlrn0iH2Dfj1dxCDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=thkBayrre7l5jeuulXvEiixivOnDYeYjBaC26YoW7UY=;
-	b=gMMZKb5yrp7wVTKV71JTDi9RfAJEhe2bnH4FEaKeHjnRPAdAqKao6sGn3NMNxTMOgVtC
-	 PVXzvVHHt1N2yMpVZaAD1ewEgTce5qfL/RWkp/ReY+OpfCEoV5QSujD+K66V09Cs7G9tq
-	 f+MV6c4WRE6saxnjaWh+9/5D0zQDulGmO/gC0D7B0A+13LWdLn2F7Cm9ExZFd57HUo5FH
-	 PSh8x+hGjZAPP7bpp4+kgN28IS9zt1vg+d0JL6MsK9o9VgXYsk9306ZcpnZD17L98AekN
-	 Yu0WSskIZJbE1LVmQNaC24W21smF0cdh22zxDIwNLOiJv0L8QZwyDGX77KQiLFul9xQ==
+	bh=tC9GbcQS/KNnhIxit8VToL0Qw2mhUdU2bC7m4WvQ97c=;
+	b=DttRt0YH7ByLV5iITaEKC/FkHTh1fOP6YwpgRoDBS4NDHKNFpyKmD+3PJ9XHavoPvD47
+	 Oazq7JX3S8QbGHCgMHFCw0YR8Q5BZqhd3t5t6sFGDs20l5iZi/3DwKbxBMUUUzVdyNfRe
+	 rfOIGPwok5z9ml3/iMGcOWDlEG1GtVYbzF9u/2x6wjZ9NsmvdEuSxpnDR2w0bddu1Ui3s
+	 HWLolnT7og9YtorE2X2w2YBNehZsljx/jOeJQzZJnUM1KqbL1cqpA7xBsvteJH18gg5qD
+	 YXEFrXTgA+QRwAnftF3onMD962kbIBSnpXe14b2z1uDs1rN+4h89HbO4uhmqfaqde3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bCw48bb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=glsPp9kS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DA3606A31C;
-	Thu, 19 Nov 2026 00:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE2D606A325;
+	Thu, 19 Nov 2026 00:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bCw48bb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9A11F000C4;
-	Thu, 19 Nov 2026 00:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=glsPp9kS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969491F000C4;
+	Thu, 19 Nov 2026 00:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049230;
-	bh=thkBayrre7l5jeuulXvEiixivOnDYeYjBaC26YoW7UY=;
+	s=korg; t=1795049233;
+	bh=tC9GbcQS/KNnhIxit8VToL0Qw2mhUdU2bC7m4WvQ97c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1bCw48bb5oBSrGkbKWlqJbkoBPwuFDY2mAU9vuAh4tlePEBhlEzC3i/v/MbEVPDdR
-	 CDY72zznJm8xle4d3PVsXCG/j3ioqhZMERaHb308+BB0799y08UXw9u7TF3SBuyNKx
-	 M+CLXCaqR/QxZhDN8gSUx6FwJDM4dz00mto6OoI8=
+	b=glsPp9kS/0QAN8lpDCsNBJIFq2/S6i1Xtc+nvtbzwIfqRBewanel8ZNN5HjzhWa38
+	 glFEO/SEq+6z/MgfWJKtmS6Tx82UC9nO3Ulk4vXdoakCQcvHlyIqWgZwdDjH6VLEK0
+	 JfF0kwMdH4fPR/YbO5g4AQmHIdULC+rU9n3uwh4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yaozhong Li <yaozhonguwl@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2237/2857] wifi: b43legacy: debugfs: NUL terminate string in debugfs
-Date: Wed, 18 Nov 2026 15:54:31 +0100
-Message-ID: <20261118150321.978925410@linuxfoundation.org>
+Subject: [PATCH 6.1 2228/2857] arm64: dts: rockchip: fix analog headphone output on rk3399-firefly
+Date: Wed, 18 Nov 2026 15:54:22 +0100
+Message-ID: <20261118150321.639822660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Yaozhong Li <yaozhonguwl@gmail.com>
 
-[ Upstream commit f94595252b318a9ae3c01d78b3bcd33b01b1c082 ]
+[ Upstream commit 23eab1a5e36099fd1269f8a18dc389e04dc19011 ]
 
-The "buf" buffer is PAGE_SIZE and allocated with kzalloc().  We store a
-string from the user in it and then pass it to sscanf() in the write
-functions such as tsf_write_file().  The buffer is only used to store a
-number so we never come close to filling up the whole PAGE_SIZE.  Reserve
-the last character of the page for a NUL terminator.
+The analog headphone jack on this board has never produced any sound
+with a mainline kernel.
 
-This is debugfs so it's root only.
+GPIO4_C5 has to be high for audio to reach the jack. The board file
+muxes the pin to GPIO through the rt5640_hpcon pinctrl group and
+references that group from the codec node, but nothing ever requests or
+drives the line.
 
-Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/909ea7a88658b5e7c183bf0fda31687a91d73818.1790839793.git.error27@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Describe it the way rk3399-roc-pc-plus.dts already does something similar,
+as a simple-audio-amplifier auxiliary component, so that DAPM asserts the
+GPIO while the headphone path is active.
+
+Measured on a Firefly-RK3399 by toggling only this line while a 1 kHz
+tone kept playing, with the playback PCM in state: RUNNING throughout:
+
+  high -> audible, low -> silent, high -> audible
+
+With this change the line is claimed and follows the audio path:
+
+  pin 149 (gpio4-21): headphones-amp gpio4:149
+  idle:    gpio-21 (|enable) out lo
+  playing: gpio-21 (|enable) out hi
+
+Fixes: 171582e00db1 ("arm64: dts: rockchip: add support for firefly-rk3399 board")
+Assisted-by: LLM
+Signed-off-by: Yaozhong Li <yaozhonguwl@gmail.com>
+Link: https://patch.msgid.link/20260921063431.103-2-yaozhonguwl@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/b43legacy/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../arm64/boot/dts/rockchip/rk3399-firefly.dts | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/b43legacy/debugfs.c b/drivers/net/wireless/broadcom/b43legacy/debugfs.c
-index 6b0e8d1170611..86f0c4b717c66 100644
---- a/drivers/net/wireless/broadcom/b43legacy/debugfs.c
-+++ b/drivers/net/wireless/broadcom/b43legacy/debugfs.c
-@@ -263,7 +263,7 @@ static ssize_t b43legacy_debugfs_write(struct file *file,
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+index c5db64f3e1241..0e5cb46f0ea01 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+@@ -96,6 +96,15 @@ key-power {
+ 		};
+ 	};
  
- 	if (!count)
- 		return 0;
--	if (count > PAGE_SIZE)
-+	if (count >= PAGE_SIZE)
- 		return -E2BIG;
- 	dev = file->private_data;
- 	if (!dev)
++	/* GPIO that enables the headphone output path */
++	headphones_amp: headphones-amp {
++		compatible = "simple-audio-amplifier";
++		enable-gpios = <&gpio4 RK_PC5 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&rt5640_hpcon>;
++		sound-name-prefix = "Headphone Amp";
++	};
++
+ 	ir-receiver {
+ 		compatible = "gpio-ir-receiver";
+ 		gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_LOW>;
+@@ -132,8 +141,11 @@ rt5640-sound {
+ 		simple-audio-card,routing =
+ 			"Mic Jack", "MICBIAS1",
+ 			"IN1P", "Mic Jack",
+-			"Headphone Jack", "HPOL",
+-			"Headphone Jack", "HPOR";
++			"Headphone Amp INL", "HPOL",
++			"Headphone Amp INR", "HPOR",
++			"Headphone Jack", "Headphone Amp OUTL",
++			"Headphone Jack", "Headphone Amp OUTR";
++		simple-audio-card,aux-devs = <&headphones_amp>;
+ 
+ 		simple-audio-card,cpu {
+ 			sound-dai = <&i2s1>;
+@@ -547,8 +559,6 @@ rt5640: rt5640@1c {
+ 		clock-names = "mclk";
+ 		realtek,in1-differential;
+ 		#sound-dai-cells = <0>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&rt5640_hpcon>;
+ 	};
+ };
+ 
 -- 
 2.53.0
 
