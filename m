@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024820;
-	b=O5snyJvW1gt26G0AL3H3FRNXmUSd/ELORcVwvB+AQTnIY8fNELHJ8c1BzDt1wDCdqMBr
-	 p8qkzY/drua0URy0SAmwFel488o1DRngKC1QFlFKK+6jLcx0HSb2e9b1VgGIsKq8YEVme
-	 +pw1ITo+qKmyHPKlqcI5qOtnSVspjrzAxAHHv7PIoss2IWMRhjfjqBMwZAP04qNI+Km4H
-	 JTU8eUirXwylQkIhFIMfygerEbatnbn8JziIlOOa7Vv3O56YyNPkwpFqQFaMn8P6NYwH3
-	 Esr//mvwYiB/77+63NIIWSvCfPKDdaX2hQg2Wqb52LfFD77ReM5OyPU9p3ZgpgZaEpQ==
+	t=1795024822;
+	b=LSzKTOgKvtDyBEJU/4qveeWJ2dDFhudQu+DwNJbq7F7o5ReNY15jzXaLv+VtICeB2fp1
+	 94399pmotlK0VLM1zSEcvNr2rVJJA4+7szZIR5Qsg3m6r9OwRSw4Vn69XRI+6a6ZffqMq
+	 h18Ur13HzHo620g88HBC67+VWFPO3pW4tc66qTg7P5632DuEB7fjJo+umQOpwSTvlGHu/
+	 RuE677fEj+foZ0ltXIjIw05Mq/II9RgLoN1iuI6fHaUEmoWpmk0rbHtFf1RmVgJjoaW+e
+	 GGEIZRQcScTNuKh/17MLKJPp4PnHsj9LKEfyYsXTa3rXoTF5lyYtaAQqfL0he5ap+ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XEztKZDzA+zv2NbmWsNoJPyICpkVw5bXrIX43VNz3f0=;
-	b=YwRXYuhZvFWqoKO1tf+94J0CcGqh68oFFHPkZEtDTy3nYrEMRgDfgTCg9erP9xhrrvn5
-	 gjZkrC6dbvKQFZcRRlIMY/NJhYV/bMa0gJ8ladltc8nxwkwm9P90ULYIodS7hZZoINZn7
-	 AlovFCiu0OT8PgcRAzsExG04tAqsuGdP894vv9QSReEkWDQG2zEL+bU8QA1e/0XulWHPA
-	 Png6mh3jR0Gca2U1O8zsOzJvO+lp7hCEVii/90Ld/xoQjlZi20gBQu9hqLcivfAiaWkoL
-	 4qDh0xafg01Ypa51UE5XRTQL/1jwu1Vphg0u9oEDFRBd6R3w0CkoNw85726s4U3oSJA==
+	bh=Q62Y0OvszQLgqkPt49748hgNp2bJsxrOE0Zc1XfuIqM=;
+	b=wk6xRS14ntuD2CKo87XMryXH2gxmVDCcwdnEpnGFMbQotNJIuiOo/C1DFub7Pt1c37oK
+	 puKe8CveVwEAsgHhiuivJ/PuUVAQnzYnRX78K2n+Sm/zb2MFfgZCM46EprzNTEkBcls4X
+	 49Sr4Ii45en9pPlDkEwpceFnxkH+o6GxiJ7GMH8zidL7jW5lI8fkycuf7FIi4vYpbUulc
+	 5fM2IeGS7lwuH6aHpWFZ4cMqi8OIyYGgQdcgR9yNnbI7pqjYWGsMOzQoLfoyHV7CMquno
+	 KHDRJ8/Qfn3tmkAr0Sy5YFnT/GrrbUNSefJLhJ4mLxNcMpN09yMF4OkQ9iSZt4GSPQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFHROnmq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jG1k/OLm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BA7606A331;
-	Wed, 18 Nov 2026 18:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE80A606A32A;
+	Wed, 18 Nov 2026 18:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFHROnmq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540D31F000C4;
-	Wed, 18 Nov 2026 18:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jG1k/OLm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9EA1F000C4;
+	Wed, 18 Nov 2026 18:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024819;
-	bh=XEztKZDzA+zv2NbmWsNoJPyICpkVw5bXrIX43VNz3f0=;
+	s=korg; t=1795024822;
+	bh=Q62Y0OvszQLgqkPt49748hgNp2bJsxrOE0Zc1XfuIqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pFHROnmqKA1R76oOrSFjzghRKJ97M3VmS6tfHmfJ6GU5JrWKrDVq21EuJnpY70+Zo
-	 ApkPgYOAJWUQwUzJBDQS3aC0SqfjVLHqVEcsVRCxd5/xeQAbENT0wMMm7o8+8x6YvA
-	 NFVdmFYh6bObQFa6HgZI6qQVwH3t+buUPULCfftc=
+	b=jG1k/OLmZdWz90YlnPNbxKUZYtfQr+aPSS/plsWxxOXxFapK9KHSWjNDtvb4GWPlh
+	 6zmooAENdhJd2D/zSXHO1vKaWfOKppFpRCYyLKPgC9+jLicTgMqPY7/I/eywBoD/Og
+	 kI83WxQiV9DXg6vX9ma51rp9J2q//FxiuokSBV6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0859/2151] RDMA/bnxt_re: Validate SRQ max_sge at create time
-Date: Wed, 18 Nov 2026 15:43:14 +0100
-Message-ID: <20261118150153.519115196@linuxfoundation.org>
+Subject: [PATCH 6.18 0860/2151] RDMA/bnxt_re: Initialize wqe.flags in bnxt_re_post_srq_recv()
+Date: Wed, 18 Nov 2026 15:43:15 +0100
+Message-ID: <20261118150153.560316320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,56 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 1894ed9a664d19c190ce1bd2146759efbae77e4b ]
+[ Upstream commit 4d8168a3b7c93385c11dc836df569d337089b218 ]
 
-bnxt_re_create_srq() stored attr.max_sge into srq->qplib_srq.max_sge
-unvalidated, which defeats the num_sge check in
-bnxt_re_post_srq_recv() since that check compares against this same
-attacker-chosen value. Reject max_sge > dev_attr->max_srq_sges at
-create time, and clamp dev_attr->max_srq_sges to BNXT_STATIC_MAX_SGE
-since SRQ WQEs use the fixed-size SGE array.
+wqe is declared once above the WR loop and never zeroed, so
+wqe.flags holds indeterminate stack contents on the first WR and the
+previous WR's stale value thereafter. This propagates straight into
+the hardware-visible srqe->flags in bnxt_qplib_post_srq_recv().
+
+Most values of the wqe struct is set except flags. So initialize
+flags also.
 
 Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 ++++++++
- drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 7c8aad8a12405..656b39753f353 100644
+index 656b39753f353..6e29ffc0704b8 100644
 --- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
 +++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1897,6 +1897,14 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
- 		goto exit;
- 	}
- 
-+	if (srq_init_attr->attr.max_sge > dev_attr->max_srq_sges) {
-+		ibdev_err(&rdev->ibdev,
-+			  "Create SRQ failed - max_sge %d exceeds supported %d",
-+			  srq_init_attr->attr.max_sge, dev_attr->max_srq_sges);
-+		rc = -EINVAL;
-+		goto exit;
-+	}
-+
- 	if (srq_init_attr->srq_type != IB_SRQT_BASIC) {
- 		rc = -EOPNOTSUPP;
- 		goto exit;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index 408a34df26672..5036cc2c2cd6f 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -160,7 +160,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw)
- 
- 	attr->max_srq = le16_to_cpu(sb->max_srq);
- 	attr->max_srq_wqes = le32_to_cpu(sb->max_srq_wr) - 1;
--	attr->max_srq_sges = sb->max_srq_sge;
-+	attr->max_srq_sges = min_t(u32, sb->max_srq_sge, BNXT_STATIC_MAX_SGE);
- 	attr->max_pkey = 1;
- 	attr->max_inline_data = attr->max_qp_sges * sizeof(struct sq_sge);
- 	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
+@@ -2042,6 +2042,7 @@ int bnxt_re_post_srq_recv(struct ib_srq *ib_srq, const struct ib_recv_wr *wr,
+ 	spin_lock_irqsave(&srq->lock, flags);
+ 	while (wr) {
+ 		/* Transcribe each ib_recv_wr to qplib_swqe */
++		wqe.flags = 0;
+ 		wqe.num_sge = wr->num_sge;
+ 		bnxt_re_build_sgl(wr->sg_list, wqe.sg_list, wr->num_sge);
+ 		wqe.wr_id = wr->wr_id;
 -- 
 2.53.0
 
