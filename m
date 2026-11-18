@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034068;
-	b=AyfTYxSkVKjHVIycnEbkiBpkpy1JAKWzKgqB9XIT1OJdgmHmpSPPvJxM+wkWYK3ecC53
-	 oPmvTs6VBjvPYlin/cHpUQmnfSKC+wRSyEV1ANoo+JhYA53JOOs8MpYrZviIv6yI5UDE5
-	 1ZfJwsZbkTMnDTLIzMbBdxntbzeGyvIZpiTNCuJWAceNxlHPXPJT7UWxe0yvvgo4zpR3L
-	 e+vnpzQadAwo6822BN5j9xV5uJ5Nc0LsC2sazlVxmSc+Q6MDLR81a04/AHxCn1B2R1nJw
-	 qbLnVWFMRb/tfEJAKlrN7e4BjCpJvlUYj1PzJHAcGJEYo4kz8Tkwouoo5L4B4SZo7SQ==
+	t=1795034071;
+	b=DmklV9iyNXiFMfbL5hIOWMUU4NzootlYcp1sbHj89jAcgdOuMjQ86Qq6yNCLDv0lRPpr
+	 I3QpWsNgicNrO6EXujZLi3UBdjegAJuQKfc2/9twbTWTxCx7xPOVfwGIff0DDHYqEWuik
+	 UFQ3YVIAJlgnwDI4uYDYQ9USBbB/a936dWASmq6vtUs3Og/QlgivK95WLiwu0tANw353G
+	 AKSLe9c8AhO+ROvIf1h89t2aTLHKBvfqpXXChBsODvlSujfUmucmCfbWiqdhF4tCoQ3Lq
+	 T2oA7EsDFDGULZ5ggQpsGHMu5filnD3YIBsBmp3jZgp5Qji8eGPFiFpL0oWZ+RRlJSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=yKiKN0KV7l1Osj0ddwyGsZKPcslqgI4rJq5A8RvmJhc=;
-	b=NmNy4e1Cwmr0gTQ7c2kpPgESq+ngDUWIopNIRVFEO7D3LDCUlT+vpT+a3wTXgJVlHjsQ
-	 jQBxgEGwdxELP0Vht1WhO7Ei34ryU12XmTqXwiozjWKuuUqpKgPZdoOzSsY/+G+lp4hQd
-	 Qo4SkweH5lrVkPfhptg+OUVCLiFejBaXgJyZLIwWMD2WLgFclfCoNxd5xqIgj/vJB9Td+
-	 Jml2iHmt3Mg0BhTihvHf34rRmxV0vwzflHnkWQgmcSIwgKAH2P/mGnWyWJEeTzFsEwlc4
-	 HD+EjcQwrGJy2Jh0uqdafRF1Ak9lDn1nP7bgORLqZ0LIIouhBWJiFf8x5adXpNjLRgg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=FMTbfllIiuKsRdYv1/BdDzB3s4NqLu7m3M9GbiGBJ1w=;
+	b=HEsGMuQwfAqRokNRvfL7XuaP/UDNafbsNnuEToY7QYEVWDNi642VjRAnD5nW14hjRpoB
+	 YYqk5DPZHG/EusJmBMwrn4FoCahWHvcHII1jvzg9GxgY7WhQ16hHWxaBa+hoZCqWkjZAN
+	 V6GVUKSf14J6j2NFQM63jjzn0qrtDMiqDEVLUf+bbLHgmstyqNpJ2dr1qgW4h8PIlkngu
+	 jRUfP4ns78w8WVYjEvbVLy7Q9iyDlkhjC51XnVSGfw0cZJQleJ+04WJgN7D+gK7EnKVtV
+	 ib19BtZd3e0k/zsYVhj2vuzwu8dsxEDdsWv71g4i/LLy6x3IMHYdGZabEWCpSdYfJJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5z3fwph;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FIJtGz6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40087606A333;
-	Wed, 18 Nov 2026 20:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6520606A325;
+	Wed, 18 Nov 2026 20:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5z3fwph
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9021D1F000C4;
-	Wed, 18 Nov 2026 20:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FIJtGz6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFB61F000C4;
+	Wed, 18 Nov 2026 20:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034068;
-	bh=yKiKN0KV7l1Osj0ddwyGsZKPcslqgI4rJq5A8RvmJhc=;
+	s=korg; t=1795034070;
+	bh=FMTbfllIiuKsRdYv1/BdDzB3s4NqLu7m3M9GbiGBJ1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5z3fwphRViK1eMjfpr5LMMxcQt3f6n1eeAnPYRd1KLJA+hjXupx+l+9+VPPnwKLI
-	 hA5+yPiVwpOSagtDujasNhmgc7tTvbfo/pKAip/NSdHfPT0wu/KkFvxtN4fCqjaBkr
-	 8zdJCsVHSgiWHJQvVTSO7YD21E4Xdt15TCFtkypE=
+	b=FIJtGz6ujZF0KmbFvW4/HFoPjXOkRColF5no+PVP8LfxqS6qx5fb5qMoVDiKv5wdM
+	 p+ACW1t8gShFXdb2174bUioHf5EuG+nLBs6juRc93rcuqTAY5VL+xpvgYoXGadjYgU
+	 NAMws3zjk065EQoceD1lQmqQu45PQ5ZZIKT9Al54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0237/3318] ext4: guard against NULL s_group_info in ext4_get_group_info
-Date: Wed, 18 Nov 2026 15:14:19 +0100
-Message-ID: <20261118150322.212375398@linuxfoundation.org>
+Subject: [PATCH 6.6 0238/3318] md/raid5: reject zero-sector reshape chunks
+Date: Wed, 18 Nov 2026 15:14:20 +0100
+Message-ID: <20261118150322.255184416@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,73 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junzhe Yu <junzheyu1@gmail.com>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 8f3901fbb40745046e513226ad84e8b84492632d ]
+[ Upstream commit a41bb2ee1aca486853e84920565e50c15f86fa5d ]
 
-Resend: previous attempt was rejected by vger for containing HTML.
+Sashiko reported that RAID5 can accept a reshape chunk size that becomes
+zero sectors. chunk_size_store() stores the sysfs byte value as n >> 9, so
+writing a value below 512 bytes sets mddev->new_chunk_sectors to zero.
+RAID5 then accepted that pending reshape geometry and raid5_start_reshape()
+installed it into conf->chunk_sectors, letting reshape code divide by zero.
 
-==================================================================
+Reject zero-sector chunks both in check_reshape(), where normal sysfs
+requests are validated, and in raid5_start_reshape(), so assembly/resume
+paths also cannot install zero chunk geometry.
 
-ext4_mark_group_bitmap_corrupted() already treats a NULL return from
-ext4_get_group_info() as "nothing to do", but ext4_get_group_info()
-indexes s_group_info without checking whether the array exists.
+Test script: in QEMU, create a plain three-disk RAID5 array with 64K
+chunks, write/read back a small pattern, write 1 to
+/sys/block/md0/md/chunk_size, add a fourth disk, and run mdadm --grow
+--raid-devices=4 --backup-file=... . The script scans dmesg for divide
+error/Oops/KASAN signatures.
 
-During mount, fast-commit replay runs inside jbd2_journal_load() from
-ext4_load_and_init_journal(), which is before ext4_mb_init() allocates
-s_group_info. Replaying an FC UNLINK for an inode whose bitmap bit is
-already clear takes:
+Bad kernel, eb29914412c3:
 
-   ext4_fc_replay_unlink -> iput -> ext4_evict_inode -> ext4_free_inode
-     -> ext4_mark_group_bitmap_corrupted -> ext4_get_group_info
+  echo 1 > /sys/block/md0/md/chunk_size
+  mdadm --grow /dev/md0 --raid-devices=4 --backup-file=/root/md0-grow.bak
 
-and faults on the NULL s_group_info base. Userspace only mounts a dirty
-ext4 image; this is a supported recovery path.
+  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+  RIP: raid5_get_active_stripe+0x863/0xc10
+  Call Trace:
+   raid5_sync_request
+   md_do_sync
+   md_thread
+  Kernel panic - not syncing: Fatal exception
 
-Return NULL when s_group_info (or the per-block grp_info row) is unset
-so the existing caller check is effective during early mount.
+Fixed kernel: echo 1 > /sys/block/md0/md/chunk_size bash: echo: write
+error: Invalid argument chunk_write_rc=1 grow_rc=skipped RESULT:
+REJECTED_ZERO_CHUNK_NO_OOPS
 
-Tested on Linux v6.6.145 KASAN: crafted FC-unlink image previously
-triggered KASAN null-ptr-deref / panic in ext4_get_group_info; with this
-patch, mount succeeds (EXT4 "bit already cleared" may still log). Also
-observed on v6.6.144; still present on torvalds/linux as of
-f5098b6bae76 (2026-07-26).
-
-A self-contained Docker/QEMU reproducer (craft + mount + patch verify) is
-available on request.
-
-Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
-Link: https://patch.msgid.link/65c955b0-716b-4599-b925-59c2782e38b4@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-5-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/balloc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/raid5.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index 3a2dfc59fb40f..80c81bc8b77f5 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -329,9 +329,13 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index ac14655c85d66..d6035fc6232aa 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -8507,6 +8507,8 @@ static int check_reshape(struct mddev *mddev)
+ 		return 0; /* nothing to do */
+ 	if (has_failed(conf))
+ 		return -EINVAL;
++	if (!mddev->new_chunk_sectors)
++		return -EINVAL;
+ 	if (mddev->delta_disks < 0 && mddev->reshape_position == MaxSector) {
+ 		/* We might be able to shrink, but the devices must
+ 		 * be made bigger first.
+@@ -8550,6 +8552,9 @@ static int raid5_start_reshape(struct mddev *mddev)
+ 	if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
+ 		return -EBUSY;
  
- 	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
- 		return NULL;
-+	if (unlikely(!EXT4_SB(sb)->s_group_info))
-+		return NULL;
- 	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
- 	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
- 	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
-+	if (unlikely(!grp_info))
-+		return NULL;
- 	return grp_info[indexh];
- }
++	if (!mddev->new_chunk_sectors)
++		return -EINVAL;
++
+ 	if (!check_stripe_cache(mddev))
+ 		return -ENOSPC;
  
 -- 
 2.53.0
