@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060103;
-	b=haFFIfTaGrK/Ptm9ZYU3DSJ5VCVExHHFfc66xMbpQNyMbj4qU/QJv0qJdexJy1ccpsqO
-	 7jH3OeKtezm7hsDwVcryRxBr5Ui6DIQtYing4iSrdCw6XKeOd9pyOK9FeQ77qQV/qkFsC
-	 jht8sGOq0p40KEahufIUapSx6oAsDAfF9kt3p9jvbHDLTfraQoUBCq4pGfJ7duMJ8IQuP
-	 zQp2Z6EWcRTfrpzB0yoW0ESIvVnlYpIMdJ9wnuNPTVNb8r3DhdgtHIG/QMqipFpWDOqoU
-	 sLKiMR77L09719kDKFvL8LAlVuzr6wWDRFTQlWE2BPN7VkrsA6PAtlp341RQlfTrpyg==
+	t=1795060106;
+	b=mZbh2jsLjUCZr30eh9akLOzIRoSCik7PQTfy/caOgFlArBL74ddRxBrLbhhodE0E9myL
+	 IQiTQcHyKc1IVv2Q+5YreIm7esb4D5E+5ZiPrTVQFRGFIKDMih942zZk/+v7kqbAPLYKr
+	 0w9wJkcEpVMZtSNNmVNzbBpiiTJobV7co9+cf+RssguAVlLKjvrdQ++tOUWznolIyPVFI
+	 hXln9+pwJwNBtXelKR/os8In4aMuenOXanBCmVkyK8eMD35muTbvN6xD3fzB+w0GgX6KG
+	 /jnNLyRBXj5ttSMhC2JHJIa9gcRleIDjgxcwOQXYWMP/0uwKwj20c2tn7ao3EOb8V2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q0deIuhPT+BWnYZlawxS8+onRevq7s6o6Yv85LH2r/c=;
-	b=myamzdb42nXwm+9NDSPBYaHl9jtk0M2nj47TRPFBENfIf4NwF1MiIRJsyunCZVQcFQzk
-	 wH/ucpBm5cnMf8yi1N5odwc7TP1vc3wV0pU15zbpDyN9dwDM7f3H+0ILAIwoUMNZnZiw6
-	 0Mxrf7C+UjizFCij2J0ERMnLg9PVxXypukPS7NxQjDuDCnQ+c4MCk7NRfdNdbICzE195b
-	 JBGm3n1EDqxT9PksKxYrrpP96KZacUoj9LBuNNvk8RB6GOVQTVniG9BSblfkeV3qhCwQl
-	 XvzYrlC+Kwv6GrkzM7BnTDKaBOy5QGEV5nMqtEsAmvmXDnWnbmBOltjbU4KCvScmatA==
+	bh=EJd2hAb/qXzck1bAbncsbMohMGKZStzOzEjiWJ7efHM=;
+	b=1n4HTTlGZjPvA4Sa86s7ByjUwFToHjrjZl0F/V1K1sjwqELEhV8wfsU1BEZM2Izp4PeB
+	 PBVrsVZLuLRZplElyBwr0azLbX4iea1eeVsD7973eh4dpT1fSpFqmhIMmFJwJ1151kbEc
+	 O7eC2zZfxYFK1BEKD+JJFoDqcAlA/T5Hn7uHQ78coPceFpEW85053Mwp3cWkQPLMdkyZL
+	 1qj7r4bO+XUfaj8MAiOrmqrkDrH7n+R3QkaO1VR3k84HawuPZViyNb2yka/OHZx/7GikL
+	 ldcujL5WdQbZnFUQyWmqpHuF42lfO0kTHSfK3OMMUDw5NKg3n1xa7k4KKtSvDwlYlQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxoglyOg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w7//tRTe";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3582B606A320;
-	Thu, 19 Nov 2026 03:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2795606A325;
+	Thu, 19 Nov 2026 03:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FxoglyOg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C03E1F000C5;
-	Thu, 19 Nov 2026 03:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w7//tRTe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEE81F000C4;
+	Thu, 19 Nov 2026 03:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060103;
-	bh=Q0deIuhPT+BWnYZlawxS8+onRevq7s6o6Yv85LH2r/c=;
+	s=korg; t=1795060105;
+	bh=EJd2hAb/qXzck1bAbncsbMohMGKZStzOzEjiWJ7efHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxoglyOgVSpFmjsHq9ggFHRrvUP9U7RBOmtkpOjDQgfhfYEw1DbXsnUpET13XDM7o
-	 jnKpii3qdvyYW92jrx6+Q5ZhHvGd93OooAtQASf58LoL7V+vZNH4Qf10g5LlIMcN7d
-	 d8Vl9oqjXwurZEQxfSyo5n1HNji8nAAlqnhdWzg4=
+	b=w7//tRTeSh9tl0EIBjpTRK5JWBKjnm3ltmLsc6jJ3JRryc2uolQ0AOek7l4qrP7zB
+	 lKPMhebu/7v7zWgoWGmhBIMtMoJnarBaDL1psLP7hkRdRYw6nfIJb2I2mgeWr0JNiz
+	 O1eNM39eeLcG85iLm3yAH6bx4onTnmG169vMcJyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>
-Subject: [PATCH 5.10 1080/1848] hwrng: virtio - prevent use-after-free after a failed restore
-Date: Wed, 18 Nov 2026 15:51:58 +0100
-Message-ID: <20261118150003.590482972@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1063/1848] mm/huge_memory: fix truncate racing with PMD zapping
+Date: Wed, 18 Nov 2026 15:51:41 +0100
+Message-ID: <20261118150002.129930140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,64 +72,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 0f7bf47f5a0cc26320aa4b14f4504d03a07f4b74 ]
+[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
 
-remove_common() frees the driver data during freeze, but does not clear
-vdev->priv, which points to freed memory. If probe_common() then fails
-during restore, a later remove or freeze can dereference the dangling
-pointer.
+zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
+If this was the last mapping, truncation can skip unmapping the folio
+and proceed without waiting for the PMD lock, racing with dirtying.
 
-Clear vdev->priv on the probe_common() error cleanup path and before
-freeing the driver data in remove_common(). Also reset the device and
-return early from remove_common() if vdev->priv is already NULL for a
-safe teardown after a failed restore.
+ifs_set_range_dirty() can oops if MADV_DONTNEED races with
+ftruncate() on XFS, when we get the folio set dirty after it was found
+to not be mapped anymore.
 
-Fixes: 08e53fbdb85c ("virtio-rng: support multiple virtio-rng devices")
+Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
+matching the PTE zap path. This keeps the folio mapped while updating
+its state, so truncation must wait for the page table lock.
+
+Fix generated by an LLM and sent by Chris Mason in private.
+
+Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Reviewed-by: PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>.
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261016103640.4989-2-blum@kernel.org>
-[ sashal: replaced virtio_reset_device(vdev) with vdev->config->reset(vdev) ]
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify comment and description ]
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adapted folio-based rmap removal to page_remove_rmap() in zap_huge_pmd() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/virtio-rng.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/huge_memory.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
-index f6c0de82c22bc..72c99fa35e78d 100644
---- a/drivers/char/hw_random/virtio-rng.c
-+++ b/drivers/char/hw_random/virtio-rng.c
-@@ -186,6 +186,7 @@ static int probe_common(struct virtio_device *vdev)
- err_find:
- 	ida_simple_remove(&rng_index_ida, index);
- err_ida:
-+	vdev->priv = NULL;
- 	kfree(vi);
- 	return err;
- }
-@@ -194,6 +195,11 @@ static void remove_common(struct virtio_device *vdev)
- {
- 	struct virtrng_info *vi = vdev->priv;
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index f6fd1d3527b68..54c097bacd5d5 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1699,8 +1699,6 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
  
-+	if (!vi) {
-+		vdev->config->reset(vdev);
-+		return;
-+	}
+ 		if (pmd_present(orig_pmd)) {
+ 			page = pmd_page(orig_pmd);
+-			page_remove_rmap(page, true);
+-			VM_BUG_ON_PAGE(page_mapcount(page) < 0, page);
+ 			VM_BUG_ON_PAGE(!PageHead(page), page);
+ 		} else if (thp_migration_supported()) {
+ 			swp_entry_t entry;
+@@ -1724,6 +1722,12 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 				set_page_dirty(page);
+ 		}
+ 
++		/* Remove the rmap after transferring the dirty bit to the page. */
++		if (pmd_present(orig_pmd)) {
++			page_remove_rmap(page, true);
++			VM_BUG_ON_PAGE(page_mapcount(page) < 0, page);
++		}
 +
- 	vi->hwrng_removed = true;
- 	vi->data_avail = 0;
- 	vi->data_idx = 0;
-@@ -203,6 +209,7 @@ static void remove_common(struct virtio_device *vdev)
- 		hwrng_unregister(&vi->hwrng);
- 	vdev->config->del_vqs(vdev);
- 	ida_simple_remove(&rng_index_ida, vi->index);
-+	vdev->priv = NULL;
- 	kfree(vi);
- }
- 
+ 		spin_unlock(ptl);
+ 		if (flush_needed)
+ 			tlb_remove_page_size(tlb, page, HPAGE_PMD_SIZE);
 -- 
 2.53.0
 
