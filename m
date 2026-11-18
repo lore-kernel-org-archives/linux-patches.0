@@ -1,63 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022073;
-	b=mLdeO3wFkN5ZvDg5KenxSXfmJ8R9MOrqQIVRYFccmyA51PJCnsrBgjGhomByMpbVulYh
-	 juEXTkmZ8rTqcqu4wi1Iit4/Jd5HHXKtSNfp/LLTOlPZzWJ1LTZP9jqOxiFDJlgR12k7R
-	 b2VO53WpgI5Zz4rOOF5wQj1Pa/MD3nX3M0erIaUfz8ekq6ulfJnYY+Wk1ifS2o6plJosQ
-	 oivOThbT8/9SbBTN4dc5wkJAp1Kx5BO6s3rsaEfktFZEXAjjuV/UrFNp8lclX7PkSmED7
-	 IWMFP2pfGJOggBq90TNN0ux/A9eh4G3uwpJelGc+TWpfF0Pu+P7TOteIBZG3g9R26Iw==
+	t=1795022076;
+	b=Lf4ZYmfYTmUoRrSeGRqR1djb0jAnzJppmJpzmZymfEU0sckuId20o7rticXiV7dYYhOZ
+	 YXZa1xkQBP/U08qsvju9ZzcThC2ccaChsXTUxwafI2p+ovW/2iQ/I9ZXEUeglIPf4png5
+	 RyGH5iZAHpidH6di6UjFhquJD2s1EpVqFaK0TEvwECO4Z5dOFmobcu23n6GoqJwyetI67
+	 M6AswNDve8nyo9hMoDdfQnoboLgxPHR3sKTmVvJd2ppYzEK0D/JA7LcDF5fdodKBjnjKy
+	 j/yw99y99NrFOPE3kWg8aQ6L6wtJxk5KDPTP2eqwXmRAYm/090Hgl6j/KC9j+/6zC6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022076;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b+1HXk2NJYDOF3m3wZLnToz57Uf07fuOZcvf9Op0Fco=;
-	b=ZTvq6K2Wdghyy65VUQOHj0oH7pgcUkNadgyRTSEuCZo1b9vbMddA3832pDfuma8ErqF3
-	 PaeWXTay7O3RL2iGZ0mzj5dcQNpkym1a1hZbGj4wh1ULSCosFcl0QZ9Gk8zvDrgWwzpAi
-	 v8yiqHvj3QZLYXsVAk7E0YDFL9h6qZEncRBCdPKbbPSmDmhUg+sa6FQJL5jM5K0D84al3
-	 /oNA1hNwOmgKYz7jYTSlOw6IaNvwX3vZlFxFUPiCRaPg30EzBCBASpj1IFJhuonMsfpqU
-	 9iiYeVA15PUbMF9Zqw+ok0SVA6/4xDXrkl67Q93+rL4DT6yLr2mvV+0e0rw2IoFsLPw==
+	bh=YK9WAdRX4Z7HXSMoAGnO5B7wId2Koi0aN0c0HG3TNes=;
+	b=lmLOCFmvYQA50IBI0u5AjldXkQA/lp7NRBexs3M3mE6WpGk5cPdZmx+eUF+PYRq9D+hK
+	 gQd8HFEu4Zsi3bhGGuic2R+4Dpybf9SOBI9U3q21iKj9ydUlw5Q7jdMhFWdtaIRJO0+fF
+	 SqlqXqAgAztaeg1ItNq1IC+qns470TV9gL49t1Y9+G/cIo0s1zKdFh+PgbW1QCxBecF79
+	 aFQoVGfcUf9XMmKJ7hIBWIUj+kl1WP7Cpzwmo+R2qt3pxwI30vFg87IX75cLz05A2++J7
+	 Pw63yJvtf06OGr+m2IdGwYvtEkxz/Y4eWgRnslE+Jw8Z4G/7d6OY9BbTuSuS1No7kpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPlxlPQl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sz9s4zcP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841F4606A335;
-	Wed, 18 Nov 2026 17:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A0D606A32A;
+	Wed, 18 Nov 2026 17:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPlxlPQl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA3D1F000C4;
-	Wed, 18 Nov 2026 17:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sz9s4zcP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B984D1F000C4;
+	Wed, 18 Nov 2026 17:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022073;
-	bh=b+1HXk2NJYDOF3m3wZLnToz57Uf07fuOZcvf9Op0Fco=;
+	s=korg; t=1795022076;
+	bh=YK9WAdRX4Z7HXSMoAGnO5B7wId2Koi0aN0c0HG3TNes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gPlxlPQl9qj+GIp+xp+sukG2W9Pc7jGhhUB5nrtGI20Td0cbMgjEMLc7D+DQXgOFt
-	 tT2mqHjUQx7nyxVcpR0twjLypsZYM1YYLTy7zohzotSBZ70/HBWvOpTUX2i9clKGhU
-	 A0lAV6HqmWHYQcjJyaQVspJ/Vo6g3RPfCrijj1Ls=
+	b=Sz9s4zcPyDNeqiOfBZct/nW5Ty1gRt+soZoWYOB7ghgBg6wfvzzhpmozOXJ4e1BfM
+	 IfFvYcj/DJ2xuh4HYeFmjWzmBOwSZnZsz8v7OKeGN99RwalQjxlVRWFDlRMDDF6RWo
+	 O97C6iY4MMPBBu8SFbSVs4kugv3/BaKYXHYAZJzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Surabhi Gogte <sgogte@purestorage.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2495/2651] perf mmap: Use the head selected by read_init
-Date: Wed, 18 Nov 2026 16:02:15 +0100
-Message-ID: <20261118150414.653789799@linuxfoundation.org>
+Subject: [PATCH 7.3 2531/2651] nvme-tcp: refactor I/O queue setup path
+Date: Wed, 18 Nov 2026 16:02:51 +0100
+Message-ID: <20261118150415.738206531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -79,62 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Surabhi Gogte <sgogte@purestorage.com>
 
-[ Upstream commit 022c64992af554cfd8c564bff86100fb5ed98678 ]
+[ Upstream commit c58465c1e3d6f6fa720c922781cad4330a573cfb ]
 
-perf_mmap__push() reads the producer head before calling
-perf_mmap__read_init(), which reads it again to select the range to
-copy.
+Split the I/O queue setup helpers apart so that the individual steps can
+be called directly from nvme_tcp_configure_io_queues():
 
-If the producer advances between those reads, push() copies through the
-newer head but stores the earlier head in prev. The next drain starts at
-that earlier position and can write the same records to perf.data again.
+- Queue count negotiation moves out of nvme_tcp_alloc_io_queues() into a
+  new nvme_tcp_set_io_queue_count(), leaving the allocator with just the
+  per-queue allocation loop.
+- TLS PSK validation moves out of __nvme_tcp_alloc_io_queues() into a
+  new nvme_tcp_tls_check_psk().
+- nvme_tcp_configure_io_queues() now calls the three steps directly in
+  the same order as before.
 
-Use the head selected by read_init(): end for forward buffers and start
-for overwrite buffers. Save it before the copy loop advances start so
-prev matches the range that was copied.
-
-Fixes: 8872481bd04850b1 ("perf mmap: Introduce perf_mmap__read_init()")
-Signed-off-by: Paul Moses <p@1g4.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Surabhi Gogte <sgogte@purestorage.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 12c20e290356 ("nvme-tcp: skip TLS control records while waiting for the ICResp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
-index 358e70c4f3edd..6dcc4a9304b92 100644
---- a/tools/perf/util/mmap.c
-+++ b/tools/perf/util/mmap.c
-@@ -330,7 +330,7 @@ int mmap__mmap(struct mmap *map, struct mmap_params *mp, int fd, struct perf_cpu
- int perf_mmap__push(struct mmap *md, void *to,
- 		    int push(struct mmap *map, void *to, void *buf, size_t size))
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index edb41cb3a7a15..6204943ea404c 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2335,10 +2335,8 @@ static int nvme_tcp_alloc_admin_queue(struct nvme_ctrl *ctrl)
+ 	return ret;
+ }
+ 
+-static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
++static int nvme_tcp_tls_check_psk(struct nvme_ctrl *ctrl)
  {
--	u64 head = perf_mmap__read_head(&md->core);
-+	u64 head;
- 	unsigned char *data = md->core.base + page_size;
- 	unsigned long size;
- 	void *buf;
-@@ -340,6 +340,7 @@ int perf_mmap__push(struct mmap *md, void *to,
- 	if (rc < 0)
- 		return (rc == -EAGAIN) ? 1 : -1;
+-	int i, ret;
+-
+ 	if (nvme_tcp_tls_configured(ctrl)) {
+ 		if (ctrl->opts->concat) {
+ 			/*
+@@ -2360,6 +2358,13 @@ static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
+ 		}
+ 	}
  
-+	head = md->core.overwrite ? md->core.start : md->core.end;
- 	size = md->core.end - md->core.start;
++	return 0;
++}
++
++static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
++{
++	int i, ret;
++
+ 	for (i = 1; i < ctrl->queue_count; i++) {
+ 		ret = nvme_tcp_alloc_queue(ctrl, i,
+ 				ctrl->tls_pskid);
+@@ -2376,7 +2381,7 @@ static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
+ 	return ret;
+ }
  
- 	if ((md->core.start & md->core.mask) + size != (md->core.end & md->core.mask)) {
+-static int nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
++static int nvme_tcp_set_io_queue_count(struct nvme_ctrl *ctrl)
+ {
+ 	unsigned int nr_io_queues;
+ 	int ret;
+@@ -2398,14 +2403,22 @@ static int nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
+ 
+ 	nvmf_set_io_queues(ctrl->opts, nr_io_queues,
+ 			   to_tcp_ctrl(ctrl)->io_queues);
+-	return __nvme_tcp_alloc_io_queues(ctrl);
++	return 0;
+ }
+ 
+ static int nvme_tcp_configure_io_queues(struct nvme_ctrl *ctrl, bool new)
+ {
+ 	int ret, nr_queues;
+ 
+-	ret = nvme_tcp_alloc_io_queues(ctrl);
++	ret = nvme_tcp_set_io_queue_count(ctrl);
++	if (ret)
++		return ret;
++
++	ret = nvme_tcp_tls_check_psk(ctrl);
++	if (ret)
++		return ret;
++
++	ret = __nvme_tcp_alloc_io_queues(ctrl);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
