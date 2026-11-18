@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018104;
-	b=g98xK2XmOJ8G7UKwFSSbkpZmmAMIngML6fw9Ozuqoa/TplRaxdbFCiL+oFJrxx4lLhz8
-	 FYsts7PdO++cauoP6YnpDIqWlWNKzg6oa03r+5Lo0zCvCClS4xg+oIPS6Hn2Zpw25XZgY
-	 A0Yu9wG9zdRdBDu1t70Won3+aLJM7NMTiuWfBe8RtZFJfwHXwJO2AAKgBgidjgMkBqgpK
-	 9x4jBc3HmgNtuXpPy8eI1FuFJTOjeNUbrB1ULXXZTFs7a/Yovq5IS+l+uY1Z9wDt4wXW7
-	 dAsUh9JfnAZ1h/VeIXN5/L0v3aLQUGtUEHFKJXSRohLVy8Dujs9M4hOsnCr3K6krf0w==
+	t=1795018107;
+	b=aBLYb+8YPibwdxErEKABBW9QTlsdYKts2hPs/LMV8IgB2bEF8wlcYXE9miq5xDMYD3o4
+	 ap7qii78rL8/sb6XH7rx1aeKfybzCq5DwcfDVdllk68+Hq1hju/iIj5TzdrpxBYvgqVrp
+	 oV89jMk5ow1/1S7SgutQdmiIjCU8UIToXwnXRtWyvuiAdW7YUpqKTBX4qAOJYjAqrYMmR
+	 lRpviTRSBB8WiaulZoe9mKadrK+N3aTPCGgA8c2v0ZyvfLtOVT+TvvXjBXKfkUoe4UjGv
+	 fnEvLkUFIHKjPj4ZgEvXOMrNTVX+PrP1TUwc92s8RFjmqOSBo445wnUbwiBmi6xZLng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8btEFjSPs5Hmb7KErxB8Eog3AtjmnZaBtmavonSJr7s=;
-	b=2LJ840FFfH3HscLu9RfDYJVtN9798ZvBZo591XDOIr6PsDUnJVDmvgsefLMTw/j2mpTY
-	 eX81OvcVwQQrCTiOt6YWXkDhprU3X0420PRW3DS6krNYLXOt49KrK1KrkiwUBXWFC/NvJ
-	 9DuTHEGgQSfYW9P09VnaRfCjt1U7kchYc7vi1I8n+relduRm9czVp525MetAla6WUyPAx
-	 J8P0lNZ1LGKj2VG3O+1S2tz9p/eBQ6XPEt9D6bG6BE1VAPWUUxWAJFb8ut0GDFjmKdDc0
-	 xHidugi+Yt1I7WEdb213FK7rLIS9oP37FikL0VnutM0L+BVbgVhWIMtQfFtIQhpjgqQ==
+	bh=IwHdlpKW/Dnbe9XDPT7NjgcGTf1CRbFB1LfxzKXGHcI=;
+	b=sGcM8Qo4xlzx/Kkm0GggcxosTy+GVC11LzgNpSCWLxHlwemEFRG9MoOv/YmVnlgxnVbR
+	 TKYGKD+PaJTYDMMZXzztr3i8k/nzgsdBMHvICHF+qldsvg9vPRmhVq3/mtbUhsubndW7y
+	 tMjQE3OsynYpWLw2NHF1pYESr+HRjF7yMUMjzGjSENnhwRNTLDMEIT2CpzxTC0KBw5Uk1
+	 fKC3iXMMKGtKFcYvFN+hwop29qqdIAj0v8wo67pe7Y28cTuyA+DOvTjE4fgFmaLQ9OL9c
+	 vqNixbynqbSQGiOmpWTvUFMw7uy+oVB/wES6yEcBItTYL5WATIRoil815wNtzwkHpYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIdloTo2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s32oqXlM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CDE60A2601;
-	Wed, 18 Nov 2026 16:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9D0606A320;
+	Wed, 18 Nov 2026 16:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIdloTo2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBAB1F000C4;
-	Wed, 18 Nov 2026 16:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s32oqXlM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADCC1F000C4;
+	Wed, 18 Nov 2026 16:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018103;
-	bh=8btEFjSPs5Hmb7KErxB8Eog3AtjmnZaBtmavonSJr7s=;
+	s=korg; t=1795018106;
+	bh=IwHdlpKW/Dnbe9XDPT7NjgcGTf1CRbFB1LfxzKXGHcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VIdloTo2V+DcWwM2rBBZlvDHEwPSbZpeFblHDJSajCYKZZIu7mZTOrWYgh5NY3/uT
-	 IJz60knTWFmsQrbMzvGaqveTX27r5y5y6FFzCfzw6ElA1IwRuAuw3+E1oSwdnAz9u2
-	 vGALMzWeFEZo1bhzChLF0q8dEZfO4RwewNQmk6d8=
+	b=s32oqXlMpPiDlaniAz+MhRKX+8i9erL2nJWQNv/RTeUQreva9h/HWfDOZYrOf/06+
+	 WNZkA8G8PhebxyLH80hUYbexzKwiW+qlPzbf+xmybClQL0sC0V8aZaO7kdNJ7WqeIQ
+	 1nfabPkayaNNzQj2AtjsbUlJDBK8WV8WkiV/ETI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Lu Yao <yaolu@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1122/2651] pps: generators: wake up PPS_GEN_FETCHEVENT readers on unregister
-Date: Wed, 18 Nov 2026 15:39:22 +0100
-Message-ID: <20261118150328.402056134@linuxfoundation.org>
+Subject: [PATCH 7.3 1123/2651] drm/amdkfd: drop KFD_QUEUE_TYPE_DIQ note
+Date: Wed, 18 Nov 2026 15:39:23 +0100
+Message-ID: <20261118150328.437541178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,65 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Lu Yao <yaolu@kylinos.cn>
 
-[ Upstream commit 5b864f8db0bd33216895f3fe0bb1ec245c596c8e ]
+[ Upstream commit 0da420089bdadf26fd02c2144a48faf57736f9fa ]
 
-A reader sleeping in PPS_GEN_FETCHEVENT waits for the next event, but
-no event comes after pps_gen_unregister_source(), so the reader sleeps
-until it gets a signal. A PPS_GEN_FETCHEVENT issued after the
-unregister sleeps the same way.
+Commit e1b73b64271d ("amdkfd: remove DIQ support") removed the
+KFD_QUEUE_TYPE_DIQ enumerator from enum kfd_queue_type but left its
+description behind in the note block.
 
-Wake up the readers on unregister, and make PPS_GEN_FETCHEVENT fail
-with -ENODEV once the generator is gone, like the other ioctls. The
-wait checks info without info_lock, so clear it with WRITE_ONCE().
-
-Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
-Suggested-by: Rodolfo Giometti <giometti@enneenne.com>
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://patch.msgid.link/20260929124937.51114-5-danishkhateeb03@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e1b73b64271d ("amdkfd: remove DIQ support")
+Signed-off-by: Lu Yao <yaolu@kylinos.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/generators/pps_gen.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/pps/generators/pps_gen.c b/drivers/pps/generators/pps_gen.c
-index 452cc12a96f27..474e17c36458d 100644
---- a/drivers/pps/generators/pps_gen.c
-+++ b/drivers/pps/generators/pps_gen.c
-@@ -103,11 +103,14 @@ static long pps_gen_cdev_ioctl(struct file *file,
- 		dev_dbg(&pps_gen->dev, "PPS_GEN_FETCHEVENT\n");
- 
- 		ret = wait_event_interruptible(pps_gen->queue,
--				ev != pps_gen->last_ev);
-+				ev != pps_gen->last_ev ||
-+				!READ_ONCE(pps_gen->info));
- 		if (ret == -ERESTARTSYS) {
- 			dev_dbg(&pps_gen->dev, "pending signal caught\n");
- 			return -EINTR;
- 		}
-+		if (!READ_ONCE(pps_gen->info))
-+			return -ENODEV;
- 
- 		spin_lock_irq(&pps_gen->lock);
- 		info.sequence = pps_gen->sequence;
-@@ -238,9 +241,12 @@ static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
- 			pps_gen->info->enable(pps_gen, false);
- 			pps_gen->enabled = false;
- 		}
--		pps_gen->info = NULL;
-+		WRITE_ONCE(pps_gen->info, NULL);
- 	}
- 
-+	/* Wake up the readers in PPS_GEN_FETCHEVENT, they fail now as well */
-+	wake_up_interruptible_all(&pps_gen->queue);
-+
- 	put_device(&pps_gen->dev);
- }
- 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index f405f476ed182..288731acc928f 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -437,8 +437,6 @@ enum kfd_unmap_queues_filter {
+  *
+  * @KFD_QUEUE_TYPE_HIQ: HIQ queue type.
+  *
+- * @KFD_QUEUE_TYPE_DIQ: DIQ queue type.
+- *
+  * @KFD_QUEUE_TYPE_SDMA_XGMI: Special SDMA queue for XGMI interface.
+  *
+  * @KFD_QUEUE_TYPE_SDMA_BY_ENG_ID:  SDMA user mode queue with target SDMA engine ID.
 -- 
 2.53.0
 
