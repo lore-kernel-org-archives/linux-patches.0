@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019688;
-	b=1/beu4dUtLLRnSa/9Fi03VITwIB3Is1pAkuWqMA04oAfXjZDero2TkPNxQTQCknQvRHf
-	 Mre0e07cFnrQLQHkXcl+o0EsRRx0Wv/fGVjtg7RZAHtxUrOodSRUC+9jFH/JI/YTPQKtX
-	 jGEnxAly0XH36aCnHJ4HVUDQu7Hb4R/POx1XvwMchlLq+DGRPEXZekWy8oBBHLCog+znC
-	 K/yfLToyvnWKp+UySji46mklSn/Uol4oRFxuH0i0yQevgDOTZmjJA+Bw95r3hDTnIumrP
-	 enBxgcxwl2GLowl9ErQwEhsiW2T+l8EFDWnILbCt4heZUEBn2lVdR+TGfIDntYh0mDQ==
+	t=1795019691;
+	b=tMBwk/bYlOrhu835rHypBf9iJ96Vo1tz5ebOOXf0QHrjMmUgofW/p5eFIthhnRXNC9Zc
+	 ntpB9VX7tN9wjcndD1eyg80eJhAzQANJXLofPojUe77PdeSfbm/sm+ke5Ptwm1o6J1Ej+
+	 sSQTcpz8nWpcIYv1rD2rXhBqe0lqwmlCFb/3kV+q9VP8s7mlzyaPfJeNewyH/f0eTX4P/
+	 jOq61qV+Br/eFrvzLnYvubDHI4Adqi9kMJkBJ4Mumbsa2RL5tDk1hX0g4uV3cAi+HnaoJ
+	 pzW0TMdpvfT/9YxRZSuC59GVMlZVWlI7X4c9z6ZAOXm/DAY9s3Me3bO251ik/Ts3IBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Ngeo5AlL7vfDta2IRXIJ4vIvJzUArdJbznlhIQ/vNMs=;
-	b=vPlyUX63jnnIB67dv9OYtFRGlCPRsExExBAks9zAjB033u50FozAXXsq5dSXAyzJwGHX
-	 GAfP7vGVBJFaDRcH2PGQfxW0SVZaLnEAvjomaWMD1YBtLGweZrLtab75eiREsDbwwx5zU
-	 J/Yo+lTOIdYJ6zRKkIoUBDgFADkHgJbuM5hCxwCUftOHSXUquX8Yv2I2WBKa/Pwf40pLo
-	 RUDE090ZKCW2xaDsRPeGGmdShB0rTPj85VyGFkDPYpjZ88/BhC7a/LjEUXPRfyYP1CJ4z
-	 k0zvja/miu6Mxnb2FGYLNq5q9o26YwQuKrg4QE2EutTFXRAu5F5SKNEQRZVCPOTJnow==
+	bh=5HvF7mEYcLoDwwt45nz49qTWsUbRyDCkBnuJ8ejZaSU=;
+	b=oJsiXHgQJLwKBsUDDc3jdD5wyPmWDe27X83Ai+8HJRbaH49ljcMRHkZ5L1BLcHnxJ8ap
+	 tNMjZiIye8889de5asA7Q3BN9ETsichLCFEsg74mmg3V5qEAKWqG96Y/yPs2zUbp/L2w0
+	 m0rzND1uHfMfRYoGgCWXN9275Hmxrsa8KE1uLFlEZKIEeL8xgUQSFwe8ZrTonJcTgMuRj
+	 kiAyKk9KJjPPlEI2GBHrnD8RJi8lIh0FML3mJ23qtrcOy10aADBaKLHKyPLMxbP4yN5Nt
+	 GRSHLEmwSu898TeKMw74mSmofyB/1pNPtWOCXaKqA5zqYYt+oBC4tb3oSbF7KtYNgqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mXa9SfOF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWwnDv3J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BD9606A32F;
-	Wed, 18 Nov 2026 16:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A728F606A33D;
+	Wed, 18 Nov 2026 16:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mXa9SfOF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EFE1F000C4;
-	Wed, 18 Nov 2026 16:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWwnDv3J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A9B1F000C4;
+	Wed, 18 Nov 2026 16:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019688;
-	bh=Ngeo5AlL7vfDta2IRXIJ4vIvJzUArdJbznlhIQ/vNMs=;
+	s=korg; t=1795019691;
+	bh=5HvF7mEYcLoDwwt45nz49qTWsUbRyDCkBnuJ8ejZaSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mXa9SfOFbjOtcYoJQjdA03siltNqoTvznd53J07FUHdVm6xTtWjvu+SadEPl/2/2I
-	 L9CPvdOm3moYMr3tQ2rir4FQ9n5LoCXwVNiLYCxZYzEZjgWXQ3bK6FbmC8IpX1jcZb
-	 1ec02dZfsI7gXuENN45Am7noIEuefJ5qejmRHfDA=
+	b=TWwnDv3JVZ/mTw5d9yDvkaTfB+kJpTpI10dHaMn+t95bEziJhstsaWttxT7a5bLmq
+	 eFqqpcIhVSA0uqvKHJfToxR/Mq8asiuUmQjnqW8S32HO4B9v4NF6vKpMi7HWg7YZIH
+	 12Q4uxUwsoJeY/YnN3Z+ufQK10rahvlPhS9B4NYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dale Whinham <daleyo@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1685/2651] platform/surface: aggregator_registry: Remove sensors device for Surface Pro 11
-Date: Wed, 18 Nov 2026 15:48:45 +0100
-Message-ID: <20261118150348.342606477@linuxfoundation.org>
+Subject: [PATCH 7.3 1686/2651] platform/surface: aggregator_registry: Fix tablet-mode detection on Surface Pro 11
+Date: Wed, 18 Nov 2026 15:48:46 +0100
+Message-ID: <20261118150348.378882017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,36 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Dale Whinham <daleyo@gmail.com>
 
-[ Upstream commit f1db1b80190b6a9f96e1171e2d7eac51ed4e28ca ]
+[ Upstream commit ee2e7315dedcdd934139237f820582f9b6ce7842 ]
 
-Remove ssam_node_hid_sam_sensors as this device is not present on
-Surface Pro 11. This fixes a probe failure in dmesg:
+Replace ssam_node_kip_tablet_switch with ssam_node_pos_tablet_switch, as
+Surface Pro 11 reports tablet-mode via the POS ('posture') subsystem and
+not the KIP subsystem.
 
-surface_hid 01:15:01:06:00: unexpected descriptor length: got 0, expected 9
-surface_hid 01:15:01:06:00: probe with driver surface_hid failed with error -71
+The KIP-based driver would remain stuck in a 'folded-back' state after
+suspend/resume, whereas the POS-based device reports its state correctly
+even after suspend/resume.
+
+This fixes the type cover keyboard/mouse being ignored by desktop
+environments after resume from sleep due to the erroneous 'folded-back'
+state.
 
 Fixes: c4a069095395 ("platform/surface: aggregator_registry: Add Surface Pro 11 (QCOM)")
 Signed-off-by: Dale Whinham <daleyo@gmail.com>
-Link: https://patch.msgid.link/20260918-surface-pro-11-aggregator-registry-fixes-v2-1-c4ed9335814a@gmail.com
+Link: https://patch.msgid.link/20260918-surface-pro-11-aggregator-registry-fixes-v2-2-c4ed9335814a@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/surface_aggregator_registry.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/platform/surface/surface_aggregator_registry.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/drivers/platform/surface/surface_aggregator_registry.c
-index d37a7e4c6b02a..82c2144e10ec7 100644
+index 82c2144e10ec7..2cb8278d98eac 100644
 --- a/drivers/platform/surface/surface_aggregator_registry.c
 +++ b/drivers/platform/surface/surface_aggregator_registry.c
-@@ -415,7 +415,6 @@ static const struct software_node *ssam_node_group_sp11[] = {
+@@ -415,7 +415,7 @@ static const struct software_node *ssam_node_group_sp11[] = {
  	&ssam_node_hid_kip_penstash,
  	&ssam_node_hid_kip_touchpad,
  	&ssam_node_hid_kip_fwupd,
--	&ssam_node_hid_sam_sensors,
- 	&ssam_node_kip_tablet_switch,
+-	&ssam_node_kip_tablet_switch,
++	&ssam_node_pos_tablet_switch,
  	NULL,
  };
+ 
 -- 
 2.53.0
 
