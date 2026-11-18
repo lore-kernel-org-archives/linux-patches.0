@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057326;
-	b=TkIU+q8NavSzMlbFle/vFURzmzZoKvW6/wvRqnIG8HFsRec7Q0R2P+70idTZh7X/iEZy
-	 cj0kZ1mF0nIImoh1j9SGvKShQSCg6QT/PE72OgOHoydKcNw6aSnG61pddM0lOMjgS8Ykc
-	 PPDn9boTB0m23Sf1d4/KAkJHP22FhXYOwB/JSsvS94cC17EUesNCZX/VPaCpDR2nWXiGb
-	 R204p6iJP+kR/hqyJF0tc3lbm2q8QIzc55grcpfUQ2sfzHvh0xBpqJdZp/y4BG7hoHIls
-	 dwZ3Rz2mmSFoAbX9iqGLhWZ6ATM3pR7Yuy9xZ9bEExJ6/1XOB4h10Pn+zbl26lZfksQ==
+	t=1795057329;
+	b=gaU3zX7EDLM/FB6hOh3XVbRBVCcW7oPJ5N/Lt8q9YGnauqhlwouJ+9YtDxet2P46kxDQ
+	 gNjgSqcnOvuz1o+xUFxS81cvTl4nLp3GLksx72WrPIjPBhpRUkooUjowkcpwmy6fmGrAE
+	 fGZ3yHZoQU+Ppn/vp+aj92HaJXZ+knxHfqEqAw4aBZY6iXbWp5Tr9gF56qNuOXrR1ttr6
+	 mzK6FiOnFvvMtOzp1C6EoZ5zzleGmS/eo9B7I3mE8Q/8iNBMfcxSUpmLBXwKCb3iobmYL
+	 +/Xl1b243LzJ5V59GAv4RZNanM/Ns90cHjwbZNbZqBPdnGPIrXD/s/mqenYZ0XR1zyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fr7eIAQvrrF39eOpv6lf7VW71ANz3ab8fbmlBFDzbs8=;
-	b=hurPH1suLTD8721nY3dTCxTGXjgWFSHbAOJG2MEJVK6OtrNXXx/Xhraz2txvczlFdxx0
-	 t0uRmf+7zfAtM1+Mr8lNLT83wOJ65/n9l0TZcHns3YCwzjKZInJOUCtQhE5DHwMLyBNW7
-	 iPefsC2rofmKBFqDWjTe+4xw4crvfRAzn0U57qLutJE4sMNOMJGmzUjdiK/gnWzWq21qo
-	 UveArPRbyH1q60/gtZ0U19ma58ms5o51tTkfkO/oFTZucQPBTtuGhhYhlzdiR+uhs6kU+
-	 WHS+36y4i6C0mg25Prb6ukcMMQxaB7RZIpVQYu+M5RpTtEeB7cSXQ6/9m5Prw/m5xJw==
+	bh=8Sk2x50EMS2C2uhmM/z7QnERF6fZZHBBII9KTPmYM/U=;
+	b=Ozt0zYAZTnGy6cZG32UtGgLwXOAAUR6/MUyvJNkE10aiUEVU8eKqkstfrtLTijcrKjBH
+	 vGcTNZek/YkpXGs/X4w1H3d8eBsi5m2VPiz90aF6mIJtX+EeDm7X6vuSuViKWDxexk8TF
+	 Tqeq4uNMyCnGJqxUaGtdSKS2Sdc/+p/qF0VmmXx6jm14czC2YaaMqYlTCDpfchzdgbsLh
+	 IJfBtWcfunJT6Q8DegiPAttBrovuCATTFpR90e02Ux+GtKYbOZIk3cnCzXmV4Cos2WD9E
+	 DvylMkT5zd9mpP0IMA4nv3C5t9BlaKkw7Xm5JEoG/HgVuVKpyo9yHM1a4zAPbWE839w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvGN4fVc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKZgFouB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CDB60A380B;
-	Thu, 19 Nov 2026 03:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216AF60A2609;
+	Thu, 19 Nov 2026 03:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvGN4fVc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F91F000C4;
-	Thu, 19 Nov 2026 03:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKZgFouB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C50C1F000C5;
+	Thu, 19 Nov 2026 03:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057326;
-	bh=fr7eIAQvrrF39eOpv6lf7VW71ANz3ab8fbmlBFDzbs8=;
+	s=korg; t=1795057328;
+	bh=8Sk2x50EMS2C2uhmM/z7QnERF6fZZHBBII9KTPmYM/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvGN4fVc5orPvgFBzZ2v6cl3+nGtEP4U8cLn3WcrvEZj6d9Sf7H1WhHoqxQLYVjzd
-	 bS1f6F8rDluL7VxGAVuxQbHZa0lHHxbtInMtz3Ikl+aqtbbGEuwZiaTdgMYeiP5IgU
-	 e8j5thci2fXmI0lQaQZbs1u9tMTztx1Kyd1idx2k=
+	b=pKZgFouB9mGiSCGPpaTsFn6hwnbI3PT0IybJ2nAwct5N0qrFb4/Yk/uN8vqEMhOh8
+	 TEsuKVjhhGeLicYj842j5XKl0eWAecy1klLIcJXQY6UJHXt17AqmVJC56PZr6xZjez
+	 dTpaCJa1kqfgDyKedGzckcEKh9HBR0Hq4xmPa63A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0089/1848] comedi: pcmmio: Add sanity check to interrupt handler
-Date: Wed, 18 Nov 2026 15:35:27 +0100
-Message-ID: <20261118145914.859002707@linuxfoundation.org>
+Subject: [PATCH 5.10 0090/1848] comedi: pcm816: Fix sanity check in interrupt handler
+Date: Wed, 18 Nov 2026 15:35:28 +0100
+Message-ID: <20261118145914.901748508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,43 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit ea72e2fc9026f375314421ddfa4dbdc49432a899 ]
+[ Upstream commit 4fdac5090ce3616283216d9a1d2b9664e8e20747 ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing the devpriv->dma pointer which may be NULL if
+dev->attached is false.  Move the dereference of the devpriv->dma
+pointer after dev->attached has been checked to avoid the possible null
+pointer dereference.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/comedi/drivers/pcmmio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/comedi/drivers/pcl816.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/comedi/drivers/pcmmio.c b/drivers/staging/comedi/drivers/pcmmio.c
-index 24a9568d33788..d1cd4bc7f36e8 100644
---- a/drivers/staging/comedi/drivers/pcmmio.c
-+++ b/drivers/staging/comedi/drivers/pcmmio.c
-@@ -363,6 +363,9 @@ static irqreturn_t interrupt_pcmmio(int irq, void *d)
- 	unsigned int triggered;
- 	unsigned char int_pend;
+diff --git a/drivers/staging/comedi/drivers/pcl816.c b/drivers/staging/comedi/drivers/pcl816.c
+index c368a337a0ae0..85299d659ee8d 100644
+--- a/drivers/staging/comedi/drivers/pcl816.c
++++ b/drivers/staging/comedi/drivers/pcl816.c
+@@ -244,7 +244,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
+ 	struct comedi_subdevice *s = dev->read_subdev;
+ 	struct pcl816_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[dma->cur_dma];
++	struct comedi_isadma_desc *desc;
+ 	unsigned int nsamples;
+ 	unsigned int bufptr;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
- 	/* are there any interrupts pending */
- 	int_pend = inb(dev->iobase + PCMMIO_INT_PENDING_REG) & 0x07;
- 	if (!int_pend)
+@@ -259,6 +259,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
+ 		return IRQ_HANDLED;
+ 	}
+ 
++	desc = &dma->desc[dma->cur_dma];
+ 	nsamples = comedi_bytes_to_samples(s, desc->size) -
+ 		   devpriv->ai_poll_ptr;
+ 	bufptr = devpriv->ai_poll_ptr;
 -- 
 2.53.0
 
