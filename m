@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028486;
-	b=RXchhuLJ2/RY/1gl5PJ0HQ5xN2TNztL4K8JBJq34oW8HJDaGjcF2a3G+3IbiK+Q/PVRj
-	 cGhmRocb8vHZLyG/kcVLEOE6VGEQhy4KLpFSIU4a9gfK0Y+LewSEKbYrl0yLp/1BHHjfp
-	 81EY89x7sBL4YO5Zo25SQuQtcbDYjxaEWee5ST5IJw1gTOayu88SFld5TmwM3YgzuBm9O
-	 ERSE19FrhIUJ/RcQ5TKV+ApFTV6emNcrGJeZ40AiJdMb0S/mDKZuTIS9hXVV0YnBqmsPQ
-	 OmhU2+tJaIx9Tvbrvk4K5cXtAnPbNbq2jcxraQs7JBhIeylMI4E4+GTB5Ik5bJg+XKA==
+	t=1795028488;
+	b=E2V6effHx2g/PPqbb1P8kSCiLAVDbnS+4fpXvIOZMncIcxCu+OX89UAxxMFf1CVUKdeJ
+	 GpUNoBNF30GX9D7+wVAUvwp54ajEcjqYACdZlIlSG9qsMU8IsEIJE7TUapPj6D67KUYxS
+	 h9awds+3OAyHlLU2ojy6GFBj/BzKrTZZVXJhY0GOJIFm3WzUmI3uWueY8gOYW+KZ3zjHv
+	 Gwoov2WvJshTX+/hevxjUOq2suRNOAYkFJxK+iLX4aQODoT/k3K59az+3MZ59rc0kT5AL
+	 pKccVWAGmM0Drz0OviFhk0GW6iEa3gqHLEUvWU7WTSnUU2aEwp1LueYdJolvbEe4EuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KaEndS6jtuCF/811B/DVOI5L792zlkh2tEwCVAMSm2A=;
-	b=OHtZHU6jCnWc7vaN+wHlgM9RHGyaHKBxHPd7rjjjcU3yAp0LjbPaQNoApTFxMwsHGpvR
-	 G7wJ7k9Uhn8C1jteJdVsJ03qDskrTa8ABEKxAUJY22GUwyOVuLQD6UzRVB3zHznE7psxl
-	 AOsQRha8PWRov+DUW5rH7i6EXgLPw/qjhSozjM07Xrjb2mngxm6NUtWz0WIQtyQQrH5b+
-	 qIglpZ0b5M6NeHF8WsWCL5cR76bVdAwxf+L6QfQ3hb8c6j97CzxnCUaNjvwnty2veS8hs
-	 Kk6Q23rwPC8vETLHJF0naXY4DnSz3s7QZ0qYht03rz4xN8nwboxWNpXtHoejHj/4a8w==
+	bh=sxKbDSLjr2i5mwdUeoDqvm19QOwoBY26iWoS9lrp7tM=;
+	b=l0ye46gHOKZh7Mro1cTP/ld4kW7LD4lF9cAuvehgDPCuxgHmMC922yQU1NdZvSZDC3cS
+	 DEn6cUdx0Q7S332Z+Me/kDp0Q/qkpnd0mxYGmG1/PkpP/k7bhqadanirRZfFdVkDvCDAd
+	 T9MtU2tDZZw0KXO891vzAPwZZIBl8/ufeG/0aR2l8EBQP0nlI4VG67+FogtF+kibDLI2C
+	 qj8wLAyi3UeV9kJNWWVPCKRf5HWb6Mgy3Rr+/UD+5aq+EFjcRohW/XEKJlOQ7NPW0qCf/
+	 966IMMJ/+PSZ3lHqJR2ZpOHbypAhdFuhiFqR86MoYvB9Vbc+1+unO6q723dbZ90r4hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CGd9PBsS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FbrYRTZt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E3606A32A;
-	Wed, 18 Nov 2026 19:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A882D606A336;
+	Wed, 18 Nov 2026 19:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CGd9PBsS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8A21F000C5;
-	Wed, 18 Nov 2026 19:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FbrYRTZt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B271F000C4;
+	Wed, 18 Nov 2026 19:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028486;
-	bh=KaEndS6jtuCF/811B/DVOI5L792zlkh2tEwCVAMSm2A=;
+	s=korg; t=1795028488;
+	bh=sxKbDSLjr2i5mwdUeoDqvm19QOwoBY26iWoS9lrp7tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CGd9PBsSe9o+vfk8VvopcP0X10BdreqYifywb1+9ydqOOA4UHtX95xu5YOaA3Kmkc
-	 Ltp9dHrfoaT9+FBGHwU6ofcUu9xddHsayd6+5UEtPN8+lxrJwuoTxylbtQBtIafAZb
-	 uOJ4aHtCbAzp9uvDX6w7oRFj1H+HOeDxGnsmnVbs=
+	b=FbrYRTZtnbF0nh4nXbkkrbthCsimlUKWh5pVgqTO9Nuplu4Eh3iFFIYQNZwYmDjHQ
+	 GYNDgt+EXrwO8gKa0oh3fNAd+V+doj3omvOBsaTUXt8tlNRJrwgbYlg2lQsTXbSrHa
+	 utSr+QN2x23exDGdi3vvA8q0TZuWgfyLHAdPhVzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	guolingxing <guolingxing@tju.edu.cn>,
-	David Sterba <dsterba@suse.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0013/1756] btrfs: prevent deleting the wrong subvolume by ID
-Date: Wed, 18 Nov 2026 15:35:40 +0100
-Message-ID: <20261118150008.482526029@linuxfoundation.org>
+Subject: [PATCH 6.12 0014/1756] ocfs2/cluster: hold a reference on the heartbeat thread
+Date: Wed, 18 Nov 2026 15:35:41 +0100
+Message-ID: <20261118150008.520511046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,62 +75,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guolingxing <guolingxing@tju.edu.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 1960146913b31b288ed2cd607d103ee3b41681d4 ]
+[ Upstream commit aa2e38aabaae87236290e486a2b77cfa3adfbebe ]
 
-When deleting a subvolume by ID, btrfs_ioctl_snap_destroy() first
-resolves the requested ID to a name, then looks up that name again
-under the parent directory lock.
+Since commit 688bc88e2046 ("ocfs2/cluster: keep heartbeat local node
+stable"), o2hb_thread() leaves its loop and returns when the local node
+changes, for example after "echo 0 > node/<name>/local".  The thread was
+started with kthread_run() and nothing holds a reference to its
+task_struct, so the task is freed once it exits, while reg->hr_task still
+points to it.
 
-A concurrent rename can change which subvolume is associated with
-the name between these operations. Since the deletion path does not
-verify the ID of the resolved subvolume, it can delete a different
-subvolume while leaving the requested one intact.
+Reading the region's pid attribute then reads the freed task, and removing
+the region calls kthread_stop() on it:
 
-This was reproduced by repeatedly exchanging the names of two
-subvolumes using renameat2(RENAME_EXCHANGE) while deleting one of
-them by ID. The wrong subvolume was deleted in 9 out of 14 independent
-tests.
+  BUG: KASAN: slab-use-after-free in o2hb_region_pid_show+0xb3/0xc0
+  refcount_t: addition on 0; use-after-free.
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:kthread_stop+0xb1/0x390
 
-Fix this by checking that the resolved subvolume ID matches the
-requested ID while holding the parent directory lock. Return -EAGAIN
-on a mismatch so that userspace can retry the operation instead of
-being told that the requested subvolume does not exist.
+The thread could already return by itself before, when heartbeat start was
+aborted or on an unclean stop, but the local node change makes it
+reachable from userspace at any time.
 
-Fixes: 949964c92843 ("btrfs: add new BTRFS_IOC_SNAP_DESTROY_V2 ioctl")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ sashal: Changed goto out_end_removing to goto out_dput to use the existing cleanup path. ]
+Create the thread, take a reference on it and only then wake it, so the
+reference cannot race with the thread exiting.  Drop it with
+kthread_stop_put().
+
+Link: https://lore.kernel.org/20260923010149.14391-1-kmehltretter@gmail.com
+Fixes: 688bc88e2046 ("ocfs2/cluster: keep heartbeat local node stable")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260616074931.3774929-1-zzzccc427%40gmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Cen Zhang <zzzccc427@gmail.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Stable-dep-of: 0a8f258c0f01 ("ocfs2/heartbeat: serialize concurrent writes to a region's dev attribute")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ocfs2/cluster/heartbeat.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 3c3c767c858f6..aa49622cd302a 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -2536,6 +2536,17 @@ static noinline int btrfs_ioctl_snap_destroy(struct file *file,
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 94743cef12f13..c7fd2e5c2c0bf 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -1956,18 +1956,22 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 	atomic_set(&reg->hr_unsteady_iterations, (live_threshold * 3));
+ 	o2hb_set_region_stopping(reg, false);
  
- 	inode = d_inode(dentry);
- 	dest = BTRFS_I(inode)->root;
+-	hb_task = kthread_run(o2hb_thread, reg, "o2hb-%s",
+-			      reg->hr_item.ci_name);
++	hb_task = kthread_create(o2hb_thread, reg, "o2hb-%s",
++				 reg->hr_item.ci_name);
+ 	if (IS_ERR(hb_task)) {
+ 		ret = PTR_ERR(hb_task);
+ 		mlog_errno(ret);
+ 		goto out;
+ 	}
++	/* The thread may exit on its own, so pin it before it can run. */
++	get_task_struct(hb_task);
+ 
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_task = hb_task;
+ 	spin_unlock(&o2hb_live_lock);
+ 
++	wake_up_process(hb_task);
 +
-+	/*
-+	 * A concurrent rename may have changed which subvolume the name
-+	 * refers to. Verify that the resolved ID still matches the requested ID.
-+	 */
-+	if (destroy_v2 && (vol_args2->flags & BTRFS_SUBVOL_SPEC_BY_ID) &&
-+	    btrfs_root_id(dest) != vol_args2->subvolid) {
-+		ret = -EAGAIN;
-+		goto out_dput;
-+	}
-+
- 	if (!capable(CAP_SYS_ADMIN)) {
- 		/*
- 		 * Regular user.  Only allow this with a special mount
+ 	ret = wait_event_interruptible(o2hb_steady_queue,
+ 				atomic_read(&reg->hr_steady_iterations) == 0 ||
+ 				reg->hr_node_deleted);
+@@ -2012,7 +2016,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 		spin_unlock(&o2hb_live_lock);
+ 
+ 		if (hb_task)
+-			kthread_stop(hb_task);
++			kthread_stop_put(hb_task);
+ 
+ 		o2hb_unmap_slot_data(reg);
+ 
+@@ -2208,7 +2212,7 @@ static void o2hb_heartbeat_group_drop_item(struct config_group *group,
+ 	spin_unlock(&o2hb_live_lock);
+ 
+ 	if (hb_task)
+-		kthread_stop(hb_task);
++		kthread_stop_put(hb_task);
+ 
+ 	if (o2hb_global_heartbeat_active()) {
+ 		spin_lock(&o2hb_live_lock);
 -- 
 2.53.0
 
