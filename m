@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016804;
-	b=PJE8Q4+xL2EjpKeGfAIdSo88uUz4wRDC5U2eKf6BffJ1DJ4kscobGcEQroA/D6JxCWw/
-	 Tocwzzgzn0B852Uy0px6GTVNydqnowaSLvMNfexHvPHmL0pe+xYLgFLSijO3eIp5ndvFm
-	 qJRJE8kGhV2dftn9CiJ3dZ4+fpDgpWf1+YsHcERXA/2pKqRqsbR0WglqtkAzrXpe1IKXe
-	 M7OOC1ltGM5ZPnXoZJeJbAL2u5WxEF5aHHmirqxGssypafraCD+2TpI54UTa737B3HV0y
-	 c0x67nf1W+KtC0XFqwQqq0pGMq4S8qqm6q/BIbRBkgRdUooapxP/jGl6bc6t3p+psRw==
+	t=1795016807;
+	b=L4k7ymTl8VXmjYZbCYg9YGcYCFaLN+/wSbvEj0UcpdM6e5Ic80+ALnkMIeul+HqV5BlQ
+	 hqVVVbPkdW11uSUk/dTR+wrvJ6Q8gLXBItt3Wop8zg3Mb5KN9P6c8kDSHUfVXqrCApHAT
+	 LdTebZCwg0FXf6yMrnA/CJpGrDG9TYX+3C93QhYGquA8Ct4r4FqzLlUohW4Eee4nbomac
+	 C946K9HEF81+AsJeMq0eH9Df7zwdnn5p+OmnIvumC5yFLwrFxof8iXbA59mYBLakOBrd5
+	 riztcgDuSaepfJAbLXZBnELfANnxtWZtwrSDz9LfjTUoxqi9ESlKN5LT24gi2LgdGiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y3/aVCDuPdZMAnCG9W5k/ZoEXoyLPvaCWbCtdb+6qIA=;
-	b=B3sUDFAzgBgM5xSSiLqiFrHSZUjutvawfotLMMGoPgVgt+/e+vQftS5Ajz3WM52u2JwU
-	 v7tjxCCcQRGyMbQ0awfcBUgrB9UBcRPQVW6F88FCO5a/OU0Gm/9aqvAlozsZj1ZbIRGM2
-	 ByTJjyWxCcBcg5gvDbl7hLLlmm6dORwQV1Qdoy8ZkevA/P+7BzKvsXPnC4fYwDGGn8yFI
-	 M9KbYfXfREnNGN9oWg9vBYLAkvi4FEN+GnDuN3XeptJkMxMZWw5GHOghh4ynVwajAR0ZI
-	 W4AW+xHFB4EPvYNHw6I9HAKfBTwC2e5wuAwrERtQmU9QEfwLRGm7GjA4DrzODNxl/gQ==
+	bh=j0nGKjeTpkfpP//h5fD/YwM6+vhVcWWd7pzwDKB/f7A=;
+	b=0rP3kMxzwkDr3axQcvG7fBNAcswgUAE1kTFKZjJN7M5XMEfbZ6+tM9SVYYmIziAdeOea
+	 ilAFUb1WS2DtV5BO8JCfPvv6DzZFMDdETXpXRC6iuIQbDdaSYvCOyUGZMhbMhzSjvpS0Z
+	 mzMtmab9ruUC4e9CwAAsmdBo+FjO0ZEKKoFxA4YwMauM2Leg3lWPZW4bblTjwTzqvdfCg
+	 lOUIqz4ex3zxxmiHSNsta7FhFJDg2o7t/9cvqYbppchHgJyFIInwtFPfFDPvaBLcCYtjA
+	 Ug1gdT6IjNnNjrQ3E3PD5mVKJTsypVd7vdK+Z7BgBTNni+s0trgz7QbM0YWkaJAbCGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smtydTTB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfNOBkLk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E27606A31C;
-	Wed, 18 Nov 2026 15:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6B3606A31C;
+	Wed, 18 Nov 2026 15:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smtydTTB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FF51F000C4;
-	Wed, 18 Nov 2026 15:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfNOBkLk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D92F1F000C5;
+	Wed, 18 Nov 2026 15:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016804;
-	bh=Y3/aVCDuPdZMAnCG9W5k/ZoEXoyLPvaCWbCtdb+6qIA=;
+	s=korg; t=1795016806;
+	bh=j0nGKjeTpkfpP//h5fD/YwM6+vhVcWWd7pzwDKB/f7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smtydTTBGrWIciL8iFSS/KNlk9+oP8ZKyg5qDg02RDRX2p6RkMN9N7XAzTp8gsX+E
-	 Ncc4HfJpwTa+L5nWrWnqf9yyCj/Z5Mt0wohfsTpBcvvmLzXRH0lJKNdySnlEoBZdpX
-	 u4Z0NSDrWsY62p+xB6e73M7A1u6kDnt/LAjs8X7g=
+	b=DfNOBkLkAkQs0/iD1aO954IlJ4g2mt/diPnz0hnRZoUDMPK45I5ll0hJ4BTiBh/6v
+	 Pcnl9U8pzjpSHS/dK7X6d6OUjcMnTm/yi7cSkCxjnk3EMpukCuHOcJzhN4jKrlq/rh
+	 juUpHP0hQm6CWXcl5YvlQaC34XyW6Up7rJheiXSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
+	sashiko-bot@kernel.org,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0660/2651] leds: st1202: Cap the channel current in st1202_led_set()
-Date: Wed, 18 Nov 2026 15:31:40 +0100
-Message-ID: <20261118150311.636994800@linuxfoundation.org>
+Subject: [PATCH 7.3 0661/2651] leds: flash: Prevent using uninitialized variable in flash_fault_show()
+Date: Wed, 18 Nov 2026 15:31:41 +0100
+Message-ID: <20261118150311.672142289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,44 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit ca81ea108502817e3841e98f0d3651398d9e1bd9 ]
+[ Upstream commit d229695f2162a41bfa614f175798fa56a5f1c969 ]
 
-st1202_led_set() writes the requested brightness straight into the 8-bit
-channel current register. The LED core limits brightness to
-max_brightness, which comes from the device tree max-brightness property
-and has no upper bound, so on a board declaring more than 255 a
-brightness of 256 reaches the register as 0 and turns the LED off, and
-larger values wrap around.
+In flash_fault_show(), address of uninitialized 'fault' variable is
+passed to device-specific .fault_get callbacks. This is not a problem
+if such a callback directly assigns the value like rt4505_fault_get(),
+but results in an undefined behavior if callback just performs bitwise
+ORs like as3645a_get_fault(). So just initialize 'fault' with zero.
 
-Cap the value at U8_MAX, the width of the register, so anything above it
-drives the channel at full current. The pattern and blink paths already
-cap the current they program the same way.
-
-Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/GV1PR08MB8497C60D1D2921DD0384926FC5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260904054437.461706-1-dmantipov@yandex.ru?part=1
+Fixes: 7aea8389a77ab ("leds: Add LED Flash class extension to the LED subsystem")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20260916161607.90106-1-dmantipov@yandex.ru
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/leds/led-class-flash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 305452acd0df7..2d34f9d06f607 100644
---- a/drivers/leds/leds-st1202.c
-+++ b/drivers/leds/leds-st1202.c
-@@ -207,7 +207,8 @@ static int st1202_led_set(struct led_classdev *ldev, enum led_brightness value)
- 			return ret;
- 	}
- 
--	ret = st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, value);
-+	ret = st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num,
-+				min_t(unsigned int, value, U8_MAX));
- 	if (ret)
- 		return ret;
+diff --git a/drivers/leds/led-class-flash.c b/drivers/leds/led-class-flash.c
+index 165035a8826ca..3bb90823de1a8 100644
+--- a/drivers/leds/led-class-flash.c
++++ b/drivers/leds/led-class-flash.c
+@@ -187,7 +187,7 @@ static ssize_t flash_fault_show(struct device *dev,
+ {
+ 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
+ 	struct led_classdev_flash *fled_cdev = lcdev_to_flcdev(led_cdev);
+-	u32 fault, mask = 0x1;
++	u32 fault = 0, mask = 0x1;
+ 	char *pbuf = buf;
+ 	int i, ret, buf_len;
  
 -- 
 2.53.0
