@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037211;
-	b=U2ajlc1qkUL3s2p4nyb+0p/OE0MrkFfpxR4ZZ4xKB2Ht3lR2d+tumWOv92lTZhBsn0tk
-	 btJb8Fm4bfUzYjK9bdi9t09nwls79mtkLjLeAYxmC0IrLdL2qrf6kNpJsJF46trFTRzYW
-	 ihzoylWfnoLH9bCpttTI/I9uq0J/MeIF9w7Wd05lUe9Yn61LihVOHY4qCIarumaPg2Sa/
-	 yBsYkLHE3n4Z7sfX1d2IxteLn2AOxh7rnD0kUn6RhpKl353BDREyiSvbZgWEOz18ycKU3
-	 iHt6HbHicMCJvdBRJRNlIGMrs6YRVjxKLgaHjICChxLEwSmGbo5aCzFGuD14QfTccag==
+	t=1795037215;
+	b=1CG/fh5fhSnC8mHlUMFDZWnjJVJI/Z8oIjAMu1Y1X4Wg+Xx7VDpIae1m1fSc8g2ETgvN
+	 yNQKuoVx0qK2jyl9hw2KIn55is5qo7+HqY105yV1uUsZaUwnZOKDHATkISsGXeMgB3bdy
+	 4kOG/xgyE58TDqGD4w/AS3kbxlQVQCSYdeUaRhuz8uRdzVXXo19gwH3yOPJPhYvfSZ5f9
+	 quC5ocqVBZyogI4edjuo2LxHFVJoOUY6ij6egfv2L91akp5YpuKLUbNPoYHnZeYqyJCJK
+	 bfKkf8I6qhkoX0OR/SFJMhpbOhjmVWnD++DD4D8sJ2xlsCO9LiBwKxg4KROV/N2i2zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1ewZLhzYbua1VNBy1ch9Gmv6ppY9VXTtzJtXsNc2g+U=;
-	b=mHlrERztMcGjYIChBfyCkYyonIPU4rvroa3SxSN0SJe73zCtLcRAhhGU6dzHVov2gwfY
-	 B0eF16nlWwyjYd+1JTLT3Hhja3uq6Y1DZn7wT9JobwI2wciFGoMdczcM+wP1t6yku2CqW
-	 KF1MNa7SwZSp4GuQPiq1jfKStEc0GAMgKsE2QGYIJnqWoiinjKht++e3p9fovz/aRLQMq
-	 PIQpCpN5DIjW7oJA1nAGxxUKo/gecpCJlWFSQqE3OyKJgiEGn5C49vbx929UviRF78NyH
-	 IRJyz59nM90cAqrwHmIsuCrHxyaEfi/ERFclAudxpma+Z9IsgGN1xp5B42s1lRLW8HQ==
+	bh=aBn5zi3Q1RLCrdrVpGc3Ua8fiNC+PQxYPPE9THdJUG8=;
+	b=23bgb3IJ0dAyG5QN3wIIKDnshGYJ2exiXBpP3/nkHMfiibTfAEo1RDsTRSEZrdedmxOx
+	 Pa88Z5zKENzROCCkLusS1+SyosjZJ70us52KcrvwHTqXTSlgZt1gNwHSyGRLO2bnNoL2C
+	 Q3ihJPvN0o3cqtx//xCn7Kvf+ifknRtEiAVsQA4KCy3NFsPNLma38/WAuJ5Jtt1O9ZIal
+	 8t/osrxAxVHDXBkoi+kIlFrdbLncHYg578dV4/4O7rS0r1IcACe4bWVa7emAL7WFW9Mbc
+	 W+OFsop5GDluYlYq4od0XCaD+5hj9Sy1rfyCt93K6JX+1ZeUu/0xc7w8TUQaGFKdcMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gjG/cJMk";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zKDwFO1R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A885F606A325;
-	Wed, 18 Nov 2026 21:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE31606A320;
+	Wed, 18 Nov 2026 21:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjG/cJMk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63D81F000C4;
-	Wed, 18 Nov 2026 21:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zKDwFO1R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BB01F000C4;
+	Wed, 18 Nov 2026 21:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037211;
-	bh=1ewZLhzYbua1VNBy1ch9Gmv6ppY9VXTtzJtXsNc2g+U=;
+	s=korg; t=1795037214;
+	bh=aBn5zi3Q1RLCrdrVpGc3Ua8fiNC+PQxYPPE9THdJUG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gjG/cJMkOXevlc3zFHdVjs/bbfDQqnyTNS6zjyvo2qmurBpl9yDQ7r0XTAZSDLQdq
-	 HoPV+kBSQuFfz7OOWv5Jj2GPpNn1hAvMJs/KuqdD7OPEWENlgOtxCfYKpu07x2zrv7
-	 02LOVM4j9j1BwGrDXH6mQGTmXTiZ/jyFEXcL1XV0=
+	b=zKDwFO1RsIwuGOuBDSWOl14L8icPR5Hbk+4coBIRrZ6I35FwTmXWX6Bbmm7Nmclm8
+	 B1vnRke9UWgkP1Jl6LNnEx2MrDSgFK2rYiilL5fiEjgy0Nn1i1lfWOynPq5scsr6ro
+	 vKOMusfXGcHNL8L4z8EUPURyP44uz0EI63xvriG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1329/3318] HID: hid-prodikeys: remove struct pk_device
-Date: Wed, 18 Nov 2026 15:32:31 +0100
-Message-ID: <20261118150400.203370584@linuxfoundation.org>
+Subject: [PATCH 6.6 1330/3318] HID: prodikeys: validate fixed-format MIDI reports
+Date: Wed, 18 Nov 2026 15:32:32 +0100
+Message-ID: <20261118150400.234391191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,341 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 16d0e1d469cc16aefa8ef745e926eda473a9b221 ]
+[ Upstream commit 0ff37294c41bd925258893310398bc2b45fcd4a7 ]
 
-First, quirks was unused in struct pk_device.
+The HID core invokes raw_event callbacks before validating the report
+length.  Prodikeys reports 0x01 and 0x04 are passed to handlers that always
+read bytes one through three, regardless of the supplied size.  A truncated
+report can therefore cause an out-of-bounds read.
 
-And I see no reason for this additional level of indirection. struct
-pcmidi_snd is far enough for the driver. Unless I am missing something?
+Require four bytes for the two fixed-format reports.  Keep report 0x03 on
+its existing variable-length path, which derives the number of note pairs
+from size and only accesses complete pairs.
 
-So drop struct pk_device and convert all the users to use struct
-pcmidi_snd directly. No need for doubled kmalloc+kfrees now.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
 
-Found by https://github.com/jirislaby/clang-struct.
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Fixes: 3a370ca1dcf8 ("HID: Prodikeys PC-MIDI HID Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 0ff37294c41b ("HID: prodikeys: validate fixed-format MIDI reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-prodikeys.c | 113 +++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 73 deletions(-)
+ drivers/hid/hid-prodikeys.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hid/hid-prodikeys.c b/drivers/hid/hid-prodikeys.c
-index f20d29566b4da..b53b0c02675a4 100644
+index b53b0c02675a4..f2b9142e95021 100644
 --- a/drivers/hid/hid-prodikeys.c
 +++ b/drivers/hid/hid-prodikeys.c
-@@ -32,13 +32,6 @@
- 
- struct pcmidi_snd;
- 
--struct pk_device {
--	unsigned long		quirks;
--
--	struct hid_device	*hdev;
--	struct pcmidi_snd	*pm; /* pcmidi device context */
--};
--
- struct pcmidi_sustain {
- 	unsigned long		in_use;
- 	struct pcmidi_snd	*pm;
-@@ -50,7 +43,7 @@ struct pcmidi_sustain {
- 
- #define PCMIDI_SUSTAINED_MAX	32
- struct pcmidi_snd {
--	struct pk_device		*pk;
-+	struct hid_device		*hdev;
- 	unsigned short			ifnum;
- 	struct hid_report		*pcmidi_report6;
- 	struct input_dev		*input_ep82;
-@@ -100,11 +93,11 @@ static ssize_t show_channel(struct device *dev,
- 	struct device_attribute *attr, char *buf)
- {
- 	struct hid_device *hdev = to_hid_device(dev);
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
--	dbg_hid("pcmidi sysfs read channel=%u\n", pk->pm->midi_channel);
-+	dbg_hid("pcmidi sysfs read channel=%u\n", pm->midi_channel);
- 
--	return sprintf(buf, "%u (min:%u, max:%u)\n", pk->pm->midi_channel,
-+	return sprintf(buf, "%u (min:%u, max:%u)\n", pm->midi_channel,
- 		PCMIDI_CHANNEL_MIN, PCMIDI_CHANNEL_MAX);
- }
- 
-@@ -113,13 +106,13 @@ static ssize_t store_channel(struct device *dev,
- 	struct device_attribute *attr, const char *buf, size_t count)
- {
- 	struct hid_device *hdev = to_hid_device(dev);
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
- 	unsigned channel = 0;
- 
- 	if (sscanf(buf, "%u", &channel) > 0 && channel <= PCMIDI_CHANNEL_MAX) {
- 		dbg_hid("pcmidi sysfs write channel=%u\n", channel);
--		pk->pm->midi_channel = channel;
-+		pm->midi_channel = channel;
- 		return strlen(buf);
- 	}
- 	return -EINVAL;
-@@ -137,11 +130,11 @@ static ssize_t show_sustain(struct device *dev,
-  struct device_attribute *attr, char *buf)
- {
- 	struct hid_device *hdev = to_hid_device(dev);
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
--	dbg_hid("pcmidi sysfs read sustain=%u\n", pk->pm->midi_sustain);
-+	dbg_hid("pcmidi sysfs read sustain=%u\n", pm->midi_sustain);
- 
--	return sprintf(buf, "%u (off:%u, max:%u (ms))\n", pk->pm->midi_sustain,
-+	return sprintf(buf, "%u (off:%u, max:%u (ms))\n", pm->midi_sustain,
- 		PCMIDI_SUSTAIN_MIN, PCMIDI_SUSTAIN_MAX);
- }
- 
-@@ -150,15 +143,14 @@ static ssize_t store_sustain(struct device *dev,
- 	struct device_attribute *attr, const char *buf, size_t count)
- {
- 	struct hid_device *hdev = to_hid_device(dev);
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
- 	unsigned sustain = 0;
- 
- 	if (sscanf(buf, "%u", &sustain) > 0 && sustain <= PCMIDI_SUSTAIN_MAX) {
- 		dbg_hid("pcmidi sysfs write sustain=%u\n", sustain);
--		pk->pm->midi_sustain = sustain;
--		pk->pm->midi_sustain_mode =
--			(0 == sustain || !pk->pm->midi_mode) ? 0 : 1;
-+		pm->midi_sustain = sustain;
-+		pm->midi_sustain_mode = (0 == sustain || !pm->midi_mode) ? 0 : 1;
- 		return strlen(buf);
- 	}
- 	return -EINVAL;
-@@ -176,11 +168,11 @@ static ssize_t show_octave(struct device *dev,
- 	struct device_attribute *attr, char *buf)
- {
- 	struct hid_device *hdev = to_hid_device(dev);
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
--	dbg_hid("pcmidi sysfs read octave=%d\n", pk->pm->midi_octave);
-+	dbg_hid("pcmidi sysfs read octave=%d\n", pm->midi_octave);
- 
--	return sprintf(buf, "%d (min:%d, max:%d)\n", pk->pm->midi_octave,
-+	return sprintf(buf, "%d (min:%d, max:%d)\n", pm->midi_octave,
- 		PCMIDI_OCTAVE_MIN, PCMIDI_OCTAVE_MAX);
- }
- 
-@@ -189,14 +181,14 @@ static ssize_t store_octave(struct device *dev,
- 	struct device_attribute *attr, const char *buf, size_t count)
- {
- 	struct hid_device *hdev = to_hid_device(dev);
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
- 	int octave = 0;
- 
- 	if (sscanf(buf, "%d", &octave) > 0 &&
- 		octave >= PCMIDI_OCTAVE_MIN && octave <= PCMIDI_OCTAVE_MAX) {
- 		dbg_hid("pcmidi sysfs write octave=%d\n", octave);
--		pk->pm->midi_octave = octave;
-+		pm->midi_octave = octave;
- 		return strlen(buf);
- 	}
- 	return -EINVAL;
-@@ -270,7 +262,7 @@ static void stop_sustain_timers(struct pcmidi_snd *pm)
- 
- static int pcmidi_get_output_report(struct pcmidi_snd *pm)
- {
--	struct hid_device *hdev = pm->pk->hdev;
-+	struct hid_device *hdev = pm->hdev;
- 	struct hid_report *report;
- 
- 	list_for_each_entry(report,
-@@ -295,7 +287,7 @@ static int pcmidi_get_output_report(struct pcmidi_snd *pm)
- 
- static void pcmidi_submit_output_report(struct pcmidi_snd *pm, int state)
- {
--	struct hid_device *hdev = pm->pk->hdev;
-+	struct hid_device *hdev = pm->hdev;
- 	struct hid_report *report = pm->pcmidi_report6;
- 	report->field[0]->value[0] = 0x01;
- 	report->field[0]->value[1] = state;
-@@ -626,7 +618,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
- 
- 	/* Setup sound card */
- 
--	err = snd_card_new(&pm->pk->hdev->dev, index[dev], id[dev],
-+	err = snd_card_new(&pm->hdev->dev, index[dev], id[dev],
- 			   THIS_MODULE, 0, &card);
- 	if (err < 0) {
- 		pk_error("failed to create pc-midi sound card\n");
-@@ -664,7 +656,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
- 		&pcmidi_in_ops);
- 
- 	/* create sysfs variables */
--	err = device_create_file(&pm->pk->hdev->dev,
-+	err = device_create_file(&pm->hdev->dev,
- 				 sysfs_device_attr_channel);
- 	if (err < 0) {
- 		pk_error("failed to create sysfs attribute channel: error %d\n",
-@@ -672,7 +664,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
- 		goto fail;
- 	}
- 
--	err = device_create_file(&pm->pk->hdev->dev,
-+	err = device_create_file(&pm->hdev->dev,
- 				sysfs_device_attr_sustain);
- 	if (err < 0) {
- 		pk_error("failed to create sysfs attribute sustain: error %d\n",
-@@ -680,7 +672,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
- 		goto fail_attr_sustain;
- 	}
- 
--	err = device_create_file(&pm->pk->hdev->dev,
-+	err = device_create_file(&pm->hdev->dev,
- 			 sysfs_device_attr_octave);
- 	if (err < 0) {
- 		pk_error("failed to create sysfs attribute octave: error %d\n",
-@@ -710,11 +702,11 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
- 
- fail_register:
- 	stop_sustain_timers(pm);
--	device_remove_file(&pm->pk->hdev->dev, sysfs_device_attr_octave);
-+	device_remove_file(&pm->hdev->dev, sysfs_device_attr_octave);
- fail_attr_octave:
--	device_remove_file(&pm->pk->hdev->dev, sysfs_device_attr_sustain);
-+	device_remove_file(&pm->hdev->dev, sysfs_device_attr_sustain);
- fail_attr_sustain:
--	device_remove_file(&pm->pk->hdev->dev, sysfs_device_attr_channel);
-+	device_remove_file(&pm->hdev->dev, sysfs_device_attr_channel);
- fail:
- 	if (pm->card) {
- 		snd_card_free(pm->card);
-@@ -728,12 +720,9 @@ static int pcmidi_snd_terminate(struct pcmidi_snd *pm)
- 	if (pm->card) {
- 		stop_sustain_timers(pm);
- 
--		device_remove_file(&pm->pk->hdev->dev,
--			sysfs_device_attr_channel);
--		device_remove_file(&pm->pk->hdev->dev,
--			sysfs_device_attr_sustain);
--		device_remove_file(&pm->pk->hdev->dev,
--			sysfs_device_attr_octave);
-+		device_remove_file(&pm->hdev->dev, sysfs_device_attr_channel);
-+		device_remove_file(&pm->hdev->dev, sysfs_device_attr_sustain);
-+		device_remove_file(&pm->hdev->dev, sysfs_device_attr_octave);
- 
- 		snd_card_disconnect(pm->card);
- 		snd_card_free_when_closed(pm->card);
-@@ -763,10 +752,7 @@ static int pk_input_mapping(struct hid_device *hdev, struct hid_input *hi,
- 		struct hid_field *field, struct hid_usage *usage,
- 		unsigned long **bit, int *max)
- {
--	struct pk_device *pk = hid_get_drvdata(hdev);
--	struct pcmidi_snd *pm;
--
--	pm = pk->pm;
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
- 	if (HID_UP_MSVENDOR == (usage->hid & HID_USAGE_PAGE) &&
- 		1 == pm->ifnum) {
-@@ -781,16 +767,16 @@ static int pk_input_mapping(struct hid_device *hdev, struct hid_input *hi,
- static int pk_raw_event(struct hid_device *hdev, struct hid_report *report,
- 	u8 *data, int size)
- {
--	struct pk_device *pk = hid_get_drvdata(hdev);
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 	int ret = 0;
- 
--	if (1 == pk->pm->ifnum) {
-+	if (1 == pm->ifnum) {
+@@ -774,8 +774,13 @@ static int pk_raw_event(struct hid_device *hdev, struct hid_report *report,
  		if (report->id == data[0])
  			switch (report->id) {
  			case 0x01: /* midi keys (qwerty)*/
- 			case 0x03: /* midi keyboard (musical)*/
+-			case 0x03: /* midi keyboard (musical)*/
  			case 0x04: /* extra/midi keys (qwerty)*/
--				ret = pcmidi_handle_report(pk->pm,
-+				ret = pcmidi_handle_report(pm,
++				if (size < 4)
++					break;
++				ret = pcmidi_handle_report(pm, report->id,
++							   data, size);
++				break;
++			case 0x03: /* midi keyboard (musical)*/
+ 				ret = pcmidi_handle_report(pm,
  						report->id, data, size);
  				break;
- 			}
-@@ -805,8 +791,7 @@ static int pk_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	struct usb_interface *intf;
- 	unsigned short ifnum;
- 	unsigned long quirks = id->driver_data;
--	struct pk_device *pk;
--	struct pcmidi_snd *pm = NULL;
-+	struct pcmidi_snd *pm;
- 
- 	if (!hid_is_usb(hdev))
- 		return -EINVAL;
-@@ -814,26 +799,16 @@ static int pk_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	intf = to_usb_interface(hdev->dev.parent);
- 	ifnum = intf->cur_altsetting->desc.bInterfaceNumber;
- 
--	pk = kzalloc(sizeof(*pk), GFP_KERNEL);
--	if (pk == NULL) {
--		hid_err(hdev, "can't alloc descriptor\n");
--		return -ENOMEM;
--	}
--
--	pk->hdev = hdev;
--
- 	pm = kzalloc(sizeof(*pm), GFP_KERNEL);
- 	if (pm == NULL) {
- 		hid_err(hdev, "can't alloc descriptor\n");
--		ret = -ENOMEM;
--		goto err_free_pk;
-+		return -ENOMEM;
- 	}
- 
--	pm->pk = pk;
--	pk->pm = pm;
-+	pm->hdev = hdev;
- 	pm->ifnum = ifnum;
- 
--	hid_set_drvdata(hdev, pk);
-+	hid_set_drvdata(hdev, pm);
- 
- 	ret = hid_parse(hdev);
- 	if (ret) {
-@@ -860,26 +835,18 @@ static int pk_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	hid_hw_stop(hdev);
- err_free:
- 	kfree(pm);
--err_free_pk:
--	kfree(pk);
- 
- 	return ret;
- }
- 
- static void pk_remove(struct hid_device *hdev)
- {
--	struct pk_device *pk = hid_get_drvdata(hdev);
--	struct pcmidi_snd *pm;
--
--	pm = pk->pm;
--	if (pm) {
--		pcmidi_snd_terminate(pm);
--		kfree(pm);
--	}
-+	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
- 
-+	pcmidi_snd_terminate(pm);
- 	hid_hw_stop(hdev);
- 
--	kfree(pk);
-+	kfree(pm);
- }
- 
- static const struct hid_device_id pk_devices[] = {
 -- 
 2.53.0
 
