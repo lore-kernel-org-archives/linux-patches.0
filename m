@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030194;
-	b=KnKFGqUVoO5TeBK1856v2Oea9MHPsmr3pIRui8/sgTHAHBjppuRLgE8k1YyvnhKFIVvI
-	 d7soSi1eLEV1UOZEexp6RatH4R1aQwhgqEILmVsVurC9sO6DKAfCKG6I2I6M9z9NGS5Wy
-	 EnBPtRMhvwERCGs6WlHaZ2getrkh2dmk9fMoo68krH67CtrhWkD0MLivbuoBghApl02zQ
-	 zgkeZ0cwXoQW31qUyVpD8vnFmVPLWq58Q29Zu8gq4iP7mhF2PPr6f1bf27RoiiQxl+gl/
-	 BntmoEZdE0b2FPNzBB+0UzEDl+8vo55yQ46BOrVJCb8UvRh1WP61Uy8xLJ6/GFsb7fw==
+	t=1795030196;
+	b=BuFP5f9YzOCFDPxqsi32yu/8j2lDNHPeRjFVmH966R2x/zFK4AIacaQ1bCWODw4mt8zh
+	 TNUqLE4l9S+yZ4gSvLPG88fueKQOBfnn/1sIu3xCi6De/nEIdABy2iZB1ZSRmF5RS6gu1
+	 HvTJGRgi2pMN0gqAN9YQIJOVkM5oAvrXVD7DjxfBcZrA7IZggXTZMLkPzjtGHr+J4vk8e
+	 AcYNc0lbAZNU4phuL8KnRu3vIaqtvzc3RhqRMiOKZZsBy6c9AYTmK6dUsZgLARqbzkPNY
+	 t7wYWFgkEFQFvqlKyG92J01jqIHfeyVwXZJc+RAH7kGQPnUJ0RtT8eFZ3R4FS3pB0ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ornd6BeZGrcpnuMyDi7euTqfJDJSh+fspLpzDaDUd3s=;
-	b=P4jWK4QFmvhDEb0TS+EFFEXB4dS/SdL/Pb9tlgk1FMtKFFReIWQOLlFdncrPK1r/pKeB
-	 iSoFWoGxgbpagqmUrcWTzA/yI5nGisn0nTq9MD++e9BpAS2VOt6APX8WEkbWbDkrqjShl
-	 8aImuTxFYWj70BwN3IiZvFGzjZH01SjtEPdFIcRpHqzCz3ZzhbpBVVqi836vggPgpGxLQ
-	 wDXQY52mOTjnylAhZ72/x6WDnoOSU/fjbIbNXR6rGctTa6C+ZQIZ9mCBND5AnbDaiTvLc
-	 vHqnTjRweG7/jl6WNNV1OnqC5aQIFFRRYIopkjXZVD16iGvkhDOU6LlI7vz+6FqyXAQ==
+	bh=XH0++tdVvXpCYP20ivNUcQtgueGfc7pcKc7o+DALCMA=;
+	b=yTadK+gX6gINj3IIZTpWZxc4SJVHYddtQaHuiPb1eF18p18JxsYrcwNBRfOH/QQOD0T3
+	 h9dqejXNoIhIqu0JnZiX/7bWnMK4Rn/Ok5d31UXnJ5GSmA2/B+90HLV4j0LCiE/yZKDtc
+	 Rlq7r0pXBzLuSf18B+HM2X2A5866EVhzRql0mJHo1KOW9MElsSDMdt613FlrPigNVrhTo
+	 daVPzqLpuvbZQjiAPFoY3FBWrAdiQKo3cQwY/RWnwiwFBHC7CzXuiFFl6xz+7yzfZdIHS
+	 eGm67P5ThBCd1d/l+wWbjZDnHIF5ezmMr1zdVRLepSkG84Hh/yeAp85ZGmgeD3p6zZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnxj1fmE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gd12uVlh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B39606A32C;
-	Wed, 18 Nov 2026 19:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DC2606D35D;
+	Wed, 18 Nov 2026 19:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnxj1fmE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416E61F000C4;
-	Wed, 18 Nov 2026 19:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gd12uVlh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E401F000C4;
+	Wed, 18 Nov 2026 19:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030193;
-	bh=ornd6BeZGrcpnuMyDi7euTqfJDJSh+fspLpzDaDUd3s=;
+	s=korg; t=1795030196;
+	bh=XH0++tdVvXpCYP20ivNUcQtgueGfc7pcKc7o+DALCMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cnxj1fmE6S1CXhDDmaL5kPMNFLlvPQC9TE+rTA3ZtfVxFHJxSEfckbLQuwNj1BEVm
-	 BcuLdhCvL/r9HZIhCbx6jlrwE8is0tQ7aeV528v83XdV4V9TQsBIPgAXQqt6KPMlYm
-	 phk3d58XP490Fps6KpYMndgKCLtEGKHuHc4lEmrk=
+	b=gd12uVlhjlXL7v6SoJbmqUrnKkFsieS4ja3WHEavkn1j0f4JyRdTK4RrHjPaYCHFB
+	 +8AiIV0r0BY3owmnLEmr6SVwi1TffbpWSx9WnEsRQbNSuDOCxI77G7S/329o3ZEBK+
+	 yWPiYekFPImvt6K9/29xBhk2lDX0G2ScWBb/oYWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0619/1756] PCI: aardvark: Disable PHY on probe failures
-Date: Wed, 18 Nov 2026 15:45:46 +0100
-Message-ID: <20261118150033.553666583@linuxfoundation.org>
+Subject: [PATCH 6.12 0620/1756] arm64: dts: qcom: sm8150: Use SM8150_CX for the SDHC power domain
+Date: Wed, 18 Nov 2026 15:45:47 +0100
+Message-ID: <20261118150033.591594683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,98 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 28cc5bc5a6c6cffbe7ba27c0acbfbe06747fa173 ]
+[ Upstream commit 475aab59d9870d250f521e202d191899c50a3ded ]
 
-advk_pcie_setup_phy() initializes and powers on the PHY before the
-emulated bridge and IRQ domains are created.  If any of those later
-initialization steps or pci_host_probe() fails, probe returns without
-powering off or exiting the PHY.
+Replace the raw power-domain index of SDHC2 with the SM8150_CX binding
+constant, which is the correct power domain in this case.
 
-Replace the direct returns with staged cleanup labels.  Remove IRQ
-domains in reverse order, release the emulated bridge allocation only
-after successful initialization, and disable the PHY on every failure
-after advk_pcie_setup_phy() succeeds.  A setup_phy() failure still
-returns directly, so its partial internal cleanup is not repeated.
-
-Fixes: 366697018c9a ("PCI: aardvark: Add PHY support")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260910221725.91980-1-mhun512@gmail.com
+Fixes: 876644c76034 ("arm64: dts: qcom: sm8150: Add support for SDC2")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260914-qcom-tie-cx-to-gcc-v4-0-9d5a606ada33@oss.qualcomm.com?part=45
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-dts-qcom-sm8150-sdhc-use-mss-for-pd-index-v2-1-a8610199483d@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-aardvark.c | 31 ++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-aardvark.c b/drivers/pci/controller/pci-aardvark.c
-index a598a98247ce9..e65fe2ca2515d 100644
---- a/drivers/pci/controller/pci-aardvark.c
-+++ b/drivers/pci/controller/pci-aardvark.c
-@@ -1881,28 +1881,25 @@ static int advk_pcie_probe(struct platform_device *pdev)
- 	ret = advk_sw_pci_bridge_init(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to register emulated root PCI bridge\n");
--		return ret;
-+		goto err_disable_phy;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 0aeceffd872c0..e52c1a4677946 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3562,7 +3562,7 @@ sdhc_2: mmc@8804000 {
+ 			iommus = <&apps_smmu 0x6a0 0x0>;
+ 			qcom,dll-config = <0x0007642c>;
+ 			qcom,ddr-config = <0x80040868>;
+-			power-domains = <&rpmhpd 0>;
++			power-domains = <&rpmhpd SM8150_CX>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
  
- 	ret = advk_pcie_init_irq_domain(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize irq\n");
--		return ret;
-+		goto err_cleanup_bridge;
- 	}
- 
- 	ret = advk_pcie_init_msi_irq_domain(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize irq\n");
--		advk_pcie_remove_irq_domain(pcie);
--		return ret;
-+		goto err_remove_irq_domain;
- 	}
- 
- 	ret = advk_pcie_init_rp_irq_domain(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize irq\n");
--		advk_pcie_remove_msi_irq_domain(pcie);
--		advk_pcie_remove_irq_domain(pcie);
--		return ret;
-+		goto err_remove_msi_irq_domain;
- 	}
- 
- 	bridge->sysdata = pcie;
-@@ -1910,14 +1907,22 @@ static int advk_pcie_probe(struct platform_device *pdev)
- 	bridge->map_irq = advk_pcie_map_irq;
- 
- 	ret = pci_host_probe(bridge);
--	if (ret < 0) {
--		advk_pcie_remove_rp_irq_domain(pcie);
--		advk_pcie_remove_msi_irq_domain(pcie);
--		advk_pcie_remove_irq_domain(pcie);
--		return ret;
--	}
-+	if (ret < 0)
-+		goto err_remove_rp_irq_domain;
- 
- 	return 0;
-+
-+err_remove_rp_irq_domain:
-+	advk_pcie_remove_rp_irq_domain(pcie);
-+err_remove_msi_irq_domain:
-+	advk_pcie_remove_msi_irq_domain(pcie);
-+err_remove_irq_domain:
-+	advk_pcie_remove_irq_domain(pcie);
-+err_cleanup_bridge:
-+	pci_bridge_emul_cleanup(&pcie->bridge);
-+err_disable_phy:
-+	advk_pcie_disable_phy(pcie);
-+	return ret;
- }
- 
- static void advk_pcie_remove(struct platform_device *pdev)
+ 			status = "disabled";
 -- 
 2.53.0
 
