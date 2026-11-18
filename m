@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049139;
-	b=RHCOTtH2nj+p5ga/JU+1wKX71XB5/Vm6BHm5AQcGXPgt0oODP3bOi2Jq48c01S7pRmBx
-	 xNeEiBhnq4WhrooPhuZe0dTVwZ58DiWsSERmLArPbfkcrqeXmHETxRFM/tR3y07yTpAjt
-	 FMMVTVyxIb14PPr9Ige9SB1yDwoUqK/SJD7UoMqpDkqkpmw3SwUZ3+7yuVbWls4nOZ1cL
-	 EJqS3e7MD7NgQZiTvlIbHMQdO4vleSYHKrvkJSWK+Ap4d7z9Vunhc4wRmOuRaB4WhaY+c
-	 K7pvVcIKvU6OPaAKE79H86TjSQcHuFo6tSPcAWMoZ+pTSJWKWlf+ra9SL3KEJXMA52Q==
+	t=1795049142;
+	b=2uc3+2k+zRJYAuaW4GvWBQPaWlGTsSpEyMbqygW5/9wmWYQ10hadya2acEOPi0uTq+v7
+	 gVBcgSDLlt7JlY3y2We3flYFzfhmChCxR+/yhwuN9UHTDrFDceHoeM3Dn28rEGelbI041
+	 +eIJB4S0ftkX4yTCn+jQ/4jWPfPUFj5jiDsyjPMQrivBW58qbu2KMEJO0nF6rEmdt8ffL
+	 Uf1QgPu1Vz3zyUOx86wKiPBqRQmzoxP5C45J9bxlAPNZB7xq2/RGPbh/Fn4TSE+MjbEIL
+	 PbtLGaIw0NGhKEsN2/Ass5FP8utWvoYHieiTyxvyVXV93+c1DikFQNOTiQX2/n/xsbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CIf9YEv1k5ECCUmonsYnmPW2qHOh5yVC+/Me8+gtBFY=;
-	b=tg+8oul/w1+9MogwvplfIfl3xOIfx0CRmv+h6e3BrxFdLyFP7jHSnP6K8CB13QZIi/FJ
-	 HQSSO3ZEgmGyPZbPcfYmQhUqEuiLatH7fIdu9MHbPEamyF/c01M4MeUGsgl4ZtLY0KaWK
-	 3R+gcvBwRr2Oseru58x3ubHG/kWCBfkrf47Zpy/R0I1ia89H0ggrYQEn+sCL88sJxjza0
-	 WOJRfMfaqLU7Z2OD+Tw4HaEY1o5LdAIwrW4nnVwlotTSGlPvZbd+tADx+NcBd8YSkC0S9
-	 P3CHohH5qkdmtoWectP9au+8k4eVgR5s9nuf5XaQASw1yBB51tUKDxQJonQTfTHpmZg==
+	bh=0s+eKYiP9p6DeUJeZdZF/eZ9ON+V83XZ3FPo73fVMBM=;
+	b=OTW+dMAuLqm4BpJgbLi673VVmZFNoOu9ANEny21rUtpDvplijzi4Y/wo2CJB2jWsjyt+
+	 RzbEnZA/AOqr5gevaYSpNcn+yyaxnJh1PPReF/LPGAVnntmD6MnciEQ6NQEdVOroe13gT
+	 sPucuN+JtgT5VWy6c/YeRbGHG8jv4RKnknzUcodsl/lRftjO4ZwNmbHTUQPKbg1K2Bj2P
+	 giIckMH04BZJPYAliqVG0Ztry33n4ysaFZfodUnSOQ1s3IcAk/jXDlyP3BZvRbkAqfUG/
+	 +GRFrSTV++OfmI4PCpyi31W7jKUOWHanGBn1lK8e1GRsIafSoxRi7LT5TK7Xu3b73og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aVsQg/hr";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="abvCu/zE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570AC606A336;
-	Thu, 19 Nov 2026 00:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A6606A331;
+	Thu, 19 Nov 2026 00:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aVsQg/hr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD14B1F000C4;
-	Thu, 19 Nov 2026 00:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=abvCu/zE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767981F000C4;
+	Thu, 19 Nov 2026 00:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049139;
-	bh=CIf9YEv1k5ECCUmonsYnmPW2qHOh5yVC+/Me8+gtBFY=;
+	s=korg; t=1795049142;
+	bh=0s+eKYiP9p6DeUJeZdZF/eZ9ON+V83XZ3FPo73fVMBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aVsQg/hrQznDOHQ/e8sCQxwaOL7qrAQ+uYJoDyMr67B14GSVBa6aaUKdO1MhzY6JT
-	 7k7AtYXyihhybx2chskQCSG036fdMa14DzZ3RxCv68bPKwHWdOEc0Z4WWPk9mnHUMV
-	 /YdSabv3L2diYWYhwqjyNo5flmEXtgbVH2NaZsbo=
+	b=abvCu/zEXbGP+e8uFCw8hyelJ+JUJLW84xEqy9bJHTCKFa+FaY+UlIIEVwtNREUH+
+	 cug9zd8O8vXg7QC5aKNKM/Jr4T9mxgCkxF8WRSvDyV0c8rxJ8WGHbe/oms43Nee0z0
+	 68/RdcR4paTyN2u/YR+Nffqf+b1zbw2xv2NnGGFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2246/2857] dmaengine: ste_dma40: Fix physical cyclic capability
-Date: Wed, 18 Nov 2026 15:54:40 +0100
-Message-ID: <20261118150322.307395815@linuxfoundation.org>
+Subject: [PATCH 6.1 2247/2857] dmaengine: ste_dma40: Fix failed start cleanup
+Date: Wed, 18 Nov 2026 15:54:41 +0100
+Message-ID: <20261118150322.343627352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,41 +72,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 11101a8e3e42273a5910a149f6324040b88f4747 ]
+[ Upstream commit 8175ead5727173d4b96d1e830e696765d75ade71 ]
 
-d40_dmaengine_init() configures dma_both for physical channels that can
-handle both slave and memcpy transfers. Physical DMA40 channel setup has
-supported cyclic LLIs since cyclic transfer support was added, but the
-DMA_CYCLIC capability is set on dma_slave a second time instead of
-dma_both.
+If d40_start() fails after a queued descriptor has been moved to the
+active list, d40_queue_start() currently returns NULL without unwinding
+the transfer state or clearing the channel busy flag.
 
-Set DMA_CYCLIC on dma_both so d40_ops_init() installs
-device_prep_dma_cyclic and physical channels advertise cyclic support.
+Fix this pre-existing error path by completing the descriptor through the
+normal tasklet path, clearing the busy flag, balancing the runtime PM
+reference and returning an error pointer to distinguish the failure from
+the no-work case. Do not free the descriptor directly, since it has
+already been submitted and has a DMA cookie.
 
-Fixes: 0c842b551063 ("dma40: cyclic xfer support")
+When starting the next queued transfer from the completion handler, put
+the completed descriptor on the done list first. This preserves FIFO
+completion order if the new transfer fails to start and prevents the
+completed cookie from moving backwards.
+
+Use done-list membership rather than the cyclic flag to identify terminal
+descriptors in the tasklet. A cyclic descriptor that failed to start is
+then completed and removed instead of remaining permanently at the head
+of the done list.
+
+Fixes: 7d83a854a1a4 ("dma40: remove "hardware link with previous jobs" code")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Assisted-by: LLM
+Link: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-1-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-4-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 594b016e76efc..e06f8f0e9c825 100644
+index e06f8f0e9c825..45c1497a107df 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -2885,7 +2885,7 @@ static int __init d40_dmaengine_init(struct d40_base *base,
- 	dma_cap_zero(base->dma_both.cap_mask);
- 	dma_cap_set(DMA_SLAVE, base->dma_both.cap_mask);
- 	dma_cap_set(DMA_MEMCPY, base->dma_both.cap_mask);
--	dma_cap_set(DMA_CYCLIC, base->dma_slave.cap_mask);
-+	dma_cap_set(DMA_CYCLIC, base->dma_both.cap_mask);
+@@ -1510,8 +1510,15 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
+ 		/* Start dma job */
+ 		err = d40_start(d40c);
  
- 	d40_ops_init(base, &base->dma_both);
- 	err = dmaenginem_async_device_register(&base->dma_both);
+-		if (err)
+-			return NULL;
++		if (err) {
++			d40_desc_remove(d40d);
++			d40_desc_done(d40c, d40d);
++			d40c->pending_tx++;
++			d40c->busy = false;
++			pm_runtime_put_autosuspend(d40c->base->dev);
++			tasklet_schedule(&d40c->tasklet);
++			return ERR_PTR(err);
++		}
+ 	}
+ 
+ 	return d40d;
+@@ -1555,15 +1562,15 @@ static void dma_tc_handle(struct d40_chan *d40c)
+ 			return;
+ 		}
+ 
++		d40_desc_remove(d40d);
++		d40_desc_done(d40c, d40d);
++
+ 		if (d40_queue_start(d40c) == NULL) {
+ 			d40c->busy = false;
+ 
+ 			pm_runtime_mark_last_busy(d40c->base->dev);
+ 			pm_runtime_put_autosuspend(d40c->base->dev);
+ 		}
+-
+-		d40_desc_remove(d40d);
+-		d40_desc_done(d40c, d40d);
+ 	}
+ 
+ 	d40c->pending_tx++;
+@@ -1577,20 +1584,22 @@ static void dma_tasklet(struct tasklet_struct *t)
+ 	struct d40_desc *d40d;
+ 	unsigned long flags;
+ 	bool callback_active;
++	bool from_done;
+ 	struct dmaengine_desc_callback cb;
+ 
+ 	spin_lock_irqsave(&d40c->lock, flags);
+ 
+ 	/* Get first entry from the done list */
+ 	d40d = d40_first_done(d40c);
+-	if (d40d == NULL) {
++	from_done = !!d40d;
++	if (!from_done) {
+ 		/* Check if we have reached here for cyclic job */
+ 		d40d = d40_first_active_get(d40c);
+ 		if (d40d == NULL || !d40d->cyclic)
+ 			goto check_pending_tx;
+ 	}
+ 
+-	if (!d40d->cyclic)
++	if (from_done)
+ 		dma_cookie_complete(&d40d->txd);
+ 
+ 	/*
+@@ -1606,7 +1615,7 @@ static void dma_tasklet(struct tasklet_struct *t)
+ 	callback_active = !!(d40d->txd.flags & DMA_PREP_INTERRUPT);
+ 	dmaengine_desc_get_callback(&d40d->txd, &cb);
+ 
+-	if (!d40d->cyclic) {
++	if (from_done) {
+ 		if (async_tx_test_ack(&d40d->txd)) {
+ 			d40_desc_remove(d40d);
+ 			d40_desc_free(d40c, d40d);
 -- 
 2.53.0
 
