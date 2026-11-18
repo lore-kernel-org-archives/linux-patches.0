@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023877;
-	b=tPdU1yEPBnXn10+rUlmHeyRg5FKPUgExqSVWWf5tlMF+oAc117ctElf1rZsGwZAGA5Lw
-	 BQWUcA5NIV0i7RhBYzNzUkuOGhoQlCKtB9W0NV+RdicFd+Pdj3xqxs/4DoePOc/+7f55w
-	 4FsrIr5gcfnUNoLCirwCtQYKmvkom/LGmAV3B70gIquGVQPSkP+OUiZ+niEd0siS/nGA5
-	 5DbdxM2R/TGu0bqGc3prWEh5VXgc+VsvukWWQBLBUvF5wrCvbhuXKYkSKIinFZJgdT8Ee
-	 utc+YThP51nKTACE/nzl0Qg/Idt5ItdULQxacdGF7iI83/NnRBYERK3yxp3Cu7XPerg==
+	t=1795023879;
+	b=1ODiZXPTXZlg7N1YcBdmzmQIdn5lw4WAdGhblpcMBOPRT/EkhmOVxdWlNZ18YAixPSPS
+	 1CMzijpHSjxikPYHa11ne5x59VRWqbNaomZUrcxcraNtds1sL+/oWnBYhjjObNeBz5bZe
+	 M4zp0l+Ewvs5KstAR5u/2ZezymwUeAk2nGYqbONwOsr+GZKgqtK9LuGOc8DvMiKMqmk4a
+	 uHAtcwx1yAX37tyQfwN+qDIwtiXLAi3qCjGakSOIZGL7bQFFZ4tHZSj+a4ykpC14PqduO
+	 6lLV5lx7tcDm2sefoAdtalH1BTtJBZ77/i3L5LYW4BenlF2IBtQjHsFK0c5ZPQOAwHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QJ9/FWFkNrMAn1na/4urKgjLxMZ1i8zrOKIh9mJIhgQ=;
-	b=J92ZzYbAKwgSMYdmJ/i++l+6i5wMD57u2XlwT6yJ+AkQLVZKN6WrsUvaWakPszlsag46
-	 t0OPNnwYbnp1x0yoLvXqWvRrxQ1ZGDRPcFUNYVmmaDaMj9L/BOswwFxxPwlOVzpWjslOK
-	 Ueu8iD/9Rf8Hmcb+5lq7XQFv5un8M/W8Td52LW5nYpK+H9XhPxgMTvK7QOh8MJ5inE2e3
-	 oNXTGo+28C3KZdZVozC8oOSjho4NwPmJswleMW8QzyaX8wB76vBY9BlFhhnZQiTcv2U+a
-	 cCTjONYp2aUwWSSvqG9mxHtsB55+ubjXL4DiTO81bfdZBn15SafzTSNoPZZx9WSJUUQ==
+	bh=Cg7BN0z0HqOu3JZX9mg+/0eC+ccHDqyYD6gYd6dV0PU=;
+	b=WTwIajERqvIr3PvK3iHgWpTjKWs9BpfSU4WvhYwoIYsNPPB3g5ZlbAyvEjDVmgSlvLnE
+	 4djRFG/SndPVcUKJobSovwQG/yNqWb4z6vmzl1odO4FGOB941kwwwo8HPskcAH/FNuwC4
+	 SksCf5A2uy7be2xu5H338dQcrtyf1qUwNF8eSi567nyU+6QV/zYtkSkGSD8MU7WTfbB+S
+	 I70hUAsw9WjWelWjPliaPSgRnEqbKiDHGUE4b51ju4ppVCyNbc8MdtzHqBH9AQFOpz1Pi
+	 +Fkk6dGC8jUP8FoIbiGUoBCaa5FXIZzailzWiX32VMO3jOn8th6IZjZvW2lOmkqt6Rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOBjkqKg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i8QfGMfd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086D9606A320;
-	Wed, 18 Nov 2026 17:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E03606A31C;
+	Wed, 18 Nov 2026 17:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOBjkqKg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABA01F000C4;
-	Wed, 18 Nov 2026 17:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i8QfGMfd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BDC1F000C4;
+	Wed, 18 Nov 2026 17:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023876;
-	bh=QJ9/FWFkNrMAn1na/4urKgjLxMZ1i8zrOKIh9mJIhgQ=;
+	s=korg; t=1795023879;
+	bh=Cg7BN0z0HqOu3JZX9mg+/0eC+ccHDqyYD6gYd6dV0PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOBjkqKgw+AtR2jD1/7AITCqICTm1NwAsRkMHH8eEE46D0NI7zuA0MLq/J9077q7y
-	 oVwzV1O30WwRPserVeUqGAXyljfROT4ieJrSVeNa2cZKu+0Bw0rZcH8bpn+a4/r/P+
-	 SXix9xj1U2pEx5P0bNuqUXliSr/Tl+9uIlkYBp+o=
+	b=i8QfGMfduB3BnTbNBwbUHM35M3Ds20FEHcUbk+1o5y9KDtc4MuvDL6ckF6lqjHEZk
+	 J3riIXFoHQX1ez+Psl3bt40BobKoSKTJ+S7NFhew6Tq4PfnPPc5tX90qcKV8KSGxcJ
+	 haUhW9deHvGaTPwPsuzUDc5rmc3IV3TaJHkbtZFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0526/2151] RDMA/uverbs: Drop restrack ref on ib_init_ucontext() failure in GET_CONTEXT
-Date: Wed, 18 Nov 2026 15:37:41 +0100
-Message-ID: <20261118150141.190154423@linuxfoundation.org>
+Subject: [PATCH 6.18 0527/2151] cxl/region: Create node access attributes for CFMWS-only NUMA nodes
+Date: Wed, 18 Nov 2026 15:37:42 +0100
+Message-ID: <20261118150141.224304737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,54 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 9dcacdc41083cccff74292851bf9fde999e0731a ]
+[ Upstream commit ef71014055f7b4959e4cb023ca8a18258cb5641c ]
 
-The UVERBS_METHOD_GET_CONTEXT handler allocates the ucontext via
-ib_alloc_ucontext(), which calls rdma_restrack_new() (initialising the
-kref to 1) and rdma_restrack_set_name(NULL), the latter attaching the
-current task and taking a task_struct reference.  When ib_init_ucontext()
-subsequently fails, the error path only does:
+A NUMA node that only backs a CXL fixed memory window and is not
+enumerated by SRAT has no memory_target in the HMAT code, so
+hmat_callback() exits early at find_mem_target() and never creates
+the node's accessN attributes:
+/sys/devices/system/node/nodeX/accessN/initiators/* stays missing.
 
-	kfree(attrs->context);
-	attrs->context = NULL;
+Commit debdce20c4f2 ("cxl/region: Deal with numa nodes not enumerated
+by SRAT") had the CXL region notifier call node_set_perf_attrs()
+directly for such nodes, but commit 2e454fb8056d ("cxl, acpi/hmat:
+Update CXL access coordinates directly instead of through HMAT")
+replaced it with node_update_perf_attrs(), which only updates
+attributes that already exist and thus does nothing for these nodes.
 
-without first calling rdma_restrack_put() on &attrs->context->res.  The
-kref therefore never reaches zero, restrack_release() is never invoked,
-and put_task_struct() is never called, so the task_struct reference taken
-during set_name is leaked permanently.
+Create the attributes with node_set_perf_attrs() when the node is not
+backed by a real SRAT pxm.
 
-A local user with access to an RDMA device can repeat this path (e.g. by
-hitting an RDMA cgroup limit or supplying invalid ucaps) and leak one
-task_struct reference per attempt, eventually preventing those processes
-from being reaped or exhausting memory.
+Tested on a QEMU CXL topology with a CFMWS window not described by
+SRAT or HMAT: node1/access0/initiators/{read,write}_{bandwidth,latency}
+appear with the calculated coordinates once the region's first memory
+block comes online.
 
-The legacy ib_uverbs_get_context() path already handles this correctly
-at its err_ucontext label, where rdma_restrack_put() precedes kfree().
-Mirror that ordering here.
-
-Fixes: a1123418ba10 ("RDMA/uverbs: Add ioctl command to get a device context")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260916085529.1838-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2e454fb8056d ("cxl, acpi/hmat: Update CXL access coordinates directly instead of through HMAT")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260917024632.1397380-1-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/region.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
-index a28f9f21bed89..a93a73b1a2fd4 100644
---- a/drivers/infiniband/core/uverbs_std_types_device.c
-+++ b/drivers/infiniband/core/uverbs_std_types_device.c
-@@ -264,6 +264,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_GET_CONTEXT)(
- 		return ret;
- 	ret = ib_init_ucontext(attrs);
- 	if (ret) {
-+		rdma_restrack_put(&attrs->context->res);
- 		kfree(attrs->context);
- 		attrs->context = NULL;
- 		return ret;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 148168319a266..46fc6644c8a72 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
++#include <linux/acpi.h>
+ #include <linux/memregion.h>
+ #include <linux/genalloc.h>
+ #include <linux/debugfs.h>
+@@ -2450,7 +2451,19 @@ static bool cxl_region_update_coordinates(struct cxl_region *cxlr, int nid)
+ 
+ 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
+ 		if (cxlr->coord[i].read_bandwidth) {
+-			node_update_perf_attrs(nid, &cxlr->coord[i], i);
++			/*
++			 * A CFMWS-only node (not backed by a real SRAT pxm)
++			 * has no HMAT memory_target, so hmat_callback()
++			 * never created the access attributes for it:
++			 * create them here instead of only updating them.
++			 * This is called at most once per node (see
++			 * nodemask_region_seen), so the attributes are not
++			 * created twice.
++			 */
++			if (!acpi_node_backed_by_real_pxm(nid))
++				node_set_perf_attrs(nid, &cxlr->coord[i], i);
++			else
++				node_update_perf_attrs(nid, &cxlr->coord[i], i);
+ 			cset++;
+ 		}
+ 	}
 -- 
 2.53.0
 
