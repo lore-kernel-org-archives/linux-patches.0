@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036434;
-	b=JyYINPDtEhDn4UEDFyAlDzCdWA1EKB2AW1vyVciMuUT7wIQ9WMt4hlXdyagCjiZvqBkp
-	 G3IZzgbTHMeU9hDY1bKCLvntfWihmiz8cPjeohb8WUCAK+aUl/W8JZPtaCW9DY8GoU79/
-	 Cx/VX8E5vpbfP7wDqvonryBYlK2x6hAWIFzeSspK9Frnwmy+L6sydOjVlEInvp6s3d8N1
-	 xaUqTSPR7nz/cxyzrwngSkhdeAh309oJPimagJ3hAu0CHs6mm1bx/HRR+ep1UCMcXbWsK
-	 Vt6M2pD61fwtHy4rwb+LPSCaJ3UdnPO/0SO8BJcVJjMxb/3Y/CDiNtOIAJcmXyfY8vQ==
+	t=1795036436;
+	b=Aj4VpVHPKWTg/sB7k2NPARdGANCusTEwKGoyb+LzgN4X+eprD6Uh34zKASnHGvffmO5V
+	 uptDbYwmCjcSJhpmo6lUO8SBJqhIfrp0eytFIMQxORajAc+Qr2yveimADt3UG8R2WYFQJ
+	 pejW50I1JAt1SAszjvJ59JsGRF1IvisxsueSJEdjl6ICDSJg73i6iaPwuSoCoTzNPBbpH
+	 VeMGY+0VhKp+8XK9xI8JWF7M2T0CV7vPXZRFWMpJNIMdd+4gL2iz3vtK7PfYExOUFMp0d
+	 jt6ZUbiAICk6/JMEhiu1rd3Gq7y/YWb/TdYkoiwmqboIFCHMiBwyDUwYHBhD+n1iNTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jx4wHDrfXH83ksXebQz9S/EsyO08T1IWqASux/cr7NA=;
-	b=zU/GEYB5+me2bamH8wm8Bg4bucU8gBsD4KskfknLayG+dgaJJ8Q+bx38BnjCPdM4rrJG
-	 Kxw+Pxz9Gw26OfJ9JgiJE9ew4ZnBfoqdn3rVyR/f3wkdKavdizJi5JdQxeajiLdkpovm0
-	 70J+5M5lnmgAa1nArunqiSjIHvsVvrlcNfDnSvEytkFH95Om4cVDktGswgaKhO2dyibyM
-	 wo90JBa23Z3NkPK+M3K5JVPTrX/kvFZtVoJxo74EyC6F8MtPHGR5qY6cuW9YCrnMCcMRX
-	 x8uEGIdknRHFGtls4sqEx6dMglOpF1Xl1IL6SSEuVECZ+3BgZwBtvmRMx0q73Wv1b3A==
+	bh=GHrGPbXn3Qi3MYR7u2t/Oi/9FHzRfwJTI0XOJXnkRAo=;
+	b=E6s9eCV7hnzmszVg0pqMI/fEHSoSCKe4SRRy+h3Yw16jXi+1i+zsLvT4CisFl6+0CRsI
+	 GP1wHD2k0BCptGcmJNZ1/q4sBsKxp2JRJ745822GPom/oxdPt8yvo2CZM8S5PXg4zh8K1
+	 CnEdpXQIoEyRbdjXtykW4nD0lwjrggtsl/EjieqxQTj3uygutb6YAws3sHDiXBbFnoDtM
+	 18vEmzsB+5jr1GBGiqhIDelKKEBSfS1iSsNtBMXLViQ29sImjiTn9XrDkHCk2PRyqJsRS
+	 PCECs6mspasig1eW60eDhaB7wxde7VDQYfWztVogbgJSYcKjzIF9/JXgaGKus37s5rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mQ8OW2Vf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtSjsbza;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95B4606A325;
-	Wed, 18 Nov 2026 21:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C25606A336;
+	Wed, 18 Nov 2026 21:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mQ8OW2Vf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D331F000C4;
-	Wed, 18 Nov 2026 21:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtSjsbza
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063BE1F000C4;
+	Wed, 18 Nov 2026 21:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036433;
-	bh=Jx4wHDrfXH83ksXebQz9S/EsyO08T1IWqASux/cr7NA=;
+	s=korg; t=1795036436;
+	bh=GHrGPbXn3Qi3MYR7u2t/Oi/9FHzRfwJTI0XOJXnkRAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mQ8OW2VfhWe1L2fuY8nujYJkxQQU5QU02D5jJZO0yF0RZpOhfzJSNvJJbgqI2iM74
-	 TmBOYyk3qVlboB4ZmNkQAKRNzhuy0BV5J/6iKLAthFR1wkcc4DI6N/VALEgqSmmkps
-	 1N66h6g6i1zL32hGjvnRAoGXoPmxJMfXz+2o3mI4=
+	b=mtSjsbzaQ3Ob1ZI/SeRePEwuvcYQrj7r9rFsQpbXazTpD5Gf6Xe3E+flt3hlH1Wmc
+	 i7wQK4ffYCnxmr1mdqcTq6jKT7Ued8uKg4ugnUk0mgypprjcVYqPnYKG+xxSM4/ak2
+	 9tCODUpL7DsfCSRnPVqaEqR3k89dkJdN9vOaPHdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Oliver Neukum <oliver@neukum.org>,
-	Johan Hovold <johan@kernel.org>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1056/3318] USB: serial: usb_wwan: fix urb leak on disconnect
-Date: Wed, 18 Nov 2026 15:27:58 +0100
-Message-ID: <20261118150351.624314380@linuxfoundation.org>
+Subject: [PATCH 6.6 1057/3318] slimbus: messaging: fix leaked PM vote on tid allocation failure
+Date: Wed, 18 Nov 2026 15:27:59 +0100
+Message-ID: <20261118150351.656914307@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,46 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit c78dd373b5c56a5a02da591b583c6b48d0d62954 ]
+[ Upstream commit c26cc979e28f5193310e4379e14aa6417375c565 ]
 
-Make sure to drop the reference taken by usb_anchor_urb() when removing
-URBs from the delayed URB anchor to prevent them from leaking when the
-device is later disconnected.
+In slim_do_transfer(), when a transaction needs a tid and
+slim_alloc_txn_tid() fails, the function returns directly instead of
+jumping to slim_xfer_err. The runtime PM vote taken earlier with
+pm_runtime_get_sync() is then never released, leaving the controller
+permanently powered up.
 
-Fixes: 383cedc3bb43 ("USB: serial: full autosuspend support for the option driver")
-Reported-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/20260916165608.2085613-1-vulab@iscas.ac.cn
-Cc: stable@vger.kernel.org	# 2.6.32
-Cc: Oliver Neukum <oliver@neukum.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+As txn->tid is still 0 at that point, jumping to slim_xfer_err drops
+the vote exactly like it is done for other failed transactions.
+
+Fixes: d3062a2109309 ("slimbus: messaging: add slim_alloc/free_txn_tid()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20261002101448.1084691-2-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/usb_wwan.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/slimbus/messaging.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/usb_wwan.c b/drivers/usb/serial/usb_wwan.c
-index 0017f6e969e12..67e1820bbbafe 100644
---- a/drivers/usb/serial/usb_wwan.c
-+++ b/drivers/usb/serial/usb_wwan.c
-@@ -402,6 +402,7 @@ void usb_wwan_close(struct usb_serial_port *port)
- 		urb = usb_get_from_anchor(&portdata->delayed);
- 		if (!urb)
- 			break;
-+		usb_put_urb(urb);
- 		unbusy_queued_urb(urb, portdata);
- 		usb_autopm_put_interface_async(serial->interface);
- 	}
-@@ -579,6 +580,8 @@ static int usb_wwan_submit_delayed_urbs(struct usb_serial_port *port)
- 		if (!urb)
- 			break;
+diff --git a/drivers/slimbus/messaging.c b/drivers/slimbus/messaging.c
+index 245e9c7f92cdc..e9bb49bbbd082 100644
+--- a/drivers/slimbus/messaging.c
++++ b/drivers/slimbus/messaging.c
+@@ -138,7 +138,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ 	if (need_tid) {
+ 		ret = slim_alloc_txn_tid(ctrl, txn);
+ 		if (ret)
+-			return ret;
++			goto slim_xfer_err;
  
-+		usb_put_urb(urb);
-+
- 		err = usb_submit_urb(urb, GFP_ATOMIC);
- 		if (err) {
- 			dev_err(&port->dev, "%s: submit urb failed: %d\n",
+ 		if (!txn->msg->comp)
+ 			txn->comp = &done;
 -- 
 2.53.0
 
