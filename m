@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039223;
-	b=gMELyTYSd+YpCksuoDZtmEb0BeBhDpEcKJxJjUmoSE1QTiwcONI0OZpteWL6H+f8YZKu
-	 LLRxcjyKMhHeTS3WPCz6eZeYgZSntECIDY1B1C4AfjfUsLgpiSXrM3eUJ69Dl1dW6azwj
-	 SGjaT2H+0OWG+iQ4UV//kTpIEjuIyUvz/UIpUBpPGFFhntQZ84NGwVmkiV0DSY8edzIis
-	 JYeNLz9NkUmFrRHaRwHuhP0a7ottP+qk3xXzXojolfrJjUp0VPcFXJiFAzjd2+4htBTH3
-	 mnhEMOb6+iiIt2vn7/Q1fQEw77L8QpfsAaMv+R9JPhnAP5DRPme1OLvrNkzBz4diBmA==
+	t=1795039225;
+	b=TxaeBuDh+U3HUQnZUikSmL14/QBCJUmn0n1i/Z1XhEp3QzutYf3ie2IAz6x58bH9XtsF
+	 JiEPASxPumLAkHlUM+cZehHplawM2mump75Oeq8yZIt5INFwiAu9q7EKAY+C7L+W/ZYLN
+	 8oBXzORtPFGF+9L8I1e+qNcY4pj7NNC6XK7G5+OqgSX+b0Db8LzZMUyJE8Wugq7cOhJtz
+	 WJvEe9GSx2sNVpNZlB9siQ00wEUQN663m9Vmtr7R5+yIk0fHjCFSIMbyz6vm3P219WdkS
+	 SuWIrBoXffTipNXIqnNSWbA4EDdlJmawbK/9gqXd4F92IP0NdJJpB0MYOEd03rwEP5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o7xQGuZxBIpPqcMwvpFAJDZ/FcEvBpcZ3J3pUBmD9YM=;
-	b=svEGj3W6x8hL6YYiqXzLzpwQYn5CrZgCedlv1eK57nWJ20PNFrNIAM08lCgj2rf/i2cg
-	 cNQLGAh77LmIBVpGsbtO5JyPFl+9Ytj/YfY4Yea73jjMSLYjLZF0/NbYP/mgVSgsnro1Z
-	 b1iynNtU8aFx3uxJQXuWUpBdM9Xs/MlbYN+Dgaq5HRDyoRkgQpH9mYiBoWdd+ubqVZkt4
-	 ZVB1gY33iGeNdghIqenMid+Cd95ynnZ4AuOCNAfiPZRrehMkM+Bp28P+YdsSycOwlcrIa
-	 SEGaREXMjScIdL2ZuTn1tLq0Z2TBNKweFECgCASNUsf3vlOmkAPr6ITSnH1XkHK5FDw==
+	bh=1D9ekCLi8FlBKwpKAJ3Fay962nFHtgKeDC6ByVb8eQE=;
+	b=abnNum1tJffNKY7wtGiYa0bINdZPnSF2in3KCZAjdEbq5mDbHIa9gds0rd3iDCqwxKbw
+	 ymsjDUUyeEY1mYBTzOloKP7u7VcsM1yPaQqh+VkK8KYcFoTGibvsgbmr5FmQTfm+dALHu
+	 fcKxhZO6HHGLxTFAQVE7fzkEVFR3vGSNvXNZSS00WTMNywAMi2EAT4wagrAqUoQcZRZje
+	 TqQnwddfiai103uY4NAAYkREXRWIj8+hSa1Ma1cZFC3GN3tMpyu7GfyVoHDFNO5umTB1h
+	 ma6Bp1GDc/kYpeUtZeYhZ57+hTwS422MApST/JqIF2PrspeUNVnCX1/CySbGZOY0fUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u37niHJe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4zPwc3O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE17E606A32A;
-	Wed, 18 Nov 2026 22:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA2606A32A;
+	Wed, 18 Nov 2026 22:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u37niHJe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E751F000C5;
-	Wed, 18 Nov 2026 22:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4zPwc3O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F256A1F000C4;
+	Wed, 18 Nov 2026 22:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039222;
-	bh=o7xQGuZxBIpPqcMwvpFAJDZ/FcEvBpcZ3J3pUBmD9YM=;
+	s=korg; t=1795039225;
+	bh=1D9ekCLi8FlBKwpKAJ3Fay962nFHtgKeDC6ByVb8eQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u37niHJeRsJfdS2SolGmzJHrWsv7EZc4TMCCul8/Jq+4wq1RozzP8T42tzUvH3Ro/
-	 uS2bPruvnSwoxrD1cbV2u320XIIUeAqqZovPuk+mLtzKSwuxTy2ToXRao2Xdbq3b89
-	 Y6XfqKiIdvQo8zjENSc2V3xOoO871w+ehlAmrd08=
+	b=D4zPwc3O3ZtMl4NbWRDVQu+92CfVnSAaxbXu4M1jniW2tfSvqbUo3U6WFGDr6eR8d
+	 d7XhjSSyDrh9i/YC8oeB39IEf6W0FwZ8UTQctqcKig7n0ShoI4aE929UZwLxzB+SI3
+	 NJY4qjoLul+bCsyCPRnAjvXC+VFVnqlArs4U4L8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2024/3318] staging: rtl8723bs: change remaining printk to proper api
-Date: Wed, 18 Nov 2026 15:44:06 +0100
-Message-ID: <20261118150422.763740278@linuxfoundation.org>
+Subject: [PATCH 6.6 2007/3318] perf jitdump: Check snprintf return before computing header size
+Date: Wed, 18 Nov 2026 15:43:49 +0100
+Message-ID: <20261118150422.260217195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,119 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit e139445ccbe4d902fce1dce517cd3b63f5b68eb8 ]
+[ Upstream commit 0155f05ea6e133c18a04b8b5945cac59870da156 ]
 
-As part of TODO file for future work, use dyn debug api for
-remaining printk statements.
+snprintf() returns the would-have-been length on truncation.  When the
+jitted filename exceeds PATH_MAX, the unclamped 'size' value inflates
+sizeof(event->mmap2.filename) - size into a massive underflow, causing
+the header.size computation to write an oversized header.  The
+subsequent write to 'id = event + header.size - idr_size' then corrupts
+the heap.
 
-Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20241029221544.112800-1-rodrigo.gobbi.7@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: baa84b1bb164 ("staging: rtl8723bs: disable SDIO function on block size failure")
+Clamp size to PATH_MAX - 1 after snprintf in both jit_repipe_code_load()
+and jit_repipe_code_move().
+
+Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c     |  6 +++---
- drivers/staging/rtl8723bs/hal/hal_com.c           |  7 +++----
- drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c | 12 ++++++++----
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c      |  2 +-
- 4 files changed, 15 insertions(+), 12 deletions(-)
+ tools/perf/util/jitdump.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-index 9125b6fed82bc..0d37e78431758 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -1886,10 +1886,10 @@ unsigned int OnAction_sa_query(struct adapter *padapter, union recv_frame *precv
- 	if (0) {
- 		int pp;
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index 8264d03260706..37aa6729ab0f2 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -493,6 +493,9 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+ 			jd->dir,
+ 			nspid,
+ 			count);
++	/* snprintf returns would-be length on truncation, clamp to buffer */
++	if (size >= sizeof(event->mmap2.filename))
++		size = sizeof(event->mmap2.filename) - 1;
  
--		printk("pattrib->pktlen = %d =>", pattrib->pkt_len);
-+		netdev_dbg(padapter->pnetdev, "pattrib->pktlen = %d =>", pattrib->pkt_len);
- 		for (pp = 0; pp < pattrib->pkt_len; pp++)
--			printk(" %02x ", pframe[pp]);
--		printk("\n");
-+			pr_cont(" %02x ", pframe[pp]);
-+		pr_cont("\n");
- 	}
+ 	size++; /* for \0 */
  
- 	return _SUCCESS;
-diff --git a/drivers/staging/rtl8723bs/hal/hal_com.c b/drivers/staging/rtl8723bs/hal/hal_com.c
-index 8522321024331..7db87df03776e 100644
---- a/drivers/staging/rtl8723bs/hal/hal_com.c
-+++ b/drivers/staging/rtl8723bs/hal/hal_com.c
-@@ -911,10 +911,9 @@ void rtw_dump_raw_rssi_info(struct adapter *padapter)
+@@ -607,6 +610,9 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	         jd->dir,
+ 		 nspid,
+ 		 jr->move.code_index);
++	/* snprintf returns would-be length on truncation, clamp to buffer */
++	if (size >= sizeof(event->mmap2.filename))
++		size = sizeof(event->mmap2.filename) - 1;
  
- 	for (rf_path = 0; rf_path < pHalData->NumTotalRFPath; rf_path++) {
- 		if (!isCCKrate) {
--			printk(", rx_ofdm_pwr:%d(dBm), rx_ofdm_snr:%d(dB)\n",
--			psample_pkt_rssi->ofdm_pwr[rf_path], psample_pkt_rssi->ofdm_snr[rf_path]);
--		} else {
--			printk("\n");
-+			netdev_dbg(padapter->pnetdev, ", rx_ofdm_pwr:%d(dBm), rx_ofdm_snr:%d(dB)\n",
-+				   psample_pkt_rssi->ofdm_pwr[rf_path],
-+				   psample_pkt_rssi->ofdm_snr[rf_path]);
- 		}
- 	}
- }
-diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
-index c5219a4a4919d..5222094af2ba5 100644
---- a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
-+++ b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
-@@ -63,7 +63,8 @@ static int _BlockWrite(struct adapter *padapter, void *buffer, u32 buffSize)
- 	for (i = 0; i < blockCount_p1; i++) {
- 		ret = rtw_write32(padapter, (FW_8723B_START_ADDRESS + i * blockSize_p1), *((u32 *)(bufferPtr + i * blockSize_p1)));
- 		if (ret == _FAIL) {
--			printk("====>%s %d i:%d\n", __func__, __LINE__, i);
-+			netdev_dbg(padapter->pnetdev, "write failed at %s %d, block:%d\n",
-+				   __func__, __LINE__, i);
- 			goto exit;
- 		}
- 	}
-@@ -86,7 +87,8 @@ static int _BlockWrite(struct adapter *padapter, void *buffer, u32 buffSize)
- 			ret = rtw_write8(padapter, (FW_8723B_START_ADDRESS + offset + i), *(bufferPtr + offset + i));
+ 	size++; /* for \0 */
  
- 			if (ret == _FAIL) {
--				printk("====>%s %d i:%d\n", __func__, __LINE__, i);
-+				netdev_dbg(padapter->pnetdev, "write failed at %s %d, block:%d\n",
-+					   __func__, __LINE__, i);
- 				goto exit;
- 			}
- 		}
-@@ -128,7 +130,8 @@ static int _WriteFW(struct adapter *padapter, void *buffer, u32 size)
- 		ret = _PageWrite(padapter, page, bufferPtr+offset, MAX_DLFW_PAGE_SIZE);
- 
- 		if (ret == _FAIL) {
--			printk("====>%s %d\n", __func__, __LINE__);
-+			netdev_dbg(padapter->pnetdev, "page write failed at %s %d\n",
-+				   __func__, __LINE__);
- 			goto exit;
- 		}
- 	}
-@@ -139,7 +142,8 @@ static int _WriteFW(struct adapter *padapter, void *buffer, u32 size)
- 		ret = _PageWrite(padapter, page, bufferPtr+offset, remainSize);
- 
- 		if (ret == _FAIL) {
--			printk("====>%s %d\n", __func__, __LINE__);
-+			netdev_dbg(padapter->pnetdev, "remaining page write failed at %s %d\n",
-+				   __func__, __LINE__);
- 			goto exit;
- 		}
- 	}
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index 258f68c35dc07..b77f1dcfcc7a9 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -73,7 +73,7 @@ static int sdio_alloc_irq(struct dvobj_priv *dvobj)
- 	err = sdio_claim_irq(func, &sd_sync_int_hdl);
- 	if (err) {
- 		dvobj->drv_dbg.dbg_sdio_alloc_irq_error_cnt++;
--		printk(KERN_CRIT "%s: sdio_claim_irq FAIL(%d)!\n", __func__, err);
-+		netdev_crit(dvobj->if1->pnetdev, "%s: sdio_claim_irq FAIL(%d)!\n", __func__, err);
- 	} else {
- 		dvobj->drv_dbg.dbg_sdio_alloc_irq_cnt++;
- 		dvobj->irq_alloc = 1;
 -- 
 2.53.0
 
