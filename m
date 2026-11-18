@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032080;
-	b=3NiYhJF3ynGhMd9gwRZqO1zUYqNUSHwMKoerUFrGjHlEqU3g7v9bKWTRp/2pBOzaV4ni
-	 AMuM1k/sNKpZMxTuNk47oe829Tjq5orHydvAA9N03DMXyn7kNXkipkWedBMihLFsxU5bc
-	 yBd+m8F4KSTZS3ko0svtHEiLM1mcapTO7w/gDK0Vw53mnK3PZ+UaOg2qmkE0dLYTMN6va
-	 RfKhXwNIQOwRYNMjHxGNOhKkaaa2/Un06+7ygpS/3pfXz3j5OQhwSMgiWmcxTtGS5K6W6
-	 bzoVUZ2ZjQ7wly4uhwrSCaMW5SKkkWQ/IiRdRwQ2VCknvNucbvOyFTVW3kgvOTl4j0A==
+	t=1795032082;
+	b=k57BR9UB4O6sbQvubd6NJsovuKZb0B5q8poDBcAqh0EDM5s4C0m84J2NbdnLek9siSKI
+	 2kwNqemMAkESx3992jGsD0Z1BrKBLIbNXRxXi/IEte6dtD9Hv9SghIwuhb7q/1z1SpCyO
+	 R6Jhw32c2CC28q/+WuHyy5xGJ+7O1X2exdrY3Od6gxhJqwkk/9yLkHkRQ6fFYmj89n1N4
+	 UPY/LAe2nlCYjcO5upv+t5CedvLzszUktUGcP5WnlAhwSJdbiFgGr6cKpHE5AHNKxniNG
+	 YPGS4+tHnF/WhhG/oa8w8VFaEpEWaOjmrB67Kr3vsR65rBqB5LWnWsAv4qjPHpneCIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ui7MsKet0ngN5NwJL4hqBqD3WskbWiADtR1BzVnNtPE=;
-	b=OG/loRaFnW9pEmdkj7VlSAajmJSvW1+hSy+O7cve11lwoONjxybA9Roj14xR3Yl41t+q
-	 lpobIAOlL4bulUTEOk+aMtkCnXQwGU97BJCalKrHDP+xjlBwxEIOaQ5RQI2Kj9Ls/Wy8F
-	 iNJqS0w7z1PStylzKPV8/7+PrsIaJ1Tdaldygrud4nFfEDWpEZXBN73uTNqQf64Cc7tJn
-	 J6F7HrxWmAnRlFBN8J/dte4MhQk76J6d2uCmviYgGAOIdaX9mDmPzm+Or/X99it5hqU3I
-	 hoz25NGYTpdUbQ50u0AsHG4aH75WqBKH/l8x5fqzU/PgMCO76SxHFP+GN5VYbDalHWg==
+	bh=nTj4b8c364zUxxm7e6fRZiY/M7BQYvulgUM+FfARCw4=;
+	b=enxyaSIwaFdK257nLqNzYOvWMsGEKcoyVZnJQRvu42i1Y0AJ5d3EEucXmnhjzYh0Tfz9
+	 9UYgNiUt2gkVdD5hx1OufN0+w9N6Z6UcuovD7wYVHMaUmmYqKo3V5wOCiLFQQvEN6aG4d
+	 dj0UZO7JINH0Ng6EZfuUGMEWbLUMcEEHLktU39f5WK+wpLDB+zaFKBrhEDXjqURfZLVd8
+	 19/oz+cLHfs4sBjep9W9Q7ZM/S+DzTLh8KGhJgRBppe/+jTst207e8vnFWwVvfOz+9D53
+	 zPKLY6fsRVNwbcSmMMmhkU6SmhnkENKXlclTgLzkwhFkI3tzNCEdxPxasoKyz0Cv9ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MAH//UZ7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMpuHgHA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A335606A31C;
-	Wed, 18 Nov 2026 20:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B60606A31C;
+	Wed, 18 Nov 2026 20:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAH//UZ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599EE1F000C4;
-	Wed, 18 Nov 2026 20:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMpuHgHA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A801F000C4;
+	Wed, 18 Nov 2026 20:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032079;
-	bh=Ui7MsKet0ngN5NwJL4hqBqD3WskbWiADtR1BzVnNtPE=;
+	s=korg; t=1795032082;
+	bh=nTj4b8c364zUxxm7e6fRZiY/M7BQYvulgUM+FfARCw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAH//UZ73uFU886usMmfb6OjBRAYS1PHNPzOt7w4Lk4FnlfKL9IFv8l9tf7yx4vzs
-	 rIe7hG/ffL/QkFpcdePE4l7DHbvOX6LK1/POF5gQnH1VZtFs5JjXcj4W+vfMPYBIWQ
-	 77Wi7UxIbGvfRphXcms0UtmT9B86jbd7nnfmw4+w=
+	b=iMpuHgHALd1iDbebeqqPolkMPnZT/3HGxeJro89fMbFS3YiyUHxrQzKC2tYwdHMEv
+	 q0UYxxGYhi8u4EvlDGYEb657smtllKOpAo1WJl21IrafyGwW1SgPeCcrXNFMhmfuPc
+	 ye0lw12QubIayLbsW9+QTk9v8fSDB7W8sGwXYa0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nicolai Buchwitz <nb@tipi-net.de>,
 	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1243/1756] net: stmmac: selftests: use skb_share_check() in the loopback receive hook
-Date: Wed, 18 Nov 2026 15:56:10 +0100
-Message-ID: <20261118150059.231613557@linuxfoundation.org>
+Subject: [PATCH 6.12 1244/1756] net/mlx5e: use skb_share_check() in the loopback selftest hook
+Date: Wed, 18 Nov 2026 15:56:11 +0100
+Message-ID: <20261118150059.266709630@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,35 +72,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit a7a89019bac0e8810bde7f1419f4adf9adc23d41 ]
+[ Upstream commit 16fb7aa6955a0af9f67ca42a61d9be58dfc9382a ]
 
 The loopback hook gets a shared skb when another ETH_P_IP handler is
-bound to the device. skb_unshare() does not unshare it, so
-skb_linearize() on a non-linear frame hits BUG_ON(skb_shared()).
+bound to the device. skb_linearize() on a non-linear frame then hits
+BUG_ON(skb_shared()).
 
-Use skb_share_check() instead.
+Call skb_share_check() before linearizing the skb.
 
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
+Fixes: 95b9606b15bb ("net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB")
 Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-2-458369bfa1ba@tipi-net.de
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-3-458369bfa1ba@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index e39ee3ea0efff..a9cb100cef1a1 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -262,7 +262,7 @@ static int stmmac_test_loopback_validate(struct sk_buff *skb,
- 	struct tcphdr *thdr;
- 	struct iphdr *ihdr;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+index 2f7a543feca62..9e0a677ea9db6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+@@ -166,6 +166,10 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
+ 	struct udphdr *udph;
+ 	struct iphdr *iph;
  
--	skb = skb_unshare(skb, GFP_ATOMIC);
 +	skb = skb_share_check(skb, GFP_ATOMIC);
- 	if (!skb)
++	if (!skb)
++		goto out;
++
+ 	if (skb_linearize(skb))
  		goto out;
  
 -- 
