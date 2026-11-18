@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032229;
-	b=aj+bR0CP8B2RpRjI0KPm3osyTz4BNpBBL7gJFlCY7tb+bCTd+Jc1hy1MjWPEfESAprPe
-	 XUxANLmJaxBP+rUL52sVy4+Fe6EvlipVIndunk/L+0zpqGv+OizkvTLVfKCOLppEvZNfY
-	 FhzDUBatt62Y+JOSDsv5zPsyHHEJJwndZ2zsgQVlYe6rUj/CDq3y4pUxS9bt4ypdlAMIV
-	 nHNBf9gJ7fNz1nVULUD+Tc6vGcH3nNFsU/ThiyLwPxPeRheZlz1eBP/tAq8687FM4NhUA
-	 RUSNwX01YhrzNC3QhjagSU1zhptDdoJ+tNNak+Z5FL0jepfBJd8H8GbIuPG+N8g0dog==
+	t=1795032232;
+	b=uSDp/lvGVWvG83vPHBHO5VN8BRXeM+LVVw726vLSny9dpesP4LJDxPoonjDvlXO30I4G
+	 7fFl7ACHvf9U4UqbIO9BQgcsyRKdOm9QXdg4p6yTBZ9OKo7J4aHsRr6pN6iALiQCj02fU
+	 NzIDq173h/SXfSsoxTdmi1PrRGM4/NiZaLTJBINC2JchreTyuBvdFj1sW6O68aUojCr+p
+	 xoCLssHODcLZnM66xTCgTRuEQYaw8ZoLKbCp3Kn6D/d5RDGMkdYEukTc47CAjdBKSRvie
+	 uji9s5an9+4NKmVpz8pBDL1MeJz+CdFjzHnS4qOZQm5sS2qpd+vHVuFT6m/bx5HShFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lx89tFrG1fBeXi89rTPTsiAGeXGixYI7fBqhBkRVWQE=;
-	b=BPF3jfVshCUHdSibWAJ165dkVKn0E4X33sJRMIFSMAPm2bWwMwBz2vNBs5d7jFuvvHP9
-	 yYHXvzEdRjkDtkrhg2uYg4wlXpgwlYNohLKUPHeVYchfYz6jTcj+MQSCNWIRrmRIWbNx/
-	 TIFBZHyIsSe1iZKd8ZOMX9a7Zof73uoN1Uzj4QEmDYKYrueBjdnVUyTDofyZhKoMdsHc5
-	 iYmb3lgMQuXwxRVXqU7Q0HRcpLcS0M931F+PwxDpmGKtC2dyPyeCcwI57k1HWRbAhvxHt
-	 1J8tP6wEtrxTmzKDWvrK3dZM/XdlAG3ie4Q2lObLzhcUIkw2WPqgHVfpVb2eK0LYVWg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oX+yNR/LOk0KN3uYriGwuLwUDPhim/ysWcj26i8BHpI=;
+	b=0G5pm23zDDUEhtoH+OTBXyJ/VDpq8bpxxlVK3GtnBuHviTDg0tiNjJ422sSO5UOQ2/Ka
+	 AurcmlRHlyOhmOIgIwmzp5LBJi9uzHKaF33hCQWmKFK8rZUGI+FVSAPkr9K9H4jda/vAQ
+	 wES928aaoO86urHcLpbx7dEZQIouabKnHV/+TNue+pInJHM583/BIx3qqCQgQTuHcb512
+	 cUSYZGUkhO3okqdQsrQ4Yakny2YlVgLhtOu8353Q3PfoewERRe7kwMh1RlWRWYM2fgdYG
+	 msIFJOwDVhZ2ACYuaFAQREhDbz7Ssg5pF6gmyDm3Ppevh1Hudm7KUzOMMaBUT2gNk7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01fvj3mJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1SBznkg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED86606A31C;
-	Wed, 18 Nov 2026 20:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B216D606A336;
+	Wed, 18 Nov 2026 20:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01fvj3mJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EDE1F000C4;
-	Wed, 18 Nov 2026 20:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1SBznkg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBED1F000C4;
+	Wed, 18 Nov 2026 20:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032229;
-	bh=Lx89tFrG1fBeXi89rTPTsiAGeXGixYI7fBqhBkRVWQE=;
+	s=korg; t=1795032232;
+	bh=oX+yNR/LOk0KN3uYriGwuLwUDPhim/ysWcj26i8BHpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01fvj3mJGYhT37Xro1FHgFS2kA5V9vZAm4alGEy+aoWIR2GGInoZqPPUVejyFWfEG
-	 Ri8OuU98+Wsev0TgLwfU2kPAIfURU7eBueM1hQvxPN4PWHH5KZwBRjXyRHuEZsWaHS
-	 hU60U1naBs0W1XbirBbXaU/qAvg2pARY0SmJ6VGw=
+	b=G1SBznkgOCPzL/KYr53lMkHkBVF3tWEmbzQ/CFwQJWtB0UTAv1COCPzs27rvpAfDN
+	 FuVmf39PFfjmWVw2FmVbOj/yOx0QH+1RH4rPb5ALIHTQ4iCTiCUqd5EelncS/TJkum
+	 IvLv433k7M7JyLxyVg1Hz4G0tGL7Dxc6PdiULY5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Derepas <fabrice.derepas@canonical.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com,
+	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1339/1756] ima: reject a kexec buffer whose declared size exceeds the buffer
-Date: Wed, 18 Nov 2026 15:57:46 +0100
-Message-ID: <20261118150102.658176991@linuxfoundation.org>
+Subject: [PATCH 6.12 1340/1756] usbnet: fix smp_processor_id() use in preemptible context
+Date: Wed, 18 Nov 2026 15:57:47 +0100
+Message-ID: <20261118150102.692594127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,65 +64,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrice Derepas <fabrice.derepas@canonical.com>
+From: Ömer Mete Kaya <omermetekaya0@gmail.com>
 
-[ Upstream commit ceb24c7052cc4649e3b52a51a7cca7dfe4896cec ]
+[ Upstream commit 95a5c641fc7becab441bf244baa73b0b0f8b7dea ]
 
-ima_restore_measurement_list() parses the measurement list persisted across
-kexec.  It computes the parse end directly from the blob:
+tx_complete() calls this_cpu_ptr() before disabling preemption, which
+triggers a BUG when running with CONFIG_DEBUG_PREEMPT:
 
-	bufendp = buf + khdr->buffer_size;
+  BUG: using smp_processor_id() in preemptible code in tx_complete
 
-khdr->buffer_size is a u64 read straight from the persisted buffer.  The
-only length checks in the function are size >= sizeof(*khdr), version == 1
-and count -- none relates buffer_size to size, the actual buffer size the
-caller (ima_load_kexec_buffer()) obtained from the ima-kexec-buffer region.
-ima_parse_buf() bounds every field read to bufendp, so a blob whose
-internal buffer_size exceeds the real size makes the parse loop read past
-the end of the buffer (CWE-125).
+Fix by using get_cpu_ptr()/put_cpu_ptr() which disable preemption and
+return the per-CPU pointer atomically. The usbnet_skb_return() hunk
+is a hardening change: that path runs in softirq context so no warning
+fires there, but the same fix is applied for consistency.
 
-The buffer's memory range is validated against addressable RAM by
-commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
-against memory bounds") and commit c5489d04337b ("x86/kexec: add a
-sanity check on previous kernel's ima kexec buffer"), but the blob's
-own declared size is never clamped to it.  Reject a buffer_size larger
-than size before the loop.
-
-This is on the boot-time kexec-restore path (__init) and the buffer comes
-from the previous kernel, so triggering it requires control of the
-persisted buffer; it is an out-of-bounds read only.
-
-Fixes: 94c3aac567a9 ("ima: on soft reboot, restore the measurement list")
-Assisted-by: copilot-cli:claude-opus-4-6 frama-c
-Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: ed194d136769 ("usb: core: remove local_irq_save() around ->complete() handler")
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Reported-by: syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04cd90bb99c6ef81a65d
+Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
+Link: https://patch.msgid.link/20261004215937.302247-1-omermetekaya0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_template.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/usbnet.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
-index 04c49f05cb74f..0a802072490a3 100644
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -449,6 +449,11 @@ int ima_restore_measurement_list(loff_t size, void *buf)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 30585ef53ae35..2ca0808398bf5 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -328,7 +328,7 @@ static void __usbnet_status_stop_force(struct usbnet *dev)
+  */
+ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ {
+-	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
++	struct pcpu_sw_netstats *stats64;
+ 	unsigned long flags;
+ 	int	status;
  
-+	if (khdr->buffer_size > size) {
-+		pr_err("attempting to restore a corrupted measurement list");
-+		return -EINVAL;
-+	}
-+
- 	bitmap_zero(hdr_mask, HDR__LAST);
- 	bitmap_set(hdr_mask, HDR_PCR, 1);
- 	bitmap_set(hdr_mask, HDR_DIGEST, 1);
+@@ -341,10 +341,12 @@ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ 	if (skb->protocol == 0)
+ 		skb->protocol = eth_type_trans (skb, dev->net);
+ 
++	stats64 = get_cpu_ptr(dev->net->tstats);
+ 	flags = u64_stats_update_begin_irqsave(&stats64->syncp);
+ 	u64_stats_inc(&stats64->rx_packets);
+ 	u64_stats_add(&stats64->rx_bytes, skb->len);
+ 	u64_stats_update_end_irqrestore(&stats64->syncp, flags);
++	put_cpu_ptr(dev->net->tstats);
+ 
+ 	netif_dbg(dev, rx_status, dev->net, "< rx, len %zu, type 0x%x\n",
+ 		  skb->len + sizeof (struct ethhdr), skb->protocol);
+@@ -1277,13 +1279,15 @@ static void tx_complete (struct urb *urb)
+ 	struct usbnet		*dev = entry->dev;
+ 
+ 	if (urb->status == 0) {
+-		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
++		struct pcpu_sw_netstats *stats64;
+ 		unsigned long flags;
+ 
++		stats64 = get_cpu_ptr(dev->net->tstats);
+ 		flags = u64_stats_update_begin_irqsave(&stats64->syncp);
+ 		u64_stats_add(&stats64->tx_packets, entry->packets);
+ 		u64_stats_add(&stats64->tx_bytes, entry->length);
+ 		u64_stats_update_end_irqrestore(&stats64->syncp, flags);
++		put_cpu_ptr(dev->net->tstats);
+ 	} else {
+ 		dev->net->stats.tx_errors++;
+ 
 -- 
 2.53.0
 
