@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023846;
-	b=T4XtCnEwwE5133qErsqQIcdj+Io2aR++wZj0W6iIqCxh1olu5vB6nZ4IYUx0EDZ0REaG
-	 MLGdWVRVh1VCuz6NY2/oUEO4k8Iin6w1lH53GfnTKDVGHRDyT505605fk1DvCQ/iKzVhH
-	 WoWrEtxIv2Kdh7LyEkatUjqrFEZJXkiMDV8CyaeEvXxcFZT9A+fwJ+LQcS/f4lFRCO1KW
-	 rjaA9SJRioXcv11BKVgJlDnauwnvBCvZClYHC+KRhssKOmyUJ2Bl9nc/pEY4i00Av14mn
-	 /zZSOzQP0xehOFkxzhEo9hebUfpoZ0p29AkLGmPngn4N5eZc2zbaxMbeEux87N0FHWQ==
+	t=1795023849;
+	b=hJyFLPd03Ov0A/d8Emc3fls4OE21a50XkXrlUFS6I8TvHQH09mFAQ+WZF+9Ev5pLjafw
+	 gq/9OO717lSm4pITCeq66qIipAhLgIsJWjhad1jgpya+dm7nJoFiMzQ2CR6EAYRBbKMM+
+	 Xh5JCpGq9gQJpSdT2NsruSly7St36n8YMbaAGFasQxXHSTlIyDZ6nCjkaxBbm4zQDIrBg
+	 +SjI4RwK7zjIeiv/PgVkH7+sUXOoxMaZJyeJwYtMDGgR+y8pewUfjL0XV/aYGA4y4MTQF
+	 YOqdcKYHxXBmEB8Dbldm6yXgX+T0T1gTVf9IxZ+IfKS6GpKCQtJ2rfWufKi7Yo3IUyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fl6Y1OF5Ku3Yj/IwzNUhTQEVHqhy3TuuiIvyH7FiEok=;
-	b=l0mgJ673YiwAbNwisgNVefBxKu/76W2P1Qm2Nn23WPDKDZ5hiqyIEik4b7K/rsFgHEnL
-	 snay/8q3FUjJQWKKGY/0K+VKMD2RkM4UuXC0sTo4hgvQHnhixkFW5AJJHqE30gjTrEu3V
-	 ZiE1/p+Ex0sqyGW+5a2ZgaozBpaWwoUCpbvitYDEaiAeCYAXKd+5Kp7afEK83pBjn191C
-	 68mrbrkgIGAMM9JByT3i4U9r22xXXpYqtItD72vAJUOH5Rre1w8ypgauMk2NTHAn5mNGF
-	 8JqEVYGiLqVm6dP9s4uiDub0CR+JhIU3+U7Z3T8QTZkUBPz2LGPBL4HISv4D+4NBPPw==
+	bh=Ol+9ovJoh7FnckkvPLCHP7gEUMYo9OrTmKfNLnuo/+M=;
+	b=nSRPCkpDbZNCaVTruFXZOyG2Kw0APJrsKyiUWpLlrem3WLVUqspdIWaVzsNXTzVj6fWP
+	 8WuGpQqe4jZhIwu+F/IgP0Uzb2OaNisWsa9zw12ePWqQTWejvdZRu2aBVIczVxJmFmjWP
+	 e9QWjb5R5IzphTM7CjdoBxQalDMIFMa+gkGh1cT7VBXRtTwYWw1typ4gMMpmsi6Drrh2l
+	 /JRT7QQNumm+U+KFNRQD08tl2Mwcwg5YNwTtlo4bPxtBHew5njHhxD5o7jGQsai2Zd3aS
+	 WOPJXY4ZI4cAS3HwG/4aV6ttAoOHUnxP2jzyDtogK13vfEEbYBfP7FOueh6Lr+8p5DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7H9Qowi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MiXZ9R0j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7A1606A330;
-	Wed, 18 Nov 2026 17:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901FA606A31C;
+	Wed, 18 Nov 2026 17:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7H9Qowi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5711F000C6;
-	Wed, 18 Nov 2026 17:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MiXZ9R0j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B481F000CA;
+	Wed, 18 Nov 2026 17:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023846;
-	bh=Fl6Y1OF5Ku3Yj/IwzNUhTQEVHqhy3TuuiIvyH7FiEok=;
+	s=korg; t=1795023849;
+	bh=Ol+9ovJoh7FnckkvPLCHP7gEUMYo9OrTmKfNLnuo/+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7H9Qowipu0XmX52AJRAzKsFlyVt5W+VCkrNxcbkJVU1dwRlqNNIGOw6mJQMDEwtF
-	 fReKYq1PoB9/rRtsq3fwekseDua31Zii6/ScAkd2js4fdtsiz6Ig3wjqCUS6wGasQY
-	 loGy4Ka/h3VGGsUoOgSE6QhuDVdHgKjYzgHwdAdE=
+	b=MiXZ9R0jE7qGBCu4+wLT9ltCE81qezd6buRBmAzfeld5BeT24N/7yi8IuPp8Yq7yw
+	 LEXKn1V5MzxCY17kxz1MMMByIjCz1+PkBlxHUa8g1QLxkD8HuSuNQg4pGj17FpEDfP
+	 Br7qKS0kzh3qqeVkhQMVXueqjL7YnhFfamnAjiZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0513/2151] cxl/port: Reduce number of @dport variables in cxl_port_add_dport()
-Date: Wed, 18 Nov 2026 15:37:28 +0100
-Message-ID: <20261118150140.747157977@linuxfoundation.org>
+Subject: [PATCH 6.18 0475/2151] scsi: pm8001: Fix SATA FIS offset in struct hw_event_resp
+Date: Wed, 18 Nov 2026 15:36:50 +0100
+Message-ID: <20261118150139.315146910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,106 +68,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 83ccbaf1a1075ded82329d27de01d3b2681986ec ]
+[ Upstream commit cdc97921de02a0c1a8324afa03e8b3e30a72bbe6 ]
 
-In preparation for refactoring cxl_port_add_dport() to add RAS register
-setup, cleanup the number of dport variables with a dport_exists() helper.
+In struct hw_event_resp, sas_identify was defined using struct
+sas_identify_frame, which is 32 bytes long because it includes a 4-byte CRC
+field. However, PM8001 and PM80xx hardware does not send the CRC in the
+event response frame, providing only the 28-byte identify payload.
 
-Kill the @dport needed to check for duplicates, rename @new_dport to
-@dport.
+Because sas_identify had a size of 32 bytes, the following sata_fis member
+was located at byte offset 44 instead of the actual hardware offset 40. In
+hw_event_sata_phy_up(), this discrepancy was worked around with negative
+pointer arithmetic: ((u8 *)&pPayload->sata_fis - 4).  This triggers a
+compiler error under Clang with -Wstringop-overread:
 
-Reported-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Closes: http://lore.kernel.org/20260116150119.00003bbd@huawei.com
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Terry Bowman <terry.bowman@amd.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260131000403.2135324-3-dan.j.williams@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
+  error: 'memcpy' reading 20 bytes from a region of size 0
+  [-Werror,-Wstringop-overread]
+          memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
+
+Move struct sas_identify_frame_local (28 bytes) into pm8001_defs.h, and
+update struct hw_event_resp in both pm8001_hwi.h and pm80xx_hwi.h to use
+struct sas_identify_frame_local followed by sata_fis and a 4-byte padding
+word. This correctly aligns sata_fis at byte offset 40 while maintaining
+the 64-byte total payload size.
+
+Update hw_event_sata_phy_up() in pm8001_hwi.c and pm80xx_hwi.c to copy
+directly from &pPayload->sata_fis.
+
+Compile-tested only. Both the patch and its description have been generated
+by Gemini.
+
+Fixes: dbf9bfe61571 ("[SCSI] pm8001: add SAS/SATA HBA driver")
+Fixes: f5860992db55 ("[SCSI] pm80xx: Added SPCv/ve specific hardware functionalities and relevant changes in common files")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/31963d53810f42970447e78ef46030ab13d2e91f.1788198434.git.bvanassche@acm.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ drivers/scsi/pm8001/pm8001_defs.h |  98 +++++++++++++++++++++++++++++
+ drivers/scsi/pm8001/pm8001_hwi.c  |   2 +-
+ drivers/scsi/pm8001/pm8001_hwi.h  |   4 +-
+ drivers/scsi/pm8001/pm80xx_hwi.c  |   2 +-
+ drivers/scsi/pm8001/pm80xx_hwi.h  | 100 +-----------------------------
+ 5 files changed, 106 insertions(+), 100 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 62c1ca6680881..9990a038d2360 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1633,30 +1633,38 @@ static int update_decoder_targets(struct device *dev, void *data)
- 	return 0;
- }
+diff --git a/drivers/scsi/pm8001/pm8001_defs.h b/drivers/scsi/pm8001/pm8001_defs.h
+index 4e19d61dffbbb..a9605ca317f34 100644
+--- a/drivers/scsi/pm8001/pm8001_defs.h
++++ b/drivers/scsi/pm8001/pm8001_defs.h
+@@ -41,6 +41,104 @@
+ #ifndef _PM8001_DEFS_H_
+ #define _PM8001_DEFS_H_
  
-+static bool dport_exists(struct cxl_port *port, struct device *dport_dev)
-+{
-+	struct cxl_dport *dport = cxl_find_dport_by_dev(port, dport_dev);
++#include <scsi/sas.h>
 +
-+	if (dport) {
-+		dev_dbg(&port->dev, "dport%d:%s already exists\n",
-+			dport->port_id, dev_name(dport_dev));
-+		return true;
-+	}
++#ifdef __LITTLE_ENDIAN_BITFIELD
++struct sas_identify_frame_local {
++	/* Byte 0 */
++	u8  frame_type:4;
++	u8  dev_type:3;
++	u8  _un0:1;
 +
-+	return false;
-+}
++	/* Byte 1 */
++	u8  _un1;
 +
- DEFINE_FREE(del_cxl_dport, struct cxl_dport *, if (!IS_ERR_OR_NULL(_T)) del_dport(_T))
- static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
- 					    struct device *dport_dev)
- {
--	struct cxl_dport *dport;
- 	int rc;
++	/* Byte 2 */
++	union {
++		struct {
++			u8  _un20:1;
++			u8  smp_iport:1;
++			u8  stp_iport:1;
++			u8  ssp_iport:1;
++			u8  _un247:4;
++		};
++		u8 initiator_bits;
++	};
++
++	/* Byte 3 */
++	union {
++		struct {
++			u8  _un30:1;
++			u8 smp_tport:1;
++			u8 stp_tport:1;
++			u8 ssp_tport:1;
++			u8 _un347:4;
++		};
++		u8 target_bits;
++	};
++
++	/* Byte 4 - 11 */
++	u8 _un4_11[8];
++
++	/* Byte 12 - 19 */
++	u8 sas_addr[SAS_ADDR_SIZE];
++
++	/* Byte 20 */
++	u8 phy_id;
++
++	u8 _un21_27[7];
++
++} __packed;
++
++#elif defined(__BIG_ENDIAN_BITFIELD)
++struct sas_identify_frame_local {
++	/* Byte 0 */
++	u8  _un0:1;
++	u8  dev_type:3;
++	u8  frame_type:4;
++
++	/* Byte 1 */
++	u8  _un1;
++
++	/* Byte 2 */
++	union {
++		struct {
++			u8  _un247:4;
++			u8  ssp_iport:1;
++			u8  stp_iport:1;
++			u8  smp_iport:1;
++			u8  _un20:1;
++		};
++		u8 initiator_bits;
++	};
++
++	/* Byte 3 */
++	union {
++		struct {
++			u8 _un347:4;
++			u8 ssp_tport:1;
++			u8 stp_tport:1;
++			u8 smp_tport:1;
++			u8 _un30:1;
++		};
++		u8 target_bits;
++	};
++
++	/* Byte 4 - 11 */
++	u8 _un4_11[8];
++
++	/* Byte 12 - 19 */
++	u8 sas_addr[SAS_ADDR_SIZE];
++
++	/* Byte 20 */
++	u8 phy_id;
++
++	u8 _un21_27[7];
++} __packed;
++#else
++#error "Bitfield order not defined!"
++#endif
++
+ enum chip_flavors {
+ 	chip_8001,
+ 	chip_8008,
+diff --git a/drivers/scsi/pm8001/pm8001_hwi.c b/drivers/scsi/pm8001/pm8001_hwi.c
+index 8005995a317c1..506c60a04954a 100644
+--- a/drivers/scsi/pm8001/pm8001_hwi.c
++++ b/drivers/scsi/pm8001/pm8001_hwi.c
+@@ -3208,7 +3208,7 @@ hw_event_sata_phy_up(struct pm8001_hba_info *pm8001_ha, void *piomb)
+ 	phy->sas_phy.oob_mode = SATA_OOB_MODE;
+ 	sas_notify_phy_event(&phy->sas_phy, PHYE_OOB_DONE, GFP_ATOMIC);
+ 	spin_lock_irqsave(&phy->sas_phy.frame_rcvd_lock, flags);
+-	memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
++	memcpy(phy->frame_rcvd, &pPayload->sata_fis,
+ 		sizeof(struct dev_to_host_fis));
+ 	phy->frame_rcvd_size = sizeof(struct dev_to_host_fis);
+ 	phy->identify.target_port_protocols = SAS_PROTOCOL_SATA;
+diff --git a/drivers/scsi/pm8001/pm8001_hwi.h b/drivers/scsi/pm8001/pm8001_hwi.h
+index f1ce8df082b0c..a21b1b37a8ea5 100644
+--- a/drivers/scsi/pm8001/pm8001_hwi.h
++++ b/drivers/scsi/pm8001/pm8001_hwi.h
+@@ -42,6 +42,7 @@
  
- 	device_lock_assert(&port->dev);
- 	if (!port->dev.driver)
- 		return ERR_PTR(-ENXIO);
+ #include <linux/types.h>
+ #include <scsi/libsas.h>
++#include "pm8001_defs.h"
  
--	dport = cxl_find_dport_by_dev(port, dport_dev);
--	if (dport) {
--		dev_dbg(&port->dev, "dport%d:%s already exists\n",
--			dport->port_id, dev_name(dport_dev));
-+	if (dport_exists(port, dport_dev))
- 		return ERR_PTR(-EBUSY);
--	}
  
--	struct cxl_dport *new_dport __free(del_cxl_dport) =
-+	struct cxl_dport *dport __free(del_cxl_dport) =
- 		devm_cxl_add_dport_by_dev(port, dport_dev);
--	if (IS_ERR(new_dport))
--		return new_dport;
-+	if (IS_ERR(dport))
-+		return dport;
+ /* for Request Opcode of IOMB */
+@@ -229,8 +230,9 @@ struct hw_event_resp {
+ 	__le32	lr_evt_status_phyid_portid;
+ 	__le32	evt_param;
+ 	__le32	npip_portstate;
+-	struct sas_identify_frame	sas_identify;
++	struct sas_identify_frame_local	sas_identify;
+ 	struct dev_to_host_fis	sata_fis;
++	u32	_r_a;
+ } __attribute__((packed, aligned(4)));
  
--	cxl_switch_parse_cdat(new_dport);
-+	cxl_switch_parse_cdat(dport);
  
- 	if (port->nr_dports == 1) {
- 		/*
-@@ -1672,17 +1680,17 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
- 		if (rc)
- 			return ERR_PTR(rc);
- 		dev_dbg(&port->dev, "first dport%d:%s added with decoders\n",
--			new_dport->port_id, dev_name(dport_dev));
--		return no_free_ptr(new_dport);
-+			dport->port_id, dev_name(dport_dev));
-+		return no_free_ptr(dport);
- 	}
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index 1ce8226fcd292..ecbf3c32e948d 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -3296,7 +3296,7 @@ hw_event_sata_phy_up(struct pm8001_hba_info *pm8001_ha, void *piomb)
+ 	phy->sas_phy.oob_mode = SATA_OOB_MODE;
+ 	sas_notify_phy_event(&phy->sas_phy, PHYE_OOB_DONE, GFP_ATOMIC);
+ 	spin_lock_irqsave(&phy->sas_phy.frame_rcvd_lock, flags);
+-	memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
++	memcpy(phy->frame_rcvd, &pPayload->sata_fis,
+ 		sizeof(struct dev_to_host_fis));
+ 	phy->frame_rcvd_size = sizeof(struct dev_to_host_fis);
+ 	phy->identify.target_port_protocols = SAS_PROTOCOL_SATA;
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.h b/drivers/scsi/pm8001/pm80xx_hwi.h
+index d8a63b7fed6a0..d6796ba40df96 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.h
++++ b/drivers/scsi/pm8001/pm80xx_hwi.h
+@@ -43,6 +43,7 @@
  
- 	/* New dport added, update the decoder targets */
--	device_for_each_child(&port->dev, new_dport, update_decoder_targets);
-+	device_for_each_child(&port->dev, dport, update_decoder_targets);
+ #include <linux/types.h>
+ #include <scsi/libsas.h>
++#include "pm8001_defs.h"
  
--	dev_dbg(&port->dev, "dport%d:%s added\n", new_dport->port_id,
-+	dev_dbg(&port->dev, "dport%d:%s added\n", dport->port_id,
- 		dev_name(dport_dev));
+ /* for Request Opcode of IOMB */
+ #define OPC_INB_ECHO				1	/* 0x000 */
+@@ -236,102 +237,6 @@
+ /* Port recovery timeout, 10000 ms for PM8006 controller */
+ #define CHIP_8006_PORT_RECOVERY_TIMEOUT 0x640000
  
--	return no_free_ptr(new_dport);
-+	return no_free_ptr(dport);
- }
+-#ifdef __LITTLE_ENDIAN_BITFIELD
+-struct sas_identify_frame_local {
+-	/* Byte 0 */
+-	u8  frame_type:4;
+-	u8  dev_type:3;
+-	u8  _un0:1;
+-
+-	/* Byte 1 */
+-	u8  _un1;
+-
+-	/* Byte 2 */
+-	union {
+-		struct {
+-			u8  _un20:1;
+-			u8  smp_iport:1;
+-			u8  stp_iport:1;
+-			u8  ssp_iport:1;
+-			u8  _un247:4;
+-		};
+-		u8 initiator_bits;
+-	};
+-
+-	/* Byte 3 */
+-	union {
+-		struct {
+-			u8  _un30:1;
+-			u8 smp_tport:1;
+-			u8 stp_tport:1;
+-			u8 ssp_tport:1;
+-			u8 _un347:4;
+-		};
+-		u8 target_bits;
+-	};
+-
+-	/* Byte 4 - 11 */
+-	u8 _un4_11[8];
+-
+-	/* Byte 12 - 19 */
+-	u8 sas_addr[SAS_ADDR_SIZE];
+-
+-	/* Byte 20 */
+-	u8 phy_id;
+-
+-	u8 _un21_27[7];
+-
+-} __packed;
+-
+-#elif defined(__BIG_ENDIAN_BITFIELD)
+-struct sas_identify_frame_local {
+-	/* Byte 0 */
+-	u8  _un0:1;
+-	u8  dev_type:3;
+-	u8  frame_type:4;
+-
+-	/* Byte 1 */
+-	u8  _un1;
+-
+-	/* Byte 2 */
+-	union {
+-		struct {
+-			u8  _un247:4;
+-			u8  ssp_iport:1;
+-			u8  stp_iport:1;
+-			u8  smp_iport:1;
+-			u8  _un20:1;
+-		};
+-		u8 initiator_bits;
+-	};
+-
+-	/* Byte 3 */
+-	union {
+-		struct {
+-			u8 _un347:4;
+-			u8 ssp_tport:1;
+-			u8 stp_tport:1;
+-			u8 smp_tport:1;
+-			u8 _un30:1;
+-		};
+-		u8 target_bits;
+-	};
+-
+-	/* Byte 4 - 11 */
+-	u8 _un4_11[8];
+-
+-	/* Byte 12 - 19 */
+-	u8 sas_addr[SAS_ADDR_SIZE];
+-
+-	/* Byte 20 */
+-	u8 phy_id;
+-
+-	u8 _un21_27[7];
+-} __packed;
+-#else
+-#error "Bitfield order not defined!"
+-#endif
+-
+ struct mpi_msg_hdr {
+ 	__le32	header;	/* Bits [11:0] - Message operation code */
+ 	/* Bits [15:12] - Message Category */
+@@ -427,8 +332,9 @@ struct hw_event_resp {
+ 	__le32	lr_status_evt_portid;
+ 	__le32	evt_param;
+ 	__le32	phyid_npip_portstate;
+-	struct sas_identify_frame	sas_identify;
++	struct sas_identify_frame_local	sas_identify;
+ 	struct dev_to_host_fis	sata_fis;
++	u32	_r_a;
+ } __attribute__((packed, aligned(4)));
  
- static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
+ /*
 -- 
 2.53.0
 
