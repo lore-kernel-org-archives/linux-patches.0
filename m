@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022199;
-	b=YbBJG2MLZbaJl5swgz+4qa3kNv1xNj73sbbwVLWczkaHMxuQvNQ8B7VtHGaWrS5KnGxQ
-	 uaKscPdCnN4JGSfBOvPF9eyS1QRoFnq4nTJtlK+rPe4xdFNmoTFvdC3nI84r7eAvd5wop
-	 cJLFwLvddjfIqEKjry39zHh9wCb/jZwea/UCMJNcBqRapUtm8j1AQ2jCEOex3vfYsz2Xb
-	 EF6CmzLxmU74NGN6dS5dpKiRXyLI/zsVi1uAXFSdRsAuoUOYVl+WDEoAdqkHbWh6Xng/C
-	 JwAVo/RDu9lnTLLgcY9vhgEUYU8E/l5T4wDzEv7m5cXHSB0Qo4Y7yjCYw5WujuKN57A==
+	t=1795022201;
+	b=ESB6rShDiEom4RbZiZ4hayNfIipZi6sKV8G2QRTlaWWapy3yiPo8og9cd894wJbNVuVM
+	 963kwFClLEyhhw2QsjKOeZ+GgiCprbo3Gx8c5j2gAB73diVlPeWME4cOGjHUhG3NCzlGd
+	 CBCna4R3jmKxW0h58nPOEq50hr+lq8kuwp+3Uk2wN6V+x0XllQaheZbYvVERo6p0VwZ06
+	 4kZTZEHz0tPT1/h1HTAbwLYXOhytvKoZEGWHfh7YaewDdoUUXR543NG/+0Q1Mbj2YKaso
+	 b5E5Qr235R54odIC5Y+hqACtXw8THIMsc34CwLpNKxxYm/2M3dvMThAzmzKE0M4NsMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022201;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K4q9rqrGHSb+KFv7pNX6A0qlS5Jw73q1bmhlnUl8ulg=;
-	b=pMetUfOLMD/9AtOYsYk35Yc4RtYwuEHJYimdamiYwqZAVKqlA70Tt/n0UWVCsaJUcnFY
-	 CbXamKSTk1+n9eeRm7GtiWhf1Xt6TjRahE3PyLK5d/wTf8VjR/QngnVPy0ilkdAqIvire
-	 4QCOQ5fIN1u43guUYn1jlbXEtnOpmQecsRyE2STmKF4aYXVX3Uqr4Z7PlMens3M+LZNKH
-	 8InagrRskon+v+NbpqqWHfxHVm8RUDPYSRTLutFpQ8vcvPQOMvsxJC55VW/mFyP4NbnOQ
-	 YkE2q1pcAXU0oQFlTWjBeWWX7In/eOX9su/gcOJDPFtKsksMj4sOaWETBNoqpIR63Zw==
+	bh=FamDkIm1W7H//ywItiVZXU4Urd3sODNzyBhG+y6S0U8=;
+	b=w+OMS11zXasfXWttQCDYlYNFcPzu+F9VTBw/qRx+SYio1rmpojjCOVGxYHpRAQLG5SZR
+	 6fR2tUNiUa+VmPjBkzR2j53z/7o4cGySL8egTqurqFbNjUh1c+6FTETXfdC2cgmboOg5K
+	 pF2mTr34MFxQ3v5aBjHDSI1VjHcZJneGaFMGL3st61mh0g9LWqnEk3UiFvoAnBcfSSuW9
+	 I21ClJOxawY4jgD195PwakzrN1lODOPsD6ze/lY3ZyrMRqXmt3ltn/xghMWW70MRSeR75
+	 6XbWRT3AGPW1c62sjtjnah2+vgieSnJ0Em6sN8JR8wld5g2upZpEzulWFsvhwAFknlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bO1/cX3+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gXzh/2W0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC7A606A325;
-	Wed, 18 Nov 2026 17:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A9D606A334;
+	Wed, 18 Nov 2026 17:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO1/cX3+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B93C1F000C4;
-	Wed, 18 Nov 2026 17:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gXzh/2W0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE641F000C7;
+	Wed, 18 Nov 2026 17:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022198;
-	bh=K4q9rqrGHSb+KFv7pNX6A0qlS5Jw73q1bmhlnUl8ulg=;
+	s=korg; t=1795022201;
+	bh=FamDkIm1W7H//ywItiVZXU4Urd3sODNzyBhG+y6S0U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bO1/cX3+McfPDW/vS+9qCvNRW1DCwBmuJwRafO/UQuQ+yXRD4zutqT3rljqASdTCM
-	 tMRXwM/icqPhpSNN7OHuRtlMJN0qtowBgCtDDEdUJp8hDYgIq+YMAPw90VjAUCvNF1
-	 rCmWWOs7VWgw3fUGQNhpiC/5/0hiqHBZsOTedbjE=
+	b=gXzh/2W0nxOrTyKOkIvQQZybNrOrCAFCzTzZdBQLGqfkl3bxbaBclWpZoKzE0BAHP
+	 wFQuxmivtk0rPtSu/S3kYMI35agnsjv7Q85BrdKsWbffABqOQOQWEDfz1fiN8NK9jR
+	 ym4OBYLmmqZwaARg/Q2IJbU45iXZ/S4+log+UUv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Li Yifan <yifan2.li@intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.3 2575/2651] ASoC: SOF: Intel: hda: Stop the controller before freeing its DMA buffers
-Date: Wed, 18 Nov 2026 16:03:35 +0100
-Message-ID: <20261118150417.056753176@linuxfoundation.org>
+	Dominik Maier <dmnk@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2576/2651] xattr: always invoke cap_convert_nscap() for security.capability writes
+Date: Wed, 18 Nov 2026 16:03:36 +0100
+Message-ID: <20261118150417.088247384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,85 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 11ae63bd9030349a0136fb2edd1622a4a029edc8 ]
+From: Dominik Maier <dmnk@google.com>
 
-hda_dsp_probe() starts the CORB/RIRB DMA engines through
-hda_dsp_ctrl_init_chip(), but neither hda_dsp_remove() nor the error
-path of hda_dsp_probe() stops them before hda_dsp_stream_free() frees
-the CORB/RIRB ring buffer and the position buffer.  Unsolicited
-responses also stay enabled, so the controller can keep writing RIRB
-entries into the freed page.
+[ Upstream commit 0f4a9e682f7fa5becc3af7204606d9bf4780e425 ]
 
-Until commit 9e6966f70404 ("ASoC: SOF: Intel: hda: Keep non-alt mlinks
-powered at probe on ACE2+"), hda_init_caps() dropped the initial
-references to the non-alternate links, and dropping the last one
-stopped the command DMA, so a probe that failed later, e.g. because
-the firmware is missing, did not leave it running.  Now it does, and
-as the probe runs from a work item, the device stays bound after the
-failure, with bus mastering enabled and the DMA engines pointed at
-freed memory.
+Commit 8db6c34f1dbc ("Introduce v3 namespaced file capabilities") changed
+cap_inode_setxattr() to return 0 unconditionally for XATTR_NAME_CAPS
+("security.capability") and moved capability validation into
+cap_convert_nscap(), but placed the call inside the "if (size)" block in
+setxattr(). Commit 7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into
+vfs_setxattr()") preserved that "size &&" condition in vfs_setxattr():
 
-Normal removal resumes the device first, which restarts the command
-DMA, so there the ring buffer is freed while the DMA is running until
-pci_disable_device() clears bus mastering.
+	if (size && strcmp(name, XATTR_NAME_CAPS) == 0) {
+		error = cap_convert_nscap(idmap, dentry, &value, size);
+		...
+	}
 
-Stop the controller with hda_dsp_ctrl_stop_chip() before freeing the
-buffers, as is done on suspend, and export it for use from hda.c.
+For security.* extended attributes, xattr_permission() skips
+inode_permission(MAY_WRITE) and leaves permission checks to the security
+module, while cap_inode_setxattr() returns 0 for XATTR_NAME_CAPS assuming
+cap_convert_nscap() has already validated the write. Because
+__vfs_setxattr() treats size == 0 as an empty attribute write (setting
+value = "") rather than a removal, calling setxattr(2) on
+"security.capability" with size == 0 bypasses cap_convert_nscap() and
+allows an unprivileged caller without CAP_SETFCAP or write permission on
+the target inode to write a 0-byte security.capability xattr (or
+overwrite an existing one).
 
-This was reproduced by binding SOF in DSPless mode to a QEMU
-ich9-intel-hda: after the probe fails with "SOF firmware and/or
-topology file not found", CORB and RIRB DMA are still running with
-unsolicited responses and bus mastering enabled, and the page they use
-is soon reused as a page table.
+When that binary is subsequently executed, get_vfs_caps_from_disk() reads
+the 0-byte security.capability xattr and fails the
+size < sizeof(magic_etc) check with -EINVAL, causing execve(2) to fail
+with -EINVAL.
 
-Fixes: 9e6966f70404 ("ASoC: SOF: Intel: hda: Keep non-alt mlinks powered at probe on ACE2+")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Tested-by: Li Yifan <yifan2.li@intel.com>
-Reported-by: Li Yifan <yifan2.li@intel.com>
-Closes: https://github.com/thesofproject/linux/pull/5976
-Link: https://patch.msgid.link/20261028144446.992948-1-sashal@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Always invoke cap_convert_nscap() when strcmp(name, XATTR_NAME_CAPS) == 0
+regardless of size, so that 0-byte writes hit the existing !*ivalue /
+!validheader() checks in cap_convert_nscap() and are rejected with
+-EINVAL.
+
+Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
+Signed-off-by: Dominik Maier <dmnk@google.com>
+Link: https://patch.msgid.link/20261022232119.2537209-1-dmnk@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-ctrl.c | 1 +
- sound/soc/sof/intel/hda.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+ fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/hda-ctrl.c b/sound/soc/sof/intel/hda-ctrl.c
-index aeb34310eebd6..333f6bbea7539 100644
---- a/sound/soc/sof/intel/hda-ctrl.c
-+++ b/sound/soc/sof/intel/hda-ctrl.c
-@@ -349,6 +349,7 @@ void hda_dsp_ctrl_stop_chip(struct snd_sof_dev *sdev)
+diff --git a/fs/xattr.c b/fs/xattr.c
+index d589791152007..44710ef2dfe50 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -332,7 +332,7 @@ vfs_setxattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	const void  *orig_value = value;
+ 	int error;
  
- 	bus->chip_init = false;
- }
-+EXPORT_SYMBOL_NS(hda_dsp_ctrl_stop_chip, "SND_SOC_SOF_INTEL_HDA_COMMON");
- 
- MODULE_LICENSE("Dual BSD/GPL");
- MODULE_DESCRIPTION("SOF helpers for HDaudio platforms");
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index 4dbba9186b29d..2a40cb9bf24d9 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -939,6 +939,7 @@ int hda_dsp_probe(struct snd_sof_dev *sdev)
- 		hda_dsp_ctrl_ppcap_enable(sdev, false);
- 	}
- free_ipc_irq:
-+	hda_dsp_ctrl_stop_chip(sdev);
- 	free_irq(sdev->ipc_irq, sdev);
- free_irq_vector:
- 	if (sdev->msi_enabled)
-@@ -1006,6 +1007,9 @@ void hda_dsp_remove(struct snd_sof_dev *sdev)
- 		snd_dma_free_pages(&hda->iccmax_dmab);
- 
- skip_disable_dsp:
-+	/* stop CORB/RIRB and position buffer DMA before the buffers are freed */
-+	hda_dsp_ctrl_stop_chip(sdev);
-+
- 	free_irq(sdev->ipc_irq, sdev);
- 	if (sdev->msi_enabled)
- 		pci_free_irq_vectors(pci);
+-	if (size && strcmp(name, XATTR_NAME_CAPS) == 0) {
++	if (strcmp(name, XATTR_NAME_CAPS) == 0) {
+ 		error = cap_convert_nscap(idmap, dentry, &value, size);
+ 		if (error < 0)
+ 			return error;
 -- 
 2.53.0
 
