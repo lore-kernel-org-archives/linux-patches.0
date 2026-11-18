@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054127;
-	b=l8/yeQEbqA8BZ2Kcnqt3ZGRxEKzokfwTOYC7e8Kx+QHGeWSOuYarY+QJ77XoowunhKpk
-	 33py/8t4PJDno26fckhEeoGHbuu2ueNzXMXdOatlH+Mp+Zr/OGWviPw2ja4Nb6eAiCw/E
-	 HxELbC+eyVs34E1iNz5Tt6si+PQbaGb6z/Z1ICRO29fnn4gqdjZyrKehUpVYhtVXdQcM9
-	 vsE5vKIipOwN/d+QFSpgor36gT9vOPnJe4gm/Vw/v1XKb+T6wMi6g9uLyHrxDxTxYpsa1
-	 N1o9a1bJREFtm9ehUmRQ5doSfrOxhu1JtEMRJxokFl3Hjj5u4NCU/KSb6rCnolVD9IA==
+	t=1795054130;
+	b=dspih46Y+atvBiiT9ISIqcj/oYnvb7MCqUNK0ouP+iYzkwOBTwN5vtLrWwjIRJ1qWz5y
+	 aRlp96y7BwNxW1IoDNWZjkQm2KVha4SppO9Kq8OIIWzrNdXyO3f/FHSuAQFz7vGn2o4P7
+	 bP/hpIIi3tkY5sbDKwu07DiJSLW6iT1XuES3Ug2q6vfdXlgZSNE4sQ6W94Jpg0HEQwJMN
+	 axn+FAs8i2F8Cc0KYggjl+UUnd2YrUg1lxGIzg07S9Fz4UhvNxtMve29phRoKYLEgunI9
+	 KhDjSXtAjqn6X91VN8OwIkqqaNG4ghHcEgRcEIh1uHM0Jel9T8SQO4YPD+PtVyEJQnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dzEyNbJnS5OSCU38S1lcguyzW5k7DO+MjQa4dC2hvTI=;
-	b=1P+gV1LKSXkTdxbssQjVmCa8Z0zTjO4qg+jfPGRSwyGUZf9S+cGJXuwDm2jwmPdFzG/2
-	 ZYgdXHDLOV8dU5AeBunGoxB5AgjBZlmQ8Op7IkTRpzyFTxeATcUP+mrZYPTryxxABeh3b
-	 NTQYNA2aVazeW6G45ezh+HhL7t4o9BrQ6IpErSvRwIiP3xvA4s9xwA8x897uXtIbtdStj
-	 OECVJhMI+8Lguw4Pj7ohDoneF2Swv2mVoUv+Gt3RI7y8KNj1oX2PntpaBUCk0K+DH3aBL
-	 WW0k5N6Py1RkZjdK0sSbNt5HINQ6JG/7GKbKhuRhUjiSG5/cpJJwFom9HaGAtM5fwCQ==
+	bh=9K690g28AWKlEVGK1sGjviKbMbfx4Mz+qWWSXIF2Pbw=;
+	b=gqq+9nSf2+JWG3ABS5uD2x7/E06dmKb7J8p9x7nlu6gCbcLgruRHgd2Qh0+Xfa8JvOtW
+	 c3yYgJnPIEg5mBOXABHAh8O5Jt2JiONIDd9PMfLC2+NXpr9mcMhUdq08iro+W3RpGx8HD
+	 eI/L60Il1gvDn2ckcISIkZeEk9NMvI0AL6nNRAuevcOCHWrwM73MHItmApYcQLLKBbir+
+	 UYwHlO8O6xh0iah3DSWwe/4qd+MzNeE5HdklKGU3c07Uo9Nh3GsFXVJgMhrsgStmjnEra
+	 u9sDSslqYjaz0TtuCYqTY5YwCW8V+uErm/EGail1DpdHohwLSYshT2+Zo/01i0N8aEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUfPA0Q1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kRqJ+pL9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06C1606A320;
-	Thu, 19 Nov 2026 02:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12C8606A325;
+	Thu, 19 Nov 2026 02:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUfPA0Q1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7A61F000C4;
-	Thu, 19 Nov 2026 02:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kRqJ+pL9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0121F000C4;
+	Thu, 19 Nov 2026 02:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054127;
-	bh=dzEyNbJnS5OSCU38S1lcguyzW5k7DO+MjQa4dC2hvTI=;
+	s=korg; t=1795054130;
+	bh=9K690g28AWKlEVGK1sGjviKbMbfx4Mz+qWWSXIF2Pbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUfPA0Q1jTFe35Jm3Cs9OzMq1kY2QsX1PHiv1agRk9DhKq+yznDjBY1G8srivaJDm
-	 v5xpO+lDhZSxaKOGnN6duZs0iWsd84qo4/70y8lF5UUnJ2LGLEzbEOWZWzUwZsqrRa
-	 IJKpdcV3wzJh6Ll+8XKPKjb/Ue2xMSxlYOSHu0fo=
+	b=kRqJ+pL9rFfW9SoT/Hgk83UCVrJP4av1fOFWnJqvCJsbJLVq9JXDrJmOWGpgKJo2n
+	 llYxcSz9lBRdVAgR+fDrenQrrs3kd6VbBYor3MxNsgDEpb7uSUbdrtyd7YfHfYL02O
+	 lu+XAtbt3ymw0WMJuDZkcr/XG8oKdds4hFFjyMM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Abhinav Kumar <abhinavk@codeaurora.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1165/2214] PCI: dwc: Set DMA_BYPASS bit in outbound IATU CTRL2 register
-Date: Wed, 18 Nov 2026 15:47:21 +0100
-Message-ID: <20261118150058.625146693@linuxfoundation.org>
+Subject: [PATCH 5.15 1166/2214] drm/msm/hdmi: use bulk regulator API
+Date: Wed, 18 Nov 2026 15:47:22 +0100
+Message-ID: <20261118150058.663058221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,86 +70,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit efadda401c5c8e2390ba66508eba154dbd0db5a9 ]
+[ Upstream commit 31b3b1f5e35252b255f2a0d6a3883b09b5c4af97 ]
 
-An outbound iATU region matches any local (AXI/application-side)
-address that falls within its Base/Limit window and rewrites it to
-the PCIe-side address programmed in that region's Target Address
-Registers before the transaction goes out on the link. This matching
-does not distinguish CPU-initiated transactions from ones issued by
-the internal DMA engine (eDMA/HDMA).
+Switch to using bulk regulator API instead of hand coding loops.
 
-Example: outbound region 0 is programmed with Base/Limit covering
-local addresses 0x8000_0000-0x8000_0FFF and Target 0x1_0000_0000, for
-CPU-initiated accesses. The DMA engine is later given a descriptor
-whose destination is the host address 0x8000_0080, which happens to
-fall inside region 0's Base/Limit range. The iATU matches the DMA
-transaction against region 0 too and rewrites it to 0x1_0000_0080
-instead of passing 0x8000_0080 through unchanged. The transaction
-then lands on the wrong host address, causing data corruption or an
-IOMMU fault when the rewritten address has no valid mapping.
-
-Set the DMA_BYPASS bit (bit 27) in PCIE_ATU_REGION_CTRL2 when
-programming outbound iATU regions so only CPU/AXI-initiated
-transactions are matched against the region; DMA engine transactions
-bypass the translation and go out on the PCIe link with their
-original address.
-
-Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260908-dma_bypass-v2-1-c3c81d408c0c@oss.qualcomm.com
-[ sashal: adapted unified outbound iATU programming to the existing separate viewport and unrolled-register paths ]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+Link: https://lore.kernel.org/r/20211015001100.4193241-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Stable-dep-of: d27f831aaf20 ("drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 11 ++++++++---
- drivers/pci/controller/dwc/pcie-designware.h |  1 +
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi.c        | 34 ++++++++------------------
+ drivers/gpu/drm/msm/hdmi/hdmi.h        |  6 ++---
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 20 +++++----------
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    | 24 +++++++-----------
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c    | 33 +++++++++----------------
+ 5 files changed, 40 insertions(+), 77 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 00972a7bc9768..22fc8ee305eec 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -292,8 +292,10 @@ static void dw_pcie_prog_outbound_atu_unroll(struct dw_pcie *pci, u8 func_no,
- 	if (pci->version == 0x490A)
- 		val = dw_pcie_enable_ecrc(val);
- 	dw_pcie_writel_ob_unroll(pci, index, PCIE_ATU_UNR_REGION_CTRL1, val);
--	dw_pcie_writel_ob_unroll(pci, index, PCIE_ATU_UNR_REGION_CTRL2,
--				 PCIE_ATU_ENABLE);
-+	val = PCIE_ATU_ENABLE;
-+	if (pci->version >= 0x460A)
-+		val |= PCIE_ATU_DMA_BYPASS;
-+	dw_pcie_writel_ob_unroll(pci, index, PCIE_ATU_UNR_REGION_CTRL2, val);
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 2c944419e1758..eb11fac881334 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -165,19 +165,13 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+ 		ret = -ENOMEM;
+ 		goto fail;
+ 	}
+-	for (i = 0; i < config->hpd_reg_cnt; i++) {
+-		struct regulator *reg;
+-
+-		reg = devm_regulator_get(&pdev->dev,
+-				config->hpd_reg_names[i]);
+-		if (IS_ERR(reg)) {
+-			ret = PTR_ERR(reg);
+-			DRM_DEV_ERROR(&pdev->dev, "failed to get hpd regulator: %s (%d)\n",
+-					config->hpd_reg_names[i], ret);
+-			goto fail;
+-		}
++	for (i = 0; i < config->hpd_reg_cnt; i++)
++		hdmi->hpd_regs[i].supply = config->hpd_reg_names[i];
  
- 	/*
- 	 * Make sure ATU enable takes effect before any subsequent config
-@@ -350,7 +352,10 @@ static void __dw_pcie_prog_outbound_atu(struct dw_pcie *pci, u8 func_no,
- 	if (pci->version == 0x490A)
- 		val = dw_pcie_enable_ecrc(val);
- 	dw_pcie_writel_dbi(pci, PCIE_ATU_CR1, val);
--	dw_pcie_writel_dbi(pci, PCIE_ATU_CR2, PCIE_ATU_ENABLE);
-+	val = PCIE_ATU_ENABLE;
-+	if (pci->version >= 0x460A)
-+		val |= PCIE_ATU_DMA_BYPASS;
-+	dw_pcie_writel_dbi(pci, PCIE_ATU_CR2, val);
+-		hdmi->hpd_regs[i] = reg;
++	ret = devm_regulator_bulk_get(&pdev->dev, config->hpd_reg_cnt, hdmi->hpd_regs);
++	if (ret) {
++		DRM_DEV_ERROR(&pdev->dev, "failed to get hpd regulator: %d\n", ret);
++		goto fail;
+ 	}
  
- 	/*
- 	 * Make sure ATU enable takes effect before any subsequent config
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 5960ae40b0f2d..4807efe73f2ef 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -91,6 +91,7 @@
- #define PCIE_ATU_CR2			0x908
- #define PCIE_ATU_ENABLE			BIT(31)
- #define PCIE_ATU_BAR_MODE_ENABLE	BIT(30)
-+#define PCIE_ATU_DMA_BYPASS		BIT(27)
- #define PCIE_ATU_FUNC_NUM_MATCH_EN      BIT(19)
- #define PCIE_ATU_LOWER_BASE		0x90C
- #define PCIE_ATU_UPPER_BASE		0x910
+ 	hdmi->pwr_regs = devm_kcalloc(&pdev->dev,
+@@ -188,19 +182,11 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+ 		ret = -ENOMEM;
+ 		goto fail;
+ 	}
+-	for (i = 0; i < config->pwr_reg_cnt; i++) {
+-		struct regulator *reg;
+ 
+-		reg = devm_regulator_get(&pdev->dev,
+-				config->pwr_reg_names[i]);
+-		if (IS_ERR(reg)) {
+-			ret = PTR_ERR(reg);
+-			DRM_DEV_ERROR(&pdev->dev, "failed to get pwr regulator: %s (%d)\n",
+-					config->pwr_reg_names[i], ret);
+-			goto fail;
+-		}
+-
+-		hdmi->pwr_regs[i] = reg;
++	ret = devm_regulator_bulk_get(&pdev->dev, config->pwr_reg_cnt, hdmi->pwr_regs);
++	if (ret) {
++		DRM_DEV_ERROR(&pdev->dev, "failed to get pwr regulator: %d\n", ret);
++		goto fail;
+ 	}
+ 
+ 	hdmi->hpd_clks = devm_kcalloc(&pdev->dev,
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+index 20f554312b17c..a6c88d157bc3a 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.h
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+@@ -48,8 +48,8 @@ struct hdmi {
+ 	void __iomem *qfprom_mmio;
+ 	phys_addr_t mmio_phy_addr;
+ 
+-	struct regulator **hpd_regs;
+-	struct regulator **pwr_regs;
++	struct regulator_bulk_data *hpd_regs;
++	struct regulator_bulk_data *pwr_regs;
+ 	struct clk **hpd_clks;
+ 	struct clk **pwr_clks;
+ 
+@@ -161,7 +161,7 @@ struct hdmi_phy {
+ 	void __iomem *mmio;
+ 	struct hdmi_phy_cfg *cfg;
+ 	const struct hdmi_phy_funcs *funcs;
+-	struct regulator **regs;
++	struct regulator_bulk_data *regs;
+ 	struct clk **clks;
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index 11b1919e37b1c..dcfefc12385ab 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -27,13 +27,9 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
+ 
+ 	pm_runtime_get_sync(&hdmi->pdev->dev);
+ 
+-	for (i = 0; i < config->pwr_reg_cnt; i++) {
+-		ret = regulator_enable(hdmi->pwr_regs[i]);
+-		if (ret) {
+-			DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %s (%d)\n",
+-					config->pwr_reg_names[i], ret);
+-		}
+-	}
++	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
++	if (ret)
++		DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %d\n", ret);
+ 
+ 	if (config->pwr_clk_cnt > 0) {
+ 		DBG("pixclock: %lu", hdmi->pixclock);
+@@ -69,13 +65,9 @@ static void power_off(struct drm_bridge *bridge)
+ 	for (i = 0; i < config->pwr_clk_cnt; i++)
+ 		clk_disable_unprepare(hdmi->pwr_clks[i]);
+ 
+-	for (i = 0; i < config->pwr_reg_cnt; i++) {
+-		ret = regulator_disable(hdmi->pwr_regs[i]);
+-		if (ret) {
+-			DRM_DEV_ERROR(dev->dev, "failed to disable pwr regulator: %s (%d)\n",
+-					config->pwr_reg_names[i], ret);
+-		}
+-	}
++	ret = regulator_bulk_disable(config->pwr_reg_cnt, hdmi->pwr_regs);
++	if (ret)
++		DRM_DEV_ERROR(dev->dev, "failed to disable pwr regulator: %d\n", ret);
+ 
+ 	pm_runtime_put_autosuspend(&hdmi->pdev->dev);
+ }
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+index 52ebe562ca9be..68f5254632c37 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+@@ -97,16 +97,13 @@ int msm_hdmi_hpd_enable(struct drm_bridge *bridge)
+ 	const struct hdmi_platform_config *config = hdmi->config;
+ 	struct device *dev = &hdmi->pdev->dev;
+ 	uint32_t hpd_ctrl;
+-	int i, ret;
++	int ret;
+ 	unsigned long flags;
+ 
+-	for (i = 0; i < config->hpd_reg_cnt; i++) {
+-		ret = regulator_enable(hdmi->hpd_regs[i]);
+-		if (ret) {
+-			DRM_DEV_ERROR(dev, "failed to enable hpd regulator: %s (%d)\n",
+-					config->hpd_reg_names[i], ret);
+-			goto fail;
+-		}
++	ret = regulator_bulk_enable(config->hpd_reg_cnt, hdmi->hpd_regs);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "failed to enable hpd regulators: %d\n", ret);
++		goto fail;
+ 	}
+ 
+ 	ret = pinctrl_pm_select_default_state(dev);
+@@ -155,7 +152,7 @@ void msm_hdmi_hpd_disable(struct hdmi_bridge *hdmi_bridge)
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+ 	const struct hdmi_platform_config *config = hdmi->config;
+ 	struct device *dev = &hdmi->pdev->dev;
+-	int i, ret = 0;
++	int ret;
+ 
+ 	/* Disable HPD interrupt */
+ 	hdmi_write(hdmi, REG_HDMI_HPD_INT_CTRL, 0);
+@@ -169,12 +166,9 @@ void msm_hdmi_hpd_disable(struct hdmi_bridge *hdmi_bridge)
+ 	if (ret)
+ 		dev_warn(dev, "pinctrl state chg failed: %d\n", ret);
+ 
+-	for (i = 0; i < config->hpd_reg_cnt; i++) {
+-		ret = regulator_disable(hdmi->hpd_regs[i]);
+-		if (ret)
+-			dev_warn(dev, "failed to disable hpd regulator: %s (%d)\n",
+-					config->hpd_reg_names[i], ret);
+-	}
++	ret = regulator_bulk_disable(config->hpd_reg_cnt, hdmi->hpd_regs);
++	if (ret)
++		dev_warn(dev, "failed to disable hpd regulator: %d\n", ret);
+ }
+ 
+ void msm_hdmi_hpd_irq(struct drm_bridge *bridge)
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+index cfaf9c26a9054..326b43c803f09 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -23,22 +23,15 @@ static int msm_hdmi_phy_resource_init(struct hdmi_phy *phy)
+ 	if (!phy->clks)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < cfg->num_regs; i++) {
+-		struct regulator *reg;
+-
+-		reg = devm_regulator_get(dev, cfg->reg_names[i]);
+-		if (IS_ERR(reg)) {
+-			ret = PTR_ERR(reg);
+-			if (ret != -EPROBE_DEFER) {
+-				DRM_DEV_ERROR(dev,
+-					      "failed to get phy regulator: %s (%d)\n",
+-					      cfg->reg_names[i], ret);
+-			}
++	for (i = 0; i < cfg->num_regs; i++)
++		phy->regs[i].supply = cfg->reg_names[i];
+ 
+-			return ret;
+-		}
++	ret = devm_regulator_bulk_get(dev, cfg->num_regs, phy->regs);
++	if (ret) {
++		if (ret != -EPROBE_DEFER)
++			DRM_DEV_ERROR(dev, "failed to get phy regulators: %d\n", ret);
+ 
+-		phy->regs[i] = reg;
++		return ret;
+ 	}
+ 
+ 	for (i = 0; i < cfg->num_clks; i++) {
+@@ -66,11 +59,10 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
+ 
+ 	pm_runtime_get_sync(dev);
+ 
+-	for (i = 0; i < cfg->num_regs; i++) {
+-		ret = regulator_enable(phy->regs[i]);
+-		if (ret)
+-			DRM_DEV_ERROR(dev, "failed to enable regulator: %s (%d)\n",
+-				cfg->reg_names[i], ret);
++	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
++		return ret;
+ 	}
+ 
+ 	for (i = 0; i < cfg->num_clks; i++) {
+@@ -92,8 +84,7 @@ void msm_hdmi_phy_resource_disable(struct hdmi_phy *phy)
+ 	for (i = cfg->num_clks - 1; i >= 0; i--)
+ 		clk_disable_unprepare(phy->clks[i]);
+ 
+-	for (i = cfg->num_regs - 1; i >= 0; i--)
+-		regulator_disable(phy->regs[i]);
++	regulator_bulk_disable(cfg->num_regs, phy->regs);
+ 
+ 	pm_runtime_put_sync(dev);
+ }
 -- 
 2.53.0
 
