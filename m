@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022129;
-	b=x4bLr1LlWlQmPuJIARO0DOvCYaNGJF6dbpk3ddfnb+W4lTw8a/2hfsra5CQVFGFybOdR
-	 S2qFiLUv4AiXACio7wKtTObFP6VDfGvn+rrccgk+ryw4ukEsDmVnpUZ+QqwcUJRQezNDh
-	 ydG5I9gaiu4Cn+892k4ntmOk1qnVY9o159tOwAISr2fv40LDeeOb3PQn0piG3FOityE+2
-	 jF5ACgRQuIqsGjXqeXYPV/NK+lCzn3Dgyt/ZlR0hwpoKmvkh7zX8brsflIB0ZN3icw7fd
-	 BvlxMOnHq1VK62QdzFjOttbHy83fzPQ34qdiRzr8oYoBx/kSdmCUQYtxp+O+gL6+7iA==
+	t=1795022132;
+	b=cWBzAEBh0y17iEaZbiKTjPAbQjbfaCcPQdCv4aMWi8/1hRUU24Bxfs3ogTFxrkcSQUpb
+	 VCRdTslOUs0C3HfUAs2/H1V5MxyVpboUUDUlC2XrEPpGMKT6I8T4RQeIm3IZ9fCg6Ucsi
+	 0l4ZRAmr7B/NkaC12F967v/RffzKk/qaCeEPiuTMyVdxYxsUzDHu4X2Pf12ABcUaEztJa
+	 +2ZEG5t2OWD7YowZ7Gldl05mDp3bIYAoJ4CImztmx35DsZqvko0SL4hoRZiG2/qq2pqx5
+	 ouLaAGP3KJhPAHEVaIGQCNMqD1SIDtp6mVsWLQIn87LphL7bpUo3sfc9pzKcGbfUJ3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022129;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vX6UR/Pw4KuN5HonixkeRAo5Cd4qZbjoxd8Zxh0ajn4=;
-	b=wNlDSirxWYga0nQD0OlMZM5oEun0KNPGaHv2NFkwsP1e4SCUiUC+QpU4ySSHed6FcyFk
-	 l46xF2C87jXmq/hjUwTylpj6EHeBLN0hiAql4Kdm7C3sfh5vt94zDfDyQ7RcmEBwkXpfh
-	 gMLUFty0aGHs0lrIJIH/suK7bFcLl9EWWWpdPA4u0r8Nb7Y2hV19m4JPHsIwYOW+IOEdL
-	 OyW3xyq/xLApGcW/t/mZJ0J7fZI+6stl3op+pjb6zCpYSESyc22IrMfKao2RJQ8Tx3w4A
-	 LTAHre7XV22/MgAlRUaaVlWq0fw2fWTKI98CqW5aQEz4ImIwyOcU/oDFtNQRUUIrzyQ==
+	bh=DxEjdNmRVwjwKWsIVyLipyCZdEbwcIalgL6NfdWUcu8=;
+	b=Nw9PO9pJjPXLuQVulTFGcBBbPILcutYzkjcMTIYMwleG36vtoHwPJc69eDOf3xrAOeID
+	 FXQHQZD0V0Kw3f0Z0LtP4+3UrlOCKSTopDVCuSZtAr1aQtLDLo5+QTJv/38nF4gnQbOG3
+	 RlRPKefmha+eTSumKu8U20Jc3DPIg4ghD26eSM5zFUNF8l6OHtQUH68PB712rsKt9dOZ/
+	 kA0UMSBhnjUY4Uksir39yZSUlN56OhZMXc0wyi9uIuLmMeyEXpMXHttzvTIhiFaDZQuP9
+	 Tu22hGeTW/FTAOrpCXMN6A4q6tFqmdIFur9zz7W/GOt9sscTZVJi+liYnrhAYUlv75A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eA3V5MvA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tOKsadfs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9D2606A32C;
-	Wed, 18 Nov 2026 17:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C55E606A31C;
+	Wed, 18 Nov 2026 17:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eA3V5MvA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BE21F000C4;
-	Wed, 18 Nov 2026 17:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tOKsadfs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610AC1F000C4;
+	Wed, 18 Nov 2026 17:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022129;
-	bh=vX6UR/Pw4KuN5HonixkeRAo5Cd4qZbjoxd8Zxh0ajn4=;
+	s=korg; t=1795022131;
+	bh=DxEjdNmRVwjwKWsIVyLipyCZdEbwcIalgL6NfdWUcu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eA3V5MvA+uABVmvoCaUIknv5XVswA3BrQbyB41n4PDck8AgfXJfXFs9IeXhpSsx5M
-	 j7/2wP7gGvks4UM1/uu4PVEVibt5rDeP5KFnuaewhAh2+5y+ibqY0tbsRp+oJUkXWI
-	 L1sduq+DWOrgKfyvmR4Vw/EfuhTDkDFG0OBNut9c=
+	b=tOKsadfs0TNJdATr5jzftXbeyhpOqYqhZPVaRUacO8PFx2MhYAPdj4qWhwREl+EdX
+	 h5Q89ClV8kRbaqzcUXg6a9zJ/zaPtbJzkTDHJMGAg+QH+rmf98Hgu888vPmbl3QREG
+	 RvEw8Omkq09aTOqEA8gXThc+/Vx6a68KhOCnykH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2553/2651] block: dont enter reclaim under rq_qos_mutex
-Date: Wed, 18 Nov 2026 16:03:13 +0100
-Message-ID: <20261118150416.401317546@linuxfoundation.org>
+Subject: [PATCH 7.3 2536/2651] nvmet: fix NULL dereference of PCI endpoint targets
+Date: Wed, 18 Nov 2026 16:02:56 +0100
+Message-ID: <20261118150415.886867953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,125 +74,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 045cbfc369f5929ed473f7c200dc2e8146569ce5 ]
+[ Upstream commit 4a5ace11b5a367270bc86097d31c35cb61890a95 ]
 
-ioc_qos_write() and the wbt_lat_usec writers take rq_qos_mutex with the
-queue frozen, blkcg_deactivate_policy() does the same with blkcg_mutex,
-so nothing holding either may wait for IO. blkg_conf_prep() got
-GFP_NOIO for the blkg in commit 5d726c4dbeed, but the
-radix_tree_preload() right after it, the policy init functions and the
-GFP_KERNEL fallback in blkcg_activate_policy() can still enter reclaim
-there. lockdep reports the cycle on the first write to io.max.
+nvmet_pci_epf_create_ctrl() calls nvmet_alloc_ctrl() without a queue,
+the admin queue comes later from the host. nvmet_alloc_ctrl() passes
+args->sq to nvmet_queue_tls_keyid(), which with
+CONFIG_NVME_TARGET_TCP_TLS dereferences it, so every PCI endpoint
+controller creation crashes on such a kernel. The debugfs tls_key file
+passes ctrl->sqs[0] to the same function, which is NULL until the admin
+queue exists and again once a fabrics host has closed it while keeping
+an I/O queue.
 
-Use GFP_NOIO for all of them.
+A queue that isn't there has no TLS key.
 
-Fixes: 9730763f4756 ("block: correct locking order for protecting blk-wbt parameters")
-Fixes: 5d726c4dbeed ("blk-cgroup: fix possible deadlock while configuring policy")
-Cc: Tejun Heo <tj@kernel.org>
+Fixes: fa2e0f8bbc68 ("nvmet-tcp: support secure channel concatenation")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-35-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c    | 13 +++++++++----
- block/blk-iocost.c    |  5 +++--
- block/blk-iolatency.c |  3 ++-
- block/blk-throttle.c  |  3 ++-
- 4 files changed, 16 insertions(+), 8 deletions(-)
+ drivers/nvme/target/nvmet.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index c0a36f6d4e146..1a363027b7444 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -884,7 +884,11 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 			parent = blkcg_parent(parent);
- 		}
- 
--		/* Drop locks to do new blkg allocation with GFP_KERNEL. */
-+		/*
-+		 * Drop the spinlock to allocate the new blkg. rq_qos_mutex and
-+		 * blkcg_mutex stay held, and both are taken with the queue
-+		 * frozen elsewhere: GFP_NOIO.
-+		 */
- 		spin_unlock_irq(&q->queue_lock);
- 
- 		new_blkg = blkg_alloc(pos, disk, GFP_NOIO);
-@@ -893,7 +897,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 			goto fail_exit;
- 		}
- 
--		if (radix_tree_preload(GFP_KERNEL)) {
-+		if (radix_tree_preload(GFP_NOIO)) {
- 			blkg_free(new_blkg);
- 			ret = -ENOMEM;
- 			goto fail_exit;
-@@ -1641,7 +1645,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
- 		if (!pd) {
- 			/*
- 			 * GFP_NOWAIT failed.  Free the existing one and
--			 * prealloc for @blkg w/ GFP_KERNEL.
-+			 * prealloc for @blkg w/ GFP_NOIO: blkcg_mutex is held,
-+			 * and a bio based queue has not been frozen above.
- 			 */
- 			if (pinned_blkg)
- 				blkg_put(pinned_blkg);
-@@ -1653,7 +1658,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
- 			if (pd_prealloc)
- 				pol->pd_free_fn(pd_prealloc);
- 			pd_prealloc = pol->pd_alloc_fn(disk, blkg->blkcg,
--						       GFP_KERNEL);
-+						       GFP_NOIO);
- 			if (pd_prealloc)
- 				goto retry;
- 			else
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 98d960b15a075..2ed9812654a34 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2926,11 +2926,12 @@ static int blk_iocost_init(struct gendisk *disk)
- 	struct ioc *ioc;
- 	int i, cpu, ret;
- 
--	ioc = kzalloc_obj(*ioc);
-+	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
-+	ioc = kzalloc_obj(*ioc, GFP_NOIO);
- 	if (!ioc)
- 		return -ENOMEM;
- 
--	ioc->pcpu_stat = alloc_percpu(struct ioc_pcpu_stat);
-+	ioc->pcpu_stat = alloc_percpu_gfp(struct ioc_pcpu_stat, GFP_NOIO);
- 	if (!ioc->pcpu_stat) {
- 		kfree(ioc);
- 		return -ENOMEM;
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index c15b1aba606c1..a3bd153c67be8 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -761,7 +761,8 @@ static int blk_iolatency_init(struct gendisk *disk)
- 	struct blk_iolatency *blkiolat;
- 	int ret;
- 
--	blkiolat = kzalloc_obj(*blkiolat);
-+	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
-+	blkiolat = kzalloc_obj(*blkiolat, GFP_NOIO);
- 	if (!blkiolat)
- 		return -ENOMEM;
- 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index c46807a0faaba..c5e26551956ac 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1322,7 +1322,8 @@ static int blk_throtl_init(struct gendisk *disk)
- 	unsigned int memflags;
- 	int ret;
- 
--	td = kzalloc_node(sizeof(*td), GFP_KERNEL, q->node);
-+	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
-+	td = kzalloc_node(sizeof(*td), GFP_NOIO, q->node);
- 	if (!td)
- 		return -ENOMEM;
- 
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 215315ebe42de..aab65ef2f24bf 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -911,7 +911,8 @@ static inline void nvmet_req_bio_put(struct nvmet_req *req, struct bio *bio)
+ #ifdef CONFIG_NVME_TARGET_TCP_TLS
+ static inline key_serial_t nvmet_queue_tls_keyid(struct nvmet_sq *sq)
+ {
+-	return sq->tls_key ? key_serial(sq->tls_key) : 0;
++	/* A PCI endpoint controller is created without a queue */
++	return sq && sq->tls_key ? key_serial(sq->tls_key) : 0;
+ }
+ static inline void nvmet_sq_put_tls_key(struct nvmet_sq *sq)
+ {
 -- 
 2.53.0
 
