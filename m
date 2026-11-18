@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026091;
-	b=Ye0APTKAdh/lPYpClMMPcbuFX7+Yt3unj6WIT4PWl68ehEy7XbC824FSzttlDGXtxeWy
-	 Ai1VbdlpTvhoAenZ6nITky5Mq62JDBNA6AezIjtKlOU8KY60kvQbNGZtwxeMlQsGqvznh
-	 s1tVgiBv35tCU6yzxt4xFidM6kWRasfEy4cFGfEqwUFNa/TkrIMnuG6mkkQGIF4V3MWQf
-	 qmKHGgYF2N4M6KW1+ikZEApXcYwFQUi5EIcTQJWH8qtnd6lR66jOXTTa6j7pYJkDb0LNs
-	 jmy0jTFOd4fRhq7175paGZ7Akeq1bPG4vWCyHGkH2borV/l4cqdE5lsrIwjE1FLtPLg==
+	t=1795026093;
+	b=RBc3pzCkYkDq5K5Z6AbD9IUokbnDvoEbMuT8Rdwng50rsXwHKcXzR/KNjviqxl0Nmjzx
+	 p2clElVfQy9TngsOQSpXKk+sPRTR+Hpwc1Wh6N3IqoC0N4UcoS2zcCrG4vm42YeCq56+k
+	 2GSEQ50xrZLeQhA4bgq499QzZ5q+jQleMp6+Ca8fIpQllOsLJ9DcvQ+13VHI4pYAcr0O3
+	 usEBKFeJZSTiO43A1H2D6hniWq2Zgs/Fi16q/8dA7Jg5yPZDb/8kb1FOZIqpN2n7CC7AI
+	 CH7/4xIXy87ufuq4HetwfnkamtGj0POozON7Rlmni7JcSG8tni394A/2uuuDymDbsew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W3HRqvqx7J25SMpHNlHLLXeiasAlWzcOZQn+OqEc5Xw=;
-	b=HZkGDlrnbWAeEU5+z3HqVFgbjTMHV0ipLFwv6o5MHjoQD71NQ5x9tpVwXlLqf5v+sr4P
-	 SELSVPwa8g+fBpPU3ggKKwSEJEDvi2ctns60IU81ygE+uURdNrsyDYaI9ojRTp3C9qmNy
-	 opGLkm/uu8Q5Zrg8qFpiYJ36489B7oXuWWcjBIi6gaWK5U3tLWFDsc7XVYJdOE8PJmpoV
-	 NBnzn0I81V6EO+1zbQkkag3s04m9MvmLfT/ZmiWSytx+znyzBd6U7P927pOsxYxvtwzSt
-	 VVIqzPCJZcIyOF8kq/gW4p9duB4L4/k85jSV23fGxlH9n38jZ0eZEUJuJbsRasZ1rZg==
+	bh=ZePGRpV3XCctyEA/h6w5aVmORc4M6jFVB/QHN1V0EdI=;
+	b=01buYAaXWXXFc4m7qI0sbvnN97ahJTj+YQaXqgSvZYjKiaEGTPl38Om1I/n0JYuDRInj
+	 HMx0CgunZ3AiPNhyvUdT+RWIhXwt5q+Ltjl2pExMpbS8NG7ArdDTZvXvLfFtK7te+NvCT
+	 +G4aodhNuQJoVYIWa8o4x6kOd7M/h0drrRGiwcu7CVwwhrsoVqzPyfKlbqhxaWDlCogyk
+	 NMHbAjceOt5oJezOyHryq5q32ZbLCZjz6AYOUe8Vf8ZTYL3R5uGRNw34MTkTmSIqLc2ru
+	 ztnCyR7+IjOQU8XiqB5stzsI48GxtWtH4Y5TpM/nAxMCsSRuyMXKrtR9uL02QOAMR9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiCJAce9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KOvLIchk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1223B606A320;
-	Wed, 18 Nov 2026 18:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEDE606A31C;
+	Wed, 18 Nov 2026 18:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiCJAce9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D8F1F000C4;
-	Wed, 18 Nov 2026 18:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KOvLIchk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8A41F000C4;
+	Wed, 18 Nov 2026 18:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026090;
-	bh=W3HRqvqx7J25SMpHNlHLLXeiasAlWzcOZQn+OqEc5Xw=;
+	s=korg; t=1795026093;
+	bh=ZePGRpV3XCctyEA/h6w5aVmORc4M6jFVB/QHN1V0EdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OiCJAce95ZzRB7GkTlapbxQxmiBN5ihUNOseN7P7uWLLye/Q6vB0GkrsouBjU2nsP
-	 3LpNJbknhDHZoWW+n1Dkt1veyHmqW7JKYVYvDl31ZOwuhf0iGQpHxZrcGWgCPS54Li
-	 /8oDutBYe5qRHNPHT3VgGluRRwkmmpwq0bYJREQo=
+	b=KOvLIchkHKjdSpMdJ1L6QJENgUz7rckUkruKIMFfKm6uzQo0LuLBGreUBe1qckLTf
+	 NQLZ9v/MHQDNQ3xt/J4UGSYISSrax1UKRKDoO3zoWG9jUx24E46Q6DoqsqXcjH0wq0
+	 2qqd2Y6Bs8ML1/xsc4EC9wPyZtV7qeBswasZMXrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1311/2151] fs/resctrl: Ensure default group reports tasks on monitor-only systems
-Date: Wed, 18 Nov 2026 15:50:46 +0100
-Message-ID: <20261118150209.857461940@linuxfoundation.org>
+Subject: [PATCH 6.18 1312/2151] ALSA: hda: Stop unsol events and jack polling before codec unbind
+Date: Wed, 18 Nov 2026 15:50:47 +0100
+Message-ID: <20261118150209.894321089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,46 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 2c10b3fa5bdf61e344bc522e6c2e00d870ce7ab8 ]
+[ Upstream commit f3607b6952ca9a5638eeef4f301daa7933ce24b1 ]
 
-resctrl can be mounted on a system that supports monitoring but not allocation.
+At unbinding a codec driver, hda_codec_driver_remove() calls the
+codec's remove callback that releases the driver resources, followed
+by snd_hda_codec_cleanup_for_unbind().  Meanwhile, the unsolicited
+events are processed asynchronously in bus->unsol_work, and
+snd_hdac_bus_process_unsol_events() checks only codec->registered flag
+before calling the driver's unsol_event callback without the lock.
+Since codec->registered is cleared only in
+snd_hda_codec_cleanup_for_unbind(), and there is no flush of the unsol
+work at unbinding, the unsol event handler may run concurrently during
+the running remove callback, which may lead to a UAF.  The same
+problem applies to the jack polling work, which is canceled only after
+the remove callback.
 
-On such a system reading the "tasks" file in the default group reports no
-tasks, even when there are tasks assigned to the default group. This problem
-occurs because the check for whether a task belongs to a CTRL_MON group is
-gated by a check for whether the system supports allocation.
+For addressing those races, introduce a new flag unsol_disabled to
+hdac_device, to be checked it in the unsol event worker, while a new
+helper snd_hdac_device_disable_unsol() sets this flag and flushes the
+pending unsol work.  The helper is called at hda_codec_driver_remove()
+together with the cancel of jackpoll_work to assure that no
+asynchronous jack handling can run.  The flag is cleared again at
+probing the codec driver, while the events are still blocked by the
+registered flag until the codec gets registered.
 
-The resctrl_arch_alloc_capable() check in is_closid_match() breaks task
-reporting for the default group on monitor-only systems so remove this check.
-On systems that support allocation the check is redundant.
-
-Fixes: e6b2fac36fcc ("x86/resctrl: Use is_closid_match() in more places")
-Closes: https://sashiko.dev/#/patchset/20260831174421.13921-1-tony.luck%40intel.com?part=9
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://patch.msgid.link/20261009193923.15498-1-tony.luck@intel.com
+Assisted-by: LLM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261007215650.159871-2-tiwai@suse.de
+Stable-dep-of: 7a78c18bffc6 ("ALSA: hda: Disable unsol event handling at error and shutdown paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/resctrl/rdtgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/sound/hdaudio.h |  2 ++
+ sound/hda/common/bind.c |  7 +++++++
+ sound/hda/core/bus.c    | 21 ++++++++++++++++++++-
+ 3 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index df92305f2a19b..0d39e268f4a42 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -681,7 +681,7 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
+diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
+index 4e0c1d8af09f7..a27cd13735808 100644
+--- a/include/sound/hdaudio.h
++++ b/include/sound/hdaudio.h
+@@ -96,6 +96,7 @@ struct hdac_device {
+ 	bool caps_overwriting:1; /* caps overwrite being in process */
+ 	bool cache_coef:1;	/* cache COEF read/write too */
+ 	unsigned int registered:1; /* codec was registered */
++	bool unsol_disabled;	/* unsol events blocked; protected by bus->reg_lock */
+ };
  
- static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
- {
--	return (resctrl_arch_alloc_capable() && (r->type == RDTCTRL_GROUP) &&
-+	return (r->type == RDTCTRL_GROUP &&
- 		resctrl_arch_match_closid(t, r->closid));
+ /* device/driver type used for matching */
+@@ -122,6 +123,7 @@ int snd_hdac_device_init(struct hdac_device *dev, struct hdac_bus *bus,
+ 			 const char *name, unsigned int addr);
+ void snd_hdac_device_exit(struct hdac_device *dev);
+ int snd_hdac_device_register(struct hdac_device *codec);
++void snd_hdac_device_disable_unsol(struct hdac_device *codec);
+ void snd_hdac_device_unregister(struct hdac_device *codec);
+ int snd_hdac_device_set_chip_name(struct hdac_device *codec, const char *name);
+ int snd_hdac_codec_modalias(const struct hdac_device *hdac, char *buf, size_t size);
+diff --git a/sound/hda/common/bind.c b/sound/hda/common/bind.c
+index bb1090b656990..c264d7c3f5460 100644
+--- a/sound/hda/common/bind.c
++++ b/sound/hda/common/bind.c
+@@ -100,6 +100,9 @@ static int hda_codec_driver_probe(struct device *dev)
+ 	if (WARN_ON(!codec->preset))
+ 		return -EINVAL;
+ 
++	/* unsol events are still blocked until registered */
++	codec->core.unsol_disabled = false;
++
+ 	err = snd_hda_codec_set_name(codec, codec->preset->name);
+ 	if (err < 0)
+ 		goto error;
+@@ -160,6 +163,10 @@ static int hda_codec_driver_remove(struct device *dev)
+ 		return codec->bus->core.ext_ops->hdev_detach(&codec->core);
+ 	}
+ 
++	/* stop asynchronous jack handling before freeing driver resources */
++	snd_hdac_device_disable_unsol(&codec->core);
++	cancel_delayed_work_sync(&codec->jackpoll_work);
++
+ 	snd_hda_codec_disconnect_pcms(codec);
+ 	snd_hda_jack_tbl_disconnect(codec);
+ 	if (!refcount_dec_and_test(&codec->pcm_ref))
+diff --git a/sound/hda/core/bus.c b/sound/hda/core/bus.c
+index 9b196c915f378..e9c3751a15395 100644
+--- a/sound/hda/core/bus.c
++++ b/sound/hda/core/bus.c
+@@ -179,7 +179,7 @@ static void snd_hdac_bus_process_unsol_events(struct work_struct *work)
+ 		if (!(caddr & (1 << 4))) /* no unsolicited event? */
+ 			continue;
+ 		codec = bus->caddr_tbl[caddr & 0x0f];
+-		if (!codec || !codec->registered)
++		if (!codec || !codec->registered || codec->unsol_disabled)
+ 			continue;
+ 		spin_unlock_irq(&bus->reg_lock);
+ 		drv = drv_to_hdac_driver(codec->dev.driver);
+@@ -190,6 +190,25 @@ static void snd_hdac_bus_process_unsol_events(struct work_struct *work)
+ 	spin_unlock_irq(&bus->reg_lock);
  }
  
++/**
++ * snd_hdac_device_disable_unsol - block and flush unsol events for the codec
++ * @codec: the HDA core device
++ *
++ * Stop dispatching the unsolicited events to the given codec, and wait for
++ * the pending unsol event handler to finish.  Called at unbinding the codec
++ * driver before releasing the driver resources.
++ */
++void snd_hdac_device_disable_unsol(struct hdac_device *codec)
++{
++	struct hdac_bus *bus = codec->bus;
++
++	spin_lock_irq(&bus->reg_lock);
++	codec->unsol_disabled = true;
++	spin_unlock_irq(&bus->reg_lock);
++	flush_work(&bus->unsol_work);
++}
++EXPORT_SYMBOL_GPL(snd_hdac_device_disable_unsol);
++
+ /**
+  * snd_hdac_bus_add_device - Add a codec to bus
+  * @bus: HDA core bus
 -- 
 2.53.0
 
