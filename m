@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054362;
-	b=4CIq3LTFlpYBnYpfNH8BvyqqRNv4NAV1DJJqczMe6Rsdza7zAJeAS9RtdSe5gjRtxys9
-	 bpgckM5gLbHRybhTTVqG6wzto+eTSNWlCrQINhMPzqHGyK9KcfEemM1JrQ9DDn3k2b6XS
-	 PdszZ2KvJcb9sjMzxdj8k3P78XqRsrCkwh6u3scPtCQ9JPxsYd7+36mqP5J5x6acvgZXX
-	 dcvtW8MGjLuf/092mNO5TPi0g0swcoGVQRlfci8bQ9uFiULPG4h8VLnaFI2BUKMqvF+rl
-	 I9RT+8TJh4T8rjUm8qc5CU2QpjjbhgVyavFUW+A8jwydR1ppoA2BDrNp1roMS7GFF3Q==
+	t=1795054365;
+	b=VaUUCd25fnTmh98sXUKbkfQxFfaiIkxcOWESbQ1+lHAL7/C6dKYowoheaTsT3iDnbZEN
+	 OKOv3Sc2i//8Xm8gx09ExAsL9uJ3ui4e6y8fX9otQb53/sNVfgDFeMwxWALZIG8AFhwto
+	 jCHYgmAqD0VNFEeaudqkq+A7U9ptWTBaiLvgwitaV1ubWYsXTzzgnv7u7tGFZQ5exPT2V
+	 ceA2Fvb4OYiRwcMZ/xo9ICE6KG6v/wzm20TDsq/gYTKQf/wZCdPe8UGTFPl+2QQulqQxx
+	 JnmbmLXUPoQBZT++wLppRcKE4DRLQ8rjZ4iwdnD2QcWBOUUuWMAvWcgNoEJn3S2F9IQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mwZBHTJjzop/UNTw7yHpm6i0SordeftjWCECXmoglWU=;
-	b=UXHSuOnsfSq5S+JvGJmkv8/unQpbx3HKMNejXg4PWjt7bp6zAxrIu0NRf4yLrS++25F0
-	 M7Mw6fVUHETU356udl5K9yBqOpfuIrwcVrfqHrRRuiPGjXGyx89kHa7c35n24bN7hbzQm
-	 VNC58durVZ607Kh5T6nqXYp/uiUgl6EeVrg0Etedn+52xQg8Q/xaLPuoNatysqL9NB7Wc
-	 abOVlIpQ9+DAbRAW9I8OY6ja0geGoMo1o4L+R5NL2Av5T07/rHaOQ5MGgpQDQyAe+rZDb
-	 zFJu0VjRZ9edlJ3ZI/ucg3dTw3HjUKzbB1kuAUkx6fBmdE2msASHpwjoiw1lT2TCJXg==
+	bh=DumSSOy/8lUB1J9s2U2JIKUNPJG1GRkK+J3ITjNXrYM=;
+	b=1ACga0Jm+5XS42zewhuwCvGQMzVCBINXPWTl60edc+n8qiYsi/89BTxUBsbFpnogNxM4
+	 K+t1CvqyRtADjiBYAdjY3CGf0Ltdkx96sJFLHpKukLWuNRe1USJMv8kYLtnOb3j5XgCFf
+	 0ITRNJbqnoZ2YJ/slwPwFTQop1lWulbyJlbNOL7z8hYD3U6DcND02wsRhxXp8n+DPIF2O
+	 PeaG2M/jfGsoS9vXUww8fDBPyElhwYN29N4qKWgtSS6JmNkYj3kUYpA5WB5tY5OyTEVDB
+	 EGXKlrFJjaGdeR4Me0ttyCtpay2po6WPH17oOYJoCRL7yuDPMPQjvzIspjARtqEMVeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXk0x8xM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCZzAptx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABD7606A31C;
-	Thu, 19 Nov 2026 02:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0978606A31C;
+	Thu, 19 Nov 2026 02:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXk0x8xM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1181F000C4;
-	Thu, 19 Nov 2026 02:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCZzAptx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F7D1F000C4;
+	Thu, 19 Nov 2026 02:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054362;
-	bh=mwZBHTJjzop/UNTw7yHpm6i0SordeftjWCECXmoglWU=;
+	s=korg; t=1795054365;
+	bh=DumSSOy/8lUB1J9s2U2JIKUNPJG1GRkK+J3ITjNXrYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iXk0x8xMqGdSGxzw9g7M02dej3grvo31dhoAEMVeQ9DVrQQora413hdsLtD7YPfQ9
-	 GjlyAMegZcoUw/EJWlCzbJtFRNdW3Kcm05kbBK+Q9caIuU8WmhdZjqrFez73AptKoW
-	 erBWgNjoiuUMrfUvMwim9/u6O9BH+Yqq29Q7wE3A=
+	b=xCZzAptxHZnj2QhimaUA+M1u225hfb2dAxnxdufEfwuPAuj85aRG6M2HJ0hmlDRfK
+	 ZwGyaY7FZJVSYFMfY/80Un+Y+NQJkJA80RPRukeV8L1/+qAUdNEqo/bKXb4yLhoKpP
+	 ulcJylv5e/9Se5XvdtsLZvXR5AxzXU5Too+wBfyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1206/2214] assoc_array: move node splitting into a function of its own
-Date: Wed, 18 Nov 2026 15:48:02 +0100
-Message-ID: <20261118150100.091898454@linuxfoundation.org>
+Subject: [PATCH 5.15 1207/2214] assoc_array: move shortcut creation into a function of its own
+Date: Wed, 18 Nov 2026 15:48:03 +0100
+Message-ID: <20261118150100.123900479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,15 +70,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 3c99a07bc82b051771ce0eb69274aceb9abf1eb7 ]
+[ Upstream commit fdc6124c55dd0c5aa8e3ec30e6425b4d423ada24 ]
 
-Move the code after the do_split_node label into
-assoc_array_split_node(), which both the split path and the shortcut
-path still reach through that label.
-
-It sets new_n1's back pointer itself, which both paths did before
-jumping there, and it no longer sets new_n1's parent slot to -1 first:
-it always sets the real one.
+Move the code after the all_leaves_cluster_together label into
+assoc_array_insert_shortcut(), which returns the new shortcut, or NULL
+when it cannot allocate one.  The caller installs it and jumps to
+do_split_node as before.
 
 No functional change.
 
@@ -86,252 +83,188 @@ Assisted-by: LLM
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Tested-by: David Howells <dhowells@redhat.com>
 Reviewed-by: David Howells <dhowells@redhat.com>
+[ sashal: used kzalloc(struct_size()) instead of kzalloc_flex() ]
 Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 194 +++++++++++++++++++++++++---------------------
- 1 file changed, 104 insertions(+), 90 deletions(-)
+ lib/assoc_array.c | 146 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 82 insertions(+), 64 deletions(-)
 
 diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 600b2d85bccb6..dba1c72ed49d9 100644
+index dba1c72ed49d9..e3924ed4d3e9f 100644
 --- a/lib/assoc_array.c
 +++ b/lib/assoc_array.c
-@@ -547,6 +547,106 @@ static bool assoc_array_fill_segment_cache(struct assoc_array_edit *edit,
- 	return have_meta;
+@@ -647,6 +647,84 @@ static void assoc_array_split_node(struct assoc_array_edit *edit,
+ 	}
  }
  
 +/*
-+ * Split a full node into new_n0, which takes its place, and new_n1, below
-+ * new_n0 in the slot of a segment that at least two of the leaves share,
-+ * the new one included.  The caller has filled in the segment cache and
-+ * set new_n0's back pointer and parent slot.
++ * All the leaves, new and old, want to cluster together in this node in the
++ * same slot, so we have to replace this node with a shortcut to skip over
++ * the identical parts of the key, leading to new_n0.  The caller then splits
++ * the leaves between new_n0 and new_n1 at the shortcut's far end, for which
++ * this fills in the segment cache.
 + */
-+static void assoc_array_split_node(struct assoc_array_edit *edit,
-+				   struct assoc_array_node *node,
-+				   struct assoc_array_node *new_n0,
-+				   struct assoc_array_node *new_n1)
++static struct assoc_array_shortcut *
++assoc_array_insert_shortcut(struct assoc_array_edit *edit,
++			    const struct assoc_array_ops *ops,
++			    const void *index_key,
++			    struct assoc_array_node *node, int level,
++			    struct assoc_array_node *new_n0)
 +{
-+	struct assoc_array_shortcut *shortcut;
-+	struct assoc_array_node *side;
-+	struct assoc_array_ptr *ptr;
-+	int slot, next_slot, free_slot, i, j;
++	struct assoc_array_shortcut *new_s0;
++	unsigned long base_seg, blank;
++	size_t keylen;
++	int diff, i;
 +
-+	pr_devel("split node\n");
-+
-+	new_n1->back_pointer = assoc_array_node_to_ptr(new_n0);
-+	new_n0->nr_leaves_on_branch = node->nr_leaves_on_branch;
-+	new_n1->nr_leaves_on_branch = 0;
-+
-+	/* Begin by finding two matching leaves.  There have to be at least two
-+	 * that match - even if there are meta pointers - because any leaf that
-+	 * would match a slot with a meta pointer in it must be somewhere
-+	 * behind that meta pointer and cannot be here.  Further, given N
-+	 * remaining leaf slots, we now have N+1 leaves to go in them.
++	/* Firstly we need to work out where the leaves start diverging as a
++	 * bit position into their keys so that we know how big the shortcut
++	 * needs to be.
++	 *
++	 * We only need to make a single pass of N of the N+1 leaves because if
++	 * any keys differ between themselves at bit X then at least one of
++	 * them must also differ with the base key at bit X or before.
 +	 */
++	pr_devel("all leaves cluster together\n");
++	diff = INT_MAX;
 +	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
-+		slot = edit->segment_cache[i];
-+		if (slot != 0xff)
-+			for (j = i + 1; j < ASSOC_ARRAY_FAN_OUT + 1; j++)
-+				if (edit->segment_cache[j] == slot)
-+					goto found_slot_for_multiple_occupancy;
-+	}
-+found_slot_for_multiple_occupancy:
-+	pr_devel("same slot: %x %x [%02x]\n", i, j, slot);
-+	BUG_ON(i >= ASSOC_ARRAY_FAN_OUT);
-+	BUG_ON(j >= ASSOC_ARRAY_FAN_OUT + 1);
-+	BUG_ON(slot >= ASSOC_ARRAY_FAN_OUT);
-+
-+	new_n1->parent_slot = slot;
-+
-+	/* Metadata pointers cannot change slot */
-+	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++)
-+		if (assoc_array_ptr_is_meta(node->slots[i]))
-+			new_n0->slots[i] = node->slots[i];
-+		else
-+			new_n0->slots[i] = NULL;
-+	BUG_ON(new_n0->slots[slot] != NULL);
-+	new_n0->slots[slot] = assoc_array_node_to_ptr(new_n1);
-+
-+	/* Filter the leaf pointers between the new nodes */
-+	free_slot = -1;
-+	next_slot = 0;
-+	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
-+		if (assoc_array_ptr_is_meta(node->slots[i]))
-+			continue;
-+		if (edit->segment_cache[i] == slot) {
-+			new_n1->slots[next_slot++] = node->slots[i];
-+			new_n1->nr_leaves_on_branch++;
-+		} else {
-+			do {
-+				free_slot++;
-+			} while (new_n0->slots[free_slot] != NULL);
-+			new_n0->slots[free_slot] = node->slots[i];
++		int x = ops->diff_objects(assoc_array_ptr_to_leaf(node->slots[i]),
++					  index_key);
++		if (x < diff) {
++			BUG_ON(x < 0);
++			diff = x;
 +		}
 +	}
++	BUG_ON(diff == INT_MAX);
++	BUG_ON(diff < level + ASSOC_ARRAY_LEVEL_STEP);
 +
-+	pr_devel("filtered: f=%x n=%x\n", free_slot, next_slot);
++	keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
++	keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
 +
-+	if (edit->segment_cache[ASSOC_ARRAY_FAN_OUT] != slot) {
-+		do {
-+			free_slot++;
-+		} while (new_n0->slots[free_slot] != NULL);
-+		edit->leaf_p = &new_n0->slots[free_slot];
-+		edit->adjust_count_on = new_n0;
-+	} else {
-+		edit->leaf_p = &new_n1->slots[next_slot++];
-+		edit->adjust_count_on = new_n1;
++	new_s0 = kzalloc(struct_size(new_s0, index_key, keylen), GFP_KERNEL);
++	if (!new_s0)
++		return NULL;
++	edit->new_meta[2] = assoc_array_shortcut_to_ptr(new_s0);
++
++	new_s0->back_pointer = node->back_pointer;
++	new_s0->parent_slot = node->parent_slot;
++	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
++	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
++	new_n0->parent_slot = 0;
++
++	new_s0->skip_to_level = level = diff & ~ASSOC_ARRAY_LEVEL_STEP_MASK;
++	pr_devel("skip_to_level = %d [diff %d]\n", level, diff);
++	BUG_ON(level <= 0);
++
++	for (i = 0; i < keylen; i++)
++		new_s0->index_key[i] =
++			ops->get_key_chunk(index_key, i * ASSOC_ARRAY_KEY_CHUNK_SIZE);
++
++	if (level & ASSOC_ARRAY_KEY_CHUNK_MASK) {
++		blank = ULONG_MAX << (level & ASSOC_ARRAY_KEY_CHUNK_MASK);
++		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, level, blank);
++		new_s0->index_key[keylen - 1] &= ~blank;
 +	}
 +
-+	BUG_ON(next_slot <= 1);
-+
-+	edit->set_backpointers_to = assoc_array_node_to_ptr(new_n0);
-+	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
-+		if (edit->segment_cache[i] == 0xff) {
-+			ptr = node->slots[i];
-+			BUG_ON(assoc_array_ptr_is_leaf(ptr));
-+			if (assoc_array_ptr_is_node(ptr)) {
-+				side = assoc_array_ptr_to_node(ptr);
-+				edit->set_backpointers[i] = &side->back_pointer;
-+			} else {
-+				shortcut = assoc_array_ptr_to_shortcut(ptr);
-+				edit->set_backpointers[i] = &shortcut->back_pointer;
-+			}
-+		}
-+	}
++	/* This now reduces to a node splitting exercise for which we'll need
++	 * to regenerate the disparity table.
++	 */
++	assoc_array_fill_segment_cache(edit, ops, node, level);
++	base_seg = ops->get_key_chunk(index_key, level);
++	base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
++	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = base_seg & ASSOC_ARRAY_FAN_MASK;
++	return new_s0;
 +}
 +
  /*
   * Handle insertion into a terminal node.
   */
-@@ -555,14 +655,14 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
- 						  const void *index_key,
- 						  struct assoc_array_walk_result *result)
- {
--	struct assoc_array_shortcut *shortcut, *new_s0;
--	struct assoc_array_node *node, *new_n0, *new_n1, *side;
-+	struct assoc_array_shortcut *new_s0;
-+	struct assoc_array_node *node, *new_n0, *new_n1;
+@@ -658,10 +736,9 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	struct assoc_array_shortcut *new_s0;
+ 	struct assoc_array_node *node, *new_n0, *new_n1;
  	struct assoc_array_ptr *ptr;
- 	unsigned long dissimilarity, base_seg, blank;
- 	size_t keylen;
+-	unsigned long dissimilarity, base_seg, blank;
+-	size_t keylen;
++	unsigned long dissimilarity, base_seg;
  	bool have_meta;
- 	int level, diff;
--	int slot, next_slot, free_slot, i, j;
-+	int i;
+-	int level, diff;
++	int level;
+ 	int i;
  
  	node	= result->terminal_node.node;
- 	level	= result->terminal_node.level;
-@@ -632,8 +732,6 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
- 	}
+@@ -766,70 +843,11 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	return true;
  
- split_node:
--	pr_devel("split node\n");
--
- 	/* We need to split the current node.  The node must contain anything
- 	 * from a single leaf (in the one leaf case, this leaf will cluster
- 	 * with the new leaf) and the rest meta-pointers, to all leaves, some
-@@ -652,91 +750,9 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
- 	edit->set[0].to = assoc_array_node_to_ptr(new_n0);
- 	new_n0->back_pointer = node->back_pointer;
- 	new_n0->parent_slot = node->parent_slot;
--	new_n1->back_pointer = assoc_array_node_to_ptr(new_n0);
--	new_n1->parent_slot = -1; /* Need to calculate this */
- 
- do_split_node:
--	pr_devel("do_split_node\n");
--
--	new_n0->nr_leaves_on_branch = node->nr_leaves_on_branch;
--	new_n1->nr_leaves_on_branch = 0;
--
--	/* Begin by finding two matching leaves.  There have to be at least two
--	 * that match - even if there are meta pointers - because any leaf that
--	 * would match a slot with a meta pointer in it must be somewhere
--	 * behind that meta pointer and cannot be here.  Further, given N
--	 * remaining leaf slots, we now have N+1 leaves to go in them.
+ all_leaves_cluster_together:
+-	/* All the leaves, new and old, want to cluster together in this node
+-	 * in the same slot, so we have to replace this node with a shortcut to
+-	 * skip over the identical parts of the key and then place a pair of
+-	 * nodes, one inside the other, at the end of the shortcut and
+-	 * distribute the keys between them.
+-	 *
+-	 * Firstly we need to work out where the leaves start diverging as a
+-	 * bit position into their keys so that we know how big the shortcut
+-	 * needs to be.
+-	 *
+-	 * We only need to make a single pass of N of the N+1 leaves because if
+-	 * any keys differ between themselves at bit X then at least one of
+-	 * them must also differ with the base key at bit X or before.
 -	 */
+-	pr_devel("all leaves cluster together\n");
+-	diff = INT_MAX;
 -	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
--		slot = edit->segment_cache[i];
--		if (slot != 0xff)
--			for (j = i + 1; j < ASSOC_ARRAY_FAN_OUT + 1; j++)
--				if (edit->segment_cache[j] == slot)
--					goto found_slot_for_multiple_occupancy;
--	}
--found_slot_for_multiple_occupancy:
--	pr_devel("same slot: %x %x [%02x]\n", i, j, slot);
--	BUG_ON(i >= ASSOC_ARRAY_FAN_OUT);
--	BUG_ON(j >= ASSOC_ARRAY_FAN_OUT + 1);
--	BUG_ON(slot >= ASSOC_ARRAY_FAN_OUT);
--
--	new_n1->parent_slot = slot;
--
--	/* Metadata pointers cannot change slot */
--	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++)
--		if (assoc_array_ptr_is_meta(node->slots[i]))
--			new_n0->slots[i] = node->slots[i];
--		else
--			new_n0->slots[i] = NULL;
--	BUG_ON(new_n0->slots[slot] != NULL);
--	new_n0->slots[slot] = assoc_array_node_to_ptr(new_n1);
--
--	/* Filter the leaf pointers between the new nodes */
--	free_slot = -1;
--	next_slot = 0;
--	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
--		if (assoc_array_ptr_is_meta(node->slots[i]))
--			continue;
--		if (edit->segment_cache[i] == slot) {
--			new_n1->slots[next_slot++] = node->slots[i];
--			new_n1->nr_leaves_on_branch++;
--		} else {
--			do {
--				free_slot++;
--			} while (new_n0->slots[free_slot] != NULL);
--			new_n0->slots[free_slot] = node->slots[i];
+-		int x = ops->diff_objects(assoc_array_ptr_to_leaf(node->slots[i]),
+-					  index_key);
+-		if (x < diff) {
+-			BUG_ON(x < 0);
+-			diff = x;
 -		}
 -	}
+-	BUG_ON(diff == INT_MAX);
+-	BUG_ON(diff < level + ASSOC_ARRAY_LEVEL_STEP);
 -
--	pr_devel("filtered: f=%x n=%x\n", free_slot, next_slot);
+-	keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+-	keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
 -
--	if (edit->segment_cache[ASSOC_ARRAY_FAN_OUT] != slot) {
--		do {
--			free_slot++;
--		} while (new_n0->slots[free_slot] != NULL);
--		edit->leaf_p = &new_n0->slots[free_slot];
--		edit->adjust_count_on = new_n0;
--	} else {
--		edit->leaf_p = &new_n1->slots[next_slot++];
--		edit->adjust_count_on = new_n1;
+-	new_s0 = kzalloc(struct_size(new_s0, index_key, keylen), GFP_KERNEL);
++	new_s0 = assoc_array_insert_shortcut(edit, ops, index_key,
++					     node, level, new_n0);
+ 	if (!new_s0)
+ 		return false;
+-	edit->new_meta[2] = assoc_array_shortcut_to_ptr(new_s0);
+-
+ 	edit->set[0].to = assoc_array_shortcut_to_ptr(new_s0);
+-	new_s0->back_pointer = node->back_pointer;
+-	new_s0->parent_slot = node->parent_slot;
+-	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
+-	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
+-	new_n0->parent_slot = 0;
+-
+-	new_s0->skip_to_level = level = diff & ~ASSOC_ARRAY_LEVEL_STEP_MASK;
+-	pr_devel("skip_to_level = %d [diff %d]\n", level, diff);
+-	BUG_ON(level <= 0);
+-
+-	for (i = 0; i < keylen; i++)
+-		new_s0->index_key[i] =
+-			ops->get_key_chunk(index_key, i * ASSOC_ARRAY_KEY_CHUNK_SIZE);
+-
+-	if (level & ASSOC_ARRAY_KEY_CHUNK_MASK) {
+-		blank = ULONG_MAX << (level & ASSOC_ARRAY_KEY_CHUNK_MASK);
+-		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, level, blank);
+-		new_s0->index_key[keylen - 1] &= ~blank;
 -	}
 -
--	BUG_ON(next_slot <= 1);
+-	/* This now reduces to a node splitting exercise for which we'll need
+-	 * to regenerate the disparity table.
+-	 */
+-	assoc_array_fill_segment_cache(edit, ops, node, level);
 -
--	edit->set_backpointers_to = assoc_array_node_to_ptr(new_n0);
--	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
--		if (edit->segment_cache[i] == 0xff) {
--			ptr = node->slots[i];
--			BUG_ON(assoc_array_ptr_is_leaf(ptr));
--			if (assoc_array_ptr_is_node(ptr)) {
--				side = assoc_array_ptr_to_node(ptr);
--				edit->set_backpointers[i] = &side->back_pointer;
--			} else {
--				shortcut = assoc_array_ptr_to_shortcut(ptr);
--				edit->set_backpointers[i] = &shortcut->back_pointer;
--			}
--		}
--	}
-+	assoc_array_split_node(edit, node, new_n0, new_n1);
+-	base_seg = ops->get_key_chunk(index_key, level);
+-	base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
+-	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = base_seg & ASSOC_ARRAY_FAN_MASK;
+ 	goto do_split_node;
+ }
  
- 	ptr = node->back_pointer;
- 	if (!ptr)
-@@ -791,8 +807,6 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
- 	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
- 	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
- 	new_n0->parent_slot = 0;
--	new_n1->back_pointer = assoc_array_node_to_ptr(new_n0);
--	new_n1->parent_slot = -1; /* Need to calculate this */
- 
- 	new_s0->skip_to_level = level = diff & ~ASSOC_ARRAY_LEVEL_STEP_MASK;
- 	pr_devel("skip_to_level = %d [diff %d]\n", level, diff);
 -- 
 2.53.0
 
