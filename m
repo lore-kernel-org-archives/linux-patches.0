@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027711;
-	b=A/Sb0DH8tuECSczG9TvVw5N5AaC+pXHA0XnkVNauyV3c/jKn+n/L7kcDkm2+aAPiEXgP
-	 0l/PTc8Lxis4W1B+ZYCXnkGZ+QfvKEIoJ8+74hcD7oK6jkUb2XO8uINfWljtK1thrMdDX
-	 b+7BuDwCLuvyiqpiZGUy7NJBJjJODdUyaxPzoln5FjcyARlmjPcxf6jRpks1Hewln8XhV
-	 N+mvNt/07rXPrtHgg8X36hsOSkGACfQx3AwRZgLCLAX3CvE3GabC2l9gRSAc2BWjamLpF
-	 aTJ15I59kTT2h+kVw7PdGPobvzRfd8s0NLpTFUZ4yfKk1LAme32pt7vRxVP+N1nIo+A==
+	t=1795027714;
+	b=wsPzweinofKiPW6kAthk9/Az/rj2oziBWfMg8djYHINgoOan76Qbtacd/tVQorUmdHrC
+	 PcR1/yISJU3Ph4S0dNXT9AoF7Q6Jsguw3+/Uf+X1lSBRLF6qVTHsM9rMpnmDIuWDGYyyR
+	 FZEtlD1ecVdLBIUceYYAMtbO/RYyWjZcxhC3Ug308MfpM3zA5OCrwZg1K1yWuxpvM4Iak
+	 Y+F+uX0hlB3yXC90XaVdQPhDGR0Vrev7BNG+PteuyN6m/9NtVXxS1tzJ/r+/dKYdjh69k
+	 iFbM/3QNCRlQ3v3axmsM9dke0h3/jPqNpyp8mJI2sfXvAxN9PkIrdZLwq0ufgskR5Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027714;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZHQ3g1YfbUlrSylLifuxSVSl/YdKYOR8AoZbRywBhd4=;
-	b=MGIIlfKXT2CTUW2LtzkvQtSRYVP/EFzuyR7zjboy3vDhWxLmw9hNOeCgJoICfpDpS5DH
-	 SGYGE7hZndI9i1azil9amREMJwrgXcU2J5JvpybQ8pBLNzVgBVYbWywr12rUdeCG3dXFh
-	 IhVSx1BV3zXSdtB4uLzCMqD3lmwnZ65nJmSDP7STgLyrkBJvymH1YGUwx0scovTtQ44A+
-	 c+HO4j4LDDJFfafkcbNDLdS5Ihenb65MH1ZItuvBp5cFXDIAVa3KAS4DS9A6gACrR9ULi
-	 1E5bdVlmGHL+KydD+a2uFTb1LKNe6s5MbVv8SJKwv7o7szaRpSC7FpyWczUcxfpteqw==
+	bh=MyzGukLj1IxUsTHXhC26ugTPweoh9z9jlecZipEZkU8=;
+	b=Fme9LeHCznOgGRgvYLkZr7vO5xRDz1Wk6DNv6OkWIijkXL4kmboeZrJi3yWvm5DKTXrX
+	 AjjvwqN2JhQgxaTawNcRA5OHxBOhe6rhw/KSaprG6lvqyKoVFL+ZmBjruEo2smrh3bYki
+	 WEiV62yiMXszJfNJldeFBqs8z5hzLEqUJdl8XPfAyUm3uebOMU5J8PBHj4NZplLmRCKY9
+	 r8m8IIF9chPxRFbfAXbnm1BuOtizCjOq2yvSPzvtWS5mveyucuXYA1sDquUDzd4CZj/jh
+	 XzSfP90frTYuxkPqyQvg+0p2qnLAG7oS/YTWaw+4z94AmEAGiIi7cVa71VgpkAGbFUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWDNJUYk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpQWxCYL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53521606A32F;
-	Wed, 18 Nov 2026 18:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12218606A33B;
+	Wed, 18 Nov 2026 18:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWDNJUYk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1D01F000C6;
-	Wed, 18 Nov 2026 18:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpQWxCYL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687241F000C6;
+	Wed, 18 Nov 2026 18:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027711;
-	bh=ZHQ3g1YfbUlrSylLifuxSVSl/YdKYOR8AoZbRywBhd4=;
+	s=korg; t=1795027713;
+	bh=MyzGukLj1IxUsTHXhC26ugTPweoh9z9jlecZipEZkU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kWDNJUYkBq5ph1rNVcmmif2VlAyhKmJqFkzMPQqbl8A/awBMV6L4aCSoU/7l6Af4I
-	 +1U15QNTfXii/ICC9LrFbAq9EmxJv90iYfCF1RS8vT96fqFDIP6mMZL+WJF1mHaPct
-	 KsevTad623gwa5uzo9u6PKbQmTOV06sguT6uXBIo=
+	b=PpQWxCYLNGU8LYW1RJH304NAaX2TvoLAfxYa2JY3O9Gm2OMFfhV2ImsUxHnmXLaw5
+	 Wfyo3l5nnqaeU3a/AlgWrrh+DlC/pZSzZ7Fk1tmEbVkElo0H9H5qqIw329T53MgTv1
+	 yJZVsNLjH/1s8QSgLJ8I+i6vfoaTVGaeMYhVtGkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
 	Eric Joyner <eric.joyner@amd.com>,
 	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1886/2151] ionic: fix port_info use-after-free on firmware recovery
-Date: Wed, 18 Nov 2026 16:00:21 +0100
-Message-ID: <20261118150230.500991050@linuxfoundation.org>
+Subject: [PATCH 6.18 1887/2151] ionic: free port_info when probe fails after the port is set up
+Date: Wed, 18 Nov 2026 16:00:22 +0100
+Message-ID: <20261118150230.536273974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,71 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Eric Joyner <eric.joyner@amd.com>
 
-[ Upstream commit d90d1a768b3b022c52beafb3a4701ee2ee3d2b5e ]
+[ Upstream commit 4e15e0a941ce901d51b5f203713fa90feee9c4d3 ]
 
-ionic_port_init() allocates port_info when the pointer is NULL, but its
-error path frees it without checking whether this call allocated it.
-Before commit ddc5911b9bd2 ("ionic: call ionic_port_init after
-fw-upgrade") the function returned early when the buffer already
-existed, so the two were symmetric.
+ionic_probe() allocates the port_info DMA buffer via ionic_setup_one()
+-> ionic_port_init(). If probe then fails anywhere after that, it
+unwinds through err_out_pci, which never calls ionic_port_reset();
+ionic_dev_teardown() and ionic_clear_pci() do not touch port_info, and
+so the buffer is leaked. The call was lost when the setup code was
+moved into ionic_setup_one().
 
-Since then a failed PORT_INIT on either recovery path - fw_up or
-reset_done - frees a buffer an earlier init owns, while the netdev is
-registered and the ethtool ops are reading it.
+Since ionic_remove() already frees the port_info DMA buffer with
+ionic_port_reset(), call that on the probe error path too. Every path
+to err_out_pci runs after ionic_setup_one() succeeded, so the BARs are
+still mapped and the firmware gets a PORT_RESET before the buffer is
+freed, the same order as in ionic_remove().
 
-Free only what this call allocated.
-
-Fixes: ddc5911b9bd2 ("ionic: call ionic_port_init after fw-upgrade")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Fixes: 0de38d9f1dba ("ionic: extract common bits from ionic_probe")
 Signed-off-by: Eric Joyner <eric.joyner@amd.com>
 Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-1-57232013fd79@amd.com
+Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-2-57232013fd79@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 14dc055be3e93..e64ee39d3d69f 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -718,6 +718,7 @@ int ionic_port_init(struct ionic *ionic)
- {
- 	struct ionic_identity *ident = &ionic->ident;
- 	struct ionic_dev *idev = &ionic->idev;
-+	bool allocated = false;
- 	size_t sz;
- 	int err;
- 
-@@ -729,6 +730,8 @@ int ionic_port_init(struct ionic *ionic)
- 						     GFP_KERNEL);
- 		if (!idev->port_info)
- 			return -ENOMEM;
-+
-+		allocated = true;
- 	}
- 
- 	sz = min(sizeof(ident->port.config), sizeof(idev->dev_cmd_regs->data));
-@@ -745,10 +748,12 @@ int ionic_port_init(struct ionic *ionic)
- 	mutex_unlock(&ionic->dev_cmd_lock);
- 	if (err) {
- 		dev_err(ionic->dev, "Failed to init port\n");
--		dma_free_coherent(ionic->dev, idev->port_info_sz,
--				  idev->port_info, idev->port_info_pa);
--		idev->port_info = NULL;
--		idev->port_info_pa = 0;
-+		if (allocated) {
-+			dma_free_coherent(ionic->dev, idev->port_info_sz,
-+					  idev->port_info, idev->port_info_pa);
-+			idev->port_info = NULL;
-+			idev->port_info_pa = 0;
-+		}
- 	}
- 
- 	return err;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+index 70d86c5f52fbb..42b7246342230 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+@@ -397,6 +397,7 @@ static int ionic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ err_out_free_irqs:
+ 	ionic_bus_free_irq_vectors(ionic);
+ err_out_pci:
++	ionic_port_reset(ionic);
+ 	ionic_dev_teardown(ionic);
+ 	ionic_clear_pci(ionic);
+ 	ionic_debugfs_del_dev(ionic);
 -- 
 2.53.0
 
