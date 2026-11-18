@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027115;
-	b=aIZedr01CmJlj6ri+0fBdU269zuy7rI6mCCkBVa1GK5UGgaS/32qtNKUoxIWxVgoW35P
-	 AjY6HZZ25imzfJvWUN6e0jVT0DZO4p1dg5aSh0bp3RaXe6EXqFAAe7UC7834D5HSuvIxI
-	 PMGVJEoXH7u4b+RnGpCYkOZX4ORZewhwiRLWwiPqQ6ZOqFYUKsR+JPccDNSQu3I4aWJGN
-	 cm5AO/D0bWmVUQgWz0UnIV8xzCWg5gdUzPWbwY36YBPEIW7naakxxbjrzrWl8IaH5Mahz
-	 CajNYqu/lAdkaPJgTIqveiKixvGi8h/hGna1gq8CZc6iK/W8wBHV+JtA1gi3XYYAQMA==
+	t=1795027118;
+	b=kAkSy0Xr5zsWSJ4LLeJZP5RvARr2Ahuy5NvpWlAyEx9yCYA6mCrrBBA0K+PnrHjHY0F/
+	 fdQu7EeMltkhJALI65u6dCavBO494gAXbCsXQOzzgtEqBFgiaHZBXUWjlmcrCv6Bxr3Kx
+	 Zu9NoVMuICWa/ntECpkcvs8FkM4MxFDpLuAtYP9UJbvs9Vk5SStfsSbMCNr97nyiYk8Gx
+	 WuEeL2vNIycGs10Owbteaz2nHXjUAzdjG8G9e1fFWlV9+foI5pYeCxhsT6AImESE+hs28
+	 xm6QyLLlUTTyiu4o3GHXKYF1cxEpCMZ55OzR/ouVurZS1X4bQFYS6/nuicjxuM3QUNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c4KQjJfmliQu781VFlfGl48HdDgjZQct4TjOXVCjsZk=;
-	b=jQjEtcUR1i10HVj4a1DAOxoJiuf7Jbnm+0c/qZXhiuvKhf+/8pQK6r0rf3V6LqAA1S8F
-	 DxISU6HgY9aaK7O54qsiYJVWl0ldS80tXV3p1gp/eYvI6ZGSzox01W5KkGjp7D4vM6d+d
-	 vL7Ne1n6YWKq2qNPGtGa4A8sBJI4A360iAQvRsAC4zQ9/Ta/fwGrUp8PP7zb522HVRmo3
-	 9hvKiMkhWPV2K9Ku7A3VxLxbXBpCqyfMCcqfEuTViHgSJ1chT6mBA6wvfjAyp2jMMbJAq
-	 SbRIUE3X7j++/Do+d6wEXjLy+enJWwucCPARIH0GXGKABd/77lZLcsfmwxEAlsPjPqw==
+	bh=NxaxfaNVNbblEH/FzkjDjzaO1Ohk0gAhmHB3WMzhm3c=;
+	b=V5Ru5za/QfBQlhPdD6s84hKBGw9NNNsw6YK/SwpMb1np4PHzlKzMLnPnlbfC0sBdCrYa
+	 /0GnZag8hp6Ob7fgx88CW6dHWGU1FmrNQXF/uFh+YP23sP2CzDFFOKqP+AT1I31Qny0T+
+	 3XyT79uvZiLlEbE8OAktFOoNvqEO8QmzqnQKg6AgYkoFNUivmG3ctqyt8ee/sDSKcJNaR
+	 MbnL/lcbA8/YQAx/jtPRbmP9sqmZaXgOlV5aKK6eG32l5yI9gHWyfCRewZc/UwevPa2uV
+	 peUXTg05RJsc7ab5j6UG1cP5m1gNRf4s5n7F/LqNSaSuJgTrUCD/cAsclqlOC+O7y4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nf1Eimp6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtsHmKXD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A78606A31C;
-	Wed, 18 Nov 2026 18:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5437D606A31C;
+	Wed, 18 Nov 2026 18:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nf1Eimp6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE351F000C4;
-	Wed, 18 Nov 2026 18:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtsHmKXD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE831F000C4;
+	Wed, 18 Nov 2026 18:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027115;
-	bh=c4KQjJfmliQu781VFlfGl48HdDgjZQct4TjOXVCjsZk=;
+	s=korg; t=1795027118;
+	bh=NxaxfaNVNbblEH/FzkjDjzaO1Ohk0gAhmHB3WMzhm3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nf1Eimp6+a7/K/cQRyHwpaldBtsc8yHgXJRP6uBKsgtNYe/09ZpnsTPtGuzHHk2z3
-	 T9FKhGMe8XKFK2rYsdXw5+XRENScUj7P8vIILWhajS4nXJD4i9engDa0A+PaCqqC5T
-	 RHFuZ5OtrRjBnV5u4YNP5fOk/K0Sh10UoAHeHdUU=
+	b=RtsHmKXDBbqHa41xfEWNPo2W26bwjsMD96T6V1lmWHT2bTJ7Ca7stfQ28rBcG+ZRC
+	 8C7+jAsqKZaCN1eu6ieGg2LWi8khqwI6SwadRLLBG82Uy8BISI8pSjg/GjnMMmNyms
+	 Jgm/iLJm5JogOX49B6upo79XjNIO90Vt9eLqE0go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Hui Peng <benquike@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1674/2151] HID: wacom: fix wacom_intuos_irq NULL pen_input deref
-Date: Wed, 18 Nov 2026 15:56:49 +0100
-Message-ID: <20261118150222.810839203@linuxfoundation.org>
+Subject: [PATCH 6.18 1675/2151] fuse: validate folio state before pipe_buf_try_steal() in fuse_try_move_folio()
+Date: Wed, 18 Nov 2026 15:56:50 +0100
+Message-ID: <20261118150222.848059801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,75 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit 2f985de0afbe9366af9d322ea20589712c1dc8fe ]
+[ Upstream commit 15c20483d91589f868fe7a72aec4b97dc68b931b ]
 
-Currently, wacom_intuos_irq() passes the parent of wacom_wac's
-pen_input to the dev_dbg() in the unknown report path. However,
-pen_input can be NULL on interfaces without a pen, causing a
-NULL pointer dereference.
+In fuse_try_move_folio(), check that the pipe buffer's folio is not
+hugetlb, swap-backed, or already mapped/anon before attempting
+pipe_buf_try_steal() and inserting it into the FUSE inode's page cache,
+preventing VM_BUG_ON_FOLIO() and page cache state corruption.
 
-Get the HID device from the enclosing struct wacom and use hid_dbg()
-instead.
-
-Fixes: eb71d1bb270e ("Input: wacom - use dev_xxx() instead of naked printk()s and dbg()s")
-Reported-by: syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b5a7cd83622c747977de
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 394244b24fdd ("fuse: support copying large folios")
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/fuse/dev.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index cf459c16b39a9..361738bb87253 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1027,10 +1027,10 @@ static int wacom_intuos_general(struct wacom_wac *wacom)
- 	return 2;
- }
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 69d178c9b3949..0f9ef3ca9824f 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1024,32 +1024,32 @@ static int fuse_try_move_folio(struct fuse_copy_state *cs, struct folio **foliop
+ 	if (cs->len != folio_size(oldfolio))
+ 		goto out_fallback;
  
--static int wacom_intuos_irq(struct wacom_wac *wacom)
-+static int wacom_intuos_irq(struct wacom_wac *wacom_wac)
- {
--	unsigned char *data = wacom->data;
--	struct input_dev *input = wacom->pen_input;
-+	unsigned char *data = wacom_wac->data;
-+	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
- 	int result;
+-	if (!pipe_buf_try_steal(cs->pipe, buf))
+-		goto out_fallback;
+-
+ 	newfolio = page_folio(buf->page);
  
- 	if (data[0] != WACOM_REPORT_PENABLED &&
-@@ -1041,23 +1041,23 @@ static int wacom_intuos_irq(struct wacom_wac *wacom)
- 	    data[0] != WACOM_REPORT_CINTIQ &&
- 	    data[0] != WACOM_REPORT_CINTIQPAD &&
- 	    data[0] != WACOM_REPORT_INTUOS5PAD) {
--		dev_dbg(input->dev.parent,
-+		hid_dbg(wacom->hdev,
- 			"%s: received unknown report #%d\n", __func__, data[0]);
-                 return 0;
- 	}
+-	folio_clear_uptodate(newfolio);
+-	folio_clear_mappedtodisk(newfolio);
+-
+ 	if (folio_test_large(newfolio))
+-		goto out_fallback_unlock;
+-
+-	if (fuse_check_folio(newfolio) != 0)
+-		goto out_fallback_unlock;
++		goto out_fallback;
  
- 	/* process pad events */
--	result = wacom_intuos_pad(wacom);
-+	result = wacom_intuos_pad(wacom_wac);
- 	if (result)
- 		return result;
+ 	/*
+ 	 * This is a new and locked page, it shouldn't be mapped or
+ 	 * have any special flags on it
+ 	 */
+ 	if (WARN_ON(folio_mapped(oldfolio)))
+-		goto out_fallback_unlock;
++		goto out_fallback;
+ 	if (WARN_ON(folio_has_private(oldfolio)))
+-		goto out_fallback_unlock;
++		goto out_fallback;
+ 	if (WARN_ON(folio_test_dirty(oldfolio) ||
+ 				folio_test_writeback(oldfolio)))
+-		goto out_fallback_unlock;
++		goto out_fallback;
+ 	if (WARN_ON(folio_test_mlocked(oldfolio)))
++		goto out_fallback;
++
++	if (!pipe_buf_try_steal(cs->pipe, buf))
++		goto out_fallback;
++
++	folio_clear_uptodate(newfolio);
++	folio_clear_mappedtodisk(newfolio);
++
++	if (fuse_check_folio(newfolio) != 0)
+ 		goto out_fallback_unlock;
  
- 	/* process in/out prox events */
--	result = wacom_intuos_inout(wacom);
-+	result = wacom_intuos_inout(wacom_wac);
- 	if (result)
- 		return result - 1;
- 
- 	/* process general packets */
--	result = wacom_intuos_general(wacom);
-+	result = wacom_intuos_general(wacom_wac);
- 	if (result)
- 		return result - 1;
- 
+ 	err = lock_request(cs->req);
 -- 
 2.53.0
 
