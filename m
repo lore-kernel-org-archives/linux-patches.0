@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036389;
-	b=ySwDjc+tszvrmSR9RAqQCWaz1LgmaJdXzrVc4l5YVpt4E8t4nAtZ5rV901V2IJXkocJ9
-	 uI84LnYk96M+3SEqkGLSTwq9UA7bffpiJDERa9vSx2wAjfQ16ZX6JSLtSTxQ5AF1gcs3M
-	 VY9Xp0kHuoC8PJyPvcXEw+IZoV4V4vtbzte9UOokpN25NBeoW33XHTjOSFD4dOKXhYFuV
-	 PQLyVX2HPj9JmeG2QiRx2wWehWDH/q8EDfjD3/RXWzYnOqaZZkStBlQDkpSIpTICoFNsg
-	 d0TnVC+Fa6Uekh0CQYsCP96s3XRu/HC2JMUAy0KZXEQTSeK6BsaGz8c2b87oYcbinpw==
+	t=1795036392;
+	b=4RE33FQ4zgqqZ8PXzYZ9zq3HTporbhwhV86fDcPc4bqPUagG4Z0XQAvXhQWvwOmVUaAy
+	 9kfS+SMQUdcKfAbjZurJncjauW9yCT6mlGSnL4kjDpSVpkcjwif5L1WCfB+0Ll8nVm0iN
+	 knBfwHtTDft+Ydggucgclk8R//qnNNbBQ+LLdaF7+6qM+4iqGVKFRWJwvFk3kGD+8b55t
+	 xitfajSvAin9J8cjXFN/N9Qnl7rN5T3wfJS2896Kg1mq112fzkDGLLuVywYIoYd47xUIv
+	 UjsebM8dD68ho9Od0UprbxZhGZatQ4brQvMNoOO/5jqr4CFE2uJE5wbsxxiHCcOHeww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cFp1KNg1u6AhRzfN7v++EvxjUsR97LeOgi+H0HVshaQ=;
-	b=b9uUUQoyMZxa/kV5N2NctVUvjGJIxU4Y2uETkggnBVnYfBy4dbtxcFF0jCgNE86rvAuH
-	 tgxEtME7pJBBgETPiem8lKBmTJfv9RiBR21SyCOd7mNMG2F57Cph55uqKRPFuiYfhQR7d
-	 9TEQePU9gFTkghFEnbDNJBwQvMzf73bbmNs9NAGljo9wKt3c8yzqkvYYbxPAXthRQZWyI
-	 FeevRCeKF2U5pFioDw4O3FjsP+gwErh59KgmOLYJwKqehg5R2tAoA4VXUuSWDw2uvo8nH
-	 zYkWDqIpCVMtC8IOdWZo7lLqwg9nQH7up7om8LudtliJNsZfGIrkaDdJQkbWe3rQVSA==
+	bh=IDypn0/wwX2JDFxNTxhLIFnxKd4WVtsj7425396y9QI=;
+	b=36d05CkEsabkz5pmxFd290qucF6/VWSrLk6nrpoazSpjknAHL365tvqZ1RQ1foyMmiU2
+	 Hqvb8lim6+TBwshEdQG5joe+APmLqxiICcOq4GO4ZLW1JsEu+6fQETM7sXO+Xj1TL9ryr
+	 joqlBZzpH0ZGz5S5yYCqSHoV+Wio0xdcUDbm/KeL3Esd8G6xAh3uyYVRIIHl7Nk4Wkqn1
+	 Hec+tEQmotdJneOhU0k6S7rH5g3MUZLC4u2+o7VAUKaO9WJpG3RCilXYXeqf0XP1kbcaD
+	 O3VexjgzGd/uKrclTQ1BXekD3rmuxL8g3Nu4XxBMmmUAOR/dY2w6wI5KTbZbOr8GmYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dxEiAAyC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MorA6Iz4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636E7606A31C;
-	Wed, 18 Nov 2026 21:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E08B606A325;
+	Wed, 18 Nov 2026 21:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dxEiAAyC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADB01F000C4;
-	Wed, 18 Nov 2026 21:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MorA6Iz4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0411F000C4;
+	Wed, 18 Nov 2026 21:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036389;
-	bh=cFp1KNg1u6AhRzfN7v++EvxjUsR97LeOgi+H0HVshaQ=;
+	s=korg; t=1795036392;
+	bh=IDypn0/wwX2JDFxNTxhLIFnxKd4WVtsj7425396y9QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dxEiAAyCucBEVA9c/Sp8KO7uFm5z/jYJhcBrYyIam1veWSvANdvlbI0hbTTigJI+t
-	 OSV6F5XCT6zFy8wpmLomm+daj+0VqOFcwkIPu1u65NPQVRWh6R4wvit30ymELGSKhe
-	 cgMijDu0jpRLffOxoku9vK/In3FlZ4OEnmbV1KGY=
+	b=MorA6Iz43JmJSOgmEowTl4N12LB+tdvBAZMmf5875ZTdwr8iByQ6WhIGapEbvaK47
+	 491HFSpP11rUoHhod8P7jEjIrStEO33lBJfNAMABG8DmjVAuzQOnPhay6ZrAdI+6Fm
+	 Wn4HbJMZIxR/upoBPCSPUIQeJMMvbihjU9vd3E1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+95eeb4ada2349a2170ea@syzkaller.appspotmail.com,
-	Yu Kuai <yukuai@fygo.io>,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	David Teigland <teigland@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1042/3318] md: dont hand out the array before md_alloc() has added mddev->kobj
-Date: Wed, 18 Nov 2026 15:27:44 +0100
-Message-ID: <20261118150351.168612876@linuxfoundation.org>
+Subject: [PATCH 6.6 1016/3318] dlm: fix send buffer backpressure handling
+Date: Wed, 18 Nov 2026 15:27:18 +0100
+Message-ID: <20261118150350.363068426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,96 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit d1472ca2ca5de8ecd2b358411eb14c031404ecf0 ]
+[ Upstream commit e234d7625598b2eaded84fa99f53c8062650828f ]
 
-md_alloc() publishes the gendisk before it is done setting the mddev up:
+lowcomms.c tests and clears SOCKWQ_ASYNC_NOSPACE in con->sock->flags,
+but this bit has not been stored there for ten years.
 
-	disk->private_data = mddev;
-	...
-	error = add_disk(disk);
-	if (error)
-		goto out_put_disk;
+Commit 9cd3e072b0be ("net: rename SOCK_ASYNC_NOSPACE and
+SOCK_ASYNC_WAITDATA") mechanically renamed the two dlm users, then
+commit ceb5d58b2170 ("net: fix sock_wake_async() rcu protection") moved
+the bit from socket->flags to the RCU protected socket_wq->flags, where
+it is reachable only through sk_set_bit() and sk_clear_bit(), and is
+only maintained for sockets having SOCK_FASYNC set.  dlm uses kernel
+sockets, which never have SOCK_FASYNC set, and never sets the bit
+itself, so the test in send_to_sock() has been false ever since.
 
-	kobject_init(&mddev->kobj, &md_ktype);
-	error = kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md");
+The consequence is that when sock_sendmsg() returns -EAGAIN because the
+socket send buffer is full, dlm no longer sets CF_APP_LIMITED, does not
+increment sk_write_pending, and does not return DLM_IO_END to wait for
+lowcomms_write_space().  It returns DLM_IO_RESCHED instead, and
+process_send_sockets() immediately requeues the send work.  A connection
+to a peer that is slow to drain thus keeps cycling through
+sock_sendmsg() and -EAGAIN, burning CPU, instead of sleeping until TCP
+reports that space is available again.
 
-add_disk() makes /dev/mdN openable.  mddev comes from mddev_alloc() and
-is zeroed, so anything that gets in between add_disk() and kobject_add()
-sees an mddev->kobj that has never been through kobject_init() - no
-ktype, no kref, state_initialized clear.
+Test SOCK_NOSPACE instead.  This is the bit that lives in socket->flags,
+that TCP sets whenever sendmsg() returns -EAGAIN for lack of send buffer
+space (tcp_sendmsg_locked() and sk_stream_wait_memory()), and that
+lowcomms_write_space() already clears.  This restores the semantics dlm
+had before the bit moved.
 
-syzbot opens the array in that window and issues ADD_NEW_DISK:
+Also remove the clear_bit() of SOCKWQ_ASYNC_NOSPACE from
+lowcomms_write_space(), for the same reason.
 
-  kobject: '(null)' (ffff8880120640f0): is not initialized, yet
-  kobject_get() is being called.
-  WARNING: lib/kobject.c:642 at kobject_add_internal+0xea/0xcd0 lib/kobject.c:225
-   kobject_add_varg lib/kobject.c:374 [inline]
-   kobject_add+0x163/0x240 lib/kobject.c:426
-   bind_rdev_to_array+0x80c/0xdd0 drivers/md/md.c:2621
-   md_add_new_disk+0xe3b/0x1850 drivers/md/md.c:7684
-   md_ioctl+0x200a/0x2610 drivers/md/md.c:8499
+SCTP connections are deliberately left as they are.  SCTP does not set
+SOCK_NOSPACE, and it never calls sk->sk_write_space(): sctp_wfree() ends
+up in sctp_wake_up_waiters(), which calls sctp_write_space() directly.
+lowcomms_write_space() is thus never invoked for an SCTP connection, and
+the test added here stays false, so send_to_sock() keeps returning
+DLM_IO_RESCHED as it does today.  This is the only safe behavior, as
+returning DLM_IO_END would wait for a callback that never comes.
 
-bind_rdev_to_array() is not the only way in.  md_run() calls
-sysfs_create_group(&mddev->kobj, &md_redundancy_group), and
-internal_create_group() has its own WARN_ON(!kobj->sd), so RUN_ARRAY in
-the same window warns too.
-
-Every ioctl that can reach mddev->kobj runs under reconfig_mutex, so
-hold it across add_disk() and kobject_add().  An ioctl issued in the
-window now waits for md_alloc() to finish instead of seeing a
-half-built mddev, and opening the array still succeeds.  The ioctls
-md_ioctl() serves without the mutex only read array state and return
--ENODEV on an array with no disks.
-
-Hoisting kobject_init() above add_disk() is not an option: commit
-ca39f7502425 ("md: fix mddev->kobj lifetime") moved it below add_disk()
-so that md_alloc()'s error paths, which free the mddev directly, never
-see an initialised kobject.
-
-Fixes: ca39f7502425 ("md: fix mddev->kobj lifetime")
-Reported-by: syzbot+95eeb4ada2349a2170ea@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6aaf3284.514bccd6.255447.0003.GAE@google.com/
-Suggested-by: Yu Kuai <yukuai@fygo.io>
+Fixes: ceb5d58b2170 ("net: fix sock_wake_async() rcu protection")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20261006122904.1538-1-yogeshgaur.83@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Cc: David Teigland <teigland@redhat.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260929071743.23624-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/dlm/lowcomms.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 96dfea33d468d..91eccc10a8d62 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -5887,12 +5887,22 @@ struct mddev *md_alloc(dev_t dev, char *name)
- 	blk_queue_write_cache(mddev->queue, true, true);
- 	disk->events |= DISK_EVENT_MEDIA_CHANGE;
- 	mddev->gendisk = disk;
-+
-+	/*
-+	 * add_disk() makes the array openable before mddev->kobj exists.
-+	 * Hold reconfig_mutex until kobject_add() is done so that ioctls
-+	 * issued in between wait instead of using an uninitialised kobj.
-+	 */
-+	mddev_lock_nointr(mddev);
- 	error = add_disk(disk);
--	if (error)
-+	if (error) {
-+		mddev_unlock(mddev);
- 		goto out_put_disk;
-+	}
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 3c9ab6461579c..44ea41e1a1e9a 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -517,10 +517,8 @@ static void lowcomms_write_space(struct sock *sk)
+ 	clear_bit(SOCK_NOSPACE, &con->sock->flags);
  
- 	kobject_init(&mddev->kobj, &md_ktype);
- 	error = kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md");
-+	mddev_unlock(mddev);
- 	if (error) {
- 		/*
- 		 * The disk is already live at this point.  Clear the hold flag
+ 	spin_lock_bh(&con->writequeue_lock);
+-	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags)) {
++	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags))
+ 		con->sock->sk->sk_write_pending--;
+-		clear_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags);
+-	}
+ 
+ 	lowcomms_queue_swork(con);
+ 	spin_unlock_bh(&con->writequeue_lock);
+@@ -1386,7 +1384,7 @@ static int send_to_sock(struct connection *con)
+ 	if (ret == -EAGAIN || ret == 0) {
+ 		lock_sock(con->sock->sk);
+ 		spin_lock_bh(&con->writequeue_lock);
+-		if (test_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags) &&
++		if (test_bit(SOCK_NOSPACE, &con->sock->flags) &&
+ 		    !test_and_set_bit(CF_APP_LIMITED, &con->flags)) {
+ 			/* Notify TCP that we're limited by the
+ 			 * application window size.
 -- 
 2.53.0
 
