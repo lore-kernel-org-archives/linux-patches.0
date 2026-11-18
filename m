@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055197;
-	b=3DhxMfwfqIfP5t9e6m5ZcqiIrpi9CWmupWsriNIsZA3FBiaSKYVhe1Jlg5b1bc/7i/Jv
-	 zwZqLz/cCyW9eXOo0GyozmZZvHDm9ch0suZW9dtHrLCrpl+Wtc2KR2LG6n6iLj7SLOdi3
-	 nEM6xdAmqu3QRYB6ZtOxSH3WNBzv/uLpa/xtAr0ivLURWvullgaxNAT9b93YYIS/pYE+i
-	 ObrC/uZgFshMkL+JQ6VKWmWkN/oC9TmCqB7pUiBLCqycO+xgoimuSSF19eeIQ4fPwpzOF
-	 nC4UTqmDhEaTeiXYSytyQ9lMnEItL7AATjymG9Cp7gOztuvJInGTMO3C1U6s0FXYgzA==
+	t=1795055199;
+	b=WKJWFeFK9/n7h2gkVp4mJqXK7/vJKLxtQPHer18+C1w2pafRVxcTOI0CoP9y/NRidMYo
+	 HCxKr9BIabW5Qk78go74uwl8mqWyworn0wIonjW3xRMBn6KkJVI/sgqYz3AdvoLwwNqju
+	 ED0wznOCG9hNGX11PuGeURFwNp+3RR9ALnaE/CfleFqoZSa/0RPjFoVXuA23Mb09/EaFf
+	 xqdSS1+EBobAEbHLAHkjcWmanj9JNDnrA2jObl7sBXzmHP947fyQCHkmBQUTUhMu+Yn5E
+	 QVGw0SQykzanXk6bxmHQ0xbzfLmRiTYMY6uMqwCssONnoYQ7ZdY9PAC3ZFK/AWg5F3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=32Tnwwc72HM+APLIN+0XoBUdRySSttJJJtmpNQRQxcg=;
-	b=sarS9t1ipWJ2z+o3qiYA/HJJzEdAm6ydbvwKutGZBkOMaRq2DkTidM3lEIO6FsdBqTH/
-	 hMyc5HzL5R/EGmAC3Tc3JCz4+d3/SE3RyM021duaNHOV+2HbQMIKnndWNQ4J79Air2oqg
-	 tyYK3gmqLukp63GUwu4ZWTWXWKxhfiwb9smu1dqlDC+wSwhbCBjXOh351KtrzZL/r7qf7
-	 PCnih9WsoYGngScmK4M7stHrsyvNOzkbNYRiKpg7kWXDSVUogolv357tN3hpTj+sFAFb0
-	 Xjzh6WkMe+tHI6KJzRBEnfqezFoRKNqTlYaqWf46NsK5FK68OpqkAPwu7MdnDE7Jzfw==
+	bh=Y4zcYQo6vqy2+x6grBx6Qv+TOhU+7gx+Oi6+3dJuWIA=;
+	b=Rgq50jXdbXG3puaMIwA8z4bfGYS6kH2ucM06LV0IUO19qQcKsjQCJLzT7fflK4le+9Rn
+	 WhRw497KpMT82D6AUYlqigAdrv89J+E32F7HoUEmrRfDjFT99Wa66X3PFxmVUw6NFa1Zk
+	 FkMAH0h3vGc92bx3Ny11cst55I116IerTptutsnnOHCsS3MeopV1S8U0hVVyENMl1mdeE
+	 /u2Ys3UAFVgo0lKdeqx4f7GwqzwgaqaIcwr0Vsi5v6u0cqYCb7zbTmVK+hVtawJOBz8Ko
+	 knu4PfKtJHcXgmoVdNMNBjZfKuUM+aGIO2TXUvqyv4VwCmZETSDNiuhPP4UKmC5ol1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGVcldo2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILeBWMQo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD62606A320;
-	Thu, 19 Nov 2026 02:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE970606A31C;
+	Thu, 19 Nov 2026 02:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGVcldo2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264E51F000C5;
-	Thu, 19 Nov 2026 02:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILeBWMQo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54C01F000C4;
+	Thu, 19 Nov 2026 02:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055196;
-	bh=32Tnwwc72HM+APLIN+0XoBUdRySSttJJJtmpNQRQxcg=;
+	s=korg; t=1795055199;
+	bh=Y4zcYQo6vqy2+x6grBx6Qv+TOhU+7gx+Oi6+3dJuWIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGVcldo2ViHi/TIlYIxFYicOLr9mxrO0EHIRB5e66/48DJOaG6/gN/gQvmanRGiN4
-	 4RCFpsxYTo4yG3xSklnyYZeN75QXJLgCxEpRvhvpsruMLgq+dqbC9iTCgLauTm2HDq
-	 RPEfJYjL6HZB2K4KER/SJabgBmuyuchkRA82FxjI=
+	b=ILeBWMQoGDaqbB+gM/dDFXUCmtR+cdATRT7858BLGGok2VYdUWlKQ8WujSVvRpof+
+	 b7d92Q7R1wmQOUn4XxerX1uGj/oB+S2/1nQT25FxIASXf6HSLZtYznE/7Ft7IGdrKo
+	 UD/SYQrUvvh0YU4iXVLBSO5gm3ZbVD5eQK7ZYBII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1544/2214] pstore: dont leave an ERR_PTR in the ramoops zone pointer
-Date: Wed, 18 Nov 2026 15:53:40 +0100
-Message-ID: <20261118150113.904994024@linuxfoundation.org>
+Subject: [PATCH 5.15 1509/2214] loadpin: Fix stale KEXEC_VERIFY_SIG reference in documentation
+Date: Wed, 18 Nov 2026 15:53:05 +0100
+Message-ID: <20261118150112.385827136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,40 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
+[ Upstream commit eb0b0d222a832b6ec851e56d4922a775ac762955 ]
 
-ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
-returns the error without clearing it when initialization fails.
-ramoops_probe() then cleans up through ramoops_free_przs(), which hands
-*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
-and dereferences it, crashing the kernel.
+Commit 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG
+and KEXEC_SIG_FORCE") removed CONFIG_KEXEC_VERIFY_SIG but left the
+LoadPin documentation pointing at it. Refer to CONFIG_KEXEC_SIG instead.
 
-Clear *prz before returning so that cleanup sees a NULL zone.
+While at it, clean up the grammar of the sentence.
 
-Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
+Fixes: 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG and KEXEC_SIG_FORCE")
 Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260905013655.58665-1-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/admin-guide/LSM/LoadPin.rst | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index e15b4631364a8..1e28b1fdcde16 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -590,6 +590,7 @@ static int ramoops_init_prz(const char *name,
- 	if (IS_ERR(*prz)) {
- 		int err = PTR_ERR(*prz);
- 
-+		*prz = NULL;
- 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
- 			name, sz, (unsigned long long)*paddr, err);
- 		return err;
+diff --git a/Documentation/admin-guide/LSM/LoadPin.rst b/Documentation/admin-guide/LSM/LoadPin.rst
+index dd3ca68b5df18..a90fd9dac9606 100644
+--- a/Documentation/admin-guide/LSM/LoadPin.rst
++++ b/Documentation/admin-guide/LSM/LoadPin.rst
+@@ -23,9 +23,9 @@ sysctl allows for easy testing on systems with a mutable filesystem.)
+ It's also possible to exclude specific file types from LoadPin using kernel
+ command line option "``loadpin.exclude``". By default, all files are
+ included, but they can be excluded using kernel command line option such
+-as "``loadpin.exclude=kernel-module,kexec-image``". This allows to use
++as "``loadpin.exclude=kernel-module,kexec-image``". This allows using
+ different mechanisms such as ``CONFIG_MODULE_SIG`` and
+-``CONFIG_KEXEC_VERIFY_SIG`` to verify kernel module and kernel image while
+-still use LoadPin to protect the integrity of other files kernel loads. The
+-full list of valid file types can be found in ``kernel_read_file_str``
+-defined in ``include/linux/kernel_read_file.h``.
++``CONFIG_KEXEC_SIG`` to verify kernel modules and kernel images while
++still using LoadPin to protect the integrity of other files the kernel
++loads. The full list of valid file types can be found in
++``kernel_read_file_str`` defined in ``include/linux/kernel_read_file.h``.
 -- 
 2.53.0
 
