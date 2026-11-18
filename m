@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058610;
-	b=pIqXhn1lARZPlbEwJt7sK7B1muhEhS8E9U5DXcdMbSPEkuiQEpKu+KY0L9q5DlpADisi
-	 VvAWq/qdbHbPsl8aZmvjXHpxacMVYOsU8ZyzggVWEAGiXKHdqNv6yAjb8xoDiWOYlWN7N
-	 aBWPgzaZTzKgj1bkostN4TVRG1AQhmYHMbI/5uFfTFCFRQenjTLtgKHlssxlKlAJP/eTV
-	 vUOVe8l9tOKPvcllKMLzn2vXTQ1eGQ5R8o0B80QcjxB08sgfhB3wncY5YbJN/3wyuxy3m
-	 7KvGt5CNi1IGiWJnP22Cqau9COVDkkUI3KJbyQADPUuQsF1SyL0TU3WJ2ZWVM26kF0A==
+	t=1795058612;
+	b=viN16qIXdfBb3epxHd1Ua+f2I1pb7k0HXJUPbg+0kVQhJ1WWJRYebOqHTHIfvO+ahGXt
+	 8xfePN1D7vbVA8dKMHUppbERyg+i2LgNloIZDzLW9xI6WEh40xtGaBpi13nKRGdWVjR4U
+	 w7m77ZB2d1NM+DcjGDLaMx46GKj9A1yqAi1eFTP5po2u3is2fW5zM/H9ISt+tNa4s0mBG
+	 LHUMiQlv3EcFzWoKyw4YJvq3nb5Dmp8Lwz61HguELs4HlK89HSD5H3DvgUFqiwgCTYK7B
+	 EmGZIUKhhnR/i4/ukd+TQu8ON/3w7sBFY3pe1Ni1zOC16I0x35/zEuD2aF3erqCsNUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bVSvN0Mh3q34mMe9YM00nQmyl75KR0g6T3WcQgZHr6k=;
-	b=chhBN6fmr/Bau1nv4XcgExK6J764bmxJDR10Tlv8yGqFksaIdSov9kdhqfR/PHbgtB5F
-	 crUdofVA7nvjiDUlIzzu7VcwK3Ks3CxiWGvqO72lwJ5+RgcseRnp6/IZS1V/k3CvB6Xq8
-	 sriPRHVJBraBJ4Da14M8T+zrMBu7BfalTkufLMXDQzjy9nTpSknL2quHttTlcFZnuXmwq
-	 xn4W/NzCaa48LrIug/L2QfBRo2W3k9x24khzCBoYr81NKptS3n3S6bz3z0wOjvQdSPJHH
-	 +fnN3GoVdkde/wQR+M36OBNAUW0iLneQmR65EC99wu6N6iaNnghS++8zb5/ycl+mjBA==
+	bh=syDaaiP8z925x5NKjhLF6H5aM53sYQssqfccJvYjgww=;
+	b=WVmAMyHvh1GC/S1u95TarbWWCENpe/0vqcfctiL+01fTNp0kWh4awdafQ36c0qbOGt4o
+	 hpTz26Y7OXJoXGxc3RnMpjUdi0A3oM8mOPHAxVKcbzer2YO4I5zooiCKPy3wMNDKCqykc
+	 Eqxg2J20JjprHRJ1g84puvuoiY2P+RM4Q6VO8SHICe1EgWOXIbCLqTYhc4RDQjyWgzHVf
+	 R86j+j2pIyAnU54rK4eyjzNOf4hfwCP2yCuUgZ/kNV0Emx3nH+JXOkItOr1zhJcekfyLh
+	 s49HrpcZdcC+J0HQujGn1zLQ32ZHGUooBcq4OOuYC/MLJ5cLXX2LLgslVUYw1KN7Jxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VN1OYlXA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jta7Zyyy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6C6606A331;
-	Thu, 19 Nov 2026 03:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD465606A31C;
+	Thu, 19 Nov 2026 03:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VN1OYlXA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916381F000C5;
-	Thu, 19 Nov 2026 03:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jta7Zyyy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B611F000C6;
+	Thu, 19 Nov 2026 03:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058610;
-	bh=bVSvN0Mh3q34mMe9YM00nQmyl75KR0g6T3WcQgZHr6k=;
+	s=korg; t=1795058612;
+	bh=syDaaiP8z925x5NKjhLF6H5aM53sYQssqfccJvYjgww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VN1OYlXAxErpBu8LW4qddCDXML960jKe5A2azv/rFxjt0Z5COJmM/jABAx7lkUDRu
-	 MN2qqM6VMUscvq3/VgABW2UuYXbObm7BUJhtyD6AU9GqtdrduQn3LfwE8h42khuOQy
-	 nhzolGyvDGsCQwJw95NaL3fEfLebt/wLHrd/brpI=
+	b=Jta7ZyyyQqaPQaxNzCJjEpRta1ihUnwzgNeHCl0Eqb7/q2N8cBIJE3XA++ljNuvEt
+	 VELfZo59ZTm2AElv5P7kU57/aQZS5TJo2A5rbm+35UiprU4UuPb2OmIQplrmNdxhxy
+	 PqLVX2ipqdJOfOw9H/IistjhSHZ6zzPee1iWJyak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Seung Min Shin <guncraft2000@naver.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0530/1848] sctp: hold transport reference across connect wait
-Date: Wed, 18 Nov 2026 15:42:48 +0100
-Message-ID: <20261118145937.125845713@linuxfoundation.org>
+Subject: [PATCH 5.10 0548/1848] drm/amdgpu: reset CIK ASIC on Apple boards with VRAM at 0
+Date: Wed, 18 Nov 2026 15:43:06 +0100
+Message-ID: <20261118145937.902365019@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,129 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seung Min Shin <guncraft2000@naver.com>
+From: Maciej Kucharek <qchcio@gmail.com>
 
-[ Upstream commit 5bef8649bb9ac4b2a014bcc227202ebd2df824be ]
+[ Upstream commit 095f634ea0aa5b9da19495520b5fc1a155b2c137 ]
 
-sctp_sendmsg_to_asoc() selects a transport before waiting for a new
-interleaved association to become established. sctp_wait_for_connect()
-drops the socket lock while sleeping.
+On MacBookPros with switchable graphics, the firmware puts VRAM at MC
+address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
+reset) moves VRAM back to the VBIOS default.  The SI fix resets and
+posts the ASIC at load, so the driver uses the VBIOS layout from the
+start:
 
-While the lock is dropped, backlog processing can handle a COOKIE ACK and
-an ASCONF DEL-IP that removes the selected transport. sctp_assoc_rm_peer()
-then marks the transport dead and drops its association-owned reference.
-The transport can be freed through RCU before the send path resumes.
+  "drm/amdgpu: reset SI ASIC on MacBookPros with VRAM at 0"
 
-After the wait, the stale pointer is assigned to newly created DATA or
-I-DATA chunks and later dereferenced by sctp_outq_select_transport().
+No MacBookPro has a CIK GPU, and no affected CIK board is known.  Add
+the same test to cik_need_reset_on_init(), so that SI, CIK and VI
+handle this firmware layout in the same way.  gmc_v7_0 reads
+MC_VM_FB_LOCATION once at init and does not reprogram it.  A CIK board
+with VRAM at 0 therefore has the same problem as the SI boards.
 
-Hold a reference to the selected transport across
-sctp_wait_for_connect(). After the socket lock is reacquired, abort the
-send if the transport was marked dead. Callers without a selected
-transport pass NULL and retain their existing behavior.
+After the reset, FB_BASE is not 0, so the new test does not fire again
+on a module reload.
 
+Only compile-tested.
+
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6bb4b79d6a6c461b40750fd67cb4e2a070e20b67)
 Cc: stable@vger.kernel.org
-Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Seung Min Shin <guncraft2000@naver.com>
-Link: https://patch.msgid.link/20261011162750.1529631-1-guncraft2000@naver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/cik.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 026b9a23c4964..96215fc4ee466 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -74,7 +74,8 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
- 				struct sctp_transport *transport,
- 				long *timeo_p, size_t msg_len);
- static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
--static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
-+static int sctp_wait_for_connect(struct sctp_association *,
-+				 struct sctp_transport *, long *timeo_p);
- static int sctp_wait_for_accept(struct sock *sk, long timeo);
- static void sctp_wait_for_close(struct sock *sk, long timeo);
- static void sctp_destruct_sock(struct sock *sk);
-@@ -1242,7 +1243,7 @@ static int __sctp_connect(struct sock *sk, struct sockaddr *kaddrs,
- 		*assoc_id = asoc->assoc_id;
- 
- 	timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
--	return sctp_wait_for_connect(asoc, &timeo);
-+	return sctp_wait_for_connect(asoc, NULL, &timeo);
- 
- out_free:
- 	pr_debug("%s: took out_free path with asoc:%p kaddrs:%p err:%d\n",
-@@ -1849,7 +1850,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 
- 		if (asoc->ep->intl_enable) {
- 			timeo = sock_sndtimeo(sk, 0);
--			err = sctp_wait_for_connect(asoc, &timeo);
-+			err = sctp_wait_for_connect(asoc, transport, &timeo);
- 			if (err || sk->sk_shutdown & RCV_SHUTDOWN) {
- 				err = -ESRCH;
- 				goto err;
-@@ -1892,7 +1893,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 
- 	if (unlikely(wait_connect)) {
- 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
--		sctp_wait_for_connect(asoc, &timeo);
-+		sctp_wait_for_connect(asoc, NULL, &timeo);
- 	}
- 
- 	err = msg_len;
-@@ -9119,7 +9120,9 @@ static bool sctp_writeable(const struct sock *sk)
- /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
-  * returns immediately with EINPROGRESS.
-  */
--static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
-+static int sctp_wait_for_connect(struct sctp_association *asoc,
-+				 struct sctp_transport *transport,
-+				 long *timeo_p)
+diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
+index 453464914f353..f8ccf31eb01ca 100644
+--- a/drivers/gpu/drm/amd/amdgpu/cik.c
++++ b/drivers/gpu/drm/amd/amdgpu/cik.c
+@@ -1882,6 +1882,16 @@ static bool cik_need_reset_on_init(struct amdgpu_device *adev)
  {
- 	struct sock *sk = asoc->base.sk;
- 	int err = 0;
-@@ -9128,12 +9131,16 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ 	u32 clock_cntl, pc;
  
- 	pr_debug("%s: asoc:%p, timeo:%ld\n", __func__, asoc, *timeo_p);
- 
--	/* Increment the association's refcnt.  */
-+	/* Hold references while the socket lock is dropped. */
-+	if (transport)
-+		sctp_transport_hold(transport);
- 	sctp_association_hold(asoc);
- 
- 	for (;;) {
- 		prepare_to_wait_exclusive(&asoc->wait, &wait,
- 					  TASK_INTERRUPTIBLE);
-+		if (transport && transport->dead)
-+			goto do_transport_dead;
- 		if (!*timeo_p)
- 			goto do_nonblock;
- 		if (sk->sk_shutdown & RCV_SHUTDOWN)
-@@ -9162,7 +9169,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
- out:
- 	finish_wait(&asoc->wait, &wait);
- 
--	/* Release the association's refcnt.  */
-+	if (transport)
-+		sctp_transport_put(transport);
- 	sctp_association_put(asoc);
- 
- 	return err;
-@@ -9181,6 +9189,10 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
- do_nonblock:
- 	err = -EINPROGRESS;
- 	goto out;
++	/*
++	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
++	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
++	 * the vbios default, so reset and post on load to start with the
++	 * vbios layout.
++	 */
++	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
++	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
++		return true;
 +
-+do_transport_dead:
-+	err = -EAGAIN;
-+	goto out;
- }
+ 	if (adev->flags & AMD_IS_APU)
+ 		return false;
  
- static int sctp_wait_for_accept(struct sock *sk, long timeo)
 -- 
 2.53.0
 
