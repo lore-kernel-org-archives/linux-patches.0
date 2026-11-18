@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052669;
-	b=0+mvUMO46pn42sW6n88P69QMDXim0HisqjQWprzzhzB8TDQT599+k4JxDYhs9/WVK0+7
-	 l/WHmKvpOnDxIJZYBnGY+mAu/T8tP9qaY9grJEF78xmd3w2+r8pXDzlLS2vV9H4AQcAfW
-	 JRf0tPqfSYnnSX9o1yFC7OsI26bDGIQNwFOGZOi+XbyQbg4SOG047sj2+nhGHHzIVPAzr
-	 Uk1eRXQzxS7CmJZG5QyLC+h4cb/GAXXEIozUZ8c0oL3sqqpGOBrLmMA7Ci4pq/qMSyO+H
-	 8Q5L2aFuu1B7dtMwRHBFflfrtIwLx14VVI4mRFgaBTvtXNpHjr1+OhQxxW2Es/GlKrw==
+	t=1795052672;
+	b=czWG4hekWmbELlrDv9TS4KiCK7Uiujy8KA37P3KlWxfjgXe520sgImVp+ih3fU74Pi8S
+	 rSW4H7YlLUL8JUyAg9MtKCiCHbaI8QPnyeBOP4H/b9Ic+nTWxQiCBCksXxmxwEYEdtuQA
+	 rvNR3m9YqNDF/RcVnReY4Uni8EeRBwvBSfgGKr7jWpg5bwMGMNhIGQCifeZapdec+F8e3
+	 G7850c4m4ha/nGHLhyJdcrqHmk+HGcGMEC4zB26lw716DOU5cdpGzSeZlKqcY8Sdr/kmf
+	 JFWFtk4L3rs6mPC0j4G0xiZ4w1QzjRYgwPDj/5RkPt8b+WUlH5tOSfBbSvr1W5Fp4Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/q4wO6tWU5evgvgbWmZXTOgdXtIIhG55BZJ+BrtHHwE=;
-	b=FkVVfRwcQBh82PDIHTRDS1o4R0xHDLBFdbkTo+3YAmxT5JcqZP+gHmwpomquTwsgGq1J
-	 b4GmmvW6QI/AKvFrg37VUvRlzzWRRQj3koMWz4eUpIyaXgOReUErM/neDjycNJM/0VWyu
-	 vvwE4eQyI4hgFTiXS+u+Q2Tmae7aT9Z5RZSFfsN4afpnzdAwfM/mEQlQLVtDIjus9sstE
-	 dGxdG1cYL+giZ6cXeMK+wdkbMzi9P03CODnshlIQk+td7lBYu8rc+Ortkcfuxlyk3xlt0
-	 4Ipl92nfi537rnwqgeMRzAEym5tmrLNec0lMEgLatdjXj9OcHhNDsvip2nh5Q4wmL5A==
+	bh=0SUAyEW+Zj6qLo7foHh99FB8OkyI6I2aRUy7dF9PjrU=;
+	b=RnNhjVpuYFx7OlStsbALfJ4mDxkIJ9nJ2mmkWfcphVzz1cm5Zsuj8UmWeI6UqHin8Up9
+	 J97k7HyNpSMzaJCEmKuioUaZLgbal4ZdZv3BYerBYXwEgJ8fs5NdJ0qfdx3mQH+eSlwZC
+	 amem1kVB6IeykYBtImjtgQN8EpWUWIcXQxwlIMk4uVwBFUvLo3fxqcr/cOSpJzYBRF60z
+	 9tTwFnn9IFlL3bCARWj3wDlQxSBulaPJ232cCd92aLxqtST4SahJxLCVW+NA9hykEWQKZ
+	 oqU5CWM0NcRz/2Pe3EgrdORVFfo8VlxWIBVtkBhvtIVb7Ox+3wtD9T7ppKiDSGwkRrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TCDgGzfW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbElcraI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0997060A2602;
-	Thu, 19 Nov 2026 01:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E92606A332;
+	Thu, 19 Nov 2026 01:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TCDgGzfW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD111F000C4;
-	Thu, 19 Nov 2026 01:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbElcraI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9901F000C4;
+	Thu, 19 Nov 2026 01:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052668;
-	bh=/q4wO6tWU5evgvgbWmZXTOgdXtIIhG55BZJ+BrtHHwE=;
+	s=korg; t=1795052671;
+	bh=0SUAyEW+Zj6qLo7foHh99FB8OkyI6I2aRUy7dF9PjrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TCDgGzfWGHF0anVJ0+DfQV7DlbsTlVKnoolSUI2vEQi/ghRq0tbA1j8gD0G6bebeS
-	 cEEAQtpsISo67Okyhry/YsPLamnkg0CW1eiL+kvbMkss5fmnZ2Vl9/ST7yGAlXjnGR
-	 gSyDHrPdtaL2HgLuvQtnGby9iGmQHXa++x3MkJbc=
+	b=DbElcraIZvX3KWGGU1hxXw+/eWaJwdt9LU8sHsX3AGVwsiRqzcvIHhmIVYNMILa7X
+	 xCINKMY2C4vQchyHm4cfvauBs4CdEkoGA9Eu+BPQ/g82WsXOfoqe/ZVy4F252VF4v8
+	 hbA4AyJ0oOMopSpvlyvfXtq6WUiURxNmeDZgDxQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0629/2214] nvme-rdma: dont complete a request after a bogus remote invalidation
-Date: Wed, 18 Nov 2026 15:38:25 +0100
-Message-ID: <20261118150036.526109190@linuxfoundation.org>
+Subject: [PATCH 5.15 0647/2214] efi/libstub: Dont replace an existing LINUX_EFI_MEMRESERVE table
+Date: Wed, 18 Nov 2026 15:38:43 +0100
+Message-ID: <20261118150037.245022401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,44 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 909307cea08aff4e486cdb7491de5c76a2c31341 ]
+[ Upstream commit aaf3ed0f46298e18ec8bc477cf0a37478e41f2ea ]
 
-When a remote invalidation names an rkey that is not the one we handed out
-for this request, nvme_rdma_process_nvme_rsp() logs and schedules error
-recovery, then falls through to nvme_rdma_end_request().  The request is
-completed with req->mr never invalidated, and nvme_rdma_unmap_data() hands
-it back with ib_mr_pool_put(), which only puts it on a list.  The rkey
-stays valid and still maps the pages the completed read filled, so a
-controller that sent the bogus invalidation can write into those pages
-after pread() has returned.
+The LINUX_EFI_MEMRESERVE table is the root of a linked list of memory
+reservations that need to persist across kexec, such as the GICv3 LPI
+pending and property tables, which cannot be moved once the
+redistributors have been enabled. Each kernel adds its own reservations
+to the list that it finds via the EFI configuration table, and honours
+the ones made by its predecessors.
 
-Return instead, the way the local invalidation path below already does,
-and leave the request for error recovery to cancel.
+The EFI stub installs a new, empty table unconditionally, replacing any
+existing one. This is fine on a cold boot, but not if the stub is being
+executed by a loader that passes on the configuration tables of an
+earlier kernel, e.g., a kexec loader that runs the incoming kernel's EFI
+stub, as the reservations made by earlier kernels would be lost.
 
-Fixes: 3ef0279bb0031 ("nvme-rdma: Check remotely invalidated rkey matches our expected rkey")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+So leave an existing table in place, and only install a new one if none
+exists yet.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/libstub/efi-stub.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 40932e82c428e..283c5ab7699cb 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -1765,6 +1765,7 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
- 				"Bogus remote invalidation for rkey %#x\n",
- 				req->mr ? req->mr->rkey : 0);
- 			nvme_rdma_error_recovery(queue->ctrl);
-+			return;
- 		}
- 	} else if (req->mr) {
- 		int ret;
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index 26e69788f27a4..31730075ef5d7 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -79,6 +79,14 @@ static void install_memreserve_table(void)
+ 	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	efi_status_t status;
+ 
++	/*
++	 * If an earlier boot stage installed a memreserve table already, e.g.,
++	 * a kexec loader passing on the persistent reservations made by the
++	 * previous kernel, use it as is: installing a new one would replace it.
++	 */
++	if (get_efi_config_table(memreserve_table_guid))
++		return;
++
+ 	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, sizeof(*rsv),
+ 			     (void **)&rsv);
+ 	if (status != EFI_SUCCESS) {
 -- 
 2.53.0
 
