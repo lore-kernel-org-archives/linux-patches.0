@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039269;
-	b=Rr+6s7GCqBDyTIbtVGZHl0bqKB53PaqjR4Z0OZMyqvZEhff3AgngS6Vy9DSZiHRgJSJg
-	 3pIeV3nraJRvQLqB9GnvJcllrNTAZV4nWds+FrqYjQQsl7/Ib8/VeFePeQ4bZk3lNj+ii
-	 LqqpSmmpvxJ+77sCQg1rWTIyLcUI9fCt3SrZrAUoh8dueD5HA//E4h1/cUECE7wJr3LBU
-	 EHClt55wWh2nQ4+LY+rlZjC2EJQcJbpUW32EBKgj8F5Bh3lG1v4TYQljuQ2fNBGgNti54
-	 /R9/cvnYlYXNg7jZDxduIE1peFKpBZgl8gkxGhDuohnNQBYENDdy5Exm9PC4VaichFw==
+	t=1795039272;
+	b=QMR4+1YowwO4XGe7k8yQTsZIAC6GVmCXjG/+oPY37zeVgKnkjSM50xwauMlP7VYLyRux
+	 OuvPdWQ4Oz2C8Q8tb3TZIeZNLKeobg++BwQKN+npNN6ZJvrnRp6JM4MZsrSP8bCHOUmOO
+	 0TUeKSJikDPhAIJJVHPU4CZAz2/OD32i1IQ0vfTptPG/XUv9czAaa3yCfo6TiiWIiLu4b
+	 vjRJicZsf4LUsb4pFYJpjByRz7fVO22cjkoMPLA8BC9y8tNpWI3QLX7ApXiRuQD8PEEeT
+	 kgfl+zLhGBFW7HC9ixC7v0euluRPppWYd+AoPjdTFoTE9ZOSFzapoR/813RxZm8O2GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039269;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039272;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PJEF8zuscHVGSxsQLhAqwD5vb5iOD2XDffHfhLfK/JM=;
-	b=R3OutLKOi6KCGjrxRFEcH11CALLbDFI42p7vTE5hqyFpgRM1P+Fk2OV3eCJlxJAqFlCg
-	 cw4+pIYoQ2U1B+ghL5C7f5OXfGyZ7wA6C85e8NlT3GPy8aN6NynsKsdAkxfTTKbIQ1iGb
-	 v6zBX2du7Fx5TiHfXJDCtMRAp2dq3Rt+GVtFWFppScQwmBen68ZwRXOuqekqwgjs6bPMg
-	 IsvMA7MJ+xiqsib1a3Euea5nrr82vzvfPiW4StyoFeCcpnh/fTUEgTp+CcklN9EC98i/h
-	 G3qLi+KGHKXL6i7nP3wKNt/9aqlCSx2F8hOtnI55o/tMHTNji5FG8ic/n5Hx3ESEmqA==
+	bh=/eGpog9xihtSVMgxNNG5RJP8hE9lOb3VoI9DKabttWY=;
+	b=ywZigM1BQM8Apll/UU0EKn9J3ZyWwXfu2g1kFX4KkY8Od2Y5cr+2dai4DnWTj9385l6m
+	 NhHuyGBBsN0QT0l8hwax6iKlUy8UOeaxOl9rkzsJJYB7EYguis+PaqlcW8Tc5OE+CXdXd
+	 tSqQATOjOh9SkSmelEMMF47qbst96gUcarYbq19HJoCQztDaC17MSLtBJ5gYHg6y/BReT
+	 fC8dLnqWiBIk1SqPEKZP2n1jEuQ0TIMDryhNBYvJoHrgWj0UBO7grFB/lYJi/ezOCwnZk
+	 INl4y7tI5JsURqzuYpTQha1MUB9rc/bxopLVtwtkmsd7ZjxJX0SwWWW1FH0fgsiuf0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxRs1crt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhpqgvFK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3CD606A31C;
-	Wed, 18 Nov 2026 22:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6631606A325;
+	Wed, 18 Nov 2026 22:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxRs1crt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCDA1F000C4;
-	Wed, 18 Nov 2026 22:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhpqgvFK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E59A1F000C4;
+	Wed, 18 Nov 2026 22:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039269;
-	bh=PJEF8zuscHVGSxsQLhAqwD5vb5iOD2XDffHfhLfK/JM=;
+	s=korg; t=1795039271;
+	bh=/eGpog9xihtSVMgxNNG5RJP8hE9lOb3VoI9DKabttWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pxRs1crt0IldCq5wreSjYttcKWPzzmhJUJPBrs0lS2DqSf2/xYewwZpFlXktVQO4C
-	 89Iz0MZuefGU6u2GIQg50nPszRfgikJoyUwoy0azBF2x9eg8xMyu2AziuZYf27p0Ew
-	 HexVodq8YVf4qwWr2Ai/yaaabkQWtcT33JTq2w4s=
+	b=PhpqgvFKbgZwf57m+lblvvrgtfme1p0qFUMfeEAS6ApFhxmHgLOtfCEL5/c/u535+
+	 /v2lH/aiBcZe9zmHDq/aKN0QIKOvX01SZ+xFUh0I109XjWI57WmMPfsZ+43A2Ed17W
+	 dAmJwK+/oUOKJAnKGMd34n4OLPyrni74SOpCy+AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Ionut Nechita <ionut.nechita@windriver.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Baoquan He <baoquan.he@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2039/3318] remoteproc: imx_dsp: Acquire runtime PM before adding carveouts
-Date: Wed, 18 Nov 2026 15:44:21 +0100
-Message-ID: <20261118150423.212504232@linuxfoundation.org>
+Subject: [PATCH 6.6 2040/3318] x86/crash: Reserve elfcorehdr for CONFIG_NR_CPUS, not CONFIG_NR_CPUS_DEFAULT
+Date: Wed, 18 Nov 2026 15:44:22 +0100
+Message-ID: <20261118150423.243943918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,52 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ionut Nechita <ionut.nechita@windriver.com>
 
-[ Upstream commit 13df1fa4f1a30571442eda64c73d6cac7b9b5c95 ]
+[ Upstream commit 6664ad1026b558563702f9a1ce637df33e7c001e ]
 
-The prepare callback publishes DSP carveouts before acquiring the
-runtime-PM reference that establishes required clocks and mailbox state.
-A PM failure therefore leaves the prepare transaction partially
-published.
+NR_CPUS_DEFAULT is purely a Kconfig thing.  Its entire purpose in life is
+to start NR_CPUS at a sane value.  There is precisely one (buggy)
+reference to it outside of Kconfig in the whole kernel: the x86 crash
+code.
 
-Acquire runtime PM first and drop that reference if carveout
-construction fails, so a failed prepare does not add resources before
-its hardware prerequisite.
+That code undersizes the elfcorehdr reservation whenever NR_CPUS exceeds
+NR_CPUS_DEFAULT, because the header carries one phdr per possible CPU and
+num_possible_cpus() is bounded by NR_CPUS.  kexec_file_load(2) then fails
+with -EINVAL from sanity_check_segment_list(), and kexec_load(2) silently
+truncates the elfcorehdr, which surfaces later as a bad or unusable dump.
 
-Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260830133310.6926-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Size the elfcorehdr reservation with NR_CPUS instead.
+
+Fixes: ea53ad9cf73b ("x86/crash: add x86 crash hotplug support")
+Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Baoquan He <baoquan.he@linux.dev>
+Link: https://patch.msgid.link/20260901071041.16311-2-ionut.nechita@windriver.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_dsp_rproc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/x86/kernel/crash.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-index 491c5a48770f8..1aa5920160e29 100644
---- a/drivers/remoteproc/imx_dsp_rproc.c
-+++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -686,14 +686,17 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
- 	struct device *dev = rproc->dev.parent;
- 	int ret;
+diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
+index c92d88680dbf1..56ef7c0966f85 100644
+--- a/arch/x86/kernel/crash.c
++++ b/arch/x86/kernel/crash.c
+@@ -363,9 +363,9 @@ int crash_load_segments(struct kimage *image)
+ 	 * maximum CPUs and maximum memory ranges.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+-		pnum = 2 + CONFIG_NR_CPUS_DEFAULT + CONFIG_CRASH_MAX_MEMORY_RANGES;
++		pnum = 2 + CONFIG_NR_CPUS + CONFIG_CRASH_MAX_MEMORY_RANGES;
+ 	else
+-		pnum += 2 + CONFIG_NR_CPUS_DEFAULT;
++		pnum += 2 + CONFIG_NR_CPUS;
  
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	ret = imx_dsp_rproc_add_carveout(priv);
- 	if (ret) {
- 		dev_err(dev, "failed on imx_dsp_rproc_add_carveout\n");
-+		pm_runtime_put_sync(dev);
- 		return ret;
- 	}
+ 	if (pnum < (unsigned long)PN_XNUM) {
+ 		kbuf.memsz = pnum * sizeof(Elf64_Phdr);
+@@ -418,7 +418,7 @@ unsigned int arch_crash_get_elfcorehdr_size(void)
+ 	unsigned int sz;
  
--	pm_runtime_get_sync(dev);
--
- 	return 0;
- }
- 
+ 	/* kernel_map, VMCOREINFO and maximum CPUs */
+-	sz = 2 + CONFIG_NR_CPUS_DEFAULT;
++	sz = 2 + CONFIG_NR_CPUS;
+ 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+ 		sz += CONFIG_CRASH_MAX_MEMORY_RANGES;
+ 	sz *= sizeof(Elf64_Phdr);
 -- 
 2.53.0
 
