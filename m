@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027078;
-	b=JbYh0VA/MxRIpHaqUsPydQbu9kYmbd2nDlCham2GXl/gp5q7TAo7jpJdasXMo913pNSH
-	 QKcto3+tqH/tf/QjGdiT7aev04KQKIOcE0gm/k0Q76upn0gSu0sTEMAhLKJ5lNxfQjvNU
-	 3Jc/2DD0cPczEIyIcz7M1RTi4ZgEo4H2WsaJDx/u+sGaGFllR8X5xd88Q/74F2nCwiNHl
-	 UoUYl6empxUosotG6AZJ9VDMNZunh+TQ2vznwQQGqIkXepnvf2CgF3ERf77sIFr74GE5t
-	 dvgZYJ3DsXt9rfUdGiYznxqXjOoStz8i9zXhuDG2gS4VzBONjOj9HEb5YeCCH5aZCLQ==
+	t=1795027081;
+	b=I/4OTEB1t1f06Thb0OYtAgGIWyKym/PDFl/yNB8R2gWM636gfHzcOSFRUQwhU3gaqb8e
+	 /yFikTi3kyBVY5B0VWA22A7JdMdu5KshMapiaZRTPkaKqvnQjVWsHPP/uFlZ8x5boroAf
+	 09ju0IY3WAXv+PnC21JT5YmVP4ac4NREk5BddvOxCIMTrQ5QkXsCTVLDDDZKefZwOaTZ/
+	 jiyZe+gRm5juAnUGNkUPbpTe51hWBUEVIPGAfypy7e9YRtw/ySy5fRPWHEAWkm/+42NL9
+	 8MXCJNlzRODcmDnRPAZKDBxmbN0me1zjp0bxqll/WZ1IDIlSMy7bx/3rgN/DdghzQtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=85NWaPllFlf0u5SMkVuoJm2kxtTIpvWZSc/WQEVOqic=;
-	b=Dx0Ry+Pfh66VSWYxdZCqTHIb4YUS+guvEzxpEUEeEEoOmPxwPWlAty3AYKHNikt/R8Ck
-	 1L7fL6aKwEFu3I3zkVnQ6rXuYEHuENOAXtd8+UfYwzK7Vn5HYqNQXa/ZtfU9hIFGZgo1j
-	 jRQXLhlS+EpqWH5yLm9fgjSQHidLjAp0+q4QqK/oiOVpWBKk/9B1aucBc4+UlgNlA/E6Y
-	 zphEHD1ThM0gidLCu4aySMBTIpgJiGfv/FR5UbY01wBa+1duYY5GDeFlZMa6A4BlleRS3
-	 VWamZ/zBRskQAu/XsAfUCTSzUGbr4Ps+tPaqMXWGTdyscHiZTzqWRo4Oe7rv4q2Gfgg==
+	bh=0RxuNXTEgqybIIKarM+LUVK890k/V9tw6VFEF7Qmc1A=;
+	b=ZVpx58WVS6bnY4twyIu/AGHD+h1jBuKyAhC1hmgfwd6uBj/IakGcZg9n47+ywWcETzHi
+	 ovdQ6Z/fokbIt2n+z/4Ncp6x7MLgs6pYZYQZ8YyV9MWIM04ISsCwIY+eefuTIF0rpnpSz
+	 NkGlMQBIrMyIzKDT6jz1IA884M7Qh5iGPdmUOML878ebQyjWdDrYFZeZq5FV/jupC8USk
+	 JGUy1vlemZVQed/SffKu5wp/y5u41mNipYLBhdgLMhKuNW09j46aZhdsgL3krAC4W6A4d
+	 1FpP/RhzNmHvEV89qZdzhJt+C2dwyaRrp1yk7IFBtaaFwjn2T/e0L90lx6ssFBPCcxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zu38K17W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkE4pl3s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EC0606A320;
-	Wed, 18 Nov 2026 18:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADC7606A31C;
+	Wed, 18 Nov 2026 18:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zu38K17W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DFF1F000C4;
-	Wed, 18 Nov 2026 18:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkE4pl3s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8749E1F000C4;
+	Wed, 18 Nov 2026 18:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027078;
-	bh=85NWaPllFlf0u5SMkVuoJm2kxtTIpvWZSc/WQEVOqic=;
+	s=korg; t=1795027080;
+	bh=0RxuNXTEgqybIIKarM+LUVK890k/V9tw6VFEF7Qmc1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zu38K17Wqz0UBDpahpMaoyN9kNZ78MlIwzfvsl5qwVrVp40wI1E7N//TVuGgGP2Ki
-	 tfh7kLnc3lmUQHhq2FamW+qoCktzYb25OT7OJuyD9x/uIYgLuGb7IqI/wJfVvKzm6E
-	 LR8HwhpXv9J6vddokJG1gQldxbis2FNCR6fNqhDM=
+	b=XkE4pl3sJU7yvz76h6zAmFNF1FuQOtD1aS4mFyObSR+AkGt0bRZS7OJNfNVo/v87b
+	 Qwcf+FL38A43DzzosV8jT+EoiRNRRZnpmjcRe1NQsjrgepxrBEz1G3ch34IeilchCw
+	 sH73Ns8zxzTlHjMfgnphQGgJmi0tJVDL8pqTXSUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	George Melikov <mail@gmelikov.ru>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1645/2151] tracing: Only report the stacktrace modifier on a real field
-Date: Wed, 18 Nov 2026 15:56:20 +0100
-Message-ID: <20261118150221.776447488@linuxfoundation.org>
+Subject: [PATCH 6.18 1663/2151] bnx2x: fix header length calculation for encapsulated TSO
+Date: Wed, 18 Nov 2026 15:56:38 +0100
+Message-ID: <20261118150222.419646335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,51 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: George Melikov <mail@gmelikov.ru>
 
-[ Upstream commit 18bb005845b78e0c0eb44b7f231c29d138552438 ]
+[ Upstream commit 4fc1d5bb448dfab391a96f949d02ad03ad8cda5c ]
 
-get_hist_field_flags() returns "stacktrace" for any field carrying
-HIST_FIELD_FL_STACKTRACE, including the common_stacktrace pseudo-field,
-which has no ftrace_event_field behind it. parse_field() no longer takes
-the modifier there:
+Commit 80bfab79b835 ("net: adopt skb_network_offset() and similar helpers")
+replaced the difference between the inner transport header and the outer
+network header with skb_inner_transport_offset().
+The helper is relative to skb->data, so the new calculation incorrectly
+includes the outer Ethernet header in fw_ip_hdr_to_payload_w.
 
-	if (stack_modifier &&
-	    (!field || field->filter_type != FILTER_STACKTRACE)) {
-		hist_err(tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
+On a BCM57810 transmitting TCP over VXLAN with an outer MTU of 1500,
+hardware segmentation emits packets declaring an outer IPv4 total length
+of 1514 while the actual IP packet is only 1500 bytes long. The receiver
+drops these malformed packets, severely degrading TCP connectivity.
 
-so expr_field_str() renders "common_stacktrace.stacktrace", a spelling
-that cannot be parsed back.
+Subtract skb_network_offset() to restore the original calculation of the
+length from the outer network header to the inner TCP payload.
 
-Report the modifier only when there is a field to report it for.
+Reproduced with plain kernel VXLAN and one TCP flow on kernel
+7.0.0-31-generic: 50 of 200 captured packets had an invalid outer IP length
+with the original driver, versus none with this fix. Disabling TSO/GSO on
+the test VXLAN device also eliminated the error with the original driver.
 
-hist_field_print(), the other caller of get_hist_field_flags(), excludes
-HIST_FIELD_FL_STACKTRACE before it calls, so this is confined to
-expr_field_str(), whose only key renderer arrives in the next patch.
-
-Link: https://patch.msgid.link/20260914053443.981201-4-donggeunyoo.kernel@gmail.com
-Fixes: a5e70ba87ca8 ("tracing: Fix memory corruption from the histogram stacktrace modifier")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 80bfab79b835 ("net: adopt skb_network_offset() and similar helpers")
+Signed-off-by: George Melikov <mail@gmelikov.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261009-bnx2x-tso-fix-v1-1-1ebea422422d@gmelikov.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 53232c3076874..707ff75930cd1 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1728,7 +1728,7 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
- 		flags_str = "percent";
- 	else if (hist_field->flags & HIST_FIELD_FL_GRAPH)
- 		flags_str = "graph";
--	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE)
-+	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE && hist_field->field)
- 		flags_str = "stacktrace";
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
+index 445e80a681fe6..4920b4b37f5a8 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
+@@ -3666,7 +3666,8 @@ static void bnx2x_update_pbds_gso_enc(struct sk_buff *skb,
+ 	u8 outerip_off, outerip_len = 0;
  
- 	return flags_str;
+ 	/* from outer IP to transport */
+-	hlen_w = skb_inner_transport_offset(skb) >> 1;
++	hlen_w = (skb_inner_transport_offset(skb) -
++		  skb_network_offset(skb)) >> 1;
+ 
+ 	/* transport len */
+ 	hlen_w += inner_tcp_hdrlen(skb) >> 1;
 -- 
 2.53.0
 
