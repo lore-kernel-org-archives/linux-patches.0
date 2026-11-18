@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046500;
-	b=1ESQDcgl0Ctg4ml7qFAtB/9PTQ/02xVcTy0oDj34LzPXXxjC0AguO850kLqqPsdoHdYF
-	 R4vJjyjm75giRwd5rDlMGPdOjIVsV4USXqkXmSjgHWCQmc+eyBHKwdmjJWCkXVtSB3UEu
-	 SnCN6L0knmUZLDziE1f3YYORKDMt3W4vIJgLR0dZV9soFFvObY2R/79hYZaISkZsIHl4E
-	 ejyy7IFfRy0KeHxWBnVk5R9hZ66igXln/3RK2+ndc8Eph5CIfH8GbDiXQKiGH6/9BNFmu
-	 5wNkSZj7H+Vuo9YUPG5Xc6jayNDxu1dNwcuV6qzZf3WqjCtKK9qptlt3MiOqX+SJq8w==
+	t=1795046503;
+	b=MfvdvTczs/u5uA4vimwIdzhOaVhWcjnoSe6vpFOoyyOHOrC/DCNpKVhGTwXQzATezO/7
+	 2fAxlW4UEbJjq+jEk1G0j2cOOINnhZza3AxQ8tKeDG5AQBHd5IO9mTiOrNeow6d6/wIef
+	 XK4NsUKi044QkC1gKTJgqQmvSVZ5e3bPtkk7lEXLsJlDRHNHZuJDFAzirqkA/PFTrBEQA
+	 Z+ssFc7HIP1hzCi9gi+uCmc0L+j6O/M6OEWXAJKVs22sfUiWeVr/O4//MyeHybSeyUIj2
+	 AxORhHs3hYuuiBT3LYJIMalr+q/orawjOUjh4T53PuJWm4LyXfalajQRlaoCWEtjA3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=euZZWQ2vfo01YKiI+mvdWZNMxK3AX48IxumbbrJDT9M=;
-	b=If4TKzjWakFHTuBvKHEdXRm3djKihTZgcNCJLm6kmIrN7Q1WE/cef97uvmGpt5Lm/Qk+
-	 vUqVzAFJ+zIcoMd6ti3vmggiNKyMRLE20zDyZMnedZJ7wm9w+fRKvGe7kFU2G95Ixoe/H
-	 rxrx1T/+Omi7Y2sAYQJ1LswIBTToqj8X02BGeVsv4F1PUsWmWovmldYLAD6d5h0gER6bA
-	 Aqcl1+H/WtQPNGCCVbT2S8Hya0irW+6YIBT8ShzLoctL9PQwVv0XxOYPM7urWmpBJ89xB
-	 22MGRpIXfiIxAfIksb/piddLkPXqXM008tjQX64U0aMLf1cLLOEvqQdai/eG1SmOXTA==
+	bh=YZ9Rh2JVFbawNlGfvlZWWzkjeBZnuOz2+Dp/Amgpk2k=;
+	b=TngR47rb5W05nyZ94xAm6cnNRox68ey3L6ZxIfRXCWSPxYOFsa91ZsPuQgFlvtu/MHFI
+	 AmacrsHyDUVqBj+VCQxGbXjRUj0NvfqBQ4XiTTwmDtkM/MVtI0yUuogWX9sGL0FEzIMOu
+	 0UtTbaj2x0TO/zA3pAhhG4qXw60dV5DfJlO8OmZIfmP8Yd/W/HBRJvoMLrEarTqaeeHt9
+	 MZWRVrwuLEwOVJlUg3uaAN9zkbz93XCLGB60nvrGFmQvpOvc3dPtz9Ainh8lIth/+FmgO
+	 fWZSv1x2bjOI03Ftj1QPhdeMsSneEbjMljRMHYOT//I4jhqutu6kqA3DuF/aFpoF/zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fu5hEvIE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fClewrnt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C863606A31C;
-	Thu, 19 Nov 2026 00:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE17606A31C;
+	Thu, 19 Nov 2026 00:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fu5hEvIE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4991F000C4;
-	Thu, 19 Nov 2026 00:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fClewrnt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764B31F000C4;
+	Thu, 19 Nov 2026 00:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046500;
-	bh=euZZWQ2vfo01YKiI+mvdWZNMxK3AX48IxumbbrJDT9M=;
+	s=korg; t=1795046503;
+	bh=YZ9Rh2JVFbawNlGfvlZWWzkjeBZnuOz2+Dp/Amgpk2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fu5hEvIEj+CtHqT9bqHAXCX02oxoWO/Ndn/wUFH3iuMy3Vmp2oVGlg4Myr70s4Q07
-	 rqsyuta4CusNSOK3/N4/RupzTj7e2W2BWdcw+usx+twCUmfqL+MtkTMtSKxijGlZU0
-	 uE1UUYn0lqPEvQ1yI2ioj0+7vrMvCOAxoydzaVD0=
+	b=fClewrntx1alhW/aaU9FF07MszCF/6aLz4LA3Z59Pe1MJweWFMFsykPeGMKrGP1hk
+	 rf1T+kWdpOuhp7QDX8Dathu55Y5I0lsOxAJEh0J0Eon0brrCXdjK8MI9XWkJ1zhl/c
+	 Q/WCDInrKzA3+3vP95LHh4FdInwjNrT7QsiSUpsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinan Turunc <enscrpt@pm.me>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1304/2857] ALSA: usx2y: Guard the playback copy
-Date: Wed, 18 Nov 2026 15:38:58 +0100
-Message-ID: <20261118150248.425910570@linuxfoundation.org>
+Subject: [PATCH 6.1 1305/2857] net/smc: dont spin in smc_rx_recvmsg() while a pipe holds spliced data
+Date: Wed, 18 Nov 2026 15:38:59 +0100
+Message-ID: <20261118150248.460209804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,99 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sinan Turunc <enscrpt@pm.me>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit e2c6de52ffacb2c0f4076884ee3fdb744735a4cb ]
+[ Upstream commit 8288ba942cfd20621c05e16978b7c3da91513ae1 ]
 
-usx2y_urb_play_prepare() sums the packet lengths of a whole URB, copies
-that many frames with a single wrap, and sizes each playback packet from
-the capture packet's actual_length. Three things are unchecked: that the
-URB fits in the ring buffer, that a packet fits in the playback
-endpoint's maxpacksize, from which tmpbuf is allocated, and that
-actual_length is a whole number of frames. The ISO descriptors take the
-raw actual_length while transfer_buffer_length and the copies take
-count * stride, so a packet that is not a multiple of the stride makes
-the descriptors add up to more than the buffer, by up to stride - 1
-bytes per packet.
+While bytes spliced off the RMB are still in a pipe, recvmsg() waits
+for the pipe to release them before it copies the data behind them.
+The path to that wait skips the timeout and signal checks, and
+smc_rx_wait() returns at once on RCV_SHUTDOWN. With a signal pending,
+after SHUT_RD, or once the peer closes or shuts down writing,
+recvmsg() spins on a CPU until the pipe is drained, and SIGKILL cannot
+stop it. MSG_DONTWAIT and an expired SO_RCVTIMEO wait there too
+instead of returning -EAGAIN.
 
-Return -EPIPE, as the existing packet-size check does, when the URB is
-larger than the buffer or a packet is larger than maxpacksize, and size
-each descriptor from whole frames, so the descriptors add up to
-transfer_buffer_length and each stays within maxpacksize. The buffer
-case is prevented by the previous patch and this is the guard for it;
-the other two depend only on the device.
+Check the timeout and signals before that wait, and end it when the
+pipe releases the data or the connection is killed, not on RCV_SHUTDOWN.
+A zero-length read returns 0 without waiting for the pipe; a
+non-blocking one returns -EAGAIN while poll() still reports the socket
+readable (splice() can still take those bytes). The wait sets
+SOCKWQ_ASYNC_WAITDATA like smc_rx_wait(), so a byte arriving behind
+the pipe raises no SIGIO on a reader already asleep for it, and a full
+barrier orders its wait queue entry before its read of splice_pending,
+so no wake is lost.
 
-The first case is reachable on the unpatched driver with ordinary
-packets: on 7.3-rc7, a USB/IP device presenting the US-122 interface
-layout and sending 48-frame packets, with a 100-frame playback buffer
-(two 50-frame periods, inside the stock constraints), KASAN reports:
-
-  BUG: KASAN: out-of-bounds in i_usx2y_urb_complete+0x79b/0x1ac0
-  Read of size 18446744073709551280 at addr ffff88800e6b02e0 by task vhci_rx/80
-
-With both patches, the same device and a 200-frame playback buffer is
-refused at hw_params with EINVAL, and a 400-frame buffer plays for 30 s
-with the position advancing inside the buffer, no KASAN report and
-neither guard message. The maxpacksize check is not exercised: the
-emulated device reports the same wMaxPacketSize on both endpoints.
-
-The descriptor case is visible with capture packets of 195 bytes at
-stride 4 (48 frames and 3 bytes): without this change the four
-descriptors add up to 780 bytes for 768 bytes of data, and USB/IP's
-completion check refuses the URB ("total length of iso packets 780 not
-equal to actual length of buffer 768", -EPROTO), after which the driver
-stops the streams. With this patch every descriptor is 192 bytes, the
-descriptors add up to the data in every URB for 30 s, the position
-advances inside the buffer and KASAN reports nothing. The 48-frame
-playback run above is unchanged.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 9014db202cb7 ("smc: add support for splice()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sinan Turunc <enscrpt@pm.me>
-Link: https://patch.msgid.link/20261104122136.1518-3-enscrpt@pm.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-b4-disp-da7f8e6a-v2-1-9052904adf72@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2yaudio.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ net/smc/smc_rx.c | 39 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
-index 10a4574fed97e..cf14721113451 100644
---- a/sound/usb/usx2y/usbusx2yaudio.c
-+++ b/sound/usb/usx2y/usbusx2yaudio.c
-@@ -116,14 +116,31 @@ static int usx2y_urb_play_prepare(struct snd_usx2y_substream *subs,
- 			snd_printk(KERN_ERR "should not be here with counts=%i\n", counts);
- 			return -EPIPE;
- 		}
-+		if (counts * usx2y->stride > subs->maxpacksize) {
-+			dev_err_ratelimited(&usx2y->dev->dev,
-+					    "%s: packet of %i bytes exceeds maxpacksize %u\n",
-+					    __func__, counts * usx2y->stride,
-+					    subs->maxpacksize);
-+			return -EPIPE;
+diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
+index 958a569eeca0e..97bb99979d6e9 100644
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -282,6 +282,27 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
+ 	return rc;
+ }
+ 
++/* Wait for the pipe to release the spliced data. Unlike smc_rx_wait()
++ * it does not end on shutdown or sk_err, the data is already in the
++ * RMB; smc_conn_kill() wakes it and the caller checks conn->killed.
++ */
++static void smc_rx_wait_splice(struct smc_sock *smc, long *timeo)
++{
++	DEFINE_WAIT_FUNC(wait, woken_wake_function);
++	struct smc_connection *conn = &smc->conn;
++	struct sock *sk = &smc->sk;
++
++	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
++	add_wait_queue(sk_sleep(sk), &wait);
++	/* pairs with the smp_mb() in wq_has_sleeper(): the release drops
++	 * splice_pending, then looks for a sleeper
++	 */
++	smp_mb();
++	sk_wait_event(sk, timeo, !atomic_read(&conn->splice_pending), &wait);
++	remove_wait_queue(sk_sleep(sk), &wait);
++	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
++}
++
+ static int smc_rx_recv_urg(struct smc_sock *smc, struct msghdr *msg, int len,
+ 			   int flags)
+ {
+@@ -439,7 +460,23 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 		/* could be just 1 byte, even after waiting on data above */
+ 		readable = smc_rx_data_available(conn, peeked_bytes);
+ 		splbytes = atomic_read(&conn->splice_pending);
+-		if (!readable || (msg && splbytes)) {
++		if (msg && splbytes) {
++			/* a pipe holds bytes ahead of these; the copy path
++			 * skips the timeout and signal checks
++			 */
++			if (!read_remaining)
++				break;
++			if (!timeo || signal_pending(current)) {
++				if (!read_done)
++					read_done = timeo ?
++						    sock_intr_errno(timeo) :
++						    -EAGAIN;
++				break;
++			}
++			smc_rx_wait_splice(smc, &timeo);
++			continue;
 +		}
- 		/* set up descriptor */
- 		urb->iso_frame_desc[pack].offset = pack ?
- 			urb->iso_frame_desc[pack - 1].offset +
- 			urb->iso_frame_desc[pack - 1].length :
- 			0;
--		urb->iso_frame_desc[pack].length = cap_urb->iso_frame_desc[pack].actual_length;
-+		urb->iso_frame_desc[pack].length = counts * usx2y->stride;
- 	}
- 	if (atomic_read(&subs->state) >= STATE_PRERUNNING) {
-+		/*
-+		 * The copy below wraps once, which needs count <= buffer_size.
-+		 * snd_usx2y_pcm_open() guarantees it; guard anyway.
-+		 */
-+		if (unlikely(count > runtime->buffer_size)) {
-+			dev_err_ratelimited(&usx2y->dev->dev,
-+					    "%s: URB of %i frames exceeds %lu-frame buffer, stopping\n",
-+					    __func__, count, runtime->buffer_size);
-+			return -EPIPE;
-+		}
- 		if (subs->hwptr + count > runtime->buffer_size) {
- 			/* err, the transferred area goes over buffer boundary.
- 			 * copy the data to the temp buffer.
++		if (!readable) {
+ 			if (splbytes)
+ 				func = smc_rx_data_available_and_no_splice_pend;
+ 			else
 -- 
 2.53.0
 
