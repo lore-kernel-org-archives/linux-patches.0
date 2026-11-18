@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044350;
-	b=pUTAJ2IXAbb0rbVKSHlDdIsNkKCI1z24j9Xoo80hyeR5v89rtYiMeghb26hPKWCeMsCC
-	 lC4ua3CS9C4eUHw2NDkWQQJR2SsWryaKHAzlQBzphle0LKXpmt80WQmwZ0845ACin1jv7
-	 LdvFe9OqeXWRzDPxqadSneKvtbwlrIoaClOeH1nfc4fjxhaAB/JbM0B3QGqffqQxdoJ4K
-	 OGXWyFSP8eIK/CBQGAl2gyKyM3uQhNoE8L0h26B0qX+guwMA2jkki46f4FBUFjybQFsDu
-	 1YGtyhu7vDyzRUHXACfZk6j9/SjTRkRI+tTGt+lR7jpxUSHskwOkRXYdISwpXLDPX2g==
+	t=1795044353;
+	b=zRhlopceCvl1fvudtwAh2NavjERa5UHC8CvAJH7pTblI9GlOc3fPG+8HjbtL5w9lIR8a
+	 /Px7pmWugKkaHfQPjPGf9fvfFwOMl62Rnq2d+yckbeFDQ+fxeIzE159Xll7Bby8zl/8oO
+	 inO644FjvAKWIAT+3llI2a/mOZ5cJteuizLI3kyK0gJTP433YfamUQ1BsHp35RI/VnOe5
+	 qbgdfOD7zo7ofFUnTOmvb/72v4oEwnDRBbuslE71NSWkBcaQdEilHzEprWqcMdWSVWuUp
+	 biYB9z5Bm1ZuBNbIuOKvCqGlcFvHMqTjWbW9Sgi1Jy1lsL3ZBjSMWixPGfewSIdB/8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9DujwoBLUnYIaqrL5V1qvNDWNcSkMe4vXfNv5gT2uiY=;
-	b=ZeyM3f1Pw/0KPDYSdACAWLOQGAquL7bTDP4z0XVNP7bWJ9AE0O7P0GVC3IwSVFOYDRCJ
-	 FGZv8i8wMG2Q4C4yoyGoxb0n42uSQTsK5+5VJVOX+go/t0xm7Itnd0ugjb0BcUDESMfKd
-	 4kOtwCMvlDTduvxX7Rp5t1ueW5bEEswou+BhXY43WpWJcX35+POAWcGbQ/cUVyW5cp/JK
-	 XdZDvgi0y3Pea7igSbRXCkvIFus4YvYN6U9raKkdU19iSkEq9m6qXIFSxyno3Aj2fmyQz
-	 qVCJ+PLCZeyG03zuCB/TSTfXILmfVk0stL2Vh3B8uWKiLrpXO9zXh9PnzSVRhVCqRFg==
+	bh=nPwD2FkLaBfrcnADy0b10v9QUUzj0Kld5CyKbFQ9Rk8=;
+	b=EMcyUPYdhxMaW/ArckvxTYQ56TjVMy9zhOP85X8Zcic4biCb9k0FpQk+O+dBaAswDLXo
+	 naLPX7jzPJlSuLl+jYLLUqsE/g2BSmxu2Juu1kSOk+2P2M+h1hZ67q6rAuT2VUPIAsk3M
+	 8pmI3JOr0pJH1dlqSzHQnH3clUmuw9yzlIUaFGiIk1ME6CepeKYvvHQylFV4EuDtoq2PT
+	 urXvwnsX22XfkSjlFv9NVkpgAw2NDpTDcmeDBXcFEnMfyb3bBXw/CKUNs7BUzDkgGhkQY
+	 YbhiW8VZ2nu9caVaZJppEtUbFyRMfbw3EF85guUjZ95ncfduf++3wnNKHQHtRkxZkXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJmSs34B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EpRb0eCO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E60606A31C;
-	Wed, 18 Nov 2026 23:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2BB606A325;
+	Wed, 18 Nov 2026 23:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJmSs34B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0624C1F000C4;
-	Wed, 18 Nov 2026 23:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EpRb0eCO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBA01F000C4;
+	Wed, 18 Nov 2026 23:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044350;
-	bh=9DujwoBLUnYIaqrL5V1qvNDWNcSkMe4vXfNv5gT2uiY=;
+	s=korg; t=1795044353;
+	bh=nPwD2FkLaBfrcnADy0b10v9QUUzj0Kld5CyKbFQ9Rk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJmSs34BPQ5p/vCD4zWDYbVW95Bx5yinP07UnKd0nAowe5xbH7ocag92kyJ3K0J8M
-	 Ew0Cxh0cHDxymo8eKcBlGz/q165V4aNyQ8WxtuPy/LvgqO/ln4TcgTI33Az0vFZ63O
-	 8yL9560o8d41cn13EGOX1UdOlNuQ2T/bXm6jmM0o=
+	b=EpRb0eCOUYfZ+nFAzbaZaVN6wOaINKKBE4DaiXfYKw/SxY1lvXnje4TQFjngISKHV
+	 9CfBAY/07Gob+nfxBhLDPY1z3hvgZSnGmeLW+e8gbqAdUiHQV0o1zTsWyTYb5UbXdj
+	 thmILlQ1dExrraoIPPYSLw6nT2+xWM3XJwMRogUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0519/2857] tcp: Fix potential UAF in reqsk_timer_handler().
-Date: Wed, 18 Nov 2026 15:25:53 +0100
-Message-ID: <20261118150220.156626839@linuxfoundation.org>
+	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0537/2857] media: hackrf: fix use-after-free in hackrf_alloc_urbs() error path
+Date: Wed, 18 Nov 2026 15:26:11 +0100
+Message-ID: <20261118150220.821597170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,44 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-commit 97c8a3c1f73d828de43a5a88e8a9a143efb2b661 upstream.
+commit 6802ad4b6b267dda02209b5811edac7825c8a5f6 upstream.
 
-When TCP socket migration fails at inet_ehash_insert() in
-reqsk_timer_handler(), we jump to the no_ownership: label
-and free the new reqsk immediately with __reqsk_free().
+hackrf_alloc_urbs() frees the URBs it allocated so far when one
+allocation fails, but leaves the entries in dev->urb_list[] and
+dev->urbs_initialized untouched. The caller, hackrf_start_streaming(),
+then calls hackrf_free_urbs() on the error path, which walks
+dev->urbs_initialized entries and calls usb_free_urb() a second time on
+the already-freed URBs, causing a use-after-free (slab-use-after-free
+Write in usb_free_urb()).
 
-Thus, we must stop the new reqsk's timer before jumping to the
-label, but the timer might be missed since the cited commit,
-resulting in UAF.
+Drop the redundant cleanup loop inside hackrf_alloc_urbs() and let
+hackrf_free_urbs(), which the caller already invokes on error, own the
+cleanup of the successfully allocated URBs.
 
-As we are in the original reqsk's timer context, we can safely
-call timer_delete_sync() for the new reqsk.
-
-Let's pass false to __inet_csk_reqsk_queue_drop() to stop
-the new reqsk's timer.
-
-Fixes: 83fccfc3940c ("inet: fix potential deadlock in reqsk_queue_unlink()")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260506035954.1563147-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
+Fixes: 969ec1f6bd92 ("[media] hackrf: HackRF SDR driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/hackrf/hackrf.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1098,7 +1098,7 @@ static void reqsk_timer_handler(struct t
+--- a/drivers/media/usb/hackrf/hackrf.c
++++ b/drivers/media/usb/hackrf/hackrf.c
+@@ -665,7 +665,7 @@ static int hackrf_free_urbs(struct hackr
  
- 		if (!inet_ehash_insert(req_to_sk(nreq), req_to_sk(oreq), NULL)) {
- 			/* delete timer */
--			__inet_csk_reqsk_queue_drop(sk_listener, nreq, true);
-+			__inet_csk_reqsk_queue_drop(sk_listener, nreq, false);
- 			goto no_ownership;
- 		}
+ static int hackrf_alloc_urbs(struct hackrf_dev *dev, bool rcv)
+ {
+-	int i, j;
++	int i;
+ 	unsigned int pipe;
+ 	usb_complete_t complete;
  
+@@ -681,11 +681,8 @@ static int hackrf_alloc_urbs(struct hack
+ 	for (i = 0; i < MAX_BULK_BUFS; i++) {
+ 		dev_dbg(dev->dev, "alloc urb=%d\n", i);
+ 		dev->urb_list[i] = usb_alloc_urb(0, GFP_KERNEL);
+-		if (!dev->urb_list[i]) {
+-			for (j = 0; j < i; j++)
+-				usb_free_urb(dev->urb_list[j]);
++		if (!dev->urb_list[i])
+ 			return -ENOMEM;
+-		}
+ 		usb_fill_bulk_urb(dev->urb_list[i],
+ 				dev->udev,
+ 				pipe,
 
 
