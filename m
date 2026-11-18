@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030803;
-	b=JeSFM5B8U2+K/NIfh9xoj4dJlJjftTQsAp3LVkF4Rrhga/eQHVVMglda9PuDLW4IY4fY
-	 0mQC9n7qaSrxoR1NREWlAi+cYxX8GLyj7AH5YWGjBYG7sQds+w1gWdJpogEmqx9r/Rqo1
-	 x23uuz3F66XfULdyiSOZLu6mSqeDIw+TFw5IkKJlCoMMQvVVzdhlKU8iwj8cm+6pgwY1r
-	 M1n5FZOod8FwXkzpnHvwxGQ4vakRtsyXIOp+By6UG+FK1Ncm63TuR3U8NsH+EKMTiP0Dp
-	 zmq3Y5D1UKqKmYFWpZFqAGoOqdkN2lJVVcw+nO7fGCcnolcfOd6BIxRiIRHS3EX8c8w==
+	t=1795030806;
+	b=GJUYwgl6LkiTlmSyZnvEK4jm18WMZkXxCeJ9qu6j0NOwDUCgydRUaOx9P997CTskT0cD
+	 +38WtQs4WMmIRvFwgqAbDhKEgj31YdKnl+MbnaJfB1GGL9DXmuUGxB2A/1Rsp0gSphLxY
+	 duvYt2i4aWVrbbqB7SCyzWb9l3BWLMtxceqnKDNX0eDT4rIX+BMAn9KuYUu9hodefy1D/
+	 grqazyrplcHTHYOasTcqHqWu6d0Y9Bs1mxBStvAfeHdEpcw3od1rAuypsSlezDp/C586G
+	 SXWTid+cC9aRP3R/kqEjt2ULcwuy0AA9lvjgpOD8O4HP4WFftATVVgmzfu/VB9kQ5MQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=14BZiZ4rPCuuB1jz1jxdK/G7J6ugIsJBkm7APDjgMok=;
-	b=ekVTJS5hA1fayK2iRaIoB5MAPvmbHTkX9zgnBW9/dMatR2Cq2GnPQYU+qU7NvgUV/tcZ
-	 Qm5A/d6BWxqbr8dEcKUMcCBnrpqYv97GlcYODz6UAaQJ6dpedOk/KjwcspgBHl9tvtGpG
-	 jCYM0BKTpM0QKUxps2td+AZEUao+nk9ZSQv0YZPVahVDH03HMB6IVG/v1hYZfaqRhBp3p
-	 mRQcNXVwPWKu1/scYkHvsJWSaIvlNZ/maRS8ufrKaJJx4DcbFARP29wqyv8pg93Gv36Bf
-	 l7P2yXliNCPPhXVzwcIBU3D/KYW7yQMeUAhfrGou7Fif23FinKrfkhqNHbzI6lNmdMg==
+	bh=N9H7orIPSbJfNwk8ePLdYG9zOCmrXKMmtO+xBVHcBYI=;
+	b=Affsz6805HhVuKq2afVTtFuYDZfrqBb0PycPTYVvznh/sCqQPVwg5jAhXlGwvyQGRZ6B
+	 XLvkiKT6uidExtPHPAkfEkWVE90dBEdZfRbANdnRH7X1j7vK5TBvx4iYaCj/pK+7pV6N8
+	 WIp8UzjU1asKXjO0LVDaRYMz3EsH1uPShPVh9K1J9L/SsoD6XnQxBCZc2vcZM24vukYMR
+	 vMnsE5t7Hz6om6omVYNMTym8XqgcTIrQx/kfNj81sc+UHzkyzoJmLJIULRbaIEwCJGC3r
+	 wX8hRZQSuxN2nRdQv73eGHUFIBg8zmd7gPTmRYdZgtrRkscrR8ALCFOPjHI76oHPaYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwYwyxI0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rmjAScW5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A35606C713;
-	Wed, 18 Nov 2026 19:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9F606A92E;
+	Wed, 18 Nov 2026 19:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwYwyxI0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6521F000C4;
-	Wed, 18 Nov 2026 19:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rmjAScW5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6676F1F000C4;
+	Wed, 18 Nov 2026 19:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030803;
-	bh=14BZiZ4rPCuuB1jz1jxdK/G7J6ugIsJBkm7APDjgMok=;
+	s=korg; t=1795030805;
+	bh=N9H7orIPSbJfNwk8ePLdYG9zOCmrXKMmtO+xBVHcBYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZwYwyxI0b3EeD3+RnVeAxGbPs5lB/cC/7Ay03wtOCUG1MPyDHNo0qkhIKt6Sf8Nol
-	 VqaArft7fmQaUmr83bYiAbRVkgup4HglDy+kMkrpgIULqjKqf1pSWGCJ/JxkTryEZa
-	 evymXH+MEsNq0gugJDhUUz8oa/u5q2bl4NdZRUKM=
+	b=rmjAScW5jX5/9UL643zjeSjESdLCrlaKqVM1IHhUU0QXp8+idb4MCSDu/GGH9ILGo
+	 4xq0gZtyPTNWMezlkUaN1INM2Qu+F3wguWYKTXpsYfTM7FUxrjEONRIGw5XoXF5a6N
+	 4xfaBx6CvWiHpeoSn2eE783cYlLziwJxKCmSuRDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0793/1756] scsi: scsi_debug: Refuse a negative physblk_exp
-Date: Wed, 18 Nov 2026 15:48:40 +0100
-Message-ID: <20261118150041.281669711@linuxfoundation.org>
+Subject: [PATCH 6.12 0794/1756] scsi: scsi_debug: Take the zone metadata lock before the data lock
+Date: Wed, 18 Nov 2026 15:48:41 +0100
+Message-ID: <20261118150041.318702838@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,41 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit a349876633f7a583429367daf16f9a4282118255 ]
+[ Upstream commit c9aedbcbff0fe31fabdea09600609eb30e05441d ]
 
-sdebug_init() refuses a physblk_exp above 15, but the parameter is a signed
-int, so a negative value is accepted. The driver then shifts by it when it
-builds the Block Limits VPD page, which is undefined behaviour, and READ
-CAPACITY (16) reports an exponent of 15 for -1.
+resp_comp_write() takes the data lock and then the zone metadata lock,
+while every other command that takes both takes the metadata lock first and
+reaches the data lock through do_device_access(). A COMPARE AND WRITE and
+any other write to the same store can therefore deadlock each other.
 
-Refuse a negative value as well, and print it as a signed value.
+Take the locks in the same order as everywhere else.
+
+Correct the comment above map_region() while here: the provisioning map is
+covered by the metadata lock rather than the data lock, which is why
+resp_unmap() takes only the metadata lock.
 
 Assisted-by: LLM
-Fixes: ea61fca58c13 ("scsi_debug: Add support for physical block exponent and alignment")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-18-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-19-cassel@kernel.org
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_debug.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index de54596bbae9b..ee129f23a7c58 100644
+index ee129f23a7c58..289f298c759fc 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
-@@ -7809,8 +7809,8 @@ static int __init scsi_debug_init(void)
- 		return -EINVAL;
+@@ -4756,20 +4756,20 @@ static int resp_comp_write(struct scsi_cmnd *scp,
+ 			    "indicated=%u, IO sent=%d bytes\n", my_name,
+ 			    dnum * lb_size, ret);
+ 
+-	sdeb_data_write_lock(sip);
+ 	sdeb_meta_write_lock(sip);
++	sdeb_data_write_lock(sip);
+ 	if (!comp_write_worker(sip, lba, num, arr, false)) {
+ 		mk_sense_buffer(scp, MISCOMPARE, MISCOMPARE_VERIFY_ASC, 0);
+ 		retval = check_condition_result;
+ 		goto cleanup_unlock;
  	}
  
--	if (sdebug_physblk_exp > 15) {
--		pr_err("invalid physblk_exp %u\n", sdebug_physblk_exp);
-+	if (sdebug_physblk_exp < 0 || sdebug_physblk_exp > 15) {
-+		pr_err("invalid physblk_exp %d\n", sdebug_physblk_exp);
- 		return -EINVAL;
- 	}
- 
+-	/* Cover sip->map_storep (which map_region()) sets with data lock */
++	/* Cover sip->map_storep (which map_region() sets) with the meta lock */
+ 	if (scsi_debug_lbp())
+ 		map_region(sip, lba, num);
+ cleanup_unlock:
+-	sdeb_meta_write_unlock(sip);
+ 	sdeb_data_write_unlock(sip);
++	sdeb_meta_write_unlock(sip);
+ cleanup_free:
+ 	kfree(arr);
+ 	return retval;
 -- 
 2.53.0
 
