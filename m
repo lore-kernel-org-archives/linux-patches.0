@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030339;
-	b=xZeJjyVEJIi4Y4CMYwCVE7el5AdXhyScJgpISdQlHY/AjrXvKqdkWd00Ikb1lG1ALwPS
-	 UdyGmDHcyUeTrNGtKaZ5IKNSSUNzra3qnuR18XxmuKFQueeiYpi1eDbo1DbBn1Zv+8/Hg
-	 XC25VHCA73b5xb8PZ/O1+xc0Ld677IcLdy1XWL+b1K75QjJlmQgNFBoIKzd0B9l3aEIy2
-	 5GIDIbtXVbyHVF0btT+f3RNZQ60r8xy58vVOzVQgHYN/NrC0F7ClBrWEjkL8qQPzh/ydW
-	 H0nQETy4Q78RRVOFTuMrXup6gOvJYanzIpfOXs8VjkYwAJHydE3UU4UeJ1lQs2HfVjw==
+	t=1795030342;
+	b=f5peyds3IktrJwJvDMq0XxI/qjvqP+jcU+mBrExeKP+fc9z5q6JozgPidqco0zQOAQYC
+	 fOtaFJbTnqWwH4R40SAzMC9VBgV0BfVpLIjgMTZsKgaKB55WAB9fJ/DFVC2xzzAmR8sKa
+	 uNauPuLqtWfTct3G8vPcqLM+lmOoXU8cBHzFeYi49aVf8RYv+AzaLvIdgngc60C3/tbeZ
+	 DwXmhN0RX/AnriOFiozBnglbgP66NCRYNIqBrLVUU9GPlgvxr5/dytHQAkMgvbgHZHkxu
+	 7nZlb1mX5B3CDjVM+jf4/HR+5ZKEH8WTzL/Meih0q6qE44cIWoZZN7EGQrPSjOTK1kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fEiMCmrmqTndTNXJIvWPOxzlvG7W6AK1nULVqJyhetc=;
-	b=1eDN18PMeHN5lRLjuzamLvGc0LpKeF4MulzM1/YdtGp4X4icX3ig1uz8dGkMX8ZMoklz
-	 XG+4L/HkLerWfy+RLNHB4KXBC6b0EDg54N8QPd92j9XWVohgWdHA/tDtkGMdPu8ou/iDH
-	 weKlgrW3Dl8ZMAlzQA4uGoL8j9+OJ30cqEpTq3+1dZaI/haTY8xE6e1k7wkJKBldeEUrX
-	 FwIOULYn9eB1lhrSuKqLtxAQaSh73lpMKmPvZgKQc6jlQyehJeYhjo2Krbsn0EAntQ0cQ
-	 uBttJujOKjvprZdxwC1jACLXvvhl795vnaieqZl9EryUlFtptodZflyZ/dw4JhbSu1Q==
+	bh=dhUOpv+QZWvrZtlPsbLFJDYA1R58v/pXR59B4NfmsBk=;
+	b=sXJDDJXSZylGbM8fX3Y/bk8TGIBWisEcmO5KS9JyLclY+CR6neCv64mL4lFrKFESKiB9
+	 vpCM3n7coh0s7dtSVkFefYW3updvDRh0G8IWzQCvrjNPBts/+jwze13iPAFeJBPLKn4EF
+	 RhgWsYi2ybB+zkXxftum+Ik6bWp2ms7MriFPPqxbzwbF13OYXHkl2FJdlATYFuOer6G+G
+	 1ubWOlSTnRAuOtuj1vFXNp8lpoE7GgEve8Q3Wlc6GVPAYcUhbIgKpeX6W5oGYOYJ1GfkT
+	 LW+zEwdFsfmGt0/lyeskr7ugD4Xwa2D6jzKuSdWXgyrD5Zi8DtXLhE3o2ZjgQDOsRuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nycqdHyM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQIpoQi9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B42606A933;
-	Wed, 18 Nov 2026 19:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374F0606A33A;
+	Wed, 18 Nov 2026 19:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nycqdHyM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FCD1F000C7;
-	Wed, 18 Nov 2026 19:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQIpoQi9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5761F000C5;
+	Wed, 18 Nov 2026 19:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030339;
-	bh=fEiMCmrmqTndTNXJIvWPOxzlvG7W6AK1nULVqJyhetc=;
+	s=korg; t=1795030342;
+	bh=dhUOpv+QZWvrZtlPsbLFJDYA1R58v/pXR59B4NfmsBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nycqdHyM0buwNTA5JnnQvvTJO54Hsi8NHZcBtqX9WWqRSY2Fnz4H7p5WQBC1jI2Sb
-	 i4uiJBOttuFJoYbEuXE7ujHJUN6+mVfw7cGob5h9XwKEBNaiNw0Pohuf6r9d/yFSG4
-	 CUd5KxvRRYFbPMfTn+/PthM5ar7StUDDqW5nQMkM=
+	b=rQIpoQi9C7X19RAWXMv4aZEYyabtgGcDTlRyOdsKd+9hGZGwmHPEfwH+d09JRYcyd
+	 bg48yuek5TdqA0WU6DxY9yxTh4YFI9m8yl2/j1iofCOxjbapQiNRBZKBX2uxh/IkvC
+	 5BHov4HZCDeczqy2DDW7JXbQteNnxey2htj8kvd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0669/1756] fs/ntfs3: fix slab-out-of-bounds write in attr_insert_range()
-Date: Wed, 18 Nov 2026 15:46:36 +0100
-Message-ID: <20261118150035.902823291@linuxfoundation.org>
+Subject: [PATCH 6.12 0670/1756] cgroup/cpuset: Disable cpuset_cpumask_can_shrink() test if not load balancing
+Date: Wed, 18 Nov 2026 15:46:37 +0100
+Message-ID: <20261118150035.958410652@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,58 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit bf9a6578e03b065335836e025356b4b9170b9449 ]
+[ Upstream commit fbfbf86685b3270dc27d1c5d6108532334aaf329 ]
 
-When fallocate(FALLOC_FL_INSERT_RANGE) grows a still-resident ntfs3
-attribute, attr_insert_range() shifts the inline data using the insert
-length 'bytes' as both the destination offset and the copy size:
+With some recent proposed changes [1] in the deadline server code,
+it has caused a test failure in test_cpuset_prs.sh when a change
+is being made to an isolated partition. This is due to failing
+the cpuset_cpumask_can_shrink() check for SCHED_DEADLINE tasks at
+validate_change().
 
-  memmove(data + bytes, data, bytes);
+This is actually a false positive as the failed test case involves an
+isolated partition with load balancing disabled. The deadline check
+is not meaningful in this case and the users should know what they
+are doing.
 
-Both are wrong: the shift must start at the insertion point 'vbo' and
-move only the data past it (data_size - vbo). When bytes > data_size the
-memmove runs off the end of the data_size + bytes buffer and overflows
-the adjacent slab object.
+Fix this by doing the cpuset_cpumask_can_shrink() check only when loading
+balanced is enabled. Also change its arguments to use effective_cpus
+for the current cpuset and user_xcpus() as an approiximation for the
+target effective_cpus as the real effective_cpus hasn't been fully
+computed yet as this early stage.
 
-Since vbo < data_size is already enforced above, the reworked offsets stay
-within the data_size + bytes buffer and cannot under/overflow.
+As the check isn't comprehensive, there may be false positives or
+negatives. We may have to revise the code to do a more thorough check
+in the future if this becomes a concern.
 
-  BUG: KASAN: slab-out-of-bounds in attr_insert_range (fs/ntfs3/attrib.c:2581)
-  Write of size 512 at addr ffff8880135e8b10 by task exploit/142
-   ...
-   __asan_memmove (mm/kasan/shadow.c:95)
-   attr_insert_range (fs/ntfs3/attrib.c:2581)
-   ntfs_fallocate (fs/ntfs3/file.c:618)
-   vfs_fallocate (fs/open.c:338)
-   __x64_sys_fallocate (fs/open.c:362)
-   ...
+[1] https://lore.kernel.org/lkml/82be06c1-6d6d-4651-86c9-bcc828cbcb80@redhat.com/T/#t
 
-Fixes: 9256ec35359f ("fs/ntfs3: Refactoring attr_insert_range to restore after errors")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 8a1c0f5c8284 ("cgroup/cpuset: Run SCHED_DEADLINE shrink test on valid partition root only")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index bfb192ec29950..f7b42cc15f6d7 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -2438,8 +2438,8 @@ int attr_insert_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
- 			char *data = Add2Ptr(attr_b,
- 					     le16_to_cpu(attr_b->res.data_off));
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 5991a9a354aad..02f02ab517fdb 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -616,12 +616,24 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
  
--			memmove(data + bytes, data, bytes);
--			memset(data, 0, bytes);
-+			memmove(data + vbo + bytes, data + vbo, data_size - vbo);
-+			memset(data + vbo, 0, bytes);
- 			goto done;
- 		}
+ 	/*
+ 	 * We can't shrink if we won't have enough room for SCHED_DEADLINE
+-	 * tasks.
++	 * tasks. This check is not done when scheduling is disabled as the
++	 * users should know what they are doing.
++	 *
++	 * For v1, effective_cpus == cpus_allowed & user_xcpus() returns
++	 * cpus_allowed.
++	 *
++	 * For v2, is_cpu_exclusive() & is_sched_load_balance() are true only
++	 * for non-isolated partition root. At this point, the target
++	 * effective_cpus isn't computed yet. user_xcpus() is the best
++	 * approximation.
++	 *
++	 * TBD: May need to precompute the real effective_cpus here in case
++	 * incorrect scheduling of SCHED_DEADLINE tasks in a partition
++	 * becomes an issue.
+ 	 */
+ 	ret = -EBUSY;
+-	if (is_cpu_exclusive(cur) &&
+-	    !cpuset_cpumask_can_shrink(cur->cpus_allowed,
+-				       trial->cpus_allowed))
++	if (is_cpu_exclusive(cur) && is_sched_load_balance(cur) &&
++	    !cpuset_cpumask_can_shrink(cur->effective_cpus, user_xcpus(trial)))
+ 		goto out;
  
+ 	/*
 -- 
 2.53.0
 
