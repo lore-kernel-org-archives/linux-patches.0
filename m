@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042008;
-	b=eYg3e5HkD2nPzu5m+M/nYk73CgatoZMgnSeLQJwj3ytHiVPPOqxUDKtZCDASvFtfgt7v
-	 hTmdGOdqgXoqMY39NSQSM0F9bNQUj2JXOmdyJ8/K1lrjypOK46FWQABjxeB3tLZHcnFNO
-	 PhiSPVTcllOhFMcVS/jjjIjbVVnNpHZ6WYHDxYKKY38qAgRrFK6Z5h5bQRtm3fMJrtRU/
-	 lW2Xz8K+BDN77CVMdUXvRZec+PkJXeJhiPjjfK5yCLS1L0TrivmDlZdHoilYkLYvpMIdT
-	 O7kq58u6zWmLXWCdL0nifos0iZVkF5ALCl7+InPQQXrmiOzdzrQyIuV9IfzIyUOXDvQ==
+	t=1795042011;
+	b=lyrJ/zxSuCBzBaJhXPC0jocomZ30bI+BLilaf5Ve0aUt3iuqLzkJipJ0Ck+IEP9m26+M
+	 JZ4borYtIWJCMZ0fI0e22xDhG1F2GahkW/z9EmmTMBHTmkasDZebS+P7IA0/EyFgXf8yD
+	 Y04AgXsvh1Ow7LTzwutD7UvKBVpL+CnKV/qDKcf87RWcgKMgTBeTLLNLiw/6dx1tqh7gT
+	 0Vvmlxjcvlq3RRzjhAUKod/nUntNgd7LClLyBcLnJottEKYbB+IR0Q7C+XI/bAtKm2UBp
+	 gJO9Z6+whSvhuxtWr5pp7VR2VnsDV8inEJWQYmaCNvO2kabU5Z3As+1n1u31BwznzYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8QxxyM0DXH+qE5uSuSSso3od8PbrAwnEzx6OzAl8Fck=;
-	b=DTspsC9S7TBSQwniGptaHPK2bNj0ByCSLdv1amvai9Ud+Gaw61VqLvoezZS9lO/ZzNgn
-	 Qu3Z6q2E0IqWsdzGpGjCQUGdQwDiG/QZ744YgaH+8tt0Uhb1idBE169ECaTLcn4TY9lmi
-	 mhdByzNiLPiIBt9ir/GfvyJzJZuG+QwA41W0onmsYT8KxuQFCaRTNJeiYK5Kx8QIT6OHn
-	 nyjLvdyYc71n5YkIw3Wd4HD9XBHya6k5AE1FLKx5gNANBD3BmGXDw5GuQrnfoob4JiHsQ
-	 u3GwiEAJPwloGCd39o+yOPNOSQF3eEvlpTnU4c/F/YM43Vng384vab2ExUWhjFTa5JQ==
+	bh=TyPTo9Nj6Ji1lubXsvv6H4n/KoSCtldYG0PxthrrhFQ=;
+	b=foWsmoEVy4X5azXy5CuntH8GPCqnG/tVrwYsXOARtZ7Pefiyg4cRymXLjn/kcAEobXlj
+	 X87rkkjN4IXGcJZI+g6sEfbTBq8yqPBH1kamYTK9yyWkDbupzjecXTVZWZjMcU1O035b1
+	 BERFWGgJWOb6NlucOVDfk8XTsDPnSJAC/2zVHXdMne2iiGAZzu8iozQ8uziSI92PTsVsw
+	 iXveBAMYbz+HvzWOP9IX2wNc8X/SM7p+3+vzxuUS/XylMQa8y1m9NzEMNoNqRSV1N/tMe
+	 K7X0KwPCsEthOMgKEIsbku3drLsLu1cbbkONw8lNiKMmY7fL1TX3YZU07JFEIN6bViw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEo+jUXI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=beksy+nH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48014606A32A;
-	Wed, 18 Nov 2026 22:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D594606A320;
+	Wed, 18 Nov 2026 22:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEo+jUXI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CF91F000C4;
-	Wed, 18 Nov 2026 22:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=beksy+nH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9DD1F000C4;
+	Wed, 18 Nov 2026 22:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042008;
-	bh=8QxxyM0DXH+qE5uSuSSso3od8PbrAwnEzx6OzAl8Fck=;
+	s=korg; t=1795042010;
+	bh=TyPTo9Nj6Ji1lubXsvv6H4n/KoSCtldYG0PxthrrhFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sEo+jUXIXqiSAc0PpPPKsiEtaTmkFmhyiYtNfeskSUpDUzfwBLMKIigi6HEWFBepI
-	 f37AaPn0ephMqiqZqIbClrshoKtm8vVIA7d9G1OOFxVk/jcZvmzaeZbyZaLCrOZRjk
-	 n3b0V7rD1CftBSq45u7Iir/j+LxshG+Fe9GchKp8=
+	b=beksy+nHuohN7Wvel2GTbzvUMayjvBZYmKvGOTvWFS2kcAy/KN9iqKMArgLqdUIel
+	 dVoePTPCnqWHw+YnUM99uyOegbGcMEXlRVeBbDEKrvnZhWrwRFVwjL9mlka8EByTDK
+	 TD1tg9gJW/4CJNm8LkyGRd8+Bp7MIFCFJlMDVDic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3016/3318] bpf: Reorder bpf_prog_test_run_skb initialization
-Date: Wed, 18 Nov 2026 16:00:38 +0100
-Message-ID: <20261118150450.701036168@linuxfoundation.org>
+Subject: [PATCH 6.6 3017/3318] bpf: Craft non-linear skbs in BPF_PROG_TEST_RUN
+Date: Wed, 18 Nov 2026 16:00:39 +0100
+Message-ID: <20261118150450.728419250@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,67 +72,249 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 57bb2f6717930a5e670da179c316159719b724a2 ]
+[ Upstream commit 838baa351cee86526973fb3ef49c0f4c1b2f3b0c ]
 
-This patch reorders the initialization of bpf_prog_test_run_skb to
-simplify the subsequent patch. Program types are checked first, followed
-by the ctx init, and finally the data init. With the subsequent patch,
-program types and the ctx init provide information that is used in the
-data init. Thus, we need the data init to happen last.
+This patch adds support for crafting non-linear skbs in BPF test runs
+for tc programs. The size of the linear area is given by ctx->data_end,
+with a minimum of ETH_HLEN always pulled in the linear area. If ctx or
+ctx->data_end are null, a linear skb is used.
 
+This is particularly useful to test support for non-linear skbs in large
+codebases such as Cilium. We've had multiple bugs in the past few years
+where we were missing calls to bpf_skb_pull_data(). This support in
+BPF_PROG_TEST_RUN would allow us to automatically cover this case in our
+BPF tests.
+
+LWT program types are currently excluded in this patch. Allowing
+non-linear skbs for these programs would require a bit more care because
+they are able to call helpers (ex., bpf_clone_redirect, bpf_redirect)
+that themselves call eth_type_trans(). eth_type_trans() assumes there
+are at least ETH_HLEN bytes in the linear area. That may not be true
+for LWT programs as we already pulled the L2 header via the
+eth_type_trans() call in bpf_prog_test_run_skb().
+
+In addition to the selftests introduced later in the series, this patch
+was tested by enabling non-linear skbs for all tc selftests programs
+and checking test failures were expected.
+
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/063475176f15828a882c07846017394baf72f682.1760037899.git.paul.chaignon@gmail.com
+Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/5694d4d1af31bddf974afcb1bbb1e28b8998dcd0.1760037899.git.paul.chaignon@gmail.com
 Stable-dep-of: 6aff0129f327 ("bpf: Use the socket of a sk_lookup test run under RCU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ net/bpf/test_run.c | 103 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 82 insertions(+), 21 deletions(-)
 
 diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 2522b0f79d15f..f677038cbb20f 100644
+index f677038cbb20f..5d7e87459e74b 100644
 --- a/net/bpf/test_run.c
 +++ b/net/bpf/test_run.c
-@@ -973,19 +973,6 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	if (size < ETH_HLEN)
+@@ -435,7 +435,7 @@ static int bpf_test_run(struct bpf_prog *prog, void *ctx, u32 repeat,
+ 
+ static int bpf_test_finish(const union bpf_attr *kattr,
+ 			   union bpf_attr __user *uattr, const void *data,
+-			   struct skb_shared_info *sinfo, u32 size,
++			   struct skb_shared_info *sinfo, u32 size, u32 frag_size,
+ 			   u32 retval, u32 duration)
+ {
+ 	void __user *data_out = u64_to_user_ptr(kattr->test.data_out);
+@@ -452,7 +452,7 @@ static int bpf_test_finish(const union bpf_attr *kattr,
+ 	}
+ 
+ 	if (data_out) {
+-		int len = sinfo ? copy_size - sinfo->xdp_frags_size : copy_size;
++		int len = sinfo ? copy_size - frag_size : copy_size;
+ 
+ 		if (len < 0) {
+ 			err = -ENOSPC;
+@@ -874,6 +874,12 @@ static int convert___skb_to_skb(struct sk_buff *skb, struct __sk_buff *__skb)
+ 	/* cb is allowed */
+ 
+ 	if (!range_is_zero(__skb, offsetofend(struct __sk_buff, cb),
++			   offsetof(struct __sk_buff, data_end)))
++		return -EINVAL;
++
++	/* data_end is allowed, but not copied to skb */
++
++	if (!range_is_zero(__skb, offsetofend(struct __sk_buff, data_end),
+ 			   offsetof(struct __sk_buff, tstamp)))
  		return -EINVAL;
+ 
+@@ -953,34 +959,39 @@ static struct proto bpf_dummy_proto = {
+ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 			  union bpf_attr __user *uattr)
+ {
+-	bool is_l2 = false, is_direct_pkt_access = false;
++	bool is_l2 = false, is_direct_pkt_access = false, is_lwt = false;
++	u32 tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+ 	struct net *net = current->nsproxy->net_ns;
+ 	struct net_device *dev = net->loopback_dev;
+-	u32 size = kattr->test.data_size_in;
++	u32 headroom = NET_SKB_PAD + NET_IP_ALIGN;
++	u32 linear_sz = kattr->test.data_size_in;
+ 	u32 repeat = kattr->test.repeat;
+ 	struct __sk_buff *ctx = NULL;
+ 	struct sk_buff *skb = NULL;
+ 	struct sock *sk = NULL;
+ 	u32 retval, duration;
+ 	int hh_len = ETH_HLEN;
+-	void *data;
++	void *data = NULL;
+ 	int ret;
+ 
+ 	if ((kattr->test.flags & ~BPF_F_TEST_SKB_CHECKSUM_COMPLETE) ||
+ 	    kattr->test.cpu || kattr->test.batch_size)
+ 		return -EINVAL;
+ 
+-	if (size < ETH_HLEN)
++	if (kattr->test.data_size_in < ETH_HLEN)
+ 		return -EINVAL;
+ 
+ 	switch (prog->type) {
+ 	case BPF_PROG_TYPE_SCHED_CLS:
+ 	case BPF_PROG_TYPE_SCHED_ACT:
++		is_direct_pkt_access = true;
+ 		is_l2 = true;
+-		fallthrough;
++		break;
+ 	case BPF_PROG_TYPE_LWT_IN:
+ 	case BPF_PROG_TYPE_LWT_OUT:
+ 	case BPF_PROG_TYPE_LWT_XMIT:
++		is_lwt = true;
++		fallthrough;
+ 	case BPF_PROG_TYPE_CGROUP_SKB:
+ 		is_direct_pkt_access = true;
+ 		break;
+@@ -992,9 +1003,24 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 	if (IS_ERR(ctx))
+ 		return PTR_ERR(ctx);
  
 -	data = bpf_test_init(kattr, kattr->test.data_size_in,
 -			     size, NET_SKB_PAD + NET_IP_ALIGN,
 -			     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
--	if (IS_ERR(data))
--		return PTR_ERR(data);
--
--	ctx = bpf_ctx_init(kattr, sizeof(struct __sk_buff));
--	if (IS_ERR(ctx)) {
--		ret = PTR_ERR(ctx);
--		ctx = NULL;
--		goto out;
--	}
--
- 	switch (prog->type) {
- 	case BPF_PROG_TYPE_SCHED_CLS:
- 	case BPF_PROG_TYPE_SCHED_ACT:
-@@ -1001,6 +988,19 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		break;
- 	}
- 
-+	ctx = bpf_ctx_init(kattr, sizeof(struct __sk_buff));
-+	if (IS_ERR(ctx))
-+		return PTR_ERR(ctx);
-+
-+	data = bpf_test_init(kattr, kattr->test.data_size_in,
-+			     size, NET_SKB_PAD + NET_IP_ALIGN,
-+			     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
-+	if (IS_ERR(data)) {
-+		ret = PTR_ERR(data);
-+		data = NULL;
-+		goto out;
++	if (ctx) {
++		if (ctx->data_end > kattr->test.data_size_in || ctx->data || ctx->data_meta) {
++			ret = -EINVAL;
++			goto out;
++		}
++		if (ctx->data_end) {
++			/* Non-linear LWT test_run is unsupported for now. */
++			if (is_lwt) {
++				ret = -EINVAL;
++				goto out;
++			}
++			linear_sz = max(ETH_HLEN, ctx->data_end);
++		}
 +	}
 +
- 	sk = sk_alloc(net, AF_UNSPEC, GFP_USER, &bpf_dummy_proto, 1);
- 	if (!sk) {
- 		ret = -ENOMEM;
++	linear_sz = min_t(u32, linear_sz, PAGE_SIZE - headroom - tailroom);
++
++	data = bpf_test_init(kattr, linear_sz, linear_sz, headroom, tailroom);
+ 	if (IS_ERR(data)) {
+ 		ret = PTR_ERR(data);
+ 		data = NULL;
+@@ -1018,7 +1044,43 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 	data = NULL; /* data released via kfree_skb */
+ 
+ 	skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN);
+-	__skb_put(skb, size);
++	__skb_put(skb, linear_sz);
++
++	if (unlikely(kattr->test.data_size_in > linear_sz)) {
++		void __user *data_in = u64_to_user_ptr(kattr->test.data_in);
++		struct skb_shared_info *sinfo = skb_shinfo(skb);
++		u32 copied = linear_sz;
++
++		while (copied < kattr->test.data_size_in) {
++			struct page *page;
++			u32 data_len;
++
++			if (sinfo->nr_frags == MAX_SKB_FRAGS) {
++				ret = -ENOMEM;
++				goto out;
++			}
++
++			page = alloc_page(GFP_KERNEL);
++			if (!page) {
++				ret = -ENOMEM;
++				goto out;
++			}
++
++			data_len = min_t(u32, kattr->test.data_size_in - copied,
++					 PAGE_SIZE);
++			skb_fill_page_desc(skb, sinfo->nr_frags, page, 0, data_len);
++
++			if (copy_from_user(page_address(page), data_in + copied,
++					   data_len)) {
++				ret = -EFAULT;
++				goto out;
++			}
++			skb->data_len += data_len;
++			skb->truesize += PAGE_SIZE;
++			skb->len += data_len;
++			copied += data_len;
++		}
++	}
+ 
+ 	if (ctx && ctx->ifindex > 1) {
+ 		dev = dev_get_by_index(net, ctx->ifindex);
+@@ -1123,12 +1185,11 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 
+ 	convert_skb_to___skb(skb, ctx);
+ 
+-	size = skb->len;
+-	/* bpf program can never convert linear skb to non-linear */
+-	if (WARN_ON_ONCE(skb_is_nonlinear(skb)))
+-		size = skb_headlen(skb);
+-	ret = bpf_test_finish(kattr, uattr, skb->data, NULL, size, retval,
+-			      duration);
++	if (skb_is_nonlinear(skb))
++		/* bpf program can never convert linear skb to non-linear */
++		WARN_ON_ONCE(linear_sz == kattr->test.data_size_in);
++	ret = bpf_test_finish(kattr, uattr, skb->data, skb_shinfo(skb), skb->len,
++			      skb->data_len, retval, duration);
+ 	if (!ret)
+ 		ret = bpf_ctx_finish(kattr, uattr, ctx,
+ 				     sizeof(struct __sk_buff));
+@@ -1345,7 +1406,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		goto out;
+ 
+ 	size = xdp.data_end - xdp.data_meta + sinfo->xdp_frags_size;
+-	ret = bpf_test_finish(kattr, uattr, xdp.data_meta, sinfo, size,
++	ret = bpf_test_finish(kattr, uattr, xdp.data_meta, sinfo, size, sinfo->xdp_frags_size,
+ 			      retval, duration);
+ 	if (!ret)
+ 		ret = bpf_ctx_finish(kattr, uattr, ctx,
+@@ -1436,7 +1497,7 @@ int bpf_prog_test_run_flow_dissector(struct bpf_prog *prog,
+ 		goto out;
+ 
+ 	ret = bpf_test_finish(kattr, uattr, &flow_keys, NULL,
+-			      sizeof(flow_keys), retval, duration);
++			      sizeof(flow_keys), 0, retval, duration);
+ 	if (!ret)
+ 		ret = bpf_ctx_finish(kattr, uattr, user_ctx,
+ 				     sizeof(struct bpf_flow_keys));
+@@ -1537,7 +1598,7 @@ int bpf_prog_test_run_sk_lookup(struct bpf_prog *prog, const union bpf_attr *kat
+ 		user_ctx->cookie = sock_gen_cookie(ctx.selected_sk);
+ 	}
+ 
+-	ret = bpf_test_finish(kattr, uattr, NULL, NULL, 0, retval, duration);
++	ret = bpf_test_finish(kattr, uattr, NULL, NULL, 0, 0, retval, duration);
+ 	if (!ret)
+ 		ret = bpf_ctx_finish(kattr, uattr, user_ctx, sizeof(*user_ctx));
+ 
+@@ -1737,7 +1798,7 @@ int bpf_prog_test_run_nf(struct bpf_prog *prog,
+ 	if (ret)
+ 		goto out;
+ 
+-	ret = bpf_test_finish(kattr, uattr, NULL, NULL, 0, retval, duration);
++	ret = bpf_test_finish(kattr, uattr, NULL, NULL, 0, 0, retval, duration);
+ 
+ out:
+ 	kfree(user_ctx);
 -- 
 2.53.0
 
