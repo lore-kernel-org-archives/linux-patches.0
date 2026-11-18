@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049058;
-	b=gD7paeQhSjkn2eKX+CDB+QprVI4y3KdnH4ZCo0aCJj1SvuVzlyo1rRquinZpO8QErVo5
-	 q7ubr6SRLUnqL5K6HsUHwPOI4mSBAqjDkPdVGhN2oMN30bNwW5OP2cktOmsIcx/i5SXzW
-	 fv9h73gXPfryUZHigvSouM6KvDYU+18OfTs9DUSVNYLbEfz4yfIt0fIqxJVXmICZQj1qA
-	 9xhQNE6yEUF16pOKADMonf62XfAurQIOD6oFm6q4BhFg0VPv36RUUW5jDfiz5fgxvmJal
-	 /7jVy9LfdPs5/Clw4PM5V3N/xJVpmTvdi6R2twFyDyeKZfJWBLfEXwjEvn6uvidkvjA==
+	t=1795049061;
+	b=JebF3o0LYdWKi8ShrP+EdGFppEUxFZlw9NkDpt5pexkzud+EeFJGUmmR/i0Hax0lPJW6
+	 1JLJINo667e1G1hEgLF9R5LJ17BPLB6x/MP/BZCUMfwXWISQ0EakuApLePMTzGweCKpCP
+	 Gt5Wdo0Eq982b59sfBKd4gS9lylkxZB3ZYlCpk8YVXc+w2EcrUvCfwhXYC+ZDgpQj9mil
+	 FUObdNJfQlmGpV57+oQ+zxQZGuoxVAkYHP/ak5cD5j8MCSAp7vC8DJVJtxrwzhCjjUbrB
+	 wShnxVf+ufaFctb/6JUqjgxYTZi4DXucOA4X+adV/AvFhmpDZC3/tuV+OtvlGRWyroA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZxUWBv33zHGB8NGc6Ht3TVz0OjTpogwUm8XBo2U6wk4=;
-	b=yUUvUfLQxMzZ9d5eCZ6kfzFH7e1Legdr6CJuHR2B5yVsuV44f+C1tov0EPVHTh+rIyXx
-	 urrzE6lzNnYBveV5DvKPP7ewxdHxikyUR0wJoKA/f/BBREbhHRsB8ULNrC1l6E1Nc3NJ0
-	 XXByL0t2joq/fXoZM22IMqW6r1atoASBMTU6PuaXCLCI7VNjtoc1+aa3SVAgWZJ3dkEIt
-	 mNfBlkaMi7j3kMNdG07XVeLCLwq6SO769aqVkzWYEwxnpEMFuJ0YCWYHcyEmRBxle8kQ8
-	 feqFcVZjwyVbdNi4FKK4gbFY0DXgdM9LtmhXzo+Nd3j0BBo6QxLqnObbT4fyP93Mn0A==
+	bh=fYa8vTFMG3gJfUBFPp+U6JKySiQ0gpw9zrc0jDA6OuQ=;
+	b=D1dquiU1xCeEPMdxzqju9RQIHATZFUB6L9yohPTvOs+KU+97EKDtfBHJOw9WhmxWEU8l
+	 pzqxrRRB3C4UrmcdMe9kZbuxnk81b45i7GluOuj/9qNfIg5R6IxGwV3vrzb7w56N89tiA
+	 wO1n2NNyWbX639fQa8jiVKVVkK0qFxK4gK/mioR2tsH8lO9CxVlucffgXW9MmG0pIWKO8
+	 chOxXTdrUxYKp6rrOhXd7D45IwqyVpr195qNA69PuZy14pV6ZgSlROYnx8Yg5bFSkFBLs
+	 ZamQ1ds682/kqjcJ/UaHSjotgQsycFt+vHlqkTgzGXt9gT4+THvglE68bLkVUiq8FMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSDPta4s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cuf+S7es;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA86606A31C;
-	Thu, 19 Nov 2026 00:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489A7606A32A;
+	Thu, 19 Nov 2026 00:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSDPta4s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E551F000C4;
-	Thu, 19 Nov 2026 00:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cuf+S7es
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955831F000C4;
+	Thu, 19 Nov 2026 00:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049058;
-	bh=ZxUWBv33zHGB8NGc6Ht3TVz0OjTpogwUm8XBo2U6wk4=;
+	s=korg; t=1795049061;
+	bh=fYa8vTFMG3gJfUBFPp+U6JKySiQ0gpw9zrc0jDA6OuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSDPta4sol3kiNCFyf4OgGRvp4R2oZ90Jxx3l55b3nxPsywG+vg9yLu50z76pyu8N
-	 eIGi8LXW6WT0Xd/qYKFBbQbGEYgUAbqWAcx9yshg9wfOpG+UnrQCTUHOxuD0ijhY3i
-	 LEWVHF9k7ch3VDUR6y12brRk2w9vN02QIx29ut/w=
+	b=cuf+S7esRzWW7WvXzZgyLmfAOsEiAFhIdkYMrpt8WsFWQy7zYCAH8CyZSnhiLtYbL
+	 GymwgbtwxhK8y/3FwkP9MosBa5QjTkOBbYsomH9uibsZujmijuv+Wheq2N5FlwjSBl
+	 EBqFkcpL9fwdMY0TlRNn8niLUkYdFESMXhzLfcPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2215/2857] power: supply: ab8500_fg: Finalize current measurements
-Date: Wed, 18 Nov 2026 15:54:09 +0100
-Message-ID: <20261118150321.171762581@linuxfoundation.org>
+Subject: [PATCH 6.1 2216/2857] power: supply: ab8500_fg: Avoid reserved AB8505 CCConf bit
+Date: Wed, 18 Nov 2026 15:54:10 +0100
+Message-ID: <20261118150321.209443053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,72 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9a0461fb5e7cc64ed303bee3661452879ee139a1 ]
+[ Upstream commit edafb2e4642b72b0f86ce5990d5c29c116bb642b ]
 
-ab8500_fg_inst_curr_start() returns with cc_lock held and the CCEOC
-IRQ enabled. The bounded sampling loop in the load-compensated voltage
-path returns without calling ab8500_fg_inst_curr_finalize() when it
-expires, leaving both resources active. The next fuel-gauge work item
-then blocks on cc_lock and all cached power-supply values stop updating.
+AB8500 defines CCConf bit 1 as CCDeepSleepEna, but AB8505 reserves
+bits 7:1 and only defines bit 0, CCPwrUpEna. The fuel-gauge driver
+currently writes both bits whenever it starts the coulomb counter.
 
-The Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
-Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO product trees use
-a bounded sampling loop in drivers/battery/abb_fuelgauge.c but still
-call the finalizer. Follow that pattern so the normal completion timeout
-also performs the required cleanup.
+The Samsung-GT-S7710-Skomer and related Samsung product trees use the
+same unconditional value in their fuel-gauge drivers, so they provide
+no AB8505 workaround to carry over. Select the value from the detected
+PMIC variant instead, retaining the deep-sleep enable bit on all
+existing non-AB8505 paths and avoiding the reserved bit on AB8505.
 
-Check the start result as well and return an uncompensated voltage if
-the instantaneous current transaction cannot be started or completed.
-
-Fixes: edc400e1632f ("power: supply: ab8500_fg: Break loop for measurement")
+Fixes: a982362c1723 ("mfd: Support for the AB8500 AB8505 variant")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-14-e986ed321cc6@kernel.org
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-15-e986ed321cc6@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/power/supply/ab8500_fg.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index 766e5cfad4eb0..681b25fc14a3f 100644
+index 681b25fc14a3f..1397dbd17c5cd 100644
 --- a/drivers/power/supply/ab8500_fg.c
 +++ b/drivers/power/supply/ab8500_fg.c
-@@ -939,9 +939,15 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
- 	int i = 0;
- 	int vbat_uv = 0;
- 	int rcomp;
-+	int ret;
+@@ -456,6 +456,16 @@ static void ab8500_fg_fill_cap_sample(struct ab8500_fg *di, int sample)
+ 	avg->avg = sample;
+ }
  
- 	/* Average the instant current to get a stable current measurement */
--	ab8500_fg_inst_curr_start(di);
-+	ret = ab8500_fg_inst_curr_start(di);
-+	if (ret) {
-+		dev_err(di->dev, "failed to start instantaneous current measurement\n");
-+		di->vbat_uv = ab8500_fg_bat_voltage(di);
-+		return di->vbat_uv;
-+	}
++static u8 ab8500_fg_cc_config(struct ab8500_fg *di)
++{
++	u8 config = CC_PWR_UP_ENA;
++
++	if (!is_ab8505(di->parent))
++		config |= CC_DEEP_SLEEP_ENA;
++
++	return config;
++}
++
+ /**
+  * ab8500_fg_coulomb_counter() - enable coulomb counter
+  * @di:		pointer to the ab8500_fg structure
+@@ -486,7 +496,7 @@ static int ab8500_fg_coulomb_counter(struct ab8500_fg *di, bool enable)
+ 		/* Start the CC */
+ 		ret = abx500_set_register_interruptible(di->dev, AB8500_RTC,
+ 			AB8500_RTC_CC_CONF_REG,
+-			(CC_DEEP_SLEEP_ENA | CC_PWR_UP_ENA));
++			ab8500_fg_cc_config(di));
+ 		if (ret)
+ 			goto cc_err;
  
- 	do {
- 		vbat_uv += ab8500_fg_bat_voltage(di);
-@@ -950,15 +956,14 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
- 	} while (!ab8500_fg_inst_curr_done(di) &&
- 		 i <= WAIT_FOR_INST_CURRENT_MAX);
- 
--	if (i > WAIT_FOR_INST_CURRENT_MAX) {
-+	ret = ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
-+	if (ret) {
- 		dev_err(di->dev,
- 			"TIMEOUT: return uncompensated measurement of VBAT\n");
- 		di->vbat_uv = vbat_uv / i;
- 		return di->vbat_uv;
- 	}
- 
--	ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
--
- 	/*
- 	 * If there is too high current dissipation, the compensation cannot be
- 	 * trusted so return an error unless we must return something here, as
+@@ -560,7 +570,7 @@ int ab8500_fg_inst_curr_start(struct ab8500_fg *di)
+ 		/* Start the CC */
+ 		ret = abx500_set_register_interruptible(di->dev, AB8500_RTC,
+ 			AB8500_RTC_CC_CONF_REG,
+-			(CC_DEEP_SLEEP_ENA | CC_PWR_UP_ENA));
++			ab8500_fg_cc_config(di));
+ 		if (ret)
+ 			goto fail;
+ 	} else {
 -- 
 2.53.0
 
