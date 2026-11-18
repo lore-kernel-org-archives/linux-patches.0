@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050556;
-	b=eDWIBCRaRgGm9j0pyzE0GA3kBroEr71l4B4H/q5OWI6bPm4+tDuSLBjFhS/MsYf+QZQ8
-	 K4aVbPgYaGLOJnVHZb6Nw+8XY4SQoi8ldbUa2+BSP0IG+/wjFvzWJfztRBqHSW/XXnMXF
-	 EJtPPDmG+heq0PIP2AHGERMjoWoCIJ0/c3LSuxBKIMRBkXi9ODFTKAn7RW4rSuS9qnVjX
-	 6pmlmQSEb8gmQDyExw5u/KDo1Y6PvFmTCTr7/QU7Hg4BxR8Ze7oJ8f18oz/xSYX+1knXS
-	 QTrYznDDxXAACWsHpmy36CrFl1V3dQzUKjUKCHbTAmtCQBBaQH8phw+JbG6KEscusNw==
+	t=1795050559;
+	b=Xq9eFfjce1l891iW9Dw0hZqnztr9YdkdkLgymVyfFvsVIAhI5V0UBC8EqydZM5k154ha
+	 EY2zEx32/cw/SVNj8fCut7bimklOrMNtWV0VGNP27Dcgy88DKaVgE19LZB96mNE/dFWO7
+	 aJ7S4J8MK8qUqFUZHCvFQB54+usc4yKZrx0Iyayj2pJwhbWDvNlmvA5aVVRSbRBrAjTbd
+	 870nxIi21P9v9mMGedvbKx7TCWl1Uv+tW3g9ECM9Z+nhZNobV3j7gUQoZsGHa+/0/zmMX
+	 3TGAJOxjOGHkUdV+BYrAWGzu1node4z+V8sh+v+QRt09ve/U7227uzavSC35QcyA2gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WhUc9CkO+U4XG46tKopJ0ZMZIZAwde1CMhFB/TSEqBk=;
-	b=FmUDqw2UnqSSDNPOvHXpB2MkLmOShkrJ/Qx+vreTfBfKhHQO3M7RJ13FZt6hfLlqp8uL
-	 XefSyDjuhC+Qm6zy+mHCGl/5wijx4MNrlWRSrSMijV8fodAn9sRJa6I0YGXEvykt5Uvqa
-	 n4ZrEA4zkSo1q0Q3L0j/p6ApLcjagMQ3Df/MjZSinp3vhWLOOwxWY/Him/ohK0PMONw34
-	 EFu4GxifejP9VgYgHb1Ffo3uPPUoAU0Ln1+jPekZJFaD+u4XTrxZAiH4Vrk4LC7GI0qFT
-	 wOo5SLEqnDAOvQMDcQ+etVRyah5df5WL3+/lL+3VnmEe5AsdOdDU4zxJoXLpZMLCIRQ==
+	bh=z9m8de/2FD7ZeCFhmkjZ7KpI66xSlSItt/wGKM0bo0Q=;
+	b=lB4wvDIPG4+DlwYhkNt+b9dDFXkMrH++RPeC6g4ArR7qM9vh3HmZOy/A3Ay9470vBSZn
+	 MMRE5GmRZ2LYG4t/y2sAKAkj+dqVYS0qcsG0as0u/TyBLIIia1eIy0RmVGHFqzc9/lGHw
+	 M/1OvttrWRxRYSoQINepQO93Di5N8F57oyM4M9VfeUC7NEd1cBMluKOvxEFiQ1KeHp4TQ
+	 ZeHgJz4fSKFMUBSVz7wDM0/swnn6+EWncRGIbHTQv3pO3d7FKlOBlm813baeyz7oxXAIh
+	 glS8s6zX1DiPGZz7Yzmw6rNXOd5HQu/OWwcxEXSAPHu5dx9FCZkwtqRPgRZKJol4yyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0oopqTml;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1Ia9pm+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB18606A320;
-	Thu, 19 Nov 2026 01:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BB9606A325;
+	Thu, 19 Nov 2026 01:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0oopqTml
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5331F000C4;
-	Thu, 19 Nov 2026 01:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1Ia9pm+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED521F000C4;
+	Thu, 19 Nov 2026 01:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050556;
-	bh=WhUc9CkO+U4XG46tKopJ0ZMZIZAwde1CMhFB/TSEqBk=;
+	s=korg; t=1795050559;
+	bh=z9m8de/2FD7ZeCFhmkjZ7KpI66xSlSItt/wGKM0bo0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0oopqTmlTYza9MFTSyb/TcCFVrZPE9ikH55wxJJQZ7suF4HE4PS//TtDM10srvg/M
-	 hlPD4v/vjNRhN/D68Yupasi0a0/5a7n/TGytqYELvBE65IRIsKY1c+vLutK0z5A043
-	 HDq+CKW5kjFmBNKuCbw0cagtxTFL6iSAirYaK+uw=
+	b=l1Ia9pm+xVptGYNBnHG0Bux617KxgRiK2lvdn65e3aTC+8h9ogh6kdpWeG63+aPlD
+	 TjcWzu7nEOZswWHU0bAbz3T4wvCcXhTEYWhMJIZkd1jznvhoxPpLuvZlqpvf6oF/V5
+	 7NLFZyCADOUy3uVpjkHi2sL/WBHT54uxdSq91GkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cheng Yongkang <teel4res@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2713/2857] tls: move tls_cipher_size_desc to net/tls/tls.h
-Date: Wed, 18 Nov 2026 16:02:27 +0100
-Message-ID: <20261118150339.300298684@linuxfoundation.org>
+Subject: [PATCH 6.1 2749/2857] net: tun: hold napi_mutex when deleting NAPI in tun_detach_all()
+Date: Wed, 18 Nov 2026 16:03:03 +0100
+Message-ID: <20261118150340.593535423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,64 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit fd0fc6fdd8896a195cb7b0210a5ee46774718fc8 ]
+[ Upstream commit 6c799b4998c87bb44574bb090b8728bb3b3dbc47 ]
 
-It's only used in net/tls/*, no need to bloat include/net/tls.h.
+With IFF_NAPI_FRAGS, tun_get_user() takes tfile->napi_mutex, gets the
+skb from napi_get_frags() and copies the user data into it before it
+enters the RCU read-side section around napi_gro_frags().
 
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/dd9fad80415e5b3575b41f56b331871038362eab.1692977948.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c43c1c24f3cd ("tls: avoid field-spanning write when copying crypto info")
+tun_detach_all() waits with synchronize_net() and then calls
+tun_napi_del() without napi_mutex.  netif_napi_del() frees napi->skb
+through napi_free_frags().  A writer that is still copying has not yet
+entered its RCU section, so synchronize_net() does not wait for it, and
+deleting the device frees the skb while the writer is using it:
+
+  BUG: KASAN: slab-use-after-free in skb_copy_datagram_from_iter+0x175/0x720
+  Read of size 8 at addr ffff888077def990 by task br029-poc/9406
+  Call Trace:
+   skb_copy_datagram_from_iter+0x175/0x720
+   tun_get_user+0xb42/0x3d00
+   tun_chr_write_iter+0x113/0x200
+  ...
+  Freed by task 9405:
+   kmem_cache_free+0x184/0x670
+   __netif_napi_del_locked+0x2bb/0x3c0
+   tun_net_uninit+0x566/0xa70
+   unregister_netdevice_many_notify+0x1a26/0x2090
+   rtnl_dellink+0x514/0x710
+
+__tun_detach() also calls tun_napi_del() without the mutex, but only
+from tun_chr_close(), when no write on that file can be in flight.
+
+Take napi_mutex around tun_napi_del() in tun_detach_all() for both
+attached and disabled queues.
+
+Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/179268538303.70821.16548460883330758972@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tls.h | 10 ----------
- net/tls/tls.h     | 10 ++++++++++
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/net/tun.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index cd0dfa25c591e..56604e75c8ae4 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -51,16 +51,6 @@
- 
- struct tls_rec;
- 
--struct tls_cipher_size_desc {
--	unsigned int iv;
--	unsigned int key;
--	unsigned int salt;
--	unsigned int tag;
--	unsigned int rec_seq;
--};
--
--extern const struct tls_cipher_size_desc tls_cipher_size_desc[];
--
- /* Maximum data size carried in a TLS record */
- #define TLS_MAX_PAYLOAD_SIZE		((size_t)1 << 14)
- 
-diff --git a/net/tls/tls.h b/net/tls/tls.h
-index c1be900190376..8ac493a56f38f 100644
---- a/net/tls/tls.h
-+++ b/net/tls/tls.h
-@@ -50,6 +50,16 @@
- #define TLS_DEC_STATS(net, field)				\
- 	SNMP_DEC_STATS((net)->mib.tls_statistics, field)
- 
-+struct tls_cipher_size_desc {
-+	unsigned int iv;
-+	unsigned int key;
-+	unsigned int salt;
-+	unsigned int tag;
-+	unsigned int rec_seq;
-+};
-+
-+extern const struct tls_cipher_size_desc tls_cipher_size_desc[];
-+
- /* TLS records are maintained in 'struct tls_rec'. It stores the memory pages
-  * allocated or mapped for each TLS record. After encryption, the records are
-  * stores in a linked list.
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index e56cc1d9b1841..573e97b1880b9 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -736,14 +736,18 @@ static void tun_detach_all(struct net_device *dev)
+ 	synchronize_net();
+ 	for (i = 0; i < n; i++) {
+ 		tfile = rtnl_dereference(tun->tfiles[i]);
++		mutex_lock(&tfile->napi_mutex);
+ 		tun_napi_del(tfile);
++		mutex_unlock(&tfile->napi_mutex);
+ 		/* Drop read queue */
+ 		tun_queue_purge(tfile);
+ 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
+ 		sock_put(&tfile->sk);
+ 	}
+ 	list_for_each_entry_safe(tfile, tmp, &tun->disabled, next) {
++		mutex_lock(&tfile->napi_mutex);
+ 		tun_napi_del(tfile);
++		mutex_unlock(&tfile->napi_mutex);
+ 		tun_enable_queue(tfile);
+ 		tun_queue_purge(tfile);
+ 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
 -- 
 2.53.0
 
