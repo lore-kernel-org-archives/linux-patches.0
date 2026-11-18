@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021508;
-	b=S0+TSyPpZxst26e3TzrPJ5ZDruOZqtmW0iJ/MaKsGXThFgwTmo5lZMvzs4awrRlep8Yk
-	 Uq440UYTSAf1WMAdTfJ3+Q4jJm08658GAc7z9eIasi6lz3+D/XcsEwRRA8rvTJcjPAA6y
-	 rQZlCQZ7NeXh9RN/HJuOCN4L0+oYCSIIp2Tu+yr0i3ETWCzf7YVIE7nKVGHo0BkHtM46k
-	 5EMfCRMf9ws0F642Cf6dTl3WINeLU5c6kJmEkUkDrSy6vaW1NgSdjWQkCOjFC3xlDJNhb
-	 YKnQmFtZyUl3cIlv+H93LL5wMviwP781YilGvaoq7L8ZcUCyw7Xy6Qy9uAUcjMWi2Rg==
+	t=1795021511;
+	b=WbmqMQXSc8WEPaeukYGUfo/DPxninGdPSuLemgKeZyTGvq1oEYxD5Zs7S/m3AeUywV4N
+	 i9jU/Y5C7oen0/qNzcm/+h/VqoZ4J/Ruc5RAoIMOkzx91yWO/3QUBx2ES4j0/P4sTf9hT
+	 XDZR/7R3G1vrZwo8otAYt8w3XxB9qBi3pOIEmjdAAEVsQfymEn45K1VJ0bwMqtv6juWgq
+	 9+xG2anYMVhJOK6oOo4NqUEcxu21kGfNKfB60rLuXinkNtfaogbmEJ8WcccwJEDpTGBIR
+	 AfVI1aBRrfynk2heA/IvQiNRLRI+ETUOGuMh1fnpy6x+OLMLFt0diF5wNGWV1GWFG2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021511;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eTNA0glYmsWBJh/KoTqH4Npz+q7Esqv8JQwJXLH/S/o=;
-	b=Ag7H+6PSHZDPJGGYQ88MGe+NxYzuKC7jRZYyjCvNdXHmESIdUwpptuVtwibHHfl8WB3z
-	 I80MDNqkA3a0tYdI4a+E/lu9HvG5zSXCLvmK8v4Z+eyLkiWTo+3Lwdgu+C3/Uo/Alq2A6
-	 VOEh3fvtYG6JWALmnDTLzcw4I9k5PJKfXaOxlTocbNEzOrka5Q3lthD5wTpXgrke+iUNv
-	 hjkG5U0VLwy0bPBfBLHweEZPbmUZQ9R+daT3BE3wOJlIi9OobaPNyuY6DiQExYuOxXTgP
-	 zrGLNAwhul5iV86t+tO1VrcrLOqP0AjYs/t8qai67NaTBhipYVRKCGHaP5ac2iCiS6A==
+	bh=Td6KndiyakhBSI0iRmm5N3RU7gp1SjoX1jlOsOwB8qQ=;
+	b=1mvJ/Es/Av+ruFkINXa0BLdenTFdVO8G4jofB9PuKoH4TDXwNm5xYa49nWogv5PBgLKq
+	 pInYpG6hVtffmim3E1fk8p+OJiK1MSdfJQy4kI//U2y1nElzpWoiD3vuEBrBriJYGNI+I
+	 M66MFU3ZWViLGzbsGSBHqjujCje3CDAqVvmX08Q8WsxcTOMEwVKu25BVsfomm0zzclR7W
+	 OT2NxroBxfDTaOiq/1ouAKHbAe5j6E0KGOdVZvslsTVhqrHG6nrxTqTAmOMwbiYRbVGfo
+	 Yr0x3D/IhlvPjrgRjevSCgUot17Gne66r8FBjNtzC44ol84TO+5If9QUh52KpUgzH8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOuA4d0O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgEmxRBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A87606A31C;
-	Wed, 18 Nov 2026 17:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753AF606A320;
+	Wed, 18 Nov 2026 17:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOuA4d0O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37C31F000C4;
-	Wed, 18 Nov 2026 17:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgEmxRBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94301F000C4;
+	Wed, 18 Nov 2026 17:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021508;
-	bh=eTNA0glYmsWBJh/KoTqH4Npz+q7Esqv8JQwJXLH/S/o=;
+	s=korg; t=1795021511;
+	bh=Td6KndiyakhBSI0iRmm5N3RU7gp1SjoX1jlOsOwB8qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xOuA4d0OAka8keiqIdymR/lzTD0b8r+7XK9w0PNcxJsPtQyAKQ9BpX+Fac9G4h2a0
-	 H/UHCK8g1ryWwByD3ec9DsmX+cvmysHWhVnZlO0/263tNLJReTqOpYiAi0GEiWmY74
-	 L9CNem+jz71S2v3K9t1P8RnX+RCd1pt2cjxWiBZ4=
+	b=LgEmxRBDwafxj96hPE3cA3qWBFAiE+LALbP9mbrnuwXio7cVkmJsp22lJEhPpSPoq
+	 /t4R2DA4iaAePCaQG5901TNRV+9J/wAtt1kVm5kW8t9HzmDi1HHCKnCApJ9czuXzjV
+	 pN+92OcDW/zjxngI/c2TWtw1x2MBj27aUrptshuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2333/2651] perf lock contention: Filter events before creating lock_stat
-Date: Wed, 18 Nov 2026 15:59:33 +0100
-Message-ID: <20261118150409.112623108@linuxfoundation.org>
+Subject: [PATCH 7.3 2334/2651] mailbox: qcom-cpucp: read mbox hardware register using readq()
+Date: Wed, 18 Nov 2026 15:59:34 +0100
+Message-ID: <20261118150409.145973006@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,128 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
 
-[ Upstream commit c58d1598e79554cc8f587668ab2ebcaeb616b076 ]
+[ Upstream commit 74f1cf02d9fe0fd32ca299cd4d71bc29d3bf2a54 ]
 
-In report_lock_contention_begin_event(), lock_stat_findnew() was
-called before checking filters.nr_types (-Y), filters.nr_addrs (-L),
-and match_callstack_filter() (-S).
+Mailbox hardware registers are 64 bit wide, but the interrupt handler
+currently reads only 32 bits with readl() at offset 0x4 (upper 32
+bits). This returns an incorrect value, while reading using readq()
+returns the expected value.
 
-When a filtered-out lock event (such as a mutex contention when
-running with -Y spinlock) shared the same aggregation key as a
-subsequent matching event (for example, contention on the mutex's
-internal wait_lock spinlock from the same caller), the first event
-created the lock_stat entry with the filtered-out lock's flags and the
-second event reused that entry, causing non-spinlock entries to appear
-in -Y spinlock output.
+Use readq() to access the 64 bit register and pass the expected value
+to the mailbox client.
 
-Check the type, address, and callstack filters before looking up or
-creating the lock_stat entry.
-
-Fixes: b4a7eff93c39f985 ("perf lock contention: Add -Y/--type-filter option")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 0e2a9a03106c ("mailbox: Add support for QTI CPUCP mailbox controller")
+Signed-off-by: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
+Reviewed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-lock.c | 61 +++++++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 28 deletions(-)
+ drivers/mailbox/qcom-cpucp-mbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
-index d5c0d55cb82d9..778923c92f420 100644
---- a/tools/perf/builtin-lock.c
-+++ b/tools/perf/builtin-lock.c
-@@ -975,6 +975,7 @@ static int report_lock_contention_begin_event(struct perf_sample *sample)
- 	struct machine *machine = &session->machines.host;
- 	struct map *kmap;
- 	struct symbol *sym;
-+	u64 *callstack = NULL;
+diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
+index 515d2d12c01be..b88ea2527265a 100644
+--- a/drivers/mailbox/qcom-cpucp-mbox.c
++++ b/drivers/mailbox/qcom-cpucp-mbox.c
+@@ -61,7 +61,7 @@ static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
+ 	status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
  
- 	ret = get_key_by_aggr_mode(&key, addr, sample);
- 	if (ret < 0)
-@@ -1010,33 +1011,6 @@ static int report_lock_contention_begin_event(struct perf_sample *sample)
- 		}
- 	}
- 
--	ls = lock_stat_find(key);
--	if (!ls) {
--		char buf[128];
--		const char *name = "";
--
--		switch (aggr_mode) {
--		case LOCK_AGGR_ADDR:
--			sym = machine__find_kernel_symbol(machine, key, &kmap);
--			if (sym)
--				name = sym->name;
--			break;
--		case LOCK_AGGR_CALLER:
--			name = buf;
--			if (lock_contention_caller(sample, buf, sizeof(buf)) < 0)
--				name = "Unknown";
--			break;
--		case LOCK_AGGR_CGROUP:
--		case LOCK_AGGR_TASK:
--		default:
--			break;
--		}
--
--		ls = lock_stat_findnew(key, name, flags);
--		if (!ls)
--			return -ENOMEM;
--	}
--
- 	if (filters.nr_types) {
- 		bool found = false;
- 
-@@ -1066,7 +1040,7 @@ static int report_lock_contention_begin_event(struct perf_sample *sample)
- 	}
- 
- 	if (needs_callstack()) {
--		u64 *callstack = get_callstack(sample, max_stack_depth);
-+		callstack = get_callstack(sample, max_stack_depth);
- 		if (callstack == NULL)
- 			return 0;
- 
-@@ -1074,7 +1048,38 @@ static int report_lock_contention_begin_event(struct perf_sample *sample)
- 			free(callstack);
- 			return 0;
- 		}
-+	}
-+
-+	ls = lock_stat_find(key);
-+	if (!ls) {
-+		char buf[128];
-+		const char *name = "";
-+
-+		switch (aggr_mode) {
-+		case LOCK_AGGR_ADDR:
-+			sym = machine__find_kernel_symbol(machine, key, &kmap);
-+			if (sym)
-+				name = sym->name;
-+			break;
-+		case LOCK_AGGR_CALLER:
-+			name = buf;
-+			if (lock_contention_caller(sample, buf, sizeof(buf)) < 0)
-+				name = "Unknown";
-+			break;
-+		case LOCK_AGGR_CGROUP:
-+		case LOCK_AGGR_TASK:
-+		default:
-+			break;
-+		}
-+
-+		ls = lock_stat_findnew(key, name, flags);
-+		if (!ls) {
-+			free(callstack);
-+			return -ENOMEM;
-+		}
-+	}
- 
-+	if (callstack) {
- 		if (ls->callstack == NULL)
- 			ls->callstack = callstack;
- 		else
+ 	for_each_set_bit(i, (unsigned long *)&status, cpucp->mbox.num_chans) {
+-		u32 val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) + APSS_CPUCP_MBOX_CMD_OFF);
++		u64 val = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i));
+ 		struct mbox_chan *chan = &cpucp->chans[i];
+ 		struct mbox_client *cl;
+ 		unsigned long flags;
 -- 
 2.53.0
 
