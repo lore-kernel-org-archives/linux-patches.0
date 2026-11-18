@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026571;
-	b=hG+3K/85J7blMxEzzITGBkdZVKKs/Y4Myzwml6iiqHFCHDPKJ/nuV7ppQWr3enYRPxpH
-	 LuYxfH7KJsD5rW542uhaRhTEypSI6rNqILm0dFKuukoKuK8OtsDy98AUGexeZU2Q+lHiP
-	 Cp+SPhW47N/44gB3NRjkqeLH1OB8mGkKdZ5yssb4pGIt0DTNpsrZrc0gwpSorExLk8ssA
-	 C5mvRjFzZ0DU/uUcdvJrpNejMpe6lwDzGISNrPatdDR8LfhUu4qTAzJ8I5S5hcLuFN52m
-	 VlaMdkVt7ZpxpqyjD+6xzC9rnupqH2AD2eXxrx1JgItTPSLkeqEcM24VbetdGPrwhdg==
+	t=1795026574;
+	b=UBxkrxJ/xWizpIbb6CfQjKK5E/K9b0wCdCrLC7vk6hmmv09US2j+UNZFH69ALzNegM5J
+	 tb7Y1A7kd3OThgrGcDQFwjMg51gJZNSwBAM3xrvLe51S3OvvEfORMCGnbUHjYcG8LObM9
+	 I312QMQTDlfSY59A6tSR9kxmDW5QDZqjsbpWXlqAPY2RdmBrKF8ga72ROVawVb3nBjT0M
+	 EQUHqse6tL+HpI3q5z6lqzRdE6b6lVbwx61exTpGYxb90QCh0DyObjswy71VlNLaicqdN
+	 ZVuvebtZSH3gt1a0e9seimL0ARfd4K2/h+AIp+LdPYWjsp+2BihWWEigdex1Y/J2CtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=AUgvlJuWH9OcWKAEdoAgaIqpDgo5cYTLvZnYq1RAhxI=;
-	b=vfYYjwKOCki2pvA7ASLXHB2IH294YT6WK7tYtjuDSL42iVyUmZXCFAGtHKrV6oUKI2QM
-	 6dFpQU5Z4KCc6hP2wIm3fqP96PSuYaC1bgpVg4pv92GdYDeO9xS8UScLM2Nc8yskQZSYG
-	 CTp8KA74offSGbjPdP1M6xxX/h/pcLmSJWXryWihxiAiimQNC0slBAd++8lr8hMsBt3I0
-	 k8oasxDJWaUzfxZGdeVxfYBohec3t+Be8FhvKV+ghvMIz4tkDYqg9A3y6qyP4FKgZ/yVp
-	 cT2VMKMYG9c6TMgvfJddqqy+4U9iIVlRKAIIgpgSLuMPU4ngP+jUc3EWrxgTXlPPNWA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=b1FArYp4+lDM/Wqb8Eylqz1cT6YIn02Ky5DPPJcD8x8=;
+	b=wBDp33nJErE3QWPU3uK++elMlISvkNFk1/Gns8m6pOYHQ5He/jbLcUVRYGO9ejAHlBlB
+	 gVj5ZcNXJg6K/hhjB1co84PKOtGecAHlWWn2csuRy2VTzFIJt+qus6wpCqSgpZP0gFqmJ
+	 uHGedw6FIjfqI96d8pnUFtyydHZWDOT99pMN6cq8Hyrnz5wB8az+KjcAAZ7ZkVlMX7hZ0
+	 2KGJwlIl+yYrOo//0glYDIdWoJ143s6DHzlmA23jiTYYKW4q8Knq0Tdkdp0GMDHU4QJFd
+	 HaJRHCJ1j6Ja5JzTZuS38KQgMWDCTatqyTBvDGLYUS4x3Xu93Iz72hRd9gTJpV9wpZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXGI+pyu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIB1Iyw7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D2A606A31C;
-	Wed, 18 Nov 2026 18:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5E8606A31C;
+	Wed, 18 Nov 2026 18:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXGI+pyu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B5C1F000C4;
-	Wed, 18 Nov 2026 18:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIB1Iyw7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824C51F000C4;
+	Wed, 18 Nov 2026 18:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026571;
-	bh=AUgvlJuWH9OcWKAEdoAgaIqpDgo5cYTLvZnYq1RAhxI=;
+	s=korg; t=1795026574;
+	bh=b1FArYp4+lDM/Wqb8Eylqz1cT6YIn02Ky5DPPJcD8x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FXGI+pyuLDWsammA3wdoGBbStr+A9YZyCquPW41j0tvKAn+Fb9bAbmpRaIzzejmiY
-	 rSfVLdJXjxhX26k1pJ2/fVKRaC8pmcbnbEL/51gf1B/rVY8qZX3ah3RsAF3j3Zq6e/
-	 +bSOZ/NfMvnGjNpJddAIpbq0GcL/P8a/UPlCIuew=
+	b=oIB1Iyw7n5hT3pT/PS2ehQJwvF1LBjlBb3kUHdJgMHwsSNQcOZo0dz3nGAX7sDFAB
+	 Eg7t/M2SB3L9VhWdGwNHlymnlkiHR21ayB2WPSPUJ0zboO1uhmb9+6+7yo384rhB1Q
+	 H3nfUz4vi6Hsf3Euc2t6NxWpXNKWT1yfOp8Nh77E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Heinzel <dennis.heinzel@irs.systems>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1466/2151] spi: axi-spi-engine: fix stale SYNC IRQ pending
-Date: Wed, 18 Nov 2026 15:53:21 +0100
-Message-ID: <20261118150215.299299562@linuxfoundation.org>
+Subject: [PATCH 6.18 1484/2151] ALSA: usb-audio: Use fixed control index for us16x08 mixer elements
+Date: Wed, 18 Nov 2026 15:53:39 +0100
+Message-ID: <20261118150215.943984666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,75 +62,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ea29c686f96adcb505071ef228ba8047dc951fac ]
+[ Upstream commit a68a688ce220f1b359bec53fa38d1504314dc70f ]
 
-spi_engine_setup() sends a SYNC(1) command and polls SYNC_ID to confirm
-it was parsed by the FPGA, but never clears the corresponding interrupt
-pending bit (INT_PENDING[SYNC]). When the first real SPI transfer starts
-and INT_SYNC is enabled, that stale pending bit fires immediately, causing
-the IRQ handler to see the leftover SYNC_ID from setup, match it against
-the current transfer's ID, and prematurely signal completion before the
-hardware finishes.
+The callbacks for us16x08 mixer elements assume that id.index points
+to the channel to be operated, and the assumption is correct for now.
+However, since the kctls are added via snd_usb_mixer_add_control() and
+it looks for the empty slot if the same control name is already
+present, in theory, the index can become more than the channel numbers
+(if a conflicting name really happens).
 
-This race manifests at low SPI clock frequencies (~2-3 MHz), where the
-FPGA takes long enough to execute the transfer that handler is parsed
-before it finishes. At higher SCLK rates the transfer completes fast
-enough that the issue is masked.
+Since the mixer code in us16x08 doesn't need the search for an empty
+slot but requires the fixed index, this patch changes slightly how to
+assign the kcontrols.  Now, a new argument is added to
+snd_usb_mixer_add_list() in order to disable the empty slot search,
+and use it in us16x08's add_new_ctl() helper function, instead.
 
-Fix this by clearing INT_PENDING[SYNC] after the polled SYNC, ensuring no
-stale interrupt is left pending.
-
-Reported-by: Dennis Heinzel <dennis.heinzel@irs.systems>
-Closes: https://ez.analog.com/linux-software-drivers/f/q-a/604145/axi-spi-engine-stale-sync-pending-can-complete-first-transfer-early-at-low-spi-clock-2-3-mhz
-Fixes: 1d0ee0c9df31 ("spi: axi-spi-engine: wait for completion in setup")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Link: https://patch.msgid.link/d3033a01a695c915e4dc5952dfe0587b2f77d733.1791361360.git.Jonathan.Santos@analog.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261014061406.162938-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-axi-spi-engine.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/usb/mixer.c         | 13 +++++++++----
+ sound/usb/mixer.h         |  5 +++--
+ sound/usb/mixer_quirks.c  |  2 +-
+ sound/usb/mixer_us16x08.c |  3 ++-
+ 4 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
-index e06f412190fd2..6a2128459f559 100644
---- a/drivers/spi/spi-axi-spi-engine.c
-+++ b/drivers/spi/spi-axi-spi-engine.c
-@@ -787,6 +787,7 @@ static int spi_engine_setup(struct spi_device *device)
- 	struct spi_controller *host = device->controller;
- 	struct spi_engine *spi_engine = spi_controller_get_devdata(host);
- 	unsigned int reg;
-+	int ret;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 0f6ced6bb8cec..f4e44c31111cd 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -572,20 +572,25 @@ static int check_matrix_bitmap(unsigned char *bmap,
  
- 	if (device->mode & SPI_CS_HIGH)
- 		spi_engine->cs_inv |= BIT(spi_get_chipselect(device, 0));
-@@ -809,8 +810,15 @@ static int spi_engine_setup(struct spi_device *device)
- 	writel_relaxed(SPI_ENGINE_CMD_SYNC(1),
- 		       spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
+ /*
+  * add an alsa control element
+- * search and increment the index until an empty slot is found.
++ * when @look_for_empty is set, search and increment the index until an empty
++ * slot is found.
+  *
+  * if failed, give up and free the control instance.
+  */
  
--	return readl_relaxed_poll_timeout(spi_engine->base + SPI_ENGINE_REG_SYNC_ID,
--					  reg, reg == 1, 1, 1000);
-+	ret = readl_relaxed_poll_timeout(spi_engine->base + SPI_ENGINE_REG_SYNC_ID,
-+					 reg, reg == 1, 1, 1 * USEC_PER_MSEC);
+ int snd_usb_mixer_add_list(struct usb_mixer_elem_list *list,
+ 			   struct snd_kcontrol *kctl,
+-			   bool is_std_info)
++			   bool is_std_info,
++			   bool look_for_empty)
+ {
+ 	struct usb_mixer_interface *mixer = list->mixer;
+ 	int err;
+ 
+-	while (snd_ctl_find_id(mixer->chip->card, &kctl->id))
+-		kctl->id.index++;
++	if (look_for_empty) {
++		while (snd_ctl_find_id(mixer->chip->card, &kctl->id))
++			kctl->id.index++;
++	}
 +
-+	/* Clear the stale SYNC pending bit so it doesn't fire when the IRQ is later enabled. */
-+	writel_relaxed(SPI_ENGINE_INT_SYNC, spi_engine->base + SPI_ENGINE_REG_INT_PENDING);
-+	/* Read back to flush posted write. */
-+	readl_relaxed(spi_engine->base + SPI_ENGINE_REG_INT_PENDING);
-+
-+	return ret;
+ 	err = snd_ctl_add(mixer->chip->card, kctl);
+ 	if (err < 0) {
+ 		usb_audio_dbg(mixer->chip, "cannot add control (err = %d)\n",
+diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
+index 08d472c5ef7b5..8e5e8da6d480f 100644
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -110,10 +110,11 @@ int snd_usb_mixer_set_ctl_value(struct usb_mixer_elem_info *cval,
+ 
+ int snd_usb_mixer_add_list(struct usb_mixer_elem_list *list,
+ 			   struct snd_kcontrol *kctl,
+-			   bool is_std_info);
++			   bool is_std_info,
++			   bool look_for_empty);
+ 
+ #define snd_usb_mixer_add_control(list, kctl) \
+-	snd_usb_mixer_add_list(list, kctl, true)
++	snd_usb_mixer_add_list(list, kctl, true, true)
+ 
+ void snd_usb_mixer_elem_init_std(struct usb_mixer_elem_list *list,
+ 				 struct usb_mixer_interface *mixer,
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index ce057bbb2e116..2d0d0d6c4047f 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -166,7 +166,7 @@ static int add_single_ctl_with_resume(struct usb_mixer_interface *mixer,
+ 	}
+ 	kctl->private_free = snd_usb_mixer_elem_free;
+ 	/* don't use snd_usb_mixer_add_control() here, this is a special list element */
+-	return snd_usb_mixer_add_list(list, kctl, false);
++	return snd_usb_mixer_add_list(list, kctl, false, true);
  }
  
- static int spi_engine_transfer_one_message(struct spi_controller *host,
+ /*
+diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
+index 3040192feb61e..de6bd41b8c58a 100644
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -1127,7 +1127,8 @@ static int add_new_ctl(struct usb_mixer_interface *mixer,
+ 
+ 	strscpy(kctl->id.name, name, sizeof(kctl->id.name));
+ 
+-	err = snd_usb_mixer_add_control(&elem->head, kctl);
++	/* look_for_empty=false, as we want the fixed id.index as channel */
++	err = snd_usb_mixer_add_list(&elem->head, kctl, true, false);
+ 	if (err < 0)
+ 		return err;
+ 
 -- 
 2.53.0
 
