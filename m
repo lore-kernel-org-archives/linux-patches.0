@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045255;
-	b=uvbaW5+Dx7v36Z+Y6O8kxq2l3xgOmwolOIXijNKSQ8tOwj/so/msLU6Ieh2c2+P5lZ3U
-	 zu4FT0xpvhqRKxOzuMbrGwV9Acfr49LKH8/kH0pk8oxDNYPAr8c1oppy+GhqNXzVzXKY1
-	 A/6yiY7HOhRwm2/uCxZbkDvEg141clGsim5EaT6RICwvmgrqHcQxwfwpzir+tJywDM2yq
-	 9huNGnEG9eUr0ikannMwOo/WjYLL4wqhhHVumlEwxuqdcZ9gcpGKZt1OeD0qWtXxDBAbO
-	 oIVJaEmPDctMmM5h7csawqxrgttHDgVTsfPj07Q9NJLBmJVSZOoqh4nYprhoOKzqkVQ==
+	t=1795045258;
+	b=sMjzLNVgd04O7Y/kDD22Kcgg5T0n0pQfa4MLXm3m9h8ocpUVNi1EOsHVpBJn+qPBRKdL
+	 WhkvQt6Pt0SJTkAMv9/TdAMJr9wygI3xs1shGqh2yAOv5uPqfUOtsSSBYwgl+lkAQQi4J
+	 xau1N3tQuibCHSrlQHAq0OkmotDTv7pBIG4VjRN0TqHTBC5LIptxflMAQOP09FXc8/QDe
+	 yrn2lu2tUHuiavx0omoCFMxFJWFDua8BBYkzPrf1aLwaCRmVT5QcyS8Lkwydvsi91a3td
+	 eJxFLOArpwPnI+HbkIC24WIhgbFp4mBU8D+x1SH/7mrK7K8gUZ6pXZHjGISmJoZb7Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045255;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045258;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i9WpMYu2941InNccnwIUVsOz4J3wHLf4bEoCt5P0jB4=;
-	b=GjNpsCgG2NB1r70OMuPzgiAZTY26Fnj6UDpYhmtP0twR0zYlPvDHeko1WDbD0ZB95H9O
-	 F2CACS9yst583A42K4KO1MjeRSMDiN7Bu5qSapDZLM9X6L7zOW6WPNb8uugxTgy2BYFy7
-	 G4T7p04dRHDlN7RD87awTjKpDEk+S/MjypwDSHnmYIC3refWKvl8yesAYnrloqkYptS94
-	 0kkSrYcUV9EIfAg/nTXYt/g38Za9zM4pRPR6KG11jIDWtSBSiFdN454YOMwmlo6rXt2RR
-	 PEzw+bgVcqsbryDXPTHSiJcQ8tag0mRzaqec1elp1SQQZi0MsJ9S8P1ZlkQCCO9AF6A==
+	bh=UUPpPFc6/8qA28vq7/UVcf2nu0LhMgqtQtKR7ffwgtk=;
+	b=lXsbUYsYHLQtqIk50c4kJLTGNfNuP1nO9iSoE/bfwfp30HDLNVRvFmRl/6rQ9VM3kK6n
+	 3P+0iXf0IuYte0y6hgGMMIAzW1QePxjgcbJyFmOct0qmqLkGQdBR4cG3XmhOMoZgFalc1
+	 qdeeA0HV+aT8n09pTtx24F2RXpQw/irdeTRzC1aZDpdRk8V/08S18UrnH/Z5hU70ga1NV
+	 A4dCPJwrZaakYpu308NPczDipPoiPOqtbY+LufDcxs+28lDGEEqbXVIf8EeH+LDYKDLdU
+	 spDCWcMow+MJ4+8kf99gRS8RQMucJnqjBVJyrt3BC8qcAnKWIjjLQ3MU5yXF94yhFFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q1WLvaFY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUB2O0UY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF76606A31C;
-	Wed, 18 Nov 2026 23:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E652606A325;
+	Wed, 18 Nov 2026 23:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q1WLvaFY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1003B1F000C4;
-	Wed, 18 Nov 2026 23:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUB2O0UY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD4B1F000C4;
+	Wed, 18 Nov 2026 23:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045255;
-	bh=i9WpMYu2941InNccnwIUVsOz4J3wHLf4bEoCt5P0jB4=;
+	s=korg; t=1795045258;
+	bh=UUPpPFc6/8qA28vq7/UVcf2nu0LhMgqtQtKR7ffwgtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1WLvaFYzgKX0FGO0YC19tlEOlnwY083yGHnEaty7gQcHqyaqIyjTB2DyNf+To5G7
-	 pmpO4FSFJs8AyCY58F24opN0oJSp9BhEEFbAE83MgO7ucKcDXj2ne27ykEr88mYXv0
-	 oyMQg961El4zoyZQOf91AowKdxdnRdJgszDZl02E=
+	b=vUB2O0UYYdeA0GjvDlHS3Q/kRA91Lfnn36z/9lWrgBNvlseibyJvU2+7I5hXs6S7Z
+	 bmfq7c1VdKpbF7iDRx4ywKzTt3w2ZJo9LQASz1pgcYa7WW4KkhzoFBr4jtrooBLz0j
+	 kHv6UsT9k4tDHAjun6iGDJ8JIyZj2LfvTXOLbvLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <98lawweijie@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	ZhaoJinming <zhaojinming@uniontech.com>,
+	Sahil Malhotra <sahil.malhotra@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0858/2857] media: uvcvideo: Fix NULL deref on events for uninitialized controls
-Date: Wed, 18 Nov 2026 15:31:32 +0100
-Message-ID: <20261118150232.458075711@linuxfoundation.org>
+Subject: [PATCH 6.1 0859/2857] crypto: caam - fix double-free in caam_rsa_set_priv_key_form()
+Date: Wed, 18 Nov 2026 15:31:33 +0100
+Message-ID: <20261118150232.492592735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,51 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <98lawweijie@gmail.com>
+From: ZhaoJinming <zhaojinming@uniontech.com>
 
-[ Upstream commit daa379e2b74d6c10ba4e3b56eeca5aa8c8704fca ]
+[ Upstream commit a91d9346a70b68f77884cba9d9ec3b70f96bf9d2 ]
 
-A null-ptr-deref exists in v6.12.105 and upstream. KASAN crash log:
+caam_rsa_set_priv_key_form() frees the partially allocated key
+components (p, q, tmp1, tmp2, dp, dq) with kfree_sensitive() on its
+error path, but does not set those pointers to NULL afterward.
 
-  KASAN: null-ptr-deref in range [0x0000000000000080-0x0000000000000087]
-  Workqueue: events uvc_ctrl_status_event_work
-  RIP: 0010:uvc_ctrl_status_event+0x105/0x280
-   uvc_ctrl_status_event_work+0x82/0x240
-   process_one_work+0x66f/0x10b0
+When the function returns an error, caam_rsa_set_priv_key() jumps to
+its err label and calls caam_rsa_free_key(), which frees all of those
+same pointers again, resulting in a double-free.
 
-XU controls are initialized lazily, on the first UVCIOC_CTRL_MAP or
-UVCIOC_CTRL_QUERY.  Until then ctrl->info is all zeroes, so
-info.mappings is not a valid list head, list_empty() returns false, and
-uvc_ctrl_status_event() walks it from a NULL next pointer.
+This is reachable when the allocation of q, tmp1, tmp2, dp, dq or qinv
+fails, e.g. under memory pressure, or for a malformed key whose CRT
+members decode to zero length and make caam_read_rsa_crt() return NULL.
 
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
+Set each pointer to NULL right after freeing it so that the subsequent
+caam_rsa_free_key() call becomes a no-op for the already-freed fields.
+
+Fixes: 52e26d77b8b3 ("crypto: caam - add support for RSA key form 2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
-Assisted-by: LLM
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260907121844.2592492-1-98lawweijie@gmail.com
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
+Reviewed-by: Sahil Malhotra <sahil.malhotra@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/caam/caampkc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 466f947ef440d..e885f57e5a361 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1566,7 +1566,7 @@ bool uvc_ctrl_status_event_async(struct urb *urb, struct uvc_video_chain *chain,
- 	struct uvc_device *dev = chain->dev;
- 	struct uvc_ctrl_work *w = &dev->async_ctrl;
+diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
+index 7881846651d12..677e0860aeec8 100644
+--- a/drivers/crypto/caam/caampkc.c
++++ b/drivers/crypto/caam/caampkc.c
+@@ -1025,16 +1025,22 @@ static int caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
  
--	if (list_empty(&ctrl->info.mappings))
-+	if (!ctrl->initialized || list_empty(&ctrl->info.mappings))
- 		return false;
+ free_dq:
+ 	kfree_sensitive(rsa_key->dq);
++	rsa_key->dq = NULL;
+ free_dp:
+ 	kfree_sensitive(rsa_key->dp);
++	rsa_key->dp = NULL;
+ free_tmp2:
+ 	kfree_sensitive(rsa_key->tmp2);
++	rsa_key->tmp2 = NULL;
+ free_tmp1:
+ 	kfree_sensitive(rsa_key->tmp1);
++	rsa_key->tmp1 = NULL;
+ free_q:
+ 	kfree_sensitive(rsa_key->q);
++	rsa_key->q = NULL;
+ free_p:
+ 	kfree_sensitive(rsa_key->p);
++	rsa_key->p = NULL;
+ 	return -ENOMEM;
+ }
  
- 	w->data = data;
 -- 
 2.53.0
 
