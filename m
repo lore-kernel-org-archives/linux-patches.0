@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026841;
-	b=Ytl430KTaODTDsciveuYCHUao0vdUkdaXuFEQmtMfh9ByzEwec3+U2olb0O4SFDLRhwh
-	 l6e486DO98sQROjVy6zZJJII5BSiT0B+GB/6TNQnfs27NIDJkjX2nOd+oldNLS5Emajrc
-	 YPJccPAkZxmFB5FhWatbGSCmkpSAweMAGc2a2jwE2jXJ9+PMXZQzQX0fJn+LZ1N4kAq5T
-	 eeUEVNy2ae6CaUUeiNzY+iJYjPn5Cc2R8aWgbLg8ozd1m1WOLtVd2jX1V7Ol+5+t1yGij
-	 jvoeJVDZFK4F/1S0CI6An8Hezx0nBBZm9rurScaRnKhOgpBBNH2aTNS8OgQM6DpyV0g==
+	t=1795026844;
+	b=Hfi+fjTW8tNIHTYGNS+FfwRsvApMXWc7qMKVXh9G8lEriJEkhXLx9iQG4SMKAV17N2+u
+	 kjryjLKjN7E50RuuNBYCRsqEYPnuPvWo8QGWRJf8PsJaNDr203ajAgGANgPaUv1MfQsj3
+	 7FFG76cAst1eNCSWz5kox+SDlCs84JPG1bfVS8r18YLvvWZ4m2WH4NdjA+eRdQHnPcZj/
+	 l00cY/E7znUjvBHSJkMD706cLhWtTlSks28Wf9mV/DmS3WnCSAPaeIWOcVBGQMGWq68JB
+	 tBjsSGIud3zxDVEG6P/tDkyYtmSuu3T2HMPKqXPCFq2vbe6lBWkr4xlwgbKtQ+7EwKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Om47dnnkN213DhC8KgfTDnxkoETjLi5KeOQx0uKPOI0=;
-	b=mVm/zVYE4ocEqhOfqrWXvaEihSoTmc2l5ON1JBS8XRCQWpXQ3WFjT1gOO5HsZPouX08s
-	 4Fvkz7bh4iK0sO96CsKsKCv7JRn/hVN132U0UGGxYjycOCG19uUN8lGxfcODFHTN3cSjB
-	 rJ6mSn51O+a4Mmve9TI8xHpvfyhA7GabuET+QzRHiKvMwFDd2q/XrBbry/wjm0cj09y3e
-	 PjTTU8gcql+GxgnXYu/BVKAB4CBZkU+hN8YsHi7GZK9TdmVX/c8OL+oDVqGu0N/34o/sX
-	 nrkK61WVFzfsOZ4XBKWEnqgw4ZacncjPWwG/01OK0MhKW0PRKepgeyd0q0s9YbsBGWA==
+	bh=+s1ncyBuLBXZrREOM6K273jLX956wQfEawX7nyJVqGU=;
+	b=V/WQxu5xJz2d48MG6Zr/dc/RBM2pIOT+CeXZnMZVovDtgjFel5MYLOxBbPIzn22yhMdB
+	 wAADZKuzV0c73JRnTsayk4gbKTh+g59OBE/1VKPrADAlU7oz9dupCQ6u7CzC4cdEdcUPy
+	 WU+aKV10IH+CcAMu0QLyvptMwuvnCrjBilvE41Tu/gwVrUPO8Oc9WM1OONg968XqF3YPj
+	 7toShLy9Y6X8g6+9vW8STFctuUd+79nR6A7KSlBJ0eOGN1xuiUJm1WsFA/YO4BQfmPHFN
+	 tBBG7lNvDlr2zgH3eGm2UW52YMwnWD9qEL6Gixce23Nuij8WvwAXtwrufm67lBL8bTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Npw+ygKG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yOz6W3cg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C3E606A320;
-	Wed, 18 Nov 2026 18:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAA3606A320;
+	Wed, 18 Nov 2026 18:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Npw+ygKG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B9F1F000C5;
-	Wed, 18 Nov 2026 18:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yOz6W3cg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83ED41F000C4;
+	Wed, 18 Nov 2026 18:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026841;
-	bh=Om47dnnkN213DhC8KgfTDnxkoETjLi5KeOQx0uKPOI0=;
+	s=korg; t=1795026844;
+	bh=+s1ncyBuLBXZrREOM6K273jLX956wQfEawX7nyJVqGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Npw+ygKGh6r/JxgPWlRNof28Wm+rKTnzf5B6Ka7OD6bIYQ920cceHHbKCQ1alt99A
-	 ICoMz2Ie8Y2c80DtEeFIvCuT2OslELtfOAIA+HCLFQd7V61h7Yey4MJmuya0SPXpYH
-	 U5l5XfoX9ObtssIRXA1GYJg2egKiWPu3OjNCk0og=
+	b=yOz6W3cgcJTvSe2pqHYfqy07nZzMtRNnKVXaIbvSt+MRdU602GRpjAT+g8sQWJ7t+
+	 ITJh8Ma0lJ5cZwEoMd8r0kQ8sIkTrq8QxpLVZhigA0PJssH7QjJ32w78NxqUH2uET9
+	 XKhPg7BwWPViH2AfcIcbfOMhSSliTJXMkwkFGta0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Popplewell <john.popplewell@nmc2.ai>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1578/2151] IB/IPoIB: Cancel normal flush work on device stop
-Date: Wed, 18 Nov 2026 15:55:13 +0100
-Message-ID: <20261118150219.365729866@linuxfoundation.org>
+Subject: [PATCH 6.18 1579/2151] rxrpc: Revert "rxrpc: rxperf: Fix missing decoding of terminal magic cookie"
+Date: Wed, 18 Nov 2026 15:55:14 +0100
+Message-ID: <20261118150219.401855215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,83 +74,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 66196a559be5963b1ced18418c876caf9bfb76e6 ]
+[ Upstream commit 870143cfdac1cad166d1dc03fbef915fac0c229a ]
 
-ipoib_ib_dev_flush_normal() can race with ipoib_stop() because the normal
-flush work does not run under RTNL.
+Revert commit c34d999ca3145d9fe858258cc3342ec493f47d2e:
 
-Before commit a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in
-ipoib_stop()"), ipoib_stop() flushed ipoib_workqueue after clearing
-IPOIB_FLAG_ADMIN_UP and before calling ipoib_ib_dev_down(). This ensured
-that any in-flight flush work completed before ipoib_ib_dev_down()
-performed the final clear of IPOIB_FLAG_OPER_UP.
+    The rxperf RPCs seem to have a magic cookie at the end of the request
+    that was failing to be taken account of by the unmarshalling of the
+    request.  Fix the rxperf code to expect this.
 
-After that commit removed the workqueue flush to avoid a deadlock with
-workqueue tasks taking RTNL, a normal flush can continue running
-concurrently with ipoib_stop() after IPOIB_FLAG_ADMIN_UP has been
-cleared.
+Actually, this isn't true; it's just that other Rx implementations ignore
+the extra data in the request and so my test programs are sending too much
+data without noticeable consequence.
 
-The flush may observe IPOIB_FLAG_ADMIN_UP set and continue running while
-ipoib_stop() clears IPOIB_FLAG_ADMIN_UP and brings the device down. The
-flush can then call ipoib_ib_dev_up() and set IPOIB_FLAG_OPER_UP again
-after the device has already been stopped:
-
-  flush_normal (ipoib_workqueue)    ipoib_stop() (RTNL held)
-  ------------------------------    ------------------------
-  test_bit(ADMIN_UP) == 1
-                                    clear_bit(ADMIN_UP)
-                                    ipoib_ib_dev_down()
-                                      clear_bit(OPER_UP)
-  ipoib_ib_dev_up()
-    set_bit(OPER_UP)
-
-This leaves the interface with ADMIN_UP clear and OPER_UP set. During
-device removal, ipoib_ndo_uninit() waits in destroy_workqueue() while
-holding RTNL, while ipoib_mcast_carrier_on_task() may keep retrying
-rtnl_trylock() as long as OPER_UP remains set, resulting in a deadlock.
-
-Cancel the normal flush work from ipoib_stop() after clearing
-IPOIB_FLAG_ADMIN_UP and before bringing the device down. A pending normal
-flush is canceled, while an already running flush is allowed to finish
-before ipoib_ib_dev_down() performs the final transition to OPER_UP
-clear.
-
-Only the normal flush needs this synchronization. The heavy flush is
-already serialized with ipoib_stop() by RTNL, while the light flush does
-not bring the device back up and therefore cannot recreate this race.
-
-Fixes: a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in ipoib_stop()")
-Reported-by: John Popplewell <john.popplewell@nmc2.ai>
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20261014-ipoib-cancel-work-v1-1-6c0faac016b8@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c34d999ca314 ("rxrpc: rxperf: Fix missing decoding of terminal magic cookie")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20261006133011.531806-2-dhowells@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/rxrpc/rxperf.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index b897c1c3e4c8d..8efec64126827 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -230,6 +230,13 @@ static int ipoib_stop(struct net_device *dev)
- 
- 	clear_bit(IPOIB_FLAG_ADMIN_UP, &priv->flags);
- 
-+	/* Normal flush runs without RTNL and may bring the device back
-+	 * up. Cancel it before the device down transition.
-+	 * Heavy flush is already serialized by RTNL and must not be
-+	 * waited on here while RTNL is held.
-+	 */
-+	cancel_work_sync(&priv->flush_normal);
-+
- 	netif_stop_queue(dev);
- 
- 	ipoib_ib_dev_down(dev);
+diff --git a/net/rxrpc/rxperf.c b/net/rxrpc/rxperf.c
+index 91ecd5d64bc34..c816820aedbdd 100644
+--- a/net/rxrpc/rxperf.c
++++ b/net/rxrpc/rxperf.c
+@@ -495,18 +495,6 @@ static int rxperf_deliver_request(struct rxperf_call *call)
+ 		call->unmarshal++;
+ 		fallthrough;
+ 	case 2:
+-		ret = rxperf_extract_data(call, true);
+-		if (ret < 0)
+-			return ret;
+-
+-		/* Deal with the terminal magic cookie. */
+-		call->iov_len = 4;
+-		call->kvec[0].iov_len	= call->iov_len;
+-		call->kvec[0].iov_base	= call->tmp;
+-		iov_iter_kvec(&call->iter, READ, call->kvec, 1, call->iov_len);
+-		call->unmarshal++;
+-		fallthrough;
+-	case 3:
+ 		ret = rxperf_extract_data(call, false);
+ 		if (ret < 0)
+ 			return ret;
 -- 
 2.53.0
 
