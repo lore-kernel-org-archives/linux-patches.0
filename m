@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053960;
-	b=02CkQRvIttR10IKHUXfA7MGFNLIdsP+BczVcJ+EgIHol5DTO1U2T9TCYztCNhNQp9pa0
-	 HwY26s0izsRhuEAUAiF1lMGxkXVcqVu4qZ285otpv1NVsJvWycCcCivY5RFNuZj3aRrxy
-	 PEssLvAqmQOJBZEDTp7jGH6qak7BOenVnfukU0FqWnAoMQYO+KBFHGVKSrkvw9HBfFuBj
-	 HcXLIhyR4v5eP4sD8S2ZTfuUakDZ02fsuSBJ8+NWT63jfeXF0hhpxDZOKnWhTzDRkeXel
-	 5faLLz+k1+fbtrdY7QznavcxKtKRun44qt4YPwlSDfiVnO/4VqdJGcyxvyzufMT6X7Q==
+	t=1795053963;
+	b=iQA1N7bok8NJrTF80gyxgMYvyrJ8FaaM8aMJhpcB1nLyY9Nn9/XA71r0GJcS74+mY+ob
+	 uivveZTrxPBATV4DER6YYD59o2h4SHsez+6F6p1ekSYHmUl9j9H0A2wwfy0vV3CXlcbzm
+	 5dbc2TUnli/ICpPN1Sd3ZkHeudRREN8EfPLQBP7IXmyQnwqD5pVc+hxzEA4CIGi5Vj2qe
+	 2A3su7yKb6MOliBqrIVJ59Fb/KcjR+ExnZtoUghsK5m91OXH8PHsNbUsPwfD/raSnZMBE
+	 12Ups59u4IMpZB/YTPCC/nqzDLc82/sdEvWtaudExnjtbS8wkyWh1Dccusa0i7TSAnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IBTRIeQPaTudSp9A4B993cSi4nJPlCfyU4YZ5nmvvOs=;
-	b=j/dttJ5xP4lEw1AeHqwVRYgfMyye+6f6GHeqXChDeWDMe/kiRW/rmSaLYEZcaCZeFhwc
-	 hUFieXJoGlOQ+ZDXtE7YowR2cxF4uQcPUpSYJYplPBxAt/pK27jA5x/UUDy6+G3lV5ndj
-	 BY8XNpedGybFcqmMTSJxmk5GfS4VPL+McCbZ8fA1geyd708ryhyeiz/m3oLg0Us3QzCNQ
-	 kr8qavqePn70q4+LlivKf46vBVn536MR9nzNeLcmXPIde6CH9ZV/wrw/8rCrtw1/0fdlA
-	 d9EGDLp9ALULkajqoA+RIiU5dd4ITL1wywkKUw2mbNftIXEC6f5NntKNqcTWQQ4mWWQ==
+	bh=3yzentFdZ90LSKxAZL9iNbhHgXdL1CX6B9m3Yfn03GU=;
+	b=UQS2sYulz+jFr6E696+EAEj+XrbratZ+Mj/6HP/R285L7+zHRvvNVeouHZSt+UFI3pRb
+	 WOzaDZjLraLVL20NNiWOmV3TdhES6Eq5ZySRqL2xGNLYF8Wmmk8Pm1rQgEe41E02NpDgn
+	 DUFo+n+aZ1rHixQILfE1/I3MtOk4Ou6SaZ+kXpqtILyydAJCI3vlTe9qfRi1O80iTmkrm
+	 6dSks6NBjlGx47fZeLAF0b1AF4ut1O7w6ZTXXD29vGwNsGes0qYY+Y6AXDF4u92WdlxgJ
+	 cE6sYqcvs0CfKO3/OeCmrWZ6R/O1QUdS1vxakO/4mp1QlE5nXxzSoO3D5S5E5MQ2Ymg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JldWmogf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAewNXhE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D73606A31C;
-	Thu, 19 Nov 2026 02:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30651606A31C;
+	Thu, 19 Nov 2026 02:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JldWmogf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECA51F000C5;
-	Thu, 19 Nov 2026 02:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAewNXhE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C6A1F000C4;
+	Thu, 19 Nov 2026 02:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053960;
-	bh=IBTRIeQPaTudSp9A4B993cSi4nJPlCfyU4YZ5nmvvOs=;
+	s=korg; t=1795053963;
+	bh=3yzentFdZ90LSKxAZL9iNbhHgXdL1CX6B9m3Yfn03GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JldWmogfUGL9wQyQD+tYnGyRsOIlcvZNZ4qfvuHHtrnfHy9abvwG3TcC2sJFSULGI
-	 nFZbSEru4aSkEGglfbVJzDKT8wVfpHOMaeBosLnVA9RMV13zIgAxjJp4k6hntfRUL9
-	 VExcF14ku7vU0LjLrghlXmxlMwRlA6ANuIraQiM4=
+	b=zAewNXhEzusmRNUjGKxKtVQSQEymRExB5kQGeniWf9cRQTN/X+OMwQVEozWASg100
+	 q1eHj6t6N0rrsCQB8uF7Pn+n3EOfNAoZuav7XvIALmvYkA3+2ROGsabYAzstuuR8c/
+	 VAVGcshebpMIpTHKxyyC9/pm7M1ntYYPrRh4Hi1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1104/2214] ALSA: emux: centralize & improve patch info validation
-Date: Wed, 18 Nov 2026 15:46:20 +0100
-Message-ID: <20261118150056.337061318@linuxfoundation.org>
+Subject: [PATCH 5.15 1069/2214] virtiofs: add FUSE protocol validation
+Date: Wed, 18 Nov 2026 15:45:45 +0100
+Message-ID: <20261118150055.043485369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,172 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-[ Upstream commit de67aab120d4d5ba7d9e94ee5b25464ae0d1bd0e ]
+[ Upstream commit 68b69fa0edb241a946cd4c850110990f30705164 ]
 
-This does several closely related things:
-- Move the code from the drivers into the SoundFont loader, which
-  de-duplicates it.
-- Sort of explain the weird "recalculate address offset" feature. Note
-  that I don't think it actually makes any sense - the calling user
-  space code should do that. The background is certainly that the source
-  data (the SoundFont format) uses pointers into a single wave block
-  (and the API allows doing the same for on-board ROM), but the API
-  expects the wave data from user space to be pre-chopped into
-  individual patches anyway.
-- Make sure that the specified offsets actually lie within the supplied
-  wave data. Note that we don't validate ROM offsets, so one can play
-  back anything within the sound card's address space.
-- In load_guspatch(), don't call the sample_new callback anymore when
-  the patch size is zero, as was already the case in load_data(). The
-  callbacks would instantly return in that case anyway; these checks are
-  now removed.
+Add virtio_fs_verify_response() to validate that the server properly
+follows the FUSE protocol by checking:
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Message-ID: <20240406064830.1029573-7-oswald.buddenhagen@gmx.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 8a5d87c2ba30 ("ALSA: emux: Stop voices before freeing zones in all cases")
+- Response length is at least sizeof(struct fuse_out_header).
+- oh.len matches the actual response length.
+- oh.unique matches the request's unique identifier.
+
+On validation failure, set error to -EIO and normalize oh.len to prevent
+underflow in copy_args_from_argbuf().
+
+Addresses the TODO comment in virtio_fs_request_complete().
+
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: 5364d081125a ("virtiofs: validate fixed-output response length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sb/emu8000_patch.c      | 13 -----------
- sound/pci/emu10k1/emu10k1_patch.c | 16 -------------
- sound/synth/emux/soundfont.c      | 37 ++++++++++++++++++++++++++++++-
- 3 files changed, 36 insertions(+), 30 deletions(-)
+ fs/fuse/virtio_fs.c | 29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/sound/isa/sb/emu8000_patch.c b/sound/isa/sb/emu8000_patch.c
-index 8c1e7f2bfc34a..ab4f988f080dc 100644
---- a/sound/isa/sb/emu8000_patch.c
-+++ b/sound/isa/sb/emu8000_patch.c
-@@ -148,13 +148,6 @@ snd_emu8000_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 	if (snd_BUG_ON(!sp))
- 		return -EINVAL;
- 
--	if (sp->v.size == 0)
--		return 0;
--
--	/* be sure loop points start < end */
--	if (sp->v.loopstart > sp->v.loopend)
--		swap(sp->v.loopstart, sp->v.loopend);
--
- 	/* compute true data size to be loaded */
- 	truesize = sp->v.size;
- 	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP))
-@@ -177,12 +170,6 @@ snd_emu8000_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 			return -EFAULT;
- 	}
- 
--	/* recalculate address offset */
--	sp->v.end -= sp->v.start;
--	sp->v.loopstart -= sp->v.start;
--	sp->v.loopend -= sp->v.start;
--	sp->v.start = 0;
--
- 	/* dram position (in word) -- mem_offset is byte */
- 	dram_offset = EMU8000_DRAM_OFFSET + (sp->block->offset >> 1);
- 	dram_start = dram_offset;
-diff --git a/sound/pci/emu10k1/emu10k1_patch.c b/sound/pci/emu10k1/emu10k1_patch.c
-index 49214c2268084..47d69a0e44bc6 100644
---- a/sound/pci/emu10k1/emu10k1_patch.c
-+++ b/sound/pci/emu10k1/emu10k1_patch.c
-@@ -35,28 +35,12 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 	if (snd_BUG_ON(!sp || !hdr))
- 		return -EINVAL;
- 
--	if (sp->v.size == 0) {
--		dev_dbg(emu->card->dev,
--			"emu: rom font for sample %d\n", sp->v.sample);
--		return 0;
--	}
--
- 	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP | SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
- 		/* should instead return -ENOTSUPP; but compatibility */
- 		printk(KERN_WARNING "Emu10k1 wavetable patch %d with unsupported loop feature\n",
- 		       sp->v.sample);
- 	}
- 
--	/* recalculate address offset */
--	sp->v.end -= sp->v.start;
--	sp->v.loopstart -= sp->v.start;
--	sp->v.loopend -= sp->v.start;
--	sp->v.start = 0;
--
--	/* be sure loop points start < end */
--	if (sp->v.loopstart >= sp->v.loopend)
--		swap(sp->v.loopstart, sp->v.loopend);
--
- 	/* compute true data size to be loaded */
- 	truesize = sp->v.size + BLANK_HEAD_SIZE;
- 	if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_NO_BLANK)
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index 0a788fe8bb8e0..6c5751bf6ed6d 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -689,6 +689,21 @@ find_sample(struct snd_soundfont *sf, int sample_id)
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index ba8d5f5dbeb01..c375a5f001056 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -551,6 +551,27 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ 	req->argbuf = NULL;
  }
  
- 
-+static int
-+validate_sample_info(struct soundfont_sample_info *si)
++/* Verify that the server properly follows the FUSE protocol */
++static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
 +{
-+	if (si->end < 0 || si->end > si->size)
-+		return -EINVAL;
-+	if (si->loopstart < 0 || si->loopstart > si->end)
-+		return -EINVAL;
-+	if (si->loopend < 0 || si->loopend > si->end)
-+		return -EINVAL;
-+	/* be sure loop points start < end */
-+	if (si->loopstart > si->loopend)
-+		swap(si->loopstart, si->loopend);
-+	return 0;
++	struct fuse_out_header *oh = &req->out.h;
++
++	if (len < sizeof(*oh)) {
++		pr_warn("virtio-fs: response too short (%u)\n", len);
++		return false;
++	}
++	if (oh->len != len) {
++		pr_warn("virtio-fs: oh.len mismatch (%u != %u)\n", oh->len, len);
++		return false;
++	}
++	if (oh->unique != req->in.h.unique) {
++		pr_warn("virtio-fs: oh.unique mismatch (%llu != %llu)\n",
++			oh->unique, req->in.h.unique);
++		return false;
++	}
++	return true;
 +}
 +
- /*
-  * Load sample information, this can include data to be loaded onto
-  * the soundcard.  It can also just be a pointer into soundcard ROM.
-@@ -730,6 +745,21 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
- 		return -EINVAL;
- 	}
+ /* Work function for request completion */
+ static void virtio_fs_request_complete(struct fuse_req *req,
+ 				       struct virtio_fs_vq *fsvq)
+@@ -561,10 +582,6 @@ static void virtio_fs_request_complete(struct fuse_req *req,
+ 	unsigned int len, i, thislen;
+ 	struct page *page;
  
-+	if (sample_info.size > 0) {
-+		if (sample_info.start < 0)
-+			return -EINVAL;
-+
-+		// Here we "rebase out" the start address, because the
-+		// real start is the start of the provided sample data.
-+		sample_info.end -= sample_info.start;
-+		sample_info.loopstart -= sample_info.start;
-+		sample_info.loopend -= sample_info.start;
-+		sample_info.start = 0;
-+
-+		if (validate_sample_info(&sample_info) < 0)
-+			return -EINVAL;
-+	}
-+
- 	/* Allocate a new sample structure */
- 	sp = sf_sample_new(sflist, sf);
- 	if (!sp)
-@@ -980,6 +1010,11 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
- 	smp->v.loopend = patch.loop_end;
- 	smp->v.size = patch.len;
+-	/*
+-	 * TODO verify that server properly follows FUSE protocol
+-	 * (oh.uniq, oh.len)
+-	 */
+ 	args = req->args;
+ 	copy_args_from_argbuf(args, req);
  
-+	if (validate_sample_info(&smp->v) < 0) {
-+		sf_sample_delete(sflist, sf, smp);
-+		return -EINVAL;
-+	}
-+
- 	/* set up mode flags */
- 	smp->v.mode_flags = 0;
- 	if (!(patch.mode & WAVE_16_BITS))
-@@ -1017,7 +1052,7 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
- 	/*
- 	 * load wave data
- 	 */
--	if (sflist->callback.sample_new) {
-+	if (smp->v.size > 0 && sflist->callback.sample_new) {
- 		rc = sflist->callback.sample_new
- 			(sflist->callback.private_data, smp, sflist->memhdr,
- 			 data, count);
+@@ -620,6 +637,10 @@ static void virtio_fs_requests_done_work(struct work_struct *work)
+ 		virtqueue_disable_cb(vq);
+ 
+ 		while ((req = virtqueue_get_buf(vq, &len)) != NULL) {
++			if (!virtio_fs_verify_response(req, len)) {
++				req->out.h.error = -EIO;
++				req->out.h.len = sizeof(struct fuse_out_header);
++			}
+ 			spin_lock(&fpq->lock);
+ 			list_move_tail(&req->list, &reqs);
+ 			spin_unlock(&fpq->lock);
 -- 
 2.53.0
 
