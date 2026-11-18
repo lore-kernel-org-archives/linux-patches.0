@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039164;
-	b=clDLy+vfHNKj/eZu+cUiTGNoV6+Gms9kmCHLb/DyL7F/qkVvEUy2wYuCBXTbI6rd1Q9V
-	 2vQmAsBJ34vY2M3fgbusKUPpRdkbYzLX829HLpyNZAX4vcivlC+YyXqewkZiMQLUv8AbL
-	 ZCGfvorQpd1K4cYBL8aOfZdgeH0k3dVoejMnAtck/I1Fe1JcsgmY8lzm/65Ri8YYoy/OM
-	 1aMTBsIPl1r4lKF1kecOhp77LFHCMGugc57xGpYufAVixy94hrKuymyjkcygn5/PlvLgE
-	 /Ja6Qa5HjhlfUyx03N36loFN2+PfMq50w48Rx1eClX0ErA/MpWxgnOTaBU+cRE0CFsw==
+	t=1795039167;
+	b=hIUgeSA5UcW9grHE5fNG3+aBASgb4max+k6dDiUlUBmMnexgYjmdZc7yUsSM9vmfRl0d
+	 ajmEwBMsoaCfJoCOVturE+YRaDFpEh0D5+knUy+j2g3XyJVetdjsJokAS3kS0Nu0e29Mq
+	 xb3QxU4TXjN9npApIf1H21CYL1Z9qEM8xH2WrCoRzAIfpE4/lNF2mI4IhGBM3oZ7jADGt
+	 FAXHJcpkiYYxS3XN8LJv+PJ3lpE/RBuZ0r1Gc1oLFxCg+K4/leszoXaGvxF/7wFdJbxaQ
+	 O8jjObVzTySVB1GcphkpDfdzOsc4UE3A/cj6TQMALVliJ5XCqM1Ha7CHXLDEbI6fD7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039167;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KOmAa33yXDUnPDbHvheNGGuFwPvCXf6kgY3+LsKrHzo=;
-	b=OoR2ALlaU/LGr4agA9NO8izpTJ6V4wCXV670oysGGgqXVCH3ebypOOWzKTIOzcJzNd7o
-	 +HWD9SgVFSDt5Olc3GnaHI5KPk53hcemwzADWox/lYgskjlmsKTSTUQKI66BfYQAk6WOC
-	 o5s3Sq+/KybuOqEA1au48TQb9sbbKRjEpr6aFAjLKVJG54IOhn3xJwMqJhBq3IZUywMYw
-	 6uRlhbVskDQo/qTJahQY/LNMjahol5SGTNYuu1MMgdG/bffSdLivyB2OZYFblmHRpc8pA
-	 pddiMeFMzjqGaNfZCMQVpLtCj9WZ4d6KPngCBuYqbxsk3vKQP9UbVIucVJHWJyF2Z6A==
+	bh=fsiCWjrI8nYyW8gcOy/vfKMy7fNkKapACl8MH50mSac=;
+	b=eIViYTK0w0RBQtJgghLLy2kftkWSa2sJAIW58Ttqr8p1wzLif3WxG9P4wOL/7KZEJWNY
+	 fazbrSq7NCW+KDfPILGUg4+PDKZ8S08dixgiFZAD1xa7iEUVHCl/lGCoT6n9TXInLRDr5
+	 rJzwKTdZaQFEZRVLyhwYBU3dzuHilqmh4JJ+BfOZkPgli/R6OpMHgO6m5O/jorkCejkOo
+	 Ret+sgKNowDsigJu4yzw8fqYduAnivNafVznXDswMgqjr1BXZVKQS6hcoebyzX0syj2CY
+	 +hzV4cm/uM9snYiRW1jR0B5txE2nKZ7znbqhfz3ZKmdAEL6xf8ZAFjxohE8L32FJbUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAyg9wVa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrU9ZXoL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8724E606A32A;
-	Wed, 18 Nov 2026 21:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C1C606A33B;
+	Wed, 18 Nov 2026 21:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAyg9wVa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F111F000C5;
-	Wed, 18 Nov 2026 21:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrU9ZXoL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E601F000C4;
+	Wed, 18 Nov 2026 21:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039164;
-	bh=KOmAa33yXDUnPDbHvheNGGuFwPvCXf6kgY3+LsKrHzo=;
+	s=korg; t=1795039166;
+	bh=fsiCWjrI8nYyW8gcOy/vfKMy7fNkKapACl8MH50mSac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RAyg9wVa0/MMvSVJd+kwttdF14gjtpi7dvn14wvkjFYKn4SWgmMklTz89/8DAIrhF
-	 a1FfFDwr2yUwkdLWizmS8JHj/gtt7LJ8QOXv1dQrMUndykGuiEzQ0W+g4qiOTY+4Cb
-	 IyjC1EpWiJiZCIIi1Uv7erv/glW+AllZWvrjv7cc=
+	b=FrU9ZXoLQLlgZu/sHvzH8/Hg4X1ODWA/z9aQLUSbdtDR5dsLPkIWe2GAp/nmoTNJm
+	 Qek1ZgFw41du34dOV1+2ndBD7BIhuekmmrQZt+s5YD6i7U3AqShrZmuW6bvyV+XvKS
+	 sGjua5u7uBdedBkUhQb30wnfis1j0kcc8F4ENMGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Breno Leitao <leitao@debian.org>,
+	Bradley Morgan <include@grrlz.net>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2000/3318] ARM: dts: helios4: fix spi1 location
-Date: Wed, 18 Nov 2026 15:43:42 +0100
-Message-ID: <20261118150422.051596143@linuxfoundation.org>
+Subject: [PATCH 6.6 2001/3318] kexec_file: stop the top-down search before it underflows
+Date: Wed, 18 Nov 2026 15:43:43 +0100
+Message-ID: <20261118150422.078809290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,68 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 5df4320a30a87f9bb918ace7b389026917c8d896 ]
+[ Upstream commit c711461303af9f796b293b5ac06f49a885e46e71 ]
 
-This spi node is specified in armada-38x.dtsi with proper compatible
-strings whereas they are not present here. Instead of copy and pasting
-various lines, just reference the node in the dtsi.
+locate_mem_hole_top_down() walks candidates downwards by subtracting
+PAGE_SIZE whenever the window conflicts with an existing segment or with
+an architecture exclude range.
 
-This dts seems to predate the move of spi from internal-regs to the soc
-node so this moves it in line there.
+Nothing stops that subtraction at zero, so a search that reaches the
+bottom of the address space wraps temp_start around and continues.
 
-Allows proper probing of SPI at runtime.
+The walk starts inside the range being scanned and only moves down, so
+bail out once a candidate ends up above end. That covers every step in
+the loop rather than the subtractions alone, and it matches
+locate_mem_hole_bottom_up(), which already bounds its candidate on both
+sides.
 
-Remove the microsom_spi1_cs_pins pinctrl group and its reference in
-&spi1. The group only muxed mpp59 to the "spi1" function, but that
-pin (SPI1 cs0) is already covered by spi1_pins, which selects the
-same function for mpp56-59 in armada-38x.dtsi.
+This is a better check than subtracting with check_sub_overflow(), given
+that we would have 3 subtractions in this block, and this single fix
+would take care of them all (instead of three check_sub_overflow()).
 
-Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: cb1052581e2b ("kexec: implementation of new syscall kexec_file_load")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Bradley Morgan <include@grrlz.net>
+Link: https://patch.msgid.link/20260812-kexec_posioned-v6-1-e477887086f0@debian.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm/boot/dts/marvell/armada-388-helios4.dts | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ kernel/kexec_file.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-index 1ed6ddf1719a7..33e30528bc7ca 100644
---- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-+++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-@@ -254,13 +254,6 @@ sata3: sata-port@1 {
- 				};
- 			};
+diff --git a/kernel/kexec_file.c b/kernel/kexec_file.c
+index 92a169f0b2b57..deacf6c23f798 100644
+--- a/kernel/kexec_file.c
++++ b/kernel/kexec_file.c
+@@ -432,7 +432,9 @@ static int locate_mem_hole_top_down(unsigned long start, unsigned long end,
+ 		/* align down start */
+ 		temp_start = temp_start & (~(kbuf->buf_align - 1));
  
--			spi@10680 {
--				pinctrl-0 = <&spi1_pins
--					     &microsom_spi1_cs_pins>;
--				pinctrl-names = "default";
--				status = "okay";
--			};
--
- 			sdhci@d8000 {
- 				bus-width = <4>;
- 				cd-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
-@@ -327,11 +320,13 @@ helios_fan2_pins: helios_fan2_pins {
- 					marvell,pins = "mpp48", "mpp55";
- 					marvell,function = "gpio";
- 				};
--				microsom_spi1_cs_pins: spi1-cs-pins {
--					marvell,pins = "mpp59";
--					marvell,function = "spi1";
--				};
- 			};
- 		};
- 	};
- };
-+
-+&spi1 {
-+	pinctrl-0 = <&spi1_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
+-		if (temp_start < start || temp_start < kbuf->buf_min)
++		/* A candidate above the range means the walk wrapped around */
++		if (temp_start < start || temp_start < kbuf->buf_min ||
++		    temp_start > end)
+ 			return 0;
+ 
+ 		temp_end = temp_start + kbuf->memsz - 1;
 -- 
 2.53.0
 
