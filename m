@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058906;
-	b=jVr2jlpbp9fgR2mWg6ORl2xBIv+/LfS7VlVxJiJobTRjyGN5t1wDLpqdA5FwrxK/KABQ
-	 6QIaZiMdLccoifJY3EHR0LB7VBKJ6cHs/crjOiAT827dc2z44kvxg62MaCjmN6E9cTA9M
-	 Ypyh7o2Le68PXSRp46GJ8WuRQqYaL7D09HNvNkUpcN7Qu9UK9SDlqTjuIW47c+j16az4D
-	 0/dMOUckICKi1f+UXWUmPySkKpPbT+GVRsvXHPq7LxqAYbH2gkMucOCRIVbVYpscU0Ukv
-	 sfmHJCfXaobPlpdF8hHlpEEpTN1lwCSsMJnQZ5NbeQ5dH6KjgQABt0luftfUlNSelMA==
+	t=1795058909;
+	b=lvMUEF3XjZoiU4bRduUus8aLHqTpFio96q+j8XWhPnAKfKNkDsH6bWeQk+5bn0b8q94L
+	 YEPYmfafpveKAOvyOznZUB9FuxUBEnUlGPSTEQr4iWS/+c8pgJTM/gdLI6NJSUlxlJOsV
+	 iSfdnx5CO47/p68o8dSnAKuADOCFYnFynggIHLEgRcjsnVt+DzUzAGQFmdIo6opnGfXlC
+	 0jVPNKnwbJGxCGHlQHzasagBh1keR2NWZG/RUwL6zyRmU+WFMh5bqfLlh5CUltJW8H0p1
+	 V48VPbNtPw4ScbpYXB8Wz5iqN7GVQ/LXIMINgfOtY48M1AFRUosW5xEG1AwQd/uNL6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DDu8dfFlqfBaXgkQ/rvXG+s+8xa5/Q9IUtZY0UGzkhs=;
-	b=05As32s0XQd1NlNChd34ttULGkirZYs750RREh8gG3bK6f5J+2CIBlXKR5YFz5+nq1iH
-	 hHcwDzdz2TmI6zcciMkKNr92o/dj6U6vaQJZtqP2vBj6BBTgDu2MBK1DW06PFdOLm/Int
-	 xP7czXUbzKEgU3iaKz3ntZSwKqCHzoZqba+I508mD3ftOjpIU7GC3okG7Pb+p097nLPGw
-	 J2yY5e2ODJ6R2wA+kGx6IBchhA/Ez0q09NwCcpSA2knlxXm17la9w5HmbQCvHzF0kMSRl
-	 vZUeqV+fZjEmc8xYI38iA3FS8vOdBNRUZ3VbT1F5DspOAPG3VsmDzdCwGh/2GYFNfOQ==
+	bh=hb22LrHRzVtYMoJ6dgSoRDS7nKdYQovkN5w+CQzoyT8=;
+	b=k0JdrJ/xBJpm5vq8rE7Gkmmmts5MaCzDvlNB3ByEqg034BMN8qMEy4yAfuGC3Zq4ksij
+	 dCZq95A9CyftSiitrmir+NC4QxdTfQA0ul8JnZqaSYJ9ijsch+eLNt4WznvVVhFdEUgG6
+	 54QHIWWgq7SIpTbkPfDvhIi/tMVU/LjFfZeDZ9zoti+X2njWKhDL+veOeKUbZP7bc9nA4
+	 pRzDmwn0VG3QN2LYaaS2rKJh68el/0FtlIkS1kVh5+qR5Dc+FladkPC+3XLJV+AuqzoFw
+	 npYqSySmPwX28H4b17vrZbxu+MRAdTx2aDSuQuHQpVXMKHhUnGP9nmVfMADnCSD1rgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JP1S4wSL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syFLIW3a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C02F606A326;
-	Thu, 19 Nov 2026 03:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161DD606A32A;
+	Thu, 19 Nov 2026 03:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JP1S4wSL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A8E1F000C4;
-	Thu, 19 Nov 2026 03:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syFLIW3a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FEC1F000C5;
+	Thu, 19 Nov 2026 03:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058906;
-	bh=DDu8dfFlqfBaXgkQ/rvXG+s+8xa5/Q9IUtZY0UGzkhs=;
+	s=korg; t=1795058908;
+	bh=hb22LrHRzVtYMoJ6dgSoRDS7nKdYQovkN5w+CQzoyT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JP1S4wSLYPv83ceKoaavt17bzC61knpqJqfK5j/Q+PXxZnmHbqM+7/M+8mFovxdNc
-	 ZcJR1fIObaV1sCrG4Ya+geqDVVAwLmdlSHvfK2/x469YWXFKZq8qgNu5FoapCAuhaG
-	 Qhv2bmArUVEdEHTg/rP27OAqSsfQ4n8tN5ukOE7A=
+	b=syFLIW3aoeVLj6F4EpGhnw0Jq79ALI6uKCjDd3EldD0nSv1eSG8QICmgSgCbm4kvD
+	 uWp0IgNXAAJopDsUn8PNuprGZsRxiaT3dgPVlZSZ7SAq4rHp+L2mKcTLx1zKLlqznQ
+	 ctbvtLJHvxPQXUZG6dmhtL6S1R8LjCxbj0Cqqz/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0652/1848] xfs: bound da-node entry count against the correct geometry
-Date: Wed, 18 Nov 2026 15:44:50 +0100
-Message-ID: <20261118145943.099202094@linuxfoundation.org>
+Subject: [PATCH 5.10 0653/1848] raid6: add missing vzeroupper to AVX2 code
+Date: Wed, 18 Nov 2026 15:44:51 +0100
+Message-ID: <20261118145943.136370967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,64 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 3df5e5aaa3bc0913236c48ab29b7df3a785aa29f ]
+commit 24f1241cdb056fd630e6710a916e0f7c8c910a70 upstream.
 
-xfs_da3_node_verify() bounds the node entry count against the larger of
-the directory and attribute geometries because, as a buffer verifier, it
-cannot tell whether the block belongs to the directory or the attribute
-tree. When the directory block size exceeds the fs block size (e.g.
-mkfs.xfs -n size=64k -b size=4k), an attribute node buffer is a single fs
-block that holds only m_attr_geo->node_ents entries, yet a crafted attr
-node may claim a count up to m_dir_geo->node_ents and still pass the
-verifier.
+Since the AVX2 optimized RAID6 code uses YMM registers, execute vzeroupper
+before returning from it.  This is needed to avoid degrading the
+performance of any later SSE code that may happen to be executed.
 
-xfs_da3_node_lookup_int() then indexes btree[] up to that count during
-its binary search -- an out-of-bounds read via getxattr/listxattr on a
-mounted crafted image.
-
-The buffer verifier is the wrong place to tighten this: it has no fork
-context, and the transaction-less read path used by getxattr does not run
-xfs_da3_node_set_type() either. xfs_da3_node_lookup_int(), on the other
-hand, always runs on that path and holds args->geo, the geometry of the
-fork actually being searched. Bound the entry count against
-args->geo->node_ents there, before walking the entries.
-
-Fixes: 7ab610f9e0f1 ("xfs: move node entry counts to xfs_da_geometry")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Omitted the xfs_da_mark_sick() call because the helper is unavailable. ]
+Link: https://lore.kernel.org/20260831212308.213855-1-ebiggers@kernel.org
+Fixes: 2c935842bdb4 ("lib/raid6: Add AVX2 optimized gen_syndrome functions")
+Fixes: 7056741fd9fc ("lib/raid6: Add AVX2 optimized recovery functions")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_da_btree.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ lib/raid6/avx2.c       | 6 ++++++
+ lib/raid6/recov_avx2.c | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_da_btree.c b/fs/xfs/libxfs/xfs_da_btree.c
-index 08871fa84419b..8300d67ae007f 100644
---- a/fs/xfs/libxfs/xfs_da_btree.c
-+++ b/fs/xfs/libxfs/xfs_da_btree.c
-@@ -1658,6 +1658,19 @@ xfs_da3_node_lookup_int(
- 		} else
- 			expected_level--;
+diff --git a/lib/raid6/avx2.c b/lib/raid6/avx2.c
+index f299476e1d764..10f2b1b4d6a69 100644
+--- a/lib/raid6/avx2.c
++++ b/lib/raid6/avx2.c
+@@ -76,6 +76,7 @@ static void raid6_avx21_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
  
-+		/*
-+		 * The node verifier cannot tell whether this block belongs to
-+		 * the directory or the attribute tree, so it only bounds the
-+		 * entry count against the larger of the two geometries.  Here
-+		 * args->geo is the geometry of the fork we are actually
-+		 * searching, so reject a count that would walk btree[] off the
-+		 * end of this node buffer.
-+		 */
-+		if (nodehdr.count > args->geo->node_ents) {
-+			xfs_buf_mark_corrupt(blk->bp);
-+			return -EFSCORRUPTED;
-+		}
-+
- 		max = nodehdr.count;
- 		blk->hashval = be32_to_cpu(btree[max - 1].hashval);
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -124,6 +125,7 @@ static void raid6_avx21_xor_syndrome(int disks, int start, int stop,
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -186,6 +188,7 @@ static void raid6_avx22_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -254,6 +257,7 @@ static void raid6_avx22_xor_syndrome(int disks, int start, int stop,
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -347,6 +351,7 @@ static void raid6_avx24_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -457,6 +462,7 @@ static void raid6_avx24_xor_syndrome(int disks, int start, int stop,
+ 		asm volatile("vmovntdq %%ymm14,%0" : "=m" (q[d+96]));
+ 	}
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+diff --git a/lib/raid6/recov_avx2.c b/lib/raid6/recov_avx2.c
+index 4e8095403ee28..a7fd1ba177f1b 100644
+--- a/lib/raid6/recov_avx2.c
++++ b/lib/raid6/recov_avx2.c
+@@ -180,6 +180,7 @@ static void raid6_2data_recov_avx2(int disks, size_t bytes, int faila,
+ #endif
+ 	}
+ 
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -297,6 +298,7 @@ static void raid6_datap_recov_avx2(int disks, size_t bytes, int faila,
+ #endif
+ 	}
+ 
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
  
 -- 
 2.53.0
