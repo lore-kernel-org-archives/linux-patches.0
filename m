@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027761;
-	b=kOGEaQjuV/9i2oUwKd7XWDJFjK63A7NVkcMIc3YT5oZYtZAR0MbQEigJsOSb0DGBBa3n
-	 abV5lxvLpihuzVkKT0S59y9nk1aaMpDSxJm9ZQp34zsdauvrWFI0/CxJNhT8FXKtpdIzp
-	 J9D/E9m/3YnZKn2ibIdz141gsiogl2ff/s6L+NaVnF2Zok+xCpufEc3OBIX9k3Y4YCVUE
-	 mdmPWSuTtXVEIVOghOXe6S9yLw0NfVSErdIOUAw5gje03qNy7+S1xEB2gg+XbBCkfgToZ
-	 lq1OKROYjX7lAvUxaDd5RzIxwEUdE2IoxBSKRkMWv4O96r8OrWDwx2d23dzME3w23FQ==
+	t=1795027764;
+	b=26NPjtWb6uUsBW/dQx82nExjp0phF0NNBdTxliR5Dm56UDPTWbROih3qRXGDioYvFbof
+	 +gfdo0DgE39yb3HGD669azxhYxWzxEDhl3Rir17T44R7135SPQCTfEU7CbIUPGDSnnYsE
+	 xYXCEMV9E9BQlNhAWPmMSvMVrm1aZWsDeYrkxLfdtBSStXs/muBWC+7ISZN7MjdnLuteL
+	 7TlZK74WHcVJNXqBX5y93ODVBvkC9r8Is+Io18K8o0zmba/x3uZf2I81uVsR7LhqWtlga
+	 PhRgRINOEHLcwG9UQ9pGDGShRedm0MYgdpRX6uo3hl2k2Rk+EZPjXqHwebMAEj5l0TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JjnAQH9FoUXlnXfih+836lyG0MavwXqbVknJQBWaF1I=;
-	b=sdGZzDE8JzFssYFuZGbxxi+MbJ/xW840pbCFTQ5FFUfjBn33xH/kE1yvB6ipX4QKHcFZ
-	 5cmBTvWQgOg85a5/Ec3Nk8EHdLmXVVhh9sZ16fCDGJ0PnRK53BSxkhlNNqvtmPGFOaxu8
-	 r0A6bIgqCi3qLvGZU85tXg+2vWbr68aSVy8dufUglrw4DmRCMXIQsYpewMnnFCQEOYdHD
-	 5a7No6Vdsunt6CStvK5Gu4K3TRPLGrSfR+lI/vOJ8sz58cBYrLl8VZb9joPTYUjhDTFTD
-	 tw8/YMO2XO/Lb9P31687A5YTHb/yf2oJMXExOyruaxLgzPGw+P8MRD6IUdghQ/15CHQ==
+	bh=z1WDB3J70Kp1onD9S8Cv66yPUz8o53BsTAvHMU1y0no=;
+	b=cU2tg8NumH/wvh2+uef3eEga2ephxFvw55JRu5djuJvypFfX3r5WxgFDcTG7E8586uJF
+	 UjaRoWgT73iiUJTfd5eGwdCYOUzZMPL+r/cnMXXFcbuNq7H38/119fWz7N0A6rMbdclbu
+	 bxZ7qOLVzpOCdxOFti5DmiA/y6YBvHEWHDJp3BVp1CPkVFzfugYcagHAsKpy926yf3UjX
+	 70I5s8iv+W0BdWTv9O+mtwgkoe5NdYUdQBtGnA5V/r0U3tJYuxBjHHIfqV6CfuUNDSbgM
+	 ll3vrGlPHdL7jWHJdMp5bFnfWmwZGhXQ+RTH54G+1jCQpn30p4Tifaaq0WfO7UMnaaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oY+WNtO6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2za4Q6y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E18560A2603;
-	Wed, 18 Nov 2026 18:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B494F606A334;
+	Wed, 18 Nov 2026 18:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oY+WNtO6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44E71F000C5;
-	Wed, 18 Nov 2026 18:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2za4Q6y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23251F000C8;
+	Wed, 18 Nov 2026 18:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027761;
-	bh=JjnAQH9FoUXlnXfih+836lyG0MavwXqbVknJQBWaF1I=;
+	s=korg; t=1795027764;
+	bh=z1WDB3J70Kp1onD9S8Cv66yPUz8o53BsTAvHMU1y0no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oY+WNtO6BJRMC3uAsdt9svKHhWy7m80uCxiudkMNkjhI/dQYXTEgvQR4krsgOf86z
-	 xUen0a0HBN14xGMuOmLGV/6K0rcfacfukuVKeZqWgsFgwbSmiQ0xrR2JDz+PMGs4re
-	 wqh4G05cxdaJSPlqIQpQ6Aa5i+tkWCdsddAFNnGw=
+	b=h2za4Q6y4rJtRl02r5pY/0v5mp/gBPWifDBeWyZ3W1urSwi2USfVGYQahKjjIDejx
+	 0+o1j6O9IMZbA3RatKpu4iIIUdNa0TWc1YFBALnOQl97jnepZGyZ43el4oOR0YxyDV
+	 KAKElxAbFesyJwMyDZRaMqVQ3lgy7efyE/Xx9MZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1903/2151] nsfs: check the trailing bytes of a file handle in bytes, not words
-Date: Wed, 18 Nov 2026 16:00:38 +0100
-Message-ID: <20261118150231.114489330@linuxfoundation.org>
+Subject: [PATCH 6.18 1904/2151] netfs: Restore selective debug mask handling
+Date: Wed, 18 Nov 2026 16:00:39 +0100
+Message-ID: <20261118150231.150246516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,64 +68,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ad0312e1decd40d18e0e75de96c9c52013ec05be ]
+[ Upstream commit 62400ce406f66b1154dfbd0d60a7e3baa374e105 ]
 
-open_by_handle_at(2) gets the wrong answer for a namespace file handle
-longer than struct nsfs_file_handle: a 16-byte handle padded with
-zeros to 48 bytes or more, which is what the comment above the check
-promises to accept, is refused with -ESTALE, while a 20-byte handle
-whose extra word is garbage is accepted. Reproduced on v7.0 and on
-mainline with the handle of /proc/self/ns/net from
-name_to_handle_at(AT_SYMLINK_FOLLOW); no privilege is needed, as
-nsfs_fh_to_dentry() admits the caller's own namespaces. Since v6.18.
+The netfs debug macros test only whether netfs_debug is nonzero.
+Consequently, selecting one debug point enables every entry, exit and
+general debug message.
 
-nsfs_fh_to_dentry() receives fh_len in 32-bit words, like every
-fh_to_dentry(), and NSFS_FID_SIZE_U32_LATEST is the struct size in
-words (4). The check that the bytes past the struct are zero adds that
-word count to a byte pointer and passes the word difference to
-memchr_inv() as a byte count: it inspects bytes 4 .. fh_len - 1 of the
-handle instead of bytes 16 .. 4 * fh_len - 1. Up to a 44-byte handle
-that range lies inside ns_id, ns_type and ns_inum, so the outcome
-depends on the values of those fields (a padded net namespace handle
-passes because the upper bytes of its ns_id and ns_type are zero) and
-the real trailing bytes are never looked at; from 48 bytes on the range
-always covers a non-zero field byte and every padded handle is refused.
+Documentation/filesystems/caching/fscache.rst and the NETFS_DEBUG
+Kconfig help still describe /sys/module/netfs/parameters/debug as a
+bitmask of per-stream function entry, exit and general debugging
+points, and the fscache_*.c files still define FSCACHE_DEBUG_LEVEL,
+but nothing has decoded either since the mask handling was dropped
+when FS-Cache was folded into netfs.
 
-Start NSFS_FILE_HANDLE_SIZE_LATEST bytes into the handle and check
-(fh_len - NSFS_FID_SIZE_U32_LATEST) * sizeof(u32) bytes.
+Restore the per-level and per-point mask decoding.  Files that do not
+define FSCACHE_DEBUG_LEVEL, which includes the netfs core, fall under
+the cache management stream, the same default the FS-Cache macros had.
 
-Tested with a program that encodes /proc/self/ns/net and opens the
-handle with handle_bytes 16, 20, 36, 48 and 128 (zero padding), and 20
-and 48 with a non-zero last byte. Before: 48 and 128 refused, the
-20-byte garbage handle accepted; after: every padded handle opens, both
-garbage handles are refused.
-
-Fixes: 5222470b2fbb ("nsfs: support file handles")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261018030342.799383-1-nickolai@csail.mit.edu
+Fixes: 915cd30cdea8 ("netfs, fscache: Combine fscache with netfs")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905051738.11317-1-kmehltretter@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nsfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/netfs/internal.h | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nsfs.c b/fs/nsfs.c
-index 4dee1e728569d..8586a578a2b82 100644
---- a/fs/nsfs.c
-+++ b/fs/nsfs.c
-@@ -485,8 +485,8 @@ static struct dentry *nsfs_fh_to_dentry(struct super_block *sb, struct fid *fh,
+diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
+index 2889df591d949..4c175eff62e40 100644
+--- a/fs/netfs/internal.h
++++ b/fs/netfs/internal.h
+@@ -470,6 +470,32 @@ void fscache_create_volume(struct fscache_volume *volume, bool wait);
+ #define kleave(FMT, ...) dbgprintk("<== %s()"FMT"", __func__, ##__VA_ARGS__)
+ #define kdebug(FMT, ...) dbgprintk(FMT, ##__VA_ARGS__)
  
- 	/* Check that any trailing bytes are zero. */
- 	if ((fh_len > NSFS_FID_SIZE_U32_LATEST) &&
--	    memchr_inv((void *)fid + NSFS_FID_SIZE_U32_LATEST, 0,
--		       fh_len - NSFS_FID_SIZE_U32_LATEST))
-+	    memchr_inv((void *)fid + NSFS_FILE_HANDLE_SIZE_LATEST, 0,
-+		       (fh_len - NSFS_FID_SIZE_U32_LATEST) * sizeof(u32)))
- 		return NULL;
++#define FSCACHE_DEBUG_CACHE	0
++#define FSCACHE_DEBUG_COOKIE	1
++#define FSCACHE_DEBUG_OBJECT	2
++#define FSCACHE_DEBUG_OPERATION	3
++
++#define FSCACHE_POINT_ENTER	1
++#define FSCACHE_POINT_LEAVE	2
++#define FSCACHE_POINT_DEBUG	4
++
++#ifndef FSCACHE_DEBUG_LEVEL
++#define FSCACHE_DEBUG_LEVEL CACHE
++#endif
++
++/*
++ * Determine whether a particular optional debugging point should be logged.
++ * Three levels of indirection are needed to expand FSCACHE_DEBUG_LEVEL before
++ * joining it with its prefix.
++ */
++#define ____do_kdebug(LEVEL, POINT) \
++	unlikely(netfs_debug & \
++		 (FSCACHE_POINT_##POINT << (FSCACHE_DEBUG_ ## LEVEL * 3)))
++#define ___do_kdebug(LEVEL, POINT) \
++	____do_kdebug(LEVEL, POINT)
++#define __do_kdebug(POINT) \
++	___do_kdebug(FSCACHE_DEBUG_LEVEL, POINT)
++
+ #ifdef __KDEBUG
+ #define _enter(FMT, ...) kenter(FMT, ##__VA_ARGS__)
+ #define _leave(FMT, ...) kleave(FMT, ##__VA_ARGS__)
+@@ -478,19 +504,19 @@ void fscache_create_volume(struct fscache_volume *volume, bool wait);
+ #elif defined(CONFIG_NETFS_DEBUG)
+ #define _enter(FMT, ...)			\
+ do {						\
+-	if (netfs_debug)			\
++	if (__do_kdebug(ENTER))			\
+ 		kenter(FMT, ##__VA_ARGS__);	\
+ } while (0)
  
- 	switch (fh_type) {
+ #define _leave(FMT, ...)			\
+ do {						\
+-	if (netfs_debug)			\
++	if (__do_kdebug(LEAVE))			\
+ 		kleave(FMT, ##__VA_ARGS__);	\
+ } while (0)
+ 
+ #define _debug(FMT, ...)			\
+ do {						\
+-	if (netfs_debug)			\
++	if (__do_kdebug(DEBUG))			\
+ 		kdebug(FMT, ##__VA_ARGS__);	\
+ } while (0)
+ 
 -- 
 2.53.0
 
