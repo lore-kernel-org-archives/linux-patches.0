@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047245;
-	b=F8Tvk5IzGpT1HYmVU6MD07sdvKgrtBlYrSmXQH3xRNVcFSNJm6YevI/rrdO+PhwglR20
-	 kS26AFWd3Y8mUmKzdCRsD1OFWkjueLGZdwI5fsVxsnFp0cFuK7Nblk2xsW3nbJUPvU38E
-	 VM41PgQP0QgXd6Th4nvmim8fp1P7kxwkKwO7AbsovhbiVoctbafGrRSrqAN9jkDAGhG/B
-	 6PKa92zuoDRehc/W8DNSiGeTmjb1C9xM4fYOIbJexjk6TAy0woIdFWQorUs800oaEHm2B
-	 Q1hjgot2vQKyuaTRCUuA6/hVDkhRH+scnqkn6DmkrBdhaAbl+EB+ZVWRoY1AnVslN/w==
+	t=1795047248;
+	b=aT/qQX6UFim+J1NSGAxREhGl2HIS0inoDPNn3qQHPQq1TtY/pS+c5QzAjScN4IZuaSXh
+	 n1+EOgza2sQMcRSEvESOZg8WUuuKobhI5/Xu1uIwWnevlNwq+HaOMq7g3kfK8PoBaG6vH
+	 clA3y0BbAbfAK+jCaGO2WUmXtWOC5r9JB9/SqZmDJBkqhZtzSWT1d0djVz+r35/xxpPz8
+	 5kx9j0e2UEHWBUuN2IuQkQa63iKv0Tc3TWpFT14rGqzCbBsFpemMQn/U/w+S6Zxw6mxrv
+	 6fofVxcglpwpp1jAqilkPs3qLgFAD1RZM+ywf+6tAu1xT7hcWZA/wMNJbHFQ5Fe8/iQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DrCZpHVFxjKOjHFv7d3KUWrYkFdprkP5eQCrS50iDQk=;
-	b=TuTAv1/mLW4nDCehK6h0YhHVU5G6U6uhiqUjF9DOQG49+4Rjb4R8pYxky64JAyAFY25O
-	 xXqSGE/4mRWUfELHKKu3klFMJnRYzq4c4F6yHg28ny8an64UXTtV2W+zhskN+tGhmdsRZ
-	 NY1BrCLgo++PiXWUqMYu+qr5TOK2UriViYZV5aZGbclE28NVb3p2JVX8AjwqwChblTq7D
-	 4nnz5UeoAxONGzeqztQg/HVY+uyASbT2tBM45oiwv7TnFMTJuxjwcPjd3lhB+dCntOVl/
-	 IOO5D3fNUewf3CRoZvYMl7Nmi0Kd/T8oX+X5W3BOkqY0R2bNUX94+HYExbPalDzH4pQ==
+	bh=GyDc6xdgVzatLtSPQi3eo7ENTulvzOM1cPs3an4jm+Q=;
+	b=i3YbeRuN+NDZFzP0YzBSiyiPTdijfYmrclnzChB5MhSWw2xTZN5iEEcmzH7BoIFuXz9K
+	 8ASlVzsLfGuHoPGuMalABo0+qhZCD9L3FE3gD9Q0MqnO9XYbkgY8E2vQcoNGBimtfYeFO
+	 xGQiXwWThkJnNdCbiF5NEO2VP+yEnZPo0f24b36tLa5HVVBeYt5YHjauZL23MXv0nEfmT
+	 bqc8N7sl8qcoHyrQU4i2GSxhBVlmA8f3qNrUwOoHoIGSxeTlUhjruSgSt3inImEWJL3tn
+	 d2/g6Jdwp804dUVYAyXjol5xAiTLySIatMi+XZmBqgtA2pTSJQj+gR/jsCyERsbkk/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F/lxkZII";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZKojB+3r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E50606A325;
-	Thu, 19 Nov 2026 00:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6F8606A331;
+	Thu, 19 Nov 2026 00:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F/lxkZII
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9959D1F000C4;
-	Thu, 19 Nov 2026 00:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZKojB+3r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD4A1F000C4;
+	Thu, 19 Nov 2026 00:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047245;
-	bh=DrCZpHVFxjKOjHFv7d3KUWrYkFdprkP5eQCrS50iDQk=;
+	s=korg; t=1795047247;
+	bh=GyDc6xdgVzatLtSPQi3eo7ENTulvzOM1cPs3an4jm+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/lxkZIIc7qffR3h3NQ6Ex7hbnGagRzKgL3sAEPsBAt0dGpDizpgybG8BJ3sTvz+s
-	 qYzD/lrD6Qb3SZmrV9Io4qibywMQyBuCqHk/L6NIQKCovUHy+BL16sVt3Jm4KpQTqm
-	 oPGsXd9N6CNhzJMIoy2akYATyZ+uZsDlsmJBdgEM=
+	b=ZKojB+3rU+0Tqtl5qAVGTsGkGJnhsTc0kIwQXYPs/b7/AGefs2IEgIPBTeF9MZdRl
+	 95nywtoX00HxHiev5BBfYQ2wbe06rwYoR2FdgthUdsa/bmZe7jzRaGEEwibt7hJSxQ
+	 GX+GIyUaTeiMx4YWB7b9CWLZ1NWXZ34WuggoNqE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Hofman <pavel.hofman@ivitera.com>,
 	Henrik Enquist <henrik.enquist@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1570/2857] ALSA: aloop: Dont constrain playback params in notify mode
-Date: Wed, 18 Nov 2026 15:43:24 +0100
-Message-ID: <20261118150257.917424857@linuxfoundation.org>
+Subject: [PATCH 6.1 1571/2857] ALSA: aloop: Update the PCM Slave controls for a matching playback
+Date: Wed, 18 Nov 2026 15:43:25 +0100
+Message-ID: <20261118150257.952545114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,115 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Henrik Enquist <henrik.enquist@gmail.com>
 
-[ Upstream commit ded106036984a9dd766e7e1451b02e2d15c81438 ]
+[ Upstream commit c3bde2beacbcb40790f0e3c3f909f9e16bbced9c ]
 
-With notify enabled (the pcm_notify module parameter or the "PCM
-Notify" control), the playback side of a cable may change format, rate
-and channels while a capture is running. loopback_check_format() then
-stops the capture and notifies the "PCM Slave" controls, so that the
-capture application can reopen with the new parameters. For this
-reason loopback_open() still gives a notify mode playback the
-unconstrained loopback_pcm_hardware.
+The "PCM Slave" format, rate, channels and access controls report the
+parameters of the playback side of a cable. loopback_check_format()
+updates them when a playback starts, but returns early when a capture
+is open and its parameters match. The controls then keep the module
+defaults, or the parameters of an earlier stream.
 
-Since commit 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints
-adjustment") the hw rules refine against the shared cable->hw instead
-of the substream's own runtime->hw. This pins the playback side to the
-parameters of an open capture whatever the notify setting is. A player
-probing the device sees only the capture's rate, format and channels,
-and the format change path in loopback_check_format() can't be reached
-by a new playback.
+A playback that joins an open capture with the same parameters is the
+normal case without notify, where it is constrained to the capture's
+parameters, and also with notify whenever the player happens to use
+them. An application that reads the controls to find the playback's
+parameters, for example to reopen the capture side at the right rate
+after a restart, then gets the wrong values.
 
-Skip the format, rate and channels rules for the playback substream
-when notify is enabled. Skip the period bytes rule as well: with a
-sound timer source, params_change() already takes the period size from
-a notify mode playback, and keeping the old capture's period bytes
-leaves a playback at another rate with a period that doesn't match the
-timer. The capture side stays constrained to the cable parameters.
+Only skip the capture stop when the parameters match, and update the
+controls in every case. A value event is still sent only for a control
+whose value changes.
 
-The capture stop this makes reachable again was hardened by commit
-826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") and
-commit e5c33cdc6f40 ("ALSA: aloop: Fix peer runtime UAF during
-format-change stop"), which need to be applied first when backporting.
+Reproducer:
+  arecord -D hw:Loopback,1,0 -r 44100 -f S16_LE -c 2 /dev/null &
+  aplay -D hw:Loopback,0,0 -t raw -r 44100 -f S16_LE -c 2 /dev/zero &
+  amixer -c Loopback cget "iface=PCM,name='PCM Slave Rate',device=1"
+Before: the control reports 48000, the module default.
+After: it reports 44100.
 
-Reproducer, with notify enabled on the cable:
-  arecord -D hw:Loopback,1,0 -r 44100 -f S32_LE -c 2 /dev/null &
-  aplay -D hw:Loopback,0,0 96k.wav
-Before: aplay is forced to 44100 Hz and the capture keeps running.
-After: aplay runs at 96000 Hz, the capture is stopped and "PCM Slave
-Rate" reports 96000.
-
-Fixes: 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints adjustment")
-Reported-by: Pavel Hofman <pavel.hofman@ivitera.com>
-Closes: https://lore.kernel.org/all/b4af9071-f8d7-5b47-4d7a-c5743bd67394@ivitera.com/
+Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
+Link: https://patch.msgid.link/20261021-aloop-slave-controls-v1-1-62297727177f@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261003-aloop-notify-fix-v1-1-ba5dfb831bf5@gmail.com
+[ sashal: adjusted context to match the existing loopback_check_format() implementation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ sound/drivers/aloop.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index cc0c59232d61f..18ca2951d4be6 100644
+index 18ca2951d4be6..b14c7a7e90f67 100644
 --- a/sound/drivers/aloop.c
 +++ b/sound/drivers/aloop.c
-@@ -944,6 +944,18 @@ static unsigned int get_cable_index(struct snd_pcm_substream *substream)
- 		return !substream->stream;
- }
- 
-+/*
-+ * In notify mode the playback side may change format, rate, channels and,
-+ * with a sound timer, the period size. A running capture that no longer
-+ * matches is stopped by loopback_check_format().
-+ * call in loopback->cable_lock
-+ */
-+static bool loopback_playback_unconstrained(struct loopback_pcm *dpcm)
-+{
-+	return dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
-+	       get_notify(dpcm);
-+}
-+
- static int rule_format(struct snd_pcm_hw_params *params,
- 		       struct snd_pcm_hw_rule *rule)
- {
-@@ -953,6 +965,8 @@ static int rule_format(struct snd_pcm_hw_params *params,
- 
- 	snd_mask_none(&m);
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		m.bits[0] = (u_int32_t)cable->hw.formats;
- 		m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
- 	}
-@@ -967,6 +981,8 @@ static int rule_rate(struct snd_pcm_hw_params *params,
- 	struct snd_interval t;
- 
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		t.min = cable->hw.rate_min;
- 		t.max = cable->hw.rate_max;
- 	}
-@@ -983,6 +999,8 @@ static int rule_channels(struct snd_pcm_hw_params *params,
- 	struct snd_interval t;
- 
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		t.min = cable->hw.channels_min;
- 		t.max = cable->hw.channels_max;
- 	}
-@@ -999,6 +1017,8 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
- 	struct snd_interval t;
- 
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		t.min = cable->hw.period_bytes_min;
- 		t.max = cable->hw.period_bytes_max;
- 	}
+@@ -346,11 +346,14 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
+ 			check = runtime->format != cruntime->format ||
+ 				runtime->rate != cruntime->rate ||
+ 				runtime->channels != cruntime->channels;
+-			if (!check)
+-				return 0;
+-			if (stream == SNDRV_PCM_STREAM_CAPTURE)
++			/*
++			 * Matching params also go on to the update below, so that
++			 * the setup controls follow a playback that joins an open
++			 * capture.
++			 */
++			if (check && stream == SNDRV_PCM_STREAM_CAPTURE)
+ 				return -EIO;
+-			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING) {
++			else if (check && cruntime->state == SNDRV_PCM_STATE_RUNNING) {
+ 				/* close must not free the peer runtime below */
+ 				atomic_inc(&cable->stop_count);
+ 				stop_capture = true;
 -- 
 2.53.0
 
