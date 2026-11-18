@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015049;
-	b=aVaVI5NwzcIkYt80N3YnI9hkd5NbnNkfTa66kOMZbmhCCHbqQwgDkHDKR4qmW4CfyYvK
-	 LYCYCiA8a6FLZsP7uTKcrD94O1vn3VqkAnx5DPOHu6skaSwzXIHSjcG9G29sRzUEhxTV0
-	 nwQdusP5n9+kf+mz3a70r8WdbC2R5CpDPqccS+MU0XzTEhlx49pEvNp1/jwAYa5Uyh/za
-	 BpGwqPVVbC+zRzpDUXJNVUWsaXnFbz8HBVvKrWX1dgoXwWabSwuQjd5kx6iKYCHmbjQmG
-	 SETPVbjaWknGRLuC5q3XKM1sdHvq4lt9LXr4hZsc5ZbkzZKSzsgueVP6VqwoNpPQxkw==
+	t=1795015052;
+	b=tE7xS1WnKY0h31fyQyTuA/6fRrq7GGLkMnJW9bS7KGzz1Ie/ry618NAmudLzfvPDfUX6
+	 gCBhTqL2XlTTPR9KIPO6/agBAj4udpkSCkBq9sua2CUSH3jPRsCDOi188rvCRgbKzP6c5
+	 XDVOqssA0a1HurHEjMo79FRT1hvbE+0OSiaHVPFj+LiZxALOOxD+v0kgKvw8dzKHxYnPH
+	 FtzKIsRT8vv1QTvuOe6FC6ZZbV1xjMr13DfascB4LiTaRn6qKGv4EyVs+Qasft8cxKZW8
+	 +w+/ZFJdMgOaLuwCHJwSIzMxGd4l25pL0wgZra6hJQr+2T/Nf+belMmKwgr05kj+Gcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WwaoMgoh7kXWb62lfpBmrAADR8QG4nF3cj/2ch63P10=;
-	b=mac/TWCV6cLQK3wRPzlQYsKkId/aAOVG9cUh7Q189hTQXe+WiHUn1UkQtbE2HxBVsEMN
-	 wY5Wd6VijgKuAyvj5gmAy7H1STLVnInE2q2zdGygqcnJWNeDq5mqmb7vqO2i7q8qEnw6o
-	 wX4Wgh22tv4nfYZwj4QPfP1g8w7e7ILKRg4a8IWQar8QCLWi7iFW7gUYDDwQuNXE9ftcz
-	 NsCLV9G6XWwkn3vdBztxuGL+HeeYh9JE5wV4o7C9R2zVl23UeaptltJ7UtUvV6JIS0D3C
-	 tkmtDpx9WviwxcatNgtXO2k4D/4C3ZwBawO3M+cRIksvDq5c/pe6M9n509Wl5sVXBEA==
+	bh=ymmHKM8ZavQk2fvpOOUlM2TYGLRQ65zM8a9PLtchmhM=;
+	b=RlLc36Qu0rFJZKguFfN1hGsJJjXsykE9mewrw0tyAiHYp1bFcysHtJCosc1kcTaA5fmB
+	 HTQu/eQX7WmaN/+xf6a6/s3rhJLA/R2poYLZcUAcU8g7i15tcSzaQ3C6pK0Bg0QSJ7eHY
+	 FfRO8kF/7ALZfeq4+opvt6N1z5kdUOa5LtUMP7w7x1/Heu+w4Qh9hmOmsSkZkCRPKXrol
+	 fF5LftqFYyYKTr9C+UfO96IyzPQCnbeUB+Jm6++fJGVkiPg6nNCaLHPNPutfBjl2r34EG
+	 izTqiBcwQF1OIs1c9C7QkFem6aP/cQjhjAVY8eecHs7I5kqZUyM832qVO+sShiSzZQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LNpYndvI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nlDiUH98;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B78606A31C;
-	Wed, 18 Nov 2026 15:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68914606A31C;
+	Wed, 18 Nov 2026 15:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LNpYndvI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E5F1F000C6;
-	Wed, 18 Nov 2026 15:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nlDiUH98
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DE51F000C6;
+	Wed, 18 Nov 2026 15:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015049;
-	bh=WwaoMgoh7kXWb62lfpBmrAADR8QG4nF3cj/2ch63P10=;
+	s=korg; t=1795015052;
+	bh=ymmHKM8ZavQk2fvpOOUlM2TYGLRQ65zM8a9PLtchmhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LNpYndvIJ2HdoM71ipKhAI2JI1XUpbQHQ0KI6Z5dIfHQuU3OJt4B5Bs900DVpJO/n
-	 MWnaJVtKw+5c1OD/4u4ZsMurCc+neW2C+qh+z8Or3wE1yDQfqaFeOXujYTkj1S/M1N
-	 +CSW/OiN0jqJ2RVi+mldZXcUfHmAgDO3vJvFvSQ0=
+	b=nlDiUH98s0uvMKkAR6XsRJdqMYlR1k7QZ0/XBSPjewIgs4FXnxPzz94spl5RUp9+8
+	 AidFGJnrX8oPkXwJHe3ZuH6+lYbIyBG7Jh6HGk9kRhsADj7E+4GJmyyyWJV9SGwmSz
+	 NnatdMyM3iw6Ib4RxAZpeXHXkYYAGnrHHtuEAe4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
+	Bartosz Fenski <bartosz@fenski.pl>,
+	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0035/2651] btrfs: remove on-stack paddrs[] array usage
-Date: Wed, 18 Nov 2026 15:21:15 +0100
-Message-ID: <20261118150249.236732929@linuxfoundation.org>
+Subject: [PATCH 7.3 0036/2651] btrfs: raid56: do not verify the content if there is no data checksum
+Date: Wed, 18 Nov 2026 15:21:16 +0100
+Message-ID: <20261118150249.270773616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,254 +72,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit f41f4dcddea1b9eb41fc3a5491b2a8dd1f7c21ff ]
+[ Upstream commit d00b85308abee300dfb7e1ac642f38bab9ec7492 ]
 
-Since the bs > ps support, we have to handle cases where a data block is
-inside several discontiguous pages.
+[BUG]
+There is a bug report that fio can fail to sync the data on a degraded
+RAID56 mount:
 
-Thus we need a local paddrs[] array to assemble a data block for bs > ps
-cases.
+  # mkfs.btrfs -m raid1 -d raid5 -f $dev1 $dev2 $dev3
+  # mount $dev1 $mnt
+  # btrfs balance start -d $mnt
+  # umount $mnt
+  # btrfs dev scan -u $dev2
+  # wipefs -fa $dev2
+  # mount -o degraded $dev1 $mnt
+  # fio --name=degraded-write --directory=$mnt --rw=randwrite --fdatasync=4 \
+		--bs=4k --size=512M --randrepeat=1
 
-However to handle all possible bs/ps combinations, we have to declare
-such array using the max block size vs page size, no matter the current
-block size and page size.
+The run will fail at fsync:
 
-This adds 128 bytes on-stack memory usage for several call sites, and
-also introduced several duplicated helpers to calculate checksum for a
-data block:
+  fio: io_u error on file /mnt/btrfs/degraded-write.0.0: Input/output error: datasync offset=142254080, buflen=0
+  fio: pid=2064, err=5/file:io_u.c:2008, func=io_u error, error=Input/output error
 
-- btrfs_calculate_block_csum_folio()
-- btrfs_calculate_block_csum_pages()
-- btrfs_check_block_csum()
+[CAUSE]
+With extra debug output, it shows the problem pretty well:
 
-The differences are mostly in how the data is passed.
-The first one accepts a contiguous paddr range.
-The second one accepts an array of paddrs[].
-The last one is just a simple wrapper of the first one.
+  rbio=2876243968 faila=0 sectornr=0
+  rbio=2876243968 error=0-15 csum=2 bio=15
 
-However the most common interface to iterate a data block is through
-bio, and we have already converted most callers to use the bio based
-interface, e.g. btrfs_bio_data_csum_ok() and btrfs_csum_one_bio_block().
+The first line shows the rbio's full stripe logical, and stripe/sector
+number when verify_one_sector() failed.
 
-Convert the remaining two call sites to address the remaining paddrs[]
-usage:
+The second line shows more detail about the rbio, the sector range [0, 16)
+is corrupted, which indicates the first data stripe is corrupted, matching
+the missing device.
 
-- btrfs_calculate_block_csum_pages() inside verify_bio_data_sectors()
-  This can be switched to btrfs_csum_one_bio_block().
+The important part is that the csum bitmap shows the data csum is only
+for sector number 2, meanwhile the failed verification is at sector
+number 0.
 
-  This removes the 128 bytes on-stack memory usage.
+This means we did the checksum verification even if no corresponding
+checksum is populated.
 
-- btrfs_calculate_block_csum_pages() inside verify_one_sector()
-  This call site doesn't use on-stack memory for paddrs[], but reuses
-  the existing btrfs_raid_bio::bio_paddrs[] or
-  btrfs_raid_bio::stripe_paddrs[].
+[FIX]
+There is already a similar check at verify_bio_data_sectors(), but
+unfortunately there is no such check at verify_one_sector().
 
-  So implement a local version called calculate_block_csum_paddrs().
+Add the missing check to skip the csum verification if there is no
+corresponding data checksum.
 
-Now there is no fixed on-stack paddrs[] usage anymore.
-
-Reviewed-by: Boris Burkov <boris@bur.io>
+Reported-by: Bartosz Fenski <bartosz@fenski.pl>
+Link: https://lore.kernel.org/linux-btrfs/a72409af-45ef-45df-9970-2e38bcb22ea6@fenski.pl/
+Fixes: 7a3150723061 ("btrfs: raid56: do data csum verification during RMW cycle")
+CC: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: d00b85308abe ("btrfs: raid56: do not verify the content if there is no data checksum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/btrfs_inode.h |  6 ----
- fs/btrfs/inode.c       | 75 ------------------------------------------
- fs/btrfs/raid56.c      | 46 +++++++++++++++-----------
- 3 files changed, 27 insertions(+), 100 deletions(-)
+ fs/btrfs/raid56.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
-index e137a99151bd0..89e5e9c0c904f 100644
---- a/fs/btrfs/btrfs_inode.h
-+++ b/fs/btrfs/btrfs_inode.h
-@@ -507,12 +507,6 @@ static inline void btrfs_set_inode_mapping_order(struct btrfs_inode *inode)
- 				      inode->root->fs_info->block_max_order);
- }
- 
--void btrfs_calculate_block_csum_folio(struct btrfs_fs_info *fs_info,
--				      const phys_addr_t paddr, u8 *dest);
--void btrfs_calculate_block_csum_pages(struct btrfs_fs_info *fs_info,
--				      const phys_addr_t paddrs[], u8 *dest);
--int btrfs_check_block_csum(struct btrfs_fs_info *fs_info, phys_addr_t paddr, u8 *csum,
--			   const u8 * const csum_expected);
- bool btrfs_bio_data_csum_ok(struct btrfs_bio *bbio, const struct bvec_iter *orig_iter,
- 			    struct btrfs_device *dev);
- void btrfs_csum_one_bio_block(struct btrfs_fs_info *fs_info, struct bio *bio,
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index c8479ffc8d1df..c2a720f74d56d 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3471,81 +3471,6 @@ int btrfs_finish_ordered_io(struct btrfs_ordered_extent *ordered)
- 	return btrfs_finish_one_ordered(ordered);
- }
- 
--/*
-- * Calculate the checksum of an fs block at physical memory address @paddr,
-- * and save the result to @dest.
-- *
-- * The folio containing @paddr must be large enough to contain a full fs block.
-- */
--void btrfs_calculate_block_csum_folio(struct btrfs_fs_info *fs_info,
--				      const phys_addr_t paddr, u8 *dest)
--{
--	struct folio *folio = page_folio(phys_to_page(paddr));
--	const u32 blocksize = fs_info->sectorsize;
--	const u32 step = min(blocksize, PAGE_SIZE);
--	const u32 nr_steps = blocksize / step;
--	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
--
--	/* The full block must be inside the folio. */
--	ASSERT(offset_in_folio(folio, paddr) + blocksize <= folio_size(folio));
--
--	for (int i = 0; i < nr_steps; i++) {
--		u32 pindex = offset_in_folio(folio, paddr + i * step) >> PAGE_SHIFT;
--
--		/*
--		 * For bs <= ps cases, we will only run the loop once, so the offset
--		 * inside the page will only added to paddrs[0].
--		 *
--		 * For bs > ps cases, the block must be page aligned, thus offset
--		 * inside the page will always be 0.
--		 */
--		paddrs[i] = page_to_phys(folio_page(folio, pindex)) + offset_in_page(paddr);
--	}
--	return btrfs_calculate_block_csum_pages(fs_info, paddrs, dest);
--}
--
--/*
-- * Calculate the checksum of a fs block backed by multiple noncontiguous pages
-- * at @paddrs[] and save the result to @dest.
-- *
-- * The folio containing @paddr must be large enough to contain a full fs block.
-- */
--void btrfs_calculate_block_csum_pages(struct btrfs_fs_info *fs_info,
--				      const phys_addr_t paddrs[], u8 *dest)
--{
--	const u32 blocksize = fs_info->sectorsize;
--	const u32 step = min(blocksize, PAGE_SIZE);
--	const u32 nr_steps = blocksize / step;
--	struct btrfs_csum_ctx csum;
--
--	btrfs_csum_init(&csum, fs_info->csum_type);
--	for (int i = 0; i < nr_steps; i++) {
--		const phys_addr_t paddr = paddrs[i];
--		void *kaddr;
--
--		ASSERT(offset_in_page(paddr) + step <= PAGE_SIZE);
--		kaddr = kmap_local_page(phys_to_page(paddr)) + offset_in_page(paddr);
--		btrfs_csum_update(&csum, kaddr, step);
--		kunmap_local(kaddr);
--	}
--	btrfs_csum_final(&csum, dest);
--}
--
--/*
-- * Verify the checksum for a single sector without any extra action that depend
-- * on the type of I/O.
-- *
-- * @kaddr must be a properly kmapped address.
-- */
--int btrfs_check_block_csum(struct btrfs_fs_info *fs_info, phys_addr_t paddr, u8 *csum,
--			   const u8 * const csum_expected)
--{
--	btrfs_calculate_block_csum_folio(fs_info, paddr, csum);
--	if (unlikely(memcmp(csum, csum_expected, fs_info->csum_size) != 0))
--		return -EIO;
--	return 0;
--}
--
- /* Generate data checksum for a single fs block, pointed to by @orig_iter. */
- void btrfs_csum_one_bio_block(struct btrfs_fs_info *fs_info, struct bio *bio,
- 			      const struct bvec_iter *orig_iter, u8 *csum)
 diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
-index 1ee52a9dcee36..a5d0ef09d92ab 100644
+index a5d0ef09d92ab..3412f43d5dec1 100644
 --- a/fs/btrfs/raid56.c
 +++ b/fs/btrfs/raid56.c
-@@ -1652,12 +1652,7 @@ static void verify_bio_data_sectors(struct btrfs_raid_bio *rbio,
- 				    struct bio *bio)
+@@ -1892,6 +1892,8 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
  {
  	struct btrfs_fs_info *fs_info = rbio->bioc->fs_info;
--	const u32 step = min(fs_info->sectorsize, PAGE_SIZE);
--	const u32 nr_steps = rbio->sector_nsteps;
- 	int total_sector_nr = get_bio_sector_nr(rbio, bio);
--	u32 offset = 0;
--	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
--	phys_addr_t paddr;
+ 	phys_addr_t *paddrs;
++	const unsigned int total_sector_nr =
++		stripe_nr * rbio->stripe_nsectors + sector_nr;
+ 	u8 csum_buf[BTRFS_CSUM_SIZE];
+ 	u8 *csum_expected;
  
- 	/* No data csum for the whole stripe, no need to verify. */
- 	if (!rbio->csum_bitmap || !rbio->csum_buf)
-@@ -1667,28 +1662,20 @@ static void verify_bio_data_sectors(struct btrfs_raid_bio *rbio,
- 	if (total_sector_nr >= rbio->nr_data * rbio->stripe_nsectors)
- 		return;
- 
--	btrfs_bio_for_each_block_all(paddr, bio, step) {
-+	for (struct bvec_iter iter = init_bvec_iter_for_bio(bio);
-+	     iter.bi_size;
-+	     bio_advance_iter(bio, &iter, fs_info->sectorsize), total_sector_nr++) {
- 		u8 csum_buf[BTRFS_CSUM_SIZE];
- 		u8 *expected_csum;
- 
--		paddrs[(offset / step) % nr_steps] = paddr;
--		offset += step;
--
--		/* Not yet covering the full fs block, continue to the next step. */
--		if (!IS_ALIGNED(offset, fs_info->sectorsize))
--			continue;
--
- 		/* No csum for this sector, skip to the next sector. */
--		if (!test_bit(total_sector_nr, rbio->csum_bitmap)) {
--			total_sector_nr++;
-+		if (!test_bit(total_sector_nr, rbio->csum_bitmap))
- 			continue;
--		}
- 
- 		expected_csum = rbio->csum_buf + total_sector_nr * fs_info->csum_size;
--		btrfs_calculate_block_csum_pages(fs_info, paddrs, csum_buf);
-+		btrfs_csum_one_bio_block(fs_info, bio, &iter, csum_buf);
- 		if (unlikely(memcmp(csum_buf, expected_csum, fs_info->csum_size) != 0))
- 			set_bit(total_sector_nr, rbio->error_bitmap);
--		total_sector_nr++;
+@@ -1901,6 +1903,11 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
+ 	/* No way to verify P/Q as they are not covered by data csum. */
+ 	if (stripe_nr >= rbio->nr_data)
+ 		return 0;
++
++	/* No data checksum for this sector. */
++	if (!test_bit(total_sector_nr, rbio->csum_bitmap))
++		return 0;
++
+ 	/*
+ 	 * If we're rebuilding a read, we have to use pages from the
+ 	 * bio list if possible.
+@@ -1911,9 +1918,7 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
+ 		paddrs = rbio_stripe_paddrs(rbio, stripe_nr, sector_nr);
  	}
- }
  
-@@ -1879,6 +1866,27 @@ void raid56_parity_write(struct bio *bio, struct btrfs_io_context *bioc)
- 	start_async_work(rbio, rmw_rbio_work);
- }
- 
-+static void calculate_block_csum_paddrs(struct btrfs_fs_info *fs_info,
-+					const phys_addr_t paddrs[], u8 *dest)
-+{
-+	const u32 blocksize = fs_info->sectorsize;
-+	const u32 step = min(blocksize, PAGE_SIZE);
-+	const u32 nr_steps = blocksize / step;
-+	struct btrfs_csum_ctx csum;
-+
-+	btrfs_csum_init(&csum, fs_info->csum_type);
-+	for (int i = 0; i < nr_steps; i++) {
-+		const phys_addr_t paddr = paddrs[i];
-+		void *kaddr;
-+
-+		ASSERT(offset_in_page(paddr) + step <= PAGE_SIZE);
-+		kaddr = kmap_local_page(phys_to_page(paddr)) + offset_in_page(paddr);
-+		btrfs_csum_update(&csum, kaddr, step);
-+		kunmap_local(kaddr);
-+	}
-+	btrfs_csum_final(&csum, dest);
-+}
-+
- static int verify_one_sector(struct btrfs_raid_bio *rbio,
- 			     int stripe_nr, int sector_nr)
- {
-@@ -1906,7 +1914,7 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
- 	csum_expected = rbio->csum_buf +
- 			(stripe_nr * rbio->stripe_nsectors + sector_nr) *
- 			fs_info->csum_size;
--	btrfs_calculate_block_csum_pages(fs_info, paddrs, csum_buf);
-+	calculate_block_csum_paddrs(fs_info, paddrs, csum_buf);
+-	csum_expected = rbio->csum_buf +
+-			(stripe_nr * rbio->stripe_nsectors + sector_nr) *
+-			fs_info->csum_size;
++	csum_expected = rbio->csum_buf + total_sector_nr * fs_info->csum_size;
+ 	calculate_block_csum_paddrs(fs_info, paddrs, csum_buf);
  	if (unlikely(memcmp(csum_buf, csum_expected, fs_info->csum_size) != 0))
  		return -EIO;
- 	return 0;
 -- 
 2.53.0
 
