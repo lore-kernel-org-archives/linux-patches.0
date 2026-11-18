@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029008;
-	b=C4lAMdxqGDFpyV83JdKjtJy5mT1Wf5HqGEiFTtnl+qH2PH3ZG/zWkyK9Kw7RePF0VzmM
-	 RvsGqsTuo96d7jrJwC1gXYHhkGcWVwrCIoXpmApTXwaa0GFIWzfs1zhQf9arKj1Lfhc7Q
-	 GSP0xFzFn+ne1OnpBN1UAPuieD9pad12rAVnhphVl+gVH2g6SWe9+1Kpakyth04YlDxc2
-	 4Gc76kWokinf0FQhTw+7oshrB2KsJzihWEUDRsnL18Y0vNvjkvvMdz+Zour7A04biwQz7
-	 tRfSUlc6ineZCWTR/a2pLVIK/cNSkSKChknoBoBP2+sRVXk69mj3PgRa+RJQS5l7HQg==
+	t=1795029010;
+	b=CFlOgLhO3OvaZlcUQDeOML4xULKkf3dMrK/SJDlRDfBZTuDVr15yyH/vUS9N9NJnGPbz
+	 Rh36tJ4EevGrgl11Srqnt4v7rSkB2wlVsn3W6cxzixvg8zR4zMBeoWtLQ2JcXy4nmmI1q
+	 Z4cUc5zLw20kmSAmRL7Z/TEBb6zLYihVbyKPtplC+ArrzLvpXj1BP10IDL3TLjoXg/KQg
+	 MKrnBivKtzrMwY5iDhwD7W+LLyrI1/8xN0dVDd5eGe3piEOEY2wZHhXQBCaapfRIcbg3m
+	 2eOh0aQ4/Ns+YCzKgLNyil8vBybAW11RNamDhCSa4acoM9dKVHGUEMEdIvn4SapADew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tjAb7lgtJvyU28PO9nmNisiOEYQxIILtgisLOJwBROU=;
-	b=i5rDN9DzsbuoqlXc7ZvcKSx3WXfL2qWR3yDe7wlIl36ndhtycmJvzM0UxNE0OOEU0YXS
-	 efZplXEIdiUQUKyE/dcgvohg+50/crwkDydDEVf3g7/U0uL+Ismt8QvyeB6GHxadg2wFM
-	 JyoOTbTN3VXQ6o9HAuJXJKLZERxFdi34YWUS16x4CtiZhZTKpl2OeXBMEqQrxxKie3XXC
-	 Y2uk5JxpZFFvG6r9Mp8i8bKndsvTFvMkrJwwMzEgeXvwgCWQGNxXOFvt6Msoqbp6KFbEs
-	 VUZ2NwRSmMYJwup8CVZgqymECljAdiiRu+ZowerGMvcdYc2egkt5H0Drg1lrIu/NR/A==
+	bh=N2cODnNY4qipwqGtcf/WtmZnuKAQr2tKgXSMXd+7NvE=;
+	b=Ta2GgpUJqoBVcpLhW0JiaSrYEuf0AfQlegtTTL+y7ktzrbaxZO1tLVGdjY7mirWckEQU
+	 ul8S3w6hhiZ8yVasOe8wXo0SkdPcdKa0byL5phuDzpN+d97wMQnilEaR1vopN8+IPxrgA
+	 pzrWi4P7BAY6CsjQyzvtqEoVODahW5TwWrK018b1euN7e7S50VpHxjKfhIyKUHgRgiuaK
+	 CuTOSbc0pUyuDytOwwdJpIbsit8NOVAO8Rhy/oj3C0iaMLl5lNey5gwEg0b7h6lqMNnoe
+	 rMqsfjSh63A+1p4wMUH6A5TS6S+0Pzmg/S789R7jaCHvfeyYnPzsPzt53tlZhrQDzXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIQXEjbe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u987THPb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE84606A31C;
-	Wed, 18 Nov 2026 19:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D08606A332;
+	Wed, 18 Nov 2026 19:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIQXEjbe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E741F000C4;
-	Wed, 18 Nov 2026 19:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u987THPb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E808D1F000C5;
+	Wed, 18 Nov 2026 19:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029007;
-	bh=tjAb7lgtJvyU28PO9nmNisiOEYQxIILtgisLOJwBROU=;
+	s=korg; t=1795029010;
+	bh=N2cODnNY4qipwqGtcf/WtmZnuKAQr2tKgXSMXd+7NvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIQXEjbeJAdSzb+qKpVt5vHKfuiaeFnzVExycvNYH110qZSF+Kkq/pte/pMK+hTbF
-	 g6vU8mx62Ft04BfR4MOD0oYVRsj12R8xfJM9z8BvdbXd8qNtek+mC3FzIHq0idT8/1
-	 8GJCd4oqnBB0auKiJ7zo7/oYc1wKJ7sQLFUDz4Js=
+	b=u987THPbnv6cZ+6y9g89F7w7EUgAF2sY3jhcqDikJmUX49v95dOOHs7RMCA83mGxH
+	 cFs7P0+E/awQuRO1PJhxvvY2Jy5YNTlliceiaMhHz9qkmBXKk8DB6B0JNDFDTZ21xG
+	 1KGjOPjAa48tMpp5B6I0VetMZK4OYFtYspw++NHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Faure <boris@fau.re>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0196/1756] soundwire: intel: initialise quirk_mask before reading it
-Date: Wed, 18 Nov 2026 15:38:43 +0100
-Message-ID: <20261118150016.198722693@linuxfoundation.org>
+Subject: [PATCH 6.12 0197/1756] arm64: dts: rockchip: Correct Device Orientation on Gameforce Ace
+Date: Wed, 18 Nov 2026 15:38:44 +0100
+Message-ID: <20261118150016.230997661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,43 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Faure <boris@fau.re>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit ee8a8cfe4e8d3c67456e554c988017c252710a25 ]
+[ Upstream commit 0d170ee38e7a943248082cdb4b3e40b45a96e2f6 ]
 
-sdw_master_read_intel_prop() declares quirk_mask without an initialiser
-and ignores the return value of fwnode_property_read_u32(). When a BIOS
-does not describe "intel-quirk-mask" for a link, the property read leaves
-the variable untouched and stack garbage decides whether
-SDW_INTEL_QUIRK_MASK_BUS_DISABLE is honoured, so the link may be marked
-hw_disabled at random.
+The display, touchscreen, and IMU are currently not oriented
+consistently. The touchscreen is 90 degrees offset and the IMU is using
+the default mount matrix which is 180 degrees offset.
 
-Initialise it to 0, matching is_link_enabled() in
-sound/hda/core/intel-sdw-acpi.c.
-Found by code inspection, not observed at run time.
+Fix the touchscreen alignment and add a mount matrix for the IMU. When
+the device is held vertically relative to the display hardware, the
+touchscreen 0,0 position is in the top left corner of the display
+(next to the home button), and the IMU reads the correct orientation.
 
-Fixes: 395713d8ca43 ("soundwire: intel: handle disabled links")
-Signed-off-by: Boris Faure <boris@fau.re>
-Link: https://patch.msgid.link/20260820212220.226912-1-boris@fau.re
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://patch.msgid.link/20260828205331.78185-1-macroalpha82@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_auxdevice.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index d444ca477064f..5843c219ca430 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -130,7 +130,7 @@ static int sdw_master_read_intel_prop(struct sdw_bus *bus)
- 	struct sdw_intel_prop *intel_prop;
- 	struct fwnode_handle *link;
- 	char name[32];
--	u32 quirk_mask;
-+	u32 quirk_mask = 0;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+index b9a17108e1acd..b658e4892424b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+@@ -519,6 +519,7 @@ regulator-state-mem {
+ &i2c3 {
+ 	status = "okay";
  
- 	/* Find master handle */
- 	snprintf(name, sizeof(name),
++	/* Touchscreen is rotated 90 degrees with 0,0 position near home button. */
+ 	touchscreen@14 {
+ 		compatible = "goodix,gt911";
+ 		reg = <0x14>;
+@@ -528,10 +529,8 @@ touchscreen@14 {
+ 		pinctrl-0 = <&touch_int>, <&touch_rst>;
+ 		pinctrl-names = "default";
+ 		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
+-		touchscreen-inverted-x;
+ 		touchscreen-size-x = <1080>;
+ 		touchscreen-size-y = <1920>;
+-		touchscreen-swapped-x-y;
+ 	};
+ };
+ 
+@@ -563,11 +562,15 @@ channel@7 {
+ 		};
+ 	};
+ 
++	/* IMU oriented relative to panel, which is rotated 90 degrees. */
+ 	imu@68 {
+ 		compatible = "invensense,mpu6880";
+ 		reg = <0x68>;
+ 		interrupt-parent = <&gpio0>;
+ 		interrupts = <RK_PD3 IRQ_TYPE_EDGE_RISING>;
++		mount-matrix = "-1", "0", "0",
++			       "0", "-1", "0",
++			       "0", "0", "1";
+ 	};
+ };
+ 
 -- 
 2.53.0
 
