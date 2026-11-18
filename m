@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028908;
-	b=o/5dIcF5wQHEuqZI8znLr1N98lHzyHYtnm0hUjyi1X9NjGmqEil9TV/NNMkD0TWoB9WO
-	 mNYzsJm6/OBqjFNco58PUJ7iZqtmtfy6MehKxwW2eUlrlcQ1UE2kJ1OSBE8zMfC5VlV8O
-	 gHQa70ahTKcfmIl4y9jrEwtcK8jz6AnkK+bTWVyUFMtAyVXW2nzi9eJANORiJKK0d2OSE
-	 jLPhZu/Wx7dHF89PvJrz5eITGVYzSpMV16pNM3zhnYKIBKCpViP8/bA4wrMq9wjXnRUsX
-	 oZpjZFW3qUc2zHhglrCPKmBjk7ZVwKm1ED9u4O0fe4+MKp4xatfm0TPgql4Z9oGqCqg==
+	t=1795028911;
+	b=Hlh+MyewWeNso08rtxo1JCtKWrGSf8dEs5JDuWg0drPSDVFF5sPIrFWAYIGoLcIq2KJm
+	 fwuIU/P6axRTx3RB0C7okeaPXp8fWwSMij21JGys6A/r1DENAU1b/FFkYQxuhi1WnB2pB
+	 mBz5YPPwkMdXYhpWKBaRvRJuT9MwVOa9RIAr1dL9SmOLRW/J5hurBSU6YqRjhmJZge8VB
+	 foCzcxQ9P1ceH6hb/4xhPEMq1wu0qKe2N9NZeQ0d5XB7B4TMiSkxH3KnD27SndKgfRgSE
+	 nAV6P9qFVaHcKVMsROp5Zow03usfvNvFwqPxoJDJCuMcSzsg/toeUvksEl0LY50ygjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028908;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028911;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h7lTfRdXo14X82sjRheQuXNKW+rCajSDYqV82dO9eV4=;
-	b=S3yJCyji3iLZlqIHiwoD4rQCNB5SxEolZR+6+R7DbwBr+OWXb2gQGISR5sLvNurLMrD1
-	 CmvgQamk931bhxTE1hAI8onpfxJSyRoPDVOijQlRmq0ExvWIDlg/c/ZcroIdg/8uTbUXA
-	 N4NJwJ1ErHhqol6XbXx/W1oMcY1QAXNQzY6HRQ0Qt2gHoouNzSFrkPNDw/lwnL5Xr1R+U
-	 PTnqM3NcepiIgzkCUUHKQvXjWcTPPScdOz4XBpqCpZKR4lJmBL9xLpuvLw/2bCKUqGtbK
-	 jjhZceJ9Wbo/WfUe9e3zvbwhxdD3o16wBNLncd+e7H+46OUyulUxdOcnepg6aCWnESw==
+	bh=998hIOugqSMRBZ+ckCQXmiH8EjOiaSECG0lUw4TP754=;
+	b=0wUtljuQSPrIR00qGuPGOkWuOHlLOL4xCR2gbueJSS3PVRzRAWP9unZulFRovwxI+/kQ
+	 8CZM4Pt5c+V+zubrlC0IQjRnn6DFEe8oVI5EMw0kBtDYY+1MULGIzYmNmnq8hlI70b1y2
+	 ijlxFrZNhafMUO9qMUNGKPqrKPpbh4skXztgHnRojcmgMm5JCDkDMOC+ydmHWH/r0/vE2
+	 LTib4nDutO9GNRKe/z2Z9ApaHtK4WHwjWooue/z1HX+qc3FodcoBgjIZI37of159aZQZM
+	 z3AaQaEeDQm3NJDAzsyTBSIhI+2dRtMnle6c3gRcRMB2YAc03tCObcldKDpHE0QbE5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEkdOj6S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myNHytRr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D23606A331;
-	Wed, 18 Nov 2026 19:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF303606A33A;
+	Wed, 18 Nov 2026 19:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XEkdOj6S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B551F000C4;
-	Wed, 18 Nov 2026 19:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myNHytRr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEF01F000C4;
+	Wed, 18 Nov 2026 19:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028908;
-	bh=h7lTfRdXo14X82sjRheQuXNKW+rCajSDYqV82dO9eV4=;
+	s=korg; t=1795028911;
+	bh=998hIOugqSMRBZ+ckCQXmiH8EjOiaSECG0lUw4TP754=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XEkdOj6SlYOT5VSKiwW+q9HpQUrwIpuCzwD2eGZyYMxbejUNkiAU9dNvUUQJ7ubVI
-	 r+blDXHqhh52aA+pX60vYaJ/JNjlMEHzoMUrv8XaNa1IPu5TdQh9lsqLBO3UvIN9fz
-	 y5hiWqrI8qTFJ1X3lj0a0ofQyJn9dTSFnYh2AKno=
+	b=myNHytRrxGx5kGADPqIxlPrdX1YrdX/kqezmtxNDZNj8m4RJUqehS7hfr7vKorK/a
+	 58ks1jJP5mKizme00DX4c/kK5LtGqp7dtvaVTAVKA2XSFfaLi3flYQp/0D3MbyDk6U
+	 K4Pbv4mk0kkSU/AUulJ2YVNevoCgH8txsyRB08wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Chris Mason <mason@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0115/1756] hdlcdrv: close the hardware driver once, and only if it was opened
-Date: Wed, 18 Nov 2026 15:37:22 +0100
-Message-ID: <20261118150012.771489363@linuxfoundation.org>
+Subject: [PATCH 6.12 0116/1756] mm/shmem: make shmem_file() check the files inode
+Date: Wed, 18 Nov 2026 15:37:23 +0100
+Message-ID: <20261118150012.807468588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,84 +70,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-hdlcdrv_unregister() calls the hardware driver's close() when s->opened
-is set and then calls unregister_netdev(). Two things go wrong:
+[ Upstream commit d3710111839d11339e414b1bb3fea3d05ab83f6e ]
 
- - if the interface is still up, unregister_netdev() closes it through
-   ndo_stop, so hdlcdrv_close() calls the hardware driver's close() a
-   second time;
+shmem_file() only checks if file->f_mapping is a shmem mapping. This
+mapping can belong to another file, however, as with a Coda file backed
+by a tmpfs container after mmap().
 
- - hdlcdrv_open() sets s->opened before it calls the hardware driver's
-   open() and leaves it set when that fails, so close() is also called
-   for a port that was never opened.
+So it does not guarantee that the file inode is an actual shmem inode.
 
-The close() methods of the baycom drivers are not written for either
-case. baycom_ser_fdx and baycom_ser_hdx call free_irq() and
-release_region() for resources they do not hold. baycom_par
-dereferences bc->pdev, which is NULL if the port was never opened and
-points to an unregistered parport device after a first close.
+Seal handling and memfd preservation use this check before accessing
+shmem inode state, so they can access an inode of the wrong type.
 
-Set s->opened only once the hardware driver's open() has succeeded,
-and let unregister_netdev() do the closing.
+Let's make shmem_file() check the inode's file operations instead, to
+identify shmem inodes reliably. This will identify regular shmem inodes,
+including memfds and ordinary tmpfs files, independently of wrapper file
+operations.
 
-Tested in a QEMU guest (6.12.94, KASAN and lockdep) with
-baycom_ser_fdx and two ports: bcsf0 at an address without a UART, whose
-open fails, and bcsf1 on a UART, left up. Unloading baycom_ser_fdx gave
-before the change:
+Use shmem_mapping() in collapse_file() instead to not change the behavior
+of collapse_file(): it operates on the page cache and uses mapping->host
+for shmem inode operations. Focusing on the file does not seem relevant.
 
-  Trying to free already-free IRQ 5
-   ser12_close+0xa1/0x190 [baycom_ser_fdx]
-   cleanup_baycomserfdx+0x38/0x50 [baycom_ser_fdx]
-  resource: Trying to free nonexistent resource <0x300-0x307>
-  baycom_ser_fdx: close ser_fdx at iobase 0x250 irq 9
-  Trying to free already-free IRQ 9
-  resource: Trying to free nonexistent resource <0x250-0x257>
-
-and after the change a single close of bcsf1 and no warning. The
-baycom_par case was not reproduced, the test kernel has no parport
-support.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 056d9c67e92622d5ec8cc6ce4a49179a16c53ef1)
+Fixes: c49fcfcda8b5 ("mm/shmem: update file sealing comments and file checking")
+Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
+Cc: stable@vger.kernel.org
+Reported-by: Chris Mason <mason@kernel.org>
+Suggested-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-3-d6437171ecc3@kernel.org
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adjusted context to preserve the existing non-const shmem_mapping() interface. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/hdlcdrv.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/shmem_fs.h | 15 ++++++---------
+ mm/khugepaged.c          |  2 +-
+ mm/shmem.c               |  5 +++++
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
-index 2263029d1a20e..dc4e2c45e2d11 100644
---- a/drivers/net/hamradio/hdlcdrv.c
-+++ b/drivers/net/hamradio/hdlcdrv.c
-@@ -441,7 +441,6 @@ static int hdlcdrv_open(struct net_device *dev)
- 	/*
- 	 * initialise some variables
- 	 */
--	s->opened = 1;
- 	s->hdlcrx.hbuf.rd = s->hdlcrx.hbuf.wr = 0;
- 	s->hdlcrx.in_hdlc_rx = 0;
- 	s->hdlcrx.rx_state = 0;
-@@ -458,6 +457,7 @@ static int hdlcdrv_open(struct net_device *dev)
- 	i = s->ops->open(dev);
- 	if (i)
- 		return i;
-+	s->opened = 1;
- 	netif_start_queue(dev);
- 	return 0;
+diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
+index 515a9a6a3c6f8..183975ead5cf6 100644
+--- a/include/linux/shmem_fs.h
++++ b/include/linux/shmem_fs.h
+@@ -97,8 +97,14 @@ extern unsigned long shmem_get_unmapped_area(struct file *, unsigned long addr,
+ 		unsigned long len, unsigned long pgoff, unsigned long flags);
+ extern int shmem_lock(struct file *file, int lock, struct ucounts *ucounts);
+ #ifdef CONFIG_SHMEM
++bool shmem_file(struct file *file);
+ bool shmem_mapping(struct address_space *mapping);
+ #else
++static inline bool shmem_file(struct file *file)
++{
++	return false;
++}
++
+ static inline bool shmem_mapping(struct address_space *mapping)
+ {
+ 	return false;
+@@ -161,15 +167,6 @@ static inline struct page *shmem_read_mapping_page(
+ 					mapping_gfp_mask(mapping));
  }
-@@ -725,8 +725,7 @@ void hdlcdrv_unregister(struct net_device *dev)
  
- 	BUG_ON(s->magic != HDLCDRV_MAGIC);
+-static inline bool shmem_file(struct file *file)
+-{
+-	if (!IS_ENABLED(CONFIG_SHMEM))
+-		return false;
+-	if (!file || !file->f_mapping)
+-		return false;
+-	return shmem_mapping(file->f_mapping);
+-}
+-
+ /*
+  * If fallocate(FALLOC_FL_KEEP_SIZE) has been used, there may be pages
+  * beyond i_size's notion of EOF, which fallocate has committed to reserving:
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 2e9d0e13b068a..9b8021d440289 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1809,6 +1809,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+ 			 struct collapse_control *cc)
+ {
+ 	struct address_space *mapping = file->f_mapping;
++	const bool is_shmem = shmem_mapping(mapping);
+ 	struct page *dst;
+ 	struct folio *folio, *tmp, *new_folio;
+ 	unsigned long new_pfn = -1;
+@@ -1816,7 +1817,6 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+ 	LIST_HEAD(pagelist);
+ 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
+ 	int nr_none = 0, result = SCAN_SUCCEED;
+-	bool is_shmem = shmem_file(file);
+ 	bool do_readahead = false;
+ 	bool readahead_done = false;
  
--	if (s->opened && s->ops->close)
--		s->ops->close(dev);
-+	/* unregister_netdev() closes the device if it is still up */
- 	unregister_netdev(dev);
- 	
- 	free_netdev(dev);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 8de38d7a98f92..df6a57f227865 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -270,6 +270,11 @@ static const struct vm_operations_struct shmem_vm_ops;
+ static const struct vm_operations_struct shmem_anon_vm_ops;
+ static struct file_system_type shmem_fs_type;
+ 
++bool shmem_file(struct file *file)
++{
++	return file && file_inode(file)->i_fop == &shmem_file_operations;
++}
++
+ bool shmem_mapping(struct address_space *mapping)
+ {
+ 	return mapping->a_ops == &shmem_aops;
 -- 
 2.53.0
 
