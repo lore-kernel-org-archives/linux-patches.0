@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052414;
-	b=ZXS375i+YmUCDQ2ayBaWFlwzo4y0MkDrtXgQ8I3wq7MraOa5KBOqxN+HQsOk44qGzXX9
-	 ST3GPipG0rF9bf778t9HvOaSJIkkEYMX0NiotUJn9TKvXhYxvxxSqZYVIl/1v4aFEwjCo
-	 rJgisFPtrXBhS5QXTk50Nfxznviz2AsfEB1wmNhB2Fkmxsoh/X6UlnLXhIAo5lp7dNWIX
-	 QY1WbRfRUfwrqLRP025DZrIhCeMfEsLfUBzxurjRgiUXsf6SOFYskNJERDRIS4c2Ei9UX
-	 Czd3lxPWBxEaWN4doh8jb25dIZeEcIgeqpm0Q9OR7kFM8Q1/0arnA3ifUh+vCufKHzA==
+	t=1795052416;
+	b=bZG+rHxE4GTd8pRh8g67AYgxLJCkXw5gqcdxzmLAdKeTFtsmoiGFuKNqNtHo+1JFAqhp
+	 CQoNkwK9c1T5RJeTaTQmwTcj/HaZ5wE9JZTYv5E91Nm1uk1GaSr072b8lCE7TJKMVNra7
+	 KQ+ZSSCouQLF8pgqJ4qt0k5whT25WFPwwKtUXfXQg28NgW693BG/JabzcJ4LMiUAWO+9F
+	 FMU9uhFVLM64OGs2YxpplR5U0H6sntRVfwJ0j9ZTLm1f+jAE1ZOeWBE0TOFuuHsvMWGL2
+	 7kUbdou/7jmu9Im5RbYfXR7rLstYkV5J5x3X5sbebjorNF3RbN2vUWdadzJt2hbxpPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J5A+XPmYtMSs9bAnti6wY1nTN0ULNiN5I37GFNsTZcQ=;
-	b=p5d2Yr9oXGv6zvF9lbj+4OC4bckjRDhY/0lIy7ADqy2dO1HvGWIgYZfmTs/zVORcXxUL
-	 ELvulDgRVnRr9rHE2TyiY4PyqGuPRmsB4i8CCfvH63aQCozi5La1OLd+K7d1dFUZ4MS85
-	 eqQVUOSBdSgj+zVzuLRlnY5eaoFDKTJe0T3UsRoIG0w7pAMk09/OyrvHMGs8ndUg/PuhY
-	 Kg+d90XLRT8GpV01xm1XOYmwLx6nFZEMebrTHd7iZjbHK3RFGLnBj8taAfYhy5GYWY4Q0
-	 VRAAFF43+bHPy2bCfxp1lnvVQ2Ob1O3v37vHvgq5oiOtMBVp9DjUFbgZNWXG6o57qWQ==
+	bh=Jz3r4kS1cSH/rtUTHQi+KP03DLZu+FvxeNEJllxz/bc=;
+	b=dISSD9wKjkF1aPmezGbizZk18q/vJ34HM+XZZAWDHW3sXFIg8SgWGoT/a6Mfe/mjE/Rb
+	 qC+xu2zLx05DyCHp+6v7PKQoe4tbFA99LMc0o7G8ENtTg+01Hlw15odsycthRBXv9nJd/
+	 6vkiInanusAtVQan9G2vXyr+DnOcp7ILq95nzWkvSOm0zq4x1b4Cy2nuRFgq0FFAZCyDM
+	 QWYfKTHhlOKh26QiTD9/9ZyR0Qw8RDERWVC2Q7L5WQ9SpKNr5JvEKqnBMCFHfqrdh8jZz
+	 p7yegcJYsyXP2tCGa12h0j1EwFUVDIHyqCYv57jP/cswGdE3ZY5LZ5oce0vUCpru0lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JdKur5l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RY1Kih6g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5805F606A320;
-	Thu, 19 Nov 2026 01:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22C7606A32F;
+	Thu, 19 Nov 2026 01:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JdKur5l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF2D1F000CA;
-	Thu, 19 Nov 2026 01:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RY1Kih6g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290C31F000C9;
+	Thu, 19 Nov 2026 01:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052414;
-	bh=J5A+XPmYtMSs9bAnti6wY1nTN0ULNiN5I37GFNsTZcQ=;
+	s=korg; t=1795052416;
+	bh=Jz3r4kS1cSH/rtUTHQi+KP03DLZu+FvxeNEJllxz/bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JdKur5lM0TfPRznqt32qBpY5AzLODCptOGb9yxlCkLkWgS0DTHSpJbB1PUpoIysR
-	 lxhqaiksPSKAmHqvAzUic9JdGrsFfkHiiTvfoh197EEq/PQR208sRNLaqPlfgVGsLm
-	 uhhxZpeVWck445Q2FMS9efERQa5wTAPo9oPZI2I0=
+	b=RY1Kih6gClo8qd+HJFWfDgw2STKwyw5lh/pONqFy9+NtdnCRZnRCh9r0v4GY1KxQO
+	 k/Qbomzkyzs7QP2p7x4IRXYECrKvD+L2qgznnqkuMnx5fVZwaV30W9kHExis04zV8g
+	 x8uVIzBnToPrkM4XnI6XleS/OX3zerZKB0kUzsuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0554/2214] media: tw686x: fix V4L2 device lifetime on probe failure
-Date: Wed, 18 Nov 2026 15:37:10 +0100
-Message-ID: <20261118150033.183485237@linuxfoundation.org>
+Subject: [PATCH 5.15 0555/2214] media: pvrusb2: Fix USB parent device leak in class_dev_create()
+Date: Wed, 18 Nov 2026 15:37:11 +0100
+Message-ID: <20261118150033.219006070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,68 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit ce6c6dd632b3b4a2c2bfc9efd8f656f4d2137dbd ]
+[ Upstream commit 02421d7278e4a62c3daf37ad6c45d4af96ee4252 ]
 
-tw686x_video_init() registers the V4L2 device, which initializes its
-reference count. Successfully registered video devices take additional
-references to the V4L2 device as well.
+class_dev_create() stores a reference to the USB device obtained with
+get_device() in class_dev->parent, which class_dev_destroy() releases.
+When device_register() fails the function only drops class_dev, so the
+reference to the USB parent device is never released.
 
-The probe failure paths currently tear down the PCI resources and then
-free the channel arrays and the tw686x device directly. This bypasses
-the V4L2 device reference count and the tw686x_dev_release() callback.
+Drop the parent reference on the failure path as well.
 
-If a video device still holds a reference, its eventual release will
-drop a reference to the already freed V4L2 device. Even when no extra
-references remain, directly freeing the device bypasses the lifetime
-management established by v4l2_device_register().
-
-After cleaning up the PCI resources, check whether the V4L2 device was
-registered. If so, mark the hardware unavailable and drop the driver's
-V4L2 device reference, letting tw686x_dev_release() free the backing
-objects when the final reference is released. Keep the existing direct
-free path for failures that occur before V4L2 device registration.
-
-This issue was found by manual code inspection.
-
-Fixes: 704a84ccdbf1 ("[media] media: Support Intersil/Techwell TW686x-based video capture cards")
+Fixes: 28c4a5e6d324 ("V4L/DVB: pvrusb2: Fix USB parent device reference count")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/tw686x/tw686x-core.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/usb/pvrusb2/pvrusb2-sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/pci/tw686x/tw686x-core.c b/drivers/media/pci/tw686x/tw686x-core.c
-index 384d38754a4b1..a5e9985701ff4 100644
---- a/drivers/media/pci/tw686x/tw686x-core.c
-+++ b/drivers/media/pci/tw686x/tw686x-core.c
-@@ -241,6 +241,7 @@ static int tw686x_probe(struct pci_dev *pci_dev,
- 			const struct pci_device_id *pci_id)
- {
- 	struct tw686x_dev *dev;
-+	unsigned long flags;
- 	int err;
- 
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
-@@ -349,6 +350,15 @@ static int tw686x_probe(struct pci_dev *pci_dev,
- 	pci_release_regions(pci_dev);
- disable_pci:
- 	pci_disable_device(pci_dev);
-+	if (dev->v4l2_dev.dev) {
-+		spin_lock_irqsave(&dev->lock, flags);
-+		dev->pci_dev = NULL;
-+		spin_unlock_irqrestore(&dev->lock, flags);
-+
-+		v4l2_device_put(&dev->v4l2_dev);
-+		return err;
-+	}
-+
- free_audio:
- 	kfree(dev->audio_channels);
- free_video:
+diff --git a/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c b/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
+index 3e42e209be374..e638c49b77b2a 100644
+--- a/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
++++ b/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
+@@ -641,6 +641,7 @@ static void class_dev_create(struct pvr2_sysfs *sfp,
+ 	if (ret) {
+ 		pvr2_trace(PVR2_TRACE_ERROR_LEGS,
+ 			   "device_register failed");
++		put_device(class_dev->parent);
+ 		put_device(class_dev);
+ 		return;
+ 	}
 -- 
 2.53.0
 
