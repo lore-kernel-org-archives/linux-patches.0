@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029523;
-	b=G8Djz3uoN+2mHNMEOVm6ZV870ITpgeMx308aQcq/NgikYlo4QMaykPJdPs3PJaYW5Rtd
-	 CJGeK0ez1pYaLu5nfOnf8+ijqVCXE/NnBW+d2E7ewDttWQgvzUmm878VixU+k0vl+aGMu
-	 mek1QQgutmON8a+VzAgmY8/dx8M42x8LtdRhWw8bjpxiCm/QURMNTcaBNmDAfW7iQdIn8
-	 q6soMXmAyvrD317MJU3IqOj3x3zBlwXXwwCTebhBCmobXwqAEhjN0+2dEOiCO6kTmJ2m3
-	 c07uDCXe7p9nKSuBLV/btZr6rKzJ9cDgd3az/LrWHwUWkBO9aITyfP4Yeg3F4Fjw/LA==
+	t=1795029525;
+	b=r07GnjWfyuFseq6QAACfSahvQf+dEmiqEXg5UKKfNpnRS2A2gxQywX29VKqwT0lsaEFC
+	 QNpD9GB29yjpPmUHw3nt/0Q8r5K3o3So/4suvJ5Li1d3L88q8NEd2BACUXJZ5/p5MD1ay
+	 obJytJnF0Ip7b/vSbLDoZlpo5CeLahtVMijrsUEn7i0hpJYwSNSEMi3Liu37H88UIn5h8
+	 lJyN4qi90oIach33wJQteL4fMwEO1N62JTY1e1x6+Bb1KpHSkgIwh8z9FnNcNvxbDyjfi
+	 8XvyLuPoMnsXiiqV8y4jNWzSBJPSfh5qPLzyU4jLyLuYKtEMSZci8wfjrG0CpJbnYWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iU2DfWf6bOARQKdE6U+4vdKA7nkTr07bSUQ1zE/5EPs=;
-	b=A2vCy18qQxd86+iyXKp9TOwsSlfZH7dEHVoc8WRxQ5KEtztCRQWuEoMzVnSm8Xyx9M7i
-	 fX69wzliE28N1n2B9ewjh8VVLIw38yK1pIjjrNplXIqzNgLBWE/eBRywXiF9g/8sS6esX
-	 JafrQcMIRw1B0+w1kgP1mXUV6FRinMRWq+1j7G8DQU6h1aWcMYGD+NoMcGSvvW7crYud/
-	 Dc38gBQdyWLmUv/bDIJBYIUzZpozQezHzhP8nmGjSwcB9gex1k7GRvlIl2EuVQxHCP5y1
-	 Li2ANgAYOc9Afz49/aNEz4tSBAwbLw/LC+5zAN/uMz9P+4AkoALONkHxtDml6PYaPQg==
+	bh=Z2UP3xMJhWTFDlnp/PInYNcYRa5TAXTplkQJr9RM2CM=;
+	b=jsaPb1oKdfG3UC47m1SqCUoCLM7SQzzXFYnAJFVAZrr4UbYN84njn0xrB2lqbQg6Otpt
+	 rh7r7Hgf1HzkIgOesQUnYO0LKga9kqlesXwJeKSiosI703FzSS8/Y9V0aZ6IHff13zhUI
+	 LgXhto5M/k84wNwAK+DljL3vnI1uw7/Xy8xPy5PxK8VueE/TlkiXMHktpKlrlS0y3HGsv
+	 THCI4Q/jecKNu4I9OiCUFZvPtTLXfMSOAJyBv9Sf7ON2Xz6YkzzbYFEuPnmt40jq29IOR
+	 eRrl9Hb0oWllR7/KDDakpwvHXe4j1607XiK8Gr95O3smIaBmqxNOfmemb8cXtChsADw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NE+zMrzX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ix9WXxLz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AC8606A31C;
-	Wed, 18 Nov 2026 19:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1850606A320;
+	Wed, 18 Nov 2026 19:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NE+zMrzX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B221F000C4;
-	Wed, 18 Nov 2026 19:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ix9WXxLz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D4D1F000C4;
+	Wed, 18 Nov 2026 19:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029522;
-	bh=iU2DfWf6bOARQKdE6U+4vdKA7nkTr07bSUQ1zE/5EPs=;
+	s=korg; t=1795029525;
+	bh=Z2UP3xMJhWTFDlnp/PInYNcYRa5TAXTplkQJr9RM2CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NE+zMrzXDnDd49NO96KCzlHSRhVHZSPSJK9jvZTVOZgEX7MJU9W33t3y7yhFXj6jj
-	 Rn4/qTKady8lso/AGdAZFp7uNLPgnb8i55GSJmZmFcBBaZ2aNxkkmfSW7/wv9I3+lz
-	 mb30dTm8T7WHqRIW56CX9kWqmcf1c0MnJL49FPIY=
+	b=ix9WXxLziUy1dB6/8ZYh6REcRqHnihgGfMPCRUFFRe3UPAUF3YRjt0Az1O8GwBz5D
+	 z2CZ7Qa7pThZgzahH/M6se3MxzAkgH5fa5cDauS42FMSIcvIl8xn9/+JcLg++Js3kw
+	 TTpiD6Pbyqi9goL7M4dE/36wXFYyNmf/IX33T9kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0319/1756] iio: imu: adis16400: Check return value of spi_setup()
-Date: Wed, 18 Nov 2026 15:40:46 +0100
-Message-ID: <20261118150021.004952380@linuxfoundation.org>
+Subject: [PATCH 6.12 0374/1756] bpf: Fix program BTF use-after-free in sleepable programs
+Date: Wed, 18 Nov 2026 15:41:41 +0100
+Message-ID: <20261118150023.365337365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,43 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit a7c07602e00596a45de8a4a700af96392953ed38 ]
+[ Upstream commit 88c9c6d0a766dd146545990053e8a04422ccb367 ]
 
-In adis16400_initial_setup(), the return value of spi_setup() was ignored.
-If SPI configuration fails, the driver would proceed with the
-initialization anyway, leading to undefined behavior or silent failures
-during device setup.
+Object kfunc calls embed metadata owned by the program BTF. A sleepable
+program can remain active under Tasks Trace RCU after its last reference is
+dropped, while program teardown releases the BTF through ordinary RCU. The
+invocation can then dereference freed metadata in bpf_obj_new().
 
-Check the return value of spi_setup() and return the error code immediately
-if it fails.
+Move btf_put() into __bpf_prog_put_rcu(), the callback that frees the
+program. When teardown is deferred, that callback runs after the program's
+own grace period (Tasks Trace RCU for sleepable programs and ordinary RCU
+otherwise), so the BTF outlives every active invocation. The non-deferred
+path invokes the callback synchronously, so load-error cleanup stays direct.
 
-Fixes: cd888a17f95f ("staging:iio:adis16400: Use adis library")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 958cf2e273f0 ("bpf: Introduce bpf_obj_new")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260901014829.3504342-2-sanghyun.park.cnu@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16400.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/bpf/syscall.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
-index 2c291f6920f44..7c658122b6305 100644
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -433,7 +433,10 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
- 	else
- 		st->adis.spi->max_speed_hz = ADIS16400_SPI_FAST;
- 	st->adis.spi->mode = SPI_MODE_3;
--	spi_setup(st->adis.spi);
-+
-+	ret = spi_setup(st->adis.spi);
-+	if (ret)
-+		return ret;
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 854cc29b47c8f..9ebb51a32ff36 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2194,6 +2194,7 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
+ {
+ 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
  
- 	ret = __adis_initial_startup(&st->adis);
- 	if (ret)
++	btf_put(aux->btf);
+ 	kvfree(aux->func_info);
+ 	kfree(aux->func_info_aux);
+ 	free_uid(aux->user);
+@@ -2204,7 +2205,6 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
+ static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
+ {
+ 	bpf_prog_kallsyms_del_all(prog);
+-	btf_put(prog->aux->btf);
+ 	module_put(prog->aux->mod);
+ 	kvfree(prog->aux->jited_linfo);
+ 	kvfree(prog->aux->linfo);
 -- 
 2.53.0
 
