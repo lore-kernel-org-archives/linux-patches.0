@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795014411;
-	b=zF6RG1RJ3Qtlg4uLciHQkYK6ToSfE/lm/GVPZiiDsdenZilKR0exb4YvhThzob2sd8Ug
-	 b7Rro5SyrRCiujqtguulA3jGM7gZqFG9Z1YTO5niEJGC2G+TFlZHZJ7RAEquehYWNsEiv
-	 uP56eHrVj4BdVuwoGe3ZReGwlQz+8qzmTFLYt+Ja0JutsTCCmJLyJroHu6M9OXDbAX0ZS
-	 63e8HgsKX5DDQcUVx+CALqm1YZsolNW5ZO2Hs+8K+LeyOjHcDYlcom/jRnhxqcAeihDmu
-	 g1qx0OtCvsrTtcFoQLzFguT/0vHu8SV7T+X+u44q9rqWQvHVov5mzOkVRAMD7uq/JwA==
+	t=1795014413;
+	b=HF3rEsMzJ+GBC63ELmFrJUk5YJ2NyWiXfl1pTRPe3IkDi+EVPtkJOpA1m1VHazmmBodo
+	 4GkcsA9KY0NiDULbK9ejBiTdXpVYdtxwXmTHH8uVdHDaIl8dqb2esg6GT3lnSJ8ZI8jDy
+	 INs6ZhCxnG0Ib6UakEUWUbE77iq120vmHuRfEZQQbQqjFwRk5nxKG9bKRG4r0e+IYvEsF
+	 wQvntziwUrwNlLh+DfZGR2kXH3Afgho7bjaWviACykh94al+IkTznJSJO/NnVRCN/LqU2
+	 QSqpSc7yqICplASpLdXAWWhRTGSUqeMWtcz3AV7+8ImtLOY276pQq7OCzEAb4X0t9iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795014411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795014413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5YFhOubAupfArHnY3ehwO7dp3UpXC41QFg4PCAfD95g=;
-	b=K2BaeoxY1Xood5z5SpdURvTSlLVcL+vmvg6ihWQfDiRvGSACshD/3e7uTax+IxjYTg+F
-	 cIWWauKYGOWMdoa4e/tHswidQ7z5+eHlnT48dp5fyTfkxjOaaeW+c6J/dNG3vKPidt2LN
-	 bZhg+kg+hgX+XGDtcIhLkEf5UaHunVcWVJLhqq122TOEJV3xTl0Uw8PBvWT9U7bQoRfK2
-	 k/RVGjdDJ6wlsbNpb4j1R5gWkhQcIHSPZSpO0fK03+P0pzJg4JU9+zKay6RzZzxBCpK1m
-	 zSiL9MrDmnYyUSzwn30zRfC9DyLdt3UXwSzSXKIyILgQNVlKSzoy4oU7GTAdh7spzDA==
+	bh=+vOnbG0scK1DJUn289lP9o3PX/o+HuLC0LsVp3moDCQ=;
+	b=HcuJEnJcoI/aU9bT0TObOugYLA+sttffJbYcbAcN8S48vWR/T83GeNqyvg8/IXCwnZKp
+	 Wc3ZinxgFUzD3VhaTfjzTdjky6Wt6Gy5tTBZiq3SfCXvK8tam7cJ7PYjXOVBg6oe0ZWKV
+	 ArG7hn3VhgfGQ/MeCcXzYTlP44Ug2Xh2AKJ9DwrxWaNSka2tBgLho8s/NDgQs3XTSG8DT
+	 GyAzO1uYrbhufPX3Ly42jv+l3+iwUwiJ+zoNv6Nng3DCdY7ckVY+9e5jz9zpQNOrBOQEd
+	 LrAiQYR5RAWvAPJoVKq0bo45jR4IkuIVCwTly3Sc8EQ40i6qjuQReqXp26eLA2lctXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=to2tUdnw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlTMfzGi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C942606A320;
-	Wed, 18 Nov 2026 15:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDA6606A331;
+	Wed, 18 Nov 2026 15:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=to2tUdnw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDD21F000C6;
-	Wed, 18 Nov 2026 15:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlTMfzGi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23DC1F000C4;
+	Wed, 18 Nov 2026 15:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795014410;
-	bh=5YFhOubAupfArHnY3ehwO7dp3UpXC41QFg4PCAfD95g=;
+	s=korg; t=1795014413;
+	bh=+vOnbG0scK1DJUn289lP9o3PX/o+HuLC0LsVp3moDCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=to2tUdnwJu9oSe+8zKGjDmKKny2AzfoFEL8azLsWtnm9QCKEYv/Xr383w6iCzPVNb
-	 4scAsKrqjyVfUdWQGUJSIgV7ad6bAWJPybZFCKw8wmzq9uxubvwkTAlt8DesEKMnrh
-	 xKY6nsokth226PMhe99DowPsV6mrOVwZjpOIuNXc=
+	b=FlTMfzGixWR7FKmdLm+AO2XlQSePmWF4c/imCrj0L60p7+1ioS4zdaNzwsXaYLv89
+	 oHsV1gMRTHWj1ZjO9j4sPd8FExQSP+5iwIHVeEf3A7GGUGDvfbHTCx5lTSxDn6kKeq
+	 /TCCdskOIow0Rhho4/dXWBrpVXln+fHle9/kbLqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,12 +46,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0001/1756] KVM: nSVM: Check validity of vmcs01 save area copied from SMRAM on RSM
-Date: Wed, 18 Nov 2026 15:35:28 +0100
-Message-ID: <20261118150008.055559906@linuxfoundation.org>
+Subject: [PATCH 6.18 0001/2151] KVM: nSVM: Check validity of vmcs01 save area copied from SMRAM on RSM
+Date: Wed, 18 Nov 2026 15:28:56 +0100
+Message-ID: <20261118150121.687157554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-References: <20261118150007.957976754@linuxfoundation.org>
+In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
+References: <20261118150121.603863898@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -66,7 +66,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -117,7 +117,7 @@ Tested-by: Stefan Teodorescu <fane@google.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Message-ID: <20261022021046.295001-1-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ sashal: adapted validation to __nested_vmcb_check_save() with failures routed through the existing unmap_save cleanup ]
+[ sashal: adapted nested-state validation to existing helper APIs and explicit mapping cleanup via unmap_save. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  arch/x86/kvm/svm/nested.c | 23 ++++++++++++++++-------
@@ -126,10 +126,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  3 files changed, 20 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 3c9c20d7855fe..670a5d57f33da 100644
+index 49cc457a4c370..feb39e0e1be8b 100644
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -1613,6 +1613,21 @@ static void nested_copy_vmcb_cache_to_control(struct vmcb_control_area *dst,
+@@ -1732,6 +1732,21 @@ static void nested_copy_vmcb_cache_to_control(struct vmcb_control_area *dst,
  	/* 'clean' and 'hv_enlightenments' are not changed by KVM */
  }
  
@@ -151,7 +151,7 @@ index 3c9c20d7855fe..670a5d57f33da 100644
  static int svm_get_nested_state(struct kvm_vcpu *vcpu,
  				struct kvm_nested_state __user *user_kvm_nested_state,
  				u32 user_data_size)
-@@ -1689,7 +1704,6 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+@@ -1808,7 +1823,6 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
  		&user_kvm_nested_state->data.svm[0];
  	struct vmcb_control_area *ctl;
  	struct vmcb_save_area *save;
@@ -159,7 +159,7 @@ index 3c9c20d7855fe..670a5d57f33da 100644
  	struct vmcb_ctrl_area_cached ctl_cached;
  	unsigned long cr0;
  	int ret;
-@@ -1759,12 +1773,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+@@ -1876,12 +1890,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
  	 * Validate host state saved from before VMRUN (see
  	 * nested_svm_check_permissions).
  	 */
@@ -174,10 +174,10 @@ index 3c9c20d7855fe..670a5d57f33da 100644
  
  
 diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index df325d0864819..2796368f231d3 100644
+index 16022d518ff3f..518cb53b6c448 100644
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -4960,6 +4960,8 @@ static int svm_leave_smm(struct kvm_vcpu *vcpu, const union kvm_smram *smram)
+@@ -4891,6 +4891,8 @@ static int svm_leave_smm(struct kvm_vcpu *vcpu, const union kvm_smram *smram)
  	 */
  
  	svm_copy_vmrun_state(&svm->vmcb01.ptr->save, map_save.hva + 0x400);
@@ -187,10 +187,10 @@ index df325d0864819..2796368f231d3 100644
  	/*
  	 * Enter the nested guest now
 diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
-index 511fadfb055f6..a3724e867a4c9 100644
+index f8ea26ba71423..367529a7482c6 100644
 --- a/arch/x86/kvm/svm/svm.h
 +++ b/arch/x86/kvm/svm/svm.h
-@@ -689,6 +689,8 @@ void nested_copy_vmcb_save_to_cache(struct vcpu_svm *svm,
+@@ -797,6 +797,8 @@ void nested_copy_vmcb_save_to_cache(struct vcpu_svm *svm,
  				    struct vmcb_save_area *save);
  void nested_sync_control_from_vmcb02(struct vcpu_svm *svm);
  void nested_vmcb02_compute_g_pat(struct vcpu_svm *svm);
