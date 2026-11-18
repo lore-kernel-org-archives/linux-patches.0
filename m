@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033292;
-	b=elovUEtOA0UhNLN3ZTgexeyxsom7qGi/8BYvK/Mn+GZjSC45z03/stK4p9/4MP47zYMb
-	 sJkh0zUTVhwM0WRS3QTD5JMHwGl2/6+bU7DZ1pHGbVnH6n6i+BENup8coZwlJi3gyHpN0
-	 Hr8oqGJG+xwyrwr8X2VsWjk4Syy17USlatyOiFjBy4lituDweXBbrjrkuV89MdX/FiOBr
-	 AALdQP9jCM/N7sJUtSfl7jmBj0nXS5EcOOQEfaSAcTzDq8WAVmKly9S2qJib3WbJE37yO
-	 J0WQTMyglZhxrp1Y1ygHwvPICr/n1dNOspGzJ9IQ+fDbbUTluw4ImYAnZItXJja2r4A==
+	t=1795033295;
+	b=BYYESCR+wUVZu/vJqoB8wc4Pr9aT7/uTMnL9svRZCWp1Ow/ecq7cY5dcLlaYUsrmYSMw
+	 1F6isy+hcMRq7rFqxMsnBmxLgvxANdV2GsPBBvDY6AQ9AVoTIvno+D84mWU2shtKKDvEw
+	 R2i3Z1wWmY1wOMAolFl22IbQ6Re/YYcrcF2Qhrwz4sqSG88Qv1+9vjIhIcrZmYQEvm43n
+	 65PbeOnRIaPSNnkHJNFMw0AcUL4AgXAq3WEEY8O2HmwWSMu0x9ljZ5qFNK3jF9pF878NF
+	 2eQu9y9UFLnl+k9ELsdWJIGq7jp0nmm+5uzMqJX2JnrC4jjNSNjDkNk2GMHfrMYQwmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2z8YwWO/eXdMoL/IGOtIgBaItN00O59Vz6KUL7FgNR0=;
-	b=oQWxPjGnUVrFoMCT0Y7VjAw+TP15LHdHscPhlc+hTTwx2QOG+7CghWAVp4fK3bfRCLEL
-	 o3zDk4J0lJsV6F3oma92rxx7sBoI2ML4Rq3TybRBsk4DfcKK9/guLuM33qwUxxEyD17Nq
-	 bIZnHlZCOFaChuVDqk3OYL/8CmKSZyky/SFydCWKJ1IgWyvxZ7+E0EdE6wbGpP3qejwwF
-	 3j4UjUTLYOkCLh9WCwBO3bnyuwdup+/dNb/Yr19mO8TMiYQy3eNWuOIAOpSicQnNGpWaW
-	 1eAeD9/iiMnld+LAYHJ/f7/BN/tFCV0bbjq80L+SIAcegDpQ3FFH1bPuKUw039S568w==
+	bh=IieWjkNHBysll3QpmLaXSQyh7IyWx2cgNpmJautlSME=;
+	b=Dlc5e7l3EqKsTRhqbYKEjgip0xKdWzVwQe6PK0bHBOGaXOcbPUmHwPETCGXvtLCPqFCA
+	 mGy1LC5fcqqUK28wEo0yQ+8MlRb8Aq0M+iGkAbBpQJwCmNWPdzNmZybMWRpdZGh7AhjjQ
+	 4E45j3y63WsEGILfpSCiwVqq5+Z+535HPysORW2cPqE2CIT2/cJBmeOAfB472YYxuz1SU
+	 13Rl1mpDdofAMNJOgdm4thOuWGBKKuQwrd3gaZT+dyoMZgl73H09GWBf/u+Lsyq+bWiBu
+	 k84X5Qj1PgZm3gOjlyTlFTmMFesJIyabgMJXR3BUs7QVfbsY8roKOc9g/IiqmGuZfvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q66VinSa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VxJsESeX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8FC606A31C;
-	Wed, 18 Nov 2026 20:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52ADE606A320;
+	Wed, 18 Nov 2026 20:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q66VinSa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47BC1F000C4;
-	Wed, 18 Nov 2026 20:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VxJsESeX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A3C1F000C4;
+	Wed, 18 Nov 2026 20:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033292;
-	bh=2z8YwWO/eXdMoL/IGOtIgBaItN00O59Vz6KUL7FgNR0=;
+	s=korg; t=1795033295;
+	bh=IieWjkNHBysll3QpmLaXSQyh7IyWx2cgNpmJautlSME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q66VinSalTra8GaT9KgYEjdP9F1Nu7vQtvFlIRZe41uFkoo/t4F7G4dSfWJlSUMde
-	 1xWsSRigWxkF4Bf6A9HXzmyCUl0nHPkZgUNJvdqdIOismrSZ8c4dhMnX9M1+uB/7Ur
-	 v/RjIiNTzEJGujO4fTM6WU9dQuAWbt38ZwDAjQGY=
+	b=VxJsESeX6qvNgV/sRb2iQwNRxUBA3SuO5RJzEFwzKvLls0OTQkPaFcwrLv4iC/fSf
+	 +RHpx/D+npa+RBMUykCzyY6oaocBo2xS0M78W6g4K4gm6Ps3l/HpttLdY5eSo8QctI
+	 st5zoChQcqSIt1sk+RlOfDbGfIKLyXFaF6HRSCIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8420e667af06b1709c00@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Joshua Kinard <linux@kumba.dev>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1717/1756] minix: reject rmdir of a directory with a corrupted link count
-Date: Wed, 18 Nov 2026 16:04:04 +0100
-Message-ID: <20261118150117.954630442@linuxfoundation.org>
+Subject: [PATCH 6.12 1718/1756] rtc: ds1685: arm the wake-up alarm at power-off only if an alarm is set
+Date: Wed, 18 Nov 2026 16:04:05 +0100
+Message-ID: <20261118150117.989408917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,50 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit fc9577079df8a44ccbf39d2f06634017d286e4f0 ]
+[ Upstream commit c2373bcd50d9654b76eac585c7c98105665b3321 ]
 
-minix_rmdir() calls minix_unlink(), which drops the victim's link
-count once, and then drops it a second time for the "." entry. An
-image where an empty directory has i_nlink < 2 makes the second drop
-hit drop_nlink() with i_nlink == 0:
+ds1685_rtc_poweroff() always sets WIE. The wake-up alarm then compares
+the time-of-day and date alarm registers, which hold whatever was last
+written to them, and a match powers the machine straight back on.
 
-  WARNING: fs/inode.c:408 at drop_nlink
-   minix_rmdir+0xe9/0x150
-   vfs_rmdir
-   filename_rmdir
-   __do_sys_unlinkat
+Set WIE only when AIE is set in Control B, and clear it otherwise.
 
-The parent's link count is already validated; do the same for the
-directory being removed and fail with -EFSCORRUPTED.
-
-Reported-by: syzbot+8420e667af06b1709c00@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8420e667af06b1709c00
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Link: https://patch.msgid.link/20261016115851.14276-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: aaaf5fbf56f1 ("rtc: add driver for DS1685 family of real time clocks")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Acked-by: Joshua Kinard <linux@kumba.dev>
+Link: https://patch.msgid.link/20261013120208.11268-2-kaloz@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/minix/namei.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/rtc/rtc-ds1685.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/fs/minix/namei.c b/fs/minix/namei.c
-index 35e3e5947be7a..3e4102bb8fbf5 100644
---- a/fs/minix/namei.c
-+++ b/fs/minix/namei.c
-@@ -167,6 +167,10 @@ static int minix_rmdir(struct inode * dir, struct dentry *dentry)
- 		minix_error_inode(dir, "inode has corrupted nlink");
- 		goto out;
- 	}
-+	if (inode->i_nlink < 2) {
-+		minix_error_inode(inode, "inode has corrupted nlink");
-+		goto out;
-+	}
+diff --git a/drivers/rtc/rtc-ds1685.c b/drivers/rtc/rtc-ds1685.c
+index 38e25f63597ab..93f463a8251e9 100644
+--- a/drivers/rtc/rtc-ds1685.c
++++ b/drivers/rtc/rtc-ds1685.c
+@@ -1370,7 +1370,7 @@ module_platform_driver(ds1685_rtc_driver);
+ void __noreturn
+ ds1685_rtc_poweroff(struct platform_device *pdev)
+ {
+-	u8 ctrla, ctrl4a, ctrl4b;
++	u8 ctrla, ctrlb, ctrl4a, ctrl4b;
+ 	struct ds1685_priv *rtc;
  
- 	err = -ENOTEMPTY;
- 	if (!minix_empty_dir(inode))
+ 	/* Check for valid RTC data, else, spin forever. */
+@@ -1397,6 +1397,8 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 		ctrla &= ~(RTC_CTRL_A_DV2);
+ 		rtc->write(rtc, RTC_CTRL_A, ctrla);
+ 
++		ctrlb = rtc->read(rtc, RTC_CTRL_B);
++
+ 		/*
+ 		 * Read Control 4A and check the status of the auxillary
+ 		 * battery.  This must be present and working (VRT2 = 1)
+@@ -1411,13 +1413,17 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 
+ 			/*
+ 			 * The auxillary battery is present and working.
+-			 * Enable extended functions (ABE=1), enable
+-			 * wake-up (WIE=1), and enable kickstart (KSE=1)
+-			 * in Control 4B.
++			 * Enable extended functions (ABE=1) and kickstart
++			 * (KSE=1) in Control 4B.  Enable wake-up (WIE=1) only
++			 * if an alarm is set, else stale alarm registers
++			 * can power the system back on.
+ 			 */
+ 			ctrl4b = rtc->read(rtc, RTC_EXT_CTRL_4B);
+-			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_WIE |
+-				   RTC_CTRL_4B_KSE);
++			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_KSE);
++			if (ctrlb & RTC_CTRL_B_AIE)
++				ctrl4b |= RTC_CTRL_4B_WIE;
++			else
++				ctrl4b &= ~(RTC_CTRL_4B_WIE);
+ 			rtc->write(rtc, RTC_EXT_CTRL_4B, ctrl4b);
+ 		}
+ 
 -- 
 2.53.0
 
