@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057047;
-	b=yRjen0DwBQ+L+sp52DiPolb0qR6ToDwxyH6w0IfJMLwNWxsZxNkf7x0/POCKqkn9VYbR
-	 LgbpE2wgvnFYZL0YKAG3sH39AAf6D9dXz/cBwy1a4Pb40+t2lwI6iGweH7KVvP9qQnVXQ
-	 XL738x0qGDHq28yZ2cLyLpa2QtimcbRqw/21wOW5NiFFy/bL84PLtDbrtNJvtpZ7F3f6i
-	 of2ur97vfIWNOsIJLr5a0KZXAD3uUm4STwtL4js0PCewOMM40pfdca7N85aj1T/UIb5b1
-	 SB0AexYz6OTvL/CB1yhyTJUZItYRnDpBDdJV0QRYlIUbDV5fRuOnRtEe/9HEB2ovBiA==
+	t=1795057050;
+	b=WioksYmCHa9ihSJTQ1eECMV1F4uinPUXURhQOZOeMPwbMBOktkKdr4bk/MeCvrg7qwkO
+	 QwD4vV8Jo60qa6ss/eWvxBo1UKKI1tQdQkS5VB5P+ryCCmRxqYITwSlkrO0oP6b9Cr/5+
+	 CxRdGIAFa6h54GpflQs185hJ8uGIqv974LusO0rbLHtkegt1i3o7VA0U28NDXI5IHNkKh
+	 cbVsLpwpZvf5odcufKaDPLNWnn3Prl6z9c1hLeWrCNP2Z0ivMimnzXbs5n5EgGj4FByRl
+	 SQBvneun+njFR8oGn9nReaUcB3lwOlKAWN/0M6jTH1/rIdR4QqM1k6/NI1/aqEeyaNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Equxzl6O+Tvm6EXpqrChvlTJICbjOqSo08uwlwf43r4=;
-	b=TeZBvi9KDfOY1fCShhcmDQWNeytuudfnd21EJdkwpk+nJWleC0IW6zlSn9cpgjEphmTj
-	 axuqQpN9eGF+OL0bQRTl76BXkEXAQBXklzKbR3ueY/g+TC/kG8t2dsUMySKZtciN2w3/x
-	 5GDe9h1qnyCbZx0DxFAT5d7fXuyHFqsrlmcuMMVotUIg/Ew4zZic3wZ1J01VstrvRbeDs
-	 sabq6I/Rte9RM5ul+BEWH6U8Q8XnEaYssaWlGKugb8xfFyxDC0E+N8yHF3ctK/yKixjGz
-	 FycAex2nU8Ev2usDi80hVRontC14Hx1BaybUdyMmJxnseUbA2fsVQjY+O9Q7/EYQpNw==
+	bh=xyk2ZBpAM6+bVFXwjaUiK+g06SOdGIciuwbblbmdwU8=;
+	b=ufadzsyZfQRRDpvO+oarsOxIocLFR+McVzjh7zuzOdKR/2K/atffEIAeuRJ8jJXm3ONz
+	 cG3QxLUN56I7bNHW/nQvn9x4hrJXOnhnirluVk+JqnT3kpRHQv4wGT1FyJcEp5ZzSMQjL
+	 GKnDkq5eFiXkDpvoZRTT6joxf/wQabI5WXkVBZM7SZ4+8Z/vkRHD22jJqa/xyPorZfP7t
+	 +vu7guHsLGbAf4mIGbBiDYCXYgaEYBzfRoJIWDtyMEU0zqCU1pt1Lw3CliitwY95Qr2mD
+	 o/h1qPkKn7kEXf0zdSPlXqSEwBP1tgl6Fp4gDaoHViyx9rL+XOi9y01/JuevZjuYEAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eVSURmx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HLl2Wr3y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ECB606A31C;
-	Thu, 19 Nov 2026 02:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B0A606A31C;
+	Thu, 19 Nov 2026 02:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eVSURmx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330381F000C4;
-	Thu, 19 Nov 2026 02:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HLl2Wr3y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8521F000C5;
+	Thu, 19 Nov 2026 02:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057047;
-	bh=Equxzl6O+Tvm6EXpqrChvlTJICbjOqSo08uwlwf43r4=;
+	s=korg; t=1795057050;
+	bh=xyk2ZBpAM6+bVFXwjaUiK+g06SOdGIciuwbblbmdwU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1eVSURmxq1WmCbuAhEqLGxedvvRk9+osSIFDFfdUVQdFQLrnLcz5eeUylgWVjY1uw
-	 1ucG24EnvNuG09VJjR42BGdUHjMy2Vrq+y2sE6kk5F2inb9SeGH/qiVK/xylzkw+62
-	 ZG3Uxsl5TtFt2PP3o36nOci3Z9N28n8xjsdMHEW8=
+	b=HLl2Wr3yQxmkwvHWlhwFSzXxX+iYzroj4OpEw7fp0Lf09pVJg/AnRgF9HXz7SIms8
+	 qXkH8DGoxfg5Axn3uLH0vv62u3r5zKuFSQZ4ezFe3BGKGSxKr7oSWL55yQSjduuKV6
+	 Arxr5v3BIN0ZMppHphkD1qRvoEKMhY0ljdyvh9cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH 5.15 2204/2214] irqchip/gic-v3-its: Restore quirk probing for ACPI-based systems
-Date: Wed, 18 Nov 2026 16:04:40 +0100
-Message-ID: <20261118150138.447314530@linuxfoundation.org>
+	Zeal Robot <zealci@zte.com.cn>,
+	ye xingchen <ye.xingchen@zte.com.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 2169/2214] rtc: s35390a: Remove the unneeded result variable
+Date: Wed, 18 Nov 2026 16:04:05 +0100
+Message-ID: <20261118150137.181793179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,48 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: ye xingchen <ye.xingchen@zte.com.cn>
 
-commit 8b02da04ad978827e5ccd675acf170198f747a7a upstream.
+[ Upstream commit f8513363b0b7155afaee09cca777fc608dc957e3 ]
 
-While refactoring the way the ITSs are probed, the handling of quirks
-applicable to ACPI-based platforms was lost. As a result, systems such as
-HIP07 lose their GICv4 functionnality, and some other may even fail to
-boot, unless they are configured to boot with DT.
+Return the value s35390a_set_reg() directly instead of storing it in
+another redundant variable.
 
-Move the enabling of quirks into its_probe_one(), making it common to all
-firmware implementations.
-
-Fixes: 9585a495ac93 ("irqchip/gic-v3-its: Split allocation from initialisation of its_node")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240213101206.2137483-3-maz@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+Link: https://lore.kernel.org/r/20220905090119.335121-1-ye.xingchen@zte.com.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 6199051016cd ("rtc: s35390a: Read 24-hour mode on access")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-s35390a.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5137,6 +5137,8 @@ static int __init its_probe_one(struct i
- 	u32 ctlr;
- 	int err;
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index ced6c0497ed6e..5247d48190e4c 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -211,7 +211,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a	*s35390a = i2c_get_clientdata(client);
+-	int i, err;
++	int i;
+ 	char buf[7], status;
  
-+	its_enable_quirks(its);
-+
- 	if (is_v4(its)) {
- 		if (!(its->typer & GITS_TYPER_VMOVP)) {
- 			err = its_compute_its_list_map(its);
-@@ -5476,7 +5478,6 @@ static int __init its_of_probe(struct de
- 		if (!its)
- 			return -ENOMEM;
+ 	dev_dbg(&client->dev, "%s: tm is secs=%d, mins=%d, hours=%d mday=%d, "
+@@ -234,9 +234,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ 	for (i = 0; i < 7; ++i)
+ 		buf[i] = bitrev8(buf[i]);
  
--		its_enable_quirks(its);
- 		err = its_probe_one(its);
- 		if (err)  {
- 			its_node_destroy(its);
+-	err = s35390a_set_reg(s35390a, S35390A_CMD_TIME1, buf, sizeof(buf));
+-
+-	return err;
++	return s35390a_set_reg(s35390a, S35390A_CMD_TIME1, buf, sizeof(buf));
+ }
+ 
+ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
+-- 
+2.53.0
+
 
 
