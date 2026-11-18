@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022947;
-	b=gH11urqLz+vU9Y1Iodz6DYfoZAB2PhenIGGO3u9zGgm27SoDpNBE4tAx6BBwKexnxwEn
-	 1CTAWcw+qi1wDey1WYlbk+4A8TZ1IBJdN/pv9bpyUP7czaxZa8nuSGmYbd6xTp7cE2Neo
-	 wcUK95pKQEMlCkKfYK3E6UYmB8Bc987OY0P1Ua/m3k+bCEI912hKv8JkylvUylopMB9Ci
-	 FzgS502I7fO0wKhIh+HC1XTFHFaL3r0AMr7AVwyxrE3JhaQY2MgdrojDPc9sBtt517tT+
-	 S/5BkDIlUiZVc2xUVIMyVoyTJuhIQ/FK/jW06K3TVulOmJr91t8jpaERhOYWsWKxOMw==
+	t=1795022950;
+	b=43ePbeE0WqswNbPcXnl4o2cTBvVEoKPvvNwuKz261gPkYddjSiA06bqUju4mjdo/eYAl
+	 iwYGTMmQRRSJAuysoqCx/n9vK5qaCjk/LUmuNij+0M3PAiKg/GON+W89fkNzbZf+BKoqZ
+	 FRX3tMTfm8/lcZ09GMcCBAEGbrcxIb5pZlPdCokgrxjgFPma76MSyDaSWG78Gqei/2NE0
+	 x39/0Kd0GKqiXqb/9sY+kMj3IPmCA4P9jNaVQWt8WV3F9Whtr02rEkCTd9aSCjbXk7xMH
+	 hphglS4nog//+VRZqzlYhixN2pfXpHBW3j5HM9yoD6Je1qZuDVByn73zXV6COVc7daA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=clwW1kaeWRNh9fIaa9ftMZ5vt+deUxtsnMqXzOcfJlA=;
-	b=Rps6bbKvAdG4z4umbGupJUvb7/KeHVcyTtkeoRhmnqyr/k+d0rCeIucbLxf9f0kRbx9i
-	 J3NLwKI6MRnFiJwIhkZDXmotiIHOl/557Ks2qvC78UPkdrLEEc/iczxh4vWpoQSwmlj14
-	 vuo18NEcN2qwOV78clib5DF3GneSm9hjfWGbdaK3ACs4AueJ7Uq2LOuMONg/7B//HlSvo
-	 T68Mg+DYkoOgEyUu6NEgQyRzBTG7yQUsfpoEGg1ZX+86W9kTWj2wJKQpN98iyUl7Cl+tE
-	 sqA7FYmZkhJ98URD56uFXC01oiHw/urCSQX1GuKUV9LuGegmUKTI0Y7stBg+2i+v+Nw==
+	bh=6R2Np5fAByRmNmqrPxjiSKFAafkF0iSU1IIBRLhOX+I=;
+	b=Qg6qX9waN8Xs1+WdgsqPHTdZdprsNyZIOoEKVtmZj7IQx2JpXwHMeNRkBAKKei5l+ZJA
+	 V6i1MA7eU8A119Upwcc9pEblphC1YsZa5KsOwauOq2yhi2YbOAfQ2clIMUISwA/yskl+U
+	 IA1x0VgrnzFoelN78LvZVgeO7X2STxKBI6+lM+VX8d79H7SFckhesBWtTM6z3yiLLQZKA
+	 IEtQOvfrPftXwR2jZWhoTSAMn3rPm/NXMieX1I17dyvjgxujdDqZoGLLk0tx9nkYZ3J24
+	 Ou7y5BeY90u5Q5MwZCj7rn05k4IQHjsc2JLvS7nrHy0XiDzFBReQVvBcEAnG0U1sXvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkjoOX+y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qesRa0vF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7486D606B3C6;
-	Wed, 18 Nov 2026 17:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A89606B3D7;
+	Wed, 18 Nov 2026 17:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkjoOX+y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE8C1F000C6;
-	Wed, 18 Nov 2026 17:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qesRa0vF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E781F000C6;
+	Wed, 18 Nov 2026 17:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022947;
-	bh=clwW1kaeWRNh9fIaa9ftMZ5vt+deUxtsnMqXzOcfJlA=;
+	s=korg; t=1795022950;
+	bh=6R2Np5fAByRmNmqrPxjiSKFAafkF0iSU1IIBRLhOX+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkjoOX+yhTjHohepwTFMFVjErTbElszz9BAbpLilgSaEoANOM9tqvDjk80M4GkQXR
-	 ktLAbDIrhj5GizRMTA+4Eu6NcLLqqxjYJslJdtIK+SLzI+p6/FIPDFvUeD6S7Wauk9
-	 gHQGkUz1ZilTFoyXul8fF0laQNzjr0UC3nqK6aZ8=
+	b=qesRa0vF9SzH1oVq5Yv6ujgRaPLx4UfR1+NTcckmF0V21wnyuw+FbITlwu38OEheK
+	 69s9UlKVChXK9wscFr/BWKH7aWwVdptYPuC8luDHOsJsyXUOPFLqwEYEDGJkW/5mnl
+	 xlCYEuNeSI9/ZXyJfU39gMNrsWt1I5xG2ubllpJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0195/2151] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
-Date: Wed, 18 Nov 2026 15:32:10 +0100
-Message-ID: <20261118150128.882119807@linuxfoundation.org>
+Subject: [PATCH 6.18 0196/2151] sched_ext/scx_flatcg: Make cgv_node_less() wraparound-safe
+Date: Wed, 18 Nov 2026 15:32:11 +0100
+Message-ID: <20261118150128.917992251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,54 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
+[ Upstream commit bf2f23dc5a36237c0d4738966829e5cbde973c8a ]
 
-Reading the rsvd_page debugfs entry before writing a page offset and
-count to it calls vzalloc() with a size of zero, because
-rsvd_page.page_num defaults to 0.  vmalloc warns about this:
+cgv_node_less() compares cvtimes with a plain <, which misorders once
+cvtime wraps: the wrapped node lands at the front of the tree while
+the unwrapped ones get stuck behind it. Each CPU picking a cgroup
+charges it a full slice, making wrap occur earlier than a naive
+estimate might suggest.
 
-  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
-  ...
-  Call Trace:
-   __vmalloc_node_noprof+0x4c/0x70
-   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
-   seq_read_iter+0x132/0x4b0
-   seq_read+0x12e/0x1c0
-   full_proxy_read+0x6f/0xc0
-   vfs_read+0xdd/0x490
+Use time_before() instead. cgrp_cap_budget() bounds the lag behind
+cvtime_now, while the lead is bounded by the slice charge plus pending
+cvtime_delta on re-insertion, so the cyclic ordering assumptions of
+time_before() hold.
 
-rtw_fw_dump_fifo() would reject the zero size anyway, but only after
-the allocation.  Check for a zero buffer size first and print a short
-usage hint instead of allocating.
-
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
+Fixes: a4103eacc2ab ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.dev
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/sched_ext/scx_flatcg.bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
-index b67d69b01f879..84e45af26f525 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.c
-+++ b/drivers/net/wireless/realtek/rtw88/debug.c
-@@ -315,6 +315,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
- 	int i;
- 	int ret;
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 3f01441731b7e..a33c6467d7855 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -144,7 +144,7 @@ static bool cgv_node_less(struct bpf_rb_node *a, const struct bpf_rb_node *b)
+ 	cgc_a = container_of(a, struct cgv_node, rb_node);
+ 	cgc_b = container_of(b, struct cgv_node, rb_node);
  
-+	if (!buf_size) {
-+		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
-+		return 0;
-+	}
-+
- 	buf = vzalloc(buf_size);
- 	if (!buf)
- 		return -ENOMEM;
+-	return cgc_a->cvtime < cgc_b->cvtime;
++	return time_before(cgc_a->cvtime, cgc_b->cvtime);
+ }
+ 
+ static struct fcg_cpu_ctx *find_cpu_ctx(void)
 -- 
 2.53.0
 
