@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043378;
-	b=OhY7a4mLyUyUFI7li2lX/DlnxzvpiIHYBfM3y2X8jvWYZ1BK95DTyit9h3xlTQUQFljO
-	 mXT5L+1dB6NNyOHqTgHFJkLfy2gmelqA7Aig+7h+ZF3alNabNV2xQaBLFSQKXVwREW1zb
-	 72UxkUT9dQPGgV7AQFAqyDg+u2lXHrYvVrsMjCuqNEZuTbd19MicNN7UjpHQ7UU+rop+V
-	 hEzdTn5EQVcmsYiI6S537n0dAyc9Q2b5dQf3mkqcL4EDPopGFzJn1J/OtuCYdpjXgVxdo
-	 9XUIIMN7POE+752NGIxk5YysVtWwAAStDV2BNQwBuMlgxcvNIbQzvDlsFpG+pv7sxrg==
+	t=1795043380;
+	b=PqzEE3tl1pPjjGw6fzKOzPVO66Rn9jWWIVEfXTKWG6CRAYx9xqr/EoT0IhPiElPDDEhm
+	 7fxVC9PllziTfE1znQ5OfIdc7oAnqEW7ItEEJdOnI2PrMyL3A5MxzaDR1zdz8/gKWatG/
+	 rv85vl73RKS+gE9kHL9CceY6tdZFsbGMY0JLAM6xNzvl7eT8jX68XpzHVFU41rcOzmEWq
+	 dSVriXhjTfsNtQeGbrqtx1/P7J5QAQVdDq/hKlSuih4/fAWGgQeMUm7NAkWe54oQzPFOr
+	 sq+bOhTZH/xEZ54hvulwLrpJ9Dz5uSGEzxf6D3DPLLh84slgYsKfrrYtkC5ZxobCVew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043380;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=buijN4ko0kn7tZv30F0mpTa6NU7I96xRUIIFtFwVDfw=;
-	b=VvFf9XH0Xuik7j2rIKD/7PSxaqcukP72snt17SXsh+u2fJ0idXoOeHU9Z1MjpZistRrw
-	 2DxRlMhb70bnVSYZ3HrBlsjPZM7SNKwJ2wHUI1wk5nUuShXgvLwJvIFrMSPt+B5+MBXUb
-	 e3YzEeeNCzADhxSfgqSM+fBt4IN+g3Yw92cJUgC8KBwKKJk3OJLoA02IGH6Dr7aAHZB9h
-	 Xhrp8jTrk4VS65723xr9FADSvxU1gGcjJ7RaF/S/Xz9OIXDlVafJePLWu98AA2Jze5jT5
-	 R3T/0k44uidHLLQheuNT20RnOrE0ygnu/l9w+yTObBbbW2iRjx9miei4H8sqcjAiJXg==
+	bh=cibSdoGxmAdAJpf+RNNepgpukQ7Y7Cm8hB7cCgnrg0g=;
+	b=QJasTQNiNK7reJWDrHGPJFZe4FN6U2XJGUn9s513gGRhNMpF66/lcZ6pLXNOqqX63kzd
+	 0UCCUdIKHRB9IjoRqG9l4vrqd0JnaE6/jGksBac9add0kNglKOUl9kgeD0lnbssWQ20nz
+	 nattkJXw06IR0uorlehh/BS/AbVKEzpPIHBRMDo9LBcOQiAOtlgU3M0cxAOV/6lAGWoSY
+	 UXylLPtgobOr+4rUliPQw7pJjS4hattw3eYGzqQgxR1p8McZwWJdNFv4wPfh3oedC6ZSU
+	 sDjFYT/QP+rV5+LUOZDo4aAPDexvhQ912hRmGviLFIoFSGf7iCf5Au4S95VvaUv8How==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SXh/QCo1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG5J4bje;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07B8606A325;
-	Wed, 18 Nov 2026 23:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DE7606A320;
+	Wed, 18 Nov 2026 23:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXh/QCo1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B21B1F000C4;
-	Wed, 18 Nov 2026 23:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG5J4bje
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDA31F000C4;
+	Wed, 18 Nov 2026 23:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043377;
-	bh=buijN4ko0kn7tZv30F0mpTa6NU7I96xRUIIFtFwVDfw=;
+	s=korg; t=1795043380;
+	bh=cibSdoGxmAdAJpf+RNNepgpukQ7Y7Cm8hB7cCgnrg0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SXh/QCo1XfmbV7IE9D8Es/drrSImovQopDQRdA6IFtm07y/a8A2B1DxxxMhVH3/PL
-	 IrlFPDkNhSMx4XbyNa5kpn1wSiKeNFVso8tl96v9XrUUVMHot+6R2cbHnWyfyXsBvd
-	 iO81L2VqE+IQNpSqOVrg3NZtOskR0sk8oD0I38xA=
+	b=EG5J4bje7gFpBM0EE7MnIbFZjar3T9mNsvEgayfILMJTTKfkXJ17ulVcFTHdTa4kb
+	 FbJ23Q0lyt5SpIqsqUCZi7P9S3Uc7LgBp30Oa1HANlA1BdoGMT3eFKu9eL0H0Tebhk
+	 bmQM11L+IEJ8pIl9tFOrcqMa08WTLhOdudWkhrV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauricio Orozco <maudob@live.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Aaron Ma <mapengyu@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0187/2857] ALSA: hda/realtek: Add quirk for ASUS VivoBook M515DA/X515DAP
-Date: Wed, 18 Nov 2026 15:20:21 +0100
-Message-ID: <20261118150208.077772773@linuxfoundation.org>
+Subject: [PATCH 6.1 0188/2857] HID: quirks: Add ALWAYS_POLL quirk for Beitong BTP-KP20D dongle
+Date: Wed, 18 Nov 2026 15:20:22 +0100
+Message-ID: <20261118150208.115054616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,41 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Orozco <maudob@live.com>
+From: Aaron Ma <mapengyu@gmail.com>
 
-[ Upstream commit a9fa2a016e805504223abf8c9b373ac9f7bfb9b3 ]
+[ Upstream commit bfff246b3a31cb45ec297ca5e2a77c1410b207ac ]
 
-The ASUS VivoBook M515DA/X515DAP (subsystem ID 1043:1e3e)
-requires the ALC256_FIXUP_ASUS_MIC_NO_PRESENCE fixup to
-enable the internal microphone.
+The BTP-KP20D dongle in Direct/HID mode (20dd:5159) re-enumerates every
+few seconds because usbhid never submits its interrupt-IN URB: no HID
+driver binds to the vendor-specific report descriptor, so the device is
+never opened, and the firmware treats the idle endpoint as a lost link.
 
-Without this quirk, the internal microphone captures only
-silence under Linux, while it works correctly under Windows.
+Add HID_QUIRK_ALWAYS_POLL to keep the interrupt-IN URB submitted from
+probe time.
 
-The fix has been verified on real hardware.
-Tested on an ASUS VivoBook M515DA/X515DAP running Linux Mint
-22.3 with Ubuntu HWE kernel 7.0.0-28.
-
-Signed-off-by: Mauricio Orozco <maudob@live.com>
-Link: https://patch.msgid.link/20260730033506.8958-1-mauoro3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Aaron Ma <mapengyu@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 3f74f485298cd..68ddad4689fd3 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10191,6 +10191,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1da2, "ASUS UP6502ZA/ZD", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e10, "ASUS VivoBook X507UAR", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x1e3e, "ASUS VivoBook M515DA/X515DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
- 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e51, "ASUS Zephyrus M15", ALC294_FIXUP_ASUS_GU502_PINS),
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 310ba8c01c101..4d185a3a4d2ad 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -247,6 +247,9 @@
+ #define USB_VENDOR_ID_BAANTO		0x2453
+ #define USB_DEVICE_ID_BAANTO_MT_190W2	0x0100
+ 
++#define USB_VENDOR_ID_BEITONG		0x20dd
++#define USB_DEVICE_ID_BEITONG_KP20D	0x5159
++
+ #define USB_VENDOR_ID_BELKIN		0x050d
+ #define USB_DEVICE_ID_FLIP_KVM		0x3201
+ 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 3dc6101680cc5..683b3a2251ed6 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -45,6 +45,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS682), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS692), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_UC100KM), HID_QUIRK_NOGET },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_BEITONG, USB_DEVICE_ID_BEITONG_KP20D), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_MULTI_TOUCH), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE2), HID_QUIRK_ALWAYS_POLL },
 -- 
 2.53.0
 
