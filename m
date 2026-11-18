@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023902;
-	b=hsAwiLBM9Bo2JcEqn/ZSg55N6+K0VWHnQdCOfm/1+WQXNbnaV8H4K85HeY1MbLQiKRlW
-	 F1VMDOgO3km7YgfpgtjgzRS9UFYXs7o1a9vrGiA8enYkwzFoKXOjgZxGHenCbmJScz++7
-	 9BlgtjBpUUsuPttHDgtcjvhqFumqFmU+HFXYQ+sh1hdJ4U648/nZ+eqIT+VqCwOvADN5q
-	 DgnTu2RWHaQP0cUHEvqzJY21Vs1veEUApM6FauM91EJKBP0ea7BadJ1+Mnnzl+xYP2pUv
-	 GyeAssHuJgbu+M9u0gSGcrt8vadGr1VzmpUh9JbQUqk6nynACvLdUiVavvjP6/5Jtfg==
+	t=1795023904;
+	b=mHPmbNQU2Rds0UpJbU1HP+WIYI7fH7NEsLbllzJ/b/1VrxlaFECoqy/Iy1zXdU62mI1w
+	 S4MOaGKfWF8NmgCo/FPa9N4FKoiqvLauUqvP5Rakj7tXA+rOjZTBiB6Ttn9E9x8JDY4DJ
+	 6UOYw86N/+/dWxvnXKVIhVVQzdx2q8GXkEncA9TAKTNd2wjcF3bhYpRZCyNO1w/8BgZiG
+	 s/g1IszsF51EUjSHbbXRJDxDuogimP+ekf7KQe6E1RNSEBLFP/0wGbdsgFXcr854aYQO9
+	 tD5Gk7jC3GkRQZRVsD0w9uCDw5DrfDw7yaXsx5j7AhkfaGddFbplbMNO5G/9Rx/oS4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023902;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023904;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F8OywP8uvJ1Ot7SG0Cj2+KRvuyjvxZBGIsTyEK7K7qw=;
-	b=Ia3W07w4vHqLIuSvcpwm+nCLswHMbNl6RLkSHeJlFpXgbph+5AR0b0KLgHjQHYqcOOtO
-	 8Wji/xm4S4B3bNt+2cjdREQ7D7IEg03U8vUN4HLDqQJrafJmhlbVPkEPR/ZrgIP2UzSn+
-	 bSBBVLNznDwZnkaYxbya781JxlDU+FCpjx1icSpGMVLECuxwLOTMl2xXnO5103+1oL/Hq
-	 OEyDxxYxT29F8/meUv1Vt1IuUUW1ctBJe6yytg1ULCnaak6+sY8Y8rkrKcQA/f7w0jbqb
-	 gjmJlWCID4rOYQRCp8g0CyY981WN2qwgR0ernE9KWSq8IjiuxXBcgo7WI81hBt/NkQg==
+	bh=Funxdd72ISH4sFq/rHrbNZxcDwrmvHVVRVBftEgpAOc=;
+	b=HdjxU4xjlgRqyH0b86NsCEnac3FkCpNAD+DLDkw/85Ev+eO5qnEqoxurl12Ii8rdONq6
+	 +iiRG8bUqFoEaNzbEP8jOZU3/ihxwDPS4lN75+sz2cPbEKwJMSmJQnSl7RM9VHnsbTbyH
+	 MYstlTyTztXKj7HkUcuo0F/x3gd0cdOlr/F0ehuWmZxJjADnimmnEhKErN8Hp8zfJJabf
+	 pKCS+ydEAZIKWlL9EyU+/JM1nVog0oPApyh218jW2LXdmJzkk4G+qU0Nov8K889vjBLeu
+	 nJQ4IT9TTAQSe6gNPownqZga6FiMt+DSeLQ8k5b7v6ho0DRME159b2OTOTLq6Ms8u9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JeRT/KI6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WF5yTNjC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EC2606A32C;
-	Wed, 18 Nov 2026 17:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6109606A32A;
+	Wed, 18 Nov 2026 17:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JeRT/KI6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405CB1F000C4;
-	Wed, 18 Nov 2026 17:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WF5yTNjC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071BD1F000C5;
+	Wed, 18 Nov 2026 17:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023901;
-	bh=F8OywP8uvJ1Ot7SG0Cj2+KRvuyjvxZBGIsTyEK7K7qw=;
+	s=korg; t=1795023904;
+	bh=Funxdd72ISH4sFq/rHrbNZxcDwrmvHVVRVBftEgpAOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JeRT/KI6raCDSuAJl6VIrMzQkmL5eMTYVSNybyOiU7eYIgRRXGP3zt57OlMqWtLvn
-	 y+MYArJFWrXh+m8KgvAsEgt1d4w/ylcdGfD6CeO8rPDLGAzMxg5LGTs+b9LjA0W++M
-	 1prSUF0/sE7T4o1QB+MIEMxkgh4EbsXl/DEoFleY=
+	b=WF5yTNjCDS8PqNyIwGTqeKocrtNrh0slLRD7lN5LB39s7hLOCg72a4n359A9VDbEy
+	 OQwTUYMdMBjdspuWYYkrJUYYOwFwnpJoGliKSm+Ovpbl2nNQGEBgjq09UxbpFFNz5E
+	 X4ZXxY4U0Z+As4xWQjjnmPnGmMb8tI74kzW0djJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0534/2151] ASoC: ab8500: Remove the nonfunctional sidetone apply control
-Date: Wed, 18 Nov 2026 15:37:49 +0100
-Message-ID: <20261118150141.461613319@linuxfoundation.org>
+Subject: [PATCH 6.18 0535/2151] ASoC: ab8500: Skip digital microphone support on AB8505
+Date: Wed, 18 Nov 2026 15:37:50 +0100
+Message-ID: <20261118150141.497269656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,229 +70,239 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit ec75e653b70ce26ea68187c2069722baa80efadb ]
+[ Upstream commit 0d46182a1be7ef12f85433d91315d4d7091dd8c8 ]
 
-After the coefficient controls were removed, writing "Apply FIR"
-programs 128 zero coefficients and reports that the sidetone filter is
-configured. The associated ANC configuration DAPM pins are also now
-unreachable dead infrastructure.
+The AB8505 does not have the digital microphone interface, its six
+input pins or the VDMIC regulator found in AB8500. The shared codec
+driver nevertheless creates the entire AB8500 DMIC DAPM graph. When an
+AB8505 sound card binds, the regulator widget requests the nonexistent
+V-DMIC supply and falls back to a dummy regulator.
 
-Remove the misleading status/apply control, its private state, and the
-obsolete configuration-only DAPM pins. Keep the direct sidetone reset
-and remaining hardware controls.
+Split the digital microphone widgets and routes from the common codec
+graph and add them only when the parent MFD is an actual AB8500. This
+also removes the DMIC4-only AD_OUT4 path from AB8505.
 
-Fixes: e366ce8b22ec ("ASoC: codecs: ab8500: Remove suspicious code")
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-5-f85024e717e3@kernel.org
+Link: https://patch.msgid.link/20260918-ux500-simple-sound-v2-4-88d29416e3c3@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 0d46182a1be7 ("ASoC: ab8500: Skip digital microphone support on AB8505")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 114 --------------------------------
- 1 file changed, 114 deletions(-)
+ sound/soc/codecs/ab8500-codec.c | 144 ++++++++++++++++++--------------
+ 1 file changed, 82 insertions(+), 62 deletions(-)
 
 diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 167f021c7ecbc..11142d15df450 100644
+index 11142d15df450..a3197d0a9c36f 100644
 --- a/sound/soc/codecs/ab8500-codec.c
 +++ b/sound/soc/codecs/ab8500-codec.c
-@@ -14,17 +14,14 @@
-  *         for ST-Ericsson.
-  */
+@@ -299,7 +299,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("V-AUD", 0, 0),
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("V-AMIC1", 0, 0),
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("V-AMIC2", 0, 0),
+-	SND_SOC_DAPM_REGULATOR_SUPPLY("V-DMIC", 0, 0),
  
--#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/slab.h>
- #include <linux/moduleparam.h>
- #include <linux/init.h>
--#include <linux/delay.h>
- #include <linux/pm.h>
- #include <linux/platform_device.h>
--#include <linux/mutex.h>
- #include <linux/mfd/abx500/ab8500.h>
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500-sysctrl.h>
-@@ -54,32 +51,9 @@
- /* Macrocell register definitions */
- #define AB8500_GPIO_DIR4_REG			0x13 /* Bank AB8500_MISC */
+ 	/* Power */
+ 	SND_SOC_DAPM_SUPPLY("Audio Power",
+@@ -324,7 +323,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_OUT("AD_OUT1", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_OUT("AD_OUT2", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_OUT("AD_OUT3", NULL, 0, SND_SOC_NOPM, 0, 0),
+-	SND_SOC_DAPM_AIF_OUT("AD_OUT4", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_OUT("AD_OUT57", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_OUT("AD_OUT68", NULL, 0, SND_SOC_NOPM, 0, 0),
  
--/* Nr of FIR/IIR-coeff banks in ANC-block */
--#define AB8500_NR_OF_ANC_COEFF_BANKS		2
--
--/* Minimum duration to keep ANC IIR Init bit high or
--low before proceeding with the configuration sequence */
--#define AB8500_ANC_SM_DELAY			2000
--
--/* Sidetone states */
--static const char * const enum_sid_state[] = {
--	"Unconfigured",
--	"Apply FIR",
--	"FIR is configured",
--};
--enum sid_state {
--	SID_UNCONFIGURED = 0,
--	SID_APPLY_FIR = 1,
--	SID_FIR_CONFIGURED = 2,
--};
--
- /* Private data for AB8500 device-driver */
- struct ab8500_codec_drvdata {
- 	struct regmap *regmap;
--	struct mutex ctrl_lock;
--
--	/* Sidetone */
--	enum sid_state sid_status;
- };
+@@ -584,36 +582,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_SUPPLY("AD5768 Enable", AB8500_ADPATHENA,
+ 			    AB8500_ADPATHENA_ENAD5768, 0, NULL, 0),
  
- static inline const char *amic_micbias_str(enum amic_micbias micbias)
-@@ -642,9 +616,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
- 			NULL, 0),
+-	/* Digital Microphone path */
+-
+-	SND_SOC_DAPM_INPUT("DMic 1"),
+-	SND_SOC_DAPM_INPUT("DMic 2"),
+-	SND_SOC_DAPM_INPUT("DMic 3"),
+-	SND_SOC_DAPM_INPUT("DMic 4"),
+-	SND_SOC_DAPM_INPUT("DMic 5"),
+-	SND_SOC_DAPM_INPUT("DMic 6"),
+-
+-	SND_SOC_DAPM_MIXER("DMIC1",
+-			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC1, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("DMIC2",
+-			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC2, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("DMIC3",
+-			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC3, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("DMIC4",
+-			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC4, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("DMIC5",
+-			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC5, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("DMIC6",
+-			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC6, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD4 Channel Volume",
+-			SND_SOC_NOPM, 0, 0,
+-			NULL, 0),
  	/* Acoustical Noise Cancellation path */
  
--	SND_SOC_DAPM_INPUT("ANC Configure Input"),
--	SND_SOC_DAPM_OUTPUT("ANC Configure Output"),
--
  	SND_SOC_DAPM_MUX("ANC Source",
- 			SND_SOC_NOPM, 0, 0,
- 			dapm_anc_in_select),
-@@ -687,10 +658,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
- 	{"Main Supply", NULL, "Audio Power"},
- 	{"Main Supply", NULL, "Audio Analog Power"},
- 
--	/* ANC Configure */
--	{"ANC Configure Input", NULL, "Main Supply"},
--	{"ANC Configure Output", NULL, "ANC Configure Input"},
--
- 	/* Powerup charge pump if DA1/2 is in use */
- 
- 	{"DA_IN1", NULL, "ab8500_0p"},
-@@ -972,75 +939,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes_mic2_vamicx[] = {
- 	{"MIC2 V-AMICx Enable", NULL, "V-AMIC2"},
+@@ -648,6 +616,40 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 			NULL, 0),
  };
  
--/*
-- * Control-events
-- */
--
--static int sid_status_control_get(struct snd_kcontrol *kcontrol,
--		struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--
--	guard(mutex)(&drvdata->ctrl_lock);
--	ucontrol->value.enumerated.item[0] = drvdata->sid_status;
--
--	return 0;
--}
--
--/* Write sidetone FIR-coefficients configuration sequence */
--static int sid_status_control_put(struct snd_kcontrol *kcontrol,
--				struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--	unsigned int param, sidconf;
--	int status = 1;
--
--	dev_dbg(component->dev, "%s: Enter\n", __func__);
--
--	if (ucontrol->value.enumerated.item[0] != SID_APPLY_FIR) {
--		dev_err(component->dev,
--			"%s: ERROR: This control supports '%s' only!\n",
--			__func__, enum_sid_state[SID_APPLY_FIR]);
--		return -EIO;
--	}
--
--	guard(mutex)(&drvdata->ctrl_lock);
--
--	sidconf = snd_soc_component_read(component, AB8500_SIDFIRCONF);
--	if (((sidconf & BIT(AB8500_SIDFIRCONF_FIRSIDBUSY)) != 0)) {
--		if ((sidconf & BIT(AB8500_SIDFIRCONF_ENFIRSIDS)) == 0) {
--			dev_err(component->dev, "%s: Sidetone busy while off!\n",
--				__func__);
--			status = -EPERM;
--		} else {
--			status = -EBUSY;
--		}
--		dev_dbg(component->dev, "%s: Exit\n", __func__);
--		return status;
--	}
--
--	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
--
--	for (param = 0; param < AB8500_SID_FIR_COEFFS; param++) {
--		snd_soc_component_write(component, AB8500_SIDFIRCOEF1, 0);
--		snd_soc_component_write(component, AB8500_SIDFIRCOEF2, 0);
--	}
--
--	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
--		BIT(AB8500_SIDFIRADR_FIRSIDSET),
--		BIT(AB8500_SIDFIRADR_FIRSIDSET));
--	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
--		BIT(AB8500_SIDFIRADR_FIRSIDSET), 0);
--
--	drvdata->sid_status = SID_FIR_CONFIGURED;
--
--	dev_dbg(component->dev, "%s: Exit\n", __func__);
--
--	return status;
--}
--
++static const struct snd_soc_dapm_widget ab8500_dmic_dapm_widgets[] = {
++	SND_SOC_DAPM_REGULATOR_SUPPLY("V-DMIC", 0, 0),
++	SND_SOC_DAPM_AIF_OUT("AD_OUT4", NULL, 0, SND_SOC_NOPM, 0, 0),
++
++	SND_SOC_DAPM_INPUT("DMic 1"),
++	SND_SOC_DAPM_INPUT("DMic 2"),
++	SND_SOC_DAPM_INPUT("DMic 3"),
++	SND_SOC_DAPM_INPUT("DMic 4"),
++	SND_SOC_DAPM_INPUT("DMic 5"),
++	SND_SOC_DAPM_INPUT("DMic 6"),
++
++	SND_SOC_DAPM_MIXER("DMIC1",
++			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC1, 0,
++			NULL, 0),
++	SND_SOC_DAPM_MIXER("DMIC2",
++			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC2, 0,
++			NULL, 0),
++	SND_SOC_DAPM_MIXER("DMIC3",
++			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC3, 0,
++			NULL, 0),
++	SND_SOC_DAPM_MIXER("DMIC4",
++			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC4, 0,
++			NULL, 0),
++	SND_SOC_DAPM_MIXER("DMIC5",
++			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC5, 0,
++			NULL, 0),
++	SND_SOC_DAPM_MIXER("DMIC6",
++			AB8500_DIGMICCONF, AB8500_DIGMICCONF_ENDMIC6, 0,
++			NULL, 0),
++	SND_SOC_DAPM_MIXER("AD4 Channel Volume",
++			SND_SOC_NOPM, 0, 0,
++			NULL, 0),
++};
++
  /*
-  * Controls - Non-DAPM ASoC
+  * DAPM-routes
   */
-@@ -1324,9 +1222,6 @@ static SOC_ENUM_SINGLE_DECL(soc_enum_bfifomast,
- 			AB8500_FIFOCONF3, AB8500_FIFOCONF3_BFIFOMAST_SHIFT,
- 			enum_slavemaster);
+@@ -853,35 +855,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"AD_OUT68", NULL, "Main Supply"},
+ 	{"AD_OUT68", NULL, "AD6 Channel Volume"},
  
--/* Sidetone */
--static SOC_ENUM_SINGLE_EXT_DECL(soc_enum_sidstate, enum_sid_state);
+-	/* Digital Microphone path */
 -
- /* ANC */
+-	{"DMic 1", NULL, "V-DMIC"},
+-	{"DMic 2", NULL, "V-DMIC"},
+-	{"DMic 3", NULL, "V-DMIC"},
+-	{"DMic 4", NULL, "V-DMIC"},
+-	{"DMic 5", NULL, "V-DMIC"},
+-	{"DMic 6", NULL, "V-DMIC"},
+-
+-	{"DMIC1", NULL, "DMic 1"},
+-	{"DMIC2", NULL, "DMic 2"},
+-	{"DMIC3", NULL, "DMic 3"},
+-	{"DMIC4", NULL, "DMic 4"},
+-	{"DMIC5", NULL, "DMic 5"},
+-	{"DMIC6", NULL, "DMic 6"},
+-
+-	{"AD1 Source Select", "DMic 1", "DMIC1"},
+-	{"AD2 Source Select", "DMic 2", "DMIC2"},
+-	{"AD3 Source Select", "DMic 3", "DMIC3"},
+-	{"AD5 Source Select", "DMic 5", "DMIC5"},
+-	{"AD6 Source Select", "DMic 6", "DMIC6"},
+-
+-	{"AD4 Channel Volume", NULL, "DMIC4"},
+-	{"AD4 Channel Volume", NULL, "AD34 Enable"},
+-
+-	{"ab8500_0c", NULL, "AD_OUT4"},
+-	{"AD_OUT4", NULL, "Main Supply"},
+-	{"AD_OUT4", NULL, "AD4 Channel Volume"},
+-
+ 	/* LineIn Bypass path */
  
- static struct snd_kcontrol_new ab8500_ctrls[] = {
-@@ -1617,8 +1512,6 @@ static struct snd_kcontrol_new ab8500_ctrls[] = {
- 		AB8500_ANC_WARP_DELAY_MIN, AB8500_ANC_WARP_DELAY_MAX, 0),
+ 	{"LINL to HSL Volume", NULL, "LINL Enable"},
+@@ -911,7 +884,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"Sidetone Left Source", "Headset Left", "DA_IN1"},
+ 	{"Sidetone Right Source", "LineIn Right", "AD2 Channel Volume"},
+ 	{"Sidetone Right Source", "Mic 1", "AD3 Channel Volume"},
+-	{"Sidetone Right Source", "DMic 4", "AD4 Channel Volume"},
+ 	{"Sidetone Right Source", "Headset Right", "DA_IN2"},
  
- 	/* Sidetone */
--	SOC_ENUM_EXT("Sidetone Status", soc_enum_sidstate,
--		sid_status_control_get, sid_status_control_put),
- 	SOC_SINGLE_STROBE("Sidetone Reset",
- 		AB8500_SIDFIRADR, AB8500_SIDFIRADR_FIRSIDSET, 0),
+ 	{"STFIR1 Control", NULL, "Sidetone Left Source"},
+@@ -924,6 +896,37 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"DA2 Enable", NULL, "STFIR2 Volume"},
  };
-@@ -2145,10 +2038,8 @@ static void ab8500_codec_of_probe(struct device *dev, struct device_node *np,
  
- static int ab8500_codec_probe(struct snd_soc_component *component)
++static const struct snd_soc_dapm_route ab8500_dmic_dapm_routes[] = {
++	{"DMic 1", NULL, "V-DMIC"},
++	{"DMic 2", NULL, "V-DMIC"},
++	{"DMic 3", NULL, "V-DMIC"},
++	{"DMic 4", NULL, "V-DMIC"},
++	{"DMic 5", NULL, "V-DMIC"},
++	{"DMic 6", NULL, "V-DMIC"},
++
++	{"DMIC1", NULL, "DMic 1"},
++	{"DMIC2", NULL, "DMic 2"},
++	{"DMIC3", NULL, "DMic 3"},
++	{"DMIC4", NULL, "DMic 4"},
++	{"DMIC5", NULL, "DMic 5"},
++	{"DMIC6", NULL, "DMic 6"},
++
++	{"AD1 Source Select", "DMic 1", "DMIC1"},
++	{"AD2 Source Select", "DMic 2", "DMIC2"},
++	{"AD3 Source Select", "DMic 3", "DMIC3"},
++	{"AD5 Source Select", "DMic 5", "DMIC5"},
++	{"AD6 Source Select", "DMic 6", "DMIC6"},
++
++	{"AD4 Channel Volume", NULL, "DMIC4"},
++	{"AD4 Channel Volume", NULL, "AD34 Enable"},
++
++	{"ab8500_0c", NULL, "AD_OUT4"},
++	{"AD_OUT4", NULL, "Main Supply"},
++	{"AD_OUT4", NULL, "AD4 Channel Volume"},
++
++	{"Sidetone Right Source", "DMic 4", "AD4 Channel Volume"},
++};
++
+ static const struct snd_soc_dapm_route ab8500_dapm_routes_mic1a_vamicx[] = {
+ 	{"MIC1A V-AMICx Enable", NULL, "V-AMIC1"},
+ 	{"MIC1A V-AMICx Enable", NULL, "V-AMIC2"},
+@@ -2040,13 +2043,30 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
  {
--	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
  	struct device *dev = component->dev;
  	struct device_node *np = dev->of_node;
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(dev);
++	struct ab8500 *ab8500 = dev_get_drvdata(dev->parent);
  	struct ab8500_codec_platform_data codec_pdata;
++	struct snd_soc_dapm_context *dapm;
  	int status;
  
-@@ -2181,10 +2072,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 	snd_soc_component_write(component, AB8500_SHORTCIRCONF,
- 		      BIT(AB8500_SHORTCIRCONF_HSZCDDIS));
+ 	dev_dbg(dev, "%s: Enter.\n", __func__);
  
--	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
--
--	mutex_init(&drvdata->ctrl_lock);
--
- 	return status;
- }
+ 	ab8500_codec_of_probe(dev, np, &codec_pdata);
  
-@@ -2213,7 +2100,6 @@ static int ab8500_codec_driver_probe(struct platform_device *pdev)
- 			GFP_KERNEL);
- 	if (!drvdata)
- 		return -ENOMEM;
--	drvdata->sid_status = SID_UNCONFIGURED;
- 	dev_set_drvdata(&pdev->dev, drvdata);
- 
- 	drvdata->regmap = devm_regmap_init(&pdev->dev, NULL, &pdev->dev,
++	if (is_ab8500(ab8500)) {
++		dapm = snd_soc_component_to_dapm(component);
++		status = snd_soc_dapm_new_controls(dapm,
++						   ab8500_dmic_dapm_widgets,
++						   ARRAY_SIZE(ab8500_dmic_dapm_widgets));
++		if (status)
++			return status;
++
++		status = snd_soc_dapm_add_routes(dapm,
++						 ab8500_dmic_dapm_routes,
++						 ARRAY_SIZE(ab8500_dmic_dapm_routes));
++		if (status)
++			return status;
++	}
++
+ 	status = ab8500_audio_init_audioblock(component);
+ 	if (status < 0) {
+ 		dev_err(dev, "%s: failed to init audio-block (%d)!\n",
 -- 
 2.53.0
 
