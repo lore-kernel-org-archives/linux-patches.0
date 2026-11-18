@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023830;
-	b=xqOzvruNllGO61u49LPkRO4+0F4uFOuwhXEiBNUePQctksuwa9cy0FrwFNxJoUPn6WLm
-	 5ozdZ3wqb1q+QMEIL3m1/tjUf0Uj3reGHWwDKMkdq/gTm/Lj0bYqcDRxLYOP30rlrA7ft
-	 fDZ2ImqmLNsFO9CroVAerFbfHOa9TOwTLhXGA4YOpeNIijSme94LfrTDcPNgmRxR+hrOg
-	 RvGkZ00NPWKme6wYoHOYgmvhQgsyib/Gzj/pxet+6/0ThIQiUwXYf7ukN1GKMdQKEkjl3
-	 jVkql4EklphFB+VXpoymp1P+2C09m8eLLszP+whOPAEPhKFHUrE5udVoFlScFJn2tJA==
+	t=1795023832;
+	b=0lQFLIfk5oHQts6uc7g6qFEdnZ1qa1iU3YYdoeklb3eOxF1MN1AN6PDfPWArrIBtiyfu
+	 +hRR77o+txLiacvuQ9LAPtgJc/mu6SyztyiB6ObjUfsh1I36Gk1JM8HVrjRXdspUNwbTE
+	 T8tc+ha07bdxbtGqwwlLOaGaKWa+9Cx/Kf9YgDbKPmBP6Thw2xHznLKN3W9sd1+pnxR7F
+	 c495IHr2kxXdCkZasGImhrWWc+2Z2Yv4KVpxrNS2SsR40r+aqlh5cwga5KiXx1SoXGSie
+	 s5Aqb1j538eyctycsUU33WiwQW1EZ0Z1iF2aY/J1LNg6oaO/rIPLBLM4f2zQblbaC2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023832;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p7kxlQzpP3Tox4L5njrapyCdMJSsF9kKBUzjN91rt9k=;
-	b=46YkzEwhe5JHgmrkd5mFowWfncSYFq+rqRlE5JFxtNBjciGvZq9P0yjTihl9Fgg5+AxG
-	 b+u4OTSmDc+w6wV99ZAw9OzkEhn+QUgKz99zQg4gwtOOXB81z5UOn6dLmTslZKHPg9t4E
-	 BQ7Ou/S0RoLgqeOV5tsdOsLmwouaBi6ezUrKlCvI8l+yQ42HGsNasoa3ZuYzuDwh2J9UB
-	 xUsWH1heyBz7btmLj0XqQudW8qMV3f3kNHY0wemfg2Pq7IX/wQJvbXiH80CR78IpsRI0g
-	 dhtj8B+ptkHDQCDsBtV1nGiApzcmHiasTacFxi3j+qIlAsD2i9Se7OrsFrOe4hMaB1g==
+	bh=T/TxSIQV0XYAi5uGzyJIx0OUuzvhx42te6lkvlv/4q4=;
+	b=ZkUYbYKiNPCPOmln6mDb8jen/XjRJKNUXWP+u8btTiCy0z33Wknn1NNHweT23MupfvGp
+	 gKOJ3gHLghYP2W1ScI6ENK4u9gpmsdZpNI9nGh6Tdwmk+kMCZ6DvmMtq2BmdmGXboELDH
+	 rv+Av/IkoIR8Ty0d5ueFQBz04rKR6W1L3AXyUUx1lS/c6zB3XkctVageu1kJ2RRSBRoba
+	 pNaEnv51adYzUvEMzLHv1zlvpdfrzn0IGb7yuInTu8Th6ErIiZT6QeSDD/ZI7bHIfteXn
+	 wMjAyQ1EEz8rXEpuowlx5K4EPXpolME6qwd/TudzAWRzskCkqSwfXNISRRugC5lYVMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f6aqOPb1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+gBeexd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ED460A2602;
-	Wed, 18 Nov 2026 17:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86FC606A320;
+	Wed, 18 Nov 2026 17:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f6aqOPb1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FC51F000C5;
-	Wed, 18 Nov 2026 17:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+gBeexd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294A91F000C5;
+	Wed, 18 Nov 2026 17:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023829;
-	bh=p7kxlQzpP3Tox4L5njrapyCdMJSsF9kKBUzjN91rt9k=;
+	s=korg; t=1795023832;
+	bh=T/TxSIQV0XYAi5uGzyJIx0OUuzvhx42te6lkvlv/4q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6aqOPb1j/UEngUsZbCgZy/8f97/ns/uO/+IjI/dLDUJVoLc4bYJOiA/m2O4h8nqF
-	 XioTTHWGIFy0Um73iauX1ZtWnW0Mw6O6FZyknkbyGOGmwX1MmGK3gOZ/g0b2jF+Xh6
-	 cLEhI1roHdncAxJCy1RfgTNExERIUUBP061yrAV8=
+	b=J+gBeexd9Glk3WuyyrSv8u7ae+/nan4qQzMo4dZ2PA1L+Qe9nWJaH66IhzxsaFtZA
+	 G5/kXby48XAsxrki0WQQyk4vkQC+IHvZZRwqzoBFxiVuvkwQFpQJ4+M9NyG9+9rnrx
+	 0q5+w62qdLUDbehVJJGpUFNNmtWnr69oMDR5eLL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Julian Braha <julianbraha@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0508/2151] PCI: dra7xx: Fix clock enable leak on probe failure
-Date: Wed, 18 Nov 2026 15:37:23 +0100
-Message-ID: <20261118150140.556647085@linuxfoundation.org>
+Subject: [PATCH 6.18 0509/2151] kconfig: fix extra output from savedefconfig on out-of-range defaults
+Date: Wed, 18 Nov 2026 15:37:24 +0100
+Message-ID: <20261118150140.594560456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,48 +69,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 768e5d0936d00d663ce2b8c192cc6ab0b61ad461 ]
+[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
 
-dra7xx_pcie_probe() enables the optional clock but never disables it
-when probing fails afterwards.
+The Kconfig interpreter currently allows defaults that are outside of the
+range bounds.
 
-Switch to devm_clk_get_optional_enabled(), which disables the clock
-automatically on failure.
+In these cases, the 'sym_validate_range' function will adjust the default
+value to the nearest range bound. For example, see this example:
 
-Fixes: 5af9405397bf ("PCI: dra7xx: Get an optional clock")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260822-dra7xx-v1-1-23e204d5548b@gmail.com
+  config A
+    int
+    range 1 2
+    default 16
+
+Here, since the default value of 16 is greater than the bounds, the
+effective default value gets adjusted down to the upper bound, 2.
+
+However, 'savedefconfig' writes non-default values, and without being
+aware of the automatic adjustment to the range bound, it would write: A=2
+
+This limitation is also documented in a comment: "The following fails to
+handle the situation where a default value is further limited by the valid
+range."
+
+To resolve this, let's factor out the default-range adjustment logic from
+the existing 'sym_validate_range' function into its own
+'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
+that it compares against the effective value.
+
+Adds tests, accordingly.
+
+Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
+Assisted-by: Codex:gpt-5.6-sol
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-dra7xx.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ scripts/kconfig/symbol.c                      | 39 ++++++++----
+ .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
+ .../tests/savedefconfig_range/__init__.py     |  8 +++
+ .../kconfig/tests/savedefconfig_range/config  |  7 +++
+ .../savedefconfig_range/expected_defconfig    |  0
+ 5 files changed, 102 insertions(+), 12 deletions(-)
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
 
-diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-index 8f325409d7b05..aef500fec3e96 100644
---- a/drivers/pci/controller/dwc/pci-dra7xx.c
-+++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-@@ -728,15 +728,11 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
- 	if (!phy)
- 		return -ENOMEM;
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index 7e81b3676ee94..1536db1599f4c 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -157,7 +157,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
+ 	return strtoll(sym->curr.val, NULL, base);
+ }
  
--	dra7xx->clk = devm_clk_get_optional(dev, NULL);
-+	dra7xx->clk = devm_clk_get_optional_enabled(dev, NULL);
- 	if (IS_ERR(dra7xx->clk))
- 		return dev_err_probe(dev, PTR_ERR(dra7xx->clk),
- 				     "clock request failed");
+-static void sym_validate_range(struct symbol *sym)
++/*
++ * Return the nearest range bound for an out-of-range default value.
++ * Return NULL if the value is valid or the symbol has no active range.
++ */
++static struct symbol *sym_get_near_range_bound(struct symbol *sym,
++					  const char *value)
+ {
+ 	struct property *prop;
+ 	struct symbol *range_sym;
+@@ -172,21 +177,31 @@ static void sym_validate_range(struct symbol *sym)
+ 		base = 16;
+ 		break;
+ 	default:
+-		return;
++		return NULL;
+ 	}
+ 	prop = sym_get_range_prop(sym);
+ 	if (!prop)
+-		return;
+-	val = strtoll(sym->curr.val, NULL, base);
++		return NULL;
++	val = strtoll(value, NULL, base);
+ 	range_sym = prop->expr->left.sym;
+ 	val2 = sym_get_range_val(range_sym, base);
+ 	if (val >= val2) {
+ 		range_sym = prop->expr->right.sym;
+ 		val2 = sym_get_range_val(range_sym, base);
+ 		if (val <= val2)
+-			return;
++			return NULL;
+ 	}
+-	sym->curr.val = range_sym->curr.val;
++
++	return range_sym;
++}
++
++static void sym_validate_range(struct symbol *sym)
++{
++	struct symbol *range_sym;
++
++	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
++	if (range_sym)
++		sym->curr.val = range_sym->curr.val;
+ }
  
--	ret = clk_prepare_enable(dra7xx->clk);
--	if (ret)
--		return ret;
--
- 	for (i = 0; i < phy_count; i++) {
- 		snprintf(name, sizeof(name), "pcie-phy%d", i);
- 		phy[i] = devm_phy_get(dev, name);
+ static void sym_set_changed(struct symbol *sym)
+@@ -812,7 +827,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
+ const char *sym_get_string_default(struct symbol *sym)
+ {
+ 	struct property *prop;
+-	struct symbol *ds;
++	struct symbol *ds, *range_sym;
+ 	const char *str = "";
+ 	tristate val;
+ 
+@@ -830,11 +845,6 @@ const char *sym_get_string_default(struct symbol *sym)
+ 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
+ 			break;
+ 		default:
+-			/*
+-			 * The following fails to handle the situation
+-			 * where a default value is further limited by
+-			 * the valid range.
+-			 */
+ 			ds = prop_get_symbol(prop);
+ 			if (ds != NULL) {
+ 				sym_calc_value(ds);
+@@ -878,6 +888,11 @@ const char *sym_get_string_default(struct symbol *sym)
+ 	default:
+ 		break;
+ 	}
++
++	range_sym = sym_get_near_range_bound(sym, str);
++	if (range_sym)
++		str = range_sym->curr.val;
++
+ 	return str;
+ }
+ 
+diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
+new file mode 100644
+index 0000000000000..fd59d9082ed5b
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
+@@ -0,0 +1,60 @@
++# SPDX-License-Identifier: GPL-2.0
++
++# Static default and range values
++
++config INT_DEFAULT_ABOVE_RANGE
++	int
++	range 1 1
++	default 16
++
++config INT_DEFAULT_BELOW_RANGE
++	int
++	range 4 8
++	default 2
++
++# Default and range values determined by other options
++
++config RANGE_UPPER_BOUND
++	int
++	default 3
++
++config INT_DYNAMIC_RANGE
++	int
++	range 0 RANGE_UPPER_BOUND
++	default 4
++
++# Hex
++
++config HEX_DEFAULT_ABOVE_RANGE
++	hex
++	range 0x10 0x20
++	default 0x40
++
++# Implicit default value of 0
++
++config INT_IMPLICIT_DEFAULT_ZERO
++	int
++	range 1 4
++
++# Conditional range
++
++config USE_FIRST_RANGE
++	bool
++	default y
++
++config INT_CONDITIONAL_RANGE
++	int
++	range 1 2 if USE_FIRST_RANGE
++	range 3 4 if !USE_FIRST_RANGE
++	default 3
++
++# Conditional default
++
++config USE_DEFAULT
++	bool
++	default y
++
++config INT_CONDITIONAL_DEFAULT
++	int
++	range 1 2
++	default 3 if USE_DEFAULT
+diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
+new file mode 100644
+index 0000000000000..961454be732c2
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
+@@ -0,0 +1,8 @@
++# SPDX-License-Identifier: GPL-2.0
++"""Test savedefconfig with numerical defaults outside of ranges."""
++
++
++def test(conf):
++    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
++                          out_file='defconfig') == 0
++    assert conf.config_matches('expected_defconfig')
+diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
+new file mode 100644
+index 0000000000000..d939cfe5fd349
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/config
+@@ -0,0 +1,7 @@
++CONFIG_INT_DEFAULT_ABOVE_RANGE=1
++CONFIG_INT_DEFAULT_BELOW_RANGE=4
++CONFIG_INT_DYNAMIC_RANGE=3
++CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
++CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
++CONFIG_INT_CONDITIONAL_RANGE=2
++CONFIG_INT_CONDITIONAL_DEFAULT=2
+diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+new file mode 100644
+index 0000000000000..e69de29bb2d1d
 -- 
 2.53.0
 
