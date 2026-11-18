@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016402;
-	b=vf4+oN623Uo6MPoY91c+QWrlrEuw9rEE51ijUesdlXEh/TYtJl9OHJ8SC1HR0Ifd6pYd
-	 IOFjCZVGsqneyGVJ0mfwsEk2XEqBWlhTe00UjiNzINlNx01Op/afEd5tWHhRaEakaLsyI
-	 +sHTpPN7+Bwim/TR8qSO9LZ17ut+qYxRmeqUyaqOGpC7p6yUSjfyHvBHQhFBbV8yjflUT
-	 FJnsjjF56XBJUUz7BVqX4RSNEb09TRGcujkG7FV6gJww+bmkz1QmzidT+FWbqoET2UwZz
-	 m5LB1nvt2EU++X05own9IU6VcZ7m85NXLFb3xSyD5Lhdbr6GbbmG/N+OJYmGNBfo40w==
+	t=1795016404;
+	b=M8lvTmwbm4oV9LKkgpD41W8xQcBmfH1dSs9ZPelW88v806fJzJFeJqIVIcfwx4e0lSsi
+	 jBIbDga0BGCZHAcKEx/SpzZYcs1oeScuk3dPk6a6n+SZFVg5Aqe5j8E7olLiepWMvWpr1
+	 DGBCWZsvphMqNSXw9rdxi+y00i8GnkMYAFjyvi2SZYGf3//TZi9QqpcBM9o44OcBsYmsP
+	 LYFeqo4IJ3NihM3lJ6HN6Zf/xRIj/TzB8BJjKpfXQaz2rBUSBn9CjvmOsskx3AGMOqIL1
+	 KQnwvd/DExEL5m7SYynF4kgG7gndk1daq+7lQ8ZQbkTN8Fh7tQFnLAROlMaO080PKNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016402;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5+bPLB6yC/QPM5jlJ1lDksTUELAuIb9DS1bBochMruo=;
-	b=LYqOufdTuu9f/ict5vH1x8BvnTdfAzBxnTP8Kej26HqKcs6cfqBGcjWGla5BsvO5O6B3
-	 70trD+cZ9+I8XVqcWIz+U+qXub5WP8v1gNQH3V2bwXlQ/3gS2IrNpyXO77qmbs88VlV2l
-	 YCl9s0a8bqqJ4znUVvp+8DTaFdWrd+y+zjtsWwDj7FispQC1JndvPJkwusbz2LrtbQzxg
-	 5sEWTFAWD6Ao4V/yDOcLOoZDqjTAN3x5qsXjLwtAHA6ld3zjMKOgu3jozdmUCd2VORl3r
-	 uE/d+Su37r61H/fF8bheMPyeg2drsTTT4Ugo0rNN5F5ZNojAjgIIlAUI+50RP12cueg==
+	bh=B1tDSExPhZ6r/brT9eTPlaai/uqX4vVQXH0MWtfMXw4=;
+	b=kh3xNFoqBY6dJ9znl+n/8UTKyzfFSNzbdfU1XCgTmZLSGmEXbjbR/OpcSzcWsgTgQwsy
+	 /MWbvJBm3XfaC+RSn6p7+JGEprZwcYDxkWZHit1/fc96G2xVNX07++5lr364fmSz+oPed
+	 gZCp0socU6lR6kgxEcWvlE2G8ITVC++7vkP5SqcCWQdU4Vnw7NnV9hgwW8c9z/ZN4r4r8
+	 Iuhyjb8t/nNgTlHAjYko0SQLEa0fUHEs/afgeQEp/zJuhdtAv4jvBzFYJ+gucj2qjShkr
+	 YZOWID6aSgZDpbVYGrlciPm/ApPbZ4bcLmQ/U5fqhyv5HlzlgNenHCW5vyvoDmH45/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WUro5Gmy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1tThMUQv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E58060A260A;
-	Wed, 18 Nov 2026 15:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE5A60A263E;
+	Wed, 18 Nov 2026 15:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WUro5Gmy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B7C1F000C4;
-	Wed, 18 Nov 2026 15:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1tThMUQv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8921F000C5;
+	Wed, 18 Nov 2026 15:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016401;
-	bh=5+bPLB6yC/QPM5jlJ1lDksTUELAuIb9DS1bBochMruo=;
+	s=korg; t=1795016404;
+	bh=B1tDSExPhZ6r/brT9eTPlaai/uqX4vVQXH0MWtfMXw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUro5GmyAW7FqnQEhR/bCtncWe/X3xviRqwnLphPNHyhQgMI5sqnqZAUQLreT205G
-	 BUa1mtphGkYWVBO7jLrpDkD3Ih4RfLjJJdPjuAtdezwopYx2sCIrocZjb4ROMW+Qk0
-	 9iXn5MriBsK1vPseohyshmsro7YcjVDQy2tqVxHY=
+	b=1tThMUQvkzkh2lBCuCtajp5kI6tP0mg1UH99sywdbLkN7hwD09jXakDOI/xinaSWE
+	 yqohUHxAzx0gR0eZoYr1LNJjKcYmCTBsOmJ38e223Ftr6LIyJu1SiJpnTP2lLLf6G6
+	 O98ZG3ZqO0WLpjwfrQo1SeSpmgksSy1yORfV4HOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maxime Ripard <mripard@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0475/2651] drm/atmel-hlcdc: Drop spurious csc_init call from reset
-Date: Wed, 18 Nov 2026 15:28:35 +0100
-Message-ID: <20261118150304.888757588@linuxfoundation.org>
+Subject: [PATCH 7.3 0476/2651] media: i2c: ar0521: remove duplicate media entity cleanup
+Date: Wed, 18 Nov 2026 15:28:36 +0100
+Message-ID: <20261118150304.923878847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,57 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 4699bb3b1dbd8ccd25cd678acb4ca12da7bd45dd ]
+[ Upstream commit 069a0343581bfcaee44bc598e2b95be2e2789807 ]
 
-The lcdc_csc_init callback was introduced in commit aa71584b323a ("drm:
-atmel-hlcdc: add driver ops to differentiate HLCDC and XLCDC IP") and
-called only once, at init time, from atmel_hlcdc_plane_init_properties().
+The error path taken when ar0521_power_on() fails calls
+media_entity_cleanup() at the disable label and then falls through to
+the entity_cleanup label, where media_entity_cleanup() is called again.
 
-commit 81af99cbd9e4 ("drm/atmel-hlcdc: destroy properly the plane state
-in the reset callback") then reworked the reset hook to use
-atmel_hlcdc_plane_atomic_destroy_state() instead of duplicating the
-code. However, it also introduced a new call to lcdc_csc_init in the
-reset path that wasn't there before and wasn't mentioned in the commit
-log.
+There is no need to clean up the media entity twice. Remove the first
+call and let all error paths converge on the common entity_cleanup
+label.
 
-Since CSC coefficients are hardware constants that only need to be
-written once at init time. This also prevents the conversion to
-atomic_create_state, which must not have any hardware side-effect.
+This issue was found by manual code inspection.
 
-Fixes: 81af99cbd9e4 ("drm/atmel-hlcdc: destroy properly the plane state in the reset callback")
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260908-drm-no-more-plane-reset-v4-28-a31b3fcfc989@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/media/i2c/ar0521.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-index f17a832351e9d..70a1cef24388f 100644
---- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-+++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-@@ -1186,8 +1186,6 @@ static void atmel_hlcdc_plane_atomic_destroy_state(struct drm_plane *p,
- static void atmel_hlcdc_plane_reset(struct drm_plane *p)
- {
- 	struct atmel_hlcdc_plane_state *state;
--	struct atmel_hlcdc_dc *dc = p->dev->dev_private;
--	struct atmel_hlcdc_plane *plane = drm_plane_to_atmel_hlcdc_plane(p);
+diff --git a/drivers/media/i2c/ar0521.c b/drivers/media/i2c/ar0521.c
+index ed324c2d87aa2..be68789eb8f5a 100644
+--- a/drivers/media/i2c/ar0521.c
++++ b/drivers/media/i2c/ar0521.c
+@@ -1142,7 +1142,6 @@ static int ar0521_probe(struct i2c_client *client)
  
- 	if (p->state) {
- 		atmel_hlcdc_plane_atomic_destroy_state(p, p->state);
-@@ -1204,9 +1202,6 @@ static void atmel_hlcdc_plane_reset(struct drm_plane *p)
- 		}
- 		__drm_atomic_helper_plane_reset(p, &state->base);
- 	}
--
--	if (plane->layer.desc->layout.csc)
--		dc->desc->ops->lcdc_csc_init(plane, plane->layer.desc);
- }
- 
- static const struct drm_plane_funcs layer_plane_funcs = {
+ disable:
+ 	v4l2_async_unregister_subdev(&sensor->sd);
+-	media_entity_cleanup(&sensor->sd.entity);
+ free_ctrls:
+ 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ entity_cleanup:
 -- 
 2.53.0
 
