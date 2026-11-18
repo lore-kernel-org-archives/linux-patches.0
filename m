@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039778;
-	b=HtE7ppGj9DMhkEywUncduoHnCsM0d4Q2yZ5dGObRQwXpJmXEi7B9a8iOQtPF9cisn72i
-	 YY1EnsMdA0mXMrEvQjnj+yQ/+mwk8KZdOPs7SZ3ue3Eed52zPLaBakJeTEaQo8nolreYB
-	 eEEhGEexfZTznxokMBOzxQJLY1zv9LZ02jqwIUu+hlpUwDpTDks7iXNSyivi4rHZw59Y2
-	 Yb+dwKn7jvE89VjLxHUUj3/ZS2KilYuxvwOBb+jIYP5sbiHZLaDuhLkkHuCJ6NVHVL2SJ
-	 ftPuXGL6r5lE4yh/ftkAK4nYuonp/JulzB0yX/VERHTkuuWHOT+ofGRA7xGfAA9gptw==
+	t=1795039781;
+	b=ZwfUWkit4nL+SzWSft5r/6b8ggyXjEqsnghnQwxqRFsU7WzImsfk3DtbKpaLH8kA+x0O
+	 SrgHL3W3fYEMAMyrtFFxuoxBfiwOAvQ+Q2Bsu0g93wBjaQ5t9UnjzzA2xz+YsOknHC6yh
+	 LcMvB+McNYaynZuR0g898y/5EFjH4qQ8+nTYoSIxK1lmDTKswOSwyDRIKj1dfcUH81Vhd
+	 YrNkNRR/ZvHNo6FWDEYz5lmjXE0wNg0S8UcqgQWzky1MHYDXmkGDeaCf1kcXvEfU36ZGK
+	 6nDa6sdcZMAi3DJ+3rRoBqN6sc+O/W11Y8uRleakoa1rhkHLRq771Bro5/KP35c9kzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039778;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039781;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aW3ViU9EkJfGSPv3MiGO3RLpu1WrYA4DKIGQi743xxo=;
-	b=i5ENVXl34uJl5qGPryvgu/opkxVtRe6Po/tkKsym9pwMLKJaaPDfeXUXNiBtKPRGpALM
-	 YxQ4PFKt7FeQrvZZrNrzGU3bEk/JMgkYw48QKeJ27wqvu3oTi+wpakC9HZDyb4woHSSP3
-	 BhRbp50CkztEfwgoZBzUqOLvTYkNT/m6I+BoqOg92/vboQQL3XZjwZ+VqtyPTgvYN4xr/
-	 QBlWK2U2qH68o2iuHJOjPODsVckhEEoYf1ViNPqcS1vnY/JDhrU0UbIARSQ7HhsELvvxr
-	 IRz511Hl1wVXV9EA9dgPZ7r0pKSMoudTDTRPzfhsL0iXuTBFcw7L2vXP9Nybsa4//sA==
+	bh=WHa4yJKgpZ7oAx5qRraliAk71scZeuxx2weCD4FnyHg=;
+	b=pIICQAXKOZDe8NC5uhtoKgXbrGee973Eahmsp/+IAY+8G1S75N/1RdusW+DG7Gol9Sr3
+	 zyvjaGpLjQP8mV+GLoMXamKlAHnuMLl+ctZrvjgAvDjNbSYbbNF0eY21/5jvzZWrcbEXe
+	 YFdGobVPLTqOUoOT59BpOyURNpuhHgCs+cFriaiDdvPfjj7HcesN2MnxIKICFa72wRioZ
+	 woCDXayjeflAInxKbA0CxoXjPES4buRlcjK4IdtjyEyAv8EgF1reqGaAvHApJG6/034Fc
+	 XRHe10DPUxKXyuDGPKPyAam0FD+6sWV9PYgKC+WO/9DDGgcNjhXdH+H1mpjZXrXfdhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vqAyP/YQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZC9QOCJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BAB606A31C;
-	Wed, 18 Nov 2026 22:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7000606A320;
+	Wed, 18 Nov 2026 22:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqAyP/YQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3EE1F000C4;
-	Wed, 18 Nov 2026 22:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZC9QOCJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1131F1F000C4;
+	Wed, 18 Nov 2026 22:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039778;
-	bh=aW3ViU9EkJfGSPv3MiGO3RLpu1WrYA4DKIGQi743xxo=;
+	s=korg; t=1795039781;
+	bh=WHa4yJKgpZ7oAx5qRraliAk71scZeuxx2weCD4FnyHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqAyP/YQqX+8TmEOkeSaV1ZnxLDrQYqNoFrg8kRBbZ8c9qd8I9aOJDgstGg13a047
-	 oTRjg2srdAJmRC1rDBsKHvGtQWW2c+aFX/nyajr+TPfOsXJYuReSppWvGyj1DTuVYZ
-	 ol2BZVmoGnrKUzhI+mfeRGaEEl1Sgu+qIVLl8SwU=
+	b=bZC9QOCJ3g1rSgi6UEUNxUXy4K318yG/Mj65yXIaIz08Hutzuc7RWs7tyx/tO0Sxe
+	 8Jt2D2QFiRPgtHhPsnPpcLzaVtQ/9/Gk0aWsamTfx2tmUmjLRM0varFlUxGt/8jqBb
+	 Fguqt1Q6owRc5QYWupRlO0iVSyITPcaQxUU0hd+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Krause <mileskrause5200@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2221/3318] memory: emif: fix device_node reference leak on np_ddr
-Date: Wed, 18 Nov 2026 15:47:23 +0100
-Message-ID: <20261118150428.523423874@linuxfoundation.org>
+Subject: [PATCH 6.6 2186/3318] x86/svm: Avoid sign extension of SVM_EVTINJ_VALID in 64-bit expressions
+Date: Wed, 18 Nov 2026 15:46:48 +0100
+Message-ID: <20261118150427.537074310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,62 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miles Krause <mileskrause5200@gmail.com>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit 314ef67d673284d4c070455bd62d332f6d0f8634 ]
+[ Upstream commit c5991239b148d40d4981901968b3a6a838ff517b ]
 
-of_get_memory_device_details() takes a reference on the DDR device
-node via of_parse_phandle() and stores it in emif->np_ddr for later
-use, but drops that reference without calling of_node_put() on two
-error paths: the devm_kzalloc() allocation-failure check and the
-is_dev_data_valid() check. Both return NULL immediately, leaking the
-node reference each time either failure triggers.
+SVM_EVTINJ_VALID is defined as (1 << 31), i.e. as an int with the sign
+bit set. Whenever it is used in a 64-bit expression the int is sign
+extended, so bits 63:32 end up set as well. Two 64-bit users are
+affected.
 
-The same reference is also never released on the success path: it is
-kept for the life of the bound device (compared against a later
-instance's np_ddr in the duplicate-DDR-geometry check) but
-emif_remove() never calls of_node_put() on it, leaking it every time
-an EMIF device unbinds. of_node_put() on a NULL pointer is a no-op, so
-this is also safe for the non-DT get_device_details() path, where
-np_ddr is left NULL by devm_kzalloc().
+verify_exception_info() uses the macro as a mask against a 64-bit value
+when it sanity checks hypervisor supplied exception information:
 
-Fixes: e6b42eb6a66c ("memory: emif: add device tree support to emif driver")
-Signed-off-by: Miles Krause <mileskrause5200@gmail.com>
-Link: https://patch.msgid.link/20260909-master-v1-1-8800f5647ab2@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+	u64 info = ghcb->save.sw_exit_info_2;
+	...
+	if ((info & SVM_EVTINJ_VALID) &&
+
+The mask is 0xffffffff80000000, so the check also passes when any bit of
+the error code in 63:32 is set while the valid bit itself is clear.
+
+svm_vmgexit_inject_exception() builds the value that KVM hands to an
+SEV-ES guest in GHCB SW_EXITINFO2:
+
+	u64 data = SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_EXEPT | vector;
+
+For vector == X86_TRAP_GP this yields 0xffffffff8000030d instead of
+0x000000008000030d. The field uses the EVENTINJ format, which holds the
+error code in bits 63:32, so KVM asks the guest to inject #GP with an
+error code of 0xffffffff. Linux guests only consume the error code when
+SVM_EVTINJ_VALID_ERR is set, which it is not here, so they are not
+affected in practice, but the value KVM writes is not the one it intends.
+
+Use BIT() instead, as is already done for most single bit definitions in
+this header. Every other user applies the macro to a u32, where the
+resulting bits are unchanged.
+
+Opportunistically give SVM_EVTINJ_VALID_ERR the same treatment, there's
+zero reason to open code BIT().
+
+Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
+Fixes: c3392d0ab714 ("KVM: SVM: Provide helpers to set the error code")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Link: https://patch.msgid.link/20260908053722.3917934-1-nagachaithanya9911@gmail.com
+[sean: use BIT() for SVM_EVTINJ_VALID_ERR as well]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/emif.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/include/asm/svm.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/memory/emif.c b/drivers/memory/emif.c
-index 434982545be63..22d12d7f86ac7 100644
---- a/drivers/memory/emif.c
-+++ b/drivers/memory/emif.c
-@@ -937,6 +937,7 @@ static struct emif_data * __init_or_module of_get_memory_device_details(
- 	if (!emif || !pd || !dev_info) {
- 		dev_err(dev, "%s: Out of memory!!\n",
- 			__func__);
-+		of_node_put(np_ddr);
- 		goto error;
- 	}
+diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
+index 3ac0ffc4f3e20..3032e95bef04c 100644
+--- a/arch/x86/include/asm/svm.h
++++ b/arch/x86/include/asm/svm.h
+@@ -605,8 +605,8 @@ struct vmcb {
+ #define SVM_EVTINJ_TYPE_EXEPT (3 << SVM_EVTINJ_TYPE_SHIFT)
+ #define SVM_EVTINJ_TYPE_SOFT (4 << SVM_EVTINJ_TYPE_SHIFT)
  
-@@ -961,6 +962,7 @@ static struct emif_data * __init_or_module of_get_memory_device_details(
- 			pd->device_info->io_width, pd->phy_type, pd->ip_rev,
- 			emif->dev)) {
- 		dev_err(dev, "%s: invalid device data!!\n", __func__);
-+		of_node_put(np_ddr);
- 		goto error;
- 	}
- 	/*
-@@ -1164,6 +1166,7 @@ static void __exit emif_remove(struct platform_device *pdev)
- 	struct emif_data *emif = platform_get_drvdata(pdev);
+-#define SVM_EVTINJ_VALID (1 << 31)
+-#define SVM_EVTINJ_VALID_ERR (1 << 11)
++#define SVM_EVTINJ_VALID	BIT(31)
++#define SVM_EVTINJ_VALID_ERR	BIT(11)
  
- 	emif_debugfs_exit(emif);
-+	of_node_put(emif->np_ddr);
- }
- 
- static void emif_shutdown(struct platform_device *pdev)
+ #define SVM_EXITINTINFO_VEC_MASK SVM_EVTINJ_VEC_MASK
+ #define SVM_EXITINTINFO_TYPE_MASK SVM_EVTINJ_TYPE_MASK
 -- 
 2.53.0
 
