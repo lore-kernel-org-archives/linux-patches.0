@@ -1,58 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053276;
-	b=pxxBf6ZMPk1ZhKf9PNXM9XxM1e8xdqC8yONLzWko/3/wRtHPSHID5BzLgCKU7c6nkXlS
-	 tB3uo6cPVvCMS3V9XoDkuKbKQewLLx2TV5P+Gk9g9RpPTNFJWJKkOCdEbPrxKpezmUFck
-	 xnICGRt1lxOneD8XZonxN9JrngEB74bidvDcG8eZuet+EPIvumXdACNCpsBSH59BMDoQ+
-	 3p9/9GgSWrxMDvyGY3cYG62Hu4S52ggTgyzn4wXg2UjNEAnmGvt2XmA4e6vQSq+iBcpb5
-	 Kwtvb6tT5Bl1Kr1buvgkYuauCPwsh8oSSXkKfVIWQDXXntniPAOQhnRDCwtOrzW95aQ==
+	t=1795053279;
+	b=OA9uFGblSpglStNj8U1ZMg7Gjlp/33NG/PWz4xy+umMq6cYXcOEccB6XERXDBnhEh4TP
+	 mZ9graBvlg8UDph6SL9ffN6bnBAINv/vzHjqzzEm5L8AriHOabRIT951HkrNwDgogagtl
+	 /AdIvw+ZfPGpIuY2jh0C0eBMXrQaKXxBmIdOj+pXdnJyIERBbXxXdVgfXYLAzLTGUoU4Y
+	 37YKwsC2/qSBKbQJfh3AES6iFpCF9Tr7/oY+Whovbqusdpu6d+IyYCqY0B/SzYlJtSFBe
+	 qQDMX76Moau0j4j1unIIG8KHF+7+c6vw2HGUCgIoB885QQESg7x20PTruSuqEaYyKSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wmi2/x9Y6K4Kda0TfHt817H/KSw6zVdtBsrdabcIBX4=;
-	b=Y6aZfNhBxLtLhmPwG1W8LiStc8VvW/hn0F/rrAbdb6KU0gjfI1WkYGd1+WraBCLAI5FJ
-	 wBZIYiiJiKzEG6HFjNhVQUXF2CU94A3X8E+sdjx62AbvFZQzXKpajcVC+udqqFqL0xvAZ
-	 LAUNeiakOajN6dhD/J3COVsaP5sl/ZRbrfdNkedeihkDo9gE5YctqZK6Ndk6FOcCEm9dJ
-	 9WqmnUZvzSupZYeiOJy5vpkkL2KnZ9zSf3y78DY4BOQDQTYcuPIiB9AA2FSop6wVnuDDV
-	 xm0X9wzZ6ELIv7HnbX+6SG844bm5ibMipukYCj7ZD3DP/OWG3JZeLuGN140SQFfIY3Q==
+	bh=ic/u92tLTm+olmkRj+PDh+Uhuid8eDT3rfENRAmcti0=;
+	b=4C4TB1ZenHRpeFnuieBmBKZoYvHchriv3oGUD+/jY/CCLNq9u+brmm/Bb9ha8kVT/sQ3
+	 3r0zwhjhYw/Wrj1cp1l9kgz0ql37+GLClg2r7Ww+AXa4XF2CeC0u3Dwqf7fyteAX/mzQO
+	 Cr1o7nLJA64ldgKKkr+IRwhWIgCHdBzdTfxx0EQ9yRmgDKVlwOh1bD6OUgPwE2czm+nSt
+	 iD07KDJZOK5Llncr9a4ZW1YZr0WVbIlPabb3ZpogcqCwXQC0crD/k/JGNJCPppP8kfmpc
+	 LELVXpXCoQq9olCu9t4+KZEadKg6lPWUFPiFLy5nLUNR8kb0oVLRSsk33aOwgUdTESw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHe+K1tW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6lCeHnZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA91B606A31C;
-	Thu, 19 Nov 2026 01:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D86606A325;
+	Thu, 19 Nov 2026 01:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHe+K1tW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9B41F000C5;
-	Thu, 19 Nov 2026 01:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6lCeHnZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF471F000C4;
+	Thu, 19 Nov 2026 01:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053276;
-	bh=Wmi2/x9Y6K4Kda0TfHt817H/KSw6zVdtBsrdabcIBX4=;
+	s=korg; t=1795053279;
+	bh=ic/u92tLTm+olmkRj+PDh+Uhuid8eDT3rfENRAmcti0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHe+K1tWXegS+j+k2iQHm1K/+GUGkw76PqQ1xOM1cvbtogM/oKXGZV86+y+EcgVw6
-	 rsYqWUuBdbBixxCtDt6MdcU9kp33wMp+7h4NJk2lDQHvXcV8+XcCFuiwi4jKNXdDQK
-	 kKjBWOx0fXaFYRfQwt+gIB5UqojFsadSaTDadGiY=
+	b=q6lCeHnZ6LhwDIpxA/ZL94HayBqHyf730tiriBgSTOtzosXOSdHLzvPKv+3QAEuaJ
+	 Rd7XNLMJA1B9Fbg0YZcVBFVh8dbbJZryT4x1CDbVrGwHDRVZsERocN/5zeYR9Qb3su
+	 +GggCe5PiEjx8aJnw6nqH/+wOouYHS7iOKjAuXb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Pedro Falcato <pfalcato@suse.de>,
 	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Balbir Singh <balbirs@nvidia.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0862/2214] mm/mempolicy: charge shared policy nodes
-Date: Wed, 18 Nov 2026 15:42:18 +0100
-Message-ID: <20261118150046.636730749@linuxfoundation.org>
+Subject: [PATCH 5.15 0863/2214] mm/memfd: make f_pos accesses atomic
+Date: Wed, 18 Nov 2026 15:42:19 +0100
+Message-ID: <20261118150046.678013478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -74,76 +76,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 68b2aa37afa390f08de13bc0bac61a9ded3318bc ]
+[ Upstream commit 5426cd43a4d28f1041c9ca45955121b921f29548 ]
 
-Any local user can bypass memory.max with mbind() on a tmpfs file, and
-allocate unbounded kernel memory.
+Commit 9c225f2655e3 ("vfs: atomic f_pos accesses as per POSIX") made
+read(), write() and lseek() on a shared open file description of a regular
+file serialize on ->f_pos_lock.  The flag that asks for it,
+FMODE_ATOMIC_POS, is set in do_dentry_open().  A memfd is a regular file
+too, but its struct file comes from alloc_file_pseudo() and never passes
+through do_dentry_open(), so it does not get the flag:
 
-mbind() sets a NUMA memory policy for a range of a mapping. If the
-mapping is of a shmem and friends, the kernel also stores the policy on
-the inode, in a tree with one entry per range of the file.
+  CPU0                                CPU1
+  write(memfd, "a", 1)                write(memfd, "b", 1)
+    pos = file->f_pos  (= 0)
+                                        pos = file->f_pos  (= 0)
+    vfs_write(..., &pos)
+                                        vfs_write(..., &pos)
+    file->f_pos = pos  (= 1)
+                                        file->f_pos = pos  (= 1)
 
-Each mbind() on a single page of a mapping can add one shared policy node
-(struct sp_node) and one struct mempolicy to that tree. They outlive the
-mapping and stay around until the inode is destroyed. The tree is not
-bounded by the file size, so the file can be empty.
+One of the two bytes is overwritten.  Two threads writing 100000 bytes
+each, one at a time, to a memfd end up with a file that is far shorter than
+200000 bytes, while the same program on a tmpfs file never loses a byte.
 
-Memory that user space can allocate must be charged to a memory cgroup. A
-slab cache does that for all of its objects if it is created with
-SLAB_ACCOUNT. numa_policy_init() creates the slab caches for both
-structs without SLAB_ACCOUNT, so they are not charged to any cgroup.
+Set the flag when the memfd is created.  As for any other regular file the
+lock is only taken if the file is reachable in more than one way, and
+nothing a memfd does in read or write waits for another operation on the
+same file.  This cannot be done for all alloc_file_pseudo() files: anon
+inode files such as eventfd are S_IFREG as well, and a blocked read holding
+->f_pos_lock would lock out the write that is supposed to wake it.
 
-Reproduced with mbind() on single pages of an empty tmpfs file, from a
-cgroup with memory.max=8M: the global OOM killer killed tasks owned by
-root, and the machine panicked.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Fix this by creating both caches with SLAB_ACCOUNT. This change implies
-that mbind() can now fail when running into memcg limits. Further,
-the policy_cache also serves task and VMA policies, so they are
-similarly accounted now.
-
-Note that per-file limits are not really helpful, as the user could
-simply use many files; having limits per user is tricky as well.
-
-Fix generated by an LLM and submitted by Chris Mason in private.
-
-Fixes: 5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg")
+Fixes: 9183df25fe7b ("shm: add memfd_create() syscall")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: minor description tweaks ]
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: smaller description tweaks ]
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-1-392fc715d8f6@kernel.org
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-4-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memfd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index f089de8564cad..51ec529425118 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2713,11 +2713,11 @@ void __init numa_policy_init(void)
+diff --git a/mm/memfd.c b/mm/memfd.c
+index 6a6bbc4477a97..7f1f3f1380a82 100644
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -326,6 +326,8 @@ SYSCALL_DEFINE2(memfd_create,
+ 		goto err_fd;
+ 	}
+ 	file->f_mode |= FMODE_LSEEK | FMODE_PREAD | FMODE_PWRITE;
++	/* a regular file like any other: POSIX.1-2008/SUSv4 Section XSI 2.9.7 */
++	file->f_mode |= FMODE_ATOMIC_POS;
+ 	file->f_flags |= O_LARGEFILE;
  
- 	policy_cache = kmem_cache_create("numa_policy",
- 					 sizeof(struct mempolicy),
--					 0, SLAB_PANIC, NULL);
-+					 0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
- 
- 	sn_cache = kmem_cache_create("shared_policy_node",
- 				     sizeof(struct sp_node),
--				     0, SLAB_PANIC, NULL);
-+				     0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
- 
- 	for_each_node(nid) {
- 		preferred_node_policy[nid] = (struct mempolicy) {
+ 	if (flags & MFD_ALLOW_SEALING) {
 -- 
 2.53.0
 
