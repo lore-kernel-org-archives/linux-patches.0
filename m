@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021322;
-	b=WqQn7zevvizq8pPpyl70lSTdS5sd7cKV3iJqm91nR8YU4WdOILEGehtpCqXXODQJ7Bt6
-	 TlKh+9v50e7814dehqMGlTIkUOFI7ovQkJolEkr+l114AU59POpnm/zff3bkWHsz2Baac
-	 PtrsNRNalHuhDIilj9hmjRIUSjaEu9DIhlCNqFXdZguZIZF+i+GOJjhYPVKV4e4DvrLJH
-	 0uthxj21XX61bDeBmloWvtajcosNIK9GtfCQWW3jll3b23nhx9rJTI2v8L0bi3pghjt4c
-	 dUVicWyQSX9nwzuIYIlJUgcwN5gtgrfPXDuVaJAVKQjmKLM6w64dV5EFhud2jHs7BKA==
+	t=1795021325;
+	b=dC7fjVYCgpZu+DbCiiD98iL3+tT3uY5g/hYXvwTP5exwdCyQG2spoKT75pJguf4OZgAZ
+	 M0uoO+P8zbfdK2FNsMmPsTf/sMDMLGtwwzd6QnYpKaH71t83NcDED4wiAJFLZtXKiOLuP
+	 DuU/PvTWM9vVn0iR0dCRMM7JxgFYYe3hrdCz8ve28qEEuosMaRI/XN/byrIse0rmJHJWT
+	 DQ2WQb6j2ebvq4DYsa9KOkWLWfi2/huO7UrPO+9ChA3xCXGJsR9MfeXFDhKkqF8VtkJUN
+	 lV4fF3CqeN2i0AARCHOQ9BmiKYQ88/yQyYJ7A5emYl/XaGLZT9lRl1+jz/ckTsvgZhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eXyT+2tnmVDplOULH4s156LlRYBCsVTVHpoKYJuR6r4=;
-	b=oqB+dxWa//5WRxT/YmyAWJBqAHNDEc327U3OUzwqtwM36r06KL/uyMKfj9ClybEWj1LI
-	 4ZqbB8iPmPhlJAseSuup+QFAItmq97aBLDAysQ0m4YXUn+e4MuT2lZ4gpyzyNpnnVgDHQ
-	 n5O+G8PrL9Cx6m1MBRQoY+yxeyqklP5Ptv9mDQhvwbxfyob5wdD6kyUzrBEBFIpv4m9Ae
-	 trefHc21EOJDYG2O+6sC2UX+nuQVBvlIX5WEls0TiywCF1DYGyYdBE0+Kuk4KhQzn7eT7
-	 b2mHsjCencepR9ch60FYGNxb2WGOsy6gl5eDlaUWR3qYlII0h1w6k276apuBJchO2Ow==
+	bh=BE99CKbavB0Lb+NJFhZavMrfIH0bEi0qGCeIEsYMOrE=;
+	b=nBaVovI7ziORQE3epWuI4eVWFSDKtK1iln2lOGce/3sJmhXSANxyI+969vZz75R7uj4X
+	 kSayxqJ6Ocu7t4se+MF9MneOXNls2O7HevHSnPs6dBRBmztxwqU9LxU9qSVHljdt5wgM4
+	 FyydYcVgug2atgQ2kuhTDezN1jV36ZyXGyY4kD5cVgbv7zWtrjHHqM9CojsvCHLhaMGiw
+	 wBAr/0R8YNFWCxxWNbM6MIjgnb911w57XRzlWekzmk1GEueS7Ul3hS59rFrFBd2meGRkN
+	 MrUqC9Y2ss862XzFwUbOXf8qZHjjRYaAUk1QKnDKC8q9XET6VtsusQdScFZatFSyMOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HADwgFn4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZaPFKNz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8061E606A320;
-	Wed, 18 Nov 2026 17:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405E4606A320;
+	Wed, 18 Nov 2026 17:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HADwgFn4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB751F000C4;
-	Wed, 18 Nov 2026 17:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZaPFKNz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989821F000C4;
+	Wed, 18 Nov 2026 17:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021322;
-	bh=eXyT+2tnmVDplOULH4s156LlRYBCsVTVHpoKYJuR6r4=;
+	s=korg; t=1795021325;
+	bh=BE99CKbavB0Lb+NJFhZavMrfIH0bEi0qGCeIEsYMOrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HADwgFn4dYVYqgIM/4lcKPa9GYWP0PXxSUEKs44mlQc3NVsuJvRqDL/+0ya99+o2K
-	 PCH3FSY07NEKNSu1dRpD/kqvMr8/QdRE7O2MDYEyJNVdtx+//0IX1UptJVKzH9xAis
-	 bJhtgRibqVCnBGYhpNE00jocopaZbCmhu4LISkyU=
+	b=aZaPFKNzBqYevJ00xOaZqR2ZSOVEK86f9Kax0icyJW47cxCippYMVovPgZBgh0H0K
+	 EApp4T8rRhVWJjpIFnrX4W3W9PcgBhj6wsLVEomJNaUyazkF9gitBDAGWTzWB8aUtV
+	 /hC6sqsmu1z+79QsA3AsKASTjnvczhH9nHEGwnBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Eric Dumazet <edumazet@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2265/2651] ip6mr: clear skb->cb[] in reg_vif_xmit()
-Date: Wed, 18 Nov 2026 15:58:25 +0100
-Message-ID: <20261118150406.930741232@linuxfoundation.org>
+Subject: [PATCH 7.3 2266/2651] ipv6: Hold RCU when emitting route hardware flags notification
+Date: Wed, 18 Nov 2026 15:58:26 +0100
+Message-ID: <20261118150406.960546864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,54 +71,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 238164201431a425e48dfcb8e9a59de63caf175b ]
+[ Upstream commit 7c9cb1edaf8fd8e1af25e39741e603500986ef66 ]
 
-reg_vif_xmit() hands the skb to ip6mr_cache_report() as an
-MRT6MSG_WHOLEPKT report. skb_realloc_headroom() copies skb->cb[]
-into the report, which is queued to the mroute socket, where
-rawv6_recvmsg() reads it as IP6CB.
+fib6_info_hw_flags_set() is called by drivers from process context
+without RTNL or RCU. When the route uses a nexthop object,
+rt6_nlmsg_size() and rt6_fill_node() access the nexthop's RCU protected
+nexthop info and group pointers via rcu_dereference_rtnl(), resulting in
+suspicious RCU usage splats [1].
 
-By the time the pim6reg device transmits the packet, skb->cb[] is
-not IP6CB anymore: qdisc_pkt_len_init() overwrites iif and ra,
-and any qdisc installed on the device (fq, fq_codel, pie, cake...)
-or a tc BPF program writing skb->cb[] fills the area holding
-dst0, srcrt, dst1, lastopt and flags.
+Fix by holding RCU while sizing and filling the notification, like
+fib_alias_hw_flags_set() already does. Switch to GFP_ATOMIC for the skb
+allocation accordingly.
 
-Since commit dd433671fef3 ("ipv6: validate extension header length
-before copying to cmsg") these stale offsets can no longer cause
-out-of-bounds reads, but the mroute socket can still receive bogus
-IPV6_PKTINFO ifindex and extension header ancillary data.
+Reproducer:
 
-Clear IP6CB before building the report. The skb is freed right
-after, so nothing else depends on its control block.
+ # echo "10 0" > /sys/bus/netdevsim/new_device
+ # sysctl -wq net.ipv6.fib_notify_on_flag_change=1
+ # sysctl -wq net.ipv4.nexthop_compat_mode=1
+ # ip -6 nexthop add id 1 blackhole
+ # ip -6 route add 2001:db8:1::1/128 nhid 1
 
-Fixes: 14fb64e1f449 ("[IPV6] MROUTE: Support PIM-SM (SSM).")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+[1]
+WARNING: suspicious RCU usage
+7.3.0-rc7-virtme-g191aa41548b2 #38 Not tainted
+net/ipv4/nexthop.c:1539 suspicious rcu_dereference_check() usage!
+[...]
+Workqueue: events nsim_fib_event_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+ lockdep_rcu_suspicious.cold (kernel/locking/lockdep.c:6972)
+ nexthop_for_each_fib6_nh (net/ipv4/nexthop.c:1539 (discriminator 16))
+ rt6_nlmsg_size (net/ipv6/route.c:5728)
+ fib6_info_hw_flags_set (net/ipv6/route.c:6503)
+ nsim_fib6_rt_add (drivers/net/netdevsim/fib.c:671 drivers/net/netdevsim/fib.c:694)
+ nsim_fib6_rt_insert (drivers/net/netdevsim/fib.c:759)
+ nsim_fib_event_work (drivers/net/netdevsim/fib.c:856 drivers/net/netdevsim/fib.c:889 drivers/net/netdevsim/fib.c:1493)
+ process_one_work (kernel/workqueue.c:3396)
+ worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (arch/x86/kernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+ </TASK>
+
+Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://lore.kernel.org/netdev/179152182668.434549.18232968419539498055@kernel.org/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20261019140337.2886875-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6mr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv6/route.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index ed9d786f1a423..8e647213ade1b 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -652,6 +652,12 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
- 	DEV_STATS_ADD(dev, tx_bytes, skb->len);
- 	DEV_STATS_INC(dev, tx_packets);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 3688280742e48..d989df6ccea5b 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6509,7 +6509,9 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
+ 	if (!fib_notify_on_flag_change)
+ 		return;
  
-+	/* skb->cb[] holds qdisc/tc state at this point, not IP6CB.
-+	 * ip6mr_cache_report() copies it to the report delivered to
-+	 * the mroute socket, where it is read as IP6CB.
-+	 */
-+	memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
+-	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_KERNEL);
++	rcu_read_lock();
 +
- 	ip6mr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
- 			   MRT6MSG_WHOLEPKT);
- 	rcu_read_unlock();
++	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_ATOMIC);
+ 	if (!skb) {
+ 		err = -ENOBUFS;
+ 		goto errout;
+@@ -6522,10 +6524,13 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
+ 		goto errout;
+ 	}
+ 
++	rcu_read_unlock();
++
+ 	rtnl_notify(skb, net, 0, RTNLGRP_IPV6_ROUTE, NULL, GFP_KERNEL);
+ 	return;
+ 
+ errout:
++	rcu_read_unlock();
+ 	rtnl_set_sk_err(net, RTNLGRP_IPV6_ROUTE, err);
+ }
+ EXPORT_SYMBOL(fib6_info_hw_flags_set);
 -- 
 2.53.0
 
