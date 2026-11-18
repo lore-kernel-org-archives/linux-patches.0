@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033884;
-	b=SlZsbxdULomCL1I05yAtP7mlKHbB4qTtm212cVYEqUjN0JjY9AB38Ym7Js57T7+U4RJ8
-	 IBAWgR7+ayksqOHt4ZysX/WPkiLtuFWN4tuJjsKIqWJBg6nSUaaWSioaDnovofOH7o9E0
-	 zF3GbS+jUHFIbvJf3fr9XGs48tSqnxLwnBfLsPKHxyXKI6Nke9eyuC1OIzGhh7T8qDul+
-	 p0RhQUMsak7hwXUIYs2OFP0gJx0zLKro6IKb1kyy/9FFN95hGdOYjHorNgSG33IZQEjT2
-	 EkTI7raXmyFtGaE8+wBXsdfMLRBamSbEc66o35Crkgm4wfRSb0e4LLUu167jG4gkMIQ==
+	t=1795033887;
+	b=Thvhld5ZLS1mTFTNdzo8YGTyXiz39RJHDK6urcd/M6lp4LPgFNgSnQKnu7CzkN4cQf3D
+	 NFn8fw3Vos3SX+7iz1sdKuogzs2/7gHsm9bHRl3FWTTzg2DjUvOfbfmJ5qrD6JJs8pMID
+	 wQPCLrbA4Zj66o5ns2wIvPSAZ4bSXa06qD/2V1vhuE9mWQ2O9nxuU9nsv+IP772d5MNkH
+	 lNyZ9MT7/O+y9fxzpjUZu6DxDhyzJrrPM55ZUWGLWFZnP5Ach/O8tPRbi5+7Y0aa3FogO
+	 A3xioNL3T5UNvy1+dwD3ap5YMhtjTExdtPnZtoCaoh4l1Gsni6mdPezd9coHhk1uGwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7log7iXcM0QI+NsDlbib1TYNZ+dZr2CInAAET6/ZXmQ=;
-	b=wujsH9dMn8+9FOC/lRV+2PtHLAzQbaI+AHz0v/182aFG0HM5up/9lZPlWouB4614A+q8
-	 N872JQgqYeENWYVvBBeNp/CqC9L7WiQAiKSIXSflP5jY/np2YaH6+GnoeneAhSNVwwIZC
-	 yTsF+2eRC5oDiKvLW8t76wXTUD7NN+Or3ZZi5TuO7lgp96+8movkEMQy2GKym4IUH1biM
-	 AMjCBvrsBSjFmoPF3MahHdYfWPgPzrfSAlvJ4x/xxfvuUnEQ8qHpKCIrMi3qgjW+nanxM
-	 6VF50sjKTX7kKonIDILWEM+l2oCnLbiNblmwbDCWzyI/WopRXYmCPOE12QQpSxSHtlw==
+	bh=bXXAc6eOWzNWUuIFmz409hwwXcsLGzrWQ08cUdTtyEI=;
+	b=I07oAQpWwbSo7kcXGXo+aOYYrhtwp8ARi0PWrbQhz9WM9UG9XdJLhVKsYUlrdMJWHrvL
+	 W9QPuckwSaeNHUPP3iofRLoci0bKEj8+TCwILGDhoFJ6WwUrDaDxeoWR6beqnis9Wj6f5
+	 wp/FBFuMC4VbARhwBWjaT2mw8KGE2jx1RW/dc597ry/+jEiZmRhdxib55dINDvooB283C
+	 kgr6hC4Uk2/9F+tq03QeQPFNOANYqjVIK/Z0bFR9e66/b25ln15HvYQnKONWZDcvzFOWA
+	 Z7//ZIpAb2+wsXeHqulDVD4szyugoMwyNRASwFm/L9HHus+jH9+gPZHZX5zIKNGPFJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eoUewY4J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xq6d4DLf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CAB606A31C;
-	Wed, 18 Nov 2026 20:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22801606A320;
+	Wed, 18 Nov 2026 20:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eoUewY4J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87B71F000C4;
-	Wed, 18 Nov 2026 20:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xq6d4DLf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764B71F000C4;
+	Wed, 18 Nov 2026 20:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033884;
-	bh=7log7iXcM0QI+NsDlbib1TYNZ+dZr2CInAAET6/ZXmQ=;
+	s=korg; t=1795033887;
+	bh=bXXAc6eOWzNWUuIFmz409hwwXcsLGzrWQ08cUdTtyEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eoUewY4J5W8oOe3/3acEivwSjYZZ9c2pqxNkYFUnQRGhKwwyCi8j3T6spLODLrZvG
-	 X9TJXYy/a3UETzJYRlrlBPkdJFzaxno4Q5aZmktca6zbeYm6TGWXLK+Vurc6fP4fzx
-	 0P2kzOuKbyU5PTGz10PGLWooLtzmarvSuCG9nLy4=
+	b=xq6d4DLfQUlbfWrJBaf2gllIsUk2LKH94jH5skhL1gQLF9ccInmjOFdikmiP11XJh
+	 MiYdGRrT+HzpnJPH0xYeVlGTXHxwzY0m07xjzDRLEY0/GQRg8m3gzN60YEeoMFOaou
+	 qbE0Y8YPULh6C6n2o/q6yp+bYZU0OoV5OlNFzktk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
+	syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0174/3318] fs/ntfs3: reserve NUL byte when converting UTF-16 names
-Date: Wed, 18 Nov 2026 15:13:16 +0100
-Message-ID: <20261118150319.893701184@linuxfoundation.org>
+Subject: [PATCH 6.6 0175/3318] ntfs3: fix info-leak in ntfs_rename()
+Date: Wed, 18 Nov 2026 15:13:17 +0100
+Message-ID: <20261118150319.935004099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,47 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 4871fedaabbfd574ac0a075b80e75afdd532e11e ]
+[ Upstream commit 2fa56613b25d0c983ef3ff6d3e865d4254280abe ]
 
-ntfs_utf16_to_nls() appends a trailing NUL to the converted output,
-but it passes the caller-supplied size directly to the conversion loop.
-For the UTF-8 path, utf16s_to_utf8s() can legitimately fill all
-buf_len bytes and return buf_len, after which ntfs_utf16_to_nls()
-writes the terminator one byte past the end of the destination buffer.
+Hard to say about copy_to_user_iter(), but at least the first splat
+looks correct. At the end of fill_name_de(), data layout is:
 
-The same contract problem exists for the NLS path when a converted
-character consumes the last available byte.
+struct NTFS_DE *e = buf;
+...
 
-Reserve one byte for the terminator before doing either conversion.
-The function continues to return the number of converted bytes,
-excluding the NUL terminator.
+    |<- data_size + sizeof(struct NTFS_DE) ->|<- XXX ->|
+buf |-----------------------------------------------------------
+    |<- ALIGN(data_size, 8) + sizeof(struct NTFS_DE) ->|   ;; e->size
 
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
+If 'buf' was allocated with kmalloc(), XXX remains uninitialized and
+passed as such to memcpy() called from hdr_insert_de().
+
+So using kzalloc() for all buffers passed to fill_name_de() looks
+the simplest and most safe solution. OTOH if someone would have
+said that an overhead of PAGE_SIZE'd memset() is too large, more
+fine-granted solution is to memset() XXX only.
+
+Reported-by: syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=905d785c4923bea2c1db
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ntfs3/namei.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index 9335d706e2005..cde23d4f103c7 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -24,6 +24,11 @@ int ntfs_utf16_to_nls(struct ntfs_sb_info *sbi, const __le16 *name, u32 len,
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index dc41b80cfc584..d342814f4e7a0 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -22,7 +22,7 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
+ {
+ 	int err;
+ 	struct NTFS_DE *e = buf;
+-	u16 data_size;
++	u16 data_size, real_size, aligned_size;
+ 	struct ATTR_FILE_NAME *fname = (struct ATTR_FILE_NAME *)(e + 1);
  
- 	static_assert(sizeof(wchar_t) == sizeof(__le16));
+ #ifndef CONFIG_NTFS3_64BIT_CLUSTER
+@@ -53,7 +53,12 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
+ 	fname->type = FILE_NAME_POSIX;
+ 	data_size = fname_full_size(fname);
  
-+	if (buf_len <= 0)
-+		return -EINVAL;
+-	e->size = cpu_to_le16(ALIGN(data_size, 8) + sizeof(struct NTFS_DE));
++	real_size = data_size + sizeof(struct NTFS_DE);
++	aligned_size = ALIGN(data_size, 8) + sizeof(struct NTFS_DE);
++	if (aligned_size > real_size)
++		memset((char *)buf + real_size, 0, aligned_size - real_size);
 +
-+	buf_len -= 1;
-+
- 	if (!nls) {
- 		/* UTF-16 -> UTF-8 */
- 		ret = utf16s_to_utf8s((wchar_t *)name, len, UTF16_LITTLE_ENDIAN,
++	e->size = cpu_to_le16(aligned_size);
+ 	e->key_size = cpu_to_le16(data_size);
+ 	e->flags = 0;
+ 	e->res = 0;
 -- 
 2.53.0
 
