@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016507;
-	b=DMbjX6Nj3gOQG0xP2wdGHcFNRVR5tKfYS1MATIzDJT2tlis2bVPAT6BqpVzPbXPHeKAD
-	 9y9eh5SvP3Am5Or1fJsLOFgbkdmWZpmjEoFyFghAr7fspJNq4iDL2KT1DUASZF/rHfaX6
-	 6hg9C3lPDznHe2v8HsDBQfmqzcMFjVW5FI4GpIgxH1qNKZW00qlCBsmIjrYkmRnA2RTfN
-	 PAG476fce1G3RNfxfT9v5NadfTbKw5Mek3oIp48J+el9WEZgQG2fDltmlr2gM01MUmumJ
-	 hBucRrTaL7sO6hNFJnPIsZxOuS70y6177C6jac0e9zq0cII0dU3nqOc8Q7YsMrOAxYg==
+	t=1795016510;
+	b=nPA/HLRUo9grG1jT6IZ0/mjT5QxMtvQPcAMHpLXx2UwQ/bk3W+WnWhkC0stOmCxbH7qa
+	 4VQpgqqP+wbeWkq28birqOOMlEGZc2QGPISITyOGDTMypHuqWZld69I/ULYMqFZ5vQjKA
+	 NZMwJf6ivt9ek4Ycj+PO3TcyB9e2bMF4PFuNTJD2OAcZp3PghjeGQfR9bZwia6QXZ5FAK
+	 5/D2CfZUHHtWUicMinPZF8QpqKdH7+LoJ0dqdFGw+W5hYNp56XB0qQWEJmYq6Ek+a5/lm
+	 A4uhARLrju+HybAhGN15TQF2k4qLt9xwzzvWZtVsl+3t5pxU85W4BSNKvV/eu4OXL1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vEIVECBae2lzv60+09FoD++nVR3PLiTcOBRZhzgcEbM=;
-	b=GZW5t2XzoMxNL/66bTos6rYGCjGQqca6GQGjCtYwuYb21EYO5K0jqwekRc5zKtugRIpg
-	 7NPNQy3AGEalQCD+Jbv4b0sh3Dn3vXvrC5fek0C471/gmKMEGNzCG9+T9YvZdiaz3VlP+
-	 sU5zFbu6DxJo1sYTpGK0r3t/r84hYJrXHzkclH9bFRU7443b8oNR2g9ZBdU1hT5tDpBKT
-	 doVbMLseqI2jt9ElhzkgKjtiy/HafVQtqUDYcDRFqGdDHRKyTTI7CIY7IPRa6qT/TmCx9
-	 L1wUv0m/aAcL85dJBDfxHtDAFyKgK6jrkKo10idEzMsVPpVfqqZqPpq0mf3JMr0ObdA==
+	bh=+BJAcMDWfQi3kFuUWtVliMLjRdgVd7eE4RQPu63XwFc=;
+	b=DszfARylmOLbaNTU9h4sSPYQ/GZ2h7qQiMsjqV8+TwB7GEENLTZECp2OBez13nfov0L7
+	 e4IIKBeftplF/f9uITD/ifoHclRP722R2kPT3IAQ0Veft+EITrjE1IPxQ/1R/I4h7URRf
+	 8pJuP4ly58J+imMCiyBHpE7I+MhrVYSvVfCGZgMG07OHA3hrFeSF0FYjkkSOTg+4bDDCS
+	 GWcrAD1Co5y548SoLL7fUQZvTC32tTR3bZgp3mM4OFX56lObAxFk12ewksRG3hl4Vki3b
+	 36GbehFX8b5v9anaZ0TFRNmqOuYsnjij9M/UwUmqyJAwCWI/cHIgLMB3aVN95r3MW4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vn2QFJgS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5YLJDf1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E68D606A31C;
-	Wed, 18 Nov 2026 15:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3840606A320;
+	Wed, 18 Nov 2026 15:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vn2QFJgS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1F01F000C4;
-	Wed, 18 Nov 2026 15:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5YLJDf1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232DC1F000C4;
+	Wed, 18 Nov 2026 15:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016507;
-	bh=vEIVECBae2lzv60+09FoD++nVR3PLiTcOBRZhzgcEbM=;
+	s=korg; t=1795016510;
+	bh=+BJAcMDWfQi3kFuUWtVliMLjRdgVd7eE4RQPu63XwFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vn2QFJgS+573NRhOOlL9nmTYMn07fej1prd+nRux83urZrLuqEK2LuQ8MVRmXSKtt
-	 uFblSKO/exXT9/zb20apJnAooyZeKnixbTVih11shi8zjtE0s1ODJvdkADEcz7Fc1V
-	 QLZVHOlvxdVmjWYpHzbmp8wrJ2xhRdVTDdZ/kveI=
+	b=t5YLJDf18/UUMXwzuBKf2wd5ZHUnD4efn2ZSr4cNxUzgNIo+1DoIzeQrSHUkvwsIx
+	 o6hzRQmGRVBm/L8OEkOiKCi7DGKC6/KWbgnZCvaqyRXRwgDUVWy/W1gKrqx/iuPGcS
+	 5HecgMKQXyrPhIjvE+gLyePhngeAhRPXzd6ZT3RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taimuraz Kaitmazov <taimuraz@kaitmazov.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0552/2651] accel/amdxdna: do not warn when a sync request is rejected
-Date: Wed, 18 Nov 2026 15:29:52 +0100
-Message-ID: <20261118150307.618159872@linuxfoundation.org>
+Subject: [PATCH 7.3 0517/2651] md/raid5: setup_conf: Fix null-ptr-def in error handling path
+Date: Wed, 18 Nov 2026 15:29:17 +0100
+Message-ID: <20261118150306.364703293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit f2751f8754ae7ca0bba1a9536e153c8cc3aa4aae ]
+[ Upstream commit eba5f518701b1c7f2d883504f89c41611bd2de46 ]
 
-amdxdna_drm_sync_bo_ioctl() answers a failed amdxdna_flush_bo() with
-drm_WARN(). Both of that function's error returns are decided by the
-ioctl's arguments, so SYNC_BO with an offset past the end of the BO
-splats and taints the kernel from an unprivileged caller.
+For raid5 setup_conf, if an error(eg. bioset_init fails) happens before
+'conf->mddev = mddev', following error handling path could trigger a
+null-ptr-def problem:
 
-Log it at debug level, since the same caller can repeat it.
+ free_conf
+  log_exit
+   raid5_has_ppl
+    test_bit(MD_HAS_PPL, &conf->mddev->flags) // conf->mddev is NULL !
 
-Fixes: dbc8fd7a03cb ("accel/amdxdna: Add expandable device heap support")
-Signed-off-by: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260819224458.257346-4-taimuraz@kaitmazov.com
+Fix it by initializing conf->mddev in advance.
+
+Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://patch.msgid.link/20260915081731.122933-1-chengzhihao1@huawei.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 2 +-
+ drivers/md/raid5.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index 07651ecb2fcd4..96f8bd46f0799 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -1503,7 +1503,7 @@ int amdxdna_drm_sync_bo_ioctl(struct drm_device *dev,
- 		amdxdna_gem_unpin(abo);
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index d5a8428778e36..45b00c9904215 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -7679,6 +7679,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+ 	if (conf == NULL)
+ 		goto abort;
  
- 		if (ret) {
--			drm_WARN(&xdna->ddev, 1, "Can not get flush memory");
-+			XDNA_DBG(xdna, "Flush BO %d failed, ret %d", args->handle, ret);
- 			goto put_obj;
- 		}
- 	}
++	conf->mddev = mddev;
+ #if PAGE_SIZE != DEFAULT_STRIPE_SIZE
+ 	conf->stripe_size = DEFAULT_STRIPE_SIZE;
+ 	conf->stripe_shift = ilog2(DEFAULT_STRIPE_SIZE) - 9;
+@@ -7747,7 +7748,6 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+ 	ret = bioset_init(&conf->bio_split, BIO_POOL_SIZE, 0, 0);
+ 	if (ret)
+ 		goto abort;
+-	conf->mddev = mddev;
+ 
+ 	ret = -ENOMEM;
+ 	conf->stripe_hashtbl = kzalloc(PAGE_SIZE, GFP_KERNEL);
 -- 
 2.53.0
 
