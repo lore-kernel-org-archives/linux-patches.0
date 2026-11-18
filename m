@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022978;
-	b=oT1uWLeWF9j5DFQoBcXSOtX2WKTw2kmzBkjh7coeI2MXvOLa5kdc4o3+pt6BGbUmOvCi
-	 fZTBCqGcTWHOVa20uMOi+iQl3vJqXvHhmrkVrquSgY03yauAOUhVk1ESfu6ChO5TeJUU6
-	 xfG8r8N4LsvyVic2CtfGxIJQ3UHIQ974qdSo/d6PB9fywfPACa4NTstyBTiLaOoGJWJCO
-	 OvY9MnIDuHG5K1LclIvRcam2kOvELV6ewPdU9PTA5eF5M7tRBtvVdc3o1T1QolnOuJOrx
-	 PcrR7BmAQzPKgdlBcwqjfL/82kszHgKCPnGpR4+eyoeREMPdYFrBsFen/7KF3g5aqVg==
+	t=1795022981;
+	b=NnXsdJJnYsECl4bg/EgFraI5AeXtmXZQDOGi9nIm4Kd5/gifEshF1Qxyo/YSt5h3I7xE
+	 9w6wmlfHBtUINxEyI/9jQr24o4nLf3SCSS8W4zEiLSBC1iCQw64N/kJGjEwzanGdvq7e8
+	 Q8yNkdl55MLL+q7CtoA4TQ+n3jh51qiz1B8bLinucsD1Rv00hywmSvP/M4JyK2NDeqp3o
+	 OOPRMmAHFCNDokjGYP1zJCZCsVSNeOBfA02sdsjtPlMstMA72NczJ7lomcVhq3FB07lLX
+	 q1m+mT8ur82ZmyapxDERTgyoUFCdW+KDkKYZI8+zouHskMQkQDBTOxTLIuk3+ck3bIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0g0QcUQ3pKyyTSxR6Skf3QEZ675LW3HUJtAwU/bUXwc=;
-	b=l/ijQ1PzN2BCDkxiRzU+VELF91VCF+zjCwv8k4tfkmAzjiIejnh/3bwcAlisl9/oCkjr
-	 JJSdssRjTFxKnBcU6wRva1Z7GlTSgYIGJiQ88q2X/DGxe3VFdsPZI05eSfvPaOG564gNI
-	 1qgmLgfio8O+ZqR+hZuTwRtXfjP4E1cxxlKJh2geXeEYj1P7G1p6kBmLda1QtmEaNIW0m
-	 aeY9oLkpLm50OWlAuiQ1BRY9R1JycxXwHiH1qiB+krxeW9LoCLOd7bM95nYiQhBGJzCfK
-	 sOIogqnW9K2l+bPPhwj5+5NBzsWMi4shIEpu+b8OF5lSDW2J/80FH1oCy4dBg/SFozw==
+	bh=6hTTsW0ZBsVzGhR8XCR1/XpJbKHWOcsRN2e3n7mQ31I=;
+	b=JOzba+SLeBJyX1UjrjmKZmGjaRbdDXfRGCaRnZtit+ACQbcYQbEdUxg5qn88d65dWoUD
+	 uUCmTZ3DzBMC5Kr9QuJJzjV8p3nK3R2von7NWM4tjFeWvxLhSlyY4i5uyfmqc2Njiwlmn
+	 EG8xaDNgsEKKBXFDnQqbmO+hRwcCxhiRsp+dKZN0tKMFH4jb9XXLns0AZdf6UF5xVx2Dd
+	 m8QbRzyEV4lL6b+4I7ML346cIU3hIVS4TnLk4PlFgVwluSTTw8BxSo/bzdaazH4z2W1XX
+	 aVSkpvZEZix0AIxor8PGZ44C0VYtHMMCMXK9hzKvb1WZk8BVn8QtAQVOFsmzlgSLEBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CRGmYq/y";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NkTt/YBn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98583606A31C;
-	Wed, 18 Nov 2026 17:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B118606A31C;
+	Wed, 18 Nov 2026 17:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRGmYq/y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C1A1F000C4;
-	Wed, 18 Nov 2026 17:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkTt/YBn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54261F000C4;
+	Wed, 18 Nov 2026 17:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022978;
-	bh=0g0QcUQ3pKyyTSxR6Skf3QEZ675LW3HUJtAwU/bUXwc=;
+	s=korg; t=1795022981;
+	bh=6hTTsW0ZBsVzGhR8XCR1/XpJbKHWOcsRN2e3n7mQ31I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CRGmYq/ylFXh6DK+Xlf8KY3OA70DRrHUX7t+T8ZHvsLR1Vf3aTByJgW1KHDDhfWgy
-	 b9P+iWgSTaIrhjc2QCJj4JenjhYb0lJu4mrkPqdm2GqdMQsj2N8AWwZo/VgluMtRe1
-	 swEyN/KlulGAMjR+AkDIN5asMCQqW8QVLNBugep4=
+	b=NkTt/YBn8nVFh3LyFR0VGf3BncKV3PKNE/D5ITz+MhefFgk/w1ryQv/q/JncKxKD8
+	 Ssb2iDVitxVYC4c0NOqN4hui5E/EJAEw1EU+w3YHW2sRdD4Shro4Y5UWMwx83TcYhZ
+	 x9VBKiMFe9gtuSyrPbghEr26WbSehCqWuuY3OcwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Ionut Nechita <ionut.nechita@windriver.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Baoquan He <baoquan.he@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0205/2151] arm64: dts: imx95: Avoid 32-bit PCIe window System RAM overlap
-Date: Wed, 18 Nov 2026 15:32:20 +0100
-Message-ID: <20261118150129.251415080@linuxfoundation.org>
+Subject: [PATCH 6.18 0206/2151] x86/crash: Reserve elfcorehdr for CONFIG_NR_CPUS, not CONFIG_NR_CPUS_DEFAULT
+Date: Wed, 18 Nov 2026 15:32:21 +0100
+Message-ID: <20261118150129.287401337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,45 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Ionut Nechita <ionut.nechita@windriver.com>
 
-[ Upstream commit 9094eb07b3e236233dbaac61ed30cc65be9e9c6c ]
+[ Upstream commit 6664ad1026b558563702f9a1ce637df33e7c001e ]
 
-Move the PCIe non-prefetchable memory PCI bus address from 0xe0000000
-to 0x10000000 to avoid overlap with DRAM. Avoid hit this as a P2P
-transfer[1]. The 0x10000000 range is reserved and safe to use.
+NR_CPUS_DEFAULT is purely a Kconfig thing.  Its entire purpose in life is
+to start NR_CPUS at a sane value.  There is precisely one (buggy)
+reference to it outside of Kconfig in the whole kernel: the x86 crash
+code.
 
-Fixes: dbecf38e60d4e ("arm64: dts: imx95: Correct PCIe outbound address space configuration")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Link: https://lore.kernel.org/imx/753fca23-c3eb-45e3-aeac-b7b248fa723a@app.fastmail.com/ [1]
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+That code undersizes the elfcorehdr reservation whenever NR_CPUS exceeds
+NR_CPUS_DEFAULT, because the header carries one phdr per possible CPU and
+num_possible_cpus() is bounded by NR_CPUS.  kexec_file_load(2) then fails
+with -EINVAL from sanity_check_segment_list(), and kexec_load(2) silently
+truncates the elfcorehdr, which surfaces later as a bad or unusable dump.
+
+Size the elfcorehdr reservation with NR_CPUS instead.
+
+Fixes: ea53ad9cf73b ("x86/crash: add x86 crash hotplug support")
+Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Baoquan He <baoquan.he@linux.dev>
+Link: https://patch.msgid.link/20260901071041.16311-2-ionut.nechita@windriver.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/crash.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
-index 47fd5a5862b4f..6a9524650ba70 100644
---- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-@@ -1824,7 +1824,7 @@ pcie0: pcie@4c300000 {
- 			      <0 0x4c340000 0 0x4000>;
- 			reg-names = "dbi", "config", "atu", "app";
- 			ranges = <0x43000000 0x9 0x00000000 0x9 0x00000000 0x0 0xe0000000>,
--				 <0x82000000 0x0 0xe0000000 0x9 0xe0000000 0x0 0x10000000>,
-+				 <0x82000000 0x0 0x10000000 0x9 0xe0000000 0x0 0x10000000>,
- 				 <0x81000000 0x0 0x00000000 0x9 0xf0000000 0x0 0x00100000>;
- 			#address-cells = <3>;
- 			#size-cells = <2>;
-@@ -1900,7 +1900,7 @@ pcie1: pcie@4c380000 {
- 			      <0 0x4c3c0000 0 0x4000>;
- 			reg-names = "dbi", "config", "atu", "app";
- 			ranges = <0x43000000 0xa 0x00000000 0xa 0x00000000 0x0 0xe0000000>,
--				 <0x82000000 0x0 0xe0000000 0xa 0xe0000000 0x0 0x10000000>,
-+				 <0x82000000 0x0 0x10000000 0xa 0xe0000000 0x0 0x10000000>,
- 				 <0x81000000 0x0 0x00000000 0xa 0xf0000000 0x0 0x00100000>;
- 			#address-cells = <3>;
- 			#size-cells = <2>;
+diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
+index 335fd2ee9766d..521ff276f5c5a 100644
+--- a/arch/x86/kernel/crash.c
++++ b/arch/x86/kernel/crash.c
+@@ -432,9 +432,9 @@ int crash_load_segments(struct kimage *image)
+ 	 * maximum CPUs and maximum memory ranges.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+-		pnum = 2 + CONFIG_NR_CPUS_DEFAULT + CONFIG_CRASH_MAX_MEMORY_RANGES;
++		pnum = 2 + CONFIG_NR_CPUS + CONFIG_CRASH_MAX_MEMORY_RANGES;
+ 	else
+-		pnum += 2 + CONFIG_NR_CPUS_DEFAULT;
++		pnum += 2 + CONFIG_NR_CPUS;
+ 
+ 	if (pnum < (unsigned long)PN_XNUM) {
+ 		kbuf.memsz = pnum * sizeof(Elf64_Phdr);
+@@ -493,7 +493,7 @@ unsigned int arch_crash_get_elfcorehdr_size(void)
+ 	unsigned int sz;
+ 
+ 	/* kernel_map, VMCOREINFO and maximum CPUs */
+-	sz = 2 + CONFIG_NR_CPUS_DEFAULT;
++	sz = 2 + CONFIG_NR_CPUS;
+ 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+ 		sz += CONFIG_CRASH_MAX_MEMORY_RANGES;
+ 	sz *= sizeof(Elf64_Phdr);
 -- 
 2.53.0
 
