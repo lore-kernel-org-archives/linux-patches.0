@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017008;
-	b=tv2+Qxnt2JTYCeQ2DP/O8c1re7YqtBHCO4yVyMMsZxMVtYnCMRvqvVqNkGbFV8IA1Hfx
-	 8gJqLePD40jpLdMcumwGMhvqEbobPgNbbZcx3UiQBJ2GhQcTJbZ+3rYwJ0csCXfPTK6dN
-	 MTiWbt31O8FXwhuy0Ma5MYQ3+zoR/fd+9+0rO5JMtVC3xQ6uMnMheVAo5xKF4QcE+nMKL
-	 nJVcqT+baf1c1DLiLdOMwkW9Se/dzu2Cdo3KYDAZlRUroBKmuKpxw3a5/w0P5DKfa51DN
-	 fK8S3+80v5RivAFR/IlIoFMsitSCoq2tgRgolUcXLdhST7970V2WB/R9ta9cd1rq8aQ==
+	t=1795017011;
+	b=EFXWQVuYPTeg3sgfRnKpL7k86Kt34cccXpJfKBMaHQl3zwn1oYy905dp7SBxI9PaXT/T
+	 98f2dZOKnFM4GltJAlEdoz8HPndy3LkAjr7elI+NVvVlX3rHqj5BIN5XnnlI3I19ABIYq
+	 +jgYiPPvQLM2YH0eznPZJEMLK4+pLBcGEptK9UWLad/87nT2677G5IKso9qCKZcSU67y4
+	 oJt1xzz89v2ovnCXc9QSRQfQOoxn7Mf97u834wlHos6QwQZbxzF8l+V/XKG1ZIFTyhR/D
+	 w2s+h6Q6zEcJSGQr22zARmKOSdSsAUM1lQ9EhAjZ0nBib0PeAwTJ9G8grSohNZ9DnUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EMRCrplT+4aSH9oQGil+a1dBU6A86elFpFW+pZilKv0=;
-	b=Ec4HIZZZEC6mKszvbq3OKXDgIHNhcYfBOdNNpgAn5Iud6LJ6WwrtxONnIZS4faKtmpfj
-	 NPv388MV6an4rKNC1OcLYlZ9U/ZEdh/2AgSY6d2BioWEEZuLVExJ5fH04zea0+9W/WvxB
-	 TDeKL7irSlZ5SezVLSZNgOVPcsPs1sOAnmMRMvosh8AtgZiyuK1Mu8Ru7DkOJ4S0rYl67
-	 mC7c9/3qmkAZqIt3waHDrxgy+J233u7fgmxsri4WBnv0TFmlW9pyhnDmkhJOogs4DJnZX
-	 5qbiMrhqG7xmiy56FTfemTHORVQLvL53pQPeL3cP3yYykukgzg5SiQ+Vn8107csPCsA==
+	bh=Z80h8b0yEa25M4JpZ80y8yJYTPE6G05FyUhepoYl+S8=;
+	b=kCPJFsJ/oPQ2Cro1VRT7m80jYUxsgcREI7ESUU2jSr+XhvnyiYpRwFF5IKoyJ26c73VW
+	 A1Bs/NvDejxPprdUFJJL4zjbOAFieDBv+7WpzuZr++WCh+J+UHEfwUbvs1e81JHm0Y24O
+	 z2xX0CZbLFpAYEKN04zzfK9daZx8+wPj/98jgoXLNa2D3A61n6QFJsoK8XNQVgxq7w2xu
+	 cPL93bgDgCGB05Gs6GotW+N+mu2PhAS57umylS3thTLG+e3gLRW6TgW7SDi1HOMHDAJFL
+	 HEuZarNv4Gxpy7JHbDi/udzXnytPmNALGWfTQ8hsELPWmeeHRyx7aa18xytqeqO39OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gTtuIl0W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPVQa3Oc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9532B606A31C;
-	Wed, 18 Nov 2026 15:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49203606A32A;
+	Wed, 18 Nov 2026 15:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gTtuIl0W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E412D1F000C4;
-	Wed, 18 Nov 2026 15:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPVQa3Oc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E721F000C4;
+	Wed, 18 Nov 2026 15:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017008;
-	bh=EMRCrplT+4aSH9oQGil+a1dBU6A86elFpFW+pZilKv0=;
+	s=korg; t=1795017011;
+	bh=Z80h8b0yEa25M4JpZ80y8yJYTPE6G05FyUhepoYl+S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gTtuIl0We/D3lGNqE+J2gNDv2wjVGtLTWMs89mRfocJdynpl0MvJlaj6GZDfZGqSB
-	 3E/F/r0YS1CzxDLWff0q7vRGWJ/3iD0zjjDjo05y5O5BWOP3JkdJyqhxX/KH/YEaq9
-	 av0CPXxKzikkJ9uo0A2Q/6XNTz03lh/hDsDT2SNM=
+	b=aPVQa3OcfZ2Ktjd4ONmCpRFo9RbtS5GBULQsGjPlKmqtR6CTLmJ5RRDEYy073LxLF
+	 dQm/URss/pCeNxXuWo+PKEHDvprvKdk3nzG+wryTfpvgikaHV0x18Gtv8afgzV2Pu8
+	 kuANj4DNlkOFQF3JUblQH07RJzgGxwrw01NfpgQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tate Whiteberg <whiteberg@arista.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0730/2651] serial: 8250_mid: wait for LSR tx empty before setting termios
-Date: Wed, 18 Nov 2026 15:32:50 +0100
-Message-ID: <20261118150314.151499360@linuxfoundation.org>
+Subject: [PATCH 7.3 0695/2651] crypto: qat - hold cfg->lock when accessing config sections
+Date: Wed, 18 Nov 2026 15:32:15 +0100
+Message-ID: <20261118150312.865527385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,68 +69,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tate Whiteberg <whiteberg@arista.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 1c305d5f1daabd317a60b6a2e2ac6b1aff7e05df ]
+[ Upstream commit cb3a1364fed9ea7b063e3ae026177a145abb5940 ]
 
-If mid8250_set_termios is called while data is still in transmission,
-the corresponding register updates will corrupt the transmission.
+adf_cfg_sec_find() walks the per-device section list without holding
+cfg->lock, and the returned section pointer is used later under the
+lock. A concurrent section deletion under cfg->lock
+(adf_cfg_del_all_except() on device down, or adf_cfg_dev_remove() on
+removal) can free the section first, leading to a use-after-free.
 
-Fix this by locking the port and and waiting for the transmitter to
-empty before performing updates. It is necessary to wait for both
-UART_LSR_THRE and UART_LSR_TEMT to ensure the final character is sent.
+The debugfs dev_cfg reader has the same problem: qat_dev_cfg_show()
+walks both the section list and each section's param_head under the
+global qat_cfg_read_lock mutex, not the per-device cfg->lock used by the
+add and delete paths, so the two do not serialise. Updating an existing
+key frees the old key_val under cfg->lock, so even a config write
+concurrent with an open dev_cfg read can free an entry mid-walk, a wider
+window than section deletion alone.
 
-Fixes: f549e94effa1 ("serial: 8250_pci: add Intel Penwell ports")
-Signed-off-by: Tate Whiteberg <whiteberg@arista.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20260831165911.2029839-3-whiteberg@arista.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Take cfg->lock around the section lookup in adf_cfg_add_key_value_param()
+and around the lookup and insert in adf_cfg_section_add(), and use
+down_read()/up_read(&cfg->lock) in the debugfs start/stop callbacks.
+Remove the now-unused qat_cfg_read_lock.
+
+While here, return -ENOENT rather than -EFAULT when the section is not
+found; EFAULT (bad userspace address) is not meaningful for this case.
+
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_mid.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_cfg.c | 49 +++++++++++--------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_mid.c b/drivers/tty/serial/8250/8250_mid.c
-index 82656645b8a64..c02ecb96e8b6f 100644
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg.c b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
+index b88febf53a19d..e13db9ede0fa7 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_cfg.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
+@@ -1,6 +1,5 @@
+ // SPDX-License-Identifier: (BSD-3-Clause OR GPL-2.0-only)
+ /* Copyright(c) 2014 - 2020 Intel Corporation */
+-#include <linux/mutex.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/list.h>
+@@ -9,13 +8,11 @@
+ #include "adf_cfg.h"
+ #include "adf_common_drv.h"
  
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/rational.h>
-@@ -209,6 +210,7 @@ static void mid8250_set_termios(struct uart_port *p, struct ktermios *termios,
- 				const struct ktermios *old)
+-static DEFINE_MUTEX(qat_cfg_read_lock);
+-
+ static void *qat_dev_cfg_start(struct seq_file *sfile, loff_t *pos)
  {
- 	unsigned int baud = tty_termios_baud_rate(termios);
-+	struct uart_8250_port *up = up_to_u8250p(p);
- 	struct mid8250 *mid = p->private_data;
- 	unsigned short ps = 16;
- 	unsigned long fuart = baud * ps;
-@@ -231,11 +233,16 @@ static void mid8250_set_termios(struct uart_port *p, struct ktermios *termios,
+ 	struct adf_cfg_device_data *dev_cfg = sfile->private;
+ 
+-	mutex_lock(&qat_cfg_read_lock);
++	down_read(&dev_cfg->lock);
+ 	return seq_list_start(&dev_cfg->sec_list, *pos);
+ }
+ 
+@@ -43,7 +40,9 @@ static void *qat_dev_cfg_next(struct seq_file *sfile, void *v, loff_t *pos)
+ 
+ static void qat_dev_cfg_stop(struct seq_file *sfile, void *v)
+ {
+-	mutex_unlock(&qat_cfg_read_lock);
++	struct adf_cfg_device_data *dev_cfg = sfile->private;
++
++	up_read(&dev_cfg->lock);
+ }
+ 
+ static const struct seq_operations qat_dev_cfg_sops = {
+@@ -272,13 +271,10 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
+ 				enum adf_cfg_val_type type)
+ {
+ 	struct adf_cfg_device_data *cfg = accel_dev->cfg;
++	struct adf_cfg_section *section;
+ 	struct adf_cfg_key_val *key_val;
+-	struct adf_cfg_section *section = adf_cfg_sec_find(accel_dev,
+-							   section_name);
+ 	char temp_val[ADF_CFG_MAX_VAL_LEN_IN_BYTES];
+-
+-	if (!section)
+-		return -EFAULT;
++	int ret = 0;
+ 
+ 	key_val = kzalloc_obj(*key_val);
+ 	if (!key_val)
+@@ -308,20 +304,28 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
+ 	 *    anything (the newly created key_val is freed).
+ 	 */
+ 	down_write(&cfg->lock);
++
++	section = adf_cfg_sec_find(accel_dev, section_name);
++	if (!section) {
++		kfree(key_val);
++		ret = -ENOENT;
++		goto unlock;
++	}
++
+ 	if (!adf_cfg_key_val_get(accel_dev, section_name, key, temp_val)) {
+ 		if (strncmp(temp_val, key_val->val, sizeof(temp_val))) {
+ 			adf_cfg_keyval_remove(key, section);
+ 		} else {
+ 			kfree(key_val);
+-			goto out;
++			goto unlock;
+ 		}
  	}
  
- 	rational_best_approximation(fuart, mid->board->freq, w, w, &mul, &div);
--	p->uartclk = fuart * 16 / ps;		/* core uses ps = 16 always */
+ 	adf_cfg_keyval_add(key_val, section);
  
--	writel(ps, p->membase + INTEL_MID_UART_PS);		/* set PS */
--	writel(mul, p->membase + INTEL_MID_UART_MUL);		/* set MUL */
--	writel(div, p->membase + INTEL_MID_UART_DIV);
-+	scoped_guard(spinlock_irq, &p->lock) {
-+		p->uartclk = fuart * 16 / ps;	/* core uses ps = 16 always */
+-out:
++unlock:
+ 	up_write(&cfg->lock);
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(adf_cfg_add_key_value_param);
+ 
+@@ -339,21 +343,26 @@ EXPORT_SYMBOL_GPL(adf_cfg_add_key_value_param);
+ int adf_cfg_section_add(struct adf_accel_dev *accel_dev, const char *name)
+ {
+ 	struct adf_cfg_device_data *cfg = accel_dev->cfg;
+-	struct adf_cfg_section *sec = adf_cfg_sec_find(accel_dev, name);
++	struct adf_cfg_section *sec;
++	int ret = 0;
+ 
+-	if (sec)
+-		return 0;
++	down_write(&cfg->lock);
 +
-+		serial8250_wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
-+
-+		writel(ps, p->membase + INTEL_MID_UART_PS);	/* set PS */
-+		writel(mul, p->membase + INTEL_MID_UART_MUL);	/* set MUL */
-+		writel(div, p->membase + INTEL_MID_UART_DIV);
++	if (adf_cfg_sec_find(accel_dev, name))
++		goto unlock;
+ 
+ 	sec = kzalloc_obj(*sec);
+-	if (!sec)
+-		return -ENOMEM;
++	if (!sec) {
++		ret = -ENOMEM;
++		goto unlock;
 +	}
  
- 	serial8250_do_set_termios(p, termios, old);
+ 	strscpy(sec->name, name);
+ 	INIT_LIST_HEAD(&sec->param_head);
+-	down_write(&cfg->lock);
+ 	list_add_tail(&sec->list, &cfg->sec_list);
++unlock:
+ 	up_write(&cfg->lock);
+-	return 0;
++	return ret;
  }
+ EXPORT_SYMBOL_GPL(adf_cfg_section_add);
+ 
 -- 
 2.53.0
 
