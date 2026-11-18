@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015609;
-	b=jdYe3JJ4NfXV+X9hhCO7/dJ+72F7mCZ30TBdoFoxbb4Nh6Kg324dOe5AHMm+cN7BO9jn
-	 68GUnAlkVjp0Bwoa5+4xIRrSzZAutm1skKV3IlP3YQh9cPeSHuACRBnoO43Tub1OM4S1D
-	 MXomshlLCwhINhRmmS47j0GdIXhgCEpiPQeoRwY43tSppsYgY8hJNr60H7XqWusYZSbPm
-	 vSDGqc2Or87VoK+duzp1yhyOez8Y/2ZZOTeIlyIKOJjHf51PpHqRW7bCiCACetSAQJJDU
-	 jK/u2BlgiMRbPypOduvTFW4L6uNnaBaUqOGJJgkaHH8iZZg/IO54VhLQ9OBw2k1+tkA==
+	t=1795015612;
+	b=wHNhjxC28AJYXwbHJnYepO2FyAqMFohfdL5Uu4aS3GdticS1HoS0Fhab0ly/x9nCzy6D
+	 s314b3cGK2PAwgR+QRetFWNt17mKJ/fVJKD4ujmjtBypGwtZUFO6n2L9jf+InjtJAwJ2L
+	 0tLL3Z2TONWhV17TstyNg3J6+NeDQN6la78+XgsuhtbS8L2Lrkw/IxXKnSqcbV32jQk29
+	 MagRg6djOlcg9Nj85rTi3X55nAQ+0zGqCmlVlOstpb1qo7zBRbOCZ2/2EQAZRZE0w4biV
+	 X4WdFXhla/x2iQk06mNc9hIdMt/mE6/wdYDRATyZmPPWcK5HcZa2Ji01WVcn7l9Pw0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gLcuVMmyrwtfPc/gDyl9aaTthzr0AsESZccpgZhoCm0=;
-	b=FryWG8tlbpu+BsJPOiRE3ZRzTxQoTGQ9pqUC6uvjsg8T8dKiYBVSm4q9LM4c1O4+zy6M
-	 ZX8HhSm2DqleZz3q2acoM93Aa1RP5ef8eGZNRJqkAxY48ANnMcovO/PYtEkBIxfSwzior
-	 +oZT/2cp97xjQHefersYm7bSnkmbGj69+BVOzY7JID8yxK/Vr9UEHsEWRRYl61M+AzFSv
-	 llSY3Bv+B926+yCRtYT14NtwJ+TYYldYTJ0i00gz3HK0wjoTGQjFkmj3/Z12pZGVnyrUD
-	 PQGiWtK/NlmUb2L+uKERZd9n9wESND2Ky504wiuUcKeaIZXATYr/FUVHwv/tywQP1TA==
+	bh=uW3AFKNMgIauCDJqMLz7yondYg1UgboQl0S4GUt4a70=;
+	b=H/X1H/IkO5/v8ZZDUuYxrd0QJzDefo1XXt8h8X3QudNJp4dncHaVfNvCq/ABeQyVAU+N
+	 HETxmW2BjXQZbrJ6Ii1DiAGVfbNcmDzKOC9cgROdYowlfbOkb0PgoQHh4I5ZETiFxbTvb
+	 nOdSB8MlghkAOVCV76e4yaveg+8fNTtJ6AsXFd3q1PudEU5db6RAY+X4DCAirWZut5Ed+
+	 fCaNkYwqYAmx+UY1txSG5266gf7eJCe23Zwl0NDjkW1KX1HJyJiU1jQ6RGEDawlQMHWAf
+	 YxfA6NjzJcyuls20Hdd4v2H1E3h2gD4ypiv/nuRqdNxwjFmu9YcMmClHSt6AeaBvMZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CCxsA/9L";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq2KeHup;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E60C606A320;
-	Wed, 18 Nov 2026 15:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C90F606A32C;
+	Wed, 18 Nov 2026 15:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCxsA/9L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16851F000C4;
-	Wed, 18 Nov 2026 15:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq2KeHup
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704161F000C4;
+	Wed, 18 Nov 2026 15:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015609;
-	bh=gLcuVMmyrwtfPc/gDyl9aaTthzr0AsESZccpgZhoCm0=;
+	s=korg; t=1795015611;
+	bh=uW3AFKNMgIauCDJqMLz7yondYg1UgboQl0S4GUt4a70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCxsA/9LY3jiHwuqkPqVD+jPMBs8cPADJLS5OnBZ1uSL8j4zNrjcAdOH3joIOoDKA
-	 hmFKoOQdqDAHqEOaFldrckIyIZoQhrAYJU33eawQtMnGZw5d831G1D5kAUYCLE9qcU
-	 uv2Y787bavQ7Zf1uC/MLe5R5ZPI4mDlqWVa6k9ds=
+	b=hq2KeHupx000Tjb3qRuGmwLal4XPXMSN02xHD4juRbzs7LdW+n7OAtBhUGD/EqBYM
+	 t+KXap7pLEMSR4MnD+V61p/rF4fr7dVJafApwseC7bro/O5gNJdoHx18ns4YJ0WdIl
+	 lDYV5sBkO/42GqLsiU2qreM/L7DEJkZGb71jN+lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0233/2651] ACPI: extlog: Validate elog record length before walking sections
-Date: Wed, 18 Nov 2026 15:24:33 +0100
-Message-ID: <20261118150256.246420116@linuxfoundation.org>
+Subject: [PATCH 7.3 0234/2651] ACPI: extlog: Avoid populating software AER metadata from raw hardware buffer
+Date: Wed, 18 Nov 2026 15:24:34 +0100
+Message-ID: <20261118150256.283332634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,55 +74,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit e1fd582a8134150aa10c1f0286dbce00cf63b086 ]
+[ Upstream commit 31333d134afb13e3942867d48efbcf8d6b88c849 ]
 
-extlog_print() copies a fixed ELOG_ENTRY_LEN (4096) bytes from the elog
-record into elog_buf, then walks the sections using the firmware-controlled
-data_length. Nothing keeps data_length inside the buffer, so a malformed
-record walks the section pointer past elog_buf and reads adjacent memory.
-Unlike the GHES paths, extlog never calls cper_estatus_check().
+extlog_print_pcie() casts pcie_err->aer_info straight to struct
+aer_capability_regs *. That struct embeds struct pcie_tlp_log, whose
+software-only header_len and flit fields sit at offset 84 - inside the
+96-byte aer_info buffer - so the cast fills them with raw firmware bytes.
+pcie_print_tlp_log() uses both to bound a loop over dw[], and a large
+header_len walks past the end of the array.
 
-Reject a record longer than ELOG_ENTRY_LEN and run cper_estatus_check()
-before walking the sections. The length test alone is not enough: a wrapped
-length reads back short and passes it, which cper_estatus_check() catches
-via the header check added earlier. Drop a malformed record with
-NOTIFY_DONE and without MCE_HANDLED_EXTLOG, since extlog did not consume
-it.
+Copy into a zeroed local struct, and only as far as aer_info maps onto it:
+the leading registers and the four Header Log DWORDs. Place the TLP Prefix
+Log separately, from the offset the hardware keeps it at. The rest stays
+zero, which covers header_len and flit and keeps the Root Error registers
+out of the prefix log, where pcie_print_tlp_log() would print them as
+end-to-end prefixes.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=6
-Fixes: f6ec01da40e4 ("ACPI: extlog: Handle multiple records")
+Closes: https://lore.kernel.org/linux-cxl/20260709165457.8BA181F000E9@smtp.kernel.org/
+Fixes: e778ffefa34d ("ACPI: extlog: Trace CPER PCI Express Error Section")
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
 Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-4-dave.jiang@intel.com
+Link: https://patch.msgid.link/20260904172337.1409775-6-dave.jiang@intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_extlog.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/acpi/acpi_extlog.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
-index 7ad3b36013cc6..046e92ee195f9 100644
+index 046e92ee195f9..eed807dd160f8 100644
 --- a/drivers/acpi/acpi_extlog.c
 +++ b/drivers/acpi/acpi_extlog.c
-@@ -208,6 +208,15 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+@@ -137,7 +137,7 @@ static void extlog_print_pcie(struct cper_sec_pcie *pcie_err,
+ 			      int severity)
+ {
+ #ifdef ACPI_APEI_PCIEAER
+-	struct aer_capability_regs *aer;
++	struct aer_capability_regs aer_regs = {};
+ 	struct pci_dev *pdev;
+ 	unsigned int devfn;
+ 	unsigned int bus;
+@@ -149,7 +149,21 @@ static void extlog_print_pcie(struct cper_sec_pcie *pcie_err,
+ 		return;
  
- 	tmp = (struct acpi_hest_generic_status *)elog_buf;
- 
-+	/*
-+	 * Bound the length before cper_estatus_check() walks the sections: it
-+	 * iterates over data_length, which is not yet known to fit elog_buf.
-+	 * cper_estatus_check_header() then rejects a length that wrapped, which
-+	 * the bound cannot see.
-+	 */
-+	if (cper_estatus_len(tmp) > ELOG_ENTRY_LEN || cper_estatus_check(tmp))
-+		return NOTIFY_DONE;
+ 	aer_severity = cper_severity_to_aer(severity);
+-	aer = (struct aer_capability_regs *)pcie_err->aer_info;
 +
- 	if (!ras_userspace_consumers()) {
- 		print_extlog_rcd(NULL, tmp, cpu);
- 		goto out;
++	/*
++	 * struct pcie_tlp_log is larger than the hardware layout, so aer_info
++	 * only maps onto the struct up to the four Header Log DWORDs. Copy that
++	 * much, then place the TLP Prefix Log from where the hardware keeps it.
++	 * Everything else stays zero: nothing reads root_command, root_status or
++	 * the error source IDs, and header_len and flit are software-only.
++	 */
++	memcpy(&aer_regs, pcie_err->aer_info,
++	       offsetof(struct aer_capability_regs, header_log) +
++	       PCIE_STD_NUM_TLP_HEADERLOG * sizeof(u32));
++	memcpy(aer_regs.header_log.prefix,
++	       pcie_err->aer_info + PCI_ERR_PREFIX_LOG,
++	       sizeof(aer_regs.header_log.prefix));
++
+ 	domain = pcie_err->device_id.segment;
+ 	bus = pcie_err->device_id.bus;
+ 	devfn = PCI_DEVFN(pcie_err->device_id.device,
+@@ -158,7 +172,7 @@ static void extlog_print_pcie(struct cper_sec_pcie *pcie_err,
+ 	if (!pdev)
+ 		return;
+ 
+-	pci_print_aer(pdev, aer_severity, aer);
++	pci_print_aer(pdev, aer_severity, &aer_regs);
+ 	pci_dev_put(pdev);
+ #endif
+ }
 -- 
 2.53.0
 
