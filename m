@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015088;
-	b=gPj/U/ro54XgUlSD2wgYDCrSsBKXdt+i+6lju+67pcF2/CKaE/l0FXWt+IorNnieKjW6
-	 Wg4XivSy8/ccJ2QgMgFM6wZXNTYtZc8UUqplV/TTXr+itIk6YL7CMoE0aBT5Q544tnCXh
-	 Z8UkxwnxhfFNtrEq38oWIKhhXtSt7DU/oqf2v/PbdRq5VTw3p4EMmjIgj1KNRyiHViqFs
-	 CikfKsK8P5eTiO+t8mEiHLRvGbbM8238BWpR8vvQI5J3gf/iQa2cj1eeGTEwBxLUf/Var
-	 3WvWi4+ETO2ZN8n/g7CLDE8L2+WHpjh77valJqWqo9gIrwf0ZP4o0GgfiCO77KbJ7Lw==
+	t=1795015091;
+	b=CBn2ucIow+/hk7HTame8BNGopDmvSY+YXiK/5kdYtZCyOuVymj5dCE8AplpeAT4k430n
+	 uUxBlNlZ0/jtc0f6mlXyk4JMlsKosivR/xFon/dcscORlF7a0pKIr8C7KNkeFPI8INbWv
+	 8VR/D8jqBnxix5CU6jGXJTYTA9AAdjz7YECR2KqtTwtlfrfMEaOvRf+exzJ6QFK0cA0Dr
+	 qgdwB8+LxAz/HIfWJutyhRm2XuBkkdB9JdWmp/INTolGFyCY7PEnGnCsAURrjoJbwKHkO
+	 /yJ4z+WwQ4HJL23+n/fXfdbiF5lSV4Mo1rE2TvkBf8HofNIzzR5HU39hi/iJKaVpYrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015088;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u5qmZRPvINNmKM0t1b5Io9DrBoiieVARBAvV2VaOJYI=;
-	b=zr/1BfyATSV+3C0PUjfK4bDTsaSyMDwUEwdKoweoKlAgDJ+zhkPVJsDRvUYigc+dGa0p
-	 tGpSYhDo218orYBKXp3+jyg4st/3SRW5tZsCl0RzBNc9okjXlhZom/XFXHJ4vnpouCRTM
-	 C7eSywrlNJLawmSkZN+lwpST3rAo2NoGl/7Pxo/6kizJxUegGpxJLjQpLqgDzwdo3rocS
-	 T8HZF1Oq0sXqAE6PmoG8Tc5nVx3Csd6qtemC83FLrba4Vf5Bv1LgP4hNvEMvd7pyqHcnC
-	 Zm502aC5ExqgUhCqeCpPB/eiyB0oskm6w9trkDexLgyrAVYjuI4HWDt2Sm9LztxUjJA==
+	bh=VF0DAozOJ1siuqlQKSvqm21n+amcmUiE1xXZEHFPnXE=;
+	b=yfQxndL/4A3h1IDLXbRuYcHkaQy73uWw4Y5L3WbUnOdH0oUBKHGRL8cQ2/RC3ffbRMxu
+	 9eekeqG4Zy5/n1Xt/gdozTElcGCPRBiMi0ghYxiZKmKG5oJNeamMLxv46MR/Bgucx84nx
+	 kFFAyWTY6G3ZCCCPDHsshzZJSqWX0Z9BBbHfwvLcwSwTifjnLPKig00Hyut0BIiM83zQc
+	 ZlBo97s2YyX3+ryZoNzJbKgkhJlScuA6ZFtzV2qKDlXgzkmLl3JCZNtJCBvV6gk1pz0qD
+	 EZm4yUYZIFmBSwZ5wWXbStD222f1T4iWVIMOFr52upJDSBldE6tn2cdbHQ4mak/AMpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IE3szT03;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TB9bjQ1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C93D606A331;
-	Wed, 18 Nov 2026 15:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7DA606A32C;
+	Wed, 18 Nov 2026 15:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IE3szT03
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE01F000C5;
-	Wed, 18 Nov 2026 15:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TB9bjQ1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1E31F000C9;
+	Wed, 18 Nov 2026 15:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015088;
-	bh=u5qmZRPvINNmKM0t1b5Io9DrBoiieVARBAvV2VaOJYI=;
+	s=korg; t=1795015091;
+	bh=VF0DAozOJ1siuqlQKSvqm21n+amcmUiE1xXZEHFPnXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IE3szT03t8WBTXSF6xokqZh+ngS1DVBWYeJhi6XjE9K/kBYJJG8gIBKvtjR8+cQYg
-	 IRIKVZtim4gixszpbFg36Ze1jjjtZQTqBEgA8ESh/0bHTa2I9tzunzEGC3V5WhONPg
-	 xTDUEkDzM6UFcKlfqKnUv38ZtgBeM7wrOx3ZYHl0=
+	b=1TB9bjQ1Yvq+ZijE09CHMjz2t2ppwljq2LjTKJ4MuYt0iT/VJ3fMAyfynS8gIYaud
+	 9Fqd3jbhK9ro0EDDjR40dM/TFwk5/diTfXXrhTWOokozE/qUheb06NyGqkiEaLPbWd
+	 zcK5+gVa+biLyDZ6/l/K4r6GjHQD9mvJEHFHuHUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0048/2651] ASoC: qcom: q6apm: clear g_apm on driver removal
-Date: Wed, 18 Nov 2026 15:21:28 +0100
-Message-ID: <20261118150249.687068849@linuxfoundation.org>
+Subject: [PATCH 7.3 0049/2651] ovl: add assertions in dir cache code
+Date: Wed, 18 Nov 2026 15:21:29 +0100
+Message-ID: <20261118150249.720335210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit be2172758f2b7c801ae80b9c8d1510b31eeffdaa ]
+[ Upstream commit ba227ed05b385926094741e2d566789525c36085 ]
 
-The global g_apm pointer is set during apm_probe() but never cleared
-in apm_remove(). After the driver is removed the devm-managed struct
-q6apm is freed, leaving g_apm dangling. A subsequent call to
-q6apm_is_adsp_ready() dereferences the freed pointer.
+Overlayfs may keep two different types of directory cache
+merged (refcounted) and impure (not refcounted) in the inode.
 
-Clear g_apm in apm_remove() before the component is unregistered so
-that q6apm_is_adsp_ready() returns false instead of triggering a
-use-after-free.
+They are mutually exclusive and an overlayfs directory is never
+expected to switch between merged and impure modes.
 
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260923-vmid-v4-v6-1-3d61a0319b1c@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Nevertheless it is hard to prove that races in the code are not
+possible, so add assertions to fortify the code accessing the
+directory cache to make sure it does not free the unexpected
+cache type.
+
+If an assertion fires the code may leak dir cache memory
+but it will not access freed cache memory.
+
+Suggested-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://lore.kernel.org/r/20260511062057.2365769-1-nirmoyd@nvidia.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Stable-dep-of: 9ff338af0e00 ("ovl: inherit FMODE_NONOTIFY when reading directory layers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/overlayfs/readdir.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 8a756249e5884..dea1dc2a79358 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -917,6 +917,7 @@ static int apm_probe(gpr_device_t *gdev)
- 
- static void apm_remove(gpr_device_t *gdev)
- {
-+	g_apm = NULL;
- 	of_platform_depopulate(&gdev->dev);
- 	snd_soc_unregister_component(&gdev->dev);
+diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
+index e23331212a29b..5d21a328fad46 100644
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -36,6 +36,7 @@ struct ovl_cache_entry {
+ struct ovl_dir_cache {
+ 	long refcount;
+ 	u64 version;
++	bool is_refcounted;
+ 	struct list_head entries;
+ 	struct rb_root root;
+ };
+@@ -479,13 +480,31 @@ static void ovl_seek_cursor(struct ovl_dir_file *od, loff_t pos)
+ 	od->cursor = p;
  }
+ 
++/*
++ * Merged (refcounted) and impure (not refcounted) caches are never
++ * expected to be mixed. On mismatch, detach the cache from the inode
++ * and leak it rather than misuse it. A merged cache is still freed by
++ * its last ovl_cache_put().
++ */
++static struct ovl_dir_cache *ovl_dir_cache_check(struct inode *inode,
++						 bool is_refcounted)
++{
++	struct ovl_dir_cache *cache = ovl_dir_cache(inode);
++
++	if (cache && WARN_ON(cache->is_refcounted != is_refcounted)) {
++		ovl_set_dir_cache(inode, NULL);
++		return NULL;
++	}
++	return cache;
++}
++
+ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
+ {
+ 	int res;
+ 	struct ovl_dir_cache *cache;
+ 	struct inode *inode = d_inode(dentry);
+ 
+-	cache = ovl_dir_cache(inode);
++	cache = ovl_dir_cache_check(inode, true);
+ 	if (cache && ovl_inode_version_get(inode) == cache->version) {
+ 		WARN_ON(!cache->refcount);
+ 		cache->refcount++;
+@@ -498,6 +517,7 @@ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	cache->refcount = 1;
++	cache->is_refcounted = true;
+ 	INIT_LIST_HEAD(&cache->entries);
+ 	cache->root = RB_ROOT;
+ 
+@@ -698,7 +718,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
+ 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
+ 	struct ovl_dir_cache *cache;
+ 
+-	cache = ovl_dir_cache(inode);
++	cache = ovl_dir_cache_check(inode, false);
+ 	if (cache && ovl_inode_version_get(inode) == cache->version)
+ 		return cache;
+ 
+@@ -710,6 +730,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
+ 	if (!cache)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	cache->is_refcounted = false;
+ 	res = ovl_dir_read_impure(path, &cache->entries, &cache->root);
+ 	if (res) {
+ 		ovl_cache_free(&cache->entries);
 -- 
 2.53.0
 
