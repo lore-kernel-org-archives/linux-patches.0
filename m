@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050854;
-	b=XhM0crAdluakxANeXOQw1N84nxazJT1NyDjafHB7hTKis5/jvtDfVWniZ9lenkN7VzWb
-	 0+765IylMc5Pjzc/hbI8NtRS8uu6fOHRZnYxM85cKj7aFOPeNxX9HNrsH2IaUVVc0sj6z
-	 2WmdZHGqSsUDQ3Sz28KEFrqbZUkrZHMp8x8SUjuNdBkiqAm79IPT4xd3WMqjrr13BrRUG
-	 2dScjsZ3Bxu10UWVqdhAhj9EQUXnwcTcvzAc84rKBZJVgxZAzazVAkZpqf1oIhb2kRC8V
-	 /sUPF10l0g9zEw7k3rYRfJBXufTY9vXxkXi3lME0dWhp5JK1MjYxel1Lb/JV2d3ODxw==
+	t=1795050857;
+	b=SqCh7ng7PrKi8EP7WfROYmm12xWdir0bsmpskVJ5hv7rvBavOPrS32/0KYMZ5Au5nWa2
+	 DvakWKeN9EzNmanRF8W0z4Cj9D2m6JDORLxcEmQWNvWVJwN7Sje2u7PjSh3kZvbs/aPDb
+	 fx29ufRx5joIQK5X2j4XM6ECqiXD6pfk0sDGSeHOzytK5doUB/o+kOjNWkxa3zXzBGHWw
+	 CVs3ziWRqBnKReho+vb53Wfv28KN8aULt9zZEiNE0ZiefpkaA2zaqRo+OMt/B7cA4V1By
+	 B2QYkz1VlAlzNtpsOkWXX59vssn7duI3hPRf0Pl127CbG9vhDt6PYkgV6MgTAiPigAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G0T5fz91c92aqjwVqrDMnUhn7qheMkuZJU0TfbLXMHE=;
-	b=qsxIlfxJ46Ptm5hOZFtlGUwG+kzrH3fTraA9XXhJ5SEKABHfIWOF3Lpplj1MLrws0oMZ
-	 Q/7i78wHiezYaopfZYvA3PHwfJ6z5wd6rASm6PgeEmXhtLfHUtw6k/StZR/SOPwOqyvt+
-	 UU2ZYUe3ys82eH7JmFJU+KD48OyXncHKkO5hbTSslJq9Wj/4sSAiu45V2wkq8bBPXK/OE
-	 QzIN9DUpKZoiIyW1C0SugftZ4ttzLq0g5vZCC5K0bLM7TyVeoRnygH3r7E9Y6DrT5QUdM
-	 3sqe0ENY+azJM85LaqLH+LDrCUgA1gutPgUsezKgkOiC6rCJSHcaHAPc4CD/qlFkDZA==
+	bh=Hp5uFbTS0OtxYQrpFbSDdbjH8RvuBZmOVdrUKlw5eS8=;
+	b=L/NioDbuC6anQmXZrunGh3CPOjbxd3lNUiu2KR1zZmoAj/vqUbrKKQL6kxN5nz3t0r5X
+	 rkkgZEhQ4Cfy3/WGsvucnIfGYFekLKeCIKcXactxDfT9p3UGVbiIjmpG6mjFScFbsOR7E
+	 OohYsCE8eq4sudNWSygUVfWXSgJ+KiOYsJfrBgFAT+JdVc1wxNdl19x+hC2m6FkcMYI6r
+	 yUSxQbWYlx93AYhaQ5W/YGvPlXJhNCo5718PZiz9Uk9tvVWVVVIPHXMn5Dg/exZMM/Q6L
+	 wc6FX69Yqr8nF5UVxwpksSEEdicT7mj8ha55j0BZLy8bvLn3coVUb+I9SDUJ6hf4TjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGgFD8wY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZpY6+air;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11917606A320;
-	Thu, 19 Nov 2026 01:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B8C606A320;
+	Thu, 19 Nov 2026 01:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGgFD8wY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6175A1F000C4;
-	Thu, 19 Nov 2026 01:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZpY6+air
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497531F000C4;
+	Thu, 19 Nov 2026 01:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050853;
-	bh=G0T5fz91c92aqjwVqrDMnUhn7qheMkuZJU0TfbLXMHE=;
+	s=korg; t=1795050856;
+	bh=Hp5uFbTS0OtxYQrpFbSDdbjH8RvuBZmOVdrUKlw5eS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oGgFD8wYBO2LIJL+m6GV0o3iaAR/PcLlm4Q4eY2ovQ3/YTFxWcMnoXmIm0P/SkwrZ
-	 UFL+RiMGyaJ7RnCZLzvkJ5hyR+xs+tcY1M1TrbvK6dyLwjwfkxAr6xPG+Du9qiAi/e
-	 g05kgip1/M7Brjx1sxAsD125QGLnoLv6g7dROuNE=
+	b=ZpY6+airu89HbQP+JjvaZ1GxMjV+TMCDxv5hsHozolznr+Y/1GUhG+fA9PgBCmpV9
+	 FtqAXSbNzSx6RkMreeo/JClGDZhZyxGpmuIoNi4SyR2n31VWLrjcnatlOhITjefs4o
+	 3J9daTtN/f9I4yJRp0Z8GEnO3uFbfbU6Zn+r1oVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 2857/2857] Bluetooth: hci_core: Fix race condition during device registration
-Date: Wed, 18 Nov 2026 16:04:51 +0100
-Message-ID: <20261118150344.446976737@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	kernel test robot <lkp@intel.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 2842/2857] tracing/histogram: Wrap remaining shell snippets in code blocks
+Date: Wed, 18 Nov 2026 16:04:36 +0100
+Message-ID: <20261118150343.893510886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,90 +70,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-commit 57938bbdb9bf7fd41cbd5cd509ec10c4b22bec18 upstream.
+commit a2ff84a5d1e65c7d1178f24ecf39fc55283fbd14 upstream.
 
-In hci_register_dev(), the power_on work item is queued to
-hdev->req_workqueue before initializing hdev->adv_monitors_idr and
-registering the MSFT extension via msft_register(). For devices marked with
-quirks such as HCI_QUIRK_RAW_DEVICE, the HCI_UNCONFIGURED flag is set on
-the device. When the power_on work item runs concurrently on another CPU,
-hci_power_on() detects that the device is unconfigured and immediately
-invokes hci_dev_do_close(), which calls msft_do_close().
+Most shell command snippets (echo/cat) and their output are already in
+literal code blocks. However a few still isn't wrapped, in which the
+htmldocs output is ugly.
 
-Concurrently, msft_register() allocates the msft structure and exposes it
-to hdev->msft_data prior to calling mutex_init(&msft->filter_lock). If
-msft_do_close() executes while hdev->msft_data is already assigned but the
-mutex has not yet been initialized, mutex_lock(&msft->filter_lock) operates
-on an uninitialized mutex, triggering a DEBUG_LOCKS warning:
+Wrap the remaining unwrapped snippets, while also fix recent kernel test
+robot warnings.
 
-DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-WARNING: kernel/locking/mutex.c:625 at __mutex_lock_common
-kernel/locking/mutex.c:625 [inline]
-WARNING: kernel/locking/mutex.c:625 at __mutex_lock+0x12d8/0x1550
-kernel/locking/mutex.c:821
-...
-Call Trace:
- <TASK>
- msft_do_close+0x308/0x7b0 net/bluetooth/msft.c:693
- hci_dev_close_sync+0x86b/0x10a0 net/bluetooth/hci_sync.c:5522
- hci_dev_do_close net/bluetooth/hci_core.c:499 [inline]
- hci_power_on+0x32c/0x750 net/bluetooth/hci_core.c:937
- process_one_work kernel/workqueue.c:3322 [inline]
- process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
- worker_thread+0x92d/0xe10 kernel/workqueue.c:3486
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
+Link: https://lore.kernel.org/linux-trace-kernel/20230129031402.47420-1-bagasdotme@gmail.com
 
-Fix this by moving the queue_work() call in hci_register_dev() to after
-idr_init(&hdev->adv_monitors_idr) and msft_register(hdev) so that device
-structures and extensions are fully initialized before asynchronous tasks
-can access them. Additionally, assign hdev->msft_data in msft_register()
-only after mutex_init(&msft->filter_lock) has completed.
-
-Fixes: 9e14606d8f38 ("Bluetooth: msft: Extended monitor tracking by address filter")
-Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=14ce1b05b7d5a989abbe
-Link: https://syzkaller.appspot.com/ai_job?id=2bc9e8aa-ca6d-43e2-be2c-fd5d9f649d7e
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/linux-doc/202301290253.LU5yIxcJ-lkp@intel.com/
+Fixes: 88238513bb2671 ("tracing/histogram: Document variable stacktrace")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    4 ++--
- net/bluetooth/msft.c     |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ Documentation/trace/histogram.rst |  103 +++++++++++++++++++-------------------
+ 1 file changed, 52 insertions(+), 51 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2683,11 +2683,11 @@ int hci_register_dev(struct hci_dev *hde
- 	if (error)
- 		BT_WARN("register suspend notifier failed error:%d\n", error);
+--- a/Documentation/trace/histogram.rst
++++ b/Documentation/trace/histogram.rst
+@@ -1864,7 +1864,7 @@ A histogram can now be defined for the n
+ The above shows the latency "lat" in a power of 2 grouping.
  
--	queue_work(hdev->req_workqueue, &hdev->power_on);
+ Like any other event, once a histogram is enabled for the event, the
+-output can be displayed by reading the event's 'hist' file.
++output can be displayed by reading the event's 'hist' file::
+ 
+   # cat /sys/kernel/debug/tracing/events/synthetic/wakeup_latency/hist
+ 
+@@ -1911,7 +1911,7 @@ output can be displayed by reading the e
+ 
+ 
+ The latency values can also be grouped linearly by a given size with
+-the ".buckets" modifier and specify a size (in this case groups of 10).
++the ".buckets" modifier and specify a size (in this case groups of 10)::
+ 
+   # echo 'hist:keys=pid,prio,lat.buckets=10:sort=lat' >> \
+         /sys/kernel/debug/tracing/events/synthetic/wakeup_latency/trigger
+@@ -1948,7 +1948,7 @@ that range ends and can be smaller than
+ 
+ To save stacktraces, create a synthetic event with a field of type "unsigned long[]"
+ or even just "long[]". For example, to see how long a task is blocked in an
+-uninterruptible state:
++uninterruptible state::
+ 
+   # cd /sys/kernel/tracing
+   # echo 's:block_lat pid_t pid; u64 delta; unsigned long[] stack;' > dynamic_events
+@@ -1993,7 +1993,8 @@ uninterruptible state:
+   => kthread+0xe9/0x110
+   => ret_from_fork+0x2c/0x50
+ 
+-A synthetic event that has a stacktrace field may use it as a key in histogram:
++A synthetic event that has a stacktrace field may use it as a key in
++histogram::
+ 
+   # echo 'hist:delta.buckets=100,stack.stacktrace:sort=delta' > events/synthetic/block_lat/trigger
+   # cat events/synthetic/block_lat/hist
+@@ -2186,11 +2187,11 @@ The following commonly-used handler.acti
+               wakeup_new_test($testpid) if comm=="cyclictest"' >> \
+               /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/trigger
+ 
+-    Or, equivalently, using the 'trace' keyword syntax:
++    Or, equivalently, using the 'trace' keyword syntax::
+ 
+-    # echo 'hist:keys=$testpid:testpid=pid:onmatch(sched.sched_wakeup_new).\
+-            trace(wakeup_new_test,$testpid) if comm=="cyclictest"' >> \
+-            /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/trigger
++      # echo 'hist:keys=$testpid:testpid=pid:onmatch(sched.sched_wakeup_new).\
++              trace(wakeup_new_test,$testpid) if comm=="cyclictest"' >> \
++              /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/trigger
+ 
+     Creating and displaying a histogram based on those events is now
+     just a matter of using the fields and new synthetic event in the
+@@ -2323,48 +2324,48 @@ The following commonly-used handler.acti
+     resulting latency, stored in wakeup_lat, exceeds the current
+     maximum latency, a snapshot is taken.  As part of the setup, all
+     the scheduler events are also enabled, which are the events that
+-    will show up in the snapshot when it is taken at some point:
++    will show up in the snapshot when it is taken at some point::
+ 
+-    # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
++      # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
+ 
+-    # echo 'hist:keys=pid:ts0=common_timestamp.usecs \
+-            if comm=="cyclictest"' >> \
+-            /sys/kernel/debug/tracing/events/sched/sched_waking/trigger
 -
- 	idr_init(&hdev->adv_monitors_idr);
- 	msft_register(hdev);
- 
-+	queue_work(hdev->req_workqueue, &hdev->power_on);
+-    # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0: \
+-            onmax($wakeup_lat).save(next_prio,next_comm,prev_pid,prev_prio, \
+-	    prev_comm):onmax($wakeup_lat).snapshot() \
+-	    if next_comm=="cyclictest"' >> \
+-	    /sys/kernel/debug/tracing/events/sched/sched_switch/trigger
++      # echo 'hist:keys=pid:ts0=common_timestamp.usecs \
++              if comm=="cyclictest"' >> \
++              /sys/kernel/debug/tracing/events/sched/sched_waking/trigger
 +
- 	return id;
++      # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0: \
++              onmax($wakeup_lat).save(next_prio,next_comm,prev_pid,prev_prio, \
++	      prev_comm):onmax($wakeup_lat).snapshot() \
++	      if next_comm=="cyclictest"' >> \
++	      /sys/kernel/debug/tracing/events/sched/sched_switch/trigger
  
- err_wqueue:
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -782,8 +782,8 @@ void msft_register(struct hci_dev *hdev)
+     When the histogram is displayed, for each bucket the max value
+     and the saved values corresponding to the max are displayed
+     following the rest of the fields.
  
- 	INIT_LIST_HEAD(&msft->handle_map);
- 	INIT_LIST_HEAD(&msft->address_filters);
--	hdev->msft_data = msft;
- 	mutex_init(&msft->filter_lock);
-+	hdev->msft_data = msft;
- }
+     If a snapshot was taken, there is also a message indicating that,
+-    along with the value and event that triggered the global maximum:
++    along with the value and event that triggered the global maximum::
  
- void msft_release(struct hci_dev *hdev)
+-    # cat /sys/kernel/debug/tracing/events/sched/sched_switch/hist
+-      { next_pid:       2101 } hitcount:        200
+-	max:         52  next_prio:        120  next_comm: cyclictest \
+-        prev_pid:          0  prev_prio:        120  prev_comm: swapper/6
+-
+-      { next_pid:       2103 } hitcount:       1326
+-	max:        572  next_prio:         19  next_comm: cyclictest \
+-        prev_pid:          0  prev_prio:        120  prev_comm: swapper/1
+-
+-      { next_pid:       2102 } hitcount:       1982 \
+-	max:         74  next_prio:         19  next_comm: cyclictest \
+-        prev_pid:          0  prev_prio:        120  prev_comm: swapper/5
+-
+-    Snapshot taken (see tracing/snapshot).  Details:
+-	triggering value { onmax($wakeup_lat) }:        572	\
+-	triggered by event with key: { next_pid:       2103 }
+-
+-    Totals:
+-        Hits: 3508
+-        Entries: 3
+-        Dropped: 0
++      # cat /sys/kernel/debug/tracing/events/sched/sched_switch/hist
++        { next_pid:       2101 } hitcount:        200
++	  max:         52  next_prio:        120  next_comm: cyclictest \
++          prev_pid:          0  prev_prio:        120  prev_comm: swapper/6
++
++        { next_pid:       2103 } hitcount:       1326
++	  max:        572  next_prio:         19  next_comm: cyclictest \
++          prev_pid:          0  prev_prio:        120  prev_comm: swapper/1
++
++        { next_pid:       2102 } hitcount:       1982 \
++	  max:         74  next_prio:         19  next_comm: cyclictest \
++          prev_pid:          0  prev_prio:        120  prev_comm: swapper/5
++
++      Snapshot taken (see tracing/snapshot).  Details:
++	  triggering value { onmax($wakeup_lat) }:        572	\
++	  triggered by event with key: { next_pid:       2103 }
++
++      Totals:
++          Hits: 3508
++          Entries: 3
++          Dropped: 0
+ 
+     In the above case, the event that triggered the global maximum has
+     the key with next_pid == 2103.  If you look at the bucket that has
+@@ -2442,15 +2443,15 @@ The following commonly-used handler.acti
+     $cwnd variable.  If the value has changed, a snapshot is taken.
+     As part of the setup, all the scheduler and tcp events are also
+     enabled, which are the events that will show up in the snapshot
+-    when it is taken at some point:
++    when it is taken at some point::
+ 
+-    # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
+-    # echo 1 > /sys/kernel/debug/tracing/events/tcp/enable
++      # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
++      # echo 1 > /sys/kernel/debug/tracing/events/tcp/enable
+ 
+-    # echo 'hist:keys=dport:cwnd=snd_cwnd: \
+-            onchange($cwnd).save(snd_wnd,srtt,rcv_wnd): \
+-	    onchange($cwnd).snapshot()' >> \
+-	    /sys/kernel/debug/tracing/events/tcp/tcp_probe/trigger
++      # echo 'hist:keys=dport:cwnd=snd_cwnd: \
++              onchange($cwnd).save(snd_wnd,srtt,rcv_wnd): \
++	      onchange($cwnd).snapshot()' >> \
++	      /sys/kernel/debug/tracing/events/tcp/tcp_probe/trigger
+ 
+     When the histogram is displayed, for each bucket the tracked value
+     and the saved values corresponding to that value are displayed
+@@ -2473,10 +2474,10 @@ The following commonly-used handler.acti
+       { dport:        443 } hitcount:        211
+ 	changed:         10  snd_wnd:      26960  srtt:      17379  rcv_wnd:      28800
+ 
+-    Snapshot taken (see tracing/snapshot).  Details::
++      Snapshot taken (see tracing/snapshot).  Details:
+ 
+-        triggering value { onchange($cwnd) }:         10
+-        triggered by event with key: { dport:         80 }
++          triggering value { onchange($cwnd) }:         10
++          triggered by event with key: { dport:         80 }
+ 
+       Totals:
+           Hits: 414
 
 
