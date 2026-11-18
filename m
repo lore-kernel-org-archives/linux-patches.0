@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015786;
-	b=KnCXeoU4nZQTG5xvQMxpbhV5xGU/PJBNcV/GBrJRY3bJJVWFC5wm/mGUQ5HQQjb5Gnru
-	 kogkDKJMFwRqDKCe9qpj3x8Tb4L/cMiaH2DmtZmlXq2sWn1enSbETPjpGMrmpu66Pee0j
-	 8m7HWHPiT8MxH/JCPeSa7AsjRq3Jre+F3Nyrv0XF4QbbnpEv8yktm466v8JyOkOt71EsJ
-	 /uUOTzKMKWXN1tOgMOaOnqBQsQK2GA8juhlyzuHz0n1cOhllcFP/PDoB8W+wZrh+4Zq1p
-	 YxLhO8GGaXsasYGl5uSSUj5JqbhBbmCv2eKNhi+gxfbx3TPrpighd9l1FGT1BANPd0w==
+	t=1795015789;
+	b=Ly/YzC50JGsNFh1Lmhi4ShhcHC5QHstTs5ob5U7DR7MGoV//mR4ZzWkOgAaVMLAzdTBi
+	 N3fJBap/HEZvYxptx5kK/3/X11fW1Smlvprrz0NTp+C/sF5bMuxgZ281AXvLNGSoVl7Cd
+	 TjRrWODuNWjOS25TIXravusZlv5IXr/nSBc26w247krA2n2Ir1wIA0ro29zrRWcFosJkq
+	 2nLXA3qjm6CQg1k7tuU9YexPtFBMJzbcgKNpK3bfuqafcsaD0a3lIn9ZEdOF5BfGezQJs
+	 MORel9c8A6GikdkstfumLclVg5kq9KWI9JiIUQ41O7Ja4zn/0t+diMOl8Ilt26kGKDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gczulTgXNVjpCoi9izEn1Pmj4aTs3IQhDgX0YLkx9B4=;
-	b=g6MuiEu35pdG6lRHpQBkWfdiV9Hv/9GY9CMFdEz9edjP9rTiT4MLiQQym8dybadRtL0V
-	 OUAErPbPuye8fFbe/OFWS8kvzXQxnHrLvX7C8icEpl1f6BCC4+kc1q2wyY5Ar4TS6SmUi
-	 BXidAeerNwD8yiZaSaXEk86FcSFrc95QDuVzQehdM3R6ZE9G11vCtCp2DT3BN0QsB+DF7
-	 ziHNqAnKp8+qxbUFMyikwP7nUmn6meg8+8bxDo8/pioAcviRwX3LQn5aQ+JDzlpCN+4W7
-	 TR2tfAN/CPdmXFRRCMrDZ95afyyaHnkfYS8M5n2ebXSxmsuCTbz8Ufdv5RJlIFu++Ww==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yByuEu7Cp6A+ojpOTAuGjoSVj5Dxltgz0yZpRxdhL2E=;
+	b=ylHm8m1ojnBJK79ITgF+Ui5SfvQT8V9hCkPNhf4+1bK81tmv0OVKNfUco9uWVBCRwuM4
+	 zQ/DDeiGNx33uyeeRUc1roEN5L0eTFLu6A99LmSA5ee850GmyhDA+ToVuhgivDA0OwoEa
+	 1bTjVbZaP7bNvzR6hC0gJyeoScBK6sKMHkjRhBEShzu3KDqpJlKA980Q7htgP3Hyzf1sy
+	 TikeVwhfy0C2Zp2wImSKMqjlSchOtu5Ws80lxNd38mc3m/uhdtiPixVldqfezZ/DNKCRM
+	 OK03NxKU3/aw+kO7wpr4CB1E/lVKFQLwYlf1MsPm55yosId4V7ohfae+BXXcoPaVuFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pW1xIUse;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqlBPpFa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7008C606A31C;
-	Wed, 18 Nov 2026 15:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E97606A31C;
+	Wed, 18 Nov 2026 15:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pW1xIUse
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C0C1F000C8;
-	Wed, 18 Nov 2026 15:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqlBPpFa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823441F000C4;
+	Wed, 18 Nov 2026 15:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015786;
-	bh=gczulTgXNVjpCoi9izEn1Pmj4aTs3IQhDgX0YLkx9B4=;
+	s=korg; t=1795015789;
+	bh=yByuEu7Cp6A+ojpOTAuGjoSVj5Dxltgz0yZpRxdhL2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pW1xIUseMvSXR+2h485Ix/Td737Z67cH4bmErwW+4LtqfFQWbngRwBS/cB2B+O44o
-	 m5wYaqQ33ZfhcLcrG6HlICUhPbRFsNNWKyBmoWvtchLkYwf+z68kr3uL/BjYLI5eyH
-	 pGGbxtmzbdDWn9T7zM/o3yEeH1ghqU3Kd7qvxIYo=
+	b=TqlBPpFa3HMENWeJoSV78jfBqTNc2CeHdF3W7WQ1C2ktq2cwypy0uspBHm1J5QUMf
+	 NQR2clFW5IbPye9YQavrq034yHAxXDN5YerQUa/Fn1FiO1cHBt2m2mENtNkf9THucd
+	 M3o0TV0nvObi5e3xb0vIaiWrdVNZj6CAkiz0ZHcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Varun Gupta <varun.gupta@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0255/2651] drm/xe: Guard page-fault worker with runtime PM check
-Date: Wed, 18 Nov 2026 15:24:55 +0100
-Message-ID: <20261118150257.041285143@linuxfoundation.org>
+Subject: [PATCH 7.3 0256/2651] spi: ma35d1-qspi: Allow DTR operations with the regular SPI API
+Date: Wed, 18 Nov 2026 15:24:56 +0100
+Message-ID: <20261118150257.076741363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,74 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Varun Gupta <varun.gupta@intel.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit fcc2431d2213dc4d04250c4f1ae87d9c3ae0d455 ]
+[ Upstream commit 2448f25cc839739fe576d31d85c7d0df4844bb3a ]
 
-During VM teardown, the VM's runtime PM reference is dropped
-asynchronously, allowing the device to autosuspend while stale page
-faults belonging to the now-dead VM are still queued. When the
-page-fault worker later tries to ack one of these, it calls into
-guc_ct_send_locked() on an already-suspended device, tripping:
+The feature was implemented but not actually enabled for regular SPI
+operations (as opposed to spi-mem operations). Make sure the missing
+capability is actually set.
 
-  Assertion `!xe_pm_runtime_suspended(xe)` failed!
-  WARNING at xe_device.c:1267 xe_device_assert_mem_access+0x11c/0x140 [xe]
-
-A live VM/exec queue always holds a PM reference while it has
-outstanding work, so if the device is suspended at ack time, the
-owning context is already gone and the fault is stale.
-
-Take a runtime PM reference across the entire pagefault
-queue worker to safely deliver acks for torn-down VMs.
-
-v3:
- - Move PM ref to the generic xe_pagefault_queue_work using
-   guard(xe_pm_runtime)(xe) instead of tracking it in the GuC
-   backend(Matt Brost).
-
-v2:
- - Hold PM ref across the entire batch (begin/end) instead of per-ack.
-   This prevents the device from autosuspending mid-batch, which would
-   leave write_only acks written but the end flush skipped, and skip
-   counter++, desyncing the cadence check.(Himal)
- - Add a comment explaining stale faults.(Himal)
-
-Fixes: f289f7807119 ("drm/xe: Add xe_guc_pagefault layer")
-Signed-off-by: Varun Gupta <varun.gupta@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patch.msgid.link/20260907050011.497181-2-varun.gupta@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/all/09c3928f-4b58-4ac6-8e1a-84dfe3ff6b92@sirena.org.uk/
+Fixes: 15e9362f6190 ("spi: ma35d1-qspi: Add DTR support")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260904-perso-ma35d1-master-v1-2-b6936e8c6fa1@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pagefault.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/spi/spi-ma35d1-qspi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pagefault.c b/drivers/gpu/drm/xe/xe_pagefault.c
-index a4986df8328d6..7a0ea4d414ca6 100644
---- a/drivers/gpu/drm/xe/xe_pagefault.c
-+++ b/drivers/gpu/drm/xe/xe_pagefault.c
-@@ -304,6 +304,13 @@ static void xe_pagefault_queue_work(struct work_struct *w)
- 	 */
- 	guard(xe_pm_runtime)(xe);
- 
-+	/*
-+	 * A live VM holds a PM reference, but a torn-down VM does not.
-+	 * Guard the entire worker loop to safely drain stale faults and
-+	 * prevent autosuspends from desyncing batched CT flushes.
-+	 */
-+	guard(xe_pm_runtime)(xe);
-+
- #define USM_QUEUE_MAX_RUNTIME_MS      20
- 	threshold = jiffies + msecs_to_jiffies(USM_QUEUE_MAX_RUNTIME_MS);
- 
+diff --git a/drivers/spi/spi-ma35d1-qspi.c b/drivers/spi/spi-ma35d1-qspi.c
+index cf731fa2f7e2d..30e3239f777d6 100644
+--- a/drivers/spi/spi-ma35d1-qspi.c
++++ b/drivers/spi/spi-ma35d1-qspi.c
+@@ -649,6 +649,7 @@ static int nuvoton_qspi_probe(struct platform_device *pdev)
+ 	ctlr->max_message_size = nuvoton_qspi_max_message_size;
+ 	ctlr->mem_ops = &nuvoton_qspi_mem_ops;
+ 	ctlr->mem_caps = &nuvoton_qspi_mem_caps;
++	ctlr->dtr_caps = true;
+ 	ctlr->set_cs = nuvoton_qspi_set_cs;
+ 	ctlr->transfer_one = nuvoton_qspi_transfer_one;
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
 -- 
 2.53.0
 
