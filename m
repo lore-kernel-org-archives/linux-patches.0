@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044865;
-	b=bzt80oXSCCkMUtvJxlcFnUOmMh2h0Ql5bFTHJ60pM5VPR5UlVCnaewsqNe8DCMzDli0d
-	 QV+fHu4XPDaRi9aH5GZJbH6Ac5VQAxz1oVFvufp1CgQn62F9QmAr2VeR2mYNTJx5LAUZX
-	 U3O8U4mRdjXZmg9YgbhtSj/gbQ4r0cOb6WRahpJrv9ZT8/eiP2fqiMPGTVAHLxbAFJ5Ty
-	 mEAzqwaurpBW0Ak4cWo63cGNzDiBRzY8JHpNyUcLV3WxwhC5fDRWb8xuL+8Q29t5E+uFe
-	 Y4/u4vcHsvffgrATZh0kJzjGzAJTn2ZeO1vBtDTNlo0bF5Chog6n89XAFCrqM3IGW6A==
+	t=1795044868;
+	b=hy921JpGmyuGZEiZ7scPmmPNe/4Qudlru05xlfXbKCa6p3hqnhIcSAUv9NMusWCSx2/X
+	 e2XXhdVoeOUY2VecdFlwx0tBz2bSZ9U+mT27VnHilUKOJYdvCrnVn1/Utfz4A5i7/ki83
+	 xplTRpP9WDCVw8sJeX7epHD4pmjK6lug+E8WyIPJidIBGLWL/UDKaRnjh5egXGNRhvbJ7
+	 GdqffENu2b+wVefRgLM42Eeh7TRmabt6KcaZZ+plZamP+TTd0yTlR7zkXBlUHtvLBnBFJ
+	 G5Afv+1H+xhLv0bX/Qd8PvOjn+pyYdnUXsqvXQCxVWlIY+BuAmts6qkpTsKspKopewA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=37OWwsZwX3Q3fPI0yHzFLT3iosRDcGDpJYR46HdR9zs=;
-	b=lOBMncIscSUoOUcs/go0elTEHINkpgkRK8TRsVqIPb87fp+IA8uCej4HmKFZRuIm0F4K
-	 ojyJAKT30qM7bVocdRSd/NiMsQ03qiEPo3U2UomGfMM6ETQBX9kbeTKA4QM4XHKbT2qpi
-	 RuMoeQOLN2kYZkOzu+lBiVIw5v7Jov1BMP6DpwFFG5pHw2R0s/k1Q7US0cbBJ/mFpuBPb
-	 m4Zpqc32DZ/Pkn6DOhzGfIyhVvu37oCiA9IpyEwsIH7/3qMwVcqT1D3F3/Qua5r+9L/e3
-	 ren9PryE0uAtvO8d8AIwipAfJJ3cMe9ZbWnl6J7n72vdEH2PRDppy2e1aRP/JqoChVA==
+	bh=/mgaVHokyRslNWglrXC662pbrWOn5VjGWUQQb1G1XOY=;
+	b=S9z7tT8BG4lVFPPAHKSZLc1yor5MSfy6KelLGMXIHrHJTrG5P7aDoXwxJRmybEn1xJ3V
+	 v/B786iJn1x1EHycASitwWfsYr0H+1pkK0k37kRNfaYTLhcdmO5L1iKXN/vlWhN+Py998
+	 aCjLLrziSxrOxxCxqrGtpUfMrpHKOalki9nb5K5LUA0wPZL9kzsvL7RG67208fIsx6+4b
+	 u+WwRDGLCZUMi28XuSm49N8972BDGHz5OYza7KYFbYa6EvDFFGW21nDx52pxzUc3Rms1f
+	 y3fOlfFajYyHp+j5JT5RVP0Q6Ki86dLPevymbyE1hcoN6398wDtYaNEHsvYQM2dEBxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdAOO0i6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ON/mz4VP";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B890606A9D8;
-	Wed, 18 Nov 2026 23:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3D3606A9D5;
+	Wed, 18 Nov 2026 23:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdAOO0i6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F711F000C4;
-	Wed, 18 Nov 2026 23:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ON/mz4VP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D131F000C4;
+	Wed, 18 Nov 2026 23:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044865;
-	bh=37OWwsZwX3Q3fPI0yHzFLT3iosRDcGDpJYR46HdR9zs=;
+	s=korg; t=1795044868;
+	bh=/mgaVHokyRslNWglrXC662pbrWOn5VjGWUQQb1G1XOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cdAOO0i6XkyzEXNZz9rw2CRZbSSx8KW5nifXbLGR2NpYINRZVnMo9srIJ+7YT3GSO
-	 +ZQv1HJnOuvAIYYT5OD7SS4ndtw91TueZ77HBDkZCR6FftoFCP5pwf1CiAtS0u/X/w
-	 oKCpo1bcSSrTetgkffFNHbOcNdHrZrtKceYGn0JI=
+	b=ON/mz4VP8hnuBa7PKs6P2qsmO+rNudL08V774XZ4UlTO8Oa634Zvt6XphetGdNhfv
+	 8i/aSt9C6H++eJj5ztM2Xg7EB6MelrPd4T1ZJjkJZdxaK4qOMIHcvt20Mj8OTAgMTu
+	 MZMZ4I2nlu+rj5m2NNOFmPikAbOHEqbXghkQktpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daehyeon Ko <4ncienth@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0717/2857] aio: prevent eventfd/epoll recursion on poll
-Date: Wed, 18 Nov 2026 15:29:11 +0100
-Message-ID: <20261118150227.362996359@linuxfoundation.org>
+Subject: [PATCH 6.1 0718/2857] ipc/mqueue: release notification resources during inode eviction
+Date: Wed, 18 Nov 2026 15:29:12 +0100
+Message-ID: <20261118150227.399060612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,62 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 398e3fa789aa5ffddc8689d8cbc7b31e1824130c ]
+[ Upstream commit eb85469f0dd69ca145d63117450e14c31f67f698 ]
 
-aio_poll_wake() can complete a keyed poll request inline while the
-provider waitqueue lock is held.  If the polled file is an epoll instance
-and the AIO result eventfd is watched by that same instance, signaling the
-result can feed back into epoll and try to take the provider waitqueue lock
-again.
+mqueue_flush_file() removes an mq_notify() registration only when the
+closing task belongs to the thread group stored in notify_owner.
 
-For example, a timerfd wake can follow this path:
+A task in a separate thread group created with CLONE_FILES can register
+SIGEV_THREAD notification and exit without closing the shared file table.
+If another thread group then unlinks and last-closes the queue, ->flush()
+skips the registration and inode eviction loses the only pointers to its
+resources.
 
-  timerfd -> ep_poll_callback -> aio_poll_wake -> aio_complete
-          -> eventfd_signal -> ep_poll_callback -> ep_poll_safewake
+The orphaned registration permanently retains the notification skb, its
+netlink socket, a pid reference and a user namespace reference. An
+unprivileged process can repeat the sequence with new queues and sockets.
 
-The second ep_poll_safewake() recursively acquires ep->poll_wait.lock.
-eventfd_signal_allowed() does not prevent this because the wake chain did
-not begin in eventfd, so the task's eventfd recursion bit is still clear
-when aio_poll_wake() decides to complete inline.
+No inode users remain during eviction. Remove any stale registration there
+after dropping info->lock, since netlink_sendskb() may release the final
+socket reference.
 
-An unprivileged process can construct this graph and make a CPU spin on the
-recursive lock.  DEBUG_SPINLOCK reports "BUG: spinlock recursion", and
-lockdep reports the same epoll waitqueue lock as both held and requested.
-
-Always defer eventfd-backed poll completions through the existing
-aio_poll_put_work() path.  At this point the request has already been
-detached from the waitqueue and active request list, so the work item can
-publish the completion after the provider callback releases its lock.
-Poll completions without a result eventfd remain inline.
-
-Fixes: e8693bcfa0b4 ("aio: allow direct aio poll comletions for keyed wakeups")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260813133843.2933127-1-4ncienth@gmail.com
+Link: https://patch.msgid.link/20260824042359.925145-1-4ncienth@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/aio.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ ipc/mqueue.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index 3e3bf6fdc5ab6..fd606a9bd701e 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -1797,7 +1797,12 @@ static int aio_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
- 		list_del_init(&req->wait.entry);
- 		list_del(&iocb->ki_list);
- 		iocb->ki_res.res = mangle_poll(mask);
--		if (iocb->ki_eventfd && !eventfd_signal_allowed()) {
-+		/*
-+		 * We hold an arbitrary provider waitqueue lock here.  Signaling a
-+		 * result eventfd can feed back through epoll and try to take the same
-+		 * lock again.  Defer all eventfd-backed poll completions.
-+		 */
-+		if (iocb->ki_eventfd) {
- 			iocb = NULL;
- 			INIT_WORK(&req->work, aio_poll_put_work);
- 			schedule_work(&req->work);
+diff --git a/ipc/mqueue.c b/ipc/mqueue.c
+index d09aa1c1e3e65..d18e024153434 100644
+--- a/ipc/mqueue.c
++++ b/ipc/mqueue.c
+@@ -528,6 +528,13 @@ static void mqueue_evict_inode(struct inode *inode)
+ 		list_add_tail(&msg->m_list, &tmp_msg);
+ 	kfree(info->node_cache);
+ 	spin_unlock(&info->lock);
++	/*
++	 * A shared file table can let the notification owner exit without
++	 * running ->flush(). No users of the inode remain during eviction, so
++	 * tear down any stale notification after dropping info->lock because
++	 * netlink_sendskb() may release the final socket reference.
++	 */
++	remove_notification(info);
+ 
+ 	list_for_each_entry_safe(msg, nmsg, &tmp_msg, m_list) {
+ 		list_del(&msg->m_list);
 -- 
 2.53.0
 
