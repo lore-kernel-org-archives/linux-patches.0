@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058141;
-	b=4CE+WtI0DDy/4WZgPgvXjkgBgOTlWTPYMDyuvkGXedkI5L1zst1Ybk8aCPjjMbWxntcJ
-	 awSmFjeG/FdHxFqPbhxwPfcx1/gVjc1ZzSBd88pRHyaBzW500IQNRAOo2PfBB2IMMS1un
-	 wQMN+FA7x9sQ0zKflq5oY6agL9eQsMx2hcnijY9ffoUcDej7tAqdgDs8e87EO450v2JVp
-	 JKtPN5fXFVaTBWGqycqK1Ibvx1mpw4l09bFq9HwSVUFrRYGb5ACB5Gvh+rjh5mTiIMgbI
-	 u0OTE2ug43dRNFhKcbPnSz1yDU4yL2Uk3u9prj8MNcHnlekvjhhGJJIzBnquEx4sf8g==
+	t=1795058144;
+	b=S+6t4AzJFVCuaeGMAAoF7PGKg2ovEyP6nZr5V0gdcawsDDw2ifz/A2TxZqhMhcXjIm6U
+	 aaJipxL7pINEt8kkWaKxJXAhJRL/Z2jgsTJYMMIh2/h9M5jdlHZDDusasOHwudu7R3wdL
+	 00eXacZFcVN4fOXkPlLG8/MeGdtSv5xoMDugcZZT9fHccg8/5F18tuM8vHBxlh85Xxa6E
+	 fuRJY//Lck3YaASt35LkPObp8bueLRRbLsfU/m+ITDyBg0n+3U7TnFcEH6agwj78ZEC6s
+	 LAiDSIpVA5Vb28VIKhEqViBl78GUAiMtnRrV1T+cs3fx25UgQuKDugm1LhmMvvAL3yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=54L/Qgcwu316ykNJPrr31ySIMwsWRN3mwlswCQW84sQ=;
-	b=h89GdojVJnfAcQsukDPALlRODneVW1u9+ZKXwoz0SCIo+ckFo7jeW5fPDfLoc9X+wYGb
-	 dVFiweX0krLNETMT3e0kwwMbxy0d4J326huGVfhWwcay5HYkY3hnKP/4SYrKTXUybDUNW
-	 7X3oc1qjGtJYLJyPN7w1nG2aPn4AhxXIxLfj73+rjQfoiYTesw2dePpB6P7ygEYpJ+BSq
-	 IZ/p74KIlRxZBUWbEiQ+W+J9xzQgJjkqFXNBuAzGGa/RSm4XbfIUP/GAE+UZ+AlxLWFBd
-	 0rgnnGHVI0+lcFfRQeDpR6m1OLj3l1dAkuznl6QPCHzS1H5NITdBlWkcl0JpzBefB/g==
+	bh=cg94z/PqVuZzZEw+O9cTtEBcf6qCDoRkkP4viwhBOg8=;
+	b=NlGXQ6QrV6DWOyap9tmw+LCcDXLvqraQQYj2mPaFrrT8xzrmrf7bRQwGfovo/5NX35eS
+	 7/x4zCxRsFiEYBE9iJK14yi8Tiuge7Ei+DmGbjM9i0Iieragxajoo88fmrv50rw6ICMrG
+	 IGTBD/hDUKOFN3QQL47Kpo4EpJ6/o0sZI+NQGImYOaeR7q3vF7AbpvHVcwmIaWeKrauLZ
+	 YwDzNIQPkXYUtixV9NGPZ+xXiRaFVvYZxj+UHneB/NsIQXVfTYBwEk4d9gKquKrbCzk9K
+	 DQP0EDAVviXELrwWzg/2EDvART6Xiz6ckSh8twAqgEGh3VlqgDOFA+txuBmEQSUHEAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TmCBl2F3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JTZ1L37b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7B9606A31C;
-	Thu, 19 Nov 2026 03:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71948606A31C;
+	Thu, 19 Nov 2026 03:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TmCBl2F3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F061F000C4;
-	Thu, 19 Nov 2026 03:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JTZ1L37b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA56E1F000C4;
+	Thu, 19 Nov 2026 03:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058141;
-	bh=54L/Qgcwu316ykNJPrr31ySIMwsWRN3mwlswCQW84sQ=;
+	s=korg; t=1795058144;
+	bh=cg94z/PqVuZzZEw+O9cTtEBcf6qCDoRkkP4viwhBOg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TmCBl2F3ICfZtvbA4HLE1a7hFuvTVE/ZkztYH8/oS0mv08f6tQJzyUFhiifvTxwf2
-	 JQvsdIy9R0s9m2iSudKcemFsNOqUNjTeOxPZNDoQmp7IER2EdQoOiohMto93SUbr5P
-	 krslBbX4s/Q9OKA3V+ceKAxugr9ofvKrxkVGdVRs=
+	b=JTZ1L37bsRtO+4hDttwI12wJLohpWNP5uqLjlIYj+hFybtKcN5o3ZmmSbIf77Qmyi
+	 iZv4FP4dbyWbcqJ7G3KVioj6H4AIlk8sOvOMO91fkHARqbR2L92muRA9Vi9rwyUYwW
+	 yDruYSsGQK5xMcTvm9PocIfArkppyo+f/6DDNvQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	stable@kernel.org,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0353/1848] remoteproc: elf_loader: Bound the section header table
-Date: Wed, 18 Nov 2026 15:39:51 +0100
-Message-ID: <20261118145927.543173058@linuxfoundation.org>
+Subject: [PATCH 5.10 0380/1848] media: stv0900: bound DiSEqC reply length to msg[] size
+Date: Wed, 18 Nov 2026 15:40:18 +0100
+Message-ID: <20261118145929.451201981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,81 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit b32177ead5f8925aa66ceed2bd533a85196f4f0c ]
+[ Upstream commit 6d7e70111b9c80a9e4cb17fe6a6c4f5470847722 ]
 
-The rproc_elf_sanity_check() only checks the image is big enough to hold
-one section header. But find_table() walks e_shnum of them, and first
-dereferences the header at e_shstrndx to locate the section name table.
-Both fields are u16 and both come from the image, so an e_shstrndx of
-65535 reads about 4 MB past the buffer.
+The FIFO_BYTENBR field is 4 bits (mask 0x0f), giving a length of 0..15
+but reply->msg is __u8[4] in struct dvb_diseqc_slave_reply.  A faulty or
+malicious device reporting more than 4 bytes will the array and clobber
+the stack.
 
-The commit 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read
-past the ELF header") added the same check to the MDT loader, and says
-the header "is sanitized beforehand" under remoteproc. That is what this
-patch makes true.
+The stb0899, tda10071, and s5h1420 drivers all properly bound the FIFO
+count against sizeof(reply->msg) before the read loop, so do the same
+thing in this driver.
 
-Check e_shoff against the image size first, so the two bounds can use
-size_add() without an e_shoff above SIZE_MAX wrapping on 32-bit. The
-bounds are separate because e_shnum may be zero while find_table() still
-reads the e_shstrndx header.
-
-Fixes: 400e64df6b23 ("remoteproc: add framework for controlling remote processors")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://lore.kernel.org/r/20260724025322.2341205-1-sammiee5311@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: 99277b3824e4 ("V4L/DVB (10803): Add core code for ST STV0900 dual demodulator.")
+Cc: stable@kernel.org
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_elf_loader.c | 23 ++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/media/dvb-frontends/stv0900_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
-index 334b3f9f88149..2694741e89841 100644
---- a/drivers/remoteproc/remoteproc_elf_loader.c
-+++ b/drivers/remoteproc/remoteproc_elf_loader.c
-@@ -46,8 +46,9 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
- 	struct elf32_hdr *ehdr;
- 	u32 elf_shdr_get_size;
- 	u64 phoff, shoff;
-+	size_t shend;
- 	char class;
--	u16 phnum;
-+	u16 phnum, shnum, shstrndx;
+diff --git a/drivers/media/dvb-frontends/stv0900_core.c b/drivers/media/dvb-frontends/stv0900_core.c
+index e7b9b9b11d7df..ce228f2ef330c 100644
+--- a/drivers/media/dvb-frontends/stv0900_core.c
++++ b/drivers/media/dvb-frontends/stv0900_core.c
+@@ -1775,6 +1775,8 @@ static int stv0900_recv_slave_reply(struct dvb_frontend *fe,
  
- 	if (!fw) {
- 		dev_err(dev, "failed to load %s\n", name);
-@@ -90,9 +91,27 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
- 	phoff = elf_hdr_get_e_phoff(class, fw->data);
- 	shoff = elf_hdr_get_e_shoff(class, fw->data);
- 	phnum =  elf_hdr_get_e_phnum(class, fw->data);
-+	shnum = elf_hdr_get_e_shnum(class, fw->data);
-+	shstrndx = elf_hdr_get_e_shstrndx(class, fw->data);
- 	elf_shdr_get_size = elf_size_of_shdr(class);
+ 	if (stv0900_get_bits(intp, RX_END)) {
+ 		reply->msg_len = stv0900_get_bits(intp, FIFO_BYTENBR);
++		if (reply->msg_len > sizeof(reply->msg))
++			reply->msg_len = sizeof(reply->msg);
  
--	if (fw->size < shoff + elf_shdr_get_size) {
-+	/* keeps shoff in size_t range for the two bounds below */
-+	if (shoff > fw->size) {
-+		dev_err(dev, "Section header table is out of bounds\n");
-+		return -EINVAL;
-+	}
-+
-+	if (shnum) {
-+		shend = size_add(size_mul(elf_shdr_get_size, shnum), shoff);
-+		if (shend > fw->size) {
-+			dev_err(dev, "Section headers are out of bounds\n");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	/* find_table() reads the header at shstrndx even with no sections */
-+	shend = size_add(size_mul(elf_shdr_get_size, (size_t)shstrndx + 1), shoff);
-+	if (shend > fw->size) {
- 		dev_err(dev, "Image is too small\n");
- 		return -EINVAL;
- 	}
+ 		for (i = 0; i < reply->msg_len; i++)
+ 			reply->msg[i] = stv0900_read_reg(intp, DISRXDATA);
 -- 
 2.53.0
 
