@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042316;
-	b=dF7I04o4vsCGmHu4tEYG1pODry0tbIH34o4RedmwO8RXvWWinGMw3W7gdw2bgx1AW+GC
-	 ivJkwbUW4pswMlO21FFSUlW3tKCbaKA1rEuV5uA1lrmoxcmnntHZ2o/FHeEut4N0Lc9BO
-	 h9nedUtIqsOuMZ7ghbjgCDrRhPHzFnb+jUfm/CK+0cIFzhQcGqUfjppqlw829uk6hB75Q
-	 9x3lr77r9jo0/AvQH/aCTWKww+FzhaVLvuTS/WS2YIYPX1Y209zAdj6Lt8ADZj4ydqmkb
-	 EJOzj5aq+1CQLAFD/+BgloCthgcvs/H8UEG0vxkRmpPNNxteAZ5KSjjpjhMSYAXX/QQ==
+	t=1795042319;
+	b=0cGQU4oYq6mzoYhxiaMCmEZXGlE6V2S8eGKNKFYPdclVenlfKMKKd+iqGrtfdEH1dBvY
+	 Yk7sDlH/AvWqnzrBrETxFFgcAjdSo8/PnOfz7gLDlt3oyQOMfuJ9qEisSw86yOmaZoFXi
+	 L4BKI9LZKbmFvyaIGdVPy9BetJa7XCUTGZ6hhTh7g8XkcRh6rqWEBYzjz1tLeqnhk4v8i
+	 DLd77fAWzgGwZTsVIaGCieLPNTlNUROgiHImjbK1YaBjJqoJmMjiMqOP5/1YRNA2482i+
+	 21DAqGHvwqA0QuBWOPBmhFWkFMjVWYxo9EjQ13jB5sYg7SROcJkyOYM0+37ex1EvfRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IFIAy31s6ytcVPViMC6t/jRKDUKvF1tloCjhGup+V48=;
-	b=3oHaQQMA+v/Obq27zuQ7a8bTNNNiHDfYFYrQvAT969/MzwDPQDNYmYOnpN6E8AyMAyTL
-	 AYRgcv3rdLcV7nC8FaQE5JCpBf2of10YtUBlBT/RUTUtlR+sISEdQmahh9PVAU4WLR/z/
-	 r5U8TiT2wxK/UtK3+aCyPe0xz/f0sKem9k5jWmutV3wEXghD1ChrqEr+bSgF5KEIt7RxH
-	 hhxFd6nRTR1dwJkFEm7iIa73VwuhoxbofkbR65mRWanC6YqyZ0jEP8BjQwfoGxGLUAQOv
-	 LKtmG3BvUwJosM3coWg4hLUoBxihkccPD5OqWbe82Ls+pLPsaWGmfYs6yOrOIcjzNPQ==
+	bh=3ZKacpY4LvR2yYx3VVMEPeAGvGSYDzUaFC8Mo2SqIMo=;
+	b=wUKIx8reSrZlgBTsd7LklWMRHqT02xOCmZnsF7TAxuxvR1an5ovS0HEKn3BJnxMFONvy
+	 9F2IMxa5NN9t64SfDSN0iUQtACdkAtFwZLQH5lrAn+tt347xjz1beQE0ZnLIK34/zNn6s
+	 KkcjVD5KkJgHMLPzXQyyOHM46OoBAiX8jcyG4aXneYqzrN+ujSdHjBhI8LCLE1pNgJZc2
+	 DTrkRNIZ1sliMvzxwFIy2qQA9PTwkWNM7VwyQ2mxe5LJVA5b1XzPHn3v80CImCmEl23XE
+	 iRPzqzuKTLLpA3tqvk01EN/27Gpm0SpiSAnLJy/jwFM/xU/Svkf1kmEnb9g5Lbv67ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y26S15jy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtcsH6tZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FBC606A31C;
-	Wed, 18 Nov 2026 22:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE7E606A32A;
+	Wed, 18 Nov 2026 22:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y26S15jy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B7D1F000C4;
-	Wed, 18 Nov 2026 22:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtcsH6tZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CDA1F000C4;
+	Wed, 18 Nov 2026 22:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042316;
-	bh=IFIAy31s6ytcVPViMC6t/jRKDUKvF1tloCjhGup+V48=;
+	s=korg; t=1795042319;
+	bh=3ZKacpY4LvR2yYx3VVMEPeAGvGSYDzUaFC8Mo2SqIMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y26S15jy7pJclBGAhzL1198vNMiGHDVbgOF6cSNQDgWkuTavTJja0sHNWV3buozkz
-	 hBvim2GwvitIFMedpfpruHAkgwXE1m5HWdPDXJ6RRH7yRiWS6pkDZ8PSg3Os8JY5NA
-	 i1ATrXdPs21UJTw3sp3AAwnMMY6yfUoJNQHa2MdE=
+	b=KtcsH6tZhj6eVS/8cBNqLUwRyenRok39FONTnoXH+qaZIUYINMUGkvQf7syoQe38p
+	 Itcq6GJ1kL5uJwDJVbkORltq1tV6Wdg9UFmV91v3bFN9NAL92+0Y3OsqZT13zgm3gB
+	 qq6zkRITOR67fgYHfNTyI61ixLrzeRNoGVFojvSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Lipp <Stephan@adalogics.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Travis Howard <thoward@lafayetteinstrument.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3128/3318] net: shrink the payload-only part of skb dataref to one bit
-Date: Wed, 18 Nov 2026 16:02:30 +0100
-Message-ID: <20261118150453.754742915@linuxfoundation.org>
+Subject: [PATCH 6.6 3129/3318] tg3: Add Datto SIRIS 5 1U Server to restart AER quirk table
+Date: Wed, 18 Nov 2026 16:02:31 +0100
+Message-ID: <20261118150453.782451328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,84 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Travis Howard <thoward@lafayetteinstrument.com>
 
-[ Upstream commit 4957ea03bf2696f5da12c09144f48d040696ecc2 ]
+[ Upstream commit a55eb6a622141352131aa6156bbd6ce5da79d9b5 ]
 
-skb_shinfo(skb)->dataref is split in two 16-bit halves: the lower
-one counts all references, the upper one the payload-only (nohdr)
-references.
+The Datto SIRIS 5 1U Server is a Dell OEMR XL R640 (Dell's OEM-ready
+variant of the PowerEdge R640) sold under Datto's identity. Its DMI
+strings report sys_vendor "datto" and product_name "SIRIS 5 1U Server",
+so it does not match the existing "PowerEdge R640" entry in
+tg3_restart_aer_quirk_table.
 
-__skb_clone() increments dataref without bound, and skb_cloned()
-only checks the low 16 bits. With 65,537 references the low half
-reads 1, the head looks private, and pskb_expand_head() (or
-skb_unclone(), skb_cow(), ...) frees it while clones still point
-to it.
+As on the PowerEdge R640, a system restart triggers a fatal PCIe AER
+on the BCM5720 during ACPI _PTS for S5, which the iDRAC logs as
+PCI1318 and which hangs the reboot. Power off is unaffected.
 
-An unprivileged user can reach this from a user and network namespace:
-about 32,770 AF_PACKET sockets on lo bring dataref to 0x10001, then
-any pskb_expand_head() on the receive path (here a pull of a large
-IPv6 Hop-by-Hop header) frees the shared head:
+Clearing the same PCI_EXP_DEVCTL error-reporting bits on both BCM5720
+functions from userspace immediately before restart allows the system
+to reboot normally, confirming the quirk applies to this platform.
 
-BUG: KASAN: slab-use-after-free in _copy_to_iter+0x187/0x1330
-Read of size 1590 at addr ff110001104a9002 by task dataref_wrap/87
- skb_copy_datagram_iter+0x60/0x190
- packet_recvmsg+0x1f5/0x12b0
- __sys_recvfrom+0x18d/0x290
-Freed by task 87:
- kfree+0xf3/0x3b0
- pskb_expand_head+0x344/0xeb0
- __pskb_pull_tail+0xf9/0x1bf0
- ipv6_parse_hopopts+0x377/0x4f0
- ip6_rcv_core+0xc67/0x1620
-
-The upper half never holds more than 1. It is only set by
-__skb_header_release(), with atomic_set() on an skb owning its head
-(TCP/SCTP output, and GRO which never sees cloned skbs).
-__skb_clone() clears nohdr, and __copy_skb_header() does not copy it.
-
-Move SKB_DATAREF_SHIFT to 30, so that the reference count gets 30 bits,
-and dataref stays positive. Wrapping it would need 2^30 live clones of
-a single skb, which socket buffer limits and memory make unreachable.
-
-This issue was found by Anthropic using Claude, and validated by
-Ada Logics.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Stephan Lipp <Stephan@adalogics.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261020151954.22953-1-edumazet@kernel.org
+Fixes: e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot")
+Signed-off-by: Travis Howard <thoward@lafayetteinstrument.com>
+Link: https://patch.msgid.link/20261019-tg3-datto-aer-quirk-v1-1-f0eccfb2ab5d@lafayetteinstrument.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 9340ee3b60045..6484ac551ec7c 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -601,9 +601,9 @@ struct skb_shared_info {
-  *
-  * Transport layers send out clones of payload skbs they hold for
-  * retransmissions. To allow lower layers of the stack to prepend their headers
-- * we split &skb_shared_info.dataref into two halves.
-- * The lower 16 bits count the overall number of references.
-- * The higher 16 bits indicate how many of the references are payload-only.
-+ * we split &skb_shared_info.dataref into two parts.
-+ * The lower 30 bits count the overall number of references.
-+ * Bit 30 indicates whether one of the references is payload-only.
-  * skb_header_cloned() checks if skb is allowed to add / write the headers.
-  *
-  * The creator of the skb (e.g. TCP) marks its skb as &sk_buff.nohdr
-@@ -623,7 +623,7 @@ struct skb_shared_info {
-  * Having multiple payload-only skbs with different lengths of hdr_len is not
-  * possible. The payload-only skbs should never leave their owner.
-  */
--#define SKB_DATAREF_SHIFT 16
-+#define SKB_DATAREF_SHIFT 30
- #define SKB_DATAREF_MASK ((1 << SKB_DATAREF_SHIFT) - 1)
- 
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 6983e0680e4b9..a0a191f80697d 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18139,6 +18139,12 @@ static const struct dmi_system_id tg3_restart_snp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
+ 		},
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "datto"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SIRIS 5 1U Server"),
++		},
++	},
+ 	{}
+ };
  
 -- 
 2.53.0
