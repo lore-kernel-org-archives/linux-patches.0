@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046417;
-	b=VTMhkFmh9f4Ve/eCCL1uo1i4tiZJpEmQj7iAh4muRRbs7xQ2RU9JLmFEx2g3ly0B96bX
-	 YjWTGt3URi3HJOXsBiiPSAuSN+l52No79nUDasBvx97MhRnRSFDrZ6Txja1Ime1fOJmvd
-	 VzmBbyaji55a0DX3quitdgCJVyS33mrhPO4ZCABs7yi5dFEGhpKDBSw8nfurKCqAdOcVi
-	 IF8KlG9TmYeo0lW05VQ0kSLPU3NIiDV9lsXesIPAkquGzLTshEXZxEG+qpFXKBxNkCWac
-	 GgoSH9hbBBTFPEPqBLyf8XiEf/rrD6ENtbGZAUlhMpe4ygJZx9qNj0+OW8qu/WErpBA==
+	t=1795046419;
+	b=YGTIOujVN2zEYq3jyHrZY7fNxIrwLKNNt0HH+Va7TpSuAVIRDyBZi3sa+jBK92exw6j+
+	 x4c6eqXATpOoUZTBwInuoKF6QATFAdND20C5GagLDQxoa0dDCWZfrPffJ/Add7igAJUXy
+	 BrDlhKmN7SzGQ2xDrBDJq1h6fM/MWrD8O4UeJ23cLo62hYfUjwd8gkxtIV7hv22ToW+Ef
+	 XFmaGSdC1iG4Au825UjtyETj7rU0RcRS1oNAJIOk6rt+6Qp2y7t4IM456mZXLMGMhzc78
+	 t9hM2fmH12jxKkVO/wxa4Hz22R6WGjicmROvHH7LjKNt3HDl3qZsSZssWI8xWZ4YEmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046419;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a8syixx/JBl3Sql4js3e4ueSzK8tMD88gO+tZYR+mXY=;
-	b=Bq+6ADKgk6ZxBFfhu3gttfG55uUWaR0g31qSLJXLa++7DRYkB91Fzf2qRV+NHFWPduAG
-	 gmwUMjKkTgQYsGmrsTWovRw7bcCJDNSB1vIbGldN/TIsD4qe9HAaqJC9dCW60rCEM2JmC
-	 M04fofBisLF2LjSvQVeWPouUkRbVLJCYEgUSpGMOTjNmZDtOazJPoSUUvp9TTLYjmWCgx
-	 enhDw7+FOzYU8RsG2R/tFSb4UKNSwhy5G2M3dwe4VdqtPNStLZH8rp7LXCs5A+CI5xN2W
-	 j3g/oFCIYNyPWrCzpUd9kANZgRtR3IzuGUZoZ1lsmTf4LBT4AiPyrTGdNijNMoAtYYw==
+	bh=ANmepGEDwE+ntp3iFDZOuJsZtLcax4XoUsGU+7WU7B4=;
+	b=bR/dlec+wwHntCEZJJPJhSxAfUW5+dYloiYK7hgsPrQkTq5V1m3OgGqZc399NJEL8RuB
+	 ob03AkvLds+3sWNG4k96IyKB0fVukDRJP+kdeOiF4fHLfm4bmy6/z21dKtBWujoO573xT
+	 Nbo7d1LcC2m9kzFTZv+yKXhiN4vhaVJLGoSLSvBzun9TEjFgf77z2h+OTVJQ89mQCyYtr
+	 I+BxaP1YhlO9kEXh+khXbuFs1BEW84dlOwlmsAzZbg0AxyXU9v5A5WRdpVYdRPSLznHl9
+	 xUW7+X0tvK7nCw4VEX5dYHRLnwls4xxOQHRirMbHy2/+K6b/F0SylL3Q5dsCknDDrVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LvuzLT+B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT2BflHk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F190D606A31C;
-	Thu, 19 Nov 2026 00:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A651E606A32A;
+	Thu, 19 Nov 2026 00:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LvuzLT+B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ED11F000C8;
-	Thu, 19 Nov 2026 00:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT2BflHk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126221F000C4;
+	Thu, 19 Nov 2026 00:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046416;
-	bh=a8syixx/JBl3Sql4js3e4ueSzK8tMD88gO+tZYR+mXY=;
+	s=korg; t=1795046419;
+	bh=ANmepGEDwE+ntp3iFDZOuJsZtLcax4XoUsGU+7WU7B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LvuzLT+BhedQv00COsvye+OxDxlwmrj/no4Gq6XxkL/uedvYx2IWiN1gO0CkXcdHC
-	 BajOGmk04HvcJaGkFSI0XBbu30mS/qA+SVw7T8c2NyaFi/WTarhyXrgAuNrp5ZlCSh
-	 gTC9Y2N5bKl8CXWBUtbXbgGThkwu/oqR+670hfL4=
+	b=qT2BflHkoJF0Thf6pmqUsE5JQpvz2xKvfzIrO121iMcWj1xRKtXmJsejMGBPPfnC0
+	 2YFEad6HzNTMKzbzRCdAlFwOMrQrRi4bGStEqNWvZKM+03Gjshy1OvXg38+dNabEVG
+	 N9ppwaUb19azv3MtPeLagn6EWeseIBwysZXeyTwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daejun Park <daejun7.park@samsung.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Pankaj Raghav <p.raghav@samsung.com>,
+	Daejun Park <daejun7.park@samsung.com>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1273/2857] xfs: clamp a pNFS LAYOUTCOMMIT extent before computing its end
-Date: Wed, 18 Nov 2026 15:38:27 +0100
-Message-ID: <20261118150247.352672557@linuxfoundation.org>
+Subject: [PATCH 6.1 1274/2857] xfs: cap the block count of xfs_iomap_write_direct() at one extent
+Date: Wed, 18 Nov 2026 15:38:28 +0100
+Message-ID: <20261118150247.388003322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,41 +73,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit d8c2bc88460f89e543ab3af622fc8f34c7011d71 ]
+[ Upstream commit 66d1ce09ebd72709f8d739630c39f440445173fd ]
 
-xfs_fs_commit_blocks() adds the client's length to the offset before it
-clamps the end to the file size. A large length wraps the sum and
-reaches xfs_iomap_write_unwritten() unclamped. With the previous two
-patches the LAYOUTCOMMIT then fails with -EIO and converts nothing.
+xfs_iomap_write_direct() reserves blocks for the whole count in an
+unsigned int. For a pNFS layout the client chooses that count, and an
+RW LAYOUTGET for 16 TiB wraps the reservation and shuts XFS down.
 
-Clamp the length first.
+xfs_bmapi_write() maps at most XFS_MAX_BMBT_EXTLEN blocks here, so cap
+the count at that. nfsd asks again for the rest. The other callers get
+the same mapping as before.
 
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Pankaj Raghav <p.raghav@samsung.com>
 Fixes: 527851124d10 ("xfs: implement pNFS export operations")
 Cc: stable@vger.kernel.org
 Signed-off-by: Daejun Park <daejun7.park@samsung.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_pnfs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/xfs/xfs_iomap.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
-index d74133c3d784d..8ee7ca4201f0e 100644
---- a/fs/xfs/xfs_pnfs.c
-+++ b/fs/xfs/xfs_pnfs.c
-@@ -302,9 +302,7 @@ xfs_fs_commit_blocks(
- 		if (start > size)
- 			continue;
+diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
+index 28a1c19dfdb3a..f2542bac50c35 100644
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -245,6 +245,14 @@ xfs_iomap_write_direct(
  
--		end = start + maps[i].length;
--		if (end > size)
--			end = size;
-+		end = start + min_t(u64, maps[i].length, size - start);
+ 	ASSERT(count_fsb > 0);
  
- 		length = end - start;
- 		if (!length)
++	/*
++	 * xfs_bmapi_write() maps at most XFS_MAX_BMBT_EXTLEN blocks in one
++	 * mapping, so don't reserve blocks for more. A pNFS layout range
++	 * comes from a client, and its block count may not even fit the
++	 * 32-bit reservation. The caller maps the rest with a later call.
++	 */
++	count_fsb = min_t(xfs_filblks_t, count_fsb, XFS_MAX_BMBT_EXTLEN);
++
+ 	resaligned = xfs_aligned_fsb_count(offset_fsb, count_fsb,
+ 					   xfs_get_extsz_hint(ip));
+ 	if (unlikely(XFS_IS_REALTIME_INODE(ip))) {
 -- 
 2.53.0
 
