@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058736;
-	b=qHQc44QCAPqbijjp2tnc3DfxQdPUzuAQyQ5IqoUAgWbea4lcEYZ8JWIhxyRi3qMC+opu
-	 vjn+DHSNZWF+bfUS4lOa/o/NQCljlNdIM+iy0vl+cEXHUJ0vOYEPX7hPzuHFQGXMIn/k1
-	 HAnuxIWpQmPb0HZZfJWduMaOVKwG0NweRWQa0FfcFfwdu9I5MYvFJtIujsCr09uMozvLf
-	 5WiZHxWq2KKe4YgyW5G03qo6mxlvmq8HMWJpGR8/B3RWvpCZnJYgkbqT4Y5jqafGxweLI
-	 IiEaKbn5a9U9EOUBBCWSBwqM7jmqWRn6U7NHdkw6cLRi85qlbUw9xCbx06Dnp+PublQ==
+	t=1795058739;
+	b=1VhHkmSL0OZGHYLAtjcfDpTMsWph0+D4Yuu43OF7m+qRfMaR5lGfTj65J0tV45J0YY7X
+	 S5gV+NDkud/wcwt51cjGOaJfdOCS3yXXNrWQqekOfN0pKGzABgLOUYHNoblIUvZXuUNy6
+	 gSIVX7PBU6No98l/yoIEynx1ZoItDrfUvRfA3CGHYxCcnIG6hdQhD9v81DdRGHl2p0XSF
+	 NGBlC+CfMcZV+CIRwCRlQ6eciTW0UbgPUDCmd9V/48eDQEvZmOIZ6Q+mYexYsklAHCLP1
+	 DWrgZ67A8IYL6UxV4zV7NDzzKMyeC9QMhEvqGpET5aoOm825xWbZ7EPUoJyGt29u6jA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=psktlA6oBteCwTvVXd/lwKqCVFSac4wttNMH1LdE62g=;
-	b=Eopuf1lHU27u+zvK8ayRrpivdD4dMXTTNpCc4ENWrDQ82BXBJLVg9Q4V/fcJTiUEqNyM
-	 MUuy2HvIvAJ5RZJ4Fjf5fvuur9Lp68GZ0C08X0uN+vrvj1yF6zQs033uGA1iBLWa45yb+
-	 Ij5aMJZLXjTrn0QeI+AxdpeXnaervwkRdyqXGUx1MNVKK5h2PhuPWsU/BQuAaC8Y8uKlZ
-	 EkSoVquhS/O2vIsNpt/AfDFVtcfqeAdijNgqD6rryjv+SIKFEF9vZPIOqsj7lIQYoV1uF
-	 9Dy2lS3QDn9K051GV21+i5D8xkHtBh9GWUQrbwIcjaLWlgNr+lysBb+q3+6zudIqZVw==
+	bh=GAiz2Scew+l/KbyB030KT/81KLJYR3174vPkoH752og=;
+	b=NC2DHtupKrRRMIiQdDiP4tzi/V8lv88U3WEAY2ZvElkli2G81yJ7ununqp/WLuEGd8YD
+	 kvFsdBGFNzDwJwc9Rsf/JWojMF38eR98ajWfhokKYMaA7A+R8Re2sleKPovoAijBUndiA
+	 CjOvtaP2cIjLTDvC4aeSMr5Yx4f8CDb/P4780bEu0Q1dpEVLA/UG8UeqGUwdCH1rHrmQL
+	 J/Fb8NYJBLOQqIZKP0nfVJBg0XX+5P2SmcFxDTsvNTzJdeqkmONtci7LuNVQFX0Mruxfz
+	 aflfFViVO2C0TRr0DSVbcawnq6dUyIGCbdWAKZUAEcFX1YVdsgHXi8X5UmcJjJk/2Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1crUOrIv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo6gw4Wj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C124606A31C;
-	Thu, 19 Nov 2026 03:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB70606A31C;
+	Thu, 19 Nov 2026 03:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1crUOrIv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C611F000C4;
-	Thu, 19 Nov 2026 03:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo6gw4Wj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69261F000C4;
+	Thu, 19 Nov 2026 03:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058736;
-	bh=psktlA6oBteCwTvVXd/lwKqCVFSac4wttNMH1LdE62g=;
+	s=korg; t=1795058739;
+	bh=GAiz2Scew+l/KbyB030KT/81KLJYR3174vPkoH752og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1crUOrIvGqvUqRd3AELVlo1zRlQcdJ+2vyrz364Lew0c2M1CLdzPG5UDgBRYitTkb
-	 cpeeskKxlY5QIxOFho7Pt8ex9vph23FT126XJg8wyNpSDo7cTif12hkkpxCRB0AGCG
-	 jkIkoed7LN3KVIUMrK0302Tcme0CP0HTEVgon4sE=
+	b=Xo6gw4Wj9Lh5lAFBzNf7NCyUn1wTfL8Bj8N7or9gL3U+80Qws0P1NA1D2bIrhAETS
+	 p+UuJdsui+Sdu55uIuxONIM8J7fQs5E1f/RhtvX8jbM0wuQ63X7YzusiNXJ9bAU1Dw
+	 REnCJBgWmzWw1Lk0hjzyXDqcZFzT8Geff+yeDFbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0592/1848] ASoC: hdac_hda: Balance the runtime PM disable in codec remove
-Date: Wed, 18 Nov 2026 15:43:50 +0100
-Message-ID: <20261118145940.190670404@linuxfoundation.org>
+Subject: [PATCH 5.10 0593/1848] cpufreq: stats: Fix potential out-of-bounds access in deferred reset
+Date: Wed, 18 Nov 2026 15:43:51 +0100
+Message-ID: <20261118145940.225018201@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,56 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-[ Upstream commit f26c0d5f91d918bb66cbbc8916f41836adb38346 ]
+[ Upstream commit 8a702989677216489e471a6f27599da53f753567 ]
 
-hdac_hda_codec_remove() disables runtime PM of the codec device before
-releasing the HDA link and calling the codec driver's remove callback,
-so that no runtime resume can race with the teardown and access the
-link or the already freed codec driver data.
-snd_hda_codec_cleanup_for_unbind() then disables runtime PM again.
+cpufreq_stats_create_table() sets stats->last_index to -1 if policy->cur
+is not in the frequency table. It then stays at -1, because
+cpufreq_stats_record_transition() returns early on old_index == -1 before
+it gets to update last_index.
 
-On the next probe snd_hda_codec_register() enables runtime PM only once,
-leaving it disabled after the ASoC card or the codec driver has been
-unbound and bound again: the codec stays powered and runtime_status
-reads 'unsupported'.
+Commit 46a310b80bc2 ("[CPUFREQ] Don't set stat->last_index to -1 if
+the pol->cur has incorrect value.") added that check. However, since
+commit 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to
+cpufreq_stats_record_transition()"), the stats reset is deferred to the
+beginning of cpufreq_stats_record_transition(), before that check, and
+cpufreq_stats_reset_table() ends with an unconditional
+cpufreq_stats_update(). So if the "reset" attribute is written while
+last_index is -1, the next frequency transition accesses
+time_in_state[-1].
 
-Re-enable runtime PM at the end of hdac_hda_codec_remove() to balance
-its own disable. The codec remains disabled until it is registered again.
+Fix it by also returning early on last_index == -1 in
+cpufreq_stats_reset_table().
 
-Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-4-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to cpufreq_stats_record_transition()")
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027133332.377546-1-zhongqiu.han@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 4 ++++
+ drivers/cpufreq/cpufreq_stats.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index de5955db0a5f0..02936e5f8f64a 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -520,6 +520,7 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		return;
- 	}
- 
-+	/* prevent runtime PM callbacks while the link and the codec are torn down */
- 	pm_runtime_disable(&hdev->dev);
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 
-@@ -527,6 +528,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		codec->patch_ops.free(codec);
- 
- 	snd_hda_codec_cleanup_for_unbind(codec);
+diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
+index ab856dd2d5fc0..fdf9fd938e4b7 100644
+--- a/drivers/cpufreq/cpufreq_stats.c
++++ b/drivers/cpufreq/cpufreq_stats.c
+@@ -52,6 +52,10 @@ static void cpufreq_stats_reset_table(struct cpufreq_stats *stats)
+ 	 * reset_pending accesses in cpufreq_stats_record_transition().
+ 	 */
+ 	smp_rmb();
 +
-+	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
-+	pm_runtime_enable(&hdev->dev);
++	if (stats->last_index == -1)
++		return;
++
+ 	cpufreq_stats_update(stats, READ_ONCE(stats->reset_time));
  }
  
- static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
 -- 
 2.53.0
 
