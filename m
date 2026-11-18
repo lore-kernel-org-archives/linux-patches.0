@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025663;
-	b=dQzN9OwI1vDam8TSbT4QiJd95CrZClVk5OV109cPyJvc2YG9l0kY/UF9AWFTxyS9Oc3V
-	 53M40L1It5vElrpHzrZ+3vVnbqQOw4Xw16m5Mu+KyM6h/WpnpKEEBrU+aXGekm/GOA5tD
-	 batUWUCB6fN7iun+v+CBEPgr3s9k9+casCmxjq1TOTtfJPgl725mk1l/mYlzYbEtsVltZ
-	 ZDuJ8Ss9WEHAIhZRwC463/03lyHi3cGPt/UeHhQNCzpcDHjyDxYeh3iQRi4MjPMDmXxlK
-	 Bki0lxfA0XHbrIiBHxFqGXxeKE5jrqRjQLrE9hd7MBsSKioSKDE5i6aB/3X3p0UPoLA==
+	t=1795025666;
+	b=lBLW7tgHeF0gq0XEjmg2DtuTHjjkz2JbwBEy4CQX6ahvE5L0wn1nK/QPV1G07WAoFSPZ
+	 dI1K6LPsEea5HYVAtf9irxDsnunDIFR5RyCrr8Yim0BPq1e+d39luCoL8SYFS3JPdYIQV
+	 UnBoHnI89i1jicKpKHCU28YcK4ZPKXzuxmKzmtYiEpPHnJ1EDwawyBFaSbvD/JrSCdlPy
+	 phYlveV1IjPzMBBX4ThXsmp6RQyEK08oSLlzpVovMFgCQJRn+s/kDdktlGyCkhhwV8RcL
+	 tgvJBdhxF3Kn+NewdGb4QzSVnwuO+8RJKa/lfm32donNZ6izBah3tsKhhjV6s1+QEIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025663;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8mcfPANpUs3ITFHwJRT9fYezOyGCoZdwpsaLFmJXGQA=;
-	b=j0hGoyhu/R9HyscWc9z0Aq70LwUJ3kiHcbvEVq8DaLmiKiEJ+I204DV947axfIG9l668
-	 DeaExKiH3N2oVXra+DI/uW+qRYTCEgUWG5OnkALkzWv3E5k7wkpb3XALhQyBum/lpZXxU
-	 y1sO+HQ6ZB0Wt4vtuIMjvoVcoNwLZ1taY5AN6B3u97lXx4tHIG9X3I8dklTnp3m0+j1i4
-	 zbpFEYgMnx/fO7IdmAbZs2MAgodmn7G/W2PyXR3afbier6g25sflxkXAI2WoQtDlU1OQb
-	 xV2k5zmLOTZzxws5QvuSgt7hV4JEWQ+Ix+FV0uqrM5MAy/MGomTefn7mr6Br/mQYZxg==
+	bh=SvyBWsijuCKc6QQhOt6FYyzXOKlVIOyWDHmg/QnUcpg=;
+	b=dYmx5A9Z9OO3Oq7+ABHJ14dVYY+AW26rS3IYWFENISrLQw8jr/ydnvlcRfPBeEcABNs3
+	 Q8Y+6FqMNWefijoIqlvo3j9Hl8vNDSkaoIPznnRyTYfHw/TVKjJYSce0zSR8A2WOOVRMv
+	 Gct3JDkMUPtQQJ/3ziVRkzxkCGGlV2YNw5x3A1/tJ7tHKiaR7ipqNeuFPuDxLqnoHn/ap
+	 hoPizKAZ4OacF37IeyJ679bGqNSxNL2Zuye/i6S4D09pSwjvVPAW9DDkX53ixAlgdHgfF
+	 rCGHTzACyjKkwgVWXiQh9jW/pG512FJGw/esur23nPMJDmOOlgUKoujBtSBBIJz47HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWTNMy0A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zupzxg3V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9049E606A31C;
-	Wed, 18 Nov 2026 18:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ABB606A31C;
+	Wed, 18 Nov 2026 18:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWTNMy0A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C4A1F000C5;
-	Wed, 18 Nov 2026 18:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zupzxg3V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89811F000C5;
+	Wed, 18 Nov 2026 18:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025663;
-	bh=8mcfPANpUs3ITFHwJRT9fYezOyGCoZdwpsaLFmJXGQA=;
+	s=korg; t=1795025666;
+	bh=SvyBWsijuCKc6QQhOt6FYyzXOKlVIOyWDHmg/QnUcpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XWTNMy0AxOlVKEes+Qf/THbLrOH6BOQeRZs8+KlJlzdDghFRjkEHLVTRGUZVg3qqv
-	 kCq/ykE8d/RMlaJi5BLLBlBMwUEyU2XIlwi2fdn6eRoPFGnw/3K970jtLsl6BAGYDD
-	 PtKJ6SxP4QnVPhMUPlHD27GkUb7fmdCXxqwY6iZk=
+	b=Zupzxg3V27At6KinTYIGnAFBr4Qz+OUlsJ327edke2C3zWxz7449nIj8eWeTycoM9
+	 7UCHJ6v4U3KpUqjK6996zp81dwuZVsvCi2N+INWYqsdnSbvG2ThiSvqe2HEnoU/Zdj
+	 Pgy29tmYgL53SnXBsiLVYqBMak9+LrHlvHW24Xh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1152/2151] sh: defconfig: Enable the current M66592 UDC symbol
-Date: Wed, 18 Nov 2026 15:48:07 +0100
-Message-ID: <20261118150204.148359744@linuxfoundation.org>
+Subject: [PATCH 6.18 1161/2151] spi: spi-sun4i: sun4i_spi_fill_fifo(): always apply A10 FIFO fill level workaround
+Date: Wed, 18 Nov 2026 15:48:16 +0100
+Message-ID: <20261118150204.458325045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,68 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 9b65dcd94222c37febf98127b1ac5452c94a16d0 ]
+[ Upstream commit ee109e2bbea0986f6ad34bfbcba90fce36f17538 ]
 
-The M66592 UDC provider is built under CONFIG_USB_M66592. Several
-SuperH defconfigs still enable the removed CONFIG_USB_GADGET_M66592
-symbol.
+In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX FIFO is
+filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around
+timeouts observed on A10s SoCs.
 
-Replace the stale entries with the current provider symbol.
+Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
+size") added support for transfers larger than the FIFO size. This
+commit did not consider the A10 workaround (limit the TX FIFO fill
+size to SUN4I_FIFO_DEPTH - 1 (= 63) bytes) for refilling the TX FIFO
+in the IRQ handler.
 
-Fixes: 193ab2a6070039e7 ("usb: gadget: allow multiple gadgets to be built")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Assisted-by: Codex:gpt-5
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be> # build-tested
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+To apply the workaround independent from where sun4i_spi_fill_fifo()
+is called, remove the length argument from the function and directly
+take the max fill level of SUN4I_FIFO_DEPTH - 1 into account when
+calculating the free space in the FIFO.
+
+Due to the lack of HW this patch has not been tested on an A10 SoC,
+but on an A20 SoC. It was not possible to reproduce the timeout on the
+A20.
+
+Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-2-9fe919d5cecf@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/configs/migor_defconfig   | 2 +-
- arch/sh/configs/sdk7786_defconfig | 2 +-
- arch/sh/configs/shx3_defconfig    | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-sun4i.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/arch/sh/configs/migor_defconfig b/arch/sh/configs/migor_defconfig
-index 31dbd8888aaa9..4ee81b944be25 100644
---- a/arch/sh/configs/migor_defconfig
-+++ b/arch/sh/configs/migor_defconfig
-@@ -74,7 +74,7 @@ CONFIG_LOGO=y
- # CONFIG_LOGO_SUPERH_MONO is not set
- # CONFIG_LOGO_SUPERH_CLUT224 is not set
- CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_M66592=y
-+CONFIG_USB_M66592=y
- CONFIG_USB_G_SERIAL=m
- CONFIG_RTC_CLASS=y
- CONFIG_RTC_DRV_RS5C372=y
-diff --git a/arch/sh/configs/sdk7786_defconfig b/arch/sh/configs/sdk7786_defconfig
-index 2433aa5f44a86..72e9700e2f6c9 100644
---- a/arch/sh/configs/sdk7786_defconfig
-+++ b/arch/sh/configs/sdk7786_defconfig
-@@ -147,7 +147,7 @@ CONFIG_USB_MON=y
- CONFIG_USB_OHCI_HCD=y
- CONFIG_USB_STORAGE=y
- CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_M66592=y
-+CONFIG_USB_M66592=y
- CONFIG_RTC_CLASS=y
- CONFIG_RTC_DRV_MAX6900=y
- CONFIG_RTC_DRV_SH=y
-diff --git a/arch/sh/configs/shx3_defconfig b/arch/sh/configs/shx3_defconfig
-index 52e7a42d66c72..56b724520c55f 100644
---- a/arch/sh/configs/shx3_defconfig
-+++ b/arch/sh/configs/shx3_defconfig
-@@ -79,7 +79,7 @@ CONFIG_USB=y
- CONFIG_USB_MON=y
- CONFIG_USB_R8A66597_HCD=m
- CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_M66592=y
-+CONFIG_USB_M66592=y
- CONFIG_RTC_CLASS=y
- CONFIG_RTC_DRV_SH=y
- CONFIG_UIO=m
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index 9f0761b0ecdfe..b19c84d5c5db4 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -142,15 +142,21 @@ static inline void sun4i_spi_drain_fifo(struct sun4i_spi *sspi, int len)
+ 	}
+ }
+ 
+-static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi, int len)
++static inline void sun4i_spi_fill_fifo(struct sun4i_spi *sspi)
+ {
+ 	u32 cnt;
++	int len;
+ 	u8 byte;
+ 
+-	/* See how much data we can fit */
+-	cnt = SUN4I_FIFO_DEPTH - sun4i_spi_get_tx_fifo_count(sspi);
++	/*
++	 * See how much data we can fit
++	 *
++	 * Filling the FIFO fully causes timeout for some reason
++	 * at least on spi2 on A10s
++	 */
++	cnt = SUN4I_FIFO_DEPTH - 1 - sun4i_spi_get_tx_fifo_count(sspi);
+ 
+-	len = min3(len, (int)cnt, sspi->len);
++	len = min_t(int, cnt, sspi->len);
+ 
+ 	while (len--) {
+ 		byte = sspi->tx_buf ? *sspi->tx_buf++ : 0;
+@@ -311,12 +317,8 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	sun4i_spi_write(sspi, SUN4I_BURST_CNT_REG, SUN4I_BURST_CNT(tfr->len));
+ 	sun4i_spi_write(sspi, SUN4I_XMIT_CNT_REG, SUN4I_XMIT_CNT(tx_len));
+ 
+-	/*
+-	 * Fill the TX FIFO
+-	 * Filling the FIFO fully causes timeout for some reason
+-	 * at least on spi2 on A10s
+-	 */
+-	sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH - 1);
++	/* Fill the TX FIFO */
++	sun4i_spi_fill_fifo(sspi);
+ 
+ 	/* Enable the interrupts */
+ 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
+@@ -373,7 +375,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
+ 
+ 	/* Transmit FIFO 3/4 empty */
+ 	if (status & SUN4I_INT_CTL_TF_E34) {
+-		sun4i_spi_fill_fifo(sspi, SUN4I_FIFO_DEPTH);
++		sun4i_spi_fill_fifo(sspi);
+ 
+ 		if (!sspi->len)
+ 			/* nothing left to transmit */
 -- 
 2.53.0
 
