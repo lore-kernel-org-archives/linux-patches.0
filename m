@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033281;
-	b=qx0GlfaTb9ht3HXafM+LP2P11gbjmwyVQjNPihR+4SE7MVFtdW0wEiCikyYimNM7jc+1
-	 BLqlyEQX4Wtq0Gna71ejDfM02EmZt64rXdFxQ7mEKoWw9Wn4P36WUE8eTdM2zrln25PN8
-	 FQjD6NZEGxOdYcWfEi7mzrVcFkeDNkc4JImqbR4IBz0T3jzA+AXFjBAIp1up99wqQZW3/
-	 RAW98f035Erk9Pf5inkTQ2IJBHBzYCR7wIf8t56hO5RAHNMxLyuxRY0xfXWQ6h+TQnncE
-	 sNVoXuHeJsHvx/bzhAsi1OgMNXayzpw1mF/zJdM1fqTdeNfZ37sg5pHXnUgVefD1tug==
+	t=1795033284;
+	b=TsOWeYalXuhrx3nmI78vFXukGkQTze7Htwolfxgk6shCl2jtTUmPnXQPgSExpz4ZcSfL
+	 QvAxQAJyciRyYnocdhdm4rd6dB//yJOp4yZNHtVWBYeffKosUn18670CHNwllyAblfpKm
+	 sSpoKBFwBw6kS6pAP3campGGEMMaYVEqkFwTW0sc/lLGnPHr+COobmcJ8rkjWXQvBxP/9
+	 cUVoVpUmM3i3Y/qd+IWqcEaiiLmRsaP3agcVfXu31jQqoVMvdCNgQlYe+/xSeTqKDbmRY
+	 IGtyvx2qLRYBxI3uDMZH1yB3tsBhxSynnWtmAFRsVPvItOmyi4f1RaFCOfxPsAW8GiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BfB54fxfEJkGfPUky9g6li2+cc0gI4ekKWTzHt6p3b8=;
-	b=yISrGPnwVYOXLJLkFCxEd2s0oQw2JnA+d63WvGVx2e4mDr03wII5MSaQZ9lvc7/k6DWR
-	 6sqSu8W1fnb/fpHAdOOuIK0LpJ+kMVmRPMhgx74SG6AuG+SkNi4hsIqUWwpEV3yViju2g
-	 iKiJJuyY3dzR12ZxaaZPHhRhe3RYyi3hAxAblE59MezWstU/PkNSOGu+DDg9DusqTc8xA
-	 gZ6uxzUpVuZ0N/lJs0Z2vZgD9WjJoNepj8jIvAbernNPKD2Q01ZHtkHAzi0V87obALEAl
-	 FVyhg1SdhXb1eBvRDVO8jlwEXIGNHyR55fIQgmLpEHeNpY6/vPKtxbs8aeRJ44/QcWA==
+	bh=nE9mjZvzPpfHxzPQVllTZ/s4uRUgKNO7KoZk35HreiE=;
+	b=0JS1J0/1QYu3dJemDhBfoVEUWwS6HUAOYoOso3gTztSD2Hw6RCYnUrCVJ9CgQJl/7QtZ
+	 SekMAw9efxjFNsk9rU3OBHk+v2sD/SOLxkCa9tUqg8+LHP03jLCeQKH74CKWiYYQg1xza
+	 wGHXmtM/MahLonNc/DdPrCyv5ztx3BCpjAJclOGDPc4OMv5TAU7hoA23YQFtHyuHyFfap
+	 zi18V7ixPVc1evMz3MskEhWcEJ3BlSKt9IOKMHwfZE+eSoR20K1JQkiwV0iy7Hhm7Gj0L
+	 BmJgcfjYPICtJzuGsssO6Xxq/tgl5OIe+yge++nlZ/YUNyOP9kXKZAi+ZBRp/cRtMDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CgG2N9vg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rfBdujQc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94D4606A325;
-	Wed, 18 Nov 2026 20:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE7B606A31C;
+	Wed, 18 Nov 2026 20:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CgG2N9vg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F0E1F000C4;
-	Wed, 18 Nov 2026 20:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rfBdujQc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B11F000C4;
+	Wed, 18 Nov 2026 20:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033281;
-	bh=BfB54fxfEJkGfPUky9g6li2+cc0gI4ekKWTzHt6p3b8=;
+	s=korg; t=1795033284;
+	bh=nE9mjZvzPpfHxzPQVllTZ/s4uRUgKNO7KoZk35HreiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CgG2N9vgMlFxn9mCrA+MQ/LElAMmejHHep10OsGC+IGaz76scUoLftHF8o8D4ifn3
-	 X5B2JLUr0KRUthc14A482ahLHBWUdfThBsStvovt81K4rCTBuEPtoYMDpML0Dn/WQl
-	 a0oah7MDAZvVp09X0KuMePZVnoYVdbkCWz67087U=
+	b=rfBdujQc8m+jSYG24JboZVWaPtc1lfIQlG5AsHWMLlpKtktU5AvI0j6aE8XwAtqcA
+	 SnjlUF78Is6LYmwzPcHSSwrSVNEMb4KTW06cgmEWcrrLoEuw2FaZNP16dwNa1Wun5Q
+	 5xe92wS8CgI+9dhpIz7lZr5+IrtjIwlXjfH1W254=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Bradley Morgan <brads@mainlining.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1713/1756] ucount: read the parent ucounts before dropping the rlimit count
-Date: Wed, 18 Nov 2026 16:04:00 +0100
-Message-ID: <20261118150117.808636729@linuxfoundation.org>
+Subject: [PATCH 6.12 1714/1756] fs_pin: do not trust the pin after a spurious wakeup in pin_kill()
+Date: Wed, 18 Nov 2026 16:04:01 +0100
+Message-ID: <20261118150117.846437038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,54 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 38bf603d1ea5d5a65a9cb277df75327ffec01ff1 ]
+[ Upstream commit f3a6dae67c9ca3d913cbb42fe324c9b47c8d9e53 ]
 
-do_dec_rlimit_put_ucounts() drops its share of iter->rlimit[type] and
-only then loads iter->ns->ucounts. If the decrement leaves the count
-non-zero, a concurrent caller can take it to zero and put the last
-reference, which frees the ucounts and possibly its user namespace with
-kfree_rcu(). An exiting task frees its pending signals without siglock
-or any RCU read-side section, so when it is preempted between the
-decrement and the load for a grace period it reads freed memory and
-then decrements a counter through the pointer it found there.
+A task waiting in pin_kill() for another task's ->kill() can take
+p->wait.lock after the pin has been freed, and can return with its
+on-stack wait entry still on p->wait. With BSD process accounting this
+is a use-after-free of the acct structure when umount() of the mount
+holding the accounting file races with acct(2).
 
-A pending signal holds no reference on its ucounts: the reference is
-taken by whoever moves the count from 0 to 1 and dropped by whoever
-moves it back to 0, so the caller's share of the count is all that
-keeps iter alive, and only until it is dropped.
+pin_kill() takes a still-queued entry as proof that pin_remove() has not
+run, so p is alive. But autoremove_wake_function() dequeues only when
+try_to_wake_up() succeeds: if the waiter was already woken spuriously,
+pin_remove() leaves the entry queued, acct_pin_kill() frees the acct
+with kfree_rcu(), and the grace period can end while the waiter sits
+between schedule() and rcu_read_lock().
 
-Load the parent first; it stays pinned by the caller's share of its
-own count.
+Dequeue the entry unconditionally in a private wake function;
+pin_remove() is the only waker and sets p->done first.
 
-Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
+Reproduced under QEMU with KASAN and test-only delays: a
+slab-use-after-free in pin_kill() before the patch, no report after.
+
+Fixes: 59eda0e07f43 ("new fs_pin killing logics")
 Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261024015513.830312-1-nickolai@csail.mit.edu
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Link: https://patch.msgid.link/20261027015813.841821-1-nickolai@csail.mit.edu
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/ucount.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/fs_pin.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/ucount.c b/kernel/ucount.c
-index b731d13e6b766..232705e8375c0 100644
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -294,9 +294,12 @@ static void do_dec_rlimit_put_ucounts(struct ucounts *ucounts,
- {
- 	struct ucounts *iter, *next;
- 	for (iter = ucounts; iter != last; iter = next) {
--		long dec = atomic_long_sub_return(1, &iter->rlimit[type]);
--		WARN_ON_ONCE(dec < 0);
-+		long dec;
+diff --git a/fs/fs_pin.c b/fs/fs_pin.c
+index 1a508f2167e0a..a4e5a5a7aca8d 100644
+--- a/fs/fs_pin.c
++++ b/fs/fs_pin.c
+@@ -28,6 +28,19 @@ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
+ 	spin_unlock(&pin_lock);
+ }
+ 
++/*
++ * Unlike autoremove_wake_function(), dequeue even if the waiter was already
++ * running: pin_kill() trusts @p only while its entry is still queued.
++ */
++static int pin_kill_wake_function(struct wait_queue_entry *wait,
++				  unsigned int mode, int sync, void *key)
++{
++	int ret = default_wake_function(wait, mode, sync, key);
 +
-+		/* Our count pins @iter; once it is dropped @iter may be freed. */
- 		next = iter->ns->ucounts;
-+		dec = atomic_long_sub_return(1, &iter->rlimit[type]);
-+		WARN_ON_ONCE(dec < 0);
- 		if (dec == 0)
- 			put_ucounts(iter);
++	list_del_init_careful(&wait->entry);
++	return ret;
++}
++
+ void pin_kill(struct fs_pin *p)
+ {
+ 	wait_queue_entry_t wait;
+@@ -36,7 +49,7 @@ void pin_kill(struct fs_pin *p)
+ 		rcu_read_unlock();
+ 		return;
  	}
+-	init_wait(&wait);
++	init_wait_func(&wait, pin_kill_wake_function);
+ 	spin_lock_irq(&p->wait.lock);
+ 	if (likely(!p->done)) {
+ 		p->done = -1;
 -- 
 2.53.0
 
