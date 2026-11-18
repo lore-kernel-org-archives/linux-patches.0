@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059077;
-	b=DS75qe0cPowOCvezrUUdK5VTxFNHOh5F8Po0/rJtle5DtQvfzK+Isu03jq0SSF/PBecL
-	 nzyCXSjvg7eVUph6cn9aI1yNmM4Xh2VCWT3FaqZh7C22MuuYewCmqycW5zvi8et5qLgJe
-	 MKbf03tBCpCC6OEuMq7+rsE8eDe3kKvN7HFc/fvgXhQL/PL0HJ5Ja2cfESH5rDl7TEDSX
-	 KX1Zbr0TtjFsdVlyUwpwWmfssFuuiQc4mAXSFNRskO+falvXaOBr6AulM6ELPky+04vDl
-	 f6/Ga0elThaj1RR3U7EMl+avtsIdvmM8HI8USXdFD+UnGXejaVQc/JjNC2JzCH8ukpg==
+	t=1795059079;
+	b=jIpOjV+uOWJPinaM0e5qXe6mN+v4ZaXKsPc3PeEc678dBv74dvLgvH0yykQ5+VR6AirE
+	 zF/cGNTGy8IAP7tcYEcQKVepBi1IrBBw+ePiaaIniV4wHOn29xVlghoYaFPdc6S3aTFtX
+	 wQ47JhuE1+YLkiLHqDZ48MYKMAKO9AVVlSs27drfUdcjQvaQ1JrnyKBZxGlmz6VbxVYRu
+	 1ypfiMF0SIUdhFLkcMjknFJnhANsRXRglvZpX5IxfBEiI3m4oj8vj9vNOt1OsFv+oYPYa
+	 A33EAv6w4PRVdPKB6RqKTSBjOZbLHJrXcjRBTw2Ak1jK8mZSxeIueKkQAjxhElhd3Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PeYV/kIQg6xo2iC9FIkP7WM16SDlnCYlY4DLuuu7TGY=;
-	b=2EGuUiudiWbWq/l+eR/H8g7q+Wsqmm23FUXhYWHHixREvR4ik4gjgbTn8DTDSPptGBy8
-	 1fyqD891tFRn4EOOx0tQ+J0y6KXFCuvkASl5cYyP4UzcS6eWB0aWHdkIdPRIVe9EZoGML
-	 jp2duR/2aNDfwpV+6AeqyLTpXrnQymokg95qMsQOIMBm5fS/O4nLJd6LQPwqwloK5jAH0
-	 SRQCUA+MeBbYggEo9vs+DtuRag3w5NQSHhBKII9hmos1sTqII0+Sv+545ubb8Xwp2A4O/
-	 NwcRRpVj3iMqnkbgPrkq3gtACuVAAE7f8e4MDZDFZ+rUKOcNynH9+6f7AAvMo1VzmHQ==
+	bh=uHS+3DNHWXv4kpMzKBIbgPNRGJGtE9X31EHCCbmcNOQ=;
+	b=VdT5B3+TuGxz+ZUus+DXwp9zc3aUIqumlJDlCvYJqld8W4vQIdkuJkE/mggSXLJpUz94
+	 C5KOS5asD2MzfKUaU2aG+vnXDb5BMN3m6AoprbBQUHdtfLiUujL+VPTDLK0it+WIzR6Dg
+	 znUSdfV3MqR1NXzxf5GD7QMWI9FMlaFPHSf4I1WcvJmexaKAwm8UlFBcze41jx7Xn/4T7
+	 b0P+9uBo7HhjvT6uEPxg4xeINAHchx5RUS+kZkRj45xyuLCM85hI2OCDT4Hxg4fXdmPwy
+	 Ijb98jC+A5UgNScocOQqMrQFSivB+X23WlWjennG/EIf+73RbJ0XsI6IuY+8tV73aFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIaYaR38;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CgmcvyS+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06013606A320;
-	Thu, 19 Nov 2026 03:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB260A2604;
+	Thu, 19 Nov 2026 03:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIaYaR38
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5091F000C5;
-	Thu, 19 Nov 2026 03:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CgmcvyS+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1091F000C4;
+	Thu, 19 Nov 2026 03:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059076;
-	bh=PeYV/kIQg6xo2iC9FIkP7WM16SDlnCYlY4DLuuu7TGY=;
+	s=korg; t=1795059079;
+	bh=uHS+3DNHWXv4kpMzKBIbgPNRGJGtE9X31EHCCbmcNOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gIaYaR38Wspvrx1SM3Waf3sriZr80y2tkMa7RirzXun5CiPPWHEQ6wrt5rchaQaRq
-	 /Ih+RncVu+/RJj+3K1x3aL4pA0OKzEOKrmgb3oTRExg4vnGqXb0O3tSv3tdC7b5mv/
-	 pNVnU/0OnlBsfiXTdlEXrPJmmFExSdSBK5LCJNlE=
+	b=CgmcvyS+JPkP+ff7hRyEeDdTjTAHMTXwge68AxeCBr2592Y9pqAshnuKX4vVwUgjr
+	 88WmvRdz37DTvzfCBtU2ZzleWO8aQIt3cTBSW/Z7dUgiXvJTxEbtlfjWT4IUSwF9zu
+	 1P3JgPFYTKJjRhAoKiGCrJSBFKgxAeaLqOfNWifk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0671/1848] gpio: pca953x: Preserve wakeup accounting on parent IRQ failure
-Date: Wed, 18 Nov 2026 15:45:09 +0100
-Message-ID: <20261118145943.954418001@linuxfoundation.org>
+Subject: [PATCH 5.10 0662/1848] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
+Date: Wed, 18 Nov 2026 15:45:00 +0100
+Message-ID: <20261118145943.469396150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,60 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit a38bf551726a21c9bcc001b02164f30378b64b64 ]
+[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
 
-pca953x_irq_set_wake() updates wakeup_path before asking the parent
-IRQ controller to change its wake state. If irq_set_irq_wake() fails,
-the IRQ core rolls back its wake state but the driver's counter remains
-changed.
+bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
+holding one opcode byte, up to four address bytes and one spare
+byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
+bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
+bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
+unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
+becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
+stack and pushes the leaked bytes into the hardware TXRAM.
 
-A failed enable can therefore leave the expander marked as part of the
-wakeup path when no child IRQ has successfully enabled wakeup. A failed
-disable can make the driver stop retaining power even though wakeup is
-still enabled. The suspend and resume paths use this counter to decide
-whether to disable or enable the regulator.
+Reject operations whose dummy phase does not fit the remaining byte
+of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
+back to the generic SPI path instead of overrunning the buffer.
 
-Update wakeup_path only after the parent operation succeeds, leaving it
-unchanged on error.
-
-Fixes: f70fbc15bae2 ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Fixes: f70fbc15bae2c89f ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20261018161042.3298045-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
+Cc: stable@vger.kernel.org # 4.18+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ Adapted for 5.10.y: this tree returns -ENOTSUPP instead of -EOPNOTSUPP. ]
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/spi/spi-bcm-qspi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 76c0c90647f66..ef69b7a01b585 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -645,13 +645,18 @@ static int pca953x_irq_set_wake(struct irq_data *d, unsigned int on)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct pca953x_chip *chip = gpiochip_get_data(gc);
-+	int ret;
-+
-+	ret = irq_set_irq_wake(chip->client->irq, on);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index 898658ab1dcd4..a01748cf88e4e 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -1024,8 +1024,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
+ 	u32 addr = 0, len;
+ 	u_char *buf;
  
- 	if (on)
- 		atomic_inc(&chip->wakeup_path);
- 	else
- 		atomic_dec(&chip->wakeup_path);
++	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
+ 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
+-	    op->data.dir != SPI_MEM_DATA_IN)
++	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
+ 		return -ENOTSUPP;
  
--	return irq_set_irq_wake(chip->client->irq, on);
-+	return 0;
- }
- 
- static void pca953x_irq_bus_lock(struct irq_data *d)
+ 	buf = op->data.buf.in;
 -- 
 2.53.0
 
