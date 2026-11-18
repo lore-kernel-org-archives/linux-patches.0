@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053065;
-	b=vR025vz2M1ZkLoRjC98Yl1h7VkcXyz/aVhidOIgtx03meS7n/xT9izEWWCAxiXnMZsoT
-	 W2PjSP0ES4nFITeHBZeL7ZUkGH6glPN0cECLOtbYUeBNxf+ToqWK74wnsaYYzXlDRM9zV
-	 /Hm08U9vGeCrVIXNW6Oy2ph3n9z1df+OkzYCiFlJhh+QalY7hg6z4wKpcUNqQCwLqOs6u
-	 6pPMfX7S39Y9+29BV0igxYpSUMktwVdCA0ruaItnKu8A7d5UcyIaxnCPPOG5Q8/ySwsxG
-	 6SOEtiObagWQfXUuZsLNZU22nBsBJmSGqSUvcO+mJmsh4xTGW9BVQMplEAl/LmCpgnQ==
+	t=1795053068;
+	b=Me2b8UlxXeusRtmwAXTENNpGU6tSqtAiRPj4rxuZna+NWSy18WPncW1laR/XkL03To/+
+	 C7x36xWde+rTYLAHbSTOXT8vTBtfPdw9yesMnMOChUl0KH+n/zHWYCBlG8mVeCM1giGFO
+	 LUryGS82ZkkrskzQFYfGFPmmhUk/NPZ0WZRiM2O46PcoUA+GKCYt+AXrjxMLFcq2ndVKO
+	 BV9HCn3c7ZTwdYlxNFXtFP+Aewr7qgkSCeYymA+J2AJP+PGhHQPgpdo9o3bRiD3fPqcWe
+	 WVv21EG+kNwJajyPi13zWMHgVbOV4TVP/eO1mQwT1D0UA4ISq1wg+57lJauHzba2Qpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RTdxHAixahd9cKT+8xXOmMAx5F4ZcSZOv4uzZ4yZ0SA=;
-	b=F1bxIxBIN4QlVHu2ZFNUep0NyckapVAuI+VXJ1bCbXKbOR+uv7pfNrLR+8ggwCbx91ry
-	 dScqVnMqwI/JB7poWWEvJDVRhrdwHRkzAkUznEvwYtPxjV/mlsp5azkKAqQ3hbwbWiupF
-	 vtf1WAlXJNtvSc9dcW3/Ll3lVVfqPS5d+5f7bk00INea+dFU2+SfW+f5YK89u44FlY8xK
-	 CbEX2NzKFEO1kyyZKYQ3koFvv1ypvus+EAeRZ9XfYqZmbP6uJ4lFYlf46eMwVKyxK4IV7
-	 Y/I7FFuTfIBma1jXIkCY24vfg3ahxuWfxPw95miapP+pTA2L1ql2Ts/H7lhodg88BwQ==
+	bh=3lrPEi6eerJjQwHSEdaIV+ukLfOLSdC/rww2FKoBLug=;
+	b=4/tEfWPCVjXm1y36p4Xn1STgt77c3/oTGY4lZleo7BZrehIx9SJCEilomdTf2HOvaj1E
+	 SREC3hsTakfOsZzXQqnEb/JizV1m13Hw73bn57XoEY7OxsUoXwvYs/5Htxrus9e9xdvGv
+	 ma85aU8/MK5yDMtUME6f8yiifG9yXZ4aIl2Ovf2WZdSEBSSh8VWGvGs62i/S5C30K+Zhp
+	 bHvX/gBLEaxl0gS2fDvZqDrbaNZN3/KSE+8pt5boCkhcL7jygammT174pEOkZt59IlgAs
+	 ePCGFCsict3TMaZyC1gXZHKjqErsv7YVX8xdS6hkIjat8rwiSvZPLKzqEQ3IuCXlk1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezAkouOj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPZ8Xeh1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939E2606A320;
-	Thu, 19 Nov 2026 01:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53180606A31C;
+	Thu, 19 Nov 2026 01:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezAkouOj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9ACB1F000C4;
-	Thu, 19 Nov 2026 01:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPZ8Xeh1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88041F000C4;
+	Thu, 19 Nov 2026 01:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053065;
-	bh=RTdxHAixahd9cKT+8xXOmMAx5F4ZcSZOv4uzZ4yZ0SA=;
+	s=korg; t=1795053068;
+	bh=3lrPEi6eerJjQwHSEdaIV+ukLfOLSdC/rww2FKoBLug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ezAkouOjzATsYei+a5+81tCZgNYWweZaxW35dFd1vNmze+DWWoJ/L+3UBLxwEjpv9
-	 nEgWgvYU5jVo0XBxgnKQSa3Yb32+py6QMiZG2tDd5veC/GB2y7DVdsKdJRJf4TGM6R
-	 uZw81cpJEPPRy/na21XxywODjwJTukwvowQQrzyo=
+	b=cPZ8Xeh1OoBb5ybJRmLCzAXYoIVhxbGJWpybeB/96oe29Jj34qxCpixVIvLAjWlLw
+	 KZWSxYHzCyNrwHEHSs25iheV1KdP+KbKEGkELcXXtRWYXrYZcCLsudKXTeBeldZ7MV
+	 Gs5TQ2C7zmvYXlVPwCTTBiogBJ/mp8uzYTVWxRXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+edbebd898142ee5e24ce@syzkaller.appspotmail.com,
-	Chuck Lever <cel@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0784/2214] NFSD: Complete a cld upcall when the daemon closes the pipe
-Date: Wed, 18 Nov 2026 15:41:00 +0100
-Message-ID: <20261118150042.968788776@linuxfoundation.org>
+Subject: [PATCH 5.15 0738/2214] ppp: fix stale pointer access after pskb_may_pull in ppp_ccp_peek
+Date: Wed, 18 Nov 2026 15:40:14 +0100
+Message-ID: <20261118150041.348238294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,80 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 2a83fcb50f3c25c493cc4389619340fefe9d6ac4 ]
+[ Upstream commit 1e860f42f41c6fbf3304f6a52be38245b9394982 ]
 
-Once nfsdcld has read a whole upcall, rpc_pipe_read() unlinks the
-message from every pipe list, so the purges in rpc_pipe_release()
-and rpc_close_pipes() no longer reach it. cld_upcall_ops supplies no
-.release_pipe callback, and cld_pipe_destroy_msg() returns without
-completing the upcall because a downcall is expected to follow. A
-daemon that exits between the read and the write therefore strands
-its waiter: the nfsd thread sleeps in TASK_UNINTERRUPTIBLE in
-__cld_pipe_upcall() and never returns, hung task warnings follow,
-and the server cannot be shut down.
+ppp_ccp_peek() caches a pointer to skb->data in dp after the first
+pskb_may_pull(), then uses dp after a second pskb_may_pull(skb, len + 2)
+in the CCP_CONFACK handler. If the second pull triggers
+pskb_expand_head() due to a cloned skb or frag linearization,
+skb->head is freed and reallocated, leaving dp stale.
 
-Add a .release_pipe that completes every upcall the daemon has
-consumed. cu_inflight distinguishes those from upcalls still queued
-on the pipe, which the framework purges before it calls this
-callback; cld_pipe_downcall() removes an upcall it accepts from
-cn_list under the same lock. Neither can be completed twice.
+The stale dp is subsequently used in CCP_OPT_LENGTH() and passed to
+decomp_init()/comp_init() which read from the freed memory.
 
-Fail the stranded upcall with -EPIPE rather than the -EAGAIN that
-makes cld_pipe_upcall() retry. The daemon consumed the request, so
-whether it acted on it before exiting is unknown.
+Re-derive dp from skb->data after the second pskb_may_pull.
 
-Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
-Reported-by: syzbot+edbebd898142ee5e24ce@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-nfs/6a99f6f0.2e567484.299ffc.000c.GAE@google.com/
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-7-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index abbde09d25f35..0b3b23ae7820e 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -937,10 +937,34 @@ cld_pipe_destroy_msg(struct rpc_pipe_msg *msg)
- 	complete(&cup->cu_done);
- }
- 
-+/*
-+ * An upcall the daemon has consumed is off every pipe list, so the
-+ * purge in rpc_pipe_release() and rpc_close_pipes() cannot reach it.
-+ * Release its waiter here instead; no downcall can arrive now.
-+ */
-+static void
-+cld_release_pipe(struct inode *inode)
-+{
-+	struct nfsd_net *nn = net_generic(inode->i_sb->s_fs_info, nfsd_net_id);
-+	struct cld_net *cn = nn->cld_net;
-+	struct cld_upcall *cup;
-+
-+	spin_lock(&cn->cn_lock);
-+	list_for_each_entry(cup, &cn->cn_list, cu_list) {
-+		if (!cup->cu_inflight)
-+			continue;
-+		cup->cu_inflight = false;
-+		cup->cu_pipe_msg.errno = -EPIPE;
-+		complete(&cup->cu_done);
-+	}
-+	spin_unlock(&cn->cn_lock);
-+}
-+
- static const struct rpc_pipe_ops cld_upcall_ops = {
- 	.upcall		= rpc_pipe_generic_upcall,
- 	.downcall	= cld_pipe_downcall,
- 	.destroy_msg	= cld_pipe_destroy_msg,
-+	.release_pipe	= cld_release_pipe,
- };
- 
- static struct dentry *
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 4c4dc817bc70c..4a274d5740f9e 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -3158,6 +3158,7 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 		len = CCP_LENGTH(dp);
+ 		if (!pskb_may_pull(skb, len + 2))
+ 			return;		/* too short */
++		dp = skb->data + 2;
+ 		dp += CCP_HDRLEN;
+ 		len -= CCP_HDRLEN;
+ 		if (len < CCP_OPT_MINLEN || len < CCP_OPT_LENGTH(dp))
 -- 
 2.53.0
 
