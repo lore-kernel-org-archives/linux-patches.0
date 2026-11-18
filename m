@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017083;
-	b=O9o4C4/2mcYQjZB8qwpkTtFQXh0DtwhP3B63hOTblMLwRVVcssiSvnGd8h883Nj/cFiG
-	 JNLYpriovoVjhGsX9i0TlhbPXq1mbL1w7Ir4exdoeE8UZJl9mPAm0FoPhQlHa0AQBIo2y
-	 MMBZIA+7jbYQS1rNAnnGVkeMMAMpqdhyT3e41NkI4sMN9Ai3zXrn3LSDyijujspSbODNh
-	 RQahJSuScLZnu7dYlHDpMCP/S1FdGsy7AOMCQgqR+X1r87me6un6vrfMvhPX6+SC5fg/0
-	 2OiX09XNcNaxwqJDEkFyxuBpVEV+77B+r+uKOBC7TLiMhkeCx2Y64JJB0d+kC64rWRw==
+	t=1795017086;
+	b=j4NE/TbwqP7EoIicYLkH6idDdz/2IY88piqePLTqg9Hfmn2PFTCmhGAwk7wycoSbRkxf
+	 8bOjuJESm9Gn/N+QHE1dljVbhlXd4tOh08hg4aUTv05lvyjZyBEDiSXbhDtlj0uQVhR6h
+	 Z2lkrIsFh/O5i6Wbv8OtzjeWQid8oALJmXWvfxH8dQwBhBl5ycE4W8CuOOebD8cipDrns
+	 w9AET5fsGzGd3NbIvv1UnknmtGdYCZwCspRdta3G5GSyI/usbuHuNrtzZzXaiVHTZmUiL
+	 /tRL44gjLnFn2yoJZY1HlVoG+JGWJGwYCHUv+oXJFp8Y/Vk41/geyFLiH80SNHIzrsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017086;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=44ioZUX5pPqlYY2PexMaeWRI3qMyiMKwnoriFx8sdqI=;
-	b=SfD5qrqO8qz7jD4zlgl5nawyLELl4Ht3h5yDYb56K3zGy6vTqIBECA4vUmRIIseBW0qH
-	 FTHd4eJYhe+6ruT5Pa0dYwj4JwklSSohi9mJ8tCnnOOdEvtaRM00KXap7WowP1JFhmxJQ
-	 s1nUBnIWbJTU6Xm7b1MB3qzt0Qiv9l5dXfOzPJcHJ2GSm5JGJUp64zACSRDN/+5ZGsON5
-	 sdvzPGUTWiZ4RpvY3o4bE6MuR2jtmUw8J+tXPqeEUVLNPMW7MyMxZKhZfk/+EMV0gWmxC
-	 JsvV0xYyOhPzlmyk/P56ChOww94ZD3EwfLKmVytgrKEzqDHeix01u0f9OOicY5bSVIQ==
+	bh=zS3dT00kZjgarEjFUEJvQqNh5+Oj/att0LWzeEoEwCM=;
+	b=fWZsKQpwY3c6ehU0xJ+MzffRf+drwtpOZ+4kAD6YhU4IqjUtDVFYu/GEvmf5AsFN89Qm
+	 MrlR+OCR0Sd4VgaJL2F9RQsLTAieVoBdi4Awpk0CdkJ+E/3QuDRoqyiLYT2qjuUaCila1
+	 sKDSQLyeAwcbpFkxbo8KlFpN2IuosEWnL1lDqbitlD0jZq5Y0LH3YBzHAQ332Fn4IYe3x
+	 39O+J7mKVJanBzqK34cnQagl43MvCS+45DHnc5+iQ20NOr5jB6fZql0nPqYXKMCJ7E3Tr
+	 AWhEccHJT6ovpaFd5K8+b5JfdPKB3fx5VXtxOm4I8OmsROsj1IknFOCRdbtDDD2PYWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lWY/DOis";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CCVJC/m0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C402606A330;
-	Wed, 18 Nov 2026 15:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E326606A32C;
+	Wed, 18 Nov 2026 15:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lWY/DOis
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3F71F000C7;
-	Wed, 18 Nov 2026 15:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCVJC/m0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EE71F000C8;
+	Wed, 18 Nov 2026 15:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017083;
-	bh=44ioZUX5pPqlYY2PexMaeWRI3qMyiMKwnoriFx8sdqI=;
+	s=korg; t=1795017085;
+	bh=zS3dT00kZjgarEjFUEJvQqNh5+Oj/att0LWzeEoEwCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lWY/DOis4q0ElxEPcY6gjREaQLf/F2qCDjik99nSS0Kr0tjJv1wFWh3d00MABQDve
-	 ncQW1+vRgv80d3UhM+hHdfTev9UlmW7u9qdq4V8YC8ir1Ri8s/hp9AWe5wVhUvN0LK
-	 hzovbEgb3YCQSGAs5UeqSbm1p7ZJwKSJZ3lSYHvM=
+	b=CCVJC/m0XJS1I0axfKAS2IDsL58Wb/KgSe2QZ2sH9iD1Pi9eoZfBFvouqxfHh15iM
+	 Hn0XrDC7zJhQ6DOwLN53lhefiQx2J//cVFBUPuaizW8hMNtb+8pqkUOUn0bNyKfVYA
+	 QKnoLTzC6kw4txTbcBb32/gb+IlVNxE7NIW4lD1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Hui Su <sh_def@163.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0758/2651] bpf: Keep target extended until its last freplace link detaches
-Date: Wed, 18 Nov 2026 15:33:18 +0100
-Message-ID: <20261118150315.168240166@linuxfoundation.org>
+Subject: [PATCH 7.3 0759/2651] bpftool: Fix CPU IDs in per-CPU map output
+Date: Wed, 18 Nov 2026 15:33:19 +0100
+Message-ID: <20261118150315.203638276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,122 +68,374 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit c43c348a84460b003fa757dd43d8c89848ae220d ]
+[ Upstream commit dbf8cef936c7783ca909c38097a69f73173a19a7 ]
 
-The is_extended / prog_array_member_cnt protocol introduced by commit
-d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-keeps a prog extended by a freplace program out of prog_array maps, and
-vice versa: once a tail call re-enters an extended subprogram, its
-tail_call_cnt resets on every execution and the loop never terminates.
+bpftool uses dense per-CPU value-buffer slots when printing per-CPU map
+values. It also uses the slot index as the CPU ID, which produces
+incorrect labels when the possible CPU mask is sparse, such as 0,2-3.
 
-But is_extended is a plain boolean, while one target prog can carry
-several freplace links at the same time, one on its entry and one on a
-global subprogram.  __bpf_trampoline_unlink_prog() cleared is_extended
-whenever *any* freplace link detached, so detaching one of two links
-re-armed the unbounded loop through the remaining one.
+Parse the possible CPU mask and use the corresponding logical CPU ID in
+plain, JSON, and BTF-formatted output. Keep the dense slot index for
+accessing the per-CPU value buffer.
 
-Replace the is_extended boolean with a count of the freplace links
-attached to each target prog, so the target stays extended until its
-last link detaches.  Also rename bpf_freplace_check_tgt_prog() to
-bpf_freplace_link_tgt_prog(), as the helper has never been a pure
-check: it reserves the target prog on success.
+Pass the parsed CPU count together with the CPU ID array so that the
+printed CPU IDs and loop bounds come from the same possible-CPU mask.
+Propagate CPU-ID lookup and map output errors through the shared output
+path to its callers.
 
-Fixes: d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20260924023737.1140521-2-chenyuan_fl@163.com
+Fixes: 71bb428fe2c1 ("tools: bpf: add bpftool")
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://lore.kernel.org/bpf/20260813155131.1022745-3-sh_def@163.com/
+Link: https://lore.kernel.org/bpf/20260923004243.969919-2-sh_def@163.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     | 4 ++--
- kernel/bpf/arraymap.c   | 2 +-
- kernel/bpf/trampoline.c | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ tools/bpf/bpftool/common.c | 40 ++++++++++++++++
+ tools/bpf/bpftool/main.h   |  1 +
+ tools/bpf/bpftool/map.c    | 95 +++++++++++++++++++++++++-------------
+ 3 files changed, 103 insertions(+), 33 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 5ca24186c6503..d71cbd920a036 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1812,7 +1812,6 @@ struct bpf_prog_aux {
- 	bool xdp_has_frags;
- 	bool exception_cb;
- 	bool exception_boundary;
--	bool is_extended; /* true if extended by freplace program */
- 	bool jits_use_priv_stack;
- 	bool priv_stack_requested;
- 	bool changes_pkt_data;
-@@ -1824,7 +1823,7 @@ struct bpf_prog_aux {
- 		u8 verdict;
- 	} sig;
- 	u64 prog_array_member_cnt; /* counts how many times as member of prog_array */
--	struct mutex ext_mutex; /* mutex for is_extended and prog_array_member_cnt */
-+	struct mutex ext_mutex; /* mutex for freplace_link_cnt and prog_array_member_cnt */
- 	struct bpf_arena *arena;
- 	void (*recursion_detected)(struct bpf_prog *prog); /* callback if recursion is detected */
- 	/* BTF_KIND_FUNC_PROTO for valid attach_btf_id */
-@@ -1856,6 +1855,7 @@ struct bpf_prog_aux {
- 	char name[BPF_OBJ_NAME_LEN];
- 	u64 (*bpf_exception_cb)(u64 cookie, u64 sp, u64 bp, u64, u64);
- 	u16 stack_arg_sp_adjust;
-+	u16 freplace_link_cnt; /* counts freplace links extending this prog */
- #ifdef CONFIG_SECURITY
- 	void *security;
- #endif
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index 0ce26b538075e..0fe9afd4a591e 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -1035,7 +1035,7 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
- 	}
+diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
+index ef366ccc96501..f9b87efa7c9a7 100644
+--- a/tools/bpf/bpftool/common.c
++++ b/tools/bpf/bpftool/common.c
+@@ -31,6 +31,7 @@
+ #include <bpf/bpf.h>
+ #include <bpf/hashmap.h>
+ #include <bpf/libbpf.h> /* libbpf_num_possible_cpus */
++#include <bpf/libbpf_internal.h>
+ #include <bpf/btf.h>
+ #include <zlib.h>
  
- 	mutex_lock(&prog->aux->ext_mutex);
--	is_extended = prog->aux->is_extended;
-+	is_extended = prog->aux->freplace_link_cnt > 0;
- 	if (!is_extended)
- 		prog->aux->prog_array_member_cnt++;
- 	mutex_unlock(&prog->aux->ext_mutex);
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index bf4cb3dd444d6..d880ad6913b38 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -859,7 +859,7 @@ static enum bpf_tramp_prog_type bpf_attach_type_to_tramp(struct bpf_prog *prog)
- 	}
+@@ -655,6 +656,45 @@ unsigned int get_possible_cpus(void)
+ 	return cpus;
  }
  
--static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
-+static int bpf_freplace_link_tgt_prog(struct bpf_prog *tgt_prog)
++int get_possible_cpu_ids(int **cpu_ids)
++{
++	const char *possible_cpus_file = "/sys/devices/system/cpu/possible";
++	bool *mask = NULL;
++	int mask_sz, nr_cpus = 0;
++	int *ids = NULL;
++	int i, res;
++
++	*cpu_ids = NULL;
++
++	res = parse_cpu_mask_file(possible_cpus_file, &mask, &mask_sz);
++	if (res) {
++		p_err("failed to parse possible CPU mask: %s", strerror(-res));
++		return res;
++	}
++
++	for (i = 0; i < mask_sz; i++)
++		nr_cpus += mask[i];
++
++	ids = calloc(nr_cpus, sizeof(*ids));
++	if (!ids) {
++		p_err("mem alloc failed");
++		res = -ENOMEM;
++		goto out;
++	}
++
++	for (i = 0, nr_cpus = 0; i < mask_sz; i++) {
++		if (mask[i])
++			ids[nr_cpus++] = i;
++	}
++	*cpu_ids = ids;
++	ids = NULL;
++	res = nr_cpus;
++out:
++	free(ids);
++	free(mask);
++	return res;
++}
++
+ static char *
+ ifindex_to_name_ns(__u32 ifindex, __u32 ns_dev, __u32 ns_ino, char *buf)
  {
- 	struct bpf_prog_aux *aux = tgt_prog->aux;
+diff --git a/tools/bpf/bpftool/main.h b/tools/bpf/bpftool/main.h
+index 78b6e0ebb85d8..6540b632a3ac5 100644
+--- a/tools/bpf/bpftool/main.h
++++ b/tools/bpf/bpftool/main.h
+@@ -216,6 +216,7 @@ void print_hex_data_json(uint8_t *data, size_t len);
  
-@@ -873,7 +873,7 @@ static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
- 		 */
- 		return -EBUSY;
+ unsigned int get_page_size(void);
+ unsigned int get_possible_cpus(void);
++int get_possible_cpu_ids(int **cpu_ids);
+ const char *
+ ifindex_to_arch(__u32 ifindex, __u64 ns_dev, __u64 ns_ino, const char **opt);
  
--	aux->is_extended = true;
-+	aux->freplace_link_cnt++;
- 	return 0;
+diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
+index 684a8fb724146..20d59eab09a12 100644
+--- a/tools/bpf/bpftool/map.c
++++ b/tools/bpf/bpftool/map.c
+@@ -70,7 +70,7 @@ static void *alloc_value(struct bpf_map_info *info)
+ 
+ static int do_dump_btf(const struct btf_dumper *d,
+ 		       struct bpf_map_info *map_info, void *key,
+-		       void *value)
++		       void *value, const int *cpu_ids, int cpu_cnt)
+ {
+ 	__u32 value_id;
+ 	int ret = 0;
+@@ -93,15 +93,15 @@ static int do_dump_btf(const struct btf_dumper *d,
+ 		jsonw_name(d->jw, "value");
+ 		ret = btf_dumper_type(d, value_id, value);
+ 	} else {
+-		unsigned int i, n, step;
++		unsigned int step;
++		int i;
+ 
+ 		jsonw_name(d->jw, "values");
+ 		jsonw_start_array(d->jw);
+-		n = get_possible_cpus();
+ 		step = round_up(map_info->value_size, 8);
+-		for (i = 0; i < n; i++) {
++		for (i = 0; i < cpu_cnt; i++) {
+ 			jsonw_start_object(d->jw);
+-			jsonw_int_field(d->jw, "cpu", i);
++			jsonw_int_field(d->jw, "cpu", cpu_ids[i]);
+ 			jsonw_name(d->jw, "value");
+ 			ret = btf_dumper_type(d, value_id, value + i * step);
+ 			jsonw_end_object(d->jw);
+@@ -130,7 +130,8 @@ static json_writer_t *get_btf_writer(void)
  }
  
-@@ -1023,7 +1023,7 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_node *node,
- 		/* Cannot attach extension if fentry/fexit are in use. */
- 		if (cnt)
- 			return -EBUSY;
--		err = bpf_freplace_check_tgt_prog(tgt_prog);
-+		err = bpf_freplace_link_tgt_prog(tgt_prog);
- 		if (err)
- 			return err;
- 		tr->extension_prog = node->link->prog;
-@@ -1069,7 +1069,7 @@ static int __bpf_trampoline_unlink_prog(struct bpf_tramp_node *node,
- 					 tr->extension_prog->bpf_func, NULL);
- 		tr->extension_prog = NULL;
- 		guard(mutex)(&tgt_prog->aux->ext_mutex);
--		tgt_prog->aux->is_extended = false;
-+		tgt_prog->aux->freplace_link_cnt--;
- 		return err;
+ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+-			     unsigned char *value, struct btf *btf)
++			     unsigned char *value, struct btf *btf,
++			     const int *cpu_ids, int cpu_cnt)
+ {
+ 	jsonw_start_object(json_wtr);
+ 
+@@ -150,12 +151,12 @@ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+ 			};
+ 
+ 			jsonw_name(json_wtr, "formatted");
+-			do_dump_btf(&d, info, key, value);
++			do_dump_btf(&d, info, key, value, cpu_ids, cpu_cnt);
+ 		}
+ 	} else {
+-		unsigned int i, n, step;
++		unsigned int step;
++		int i;
+ 
+-		n = get_possible_cpus();
+ 		step = round_up(info->value_size, 8);
+ 
+ 		jsonw_name(json_wtr, "key");
+@@ -163,10 +164,10 @@ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+ 
+ 		jsonw_name(json_wtr, "values");
+ 		jsonw_start_array(json_wtr);
+-		for (i = 0; i < n; i++) {
++		for (i = 0; i < cpu_cnt; i++) {
+ 			jsonw_start_object(json_wtr);
+ 
+-			jsonw_int_field(json_wtr, "cpu", i);
++			jsonw_int_field(json_wtr, "cpu", cpu_ids[i]);
+ 
+ 			jsonw_name(json_wtr, "value");
+ 			print_hex_data_json(value + i * step,
+@@ -183,7 +184,7 @@ static void print_entry_json(struct bpf_map_info *info, unsigned char *key,
+ 			};
+ 
+ 			jsonw_name(json_wtr, "formatted");
+-			do_dump_btf(&d, info, key, value);
++			do_dump_btf(&d, info, key, value, cpu_ids, cpu_cnt);
+ 		}
  	}
- 	bpf_trampoline_remove_prog(tr, node);
+ 
+@@ -245,7 +246,7 @@ print_entry_error(struct bpf_map_info *map_info, void *key, int lookup_errno)
+ }
+ 
+ static void print_entry_plain(struct bpf_map_info *info, unsigned char *key,
+-			      unsigned char *value)
++			      unsigned char *value, const int *cpu_ids, int cpu_cnt)
+ {
+ 	if (!map_is_per_cpu(info->type)) {
+ 		bool single_line, break_names;
+@@ -273,9 +274,9 @@ static void print_entry_plain(struct bpf_map_info *info, unsigned char *key,
+ 
+ 		printf("\n");
+ 	} else {
+-		unsigned int i, n, step;
++		unsigned int step;
++		int i;
+ 
+-		n = get_possible_cpus();
+ 		step = round_up(info->value_size, 8);
+ 
+ 		if (info->key_size) {
+@@ -284,9 +285,9 @@ static void print_entry_plain(struct bpf_map_info *info, unsigned char *key,
+ 			printf("\n");
+ 		}
+ 		if (info->value_size) {
+-			for (i = 0; i < n; i++) {
+-				printf("value (CPU %02u):%c",
+-				       i, info->value_size > 16 ? '\n' : ' ');
++			for (i = 0; i < cpu_cnt; i++) {
++				printf("value (CPU %02d):%c",
++				       cpu_ids[i], info->value_size > 16 ? '\n' : ' ');
+ 				fprint_hex(stdout, value + i * step,
+ 					   info->value_size, " ");
+ 				printf("\n");
+@@ -742,7 +743,7 @@ static int do_show(int argc, char **argv)
+ 
+ static int dump_map_elem(int fd, void *key, void *value,
+ 			 struct bpf_map_info *map_info, struct btf *btf,
+-			 json_writer_t *btf_wtr)
++			 json_writer_t *btf_wtr, const int *cpu_ids, int cpu_cnt)
+ {
+ 	if (bpf_map_lookup_elem(fd, key, value)) {
+ 		print_entry_error(map_info, key, errno);
+@@ -750,7 +751,7 @@ static int dump_map_elem(int fd, void *key, void *value,
+ 	}
+ 
+ 	if (json_output) {
+-		print_entry_json(map_info, key, value, btf);
++		print_entry_json(map_info, key, value, btf, cpu_ids, cpu_cnt);
+ 	} else if (btf) {
+ 		struct btf_dumper d = {
+ 			.btf = btf,
+@@ -758,9 +759,9 @@ static int dump_map_elem(int fd, void *key, void *value,
+ 			.is_plain_text = true,
+ 		};
+ 
+-		do_dump_btf(&d, map_info, key, value);
++		do_dump_btf(&d, map_info, key, value, cpu_ids, cpu_cnt);
+ 	} else {
+-		print_entry_plain(map_info, key, value);
++		print_entry_plain(map_info, key, value, cpu_ids, cpu_cnt);
+ 	}
+ 
+ 	return 0;
+@@ -833,6 +834,8 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 	void *key, *value, *prev_key;
+ 	unsigned int num_elems = 0;
+ 	struct btf *btf = NULL;
++	int *cpu_ids = NULL;
++	int cpu_cnt = 0;
+ 	int err;
+ 
+ 	key = malloc(info->key_size);
+@@ -845,6 +848,14 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 
+ 	prev_key = NULL;
+ 
++	if (map_is_per_cpu(info->type)) {
++		cpu_cnt = get_possible_cpu_ids(&cpu_ids);
++		if (cpu_cnt < 0) {
++			err = cpu_cnt;
++			goto exit_free;
++		}
++	}
++
+ 	if (wtr) {
+ 		err = get_map_kv_btf(info, &btf);
+ 		if (err) {
+@@ -876,7 +887,8 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 				err = 0;
+ 			break;
+ 		}
+-		if (!dump_map_elem(fd, key, value, info, btf, wtr))
++		if (!dump_map_elem(fd, key, value, info, btf, wtr,
++				   cpu_ids, cpu_cnt))
+ 			num_elems++;
+ 		prev_key = key;
+ 	}
+@@ -893,6 +905,7 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ exit_free:
+ 	free(key);
+ 	free(value);
++	free(cpu_ids);
+ 	free_map_kv_btf(btf);
+ 
+ 	return err;
+@@ -1035,17 +1048,30 @@ static int do_update(int argc, char **argv)
+ 	return err;
+ }
+ 
+-static void print_key_value(struct bpf_map_info *info, void *key,
+-			    void *value)
++static int print_key_value(struct bpf_map_info *info, void *key,
++			   void *value)
+ {
+ 	json_writer_t *btf_wtr;
+ 	struct btf *btf;
++	int *cpu_ids = NULL;
++	int cpu_cnt = 0;
++	int err = 0;
+ 
+-	if (get_map_kv_btf(info, &btf))
+-		return;
++	if (map_is_per_cpu(info->type)) {
++		cpu_cnt = get_possible_cpu_ids(&cpu_ids);
++
++		if (cpu_cnt < 0) {
++			err = cpu_cnt;
++			goto out;
++		}
++	}
++
++	err = get_map_kv_btf(info, &btf);
++	if (err)
++		goto out;
+ 
+ 	if (json_output) {
+-		print_entry_json(info, key, value, btf);
++		print_entry_json(info, key, value, btf, cpu_ids, cpu_cnt);
+ 	} else if (btf) {
+ 		/* if here json_wtr wouldn't have been initialised,
+ 		 * so let's create separate writer for btf
+@@ -1055,7 +1081,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
+ 			p_info("failed to create json writer for btf. falling back to plain output");
+ 			free_map_kv_btf(btf);
+ 			btf = NULL;
+-			print_entry_plain(info, key, value);
++			print_entry_plain(info, key, value, cpu_ids, cpu_cnt);
+ 		} else {
+ 			struct btf_dumper d = {
+ 				.btf = btf,
+@@ -1063,13 +1089,16 @@ static void print_key_value(struct bpf_map_info *info, void *key,
+ 				.is_plain_text = true,
+ 			};
+ 
+-			do_dump_btf(&d, info, key, value);
++			do_dump_btf(&d, info, key, value, cpu_ids, cpu_cnt);
+ 			jsonw_destroy(&btf_wtr);
+ 		}
+ 	} else {
+-		print_entry_plain(info, key, value);
++		print_entry_plain(info, key, value, cpu_ids, cpu_cnt);
+ 	}
+ 	free_map_kv_btf(btf);
++out:
++	free(cpu_ids);
++	return err;
+ }
+ 
+ static int do_lookup(int argc, char **argv)
+@@ -1114,7 +1143,7 @@ static int do_lookup(int argc, char **argv)
+ 	}
+ 
+ 	/* here means bpf_map_lookup_elem() succeeded */
+-	print_key_value(&info, key, value);
++	err = print_key_value(&info, key, value);
+ 
+ exit_free:
+ 	free(key);
+@@ -1404,7 +1433,7 @@ static int do_pop_dequeue(int argc, char **argv)
+ 		goto exit_free;
+ 	}
+ 
+-	print_key_value(&info, key, value);
++	err = print_key_value(&info, key, value);
+ 
+ exit_free:
+ 	free(key);
 -- 
 2.53.0
 
