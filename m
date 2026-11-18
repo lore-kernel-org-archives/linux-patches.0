@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047098;
-	b=uekTiTtzglzhhnwZEahGiRtimBr/GNCOlgPhO7pvV8HSCf5r8/sgsCjRF7b1K/zcKz0v
-	 5VFZWtwkegDG6s4fZ5aZzPzWyu/zOUuS0PhpxO5w/bXPPbi3m6uO4MwXlaEnSfC8xxLi7
-	 ZN9UrYZxFz92LfTUSwGzIsUChuKhbuJeHBh9ENYznDXumwZ0oI1KkuMF3YIAJ2vK4n2NI
-	 W3TTJYL/amgS61zI8tkIeKXRrEwNH6b+5ojKb87ReFtsSPKM+5hpbI22jE+wntGsq9oES
-	 KKiNfXyfhd0cberQ9v2N1gIpvzJLCN/HpKRnXSbRHaW964Md8WYUdRZzIae7Ii2belg==
+	t=1795047101;
+	b=3AzVa+shsUoCpGmHmywgmTDjukHvECfiSpE1pKQ4v1r0M4tskYht0ppH+SFNP2XO77GV
+	 hUA5imkshdzEcrKIP/GeGL+irpADFOVjgzMJndIYqRtBSKrvyn7xkNBRNfEnqIWESDnPu
+	 yg689Q0B10xcUXSL20rmAeTJaiwBLmw3dhY6LeL8AiMeTeNLzNt7rQXQpqP1rDzzEDpoK
+	 p6DsNs3tIT4q3/J+7RZMDltC7usDGn0wJAKKcPs9TBAElOy07I8npd7VQSZaeLYUv9gAD
+	 E4/W7Fq0ov5Zszmowrge6c5G4lX+uFV835cZLY1y+9pogRk106qBjd6NNI+v/hmqMjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IUnIaOSPNDr+1hbe+vIrxRziUCxL1bbZiSUAivBR4Uw=;
-	b=124mQmZxEfSSk5ruuThbFU4J2q1KKJRALxPRfjMVn37leN00BgKH6i2YcOV0Z7v1oklW
-	 utlGAWwPJg3WWdbzMa/UHy6foAECBoDbunCHN1tLSSKWBG4jUElC9F7Gu6qNeuztleucr
-	 23KRH8fwvFGEwEPP2jiwbqwZArUSJtq/UTU3ZOjNSnqMFLuecxG4UMDqomcg7XN1V21W5
-	 wzsiRTDz6+0Qe8CRnSgRiTWv0H9GmSK1mxLOBncq92/YMlb5iHE6we4Y3kH+tKlAdRGbH
-	 dH4Ka+zlyXs0YzLD260ScBAxtdeWwmxyic7JmPtxtW0UBIQeufNM6e4XALaK6x3Tlnw==
+	bh=Y4UBvEfXf8FqrIo5iu++XINgwYqJnRGtHa3eCyxYinw=;
+	b=VITFTit1JT7HZUgtSVPGTUjoALTi7MsdG/u/4Unvxta6zeJ7x3+jF/ubTHmhUbyfxw2P
+	 9/2r7UZhb36sTyHiKGXcUqsJDzV2KulGeKj2iRWCd8tcm1IPaFn1hwgVryUX8HaEqA1jJ
+	 22oo6nbKivYFI1UYfXV9Dn3ejaxYiLcLF0kudRdERbSdEDXY01X6ejNWPfDHPDbEyAIFq
+	 iiJ26ek8WIp/Yh32F50Xy6K/Di2yER0Dsw/jOi16OYFlyeYHnkBA8fz8qzNGaTMarLLyF
+	 PfEKFVtkPjm56sgni2YCtrdAYf8IfyGbcsXpUqVJjXLTMLrBtrin9zCsAudir7YjsqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Rza/Ypga";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IU0cVM3l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A956606A31C;
-	Thu, 19 Nov 2026 00:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A27E606A325;
+	Thu, 19 Nov 2026 00:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rza/Ypga
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E011F000C4;
-	Thu, 19 Nov 2026 00:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IU0cVM3l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9821F000C4;
+	Thu, 19 Nov 2026 00:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047098;
-	bh=IUnIaOSPNDr+1hbe+vIrxRziUCxL1bbZiSUAivBR4Uw=;
+	s=korg; t=1795047100;
+	bh=Y4UBvEfXf8FqrIo5iu++XINgwYqJnRGtHa3eCyxYinw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rza/YpgauaWNbmbFT0xxIUwAgzOdhL4t+R6Nkxwv4c2YyESgkc+tc24JBVc8M4ilW
-	 ICUdj/XurHwvxNQynS4JeFwh35Lig012tiXZjw8gCp12wcuQHMbyQXdwrOeksVh9DX
-	 zy+L6n3JSYH67u5f1M2PRwbrXItizmwS1cXW0W4I=
+	b=IU0cVM3ls0Yk37oND08wSVpMwnO0exQ2rDMbRObYgN4aJXTP++igiP5vQFUs97UNu
+	 qWkhkDbDWeqQNLy2SOyO6DeD2Lzu6AS0hDha/avyHmCbHfKy44qexNY98u35pQYAj/
+	 N+DnlF+ZC2mstOdNRgilyXfu8ndB2iXyhUadY13M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1518/2857] gpio: pca953x: Utilise temporary variable for struct gpio_chip
-Date: Wed, 18 Nov 2026 15:42:32 +0100
-Message-ID: <20261118150255.985439161@linuxfoundation.org>
+Subject: [PATCH 6.1 1519/2857] gpio: pca953x: Handle direction register read errors in IRQ paths
+Date: Wed, 18 Nov 2026 15:42:33 +0100
+Message-ID: <20261118150256.019800842@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,53 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 9da0a75ea7ced4731b1f2c6c67dc409e40efb95a ]
+[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
 
-We have a temporary variable to keep pointer to struct gpio_chip.
-Utilise it where it makes sense.
+Three IRQ paths ignore the result of reading the direction registers
+and then use the destination bitmap. pca953x_read_regs() does not populate
+that bitmap when regmap_bulk_read() fails, leaving the callers to use
+uninitialized stack data.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: a0fe26929350 ("gpio: pca953x: Handle direction register read errors in IRQ paths")
+This can select incorrect GPIOs for direction changes during IRQ bus
+synchronization, corrupt the saved input state during IRQ setup, or
+produce incorrect pending interrupt decisions.
+
+Check the read result at all three sites. Release irq_lock without
+changing GPIO directions on failure, leave the IRQ history untouched
+when pending detection fails, and propagate the error from IRQ setup.
+The read helper already logs the error.
+
+Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 4ea19500fa39d..3ad235cd740be 100644
+index 3ad235cd740be..5bf0964c16dde 100644
 --- a/drivers/gpio/gpio-pca953x.c
 +++ b/drivers/gpio/gpio-pca953x.c
-@@ -692,9 +692,7 @@ static int pca953x_gpio_set_config(struct gpio_chip *gc, unsigned int offset,
- 
- static void pca953x_setup_gpio(struct pca953x_chip *chip, int gpios)
- {
--	struct gpio_chip *gc;
--
--	gc = &chip->gpio_chip;
-+	struct gpio_chip *gc = &chip->gpio_chip;
- 
- 	gc->direction_input  = pca953x_gpio_direction_input;
- 	gc->direction_output = pca953x_gpio_direction_output;
-@@ -915,6 +913,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 	struct i2c_client *client = chip->client;
+@@ -766,6 +766,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	DECLARE_BITMAP(irq_mask, MAX_LINE);
  	DECLARE_BITMAP(reg_direction, MAX_LINE);
- 	DECLARE_BITMAP(irq_stat, MAX_LINE);
-+	struct gpio_chip *gc = &chip->gpio_chip;
- 	struct gpio_irq_chip *girq;
- 	int ret;
+ 	int level;
++	int ret;
  
-@@ -943,7 +942,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	guard(mutex)(&chip->i2c_lock);
+ 
+@@ -780,7 +781,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	}
+ 
+ 	/* Switch direction to input if needed */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		goto out;
+ 
+ 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
+ 	bitmap_complement(reg_direction, reg_direction, gc->ngpio);
+@@ -790,6 +793,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	for_each_set_bit(level, irq_mask, gc->ngpio)
+ 		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
+ 
++out:
+ 	mutex_unlock(&chip->irq_lock);
+ }
+ 
+@@ -856,7 +860,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 		return false;
+ 
+ 	/* Remove output pins from the equation */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return false;
+ 
+ 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
+ 
+@@ -941,7 +947,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	 * interrupt.  We have to rely on the previous read for
  	 * this purpose.
  	 */
- 	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
--	bitmap_and(chip->irq_stat, irq_stat, reg_direction, chip->gpio_chip.ngpio);
-+	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return ret;
+ 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
  	mutex_init(&chip->irq_lock);
  
- 	girq = &chip->gpio_chip.irq;
 -- 
 2.53.0
 
