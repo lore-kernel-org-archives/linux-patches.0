@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025535;
-	b=YvmG92llb34AcJBfnqiLhT4zmfcTOtRj3h9P6FEDEMhDDsjaOg5+GlK6kGTsq8eK3yA4
-	 SBHLi879adCHvJfnCtK0rOQK+2wlcasJb3gDXBkVvNAJmyHkYYKgsKQJ2A/VdTyN5z06W
-	 1BqrKGWnqeaKkzaZl7JHmxosMkReH7b+E10K4IhqGtIqXi6PHRcc55bWbd1ja+j9mA4Is
-	 g1iGsc4319SYFdy3IbwKGBm3huBFkgWZzeR8VrgkBZ8W19+pftakmMOMa5dn1OjDojtri
-	 NCE7TSBk6c8ENs0t1WT7e7dZ8U+Awz5L/ziwxyZq6Jo/2absHAhrS1qO3Y+Rjh0evZA==
+	t=1795025537;
+	b=34SqN3ZQ+AVuM2ImmbxjAVaQapnM+QiSIx0R8A6/4CPLEj6YHAzxgjnVWiSsUjE9AIxw
+	 PbFl2g0hDrjfVD5uT1DeSbbFZriK87r9+Pi9995i8M+raWeKHCfNEA0J/wjQpGyZHxmCL
+	 Pgf4oW/ThvPMUfOCiIeDpECxi+iq5R13ryK6vKpyOS7gZXKhFSpC4hchxLwJgfqiwQMU/
+	 lEwyDRh/4Tcr74/9PleABc7NWEXH+73D1hf+4mfvYpJBLNZAYR+F1NIv010o13+85plYJ
+	 IGn+nnX2YjZmVOYskh1zuXIRvZ/Q6q7OxvbFIQJTrhYYB5yq3GMZ0KEizR5F3GomUbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VTOpVzS27yGb/VfhBIjK1JynEnCPED8kLlyEXZyvinw=;
-	b=Bz1jymZ0ZOVDCMwlOGOpNiSiJ720ZKnv6iiS2fzAHs8hT1mtJfwcKIhYqlzLoZBR9/vs
-	 UKBGvXMEQyze5PiJg/bwk3h5OkGL9VGLFgoXoGESi+X3vDn5nS9Pu3VzYHc0kxz4LdKCq
-	 /ZcLKXaT0fG60wIrOioO/GFXphK63bHsjvA8vW9K+4XiXp2u2IZoulsYK5ktwwG3pa9EJ
-	 xp1Pnx5i5gLdY+0xnwu7aTswd4EfzqnKtROcTlbBGkmrlnjwQU+aAOTRyLceRrBffsBYF
-	 XHlHh6/rDRWqh3KatxU3/REC29L5/HmVZtf5+UyeDPn0NluWaHFhqUjo9oNE2wtXw7A==
+	bh=bdlnrNiCrbFVcTG8nRs6tszGpBCeGilRUbrwmbug1Zg=;
+	b=EhNErGBPJdpk1X+jZ/uyj4wiOhlArgtdejjYKfU6vJqNhQTzStBtpsMCsVHnyw5EPF2b
+	 +1cel3e0PZu/7v/mJROddAhM1RpwXcTkI9HYwQedR6kUdFoG7iHaaeeKDK0LwdP5SflUP
+	 2z8lmasQZcMhEgjIzK6KBiMyyDLtFgoIAGSaJInwDrjmWa3ahLdoE3s4E1FUgkul0IkGm
+	 ++LQzobcAXffa/ToaJDiDswVam4ddKABy8C1VmtuGVOrgqqRpJod1HxBaVjg5ZH8ZOxwD
+	 6/PFMDCKNY3boHCu4L1ewPfeniUNdc/0oyOP0yEsY2m6g0NKVSfT7S5eudGrzuWHWmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfMW6T2i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X/Glp05K";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B234606A31C;
-	Wed, 18 Nov 2026 18:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1C2606A32C;
+	Wed, 18 Nov 2026 18:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfMW6T2i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4DE1F000C4;
-	Wed, 18 Nov 2026 18:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X/Glp05K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C081F000C4;
+	Wed, 18 Nov 2026 18:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025533;
-	bh=VTOpVzS27yGb/VfhBIjK1JynEnCPED8kLlyEXZyvinw=;
+	s=korg; t=1795025536;
+	bh=bdlnrNiCrbFVcTG8nRs6tszGpBCeGilRUbrwmbug1Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SfMW6T2ilq7y0/eOWe3O3C+Wp9PSvGQmOwD3R0rk+BThPU4U8T4PnqYBSJ+VHdEZZ
-	 CYzPaNYGocWGznndj7XKN1qjsF2f/qyk4y2sL5Kr61oUlF0xxPcqMXwL5YONEHG5pM
-	 CVsX0S3NvPJGTO/T1bP+CDhW1+ypjzvmsFqkGGTI=
+	b=X/Glp05Kd317DYLyekJdZ3KBUYck23dE5H8ZqVG67LnvaYyyJHTtRQ3FYUmdEV7Xr
+	 +mAuehjPlnon0mviZLpXAwURqpD9q1aD9UpVOjPcvLCA45HOCukyybH4nTcs9NWerP
+	 JDVO0NrdUmeAT4WJdFiJQf+4HyrNjEvVOjBCcVgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	"Denis Efremov (Oracle)" <efremov@linux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1061/2151] power: supply: ab8500_fg: Finalize current measurements
-Date: Wed, 18 Nov 2026 15:46:36 +0100
-Message-ID: <20261118150200.949710440@linuxfoundation.org>
+Subject: [PATCH 6.18 1107/2151] floppy: unregister platform device on add_disk failure
+Date: Wed, 18 Nov 2026 15:47:22 +0100
+Message-ID: <20261118150202.567785145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,74 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 9a0461fb5e7cc64ed303bee3661452879ee139a1 ]
+[ Upstream commit f1e72d80ad4ac5ff3573796d07bd1a1e74909f94 ]
 
-ab8500_fg_inst_curr_start() returns with cc_lock held and the CCEOC
-IRQ enabled. The bounded sampling loop in the load-compensated voltage
-path returns without calling ab8500_fg_inst_curr_finalize() when it
-expires, leaving both resources active. The next fuel-gauge work item
-then blocks on cc_lock and all cached power-supply values stop updating.
+The change referenced by the Fixes tag reverted a previous fix because
+that fix added incorrect cleanup for the platform_device_register()
+failure path.
 
-The Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
-Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO product trees use
-a bounded sampling loop in drivers/battery/abb_fuelgauge.c but still
-call the finalizer. Follow that pattern so the normal completion timeout
-also performs the required cleanup.
+However, reverting the whole change also removed the cleanup for a later
+failure path. If platform_device_register() succeeds but device_add_disk()
+fails, the current floppy platform device has already been registered and
+registered[drive] has been set.
 
-Check the start result as well and return an uncompensated voltage if
-the instantaneous current transaction cannot be started or completed.
+The common out_remove_drives path uses while (drive--), so it starts from
+the previous drive and does not unregister the current one. As a result,
+the platform device registered for the failing drive is leaked.
 
-Fixes: edc400e1632f ("power: supply: ab8500_fg: Break loop for measurement")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-14-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Unregister the current platform device directly on the device_add_disk()
+failure path, where platform_device_register() is known to have
+succeeded. Leave the platform_device_register() failure path unchanged.
+
+Fixes: 895a9b37917d ("Revert "floppy: fix reference leak on platform_device_register() failure"")
+Fixes: 47d34aa2d211 ("floppy: add error handling support for add_disk()")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260708105703.747262-1-lgs201920130244@gmail.com
+Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/block/floppy.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index 3b0a5bdd352b5..04c12ebdfebfa 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -934,9 +934,15 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
- 	int i = 0;
- 	int vbat_uv = 0;
- 	int rcomp;
-+	int ret;
+diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
+index f380c5a163e56..6ba9f131037b0 100644
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -4734,8 +4734,11 @@ static int __init do_floppy_init(void)
  
- 	/* Average the instant current to get a stable current measurement */
--	ab8500_fg_inst_curr_start(di);
-+	ret = ab8500_fg_inst_curr_start(di);
-+	if (ret) {
-+		dev_err(di->dev, "failed to start instantaneous current measurement\n");
-+		di->vbat_uv = ab8500_fg_bat_voltage(di);
-+		return di->vbat_uv;
-+	}
- 
- 	do {
- 		vbat_uv += ab8500_fg_bat_voltage(di);
-@@ -945,15 +951,14 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
- 	} while (!ab8500_fg_inst_curr_done(di) &&
- 		 i <= WAIT_FOR_INST_CURRENT_MAX);
- 
--	if (i > WAIT_FOR_INST_CURRENT_MAX) {
-+	ret = ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
-+	if (ret) {
- 		dev_err(di->dev,
- 			"TIMEOUT: return uncompensated measurement of VBAT\n");
- 		di->vbat_uv = vbat_uv / i;
- 		return di->vbat_uv;
+ 		err = device_add_disk(&floppy_device[drive].dev,
+ 				      disks[drive][0], NULL);
+-		if (err)
++		if (err) {
++			platform_device_unregister(&floppy_device[drive]);
++			registered[drive] = false;
+ 			goto out_remove_drives;
++		}
  	}
  
--	ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
--
- 	/*
- 	 * If there is too high current dissipation, the compensation cannot be
- 	 * trusted so return an error unless we must return something here, as
+ 	return 0;
 -- 
 2.53.0
 
