@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048012;
-	b=lUIU1fsn+fWU4GGJ5+aPmWgI5bMMQfNmLMQCru052hEkTajFShzIGgEqYr/lrM4cI/HP
-	 DDRa4g/dFvhGqcDPAOsfik0agcOlMMwxd/Gng3gXumfPaVnuU1LHO00881be7jQndyHvU
-	 JHBQI+kOr9H7I18p4J7Fukjf1Z4OelSMWGQLVnW1tQ6i5DzEDxJqsIUpDSfjLFOsDAYyL
-	 nspZsa8ySTAzhL8gW//3HyPU/UPphtuW2RB0DivoGvkc/hZGCJ8UL8nE5b7tBxBpBstGJ
-	 6QU/M0IVafQWiK+c42n3OfoydatdFt3R1JY6cIzahl1vIe0wHo4MGWcKtHMnjrHD0sQ==
+	t=1795048015;
+	b=dP6ShjUSWPYQwWzWZeSIZF8HkxKRB0nAioTwZ78+3zpJLGGTvTjOs64QW93/ZPJ9BoLj
+	 227SA4KeEoyzVhiG50A2nJuSshD3HEaEfDKtGFMkPmGKnrH/3mInzZF+zvrjU1jmGP1KG
+	 yVhW85ImRbF/NG5fB0NimEkplhfRMvOWL8E2qfder2hI2qW2IBtY5syhnERV80utky/s5
+	 tMSg+NexPPwJsVERaKJlMnGrGJ/0+8TwzO8DZQAQGYtesKvVrMu0qzfHa1Pd91j9sDZ0b
+	 uDT/0FpbGIRisVg5+oiBoHRWjd3sjMHzY9anCZG8LGo0hrZtd+dqt/474fS4OXCnZNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pSKapLSouf8Wu8fnTCvVVHKZqsyAOtoksvwunH/uA0k=;
-	b=feTEZnG1uPewVaKSO/sc6IxF83PerDFX1vEU+9q4ifhiGkdTcCZEuFJPLHsOje2mBPz6
-	 os5gGgwEu1/ofKqN8ujHU2d61q39UW8ZnSkWbtlf/Cog1ambViD7ZBgM44t+XhdPBdlTF
-	 urjByG865hKwAa4crmX/m+OacEOHUU9dqclnefuT8bn3aloV3Qy323GUlbq6bJXpEMFJw
-	 kK9+nYF/cWVn1k/vhNfAGFgVWSquzsSH3awatZ4c10Eq3CeHKpi4ZVMnWId+E1kLe2hjW
-	 c43CvjPmW5Z6xr0SVXs4Bd5Z85eOrcDNqZr2AN8g6UueaN7h60WW8TOPVZ/xVUmxV0A==
+	bh=rOaKKrkEwb7A/GATUcfKrpbbso7HXqZu6bnm+hSahG0=;
+	b=SSzXIK8r9lEXfeo37uiknOZUWOBH1MP4Uhrgp6i2CIpFVaEi3pJUXnjgKSdFHgTHghTD
+	 zdKMEbDarlye/1DadctZ7h98PqblYGsnh6MiQzxe/5cmddIcq0Q1rgF8dm/Xvjl+bLhVR
+	 NLl+2OaW7xEOfTeUXHTrAR78BhR4270Q/RGDuS2jVRWHVI6ta0T+p/GeqW2GT+I+EOdD8
+	 1ZzU55F1jDm+p8TuL2LnYOjYV/fT25GrtTgb3zcFShVa2/K0E9gJmnswEf5GyuIep6GgN
+	 AafJzeHfHkGKYgbYYPfXsTQ6p2/khtd7i3U94IfjZyzPlEyrrj0SA+T0IEnzWPauXRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yo8zX3rM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZl7aJYm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E0F606A31C;
-	Thu, 19 Nov 2026 00:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEBC606A31C;
+	Thu, 19 Nov 2026 00:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yo8zX3rM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BE21F000C4;
-	Thu, 19 Nov 2026 00:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZl7aJYm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB251F000C6;
+	Thu, 19 Nov 2026 00:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048012;
-	bh=pSKapLSouf8Wu8fnTCvVVHKZqsyAOtoksvwunH/uA0k=;
+	s=korg; t=1795048015;
+	bh=rOaKKrkEwb7A/GATUcfKrpbbso7HXqZu6bnm+hSahG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yo8zX3rM3DwW3NcD2eRGrCo0oBB2Nl/xc3DS9G+nKIp2IxmeK+AIPOk0yRgqntmkP
-	 6x0BMfSR3MBpCEaZ/byIoJy3ANUjR0oEHstNwr/0zIDnk/8Y8Ydbjt2ag7PQwvV5k0
-	 pq9Qo4mKOooEoUwKpSyZk8EI5jx//xDLujp3RJQI=
+	b=vZl7aJYmYFDQ2kum8vvdjmvlor+cOPX4xsjRoZ+xUtovVua+tO0xb9DbW7dpT6b6I
+	 DzYWQ3YEKrf1h40badPdP+NAaYg8RJkRnFZNEsEzX6XHyNYwNaUKCu4d/dhUIggxgw
+	 m7Fkx+yNsUHVO+9IwotN7VpWdyFdDhooOriImRzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1816/2857] ASoC: mediatek: mt8186: Fix APLL enable error handling
-Date: Wed, 18 Nov 2026 15:47:30 +0100
-Message-ID: <20261118150306.627490665@linuxfoundation.org>
+Subject: [PATCH 6.1 1843/2857] PM: sleep: wakeirq: Introduce device-managed variant of dev_pm_set_wake_irq()
+Date: Wed, 18 Nov 2026 15:47:57 +0100
+Message-ID: <20261118150307.608466082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,79 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit cb552c6b9abe02f254d44d8c29d0dce1ae21f69f ]
+[ Upstream commit fd8318a32573d73eb20637a0c80689de0dc98169 ]
 
-Currently, the mt8186_apll*_enable() functions call mux_setting(afe, true)
-but do not check its return value to handle failures.
+Add device-managed variant of dev_pm_set_wake_irq which automatically
+clear the wake irq on device destruction to simplify error handling
+and resource management in drivers.
 
-In addition, the cleanup paths of mt8186_apll*_enable() do not call
-mux_setting(afe, false) when the enable operation fails, while the
-mt8186_apll*_disable() functions do.
-
-Add error handling for apll*_mux_setting() and call mux_setting(afe, false)
-in the cleanup paths when mt8186_apll*_enable() fails.
-
-Fixes: 55b423d5623c ("ASoC: mediatek: mt8186: support audio clock control in platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260903051150.178057-5-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20250103-wake_irq-v2-1-e3aeff5e9966@nxp.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: ece9baab2a6e ("power: supply: bq24190_charger: use the wake irq API")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8186/mt8186-afe-clk.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/base/power/wakeirq.c | 26 ++++++++++++++++++++++++++
+ include/linux/pm_wakeirq.h   |  6 ++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-clk.c b/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
-index 87b5c23986cf0..c941d7dc08aea 100644
---- a/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
-+++ b/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
-@@ -410,7 +410,9 @@ int mt8186_apll1_enable(struct mtk_base_afe *afe)
- 	int ret;
+diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
+index ddbe9cc91d23d..c0809d18fc540 100644
+--- a/drivers/base/power/wakeirq.c
++++ b/drivers/base/power/wakeirq.c
+@@ -106,6 +106,32 @@ void dev_pm_clear_wake_irq(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(dev_pm_clear_wake_irq);
  
- 	/* setting for APLL */
--	apll1_mux_setting(afe, true);
-+	ret = apll1_mux_setting(afe, true);
++static void devm_pm_clear_wake_irq(void *dev)
++{
++	dev_pm_clear_wake_irq(dev);
++}
++
++/**
++ * devm_pm_set_wake_irq - device-managed variant of dev_pm_set_wake_irq
++ * @dev: Device entry
++ * @irq: Device IO interrupt
++ *
++ *
++ * Attach a device IO interrupt as a wake IRQ, same with dev_pm_set_wake_irq,
++ * but the device will be auto clear wake capability on driver detach.
++ */
++int devm_pm_set_wake_irq(struct device *dev, int irq)
++{
++	int ret;
++
++	ret = dev_pm_set_wake_irq(dev, irq);
 +	if (ret)
 +		return ret;
++
++	return devm_add_action_or_reset(dev, devm_pm_clear_wake_irq, dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_set_wake_irq);
++
+ /**
+  * handle_threaded_wake_irq - Handler for dedicated wake-up interrupts
+  * @irq: Device specific dedicated wake-up interrupt
+diff --git a/include/linux/pm_wakeirq.h b/include/linux/pm_wakeirq.h
+index d9642c6cf8521..25b63ed51b765 100644
+--- a/include/linux/pm_wakeirq.h
++++ b/include/linux/pm_wakeirq.h
+@@ -10,6 +10,7 @@ extern int dev_pm_set_wake_irq(struct device *dev, int irq);
+ extern int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq);
+ extern int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq);
+ extern void dev_pm_clear_wake_irq(struct device *dev);
++extern int devm_pm_set_wake_irq(struct device *dev, int irq);
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL22M]);
- 	if (ret) {
-@@ -435,9 +437,9 @@ int mt8186_apll1_enable(struct mtk_base_afe *afe)
- 	return 0;
+ #else	/* !CONFIG_PM */
  
- err_clk_apll1_tuner:
--	clk_disable_unprepare(afe_priv->clk[CLK_APLL1_TUNER]);
--err_clk_apll22m:
- 	clk_disable_unprepare(afe_priv->clk[CLK_APLL22M]);
-+err_clk_apll22m:
-+	apll1_mux_setting(afe, false);
- 
- 	return ret;
+@@ -32,5 +33,10 @@ static inline void dev_pm_clear_wake_irq(struct device *dev)
+ {
  }
-@@ -463,7 +465,9 @@ int mt8186_apll2_enable(struct mtk_base_afe *afe)
- 	int ret;
  
- 	/* setting for APLL */
--	apll2_mux_setting(afe, true);
-+	ret = apll2_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL24M]);
- 	if (ret) {
-@@ -488,9 +492,9 @@ int mt8186_apll2_enable(struct mtk_base_afe *afe)
- 	return 0;
- 
- err_clk_apll2_tuner:
--	clk_disable_unprepare(afe_priv->clk[CLK_APLL2_TUNER]);
--err_clk_apll24m:
- 	clk_disable_unprepare(afe_priv->clk[CLK_APLL24M]);
-+err_clk_apll24m:
-+	apll2_mux_setting(afe, false);
- 
- 	return ret;
- }
++static inline int devm_pm_set_wake_irq(struct device *dev, int irq)
++{
++	return 0;
++}
++
+ #endif	/* CONFIG_PM */
+ #endif	/* _LINUX_PM_WAKEIRQ_H */
 -- 
 2.53.0
 
