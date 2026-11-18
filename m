@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032274;
-	b=yJr4dFZPkbHWSFRoWPlGwtROcc2y95dFP93AXde9kOwsAnaRBtR7w5kicuUvX4vXbXYS
-	 uxgjE7eXFrQ3zgyUyI+HXkRFhnf8tMYJaiZ7NIX4Zmeg/CWyTVMl37lxav5CpbmpkKCyz
-	 I9igRJ4ONgNYsumha0hySggaPBXJrulv+luUU/b5oUhU+Uovo6Eb4j/OnvuLPh22nGvul
-	 kWl6hXl5oiznzfYVGrp0AbjULW77RvTnM83IGho6En87Y5V6wzjaGyHQ0DibmOOnvmKRl
-	 LC9gm8sEav0LiAM+pr9KjJD2PQ5IOBOTf3zVL4MMqhkzpCVdFkRAmUL/esxL44yVFSA==
+	t=1795032277;
+	b=RB32nRvrAB0X9S6DO6l+hMcl4PX5x4gPArJZzIF8gznAaihQVdyu9Vr7PwAlFq9wGeIa
+	 Xz1iJ2CWyDMTmFCL2UGO8MVwpKmm2kZQEYdGfjw8aWBi0vuWLDOTEOkhSH5DOrNH1ABbJ
+	 B4uXCOdHfruy+viVyT1f55LH4xd4VHBJfC0YmkOoDQODiY3gEjN9YBXDh1SGL6Rgga9+2
+	 7eKpFSckO6GYMybRLFPzQwubH3t9ziNGIykaSokyAczl7Qz6GLmS98qr1lC8nY+sr58qd
+	 Wz2en8hijC2UeSo2cJVCpwQXvyGOjIhi4AqKD5ixOPItkKSNr+B7SKcsVP6ytq8y1aA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qwYxMHbq2gRI01lT8LvbXaaT8Nsz1yK+5R3123kceLc=;
-	b=SuakCFjKHb6BUrappBgV/7R8l8I0cksZfCDkARpmBnCF9ELi582L192q+WTETZGjt9aa
-	 frpZc2E+zuuQKOEtuKhLLIy8zljVnkykg+b3brKHWDPHUI4vZN19w7uh7f9xN+jKy7V3M
-	 6wnHL0mXDZym6rwhhfElzuGfP3O4qpyV4vpPYY4VZdXupxl4oZa8DJEVSfYAZ98iLGOr9
-	 +n3RcLaeOpt2KDo0DmfNLYPoJWlH42zdWOFwc/39Vukw1F0l+BJ/5n8w1i1CCqCsId5ke
-	 smnul/KxdWCLLPNAwtTVqcCpPG/lA+EHOP3hRpmd/IKRa1gm715luFnsHnqhGGphjmw==
+	bh=1kDQVurmxKGPv/9v4bdiyUR804YcWmyZEYDOxTxlK6A=;
+	b=bCbchwMYgTe8gbl2XfaT3Q4Kf0sdhztO1KYaPLXAqegJTd4KIhzF8kDU17pMU1dqeo9V
+	 cVnQGvBHHZioBSs0DfMB/XppCaHkAgNV1Lelej4STOAUg0VHt/XW+7Pem3lRUWicSC8tG
+	 KuMLxmkUWwZGqfBR+9aKydgdNj49rHgGyvW+xi2xr3G61cftyFYmwgFNmkLfugGnXpjL8
+	 MLwohmCsNq5vHyiHC06pW6Q6PU7r2EJEy9EUHz8LwBzZiEMUWEJwaCd5JGMCF5IjgUK6Y
+	 LeBPqDl0/Q3QRshmZlHLu6PCoPu1wOZbd4tHd6dndolwgngKzV/2hEr4k0Ko/B6EhBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEhGeMvA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tQCFo9L0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38D7606A31C;
-	Wed, 18 Nov 2026 20:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995CF606A325;
+	Wed, 18 Nov 2026 20:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEhGeMvA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E13E1F000C6;
-	Wed, 18 Nov 2026 20:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tQCFo9L0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00CE1F000C4;
+	Wed, 18 Nov 2026 20:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032274;
-	bh=qwYxMHbq2gRI01lT8LvbXaaT8Nsz1yK+5R3123kceLc=;
+	s=korg; t=1795032277;
+	bh=1kDQVurmxKGPv/9v4bdiyUR804YcWmyZEYDOxTxlK6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEhGeMvAwj8KZx9wQ0Pro1eMoP47PyLXXGXbq87AZf3wrZhWs3Zaaja1r4Sp9n9Ae
-	 gK6wxTjreuHBgRHfJ5DiZAv2CU0pUInces1VaxnfanrosE4QqPsvrgiOokTul4+XVL
-	 RSq3ujvNmjhRtna986NEt+A9I/xgyiqjYh9/0cJM=
+	b=tQCFo9L0cxOhnpQ+FPcOlATVQKc1/ErahyFigxDk9Pdql2Cg7JbSYYOBpqvll5JgZ
+	 iWXt1JAb5y8HTmNrxoNEiyrhNZyiyuiORe96yklMygurk+QdL8NVsaEQ8fQGkCNUMb
+	 qSPUXly8ozNyj4a+gZ5cVDnG3KwrOrHWaSvINYvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baul Lee <baul.lee@xbow.com>,
+	Brad Fitzpatrick <bradfitz@tailscale.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1327/1756] ipv4: use RCU protection in inet_netconf_get_devconf()
-Date: Wed, 18 Nov 2026 15:57:34 +0100
-Message-ID: <20261118150102.237915275@linuxfoundation.org>
+Subject: [PATCH 6.12 1354/1756] gre: keep the UDP tunnel GSO type when completing GRO
+Date: Wed, 18 Nov 2026 15:58:01 +0100
+Message-ID: <20261118150103.206261817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,119 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Brad Fitzpatrick <bradfitz@tailscale.com>
 
-[ Upstream commit b2039a6dd36b5c89142bfb95bc0205be8abcc600 ]
+[ Upstream commit 718f364a20ecee4f25986789c25550cf4da73b4c ]
 
-inet_netconf_get_devconf() runs without RTNL. It uses dev_get_by_index()
-and in_dev_get() to pin the device and its in_device while the reply is
-allocated and filled.
+gre_gro_complete() assigns SKB_GSO_GRE to gso_type rather than OR-ing
+it in. When GRE is carried over UDP by FOU or GUE, udp_gro_complete()
+has already set SKB_GSO_UDP_TUNNEL{,_CSUM} before calling into the FOU
+or GUE gro_complete handler and then gre_gro_complete(), so that bit is
+lost.
 
-in_dev_get() is not safe for a lockless caller. Since commit 9d40c84cf5bc
-("net: devinet: Reduce refcount before grace period"), inetdev_destroy()
-drops the final reference before the RCU grace period. A reader can load
-dev->ip_ptr, then call refcount_inc() on a zero refcount after
-in_dev_free_rcu() has been queued, and keep using the in_device once it
-has been freed.
+That has broken forwarding of such packets since FOU gained GRO: if a
+host with a FOU or GUE socket on the tunnel's port merges transit
+packets and then forwards them out a device that can't segment them
+itself, udp4_ufo_fragment() finds neither tunnel bit and fails, and
+the packets are dropped. Since commit 3d010c8031e3 ("udp: do not accept
+non-tunnel GSO skbs landing in a tunnel"), local receive is broken too:
+udp_unexpected_gso() considers the merged skb, which reaches the
+encapsulation socket without either UDP tunnel bit, unexpected and
+hands it to udp_rcv_segment(). Segmenting fails, so the packet is
+freed and counted in UdpInErrors. Either way, only packets GRO didn't
+merge get through, so TCP over FOU or GUE GRE tunnels slows to about
+one segment per round trip whenever the receiving device has GRO
+enabled.
 
-None of these references are needed. An in_device is freed after an RCU
-grace period, ipv4_devconf is embedded in it, and
-inet_netconf_fill_devconf() does not sleep.
+OR in SKB_GSO_GRE instead, as ipip_gro_complete() and
+sit_gro_complete() do for SKB_GSO_IPXIP4. For plain GRE, gso_type is
+still zero at this point unless the driver set it, so nothing changes
+there in the usual case.
 
-Allocate the skb first, then perform the lookup and the fill under
-rcu_read_lock(), using dev_get_by_index_rcu() and __in_dev_get_rcu(),
-like inet_netconf_dump_devconf() already does.
+The assignment dates to commit bf5a755f5e91 ("net-gre-gro: Add GRE
+support to the GRO stack"), but nothing set gso_type before it until
+FOU GRO came along, so the Fixes tag points there.
 
-Fixes: bbcf91053bb6 ("inet: do not use RTNL in inet_netconf_get_devconf()")
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Closes: https://lore.kernel.org/netdev/20260815172032.79740-1-baul.lee@xbow.com/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Tested-by: Cen Zhang <zzzccc427@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/CAAVpQUA5FEMWV1R4vy2+uzQc+_iLDaz4m-D6kfKYngGf2sE0Eg@mail.gmail.com
-Link: https://patch.msgid.link/20261009074906.729877-1-edumazet@kernel.org
+Tested under virtme-ng with bulk TCP over a GRE tunnel between two
+network namespaces joined by a veth, with GRO on the receiving veth and
+segmentation off on the sending one, so GRO sees wire-sized packets.
+32 MiB took:
+
+                  before                  after
+  FOU over IPv4   26.0s, 9658 UDP errors  0.28s, 0 errors
+  GUE over IPv4   26.1s, 9686 UDP errors  0.39s, 0 errors
+  FOU over IPv6   26.4s, 9860 UDP errors  0.16s, 0 errors
+  plain GRE       0.17s                   0.15s
+
+Forwarding the same FOU traffic through a third namespace with its own
+FOU socket on the port, GRO on its ingress and segmentation off on its
+egress, took 26.0s with 4826 egress drops before and 0.31s with none
+after. On v6.8, before 3d010c8031e3, local receive was fine but
+forwarding failed the same way (25.7s, 4764 drops).
+
+With GRO off on the receiver, all took under 0.2s both before and
+after. The gre_gso.sh and fou_mcast_encap.sh selftests give the same
+results before and after.
+
+Fixes: afe93325bc02 ("fou: Add GRO support")
+Signed-off-by: Brad Fitzpatrick <bradfitz@tailscale.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261011-bradfitz-gre-fou-gro-b4-v1-1-df713aad1531@tailscale.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/devinet.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ net/ipv4/gre_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
-index 46fa50576f581..6f81b61bf8878 100644
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -2211,8 +2211,8 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
- 	struct net *net = sock_net(in_skb->sk);
- 	struct nlattr *tb[NETCONFA_MAX + 1];
- 	const struct ipv4_devconf *devconf;
--	struct in_device *in_dev = NULL;
--	struct net_device *dev = NULL;
-+	struct in_device *in_dev;
-+	struct net_device *dev;
- 	struct sk_buff *skb;
- 	int ifindex;
- 	int err;
-@@ -2224,7 +2224,13 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
- 	if (!tb[NETCONFA_IFINDEX])
- 		return -EINVAL;
+diff --git a/net/ipv4/gre_offload.c b/net/ipv4/gre_offload.c
+index 5028c72d494ab..c8129782d39de 100644
+--- a/net/ipv4/gre_offload.c
++++ b/net/ipv4/gre_offload.c
+@@ -242,7 +242,7 @@ static int gre_gro_complete(struct sk_buff *skb, int nhoff)
+ 	__be16 type;
  
-+	skb = nlmsg_new(inet_netconf_msgsize_devconf(NETCONFA_ALL), GFP_KERNEL);
-+	if (!skb)
-+		return -ENOBUFS;
-+
- 	ifindex = nla_get_s32(tb[NETCONFA_IFINDEX]);
-+
-+	rcu_read_lock();
- 	switch (ifindex) {
- 	case NETCONFA_IFINDEX_ALL:
- 		devconf = net->ipv4.devconf_all;
-@@ -2234,36 +2240,29 @@ static int inet_netconf_get_devconf(struct sk_buff *in_skb,
- 		break;
- 	default:
- 		err = -ENODEV;
--		dev = dev_get_by_index(net, ifindex);
--		if (dev)
--			in_dev = in_dev_get(dev);
-+		dev = dev_get_by_index_rcu(net, ifindex);
-+		if (!dev)
-+			goto out_unlock;
-+		in_dev = __in_dev_get_rcu(dev);
- 		if (!in_dev)
--			goto errout;
-+			goto out_unlock;
- 		devconf = &in_dev->cnf;
- 		break;
- 	}
+ 	skb->encapsulation = 1;
+-	skb_shinfo(skb)->gso_type = SKB_GSO_GRE;
++	skb_shinfo(skb)->gso_type |= SKB_GSO_GRE;
  
--	err = -ENOBUFS;
--	skb = nlmsg_new(inet_netconf_msgsize_devconf(NETCONFA_ALL), GFP_KERNEL);
--	if (!skb)
--		goto errout;
--
- 	err = inet_netconf_fill_devconf(skb, ifindex, devconf,
- 					NETLINK_CB(in_skb).portid,
- 					nlh->nlmsg_seq, RTM_NEWNETCONF, 0,
- 					NETCONFA_ALL);
-+out_unlock:
-+	rcu_read_unlock();
- 	if (err < 0) {
- 		/* -EMSGSIZE implies BUG in inet_netconf_msgsize_devconf() */
- 		WARN_ON(err == -EMSGSIZE);
- 		kfree_skb(skb);
--		goto errout;
-+		return err;
- 	}
--	err = rtnl_unicast(skb, net, NETLINK_CB(in_skb).portid);
--errout:
--	if (in_dev)
--		in_dev_put(in_dev);
--	dev_put(dev);
--	return err;
-+	return rtnl_unicast(skb, net, NETLINK_CB(in_skb).portid);
- }
- 
- static int inet_netconf_dump_devconf(struct sk_buff *skb,
+ 	type = greh->protocol;
+ 	if (greh->flags & GRE_KEY)
 -- 
 2.53.0
 
