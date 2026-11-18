@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026255;
-	b=EGbIZ4CEIAhTNqTwk0otr+xpWN0Ck3hoOTA2Cqr3+IhSFIrReKLJBlPzfsN8q9hY0Utl
-	 UhM+O42Lq+pOTJ3bRMuMGz/y7J346wm/MJxWGHClaQ3eeULVn1nabOZ7hASNYr18jsIDG
-	 cJ79YqmQnoAsPqif3XJqaFlwP/a78RM/1d+9RmXqPbeXHpGGLZsa7TKbxb8hK9QUaWjs1
-	 NJSxtNYxaxMrsH/ULp69pIEEvOnNEjH3hVfULtGvGxgcrCp5AzCU7FRiL9B6NWkCFMjXO
-	 yn+ppnayMr2Eae+p2LhjiDx8YClMLJWZuu8hGHwHtnd460NqON2t5ObGm2LCK44U7WA==
+	t=1795026258;
+	b=hACDg48NF8hY0Ivo17DoQf+xs8mew7XTakv3o6I3BGul/Sy/HOB800eAVIswP1mjzQGw
+	 4wJLRuIlX7p9vTl8RVL5IKhZhpI18BMkPEmYvZSa5pnGR7tenunPp8442w314/yW/HcmK
+	 YScqVH8M88jvIHxtKFORjpoC8FJBH2hbyzf1Rki0oeMdqNaWbyJigIyJilxzTUIpwhScD
+	 LQ4TCdHpugmRowbH8kQF4ZonrEsSCb1au97d7alOgo6AKT1vR464OxbPR/xcSUwSRyGLZ
+	 mBAbNrCB81LqmZIW3H9pFCWmPnA6wnxEpXtUWp5zAZWsVUjr8kRlKvIrFHCBXMr9POg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026255;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026258;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bKpWf7iHlcernLhGGgAgLe1UEhR6Y2sG7osYCZ3mBdQ=;
-	b=1wkmSsmEiwdDEQaRHx9hIDSP05c0hf1OmmdHlTJteIr3L8DmfsGI0L95eO2LvVdFaQgb
-	 xhUpCG36cX225bbiKdiUqImMy0JkV3LqwBvpq+EdrTzU8Dd5FprNrzpLCgZP5+gqfAocK
-	 M6CO42IGTU84TUWZ4eBBMODZo5GhCvOE5EDsxW5Hw0vvlQuETYQk8/2OnowkFqKdfUyyp
-	 wRbPJCMwcmBwZ4ucGCk4Rwpr8fcQrHIUvDn8qSWLZYQKGG21Vh6uQVmeMFk2VE3WrMYxI
-	 oUbejCePGRNokVLMr50hH6AoUGdxLwCYMM/a7U1lzjGQnk5tV4xfMInbY93+SnE8XSQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=L4gj2PkhfZ1zd1J14bq6kerHbEa/ezc+5F/lHflHmk4=;
+	b=oK65Oi+I4wqYmrymS2KOR2jHoLV8umwstaWQi1adTAet/K2MBeDGmIgZWEmjeLNBIrCx
+	 JP/juxJoWIZlcDMGeOlKYXBZXUuHz9Je2iqRyl8HtxWODtQZobCrNddYU/2/fy5dxEiTf
+	 MoUFytiFQJcgXj3rgArKoS7PRAAgfXvbFFJPXNWkrgxvfBdHmBVhygH9HoWkWNeExr1Ab
+	 eYYC8dTfTFXZAc0dq4Z0yr2IXbvOQyaV9wOgAouKzFSeZw/3w06x7Gv8SU5YPlaqlxxEW
+	 p3JprG26k9zCynEXocJZ2+aIxEPR6phTJ47jkQNzr5sC4H9XgGMDqhqhx/QYmyvJIvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0VLGF2rx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w1N/++EO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE0606A320;
-	Wed, 18 Nov 2026 18:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9401606A32C;
+	Wed, 18 Nov 2026 18:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0VLGF2rx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E89E1F000C4;
-	Wed, 18 Nov 2026 18:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1N/++EO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEE11F000C4;
+	Wed, 18 Nov 2026 18:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026254;
-	bh=bKpWf7iHlcernLhGGgAgLe1UEhR6Y2sG7osYCZ3mBdQ=;
+	s=korg; t=1795026257;
+	bh=L4gj2PkhfZ1zd1J14bq6kerHbEa/ezc+5F/lHflHmk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0VLGF2rx19pP547MObYKVxrq3EFIqhi8/36RpKvFKhEq9aXD9U7r2kockUUBqvba7
-	 oDys7w7P3uA2y3T2HIHsSqaKBKmcxtguztIVxLKnEJGOlWkZwEAgTCe2p0EN+ucPIZ
-	 G4W1AVLLG9DdvMWrRqTfI7MyqemQYGzjnzbrUhaA=
+	b=w1N/++EOkMoSptvvtMAbZ9XJjvQx8WTYsvN4KdtLpfeY71w3+sTgrEVChr3xTrcxi
+	 NWhB9t2W4f5GT/EhVHARAdc1ptgMTL6MseVGNg2YsaWhoWVStdA2+xidRGblJFA0W9
+	 BUk9/CSHOESz82w1b9ij9a0Eu0Skv6ezXw/bJ6rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1369/2151] ASoC: codecs: rt5659: propagate GPIO errors
-Date: Wed, 18 Nov 2026 15:51:44 +0100
-Message-ID: <20261118150211.890005884@linuxfoundation.org>
+Subject: [PATCH 6.18 1334/2151] RDMA/mlx5: Cancel software CQ notifications before teardown
+Date: Wed, 18 Nov 2026 15:51:09 +0100
+Message-ID: <20261118150210.657427530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,53 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit c1e321bd5ce6ae3702db65837cfe0c792634d603 ]
+[ Upstream commit a0ab2bb269e7fd8523f87950b91a42a36c7f8f2a ]
 
-devm_gpiod_get_optional() may return an error pointer, including
--EPROBE_DEFER, but rt5659_i2c_probe() does not handle these errors
-for the ldo1-en GPIO and does not check for errors for the reset GPIO.
+GSI completions queue notify_work to invoke the CQ completion handler.
+CQ destruction drains hardware events and core polling, but does not
+cancel this software notifier.
 
-Check the return values and propagate GPIO lookup errors.
-
-Fixes: d3cb2de2479b ("ASoC: rt5659: add rt5659 codec driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Link: https://patch.msgid.link/20261009112204.33199-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 25361e02c448 ("IB/mlx5: Generate completions in software")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Link: https://patch.msgid.link/20261008141209.6923-1-prathameshdeshpande7@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5659.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/cq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/rt5659.c b/sound/soc/codecs/rt5659.c
-index 805898547025d..760b1a14ce35e 100644
---- a/sound/soc/codecs/rt5659.c
-+++ b/sound/soc/codecs/rt5659.c
-@@ -4112,10 +4112,14 @@ static int rt5659_i2c_probe(struct i2c_client *i2c)
- 	rt5659->gpiod_ldo1_en = devm_gpiod_get_optional(&i2c->dev, "ldo1-en",
- 							GPIOD_OUT_HIGH);
- 	if (IS_ERR(rt5659->gpiod_ldo1_en))
--		dev_warn(&i2c->dev, "Request ldo1-en GPIO failed\n");
-+		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_ldo1_en),
-+				     "failed to get ldo1-en GPIO\n");
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index c6590dde68332..4f25aa8c72fd6 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -1064,6 +1064,9 @@ int mlx5_ib_pre_destroy_cq(struct ib_cq *cq)
+ 	struct mlx5_ib_dev *dev = to_mdev(cq->device);
+ 	struct mlx5_ib_cq *mcq = to_mcq(cq);
  
- 	rt5659->gpiod_reset = devm_gpiod_get_optional(&i2c->dev, "reset",
- 							GPIOD_OUT_HIGH);
-+	if (IS_ERR(rt5659->gpiod_reset))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_reset),
-+				     "failed to get reset GPIO\n");
++	if (!cq->uobject)
++		cancel_work_sync(&mcq->notify_work);
++
+ 	return mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
+ }
  
- 	/* Sleep for 300 ms miniumum */
- 	msleep(300);
 -- 
 2.53.0
 
