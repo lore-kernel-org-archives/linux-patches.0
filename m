@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039590;
-	b=uPdcI8TjqrXjEIaRovBjgQtTadnJxskT5GCe3gp6QwXdt9hXQoN+9hzOonSHR1HeElz3
-	 Jhdo+U4fxtC2KWiGrFzn8FdDLtD1cL4CyHGYWRi0IZmWLTZvmr8aA4wARFPvoa6128XR5
-	 AzjJZ9Tm1OH40Tacxgh0WUnuc5nJQOg8pHtGjgrnjo0h8T43WkP71/j08wz+kn8Rl4tF6
-	 dRxJ+xBVySehoTieVedtmhGcbj+Fzd1gHRAt4FSqvtXSmC/CkKKmjpqPqMy0Iw2CuyNHN
-	 0Ig+UNNkmValZZ4Z2bV4FVeDuo00RYn4IL5eUHHCP/WTzaclGUWDY09Tto9ol9XQ1uw==
+	t=1795039593;
+	b=XX7UVKIkN7JbfRGYngIlie6gm260Pc+4dvY+SJM0fQw/JAQp/uK2Lrsw+3EtebJw/6xc
+	 puaBHOcGo7xwuaieMrP9BS4fQQ26pm3w89m7g5UakN4UnetEMFLOsTX1ZqpiarKvR1USl
+	 H7+7r6BGG2VT8guGl9aU7B5EQJuzfIoU8EGiMiWg5iDOn9zIq8YZc+nv14G9M9Rc5uUeK
+	 Vc0vVC/5VfQisg/lj/TwpdHl4eoM3+Si7wZeSkGTo7E8DiWTVL3QG3KRd68T+R3J85rQh
+	 JIIgM3YCK+Kfm26T9eZT4JwkD7f+ky+w3zn0HuGl8h4SBhdiFxyeZEUBITqc4zNPGEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zor8DF827ed04iVg0CS7qHupkreB5sn7DauwWSqQRv8=;
-	b=S5dImyjE3Cx93XTd6ahNWS1ZTOJFLdhWcZUZ1gT7zxP20nnTafE6w6/mlkkttrwd42hN
-	 ZO0ssoxI6HG1rXcgUO3dnmxjfvYtm9t2s4oW/2ta1UU91yKPZATO9v+JBmJSUgDxUvf8l
-	 aNfqmc4w4LnvNvc9ow7ZcoCDNTKgPefKUfmx7bo5oSho3yFRidoXchVEorjcRpsR2cKD5
-	 FKsk/F9eELObKPRPxISBWFLFicpOZ4TLZrPLjYjDY0qCYDE4NWLnWnAvnVEvEqcy/ya7v
-	 5ljHMbwjXos3hvF3orMTgBkP36/1fEP6UD5CJ0aIkuLqcFdH+SASaUVJH7Ubgc7YOdg==
+	bh=GHrb/D58zzEKaUBR9bymsZdr1P4jiwmnXPC6+sOmQ2U=;
+	b=wC+CA9fFfrH9O91xkvNTeXGCuQ+mIdZQm0AWsOXESOxqSe8okcLufJ1WYfg2OAOlqn9c
+	 Xpfh+sRWIlJcX2sdhufz5NpNAe5enl8x+OdbLFP2L6QKCoUNKZeNX97xElV4k73K14FD7
+	 G3m+u8fXtaiLpZseFnlPs2SMCkJlrXkdGk+kwRtfLOYDu+wlXMN+ZBlEDuhB8RsEHbPAN
+	 rxbb2fL6xITPETJ/A4IMmoSnZXNoMlKwomjbHbJCZlnQNplifhBtx0awuZeRmMUjoQTwV
+	 5I3uXHM32z4JvmWHeYn1dFm4+76WQGrwzAZ7rdsXcSukpfHamuWBI0weM+cdVzsCMmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo6Aghfg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uv6M3Sqm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915A6606A31C;
-	Wed, 18 Nov 2026 22:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B08606A31C;
+	Wed, 18 Nov 2026 22:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo6Aghfg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3101F000C4;
-	Wed, 18 Nov 2026 22:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uv6M3Sqm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949BE1F000C4;
+	Wed, 18 Nov 2026 22:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039590;
-	bh=Zor8DF827ed04iVg0CS7qHupkreB5sn7DauwWSqQRv8=;
+	s=korg; t=1795039593;
+	bh=GHrb/D58zzEKaUBR9bymsZdr1P4jiwmnXPC6+sOmQ2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xo6AghfgNO/Rx1urg+Exy88Bh3Lwhr5e13gqeJPArc3WrYAPOBAt71kVNyrtvYkvl
-	 l5Hj11G0AzjqgGhtWRtcASE8+mw4WWdelmeY9SAMac1pruG6E3x7i33E9+eEBuF6ZY
-	 SOGLTcR/Odj/9+5xCHhATO+JYKpA+4QjdMjsyQs0=
+	b=uv6M3SqmUXuWn1EmHnHHD8Sld/PnuvVbXydah78PgfwrCoOpFUx3rMWYxeBOkN43y
+	 Nxd/+XNylS+iRwyaAaTm9LVJk3pcw5DPQiefLTHyBxP3F9ASKp33mtLcJG81x/J1zL
+	 UVfGDz+Xq8xWZXQsXZ07mOpB1+Gv6OYxbnmkQn/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2156/3318] dmaengine: dw-axi-dmac: Fix AXI burst length encoding
-Date: Wed, 18 Nov 2026 15:46:18 +0100
-Message-ID: <20261118150426.705975710@linuxfoundation.org>
+Subject: [PATCH 6.6 2157/3318] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
+Date: Wed, 18 Nov 2026 15:46:19 +0100
+Message-ID: <20261118150426.731666163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,51 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit 0d59891c42e11c3840276d8a632dbc355d6ddc4f ]
+[ Upstream commit e6b49f8016ee8b642e8e495d1704342ee0b35d72 ]
 
-The snps,axi-max-burst-len property describes the number of beats in an
-AXI burst, while the ARLEN and AWLEN fields encode that value minus one.
+axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
+walk the hw_desc[] array of a single transaction. If multiple
+transactions have allocated LLIs, the channel count can exceed the
+transaction-local nr_hw_descs and make the DMA error path read past the
+end of hw_desc[].
 
-The driver keeps axi_rw_burst_len as the actual burst length so that
-dma_device.max_burst reports the correct value. However, it also programs
-that unencoded value directly into the hardware fields. A value of 256
-therefore overflows the 8-bit fields and can cause AXI decode errors.
+Use the descriptor-local nr_hw_descs count when dumping LLIs.
 
-Subtract one only when constructing hardware descriptors, while keeping
-the actual value for dma_device.max_burst.
-
-Fixes: c454d16a7d5a ("dmaengine: dw-axi-dmac: Burst length settings")
+Fixes: ef6fb2d6f1ab ("dmaengine: dw-axi-dmac: simplify descriptor management")
 Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260902-dma-fix-v3-1-414c6449fbcc@ultrarisc.com
+Link: https://patch.msgid.link/20260902-dma-fix-v3-2-414c6449fbcc@ultrarisc.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 87c005855f96b..ac3d7600c3af7 100644
+index ac3d7600c3af7..9758dffe249e0 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -660,7 +660,7 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
- 	ctlhi = CH_CTL_H_LLI_VALID;
+@@ -1008,10 +1008,7 @@ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
+ static void axi_chan_list_dump_lli(struct axi_dma_chan *chan,
+ 				   struct axi_dma_desc *desc_head)
+ {
+-	int count = atomic_read(&chan->descs_allocated);
+-	int i;
+-
+-	for (i = 0; i < count; i++)
++	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
+ 		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
+ }
  
- 	if (chan->chip->dw->hdata->restrict_axi_burst_len) {
--		burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
-+		burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
- 		ctlhi |= CH_CTL_H_ARLEN_EN | CH_CTL_H_AWLEN_EN |
- 			 burst_len << CH_CTL_H_ARLEN_POS |
- 			 burst_len << CH_CTL_H_AWLEN_POS;
-@@ -931,7 +931,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
- 
- 		reg = CH_CTL_H_LLI_VALID;
- 		if (chan->chip->dw->hdata->restrict_axi_burst_len) {
--			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
-+			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
- 
- 			reg |= (CH_CTL_H_ARLEN_EN |
- 				burst_len << CH_CTL_H_ARLEN_POS |
 -- 
 2.53.0
 
