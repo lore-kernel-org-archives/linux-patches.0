@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017154;
-	b=usibQu7AIV250rrNedKXDMikjFJ2R7f8gPcbMLQvhOUGSk0tmVtV+T4tSxAenxaebupR
-	 cL+jMzmwmmw0AzT7DrdfqRUnbHjpO/UjCZ8HqfK84MJfdrRTonutHwG+Qqu0V36e9Kt+k
-	 bmyvDdtloQCQZ0ht9UAHUvyEsAQAenTfKS6xtZjhSridKmeXYEEBrK/8SiqnjWFNDAOGs
-	 pRBr/+JGZAztVRq/Uzbihr0Xm2YXj+P3335c+Or0sR76rQUZ22yxn3BPNFKuVkns/m+9Z
-	 Z6QmpNrKdDxE7VLA1mWooiZZ8byamLskNAB8TbvptBMrdUpofPJi2ieOYzmOOzcHIbw==
+	t=1795017157;
+	b=sgLd2RtuJzqn5GFw+ZfrzrI9pA42imN0hVtaQALNdF9WsQqUVQfU/odVqX5dVFB95I64
+	 pILWeLebOrdMU70GZoiOnyjsRw5mQ0l4fqoUGSA62SwOyE5JRjlL24RUA5ULvw1hvqIyK
+	 uwzG4Fh0GuHpuJ+yC5b1qm6PXYIgi5MWDWMc6uQhT1KeLH9qyGVPWETNdVoxLylRYuuPP
+	 QCz8D19h7DI6fTN6/IzbyaKGo7yBpDJDMh24d1uJO5Cx0BVOD70TqoGAHKnoHFy4bE94u
+	 qizGx9POMqPygOTTiHQKzLsuenTA18GMzL5u2AxL1U/Rbk5GsgoY2qGcBr6qZiQg4/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3mgTVs515xNx1JlKLLYfOXnf6J2U0WWSroRvaJkDBNc=;
-	b=16VbLvSQVDJz02agO/TCL4ftlYtNYR38ReNhZGfNj62q9l/q/NcAWNvqRq4infL1t8sc
-	 20f8hD53xkD3FDslvQUdYhovDccjgp/sQy/E1nJxA1f7N1TZfFT100TT/AZP10QllPvPO
-	 +s3pEvGmhMaWRE3zT3aXDLjVTmFevOtMwPPoMhu+TkNiChE2o9juRZFJ25tQW7SSEOuKV
-	 HtQCX7OBB6ks2VXBSHbsz8qyZOqP2PPw40/PRIsVgk1ogaHUYuY1c9F43uOzLS2+LRhuI
-	 Q62e8vnVS2b9V0tfQm3vYgdhQv6pKe46pwy6I+8Ujki51LB420pUhjKQkxq1c7JPEaQ==
+	bh=PR50j6TU+HF812cO2dlHqFYuHOMuwVv1Bb/sRXndnoA=;
+	b=XMkAtheB45DukM6/nqrhzG1yi+UQ0G0vTTKIGDDIW9tcK4Yu+LBvnQomnfDkKXReyfjc
+	 ykvQgOHjUUlbTB69nPzax9LUpT0FfdDqIpXfrXElGI5QHm6bWGICOE7Lz6/4wbR3Qw0iY
+	 6Av8BDDH5jznx/TLYK9d/8qeoSc7u01B9cD2S2iMWd+UFFxtk2fOemOng8XYxsa2h/vNb
+	 OQV/KzIiwkegPJkcftEzVldQ3473URQFxo6S6OdLaTRmDjIrazVdHhWtwB5RlMpjqS463
+	 MRfeutZHtmFhuOafStysaARjuF/5VSMYDRga0PQBPHzZY0wjzvpHbsMzUEqFN4wT6yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BcvqPCov;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgKUjsm4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74606606A32C;
-	Wed, 18 Nov 2026 15:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D07A606A320;
+	Wed, 18 Nov 2026 15:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BcvqPCov
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2EC1F000C4;
-	Wed, 18 Nov 2026 15:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgKUjsm4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB621F000C4;
+	Wed, 18 Nov 2026 15:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017154;
-	bh=3mgTVs515xNx1JlKLLYfOXnf6J2U0WWSroRvaJkDBNc=;
+	s=korg; t=1795017157;
+	bh=PR50j6TU+HF812cO2dlHqFYuHOMuwVv1Bb/sRXndnoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BcvqPCovAfuRuAzRJkQBLkaWXnuLTPr1N8Fmui8pIe96WL3SY7XEgjzOdBV1vdmC4
-	 MvjpnpcdqUX+XM28nUTPokmwD/tgyZznKPnsp0ypjxgvYWOCY03QBfRaG4cgcybOlX
-	 BhSk21TFmbzAoL/rTMusdG474wraAa7EB1Tlf9PU=
+	b=XgKUjsm4/RULwJ3WaKjple0PndEqy0LyjB9t7Mykp6f3cKVZURZbEVNQb7O6YCJSW
+	 8pj5h8NpRv2Ki+2/uHPbjapHGQTmQIWC35q8aF3r/1UPCjd1yolA6/XOWyUAfoiltL
+	 h5dpKiKcKp676cnkPUsXNSbQ5VrHTmYgOogEJuOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Even Xu <even.xu@intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Le Ma <le.ma@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0741/2651] HID: Intel-thc-hid: Intel-quickspi: Use hid_safe_input_report()
-Date: Wed, 18 Nov 2026 15:33:01 +0100
-Message-ID: <20261118150314.554407063@linuxfoundation.org>
+Subject: [PATCH 7.3 0742/2651] drm/amdgpu: disable GFX clockgating for GC 12.1.0
+Date: Wed, 18 Nov 2026 15:33:02 +0100
+Message-ID: <20261118150314.589688364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,116 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Even Xu <even.xu@intel.com>
+From: Le Ma <le.ma@amd.com>
 
-[ Upstream commit 291f4f310cc18ff8f5addbc3c9fbe33877283ec7 ]
+[ Upstream commit 7c00e5859b3bd232b2eceaafad4067fbfa46aeca ]
 
-Replace the deprecated hid_input_report() with
-hid_safe_input_report(), which takes the allocated size of the input
-report buffer and allows hid-core to validate the reported data length
-against the actual buffer size.
+RLC fw disables GFX CGCG and CGLS on GC 12.1.0 by default, so clear the
+corresponding CG flags and keep GUI idle interrupts disabled during gfx init.
 
-Track the allocated size of qsdev->input_buf in the new input_len
-field and pass it through quickspi_hid_send_report() to
-hid_safe_input_report() to prevent potential out-of-bounds reads.
-
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
-
-Signed-off-by: Even Xu <even.xu@intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Le Ma <le.ma@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 52a484f3ef5b ("drm/amdgpu: Move GC v12.1 spm vmid init to hw init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c     | 2 ++
- drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h     | 2 ++
- drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.c     | 6 ++++--
- drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.h     | 2 +-
- .../hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c    | 2 +-
- 5 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c | 5 ++---
+ drivers/gpu/drm/amd/amdgpu/soc_v1_0.c  | 3 +--
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-index ad676fde211b6..53023e30cf8d4 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-@@ -557,6 +557,8 @@ static int quickspi_alloc_report_buf(struct quickspi_device *qsdev)
- 	if (!qsdev->input_buf)
- 		return -ENOMEM;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+index e49d8a79045cc..78d64f2ed31fd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+@@ -2817,9 +2817,8 @@ static int gfx_v12_1_xcc_cp_resume(struct amdgpu_device *adev, uint16_t xcc_mask
+ 				return r;
+ 		}
  
-+	qsdev->input_len = max_input_len;
-+
- 	max_report_len = max(le16_to_cpu(qsdev->dev_desc.max_output_len),
- 			     le16_to_cpu(qsdev->dev_desc.max_input_len));
+-		/* GFX CGCG and LS is set by default */
+-		if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP)
+-			gfx_v12_1_xcc_enable_gui_idle_interrupt(adev, true, xcc_id);
++		/* GFX CGCG and LS is disabled by rlc fw */
++		gfx_v12_1_xcc_enable_gui_idle_interrupt(adev, false, xcc_id);
  
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-index dc67a39ad546b..fe51ff51d8c0e 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-@@ -113,6 +113,7 @@ struct acpi_device;
-  * @low_power_ltr_val: THC low power LTR value
-  * @report_descriptor: store a copy of device report descriptor
-  * @input_buf: store a copy of latest input report data
-+ * @input_len: the data size of the input report buffer
-  * @report_buf: store a copy of latest input/output report packet from set/get feature
-  * @report_len: the length of input/output report packet
-  * @reset_ack_wq: workqueue for waiting reset response from device
-@@ -159,6 +160,7 @@ struct quickspi_device {
+ 		gfx_v12_1_xcc_cp_set_doorbell_range(adev, xcc_id);
  
- 	u8 *report_descriptor;
- 	u8 *input_buf;
-+	u32 input_len;
- 	u8 *report_buf;
- 	u32 report_buf_size;
- 	u32 report_len;
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.c b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.c
-index a60a0a7f16aad..ed1c40b8c4fa1 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.c
-@@ -148,16 +148,18 @@ void quickspi_hid_remove(struct quickspi_device *qsdev)
-  *
-  * @qsdev: point to quickspi device
-  * @data: point to input report data buffer
-+ * @buf_size: the allocated size of the input report data buffer
-  * @data_len: the length of input report data
-  *
-  * Return: 0 on success, non zero on error.
-  */
- int quickspi_hid_send_report(struct quickspi_device *qsdev,
--			     void *data, size_t data_len)
-+			     void *data, size_t buf_size, size_t data_len)
- {
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c b/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
+index 37e2068b6fda2..1918313d14960 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
+@@ -293,8 +293,7 @@ static int soc_v1_0_common_early_init(struct amdgpu_ip_block *ip_block)
  
--	ret = hid_input_report(qsdev->hid_dev, HID_INPUT_REPORT, data, data_len, 1);
-+	ret = hid_safe_input_report(qsdev->hid_dev, HID_INPUT_REPORT, data,
-+				    buf_size, data_len, 1);
- 	if (ret)
- 		dev_err(qsdev->dev, "Failed to send HID input report, ret = %d.\n", ret);
- 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.h b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.h
-index f640fa876a405..61b7c6be6c516 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.h
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-hid.h
-@@ -7,7 +7,7 @@
- struct quickspi_device;
- 
- int quickspi_hid_send_report(struct quickspi_device *qsdev,
--			     void *data, size_t data_size);
-+			     void *data, size_t buf_size, size_t data_size);
- int quickspi_hid_probe(struct quickspi_device *qsdev);
- void quickspi_hid_remove(struct quickspi_device *qsdev);
- 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
-index 847c5ec55569a..0df33c44fbffe 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
-@@ -240,7 +240,7 @@ void quickspi_handle_input_data(struct quickspi_device *qsdev, u32 buf_len)
- 		input_len = sizeof(body_hdr->content_id) + input_len;
- 		input_report = input_body->content - sizeof(body_hdr->content_id);
- 
--		ret = quickspi_hid_send_report(qsdev, input_report, input_len);
-+		ret = quickspi_hid_send_report(qsdev, input_report, qsdev->input_len, input_len);
- 		if (ret)
- 			dev_err_once(qsdev->dev, "Failed to send HID input report: %d\n", ret);
- 
+ 	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
+ 	case IP_VERSION(12, 1, 0):
+-		adev->cg_flags = AMD_CG_SUPPORT_GFX_CGCG |
+-			AMD_CG_SUPPORT_GFX_CGLS;
++		adev->cg_flags = 0;
+ 		adev->pg_flags = AMD_PG_SUPPORT_VCN_DPG;
+ 		adev->external_rev_id = adev->rev_id + 0x50;
+ 		break;
 -- 
 2.53.0
 
