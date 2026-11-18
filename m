@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021836;
-	b=EXSqZr0Y51hiaa25g0LYRjVMNT1Nj4296JCv0bYpxBL6bgWpxXM+fA/bgtnnZVtMyCaY
-	 CDWVJxhzaQUOySSO+NQ80fVPhU5lb3mRM6QDcIlLS1XAOhpIqLFINuh7Uacx4HnLwhtNv
-	 hSTURRAdF6RASqPOlXS2vUUeBi7L2gm06O1l5nFDEdyas9x6fkvC1aQMDtkqLmbjgk0X5
-	 AsYWpcUnuzgQ6M2wXUst/PhnhuOFk+JSoM2RvFJQcH8F8p3d6noaYiytx7iJn2JAJGxuG
-	 ckDXdjWNYWgspMUPv8TvbTlTYcC9ydhXLx/osimGBOFOJtQxJTm6J9OpBiWXQFbVzpA==
+	t=1795021839;
+	b=jqsvn6EeO3uDc7wS5fGC/22Z4RMsaExL8XfERW8L0t9VwH3KY5ZdKjPLHTxF8D6Gtf9y
+	 5s1ahk/L+Xp9ObSXLKZINKMT198dDnVuT3NKe2JQBi/19jaRKwu1+oXNFga6Qs7ogdD9l
+	 qYW3AItI2PBehFDOob1ufB3REzZIbZdauc/lGUJkgkOHXueZ0TTYsCunHGNxi9mCJCPWA
+	 wnFwk5HLh208X1UYGSEYA5Ms2DPq4UQlMxC8uiAQ/tmt/6DSRb+9XPbViG3vUsTuF2/B3
+	 TX2gIjUXJodPx/WmTKO18mZkXVMc16DC6WDNKx13aWjUHIrLi8XcEKmPpzjwoIn2BfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6J+WvXeqFfpBONHyYoEsFHzAFTkK7eYMUwk3V3Ls4XU=;
-	b=Tm9Uua0zmFFAC2z9oxq00NUzVYxEA/I0hXLa9qjEf+07PgvaCQv7g34SY+VfsaQ2zAeG
-	 cVMdR9qz6JmLC7uWT3atGNTo2hqATVrnSrqih2ky2oY8INKavQYN/JkmFghZm2V2z29EC
-	 LWZTlIxHqD7LeLpKAA6+qIeupUTVyjR6v8jTnvr5rl9T5q3ptYpx13vUnb4Esfp/pu4a/
-	 oz9Rcy2vcbFQddDwrWkR6pl4DB79VGOMl8t2htRSyBWosilB8bTyaVzfWWQXrfNTJ9grS
-	 8LRQnGW0TrYe6Ly+PFK7oILFshZFp1iRyEGld9fojP/UY7KjWsKG33PV57VM9GQbujg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=giw+9vykF8QXBIjEXIuLxdnhz7VAdDS0yrxOsTsh3Ao=;
+	b=Wz0bzkB1Zka9rp45TQzPrgJAuwInXLryCm2085BWFWlh83geHTNfjILzwucWbNgEBCp4
+	 WDkQXwzdPma//aj6/9InJpP9pjsCZ3Hj8mmakWYjRmBQjKu3felcKc/sHMgeKDAvl+GV0
+	 9BM6sINWHZAVEj0P+k2xn7Sd5PPYoCIS2DmY+wM8Vf5SJtnC4vi7tKGijdngaGetwIotP
+	 Ou0YSCFvfZdtqBnG4gysFMCCF4uHUKrHPc2GA7xJtadoaNRjvjHVSBgxS1RV6pwk/r50y
+	 QZReCt9M70E83bWY7boifN9mI4kY0GVadxKQuOV3VwjLG6eJCuteRH8MK7ukRn7TRwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YPfDAN83;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEKdF201;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F465606A31C;
-	Wed, 18 Nov 2026 17:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF73E606A31C;
+	Wed, 18 Nov 2026 17:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YPfDAN83
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2B41F000C4;
-	Wed, 18 Nov 2026 17:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEKdF201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD551F000C4;
+	Wed, 18 Nov 2026 17:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021836;
-	bh=6J+WvXeqFfpBONHyYoEsFHzAFTkK7eYMUwk3V3Ls4XU=;
+	s=korg; t=1795021838;
+	bh=giw+9vykF8QXBIjEXIuLxdnhz7VAdDS0yrxOsTsh3Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YPfDAN83djEUnxZaxfzI+YUVSNE1jQSKgOZ0deCF7hJuc/PNlU2yH8R1QHsX4sLa+
-	 d9xSJIgbWMZZGxx9gPpQWJLg5bv02pr/RI+aDC5QKakyfMX1ICHkVvTt70cn95IVrZ
-	 pq93lANJ4fZ79wU9QB51d7hsfcV87McPn3GYuKyg=
+	b=LEKdF201Shw/GFEg5jljo15FwqOroEYsJRoTYu10A/fkGg/vblyl93GaI2dt0fgdh
+	 GhBPMkqAm5uzUP23O0S14K4tVp0hY1+Vrz/YsHkh6+4kowp9/DmHp3GR5IU516Oc5j
+	 XAvO7tDJNwsu2W4NWHo6G/JIMvrDfDO0M218Eu4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2446/2651] net/sched: taprio: unwind the netdevice notifier if register_qdisc() fails
-Date: Wed, 18 Nov 2026 16:01:26 +0100
-Message-ID: <20261118150413.197439519@linuxfoundation.org>
+Subject: [PATCH 7.3 2408/2651] vdso/gettimeofday: Correct the read of tz_minuteswest and tz_dsttime
+Date: Wed, 18 Nov 2026 16:00:48 +0100
+Message-ID: <20261118150412.010321877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,77 +64,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit c5234f89d7cb311880ef218cb7a969794a106678 ]
+[ Upstream commit cbd0f65b48f52d308c457b0fd5201324abadb501 ]
 
-taprio_module_init() registers taprio_device_notifier and then returns
-register_qdisc()'s error directly.  When register_qdisc() fails the
-notifier stays registered, but the loader's failure path frees the module
-image without ever calling the __exit function, so netdev_chain is left
-pointing at taprio_device_notifier.notifier_call -- a function pointer
-that lives in text that has just been freed.
+When these fields got moved from 'struct vdso_time_data' to the new
+'struct vdso_clock', this access was forgotten.
 
-register_qdisc() has two failure returns: -EEXIST (duplicate .id) and
--EINVAL (malformed cl_ops).  taprio_class_ops satisfies every checked
-implication, so -EINVAL is unreachable and -EEXIST is the only reachable
-failure; it needs a pre-existing "taprio" entry in qdisc_base.  In-tree
-that is reachable only through bpf_qdisc_reg() (CONFIG_NET_SCH_BPF); a
-module calling the exported register_qdisc() reaches it as well.
+'vd' is not an array, but a pointer to a single structure. The code
+works by accident in its current form as CS_HRES_COARSE is 0.
 
-Once the notifier is left dangling, the next netdevice event that walks
-netdev_chain calls through the stale pointer:
+Replace the incorrect array access with a regular pointer dereference.
 
-  BUG: KASAN: vmalloc-out-of-bounds in notifier_call_chain+0x650/0xb5c
-  Read of size 8 at addr ffff80001fc5ab08 by task ip/110
-   notifier_call_chain+0x650/0xb5c
-   raw_notifier_call_chain+0x34/0x64
-   call_netdevice_notifiers_info+0xa8/0x198
-   __dev_close_many+0xe0/0x800
-   ...
-  >ffff80001fc5ab00: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-
-The shadow row is all f8 (KASAN_VMALLOC_INVALID): the read lands in
-vmalloc memory that was poisoned when the module image was freed, and the
-indirect call is unguarded because the only check, func_ptr_is_kernel_text(),
-is compiled out unless CONFIG_DEBUG_NOTIFIERS.
-
-Mirror the sibling sch_cbs.c and act_mirred.c, which unwind the notifier
-on this failure path.
-
-Fixes: 7b9eba7ba0c1 ("net/sched: taprio: fix picos_per_byte miscalculation")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021155417.66254-1-phx0fer@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 886653e36639 ("vdso: Rework struct vdso_time_data and introduce struct vdso_clock")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Link: https://patch.msgid.link/20260902-vdso-tz-v1-1-4d37a6b85ff9@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ lib/vdso/gettimeofday.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 0eb0803047a1e..324c02fa23455 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -2577,7 +2577,11 @@ static int __init taprio_module_init(void)
- 	if (err)
- 		return err;
+diff --git a/lib/vdso/gettimeofday.c b/lib/vdso/gettimeofday.c
+index f7a591aba59f1..6e9b03051beec 100644
+--- a/lib/vdso/gettimeofday.c
++++ b/lib/vdso/gettimeofday.c
+@@ -374,8 +374,8 @@ __cvdso_gettimeofday_data(const struct vdso_time_data *vd,
+ 		if (vdso_is_timens_clock(vc))
+ 			vd = vdso_timens_data(vd);
  
--	return register_qdisc(&taprio_qdisc_ops);
-+	err = register_qdisc(&taprio_qdisc_ops);
-+	if (err)
-+		unregister_netdevice_notifier(&taprio_device_notifier);
-+
-+	return err;
- }
+-		tz->tz_minuteswest = vd[CS_HRES_COARSE].tz_minuteswest;
+-		tz->tz_dsttime = vd[CS_HRES_COARSE].tz_dsttime;
++		tz->tz_minuteswest = vd->tz_minuteswest;
++		tz->tz_dsttime = vd->tz_dsttime;
+ 	}
  
- static void __exit taprio_module_exit(void)
+ 	return 0;
 -- 
 2.53.0
 
