@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016757;
-	b=4i7/24nNvZZzN8NjNHmdhdAGmVLth4J1qeAzUiWv8norG0b/McWv4YqauXs+tm4zbKBf
-	 /t9hhzko3z6B6vgQYIajbioSVCYc101iCDdw1lG5BEplFFCVrBowarL1BhGQfyWpZlT44
-	 sHyRqTWz9VBbi7Sy0gMSeguEzdyuP/TJBruB/8BM2UEXU8o6msB3ugl4TRdNJ4CoaASPZ
-	 Bj21KtXMymnsZ5uhRm5ecQkoceSlDsKV3qvjzeJ+HqH/qZudze2dq/aPPTuuMCBGWNnfk
-	 petkI30pdhNClkAz8qXqMxbNNwNr0oRNwIBOuRXpmOAbL36N4e8Yp+dlTE4dyEyYceA==
+	t=1795016759;
+	b=2mHCArusU9og9oo/InV/ZvC2Q9Z2KmDWrslPb99xCGsc3W3hzU0U0zHU9ACGtFPJ3qP2
+	 Smtx57xOVsR2a57gmArTD3kNLRvvc4/wWzLP4WZ4bUyVkCvDOiPTOwlPqsxXVUjrP7QRB
+	 ykqrNOK6aX8PamBsSlA7HlLHLWTcCQtA61knpcKqVpe7hjyAJ3LCdc6Y5ttpsa1E9KUw9
+	 1aGhtVIxBPaR1Jch3/0opNfAq3ihUrco67ElsIn94HbLxxXY0jzOGpNYtS8Ba3Wl3A1i8
+	 1yYK2W9mpotEivPp/zeK6lljJep5szWF2qtdj9Qcqk6Pce0fp0N+9Wd6LiXYtXgCHmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ar155YT+KDNJxXC411nVvugk3rCwsg065UJgJIr63H0=;
-	b=axeMKaLllOCTbTXy08tVIdZRuYuJjxmn7t8L6a6mYBneQquRKUELzl5T6OmDhCX3d//w
-	 /+WIPPI2wQ1+FiNF41zVwEGs/eqMVoXgGksw4Fbl1okcrs3itJcQMEI/WjwcfSb4M676K
-	 gm0M96Js6WrOdDg66ucvNBWdGV2RC2o1pkLhaJ8q4U60fmbUcGGzTktg8/zMcdufra79z
-	 dnEwwJ/ufhKF3UkKY+eQMcDy/vQkq7JksVKPaMeeSl/HhPti4H2bfnOsyQXRGcH4e+9XU
-	 eqdcV8C0nrlMwT9I/jKzC4NtTlqgx6sTFo0MLmpUo70l11ncKTBu4N17jZ4YT4/oePw==
+	bh=iRT7sWcchbc3BlikkMaj0d7EK/0aiaTf9c5c9OIWDdA=;
+	b=hi4LyPLzetnbOk65Q9b0kV6fAOgLnS4LA/FW0cFcdiHYwFYZwWwFkV7nnPXVTQw5xNCs
+	 h0M7FnPDQ0r5We4F9fCNKd2Vx1BvUWIwaq1sOEEN9uvUgFDFgj9rUml05Uu2HxPE83gtR
+	 idgihEw/fPOYdwzLB+JDEvSgj7KkuVdZfhG6lyENUZKM1hNsHSmqGFF/4mQuxrj1fYiNP
+	 3DqF7hWZxpO0QnGikPjjhxH/0Rc/4MJaWCAZ5vv4BLqNLmD0Fpg51/Xd5Qxslv60RNOnf
+	 cUdVNCZ96F7sdqS4ofqfcx/Q4B9cIuj89hLzMa28J3BDyCt0HW+Y5UIKmXjz+SPP4Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="160/DoLl";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LDHeMj9d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373D8606A32F;
-	Wed, 18 Nov 2026 15:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8367606A31C;
+	Wed, 18 Nov 2026 15:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=160/DoLl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CFB1F000C4;
-	Wed, 18 Nov 2026 15:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LDHeMj9d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDD81F000C5;
+	Wed, 18 Nov 2026 15:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016757;
-	bh=ar155YT+KDNJxXC411nVvugk3rCwsg065UJgJIr63H0=;
+	s=korg; t=1795016759;
+	bh=iRT7sWcchbc3BlikkMaj0d7EK/0aiaTf9c5c9OIWDdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=160/DoLliWAWswFk94N/Tk/hd7C8lj4LfZEZy74ykXV/lHYhoa5uiJKOUytznAg0G
-	 p/udPgXcYBBiOof4Ru9tmwRtgEXW1SWiw1LsdGBFs6PRAZL7t3Uu05rfbOI009Mecj
-	 /2/gA+Vz4c3cgx/edbJWkC+LSn2oXhd12afAU1/A=
+	b=LDHeMj9dlE59Gf5gvdGK0GCTNmJCJePwjR4rbImrO/Dlic4ZXDs5QwZukRUXD9hQ3
+	 03+kemdwghF63/DS8YY8xaaG8zo2/iWSKwlcpxA3jtcXDHOu5YBkPK+Fh1Gdf3Obpz
+	 lzvqqKQNt0VPeMOl9nNR+UBkDBf0Odly+yPze9JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0641/2651] perf symbol: Fix the build when demangling with libbfd
-Date: Wed, 18 Nov 2026 15:31:21 +0100
-Message-ID: <20261118150310.758536810@linuxfoundation.org>
+Subject: [PATCH 7.3 0642/2651] perf build: Only pass clang flags to CXX when CXX is clang
+Date: Wed, 18 Nov 2026 15:31:22 +0100
+Message-ID: <20261118150310.796483222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,135 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit ecbc5aac7d9218320f2c734d75798f34c15a9d85 ]
+[ Upstream commit c8592f8da838a07ddd0011eeb444771b64193a0f ]
 
-cxx_demangle_sym() calls bfd_demangle() with the DMGL_PARAMS and
-DMGL_ANSI flags, but nothing declares them. The
-"#define PACKAGE 'perf'", "#include <bfd.h>" and the DMGL_ definitions
-were left behind in symbol-elf.c when the demangling code moved to
-symbol.c, and libiberty's demangle.h that defines the flags isn't
-installed by every binutils package. The cplus_demangle() variant is
-missing a declaration for the same reason.
+Building with "make CC=clang" appends clang's --target= and
+-fintegrated-as to CXX, but CXX is only set to clang++ by "make LLVM=1".
+With just CC=clang, CXX is still g++ and every C++ feature test dies:
 
-The code is only built when the C++ ABI's __cxa_demangle() is
-unavailable, so most builds never compile it:
+  g++: error: unrecognized command-line option '--target=...'
+  g++: error: unrecognized command-line option '-fintegrated-as'
 
-  $ make BUILD_NONDISTRO=1 NO_DEMANGLE=1
-  util/symbol.c:2714: error: 'DMGL_PARAMS' undeclared
-  util/symbol.c:2714: error: 'DMGL_ANSI' undeclared
-  util/symbol.c:2716: error: implicit declaration of 'bfd_demangle'
+The failures are silent, as feature tests are allowed to fail, so the
+build quietly loses libllvm and C++ demangling support:
 
-Move the libbfd demangling into libbfd.c, which already includes bfd.h,
-and declare in symbol.c the libiberty interfaces the cplus_demangle()
-variant needs.
+  $ make CC=clang && grep LIBLLVM .config-detected
+  (nothing, whereas a gcc build reports CONFIG_LIBLLVM=y)
 
-Fixes: 4d9b5146f0d91472 ("perf symbol: Move demangling code out of symbol-elf.c")
+The block is entered when CC_NO_CLANG says CC is clang, which says
+nothing about CXX. Probe CXX the same way tools/scripts/Makefile.include
+probes CC, and only add the flags when CXX really is clang++.
+
+Mixing a clang-built C with a g++-built C++ is fine here, the C++ code
+is linked with -lstdc++ already.
+
+Fixes: 4772e66cb45e0dd2 ("perf build: Support build with clang")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Assisted-by: Antigravity:gemini-3.1-pro
 Acked-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/libbfd.c | 17 +++++++++++++++++
- tools/perf/util/libbfd.h |  9 +++++++++
- tools/perf/util/symbol.c | 18 +++++++++++++++---
- 3 files changed, 41 insertions(+), 3 deletions(-)
+ tools/perf/Makefile.config | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index d1d1c9b2ef223..59f4ab252bb16 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -72,6 +72,23 @@ static void ensure_bfd_init(void)
- 	pthread_once(&bfd_init_once, perf_bfd_init);
- }
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 4d5993da9f945..3f84e6548c0f5 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -54,7 +54,14 @@ ifeq ($(CC_NO_CLANG), 0)
+   endif # CROSS_COMPILE
  
-+/*
-+ * Flags from libiberty's demangle.h. bfd.h declares bfd_demangle but not the
-+ * flags to pass to it, and demangle.h isn't installed by every binutils
-+ * package.
-+ */
-+#ifndef DMGL_PARAMS
-+#define DMGL_PARAMS	(1 << 0)	/* Include function arguments. */
-+#define DMGL_ANSI	(1 << 1)	/* Include const, volatile, etc. */
-+#endif
+   CC := $(CLANG) $(CLANG_FLAGS) -fintegrated-as
+-  CXX := $(CXX) $(CLANG_FLAGS) -fintegrated-as
 +
-+char *libbfd__demangle_sym(const char *str, bool params, bool modifiers)
-+{
-+	int flags = (params ? DMGL_PARAMS : 0) | (modifiers ? DMGL_ANSI : 0);
-+
-+	return bfd_demangle(/*abfd=*/NULL, str, flags);
-+}
-+
- static int bfd_error(const char *string)
- {
- 	const char *errmsg;
-diff --git a/tools/perf/util/libbfd.h b/tools/perf/util/libbfd.h
-index 953886f3d62f3..14171db8b1120 100644
---- a/tools/perf/util/libbfd.h
-+++ b/tools/perf/util/libbfd.h
-@@ -31,6 +31,8 @@ int libbfd_filename__read_debuglink(const char *filename, char *debuglink, size_
++  # CC being clang says nothing about CXX: "make LLVM=1" overrides both, but
++  # "make CC=clang" leaves CXX as g++. Probe CXX the way Makefile.include
++  # probes CC rather than assuming the two match.
++  CXX_NO_CLANG := $(shell if command -v $(firstword $(CXX)) >/dev/null 2>&1; then $(CXX) -dM -E -x c++ /dev/null; fi | grep -Fq "__clang__"; echo $$?)
++  ifeq ($(CXX_NO_CLANG), 0)
++    CXX := $(CXX) $(CLANG_FLAGS) -fintegrated-as
++  endif
  
- int symbol__disassemble_bpf_libbfd(struct symbol *sym, struct annotate_args *args);
- 
-+char *libbfd__demangle_sym(const char *str, bool params, bool modifiers);
-+
- #else // !defined(HAVE_LIBBFD_SUPPORT)
- #include "annotate.h"
- 
-@@ -77,6 +79,13 @@ static inline int symbol__disassemble_bpf_libbfd(struct symbol *sym __always_unu
- 	return SYMBOL_ANNOTATE_ERRNO__NO_LIBOPCODES_FOR_BPF;
- }
- 
-+static inline char *libbfd__demangle_sym(const char *str __always_unused,
-+					 bool params __always_unused,
-+					 bool modifiers __always_unused)
-+{
-+	return NULL;
-+}
-+
- #endif // defined(HAVE_LIBBFD_SUPPORT)
- 
- #endif /* __PERF_LIBBFD_H */
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index 3587ad2431590..3206929473a2d 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -27,6 +27,7 @@
- #include "dso.h"
- #include "util.h" // lsdir()
- #include "event.h"
-+#include "libbfd.h"
- #include "machine.h"
- #include "map.h"
- #include "symbol.h"
-@@ -2707,13 +2708,24 @@ static bool want_demangle(bool is_kernel_sym)
-  * version.
-  */
- #ifndef HAVE_CXA_DEMANGLE_SUPPORT
-+#ifdef HAVE_CPLUS_DEMANGLE_SUPPORT
-+/*
-+ * Declarations from libiberty's demangle.h, the header isn't installed by
-+ * every binutils package.
-+ */
-+#ifndef DMGL_PARAMS
-+#define DMGL_PARAMS	(1 << 0)	/* Include function arguments. */
-+#define DMGL_ANSI	(1 << 1)	/* Include const, volatile, etc. */
-+#endif
-+
-+char *cplus_demangle(const char *mangled, int options);
-+#endif
-+
- char *cxx_demangle_sym(const char *str __maybe_unused, bool params __maybe_unused,
- 		       bool modifiers __maybe_unused)
- {
- #ifdef HAVE_LIBBFD_SUPPORT
--	int flags = (params ? DMGL_PARAMS : 0) | (modifiers ? DMGL_ANSI : 0);
--
--	return bfd_demangle(NULL, str, flags);
-+	return libbfd__demangle_sym(str, params, modifiers);
- #elif defined(HAVE_CPLUS_DEMANGLE_SUPPORT)
- 	int flags = (params ? DMGL_PARAMS : 0) | (modifiers ? DMGL_ANSI : 0);
- 
+   # Enabled Wthread-safety analysis for clang builds.
+   CFLAGS += -Wthread-safety
 -- 
 2.53.0
 
