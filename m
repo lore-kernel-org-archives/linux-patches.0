@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042998;
-	b=jdT9KyV7eUecai512eEkXnKORUMw13lT5nFjyZDeKJqdEgihg3/j+94Bi7phCnDVXcOB
-	 BrkFINS1MM+RUEuU8Mo4h4LM1UuMjb85uAX+Kl7ErO2bMi21KTbXty3QD62qA0KgoSbMv
-	 KTFeaciPKZclRYIAL7PAFX85QyLZB2dNeV0unoAaWoPcSOS2qKM2mebqYBzZevgtfb9zC
-	 E+sUYpnShjTA/dtsPvvaIH9UAtAq4FYViMZdXBbTfDigccbZQu3skNVvaxF+wElEmzdA/
-	 QCsCz40g8Dy3vE/eeyCfDnDQ+9uv2+nokXkX/9uOkG6que/5/b1DrQrqwxLwdl32woQ==
+	t=1795043001;
+	b=pbAPa1qOLzjLPMxkctJCwo/CWWfTQhv3bsHaPjOntJY0mJYmTb61WBGsW9ybHszBUJU6
+	 QUkIqiqTk9XZ1/oycgYXeFzOvTIIq4RCR1PGCM/9V/0sN+Vbr9BW98v+0fTHF85yStLws
+	 BMLLCh8Zuod1OqpZ2WfU/acaGGgio6i+H2VrY48B6afbg7ebUIAyl73lW3A3Re2DQYYiQ
+	 TE+bEvEHm5SilOL5ZpeL4Hd4hoLuJ1Hjsisg5ZXIuOfj+U5RkrF/TKUB2QInFiGGWmwO6
+	 b7OKUDCAlUATIuvvnG9UUv18CLsiw0A/t3LghKf6uMnPu9sdGaDjxbrQHS9+uR0XVkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=daWNGHV9MbLdcd0me67W5Nv52TporlQFtripGq8h4d8=;
-	b=CF5Ig5kPCXYGnVsLl3rj/889QdLaFG/Ugp3LgtluKrdO1vzLIfzzPtLLVtqsbkLrMBOo
-	 2LywaFxCbyYr+jaFLhqdOGIsMp3S5ahBYwZSVYTK5T4o16J0b7wQKJtNKVG4HI0Yo3Ny0
-	 tIUw6CZobJyKxM83EutEhJEkaY6lNeFyap7p4v5ZF5ouv98CZiE2HW6Uha6YF1lJPKn4l
-	 2L1ePpkyGmuyvG2Y6kObVpBJesXD3boNrQ97d56RsTtikyNhgJqLaiskhvfPqoNOIM7uR
-	 XXSC6bezp4b9rvk8D0QWRZjwWc/EB1kGxtxjL00yqbx3VJDERjyWB8nPayKy/f1Divw==
+	bh=PV7AoUmANLrdvi1y+al+FAZqu3gRrP1KhAmZUEk3Ggo=;
+	b=dHkfv8p3tlxGruIasME5PULl3rhHOluxuIDJ+AkWrMQdJBtcIg1rSuxbzFZZzOnWFr6Q
+	 JgtojRQ28zXXBJI50ulVguBiph/nxdCx9VWN1rF0tanedkMacqGoZud176XwN2nBJEp2L
+	 /ngaRaAp4Mna3mtuagsWxt6jDnRc9gJaIqORSxa88+Py64gcglsLdYzu5nd3BwZrf3jB3
+	 91LBbHvxM1UulpdVW/zrio+qO6/dvn/dgt8FrQ5QElkA7eQRbpW9YDNqkOziN1sBFzP+p
+	 r9Bm6hkjc/rIVJSJTSpDp5QaDzfEqax5mkgQj/fmie/P3QR0W0JwygtoFDr1YzSUOeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEXscDk2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ut9j74o1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDDA606A331;
-	Wed, 18 Nov 2026 23:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6165606A339;
+	Wed, 18 Nov 2026 23:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEXscDk2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E4F1F000C4;
-	Wed, 18 Nov 2026 23:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ut9j74o1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F7A1F000C7;
+	Wed, 18 Nov 2026 23:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042998;
-	bh=daWNGHV9MbLdcd0me67W5Nv52TporlQFtripGq8h4d8=;
+	s=korg; t=1795043000;
+	bh=PV7AoUmANLrdvi1y+al+FAZqu3gRrP1KhAmZUEk3Ggo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tEXscDk2QLTEsVrwrODWaAyguTFqp3A1Z3KAByLSD/PBcbndeELnABB/IELeN0kRw
-	 pOf62aTGPSnHUMu2+N34BT1huU+5r/36NJvpRArv+YwC1RrTifKYnWRJDg5xw9K/UF
-	 gG8QxltRcMRz3xSd6Ql0J3dCyCOHI0IJI/VKsZjg=
+	b=Ut9j74o1o3jgi9uMNmicNwe6U7bPx4T6Pmf3cnYHoArGWSj5wI6Umk4iAAa9xTDk8
+	 UB9ZUUPcGMDkesWOZCjhefczC7gX+pjIriVN0lUfB0e32EbGtQE74GblGn8wD8zFcs
+	 +y2HghXvFWVgeQFZMz1aE3UPbt1/TdOMDC3Ddfzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 0017/2857] ALSA: line6: Clear prev_fbuf on capture buffer release
-Date: Wed, 18 Nov 2026 15:17:31 +0100
-Message-ID: <20261118150201.980486922@linuxfoundation.org>
+	William Hansen-Baird <william.hansen.baird@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0053/2857] wifi: rtlwifi: fix disabling of ASPM for RTL8723BE with AER flooding
+Date: Wed, 18 Nov 2026 15:18:07 +0100
+Message-ID: <20261118150203.220857764@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,77 +68,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
+[ Upstream commit 04a46c2dbf3b516c96a1d19b72917b56055ad6c1 ]
 
-A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
-when generating an impulse test signal:
+commit 77a6407c6ab2 ("wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723")
+adds code which sets ppsc->support_aspm to false in
+_rtl_pci_update_default_setting() in order to disable ASPM.
+This does not, however, disable ASPM. Rather, it disables driver
+control of ASPM, and blocks calls to rtl_pci_enable_aspm()
+and rtl_pci_disable_aspm().
 
-  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
-  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
-  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
+In some cases, the pci device supplied to the probe function has
+ASPM enabled. The code would therefore not disable ASPM, as it means to,
+but rather just leave it enabled.
+This was discovered through testing on a Razer Blade 14 2017.
 
-  Allocated by task 11:
-   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
-   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
-   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
-   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
+Implement a new __rtl_pci_disable_aspm(hw) function which does not check
+ppsc->support_aspm before disabling and call it from
+rtl_pci_disable_aspm().
 
-  Freed by task 7785:
-   kfree+0xf8/0x390 mm/slub.c:6566
-   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
-   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
-   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
-   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
-   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
+Then move the code added in the previous commit to rtl_pci_init_aspm() to
+allow adding a call to __rtl_pci_disable_aspm(hw).
+This makes sure ASPM is disabled while still disabling
+driver control of ASPM to block it from being enabled later.
 
-line6pcm->prev_fbuf points into the capture PCM stream buffer
-(line6pcm->in.buffer), which is updated during audio_in_callback() to
-feed rate synchronization, software monitoring, and impulse test signal
-generation on playback side.
-
-When all capture streams are closed, line6_buffer_release() frees
-pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
-If playback is subsequently started (e.g. via impulse test signal
-volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
-dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
-resulting in a slab-use-after-free read.
-
-Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
-the capture stream buffer under in.lock, ensuring that no stale buffer
-pointer can be accessed by submit_audio_out_urb().
-
-Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
-Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260630141553.785769-2-william.hansen.baird@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/pcm.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 39 ++++++++++++++--------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
---- a/sound/usb/line6/pcm.c
-+++ b/sound/usb/line6/pcm.c
-@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
- 	clear_bit(type, &pstr->opened);
- 	if (!pstr->opened) {
- 		line6_wait_clear_audio_urbs(line6pcm, pstr);
-+		if (pstr == &line6pcm->in) {
-+			/* prev_fbuf points into the capture buffer we are about
-+			 * to free; drop it while no capture URB is in flight.
-+			 */
-+			guard(spinlock_irqsave)(&line6pcm->in.lock);
-+			line6pcm->prev_fbuf = NULL;
-+			line6pcm->prev_fsize = 0;
-+		}
- 		kfree(pstr->buffer);
- 		pstr->buffer = NULL;
- 	}
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 9e8955399745a..3e366797c413d 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -156,15 +156,6 @@ static void _rtl_pci_update_default_setting(struct ieee80211_hw *hw)
+ 	    init_aspm == 0x43)
+ 		ppsc->support_aspm = false;
+ 
+-	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
+-	 * X555UQ with subsystem ID 11ad:1723 are known to output large
+-	 * amounts of PCIe AER errors during and after boot up, causing
+-	 * heavy lags, poor network throughput, and occasional lock-ups.
+-	 */
+-	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
+-	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
+-	     rtlpci->pdev->subsystem_device == 0x1723))
+-		ppsc->support_aspm = false;
+ }
+ 
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
+@@ -203,7 +194,7 @@ static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ }
+ 
+ /*Disable RTL8192SE ASPM & Disable Pci Bridge ASPM*/
+-static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++static void __rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
+@@ -215,9 +206,6 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	u16 aspmlevel = 0;
+ 	u8 tmp_u1b = 0;
+ 
+-	if (!ppsc->support_aspm)
+-		return;
+-
+ 	if (pcibridge_vendor == PCI_BRIDGE_VENDOR_UNKNOWN) {
+ 		rtl_dbg(rtlpriv, COMP_POWER, DBG_TRACE,
+ 			"PCI(Bridge) UNKNOWN\n");
+@@ -240,6 +228,16 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	_rtl_pci_platform_switch_device_pci_aspm(hw, linkctrl_reg);
+ }
+ 
++static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++{
++	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++
++	if (!ppsc->support_aspm)
++		return;
++
++	__rtl_pci_disable_aspm(hw);
++}
++
+ /*Enable RTL8192SE ASPM & Enable Pci Bridge ASPM for
+  *power saving We should follow the sequence to enable
+  *RTL8192SE first then enable Pci Bridge ASPM
+@@ -331,10 +329,25 @@ static void rtl_pci_parse_configuration(struct pci_dev *pdev,
+ 
+ static void rtl_pci_init_aspm(struct ieee80211_hw *hw)
+ {
++	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 
+ 	_rtl_pci_update_default_setting(hw);
+ 
++	/*
++	 * RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
++	 */
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723)) {
++		__rtl_pci_disable_aspm(hw);
++		ppsc->support_aspm = false;
++	}
++
+ 	if (ppsc->reg_rfps_level & RT_RF_PS_LEVEL_ALWAYS_ASPM) {
+ 		/*Always enable ASPM & Clock Req. */
+ 		rtl_pci_enable_aspm(hw);
+-- 
+2.53.0
+
 
 
