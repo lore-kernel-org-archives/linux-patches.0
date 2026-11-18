@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021063;
-	b=QBS5JwqcsWd2Vj4ThVnRYVxilBlZUFnd6h0QsVgumnmAsBFejnjV0TXAy5AfxzmcbCfe
-	 KcgHIOw2jrnxkNyvftcRs7eVX1qZ+u4SIi3nwKFRIAbL22MlARUyBMnRQhFu58YgrC+/T
-	 H8x9U4Sli5m2F7atgtwqYe9Tu+wPib6pWRPb534B9hCFnQNeovRgYdvooGO1DxX0u+PvB
-	 gC9NwSocfVMPBAK0vBtwajbsBkfdSn9wDKQMiaaK6oXudeXcpUp+jZqlZWuSKxXj3xnu3
-	 AFFruWt57jojyu20d5UmwtTj++67QuFcYvLAIxGfb/xAlq4I/SGWcZ12t3z9Wy3bI1g==
+	t=1795021066;
+	b=qEZkIhV0fQzTk90ArHPrslmvGWGnfO9SDN8CRrgteMDuqYiVLCTdgWoq7ds/E7Yx7UGV
+	 tO8FtYTF887cT/pZv7+qmhhEwTGTzOO+0BtCJfixYazijTFqRJHcvAzkrx/wLgsNqvP++
+	 Cdj9T7O5dxk6rsRhuo3ni6pj50jU6X7CS5C+9aQL5PchdrEffWozocIu0gqbOvdSkXsaY
+	 4pqTa2AQlDUqOrybJCNiW5Z/b/sYqez96fzIguBiAN/VRluXpKIixT2lsRyY4Dfh5a4ji
+	 Qtq8ngtyAGwnfU9B8qoVKIBjM2Lsd2fDT8VWtQrIHBzh+zA9lR+BI90Vpjbr3KwSzBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lfEVc6+YqEUrVF1iNpWcGhIH7f3kdYRl4K7miXemTKU=;
-	b=rdtH6MXphdFRPdt/pSqoAD9ChnKB+3eBJZFZhWRbq5U5G8i9eF5XhVLgnddPdpCfzjhY
-	 RVyx3fP5nheS//pMscK05ecECmH/ubz4bgcGFPuBHd8M5B0qnqLDYceabB/TX7UIa81jO
-	 QiIyJihGrT5Cdcv8rsJUn4pyCA0IlJJM2qkdbcelMVuXJrrVCx4VfHWrpRHeaR8eSl3Zr
-	 Gq1VZzWHds3GhDhU0aROLAVG8ltlO9NkFY81YVgZ6AfDY7EOX1Gzp79FUOPZS214yJUB3
-	 d8pwnN92feQ1cRKRzpYmaUva35+K7rhAopVyYFlb4WKDnnI300X5DbQPF2TXhiwLPHw==
+	bh=/eb8PbwzfBc4qHCkPLH+mp1mbZTJkg/47nFJsCfYAwQ=;
+	b=FUvZiX1+7S81afqadbxZUhkdttTDTq+mE+BehM21FYneNB5JpYQo86xG8OLdaJ2yZpH8
+	 57LaS4u5QiPRq/TyBisBxAu7/Q7NGR9pXX5UNvokX2lQGIo2pfnMtAdZBq+dwgjHJ+1wd
+	 XeVXCFzAcRREjtojfxnuhRBDWKIUiO1zq22Bez8aFxsuqPQFt66e22N108hvr7cQXFFWv
+	 meM+LB+qbP2YrYK20NzCN1y2DdlmZSZFM2yGDylk8FSWScMmmU6vZSMPQz0hKZ5IWlLMV
+	 gctjJMf2v9DU7GJ3BBaz9Xv0BHOpVXED3aZWS00a7qjsu9uaxsrR4I9FjmJnudoO+5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4zEmZk5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oxsz00kv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F69606A331;
-	Wed, 18 Nov 2026 16:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5EA606A32F;
+	Wed, 18 Nov 2026 16:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4zEmZk5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966251F000C4;
-	Wed, 18 Nov 2026 16:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oxsz00kv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A6E1F000C4;
+	Wed, 18 Nov 2026 16:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021063;
-	bh=lfEVc6+YqEUrVF1iNpWcGhIH7f3kdYRl4K7miXemTKU=;
+	s=korg; t=1795021065;
+	bh=/eb8PbwzfBc4qHCkPLH+mp1mbZTJkg/47nFJsCfYAwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4zEmZk5G3J5rGxKMo3LWwXNneBaszmN7XyV5ZfqfXFxguEGIRTsZJT5FHQ3gKXGe
-	 19z/88vuxR89jFZB5/hygjrCiEEihbC8noO/fWjcE/uOZhwooPNgmj/9liY4dcaiB2
-	 6+orJGREcSZtUYX/X3xkVWT9SiKmLWe8y3f+uvuA=
+	b=Oxsz00kvLkrFWKHG0BEL9y9XWMHzcQiqBB7vGozGbhl6Ip/XIoXwfTJb+knwB7win
+	 uss6uvXzJyF34b0Dpe5JHo7afLqXa3DfwxAESs4PPcI5NeAaw1d/1EYXa6Uv7V8uKz
+	 fXmkRKbSRcM+UFIwIqClJvDTRzIkqN5FA4H7NYVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2173/2651] f2fs: refresh pinned allocation boundary after resize
-Date: Wed, 18 Nov 2026 15:56:53 +0100
-Message-ID: <20261118150404.032071262@linuxfoundation.org>
+Subject: [PATCH 7.3 2174/2651] nfsv4/pnfs: use the MDS authflavor for data server connections
+Date: Wed, 18 Nov 2026 15:56:54 +0100
+Message-ID: <20261118150404.064007091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,169 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
 
-[ Upstream commit e4df12e37300d4e181ae76746ae0fd7f7b92aa36 ]
+[ Upstream commit 4b27670ea25b955b710021151471cb252240b1e0 ]
 
-Online shrink updates MAIN_SECS() but leaves resizable_tail_secno and
-pinned_area_max_secno unchanged. The pinned allocation limit can exceed
-the new main area when shrinking beyond the reserved tail.
+When a pNFS client connects to an NFSv4.1 data server, the EXCHANGE_ID
+is always attempted with RPCSEC_GSS krb5i first, even if the auth flavor
+with the MDS is AUTH_SYS. On a host that runs rpc.gssd but has no usable
+machine credential, every first contact with a data server therefore
+upcalls to rpc.gssd before falling back to AUTH_SYS.
 
-Consume the reserved tail by the number of removed sections, clamping
-it to zero, before refreshing the shared pinned allocation boundary.
-This preserves the boundary while shrinking within the reservation and
-limits it to the new main area otherwise, retaining the zoned limit.
+As nfs4_discover_server_trunking is serialized by nfs_clid_init_mutex
+such an extra upcall creates a backlog of DS connections when many files
+accessed in parallel.
 
-Save the old tail count and restore it before rolling back the geometry
-if the final checkpoint fails.
+Pass the authflavor of the MDS lease to nfs4_alloc_client() and skip
+the krb5i attempt if the MDS already ended up with AUTH_SYS. Nothing
+changes for the MDS itself, or for data servers of an MDS whose lease
+was established with krb5i.
 
-Also bound pinned section allocation by the current MAIN_SECS(). Range
-evacuation temporarily reduces it before moving cursegs, while the
-cached pinned boundary still describes the old geometry. Otherwise, a
-pinned curseg can be reallocated into the range being removed.
-
-Fixes: c966d29e01bb ("f2fs: support resizable tail section and unify pinned allocation")
-Suggested-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 4edaa308888b ("NFS: Use "krb5i" to establish NFSv4 state whenever possible")
+Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/f2fs.rst |  3 ++-
- fs/f2fs/gc.c                       |  6 +++++-
- fs/f2fs/segment.c                  |  2 +-
- fs/f2fs/segment.h                  | 11 +++++++++++
- fs/f2fs/super.c                    | 15 ++-------------
- 5 files changed, 21 insertions(+), 16 deletions(-)
+ fs/nfs/internal.h   | 1 +
+ fs/nfs/nfs4client.c | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/filesystems/f2fs.rst b/Documentation/filesystems/f2fs.rst
-index 771216f45207a..55798421f2c45 100644
---- a/Documentation/filesystems/f2fs.rst
-+++ b/Documentation/filesystems/f2fs.rst
-@@ -421,7 +421,8 @@ resizable_tail_secno=%u  Control the number of sections at the tail of the
- 			 (MAIN_SECS - resizable_tail_secno) - 1. If set to 0
- 			 (default), there is no tail restriction unless running
- 			 on a zoned block device where conventional zones are
--			 used.
-+			 used. Online shrink consumes this reservation, reducing
-+			 the value by the number of removed sections, down to zero.
- ======================== ============================================================
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 5a1967f9e319e..ec0b1289864f2 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -86,6 +86,7 @@ struct nfs_client_initdata {
+ 	struct xprtsec_parms xprtsec;
+ 	unsigned long connect_timeout;
+ 	unsigned long reconnect_timeout;
++	rpc_authflavor_t authflavor;		/* Auth flavor to use for DS connection */
+ };
  
- Debugfs Entries
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 6220d55709e9c..8d620799df121 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2323,6 +2323,7 @@ static void update_fs_metadata(struct f2fs_sb_info *sbi, int secs)
- 	SM_I(sbi)->segment_count = (int)SM_I(sbi)->segment_count + segs;
- 	MAIN_SEGS(sbi) = (int)MAIN_SEGS(sbi) + segs;
- 	MAIN_SECS(sbi) += secs;
-+	f2fs_adjust_pinned_area_boundary(sbi);
- 	if (sbi->allocate_section_hint > MAIN_SECS(sbi))
- 		sbi->allocate_section_hint = MAIN_SECS(sbi);
- 	FREE_I(sbi)->free_sections = (int)FREE_I(sbi)->free_sections + secs;
-@@ -2354,7 +2355,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 	struct f2fs_lock_context lc;
- 	struct f2fs_lock_context glc;
- 	struct f2fs_lock_context clc;
--	unsigned int secs;
-+	unsigned int secs, old_tail;
- 	int err = 0;
- 	__u32 rem;
+ /*
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index b661f446ea49e..e7b379f4b4d4b 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -229,8 +229,12 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
+ 	/*
+ 	 * Set up the connection to the server before we add add to the
+ 	 * global list.
++	 *
++	 * Prefer krb5i unless the caller already knows AUTH_UNIX is required.
+ 	 */
+-	err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_GSS_KRB5I);
++	err = -EINVAL;
++	if (cl_init->authflavor != RPC_AUTH_UNIX)
++		err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_GSS_KRB5I);
+ 	if (err == -EINVAL)
+ 		err = nfs_create_rpc_client(clp, cl_init, RPC_AUTH_UNIX);
+ 	if (err < 0)
+@@ -812,6 +816,7 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
+ 			.cert_serial = TLS_NO_CERT,
+ 			.privkey_serial = TLS_NO_PRIVKEY,
+ 		},
++		.authflavor = mds_clp->cl_rpcclient->cl_auth->au_flavor,
+ 	};
+ 	char buf[INET6_ADDRSTRLEN + 1];
  
-@@ -2463,6 +2464,8 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 		goto recover_out;
- 	}
- 
-+	old_tail = F2FS_OPTION(sbi).resizable_tail_secno;
-+	F2FS_OPTION(sbi).resizable_tail_secno -= min(old_tail, secs);
- 	update_fs_metadata(sbi, -secs);
- 	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	set_sbi_flag(sbi, SBI_IS_DIRTY);
-@@ -2470,6 +2473,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 	stat_inc_cp_call_count(sbi, TOTAL_CALL);
- 	err = f2fs_write_checkpoint(sbi, &cpc);
- 	if (err) {
-+		F2FS_OPTION(sbi).resizable_tail_secno = old_tail;
- 		update_fs_metadata(sbi, secs);
- 		update_sb_metadata(sbi, secs);
- 		f2fs_commit_super(sbi, false);
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 75f78ed7eb909..c1d78939ce845 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2980,7 +2980,7 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
- 		alloc_hint = MAIN_SECS(sbi);
- 
- 	if (pinning) {
--		max_secno = sbi->pinned_area_max_secno;
-+		max_secno = min(sbi->pinned_area_max_secno, MAIN_SECS(sbi));
- 		hint = 0;
- 	} else if (alloc_policy == ALLOCATE_FORWARD_FROM_HINT &&
- 		hint < alloc_hint) {
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 5949aa5200ac1..6c3af51f352c4 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -91,6 +91,17 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
- #define GET_ZONE_FROM_SEG(sbi, segno)				\
- 	GET_ZONE_FROM_SEC(sbi, GET_SEC_FROM_SEG(sbi, segno))
- 
-+static inline void f2fs_adjust_pinned_area_boundary(struct f2fs_sb_info *sbi)
-+{
-+	sbi->pinned_area_max_secno = MAIN_SECS(sbi);
-+	if (f2fs_sb_has_blkzoned(sbi) && sbi->first_seq_zone_segno != NULL_SEGNO)
-+		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
-+				GET_SEC_FROM_SEG(sbi, sbi->first_seq_zone_segno));
-+	if (F2FS_OPTION(sbi).resizable_tail_secno)
-+		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
-+				MAIN_SECS(sbi) - F2FS_OPTION(sbi).resizable_tail_secno);
-+}
-+
- #define GET_SUM_BLOCK(sbi, segno)	\
- 	(SM_I(sbi)->ssa_blkaddr + (segno / (sbi)->sums_per_block))
- #define GET_SUM_BLKOFF(sbi, segno) (segno % (sbi)->sums_per_block)
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 09bc78f2d0b58..c422a0d15260c 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -554,17 +554,6 @@ static inline void adjust_unusable_cap_perc(struct f2fs_sb_info *sbi)
- 			F2FS_OPTION(sbi).unusable_cap_perc);
- }
- 
--static inline void adjust_pinned_area_boundary(struct f2fs_sb_info *sbi)
--{
--	sbi->pinned_area_max_secno = MAIN_SECS(sbi);
--	if (f2fs_sb_has_blkzoned(sbi) && sbi->first_seq_zone_segno != NULL_SEGNO)
--		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
--				GET_SEC_FROM_SEG(sbi, sbi->first_seq_zone_segno));
--	if (F2FS_OPTION(sbi).resizable_tail_secno)
--		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
--				MAIN_SECS(sbi) - F2FS_OPTION(sbi).resizable_tail_secno);
--}
--
- static void init_once(void *foo)
- {
- 	struct f2fs_inode_info *fi = (struct f2fs_inode_info *) foo;
-@@ -3098,7 +3087,7 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sbi, POSIX_ACL) ? SB_POSIXACL : 0);
- 
--	adjust_pinned_area_boundary(sbi);
-+	f2fs_adjust_pinned_area_boundary(sbi);
- 	limit_reserve_root(sbi);
- 	fc->sb_flags = (flags & ~SB_LAZYTIME) | (sb->s_flags & SB_LAZYTIME);
- 
-@@ -5414,7 +5403,7 @@ static int f2fs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	/* get segno of first zoned block device */
- 	sbi->first_seq_zone_segno = get_first_seq_zone_segno(sbi);
- 
--	adjust_pinned_area_boundary(sbi);
-+	f2fs_adjust_pinned_area_boundary(sbi);
- 
- 	sbi->reserved_pin_section = f2fs_sb_has_blkzoned(sbi) ?
- 			ZONED_PIN_SEC_REQUIRED_COUNT :
 -- 
 2.53.0
 
