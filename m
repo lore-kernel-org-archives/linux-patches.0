@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026765;
-	b=znexs1hg0IbGaUci5WMRIDEaHQD3eoYljPVzxyo+AfjjxIjKyZ9tvsIroqFU84a/zCjV
-	 /xuEhmmcVUPzUgQ0wxAcU60N9+xHiGAkG+CpWDRzknyRpp4p+dQeOqfx/PFivRcZDe0XW
-	 yUVWar7f6vBzFQcsPw4COFZ28JM7yAA9xln8jLGoagdbosycXOT0NLizK8yJA18nQtDEO
-	 K92pmRsugcA4lpPTJrE317gRdMrXa1GFC523x91DEReWgLiO0oCZrjnD4neO3WlZq4W/C
-	 BGYWisbCs8edr8e8IYQu1mqPErqnkhTLI94GJ9n0wZe7xuMHA4/+yAAYr/iSYj3PZJw==
+	t=1795026768;
+	b=IT7gTDO7e8QUCmzJKEJtK52QvNj9V4qrDBHQJxFwnMJJxmk/KsPATF+pZG0V+/LKPv4V
+	 ctUHIwR1LcnO9PBFW82/nvcwtSwQpL7hBqurDlrWvEqYp6/OQCJs0XdKZ0YC0DmAX5M+S
+	 66Ctqb03e/Jml7f90cxmTsMcXxQ1ZKUrsNmmdo32Hgt7flnpdIjgrxImZ+L6M5SS2qdiJ
+	 jw8MXouFpxdAHEqVR4RonTwCmhQ0ikJkGgELjInOH0q4yjVwYmagsOT9+S3ylyJksl3B8
+	 CxRoupZpTM2jCb0wSnyzG0FoPi48M4+oqQGC/fFabq50RlHOtviL4tLRJ2Zp+9C0T5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dRM1ktvyKEfMX2FILCFR4SSW+rMgWlDOS80izsWt/Zc=;
-	b=aIDSqBdqQQsrvZrCkj0G7CPK8zGdf/vVN/4prp0ijVO3UnzvrlKbgP1q4KmVcgBCusbO
-	 HSfAf+a7fQnyFtUCgCTEr5LUfksB2cE5bqfh9lxyEo1/HqUnP4CgWwC22x9xN0PAHUM+Y
-	 THhvl88AxDqxHcsMPkeN+L9hPwRUxGg36X3R+NWqhVreaAfa1mkC+FpY4dygZ+rxnWkwY
-	 uV/BvE0F4a5b/ovuK6i+YQ7fNzwTWIRIM9hhiy/rhPTQOgyJUitq2dpdYjgUek9QyBKZF
-	 ynuuyTkaFSPtRp6UD+Z59QRsgs6HOF0jsbKIyBW+ST77qAJ8tfiHzFu6h0zbj7YRFsQ==
+	bh=FHIvQ9miKGTPZxdnq0KYk9q6+jCjtw2woykB6rCsD0I=;
+	b=ATFdi+/pR5UP+fHIREeBJdsjCKC5FtwRG740O+WqBz4PbUVyHrmEqqLzm0OzQwrSXO28
+	 vVQl7LR3Zrsd1727dAsYsSZYyA1hkvcy5mtfSTaOMvuNbrOH/KatGqoXMWQox7urf+cLF
+	 bS+/+rzQQF5o1wIWCl+4SZYBp9uZB2THnQBHgDjK/+mN+3ikzCDuCVvMopAa2Nf/RN/8r
+	 M4mk8Ciy7A2iw2A59ReQTIkHCvzTLrPHAWPUQBO54u+gEe74Ry49NDNJNmtpkQ87gXwZF
+	 ifeBM1bn8q4SnjCDNGQxfY8gcV44VCPZ3CVJua0NNuC3KVEZ6AlTxIF9IZQtMKCYNSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi9p5SRu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x55QAV8q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E069606A325;
-	Wed, 18 Nov 2026 18:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A4A606A31C;
+	Wed, 18 Nov 2026 18:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi9p5SRu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2341F000C4;
-	Wed, 18 Nov 2026 18:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x55QAV8q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4046D1F000C4;
+	Wed, 18 Nov 2026 18:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026765;
-	bh=dRM1ktvyKEfMX2FILCFR4SSW+rMgWlDOS80izsWt/Zc=;
+	s=korg; t=1795026767;
+	bh=FHIvQ9miKGTPZxdnq0KYk9q6+jCjtw2woykB6rCsD0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fi9p5SRuyvhMzzJs33+UwmHwBSljCbaIEuK0VSbzX3wA1K6ft6nWlw+u/mg6WESoC
-	 LPw5lawpkEQZn2JxIrPF9t9zHB72L5ygNSgXN7n26fAn1larBFPE39PQM9Os/rX4/e
-	 z6FF208DyXkJU2hSQtKkDiCa4Vv0iIzu8hVxPgJM=
+	b=x55QAV8qdGX2IsGBP5ePY+jQqNk7k+HYTo3wqdUSm3b9heALjHDrVpYeQBRIJWY8T
+	 bynosIsUNgoNMJ35XnUlyHTjF8se5+osta0GGxSFT8+oSNJF1vkxIn+s7y1hza7SFD
+	 K4a6+9pKLcvFXKGrv0M8maaQsHkWBKA450KqZMtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Kyle Pepper <cochcoder@proton.me>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1549/2151] Bluetooth: MSFT: Serialize handle map cleanup with event processing
-Date: Wed, 18 Nov 2026 15:54:44 +0100
-Message-ID: <20261118150218.334656030@linuxfoundation.org>
+Subject: [PATCH 6.18 1550/2151] Bluetooth: hci_sync: scan unfiltered for host-resolved RPAs
+Date: Wed, 18 Nov 2026 15:54:45 +0100
+Message-ID: <20261118150218.370519385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,95 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Kyle Pepper <cochcoder@proton.me>
 
-[ Upstream commit 56e20c3d8ad340bbfc90221c4aae1c870485fb57 ]
+[ Upstream commit 397464709a204da9b8dc3b01d6ea42539d951cd2 ]
 
-MSFT monitor handle mappings must remain valid while vendor events look
-up and use them under hdev->lock. msft_do_close() removes and frees the
-mappings without that lock.
+Restore unfiltered scanning for pending IRK peers when the controller
+cannot resolve private addresses. Keep accept-list filtering while
+suspended and when forced by periodic advertising synchronization.
 
-hci_dev_close_sync() clears HCI_UP and drains the RX workqueue before
-MSFT cleanup. However, a transport callback that already passed
-hci_recv_frame()'s state check can queue a vendor event after the drain
-returns, if no earlier shutdown callback has quiesced reception. The
-driver close callback runs after MSFT cleanup, so event processing can
-overlap the unlocked removal. msft_monitor_device_evt() can then
-traverse freed list entries or read handle_data->mgmt_handle after it is
-freed.
-
-Take hdev->lock while resetting monitor states and removing handle
-mappings in msft_do_close(), as normal monitor cancellation already
-does. An active event reader then finishes before its mapping is freed,
-and later lookups see an empty handle map.
-
-An instrumented kernel produced this KASAN report (timestamps removed
-and unrelated frames omitted):
-
-    BUG: KASAN: slab-use-after-free in msft_vendor_evt+0x1906/0x1990
-    Read of size 2 at addr ffff888104df3602 by task kworker/u17:2/502
-
-    Workqueue: hci0 hci_rx_work
-    Call Trace:
-      [...]
-      msft_vendor_evt+0x1906/0x1990
-      hci_vendor_evt+0x6f/0x90
-      hci_event_packet+0x894/0xc70
-      [...]
-      hci_rx_work+0x3f8/0xfa0
-      [...]
-
-    Allocated by task 499:
-      [...]
-      msft_add_monitor_sync+0x6a8/0x10a0
-      msft_add_monitor_pattern+0x7f/0xb0
-      hci_add_adv_monitor+0x1fa/0x2e0
-      [...]
-
-    Freed by task 499:
-      [...]
-      kfree+0x307/0x580
-      msft_do_close+0x238/0x750
-      hci_dev_close_sync+0x546/0x1380
-      [...]
-
-    The buggy address belongs to the object at ffff888104df3600
-      which belongs to the cache kmalloc-32 of size 32
-    The buggy address is located 2 bytes inside of
-      freed 32-byte region [ffff888104df3600, ffff888104df3620)
-    [...]
-
-Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: e209e5ccc5ac ("Bluetooth: MGMT: Mark LL Privacy as stable")
+Assisted-by: OpenCode:gpt-6.1-sol
+Signed-off-by: Kyle Pepper <cochcoder@proton.me>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_sync.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 1879a6771b7c6..1407225ac7520 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -683,6 +683,8 @@ void msft_do_close(struct hci_dev *hdev)
- 
- 	bt_dev_dbg(hdev, "Cleanup of MSFT extension");
- 
-+	hci_dev_lock(hdev);
-+
- 	/* The controller will silently remove all monitors on power off.
- 	 * Therefore, remove handle_data mapping and reset monitor state.
- 	 */
-@@ -697,6 +699,8 @@ void msft_do_close(struct hci_dev *hdev)
- 		kfree(handle_data);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index a5a6708b93cbd..6967da50aef05 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2639,7 +2639,7 @@ static int hci_le_set_privacy_mode_sync(struct hci_dev *hdev,
+  */
+ static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
+ 				       struct conn_params *params,
+-				       u8 *num_entries)
++				       u8 *num_entries, bool force_filter)
+ {
+ 	struct hci_cp_le_add_to_accept_list cp;
+ 	int err;
+@@ -2652,6 +2652,11 @@ static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
+ 		return 0;
  	}
  
-+	hci_dev_unlock(hdev);
++	/* Host-resolved peers need unfiltered scanning while awake. */
++	if (!force_filter && !hdev->suspended && !ll_privacy_capable(hdev) &&
++	    hci_find_irk_by_addr(hdev, &params->addr, params->addr_type))
++		return -EINVAL;
 +
- 	mutex_lock(&msft->filter_lock);
- 	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
- 				 list) {
+ 	/* Select filter policy to accept all advertising */
+ 	if (*num_entries >= hdev->le_accept_list_size)
+ 		return -ENOSPC;
+@@ -2983,7 +2988,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 
+ 			num_entries = 1;
+ 			err = hci_le_add_accept_list_sync(hdev, &pa,
+-							  &num_entries);
++							  &num_entries, true);
+ 			goto done;
+ 		} else {
+ 			rcu_read_unlock();
+@@ -3047,7 +3052,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 
+ 	for (i = 0; i < n; ++i) {
+ 		err = hci_le_add_accept_list_sync(hdev, &params[i],
+-						  &num_entries);
++								&num_entries, false);
+ 		if (err) {
+ 			kvfree(params);
+ 			goto done;
+@@ -3069,7 +3074,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 
+ 	for (i = 0; i < n; ++i) {
+ 		err = hci_le_add_accept_list_sync(hdev, &params[i],
+-						  &num_entries);
++								&num_entries, false);
+ 		if (err) {
+ 			kvfree(params);
+ 			goto done;
 -- 
 2.53.0
 
