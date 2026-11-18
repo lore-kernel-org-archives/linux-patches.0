@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035552;
-	b=UFbTjzHbizuiBt3bjeVPwwb+Tiua+9/LGM90RE56wm7qD557iG0LEhP+baE09XaoTGOF
-	 nnJilhv4cYqGRIcDE7FdeTl7serSu+qgaClxflNtuL3j8UzpLyKejAum828hYcvDwbz78
-	 e98p1PRKTSMRIsskZR5dF++YM5kkaT+JAkbqU1hPnE5zoVvOtoovBKvsWG5hy+pN+dtjM
-	 oEdhfz6sLzW8fUxw+5WoXN8pkwCEAW4CsMKb0yCKFLFo1ffEGUgAb15TdmRbMkXO52xHe
-	 uECCpWy5Sv7cb/w+sTlmhykU50gGIWjuidpqjFcvkaH7fyVA0GZ44JvtuvMHMF99TMA==
+	t=1795035555;
+	b=ZQAeuLo1Ckqh0/TcN2EOBptFKl4zyJurfAXH3tuJTPnousQoQa+Y5BHuK9MkbC7iWOPQ
+	 ZIWe9INNa/GxWOS6aa5G/VpPqnN850Xw6n9mB2P79B6nOgiF4JT6kSLRhs5iL1WeOwQ3d
+	 SyRVfshxEln7POcAHKg7jYfG+WNjjZbTMEh6BRpPVQyJxXb/wGLMYYPR90PgCuHV2zD4X
+	 vdloe8VCMA3pmMdb9eOzFL47k5iWhg2Sh+GrbxVwkMiaF+Vc17g2xUrVzs3wTVm/Woe4d
+	 1+5Ok+asuFytFxkcCfkARKQLmtF1iK8KA++jn1frrvMz3g4ypfe26P6jw3iMZsYN9/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z5uV7TpgKuakQG0cPf0KacmwEY3/w5FR1Er1JE/7iY8=;
-	b=zO6O08fcUKv3nJXLfHGaaSQPx+2vJWdChK/V0Smz+8nmDy3EJeSOfb7dnpm1H3RfLlj7
-	 5VFEGltI9fcU2C4mnc6G056qbKUjBSHjCKeWdcetnj/A1M47WxwScFZqIqFJZ1WfE7NWi
-	 lp4yjZOHYcAhPT6EHAbZWoQbEn1VOOIBIzEgR9NzRd2eVHrkNl5gW3SJd3YumMdr0BmvN
-	 hmdWGhDsQTCXKE3Zkb1xmpQmzsxcxrVxRul9DXdHheA46M8apzImztbx0V2wfSlVhlKk0
-	 oZQoKlKWdwnpQXRvwIrhwlT3cNzJY6ijW7zUZ8Hwj5axOe+/hs0G5aQFy65nukuWEtA==
+	bh=z9X+o4w1rO0Hrn5FCx1qYPu9GVyoIF3Fy2W9QPw47XE=;
+	b=ltsdoQth2WQje2cNKRSR1J1ENCMMk0H+X0mcDRPKjtgMyFXQpQSnPvctiTAaCTee7KDk
+	 v2DVt4643PD8jomwFEI82iPtldNXKMf8ypmWtSHRd/bJq7x0/zuXxdYAIgcG1d+lJKqnG
+	 pYyYay4yze0o1IoBeTKYBMWYq8m6Td/0zTpGvli84MqhGahS6Kg58p7Nh2gfYdTs1f3bq
+	 xFWbOTTD6vLKEqswIHZzayl5s+ITxaphR9ZeZHlp8m3cFHWsdBczIsoc+i6dSlzS1U0sF
+	 /2JD2eY2Rurb9vxCMBtq+Np5T9qqhOV8YeHwkfl80yCoRGopAlLcltqEmzoEXQ+cvHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1/58lB95";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pbE8SrlX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D682606A31C;
-	Wed, 18 Nov 2026 20:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A779606A31C;
+	Wed, 18 Nov 2026 20:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1/58lB95
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFE01F000C4;
-	Wed, 18 Nov 2026 20:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pbE8SrlX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38CD1F000C4;
+	Wed, 18 Nov 2026 20:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035552;
-	bh=Z5uV7TpgKuakQG0cPf0KacmwEY3/w5FR1Er1JE/7iY8=;
+	s=korg; t=1795035555;
+	bh=z9X+o4w1rO0Hrn5FCx1qYPu9GVyoIF3Fy2W9QPw47XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/58lB95wigOUFD1Mygdg7daauijJzeJyFlLOu99k7fs8qLCpUGrb/PJ9M5ho07+H
-	 V0/wPK9TUR4LE0pf7lxtbkNJ5ctiZvRh/gGGJQAA1ZWMCH1ViolLt1abrGCEt9TF8X
-	 +ghnbith28gqMR9g5Iqia5pvyU/VU6Iz85yzKXXY=
+	b=pbE8SrlXG2p4eCfrDqUU4pcB9cdIRqZE6nz+PHF5faK3jmrmKT3Z5EgN0ddkXUnX7
+	 7kvfBpwqw81ouT1/2zhR+xsluXx1ZNzMLykCzE4D6f4t5RCTl0J1MSMzvFLqq1nFU3
+	 qZ/aIFvhA679vV1BF0lOhPaW+vnn4ambfNegWfZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0699/3318] SUNRPC: Copy the deferred RPC Call from the head buffer
-Date: Wed, 18 Nov 2026 15:22:01 +0100
-Message-ID: <20261118150339.322088292@linuxfoundation.org>
+Subject: [PATCH 6.6 0700/3318] SUNRPC: Do not credit control-record octets to the RPC stream
+Date: Wed, 18 Nov 2026 15:22:02 +0100
+Message-ID: <20261118150339.361796337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,102 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit 2192a56b0686599358909c3e12e9a366f5b5d452 upstream.
+commit 129e7107b971009bc81643d23f3ab949f540d321 upstream.
 
-svc_defer() snapshots the RPC Call for replay once a pending cache
-upcall resolves. It copies the Call starting (rq_arg.len -
-head[0].iov_len) bytes before head[0].iov_base, a back-up that once
-covered a transport header. No transport has had one since commit
-983084b2672c ("SUNRPC: Remove svc_rqst::rq_xprt_hlen"), so the two
-lengths are meant to be equal.
+svc_tcp_sock_recv_cmsg() receives up to two octets into a local
+buffer, and returns that count for any record type other than
+TLS_RECORD_TYPE_ALERT. Nothing reached the caller's buffer, but
+svc_tcp_read_marker() adds the count to sk_tcplen and
+svc_tcp_read_msg()'s caller adds it to sk_datalen. The RPC stream
+advances over octets it never received. The fragment marker is
+assembled from stale sk_marker octets. The message body comes from
+pages nothing wrote.
 
-An RPCSEC_GSS Call breaks that assumption. Unwrapping the integrity
-service truncates rq_arg.len by the length of the trailing checksum,
-and unwrapping the privacy service leaves rq_arg.len short by an
-amount the client sets with trailing bytes after the wrap token.
-Neither adjusts head[0].iov_len. Both lengths are size_t, so the
-subtraction underflows and the copy starts past head[0].iov_base.
-Every deferred integrity Call replays a shifted snapshot.
+A conforming client reaches this. RFC 8446 Section 4.6.3 lets either
+peer send KeyUpdate once it has sent its Finished, and svcsock has no
+rekey path. kTLS leaves the partially consumed record on ctx->rx_list,
+so the body drains two octets per svc_tcp_recvfrom() call. Each pair
+is credited the same way.
 
-A deferred replay skips GSS verification, so a shifted snapshot runs
-as an authenticated Call. With the privacy service the offset is
-client-chosen. A forged Call placed in that window, naming another
-user's GSS context handle, runs under that identity.
+Return -EAGAIN for a record that is not an alert. That is what
+svc_tcp_sock_process_cmsg()'s default arm returned before the receive
+moved into a local buffer.
 
-Copy the Call from head[0].iov_base. Refuse to defer a Call whose
-length runs past the head buffer, so the copy cannot read out of
-bounds.
-
-Fixes: 260c1d1298f6 ("svc: Add transport hdr size for defer/revisit")
+Fixes: bee47cb026e7 ("sunrpc: fix handling of server side tls alerts")
 Cc: stable@vger.kernel.org
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260902133101.48914-1-cel@kernel.org
+Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-1-62d9a631c880@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc_xprt.c |   22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ net/sunrpc/svcsock.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -1171,13 +1171,8 @@ static void svc_revisit(struct cache_def
- }
- 
- /*
-- * Save the request off for later processing. The request buffer looks
-- * like this:
-- *
-- * <xprt-header><rpc-header><rpc-pagelist><rpc-tail>
-- *
-- * This code can only handle requests that consist of an xprt-header
-- * and rpc-header.
-+ * Save the request off for later processing. Only a Call that fits
-+ * entirely in rq_arg.head[0] can be deferred.
-  */
- static struct cache_deferred_req *svc_defer(struct cache_req *req)
- {
-@@ -1190,8 +1185,11 @@ static struct cache_deferred_req *svc_de
- 		dr = rqstp->rq_deferred;
- 		rqstp->rq_deferred = NULL;
- 	} else {
--		size_t skip;
- 		size_t size;
-+
-+		if (rqstp->rq_arg.len > rqstp->rq_arg.head[0].iov_len)
-+			return NULL;
-+
- 		/* FIXME maybe discard if size too large */
- 		size = sizeof(struct svc_deferred_req) + rqstp->rq_arg.len;
- 		dr = kmalloc(size, GFP_KERNEL);
-@@ -1205,9 +1203,7 @@ static struct cache_deferred_req *svc_de
- 		dr->daddr = rqstp->rq_daddr;
- 		dr->argslen = rqstp->rq_arg.len >> 2;
- 
--		/* back up head to the start of the buffer and copy */
--		skip = rqstp->rq_arg.len - rqstp->rq_arg.head[0].iov_len;
--		memcpy(dr->args, rqstp->rq_arg.head[0].iov_base - skip,
-+		memcpy(dr->args, rqstp->rq_arg.head[0].iov_base,
- 		       dr->argslen << 2);
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -289,8 +289,13 @@ svc_tcp_sock_recv_cmsg(struct socket *so
+ 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
+ 		      alert_kvec.iov_len);
+ 	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
+-	if (ret > 0 &&
+-	    tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT) {
++	if (ret > 0) {
++		/* Returning the count would credit the RPC stream with
++		 * octets that never reached the caller's buffer.
++		 */
++		if (tls_get_record_type(sock->sk, &u.cmsg) !=
++		    TLS_RECORD_TYPE_ALERT)
++			return -EAGAIN;
+ 		iov_iter_revert(&msg.msg_iter, ret);
+ 		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
  	}
- 	dr->xprt_ctxt = rqstp->rq_xprt_ctxt;
-@@ -1230,17 +1226,13 @@ static noinline int svc_deferred_recv(st
- 
- 	trace_svc_defer_recv(dr);
- 
--	/* setup iov_base past transport header */
- 	rqstp->rq_arg.head[0].iov_base = dr->args;
--	/* The iov_len does not include the transport header bytes */
- 	rqstp->rq_arg.head[0].iov_len = dr->argslen << 2;
- 	rqstp->rq_arg.page_len = 0;
--	/* The rq_arg.len includes the transport header bytes */
- 	rqstp->rq_arg.len     = dr->argslen << 2;
- 	rqstp->rq_prot        = dr->prot;
- 	memcpy(&rqstp->rq_addr, &dr->addr, dr->addrlen);
- 	rqstp->rq_addrlen     = dr->addrlen;
--	/* Save off transport header len in case we get deferred again */
- 	rqstp->rq_daddr       = dr->daddr;
- 	rqstp->rq_respages    = rqstp->rq_pages;
- 	rqstp->rq_xprt_ctxt   = dr->xprt_ctxt;
 
 
