@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041518;
-	b=bNDbaQXc2p/pcNHj+P3EuVfue6Y0oERsW7YfMsRY3WOWFwVdlPsqTMPVa5o/aVW/CQQq
-	 zCgRaywqEwSPo8Zoz8fA0235Nkm3gCMCCyE5GVgGUhrOSpz33pO30sXj9oXCRNDo5US0D
-	 pvP3c7Sji9cYpPVIM5rO0Cn1u24/S21KKwPdmN5vOERs6csMV79BKxTdl7VnQbC3ynoeD
-	 ShUDJhlqNeyCxO9XfA7M04w1EH6+cfQfeltsWxHKQR7oFvE1eUjtTm5gQdgS38C6L/77I
-	 MBip/6CZ5rtNquQUaBHiwX/Wucmt8CTD+YNireaVmsYBNIwFecRTx1YN119jarWmw/w==
+	t=1795041521;
+	b=lnXoKHmkwNSxULfp/pOfqz6gF/4HwA33FAtoIRqLkVQ6mwmU2JPn11nC5phET5BHjjmM
+	 /CwbMjObu0eWn91hQSqsbPmlUAJh+5HaMI+7MqIgO4jVDMV1m1qyJDwq6KcdMXzDB+knz
+	 S5/vLIFVA7iMH53CXo8Ka67Bs+L6OFFK73S3HPKke8L06H6Ewl75hx9jr+RpDSBbegSKW
+	 phTs8lts8YR5YdkbkWywAuEjGNqs+tnyrSbnmHxvewgVwY6aXR7CecZ7AEXPvMRLKRf34
+	 4TdK0u4HJmaTkz1/3nQWYLQ3WP1ou1TM7X1Q2wWhAYsjLYE8KObV8QZyHCJKWYXBAdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qLmRRAZ88PMz4u4uFc0xXa9iC0ygfdkeDfRwIDCqAzw=;
-	b=4oWqwJPhwCrKJxznda6aVMPFLcDdV8XqtBP4KZTiFpYojiDh2OlK9F0LBZzvJbmt/+ns
-	 agFxPvUO/IJsyckNWF4PR3ViyfzVXuMLeCmETKiYvt3T/qiinzfUAbhK1OgPtxn87tGgA
-	 GZOMRns16Cb6G+FRE5SlLEln9pJT49qKUiqlscwsLRo3pT4zdnFarBBiAVmKMEdGFI3v/
-	 VRho2dSjUvZfJoX42jr860ni6iYOcXrcWNxfSH7iPyY7VWqKKWtNwZhL4tDeE1nBgykks
-	 4MbKfIyKDf1mRXT8dK0MhpIrO2Q6ODv21uM1Hg0gRDbTwArKTNiXR1YbO4+rFC71n9Q==
+	bh=iCYhxPogrOfG8YzZYBv8aXXnMEZ0Hj6GwcMVzPM4FN0=;
+	b=ZWr8RrrlesztLOMukKbGYItQp3xuxnpeexPVkTsBS8ymhmTBlZnL/0ATPD0x/Ur+rQ2x
+	 /iHeUKkDKBOaTHI/5msKKEOswYduF4Ntn2SuL9HwuxWG3OV1gSD1Fa4XuDpvvbZnkW9wF
+	 90McwDuPpZXztElQzCz0T+8hYxEjFAmSTX8wBjpUqamKmqT9EniKxAo0gJtYRo2JQRE5L
+	 bYsJA3auJIYf/O4oP+xea9TE9oVRxqxLq6lTA3Y0tJoqxkC1cktlbNIDMFBBHK8cFwo7U
+	 ETbiyiWM4QzbHKrn+M/VpeItVO7IzVOqjtmY4DwiHRrcOfBSb4lVS7Gdmmgk2NdEuzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLnVeNEW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lau8XWH4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8864606A32C;
-	Wed, 18 Nov 2026 22:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D450606A32C;
+	Wed, 18 Nov 2026 22:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLnVeNEW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7F11F000C4;
-	Wed, 18 Nov 2026 22:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lau8XWH4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977E31F000C4;
+	Wed, 18 Nov 2026 22:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041518;
-	bh=qLmRRAZ88PMz4u4uFc0xXa9iC0ygfdkeDfRwIDCqAzw=;
+	s=korg; t=1795041521;
+	bh=iCYhxPogrOfG8YzZYBv8aXXnMEZ0Hj6GwcMVzPM4FN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CLnVeNEWjTFZIQVdYdZf2BSiGi7UJMYGONEaZxQT3Fz5HyBLH+udwUY7lyFLPd/Gz
-	 y+Bp3dhNeAtDEP0ZBWf14UbIaBHoJCnQTgYrDWI9KaEd/CGjtpTOFCu5U2ml/WhO+N
-	 oQlxIyjlBSoghJS0ygAmxh9CWvUBzJGEXEA2e0xw=
+	b=lau8XWH4NP0SIXK/q01RwZNi0lyEnpHWXoPdpS3UA4Q8LeCxoJ5AMNMIK1Y8ju7CC
+	 JwHLpa/d0UNWvtPrpIe+HP8oeC4EiXJyMk7EHBWxqeDKqdj1pkCW9K9V/yNheHRVKQ
+	 0hy6OpzHQshzqsWb7jix9c9+dyEUpMZSGimFTEUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	David Lechner <david@lechnology.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.6 2805/3318] clk: Use device_get_match_data()
-Date: Wed, 18 Nov 2026 15:57:07 +0100
-Message-ID: <20261118150444.821022200@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 2841/3318] ALSA: vmaster: Serialize hook registration with control callbacks
+Date: Wed, 18 Nov 2026 15:57:43 +0100
+Message-ID: <20261118150445.847892975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,543 +68,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 409c39ec92a35e3708f5b5798c78eae78512cd71 ]
+[ Upstream commit 6215cf3ff5b0ff1ca5ab66b79021f9e28b02eae1 ]
 
-Use preferred device_get_match_data() instead of of_match_device() to
-get the driver match data. With this, adjust the includes to explicitly
-include the correct headers.
+An HDA virtual-master hook must have its private argument initialized
+before a control callback can invoke it. snd_hda_add_vmaster_hook()
+installs the trampoline through snd_ctl_add_vmaster_hook(), which stores
+master->hook before master->hook_private_data without serialization.
 
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20231006213959.334439-1-robh@kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #msm part
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> # Samsung
-Acked-by: David Lechner <david@lechnology.com>
-Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 342db3b6cf7b ("clk: qcom: mmcc-msm8960: Configure PLL15 only on APQ8064")
+When a codec with a vmaster mute hook binds to an already registered
+card, snd_hda_gen_build_controls() publishes and initializes the Master
+Playback Switch before installing the hook. A native write that changes
+the switch can then run in the following order:
+
+  1. The codec bind path publishes and initializes the master control in
+     __snd_hda_add_vmaster(), then calls snd_hda_add_vmaster_hook().
+  2. The hook setter stores master->hook, but has not yet stored its
+     private argument.
+  3. SNDRV_CTL_IOCTL_ELEM_WRITE takes controls_rwsem and calls
+     master_put() while the setter remains between those stores.
+  4. master_put() sees the callback and invokes vmaster_hook() with a
+     NULL argument. The trampoline dereferences it before the setter
+     can complete publication.
+
+The write lock held by snd_ctl_elem_write() does not exclude the hook
+setter, so this can cause a NULL pointer dereference. Take the same
+controls_rwsem for writing inside snd_ctl_add_vmaster_hook() so the
+callback and its argument are installed together with respect to
+native control callbacks. Pass the card into the helper and update
+the HDA caller, keeping the lock in the ALSA core. Release it when
+registration returns, before the caller synchronizes the hook.
+
+KASAN report as below:
+
+    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+    KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+    CPU: 1 UID: 0 PID: 499 Comm: alsa-vmaster-tr Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    RIP: 0010:vmaster_hook+0x35/0xb0
+    Code: f5 53 48 89 fb 48 83 ec 08 e8 57 f0 9a fc eb 50 e8 50 f0 9a fc 48 8d 7b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 75 59 48 8d 7b 10 48 8b 43 08 48 ba 00 00 00 00 00 fc
+    RSP: 0018:ffff888117647cd0 EFLAGS: 00010212
+    RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff84e9ff50
+    RDX: 0000000000000001 RSI: 0000000000000000 RDI: 0000000000000008
+    RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000001
+    R10: ffffffff89427457 R11: ffff888115ad1d00 R12: ffffffff84e9ff30
+    R13: ffff888114943ca0 R14: 0000000000000000 R15: 0000000000000001
+    FS:  00007fe8167b3780(0000) GS:ffff88826b7e3000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000557c8c2842a8 CR3: 000000011579f005 CR4: 0000000000770ef0
+    PKRU: 55555554
+    Call Trace:
+     <TASK>
+     master_put+0x20e/0x2b0
+     snd_ctl_elem_write+0x37f/0x5e0
+     snd_ctl_ioctl+0x997/0xdd0
+     ? __pfx_snd_ctl_ioctl+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? selinux_file_ioctl+0xaa/0x280
+     ? __pfx_snd_ctl_ioctl+0x10/0x10
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7fe8168c291b
+    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
+    RSP: 002b:00007fffab0cb150 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007fe8168c291b
+    RDX: 00007fffab0cb310 RSI: 00000000c4c85513 RDI: 0000000000000003
+    RBP: 00007fffab0cb310 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+    R13: 00007fffab0cb1c0 R14: 0000000000000001 R15: 0000557c4f71fd10
+     </TASK>
+    Modules linked in:
+    ---[ end trace 0000000000000000 ]---
+
+Fixes: ee52e56e7b12 ("ALSA: hda - Fix mute-LED fixed mode")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+
+Link: https://patch.msgid.link/pm-pmb-c2667fb9cc42fbb7943c-v4-b7bc2fe90e950accb3f7@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-lochnagar.c             |  9 ++-------
- drivers/clk/davinci/da8xx-cfgchip.c     |  8 +++-----
- drivers/clk/davinci/pll.c               | 10 +++-------
- drivers/clk/davinci/psc.c               | 10 +++-------
- drivers/clk/qcom/gcc-msm8960.c          | 13 +++++--------
- drivers/clk/qcom/gcc-msm8974.c          | 10 +++-------
- drivers/clk/qcom/kpss-xcc.c             |  9 ++-------
- drivers/clk/qcom/krait-cc.c             | 14 +++++---------
- drivers/clk/qcom/mmcc-msm8960.c         | 16 +++++-----------
- drivers/clk/qcom/mmcc-sdm660.c          |  8 ++------
- drivers/clk/rockchip/clk-rk3399.c       |  9 ++-------
- drivers/clk/samsung/clk-exynos-clkout.c |  8 +++-----
- drivers/clk/ti/adpll.c                  | 14 ++++----------
- 13 files changed, 42 insertions(+), 96 deletions(-)
+ include/sound/control.h   | 2 +-
+ sound/core/vmaster.c      | 7 ++++++-
+ sound/pci/hda/hda_codec.c | 2 +-
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/clk-lochnagar.c b/drivers/clk/clk-lochnagar.c
-index db468a62c8d71..5561a2c66b697 100644
---- a/drivers/clk/clk-lochnagar.c
-+++ b/drivers/clk/clk-lochnagar.c
-@@ -12,8 +12,8 @@
- #include <linux/device.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- 
- #include <linux/mfd/lochnagar1_regs.h>
-@@ -242,22 +242,17 @@ static int lochnagar_clk_probe(struct platform_device *pdev)
- 	};
- 	struct device *dev = &pdev->dev;
- 	struct lochnagar_clk_priv *priv;
--	const struct of_device_id *of_id;
- 	struct lochnagar_clk *lclk;
- 	struct lochnagar_config *conf;
- 	int ret, i;
- 
--	of_id = of_match_device(lochnagar_of_match, dev);
--	if (!of_id)
--		return -EINVAL;
--
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
- 
- 	priv->dev = dev;
- 	priv->regmap = dev_get_regmap(dev->parent, NULL);
--	conf = (struct lochnagar_config *)of_id->data;
-+	conf = (struct lochnagar_config *)device_get_match_data(dev);
- 
- 	memcpy(priv->lclks, conf->clks, sizeof(priv->lclks));
- 
-diff --git a/drivers/clk/davinci/da8xx-cfgchip.c b/drivers/clk/davinci/da8xx-cfgchip.c
-index dff7ca35536cc..ec60ecb517f1f 100644
---- a/drivers/clk/davinci/da8xx-cfgchip.c
-+++ b/drivers/clk/davinci/da8xx-cfgchip.c
-@@ -11,10 +11,10 @@
- #include <linux/init.h>
- #include <linux/mfd/da8xx-cfgchip.h>
- #include <linux/mfd/syscon.h>
--#include <linux/of_device.h>
- #include <linux/of.h>
- #include <linux/platform_data/clk-da8xx-cfgchip.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
- 
-@@ -744,15 +744,13 @@ static int da8xx_cfgchip_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct da8xx_cfgchip_clk_platform_data *pdata = dev->platform_data;
--	const struct of_device_id *of_id;
- 	da8xx_cfgchip_init clk_init = NULL;
- 	struct regmap *regmap = NULL;
- 
--	of_id = of_match_device(da8xx_cfgchip_of_match, dev);
--	if (of_id) {
-+	clk_init = device_get_match_data(dev);
-+	if (clk_init) {
- 		struct device_node *parent;
- 
--		clk_init = of_id->data;
- 		parent = of_get_parent(dev->of_node);
- 		regmap = syscon_node_to_regmap(parent);
- 		of_node_put(parent);
-diff --git a/drivers/clk/davinci/pll.c b/drivers/clk/davinci/pll.c
-index 87bdf88790452..5bbbb3a664778 100644
---- a/drivers/clk/davinci/pll.c
-+++ b/drivers/clk/davinci/pll.c
-@@ -18,11 +18,10 @@
- #include <linux/kernel.h>
- #include <linux/mfd/syscon.h>
- #include <linux/notifier.h>
--#include <linux/of_address.h>
--#include <linux/of_device.h>
- #include <linux/of.h>
- #include <linux/platform_data/clk-davinci-pll.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
- #include <linux/types.h>
-@@ -892,14 +891,11 @@ static int davinci_pll_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct davinci_pll_platform_data *pdata;
--	const struct of_device_id *of_id;
- 	davinci_pll_init pll_init = NULL;
- 	void __iomem *base;
- 
--	of_id = of_match_device(davinci_pll_of_match, dev);
--	if (of_id)
--		pll_init = of_id->data;
--	else if (pdev->id_entry)
-+	pll_init = device_get_match_data(dev);
-+	if (!pll_init && pdev->id_entry)
- 		pll_init = (void *)pdev->id_entry->driver_data;
- 
- 	if (!pll_init) {
-diff --git a/drivers/clk/davinci/psc.c b/drivers/clk/davinci/psc.c
-index 6f7b8f082ad30..a37fea7542b23 100644
---- a/drivers/clk/davinci/psc.c
-+++ b/drivers/clk/davinci/psc.c
-@@ -18,10 +18,9 @@
- #include <linux/clk/davinci.h>
- #include <linux/clkdev.h>
- #include <linux/err.h>
--#include <linux/of_address.h>
--#include <linux/of_device.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/pm_clock.h>
- #include <linux/pm_domain.h>
- #include <linux/regmap.h>
-@@ -522,15 +521,12 @@ static const struct platform_device_id davinci_psc_id_table[] = {
- static int davinci_psc_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	const struct of_device_id *of_id;
- 	const struct davinci_psc_init_data *init_data = NULL;
- 	void __iomem *base;
- 	int ret;
- 
--	of_id = of_match_device(davinci_psc_of_match, dev);
--	if (of_id)
--		init_data = of_id->data;
--	else if (pdev->id_entry)
-+	init_data = device_get_match_data(dev);
-+	if (!init_data && pdev->id_entry)
- 		init_data = (void *)pdev->id_entry->driver_data;
- 
- 	if (!init_data) {
-diff --git a/drivers/clk/qcom/gcc-msm8960.c b/drivers/clk/qcom/gcc-msm8960.c
-index dbc7093ab9cc4..6236a458e4eb2 100644
---- a/drivers/clk/qcom/gcc-msm8960.c
-+++ b/drivers/clk/qcom/gcc-msm8960.c
-@@ -7,9 +7,10 @@
- #include <linux/bitops.h>
- #include <linux/err.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
-+#include <linux/of_platform.h>
- #include <linux/clk-provider.h>
- #include <linux/regmap.h>
- #include <linux/reset-controller.h>
-@@ -3716,14 +3717,10 @@ MODULE_DEVICE_TABLE(of, gcc_msm8960_match_table);
- static int gcc_msm8960_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	const struct of_device_id *match;
- 	struct platform_device *tsens;
-+	const struct qcom_cc_desc *desc = device_get_match_data(dev);
- 	int ret;
- 
--	match = of_match_device(gcc_msm8960_match_table, &pdev->dev);
--	if (!match)
--		return -EINVAL;
--
- 	ret = qcom_cc_register_board_clk(dev, "cxo_board", "cxo", 19200000);
- 	if (ret)
- 		return ret;
-@@ -3732,11 +3729,11 @@ static int gcc_msm8960_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ret = qcom_cc_probe(pdev, match->data);
-+	ret = qcom_cc_probe(pdev, desc);
- 	if (ret)
- 		return ret;
- 
--	if (match->data == &gcc_apq8064_desc) {
-+	if (desc == &gcc_apq8064_desc) {
- 		hfpll1.d = &hfpll1_8064_data;
- 		hfpll_l2.d = &hfpll_l2_8064_data;
- 	}
-diff --git a/drivers/clk/qcom/gcc-msm8974.c b/drivers/clk/qcom/gcc-msm8974.c
-index 0231c1efd2864..b32e66714951b 100644
---- a/drivers/clk/qcom/gcc-msm8974.c
-+++ b/drivers/clk/qcom/gcc-msm8974.c
-@@ -7,9 +7,9 @@
- #include <linux/bitops.h>
- #include <linux/err.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/clk-provider.h>
- #include <linux/regmap.h>
- #include <linux/reset-controller.h>
-@@ -2875,14 +2875,10 @@ static int gcc_msm8974_probe(struct platform_device *pdev)
- {
- 	int ret;
- 	struct device *dev = &pdev->dev;
--	const struct of_device_id *id;
--
--	id = of_match_device(gcc_msm8974_match_table, dev);
--	if (!id)
--		return -ENODEV;
-+	const void *data = device_get_match_data(dev);
- 
- 	if (!of_device_is_compatible(dev->of_node, "qcom,gcc-msm8974")) {
--		if (id->data == &gcc_msm8226_desc)
-+		if (data == &gcc_msm8226_desc)
- 			msm8226_clock_override();
- 		else
- 			msm8974_pro_clock_override();
-diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
-index d8c1f2b41eeb3..e7cfa8d22044e 100644
---- a/drivers/clk/qcom/kpss-xcc.c
-+++ b/drivers/clk/qcom/kpss-xcc.c
-@@ -5,10 +5,10 @@
- #include <linux/init.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/err.h>
- #include <linux/io.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- 
-@@ -32,20 +32,15 @@ MODULE_DEVICE_TABLE(of, kpss_xcc_match_table);
- static int kpss_xcc_driver_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	const struct of_device_id *id;
- 	void __iomem *base;
- 	struct clk_hw *hw;
- 	const char *name;
- 
--	id = of_match_device(kpss_xcc_match_table, dev);
--	if (!id)
--		return -ENODEV;
--
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
- 
--	if (id->data) {
-+	if (device_get_match_data(&pdev->dev)) {
- 		if (of_property_read_string_index(dev->of_node,
- 						  "clock-output-names",
- 						  0, &name))
-diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
-index 410ae8390f1c2..ae325f4e1047c 100644
---- a/drivers/clk/qcom/krait-cc.c
-+++ b/drivers/clk/qcom/krait-cc.c
-@@ -5,10 +5,10 @@
- #include <linux/init.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/err.h>
- #include <linux/io.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/slab.h>
-@@ -347,22 +347,18 @@ MODULE_DEVICE_TABLE(of, krait_cc_match_table);
- static int krait_cc_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	const struct of_device_id *id;
- 	unsigned long cur_rate, aux_rate;
- 	int cpu;
- 	struct clk_hw *mux, *l2_pri_mux;
- 	struct clk *clk, **clks;
--
--	id = of_match_device(krait_cc_match_table, dev);
--	if (!id)
--		return -ENODEV;
-+	bool unique_aux = !!device_get_match_data(dev);
- 
- 	/* Rate is 1 because 0 causes problems for __clk_mux_determine_rate */
- 	clk = clk_register_fixed_rate(dev, "qsb", NULL, 0, 1);
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 
--	if (!id->data) {
-+	if (!unique_aux) {
- 		clk = clk_register_fixed_factor(dev, "acpu_aux",
- 						"gpll0_vote", 0, 1, 2);
- 		if (IS_ERR(clk))
-@@ -375,13 +371,13 @@ static int krait_cc_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	for_each_possible_cpu(cpu) {
--		mux = krait_add_clks(dev, cpu, id->data);
-+		mux = krait_add_clks(dev, cpu, unique_aux);
- 		if (IS_ERR(mux))
- 			return PTR_ERR(mux);
- 		clks[cpu] = mux->clk;
- 	}
- 
--	l2_pri_mux = krait_add_clks(dev, -1, id->data);
-+	l2_pri_mux = krait_add_clks(dev, -1, unique_aux);
- 	if (IS_ERR(l2_pri_mux))
- 		return PTR_ERR(l2_pri_mux);
- 	clks[l2_mux] = l2_pri_mux->clk;
-diff --git a/drivers/clk/qcom/mmcc-msm8960.c b/drivers/clk/qcom/mmcc-msm8960.c
-index 6bf908a51f530..50638ab341eca 100644
---- a/drivers/clk/qcom/mmcc-msm8960.c
-+++ b/drivers/clk/qcom/mmcc-msm8960.c
-@@ -8,9 +8,9 @@
- #include <linux/err.h>
- #include <linux/delay.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/regmap.h>
-@@ -3105,30 +3105,24 @@ MODULE_DEVICE_TABLE(of, mmcc_msm8960_match_table);
- 
- static int mmcc_msm8960_probe(struct platform_device *pdev)
- {
--	const struct of_device_id *match;
- 	struct regmap *regmap;
--	bool is_8064;
- 	struct device *dev = &pdev->dev;
-+	const struct qcom_cc_desc *desc = device_get_match_data(dev);
- 
--	match = of_match_device(mmcc_msm8960_match_table, dev);
--	if (!match)
--		return -EINVAL;
--
--	is_8064 = of_device_is_compatible(dev->of_node, "qcom,mmcc-apq8064");
--	if (is_8064) {
-+	if (desc == &mmcc_apq8064_desc) {
- 		gfx3d_src.freq_tbl = clk_tbl_gfx3d_8064;
- 		gfx3d_src.clkr.hw.init = &gfx3d_8064_init;
- 		gfx3d_src.s[0].parent_map = mmcc_pxo_pll8_pll2_pll15_map;
- 		gfx3d_src.s[1].parent_map = mmcc_pxo_pll8_pll2_pll15_map;
- 	}
- 
--	regmap = qcom_cc_map(pdev, match->data);
-+	regmap = qcom_cc_map(pdev, desc);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
- 
- 	clk_pll_configure_sr(&pll15, regmap, &pll15_config, false);
- 
--	return qcom_cc_really_probe(pdev, match->data, regmap);
-+	return qcom_cc_really_probe(pdev, desc, regmap);
+diff --git a/include/sound/control.h b/include/sound/control.h
+index f4e230a5dbd4b..a9d5ca10c8fdd 100644
+--- a/include/sound/control.h
++++ b/include/sound/control.h
+@@ -288,7 +288,7 @@ snd_ctl_add_follower_uncached(struct snd_kcontrol *master,
+ 	return _snd_ctl_add_follower(master, follower, SND_CTL_FOLLOWER_NEED_UPDATE);
  }
  
- static struct platform_driver mmcc_msm8960_driver = {
-diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
-index fc2fc74d1c01d..7187ad18f3367 100644
---- a/drivers/clk/qcom/mmcc-sdm660.c
-+++ b/drivers/clk/qcom/mmcc-sdm660.c
-@@ -9,9 +9,9 @@
- #include <linux/bitops.h>
- #include <linux/err.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/clk-provider.h>
- #include <linux/regmap.h>
- #include <linux/reset-controller.h>
-@@ -2828,14 +2828,10 @@ static void sdm630_clock_override(void)
+-int snd_ctl_add_vmaster_hook(struct snd_kcontrol *kctl,
++int snd_ctl_add_vmaster_hook(struct snd_card *card, struct snd_kcontrol *kctl,
+ 			     void (*hook)(void *private_data, int),
+ 			     void *private_data);
+ void snd_ctl_sync_vmaster(struct snd_kcontrol *kctl, bool hook_only);
+diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
+index 378d2c7c3d4af..94bfcdd29c3cd 100644
+--- a/sound/core/vmaster.c
++++ b/sound/core/vmaster.c
+@@ -463,6 +463,7 @@ EXPORT_SYMBOL(snd_ctl_make_virtual_master);
  
- static int mmcc_660_probe(struct platform_device *pdev)
+ /**
+  * snd_ctl_add_vmaster_hook - Add a hook to a vmaster control
++ * @card: the card instance
+  * @kcontrol: vmaster kctl element
+  * @hook: the hook function
+  * @private_data: the private_data pointer to be saved
+@@ -470,13 +471,17 @@ EXPORT_SYMBOL(snd_ctl_make_virtual_master);
+  * Adds the given hook to the vmaster control element so that it's called
+  * at each time when the value is changed.
+  *
++ * Takes the card's controls_rwsem lock internally.
++ *
+  * Return: Zero.
+  */
+-int snd_ctl_add_vmaster_hook(struct snd_kcontrol *kcontrol,
++int snd_ctl_add_vmaster_hook(struct snd_card *card, struct snd_kcontrol *kcontrol,
+ 			     void (*hook)(void *private_data, int),
+ 			     void *private_data)
  {
--	const struct of_device_id *id;
- 	struct regmap *regmap;
- 	bool is_sdm630;
- 
--	id = of_match_device(mmcc_660_match_table, &pdev->dev);
--	if (!id)
--		return -ENODEV;
--	is_sdm630 = !!(id->data);
-+	is_sdm630 = !!device_get_match_data(&pdev->dev);
- 
- 	regmap = qcom_cc_map(pdev, &mmcc_660_desc);
- 	if (IS_ERR(regmap))
-diff --git a/drivers/clk/rockchip/clk-rk3399.c b/drivers/clk/rockchip/clk-rk3399.c
-index 9ebd6c451b3db..9316e5c8a0ea5 100644
---- a/drivers/clk/rockchip/clk-rk3399.c
-+++ b/drivers/clk/rockchip/clk-rk3399.c
-@@ -9,8 +9,8 @@
- #include <linux/io.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- #include <dt-bindings/clock/rk3399-cru.h>
- #include "clk.h"
-@@ -1634,14 +1634,9 @@ static const struct of_device_id clk_rk3399_match_table[] = {
- static int __init clk_rk3399_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	const struct of_device_id *match;
- 	const struct clk_rk3399_inits *init_data;
- 
--	match = of_match_device(clk_rk3399_match_table, &pdev->dev);
--	if (!match || !match->data)
--		return -EINVAL;
--
--	init_data = match->data;
-+	init_data = device_get_match_data(&pdev->dev);
- 	if (init_data->inits)
- 		init_data->inits(np);
- 
-diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
-index 3c09e9a4b25b4..83a3dc7de9204 100644
---- a/drivers/clk/samsung/clk-exynos-clkout.c
-+++ b/drivers/clk/samsung/clk-exynos-clkout.c
-@@ -13,9 +13,9 @@
- #include <linux/io.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
-+#include <linux/property.h>
- 
- #define EXYNOS_CLKOUT_NR_CLKS		1
- #define EXYNOS_CLKOUT_PARENTS		32
-@@ -84,19 +84,17 @@ MODULE_DEVICE_TABLE(of, exynos_clkout_ids);
- static int exynos_clkout_match_parent_dev(struct device *dev, u32 *mux_mask)
- {
- 	const struct exynos_clkout_variant *variant;
--	const struct of_device_id *match;
- 
- 	if (!dev->parent) {
- 		dev_err(dev, "not instantiated from MFD\n");
- 		return -EINVAL;
- 	}
- 
--	match = of_match_device(exynos_clkout_ids, dev->parent);
--	if (!match) {
-+	variant = device_get_match_data(dev->parent);
-+	if (!variant) {
- 		dev_err(dev, "cannot match parent device\n");
- 		return -EINVAL;
- 	}
--	variant = match->data;
- 
- 	*mux_mask = variant->mux_mask;
- 
-diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
-index f76251bb950c6..2839d86c5957e 100644
---- a/drivers/clk/ti/adpll.c
-+++ b/drivers/clk/ti/adpll.c
-@@ -8,7 +8,9 @@
- #include <linux/io.h>
- #include <linux/math64.h>
- #include <linux/module.h>
--#include <linux/of_device.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/string.h>
- 
- #define ADPLL_PLLSS_MMR_LOCK_OFFSET	0x00	/* Managed by MPPULL */
-@@ -860,24 +862,16 @@ static int ti_adpll_probe(struct platform_device *pdev)
- {
- 	struct device_node *node = pdev->dev.of_node;
- 	struct device *dev = &pdev->dev;
--	const struct of_device_id *match;
--	const struct ti_adpll_platform_data *pdata;
- 	struct ti_adpll_data *d;
- 	struct resource *res;
- 	int err;
- 
--	match = of_match_device(ti_adpll_match, dev);
--	if (match)
--		pdata = match->data;
--	else
--		return -ENODEV;
--
- 	d = devm_kzalloc(dev, sizeof(*d), GFP_KERNEL);
- 	if (!d)
- 		return -ENOMEM;
- 	d->dev = dev;
- 	d->np = node;
--	d->c = pdata;
-+	d->c = device_get_match_data(dev);
- 	dev_set_drvdata(d->dev, d);
- 	spin_lock_init(&d->lock);
- 
+ 	struct link_master *master = snd_kcontrol_chip(kcontrol);
++
++	guard(rwsem_write)(&card->controls_rwsem);
+ 	master->hook = hook;
+ 	master->hook_private_data = private_data;
+ 	return 0;
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index 70bbcdcf0f5c5..a267724f631bb 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -2071,7 +2071,7 @@ int snd_hda_add_vmaster_hook(struct hda_codec *codec,
+ 	if (!hook->hook || !hook->sw_kctl)
+ 		return 0;
+ 	hook->codec = codec;
+-	snd_ctl_add_vmaster_hook(hook->sw_kctl, vmaster_hook, hook);
++	snd_ctl_add_vmaster_hook(codec->card, hook->sw_kctl, vmaster_hook, hook);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_add_vmaster_hook);
 -- 
 2.53.0
 
