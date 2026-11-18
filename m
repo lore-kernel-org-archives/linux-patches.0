@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048874;
-	b=zoPSnoDUgeSw1C2vBuGtft7vzTajvmLZxOHWvNBnvlHODc3XcMo5PbXnVYFRDO7sCGKY
-	 Ks67ck7/Y8z+PstqMCcZIE6vPByv6Q1yZpQNknLEMQy1frZgQTDOZLYxqBRuvVGrmL2DS
-	 pDIjaQeAtUUEhkN1bg9IWfBS2xNk7ZS+pgpfil3hfjQffR9y6qf6K9bCe5y5YkOV4aQhY
-	 qPGaHwDtsNju5DzLeEO+TFVOYIOGVa5eQXoviDsU+mN/cQOXXy8h/TsH/KrAoP9KlJT89
-	 ZAAUFgHRQSUWiKKUWVDeKhyqOgKrS50kWYgLVBlQqkXI5GbzclMYWIUCUVFimXpE8+g==
+	t=1795048877;
+	b=L0wDNyJPN2VHVPSKgEO2JAnpkH/OEVAxwR7aL5YL4CyQmEvOzokGzbY/H8nSuIV/nyhk
+	 wwHYflUBuQ8prci3IoCKpuTXMPQf2Urewz5S0FF4yWTOCrzf15aYIM1NhdIRHmlvkx4eJ
+	 hUeg0ALDHNwkXpbdAw1P0ekELuGU9peXYMY7tqNslA77RYpj4AXt5WTmSsq2UjCsj1AUM
+	 ZGIItsbBEUBeZg00QlYKHM+fyOFfDVF3VOD76kt6bHfjXZMcig9/nrPiRJnFfjpJju6TC
+	 XFNtvLcorvRjB3yVDjvWsMXPNjAHd9tYaZvLExlFlJF/y8NjMQce0t+19MzFuZI5hFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048877;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ewrvrn5zDbAllt0RR8dfHYARgvLiur6emsYKwwZc8Qw=;
-	b=3nntNoXP8Wf63sDQxa4vfsCNmZvISSr0r7jbo1LTPylXX6JEUiXaGvYTJyQSEXoLGE61
-	 TtLeMdiS3R07FOgy2ca3m7JAH/wQtxX034X+sRqCJnNHjMLgX7IwTaWk1jU7ewqUfwUkX
-	 hFZQlxDiFCxMRXC9kuO9Ontj+TUlSDJFz/0aGN1sm7xr6cki5RO22SybmnxtLw1/Hl5mT
-	 er2rKG+/8wQR14Doq1e9ALmMsjbM4OegFu9h2ojEgzVYZ1pa4L8NHkqi9hkc26o2aOzf5
-	 aNdOhPLD93n/2ULWjXhImW/9szncFrsrWYpyKYhGhbvzDXYIDYhEUpIo8Kyi/Iym+Zg==
+	bh=jFr04HFwQpfMK3oK4w73HPML+O9EDjYX4nOHdhy98lo=;
+	b=ueuf212qPa10StP9+L2nRKVlfYhy21UmnBAYENopp49RavqTH2p7rp7dRAUNu/Y5baco
+	 pZEkFprbIHhdVFCHFA6DsVJFK0KWOeE/uPQ6l5XDdUfvMXaEptxKrz+7kKm9Ul6o59aZQ
+	 MvuT8kvPf0Ys9rEi563MqwQ6GimTrfpMuctFXAoHjGuD0RXSC50iBYZ1fJY3NgVA8eKRe
+	 gYjzkr5wcX9hhGYGf7VpgSsSivcN/EdBzWW8cOvS/2UgxrwsfLn5Dkhk5zzDli2FQOdIx
+	 6l53kLasrqshVjZKnksI6tg5L2iNCANgm+IiZiaBjeixgdOIjJ0QERkDlrVGu9EWG0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBrrSweg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6nlsubF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C03C606A31C;
-	Thu, 19 Nov 2026 00:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B36A606A32C;
+	Thu, 19 Nov 2026 00:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBrrSweg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB70A1F000C4;
-	Thu, 19 Nov 2026 00:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6nlsubF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7389E1F000C4;
+	Thu, 19 Nov 2026 00:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048874;
-	bh=Ewrvrn5zDbAllt0RR8dfHYARgvLiur6emsYKwwZc8Qw=;
+	s=korg; t=1795048877;
+	bh=jFr04HFwQpfMK3oK4w73HPML+O9EDjYX4nOHdhy98lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WBrrSweg5ICtc0GpAnrQZbD4BdI00qcHvBAdX9sTHDbOnxoW50erBR3A5cGoLMe22
-	 TaBGP6xWNpoCPzZGmvjjD5AP6JBUP904ZFBrHNYJVI6YUPCmNTyaYFQSfVMeEvSDd6
-	 /rzFGHmFQ0xQPjs26pCbqy0WPaJVDSp377XMvzeA=
+	b=M6nlsubFTKCrQ3CB0DsHea2hK0qA6xPBKCjJdOvoK41EFRuttuWpXhYROlVElWy75
+	 JcOinaYKMl/89TGwWJXDqpeVDhQikXSvQ3LdUA56W6ISsx4wYu61gdczO4vhidzdKL
+	 wOvo9idC2o5o2n7y32s7tV/3Qvrz2Nb3vXafDLBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
+	Guo Ren <guoren@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Chao Wei <chao.wei@sophgo.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2149/2857] dt-bindings: vendor-prefixes: add Source Parts and Lctech names
-Date: Wed, 18 Nov 2026 15:53:03 +0100
-Message-ID: <20261118150318.772194446@linuxfoundation.org>
+Subject: [PATCH 6.1 2150/2857] dt-bindings: vendor-prefixes: add milkv/sophgo
+Date: Wed, 18 Nov 2026 15:53:04 +0100
+Message-ID: <20261118150318.810182376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,27 +70,23 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Chen Wang <unicorn_wang@outlook.com>
 
-[ Upstream commit eef696356f58a4f5c17ec5d7cb1d495f75edf62e ]
+[ Upstream commit 07f9b764062904f0c0fd6e54e58535f34ac3ac6f ]
 
-Source Parts Inc. [1] is a company that makes a series of SBCs, SoMs,
-etc under a brand called Popcorn Computer [2].
-Shenzen LC Technology [3] makes various boards and related products
-around IoT and AI technology. They used the "Cherry Pi" brand name before.
+Add new vendor strings to dt bindings.
+These new vendor strings are used by
+- SOPHGO's SG2042 SoC [1]
+- Milk-V Pioneer board [2], which uses SG2042 chip.
 
-Add both companies' names to the vendor prefixes list.
+Link: https://en.sophgo.com/product/introduce/sg2042.html [1]
+Link: https://milkv.io/pioneer [2]
 
-[1] https://source.parts/
-[2] https://popcorncomputer.com/
-[3] http://www.chinalctech.com
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://lore.kernel.org/r/20230319212936.26649-4-andre.przywara@arm.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Chao Wei <chao.wei@sophgo.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Stable-dep-of: 538f8ec6b9c7 ("dt-bindings: vendor-prefixes: Add Sophos")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -98,27 +94,27 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index b07d3671865d6..3746f6e01aa75 100644
+index 3746f6e01aa75..25e3309a8567f 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -721,6 +721,8 @@ patternProperties:
-     description: Lantiq Semiconductor
-   "^lattice,.*":
-     description: Lattice Semiconductor
-+  "^lctech,.*":
-+    description: Shenzen LC Technology Co., Ltd.
-   "^leadtek,.*":
-     description: Shenzhen Leadtek Technology Co., Ltd.
-   "^leeco,.*":
-@@ -1245,6 +1247,8 @@ patternProperties:
+@@ -843,6 +843,8 @@ patternProperties:
+     description: MikroElektronika d.o.o.
+   "^mikrotik,.*":
+     description: MikroTik
++  "^milkv,.*":
++    description: MilkV Technology Co., Ltd
+   "^miniand,.*":
+     description: Miniand Tech
+   "^minix,.*":
+@@ -1247,6 +1249,8 @@ patternProperties:
      description: Solomon Systech Limited
    "^sony,.*":
      description: Sony Corporation
-+  "^sourceparts,.*":
-+    description: Source Parts Inc.
++  "^sophgo,.*":
++    description: Sophgo Technology Inc.
+   "^sourceparts,.*":
+     description: Source Parts Inc.
    "^spansion,.*":
-     description: Spansion Inc.
-   "^sparkfun,.*":
 -- 
 2.53.0
 
