@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040335;
-	b=CghbFFjs2ljIODKu75fh9vaoMTFSRFZNbKptJkmuUyKEgNTca83z4NsXhc5jIUILVTzY
-	 TvtEGeKT3M3+6q+8z23HsWyNU3PUPphkAZvoS+dVgyAIhMHMBOkx9PsF7erIXsGL2ybCf
-	 9ohVJ0TYz/uI4s0O72eEIBSb9Qe15zb8Zb5AjbvSRzAuKeVV6UopYy/UgHp6ILAwjZh1U
-	 DFQCAl6IYQDhJWSd6cqLelcwZEVgHw2GjXtO/4TL2GUjc2xsLfpbuvPD4mXgKwMUhtzoU
-	 FfCMr9iRIccNezURHo82WxGxUbq10XxFUYimSzkS0dahf8hWI7EcsuFDUvQP8qRs3ow==
+	t=1795040337;
+	b=JFJBcGVzQshmeOWQtIFouIWZtUjj8CRUZ9P/wy2SuYjTLZuEcCI8Ql+LKPe8E6dkWE/v
+	 Yrcjgcb0FuF0zh3EKo9C5Rt/elt+TxvCxGURbGGst9xVMWVqE1Y6rZlUYPwIdCuTpRman
+	 AXhAtApVp2Nb8VEDdfKeZieqi1rxPOfuxobe1yXfKgl72q0QZzmAP3t0JHnZ0vms5cCVb
+	 qbsIt0dedJc7zo43Wul27oQI5zumI8J5EfmxIw29wix1d9NmD2KYta8kcL7pgV4h9cEd2
+	 iknZcyIZNw8k6TqFE2qcQbcFkm1aDWRhk+PZWBsB+0EQaJ0p1J+B1+UlQJTCHMI9dYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sBwjBjX0fD0MuCk9TEO0s5YnsTpCfQG75CmJ1eLQf6M=;
-	b=qmrytm4jty6FPZpDcMUvnz6Dypg8snJ20N5/IIHSeH4IxXyscfHNASFbIY/amQc8zgGU
-	 OpOqLBVZFaZ4WdYLFGWPsM+Kj9xkReTBYjRv/mvagcFGhUd4cJ+D3cYccyW4tPpQKkxOT
-	 M/uuqKoqggd4JKNBhuCWpeY+s4LgR8M+KewiSeEiXcLTlPrNV9cTmndZolztbnKte+h5b
-	 UdDmWQdi6aQTR+1kJzu6Pse6OShqWx8kJpXWlC5dppeotM+YqWTmzwCBYeiQjrgAZJnnL
-	 WAtWWyg+pPdFxWshmAO1R1K8R/VHz7eseMNH9aVezq8Mg4sxGbxF3bYGXVSZuFynWfA==
+	bh=RSRrvQwbI73SCIDOCYpJfWExWUa+B89a6VBgMIEovT0=;
+	b=LFe9ldwcDsJqI+gIYPVuI7KVx68NEkzv+93bwgPOS42CAbOisB4msNDKI/8wWxfQt9fx
+	 UDFIk/bnpenTZZSK71e7TqCD440Sie2g8aI62749QRGC91mkErFIDHrbWjxgz2o7JheC2
+	 HDxTXUDy+TxnmJBfTr1dVmbFT990v9ymXYH80agAMnb4r1eiOwr4rlSxbtxub1VTmcK4I
+	 75LZhE8YdES1kWjvjdKNPgqUYcQ6GddZSsK8UFmuf9mHwkgxjndABejT0TQsnSMRfAIAF
+	 N8OxHuL8LxSuOIQ+Kq6Qa8i0RdEHWj6G1cDzPvoOH0zshpMHJ1zWngCQRKuZ486GKaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qUDt9zwC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvJGrxCS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A201606A334;
-	Wed, 18 Nov 2026 22:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB46606A339;
+	Wed, 18 Nov 2026 22:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qUDt9zwC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDE21F000C4;
-	Wed, 18 Nov 2026 22:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvJGrxCS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3089B1F000C5;
+	Wed, 18 Nov 2026 22:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040335;
-	bh=sBwjBjX0fD0MuCk9TEO0s5YnsTpCfQG75CmJ1eLQf6M=;
+	s=korg; t=1795040337;
+	bh=RSRrvQwbI73SCIDOCYpJfWExWUa+B89a6VBgMIEovT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qUDt9zwCS5phlnyXOq4B9RYkyAdGXQrXJZh9uWZpzlnWNEqRK1d3lUvjlNfVDlKL3
-	 7So+BORjFmV8EAO8ADTuH7+ilYYFph7tQfg3XZvhy+N44LuqO+3NNzE77lR7ulG9AT
-	 rNEtgEmzAi146n0oCl8xgXUPfaUPDP8pO//cSbjE=
+	b=EvJGrxCSu7Tjl5NQkt4XLtuT7RZNiKElQShcRnDOMM2+q3ArK6/bUU087TfZEXYdI
+	 4qNkdT44G/0IOjJiW8Hqwcx8bBosEtrqEGISkjInWTT+WYbkKK+JBKMdLw1wVKKlaR
+	 dpdnd/LmON0ESz+rDy6jOI0F+a/NwR/ci2pH15dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2421/3318] ASoC: mediatek: mt8192: fix AFE clock error handling
-Date: Wed, 18 Nov 2026 15:50:43 +0100
-Message-ID: <20261118150434.105093721@linuxfoundation.org>
+Subject: [PATCH 6.6 2404/3318] RDMA/mlx5: Initialize QP/RQ/SQ resource refcount before publishing it
+Date: Wed, 18 Nov 2026 15:50:26 +0100
+Message-ID: <20261118150433.620926389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,111 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 7c54781e6e60681af8d0858148d613becb582328 ]
+[ Upstream commit 829a0e65deff3f826a7870a52404aeaf1a3fec3f ]
 
-If a clock operation fails in mt8192_afe_enable_clock(), the function
-returns immediately via the EXIT label without disabling the clocks
-that were successfully enabled earlier in the sequence. This leaves
-unneeded clocks running and causes a resource leak.
+create_resource_common() inserted the resource into the radix tree
+before its initialization was complete. A firmware EQE in that window
+finds a zero refcount_t and calls refcount_inc() on it; the refcount API
+treats this as a use-after-free, saturates the counter, and permanently
+breaks the resource's lifecycle tracking.
 
-Properly unwind clocks enabled before an error by jumping to appropriate
-cleanup labels on failure.
+Move the initialization before the radix_tree_insert().
 
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260915140933.40580-15-yishaih@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 28 +++++++++++++++-------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/mlx5/qpc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index bd778e5663b56..7647bdd463d9c 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -220,21 +220,21 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_SYS_AUDIO], ret);
--		goto EXIT;
-+		return ret;
- 	}
+diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
+index 9de9bea1025e2..bba42790be37d 100644
+--- a/drivers/infiniband/hw/mlx5/qpc.c
++++ b/drivers/infiniband/hw/mlx5/qpc.c
+@@ -165,6 +165,10 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
+ 	int err;
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_INFRA_AUDIO_26M]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_AUDIO_26M], ret);
--		goto EXIT;
-+		goto err_disable_infra_sys_audio;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIO]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO], ret);
--		goto EXIT;
-+		goto err_disable_infra_audio_26m;
- 	}
- 	ret = clk_set_parent(afe_priv->clk[CLK_MUX_AUDIO],
- 			     afe_priv->clk[CLK_CLK26M]);
-@@ -242,14 +242,14 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO],
- 			aud_clks[CLK_CLK26M], ret);
--		goto EXIT;
-+		goto err_disable_mux_audio;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS], ret);
--		goto EXIT;
-+		goto err_disable_mux_audio;
- 	}
- 
- 	ret = mt8192_set_audio_int_bus_parent(afe, CLK_CLK26M);
-@@ -257,7 +257,7 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
- 			aud_clks[CLK_CLK26M], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
- 	ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUDIO_H],
-@@ -266,17 +266,27 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_TOP_MUX_AUDIO_H],
- 			aud_clks[CLK_TOP_APLL2_CK], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_AFE], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
--EXIT:
-+	return 0;
+ 	qp->common.res = rsc_type;
++	refcount_set(&qp->common.refcount, 1);
++	init_completion(&qp->common.free);
++	qp->pid = current->pid;
 +
-+err_disable_mux_audiointbus:
-+	clk_disable_unprepare(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
-+err_disable_mux_audio:
-+	clk_disable_unprepare(afe_priv->clk[CLK_MUX_AUDIO]);
-+err_disable_infra_audio_26m:
-+	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_AUDIO_26M]);
-+err_disable_infra_sys_audio:
-+	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_SYS_AUDIO]);
-+
- 	return ret;
+ 	spin_lock_irq(&table->lock);
+ 	err = radix_tree_insert(&table->tree,
+ 				qp->qpn | (rsc_type << MLX5_USER_INDEX_LEN),
+@@ -173,10 +177,6 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
+ 	if (err)
+ 		return err;
+ 
+-	refcount_set(&qp->common.refcount, 1);
+-	init_completion(&qp->common.free);
+-	qp->pid = current->pid;
+-
+ 	return 0;
  }
  
 -- 
