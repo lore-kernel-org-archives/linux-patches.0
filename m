@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036494;
-	b=OEDou+ehEgXjkiYzQA/6gGO58wgWeJTIkbbhwvdvt1twep/FWzlxx/f4lCiKAYvjnIuy
-	 hA8lPbL9/Bn/vbL+HjcLIziFFlvphetwNLWs2gJa4o4IcJtp8apZquoTnDmXCghFuNhyA
-	 HGQhnBGpFInJHGi7OY89c9f10paSa52JY1oA/xA7Chz7UCakGXu7YgCxLvxOLy6uMfX+J
-	 wl2vRaFcy8q2d5zp2UyfU/gb89l0ZtgqvZhI5HqtGrW2849p1hL6taFT3xfZdP2DDOcOg
-	 DB8KR+WMsMuLjEcYA4+03rv1zZn+/oxIxiqVlLOvDBfrbeNq/foZqCYk/9W9ht37M8A==
+	t=1795036497;
+	b=qZ8WOwemVZSi4FdNtGLk1qAVg51sT5D3yexxJyVd2KTzUN9PEUlo8eZ/i5njpRfBFHcx
+	 MYOgxnuMOaJSYPL0074QnIKV0LOT+K5V1/l+/usJgvPrSYeSthbbc7MNpVw1D8UCXpVyE
+	 eqHiJt1lco408CLd3ZiMIAI5c4B91qfF6HDMiGQkDUqlgT9pi3TgEFGW2eWTDtkubJzrZ
+	 CxJ+ot9r+rIvfL7UbzqZw/9jYyPAFbpfmtBoQINE7uxfzmFSjEo2/twssiztng4ygvYNX
+	 dU6jFCVhCTNZVhXnbNUWIf3Bl8YdHxtGh/DTmHoN7FKOQrRTgNoCQVZWssIIq68Ur6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7RIjNjGAhOXWeadvMAghe8q1FUOk+0TcSkee0Qq1VIs=;
-	b=sqDucxnNUvMcgdHGv3eDA68lNFHUkhR6TjR5sJ7LM1aesFwd57FtKFrCrZC0fugoeu/o
-	 p5B3xOqivupOICzP2jwHm48IZyI4SZCZB1rBM07q1LO7W9/NX+fP54V29dv7ok/gGsASS
-	 fpJf0DwmlXlqwta4qJ3LEs+sMksg0P/TDwsK9EOt6HSE0YLrsf4g8lpl+w+SEZVcalh+m
-	 7CWE45JwmIBUfE7ypRHA3ngD2rQuNxHhGKl96YxXFCRCUZrE9Pgwy7vpKoFzPLn5wZduQ
-	 4pduzxSik6dLvx9hpnL0baoz3Q0NoQ+99zQsaZyPiURn3a4svXeM4m/k5OzUm5ecdFA==
+	bh=T5MMHxix5Qj2oSFDTuh7biOzKlrysVZbcCThcjJBeDQ=;
+	b=3nziQPWr5t+HrxQbc3OMtV39HMrjtyEqPCLUR9xuYmZOrVVLEDWlYrM30tw4z8Rqv37y
+	 cuMfhzy6IWO+Bs1PGt+Zr2NawDiGMO2ujPheFvqxxRVUo9dfJDZ8B532XqkruuluHqFon
+	 M49UiKaq3bJxBzefaDDwHwVcMJiQONeO5rMpUVVzJCzIddc2/LY2EOb70+epZ7aGkuZDK
+	 tFGpjNNIZN04KRAIDBY1t0zgWhui9vi2mqqLPBtyQDdIVvkPn3yzK83ybBKdoc+qkoyL8
+	 lPztqgA/AE2dZ2+83PhctpespzFYOYl9DBrnKR9eYdz1xJX43S17GjyWHYl7klmoMbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfPT04hV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IwdlMv24;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B253B606A31C;
-	Wed, 18 Nov 2026 21:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BE5606A31C;
+	Wed, 18 Nov 2026 21:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfPT04hV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD291F000C7;
-	Wed, 18 Nov 2026 21:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IwdlMv24
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44101F000C4;
+	Wed, 18 Nov 2026 21:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036494;
-	bh=7RIjNjGAhOXWeadvMAghe8q1FUOk+0TcSkee0Qq1VIs=;
+	s=korg; t=1795036497;
+	bh=T5MMHxix5Qj2oSFDTuh7biOzKlrysVZbcCThcjJBeDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfPT04hVkAyTnG6cF0mYCzmviwHuzhUefTjZHCGh7ItGCQQM2lS7H5fgCSUatCcP4
-	 +kQXNU+76jhZstJ+4tvrcgyMp0jHW8Pk8SNmG0grssUoXLrkrcVY+Xb/0DnX3bWAP1
-	 YStuY1W1wTjrjxX9nP6FjS6gRzhZJ2ykLoHtmq7o=
+	b=IwdlMv248X1O8J7tezZhSLjv1k6gk7LeUbu/PLNqeOLSoBddEZ8/QDW7dSruTBa64
+	 LkuMsof3xuupzvMmxq0SBY2RREbOKqOk+BiFabg6qQq9U/LKh7VwCghweGo+d0qoAx
+	 DN6WG2k278u29a180IK+kIYoOJbqfr/4qKk4Jxbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Yijia Wang <wangyijia.yeah@bytedance.com>,
+	Guixiong Wei <weiguixiong@bytedance.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1080/3318] platform/x86: simatic-ipc: fix platform device leak on registration failure
-Date: Wed, 18 Nov 2026 15:28:22 +0100
-Message-ID: <20261118150352.369497614@linuxfoundation.org>
+Subject: [PATCH 6.6 1081/3318] platform/x86/intel-uncore-freq: Continue restoring limits on resume
+Date: Wed, 18 Nov 2026 15:28:23 +0100
+Message-ID: <20261118150352.400320910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,88 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Guixiong Wei <weiguixiong@bytedance.com>
 
-[ Upstream commit 9523698252fd583d6987582b9c34ec6500d10986 ]
+[ Upstream commit 38998529f45c02edcf96b0a3ddd3c83de6d11bbe ]
 
-register_platform_devices() registers the battery, LED, and watchdog
-platform devices in sequence. If LED registration fails, the battery
-device remains registered. If watchdog registration fails, the LED and
-battery devices remain registered.
+The PM notifier iterates over every uncore frequency instance to restore
+user-configured MSR_UNCORE_RATIO_LIMIT values after resume. Entries that
+have never been configured legitimately have stored_uncore_data set to
+zero.
 
-These failure paths leave successful platform_device_register_data()
-calls without the matching platform_device_unregister() calls.
+The refactoring that split common and enumeration code changed the
+iteration from active control CPUs to all allocated instances. It also
+changed the skip for an invalid or unconfigured entry from continue to
+return, causing that entry to terminate the entire restore operation.
 
-Add an unwind ladder to unregister previously registered platform
-devices in reverse order before returning the registration error.
+On a multi-package or multi-die system, configuring only a later instance
+therefore leaves its limit unrestored after suspend, hibernation, or
+restore if an earlier entry is invalid or unconfigured.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+Use continue to skip only the current entry and restore all remaining
+configured instances.
 
-Fixes: dd123e62bded ("platform/x86: simatic-ipc: add main driver for Siemens devices")
+Fixes: dbce412a7733 ("platform/x86/intel-uncore-freq: Split common and enumeration part")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260924115617.1578309-1-lgs201920130244@gmail.com
+Tested-by: Yijia Wang <wangyijia.yeah@bytedance.com>
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260929163133.14326-2-weiguixiong@bytedance.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/siemens/simatic-ipc.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/siemens/simatic-ipc.c b/drivers/platform/x86/siemens/simatic-ipc.c
-index 8ca6e277fa038..ebe7978e0c7b4 100644
---- a/drivers/platform/x86/siemens/simatic-ipc.c
-+++ b/drivers/platform/x86/siemens/simatic-ipc.c
-@@ -92,6 +92,7 @@ static int register_platform_devices(u32 station_id)
- 	u8 wdtmode = SIMATIC_IPC_DEVICE_NONE;
- 	u8 battmode = SIMATIC_IPC_DEVICE_NONE;
- 	char *pdevname;
-+	int ret;
- 	int i;
+diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
+index 2c9c5cc7d854e..7068dc85d4512 100644
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
+@@ -185,7 +185,7 @@ static int uncore_pm_notify(struct notifier_block *nb, unsigned long mode,
+ 			struct uncore_data *data = &uncore_instances[i];
  
- 	for (i = 0; i < ARRAY_SIZE(device_modes); i++) {
-@@ -139,8 +140,10 @@ static int register_platform_devices(u32 station_id)
- 				pdevname, PLATFORM_DEVID_NONE,
- 				&platform_data,
- 				sizeof(struct simatic_ipc_platform));
--		if (IS_ERR(ipc_led_platform_device))
--			return PTR_ERR(ipc_led_platform_device);
-+		if (IS_ERR(ipc_led_platform_device)) {
-+			ret = PTR_ERR(ipc_led_platform_device);
-+			goto err_unregister_batt;
-+		}
+ 			if (!data || !data->valid || !data->stored_uncore_data)
+-				return 0;
++				continue;
  
- 		pr_debug("device=%s created\n",
- 			 ipc_led_platform_device->name);
-@@ -153,8 +156,10 @@ static int register_platform_devices(u32 station_id)
- 				KBUILD_MODNAME "_wdt", PLATFORM_DEVID_NONE,
- 				&platform_data,
- 				sizeof(struct simatic_ipc_platform));
--		if (IS_ERR(ipc_wdt_platform_device))
--			return PTR_ERR(ipc_wdt_platform_device);
-+		if (IS_ERR(ipc_wdt_platform_device)) {
-+			ret = PTR_ERR(ipc_wdt_platform_device);
-+			goto err_unregister_led;
-+		}
- 
- 		pr_debug("device=%s created\n",
- 			 ipc_wdt_platform_device->name);
-@@ -169,6 +174,14 @@ static int register_platform_devices(u32 station_id)
- 	}
- 
- 	return 0;
-+
-+err_unregister_led:
-+	if (ledmode != SIMATIC_IPC_DEVICE_NONE)
-+		platform_device_unregister(ipc_led_platform_device);
-+err_unregister_batt:
-+	if (battmode != SIMATIC_IPC_DEVICE_NONE)
-+		platform_device_unregister(ipc_batt_platform_device);
-+	return ret;
- }
- 
- static void request_additional_modules(u32 station_id)
+ 			wrmsrl_on_cpu(data->control_cpu, MSR_UNCORE_RATIO_LIMIT,
+ 				      data->stored_uncore_data);
 -- 
 2.53.0
 
