@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034437;
-	b=0s8CwBbkiCB3JAX8gTqPavTAPq/2wk+k/K9bjXm/w0luxuUinTgdaenpFTlnnFpPPSbk
-	 x6FJ3uP97oVsGnRyNGRqPMJ6FHN/IVIjCgrjgMX6uHmUv91a/O2wxberhspL89o7W083X
-	 cg2sJOYZXTeWazgqdGrwcLX6uaDwkI2/ysDDaLIQYe8T+iocLKwYB8wCRQFfrn3B6qiPF
-	 nvsXDkhdcrZooEoFC7v0gGz6XNDkmeeaBSU3c3AS8nVdRlJIKQ8qb8Y0AzAP+XbhViYEO
-	 zzdJWvuu7X1R0aJvj1ywNIAgoDiLhMQg8ly4UATkWLX9OeLuT7bbi7CeV8nrNLAVNvQ==
+	t=1795034440;
+	b=MIQSPRWMp9a6mZUoVjalhiGr4MDkVvSENlS1jp6BzRMu06y42xleTL4g7DhhSi1XKEhs
+	 Tk0MdcoPlXinj949CDRU54Kf7ct7YetoMDz2hxQb0cGRwuU6OP/SpDabyCCZBV/6IRwhZ
+	 j8qJUPHqKIh6dunE8AyLKthlpBYvBwGkO69+VoNCng0IPpgEnUlyq4RWfw+C3K3O5Q6G1
+	 XuBmHRsDKyYXHgu00hDHrtyymzDhzMWwydb9e1NrKbOqHnTeqiUswyHtgsEaVRlQa9A97
+	 ocbhCLzUN/0mC6X4AKFN43qJBSJT7uNVwdBYM43C371pfS2qnJsd2rUpXgzgWsSjhWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IEkK4Iy2YUj0GGGRurdubCSgh1/b0QphRHgAuXDQq4s=;
-	b=tV1X07+MkvYKS9FvwiRy0K/wWyMDir4SLPKsr2NE2XZHE4zGVGfizqCiszlLYhLf/VeW
-	 jelDZFcM00vM/0t9EdHrol6aH7hYdf9R+P5cqCXCPc58CzzVOfPwDFU1nhG/qiLIAMJ7p
-	 iraD24l7llmtMAvfRhXKl3uqFCsqgxAkXgGZP3cBMX0V3C4S1oIh6MUxcYBIWVEOl+LYs
-	 f9l7a2Qs3QJUlOQkKOpbpAMrZcnFn8mXsEsVPihuSVmdmI5Tl98PbKFCKHfzOvWgyxLr5
-	 qCDhL8XMOTkLKft76RKM8XGE1PgI+rst28NGC1o53oucFvjBWhforlWlpFXMPpvNZgw==
+	bh=1UfNhq9CT9g7S9SpzdhvyIzFvMjPhkfxT/HkUeflmHs=;
+	b=TMXUuqPUn/CmW5A1HakILEA1nOtzvwX9yMfdswZX7ArrH6z+thnv71/g5haLYfTvki3W
+	 oEESglh4dxA6GW0gIMoKjEmz2BF5xK1oE7OonUBkRy/99c8gtP2Z4w9vux/y2dciu7e6x
+	 JN2ySlgndvZKpDnhnnz6qI/8BIRw0bbb3IBeZVyUuVYeCRr530bGU2dWzLCECME3CRTYP
+	 QsBsyGZsv3OtzluvS3YPiRCvLALc3gMHeMnHs5/2BfqsExDxjKXzLub+IvP7Tal/d+Jf1
+	 WsxCwG6xuvaapcMEgwUSj++KuDPZhvNFM5eW3NRLkUTAclkpt/W2njEXbhtE8fwRAfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZF7CGU7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eTiVuCo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF9F606A31C;
-	Wed, 18 Nov 2026 20:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91253606A325;
+	Wed, 18 Nov 2026 20:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZF7CGU7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05801F000C4;
-	Wed, 18 Nov 2026 20:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eTiVuCo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48D41F000C4;
+	Wed, 18 Nov 2026 20:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034437;
-	bh=IEkK4Iy2YUj0GGGRurdubCSgh1/b0QphRHgAuXDQq4s=;
+	s=korg; t=1795034440;
+	bh=1UfNhq9CT9g7S9SpzdhvyIzFvMjPhkfxT/HkUeflmHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZF7CGU7b9OIBRL95XVP3vW5QfRBm30FsBpIrmFOkOHxtG12+d2M3P1kWkGhrx45K
-	 7PRVqD0b9sJht8PAwVGL/dOMKgenWJORFUj/BR7/+4aWgUJyju+L1Y755eI+J8vMjb
-	 X7uf60S823Z+qOB4IcbNXHQ//bJP1TtEfmyRIUAk=
+	b=1eTiVuCoRQiCS714MahT+aRw2y9gN2NWjHUxnDMROQ5dZ/E0sF9heu3ET3clxx0Xe
+	 iV1CGOZbvbnR/Erabb7HZf5glP2efWN6FEc9PaqZankfuIrdzdBoCjMTO4TdhuXBM+
+	 +XOXM/hatZGrlwdji4XA8U+CxjWpN8RxsjynQYz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0332/3318] ceph: fix use-after-dereference of NULL ci in __ceph_remove_cap()
-Date: Wed, 18 Nov 2026 15:15:54 +0100
-Message-ID: <20261118150325.891751611@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Gang He <ghe@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.6 0368/3318] ocfs2: publish the filecheck owner before adding sysfs attributes
+Date: Wed, 18 Nov 2026 15:16:30 +0100
+Message-ID: <20261118150327.227164632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,63 +74,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit a354d7eaa1a57f1532c8072a424cc2d339a73cc0 ]
+commit e062baf5680845705d21df415c8f0751c96b0792 upstream.
 
-The NULL check for "ci" in __ceph_remove_cap() was dead code because
-ci was dereferenced via &ci->netfs.inode before the check, and
-cap->session was dereferenced via session->s_mdsc->fsc->client even
-earlier.  On a double-remove, both cap->ci and cap->session are set
-to NULL by the first call, so the second call would crash before
-ever reaching the guard.
+ocfs2_filecheck_create_sysfs() initializes the filecheck allocation before
+calling kobject_init_and_add(), but assigns entry->fs_fcheck only after
+that call returns.  The default attribute group can already be visible
+while registration is in progress.  A concurrent read can therefore enter
+ocfs2_filecheck_attr_show() with a NULL fs_fcheck and try to lock its
+fc_lock.
 
-Move ci, session, cl, and inode initializations after the NULL check
-so that the early-return actually works.
+Assign the initialized owner before adding the kobject, so every activated
+attribute has valid state.  Clear the pointer when addition fails,
+preserving the existing teardown guard and error cleanup.
 
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A controlled probe-instrumented test kernel with the original OCFS2
+registration ordering produced this Oops during a concurrent sysfs read:
+
+  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+  RIP: 0010:kasan_byte_accessible+0x15/0x30
+  Call Trace:
+   <TASK>
+   __kasan_check_byte+0x13/0x50
+   lock_acquire+0x113/0x300
+   _raw_spin_lock+0x31/0x40
+   ocfs2_filecheck_attr_show+0x138/0x5f0
+   ocfs2_filecheck_show+0x5d/0x90
+   sysfs_kf_seq_show+0x1d3/0x360
+   seq_read_iter+0x480/0x1110
+   kernfs_fop_read_iter+0x419/0x5a0
+   vfs_read+0x7d2/0xc20
+   ksys_read+0x111/0x200
+   do_syscall_64+0x114/0x620
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Modules linked in:
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0086-v4-1b3a3c5fd05c1fb41df9@gmail.com
+Fixes: 5f483c4abb50 ("ocfs2: add kobject for online file check")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Gang He <ghe@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ fs/ocfs2/filecheck.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 4688ae99c8ef6..ee80fe4c0266a 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1133,18 +1133,21 @@ int ceph_is_any_caps(struct inode *inode)
-  */
- void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
- {
--	struct ceph_mds_session *session = cap->session;
--	struct ceph_client *cl = session->s_mdsc->fsc->client;
--	struct ceph_inode_info *ci = cap->ci;
--	struct inode *inode = &ci->netfs.inode;
-+	struct ceph_mds_session *session;
-+	struct ceph_client *cl;
-+	struct ceph_inode_info *ci;
-+	struct inode *inode;
- 	struct ceph_mds_client *mdsc;
- 	int removed = 0;
+--- a/fs/ocfs2/filecheck.c
++++ b/fs/ocfs2/filecheck.c
+@@ -179,17 +179,20 @@ int ocfs2_filecheck_create_sysfs(struct
+ 	fcheck->fc_size = 0;
+ 	fcheck->fc_done = 0;
  
- 	/* 'ci' being NULL means the remove have already occurred */
--	if (!ci) {
--		doutc(cl, "inode is NULL\n");
-+	ci = cap->ci;
-+	if (!ci)
- 		return;
--	}
-+
-+	session = cap->session;
-+	cl = session->s_mdsc->fsc->client;
-+	inode = &ci->netfs.inode;
++	/* Publish the initialized owner before activating its sysfs callbacks. */
++	entry->fs_fcheck = fcheck;
+ 	entry->fs_kobj.kset = osb->osb_dev_kset;
+ 	init_completion(&entry->fs_kobj_unregister);
+ 	ret = kobject_init_and_add(&entry->fs_kobj, &ocfs2_ktype_filecheck,
+ 					NULL, "filecheck");
+ 	if (ret) {
++		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
++		entry->fs_fcheck = NULL;
+ 		kobject_put(&entry->fs_kobj);
+ 		kfree(fcheck);
+ 		return ret;
+ 	}
  
- 	lockdep_assert_held(&ci->i_ceph_lock);
+-	entry->fs_fcheck = fcheck;
+ 	return 0;
+ }
  
--- 
-2.53.0
-
 
 
