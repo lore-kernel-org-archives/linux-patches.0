@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059952;
-	b=cwvgoWC1mEUrg2ddQO1mzNqXVlDghkIGRRYLYZ7ZLWvbv5L0EOopVnOF2tGegBYL8a0a
-	 PsVEALljNKnAdrTiOc7S5Pa8l8USFHK711NxnO7SgbK17xOak6OyKRErnzYM32wdkuhy3
-	 5qIu45vlbvFX03J2nPg417J72X4ER1yRDuOz2GS3gE8Ip7Djk16jPebmJ2fiuWC1blynY
-	 2z8PSyoZMBKQR3YLDPkEEh+4gPRq5+NihwPi5o1N1ua5onWx5IXTiE25qbVnoo7GZJC0W
-	 WgjAN5gG+H4varuJ/GsUrVaPmlKVWQi78550+CmzCIm9ljhup4iq4u2AVlq0144QR3w==
+	t=1795059955;
+	b=ihYJ+4jo3tE2ACEVTyl22oNXEAn07vmnGbzhlqpNglqt8cbZlfA+3PMSUyWav5BqKefS
+	 w0pcGsuQSqpuoAQugjkvGQzGhe6xldJqLBvmVf7urqxT08vl7czuw07GAr/4jvABKPT3l
+	 EtVgQkyUbpqew9IJFCfH6x4jWKMBoeNvlW4/UcP8gzOLT8VD9e+lxMbkN18IC7r5T++uC
+	 GN7YZ5gRlyeNVEV5s6CXM1p0jWm3yNB4lNECmkV5nyUpB2B/RgwtwmTrp2aU7go2XbN+u
+	 kk8d5RQgVBtYT4ZMDRbnsBa+1xaMwDtnZ92mKk/b4jg38L2Ilu84h1BP/mOcVahnktg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059952;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OYLzz/8xK5Ae5XxJ0w9pAsHWAKze74o8mMT+7SfMEHY=;
-	b=H61FO+Eno5CO4f41KfYaFxXqodDTsu9Go3pQ089kpbwNidln3bfa9MsLkFKxXsqQ5RV9
-	 DbCYB6Da+5Y5TMMA/mOgHpD2fLeGRBpFlrNG9JnVsHcJY4J6JjD30cc/08J2FLw0NlPYU
-	 YcAbHLnDzH3D01u0BrIQXuPZfUOIM4MbgZMiQLHKVcBLAtnP2ALQkEfrBj5cpqodfA/mt
-	 +s4eAeMy0vHP2J39V5nLILtZPatVo6Yd7MRzfXrb8dLnzHyoaKIDWZzgIfsnCN6zg4fxw
-	 Kl4b3+S8VHxtPnqsPj8kUC4UFNwnNVv5u4kJFPN6i37IZqxMf/tlrMTR5T15Xe3Kdkw==
+	bh=T5+/DoRK4E9bNCkCwTGjsVHoBe8V56wt31gMhZUcIb8=;
+	b=k9e3FLSVVDj3oTe5tvE02mKK5nJLyzgF1AEUr8pHRlaqk3aoPLmltmOdRxb4ZI341mlQ
+	 WVGzVYDciKgl1EdASS94XP764yeWD/RlI+tpwBXAHUgwQzPCo3ynhsfrop96tWh38vaDV
+	 XFY0/ae82bboD6Ddti85Faeebomhh/bcWxXf9zdd1fVlPQAR+ypGDQlvmsUO3dMwuZ4DX
+	 jgNM068xk/AJd3hXzZwKIRG7gqMPQVAop9sWzUBOEGURTeADxuen5sipvqrTRBM/JhPLH
+	 ZpkAjW4dPECcm0K51ZlvsrxcWujQvBZ2cKgbxffmK1mGN6trNCH1qtSu4NjAr8GBx8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BotHAOBr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgGpcDhP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6094860A2609;
-	Thu, 19 Nov 2026 03:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F6C60A260E;
+	Thu, 19 Nov 2026 03:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BotHAOBr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D161F000C4;
-	Thu, 19 Nov 2026 03:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgGpcDhP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4E51F000C4;
+	Thu, 19 Nov 2026 03:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059952;
-	bh=OYLzz/8xK5Ae5XxJ0w9pAsHWAKze74o8mMT+7SfMEHY=;
+	s=korg; t=1795059954;
+	bh=T5+/DoRK4E9bNCkCwTGjsVHoBe8V56wt31gMhZUcIb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BotHAOBr20kVvvMxXtlIqNuCckmdgx4r4zIkJp6oPgXH0e49Hbr2w1gVxQydsSAbA
-	 0FC5lkUxjVlxitkmTRwCRwAPoI2Zz0EToCainwpUIYoygTvybs0vJVHQ7ZQfpJv1Ga
-	 l1dE3XLMUPj77tQO4QsVaCHldmHZ8lEHefoEkzSY=
+	b=xgGpcDhP/O1/wcp2+uNSMSyoLdIH3MAjz8NUUoe+QM8CRPmufRSw5+ej/yhrMoAK8
+	 4G8av7IbNhVJNP/gh6pXC+TADytJK3QnUg/daJ3vFcBeIZbvym+f2M3O3hPE+F7vcL
+	 V8j0H27zdbhGkfD4/WCYUnkKTBtME4VCBMlGUVTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Cheng Yongkang <teel4res@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1018/1848] net/packet: check TX_RING fragments before memory accounting
-Date: Wed, 18 Nov 2026 15:50:56 +0100
-Message-ID: <20261118145959.619065003@linuxfoundation.org>
+Subject: [PATCH 5.10 1027/1848] io_uring/timeout: count cancelled timeouts in cq_timeouts
+Date: Wed, 18 Nov 2026 15:51:05 +0100
+Message-ID: <20261118150000.298744448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,74 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
+[ Upstream commit 1c8b49851543f41fc8bb18bcd1f15cc93d14b530 ]
 
-tpacket_fill_skb() adds the full non-linear payload length to
-skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
-PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
-greatly exceeds the device MTU.
+io_timeout_cancel() posts the cancelled timeout's -ECANCELED CQE without
+advancing ctx->cq_timeouts.  io_timeout_fn() and io_kill_timeout()
+advance it for every timeout CQE they post, and io_flush_timeouts()
+computes the number of non-timeout completions as
 
-A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
-loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
-turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
-drop that apparent last reference and free the still-live packet
-socket before refcount_warn_saturate() restores the counter.
+    seq = cached_cq_tail - cq_timeouts
 
-Check that the remaining payload fits in MAX_SKB_FRAGS pages before
-accounting it. Include the initial page offset in the calculation,
-and move the existing -EFAULT handling out of the fragment loop.
-This preserves the accepted packet sizes and error code while
-preventing an invalid frame from injecting an oversized byte charge.
+to compare against each off timeout's target_seq.  The cancelled
+timeout's CQE is therefore counted as a regular completion, so every
+cancellation makes an already armed off timeout fire one completion
+early.
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+A ring with a keep-alive timeout of off=4 completes it after two NOPs
+when one off=100 victim is cancelled through IORING_OP_ASYNC_CANCEL, and
+before any NOP when two victims are cancelled.  The cancel CQE should
+count, but the cancelled timeouts' -ECANCELED CQEs must not: the
+expected counts are three and two NOPs respectively.
+
+Advance cq_timeouts when io_timeout_extract() succeeds, under
+timeout_lock and before the -ECANCELED completion is queued, matching
+io_timeout_fn() and io_kill_timeout().  The -ENOENT and -EALREADY paths
+post no new timeout CQE and keep their accounting.  Both the
+ASYNC_CANCEL and the TIMEOUT_REMOVE path go through io_timeout_cancel().
+
+Fixes: bfe68a221905 ("io_uring: off timeouts based only on completions")
 Cc: stable@vger.kernel.org
-Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ 5.10: adjust for context in kernels lacking 3948b05950fd ("net:
-  introduce a config option to tweak MAX_SKB_FRAGS") ]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Assisted-by: LLM
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/179328314078.648427.13761781546953594668@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: placed the cq_timeouts increment after the existing IS_ERR(req) early return in io_timeout_cancel() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ io_uring/io_uring.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 94853ddd0bc9d..be1ad7bce1588 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2642,6 +2642,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	}
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index e2e04a381315f..4926dd03e3fd8 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -6117,6 +6117,8 @@ static int io_timeout_cancel(struct io_ring_ctx *ctx, __u64 user_data)
+ 	if (IS_ERR(req))
+ 		return PTR_ERR(req);
  
- 	offset = offset_in_page(data);
-+	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
-+		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
-+				     (unsigned int)MAX_SKB_FRAGS);
-+		return -EFAULT;
-+	}
-+
- 	len_max = PAGE_SIZE - offset;
- 	len = ((to_write > len_max) ? len_max : to_write);
- 
-@@ -2653,12 +2659,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	while (likely(to_write)) {
- 		nr_frags = skb_shinfo(skb)->nr_frags;
- 
--		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
--			pr_err("Packet exceed the number of skb frags(%lu)\n",
--			       MAX_SKB_FRAGS);
--			return -EFAULT;
--		}
--
- 		page = pgv_to_page(data);
- 		data += len;
- 		flush_dcache_page(page);
++	atomic_set(&ctx->cq_timeouts,
++		   atomic_read(&ctx->cq_timeouts) + 1);
+ 	req_set_fail(req);
+ 	io_fill_cqe_req(req, -ECANCELED, 0);
+ 	io_put_req_deferred(req);
 -- 
 2.53.0
 
