@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023729;
-	b=izwOS4iIA2RA92KQfQKBinuuCJJW75F7NUDfKvCL5qMA9cNb66b9BUjdwxvXMul8SZmm
-	 d6Fy5Eo1SWVDbeAXIqP09A0NYffbUJ4oDWnsFmJMN1XEeHE2LOReZnSRXQ2POlD/LVLCj
-	 Vm3DdqUp63hthXTHjSL9GcoaLiZaPxiRrR0xG3DLoZ4b/Isv81mYa22w2jCxj29CN5iLd
-	 GloGbcJnprSOA5HhI0bHPjzE6od+M6fFRpDGgD22yUXfMIBafu5jtkXvOSE8d5BvMtBqH
-	 wR/Sgfhd4x4oYqw8biRdRL5KPXEi+irQxY17P9EEBYQPPVo9kjAQ/BffjFbo/ScTOIQ==
+	t=1795023732;
+	b=uq8ek+dQYww4AfZcTalfFlfOsgmxeD6AFqZTyRpMM8ofmNYyWawN5ujIGN7jVc5V2BxC
+	 eu3dQVlqLIaA13q9KVTCW8w+fpW7DCW4h9D8rJMT7yxochaU7Qb5N2R89Lii+lpEP/hm2
+	 Ijanx5P5e2uPL5BMf03fpoFr1rz6/DB8/K1M/qMdq+IMJJkXTf0yjClcxs+NPVsPkq9nF
+	 F5Bpwtoq2JgWbs0/oGUVMeacW0imk2ZvKjOvufnX1wTlIMZxk/iKhdqbQbbbBUHTx6OpQ
+	 huKUAMCmfwxW2bXuyIH0kaphNzMCGyfyekxGkBHSQ73U9yMdbM4L6XEiq6yY1nBu7fQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aOcF9fJwclEBqK+hnL7p8u/woir6q5r+/mU6zed4AHo=;
-	b=TK2H62tjGqtOVPtX/E4etkFON1C8RISxMRXMK4FtUhvC9Z064cPyJwZcZi8gTzaEXJdR
-	 HJelEeKfBDcc6nqPlDWibbI+SWgHTf23IolLTF4VQBBdO7+HJKZFCo+B6OuKr2AlNxCx5
-	 OATtAl75SwXNcFwl0rKVe8wH45+wqMsL/3/Lst7m/nrg955ZKtIx1k4FF6EILKOTKncCf
-	 ne+zzZXolqqUAA/TOeyKQDQlonGrYFEFkKI8829jWYgv7UTTE3QtWbLXRlDhFmrxoClsD
-	 Vbln/E2DrptZ1P8HPCLZaeBP8U7ZTw4nZAH+uSMU0zEPe4juWyTGha1tZ4O6+TjpC8A==
+	bh=H6VsC3d6uZ0FSbTlD5LYt9MSunCZqRt5uU0YaXHNbX8=;
+	b=3mGnMmiE5RBoae0aYfqaMRXJeeryDkkE4Q2BPd2YvMOOOIc8zeNFy0xE0wz8GMNjTIdf
+	 +8lK0bXRTm+e310CQCDbgFLEtp91annLJiHRWisdRUSzn+9kKvSPLhDaNWVYNAib6Smn/
+	 M2LP09Ogd5riPP/j92Hv43nLxJcxvKrrCmlDoh6TCVFFEZFNqlSgoFTz9yU2N1GKryCG/
+	 uastbw/KmnmUg8KS6U/WuDWJgOK5c2ugyi4Im/XBCdr8DVFci3vaTf2U7eFA6d3H7Ei/5
+	 KENTa/8m2Ln70oBEcECa0N6BYwJlk+KUnas1OVSxLBYef35RLDAPkG465I4Gv3cLIIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNrzRAhX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqA7uhp6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADA3606A32C;
-	Wed, 18 Nov 2026 17:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B152606A320;
+	Wed, 18 Nov 2026 17:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNrzRAhX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9BF1F000C4;
-	Wed, 18 Nov 2026 17:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqA7uhp6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934451F000C4;
+	Wed, 18 Nov 2026 17:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023729;
-	bh=aOcF9fJwclEBqK+hnL7p8u/woir6q5r+/mU6zed4AHo=;
+	s=korg; t=1795023732;
+	bh=H6VsC3d6uZ0FSbTlD5LYt9MSunCZqRt5uU0YaXHNbX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CNrzRAhXIMuoTqSENM9XSMe3gDMuLsVm3ZQtDlqiO/GRDZt43U/1sJt7bxQhrVAPq
-	 91CBDyjQeOSoQvG+XcMHEdEcrY7ymZfwvbCffXdYPL6QDmNV8mEbBQ75Xihp3CzsRF
-	 OddqVYtu2Px2HrFULLeHlvho1PnpsfmQPl1dIUCI=
+	b=nqA7uhp6xl8/2+h0LN5GljEWTubnOqoItoJuXogP46gFKfjUy7muXu7In9IyS0zmo
+	 20NAU8TaOZoXQUicA+A+KzFnpP5XR2sO0b6dMfaIuNF8TxngZ4V4yklzB2lJMp1fyB
+	 EqclmXuYoMnwEyIhKl16fdq+/3xgskihBqQf4+C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0432/2151] fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file
-Date: Wed, 18 Nov 2026 15:36:07 +0100
-Message-ID: <20261118150137.781913891@linuxfoundation.org>
+Subject: [PATCH 6.18 0433/2151] fs/ntfs3: update ctime only on successful setxattr
+Date: Wed, 18 Nov 2026 15:36:08 +0100
+Message-ID: <20261118150137.816990447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,67 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit ad39d8d90fa0fd99b2714d4c84c6f4e1c399f1f4 ]
+[ Upstream commit bfa6296bb6a0e2333796a9507beb4605b92a9fdf ]
 
-attr_wof_frame_info() allocates, caches and dereferences
-ni->file.offs_folio under down_write(&ni->file.run_lock).
-ni_decompress_file() frees the same folio with folio_put() without
-taking run_lock. When a WOF externally-compressed file is opened for
-write, ni_decompress_file() can drop the last reference while a
-concurrent O_RDONLY reader is dereferencing the folio in
-attr_wof_frame_info(), leading to a use-after-free:
+ntfs_setxattr() updates ctime and marks the inode dirty even when the
+xattr operation fails.
 
- BUG: KASAN: use-after-free in attr_wof_frame_info (fs/ntfs3/attrib.c:1619)
- Read of size 4 at addr ffff8880120c9000 by task exploit
- Call Trace:
-  attr_wof_frame_info (fs/ntfs3/attrib.c:1619)
-  ni_read_frame (fs/ntfs3/frecord.c:2421)
-  ni_read_folio_cmpr (fs/ntfs3/frecord.c:1916)
-  ntfs_read_folio (fs/ntfs3/inode.c:648)
-  read_pages (mm/readahead.c:181)
-  page_cache_ra_unbounded (mm/readahead.c:292)
-  force_page_cache_ra (mm/readahead.c:364)
-  page_cache_sync_ra (mm/readahead.c:573)
-  filemap_get_pages (mm/filemap.c:2688)
-  filemap_read (mm/filemap.c:2806)
-  generic_file_read_iter (mm/filemap.c:2994)
-  ntfs_file_read_iter (fs/ntfs3/file.c:842)
-  vfs_read (fs/read_write.c:574)
-  __x64_sys_pread64 (fs/read_write.c:773)
+Do that only on success.
 
-Take run_lock around the folio_put(), as is done for every other
-access to ni->file.offs_folio.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Fixes: 2d44667c306e ("fs/ntfs3: Update i_ctime when xattr is added")
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/xattr.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 1cc905a265553..2d0ab6c77d13c 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2338,10 +2338,13 @@ int ni_decompress_file(struct ntfs_inode *ni)
- 
- 	/* Clear cached flag. */
- 	ni->ni_flags &= ~NI_FLAG_COMPRESSED_MASK;
-+	/* offs_folio is accessed under run_lock in attr_wof_frame_info(). */
-+	down_write(&ni->file.run_lock);
- 	if (ni->file.offs_folio) {
- 		folio_put(ni->file.offs_folio);
- 		ni->file.offs_folio = NULL;
- 	}
-+	up_write(&ni->file.run_lock);
- 	mapping->a_ops = &ntfs_aops;
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 03006ff6a296c..d25de94b878ea 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -974,8 +974,10 @@ static noinline int ntfs_setxattr(const struct xattr_handler *handler,
+ 			  NULL);
  
  out:
+-	inode_set_ctime_current(inode);
+-	mark_inode_dirty(inode);
++	if (!err) {
++		inode_set_ctime_current(inode);
++		mark_inode_dirty(inode);
++	}
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
