@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043735;
-	b=fwa3yPLH1Oq1wZyPqrMt8qYAhdsjDWj3V1rSSvAzVDDeHzDmnJtF6/0IU0890FCaqBGj
-	 XS2nm837vLPZiaAmbpaquRQQOCBdNQg/LWITNU3dxUWHO/hi/jSLT63AX5XEWLOoyUdcd
-	 qVKoP0QGL48dzcAINjG3+bz6nBQJRxK1o6USwQo/6UZgkqQBTuvQ9UnldtYCMRTs46YJB
-	 cVBK3jiDHpCxl0ri76DH2jVDn1DkVlgUuFNjzYXsRN3BuihTAnMF0N+T8VdowS+Elmt4X
-	 8Vb8zaYsU89IAHLhUjnbS5fnoFhAFx3DeHXgyMCpnJdBV/yoU5n4cYnmbofLKhr3wCg==
+	t=1795043738;
+	b=vblVsPvjWqBkbXQMYjArmqKv27iiJheOeSxj9F3oGThEKbcw+O7uUfTUMAPUqFU4bpEe
+	 Sr3VRVucFT5yMZwY9S4k+AmRQaDq7eI53vCPoMDCvRnaqimLC+HN/1WI/25AjoRBg1zrR
+	 VWhSLebX6P8zMVC7wD1v2SMOnEuKRMPZi801zM6obFljAXW0QtcfWiiA5tzX/ZwL1AQNk
+	 iFbfgBe+KqiOFSFxeHn3QjqHzuFHZZbEBIzdqbZA1hVtbVjo78OFjL4pACxbhmchHMjs+
+	 qggy3t+LRLqUCtC8h593Ord6xf10SWbeNlvn3StqrA0c1W5b9QimLMOGjI5F8A1UnyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DEqDsuwjQsItG3W2fQw5LHRKxUOghczGvCdowwmFFTM=;
-	b=5VpeMkbbJQNUeLK5EAtssmtm3FaGPlYE3ZbS0K3lELPdh3610cbhvPGxK8XpVS5KH9UQ
-	 W+M0tK+4Z94Tor+zMWAEtK2C+0o6tmxIyJa6+umTaebJ+5P+lkksXZa8SG5cxzXuqnSEP
-	 dJGMzwnBvROuFbILiZpts+WRSBpVS2bjWeQCq2tIBi/TkoXGhMk66N2fEeuM/KGOdRFTJ
-	 0KGtV1p49tzD31ETfdABRI0xgFQLehpbfY6eItyxZarlGyAZLJ6gDzz2VCPhXS6HHxBzp
-	 6nVAlg0Qe1htB+XdVpJKCbGRTGXDvixxOeSNwsIhob1IsdJvmbWzuo+p4dywZ9njnnA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Y1NgeL8XmqCpAqV7luS3g4FFteaqVybPT7A+aZfJdks=;
+	b=fQjYHF9RRofEd7VVTip/JgvZcB+O06V5q12uj3Q3H73BzOI18l7+gbaCdX4v+JwKnXe+
+	 gQrz8A1HLg7BhCcPXYe55mLFxsP+BM1t8QNiaV5x80w/QXh0s01BXpFclo14bOMn1Cy+l
+	 l83UOpie1FDN5dwShb+5Opgy8lMgNOe8qO93LqPNsGO/sQC1IGeXM1oqEeSwA0wXNLMyM
+	 DF3+6EvnIibYDyNZNXIEE6qNTUfbF9tNPpQ1ON8IsTMID3ouiokXikvZXnJlKaFcOP95H
+	 3P/d8ed76Tq1BdnrSg7R71QjpC7g+ldKXYj0ehIQeIC+DCAvCv0SnqV7US+SzW4cRhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDmvRg8e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wWipCqj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C903606A32A;
-	Wed, 18 Nov 2026 23:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2343C606A31C;
+	Wed, 18 Nov 2026 23:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDmvRg8e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A211F000C4;
-	Wed, 18 Nov 2026 23:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wWipCqj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801281F000C5;
+	Wed, 18 Nov 2026 23:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043735;
-	bh=DEqDsuwjQsItG3W2fQw5LHRKxUOghczGvCdowwmFFTM=;
+	s=korg; t=1795043738;
+	bh=Y1NgeL8XmqCpAqV7luS3g4FFteaqVybPT7A+aZfJdks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jDmvRg8eBLAIy6mIiCEig47ZWesri9glQ/s4eGWCFHIqwB5y0UXaV2H2IdUwLZSOn
-	 mvdfj/7rmChbBJRLYBU7XhhNXAksWnEkdP5yF12Syhlsyhy9Hj59KQmCmUED3AvSp4
-	 fXea9hIwCXicFKPy6jOnngZ76Dh2fS6rzGXGynwU=
+	b=0wWipCqjrHdYAqO+4T/eyOWtXe8o/QAdoAZm2sTaDruVbM1+u1sDT630q/dhxDp3v
+	 H+l37rqo1mNil4XTQ5JdTg5Ft2NXe6VWxccEgdfFEvk7X0/ZKMWlbFXvnVa42E6tVF
+	 Xe9dMGE9tzzIOQcKbLnK/HxF5fUrhW2/tTsZ/tfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0279/2857] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
-Date: Wed, 18 Nov 2026 15:21:53 +0100
-Message-ID: <20261118150211.472346271@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.1 0315/2857] ocfs2: drain quorum work before removing the cluster
+Date: Wed, 18 Nov 2026 15:22:29 +0100
+Message-ID: <20261118150212.781692777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,75 +67,158 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
+commit b584c45b6066fd9799c44ffb9badcb5db351c8a6 upstream.
 
-The M-Audio Venom (0763:2084) does not answer any GET_CUR request
-of its feature units, hanging up the USB microcontroller and
-"responding" with timeouts. So the mixer building lasts around 47
-seconds, and the device does not stream at all.
+The configured cluster must remain available until an in-flight quorum
+decision has finished using its fencing method.  o2quo_make_decision()
+drops qs_lock before calling o2quo_fence_self(), which marks heartbeat
+regions for unclean stop and then reads
+o2nm_single_cluster->cl_fence_method.  Cluster removal clears the
+singleton without waiting for this independent system-workqueue item.
 
-The same GET_CUR requests issued through libusb (with no kernel
-driver bound) complete correctly and blazingly fast. So it seems
-to only happen during the initial probe.
+When a failed-quorum decision overlaps removal of the heartbeat regions,
+nodes and cluster through configfs, the worker can be preempted after
+marking the regions and resume after the singleton has been cleared:
 
-I defined an explicit composite quirk to bypass the mixer creation,
-as it is not needed (the synth already comes with volume controls).
+  Quorum worker                     Configfs removal
+  select fence; drop qs_lock
+  o2hb_stop_all_regions()
+                                    remove regions; join heartbeat threads
+                                    remove nodes; stop o2net
+                                    clear singleton; release cluster
+  read cl_fence_method
 
-With both this and the device flag applied, the synth works
-flawlessly.
+The resumed read dereferences NULL instead of applying the configured
+fencing method. The heartbeat thread's dependency protects the local
+node only until the thread exits, and draining o2net does not wait for
+qs_work.
 
-Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
-Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add o2quo_flush_work() to drain pending or running quorum decisions
+before clearing the singleton in o2nm_cluster_group_drop_item(). By
+this point the heartbeat regions and nodes have been removed, so their
+work publishers are stopped. The worker can finish while the cluster
+and its configured fencing method remain available. It does not acquire
+the configfs mutex held by the removal path.
+
+Keep o2quo_exit() as the counterpart of o2quo_init() for module teardown
+and initialization failure, and have it call the same drain helper.
+Cluster removal uses only the explicitly named drain operation.
+
+KASAN report as below:
+
+    Oops: general protection fault, probably for non-canonical address 0xdffffc000000011b: 0000 [#1] SMP KASAN NOPTI
+    KASAN: null-ptr-deref in range [0x00000000000008d8-0x00000000000008df]
+    CPU: 0 UID: 0 PID: 72 Comm: kworker/0:2 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: events o2quo_make_decision
+    RIP: 0010:o2quo_fence_self+0x65/0x200
+
+Register dump omitted.
+
+    Call Trace:
+     <TASK>
+     o2quo_make_decision+0x345/0x3a0
+     ? __pfx_o2quo_make_decision+0x10/0x10
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    Modules linked in:
+    ---[ end trace 0000000000000000 ]---
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0064-v5-e3870bf6571b80b07b52@gmail.com
+Fixes: f6656d26d17b ("ocfs2/cluster: Make fence method configurable - v2")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/ocfs2/cluster/nodemanager.c |    3 +++
+ fs/ocfs2/cluster/quorum.c      |    7 ++++++-
+ fs/ocfs2/cluster/quorum.h      |    1 +
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index f4995560050ab..b505ec63f199d 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -1814,6 +1814,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 		}
- 	}
- },
-+{
-+	/*
-+	 * M-Audio Venom
-+	 *
-+	 * The AudioControl interface times out on every GET_CUR request,
-+	 * which adds around 47 seconds to the card registration and
-+	 * freezes the device, blocking streaming.
-+	 * Using an explicit composite quirk to skip the mixer entirely.
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
-+	QUIRK_DRIVER_INFO {
-+		.vendor_name = "M-Audio",
-+		.product_name = "Venom",
-+		QUIRK_DATA_COMPOSITE {
-+			{ QUIRK_DATA_IGNORE(0) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(1) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(2) },
-+			{ QUIRK_DATA_STANDARD_MIDI(3) },
-+			QUIRK_COMPOSITE_END
-+		}
-+	}
-+},
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -11,6 +11,7 @@
+ #include "tcp.h"
+ #include "nodemanager.h"
+ #include "heartbeat.h"
++#include "quorum.h"
+ #include "masklog.h"
+ #include "sys.h"
  
- /* Casio devices */
+@@ -739,6 +740,8 @@ static void o2nm_cluster_group_drop_item
+ 	struct o2nm_cluster *cluster = to_o2nm_cluster(item);
+ 
+ 	BUG_ON(o2nm_single_cluster != cluster);
++	/* Drain quorum work before it loses access to the cluster. */
++	o2quo_flush_work();
+ 	o2nm_single_cluster = NULL;
+ 
+ 	configfs_remove_default_groups(&cluster->cl_group);
+--- a/fs/ocfs2/cluster/quorum.c
++++ b/fs/ocfs2/cluster/quorum.c
+@@ -318,9 +318,14 @@ void o2quo_init(void)
+ 	INIT_WORK(&qs->qs_work, o2quo_make_decision);
+ }
+ 
+-void o2quo_exit(void)
++void o2quo_flush_work(void)
  {
--- 
-2.53.0
-
+ 	struct o2quo_state *qs = &o2quo_state;
+ 
+ 	flush_work(&qs->qs_work);
+ }
++
++void o2quo_exit(void)
++{
++	o2quo_flush_work();
++}
+--- a/fs/ocfs2/cluster/quorum.h
++++ b/fs/ocfs2/cluster/quorum.h
+@@ -8,6 +8,7 @@
+ 
+ void o2quo_init(void);
+ void o2quo_exit(void);
++void o2quo_flush_work(void);
+ 
+ void o2quo_hb_up(u8 node);
+ void o2quo_hb_down(u8 node);
 
 
