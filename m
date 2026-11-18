@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048361;
-	b=mc6HojaJ52S5oY5ntRQfX8eIK3YrELijoRqgc4mEyu+w85GvDK66okn6fgmKe3xJ44Dz
-	 /3jFl6gbcx/yQzZBCwOnKXPYDFokbsjlz8PikPT8wTMsyLmpByemTMSXT4RzJZKzFPmt+
-	 vcqW0NiABzY6KsbRY1x9YFV3xY+/glCQfLZ7Zr5ECZPiEO3ES0OqiESzfwWTNB1GKO4yZ
-	 AA849AZs1PFN2wq6PpFlG4gz9gUivoIQtuT6qFcFWNQM+AILOddTOLbSq0Tbi+8WcVQ1X
-	 AVPwnJMtKw5rXzh+BC9/xuLfB8yiri8+UDiuGwZ0kq7raOnhmLRDjYpJ3cTwBtbsTZQ==
+	t=1795048364;
+	b=IxIdzO6lSfG0t3kBV4qa8Gwzp/952lvERUols0NwGKkQ918k2QwB7Jw6lwL/LipPKSJO
+	 5F2dNrtc4RQOLbHfcfHYvR/3UlYmTaGr6398bKTHtFFezJb3+apbLs95HcsWHCozo+QWj
+	 pcYoNDg2jLuvW5cUfb2RKRQpzZqiXKe1n9qcLTkay5TlvVuBaFdkVq57BMJCz5IKD7zE0
+	 p8JrqTFjwizDqTIWxJIgAlk7eKKofxGM1iIDKFsKGOAW892IMMyqTiQebdVC8WEXVGVZz
+	 stT5bFuSeCVn2ztVVLz0NW6ehQNE7sd6IuvzeIq6rUKcc702bz9v7oX4A0w+9YXBb2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Pv9fQXc1SOCR51a1RiHtfl2d5+6HARmZUlEE+yaIAE=;
-	b=PX4K5xZ88IFvEbx+JYjMhx4CVfapHd9nWe7qKEt4ZcyDVL3QNvA3Xyu8qvyH6kpmVc/I
-	 eeOA7Gt7WPq+hXKzzxR1Up5GuVdu2AD85YIZfsSwIS/PBz17P1oHK24kA3oZaP1M+67/K
-	 Ul6EigpBd0PpaOiL1gBfFk6EKQNLj00E6LKRBqROR3OFdbmeJqLO9SdDtSU0nHPoNc/OX
-	 8dfUlRhS7qDhuQgq9rUiqlDIK/UVvbF0CSsDc6hBsSS/BjZL75VovNWCf1k17+QLo/9yi
-	 1MgqMyR65F1JYNBhcIRiI2bRWmwmAtBW0WHRUrtYxx4I7V4hU36TUkP/onlReRXSRzQ==
+	bh=qA++J3BICeTwYUdkY+40Eg0hss+7LafOdc4e6TmABP8=;
+	b=pPfDepX3cODZzd0OU+PibeI5GBsNvz3slGMnJ2cdFJ1HfBG2HylJIEEkTeaX3aBYGhY9
+	 tSvXRQk8VsTeLYvwrBMojl6phLRg11rHTbaTHMzXDMGJMMaj8MlBYQqNhWutKRJIgSGQ1
+	 Q1jcv/ZfHMAQDqsjV/9hjjO7byV/OTw/GS5wE1a++Td9iX23a78HdSKQLWwbWxBhgK4qs
+	 F4kDggWCXRQ+3fqTpxoQkfh56M9VZUlg1JADBooAKleL02X8ytaq1wYy55iJQX9cEZX5O
+	 lF+MnW2YaIfAb9gcVVEpwyAmbWK2YC5oI4F1D1iP/3TmfiZHIswKSS8svsuHhGL5RGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v6lxUKXu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lu63f89f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3E2606A320;
-	Thu, 19 Nov 2026 00:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46DD606A320;
+	Thu, 19 Nov 2026 00:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v6lxUKXu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4156C1F000C4;
-	Thu, 19 Nov 2026 00:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lu63f89f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C561F000C4;
+	Thu, 19 Nov 2026 00:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048361;
-	bh=0Pv9fQXc1SOCR51a1RiHtfl2d5+6HARmZUlEE+yaIAE=;
+	s=korg; t=1795048364;
+	bh=qA++J3BICeTwYUdkY+40Eg0hss+7LafOdc4e6TmABP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v6lxUKXuLZZJl7HvmsHXTOf1dAKre04bVaI1fsahE550F92mi9rGr/RQFHQjFwIt7
-	 TRFYrbozGyHrUm3tEwchdNjFXhDMBE5Oh5/loaNYNhxXUdzZA+4Oryncb9tfiF2BM6
-	 Hp+gDVQMC8i7Qph/F9jgC5xWkz26OyIj/Ta+cb8c=
+	b=lu63f89f5w6vYW5abhOcHrqSpeJ50eTaZtsQJ6HsKUEEhopC8S8SN3aVSt69kpkBX
+	 kOuaHo6EdE/AhRIBUm1JSa4dni5kujec+2KiMorOWWmKMwf19gfoOhXD6zFG084Hns
+	 9QgP7VatyqQ5gYWhiEySn7egIHT+ehzXNQGUKw6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1967/2857] crypto: atmel-sha - reject initialization without a device
-Date: Wed, 18 Nov 2026 15:50:01 +0100
-Message-ID: <20261118150312.228334992@linuxfoundation.org>
+Subject: [PATCH 6.1 1968/2857] interconnect: exynos: drop redundant link destroy
+Date: Wed, 18 Nov 2026 15:50:02 +0100
+Message-ID: <20261118150312.262786572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,39 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit a9a2152d292fd0bc73814eb4a127278ee7dd3f6a ]
+[ Upstream commit 859ad5f177efa59f6b8a2fac20561ca5cb13c89f ]
 
-A transform may be initialized for the first time after the last
-device has been removed from the driver list. Return -ENODEV when the
-lookup is empty, before the debug message reads dd->dev.
+There is no longer any need to explicitly destroy node links as this is
+now done when the node is destroyed as part of icc_nodes_remove().
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
-
-Fixes: ebc82efa1cd6 ("crypto: atmel - add Atmel SHA1/SHA256 driver")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230306075651.2449-17-johan+linaro@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Stable-dep-of: 601a54f00723 ("interconnect: exynos: Remove the PM QoS request on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-sha.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/interconnect/samsung/exynos.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/crypto/atmel-sha.c b/drivers/crypto/atmel-sha.c
-index ca4b01926d1b1..2596ec2dd2dbb 100644
---- a/drivers/crypto/atmel-sha.c
-+++ b/drivers/crypto/atmel-sha.c
-@@ -430,6 +430,9 @@ static int atmel_sha_init(struct ahash_request *req)
- 	struct atmel_sha_reqctx *ctx = ahash_request_ctx(req);
- 	struct atmel_sha_dev *dd = atmel_sha_find_dev(tctx);
+diff --git a/drivers/interconnect/samsung/exynos.c b/drivers/interconnect/samsung/exynos.c
+index 72e42603823b9..ebf09bbf725bd 100644
+--- a/drivers/interconnect/samsung/exynos.c
++++ b/drivers/interconnect/samsung/exynos.c
+@@ -96,14 +96,8 @@ static struct icc_node *exynos_generic_icc_xlate(struct of_phandle_args *spec,
+ static int exynos_generic_icc_remove(struct platform_device *pdev)
+ {
+ 	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
+-	struct icc_node *parent_node, *node = priv->node;
  
-+	if (!dd)
-+		return -ENODEV;
-+
- 	ctx->dd = dd;
+ 	icc_provider_deregister(&priv->provider);
+-
+-	parent_node = exynos_icc_get_parent(priv->dev->parent->of_node);
+-	if (parent_node && !IS_ERR(parent_node))
+-		icc_link_destroy(node, parent_node);
+-
+ 	icc_nodes_remove(&priv->provider);
  
- 	ctx->flags = 0;
+ 	return 0;
 -- 
 2.53.0
 
