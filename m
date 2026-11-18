@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042668;
-	b=YrHtB/NhrUbJk0VcDKWJKwfy+cAs3JQMxTiXObXtTIrD2y5LuLWJnxpnheVXuimLdlUr
-	 m6yy+dizv4EH9d5D7pEI2stOU9T+OChJtg82r5JxKlFE+/x2bb0o5GPoKeowfZXizOQrh
-	 hZCSU5KOQ/jkLq4EcsoEQwJz4sn4mj1Uoh7lUJF9dvPWc4sD9BFDdBfrGyksQV2biabyI
-	 58wFpzUXZaGonG790318OHD6EY8nrc+p5V3CVnOF9wS04wcSzJELQWl5OwA3Bhy56CMcf
-	 GtJEe6B16pwvxtHLEoQ7IdrdvE09+lgZwvWNsjIpTmGMuT54Rt1t9kW+Y8QgZrf9R0g==
+	t=1795042671;
+	b=u/9+wBppKfw63ZxeVXm79cIpVoILYgOH/4o3BSE9WXoL1d+0YErz6lem4htH0HtP1XJk
+	 ynKeM+Tb32KYChGy8zwY/z8qwx1z7D33PLjl81dWjxOsljFrkyTCpjQ6w4aG24V4PqpI4
+	 lGM+r+KOnBtl7ll0/SLJ1PdZQuGYieLVJSNSPMJF7vUlkKx6BeuAE/iGTvioHD/flnCXX
+	 pyl+TLBNetJFCbnsUhP+LgWYfYyBDYBQ5YQSDGxDT9LiZIGdgRzbh+XMB+yOtkSlYV6kH
+	 84Dgec1tTYMn6z3+7s72W5Wnm2JKhTt6TSWqkULRuvx+b1qJnqtkhAFObxSDIRoOPXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bgXMNO9rj3QxQ2LivXXq8LrbwDmDgQy1VKV7yggtKDs=;
-	b=WweOmkDblZBICz7ug655YB6W3weS5PDQadFKr2Fg0SN5YRZN81qXu7So45DUwXEzhICx
-	 yedQjB0UpMPYLelWlM/B348okpE1rnQ+8uYfx/TTIUPvtmmO9ZFnzlJJpZXDQmuKaVNhy
-	 JndFDsiZWceTzJTgq/pysWi8rGXK3POLFspHqCQCHv7a2x9pXjPYNIrlI7Er+qrQEZ83Y
-	 wrv2559EezEJq+lj4JwDfjeo0AhjL8mOFEZ5newqO5yK5RctNecRc5V4lAFNL5rL48cxb
-	 Fnys2CiCRGm9bO8tsgdDG4DLsUUeeiv8IG/NPKnBsbk4M8QBlI7e2gm1OhNmJTndYBw==
+	bh=dExZhXhB4pPcoY1ZJuu2g8QiB9+Tv44rG3iX+Zx1KVY=;
+	b=aIU0uzFqmXZEJwKE4fl7kEzu9fycZaTF5QMfxLfAs7NFOcww0qemFXhyXOmOyO+7O0fC
+	 1i6V9IFRWM6OCNjCne/00TMFKZqgFdEhYXGHxOwQOAFO0m+IsEf67s8zHQu+aoDE/uMeU
+	 QW06iIkvQ1vekaZ04U5+xCXD9+mNT266sY9KkHMr0Mab4tQqvNxugmPLo5AvpT38EmoIi
+	 oYq2klmrQG5cV2LScHXSbsZMrJXaoyXl9XHAmiRALRZ+zmZu4ZKHSLvmo4m20gA5NRrFO
+	 aukuRTbzqwTx5ozNjXFsMN6RiYoVb0rNzJvQLRYbpyGxL/qdf0+IN2gwnRd2a3dCk3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9yOJnqf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4wumv6c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B6F606A31C;
-	Wed, 18 Nov 2026 22:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833CD606A31C;
+	Wed, 18 Nov 2026 22:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9yOJnqf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4161F000C4;
-	Wed, 18 Nov 2026 22:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4wumv6c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD841F000C4;
+	Wed, 18 Nov 2026 22:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042668;
-	bh=bgXMNO9rj3QxQ2LivXXq8LrbwDmDgQy1VKV7yggtKDs=;
+	s=korg; t=1795042671;
+	bh=dExZhXhB4pPcoY1ZJuu2g8QiB9+Tv44rG3iX+Zx1KVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r9yOJnqfF91Q5Ox+QiVvGtPdGEGCz/p0oc07uZxFiAnDoFw/Psf/JH36qnz9FsK1j
-	 CcPCxnuAIbZdgG4k/BPJlqIijyBcZpdh0md638KjGeWlmLeN4tRpbELIaooIBwdnr/
-	 dPrN6Hf5NaQpkhzaDnHYIR5JFg51hSgQfXYwh2M8=
+	b=o4wumv6cSHvb4ltU91iherY8/rLlkoy4pCNYQY/u0HMW4TVP51lNLYHyEJs4RbFMo
+	 gQPgE3DNgrc+Cyb5Ej1w1Uzn7ArLuLyice3xvp27B3sn6x4Q4JGOkS/4jo/svsr8AQ
+	 QTsjam23WivTRi/0lMbBey8wOS2YEv5abeXwVx5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Christoph Hellwig <hch@lst.de>,
+	Hans Holmberg <hans.holmberg@wdc.com>,
+	Dennis Maisenbacher <dennis.maisenbacher@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3254/3318] blk-mq: keep sharing tags fairly after a queue update
-Date: Wed, 18 Nov 2026 16:04:36 +0100
-Message-ID: <20261118150457.257203344@linuxfoundation.org>
+Subject: [PATCH 6.6 3255/3318] block: Allow using bio_attempt_back_merge() internally
+Date: Wed, 18 Nov 2026 16:04:37 +0100
+Message-ID: <20261118150457.284610241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,42 +75,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 620cfc7a664278a55d068ed88fff1242fddc4ef2 ]
+[ Upstream commit dd850ff3eee428b4e1276bd51263dd937643ba19 ]
 
-A hctx only gets BLK_MQ_F_TAG_QUEUE_SHARED from
-blk_mq_add_queue_tag_set(). The hctxs blk_mq_update_nr_hw_queues()
-allocates for queues that joined long ago never get it, so they aren't
-counted in active_queues and hctx_may_queue() lets them take all the
-tags. One NVMe namespace can starve the others after the first update.
+Remove "static" from the definition of bio_attempt_back_merge() and
+declare this function in block/blk.h to allow using it internally from
+other block layer files. The definition of enum bio_merge_status is
+also moved to block/blk.h.
 
-Set the flag on the new hctxs.
-
-Fixes: 868f2f0b7206 ("blk-mq: dynamic h/w context count")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-30-axboe@kernel.dk
+Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
+Tested-by: Dennis Maisenbacher <dennis.maisenbacher@wdc.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20240408014128.205141-6-dlemoal@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 9531230ee1fc ("blk-mq: don't bring back flags of a completed request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-merge.c | 8 +-------
+ block/blk.h       | 8 ++++++++
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 32b0bb53b8758..58cbf858fe134 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4979,6 +4979,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 			goto fallback;
- 		}
- 		blk_mq_map_swqueue(q);
-+		/* The new hctxs don't know yet that they share their tags */
-+		if (set->flags & BLK_MQ_F_TAG_QUEUE_SHARED)
-+			queue_set_hctx_shared(q, true);
- 	}
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index 889ac59759a26..1aa2085e1cde4 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -978,13 +978,7 @@ static void blk_account_io_merge_bio(struct request *req)
+ 	part_stat_unlock();
+ }
  
- reregister:
+-enum bio_merge_status {
+-	BIO_MERGE_OK,
+-	BIO_MERGE_NONE,
+-	BIO_MERGE_FAILED,
+-};
+-
+-static enum bio_merge_status bio_attempt_back_merge(struct request *req,
++enum bio_merge_status bio_attempt_back_merge(struct request *req,
+ 		struct bio *bio, unsigned int nr_segs)
+ {
+ 	const blk_opf_t ff = bio_failfast(bio);
+diff --git a/block/blk.h b/block/blk.h
+index 13243d9fb8964..5590a4996c3b0 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -276,6 +276,14 @@ static inline void bio_integrity_free(struct bio *bio)
+ unsigned long blk_rq_timeout(unsigned long timeout);
+ void blk_add_timer(struct request *req);
+ 
++enum bio_merge_status {
++	BIO_MERGE_OK,
++	BIO_MERGE_NONE,
++	BIO_MERGE_FAILED,
++};
++
++enum bio_merge_status bio_attempt_back_merge(struct request *req,
++		struct bio *bio, unsigned int nr_segs);
+ bool blk_attempt_plug_merge(struct request_queue *q, struct bio *bio,
+ 		unsigned int nr_segs);
+ bool blk_bio_list_merge(struct request_queue *q, struct list_head *list,
 -- 
 2.53.0
 
