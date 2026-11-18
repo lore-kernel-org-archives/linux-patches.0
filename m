@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040191;
-	b=IzBR0qyk/GPhEy6PqG15hNjirEWAcuR8l7HAPSA8k69+hduDSWf0eWpo8HD9dRQ7h5bt
-	 Wd32vh1Hodh/oSk0HpeJBKYJdGRAMUl1aLhqzGK2G3/f2bYsROwYTh569Et17SFdj/gOM
-	 BcyRHWEOBcZLht4zTJmib0OKg/wMjffOH8s+7F+s2r1uH5pW5OiVC+Bgs0lZvQvvxait3
-	 AvCdwq+BEIQVu1PicTHWF6kocRu8Q95jzHETebausXPUQGVzuxw6Bcy4ORuLQnaJO8/ZR
-	 CA4McApN+2N14hudYueY9YiQOWx1HR7eHUn5/Dj4RL+1clAhpJB/lIuQbBMhkQgArpQ==
+	t=1795040193;
+	b=WgRD9LCCPgWIuayPySGy4Ga8ui+jgbJD8oKgUEyld533628uNjUK+Kt2kzH1wJtnQw5r
+	 SXzkDV29IEuPNgle0Krd+kzF7RvXDOnEULJ7pdVCDtXhgrDTpUNanM+84CsGk6J1RHtnT
+	 kI5B1lNOUEk5eAH/G1ykEN7cfqGUuGUejKlnM/Z2L+3lLrWz7XA45CXGZojvYdndPwNOU
+	 VJWg4smqkBxmrqrbxIXaxi9RI0NX1hEiVrwoLQ7SWQT+F/v/uuB83pdEj7EsYPSKPwiNR
+	 MjUFk8H2TO57fNrCN4oC11oHLZjGPCWuTgLHRXCKEEhDS8OHQ2XvIYH5wO+3Sb6PRkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8CRAi3jQoAIVUymAHfn93GcfJG7xfDO4Ak+Pn2pQBz8=;
-	b=ZapbC47nHc1tOiFBVVq2t+4qQzDEDvL9SugjGhmY+a/FSEnAZqqpS18wvm/Ch208U2Qd
-	 sYNRKJZCjRz29Y2BdS55Co+b537X1m3RocOFlLPF85ZfDIsT2W80cQTGr0BHEXmcTdWrQ
-	 ZIIcs4rumGQf9sSjep9cLfFKW7zTixuh/tIofmQ7u/tHiTPqwwzDwIb5r8QmMuKGs+3BZ
-	 v6or4LwRQO1Wvt1rr5ZExrzAnH/5XCYz/ERfzSrfM+wWJvxaO2BsDzChV/E2kEEW3Z0de
-	 MCnd87e44W+eLW/TMb1VX7CDhWsOOnDWsnJCoU/8Yyz5sCHosxbs0YdZec9r0/NC16A==
+	bh=WFVos9o0BYuztgh4C94Jr+TpVqrtvWr3XYNqekkayd0=;
+	b=FL7Fmd7U4G8ItNxI0XZ7QCkpn7+hV6ThNQOKlEHsTUjD9KiXM6NGIg3O/jXUoHuhSQwH
+	 ZAncclInKRKg0pQNRoP9XXPjCJkxn1WhAn0QNY/shFoQ6K1nxlzIvMFlRKU+HNb6JQHh3
+	 aCPrTlqdwcwYI16QnCZn9hQcKlM2Pw6fTh955VrEADGhKH9ZYE8KNH/KAbEcxbDkLJMYp
+	 f6tLEuQbIGF79o7XI8JzmE+E5ALL6NEiX24ZOvewmssgtu+Jvt3IIx5fPB6c4KjKq55Go
+	 cPKpfY4a5/e3QSXCOpcfmlxLb/7W1utGyGumHSQWAwjbMIKw/uoCTGj6AH1pdGHX1AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=boREz14h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJKtjBDW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213D7606A31C;
-	Wed, 18 Nov 2026 22:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1275606A31C;
+	Wed, 18 Nov 2026 22:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=boREz14h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B291F000C4;
-	Wed, 18 Nov 2026 22:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJKtjBDW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DB11F000C4;
+	Wed, 18 Nov 2026 22:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040190;
-	bh=8CRAi3jQoAIVUymAHfn93GcfJG7xfDO4Ak+Pn2pQBz8=;
+	s=korg; t=1795040193;
+	bh=WFVos9o0BYuztgh4C94Jr+TpVqrtvWr3XYNqekkayd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=boREz14h+xadnPtSCA2LMVHa5UWPjrAy9+YziVcINxkN4sWF5BHg3rKz8gB7jkjHQ
-	 F9K1N98po4kMfwKpkWI7Ic0qEUetwGgLbum/dWiByJLyfM9+jexwFHP/KeLoGgz21b
-	 n6lMSDftArWdBZkXXHBB2RVHIZJpU0+01fOH0b0U=
+	b=IJKtjBDWOumJ8IYay68QnjJTbQ1zX/vRmwsUipB/rlvI4kvtmYCHEslJNPwp8sus7
+	 su2iTSishsPl/FE7iRgx47yUG3f/BAf/go7f625jQmluNFHyqbSrpvTti2ggY4YO67
+	 X/25ZSekazAPAXGWDv/FfPcgSw6GheJDKd4x30/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Young <admiyo@os.amperecomputing.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Huisong Li <lihuisong@huawei.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2370/3318] ACPI: PCC: Simplify PCC shared memory region handling
-Date: Wed, 18 Nov 2026 15:49:52 +0100
-Message-ID: <20261118150432.663417824@linuxfoundation.org>
+Subject: [PATCH 6.6 2371/3318] ACPI: PCC: Preserve shared memory signature in OpRegion handler
+Date: Wed, 18 Nov 2026 15:49:53 +0100
+Message-ID: <20261118150432.691210641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,74 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 8960c45a0f41399770d408921180231395604e2f ]
+[ Upstream commit 46c263c213876bdc2297ef61aa90f0b210ebac73 ]
 
-The PCC driver now handles mapping and unmapping of shared memory
-areas as part of pcc_mbox_{request,free}_channel(). Without these before,
-this ACPI PCC opregion driver did handling of those mappings like several
-other PCC mailbox client drivers.
+ACPI 6.3 introduced PCC OperationRegions. Section 5.5.2.4.7.3,
+"Declaring message fields within a PCC OperationRegion", states that,
+for all PCC subspace types, the PCC Operation Region pertains to the
+region of PCC subspace that succeeds the PCC signature. Its length
+therefore excludes the 4-byte signature.
 
-There were redundant operations, leading to unnecessary code. Maintaining
-the consistency across these driver was harder due to scattered handling
-of shmem.
+The PCC address space handler currently copies the OperationRegion
+buffer to and from the start of the shared memory. This overwrites or
+exposes the platform-populated signature and omits the final four bytes
+of the OperationRegion.
 
-Just use the mapped shmem and remove all redundant operations from this
-driver.
+Offset the copies by the size of the signature and reject an
+OperationRegion that does not fit in the remaining shared memory.
 
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://patch.msgid.link/20250411113144.1151094-1-sudeep.holla@arm.com
+The example added by commit 77e2a04745ff ("ACPI: PCC: Implement
+OperationRegion handler for the PCC Type 3 subtype") incorrectly
+included the signature as an OperationRegion field. A Type 3
+OperationRegion containing a 100-byte communication area is declared
+as follows:
+
+OperationRegion (PFRM, PCC, 2, 0x70)
+Field (PFRM, ByteAcc, NoLock, Preserve)
+{
+    FLGS,   32,
+    LEN,    32,
+    CMD,    32,
+    DATA,   800
+}
+
+This contains three 32-bit fields followed by a 100-byte DATA field.
+The fields correspond to the Type 3 shared memory layout in ACPI 6.3,
+Table 14-372, after excluding its 4-byte signature.
+
+Fixes: 77e2a04745ff ("ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype")
+Reviewed-by: Huisong Li <lihuisong@huawei.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Link: https://patch.msgid.link/20260922144302.3847593-3-sudeep.holla@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 46c263c21387 ("ACPI: PCC: Preserve shared memory signature in OpRegion handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pcc.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ drivers/acpi/acpi_pcc.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/acpi/acpi_pcc.c b/drivers/acpi/acpi_pcc.c
-index 59d2308259cb2..e3f302b9dee5f 100644
+index e3f302b9dee5f..683924a708ba0 100644
 --- a/drivers/acpi/acpi_pcc.c
 +++ b/drivers/acpi/acpi_pcc.c
-@@ -31,7 +31,6 @@
+@@ -28,6 +28,7 @@
+  * to PCC commands
+  */
+ #define PCC_CMD_WAIT_RETRIES_NUM	500ULL
++#define PCC_SIGNATURE_SIZE		sizeof(u32)
  
  struct pcc_data {
  	struct pcc_mbox_chan *pcc_chan;
--	void __iomem *pcc_comm_addr;
- 	struct completion done;
- 	struct mbox_client cl;
- 	struct acpi_pcc_info ctx;
-@@ -81,14 +80,6 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
- 		ret = AE_SUPPORT;
- 		goto err_free_channel;
+@@ -74,6 +75,14 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
  	}
--	data->pcc_comm_addr = acpi_os_ioremap(pcc_chan->shmem_base_addr,
--					      pcc_chan->shmem_size);
--	if (!data->pcc_comm_addr) {
--		pr_err("Failed to ioremap PCC comm region mem for %d\n",
--		       ctx->subspace_id);
--		ret = AE_NO_MEMORY;
--		goto err_free_channel;
--	}
  
- 	*region_context = data;
- 	return AE_OK;
-@@ -113,7 +104,7 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
+ 	pcc_chan = data->pcc_chan;
++	if (pcc_chan->shmem_size < PCC_SIGNATURE_SIZE ||
++	    ctx->length > pcc_chan->shmem_size - PCC_SIGNATURE_SIZE) {
++		pr_err("PCC channel-%d shared memory is too small.\n",
++		       ctx->subspace_id);
++		ret = AE_AML_REGION_LIMIT;
++		goto err_free_channel;
++	}
++
+ 	if (!pcc_chan->mchan->mbox->txdone_irq) {
+ 		pr_err("This channel-%d does not support interrupt.\n",
+ 		       ctx->subspace_id);
+@@ -97,14 +106,17 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
+ 			       u32 bits, acpi_integer *value,
+ 			       void *handler_context, void *region_context)
+ {
+-	int ret;
+ 	struct pcc_data *data = region_context;
++	void __iomem *pcc_opregion;
+ 	u64 usecs_lat;
++	int ret;
++
++	pcc_opregion = data->pcc_chan->shmem + PCC_SIGNATURE_SIZE;
+ 
  	reinit_completion(&data->done);
  
- 	/* Write to Shared Memory */
--	memcpy_toio(data->pcc_comm_addr, (void *)value, data->ctx.length);
-+	memcpy_toio(data->pcc_chan->shmem, (void *)value, data->ctx.length);
+-	/* Write to Shared Memory */
+-	memcpy_toio(data->pcc_chan->shmem, (void *)value, data->ctx.length);
++	/* Write to the PCC OperationRegion after the shared memory signature. */
++	memcpy_toio(pcc_opregion, (void *)value, data->ctx.length);
  
  	ret = mbox_send_message(data->pcc_chan->mchan, NULL);
  	if (ret < 0)
-@@ -134,7 +125,7 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
+@@ -125,7 +137,7 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
  
  	mbox_chan_txdone(data->pcc_chan->mchan, ret);
  
--	memcpy_fromio(value, data->pcc_comm_addr, data->ctx.length);
-+	memcpy_fromio(value, data->pcc_chan->shmem, data->ctx.length);
+-	memcpy_fromio(value, data->pcc_chan->shmem, data->ctx.length);
++	memcpy_fromio(value, pcc_opregion, data->ctx.length);
  
  	return AE_OK;
  }
