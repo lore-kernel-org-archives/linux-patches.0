@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042355;
-	b=vDsv3i3kW+OaMCRvmMyU5ht7ajdPM4tXtKRYlqc6OHThrreviaTXSONCWslH18yWI1/1
-	 nVXrCMuZp9Z5SFA+6dEt6qk+0DJ23R4g7r69qpn+SOY6a/RbJQTA9N8ryELhPccMurxRR
-	 fUlhEqXS+D183zaFwcrmto40CjYNz1H8QhfENExrUHAgF5DzOJPRbHhwzNxNJ4TqUirQ1
-	 +S3RX+OIBe2083os9+H0X6WhP023oDOybt747XZIIqH0KT6wA4wsWz9KFn2n/b8e/e2r7
-	 uHyxadKwI33BXGI8zpVN0GiGgnMOVNCiFoY5sgtoxW0weUy0PiwrEFw5B+lJPXxmj5g==
+	t=1795042358;
+	b=TBTPUSfRayCapRYNl1j16yD+h6/Ag/GLCFV7OkBHMHYGa9GAp1I/kn8f0cFgytB9HQe0
+	 QecqU5I1jrxRidKp/OZwQkJdogeKBkOUsADgp2qxwvTT1RzFqk3hmRWbXnTt6Sx284hLT
+	 B8wWwQKRa1JgYLqtD+mhvkGJQWWZDY6sc3aE4rWuV0J1ixmSDnjHKCvVVOI7zAl7+dV68
+	 UH44nAA/19isUujx3fagn32uYYVkdvBLCWI6DMVqAUVpQgiERBCHrwtBRS5+uDpsEbZlO
+	 szyNp1HBB0HKYUEh1lqv4407OOtgsCfaYrqjdrVy9X0ldFzeq17T7VnD4DiM+1Mxagg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YWPRUzWXCBv3sxyRq7QM7P1RVg9TwP5H6vrjD+wn0Dw=;
-	b=5RW5iHXug0A3Tkuj/GHpJz0o0FVOchEuXj29rOWGp5VJYEtdkDqO+suylgbn0zbSeC2j
-	 jLIJz7eeeG+lnCECvk7Fewh/tQ89dXmcnzlTimGe2TV+/x4N9XW2UNzPsgD2DcD/UfNAn
-	 nl9a8X88x27N3ssAshBC3iOgqPwXxYRzbFFULGGwlXcTAPNSMArwBog3VyWGo6BTRobSK
-	 YYOS8tYc9LzD8huJLQxgLAYYFg9dOLM0KEepwBevHQvSF/X6OSu/U1nnGuJENKXmFScRL
-	 udvRL+39Wc5XwFmx8xWwWVuzHQn4vFFp2Ha19DhrJVamUs9o3STX9vTbTWfVQaY0yIQ==
+	bh=bAe0PycMy34DRb4GQge+EqcbELOvjRFJ2ZVlt1vy80o=;
+	b=ad7bS7WgBum67L6g9APBLYXwIvWG8SdQ9RbsbA7i8Jt7OjmZ0H3/w0uymXuL7VUPged7
+	 y4KPf9o48cf0Vtq9rhVOLh+E6TyKhA+r/inhk/0L3jq8art6ehlTpgEr2eSzpKkZZHmto
+	 LTfWo8GmO//szsFP5JluQn+9iem52PIdnkfTYfTxw+8XP3OUbkq8rzijjmF8NiMfER3+G
+	 cHedSkX4kHVNfZF5QhDK7PCGILvRtxhPB0Jq6/LuL4bdTC9wbnLM31qVbvqyWRVB7G4UJ
+	 G2XCoyjpVLFMxos2LdkgOLxL8rmHbuor9oq6mli/2r3S0aXvDpN/1V/VbObxAV+XBAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vedCb90f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ItXlJQ7Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D17606A31C;
-	Wed, 18 Nov 2026 22:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E20606A325;
+	Wed, 18 Nov 2026 22:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vedCb90f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B3B1F000C4;
-	Wed, 18 Nov 2026 22:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ItXlJQ7Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5242C1F000C4;
+	Wed, 18 Nov 2026 22:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042355;
-	bh=YWPRUzWXCBv3sxyRq7QM7P1RVg9TwP5H6vrjD+wn0Dw=;
+	s=korg; t=1795042357;
+	bh=bAe0PycMy34DRb4GQge+EqcbELOvjRFJ2ZVlt1vy80o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vedCb90fcewmZ8FSL18LjEMF7Rn8UlsOYhdRqyv0kynVT3SHQmJMURnDbdfSV+TsY
-	 fv1VkYw5WWqVj9luTNhgNZuzmnXxrrc9yy3Dn4OPANdNke7DP7dbVgRl1VQsP6G8+g
-	 rUzlYS8ikTeI1J1QzID8csbm2QYwOWSorMAM3MMs=
+	b=ItXlJQ7Q6082yrRMrk/IhFFmyGv3lgUvrhXGA/W7awauc+LOJ3En5YLh98WkdVyJF
+	 BUIZq93AnvZfLagulF2R7b0Nfb8BXrLOGVC9kIzcgSdIxhoyci0K2LBIk3YExM7Cyn
+	 kU2m5Uv30IdVY2GAOKRJZe4rmFdSWFD6Mr4gsw8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Tejun Heo <tj@kernel.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3114/3318] ASoC: wm8994: fix MCLK index used for setting MCLK rate
-Date: Wed, 18 Nov 2026 16:02:16 +0100
-Message-ID: <20261118150453.377054260@linuxfoundation.org>
+Subject: [PATCH 6.6 3141/3318] regulator: irq_helper: replace use of system_wq with system_dfl_wq
+Date: Wed, 18 Nov 2026 16:02:43 +0100
+Message-ID: <20261118150454.107424282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,60 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 7916b55b100973b5fb5b974e8f7c8ae9f3ac1d2e ]
+[ Upstream commit b6f4bd64f453183954184ffbc2b89d73ed8fb135 ]
 
-wm8994_set_dai_sysclk() passes the AIF index (dai->id - 1) to
-wm8994_set_mclk_rate(), which uses it to index the MCLK clocks and
-their cached rates. As a result, selecting MCLK2 as the AIF1 clock
-source sets and reads back the rate of MCLK1 instead, and the rate
-of MCLK1 is then stored as the MCLK2 rate.
+Currently if a user enqueues a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
 
-On the Exynos4412 Trats2 board, where MCLK1 is a fixed 24MHz clock and
-MCLK2 a 32768Hz clock used when the codec is idle, this gives:
+This lack of consistency cannot be addressed without refactoring the API.
 
- wm8994-codec wm8994-codec: AIF1 using MCLK2 at 24000000Hz
+This continues the effort to refactor worqueue APIs, which has begun
+with the change introducing new workqueues and a new alloc_workqueue flag:
 
-so the driver assumes a 12MHz SYSCLK while it actually runs at 32kHz.
-This skips the 128fs AIF clock ratio setup for low SYSCLK rates and
-makes the mic detection rate configuration use the wrong clock rate.
+commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
+commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
 
-Pass the MCLK index matching the selected clock source instead.
+This specific workload do not benefit from a per-cpu workqueue, so use
+the default unbound workqueue (system_dfl_wq) instead.
 
-Fixes: 419e2f508336 ("ASoC: wm8994: Add support for setting MCLK clock rate")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-4-m.szyprowski@samsung.com
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Link: https://patch.msgid.link/20251106142914.227875-1-marco.crivellari@suse.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 8a6d73e316f9 ("regulator: irq: freeze deferred hardware access during suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/irq_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 5a40294ad3fa2..4fc3525e546e6 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -2542,7 +2542,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
- 	case WM8994_SYSCLK_MCLK1:
- 		wm8994->sysclk[dai->id - 1] = WM8994_SYSCLK_MCLK1;
+diff --git a/drivers/regulator/irq_helpers.c b/drivers/regulator/irq_helpers.c
+index ba07a7016a272..ad424d7542f14 100644
+--- a/drivers/regulator/irq_helpers.c
++++ b/drivers/regulator/irq_helpers.c
+@@ -146,7 +146,7 @@ static void regulator_notifier_isr_work(struct work_struct *work)
  
--		ret = wm8994_set_mclk_rate(wm8994, dai->id - 1, &freq);
-+		ret = wm8994_set_mclk_rate(wm8994, WM8994_MCLK1, &freq);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -2555,7 +2555,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
- 		/* TODO: Set GPIO AF */
- 		wm8994->sysclk[dai->id - 1] = WM8994_SYSCLK_MCLK2;
- 
--		ret = wm8994_set_mclk_rate(wm8994, dai->id - 1, &freq);
-+		ret = wm8994_set_mclk_rate(wm8994, WM8994_MCLK2, &freq);
- 		if (ret < 0)
- 			return ret;
- 
+ reschedule:
+ 	if (!d->high_prio)
+-		mod_delayed_work(system_wq, &h->isr_work,
++		mod_delayed_work(system_dfl_wq, &h->isr_work,
+ 				 msecs_to_jiffies(tmo));
+ 	else
+ 		mod_delayed_work(system_highpri_wq, &h->isr_work,
 -- 
 2.53.0
 
