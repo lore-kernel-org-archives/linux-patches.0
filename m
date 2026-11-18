@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046403;
-	b=Gh5vPTDBabsgfl+uBBRM8SwjBI++R7REsrr7SMd5mnHwKSxT0lHq/9lYBDPvCLnyPxy+
-	 qqmoqkX1AafA1hTXaTVlzgchtsemU7ju6abzhagy/5qQ7FnGMeLQnYwveZ3tzX8aI4jtG
-	 XgCsv29D/qxnj6SH7Q29VWchcUJIm3Qm8v/NGCr7IEQgAKZWl+pbSpxffiw+LHGRpZq9r
-	 zuNSKGF1Q9QRY4EKwG4Imi8U7LIlZiKYj/jOzwmQbdbIERODgA3RjXTB8bo7lKx6TT2sm
-	 lkF2w02AOC8Dfqc9XYBR1NZGBBpZjx+VVvG7Tw+v8JBvNJHY0MoAor+EyQkMKyPRB0Q==
+	t=1795046405;
+	b=BLOMkFAXuHF+efgjhy7YKmObQjbc8j4Jxno9Q56BLQCZ6PwgmXyx5Xu9ySIeeygku5UN
+	 YC+B0ScqoeZOlwOw+WPVv3YK/5J1XRc8z3A/4k0RrhIp+qG1xAqDTZIMFH57lerwAPnSv
+	 4lC5T+pdw4b8G78NVBttoj8Wg5+PYydvyw8NMIHM3j7yjM3BfEl8mdlcJg7sPB1geAH3F
+	 K3MkTGNd85TnhbfKVFnivE6sjgrk98TpanjyniJSm/ausl7G/l/lV2zDC5/lBDMIjOzHe
+	 YBMzwTLWC8O0u+cn6CNFBxv8zBhOl9wmYOKxGRPk4zdJvOWzTjIarxT6bTZ/2CG87CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046403;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046405;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S9b0QtqQY1MA6xXrg0evXgcMaFqJJWUktDIes932La4=;
-	b=1o21Nho2NLpFwQZFsgexYmsoo8pE95AZ4oR4n5wAX9eBDFG3mcCRgY0CaOLu66jBa7uJ
-	 dAtrCsPltdCaGwcYIRbYhPnr3yKygQGzMwAVscx4KKcSE6POH3h4xEBaMk8O9FqZX9M1C
-	 TcVI6Eymkh/V1i4pFj3wIcUU+VgpCNqidhqLAJvxrMHoAn5gxeiUOe7nW8L4EBX5LN0so
-	 wsHj+7LllE2lZlM60BnGlFHQVQe5wBeS0NPJ6x7vPHe+ibZdfSUAAPRXwl1C0iGfImPW3
-	 Xpm2DGONuxWccAEYWH1MhhxcKxzihmonTgC0CKCIciyq86leGDJYFadKMZGi5qXOkZg==
+	bh=DezLWWFyfbhHJIH/AizyumtkerqMT50a3T8x1gMpMkA=;
+	b=Z3OVlV3htjNEpiccYiA5yNQ8/Pd82LKBVk5X+1U/HtTY6VJoENuSd0GilrXn5B3LFMlD
+	 hn4tWQ0O6aMzQYLhlABa5O75xKURuPSXiIsFJLBewerVhrp/6ruVE8r3BEhapNCTaSs+N
+	 bwouByJVHg3Gmt6ueYQ09DMBC55Ujw/ZpUtlGH3jlYHAgU59NEFaXYuX5l7nahFXYQrRH
+	 ESVMh+/mJ37NGbAfaUX6lc1vKj9NGGFD/kCj1A+0tvOPfQIwbRHQv5xCzTRYpCoqdphut
+	 GnaLaE3KyW8igx8XebDUUUqMm8MTVvtKXDJNQlpub5oJ3Sm4tUaSaTYqVZ79opTrk/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbK0B9tX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JsGRSt/P";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04716606A320;
-	Thu, 19 Nov 2026 00:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC2A606A325;
+	Thu, 19 Nov 2026 00:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbK0B9tX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A9C1F000C4;
-	Thu, 19 Nov 2026 00:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsGRSt/P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4091F000C5;
+	Thu, 19 Nov 2026 00:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046402;
-	bh=S9b0QtqQY1MA6xXrg0evXgcMaFqJJWUktDIes932La4=;
+	s=korg; t=1795046405;
+	bh=DezLWWFyfbhHJIH/AizyumtkerqMT50a3T8x1gMpMkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NbK0B9tX6L32jXrEptlIbzM4aN0Z2xpkRT0CVaVyUdCXQG+2hIWfFNxphDfeCZ9vw
-	 +aKL2RI9V3YSzWgUfJankrn0bUYdzemUZPqNn2mYNIi9eqH/Homxd7fSVpBowkHSHD
-	 RMsn7awKc5ldQN+KmF3vqNKa55zkn8T5i7MVhUqA=
+	b=JsGRSt/PIH+DXAFlwbSCK2EgnCgNTXCgTxdU6Z/IBu31xB0dHsFyMhA5tgHL0yQGN
+	 yKpB80MawFWPzoksXYoFL/itSZgfSKiHDVRffhXuEPrslMH/C4FhabsTX8e8h81fgB
+	 W8qpBKLDo1KsBKJyYRfwVMQoRzE9y5QieEutTgIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
 	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Christoph Hellwig <hch@lst.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1268/2857] inotify: do not coalesce rename events
-Date: Wed, 18 Nov 2026 15:38:22 +0100
-Message-ID: <20261118150247.178528599@linuxfoundation.org>
+Subject: [PATCH 6.1 1269/2857] block: Return the soft block size for compat BLKBSZGET
+Date: Wed, 18 Nov 2026 15:38:23 +0100
+Message-ID: <20261118150247.212679003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,50 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 581230d2ec3c0380917d1255792508851e7c4627 ]
+[ Upstream commit 57cd1a08717690e5ea01d7ac7a96bb33a2dca117 ]
 
-inotify compares the mask, watch descriptor and name when coalescing
-adjacent unread events, but ignores their rename cookies. Distinct
-IN_MOVED_FROM events can therefore be coalesced, losing the cookie needed
-to match a later IN_MOVED_TO event.
+BLKBSZGET returns the block device's soft block size, while BLKSSZGET
+returns its logical sector size. The compat BLKBSZGET_32 handler uses
+bdev_logical_block_size(), so it returns the wrong value when these
+sizes differ.
 
-For example, watch two directories with IN_MOVE. Move an entry from the
-first directory into an unwatched directory, recreate it under the same
-name, then move it from the first directory into the second watched
-directory before reading the events. The second IN_MOVED_FROM is merged
-with the first, while the IN_MOVED_TO retains the second rename's cookie.
-Userspace can no longer pair the second rename's events.
+For example, on an x86_64 kernel a native query of a RAM or loop device
+with 512-byte logical sectors returns the initial soft block size of
+4096 bytes, but an i386 process gets 512 bytes. This makes 32-bit
+blockdev --getbsz and the BSZ column of --report disagree with native
+queries, even without a preceding BLKBSZSET.
 
-The original inotify implementation compared cookies before coalescing.
-The fsnotify conversion lost this comparison. Do not coalesce
-IN_MOVED_FROM or IN_MOVED_TO events, which carry the identity of their
-respective renames. Leave coalescing of other event types unchanged.
+Use block_size() as the native handler and the pre-regression compat
+handler do, and correct the case comment to describe the soft size.
 
-Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
+Fixes: 9b81648cb5e3 ("compat_ioctl: simplify up block/ioctl.c")
 Cc: stable@vger.kernel.org
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20261027192027.8617-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20261023153645.37546-1-dennylin0707@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/inotify/inotify_fsnotify.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/ioctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
-index 993375f0db673..ff0af29745a8c 100644
---- a/fs/notify/inotify/inotify_fsnotify.c
-+++ b/fs/notify/inotify/inotify_fsnotify.c
-@@ -36,7 +36,7 @@ static bool event_compare(struct fsnotify_event *old_fsn,
+diff --git a/block/ioctl.c b/block/ioctl.c
+index b37bbe9b3487d..60a564ffae746 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -672,8 +672,8 @@ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
+ 		return compat_put_ulong(argp, bdev_nr_sectors(bdev));
  
- 	old = INOTIFY_E(old_fsn);
- 	new = INOTIFY_E(new_fsn);
--	if (old->mask & FS_IN_IGNORED)
-+	if (old->mask & (FS_IN_IGNORED | FS_MOVE))
- 		return false;
- 	if ((old->mask == new->mask) &&
- 	    (old->wd == new->wd) &&
+ 	/* The data is compatible, but the command number is different */
+-	case BLKBSZGET_32: /* get the logical block size (cf. BLKSSZGET) */
+-		return put_int(argp, bdev_logical_block_size(bdev));
++	case BLKBSZGET_32: /* get the soft block size (cf. BLKSSZGET) */
++		return put_int(argp, block_size(bdev));
+ 	case BLKBSZSET_32:
+ 		return blkdev_bszset(bdev, mode, argp);
+ 	case BLKGETSIZE64_32:
 -- 
 2.53.0
 
