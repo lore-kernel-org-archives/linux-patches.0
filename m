@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026714;
-	b=K7BxP0qh0ZD/mrUwDXStYY956iwN0PckBlRreEIQX7XMX/vT62aBXVNSmAaEYzB1OVfI
-	 JBG7jNk2VGU/YNi+RjF30zKX8cvnXqiEovJEvKvoU7MtN1p/N8qK6O1qwC6LkybuTZkPn
-	 CMDv2IdfsNOqjFME4UGUttW2pOFO6vzk/ywEhuHyQDSy8IDLDY5XoJqva9d8qOralTX4r
-	 rn6OIEjD/PHMvpy71FxLd9bNg5sQwQjvaWHZHY31NMmIjpWnGtUvE0SrwEf8kAt6UMJ+l
-	 qtcyA+7xNXT73YEYNsJPN8jwxV3h14RE+jSmnW4K1QWGWUxLf7b505FifIekO3Nz4oA==
+	t=1795026717;
+	b=rZNHL01aGImvT5NZ3I4O1AOE5Q94ZucbJXFzC5Dv062gk1R0XRr/dzPx7PnZDkgu0x+i
+	 6XYe3kQDEJpIJgE2pmQApLlu7pIlCpWUUr4nAuhefM1AhI/EXC8dkHY+GlStdndGdt576
+	 NTPMt7TNFTOsoIRKd7mvQaluUC54nUMrPoFlZmNmxWkBusxAx7bNqGGaow4tJQUrVwepZ
+	 D48ozDYo/UaJsYdp2zWPY69c5wKOuuZQIC2nVEvidTSAcO/whOTzyHGu4waT61wD7gMa1
+	 /UvVk5tnk97aVyq1pYV2qQf8971JzI9laJciuzvq1APQhgKcGbTHhsU4QeAWxfwujyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XVkTQpjHKo2FoISrffIgmfMIOjOjJ144lYrE5bLhsPY=;
-	b=qlCgFJqBO1GVIr1WalY8GOiOQN7IGW64w5rUH9mjnFj/XRGmD8RMdCwUrNNkFXO4/jOm
-	 UdCqJgZVybyYSCMQgJ30899m/2/wAnd9b569O3nKkHzPZJDVlb8mHYsvkyMnq7uiXeCgE
-	 eYw9pyk8JeTLzpMIjGM4dXyNXKrcujigChZbpsZD9aTCGqJdUk4SYl56hmWBZ0x+GKnUZ
-	 dqBsOnAtnvI2hgPLbr2TOF2hlgMp21ERuLvqBUZFU8s/eWOpMzb4EORNLJWVH03wIcYDl
-	 e+F5r3ihzjazsesOKgjWN44TznxOfZyr0dDVu3blvFhvRxsBUT6afo6Wst10G5oXfUQ==
+	bh=uVoe/RI32w19iWnDszSmlW3Lr3478c0JmPzEB4GnoZ4=;
+	b=D/LE4Orp0UNED3aV5g7VWwE4P5e19Qah6YvIo9Bav0ry8GRyfGmZv30a0awwiqtJRFZM
+	 vd+EJqgSHazPP3W86nx+KWXW89v3amIcoj2yrkeTklZfCMLk9oE994B338M2VlOPjQkvO
+	 QimJtP8NQqtCsKZo4a1KR/sI5RHvhx3LyW+Fo/74MNzk9+ix0aDNOwe065gFf8KaarVUD
+	 fwbTXroBG7R72I/VIKAkm/+EZ0g4YAAhcMN0FPbPJHpPzEwu7KJ4Tls7ptOhsIdSsYnr/
+	 A0TnqH1oVtDch3DrDOdSbdFg75znsZf3Eqbwh4EWdUpi90NxA8vQvJbv1BBxvJn4AvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vBarsrGZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ktxODDiR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B916606A31C;
-	Wed, 18 Nov 2026 18:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A48D606A31C;
+	Wed, 18 Nov 2026 18:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vBarsrGZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE4C1F000C4;
-	Wed, 18 Nov 2026 18:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ktxODDiR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD9D1F000C4;
+	Wed, 18 Nov 2026 18:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026714;
-	bh=XVkTQpjHKo2FoISrffIgmfMIOjOjJ144lYrE5bLhsPY=;
+	s=korg; t=1795026717;
+	bh=uVoe/RI32w19iWnDszSmlW3Lr3478c0JmPzEB4GnoZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vBarsrGZPhBCvkw924dc478fvISqtgJxRiuE6+pZiIR3nVIoQTU9aKxz2B+yXKtDe
-	 lEOpfRAihUeqVG3hlk3nNX4t2l0FNhTp0BNHk4ReYzqxGN2ZEvtka0AihLVMmfqX21
-	 GCvApV8UcCsdWH+em6Wkt56anDfLLO/fvkOG9v70=
+	b=ktxODDiRhaXk+i3VV7EKOS5qEmq2PSJU6R0Yy9JATWpU0iqMQf3D4mgm64IyGI1tX
+	 if8ywjXni/pvcqX4sj+ai4syZCVqi9zhHqA9K+R5DDzisb/kiBZ1/CRb6M2NUj9mIc
+	 ZFtnFqFihLgEZibGoWUtVOW3aanebpN4Fc6IjhjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1533/2151] Bluetooth: MGMT: Fix advertising instances with Global Advertising
-Date: Wed, 18 Nov 2026 15:54:28 +0100
-Message-ID: <20261118150217.666210212@linuxfoundation.org>
+Subject: [PATCH 6.18 1534/2151] Bluetooth: HCI: Fix tracking of instances sharing handle 0x00
+Date: Wed, 18 Nov 2026 15:54:29 +0100
+Message-ID: <20261118150217.756502629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,235 +69,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 0ad48c88a2ed3b58164fa771977868503b0abac3 ]
+[ Upstream commit 1bfecdbd031711e5205ae78f3b8c296e5a53bc55 ]
 
-Global Advertising, enabled with MGMT_OP_SET_ADVERTISING, uses instance
-0 and with extended advertising it has its own advertising set, but
-instances were still being treated as if they shared the same set:
+When the controller supports a single advertising set, instance 1 uses
+handle 0x00 which is the same handle used by instance 0 (Global
+Advertising), but hci_cc_le_set_ext_adv_enable would lookup the instance
+using the handle as instance identifier, marking instance 0 as
+enabled/disabled instead of instance 1, leaving its state out of sync.
 
- - Add Advertising and Add Extended Advertising Data would return
-   success without ever enabling the instance.
- - Removing the last instance would disable all advertising sets,
-   stopping Global Advertising while leaving its setting enabled.
- - Disabling Global Advertising would disable all sets, including
-   active instances.
+Fix this by matching instances by handle and, for handle 0x00, using
+hdev->cur_adv_instance, now set when enabling an instance, to determine
+which instance owns the set. Also disable the instance sharing the
+advertising set of instance 0 before overriding it.
 
-Fix this by only overriding instances that share the advertising set of
-Global Advertising, and by tracking HCI_LE_ADV_0 rather than HCI_LE_ADV
-to determine the state of Global Advertising.
-
-Fixes: 0d92808024b4 ("Bluetooth: HCI: Fix tracking of advertisement set/instance 0x00")
+Fixes: e77f43d531af ("Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1")
 Assisted-by: OpenCode:claude-opus-5.5
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_sync.h |  1 +
- net/bluetooth/hci_event.c        | 11 ++++-
- net/bluetooth/hci_sync.c         |  2 +-
- net/bluetooth/mgmt.c             | 83 +++++++++++++++++++++++++++-----
- 4 files changed, 83 insertions(+), 14 deletions(-)
+ net/bluetooth/hci_event.c | 47 ++++++++++++++++++++++++++++++---------
+ net/bluetooth/hci_sync.c  | 35 ++++++++++++++++++++++++++++-
+ 2 files changed, 70 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index e352a4e0ef8d7..d6552b5790872 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -124,6 +124,7 @@ int hci_disable_per_advertising_sync(struct hci_dev *hdev, u8 instance);
- int hci_remove_advertising_sync(struct hci_dev *hdev, struct sock *sk,
- 				u8 instance, bool force);
- int hci_disable_advertising_sync(struct hci_dev *hdev);
-+int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev);
- int hci_clear_adv_instance_sync(struct hci_dev *hdev, struct sock *sk,
- 				u8 instance, bool force);
- int hci_update_passive_scan_sync(struct hci_dev *hdev);
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index fd823baf64415..1268318d5624e 100644
+index 1268318d5624e..572f195f09c13 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -1631,15 +1631,22 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
+@@ -1584,6 +1584,39 @@ static u8 hci_cc_le_set_adv_enable(struct hci_dev *hdev, void *data,
+ 	return rp->status;
+ }
+ 
++/* Update the enabled state of the instance(s) using the advertising set
++ * identified by handle.
++ *
++ * Instances may share handle 0x00 with instance 0 (Global Advertising), e.g.
++ * when the controller supports a single advertising set, in which case the
++ * set is owned by the instance last enabled (hdev->cur_adv_instance) and any
++ * other instance sharing it shall be considered disabled.
++ */
++static void hci_le_ext_adv_set_enabled(struct hci_dev *hdev, u8 handle,
++				       bool enable)
++{
++	struct adv_info *adv;
++	bool owned = false;
++
++	list_for_each_entry(adv, &hdev->adv_instances, list) {
++		if (adv->handle != handle)
++			continue;
++
++		adv->enabled = enable &&
++			       (handle ||
++				adv->instance == hdev->cur_adv_instance);
++		owned |= adv->enabled;
++	}
++
++	if (handle)
++		return;
++
++	if (enable && !owned)
++		hci_dev_set_flag(hdev, HCI_LE_ADV_0);
++	else
++		hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
++}
++
+ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+ 				       struct sk_buff *skb)
+ {
+@@ -1605,18 +1638,13 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+ 
+ 	hci_dev_lock(hdev);
+ 
+-	if (cp->num_of_sets)
+-		adv = hci_find_adv_instance(hdev, set->handle);
+-
+ 	if (cp->enable) {
+ 		struct hci_conn *conn;
+ 
+ 		hci_dev_set_flag(hdev, HCI_LE_ADV);
+ 
+-		if (adv)
+-			adv->enabled = true;
+-		else if (!set->handle)
+-			hci_dev_set_flag(hdev, HCI_LE_ADV_0);
++		if (cp->num_of_sets)
++			hci_le_ext_adv_set_enabled(hdev, set->handle, true);
+ 
+ 		conn = hci_lookup_le_connect(hdev);
+ 		if (conn)
+@@ -1625,10 +1653,7 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+ 					   conn->conn_timeout);
+ 	} else {
+ 		if (cp->num_of_sets) {
+-			if (adv)
+-				adv->enabled = false;
+-			else if (!set->handle)
+-				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
++			hci_le_ext_adv_set_enabled(hdev, set->handle, false);
  
  			/* If just one instance was disabled check if there are
--			 * any other instance enabled before clearing HCI_LE_ADV
-+			 * any other instance enabled, including instance 0,
-+			 * before clearing HCI_LE_ADV
- 			 */
-+			if (hci_dev_test_flag(hdev, HCI_LE_ADV_0))
-+				goto unlock;
-+
- 			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
- 						 list) {
- 				if (adv->enabled)
- 					goto unlock;
- 			}
- 		} else {
--			/* All instances shall be considered disabled */
-+			/* All instances shall be considered disabled, except
-+			 * instance 0 whose state is preserved so it can be
-+			 * re-enabled by hci_resume_advertising_sync.
-+			 */
- 			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
- 						 list)
- 				adv->enabled = false;
+ 			 * any other instance enabled, including instance 0,
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 8bedfab14cdf2..05926993f34ed 100644
+index 05926993f34ed..b592dd152b5a9 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -1184,7 +1184,7 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
+@@ -1184,6 +1184,30 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
  	return 0;
  }
  
--static int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
-+int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
- {
- 	struct hci_cp_le_set_ext_adv_enable *cp;
- 	struct hci_cp_ext_adv_set *set;
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 9b034814f29f9..d62d6dd91de77 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -6458,7 +6458,12 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 		return;
- 	}
- 
--	if (hci_dev_test_flag(hdev, HCI_LE_ADV))
-+	/* With extended advertising global advertising (instance 0) has its
-+	 * own advertising set so only consider its state, other instances may
-+	 * still be enabled.
-+	 */
-+	if (ext_adv_capable(hdev) ? hci_dev_test_flag(hdev, HCI_LE_ADV_0) :
-+				    hci_dev_test_flag(hdev, HCI_LE_ADV))
- 		hci_dev_set_flag(hdev, HCI_ADVERTISING);
- 	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
-@@ -6478,6 +6483,34 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 	    list_empty(&hdev->adv_instances))
- 		return;
- 
-+	/* With extended advertising instances are not overridden by global
-+	 * advertising, except the ones sharing its set, so only (re)start the
-+	 * instances that are not already enabled.
-+	 *
-+	 * Lookup instances by identifier while holding hdev->lock since the
-+	 * list may change while waiting for the HCI commands to complete.
-+	 */
-+	if (ext_adv_capable(hdev)) {
-+		u16 i;
++/* Check if the advertising set with handle 0x00 is in use, either by instance
++ * 0 or by an instance sharing its advertising set.
++ */
++static bool hci_ext_adv_handle_0_enabled(struct hci_dev *hdev)
++{
++	struct adv_info *adv;
++	bool enabled;
 +
-+		for (i = 1; i <= hdev->le_num_of_adv_sets + 1; i++) {
-+			bool enabled;
++	hci_dev_lock(hdev);
 +
-+			hci_dev_lock(hdev);
-+			adv_instance = hci_find_adv_instance(hdev, i);
-+			enabled = !adv_instance || adv_instance->enabled;
-+			hci_dev_unlock(hdev);
++	enabled = hci_dev_test_flag(hdev, HCI_LE_ADV_0);
 +
-+			if (enabled)
-+				continue;
-+
-+			err = hci_schedule_adv_instance_sync(hdev, i, true);
-+			enable_advertising_instance(hdev, err);
++	list_for_each_entry(adv, &hdev->adv_instances, list) {
++		if (!adv->handle && adv->enabled) {
++			enabled = true;
++			break;
 +		}
-+
-+		return;
 +	}
 +
- 	instance = hdev->cur_adv_instance;
- 	if (!instance) {
- 		adv_instance = list_first_entry_or_null(&hdev->adv_instances,
-@@ -6533,6 +6566,11 @@ static int set_adv_sync(struct hci_dev *hdev, void *data)
- 			hci_update_scan_rsp_data_sync(hdev, 0x00);
- 			hci_enable_advertising_sync(hdev);
- 		}
-+	} else if (ext_adv_capable(hdev)) {
-+		/* Only disable global advertising (instance 0) leaving other
-+		 * instances untouched.
-+		 */
-+		hci_disable_ext_adv_legacy_instance_sync(hdev);
- 	} else {
- 		hci_disable_advertising_sync(hdev);
- 	}
-@@ -8818,6 +8856,21 @@ static bool adv_busy(struct hci_dev *hdev)
- 	return pending_find(MGMT_OP_SET_LE, hdev);
- }
- 
-+/* Global advertising, enabled with MGMT_OP_SET_ADVERTISING, uses instance 0
-+ * and takes precedence over any instance that would share its advertising
-+ * set: with legacy advertising there is only a single set so all instances
-+ * are overridden, whereas with extended advertising only an instance using
-+ * handle 0x00 is.
-+ */
-+static bool adv_overridden_by_global(struct hci_dev *hdev,
-+				     struct adv_info *adv)
-+{
-+	if (!hci_dev_test_flag(hdev, HCI_ADVERTISING))
-+		return false;
++	hci_dev_unlock(hdev);
 +
-+	return !ext_adv_capable(hdev) || !adv->handle;
++	return enabled;
 +}
 +
- static void add_adv_complete(struct hci_dev *hdev, struct sock *sk, u8 instance,
- 			     int err)
+ int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
  {
-@@ -8979,12 +9032,12 @@ static int add_advertising(struct sock *sk, struct hci_dev *hdev,
- 		schedule_instance = cp->instance;
+ 	struct hci_cp_le_set_ext_adv_enable *cp;
+@@ -1191,7 +1215,7 @@ int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
+ 	u8 data[sizeof(*cp) + sizeof(*set) * 1];
+ 	u8 size;
+ 
+-	if (!hci_dev_test_flag(hdev, HCI_LE_ADV_0))
++	if (!hci_ext_adv_handle_0_enabled(hdev))
+ 		return 0;
+ 
+ 	memset(data, 0, sizeof(data));
+@@ -1435,6 +1459,9 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 			return -EINVAL;
+ 		}
+ 	} else {
++		/* Disable the advertising set with handle 0x00, including any
++		 * instance sharing it, since it is going to be overridden.
++		 */
+ 		err = hci_disable_ext_adv_legacy_instance_sync(hdev);
+ 		if (err)
+ 			return err;
+@@ -1701,6 +1728,12 @@ int hci_enable_ext_advertising_sync(struct hci_dev *hdev, u8 instance)
+ 		set->duration = cpu_to_le16(duration / 10);
  	}
  
--	/* If the HCI_ADVERTISING flag is set or the device isn't powered or
--	 * there is no instance to be advertised then we have no HCI
--	 * communication to make. Simply return.
-+	/* If the instance is overridden by global advertising or the device
-+	 * isn't powered or there is no instance to be advertised then we have
-+	 * no HCI communication to make. Simply return.
- 	 */
- 	if (!hdev_is_powered(hdev) ||
--	    hci_dev_test_flag(hdev, HCI_ADVERTISING) ||
-+	    adv_overridden_by_global(hdev, adv) ||
- 	    !schedule_instance) {
- 		rp.instance = cp->instance;
- 		err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_ADD_ADVERTISING,
-@@ -9159,8 +9212,11 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
- 
--	/* Submit request for advertising params if ext adv available */
--	if (ext_adv_capable(hdev)) {
-+	/* Submit request for advertising params if ext adv available, unless
-+	 * the set is in use by global advertising in which case the params
-+	 * will be programmed once the instance is scheduled.
++	/* Track which instance owns the advertising set since the handle
++	 * alone is ambiguous when instances share handle 0x00, see
++	 * hci_cc_le_set_ext_adv_enable.
 +	 */
-+	if (ext_adv_capable(hdev) && !adv_overridden_by_global(hdev, adv)) {
- 		cmd = mgmt_pending_new(sk, MGMT_OP_ADD_EXT_ADV_PARAMS, hdev,
- 				       data, data_len);
- 		if (!cmd) {
-@@ -9310,11 +9366,12 @@ static int add_ext_adv_data(struct sock *sk, struct hci_dev *hdev, void *data,
- 		schedule_instance = cp->instance;
- 	}
- 
--	/* If the HCI_ADVERTISING flag is set or there is no instance to
--	 * be advertised then we have no HCI communication to make.
-+	/* If the instance is overridden by global advertising or there is no
-+	 * instance to be advertised then we have no HCI communication to make.
- 	 * Simply return.
- 	 */
--	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) || !schedule_instance) {
-+	if (adv_overridden_by_global(hdev, adv_instance) ||
-+	    !schedule_instance) {
- 		if (adv_instance->pending) {
- 			mgmt_advertising_added(sk, hdev, cp->instance);
- 			adv_instance->pending = false;
-@@ -9390,7 +9447,11 @@ static int remove_advertising_sync(struct hci_dev *hdev, void *data)
- 	if (err)
- 		return err;
- 
--	if (list_empty(&hdev->adv_instances))
-+	/* Don't disable advertising if global advertising (instance 0) is
-+	 * enabled since it is not affected by removing instances.
-+	 */
-+	if (list_empty(&hdev->adv_instances) &&
-+	    !hci_dev_test_flag(hdev, HCI_ADVERTISING))
- 		err = hci_disable_advertising_sync(hdev);
- 
- 	return err;
++	hdev->cur_adv_instance = instance;
++
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_ENABLE,
+ 				     sizeof(*cp) +
+ 				     sizeof(*set) * cp->num_of_sets,
 -- 
 2.53.0
 
