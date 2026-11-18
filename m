@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017833;
-	b=5ANA/P1VWEYum7zfuN8WV1rld4bFJbCVDAHlStWiXayzqoC0mwfJc/E3ZGm2/rRk3grq
-	 MwPj9YxkDHbvI4PFE6kyf+nXxlLxSgINXCULXJ6Q+zx5FYKhvZIHLyRllv01fGHTMyDJs
-	 dYBbYIq7D3RFIjnqq6gzNhfNHTNoMtlmM+5E7+JDn8jMtJBSptyODBPBKzoM6r2Tj2dIF
-	 P4lnRCxYi9tlnI/DgLasYKTJ92BgsKdrcfDTPJIxKcS3AYi8NTUloIZJlcfZiM6EHk3Jq
-	 ieeXpG4db5si4JVXwCjXxHqJwWDuElHBEhcRYCPUq8SFIk2F8+97cUIReaAjHA/A2Iw==
+	t=1795017836;
+	b=ZMf0TFVmGpE3fQpCvwH5OxoUHLUF9Q/QhNPNjtytmzLlbCY9feC9B/ycoqry4Gb1JxLO
+	 GC5MAO7ziYn77rU3PHGSxvdJdX4pJWT/T1S8RN3C7vfyjIfcSB72EFS/aK+DhfQkNgt+M
+	 dkwQr1wawlF4eDV57aGL0HuRccm4WK6hGTF8Vl7TX6yMD0LzZX6TjbFdCKlXgxjIQwLhv
+	 2DcTENJx+YiN+im4wn3pO+JNAiUCaAdb8KgFDzHUDpvZzv+hxL2OgINZApjYgxs3xIMf7
+	 Yf/wHAX6C8pBKg1Ch+mu4J6g0gj/YyU36pGx1Sp9/fUuiBS4fWrdD2VUKmdUp/DyVOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U1B0Gyd+ZPWSSEbdNP65ww6FT7HVeAANBcbZjmbm9Hg=;
-	b=Hk3tTvTO4BxoEagG4oR/uXRk22ftiF44vx4NUufM0P0ROThdjw6TVLMHzqSLqGbT2s7t
-	 zzUaPRvdLNzwjp1WG75KyVroZBN/0GUJYJ/109FcdhVrQtrXkd6ITtR6mXfzT0hz8OUTX
-	 TFt2VAz4GFvNUD8ZR0PRPNCWO021BumcnMEqMIjy/5nbW0SirdfCRTk4HxvBdvZeG3nEy
-	 Teb4vJtU2shgTarK2/iylU34NZ2Xt/IVIhn+KzcMRSGr/vihBUDyaS72rTqmliNODjYNj
-	 hGhnwOZTiIzTz38Dg9Cy6PEhLaUDkBZI2FOAA0tI53TyRFZCkqH1FO1Wc8Hby9Thgug==
+	bh=yH0LhsOalxAFzIpLTMD81R+jv/AfcYIzSOpJzdqZn7o=;
+	b=yHRIzPdwnR5abriYhflB5ObnhNcvI/iZz5IJXWmT8AgyP7f1Qo/hQdPpooyr+hET2PfT
+	 0TrSnnYMohLMfE2RnLgZztce0RdmZ7YD9aZXBYztm0d3WzA1ezcATmPpKHQHykZljnv5t
+	 i940wb1HYEsG5a+f2DweaZqmssoMAE2Y1RnGl1Lu8R/fnD3IWZMOBn+6YEAoEJm7yaJ0U
+	 yVfxIyIzKqTijQavKDY/j9XMvtsBDjApNjpF1uHqQAyhILBkT8ulovrbzFx67eL5gJChj
+	 +xyFTwlPJLlV0Q1LvA6jYhxXwPaluppXENhhPuSccLg4vwGgXI1BcGF+nx9ORttAIEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trfQBf9D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hyQL8WdG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1337606A31C;
-	Wed, 18 Nov 2026 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DC8606A31C;
+	Wed, 18 Nov 2026 16:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trfQBf9D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E8E1F000C4;
-	Wed, 18 Nov 2026 16:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hyQL8WdG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1E01F000C4;
+	Wed, 18 Nov 2026 16:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017833;
-	bh=U1B0Gyd+ZPWSSEbdNP65ww6FT7HVeAANBcbZjmbm9Hg=;
+	s=korg; t=1795017836;
+	bh=yH0LhsOalxAFzIpLTMD81R+jv/AfcYIzSOpJzdqZn7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trfQBf9Dg7pfVhourgIBn/i5TGyXv+fuQylBC0wxSsH0T1ICIOVOBbTVaUnnEQFWc
-	 XXx1+cPf2AOlmuebAYhDzAIHmbu9ZNH4BM3vHKSC2O0nmNYyuKYpv66gFys6wcsVuW
-	 LbKoyCbOx/F3GkAvbPhOlu3QTX4DDj2JQNKAFavo=
+	b=hyQL8WdGs57LM0GQVLJAZSuV1OdUUu5G0AjSBItbQ8Y8V/hD0s9b0gOwMT8dKhpPv
+	 ve1Z0MJ1w1TalbvV+Xq+hOoepnBIM4/mLqFNBC7ypDhfA3cQA7nCvpZ5Uc/NCSaZRo
+	 ledvq5eIcgKUD1uVkDzP6uL8GgCbEmtIHAda7x7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Sachin Kumar Garg <sachin.garg@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1025/2651] media: iris: cache work mode after computing it in iris_set_stage
-Date: Wed, 18 Nov 2026 15:37:45 +0100
-Message-ID: <20261118150324.850778327@linuxfoundation.org>
+Subject: [PATCH 7.3 1026/2651] IB/mad: fix UAF and double-free in RMPP receive reassembly
+Date: Wed, 18 Nov 2026 15:37:46 +0100
+Message-ID: <20261118150324.892490621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,44 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sachin Kumar Garg <sachin.garg@oss.qualcomm.com>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-[ Upstream commit 1237888922a71897326495f848766412fb74307c ]
+[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
 
-iris_set_stage() computes work_mode and sends it to firmware but
-never updates inst->fw_caps[STAGE].value, leaving the cached STAGE
-value stale. iris_vpu_enc_bin_size() and
-iris_vpu3x_vpu4x_calculate_frequency() read this cached value, so a
-stale default causes them to miscalculate buffer size and clock
-frequency for sessions actually running in a different stage than
-the cached one.
+mad_rmpp_recv.state is protected by two locks that do not exclude
+each other: recv_timeout_handler() (port workqueue) uses agent->lock,
+continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
+the check-then-set sequence on the state word:
 
-Update inst->fw_caps[cap_id].value with the computed work_mode
-before sending it to firmware, keeping the cache consistent with
-what is actually configured.
+  T1 (CQ softirq)              T2 (port workqueue)
+  continue_rmpp()
+    lock(rmpp_recv->lock)
+    state == ACTIVE  [passes]
+                               recv_timeout_handler()
+                                 lock(agent->lock)
+                                 state = TIMEOUT
+                                 list_del(&rmpp_recv->list)
+                                 unlock(agent->lock)
+                                 destroy_rmpp_recv()
+                                   wait_for_completion()
+                                   [blocks on T1's ref]
+    state = COMPLETE
+    unlock(rmpp_recv->lock)
+    complete_rmpp()
+      queue cleanup_work (+10s)
+    deref()
+                               [unblocks]
+                               kfree(rmpp_recv)
+                               ib_free_recv_mad(done_wc)
 
-Fixes: 3a19d7b9e08b ("media: iris: implement set properties to firmware during streamon")
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Signed-off-by: Sachin Kumar Garg <sachin.garg@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
+        freed rmpp_recv -> UAF write and double free; nothing can
+        cancel that cleanup_work anymore, the entry is already off
+        agent->rmpp_list. done_wc is also returned to
+        ib_mad_complete_recv() and freed again -> UAF read and
+        double free.
+
+Reaching this requires sending MADs to a kernel RMPP agent from the
+InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
+manager responses whose SLID/GID/TID are not authenticated on the
+fabric, and legacy user_mad agents registered without
+IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
+MAD with an attacker-chosen TID, no in-flight send required. The
+attacker controls segment timing and can run many transactions in
+parallel (agent->rmpp_list has no cap), so landing the
+microseconds-wide receive critical section on the 40-second timeout
+boundary is a matter of patience, not luck.
+
+Unify state transitions under rmpp_recv->lock in
+recv_timeout_handler(), keeping list manipulation under agent->lock
+(which preserves the agent->lock -> rmpp_recv->lock ordering used
+by continue_rmpp()). State check/set in both paths is then
+serialized, so the loser of the race always observes the final
+state and bails out. recv_cleanup_handler() needs no change: with
+transitions serialized, a cleanup_work can only be pending after
+COMPLETE, in which case the timeout handler exits early.
+
+The race is as old as the RMPP implementation itself.
+
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: LLM
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_ctrls.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/mad_rmpp.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
-index bf17d310eac08..232be0cb7fa07 100644
---- a/drivers/media/platform/qcom/iris/iris_ctrls.c
-+++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
-@@ -525,6 +525,8 @@ int iris_set_stage(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id
- 			work_mode = STAGE_1;
- 	}
+diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
+index 17c4c52a19e4c..f05e9ce93c335 100644
+--- a/drivers/infiniband/core/mad_rmpp.c
++++ b/drivers/infiniband/core/mad_rmpp.c
+@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
+ 	struct ib_mad_recv_wc *rmpp_wc;
+ 	unsigned long flags;
  
-+	inst->fw_caps[cap_id].value = work_mode;
+-	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
++	spin_lock_irqsave(&rmpp_recv->lock, flags);
+ 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
+-		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
++		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
+ 		return;
+ 	}
+ 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
++	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
 +
- 	return hfi_ops->session_set_property(inst, hfi_id,
- 					     HFI_HOST_FLAGS_NONE,
- 					     iris_get_port_info(inst, cap_id),
++	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
+ 	list_del(&rmpp_recv->list);
+ 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
+ 
 -- 
 2.53.0
 
