@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019857;
-	b=LQ7s8tBdFgr+J7asNzQx3MGRsgeUhrGrMrqtZNNQPKewRHcUI2a+HCHPsqdvTCY9uQgW
-	 u+gUfM1loJQDQPaZZYDvPC/2grnYU2mO+/zCrALUWMmt8L++MQXzF7M0OtxEnaaH9uyqZ
-	 bhfOX+XUXoR1JFWePkdjeftUnl148KxpEIPfH8A6oZ29xDoccsCK4NhffybIxk3atKal7
-	 RFCEXnSqYFd4QuhQUFQu/yEVvW0WYY7KPjYMva1KfWwf25K2EqAzPs5XSHZ1GzpaoUCpQ
-	 EvEtm81mWw7tXpwhlkH2DeWuVJD6HjY4uf0x6VXVgcrvRZgD1O7hwrCysDxMvt2JohQ==
+	t=1795019859;
+	b=T4qW7/goxsSytfP/QL9Miz3JWW29c/yA68VK/Z9V+eYqjffnBMi2Cc6TeeuNGgoK6e9G
+	 83mfB/LKQ0I4xV3rBFonQEFyhipH0+jzOkGvKzAknvVuQbbQp2tACqyx2ZelEITSreuPd
+	 v08IasZW5wWiNebCEcTYviMd+GLSc6A0Hm9DqkamDh6dWhHvzjFPfi8kipW3ebTqYeAx/
+	 TU5q3gBe05/Af6QlmZ0Nib9ND5AFyg3mJkwScj+XT7AWOM9K4kRlwFjk2Vjw2Fh9dhFEp
+	 7RqD45Ju7RikoA1Vbw7xh6JeXuyDl5z6gmMRXb/b2MlihdRBiYujpa48AWu3FXwcLYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ScOadTgcZcY3EXK/uHLv0yTA8z08yF57DPv4OV8lGwg=;
-	b=Gn3tHC1/g4u86HIyV/fYJ5Y/sf8oVM/i80xvFfvzPnhyh7gWhuR8NlenVfIhndVJObJC
-	 MjXxV3KeeED9y1p4eCPwFwuhwPlbY32VI0McLGu4gmoZ3TVkhThkdLulR1m6N1LT8Epwi
-	 F709vL6/nrb7T0fHcPWby7ZQeMsLLTVb5uWDSH9LxYl3dmr9esuNUxjdlarcOehn6eWFm
-	 blEZQ6WKX8vVzQlF890nwAzomycLVIe6kXV7Rv6jt+8lf7inmAWAF7CbMTGf6UHTXqh83
-	 athJs3SM9ym7k6nEvVMPzLY3IfeyDiI4g/tJsNzuBI6OccBT9GpSeTOfIHULwDD8Wpw==
+	bh=AwiLR/UpSOQNVAhO0C+hgSFu7vVgyGcVN4h/IIaDRvU=;
+	b=L7XzHtl1byDS1ZHPE+RZLK9DjvPKDj6f44AZyxG+/yIWvqmAvjvBfnfor9BNKS0PxGi5
+	 N8jHYm8tjh1k0KMrbvUgvGTYyr13PMrmfU1TApdUqwiS0KX6Abua9g5uy6J0nG2fTZQfk
+	 IWh8yjjcAAhGTjSY9QPKM/MseRDmlXR0yDkUFsw2EgezZSP0HEBMnaXvMNfaQs8wPNwSa
+	 k4ZtZ29aXSs7r/JlOtNXRqRNH+af64gao1iNmwpqHr54yRNTYj8UXZ7vW6I9FYTlROZte
+	 PhtSykSH3g8z9FOE0d4pWR4Kx7w2vASYc1SJ2LpzQ1Un3+yDbDgdIyduS80cT2JnsiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EHq4nVsf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cm9Ov8WN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEF860A260C;
-	Wed, 18 Nov 2026 16:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C885E606A32A;
+	Wed, 18 Nov 2026 16:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EHq4nVsf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E1B1F000C4;
-	Wed, 18 Nov 2026 16:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cm9Ov8WN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4FA1F000CB;
+	Wed, 18 Nov 2026 16:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019856;
-	bh=ScOadTgcZcY3EXK/uHLv0yTA8z08yF57DPv4OV8lGwg=;
+	s=korg; t=1795019859;
+	bh=AwiLR/UpSOQNVAhO0C+hgSFu7vVgyGcVN4h/IIaDRvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EHq4nVsfxw1J1IKhrNRuMz/hwEIqadJPlWu0RQ0X6P0py0nC1gsdHW3sfziY9H5Te
-	 dg+TfacfaiPnW/75npTZ6vpCGU+PKLWSm+utiDzupJwS9x74R4ayWyU9mjPIo4rJe/
-	 jQngliAX28I+BIY5WXczoucDr8hf0X+G1jv21IUo=
+	b=cm9Ov8WNl06EaIXES+csLwLrRNPXOh/xoIogYGb6dtZ8vzk6qFYmQUYe4OY728s34
+	 e2Ef38bHoXG3zS3MoFMlg9ToC3rpGwsx8W2II8O1I+xxLSR1kTh/erxIc6CylicMJm
+	 HdAYJQV2tpAyg2M8XsBD2fmUwllEaIDma+wB4VTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1743/2651] clk: qcom: rpmhcc: Add LNBB clocks support for Glymur
-Date: Wed, 18 Nov 2026 15:49:43 +0100
-Message-ID: <20261118150350.304784086@linuxfoundation.org>
+Subject: [PATCH 7.3 1705/2651] clocksource/drivers/timer-mediatek: Fix random crash at boot
+Date: Wed, 18 Nov 2026 15:49:05 +0100
+Message-ID: <20261118150349.026948564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,48 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit 1ebab545ee3acbbee22adecb858d5d1d001de0af ]
+[ Upstream commit 8496a1d234e8cf9cb15c4282cb3a11c6550bd242 ]
 
-Add support for rpmh LN_BB_CLK2 and LN_BB_CLK3 clocks on Qualcomm Glymur
-platform.
+MediaTek bootloaders generally enable APXGPT timers at boot. This means
+that a timer IRQ can sometimes happen between the IRQ line request and the
+configuration of the clock event handler. This leads to a hard crash with
+an instruction abort, branch to pc 0x0 in mtk_gpt_interrupt handler as
+clkevt is null.
 
-Fixes: ebcb9db98bda ("clk: qcom: rpmh: Add support for Glymur rpmh clocks")
-Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-glymur-ufs-clk-changes-v2-1-d0aa1c60c269@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+To avoid this issue request the IRQ with IRQF_NO_AUTOEN and enable it
+explicitly after the clock event is configured.
+
+Issue was reported and fix tested on the Lenovo Tab E7 (TB-7104F, mt8167).
+
+Fixes: a0858f937960 ("clocksource/drivers/timer-mediatek: Convert the driver to timer-of")
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20261002072115.169250-2-l.scorcia@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clocksource/timer-mediatek.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index a224a94ae2733..88e872e58f641 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -393,6 +393,7 @@ DEFINE_CLK_RPMH_VRM(clk2, _a1_e0, "C2A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk3, _a1_e0, "C3A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk4, _a1_e0, "C4A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk5, _a1_e0, "C5A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk7, _a1_e0, "C7A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk8, _a1_e0, "C8A_E0", 1);
+diff --git a/drivers/clocksource/timer-mediatek.c b/drivers/clocksource/timer-mediatek.c
+index 7bcb4a3f26fb0..e20075b09fab0 100644
+--- a/drivers/clocksource/timer-mediatek.c
++++ b/drivers/clocksource/timer-mediatek.c
+@@ -277,7 +277,7 @@ static struct timer_of to = {
+ 	},
  
- DEFINE_CLK_RPMH_VRM(clk3, _a2_e0, "C3A_E0", 2);
-@@ -902,6 +903,10 @@ static struct clk_hw *glymur_rpmh_clocks[] = {
- 	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a1_e0_ao.hw,
- 	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a1_e0.hw,
- 	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a1_e0_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a1_e0.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a1_e0_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a1_e0.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a1_e0_ao.hw,
+ 	.of_irq = {
+-		.flags = IRQF_TIMER | IRQF_IRQPOLL,
++		.flags = IRQF_TIMER | IRQF_IRQPOLL | IRQF_NO_AUTOEN,
+ 	},
  };
  
- static const struct clk_rpmh_desc clk_rpmh_glymur = {
+@@ -298,6 +298,7 @@ static int __init mtk_syst_init(struct device_node *node)
+ 
+ 	clockevents_config_and_register(&to.clkevt, timer_of_rate(&to),
+ 					TIMER_SYNC_TICKS, 0xffffffff);
++	enable_irq(timer_of_irq(&to));
+ 
+ 	return 0;
+ }
+@@ -334,6 +335,7 @@ static int __init mtk_gpt_init(struct device_node *node)
+ 					TIMER_SYNC_TICKS, 0xffffffff);
+ 
+ 	mtk_gpt_enable_irq(&to, TIMER_CLK_EVT);
++	enable_irq(timer_of_irq(&to));
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
