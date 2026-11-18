@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017474;
-	b=4fNqbUKPXhlIXyomED7pwi8cM4HyieFiTtdz1fleLE2dOX9I2r/PYPcXKU6dCtXtiWfm
-	 WNRoN5j2LTyZwua0WgebDx+7g2AqE9Ee0FgL+KSkmOGQ1I9abUJkyRo9SVDij7OHgqO/k
-	 OkiJ+xEghnSFcYCa3m2cIEiMTzDlucbdK02yIbBaCadtgqOuV15tsM6bOqX1vPLwJodq0
-	 CaUkOkKsPjonAupPI62he1umG07SDGg3FXafpp9Bsd7UIeDNWmmhtH+NLZzyIk0B+CTmC
-	 8ENVATBy4pEsPwOdA8w3ICC1RMAdudA38SIqW6QJe9rihzPDtQdnnd4OWw5Suef8u4A==
+	t=1795017477;
+	b=GMO50F0708O5HP5RhwXvsfGn9X3hp/L088GWeMxtL/XPzIb8HlTdYBagIEYk3VpwbhEl
+	 LR1gjyrYLXc/P52FF6ptuqn48flYvIkCj0Kqff/k+8+CAiVOuCffZMb9avKKZb5ukq1sN
+	 Pcd3SJ1t8PFWAa1qsNzguI2B9YuTbupo+Iqh//yZeVVwLYnB2DbUNVdy6UDDs6mqDKaXy
+	 nLtIdfXE4fXZtSWFvkwb+OLdtbjW68qkVow1nTBdPHKQaMfkYVjra2jYyEwyXum0hmaPq
+	 JWLwmgZSmE51YCG/FIsTjifP6AkYEQg6kNf1GBv79x5eqS3b5bU3qSHy2y1De6/EATQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017474;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3RNaTTysqExztZmjbE1Vst3y9sa8tjVzpGrnKPQnImA=;
-	b=LWNXowiWpqKSDV8E7mH3yOlq9FtcT8GTiK59ngUEC4gnn515OWk7AIccz+EUpVwJdAt4
-	 bq9UIpkokSlc/8iGcnOwq1ZkB5pqFpFH133+qYHnfPwgfHPLLYBzmuTkc8RkmZiwkeoe3
-	 NCDtWjWtL9NmAzod4U0GHWzWFdZGBL82OWUQbNW+wLyxi10vxCstFLcsRHJfVAi8mefRR
-	 y0JA4ew1Ltp5HZ8cFEMslGwQsUYU7yfkgkRYb1rKyby40k9afoB1UZ41yWdfX+NfkS4UQ
-	 cekw5QsHf21QoIuW8o1DuTaeXTQfFZboiurgU6qmE9aFKHS99D6lLs9awODGHTgNOcQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=V8FbX6u7oycJ1B0ugbk7LOQn9i7OSsoAIm6L6MbxlN8=;
+	b=2fyTDe5asBGmBwMEHgLkwS3NT5KrZhsl1Eeu0TY3JnbcKk6w/21GSFD/YVj6yUtY7//1
+	 +B/Gwp434F26QWYsQ0fhZkmuLLKmw6i8yDQLYVXccYP5srZ3jitj073u3mp+OJ4EXP5ad
+	 SYwQmo2OGgabKjCWIrBj5mf5HS5Idn/BefRsglBY0LSe6BxDq2q60O4sGRKb7nCZeE7kX
+	 drzm3cjvneWbIPEdZp8p55VeCzIra9uVXLyVlIeXwZrciJLhKyttqGaCql64BGNAec3Il
+	 8yUsrrKS4CPvtfpf/WRnFSHkJQ/qXL3Dl99NK6HWiWZozC7uGPHcR64N/YdjRwwloEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWJ8GyiW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMFaHlRl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F84E606A320;
-	Wed, 18 Nov 2026 15:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618F3606A338;
+	Wed, 18 Nov 2026 15:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWJ8GyiW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E116D1F000C4;
-	Wed, 18 Nov 2026 15:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMFaHlRl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34B81F000C4;
+	Wed, 18 Nov 2026 15:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017474;
-	bh=3RNaTTysqExztZmjbE1Vst3y9sa8tjVzpGrnKPQnImA=;
+	s=korg; t=1795017477;
+	bh=V8FbX6u7oycJ1B0ugbk7LOQn9i7OSsoAIm6L6MbxlN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GWJ8GyiW0vjdRqeAR1VsvjgwaSh2dWhkc3NaXaRrV4Qn2jTlmqAVqITYi/FHkoC/f
-	 c980malAh8PJwVXTDDQd1pZ52/k/CYJqRJ3z8umAtzARNAfNcHEvQyX3AbIj1yN8x3
-	 3sdQH2iOo2UmzzWnhlF82DpJL1zGIqqIgrm+lNuQ=
+	b=XMFaHlRls3P+k63CnyQ8YUIsz+p7g4sK7nlAzhwJ2B1vP0QVcB8FheSCz8oEGMCyw
+	 RRtdhRUvvtukCpsR21Wg/6OTkXBg75mApz8WnyvuKGEJy2U04VDQ+MlWBEVfBOFN9E
+	 CHdwyAM3yRTtzngwjpy2aqPc9AXx9BP8KvPO+huM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0896/2651] tools/nolibc: fix FD_SET(), FD_CLR() and FD_ISSET() on 64-bit
-Date: Wed, 18 Nov 2026 15:35:36 +0100
-Message-ID: <20261118150320.122570238@linuxfoundation.org>
+Subject: [PATCH 7.3 0897/2651] MIPS: Octeon: size the swiotlb for a modular OHCI platform driver
+Date: Wed, 18 Nov 2026 15:35:37 +0100
+Message-ID: <20261118150320.158982355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,75 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 929ea5b3481fdbbb419f3986703280fb2b819504 ]
+[ Upstream commit f1dd1f0c8d595a019be503d40060d25721313b4a ]
 
-Since commit feaf75658783 ("nolibc: fix fd_set type"), an fd_set is an
-array of unsigned long, but the FD_* macros still build their masks as
-an int or an unsigned int: 1 << n in FD_SET(), 1U << n in FD_CLR() and
-FD_ISSET(), where n is the fd modulo 64 on 64-bit architectures. So:
+plat_swiotlb_setup() raises the swiotlb to 64 MB on OCTEON II with
+memory above 4 GB, because that OHCI can only DMA to 32 bits. The test
+is "#ifdef CONFIG_USB_OHCI_HCD_PLATFORM", which is false when the driver
+is a module - the usual way to build it - so the bump is silently
+skipped.
 
-- FD_SET() of an fd with n == 31 sets the bits for n = 31-63, as
-  1 << 31 is negative and gets sign-extended.
-- For n >= 32 the shifts are undefined. x86-64, for instance, masks
-  the shift count, so FD_SET(40) and FD_ISSET(40) use the bit of fd 8.
-- FD_CLR() zero-extends ~(1U << n), so it also clears the bits for
-  n = 32-63, whichever fd it is given.
+What is left depends on the rest of the function: with PCI enabled the
+"memory past the BAR1 hole" branch happens to ask for the same 64 MB,
+but with CONFIG_PCI off - which is normal on these SoCs when no PCI
+devices are wired - swiotlbsize stays at the PAGE_SIZE it was
+initialised to. A full- or low-speed device on an OCTEON II board with
+more than 4 GB of RAM then has no bounce buffer to speak of.
 
-select() on fd 40, for instance, fails with EBADF, or watches fd 8
-instead if that one is open.
+Use IS_ENABLED() so a modular OHCI gets the same sizing as a built-in
+one. Seen on a CN6635 board with 8 GB of RAM and
+CONFIG_USB_OHCI_HCD_PLATFORM=m.
 
-Build the masks from 1UL.
-
-Fixes: feaf75658783 ("nolibc: fix fd_set type")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260925211600.119116-3-danishkhateeb03@gmail.com
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: a8667d706dfa ("MIPS: OCTEON: dma-octeon: fix OHCI USB config check")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/sys/select.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/mips/cavium-octeon/dma-octeon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/sys/select.h b/tools/include/nolibc/sys/select.h
-index 6d65d9ef3d6af..f299c79939f59 100644
---- a/tools/include/nolibc/sys/select.h
-+++ b/tools/include/nolibc/sys/select.h
-@@ -26,7 +26,7 @@ typedef struct {
- 		int __fd = (fd);					\
- 		if (__fd >= 0)						\
- 			__set->fds[__fd / FD_SETIDXMASK] &=		\
--				~(1U << (__fd & FD_SETBITMASK));	\
-+				~(1UL << (__fd & FD_SETBITMASK));	\
- 	} while (0)
- 
- #define FD_SET(fd, set) do {						\
-@@ -34,7 +34,7 @@ typedef struct {
- 		int __fd = (fd);					\
- 		if (__fd >= 0)						\
- 			__set->fds[__fd / FD_SETIDXMASK] |=		\
--				1 << (__fd & FD_SETBITMASK);		\
-+				1UL << (__fd & FD_SETBITMASK);		\
- 	} while (0)
- 
- #define FD_ISSET(fd, set) ({						\
-@@ -43,7 +43,7 @@ typedef struct {
- 		int __r = 0;						\
- 		if (__fd >= 0)						\
- 			__r = !!(__set->fds[__fd / FD_SETIDXMASK] &	\
--1U << (__fd & FD_SETBITMASK));						\
-+1UL << (__fd & FD_SETBITMASK));						\
- 		__r;							\
- 	})
- 
+diff --git a/arch/mips/cavium-octeon/dma-octeon.c b/arch/mips/cavium-octeon/dma-octeon.c
+index 9fbba6a8fa4c5..c049632fbcc33 100644
+--- a/arch/mips/cavium-octeon/dma-octeon.c
++++ b/arch/mips/cavium-octeon/dma-octeon.c
+@@ -228,7 +228,7 @@ void __init plat_swiotlb_setup(void)
+ 		swiotlbsize = 64 * (1<<20);
+ 	}
+ #endif
+-#ifdef CONFIG_USB_OHCI_HCD_PLATFORM
++#if IS_ENABLED(CONFIG_USB_OHCI_HCD_PLATFORM)
+ 	/* OCTEON II ohci is only 32-bit. */
+ 	if (OCTEON_IS_OCTEON2() && max_addr >= 0x100000000ul)
+ 		swiotlbsize = 64 * (1<<20);
 -- 
 2.53.0
 
