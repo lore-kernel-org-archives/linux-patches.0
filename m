@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027456;
-	b=l9cArOxSG+ZyJcjy+lMg5mIWXy6SuQpE34lj/C8uwQy/pcFli2+EfCPH0kw6s/rpfm1C
-	 N1PRcbJ2ilFSgKFSUZiS7ITWyLf0p4NRdnL3kx0AxnbCf3N1tYVeAiCEIm/FFy+YB7jm6
-	 sEL0wFlXIQbHrhpb2RpNeAp3GPTybFiFS4EcDpCd1zrBMoIW8rXHoS4DbC9uAepleOyox
-	 HG1TN3+39llt1eH5rvUEv13T5kntajiPikvitLSKyJsn096L4LndgE51D6oxSM3gHAgZX
-	 AiNbBwSaOujh/YafbQb7WnOdXFRn2ReHOkxEPdQbua0+GZatQcGemyzZJDpkf5j0N4A==
+	t=1795027459;
+	b=NPiSxhj7uyq1Hwa2KQMXPWxWKpRzK882YSXpzMkUCiROj4BRuq3ipRLpFF66EKfH8jIg
+	 oLZPmeKYix3BvcQluHyYaVVFtd5bErfMv9qHwXj7ZYMaRm3Mzgx5uinaizG8Hv9jKEpF8
+	 KLMxHx+WfXgs+pw5V2MYuOxa7WqmA7Ha1lvEHNJLeOb0AHLCTOH9hiK7+/h++cWa2eYq2
+	 3nKyefhBzHmM/UQkCpbnrgQr0hN6nMDPuGvmG+fZgBhxgHChZXvOCG86KWkdazea0HFY+
+	 1pUGssKlTu0xbYqUwNWZ1kL6bZlBCLT5l8iCwhx/vKnJzOb+qnSVHjioJPMfNOHwJng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5IwnEmxYi5xxMEbIIuQMgniATd8etYc1NckeOKpvI2w=;
-	b=NlQ9/r/I2ollkYcrZEaEI5sKFKaEbaki5EXYpTy+6+GwFh8Gsqq0ebi1BadyXh7huQao
-	 G+rVpUa9wqUf8wcCoIOjmLB++M3qOTKOA5mWu4rzBJV82f0wxybC81/AyUB+jTNo4zxSi
-	 XMPITgl2tEY2ncaRzeITwPQp33ViEcZp/6uFKB/xbG0WgfYlPuAFQHI0IX/Wjj9UQQsww
-	 zZdbufFXei1V7/zsiMgDcRvc0WXT2fSQp0HvT7BdMh3N2KHO7rU3/jSQNXf4m59WaS8Xk
-	 TBIg7kPf0GfSbTeAnTWDrKdIGfg5K09rGT0usVNuJD3f3YR1AjF4eForsyKRdB0n0YA==
+	bh=BSztF9Q2Qr6lMYCpKv0ZqYY/3kLzH4ODm4qGBZGzAWI=;
+	b=4cbfPV0nTLBQNIp80F4XDldDLpde3zmu9cIsWxzTzKEPTvlpCYZRgOD1lr0x8YWrpEaq
+	 ZN5ZN9GRfhloNiMjK+9+b4nT0oz/SAsWdjMfCY9o2oUn4yaUq3rG3JoXe39jQg25qGRwz
+	 y6WGiSm1lCdRBVviXNrTcJFpvqOZsdknr5dI1lRDDV+L7qlhVyU5qyIU3DdBAIxs2j1nl
+	 Le6XwaZ8JYHNPvyHi+CpXgTcflrZDaSGanW+YER6Gamla3Hs0OzNpb/fwev6vYxVQQPZi
+	 H38K89CPScwdbrVt7CsioBC53RhTsee6G/ezQHVWvMm0WKiVhYfdoFweBktlDTbPdsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0LIcdxx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjw3jaUT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB3560A2616;
-	Wed, 18 Nov 2026 18:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473CB60A2602;
+	Wed, 18 Nov 2026 18:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0LIcdxx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7901F000C5;
-	Wed, 18 Nov 2026 18:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjw3jaUT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21F91F000C7;
+	Wed, 18 Nov 2026 18:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027456;
-	bh=5IwnEmxYi5xxMEbIIuQMgniATd8etYc1NckeOKpvI2w=;
+	s=korg; t=1795027459;
+	bh=BSztF9Q2Qr6lMYCpKv0ZqYY/3kLzH4ODm4qGBZGzAWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r0LIcdxxbsCmqf984z+vQVN9tjynhm6//fl7f8CHt/XGWIo/PCv1U0ia9m8nC8rBa
-	 qdwxt77xaBd5UV5GpY5lVGxUyKFDuyBU5toHyEta/FFlCU18KeThAsHNcGCczw0ITP
-	 ew2xouPQwJir64bkz/Wvh+dD9ouwvKYAbCZiuUh0=
+	b=Hjw3jaUTZ0WfY3Kk0G+tvIhHmCPOHwBvECBq5tfecR7YWFKvrbjrjX1kbzfOkpE3i
+	 1Y2Am0geIuvAFJjNC3fFrll3ZquWc9DoRmJsK7EWCN1nPceJbX/8M1PyAQwH19A4kH
+	 bwmTDcj059OsKrlbvODDeVuKSS71HiLEHOsiXDDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Yongzhao Chen <yongzhao.derek@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1779/2151] ALSA: jack: Pin the module while debugfs files are open
-Date: Wed, 18 Nov 2026 15:58:34 +0100
-Message-ID: <20261118150226.631280345@linuxfoundation.org>
+Subject: [PATCH 6.18 1797/2151] net: phy: qca83xx: read resolved QCA8337 link status
+Date: Wed, 18 Nov 2026 15:58:52 +0100
+Message-ID: <20261118150227.270625724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,110 +69,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Yongzhao Chen <yongzhao.derek@gmail.com>
 
-[ Upstream commit 8b479b265301e97bfbec0ef25de1c1f7eb4d2f74 ]
+[ Upstream commit 42a91cbfc7a3ab99d05cb2ed0de5a24b9652cfed ]
 
-With CONFIG_SND=m and CONFIG_SND_JACK_INJECTION_DEBUG enabled, an in-tree
-HDA jack creates these debugfs files through snd_jack_new() and
-snd_jack_add_debugfs(). Their file_operations live in snd, but none sets
-.owner. full_proxy_open_regular() therefore takes no snd module reference
-when it calls fops_get(real_fops).
+After a QCA8337 SmartSpeed downshift, genphy_read_status() can report
+1000 Mbit/s from the advertised modes when the PHY is running at
+100 Mbit/s. On a Redmi AX5400 running downstream OpenWrt Linux 6.18.52,
+this caused qca8k to program the user-port MAC for 1000 Mbit/s and
+traffic failed. An earlier prototype that read the resolved speed
+from the PHY restored traffic.
 
-A debugfs descriptor can outlive removal of its HDA card. Once the card
-and dependent modules, including the OSS emulation modules, have been
-removed, snd can be unloaded while that descriptor is still open:
+Wrap genphy_read_status() and use at803x_read_specific_status() to
+replace its speed and duplex result when an autonegotiated link comes
+up. Resolve pause for the resulting duplex. Until the PHY reports a
+resolved speed and duplex, report the link as down so that the next
+poll reads them again, as marvell_read_status_page_an() does. In that
+case also clear the duplex, master/slave state and link partner modes
+that genphy_read_status() read for an up link. QCA8337's register
+layout matches the helper (data sheet 80-Y0619-3 Rev. D, pages
+327-328).
 
-  Descriptor holder                   Card/module teardown
-  -----------------                   --------------------
-  open jack debugfs file
-    full_proxy_open_regular()
-      fops_get(real_fops)
-        owner == NULL: no snd pin
-  keep descriptor open
-                                      remove HDA card
-                                        snd_card_disconnect()
-                                          snd_jack_dev_disconnect()
-                                          remove debugfs nodes
-                                        snd_jack_dev_free()
-                                      unload dependent modules
-                                      rmmod snd
-                                        alsa_sound_exit()
-                                        free_module(): unmap snd
-  close descriptor
-    full_proxy_release()
-      read real_fops->release
-      fops_put(real_fops)
-        read real_fops->owner
+Keep the generic master/slave read order and the early return for a
+steady autonegotiated link. This avoids additional reads of the
+clear-on-read idle error count in MII_STAT1000. Forced mode continues
+to use BMCR. Report the MDI-X state read at link-up and invalidate it
+when the link goes down or autonegotiation is disabled. Clear
+mdix_ctrl because this driver does not implement MDI-X configuration.
 
-debugfs_remove() drains active operations, but does not wait for idle
-open descriptors. Release deliberately bypasses removal protection and
-reads the real table even when no release callback is installed. The
-last close can therefore access unloaded snd storage.
+The QCA8327 entries keep genphy_read_status(). The AR8327 data sheet
+(MKG-15791 Rev. 1.0) lists the QCA8327-A PHY ID and documents the same
+PHY-specific status layout, with SmartSpeed enabled after a hardware
+reset, so those PHYs may have the same problem. That is untested on
+QCA8327 hardware, so limit this change to QCA8337.
 
-Set .owner to THIS_MODULE in all six tables. The existing proxy
-fops_get()/fops_put() pair then keeps snd loaded through the final table
-access on close.
-
-Fixes: 2d670ea2bd53 ("ALSA: jack: implement software jack injection via debugfs")
+Fixes: b3591c2a3661 ("net: dsa: qca8k: Switch to PHYLINK instead of PHYLIB")
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Yongzhao Chen <yongzhao.derek@gmail.com>
 Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-431ddb947e1a13b95d3a-v3-02d37dd7b4eb4774e100@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261013190339.51909-1-yongzhao.derek@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/jack.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/phy/qcom/qca83xx.c | 58 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/sound/core/jack.c b/sound/core/jack.c
-index 9f1f61892d940..ddee40de720e8 100644
---- a/sound/core/jack.c
-+++ b/sound/core/jack.c
-@@ -309,6 +309,7 @@ static ssize_t jack_type_read(struct file *file,
+diff --git a/drivers/net/phy/qcom/qca83xx.c b/drivers/net/phy/qcom/qca83xx.c
+index bc70ed8efd86a..2c4d085bacdba 100644
+--- a/drivers/net/phy/qcom/qca83xx.c
++++ b/drivers/net/phy/qcom/qca83xx.c
+@@ -92,6 +92,63 @@ static int qca83xx_probe(struct phy_device *phydev)
+ 	return 0;
  }
  
- static const struct file_operations jack_type_fops = {
-+	.owner	=	THIS_MODULE,
- 	.open	=	simple_open,
- 	.read	=	jack_type_read,
- 	.llseek	=	default_llseek,
-@@ -316,6 +317,7 @@ static const struct file_operations jack_type_fops = {
- #endif
- 
- static const struct file_operations sw_inject_enable_fops = {
-+	.owner	=	THIS_MODULE,
- 	.open	=	simple_open,
- 	.read	=	sw_inject_enable_read,
- 	.write	=	sw_inject_enable_write,
-@@ -323,24 +325,28 @@ static const struct file_operations sw_inject_enable_fops = {
- };
- 
- static const struct file_operations jackin_inject_fops = {
-+	.owner	=	THIS_MODULE,
- 	.open	=	simple_open,
- 	.write	=	jackin_inject_write,
- 	.llseek	=	default_llseek,
- };
- 
- static const struct file_operations jack_kctl_id_fops = {
-+	.owner	=	THIS_MODULE,
- 	.open	=	simple_open,
- 	.read	=	jack_kctl_id_read,
- 	.llseek	=	default_llseek,
- };
- 
- static const struct file_operations jack_kctl_mask_bits_fops = {
-+	.owner	=	THIS_MODULE,
- 	.open	=	simple_open,
- 	.read	=	jack_kctl_mask_bits_read,
- 	.llseek	=	default_llseek,
- };
- 
- static const struct file_operations jack_kctl_status_fops = {
-+	.owner	=	THIS_MODULE,
- 	.open	=	simple_open,
- 	.read	=	jack_kctl_status_read,
- 	.llseek	=	default_llseek,
++static int qca8337_read_status(struct phy_device *phydev)
++{
++	struct at803x_ss_mask ss_mask = {
++		.speed_mask = AT803X_SS_SPEED_MASK,
++		.speed_shift = __bf_shf(AT803X_SS_SPEED_MASK),
++	};
++	int ret, old_link = phydev->link;
++
++	ret = genphy_read_status(phydev);
++	if (ret)
++		return ret;
++
++	/* Keep the state resolved at link-up while the link stays up */
++	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
++		goto out;
++
++	phydev->mdix = ETH_TP_MDI_INVALID;
++
++	/* genphy_read_status() derives speed and duplex from the
++	 * advertisements, which is wrong after a SmartSpeed downshift.
++	 * Use what the PHY resolved instead.
++	 */
++	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete &&
++	    phydev->link) {
++		phydev->speed = SPEED_UNKNOWN;
++		phydev->duplex = DUPLEX_UNKNOWN;
++		phydev->pause = false;
++		phydev->asym_pause = false;
++
++		ret = at803x_read_specific_status(phydev, ss_mask);
++		if (ret)
++			return ret;
++
++		/* Report the link down until speed and duplex are resolved,
++		 * so that the next poll reads them again. Also clear what
++		 * genphy_read_status() read for an up link, as the
++		 * PHY_HALTED path of the state machine does.
++		 */
++		if (phydev->speed == SPEED_UNKNOWN ||
++		    phydev->duplex == DUPLEX_UNKNOWN) {
++			phydev->link = 0;
++			phydev->duplex = DUPLEX_UNKNOWN;
++			phydev->mdix = ETH_TP_MDI_INVALID;
++			phydev->master_slave_state = MASTER_SLAVE_STATE_UNKNOWN;
++			linkmode_zero(phydev->lp_advertising);
++		} else {
++			phy_resolve_aneg_pause(phydev);
++		}
++	}
++
++out:
++	/* MDI-X configuration is not implemented */
++	phydev->mdix_ctrl = ETH_TP_MDI_INVALID;
++
++	return 0;
++}
++
+ static int qca83xx_config_init(struct phy_device *phydev)
+ {
+ 	u8 switch_revision;
+@@ -220,6 +277,7 @@ static struct phy_driver qca83xx_driver[] = {
+ 	.flags			= PHY_IS_INTERNAL,
+ 	.config_init		= qca83xx_config_init,
+ 	.soft_reset		= genphy_soft_reset,
++	.read_status		= qca8337_read_status,
+ 	.get_sset_count		= qca83xx_get_sset_count,
+ 	.get_strings		= qca83xx_get_strings,
+ 	.get_stats		= qca83xx_get_stats,
 -- 
 2.53.0
 
