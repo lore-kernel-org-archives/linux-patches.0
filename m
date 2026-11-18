@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043505;
-	b=G4LtYJ5/N+5+2iuTNGJrwlJt4MDZ+N/5Bho6Tf9KNwowna+rUOY92a/P9jbvZYzeDhSU
-	 AL2ezxnZkA3FJWeJV17Dvs2amq0BIvS3Q6S7Yrw3kFpnxGZcd7k/5Dbu8M5IPI5Jrv9gR
-	 6lDRX7pyYZ3pNu3w/WXC8o9VuvNwBKPHPkhiYY5WmQHZ4r5AhPw4iXKzS+sPjijfawFgo
-	 rEqG7pgByoPT2g/0uG6ym9M0ZwIgnGXCZF/7KewQPkXY5NQmc1/h/K5d0HmUcfCqIQWf/
-	 Z6easKl3W2RXemAXrDASWWGVTs0/YRJvO9+/pLeg5C49tK5Ls3c0dIBrf3l8XFhPDXw==
+	t=1795043507;
+	b=21xUvWEfVL0SOKNPD9h3kLYHJDBpmG0pJoHm7VjaBbJ+T/+8vvywVyWD/5yAbCB7Cuvy
+	 ZCaAFVB9wpMdr/L/XkaZnfI5COk9GG2ctj1BR2W6TdLbrN7Tddct/r2UjX57qfzDdo8MA
+	 dsKSP3NQyZPFVD76qF1p/R943SfG2oInnUHRAWlQwI/nmrXI2Ueeo4Pav5LzSI9rag66d
+	 B9Ykd7F1jjS4ar0VV2ywZNzUUY+J+X7U4Btiv3Ay3IvQqTpu6kAr5A6+TXjiZDJ6CetLh
+	 meK4RcH83wl0Y0lk903sakDYLbmcSfonr/AFVD6ik5MdxSYh8TlO/R3i5DRLKpngd7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Q6wD8KyI7Jj8c1w3e+8w/sz8YfvHTfnL+fX67I5/akM=;
-	b=ZIBckAERAUkkBBN15NuI+pmuhb/5DfmuRlaqK+Tps5U0toaiulOb3H6fIVYo8a+4SYYC
-	 cXqrQ2AZRETBcqw3jTajaHekfG6kzG6sn85ApwreOMT4Bsp/SRw7jE3VlcHYYwUglwdx4
-	 NRshUTOTYlSPn/Ps86U4wzsjKsmpKTb3q+z5HXqi1CFQ9ncnUMP1WL39RkOj5gAXl1f4r
-	 bHwnusqYd23aGBGitmznC7geCT993a+TgFXsIJ2p3PVlhgUXHGD5KeUDZ5t2qPztlViUy
-	 cPTHcc/J/9ib04CdCxPJZEfQoZTIXTg7VY87/aP8chiHvd4NygC20rtwJTfryUIiTlg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=iUnVd+TdjphOIJ7rmhigM1javg5xPNa7cquhzrbwcWA=;
+	b=aC3e0NZMuewy8nDS854A5RoziZg5bQepoC2vcDd3uARNjbLYflczmPgoms0+0p+W9vu/
+	 NCHAfJk0mYhjqg4S1oyJOpQX5yYn3ZERly42i+CiYAZuTOyWw3BD9HQ80MODoOxaaDLgX
+	 1Gmle7mOlwYAElmdYtqlwDtPdZehpYHpiEh0cKBBKlrDkRIBEVGzurUTw32EiGPeyiG/e
+	 GAbks502+eOlVOwCHnG2hXMY/vCH8sxR3rvG0M3Vfpk8jrv6FL2whV8dGdJu09OE6Hzbl
+	 W1O22W9aZb+85w4LzspxWy74kPiDOOUtCP3L5LXvB1FIQsnr8fhr7EdpIZAL0KqBnAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNfGzG91;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CuUqb6b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27B3606A320;
-	Wed, 18 Nov 2026 23:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A52606A31C;
+	Wed, 18 Nov 2026 23:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNfGzG91
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5165C1F000C4;
-	Wed, 18 Nov 2026 23:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CuUqb6b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F941F000C4;
+	Wed, 18 Nov 2026 23:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043504;
-	bh=Q6wD8KyI7Jj8c1w3e+8w/sz8YfvHTfnL+fX67I5/akM=;
+	s=korg; t=1795043507;
+	bh=iUnVd+TdjphOIJ7rmhigM1javg5xPNa7cquhzrbwcWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNfGzG914coKz5bqA6oJeNe7ZdPuQIV++9UMHis28RKlCH/kwGxPtEvrO4xNEX7CC
-	 IqkB/LDMGSz891GoCreAlQNzDrMgu/KZzOcQSwBOJ4B9PT806ZIIUbqk4G18yqEQSA
-	 94FjSVq+ypuzheKzAgP0RzVj+c4mbownL0AhWSQs=
+	b=1CuUqb6b8HNZ22b2Ojsv6xtNaiAmpMPp4pjwi97Ioi9uI4xHK2jdDv82BLyMkJkoO
+	 bHWsBEhA1/1ExeSE4V7A7T71BfV3/pnF+MiUyvdOwGXGATL5WLe5HhuL9Ye2cDMlN9
+	 q5JPTEZGkyjs6DYrI2dKxThHXJqQxygqPxDx5mkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhui Guo <guojinhui.liam@bytedance.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Carl Quist <equalizerjr@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0198/2857] net: usb: cdc_ether: add quirk for AMI BMC stale link events
-Date: Wed, 18 Nov 2026 15:20:32 +0100
-Message-ID: <20261118150208.481987842@linuxfoundation.org>
+Subject: [PATCH 6.1 0199/2857] ALSA: hda/realtek: Enable mute LED on HP Laptop 15-dy0xxx
+Date: Wed, 18 Nov 2026 15:20:33 +0100
+Message-ID: <20261118150208.518296886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,93 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinhui Guo <guojinhui.liam@bytedance.com>
+From: Carl Quist <equalizerjr@gmail.com>
 
-[ Upstream commit 089ca284afb0f3b2870a5ce41524cbc91ed350d4 ]
+[ Upstream commit eb2b516900f2cff6c931a0d664a625ee93855779 ]
 
-On AMD Genoa/Turin platforms the BMC-provided USB-Ethernet gadget
-(American Megatrends, VID 0x046b PID 0xffb0) intermittently fails to
-respond to ARP after AC cold boot.  usbmon captures a stale
-NETWORK_CONNECTION(off) immediately followed by
-NETWORK_CONNECTION(on) on the interrupt endpoint (~130us apart)
-after enumeration.  Because alloc_netdev() leaves
-__LINK_STATE_NOCARRIER cleared, netif_carrier_ok() returns true
-when the spurious OFF arrives, so usbnet_cdc_status() cannot
-recognise it as redundant and schedules EVENT_LINK_CHANGE.
-__handle_link_change() then calls unlink_urbs(), killing ~60 rx
-URBs whose payload has already been DMA'd into memory — xHCI trace
-confirms them completing as -ECONNRESET with non-zero residual
-length.  rx_complete() drops these unconditionally.  The following
-ON restores the carrier and re-submits URBs, but the ARP reply is
-already lost; the interface looks "up but silent" until ifdown/ifup.
+The mute LED on the HP Laptop 15-dy0xxx (PCI SSID 103c:864f, Realtek
+ALC236) does not work, because the machine has no entry in the quirk
+table. No fixup is applied, so no mute LED classdev is registered and
+nothing ever drives the LED.
 
-Fix this by adding a device-specific quirk with FLAG_LINK_INTR set,
-which makes usbnet_probe() call netif_carrier_off() after bind.
-With initial carrier == OFF, usbnet_cdc_status() recognises the
-spurious OFF as matching the current state and drops it; the
-subsequent ON is the first real event and brings the link up
-cleanly without ever tearing down the rx queue.  The scheduled
-link-change kevent is harmless because EVENT_DEV_OPEN is not yet
-set at probe time.
+The LED is controlled by COEF index 0x07, bit 0. This was verified on
+the hardware with hda-verb: setting the bit lights the mute LED and
+clearing it turns the LED off.
 
-This is applied as a device-specific quirk rather than a change to
-the shared cdc_info driver_info because some CDC devices never
-send NETWORK_CONNECTION notifications; forcing carrier off for
-them would leave the link permanently DOWN.  Restricting the change
-to this VID/PID keeps that class of device untouched.
+  hda-verb /dev/snd/hwC0D0 0x20 SET_COEF_INDEX 0x07
+  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x1     # LED on
+  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x200   # LED off
 
-Tested on Genoa and Turin across 100+ AC cold boot cycles; ping
-first-packet success rate went from intermittent to 100%.
+That is exactly what ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 configures, and
+the closely related HP Laptop 15-dw0xxx (103c:85f0) already uses it.
+Bit 9 (0x200) is set by default on this board and is preserved by the
+fixup's read-modify-write.
 
-Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Link: https://patch.msgid.link/20260730051341.24930-1-guojinhui.liam@bytedance.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested on an HP Laptop 15-dy0xxx (SKU 7FU54UA#ABA, board 864F,
+BIOS F.40).
+
+Signed-off-by: Carl Quist <equalizerjr@gmail.com>
+Link: https://lore.kernel.org/CAOtcGaxXndKxTK5MVSEcmF-LUy+V51K7fhE=qvLA+VvW5ZyCNA@mail.gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ether.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/cdc_ether.c b/drivers/net/usb/cdc_ether.c
-index f07bfe56ec875..b5e3f81900446 100644
---- a/drivers/net/usb/cdc_ether.c
-+++ b/drivers/net/usb/cdc_ether.c
-@@ -531,6 +531,16 @@ static const struct driver_info	cdc_info = {
- 	.manage_power =	usbnet_manage_power,
- };
- 
-+static const struct driver_info ami_bmc_info = {
-+	.description =	"AMI BMC USB Ethernet",
-+	.flags =	FLAG_ETHER | FLAG_POINTTOPOINT | FLAG_LINK_INTR,
-+	.bind =		usbnet_cdc_bind,
-+	.unbind =	usbnet_cdc_unbind,
-+	.status =	usbnet_cdc_status,
-+	.set_rx_mode =	usbnet_cdc_update_filter,
-+	.manage_power =	usbnet_manage_power,
-+};
-+
- static const struct driver_info	zte_cdc_info = {
- 	.description =	"ZTE CDC Ethernet Device",
- 	.flags =	FLAG_ETHER | FLAG_POINTTOPOINT,
-@@ -1034,6 +1044,12 @@ static const struct usb_device_id	products[] = {
- 				      USB_CDC_SUBCLASS_ETHERNET,
- 				      USB_CDC_PROTO_NONE),
- 	.driver_info = (unsigned long)&wwan_info,
-+}, {
-+	/* AMI BMC gadget */
-+	USB_DEVICE_AND_INTERFACE_INFO(0x046b, 0xffb0, USB_CLASS_COMM,
-+				      USB_CDC_SUBCLASS_ETHERNET,
-+				      USB_CDC_PROTO_NONE),
-+	.driver_info = (unsigned long)&ami_bmc_info,
- }, {
- 	USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ETHERNET,
- 			USB_CDC_PROTO_NONE),
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 68ddad4689fd3..5fbc25888f3ac 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9941,6 +9941,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
+ 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
++	SND_PCI_QUIRK(0x103c, 0x864f, "HP Laptop 15-dy0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
 -- 
 2.53.0
 
