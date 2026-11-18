@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045492;
-	b=WxxA/6iP0//M2RSESf9jyV93Q9J6HcA7FRvrY13j/YWyNBua8Fcs/YvfBumKvsyZTlNi
-	 NfnSEAP1XtbxNJ5rUacy1rAkVYiPvlSEdupGjEpMEE2yH8rJQIpsDsXB6KiBDvflwAdnw
-	 No5bexG9ll+8Fckl4bDSVxO6lMk365kQ5szAEfoGOhYzdmmtVK5maDtnes0pBXbsmXjd6
-	 ZQEKbkhCJfCaveSX/5HbFl0Qb0gV8BMT4MWQOmK8uYw1HZkb9HCbreMmQhfRnotHjDi3j
-	 DWIsvZiOAlKNiW1O9vjtmKDT81adNv+l2eIsYmHwEiong03AjOni5FwDChC55W6QJcA==
+	t=1795045494;
+	b=eiuFGRcvj8B4W9JMhzYTgocMOd5tJoHVAm8fV7DdC73udOCzy5fJ7zFFAelGvaKKd+Em
+	 CAjbL3FWYtPdAhzu5rY485Ozu3fgkncbQOmSJBB4OXjrs5xEtnxdunon+1Eu1w041nqtH
+	 PgPma9/IuatCeXcpcR69McWlpQSIAiBo4/Ckg9nkPtmzQnnVwxS2w/XBY+uPIxQ4gkQQ3
+	 fiop+y4evxz34w4UCPaqEQHUyZZdBlDfR12kKBaUeOJbz4BspWPG9nc/9PiHVxr5kMSMt
+	 q4A5zKEQTs8ats5Ks2DbWcoO5Y3hfLfkbd7cTe99f/1Fa7QcylBUH1fhXRZnBwT9tkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6hDi5JqSlE3eRd42ww4W1ykZvw3TJ55/HJmLV/ezSic=;
-	b=cXZD15e5dfgmMWqP30Mvvw+D6ql4v/LWWdWJy2Qta4CK7DNrzQuqzE0LffWwukj0dJ67
-	 vfWvXeFLRTb/3EcsNtfnJdzw82rinmqozE2SWloTjfKJshSHZAlcqIsvSvCbiEMV9BkA/
-	 TI+6qlPJEMXjr5jjtXjG/MgMnUYgzn+r1d6x+VQhi7mzbpVZcvFnSccXCsXGLa8KmTfN/
-	 EezKdHbQr7/pLFtak7/wRNGVNT5CQrtPRt5eBlAGmXPGz6wkDtH0F9TSG2tlzf+FwSZ74
-	 q0AVgTSAxaH6XdLvw3aIprAnEduUIN+NMRwZiWPKXIQiAB5SqxpDI1BPYNJB0/g8gLA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=1XprbiX9Jg2c/tH1o99hw/tVB/2pnh0SC9JI6/6lI/8=;
+	b=hzEdz8svIkgWlLHGYXC2FiuozG9x8qUsmUCmY7y/gjNSEMGWqvCc8w9Vkk73/xFSbA/h
+	 qzjJOS2srH3VrHecrzCvBJCE6by+gFsD2VL26T3nV53Sj7lRhLoUU5HlgoZIQyPfTtvGQ
+	 CfCoFnr9lbcMx0MmsMcgWVQQsRIsBFPmmR3obAK6/nF96Wrqn4whGLe4DdRUQA2Pni8BS
+	 /tE21TLls/qXUyxvLAwZ+qVk2sBmC5fgXmiqL1uzYov3Djko14JmyzenvfoPzh8sx9Eiy
+	 lDJvLJH+hPZzBYtZ6DYZVOo0p2An7rvPtW+4iBMdStpAim+rEPGXiwo4ZiiRS2aeCcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iwe+8PJw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VYfsN2S/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF99D606A332;
-	Wed, 18 Nov 2026 23:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F54F606A31C;
+	Wed, 18 Nov 2026 23:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iwe+8PJw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454FC1F000C5;
-	Wed, 18 Nov 2026 23:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VYfsN2S/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DE41F000C5;
+	Wed, 18 Nov 2026 23:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045491;
-	bh=6hDi5JqSlE3eRd42ww4W1ykZvw3TJ55/HJmLV/ezSic=;
+	s=korg; t=1795045494;
+	bh=1XprbiX9Jg2c/tH1o99hw/tVB/2pnh0SC9JI6/6lI/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iwe+8PJwFnhEXlAv/z/klgBmJtVpG/TiGXmzcNVqWfM/kVP70Z82X8Uvu886rWTyL
-	 4KP4c/3f9114vVPtoHUiOzla+o6zjEcNPzvV5Fg9gkhS0vbJ8Qhtbjd+FsKvqdd/jh
-	 NOXoN5JB0vuvnJsF/v+mM5HM3qLtqguV9k30BVok=
+	b=VYfsN2S/qOyiswHbekhZ7umeyBcZZeXne71/pYBFz90n+UOP1lUUEKGskRjFfIB94
+	 q+D+uf/vMP35Y6jU6zmoR73D1SZ9yGfmHs0wIkd9L1q09KzOwNJr++GYGNwv1qo4+E
+	 Ks24+N0lyTrRD1lN3ZCjK26y6ZILp01qv6EBFgps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Andrea Parri <parri.andrea@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0939/2857] nvmet: free the bvec on file namespace range errors
-Date: Wed, 18 Nov 2026 15:32:53 +0100
-Message-ID: <20261118150235.412543143@linuxfoundation.org>
+Subject: [PATCH 6.1 0940/2857] nvmet: zns: dont leak stale memory in zone management receive
+Date: Wed, 18 Nov 2026 15:32:54 +0100
+Message-ID: <20261118150235.450381933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,53 +63,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 9d820d55b3cb4859c7cf42a74dc78f6154f97398 ]
+[ Upstream commit 31b8a6af19b73e6167c4b655cd5e86681bac1c41 ]
 
-nvmet_file_execute_rw() allocates the bvec before
-nvmet_file_execute_io() checks whether the request fits in the backing
-file. If the request extends beyond the file, nvmet_file_execute_io()
-calls nvmet_req_complete() to return an error. This skips
-nvmet_file_io_done(), so the allocated memory is never freed. Repeated
-requests can exhaust memory.
+A Zone Management Receive report returns the full buffer the host asked
+for, but nvmet_bdev_zone_zmgmt_recv_work() writes only the 8-byte
+Number of Zones field and one 64-byte descriptor for each matching zone
+that fits. The 56 reserved header bytes and every descriptor slot past
+the last match keep whatever the buffer held before. A 4096-byte report
+covering a single zone leaves 4024 bytes unwritten.
 
-Use nvmet_file_io_done() to free the bvec before returning the range
-error to the client.
+The tcp, rdma and fc transports allocate that buffer with sgl_alloc()
+and pci-epf with kmalloc(), none with __GFP_ZERO, and on success each
+sends the whole buffer to the host (nvmet_setup_c2h_data_pdu() for
+tcp), so the host receives old kernel memory from the target.
 
-Fixes: 50a909db36f2 ("nvmet: use IOCB_NOWAIT for file-ns buffered I/O")
+nvmet_bdev_execute_zone_mgmt_recv() also never checks the transport
+data length against NUMD, so on transports where the host sets that
+length, the buffer sent back can be much larger than the report NUMD
+describes. pci-epf derives its data length from NUMD, so the length
+check below does not apply there, but the zeroing still covers the
+report.
+
+Reject a data length that does not match NUMD with
+nvmet_check_transfer_len(), as nvmet_bdev_execute_zone_append() does,
+and zero the report with nvmet_zero_sgl() before filling it. Zeroing
+NUMD bytes is only enough because of the length check, so the two go
+together.
+
+Allocating with __GFP_ZERO in the transports would also close the leak,
+but it adds a memset to every read command to fix one handler, so the
+transports are left alone.
+
+Tested over the loop, tcp, rdma and fc transports with a zoned
+null_blk namespace: before this patch, zone reports carried stale bytes
+and a data length larger than NUMD was accepted; with it, reports are
+fully initialized and such a length fails with Data SGL Length Invalid.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/io-cmd-file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/target/zns.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index 2d068439b129c..6e14700164724 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -133,8 +133,8 @@ static bool nvmet_file_execute_io(struct nvmet_req *req, int ki_flags)
+diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
+index bb512a88053df..64ec757c7c23b 100644
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -291,6 +291,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
+ 	if (status)
+ 		goto out;
  
- 	pos = le64_to_cpu(req->cmd->rw.slba) << req->ns->blksize_shift;
- 	if (unlikely(pos + req->transfer_len > req->ns->size)) {
--		nvmet_req_complete(req, errno_to_nvme_status(req, -ENOSPC));
--		return true;
-+		ret = -ENOSPC;
-+		goto complete;
- 	}
++	/* Only the zone count and matching descriptors are written below. */
++	status = nvmet_zero_sgl(req, 0, out_bufsize);
++	if (status)
++		goto out;
++
+ 	if (!req_slba_nr_zones) {
+ 		status = NVME_SC_SUCCESS;
+ 		goto out;
+@@ -319,6 +324,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
  
- 	memset(&req->f.iocb, 0, sizeof(struct kiocb));
+ void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
+ {
++	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
++
++	if (!nvmet_check_transfer_len(req, out_bufsize))
++		return;
++
+ 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
+ 	queue_work(zbd_wq, &req->z.zmgmt_work);
+ }
 -- 
 2.53.0
 
