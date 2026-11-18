@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061383;
-	b=BNemgO6JvQhwEPnGSSEW+lz4xLhauLKvPqAH65JFNxahSUXVrT+vqtG5NLRPy+NKtEQN
-	 v9w2eP1TfCt/biB8ZOZWzAJORFVriDvvtwgn4VFsH66qoqIApW0veezIaxswu0vIyjuRi
-	 sD6it9DWOo9JtAAeI3JBdrknVYUp0/Unqx9RLSN2So+310a27c35KMzkfyCInp+gVU67K
-	 m6eE99k9hWYSLtMcTD5w3UMgfo9nVLJcggHpI/cDtI6VXMe5SUfynBISrOvpIoxX1IRb7
-	 kahsieX5ZcWrwgGnKt8hn3RfVqLtwNSu/6/qjTMVYbVsV+oN7G5ddFP/gXE00dZwp5A==
+	t=1795061386;
+	b=ygywR0K2B9MNhiwzDJcvSZ85ic3QmHYKybO/Q9qkiRc+8hhBKIqNDpAdt9MnAyLS1cTj
+	 fDeiGZXeNjc2E9UMxqgdz6XiZf/ITPqsSgFcDk0qpB0ds5ZSvoW9KnV2Tj73oJnh6k3aX
+	 byz0Q83rs6RFApGzXPsRquoWcgsc8Z0gfYpBgdmAcLti1fpC752olBtY/J45pPAkQJStC
+	 d0YpqGFgBWvIq6dpWBuykggM1eh29p6L04766fAjIAw0b5Vs0pieWzp2L9YUPNgv2wpoS
+	 vWYEcWci0wrzEoBgtfezsbndi1kJaL6KbZS/0HDFLQpGugP0+RkjiTN7tdXu9+gzyxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j1XL0qtTKRDC4gbLv8Ht3Wy+yi+XvkzfFzDV5ulM9do=;
-	b=i2O0SF4Nyz7YhDEiWgwATjIg7+N0+QF7hQ63IO8ZWXMhUU/YvVqH/mNrRw28QMhSuXUU
-	 fZKXZoM6FwhAKf0RQ2OwX10bP6Qq7NZepmhvrHTHclPN4EDtBbRlPtmui4mBJUsy6AJjm
-	 7uk+ilM7NhkmAfDK5nEXrQOUCV2fMtxFxE7eQGJEoZThgg22EbliA2v43ghakUct8WFCA
-	 UogZfoPk/rrpi8B8AKZakT4HbxeTyED3ADjgEXxr27o2wSntGTohW1j6Zy/aHUR6Wn1rO
-	 oO2gPCCnqhVsDWlNhSWMzBfq52xkD94uR7aqR3Aw6xWDgaC+h9F81jFyIIt42VC99qw==
+	bh=e8Yrt2uOISvs52dn3bJJ/2ZL3ZjjMXDm2aYjz6VhdSM=;
+	b=quUCfrcE8MRalO1dB+BlTLEbUigV5AAtkYa2vRj6FdgPyMwAZ6KcEmWpukaPn1SsCp5c
+	 y4RS/dq4Vq75tJVF9rta9AJvTPVWLiQeGBem2WWZ32iou8TywmVKavzXhSypD0E0aazud
+	 FbGtCF86b7XLoUp6ZIAZhlDUjP54NispvFJ4m8liOaEcl1s+xjIA99a0QQw+woIk03E7D
+	 00jYbr4gaDWtsaxvia9h+f+jzJ24MsO4FgOMPSNfhKZRFiDde1PRZIW7F1U7MI+aZrFoo
+	 9zoPMDlHBekqlU6ncig+RpHRJuxKL2awWcVojnoKgfAIC9AB7wbxePtjXw8KlcND5mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QaKuWLob;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNszwnH4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361D6606A320;
-	Thu, 19 Nov 2026 04:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71087606A320;
+	Thu, 19 Nov 2026 04:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QaKuWLob
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF391F000C4;
-	Thu, 19 Nov 2026 04:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNszwnH4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7BB1F000C4;
+	Thu, 19 Nov 2026 04:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061383;
-	bh=j1XL0qtTKRDC4gbLv8Ht3Wy+yi+XvkzfFzDV5ulM9do=;
+	s=korg; t=1795061385;
+	bh=e8Yrt2uOISvs52dn3bJJ/2ZL3ZjjMXDm2aYjz6VhdSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QaKuWLobntaPwnkyPrH1JXu8xVYt80Za8X4GlFmPzKmPutu/9pwfumoI+FShE32iH
-	 fuHp3+VklmKMJbvg3k0tgsdrKqNYCdK3TXCmhYNXDC/PIFn0wIw8odMD10jX2rCXLV
-	 Pftm4rovJnQU3qLPi72PMS58srlKyv/m4zuF089E=
+	b=HNszwnH4UDv1IwdCntuS9eZmafO9XiOon2/uim9TZdzwDl7sG8uPJexBCrFlhNxwN
+	 i+kbOykBFZpkj6XH6fPzJp6wtblqY6bO7f56qeC1xthVB/E0UWKmd0I32zRMCn+Fu6
+	 AQDtHECf9mzCrwQlqkJtCmNv+So2X0SGGLpBiVVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1533/1848] drm/amd/display: use right type for amdgpu_dc_performance event entries
-Date: Wed, 18 Nov 2026 15:59:31 +0100
-Message-ID: <20261118150023.553189321@linuxfoundation.org>
+Subject: [PATCH 5.10 1534/1848] ASoC: mediatek: common: Handle constraint return value in FE startup
+Date: Wed, 18 Nov 2026 15:59:32 +0100
+Message-ID: <20261118150023.683027083@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,58 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 99858eda764364bae733448c7eb79145d3d043ec ]
+[ Upstream commit 5fcdb40a4776cc6f8d3179aa9cf9663fc18c7861 ]
 
-Some amdgpu_dc_performance trace event params are passed as unsigned
-long but stored as uint32_t, cutting them off on 64-bit. Use the right
-type on entry fields and on printk use unsigned format accordingly.
+snd_pcm_hw_constraint_integer() may return 1, which is then returned
+from mtk_afe_fe_startup(). ASoC only treats 0 as success when marking
+the DAI as started, so .shutdown() can be skipped on rollback.
 
-Fixes: 0cf5eb76e2b4 ("drm/amd/display: Add tracing to dc")
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Return 0 explicitly on success.
+
+Fixes: 283b612429a2 ("ASoC: mediatek: implement mediatek common structure")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261007110858.509341-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ sound/soc/mediatek/common/mtk-afe-fe-dai.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index d898981684d5a..23e4c6c7c3db0 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -72,10 +72,10 @@ TRACE_EVENT(amdgpu_dc_performance,
- 		const char *func, unsigned int line),
- 	TP_ARGS(read_count, write_count, last_read, last_write, func, line),
- 	TP_STRUCT__entry(
--			__field(uint32_t, reads)
--			__field(uint32_t, writes)
--			__field(uint32_t, read_delta)
--			__field(uint32_t, write_delta)
-+			__field(unsigned long, reads)
-+			__field(unsigned long, writes)
-+			__field(unsigned long, read_delta)
-+			__field(unsigned long, write_delta)
- 			__string(func, func)
- 			__field(uint32_t, line)
- 			),
-@@ -89,12 +89,9 @@ TRACE_EVENT(amdgpu_dc_performance,
- 			*last_read = read_count;
- 			*last_write = write_count;
- 			),
--	TP_printk("%s:%d reads=%08ld (%08ld total), writes=%08ld (%08ld total)",
--			__get_str(func), __entry->line,
--			(unsigned long)__entry->read_delta,
--			(unsigned long)__entry->reads,
--			(unsigned long)__entry->write_delta,
--			(unsigned long)__entry->writes)
-+	TP_printk("%s:%u reads=%08lu (%08lu total), writes=%08lu (%08lu total)",
-+		  __get_str(func), __entry->line, __entry->read_delta,
-+		  __entry->reads, __entry->write_delta, __entry->writes)
- );
- #endif /* _AMDGPU_DM_TRACE_H_ */
+diff --git a/sound/soc/mediatek/common/mtk-afe-fe-dai.c b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
+index 882cdf86c8bf8..22bd137d61c57 100644
+--- a/sound/soc/mediatek/common/mtk-afe-fe-dai.c
++++ b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
+@@ -75,8 +75,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
+ 
+ 	ret = snd_pcm_hw_constraint_integer(runtime,
+ 					    SNDRV_PCM_HW_PARAM_PERIODS);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(afe->dev, "snd_pcm_hw_constraint_integer failed\n");
++		return ret;
++	}
+ 
+ 	/* dynamic allocate irq to memif */
+ 	if (memif->irq_usage < 0) {
+@@ -88,10 +90,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
+ 		} else {
+ 			dev_err(afe->dev, "%s() error: no more asys irq\n",
+ 				__func__);
+-			ret = -EBUSY;
++			return -EBUSY;
+ 		}
+ 	}
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(mtk_afe_fe_startup);
  
 -- 
 2.53.0
