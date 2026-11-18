@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015445;
-	b=Ldy+zENpA4/+oOAo+6VMMzwGaElxjm/oDEGZHaYHfn5Nc6+lalX8K8SgPICzhUteq+OT
-	 5YE0X/JZknwVjubNn9RaXxisKSZ5IWAtjFLstWXNQNDHeMKufepc3Qgp18z0Z3zBQz8XK
-	 dbY3TTPrua6W5P0re7EQLqTQIjvAEttdU9HbX9f/dOvXa9QdzDRmWImIalHN2V9/Om3RW
-	 FKkgJdS1iSPi9D83CZFFMlvlPgEwnpaRNtWnuLKkNKoMOA9QOycynPXHc6KGQ7TC2Me4f
-	 ArnQQ/nw9eZjzc5sH1PbPmmZh+NnY7goQO+Q4vUFHRYyYNTEnrGP6MYMnmgQdwtV+Yw==
+	t=1795015448;
+	b=HtHUSS6k46kuP5XZr7Og5Ca5xH5yjTFKmJRbmlAQG2dHuNhExQc1FkdmEoKatH5hyWNI
+	 iHpa/W37yoXNA2lw+Tl45L+6HzxZPlXytkdaY8MImPhSni7nsCxwKp6u7O8KPlu0dAtvG
+	 JeCQZvj3oFYO5i64AhU6Vm/kyiwPt5pVrxJUNIfk+dA03W66gmit/vNY5znpmP9dj9+Zd
+	 cUX14wfHQQFzc3omB7kn9gXm+cpBYRctSAkgjzfOWXMvCB4YkApbG2EehUZtWHhV4r0Bd
+	 jaPcMBi/pGY8p1qQhnTeH6Xp6+ET7KmR9FKU5+Psw3OBw5JLaxUFe56yLCj6PVEEM0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015448;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yZBMpeo2zJy3tqRJp9RaLN8JQVqIThB4NRzoiZ6/piw=;
-	b=k2fegvssQg9Ns1LqeWxA8BcIJmx/jAewPDvO4T55MrmU/RjXgdp8WSV6INX+kB68q+/l
-	 n88wz5D2L8F4l7Qp4NZesgww7KfxlLu4dkIdMNhcQJ/ZvgMdFoLZJsY2y5lVROly7WYjC
-	 6uqiMwueDpAduj/yr0/LJ3fLWAFwpTGb0bMJQj1pymFD/fhl2CA+ifTA4w6pBWQcg09wP
-	 eF82N84s6MdeXtfsUxgm6+fbcawnP5PooJ62DSfCIqQ7pBa4wEcFD7mybUAfpYCAO8CRJ
-	 OfqOxCyI1SIIgsQ7NRaqdpppjQ0Jck4XILNeGcw1zBoT4y+yVpcWtf9I6/OoRAeAzWg==
+	bh=JV3lr0fXD60NNdN+IU3D3x2+eFFt5gKr0NGnp/A+g3k=;
+	b=LawVrWHCWgDQoM94JDD8sEVguIQfJcr1PTnKaqF+ESQXvSSnFSQ1DxqcfHK0+3HmfAH5
+	 qdl4BcxFENtsBwtX7DB1LApN1QcPUUO91HFTHrGCvAMmOfQVtq9fAdgMaSggTqoPV0EPj
+	 IAXLY6TbR3pzbY5VqQyJ1p7J/0jFJjkuj+e0y2O4Z1YP6TJoo8LKdOL74ThzGzWEi76E6
+	 KR+ixM6kmlfS0n45LNYAEzfiVEwVhxXYsPft6pMt/pEa+mS0rXJ8PoYaUlkq3VgB4+QhX
+	 DcX6VFcG8XoM0asQQUGDfpNhyA94PK/r2qvDESVIEYRFG6U4sTjL9IpC2gqyKKzmqdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFSSnlU0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmeA08Cp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8989606A335;
-	Wed, 18 Nov 2026 15:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCADB60A2617;
+	Wed, 18 Nov 2026 15:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFSSnlU0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2407A1F000C4;
-	Wed, 18 Nov 2026 15:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmeA08Cp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085991F000C5;
+	Wed, 18 Nov 2026 15:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015445;
-	bh=yZBMpeo2zJy3tqRJp9RaLN8JQVqIThB4NRzoiZ6/piw=;
+	s=korg; t=1795015448;
+	bh=JV3lr0fXD60NNdN+IU3D3x2+eFFt5gKr0NGnp/A+g3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VFSSnlU0gV8ypgNxlHJ8A8kr53NID1SraIBchl8r+tjH6FdOtWM6OHLaSaX5hcaTm
-	 NHemYQz9YpxKrBDVDVhi0OdOkAvLhyvOE1YptjiJ/phAb9VWKV6TDfOJXdlT41YiX9
-	 OIu/FbKu/X9Dc6U4A0PS9M9kko1IhE3N7Pa5UAvw=
+	b=gmeA08CpqAIgtPIaTT6hpecuo4RG5XHhPn2KuSujrL4fSOMtjAMBEbsmyt+PH/YB+
+	 N/6uv9PjGhqHdSsUN2kGhdhLV0h545rvkgcrat+Av24No/N8tgcAsXHYsIjLWiCgip
+	 glPXdTzYcPdaST2JkS/tnMxhnTlp4fIeQNoQJHSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ionut Nechita <ionut.nechita@windriver.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Baoquan He <baoquan.he@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0177/2651] drm/amd/display: use translate_curve_to_degamma_hw_format on DCN30
-Date: Wed, 18 Nov 2026 15:23:37 +0100
-Message-ID: <20261118150254.217842527@linuxfoundation.org>
+Subject: [PATCH 7.3 0178/2651] x86/crash: Reserve elfcorehdr for CONFIG_NR_CPUS, not CONFIG_NR_CPUS_DEFAULT
+Date: Wed, 18 Nov 2026 15:23:38 +0100
+Message-ID: <20261118150254.254127435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,55 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Ionut Nechita <ionut.nechita@windriver.com>
 
-[ Upstream commit e377716b9863fb79c59e0f1f7612a1ebf160f8cc ]
+[ Upstream commit 6664ad1026b558563702f9a1ce637df33e7c001e ]
 
-DCN3.01 presents the same banding issue as reported in the link below,
-but the previous fix doesn't cover this hw. Change the helper used to
-translate degamma/blend curves to HW points for DCN30, DCN 301, DCN31
-and DCN314 similar to what was done for DCN32+ by commit 3719314af322
-("drm/amd/display: use a separate helper to translate degamma curves").
+NR_CPUS_DEFAULT is purely a Kconfig thing.  Its entire purpose in life is
+to start NR_CPUS at a sane value.  There is precisely one (buggy)
+reference to it outside of Kconfig in the whole kernel: the x86 crash
+code.
 
-Link: https://lore.kernel.org/amd-gfx/20260623160112.1636801-1-mwen@igalia.com/
-Fixes: 222e63bddae5 ("drm/amd/display: use a separate helper to translate degamma curves")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+That code undersizes the elfcorehdr reservation whenever NR_CPUS exceeds
+NR_CPUS_DEFAULT, because the header carries one phdr per possible CPU and
+num_possible_cpus() is bounded by NR_CPUS.  kexec_file_load(2) then fails
+with -EINVAL from sanity_check_segment_list(), and kexec_load(2) silently
+truncates the elfcorehdr, which surfaces later as a bad or unusable dump.
+
+Size the elfcorehdr reservation with NR_CPUS instead.
+
+Fixes: ea53ad9cf73b ("x86/crash: add x86 crash hotplug support")
+Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Baoquan He <baoquan.he@linux.dev>
+Link: https://patch.msgid.link/20260901071041.16311-2-ionut.nechita@windriver.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c    | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/x86/kernel/crash.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-index bab29ca58c351..a6144da65254c 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-@@ -242,10 +242,9 @@ bool dcn30_set_blend_lut(
- 	if (plane_state->cm.blend_func.type == TF_TYPE_HWPWL)
- 		blend_lut = &plane_state->cm.blend_func.pwl;
- 	else if (plane_state->cm.blend_func.type == TF_TYPE_DISTRIBUTED_POINTS) {
--		result = cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
-+		result = cm3_helper_translate_curve_to_degamma_hw_format(
- 				&plane_state->cm.blend_func,
--				&dpp->regamma_params,
--				false);
-+				&dpp->regamma_params);
- 		if (!result)
- 			return result;
+diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
+index e681ec9cf1dc8..e6f23933a6df2 100644
+--- a/arch/x86/kernel/crash.c
++++ b/arch/x86/kernel/crash.c
+@@ -369,9 +369,9 @@ int crash_load_segments(struct kimage *image)
+ 	 * maximum CPUs and maximum memory ranges.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+-		pnum = 2 + CONFIG_NR_CPUS_DEFAULT + CONFIG_CRASH_MAX_MEMORY_RANGES;
++		pnum = 2 + CONFIG_NR_CPUS + CONFIG_CRASH_MAX_MEMORY_RANGES;
+ 	else
+-		pnum += 2 + CONFIG_NR_CPUS_DEFAULT;
++		pnum += 2 + CONFIG_NR_CPUS;
  
-@@ -335,9 +334,8 @@ bool dcn30_set_input_transfer_func(struct set_input_transfer_func_params *params
- 	if (plane_state->in_transfer_func.type == TF_TYPE_HWPWL)
- 		pwl_params = &plane_state->in_transfer_func.pwl;
- 	else if (plane_state->in_transfer_func.type == TF_TYPE_DISTRIBUTED_POINTS &&
--		cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
--							&plane_state->in_transfer_func,
--							&dpp->degamma_params, false))
-+		cm3_helper_translate_curve_to_degamma_hw_format(&plane_state->in_transfer_func,
-+								&dpp->degamma_params))
- 		pwl_params = &dpp->degamma_params;
+ 	if (pnum < (unsigned long)PN_XNUM) {
+ 		kbuf.memsz = pnum * sizeof(Elf64_Phdr);
+@@ -430,7 +430,7 @@ unsigned int arch_crash_get_elfcorehdr_size(void)
+ 	unsigned int sz;
  
- 	result = dpp->funcs->dpp_program_gamcor_lut(dpp, pwl_params);
+ 	/* kernel_map, VMCOREINFO and maximum CPUs */
+-	sz = 2 + CONFIG_NR_CPUS_DEFAULT;
++	sz = 2 + CONFIG_NR_CPUS;
+ 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+ 		sz += CONFIG_CRASH_MAX_MEMORY_RANGES;
+ 	sz *= sizeof(Elf64_Phdr);
 -- 
 2.53.0
 
