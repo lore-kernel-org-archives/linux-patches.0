@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058624;
-	b=q7JFWgyJbqoLcEEBGjtNbjVG+ZulKtFK30EXEbR2Tu8uthLKdSgKBxTjLnRqbYOxb9Gk
-	 gnx+oc6/OfNJOl+X8q29mCIuq75ylLKBUOYAEyuBrkPCL4OpBwqKh+yJ4OzgbbMq6EwH3
-	 MAxOcCsgFhYbitRjQvzTjpbt/IQraKxJCdyOpfR9tbuObYQu2Ki8sHStlsWV/BFNx3rW/
-	 dG+nXT29sxWJUr3qFtcrftqFcyg5PeLO+6G2gYUg2gRPT/gbBKgM7Yj6cTA786gI81ywQ
-	 3TJHu+gGm67zgOwPXkHxsFM3IPZnoxFB244k/OkFilFsAzJBeODXflH6Cp/q0w5eGbw==
+	t=1795058627;
+	b=5sNxyT+Zt41T0eG1TVExQS73p8viBm6D0+975yFuxoNfCMe4D0s5NddvtiCNZNuKbHn9
+	 nZMEDGpumtdjBUyipwW5hiB5UNABsFUA4nudjwv5/zzDejeRsz8RGiFyjJ9/WYoLLnG3P
+	 OO1tAIMnHSgINdlnuj8XDb6QiXXqqR4+ZRsybvDNvf3sz2WZhWEZ4IibhKpPke8RSQDPm
+	 AxyaQHETbvYqx9qA5fI49w3LiJxh38JYBPKj1GWCmdu794vFpdxWZhzln/rLZ67pW3Fb7
+	 fCbj6FOY7rsGksZu2PRH2y8ly9cynjx1NZSJpTnyqdX/k703wk7zKrjyAwczWpAftww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058627;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uNFFOZjcksHp/cr0ZW0OTg5Cg9OwJbjiEg4mk3mXmR0=;
-	b=mlAHyiPrfLfU+Xp1ojCJotd/u8Gwmat5cUYnuhKk6SEqvUYzotHXXwSRjQgAGH6LUT82
-	 +quL+AQZzwUj8CU+Bc3YwTzVyWxCfTZ7nF9eAYT9WGXmHqhhHRjJqr/GO5aM8idh5pOGu
-	 emz+2R12ySNvUCuzm45M3D9bF7+fWVh3oKcAQVZSJ0z6LHY/z0nIa6f6kDl2tkiOeEbzC
-	 cPNRaDlTaetaqScfZhtjs/OP/vADhoG+ODONCfuuhDuDZzrQBpi7/j8LjiL3rWz+u1LA3
-	 Sl6UVYc+SHtytJogG53oJTLUd5e5kDzBePdtkxAYAqpnu9pDBERZjTCI8xqZjrVjBNQ==
+	bh=Ebsp9HyEhVxsrR2JkhmVy31IVYBHUho+OfMsdWez6eo=;
+	b=oqDfEvG9FyllJJ/HuwfZFmLE+RtPAKs2wZoDz7GqGN9I7436kD23VC9XGlXrPI7UqEdc
+	 wgoKb4giQPt0/UGx1C9cGDzPiRMDVoqbptac1Cq2nP5/AivW6TFITtOJ0Jyyi4nkwlYz0
+	 ePtOyEUvxKK/77AQ2JxUpBnMwkw844tYzRo3sbqfR8f6UBXdCMEiIy7JkbyeHP1FBzdbd
+	 lz8q4ksUahunMu0JGOqxZGkwOchI0q6FdYRDaUWnXeondSIY9dC7rf77/vvRYbqzKU3Hl
+	 LOWnxZlYEG9guC89yAOkAmuwhEyU19pwOg8mvDHz1D9mPWBjAA6CaIXRUfZF3/Z8jeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKUksDbm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oM8k1aLC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC06606A31C;
-	Thu, 19 Nov 2026 03:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465D0606A31C;
+	Thu, 19 Nov 2026 03:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKUksDbm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD8E1F000C4;
-	Thu, 19 Nov 2026 03:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oM8k1aLC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FFC1F000C4;
+	Thu, 19 Nov 2026 03:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058624;
-	bh=uNFFOZjcksHp/cr0ZW0OTg5Cg9OwJbjiEg4mk3mXmR0=;
+	s=korg; t=1795058626;
+	bh=Ebsp9HyEhVxsrR2JkhmVy31IVYBHUho+OfMsdWez6eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cKUksDbmJkq+iqnrnwAwCdVp2NrTtW8TTEczC8zdOdDtTmUQoq99oNZR2zs4nzo83
-	 IEV7Rpn2d9UmV7mrfcWvPj63pnn6HTUArNdMdg0b91ceLIPKcPae5B6YpGpdy554Ad
-	 LlDoe5BSonFl1yjqu6O8qJIuceZXxvqgXXCiLRQw=
+	b=oM8k1aLCLFj/iuH96SB+/yXkxJaWTv49fJuJUMjXMhVDlcr4VH+KOt2pHQIWWnf/Y
+	 wr0y1DbnldVZWWcI4e0Ja4LDyMKTShqAmydqTUb9kQqlIA3/P+w/BC8j5/VHopzjL3
+	 nKhRwItWzXwWBJ7POXL27qYUzN9Gj1goBXIgdfE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+c3741bb338b5c6d6a4aa@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0552/1848] ipv6: do not restart DAD for a dead ifaddr
-Date: Wed, 18 Nov 2026 15:43:10 +0100
-Message-ID: <20261118145938.040833755@linuxfoundation.org>
+Subject: [PATCH 5.10 0553/1848] net/rds: ib: dont enable IRQs in rds_ib_conn_free()
+Date: Wed, 18 Nov 2026 15:43:11 +0100
+Message-ID: <20261118145938.078474254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,75 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit ffb668669ce4144347973d8b2fad449e9be0563d ]
+[ Upstream commit f6fa1d60ec3ceb7e6c26aa91eadfef34f94014e1 ]
 
-addrconf_dad_failure() can create a stable-privacy replacement without
-RTNL. After ipv6_add_addr() publishes it, addrconf_ifdown() can mark the
-new ifaddr DEAD, clear its route, and unlink it before the recovery path
-takes ifp2->lock.
+__rds_conn_create() calls trans->conn_free() with rds_conn_lock held
+and IRQs disabled when it loses the race to insert a connection.
+rds_ib_conn_free() takes the device list lock with spin_lock_irq() and
+releases it with spin_unlock_irq(), so IRQs are turned on while
+rds_conn_lock is still held:
 
-The recovery path then unconditionally changes the state back to PREDAD
-and queues delayed DAD work. The MTU teardown path can leave IF_READY
-set. For an optimistic address, addrconf_dad_begin() can consequently
-pass the cleared NULL route to ip6_ins_rt().
+  raw_local_irq_restore() called with IRQs enabled
+  WARNING: kernel/locking/irqflag-debug.c:10 at warn_bogus_irq_restore+0xc/0x20
+   _raw_spin_unlock_irqrestore+0x67/0x80
+   __rds_conn_create+0x1de5/0x2290
+   rds_conn_create_outgoing+0x43/0x60
+   rds_sendmsg+0xfca/0x20e0
+   __sys_sendto+0x408/0x5a0
 
-This follow-on was found by source review and was not separately
-triggered at runtime.
+It needs an RDS socket bound to an address on an RDMA device (e.g. rxe)
+and two concurrent sendto() calls to the same new destination.
 
-The new ifaddr is already initialized in PREDAD. Under ifp2->lock, record
-the retry and queue DAD only if teardown has not changed the state to
-DEAD. If teardown wins after this check, the work observes DEAD and exits
-without reviving the address.
+The TCP and loopback ->conn_free() callbacks already use irqsave, so
+do the same here.
 
-This complements the existing lock_errdad check that preserves the original
-ifaddr's DEAD state after the same function reacquires its lock.
-
-Fixes: 5f40ef77adb2 ("ipv6: do retries on stable privacy addresses")
+Fixes: 745cbccac3fe ("RDS: Rewrite connection cleanup, fixing oops on rmmod")
+Reported-by: syzbot+c3741bb338b5c6d6a4aa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c3741bb338b5c6d6a4aa
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/r/179161099408.434549.14449036924552933828@kernel.org
-Link: https://lore.kernel.org/r/20260513025509.3776405-1-lilinmao@kylinos.cn
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261015050651.1841557-5-4ncienth@gmail.com
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/rds/ib_cm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 41c2651dd1d39..0e45127b14cdd 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2130,6 +2130,7 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index 5cdfd4310bce5..b225f73725442 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -1304,6 +1304,7 @@ void rds_ib_conn_free(void *arg)
+ {
+ 	struct rds_ib_connection *ic = arg;
+ 	spinlock_t	*lock_ptr;
++	unsigned long flags;
  
- 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
-+		bool start_dad = false;
- 		struct in6_addr new_addr;
- 		struct inet6_ifaddr *ifp2;
- 		int retries = ifp->stable_privacy_retry + 1;
-@@ -2168,11 +2169,14 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 			goto lock_errdad;
+ 	rdsdebug("ic %p\n", ic);
  
- 		spin_lock_bh(&ifp2->lock);
--		ifp2->stable_privacy_retry = retries;
--		ifp2->state = INET6_IFADDR_STATE_PREDAD;
-+		if (ifp2->state != INET6_IFADDR_STATE_DEAD) {
-+			ifp2->stable_privacy_retry = retries;
-+			start_dad = true;
-+		}
- 		spin_unlock_bh(&ifp2->lock);
+@@ -1314,9 +1315,10 @@ void rds_ib_conn_free(void *arg)
+ 	 */
+ 	lock_ptr = ic->rds_ibdev ? &ic->rds_ibdev->spinlock : &ib_nodev_conns_lock;
  
--		addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
-+		if (start_dad)
-+			addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
- 		in6_ifa_put(ifp2);
- lock_errdad:
- 		spin_lock_bh(&ifp->lock);
+-	spin_lock_irq(lock_ptr);
++	/* May be called with IRQs already disabled (see __rds_conn_create()) */
++	spin_lock_irqsave(lock_ptr, flags);
+ 	list_del(&ic->ib_node);
+-	spin_unlock_irq(lock_ptr);
++	spin_unlock_irqrestore(lock_ptr, flags);
+ 
+ 	rds_ib_recv_free_caches(ic);
+ 
 -- 
 2.53.0
 
