@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015493;
-	b=Wf6RMIB0mRwZXCdegGRnhd+eQQdCAsWiOgmnokp8ZffQEQ0FXQMP/GJPY0NxLHuh63i7
-	 +/rRH+IdYQ18/ZbjsuSnbQps6zVCDLK1LHxVov/myLg7O38o3Qna45+rgHvWOqKPBFmZM
-	 AYyOX9NKIi1tm0YhpQX6Qgf6XumGnAQWyxpIdgWZuT5Z51Tf23quh70aKRe8ngFwM19yE
-	 W1BSj+WddfJyeTKKS3n5fqDfR+AT82KGP3egSYHo6L8ldhs9ZjzcSw14StW6gKxXkxq4D
-	 th0AL9GtJ4e2YT3UzMFZicVfTWATltxjJAZ0Vud7YC6aYmlOUzqllfG28x2/2Ce5DyA==
+	t=1795015496;
+	b=1A+usAkYdBz/k3aagKpCrFMA2YqjaH3q3ktPSFSMKUajxUyXVzCv86QIxl32UapOvGyv
+	 SuofrqFW6BmMMWxoxDJCa0YBt11jyhoMhR7BdgbpR1IFpDFcYyK7eD9BqndhTEeezC8xX
+	 mtO8PHP5MkkXWjnCSSk0agCdw1ecop97yET+eyE/ILyHbY5xXXK+PcSIGAG7rF2keQVbf
+	 P6rJVjYEz2FvW0yw1KbnUj0iSOGN8JdSHmc9ldMbO6LSCjTCTJj/dAuZZ6Nu5j2aENsAR
+	 gkFcLI0vcP7kOc5ORmlDE8tnxfMXtxIAg7Pi4/n6dLtX6FYzD0kfzeSIY1a47lRikQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M8dVWgFSzNlpO7wFjMyVlKQfmjoZAEGy0QsqcmGYtT0=;
-	b=vb0pAJDkmiP8dBPA5AlySbKxwS4UL8AdHecfvgRJjgvM54kVVg4dLLq9NlQlB3hCo0hy
-	 OdUqXxnZSaFAFOIPS5ULFX4trVTuruLV3ixrH/0I4iq7O8JvSnIGzk96kYwCptHT1CP4Q
-	 Sz8zK6WEWd9O9zx3KMaP+wJpOFmb7rHy2xAh+n3faHNySbx5LB1MxtmnSAR/t1XCAk43U
-	 jhPCKVhgi9gIgQUhY1sdEroin2BYnZBWeVVUPn6vxPo2j7oi9sf847+bx6aku95hIDtnt
-	 IO+l7ToCL2qnDnNbV9c8G527fc37noNQ/BsLBEUCKdeUCw62x310MFMN873u85GB7ng==
+	bh=9Hh2z7RYYXtOm72d0oMBR5tzvVtXcl91jB9xuzuzJak=;
+	b=xMvLi0BrnJ8jjTGzGbh0NVOLqS1U2obEndhJDje0bwpVUGKaobW50y+JyCFGUofa3DOC
+	 BA4ZZnyyNXekviMFwfhJx0jWCpVCHRohMHqFQ76FnI0jgTNXK0zRSfokwCej3kBc2Ynpe
+	 xgbFCLRBpdZFAMwD53dEHaEbbCDLcGh9E0hwS5KztfKwGo1u5X/0KS/lkxjy92wAe2NS6
+	 Nkt2DDTcV9TMvKEWZCz3iGM4idgAIl8b+yZFNKAPBbruevvbtRtg7IiUBnRWT9kV5eOJO
+	 ICQRe9nYM0l5XYjggIgyokptgU3souVVKJi71PcKHbTUV/1R0+7Od68VwaNueGfPp1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAR2BoTx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KjlXG6XO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C96606A31C;
-	Wed, 18 Nov 2026 15:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716B2606A325;
+	Wed, 18 Nov 2026 15:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAR2BoTx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE571F000C4;
-	Wed, 18 Nov 2026 15:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KjlXG6XO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00681F000C4;
+	Wed, 18 Nov 2026 15:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015493;
-	bh=M8dVWgFSzNlpO7wFjMyVlKQfmjoZAEGy0QsqcmGYtT0=;
+	s=korg; t=1795015496;
+	bh=9Hh2z7RYYXtOm72d0oMBR5tzvVtXcl91jB9xuzuzJak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sAR2BoTxI8WtfAKsPkk/VLqgFpU9U/jJMxWfn8r6P1Lc+V9W8GBHIT/kHB/qkgyG1
-	 7mIWh1u2/pghnq3Ye+RIWq3z3s77wfe2yFIqTH52/NDdjf20O9eDxDSobuOAWJZr04
-	 UUyqXEkfUrg5LosEBtQpjuU51RaIZRJwro092OFI=
+	b=KjlXG6XO8ooFV7p6EjKQD+gn/B++XzY/akhZpL/4PHQs0/JO7REjPRX72Dl0bJ14e
+	 pflrYzL9O7IG7olgfIHdTyEefDmkRr9e8B9TYeNz3aGfzCXW+f0LbC2DoYmvUfDe+o
+	 3diNxLoh4eJIy5O4Ag4hl5cuyYtNElMZCWg04rlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Manush Prajwal <manushprajwal555@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0192/2651] leds: max77705: Use fwnode_for_each_child_node_scoped() in max77705_add_led()
-Date: Wed, 18 Nov 2026 15:23:52 +0100
-Message-ID: <20261118150254.775297767@linuxfoundation.org>
+Subject: [PATCH 7.3 0193/2651] RDMA/hns: Fix missing CQE when UD QP use different SL
+Date: Wed, 18 Nov 2026 15:23:53 +0100
+Message-ID: <20261118150254.808844706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,50 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manush Prajwal <manushprajwal555@gmail.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 4805e5ec50d0b355370e3d1ea906af4fc758accf ]
+[ Upstream commit 3547f46c31993d41748f0f7936f9d4dc5b5d4b12 ]
 
-Rework the subled loop in max77705_add_led() around
-fwnode_for_each_child_node_scoped() instead of adding a manual
-fwnode_handle_put(child) before the early return on a
-max77705_parse_subled() failure, so the reference on the current
-child fwnode is released automatically on every exit path from the
-loop. child is never used outside the loop, so the now-unused outer
-child declaration is dropped along with it.
+Due to the hardware contraint, CQEs may be dropped when a UD QP
+sends with multiple SLs. Pin the SL to the value from the first
+post_send on the QP to avoid this issue.
 
-Suggested-by: Krzysztof Kozlowski <krzk@kernel.org>
-Fixes: 3b6eaa3db567 ("leds: Use fwnode_for_each_child_node() instead")
-Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/6a914e1e.7d702ed2.1273e8.2a52@mx.google.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 66d86e529dd5 ("RDMA/hns: Add UD support for HIP09")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20260831020324.3540901-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-max77705.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 15 ++++++++++-----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/leds/leds-max77705.c b/drivers/leds/leds-max77705.c
-index 1e2054c1bf80b..4fd803c959890 100644
---- a/drivers/leds/leds-max77705.c
-+++ b/drivers/leds/leds-max77705.c
-@@ -160,7 +160,6 @@ static int max77705_add_led(struct device *dev, struct regmap *regmap, struct fw
- 	struct max77705_led *led;
- 	struct led_classdev *cdev;
- 	struct mc_subled *info;
--	struct fwnode_handle *child;
- 	struct led_init_data init_data = {};
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index eb7b1865e4c79..95529251e2e21 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -654,6 +654,7 @@ struct hns_roce_qp {
+ 	u8			priority;
+ 	spinlock_t flush_lock;
+ 	struct hns_roce_dip *dip;
++	bool ud_sl_set;
+ };
  
- 	led = devm_kzalloc(dev, sizeof(*led), GFP_KERNEL);
-@@ -191,7 +190,7 @@ static int max77705_add_led(struct device *dev, struct regmap *regmap, struct fw
- 		cdev->brightness_set_blocking = max77705_led_brightness_set_multi;
- 		cdev->blink_set = max77705_rgb_blink;
+ struct hns_roce_ib_iboe {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 27cc7df55ee70..fd198faf4ee47 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -431,7 +431,8 @@ static int set_ud_opcode(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
+ 	return 0;
+ }
  
--		fwnode_for_each_child_node(np, child) {
-+		fwnode_for_each_child_node_scoped(np, child) {
- 			ret = max77705_parse_subled(dev, child, &info[i]);
- 			if (ret < 0)
- 				return ret;
+-static int fill_ud_av(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
++static int fill_ud_av(struct hns_roce_qp *qp,
++		      struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
+ 		      struct hns_roce_ah *ah)
+ {
+ 	struct ib_device *ib_dev = ah->ibah.device;
+@@ -441,7 +442,12 @@ static int fill_ud_av(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_HOPLIMIT, ah->av.hop_limit);
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_TCLASS, ah->av.tclass);
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_FLOW_LABEL, ah->av.flowlabel);
+-	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_SL, ah->av.sl);
++	if (!qp->ud_sl_set) {
++		qp->sl = ah->av.sl;
++		qp->ud_sl_set = true;
++	}
++
++	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_SL, qp->sl);
+ 
+ 	ud_sq_wqe->sgid_index = ah->av.gid_index;
+ 
+@@ -491,12 +497,10 @@ static inline int set_ud_wqe(struct hns_roce_qp *qp,
+ 			  qp->qkey : ud_wr(wr)->remote_qkey);
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_DQPN, ud_wr(wr)->remote_qpn);
+ 
+-	ret = fill_ud_av(ud_sq_wqe, ah);
++	ret = fill_ud_av(qp, ud_sq_wqe, ah);
+ 	if (ret)
+ 		return ret;
+ 
+-	qp->sl = to_hr_ah(ud_wr(wr)->ah)->av.sl;
+-
+ 	set_extend_sge(qp, wr->sg_list, &curr_idx, valid_num_sge);
+ 
+ 	/*
+@@ -5603,6 +5607,7 @@ static void v2_set_flushed_fields(struct ib_qp *ibqp,
+ 	hr_reg_write(context, QPC_SQ_PRODUCER_IDX, hr_qp->sq.head);
+ 	hr_reg_clear(qpc_mask, QPC_SQ_PRODUCER_IDX);
+ 	hr_qp->state = IB_QPS_ERR;
++	hr_qp->ud_sl_set = false;
+ 	spin_unlock_irqrestore(&hr_qp->sq.lock, sq_flag);
+ 
+ 	if (ibqp->srq || ibqp->qp_type == IB_QPT_XRC_INI) /* no RQ */
 -- 
 2.53.0
 
