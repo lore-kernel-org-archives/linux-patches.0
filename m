@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055681;
-	b=uppT4zlGPET+2B43mMPV2nwjnDUIvMAla48QeifwczM9EDl3BzB0my/yUpFUd8EWLPNO
-	 K5HYKDUjqmCSzVyuXP5sg/QwXlL7tgLQVx3APfFVAVBCTmLc2ROqlckjGViM0hQk6W+8r
-	 r2247qguzgaQCvEtfyECNEL57ZKRZyCA2v74VJGIhj2NWFjmVLVS9BjvBoUrk5hY5Ky/F
-	 /YLIWr/MHvi85+wWD9smYcaxHlgtsUzRF05cIZYacXiT8ASwopzl2HMtRwYItJj9ZHRVz
-	 PJJcE8f177wgwaQcWrtXZSVmOxd6/oiztxvyAUokj3CrsvL1J2f8f+QZO45xAgz7yGQ==
+	t=1795055683;
+	b=E6jdn/e69AF4F4jLMmurERShjhf5/AigwQlcp8fqfudI94toXrN2pIpuwtA9rMdwYPIc
+	 nPXu6snvNyelfRCBLBE/uFzx/+c9DbUAQCS7uWXY7M171hdDdKjkHE7sVF2o6uPdyNKD0
+	 hPq1uol6Ds3EYCXjFuK5AxSSKUgMYJFJ4H6EvxedW3dFVPKnZVZ/o7pLDW7n1TzvL3WSy
+	 jg/k5WcGLOAfbiOmU/DIhY17nPvMvyON6xXEbMg4+lRL4leYlHK8QPb2vX/2BDaDPywKS
+	 3OVT60hS+rcrtcPWQ+We4Ur91Lpg0Y0ke5SDDKSHq0LAb/y7+I6EllyYLQa7dtZxSgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=whZuVYNWwlPR3fnz09ZGKUwnr5FHWHQPJ27ytVLkQkc=;
-	b=PAC2tsfw4qKTcLCM26ViBtjofdTYvbVjGUKFsqoOBg3c0VssmSbTePnGZs52j8eWupMI
-	 rluLJ+7oJ+hNJ69ydmjmUBZcfW9BYfxHmiR+1c94DzATQWn3bU/Z24e+z9tsGSBIabCNZ
-	 Nt1Q3ztZMCJ6mVT8Ocahdnajx2HTAEZgL6Sm8HpbADtvj0k2jSfJyEHB2sg5FcZJfS8gR
-	 YA8V9TPM3fwLvRXN++vxXA427NIl2+3kPqLX0VRCqSGrpU94lkBQk1y8PM5Kj24XTTVqM
-	 ahTTMX3IqbIsyQK6zaL1GrfoymUEU0V9237tcENl0Pp8hO3tu6jNxFHs2o2Ih8pK0tQ==
+	bh=yhnesO8uGzv/jYDPyF/XGfUJ92HICacmdd2fPEavqnA=;
+	b=RPQ3j7WGqpXNzriowIdK6VXOCTF5NDSE9HrYqB+CTTpAMl6hNmFIcQosBzpVQKPrCE5Y
+	 6gfflxkzvnYCiOacOKFoTJ6yt98zXUQ2ujjK9xJVzPI0oIC4FNOWghWO6HPKbgz+m6lA1
+	 O3V1k5DQWxS3JPycZi5+qRJCflinRYzQAYgSgoq0uvCNNgZZrVwf0TIPAcrwDvwc2PLLE
+	 XIZjvYs5Bu+EHSo5umhweJTdMgDAP/XQ0X2stLo+nETma/RliccPRoeZNbQxWrGwRI0Kt
+	 CeBHZyptgUdjatC+SXjKhhh226/2S1KlxJoJSZ0v/mXX0h6gxAhCQPcdINbH2LnU68g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f/JGK148";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ly4wXhDB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7A860A2602;
-	Thu, 19 Nov 2026 02:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE45E606A31C;
+	Thu, 19 Nov 2026 02:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f/JGK148
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D94B1F000C5;
-	Thu, 19 Nov 2026 02:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ly4wXhDB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9FE1F000C5;
+	Thu, 19 Nov 2026 02:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055680;
-	bh=whZuVYNWwlPR3fnz09ZGKUwnr5FHWHQPJ27ytVLkQkc=;
+	s=korg; t=1795055683;
+	bh=yhnesO8uGzv/jYDPyF/XGfUJ92HICacmdd2fPEavqnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f/JGK148WM4wZfq6zqX1nGwUzUw2m+zWfjV4QV5/5cKE/lMjI418bIGmUhCe/0MVx
-	 4YpyKOziL1TajKSgxc1iIqwGUnLvzJ7rxklAfgOpUw/HeZyqUCULod2wOAISRDL1bk
-	 Ao4Jp+RBN3jLAMD2xvwDBfkBWA2O0QNWKeoqZWnA=
+	b=Ly4wXhDBgb+yqPOYU/FtAgX6JB+x1DVyBHIsVT+L3gajpEKWmxXIhcduJSj6nXCBY
+	 fN3JqrPlNlKhP63UEoqFt1Y5/eXp/gM0Hh/nMUDWpkCgbvi29EZlmJQoY0yRxcnTWQ
+	 IZ4/VQprN0PzeNOYzNT4cDvjN18ubPUZwpC8ddi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Keri <okerixx@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1717/2214] drm/msm/dp: dont report link training success after a reinit
-Date: Wed, 18 Nov 2026 15:56:33 +0100
-Message-ID: <20261118150120.424106712@linuxfoundation.org>
+Subject: [PATCH 5.15 1718/2214] scsi: scsi_debug: Refuse a negative physblk_exp
+Date: Wed, 18 Nov 2026 15:56:34 +0100
+Message-ID: <20261118150120.462335577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Keri <okerixx@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit a47987366e7fc2c05aeffc97f8e1f776e583f792 ]
+[ Upstream commit a349876633f7a583429367daf16f9a4282118255 ]
 
-When every training attempt fails, the retry loop in
-msm_dp_ctrl_on_link() ends on a successful
-msm_dp_ctrl_reinitialize_mainlink(), leaving rc at 0. The caller then
-enables the stream on an untrained link and the display stays dark.
+sdebug_init() refuses a physblk_exp above 15, but the parameter is a signed
+int, so a negative value is accepted. The driver then shifts by it when it
+builds the Block Limits VPD page, which is undefined behaviour, and READ
+CAPACITY (16) reports an exponent of 15 for -1.
 
-The retry counter only reaches zero in that case, so treat it as a
-training failure.
+Refuse a negative value as well, and print it as a signed value.
 
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Signed-off-by: Oleg Keri <okerixx@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/756528/
-Link: https://lore.kernel.org/r/20260925125314.16563-1-okerixx@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Assisted-by: LLM
+Fixes: ea61fca58c13 ("scsi_debug: Add support for physical block exponent and alignment")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-18-cassel@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/scsi_debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 85f86afc55052..2b0ec2149dd51 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1746,6 +1746,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
- 		return rc;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 843dc4728a5a0..4a9a1602589fb 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -6770,8 +6770,8 @@ static int __init scsi_debug_init(void)
+ 		return -EINVAL;
+ 	}
  
-+	if (!link_train_max_retries)
-+		rc = -ETIMEDOUT;
-+
- 	if (rc == 0) {  /* link train successfully */
- 		/*
- 		 * do not stop train pattern here
+-	if (sdebug_physblk_exp > 15) {
+-		pr_err("invalid physblk_exp %u\n", sdebug_physblk_exp);
++	if (sdebug_physblk_exp < 0 || sdebug_physblk_exp > 15) {
++		pr_err("invalid physblk_exp %d\n", sdebug_physblk_exp);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
