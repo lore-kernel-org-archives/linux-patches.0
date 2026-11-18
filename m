@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024890;
-	b=AXvzbe/hNUXpkmmFoBJA2UHiurWGQ4umSh4WtX8/utKSyO27j6Ce/5nHEq2f5U9uf81W
-	 dgaafQRUDsO598MLxVquOiFmmgpTx16fAdHfl2RixYNdkhjUGnXuIA7WeoKDbdnDCZTNP
-	 YsEl6yC/Xo+fTFx3DkCpr8YAytxmh1mv3XCX/B8MTxyU/DGWXTKBWPRjxJpubgHmGiIp0
-	 A1rAUL4z0q5TNJeqBjrrYKs4U9VFLJnN/hDO4exDG0sjg0G/9J7ebwrUdlzZL7zYwnhH2
-	 lQz2cWlSWdbjEmigILqMmie9nAGonkMK0NhoiPH9Y+h5PDdk04SW9CO+9mLQmId17CQ==
+	t=1795024893;
+	b=DwZfO7bUb7krRbY9+Y78e/k4qmLOOTVgxcUacpLPBFHCfVwejt7FSx8OlOesc3Xjb1IJ
+	 FsteF7E/tmsQn04LvlCKmpUTw+b4h933y20G6SSYYnhRAUdjgU8KablULgwFxZ7BcQenW
+	 7tetFeJWJ+3MbRZRHvDbKTjTkGrskPSrx76Umnuc1H0K640cXNuQOw+UG+guNO20LFL/W
+	 TyHUm+6ruUUqfAli+hrqK5N/hmGXsmeRtTetOfx8OlfhExpX2nYthpnvUt28VC5mY8Ik2
+	 takZ/v8XTV6vOlTRTlvXwngRY1jfOavN7KXDrZ78PEHWXuc+tfhmBHViD9W49IxskLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tA09o3TektbYwWI97qaDjYaoelp03+PneQn6S+QUGHA=;
-	b=DHr0DYGjr5xUHj4pwm7DraqBQIO1HjvgUeCfGu+OW1Xo8NsQVZ5WnSZ8r5j1eIrMPFIN
-	 bvs3KEYR5nTph6+gdAf+9D1GDnZyD6WkPi4udFU9frLgJa9xDsX4Jd4lemNrsWrJO95Lc
-	 hn47xdyJ2mlcmQ93XHMAissg360SaVkj5ApyhjLYtXiTcgmiYxSsNnbcqkVmuUwWK4q/q
-	 3ezaY7+Wa5pEOzg/WY7t5Oodz9zqTVfJJxehZdOjRFO7xcUQ9AXbxtaHf6VdUwEDkIk3q
-	 uS47f/XEnTUV0VDOOWHvvaNvy7czi6ObcaDE12XwHws6G+NxC9oW+FmHQmIogScUAnQ==
+	bh=WrWWXNDdLlB79R7YJLirtqXhiWOXMCwIudYRZIKtOZA=;
+	b=w3URwOUVxQSA3GR5oBBQQTfEFlfvyape3pYCTafL5wm/BLTgd7MuxxZBpSDArE8dCpRH
+	 ls+DczQgY+7YijzgmH6zrYncdddG3BPPQhQ60BEWbjQV4FsJWefPO3JZOGYcOZQRol06C
+	 SYsIP8JJUshoDq0/uYagcybK1SDlJcrT3KU5f2mwLzal8mU2BSaGOHBTvhSys/JCFOJss
+	 50pb+/dOSBtDezAEwd7tDcJ6ypJuoZGHUcarzx80g41OyUkdLI3/7WScfM2NfxRB/9JZd
+	 ucNtOMSe/lsa9bSDSoirwPZTHqxWxvzlXvjLRCOj+mRwMbRCDFP4f0odnOxaIEc7lpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r19pd5m9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NIJ/Ezrn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124C5606A31C;
-	Wed, 18 Nov 2026 18:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F29606A31C;
+	Wed, 18 Nov 2026 18:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r19pd5m9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C4F1F000C5;
-	Wed, 18 Nov 2026 18:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIJ/Ezrn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281321F000C4;
+	Wed, 18 Nov 2026 18:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024889;
-	bh=tA09o3TektbYwWI97qaDjYaoelp03+PneQn6S+QUGHA=;
+	s=korg; t=1795024892;
+	bh=WrWWXNDdLlB79R7YJLirtqXhiWOXMCwIudYRZIKtOZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r19pd5m95QKS3worQBu9QF3JlM5TtY4jAtN5xphuzDX/3KvX7QMc23lSAL0w5DcR6
-	 zjwXc7LXQo83b393DGHII/K9mAJRyqgW5mLZ+HYNUpAPvqNatBAxzNzYPBKFcAg2tR
-	 u26TfVBxkZ9osfPqIzI/ITF2hVsBgJ/USLMPNMSs=
+	b=NIJ/EzrnnoGMYIMC3MqFmXgkk9KDlhOoX9lkTTby9K925NiPUkjimXPlErXC+fslr
+	 YXITR/y32CzWXar8wmCllq/iGNWyYK1e7txpNhb7wFKPXtu4Qu1gkShZ8LkKUVVkkJ
+	 3YD+d1ODRXWBsJwTltFFUXK5jl/cbO6mUuAtjdvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Quanye Yang <quanyeyang@proton.me>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0868/2151] media: iris: reject open() when the session limit is reached
-Date: Wed, 18 Nov 2026 15:43:23 +0100
-Message-ID: <20261118150153.826165045@linuxfoundation.org>
+Subject: [PATCH 6.18 0886/2151] RDMA/rtrs-clt: Dont WARN on unexpected info-response opcode
+Date: Wed, 18 Nov 2026 15:43:41 +0100
+Message-ID: <20261118150154.591616670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,81 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 397ebadcbc219f6c20d11c0378d8cb7695d015c2 ]
+[ Upstream commit 49c5691ad76f000e66c4f2635d5f196db5d038f9 ]
 
-iris_add_session() silently skips adding the instance to core->instances
-once max_session_count is reached, but returns void, so iris_open()
-continues as if it succeeded and hands a file descriptor back to
-userspace. As the instance is not on core->instances, firmware responses
-for it are dropped and every subsequent ioctl times out.
+The info-response receive is posted for a SEND.  The completion
+opcode comes from the peer, so RDMA WRITE with Immediate is a
+legal WC on that WQE even though it violates the RTRS handshake.
 
-Make iris_add_session() return an error when the limit is reached and
-fail iris_open() accordingly, freeing the partially initialised instance.
+WARN_ON(wc->opcode != IB_WC_RECV) treats that peer-controlled
+field as an internal invariant and panics with panic_on_warn.
+Treat a non-SEND completion as a handshake failure: log it and
+keep the existing CONNECTING_ERR cleanup.
 
-Fixes: 38fc8beaba55 ("media: iris: implement reqbuf ioctl with vb2_queue_setup")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Link: https://patch.msgid.link/r/20260921-rtrs-fix-rtrs-clt-info-rsp-done-v1-1-c64281ed97c0@proton.me
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/linux-rdma/CA+0ovCge-K+hcGHXZ4R3Ww5+cg159uxHBeVbKeUSLBRSMT8OWA@mail.gmail.com/
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_vidc.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-index b916e8c8a6456..2ebccd9455cf3 100644
---- a/drivers/media/platform/qcom/iris/iris_vidc.c
-+++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-@@ -39,21 +39,23 @@ static void iris_v4l2_fh_deinit(struct iris_inst *inst, struct file *filp)
- 	v4l2_fh_exit(&inst->fh);
- }
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 96f76dfe18619..99de772e99afb 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -2499,7 +2499,12 @@ static void rtrs_clt_info_rsp_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			  ib_wc_status_msg(wc->status));
+ 		goto out;
+ 	}
+-	WARN_ON(wc->opcode != IB_WC_RECV);
++	if (wc->opcode != IB_WC_RECV) {
++		rtrs_err(clt_path->clt,
++			 "Path info response has unexpected opcode %d\n",
++			 wc->opcode);
++		goto out;
++	}
  
--static void iris_add_session(struct iris_inst *inst)
-+static int iris_add_session(struct iris_inst *inst)
- {
- 	struct iris_core *core = inst->core;
- 	struct iris_inst *iter;
- 	u32 count = 0;
- 
--	mutex_lock(&core->lock);
-+	guard(mutex)(&core->lock);
- 
- 	list_for_each_entry(iter, &core->instances, list)
- 		count++;
- 
--	if (count < core->iris_platform_data->max_session_count)
--		list_add_tail(&inst->list, &core->instances);
-+	if (count >= core->iris_platform_data->max_session_count)
-+		return -EBUSY;
- 
--	mutex_unlock(&core->lock);
-+	list_add_tail(&inst->list, &core->instances);
-+
-+	return 0;
- }
- 
- static void iris_remove_session(struct iris_inst *inst)
-@@ -202,12 +204,17 @@ int iris_open(struct file *filp)
- 	if (ret)
- 		goto fail_m2m_ctx_release;
- 
--	iris_add_session(inst);
-+	ret = iris_add_session(inst);
-+	if (ret)
-+		goto fail_inst_deinit;
- 
- 	inst->fh.m2m_ctx = inst->m2m_ctx;
- 
- 	return 0;
- 
-+fail_inst_deinit:
-+	kfree(inst->fmt_src);
-+	kfree(inst->fmt_dst);
- fail_m2m_ctx_release:
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- fail_m2m_release:
+ 	if (wc->byte_len < sizeof(*msg)) {
+ 		rtrs_err(clt_path->clt, "Path info response is malformed: size %d\n",
 -- 
 2.53.0
 
