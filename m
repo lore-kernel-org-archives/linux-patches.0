@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051572;
-	b=TPWXXT9aAK/tkXx1mMSTjS+Q4Zsljl1g6sY/kfchcfGYmwV8S79jAgJZ8zk4FjEWr3R/
-	 q/FBIxz+iwFh6uiDj6Pah4DmL1ycK/6x2InuO9iiOpabD6lc+5jUaAdGzqbKx60nqwZzz
-	 fIXfwGPqrbv48jYGE360ArvaGM8zTqI8EpyiZF4kW9XF9lABkbc7LTprax7Titpn1Foyz
-	 bERqjdrMEbBndHAWzjkL2+rzZgJQAcyiM1Jjj8wuPZhh0h3OUV9Cp2owuf9nK67VAUC8M
-	 W6hpLyLSfB+6izqmQY2bdbjZsXXduTGhJYWOSgzs9iuPWGH+RVi3I73bTfdhOlysXLg==
+	t=1795051575;
+	b=kxOe1Z6vTJiUfRCnFtJJ/VtCwSXUGJ00boHCuuP6hE5u2Av0QK8Akz36ueFiLMuwYAQI
+	 vgjlZ2bvowGAJ57JTflm9QC9A48w0ACs+m0kosPVbH2C482lG7ZVEizyjobfVk+eHMh+e
+	 ZhQ+FanEiMGw4NLxXl+bYqIrUnn/0JA3gCsSczdyhnaBcqnG8udp2Zc9jHLaP3cfE9WrA
+	 Wv59CmRt4DEq4bELgtFjgoslMpbIIecNqv2gFfIxWznI3xBeFw5EXgrTsj2Sb69IJyjSA
+	 KPqZFmaUnGDh9FN24xEZ8gowx4Tb0bsaDksbcgUI7YDMks0Xv3r/zU6tTzehLBG3E4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5W3BvJQaMJRyABMMKJ5csgWaB0RU1tJ/yPILdx0vgaY=;
-	b=qC1UCRYBTU1LgnDnbhPfoJ28mELdpws6AEOH12DDLook+17UwKCKmlkLFQOo1N93MFGc
-	 4hov/3s7+sixwTtVYjHFpnCH39agRa1e4qjOM1fUvaJCL0VQvx5BHZLjyhz91rtp+SDLv
-	 UagMzph47aJvfoApE1R94NpqaB5FO0eAPkDVl3yYEeo41ixlGKE/lXxVA00tGF7MxZE5y
-	 M1P2nP3DGmFH30MT2axxOn+Dv2iA/ALYCUvK+sQV/IZ/8NPObZ1UJqONnaCje/yQYjoVj
-	 iB3M8I7wa0gFYnWix7s59YElxUZmSyzWED6EZ8gfl/qna4Fx5oJCRZnNpPgni2BL7cg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=sOuWTwJn04rOhYJf659cOQsWzpfvWJEolWHSYhgb0a0=;
+	b=F9j3s8Iv1RdsufiuoaEqidC3d1EAjJnsJp2xlQt7IiWVidacsPqN3yXaKv10BiHllD3W
+	 xvoFMqBKYn3lcbDnZW89BwErFUFNYUuSdmrdQUiYGCEOAnWcWMSW9m4/WpcxqSv6skghQ
+	 PbvpEOH54hKxHESsFApGexJO3SiXR2K50UhNBMr4VsUXJUHY+SVGCWadEJsqX/s3Lqm58
+	 TebivQ7Bi/ATMKecYKzPHWsB8hX22UoDEkR2Wq9z+1t8i1Mf98U1+F6HMTIvsG66Q4zku
+	 2AyP+/P/skZCNMw7AEzUylUOyJlttoiaRM4YqWLXem9dJvNwlJnyan2PwjfTs4+pB9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Eaiq1/Hw";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W2P36VyT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84913606A325;
-	Thu, 19 Nov 2026 01:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401DB606A31C;
+	Thu, 19 Nov 2026 01:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eaiq1/Hw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91361F000C4;
-	Thu, 19 Nov 2026 01:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W2P36VyT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9570D1F000C4;
+	Thu, 19 Nov 2026 01:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051572;
-	bh=5W3BvJQaMJRyABMMKJ5csgWaB0RU1tJ/yPILdx0vgaY=;
+	s=korg; t=1795051575;
+	bh=sOuWTwJn04rOhYJf659cOQsWzpfvWJEolWHSYhgb0a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eaiq1/Hw0S1QuqZPhMk8LwJyjXCTIPMvzrJqGq+H2YXspppv58iVYziz0uGuPqZVE
-	 QJDC+zMiKWEpOE6hP+DP1GAcQT4IYGXK1p1e/5PwE0qjHh0jzxro8F4glCCgn9HFZv
-	 Nzr2Y6y6/dtCgxKTkwfPGtUf0RBpB0+Ek9utnqlE=
+	b=W2P36VyTaLq5l6zWFIrEB6ULYmizIBzDF6XXZlpmhVthT43jdCOPmVIYvFMNE+0VQ
+	 Nc95SvGxAuHdOFK+aU/DyYVgDymm5db51v+gl2XOxTeEgy+QwkrAC5UEv4jkwsRUgm
+	 Imayrrxa60hWEwqAxAX/RlK0X6Dzigm1YE1+WFoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0254/2214] kbuild: link-vmlinux.sh: improve detection of third pass requirement
-Date: Wed, 18 Nov 2026 15:32:10 +0100
-Message-ID: <20261118150020.297698532@linuxfoundation.org>
+Subject: [PATCH 5.15 0255/2214] wifi: cfg80211: release locks on error in cfg80211_wext_siwgenie()
+Date: Wed, 18 Nov 2026 15:32:11 +0100
+Message-ID: <20261118150020.336980658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,95 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit 14b8b4bf2d7bd5d58c17adbeed0edfda1dfc1a7f upstream.
+This error path returns while wdev_lock() is still held, so one
+malformed IE request can permanently block later operations on this
+wiphy. Route the error through out to release the lock.
 
-It can happen that symbol sizes within .tmp_vmlinux1.kallsyms.o and
-.tmp_vmlinux2.kallsyms.o differ, without affecting file size on disk
-because of section alignment and/or padding emitted by the assembler.
+This bug is stable-specific: it was introduced by the stable backport
+commit 685082f4be77 ("wifi: cfg80211: validate IEs in
+cfg80211_wext_siwgenie()") of upstream
+commit a2f5286ca4f3 ("wifi: cfg80211: validate IEs in
+cfg80211_wext_siwgenie()").  Upstream is safe because that function
+runs under guard(wiphy)(), added by
+commit f42d22d3f7963 ("wifi: cfg80211: define and use wiphy guard"),
+while this tree still uses explicit locking and the separate wdev
+mutex that upstream removed in
+commit 076fc8775dafe ("wifi: cfg80211: remove wdev mutex").  Backporting
+those locking reworks is not appropriate as a minimal stable fix.
 
-link-vmlinux.sh doesn't detect this case currently and keeps using
-.tmp_vmlinux2.kallsyms.o to link the final vmlinux. Due to the
-different symbol sizes, other symbols are shifted within the final
-image compared to .tmp_vmlinux2, and the final comparison of System.map
-against "${kallsyms_sysmap}" fails with the message:
+This is a fix for stable v5.15.222 backport commit, so no upstream commit.
 
-    Inconsistent kallsyms data
-    Try "make KALLSYMS_EXTRA_PASS=1" as a workaround
-
-This can happen in particular if the linker emits additional symbols
-that might have different names between our (re-)linking steps, e.g.
-because those names depend on the virtual address of the symbol. Linker
-stubs for ARM errata work-arounds are one such case.
-
-These changed symbol names can cause the output of the token
-compression of kallsyms.c to change due to the changed symbol substring
-count, which in turn can change the size of the kallsyms_names symbol
-itself, causing the potential shift of subsequent symbol addresses in
-.tmp_vmlinux2.kallsyms.o and therefore the final image.
-
-Update link-vmlinux.sh to not rely on file size of
-.tmp_vmlinux?.kallsyms.o alone but to also consider symbol offsets
-within to resolve this, and do a third pass if required.
-
-[AD: kallsymso_prev is already tracked by kallsyms_step() here, so only
- add kallsymso_changed() and use it]
-
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Closes: https://lore.kernel.org/all/93db0eae-f479-4343-a126-59987ae0dc22@oracle.com/
+Fixes: 685082f4be77 ("wifi: cfg80211: validate IEs in cfg80211_wext_siwgenie()")
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/link-vmlinux.sh | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ net/wireless/wext-sme.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 40cbc73c7813c..281bdb335c941 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -245,6 +245,18 @@ gen_btf()
- 	printf "${et_rel}" | dd of=${2} conv=notrunc bs=1 seek=16 status=none
- }
+diff --git a/net/wireless/wext-sme.c b/net/wireless/wext-sme.c
+index 1919290d1208d..f0c9aab622385 100644
+--- a/net/wireless/wext-sme.c
++++ b/net/wireless/wext-sme.c
+@@ -339,8 +339,10 @@ int cfg80211_wext_siwgenie(struct net_device *dev,
+ 			/* nothing */
+ 		}
  
-+# Check if kallsymso_prev and kallsymso differ
-+# If symbol sizes within ${kallsymso} change, any symbols within vmlinux are
-+# likely to shift, invalidating ${kallsymso}.
-+# Since file size can remain unchanged even if symbol sizes change, compare the
-+# actual symbols instead of relying on file size only.
-+kallsymso_changed()
-+{
-+	${NM} -n "${kallsymso_prev}" > "${kallsymso_prev}.sym"
-+	${NM} -n "${kallsymso}" > "${kallsymso}.sym"
-+	! cmp -s "${kallsymso_prev}.sym" "${kallsymso}.sym"
-+}
-+
- # Create ${2} .S file with all symbols from the ${1} object file
- kallsyms()
- {
-@@ -398,7 +410,12 @@ if [ -n "${CONFIG_KALLSYMS}" ]; then
- 	size1=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" ${kallsymso_prev})
- 	size2=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" ${kallsymso})
+-		if (!for_each_element_completed(elem, extra, ie_len))
+-			return -EINVAL;
++		if (!for_each_element_completed(elem, extra, ie_len)) {
++			err = -EINVAL;
++			goto out;
++		}
  
--	if [ $size1 -ne $size2 ] || [ -n "${KALLSYMS_EXTRA_PASS}" ]; then
-+	# Due to alignment, file size of the kallsymso object file might remain
-+	# unchanged even if individual symbols within change size. Changed
-+	# symbol sizes can still shift other symbols, though. Therefore, don't
-+	# rely on file size alone.
-+	if [ $size1 -ne $size2 ] || kallsymso_changed || \
-+			[ -n "${KALLSYMS_EXTRA_PASS}" ]; then
- 		kallsyms_step 3
- 	fi
- fi
+ 		ie = kmemdup(extra, ie_len, GFP_KERNEL);
+ 		if (!ie) {
 -- 
 2.53.0
 
