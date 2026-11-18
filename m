@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022819;
-	b=sO6bmTWqoC2AAyU/nIMnIT4HkAb6g6Y/VI96Hr8CAzmyz42ZnO/PwgJ88v5ETGbvcgAV
-	 qQ0TDyt0Qz5nRT+73NZQyFAfgdpVgQCQdUrij+ZFH0HpwahYtClVKvtQbtMuuKP6tBB+z
-	 KcKCKoSlRsZ3oGCV+m1v+2DXPq/n/ymjy+9lQdpQrnoJilFyNWtEZpJ2Di1kovroyjkJm
-	 V39SoXtfNavrBd4M/K1tb12z4na9mIahKM1atLoqTA/lIfr3PhRdk1xdIGHOrDgu/iMj0
-	 I8okMT28x+yVvQKy5KtaFWWFye5z5fkmswQHD23NdtXg3fyPb0to46c9bv/ucof5KLA==
+	t=1795022822;
+	b=nph9ihJJOLiSV4Z4n6fHC/EmDGeDisLVou7kNbsb9SUmk9EAE6kwuijTOSTuS4wZ77LZ
+	 JsVplgXdK8SgQlyVvttLa19BobIXutkSCUSwinr2as2xMFl4xRMilLYhIsvMrcMN4NUT3
+	 3nVOHRh0mP3AbBwElH1qO37vGMsWNy69wimUNJMcl1VDtrTnq6tovKq1UFXFi/Q0jj2wg
+	 U/3RjHUcHJbFAg8acMUAT32qELP5zWbp+g823iGCShTnAb5jgeDiM3S/FJaHi+yL7rYJv
+	 y0Y4RYcbCuHrClCuVWcAYBcNE3PRLf06ibRsGWjxawMfUtgmhxWDS/GaZal/FJvgE8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022819;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1LKZWvHJuWL1CEj5cZkqKFq0Z9XtzyoZDsLNSU6fFUs=;
-	b=HNvuXr91+ZZS1vEMw7lycFRprWjn3AozHAPheo/xDMMoMI0lTgW92FQNxvhVc3U8j2o6
-	 gQfII9qdDv72Tx2RyF9m8BhBnOPDPXM+x+eNF7anI6qpg6B7U9Z+kqHB9l2rhw5iK+70d
-	 uQR9QBe77FX7xpOL7nXfltFHymZArgTCO+8jHqTFG4xUoT2a6C+Nwq7arvEWmMCLrLnAl
-	 5403Y2uUIxwsjHq6YfR278MS/I1Xl9/yqzFAFGTgWsCLunp83s3WlMtzlq/OKvnTSYkIW
-	 S/Ig2p58uA+OENQwBxeaGxQpuhdt2wGDNJgzCqzdTxTRnIuVUf1di+vdFPhLUujLGjw==
+	bh=tUgUBxavGAZWsOZUV1aSrENDXybnj1GTJI46KuQpVng=;
+	b=ZnsslKtjGzMa+IPUTwfy1saM4XLIPPPf4hR4DDGLV8djRcQTC4k4/FqUyn51bMz9cpQk
+	 ldyJuyfYMBqdTdVWGgrj0ZAqm2+zzv+WygroB1algTQGEtnUast3mSm5LP7Bva+6rTqeB
+	 w7a5RMN8umPdPn7rA1pOybul9uQhANh87dpylLAO5Hm6iLWh5OeWM09tleDmDWPdFnBBw
+	 OwdZzXLiVvj5DJgVUGfTqHF/zZqwKaqnS4swf/y0TX6yq914IIUtwnWPMy8gtr5mmMlI+
+	 yQPV9Gy2cWzX4RXBftjNu2YQ3w5YaHQ2zxtFYTh/AwpCjIwQ9sdIgSYOCA4SS+CKwug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okOxY2t3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2thgDneT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD35606A756;
-	Wed, 18 Nov 2026 17:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43222606A75C;
+	Wed, 18 Nov 2026 17:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okOxY2t3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8751C1F000C4;
-	Wed, 18 Nov 2026 17:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2thgDneT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FCE1F000C5;
+	Wed, 18 Nov 2026 17:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022819;
-	bh=1LKZWvHJuWL1CEj5cZkqKFq0Z9XtzyoZDsLNSU6fFUs=;
+	s=korg; t=1795022821;
+	bh=tUgUBxavGAZWsOZUV1aSrENDXybnj1GTJI46KuQpVng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=okOxY2t34i8GPMewgzBCMzGb/1UV+OXy2yXTMDhDwSmk2uZBM5auPKZhqWufJzOFk
-	 SA5O12gcMigjVT37UrWw6d8ZkW5cjGI7c1rSaEyb/SgaJ+sB7XL7d1ZWF5BzJ6Hy2A
-	 RF9wBcDM7HSVqhBnCtF/iusIMpW9HhU1WwtXrNEM=
+	b=2thgDneT4SLoJDceuVkMPtweeQpzGaq3H9M+kmkE1nJ6bftDTUHKuHjpjsOO1yfYG
+	 CG00C4f6MrYQ2/yRYTwfiXJW4NgpE2tWIT7lFOc6Uxd7qBaKO3UD+TWNhJwhmWxmuy
+	 WV6wkzALDYlZ2m88fFUbExquB+SZI+4fphsj3tOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0150/2151] iio: pressure: rohm-bm1390: Fix AVE_NUM initialization
-Date: Wed, 18 Nov 2026 15:31:25 +0100
-Message-ID: <20261118150127.232370538@linuxfoundation.org>
+Subject: [PATCH 6.18 0151/2151] ata: pata_parport: Fix use-after-free in new_device_store
+Date: Wed, 18 Nov 2026 15:31:26 +0100
+Message-ID: <20261118150127.268411868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,47 +69,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 64f4173ad1a7f1b247296c84e624f5095be170c7 ]
+[ Upstream commit bd46a0b22933fb45f4ff009fa4a3836124df34b3 ]
 
-The BM1390 tries to initialize the AVE_NUM to 110b at the start-up. The
-field location is not taken into account, and value is written unsifted.
-This causes the AVE_NUM to be initialized to zero.
+The function new_device_store() calls driver_find() without any
+protection against concurrent driver unregistration. This can lead
+to a use-after-free (UAF) when a driver is unloaded (via rmmod)
+in parallel with a new device addition via sysfs.
 
-Use FIELD_PREP() to shift the intended AVE_NUM value to correct field.
+The race window exists because driver_find() returns a pointer to
+the driver's private data, but does not increase its reference
+count. The caller is responsible for ensuring the driver remains
+valid, but new_device_store() did not hold any lock or reference
+during the lookup and subsequent use.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 81ca5979b6ed ("iio: pressure: Support ROHM BU1390")
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Concurrently, pata_parport_unregister_driver() releases the
+pi_mutex before calling driver_unregister(), allowing new_device_store
+to proceed with a stale pointer after the driver has been freed.
+
+Fix this by expanding the critical section protected by pi_mutex
+in both functions:
+
+- In new_device_store(): acquire pi_mutex before calling driver_find(),
+  and keep it held until all uses of the found driver pointer are
+  completed.
+- In pata_parport_unregister_driver(): hold pi_mutex throughout the
+  entire unregistration process, including the driver_unregister()
+  call, so that no concurrent lookup can see a partially removed
+  driver.
+
+Thread A (new_device_store)       | Thread B (pata_parport_unregister_driver)
+  driver_find("ate")              |
+                                  |   mutex_lock(&pi_mutex)
+                                  |   idr_remove(&protocols, id)
+                                  |   mutex_unlock(&pi_mutex)
+                                  |   driver_unregister(&pr->driver)
+                                  |   (frees driver_private)
+  /* continues using stale driv */|
+  -> UAF!                         |
+
+Logs:
+BUG: KASAN: slab-use-after-free in driver_find+0xd0/0xd4
+Read of size 8 at addr ffffff9f970dc690 by task sh/4737
+Call trace:
+ show_stack+0x14/0x1c (C)
+ dump_stack_lvl+0x70/0x84
+ print_report+0xf4/0x5a4
+ kasan_report+0xa0/0xe4
+ __asan_report_load8_noabort+0x18/0x20
+ driver_find+0xd0/0xd4
+ new_device_store+0x140/0x30c [pata_parport]
+ bus_attr_store+0x5c/0x94
+ sysfs_kf_write+0x1c4/0x25c
+ ...
+
+Allocated by task 4734:
+ kasan_save_stack+0x28/0x4c
+ kasan_save_track+0x1c/0x34
+ kasan_save_alloc_info+0x3c/0x4c
+ __kasan_kmalloc+0x98/0xac
+ __kmalloc_cache_noprof+0x158/0x3cc
+ bus_add_driver+0x70/0x4d8
+ driver_register+0xf0/0x3b0
+ pata_parport_register_driver+0xb8/0x1c4 [pata_parport]
+ 0xffffffc07f5ce014
+ do_one_initcall+0xb8/0x36c
+ do_init_module+0x230/0x6d4
+ ...
+
+Freed by task 4737:
+ kasan_save_stack+0x28/0x4c
+ kasan_save_track+0x1c/0x34
+ kasan_save_free_info+0x48/0x8c
+ __kasan_slab_free+0x5c/0x84
+ kfree+0x174/0x3e0
+ driver_release+0x1c/0x7c
+ kobject_put+0x178/0x47c
+ driver_find+0x78/0xd4
+ new_device_store+0x140/0x30c [pata_parport]
+ bus_attr_store+0x5c/0x94
+ sysfs_kf_write+0x1c4/0x25c
+ ...
+
+Fixes: 246a1c4c6b7f ("ata: pata_parport: add driver (PARIDE replacement)")
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/lkml/20260728024015.2014674-1-shuangpeng.kernel@gmail.com/
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/77dad1184ebd0e1e7ea541d4207568f8bc5ec01f.1785381141.git.xiaopei01@kylinos.cn
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/rohm-bm1390.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/ata/pata_parport/pata_parport.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/pressure/rohm-bm1390.c b/drivers/iio/pressure/rohm-bm1390.c
-index 3b48c1c86fd2e..f6732781dd567 100644
---- a/drivers/iio/pressure/rohm-bm1390.c
-+++ b/drivers/iio/pressure/rohm-bm1390.c
-@@ -479,6 +479,7 @@ static const struct iio_info bm1390_info = {
+diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
+index 22bd3ff6b7ae8..5c6651621dfbe 100644
+--- a/drivers/ata/pata_parport/pata_parport.c
++++ b/drivers/ata/pata_parport/pata_parport.c
+@@ -626,8 +626,9 @@ void pata_parport_unregister_driver(struct pi_protocol *pr)
+ 			break;
+ 	}
+ 	idr_remove(&protocols, id);
+-	mutex_unlock(&pi_mutex);
+ 	driver_unregister(&pr->driver);
++	mutex_unlock(&pi_mutex);
++
+ }
+ EXPORT_SYMBOL_GPL(pata_parport_unregister_driver);
  
- static int bm1390_chip_init(struct bm1390_data *data)
- {
-+	u8 regval;
- 	int ret;
+@@ -654,18 +655,18 @@ static ssize_t new_device_store(const struct bus_type *bus, const char *buf, siz
+ 		port_wanted = -1;
+ 	}
  
- 	ret = regmap_write_bits(data->regmap, BM1390_REG_POWER,
-@@ -512,8 +513,9 @@ static int bm1390_chip_init(struct bm1390_data *data)
- 	 * Default to use IIR filter in "middle" mode. Also the AVE_NUM must
- 	 * be fixed when IIR is in use.
- 	 */
-+	regval = FIELD_PREP(BM1390_MASK_AVE_NUM, BM1390_IIR_AVE_NUM);
- 	ret = regmap_update_bits(data->regmap, BM1390_REG_MODE_CTRL,
--				 BM1390_MASK_AVE_NUM, BM1390_IIR_AVE_NUM);
-+				 BM1390_MASK_AVE_NUM, regval);
- 	if (ret)
- 		return ret;
- 
++	mutex_lock(&pi_mutex);
+ 	drv = driver_find(protocol, &pata_parport_bus_type);
+ 	if (!drv) {
+ 		if (strcmp(protocol, "auto")) {
+ 			pr_err("protocol %s not found\n", protocol);
++			mutex_unlock(&pi_mutex);
+ 			return -EINVAL;
+ 		}
+ 		pr_wanted = NULL;
+ 	} else {
+ 		pr_wanted = container_of(drv, struct pi_protocol, driver);
+ 	}
+-
+-	mutex_lock(&pi_mutex);
+ 	/* walk all parports */
+ 	idr_for_each_entry(&parport_list, parport, port_num) {
+ 		if (port_num == port_wanted || port_wanted == -1) {
 -- 
 2.53.0
 
