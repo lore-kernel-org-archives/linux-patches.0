@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035572;
-	b=FEzVHrd28q2JWF/do1SPc4EHaJk0fyAH7wz+/EHz774sqtR5eicAo2du6Ryl2npkqxTt
-	 lJm8bRSMO1tU+ayRhPhJBXMRAXb5Z8A9uX1/oRgikC/+nSSH4KddcTE04FV9lVGJiwSbX
-	 nMXGExGwh/fUKVWZiTJarZ3IRAG/qQoic/zb3MzekUYkkggOHmQADNseVcPwrTwN/towu
-	 IawO7aBNtw2bquisDs8KipNE6NXeguJYJJ5UaMonaOgBXU2ntcgQWuZLk5HgqPZVYdVr5
-	 1H3DPq1m6nRW4CdvCOFgIINZinrJg/rfWfQPebbUxWkCn7gqVvnIaYAtn0uSK4Xyhuw==
+	t=1795035575;
+	b=PA9IPqxl0Bjtum5iUNPSGRKDl29SdXPDPW8VVDdXGxX1sI/bJTBpOwFg+0fzTZjH+bHe
+	 4VxjmzD6+4Av11WgUzZzMicdtFZ7tLFA0NW4lbZtWFM/wl4ZFkewiwFYkM412jKBCJ58h
+	 iyHoCVS+3vmYS76awk1UyIb0QwnmKz3KDMQUnnjbTfuJROEhFB6CwvD8bgX0K62k1HmwS
+	 17S2buOlfSDparTeFZeF4AcYBRdhvdyigcxBB97pXyU33D1c8p38m4i5bzIoEvbS+3L6Q
+	 WYStF5Fcnm+kg0bmkcqGS7QBMzZiV1ba0eS4x+k5DMtHydK2lFHK9JSIA1GXttsb6lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VT+CmfMNfp+cfG5jwdgnvbISu1VkQTcH3IxBl/7yS+o=;
-	b=QbjRBfFqL2ffsGZG+9I3Fm8IfLr1jatEt1Fkm1zByw/YcYqETkq3vr0/c3UE/2iDztWG
-	 LZDGDIhkBEwseq/VfEZW9R6zuKkWemWwUM0/BwA807RSUiPdE9XljoEBvyS6BPlKDCmUa
-	 8P03pyPzYRjg04/ROZA+8ML5WA/cCLRfBIs6N5ywbsv4WRVUm+iVsrTv/7odgjRLAw1wu
-	 lZWEM3Uwrpm0K2XqqrUKFxdyQVsG5cuBgHOk8OeNStwgBE0+Iz1yxQjLm96jKh8HN1cEl
-	 gB7O6FygxL6fPfeoj36ZZk82md3I58jOK3tyFpjbR+PQKDAZ6/fppcBCxM1yLJQgQqA==
+	bh=EleIXQ2RbpDpSzPpijA+7QAdGoOlSxQvaWcE49gesWY=;
+	b=2/+pwJAJ8c3mPS1lK7yPofsl0zoJAU7/ds0cnFYJSZUoZhhS+t1jmWluU+eOHMzBBxdd
+	 vypKjuVqTGIEskHRbaxvl0Zppyh01J/2ajJqGffwZJL9ZW9xKASSaDienQUykKoUugKGr
+	 Rsw7+ExoT2ikELbV218BGtfTA/yxR6JMEt/2S47ciVCecRC7IdC4tPWkMEY2JUK3iADUD
+	 +0B5de2iurH2w9Ch3xjY4BB9aI68PQmpGE37KT4VfMuZKa7wuLSt/4f2Zi8gOqfjhNTsI
+	 Y1mrlIC/9XMF2jUwXNN4rf76uarElN6oz+if9QWu1d7nAniZE5RIAm6SNbaZ3sYpTvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=06zBPnoA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LbJk83g0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7719606A334;
-	Wed, 18 Nov 2026 20:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38F9606A31C;
+	Wed, 18 Nov 2026 20:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=06zBPnoA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228BC1F000C5;
-	Wed, 18 Nov 2026 20:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LbJk83g0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40871F000CB;
+	Wed, 18 Nov 2026 20:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035572;
-	bh=VT+CmfMNfp+cfG5jwdgnvbISu1VkQTcH3IxBl/7yS+o=;
+	s=korg; t=1795035575;
+	bh=EleIXQ2RbpDpSzPpijA+7QAdGoOlSxQvaWcE49gesWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=06zBPnoADD1JsecA6pmK2xy6k1BRF00E8Mn79NI3UXk75Sz1KpAGyfutnXttns0yQ
-	 RxL1BCrUPDgnxv7iSErHySRhywcaS74Y09dyAZnP4Gv5mYQktlCX3a1Qdap0hY0Jay
-	 DFtVKJ5OjmPTXNEiYbVEcH8aXzVfAPgNungKjvWg=
+	b=LbJk83g0HbvjQ1+8DISf/TrTpDjFXQ1h+ZRMBQWsm15QE1A6zxOxmFZfLZO29thid
+	 el+5gJJUXbHecNoAukSt405Fiu8diUKtudO13khfiVpWGtcW8CNdTBPyxZZfj0KPJM
+	 v4AMWl6JKkFB/EEglcm8j6UU9XBo3BGe2M7eriJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.6 0753/3318] media: rc: Fix build failure with CONFIG_LIRC disabled
-Date: Wed, 18 Nov 2026 15:22:55 +0100
-Message-ID: <20261118150341.247073992@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Yang Wang <lkevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 0754/3318] drm/amdgpu/powerplay: Align get_tonga_state_array() header with prototype
+Date: Wed, 18 Nov 2026 15:22:56 +0100
+Message-ID: <20261118150341.281573913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,46 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 0c795849fd70d6bdb99aea5dd08d9b43128612f6 upstream.
+commit 4986757d3207383c052689532e505edccc6df7c8 upstream.
 
-commit 37efd09ba2c6 ("media: rc: Ensure registered is cleared in error
-path") broke the build if CONFIG_LIRC was not enabled.
+The function header above get_tonga_state_array() still refers to
+check_powerplay_tables() and does not describe all of the function
+parameters.
 
-Fixes: 37efd09ba2c6 ("media: rc: Ensure registered is cleared in error path")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202609230511.Em5Osw74-lkp@intel.com
-Signed-off-by: Sean Young <sean@mess.org>
+Update it to match the current function prototype and include the
+missing parameter description.
+
+Fixes: 1ac24df78c56 ("drm/amd/pm: Validate Tonga PowerPlay state array bounds")
+Cc: Yang Wang <kevinyang.wang@amd.com>
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Yang Wang <lkevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/lirc_dev.c |    3 +++
- drivers/media/rc/rc-main.c  |    3 +--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -774,6 +774,9 @@ void lirc_unregister(struct rc_dev *dev)
- 	unsigned long flags;
- 	struct lirc_fh *fh;
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+@@ -1502,11 +1502,12 @@ static int init_thermal_controller(
+ }
  
-+	if (!device_is_registered(&dev->lirc_dev))
-+		return;
-+
- 	dev_dbg(&dev->dev, "lirc_dev: driver %s unregistered from minor = %d\n",
- 		dev->driver_name, MINOR(dev->lirc_dev.devt));
- 
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -1981,8 +1981,7 @@ out_lirc:
- 	scoped_guard(mutex, &dev->lock)
- 		dev->registered = false;
- 
--	if (device_is_registered(&dev->lirc_dev))
--		lirc_unregister(dev);
-+	lirc_unregister(dev);
- 	device_del(&dev->dev);
- 	/* registered already cleared above */
- 	goto out_free_table;
+ /**
+- * check_powerplay_tables - Private Function used during initialization.
+- * Inspect the PowerPlay table for obvious signs of corruption.
++ * get_tonga_state_array - Get the Tonga state array from the PowerPlay table.
+  * @hwmgr: Pointer to the hardware manager.
+  * @powerplay_table: Pointer to the PowerPlay Table.
+- * Exception:  2 if the powerplay table is incorrect.
++ * @state_array: Pointer to the returned Tonga state array.
++ *
++ * Return: 0 on success, negative error code on failure.
+  */
+ static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
+ 	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
 
 
