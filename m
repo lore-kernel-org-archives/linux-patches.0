@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056355;
-	b=kxc0sZQGVJeSTLUQtZ9E1oOwiWbGzJ+oj5ibIyVGkAeyG1AOZFVMraGxC2GNNqvr6bQf
-	 9rGmAD8A8JCrNnNwaby8fMVaiJvExntnkLSemdL8nkXx1Fbg6pTEShkS259IKLFTzMFP9
-	 R1+kDr79UJtu4tdiKYvT5DZsXdT258iOLhk0WEFEcVUxRWQp6zKrMlJEp+bA3y++IkjIL
-	 yQLTi8kzEgAnRD39eH/o6KxJqKiihijLSZ2kDFG0A5Z0m6QxLvY4m0YbGLZcyYlnMjK0y
-	 86NwgGNykdFoxhIrgz2YLD+8xxmLc1ZJ3zrVcAmYzYmNJQkf4dL//sxeaM7nQy2ODXg==
+	t=1795056357;
+	b=5gxqnSLYaZsLGbZhLYiknrX1NYHg10wL5NFcwPh6eRl0FLyEGFWBgRq5tILQ7M+LqdH0
+	 LKuUKFflwq5p6u0oK2P4iaHalCrNvbCXmDjjtGqw34IgjNUXcPoKgDSl1Fb5P0CVl3hM/
+	 g03vZjJfzt3wYODrRHAhKbHp3SHKupjfgXR4Z8BhwWcKDy2bHCRjGp8CizkZ1GjbQNBxU
+	 gc/2qIUB1J8DbigCsv5uOBCEOKY4UklnOG0uIaHTqhZmXoPyXTFaN2lulo8sTymI883es
+	 UNi0p+cqa5hxJmjFKVRJII3R0zrRk5thnKCGheZ/1sDOKlQDv7xblpBZPwGF07/OOuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8mKdMAywH/Yp3sVUOj/FTthbzBClJVQBqSg+ir0RQFU=;
-	b=2Aij+1Q1GEEVofr3b2dTw5tbytWBbsNG8fD4RiO8fYXoDi6MZtTwTrQuEONQRFAjWAEs
-	 pJI3T0iLTrgdQIhxW6MGfFWhZbOIXgWvkhK+1sGGiUpS9V2OZIngdFkUmY37vBB/hhDTy
-	 vH1aWrwFe0fvoX2QumkEFqlkA7p+GZpztzYJIWhyXLjZbiqu/i1YopEr2Sf9hjXsfkTb7
-	 IP3uDN/iW6Kitd8UAJ44vi9mV91qGGAPHG78H956rNb4WJHLG/ENOHiGUu6Z2Lc7jDpSb
-	 fZaL9uUnmta00k/U9AExHRTJZA3BLdn6nW1+rB4Tn0x+hmkwfZZ5jCfSyahLWcCF6ag==
+	bh=xThbVx5NNjBz/kmDOQycIdjAx85zleAh3fGUHNlSAmg=;
+	b=yXXqk05HrQtEjTuLle6zzZ+94TW6tLh8zPeYIpQ4zDAwSjezB49Q6TLMjy7qyUIJbMaU
+	 48dUdSIUQ3Jbyzc41w9laWmWpLDK+BI+x3hkQlJBkLjxfwWB+maKMnaGTEWvGrigbmKbZ
+	 wLE8RccsLBaRUX1OJ9dqAYIV4s+hMn7pNqA4ot6crh8+zuSzkcOz/NJM4mCu7t3kEnLz1
+	 ovSpM9kz5w5NvwpyphbyCBX2DyZboD2hj/azUtUmR5go8ydINa9CqXG/eAUfxecxhqJG4
+	 UJl57H/u36AdSyvXJzY9bPFkahjwnwr1xbb4VR0eZPiq9fQnvWpK+nYTVqk+SGmT27Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q0JFJDiB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8I2oo4M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2745A606A320;
-	Thu, 19 Nov 2026 02:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8C4606A325;
+	Thu, 19 Nov 2026 02:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q0JFJDiB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C551F000C4;
-	Thu, 19 Nov 2026 02:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8I2oo4M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CC11F000C5;
+	Thu, 19 Nov 2026 02:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056354;
-	bh=8mKdMAywH/Yp3sVUOj/FTthbzBClJVQBqSg+ir0RQFU=;
+	s=korg; t=1795056357;
+	bh=xThbVx5NNjBz/kmDOQycIdjAx85zleAh3fGUHNlSAmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0JFJDiByY3DCQVquFm0FzCH4+35w/xZO6X0KF3iMMqgtas686dihgtOgvLKXEi12
-	 nqh/mR1EInO1t/N+1AB41HbxfCWsrv+z9DE5YfEssdxxXt9Na5PR+/FC0/nHkfCp22
-	 cegeFNY0c+VdzyHZwcHK4vl3TycGGR0zllwwbznA=
+	b=J8I2oo4MJ22JD2aSYTiGUdtQuGCyoodQTb/q+qYThMsbtTDpNzJlubmkE9I1G5Q2K
+	 WaBev5o64NycS+sEmtZ6xdpo3/45bAnrJOWM0RhUIBTrU/nioiB8MaGsB6xRDr31uQ
+	 gEALsEI3cW/VXHiIfWtIztFSJHShJx99q82BjIZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8285e973a41b5aa68902@syzkaller.appspotmail.com,
-	syzbot+669c9abf11a6a011dd09@syzkaller.appspotmail.com,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1959/2214] ALSA: pcm: Use deferred fasync helper
-Date: Wed, 18 Nov 2026 16:00:35 +0100
-Message-ID: <20261118150129.327778863@linuxfoundation.org>
+Subject: [PATCH 5.15 1960/2214] ALSA: Add simple refcount helper functions
+Date: Wed, 18 Nov 2026 16:00:36 +0100
+Message-ID: <20261118150129.365416145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,76 +69,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 96b097091c66df4f6fbf5cbff21df6cc02a2f055 ]
+[ Upstream commit dcca9b6064c33c84fbeb9f09814178a206321249 ]
 
-For avoiding the potential deadlock via kill_fasync() call, use the
-new fasync helpers to defer the invocation from timer API.  Note that
-it's merely a workaround.
+There are many open-code to manage the same pattern for refcount +
+wakeup sync at closing.  Let's provide the common helper functions to
+replace the open-code.
 
-Reported-by: syzbot+8285e973a41b5aa68902@syzkaller.appspotmail.com
-Reported-by: syzbot+669c9abf11a6a011dd09@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20220728125945.29533-4-tiwai@suse.de
+- The recount is kept in struct snd_refcount, where it's initialized
+by snd_refcount_init().
+- The user can simply reference or unreference via snd_refcount_get()
+and snd_refcount_put() functions
+- The user can wait for the all usages gone by snd_refcount_sync()
+
+Note that here we use atomic_t instead of refcount_t since the current
+users allow reusing the refcount after sync again.  The design of
+refcount_t prevents exactly this behavior, so it doesn't fit.
+
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260610154538.51076-2-tiwai@suse.de
 Stable-dep-of: 91d0048a97e0 ("ALSA: pcm: Add refcount for races between drain and unlink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/pcm.h     | 2 +-
- sound/core/pcm.c        | 1 +
- sound/core/pcm_lib.c    | 2 +-
- sound/core/pcm_native.c | 2 +-
- 4 files changed, 4 insertions(+), 3 deletions(-)
+ include/sound/core.h | 21 +++++++++++++++++++++
+ sound/core/misc.c    | 24 ++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
 
-diff --git a/include/sound/pcm.h b/include/sound/pcm.h
-index c827527b0e1fc..9a4cd00b3e221 100644
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -398,7 +398,7 @@ struct snd_pcm_runtime {
- 	snd_pcm_uframes_t twake; 	/* do transfer (!poll) wakeup if non-zero */
- 	wait_queue_head_t sleep;	/* poll sleep */
- 	wait_queue_head_t tsleep;	/* transfer sleep */
--	struct fasync_struct *fasync;
-+	struct snd_fasync *fasync;
- 	bool stop_operating;		/* sync_stop will be called */
- 	struct mutex buffer_mutex;	/* protect for buffer changes */
- 	atomic_t buffer_accessing;	/* >0: in r/w operation, <0: blocked */
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 8bad50bf00e13..927974a7bcf70 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -1008,6 +1008,7 @@ void snd_pcm_detach_substream(struct snd_pcm_substream *substream)
- 		substream->runtime = NULL;
- 	}
- 	mutex_destroy(&runtime->buffer_mutex);
-+	snd_fasync_free(runtime->fasync);
- 	kfree(runtime);
- 	put_pid(substream->pid);
- 	substream->pid = NULL;
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 38671c4737f51..e9d9624209acc 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -1821,7 +1821,7 @@ void snd_pcm_period_elapsed_under_stream_lock(struct snd_pcm_substream *substrea
- 		snd_timer_interrupt(substream->timer, 1);
- #endif
-  _end:
--	kill_fasync(&runtime->fasync, SIGIO, POLL_IN);
-+	snd_kill_fasync(runtime->fasync, SIGIO, POLL_IN);
- }
- EXPORT_SYMBOL(snd_pcm_period_elapsed_under_stream_lock);
+diff --git a/include/sound/core.h b/include/sound/core.h
+index 5f6a6dde20303..b76345c8e2e0d 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -74,6 +74,27 @@ struct snd_device {
  
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 757f5c4c25a25..3a792defc3998 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -4007,7 +4007,7 @@ static int snd_pcm_fasync(int fd, struct file * file, int on)
- 	runtime = substream->runtime;
- 	if (runtime->state == SNDRV_PCM_STATE_DISCONNECTED)
- 		return -EBADFD;
--	return fasync_helper(fd, file, on, &runtime->fasync);
-+	return snd_fasync_helper(fd, file, on, &runtime->fasync);
- }
+ #define snd_device(n) list_entry(n, struct snd_device, list)
  
- /*
++/*
++ * A simple reference counter with a wait queue;
++ * typically used for usage counts, and you can synchronize at finishing
++ * via snd_refcount_sync(), which is woken up when the refcount reaches to
++ * zero again.
++ */
++struct snd_refcount {
++	atomic_t count;
++	wait_queue_head_t waiter;
++};
++
++void snd_refcount_init(struct snd_refcount *ref);
++
++static inline void snd_refcount_get(struct snd_refcount *ref)
++{
++	atomic_inc(&ref->count);
++}
++
++void snd_refcount_put(struct snd_refcount *ref);
++void snd_refcount_sync(struct snd_refcount *ref);
++
+ /* main structure for soundcard */
+ 
+ struct snd_card {
+diff --git a/sound/core/misc.c b/sound/core/misc.c
+index edd29fcde4200..9012a23047f86 100644
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -247,3 +247,27 @@ void snd_fasync_free(struct snd_fasync *fasync)
+ 	kfree(fasync);
+ }
+ EXPORT_SYMBOL_GPL(snd_fasync_free);
++
++/*
++ * generic refcount helper
++ */
++
++void snd_refcount_init(struct snd_refcount *ref)
++{
++	atomic_set(&ref->count, 0);
++	init_waitqueue_head(&ref->waiter);
++}
++EXPORT_SYMBOL_GPL(snd_refcount_init);
++
++void snd_refcount_put(struct snd_refcount *ref)
++{
++	if (atomic_dec_and_test(&ref->count))
++		wake_up(&ref->waiter);
++}
++EXPORT_SYMBOL_GPL(snd_refcount_put);
++
++void snd_refcount_sync(struct snd_refcount *ref)
++{
++	wait_event(ref->waiter, !atomic_read(&ref->count));
++}
++EXPORT_SYMBOL_GPL(snd_refcount_sync);
 -- 
 2.53.0
 
