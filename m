@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046231;
-	b=GkPGnTrlQlEAwzU8lE7quyXdkjazWiS9r8FG8BRCImeOhg1AQbq77bGodH1hGQRWvLJS
-	 lXP1Qs1p0wCd35CDnGJoqV4/K/iYVX+t/OCRL9HY1Ynji8Sml9x4O5dQiDO1ooosy4hpY
-	 3O9AOVray5IMVV7MB/JkqmzC/047tws2fok1W0+FzovWyf9mCqMw/QU4nvcBOBHj7rAF3
-	 UUyCz/Ci4RrMalpfIi8S6moKJ1m3yb4yeOzcrmNWWR84IyFOHsldonl2ES17YeO6cuJD1
-	 Y7hbbQ+Qoi6ea5gO4basXyZZ7HYedr4fY27twV0853DTw0jotLhTmFgK0pcDxlIb7rQ==
+	t=1795046234;
+	b=ERLtKKVnaOhBn6wKwQh76exdoj/tz62xXDDpcnjgtVr897TdyzJbNDPnminiTpY2UjEt
+	 7QJOUMZ2w/ai6PPUeE8tx6p3qnfNa9G+r5WqJCp6T9e/8MxJks6lFZpm7aDQV0pqvChqQ
+	 OlM5yhHdpkkBaWQP1TCACujzv7665R8zDAgOSP9mwxh0AyWsgj3LLxmRbLy0xgiY45+KE
+	 vAgzu+0XR4tnU4urb9d+XaI3tkPlQx4KW0Mw7g0MRvfNUOotpdOMOQP2Re+fPakw7RIaA
+	 4K4T7i8CTvPglMfzESUPREp56lh6YUyjA47hF8cLZyOPFJTahqucEQgqcGwwlBBSyag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BHt8Y4+GboND5HgLl4y2eI0YBlPx9iOIJjwh0WAs150=;
-	b=sNzycmvDtC6ea2vCptIgomkxBPCmRgq+EX5fYjuOvbFV4O2P29C9TOwSwcXQksybukkg
-	 KDhUam+dLKrB6DSb2SON4BiTJZTfCCPNjo44ub+s0SPCj7uogNFr2mHAK8cMoTJiTpLsH
-	 mzf2rNmbvFXIPbt4ajFY8XXXDfHMf9u14WD6vhXsTNXe3moi6p91jwU9d9+oTSr3B8t1d
-	 x3DAhxo7PDhI4sWNxWb+BRuF9XBT+RdIa5JnzEeXB2/Q2IpGbKO367KpMuVk1eFPpCNts
-	 I8F8/uk8ynNPWL2nRuTL1K/pgxvWsSPcBzrKgxULv4y5uXpiSM+z/eUZ7qy/GdVpsKg==
+	bh=S0uMM7r8shGQBC6s8J6oZv7gvIrZgpDiKBVxyTZXNkw=;
+	b=JVORd4SnIPfzwwchYIdW98mjlVWEstb8l+8me2xaqOhYv9ijDpl86pYxanOIrmziAjbX
+	 vxptACzhzqFpM8ciAd5tCrHwetaXFK1qi+9+QvmXE/qs6oXYmt5g4I9em7ET35+LgRAM/
+	 yQe22hE5OT+13Ivqjy61Pfs1M2OGXj2EvdrfizwOxT96XPLOb4XidV5+4eiSgYoxhUNyC
+	 SmxyA3ztndYTVe9gMFqB5sJJQ1fGym4bwB6CaEXpxr+HdMqvlOlBZaoRaGlzbpuYc/wTH
+	 O6Qr8AiqEmskaqlGOCDKugYrROv9eGMrpoAwn87XUR7vGPrSKF6Xb7QqNA6OSeO03rQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ks07gIFC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ckueF79n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930FB606A31C;
-	Wed, 18 Nov 2026 23:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584B6606A325;
+	Wed, 18 Nov 2026 23:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ks07gIFC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85C81F000C4;
-	Wed, 18 Nov 2026 23:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ckueF79n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0681F000C4;
+	Wed, 18 Nov 2026 23:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046231;
-	bh=BHt8Y4+GboND5HgLl4y2eI0YBlPx9iOIJjwh0WAs150=;
+	s=korg; t=1795046234;
+	bh=S0uMM7r8shGQBC6s8J6oZv7gvIrZgpDiKBVxyTZXNkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ks07gIFCht6No0Rs61/dWS7WbUTBhYDkhDRgaueX6mP+KQYIDqUSa/yNO3KpuFBsc
-	 6oNtmCyM43dsGTsfirVWNMTNffM7LEyi6x/Sh5JgWW56jQ8hvoP/ZeXRnkyo79y5r4
-	 /J2YCBsKYKj3myKX4MDI2cIcfDR0NqRdfHl8LDYQ=
+	b=ckueF79nTugXfkgswqVyajXTMp9fYD4fCosXR3WSnAzu36T+ylfTHGTJQ5Ue2YOwm
+	 MVzwNOW8nqyTnLJJ3fRxpufWlsBfMQDW8ovSlm57/E65ieFj1y7qRkyN00aoKLYzjG
+	 MB/3o7sGoN21UwVDz6GUfkUgYIh73+K8nI7qd9TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1167/2857] jbd2: dont advance j_fc_off before the buffer is recorded
-Date: Wed, 18 Nov 2026 15:36:41 +0100
-Message-ID: <20261118150243.607207169@linuxfoundation.org>
+Subject: [PATCH 6.1 1168/2857] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
+Date: Wed, 18 Nov 2026 15:36:42 +0100
+Message-ID: <20261118150243.644188617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,86 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-commit 9f359c031885bb50add7d23c7a5a0e9755b134c9 upstream.
+[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
 
-jbd2_fc_get_buf() increments journal->j_fc_off before jbd2_journal_bmap()
-and __getblk() have had a chance to fail.  When either does, the slot
-j_fc_wbuf[fc_off] is never assigned, but j_fc_off already counts it.
+bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
+holding one opcode byte, up to four address bytes and one spare
+byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
+bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
+bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
+unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
+becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
+stack and pushes the leaked bytes into the hardware TXRAM.
 
-ext4 then fails the fast commit and falls back, and the fallback path
-reaches jbd2_fc_release_bufs() via ext4_fc_commit ->
-jbd2_fc_end_commit_fallback -> __jbd2_fc_end_commit -> ext4_fc_cleanup.
-That walks down from j_fc_off - 1 and put_bh()es every slot until it
-sees NULL, so it also touches the slot that was never written.
-j_fc_wbuf comes from a plain kmalloc() and is never zeroed, so a slot
-used for the first time holds uninitialised heap data.
+Reject operations whose dummy phase does not fit the remaining byte
+of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
+back to the generic SPI path instead of overrunning the buffer.
 
-Advance j_fc_off only after the buffer head has been stored.  That
-restores the invariant that j_fc_off covers exactly the filled slots,
-which is what jbd2_fc_release_bufs() relies on: the live buffers of the
-current fast commit sit above the NULLs the previous one released, so
-stopping at the first NULL is correct.
-
-Reproduced on a KASAN kernel with an ext4 fast_commit filesystem on a
-loop device, truncating the backing file under the live mount so that
-only the journal's fast-commit region falls past the end of the device.
-__getblk() then fails for the first fast-commit block while the rest of
-the journal is still addressable, so the journal is not aborted and the
-fast commit reaches the fallback path.  j_fc_wbuf was poisoned to make
-the read of the never-written slot visible:
-
-  BUG: KASAN: wild-memory-access in jbd2_fc_release_bufs+0x6b/0xd0
-  Write of size 4 at addr 5a5a5a5a5a5a5ab2 by task sync/961
-   jbd2_fc_release_bufs+0x6b/0xd0
-   ext4_fc_cleanup+0x97/0x830
-   __jbd2_fc_end_commit+0x37/0xc0
-   ext4_fc_commit+0x524/0x560
-   ext4_sync_file+0x3c4/0x4b0
-   __x64_sys_fsync+0x20/0x30
-
-With this patch the same run leaves j_fc_off at 0 across repeated
-__getblk() failures and completes cleanly.
-
-[ Context: in 6.1.y, jbd2_fc_get_buf() still advances j_fc_off inside
-  the if/else bounds check, so the increment is removed from there.
-  The change is otherwise the same as upstream. ]
-
-Fixes: ff780b91efe9 ("jbd2: add fast commit machinery")
-Cc: stable@kernel.org
-Reported-by: Yu Junzhe <junzheyu1@gmail.com>
-Closes: https://lore.kernel.org/linux-ext4/7e4b109d-64c3-444f-a5dc-93c2ca4576cc@gmail.com/
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260819060939epcms2p37bb8589b2f8a52a2b14bef38fadcf69d@epcms2p3
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
+Cc: stable@vger.kernel.org # 4.18+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ Adapted for 6.6.y: this tree returns -ENOTSUPP instead of -EOPNOTSUPP. ]
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/journal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-bcm-qspi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
-index f54836c1dae22..4d26457f2e906 100644
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -881,7 +881,6 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
- 	if (journal->j_fc_off + journal->j_fc_first < journal->j_fc_last) {
- 		fc_off = journal->j_fc_off;
- 		blocknr = journal->j_fc_first + fc_off;
--		journal->j_fc_off++;
- 	} else {
- 		ret = -EINVAL;
- 	}
-@@ -899,6 +898,7 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index b24955910147c..846ec071baad8 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -1197,8 +1197,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
+ 	u32 addr = 0, len;
+ 	u_char *buf;
  
++	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
+ 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
+-	    op->data.dir != SPI_MEM_DATA_IN)
++	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
+ 		return -ENOTSUPP;
  
- 	journal->j_fc_wbuf[fc_off] = bh;
-+	journal->j_fc_off++;
- 
- 	*bh_out = bh;
- 
+ 	buf = op->data.buf.in;
 -- 
 2.53.0
 
