@@ -1,58 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019004;
-	b=h8iVht0MpsD/kg+2kMJe4zzR7pGpsuQ2lmmepqIsI2quE96YjGPK16ExDD1gXp+jp3fn
-	 waEHpJ+eaEcpv0tk79NptOgtxAHsqYWzdKcw6CoUNA2vqUOemEez3zQXt2L+YNC/6kVvJ
-	 cYsR25hYNpRAoyGNW3+f9oqlwOaPobij7SbQsamaeiYmfZTdUXy4RpqUGVxfD/7UJ8DZ/
-	 1zMw/w9EnS8bwVLXcVe7VQk6z825v6OpL9njOIm4yio8kL/Lmkdoq83sNu/mzf3I4t7oW
-	 MKAn4C1yCjRZ1s0wDj/tjcP81JTdfImx+jfQMsxK2QaXoMfyEvL/MkX6TFhpC7HXISg==
+	t=1795019007;
+	b=zUu/NHm0Xi5An5aTwXZsyt1B+M1TZx+souhveqoAQeLHwj+HSahaJzyos2WzaTFjCc73
+	 joU4iAQorfDyIyVn+bA1Tkc47hgTBArldnREC84SwJa1WCiEzxkdRK4nrm6li+4epHpY8
+	 JHAi5RFoPm8VQJKeVoO7ubHa3XXlbihqfKWwc4HHx4bYQGkudlyRq9AVqOho7CebTY3yX
+	 mQpu8X9XgyN3EgqCnWb6fFhDVoQLoOMHk1tAfDEh67zVVCcPKKjjdz8JqixqQdnznsw/N
+	 hG9OnPwImlnNvAAC8Hiy0Y0YuPs1nW6GJ4q1I47JpTMMY2Kh8tx2qH5S/ayR9vaIfhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=53Ov4ORdZw1ZZKebVn0jTGrwLOLwLzMZy2fJGJomkJQ=;
-	b=4xs3iZeUkYP13UcJzvCI0SrKFhtxtfN9K/nOaTKVoxEWP1i88Y30Ik2l6mSmw7wH/MYG
-	 506UKK4UyNNauw8U1Ut94h9CQ/j6gB/QkgCACeyeVysxVHH+hjMKfKFrs8oSjW2paehaF
-	 Tt6JFHeB38f/l336kjRoXfQliK9ToDqZVAgY/+3sVPWLUxu1LhlvIMT6BYx/N9pmAz5je
-	 4nQXBXAq9fXf1IwdBhsKkEvCcE8hiVukc4wRLYBUlI2uJBLV38m1Zwwh5P8g31XpW2BF6
-	 1em54SxXba+EE5Yi92A9epkvjP/HvfizVQXUBJKbs/cFF9Jwm4wzV/pOYYU/HJOcPXQ==
+	bh=+fZcC0WjjxHoL+JYPXplnwmcDloX0OK2iho+pSD8OGI=;
+	b=zOcPLiYxI+obted6dDEGlHPcVf+WzT5cPR844V5/zRD7462lQIZdBhoZmz1A4aBsGnXp
+	 S6r4U3FVWUVhaxpdHVjixP69bmF6V42SDArOp1By/c0P01P0bw/QH6BeCG+f42tvex1dk
+	 oOT/EfAtNFQ1dXL8VAQ7P3S6PAiQ3rbP7u9bbLq74eeOTIdyUcemu7cl0rBIsayRL/usI
+	 AgA1/pkZ6CDpMq/LxlazWHp06tTR+QO2sugXoGh1p/5KCE6S/s6gKZUFgCjcNF0AMVdSH
+	 z3WcwNqjeODJPjntpwh8Hlvt6lswRIVj16TE857KHv0rV++RSdhHTupo3qCAWxYxoxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VibQ0++T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BT2DMXg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6985F606A31C;
-	Wed, 18 Nov 2026 16:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C1E606A31C;
+	Wed, 18 Nov 2026 16:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VibQ0++T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6BA1F000C4;
-	Wed, 18 Nov 2026 16:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BT2DMXg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3E61F000C4;
+	Wed, 18 Nov 2026 16:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019004;
-	bh=53Ov4ORdZw1ZZKebVn0jTGrwLOLwLzMZy2fJGJomkJQ=;
+	s=korg; t=1795019006;
+	bh=+fZcC0WjjxHoL+JYPXplnwmcDloX0OK2iho+pSD8OGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VibQ0++TFI+rhunywdfCiD2oBZro7Za4JQ/R7U0jXxxXTdKDVu5JpanQnThKoy+3h
-	 NI7ccOkGhLsqWnayXBBODjowSusAp0GayEy+oh1iUjn9Rcn0QfcM1xS7HGGoTNlR+c
-	 x3iRwZxrKcJ1SnZ55KgYd+qBwC2qUVzuVTm77Av4=
+	b=2BT2DMXg+Ff++MbPL/7oV+tKuDOEc7QD2YpIA9y1nQegLBC8oZfarkwo4guQsX9+4
+	 LPd8CPLN8meLwvLBWUcS73p3jeff8rFiPLmotFaHvpWmF6xQQ532v+SVa/xMO9aleu
+	 86wSxBA38EcdOURfPz5NwGlZ/5OiGWvUASASptaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Changwei Ge <gechangwei@live.cn>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1400/2651] ocfs2: reject inconsistent xattr bucket during defrag
-Date: Wed, 18 Nov 2026 15:44:00 +0100
-Message-ID: <20261118150338.409759260@linuxfoundation.org>
+Subject: [PATCH 7.3 1401/2651] wifi: mm81x: move beacon work and init below the tx op
+Date: Wed, 18 Nov 2026 15:44:01 +0100
+Message-ID: <20261118150338.448657813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,70 +67,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit bd40b997f04542869afeabe94f2cf1a016fc9bfa ]
+[ Upstream commit 483e1ebc813280dc566210ec5c48738060355f62 ]
 
-ocfs2_defrag_xattr_bucket() has two mlog_bug_on_msg() checks that assume
-the name/value pairs in a bucket are disjoint and that xh_free_start is
-not below the compacted region.
+Move mm81x_mac_beacon_work() and mm81x_mac_beacon_init() to below
+mm81x_mac_ops_tx() to prepare for future multicast handling such that
+we avoid a forward declaration. No functional change.
 
-ocfs2_validate_xattr_bucket() only checks each entry in isolation, so a
-corrupt bucket holding overlapping entries, or one with an inflated
-xh_free_start, passes validation and then hits BUG() in defrag when a
-setxattr triggers it.
-
-Defrag works on a linear copy of the bucket and does not touch the real
-blocks before the copy back, so the checks can return an error instead of
-calling BUG().
-
-Link: https://lore.kernel.org/20260903131313.2396208-3-joseph.qi@linux.alibaba.com
-Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
+Link: https://patch.msgid.link/20260827054917.255584-2-lachlan.hodges@morsemicro.com
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Stable-dep-of: 54b961097682 ("wifi: mm81x: start beaconing on beacon enable not interface add")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/wireless/morsemicro/mm81x/mac.c | 84 ++++++++++-----------
+ 1 file changed, 42 insertions(+), 42 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index e3c50cd120cd1..0b49e6c929c9a 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -4879,16 +4879,22 @@ static int ocfs2_defrag_xattr_bucket(struct inode *inode,
- 			memmove(bucket_buf + end - len,
- 				bucket_buf + offset, len);
- 			xe->xe_name_offset = cpu_to_le16(end - len);
-+		} else if (end < offset + len) {
-+			ret = ocfs2_error(inode->i_sb,
-+					  "Defrag check failed for bucket %llu\n",
-+					  (unsigned long long)blkno);
-+			goto out;
- 		}
+diff --git a/drivers/net/wireless/morsemicro/mm81x/mac.c b/drivers/net/wireless/morsemicro/mm81x/mac.c
+index 0fa80b1488aac..2760e9389518b 100644
+--- a/drivers/net/wireless/morsemicro/mm81x/mac.c
++++ b/drivers/net/wireless/morsemicro/mm81x/mac.c
+@@ -445,39 +445,6 @@ static void mm81x_beacon_h_fill_tx_info(struct mm81x *mors,
+ 			cpu_to_le32(MM81X_TX_CONF_FLAGS_IMMEDIATE_REPORT);
+ }
  
--		mlog_bug_on_msg(end < offset + len, "Defrag check failed for "
--				"bucket %llu\n", (unsigned long long)blkno);
+-static void mm81x_mac_beacon_work(struct work_struct *work)
+-{
+-	struct mm81x_vif *mors_vif =
+-		from_work(mors_vif, work, u.ap.beacon_work);
+-	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
+-	struct mm81x_skbq *mq;
+-	struct sk_buff *beacon;
+-	struct ieee80211_vif *vif = mm81x_vif_to_ieee80211_vif(mors_vif);
+-	struct mm81x_skb_tx_info tx_info = { 0 };
+-	int num_bcn_vifs = atomic_read(&mors->num_bcn_vifs);
 -
- 		end -= len;
+-	mq = mm81x_hif_get_tx_beacon_queue(mors);
+-	if (!mq) {
+-		dev_err(mors->dev, "no matching beacon Q found");
+-		return;
+-	}
+-
+-	if (mm81x_skbq_count(mq) >= num_bcn_vifs) {
+-		dev_err(mors->dev,
+-			"previous beacon not consumed, dropping req [id:%d]",
+-			mors_vif->id);
+-		return;
+-	}
+-
+-	beacon = ieee80211_beacon_get(mors->hw, vif, false);
+-	if (!beacon)
+-		return;
+-
+-	mm81x_beacon_h_fill_tx_info(mors, &tx_info, mors_vif,
+-				    cfg80211_chandef_s1g_pri_width(&mors->chandef));
+-	mm81x_skbq_skb_tx(mq, &beacon, &tx_info, MM81X_SKB_CHAN_BEACON);
+-}
+-
+ void mm81x_mac_beacon_irq_handle(struct mm81x *mors, u32 status)
+ {
+ 	int vif_id;
+@@ -497,15 +464,6 @@ void mm81x_mac_beacon_irq_handle(struct mm81x *mors, u32 status)
  	}
+ }
  
--	mlog_bug_on_msg(xh_free_start > end, "Defrag check failed for "
--			"bucket %llu\n", (unsigned long long)blkno);
-+	if (xh_free_start > end) {
-+		ret = ocfs2_error(inode->i_sb,
-+				  "Defrag check failed for bucket %llu\n",
-+				  (unsigned long long)blkno);
-+		goto out;
+-static void mm81x_mac_beacon_init(struct mm81x_vif *mors_vif)
+-{
+-	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
+-
+-	INIT_WORK(&mors_vif->u.ap.beacon_work, mm81x_mac_beacon_work);
+-	mm81x_mac_beacon_irq_enable(mors_vif, true);
+-	atomic_inc(&mors->num_bcn_vifs);
+-}
+-
+ static struct hw_scan_tlv_hdr mm81x_hw_scan_h_pack_tlv_hdr(u16 tag, u16 len)
+ {
+ 	struct hw_scan_tlv_hdr hdr = { .tag = cpu_to_le16(tag),
+@@ -1328,6 +1286,48 @@ static void mm81x_mac_ops_tx(struct ieee80211_hw *hw,
+ 				      MM81X_SKB_CHAN_DATA);
+ }
+ 
++static void mm81x_mac_beacon_work(struct work_struct *work)
++{
++	struct mm81x_vif *mors_vif =
++		from_work(mors_vif, work, u.ap.beacon_work);
++	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
++	struct mm81x_skbq *mq;
++	struct sk_buff *beacon;
++	struct ieee80211_vif *vif = mm81x_vif_to_ieee80211_vif(mors_vif);
++	struct mm81x_skb_tx_info tx_info = { 0 };
++	int num_bcn_vifs = atomic_read(&mors->num_bcn_vifs);
++
++	mq = mm81x_hif_get_tx_beacon_queue(mors);
++	if (!mq) {
++		dev_err(mors->dev, "no matching beacon Q found");
++		return;
 +	}
- 
- 	if (xh_free_start == end)
- 		goto out;
++
++	if (mm81x_skbq_count(mq) >= num_bcn_vifs) {
++		dev_err(mors->dev,
++			"previous beacon not consumed, dropping req [id:%d]",
++			mors_vif->id);
++		return;
++	}
++
++	beacon = ieee80211_beacon_get(mors->hw, vif, false);
++	if (!beacon)
++		return;
++
++	mm81x_beacon_h_fill_tx_info(mors, &tx_info, mors_vif,
++				    cfg80211_chandef_s1g_pri_width(&mors->chandef));
++	mm81x_skbq_skb_tx(mq, &beacon, &tx_info, MM81X_SKB_CHAN_BEACON);
++}
++
++static void mm81x_mac_beacon_init(struct mm81x_vif *mors_vif)
++{
++	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
++
++	INIT_WORK(&mors_vif->u.ap.beacon_work, mm81x_mac_beacon_work);
++	mm81x_mac_beacon_irq_enable(mors_vif, true);
++	atomic_inc(&mors->num_bcn_vifs);
++}
++
+ static void mm81x_mac_ops_stop(struct ieee80211_hw *hw, bool suspend)
+ {
+ 	struct mm81x *mors = hw->priv;
 -- 
 2.53.0
 
