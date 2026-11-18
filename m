@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060950;
-	b=qx0j0oWkonydyNj8HBgYWE+BI3HxvhMelsM0DArw7SEV6n/VUOtF+X8ULuD4c2iiKD/z
-	 Gymh0eTrgtjKTkoii+gQtWDVAQNWf/SzVxSfwUniTiwAgFuda/f/qrvSuAQXcyDLiCZUL
-	 TauYPOijcynGD0le/0W2bAixdmhW8gCjR6VPi60EjOQLilC+YTKFvtv1uSTjsy/pRWVvM
-	 PBdBHCMKuzUxcpR7KiaJFxUt3+7T9Axnuvz68QGYv9ImusI6uRcIyGH/0UzA92LgQt7Hr
-	 tw25CSsW2PQbU+H6c1bs6y0mBFk6yAIyG/On6M3o5ZyBo6pw6MbCf9Pr7YA05JvHI/Q==
+	t=1795060952;
+	b=ZsZCx4ixaWIWs5n+YQ0ZtTSWBOAVBQHbTknq79MgDQI8Rnib/hdwezYcHLofwFetabrh
+	 kd3SUzY/IVz6/5gZgLTHM/6UIIpdNUi2cK908BB5AHeAyElSjDsbLBHQl+fq3jAleCA8P
+	 y7QfIHKTexpOelShrOLFWOGfvHY1XHJCbhLNwi1VrfKwC05KZMfRw8lrxCjz3NCFesVQb
+	 i2Of0TQRUbRBNYE9JdCacb4+wo+oSndCw0oKDkgsr3PVVtGncVNLbD2vkfJCnzvirpLGK
+	 /OBKUjeu04uHyrbXuat2VWWxdVck/WrFXq9aM8APUUwZMW8YpBZLr0NvQvsmtzU1Gmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7ipVUmqOS91xyhS0X5ef5hdjXsRwVGOTO307GFdIL+Q=;
-	b=Xg4R/1QKuypQ87ubqt/O2of8JymZuXI+ehk8B61gIXOBZrT2Pw9M7yw7NZFskg6ZspvK
-	 vMrY9AFe01gpX+EgoNB3Ft55fjF1Gku87AQY7PLILFGU+RteULzDUGtn6xa9C22cgXu2H
-	 bhuQDHWXzmFZ0ed0jWN1Wy66QsJhimxy9xAGC1BO165vbrkMmobeuIjB28OH4CSegO5dO
-	 z9xoZd9Z2ab7qxW4w4moA4hseyolH52bdhdFuJOC7ES7mghxYHp1xqb0KxrDrkCoJIZXK
-	 bOSEaKUFa4VjOJBrz73sqkLUE6PccvEM4iCYYZ7HJDIWaG0KnEQT82R+BXEBXJI/DrQ==
+	bh=vFIeQYuitF7+gK9QmRX8139jWk2iS8pNG3sUfWPQDVw=;
+	b=BD1rpEujjHLtr9Z7xU5qjtCkR/fSKmtvp0hOw68x/6YJbZqH34vQbnoOg/m9ZSJmvlPS
+	 /N49B5yWeoaD4UcJFpjnzkqCthF+e8Ik/kSteQN2V29jH0xAcAnkp+MIVVImXdcGVMdOp
+	 P2kV43V4kYVDKnNYVSU4+kINeopWOTAx1VDzCwyEltimbYaQu8+2slOvi0lF/AHZlTpSB
+	 7pKHXimy+oQ02yLebbWwyjKQ+55k3GwUgKZ1QUXBHOdGFJjxHJBA/TXx8aOZThCEBSg3M
+	 P/BdFFtZr+gUgk9/zol4rQKvZA7r2nz3AG8oZMYEwECBUo+8JTnn9x+wNqCY4j9R5WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEHlBBdq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B2T/Z8YN";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAD2606A320;
-	Thu, 19 Nov 2026 04:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D031606A320;
+	Thu, 19 Nov 2026 04:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEHlBBdq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FAA1F000C4;
-	Thu, 19 Nov 2026 04:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2T/Z8YN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1D31F000C4;
+	Thu, 19 Nov 2026 04:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060949;
-	bh=7ipVUmqOS91xyhS0X5ef5hdjXsRwVGOTO307GFdIL+Q=;
+	s=korg; t=1795060952;
+	bh=vFIeQYuitF7+gK9QmRX8139jWk2iS8pNG3sUfWPQDVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VEHlBBdqli0pqHp2gD/Xx0oPCQXfcathq9IWupP2b1AfUVBM1B0Z+7cz6LaCpAG0k
-	 CDFu6FX1qWK+8cNwRx2CyVqneLvYUre16ZQrwYEYu67g0IhWaUbP2J0FEHXjcCGwLp
-	 GilPrJduSX/JukreNQjW2lNafGbcZHtg63JN72mk=
+	b=B2T/Z8YNRjRbpBm9VRKN4DSl5RXwslwhFTP/F0KxiyReQTWCisYuIGpXiRf9xP7XE
+	 5lsVbIb8wZPO0fVMpLgKD8JpkhBz9qraEzuTxHwt3Sacmc4DWgZfnVVtdkDPEbofU8
+	 7fLWvoHgt/C2G7P4yl/rNFQ0vwjQv/hSenENVOXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1383/1848] ALSA: via82xx: use helper to activate DXS controls
-Date: Wed, 18 Nov 2026 15:57:01 +0100
-Message-ID: <20261118150017.380574613@linuxfoundation.org>
+Subject: [PATCH 5.10 1384/1848] drm/exynos/fimd: fix register offset type in fimd_trigger()
+Date: Wed, 18 Nov 2026 15:57:02 +0100
+Message-ID: <20261118150017.416371144@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,56 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit aee7c43126e3184d7eefde6545b3b88628e5591a ]
+[ Upstream commit f901c9b986b6355716822d5c6ad34ae5edd71085 ]
 
-The VIA DXS playback callbacks modify control access flags directly when
-a stream opens or closes. This bypasses the control core locking and
-notification path.
+Sparse reports:
 
-Use snd_ctl_activate_id() for both transitions so access changes are
-serialized by the control core and reported with the expected info event.
+    exynos_drm_fimd.c:992:39: warning: incorrect type in initializer (different address spaces)
+    exynos_drm_fimd.c:992:39:    expected void *timing_base
+    exynos_drm_fimd.c:992:39:    got void [noderef] __iomem *
+    exynos_drm_fimd.c:1005:33: warning: incorrect type in argument 1 (different address spaces)
+    exynos_drm_fimd.c:1005:33:    expected void const volatile [noderef] __iomem *addr
+    exynos_drm_fimd.c:1005:33:    got void *
+    exynos_drm_fimd.c:1007:33: warning: incorrect type in argument 2 (different address spaces)
+    exynos_drm_fimd.c:1007:33:    expected void volatile [noderef] __iomem *addr
+    exynos_drm_fimd.c:1007:33:    got void *
 
-Fixes: 3d00941371a7 ("sound: via82xx: deactivate DXS controls of inactive streams")
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260927141447.788664-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add "__iomem" to *timing_base to fix its type.
+
+Fixes: 3854fab24e89 ("drm/exynos: fimd: support LCD I80 interface")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/via82xx.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/via82xx.c b/sound/pci/via82xx.c
-index 154d88ce88131..496e212c80cc5 100644
---- a/sound/pci/via82xx.c
-+++ b/sound/pci/via82xx.c
-@@ -1247,11 +1247,7 @@ static int snd_via8233_playback_open(struct snd_pcm_substream *substream)
- 				VIA_DXS_MAX_VOLUME - (dxs_init_volume & 31);
- 		chip->playback_volume[stream][1] =
- 				VIA_DXS_MAX_VOLUME - (dxs_init_volume & 31);
--		chip->dxs_controls[stream]->vd[0].access &=
--			~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--		snd_ctl_notify(chip->card, SNDRV_CTL_EVENT_MASK_VALUE |
--			       SNDRV_CTL_EVENT_MASK_INFO,
--			       &chip->dxs_controls[stream]->id);
-+		snd_ctl_activate_id(chip->card, &chip->dxs_controls[stream]->id, 1);
- 	}
- 	return 0;
- }
-@@ -1337,10 +1333,7 @@ static int snd_via8233_playback_close(struct snd_pcm_substream *substream)
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index 3b89a8774db5a..bc368e2de9104 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -944,7 +944,7 @@ static void fimd_trigger(struct device *dev)
+ {
+ 	struct fimd_context *ctx = dev_get_drvdata(dev);
+ 	const struct fimd_driver_data *driver_data = ctx->driver_data;
+-	void *timing_base = ctx->regs + driver_data->timing_base;
++	void __iomem *timing_base = ctx->regs + driver_data->timing_base;
+ 	u32 reg;
  
- 	stream = viadev->reg_offset / 0x10;
- 	if (chip->dxs_controls[stream]) {
--		chip->dxs_controls[stream]->vd[0].access |=
--			SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--		snd_ctl_notify(chip->card, SNDRV_CTL_EVENT_MASK_INFO,
--			       &chip->dxs_controls[stream]->id);
-+		snd_ctl_activate_id(chip->card, &chip->dxs_controls[stream]->id, 0);
- 	}
- 	return snd_via82xx_pcm_close(substream);
- }
+ 	 /*
 -- 
 2.53.0
 
