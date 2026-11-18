@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053808;
-	b=QkwAUBWWsaR/U69LZbLD2MH4+YF7IllT4PhIkYUrT5a/78bCuSV6TnqDkfrnivJx6p6+
-	 QA6lvkUy47rTwWnC9ETBms5mhsRF8JTuCC3RXb1/wJx5WIGrvYUgruX8d+xSUkWSDltie
-	 4B/I4VhHPTF5ii/wi7xite3onv9hW5BtsrEqZahGOv7kp5RTfCWHnGoB6hqL3MGaDfcyD
-	 U1hgjCq81stHGuHfFum1Ykbbnc70pZ3dvI3koeve7dc0qURlWfikbO/1VyBg9/i5UgW77
-	 niJNUMi9tiotNt717N6TW4UF4Sbahr0lsV7Jb4vaRyRATaLLY6w/CQcnRm4t7JPJsoQ==
+	t=1795053811;
+	b=JSJYsZU64dn+b+msFdwdLFRZzD7TKXl8k+QOwZZvb76t+WwgyMdacJSsTRpn52AfeuHv
+	 yXgotGzZzWr3+STsrLGREtWNSw/yxfiAhoJ6tfep1TP9O+cpqCjhRJeoy/n4ckwR+TqRs
+	 3Ep53ehFcKZcjy0taPyr37pfd8kO89r9SNMwQh5UaF/G3K5OMXud8iBGi9cXyMikQoNGL
+	 aNXvQO3Vww+ERDK0pYHWDMD6YxTmhUnC0CIPrdCkzAvRVaEA1s7fclbf8Nsj2oFYQMKTM
+	 LPjdyiewW/tEZcp2peRJ50NM4iY8BFhyChfGGFavrMJ7gLBg7bHykoT5xEVkqQU9d1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JCjXTN/61JNiQkqY7k8h5geRjWoMPsuDgMv9jIezm4o=;
-	b=naqbv7wY+8PXIymrUb+SphlWruePz3jyKz1OIY3wOy9Tx9Vk5IfX1m5N+fvpbnm9cZ6s
-	 wi/VyOtDcFHzacyZ6eBAEs5ihQxPwfWoCkSLc0TwDda16eG9rOvGKK1RThW9Lch+203Yj
-	 lLDlgqg7CujHXjP+0HiiljY+h3GeLHl+RFN8J3sUUF5Mky0j0MuifKLl1p4bcdaqEvbJ7
-	 TCKA7FU/0dZ/DAwVWb+6tEIbj8nTsQG4uCimwY01/DYXyKXLKiODO0TuKKhhu/F08/igo
-	 xu+GTUPPBh5EMJE2R2e/kxepIwcA8yGtof1hUUbmBJugoB/0PpnmJiUb33NT7LIf95A==
+	bh=Z1bbCCFNB/dgTIGrUXWwpnsNltwj121zG2joH+gSnu4=;
+	b=EphrcKULAdG5Dtbsv9C/hiHHx6dmKSHcC3r5K90sTfj5ZdCVyzh8ZmI8+YNt069FE83C
+	 EP91ZdfgL6u2nLkhBnF8ZUW+k7Nul+P90qGPdNpeMXX3kmYxa1q8h8313XhMcvz1jo7WZ
+	 Vgeb0xZ4xfokMXdupBv3dbLbuOnOvOL7yOCy1lk069/4WRAS+L7R5S8TjlcDdkH2T2RoV
+	 f5t7mSaHCEgBkJJlfGu9WLeJOMzSM6Oy94gZl6i42PNR9DOBnAHU/Z35R+5pmhBX3LqZg
+	 Pm0cSsyeg4gGF3ry6zepof2TIw+RO27p4FXuWJySYhrDh7NfMVcAOvEfnsCayn64nTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXVBNrYs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fa2qoyLZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D32606A325;
-	Thu, 19 Nov 2026 02:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C461D606A320;
+	Thu, 19 Nov 2026 02:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXVBNrYs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A5E1F000C4;
-	Thu, 19 Nov 2026 02:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fa2qoyLZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81F21F000C4;
+	Thu, 19 Nov 2026 02:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053808;
-	bh=JCjXTN/61JNiQkqY7k8h5geRjWoMPsuDgMv9jIezm4o=;
+	s=korg; t=1795053811;
+	bh=Z1bbCCFNB/dgTIGrUXWwpnsNltwj121zG2joH+gSnu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXVBNrYsXMmkuYmxe9irmcEri9Cm7udiSH4KmwTHQDVof0GMsujRo9tE9JAgmtk6t
-	 qSPohUiyJg0yL3LUD24F7ACzisyGhZGtFz94nTlk7vQfQthhhZmXgY5OcapH1dZM8z
-	 m14V5JoKpT5J0UbY8zbmMW6pwLJJQDrBPpYf/YOU=
+	b=Fa2qoyLZEgFzCXyYj8dRLSllNIpJ7Eux0qNteu7duBVYbmTUPhjoiOclqd1tJsw92
+	 M7CjcWC0QXf7vRzznZHZXrEmxkMEtvLTIrVEgnns5uWvnc8qIdCnqbkhY/8aY6zCrQ
+	 ZUSHI+W158XwhEZUJvrhlfcOY9EfcEuclz6OR3j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1050/2214] mfd: twl-core: Unregister the auxiliary platform device on unbind
-Date: Wed, 18 Nov 2026 15:45:26 +0100
-Message-ID: <20261118150054.334514720@linuxfoundation.org>
+Subject: [PATCH 5.15 1024/2214] splice: avoid stale f_pos writeback on error
+Date: Wed, 18 Nov 2026 15:45:00 +0100
+Message-ID: <20261118150053.317352179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,99 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 3c5c55d979ddcb0765ce531bc7ba173c87c8712a ]
+[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
 
-twl_probe() registers a standalone platform device named "twl", but keeps
-its pointer only in a local variable. Probe errors unregister the device,
-while successful probe leaves no way for twl_remove() to release it. The
-platform device therefore remains registered after the I2C driver unbinds.
+do_splice() snapshots an implicit file position before calling the splice
+helper. Since splice does not take f_pos_lock, another operation on the
+same open file description can update f_pos while the helper is blocked.
+If the helper then fails, the unconditional writeback restores the stale
+snapshot.
 
-Register a managed action on the I2C device immediately after adding the
-platform device. This unregisters it on probe failure and driver unbind,
-and also handles failure to register the action itself. Remove the manual
-error-path unregister to avoid releasing the device twice.
+For a directory without ->splice_read, a file-to-pipe splice fails with
+-EINVAL. A concurrent directory mutation and getdents() call can advance
+f_pos and refresh the filesystem's revalidation cookie before that failure
+restores only the old position. The next ext2 readdir can then trust an
+offset inside a directory entry and copy data from the adjacent page to
+userspace.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Only update an implicit file position when splice returns a non-negative
+result, matching read and write. Keep explicit offset updates unchanged.
 
-Fixes: defa6be1c821 ("mfd: Fix compile for twl-core.c by removing cpu_is_omap usage")
+Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI:GPT-5.6
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260913205013.54777-1-mhun512@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-[ sashal: omitted the goto adjustment for the absent devm_mfd_add_devices() error path ]
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/twl-core.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/splice.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mfd/twl-core.c b/drivers/mfd/twl-core.c
-index acfc0b96b4a1a..9b1ff86632122 100644
---- a/drivers/mfd/twl-core.c
-+++ b/drivers/mfd/twl-core.c
-@@ -757,6 +757,11 @@ static struct of_dev_auxdata twl_auxdata_lookup[] = {
- 	{ /* sentinel */ },
- };
+diff --git a/fs/splice.c b/fs/splice.c
+index 70008e08998f5..3630fd18a12e8 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1107,10 +1107,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 		ret = do_splice_from(ipipe, out, &offset, len, flags);
+ 		file_end_write(out);
  
-+static void twl_unregister_device(void *data)
-+{
-+	platform_device_unregister(data);
-+}
-+
- /* NOTE: This driver only handles a single twl4030/tps659x0 chip */
- static int
- twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
-@@ -791,17 +796,22 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
- 		return status;
+-		if (!off_out)
+-			out->f_pos = offset;
+-		else
++		if (off_out)
+ 			*off_out = offset;
++		else if (ret >= 0)
++			out->f_pos = offset;
+ 	} else if (opipe) {
+ 		if (off_out)
+ 			return -ESPIPE;
+@@ -1127,10 +1127,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 
+ 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
+ 
+-		if (!off_in)
+-			in->f_pos = offset;
+-		else
++		if (off_in)
+ 			*off_in = offset;
++		else if (ret >= 0)
++			in->f_pos = offset;
+ 	} else {
+ 		ret = -EINVAL;
  	}
- 
-+	status = devm_add_action_or_reset(&client->dev, twl_unregister_device,
-+					  pdev);
-+	if (status)
-+		return status;
-+
- 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
- 		dev_dbg(&client->dev, "can't talk I2C?\n");
- 		status = -EIO;
--		goto free;
-+		goto out;
- 	}
- 
- 	twl_priv = devm_kzalloc(&client->dev, sizeof(struct twl_private),
- 				GFP_KERNEL);
- 	if (!twl_priv) {
- 		status = -ENOMEM;
--		goto free;
-+		goto out;
- 	}
- 
- 	if ((id->driver_data) & TWL6030_CLASS) {
-@@ -825,7 +835,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
- 					 GFP_KERNEL);
- 	if (!twl_priv->twl_modules) {
- 		status = -ENOMEM;
--		goto free;
-+		goto out;
- 	}
- 
- 	for (i = 0; i < num_slaves; i++) {
-@@ -912,10 +922,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
- fail:
- 	if (status < 0)
- 		twl_remove(client);
--free:
--	if (status < 0)
--		platform_device_unregister(pdev);
--
-+out:
- 	return status;
- }
- 
 -- 
 2.53.0
 
