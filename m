@@ -1,63 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050681;
-	b=30LWU//cthy7GSJYxd2RabpE/SeI3vi6jUHJLwm9Uu2qMRLZZqOk53+OLZr0VP5WfEI5
-	 h0NxANtq5j55R+pxKsbwrlM62HZhcaEoYkJTwBrkH22cQcl7OUD0PUZUCUaLxcHP4+kqY
-	 wCS1vAOc4G6IBzvcyBZ9wzqmhwszJ35gVFaJ/ER5yvAU2fVub3Lhx6+2gxDZCEdhKMYiU
-	 DY1g7wihIr2y11AeRw9ux3kPOpXuO+gDwKsXFd1ZNliG5imxrBmH6v4Vribdub7NXgbVG
-	 YWV2+JcU8tRIJg4TjlFVQ4U4RV3z4qnZR9LFnMbDbQcH2cZZ4UD/PfsXNea2u1zjwqw==
+	t=1795050684;
+	b=UEO5yCi7seFaFzcQH+zqcaPml2ePrw9z8JOjU9IcSMFlPBJcBoVUjxPBqVXCtY9zBmTr
+	 d2y/PV5AwWl15LEamY7UAuHbC6yIevv+fXW9IZKhiuHicf8hmlP+zuyhaKmRBZ6V8/4s6
+	 Ri1W1ryHZ+IfmOdIbyHdNAeZL/sOJ8O8ZR5clTB1edK4/zLk6VTVxYcFTHIY5qJp+EWR9
+	 Xyv4ZvDFRJ4raF5ol3pIFsDmfFacYnHhUgCixE8rN4DTkM76bl54FSPjxhhsi+8/4Eald
+	 oui65u75GY7IoGtaif4DcsiiMjD+z9WkGMDZwKMqMU8ZsRi8ZUXK76uQazy5tNfP67g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OpZk/1hb9pkCLc7CsK9S42WuJjga0zrgCLK4SU6iijA=;
-	b=EcAdGJDrWveCtAPJ/z61RiTzhZdV7qifPecKC6imkhx3yCK6ahniw6vxMsJar4LePbzd
-	 9AilbjLFbpSISQjOi/mwdVNYlFD16eHelLolikUF684pGAXZu5Rag9yCpbwjiKep4woWm
-	 JDzeg8u7P//PayXAGhsRnvvIq5n1eWyBUmTm/a0E05Jd501oZ/UFH36S41QvRvYlvRetB
-	 0tZpARlhGqG9k8ooVRLi8IKiQs2BAYKSSvvl77/hzT2Cv+ZRtAnZ/Cli/2hZ39hwPdV0c
-	 HAA1jKbh5KlaEwn4CXXs4mO80QgWeZx64MScBAW07nF3ogqqkwqFahWfd72Zvb4Z61w==
+	bh=DmbKvEty28UMz6I1xBvLbjse/bTuR6+zXBqvzXizdLQ=;
+	b=KfbmtsSc4Jy764h6xsUlNpfTjVFLfkXJiMFf92mYCYVCGheowT0TYn/HIjyKgfOUQecn
+	 M5IatEm8Pcuzlo6Tpq15zyTXRLxCs8wr0D5Ayn5g2g7bUg7cBtZBs4KFNaUN14Yaq94Wl
+	 /A68wBP4sqT/0qBn9xazNNaBd0x4bFUWOSd+T9MBls3YAiXOkH8L+a2/DwD2EsvbVL+Po
+	 xVVTo9pSc3tEl4yGU41jHisGTKn9MliWgc78QZJrLEDxbjq3G+LCViDXraBe3UIymS/p7
+	 Kizk5+7tU83argtgDNdcR8JqOuKhXB8VEGlvForli784yTYSXx12COrhZgZ5Yv2hwZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=APzS0k0s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZBuW/KLC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B6B606A31C;
-	Thu, 19 Nov 2026 01:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C1C606A32F;
+	Thu, 19 Nov 2026 01:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=APzS0k0s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4FC1F000C4;
-	Thu, 19 Nov 2026 01:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBuW/KLC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CFB1F000C4;
+	Thu, 19 Nov 2026 01:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050681;
-	bh=OpZk/1hb9pkCLc7CsK9S42WuJjga0zrgCLK4SU6iijA=;
+	s=korg; t=1795050684;
+	bh=DmbKvEty28UMz6I1xBvLbjse/bTuR6+zXBqvzXizdLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=APzS0k0spMxFGfdowOke88cSllNggL9w31YFsrQ/+RCywL8ZYOEFdcr/4zubZOPnY
-	 HHp5JovFwvIrNJjCFvIUwHO0jQSJC+NP+Hh2F4/uV/c9qlTOhr0daX5EVC8lS5Kp4o
-	 HWo5iN+qT40BL2fa8d5v/FpxHIZEX4kA5KLOd63Q=
+	b=ZBuW/KLCSWd7cK5DmKlkIPBFjjN6fcekNEnd169pXihitmT8xkNaMVWZR9paAvxgb
+	 +xz3mVpZdAsA0W/vgdTv5U+oTkC9Ry9KCWEKGFQkV8YW+A4RlcTSjCe64FF2Vg0wOq
+	 gAZAGh6NpWOGqxh7myZ9J3tRsCOdO7Y5IatW7ygg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zeal Robot <zealci@zte.com.cn>,
+	ye xingchen <ye.xingchen@zte.com.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2757/2857] perf mmap: Use the head selected by read_init
-Date: Wed, 18 Nov 2026 16:03:11 +0100
-Message-ID: <20261118150340.875626275@linuxfoundation.org>
+Subject: [PATCH 6.1 2793/2857] rtc: s35390a: Remove the unneeded result variable
+Date: Wed, 18 Nov 2026 16:03:47 +0100
+Message-ID: <20261118150342.160536525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -79,62 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: ye xingchen <ye.xingchen@zte.com.cn>
 
-[ Upstream commit 022c64992af554cfd8c564bff86100fb5ed98678 ]
+[ Upstream commit f8513363b0b7155afaee09cca777fc608dc957e3 ]
 
-perf_mmap__push() reads the producer head before calling
-perf_mmap__read_init(), which reads it again to select the range to
-copy.
+Return the value s35390a_set_reg() directly instead of storing it in
+another redundant variable.
 
-If the producer advances between those reads, push() copies through the
-newer head but stores the earlier head in prev. The next drain starts at
-that earlier position and can write the same records to perf.data again.
-
-Use the head selected by read_init(): end for forward buffers and start
-for overwrite buffers. Save it before the copy loop advances start so
-prev matches the range that was copied.
-
-Fixes: 8872481bd04850b1 ("perf mmap: Introduce perf_mmap__read_init()")
-Signed-off-by: Paul Moses <p@1g4.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+Link: https://lore.kernel.org/r/20220905090119.335121-1-ye.xingchen@zte.com.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 6199051016cd ("rtc: s35390a: Read 24-hour mode on access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-s35390a.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
-index a4dff881be39b..bbb1633ff0019 100644
---- a/tools/perf/util/mmap.c
-+++ b/tools/perf/util/mmap.c
-@@ -324,7 +324,7 @@ int mmap__mmap(struct mmap *map, struct mmap_params *mp, int fd, struct perf_cpu
- int perf_mmap__push(struct mmap *md, void *to,
- 		    int push(struct mmap *map, void *to, void *buf, size_t size))
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index c10765959d101..64ce8a5f96a68 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -211,7 +211,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
  {
--	u64 head = perf_mmap__read_head(&md->core);
-+	u64 head;
- 	unsigned char *data = md->core.base + page_size;
- 	unsigned long size;
- 	void *buf;
-@@ -334,6 +334,7 @@ int perf_mmap__push(struct mmap *md, void *to,
- 	if (rc < 0)
- 		return (rc == -EAGAIN) ? 1 : -1;
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a	*s35390a = i2c_get_clientdata(client);
+-	int i, err;
++	int i;
+ 	char buf[7], status;
  
-+	head = md->core.overwrite ? md->core.start : md->core.end;
- 	size = md->core.end - md->core.start;
+ 	dev_dbg(&client->dev, "%s: tm is secs=%d, mins=%d, hours=%d mday=%d, "
+@@ -234,9 +234,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ 	for (i = 0; i < 7; ++i)
+ 		buf[i] = bitrev8(buf[i]);
  
- 	if ((md->core.start & md->core.mask) + size != (md->core.end & md->core.mask)) {
+-	err = s35390a_set_reg(s35390a, S35390A_CMD_TIME1, buf, sizeof(buf));
+-
+-	return err;
++	return s35390a_set_reg(s35390a, S35390A_CMD_TIME1, buf, sizeof(buf));
+ }
+ 
+ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
 -- 
 2.53.0
 
