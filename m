@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029168;
-	b=MbJu75KlIJT04AH0SgZMR8AfTRzM+p6F8FAOorpFXx56SblrLnjUaIOhTYT6U5b7FgQ4
-	 T2SMmbFPTHV3y/z3irsqPgrUKU4Ui5j3ShdLr4AFC4u5JRcnoayQW+z4RRJXKFnobnYLD
-	 fP1Qhk2q6Uwf9HBIlDCOEXuNpmNUvsLtbptzTM2w5dXMwKx9GKeYUda1seAExXz3HktIy
-	 3IYKwj7QuZRIIR/ISkISTLzG4MYUgh0LKsTlZtbmkd97O45grM8Lkdkb2rMfLX8MqnvUm
-	 C1+IkRWnRjioctEGWs5zCx2nW3d/vC+gXT9Aq2sA1bA2fZkIbHr7APir3DlweqIogEA==
+	t=1795029171;
+	b=BrNN79Sp6grwqBCDikl2zuLT8qi1F9/k/FVAOisQUBQii8r92jGJ915EXPOr6ra0ceio
+	 R4JLd1ahUEdLAtaVrt62cWZkGo8U2ejDxO6tWBVw5IeknlWH8eZ4jFaBwEz7MZ0OoVjpV
+	 C1ZpChVL+EI7eLjEtQ2TWYjl8pttwp5q2yEc7CWu+BhftHjpADAhKWF8M5w+2+jHeeNaM
+	 Bw3sMKR7DrRZ6UXc6Sdm7LOqcbsGHUWlr4Ug/4+3Ns73IdA0IY6LEhA+a3YQyyzmmI7/X
+	 5xImmoOJfJcAd/hQoYb/6OKLPQJLYqtHyNJuoeXwL3aBlSqoSlg1mLO3zkUPG1X8jUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AoV76BMaopM+IeJUFrK0sg0qbtdgARdLUFB+QxpM1R0=;
-	b=Vu/HDVltfo3Vr8UMAPImMaWDsXPtIVnglfMnEnQ0Tb6SHrAvvlEEu+6ab6VOmS4i38xX
-	 XDiUnBYRszJxUDUCWBAkvBUAUW34YN7f/XiUqdPNn36mCAGZNYvKUNRD+Upm4p0WriiHA
-	 3L+51TtWBOXCXDz+I/R0mziy0C4ptH8FsneFqFUBDr/tK8FdRKbph/dOqvI6LVaRks8pl
-	 zy5esId6WvNM6jWAOfpXwWT1inmEeDAOSv5nexzB/MlzMUmS84lQfhPnYhbCkblbLyuWn
-	 J9DFmis/jowZ135190rqygl/pv9squk6n9EmgzEa0wiAtwXoDdRyVopx/7R6D+x8XVw==
+	bh=D77ssWAr1iZ2gOwF1sXy/PHEbigTbTAc/ka2EIPgcxg=;
+	b=ekZ1TE+ZncTmXLVjCe0LDto11jpgKfZSnBudqoe5NaYLJLO4gjT/BLvnEQit3xeskYKN
+	 b0bXXyXXEwgpdv7+lAxnlGEbXPbSn3wFLELLgkR9IUeU7hQ3AcRfQXrwYWzVC6l3oN5Nz
+	 J0oGk2ZQX5Vmn2GQAvwmVA4BkwP1m4vsFJwRZ9W7Y990u+2ADWb1LuSxyIbps68HP0sEU
+	 eosMkbb8E+oelX82FvNe0OXXqYHPLEyDYeDIWrVY8tnFEN4eAhpkuLEIedEhX0SVKZ8aw
+	 ZHU17Mr5ctwvQa/9JJ0oSKOksQiJ7ONN1ToYBuN62g7JEbNYijvU+oi5e/Gn/B/IlGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgCLdeYd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GApc+fbI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204D5606A33B;
-	Wed, 18 Nov 2026 19:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B07160A2600;
+	Wed, 18 Nov 2026 19:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgCLdeYd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BB51F000C4;
-	Wed, 18 Nov 2026 19:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GApc+fbI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372761F000C4;
+	Wed, 18 Nov 2026 19:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029168;
-	bh=AoV76BMaopM+IeJUFrK0sg0qbtdgARdLUFB+QxpM1R0=;
+	s=korg; t=1795029170;
+	bh=D77ssWAr1iZ2gOwF1sXy/PHEbigTbTAc/ka2EIPgcxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgCLdeYdIsZb9rkLo5VFNejrG6l2tLcL5YN7TqH5wL4jlrmsZG1W43MUxtRkn2wNA
-	 Zw5OZJ9HxZD+gj4PswCTtnoGTJH5iNHThoMpCGEsk2NEDhrGlTxtvRsz3ZAS6tsxYC
-	 5tnvtGz0P1JR4provOESRlveqgRNwLWXadaYB9iA=
+	b=GApc+fbIq0G9WPdJOP1hn/44x8gFJ+WPbcK51cVGeQS3pmft+npZ8mn6suwHgcezN
+	 Kn1VuUxg+M8vWKyZBtv2LCm05+cMXHJ+R4lwzuvjeg1Z2d793pCR5lZbJR9SoNHAkA
+	 ggDnsqtNZOJwwjsjOjUIPtnjUYPTLR1o1oz457y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+229d761b8a110e6de517@syzkaller.appspotmail.com,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0252/1756] irqchip/gic-v3-its: Dont WARN on LPI free allocation failure
-Date: Wed, 18 Nov 2026 15:39:39 +0100
-Message-ID: <20261118150018.413298724@linuxfoundation.org>
+Subject: [PATCH 6.12 0253/1756] ASoC: es8326: report resume restore errors
+Date: Wed, 18 Nov 2026 15:39:40 +0100
+Message-ID: <20261118150018.449919195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,53 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 135d9e67f7ab4f261c2157ee2de1f93a4de39a41 ]
+[ Upstream commit 349e94679968785803cc32c1d2e41e000e8afd5f ]
 
-free_lpi_range() cannot give LPIs back to the allocator without
-allocating a struct lpi_range to describe the freed range, so it
-returns -ENOMEM (its only failure mode) when that allocation fails,
-and its_lpi_free() turns this into a WARN_ON().
+es8326_resume() ignores the status-register read, the direct clock-state
+write and the register-cache replay. A read failure can also leave reg
+uninitialized before it selects the reset path, and a cache failure is
+followed by jack IRQ processing.
 
-syzbot triggers the WARN_ON() by injecting a slab allocation failure
-on device teardown, which with panic_on_warn becomes a panic:
+Return these errors before later resume work. The ASoC component wrapper
+reports the callback failure while retaining its best-effort resume
+contract.
 
-  WARNING: drivers/irqchip/irq-gic-v3-its.c:2251 at its_msi_teardown+0x3a4/0x424
-   its_msi_teardown+0x3a4/0x424
-   msi_remove_device_irq_domain+0x16c/0x27c
-   msi_device_data_release+0x38/0x9c
+The issue was found by our static-analysis tool and manually reviewed.
 
-The failure is transient and the consequence benign: the freed range
-is simply never returned to the allocator. This does not warrant a
-WARN_ON() backtrace, so log a rate-limited error instead.
-
-Fixes: 880cb3cddd16 ("irqchip/gic-v3-its: Refactor LPI allocator")
-Reported-by: syzbot+229d761b8a110e6de517@syzkaller.appspotmail.com
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: Claude:claude-fable-5
-Link: https://patch.msgid.link/20260811095532.48454-1-kmehltretter@gmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=229d761b8a110e6de517
+Fixes: 5c439937775d ("ASoC: codecs: add support for ES8326")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Link: https://patch.msgid.link/20260906034217.85696-2-hppiscas@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/es8326.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 7ab93108c1096..a98acf21becce 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -2166,7 +2166,8 @@ static unsigned long *its_lpi_alloc(int nr_irqs, u32 *base, int *nr_ids)
- 
- static void its_lpi_free(unsigned long *bitmap, u32 base, u32 nr_ids)
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index d5362b3be4844..caaacde8b59e3 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -1082,18 +1082,28 @@ static int es8326_resume(struct snd_soc_component *component)
  {
--	WARN_ON(free_lpi_range(base, nr_ids));
-+	if (free_lpi_range(base, nr_ids))
-+		pr_err_ratelimited("ITS: failed to free LPI range %u:%u\n", base, nr_ids);
- 	bitmap_free(bitmap);
- }
+ 	struct es8326_priv *es8326 = snd_soc_component_get_drvdata(component);
+ 	unsigned int reg;
++	int ret;
  
+ 	regcache_cache_only(es8326->regmap, false);
+ 	regcache_cache_bypass(es8326->regmap, true);
+-	regmap_read(es8326->regmap, ES8326_CLK_RESAMPLE, &reg);
++	ret = regmap_read(es8326->regmap, ES8326_CLK_RESAMPLE, &reg);
+ 	regcache_cache_bypass(es8326->regmap, false);
++	if (ret)
++		return ret;
++
+ 	/* reset internal clock state */
+-	if (reg == 0x05)
+-		regmap_write(es8326->regmap, ES8326_CLK_CTL, ES8326_CLK_ON);
+-	else
++	if (reg == 0x05) {
++		ret = regmap_write(es8326->regmap, ES8326_CLK_CTL,
++				   ES8326_CLK_ON);
++		if (ret)
++			return ret;
++	} else {
+ 		es8326_init(component);
++	}
+ 
+-	regcache_sync(es8326->regmap);
++	ret = regcache_sync(es8326->regmap);
++	if (ret)
++		return ret;
+ 
+ 	es8326_irq(es8326->irq, es8326);
+ 	return 0;
 -- 
 2.53.0
 
