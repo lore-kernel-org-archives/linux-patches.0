@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033510;
-	b=U6lob+7TBChoVm/OfO3Klk10fm5l1lr3C0z7q6F802+dIx11p/sZgfKkGinw/v6WCdR4
-	 cfxGwzdBxNleUfOc0PymtnJudc78OLchaXPdIoZmn6G5QQppUjtxXAZGCQG9/rxXG43LH
-	 i1es52Y3QMb2RyNO3bh06s1tLROEwtniztUd75bN7kc94ghcuvqHZ3gkTfoQMSo6+GqM4
-	 1k5tq6f5LAmBBwMOPdupH6t3047MrzRN0RzTD7+N7VFfk/z8T7OoP5hMiuco/NH1gZpTW
-	 /Fu7rMvjVBkMNy+7/v6C+Amkn5GkZnzbp7g2sb+XEya2OecZiIfiDcfJiMgeNo1uy1A==
+	t=1795033513;
+	b=IMnN6SUZcS48v1iJpacv/1xM9b6Ud1KfF1HXOUd8yC99ve0m7z1TljM98ebk8+ijPU3o
+	 RDn0o2hrGmAH11Q1SDX/xUo4GySH2M84vPzlYgRKzndJoASKcmeyX9NfkX98w98n6Etpp
+	 vSVeXmNjTKPiSgFZE6NhcOMncQeuU26sHAyeDTzeXEFeNmKuhhDtXDqUkcmsz1CzWiaKt
+	 loCXaifjoU/A+J3urlr5gsDUgAY9lj1kbFI6zCsR313KGUbJlXEvR0Jd933Kf4U2pr1V9
+	 gno3a5dCfEBKkD5TcLVrWef6gKPlz9lYSn59fwpQjefZ3wokciDl/eaI3lhiTiN5RRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fXbT1tAs2v643qxd9fsnck+gOj0VjagjoyWT6ICa8/E=;
-	b=NdL8LLUIWV+zU01LpVgH+oWpLsTUzyBOshpPCwF8OHnDdgxRjWAZRx4tsWDSCTG1STgR
-	 JbGIUD+LM9/V/BWeX/dTGPhDuC4uLY0y/3C752h+qgrRE+eSSCpYwnHzSz3HG5RkVVpBz
-	 +nc4/i+OwBFjq8xMN0457xAsHZvLPsdgkfA0tqbxeBMf9yPVG2FsaUYi/Sxt5HZymEJft
-	 H7nsW8/2CKk3c/tsRp23ncAcc474/+NXLfBcXmQACVQaPIxte36gFyo42LT/VgNy9aKCd
-	 mSLudo4VDlITvKvVkFkFp0la0HXPrunPXuN2TR5zsvdjjFTmr+HRtGdgHi0rnW6V/8w==
+	bh=DosVjhSjAf2Ef8amq6V4Mi97JEV05PoZ5MyTFOo6/iU=;
+	b=x+v9YY7mUSirFPEXQ+d7NFFp+44PWs5QwmV2D2HPF8Q5xSenXRdCZGr36NVnrD/CDOML
+	 9pOnHNcWxENr2XOz5GqqF44HvNjNN44j652DQQB2nXdxK4S2K+/FpU/pZWyfkWN7328B7
+	 OOlQpgOV6kQsTRNNcLgqLk5zmEzCqyJxhAKACI6R+gU9JR+zUeLSmnwv9f960CVkt0tmp
+	 c791hGngP63GUmuamqiBvm2D1oz9owQFCgA+pCnIT8EBjXyUbVUe0hi4ois2452GG1Ql7
+	 u+c6JiFLgwWQLdByqms9RWEbY3P0ZK++pK7GWQzDZWONSgPpsL2Vx9f55Dif0LT3JOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0BqxONdh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CU0Ndxpu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD52F606A325;
-	Wed, 18 Nov 2026 20:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7CB606A325;
+	Wed, 18 Nov 2026 20:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0BqxONdh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1040D1F000C4;
-	Wed, 18 Nov 2026 20:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CU0Ndxpu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22BE1F000C4;
+	Wed, 18 Nov 2026 20:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033510;
-	bh=fXbT1tAs2v643qxd9fsnck+gOj0VjagjoyWT6ICa8/E=;
+	s=korg; t=1795033513;
+	bh=DosVjhSjAf2Ef8amq6V4Mi97JEV05PoZ5MyTFOo6/iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0BqxONdhjEn+WkCd0JcUsNi9sjxSxVQtZeSzxIJGb/z/Kh1vAzG3nlLOQyQhjnTsb
-	 1SsaX5oepzxnGmrLabwIGzhyJ6/kl5rLKkuUa1xDyR4jpW9/en5qSBt06m8CDAXvAX
-	 SB2xg3dvwxd+Z8DjLSLwj8/v38Om6bzQetrjms+g=
+	b=CU0NdxpuEf4CZJE7gh/uGTCWP3oeUxCazs/CjporFXX5A4FRESEGAcaAVoP226SwM
+	 CqxTCW8fmBe0xv1r8NksO4R4vkUsBgWmEjnumJbmdwcpfTMipOTeQydWbHMFRF6snQ
+	 4DVjV9ikm0RM0QLjjOpuhfmi/0JEUwokBeDLshwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damon Ding <damon.ding@rock-chips.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Jiawen Liu <1298662399@qq.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0041/3318] drm/panel-edp: Add BOE NE160QDM-NY1 panel
-Date: Wed, 18 Nov 2026 15:11:03 +0100
-Message-ID: <20261118150315.096016802@linuxfoundation.org>
+Subject: [PATCH 6.6 0042/3318] spi: bcmbca-hsspi: return error from failed controller suspend
+Date: Wed, 18 Nov 2026 15:11:04 +0100
+Message-ID: <20261118150315.134443317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,55 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit be4f10d44757211fd656fa57f37034657f26c883 ]
+[ Upstream commit faa878d4805ca375738294bc52eae310eb287b16 ]
 
-Add an entry for the BOE NE160QDM-NY1 eDP panel. The panel's AUX
-backlight functionality is verified and working on the RK3576 EVB1
-board.
+spi_controller_suspend() can fail if pending transfers cannot stop.
+bcmbca_hsspi_suspend() ignored the error and still disabled the
+PLL and core clocks.
 
-edid-decode (hex):
+Return the error before disabling the clocks.
 
-00 ff ff ff ff ff ff 00 09 e5 85 09 00 00 00 00
-1c 1e 01 04 b5 22 15 78 03 7c e5 a4 55 4c 9f 26
-0f 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 6b 6e 00 a0 a0 40 84 60 30 20
-36 00 58 d7 10 00 00 1a 00 00 00 fd 0c 3c a5 1f
-1f 4e 01 0a 20 20 20 20 20 20 00 00 00 fe 00 42
-4f 45 20 43 51 0a 20 20 20 20 20 20 00 00 00 fe
-00 4e 45 31 36 30 51 44 4d 2d 4e 59 31 0a 01 ed
-
-02 03 1d 00 e3 05 80 00 e6 06 05 01 6a 6a 24 6d
-1a 00 00 02 03 3c a5 00 04 6a 24 6a 24 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff
-
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260625071916.744686-1-damon.ding@rock-chips.com
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Link: https://patch.msgid.link/tencent_54F5634545908FBA724E758054BF03953808@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-bcmbca-hsspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index aacc5cf758d93..6a3107be3d2ef 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1906,6 +1906,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x094b, &delay_200_500_e50, "NT116WHM-N21"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x095f, &delay_200_500_e50, "NE135FBM-N41 v8.1"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0979, &delay_200_500_e50, "NV116WHM-N49 V8.0"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0985, &delay_200_500_e50, "NE160QDM-NY1"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x098d, &boe_nv110wtm_n61.delay, "NV110WTM-N61"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09dd, &delay_200_500_e50, "NT116WHM-N21"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a5d, &delay_200_500_e50, "NV116WHM-N45"),
+diff --git a/drivers/spi/spi-bcmbca-hsspi.c b/drivers/spi/spi-bcmbca-hsspi.c
+index 81826692d4df6..5e0a928616dd8 100644
+--- a/drivers/spi/spi-bcmbca-hsspi.c
++++ b/drivers/spi/spi-bcmbca-hsspi.c
+@@ -595,8 +595,12 @@ static int bcmbca_hsspi_suspend(struct device *dev)
+ {
+ 	struct spi_controller *host = dev_get_drvdata(dev);
+ 	struct bcmbca_hsspi *bs = spi_controller_get_devdata(host);
++	int ret;
++
++	ret = spi_controller_suspend(host);
++	if (ret)
++		return ret;
+ 
+-	spi_controller_suspend(host);
+ 	clk_disable_unprepare(bs->pll_clk);
+ 	clk_disable_unprepare(bs->clk);
+ 
 -- 
 2.53.0
 
