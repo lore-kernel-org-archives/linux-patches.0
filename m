@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032826;
-	b=bIHUfe069s0SRzuAKvdu4qKDGwOGBstnrUugba2DY3PXg4jKqjAOCObk5oI7UnA30KKu
-	 SNqTYq2PnlT+pg0W6TZkUhZFwt8us0/Xi2F8qAwcvgsh43TQv9XKQ/VxhvIAScrg+BM7v
-	 /TMBnK3JXtXhaeafnMdxioHmIhpv7bjhjryU580m3ZR65C3K2/UWxV4SS1J5MHYrEm36j
-	 stTCBnH4RRngQFm6QaAgcKzc4FjpFFUwHSpqJg9Vg2/W+wFm9bcVVEv3Z3iKZeBaudNVB
-	 cjBdzibJbF0wJVg2hyw0iz6ZBSp6gGozIxOftaMml0jSgHlvBc56mqXNjwtrt45ZIYg==
+	t=1795032828;
+	b=GCX9dRVUDYuru+GZPxF6rEhUciYXqltDfxvrWiOCb5UXv4M4KqPOO0/uX35b0GeVRShH
+	 HHvQDmXqJ6ktdr7tPcLxuhRkvEoz8RxPFV/2sKtddAaTLhDO24mUutdET/WlAEdH02gC5
+	 XNwCqW1Gc8rUjwE/dTNyliQT8etjh0w0qvKGfQk6qQBTivXSGNyKWIAM56kMOYa3tDMSi
+	 SxoCdcH7ZbMAWuedrHtNHl39ZtQY5mAk8aV+SiylCOAQq/kh6zWDf8zIzcQFMyQs2XmRQ
+	 OyUqI3rSozJ3oLOwBdrW1sLZCx1EuJC5wlECHkApd1FU6tN7gfLexzuWeXFC8WLL+NQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032828;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=isTq87MqFWUHv28GLA3YK/6lnERNAiIBjo36gWizJiI=;
-	b=5mOPwlJlnKmhBEV0w6fymX5dW618zt1cRpUIDgBPNquOR4/RZcT6iNb6FLC5bTqDixuU
-	 QZ5s8yizi9dw+hw09ZKVrE+bjvRT9Dr8t16qgvGNQMd1lhj0IwivP6p3uzdZV+3i95Ygl
-	 H99dZ829TiHjJYweInDLG98UUZnppnYIrljCaqqYU3Su52dNUHjXJfeHK854MG/bfJRwu
-	 8X0W65np0Xpt1uw9ABjEB/1o7fOlXkLUTRYLtJ56U8AmF4PAJAiNTmBqTBYjnwnwP0mnl
-	 QgA7Vtt5PN6v57gwDJvsjHdQfSijf1nMy1TYU8ZAE1o7ejm3tZVEsZNY8cgwV0Qt1Ww==
+	bh=jdwRx7ZpV9bGadKlRyaRpLSAnLTcyhFTDkTIGNCLShU=;
+	b=vkJN30rl1RMt+sIfHL/8R7NVQBnB8HjnI4Lledgft3vBimd62TJDuwXhgLkAgCbjVF3x
+	 1U44UZuezo5mdlnCwU7uB9mFht/hYu78BDGfsRW9K+em8RYvF056L6mDK9lcAumlAM+bh
+	 Bl0K2e2BW4OpzrUmODUcDXDUDCLrYsmCsnqJFNpDK4Lex0LakkOXGLIE3/qAg6+702csb
+	 zGS7H/5wjwYL3BCuoWz8xo+4qqI8evVU4TmPGOZueCl4WTIQstIXurE0z+JwnrjmlzKpm
+	 TuMVDA8xOeF9DRTpuRLT8pkp6OxjtEalcWkPMV4YBobIRSFIK8p3+1Vi19+bnNx8fRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lnk848g6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljGZhXvD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40A9606A31C;
-	Wed, 18 Nov 2026 20:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5CC606A320;
+	Wed, 18 Nov 2026 20:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lnk848g6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CE21F000C5;
-	Wed, 18 Nov 2026 20:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljGZhXvD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39B31F000C4;
+	Wed, 18 Nov 2026 20:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032825;
-	bh=isTq87MqFWUHv28GLA3YK/6lnERNAiIBjo36gWizJiI=;
+	s=korg; t=1795032828;
+	bh=jdwRx7ZpV9bGadKlRyaRpLSAnLTcyhFTDkTIGNCLShU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lnk848g6niUdczPDZxXG6LcEw7Qq28EdGW7SjksZo+CtLJC4CIc59xkKJF99a0d5P
-	 bAJ21IWDTMAJ2Pznip0y1uSlno8iT+9dVQA7Gt4agoiBwQxz6Ing5QAVI/8Rhcpv6P
-	 h+NlyU2axSWipEk7Q9ch/4jiprp2W/LF5040DlAk=
+	b=ljGZhXvD4bXUJnGkGh1RcvkPNesLPDf0KMvKyPcIsyVIgQA6JJNuJMvhLK8EpWprr
+	 2dGOfSTcUqlrwiDYGMBZWVjEfWDmRoK9vzG1IztK7mmvH/EI3o8GUTeuOoRyCVVNIX
+	 SSPWX9HSwxT0zL+CWA7InxPxZJP98O1NOjsExIh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@sina.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com,
-	Bradley Morgan <brads@mainlining.org>,
-	Pingfan Liu <kernelfans@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Tianyi Gao <tianyi@cloudflare.com>,
+	Mohsin Bashir <hmohsin@meta.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1548/1756] kernel/reboot: avoid potential deadlocks during suspension
-Date: Wed, 18 Nov 2026 16:01:15 +0100
-Message-ID: <20261118150110.576670237@linuxfoundation.org>
+Subject: [PATCH 6.12 1513/1756] veth: schedule the peers NAPI after XDP_TX when only GRO is enabled
+Date: Wed, 18 Nov 2026 16:00:40 +0100
+Message-ID: <20261118150109.114820150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,78 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@sina.com>
+From: Tianyi Gao <tianyi@cloudflare.com>
 
-[ Upstream commit 66644b992f25f6a33775788c8b69a8bb3d41ad67 ]
+[ Upstream commit f16b8c6a656e62bfa7bb6a3b876f9ccdaf53bd43 ]
 
-Invoking reboot with LINUX_REBOOT_CMD_SW_SUSPEND causes kernel/reboot.c
-to acquire system_transition_mutex and invoke hibernate(). hibernate()
-calls lock_system_sleep(), which sets PF_NOFREEZE on current and attempts
-to acquire system_transition_mutex again, potentially hitting:
+veth_xdp_xmit() queues XDP_TX frames on the peer's ring if the peer has
+NAPI. A peer with GRO enabled and no XDP program also has NAPI.
 
-WARNING: possible recursive locking detected
---------------------------------------------
-syz.3.5755/5950 is trying to acquire lock:
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: lock_system_sleep+0x49/0x70 kernel/power/main.c:71
+veth_xdp_flush() then schedules the peer's NAPI, but only if the peer's
+xdp_prog is set, so for such a peer the frames are never processed.
+Nothing else schedules that NAPI by default.
 
-but task is already holding lock:
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
+Once the ring is full, every XDP_TX frame is dropped, and so are the
+skbs that veth_xmit() queues on the same ring.
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
+Commit 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before
+xmit of XDP frame") changed the check in veth_xdp_xmit() but not the one
+in veth_xdp_flush(). Make veth_xdp_flush() check the napi pointer
+instead of xdp_prog, as veth_xdp_xmit() does.
 
-       CPU0
-       ----
-  lock(system_transition_mutex);
-  lock(system_transition_mutex);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-locks held by syz.3.5755/5950: 1, last CPU#0:
- #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
- #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
-
-Call Trace:
- lock_system_sleep+0x49/0x70 kernel/power/main.c:71
- hibernate+0x162/0x680 kernel/power/hibernate.c:784
- __do_sys_reboot kernel/reboot.c:816 [inline]
-
-Move the suspension operation outside the scope protected by lock
-system_transition_mutex.
-
-Link: https://lore.kernel.org/20261020010559.23031-1-eadavis@sina.com
-Fixes: 55f2503c3b69 ("PM / reboot: Eliminate race between reboot and suspend")
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=1f0fbc2561b3e5d51b91
-Tested-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Cc: Pingfan Liu <kernelfans@gmail.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Fixes: 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before xmit of XDP frame")
+Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
+Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20261016214217.16942-2-tianyi@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/reboot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/veth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/reboot.c b/kernel/reboot.c
-index caab5c86c6e29..788aaa4c5be76 100644
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -801,8 +801,8 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 0fc14b73d24a2..6f8de3e775033 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -615,7 +615,7 @@ static void veth_xdp_flush(struct veth_rq *rq, struct veth_xdp_tx_bq *bq)
+ 	rcv_priv = netdev_priv(rcv);
+ 	rcv_rq = &rcv_priv->rq[veth_select_rxq(rcv)];
+ 	/* xdp_ring is initialized on receive side? */
+-	if (unlikely(!rcu_access_pointer(rcv_rq->xdp_prog)))
++	if (unlikely(!rcu_access_pointer(rcv_rq->napi)))
+ 		goto out;
  
- #ifdef CONFIG_HIBERNATION
- 	case LINUX_REBOOT_CMD_SW_SUSPEND:
--		ret = hibernate();
--		break;
-+		mutex_unlock(&system_transition_mutex);
-+		return hibernate();
- #endif
- 
- 	default:
+ 	__veth_xdp_flush(rcv_rq);
 -- 
 2.53.0
 
