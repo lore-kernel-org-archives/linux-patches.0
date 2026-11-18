@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033199;
-	b=CHsoTPIANjo07mqjPI6vTPYJLH4R7V+pqYzlXXHMomOcO5+Tc0D1xVK7qUpUjRnQeZ+g
-	 n+2N6+ctmADimRzmQS3VZh7DYt0Ah9fwyJ1AwARkZlEZaDwIAMEULek6Y+MIX4NcAD4Yi
-	 VXD4INn6ZzhgCkyqOr6KuX9uX+Y6n5funFhYEJYYTLpjIlsxsdRVrc1xcm2MBzMuq+k5h
-	 OfB+owm3VDUWHO1fs9W3ICa8jAAWQexfEBTmoVJ03dPT/iEgwU3lHmj7tq+gOck9gLM2n
-	 40u1yG5kAnht52zwDMnPoV6GhQiU01y0VCT9pdjmabYOtksF18iAY6wh5y6eEO1r3Hw==
+	t=1795033202;
+	b=KSrMrMBzuGjvSbHWgs8MI0+ShDG0s6Rl14NweniquYofSMeZQm+7A3T6jOVJfh/Amn94
+	 ieMz6cX/Y26mPeM/1nksagEldUvGI6F9mTgSOQZFqIF1Ubgb6j2U6F0+11LftzzCTVb+u
+	 8KZAbZNUsySEJ7VqflrNED6lwl3X8r3fNf03/KKsyMhy06UNVHR2avvqvLVLZ0PfG+b+i
+	 2Rx4qUOfPB46axboL3XooTVefZ0PF+xwze6MZ2/4Jqe+sMruMkFx/zK2GNqYE0tfWzNbv
+	 ElZOHvVlSguLDji/JVHthns1PptnaEuiZEte0XnIx2sLtUd3uqw3mdY2HnwrwsvzDiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8SsKyAXE/DD58EM9hoxkLKXfqGqFSsKcYxRw3NHIlyw=;
-	b=vdFnv527umGfN4hZUX4JY8f/I3iGPCaOODHpTC1UOKnqRC1goRUbi5QsZ1UvUrOW9UkA
-	 A6+iTP9naEDSrlj3szacSsw18wuQzahrRlDNNnyVr8rpg7Uh/K7QyGkHNSHmvR/ESqTIz
-	 z9/klC0EMaIpC7bSINfsmXmaiJsFIm3K/i6PHutTbiIiaRhbppMYDVQxaPNmC/pLQNEUt
-	 3patdpLACzpx3rTvWIfegZZ5id59IuZZaHLxV7Pt+DYuGVRCBUOWsWDnYgA4t4SMj9hmN
-	 NqMWqh4Kk6FnVFd9aHLQJQrsdk3ltCwd8gqRdAxzkzCu6/ZUHNcxeUD5pu4hJ26NETQ==
+	bh=uno+4HRdTnVM2/YA7gwqyzSoBB0HwmGfiYIUeWST/LM=;
+	b=CDOHlB4LlmVo7Ab7WlGAtA+X9CNzQ7+3FEcRn5yI7L/OqwkKFBcVWg8tN+a4AVvOXrQ3
+	 n1hu5cvnQrRqWsAmhmjLuwJqE54L5G2tsmN2jul/fLCq8PSauGKWUtLZ2qOEcwlmBjZSC
+	 5ih93FJs4E+HukpdlRTa+7AsYmT4I1O707Y31OYusvCg7X53oKI3N/IIrfM9eZM9j2WZz
+	 t3b48x/7E5AAI6EB9j8qI03R2QVp2YFt8VXxiaRq3nP7g+zwhNje1r9MbJbeGLU2EIjaJ
+	 LTdowZ6ZI5wBKCizuX6RVzuGbMiqF9aHtboObBgEieBx52iFYStjwNDLotlh2g+PyDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUINwSle;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvXjQvhA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AF0606A33A;
-	Wed, 18 Nov 2026 20:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4FE606A320;
+	Wed, 18 Nov 2026 20:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUINwSle
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8DE1F000C4;
-	Wed, 18 Nov 2026 20:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvXjQvhA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56E31F000C4;
+	Wed, 18 Nov 2026 20:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033199;
-	bh=8SsKyAXE/DD58EM9hoxkLKXfqGqFSsKcYxRw3NHIlyw=;
+	s=korg; t=1795033202;
+	bh=uno+4HRdTnVM2/YA7gwqyzSoBB0HwmGfiYIUeWST/LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUINwSleGAMlqCwZ0WlisS8mvUF44zxA94Uif69eS+UtIJJv95flQ54f9AZycXUEG
-	 YVZU3ptsWVBtDyE2R/C8d/wCeE8u9Yq1DKZZBJ1KnFuQKeYC1VWem8j7KArjBqasrX
-	 8JBeS/Usd4vdE1LBJZJGteTEQG+uNCXtbwKh+z70=
+	b=PvXjQvhAlikfWpH31W2fv9xhm7umoigNgXS4noMhNuwWE5K8IZZNukmcaxweFIpMl
+	 6Ps6WPqT7sF4xF5exVpX4zrufjQXk7So4aJBH3k69fn43zBuEv8I2tn7RnNuofUuar
+	 JaC8k6MajIjbQShVUZshBc0o1yrlTCrpUYQ70U/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Chris Mason <mason@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Omar Sandoval <osandov@fb.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1682/1756] rnbd-srv: publish the sess_dev at the end of OPEN
-Date: Wed, 18 Nov 2026 16:03:29 +0100
-Message-ID: <20261118150116.658742534@linuxfoundation.org>
+Subject: [PATCH 6.12 1683/1756] block: remove redundant explicit memory barrier from rq_qos waiter and waker
+Date: Wed, 18 Nov 2026 16:03:30 +0100
+Message-ID: <20261118150116.696601002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,66 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit 08ebf69c78a02afb39b7728f3358c09bc4cf067d ]
+[ Upstream commit 904ebd2527c507752f5ddb358f887d2e0dab96a0 ]
 
-rnbd_sess_dev_alloc() stores the empty sess_dev in the XArray as its
-first step. An IO message with the new ID from another connection can
-find it before bdev_file is set, or hold a reference while a failing
-OPEN frees it after a mere RCU grace period. Both are reachable from any
-host that can open a device.
+The memory barriers in list_del_init_careful() and list_empty_careful()
+in pairs already handle the proper ordering between data.got_token
+and data.wq.entry. So remove the redundant explicit barriers. And also
+change a "break" statement to "return" to avoid redundant calling of
+finish_wait().
 
-Reserve the ID with a NULL entry and store the sess_dev once nothing can
-fail anymore. The error path still erases the ID, and no longer needs
-synchronize_rcu().
-
-Fixes: 2de6c8de192b ("block/rnbd: server: main functionality")
-Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
-Cc: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-41-axboe@kernel.dk
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
+Reviewed-by: Omar Sandoval <osandov@fb.com>
+Link: https://lore.kernel.org/r/20241021085251.73353-1-songmuchun@bytedance.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 0150554a3f38 ("blk-iocost: publish hweights as one atomic value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ block/blk-rq-qos.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index dc944a194cc3d..ced4e435f963f 100644
---- a/drivers/block/rnbd/rnbd-srv.c
-+++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -430,7 +430,7 @@ static struct rnbd_srv_sess_dev
- 	if (!sess_dev)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/block/blk-rq-qos.c b/block/blk-rq-qos.c
+index 058f92c4f9d57..eb9618cd68adf 100644
+--- a/block/blk-rq-qos.c
++++ b/block/blk-rq-qos.c
+@@ -218,7 +218,6 @@ static int rq_qos_wake_function(struct wait_queue_entry *curr,
+ 		return -1;
  
--	error = xa_alloc(&srv_sess->index_idr, &sess_dev->device_id, sess_dev,
-+	error = xa_alloc(&srv_sess->index_idr, &sess_dev->device_id, NULL,
- 			 xa_limit_32b, GFP_NOWAIT);
- 	if (error < 0) {
- 		pr_warn("Allocating idr failed, err: %d\n", error);
-@@ -800,6 +800,13 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
- 	list_add(&srv_sess_dev->dev_list, &srv_dev->sess_dev_list);
- 	mutex_unlock(&srv_dev->lock);
- 
-+	/*
-+	 * Nothing fails from here on, so let I/O messages find the sess_dev.
-+	 * The ID is reserved, so this store allocates nothing.
-+	 */
-+	xa_store(&srv_sess->index_idr, srv_sess_dev->device_id, srv_sess_dev,
-+		 GFP_KERNEL);
-+
- 	rnbd_srv_info(srv_sess_dev, "Opened device '%s'\n", srv_dev->name);
- 
- 	kfree(full_path);
-@@ -811,7 +818,6 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
- 
- free_srv_sess_dev:
- 	xa_erase(&srv_sess->index_idr, srv_sess_dev->device_id);
--	synchronize_rcu();
- 	kfree(srv_sess_dev);
- srv_dev_put:
- 	if (open_msg->access_mode != RNBD_ACCESS_RO) {
+ 	data->got_token = true;
+-	smp_wmb();
+ 	wake_up_process(data->task);
+ 	list_del_init_careful(&curr->entry);
+ 	return 1;
+@@ -274,10 +273,9 @@ void rq_qos_wait(struct rq_wait *rqw, void *private_data,
+ 			 * which means we now have two. Put our local token
+ 			 * and wake anyone else potentially waiting for one.
+ 			 */
+-			smp_rmb();
+ 			if (data.got_token)
+ 				cleanup_cb(rqw, private_data);
+-			break;
++			return;
+ 		}
+ 		io_schedule();
+ 		has_sleeper = true;
 -- 
 2.53.0
 
