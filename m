@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020900;
-	b=rcQAQr15cMHPiLxLl/r2mNgcuA8eVZyIunzjUPI5eitx+l9OIfMPPzAzBtNImo2YFbTD
-	 LfEomlRw3RZHpO68R7HqmyNe06Lfe5XpqzRwnt9X8jfghNmopKtuBwKt/lQLJnHgSMlnc
-	 hiczkhzIkH2uWWBGxGkdn+jEgNnEeKQwuXsNPGWIwHJs+XeVBouM564TgAB8xljQtvWjA
-	 5P33hjgHNh+an7xbb7RcRcBsDYPbym+E/Rd1J/ZvcBAFRCDKtKE+VzoXiNWdikUM/xGG5
-	 OLew60IrgHIopMHKA2vA60AimDXzT2AeoU0dSB34LZJrztaVlTJ5FRbioU7IKpb5zww==
+	t=1795020903;
+	b=Pr1ll0QiYj71HwlHL1j/0sidp+3kfztKuOnHQwfiKKFnxIlTTmIRyia6z63on0WDUeI2
+	 91XNr9cvHtdxqasSImqVQ7N9JFMJAFQJ0dvcAg4OPwDP24jQijIeB6cg96l7MPwWkLpSV
+	 tMgJqEzGVYeg17S9bWLA8l/pMmojwjsuWQfno8QCBP6MTlOVH9rTc7WjM/+Vjz7llZ+Cz
+	 YCMCUs1ORWamYo6zEA417v+dhejxO9yVK+hT2DmzmuKlnltdq0xaQXtb+InBL4jVP6YsB
+	 VFo7hzdzw7c5YC/PsulnwZJ4Btg5wpxkxuRokkM7qZCCo1NPd/lgloOtM8fUKjbBg8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020900;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JBh2aucmrQEG9/ADDRMYvVTcahw2wQjzFjFCZbWc2WQ=;
-	b=dF59AJ5/fURzAKYEp0+eYt2Nfsh8L5VmqZyGIt5uEio9W8+jct3qM8vWpzXjgg7T7L4A
-	 6qh9VLdBzkuW6o9N3bJenYpYRF0Np3SD6xTRrZNPFA8P79KjkCU8kwHu1J10Dv0JxqzzA
-	 u3cmQMeTYz6oVOjvgKnfoKiHjxx5JDuxuYWhFFp4b+hO72EEZdFuSMvH4l0yxfcW2EnjB
-	 EWOyisYYuIk9KzYzQz8sb1E45r2RX06zbpfL2I22P9B/EzmiQW6s37ukTlQqyArzknXfn
-	 wpJ6wEliZiMs/ftY4svbG+WYnGYMKFDoDTZKMPhL8RRI7AiA24sH0sTqsL0Xu6qG+4w==
+	bh=Pk23Mr9xz+P/BOCS07sVBl6RhsZpNGhGtmTJD9Q0I/Q=;
+	b=ArJcd975C955yhuxlQdMiv5VsNwC33dKEj3Y08FBNIXe22tQNoeE04RZpK32Fr3znOoJ
+	 5L1UA2ez3wlI+yeyWy+HWoplOTp3dN+zUTqsB0ncPY2iZKjz86x5UHhgy21br5u8oEMzJ
+	 qpeAKGTNzlOwc2nHCXGf+Uyf5Laj9UxKfHEe/34t9gkAIjJxnZbxrq4627dNyeW+7azUg
+	 Ip2kY3xz2VUfJpLj8kwZvrTiNtnPLRFeZ4p2bpNQlbgFKhh8qjQviEQerSKCyEgX9X/qJ
+	 /DZVeCpVOdHUfxleKL1EujrwsfVe7HX9TlPjXzjNYCMwxLW/CkrpH2pGqY2dhYmcFZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O01jMKXL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DU7tvfiy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E2E606A332;
-	Wed, 18 Nov 2026 16:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CE860A2605;
+	Wed, 18 Nov 2026 16:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O01jMKXL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0401F000C4;
-	Wed, 18 Nov 2026 16:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DU7tvfiy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855E71F000C4;
+	Wed, 18 Nov 2026 16:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020900;
-	bh=JBh2aucmrQEG9/ADDRMYvVTcahw2wQjzFjFCZbWc2WQ=;
+	s=korg; t=1795020903;
+	bh=Pk23Mr9xz+P/BOCS07sVBl6RhsZpNGhGtmTJD9Q0I/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O01jMKXLt2xUorPI6AMebkJgPnB0j8QpEYwm7INDy1gkaNRcjoBMRsn/8PesAhQ0i
-	 A6vn+s94mjGP/Do+i8Zbk7QCFGt6D+wJXYYYnPvCd+u2lktUM9ejmfvBA9R2VECPNV
-	 SQsh5Pl9zMCnaOMV9Wp3BF9UTRF41zpeqbi9HrxM=
+	b=DU7tvfiyBPGHuAeUk53+m1bx+R7AcFRg3DUH5Tg0XsGoBeGg3ObYZZxSe5bar+/Ux
+	 NAABsK5o/QvSuc55YOs5N5QrW1ZBemcpN7nOO60Ds37e3dLgrNh+fr208v2DnthCda
+	 Lod7g8xN+IozVc8iA9g/wAEfii5/90EPf0gIiCVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2116/2651] bpf: Free what map_free() unlinks for sleepable readers
-Date: Wed, 18 Nov 2026 15:55:56 +0100
-Message-ID: <20261118150402.113241460@linuxfoundation.org>
+Subject: [PATCH 7.3 2117/2651] power: supply: qcom_battmgr: report full batteries
+Date: Wed, 18 Nov 2026 15:55:57 +0100
+Message-ID: <20261118150402.148608270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,60 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 5bdd61e98da5468140aff5b5abc0e8544deaf2ee ]
+[ Upstream commit 6c8098e04ee4d233399e40e7311715844910f8f8 ]
 
-bpf_local_storage_map_free() takes the elements of the map off the lists
-of their owners, which are alive, and frees them, and the storage of an
-owner with its last element, behind a plain RCU grace period.  Nobody uses
-the map any more, but the other maps of these owners are in use.  A
-sleepable program calls the get and delete helpers under
-rcu_read_lock_trace() only.  While it walks the list of an owner for its
-own map, or is about to lock the storage, the element it stands on, or the
-storage, can be freed under it.
+The SC8280XP battery-status response has no explicit full state. When a
+battery reaches its full capacity on external power, neither the charging
+nor discharging bit is set. The driver consequently reports "Not
+charging", which can make userspace show the system as battery powered.
 
-Whatever else takes an element off the list of a live owner frees it
-behind an RCU Tasks Trace grace period, which implies a plain one.  Do so
-in bpf_local_storage_map_free() as well.  It waits for these callbacks
-before it frees the map.
+Use the response's power-online bit and the reported capacity to identify
+a battery that is full while externally powered. Preserve "Not charging"
+for a battery whose charging is inhibited below its full capacity.
 
-This does not help a sleepable program that hands an owner to the helpers
-which nobody holds, and which may be gone by then.
-
-Fixes: dcf456c9a095 ("bpf: Fix usage of trace RCU in local storage.")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-31-alexei.starovoitov@gmail.com
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+Assisted-by: LLM
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261008-battmgr-full-v1-1-4f5485a9c421@oss.qualcomm.com
+[put variable definition in Reverse-Christmas-tree order]
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/power/supply/qcom_battmgr.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index cc80838f15584..4f471e0620d2c 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -429,13 +429,17 @@ static void bpf_selem_unlink_nofail(struct bpf_local_storage_elem *selem,
- 	 * then freed after an RCU grace period. However, if destroy() and map_free() are
- 	 * racing or rqspinlock returns errors in unlikely situations (unlink != 2), free
- 	 * the selem only after both map_free() and destroy() see the selem.
-+	 *
-+	 * The owner that map_free() takes an selem from is alive: sleepable code, which
-+	 * is in no RCU read side critical section, may be walking its list for another
-+	 * map.
- 	 */
- 	if (unlink == 2 ||
- 	    atomic_cmpxchg(&selem->state, SELEM_UNLINKED, SELEM_TOFREE) == SELEM_UNLINKED)
--		bpf_selem_free(selem, true);
-+		bpf_selem_free(selem, !in_map_free);
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 99ae0920f7264..636d6f6acecc5 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -1277,6 +1277,7 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+ 					   size_t len)
+ {
+ 	unsigned int opcode = le32_to_cpu(resp->hdr.opcode);
++	unsigned int power_state;
+ 	unsigned int source;
+ 	unsigned int state;
+ 	size_t payload_len = len - sizeof(struct pmic_glink_hdr);
+@@ -1327,19 +1328,24 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+ 			return;
+ 		}
  
- 	if (free_storage)
--		bpf_local_storage_free(local_storage, true);
-+		bpf_local_storage_free(local_storage, !in_map_free);
- }
++		battmgr->status.capacity = le32_to_cpu(resp->status.capacity) * 1000;
++		battmgr->status.power_now = le32_to_cpu(resp->status.rate) * 1000;
++		battmgr->status.voltage_now = le32_to_cpu(resp->status.battery_voltage) * 1000;
++		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
++
+ 		state = le32_to_cpu(resp->status.battery_state);
++		power_state = le32_to_cpu(resp->status.power_state);
+ 		if (state & BIT(0))
+ 			battmgr->status.status = POWER_SUPPLY_STATUS_DISCHARGING;
+ 		else if (state & BIT(1))
+ 			battmgr->status.status = POWER_SUPPLY_STATUS_CHARGING;
++		else if ((power_state & BIT(0)) &&
++			 battmgr->info.last_full_capacity &&
++			 battmgr->status.capacity >= battmgr->info.last_full_capacity)
++			battmgr->status.status = POWER_SUPPLY_STATUS_FULL;
+ 		else
+ 			battmgr->status.status = POWER_SUPPLY_STATUS_NOT_CHARGING;
  
- void __bpf_local_storage_insert_cache(struct bpf_local_storage *local_storage,
+-		battmgr->status.capacity = le32_to_cpu(resp->status.capacity) * 1000;
+-		battmgr->status.power_now = le32_to_cpu(resp->status.rate) * 1000;
+-		battmgr->status.voltage_now = le32_to_cpu(resp->status.battery_voltage) * 1000;
+-		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
+-
+ 		source = le32_to_cpu(resp->status.charging_source);
+ 		qcom_battmgr_sc8280xp_set_online(battmgr->ac_psy, &battmgr->ac.online,
+ 						 source == BATTMGR_CHARGING_SOURCE_AC);
 -- 
 2.53.0
 
