@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060899;
-	b=QyGHhTMQW7zO3TW8OHGAxuCSSbUIF+/QALzUZ7ohZUUlLw3wpIMv5jjoC93uZu/ZGmiT
-	 XK0gRPvU5uzLXbEQSQlyrIbasvcvSxByeTwXSZEmc0Ohdts0bfe8wmprCw1Nln2vo/niA
-	 CZtQqhatNvc5a4prLHACwt1Oj6lPI6uQ8juNs9IY8zhkmzYqL5RbFEkol+JM+zaM5nBGl
-	 FyaNbifrWPuwslJ6Eh85JIpIqxQPV6T3KdDbdes1YjAFs/wmy2hNPuLzJ/iupupUQKc+e
-	 LoN2H1hwUOcbw7YwWVU6GtggeoJGLEQFQHJmJe8jcXAArg0KtmrBUVc2EmSk0tAvmVg==
+	t=1795060902;
+	b=tBciqROS9q+msydmyXJ4gyWyN6NCUK+97G9bllAUtFxAoO0Lzyfm0V4lN8ivwkYuE7xU
+	 tlHtuP2RFJAVw3TT3Bu3DVZPNnIyk+3CrCwR1iJufuciVL/lB8SZeewAeodS39C4RRaIc
+	 Idqv+KZUHkFoMCXSw7eW2O1E32zlA2LWNeN8IwVbWHltFXcFh4Af0mXaoeZu+eF8/k4yl
+	 xeK9XCcMJmH0je2N9gIEmk8gFVGCnmTETQEDBkpqxFffxDj7HqhqU5vZ43z3K4+o+XPQR
+	 AwZNglvMcQR0moSBJD/YSXg9ucnWla9Sk3JofoBDrOPewTi+f3sZOXqka/6eaXaLc7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g+rE890GKJGvTjbfD3IXvvh299VyMzCv3omksXDsBO8=;
-	b=e30SzjlDTb7NKEJxoK+WvngH+sOlyLtylrsjymM33baZ3oglj8U3NCwoMXqWWFOfpBX5
-	 O730c7gy8QsUKUXhLrqEtECa0HBpmHfukXYpZvnNuN9GIY7I6x4WADv+UBuRIEfibg7qh
-	 L+pgf9r7tsiF6cfVfLoou8dl1O4V3lkAMJVg99NP+947HEaHcopTEi9BGraUOBf5TzwMD
-	 3M6NNNiLOQScREpGPbl5zn+A6LVS39MJIYfeOEfOJ25VGGdZ/u/WSEAUkrt7wT6u+ILkF
-	 ino/rm3uKCEEF9/kfN7ftUxQ+9GALV9qzidqmm86dUdCbYHyW2khZiHqD0Hz2obkddA==
+	bh=d3z+AUmUxIVJvbaJzHzSMNdyGtXsSHw+4QI0Cw4t12o=;
+	b=4Il81wI6LU+p/YPERVwpmrfuFGSrqBdiRRCLpRfj8245kQ7hdKFHb4n2Vy4/anfjO6is
+	 xDlaY5XLyvbOB016u12cmbH6qsINaL2n4JBo5/qDwAf7cW1348G8gjCCTUN/2lKNeUMSb
+	 l/jcEBeqW/VyJbaUcu93mYXPepxWyLh98Y7FHq+spoz5f+av/Tg/B+syuYZ4eQg7dJsrf
+	 atj187Kas8TvJIy32NoCfvnJY45pYJ/4uJo2iR3hQiSyrjaVi6qfPZlViOqF6cVEkLHOK
+	 pPxBac1PxHKlj7uocbz4FyIKWWvzuYCI9wBRjQKcBbW62r/aIfxncUqOTfF3GrCfHBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hy1rX6+c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEyYL5Oz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12F4606A325;
-	Thu, 19 Nov 2026 04:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FB9606A325;
+	Thu, 19 Nov 2026 04:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hy1rX6+c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD471F000C4;
-	Thu, 19 Nov 2026 04:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEyYL5Oz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DEE1F000C4;
+	Thu, 19 Nov 2026 04:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060899;
-	bh=g+rE890GKJGvTjbfD3IXvvh299VyMzCv3omksXDsBO8=;
+	s=korg; t=1795060902;
+	bh=d3z+AUmUxIVJvbaJzHzSMNdyGtXsSHw+4QI0Cw4t12o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hy1rX6+cWb8pJfA9Hnj25hLr8CY4AEJYmFyhcXsVlSWnmB7Odo8+JKuHE1z4mZTHX
-	 c6BhApyJa3Xv8Jdp8tKEM/RLdq8I328GAA4GTDBVfvVDY/28Nr355spb6NA846pLi2
-	 vkV5EXA0fGaE/FCHHmYm3Wr8V1A00zmjYw73BNyY=
+	b=LEyYL5OzA9ZSthGFjRJhBQsv/tBKo2eDzAhk6fK6tEQmjA3AdL0+bOOvv+IsbdmYD
+	 Me5xnAAZuuNDEjczTJQHwtrf122D3RvSytaXKRkaRoZzf1VsU8o31E24G3SAuxVGSE
+	 HPjCSOCOW/d5u+lerquwZCxm42mo3yoUDvcCHCPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	syzbot+d729df28d933979e017a@syzkaller.appspotmail.com,
+	syzbot+2eac7d175baf21e6a5d5@syzkaller.appspotmail.com,
+	syzbot+7155b2fe09e033c91381@syzkaller.appspotmail.com,
+	syzbot+adeb387cede15eb11607@syzkaller.appspotmail.com,
+	syzbot+ae7f2423f3648100506d@syzkaller.appspotmail.com,
+	Kyle Zeng <kylebot@openai.com>,
+	Bruno Produit <bruno.produit@trailofbits.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1363/1848] dt-bindings: vendor-prefixes: Add Chip Wealth Technology
-Date: Wed, 18 Nov 2026 15:56:41 +0100
-Message-ID: <20261118150016.645657007@linuxfoundation.org>
+Subject: [PATCH 5.10 1364/1848] hfs/hfsplus: serialize B-tree close against folio release
+Date: Wed, 18 Nov 2026 15:56:42 +0100
+Message-ID: <20261118150016.680591548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,33 +74,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Bruno Produit <bruno.produit@trailofbits.com>
 
-[ Upstream commit 058ee00216a1356e710446b59a800065d2abbd80 ]
+[ Upstream commit dce0e0248205bb3dc5b4c6793cd2ecb453152259 ]
 
-Add an entry for Chip Wealth Technology (https://www.chipwealth.com/)
+B-tree nodes with a zero reference count remain in the node hash until
+folio reclaim or tree teardown frees them.  The folio release callbacks
+remove nodes while holding hash_lock, but hfs_btree_close() walks and
+frees the same hash without that lock.  Reclaim can therefore unhash and
+free a node after close has loaded its pointer, causing a use-after-free
+or double-free.
 
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://patch.msgid.link/20260727-ayn-qcs8550-v9-1-e3db456e10e5@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The following syzkaller crashes seem to be the same UAF in
+{hfs,hfsplus}_btree_close() (or {hfs,hfsplus}_bnode_unhash()) and follow
+the same pattern, but do not contain a reproducer to confirm.
+
+Detach each node with hfs_bnode_unhash() while holding hash_lock before
+inspecting and freeing it.  Drop the lock before hfs_bnode_free() so a
+large tree is not freed while holding a spinlock.  Apply the same fix to
+the matching HFS+ implementation.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d729df28d933979e017a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d729df28d933979e017a
+Reported-by: syzbot+2eac7d175baf21e6a5d5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2eac7d175baf21e6a5d5
+Reported-by: syzbot+7155b2fe09e033c91381@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7155b2fe09e033c91381
+Reported-by: syzbot+adeb387cede15eb11607@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=adeb387cede15eb11607
+Reported-by: syzbot+ae7f2423f3648100506d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae7f2423f3648100506d
+Assisted-by: Codex:gpt-5.6-sol
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260921153729.600313-1-bruno.produit@trailofbits.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/hfs/btree.c     | 7 +++++--
+ fs/hfsplus/btree.c | 7 +++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 8dbd288fdd659..762398cf70290 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -211,6 +211,8 @@ patternProperties:
-     description: ChipOne
-   "^chipspark,.*":
-     description: ChipSPARK
-+  "^chipwealth,.*":
-+    description: Chip Wealth Technology
-   "^chongzhou,.*":
-     description: Shenzhen Chongzhou Electronic Technology Co., Ltd
-   "^chrontel,.*":
+diff --git a/fs/hfs/btree.c b/fs/hfs/btree.c
+index f9ccfe0fc5748..5553de925448f 100644
+--- a/fs/hfs/btree.c
++++ b/fs/hfs/btree.c
+@@ -143,15 +143,18 @@ void hfs_btree_close(struct hfs_btree *tree)
+ 		return;
+ 
+ 	for (i = 0; i < NODE_HASH_SIZE; i++) {
++		spin_lock(&tree->hash_lock);
+ 		while ((node = tree->node_hash[i])) {
+-			tree->node_hash[i] = node->next_hash;
++			hfs_bnode_unhash(node);
++			spin_unlock(&tree->hash_lock);
+ 			if (atomic_read(&node->refcnt))
+ 				pr_err("node %d:%d still has %d user(s)!\n",
+ 				       node->tree->cnid, node->this,
+ 				       atomic_read(&node->refcnt));
+ 			hfs_bnode_free(node);
+-			tree->node_hash_cnt--;
++			spin_lock(&tree->hash_lock);
+ 		}
++		spin_unlock(&tree->hash_lock);
+ 	}
+ 	iput(tree->inode);
+ 	kfree(tree);
+diff --git a/fs/hfsplus/btree.c b/fs/hfsplus/btree.c
+index d4b2591046474..926398b135929 100644
+--- a/fs/hfsplus/btree.c
++++ b/fs/hfsplus/btree.c
+@@ -264,16 +264,19 @@ void hfs_btree_close(struct hfs_btree *tree)
+ 		return;
+ 
+ 	for (i = 0; i < NODE_HASH_SIZE; i++) {
++		spin_lock(&tree->hash_lock);
+ 		while ((node = tree->node_hash[i])) {
+-			tree->node_hash[i] = node->next_hash;
++			hfs_bnode_unhash(node);
++			spin_unlock(&tree->hash_lock);
+ 			if (atomic_read(&node->refcnt))
+ 				pr_crit("node %d:%d "
+ 						"still has %d user(s)!\n",
+ 					node->tree->cnid, node->this,
+ 					atomic_read(&node->refcnt));
+ 			hfs_bnode_free(node);
+-			tree->node_hash_cnt--;
++			spin_lock(&tree->hash_lock);
+ 		}
++		spin_unlock(&tree->hash_lock);
+ 	}
+ 	iput(tree->inode);
+ 	kfree(tree);
 -- 
 2.53.0
 
