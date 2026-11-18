@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053985;
-	b=C59OJ/EB57ICil7iTXTQHIMTik1k2jtGyHZsJQEk+WgOTNI0MeDxqSHJzMZqyYDlGT6o
-	 nKomKIlGXYQqEtKR0wfR/YcIz7M8Qegbr9qnLp7W+7Yx0sYX1I8hEQ2MyOcRLZbd+d3Zf
-	 z7f/oOCn0fZ17yHKGJMIa7Ea7zPhhadYqakiOAtSKC54M4qxVJLowIVeu7vndX9GLDFQT
-	 h4ZYWPCQDQRjrIOPOaeoACYfKRYl79jp13c1O9op4Xe5RjJ3dEdupd3llBOrj2FXzB+ij
-	 4jwcW14d1Lra4gq/ma9/+A5IQaf92jEgOYEYpMt63qIthwa3aV658SVGTGhwLR06rVg==
+	t=1795053988;
+	b=eordMxhShk1LSUnESTVEafCJc+ihvORNjWfditsHReMFCXo8UNszui67aja1B5lKdHOM
+	 dBEse4jmXhy1/kuUsNpzI4VbvcBTdOyXaia37Pv3l+aPvbrLUrP3uOVB06rVgyWO9Fifo
+	 CRPCYM85k6K/AVZUacXlB3ayiPtNDkh6U0d6ZHY6eRqCBGN9dLYlvjEnR+/U9hvgvLB1v
+	 Pz6gYuwO/VhCVvlq9/uaOcmRSbkU0fNY0mKm30HbcIjnEHF/4zpK3T7tsTAJ4xcivMg+o
+	 NY1BOq6j3x6TkUTYiGJQJMRe2VDduH+P8rySvnLBe2nczS4lZuTfS4ivC97piKMk1Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=zCTsl/N6S/WYPYsM+/IOQ5ZSSe/yTl0fDmKod1RYw+w=;
-	b=1wTFkxnJVahtX9ukCifge7tXuOqIe/OjwBOu4iQ9xNtkCkIAChLnhIYAIQPy66CNisBB
-	 Bv3iG1gx0ChZ5x2nK/V2w+tTiQg6fCjWJtk86ZOATDL3zY19KLfWe6tbts+ls9roKp4lm
-	 MfvhPQReCQY/UxbtzjA3Tdn74DXU55lNm5ouIKAQFGFiZnCYQUhZcYVsuqZN8CMBJ8Hh4
-	 3xcoDRn/Zvd0OkfY22pb66u4AfFqmOQmN+a6+OWeuDmFbC9utBHkfh2iORyNIHaGwfb1Q
-	 JeA45/gmIJPIfQRk2eiOekzR7V3E7sa2bp6+B+2j2N3jZ/ROh+QYJB4MrD8kzvjCjOQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jwW13ieVBEKtHIf7ucGpWoQu4s18b1gKpnVX0OLj4Wc=;
+	b=WZDkZKt4hibf0LOs9SjH0y9rpXmS4Z99D1u/OXEFeK/V+1FcMKCBHJdnCgkufmdH2sGX
+	 3j7X+J9/bEmlHMHFB9ZEBG0b3rYIFxKcc26xAJFomksCpJcEWx0pnA7HYNsdyDxE/X3vW
+	 sRiRq67ZKE4ogBXVBuXeAwBmMfTmoZiGFFxMSMiCo4pSOtLxgfkvLW63D9UOuUYX1OQZ4
+	 IGr5jqxSJExJX3az4x9u5opPxT+ENNCz+5UqgNm9eQe+UwtrtluY6+WwHC49441SYf3Ew
+	 80PKQJc0ZQjf9UcUyL3PYDZMr/19eZG83yHeN8bkn06LmkTGuRc6vB5JnjxaDLyjF5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AzF9NqrY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjuABIJV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FBA606A31C;
-	Thu, 19 Nov 2026 02:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF40606A31C;
+	Thu, 19 Nov 2026 02:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AzF9NqrY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6621F000C4;
-	Thu, 19 Nov 2026 02:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjuABIJV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F791F000C4;
+	Thu, 19 Nov 2026 02:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053985;
-	bh=zCTsl/N6S/WYPYsM+/IOQ5ZSSe/yTl0fDmKod1RYw+w=;
+	s=korg; t=1795053988;
+	bh=jwW13ieVBEKtHIf7ucGpWoQu4s18b1gKpnVX0OLj4Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AzF9NqrYyTs9dDI6EA0RIBquqZWCTyxpkwrmGpTBmVqhavDFy9yxgyGauKdEe9mzQ
-	 VO5iRKQxLDsygXk0EtWvwDS07dmdIT8ms9okJZLcOGxQP8+jJRb9aBjomOPZSBQZ3g
-	 An9cDgIIJrrS+PBKlDEeH2mPxIMb7S2fQTPw2S4k=
+	b=OjuABIJV2IyPhcdgFW3tcaBqp55eozKDY+15bhS3gEcdxoUYPsm4PBwsaqSMgpIj8
+	 3uDrP8W+irAc0wD/25X5T4VS6Uwk2jd1gXexBrdQ59ag/Q1yo/egnX6YXujRVrEL3A
+	 5TWPZ6st4izvbXPPhH8ilZIo9hrswE58yVAO2VWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1073/2214] irqchip/imx-intmux: Convert to platform_driver::remove_new() callback
-Date: Wed, 18 Nov 2026 15:45:49 +0100
-Message-ID: <20261118150055.193354261@linuxfoundation.org>
+Subject: [PATCH 5.15 1074/2214] irqchip/imx-intmux: Fix runtime PM teardown on remove
+Date: Wed, 18 Nov 2026 15:45:50 +0100
+Message-ID: <20261118150055.228822895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,78 +64,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 984e5c7b8d7bac9efd3818e06dcf1f7aab7701b2 ]
+[ Upstream commit b167c1a30e9e020e4c5e102c7a555943742c024b ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+imx_intmux_probe() enables the IPG clock and then drops its runtime PM
+reference with pm_runtime_put(). With CONFIG_PM enabled, the runtime
+suspend callback disables the IPG clock. With CONFIG_PM disabled, the
+clock remains enabled after probe.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+imx_intmux_remove() accesses the CHANIER registers without first making
+sure that the device is runtime active. The device may therefore be
+runtime suspended with the IPG clock disabled when these registers are
+accessed. In addition, the remove path only calls pm_runtime_disable()
+and does not balance the clock enable when CONFIG_PM is disabled.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Resume the device and acquire a runtime PM reference before accessing
+the registers. If resume fails, skip the register accesses but still
+tear down the chained handlers and IRQ domains. Disable runtime PM
+afterwards, drop the acquired reference without triggering another
+runtime suspend, and explicitly disable the IPG clock.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/edeee074956dd943d3c67da894a01dc5f0d33bd7.1703284359.git.u.kleine-koenig@pengutronix.de
-Stable-dep-of: b167c1a30e9e ("irqchip/imx-intmux: Fix runtime PM teardown on remove")
+This keeps the clock enabled while the hardware registers are accessed
+and balances the clk_prepare_enable() performed during probe for both
+CONFIG_PM configurations.
+
+This issue was found by manual code inspection.
+
+Fixes: bb403111e017 ("irqchip/imx-intmux: Implement intmux runtime power management")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260914134211.1734163-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imx-intmux.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/irqchip/irq-imx-intmux.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
-index e86ff743e98c3..45d2ac494a82d 100644
+index 45d2ac494a82d..10390446b4f01 100644
 --- a/drivers/irqchip/irq-imx-intmux.c
 +++ b/drivers/irqchip/irq-imx-intmux.c
-@@ -283,7 +283,7 @@ static int imx_intmux_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int imx_intmux_remove(struct platform_device *pdev)
-+static void imx_intmux_remove(struct platform_device *pdev)
+@@ -286,12 +286,16 @@ static int imx_intmux_probe(struct platform_device *pdev)
+ static void imx_intmux_remove(struct platform_device *pdev)
  {
  	struct intmux_data *data = platform_get_drvdata(pdev);
- 	int i;
-@@ -299,8 +299,6 @@ static int imx_intmux_remove(struct platform_device *pdev)
+-	int i;
++	int i, ret;
++
++	ret = pm_runtime_resume_and_get(&pdev->dev);
++	if (ret < 0)
++		dev_warn(&pdev->dev, "failed to resume device: %d\n", ret);
+ 
+ 	for (i = 0; i < data->channum; i++) {
+ 		/* disable all interrupt sources of this channel */
+-		writel_relaxed(0, data->regs + CHANIER(i));
+-
++		if (ret >= 0)
++			writel_relaxed(0, data->regs + CHANIER(i));
+ 		irq_set_chained_handler_and_data(data->irqchip_data[i].irq,
+ 						 NULL, NULL);
+ 
+@@ -299,6 +303,11 @@ static void imx_intmux_remove(struct platform_device *pdev)
  	}
  
  	pm_runtime_disable(&pdev->dev);
--
--	return 0;
++	if (ret >= 0) {
++		pm_runtime_put_noidle(&pdev->dev);
++		clk_disable_unprepare(data->ipg_clk);
++		pm_runtime_set_suspended(&pdev->dev);
++	}
  }
  
  #ifdef CONFIG_PM
-@@ -355,11 +353,11 @@ static const struct of_device_id imx_intmux_id[] = {
- 
- static struct platform_driver imx_intmux_driver = {
- 	.driver = {
--		.name = "imx-intmux",
--		.of_match_table = imx_intmux_id,
--		.pm = &imx_intmux_pm_ops,
-+		.name		= "imx-intmux",
-+		.of_match_table	= imx_intmux_id,
-+		.pm		= &imx_intmux_pm_ops,
- 	},
--	.probe = imx_intmux_probe,
--	.remove = imx_intmux_remove,
-+	.probe		= imx_intmux_probe,
-+	.remove_new	= imx_intmux_remove,
- };
- builtin_platform_driver(imx_intmux_driver);
 -- 
 2.53.0
 
