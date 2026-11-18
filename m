@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022411;
-	b=YoIofqMbXBFr1tvsax4LESbSb2zR6jtPleA983zJRJamQfr5T6k6qkHXEeru1a3Keoli
-	 mGRx9jyJtchKTy/l86pfsgL7SDmKENUQAwPoXsNWhcoDr3zTPd5Z25gzqqlkCJOzTvwBm
-	 8PnBYxq8Yq3bBrfUBqBZ6ywRY/h7NsPKFxLs74vWwNXrRK98ZZSRPzjCE3rq8EHfj8uN+
-	 iVPL2DyVKlurbCdIwrWnGcs0ed4fPKAyYSOv/31QVdJiN27oa+HMLlzdLePPNKMn/V54X
-	 F0j8xcOFiSc1QMB5ZapCwVuh1kpna5H9pW1Pce32Q9JFX5/u7qLTMdFomIZxLi1rATg==
+	t=1795022414;
+	b=o11zhoKQyFwyRNjBtMJNtZKKqrHMU5fKw8L0MQW9BUpP46zF2sKUL36eKxsrsQ/46aJg
+	 j3BYyKaAErRL3yiLLOiB0hBGMIr9P5X0cT9CPmMcL4RRnpen2Rt+7QpaSt1oOeCE5KWlo
+	 sI5N4j0dd6iC0TsdqrlEVME3h0a1wsupdjHslFpDxsPFLFXP9iE92uKyJ9MYkQj7HCgX7
+	 6r8Ux31mxYqYSXzhgKJw3EOKirfc9s7M+B/TjealC3LGCp6mRtWj01eAUfGzuNQWnI6Jq
+	 /EMDd333R76q/q1xsqbxqIrcg+6zfw4ERiGF0xY7ztipm/W1qisBIjpWv7f1ysvFtHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=USsHGOUXgmPoPus5b+8X/5hj8YapIr0cpFb2Iua+laI=;
-	b=keXq8NGKwDtOt1rw9X7FNb+fmILjp5dBuJG6boRRuFTs+Nlcj/QooXvNRfgY1LqgLlkz
-	 KL2PSnIAN1ixoYV6ISYssrQrSeDIA/1yk+7lKesZXg3cPNpQU7xCqau1b0xKqF3EVZsbO
-	 uRM5LqKBPWtEBiX3eE4eX2T4DU8+k5Qp6GL2i1VoRYgGq7L0GQkDp8b2cwQh+3Bhkr0VC
-	 3eAGZhUPvDSUSndTXwFmKcxyqxmEdwb4bhPxwpbOw4wtr4kSCzRESKhuSOsbip7TNZJxf
-	 PdKXQgUkHSjV7AmQ9G+0IlVLiZzPl0ifh95SJEEoWvR1BV13m56xaCd+UDowIAey/Hw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gqzfwKFmGDEg/UwYdbrnk/gTg5mJsRDEqhsUgxgLZ3A=;
+	b=Yty6vQVaNVfXXj2StSbjmvj+nFQn4vWrGIPZrGM9y2ZGLXu6AZH6iSihcr7k2LAThnMr
+	 WcS719cuPBuxd6R0c/omcckWmCMn8QbQbMgaOvsTCRJFxiR09abXxJiKayTYEJnErTkY4
+	 jub6chohlzjFOE9QROjX0f/XdNnmD6cum5VCGxbqI3D4bS85RDA35OXVX7jjtp0S9DeNL
+	 9WV0kW0fsl9Y5oDy9pcrY4I1VQN3gelFsB7kFbv1NNED6uyUayADriNhvGFpreWTPd2ti
+	 R1jaVC770eTvmr3C8N4Rw79DnraXvj1zQ9HvtUcmF7vUrliRwJhu0aExM0Kx2MAxlqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=piPNO17L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ej9O2xcG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58890606A31C;
-	Wed, 18 Nov 2026 17:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2250F606A334;
+	Wed, 18 Nov 2026 17:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=piPNO17L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A5D1F000C5;
-	Wed, 18 Nov 2026 17:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ej9O2xcG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6E71F000C4;
+	Wed, 18 Nov 2026 17:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022411;
-	bh=USsHGOUXgmPoPus5b+8X/5hj8YapIr0cpFb2Iua+laI=;
+	s=korg; t=1795022414;
+	bh=gqzfwKFmGDEg/UwYdbrnk/gTg5mJsRDEqhsUgxgLZ3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=piPNO17LlTHDPnGZEVakwirdsQ9+Ix6As8EE3J5bPIouOtZbfsh7GKRaW4H2nkjl9
-	 ECeB7eFp4U8H46u38chpUMGXYwrJsVsZ3f8HeOqlDpKMdd+JXN/yKbzeEn8BzdlTLL
-	 5aj7XZ+PntJMQHlCgzLxZ73t8SGL6dNZf4hGDe3Y=
+	b=ej9O2xcGXZZlWQ+4R3nY4kMl2MQCHMFVTexToiqFTv3M4/nXQHHVmxYQ267/AJuWy
+	 8YllFhg3QOB6OlnOkyDqranpYAmRk/4u2aQvehWVNdfWrmUVx/0Vk6Onte0E7F9yHz
+	 tXCfDxb5BN8GFjAMKkk7X04XJPIOazs5DNxADdPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>
-Subject: [PATCH 7.3 2651/2651] drm/panfrost: Fix race when restoring reset state in perfcnt
-Date: Wed, 18 Nov 2026 16:04:51 +0100
-Message-ID: <20261118150419.483074470@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2625/2651] loopback: use eth_type_trans_careful()
+Date: Wed, 18 Nov 2026 16:04:25 +0100
+Message-ID: <20261118150418.693185256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,57 +66,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-commit a947f57843f1139821c6f9f94ebe899574e6636e upstream.
+[ Upstream commit 093a28998374f4007ffe67cc661f8192c1b062a9 ]
 
-struct panfrost_perfcnt::state should always be updated atomically, both
-in the dump ioctl and the reset sequence.
+tc egress actions can leave an skb with fewer than ETH_HLEN bytes in
+its linear part. loopback_xmit() then crashes in eth_type_trans():
 
-Fixes: 9944dd07f3cf ("drm/panfrost: Fix races between perfcnt and reset sequence")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20261104-panfrost-reset-races-fixes-v3-2-09868a88c351@collabora.com
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  tc qdisc add dev lo clsact
+  tc filter add dev lo egress matchall action vlan pop_eth
+  # AF_PACKET SOCK_RAW: eth / eth / 8192 bytes of payload
+
+  kernel BUG at include/linux/skbuff.h:2839!
+  RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
+  Call Trace:
+   loopback_xmit (drivers/net/loopback.c:87)
+   dev_hard_start_xmit (include/linux/netdevice.h:5455 include/linux/netdevice.h:5464 net/core/dev.c:4057 net/core/dev.c:4073)
+   __dev_queue_xmit (net/core/dev.c:5066)
+   packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+
+The same happens with "action ife decode" on lo egress.
+
+Use eth_type_trans_careful(), and drop the packet if the Ethernet
+header can not be pulled.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Vega <vega@nebusec.ai>
+Link: https://lore.kernel.org/netdev/20261005052249.1914367-2-weir@nebusec.ai/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028122703.2093730-3-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_perfcnt.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/loopback.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-@@ -142,18 +142,17 @@ static int panfrost_perfcnt_dump_locked(
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index 1fb6ce6843ade..6d16d6040401d 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -70,6 +70,7 @@ EXPORT_SYMBOL(blackhole_netdev);
+ static netdev_tx_t loopback_xmit(struct sk_buff *skb,
+ 				 struct net_device *dev)
+ {
++	enum skb_drop_reason reason;
+ 	int len;
+ 
+ 	skb_tx_timestamp(skb);
+@@ -84,7 +85,12 @@ static netdev_tx_t loopback_xmit(struct sk_buff *skb,
  	 */
- 	ret = wait_for_completion_interruptible_timeout(&pfdev->perfcnt->dump_comp,
- 							msecs_to_jiffies(1000));
--
- 	if (!ret)
- 		ret = -ETIMEDOUT;
+ 	skb_dst_force(skb);
  
--	/* We need to restore perfcnt state so the next successful dump can relay it to UM */
--	if (ret < 0) {
--		perfcnt->state |= *state;
--		*state = 0;
--		return ret;
--	}
--
- 	scoped_guard(rwsem_read, &pfdev->reset.lock) {
-+		/* Restore perfcnt state so the next successful dump can relay it to UM */
-+		if (ret < 0) {
-+			perfcnt->state |= *state;
-+			*state = 0;
-+			return ret;
-+		}
-+
- 		*state |= perfcnt->state;
+-	skb->protocol = eth_type_trans(skb, dev);
++	reason = eth_type_trans_careful(skb, dev);
++	if (unlikely(reason)) {
++		dev_core_stats_tx_dropped_inc(dev);
++		kfree_skb_reason(skb, reason);
++		return NETDEV_TX_OK;
++	}
  
- 		/* UM must re-enable their session before requesting new dumps. */
+ 	len = skb->len;
+ 	if (likely(__netif_rx(skb) == NET_RX_SUCCESS))
+-- 
+2.53.0
+
 
 
