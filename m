@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030593;
-	b=GXjKLKgUpkR00Polpkepvg6HirXCsO2ieIEFZI3MdKBO+IYyqFgmm7KX7YMo9ZAeQNVP
-	 Uofrx2c7G8uQypF0QgR7vgRDQxBPJfrWBXKDl01QcQOXDqOLdtc0kK0eUBpWL8kGoSAO6
-	 vY5RTf18Sf4QkC9J32QtqQnHoNAVVn7xMxGCjVy18W9sovpfeHabAgw02cWz0srRyxSN8
-	 H18iy7sfxpj0hXeVYvq9G2OHcGlfvwKLtwyD1ue7VtJik44m3N2TrFLNSE4fAnGnTGEGB
-	 4vRcIUmShz/l/cL2KNZZDz7nz4t1jj3wH9z0AQjifdIDaCu996i1+ZDwANK1bChrzqA==
+	t=1795030596;
+	b=PfxfxF/kSYgGEOR1etBhUNVlriYLeZpSuFlgHAoVMNR5Vk7o6gBV90AndVEj5xkGjUWm
+	 vnoxjfl2HVIruqSAohTWQ3UZS6Z9M1YWg3WawbVJYBx06jTGcJLZ0gLS/bxdxrjnMoICr
+	 w3XWLCM/OtAM8B51rneqMXuBALGXzgpuzpjb8LirSxkYQuTtStv4fZRlb6RXpECkSG9MY
+	 Zheaa8QyhoYR4LjqKvkIAL81LHbVfm8vRG6M4hvvZPuOPULO0SPfxzWgZ9K5KvsMTDt4g
+	 fcsy6M18GIhjpR2WiMmRJRaAbVlalS1L4tLe/b4idxIXvNbpZ6qhFS8iOiII5wRVrcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XQfhNkangLb4rW59s91MO79XLaU0dscs6y4AA985/pY=;
-	b=TGk2CaKa6gDUxWwi373AA+qENTP415i6e9k6nLiSOxMn5hnSu8Wb35K58+uh0qEXcTZb
-	 yN6SP14Z2btBFr4FzKQG3vS5MgehGkEj5guOR2ym/TLWsJxDp8s52RX+2bHlTVKP6XUY5
-	 Ux0jScn4C5eIy6C4z1dzhR5dMOB3cIZcWk6OfKna0hfzJYFBnK4lhcRQJW+glE4gQiVQZ
-	 O3gEtbm1x8DZIf0U4A5nUgDeevxAniVrfcf2R89tEAo5qftErSBzO78QrjVmnhvOiz1/A
-	 FzysEvbOm+vhk1HxhpUGTAdsWrZlHEkpXVUYmWXLQJq+lJGi797SmDoBxawNkVeG/kQ==
+	bh=ZWa05qOJTMQP4bl56WKF3GqK0uIImx85QGxSKbD46Zo=;
+	b=hi4ktoSw6UmBnDMhbxH7xwgzWSuI7xG3LAIJx6On1mQRhfvzz7pntqHajxW9w20J/bsT
+	 eFXSaWhcwUn/Clp2yMwENXEQECwSD9SmTgoQucADCfEW6iiIaOwy2YsCUfTP3h7Mmqinm
+	 Slurmvng7wDsDiis97pS/G5olLaPzk4pzM1qsinkmkWIB04QTM0R7S49ftNCSoUKm614c
+	 WqthiE5Nm6LDEjHd0KnpNLvHRBFYZidxN4PFsa2nxJqQS0pKWIZNUqf71AxnfAWeDVzuI
+	 3JOKlkfjXpbihS14zhhCpupkkQFJBKazhdW06iV2xegmD8+DDpXBwYu9TqiZt9KW1EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQc4fOmp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHrBdLa8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF60606F269;
-	Wed, 18 Nov 2026 19:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C2A60A5BC2;
+	Wed, 18 Nov 2026 19:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQc4fOmp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6121F000C4;
-	Wed, 18 Nov 2026 19:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHrBdLa8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D774B1F000C7;
+	Wed, 18 Nov 2026 19:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030593;
-	bh=XQfhNkangLb4rW59s91MO79XLaU0dscs6y4AA985/pY=;
+	s=korg; t=1795030596;
+	bh=ZWa05qOJTMQP4bl56WKF3GqK0uIImx85QGxSKbD46Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AQc4fOmpi1Y5OF1MT8RK9FzpMRIcjh4pd/k/ZzqakJocZBxuYfHhwKIlrSDy1Dgod
-	 78JqTS9sILy4X1ba5uAXCal8agEcOSQJrNQG5tFjmOr+bCRSAISOoiCVmMdVW605QR
-	 PqcQWAAklKyWUByKNnQ/S0t5z6pUPjCihy5AXV30=
+	b=WHrBdLa8JlRMO54I1AvMZ3iQ5RxJc1kQv7EkXm+pnn1eygJSPB8lziPyHLflEdGE3
+	 kiSc+4Suw9ixlI0sp0IQTtfCyZfc8TGIR6Eskccl/wuSCQLWnMRlf+XGsRmO4JoT5w
+	 6Gg0lQ7sLykRDUfsGB3kUw1JM5q82PBfFdhd+LlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0761/1756] isofs: return long Joliet names whole
-Date: Wed, 18 Nov 2026 15:48:08 +0100
-Message-ID: <20261118150039.933363266@linuxfoundation.org>
+Subject: [PATCH 6.12 0744/1756] perf thread_map: Add thread_map__tgid()
+Date: Wed, 18 Nov 2026 15:47:51 +0100
+Message-ID: <20261118150039.213563738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,197 +69,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b8253bcf92d6365b20eea6465f5a93c9fc4aa029 ]
+[ Upstream commit 1fdf657871b9240edcaaf1d15caaac5b78a84317 ]
 
-get_joliet_filename() writes into a buffer allocated by its caller but
-is not told how big that buffer is.  It hardcodes PAGE_SIZE as the
-output limit for utf16s_to_utf8s() and gives uni16_to_x8() no limit at
-all.  PAGE_SIZE was never the right bound.  Before commit b2eb2e288604
-("isofs: Drop support of directory entries straddling blocks") both
-callers allocated a page, but only its first 1024 bytes were for the
-name, the rest holding a copy of a directory record that straddled a
-block.  It could not overflow only because a directory record holds at
-most 222 bytes of name (255 bytes, 33 of them fixed), which no converter
-expands beyond 1024 bytes.
+bpf-filter reads the tgid of each thread in a thread map from /proc, to
+key its BPF map by process, and perf trace is about to do the same. Move
+convert_to_tgid() to thread_map.c as thread_map__tgid(), taking the
+thread map and index both users have.
 
-It also keeps the converted length in an unsigned char.  222 bytes of
-name are 111 UTF-16 units, and the UTF-8 converter, used for
-iocharset=utf8 and when CONFIG_NLS_DEFAULT is "utf8", needs three bytes
-for each CJK, Thai or Devanagari character, so such a name can take up
-to 333 bytes.  Past 255 the length wraps.  readdir then reports a short
-name that usually ends in the middle of a UTF-8 sequence, and lookup
-finds the file only under that name, never under its real one; a name
-that wraps to exactly 0 bytes is not listed at all.
+While moving it, fix two bugs. Match Tgid: at the start of a line, as a
+task can set its comm, shown on the Name: line before it, to contain
+"Tgid: <n>". And check the character after the number before freeing the
+buffer it points into, rather than after.
 
-Such names are out of spec, since Joliet allows 64 units, but common
-tools write them: PowerISO 9.5 and UltraISO 9.76 both keep up to 110
-units by default.  Windows, for which Joliet was made, returns them
-whole, including 111-unit names in records that leave out the padding
-byte.
-
-Return them whole here too.  Pass the buffer size down and have both
-converters respect it.  utf16s_to_utf8s() stops before a character that
-does not fit, and uni16_to_x8() now hands uni2char() the space that
-actually remains and stops on -ENAMETOOLONG, as fs/hfsplus/unicode.c
-does.  Both callers pass JOLIET_NAME_MAX + 1, room for 111 units at
-three bytes each plus the terminator; no character set needs more than
-three bytes for a UTF-16 unit, and isofs_dir_record_valid() already
-rejects a record whose name_len claims more than the record holds, so no
-name is cut.  Make the length an int, which is what both converters
-return.
-
-These names are longer than NAME_MAX.  POSIX lets the limit vary by
-filesystem, reported by pathconf(_PC_NAME_MAX), and the VFS limits a
-name only by PATH_MAX (verify_dirent_name() in fs/readdir.c).
-
-vfat, exfat, hfsplus and ntfs3 already return names of up to 255 UTF-16
-units, 765 bytes of UTF-8, and such names break the same things there:
-copying the file to a filesystem with a 255-byte limit, such as ext4 or
-tmpfs, fails with ENAMETOOLONG, and cp, tar, rsync and Python's shutil
-report that file and carry on with the rest, so the copy is incomplete
-but says so.  glibc's readdir() returns the names, but the deprecated
-readdir_r() skips them and fails with ENAMETOOLONG, and an inotify
-reader with the buffer size inotify(7) suggests gets EINVAL.  In the
-kernel, fanotify reports events on such a file without its name and
-warns once in fanotify_info_copy_name(), and a directory with such a
-name cannot be reconnected from a file handle, because the generic
-get_name() in fs/exportfs, which isofs uses, skips names longer than
-NAME_MAX.  Cutting at NAME_MAX would avoid these, but would list names
-that Windows does not show and that can coincide within a directory.
-
-Every name of at most 255 bytes is returned exactly as before.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/20260926042916.3277409-2-matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: eb1693b1150d4b99 ("perf bpf-filter: Split per-task filter use case")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/dir.c    |  4 +++-
- fs/isofs/isofs.h  | 11 ++++++++++-
- fs/isofs/joliet.c | 27 ++++++++++++++++++++-------
- fs/isofs/namei.c  |  3 ++-
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ tools/perf/util/bpf-filter.c | 29 ++---------------------------
+ tools/perf/util/thread_map.c | 26 ++++++++++++++++++++++++++
+ tools/perf/util/thread_map.h |  1 +
+ 3 files changed, 29 insertions(+), 27 deletions(-)
 
-diff --git a/fs/isofs/dir.c b/fs/isofs/dir.c
-index 09df40b612fbf..f55528bb376af 100644
---- a/fs/isofs/dir.c
-+++ b/fs/isofs/dir.c
-@@ -215,7 +215,9 @@ static int do_isofs_readdir(struct inode *inode, struct file *file,
- 		if (map) {
- #ifdef CONFIG_JOLIET
- 			if (sbi->s_joliet_level) {
--				len = get_joliet_filename(de, tmpname, inode);
-+				len = get_joliet_filename(de, tmpname,
-+							  JOLIET_NAME_MAX + 1,
-+							  inode);
- 				p = tmpname;
- 			} else
- #endif
-diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
-index a36a634797435..0070c163b7250 100644
---- a/fs/isofs/isofs.h
-+++ b/fs/isofs/isofs.h
-@@ -118,7 +118,16 @@ extern int parse_rock_ridge_inode(struct iso_directory_record *, struct inode *,
- extern int get_rock_ridge_filename(struct iso_directory_record *, char *, struct inode *);
- extern int isofs_name_translate(struct iso_directory_record *, char *, struct inode *);
+diff --git a/tools/perf/util/bpf-filter.c b/tools/perf/util/bpf-filter.c
+index 535290000c447..3faa67206bc69 100644
+--- a/tools/perf/util/bpf-filter.c
++++ b/tools/perf/util/bpf-filter.c
+@@ -55,6 +55,7 @@
+ #include "util/debug.h"
+ #include "util/evsel.h"
+ #include "util/target.h"
++#include "util/thread_map.h"
+ #include "util/bpf-utils.h"
  
--int get_joliet_filename(struct iso_directory_record *, unsigned char *, struct inode *);
-+/*
-+ * The longest name the Joliet converter returns, in bytes.  A directory
-+ * record is at most 255 bytes long, which leaves room for 111 UTF-16 units
-+ * of name, and no character set needs more than three bytes for one unit.
-+ */
-+#define JOLIET_NAME_MAX \
-+	((255 - sizeof(struct iso_directory_record)) / 2 * 3)
-+
-+int get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
-+			int outsize, struct inode *inode);
- int get_acorn_filename(struct iso_directory_record *, char *, struct inode *);
- 
- extern struct dentry *isofs_lookup(struct inode *, struct dentry *, unsigned int flags);
-diff --git a/fs/isofs/joliet.c b/fs/isofs/joliet.c
-index c0f04a1e7f695..d37e67c5e36f4 100644
---- a/fs/isofs/joliet.c
-+++ b/fs/isofs/joliet.c
-@@ -15,19 +15,26 @@
-  * Convert Unicode 16 to UTF-8 or ASCII.
-  */
- static int
--uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
-+uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls,
-+	    int outsize)
- {
- 	__be16 *ip, ch;
--	unsigned char *op;
-+	unsigned char *op, *end;
- 
- 	ip = uni;
- 	op = ascii;
-+	end = ascii + outsize - 1;	/* leave room for the terminator */
- 
- 	while ((ch = get_unaligned(ip)) && len) {
- 		int llen;
--		llen = nls->uni2char(be16_to_cpu(ch), op, NLS_MAX_CHARSET_SIZE);
-+
-+		if (op >= end)
-+			break;
-+		llen = nls->uni2char(be16_to_cpu(ch), op, end - op);
- 		if (llen > 0)
- 			op += llen;
-+		else if (llen == -ENAMETOOLONG)
-+			break;
- 		else
- 			*op++ = '?';
- 		ip++;
-@@ -38,21 +45,27 @@ uni16_to_x8(unsigned char *ascii, __be16 *uni, int len, struct nls_table *nls)
- 	return (op - ascii);
+ #include "util/bpf-filter.h"
+@@ -201,31 +202,6 @@ static int get_filter_entries(struct evsel *evsel, struct perf_bpf_filter_entry
+ 	return 0;
  }
  
-+/*
-+ * Convert the Joliet name of @de into @outname, a buffer of @outsize bytes.
-+ * The result is at most @outsize - 1 bytes long; a longer name is cut at a
-+ * character boundary.
-+ */
- int
--get_joliet_filename(struct iso_directory_record * de, unsigned char *outname, struct inode * inode)
-+get_joliet_filename(struct iso_directory_record *de, unsigned char *outname,
-+		    int outsize, struct inode *inode)
- {
- 	struct nls_table *nls;
--	unsigned char len = 0;
-+	int len = 0;
+-static int convert_to_tgid(int tid)
+-{
+-	char path[128];
+-	char *buf, *p, *q;
+-	int tgid;
+-	size_t len;
+-
+-	scnprintf(path, sizeof(path), "%d/status", tid);
+-	if (procfs__read_str(path, &buf, &len) < 0)
+-		return -1;
+-
+-	p = strstr(buf, "Tgid:");
+-	if (p == NULL) {
+-		free(buf);
+-		return -1;
+-	}
+-
+-	tgid = strtol(p + 6, &q, 0);
+-	free(buf);
+-	if (*q != '\n')
+-		return -1;
+-
+-	return tgid;
+-}
+-
+ /*
+  * The event might be closed already so we cannot get the list of ids using FD
+  * like in create_event_hash() below, let's iterate the event_hash map and
+@@ -406,14 +382,13 @@ static int create_idx_hash(struct evsel *evsel, struct perf_bpf_filter_entry *en
+ 	last = -1;
+ 	nr = perf_thread_map__nr(threads);
+ 	for (int i = 0; i < nr; i++) {
+-		int pid = perf_thread_map__pid(threads, i);
+ 		int tgid;
+ 		struct idx_hash_key key = {
+ 			.evt_id = event_id,
+ 		};
  
- 	nls = ISOFS_SB(inode->i_sb)->s_nls_iocharset;
- 
- 	if (!nls) {
- 		len = utf16s_to_utf8s((const wchar_t *) de->name,
- 				de->name_len[0] >> 1, UTF16_BIG_ENDIAN,
--				outname, PAGE_SIZE);
-+				outname, outsize - 1);
- 	} else {
- 		len = uni16_to_x8(outname, (__be16 *) de->name,
--				de->name_len[0] >> 1, nls);
-+				de->name_len[0] >> 1, nls, outsize);
- 	}
- 	if ((len > 2) && (outname[len-2] == ';') && (outname[len-1] == '1'))
- 		len -= 2;
-diff --git a/fs/isofs/namei.c b/fs/isofs/namei.c
-index 58f80e1b3ac0d..62c2f15fc6004 100644
---- a/fs/isofs/namei.c
-+++ b/fs/isofs/namei.c
-@@ -112,7 +112,8 @@ isofs_find_entry(struct inode *dir, struct dentry *dentry,
- 			dpnt = tmpname;
- #ifdef CONFIG_JOLIET
- 		} else if (sbi->s_joliet_level) {
--			dlen = get_joliet_filename(de, tmpname, dir);
-+			dlen = get_joliet_filename(de, tmpname,
-+						   JOLIET_NAME_MAX + 1, dir);
- 			dpnt = tmpname;
- #endif
- 		} else if (sbi->s_mapping == 'a') {
+ 		/* it actually needs tgid, let's get tgid from /proc. */
+-		tgid = convert_to_tgid(pid);
++		tgid = thread_map__tgid(threads, i);
+ 		if (tgid < 0) {
+ 			/* the thread may be dead, ignore. */
+ 			continue;
+diff --git a/tools/perf/util/thread_map.c b/tools/perf/util/thread_map.c
+index b5f12390c3558..b3a188bcbab4f 100644
+--- a/tools/perf/util/thread_map.c
++++ b/tools/perf/util/thread_map.c
+@@ -427,3 +427,29 @@ int thread_map__remove(struct perf_thread_map *threads, int idx)
+ 	threads->nr--;
+ 	return 0;
+ }
++
++/* The tgid of the thread at idx, read from /proc, or -1 if it has exited. */
++pid_t thread_map__tgid(struct perf_thread_map *threads, int idx)
++{
++	char path[128];
++	char *buf, *p, *q;
++	pid_t tgid;
++	size_t len;
++
++	snprintf(path, sizeof(path), "%d/status", perf_thread_map__pid(threads, idx));
++	if (procfs__read_str(path, &buf, &len) < 0)
++		return -1;
++
++	/* From a line start, as the Name: line before it can contain "Tgid:". */
++	p = strstr(buf, "\nTgid:");
++	if (p == NULL) {
++		free(buf);
++		return -1;
++	}
++
++	tgid = strtol(p + 6, &q, 0);
++	if (*q != '\n')
++		tgid = -1;
++	free(buf);
++	return tgid;
++}
+diff --git a/tools/perf/util/thread_map.h b/tools/perf/util/thread_map.h
+index 00ec05fc1656d..39592d8f53daa 100644
+--- a/tools/perf/util/thread_map.h
++++ b/tools/perf/util/thread_map.h
+@@ -26,4 +26,5 @@ size_t thread_map__fprintf(struct perf_thread_map *threads, FILE *fp);
+ void thread_map__read_comms(struct perf_thread_map *threads);
+ bool thread_map__has(struct perf_thread_map *threads, pid_t pid);
+ int thread_map__remove(struct perf_thread_map *threads, int idx);
++pid_t thread_map__tgid(struct perf_thread_map *threads, int idx);
+ #endif	/* __PERF_THREAD_MAP_H */
 -- 
 2.53.0
 
