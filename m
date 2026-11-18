@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034529;
-	b=rhUeNTmPH6ycOuSr/Nhqx/b2QFKX4hsjVGA4mi63rSXWjO995Oj2qnlGQ8PmD5nXOCGw
-	 95vdiwInfX3bzOj2xW3vzaErxyYmvowwGLl7PZOWIKz0dIrQhlT2VQ/8mq9N5xS3CL8Nh
-	 O0rVk8EfZv7kkZepbRwEgnFjJV/vwdC1lS6d1JrYhZtUXCcD4V0MVSIDIt5DADacqPfOY
-	 ZbIw6Kjjsa02MQNW5Epdzd3R10faGAI7cPLCIgnF+u7UquUtEhVHk5P0F00BhI7IupzyE
-	 yAlaC0K5eNAHtT5aCjRrrPI4HgL9pKpmgX/3SVrDyScjyWT1BDn928KP/BAY/J24hWg==
+	t=1795034532;
+	b=oDbRIiXVhmm3mwASThpbxEl0QdjvEYAHE4POYGzkhANWnkTCuPtSx+ztAufLy1KHHl7b
+	 7HMDkxVtK3qUORy7jFlqNYwUrBvlpJr8heZoJV9XXEv0UDeXKPDWnz047ubfCXyq1EKdz
+	 b5Rf/WoN2ZpJlAaYhT9caVA5dw1qkopHkH/cszgaehSxLBlqkb5KKR79SiK651bjID16O
+	 G96S6xRxuYcxTswqmk0UPkkIDCTeQLBHXnBcnc8epUPl/4nBLp5NCw49pJQNkXpr7bVcF
+	 psyyWxjp0l+FiiH6aWlyw4wrYAN3DFighr3SGUF8y6tRUxi58Wi3qqyf/+lWKkJKCaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=be/+nvS3vIjdv7z8eRJN+2iFfflgHpHd3hOgVB3lhKU=;
-	b=gRhnKVnsQHSuRSdYpVp2bZX0qXbNiPKBogJY3GTy4728M2ItWXD6dJ6FJgVTn1QRSK+V
-	 QRL7HovZXATful0d9+AUSDfWY8EsDR1z5ga6TEwueNw0oEq6JH7SKhFHbXBna203Jfw5o
-	 MGl9dNKOm3FM/cJn4SFFcPw0HXkaRiC3rgYmkZJzQVWZLant50QwHXjnPCJTzhDJqssqy
-	 4WWIwmTplomVsZ1m7qZdfFFAim8iSqezLO94DApE3vV8JOh/7Ya6Yxb3zkbKA9IdlQ2QH
-	 1anv1wa8Bq0JnQfZ7toDSAKZSGWd+A17O886kOnnGTZyTd95itrzJ3BrfI7mcgpasUA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=eFaeCslYaIG6bMAaDp+Mp5hKHyRjfn8HhdcF6ROJdww=;
+	b=Qprnc4r9xM+GPNystpwyggMOly+ZnxyajWT6uzUEShUHovntwveyF92VICMjX8EWxys5
+	 J7ZkPC+RN/Fu4BF2kGM/kpPjM8prlhLBY6aLMfZh2rOM+s8oZyAmpnrD7qDoJLLaakq1d
+	 mSflTSdHAzuUL7PuGXIulQYU1yjJc2uLrmRA1hJYB2x3ZIKrAHMTYRIlJRGjyJNE1myJ2
+	 oacQZFhg0nMhbW7Wy3R0yPcEhkpXwogRkaqRlCUKMKFv74atTM7qVWjl/6+g6zrPLFRgZ
+	 6jMX1WEq5TKpJjHTntiQD4xtkxgk2H83e3zPYCfmZOL6b9DNEjxoN2wcmyXmCtCvb4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znJaCJ9V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkcxj8Bd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54272606A320;
-	Wed, 18 Nov 2026 20:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1109E606A32A;
+	Wed, 18 Nov 2026 20:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znJaCJ9V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4D11F000C4;
-	Wed, 18 Nov 2026 20:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkcxj8Bd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6615F1F000C7;
+	Wed, 18 Nov 2026 20:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034529;
-	bh=be/+nvS3vIjdv7z8eRJN+2iFfflgHpHd3hOgVB3lhKU=;
+	s=korg; t=1795034531;
+	bh=eFaeCslYaIG6bMAaDp+Mp5hKHyRjfn8HhdcF6ROJdww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znJaCJ9VBKx93nnl8jeUBwufKumLJBNNUKjxGm0lXZnk41dM3jqvQR2xWJhwnEJqH
-	 F+ZfZW6sKOuXlwC4J4frhTNwspvn34gkmZWg3cel5aMoqkFBJsU24VZnNk2Um6aEgW
-	 TXBrjRKOLemshRUUMXP26VgqFr4VmsjSek3gnXUE=
+	b=nkcxj8Bd8s3PLrDUeZLooHvpFT4szOP18Vj6Ygr2yMO4QZQiY/vsj8Z+nlLE6DP5/
+	 8yoQghNKHOJH7NbbT56pOvSX2lO6MEFl5e+cRFN4IFdsQYmXLaaVx8/T6XW5HiS3l0
+	 fOHqil2nQRpXzN3wkamjwGMJVOVzfwYNN0LwxAk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0402/3318] module: validate string table section types
-Date: Wed, 18 Nov 2026 15:17:04 +0100
-Message-ID: <20261118150328.486120286@linuxfoundation.org>
+Subject: [PATCH 6.6 0403/3318] scsi: qla2xxx: Clamp max_npiv_vports to VP_CTRL bitmap capacity
+Date: Wed, 18 Nov 2026 15:17:05 +0100
+Message-ID: <20261118150328.523719966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,87 +63,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thiébaud Weksteen <tweek@google.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 9a5ff45689329835f874cefe5174e577d141d423 ]
+[ Upstream commit 2ac6a829843cf3df522d19e091276109b94c4c7a ]
 
-In elf_validity_cache_sechdrs, section sizes and offsets are validated,
-unless the section type is SHT_NULL or SHT_NOBITS.
+ha->max_npiv_vports is taken from firmware (mcp->mb[11]) and only
+constrained so that (max_npiv_vports + 1) is a multiple of
+MIN_MULTI_ID_FABRIC, which permits values of 63, 127, 191 and 255.
+NPIV vports are then allocated up to that count.
 
-Later, elf_validity_cache_secstrings and elf_validity_cache_index_str
-access the section name table (.shstrtab) and symbol string table
-(.strtab) headers without first ensuring that their types are
-SHT_STRTAB. If a section type is SHT_NULL or SHT_NOBITS, sh_offset has
-not been validated and may reference out-of-bounds memory when
-dereferenced in elf_validity_cache_secstrings or
-elf_validity_cache_strtab.
+VP enable uses the VP_CONFIG IOCB, which addresses a vport through a
+plain vp_index byte, so a vp_index beyond 128 is enabled without issue.
+VP disable, however, uses the VP_CTRL IOCB, which selects target vports
+through the fixed 128-bit vp_idx_map bitmap. qla24xx_control_vp()
+rejects a vp_index past that bitmap and the IOCB builder cannot set a bit
+beyond 127, yet qla24xx_vport_delete() frees the local state regardless.
+A vport with vp_index > 128 can therefore be created and enabled but
+never disabled, leaving it permanently active in firmware: a resource
+leak.
 
-Validate that both string section headers are of type SHT_STRTAB before
-caching them.
+Cap ha->max_npiv_vports at init to the vp_idx_map capacity so such
+vports are never created. This collapses 191/255 to 127 (still
+modulo-valid) and leaves the real-world 63/127 cases unaffected.
 
+Fixes: 4d0ea24769c8 ("[SCSI] qla2xxx: Retrieve max-NPIV support capabilities from FW.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thiébaud Weksteen <tweek@google.com>
-Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-20-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_fw.h   |  4 ++++
+ drivers/scsi/qla2xxx/qla_init.c | 13 +++++++++++++
+ drivers/scsi/qla2xxx/qla_mid.c  |  2 +-
+ 3 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 0127adf7d7d5a..b0f4203d6f402 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -1819,6 +1819,7 @@ static int elf_validity_cache_sechdrs(struct load_info *info)
-  * Specifically checks:
-  *
-  * * Section name table index is inbounds of section headers
-+ * * Section name table type is SHT_STRTAB
-  * * Section name table is not empty
-  * * Section name table is NUL terminated
-  * * All section name offsets are inbounds of the section
-@@ -1846,6 +1847,11 @@ static int elf_validity_cache_secstrings(struct load_info *info)
+diff --git a/drivers/scsi/qla2xxx/qla_fw.h b/drivers/scsi/qla2xxx/qla_fw.h
+index f307beed9d29d..e7ded95afb9a8 100644
+--- a/drivers/scsi/qla2xxx/qla_fw.h
++++ b/drivers/scsi/qla2xxx/qla_fw.h
+@@ -1442,6 +1442,10 @@ struct vp_ctrl_entry_24xx {
+ 	uint8_t reserved_5[24];
+ };
  
- 	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
- 
-+	if (strhdr->sh_type != SHT_STRTAB) {
-+		pr_err("Invalid ELF section name table type: %u\n", strhdr->sh_type);
-+		return -ENOEXEC;
-+	}
++/* vp_idx_map is a 128-bit (16-byte) bitmap selecting target VPs. */
++#define VP_CTRL_IDX_MAP_BITS \
++	(sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
 +
- 	/*
- 	 * The section name table must be NUL-terminated, as required
- 	 * by the spec. This makes strcmp and pr_* calls that access
-@@ -2012,7 +2018,7 @@ static int elf_validity_cache_index_sym(struct load_info *info)
-  *        Must have &load_info->index.sym populated.
-  *
-  * Looks at the symbol table's associated string table, makes sure it is
-- * in-bounds, and caches it.
-+ * in-bounds and of type SHT_STRTAB, and caches it.
-  *
-  * Return: %0 if valid, %-ENOEXEC on failure.
+ /*
+  * Modify Virtual Port Configuration IOCB
   */
-@@ -2026,6 +2032,12 @@ static int elf_validity_cache_index_str(struct load_info *info)
- 		return -ENOEXEC;
- 	}
- 
-+	if (info->sechdrs[str_idx].sh_type != SHT_STRTAB) {
-+		pr_err("Invalid ELF symbol string table type: %u\n",
-+		       info->sechdrs[str_idx].sh_type);
-+		return -ENOEXEC;
-+	}
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 914b5993d110f..374dba3216ad5 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -4408,6 +4408,19 @@ qla2x00_setup_chip(scsi_qla_host_t *vha)
+ 					    MIN_MULTI_ID_FABRIC))
+ 						ha->max_npiv_vports =
+ 						    MIN_MULTI_ID_FABRIC - 1;
 +
- 	info->index.str = str_idx;
- 	return 0;
- }
++					/*
++					 * The VP_CTRL IOCB selects target VPs
++					 * through the fixed vp_idx_map bitmap,
++					 * so a vp_index beyond it can be enabled
++					 * via VP_CONFIG but never disabled via
++					 * VP_CTRL, leaking the VP.  Cap the count
++					 * to the bitmap capacity.
++					 */
++					if (ha->max_npiv_vports >=
++					    VP_CTRL_IDX_MAP_BITS)
++						ha->max_npiv_vports =
++						    VP_CTRL_IDX_MAP_BITS - 1;
+ 				}
+ 				qla2x00_get_resource_cnts(vha);
+ 				qla_init_iocb_limit(vha);
+diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
+index 86c0217d1763e..27ca16a7f1aab 100644
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -967,7 +967,7 @@ int qla24xx_control_vp(scsi_qla_host_t *vha, int cmd)
+ 	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
+ 	 * if firmware advertises more NPIV vports.
+ 	 */
+-	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
++	if (vp_index > VP_CTRL_IDX_MAP_BITS)
+ 		return QLA_PARAMETER_ERROR;
+ 
+ 	/* ref: INIT */
 -- 
 2.53.0
 
