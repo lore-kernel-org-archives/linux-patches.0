@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020499;
-	b=oExWcrcDMa5VahkXwSHuRKhWkOcr63WZXJt9xVimxobDtkpdBkqg/4SAKisHvCE9Pb8N
-	 yHHp0SysrvyniKxsUe1bAARFUCIIJUI+mvAgv1WBgm1sYLL6QnaOS/+q1wAWWbUHe5b1i
-	 EtTQ1IajkK6sZBdshadeSN5x9tUwM6nVOFkB0pJpMlPUKytH/O8nw5m7sLGzrY5KhbRzi
-	 h5TNBh+7gbO/rjBMtz+xaRwFJ+TLmeShUguSmPiTt3Le8SGyUfQN3Zqh/NQJYZpYRJ/R1
-	 znN7NkmegcdwVL/58P0qbzZiY1m2KnUPXlkjG5cFVA+0MgeVUBy2yxGA6Lxg57qitOw==
+	t=1795020502;
+	b=gQSAqUrIE6lcwC9op9Xw8XZ6bKubHg2rp7dIc/OfNmGthaqHoK/ulbr/3k/W35qix8E0
+	 8CZ5WcoQ4udLpQcip19rH4FpR2NbbWR3WgP0FYKnP6C9d6j2WEKfcIH6NBx5hP6rquaOk
+	 FO1ztU/2B2cV0QpPO0f0EiasLu9lWfC2S1lODTg6GHXc14FMDVwNI2cnH9skB52EWV/0/
+	 LAwfaXwOs76piPZzCireLsgh2mHZKT/tORMXu7PAnOlAS431Vy86Q/u3xI831Shqh1JJK
+	 ucfaSZxt7XkobKXTeaEfmba62GUPupRDnwTA8KImS6lfeh+qeprAZMwGqXr6EYeuqhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AgCMgJBC5VJq/4au6a3SNTaWS865UE7J1sIZw5u6H9Y=;
-	b=Uzz2piiFA4clrxuNF1LBrt1guxm8HG9dN+E2cf1VCX8jvVmzYTLF/UFCh9vzCKNLkqGQ
-	 /i4Q+dJyNzCzDanE6nmce9GlGo37m3asY7NeDtQ6s3qyhnaovVEGFWl6phTydjnmdb9yI
-	 oksdJQhiW4/0BuuPdnHQQsYhgiTvQeHu9sFQi+Vq4sr6myCB6M+KVBEVldHApd2vOOehu
-	 +krHDoqcjcdXvWFRWJCIm/+HTXhK2yOCZ0Gs8SV+8SMQJDj6NEclN7VCTAB/+rt2wJQTm
-	 /AsZoqE+BU2WOEh/2Daz72z2VbMGuxKxQjnjguON96aiSl1rc0eEWQEoyTXlWuVRObQ==
+	bh=0K7vswElxDNgeJgFLawPwu2UwdtMUzGgLVM+FUTPJzw=;
+	b=pnls3wMgVUbQMgNcItBE5Cod5/LkP3Oxb6JR1Fe8xV5po5q3dnRNvehuIXVks+x9iTgP
+	 p/qB9Dd9UCOV40tSAx+hKXkDwD2/ok1Z6DY3TYrfhoNTYkP0Dpn/xIJV1ddXgXKkq4LlY
+	 2EFFaYY2E4tvcwRmV/zCj6TjqvCpj6s2xmE0eq1mog0qA1jdBivDyghTxRUHfq+h1YvWz
+	 jyjT3Wh4tQ/MX3Wqe9eXMBw4WEzAYIpQF33/D4609VToSmzAoeXj8I4pdJQAIatmQbd8W
+	 7lGmKJDaF1QZlnpoIDVbljqksVhkFeVBy5UeOJejrolkyDPX9c6duv4a+iwDUCGmd+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgDWwtXE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gP6Ru+lT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D39606A325;
-	Wed, 18 Nov 2026 16:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99B606A31C;
+	Wed, 18 Nov 2026 16:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgDWwtXE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9341F000C5;
-	Wed, 18 Nov 2026 16:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gP6Ru+lT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B711F000C5;
+	Wed, 18 Nov 2026 16:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020499;
-	bh=AgCMgJBC5VJq/4au6a3SNTaWS865UE7J1sIZw5u6H9Y=;
+	s=korg; t=1795020502;
+	bh=0K7vswElxDNgeJgFLawPwu2UwdtMUzGgLVM+FUTPJzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WgDWwtXEM0xbEnxYH4vRPMuQIsJcFScs0B5EgLyDWy170I41qwLoRBPHC9HTpEM4F
-	 7o5pSvwXNfapInn5ONuNIEwLMbJq7yH+8qkVYF7dtHQIHFOmMBRRW44cwiAvKiNfMt
-	 BsebXaTWdzZHu0nq6Kccu3nuJnHjRDH9XwXetX8E=
+	b=gP6Ru+lT++ybxU1qVdb4eyTaEVDRL/a3k3ntDIzRaC3w7vxslpixBtgkI1Hn5Qpzx
+	 D+u5YTg+Yvguhnjd7LzehRPrAYURsFSIdLReCNwYidtLbeVNgCXtDfgrKztd1zMqoU
+	 qt9m0zcufE6OzBP2x61NvfKVLM52fJrlakqu4H/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	syzbot@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	Yun Lu <luyun@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1966/2651] ext4: fix orig_mlen initialization in ext4_map_blocks()
-Date: Wed, 18 Nov 2026 15:53:26 +0100
-Message-ID: <20261118150357.273498561@linuxfoundation.org>
+Subject: [PATCH 7.3 1975/2651] selftests/bpf: Fix map fd leak in no-BTF wq test
+Date: Wed, 18 Nov 2026 15:53:35 +0100
+Message-ID: <20261118150357.539968024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,45 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Yun Lu <luyun@kylinos.cn>
 
-[ Upstream commit 3ec0eefc07cb9e2bb1193f1fa3d8157302a737f5 ]
+[ Upstream commit d3c9ecb8765d4befbc46ee325c8d76efd523eece ]
 
-Save orig_mlen after clamping map->m_len to INT_MAX. Otherwise, the
-unclamped value may be passed below, bypassing its overflow protection.
+bpf_map__reuse_fd() duplicates the supplied file descriptor instead of
+taking ownership of it. test_failure_map_no_btf() closes the original
+map_fd only when reuse fails, leaking it when reuse succeeds, including
+when the test passes. Destroying the skeleton closes its own descriptor
+but leaves the original descriptor and its map reference alive.
 
-Fixes: 5bb12b1837c0 ("ext4: Add support for EXT4_GET_BLOCKS_QUERY_LEAF_BLOCKS")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20261009103033.2920530-6-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Close map_fd immediately after bpf_map__reuse_fd(), before checking its
+return value, to release the original descriptor on both success and
+failure. The skeleton retains its own descriptor for the subsequent
+program load.
+
+Fixes: bca2b74ea9a8 ("selftests/bpf: Add more bpf_wq tests")
+Reported-by: Jackie Liu <liuyun01@kylinos.cn>
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261013030114.292157-1-luyun_611@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/wq.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 6697c33d3aa33..bd1c14b983768 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -703,7 +703,7 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
- 	struct extent_status es;
- 	int retval;
- 	int ret = 0;
--	unsigned int orig_mlen = map->m_len;
-+	unsigned int orig_mlen;
- #ifdef ES_AGGRESSIVE_TEST
- 	struct ext4_map_blocks orig_map;
+diff --git a/tools/testing/selftests/bpf/prog_tests/wq.c b/tools/testing/selftests/bpf/prog_tests/wq.c
+index 84831eecc935b..97926e35aaf26 100644
+--- a/tools/testing/selftests/bpf/prog_tests/wq.c
++++ b/tools/testing/selftests/bpf/prog_tests/wq.c
+@@ -64,10 +64,9 @@ static void test_failure_map_no_btf(void)
+ 		goto out;
  
-@@ -719,6 +719,7 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
- 	 */
- 	if (unlikely(map->m_len > INT_MAX))
- 		map->m_len = INT_MAX;
-+	orig_mlen = map->m_len;
+ 	err = bpf_map__reuse_fd(skel->maps.array, map_fd);
+-	if (!ASSERT_OK(err, "map reuse fd")) {
+-		close(map_fd);
++	close(map_fd);
++	if (!ASSERT_OK(err, "map reuse fd"))
+ 		goto out;
+-	}
  
- 	/* We can handle the block number less than EXT_MAX_BLOCKS */
- 	if (unlikely(map->m_lblk >= EXT_MAX_BLOCKS))
+ 	insns = bpf_program__insns(skel->progs.test_map_no_btf);
+ 	if (!ASSERT_OK_PTR(insns, "insns ptr"))
 -- 
 2.53.0
 
