@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030347;
-	b=xrdSEY/zQXigmxCXaUjowg+x8ELmBhTdhbAJP+J45e/IEalsGnBfh5gIkPdFrg6tgawU
-	 Qk1Mh6krkzMxI0q7eh/GpXMUq1Z5LfZGWpdijHwfAEGh70f7lPh5iihkoZQ904NxUhm27
-	 /gL55stK0Ul5PH+bvTZb14k3yQZwHNCzaJSti7Asmg2w8atbIf7EmzeJgarq13qI/Xh69
-	 yRqt9Z1tS5vkEH7dNTIvD1s29UxqoG/+oL2BwUCT2m/EXvHCBledREBhiTqpGVeFhGMZB
-	 Cjm3xYPQE5JLx+wQFV2utt2O0t40kNMSUD7h19saVYFNHqTsp/Lx5u4HkoFsHGzuQoA==
+	t=1795030350;
+	b=l0/LGMWiHY7vFB3hyq9WW+CzVnaaM9Acug83W4jo1Nv4UO0oMasXGTfEVUkNJJdA02XR
+	 tfmW77rmjK10DYBWV3TiDLRn9oBhOL5E8JMEnTc8KNmep2At0lCQeV6Ol9NlXg9+3/v/t
+	 uQwNQk5A4Pm41hHca1lz7shK364hx0fQB4YiskPAHrJQ6DGDiIp0kMy+db+HfpRr82Dxo
+	 exsP2Z9/gI9hER5Maz3lG2c3YGQGFntu8DPOGRjUmtYtS1liIcLKixuhn3ho1MZ1Ys/Pp
+	 9siNYsDGpZLz/fsNJVspIVdHq8nkjcHHSis/ypYZP40he8BX8UFA0Quy6TJh8oPjXwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B+kdV32Bt7mhLVEqNDyAI5fN3Uf6v4LD99JLWmw+3L4=;
-	b=BEkw6WF+bACDsJVJ7U1JDaQyFrZ769no0tcuw4QQ5ZIYIApYhU1beuE7xtzbdMVBXgW+
-	 7fjDoAdboq3ipBLsrcBhvFL0yJs+wmhf5ou/gsYwtKLgvN91JbNn5DTDttYBb6mLDJgef
-	 /1jU3y8WSGcRjhcbfKQRPt+TSpyphkkp5VcqmjHvIVuRWBvkeLTvMsdQ5lXkm/bWCAIV3
-	 E4iry/1Ur/78L1YbAgYUJCKUWqXcIIBw8pCJ0ZWGjSYfGJrfpy8R1whPtXgW0hZHbThQ+
-	 IkikCE0yYH6sd8rXkUfG8dvMxLgzUxETrtbjZ8aV5S/VEhb9J3rwnZO/XlrUXtkO17Q==
+	bh=2k+JOmMYH0FbF58Frme9GJZSFhv11Q6ZbZZbxeYNfN8=;
+	b=O86cJHZckGWmrX4D8as8ycTw4wRhqlfouHYdDCLIA4NcKbnBjCYXwkWcbzMK7lOs0SUw
+	 KrnrPvTxT5IcySXcHkio1e1OsNdzl1PnSqGyDhPfjpJm1+3U1WowX1vQiSd6g61G75H8+
+	 LyQgWa5XLPgWqmDF6j96+Yb9YcbIQQYuWUghy8tiAdlVPr4FfMzDQ2HRu7wIBptTUX3jH
+	 YcRasm2XUFKQKCwqjJ6Lc/FB79U4T4NntN076ZNnWLL3AZBveqQsWsIH/SRhToi11api0
+	 gVNosG6EPrb73oDFOSgM8w4Y9CvKy/a/2X684V6K/JBanwWHPKIfw+jzERpCr4o2FPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCHZ8+yD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=No8I6d1L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDFE606A33A;
-	Wed, 18 Nov 2026 19:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9918E606A33A;
+	Wed, 18 Nov 2026 19:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCHZ8+yD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1117A1F000C4;
-	Wed, 18 Nov 2026 19:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=No8I6d1L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F391F000C4;
+	Wed, 18 Nov 2026 19:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030347;
-	bh=B+kdV32Bt7mhLVEqNDyAI5fN3Uf6v4LD99JLWmw+3L4=;
+	s=korg; t=1795030350;
+	bh=2k+JOmMYH0FbF58Frme9GJZSFhv11Q6ZbZZbxeYNfN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UCHZ8+yDtIISN8rd8OIOSvU2xX7R2pyYyEXiTsPpPAxWlrpSvW3hn+6Lq0byb55iw
-	 ZeKD3lhDPladDM/sGfj877kDm2A5SRaDdChMyJCRmvpQLCVeYJ7wZgn65zBzk9gmuj
-	 O/aTO3SGW2ia/kQSVZuI2ZwcVXugpD424l2ABAgU=
+	b=No8I6d1LQauRe9Mw+OV31x26nu+uztdwFIndPlYT75Sw+WBC6dkh+hVqqs3HqoNa5
+	 WJ8iaXG5UdJkL+ZLBipZnvvxF+whkP1KR82chia66LCJEIQeEvqhapbDe+CB5M9RwN
+	 JTnH/cH8PuKhZT4ejj19dTkgebqNgKHkImhIXN/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li RongQing <lirongqing@baidu.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0672/1756] RDMA/mlx5: Restore mr->pi_mr after temporary stack-local assignment
-Date: Wed, 18 Nov 2026 15:46:39 +0100
-Message-ID: <20261118150036.029903856@linuxfoundation.org>
+Subject: [PATCH 6.12 0673/1756] IB/isert: Dont share drop_cmd_list across concurrent connection teardowns
+Date: Wed, 18 Nov 2026 15:46:40 +0100
+Message-ID: <20261118150036.067764940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,39 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 9728effe43d8fc4d58e12b697d0d6127355abdd5 ]
+[ Upstream commit d30e9b1bc47bd9be4b2fc97b0e4074bc02c4203a ]
 
-In handle_reg_mr_integrity, when mr->pi_mr is NULL (physical-address
-optimization path), the code points mr->pi_mr at a stack-local pa_pi_mr
-so set_pi_umr_wr can read it during this call. The pointer is never
-restored, so after the function returns mr->pi_mr dangles at a freed stack
-frame. A second IB_WR_REG_MR_INTEGRITY posted on the same MR without
-remapping reads the stale pointer and dereferences it.
+isert_put_unsol_pending_cmds() declares drop_cmd_list as a static
+LIST_HEAD, so the list is shared across all invocations of the function.
+It is called from isert_wait_conn(), the per-connection .iscsit_wait_conn
+transport callback, which runs independently for each connection during
+teardown.
 
-Save the original pi_mr (captured at function entry) and restore it on
-the out path.
+conn->cmd_lock only protects each connection's own conn_cmd_list, not the
+shared drop_cmd_list.  If two connections tear down at the same time, both
+threads list_move_tail() commands into the same drop_cmd_list without any
+mutual exclusion, and then both iterate and list_del/put it concurrently.
+This corrupts the linked list and can double-free iscsit_cmd structures.
 
-Fixes: 2563e2f30acb ("RDMA/mlx5: Use PA mapping for PI handover")
+Make drop_cmd_list a stack-local list, matching the pattern already used
+in isert_free_np().
+
+Fixes: 3e03c4b01da3 ("iser-target: Put the reference on commands waiting for unsol data")
 Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260919100848.2442-1-lirongqing@baidu.com
+Link: https://patch.msgid.link/20260921031100.2199-1-lirongqing@baidu.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/wr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/ulp/isert/ib_isert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/wr.c b/drivers/infiniband/hw/mlx5/wr.c
-index 9947feb7fb8a0..1748c633213ed 100644
---- a/drivers/infiniband/hw/mlx5/wr.c
-+++ b/drivers/infiniband/hw/mlx5/wr.c
-@@ -925,6 +925,7 @@ static int handle_reg_mr_integrity(struct mlx5_ib_dev *dev,
- 	qp->next_fence = MLX5_FENCE_MODE_INITIATOR_SMALL;
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index b3fc753982a38..e3ff99c75b308 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -2586,7 +2586,7 @@ static void
+ isert_put_unsol_pending_cmds(struct iscsit_conn *conn)
+ {
+ 	struct iscsit_cmd *cmd, *tmp;
+-	static LIST_HEAD(drop_cmd_list);
++	LIST_HEAD(drop_cmd_list);
  
- out:
-+	mr->pi_mr = pi_mr;
- 	return err;
- }
- 
+ 	spin_lock_bh(&conn->cmd_lock);
+ 	list_for_each_entry_safe(cmd, tmp, &conn->conn_cmd_list, i_conn_node) {
 -- 
 2.53.0
 
