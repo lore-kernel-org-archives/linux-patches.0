@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025047;
-	b=Bfk0c4R5ZsKwJSMVCCx4ofyY6skL79dX/dG8THqm1hHcL6e1lLPQjRvQg/oqLQ5ie8fX
-	 +MhYd3IQw8vaCCG7XRBOjMCkzLA2/h9USz2iDG8TmgOBXJTii0Yzms7xk0GFwpJKgrb/E
-	 SxndjCoKAh9Y11hjaUMARhRXt71jBybTFCVcqifDMM6L1Gwf8qTiFl47ba/an1ere9azm
-	 d6bozD9bfmYnDCibm7A7nVAvfSE13rJdTcxK+rAWWG1eIz0AkCS+DRAhvBDsNPaA+G0/B
-	 fXmbXWjKGR3ljphseoyPXGOkP3tjevcDy512bhh1jok7Lvl8Xo04tbKplY30AYv1LBg==
+	t=1795025050;
+	b=hCrur4MjtuHVC20xvjbrjYrdGsUbAPytnOufkeU7P6yXjiGrEnvS2j/CpmclvG8EVR92
+	 T+MJNTQ7mgT3NgsPmwHkKlO5oYFTRVcIJqnI6/Tl/vlSQkLA7zZ4ZMZ+QlfE2IAFzXIzZ
+	 gwt1UivzXu3R06kCzgQNKSNylc5SBWcbstCDApGJSVIJSHl0QRU2yl19Ds9BUNdsmMNHW
+	 l4C64ASfboLHyHHINMvawR1Tw79OnlfqAAefiDhryJ5YhY6AkWtykVfPfm8XP5mTTPEuc
+	 10/m6e4O17t1gUYwDr6tC2MNF8oD+QPoDkOtk8mXrnsHlpoyPWyIUTI+phcNrQwX1SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DFTkK7uwDVcWRLF6MceN/yqb/HDlK3PiEmsfCsMaVxY=;
-	b=gywG+hGi8byu/ttL++x15PWa9+gpXuKTTwAVDzpefrelWyNkX3XTRsQ/HqMdfd6JObaC
-	 qezzL32TzA9kF80ZQYbR69rAV7UWUb8ttF2woZGORogdlq4nS0jeBdvWb14m/i3nyXe9T
-	 sH+nbF/JK/TmrodGjwH0Hjn2j+e+6xIB1b3kZYgQJq8tN6XMqhlAueh9Eb0TnQEztXzTH
-	 iAQovD6yezRyTbazZII205Mk9t7wyB+48mrRZdhOF76iNYIfUdZPvGOx3GU6LEtrPiBsZ
-	 ZzNSVjedd25QSTWE5wQ4kaqAc2hrwdmP6/H+p7ovbAEt9NQ1FnQjwzGWw3XsIH5ASmg==
+	bh=j07MgsO6Fws8H97dwaPJFwVljUSJ71LSVfNxXOU9F3Q=;
+	b=AfNnZR9TxUE0R6vGviSe+iMBB9mM4KNdoOVV2GR0KGaT+uizZuGCPmOdtr5i1+sLFuvD
+	 lIQa1cPKE/2ycUuWCnl/2+GrA7TlhjWgsWVTgxRILo4lYkIv+MtHr0tki/VW/F0HwTR3p
+	 nFy3Og0Oi3ISRfhM7sVV3746ZpnXrm38kkX8Y7uyNzUCDpB6oTWFk9cr6KK9lAKZkSQNS
+	 8Srous0NxGJz2kkIfMgDNhGEdUZCWvQUKyEwD3EwgZHxOnl106/GoyplAHv378scxRjYf
+	 EDQ4aNXeCrWjBastjf16dfupsHECSyQzk4U0WscaLW23Ioa3XbE1sJQqPsJYcQ937Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+5qLdfU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEtdJRR1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC13606A31C;
-	Wed, 18 Nov 2026 18:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D942606A32A;
+	Wed, 18 Nov 2026 18:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+5qLdfU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F9E1F000C4;
-	Wed, 18 Nov 2026 18:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEtdJRR1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40801F000C4;
+	Wed, 18 Nov 2026 18:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025047;
-	bh=DFTkK7uwDVcWRLF6MceN/yqb/HDlK3PiEmsfCsMaVxY=;
+	s=korg; t=1795025050;
+	bh=j07MgsO6Fws8H97dwaPJFwVljUSJ71LSVfNxXOU9F3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+5qLdfUaFD7IYVnthdm4B1EPfREZa4bDPzzvcPgSPI/XMjFgD5c0nR5ks99ReYEG
-	 FqYhzutaqjVN22Xr2Bwu0R+wSwueSrYCDS/s6JkexFEKEabWKO0FDCtFqCVQ7btxVT
-	 2YN3V++HoJFb6jyZI8yMKGzzLmBOV9XxEycAk4Y8=
+	b=fEtdJRR1gRFmODQF4n9yeG4W2VJkTR5JcL5xnFbU1Jtt8EFHOSTDdN6qudboapjLJ
+	 B2qDBUwRdCMmsIJDnR+bI7QZ8QJF3pUDOiT4yZ5TwytUKKmXzld3EqLbSbbAn2L9Bx
+	 6SkPNF3BHOUVGrgRtAbG3pNAbkWgEAFq+F07NNN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0942/2151] cpufreq: amd-pstate: Restore previous mode when changing driver mode fails
-Date: Wed, 18 Nov 2026 15:44:37 +0100
-Message-ID: <20261118150156.791074639@linuxfoundation.org>
+Subject: [PATCH 6.18 0943/2151] cpufreq: amd-pstate: Propagate cppc_set_auto_sel() errors on mode change
+Date: Wed, 18 Nov 2026 15:44:38 +0100
+Message-ID: <20261118150156.825773224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,62 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit f6d3cbc63935fa8911da87e91ed768824d495470 ]
+[ Upstream commit 8de705037124dd1cd49bd8cae6536d63ec4e1807 ]
 
-amd_pstate_change_driver_mode() unregisters the currently active driver
-before registering the requested mode.  If amd_pstate_register_driver()
-fails for the new mode, the function returns the error without restoring
-anything, leaving the system with no cpufreq scaling driver at all until
-a valid mode is manually re-selected.
+amd_pstate_change_mode_without_dvr_change() iterates over the online CPUs
+and calls cppc_set_auto_sel() to enable or disable hardware autonomous
+selection, but discards its return value and unconditionally returns 0.
 
-Remember the mode that was active before the transition and, if
-registering the requested mode fails, register the previous mode again so
-the system keeps a working scaling driver.  The original error is still
-returned to the caller so the sysfs write reports the failure.
+If the firmware rejects the request, the failure is hidden: the cpufreq
+core records the mode transition as successful while the hardware stays in
+its previous autonomous-selection state.  The software mode and the actual
+hardware behaviour then disagree, breaking the expected frequency scaling.
+
+Check the return value of cppc_set_auto_sel() and propagate the first
+error to the caller so the sysfs write reports the failure.
 
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-5b138ddb-c88b-4f82-8a2d-f39446b625d4
+Closes: https://sashiko.dev/#/bug/linux-d114a94a-655b-43a6-91b1-9484889726c9
 Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20260921190235.3651688-1-mario.limonciello@amd.com
+Link: https://lore.kernel.org/r/20260921190235.3651688-2-mario.limonciello@amd.com
 Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 130b037be8f95..298eaec8df092 100644
+index 298eaec8df092..e78a8d5207153 100644
 --- a/drivers/cpufreq/amd-pstate.c
 +++ b/drivers/cpufreq/amd-pstate.c
-@@ -1582,6 +1582,7 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
- 
- static int amd_pstate_change_driver_mode(int mode)
+@@ -1567,6 +1567,7 @@ static int amd_pstate_unregister_driver(int dummy)
+ static int amd_pstate_change_mode_without_dvr_change(int mode)
  {
-+	int old_mode = cppc_state;
- 	int ret;
+ 	int cpu = 0;
++	int ret;
  
- 	lockdep_assert_held(&amd_pstate_driver_lock);
-@@ -1591,10 +1592,16 @@ static int amd_pstate_change_driver_mode(int mode)
- 		return ret;
+ 	cppc_state = mode;
  
- 	ret = amd_pstate_register_driver(mode);
--	if (ret)
--		return ret;
-+	if (ret) {
-+		pr_err("Failed to register %s mode, restoring %s mode\n",
-+		       amd_pstate_get_mode_string(mode),
-+		       amd_pstate_get_mode_string(old_mode));
-+		if (amd_pstate_register_driver(old_mode))
-+			pr_err("Failed to restore %s mode\n",
-+			       amd_pstate_get_mode_string(old_mode));
-+	}
+@@ -1574,7 +1575,9 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
+ 		return 0;
  
--	return 0;
-+	return ret;
- }
+ 	for_each_online_cpu(cpu) {
+-		cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
++		ret = cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
++		if (ret)
++			return ret;
+ 	}
  
- static cppc_mode_transition_fn mode_state_machine[AMD_PSTATE_MAX][AMD_PSTATE_MAX] = {
+ 	return 0;
 -- 
 2.53.0
 
