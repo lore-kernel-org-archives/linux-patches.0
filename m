@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032224;
-	b=wruBuYb/jXYx+9X7PFjJEbawSm8U6oIK2FzTrcFXK0rnVtTyvDlp/xc45qDNPT1GPIde
-	 dRt1x6HkmLP3uwDwl73HYZI3nae/H2b+1dBdAJFmsr9Sagw2iZjv87O1fYOXn31v1zcM1
-	 1Ywqql2nGH+K/98X+2reHloB1a6VBS33Uxg7egehI/8ZTqo6AtZEE8hl4llHTYrfj8B1O
-	 Gk+h6rx8x65m6a1epw6fRz0hofOkM9MhTyoN0eLmsrNSpPnCctf0bkz6LsmFesGUrJItc
-	 Pk1U/tIV/lZq8THaYN7869CJMzkHDAQu/6pRrGoVjBmFsbkOmbY+Fv4PCYvykkDXo/g==
+	t=1795032227;
+	b=uBrRzTNsFTujq/eFdCPNWlM8xO9iPvNJdu3KcscYoalBgWloIkUscimnF8Xwaf3SsYAn
+	 LQPI1zsh6UCCc8oyX6xk9m18urINutFwxaZb0g7h0rVXmX6Kf2aVuCYsap7BfpOAaWpKx
+	 z5ey75LVUSmNx4RIHFrtcMQg+3ZjnDhsDTSlssdkJsaJyQfB9Sd6KdkSxd6RhYRboqqoA
+	 RU5CgpgeTqrTrVuT3ORuG04OC0jY5w2QffqeKc7VusektjJ6dv667ZSrsxrLeZjXSCJQJ
+	 7kmY07UTN2NDy/Z1OQ/dlGXtWNrperNsVmkjGQ+dMHl07fC+4zUqk7LuvVdc5q2Jjig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KVlX3wjltiOcdO531BQLkF4Wr+EEIVfeDgbDaT83dDQ=;
-	b=a8t5vnPaLUnoW8qUxsLeEBvjobr4Cnw+4hEQMrGsRP4aPD6YIBHpOInYf6ZCG5y4DxeC
-	 TTm/rm1+FR58Kk6oXFdpf+jZIkKj69DdLIW/2rOLOHJFW6wwbHDXB7UOB9NAtQ6EZAtfH
-	 djRYR8O7yiSJVlS62JBOtCaE0g+PlK0b2i2seSIPWNX//BeQCDmBcIAzahieposkfr7+q
-	 1fiMhDD2a0bGdjWMPrXJhNV6pPIewgsmAnjaFheleoK4miIgm8snRvXSdDgTPbuU8fJkB
-	 6VVHZbLVraNoxT34ezX9fA1+G8pjRuwIGZNu8Pd/aA2/XY71wB/P3Lo2iq1JEmscgwA==
+	bh=H1pGwq9ZvEzNah98eYT95HM9T/zNv5XJKrbvKPx5JGE=;
+	b=Z6XYXQSvFm0cl9H+axmIWd+/6uHQckoRIlHUlW82riLnhrC4aO3hjN565PRYBKQ4bkGo
+	 uuxH85i1HgBsHJiQkRDIOohYvGHGdYRT3IG/3bgxqoIdBZmNBMJaUn1PKxMnkmpMTOSFV
+	 lWZ3ALiyT7Osch2c6hS9a5rK7Cl28RBsvABAMS5glx9bw+r2JiPFyTX488c4Up8oeTMe+
+	 m3QZIlTvgscTD/MpRw5C4UaWAdJpCbTtut6ztHlABxgDZXALCVZ6k9qemIYkCUn2obWP0
+	 zdtOKJshUolIcQO+8CBp6oQwTbVsSI8zhJaDpATfUnLGFSdAAQYFdccpuPgDGI+d/Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=norogRrX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1lPYbug;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FB6606A320;
-	Wed, 18 Nov 2026 20:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BFB606A31C;
+	Wed, 18 Nov 2026 20:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=norogRrX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0771F000C4;
-	Wed, 18 Nov 2026 20:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1lPYbug
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA471F000C5;
+	Wed, 18 Nov 2026 20:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032224;
-	bh=KVlX3wjltiOcdO531BQLkF4Wr+EEIVfeDgbDaT83dDQ=;
+	s=korg; t=1795032227;
+	bh=H1pGwq9ZvEzNah98eYT95HM9T/zNv5XJKrbvKPx5JGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=norogRrXFvL/XWhSKxfKpbc+UdHhF+d1B3Mvre/jJtd3jtIXsS2dCtW3XTJlswRRJ
-	 avlhNbpEkN4PXNCE+f5WKLCle4A9V20PmJozbyBeNnqHLZLWfxAGAn+pYldd3v05U1
-	 QI1Sh3DRcUt4Y0wI4bNEYvg0NEr5XATCu83Anosw=
+	b=N1lPYbugD9RVRz7tALOG8xGQv4ZwOZ9dD2ZDYWVcE8HmgDGPUDKH9DUIrNFfCBNfh
+	 S/gRJE2Z+U2PIEi3xLAoR24ar8J/A55Qn2MV4qrr/Kx/yPoi4M9wWTHwbHHkFa2zgE
+	 hpnuDEIwEb5wsYjarq8m+JZjzchLd1isKm/nJpCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tao Cui <cuitao@kylinos.cn>,
+	Christoph Hellwig <hch@lst.de>,
 	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1337/1756] blk-iocost: charge zone appends as writes
-Date: Wed, 18 Nov 2026 15:57:44 +0100
-Message-ID: <20261118150102.582554351@linuxfoundation.org>
+Subject: [PATCH 6.12 1338/1756] blk-iocost: account zone append completions in latency stats
+Date: Wed, 18 Nov 2026 15:57:45 +0100
+Message-ID: <20261118150102.621510214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,38 +72,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit febdbf5682fa7e8f325b07a2c115e7632c4252bd ]
+[ Upstream commit c38975c427cc3d3f6eb66a36143893be5cdf4ebd ]
 
-Zone append is a primary write operation for zoned devices; zoned xfs
-and btrfs use it for data writes.  It is priced at zero, so the zone
-append portion of zoned workloads runs outside the controller: a
-1%-weight cgroup issued 16000 appends at zero cost on a zoned null_blk.
+ioc_rqos_done() only accounts READ and WRITE completions, so zone
+append completions are excluded from the latency window: the vrate
+feedback loop cannot see ZA-induced latency, leaving it unable to
+respond to device saturation caused by zone appends.  Similarly,
+calc_size_vtime_cost_builtin() does not classify zone append as a
+write operation.
 
-Treat REQ_OP_ZONE_APPEND the same as REQ_OP_WRITE so it goes through
-the existing seq/rand classification and charging.
+Charging (the cost model) and feedback (the latency window) are
+separate mechanisms, so this is not covered by the previous patch
+that prices zone appends.
+
+Treat zone append as WRITE for both latency accounting and cost
+classification.
 
 Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260922043856.2020116-3-cui.tao@linux.dev
+Link: https://patch.msgid.link/20260922043856.2020116-4-cui.tao@linux.dev
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-iocost.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index b33df932ea1b8..ce822834d5b90 100644
+index ce822834d5b90..2a4d246fd9922 100644
 --- a/block/blk-iocost.c
 +++ b/block/blk-iocost.c
-@@ -2548,6 +2548,7 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
- 		coef_randio	= ioc->params.lcoefs[LCOEF_RRANDIO];
- 		coef_page	= ioc->params.lcoefs[LCOEF_RPAGE];
+@@ -2592,6 +2592,7 @@ static void calc_size_vtime_cost_builtin(struct request *rq, struct ioc *ioc,
+ 	case REQ_OP_READ:
+ 		*costp = pages * ioc->params.lcoefs[LCOEF_RPAGE];
  		break;
 +	case REQ_OP_ZONE_APPEND:
  	case REQ_OP_WRITE:
- 		coef_seqio	= ioc->params.lcoefs[LCOEF_WSEQIO];
- 		coef_randio	= ioc->params.lcoefs[LCOEF_WRANDIO];
+ 		*costp = pages * ioc->params.lcoefs[LCOEF_WPAGE];
+ 		break;
+@@ -2828,6 +2829,7 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
+ 		pidx = QOS_RLAT;
+ 		rw = READ;
+ 		break;
++	case REQ_OP_ZONE_APPEND:
+ 	case REQ_OP_WRITE:
+ 		pidx = QOS_WLAT;
+ 		rw = WRITE;
 -- 
 2.53.0
 
