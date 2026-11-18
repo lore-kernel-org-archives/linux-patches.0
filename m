@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047945;
-	b=lO42DPOHmLuanVUhxQhZ7LNbary+EPsBtUEm75zCGUV+5BydUAh/7mr8n4wclE8RHNEM
-	 2lxlO8yVzKQSg6KJwRONMdsHLlNElN6onDaSCHRlUu+4V2m+tbAoIUW7r7jvmDRmSyzjl
-	 pWw48QO5EYeodHBlDLUKfscic7wPs+fxq5N7nGa1pwrTOu2QYfJJ4eYawZqRQkeisR1H0
-	 wn5r6TPKYHus6vEOyQWD7i7p17VccNpxBfueRW/iBJ6953hszAVTFcRxB8mFEv++z9xs1
-	 XgdcLF48VEv9wSrwPAca7EJkOhKz9JxXWPeUDLsu3d8pU+yH780SQhV+tHVxyvuosMA==
+	t=1795047948;
+	b=Uf52tYWJQsKITwwRl7TbWR8WTPxuD8ZImob+MA7k4FC+5YsTcCAiZK+UoYBGm1aCHBX+
+	 TgJjSO2SXTdxl5UX5EgANmn39xdKVU5UbZsI3uIMIa5SuUin3MUAnxzgBCNd6MVxrYKk3
+	 Obr8d+TNWIYk1kLk7w0RaPhs2pXdAn3GMx17EDnRVdYZbFRYwdxknK8fUKBmeZVjPETat
+	 tyxVsChIsUc+xol/2H7eAIiqvPhFFtraIgnQdpoiim3EWki/BPX2jpi6g6oZ1GiZqlkLr
+	 TgQA2kqrn1n6z2NBFLyrJjEOtw1K8pCdGqnk0qn6WdMacZYH6IrEP2OE2TJXGcMIBOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6POxPvB9ye13+pEwl7aDaoOYK//EKqk1Uaq4UETIosg=;
-	b=MFTYWyMiDiVxuUa5vcVLUO0IbdYMmIOQMJjUUlVRQxVy1ZQS87SXWivJ3K3mkYA5x1gs
-	 4cP8YVIDo5ZkWZMRC4iGcH0Q9yYS0Zs/zVGg/JXdAO8yBDcTIghdqx26RaFD7dy0rBAIF
-	 RFEswgF7WdV8AwLN0NzocQlAzeEH0YsTzVfU3MAOMUs9KoGzjoAnfoe5srisiM5nZVoOw
-	 ByR6ijjKbZIB30C3tGh4ULq95cwYS5gW7RZ7k3eiEeNklhLGuRCB43VYP68LGeiu+3suU
-	 JD66Y11NfybDeWI3S6wtjKWLPXCE1cRiMpnwSiSLMRDRLl+T4dUjJeOXXTwkqvQ6ErA==
+	bh=sgVBRAqrbkZ/UwI/n0GfHGyKeO50bLY8yjrs3ETMDtE=;
+	b=UlTKxS98YxOFuF/92FCBa5mypCL3pyH0PE5t9CuUsd+AWDBqAwI4p3wATOw1sgiPW6ZD
+	 hM51B/KyGAZbP5pNWAUtDjPoogDg9imLmryPkL+M2PCwCrRzOEUn6V2CPQmk3nOzLlt+r
+	 I44LAzHtDmByW9ul5UYpQMhXTEkzS9078rAft+Fp4C7epmVk7an0z+m2lkhe6g0S1zJdz
+	 nPfisi397bKNCKp6YxMNVVNEefcdB2rDjvaLnJ80Dq8FBH82QXr8sTXmRN5kfSd9yjOU5
+	 VuH9QYeQgWiA+xKnkgxE/6id/zRnzv4PH85d0l6OjDCB9gP9H66uF8K0VCMNGmex7Lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2JlCI2O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jOd2lJOC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525D9606A330;
-	Thu, 19 Nov 2026 00:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA9E606A325;
+	Thu, 19 Nov 2026 00:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2JlCI2O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15411F000C4;
-	Thu, 19 Nov 2026 00:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jOd2lJOC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDBA1F000C9;
+	Thu, 19 Nov 2026 00:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047945;
-	bh=6POxPvB9ye13+pEwl7aDaoOYK//EKqk1Uaq4UETIosg=;
+	s=korg; t=1795047948;
+	bh=sgVBRAqrbkZ/UwI/n0GfHGyKeO50bLY8yjrs3ETMDtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D2JlCI2Ocic7DxH0RBwomLxMccq3qd7MCYp7NBxHH3WApXrjg++Ex1l0NLRsW7eBQ
-	 W0QwkW8bxhKE48ZdAqtVXes81skG05Lk/v4PDzadk2dmts+/SHUzv/rt3LsjQ2zVZ0
-	 xaxq0jEseBrOgN5LxE/rxHoTV3Qrmc8RSedjNopg=
+	b=jOd2lJOC+C4dbZgloUGdHNYDsAOjz63mwhsecHOz7EiTvrMUuXAKpUP18VkcciWIR
+	 JDzfcBo1jF9Ad03k+KoZvKdz+kSmx7V+PeruRqQDMnqX6gFxM90H2L5ocvc6XSoQ8p
+	 /+jp5kWEugp0sVoID8+l7sZ9y35mwXHY7VsPSR70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1778/2857] soundwire: intel: add bus management callbacks in hw_ops
-Date: Wed, 18 Nov 2026 15:46:52 +0100
-Message-ID: <20261118150305.294127613@linuxfoundation.org>
+Subject: [PATCH 6.1 1769/2857] staging: rtl8723bs: remove unused private debug counters
+Date: Wed, 18 Nov 2026 15:46:43 +0100
+Message-ID: <20261118150304.977590167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,195 +68,551 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 3db0c5a6a2832c7b4b40676299e4bbbe1a96bc8b ]
+[ Upstream commit 7de30d5d76aa614777a02a9807d29ed65b0704a0 ]
 
-No functionality change, only add indirection for bus management
-helpers.
+The driver maintains a private `struct debug_priv` embedded within
+`struct dvobj_priv` to track various error counters (e.g., suspend
+errors, alloc failures, RX drops).
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20221111013135.38289-5-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: ee8a8cfe4e8d ("soundwire: intel: initialise quirk_mask before reading it")
+These counters are incremented in various files but the data is
+never read or exposed to userspace.
+
+Remove the unused `debug_priv` structure definition, the instance
+in `dvobj_priv`, and all associated increment operations across
+the driver to clean up the code.
+
+This also removes the following helper functions which were used
+solely to update these counters:
+ - rtw_reset_rx_info()
+ - recv_indicatepkts_pkt_loss_cnt()
+
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20260131212128.25548-1-ethantidmore06@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: baa84b1bb164 ("staging: rtl8723bs: disable SDIO function on block size failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel.c           | 24 ++++++++++++--------
- drivers/soundwire/intel.h           | 34 +++++++++++++++++++++++++++++
- include/linux/soundwire/sdw_intel.h | 11 ++++++++++
- 3 files changed, 60 insertions(+), 9 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c     | 13 ------
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |  3 --
+ drivers/staging/rtl8723bs/core/rtw_pwrctrl.c  |  6 +--
+ drivers/staging/rtl8723bs/core/rtw_recv.c     | 24 +---------
+ drivers/staging/rtl8723bs/hal/hal_com.c       | 13 ------
+ .../staging/rtl8723bs/hal/rtl8723b_hal_init.c |  4 --
+ drivers/staging/rtl8723bs/hal/sdio_halinit.c  |  8 +---
+ drivers/staging/rtl8723bs/include/drv_types.h | 41 -----------------
+ drivers/staging/rtl8723bs/os_dep/os_intfs.c   | 15 +------
+ drivers/staging/rtl8723bs/os_dep/sdio_intf.c  | 45 +++++--------------
+ 10 files changed, 15 insertions(+), 157 deletions(-)
 
-diff --git a/drivers/soundwire/intel.c b/drivers/soundwire/intel.c
-index ae564c15b4a48..90b1c42247dde 100644
---- a/drivers/soundwire/intel.c
-+++ b/drivers/soundwire/intel.c
-@@ -1432,6 +1432,12 @@ const struct sdw_intel_hw_ops sdw_intel_cnl_hw_ops = {
- 
- 	.register_dai = intel_register_dai,
- 
-+	.check_clock_stop = intel_check_clock_stop,
-+	.start_bus = intel_start_bus,
-+	.start_bus_after_reset = intel_start_bus_after_reset,
-+	.start_bus_after_clock_stop = intel_start_bus_after_clock_stop,
-+	.stop_bus = intel_stop_bus,
-+
- 	.pre_bank_switch = intel_pre_bank_switch,
- 	.post_bank_switch = intel_post_bank_switch,
- };
-@@ -1626,7 +1632,7 @@ int intel_link_startup(struct auxiliary_device *auxdev)
- 	sdw_intel_debugfs_init(sdw);
- 
- 	/* start bus */
--	ret = intel_start_bus(sdw);
-+	ret = sdw_intel_start_bus(sdw);
- 	if (ret) {
- 		dev_err(dev, "bus start failed: %d\n", ret);
- 		goto err_power_up;
-@@ -1854,7 +1860,7 @@ static int __maybe_unused intel_suspend(struct device *dev)
- 		return 0;
- 	}
- 
--	ret = intel_stop_bus(sdw, false);
-+	ret = sdw_intel_stop_bus(sdw, false);
- 	if (ret < 0) {
- 		dev_err(dev, "%s: cannot stop bus: %d\n", __func__, ret);
- 		return ret;
-@@ -1880,14 +1886,14 @@ static int __maybe_unused intel_suspend_runtime(struct device *dev)
- 	clock_stop_quirks = sdw->link_res->clock_stop_quirks;
- 
- 	if (clock_stop_quirks & SDW_INTEL_CLK_STOP_TEARDOWN) {
--		ret = intel_stop_bus(sdw, false);
-+		ret = sdw_intel_stop_bus(sdw, false);
- 		if (ret < 0) {
- 			dev_err(dev, "%s: cannot stop bus during teardown: %d\n",
- 				__func__, ret);
- 			return ret;
- 		}
- 	} else if (clock_stop_quirks & SDW_INTEL_CLK_STOP_BUS_RESET || !clock_stop_quirks) {
--		ret = intel_stop_bus(sdw, true);
-+		ret = sdw_intel_stop_bus(sdw, true);
- 		if (ret < 0) {
- 			dev_err(dev, "%s: cannot stop bus during clock_stop: %d\n",
- 				__func__, ret);
-@@ -1945,7 +1951,7 @@ static int __maybe_unused intel_resume(struct device *dev)
- 	 */
- 	sdw_clear_slave_status(bus, SDW_UNATTACH_REQUEST_MASTER_RESET);
- 
--	ret = intel_start_bus(sdw);
-+	ret = sdw_intel_start_bus(sdw);
- 	if (ret < 0) {
- 		dev_err(dev, "cannot start bus during resume\n");
- 		intel_link_power_down(sdw);
-@@ -1999,7 +2005,7 @@ static int __maybe_unused intel_resume_runtime(struct device *dev)
- 		 */
- 		sdw_clear_slave_status(bus, SDW_UNATTACH_REQUEST_MASTER_RESET);
- 
--		ret = intel_start_bus(sdw);
-+		ret = sdw_intel_start_bus(sdw);
- 		if (ret < 0) {
- 			dev_err(dev, "%s: cannot start bus after teardown: %d\n", __func__, ret);
- 			intel_link_power_down(sdw);
-@@ -2014,7 +2020,7 @@ static int __maybe_unused intel_resume_runtime(struct device *dev)
- 			return ret;
- 		}
- 
--		ret = intel_start_bus_after_reset(sdw);
-+		ret = sdw_intel_start_bus_after_reset(sdw);
- 		if (ret < 0) {
- 			dev_err(dev, "%s: cannot start bus after reset: %d\n", __func__, ret);
- 			intel_link_power_down(sdw);
-@@ -2022,7 +2028,7 @@ static int __maybe_unused intel_resume_runtime(struct device *dev)
- 		}
- 	} else if (!clock_stop_quirks) {
- 
--		intel_check_clock_stop(sdw);
-+		sdw_intel_check_clock_stop(sdw);
- 
- 		ret = intel_link_power_up(sdw);
- 		if (ret) {
-@@ -2030,7 +2036,7 @@ static int __maybe_unused intel_resume_runtime(struct device *dev)
- 			return ret;
- 		}
- 
--		ret = intel_start_bus_after_clock_stop(sdw);
-+		ret = sdw_intel_start_bus_after_clock_stop(sdw);
- 		if (ret < 0) {
- 			dev_err(dev, "%s: cannot start bus after clock stop: %d\n", __func__, ret);
- 			intel_link_power_down(sdw);
-diff --git a/drivers/soundwire/intel.h b/drivers/soundwire/intel.h
-index 0521cab311a33..99a2d875a3316 100644
---- a/drivers/soundwire/intel.h
-+++ b/drivers/soundwire/intel.h
-@@ -84,4 +84,38 @@ static inline int sdw_intel_register_dai(struct sdw_intel *sdw)
- 	return -ENOTSUPP;
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+index 58b3dbee58ad5..ac3a08e6727f6 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -870,15 +870,6 @@ static void free_scanqueue(struct	mlme_priv *pmlmepriv)
+ 	spin_unlock_bh(&scan_queue->lock);
  }
  
-+static inline void sdw_intel_check_clock_stop(struct sdw_intel *sdw)
-+{
-+	if (SDW_INTEL_CHECK_OPS(sdw, check_clock_stop))
-+		SDW_INTEL_OPS(sdw, check_clock_stop)(sdw);
-+}
-+
-+static inline int sdw_intel_start_bus(struct sdw_intel *sdw)
-+{
-+	if (SDW_INTEL_CHECK_OPS(sdw, start_bus))
-+		return SDW_INTEL_OPS(sdw, start_bus)(sdw);
-+	return -ENOTSUPP;
-+}
-+
-+static inline int sdw_intel_start_bus_after_reset(struct sdw_intel *sdw)
-+{
-+	if (SDW_INTEL_CHECK_OPS(sdw, start_bus_after_reset))
-+		return SDW_INTEL_OPS(sdw, start_bus_after_reset)(sdw);
-+	return -ENOTSUPP;
-+}
-+
-+static inline int sdw_intel_start_bus_after_clock_stop(struct sdw_intel *sdw)
-+{
-+	if (SDW_INTEL_CHECK_OPS(sdw, start_bus_after_clock_stop))
-+		return SDW_INTEL_OPS(sdw, start_bus_after_clock_stop)(sdw);
-+	return -ENOTSUPP;
-+}
-+
-+static inline int sdw_intel_stop_bus(struct sdw_intel *sdw, bool clock_stop)
-+{
-+	if (SDW_INTEL_CHECK_OPS(sdw, stop_bus))
-+		return SDW_INTEL_OPS(sdw, stop_bus)(sdw, clock_stop);
-+	return -ENOTSUPP;
-+}
-+
- #endif /* __SDW_INTEL_LOCAL_H */
-diff --git a/include/linux/soundwire/sdw_intel.h b/include/linux/soundwire/sdw_intel.h
-index 5be63d4fe62ec..cee61bc9af8ad 100644
---- a/include/linux/soundwire/sdw_intel.h
-+++ b/include/linux/soundwire/sdw_intel.h
-@@ -300,6 +300,11 @@ struct sdw_intel;
-  * @debugfs_init: initialize all debugfs capabilities
-  * @debugfs_exit: close and cleanup debugfs capabilities
-  * @register_dai: read all PDI information and register DAIs
-+ * @check_clock_stop: throw error message if clock is not stopped.
-+ * @start_bus: normal start
-+ * @start_bus_after_reset: start after reset
-+ * @start_bus_after_clock_stop: start after mode0 clock stop
-+ * @stop_bus: stop all bus
-  * @pre_bank_switch: helper for bus management
-  * @post_bank_switch: helper for bus management
-  */
-@@ -309,6 +314,12 @@ struct sdw_intel_hw_ops {
+-static void rtw_reset_rx_info(struct debug_priv *pdbgpriv)
+-{
+-	pdbgpriv->dbg_rx_ampdu_drop_count = 0;
+-	pdbgpriv->dbg_rx_ampdu_forced_indicate_count = 0;
+-	pdbgpriv->dbg_rx_ampdu_loss_count = 0;
+-	pdbgpriv->dbg_rx_dup_mgt_frame_drop_count = 0;
+-	pdbgpriv->dbg_rx_ampdu_window_shift_cnt = 0;
+-}
+-
+ static void find_network(struct adapter *adapter)
+ {
+ 	struct wlan_network *pwlan = NULL;
+@@ -903,8 +894,6 @@ void rtw_free_assoc_resources(struct adapter *adapter, int lock_scanned_queue)
+ {
+ 	struct	mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 	struct wlan_network *tgt_network = &pmlmepriv->cur_network;
+-	struct dvobj_priv *psdpriv = adapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
  
- 	int (*register_dai)(struct sdw_intel *sdw);
+ 	if (check_fwstate(pmlmepriv, WIFI_STATION_STATE|WIFI_AP_STATE)) {
+ 		struct sta_info *psta;
+@@ -928,8 +917,6 @@ void rtw_free_assoc_resources(struct adapter *adapter, int lock_scanned_queue)
  
-+	void (*check_clock_stop)(struct sdw_intel *sdw);
-+	int (*start_bus)(struct sdw_intel *sdw);
-+	int (*start_bus_after_reset)(struct sdw_intel *sdw);
-+	int (*start_bus_after_clock_stop)(struct sdw_intel *sdw);
-+	int (*stop_bus)(struct sdw_intel *sdw, bool clock_stop);
+ 	if (lock_scanned_queue)
+ 		adapter->securitypriv.key_mask = 0;
+-
+-	rtw_reset_rx_info(pdbgpriv);
+ }
+ 
+ /*
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+index e02e56d85ca0a..39ecddae5ff23 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -442,8 +442,6 @@ void mgt_dispatcher(struct adapter *padapter, union recv_frame *precv_frame)
+ 	u8 bc_addr[ETH_ALEN] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+ 	u8 *pframe = precv_frame->u.hdr.rx_data;
+ 	struct sta_info *psta = rtw_get_stainfo(&padapter->stapriv, GetAddr2Ptr(pframe));
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 
+ 	if (GetFrameType(pframe) != WIFI_MGT_TYPE)
+ 		return;
+@@ -467,7 +465,6 @@ void mgt_dispatcher(struct adapter *padapter, union recv_frame *precv_frame)
+ 		if (GetRetry(pframe)) {
+ 			if (precv_frame->u.hdr.attrib.seq_num == psta->RxMgmtFrameSeqNum) {
+ 				/* drop the duplicate management frame */
+-				pdbgpriv->dbg_rx_dup_mgt_frame_drop_count++;
+ 				return;
+ 			}
+ 		}
+diff --git a/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c b/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
+index a392d5b4caf20..0452637da71b6 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
++++ b/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
+@@ -145,8 +145,6 @@ static bool rtw_pwr_unassociated_idle(struct adapter *adapter)
+ void rtw_ps_processor(struct adapter *padapter)
+ {
+ 	struct pwrctrl_priv *pwrpriv = adapter_to_pwrctl(padapter);
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 	u32 ps_deny = 0;
+ 
+ 	mutex_lock(&adapter_to_pwrctl(padapter)->lock);
+@@ -155,10 +153,8 @@ void rtw_ps_processor(struct adapter *padapter)
+ 	if (ps_deny != 0)
+ 		goto exit;
+ 
+-	if (pwrpriv->bInSuspend) {/* system suspend or autosuspend */
+-		pdbgpriv->dbg_ps_insuspend_cnt++;
++	if (pwrpriv->bInSuspend) /* system suspend or autosuspend */
+ 		return;
+-	}
+ 
+ 	pwrpriv->ps_processing = true;
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
+index 88612ed1cd5b4..48e86427fa30d 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_recv.c
++++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
+@@ -1653,9 +1653,6 @@ static int amsdu_to_msdu(struct adapter *padapter, union recv_frame *prframe)
+ 
+ static int check_indicate_seq(struct recv_reorder_ctrl *preorder_ctrl, u16 seq_num)
+ {
+-	struct adapter *padapter = preorder_ctrl->padapter;
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 	u8 wsize = preorder_ctrl->wsize_b;
+ 	u16 wend = (preorder_ctrl->indicate_seq + wsize - 1) & 0xFFF;/*  4096; */
+ 
+@@ -1681,7 +1678,6 @@ static int check_indicate_seq(struct recv_reorder_ctrl *preorder_ctrl, u16 seq_n
+ 			preorder_ctrl->indicate_seq = seq_num + 1 - wsize;
+ 		else
+ 			preorder_ctrl->indicate_seq = 0xFFF - (wsize - (seq_num + 1)) + 1;
+-		pdbgpriv->dbg_rx_ampdu_window_shift_cnt++;
+ 	}
+ 
+ 	return true;
+@@ -1732,15 +1728,6 @@ static int enqueue_reorder_recvframe(struct recv_reorder_ctrl *preorder_ctrl, un
+ 
+ }
+ 
+-static void recv_indicatepkts_pkt_loss_cnt(struct debug_priv *pdbgpriv, u64 prev_seq, u64 current_seq)
+-{
+-	if (current_seq < prev_seq)
+-		pdbgpriv->dbg_rx_ampdu_loss_count += (4096 + current_seq - prev_seq);
+-	else
+-		pdbgpriv->dbg_rx_ampdu_loss_count += (current_seq - prev_seq);
+-
+-}
+-
+ static int rtw_recv_indicatepkt(struct adapter *padapter, union recv_frame *precv_frame)
+ {
+ 	struct recv_priv *precvpriv;
+@@ -1787,8 +1774,6 @@ static int recv_indicatepkts_in_order(struct adapter *padapter, struct recv_reor
+ 	int bPktInBuf = false;
+ 	struct recv_priv *precvpriv = &padapter->recvpriv;
+ 	struct __queue *ppending_recvframe_queue = &preorder_ctrl->pending_recvframe_queue;
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 
+ 	/* spin_lock_irqsave(&ppending_recvframe_queue->lock, irql); */
+ 	/* spin_lock(&ppending_recvframe_queue->lock); */
+@@ -1798,7 +1783,6 @@ static int recv_indicatepkts_in_order(struct adapter *padapter, struct recv_reor
+ 
+ 	/*  Handling some condition for forced indicate case. */
+ 	if (bforced == true) {
+-		pdbgpriv->dbg_rx_ampdu_forced_indicate_count++;
+ 		if (list_empty(phead)) {
+ 			/*  spin_unlock_irqrestore(&ppending_recvframe_queue->lock, irql); */
+ 			/* spin_unlock(&ppending_recvframe_queue->lock); */
+@@ -1808,7 +1792,6 @@ static int recv_indicatepkts_in_order(struct adapter *padapter, struct recv_reor
+ 		prframe = (union recv_frame *)plist;
+ 		pattrib = &prframe->u.hdr.attrib;
+ 
+-		recv_indicatepkts_pkt_loss_cnt(pdbgpriv, preorder_ctrl->indicate_seq, pattrib->seq_num);
+ 		preorder_ctrl->indicate_seq = pattrib->seq_num;
+ 
+ 	}
+@@ -1869,8 +1852,6 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
+ 	struct rx_pkt_attrib *pattrib = &prframe->u.hdr.attrib;
+ 	struct recv_reorder_ctrl *preorder_ctrl = prframe->u.hdr.preorder_ctrl;
+ 	struct __queue *ppending_recvframe_queue = &preorder_ctrl->pending_recvframe_queue;
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 
+ 	if (!pattrib->amsdu) {
+ 		/* s1. */
+@@ -1916,11 +1897,8 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
+ 	spin_lock_bh(&ppending_recvframe_queue->lock);
+ 
+ 	/* s2. check if winstart_b(indicate_seq) needs to been updated */
+-	if (!check_indicate_seq(preorder_ctrl, pattrib->seq_num)) {
+-		pdbgpriv->dbg_rx_ampdu_drop_count++;
++	if (!check_indicate_seq(preorder_ctrl, pattrib->seq_num))
+ 		goto _err_exit;
+-	}
+-
+ 
+ 	/* s3. Insert all packet into Reorder Queue to maintain its ordering. */
+ 	if (!enqueue_reorder_recvframe(preorder_ctrl, prframe)) {
+diff --git a/drivers/staging/rtl8723bs/hal/hal_com.c b/drivers/staging/rtl8723bs/hal/hal_com.c
+index 2fa7ea8efd5fc..2ce51cb0ba836 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_com.c
++++ b/drivers/staging/rtl8723bs/hal/hal_com.c
+@@ -934,22 +934,9 @@ bool isAllSpaceOrTab(u8 *data, u8 size)
+ 
+ void rtw_hal_check_rxfifo_full(struct adapter *adapter)
+ {
+-	struct dvobj_priv *psdpriv = adapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+-	int save_cnt = false;
+-
+ 	/* switch counter to RX fifo */
+ 	/* printk("8723b or 8192e , MAC_667 set 0xf0\n"); */
+ 	rtw_write8(adapter, REG_RXERR_RPT+3, rtw_read8(adapter, REG_RXERR_RPT+3)|0xf0);
+-	save_cnt = true;
+-	/* todo: other chips */
+-
+-	if (save_cnt) {
+-		/* rtw_write8(adapter, REG_RXERR_RPT+3, rtw_read8(adapter, REG_RXERR_RPT+3)|0xa0); */
+-		pdbgpriv->dbg_rx_fifo_last_overflow = pdbgpriv->dbg_rx_fifo_curr_overflow;
+-		pdbgpriv->dbg_rx_fifo_curr_overflow = rtw_read16(adapter, REG_RXERR_RPT);
+-		pdbgpriv->dbg_rx_fifo_diff_overflow = pdbgpriv->dbg_rx_fifo_curr_overflow-pdbgpriv->dbg_rx_fifo_last_overflow;
+-	}
+ }
+ 
+ void linked_info_dump(struct adapter *padapter, u8 benable)
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
+index 303308dcb5e22..7313100c5f454 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
+@@ -307,8 +307,6 @@ s32 rtl8723b_FirmwareDownload(struct adapter *padapter, bool  bUsedWoWLANFw)
+ 	const struct firmware *fw;
+ 	struct device *device = dvobj_to_dev(padapter->dvobj);
+ 	u8 *fwfilepath;
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 	u8 tmp_ps;
+ 
+ 	pFirmware = kzalloc(sizeof(struct rt_firmware), GFP_KERNEL);
+@@ -327,8 +325,6 @@ s32 rtl8723b_FirmwareDownload(struct adapter *padapter, bool  bUsedWoWLANFw)
+ 	/* 2. read power_state = 0xA0[1:0] */
+ 	tmp_ps = rtw_read8(padapter, 0xa0);
+ 	tmp_ps &= 0x03;
+-	if (tmp_ps != 0x01)
+-		pdbgpriv->dbg_downloadfw_pwr_state_cnt++;
+ 
+ 	fwfilepath = "rtlwifi/rtl8723bs_nic.bin";
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/sdio_halinit.c b/drivers/staging/rtl8723bs/hal/sdio_halinit.c
+index c9cd6578f7f82..bc19749c0851b 100644
+--- a/drivers/staging/rtl8723bs/hal/sdio_halinit.c
++++ b/drivers/staging/rtl8723bs/hal/sdio_halinit.c
+@@ -887,9 +887,6 @@ static void CardDisableRTL8723BSdio(struct adapter *padapter)
+ 
+ static u32 rtl8723bs_hal_deinit(struct adapter *padapter)
+ {
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+-
+ 	if (padapter->hw_init_completed) {
+ 		if (adapter_to_pwrctl(padapter)->bips_processing) {
+ 			if (padapter->netif_up) {
+@@ -922,18 +919,15 @@ static u32 rtl8723bs_hal_deinit(struct adapter *padapter)
+ 				adapter_to_pwrctl(padapter)->pre_ips_type = 0;
+ 
+ 			} else {
+-				pdbgpriv->dbg_carddisable_cnt++;
+ 				CardDisableRTL8723BSdio(padapter);
+ 
+ 				adapter_to_pwrctl(padapter)->pre_ips_type = 1;
+ 			}
+ 
+ 		} else {
+-			pdbgpriv->dbg_carddisable_cnt++;
+ 			CardDisableRTL8723BSdio(padapter);
+ 		}
+-	} else
+-		pdbgpriv->dbg_deinit_fail_cnt++;
++	}
+ 
+ 	return _SUCCESS;
+ }
+diff --git a/drivers/staging/rtl8723bs/include/drv_types.h b/drivers/staging/rtl8723bs/include/drv_types.h
+index 82159e1c7f9b6..49fc58d39be35 100644
+--- a/drivers/staging/rtl8723bs/include/drv_types.h
++++ b/drivers/staging/rtl8723bs/include/drv_types.h
+@@ -188,45 +188,6 @@ struct registry_priv {
+ #define GET_IFACE_NUMS(padapter) (((struct adapter *)padapter)->dvobj->iface_nums)
+ #define GET_ADAPTER(padapter, iface_id) (((struct adapter *)padapter)->dvobj->padapters[iface_id])
+ 
+-struct debug_priv {
+-	u32 dbg_sdio_free_irq_error_cnt;
+-	u32 dbg_sdio_alloc_irq_error_cnt;
+-	u32 dbg_sdio_free_irq_cnt;
+-	u32 dbg_sdio_alloc_irq_cnt;
+-	u32 dbg_sdio_deinit_error_cnt;
+-	u32 dbg_sdio_init_error_cnt;
+-	u32 dbg_suspend_error_cnt;
+-	u32 dbg_suspend_cnt;
+-	u32 dbg_resume_cnt;
+-	u32 dbg_resume_error_cnt;
+-	u32 dbg_deinit_fail_cnt;
+-	u32 dbg_carddisable_cnt;
+-	u32 dbg_carddisable_error_cnt;
+-	u32 dbg_ps_insuspend_cnt;
+-	u32 dbg_dev_unload_inIPS_cnt;
+-	u32 dbg_wow_leave_ps_fail_cnt;
+-	u32 dbg_scan_pwr_state_cnt;
+-	u32 dbg_downloadfw_pwr_state_cnt;
+-	u32 dbg_fw_read_ps_state_fail_cnt;
+-	u32 dbg_leave_ips_fail_cnt;
+-	u32 dbg_leave_lps_fail_cnt;
+-	u32 dbg_h2c_leave32k_fail_cnt;
+-	u32 dbg_diswow_dload_fw_fail_cnt;
+-	u32 dbg_enwow_dload_fw_fail_cnt;
+-	u32 dbg_ips_drvopen_fail_cnt;
+-	u32 dbg_poll_fail_cnt;
+-	u32 dbg_rpwm_toggle_cnt;
+-	u32 dbg_rpwm_timeout_fail_cnt;
+-	u64 dbg_rx_fifo_last_overflow;
+-	u64 dbg_rx_fifo_curr_overflow;
+-	u64 dbg_rx_fifo_diff_overflow;
+-	u64 dbg_rx_ampdu_drop_count;
+-	u64 dbg_rx_ampdu_forced_indicate_count;
+-	u64 dbg_rx_ampdu_loss_count;
+-	u64 dbg_rx_dup_mgt_frame_drop_count;
+-	u64 dbg_rx_ampdu_window_shift_cnt;
+-};
+-
+ struct rtw_traffic_statistics {
+ 	/*  tx statistics */
+ 	u64	tx_bytes;
+@@ -262,8 +223,6 @@ struct dvobj_priv {
+ 
+ 	s32	processing_dev_remove;
+ 
+-	struct debug_priv drv_dbg;
+-
+ 	/* for local/global synchronization */
+ 	/*  */
+ 	spinlock_t	lock;
+diff --git a/drivers/staging/rtl8723bs/os_dep/os_intfs.c b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+index 6a44fb1b8593e..a5b2bb05e9628 100644
+--- a/drivers/staging/rtl8723bs/os_dep/os_intfs.c
++++ b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+@@ -1014,8 +1014,6 @@ void rtw_ndev_destructor(struct net_device *ndev)
+ void rtw_dev_unload(struct adapter *padapter)
+ {
+ 	struct pwrctrl_priv *pwrctl = adapter_to_pwrctl(padapter);
+-	struct dvobj_priv *pobjpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &pobjpriv->drv_dbg;
+ 	struct cmd_priv *pcmdpriv = &padapter->cmdpriv;
+ 	u8 cnt = 0;
+ 
+@@ -1045,7 +1043,6 @@ void rtw_dev_unload(struct adapter *padapter)
+ 			/* check HW status and SW state */
+ 			netdev_dbg(padapter->pnetdev,
+ 				   "%s: driver in IPS-FWLPS\n", __func__);
+-			pdbgpriv->dbg_dev_unload_inIPS_cnt++;
+ 			LeaveAllPowerSaveMode(padapter);
+ 		} else {
+ 			netdev_dbg(padapter->pnetdev,
+@@ -1129,24 +1126,21 @@ static void rtw_suspend_normal(struct adapter *padapter)
+ void rtw_suspend_common(struct adapter *padapter)
+ {
+ 	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 	struct pwrctrl_priv *pwrpriv = dvobj_to_pwrctl(psdpriv);
+ 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
+ 
+ 	unsigned long start_time = jiffies;
+ 
+ 	netdev_dbg(padapter->pnetdev, " suspend start\n");
+-	pdbgpriv->dbg_suspend_cnt++;
+ 
+ 	pwrpriv->bInSuspend = true;
+ 
+ 	while (pwrpriv->bips_processing)
+ 		msleep(1);
+ 
+-	if ((!padapter->bup) || (padapter->bDriverStopped) || (padapter->bSurpriseRemoved)) {
+-		pdbgpriv->dbg_suspend_error_cnt++;
++	if ((!padapter->bup) || (padapter->bDriverStopped) || (padapter->bSurpriseRemoved))
+ 		return;
+-	}
 +
- 	int (*pre_bank_switch)(struct sdw_intel *sdw);
- 	int (*post_bank_switch)(struct sdw_intel *sdw);
- };
+ 	rtw_ps_deny(padapter, PS_DENY_SUSPEND);
+ 
+ 	rtw_cancel_all_timer(padapter);
+@@ -1174,8 +1168,6 @@ static int rtw_resume_process_normal(struct adapter *padapter)
+ 	struct net_device *pnetdev;
+ 	struct pwrctrl_priv *pwrpriv;
+ 	struct mlme_priv *pmlmepriv;
+-	struct dvobj_priv *psdpriv;
+-	struct debug_priv *pdbgpriv;
+ 
+ 	int ret = _SUCCESS;
+ 
+@@ -1187,8 +1179,6 @@ static int rtw_resume_process_normal(struct adapter *padapter)
+ 	pnetdev = padapter->pnetdev;
+ 	pwrpriv = adapter_to_pwrctl(padapter);
+ 	pmlmepriv = &padapter->mlmepriv;
+-	psdpriv = padapter->dvobj;
+-	pdbgpriv = &psdpriv->drv_dbg;
+ 	/*  interface init */
+ 	/* if (sdio_init(adapter_to_dvobj(padapter)) != _SUCCESS) */
+ 	if ((padapter->intf_init) && (padapter->intf_init(adapter_to_dvobj(padapter)) != _SUCCESS)) {
+@@ -1207,7 +1197,6 @@ static int rtw_resume_process_normal(struct adapter *padapter)
+ 
+ 	if (pm_netdev_open(pnetdev, true) != 0) {
+ 		ret = -1;
+-		pdbgpriv->dbg_resume_error_cnt++;
+ 		goto exit;
+ 	}
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+index b77f1dcfcc7a9..d346cca4a4396 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+@@ -71,13 +71,10 @@ static int sdio_alloc_irq(struct dvobj_priv *dvobj)
+ 	sdio_claim_host(func);
+ 
+ 	err = sdio_claim_irq(func, &sd_sync_int_hdl);
+-	if (err) {
+-		dvobj->drv_dbg.dbg_sdio_alloc_irq_error_cnt++;
++	if (err)
+ 		netdev_crit(dvobj->if1->pnetdev, "%s: sdio_claim_irq FAIL(%d)!\n", __func__, err);
+-	} else {
+-		dvobj->drv_dbg.dbg_sdio_alloc_irq_cnt++;
++	else
+ 		dvobj->irq_alloc = 1;
+-	}
+ 
+ 	sdio_release_host(func);
+ 
+@@ -98,12 +95,10 @@ static void sdio_free_irq(struct dvobj_priv *dvobj)
+ 			sdio_claim_host(func);
+ 			err = sdio_release_irq(func);
+ 			if (err) {
+-				dvobj->drv_dbg.dbg_sdio_free_irq_error_cnt++;
+ 				netdev_err(dvobj->if1->pnetdev,
+ 					   "%s: sdio_release_irq FAIL(%d)!\n",
+ 					   __func__, err);
+-			} else
+-				dvobj->drv_dbg.dbg_sdio_free_irq_cnt++;
++			}
+ 			sdio_release_host(func);
+ 		}
+ 		dvobj->irq_alloc = 0;
+@@ -123,16 +118,13 @@ static u32 sdio_init(struct dvobj_priv *dvobj)
+ 	sdio_claim_host(func);
+ 
+ 	err = sdio_enable_func(func);
+-	if (err) {
+-		dvobj->drv_dbg.dbg_sdio_init_error_cnt++;
++	if (err)
+ 		goto release;
+-	}
+ 
+ 	err = sdio_set_block_size(func, 512);
+-	if (err) {
+-		dvobj->drv_dbg.dbg_sdio_init_error_cnt++;
++	if (err)
+ 		goto release;
+-	}
++
+ 	psdio_data->block_transfer_len = 512;
+ 	psdio_data->tx_block_mode = 1;
+ 	psdio_data->rx_block_mode = 1;
+@@ -148,22 +140,15 @@ static u32 sdio_init(struct dvobj_priv *dvobj)
+ static void sdio_deinit(struct dvobj_priv *dvobj)
+ {
+ 	struct sdio_func *func;
+-	int err;
+ 
+ 	func = dvobj->intf_data.func;
+ 
+ 	if (func) {
+ 		sdio_claim_host(func);
+-		err = sdio_disable_func(func);
+-		if (err)
+-			dvobj->drv_dbg.dbg_sdio_deinit_error_cnt++;
++		sdio_disable_func(func);
+ 
+ 		if (dvobj->irq_alloc) {
+-			err = sdio_release_irq(func);
+-			if (err)
+-				dvobj->drv_dbg.dbg_sdio_free_irq_error_cnt++;
+-			else
+-				dvobj->drv_dbg.dbg_sdio_free_irq_cnt++;
++			sdio_release_irq(func);
+ 		}
+ 
+ 		sdio_release_host(func);
+@@ -441,15 +426,12 @@ static int rtw_sdio_suspend(struct device *dev)
+ 	struct dvobj_priv *psdpriv = sdio_get_drvdata(func);
+ 	struct pwrctrl_priv *pwrpriv = dvobj_to_pwrctl(psdpriv);
+ 	struct adapter *padapter = psdpriv->if1;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 
+ 	if (padapter->bDriverStopped)
+ 		return 0;
+ 
+-	if (pwrpriv->bInSuspend) {
+-		pdbgpriv->dbg_suspend_error_cnt++;
++	if (pwrpriv->bInSuspend)
+ 		return 0;
+-	}
+ 
+ 	rtw_suspend_common(padapter);
+ 
+@@ -459,13 +441,9 @@ static int rtw_sdio_suspend(struct device *dev)
+ static int rtw_resume_process(struct adapter *padapter)
+ {
+ 	struct pwrctrl_priv *pwrpriv = adapter_to_pwrctl(padapter);
+-	struct dvobj_priv *psdpriv = padapter->dvobj;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+ 
+-	if (!pwrpriv->bInSuspend) {
+-		pdbgpriv->dbg_resume_error_cnt++;
++	if (!pwrpriv->bInSuspend)
+ 		return -1;
+-	}
+ 
+ 	return rtw_resume_common(padapter);
+ }
+@@ -477,9 +455,6 @@ static int rtw_sdio_resume(struct device *dev)
+ 	struct adapter *padapter = psdpriv->if1;
+ 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
+ 	int ret = 0;
+-	struct debug_priv *pdbgpriv = &psdpriv->drv_dbg;
+-
+-	pdbgpriv->dbg_resume_cnt++;
+ 
+ 	ret = rtw_resume_process(padapter);
+ 
 -- 
 2.53.0
 
