@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033099;
-	b=uz/9X895f1NFe1u59yDcQrbl+bwoctBuJCFNoMdzh+AD3uvJajKOU3lT4vYsJ79ndDbb
-	 mBm0GVLhZB6ZN8JrENajOInEFr3V+SErzlDz150fI77AUsPgd5VYerAqux0KMlGAawL6i
-	 gn2u9I72IzRv/ZYXwjk8xYm1DOk/M7YjCrWoC6qGb7Gn6ib97rK9Nln+xvx9q8y4j+aoC
-	 89mmBnwhwb2ibJ/4XYMi3l1jTAHGfMS8EFnq+mE5iXISBC1+h1zeuzMS2XoCJlx1RtCS8
-	 myUBAMFIxidoYeo9lj5A7jbk0P4t4NCYsaaoryCJx19AELZDrXWaM4ePO89AJ01OVKA==
+	t=1795033102;
+	b=Nuwm4tY4Z8q+bF+2yy6YX3wR3Rh4oAGKRBmp6SeQplnkr38UBhsVjKPPdmQGKR3ARm4L
+	 NwIoo1aP6PwwDB2MqwK50gJzRw7xot/044vIiheIhN/Vhxq86Jpz7fw8n9x1ruv5rZA4D
+	 HldvQkIX0YoU1S/zqCtLBoXUOTV6bvrdsimbgxefKdGhcu5GW095VtoArlERKAvzd4zCO
+	 3U+TCyoilGwTsAZDnWYZLD0/t3IBQ36WG/7zPw1NBmUTZzFYyl6JTC9tbZcMxpuu8q8Mi
+	 gwlfvKvzHgSSScja8RcZVcj80P5UmUo2mYOrzn9R1JtlYr4kq2aEyPuRPygOnZiY/qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sAM6KejkDXrqdfxuSVxT70UqK7dRwGmyw/HBHbdrFOw=;
-	b=2UmxySnj4y8E0GHb72NBcqN1JOg71Jv79wzBRZ6GZ5ShEiwcsidRUIjYqcqmAbv2zCyX
-	 GzRSzN5ULJpOaTINijbA/ClJ1d0hTw0elsQ9Xbh6QMcFZcmzCBXSc08oyXp1SctQ1rzfw
-	 ctNTCDQ9/DLpNvjVyyjtGaU/qBVhV+bY5lCn2tqiIQBarYldt0YmVu4PH/m1ymM0rveMd
-	 gnz/uc1hhKFRk/NGYA2GmrQbGSBwtuFLC8C42eIuszPebcAUYACN20hDHnpHzwLmMLp7t
-	 LQbyaF2qJdr+mL5j9x0W6Mm0Ad2mNmlccRge2GO70HF9tkVoY+AeBpwBzE6EGL7U9Nw==
+	bh=++3aIgIXsOiR4E8JC/uwN1Mod/vuKqy7edGGGQpRobc=;
+	b=zbgf7F31UZ+tAJzI+z/6o4Ch1SZ24MQhndB3Tnyvcsnr67lBOR8FV2kHtpisJA6acaH2
+	 aTNDjjcjVy629ZLWKATNTB0/wG9DlnJFUVimy7FY0nkMk5NFJ23eoGsCwExk0EgUOmHNi
+	 pffScFqIX3HXLO/rxs7sVtyB1P8uUauMXeahh3abDYClBhXy6BNAgsPiDvh3pXJ9Qggq9
+	 wydcvdBs0OMGEjlgJ1QnzRUIXnM9i+W7NHgySMoTlMPHaUWfbMuiQdfe+LZC/nVD1c5Kh
+	 cisU7I6jXH169ZOuZq0cN07QrfOQBmVV5ETAfIA7CvBFbnnCdw/1wYXdXkj6t0WQlQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ilFhInXl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bzwlaqco;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE86606A31C;
-	Wed, 18 Nov 2026 20:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3E3606A31C;
+	Wed, 18 Nov 2026 20:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ilFhInXl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4671F000C4;
-	Wed, 18 Nov 2026 20:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bzwlaqco
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F8F1F000C4;
+	Wed, 18 Nov 2026 20:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033099;
-	bh=sAM6KejkDXrqdfxuSVxT70UqK7dRwGmyw/HBHbdrFOw=;
+	s=korg; t=1795033102;
+	bh=++3aIgIXsOiR4E8JC/uwN1Mod/vuKqy7edGGGQpRobc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ilFhInXlioj0AeTN534pE8wjzcuBwfR/wK0X1L5GR32wMr7zXcgStxN4UHUc7kIHw
-	 kF5D0lFp/pspgXLLtlF/3ci5aHyVxQDKduhRs4Qa5JWPIW1MpHEWuPbFUEEUHFjcI4
-	 Wgp27Z/r3SO+eVCFLgLxvAVUG+YN2yLbh7UdLu0E=
+	b=Bzwlaqcoy23ng0Aq36RSJ5/Ya2H14TJW+sCekjBYYXYpuZ6G4EfjtRGfO6ENG15XX
+	 nM20TRW25OmpzMUztM8plNgrQw1BehkxB4MuCJHJRGz6J4zhuohH9xYop9Wwuvcrqt
+	 6oxk8tEtqBrf52Ork7wxGgCOJ+YgiG/oGvm/hTSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1605/1756] x86_energy_perf_policy: Fix optarg keyword matching
-Date: Wed, 18 Nov 2026 16:02:12 +0100
-Message-ID: <20261118150113.777642941@linuxfoundation.org>
+Subject: [PATCH 6.12 1606/1756] x86_energy_perf_policy: Cleanup: Check fseek() in VM path
+Date: Wed, 18 Nov 2026 16:02:13 +0100
+Message-ID: <20261118150113.811903243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,55 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 0177067d195a4757149f6702af191987377c71c3 ]
+[ Upstream commit 2778dc35d40e7e84c134ca4cab1376fa58208f80 ]
 
-Replace strncmp() with strcmp() for exact string matching in
-parse_optarg_string().  Exact keyword matching is safer and clearer.
-This prevents accidental matches with longer strings
-like "performance-foo".
+Add return value validation for fseek() and ensure consistent
+resource cleanup on all error paths in err_on_hypervisor().
 
-Fixes: 4beec1d75196 ("tools/power x86_energy_perf_policy: support HWP.EPP")
+Fixes: 0936cdfbb527 ("tools/power x86_energy_perf_policy: Input/output error in a VM")
 Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86_energy_perf_policy/x86_energy_perf_policy.c  | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ .../x86/x86_energy_perf_policy/x86_energy_perf_policy.c     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 891738116c8b2..2545f64d5f43b 100644
+index 2545f64d5f43b..f26c6dd0d6c14 100644
 --- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
 +++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -312,22 +312,22 @@ int parse_optarg_string(char *s)
- 	int i;
- 	char *endptr;
+@@ -661,7 +661,11 @@ void err_on_hypervisor(void)
  
--	if (!strncmp(s, "default", 7))
-+	if (strcmp(s, "default") == 0)
- 		return OPTARG_NORMAL;
- 
--	if (!strncmp(s, "normal", 6))
-+	if (strcmp(s, "normal") == 0)
- 		return OPTARG_NORMAL;
- 
--	if (!strncmp(s, "power", 9))
-+	if (strcmp(s, "power") == 0)
- 		return OPTARG_POWER;
- 
--	if (!strncmp(s, "balance-power", 17))
-+	if (strcmp(s, "balance-power") == 0)
- 		return OPTARG_BALANCE_POWER;
- 
--	if (!strncmp(s, "balance-performance", 19))
-+	if (strcmp(s, "balance-performance") == 0)
- 		return OPTARG_BALANCE_PERFORMANCE;
- 
--	if (!strncmp(s, "performance", 11))
-+	if (strcmp(s, "performance") == 0)
- 		return OPTARG_PERFORMANCE;
- 
- 	i = strtol(s, &endptr, 0);
+ 	flags = strstr(buffer, "flags");
+ 	rewind(cpuinfo);
+-	fseek(cpuinfo, flags - buffer, SEEK_SET);
++	if (fseek(cpuinfo, flags - buffer, SEEK_SET) != 0) {
++		fclose(cpuinfo);
++		free(buffer);
++		err(1, "Failed to seek in /proc/cpuinfo");
++	}
+ 	if (!fgets(buffer, 4096, cpuinfo)) {
+ 		fclose(cpuinfo);
+ 		free(buffer);
 -- 
 2.53.0
 
