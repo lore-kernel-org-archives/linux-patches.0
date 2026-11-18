@@ -1,60 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038210;
-	b=aeHrbLXDea6/MQnLzIjvAVuP3JC/NbyR2I+TSYyqKiFzwaPcEuRsWmMTBt6mgVLNFkcF
-	 gVAw/L0mbPNZ3coRJW207NJghzAh1je3nBBGK2Z4jy2kELDE/Ier2DqHBWDJn5NTAkkKb
-	 +DNlZhySHT9FVt+wfSHqlc2N/4BSI3nLGbTtclRVtoebnbZ0cCGI7+YZEoRuZjrp0TR7Y
-	 Dsl5SKMMBByQ/k7FEruIGy3jJI7SqqIRxII5RsWJiaMHtpOQiXRgJqkKnIGfDsRLxOvV4
-	 DDzdf9ChI8JtnVn7ybyeAOyczv00ys8x4yrZWbz/m6MPm02wLkRw4p19aMBNVfFmhig==
+	t=1795038213;
+	b=k+/TRcwxUDieo5Zd3yF2CoZEuOqZ9IULkne/rOju+aOOeSblk786exA883iRTtuxpfTA
+	 efpqy3q7I4TFSClBeeX3e4ZvKGzKl16wI1fNhuzOxCwZDLk2TeXMIkb+GbrB4BCZnffVj
+	 vqBDLRM42zKu/f87EwlqCD0xPtJTH6As4DUE7RfM3uoU6Oy4p6eIFK93RQn9f2gdvl1EG
+	 4knQbDSGEO2u9m4OkBncLuBem5nXPrUtdMVyJIkPpeKvwpwlMyFowPfjD8pj9IbzPf4Xq
+	 KnQf/KIK5irGL4Y4msUtHgC1gBXhXBGCVppC03C8JcECPyw5Au9bvAY/pFUPHnR7vRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e+EPwlmgkesww9sEKkn2udezWle/FKsMkYf8ceSnpGw=;
-	b=VQH1ou8CnnLUA3leWMd1cHe6SLXk4pok2JymD6YdysU8UyVc4nBQzxiJG4+c5xMGgi71
-	 3xWyVBg23YyRAKd5Z6C1qkuN+dwzQvXC437Fx8m21JfJipkzT/Ce8Of8++nO8L6phUvzC
-	 301se0HVtGIJDANvWoCHLDRphOPa40HPSGdeqtW5nvWMzQP4WKqXrKiLo88EIyPM3RkpY
-	 /vls5S2o1IoiuK+VZcuX/PlQ74y2/tUqbqDU7aZj5uCLg0bsSRJrveodi8FQ7a4U5dGb4
-	 NXpdkJVBAg59AKV3aOY+PQqXlTd1M4vP2MLYyhnqejTLaIGHWsPDxfP63PCGkC8y9bA==
+	bh=lqE9gx4nWtgcYBRQeql0nFt3G1wG++mTFA0iNzKPCv4=;
+	b=cRKqXgL1MQ+TWJ2D8VjKVz+Z6f+CGW/Q+FJQrqOUx4jWd0ZrNmbterH/ISQijr4xqaYh
+	 5jHB4sny1XIqgGh3hGuIPpfRBUDEiOpMEiFquRhhLgYRWdZqIBH6qwgwEbddPUWSykJhF
+	 1mE0jiK9P6rF3KFEH279Nq88tE975wG/tGIfEpFm9EDVn4gzdRGHEZHoFf3F7TNXQXjg+
+	 lpS6gryj5iFLypd6aiefSYHB0Ub9pqGLkOGPXk4SaH1N2PF+yeSRCZPpiRvuwIF42HW2i
+	 3spDmWYDmwSvURmpXzVSRCN+jv1vAs688KmbH/4Yivd72HAxdY6E7mBjDRvzpbbfHyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlBEjEv5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nQNO9/hz";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B48606A320;
-	Wed, 18 Nov 2026 21:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68B606A320;
+	Wed, 18 Nov 2026 21:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlBEjEv5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4281F000C4;
-	Wed, 18 Nov 2026 21:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQNO9/hz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CACE1F000C4;
+	Wed, 18 Nov 2026 21:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038210;
-	bh=e+EPwlmgkesww9sEKkn2udezWle/FKsMkYf8ceSnpGw=;
+	s=korg; t=1795038212;
+	bh=lqE9gx4nWtgcYBRQeql0nFt3G1wG++mTFA0iNzKPCv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tlBEjEv5d+6q/Zhp/H7DK7q3W58REVPkmDeyV9zuQ2r0FW/8+U3UoU2uoBT3CraYJ
-	 4f9f4Unm1INyM/BDnQVqsn2dleiiEP4VIwCZBmb09H9EkaQdF7yUClQfHcUEj9xskf
-	 oPRAz+siqeqO56nhj9FD5nf684Rhl+LibfeqmQd8=
+	b=nQNO9/hzSgfHWz70faNgABp47ZCzgFmMTaECKbqP1Gp1XVcC3LEqeligEcllerXeM
+	 zTbx346RviVz0KYgww+3R5mcMLl9aPMdVn8vugp8RWp6NPGlfh8AAT9KxCePFl03Bn
+	 TOqv7V8MBY0S40nDacLcHEYNcofqU8Y/qNOXsdeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Mason <mason@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Harry Yoo <harry@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Lance Yang <lance.yang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1665/3318] mm/page_vma_mapped: continue past nonmatching huge PMDs
-Date: Wed, 18 Nov 2026 15:38:07 +0100
-Message-ID: <20261118150411.732674905@linuxfoundation.org>
+Subject: [PATCH 6.6 1666/3318] mm/shmem: honour F_SEAL_EXEC when an ACL is set
+Date: Wed, 18 Nov 2026 15:38:08 +0100
+Message-ID: <20261118150411.763776995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -76,105 +74,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 1a2993227e8a27fc4cdea305bbdae82d290bc885 ]
+[ Upstream commit 0237c47ca17005ea41b510c6116f0257dbf84eab ]
 
-A PTE-mapped large folio can straddle PMD boundaries after an unaligned
-mremap().  If the first part is discarded and replaced with an unrelated
-huge PMD, page_vma_mapped_walk() stops instead of looking for the rest of
-the folio in subsequent PMDs.
+The owner of a memfd sealed with F_SEAL_EXEC can still change its
+execute bits by setting a POSIX access ACL. With CONFIG_TMPFS_POSIX_ACL,
+this lets an unprivileged owner make a non-executable memfd executable,
+bypassing vm.memfd_noexec=2.
 
-This also affects migration entries.  A walk that stops at an unrelated
-huge PMD can leave migration PTEs behind when migration or an anonymous
-folio split restores the mappings.  Those entries do not hold mapping
-references and can outlive the source folio.
+simple_set_acl() updates i_mode directly, bypassing the seal check in
+shmem_setattr(). Add shmem_set_acl() to check the resulting mode. Share
+the F_SEAL_EXEC check with shmem_setattr() using memfd_check_seals_mode()
+in include/linux/memfd.h.
 
-This issue can lead to memory corruption and I have a reproducer for
-it.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Skip the current PMD rather than ending the walk on a flag or PFN
-mismatch.  Do the same if the PMD became nonpresent before the locked
-recheck.  Release the PMD lock, clear the per-PMD state and advance with
-step_forward(), so the existing range limit controls termination.  This
-covers present, migration and device-private huge PMDs while preserving
-the matching-PMD and split-to-PTE paths.
-
-Link: https://lore.kernel.org/20261016011549.61146-1-kylebot@openai.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: LLM
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted PMD checks to the existing swap-entry-based migration handling ]
+Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+[ david: use common helper; simplify description ]
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-4-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: changed shmem_set_acl() to accept a non-const mnt_idmap pointer ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_vma_mapped.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ include/linux/memfd.h |  9 +++++++++
+ mm/shmem.c            | 35 ++++++++++++++++++++++++++++++-----
+ 2 files changed, 39 insertions(+), 5 deletions(-)
 
-diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
-index c7e8ccd1aa06f..70769e270c04d 100644
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -254,18 +254,18 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+diff --git a/include/linux/memfd.h b/include/linux/memfd.h
+index 40cc726a8a0ce..a0f022e2a58cb 100644
+--- a/include/linux/memfd.h
++++ b/include/linux/memfd.h
+@@ -2,8 +2,17 @@
+ #ifndef __LINUX_MEMFD_H
+ #define __LINUX_MEMFD_H
  
- 				if (!thp_migration_supported() ||
- 				    !(pvmw->flags & PVMW_MIGRATION))
--					return not_found(pvmw);
-+					goto next_pmd;
- 				entry = pmd_to_swp_entry(pmde);
- 				if (!is_migration_entry(entry) ||
- 				    !check_pmd(swp_offset_pfn(entry), pvmw))
--					return not_found(pvmw);
-+					goto next_pmd;
- 				return true;
- 			}
- 			if (likely(pmd_trans_huge(pmde) || pmd_devmap(pmde))) {
- 				if (pvmw->flags & PVMW_MIGRATION)
--					return not_found(pvmw);
-+					goto next_pmd;
- 				if (!check_pmd(pmd_pfn(pmde), pvmw))
--					return not_found(pvmw);
-+					goto next_pmd;
- 				return true;
- 			}
- 			/* THP pmd was split under us: handle on pte level */
-@@ -284,8 +284,7 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
++#include <linux/fcntl.h>
+ #include <linux/file.h>
  
- 				spin_unlock(ptl);
- 			}
--			step_forward(pvmw, PMD_SIZE);
--			continue;
-+			goto next_pmd;
- 		}
- 		if (!map_pte(pvmw, &ptl)) {
- 			if (!pvmw->pte)
-@@ -318,6 +317,17 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
- 			spin_lock(pvmw->ptl);
- 		}
- 		goto this_pte;
-+next_pmd:
-+		/*
-+		 * A large folio can be PTE-mapped across PMDs, so a
-+		 * nonmatching PMD does not end the walk.
-+		 */
-+		if (pvmw->ptl) {
-+			spin_unlock(pvmw->ptl);
-+			pvmw->ptl = NULL;
-+		}
-+		pvmw->pmd = NULL;
-+		step_forward(pvmw, PMD_SIZE);
- 	} while (pvmw->address < end);
++static inline int memfd_check_seals_mode(unsigned int seals, umode_t old_mode,
++		umode_t new_mode)
++{
++	if ((seals & F_SEAL_EXEC) && ((old_mode ^ new_mode) & 0111))
++		return -EPERM;
++	return 0;
++}
++
+ #ifdef CONFIG_MEMFD_CREATE
+ extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
+ unsigned int *memfd_file_seals_ptr(struct file *file);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index e6b39b49caec7..0f7c7ec48837a 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -75,6 +75,7 @@ static struct vfsmount *shm_mnt;
+ #include <linux/magic.h>
+ #include <linux/syscalls.h>
+ #include <linux/fcntl.h>
++#include <linux/memfd.h>
+ #include <uapi/linux/memfd.h>
+ #include <linux/rmap.h>
+ #include <linux/uuid.h>
+@@ -1202,10 +1203,11 @@ static int shmem_setattr(struct mnt_idmap *idmap,
+ 	if (error)
+ 		return error;
  
- 	return false;
+-	if ((info->seals & F_SEAL_EXEC) && (attr->ia_valid & ATTR_MODE)) {
+-		if ((inode->i_mode ^ attr->ia_mode) & 0111) {
+-			return -EPERM;
+-		}
++	if (attr->ia_valid & ATTR_MODE) {
++		error = memfd_check_seals_mode(info->seals, inode->i_mode,
++					       attr->ia_mode);
++		if (error)
++			return error;
+ 	}
+ 
+ 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
+@@ -4524,12 +4526,35 @@ static const struct file_operations shmem_file_operations = {
+ #endif
+ };
+ 
++#ifdef CONFIG_TMPFS_POSIX_ACL
++static int shmem_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
++		struct posix_acl *acl, int type)
++{
++	struct inode *inode = d_inode(dentry);
++	umode_t mode = inode->i_mode;
++	int error;
++
++	if (type == ACL_TYPE_ACCESS) {
++		error = posix_acl_equiv_mode(acl, &mode);
++		if (error < 0)
++			return error;
++		error = memfd_check_seals_mode(SHMEM_I(inode)->seals,
++					       inode->i_mode, mode);
++		if (error)
++			return error;
++	}
++	return simple_set_acl(idmap, dentry, acl, type);
++}
++#else
++#define shmem_set_acl simple_set_acl
++#endif
++
+ static const struct inode_operations shmem_inode_operations = {
+ 	.getattr	= shmem_getattr,
+ 	.setattr	= shmem_setattr,
+ #ifdef CONFIG_TMPFS_XATTR
+ 	.listxattr	= shmem_listxattr,
+-	.set_acl	= simple_set_acl,
++	.set_acl	= shmem_set_acl,
+ 	.fileattr_get	= shmem_fileattr_get,
+ 	.fileattr_set	= shmem_fileattr_set,
+ #endif
 -- 
 2.53.0
 
