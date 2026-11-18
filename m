@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044156;
-	b=NvwRxNA+3+WZzeC0M+9OlvintnZ3fMbKLSkr0c4er+BIwxWQ+gwe4RfqpP7GwQsqNAyp
-	 edh2wraHv0vICrE8q9KOG1Vn4rEMbHHSx7I0rMsELuc//xE6WHaoRinQu0RxxnLIRATpI
-	 cgnd3NrRjjG7rH6urpk/+YXcyrKacY1HMAxcjgc8kanYHzatMxWiSsFY7GDTf5PcAuXQD
-	 T22uHMOJHhUZfEh2nQOz08vy5msj0ohfUkyWXLW7Unf2A51X1kh5EfmA2v4AUiMx2HVpJ
-	 B8eAocUl0ArSW1A1NFVYUDNM+84S4gQS6mTAZH+KmX2EpavKNnKKde3Ew2hJlvpAuPg==
+	t=1795044158;
+	b=lU0cEkzCxgJCvbRMPsLK2IErT6sX9RO2/zHGjuxjlHHXaZ6gbDAQQdix5xcLPSLGospm
+	 rOBXawFtIzkaBj2lP0SaD29DL7InNOmA64Hr8jB/x+mUQ8nbchi+na7aGmzJTA46e8skG
+	 acLDVaitjwO/MFmglblBSXdAogZNMgQ+ftFPXC2AX4RTtt63yRXW0HLdQDUt0PXUbklH6
+	 lkgwKhoMGJLl1pGIdEaEqxp1VPwYprGOJyw94EV8Po1baqy+JuIaIwun98SMMT+pJZveL
+	 8ZA5T8fRucg1Laa2XRsmHe5m/NmfkY9YPSy87U/vhMRlssssuajbSymO0jmIwCcBPtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ra/QwUUkl2UnSdXhO8oh8QWqDgRv7dvqMUDVhfbaaqU=;
-	b=lnZ0JLldiaToeHlzwT49h+xyVFm93oi2HCCHOI1mMx8CsBfTrs391lYxMt1y62gpZsva
-	 003Nn9PT0RbqpJHOafimSY6kZkLKIUw5mWDPvoyxHYGYkI69DXvZ9y1u4wIJVmqflr01r
-	 ssdsDYATSac4vfe4YW31GSf92bRW+tiftzJVnJ0r9eCXFQPszxFCSlpyap1VtSYH6DBoR
-	 13SCDUAlnZZpF4sUV1MDgzata9ydJjBwmVKncbL/AhOEZtvzlMx6CbDL1Ch7lDlGU6GRF
-	 pQ3yyIwz/46j3zGiceGcwHu+pvKABsvgLBgdGssFyGEyDNf/GVI+z3nf3WU/1RDW5EA==
+	bh=vsQyqBNfekSva9UgdBc0F0S0upWYgmuiP5YKjTir2jA=;
+	b=3Xdaez737CPSqo3879wVChCYSmEOI0A6cXCJHydUfcqcxGVDCuOcu9lMT4sUEfrS/cZY
+	 iADJl6LDiH+uSp8IAcrBkaDXTdu14O9T87rIIfgJ7/d+OZP4q3p38ed427dgHpitbOfUZ
+	 iGTMVMpFz/TaUtj3eVLtvGfhAL24UZfgnHbmCy+RLj2LPTm/1uB3A4HutazvKlHNPtH2+
+	 SS6RMc8+KmyxanPlDrl3kZCMt5oF4PYPH3QptONK50VzKPnV1gljYP4nzV8HqWHn3jxnJ
+	 MliGUvtTFiEky46ncEyBUEQKgiSYux/Hfn1hcMT583WR3214LxoGstSfUrNkTNGqNHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9ghyMGi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fpz/+g2A";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC39606A31C;
-	Wed, 18 Nov 2026 23:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AC8606A31C;
+	Wed, 18 Nov 2026 23:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9ghyMGi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B02B1F000C4;
-	Wed, 18 Nov 2026 23:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpz/+g2A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3830E1F000C4;
+	Wed, 18 Nov 2026 23:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044156;
-	bh=ra/QwUUkl2UnSdXhO8oh8QWqDgRv7dvqMUDVhfbaaqU=;
+	s=korg; t=1795044158;
+	bh=vsQyqBNfekSva9UgdBc0F0S0upWYgmuiP5YKjTir2jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X9ghyMGimDClG719XTwKQoGdTNXgaILSXVjpHqzeftG0yFu33MEYmNuWinY0rG8Oa
-	 UY3XumDdKb54EjhQSXx9X0EmdeIRFN5J+13r8xJdW/yHtIpTe5zrN13wA2pPlUPojd
-	 izbMiwo7Yfo630BSRBqk45SESrtTXSJeyGISDqWg=
+	b=fpz/+g2AMpS12PE0bRAZ5aPM9GPsQiqWx4B6jo1QhNWCzDg6wG5oBjMC2JJAXo4fd
+	 kotnECfSGJ5HdGGd7R0hS4wVJoBTf52V4tz1eIG3PQXwLMsMwzFq87HCjGBpc7wEBF
+	 9l58Rze2w3wdmbTpP1ycQVWtfDjWKAh/whmctBeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jonghyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0418/2857] drm/msm: RCU-free the scheduler-containing ring and VM objects
-Date: Wed, 18 Nov 2026 15:24:12 +0100
-Message-ID: <20261118150216.432511403@linuxfoundation.org>
+Subject: [PATCH 6.1 0419/2857] arm64: Use load LSE atomics for the non-return per-CPU atomic operations
+Date: Wed, 18 Nov 2026 15:24:13 +0100
+Message-ID: <20261118150216.467316559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,64 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit 01c8d1f385f788f1bbbbb7687c4386d614281218 ]
+[ Upstream commit 535fdfc5a228524552ee8810c9175e877e127c27 ]
 
-Both struct msm_ringbuffer and struct msm_gem_vm embed a struct
-drm_gpu_scheduler.  msm_ringbuffer_destroy() and the VM free callback
-msm_gem_vm_free() call drm_sched_fini() on the embedded scheduler and then
-free the containing object with plain kfree().
+The non-return per-CPU this_cpu_*() atomic operations are implemented as
+STADD/STCLR/STSET when FEAT_LSE is available. On many microarchitecture
+implementations, these instructions tend to be executed "far" in the
+interconnect or memory subsystem (unless the data is already in the L1
+cache). This is in general more efficient when there is contention as it
+avoids bouncing cache lines between CPUs. The load atomics (e.g. LDADD
+without XZR as destination), OTOH, tend to be executed "near" with the
+data loaded into the L1 cache.
 
-drm_sched_fence_get_timeline_name() returns fence->sched->name, and the
-scheduler fence keeps a .release callback so it is not ops-detached on
-signalling.  A finished fence exported to userspace (the submit out-fence, or
-a VM_BIND fence, via sync_file / drm_syncobj) keeps pointing at the embedded
-scheduler after the ring/VM is freed, so a later get_timeline_name() --
-reachable unprivileged through SYNC_IOC_FILE_INFO -- dereferences freed slab
-memory (KASAN slab-use-after-free read).
+STADD executed back to back as in srcu_read_{lock,unlock}*() incur an
+additional overhead due to the default posting behaviour on several CPU
+implementations. Since the per-CPU atomics are unlikely to be used
+concurrently on the same memory location, encourage the hardware to to
+execute them "near" by issuing load atomics - LDADD/LDCLR/LDSET - with
+the destination register unused (but not XZR).
 
-Per the dma-fence lifetime contract the exporter must keep the data backing a
-signalled fence alive for an RCU grace period.  Free the scheduler-containing
-objects with kfree_rcu() instead of kfree().
-
-Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
-Fixes: 92395af63a99 ("drm/msm: Add VM_BIND submitqueue")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/750234/
-Message-ID: <20260902012720.880783-1-malhyuk97@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-[ sashal: Dropped the VM half since this tree has no msm_gem_vm, and ring context changed ring->gpu->vm to ring->gpu->aspace. ]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/e7d539ed-ced0-4b96-8ecd-048a5b803b85@paulmck-laptop
+Reported-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+[will: Add comment and link to the discussion thread]
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: 8cf2093f5372 ("arm64: percpu: Fix LSE operations on {8,16}-bit types")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_ringbuffer.c | 2 +-
- drivers/gpu/drm/msm/msm_ringbuffer.h | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/percpu.h | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index af9ba8bba445e..f80d482779b02 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -130,5 +130,5 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring)
+diff --git a/arch/arm64/include/asm/percpu.h b/arch/arm64/include/asm/percpu.h
+index 3b57b36161412..f4b57b911139d 100644
+--- a/arch/arm64/include/asm/percpu.h
++++ b/arch/arm64/include/asm/percpu.h
+@@ -77,7 +77,7 @@ __percpu_##name##_case_##sz(void *ptr, unsigned long val)		\
+ 	"	stxr" #sfx "\t%w[loop], %" #w "[tmp], %[ptr]\n"		\
+ 	"	cbnz	%w[loop], 1b",					\
+ 	/* LSE atomics */						\
+-		#op_lse "\t%" #w "[val], %[ptr]\n"			\
++		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
+ 		__nops(3))						\
+ 	: [loop] "=&r" (loop), [tmp] "=&r" (tmp),			\
+ 	  [ptr] "+Q"(*(u##sz *)ptr)					\
+@@ -124,9 +124,16 @@ PERCPU_RW_OPS(8)
+ PERCPU_RW_OPS(16)
+ PERCPU_RW_OPS(32)
+ PERCPU_RW_OPS(64)
+-PERCPU_OP(add, add, stadd)
+-PERCPU_OP(andnot, bic, stclr)
+-PERCPU_OP(or, orr, stset)
++
++/*
++ * Use value-returning atomics for CPU-local ops as they are more likely
++ * to execute "near" to the CPU (e.g. in L1$).
++ *
++ * https://lore.kernel.org/r/e7d539ed-ced0-4b96-8ecd-048a5b803b85@paulmck-laptop
++ */
++PERCPU_OP(add, add, ldadd)
++PERCPU_OP(andnot, bic, ldclr)
++PERCPU_OP(or, orr, ldset)
+ PERCPU_RET_OP(add, add, ldadd)
  
- 	msm_gem_kernel_put(ring->bo, ring->gpu->aspace);
- 
--	kfree(ring);
-+	kfree_rcu(ring, rcu);
- }
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index eafaa7cef3242..01c257f6e77c3 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -49,6 +49,7 @@ struct msm_ringbuffer {
- 	/*
- 	 * The job scheduler for this ring.
- 	 */
-+	struct rcu_head rcu;
- 	struct drm_gpu_scheduler sched;
- 	bool sched_initialized;
- 
+ #undef PERCPU_RW_OPS
 -- 
 2.53.0
 
