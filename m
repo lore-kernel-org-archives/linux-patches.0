@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057730;
-	b=oa0/79paxQAyoeuU3EdRJb3vR/75UN/+iocg8ahDD9jOhIyxIaC1olCGUSJXElVhy95F
-	 R58sAtEtpO9FJ0iy7LWYD51CDnkyZQgU/gHiehUyIJ2kUhQhW066D+odZiaZPt5cwFSWw
-	 VaJ3mvMHhv34qDHZD3v6jreww5YWZK6GBZYitY9HKYj7pomOekX1S1kIM/zbP8XylkIRx
-	 X48i3mFRbVdqthHESnLsGgjnu2UQ+D/o199sWzGOb8XAnL1CrojUWEcIkUKm4J5haM4eT
-	 KLd0klfRg9PFf892VWBRsWxxzlQ5VfEVbuTA2zL+moY2TXlf8gD0O6h9StnEFVV+eQA==
+	t=1795057734;
+	b=jUlE39FJbX+DR7vqpxKHMHuSmkjBjneXFKtSOlQVwKEBbqg5AS7ADvGma+sWOd8sb4oQ
+	 YD6Yo88+scPpF2b8/qq06aVgUB0KuP52ErefF44pQVQr37FJDWoIx3t6sFCtL2SuBwKE4
+	 NwXP+dGQM62GWTSUoo45bZjcTn16I843RnHe3XO4TD5biTVe23keTwkcXeEOsEUG+oQyd
+	 94bIqkbhJexUuSZdZPK4XhcJo+NGZJcDc4OwfxAy2N1HBDxzJGXJ7ZlCX/oF4fRMcFgaj
+	 sbkJMimbMn9p3wCq3rblFwtIt6cd/Cv47OdNlc9jwGeehvWflIgAJps7ZA9mBcpzXGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c6DiucTxDDhVR8hptaKh2kNGg+EgmtLs5SryrlXymxY=;
-	b=udPJPqnL6mJojTMsZdymqgk+BZA854LNd2s0CxI5N/MAwZ2fdnuNtRZPFm+cwMxkAUe4
-	 aT3JB9j3/bjyvj8jdbKNE6sBYipZmH8nSpsnPtouRgN+5TZ6wS+Sv+pL6feCHkaVROo2M
-	 ZXbXMJMcljny4hZl2lDU6WcP6Mdieuv8XHaT2Qw/lNya9miDueNHrV+nGFgewhoSv1QAR
-	 va43cnpEK3y1mZ9pfrJTTjpIwEUNbyJUScYDi2v5FvnJY/bZVGw8+dMCDUr4zlk1IC5ov
-	 OJT/aaXPXRBPGNpAkDJzMUidB0JGoFApabek3XQSeJCakR7bnzAJgvRl5J+hQZj3m6A==
+	bh=iR0Z0muvwOGHcphHxoXPwwRF+clRJ3I64BzatJQGuXM=;
+	b=QNYpR3FE1eCNE2FTw2W7Ew1+QTjCemwAmiyMjijD0jBzG2l8Yqzyk3kK5XJp3+y7hjOh
+	 nUxds2S8T4sIa2O4JfxVWIzcE2YfLBA2rVu5fgtjsVRd/ifuFap8f/qOQcUNTd4YVyW6x
+	 90MAp/ESjnQ5DwWMi1U62pNWC+WzgrM5ixZDmhPvuWVuh8kPBFMdUR44jYqN1awDuEXwi
+	 BEixN/DdF7frVKXF6YvkERPnDq5+Q5W80CuRFxEXUb/ZMUIaKHDTFLSzRjt4cju95dQgF
+	 iO+6i/sjzp9OtRHNiL37p5U+tbimfywWDT6X2TIOYxs9BM0cyvbSSWiGAzqMnjbZuPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiKkkv5A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnkc5uDu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FB7606A320;
-	Thu, 19 Nov 2026 03:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33666606A320;
+	Thu, 19 Nov 2026 03:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiKkkv5A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293DE1F000C4;
-	Thu, 19 Nov 2026 03:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnkc5uDu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161C11F000C4;
+	Thu, 19 Nov 2026 03:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057729;
-	bh=c6DiucTxDDhVR8hptaKh2kNGg+EgmtLs5SryrlXymxY=;
+	s=korg; t=1795057733;
+	bh=iR0Z0muvwOGHcphHxoXPwwRF+clRJ3I64BzatJQGuXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aiKkkv5AanDIaG8pCAxTLoaqdkoNzFIEz1yVMy7mW6uh0RvMsMEMsweo3Hm8zAoEF
-	 c1830xhq1WBBjco9JL4k2j2UHuMrm/n8PzLz/uUtjMi928h2FfcKM3RHK9PlKvFZMo
-	 JJBTjsmGcmKdx8Xbe5jk19sGrDIEw/5aA7rZihRw=
+	b=qnkc5uDu76SCeRGpmunRQ8zv7F/Kpz76uJ87bojZ7ZaDvVY8qf1pOa++B5dGcrB+j
+	 UznVvIXZLXLvdLLGjyRmqUZBpcvVm49xeIbK9eIhYhqUFCnAxCtdqxM/zXbZ2w+bHw
+	 L61jjC8o1GPmWFvqnOrVVKZGncElTEnJz+XWtTnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Riwen Lu <luriwen@kylinos.cn>,
-	xiongxin <xiongxin@kylinos.cn>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0235/1848] gpio: dwapb: mask/unmask IRQ when disable/enale it
-Date: Wed, 18 Nov 2026 15:37:53 +0100
-Message-ID: <20261118145921.792797297@linuxfoundation.org>
+Subject: [PATCH 5.10 0236/1848] x86/ioperm: Prevent NULL dereference on theoretical missing IO bitmap
+Date: Wed, 18 Nov 2026 15:37:54 +0100
+Message-ID: <20261118145921.824497615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -73,81 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xiongxin <xiongxin@kylinos.cn>
+From: Li RongQing <lirongqing@baidu.com>
 
-commit 1cc3542c76acb5f59001e3e562eba672f1983355 upstream.
+[ Upstream commit 2d36d3b451a94899db9c965adde15492ffe6027a ]
 
-In the hardware implementation of the I2C HID driver based on DesignWare
-GPIO IRQ chip, when the user continues to use the I2C HID device in the
-suspend process, the I2C HID interrupt will be masked after the resume
-process is finished.
+Outside the IOPL emulation path, the IO bitmap is always expected
+to be allocated when TIF_IO_BITMAP is set. The paranoid WARN_ON_ONCE()
+handles the case where the flag and the pointer got out of sync.
+In this theoretical scenario, which presumes some other bug in the
+code that triggers the WARN_ON_ONCe(), return early, instead of
+continuing and dereferencing a NULL pointer.
 
-This is because the disable_irq()/enable_irq() of the DesignWare GPIO
-driver does not synchronize the IRQ mask register state. In normal use
-of the I2C HID procedure, the GPIO IRQ irq_mask()/irq_unmask() functions
-are called in pairs. In case of an exception, i2c_hid_core_suspend()
-calls disable_irq() to disable the GPIO IRQ. With low probability, this
-causes irq_unmask() to not be called, which causes the GPIO IRQ to be
-masked and not unmasked in enable_irq(), raising an exception.
+[ mingo: Clarified the changelog. ]
 
-Add synchronization to the masked register state in the
-dwapb_irq_enable()/dwapb_irq_disable() function. mask the GPIO IRQ
-before disabling it. After enabling the GPIO IRQ, unmask the IRQ.
-
-Fixes: 7779b3455697 ("gpio: add a driver for the Synopsys DesignWare APB GPIO block")
-Cc: stable@kernel.org
-Co-developed-by: Riwen Lu <luriwen@kylinos.cn>
-Signed-off-by: Riwen Lu <luriwen@kylinos.cn>
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-Acked-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Link: https://patch.msgid.link/20260615070115.4720-1-lirongqing@baidu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-dwapb.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/kernel/process.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
-index d6240ae0f87ca..51bed3adafc1f 100644
---- a/drivers/gpio/gpio-dwapb.c
-+++ b/drivers/gpio/gpio-dwapb.c
-@@ -282,13 +282,15 @@ static void dwapb_irq_enable(struct irq_data *d)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 	unsigned long flags;
- 	u32 val;
+diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+index fd91c301218d5..854aaf390b262 100644
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -405,6 +405,7 @@ void native_tss_update_io_bitmap(void)
+ 		if (WARN_ON_ONCE(!iobm)) {
+ 			clear_thread_flag(TIF_IO_BITMAP);
+ 			native_tss_invalidate_io_bitmap();
++			return;
+ 		}
  
- 	spin_lock_irqsave(&gc->bgpio_lock, flags);
--	val = dwapb_read(gpio, GPIO_INTEN);
--	val |= BIT(irqd_to_hwirq(d));
-+	val = dwapb_read(gpio, GPIO_INTEN) | BIT(hwirq);
- 	dwapb_write(gpio, GPIO_INTEN, val);
-+	val = dwapb_read(gpio, GPIO_INTMASK) & ~BIT(hwirq);
-+	dwapb_write(gpio, GPIO_INTMASK, val);
- 	spin_unlock_irqrestore(&gc->bgpio_lock, flags);
- }
- 
-@@ -296,12 +298,14 @@ static void dwapb_irq_disable(struct irq_data *d)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 	unsigned long flags;
- 	u32 val;
- 
- 	spin_lock_irqsave(&gc->bgpio_lock, flags);
--	val = dwapb_read(gpio, GPIO_INTEN);
--	val &= ~BIT(irqd_to_hwirq(d));
-+	val = dwapb_read(gpio, GPIO_INTMASK) | BIT(hwirq);
-+	dwapb_write(gpio, GPIO_INTMASK, val);
-+	val = dwapb_read(gpio, GPIO_INTEN) & ~BIT(hwirq);
- 	dwapb_write(gpio, GPIO_INTEN, val);
- 	spin_unlock_irqrestore(&gc->bgpio_lock, flags);
- }
+ 		/*
 -- 
 2.53.0
 
