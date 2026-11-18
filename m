@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034730;
-	b=5ApUyMVM1JTzQjS6R2XrPrGXz8LTlrCzQPovt1fFgEupsaOuV2FEQ9XavNOj+5UxmjMC
-	 /MZXz7MbxppPDUhJ4ct/p5cA4SsTo7GLiFUuIiLpbRip6BMi6g+PDYVjbR75dziyTaoj1
-	 aWhXEMsEyFsdF8QLo2RwxpIwLB4e8M6D88v53jzd0rl7W2gb2lFAnDdrW66hE8A9FIDZ0
-	 eQINLhVT10Kgum4Wt373KrFBXIjW9doK4E4NWRzQfDi1bxFtRvEl9s6h6xD7oeNAA3MsU
-	 bNQEgQKVZrRKwzUCWVpvbMJqmYI5agfUm3yQ8R+tvKrcMzaR+1OKo13pChrbJ3VqtJQ==
+	t=1795034733;
+	b=uZgwMwsQ5FP+FirCZuMPD0P06afkwSp0FrEU/fTqlztBC25tWN4OpSfTzfY/LZz+xfSZ
+	 divdRYWGUt5fagjgD/68y/eZvvqYEMI7AEQw8DqJ+gsw7oq+OwQG41OaDDjT8fRbnoJNh
+	 6OX1RhaSCSt9StnZeL669SyRHGNQ711B51MXT2SDQ+64FbtXABRutng8s9EldPqOD/bLU
+	 qynxtY/mXYgNb8lyOgrgKrrNoRvhD/HQmGaTAizLc395Sdj9XKkB8Zxq3HKVJrCITAIhP
+	 IlJa/UUm6aN7x6nd5P3c/wPXrepRiuFTEpN+2T1UaeFUpI1g3jRIiXJBq6CykEciqqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9V6tIgvMYobTrgL1n/JFbDpGttRXW25dr7MXQo5LX1E=;
-	b=1l0zRXEd0ov8+4ApVxdUCRkFh53j2+pVCgQwRHH5K48sqpUugAHItmCYkeRXVnx+y1UI
-	 cL+ziQY6k8hrCkvaESNfBXEe+AP9HkeqTPKuWfiLeDj1Bcr9xyEfz59keUjy25kJZ4Gap
-	 DGDtPOb0EDeOE0zwnkhHnOML5qxLUFPV9c1OQksVaVfiSWkrMjsJ+QHgtsf/ND9OX9F2i
-	 zPKt61YdNpGLVzC4coO8RlKb8W6gmIuq0nXmoxGPIXi0x/VjEjsufsUeJllOHjEhVfwtV
-	 z+NxaaRXh5If+9hoFzRyUgRiswDU7XyaKiq109dltOyYoTImrNJ3UT0P6bEBNMvB77Q==
+	bh=SefkBFqx50toPA/KL0RGiLXUb75t5Ubts3S/fy5gjOA=;
+	b=h7z7rbUgQIYxcCutlGcbMHt3v13ekY6T3AfM53ZYORWbg+YcOqAwPNAnvkYErJEqkpz0
+	 66ZiexUp9dHKfm2fysSicY7E3ywsfbUyMsLAFFpp+jpbM/9X6+cn8wvTkSaWvPVpq+MN8
+	 MWzrYvLVwQbMhEUmfJmEGeXfhIzllqIh70lIo+1/dbjEGKv/sRFgbEjL5e2zx39Gn5NVm
+	 NgYWvZ6Lkc2j6I0PwbevcYb7Fxgc7AtPvA/Bufa9qmN8hBaCuW2h5r5qcc78pmGFbrAyD
+	 bAeqCwH8hNnQpdP854zh5/TQJAhQTVPgLtCiypJYwJki0ko63wWQXOju6/O/2NNmmng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R9WDX/iV";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzgacLGb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B301606A32C;
-	Wed, 18 Nov 2026 20:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5896C606A31C;
+	Wed, 18 Nov 2026 20:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9WDX/iV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D1A1F000C4;
-	Wed, 18 Nov 2026 20:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzgacLGb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBD61F000C4;
+	Wed, 18 Nov 2026 20:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034730;
-	bh=9V6tIgvMYobTrgL1n/JFbDpGttRXW25dr7MXQo5LX1E=;
+	s=korg; t=1795034733;
+	bh=SefkBFqx50toPA/KL0RGiLXUb75t5Ubts3S/fy5gjOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9WDX/iVHSA74PO2BRmcnjUPfzfQheki4E/odErBlBU69PBshYyNggH+V2dSXaHqB
-	 BKVJuPPyjlWTWOiMuLCNDOzRfzWHG/haykfSyxqPjTzDtK5DTD5QwXjYPbWJMtzms3
-	 Vv1+VQDezijlgQnJLAElW+Qrjw8AmxOSp3AWvTsk=
+	b=fzgacLGb7z8UaJg8xehUaMDKdE5BZZ5gb5ANTyJPHJMoEiCKHH8cjU45ololYdtOt
+	 WI293OxGE1E79qQVjD3e2Y5QXWfVvnpaxfIGIY4Dg5fdfP6TxnDviQPF6t+MJWeW+0
+	 P+8qvTrtz82Sky9Gega21093HYZd6cqMsEFJ3jgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0471/3318] tools/bootconfig: Cleanup bootconfig footer size calculations
-Date: Wed, 18 Nov 2026 15:18:13 +0100
-Message-ID: <20261118150331.024144196@linuxfoundation.org>
+Subject: [PATCH 6.6 0472/3318] tools/bootconfig: Fix integer overflow and truncation in size checks
+Date: Wed, 18 Nov 2026 15:18:14 +0100
+Message-ID: <20261118150331.063559921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,97 +71,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 26dda57695090e05c1a99c3e8f802f862d1ac474 ]
+[ Upstream commit 462d0b066b613103f579793031429db2ca23abc0 ]
 
-There are many same pattern of 8 + BOOTCONFIG_MAGIC_LEN for calculating
-the size of bootconfig footer. Use BOOTCONFIG_FOOTER_SIZE macro to
-clean up those magic numbers.
+Sashiko reported that on 32-bit systems, if an attacker crafts size in
+the bootconfig footer such that adding BOOTCONFIG_FOOTER_SIZE wraps around
+(for instance, if size is 0xFFFFFFFF), the size check in
+load_xbc_from_initrd() can be bypassed:
 
-Link: https://lore.kernel.org/all/175211425693.2591046.16029516706923643510.stgit@mhiramat.tok.corp.google.com/
+    if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
+        pr_err("bootconfig size is too big\n");
+        return -E2BIG;
+    }
 
+Furthermore, on 64-bit systems with an initrd > 4.29 GB, comparing a
+corrupted 32-bit size (e.g. 0xFFFFFFFF) against
+stat.st_size - BOOTCONFIG_FOOTER_SIZE can also bypass the check if
+size is not bounded. Similarly, load_xbc_file() passes 64-bit stat.st_size
+directly into the 32-bit int size parameter of load_xbc_fd(), truncating
+large standalone files (>= 2GB).
+
+In both cases, passing 0xFFFFFFFF to load_xbc_fd() truncates to -1,
+resulting in malloc(0), an integer overflow in read(), and an
+out-of-bounds null-byte write.
+
+Fix this by:
+1. Rejecting size > XBC_DATA_MAX or
+   size > stat.st_size - BOOTCONFIG_FOOTER_SIZE in load_xbc_from_initrd().
+2. Rejecting stat.st_size > XBC_DATA_MAX in load_xbc_file() before passing
+   it to load_xbc_fd().
+3. Checking size < 0 || size > XBC_DATA_MAX defensively in load_xbc_fd().
+
+Link: https://lore.kernel.org/all/178905332413.213925.3179977110281463499.stgit@devnote2/
+
+Fixes: 950313ebf79c ("tools: bootconfig: Add bootconfig command")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260909161113.16C691F00A3A@smtp.kernel.org/
+Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.8-flash
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Stable-dep-of: 462d0b066b61 ("tools/bootconfig: Fix integer overflow and truncation in size checks")
+Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bootconfig/main.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ tools/bootconfig/main.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
-index 32cf48f2da9a1..d302235f6b974 100644
+index d302235f6b974..655ca7da4b843 100644
 --- a/tools/bootconfig/main.c
 +++ b/tools/bootconfig/main.c
-@@ -16,6 +16,10 @@
- 
- #define pr_err(fmt, ...) fprintf(stderr, fmt, ##__VA_ARGS__)
- 
-+/* Bootconfig footer is [size][csum][BOOTCONFIG_MAGIC]. */
-+#define BOOTCONFIG_FOOTER_SIZE	\
-+	(sizeof(uint32_t) * 2 + BOOTCONFIG_MAGIC_LEN)
-+
- static int xbc_show_value(struct xbc_node *node, bool semicolon)
+@@ -139,6 +139,9 @@ static int load_xbc_fd(int fd, char **buf, int size)
  {
- 	const char *val, *eol;
-@@ -188,7 +192,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
- 	if (ret < 0)
- 		return -errno;
+ 	int ret;
  
--	if (stat.st_size < 8 + BOOTCONFIG_MAGIC_LEN)
-+	if (stat.st_size < BOOTCONFIG_FOOTER_SIZE)
- 		return 0;
++	if (size < 0 || size > XBC_DATA_MAX)
++		return -EINVAL;
++
+ 	*buf = malloc(size + 1);
+ 	if (!*buf)
+ 		return -ENOMEM;
+@@ -167,6 +170,13 @@ static int load_xbc_file(const char *path, char **buf)
+ 		return ret;
+ 	}
  
- 	if (lseek(fd, -BOOTCONFIG_MAGIC_LEN, SEEK_END) < 0)
-@@ -201,7 +205,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
- 	if (memcmp(magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN) != 0)
- 		return 0;
++	if (stat.st_size > XBC_DATA_MAX) {
++		pr_err("%s size is too big\n", path);
++		ret = -E2BIG;
++		close(fd);
++		return ret;
++	}
++
+ 	ret = load_xbc_fd(fd, buf, stat.st_size);
  
--	if (lseek(fd, -(8 + BOOTCONFIG_MAGIC_LEN), SEEK_END) < 0)
-+	if (lseek(fd, -BOOTCONFIG_FOOTER_SIZE, SEEK_END) < 0)
- 		return pr_errno("Failed to lseek for size", -errno);
- 
- 	if (read(fd, &size, sizeof(uint32_t)) < 0)
-@@ -213,12 +217,12 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	close(fd);
+@@ -217,7 +227,8 @@ static int load_xbc_from_initrd(int fd, char **buf)
  	csum = le32toh(csum);
  
  	/* Wrong size error  */
--	if (stat.st_size < size + 8 + BOOTCONFIG_MAGIC_LEN) {
-+	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
+-	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
++	if (size > XBC_DATA_MAX ||
++	    size > stat.st_size - BOOTCONFIG_FOOTER_SIZE) {
  		pr_err("bootconfig size is too big\n");
  		return -E2BIG;
  	}
- 
--	if (lseek(fd, stat.st_size - (size + 8 + BOOTCONFIG_MAGIC_LEN),
-+	if (lseek(fd, stat.st_size - (size + BOOTCONFIG_FOOTER_SIZE),
- 		  SEEK_SET) < 0)
- 		return pr_errno("Failed to lseek", -errno);
- 
-@@ -349,7 +353,7 @@ static int delete_xbc(const char *path)
- 		ret = fstat(fd, &stat);
- 		if (!ret)
- 			ret = ftruncate(fd, stat.st_size
--					- size - 8 - BOOTCONFIG_MAGIC_LEN);
-+					- size - BOOTCONFIG_FOOTER_SIZE);
- 		if (ret)
- 			ret = -errno;
- 	} /* Ignore if there is no boot config in initrd */
-@@ -379,8 +383,7 @@ static int apply_xbc(const char *path, const char *xbc_path)
- 	csum = xbc_calc_checksum(buf, size);
- 
- 	/* Backup the bootconfig data */
--	data = calloc(size + BOOTCONFIG_ALIGN +
--		      sizeof(uint32_t) + sizeof(uint32_t) + BOOTCONFIG_MAGIC_LEN, 1);
-+	data = calloc(size + BOOTCONFIG_ALIGN + BOOTCONFIG_FOOTER_SIZE, 1);
- 	if (!data)
- 		return -ENOMEM;
- 	memcpy(data, buf, size);
-@@ -428,7 +431,7 @@ static int apply_xbc(const char *path, const char *xbc_path)
- 	}
- 
- 	/* To align up the total size to BOOTCONFIG_ALIGN, get padding size */
--	total_size = stat.st_size + size + sizeof(uint32_t) * 2 + BOOTCONFIG_MAGIC_LEN;
-+	total_size = stat.st_size + size + BOOTCONFIG_FOOTER_SIZE;
- 	pad = ((total_size + BOOTCONFIG_ALIGN - 1) & (~BOOTCONFIG_ALIGN_MASK)) - total_size;
- 	size += pad;
- 
 -- 
 2.53.0
 
