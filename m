@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042327;
-	b=2ZsGBfjZHLwSzPH9YfRGvCnhkvD8/YrAXKcpqLvnZBJwF69ZLmgiKgERIemS9jsvFD6/
-	 bAcQqWrI6/vSa8T5vd3shuj+FJZEw3/CvTuJK+8y8CSvLqjf4HBJ9JVPCKKpame7JRugG
-	 lr473PyBmeit5asEZ1W1dnfHz1H6T3AOZjzJvRsfxCKvpa7tmOVLlFmLvm+jkkutnYYo+
-	 7aSYY1KOiU29U3gItrD8bgZQfWpYUMNJJ+SUmdQa3l7P69creV8xWrwcX2+CM3N/GZkQO
-	 nqr1VCgd3nmdfFOnEiyM96u1yZ4NyQve7wi7nJvacMJmVymnnjhB2KqldDBJmw0nFOg==
+	t=1795042330;
+	b=x2wMQDw+NVRQn/hZ3IFI+ZMkuQbXwfhd+6B7VlpDBsJMQYdG6VafqYoZ4Lx+6p0ASgKa
+	 DFa+LFaboOgTor4kH0cauZdN+TbTZOhCXludvA2FHL4dPgaXdc0KY0m/AEyFsUYxvI6lN
+	 JCGbw8VYQicUYiU3cPjnAtsHlewnYYgbltVN5cky1mkjOwaMWIRfwvOM25+5HsstrCV4w
+	 CSClb2Suoo82RM0pWV2y4clpzumxsChjfpm79RNe6aFRzbkz5IMfpi3YEwzaVRaBLHbWq
+	 UyiqPIia07ss+LmRW1QLSriyr1BgQFYLFY6pZT2D23K8vZQ0iidbnACKOsilF0UjYrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N/F/OAxhYZzTfC4cOiW0qdV/V3IqNR0aIZ+w4Q8lYNU=;
-	b=DqeQG0ldpPfBnmqNKuDZGjrY902KW091StOB2TZFUCFyTuL5406d6kdPhjAWZZ93kdy9
-	 zFxncxKADb/nYFQ0SGQWcN/eGUohbJPTdbrQEaF6jlpbuOgvQZAFpi/cJz9bsM0BK3HKc
-	 0yGeNDq4JnVunq38KW+HJb7gyymdXdUvZQsRyKjTXNqDXW9M7XRHiJbaHIsuWZf8YpxkG
-	 0fjeWm+8urAkFTXssEZNHgQXuqUUTADBT4nhkOheDp2SlUC5PhykV3GpT00Ow01Uv+M2b
-	 /2P0qMEala+bfn8mM5IhKJlBpDc5uHZXiw5f0Fx6AhtBo4HepiiRyTogVSMRtu23Ffw==
+	bh=cG4X1tzOOVdEBv+3Kigf2VDHdV3cQ/I/F7O3+fWHVRg=;
+	b=jos3mawqtMbb4TMp6+fXIEx8yax5VNsUMz9yaL7jliykGobXnxXZfLkgiREJXa4Rk2mL
+	 IKRjTKnLVNZe0QUlY1aNFLvbv2+JTTgfHCsSaXBc+KrjgTPp6q++x5ZpZb35I+3reVMkg
+	 r2SL63Nk9GHWj7UeSloxsQ2sQCYpExR6Hry1CHWqWOdpEVbnD+/c0Mxzk+aycVa/CS1o8
+	 6L2Z9EYG7LD1oFvkY6sbp9iA3q9qmJlXycyhuwYsDgvjwyg495Un0tdRvFbwX7PjuOBIP
+	 rt3mwQTu7LYCCmayHCIet3sEZSOhSKnubmbKAhweysVfM7+ovuY2fqE32IkINrBiDfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n7QRMZVF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlyzUo7Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D496606A31C;
-	Wed, 18 Nov 2026 22:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C56B606A31C;
+	Wed, 18 Nov 2026 22:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n7QRMZVF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22401F000C4;
-	Wed, 18 Nov 2026 22:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlyzUo7Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ED41F000C5;
+	Wed, 18 Nov 2026 22:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042327;
-	bh=N/F/OAxhYZzTfC4cOiW0qdV/V3IqNR0aIZ+w4Q8lYNU=;
+	s=korg; t=1795042330;
+	bh=cG4X1tzOOVdEBv+3Kigf2VDHdV3cQ/I/F7O3+fWHVRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7QRMZVFxpQ6XncQL1fYBPxnf15aD86B5RJmNNTpU09PAE6ZikuHQVuQAlTcHfsEK
-	 FZK9EenPgNhK/xxEFQ/l0CLNy3toaDRAtL9coCiNLrN+3imjrCWj744ognf9IAnMhR
-	 whX0/tpm5+KOG9/pJ4psymx4e/S4YOKxDo85cIKE=
+	b=tlyzUo7Z8E1RtlwfZAqjw4TAiaGUWNtAULgEC19n5H55+F11FnPiNWAm8BoPUMOKg
+	 QsGLNgWpB/tsqSEzHxzkw4T4la0FhZnMB0DNubwD9ddX+skPl2vVKta4Ek98+DA2lZ
+	 YrqAVjHUPWV6M4MW8rcZOC+Tp/hoJGQhvELRiuaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Simon Horman <horms@kernel.org>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3131/3318] tipc: fix use-after-free of broadcast reception link at node release
-Date: Wed, 18 Nov 2026 16:02:33 +0100
-Message-ID: <20261118150453.835831458@linuxfoundation.org>
+Subject: [PATCH 6.6 3132/3318] ASoC: wm8994: follow AIF clock source changes in MCLK gating
+Date: Wed, 18 Nov 2026 16:02:34 +0100
+Message-ID: <20261118150453.861050123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,95 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 473167593f42551ce6b00c05cee8cd20309d45ac ]
+[ Upstream commit 8731e33a3b98ea1ccade059b3a1ce06b7dd66b17 ]
 
-When the last reference to a tipc_node is dropped, the node itself is
-deferred to the RCU callback tipc_node_free(), but the nested broadcast
-reception link, n->bc_entry.link, is kfree()d synchronously in
-tipc_node_kref_release(), before call_rcu(), and the pointer is never
-cleared.  Readers that obtained the node from node_list and then
-dereference bc_entry.link deep into the link (tipc_link_name() in
-tipc_nl_node_reset_link_stats(), bcl->name/stats in
-tipc_nl_add_bc_link() on the link dump path) therefore touch freed
-memory although the enclosing node stays alive for a full grace period.
-The sibling per-bearer links get "kfree + NULL" under the node write
-lock in tipc_node_clear_links(); the broadcast entry was missed.
+The AIF clock source can be changed by configure_aif_clock() while the
+AIF clock is running, for example the Midas machine driver switches
+AIF1 between MCLK2 and FLL1 while AIF1CLK is kept enabled for jack
+detection. aif_mclk_set() only enables the MCLK selected at the time
+the AIF clock is turned on, so an MCLK selected later this way is never
+enabled, and the codec may run from a stopped clock.
 
-The race is reachable through the node cleanup timer: once a peer has
-been unreachable for NODE_CLEANUP_AFTER (300 s), tipc_node_timeout() ->
-tipc_node_cleanup() unlinks the node under the write lock, and the
-final tipc_node_put() at the caller runs outside node_list_lock, so the
-kfree executes in timer softirq context, concurrently with genl dump/
-reset walkers that hold only rcu_read_lock().  (A netlink "peer remove"
-cannot race those walkers itself: tipc_genl_family has no parallel_ops,
-so all doit/dumpit calls serialize on the global genl lock.)
+Track whether the AIF clock is running and, if so, enable the newly
+selected MCLK in configure_aif_clock() before switching to it, then
+release the previously enabled one.
 
-Reproduced in a QEMU/KVM guest running v7.3.0 with KASAN and
-PREEMPT(full): 10 TIPC peer namespaces on veth bearers, bearer removal
-staggered so the 300 s node cleanup timers expire while other tasks
-loop link dumps with the broadcast filter and reset-link-stats lookups.
-KASAN hit within two cleanup cycles:
-
-  BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
-  Read of size 1 at addr ffff88800b54a004 by task poc_eth/371
-   strlen+0x85/0xa0
-   tipc_nl_add_bc_link+0x2f9/0xd40
-   __tipc_nl_add_node_links+0x10c/0x140
-   tipc_nl_node_dump_link+0x8d5/0xd50
-  Freed by task 0:
-   kfree+0x121/0x380
-   tipc_node_timeout+0xa33/0xcf0
-   run_timer_softirq+0x144/0x250
-   sysvec_apic_timer_interrupt
-
-with the freed object being the kmalloc-1k tipc_link allocated by
-tipc_link_bc_create() during peer discovery.  The same defect fires in
-strcmp() called from tipc_nl_node_reset_link_stats().
-
-Move the kfree of n->bc_entry.link into the tipc_node_free() RCU
-callback so the broadcast link lives exactly as long as the enclosing
-node.  All readers are covered: the netlink walkers are inside
-rcu_read_lock(), and the packet reception path reaches the node via
-tipc_node_find(), whose kref defers kref_release itself.
-
-Found during a static-analysis-assisted audit: candidate sites were
-surfaced by a Coccinelle rule, and the reader/writer paths were
-confirmed by LLM-assisted (GLM-5.3) code inspection.
-
-Fixes: d25a01257e42 ("tipc: fix crash during node removal")
-Assisted-by: GLM-5.3 coccinelle
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261019104352.488347-1-18983559317@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20261022101531.775891-1-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm8994.c | 27 +++++++++++++++++++++++++++
+ sound/soc/codecs/wm8994.h |  1 +
+ 2 files changed, 28 insertions(+)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index f2d83169fe221..4db3780777a6a 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -305,6 +305,7 @@ static void tipc_node_free(struct rcu_head *rp)
- #ifdef CONFIG_TIPC_CRYPTO
- 	tipc_crypto_stop(&n->crypto_rx);
- #endif
-+	kfree(n->bc_entry.link);
- 	kfree(n);
- }
- 
-@@ -312,7 +313,6 @@ static void tipc_node_kref_release(struct kref *kref)
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 4fc3525e546e6..fc385cddf5221 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -162,9 +162,12 @@ static void wm8958_micd_set_rate(struct snd_soc_component *component)
+ static int configure_aif_clock(struct snd_soc_component *component, int aif)
  {
- 	struct tipc_node *n = container_of(kref, struct tipc_node, kref);
+ 	struct wm8994_priv *wm8994 = snd_soc_component_get_drvdata(component);
++	struct clk *mclk = NULL;
++	bool switch_mclk;
+ 	int rate;
+ 	int reg1 = 0;
+ 	int offset;
++	int ret;
  
--	kfree(n->bc_entry.link);
- 	call_rcu(&n->rcu, tipc_node_free);
+ 	if (aif)
+ 		offset = 4;
+@@ -173,11 +176,13 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
+ 
+ 	switch (wm8994->sysclk[aif]) {
+ 	case WM8994_SYSCLK_MCLK1:
++		mclk = wm8994->mclk[WM8994_MCLK1].clk;
+ 		rate = wm8994->mclk_rate[0];
+ 		break;
+ 
+ 	case WM8994_SYSCLK_MCLK2:
+ 		reg1 |= 0x8;
++		mclk = wm8994->mclk[WM8994_MCLK2].clk;
+ 		rate = wm8994->mclk_rate[1];
+ 		break;
+ 
+@@ -195,6 +200,20 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
+ 		return -EINVAL;
+ 	}
+ 
++	/*
++	 * If the AIF clock is running, enable the new MCLK before switching
++	 * to it and release the previous one afterwards.
++	 */
++	switch_mclk = wm8994->aif_clk_on[aif] && mclk != wm8994->aif_mclk[aif];
++	if (switch_mclk) {
++		ret = clk_prepare_enable(mclk);
++		if (ret < 0) {
++			dev_err(component->dev,
++				"Failed to enable MCLK for AIF%d\n", aif + 1);
++			return ret;
++		}
++	}
++
+ 	if (rate >= 13500000) {
+ 		rate /= 2;
+ 		reg1 |= WM8994_AIF1CLK_DIV;
+@@ -209,6 +228,11 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
+ 			    WM8994_AIF1CLK_SRC_MASK | WM8994_AIF1CLK_DIV,
+ 			    reg1);
+ 
++	if (switch_mclk) {
++		clk_disable_unprepare(wm8994->aif_mclk[aif]);
++		wm8994->aif_mclk[aif] = mclk;
++	}
++
+ 	return 0;
  }
  
+@@ -1070,6 +1094,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 	if (!enable) {
+ 		clk_disable_unprepare(wm8994->aif_mclk[aif]);
+ 		wm8994->aif_mclk[aif] = NULL;
++		wm8994->aif_clk_on[aif] = false;
+ 		return 0;
+ 	}
+ 
+@@ -1089,6 +1114,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 		clk_idx = WM8994_MCLK2;
+ 		break;
+ 	default:
++		wm8994->aif_clk_on[aif] = true;
+ 		return 0;
+ 	}
+ 
+@@ -1099,6 +1125,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 		return ret;
+ 	}
+ 	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
++	wm8994->aif_clk_on[aif] = true;
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
+index 28a54007302f9..0d3d5fc0ff034 100644
+--- a/sound/soc/codecs/wm8994.h
++++ b/sound/soc/codecs/wm8994.h
+@@ -82,6 +82,7 @@ struct wm8994_priv {
+ 	struct wm8994 *wm8994;
+ 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
+ 	struct clk *aif_mclk[2];
++	bool aif_clk_on[2];
+ 	int sysclk[2];
+ 	int sysclk_rate[2];
+ 	int mclk_rate[2];
 -- 
 2.53.0
 
