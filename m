@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034711;
-	b=4wnpCZwpc6H2h8FCW5mRj397AmNnm0SnrIcRv/cyGWMWXwDJxOwoBSB9F+25sMWi4Zkr
-	 jCYapAnoXBIVdv+vtFwkbGTF1IvJT8dCFG3ThT48NAYfhdi10JMP1YLx10n0cNjvL8+ex
-	 ewK0BxEtQNothxW9s2WEByJDvKeXgRfkn+VLBSaF3lli1iEsBEmdUq8rQ0lR6gBrAsVMm
-	 l0jVAZLCY8fRrrc/7RRi2pP4THB16NpZJkShvpuOLa+CaGUInsWM/V7MxmGmAwiENefbB
-	 hUaAZhGlAhzJ2TSqPm4wY+TgMqyL6d5ENOm2LV+AAZt2XEmmJ8JiqLJpAu++juTR5uA==
+	t=1795034713;
+	b=ji/+zgSI4jTyxAYbkWt3IFyCUHjoVNSo2WQPg7Kecrs18q1Mk97Os1cXomGPZFKen97d
+	 W5JUIaAxUIXSUXf2NngL8rH/pPGsTD48yosE8HBhoZuThfMOj85AiTrHOpf0B9Pn/ZN4P
+	 9dJfx3iYtii58nmyeEjQAAW9ozVbe8ygpjtiI8Zl3liQHmo3d65xmIrSF0WHJhqblrtJE
+	 0fFgSogrVrt9uG54FTdIl1Pl1Jgy4U/hLBIHhBrZaABoKT/m0Kkq0ZCEhJnVi1ftTiQbq
+	 AqUzumoVY6ABye7wNAjUL9zcbf07XQePS64Xoj2XhS7jN1zDoiJpmj+ngDyAWn7Wq2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034713;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=qwpX5iN/azocnDZZbHHvw5ZIYIfsEFBRdveGJn7mje4=;
-	b=j6ICVkYXiijRQgNajuy5mF9kTzGX95p/r9uYpQc4CC3HqYpWutku2UCeRXTevcf516s/
-	 CvlroJuFnDXe25C+4j5Gs2eC8FRzgP05qPxyn084r+XGzvPdJW5NebdQ4bYd4rLyPYjSO
-	 S+QVepZ93RKZ+1qTRw0ku0e1gf0sD1KOb6jNBWSf2IIMJnmjjhozf7U5g2v3rG2YIdvNi
-	 Wsx3CPk/8oU8gCB88bDwnN8yWiDdB1OiK2K+A9CZnxVaPEVwbS76bGIhymjbo7fsKjQVS
-	 aZEoJ19iXhmXYR3bsP3bTyoQVInIxmXmCcwjRbVLrn7A3rjodTMHlBJUGRa40wSpL3w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=D3/+ICn/uddnv1C6NxPHuRTHkvF6+OHKBJ1cbWJ5Kl4=;
+	b=fFcbEYRFwDMytUF9jldUu3J51Bchh3jkfr1rp0KBVChJV21sSXGXusysSRkMWreqHh4M
+	 Au+AtRWeXB+v03eqpz5M3/yHrxN9eFoJedoC45KhxZE7Y4CK5o0fwHeqHoJPu1OmW3wTf
+	 exako2HbwsQ6PKtGYoa/LZsbJx5fNZAbdI29t1zuukOpU+PIMVau8pb1xP0tFDTA1WDb6
+	 TDYdHcHUoMimC4t7Ilc4VhnI5Sj1aLYbIjSMZplBR/Hl/1gLOy+a3Rou7oEGwInBzjZ/f
+	 9lmOBxkcjL9mG8UaoBXBExU6EcE7DEZGfsBG+IuSTkrHYkaShwsCM7RcJqw0YKgWoIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PB5E2ZJZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m3dVPKG2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1AE606A320;
-	Wed, 18 Nov 2026 20:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B2B606A333;
+	Wed, 18 Nov 2026 20:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PB5E2ZJZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3A11F000C4;
-	Wed, 18 Nov 2026 20:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m3dVPKG2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175351F000C4;
+	Wed, 18 Nov 2026 20:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034710;
-	bh=qwpX5iN/azocnDZZbHHvw5ZIYIfsEFBRdveGJn7mje4=;
+	s=korg; t=1795034713;
+	bh=D3/+ICn/uddnv1C6NxPHuRTHkvF6+OHKBJ1cbWJ5Kl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PB5E2ZJZE8/fU2oj5g5Fma6Y+jvxFe0kCtDjiEyEQzOza6AxtWad9LtKbs1W8O7P/
-	 ApRfZoyekKvV5jwDQfw3ZXR9lAhCON4b4lTDzYPBYBm9rZBu36GwhOhmC6hBhRLH6G
-	 nDMdsZbsGWwQRf7UCHDrUrHcKR4MDkioS2tcOE1Q=
+	b=m3dVPKG2e8FBX9lJ5jVMsGv6xbPeJXco23UXPDJj89qdKxUJGyvid1XBZ19X7vF/s
+	 xEeemqCxEJ8opPTSe6bJhu/rWRbfj5zGsyCmrKOQmmXmxmy6fnfXLx9nAXmxVl6Pkt
+	 qA3F8yYyPiZi0H/lFzIMbfY7rzTVZ41apzYBeZuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0465/3318] net: macb: initialize PTP state before registering clock
-Date: Wed, 18 Nov 2026 15:18:07 +0100
-Message-ID: <20261118150330.801794042@linuxfoundation.org>
+Subject: [PATCH 6.6 0466/3318] drm/amdgpu/pm: add workload profile pause helper
+Date: Wed, 18 Nov 2026 15:18:08 +0100
+Message-ID: <20261118150330.837400574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,81 +62,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit e1406330d70e56dd44fa6fbafc86e77e5c80c122 ]
+[ Upstream commit 7f991dd3641ef52e0a25b43f27cc61440c4bdcb4 ]
 
-gem_ptp_init() registers the PTP clock before initializing
-bp->tsu_clk_lock and the TSU hardware. Since ptp_clock_register()
-publishes the PTP character device, userspace may invoke PTP callbacks
-before the lock and hardware are ready.
+To be used for display idle optimizations when
+we want to pause non-default profiles.
 
-In addition, gem_ptp_init() is called from both the interface open and
-resume paths. Reinitializing tsu_clk_lock there can reset the lock while
-timestamp processing is using it.
-
-This race is theoretical and has not been observed in practice.
-
-Initialize tsu_clk_lock once during probe and initialize the TSU before
-registering the PTP clock.
-
-Fixes: ab91f0a9b5f4 ("net: macb: Add hardware PTP support")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260904030439.3994047-1-runyu.xiao@seu.edu.cn/
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260908103924.607033-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Renamed net_device parameter references from netdev to dev in the ptp_clock_register() context line to match this branch's naming. ]
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6dafb5d4c7cdfc8f994e789d050e29e0d5ca6efd)
+Stable-dep-of: 1f1d43418d61 ("drm/amdgpu: skip gfx switch_power_profile during GPU reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 1 +
- drivers/net/ethernet/cadence/macb_ptp.c  | 5 +----
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ .../gpu/drm/amd/include/kgd_pp_interface.h    |  1 +
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c           | 19 +++++++++++++++++++
+ drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h       |  2 ++
+ 3 files changed, 22 insertions(+)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 1dfd199cb97d3..ec912a32bba9a 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5218,6 +5218,7 @@ static int macb_probe(struct platform_device *pdev)
- 	}
- 	spin_lock_init(&bp->lock);
- 	spin_lock_init(&bp->stats_lock);
-+	spin_lock_init(&bp->tsu_clk_lock);
- 
- 	/* setup capabilities */
- 	macb_configure_caps(bp, macb_config);
-diff --git a/drivers/net/ethernet/cadence/macb_ptp.c b/drivers/net/ethernet/cadence/macb_ptp.c
-index 702397469c3cf..15af468c0d390 100644
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -341,6 +341,7 @@ void gem_ptp_init(struct net_device *dev)
- 	bp->tsu_rate = bp->ptp_info->get_tsu_rate(bp);
- 	bp->ptp_clock_info.max_adj = bp->ptp_info->get_ptp_max_adj();
- 	gem_ptp_init_timer(bp);
-+	gem_ptp_init_tsu(bp);
- 	bp->ptp_clock = ptp_clock_register(&bp->ptp_clock_info, &dev->dev);
- 	if (IS_ERR(bp->ptp_clock)) {
- 		pr_err("ptp clock register failed: %ld\n",
-@@ -352,10 +353,6 @@ void gem_ptp_init(struct net_device *dev)
- 		return;
- 	}
- 
--	spin_lock_init(&bp->tsu_clk_lock);
--
--	gem_ptp_init_tsu(bp);
--
- 	dev_info(&bp->pdev->dev, "%s ptp clock registered.\n",
- 		 GEM_PTP_TIMER_NAME);
+diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+index 84c5224d994c4..2fd3aa80f939d 100644
+--- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+@@ -347,6 +347,7 @@ struct amd_pm_funcs {
+ 	int (*set_pp_table)(void *handle, const char *buf, size_t size);
+ 	void (*debugfs_print_current_performance_level)(void *handle, struct seq_file *m);
+ 	int (*switch_power_profile)(void *handle, enum PP_SMC_POWER_PROFILE type, bool en);
++	int (*pause_power_profile)(void *handle, bool pause);
+ /* export to amdgpu */
+ 	struct amd_vce_state *(*get_vce_clock_state)(void *handle, u32 idx);
+ 	int (*dispatch_tasks)(void *handle, enum amd_pp_task task_id,
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+index 6bc1f4b381c2e..dfd455a1b9549 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -319,6 +319,25 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
+ 	return ret;
  }
+ 
++int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
++				   bool pause)
++{
++	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
++	int ret = 0;
++
++	if (amdgpu_sriov_vf(adev))
++		return 0;
++
++	if (pp_funcs && pp_funcs->pause_power_profile) {
++		mutex_lock(&adev->pm.mutex);
++		ret = pp_funcs->pause_power_profile(
++			adev->powerplay.pp_handle, pause);
++		mutex_unlock(&adev->pm.mutex);
++	}
++
++	return ret;
++}
++
+ int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
+ 			       uint32_t pstate)
+ {
+diff --git a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+index cb4d33555feee..744c0c8d61ad4 100644
+--- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
++++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+@@ -387,6 +387,8 @@ int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
+ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
+ 				    enum PP_SMC_POWER_PROFILE type,
+ 				    bool en);
++int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
++				   bool pause);
+ 
+ int amdgpu_dpm_baco_reset(struct amdgpu_device *adev);
+ 
 -- 
 2.53.0
 
