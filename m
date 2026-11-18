@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058986;
-	b=prh/EcD2Hz9eUyd9Lf2k9yHtPqs16FpnC06BBjklL0JI/5Ph1csN3m+3tHpshBlyXd/Y
-	 Cr624ImUmODyvEcSLaBbDzxovrpuQc0Ec7U1HhZ9RBvR1vZZ470kjMHK/KH8S8u+yt3rC
-	 RthW5btiYlz2Bv6NcQRLGSCIEoXWflPe5ESdRoF1sJSo2D5Ul7fA3Hbj+95pTJoY9zi4+
-	 yCG77+5vJA7M6ijKGAm2I4Py9GUMtGgtbwjH4uVNbJWKjEztYsm0UXd7wfKrCVSy8WCf9
-	 AGYcwDETZCZChXQTnzB4g3Bp3zJTeX3797LN6wNkEWFRt+U+Fg3Q3w1G4vq7AkYc2eg==
+	t=1795058989;
+	b=1SLWv0bXPJydhSIcVww5egGRnuW1beOEScgFVd39B+ouMDo/OgZbcz2Vq1Bix9M6XJL2
+	 XHTD9+dCiRHls80qFRl3X1LuZZOqkUJfXXw3M/TezbuHMiTbR7lIxVZYBWhc2aaslx4gN
+	 DgCFb7D7dOKeYehzwddjHFsaapRbMjoclez7h7U2RSn7wXJnjs+lH5KPpWQr+wI0GPdLB
+	 S7C25RDfvSewYPQnx05zlpTMtAPJPxgr+NnWs6Oc/wk3B49XHK8FLeSe855q2WGEoxFBh
+	 VcF43MoV/gTQtUGvC7XTZXkenY4DUlQSQUH2j30R4MyMxCm+sfvmM3ap85jo5x+7aOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZwZ4dI7BGNh8k1/fvLJ+nEI48BpnvZ5z1+8h5EGc+uY=;
-	b=fDT32A7/4uMNgJlEKS67/oxT+vnFGVi8whPsS4kzTeEe14u+XTbFwdYRVuvfdXXxAUmE
-	 Azl106wylXZG6T3J2MseIgnwGYmrQn2SMtbY9Wwpo7gc1peRJogCPKflrQtt7TiNJaiAy
-	 QiFl9I+BBV2aoeMnpu5he6/w6d1xwqVXgrhq3qi9BZ7btf2lSa2ZR3+Sg0mQw+y0NXISy
-	 PcldOt3HsEeEioyTJW5p5uOCH2zorDE2QkIeJEEb6kehna7u0pw0TI/Nc8CbxN16BEqDB
-	 X+YQhLsyRuIMpwptIfUgvafdsU4GdN9yaJ4aJ5bNYsxullrYPGX+VEYff6kCAdSW4Ig==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jkbaepiuM3UQ4XkNcfqTnpNoI/EobYTC7Cm2zRLzfPM=;
+	b=UPhpNdQPhrad8LVVlu6E1fpX7TlHzZ2ACWPUgGlqo2Tfc7pVB8FeElvXxoYPMaU7doPY
+	 wUF/XDL/F62Xt+X7g7/bfvhnhfU56Q54IULJuYGY4bzH6wgEQ4QtBrw+jjFjwWWmqhG5S
+	 jTxV7sEYZsYz+/VCNR+utz3NBIeB4D4BqpxaTXR9dD0GNt87TtGjO1X8BfhwfNoOUJ0yN
+	 sfPDkSZRDqLe2Z3mdqnv1RHRB9ZpTski1kLHPchYJO66XDxdk7VG6HW5XhQw0nBBKDUVL
+	 MriyuQQ04HgJ9QhHwq8m5jpngJhUMCCcaOAk8UvOKMlWjk7+Xslda1wm8nRGGtWLEvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQCrSg9I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS+RTjtO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B52C606A31C;
-	Thu, 19 Nov 2026 03:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C72B606A31C;
+	Thu, 19 Nov 2026 03:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQCrSg9I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1561F000C4;
-	Thu, 19 Nov 2026 03:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS+RTjtO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8248C1F000C4;
+	Thu, 19 Nov 2026 03:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058986;
-	bh=ZwZ4dI7BGNh8k1/fvLJ+nEI48BpnvZ5z1+8h5EGc+uY=;
+	s=korg; t=1795058989;
+	bh=jkbaepiuM3UQ4XkNcfqTnpNoI/EobYTC7Cm2zRLzfPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQCrSg9IkpPhH4kZXG8Hc6j8HnTQCaBH1EufD3BULWR3HLB/Z/IUbz+RIr4uoxPyP
-	 ybTuOUR8Ww+kTuknLp/JXpFp1XddwypDfatMoTFPC5MAboflR1FOdWRtAuYfmVoaM9
-	 UkRXzb7IYpF2j1YM2+P96e/N+cRYqj60FStKQf2I=
+	b=CS+RTjtOZVKngtdETLHhX4DWPNy/Zp+NGjrKnCKzlWltSq1ngPuOBAniHiKi8ltAZ
+	 rFhWnmcrjv7JzkEfZiUB4EyzMeVRxcOS0QEQh0upTLb9ghtw5hKbrSIVBMZz5kfK3Y
+	 23amrsk4dKytrGDqImde1rHRn5tcOhq0vvCqqlZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0664/1848] media: require two-byte Cypress type 04 records
-Date: Wed, 18 Nov 2026 15:45:02 +0100
-Message-ID: <20261118145943.598682647@linuxfoundation.org>
+Subject: [PATCH 5.10 0682/1848] drm/vc4: Publish the output fence outside of job_lock
+Date: Wed, 18 Nov 2026 15:45:20 +0100
+Message-ID: <20261118145944.535016071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,63 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit e22872703386c3885d8c6bd595124587bc4e5081 ]
+[ Upstream commit 9ee552a42c3905b4547e83173d46413137ec329a ]
 
-Both Cypress Intel HEX parsers read two address bytes from type 04
-records. Generic record framing permits any record length, so a short
-record can make the parser consume the checksum or bytes beyond the
-firmware record. A longer record also violates the Intel HEX type 04
-layout.
+job_lock is taken by the V3D interrupt handler, so nesting an IRQ-unsafe
+lock under it creates an inversion. drm_syncobj_replace_fence() takes
+drm_syncobj::lock, which other paths acquire with interrupts enabled. For
+example, a thread interrupted while holding it blocks the handler on
+job_lock, and the handler can only make progress once the submit path
+releases job_lock, which it cannot do while waiting for drm_syncobj::lock.
 
-Require the type 04 payload length to be exactly two bytes in both
-implementations.
+This is reported by lockdep:
 
-Fixes: 79a63c60a6a2 ("[media] media: move dvb-usb-v2/cypress_firmware.c to media/common")
-Fixes: 776338e121b9 ("[PATCH] dvb: Add generalized dvb-usb driver")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[  188.139076] ========================================================
+[  188.139086] WARNING: possible irq lock inversion dependency detected
+[  188.139096] 7.3.0-rc3-00067-gc4f3feeaf60f #67 Tainted: G         C
+[  188.139108] --------------------------------------------------------
+[  188.139116] swapper/0/0 just changed the state of lock:
+[  188.139125] ffff0000054f8ff8 (&vc4->job_lock){-...}-{3:3}, at: vc4_irq+0xa8/0x28c [vc4]
+[  188.139234] but this lock took another, HARDIRQ-unsafe lock in the past:
+[  188.139242]  (&syncobj->lock){+.+.}-{3:3}
+[  188.139256] and interrupts could create inverse lock ordering between them.
+[  188.139267] other info that might help us debug this:
+[  188.139275]  Possible interrupt unsafe locking scenario:
+[  188.139284]        CPU0                    CPU1
+[  188.139291]        ----                    ----
+[  188.139299]   lock(&syncobj->lock);
+[  188.139312]                                local_irq_disable();
+[  188.139320]                                lock(&vc4->job_lock);
+[  188.139335]                                lock(&syncobj->lock);
+[  188.139350]   <Interrupt>
+[  188.139358]     lock(&vc4->job_lock);
+[  188.139372] *** DEADLOCK ***
+
+Hand the fence over after job_lock is dropped. The job can complete and
+drop exec->fence in that window, so take a reference first and publish
+through the local pointer, as exec may already be gone.
+
+Cc: stable@vger.kernel.org
+Fixes: e84fcb95e074 ("drm/vc4: Export fence through syncobj")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-1-b763df9e33e1@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/cypress_firmware.c      | 2 ++
- drivers/media/usb/dvb-usb/dvb-usb-firmware.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/gpu/drm/vc4/vc4_gem.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/common/cypress_firmware.c b/drivers/media/common/cypress_firmware.c
-index cdc7050ed3ac8..3468eff508b02 100644
---- a/drivers/media/common/cypress_firmware.c
-+++ b/drivers/media/common/cypress_firmware.c
-@@ -59,6 +59,8 @@ static int cypress_get_hexline(const struct firmware *fw,
- 	if (hx->type == 0x04) {
- 		/* b[4] and b[5] are the Extended linear address record data
- 		 * field */
-+		if (hx->len != 2)
-+			return -EINVAL;
- 		hx->addr |= (b[4] << 24) | (b[5] << 16);
- 	}
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index 82b413ae11ac9..d46357f73e74f 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -689,8 +689,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+ 	fence->seqno = exec->seqno;
+ 	exec->fence = &fence->base;
  
-diff --git a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-index 0fb3fa6100e4a..675d9d1d4f472 100644
---- a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-+++ b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-@@ -141,6 +141,8 @@ int dvb_usb_get_hexline(const struct firmware *fw, struct hexline *hx,
++	/* The job can complete and drop exec->fence as soon as job_lock is
++	 * released, so hold our own reference.
++	 */
+ 	if (out_sync)
+-		drm_syncobj_replace_fence(out_sync, exec->fence);
++		dma_fence_get(&fence->base);
  
- 	if (hx->type == 0x04) {
- 		/* b[4] and b[5] are the Extended linear address record data field */
-+		if (hx->len != 2)
-+			return -EINVAL;
- 		hx->addr |= (b[4] << 24) | (b[5] << 16);
- /*		hx->len -= 2;
- 		data_offs += 2; */
+ 	vc4_update_bo_seqnos(exec, seqno);
+ 
+@@ -712,6 +715,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+ 
+ 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+ 
++	if (out_sync) {
++		drm_syncobj_replace_fence(out_sync, &fence->base);
++		dma_fence_put(&fence->base);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
