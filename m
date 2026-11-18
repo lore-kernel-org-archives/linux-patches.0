@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037709;
-	b=cNLKfKb5m/yl4iG9gsK5ntPXMu7TwgY+RSfPAxQVROIhIi+aMamXIs5dCeP7ln7kU1an
-	 Dd4Id+fp2iVtZ3636zPkTEOSInu/wq3u7qHFxL4HFEGvS2kHIgYQ9HMUG6/m830hfuM/z
-	 IhcI8TkMur+w8CgVwepJUlVbM2Hw7KeBk0hU2jNH9DPa1om//BUzNkPnUnK/L/Ss1fRiR
-	 ex0PLSZsUJQwUdlVa3IMSQaczorNPA1oNiyxi1dDqLWrB+BRilOwrUxRhbgzIfSRBOLz4
-	 vqm6VC77p07JfkJKhE2ZIfqiu0R8lFgSMPnis+BYWqU4XALveKDb/q6TeG1BLQ2LiFw==
+	t=1795037712;
+	b=3N07xDRD7NPfBcFDUfBikeseJKRCC3cP1tl/+i+f3gvIx+tiSWqq+uB0iYG+42Icv8fy
+	 0EcMJ/zMOkeCmoYsdp0doNj+wGL2f+B6O2CO/m/qZrOcuWbD6+2lb2OGSdFZxGigHgGWX
+	 M0m/xv1oMR3zvRrPUk0/O/yL3tQ9TOInWNgqg56AxodiiNBqy9AlFoFcqkR5F6CocXyNK
+	 etv63PfLYtTHe8UbFAFfLTQJkvr5bmuf0SmAcSvavYepNfVOmUCdIWwJiqP/oibTDQhRY
+	 mPYgxm2BikyRUdhFFWAuVz3jfDCdOpj4JjGPNtuto03N3xOKgdUfdDREWcUd/RGQJzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037709;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037712;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=upF7RsjQMSj2TBwazlbX0XN5E9Fe6bi7auJFSEb00XY=;
-	b=H+gp6pDUj16CNwJ/8YooF0clqfiujXn8ge2QFoIKiqSk6oDlhVhI9dS1+HCmEmRvIiz5
-	 LLb7R8rbkRXNZIyYIa4DGJSvcaG2jEbujKvEI60Xnf7ZJCKQEm+L1H2skXXzwQU6mXT2+
-	 ZBJo50a73M7TLFLhu6mhCR8CS/GGCO5gawX5e+nwuxeP4L8kqee1ylOAX4ShWYpypvYOF
-	 WX+dUg5DPtAyGjIgcIimTJRL0HnozllaA4/ItSNp8JSK43srZtxCO5j3n2RiHlhMr2XX0
-	 tvlyDjrTr3FjoI3nRvK2SlnrIFFvNXwa9QaFkIGwuDw5mcEPdczVTZ32Dahwp4qWT0A==
+	bh=4NwOHqMTYJC4ZkNQe2x5JQQcVI5X+lWIMwGwnk4QOUI=;
+	b=m2/HeL/p4CqMI/lQ7m440QFbk3+nMR1d+U+/3VOTtao7tpu9B4Chb/f3ZrALsyL8/7Oy
+	 sRYC9qGaMJKP7KNBw1fsulHFv0cWFR27G6g8C5TzVDsO40xlrwUBQDFSatMInUTPtHxjV
+	 SiG3aL4yE+/4hVAvkNE5ibGcnHbFC4yGWsOkj07GmiCYb5efQjW2JYnK3DZ3oJqXBMmkb
+	 Es+5nJj6DYOdqa2GjaCyU/mMFDjlA0njyHbxmnxIjcYVMV/U2rEnEcB6fx+dn287AVrtY
+	 7FYTiLjigvda4TvkSkj4qMs/8yuavkvK8Z0/w5zlhgw7wwl+L8+EAdidjzk7uca2nZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTaXmCEx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTb0msxj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7617606A320;
-	Wed, 18 Nov 2026 21:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89838606A320;
+	Wed, 18 Nov 2026 21:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTaXmCEx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B63F1F000C4;
-	Wed, 18 Nov 2026 21:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTb0msxj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2771F000C4;
+	Wed, 18 Nov 2026 21:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037709;
-	bh=upF7RsjQMSj2TBwazlbX0XN5E9Fe6bi7auJFSEb00XY=;
+	s=korg; t=1795037712;
+	bh=4NwOHqMTYJC4ZkNQe2x5JQQcVI5X+lWIMwGwnk4QOUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTaXmCEx6aFHXlWvlAqarM1oUnLmuQ2pQ2PZfpigTyyWr4AOrOfp1YU//HrQtRHqq
-	 oPmVAgJeuC+zfh3K7pynVaGE2dhizRZNh8ZtSfPKdYeWdIYx1MHjNcYpaJpGkEFnjT
-	 ABHlo0XY8YSkP6SYUfNkr6sa9W46XAHBuRlASNdI=
+	b=ZTb0msxjhfXGTA9rk6LCNI1FQLArdQw+O1/1W7zUjz7qNIOtMM9j+WOHvFbIfiT3c
+	 +Ad1/p75MzNuxH+pBGXpVCXEKhkMOKSnhcVa/v7nzrzSdF8cE26YFPx16aryM6E4B1
+	 Z6o8QS8djB5L63KBQmqG4FTZ/NsQgyTQ97CU2we8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naman Jain <namjain@linux.microsoft.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Roman Kisel <vdso@mailbox.org>,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	Dexuan Cui <decui@microsoft.com>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1492/3318] x86/init: Initialize wall clock in get_rtc_noop()
-Date: Wed, 18 Nov 2026 15:35:14 +0100
-Message-ID: <20261118150405.664889661@linuxfoundation.org>
+Subject: [PATCH 6.6 1493/3318] xfs: fix temporary cursor leak in btree shift corruption paths
+Date: Wed, 18 Nov 2026 15:35:15 +0100
+Message-ID: <20261118150405.696772840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,47 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit 7d5af1f256fdecff6a7986bbc9146b69cb355bb5 ]
+[ Upstream commit 2bbca049deeb1699cafd966cb2793fee576ee409 ]
 
-get_rtc_noop() is used when an RTC is unavailable, but leaves its output
-argument untouched. When CONFIG_INIT_STACK_ALL_ZERO is not enabled,
-timekeeping_init() may therefore receive a nonzero invalid persistent
-clock value and warn:
+In xfs_btree_lshift and xfs_btree_rshift, when XFS_IS_CORRUPT detects
+an invalid firstrec/lastrec result after xfs_btree_dup_cursor has
+successfully allocated a temporary cursor, the error path jumps to
+error0 which returns without freeing tcur.  This leaks the cursor
+memory, the xfs_group reference, and the per-level buffer references
+held by the duplicated cursor.  Jump to error1 instead, which calls
+xfs_btree_del_cursor(tcur, XFS_BTREE_ERROR) to properly release all
+resources.
 
-  "Persistent clock returned invalid value"
-
-Initialize the output to zero, the documented representation of an
-unsupported persistent clock.
-
-Fixes: c311ed6183f4 ("x86/init: Allow DT configured systems to disable RTC at boot time")
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Roman Kisel <vdso@mailbox.org>
-Reviewed-by: Hardik Garg <hargar@linux.microsoft.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260831082528.1623843-1-namjain@linux.microsoft.com
+Fixes: 9eaead51bed95 ("[XFS] implement generic xfs_btree_rshift")
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/x86_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_btree.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
-index 268627a17cf0d..aaef9fd1b9040 100644
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -36,7 +36,7 @@ static void iommu_shutdown_noop(void) { }
- bool __init bool_x86_init_noop(void) { return false; }
- void x86_op_int_noop(int cpu) { }
- int set_rtc_noop(const struct timespec64 *now) { return -EINVAL; }
--void get_rtc_noop(struct timespec64 *now) { }
-+void get_rtc_noop(struct timespec64 *now) { *now = (struct timespec64){0}; }
+diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
+index 1328dadcfc299..331bf27f2b219 100644
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -2467,7 +2467,7 @@ xfs_btree_lshift(
+ 		i = xfs_btree_firstrec(tcur, level);
+ 		if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
+ 			error = -EFSCORRUPTED;
+-			goto error0;
++			goto error1;
+ 		}
  
- static __initconst const struct of_device_id of_cmos_match[] = {
- 	{ .compatible = "motorola,mc146818" },
+ 		error = xfs_btree_decrement(tcur, level, &i);
+@@ -2637,7 +2637,7 @@ xfs_btree_rshift(
+ 	i = xfs_btree_lastrec(tcur, level);
+ 	if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
+ 		error = -EFSCORRUPTED;
+-		goto error0;
++		goto error1;
+ 	}
+ 
+ 	error = xfs_btree_increment(tcur, level, &i);
 -- 
 2.53.0
 
