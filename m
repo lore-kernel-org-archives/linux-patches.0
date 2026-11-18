@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027920;
-	b=gjBK7s5CyT60x6VYfVI4CSxfxzwDdkKS3Mx2jK0pWFYK7ulKq02JMolD9SY5q4Ftql+Q
-	 /lydJkNido+uBptS/98m/Khb+XZ6C0t4yqZWTheBHd/KkCLLGHIuUOUsT7K/5cdJMxlM+
-	 pKebRaJ/xefaw/kXCbIEwEzWZMLzDixOMeU/YYMl2HobdXTlY0xpuGGeQ0Y/x462XqEfi
-	 JqsJk/NXeBKEy88wFufoTkf5sazza2yuL4qPG3OzOzPEUoKPSaAeiOjghcBNCbZWPX0O/
-	 4nGCdeaPXcYEmtwXKJt3x1WOpePiHrbr0TRNrXAayjLKIZKtzkDattQ8WRGD1QMxV8A==
+	t=1795027922;
+	b=q2BLc7O0jPk6QicS+M1JM3thJKEpLBPaUANCl+L4dtsanpBzLJ2G6nWIYFrxGprGWY78
+	 a5GwnAwmimNcIiKsIiPC21ljzAz58+EpwiIVd6ylr2YNk1cvUdlZtHOPXqez6udpvswVL
+	 sW8EOvfy40plbkqQ8GKUMre5DcqoUvla+lA8vrwIqAdAdml9SYWJSqZ0e6Wp/C6C5yKjW
+	 6JNNuj2qYbpBtY28stO/Z1TZZ1PK9QWrUpkZWxaiiH3Wl1dUzrRRb1txe+a62MfR3k6co
+	 N1O2OgLw7E3DNENo5IWlUhfFCjJGHBxi6GFVcTc8sbTXuzxYbVNwX/BKrYt4XPjlXdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i1g/mVzWbi2HywpwJj/FbajJ26PFOF3l29SgFydheoY=;
-	b=KsxfqVpCu4Wu2vJsnai21KgGi/TaTEMw2IzXLYRiodQTbm9Sp9xETHmbPaDKslRrEy93
-	 yAElp5o1YwctAewV1BsozsRoG1f/VKRFqNiqlH2/CwbU91PpY9Gwml8VkU1957TmJ0pD3
-	 R+Es2ev6kwf5h3AshKlzSZb8jldMEnP2T8pAknp4KBZX14x2RtfykKtklHekdNfsUltqJ
-	 dBa8Q32AqzECKzTrAJ3NF4VtBrYNL1JYFfQtSGOJoioqC8dlwgqVaxVyWMQcAuSx2XQf1
-	 OMyVXIJwWGs33H6Q2sM7WiYwdV8HWCezYpHYBelbk7hVYp1AYvCVp3kfZCjOVdvZeag==
+	bh=ShKgzbsrdtvTyOCD73qZaSNYN4/MmhsGeZF3hIZWzMU=;
+	b=OdPGiQnX4YIu6mcW8k/6kx61qKMjUWNIh+Rw7FIGSfPtbfaiYn3HLN9Chg/kT36QGM7w
+	 fjj+l8oTtrP8tfHUCDOxvPlbQV1xj7/8J0bOijaz4cC6+XYq/T/wkT5SbObKQonAYIJJd
+	 L0bSvczy4tmy2oYk4IbKZjNMGQtKggrnPN5MMso8TA+YQk7rWRvwnVKnI6Sjzpsbb0TVQ
+	 BM1+0ttiYldgX1YtsOSVw9KQdXdMf2Hp6zX9l4xmA71UirRtUyiQWoami0zZQW/n1ifcC
+	 +mHXKmbFqgnteYKFyYp/MrR8NenTFzBBY+OOnRrP4f2mAvBRh0rYDTZTyMsvOjlty1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYRxYccg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjVTOp9V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003B1606A320;
-	Wed, 18 Nov 2026 18:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE67606A320;
+	Wed, 18 Nov 2026 18:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYRxYccg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5596C1F000C4;
-	Wed, 18 Nov 2026 18:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjVTOp9V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E101F000C4;
+	Wed, 18 Nov 2026 18:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027919;
-	bh=i1g/mVzWbi2HywpwJj/FbajJ26PFOF3l29SgFydheoY=;
+	s=korg; t=1795027922;
+	bh=ShKgzbsrdtvTyOCD73qZaSNYN4/MmhsGeZF3hIZWzMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYRxYccgNPp7n+uPBBjHjfp862t9Z9IFty5+JU/fLCjO1cB948zqC0lmuaScB5tGw
-	 SBMGcyCYivK+Lvuwd27KxYQ4KzolQpDv6i46sVMLydPCMrhkYCemPF9Z3YeKcjVWol
-	 IdoV76OqAQYJJ9Nj96azhCjIbYpftdOjIfE36Vv4=
+	b=pjVTOp9VPWt2m/EUKkZyj4nZIIn1jEG9Jw2vnmU5sXjcBpm11XdON2HUp01ebaOC+
+	 loL5SRpCdBnGPzH4YyfuFd7W9Kwe3tvv8Rn3rGTCQXFfP4iK1l0Ve66bLtUEO+bkUo
+	 OvBYDNrJz/QEQQNpaeMQqY7G6Nd2O2iBgXs4mfXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Adrian McMenamin <adrianmcmenamin@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1918/2151] ALSA: sh: aica: Fix spu_memset() stride
-Date: Wed, 18 Nov 2026 16:00:53 +0100
-Message-ID: <20261118150231.651553937@linuxfoundation.org>
+Subject: [PATCH 6.18 1909/2151] ksmbd: select CRYPTO_AES
+Date: Wed, 18 Nov 2026 16:00:44 +0100
+Message-ID: <20261118150231.327881270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,46 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
 
-[ Upstream commit 0d01f90b07e877ef31f9959e9b0bc6bcca9b99df ]
+[ Upstream commit 2c36c4a86104d763ee798d4a89e2d3384b4cd626 ]
 
-spu_memset() writes one 32-bit word per iteration, but advances the
-destination offset by only one byte. spu_reset() calls it with
-0x200000 / 4 words to clear the 2 MiB of sound RAM, so:
+ksmbd allocates "gcm(aes)" and "ccm(aes)" AEAD transforms for SMB3
+encryption, but SMB_SERVER only selects CRYPTO_GCM and CRYPTO_CCM, not
+an AES cipher. With a configuration in which nothing else enables
+CRYPTO_AES, ksmbd builds but cannot allocate the transforms, and every
+session that uses encryption fails:
 
- - three out of four writel() calls target an unaligned address. The
-   SH4 can't do that. Each one traps and is emulated by the unaligned
-   access fixup. This call to spu_memset() causes 393216 unaligned
-   accesses, visible in /proc/cpu/alignment.
- - the clear covered only about 512 KiB of sound RAM, not 2 MiB.
+  ksmbd: Failed to alloc encrypt aead : -2
+  ksmbd: crypto alloc failed
 
-Advance the offset by the size of the written word, to clear the full
-sound RAM using aligned writes.
+Select CRYPTO_AES, as the SMB client already does.
 
-Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Acked-by: Adrian McMenamin <adrianmcmenamin@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261022163241.2504922-1-fuchsfl@gmail.com
+Fixes: a848c4f15ab6 ("cifsd: add Kconfig and Makefile")
+Assisted-by: LLM
+Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/sh/aica.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/sh/aica.c b/sound/sh/aica.c
-index fa81bfba59c14..2ba5f78f0c9a5 100644
---- a/sound/sh/aica.c
-+++ b/sound/sh/aica.c
-@@ -94,7 +94,7 @@ static void spu_memset(u32 toi, u32 what, int length)
- 		local_irq_save(flags);
- 		writel(what, toi + SPU_MEMORY_BASE);
- 		local_irq_restore(flags);
--		toi++;
-+		toi += sizeof(what);
- 	}
- }
- 
+diff --git a/fs/smb/server/Kconfig b/fs/smb/server/Kconfig
+index 8b91a6323d936..4273783a3b4c5 100644
+--- a/fs/smb/server/Kconfig
++++ b/fs/smb/server/Kconfig
+@@ -17,6 +17,7 @@ config SMB_SERVER
+ 	select CRYPTO_AEAD2
+ 	select CRYPTO_CCM
+ 	select CRYPTO_GCM
++	select CRYPTO_AES
+ 	select ASN1
+ 	select OID_REGISTRY
+ 	select CRC32
 -- 
 2.53.0
 
