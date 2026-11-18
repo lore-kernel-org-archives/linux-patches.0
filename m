@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048211;
-	b=MlYle5S+NbbuW0XdMSVlKXnro3WbU8nGAh3cYr3pZOK3w5GRlBruUFxkAq2kbaQlHFPO
-	 J+cTqjCPe6khN7YTO+e5IN5xcxzBOV7BhtPIhb4GMTwY4mqFRI6b8DJ+XWaB+2L1cFF9g
-	 CyU7voMqCNVowpnOAD4gegK3FDk7M4fkKyJctwYL8FK1M06uRno44nUuYJ+db7O7JDfww
-	 PJvR2P6q3nswxtTKMi+38fnWGIa6VkYXoEnbbqWRxXp6itcIkuip6uiNaySDzDcpWgCgq
-	 M9a4Yv/akITPCibdXaICBzL1qPxr7a9Ht4MeH7PXjtyasJ4RhIMbUV8nWaZMuTXqUPg==
+	t=1795048214;
+	b=oGJfNmbGvNJ8Q4Ba5AEx1hjbtj42NCQE7fjM7aQAS1U7T1X1faUYAeJ9eumvrr58uMzN
+	 Ki/Gpd5zS6PDtJVU6yVwpQW5siWpnVzW2e2NUi0fwzPa3RvQG/ROLe/rSpOmq1rxhM22Y
+	 0g4xGVhfOFph44Z0v76xzAiuuErMNLHNwT1QDYgJsRG8N0xZutsjz/4HeNBxBJuUApHmy
+	 dLtTcb2w99KmTUEm5V+sA5ODpJc5H5rNlimTiTHo6u4KJ2PbjewyaxzdQHy1nHEmQ9DGe
+	 7ZgWSm0w9zq7XLPNuLLduS497fyE+amuFCsDzznPAeiZxU7XS9+5vDac0GmNfH3gs2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048214;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xfRVHc44zD8SzxOmZ6TAulYILsBAmBVIC5ecvI2zX3I=;
-	b=iXaVJSuEcvv86eTCC5luTyJW3Fb4znJiqXFcD2qN9jrejri8JvzUrhl+DhbK0HdOwlY7
-	 rMs72Ed6TJhJPwT+WG0wequH2h04mShS4hVCnOnaYSvv5XxNGRJq2A+x46kmzvAu1xXv4
-	 dpQ514chDY6V6A/+0CyZoY8MMZ+yGTMuz1vnsQNYOJNXOej3Ppjjo4Z70KU81OBu2Oivb
-	 zATwEvZO7mcGTn8Vm1amG1gbd+7HZ3BAfKDWNN0SDFQCIEUJwhL+8ThXyLjGCBwkUniY9
-	 X9rqwZZj6gEPGl2T2r2m4R0/CWxkDqSQ9x0VqztJ7R/2DMsk+HzWKoca/uFFmpxfZZQ==
+	bh=tYx7vlyDFiLXWHR2INUW504bl+Zgdguy3DnIZK32ZTc=;
+	b=lLczKifH8FcKkF5XkqjGoXg8wypo8T8seO7F6FvKPDsvhIquWLBra6ubmXsDC0OeVcfD
+	 nBH2wz1GwSko5Tr9MtRP/+sU2Xb6MtEzXbKwiC6ioHzUEahop9W8ckRI/zuWLcq4OTxTO
+	 ls9d/mGIwJInFdiwbAtSlDnuilV/+QLD4okESFD3phkXyQ6OekZhhHdB0wHvzKUTeUDCi
+	 HjsadrbT3r7UgzvARmXRQxJOdbotIQ1630j27m4TCa044iq+ku1FAg2o2C/iVk3t0M7+I
+	 YJ9w5bi6PH/3axmzgLKKBK8BWDo7C7VJEsPLeUww896CnwKIau216LS95RIAIuqur0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+3Kg20v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iY9Jr3LO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93909606A320;
-	Thu, 19 Nov 2026 00:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F3160A2607;
+	Thu, 19 Nov 2026 00:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+3Kg20v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19C31F000C5;
-	Thu, 19 Nov 2026 00:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iY9Jr3LO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04081F000CA;
+	Thu, 19 Nov 2026 00:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048211;
-	bh=xfRVHc44zD8SzxOmZ6TAulYILsBAmBVIC5ecvI2zX3I=;
+	s=korg; t=1795048214;
+	bh=tYx7vlyDFiLXWHR2INUW504bl+Zgdguy3DnIZK32ZTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+3Kg20v7aQMB3VqJ1Fy1AGC5qg6yha6jZyMo8NiZ71CtM06Snq+uVOhXgMgLcSYY
-	 CMAMIL/k/5mq1zc/5RuOYfSU7KFtJDMK1Pf87Env/hNs/zmQrzyuagORKn/feJhDkh
-	 sA/qCZF7vjCpQmKryMdHKxqAVd0b6ZIIsWn51QOg=
+	b=iY9Jr3LOiAz/RzRABMVG8gqERJgzYS/zEmk8S1uYYk/581f31TT9dPoPkZgw4JFIm
+	 XGqWVRWZPKg45d79lNhApdVszN2LRJn1j8kJ934miTa5vUSXcDI0wro24VvutD1iRL
+	 OSSXJXcJfTSVnzf0AXPtvKIQ5ftM7eTq+/C8UNi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1915/2857] ACPI: video: Fix backlight unregistration ordering
-Date: Wed, 18 Nov 2026 15:49:09 +0100
-Message-ID: <20261118150310.165887134@linuxfoundation.org>
+Subject: [PATCH 6.1 1916/2857] perf header: Fix potential memory corruption in cpu_cache_level__read
+Date: Wed, 18 Nov 2026 15:49:10 +0100
+Message-ID: <20261118150310.202536878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,58 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 46577d36611953d1b99e86493289cfc824116ad2 ]
+[ Upstream commit d964ffba01f5d0935dd6bc850029958a62c74491 ]
 
-In acpi_video_dev_unregister_backlight(), the sysfs interface of the
-cooling class device may access the brightness object under the
-backlight device's ACPI companion, so that object cannot be freed
-before unregistering the cooling class device.
+strim() may advance the pointer assigned to cache->size which causes
+later frees to crash.
 
-Adjust the code to take that into account.
+Fix by performing the strim and then memmove-ing the potentially shifted
+string back over the original string.
 
-Fixes: 67b662e189f4 ("ACPI / video: seperate backlight control and event interface")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-[ rjw: Fixed the Fixes: tag ]
-Link: https://patch.msgid.link/3429468.aeNJFYEL58@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The bug was introduced by the transition from rtrim() to strim(), as
+rtrim() wouldn't move on the left.
+
+Fixes: 13c230ab6e56c6ae ("perf tools: Ditch rtrim(), use strim() from tools/lib")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_video.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/perf/util/header.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
-index 2f1a2ad4eb816..7b24e577c1ab8 100644
---- a/drivers/acpi/acpi_video.c
-+++ b/drivers/acpi/acpi_video.c
-@@ -1847,6 +1847,12 @@ static int acpi_video_bus_register_backlight(struct acpi_video_bus *video)
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index b2b0293567f07..421bf05e00f6a 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1178,7 +1178,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
+ 		return -1;
  
- static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device)
- {
-+	if (device->cooling_dev) {
-+		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
-+		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
-+		thermal_cooling_device_unregister(device->cooling_dev);
-+		device->cooling_dev = NULL;
+ 	cache->type[len] = 0;
+-	cache->type = strim(cache->type);
++	{
++		char *trimmed = strim(cache->type);
++
++		memmove(cache->type, trimmed, strlen(trimmed) + 1);
 +	}
- 	if (device->backlight) {
- 		backlight_device_unregister(device->backlight);
- 		device->backlight = NULL;
-@@ -1856,12 +1862,6 @@ static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device
- 		kfree(device->brightness);
- 		device->brightness = NULL;
+ 
+ 	scnprintf(file, PATH_MAX, "%s/size", path);
+ 	if (sysfs__read_str(file, &cache->size, &len)) {
+@@ -1187,7 +1191,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
  	}
--	if (device->cooling_dev) {
--		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
--		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
--		thermal_cooling_device_unregister(device->cooling_dev);
--		device->cooling_dev = NULL;
--	}
+ 
+ 	cache->size[len] = 0;
+-	cache->size = strim(cache->size);
++	{
++		char *trimmed = strim(cache->size);
++
++		memmove(cache->size, trimmed, strlen(trimmed) + 1);
++	}
+ 
+ 	scnprintf(file, PATH_MAX, "%s/shared_cpu_list", path);
+ 	if (sysfs__read_str(file, &cache->map, &len)) {
+@@ -1197,7 +1205,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
+ 	}
+ 
+ 	cache->map[len] = 0;
+-	cache->map = strim(cache->map);
++	{
++		char *trimmed = strim(cache->map);
++
++		memmove(cache->map, trimmed, strlen(trimmed) + 1);
++	}
+ 	return 0;
  }
  
- static int acpi_video_bus_unregister_backlight(struct acpi_video_bus *video)
 -- 
 2.53.0
 
