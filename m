@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047018;
-	b=Y9ZebKo4L/pghLs5xONMTvAD0Jeb11ztTNHF8ys3vyqpFVYaHo05wNvryUmSJHXyALW6
-	 aOJ/Tq+Aq3I0Ht09GIyBkp0zNdK/aB8HW1Ke3XefhFcMhYJNDU5WP2tTikJKBr7KQEA2Q
-	 pDkNyaXtUqj51paCWCI0f8qdyqffydvxjeYjzSBo3/P/DTXfAgIyoZQ7eR2SyiLjR4okp
-	 GJbU8ksKWbQ+SNSuO+oquQvGbs5bT+E/T8+XlwYMcuocVV543h4udzYvYuzrgKV7cC9z/
-	 r24WBCYuiPDN46m+jMcylX3wFFsm1M/+5HbpeXsrgHYC5BvS/rkiV9Ey6PMaF2vtR/w==
+	t=1795047020;
+	b=KgxOUwInQlJ9OqlLtbzj9wScDhP5cjqZj8Vt7PDQoKCBzS8GmY1kxdyGqcECXTVG4iAj
+	 avkqjt9rVKKIKmCSd6zL2rIEvMTn1J/5IuyzgXlpUZgPgZctzyxeTvsdrGDHOtwjDPTZ1
+	 JfPLkB+E0CnC/eVgJJgQwtV4YtRIpFRS//GJbUhZHTfIIcZgSi3T+2QJW/fpZirMrqkDu
+	 i/4xQlvHQv/c6bL6fmZUZQsWSB4j4qBBbpBEcaBFnJ1IJ+l6ih5gzAxQiIjY7dxPZFFt2
+	 MEx7knpe4rerNYEDhSQMr9smyupHT5TfJ2qKOzyOcnm+S9RImFth5HGi2ZhRv6ihamw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0w527BuNDkyPIfXgdxTDwyljcrTYenJsJCj6ESrAqWY=;
-	b=H69ZjFloUvxZsllOF4iiBP3rlsKpqPJVE9/5yiqNbh8wL3w3qrXXtS6BDRcyIcP7QV56
-	 w/72TUVbQ3RW9xVCLnkBpAON9NibuN2FIvWF/WbqzABStzpH7rr2QNKT6cGYmGUBgztJv
-	 LVrbcpA0QiMzI68VL9GO6ycqV3h1pugsLU2Y2UNiE/Qj2UNX4cHedP6Wx4tLTttX8Rk2x
-	 7Ia/pn1UiDmpwf8RX6gz1Ye1PtodHd+3IAffHbi2/D/vMQEhB7vAKEl4MbniCUA65hqgq
-	 VBfdWtPNhHHTcaKScw830BrugV2bGl/plL+bbzEia/bKn1ZL8JsEOclhdd1g928UV4Q==
+	bh=pUQLOHW4igvO2cJfF8G31rXlfOvbNXbJ8GuMFlR85w0=;
+	b=1QPCRGqofYNblI6SLxH1EEudth77XDmZ4ReBVvwyTdfav9QHWnDgkXq5vdcEi1AvPLPN
+	 zcikTEJlA9aqkc9++WoAKy+JloW9C2oK63hx6rPHd/nUQyv8QqBz0XDZ6PN++JqrR8scv
+	 5tGFDcOFfc+xvWu7+KCClnyQ0CW1nfj1CoxtXXoNyqORYDqyWKF93SbOiXVlMniCsVzc7
+	 8rWLFqo+pUGjrBUtd0bpeMMLS09mMwpI0mQ9fC7tRwfEDHD4765Yo8yNbCY5DUNlMvjR/
+	 Ybk/Og4y88OIYmWa64kmH7i3rsoOi3UJqiggPLIo5jPo5StI6tQECN5Mv1z2V7qKWyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0nj5Ii0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FjvcHzNd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD1F60A382A;
-	Thu, 19 Nov 2026 00:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA52F60A5BCC;
+	Thu, 19 Nov 2026 00:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0nj5Ii0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613CA1F000C9;
-	Thu, 19 Nov 2026 00:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FjvcHzNd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7A21F000C6;
+	Thu, 19 Nov 2026 00:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047017;
-	bh=0w527BuNDkyPIfXgdxTDwyljcrTYenJsJCj6ESrAqWY=;
+	s=korg; t=1795047020;
+	bh=pUQLOHW4igvO2cJfF8G31rXlfOvbNXbJ8GuMFlR85w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0nj5Ii0zff+9VWx5ad8jQP40n1vDAS3zyX0LOZ5D6GzFGCL/GItaouHiDPkyJCOn
-	 8B+0xLpDX2vhJEDtlbaLprjQI2RL14DvQaU8txbXggqsBmEXVeD6r8XmNAtarxcEs7
-	 TQYXq+/6oRcLpZ7fZT7QdRRgHkLfI1hpo9mTGyjw=
+	b=FjvcHzNdO/WS0iNgUQG+8yuORT4x+p9fUWdQXn3XZLmIv+0htbgDn1ZFqODt6tvb+
+	 8AEgX8/NaEql+Mya264ZkIBzCKVcLzYCdS5y/eFliBxJZfW7aGUw2x0f7vkDLUrsEP
+	 yLdRF58SL862+A+Efi6iaSNGT/Y7D3FSfqSQ1k8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1488/2857] block: amiflop: synchronize flush timer before track flush
-Date: Wed, 18 Nov 2026 15:42:02 +0100
-Message-ID: <20261118150254.897696513@linuxfoundation.org>
+Subject: [PATCH 6.1 1489/2857] leds: ktd2692: Pass context to regulator cleanup
+Date: Wed, 18 Nov 2026 15:42:03 +0100
+Message-ID: <20261118150254.933368327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,185 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 9690943353cec1690a715e000ba6a74e5139f530 ]
+[ Upstream commit c73e9f04445f361d5f19ca2edfde742ce18348ef ]
 
-The amiflop track buffer is shared with the timer callback. timer_delete()
-does not wait for an in-flight callback, and that callback can rearm itself
-when it cannot acquire the floppy controller. A synchronous track flush can
-therefore race with the callback.
+regulator_disable_action() retrieves the driver context from device
+driver data.  However, ktd2692_parse_dt() registers the action before
+ktd2692_probe() stores the context with platform_set_drvdata().
 
-Stop the timer before synchronous track writes and use timer_delete_sync()
-to wait for any callback already running. Keep callback rearming disabled
-until the write is complete. Apply this to the FDFMTTRK path as well.
+If devm_add_action_or_reset() cannot allocate the action, it invokes the
+callback immediately.  A later probe failure also invokes it during
+managed-resource unwinding.  Both paths dereference a NULL context.
 
-FDFLUSH, FDFMTTRK and close-time flushes run outside the blk-mq
-request callback. Freeze their queues so an in-flight request cannot
-change the shared track buffer while it is encoded and written. Restart
-the timer if a track remains dirty after a failed flush.
+Pass the already allocated context directly to the action and retain the
+device pointer in it for error reporting.  The context is allocated before
+the action is registered, so reverse-order devres unwinding keeps it alive
+through the callback.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: ee78b9360e14 ("leds: ktd2692: Fix an error handling path")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260930065951.2932739-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: Adapted blk_mq_freeze_queue() and blk_mq_unfreeze_queue() calls to the older API without memflags. ]
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260910194525.99654-1-mhun512@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+[ sashal: adjusted context to account for missing ExpressWire properties and timing initialization ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/amiflop.c | 69 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 61 insertions(+), 8 deletions(-)
+ drivers/leds/flash/leds-ktd2692.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/amiflop.c b/drivers/block/amiflop.c
-index 4c8b2ba579ee6..a5cf490c5fd68 100644
---- a/drivers/block/amiflop.c
-+++ b/drivers/block/amiflop.c
-@@ -264,6 +264,8 @@ static struct fd_data_type data_types[] = {
- static struct amiga_floppy_struct unit[FD_MAX_UNITS];
+diff --git a/drivers/leds/flash/leds-ktd2692.c b/drivers/leds/flash/leds-ktd2692.c
+index 670f3bf2e9062..b54220658f969 100644
+--- a/drivers/leds/flash/leds-ktd2692.c
++++ b/drivers/leds/flash/leds-ktd2692.c
+@@ -72,6 +72,8 @@ struct ktd2692_led_config_data {
+ };
  
- static struct timer_list flush_track_timer[FD_MAX_UNITS];
-+static DEFINE_SPINLOCK(flush_track_timer_lock);
-+static bool flush_track_timer_stopped[FD_MAX_UNITS];
- static struct timer_list post_write_timer;
- static unsigned long post_write_timer_drive;
- static struct timer_list motor_on_timer;
-@@ -1369,11 +1371,22 @@ static void flush_track_callback(struct timer_list *timer)
- 					sizeof(flush_track_timer[0]);
+ struct ktd2692_context {
++	struct device *dev;
++
+ 	/* Related LED Flash class device */
+ 	struct led_classdev_flash fled_cdev;
  
- 	nr&=3;
-+	spin_lock(&flush_track_timer_lock);
-+	if (flush_track_timer_stopped[nr]) {
-+		spin_unlock(&flush_track_timer_lock);
-+		return;
-+	}
-+	spin_unlock(&flush_track_timer_lock);
-+
- 	writefromint = 1;
- 	if (!try_fdc(nr)) {
- 		/* we might block in an interrupt, so try again later */
--		flush_track_timer[nr].expires = jiffies + 1;
--		add_timer(flush_track_timer + nr);
-+		spin_lock(&flush_track_timer_lock);
-+		if (!flush_track_timer_stopped[nr]) {
-+			flush_track_timer[nr].expires = jiffies + 1;
-+			add_timer(flush_track_timer + nr);
-+		}
-+		spin_unlock(&flush_track_timer_lock);
- 		return;
- 	}
- 	get_fdc(nr);
-@@ -1420,6 +1433,35 @@ static int non_int_flush_track (unsigned long nr)
- 	return 1;
- }
+@@ -258,13 +260,12 @@ static void ktd2692_setup(struct ktd2692_context *led)
  
-+static void flush_track_timer_stop(unsigned int drive)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&flush_track_timer_lock, flags);
-+	flush_track_timer_stopped[drive] = true;
-+	spin_unlock_irqrestore(&flush_track_timer_lock, flags);
-+
-+	timer_delete_sync(flush_track_timer + drive);
-+}
-+
-+static void flush_track_timer_start(unsigned int drive)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&flush_track_timer_lock, flags);
-+	flush_track_timer_stopped[drive] = false;
-+	if (unit[drive].dirty)
-+		mod_timer(flush_track_timer + drive, jiffies + 1);
-+	spin_unlock_irqrestore(&flush_track_timer_lock, flags);
-+}
-+
-+static void flush_track_timer_sync(unsigned int drive)
-+{
-+	flush_track_timer_stop(drive);
-+	non_int_flush_track(drive);
-+	flush_track_timer_start(drive);
-+}
-+
- static int get_track(int drive, int track)
+ static void regulator_disable_action(void *_data)
  {
- 	int error, errcnt;
-@@ -1434,8 +1476,7 @@ static int get_track(int drive, int track)
- 	}
- 
- 	if (unit[drive].dirty == 1) {
--		del_timer (flush_track_timer + drive);
--		non_int_flush_track (drive);
-+		flush_track_timer_sync(drive);
- 	}
- 	errcnt = 0;
- 	while (errcnt < MAX_ERRORS) {
-@@ -1562,6 +1603,12 @@ static int fd_locked_ioctl(struct block_device *bdev, fmode_t mode,
- 	case FDFMTTRK:
- 		if (param < p->type->tracks * p->type->heads)
- 		{
-+			flush_track_timer_stop(drive);
-+			if (unit[drive].dirty == 1 &&
-+			    !non_int_flush_track(drive)) {
-+				flush_track_timer_start(drive);
-+				return -EIO;
-+			}
- 			get_fdc(drive);
- 			if (fd_seek(drive,param) != 0){
- 				memset(p->trackbuf, FD_FILL_BYTE,
-@@ -1570,6 +1617,7 @@ static int fd_locked_ioctl(struct block_device *bdev, fmode_t mode,
- 			}
- 			floppy_off(drive);
- 			rel_fdc();
-+			flush_track_timer_start(drive);
- 		}
- 		else
- 			return -EINVAL;
-@@ -1591,8 +1639,7 @@ static int fd_locked_ioctl(struct block_device *bdev, fmode_t mode,
- 	case FDDEFPRM:
- 		return -EINVAL;
- 	case FDFLUSH: /* unconditionally, even if not needed */
--		del_timer (flush_track_timer + drive);
--		non_int_flush_track(drive);
-+		flush_track_timer_sync(drive);
- 		break;
- #ifdef RAW_IOCTL
- 	case IOCTL_RAW_TRACK:
-@@ -1611,9 +1658,14 @@ static int fd_ioctl(struct block_device *bdev, fmode_t mode,
- 			     unsigned int cmd, unsigned long param)
- {
+-	struct device *dev = _data;
+-	struct ktd2692_context *led = dev_get_drvdata(dev);
++	struct ktd2692_context *led = _data;
  	int ret;
-+	bool freeze_queue = cmd == FDFMTTRK || cmd == FDFLUSH;
  
- 	mutex_lock(&amiflop_mutex);
-+	if (freeze_queue)
-+		blk_mq_freeze_queue(bdev->bd_disk->queue);
- 	ret = fd_locked_ioctl(bdev, mode, cmd, param);
-+	if (freeze_queue)
-+		blk_mq_unfreeze_queue(bdev->bd_disk->queue);
- 	mutex_unlock(&amiflop_mutex);
- 
- 	return ret;
-@@ -1715,9 +1767,9 @@ static void floppy_release(struct gendisk *disk, fmode_t mode)
- 	int drive = p - unit;
- 
- 	mutex_lock(&amiflop_mutex);
-+	blk_mq_freeze_queue(disk->queue);
- 	if (unit[drive].dirty == 1) {
--		del_timer (flush_track_timer + drive);
--		non_int_flush_track (drive);
-+		flush_track_timer_sync(drive);
- 	}
-   
- 	if (!fd_ref[drive]--) {
-@@ -1727,6 +1779,7 @@ static void floppy_release(struct gendisk *disk, fmode_t mode)
- #ifdef MODULE
- 	floppy_off (drive);
- #endif
-+	blk_mq_unfreeze_queue(disk->queue);
- 	mutex_unlock(&amiflop_mutex);
+ 	ret = regulator_disable(led->regulator);
+ 	if (ret)
+-		dev_err(dev, "Failed to disable supply: %d\n", ret);
++		dev_err(led->dev, "Failed to disable supply: %d\n", ret);
  }
+ 
+ static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
+@@ -296,7 +297,7 @@ static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
+ 			dev_err(dev, "Failed to enable supply: %d\n", ret);
+ 		} else {
+ 			ret = devm_add_action_or_reset(dev,
+-						regulator_disable_action, dev);
++						regulator_disable_action, led);
+ 			if (ret)
+ 				return ret;
+ 		}
+@@ -354,6 +355,7 @@ static int ktd2692_probe(struct platform_device *pdev)
+ 	if (!led)
+ 		return -ENOMEM;
+ 
++	led->dev = &pdev->dev;
+ 	fled_cdev = &led->fled_cdev;
+ 	led_cdev = &fled_cdev->led_cdev;
  
 -- 
 2.53.0
