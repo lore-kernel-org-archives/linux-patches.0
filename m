@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034093;
-	b=M+3et95dfCk8Y/qh2H5iu11ce+Gn96KKbqtvqsyDTjF/s59m2rbcwHlpgd2RhDRk9K11
-	 FDxoKQFULy7ivOvi6A0XqOYqfh3Wp0gJIDuffRX3xUuIrGqDcqyDLRd8GbYjN/hwdynHN
-	 HfczsTA7P2tS0hL7xly7MIGjHZF/JCvesmr0ENoK5gNP+pj2r8w6V+WHuw3keNGfT4bec
-	 CmcZgJo8Qxi1433y2c929UvMC/1i9cv1i4uNXfmPwzMtz44p5FkmRrBmLOGXYdOzSUtWT
-	 98Up6fjZhMPmrwmqJmiJwJlpdgzmLiVHMywadmapqHYtJpKkknccpLi+q7Yg/sydgtA==
+	t=1795034096;
+	b=yJr4mhlxSIjk19kMIYR7F4cLgdV0WfcMyviJtDeL1iNDTRthWgYxoggYn1gBRQamFz52
+	 uUHXt9ylgdGQ3U2oMPW9gHMfonXPumnovK1fWHY48cRudFnfd3I5QvvVeMkeyT83j4q0+
+	 PQCwaHz+Xq23vo0LzJUKM2+KCc5ngAbzn2d+gqEzIdn+fMaZod6GZM0ga59v3p/6sVJaL
+	 eVpEC2yDs0yAOX14tweCIlaf+utTv7EB8CyZ8mfQ7KiHg7g2B3Xgqf2YScWmphs3W17ng
+	 seGt7dRZ2Ff4LxAi3R6MQZpc6Z6VmxWBigW43WUSTONTuUuHo/GHRU6qOmIMS6Bv03Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MZX/SEyucO3/dm5EUeRd4IMNqmeKWuUJF88FaLWNpl4=;
-	b=H695ZkWtRKONZATdaAQo9zKk0cLaAfTtdriVn+Qsj1c5uOrRx3d5Lr0nHwNH2hyWps3T
-	 AJXVIYdjWTAGtgyMKm/jhNHomaW4SlV1U1XYcYbo+L/w8QcsI35Yd25L/a5P3AdBGsdDX
-	 P16poKs+StrqOYqDTxrRuRVoz8EWC609GFoFpGxreqpxi/XPRM/HfuAPsFxiUEDhksG1F
-	 vnSaE7ggSBuNXZCADZ2iOdLcgHWMOCOIheO1zvsaC8HRwtDqOdH06RXSLNBoLerbtFpcB
-	 jK6qvxjm5LyfjunFGVtEapreTNbPPZn8fvOx5HcbcfblMbkA7CbQPTSVBnQLpeC1pYw==
+	bh=5Z2yC1FEahIhTeV70/PO6Qw8VUiBjIY7qS+a1jxTNoA=;
+	b=PKh4bBEV61+V0PnmzZWUcKL679pE6b5xA3Ea1DVLk+xN8dpCtQnPbE5QvINnfsU0t0CS
+	 UslMuPmoMwE9pSI1Frtd5Mq0kmtflQw06m/vqv4v3RONSQUEJX/cb6VYqzsxMvfM3S1KY
+	 GQg89/t9uHBI751YFBMrgw2OITUZw5YE9JxTZSFXWx2FU/MgWajSvC97e5BA+//VxXAFq
+	 GAcm9M2GMhjSU2LpvqXqpDTj/wOMpxudkN+RYQCvyt4ZGaream9mXs9NEINjD0gTXuwbO
+	 pQY7a9vcVbPazhFWsbX8exfR5qd0aPFtzw72J8dBHpYMy1VpImJWE70awAqK5ZtHQsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCUJ+3ea;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5jPmfAb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59BB606A320;
-	Wed, 18 Nov 2026 20:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F46C606A31C;
+	Wed, 18 Nov 2026 20:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCUJ+3ea
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD19A1F000C4;
-	Wed, 18 Nov 2026 20:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5jPmfAb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811D31F000C4;
+	Wed, 18 Nov 2026 20:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034093;
-	bh=MZX/SEyucO3/dm5EUeRd4IMNqmeKWuUJF88FaLWNpl4=;
+	s=korg; t=1795034096;
+	bh=5Z2yC1FEahIhTeV70/PO6Qw8VUiBjIY7qS+a1jxTNoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCUJ+3eaM6jvHvPhboROuByYNg7W6RmfW9CZN98Tf9OIRrs/OxAvIZrB4DDUrZezi
-	 nrTPQo76sbOueVGsHVhkuB8NNtrO1GzCbGdv4qCoxY7+Ebl5BfJOX0XjSUto8Psjbl
-	 tE3fNyxcNAGu/9a/SgF8rFWI2ok5nxdOr0hu8a8A=
+	b=L5jPmfAbX2+RalBFPX3U5SijF10sVPyo85SN8Y7Z8rc6poB4Qzu3/3iF+lr213dxI
+	 pm5UhYbAWkPxrlH1qMqNPShlZicOm4mdj7bR/zK6oLD5FQeS7dEbo/vxNErJwzV/gy
+	 WJFBFMlvttYzQ6yalJpLUujUbAcMlSu+eniX98yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>,
-	Jianjun Chen <jianjun@tsinghua.edu.cn>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0207/3318] netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets
-Date: Wed, 18 Nov 2026 15:13:49 +0100
-Message-ID: <20261118150321.115281702@linuxfoundation.org>
+Subject: [PATCH 6.6 0208/3318] netfilter: nf_tables: call skb_valid_dst() before skb_dst()
+Date: Wed, 18 Nov 2026 15:13:50 +0100
+Message-ID: <20261118150321.155265837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,69 +67,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit bf80e6802273a900311b44e47c9b1a59c6d2473c ]
+[ Upstream commit 689db98e535bf8efb5bc9c36f4fd3de3bd715eb6 ]
 
-Commit be0502a3f2e9 ("netfilter: conntrack: tcp: only close if RST
-matches exact sequence") keeps an established conntrack entry in
-ESTABLISHED when an in-window RST does not match the expected sequence
-number exactly, so the endpoint can validate the RST with a challenge
-ACK.
+When fetching the dst_entry from the skb, check if it valid, ie. this is
+not a template dst, for extensions that can be used from the netdev
+ingress and egress chains.
 
-The timeout selection nevertheless uses the CLOSE timeout for every RST
-packet.  The bug is that timeout selection is based on the packet type,
-not on the state transition result: even when RST validation keeps
-new_state in ESTABLISHED, the timeout is still forced to
-TCP_CONNTRACK_CLOSE.
-
-Linux TCP independently rate limits challenge ACKs per socket.  A second
-non-exact RST can therefore arrive after the first challenge ACK has
-restored the timeout but before the rate limit expires.  The second RST
-lowers the timeout to 10 seconds again while the endpoint suppresses the
-second challenge ACK, allowing the conntrack entry to expire while both
-TCP endpoints remain established.
-
-Using the ESTABLISHED timeout for such RSTs would avoid this short
-expiration window, but it could also retain stale entries for the
-five-day default because conntrack cannot reliably match the endpoint's
-exact TCP state.
-
-Use the UNACK timeout for RST packets that leave the conntrack entry in
-TCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet
-trains still fall through to timeouts[new_state], which preserves the
-CLOSE timeout when conntrack accepts the RST as closing the flow.
-
-This avoids the aggressive 10-second expiration window for non-exact
-RSTs while preserving the short timeout for RSTs that conntrack accepts
-as closing the flow.
-
-Suggested-by: Florian Westphal <fw@strlen.de>
-Reported-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Reported-by: Jianjun Chen <jianjun@tsinghua.edu.cn>
-Signed-off-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++++--
+ net/ipv6/netfilter/nf_reject_ipv6.c | 8 ++++++--
+ net/netfilter/nft_meta.c            | 6 ++++--
+ net/netfilter/nft_rt.c              | 6 ++++--
+ net/netfilter/nft_xfrm.c            | 9 ++++++++-
+ 5 files changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index aaf316c665661..1ca76c0becd05 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1324,8 +1324,9 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 	if (ct->proto.tcp.retrans >= tn->tcp_max_retrans &&
- 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
- 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
--	else if (unlikely(index == TCP_RST_SET))
--		timeout = timeouts[TCP_CONNTRACK_CLOSE];
-+	else if (unlikely(index == TCP_RST_SET &&
-+			  new_state == TCP_CONNTRACK_ESTABLISHED))
-+		timeout = timeouts[TCP_CONNTRACK_UNACK];
- 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
- 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
- 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index 1632cedcd348c..549d355ebb1d9 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -8,6 +8,7 @@
+ #include <net/tcp.h>
+ #include <net/route.h>
+ #include <net/dst.h>
++#include <net/dst_metadata.h>
+ #include <net/netfilter/ipv4/nf_reject.h>
+ #include <linux/netfilter_ipv4.h>
+ #include <linux/netfilter_bridge.h>
+@@ -256,6 +257,7 @@ static int nf_reject_fill_skb_dst(struct sk_buff *skb_in)
+ 	if (!dst)
+ 		return -1;
+ 
++	skb_dst_drop(skb_in);
+ 	skb_dst_set(skb_in, dst);
+ 	return 0;
+ }
+@@ -272,7 +274,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	if (!oth)
+ 		return;
+ 
+-	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
++	if (!skb_valid_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
+ 		return;
+ 
+ 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
+@@ -345,7 +347,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
+ 	if (iph->frag_off & htons(IP_OFFSET))
+ 		return;
+ 
+-	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
++	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
+ 		return;
+ 
+ 	if (skb_csum_unnecessary(skb_in) ||
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index a19ca1907de36..d565cea4cc737 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -8,6 +8,7 @@
+ #include <net/ip6_route.h>
+ #include <net/ip6_fib.h>
+ #include <net/ip6_checksum.h>
++#include <net/dst_metadata.h>
+ #include <net/netfilter/ipv6/nf_reject.h>
+ #include <linux/netfilter_ipv6.h>
+ #include <linux/netfilter_bridge.h>
+@@ -291,6 +292,7 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
+ 	if (!dst)
+ 		return -1;
+ 
++	skb_dst_drop(skb_in);
+ 	skb_dst_set(skb_in, dst);
+ 	return 0;
+ }
+@@ -323,10 +325,12 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	fl6.fl6_sport = otcph->dest;
+ 	fl6.fl6_dport = otcph->source;
+ 
+-	if (!skb_dst(oldskb)) {
++	if (!skb_valid_dst(oldskb)) {
+ 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
+ 		if (!dst)
+ 			return;
++
++		skb_dst_drop(oldskb);
+ 		skb_dst_set(oldskb, dst);
+ 	}
+ 
+@@ -427,7 +431,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
+ 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
+ 		skb_in->dev = net->loopback_dev;
+ 
+-	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
++	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
+ 		return;
+ 
+ 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
+diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
+index 983158274c68d..9ef4173976c04 100644
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -20,6 +20,7 @@
+ #include <net/dst.h>
+ #include <net/ip.h>
+ #include <net/sock.h>
++#include <net/dst_metadata.h>
+ #include <net/tcp_states.h> /* for TCP_TIME_WAIT */
+ #include <net/netfilter/nf_tables.h>
+ #include <net/netfilter/nf_tables_core.h>
+@@ -274,11 +275,12 @@ static bool nft_meta_get_eval_ifname(enum nft_meta_keys key, u32 *dest,
+ static noinline bool
+ nft_meta_get_eval_rtclassid(const struct sk_buff *skb, u32 *dest)
+ {
+-	const struct dst_entry *dst = skb_dst(skb);
++	const struct dst_entry *dst;
+ 
+-	if (!dst)
++	if (!skb_valid_dst(skb))
+ 		return false;
+ 
++	dst = skb_dst(skb);
+ 	*dest = dst->tclassid;
+ 	return true;
+ }
+diff --git a/net/netfilter/nft_rt.c b/net/netfilter/nft_rt.c
+index 700656565b656..6b0e7528cd1a4 100644
+--- a/net/netfilter/nft_rt.c
++++ b/net/netfilter/nft_rt.c
+@@ -8,6 +8,7 @@
+ #include <linux/netfilter.h>
+ #include <linux/netfilter/nf_tables.h>
+ #include <net/dst.h>
++#include <net/dst_metadata.h>
+ #include <net/ip6_route.h>
+ #include <net/route.h>
+ #include <net/netfilter/nf_tables.h>
+@@ -59,10 +60,11 @@ void nft_rt_get_eval(const struct nft_expr *expr,
+ 	u32 *dest = &regs->data[priv->dreg];
+ 	const struct dst_entry *dst;
+ 
+-	dst = skb_dst(skb);
+-	if (!dst)
++	if (!skb_valid_dst(skb))
+ 		goto err;
+ 
++	dst = skb_dst(skb);
++
+ 	switch (priv->key) {
+ #ifdef CONFIG_IP_ROUTE_CLASSID
+ 	case NFT_RT_CLASSID:
+diff --git a/net/netfilter/nft_xfrm.c b/net/netfilter/nft_xfrm.c
+index 81cbe8408c83c..924d6bd389843 100644
+--- a/net/netfilter/nft_xfrm.c
++++ b/net/netfilter/nft_xfrm.c
+@@ -12,6 +12,7 @@
+ #include <linux/netfilter/nf_tables.h>
+ #include <net/netfilter/nf_tables_core.h>
+ #include <net/netfilter/nf_tables.h>
++#include <net/dst_metadata.h>
+ #include <linux/in.h>
+ #include <net/xfrm.h>
+ 
+@@ -176,9 +177,15 @@ static void nft_xfrm_get_eval_out(const struct nft_xfrm *priv,
+ 				  struct nft_regs *regs,
+ 				  const struct nft_pktinfo *pkt)
+ {
+-	const struct dst_entry *dst = skb_dst(pkt->skb);
++	const struct dst_entry *dst;
+ 	int i;
+ 
++	if (!skb_valid_dst(pkt->skb)) {
++		regs->verdict.code = NFT_BREAK;
++		return;
++	}
++
++	dst = skb_dst(pkt->skb);
+ 	for (i = 0; dst && dst->xfrm;
+ 	     dst = ((const struct xfrm_dst *)dst)->child, i++) {
+ 		if (i < priv->spnum)
 -- 
 2.53.0
 
