@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052527;
-	b=lCofoZ3PlM0t0JogfywGAfM8qfYKLccvljF6+N3I+svHc61n+6rK2KoPGBfa11AIRJ8E
-	 HqKlTwHeA4vRlZpC1m7v0125D7jhUVxBDS5ox9m+GxWWRcQTa3XjXaP73DUjCFpDO3rL2
-	 9DC+w7mt46MKLJQWMhUFgHkUxN+bF5qQeHN+Y885bz11ei0BtJYnh82QJdaTe3HT1UO/m
-	 tJ6d9zPu1FIEqg02fHFuPbeVg2c5Qv8YZepc5JSzad5BAaGWnmDGGHrAvLb4DWk2WdV2X
-	 QV9+BDbMwimKklHW4j9ZJWsJ0VyR51SZ8dFCgvq0zhaUzG/K0xnOj3loxmdnag/tIYQ==
+	t=1795052530;
+	b=5JJLF2se5ZEa9hLvuY7AmNTFvqrTZcGd5GxkTkpa9RqScbnJ8f0nvZDbDby4h7A4GDB5
+	 +mCDmWRrEh1dqot8Qu4se/0liMSBWS1/+xXrK7MssEswTzviSUvXissh+sHJjxzIDkTwh
+	 h8tl9t53zh8NyqHvbqdc6FEu92p/MaUQddOCPbBoY/8uiE9NNmZLPmFijLPJVOI5BFn78
+	 f/btIIZqv3NU9x0OINE3V7jBXUjZeqiVh2iUE3xYOC6Q7knL2/tiyKhnyrhUCwB/LK0sb
+	 dQONunwtSH1GsKQm6LkSXapNXV1jDWEk6Xz4UaZ6KQCoTA5Z/WzRvYSDWhAbFQHYP+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sY0B3waRAe89OD/g6y+Lj7B6TNe4cwFcL0v7oMQu064=;
-	b=0dHzatNL2OaMFP9zsplgudu/rC/QxhBiFeYc93xOQi5oMeYCR9ncaWaOwRUL7vOXgJNb
-	 mPFJF7p/gOiWREGkJw4aUpbqjy1eImTcxCN+r4QYoatTrOLgJcnVY2JSj+NvbpDXystLB
-	 SeSj4Ou4/eAViHrQAIEvmIJxHFjHUdE27ZvBkxFkjLqhyrg0wn9gk9gg4hB9fK7KIkkVE
-	 xrRNgFb/T0Y9PRSzowyhhaeSSmBwN4M9GIe+kSVO4qp/jdAuFHkAA0tiNRwW6+sqbxXgk
-	 hfSRP/TVu5x3tuK9Ze6hWNBrE4BIpgNvwm8x9kA876u24D1sovTP/YqgLRIRtlFcbWw==
+	bh=UIY1CD25kzCPNC1v0B7XlsDPOonT7/fLLl8o29IFnuA=;
+	b=qGgodlOPIzL7+TWtT8NGFC4DJYf/EspX1azw91QqfkTCTw837Lshi6wXiI1FVnu4WYyl
+	 XLDzGr1ke6jjFlJdTgrCsKMRYtfYclodpKj1INoOsksh99aeaJRGWfVo1tRtth+xXjAoe
+	 NW2z5pE79Eh/lb8rZMN6qDQKUKcc30EBWaBLBFsHETkFQDMb/nfO3Q2ptN1NjgVABO2ZS
+	 fYQJL4LZ3PoVD2AGc7t/LQtjC3CqiQjzmMH4mK5gzaJGzksrURXZTuGjzOj4zmfY35K83
+	 9ibXptRJVvP+mUnKBbEC8tNmBBGIzl3ZOdV6Z8Pldk0k9aFLwiogd9/ncyKzjFVuEIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btlpEc2i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8gkzHtb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CF7606A31C;
-	Thu, 19 Nov 2026 01:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE98606A31C;
+	Thu, 19 Nov 2026 01:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btlpEc2i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F051F000C4;
-	Thu, 19 Nov 2026 01:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8gkzHtb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1D31F000C4;
+	Thu, 19 Nov 2026 01:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052527;
-	bh=sY0B3waRAe89OD/g6y+Lj7B6TNe4cwFcL0v7oMQu064=;
+	s=korg; t=1795052530;
+	bh=UIY1CD25kzCPNC1v0B7XlsDPOonT7/fLLl8o29IFnuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btlpEc2iPIa7LRHSLvC+SuKkS6nJ/EB6Uyhj4EGmUGPdj9Avn31CvYRBfyAVhdrA9
-	 IxWyp/TxtNH0G1QZvKtOJ2FuvD2Vl2oYfoUD3bOIbS70SIf5oTJXUybG9QSd0CjjUX
-	 aUCM2mx8hFeraKNYSpIEBSJ5t1XGk7SKvUtiXe5c=
+	b=Q8gkzHtbiktCSlqbb7sJW8KBfOp11LwmDmd9/trk8w4FeukZGWdkPmXrYVpdM/g1o
+	 1z7jfPSXJQRJkeMoVrtEs1ULfj3USoaypd1OB/ZJPQnNhSfnQSRi0QHtUuOuARNZBW
+	 Br4Rk6XzCmqgv/9e0UMl5Cs1dIMPA2xd+/AceviI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Baruch Siach <baruch@tkos.co.il>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0595/2214] clocksource/drivers/digicolor: Fix clk reference leak on request_irq failure
-Date: Wed, 18 Nov 2026 15:37:51 +0100
-Message-ID: <20261118150034.773695134@linuxfoundation.org>
+Subject: [PATCH 5.15 0596/2214] aoe: pull in the headers each received packet type reads
+Date: Wed, 18 Nov 2026 15:37:52 +0100
+Message-ID: <20261118150034.814639245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,43 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 9cc2e18b32f12d26ae6729c62a03640423956b17 ]
+[ Upstream commit e1274a6bc40a4618f6fbaebbdc51cca865d51bed ]
 
-digicolor_timer_init() obtains the timer clock with of_clk_get() and
-enables it, but the request_irq() failure path returns without releasing
-the clock reference, leaking both the enable/prepare state and the
-reference itself.
+aoenet_rcv() only pulls the AoE and ATA headers into the skb head when
+the packet is long enough to hold both.  A shorter packet goes through
+unpulled, and aoenet_rcv() reads the AoE header from it anyway.  CFG
+responses go on to aoecmd_cfg_rsp(), which reads the config header
+after it, and ATA responses get queued for ktiocomplete(), which
+skb_pull()s both headers.  Ethernet pads frames to 60 bytes, so this
+mostly takes a virtual link, but nothing stops a short frame from
+getting here.
 
-Disable and put the clock before returning on the request_irq() failure
-path. The success path keeps the clock enabled for the lifetime of the
-timer and is left untouched.
+Pull the AoE header up front and drop the packet if it isn't there,
+then pull the ATA or config header in the switch arm that hands the
+packet on, so each path gets the headers it reads.  This also replaces
+the open-coded __pskb_pull_tail() with pskb_may_pull().
 
-Fixes: 9b8bb7736b78 ("clocksource: Driver for Conexant Digicolor SoC timer")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Acked-by: Baruch Siach <baruch@tkos.co.il>
-Link: https://patch.msgid.link/20260915045242.1726702-1-vulab@iscas.ac.cn
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261007-b4-aoe-short-packets-v1-1-db5155f7bb9c@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-digicolor.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/aoe/aoenet.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clocksource/timer-digicolor.c b/drivers/clocksource/timer-digicolor.c
-index 1e984a4d8ad00..ae758b3059cc1 100644
---- a/drivers/clocksource/timer-digicolor.c
-+++ b/drivers/clocksource/timer-digicolor.c
-@@ -193,6 +193,8 @@ static int __init digicolor_timer_init(struct device_node *node)
- 			  &dc_timer_dev.ce);
- 	if (ret) {
- 		pr_warn("request of timer irq %d failed (%d)\n", irq, ret);
-+		clk_disable_unprepare(clk);
-+		clk_put(clk);
- 		return ret;
- 	}
+diff --git a/drivers/block/aoe/aoenet.c b/drivers/block/aoe/aoenet.c
+index 1e66c7a188a12..03bc1ca3ad472 100644
+--- a/drivers/block/aoe/aoenet.c
++++ b/drivers/block/aoe/aoenet.c
+@@ -132,9 +132,7 @@ static int
+ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt, struct net_device *orig_dev)
+ {
+ 	struct aoe_hdr *h;
+-	struct aoe_atahdr *ah;
+ 	u32 n;
+-	int sn;
  
+ 	if (dev_net(ifp) != &init_net)
+ 		goto exit;
+@@ -145,12 +143,8 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
+ 	if (!is_aoe_netif(ifp))
+ 		goto exit;
+ 	skb_push(skb, ETH_HLEN);	/* (1) */
+-	sn = sizeof(*h) + sizeof(*ah);
+-	if (skb->len >= sn) {
+-		sn -= skb_headlen(skb);
+-		if (sn > 0 && !__pskb_pull_tail(skb, sn))
+-			goto exit;
+-	}
++	if (!pskb_may_pull(skb, sizeof(*h)))
++		goto exit;
+ 	h = (struct aoe_hdr *) skb->data;
+ 	n = get_unaligned_be32(&h->tag);
+ 	if ((h->verfl & AOEFL_RSP) == 0 || (n & 1<<31))
+@@ -172,10 +166,14 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
+ 
+ 	switch (h->cmd) {
+ 	case AOECMD_ATA:
++		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_atahdr)))
++			goto exit;
+ 		/* ata_rsp may keep skb for later processing or give it back */
+ 		skb = aoecmd_ata_rsp(skb);
+ 		break;
+ 	case AOECMD_CFG:
++		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_cfghdr)))
++			goto exit;
+ 		aoecmd_cfg_rsp(skb);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
