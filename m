@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040584;
-	b=xd+vq1gsbijghK0Q+1Yj1gTIIfV7PsWr0tdcMbOP1J/K+uLkfqEypVUbV1p4UQx420KK
-	 zGvHBCL9e49wvYhfXxjRVYaUhy9TF/nWXuH3wEQ2j16t33ojQ0r9/UHFRMyb+9jAUXeE6
-	 IeuKZ14WWUiuxcf6dlMsn6LGXWkriHaHJnTZvplFN4Us5uW0mIf+za+Zbgs2ltb/+yPFm
-	 /f0Kmow7opet9UDzzga8KJPSMeTC9WGnqnXU0fpuE6vSolc+QkxREIM/ip+rWb8mUFnyE
-	 UvIkxvZS1b4y+zHDG0xtLNBxalA4N8tKuKsnO+IKCefgOdQ6HnJasT3jKHYUKCBIRxw==
+	t=1795040587;
+	b=Q1fV3Q4fAJ9vO9YjSmTrWWk/0WqPjvRN1qJIruuffZnJEGh4m2e1BDh46Xvz8pc5Tehy
+	 4JitYX+slHltnOW05qjpYWQb7CekUZW1s1ZOZVPqQP9qxwvY68xvBwOTUHnzT58nct/XU
+	 eNnn4yuy2WTucTyZMcyQVyhQ//JagUkdf4qWZEUuWSvkapQoOB0rMrqoGRLhBH/OGjwX0
+	 0ugSpE8SgA2DyUge6f/0gfY8qRq0jNOICO/7wLoZU4xsiyXszhSnws1P9EazPxcUul8o+
+	 TguiDH1m7bZ1SwS0oSSWwR7e5vbYlGXgO3nIeDDMpPWRPSmMHUIvaGjNSJNvrpytZZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+d9WZ8XO7nE2ihjoP1tByouzdlbN0+P/ZOjG22ahJYs=;
-	b=M0dOzjest+CMCvmNvPCQqBjPGR1h0DlYIHtlsYDD+54PIzL3NnUy2l19CHKe32rn91yH
-	 KgqEiV8NAghHUNN2q3KjwTgLpI+3Nr4/EjmvXWHt5RtTSYTYbjwON9XLiFNvnmaR0tzOo
-	 0W3GvpUKyZHysP0KRPdx5XgyHwdKw8tVXiQm+/oo7Amritha+tUVoDYIs+cwVpo+QtPtC
-	 DAX1U5z5HdBWbadAmHi7gCaetIGkuX08kQGyO/aqboYhA+4ENqOOLLC1VTFzHHTYKboKF
-	 gP8MnbouNUVe4eqOWnUzgcvNstnj/bCt0jpCgKB4apSVOqH6Xs2nVoBG0CCCRrrg9Tg==
+	bh=jCnmDjr3RPwH4A1i4gL9cmfOFAKSNTxFDWbY445f8Ts=;
+	b=TWBPFOt9+sHgTsRi2n8JiKm1Wj6uFfqLdDeLs7CucMjf9AEnUDrFGCEsfVK/aIdztbvY
+	 cWnGVIWCOeccjUj5tE6yKq5TGgKZZqhUI5YtBN3aL9kl0h/AUXoUKYJChromJk0bmvIjp
+	 s60LHWiMjyx+4aSDv0YapmATOhZg4nK/jBXpBu9doevty5xPx88WR4zzJ1uy/94Bid9AW
+	 KtyE3qWBc2Zqt3wcvXjZhnp0aJuKmhurlp+8pBEHEcvqJbB9JgyXjlAre+ggS8HIsx2LK
+	 cFI4D1ABxP/UdOWz8N+iibJYesGAO2XlfAgbkRrOuRBvJxGgTqctheDHRndBKmBvXig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PcymQ1Yr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeusFHhn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A279606A31C;
-	Wed, 18 Nov 2026 22:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56251606A31C;
+	Wed, 18 Nov 2026 22:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PcymQ1Yr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6B01F000C4;
-	Wed, 18 Nov 2026 22:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeusFHhn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0601F000C4;
+	Wed, 18 Nov 2026 22:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040584;
-	bh=+d9WZ8XO7nE2ihjoP1tByouzdlbN0+P/ZOjG22ahJYs=;
+	s=korg; t=1795040587;
+	bh=jCnmDjr3RPwH4A1i4gL9cmfOFAKSNTxFDWbY445f8Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcymQ1YrNfmNs0CcRViucPxqDd54JJXxkrQv6OjTPQSxpRTT7pLk5KduVMsNAtzDN
-	 lYrF2RYOm7iDbwz2i6ZH1ZTkwJXZYR/gnmcyIF0nvyVDQYO15oRtZusZxWg1y8RYYy
-	 OKFEImWN343S4YGKJzoR4bTtz/LlXYRHvqreEShU=
+	b=VeusFHhnpB4oLBRL8nO9QyxhvOoT2cVyz9kKwemgEYLF1YDYtkkwPOb0DoYStTIDB
+	 0JMh8zHSPJkVy+3bqE8yb5JFJGL3TF+0/GQkdJfeybcDr4kkklnbk0GSSn7EYWLeMs
+	 OQhu+oOzksE70n+j4wEEQP/iP3TeRLejQwlXDUlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Szpila <bszpila@google.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2510/3318] platform/chrome: cros_ec_typec: Validate SVID and mode counts in discovery data
-Date: Wed, 18 Nov 2026 15:52:12 +0100
-Message-ID: <20261118150436.668880261@linuxfoundation.org>
+Subject: [PATCH 6.6 2511/3318] crypto: atmel - handle authenc requests without plaintext
+Date: Wed, 18 Nov 2026 15:52:13 +0100
+Message-ID: <20261118150436.704470231@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,65 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Szpila <bszpila@google.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 317e7abcaf60b79765dcf35c014edac8b9d37a6e ]
+[ Upstream commit ccbd95b3efbc0580b6abde2a905823417ca56022 ]
 
-cros_typec_register_altmodes() iterates over sop_disc->svid_count and
-sop_disc->svids[i].mode_count from the EC_CMD_TYPEC_DISCOVERY response
-without validating their bounds.
+Authenc permits a nonempty associated-data string with no plaintext.  The
+Atmel driver accepts such a request, has SHA process the associated data,
+and then unconditionally asks AES DMA to transfer zero bytes.  The Atmel
+DMA engines reject the zero-length descriptor, so the valid request fails,
+normally with -ENOMEM.
 
-port->disc_data is allocated as a buffer of EC_PROTO2_MAX_RESPONSE_SIZE
-bytes, and each SVID entry contains a fixed mode_vdo[6] array. If the EC
-returns an out-of-bounds svid_count or mode_count, the loops read past
-the end of the mode_vdo array or the disc_data buffer.
+Skip the AES transfer when textlen is zero and proceed directly to SHA
+finalization.
 
-Validate that the discovery response with svid_count entries fits within
-EC_PROTO2_MAX_RESPONSE_SIZE using struct_size(), and ensure each SVID's
-mode_count does not exceed ARRAY_SIZE(sop_disc->svids[i].mode_vdo)
-before registering altmodes.
+Once an HMAC transform has cached its inner and outer states, SHA can
+complete this path synchronously.  The forced ahash completion callback
+then invokes the AES finalizer through a void function and discards its
+return value.  This loses -EBADMSG for a mismatched tag and reports
+successful decryption.
 
-Fixes: de0f49487db3 ("platform/chrome: cros_ec_typec: Register partner altmodes")
-Signed-off-by: Bartosz Szpila <bszpila@google.com>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Link: https://lore.kernel.org/r/20261001085714.1086242-1-bszpila@google.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+For synchronous SHA completion, release the SHA device without invoking
+the ahash callback and call the AES finalizer directly.  Its result then
+propagates through the synchronous call chain.  Keep the existing callback
+path for asynchronous completion.
+
+On a SAM9X75, the unpatched driver failed valid AAD-only requests and
+returned success for a bad tag after the transform had been used once. With
+this change, bad tags return -EBADMSG for both fresh and reused transforms.
+
+Fixes: 89a82ef87e01 ("crypto: atmel-authenc - add support to authenc(hmac(shaX), Y(aes)) modes")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/crypto/atmel-aes.c |  2 ++
+ drivers/crypto/atmel-sha.c | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index 65549c3a67486..f4a71a6297742 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -7,8 +7,10 @@
-  */
+diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
+index c968646d8104a..fbf0f7e1c5c56 100644
+--- a/drivers/crypto/atmel-aes.c
++++ b/drivers/crypto/atmel-aes.c
+@@ -1830,6 +1830,8 @@ static int atmel_aes_authenc_transfer(struct atmel_aes_dev *dd, int err,
+ 		dd->is_async = true;
+ 	if (err)
+ 		return atmel_aes_complete(dd, err);
++	if (!rctx->textlen)
++		return atmel_aes_authenc_digest(dd);
  
- #include <linux/acpi.h>
-+#include <linux/array_size.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/overflow.h>
- #include <linux/platform_data/cros_ec_commands.h>
- #include <linux/platform_data/cros_usbpd_notify.h>
- #include <linux/platform_device.h>
-@@ -717,7 +719,15 @@ static int cros_typec_register_altmodes(struct cros_typec_data *typec, int port_
- 	int ret = 0;
- 	int i, j;
+ 	/* Prepare src and dst scatter-lists to transfer cipher/plain texts. */
+ 	src = scatterwalk_ffwd(rctx->src, req->src, req->assoclen);
+diff --git a/drivers/crypto/atmel-sha.c b/drivers/crypto/atmel-sha.c
+index 1aecd175eb77b..0ff124eb8ecc9 100644
+--- a/drivers/crypto/atmel-sha.c
++++ b/drivers/crypto/atmel-sha.c
+@@ -2395,11 +2395,25 @@ static int atmel_sha_authenc_final_done(struct atmel_sha_dev *dd)
+ {
+ 	struct ahash_request *req = dd->req;
+ 	struct atmel_sha_authenc_reqctx *authctx = ahash_request_ctx(req);
++	atmel_aes_authenc_fn_t cb;
++	struct atmel_aes_dev *aes_dev;
+ 	size_t i, num_words = authctx->digestlen / sizeof(u32);
  
-+	if (struct_size(sop_disc, svids, sop_disc->svid_count) > EC_PROTO2_MAX_RESPONSE_SIZE)
-+		return -EINVAL;
+ 	for (i = 0; i < num_words; ++i)
+ 		authctx->digest[i] = atmel_sha_read(dd, SHA_REG_DIGEST(i));
+ 
++	if (!dd->is_async) {
++		/*
++		 * Return the AES finalizer's status directly for synchronous requests.
++		 * The ahash callback cannot propagate it.
++		 */
++		cb = authctx->cb;
++		aes_dev = authctx->aes_dev;
++		dd->force_complete = false;
++		(void)atmel_sha_complete(dd, 0);
++		return cb(aes_dev, 0, false);
++	}
 +
- 	for (i = 0; i < sop_disc->svid_count; i++) {
-+		if (sop_disc->svids[i].mode_count > ARRAY_SIZE(sop_disc->svids[i].mode_vdo)) {
-+			ret = -EINVAL;
-+			goto err_cleanup;
-+		}
-+
- 		for (j = 0; j < sop_disc->svids[i].mode_count; j++) {
- 			memset(&desc, 0, sizeof(desc));
- 			desc.svid = sop_disc->svids[i].svid;
+ 	return atmel_sha_complete(dd, 0);
+ }
+ 
 -- 
 2.53.0
 
