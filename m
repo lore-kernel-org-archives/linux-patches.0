@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041180;
-	b=TpnsztJBc+5cB21V1MLg3aDM0hbiyJhrHgsVeUmXpESJlUsmgQqCf/lI8UySgOaO832A
-	 /rLU7REbz54G7mT7zgDrBqDTZ40amhZaJ0fBhifU8mYyYuBSDVJ62FgAB5i2tRbTBR8KI
-	 /mTWfVQDmUvbZERyXf3jn0+Nz7YqpSOJJgKtcScOCJee6oxcAjY2PuBcXlhNsIWVX9Hzp
-	 QVSzWeRtJ4H3747amut24DG62wgBF+eDa/kxTXaVcOBuo28g6I0+l6wZ1VfTyv6fZHN2p
-	 Y3XEr14KKjGnnrZKhrEJRuSoLA5f45O3UkHzjDP8cZi/tvMp2xwiH5e+mRjjggWhW6A==
+	t=1795041183;
+	b=YyIHsq7fguZgwxqfckjHlZ6Og6oyJUb9tDP60nhJXNHzzu8omTzASbXOVMUA/sfAdgFd
+	 Zh/jr3v773Ot0NVq3xlN2NUe8Bkf9RC/TsK+zXd+mVYioWZKL/1ok9NKyzkvGrfuJgInY
+	 ZQSKVG0W3rLlEid+JsClAFgaReaxKIw4TT7XLZxcrP5avQwJqqIb+ex/qlT8m+3Xvt7Yg
+	 v8QcZMePgClpo1mm3DJwurnpCPbHWsJD6icuEjs95My1T4JBra0mtt5dMC3/PrzWb9hHG
+	 Wtg33vsMJh6Tk5kxmGPK2WnbHQ5KxXCDbyEi7AnPKe7KFF+/M6grpeGaS5YXnUw8+4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=umCk7GULl2NX2oeeVlHnqJ2yHT03Z9HFTipnkyLb6U8=;
-	b=ih47nXTeB0BsPG77wBodz2lr1ZaChYI9fvO/e0FQTWSzefVUoIz/+skLyYSmYcQStB7V
-	 GYAfKilmuQg2q/dO/wBuIZH44a4iEX0OxgnDfR+QEQt8Vb9wgbu/sYkBDjZ6sUSeISTfj
-	 NyXCZqqpjp49kjrGRlN17VtFKLQVOMh2dBxxdwk5/C+Vx4vjBI00V+/qZ1oQkluVk4wLc
-	 VqsrsyhsAx0RkAsPFk4rbnN03WH+MoONg5HebW76RVa9e4ttQEw6urTcnZoJeYnYCoXS1
-	 JeqwS5qDNhGY2cfgMqsqodx1phnLl3X6rApQjTVYiy9NeolPjAUOad10J9F2L2RXuow==
+	bh=/39995mRXL1geTc5iBJNOKCVLoHx0IRzbdN1USVTCes=;
+	b=v7dShSt4CCbfGTe4vNn4VF7x2s5Blpm4kDvH7xGqz/gIEn0HxRk3zADFPWH5KBWUVcGn
+	 BRLF3j9iZTJZfkqmcGwl0/uTv8YtdwMZiBNk8T2dXS/elJPGMV1IFexaU5A4xm3lD4PQG
+	 tuttK68zUrFYEvUlfCOoYVcJS+F2B5rnkfzdEs4IbxcvGzfP9XphvT7RBoeQ0ArbD8uqp
+	 Vi4Sze4ettuKbzzrh/er0OkhGPf/pg30uMT6Od5h3KAPEZcMNk09yl+8ADST/1Ayx+BMk
+	 nYueamED5LgvMcOxteJLnQruV6wBhtAwCO2kBiQ5xzgt2xy4sQXe4pcYIFmbNBc7KhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IVSlFgUo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UtwhNZ84;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11A5606A325;
-	Wed, 18 Nov 2026 22:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6E7606A320;
+	Wed, 18 Nov 2026 22:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IVSlFgUo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F052D1F000C4;
-	Wed, 18 Nov 2026 22:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UtwhNZ84
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5E91F000C4;
+	Wed, 18 Nov 2026 22:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041180;
-	bh=umCk7GULl2NX2oeeVlHnqJ2yHT03Z9HFTipnkyLb6U8=;
+	s=korg; t=1795041183;
+	bh=/39995mRXL1geTc5iBJNOKCVLoHx0IRzbdN1USVTCes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IVSlFgUoB/kl5zOmTAt0rQS3SF+ai3zInc6IWKrMjqVTXsFbrt5nAE2UFRDtaNLix
-	 JE9bUDjtpl35nynvgFSmk5PJ1NGIPMZt18h5n0QJz67S++C/leSn3lSOyLQIz5K/M6
-	 ZbxD3pmu/VfiAikLbB/BAMKgXBv68uhwiVnHuumw=
+	b=UtwhNZ842xHMesCu/yVK+DcLWZTGIl0BdxtjNHfdgp8JxUv9jNoZ6P1tY8QGnmLtR
+	 SDsSWMfDnecKu+YWXzw+EVuHkxuchHewIP6JTtNSBlAE7zwXkSEubuAMfrryTLjsdQ
+	 bko6/HfKGSMJX55jZ5GR16BePvOTKVJ2RgURR6Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Antoni Pokusinski <apokusinski01@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2714/3318] wifi: mac80211: init radiotap iter after length checks
-Date: Wed, 18 Nov 2026 15:55:36 +0100
-Message-ID: <20261118150442.290803016@linuxfoundation.org>
+Subject: [PATCH 6.6 2723/3318] rtc: abx80x: fix error check after i2c_smbus_read in read_alarm()
+Date: Wed, 18 Nov 2026 15:55:45 +0100
+Message-ID: <20261118150442.533856138@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,54 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Antoni Pokusinski <apokusinski01@gmail.com>
 
-[ Upstream commit e3cf8da7e0c560db67ac5ee8c9197514bb298ea7 ]
+[ Upstream commit 07c57022afb3afc0d7c20efef45a4d3c7389b1c0 ]
 
-The radiotap iterator initialization will already parse
-the presence bitmaps, so it accesses a good part of the
-header. This might not be present in the linear part of
-the SKB, we haven't checked it at this point. Check the
-lengths first.
+i2c_smbus_read_i2c_block_data() returns the number of bytes read on
+success and a negative error code on failure. The existing code treated
+any non-zero return value as an error.
 
-Assisted-by: LLM
-Fixes: cb17ed29a7a5 ("mac80211: parse radiotap header when selecting Tx queue")
-Link: https://patch.msgid.link/20261005224950.b5c2c31790d2.I091422db411b595bde4dba2de69334cd2aeb33b0@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix the error handling by checking only for negative return values.
+
+Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
+Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
+Link: https://patch.msgid.link/20260916205138.16771-3-apokusinski01@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-abx80x.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 0690c9004a4d1..43a66201db299 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2152,8 +2152,6 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
- 	struct ieee80211_radiotap_header *rthdr =
- 		(struct ieee80211_radiotap_header *) skb->data;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
--	int ret = ieee80211_radiotap_iterator_init(&iterator, rthdr, skb->len,
--						   NULL);
- 	u16 txflags;
- 	u16 rate = 0;
- 	bool rate_found = false;
-@@ -2162,11 +2160,14 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
- 	u8 mcs_known, mcs_flags, mcs_bw;
- 	u16 vht_known;
- 	u8 vht_mcs = 0, vht_nss = 0;
--	int i;
-+	int ret, i;
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 862833519d7f4..ce0bcb03bfbdb 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -294,8 +294,10 @@ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
  
- 	if (!ieee80211_validate_radiotap_len(skb))
- 		return false;
+ 	err = i2c_smbus_read_i2c_block_data(client, ABX8XX_REG_ASC,
+ 					    sizeof(buf), buf);
+-	if (err)
++	if (err < 0)
+ 		return err;
++	if (err < ARRAY_SIZE(buf))
++		return -EIO;
  
-+	ret = ieee80211_radiotap_iterator_init(&iterator, rthdr, skb->len,
-+					       NULL);
-+
- 	info->flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT |
- 		       IEEE80211_TX_CTL_DONTFRAG;
+ 	irq_mask = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
+ 	if (irq_mask < 0)
+@@ -311,7 +313,7 @@ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 	t->enabled = !!(irq_mask & ABX8XX_IRQ_AIE);
+ 	t->pending = (buf[6] & ABX8XX_STATUS_AF) && t->enabled;
  
+-	return err;
++	return 0;
+ }
+ 
+ static int abx80x_set_alarm(struct device *dev, struct rtc_wkalrm *t)
 -- 
 2.53.0
 
