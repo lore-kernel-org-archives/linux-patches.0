@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049649;
-	b=kfljgPtDTvHrTcceoXcJ1yQjlzPwA7r7ZXk7Pjwvey9p7d2Ht9SL/D7LWOb/joYu9Ptm
-	 Pt6/OkdTqxVdTIlmtIAT/sl8PclWjcfVph+PoSIZSZJclktbX4pHpzvTBtR9xsKIG06yN
-	 iwq4joso5cwbE2C9LvA8T9Yv6gwrmdm03egIavavjTcBTxAYx0HNJMLWA97SS0nZJS3Mj
-	 2hRjFBKimVSsCy7eRn8H8x12n89lS0tyoCWXtq0LWDV9rYxybIwrCOnOb5j71MOjKwOFD
-	 rsMbaGithgnK681EHitJK4lJfz1hpW+MyArOLo1+ecAwCr6KDVfJ7UOjaDbXBS6GGrg==
+	t=1795049652;
+	b=EunF9Gb4W2BdczYuE7Hpy5PsxQfyb+QfQRJ/pB6uKdqTWjiLaQYnPvIOrKPknMcZQaf3
+	 RKdcmrJHOO/EdJqrycW93CyxNQ+PfJ8uKXK6r+EzmGYRJRamKd6EHC4A3k2Qg/S5+LPWK
+	 hMN+T9ofJYClBzGSveymhzEEyjgR4PYNVi/eRgdGOjVkg11qZr9HEQ8od4coipHvo1du4
+	 vF+durYdAUazqsbEirziqciChj0TpuXzanH6ojJucsmoNhnpMmO8v5RmWlQkLoNj5ad68
+	 F2hFpVDwJoyXlgY2wD1huEMGFkXdQKUVeqkRb4tW0Uqfx5gc1S3O6M3ddezWZso0fNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EKWoIftLcmh6ilyyC3hrlwyzZBjajt+L2PqXkB/Utxk=;
-	b=yVggi8WG5qp0mZuAaQqY6KQAXdcyxyrDel787Y4JALymAvRuW8KW3P+r3RrsgywEUTKo
-	 YPTPlZBIWq1o/Tzq9KsZCWTXI9U0g6HqV+a8NziSfRLEl3OQaQIl5YxyDJEqrZ4wHBssJ
-	 Yu3nwS8Yto7rvtpBsZenYfXEYDu4ltReofpECxmfO2OYFMGYheISM8zapNRtAtncVjLBB
-	 /yAmWb7ntBNIkZFcgYmi/ujAvXh5Zc0DjkmUpFO0QJsah3h9ZgPujUE6Zh8FGtKtgnbcc
-	 BGANH/OxeXFaBYaJt865HIsuI8CwlB/u6Wmqa+ODxmPHHahkdx1344DfqtyCZZ9SnjA==
+	bh=1aNnSspcvn+NUqn9BzvbXfGXt2Q60NYcsA3rotpktus=;
+	b=BeQN5BGej0Q7AjO3iVZvo+cevcdSgOk49T0PHaBR5XzOArlN5ostBRUZCorrEOJH6Hcz
+	 j88ZXiyFrpHScEFkaxYPJVTX6qOfVOzVwC42t1Iayzdo+UqAbJUP+Wf/yGfIH74oZtNdH
+	 VMwctvOmT0tD/NouCFefcM8d8riYY4lFMl+MUvFrhUQcOFcnvCQAT9yU+RrA9uCUrst4X
+	 lbUjJyKoUUe+JNhvbxgP+0Nom0mnvrXlEboarj3zNdkFcW5xgqSpX/+TfeisdLH8z6sat
+	 xBv2QYopMa2ri0dXK6motbeaQ1siCf52lAR7gRycVCCAtPiJsyMMP7IzXq9UQ252SjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=abQlbODO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mWVhO/af";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B27606A31C;
-	Thu, 19 Nov 2026 00:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A96606A320;
+	Thu, 19 Nov 2026 00:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=abQlbODO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72B91F000C4;
-	Thu, 19 Nov 2026 00:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWVhO/af
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A767F1F000C5;
+	Thu, 19 Nov 2026 00:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049649;
-	bh=EKWoIftLcmh6ilyyC3hrlwyzZBjajt+L2PqXkB/Utxk=;
+	s=korg; t=1795049652;
+	bh=1aNnSspcvn+NUqn9BzvbXfGXt2Q60NYcsA3rotpktus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=abQlbODOdsUjjD8eXPafDHmLa5g7WekXEEgs1vX1nNUpEWvfrvIyZW6SECQYSEaEH
-	 Z7RtwMk4GS47/PloJA9V7Ygvwi4d8FKAO4fb5iS26mt5j8i/SBv3FULAXnXyFKZpdb
-	 ZKQYR1r4wRTEhc8KNNGV07xm11mvuUfQEEmdjjmo=
+	b=mWVhO/af1OisDQvLZx/fYmxiFolISrw3lUh7nKRlDsgowobkcxXiupdBI9UXkIF+g
+	 09vFlBOJR0M3G+I552XE9Aqf1ciICWgngYEJOF3D7RjWcgFcIGwfWrMCQOc/n0wCcB
+	 ZrBybAmi3p1tNzNY3wmBEfVSsIm6ta3j3CW4pIiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2427/2857] clk: qcom: rcg2: Clear force enable after rate failure
-Date: Wed, 18 Nov 2026 15:57:41 +0100
-Message-ID: <20261118150328.945386526@linuxfoundation.org>
+Subject: [PATCH 6.1 2428/2857] s390/uprobes: Fix off-by-one bug in emulated PER handling
+Date: Wed, 18 Nov 2026 15:57:42 +0100
+Message-ID: <20261118150328.982718092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,47 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit d4e8c6b9aef42d06cf5755543ad10097b2217990 ]
+[ Upstream commit 2ba01cf7b2598571486425a0605f1434909b532d ]
 
-Shared RCG rate changes assert force-enable before programming the new
-configuration. If programming fails, the function returns without
-clearing force-enable, leaving the root running while CCF can release
-temporary parent and resource references.
+The uprobes code emulates some instructions, and with that also
+PER storage-alteration handling, in case a debugger is attached.
 
-Attempt to clear force-enable on the configuration error path before
-returning the original programming error. This restores the same cleanup
-performed after a successful configuration while preserving the primary
-failure for callers.
+The PER storage-alteration handling contains an off-by-one bug, which
+may lead to PER traps which should not happen. Adjust the comparison
+in sim_stor_event() to fix that.
 
-Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
-Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-3-5531cb00514b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 8d1a2427d8fc ("s390/uprobes: fix user space PER events")
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/uprobes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index b74f5e65265b1..dd41f3e3ea913 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1014,8 +1014,10 @@ clk_rcg2_shared_force_enable_clear(struct clk_hw *hw, const struct freq_tbl *f)
- 		return ret;
- 
- 	ret = clk_rcg2_configure(rcg, f);
--	if (ret)
-+	if (ret) {
-+		clk_rcg2_clear_force_enable(hw);
- 		return ret;
-+	}
- 
- 	return clk_rcg2_clear_force_enable(hw);
- }
+diff --git a/arch/s390/kernel/uprobes.c b/arch/s390/kernel/uprobes.c
+index b88345ef8bd9e..b8f09483c355f 100644
+--- a/arch/s390/kernel/uprobes.c
++++ b/arch/s390/kernel/uprobes.c
+@@ -248,7 +248,7 @@ static void sim_stor_event(struct pt_regs *regs, void *addr, int len)
+ 		return;
+ 	if (!(current->thread.per_user.control & PER_EVENT_STORE))
+ 		return;
+-	if ((void *)current->thread.per_user.start > (addr + len))
++	if ((void *)current->thread.per_user.start > (addr + len - 1))
+ 		return;
+ 	if ((void *)current->thread.per_user.end < addr)
+ 		return;
 -- 
 2.53.0
 
