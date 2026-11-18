@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025958;
-	b=yTj4hdj6wkiHXgdnGmIm3Ae4wG5iOSvompa9JJVyRXtevHyFcrUw1r9V50uxVsiIKXBP
-	 M4FItM8C7pxPe8XEjJVtt+Cua8DTTLQJlMMPqaxCI82K8kmn4ekLcnr3QLXneZur02zQi
-	 u1JASa1rCBRCjclztJodZJIHfX3Mih/iOvRJWgnG7rW8A5XLr8UAzBlM+PpBff0NVwgPh
-	 p0jjHIj5+SS73kpMdKRMFl3EQWgVSOP+kq7Z0lNjHSgrk5tLM59qRlMHqsTFcAtnr2qjt
-	 7UJHDMMvtSt8A2BYM3uAz8CjqIMttgTdVao9oea2m0+dzSx7F3U0XKw5gFm662efe+w==
+	t=1795025960;
+	b=pFSexQ7C+u1BQGs6gQeWbqjTCkUCE6z5wLpE5jOO5EioxcmGeIPvCrVlR2tCxedeqYyQ
+	 Op/+2TlmdQx1d/+0LcU+xGeVYFwIEFgSP2fD5mYbCPiT/IppYxu7M3ljSaKsuo3jsE1G4
+	 Dy3mB3bgUedWOnxhXNU8+pbGLIfQO11NLzGtWBT8xIBeJYl4HJtN673CiCJI+jixqEf0x
+	 6LxHhVdE+wj7wWLMk2DCdkVi2bEoJPhnsd7mKfhNyhHqJb2XzNVPilOo4BNQ3DFXQ9Mhj
+	 17SHbwPm8hKFMZ7uWlE7BC5UBauCZWNPm6aF44/Iw5I34lEVhcSs0RgFvvW5X1KLw7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IFG0/3t9MFAI30GvxNyQttxS8xgx11bGbG+zYVTPTSQ=;
-	b=euqchVhDpizjIJwQOE9qA1Z9pwBTBwhsj1I7muw3eeyUFYdPpunS4RVoxOoIiZ1Uot6P
-	 q+fLsX2QBVGzqV1D8Vrzn6CffrbveyBZBRcQxO34Lxs7VhGeqmMROxFj7OGWVvkIdISVD
-	 R3KL+G7Gl7ZTJRRZhSS1Yx3BR7yc38hRhMOTZi9QVkjCg3XFsdMHAdmfv/DFtmcMtqAZ6
-	 Xbdd/1ZPoX9yM/UN4/5fy4u9T23Uci5+guLlJZvzC3jkdkCDwN0IljrrrkNXwBkewtjFm
-	 CqOrBU5Dzu7GS5smZBnqktvq1RzgtzeUrlUpbpiT9slatDEmJK1XRG75sgpZlMMZ/Ng==
+	bh=7N5nAPh48RkRbBZNNlWPIlVJokI1bh9D+OuJntonMg8=;
+	b=afSiSDPP5W51vjw3sFbbyOF9ByisfyRASiR2g5hxKKKLW/GKaggK+vvVSPuydXopb6aN
+	 PWUWq1ypPpVeo7nfEDgS9nJs0yAncb8XwkdAjAFxWb0qmf5qrXk+RYhA4YGTrvNLhA/5Q
+	 6My82prwTftMLDiQL04GsRPevKpxm+2SQtKVcBBdocWJDyPA5E/QZnrDDqE+fHGlOr4HB
+	 rjl7xakidyOlpn86I5rsxiGiJg8SE8emKC3/+oUypKmXpEUzzSOaZA14XN5wnChxWZn8O
+	 08bDBRJTXbSe5IJWKUDz0sQadrX9KecGksTCOKbp2dGf6fxhBH2cfNTfQ1oLxy358wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r7Y7IV9h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdhqgVma;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3158F606A320;
-	Wed, 18 Nov 2026 18:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5102606A32A;
+	Wed, 18 Nov 2026 18:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r7Y7IV9h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E341F000C4;
-	Wed, 18 Nov 2026 18:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdhqgVma
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC3E1F000C4;
+	Wed, 18 Nov 2026 18:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025958;
-	bh=IFG0/3t9MFAI30GvxNyQttxS8xgx11bGbG+zYVTPTSQ=;
+	s=korg; t=1795025960;
+	bh=7N5nAPh48RkRbBZNNlWPIlVJokI1bh9D+OuJntonMg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7Y7IV9hEE+vrB8UmIh+AAgrYp5gTig10qdWuSTjnseDT4OfYowfLf7WOJbBaKGK/
-	 yQDrDTn3l0OUIr2ZjDj7DgrtT7pBKZqpWoiESC4GJ9qbadXSepdA7lNb4bjH7XPX77
-	 f00gLdBSHR5HAiWPUOtvMgsXRMY/hy6/WTr63I+8=
+	b=wdhqgVmaDdKujBq6KXyrljGFLUjPtCH8DF9x/2rPkPA5Bv+vqR9y+yxBbU5Dmvvov
+	 71eaW3QXhMD3o4+Dob5SCyy8qtjXlUe2IER3woN3cI5kVofRgs1NXIyBUj8yCxIdwO
+	 i4arozXMhaLxu9x75Gnu3udiA+Kg4tIXyBiK/qGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1264/2151] ALSA: hda: Use linked list for jack table
-Date: Wed, 18 Nov 2026 15:49:59 +0100
-Message-ID: <20261118150208.190545787@linuxfoundation.org>
+Subject: [PATCH 6.18 1265/2151] ALSA: hda: Avoid non-operational GPU warning at regular device removal
+Date: Wed, 18 Nov 2026 15:50:00 +0100
+Message-ID: <20261118150208.226052523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,304 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5676e013f16ac4b616d433af24647d0ce4b067aa ]
+[ Upstream commit 3af4ed9f927c469f23d03a76e3b438ed09715bd3 ]
 
-So far we've used snd_array infrastructure for managing the
-hda_jack_tbl elements, but it turned out that this may lead to a UAF
-when a different order of destruction procedure is applied; namely,
-each hda_jack_tbl object creates a snd_jack object and sets the
-private_data pointing to the hda_jack_tbl, and private_free to release
-it.  It looks harmless, but since snd_array may reallocate the whole
-table at growing, the formerly referred jack pointer may become stale.
+When a hda-intel driver is removed manually and it has a GPU with
+switcheroo, it always gives a warning like "GPU sound probed, but not
+operational:..." no matter whether GPU has been actually operational
+or not.  This warning was originally put for machines that really
+suffer from the non-operational GPU HDMI audio, but it's seen at the
+common path a normal device removal also goes over.
 
-Fortunately, currently there is no call pattern that triggers this
-issue, so it's only hypothetical, but we should address it in anyway.
+For avoiding a confusing warning, move the check and the warning at
+the error path of azx_probe_continue() that is the point where the
+non-functional GPU gets detected and given up.
 
-There are several ways to address this, and at this time, we rather
-redesign the hda_jack_tbl allocations: instead of snd_array(), do a
-normal kmalloc() + linked list.  There will be more kmalloc calls than
-the original code, but as the number of jacks are usually at most
-handful, it must not be a problem.  This change allows us the
-persistent jack pointer, so no stale pointer access can happen any
-longer.
-
-This also fixes another reported issue about the stale jack pointer
-reference in snd_hda_jack_tbl_new(), too.
-
-Fixes: 31ef22579302 ("ALSA: hda - Integrate input-jack stuff into kctl-jack")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2b360ba9a493 ("ALSA: hda: intel: Fix Optimus when GPU has no sound")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007171057.7462-1-tiwai@suse.de
+Link: https://patch.msgid.link/20261007171231.8147-1-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hda_codec.h       |  6 ++-
- sound/hda/common/codec.c        |  1 -
- sound/hda/common/hda_jack.h     |  1 +
- sound/hda/common/jack.c         | 79 ++++++++++++++++++---------------
- sound/soc/sof/intel/hda-codec.c |  4 +-
- 5 files changed, 51 insertions(+), 40 deletions(-)
+ sound/hda/controllers/intel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/hda_codec.h b/include/sound/hda_codec.h
-index b801943f0667f..6a21e42955df4 100644
---- a/include/sound/hda_codec.h
-+++ b/include/sound/hda_codec.h
-@@ -28,6 +28,7 @@ struct hda_codec;
- struct hda_pcm;
- struct hda_pcm_stream;
- struct hda_codec_ops;
-+struct hda_jack_tbl;
- 
- /*
-  * codec bus
-@@ -275,7 +276,8 @@ struct hda_codec {
- 				 struct hda_codec *codec, hda_nid_t nid);
- 
- 	/* jack detection */
--	struct snd_array jacktbl;
-+	struct hda_jack_tbl *jacktbl, *jacktbl_last; /* linked list head/tail */
-+	int jacktbl_used; /* number of jacktbl elements */
- 	unsigned long jackpoll_interval; /* In jiffies. Zero means no poll, rely on unsol events */
- 	struct delayed_work jackpoll_work;
- 
-@@ -502,7 +504,7 @@ void snd_hda_update_power_acct(struct hda_codec *codec);
- 
- static inline bool hda_codec_need_resume(struct hda_codec *codec)
- {
--	return !codec->relaxed_resume && codec->jacktbl.used;
-+	return !codec->relaxed_resume && codec->jacktbl_used;
- }
- 
- /*
-diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
-index e6548e03a32ce..7528839bed706 100644
---- a/sound/hda/common/codec.c
-+++ b/sound/hda/common/codec.c
-@@ -929,7 +929,6 @@ snd_hda_codec_device_init(struct hda_bus *bus, unsigned int codec_addr,
- 	snd_array_init(&codec->driver_pins, sizeof(struct hda_pincfg), 16);
- 	snd_array_init(&codec->cvt_setups, sizeof(struct hda_cvt_setup), 8);
- 	snd_array_init(&codec->spdif_out, sizeof(struct hda_spdif_out), 16);
--	snd_array_init(&codec->jacktbl, sizeof(struct hda_jack_tbl), 16);
- 	snd_array_init(&codec->verbs, sizeof(struct hda_verb *), 8);
- 	INIT_LIST_HEAD(&codec->conn_list);
- 	INIT_LIST_HEAD(&codec->pcm_list_head);
-diff --git a/sound/hda/common/hda_jack.h b/sound/hda/common/hda_jack.h
-index ff7d289c034bf..26bfaae393568 100644
---- a/sound/hda/common/hda_jack.h
-+++ b/sound/hda/common/hda_jack.h
-@@ -44,6 +44,7 @@ struct hda_jack_tbl {
- 	int type;
- 	int button_state;
- 	struct snd_jack *jack;
-+	struct hda_jack_tbl *next;
- };
- 
- struct hda_jack_keymap {
-diff --git a/sound/hda/common/jack.c b/sound/hda/common/jack.c
-index bfbbfe0cbdb92..72b5bf0e31175 100644
---- a/sound/hda/common/jack.c
-+++ b/sound/hda/common/jack.c
-@@ -76,12 +76,11 @@ static u32 read_pin_sense(struct hda_codec *codec, hda_nid_t nid, int dev_id)
- struct hda_jack_tbl *
- snd_hda_jack_tbl_get_mst(struct hda_codec *codec, hda_nid_t nid, int dev_id)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i;
-+	struct hda_jack_tbl *jack;
- 
--	if (!nid || !jack)
-+	if (!nid)
- 		return NULL;
--	for (i = 0; i < codec->jacktbl.used; i++, jack++)
-+	for (jack = codec->jacktbl; jack; jack = jack->next)
- 		if (jack->nid == nid && jack->dev_id == dev_id)
- 			return jack;
- 	return NULL;
-@@ -98,12 +97,11 @@ struct hda_jack_tbl *
- snd_hda_jack_tbl_get_from_tag(struct hda_codec *codec,
- 			      unsigned char tag, int dev_id)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i;
-+	struct hda_jack_tbl *jack;
- 
--	if (!tag || !jack)
-+	if (!tag)
- 		return NULL;
--	for (i = 0; i < codec->jacktbl.used; i++, jack++)
-+	for (jack = codec->jacktbl; jack; jack = jack->next)
- 		if (jack->tag == tag && jack->dev_id == dev_id)
- 			return jack;
- 	return NULL;
-@@ -113,12 +111,11 @@ EXPORT_SYMBOL_GPL(snd_hda_jack_tbl_get_from_tag);
- static struct hda_jack_tbl *
- any_jack_tbl_get_from_nid(struct hda_codec *codec, hda_nid_t nid)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i;
-+	struct hda_jack_tbl *jack;
- 
--	if (!nid || !jack)
-+	if (!nid)
- 		return NULL;
--	for (i = 0; i < codec->jacktbl.used; i++, jack++)
-+	for (jack = codec->jacktbl; jack; jack = jack->next)
- 		if (jack->nid == nid)
- 			return jack;
- 	return NULL;
-@@ -142,12 +139,19 @@ snd_hda_jack_tbl_new(struct hda_codec *codec, hda_nid_t nid, int dev_id)
- 
- 	if (jack)
- 		return jack;
--	jack = snd_array_new(&codec->jacktbl);
-+	jack = kzalloc_obj(*jack);
- 	if (!jack)
- 		return NULL;
- 	jack->nid = nid;
- 	jack->dev_id = dev_id;
- 	jack->jack_dirty = 1;
-+	if (!codec->jacktbl)
-+		codec->jacktbl = jack;
-+	else
-+		codec->jacktbl_last->next = jack;
-+	codec->jacktbl_last = jack;
-+	codec->jacktbl_used++;
-+
- 	if (existing_nid_jack) {
- 		jack->tag = existing_nid_jack->tag;
- 
-@@ -158,7 +162,7 @@ snd_hda_jack_tbl_new(struct hda_codec *codec, hda_nid_t nid, int dev_id)
- 		 */
- 		jack->jack_detect = existing_nid_jack->jack_detect;
- 	} else {
--		jack->tag = codec->jacktbl.used;
-+		jack->tag = codec->jacktbl_used;
+diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
+index fd61dc8e21a53..45bdacb9a91ba 100644
+--- a/sound/hda/controllers/intel.c
++++ b/sound/hda/controllers/intel.c
+@@ -1366,7 +1366,6 @@ static void azx_free(struct azx *chip)
+ 			 * actually stop the chip) to allow GPU to suspend via
+ 			 * vga_switcheroo, and print a warning.
+ 			 */
+-			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
+ 			pm_runtime_disable(&pci->dev);
+ 			pm_runtime_set_suspended(&pci->dev);
+ 			pm_runtime_enable(&pci->dev);
+@@ -2411,6 +2410,8 @@ static int azx_probe_continue(struct azx *chip)
+ out_free:
+ 	if (err < 0) {
+ 		pci_set_drvdata(pci, NULL);
++		if (hda->vga_switcheroo_registered)
++			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
+ 		snd_card_free(chip->card);
+ 		return err;
  	}
- 
- 	return jack;
-@@ -166,10 +170,9 @@ snd_hda_jack_tbl_new(struct hda_codec *codec, hda_nid_t nid, int dev_id)
- 
- void snd_hda_jack_tbl_disconnect(struct hda_codec *codec)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i;
-+	struct hda_jack_tbl *jack;
- 
--	for (i = 0; i < codec->jacktbl.used; i++, jack++) {
-+	for (jack = codec->jacktbl; jack; jack = jack->next) {
- 		if (!codec->bus->shutdown && jack->jack)
- 			snd_device_disconnect(codec->card, jack->jack);
- 	}
-@@ -177,22 +180,31 @@ void snd_hda_jack_tbl_disconnect(struct hda_codec *codec)
- 
- void snd_hda_jack_tbl_clear(struct hda_codec *codec)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i;
-+	struct hda_jack_tbl *jack, *jack_next;
- 
--	for (i = 0; i < codec->jacktbl.used; i++, jack++) {
-+	for (jack = codec->jacktbl; jack; jack = jack_next) {
- 		struct hda_jack_callback *cb, *next;
- 
--		/* free jack instances manually when clearing/reconfiguring */
--		if (!codec->bus->shutdown && jack->jack)
--			snd_device_free(codec->card, jack->jack);
-+		jack_next = jack->next;
-+
-+		if (jack->jack) {
-+			/* fingers away from stale data */
-+			jack->jack->private_data = NULL;
-+			jack->jack->private_free = NULL;
-+			/* free jack instances manually when clearing/reconfiguring */
-+			if (!codec->bus->shutdown)
-+				snd_device_free(codec->card, jack->jack);
-+		}
- 
- 		for (cb = jack->callback; cb; cb = next) {
- 			next = cb->next;
- 			kfree(cb);
- 		}
-+		kfree(jack);
- 	}
--	snd_array_free(&codec->jacktbl);
-+
-+	codec->jacktbl = codec->jacktbl_last = NULL;
-+	codec->jacktbl_used = 0;
- }
- 
- #define get_jack_plug_state(sense) !!(sense & AC_PINSENSE_PRESENCE)
-@@ -238,10 +250,9 @@ static void jack_detect_update(struct hda_codec *codec,
-  */
- void snd_hda_jack_set_dirty_all(struct hda_codec *codec)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i;
-+	struct hda_jack_tbl *jack;
- 
--	for (i = 0; i < codec->jacktbl.used; i++, jack++)
-+	for (jack = codec->jacktbl; jack; jack = jack->next)
- 		if (jack->nid)
- 			jack->jack_dirty = 1;
- }
-@@ -478,19 +489,17 @@ EXPORT_SYMBOL_GPL(snd_hda_jack_set_button_state);
- void snd_hda_jack_report_sync(struct hda_codec *codec)
- {
- 	struct hda_jack_tbl *jack;
--	int i, state;
-+	int state;
- 
- 	/* update all jacks at first */
--	jack = codec->jacktbl.list;
--	for (i = 0; i < codec->jacktbl.used; i++, jack++)
-+	for (jack = codec->jacktbl; jack; jack = jack->next)
- 		if (jack->nid)
- 			jack_detect_update(codec, jack);
- 
- 	/* report the updated jacks; it's done after updating all jacks
- 	 * to make sure that all gating jacks properly have been set
- 	 */
--	jack = codec->jacktbl.list;
--	for (i = 0; i < codec->jacktbl.used; i++, jack++)
-+	for (jack = codec->jacktbl; jack; jack = jack->next)
- 		if (jack->nid) {
- 			if (!jack->jack || jack->block_report)
- 				continue;
-@@ -758,10 +767,10 @@ EXPORT_SYMBOL_GPL(snd_hda_jack_unsol_event);
-  */
- void snd_hda_jack_poll_all(struct hda_codec *codec)
- {
--	struct hda_jack_tbl *jack = codec->jacktbl.list;
--	int i, changes = 0;
-+	struct hda_jack_tbl *jack;
-+	int changes = 0;
- 
--	for (i = 0; i < codec->jacktbl.used; i++, jack++) {
-+	for (jack = codec->jacktbl; jack; jack = jack->next) {
- 		unsigned int old_sense;
- 		if (!jack->nid || !jack->jack_dirty || jack->phantom_jack)
- 			continue;
-diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
-index 2f5a1db235351..c2f6f0848b091 100644
---- a/sound/soc/sof/intel/hda-codec.c
-+++ b/sound/soc/sof/intel/hda-codec.c
-@@ -87,7 +87,7 @@ void hda_codec_jack_wake_enable(struct snd_sof_dev *sdev, bool enable)
- 		list_for_each_codec(codec, hbus) {
- 			/* only set WAKEEN when needed for HDaudio codecs */
- 			mask |= BIT(codec->core.addr);
--			if (codec->jacktbl.used)
-+			if (codec->jacktbl_used)
- 				val |= BIT(codec->core.addr);
- 		}
- 	} else {
-@@ -116,7 +116,7 @@ void hda_codec_jack_check(struct snd_sof_dev *sdev)
- 		 * Wake up all jack-detecting codecs regardless whether an event
- 		 * has been recorded in STATESTS
- 		 */
--		if (codec->jacktbl.used)
-+		if (codec->jacktbl_used)
- 			pm_request_resume(&codec->core.dev);
- }
- EXPORT_SYMBOL_NS_GPL(hda_codec_jack_check, "SND_SOC_SOF_HDA_AUDIO_CODEC");
 -- 
 2.53.0
 
