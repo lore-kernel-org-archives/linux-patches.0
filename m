@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051051;
-	b=XALMhNeFcYTuqV+5VEMYJzMiCIBErnv3mRn8icnDka579+rBA4sODGEJ3/jhR2cORhiS
-	 iy+6c4GTdF5kUNO/MtGBO/V/aAf6o/G8E8C5+r1vos22hxa1yKBiCIPDgkgxTFOz6APtI
-	 qCUlakN5vfCyYDh0PcqKg2rW1GKGfZI2YvOppa9wzEMqVFzJ5Ha54w7DvUZEM0vduV2U2
-	 GQun1Wu9TQlo7pk7LrRof0bCSk+j2zjjeDBEFgN9aKHJSaMHUGF1X+i3M7w8hpShiutZu
-	 fO9iU/mYKi2PRsuD6PQf1cOzzbKTHrA7VmI9PuK8RQ0wNvrtg45sSwt6ixJqPhYDlcw==
+	t=1795051053;
+	b=i6/30ZMO4DLRgeRSncqE7H30J6kSTZuXxlv3l+fwhvXzPKOROHgZDQyaAWl0tbgC8a0L
+	 2cukS5mGsL32WIQW7fmm90WeVN2rcohE72x0/R9ZVTIPvCCtJwJeB0rv8aNAV7FiXd//O
+	 6r9qDI1pKp2UebezkWSBAcTZRmiEv3ZWriiNyIQq1l37/NpIyqG1l8ZQKo5iIAZfVK0Xi
+	 BcERZpL7GJ4syhrPP4VCQB5D+jYrEAWPONXtsBF1mq9dbTfvWEndMul/NYNnasGQgbz0C
+	 Db+uQLgDN9+AoP4fSb5XLS8jMYq3dFKiMN6q9HAaZzO5XbuauwquO1rHmtg0zghx89g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bieOWp3JkdagOxz0XG7e50bzhX/+i7eX8+IrxPUbNTM=;
-	b=gTBlNTodrkEIsW0zQZYmklPQgBl8G6qv0jyrIUqqOdHxRmiS1rJfaPEhzi0qzxSw5vm1
-	 tJwrawYU4ax8A5PxIznxJBrUjmk+lXvCuA5zHS+RNeowvXx2bLhJQ6NZI8xmqVF8Gsvdo
-	 TJKlDvQaIZCom9I621NB6COULUgEV2hgbDbNP/Wj7xqej6jkp0Bd7K37+UCY5aBiRd7MU
-	 ir0smNqGQg3TXLdLTMOZY4OGtStYRcikEdHkZ8ReBGsHsLp9DdVTYRhtSdRiUpP5fuZTo
-	 7n8oDl7uBWWUE0vZ7J9QZUP/4Z39wSTfhvhHE9FA+W+3JoH1WSB71z2jzVpBmc41qBA==
+	bh=l80Te2InAYOfuq8QJHicoMcK6SJnHg1HOpRLzrVzltM=;
+	b=p1RKpxpaVmpR8YbSMeokKNASzS3RICFo+NvTMMeGCiLDk8AX2wjR9o3z1NDy9qWtbpqo
+	 K2ZI1+f9CJD3b76q1k/mKHYx053EtLSt3q7e7XOCGVvVXxwrz4telc8Rl3NjyI9C8QI/C
+	 BmNaXKnMUBsR+/o64Qg5ATSDHkcm8yUu51KZE4ukW2vzKrgHTn2032OEOzosD4B8Jkww3
+	 xWhDuAvIXygtNKF0yFcz6Fsw9UPhfFFD3ryyolvFDQHd35Z2DBtrz99FAd38vXQZRY3EN
+	 aII0BcDiTR+urkpuh75TEsX96nd6z+AO6jX9kkBmoJ9eDejA8mIUdh79L+6bOk7XNIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy2ibHQH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d69K+3+I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCB0606A325;
-	Thu, 19 Nov 2026 01:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FABD606A32C;
+	Thu, 19 Nov 2026 01:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy2ibHQH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170641F000C4;
-	Thu, 19 Nov 2026 01:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d69K+3+I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3BF1F000C4;
+	Thu, 19 Nov 2026 01:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051050;
-	bh=bieOWp3JkdagOxz0XG7e50bzhX/+i7eX8+IrxPUbNTM=;
+	s=korg; t=1795051053;
+	bh=l80Te2InAYOfuq8QJHicoMcK6SJnHg1HOpRLzrVzltM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fy2ibHQHNddx/bNMVYt5enJ37PVm2TvPCgPGNAk1XRia4f8GsNtzfbxmMgrOQF5ck
-	 IezqDE4fK435qxyrMpZK1Gukz8L6TyR2K0UppS+hP4xGRvmeQPJG9vFDzHQ+wrKAnK
-	 Sc96B6U+l8Sh33NyI6d3sUhYsDafOMFwJsjt4f94=
+	b=d69K+3+IiPHKXHtJFzK1zQDtgKfHlOiBrnEQtUt3jvjw9ZtCpzmj6WIjJfv8kl9dN
+	 BlWbqBRq7cdUkVZKeBqqmenCPeje1jYgl5sioHaIBqbfPI2Osfl3apZRND7cJKZA0r
+	 iwBvwDSejr7649n5thg08LDfqnOXqX7pJXdUqbsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0070/2214] pinctrl: sx150x: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:29:06 +0100
-Message-ID: <20261118150012.792684624@linuxfoundation.org>
+Subject: [PATCH 5.15 0071/2214] media: em28xx: dev_info->pr_info since dev has been freed
+Date: Wed, 18 Nov 2026 15:29:07 +0100
+Message-ID: <20261118150012.828659210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,40 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 5fe4b12c087db3e565f53b87f1dafdf2f0d1ee0f ]
+[ Upstream commit c132b07f7e5853c0df35a9b94b8e204cdc6afdef ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+In em28xx_free_device() dev_info passed &dev->intf->dev,
+but that device can be freed already.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+Just use pr_info instead.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-sx150x.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-sx150x.c b/drivers/pinctrl/pinctrl-sx150x.c
-index 484a3b9e875c1..6998e24afc5c2 100644
---- a/drivers/pinctrl/pinctrl-sx150x.c
-+++ b/drivers/pinctrl/pinctrl-sx150x.c
-@@ -829,6 +829,7 @@ static const struct i2c_device_id sx150x_id[] = {
- 	{"sx1509q", (kernel_ulong_t) &sx1509q_device_data },
- 	{}
- };
-+MODULE_DEVICE_TABLE(i2c, sx150x_id);
+diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
+index 9027660b0fe64..1af36627ff617 100644
+--- a/drivers/media/usb/em28xx/em28xx-cards.c
++++ b/drivers/media/usb/em28xx/em28xx-cards.c
+@@ -3509,7 +3509,7 @@ void em28xx_free_device(struct kref *ref)
+ {
+ 	struct em28xx *dev = kref_to_dev(ref);
  
- static const struct of_device_id sx150x_of_match[] = {
- 	{ .compatible = "semtech,sx1501q", .data = &sx1501q_device_data },
+-	dev_info(&dev->intf->dev, "Freeing device\n");
++	pr_info("%s: Freeing device\n", dev->name);
+ 
+ 	if (!dev->disconnected)
+ 		em28xx_release_resources(dev);
 -- 
 2.53.0
 
