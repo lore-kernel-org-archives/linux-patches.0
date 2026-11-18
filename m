@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052759;
-	b=CTDaggbyaEl3EApvIf+LVnKQt2AWF0l9lAB67HFdadZl/a253R6MTPG0NQRwJ2GfmE5D
-	 d4/0sno+cUAhDirdWuFc8/j7LKXeHml0QovyWoGD9st6e7JPzcVRpzZ/f2C5Ga6pWK1Yw
-	 V47/dMxAMflBYMYQ3AQ5AmiZVkTN/cS8+ssS0rakUFfv3HHNYPQWzCmTM1JwE6kaosXha
-	 MZqrFzi49JalFQv4aF+8DKKRvryWfbzPYwnr0B/LvRFJaTZ3o3lk1iyG0ZIg4g6ePiGbi
-	 OiADLKucPnPnu5jKjQKRJ6fNKzdrbB6ZQjI12xTlKJhjb/ekNQ19I4BUEYndYTIZpBA==
+	t=1795052761;
+	b=miFMlStXHf5OZwkzcGIOstIIpmrWB2SbdwzrPGLhUNDJ0uq8QaIj3BC7eL/GfkC/qnCz
+	 YGeB8mXactHmPYiL9bV1II/RxzliA5PW2G6OFgu/pD5VuKee2tJ3YIAQZZ9CjFNMlmsDd
+	 EWZ6qS/ptT/aUCAV126lhV84G7hTOgmzMt7Oh8VLESJg5VIpPhYf9mCWHHQsrahUMwSwn
+	 6bcu8x9N23P5srE6UPKGQsswwXCqJTy0kDcK9o4cCp9OUcyFzhyn78VCeJ9DxqKLdpOcp
+	 MGwPURHDJL/EbIKDOuxva2T1OtD0lSZnrSq5pCvkbR2uNUuors9t51NXLC4ojFEYNxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052759;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wLbq6pIDqUmwO7Ne4fR9Jmf2MN4CNZLozKfHbdMzVmo=;
-	b=qYw+nD2++mDAdc7gp1fAEYZ3NMeswZWQJZwlwLwpo4nM73YuJceHmUQHkyVJKsPFaAU5
-	 QKS0450UVmZZAgD7ASt9HUI8OYQptRh5PWbb213L16vxkO9srEwcc95B6lSKBhMVMRGcf
-	 t1T6hxBDA8qeHFM3D6Z5GRL+/0M2f4/zZ9+XrMlBhOifgKW2V+aaI+ZGNGz6wr9wxj42g
-	 wXIKjZaWRIkPKDHpqIGmsAbmvY1dyXPQyew2hnda1LLNNZx8dYzEztSTzzssA0HIy2WTZ
-	 wn+yZOMMsITqUq/902BUO8OxPrHxNsuIGx4hABZkFbASQ7EuoVikTv/rwP+kuDeP/WQ==
+	bh=CZiWiZBxPw88NOlapOViyWkmH3SNKodYsbxnjdPXWao=;
+	b=zMaTEjcnHAVhkQ2SRcPjvoZIdD6vHf0K8GDrP1xiIaF1k4hbiNHECi8LRxmQgz4XHbRR
+	 YvIA+E79Ja1YrQZJ/k2nc2wfuuyJSf67+MiKIEciwXp0ito6EtiiBpohFipTNJTke45uf
+	 z4liwOmmMS6b/vGNpH8wdP5/eBWP0gVqDq92sm6NshfiLB6tEPduxGK97RxfnLjofGIvS
+	 ZIdK/hjZd+sxRWL2m89uMNwCxuL+D5K+Xp4lZeTLnJrlynxt1Aedw8nQRjS0AYm27dqWn
+	 PCtAwmlinR9a334llvRtuqFAc3C94bCe7Px3GvbZHzSkdQ7wPf7cMTCviPM7z2kE3FA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7LLFQyL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3Ga0Mzc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B2606A31C;
-	Thu, 19 Nov 2026 01:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF19606A31C;
+	Thu, 19 Nov 2026 01:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7LLFQyL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7CA1F000C4;
-	Thu, 19 Nov 2026 01:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3Ga0Mzc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA39B1F000C4;
+	Thu, 19 Nov 2026 01:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052758;
-	bh=wLbq6pIDqUmwO7Ne4fR9Jmf2MN4CNZLozKfHbdMzVmo=;
+	s=korg; t=1795052761;
+	bh=CZiWiZBxPw88NOlapOViyWkmH3SNKodYsbxnjdPXWao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g7LLFQyL/bPzKbu9I/X4qhco5jDE8zjznDbVobSeYphpA8712M2eXZXp87z0Chq1p
-	 ccw6Mu7iUokXGFmOZAzfVYlQY8mq4yvYRvyRkGsNZ75hRqUwuh72+BUibG6/6y10uS
-	 p2k+NQ33aDBxq2Zi5fJt1iZME1dxyQ570067mQf8=
+	b=B3Ga0MzcLo2F3hPNLecl9jtBF6lGbyqi2lVVyw/STIg1cCod/ap5OpCkeq4GWtiXl
+	 Ho2+DqSX8IPvuT02sH9iKaoPMk+moZD4Z1o6CSSb0vd1XIVQWvMPkc0wHuVeTGa+A8
+	 IdEjeUK6i3XhjZzyGTOnAH/OVvu8qA/lLCzc31d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Maciej Kucharek <qchcio@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0676/2214] drm/amdgpu: reset VI ASIC on Apple boards with VRAM at 0
-Date: Wed, 18 Nov 2026 15:39:12 +0100
-Message-ID: <20261118150038.840785730@linuxfoundation.org>
+Subject: [PATCH 5.15 0632/2214] sh: intc: Sort the prio and sense lists after filling them
+Date: Wed, 18 Nov 2026 15:38:28 +0100
+Message-ID: <20261118150036.633982974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,70 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Kucharek <qchcio@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 92a5184787b81e67f7b831ad860ca9b053505cf8 ]
+[ Upstream commit 94a219eda3b5fb1d1753a5ecf28b171c8f308a27 ]
 
-On MacBookPros with switchable graphics, the firmware puts VRAM at MC
-address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
-reset) moves VRAM back to the VBIOS default.  gmc_v8_0 reads
-MC_VM_FB_LOCATION once at init and reprograms it only on SR-IOV.  On
-bare metal, the driver then keeps using the old layout.
+register_intc_controller() sorts d->prio and d->sense right after
+allocating them, with hw->nr_prio_regs and hw->nr_sense_regs as the
+element count. The lists hold hw->nr_vectors entries and are only
+filled later, by intc_register_irq().
 
-vi_reset_quirks[] handles this for the MacBookPro14,3 by PCI ID:
+On SH7785, sh7785-irq0123 and sh7785-irq4567 have four vectors but the
+SoC's eleven priority registers, so sort() swaps 88 bytes in a 32 byte
+kmalloc object at boot. slub_debug=FZPU reports "Right Redzone
+overwritten" in kmalloc-32, and v6.5 and v6.6 panic in
+__kmem_cache_alloc_node() while registering sh7785-irq0123.
 
-  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+Found with a custom QEMU model of the SH7785LCR. On it, v6.4
+sh7785lcr_defconfig boots with SLAB, the defconfig default before v6.5,
+and hangs before the console is up when built with SLUB.
 
-Add the test that SI and CIK use: an Apple subsystem vendor and VRAM at
-0.  Other Polaris MacBookPros then get the same reset at load, for
-example the MacBookPro13,3 if its firmware leaves VRAM at 0.  These
-boards are not tested.
+Sort the lists once all vectors are registered, with the number of
+entries that were added.
 
-Keep vi_reset_quirks[].  Its MacBookPro15,1 entries fix a different
-failure, a module reload after S3:
-
-  commit a5be7ad8f5f0 ("drm/amdgpu: reset VI ASIC on MacBookPro15,1")
-
-VRAM is not at 0 at that point, so the new test may not cover it.
-
-After the reset, FB_BASE is not 0, so the new test does not fire again
-on a module reload.
-
-Only compile-tested.
-
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c2335b685b1e1e387f2fea1c67f56b5b8a8b6dc6)
+Fixes: b59f9f9775e6 ("sh: intc: optimize intc IRQ lookup")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/sh/intc/core.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
-index ef26e8973829a..98f37102578c0 100644
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1450,6 +1450,16 @@ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
- 	unsigned int i;
- 	u32 clock_cntl, pc;
+diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
+index b19388b349be3..590a532e75a7e 100644
+--- a/drivers/sh/intc/core.c
++++ b/drivers/sh/intc/core.c
+@@ -277,9 +277,6 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 			k += save_reg(d, k, hw->prio_regs[i].set_reg, smp);
+ 			k += save_reg(d, k, hw->prio_regs[i].clr_reg, smp);
+ 		}
+-
+-		sort(d->prio, hw->nr_prio_regs, sizeof(*d->prio),
+-		     intc_handle_int_cmp, NULL);
+ 	}
  
-+	/*
-+	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
-+	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
-+	 * the vbios default, so reset and post on load to start with the
-+	 * vbios layout.
-+	 */
-+	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
-+	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
-+		return true;
+ 	if (hw->sense_regs) {
+@@ -290,9 +287,6 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 
+ 		for (i = 0; i < hw->nr_sense_regs; i++)
+ 			k += save_reg(d, k, hw->sense_regs[i].reg, 0);
+-
+-		sort(d->sense, hw->nr_sense_regs, sizeof(*d->sense),
+-		     intc_handle_int_cmp, NULL);
+ 	}
+ 
+ 	if (hw->subgroups)
+@@ -360,6 +354,11 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 		}
+ 	}
+ 
++	sort(d->prio, d->nr_prio, sizeof(*d->prio),
++	     intc_handle_int_cmp, NULL);
++	sort(d->sense, d->nr_sense, sizeof(*d->sense),
++	     intc_handle_int_cmp, NULL);
 +
- 	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
- 		if (adev->pdev->device == vi_reset_quirks[i].device &&
- 		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
+ 	intc_subgroup_init(desc, d);
+ 
+ 	/* enable bits matching force_enable after registering irqs */
 -- 
 2.53.0
 
