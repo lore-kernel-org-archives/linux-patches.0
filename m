@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056830;
-	b=XRC7Hc+hUWlAjNYzbOx7KBkdJS1r+bcBdEBhS7cpTxkKM4D4d7inZYYcL2ZUsdGGDeFs
-	 7Uo78QdL6T+Ygd7H+5E3ppXDnt18mQeyQN8DjHAzdSdHrZUjMmwoxOOnfqLRvcs+dVzB1
-	 VNQtNxXmolr0Z6xJjYUxjzUDnVMrdAKv3x1bPQObyIjxlu4Y9KoB++m6DTTyNb+2t39w/
-	 HTNWpKDUo6+00DOlzm0eGAyJSgGJii9QDv+ySigT5Sp+eeGOklCvY148UVRCVFh9mya7S
-	 aHOuTh0J25VWnGQEv/nZ+OF9iIJVGFCjjw0udp5cNogE+zHl5vnF9qKxzINfg3Elp3w==
+	t=1795056833;
+	b=lJgb32ACbSWJQvE6nSiK0EezUznOgWXkex4jch2GB25WUVYZXTEDpeuiHmF30zep1gLf
+	 AjM004irhjl1uat1I796iTWRaHrWiqSuEuo3Qwh91VivGPM2hWTyIyukSr2M0qFzemNtF
+	 543jA09CQ5Z1lnVs4dmKSiVAxdxP+R6+nuYaTzhDMU7ha98Pq8lsGWzvNcCzgSQmWmQPF
+	 yWQHqoE0K589GxTP5UKNxakKn8ymak4lJB6L1lwUxMby5xeADOXQ6YwU+zGjI/tuZMN6U
+	 T+x6MDoe4kIoxggjiFzZpNNg9av8E/iUtzrmWMd6T1O7eLBvtLiQkZUnGsMIkC20NAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V6isCTU4D25hsjGB13w2zPnP4dJjegCVcylt7NWF4H4=;
-	b=Vi0A1AS6oRHI77S1F/mIGkF1QfBi0ZyJRnz6yM5QbCXGR1jFkKFS4q+UMTUsKCARDiSj
-	 tURCointI89pCtqzRq8v/AZ0icb8/QheQAPc+B0wMjpW8ObEhuEfeOuqxHQdsso0uh5s8
-	 KekiMdf+oquPbJClwZuDIHaSlhfPPAJbpHusCt1fiwHufrztj4y9gnhODAxamAFtBl3w7
-	 EUXG8zc6zNR/6tu4gUOwpKSsEv9XrWGdpQVNMZPHqyiPDI7HIrjB62bOEmd889hj0Q7ul
-	 1KWrn1ih9wYHzhVdqurHHZN+whaRaEFnV0NMNbnBdP0Lr3p3b/cKFfLz5Ceb7ap97dA==
+	bh=8Tt26JC9EdfzGHvv/Kk5Sr5Z7s1DIbz9T4TXnnmnDOM=;
+	b=XCkA8e3H90gxX7lvDUn4+jUDV33hu7BzIP4QE707ZHhDDAbIFQBwDPvpXRTo2WyoPrKY
+	 fSaK9ohSznQlK9hXro6adsuvPMTrLAvC7I7aACKPiSC2g7ilhAmZzLJ/xTEJP4Vuvkgqz
+	 qa8KaA9df17xRpwtqKch71vyRsL7/KxRLdWzxFTNa0zNzxfEfpz25k3ziOAJozGqcp7Pa
+	 EMKGugTCsMt51BTMZH59MZR/RoFU3mGAYcbdnwewy0pigtUVb607H/MakxoQ+Gd9aEIMu
+	 tiKbji5PNCkH5EkbuWHPkt4qbpNEVyY3/tV8bjHKFU4+hbOJ6PRZ+qlFdmlrR5j1iLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PtlKKJdy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vthNVyGE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A025606A325;
-	Thu, 19 Nov 2026 02:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2455606A33E;
+	Thu, 19 Nov 2026 02:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PtlKKJdy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E371F000C5;
-	Thu, 19 Nov 2026 02:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vthNVyGE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D73F1F000C4;
+	Thu, 19 Nov 2026 02:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056830;
-	bh=V6isCTU4D25hsjGB13w2zPnP4dJjegCVcylt7NWF4H4=;
+	s=korg; t=1795056832;
+	bh=8Tt26JC9EdfzGHvv/Kk5Sr5Z7s1DIbz9T4TXnnmnDOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtlKKJdy6MptT3URnQQzI6U/xh7RzbauNjwEKF6Qt3j48LfFlgIgIekZHRJqmwE8F
-	 LMws02ZkV71VSWUOTJfIfF0Vj8IISv/gcdXSewzNbmUXbtLyF8ORJ/LUUdYvhwSHtN
-	 zB8Em7inRNmyF5xrAQkAcHx3kGI/hoUeBHDBlwtc=
+	b=vthNVyGEKXbjfLMaaCWX/Xp34TWEx73jjBaKyL8qcCH/63PDeekRIImJXOftke9Io
+	 l+MElGi/736oCkCh6mMD7EticxdsgS93rd9B2jzPDMZYXyaHZB1eqAu/KtUQGyVUDv
+	 4qX8xj/i/3kKGoV8vyEnBc3dtT9uIvINcen6bsX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mingming Cao <mmc@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2086/2214] ASoC: wm8994: fix MCLK gating for AIF clocks sourced from MCLK2
-Date: Wed, 18 Nov 2026 16:02:42 +0100
-Message-ID: <20261118150134.081644984@linuxfoundation.org>
+Subject: [PATCH 5.15 2077/2214] ibmveth: wait for the RX poll to return before freeing the RX queue
+Date: Wed, 18 Nov 2026 16:02:33 +0100
+Message-ID: <20261118150133.713823253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,119 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 872215109fc880de7a03fa30437346f9212649e8 ]
+[ Upstream commit 3f872b34368c7c1d2a8900950e0fee4cb4dd9a34 ]
 
-aif_mclk_set() masks the AIFnCLK_SRC field of the AIFn clocking
-register, but compares the result with unshifted field values. The
-MCLK2 source (0x08) therefore never matches, so MCLK2 is never enabled
-for an AIF clocked from it, and the AIF relies on other users of that
-clock to keep it running.
+napi_disable() returns once ibmveth_poll() has called
+napi_complete_done(), but the poll is not finished: it then re-enables
+the interrupt and calls ibmveth_rxq_pending_buffer(), which reads the
+RX queue. ibmveth_close() can free that queue in the meantime, and the
+late enable can leave the interrupt unmasked after close() masked it.
+The request_irq() failure path in ibmveth_open() frees the same memory
+after napi_disable() too.
 
-On the Exynos4412 Trats2 board, AIF1 and SYSCLK run from MCLK2, the
-32768Hz PMIC clock, while the codec is idle. That clock is shared with
-the WLAN and Bluetooth chips, which enable it only once their drivers
-are loaded. Until then the codec runs from a stopped clock: FLL1 fails
-to lock when configured from that state, and the codec floods the
-kernel log with FIFO error interrupts once a digital path is powered
-up:
+Call synchronize_net() after napi_disable() on both paths. Every
+caller of ibmveth_poll() runs it with bottom halves or interrupts
+disabled, so this waits for the poll to return.
 
- wm8994-codec wm8994-codec: Timed out waiting for FLL lock
- wm8994-codec wm8994-codec: FIFO error
+Found in review of the ibmveth multi-queue RX series and confirmed by
+code inspection; also raised by the Sashiko review of the first version
+of this series. The race was not reproduced. Tested on a POWER10 LPAR
+under an incoming ping flood with 30 rapid link down/up cycles and 30
+rapid MTU cycles (1500 <-> 9000); ran cleanly with no warnings or
+faults. No kernel selftests cover ibmveth.
 
-Booting with clk_ignore_unused, which keeps that clock running from
-the bootloader, makes both issues disappear.
-
-Fixing just the comparison is not enough. The AIF clock source can
-be changed while the AIF clock is running, for example the Midas
-machine driver switches AIF1 between MCLK2 and FLL1 while AIF1CLK is
-kept enabled for jack detection. Looking up the clock again on disable
-can then release a different MCLK than the one enabled, leaking the
-enable count of one clock and underflowing the other.
-
-Shift the field value before decoding it, and remember which MCLK has
-been enabled for each AIF, so that the same clock is released on
-disable. While at it, report the MCLK number 1-based in the error
-message.
-
-Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-2-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Link: https://patch.msgid.link/20261013182926.30417-9-mmc@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 28 ++++++++++++++++++----------
- sound/soc/codecs/wm8994.h |  1 +
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/ibm/ibmveth.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 3d966f46bcac1..0c121fc4b750d 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -1062,13 +1062,24 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 	unsigned int offset, val, clk_idx;
- 	int ret;
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index f09d19f6f8400..43cfcf68443d5 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -601,6 +601,7 @@ static int ibmveth_open(struct net_device *netdev)
+ 			 netdev);
+ 	if (rc != 0) {
+ 		napi_disable(&adapter->napi);
++		synchronize_net();
+ 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
+ 			   netdev->irq, rc);
+ 		goto out_free_buffer_pools;
+@@ -670,6 +671,11 @@ static int ibmveth_close(struct net_device *netdev)
+ 	netdev_dbg(netdev, "close starting\n");
  
-+	/*
-+	 * The AIF clock source may be changed while the AIF clock is
-+	 * running, so release the MCLK which has been enabled for it
-+	 * instead of the one currently selected.
+ 	napi_disable(&adapter->napi);
++	/* napi_disable() returns once ibmveth_poll() has called
++	 * napi_complete_done(), but the poll still re-enables the
++	 * interrupt and reads the RX queue after that.
 +	 */
-+	if (!enable) {
-+		clk_disable_unprepare(wm8994->aif_mclk[aif]);
-+		wm8994->aif_mclk[aif] = NULL;
-+		return 0;
-+	}
-+
- 	if (aif)
- 		offset = 4;
- 	else
- 		offset = 0;
++	synchronize_net();
  
- 	val = snd_soc_component_read(component, WM8994_AIF1_CLOCKING_1 + offset);
--	val &= WM8994_AIF1CLK_SRC_MASK;
-+	val = (val & WM8994_AIF1CLK_SRC_MASK) >> WM8994_AIF1CLK_SRC_SHIFT;
- 
- 	switch (val) {
- 	case 0:
-@@ -1081,16 +1092,13 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 		return 0;
- 	}
- 
--	if (enable) {
--		ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
--		if (ret < 0) {
--			dev_err(component->dev,	"Failed to enable MCLK%d\n",
--				clk_idx);
--			return ret;
--		}
--	} else {
--		clk_disable_unprepare(wm8994->mclk[clk_idx].clk);
-+	ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
-+	if (ret < 0) {
-+		dev_err(component->dev,	"Failed to enable MCLK%d\n",
-+			clk_idx + 1);
-+		return ret;
- 	}
-+	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
- 
- 	return 0;
- }
-diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
-index bc584b17bf283..28a54007302f9 100644
---- a/sound/soc/codecs/wm8994.h
-+++ b/sound/soc/codecs/wm8994.h
-@@ -81,6 +81,7 @@ struct wm8994_priv {
- 	struct wm_hubs_data hubs;
- 	struct wm8994 *wm8994;
- 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
-+	struct clk *aif_mclk[2];
- 	int sysclk[2];
- 	int sysclk_rate[2];
- 	int mclk_rate[2];
+ 	if (!adapter->pool_config)
+ 		netif_stop_queue(netdev);
 -- 
 2.53.0
 
