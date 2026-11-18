@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030535;
-	b=TP7kFpTWImUaTmJPwdAk5kSTjOP5VB9VvoTti8kzqg2O2EWgKFmLN19d6cSzTcdPSgn7
-	 A2Kn18KMljKRdHXdaYi58xQSKXRt5wmyzlQukuy9sSBlgGvYzptj0d4vpQsSf3q9mCQng
-	 io94k/F8JhIrfhPk48HG0Cn2YODjzjck6fpZWNyUBrwnTSixgyOIDVK5mTgxEj9p5LnKX
-	 vBN94mWeEXyyyrIVLR/6n9DKXIkkc2+yFmy8/ZO/6hGxSBLBg5QuKS3fkX5s6QBfoP5+m
-	 2LfDWusO35UeZz41d20nw3aTTlRwQbexIfNXu3YrwxFpVmyQ0LzePd4ELyvnqHfhLDQ==
+	t=1795030538;
+	b=pJw17O1fPKANaQ4oNwpIboztl4b/9c0GBhSpG02wm+AckpNtIShJtVaTQL0p/WjhD2rA
+	 j9nx/AvgmyCZGGRLMK69k6NCLozDu7C4idx5M3x9erzO8M/W2ESQMsFhag95TAJbu9YMo
+	 O1dJekXEfnbit0O3qsNvPDLVVkRgzHj3YN7ezodUbozDGybqTPghkPp/Z2L7Ju1E5bDrF
+	 bXhpsISCQPubYNSt3PPUzsY3wms9rt7PwHljdGeurmweii/YA2Kuk0nsyJaEuigcsmMdC
+	 YrqR31OvKFZ0AJsX0gbEAXb9/eoEKsBuBs0rK91yZ3Al3CKTNJpjZSEx7p3UPAsJkeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EZ92DzGIHGDT+Ys09aaCy9L7Xvid/y4+Mpt9+7thc1o=;
-	b=5sGP4BiL3Isc5n7xZDOFuBYlGbfqqNYxWvpb/HFCrWgXgsmgL2AxINJmioqUhU2NEz6g
-	 h7Aw5RS4K7lCwFL6gGPm0xr1kpsnav3USZy2jt8d3LE+JZ6OWxd4ADnW5EA+6oxr6hwxl
-	 HGHYFW9iXr9wxVLS0s03Glj3+osez7rCTB2F4js7JaXlz++yHXt9RoTw3LqUU91iQFlJu
-	 Z3HJ/k+J3BnHQ27CEZoBh3hpcZjjxe4wB75SqIGzVfd4lEMKsE1eJXPZ87g8eEMwrvK6S
-	 G/V2hUvO3bLt0w7GB/EFQ1bpuGPDYsYPQons4VbtavmvhId3VH+bxXCijYvEKk8EfQA==
+	bh=qIi4/JwhOA817wLNbwdQ7pDtlK7wCidF5OiY0B2oul0=;
+	b=r/3YbkPwM1K5XEhogmt+1Vm7+OLe38+cfQQCnru5VbjtRZIuEJOMejenr2JHWVK3Mh8T
+	 Mx/uW7d0IZqJrYFYKe64ogWTORIvxaUNI8J9AamdMmwGExwdFjeDRsuwWOFWdXiXQxiuj
+	 b6ebf43LTcEARUpgwQb4tKj7KFfpX9MZuUKU3Zi38zmJARCxCw4y4YjENEOGWBAuZF0ey
+	 gwHaVEkSelSQJJH8/93Al5J8W7uFrRRDqrTz6he3qNkcJ6xFSVygPk1OWS+7nDuan3098
+	 dWAHcaHaDiUhkk7hs5Fiq1NkQcsaeslAEGR173IOFWgjKrMvkS2jONFmSjnVh6wBHGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usOKNQcn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQS8WE2N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB8B606BB70;
-	Wed, 18 Nov 2026 19:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107D9606B13D;
+	Wed, 18 Nov 2026 19:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usOKNQcn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D23D1F000CD;
-	Wed, 18 Nov 2026 19:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQS8WE2N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636111F000C5;
+	Wed, 18 Nov 2026 19:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030535;
-	bh=EZ92DzGIHGDT+Ys09aaCy9L7Xvid/y4+Mpt9+7thc1o=;
+	s=korg; t=1795030537;
+	bh=qIi4/JwhOA817wLNbwdQ7pDtlK7wCidF5OiY0B2oul0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=usOKNQcngzJdYfZqqGFdgVlUwkQRZw+UQVxu/a6sZvHfHsXvUMVvmsRoj1PzpmF0n
-	 TU9lmJOZOjTDLkzKj/KD8jQ7qVJhV57dro6IyYvJ4ChPfd0TuPMIrXglRt5NHu/6C9
-	 Rvsf1QtW3KfNDLS/h2Jvefs6prjwTt3uN84kBSPc=
+	b=GQS8WE2N5CuCVu1oeOckTRBe5wcUwkSReuXMVF8to+uULUT64yDnZDceyjwguPN7U
+	 29SsI5e/GnGUg4OB5pqDP1eZa9zgsK+iU8c2iTJbAj3XYN46G9G1CwvAmjwOWPmP/d
+	 mILGmEGkt0/95cYe0Xt8IiOTtGr91moyHfTKQ29A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0698/1756] RDMA/cxgb4: Do not allow userspace to write the status page
-Date: Wed, 18 Nov 2026 15:47:05 +0100
-Message-ID: <20261118150036.981263691@linuxfoundation.org>
+Subject: [PATCH 6.12 0689/1756] media: venus: Drop session events without an instance
+Date: Wed, 18 Nov 2026 15:46:56 +0100
+Message-ID: <20261118150036.644607104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 1c5335a6902639596a795705349da7f76027e103 ]
+[ Upstream commit 8921f6da06fd869b6f1aa8d02e40a4e2e2a45fe4 ]
 
-The device status page is shared by all userspace contexts and contains
-db_off, which the driver updates to control doorbell flow. The rdma-core
-provider maps it with PROT_READ, but c4iw_mmap() passes the requested page
-protection through when handling CXGB4_MMAP_CONTIG.
+hfi_process_msg_packet() intentionally allows HFI_MSG_EVENT_NOTIFY
+packets without a matching session instance because HFI_EVENT_SYS_ERROR
+is a system event and has no session attached.
 
-A process can therefore request PROT_WRITE directly or later upgrade a
-read-only mapping with mprotect() because VM_MAYWRITE remains set. This
-lets userspace alter device-wide flow-control state seen by the kernel and
-other contexts.
+That exception currently applies to every event-notify packet. If the
+firmware reports a late or otherwise invalid session event after
+to_instance() fails, hfi_event_notify() can dispatch it to session-only
+handlers such as event_seq_changed() or event_release_buffer_ref(), which
+dereference inst.
 
-Reject initially writable mappings and clear VM_MAYWRITE before mapping the
-page. This preserves the existing read-only userspace ABI.
+Only system errors are valid without a session instance. Drop other
+event notifications before the session event handlers can dereference a
+NULL inst.
 
-Fixes: 05eb23893c2c ("cxgb4/iw_cxgb4: Doorbell Drop Avoidance Bug Fixes")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260926112611.3214382-1-yaojiale02@163.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/provider.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_msgs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/cxgb4/provider.c b/drivers/infiniband/hw/cxgb4/provider.c
-index e059f92d90fd4..4b2c7ec348176 100644
---- a/drivers/infiniband/hw/cxgb4/provider.c
-+++ b/drivers/infiniband/hw/cxgb4/provider.c
-@@ -171,6 +171,11 @@ static int c4iw_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
- 					 len, t4_pgprot_wc(vma->vm_page_prot));
- 		break;
- 	case CXGB4_MMAP_CONTIG:
-+		if (vma->vm_flags & (VM_WRITE | VM_EXEC)) {
-+			ret = -EPERM;
-+			break;
-+		}
-+		vm_flags_clear(vma, VM_MAYWRITE);
- 		ret = io_remap_pfn_range(vma, vma->vm_start,
- 					 addr >> PAGE_SHIFT,
- 					 len, vma->vm_page_prot);
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+index cf0d97cbc4631..2e6354d267d91 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -230,6 +230,9 @@ static void hfi_event_notify(struct venus_core *core, struct venus_inst *inst,
+ 	if (!packet)
+ 		return;
+ 
++	if (!inst && pkt->event_id != HFI_EVENT_SYS_ERROR)
++		return;
++
+ 	switch (pkt->event_id) {
+ 	case HFI_EVENT_SYS_ERROR:
+ 		event_sys_error(core, EVT_SYS_ERROR, pkt);
 -- 
 2.53.0
 
