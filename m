@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016620;
-	b=A/ybXu/7LoTEn0mHcEF6TK24kbnkz3vA9EUVHjELqAB89jc1xyhlI57Gg+FhQ2x00aeR
-	 1yyVYIVf+/y0JuBdulV9o8jUOgrYvpQ+9SIaYUrdCthmkkMuR3iEdwOKuRZTXjO/AmrVS
-	 tJcuXkE47BcsKCaWaiL0c2B0t389RVQp5SK7WhZsv0zN6lNoKznCwNgPmU3zuJZqiG149
-	 iyCFIrssscp+n4xtzFjQN3w8SNUCVylZZYwHDsEEd8UDXNDqHwyTLSwsc5y0Je51c12yz
-	 n0rRmf6Rwi9DwEuBWX7MbwGH28/YDWErNS5zBzhdsFFdv6ihKK21j7eZ8kA5L7xBQOg==
+	t=1795016623;
+	b=nnwL8KHlgcOHGlHjJtFWcPjw/hOWg3g0NbyxLRZY5VrsDJGCx8l9yaT0slBfJULDTt0u
+	 CngMMnFTWgkk5UmQpl64GC0T/r3Jtgu9hUj7otDLxLfcy96qPzEjX5pRzdK5A1AKBidqF
+	 DMe5bKXap3APu3c0ZgSHeNkSUqolKpugT4qUyjw1mCDlN7xhdWH0JwZPObUkJg0Mrpm4A
+	 +kc6VMdws4tXp/fpZWyrm10FP5+bAj3hRL6eWsUOchT/FahDdOALscqfXRvRCfnBEqrUW
+	 /8jaK5q1e5ABIYpLeYjcA53dCwU5obq6Zi6WzW3/ilmYeODDiPX+8R+x9HJR5Xnzc2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016623;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QtRy5Nqbs90LMUwBzEZ7gTO3M8dbz5p2GdaMGS/PyjE=;
-	b=Q0jiuoEXTyu1263jqnnYJekA6QB4tmPfbFFnLCSpLaIKSZOwJtC1r6k7BrCCXsNJllJM
-	 Mltfce9WT8p3su3e4NzGnTYQ01FU55DSB6uFPDmNZjDNAifcRyfeatRR8qVTiLUaljQqU
-	 u/mHrW0Twz0r8tcK8rf00hPKPfByYLlvmS2X1vxfyvRbDhTkrH9gh8sOW+13r+PNQ4+Ck
-	 x9Yn1CGbRWzWBMTljFSM057HGn7B6kpAXQDh71lgmq3eT6EaBiCDTYuXQzqnfNPqAR31I
-	 0HFZrQPEqj1PRW7Zlxv7yJ1q7z/4VKcjtFq/SqzwDYVTKLF5K/kP/8DrFrLkrwFJjtw==
+	bh=mdXWLOYnUrDmOZxAjpCZfxrYLQO25W00/4jasUjKmSI=;
+	b=gu70sBnfFbINQ9joSNbjRAp6+NB9OPRSYlMkwUFbpxdKceWrms2nyfz8PQlrZAKvwIX+
+	 93hP0DzrVF4P6C9MRF6cIMLp5IW2T/yQYRkcttObEsp+k4pgD+bXoI8PfUMWJL5UZ64rw
+	 3uJc2A1KzvaIZrfnBeDXdv7iXp2HQhqhBM7xwCC1PCsPXzMKhczZFoVnClISmmxhgTl/7
+	 31mouDgS2YPabyeuz3GlNRaQ3nAkqKOc1zi0q3TLW9BfV+U4M5gE2vSQsd71SiMylL1w5
+	 MFNglUz4VP4snEXAfzIoLCwmeZ+wR1Q4GGX9w3r6uLYt5rf9PCX6HdM7G9Epm8CQaDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io9mD1YJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxQwjK6N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D4A60A260E;
-	Wed, 18 Nov 2026 15:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517A606A332;
+	Wed, 18 Nov 2026 15:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io9mD1YJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E727B1F000C4;
-	Wed, 18 Nov 2026 15:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxQwjK6N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB481F000C7;
+	Wed, 18 Nov 2026 15:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016620;
-	bh=QtRy5Nqbs90LMUwBzEZ7gTO3M8dbz5p2GdaMGS/PyjE=;
+	s=korg; t=1795016623;
+	bh=mdXWLOYnUrDmOZxAjpCZfxrYLQO25W00/4jasUjKmSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=io9mD1YJGW1PEYUEcJtz1+rLonlJmn1CDitwEXkgxPWfYuGoN8S42mCmrL+7qsQ3h
-	 XaPU8i5EohD1C3zF22gca9kan093OhRnapMfIjQ0m+I/3zuDxebUn+9w+EzdEiqVmy
-	 90P6sHFc/Enlb/0qJP/NsqOZ7jZPMD0Aa+o1obLc=
+	b=IxQwjK6Nbrz9Z97QRWI7yJumDzvRt2JzoQtT9k1Dq3E4zHBtKSZR7p6cFy4YGHoNv
+	 PIYKkKA1A7bLGEYlQAQUqwEKWofDsfrkETsFz7mDc73HoGjZ1TNZTkLsRX4Sci0Z2H
+	 VHDGsOW7w5AFF799/0icJDIVEuCjNAybkLLlhMLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Lucero <alucerop@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Zide Chen <zide.chen@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0592/2651] ACPI: HMAT: preserve hmat_adist_nb notifier block
-Date: Wed, 18 Nov 2026 15:30:32 +0100
-Message-ID: <20261118150309.030764748@linuxfoundation.org>
+Subject: [PATCH 7.3 0593/2651] perf topdown: Dont require config1==0 for a slots event
+Date: Wed, 18 Nov 2026 15:30:33 +0100
+Message-ID: <20261118150309.066795938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,45 +71,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alejandro Lucero <alucerop@amd.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit b1c75a77d494298b8dedf46062f2072239bbc33b ]
+[ Upstream commit 0824af00a8d2ede0d8bc70bdc0b493ecfd167900 ]
 
-Remove __meminitdata from hmat_adist_nb declaration preserving it even
-when CONFIG_MEMORY_HOTPLUG is not set. Otherwise further notifier
-registrations using register_mt_adistance_algorithm() will find a
-notifier chain likely corrupted.
+arch_is_topdown_slots() requires config1 == 0, so it misidentified
+"cpu/slots,metrics_clear=1/" as not being the slots event, and an
+additional slots event gets inserted, which fails event scheduling
+since the group now needs two fixed counter 3.
 
-This is the case when cxl_region_probe() calls
-register_mt_adistance_algorithm() what can happen when CXL regions
-are dynamically created at any time from Type3 device(s) or when a Type2
-device is initialized at its driver probe.
+  $ perf stat -e "{cpu/slots,metrics_clear=1/,cpu/topdown-retiring/}" -- sleep 1
+  WARNING: events were regrouped to match PMUs
+       <not counted>      slots
+     <not supported>      cpu/slots,metrics_clear=1/
+       <not counted>      cpu/topdown-retiring/
 
-Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
-Signed-off-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260716181114.35962-2-alejandro.lucero-palau@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Drop the config1 == 0 check from arch_is_topdown_slots(). This is
+safe: config1 has no bearing on the event's identifying config value
+(TOPDOWN_SLOTS, 0x0400).
+
+The attr.type == PERF_TYPE_RAW check is what actually matters: only the
+core PMU is registered with PERF_TYPE_RAW, and on x86, 0x400 is
+guaranteed to be slots event on core CPU.
+
+arch_is_topdown_metrics() keeps its own config1 == 0 check, since
+genuine metrics events have no "metrics_clear" and config1 remains 0.
+
+Add a test verifying that an explicit "slots,metrics_clear=1" event in
+a group does not trigger an extra slots event injection.
+
+Fixes: 5b546de9cc177936 ("perf topdown: Use attribute to see an event is a topdown metic or slots")
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+[ Add missing stdio.h and string.h as noticed by Sashiko ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/arch/x86/tests/topdown.c | 30 +++++++++++++++++++++++++++++
+ tools/perf/arch/x86/util/topdown.c  |  3 +--
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 9792dc3947561..3006789ae31fe 100644
---- a/drivers/acpi/numa/hmat.c
-+++ b/drivers/acpi/numa/hmat.c
-@@ -995,7 +995,7 @@ static int hmat_calculate_adistance(struct notifier_block *self,
- 	return NOTIFY_STOP;
+diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
+index 2b6f47ce49324..520075329c378 100644
+--- a/tools/perf/arch/x86/tests/topdown.c
++++ b/tools/perf/arch/x86/tests/topdown.c
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <errno.h>
++#include <stdio.h>
++#include <string.h>
+ #include "arch-tests.h"
+ #include "../util/topdown.h"
+ #include "debug.h"
+@@ -229,10 +231,38 @@ static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unu
+ 	return TEST_OK;
  }
  
--static struct notifier_block hmat_adist_nb __meminitdata = {
-+static struct notifier_block hmat_adist_nb = {
- 	.notifier_call = hmat_calculate_adistance,
- 	.priority = 100,
++/*
++ * An explicit "slots,metrics_clear=1" event is still the slots event and
++ * must not cause an extra slots event to be injected into the group.
++ */
++static int test__x86_topdown_metrics_clear(struct test_suite *test __maybe_unused,
++					   int subtest __maybe_unused)
++{
++	struct perf_pmu *pmu;
++	char event_str[128];
++	int ret;
++
++	if (!topdown_sys_has_perf_metrics())
++		return TEST_OK;
++
++	pmu = perf_pmus__find_by_type(PERF_TYPE_RAW);
++	if (!pmu || !perf_pmu__has_format(pmu, "metrics_clear"))
++		return TEST_OK;
++
++	snprintf(event_str, sizeof(event_str),
++		 "{%s/slots,metrics_clear=1/,%s/topdown-retiring/}",
++		 pmu->name, pmu->name);
++	ret = test_sort(event_str, 2, 1);
++	TEST_ASSERT_EQUAL("explicit metrics_clear slots event isn't duplicated", ret, TEST_OK);
++
++	return TEST_OK;
++}
++
+ static struct test_case x86_topdown_tests[] = {
+ 	TEST_CASE("topdown events", x86_topdown),
+ 	TEST_CASE("topdown sorting", x86_topdown_sorting),
+ 	TEST_CASE("topdown slots injection", x86_topdown_slots_injection),
++	TEST_CASE("topdown metrics_clear no extra slots", x86_topdown_metrics_clear),
+ 	{ .name = NULL, }
  };
+ 
+diff --git a/tools/perf/arch/x86/util/topdown.c b/tools/perf/arch/x86/util/topdown.c
+index bafd285119d7a..64bc64e335a2a 100644
+--- a/tools/perf/arch/x86/util/topdown.c
++++ b/tools/perf/arch/x86/util/topdown.c
+@@ -37,8 +37,7 @@ bool topdown_sys_has_perf_metrics(void)
+ bool arch_is_topdown_slots(const struct evsel *evsel)
+ {
+ 	return evsel->core.attr.type == PERF_TYPE_RAW &&
+-	       evsel->core.attr.config == TOPDOWN_SLOTS &&
+-	       evsel->core.attr.config1 == 0;
++	       evsel->core.attr.config == TOPDOWN_SLOTS;
+ }
+ 
+ bool arch_is_topdown_metrics(const struct evsel *evsel)
 -- 
 2.53.0
 
