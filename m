@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052369;
-	b=JNHRuQDaRwSHRlFVRWFejDsHf2kZNpnnM4Np8WbftTHgVEsCrjv6ppYlrvLwzXlMjUEO
-	 4eKLAuFvS0SLX5vHm7VCSNoGJmcIM/vQBwQepFea3csGBDHdupQ+SRqDhk3qVCOi9vnn4
-	 gwp/6VM9J28+XQRZl3IuENPblb4XayWE5vts2iNMG6mY54FNgHHaEZApgRwazv/bgcxV6
-	 KnF87Sf4YlMOi7ktzgTbvgreGVktWTkUl+yLccRLBk7nuduxHK3ljjB1nvp2VymB/rrY8
-	 GQ/t8K2C/MC4JBnU48VsmeBlnTQtcZT8C1boO34bs5xYUQX5+8ZYvC4S1MvEMGEX8JQ==
+	t=1795052372;
+	b=m1U8VR3gze9kiBDBf3WKe7EwCXyeXS1Lbf7jq64x/fjpyxK9Fq02f9mr1CDIGQqrkJsy
+	 EXbi3+e9M20i1fQRIK3+p6Z2Hvx4DSKfswPmkkPFyQ6qsjUyf/6ZeoBWid19+l9U7JDnx
+	 m3r5LinveVYyRgbAMMukCKXg3AX/F+RGEYOj+7CvoPHsnnGbu6VGcucQBU61IvGS4N28q
+	 2y/432hT0h0vcvs44fRLdtlkgE0mUX5Eq8OqHLLKOAOha/J18TfL7xiNoXZVIzBfRaJxR
+	 cZyaetFjj8ejM9xKES62DD2vT2wnuubjQ1M0puv146vol95RoPCut1z9bUqrXP+H6KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TpC9PIl82xTVobRLr3ykuUHIGEV3owylcOFvRbbvP94=;
-	b=c1dwMWyw2shBfORYk21A7CGDlA4f4xswB3JRN3txe8f38j3ZzNkNq1idO3UyWnifNVSw
-	 lNyRO1FWjFsXanZzqw/oMapSEjGr3Kq0bflJ1SQMkt9kBvrb3lGAtDa+oB/L02pYG0x7L
-	 syRWCnj49UG3ZsZZGQEJILI7QF9j7WnCWnG8ZU+5rluj0lF3DgkkmF3mBjpOdYgu8NeKk
-	 0GpTmzE+/fMq7yoWwqrwcPMqAHhtmXI3fcdtENLlXfVNMOz1SvLITtSa4ReK/zCEA2NYE
-	 5Ju6MO2qWq66MDeJ1iiCm0fr8i8So/9hMVBwRf/iXl09lqYdjU6Mr7luMYdvpWNG61w==
+	bh=NkP02IQD3m3BjJc4Hujalz10fNPeWzsgH6RRbqNlT7U=;
+	b=lAOb1ZwpH795YOAnU8uDzbCPNtF8+8oiYhGqOPAjIPbxhK+Wbxg2gLhWuyzEcnm0jBSw
+	 mOHhpTSwhvCaytVf/raBLpts4G4b7BGRjogiepOVU/zZd52fOIjsuwwzrLgOyhye4htif
+	 DXuT3hhsm1G7tLt2WVh5KxJ0l10n/ezDju+AHGZYjVeILMSOHOaGj0JHmASD44NqI5cDR
+	 hx35cKPvdwYvfUR1oZsiILRDAfmPDvTfENWP5oRU/+V55KtltEFai/eMccY6DsgS//PTH
+	 5fIKs0SiSye2oNUpcgojOIQQzrSYc1j0A2LLS6SSIucAfTZH2xpBl5vY3JdjZVfKwjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMINIZSM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fihMHhV+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CB606A32C;
-	Thu, 19 Nov 2026 01:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4F8606A325;
+	Thu, 19 Nov 2026 01:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMINIZSM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187421F000C4;
-	Thu, 19 Nov 2026 01:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fihMHhV+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E120E1F000C4;
+	Thu, 19 Nov 2026 01:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052369;
-	bh=TpC9PIl82xTVobRLr3ykuUHIGEV3owylcOFvRbbvP94=;
+	s=korg; t=1795052372;
+	bh=NkP02IQD3m3BjJc4Hujalz10fNPeWzsgH6RRbqNlT7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iMINIZSM9dqcsZmDfCgesFWUDEifcTRZ0I5UFRv1s7NnAYmLcDs4D75iamlQwlwEk
-	 PujAW719oLrVxbx7EFxrlMOj+twC4ev6hHcnwC8LGWN4rj2+Zsm2nknEMfVMpaMi8k
-	 HEbUVnyaOxh7eDiAMECd1CKmz1ZPrpQ/soPhR4/c=
+	b=fihMHhV+fq73TfKUrQ25fUeQCQGCkaI/RHaZVhnOvA5qhIjt8AGhgh3fZ2gE3WH0R
+	 8wwXP+NEKqZOoV0rvZXmbCN5s4HPAEGZwAsXm82VohpJISPkBSwKty8z5CqmX70Sei
+	 WoNbzXC/H0W6QTBWn28630LjKdD/oa3bULdb2eJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0540/2214] mtd: maps: l440gx: Fix double put of the ISA bridge in init_l440gx()
-Date: Wed, 18 Nov 2026 15:36:56 +0100
-Message-ID: <20261118150032.625801342@linuxfoundation.org>
+Subject: [PATCH 5.15 0523/2214] media: marvell: manage the MMP camera clock provider
+Date: Wed, 18 Nov 2026 15:36:39 +0100
+Message-ID: <20261118150032.000906276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,39 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 521ad948e04934b2d70ae899bc016bbb38802e90 ]
+[ Upstream commit 9887716132d6c3c58cc67841dfb441c5a4a0d209 ]
 
-init_l440gx() takes a single reference on the PIIX4 ISA bridge with
-pci_get_device() and drops it again right after the lookups, before
-the flash window is set up.  The pci_assign_resource() failure path
-then calls pci_dev_put() on the same device a second time, releasing a
-reference that is no longer owned and underflowing the reference count.
+mmpcam_probe() registers an OF clock provider before requesting the IRQ.
+Neither a later probe failure nor driver removal unregisters that provider,
+although the underlying clock is registered with devm_clk_register().
+This leaves the provider referring to a clock whose lifetime has ended.
 
-Remove the extra pci_dev_put().
+Use devm_of_clk_add_hw_provider() with the existing mclk_hw so the provider
+is unregistered before the managed clock and camera storage are released.
 
-Fixes: dd8e9ed6ed54 ("[MTD] Switch to pci_get_device and do ref counting")
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 81a409bfd551 ("media: marvell-ccic: provide a clock for the sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/l440gx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/marvell-ccic/mmp-driver.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/maps/l440gx.c b/drivers/mtd/maps/l440gx.c
-index 832b880d1aaf8..85cd273ce0654 100644
---- a/drivers/mtd/maps/l440gx.c
-+++ b/drivers/mtd/maps/l440gx.c
-@@ -110,7 +110,6 @@ static int __init init_l440gx(void)
+diff --git a/drivers/media/platform/marvell-ccic/mmp-driver.c b/drivers/media/platform/marvell-ccic/mmp-driver.c
+index f2f09cea751d8..0de293e606fe7 100644
+--- a/drivers/media/platform/marvell-ccic/mmp-driver.c
++++ b/drivers/media/platform/marvell-ccic/mmp-driver.c
+@@ -25,6 +25,7 @@
+ #include <linux/list.h>
+ #include <linux/pm.h>
+ #include <linux/clk.h>
++#include <linux/clk-provider.h>
  
- 		/* Allocate the resource region */
- 		if (pci_assign_resource(pm_dev, PIIXE_IOBASE_RESOURCE) != 0) {
--			pci_dev_put(dev);
- 			pci_dev_put(pm_dev);
- 			printk(KERN_WARNING "Could not allocate pm iobase resource\n");
- 			iounmap(l440gx_map.virt);
+ #include "mcam-core.h"
+ 
+@@ -259,8 +260,8 @@ static int mmpcam_probe(struct platform_device *pdev)
+ 	/*
+ 	 * Add OF clock provider.
+ 	 */
+-	ret = of_clk_add_provider(pdev->dev.of_node, of_clk_src_simple_get,
+-								mcam->mclk);
++	ret = devm_of_clk_add_hw_provider(&pdev->dev, of_clk_hw_simple_get,
++					  &mcam->mclk_hw);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "can't add DT clock provider\n");
+ 		goto out;
 -- 
 2.53.0
 
