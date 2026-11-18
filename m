@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019926;
-	b=QtCBSFXKlAhmrTBd3enxsMMdqHZoTnN8S8Pim28XGB3W+wOc9bNTDVcdx2Zuu3eMEql7
-	 xnsmDPsT/AfbWan7ObDOEoECMypKiBaKj5yG79PtQdgDOGGGub9H2rirUYaHeOAthMLYa
-	 QPahB+SAfNYZrCxZrDEVWzbO6h6uyZ3b267OJfmDETmBrJX97FkFWkMHO9aZzg+MiQMjX
-	 5XJs4grM7VM58J966x3ExVOcLjwpyrRDvqKfU1AderImxTnCcheTsiwF8mLxPIUgyUrF1
-	 3PHa96AKtjtcrAH9ZDadp/upqhX9JpsLJQYF46DuQORJBU26oi/FqpBOvbneXB2NGGQ==
+	t=1795019929;
+	b=mKopCPou/bqV/1GgzLwo8GGCCP+lbUHHchmaDFCsExkfrfy/Np8hMlWSfiC9368j5FTr
+	 4TLSItQx9q1PJzU/AqCZLmlBgRgG8EUjjnVE7/yvmNzoMA6JhMiHb0BJEcnslYFItt0lK
+	 XFMiVB/tHTOlGG2SIDS/+cYdmDSngKfE7CAbYlDpdu5vqNRtfZkMqJnwq+7ASJhUo+5lp
+	 Xi5Qlf5qtwXMxsidcpPorm77ysrE4Zhmt/+rUC0DZcIx3ruupwDI+pn5L/zhNNarGGoVG
+	 ShDj+WzNTbOw33dROliuoCl9Mn4QDqxWNUcgoiVS1GPU92PcsffncjKEtJ/QaOYJdgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LvrLHFfUTKXenxu+3jI/MoDrvzw2B4oORNuFgZ8vViI=;
-	b=Wg3ZUtdCDuPaidnggaMPoYzc3Aj8WnsCesM+sdeGMJInu8Dot/TVxQNlss1z1JbWqbwe
-	 RiPXPC/ZeZc65/u/VkfryCtkukgyGVLyVBhg2nBzRCxUfJlAEmlssXjLb02hOVuW8Msni
-	 Q+TRMMRdBFcXtmbRAe1bqd0sJ9AQeABbgrg1ajYPH/mM+geTG98P2c7VDT7Z1M6zn16TA
-	 OxxNCSZ9uhLfTMb0MSqQgGKkUuP4i2tu8PbW1strcfqJBUKwCs0ecvADjn8m/QXeVEkyL
-	 ebEXm2rp5nGgMNt0oaHRGs9ATude/YSN0apMOCAzhrAWz+LzqJNV87QlVcAAop9JHaw==
+	bh=cnVpyHoGlrUc/IFPIbjMqDFu58ecPueTd07Nc0UPpwI=;
+	b=Y521TzjvjfhkQQqIrjzEtfUxpq644LKgL7gCucwTQe9TvxAcbDa6fmQ7Gu8PqwbQZ0zu
+	 NhHS6jG6k/kHag9cpNOdbPLlIQoHV9Cnmwcp78LugZWPw8epc7S4VrQwyTkR7bKl4bytK
+	 /i9gADBn2hCwknl6KbqKaFezRQKveZE8CFQpl0L929AB7I/lLwOX8ZFs+nV+I+DIvuitg
+	 f1mKj8QuRs+v+2LNly67/IAnbixbf/28XX3iDMpRer6ccrguL5427U+qDBn+tt7nPev/w
+	 3f6jA+oQxj5yVUooiMnW1iYzfttgGlnaDnooThMYFPxbXYoV/f4Q5O/o0eP51Uz9Q8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Un9fJ2V9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eYNdyvcH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E762E606A31C;
-	Wed, 18 Nov 2026 16:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E050606A31C;
+	Wed, 18 Nov 2026 16:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Un9fJ2V9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA9C1F000C4;
-	Wed, 18 Nov 2026 16:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eYNdyvcH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BF51F000C4;
+	Wed, 18 Nov 2026 16:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019925;
-	bh=LvrLHFfUTKXenxu+3jI/MoDrvzw2B4oORNuFgZ8vViI=;
+	s=korg; t=1795019928;
+	bh=cnVpyHoGlrUc/IFPIbjMqDFu58ecPueTd07Nc0UPpwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Un9fJ2V9nqY4fPfj0EDO7lPh2p9Dnhc6/wj+rVUOTM5dm1apopR5WJrEpOhsxxOh/
-	 +l7T6Zd6kre/dX2r9qWRpaaANkv+w0l9Z/ZPdpx+t0OJygnWh1HxnXlANyFxZONib2
-	 zKOO0YhNWC0LtpBQJf3mS2TDoDhbdQjzgaIZ2K44=
+	b=eYNdyvcHqlV8kxzYxtZdb6/CQftR4J0t2PxQcxIHIMWTcmsDi8h/YzYEElr95Bbia
+	 qiXJn2YOtKXWgdiEfnLVZX1Zgi0lYAAgbvV+3jgllaUM3pBZL8+ZsIg6BAi0pegUEt
+	 nhq+0AXP37eqZ9zSuyKZWQzkxZhhu15f6gD7rqrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1769/2651] RDMA/bnxt_re: Unpublish QP table before freeing it
-Date: Wed, 18 Nov 2026 15:50:09 +0100
-Message-ID: <20261118150351.108556023@linuxfoundation.org>
+Subject: [PATCH 7.3 1770/2651] hisi_acc_vfio_pci: fix NULL dereference in reset_prepare on PF passthrough
+Date: Wed, 18 Nov 2026 15:50:10 +0100
+Message-ID: <20261118150351.140441206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,63 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 978361dd2ccff357d4fe6aac6ce057d1bfae8312 ]
+[ Upstream commit e1d2d60b1f50296828d3f7ff26c45d1a90f142ef ]
 
-bnxt_re_dev_uninit() frees the QP table before the RCFW channel is
-disabled, so the CREQ tasklet can still look up rcfw->qp_tbl while it
-is being freed.
+When a PF is bound to the driver via driver_override and passed
+through to a VM, its pf_qm stays NULL. The PCI error handler
+reset_prepare() runs during open_device through
+pci_try_reset_function(), before the mig_ops gate, and dereferences
+the NULL pf_qm for the timeout log, crashing the kernel.
 
-Clear rcfw->qp_tbl under tbl_lock before freeing it, and have the QP
-error notification handler bail out if the table is gone.
+Move the mig_ops check to the entry of reset_prepare() and
+aer_reset_done() so non-migration devices skip the QM_RESETTING
+coordination. The dev local resolved &qm->pdev->dev before the
+gate, so open code it at the dev_err() call where qm is known
+valid. Also clear set_reset_flag together with QM_RESETTING in
+aer_reset_done(); the flag was never cleared before, so a later
+timed-out reset could release a foreign lock.
 
-Fixes: 82f1f575aa13 ("RDMA/bnxt_re: Fix allocation of QP table")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20261013140427.256612-3-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
+Fixes: a22099ed7936f ("hisi_acc_vfio_pci: fix VF reset timeout issue")
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Link: https://lore.kernel.org/r/20261013071929.3988687-2-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c |  4 ++++
- drivers/infiniband/hw/bnxt_re/qplib_res.c  | 10 +++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 9ee0d500436cb..34d8aa12265de 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -638,6 +638,10 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 		err_event = (struct creq_qp_error_notification *)qp_event;
- 		qp_id = le32_to_cpu(err_event->xid);
- 		spin_lock(&rcfw->tbl_lock);
-+		if (!rcfw->qp_tbl) {
-+			spin_unlock(&rcfw->tbl_lock);
-+			break;
-+		}
- 		tbl_indx = map_qp_id_to_tbl_indx(qp_id, rcfw);
- 		qp = rcfw->qp_tbl[tbl_indx].qp_handle;
- 		if (!qp) {
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index e8a111646fc9a..cde56ff2313b2 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -910,7 +910,15 @@ int bnxt_qplib_init_res(struct bnxt_qplib_res *res)
- 
- void bnxt_qplib_free_res(struct bnxt_qplib_res *res)
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index 86362ec424a50..e6fdf4d2e5818 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -1154,14 +1154,16 @@ static void hisi_acc_vf_pci_reset_prepare(struct pci_dev *pdev)
  {
--	kvfree(res->rcfw->qp_tbl);
-+	struct bnxt_qplib_rcfw *rcfw = res->rcfw;
-+	struct bnxt_qplib_qp_node *qp_tbl;
+ 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
+ 	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
+-	struct device *dev = &qm->pdev->dev;
+ 	u32 delay = 0;
+ 
++	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
++		return;
 +
-+	/* The CREQ tasklet may still be running; unpublish the table first */
-+	spin_lock_bh(&rcfw->tbl_lock);
-+	qp_tbl = rcfw->qp_tbl;
-+	rcfw->qp_tbl = NULL;
-+	spin_unlock_bh(&rcfw->tbl_lock);
-+	kvfree(qp_tbl);
- 	bnxt_qplib_free_sgid_tbl(res, &res->sgid_tbl);
- 	bnxt_qplib_free_pd_tbl(&res->pd_tbl);
- 	bnxt_qplib_free_dpi_tbl(res, &res->dpi_tbl);
+ 	/* All reset requests need to be queued for processing */
+ 	while (test_and_set_bit(QM_RESETTING, &qm->misc_ctl)) {
+ 		msleep(1);
+ 		if (++delay > QM_RESET_WAIT_TIMEOUT) {
+-			dev_err(dev, "reset prepare failed\n");
++			dev_err(&qm->pdev->dev, "reset prepare failed\n");
+ 			return;
+ 		}
+ 	}
+@@ -1174,12 +1176,14 @@ static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
+ 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
+ 	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
+ 
+-	if (hisi_acc_vdev->set_reset_flag)
+-		clear_bit(QM_RESETTING, &qm->misc_ctl);
+-
+ 	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
+ 		return;
+ 
++	if (hisi_acc_vdev->set_reset_flag) {
++		clear_bit(QM_RESETTING, &qm->misc_ctl);
++		hisi_acc_vdev->set_reset_flag = false;
++	}
++
+ 	mutex_lock(&hisi_acc_vdev->state_mutex);
+ 	hisi_acc_vf_reset(hisi_acc_vdev);
+ 	mutex_unlock(&hisi_acc_vdev->state_mutex);
 -- 
 2.53.0
 
