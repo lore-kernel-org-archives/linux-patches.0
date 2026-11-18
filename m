@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035885;
-	b=5UkSixS+GhEYUgTIncvEi7kabd1S7Z2ombyvHZdDZmhrS4sogXM8zQu46IFQfnQz30hK
-	 vH0LEy0H16edK9qcOn9aXl0AG6oe/w1zl51ojZumJVEnEhOSkRNqxZEeXzW9vBvZo+z0H
-	 NMLFpyJI3Ogs0OEDsk9kipTJW4raslKQq1luv5ZLahm71Uufkfmb/ApqlnMiI+AhNR70T
-	 cTN4AZwfQNJYEdIE5JCUMfjGc9WxrDE7I1tsYWc2FnLh5MfUqojvC/XWezhurX0i1uhc9
-	 BYVM7zRPjhuquz+5RJ+PDNa7Qnx1a+5+IEI2fERbRqzGJRiewXH1oP+bVQHnwWopWPw==
+	t=1795035888;
+	b=Uv2xJpkMhgqPQte12U9eQLu82WHnsRgrHefXwOl7SC+LBy5Lt/rYeNb+KNF8WJ0DTto8
+	 85ZMAnllzlFWZcJ1Yvth+ffCzbAI1DrXGVBRyfDcC8Ah63vQoZlztgJ9jp6oG2uF7WxIv
+	 vtPPn9isFC8PKebTr3A+oNgFk17xg6VzeRwYKWK3qPc4UM7xDl6QGpFuyphcixbNBGWvK
+	 NiPktES3J5TUUlYeGbs4j0eFVLV0P4NcAfN5Jj8wvnedqlyAv504PEIb5UOy+4uXW2NWN
+	 imAsUTtJiW8imZN6ZlpRnGyL8a4o6w15ED85C5wwTjc22JIjpytL8PmnS5hbc0d9Bnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nndUG+BIEWVCu497RK96Lt091MmHV+fHWLwC+9vMNlA=;
-	b=jvYLp6fmdjRst4Obw9OIHcKkN72TAjlLyUtX09Y0s5hHzPH/QsqQfYWiis8TZTUvhDb0
-	 ioaxOFY8EJHlARF2W6Gmtt1p49U0JxHRdwvRJfFj2Ok/8Q2YpuAHOhHCIIssYxJNRaQd/
-	 gins1ZF1k6fb1i6M0b6/vvzLT4Ophoiy+tInb30+D+EMCDfWQ37AHFH715O8/dcq1DyYL
-	 1agXS8Quyje/X63cnwNnEMHQE5y1WBr6AgnVcTl+EKFEVeq61/ESOTMu8DeUjQvFVDqeG
-	 Eqf8M2FkFDeBCoP5Lm4HAwVJnogt+76Ndb34U8nXXPttjWI2V+/omoD4CcmHBbJHnSg==
+	bh=qGyzd3jv6kHmGSACMhL1Je5XqfG7Hf+dIXGSRZN27uk=;
+	b=ndAE1hYNNJEqRbbCMTP3T7TtzTRlYqBzeR9QkDVNLvdclNL2YRhYo2TtHPkmwyrqSzb2
+	 Oy/bYzgcH2vOOS6t0puVO8Ipc/rOumRUTN3Wb1Wgzw18PnRjYPIav0C52WoeUQKggsrlu
+	 Qee3/mxBFk2/qWKYNDr0Fbtq4gPYydyjoGN2oxaA8PYXEygXNTWM+crNknMLrA9SwcqqO
+	 cfJaRBp7NrWocjN5/PBQ0HwXLGHkaALP4xEgIuk1xFnJWFfx6Zu/99KuI1oyJdVs8BCOF
+	 +tGPmIPVbgwyJzU2Q3M1VK2nSEsCPhAzVHr0pdZtGY4v8NFX9f5OPgKDOqBdJcqlYCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BS23uVnP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Xif3/SEH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3761D606A33B;
-	Wed, 18 Nov 2026 21:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D09060A2613;
+	Wed, 18 Nov 2026 21:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BS23uVnP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843E81F000C5;
-	Wed, 18 Nov 2026 21:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xif3/SEH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51ED41F000C8;
+	Wed, 18 Nov 2026 21:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035885;
-	bh=nndUG+BIEWVCu497RK96Lt091MmHV+fHWLwC+9vMNlA=;
+	s=korg; t=1795035887;
+	bh=qGyzd3jv6kHmGSACMhL1Je5XqfG7Hf+dIXGSRZN27uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BS23uVnP+2qaBNvYJ0JVTfMQeL4HQciX9txHTbj+FxtsR5yA9/FD+08dfeK71QHaB
-	 1vRoo2t/ceUrdnXU1PEqjMP/0ecv6/0DPgUxJOYUaXplRlHRyFWERlDjbVZrrt4yCb
-	 1CytWRsW9Kbb1BiJUfLzWYOl9VTi1ryPGOMTUv48=
+	b=Xif3/SEH1w5DwcekqJbxElVUU5ng9DWmlHiHwv3o3waDsOMjwS4VGvwVHaovIt7Lq
+	 IGX3+5LaYl00CpzD9DMscbztODmAW/ux2FCOYDZI0YzdrmgGIlpFCBNCKmNU+eMY3F
+	 3HtIw3zbR1fOWGEuP3ISvlyqyU7mv3S80DVxgYD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Binwon Song <qlsdnjs236@chungbuk.ac.kr>,
+	Eric Kim <seohyun.kim@outlook.kr>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0861/3318] iio: imu: inv_icm42600: fix odr change not caught in certain cases
-Date: Wed, 18 Nov 2026 15:24:43 +0100
-Message-ID: <20261118150345.115670877@linuxfoundation.org>
+Subject: [PATCH 6.6 0862/3318] sched/fair: Reset NUMA fault locality after scan period update
+Date: Wed, 18 Nov 2026 15:24:44 +0100
+Message-ID: <20261118150345.149411900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,76 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Eric Kim <seohyun.kim@outlook.kr>
 
-[ Upstream commit f670d4d3477386d62017936f0121909f93ac17f8 ]
+[ Upstream commit e81ee06308379a5f2ededf997bcf17551bce5db7 ]
 
-When using both accel and gyro with different frequencies, the ODR
-change flag in the FIFO header can be sometime in a packet with
-invalid data. Since we are ignoring these packets, we miss the ODR
-change and any further change are blocked until sensor is turned off.
+When updating the task scan period for NUMA locality checks,
+update_task_scan_period() checks whether there were no faults or failed
+migration on the last scan window, at which it prolongs the scan period.
 
-Fix this by moving the packet data validity check after the ODR change
-flag check.
+However, p->numa_faults_locality, which is used to check for migration
+failure and number of faults at the previous scan window is not cleared
+after changing the scan period, which unintentionally increases
+numa_scan_period up to numa_scan_period_max even when there were no
+migration failures or no faults at previous scan.
 
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Fix this by jumping to the out label on early exit at this case to
+ensure p->numa_faults_locality is always cleared before returning.
+
+Closes: https://lore.kernel.org/all/20250404095354.311156-1-qlsdnjs236@chungbuk.ac.kr/
+Reported-by: Binwon Song <qlsdnjs236@chungbuk.ac.kr>
+Signed-off-by: Eric Kim <seohyun.kim@outlook.kr>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/Message-ID:
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c | 8 ++++----
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ kernel/sched/fair.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-index f260a4d07b29f..f3010befd2e09 100644
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -768,15 +768,15 @@ int inv_icm42600_accel_parse_fifo(struct iio_dev *indio_dev)
- 		if (size <= 0)
- 			return size;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index a1bdd45c62932..c9e2b437ca003 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -2668,7 +2668,7 @@ static void update_task_scan_period(struct task_struct *p,
+ 		p->mm->numa_next_scan = jiffies +
+ 			msecs_to_jiffies(p->numa_scan_period);
  
--		/* skip packet if no accel data or data is invalid */
--		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
--			continue;
--
- 		/* update odr */
- 		if (odr & INV_ICM42600_SENSOR_ACCEL)
- 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
- 							st->fifo.nb.total, no);
+-		return;
++		goto out;
+ 	}
  
-+		/* skip packet if no accel data or data is invalid */
-+		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
-+			continue;
+ 	/*
+@@ -2712,7 +2712,10 @@ static void update_task_scan_period(struct task_struct *p,
+ 
+ 	p->numa_scan_period = clamp(p->numa_scan_period + diff,
+ 			task_scan_min(p), task_scan_max(p));
+-	memset(p->numa_faults_locality, 0, sizeof(p->numa_faults_locality));
 +
- 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
-diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-index 49d2e18c3a8ec..311419d9788d5 100644
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -780,15 +780,15 @@ int inv_icm42600_gyro_parse_fifo(struct iio_dev *indio_dev)
- 		if (size <= 0)
- 			return size;
++out:
++	memset(p->numa_faults_locality, 0,
++	       sizeof(p->numa_faults_locality));
+ }
  
--		/* skip packet if no gyro data or data is invalid */
--		if (gyro == NULL || !inv_icm42600_fifo_is_data_valid(gyro))
--			continue;
--
- 		/* update odr */
- 		if (odr & INV_ICM42600_SENSOR_GYRO)
- 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
- 							st->fifo.nb.total, no);
- 
-+		/* skip packet if no gyro data or data is invalid */
-+		if (gyro == NULL || !inv_icm42600_fifo_is_data_valid(gyro))
-+			continue;
-+
- 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
+ /*
 -- 
 2.53.0
 
