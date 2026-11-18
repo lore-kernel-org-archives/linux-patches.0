@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046153;
-	b=quvG+s0BSqKjhWsxmCj5EAZsN70mmcW4GR8ScDgxqQjMRh0q+jdFZsX2TkXyZp6rOsO/
-	 UPBMwx4Mc+Ppr0z94JxkuDNHo2BGTar+9TvnaGAb3rjl4caYUTxIbnM+Ilj2hm+Df7Vx3
-	 qFrzQkKI8A8n30FQGpb7L+nbklPyHDwDDONjjQy8n792xS4HK8zyNTomsXjV1uzSFn029
-	 xWnG9WGVjsg3MfomRVDOofI3h/v6TYJ7WlWpLEox/ysXW7Yw2+aUL5YeiLAjah65Xv1Xc
-	 ucQSgNApZNJLM61fPtbNIa/eEPFQetXIgISFM+sX4PuNiET4tAVdhYh6wDv4xUzQzXg==
+	t=1795046156;
+	b=KWdP2z7C+ziqFNQpnqUd/amJFjXnX1+nw4k6KqZkU6J12CMi2K6f2jGF+b3OEpO/Tgis
+	 gHJO2JO9g8IBrkhNS6adtf3L49nsmtUyLYNuQrphoRsFnmJ9jjsecYB0sia6wo2XPbIol
+	 elo6sDAt5fwLN7FQ7NI9wiV6YAz6DVEqqddFI1SZgihFB1opBjx441rXNKvaGr+Hc4sFR
+	 2Gon6Ingb1gsGPjCb2bSrTUiK5g0C87aBHN7BU2Jp1kPfOZtJKYZia7EAoPjCWudaTcys
+	 Ho45WbHXUQEhhlH7Qzu2sXdkc9mXzlwnzQ16PlPVzpAauFMfoek8ajc+nOwI9lGHQBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nZSyCXaSZciliUP9E6wz06cpaOGjQ8MkHJ3hZBwSEG4=;
-	b=qXkplrZRb8LyrotO9p0eFyQ8dRr1R8Feew8WBOjsNGKmRVPdwMut2x8y7vIcnqXY2NKP
-	 5AcM5pEFen2IIZo/m9H3hGsIOivB/uzkIJPT6mj5q0zOpEr/gYN+aETu8zkz2Zf6lekBt
-	 9PAgJANp5zc8sBZBxyFFCv5cvAAoapoXIZmgLE7bnrUeo3f+gHhtBZKci6Q9I9keubFXW
-	 gCGpbbtUq5/RCkaEMXMW8bD47LjiqkSisk4HAPV6q7FdJLes96iZeUB/0MEj1QBzRPl0i
-	 dWy56Jgo+s1thl0hk9iCmol9qsLt6S3KFU3xJYV6HqTnjyc9VMq5BBVTeh8JxLmpRxw==
+	bh=IVizj6N2X7Lqa0oVer0dafC49LLQSS1z7ESAli+KDhw=;
+	b=k2GvUcLxxrrn2GyKR7ONqS48omLBeKvjUMsy6MwGP66ezWqMfWdvXHSW761dJmOyoq7e
+	 9pcMc0dU0Fev9BYd0OwPNu5ca2gR6ILtqWLbKYlB5rvc2GW1jQmPT6GuWxshB8Wv6FOLQ
+	 yt2K0tExJGpfF3kHZkJxORdIzB5MpybMza2CBuRlByi9/k6Zygh/IsQK6xZFon3YDjQn3
+	 3IzxemYZdRgv00SQwWtn0EgWFMlx52I+EjNc8xEEM6qry/K3JbrAva14TCLqUTdHGG+jZ
+	 I5esinsneUhlITWs8GdYxix2zUhnkQHbt+uIfTAOQyw53GnS6fPaNWQSsOAU+SBmGqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIzdy7t+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quV5yrxM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA4A606A31C;
-	Wed, 18 Nov 2026 23:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4516B606A31C;
+	Wed, 18 Nov 2026 23:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIzdy7t+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9731F000C4;
-	Wed, 18 Nov 2026 23:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quV5yrxM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968381F000C5;
+	Wed, 18 Nov 2026 23:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046153;
-	bh=nZSyCXaSZciliUP9E6wz06cpaOGjQ8MkHJ3hZBwSEG4=;
+	s=korg; t=1795046156;
+	bh=IVizj6N2X7Lqa0oVer0dafC49LLQSS1z7ESAli+KDhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NIzdy7t+u5aNNPjVXn9wCZhfs2XUEYsz6XE8Ii2SC6ioAqSuaDSXFC32BtjKUL53x
-	 fJc5noFqgNgLGtSoq+udF8KRdSNCvao9W3Hlp60lZ0DwNOyrO+nEkckUYpN7sBlWno
-	 gr0AFcW5klhPGIuh610PMHMM3NPBcUPIBYI0atKU=
+	b=quV5yrxMi9gQu4sRrJhBDvt+c/MwsWlq0ttRz95KaCd41YuiioHl8jrNZzNbcGWh3
+	 JA0f3/3bLfXVmSDw5VraGalsfF55YnA2fLPW5riCA/rEdtFFDPv7+tP0FeBM8zfqEK
+	 zFn5DAotsjrIHuc0ViYw7eil3NySymUXwHFteDlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1179/2857] NFSv4/pnfs: Free the netid when draining a data-server address list
-Date: Wed, 18 Nov 2026 15:36:53 +0100
-Message-ID: <20261118150244.055091599@linuxfoundation.org>
+Subject: [PATCH 6.1 1180/2857] smb: client: fix OOB read in the SMB_FIND_FILE_UNIX name scan
+Date: Wed, 18 Nov 2026 15:36:54 +0100
+Message-ID: <20261118150244.090792089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,154 +69,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Diego Oliva <diego@bynar.io>
 
-[ Upstream commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a ]
+[ Upstream commit fa0c2f082946917c3f07d2475c8ce73a8c96d0e2 ]
 
-nfs4_pnfs_ds_addr_free() releases all three of an address entry's
-allocations, but the four sites that drain a decoded list before it
-reaches a data server open-code the loop and free only da_remotestr and
-the entry, leaking da_netid.  Both layout drivers drain that list when
-nfs4_pnfs_ds_add() returned a data server already in the cache, and
-again on their error exits.
+cifs_fill_dirent_unix() finds the length of an SMB_FIND_FILE_UNIX
+entry name by scanning for its terminating NUL, over up to PATH_MAX + 1
+UTF-16 units in cifs_unicode_bytelen() or PATH_MAX bytes in strnlen().
+Neither scan knows where the response ends. cifs_fill_dirent() only
+requires the fixed part of the entry to fit, so the name can start
+exactly at the end of the received data, and a name that holds no
+terminator is then scanned for 8194 bytes, or 4096 bytes without
+unicode, past the end of the received data. SendReceive() copies at
+most 16468 bytes into the 16588-byte cifs_request allocation, so for a
+response of that length up to 8074 of the bytes scanned lie past the
+end of the allocation. Before the preceding patches bounded where the
+entry starts, the entry itself could start up to 820 bytes past the
+end of the allocation at the default CIFSMaxBufSize, and its name 928
+bytes past it, so all 8194 scanned bytes would lie outside.
+cifs_fill_dirent() rejects the name afterwards because it extends past
+the end of the response, so nothing of what was read is used, but the
+out-of-bounds read itself remains.
 
-Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
-one owner.  A striping mount reaches the cached case on nearly every
-GETDEVICEINFO, since many deviceIDs name the same data servers.
+SMB_FIND_FILE_UNIX is only used with SMB1 servers that offer the Unix
+extensions; SMB1 is not negotiated by default and requires an explicit
+vers=1.0 mount.
 
-Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
+Before the preceding patches, an entry placed past the buffer left the
+scan out of bounds from its first read. They bound where the entry
+starts, but nothing bounds the scan, so a name that holds no
+terminator still runs off the end of the allocation. Reproduced on
+the unpatched tree with KASAN enabled, for an entry that starts
+inside the response, which is the case the preceding patches leave
+open:
+
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x75c/0x7f0
+ Read of size 2 at addr ffff88807ee640cc by task ls/84
+
+ CPU: 0 UID: 0 PID: 84 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
+ Call Trace:
+  <TASK>
+  kasan_report+0xdf/0x1a0
+  cifs_save_resume_key.isra.0+0x75c/0x7f0
+  cifs_readdir+0x1ed6/0x29c0
+  iterate_dir+0x1c0/0x570
+  __x64_sys_getdents64+0x133/0x270
+  do_syscall_64+0x109/0x5d0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
+
+ Allocated by task 84 on cpu 1 at 15.751078s:
+  cifs_buf_get+0x36/0x90
+  smb_init+0x4f/0x110
+  CIFSFindNext+0xf7/0x14c0
+  cifs_readdir+0xf51/0x29c0
+
+ The buggy address belongs to the object at ffff88807ee60000
+  which belongs to the cache cifs_request of size 16588
+ The buggy address is located 0 bytes to the right of
+  allocated 16588-byte region [ffff88807ee60000, ffff88807ee640cc)
+ ==================================================================
+
+The two bytes read there are one UTF-16 unit of the scan, at the first
+byte past the end of the object. The scan carries on from there,
+reported again 2, 4 and 6 bytes to the right.
+
+Pass the number of bytes that follow the fixed part of the entry to
+cifs_fill_dirent_unix() and stop both scans there. A scan that reaches
+the end of the response without finding a terminator now fails: it
+returns a name that ends exactly at the end of the response and would
+otherwise pass the bound, so cifs_fill_dirent() requires the position
+of the terminator of an SMB_FIND_FILE_UNIX name to lie inside the
+response as well. Accepting such a name truncated at the end of the
+response would turn a malformed entry into a directory entry, or a
+resume name, that no server sent. A name longer than the PATH_MAX cap
+of the scans is still truncated there, as before, when the response
+extends past the cap. The message cifs_unicode_bytelen() logs when it
+finds no terminator now covers both limits.
+
+This patch depends on "smb: client: fix OOB read of the resume name
+sent in TRANS2_FIND_NEXT2", which adds the end argument of
+cifs_fill_dirent() and the length it derives from it; the backport
+note in that patch applies to this one as well.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/filelayout/filelayoutdev.c         | 17 ++---------------
- fs/nfs/flexfilelayout/flexfilelayoutdev.c | 17 ++---------------
- fs/nfs/pnfs.h                             |  1 +
- fs/nfs/pnfs_nfs.c                         | 21 +++++++++++++--------
- 4 files changed, 18 insertions(+), 38 deletions(-)
+ fs/smb/client/readdir.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
-index e90e1cf2f0aa1..263046faccc59 100644
---- a/fs/nfs/filelayout/filelayoutdev.c
-+++ b/fs/nfs/filelayout/filelayoutdev.c
-@@ -175,27 +175,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 			goto out_err_drain_dsaddrs;
- 
- 		/* If DS was already in cache, free ds addrs */
--		while (!list_empty(&dsaddrs)) {
--			da = list_first_entry(&dsaddrs,
--					      struct nfs4_pnfs_ds_addr,
--					      da_node);
--			list_del_init(&da->da_node);
--			kfree(da->da_remotestr);
--			kfree(da);
--		}
-+		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 	}
- 
- 	__free_page(scratch);
- 	return dsaddr;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- out_err_free_deviceid:
- 	nfs4_fl_free_deviceid(dsaddr);
- 	/* stripe_indicies was part of dsaddr */
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index e764e5a25f43d..e404b0f660bf8 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -155,26 +155,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 		goto out_err_drain_dsaddrs;
- 
- 	/* If DS was already in cache, free ds addrs */
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	__free_page(scratch);
- 	return new_ds;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	kfree(ds_versions);
- out_scratch:
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index 0cc6f9a295f2c..255935a4c9f28 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -416,6 +416,7 @@ int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
- struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
- 						 struct xdr_stream *xdr,
- 						 gfp_t gfp_flags);
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
- void pnfs_layout_mark_request_commit(struct nfs_page *req,
- 				     struct pnfs_layout_segment *lseg,
- 				     struct nfs_commit_info *cinfo,
-diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
-index 11bc2c12009dc..c4b61b4b0b1c7 100644
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -679,23 +679,28 @@ static void nfs4_pnfs_ds_addr_free(struct nfs4_pnfs_ds_addr *da)
- 	kfree(da);
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index 3bbbf5375c0e0..264046f4ef114 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -486,17 +486,20 @@ initiate_cifs_search(const unsigned int xid, struct file *file,
  }
  
--static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
+ /* return length of unicode string in bytes */
+-static int cifs_unicode_bytelen(const char *str)
++static size_t cifs_unicode_bytelen(const char *str, size_t maxlen)
  {
- 	struct nfs4_pnfs_ds_addr *da;
+-	int len;
+ 	const __le16 *ustr = (const __le16 *)str;
++	size_t len;
  
-+	while (!list_empty(dsaddrs)) {
-+		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
-+				      da_node);
-+		list_del_init(&da->da_node);
-+		nfs4_pnfs_ds_addr_free(da);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
-+
-+static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+{
- 	dprintk("--> %s\n", __func__);
- 	ifdebug(FACILITY)
- 		print_ds(ds);
+-	for (len = 0; len <= PATH_MAX; len++) {
++	maxlen = umin(PATH_MAX + 1, maxlen / sizeof(__le16));
++	for (len = 0; len < maxlen; len++) {
+ 		if (ustr[len] == 0)
+-			return len << 1;
++			return len * sizeof(__le16);
+ 	}
+-	cifs_dbg(FYI, "Unicode string longer than PATH_MAX found\n");
+-	return len << 1;
++	len *= sizeof(__le16);
++	cifs_dbg(FYI, "%s: Unicode string not terminated within %zu bytes\n",
++		 __func__, len);
++	return len;
+ }
  
- 	nfs_put_client(ds->ds_clp);
+ static char *nxt_dir_entry(char *old_entry, char *end_of_smb, int level)
+@@ -562,13 +565,13 @@ static void cifs_fill_dirent_posix(struct cifs_dirent *de,
+ }
  
--	while (!list_empty(&ds->ds_addrs)) {
--		da = list_first_entry(&ds->ds_addrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		nfs4_pnfs_ds_addr_free(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
+ static void cifs_fill_dirent_unix(struct cifs_dirent *de,
+-		const FILE_UNIX_INFO *info, bool is_unicode)
++		const FILE_UNIX_INFO *info, bool is_unicode, size_t maxlen)
+ {
+ 	de->name = &info->FileName[0];
+ 	if (is_unicode)
+-		de->namelen = cifs_unicode_bytelen(de->name);
++		de->namelen = cifs_unicode_bytelen(de->name, maxlen);
+ 	else
+-		de->namelen = strnlen(de->name, PATH_MAX);
++		de->namelen = strnlen(de->name, min_t(size_t, maxlen, PATH_MAX));
+ 	de->resume_key = info->ResumeKey;
+ 	de->ino = le64_to_cpu(info->basic.UniqueId);
+ }
+@@ -619,6 +622,7 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+ 			    const char *end, u16 level, bool is_unicode)
+ {
+ 	size_t len = end > (const char *)info ? end - (const char *)info : 0;
++	size_t nul_len = 0;
  
- 	kfree(ds->ds_remotestr);
- 	kfree(ds);
+ 	memset(de, 0, sizeof(*de));
+ 
+@@ -631,7 +635,9 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+ 	case SMB_FIND_FILE_UNIX:
+ 		if (len < offsetof(FILE_UNIX_INFO, FileName))
+ 			goto too_short;
+-		cifs_fill_dirent_unix(de, info, is_unicode);
++		cifs_fill_dirent_unix(de, info, is_unicode,
++				      len - offsetof(FILE_UNIX_INFO, FileName));
++		nul_len = is_unicode ? sizeof(__le16) : sizeof(__u8);
+ 		break;
+ 	case SMB_FIND_FILE_DIRECTORY_INFO:
+ 		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
+@@ -664,7 +670,8 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+ 	}
+ 
+ 	if (de->name &&
+-	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
++	    (end < de->name ||
++	     (size_t)(end - de->name) < de->namelen + nul_len)) {
+ 		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
+ 			 __func__);
+ 		return -EINVAL;
 -- 
 2.53.0
 
