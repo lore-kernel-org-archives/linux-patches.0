@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024878;
-	b=yiire+LAebHKrRPurgrSufSQoTwJOTj5BSMzhfRMID7e8JL/V0nStt+cfByyrZrwpDSg
-	 yo+cSu9Mcfodb/7gTT0ZWTY3EW6mryn+0mhE0zoRhlg/amkc+HjwCgrONyGNNNiN0tAzX
-	 /zp7ikRRSWNREc8eua2Tm23vEbYeUEkHFwcWdtq2uytfQKQLP3MdpAbrhdvhjIyNVLA3s
-	 FjjKCkaUDCUF1ocSPFNAr2EDht98NxkCS2HRxjSMIIHmVYLe9Vk9KHjmKWOvjX1wsR2vb
-	 68c5dK+uNDgT6lyKw6/MgXiJJkEx2t0KcxvcfyreecnXSYJBb2SO+/kblEkp5ca9ExQ==
+	t=1795024881;
+	b=Cy94lo5OnwltP/KMAW2JrgTvo8yHMoTVtmyqrX2w/l8NisTNkaWt0uqA5B4z9IjP9XPe
+	 GXMhQioQeLO2lmDGcrmYRjunIc0FIVXSHXzZ8o0LfH23FUlBfZO+pwEiNgq2pw6sYjMvJ
+	 L/fiuyTkZ3ydskNDfGebDLlDlr+GFeyHJDMvCMkhDuwHk9PUTyaHrw9QxQpeuj2ZZK3zw
+	 MFFiie5jvasJS95CcfQZDzQ9go5SISTtivRHYCio84Cry+2L5fFCU2GXZX7VhIXi9NM1e
+	 65ocL7Bj5qHa21uJPTwVvgGyDC0Iqe8KtwAidXZxoO5YpSWUT5ncW7gJ3rYdtKu9ugw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024881;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PGJr6YymcDJK8GeLSyKOxy8M5gaZ9zvsqMJMHt4AaVM=;
-	b=N6I4RfnIvRqiciBczIyhOIbRGVwGdu+WfMFDGvvJELMTtyYpCjIclNUIhuv932EfOKhg
-	 e8vtoRnEHBBg4AtG1ntujonN5qiQF3ACo3GMYuj/g9sdIGZC0vMo7CBoPIlexAeS0Ermc
-	 dK/Pmpn2NfQ/ul5Lrx1XSQI2AG7s09K5fyqhjxGClGfYFToAGap61eaBVkvjHA7TeUrHv
-	 /2EpOuCWND+qevi10/4g9Sq6PDW5VOz7y9IdQChXPIBiIYn4ftS+i0aoShWm4oz3N302K
-	 bGL3P+Nle+ldrsu2WfTQfeuah3YxqinlHbFyx9uRTxJBB7TxvtehI8oPfLJqkSCE8Cg==
+	bh=8uTYx4pBvxflOjVNHq0XDzQwcQIM8LWOJHEZWU37h6E=;
+	b=WDXqY58V3K88An3dS7MQWzPscSDa+sb5tc4gNvgK4t6Sicsnxno0AOBAwmfIXJWxG+GU
+	 5pzEgG50SInb64olxDXJnIgcV6tfztGpg8naIacToVXIKZvh6hls9NnAIIHQvlb622EPh
+	 ogMIhSa4CdercgYcb5CZbozwZOcQUnWKOAEXh+HOZIG0P2DwtxEcOrNTw6LhUgzVEmgVg
+	 DVCkFvJrMh6po8+TmSJpcFPDSuIENXk0DLPNSfCd7+kOFPNt1898RenUD2gX1M/6r2mYU
+	 GmTdbcBfqn0CZX77xfrr0M4ek/KTW49ds8qg2xHNuU+1Y8tvjUGV/JPtVIeP8En6exg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Gmtjne0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hve2xkJ7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFA2606A31C;
-	Wed, 18 Nov 2026 18:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D06F606A320;
+	Wed, 18 Nov 2026 18:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Gmtjne0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5AC1F000C4;
-	Wed, 18 Nov 2026 18:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hve2xkJ7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E914C1F000C4;
+	Wed, 18 Nov 2026 18:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024878;
-	bh=PGJr6YymcDJK8GeLSyKOxy8M5gaZ9zvsqMJMHt4AaVM=;
+	s=korg; t=1795024881;
+	bh=8uTYx4pBvxflOjVNHq0XDzQwcQIM8LWOJHEZWU37h6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Gmtjne0B79UpcsxaO3be6cm5QhuZ0VZ2wecS1GhJoNZXs3jHs1vJdvzSExEZwCr+
-	 U6+dIS0hr4vAMbqZwPeOmfvRRCgWhgNenRvRRw1MxQG8gBRY/gePAO4KiPXA/TQMyz
-	 hZfNritNB97IyAJHVAG0onpF335KWlLXcxKGV6/w=
+	b=Hve2xkJ7NRSpNRxp4t+xdnjMQ6sO8yxjQz7esSTSDGQB23DlKFvjb6ptpxJkk3gdq
+	 hBsQt3iEXFiAjjdL7BKZ9zLCRnOhziWSYXnMMCiHUhPV5ahaRChYaKWhuZ8ysN71zU
+	 T0X0KW54tqGQuHEoeiKRYGla9TCCbJWkgMwLq/IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0882/2151] RDMA/mad: Reject receive completions shorter than GRH
-Date: Wed, 18 Nov 2026 15:43:37 +0100
-Message-ID: <20261118150154.431100438@linuxfoundation.org>
+Subject: [PATCH 6.18 0883/2151] RDMA/mlx4: Do not allow the user to write to the clock page
+Date: Wed, 18 Nov 2026 15:43:38 +0100
+Message-ID: <20261118150154.468572299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,38 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 2dc2126e690203d6adbddc7675927a242d810e43 ]
+[ Upstream commit 33db1d9683b8fb00bc233d0bea093e694ed9afc5 ]
 
-ib_mad_recv_done() derives the OPA MAD length by subtracting the GRH
-size from wc->byte_len without ensuring the receive completion covers
-the GRH. If it is shorter, the subtraction wraps before the result is
-stored in mad_len and an invalid length can be passed downstream.
+mlx4_ib_mmap() maps the internal clock page to userspace through
+rdma_user_mmap_io(), which does not restrict write access. Userspace can
+request PROT_WRITE directly, or upgrade a read-only mapping later with
+mprotect() because VM_MAYWRITE remains set.
 
-Reject receive completions shorter than the GRH before inspecting the
-MAD header or deriving the MAD length.
+Reject VM_WRITE, VM_EXEC and clear VM_MAYWRITE, applying the same read-only
+policy as commit c660133c339f ("RDMA/mlx5: Do not allow the user to write to the
+clock page"). The rdma-core mlx4 provider requests this mapping with
+PROT_READ, so its existing behavior is unchanged.
 
-Fixes: 8e4349d13f33 ("IB/mad: Add final OPA MAD processing")
+Fixes: 52033cfb5aab ("IB/mlx4: Add mmap call to map the hardware clock")
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260926105927.3183294-1-yaojiale02@163.com
+Link: https://patch.msgid.link/20260926111150.3197004-1-yaojiale02@163.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx4/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index f7ad35233c2df..daad0be9054b6 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -2342,6 +2342,8 @@ static void ib_mad_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 			    recv->header.mapping,
- 			    mad_priv_dma_size(recv),
- 			    DMA_FROM_DEVICE);
-+	if (unlikely(wc->byte_len < sizeof(struct ib_grh)))
-+		goto out;
+diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
+index dd35e03402ab4..164f34e887552 100644
+--- a/drivers/infiniband/hw/mlx4/main.c
++++ b/drivers/infiniband/hw/mlx4/main.c
+@@ -1176,6 +1176,10 @@ static int mlx4_ib_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 		struct mlx4_clock_params params;
+ 		int ret;
  
- 	/* Setup MAD receive work completion from "normal" work completion */
- 	recv->header.wc = *wc;
++		if (vma->vm_flags & (VM_WRITE | VM_EXEC))
++			return -EPERM;
++		vm_flags_clear(vma, VM_MAYWRITE);
++
+ 		ret = mlx4_get_internal_clock_params(dev->dev, &params);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
