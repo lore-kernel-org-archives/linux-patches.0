@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042737;
-	b=xpTtxv77IwbKflXSN0tzO59H0sBiIxcgbBnXUWBALefWLecvZ975Ylc2KUtV6LzSVYuc
-	 bmojmSsT2WLyAqSdberWLk2o3YFlvoFOr619DYqDDuPs5hDjeLAFLZKitwAss4qrf1OBr
-	 NeDHVrblAin7D48Q0anw4QPAcpNCU37b4cyb1OXCLYwaNrH/fDJVxg644pYrtiFruFz3R
-	 +a6wDCquBm2Jo6RjE6vhisLJfaFurk1jJd+uo0T/EjrdMeE/AooZ/a4GX+qtbvhPXe3ep
-	 5OsqqB5wds+s5gF57iVUTK8J2cC+gvd8/+l35GRV11W78/S4Rvd2bOkvJeWxIpRAhlw==
+	t=1795042740;
+	b=4rM/j4ZOaToTYtCHGTfIJsmr49IYf37Tw9ryLszaphrCFpywUusFbmMo/pvM01f6GEtx
+	 bRP0Usdq1/H2cAFSnZjyGUiUvjtnJLwNvp/F9O+pS7UF338V4qfeXpOYHFGi/20ucSICF
+	 whFmBbJHF9UAg9ZSU8WzuugJG58ZktKuABNCo1sU6UjvIailH3bKJaoZ9mDtZDxj9zQDh
+	 98Lkdil5yDw52q3i7VNMVhmIJHHhA6d6xcHg71D1OaIXHn/EptqRQMLkV3Zzey7QweeHs
+	 tVZhc3XF/nbS8j67+/LdMqW2XU+xguczz7Ognp0kUm2Rs1hBpsDYQNBMjaalpucZnnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PJ+jEchdXnEk5dmjcXmrdclQ5s7PLz8GwPaCgrVzfX0=;
-	b=aVNdpaFy08q5AWtgQrYjzBQbkwi+PDcAEQqJfplpxK/A2D7qCiKxGGJd7Rv51AE7yyRK
-	 s2ZDIFAz2ExxkQEnUVd8DM2JLSRVfHe5MdI+4E1xdxR0453pWY4ILpRxqsoj+WQfTTecD
-	 C0zYOtzaEYwrmkmLkcNmiUDuAzCSkR1YllTXZdY16g8gQUDWabxpTpYOXDxG+LGoDedxO
-	 YlWNxMu73Ggna4Ugayaxcj8UWUL0mCAzB0fvcCAZZO4XUacv6OFSFFtpeR/IMhgNfNYmD
-	 A3xIJoC0HVw1ISez7yXgBEDDWRzyeeJJN2Ej4tsEPCrQpCsMZpoi9Mdy+JLFytH8Tug==
+	bh=mmxOICTAMhAQ8DuKfnCdFGg0inRyHMHu3zIas24VDTM=;
+	b=gEdncJIadGc1EXe7y+bB0olRNcsP4tVD/T6lRTMcY611Cl0KoIgAzhAzmAud1orRRRRh
+	 4yXbdU5vb89PY1TZA0xnO1JoOYp2xDOe3ele9OMQNYyRRZvNg+afPH2f+irwUuGP/Bbdh
+	 aL6cHW4J66AMyLM2pkIKWvjjXK2vB4L7Qqb3Bem0FNPiW7JvFjbC/3U6YGD4b4eJYVoJ8
+	 yX/gZnx5R9/dftKwfEdGUyaoK1OdXsVkObBLOV1d6RcRHy1JpClHrs8V6sjCjV6PDkUTN
+	 F/dyTAP8T4jV3cdh8+KkVR1P85m8K6kUVi0qkddMWsPLA2K+yv8Yr1YNkM21obVUQPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iRj8WKR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Byy3lSpV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB805606A31C;
-	Wed, 18 Nov 2026 22:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBC2606A31C;
+	Wed, 18 Nov 2026 22:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iRj8WKR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4581F000C4;
-	Wed, 18 Nov 2026 22:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Byy3lSpV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B911F000C4;
+	Wed, 18 Nov 2026 22:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042737;
-	bh=PJ+jEchdXnEk5dmjcXmrdclQ5s7PLz8GwPaCgrVzfX0=;
+	s=korg; t=1795042740;
+	bh=mmxOICTAMhAQ8DuKfnCdFGg0inRyHMHu3zIas24VDTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iRj8WKR8jBU6wxhSr5aVRRHulmNlUR1AbSgH4e98Axu3z2k+xRrk38XdiUXPtVKy
-	 3qr1wc3EOIOUvjtv8kp0sTp+9AWPwifqB6iulvwqjqsRrAKPupgUQsu+HUa7Y4O7Eb
-	 31xjG5zVf4MpapbIzRKrSRbs2izGH64abLm3JYis=
+	b=Byy3lSpVK0PMjqlhLHxcfbDDI4Zs9Smhc8KYmHYsVA46meenOZBHhpoPm4/S0fdMY
+	 dci7sBE5GOQ0yXVWOAIrkQK7TfpEszOhTUIYlHzp0JhRpTL8OW0s4RcGYTQMBbz6wc
+	 91pzU35yJkqCxlCLBnrIZg+fAYtARm71sQhXrcKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3276/3318] bnxt_en: Add XDP Metadata support
-Date: Wed, 18 Nov 2026 16:04:58 +0100
-Message-ID: <20261118150457.894376819@linuxfoundation.org>
+Subject: [PATCH 6.6 3277/3318] eth: bnxt: hand XDP frags over to the copybreak skb
+Date: Wed, 18 Nov 2026 16:04:59 +0100
+Message-ID: <20261118150457.923071696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,116 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0ae1fafc8be6d4271a8ad66b4695e123a4e8cef1 ]
+[ Upstream commit 364b88b54fc260d22ee318bae862c2d7d8c31dc6 ]
 
-- Change the last arg to xdp_prepare_buff to true from false.
-- Ensure that when XDP_PASS is returned the xdp->data_meta area
-is copied to the skb->data area. Account for the meta data
-size on skb allocation and do a pull after to move it to the
-"reserved" zone.
+With a multi-buffer XDP program attached, a packet only has agg
+buffers if it filled its head buffer, which in page mode holds most
+of a page. The program can still move the start of the packet forward
+with bpf_xdp_adjust_head() and leave at most rx_copybreak bytes in the
+head. bnxt_rx_pkt() then copies the head into a new skb, puts the head
+page back on the ring, and calls bnxt_xdp_build_skb() on the copy.
+bnxt_xdp_build_skb() only sets nr_frags and the skb's length
+accounting, because it expects an skb built around the head page,
+sharing its shinfo with the xdp_buff. The copy ends up with nr_frags
+set but no frag descriptors, and the stack later reads and releases
+whatever its frags array happens to contain. The real frags leak.
 
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Copy the frag descriptors to the new skb in bnxt_copy_xdp(), so that
+bnxt_xdp_build_skb() finds the frags where it expects them. The frags
+now belong to the skb, and the head page goes back on the ring as
+before.
+
+Pointed out in LLM review of the first patch of the series.
+Confirmed by reading the code, the unfixed kernel was not run with
+the reproducer below.
+Tested on a BCM57504 at MTU 9000 with rx-copybreak raised to 1024
+and a frags-capable XDP program moving the start of multi-buffer
+frames 3000B forward with bpf_xdp_adjust_head(), receiving 8000B
+ICMPv6 echo requests (a head and two agg buffers each). All 60k
+frames took the copybreak path with frags attached, the sampled skbs
+reached GRO with len=4998 data_len=4492 nr_frags=2, and were freed by
+the stack with the page pools' inflight count staying flat, no KASAN
+or DEBUG_PAGEALLOC splats.
+
+Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
 Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Jesper Dangaard Brouer <hawk@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240402093753.331120-6-pavan.chebbi@broadcom.com
+Link: https://patch.msgid.link/20261027234940.1267225-6-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 364b88b54fc2 ("eth: bnxt: hand XDP frags over to the copybreak skb")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 44 +++++++++++++++++--
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  2 +-
- 2 files changed, 41 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index cf329bdfa1caf..98ae70fcf8888 100644
+index 98ae70fcf8888..9751ddcf416c0 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1211,9 +1211,9 @@ static int bnxt_agg_bufs_valid(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 	return RX_AGG_CMP_VALID(agg, *raw_cons);
- }
+@@ -1266,6 +1266,14 @@ static struct sk_buff *bnxt_copy_xdp(struct bnxt_napi *bnapi,
+ 		__skb_pull(skb, metasize);
+ 	}
  
--static inline struct sk_buff *bnxt_copy_skb(struct bnxt_napi *bnapi, u8 *data,
--					    unsigned int len,
--					    dma_addr_t mapping)
-+static struct sk_buff *bnxt_copy_data(struct bnxt_napi *bnapi, u8 *data,
-+				      unsigned int len,
-+				      dma_addr_t mapping)
- {
- 	struct bnxt *bp = bnapi->bp;
- 	struct pci_dev *pdev = bp->pdev;
-@@ -1233,6 +1233,39 @@ static inline struct sk_buff *bnxt_copy_skb(struct bnxt_napi *bnapi, u8 *data,
- 				   bp->rx_dir);
- 
- 	skb_put(skb, len);
++	if (unlikely(xdp_buff_has_frags(xdp))) {
++		struct skb_shared_info *sinfo;
 +
-+	return skb;
-+}
-+
-+static struct sk_buff *bnxt_copy_skb(struct bnxt_napi *bnapi, u8 *data,
-+				     unsigned int len,
-+				     dma_addr_t mapping)
-+{
-+	return bnxt_copy_data(bnapi, data, len, mapping);
-+}
-+
-+static struct sk_buff *bnxt_copy_xdp(struct bnxt_napi *bnapi,
-+				     struct xdp_buff *xdp,
-+				     unsigned int len,
-+				     dma_addr_t mapping)
-+{
-+	unsigned int metasize = 0;
-+	u8 *data = xdp->data;
-+	struct sk_buff *skb;
-+
-+	len = xdp->data_end - xdp->data_meta;
-+	metasize = xdp->data - xdp->data_meta;
-+	data = xdp->data_meta;
-+
-+	skb = bnxt_copy_data(bnapi, data, len, mapping);
-+	if (!skb)
-+		return skb;
-+
-+	if (metasize) {
-+		skb_metadata_set(skb, metasize);
-+		__skb_pull(skb, metasize);
++		sinfo = xdp_get_shared_info_from_buff(xdp);
++		memcpy(skb_shinfo(skb)->frags, sinfo->frags,
++		       sinfo->nr_frags * sizeof(skb_frag_t));
 +	}
 +
  	return skb;
  }
  
-@@ -1947,7 +1980,10 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 	}
- 
- 	if (len <= bp->rx_copy_thresh) {
--		skb = bnxt_copy_skb(bnapi, data_ptr, len, dma_addr);
-+		if (!xdp_active)
-+			skb = bnxt_copy_skb(bnapi, data_ptr, len, dma_addr);
-+		else
-+			skb = bnxt_copy_xdp(bnapi, &xdp, len, dma_addr);
- 		bnxt_reuse_rx_data(rxr, cons, data);
- 		if (!skb) {
- 			if (agg_bufs) {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index cc80e48477acb..ba4986a834249 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -197,7 +197,7 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, len, bp->rx_dir);
- 
- 	xdp_init_buff(xdp, buflen, &rxr->xdp_rxq);
--	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, false);
-+	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, true);
- }
- 
- void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
 -- 
 2.53.0
 
