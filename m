@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037042;
-	b=0X7v6cgXtOU2uA+A4idIzXL0j/1h3oSG22R3IpWV6/iumDcCx+GYHPVobdj+DVeyJFVh
-	 eTVLC8gtkMHGYFOSIs7tIkXKCEgaU+x5E1hTG4uXG8/i+7sFpMuVVWSd/8qSYFyCA/P4Z
-	 WVG3DCGYMr4cdWjwwvGgjCl+d4xtlgItBPM2lJnhs9Z0bNFDxWlaDMkrzhzOWdtHBTrm+
-	 gmUu/8aaZzL5hBMcMZVbssRVkA8dy8xADb2/sZ5NMMBdn9EMcH6nY7g2Zq6YrsEzgIMd1
-	 YvEVEP8hduwfnEDt4j0ayVl401Gd1ScZpHKtffiKMRqwXz3meLGyli3jMNBoA+C2cwg==
+	t=1795037045;
+	b=tZsHW7QBOJkrHUsmG+EHBgsV7nUoa0/wA4p1PBTI6Up53T3K3oiB8DYHenmEWI5x0g00
+	 vi1B+PcftE9jI7HGKBRJWmTKImVqcoYrHyJI/7/3tR7I6G9YewTdhJnEEtyEGoqjxh9Tc
+	 KkBCwrQma5eyO7+wbD6YTsCYvzo89qYeENRf7S2LhIOGjxwe0anYJdKu9ku4WZYIZMp1g
+	 pEO0d4Jj5ztq7ARcX5Vz5dTkw+M3wEja6yPq8o9q7f5XmQdLDsEOnnV7N4Jk0yq5Ejv+V
+	 cZNbrPk5uvv3dpDQmk3oytKuMrgzN7SbjRJCb+giLlQTUBzPb3bCb6OHr8gwI67pGSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r51xaozhBe5TkVdj28PL1ckvzfKcUyDIGyLEuJuJ7G8=;
-	b=vowH+1HP9Gl2LvmJ5C4CcQG/r8Aj7Wf5ojWon4rSaHjO0CY7rtNsGbVSXqxuwfJ2LnDE
-	 n40nam95aBloMya2GqLzCgJgBFqUlhczasVfYZbOUkjipWYdQ+9ICBU/uUrGENSqCHXIl
-	 oB1bz3hEmYyF7UUdF+hR7I+UWuep8QkC0P5SbpK2w2mdz1bfALv80wdaR1mjuIRa43syy
-	 S31LPJ0vf+584Pe5w3uIRkAD2MeeQN42XQ9Dm6Zp48Q4GArpeVdgpd/WVdSpTWfGFXDIC
-	 FrKEvc67sQaE7vU+G8sG1wnq6D8CZMounyHZuGHCK2Z/JGJaJ2UC3FGbt41wIxIV5JA==
+	bh=J0VS35rUu1p59fqBFxuaBFt7nBvyY7DbT2MhfEAv9Rg=;
+	b=q0V4PdGT1WhQ40ozhi9VRhxzkJKNiX8C8RxDlKceBgtkZ0tJDx5L6Q5WkpBEYJxYF+cs
+	 MgPyMFQACjdy/XLHrW+UKcYG6zvOM1ED+EIT0o+c0JeITKzThbQ12lOr4HKNHnJmX78G/
+	 KFAKtpHCXq/sOjo1hTbSVc9zMYa+q9XQ9Fg63rB705xv+oLEuABm7Qb/nmR2j3d+wGJsV
+	 wkeiNxneBAfwPUalUmsV/3DPnLW7bqtmBvNl3vNG5gMmLZW60drUqCZfG0/P1WPovNWN2
+	 lj4ylNzFFx39V5C2GpYBNRswmMXxDViflVZn0yV9m4uR917pZH/Vtm47/yWfkKJVp1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnzHBeMA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6QZyvfL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B41606A320;
-	Wed, 18 Nov 2026 21:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB295606A32A;
+	Wed, 18 Nov 2026 21:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnzHBeMA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7DF1F000C4;
-	Wed, 18 Nov 2026 21:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6QZyvfL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046301F000C4;
+	Wed, 18 Nov 2026 21:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037042;
-	bh=r51xaozhBe5TkVdj28PL1ckvzfKcUyDIGyLEuJuJ7G8=;
+	s=korg; t=1795037045;
+	bh=J0VS35rUu1p59fqBFxuaBFt7nBvyY7DbT2MhfEAv9Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnzHBeMAY4q932dyO3mIXs3SOWbCBzSeNtPUvFXS3iPYPkY2MvmcfjgR3S035WEGs
-	 VwSxmuTR3PLggzxOrIlCdbVBxJS2UoOZHx9+MloJnE72ct/kIjZqf+hCnIhnsAVO7b
-	 EMkEqP2y8Dq1eJ7NZBdZ4gPW524n7UHdW2vBHpmg=
+	b=c6QZyvfLO2dAubUhC598GJnCPoh9UsXtwe4DMeQaO9Sk4zVLaDnESRzSGXp0xBKnx
+	 ANE8ePm8sMFpiZ016bITTy+Opd3dAeO8/HZtzp7f/AvH5IvYh0yn0NfYhErgBHpGHy
+	 e0mi5IKbR1R6ggWTAv0uNTRgriMc1hxsP4iitqho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	co+e015e82956da641b@bugs.sh,
+	Christoph Hellwig <hch@lst.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1246/3318] net: usb: pegasus: check rx pkt_len against the received length
-Date: Wed, 18 Nov 2026 15:31:08 +0100
-Message-ID: <20261118150357.571897882@linuxfoundation.org>
+Subject: [PATCH 6.6 1273/3318] nvmet-rdma: reject short connection requests
+Date: Wed, 18 Nov 2026 15:31:35 +0100
+Message-ID: <20261118150358.418432186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,77 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit efee699f6de06611234ef9b0abd52db1340e5452 ]
+[ Upstream commit 635e760169a87abf03874cd4636cd91b580cb427 ]
 
-read_bulk_callback() takes the frame length from the device, from the
-receive header on the 0x8513 and from the trailing status bytes on the
-other chips, and only checks it against PEGASUS_MTU before passing that
-many bytes up the stack. In two cases the stack then uses bytes that the
-device did not send:
+nvmet_rdma_parse_cm_connect_req() treats RDMA-CM private data as a
+struct nvme_rdma_cm_req but accepts any nonzero private_data_len.  The
+iWARP path allocates exactly the peer-provided length, so a six-byte MPA
+request reaches the parser and the hsqsize load reads two bytes past the
+allocation.
 
-- A device that sends a short transfer but claims a long frame gets the
-  stale or uninitialized remainder of the receive skb delivered as
-  packet data.
+Require the complete request structure before reading any of its fields.
+The decoded KASAN report is:
 
-- A device that claims a frame shorter than an Ethernet header gets
-  past the check as well. eth_type_trans() takes pkt_type from h_dest
-  and the protocol from h_proto without checking skb->len. If the
-  transfer is also short, those come from bytes left in the skb by an
-  earlier transfer, or from uninitialized memory.
+  BUG: KASAN: slab-out-of-bounds in nvmet_rdma_cm_handler
+    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
+     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
+  Read of size 2 at addr ff1100010459d366 by task kworker/u16:1/41
+  Workqueue: iw_cm_wq cm_work_handler
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   nvmet_rdma_cm_handler
+    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
+     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
+   cma_cm_event_handler (drivers/infiniband/core/cma.c:2181)
+   iw_conn_req_handler (drivers/infiniband/core/cma.c:2640)
+   cm_work_handler
+    (drivers/infiniband/core/cm.c:2502
+     drivers/infiniband/core/cm.c:3858)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+   </TASK>
 
-Drop frames shorter than ETH_HLEN, and frames whose claimed length, plus
-the 0x8513 header, does not fit in the bytes actually received, and
-count them as length errors. urb->actual_length never exceeds the
-PEGASUS_MTU sized transfer buffer, so this also covers the existing
-PEGASUS_MTU check. Valid Ethernet frames are at least 60 bytes long
-without the FCS, so they are not affected.
+  Allocated by task 12:
+   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+   __kmalloc_node_track_caller_noprof
+    (mm/slub.c:5414 mm/slub.c:5545)
+   kmemdup_noprof (mm/util.c:138)
+   cm_event_handler
+    (drivers/infiniband/core/iwcm.c:194
+     drivers/infiniband/core/iwcm.c:1076)
+   siw_cm_upcall (drivers/infiniband/sw/siw/siw_cm.c:408)
+   siw_proc_mpareq (drivers/infiniband/sw/siw/siw_cm.c:750)
+   siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1086)
 
-Found by code review with LLM assistance. With an emulated USB device,
-a 101-byte transfer claiming a 1500-byte frame was passed up as a
-1500-byte packet before this change and is dropped after it, and
-frames claiming 0, 4 and 13 bytes were passed up and are now dropped
-and counted in rx_length_errors. The extra bytes happened to be zero
-in the first test, so disclosure of actual kernel data was not
-demonstrated.
+  The buggy address is located 0 bytes to the right of
+  allocated 6-byte region [ff1100010459d360, ff1100010459d366)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021020310.34045-3-law.wei.jie@gt.tech.gov.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
+Reported-by: <co+e015e82956da641b@bugs.sh>
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/pegasus.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/nvme/target/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
-index f5a26a0bc679a..69445a94ee6ff 100644
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -523,11 +523,17 @@ static void read_bulk_callback(struct urb *urb)
- 	}
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 380c0aea840df..77439a3d5244b 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1412,7 +1412,7 @@ nvmet_rdma_parse_cm_connect_req(struct rdma_conn_param *conn,
+ 	struct nvme_rdma_cm_req *req;
  
- 	/*
--	 * If the packet is unreasonably long, quietly drop it rather than
--	 * kernel panicing by calling skb_put.
-+	 * Drop frames shorter than an Ethernet header, because
-+	 * eth_type_trans() reads the header whatever the length, and frames
-+	 * longer than what was actually received. Passing either up would
-+	 * expose stale buffer contents, and skb_put() could panic on the
-+	 * latter. count is at most PEGASUS_MTU.
- 	 */
--	if (pkt_len > PEGASUS_MTU - rx_offset)
-+	if (pkt_len < ETH_HLEN || pkt_len + rx_offset > count) {
-+		net->stats.rx_errors++;
-+		net->stats.rx_length_errors++;
- 		goto goon;
-+	}
+ 	req = (struct nvme_rdma_cm_req *)conn->private_data;
+-	if (!req || conn->private_data_len == 0)
++	if (!req || conn->private_data_len < sizeof(*req))
+ 		return NVME_RDMA_CM_INVALID_LEN;
  
- 	/*
- 	 * at this point we are sure pegasus->rx_skb != NULL
+ 	if (le16_to_cpu(req->recfmt) != NVME_RDMA_CM_FMT_1_0)
 -- 
 2.53.0
 
