@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025186;
-	b=n0b0sNvihVDddBI6XwCaBy8jCOK9mMdyrk3Bdi+tLIAP0OggqFj3sRk8fCKAjZza2FHW
-	 6EbVp+60kK06IsDhewLA9Mnf/uXqz5jkujtXXOt3Pe6UywapD6Hc2/85w1W12WQ1ta/YA
-	 GW3A4Yld2kcbbGKH/T/sTSIFgqNknF+lAYQXSSq8cr6N5u4PxvygHX9HY+/Z57WI7OT/p
-	 THm/yH4sKunndHfytBA39Q4CqodK1c1frWI3iJxWEbRhJORB+SuVqWrMcc0lV1GMYfMkK
-	 Ribf0/1CWj/YesxYP96Dva9MR00mKkH5y+Vb12eMksZ3zGN6jO6rReJ8bxR7E1DUo0w==
+	t=1795025189;
+	b=0p+pa/0mlhy6zf/nGIXr0YxLt5qG59vylncfmV00CsXXXR0YUqgnL2GznPIpMPUUUMvG
+	 u4RE+7dEfTUdT9klrSRYsadBqs/95I3AIo3gg5jD48N+lL9Hsah2sK4/u5SqJuJCNQ9Di
+	 IsyA4/O5XPBldilQd8CLRv4x5U2JO90S67sJKIHy7WG2qpv2pqeqfw+F8Ye9MW6JylcNI
+	 Uoqjps9ToFQBzeJJTkPecGt7fYKnx39IY4i5X6fUuewFjtM252Q98uMlMUSBhmPOzQk+s
+	 T6nk9u5AjmEXg287JI5gx7qL5p5Tcu387zi5zXkm3abGGkIrOTuaV1LQYZY2r0y97Ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jp9rvdwPRWHcoX3TBGiy4mjTaSOpG6JMY42i0dYx/nk=;
-	b=IXQP4INW4yV4G+O9IT/9C6bBuGO6+kE8utD8s14+Sj/Ikx7boM+GDKymtCyFBcmkyHuO
-	 FxMqlJwhBx9IM8bMypV9MUNs8bmY+iTBNKpyeUr5Re4xM1YeA1H/NJ/0h6N4UT2CtvA+m
-	 kBtwF0//DJ9VJb3/s9wdRGn1TFE3AB1ty6+FR0aUY7vcIjTDl3oU/yO9YE4FIWI6h6sEm
-	 7e8q0hM9KeR9/I98jj/bRWqaXF/QpKz/ziwBMEylF+VJspdtZy9crLRiCBWmZXs3R9+Te
-	 MVmuH54h2YifJPbb1ZHd75RGPZWkb1pQ7hqSTSz5wDjxovbNllCD01fYU0knEHEYAsQ==
+	bh=IuSyd8XScYRHVOZhyKvsR3Ss6eAUF+qmpN16mfd5UIs=;
+	b=JtGKE6CGevdX2U2VoCkAwu6dOWq/pixFPoZZVlImi1HF1eLsfDaltwcYEATXVZtVphPV
+	 69jGSBe5USV4XX/Ig7tT8eO+jyc8JgxGQIeatDIDQL9nwY2EUSg91Dm4sM3K3/77pBvGx
+	 4KzpfM/GQ+2D0H2AFO0TDnKMt6im5R2uM5oTiYwW+FQ6rxhh5WOK9yVw4iP9+sZ9lfeWF
+	 +bvJuUjVimGNO4zvmTp3/8an9G4zlqlHq0YVRWyrryAKIaCbWxskvEDkYqi7HfO21O4RG
+	 mMrc5R4e7YQGkg4WFICPEuE5UOXal3b3Ny45+rDhvXfroBCVShFsNzz07iR9pJMM93A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pktQMg7w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gVduFjFx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7B7606A32A;
-	Wed, 18 Nov 2026 18:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129E3606A330;
+	Wed, 18 Nov 2026 18:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pktQMg7w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF821F000C4;
-	Wed, 18 Nov 2026 18:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gVduFjFx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691481F000C4;
+	Wed, 18 Nov 2026 18:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025186;
-	bh=Jp9rvdwPRWHcoX3TBGiy4mjTaSOpG6JMY42i0dYx/nk=;
+	s=korg; t=1795025188;
+	bh=IuSyd8XScYRHVOZhyKvsR3Ss6eAUF+qmpN16mfd5UIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pktQMg7wDwO/MW/NKvIpNv6BC9aIpoulQx+LJGmKdvNY+fdSsiftyp7yHpaiWY/Zh
-	 c+0OSIERkgfCx9U6914c9CSL+zKE8p1Y3VhFMB3wG+bb7Kan416pTB+xdwsYCcprSt
-	 d/YIYLghLYvMSEFVQDUK265Ovase+BTmJB9cdIGo=
+	b=gVduFjFxC4wC0c9COpPgv+zDo+MMZSQURXRvCKDS6g6dOurwbWhWNvuRi9Chiku/v
+	 ZVS+gjw6U2bITyrrGBo0UjATOwOvgyLDqMWvj4dTcTCDPFW5X1B+ffqNNgKHGjF7zr
+	 5ysql5Eoao5R8F5yVzKnOJ9OXleeSTGqHIL8bYVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Mike Leach <mike.leach@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0991/2151] coresight: etm3x: fix inconsistencies with sysfs configuration
-Date: Wed, 18 Nov 2026 15:45:26 +0100
-Message-ID: <20261118150158.559104486@linuxfoundation.org>
+Subject: [PATCH 6.18 0974/2151] perf build python: Dont leave a.out file when building with clang
+Date: Wed, 18 Nov 2026 15:45:09 +0100
+Message-ID: <20261118150157.978619687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,374 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 950cca5352b009dcf8ef0ca4a2fae850d26b552f ]
+[ Upstream commit 6090e612cf24393335e709105db31b6d6e36d6ef ]
 
-The current ETM3x configuration via sysfs can lead to the following
-inconsistencies:
+Testing clang features doesn't specify a "-o" option so an a.out file
+is created and left in the make directory (not the output). Fix this
+by specifying a "-o" of "/dev/null". Reorganize the code a little to
+help with readability.
 
-  - If a configuration is modified via sysfs while a perf session is
-    active, the running configuration may differ between before
-    a sched-out and after a subsequent sched-in.
-
-To resolve these issues, separate the configuration into:
-
-  - curr_config: the configuration applied to the current session
-  - config: the configuration set via sysfs
-
-Additionally:
-
-  - Since curr_config and related fields are accessed only by the local CPU
-    in etm_enable/disable_sysfs_smp_call() (similar to perf enable/disable),
-    remove the lock/unlock from the sysfs enable/disable path and
-    starting/dying_cpu path except when to access config fields only.
-
-  - Some of sysfs interface read etm register directly. To reduce lock
-    scope while the etm_enable_hw()/etm_disable_hw(), handle it via
-    IPI so that registers could be read from on proper CPU.
-
-Fixes: 1925a470ce69 ("coresight: etm3x: splitting struct etm_drvdata")
-Tested-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Mike Leach <mike.leach@arm.com>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20261003-separate_etm_cfg_v2-v13-5-5d8a29aead95@arm.com
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 2ed38aa8a52d ("perf python: Track linked libraries as extension dependencies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm.h   |  4 +-
- .../coresight/coresight-etm3x-core.c          | 66 ++++++++-------
- .../coresight/coresight-etm3x-sysfs.c         | 80 +++++++++++++------
- 3 files changed, 98 insertions(+), 52 deletions(-)
+ tools/perf/util/setup.py | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm.h b/drivers/hwtracing/coresight/coresight-etm.h
-index 1d753cca29439..52f23a3c73642 100644
---- a/drivers/hwtracing/coresight/coresight-etm.h
-+++ b/drivers/hwtracing/coresight/coresight-etm.h
-@@ -226,7 +226,8 @@ struct etm_config {
-  * @etmccr:	value of register ETMCCR.
-  * @etmccer:	value of register ETMCCER.
-  * @traceid:	value of the current ID for this component.
-- * @config:	structure holding configuration parameters.
-+ * @curr_config:	structure holding current running configuration.
-+ * @config:	structure holding sysfs mode configuration.
-  */
- struct etm_drvdata {
- 	struct csdev_access		csa;
-@@ -248,6 +249,7 @@ struct etm_drvdata {
- 	u32				etmccr;
- 	u32				etmccer;
- 	u32				traceid;
-+	struct etm_config		curr_config;
- 	struct etm_config		config;
- };
+diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
+index 9cae2c472f4ad..b65b1792ca056 100644
+--- a/tools/perf/util/setup.py
++++ b/tools/perf/util/setup.py
+@@ -23,10 +23,17 @@ assert srctree, "Environment variable srctree, for the Linux sources, not set"
+ src_feature_tests  = f'{srctree}/tools/build/feature'
  
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-index 258b6311f5c79..fecb7c34eb66f 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-@@ -307,7 +307,7 @@ void etm_config_trace_mode(struct etm_config *config)
- static int etm_parse_event_config(struct etm_drvdata *drvdata,
- 				  struct perf_event *event)
- {
--	struct etm_config *config = &drvdata->config;
-+	struct etm_config *config = &drvdata->curr_config;
- 	struct perf_event_attr *attr = &event->attr;
+ def clang_has_option(option):
+-    cmd = shlex.split(f"{cc} {cc_options} {option}")
+-    cmd.append(path.join(src_feature_tests, "test-hello.c"))
++    error_substrings = (
++        b"unknown argument",
++        b"is not supported",
++        b"unknown warning option"
++    )
++    cmd = shlex.split(f"{cc} {cc_options} {option}") + [
++        "-o", "/dev/null",
++        path.join(src_feature_tests, "test-hello.c")
++    ]
+     cc_output = Popen(cmd, stderr=PIPE).stderr.readlines()
+-    return [o for o in cc_output if ((b"unknown argument" in o) or (b"is not supported" in o) or (b"unknown warning option" in o))] == [ ]
++    return not any(any(error in line for error in error_substrings) for line in cc_output)
  
- 	if (!attr)
-@@ -362,7 +362,7 @@ static int etm_enable_hw(struct etm_drvdata *drvdata)
- {
- 	int i, rc;
- 	u32 etmcr;
--	struct etm_config *config = &drvdata->config;
-+	struct etm_config *config = &drvdata->curr_config;
- 	struct coresight_device *csdev = drvdata->csdev;
- 
- 	CS_UNLOCK(drvdata->csa.base);
-@@ -443,26 +443,22 @@ struct etm_enable_arg {
- static void etm_enable_sysfs_smp_call(void *info)
- {
- 	struct etm_enable_arg *arg = info;
-+	struct etm_drvdata *drvdata;
- 	struct coresight_device *csdev;
- 
- 	if (WARN_ON(!arg))
- 		return;
- 
--	csdev = arg->drvdata->csdev;
--	if (!coresight_take_mode(csdev, CS_MODE_SYSFS)) {
--		/* Someone is already using the tracer */
--		arg->rc = -EBUSY;
--		return;
--	}
-+	drvdata = arg->drvdata;
-+	csdev = drvdata->csdev;
- 
--	arg->rc = etm_enable_hw(arg->drvdata);
-+	drvdata->traceid = arg->path->trace_id;
- 
--	/* The tracer didn't start */
--	if (arg->rc) {
--		coresight_set_mode(csdev, CS_MODE_DISABLED);
-+	arg->rc = etm_enable_hw(arg->drvdata);
-+	if (arg->rc)
- 		return;
--	}
- 
-+	drvdata->sticky_enable = true;
- 	csdev->path = arg->path;
- }
- 
-@@ -514,9 +510,10 @@ static int etm_enable_sysfs(struct coresight_device *csdev, struct coresight_pat
- 	struct etm_enable_arg arg = { };
- 	int ret;
- 
--	spin_lock(&drvdata->spinlock);
--
--	drvdata->traceid = path->trace_id;
-+	if (!coresight_take_mode(csdev, CS_MODE_SYSFS)) {
-+		/* Someone is already using the tracer */
-+		return -EBUSY;
-+	}
- 
- 	/*
- 	 * Configure the ETM only if the CPU is online.  If it isn't online
-@@ -525,23 +522,27 @@ static int etm_enable_sysfs(struct coresight_device *csdev, struct coresight_pat
- 	if (cpu_online(drvdata->cpu)) {
- 		arg.drvdata = drvdata;
- 		arg.path = path;
-+
-+		scoped_guard(spinlock, &drvdata->spinlock) {
-+			drvdata->curr_config = drvdata->config;
-+		}
-+
- 		ret = smp_call_function_single(drvdata->cpu,
- 					       etm_enable_sysfs_smp_call, &arg, 1);
- 		if (!ret)
- 			ret = arg.rc;
--		if (!ret)
--			drvdata->sticky_enable = true;
- 	} else {
- 		ret = -ENODEV;
- 	}
- 
--	if (ret)
-+	if (!ret) {
-+		dev_dbg(&csdev->dev, "ETM tracing enabled\n");
-+	} else {
- 		etm_release_trace_id(drvdata);
-+		/* The tracer didn't start */
-+		coresight_set_mode(csdev, CS_MODE_DISABLED);
-+	}
- 
--	spin_unlock(&drvdata->spinlock);
--
--	if (!ret)
--		dev_dbg(&csdev->dev, "ETM tracing enabled\n");
- 	return ret;
- }
- 
-@@ -567,7 +568,7 @@ static int etm_enable(struct coresight_device *csdev, struct perf_event *event,
- static void etm_disable_hw(struct etm_drvdata *drvdata)
- {
- 	int i;
--	struct etm_config *config = &drvdata->config;
-+	struct etm_config *config = &drvdata->curr_config;
- 	struct coresight_device *csdev = drvdata->csdev;
- 
- 	CS_UNLOCK(drvdata->csa.base);
-@@ -595,7 +596,6 @@ static void etm_disable_sysfs_smp_call(void *info)
- 	etm_disable_hw(drvdata);
- 
- 	drvdata->csdev->path = NULL;
--	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
- }
- 
- static void etm_disable_perf(struct coresight_device *csdev)
-@@ -632,8 +632,9 @@ static void etm_disable_perf(struct coresight_device *csdev)
- static void etm_disable_sysfs(struct coresight_device *csdev)
- {
- 	struct etm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
--
--	spin_lock(&drvdata->spinlock);
-+	struct etm_config *config = &drvdata->config;
-+	const struct etm_config *curr_config = &drvdata->curr_config;
-+	int i;
- 
- 	/*
- 	 * Executing etm_disable_hw on the cpu whose ETM is being disabled
-@@ -642,7 +643,14 @@ static void etm_disable_sysfs(struct coresight_device *csdev)
- 	smp_call_function_single(drvdata->cpu, etm_disable_sysfs_smp_call,
- 				 drvdata, 1);
- 
--	spin_unlock(&drvdata->spinlock);
-+	/*
-+	 * Userspace may read seq_curr_state and cntr_val through sysfs
-+	 * after the sysfs-session has been disabled.
-+	 */
-+	for (i = 0; i < drvdata->nr_cntr; i++)
-+		config->cntr_val[i] = curr_config->cntr_val[i];
-+
-+	config->seq_curr_state = curr_config->seq_curr_state;
- 
- 	/*
- 	 * we only release trace IDs when resetting sysfs.
-@@ -651,6 +659,8 @@ static void etm_disable_sysfs(struct coresight_device *csdev)
- 	 * prior trace id allocation method
- 	 */
- 
-+	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
-+
- 	dev_dbg(&csdev->dev, "ETM tracing disabled\n");
- }
- 
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-index cdb70a4382eb8..284998f180170 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-@@ -6,10 +6,48 @@
- 
- #include <linux/pid_namespace.h>
- #include <linux/pm_runtime.h>
-+#include <linux/smp.h>
- #include <linux/sysfs.h>
- #include "coresight-etm.h"
- #include "coresight-priv.h"
- 
-+struct etm_readl_cslocked_arg {
-+	struct etm_drvdata *drvdata;
-+	u32 off;
-+	unsigned long *val;
-+};
-+
-+static void etm_readl_cslocked_smp_call(void *info)
-+{
-+	struct etm_readl_cslocked_arg *arg = info;
-+
-+	CS_UNLOCK(arg->drvdata->csa.base);
-+	*arg->val = etm_readl(arg->drvdata, arg->off);
-+	CS_LOCK(arg->drvdata->csa.base);
-+}
-+
-+static int etm_readl_cslocked(struct etm_drvdata *drvdata, u32 off,
-+			      unsigned long *val)
-+{
-+	int ret;
-+	struct etm_readl_cslocked_arg arg;
-+
-+	ret = pm_runtime_get_sync(drvdata->csdev->dev.parent);
-+	if (ret < 0)
-+		goto out;
-+
-+	arg.drvdata = drvdata;
-+	arg.off = off;
-+	arg.val = val;
-+
-+	ret = smp_call_function_single(drvdata->cpu,
-+				       etm_readl_cslocked_smp_call,
-+				       (void *)&arg, 1);
-+out:
-+	pm_runtime_put(drvdata->csdev->dev.parent);
-+	return ret;
-+}
-+
- static ssize_t nr_addr_cmp_show(struct device *dev,
- 				struct device_attribute *attr, char *buf)
- {
-@@ -45,18 +83,13 @@ static DEVICE_ATTR_RO(nr_ctxid_cmp);
- static ssize_t etmsr_show(struct device *dev,
- 			  struct device_attribute *attr, char *buf)
- {
--	unsigned long flags, val;
-+	int ret;
-+	unsigned long val;
- 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 
--	pm_runtime_get_sync(dev->parent);
--	spin_lock_irqsave(&drvdata->spinlock, flags);
--	CS_UNLOCK(drvdata->csa.base);
--
--	val = etm_readl(drvdata, ETMSR);
--
--	CS_LOCK(drvdata->csa.base);
--	spin_unlock_irqrestore(&drvdata->spinlock, flags);
--	pm_runtime_put(dev->parent);
-+	ret = etm_readl_cslocked(drvdata, ETMSR, &val);
-+	if (ret)
-+		return ret;
- 
- 	return sprintf(buf, "%#lx\n", val);
- }
-@@ -76,7 +109,7 @@ static ssize_t reset_store(struct device *dev,
- 		return ret;
- 
- 	if (IS_ERR_OR_NULL(drvdata->csdev) ||
--	    coresight_get_mode(drvdata->csdev))
-+	    coresight_get_mode(drvdata->csdev) == CS_MODE_SYSFS)
- 		return -EBUSY;
- 
- 	if (val) {
-@@ -721,7 +754,9 @@ static DEVICE_ATTR_RW(cntr_rld_event);
- static ssize_t cntr_val_show(struct device *dev,
- 			     struct device_attribute *attr, char *buf)
- {
-+	int ret;
- 	u32 val;
-+	unsigned long val2;
- 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 	struct etm_config *config = &drvdata->config;
- 
-@@ -730,7 +765,10 @@ static ssize_t cntr_val_show(struct device *dev,
- 		val = config->cntr_val[config->cntr_idx];
- 		spin_unlock(&drvdata->spinlock);
- 	} else {
--		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
-+		ret = etm_readl_cslocked(drvdata, ETMCNTVRn(config->cntr_idx), &val2);
-+		if (ret)
-+			return ret;
-+		val = val2;
- 	}
- 
- 	return sysfs_emit(buf, "%#x\n", val);
-@@ -749,7 +787,7 @@ static ssize_t cntr_val_store(struct device *dev,
- 	if (ret)
- 		return ret;
- 	if (IS_ERR_OR_NULL(drvdata->csdev) ||
--	    coresight_get_mode(drvdata->csdev))
-+	    coresight_get_mode(drvdata->csdev) == CS_MODE_SYSFS)
- 		return -EBUSY;
- 
- 	spin_lock(&drvdata->spinlock);
-@@ -937,7 +975,8 @@ static DEVICE_ATTR_RW(seq_13_event);
- static ssize_t seq_curr_state_show(struct device *dev,
- 				   struct device_attribute *attr, char *buf)
- {
--	unsigned long val, flags;
-+	int ret;
-+	unsigned long val;
- 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 	struct etm_config *config = &drvdata->config;
- 
-@@ -946,15 +985,10 @@ static ssize_t seq_curr_state_show(struct device *dev,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(dev->parent);
--	spin_lock_irqsave(&drvdata->spinlock, flags);
--
--	CS_UNLOCK(drvdata->csa.base);
--	val = (etm_readl(drvdata, ETMSQR) & ETM_SQR_MASK);
--	CS_LOCK(drvdata->csa.base);
--
--	spin_unlock_irqrestore(&drvdata->spinlock, flags);
--	pm_runtime_put(dev->parent);
-+	ret = etm_readl_cslocked(drvdata, ETMSQR, &val);
-+	if (ret)
-+		return ret;
-+	val &= ETM_SQR_MASK;
- out:
- 	return sprintf(buf, "%#lx\n", val);
- }
+ if cc_is_clang:
+     from sysconfig import get_config_vars
 -- 
 2.53.0
 
