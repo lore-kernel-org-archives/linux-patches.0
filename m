@@ -1,52 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037524;
-	b=QTUXQgvf/zj5rjylw7rJrfUA7omLEnWk+SHFQBc+Zj7WbiAIxo+On8oDa57D+dwu8PJJ
-	 JZZiOi3hAIhIe1lxdlnEsq3UlNTPphGERhXVoGgXTPMXRvQXOdmEqKeofrak4x/8NJttk
-	 a77sOyeB1vDFvyO60SGhoFOVWk0zNLdFm+LwOhvSEvS66BACABGyA9pfG+MEIgA3HTlYM
-	 /MmU3LooRrspUWbr6aoAzEJzVL9vOrxe937qAaWWoQhQJ6YaU6LP2/HAVJJYQhPkZKweV
-	 5auBMmknBVBJ2pau4I8ND8hm3hYUcdPmtnXbw/1Pd7uC0R44EaxAIJzqOk5wMGUn6Tw==
+	t=1795037527;
+	b=0OxKzoSJxoNZBePL2b9PLxff2GKWbol8MDtNsG6ZxT06rgukwyTTOQ6R1azWp3mcqe3/
+	 HRrb84YmWHDCRYLvcYYow7TpJpPwJIC7/6IObCMvbBGfwWzEzPAAMiMOdPYWpQmA0IQGu
+	 ss5vZifBhJPtWlPeG9FKmO4yMBXFYKyGoYjC5PBnRlPdSvWFdkNquqepp2xHBMylFW5vV
+	 jMcxcCXdofHd3ayyc8NaSb4PKUyQoHvKzWyBBOHYDdWXowAUwPEtLazPW52qUnca2Enrp
+	 DsF+Ed2wAfwPEoNai09ucPikxg6lhzeYR6lDrTePCqEdY96CiyT84F1S8X1CNdLkSHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MqQl3SWnvdQs8t99vj3Gbqd+QPC9BdQrdw6ixSoQhCk=;
-	b=X0nG+Cut4c+1kQZzNnv5Nvd6uu7b2hB+tt8PYwbJXZ1dVhSg4c8ZwpUhYFapppUX35jP
-	 YFAXvY2X+tiVBcuEKzfrhtY7x98ND8oPZyeTUImydY96opNlec01znVRWanVxSKNdzvIG
-	 orLlfDfMx45cHbRcG5GMBrZNWYCcY5E3/zwHjDFtcxQnwDgXICMwb0NVPD2xkWa+NjXrV
-	 EOOFXwUBD7IW6Dh63eFZKmQWELHKuzdN+gSl4fkGt/DZmPBnDRAmiN9woYPS67EQZTTo/
-	 mEys01zQ9ivc32wE5TTIOHBr+xPOXXhHziy9uPix2klLwWLm+wTuTKv20sTKrrpVqQQ==
+	bh=lzT7akHwbwDatIcUr8b+VYAFvl2z/5DUtLJHDsraIps=;
+	b=sWHFnYRjI+Ot2B8ccC/M52ONZdqLlLKSF88wbCXrAkMTUVb8ArpQ5qD+/F6tTfYuU9ZD
+	 Yv8R7/IbOFKS9QUZXASHSQKwlM+RYW6toxYrJxbGw9fub/8ybrTtvpZQH6wNKd7TkNJhA
+	 U+0zpeTPgaDmrVM1VC51fvwgTGtl0BUsH3JWtVYYze1jAlrTIJdxXfW2Jb4Hi/sonXBQ2
+	 73qTLWjovKlcOILqWVubP5+wFhNp45GOIS3eWxD/ZOtRZMttHFSPOHWzkBSLgfciwTwg/
+	 szk3SmtMWIHNjOYeqTAMLA2+63MkGJTi1KnYRZk1lEQ313lzBa16t+X+FFRJtAOtaZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saRZhmac;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTrvWXKc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCC9606A31C;
-	Wed, 18 Nov 2026 21:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A6C606A32A;
+	Wed, 18 Nov 2026 21:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saRZhmac
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED94B1F000C4;
-	Wed, 18 Nov 2026 21:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTrvWXKc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FEE1F000C4;
+	Wed, 18 Nov 2026 21:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037524;
-	bh=MqQl3SWnvdQs8t99vj3Gbqd+QPC9BdQrdw6ixSoQhCk=;
+	s=korg; t=1795037527;
+	bh=lzT7akHwbwDatIcUr8b+VYAFvl2z/5DUtLJHDsraIps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saRZhmac9qz+Hbm0rhb3LhQ34yXdIbcJ+kIYGqY1v2LS/7rEDEPDaXniMVHm/UO/t
-	 HvszuHW9WBNMFw1KlGh+jxzGRitMMzoii/t6ZGP0Vxi20NVTYIxTeoMN6RVYijKbkD
-	 gpNbx6IlXebN2pPKzUqctHN2GG5HIAno/jUA4tBc=
+	b=kTrvWXKcTnqROGd+2DuStqqHHaOg5ckJXmKFZ4iKUtJK8Ey9/eDEoq7WE76amQE7M
+	 XbMhhKvNXAWjJTU3WZf7pYdOt7UTno4SVFlR7A/Sh16mHDbVbJcBKRdNYTytRETj9u
+	 sWP8wbWAUZfp9nXWAEdGqfLXY8eJ8t6RzE7pTPBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com,
+	Muchun Song <muchun.song@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Chris Li <chrisl@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1386/3318] NFSv4/pnfs: Free the netid when draining a data-server address list
-Date: Wed, 18 Nov 2026 15:33:28 +0100
-Message-ID: <20261118150402.141002196@linuxfoundation.org>
+Subject: [PATCH 6.6 1387/3318] mm/memcontrol: fix data-race on reading jiffies_64
+Date: Wed, 18 Nov 2026 15:33:29 +0100
+Message-ID: <20261118150402.175829673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,154 +78,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a ]
+[ Upstream commit c20cf1c3c8cdd98618d6fcc794003a0e003ae858 ]
 
-nfs4_pnfs_ds_addr_free() releases all three of an address entry's
-allocations, but the four sites that drain a decoded list before it
-reaches a data server open-code the loop and free only da_remotestr and
-the entry, leaking da_netid.  Both layout drivers drain that list when
-nfs4_pnfs_ds_add() returned a data server already in the cache, and
-again on their error exits.
+KCSAN reported a data-race between tick_do_update_jiffies64() updating
+jiffies_64 and mem_cgroup_flush_stats_ratelimited() reading it directly.
 
-Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
-one owner.  A striping mount reaches the cached case on nearly every
-GETDEVICEINFO, since many deviceIDs name the same data servers.
+Unlike jiffies, jiffies_64 is not volatile, so raw reads are plain
+accesses and can even be torn on 32-bit.  Use get_jiffies_64() instead,
+and fix the same pattern in mem_cgroup_flush_foreign().
 
-Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Link: https://lore.kernel.org/20260827025457.116191-1-jiayuan.chen@linux.dev
+Fixes: 508bed884767 ("mm: memcg: change flush_next_time to flush_last_time")
+Fixes: 97b27821b485 ("writeback, memcg: Implement foreign dirty flushing")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/filelayout/filelayoutdev.c         | 17 ++---------------
- fs/nfs/flexfilelayout/flexfilelayoutdev.c | 17 ++---------------
- fs/nfs/pnfs.h                             |  1 +
- fs/nfs/pnfs_nfs.c                         | 21 +++++++++++++--------
- 4 files changed, 18 insertions(+), 38 deletions(-)
+ mm/memcontrol.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
-index e90e1cf2f0aa1..263046faccc59 100644
---- a/fs/nfs/filelayout/filelayoutdev.c
-+++ b/fs/nfs/filelayout/filelayoutdev.c
-@@ -175,27 +175,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 			goto out_err_drain_dsaddrs;
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 5ff036cd70bad..613a0b79a80bc 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -737,7 +737,7 @@ static inline void memcg_rstat_updated(struct mem_cgroup *memcg, int val)
+ static void do_flush_stats(struct mem_cgroup *memcg)
+ {
+ 	if (mem_cgroup_is_root(memcg))
+-		WRITE_ONCE(flush_last_time, jiffies_64);
++		WRITE_ONCE(flush_last_time, get_jiffies_64());
  
- 		/* If DS was already in cache, free ds addrs */
--		while (!list_empty(&dsaddrs)) {
--			da = list_first_entry(&dsaddrs,
--					      struct nfs4_pnfs_ds_addr,
--					      da_node);
--			list_del_init(&da->da_node);
--			kfree(da->da_remotestr);
--			kfree(da);
--		}
-+		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 	}
- 
- 	__free_page(scratch);
- 	return dsaddr;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- out_err_free_deviceid:
- 	nfs4_fl_free_deviceid(dsaddr);
- 	/* stripe_indicies was part of dsaddr */
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index e764e5a25f43d..e404b0f660bf8 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -155,26 +155,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 		goto out_err_drain_dsaddrs;
- 
- 	/* If DS was already in cache, free ds addrs */
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	__free_page(scratch);
- 	return new_ds;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	kfree(ds_versions);
- out_scratch:
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index f82defddcd82e..73b5bc4404278 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -416,6 +416,7 @@ int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
- struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
- 						 struct xdr_stream *xdr,
- 						 gfp_t gfp_flags);
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
- void pnfs_layout_mark_request_commit(struct nfs_page *req,
- 				     struct pnfs_layout_segment *lseg,
- 				     struct nfs_commit_info *cinfo,
-diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
-index 01779ef092ec4..f350bc1cc82c9 100644
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -679,23 +679,28 @@ static void nfs4_pnfs_ds_addr_free(struct nfs4_pnfs_ds_addr *da)
- 	kfree(da);
+ 	cgroup_rstat_flush(memcg->css.cgroup);
+ }
+@@ -766,7 +766,7 @@ void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
+ void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg)
+ {
+ 	/* Only flush if the periodic flusher is one full cycle late */
+-	if (time_after64(jiffies_64, READ_ONCE(flush_last_time) + 2*FLUSH_TIME))
++	if (time_after64(get_jiffies_64(), READ_ONCE(flush_last_time) + 2 * FLUSH_TIME))
+ 		mem_cgroup_flush_stats(memcg);
  }
  
--static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
+@@ -4780,7 +4780,7 @@ void mem_cgroup_flush_foreign(struct bdi_writeback *wb)
  {
- 	struct nfs4_pnfs_ds_addr *da;
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(wb->memcg_css);
+ 	unsigned long intv = msecs_to_jiffies(dirty_expire_interval * 10);
+-	u64 now = jiffies_64;
++	u64 now = get_jiffies_64();
+ 	int i;
  
-+	while (!list_empty(dsaddrs)) {
-+		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
-+				      da_node);
-+		list_del_init(&da->da_node);
-+		nfs4_pnfs_ds_addr_free(da);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
-+
-+static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+{
- 	dprintk("--> %s\n", __func__);
- 	ifdebug(FACILITY)
- 		print_ds(ds);
- 
- 	nfs_put_client(ds->ds_clp);
- 
--	while (!list_empty(&ds->ds_addrs)) {
--		da = list_first_entry(&ds->ds_addrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		nfs4_pnfs_ds_addr_free(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
- 
- 	kfree(ds->ds_remotestr);
- 	kfree(ds);
+ 	for (i = 0; i < MEMCG_CGWB_FRN_CNT; i++) {
 -- 
 2.53.0
 
