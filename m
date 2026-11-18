@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039351;
-	b=hwyJxpvxEyrWYNu8TH8EQblHCjezzGviJ2iAFpi20rL7bnhB5iFf3BdfK0bM4Yp6XKkV
-	 OIaf5HG3WFs0Up7/d7SC4gdCNUEHsgX848JV551FMQXlbbkcpUxXA3Az4U1J0SRAVwbO9
-	 BT+coDLG9VTBQ4cocbZqKyAmzEyolhsEPKfY85jXjptXPabx/3v0xekepMyXuXZGCXzVt
-	 v6ZD/xQdX3A2OCtCArjHxmu0WtXHl4LnRMd53QLE7FaF9j2T96Tf9YvsMDDV9mudPGen3
-	 gj9jxX48vQOwW38Ge50v0yMB4iQSeH/3gNLSqRAaP1cZrOxpeUn/5Hc4D6TWaWA/wYQ==
+	t=1795039354;
+	b=BGQ5sfANr3rCw2YEKu2PX3qcDirQt6DR74fGRe3UFMMeMgTHhkMi4t5ZRqXuLMbxDVPy
+	 2KHCdkaqTJH7b02sHSOufbUQtOJxzEVPN5HRtaQnmwOv1nSNtORjNl7U307FVoFnDt6Kc
+	 yo2AWNtth2zOJZQrUWl/wi26sOaTylBDNwbMD3fC8ZfLm9kTSU69Kqbx2rgLq+XyowHEA
+	 5kd4L9QWsNEd3RYwafE7m154LvuO6yqV1uE5sK1sEUs0OzqwAt14PJjamUNW9vSugSEDh
+	 4SkQOZtTIPsR0f6R3O4jRpocA7tnKYPwynfUX4pfbEMVb3gVtiHLWLpUJuYO3Y7y71g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039351;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BBTJ6+NwFv6umgl52y3mxrINLpO2/SKy/HG2oHaMldI=;
-	b=JvvqXRIjbYhz7ksMRgY77eikAKz7CTog1e07Y8FwFnAOdpal4PYpMxYHrBXQLpFFuz+X
-	 0qKzIBqlc3HfTJCucK6OnvQK1s2uJj7ggugrS+TUr/ooQvy8SE1yNBT7UGvMOAmN6yB5B
-	 9Nn3BhoAh7qKVr5Mvm8HhdPkf1CbGHegWSR+KJXar1MlxDEvppJtvL6gE7QtjCzBv/WWd
-	 4OTl3U+5gNcvpTiFTPLQyxzczJtvoaUb6le2q+OEaCQ9zDzYkZ+XbbnLeu9fwXcAaIe5i
-	 eQBtREgM/Fxzz655Sk466yQFa5ogyweANjTonLkNRnpJ8hFNcpkhWch61/804n+Bvcw==
+	bh=AQRjus4klodVtk4xaT1GTOS9UnoRAO/A5mdkRqr5QK8=;
+	b=fbXzM3y29vKLFdlSVlt1vez57ynGaUuLcbytVS4Z8Avt2NDywVrWQAxQwC3Egpd1GqZH
+	 M3dBqHxtd9XMw/qZeldxDP9mkH1jipLWK8m/pwPMuhUVewGAC7iG6G0vmoS2sFseVWDQk
+	 yz5mTs6F6sz1HHPscw0vg4+TVDy6HNDp8H5ofvTbc8lb4XjacsipsO6mC8y83H1JuFCJJ
+	 4oBIxNaIVxlSEZT3uoA4THzUhOkN+GSPUpvB/mwTGBfqUC8cSIM4DW356hCEg+rI2D/40
+	 uC7ZJVClmpnBCDMKprQeOJ/1W5qrpOWaY5zmk1iwGdKq9nYy11Jpf7kk2YhTwis+FUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XakVv4A6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxsMqVuw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CF3606A325;
-	Wed, 18 Nov 2026 22:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A54D606A31C;
+	Wed, 18 Nov 2026 22:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XakVv4A6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BD41F000C5;
-	Wed, 18 Nov 2026 22:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxsMqVuw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4000D1F000C5;
+	Wed, 18 Nov 2026 22:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039350;
-	bh=BBTJ6+NwFv6umgl52y3mxrINLpO2/SKy/HG2oHaMldI=;
+	s=korg; t=1795039353;
+	bh=AQRjus4klodVtk4xaT1GTOS9UnoRAO/A5mdkRqr5QK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XakVv4A6KXMU9daZhxSLTVE+RkbBxOpOrz3TTfOgiO3ecQYSZl/S2D+PebhDb2KXx
-	 qqrdFwnUMBUEm9yfnCpNxusc9kYXha+ZelrtY9oEOmvDP/juNCSqoQyD8eh1J7aZW/
-	 0/1veYsvLtfdg+/CoCepNAom0Qa/FBDbjkvtIpQE=
+	b=cxsMqVuwOZ663voQWM2d2qxnucr7eaPIcqOEYz7vNcImnAwej1lFZfgYqOzIT0NBr
+	 F9wQvbszWxwBxEx0WxgIvpvnRCwPsUKoPl3dII9o6KOre2sf97Wvo6voRfkYQZARNE
+	 2qHthAR6ZTr9lu2pfzqVxKPbbNm0gyClQdRS3JiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhu Ning <zhuning0077@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2069/3318] ASoC: codecs: ES8326: Changing initialisation and broadcasting
-Date: Wed, 18 Nov 2026 15:44:51 +0100
-Message-ID: <20261118150424.151819555@linuxfoundation.org>
+Subject: [PATCH 6.6 2070/3318] ASoC: codecs: ES8326: Improving the THD+N performance
+Date: Wed, 18 Nov 2026 15:44:52 +0100
+Message-ID: <20261118150424.181972170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,167 +70,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhu Ning <zhuning0077@gmail.com>
 
-[ Upstream commit fc702b2c04d778d7e3a4091ebe54a86c5d0a0d96 ]
+[ Upstream commit 14a0a1ec3335ac3945a96437c35465e4a9616b88 ]
 
-New chip versions require new initialisation and playback processes.
-Changing the initialisation and playback process for better results.
-The old chip versions are going to work well with the new sequences.
-We've tested this with version_v0 and version_v3 chips
-under the new sequence and they both pass.
+We update the values of some registers in the initialization
+sequence in es8326_resume function to improve THD+N performance.
+THD+N performance decreases if the output level on headphone is
+close to full scale. So we change the register setting in
+es8326_jack_detect_handler function to improve THD+N performance
+if headphone pulgged. Also, the register setting should be restored
+when the headset is unplugged
 
 Signed-off-by: Zhu Ning <zhuning0077@gmail.com>
-Link: https://lore.kernel.org/r/20231101072702.91316-3-zhuning0077@gmail.com
+Link: https://msgid.link/r/20240120101240.12496-3-zhuning0077@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 349e94679968 ("ASoC: es8326: report resume restore errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8326.c | 50 +++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 21 deletions(-)
+ sound/soc/codecs/es8326.c | 21 +++++++++++++--------
+ sound/soc/codecs/es8326.h |  2 +-
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
-index 32a9b26ee2c89..5cdd0974e4ae3 100644
+index 5cdd0974e4ae3..ca2165f4ad46b 100644
 --- a/sound/soc/codecs/es8326.c
 +++ b/sound/soc/codecs/es8326.c
-@@ -132,6 +132,11 @@ static const struct snd_soc_dapm_widget es8326_dapm_widgets[] = {
- 	SND_SOC_DAPM_PGA("LHPMIX", ES8326_DAC2HPMIX, 7, 0, NULL, 0),
- 	SND_SOC_DAPM_PGA("RHPMIX", ES8326_DAC2HPMIX, 3, 0, NULL, 0),
- 
-+	SND_SOC_DAPM_REG(snd_soc_dapm_supply, "HPOR Supply", ES8326_HP_CAL,
-+			 4, 7, 0, 0),
-+	SND_SOC_DAPM_REG(snd_soc_dapm_supply, "HPOL Supply", ES8326_HP_CAL,
-+			 0, 7, 0, 0),
-+
- 	SND_SOC_DAPM_OUTPUT("HPOL"),
- 	SND_SOC_DAPM_OUTPUT("HPOR"),
- };
-@@ -156,6 +161,9 @@ static const struct snd_soc_dapm_route es8326_dapm_routes[] = {
- 	{"LHPMIX", NULL, "Left DAC"},
- 	{"RHPMIX", NULL, "Right DAC"},
- 
-+	{"HPOR", NULL, "HPOR Supply"},
-+	{"HPOL", NULL, "HPOL Supply"},
-+
- 	{"HPOL", NULL, "LHPMIX"},
- 	{"HPOR", NULL, "RHPMIX"},
- };
-@@ -409,8 +417,8 @@ static int es8326_mute(struct snd_soc_dai *dai, int mute, int direction)
- 			regmap_write(es8326->regmap, ES8326_HPR_OFFSET_INI, offset_r);
- 			es8326->calibrated = true;
+@@ -635,6 +635,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			es8326->hp = 0;
  		}
--		regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa0);
--		regmap_write(es8326->regmap, ES8326_HP_VOL, 0x80);
-+		regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa1);
-+		regmap_write(es8326->regmap, ES8326_HP_VOL, 0x91);
- 		regmap_write(es8326->regmap, ES8326_HP_CAL, ES8326_HP_ON);
- 		regmap_update_bits(es8326->regmap, ES8326_DAC_MUTE,
- 				ES8326_MUTE_MASK, ~(ES8326_MUTE));
-@@ -430,8 +438,6 @@ static int es8326_set_bias_level(struct snd_soc_component *codec,
- 		if (ret)
- 			return ret;
- 
--		regmap_write(es8326->regmap, ES8326_RESET, 0x9f);
--		msleep(20);
- 		regmap_update_bits(es8326->regmap, ES8326_DAC_DSM, 0x01, 0x00);
- 		regmap_write(es8326->regmap, ES8326_INTOUT_IO, es8326->interrupt_clk);
- 		regmap_write(es8326->regmap, ES8326_SDINOUT1_IO,
-@@ -440,19 +446,21 @@ static int es8326_set_bias_level(struct snd_soc_component *codec,
- 		regmap_write(es8326->regmap, ES8326_PGA_PDN, 0x40);
- 		regmap_write(es8326->regmap, ES8326_ANA_PDN, 0x00);
- 		regmap_update_bits(es8326->regmap,  ES8326_CLK_CTL, 0x20, 0x20);
--		regmap_write(es8326->regmap, ES8326_RESET, ES8326_CSM_ON);
-+
-+		regmap_update_bits(es8326->regmap, ES8326_RESET,
-+				ES8326_CSM_ON, ES8326_CSM_ON);
- 		break;
- 	case SND_SOC_BIAS_PREPARE:
- 		break;
- 	case SND_SOC_BIAS_STANDBY:
--		break;
--	case SND_SOC_BIAS_OFF:
--		clk_disable_unprepare(es8326->mclk);
- 		regmap_write(es8326->regmap, ES8326_ANA_PDN, 0x3b);
- 		regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x00);
- 		regmap_update_bits(es8326->regmap, ES8326_CLK_CTL, 0x20, 0x00);
- 		regmap_write(es8326->regmap, ES8326_SDINOUT1_IO, ES8326_IO_INPUT);
- 		break;
-+	case SND_SOC_BIAS_OFF:
-+		clk_disable_unprepare(es8326->mclk);
-+		break;
- 	}
- 
- 	return 0;
-@@ -724,13 +732,15 @@ static int es8326_calibrate(struct snd_soc_component *component)
- 		regmap_write(es8326->regmap, ES8326_CLK_DIV1, 0x01);
+ 		regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
++		regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x0a);
++		regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x03);
+ 		/*
+ 		 * Inverted HPJACK_POL bit to trigger one IRQ to double check HP Removal event
+ 		 */
+@@ -660,6 +662,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
+ 			usleep_range(50000, 70000);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x00);
++			regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x1f);
++			regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x08);
+ 			queue_delayed_work(system_wq, &es8326->jack_detect_work,
+ 					msecs_to_jiffies(100));
+ 			es8326->hp = 1;
+@@ -729,14 +733,14 @@ static int es8326_calibrate(struct snd_soc_component *component)
+ 	if ((es8326->version == ES8326_VERSION_B) && (es8326->calibrated == false)) {
+ 		dev_dbg(component->dev, "ES8326_VERSION_B, calibrating\n");
+ 		regmap_write(es8326->regmap, ES8326_CLK_INV, 0xc0);
+-		regmap_write(es8326->regmap, ES8326_CLK_DIV1, 0x01);
++		regmap_write(es8326->regmap, ES8326_CLK_DIV1, 0x03);
  		regmap_write(es8326->regmap, ES8326_CLK_DLL, 0x30);
  		regmap_write(es8326->regmap, ES8326_CLK_MUX, 0xed);
-+		regmap_write(es8326->regmap, ES8326_CLK_DAC_SEL, 0x08);
+ 		regmap_write(es8326->regmap, ES8326_CLK_DAC_SEL, 0x08);
  		regmap_write(es8326->regmap, ES8326_CLK_TRI, 0xc1);
  		regmap_write(es8326->regmap, ES8326_DAC_MUTE, 0x03);
  		regmap_write(es8326->regmap, ES8326_ANA_VSEL, 0x7f);
--		regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x33);
-+		regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x03);
+-		regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x03);
++		regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x23);
  		regmap_write(es8326->regmap, ES8326_DAC2HPMIX, 0x88);
--		regmap_write(es8326->regmap, ES8326_HP_VOL, 0x80);
-+		usleep_range(15000, 20000);
- 		regmap_write(es8326->regmap, ES8326_HP_OFFSET_CAL, 0x8c);
-+		usleep_range(15000, 20000);
- 		regmap_write(es8326->regmap, ES8326_RESET, 0xc0);
  		usleep_range(15000, 20000);
- 
-@@ -768,27 +778,27 @@ static int es8326_resume(struct snd_soc_component *component)
+ 		regmap_write(es8326->regmap, ES8326_HP_OFFSET_CAL, 0x8c);
+@@ -777,13 +781,13 @@ static int es8326_resume(struct snd_soc_component *component)
+ 	/* reset internal clock state */
  	regmap_write(es8326->regmap, ES8326_RESET, 0x1f);
  	regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x0E);
++	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
  	usleep_range(10000, 15000);
--	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0x88);
-+	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xe9);
-+	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0x4b);
+ 	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xe9);
+-	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0x4b);
++	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0xcb);
  	/* set headphone default type and detect pin */
--	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x81);
-+	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x83);
+ 	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x83);
  	regmap_write(es8326->regmap, ES8326_CLK_RESAMPLE, 0x05);
-+	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x30);
+-	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x30);
  
  	/* set internal oscillator as clock source of headpone cp */
--	regmap_write(es8326->regmap, ES8326_CLK_DIV_CPC, 0x84);
-+	regmap_write(es8326->regmap, ES8326_CLK_DIV_CPC, 0x89);
- 	regmap_write(es8326->regmap, ES8326_CLK_CTL, ES8326_CLK_ON);
+ 	regmap_write(es8326->regmap, ES8326_CLK_DIV_CPC, 0x89);
+@@ -791,14 +795,15 @@ static int es8326_resume(struct snd_soc_component *component)
  	/* clock manager reset release */
  	regmap_write(es8326->regmap, ES8326_RESET, 0x17);
  	/* set headphone detection as half scan mode */
--	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x08);
-+	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x30);
+-	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x30);
++	regmap_write(es8326->regmap, ES8326_HP_MISC, 0x3d);
  	regmap_write(es8326->regmap, ES8326_PULLUP_CTL, 0x00);
  
  	/* enable headphone driver */
++	regmap_write(es8326->regmap, ES8326_HP_VOL, 0xc4);
  	regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa7);
  	usleep_range(2000, 5000);
--	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xab);
--	usleep_range(2000, 5000);
--	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xbb);
--	usleep_range(2000, 5000);
-+	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xa3);
-+	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xb3);
+-	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xa3);
+-	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0xb3);
++	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0x23);
++	regmap_write(es8326->regmap, ES8326_HP_DRIVER_REF, 0x33);
  	regmap_write(es8326->regmap, ES8326_HP_DRIVER, 0xa1);
  
  	regmap_write(es8326->regmap, ES8326_CLK_INV, 0x00);
-@@ -802,9 +812,6 @@ static int es8326_resume(struct snd_soc_component *component)
- 	/* set ADC and DAC in low power mode */
- 	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
+@@ -827,7 +832,7 @@ static int es8326_resume(struct snd_soc_component *component)
+ 		    (ES8326_IO_DMIC_CLK << ES8326_SDINOUT1_SHIFT));
+ 	regmap_write(es8326->regmap, ES8326_SDINOUT23_IO, ES8326_IO_INPUT);
  
--	/* force micbias on */
--	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0x4f);
--	regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x08);
- 	regmap_write(es8326->regmap, ES8326_ANA_VSEL, 0x7F);
- 	/* select vdda as micbias source */
- 	regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x23);
-@@ -832,6 +839,7 @@ static int es8326_resume(struct snd_soc_component *component)
- 			((es8326->version == ES8326_VERSION_B) ?
- 			(ES8326_HP_DET_SRC_PIN9 | es8326->jack_pol) :
- 			(ES8326_HP_DET_SRC_PIN9 | es8326->jack_pol | 0x04)));
-+	regmap_write(es8326->regmap, ES8326_HP_VOL, 0x11);
+-	regmap_write(es8326->regmap, ES8326_ANA_PDN, 0x3b);
++	regmap_write(es8326->regmap, ES8326_ANA_PDN, 0x00);
+ 	regmap_write(es8326->regmap, ES8326_RESET, ES8326_CSM_ON);
+ 	regmap_update_bits(es8326->regmap, ES8326_PGAGAIN, ES8326_MIC_SEL_MASK,
+ 			   ES8326_MIC1_SEL);
+diff --git a/sound/soc/codecs/es8326.h b/sound/soc/codecs/es8326.h
+index 90a08351d6acd..0f491db6d8322 100644
+--- a/sound/soc/codecs/es8326.h
++++ b/sound/soc/codecs/es8326.h
+@@ -100,7 +100,7 @@
+ #define ES8326_MUTE (3 << 0)
  
- 	es8326->jack_remove_retry = 0;
- 	es8326->hp = 0;
+ /* ES8326_CLK_CTL */
+-#define ES8326_CLK_ON (0x7f << 0)
++#define ES8326_CLK_ON (0x7e << 0)
+ #define ES8326_CLK_OFF (0 << 0)
+ 
+ /* ES8326_CLK_INV */
 -- 
 2.53.0
 
