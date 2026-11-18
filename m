@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048392;
-	b=iDF284Ke2ljETEze8IHuj8GZlxPeI5lb4q2Ob3lz0mQ38BKQ/MQsHT9YZEIbZh10gkoq
-	 2Pqd3rtrE3DkFiCOlOSNtoSt1un+iFpuXk4DUWeDSnDDRfQZ/Q6DkhmApcDPYKseK4aed
-	 3Dwaxv3STyhr1Akj2MU73t7koN6Kla1HY3P/LpP61a090HaaLbRwiFJQ7fzm/308fwVWd
-	 No6TpOLPlJO1XvJvu6edsBk7m5x+sj2ssUxslAgkn/OZ1nePj1WRnbXnBqakr6Id1YHxO
-	 5i29sQY9Ci2VKvrwIiF3ejANpQfrHPLj4TfSpDe7PWh7NOnPWj18qx1/mi1Hyg8tPoQ==
+	t=1795048395;
+	b=0I6IO1M93IEaQsxE9ZYx/pSvkLl8PbPoGfUnQHbwsrsxf3lBDbW5ptH4qq2Bqb81BOUW
+	 nlhlNp3F3/Ofigj6h3kLnTukkl8JIjZZ1Ggq6udNk1CRG27sdczGLM9nvlEGcAGvu9dDu
+	 FzTdQv756QgZO5514eoaV5Y++vz2hvHjYMy0RwNG6cD6gnTvSZb8MXTGg535Gbav0PdcU
+	 Iso31XbvXoFTiQB1vQXy/1f8N5WxzBhO3vQguSPmQ8RM3N2hrADJ7rGtrJQ0mWlstB5gO
+	 QzkMKQTBlTc7wlO1jXCMB73wbfOlqhGvK0llBBNOnbIWgBwrPOYImORWNU4TRn9tE3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rePSK+Bywl9VT1rQ4nlEmP75GYxkTv3jeGAT3wkWbWc=;
-	b=EPZvXlhwbuca1KaFG9fkyNFFILiTbdd+Cm9EZYN1PCZpMjlXG8+tNLRKtiDfcBJA/eU3
-	 MSoy2KjtQ6HvENdQvX6HV/nsMvYEnUsy8yzZWbHfWrc2mA6gZ2Klic7IsSPSyJGoaIrJx
-	 MQHul7IvmI/9UZt/o1ok7vewKj3BglyNV31FCpm4KzyYta0g88K6Hd5x7atokOd3c1RA5
-	 v9QedqTZQEV2a0GPtgUY7R3Fm2FKdq4fTG3bGzYV3qxJTyDPvMxFECY3O03TTj1yzhNKx
-	 ksyXaKSpjG5DqbrQRlpNlUL/ELlhC5V+LpUNAUWEGPfljauNelbcZA0Swjap5gpgUbA==
+	bh=W09a56seXU3+J0XW3Sxbly8Ur6XpSK368oK4hb3RNcM=;
+	b=IXGAdSjhp3QXzWMBihzXWLmPlvNi+BiaNi4/soadJ3gIk1jOcIgEpTT6Khtt9YP0Zd+C
+	 bkZOa1rL2uEC4DqM76bS4ykxKf3/YBLYZFAFY8ekUXGy8gkJ5bEds2zp5bkYIkPnirK/W
+	 wgyXwKAK+bQhUiy/ch3ZTVbUIWFyrXn7zalU0XyYCbpPQ1TGdy6J1c32XC5rAj+JzG7tx
+	 1gxiYayRDJWympUiEz2mmgFog8cG+9euGeb/vwuLohDIig5OMXHlQULYQPa+nj7MPf003
+	 pcn4Vzuk48frpqds6p+17pEjr/7cUp3fjTo6zFa5Da4gH/56yMGu0zE1W6ozBgDhVSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjzhrifZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=icuVko4S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800C060A3803;
-	Thu, 19 Nov 2026 00:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA6760A2600;
+	Thu, 19 Nov 2026 00:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjzhrifZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D560A1F000C4;
-	Thu, 19 Nov 2026 00:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=icuVko4S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69E41F000C4;
+	Thu, 19 Nov 2026 00:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048392;
-	bh=rePSK+Bywl9VT1rQ4nlEmP75GYxkTv3jeGAT3wkWbWc=;
+	s=korg; t=1795048395;
+	bh=W09a56seXU3+J0XW3Sxbly8Ur6XpSK368oK4hb3RNcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UjzhrifZan5D/Cykdt2hefDniZFDjynYOav20zsUQLm/lEoRLjr5ljKEYV2c8W//L
-	 17Mr9s+MP8IsOyhDB6B+J71pVsyqBORBujDZJyVfhEQ4B714s4iMZgBwThktzFkH+s
-	 Byw2Dl2Y8kT4XGQ6glSed5Nir88kExviw/YNpdN4=
+	b=icuVko4SLGhoDJ5Bt84NWyUhhGC9BqbpLxYR8hqxahmcY9S26CofeYSCe1Ce3IU6D
+	 3SC6gYroMctWQCqC1YkWzTXKZrYhj96nC7L8NydxO6GJ3JR9ra9JL/WhOK8iQ+KjAV
+	 vnONkiL8FIRBO07+8AqWRAIL2ycoMCaWZlr7qjYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andrew Gaylard <ag@ffroot.co.za>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1977/2857] bpf, lsm: Reject writes into the BPF LSM program context
-Date: Wed, 18 Nov 2026 15:50:11 +0100
-Message-ID: <20261118150312.569835272@linuxfoundation.org>
+Subject: [PATCH 6.1 1978/2857] pinctrl: fix PINCTRL_SPPCTL=m
+Date: Wed, 18 Nov 2026 15:50:12 +0100
+Message-ID: <20261118150312.604950941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,50 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Andrew Gaylard <ag@ffroot.co.za>
 
-[ Upstream commit c42da1d3ba9d5067cf3f0676b98bcb3f5f9e3ce1 ]
+[ Upstream commit 7dcf87d2dbbe8c9c1efb69fe9be728a3dfd51d3d ]
 
-The verifier types a load from a tracing-style context by its offset
-alone: btf_ctx_access() looks the offset up in the attach hook's
-prototype, and check_mem_access() stamps the resulting type onto the
-destination register. Nothing tracks what the slot actually holds.
-That is sound only as long as the context is read-only, and for BPF LSM
-it is not. lsm_verifier_ops wires ->is_valid_access() straight to
-btf_ctx_access(), which never looks at enum bpf_access_type, so a store
-into the context passes verification. Every other user of the helper
-either goes through bpf_tracing_btf_ctx_access() or open-codes the same
-type != BPF_READ test first; BPF LSM is the only one that does neither.
+The PINCTRL_SPPCTL option is defined as a tristate in Kconfig, and the
+help text suggests that the user can build it as a module by setting to
+'m'.
 
-A program can therefore store a scalar of its choosing into a context
-slot, read the slot back, and get a register the verifier believes is a
-trusted pointer of the hook's argument type. Handing that to a kfunc or
-helper which dereferences a trusted argument turns it into an arbitrary
-kernel access. Route BPF LSM through bpf_tracing_btf_ctx_access() like
-everyone else.
+However, it cannot currently be set to 'm', because SOC_SP7021, the only
+platform that supports it, is a bool option that uses 'select' on it.
+Also, the SP7021 requires this driver to be built in, in order to boot.
 
-Fixes: fc611f47f218 ("bpf: Introduce BPF_PROG_TYPE_LSM")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260915150739.284189-3-daniel@iogearbox.net
+Change the tristate to bool and fix the help text.
+
+Tested on linux-next-2026-09-14 on a LTPP3G2 board.
+
+This impossible tristate was detected by kconfirm, a static analysis tool
+for Kconfig, by Julian Braha <julianbraha@gmail.com>.
+
+Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
+Signed-off-by: Andrew Gaylard <ag@ffroot.co.za>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lsm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/sunplus/Kconfig | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index e7e195a2e5f98..f26faa9a35db1 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -381,6 +381,6 @@ const struct bpf_prog_ops lsm_prog_ops = {
- };
+diff --git a/drivers/pinctrl/sunplus/Kconfig b/drivers/pinctrl/sunplus/Kconfig
+index 4b5c47c193d97..a359fdbda1b3a 100644
+--- a/drivers/pinctrl/sunplus/Kconfig
++++ b/drivers/pinctrl/sunplus/Kconfig
+@@ -4,8 +4,8 @@
+ #
  
- const struct bpf_verifier_ops lsm_verifier_ops = {
--	.get_func_proto = bpf_lsm_func_proto,
--	.is_valid_access = btf_ctx_access,
-+	.get_func_proto		= bpf_lsm_func_proto,
-+	.is_valid_access	= bpf_tracing_btf_ctx_access,
- };
+ config PINCTRL_SPPCTL
+-	tristate "Sunplus SP7021 PinMux and GPIO driver"
+-	depends on SOC_SP7021
++	bool "Sunplus SP7021 PinMux and GPIO driver"
++	depends on SOC_SP7021 || COMPILE_TEST
+ 	depends on OF && HAS_IOMEM
+ 	select GENERIC_PINCTRL_GROUPS
+ 	select GENERIC_PINMUX_FUNCTIONS
+@@ -17,6 +17,4 @@ config PINCTRL_SPPCTL
+ 	help
+ 	  Say Y here to support Sunplus SP7021 pinmux controller.
+ 	  This driver requires the pinctrl framework.
+-	  GPIO is provided by the same driver.
+-	  To compile this driver as a module, choose M here.
+-	  The module will be called sppinctrl.
++	  This driver also provides GPIO.
 -- 
 2.53.0
 
