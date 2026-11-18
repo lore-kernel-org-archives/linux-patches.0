@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019660;
-	b=c+qtAXucZ6e3IqwlczCfWHMK54b7EsGNl0bhPpjmhXa2yxSPE8V0yfX2YyYAezmshokx
-	 7RRzomj/+dY4M4He+jzBh18GnWNoRzlLq2trEUA+3YW69xya9JcQ1He36UirZjYApmCDI
-	 46h2M9KILSKSJQEvGTf29KLAF14YPwapEr3tZUzBM/jPx0uhUKzfTUD0aQVrNxLc7qjgt
-	 4CcV/Ncgd+PQB5N7IPfj4n3uAdu22/ENHu70njRVrCn1fw2BIE90G/DTNCbsZfvK3TfL0
-	 /VKbE3qABzve+sBWhdnpDEIUNPo5RRsQA9hBX439VPqB30YJNqY5Io3rCnihG/1AbIQ==
+	t=1795019663;
+	b=B7rAl6kOEbLS0LuotA1LWaejq0U+FysBI8QZ4gqTyasvVpWDQ5jt3vuvHDsmuVAYlCIp
+	 Qi94vWKuf26CIdLHWxVawOXELcYtCFtnN8ere8PwWEoR7nX6ikOBNN0Qs2Hk3iUbu0jkK
+	 exoZRIvyrusmEJamM/u/eIbvrrCksEzMXfNOVF7ZLCRtywi49wMQuMfEI7kzrE0In5Y+S
+	 7BHU1wXV5/DBN2FhvoiTVA5t6SQgDqSZoYmzFkVLt9l6VvSjkoaXsGYYogWZJzXqfhwLv
+	 v/iO7YsbV3+dDueWIwKkUMwJ/SzDYvYC5c5rUwD0OqAPOP6ah54M0inPW9VJ7fQQLhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YTAIhhWFoGhUVV36e13K+Zi4JPetUWXEuRzs60i48F4=;
-	b=IH8N0Zk6aP4WSiGMhILUfj3ZwXQ+SuXJRN57id5FBfOybf2mNJPfhfRckMPB+WhSBRTP
-	 LNErhdKF4inXUdudujEaXtDB6yCVWSM2vwW2cjI9/wHYM7oMHsGq3DWKQuSU6ug2cu0Wy
-	 O9FwcyM2PXLNSKmoVWqGSZ3DpFCPzlgVoU5lfSM2q7nSaH4nfogXSdKD8OctqzKxlT5kS
-	 11prPommTmCrSx8O8mTFZlQguW6VuHS684Vbune/vq8Jka83cGspysXKPsSKk52OZXULx
-	 zj8T8np+JbzmA2f9L/4X6ljcRjiuaeNbcSbJh+zvzr/D7kyep5Hs+d/dDSL3bWCh5ww==
+	bh=T5xT08Hwt6RY4vS3AU3qLAC5fL3nYCtNOZaWttLO+yM=;
+	b=ib8XrhU54MNBkHq+LQ/a1mSLxZ/IhclnisMKZC+55aIFo4Tl1JRXH+LArpSssrcjdWr9
+	 GtuC1IfGXtY/aIQbQhQzJ0vK4H20+o10XNVPbLPOejp5CYDasxoiHBfxwjk0myfxACLMo
+	 Rth2yDu3qHmo9uvnILVIA58VgucLKKYz/Sl+IL5zwnt5C28fkNQjAV11AQERk6kAKZqY0
+	 W+TO0/NPDLmmyqpEXw4/8Q71vXU7kCxIHBI4bNNB52VcKhIYsG4hpyDrwCZSjFxv1imB/
+	 oaqb0s0K1VZtabncal3wWbkuS+/CK/crRUKZPpE6y9Zr5GaDTN1lla0kqCuMjWjKZbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sf9WEMht;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEZqgbKb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0B1606A32C;
-	Wed, 18 Nov 2026 16:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963A606A325;
+	Wed, 18 Nov 2026 16:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sf9WEMht
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E611F000C5;
-	Wed, 18 Nov 2026 16:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEZqgbKb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E421F000C4;
+	Wed, 18 Nov 2026 16:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019660;
-	bh=YTAIhhWFoGhUVV36e13K+Zi4JPetUWXEuRzs60i48F4=;
+	s=korg; t=1795019663;
+	bh=T5xT08Hwt6RY4vS3AU3qLAC5fL3nYCtNOZaWttLO+yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sf9WEMhtZGMRzmndS7sr8GiKYp43HN0YxGXplUUhpDy2oL77E12RaOUBo8yXRAjn5
-	 SCFopG7y8yQNyU0zCzxeGijoLV8aVqofLs2RMzIGGIMMfFqTN5PH950cwhy+XlLsf4
-	 R0iUsJjk2f/FNxFpBhl5TTPGzTwyLOdrqQ+4nU/g=
+	b=vEZqgbKbbDzqh0aX9mbwiqvKgNT+n7eq/twMwqQy4N5HdfW8Drb1RvMrOq9By7n2k
+	 WFTK70Hmplp6xNGh+60e3sai2nyFLYsnIuP8RY1rPmr1kbRJQfeWhHOyFzgzwZ7BGC
+	 wMFbittk70tw1pLj9dlYNwzqVB/xuMXSH5phhxSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	c.f.a@posteo.de,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1676/2651] wifi: ath12k: avoid IDR mutation during pending mgmt TX cleanup
-Date: Wed, 18 Nov 2026 15:48:36 +0100
-Message-ID: <20261118150348.032525567@linuxfoundation.org>
+Subject: [PATCH 7.3 1659/2651] btrfs: qgroup: do not treat "ret > 0" as error when deleting a qgroup
+Date: Wed, 18 Nov 2026 15:48:19 +0100
+Message-ID: <20261118150347.469703492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,90 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 94c7b50351fd30e1dfe1b4051197a1445d8547e1 ]
+[ Upstream commit dd906477cc2c33c82ec17e6301bd4be4ea588565 ]
 
-The pending management TX cleanup walks txmgmt_idr with idr_for_each(),
-and its callback removes the current entry. This can invalidate the
-radix-tree iterator retained by idr_for_each().
+[BUG]
+There is a bug report that when removing a child qgroup, if removing the
+qgroup requires a rescan, it will delete the on-disk relation and qgroup
+items but not the in-memory qgroup rb entry.
 
-Use idr_for_each_entry() so every iteration starts with a fresh lookup.
-Continue to remove each entry under txmgmt_idr_lock before freeing its skb,
-preventing concurrent TX completion from finding a stale skb pointer.
+This makes all later qgroup rescan to fail.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-5-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[CAUSE]
+The call chain looks like the following:
+
+ btrfs_remove_qgroup()
+ |- __del_qgroup_relation()
+ |  |- quick_update_accounting()
+ |     Which returns 1, showing this operation will require
+ |     a qgroup rescan
+ |- if (ret) goto out;
+    Which skips the del_qgroup_rb() call, leaving the in-memory qgroup
+    rb entry still intact.
+
+Then later qgroup rescan/update will always fail and mark qgroup
+inconsistent:
+
+ btrfs_run_qgroups()
+ |- update_qgroup_info_item()
+ |  |- btrfs_search_slot()
+ |     Which returns -ENOENT, as the qgroup info item is already
+ |     deleted.
+ |- qgroup_mark_inconsistent()
+ |- return -ENOENT;
+
+[FIX]
+Do not treat "ret > 0" as an error.
+
+Reported-by: c.f.a@posteo.de
+Link: https://lore.kernel.org/linux-btrfs/14846642-85d3-4afb-ad99-1b74b22f5f90@posteo.de/
+Fixes: 9c8b35b1ba21 ("btrfs: quota: Automatically update related qgroups or mark INCONSISTENT flags when assigning/deleting a qgroup relations.")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c |  3 +--
- drivers/net/wireless/ath/ath12k/mac.c  | 12 ++++++------
- drivers/net/wireless/ath/ath12k/mac.h  |  2 +-
- 3 files changed, 8 insertions(+), 9 deletions(-)
+ fs/btrfs/qgroup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index b25202effb002..c6af10e54c3f7 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -1516,8 +1516,7 @@ static void ath12k_core_pre_reconfigure_recovery(struct ath12k_base *ab)
- 			complete_all(&ar->thermal.wmi_sync);
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index f68b696b4bf72..df8a0aa662478 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1845,7 +1845,7 @@ int btrfs_remove_qgroup(struct btrfs_trans_handle *trans, u64 qgroupid)
+ 					struct btrfs_qgroup_list, next_group);
+ 		ret = __del_qgroup_relation(trans, qgroupid,
+ 					    list->group->qgroupid);
+-		if (ret)
++		if (ret < 0)
+ 			goto out;
+ 	}
  
- 			wake_up(&ar->dp.tx_empty_waitq);
--			idr_for_each(&ar->txmgmt_idr,
--				     ath12k_mac_tx_mgmt_pending_free, ar);
-+			ath12k_mac_tx_mgmt_pending_free(ar);
- 			idr_destroy(&ar->txmgmt_idr);
- 			wake_up(&ar->txmgmt_empty_waitq);
- 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 815be25b33c4a..3e4039612fb5a 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -9194,13 +9194,13 @@ static void ath12k_mac_tx_mgmt_free(struct ath12k *ar, int buf_id)
- 	ath12k_mgmt_over_wmi_tx_drop(ar, msdu);
- }
- 
--int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
-+void ath12k_mac_tx_mgmt_pending_free(struct ath12k *ar)
- {
--	struct ath12k *ar = ctx;
--
--	ath12k_mac_tx_mgmt_free(ar, buf_id);
-+	struct sk_buff *msdu;
-+	int buf_id;
- 
--	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, msdu, buf_id)
-+		ath12k_mac_tx_mgmt_free(ar, buf_id);
- }
- 
- static int ath12k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-@@ -14735,7 +14735,7 @@ static struct wiphy_iftype_ext_capab ath12k_iftypes_ext_capa[] = {
- 
- static void ath12k_mac_cleanup_unregister(struct ath12k *ar)
- {
--	idr_for_each(&ar->txmgmt_idr, ath12k_mac_tx_mgmt_pending_free, ar);
-+	ath12k_mac_tx_mgmt_pending_free(ar);
- 	idr_destroy(&ar->txmgmt_idr);
- 
- 	kfree(ar->mac.sbands[NL80211_BAND_2GHZ].channels);
-diff --git a/drivers/net/wireless/ath/ath12k/mac.h b/drivers/net/wireless/ath/ath12k/mac.h
-index aba98afd4365c..ae44ebfd9bd98 100644
---- a/drivers/net/wireless/ath/ath12k/mac.h
-+++ b/drivers/net/wireless/ath/ath12k/mac.h
-@@ -173,7 +173,7 @@ struct ath12k *ath12k_mac_get_ar_by_pdev_id(struct ath12k_base *ab, u32 pdev_id)
- void ath12k_mac_drain_tx(struct ath12k *ar);
- void ath12k_mac_peer_cleanup_all(struct ath12k *ar);
- void ath12k_mac_dp_peer_cleanup(struct ath12k_hw *ah);
--int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx);
-+void ath12k_mac_tx_mgmt_pending_free(struct ath12k *ar);
- enum rate_info_bw ath12k_mac_bw_to_mac80211_bw(enum ath12k_supported_bw bw);
- enum ath12k_supported_bw ath12k_mac_mac80211_bw_to_ath12k_bw(enum rate_info_bw bw);
- enum hal_encrypt_type ath12k_dp_tx_get_encrypt_type(u32 cipher);
 -- 
 2.53.0
 
