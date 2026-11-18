@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024022;
-	b=I1Zlwue3C1bP+XlfhXkkmO2UHDkHIKPXQOtXIY+OPioXcsraOlaWNoaPJAwkh9LLknRL
-	 dyhpjP8ItCoOxnS3d4U3XZUrK1TRJ28hHF/YpYHULe99ITFqXhRiE+cdGZMuVmV62Fv4M
-	 vzWKepdFFl+cGjS+IZ5axsU0DHFe5quGrhxqfRNUmzlMuunrZODbZdKmsy7rM98qvIKVq
-	 kxidiR2b9qh9b5hiWchi2yRwOEtULSGEU6ctWQGQ3wM7dzsW1mD01mEWJq4hp5GMK/UF0
-	 fKC5bEr1Bp7u/7oGOZkmDGwRSWZZlAJuCncV1qzTM0gYwPKyDe5Z4dWDHOEPSurNTuw==
+	t=1795024025;
+	b=lWVn/9vgbI2cq/Wcfxci3kq+bnOvk5qkuIfVveDl8vAMYoNBqzKEnmMK9blas060mFb1
+	 563kA4ieoV0Umj2bNlWt7OTG3GpqPRVUot7s3IZ0QQiv3PaNki52MgeNa4ydCVSxzJgNY
+	 T/uEH2FmHwnh2l7U7qWtwG47ADYMfM4nUb1WO7fjqsAXAyXmMziOAjTA8UM79gB2WyZ3f
+	 Yo/FGlfIRdJ4dOnCfSukYafWt4bQFk1EAIxjaZ1csZQSz0EsJM6B+z8kzS7Xnqdl738V1
+	 J1JXcBZYSLZe5Pdfa0QLdN+6i3hxmVMu6Ce53irO/xNGhn+Fojw8sLED+4a1rBtAAjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jxXxzYsDHOdk7Yzi1oVcUVQCOPt1+v1mJ/fxFsP3xMk=;
-	b=W5+TvJPaNUNyCrLgY3smGOSfM/TUCQw53MGEcJIOdo/+kNEQTD7dmTmTIewaHGGfldlr
-	 16Iie7P656X4MsM6fZMEmaewZi5YHUFdQyzUVbLuKqXU9prvCq6cjYz/Ab9P5jgEbIEgK
-	 GpcWhOTs9I1O6mAswxmOY4/Yp9TcW5yjMWWiWpWufNjVw3F7uYCDrlIcb9ADU/MfPa8y/
-	 Us6fUw1e5ctxarMLTTmq1i1SO3kKsktO1S2l56x2P+gAs3AWuOKomPTP/ZYFqp3dmnjGI
-	 l0/YuPUmBUD+B8uZJ2+PVAGy05qIsbhsI/bpIuK+d6K9tUx5sLKmeS7TOgjSBMFD0Sw==
+	bh=LUGXwzux1QHCRDrit0Dpm3xJqI+dvmfrcIsGiAeiT9k=;
+	b=zvO4rrc4FswC2z3BxkJfqXH1oLTECMgdnGdrqfwCnq801MqaQzdenfAyOvx/Ssg2QnXh
+	 bLviENWM+Q1oexrCvAVKC/wIaHXcPhxLrV6NAm8p5+0XNKGfd6sWEm9YOdTTTTDAQdb81
+	 xhZnzJqvIdK983KApCgdsQFPWSiiIhuRiJwCNFES/1zqqhOFV6IecfAJTKbdPHdTn3mmy
+	 Pf/32cDjZSQGpam51t/8RTtdPZ6OWFA2UITq2LS0ykj+TTD1InzXd50BsO9xHWeSuCEOL
+	 jM9MK4wfeD2dUisaIWX3Fm4ZmUb4mhm5c5FHA+RlyO87BwilU7ABWZsXJQtYHxJxNSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA17XQW9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ObSyS3Gt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2653606A331;
-	Wed, 18 Nov 2026 17:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9435606A320;
+	Wed, 18 Nov 2026 17:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA17XQW9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C44E1F000C5;
-	Wed, 18 Nov 2026 17:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ObSyS3Gt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E081F000C4;
+	Wed, 18 Nov 2026 17:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024021;
-	bh=jxXxzYsDHOdk7Yzi1oVcUVQCOPt1+v1mJ/fxFsP3xMk=;
+	s=korg; t=1795024024;
+	bh=LUGXwzux1QHCRDrit0Dpm3xJqI+dvmfrcIsGiAeiT9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yA17XQW9fPhyjpy/SYKQIUtaUr8mK2oGeMNzX5tCAieZO/D2FuYjyhXHuhjJXSTjX
-	 E3IeFFyGXr+AF7153IJCVxfnYZDrXqE9PpifUcdb2JH7Jv9CN7WxX6OaQRCFkVfXPD
-	 GWOzhfdH8kg8gE/E8/6pJg+3ml37OuzhnHScXHlY=
+	b=ObSyS3Gtj2W1SV2ugoilW3PxWd4Z73E/++D7cbNZ0JfXdEdsigvp/d3PmvlGH9Edm
+	 vP3YUfjRWjtVqle9ruroZVBSuIYcp58t+KZVpEEnSGCHwlcm/x/veM01Dn/D23lSBx
+	 TnKjqJrnOzJ4tj6T/mzgOXBsTs5bLe7pjW72LoCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0560/2151] thermal/drivers/renesas/rzg3e: Fix runtime PM handling of compare irq
-Date: Wed, 18 Nov 2026 15:38:15 +0100
-Message-ID: <20261118150142.354139529@linuxfoundation.org>
+Subject: [PATCH 6.18 0578/2151] perf build: Only pass clang flags to CXX when CXX is clang
+Date: Wed, 18 Nov 2026 15:38:33 +0100
+Message-ID: <20261118150143.009620001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,72 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit aa1bc39e45f29a4f56d7e6be7164e100727df465 ]
+[ Upstream commit c8592f8da838a07ddd0011eeb444771b64193a0f ]
 
-The TSU hw is limited in the sense that lower and upper trip points can be
-set, but the hw cannot raise interrupts on its own. It can only signal that
-the thresholds were passed when the temperature is read, either during
-polling or on a manual read. Therefore, the interrupt enable state
-configured by set_trips() must remain active for the next read to trigger
-an event.
+Building with "make CC=clang" appends clang's --target= and
+-fintegrated-as to CXX, but CXX is only set to clang++ by "make LLVM=1".
+With just CC=clang, CXX is still g++ and every C++ feature test dies:
 
-Currently, runtime PM autosuspend puts the chip to sleep and clears the
-compare interrupt that was enabled during set_trips(). On power up, the
-compare interrupt enable is not restored, which means that it won't ever
-fire.
+  g++: error: unrecognized command-line option '--target=...'
+  g++: error: unrecognized command-line option '-fintegrated-as'
 
-Fix this by caching the contents of the SIER register during runtime power
-off and restore it during runtime power on.
+The failures are silent, as feature tests are allowed to fail, so the
+build quietly loses libllvm and C++ demangling support:
 
-Fixes: dc67521c20b7 ("thermal/drivers/renesas/rzg3e: Fix add thermal driver for the Renesas RZ/G3E SoC")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260916120003.87018-3-ovidiu.panait.rb@renesas.com
+  $ make CC=clang && grep LIBLLVM .config-detected
+  (nothing, whereas a gcc build reports CONFIG_LIBLLVM=y)
+
+The block is entered when CC_NO_CLANG says CC is clang, which says
+nothing about CXX. Probe CXX the same way tools/scripts/Makefile.include
+probes CC, and only add the flags when CXX really is clang++.
+
+Mixing a clang-built C with a g++-built C++ is fine here, the C++ code
+is linked with -lstdc++ already.
+
+Fixes: 4772e66cb45e0dd2 ("perf build: Support build with clang")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/renesas/rzg3e_thermal.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/Makefile.config | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
-index b797c367ae44f..423e852f4cbf1 100644
---- a/drivers/thermal/renesas/rzg3e_thermal.c
-+++ b/drivers/thermal/renesas/rzg3e_thermal.c
-@@ -88,6 +88,7 @@ struct rzg3e_thermal_info {
-  * @info: chip type specific information
-  * @trmval0: calibration value 0 (b)
-  * @trmval1: calibration value 1 (c)
-+ * @sier: cached interrupt enable register
-  * @lock: protects hardware access during conversions
-  */
- struct rzg3e_thermal_priv {
-@@ -98,6 +99,7 @@ struct rzg3e_thermal_priv {
- 	const struct rzg3e_thermal_info *info;
- 	u16 trmval0;
- 	u16 trmval1;
-+	u32 sier;
- 	struct mutex lock;
- };
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 06b6b4ce903c4..1941700ed6ef0 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -53,7 +53,14 @@ ifeq ($(CC_NO_CLANG), 0)
+   endif # CROSS_COMPILE
  
-@@ -143,12 +145,16 @@ static int rzg3e_thermal_power_on(struct rzg3e_thermal_priv *priv)
- 		return ret;
- 	}
- 
-+	/* Restore interrupt enable state */
-+	writel(priv->sier, priv->base + TSU_SIER);
+   CC := $(CLANG) $(CLANG_FLAGS) -fintegrated-as
+-  CXX := $(CXX) $(CLANG_FLAGS) -fintegrated-as
 +
- 	return 0;
- }
++  # CC being clang says nothing about CXX: "make LLVM=1" overrides both, but
++  # "make CC=clang" leaves CXX as g++. Probe CXX the way Makefile.include
++  # probes CC rather than assuming the two match.
++  CXX_NO_CLANG := $(shell if command -v $(firstword $(CXX)) >/dev/null 2>&1; then $(CXX) -dM -E -x c++ /dev/null; fi | grep -Fq "__clang__"; echo $$?)
++  ifeq ($(CXX_NO_CLANG), 0)
++    CXX := $(CXX) $(CLANG_FLAGS) -fintegrated-as
++  endif
  
- static void rzg3e_thermal_power_off(struct rzg3e_thermal_priv *priv)
- {
--	/* Disable all interrupts */
-+	/* Save and disable all interrupts */
-+	priv->sier = readl(priv->base + TSU_SIER);
- 	writel(0, priv->base + TSU_SIER);
- 
- 	/* Clear pending interrupts */
+   # Enabled Wthread-safety analysis for clang builds.
+   CFLAGS += -Wthread-safety
 -- 
 2.53.0
 
