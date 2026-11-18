@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034463;
-	b=pqlcm0xT1rYGYZevAw+dJBecDXeTSn77y01LcpEUz2ly7juA4+QILZFYFHvd84kpkzFF
-	 IOQKJv6G21YH//ZqENGhpfnrvPEVG3+Gt5UprLeKXMUOSI7LJhfnoqBZSmuZ2t8P6FMcC
-	 LavKU7PTGzZKoZifhsVBN2+a6CUriA69UJ4urJOH09ipkrJkuct21dstt2IyzAB+xhzaE
-	 8lNmeCTE21Brfn69OW3FMI4Ud7IEekNl7IWjlLekK7BveJfUDtfsEl3A/M9kyYB3hgard
-	 22FgEISafaS/rb2YqFGfSN1AiYE5LLueu7FEeBnTVRsN7HqvUOipALk9Ap4eXYqGwaw==
+	t=1795034465;
+	b=L/yvpm3iBSjjEH23tbf1fjgzX3jrd0htvdCDI7PKir5WBXPtMUl6ulRiTupXhOvFftMf
+	 EmQOqZ1D0tU26a1Lc/p45fq33a5D+2blw3SPa30Il7eHIfuWCtU2I10pbLM72cLcrlLwF
+	 bLqRgLfkfx37Vh5YmWpafUlb2ju72Bt5EZaYs+RQo6N9DMAp6a0mTDFDP5A580G+k9sAw
+	 kXStSvjs48UXWHomLMzLN5S4NjjtWKplsg5DesY5J/PNxGqpml76pdnFv6/KN3p1nJ70e
+	 45lbdaVD64AB1JjZM5WeEStKE4fviR61fCvrbreEazuCneaRE0YBNUvEDYWt+HyAObw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034465;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=impEYo/aNsAF+xoNYzLxDT28aKv4kc/CH0YFUEvKD+k=;
-	b=EHBPbH7A2gV8zkvsqh5GL4AXoLove6a0ajNYIFbGKN6SJQ1zWJM/+lH3wxOuKmLCPJRI
-	 6P0oiRh1vTOmrfTDOx6s4PHfxY+K8OsRHd3myZa4S0DUdXWBVZaQmeO7EvVzSjAy7S8Mv
-	 VpE230V8sSTFpIdArGwXfQS0RKv8hmq0/btvRDY8pWuEZx4mCBiayrH2iER0T4Ii/+nwb
-	 KWy9BwQKFETTUf+WsEk8tRlpOHoBca+3yQfiueUcVcIOfxNJFq599p1CQCXl6TncMxw+M
-	 LfCSH842QnIeNLiy3Cn0jRiKUcr5AA/ekKj5WAPoxzaL16wYQ/XGfV4ptzyNeB8XiPw==
+	bh=l+/cGWC0XttgUlwqFK0fBFes7dGwIhLv0wgEGNSnRmk=;
+	b=CFkV1/hYwPTS2FTa/BymwDUvnBUpw20KFn4BixmerveD2LiBHp7CQmKZcGu8M/aocBIG
+	 c6Px3d+XPdfoY4uxEarSVwQKlL6uDtwX6W1aL40CvmboK14VmSEFYzLvQm7OTgZJFRPby
+	 +DQMORVnkBQSgLjl700lQXBEufH1XCkfvdBzln2KZuLqoxGD+Bk3QJR/4MJS5UQx2lBUW
+	 CjRDzR5CeWwd2+O3mqHaJA7vneLmHbiNe9b3Z+aVXaJRKHT9oNiCZGdEAut52ooPFz2GG
+	 BhW5BmAYQtWhqA1WemJE3cehk5tbD141pKOe2yvOl3KV7+ENhOrhD3zN4TWELy6aI+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IO5DyCwC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3nS9u9G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E4B606A31C;
-	Wed, 18 Nov 2026 20:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8D0606A32C;
+	Wed, 18 Nov 2026 20:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IO5DyCwC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB711F000C4;
-	Wed, 18 Nov 2026 20:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3nS9u9G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B06F1F000C4;
+	Wed, 18 Nov 2026 20:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034462;
-	bh=impEYo/aNsAF+xoNYzLxDT28aKv4kc/CH0YFUEvKD+k=;
+	s=korg; t=1795034465;
+	bh=l+/cGWC0XttgUlwqFK0fBFes7dGwIhLv0wgEGNSnRmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IO5DyCwCoDfn5tMyeRi1RQVEqsxUnDDPndlW0eZX9J2TWNmcK+EksZh8VlpwppuZn
-	 +gUBf52hh3gx3BruZgetg5hjhzzrg3gRhoxvB1s66bmiWZgLSz97Qhdi5QYZiXI/dt
-	 qSk5P9XUKKlEn7DfmySk/Gk986K84do6nWnPxWj8=
+	b=K3nS9u9GnwXDsV/jEv422BnF9oypRLurYUrdFvVJ8o2CkTv23Yb6zqtK7eIk3sEJ5
+	 X8IU4ciHQIOPRoqQ9skg0dEEXgqJnTulC+/8a3YQD2tB3gMgLYgksQ5PQblN0qbDMo
+	 956E7geDJAT3JQsLcIo1vopI30hL2jDUjCU4fZIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Scian <andrea.scian@dave.eu>,
-	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Thierry Reding <treding@nvidia.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0376/3318] mtd: rawnand: pl353: Make sure we use the monolithic helpers for raw accesses
-Date: Wed, 18 Nov 2026 15:16:38 +0100
-Message-ID: <20261118150327.512183912@linuxfoundation.org>
+Subject: [PATCH 6.6 0377/3318] drm/sysfb: simpledrm: Improve framebuffer-size validation
+Date: Wed, 18 Nov 2026 15:16:39 +0100
+Message-ID: <20261118150327.549485802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,58 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 80ecacd054ffeb60cd28e46ed5cd6bd0d2de318b ]
+[ Upstream commit 03f1a3545b721fa7fdadd00080e237519a286a97 ]
 
-Any access not using the hardware ECC engine should be monolithic
-because the controller has its very own way of handling the end of a
-transaction during operation configuration, so we cannot easily make
-repeated reads.
+Validate the framebuffer size from the firmware against the
+limitations of struct drm_display_mode. The type only stores sizes
+in 16-bit fields. Fail probing on errors.
 
-This has the side effect of fixing support for software ECC engines.
+v2:
+- remove unused function simplefb_get_validated_int0() (Sashiko)
 
-Suggested-by: Andrea Scian <andrea.scian@dave.eu>
-Cc: stable@vger.kernel.org
-Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
-Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: 11e8f5fd223b ("drm: Add simpledrm driver")
+Cc: <stable@vger.kernel.org> # v5.14+
+Fixes: 11e8f5fd223b ("drm: Add simpledrm driver")
+Link: https://patch.msgid.link/20260625094509.157581-2-tzimmermann@suse.de
+[ sashal: Kept the local simplefb_get_validated_int0() helper and made it reject values above U16_MAX, since the tree lacks drm_sysfb_get_validated_int0(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/tiny/simpledrm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-index 56c789ab8c1a1..771bda7612864 100644
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -914,7 +914,6 @@ static int pl35x_nand_init_hw_ecc_controller(struct pl35x_nandc *nfc,
- 	chip->ecc.steps = mtd->writesize / chip->ecc.size;
- 	chip->ecc.read_page = pl35x_nand_read_page_hwecc;
- 	chip->ecc.write_page = pl35x_nand_write_page_hwecc;
--	chip->ecc.write_page_raw = nand_monolithic_write_page_raw;
- 	pl35x_smc_set_ecc_pg_size(nfc, chip, mtd->writesize);
- 
- 	nfc->ecc_buf = devm_kmalloc(nfc->dev, chip->ecc.bytes * chip->ecc.steps,
-@@ -981,7 +980,6 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
- 	case NAND_ECC_ENGINE_TYPE_NONE:
- 	case NAND_ECC_ENGINE_TYPE_SOFT:
- 		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
--		chip->ecc.write_page_raw = nand_monolithic_write_page_raw;
- 		break;
- 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
- 		dev_dbg(nfc->dev, "Using hardware ECC\n");
-@@ -995,6 +993,9 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
+diff --git a/drivers/gpu/drm/tiny/simpledrm.c b/drivers/gpu/drm/tiny/simpledrm.c
+index d10574e630a86..5d18ed29bf634 100644
+--- a/drivers/gpu/drm/tiny/simpledrm.c
++++ b/drivers/gpu/drm/tiny/simpledrm.c
+@@ -52,12 +52,12 @@ static int
+ simplefb_get_validated_int0(struct drm_device *dev, const char *name,
+ 			    uint32_t value)
+ {
+-	if (!value) {
++	if (!value || value > U16_MAX) {
+ 		drm_err(dev, "simplefb: invalid framebuffer %s of %u\n",
+ 			name, value);
  		return -EINVAL;
  	}
- 
-+	chip->ecc.read_page_raw = nand_monolithic_read_page_raw;
-+	chip->ecc.write_page_raw = nand_monolithic_write_page_raw;
-+
- 	return 0;
+-	return simplefb_get_validated_int(dev, name, value);
++	return (int)value;
  }
  
+ static const struct drm_format_info *
 -- 
 2.53.0
 
