@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041949;
-	b=RQjdY7TBZqs5A1r7Kp3Id4eUkt9ONqocSgb29SgUlLZ+onsRYPuuNtjKNR/TblLmzijY
-	 vO2RZUUAFDuyQ2tpnvD0iUmYJR0iFBaU200DjNX0QmH8l8Cyl/FJwDxSfLR1qv8hEXLxW
-	 9zwP2Wd4Ijp+uvLFnkIGxXYpqchMvj4ZpfvUMKuGNaCWTljqH3y8azJG8iY+4liW2QKMS
-	 0rLnFxqEEr/RW7ZwSHp8VHcLGqsMQMC0tuolnOp8GNpjIN3PHBNm9+O9CzECBtyzYXe0B
-	 yTpJw8KjeKQYcv4MH4eAz6V2WpOV9uJX1kZgQ03fQnms6uHapnhrjuYjqxglVoTbfFQ==
+	t=1795041952;
+	b=gtSVimCIuJtvFkqC9AHfvUccBaP7fruz+M35CdKafGpwrLApZupqUpyow4uMUcQtA2aH
+	 k56UoWhUIgLHMamYjl7Iagvgsmi4a3KvpnYXXyJkh1O+66VEyehU2v48yDixuDLbbROTX
+	 dr2BxdlmdaxkiWxnLoZoBTPT7kk3i5Gsv4B8s9AjPEW3BIEaDbVEBxQ7xkkAExCmrdndP
+	 4lrcyNm3jMyTE33JNguDgobeDgiEgtGexpnmPXmOrijwxSPxHgM4b/e3Fnk9JQ5Pt5Pmu
+	 ukQM8PeES5iLBAXzTxWIzYaWihR/vBUlsPZCnHjpGcMLq1F2aiMct4FB8JoY+9YPJ0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+98r+sBPaL9aPW/UcZh8niQTLwvPJZslZ8HAxHr1b4I=;
-	b=Hq2DVg+iVJ6Pk9BOA8RYtDmrPSNM6y5MqslaAGFv2U5lHvOceyNKrbiPBoDsM3mbZHO4
-	 UY3g+BLQLz8CMpmma6E8dtiyIGwBYJlmWXW3ePpuzdyxQTQjzonNDC5oBFD3Rl4ep/Thp
-	 Ii33Hx85ak+bbpPSYrfb7rX9nnN2kHAK16U1HVHUyAP5zcHsmOgds8dmWKIRI5USTUsbd
-	 nQgAxrejwaxAfAJ/x0Y9HxhJRvSnbr2UQmfMF/L+w3K8gZ/8+mAIrNCjh4AOAu6Z9AH7+
-	 +uqQjhStEVDk5O4p9n8Hei9Nzg1ypblyJWhXt6TFVhSjNvxwvm7l9USDaVT0/KaW7sQ==
+	bh=cnbaijyr55isr4uLzTx9ceq+t/P+rf9Vo+YYni0Xa5I=;
+	b=lLD/h8NzXTuHpSqHQNSeT79lfoQhrD8DXel9snS0bGIh3Whl2MpY7lBk0KL38SPda70k
+	 62Sh/kGtSO5RgmlZplpgKAl0Bs0HNbk0HX218pkiARSvJaelfn4oSsApdTi0z06EtNHVl
+	 Sz/q/9mG+vnTxlj2kLJxI9UhwVwlrJfWa4xR52/6aPNhuBF8UVIV1JRUkiOvTPJEFcS1S
+	 z5Y/Qmx5nv5XzkcOFb5B5Lqb4bdHVSrs0guZRpm6PI9SZBs9QHT8QVOrMNW/Fw+X9YFBe
+	 mGkC6qKCJe4pe7GFYPxdjLBUppqRJK6OwJRUjWwzkMiLwLqyM3nAHp9J4Nm5g4nyjVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fRHHxFBG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CaC4vl8F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1850606A325;
-	Wed, 18 Nov 2026 22:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94953606A320;
+	Wed, 18 Nov 2026 22:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fRHHxFBG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8FE1F000C4;
-	Wed, 18 Nov 2026 22:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CaC4vl8F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96211F000C5;
+	Wed, 18 Nov 2026 22:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041949;
-	bh=+98r+sBPaL9aPW/UcZh8niQTLwvPJZslZ8HAxHr1b4I=;
+	s=korg; t=1795041952;
+	bh=cnbaijyr55isr4uLzTx9ceq+t/P+rf9Vo+YYni0Xa5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fRHHxFBGPPvnC5GGqUo9P83s8pVlQSC7jEC2qRDnTI4OBRzsVTibRtLhZRVA70OQc
-	 Mfd+HUgM4qzizsAKgQML9vqOxqetyMRkJzPT4zKrnf+A2t1g3KoztbYsjIo2I3cP7G
-	 JW84NCtbRO6rRJlvUiFrOSLlFefehOVv9BIEqGSY=
+	b=CaC4vl8FizRae9CyGQe2vfeifiyxt+3xYRYznWVMsTsgkJzi2FBUjebrILMqffjDs
+	 VsWPahwWajbZWMLnMuy6n/LB4xnQ0XKkRDrqzhGX+WZFElspc4HA2+ukio3xC1dXv+
+	 mNFbzXL+9Rk202S/8v64R2pG2f3+FKwwADyEldGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2997/3318] bpf: Read the probe of a perf event under event_mutex
-Date: Wed, 18 Nov 2026 16:00:19 +0100
-Message-ID: <20261118150450.174170058@linuxfoundation.org>
+Subject: [PATCH 6.6 2998/3318] bpf: Validate the SRH which End.DT6 uncovers in End.BPF
+Date: Wed, 18 Nov 2026 16:00:20 +0100
+Message-ID: <20261118150450.202082725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,145 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3ccd700543f16a2b2ab656f35dcaeb6bd7c45e22 ]
+[ Upstream commit e8b084646b946cc6f7976365588035947a296184 ]
 
-For a perf event on a kprobe or uprobe event which was made in tracefs,
-bpf_get_kprobe_info() and bpf_get_uprobe_info() look the probe up by
-name in the list of dynamic events, and hand a pointer to its symbol or
-file name back to the caller. None of the callers holds event_mutex.
+input_action_end_bpf() validates the SRH of a packet and pulls it into the
+head before the program runs. If the program decapsulates the packet with
+bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6), bpf_update_srh_state()
+looks for a routing header in the inner packet and takes it for the new
+SRH as it is.
 
-The perf event keeps its trace event alive, nothing else. Other dynamic
-events are removed from the list and freed during the walk. And a probe
-which shares its event with other probes can be deleted while the event
-is in use, so even the probe which is found can be freed, together with
-the string, before the caller has measured and copied it. The result is
-a use-after-free in the walk, in strlen() and in the copy to user space,
-or a NULL pointer dereference.
+Nobody has looked at that header, and whoever has sent the packet has
+written it. ipv6_find_hdr() finds it in a fragment of the skb as well, but
+hdrlen is then read at that offset from skb->data, past the end of the
+head. The header need not be an SRH, and its hdrlen need not fit into the
+packet, but it is marked as valid, and bpf_lwt_seg6_adjust_srh() and
+bpf_lwt_seg6_store_bytes() check their offsets against it.
 
-The readers are BPF_OBJ_GET_INFO_BY_FD and fdinfo of a perf link, for
-whoever holds a descriptor of the link, and BPF_TASK_FD_QUERY. The other
-side is anybody who may write to dynamic_events, kprobe_events or
-uprobe_events.
+A program which then adds a TLV at the end of the SRH, where hdrlen has it,
+makes bpf_lwt_seg6_adjust_srh() move and write memory behind the head of
+the skb, as far as the sender likes within the 2 KB that hdrlen can say:
 
-Take event_mutex in bpf_get_perf_event_info() and give the caller a copy
-of the name, which it has to free.
+  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x185/0x240
+  Read of size 2088 at addr ffff888107d6f09e by task srh/102
+  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x1b5/0x240
+  Write of size 8 at addr ffff888107d6f8be by task srh/102
 
-Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+Use seg6_get_srh(), which pulls and validates the header. Without a valid
+SRH the state says that there is none, and the packet goes its way as
+before. The pull can move the head, so compute the data pointers behind
+it.
+
+Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-10-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-12-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c     | 17 +++++++++++------
- kernel/trace/bpf_trace.c | 13 +++++++++++++
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ net/core/filter.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index e65c98222c31b..bc331d8ac5968 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3502,19 +3502,19 @@ static int bpf_perf_link_fill_common(const struct perf_event *event,
- 		*ulenp = 1;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index ac1d7a8a29760..432856e47f61c 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6583,15 +6583,15 @@ static void bpf_update_srh_state(struct sk_buff *skb)
+ {
+ 	struct seg6_bpf_srh_state *srh_state =
+ 		this_cpu_ptr(&seg6_bpf_srh_states);
+-	int srhoff = 0;
+ 
+-	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0) {
+-		srh_state->srh = NULL;
+-	} else {
+-		srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
++	/* Behind a decapsulation this is a header that nobody has looked at */
++	srh_state->srh = seg6_get_srh(skb, 0);
++	if (srh_state->srh) {
+ 		srh_state->hdrlen = srh_state->srh->hdrlen << 3;
+ 		srh_state->valid = true;
  	}
- 	if (!uname)
--		return 0;
-+		goto out;
- 
- 	if (buf) {
- 		err = bpf_copy_to_user(uname, buf, ulen, len);
--		if (err)
--			return err;
- 	} else {
- 		char zero = '\0';
- 
- 		if (put_user(zero, uname))
--			return -EFAULT;
-+			err = -EFAULT;
- 	}
--	return 0;
-+out:
-+	kfree_const(buf);
-+	return err;
++	/* it may have been pulled into the head */
++	bpf_compute_data_pointers(skb);
  }
  
- #ifdef CONFIG_KPROBE_EVENTS
-@@ -3571,6 +3571,7 @@ static void bpf_perf_link_fdinfo_kprobe(const struct perf_event *event,
- 		   name, offset, missed, addr,
- 		   type == BPF_FD_TYPE_KRETPROBE ?  "kretprobe" : "kprobe",
- 		   event->bpf_cookie);
-+	kfree_const(name);
- }
- #endif
- 
-@@ -3623,6 +3624,7 @@ static void bpf_perf_link_fdinfo_uprobe(const struct perf_event *event,
- 		   name, offset, ref_ctr_offset,
- 		   type == BPF_FD_TYPE_URETPROBE ?  "uretprobe" : "uprobe",
- 		   event->bpf_cookie);
-+	kfree_const(name);
- }
- #endif
- 
-@@ -3721,6 +3723,7 @@ static void bpf_tracepoint_link_show_fdinfo(const struct perf_event *event,
- 		   "event_type:\t%s\n"
- 		   "cookie:\t%llu\n",
- 		   name, "tracepoint", event->bpf_cookie);
-+	kfree_const(name);
- }
- 
- static void bpf_probe_link_show_fdinfo(const struct perf_event *event,
-@@ -5083,11 +5086,13 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
- 		err = bpf_get_perf_event_info(event, &prog_id, &fd_type,
- 					      &buf, &probe_offset,
- 					      &probe_addr, NULL);
--		if (!err)
-+		if (!err) {
- 			err = bpf_task_fd_query_copy(attr, uattr, prog_id,
- 						     fd_type, buf,
- 						     probe_offset,
- 						     probe_addr);
-+			kfree_const(buf);
-+		}
- 		goto put_file;
- 	}
- 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 847f94443a0a6..25476caab954f 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2398,6 +2398,7 @@ int bpf_probe_unregister(struct bpf_raw_event_map *btp, struct bpf_prog *prog)
- 	return tracepoint_probe_unregister(btp->tp, (void *)btp->bpf_func, prog);
- }
- 
-+/* On success the caller releases *buf with kfree_const() */
- int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- 			    u32 *fd_type, const char **buf,
- 			    u64 *probe_offset, u64 *probe_addr,
-@@ -2407,6 +2408,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- 	struct bpf_prog *prog;
- 	int flags, err = 0;
- 
-+	/*
-+	 * The list of dynamic events is walked, and a probe which has siblings
-+	 * can be deleted, with its strings, while its event is in use.
-+	 */
-+	guard(mutex)(&event_mutex);
-+
- 	prog = event->prog;
- 	if (!prog)
- 		return -ENOENT;
-@@ -2447,6 +2454,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- #endif
- 	}
- 
-+	if (!err && *buf) {
-+		*buf = kstrdup_const(*buf, GFP_KERNEL);
-+		if (!*buf)
-+			err = -ENOMEM;
-+	}
-+
- 	return err;
- }
- 
+ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
 -- 
 2.53.0
 
