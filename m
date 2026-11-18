@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030881;
-	b=sAJePUgO5QCIpjLoGpqmAS+t1KQ8Akj4uOa6CRdmCsd1pXzcDXV8BpQe4APSYMTuT07f
-	 FZs7O2auH31AKY/hcqzELlOqVdlOk5L/8IQDr+Z3EDvlqRrxQxNbne4qIpXsMxKSmGjMM
-	 kVdLNHf9InEfL+AJoXolT+D7bnUftBDRNRLQQyPfWXgR5gh+ImIlsGiRHteWcN5gRFsCh
-	 LR7OllxIaI7eoL+4yA3Mwq4/MI//nh+Um5HQh22W3fzebhgtg1yCC2nbpdtF+6ckZDbtr
-	 euNcHO3PCjssWYefnWfNzDbEz8NKdSATYZUViHmWXtDHsr5DXGiWt8pR0/pAaNj3ZRA==
+	t=1795030884;
+	b=KdVxu8OJh8zH/s9rRBOeIOFHo5JZTW8lzC8kG8zDkpNoYQQqCYNmjA4ze2Lz+YA0cXoo
+	 +1x4S4tUwLcGguj12cjE6CcFC4SZqcAjY9FXnFeDztDHnIxT13oRxSSUZfcksnWou4q9l
+	 hoY+0s1Vwc3cTDGNJEl94PqCtDL8lfX3tjcov3jsjnjwmHPuiZVQfJ9zJitU9bRYzw7kK
+	 82y5TOVW7lALOgotegTcRkOu0sseTzc9r/A/8bNmdB6M845ztUv6C5HbaMbRWjcTvaeMV
+	 gGYf+LBgioLdaTkzTUqFJVoFogqZwR2ZII1ShpNAnSWNRnKJ2xNVVBrte9+e2kEHyzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zVXGpXIXDwjiRRdzb+I7LrA/ec038Tuzt0EvRU4ECBA=;
-	b=qaqpizZeuR3mIz9do9IakDaJXu2xv/yy6S3CtYB6mHnCTg+gQfXiLHpFRrTxWy98+guQ
-	 4E/QxQYh6bSd21xKRPtGytDxZ3czJpMh4rCjEioV0iZzJS+4PAhWe+4f5xYCFt3f9bdWw
-	 1XI/b3fLd8NXSZr5B+7Gy9urMowyWkuZqqnTHbLk1HG7K379b3UJ38WYbDPxmHg1EwYRe
-	 QWotH9EtcQp+n0lkXQ/RCSJXIcGIE/1j0YaLhJUiuXBjdVkZNJXG12HTqVLVIlQ71qym0
-	 7p6/PDJgaseh/ZTfcPej/V7eKZiQbLqzaYvwWWCgiKF7v/PfatmVmTGemofC6zisx6w==
+	bh=WgFpBqsE9pyAQ5Q2f069d9x5m+ZzKxcwexXIS83jDM8=;
+	b=PY/IpePxMm+gAtDeFDF52mFHuI204thiVP0pyE+ohIMfMRouXAnOXgO0TlM01hxJSaf/
+	 aMxno1oz7i3BL8L89wI9B/4XPpbtmTsdhobPhexDM250iF45rO/dmGYDQtWKgOdi+SRLj
+	 WmI+IzNzuU78IdSEBKugKlWzKDKMrt899yNDbEIkDgIIX3fuShhEHXcLts0DqTG81/DBT
+	 8h1vYolQ7384zYYs2SDqamk3/6/lX08zXzhfwP4efYHqgFuAkvOZsUfHLozqG4gXzuuSJ
+	 DEMoa7D/mck+tk5QS+p46Z7JladV03R2Sn4OlFQ3iib0Ccj39hl4na5V3tf/jz/rmpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcOrQ3gD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXA0hRRl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E65606D356;
-	Wed, 18 Nov 2026 19:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ACE606D356;
+	Wed, 18 Nov 2026 19:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcOrQ3gD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6CD1F000C4;
-	Wed, 18 Nov 2026 19:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXA0hRRl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378AE1F000C4;
+	Wed, 18 Nov 2026 19:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030881;
-	bh=zVXGpXIXDwjiRRdzb+I7LrA/ec038Tuzt0EvRU4ECBA=;
+	s=korg; t=1795030883;
+	bh=WgFpBqsE9pyAQ5Q2f069d9x5m+ZzKxcwexXIS83jDM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jcOrQ3gDsoOknCxwDUlaWP20nQjwcpxbZjpWFU1wqt4+aadSg2BdQFsy4LxAspv41
-	 ne5+q+YMYLF315XorWBa9R/dPimrefTZF8SC2Ms2ktZ7kobNtrHxGIEmUvyryaaf3R
-	 mK6oevVyINVf/9wm8CWYbvDgB2imibr77oyvhORw=
+	b=wXA0hRRlAI+wuYfvzGPDSCXJpYS0xrBnO/VOrPaMYKy7j6ecYpJlNx9ZEzz+wvTyI
+	 1Fb5XS/hyJoQkKXDtboRuWwETu/TLREt9+MFGOPEmi069d9EyYbpprQQQzJTZ/Ccvm
+	 /CZiRBs3VBr+bCqI+6W5eZTxvwSDoX+5wQvZz/yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0834/1756] power: supply: ab8500_charger: Handle detection errors
-Date: Wed, 18 Nov 2026 15:49:21 +0100
-Message-ID: <20261118150042.686422171@linuxfoundation.org>
+Subject: [PATCH 6.12 0861/1756] soc: qcom: pmic_glink: Avoid losing early rpmsg probe
+Date: Wed, 18 Nov 2026 15:49:48 +0100
+Message-ID: <20261118150043.619910213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,55 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
+[ Upstream commit 0c79a829af36a94143c747a0ab8f0a8563b17cfa ]
 
-ab8500_charger_detect_chargers() returns either a charger bitmask or
-a negative register-access error. The probe and component-bind paths
-use a negative return value as a bitmask, making failed reads appear
-as both AC and USB connections.
+The PMIC GLINK rpmsg device can appear before the platform device has
+finished probing. In that case pmic_glink_rpmsg_probe() sees
+__pmic_glink as NULL and returns -ENODEV, which is treated as a fatal
+probe failure for the rpmsg endpoint.
 
-Propagate detection errors and release the bind-time workqueue on
-failure.
+If this race is hit, pg->ept is never installed and PMIC GLINK clients
+never receive the service-up notification. This may leave the system
+with no Type-C functionality and without battery/power supply
+management.
 
-Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Return -EPROBE_DEFER when the rpmsg endpoint arrives before the platform
+device is ready.
+
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260720-topic-pmic_glink_defer-v1-1-94c0f233f2f7@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soc/qcom/pmic_glink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 9c81f79502870..f530682bfd1e8 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3463,6 +3463,10 @@ static int ab8500_charger_bind(struct device *dev)
- 	}
+diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+index be64a4ce8e0ca..7e954db8e7ae0 100644
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -243,7 +243,8 @@ static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	guard(mutex)(&__pmic_glink_lock);
+ 	pg = __pmic_glink;
+ 	if (!pg)
+-		return dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
++		return dev_err_probe(&rpdev->dev, -EPROBE_DEFER,
++				     "no pmic_glink device to attach to\n");
  
- 	ch_stat = ab8500_charger_detect_chargers(di, false);
-+	if (ch_stat < 0) {
-+		destroy_workqueue(di->charger_wq);
-+		return ch_stat;
-+	}
+ 	dev_set_drvdata(&rpdev->dev, pg);
  
- 	if (ch_stat & AC_PW_CONN) {
- 		if (is_ab8500(di->parent))
-@@ -3751,6 +3755,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 
- 	/* Identify the connected charger types during startup */
- 	charger_status = ab8500_charger_detect_chargers(di, true);
-+	if (charger_status < 0) {
-+		ret = charger_status;
-+		goto remove_ab8500_bm;
-+	}
- 	if (charger_status & AC_PW_CONN) {
- 		di->ac.charger_connected = 1;
- 		di->ac_conn = true;
 -- 
 2.53.0
 
