@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026074;
-	b=Q+rvxoNbYI59ticVvrjQH7qzBjbQ6O2lNW2T12HG1Nv3DkjaHK4NSukd89TgLEvvl4wb
-	 eL6iZGip+baF6/DIEmAQOcClNVjHgSjvnjjDwR7XNqrR1mfZB4AoccCwq5rnmCUu2hd0L
-	 Uvxv4iYzxEVoqPKxyX3r95IxLi7qVd3mHlgAUOfBwo3VH6OJuZOdP1/WLCXrFSzn/ujYZ
-	 V8STM/AIZdAhf60ZFnxbrDkVt+7tjALbR9/bZLUtjaH1t5pIH4DwZ7iymVyB9A1LuX5Mc
-	 KoK3hfOnvJ2IEE1mp7BbJDJ5l0U+g7RuF0xqG8ALLCfcC5QQHqB7SXU6M4ClNBb+ufA==
+	t=1795026077;
+	b=q8tpBwD2ksvXcdtMHxOOYO3jslnydrlVZYBeCoVhO9bm8Id0Rwqu+pD6MVH3EWjGftrg
+	 NU6o2S/jDMo6i4oQ091TAwoWZcTyI8T1x9N1zPCXIO5KB1+zD2/a/0zbS9X0ojCd+yIWJ
+	 Rx0tgQ/hWK6M/CWlNCyzpkJ7zUsvhv6/0rGMSNMoaNXFz/b4JLe9Ne7lBpw4kRdXiuWmQ
+	 gxLFbKEqSlyIM90KPOHTfCsAay9Xx5xDnYPtbUawn+DbLZzfxr4irIx3VFn0j04YpDnoQ
+	 KZlEa19oCuykOecTRbxfZS3gQft6iCRbMgZEz2Up051aNbWeURPwvExYQ3LZPGaQxPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EWTryLP5Bo4ry0z328M6uQ5jPCd1o92QNoabyHWCFCU=;
-	b=0kPrCALa7cpxIeSA96U7cfVQJJqJCa6qrMRTpjsN3AKX6E8a7K9nsH0FQNY+1NYM21bb
-	 G16trdSYpUgcHvhVtRUHxvQY1OpbQb2ATr7/6O/zXCHf6DEsTfd2g90AhOI47ywj3jKBw
-	 +uuCSm1DAbj5xsigdlCEo+PBdbcJlXPDqs4h33zTyspsJ5d1lSNKujgP12VyTU4Ys6DVs
-	 T0EWKHwGxzXYBFqRL3VzyuOYgkrdqgxPQS8Um6Ug9Sxd4JniZA/ns0wjC8lFi/PV6oCu8
-	 w0YU1TuvfEdvec5ZZXMW32FvCmNCciAQ0W9XSitCrb53SvkoD/FdzkdnpoCt5BwO9zQ==
+	bh=RQgkOZ6JTlpK8MBlo4gNBz9Tgj9JeQZw6mNPIDQb2Ys=;
+	b=ElkVUfQ5JekeZCUKCkHdZ7Tg5mhUjUB6nVpSEXwzmpCYJ95TCpyZbFYD6J/jhYg5YbOo
+	 LYzy5wdp0cNLQmZ6BGjVtT4PCPvzhYLtWZSmZOaB5Y2lsyqGv9fSG09QiplDJyzykQCDq
+	 8XbuY+1XWHCbpaLJuIvxkmDm8oXg8twvR+SS9uSFaMMlYRX4wSNoRalktCpvgwg+Mq65M
+	 7P/sdSn6HYWKbYPEc2A+vHQOaCKAuB70WeXunRSL2NO0moK7VcRbFgZ/HUnksaysA+50p
+	 U5hH9CLdsG9k+SU1uytKzYOu2TZNuBUZw7lUim3xC5svIEW7ARdJk0lANYUYnIP10YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cuMuRA/B";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKchL6Wy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C863606A32A;
-	Wed, 18 Nov 2026 18:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CA4606A32A;
+	Wed, 18 Nov 2026 18:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cuMuRA/B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6641F000C8;
-	Wed, 18 Nov 2026 18:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKchL6Wy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598E01F000C7;
+	Wed, 18 Nov 2026 18:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026074;
-	bh=EWTryLP5Bo4ry0z328M6uQ5jPCd1o92QNoabyHWCFCU=;
+	s=korg; t=1795026076;
+	bh=RQgkOZ6JTlpK8MBlo4gNBz9Tgj9JeQZw6mNPIDQb2Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cuMuRA/B1j4LrDsbPsKisQAXo0/tf0H7aSmTa2t8Jjn3yfle2G/Of5EjLq0UfS3+R
-	 Ay6Sl7XWvQATWfaaHfL50ENfwaHchYdcfl2wtTTIw2rItyANpWkvDLxXAh7u2qgYwE
-	 FcOd6/3s18fBdSLUvyyKYj3eEKQEGa70i4MAigHw=
+	b=PKchL6WyrBNAwf83/yLCAmyZg8u5Jah2r/1E4XPtiuxCRlTOqWTDnfVGBzwOVYZ0r
+	 QfCjuWMnI0wwFa6/WehtOkVw1a+Ebvgw2aY575rALJlx/ZU1rvCFrqxuPK6LJqLIar
+	 nrPB29xMK7/Yo27S4eUuC11zLn/OKiaC3VM8imJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1288/2151] wifi: ath6kl: dont take RTNL in del_virtual_intf
-Date: Wed, 18 Nov 2026 15:50:23 +0100
-Message-ID: <20261118150209.051006917@linuxfoundation.org>
+Subject: [PATCH 6.18 1306/2151] vfio/pci: Drain eventfd RCU callbacks on module exit
+Date: Wed, 18 Nov 2026 15:50:41 +0100
+Message-ID: <20261118150209.674698049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 97aab70a03df478ffefcf890ed4be258c0240bcb ]
+[ Upstream commit 3b2e9b05011ee74543b6d17401bb02f1df3b93ff ]
 
-cfg80211 already holds the RTNL here, so this will
-just deadlock. Remove the extra RTNL acquisition.
+vfio_pci_eventfd_replace_locked() defers freeing replaced eventfds to
+vfio_pci_eventfd_rcu_free(). A callback can remain queued after
+close_device() returns and the device driver module reference is dropped.
+Once the dependent driver is removed, vfio-pci-core can be unloaded while
+the callback still points into its module text.
 
-Oddly enough this was all true even back when the
-locking here was added, so this is just a revert
-of a broken ~13 year old commit.
+Wait for outstanding RCU callbacks before vfio-pci-core exits.
 
-Fixes: bc52aab380c7 ("ath6kl: Protect ath6kl_cfg80211_vif_cleanup using rtnl_locks")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20261008165646.48866f0521af.I1c166be830384473f67677eeb187afa7e54106ea@changeid
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 98693e0897f7 ("vfio/pci: Use RCU for error/request triggers to avoid circular locking")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://lore.kernel.org/r/20261003093806.544631-1-yaojiale02@163.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/vfio/pci/vfio_pci_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/cfg80211.c b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-index e4f87018f1642..bc36c609e7e7e 100644
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -1555,9 +1555,7 @@ static int ath6kl_cfg80211_del_iface(struct wiphy *wiphy,
- 
- 	ath6kl_cfg80211_vif_stop(vif, test_bit(WMI_READY, &ar->flag));
- 
--	rtnl_lock();
- 	ath6kl_cfg80211_vif_cleanup(vif);
--	rtnl_unlock();
- 
- 	return 0;
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index a807a678277c6..b2f9ff2e4fef4 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -2607,6 +2607,7 @@ EXPORT_SYMBOL_GPL(vfio_pci_core_set_params);
+ static void vfio_pci_core_cleanup(void)
+ {
+ 	vfio_pci_uninit_perm_bits();
++	rcu_barrier();
  }
+ 
+ static int __init vfio_pci_core_init(void)
 -- 
 2.53.0
 
