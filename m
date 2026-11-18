@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023960;
-	b=Ox1mSG5rtzx7kqc/CLSgSxdnPnf9PTcjOF7wajiZkban0Qi/i2ZnSPfz09M0sjFC6c24
-	 W3F9xHwheQ1YT02h3v+QJV1eXHfYBvpENZJ7QHF1/fm+ECqw4WJ86rIl6JFX5VFi451vL
-	 DXGBLKxYI6t/KDoxncSM6yaWVSIyH2KZznKk0HiZIK4wFCj+vf8qaEOtfz6kVw8Gc+zfl
-	 pXN0oyKOmVf27XeKoXgyFnOiru3owlubnDwXQmOyuMh0dn2MuKs9b60uz3OvH3ygSYrZ8
-	 btUEtsVhE03k+5Y4E2HneT5DsCoIM8APdRcQDYmdfCYlORDn0Rfb/b2w5LwsOwatNxQ==
+	t=1795023963;
+	b=d/thTUGDSsjlr6viXbZfac3jvIEQT2sHrN25T5MuoreoY2BVM2KQ8EmbflY3I3QPTeRx
+	 a47OTddCuQU/Em+Zwmot4kl9gy4oavJa6bT3w8MkJelu82kohzinDsRpC3qIo8BbZpbJ7
+	 fih9H9W5d64jlRHebLblGB/3Kn8VP4xtbAHAxHZ6U08bhiQLX4Ig6UiZhAev68WcSkk5r
+	 W9rBrl3RPwauLfNSJF9g+UgnvtuNhZz7PouZvyfX1+40UnYLdm1zxmSxhD2aE2KIHwqVK
+	 SnFcrAF+GNXVW2OgOL8QBFdanKUfQRb6dKyu+ieTaCflHbTD7pVccqGY0FioVa3dpeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nw8clo9mmyo/825djvLHU861AFFTOqVkEoKqaMCojIk=;
-	b=Y/n6/AbbTvVYmM4I07jjeeQfiUWqsd7iNe4pqyf8Zk35U46MpaWuLg5pe6NMh5NZJcUo
-	 klapqdrLi9HwehJd4BYNlpeAah2WpNukjS4yDjzWLYtNUcozkoGVInp9zT31TUd8mqhDF
-	 gmNZDZBo0xcY8T78Fdd/Lpd/m2SbKW21IRr0E6PYb3RbtvkpCg22Oe04JhPU+Vza5xFZ9
-	 JlqwYKLVSAwkRfznDhkLombRABMXapmq5gVwoxhNOh04SJxGDlpm4FzqcssiQtvveO3PK
-	 pGpl/v7++l60lAzqOZWBPNHivBwKG7998F1806XBrfGrEfBjSVPNwbZoah1pnqDvUqg==
+	bh=pFlqhdTR9Ra3G5B3cqB47jBxdCYR0ofOLIXEDcLzEvU=;
+	b=Y9kAvwh8XIE4ZfDxxzeM7M2lzYX0mpDy5h1NEuvvd9rdEZs8PxvRSGdAZE1HpqcuOWne
+	 Miou+mVsLWA/X+D1SlVmV05R2GUuLWVauvAQus4bt8YP258qyvoxToQ8P2ebZWTLUSmhE
+	 0IXFU8py3b7aNh4avdtsNrR54RnvaR1Hjhu8oUKiEQ3PDC/6wQjs3ZN8fd1hMDPIEiS/6
+	 sOzx+4iNMrXASW2F0Q2aQxRRa3IGz9ZzNa2rP3t7zDuGg0jmwqRESeRno5Bonw6Av+QLU
+	 wvtd+G9s3CVvUBXVFT9CMvyQGXGFZq2kyv5LInUFJ66ZUn2GBhnn0FW7TSJQc4gYfEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O36rvupo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJrrFrwg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9F606A31C;
-	Wed, 18 Nov 2026 17:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372A3606A320;
+	Wed, 18 Nov 2026 17:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O36rvupo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88AE1F000C4;
-	Wed, 18 Nov 2026 17:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJrrFrwg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AEB1F000C4;
+	Wed, 18 Nov 2026 17:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023960;
-	bh=nw8clo9mmyo/825djvLHU861AFFTOqVkEoKqaMCojIk=;
+	s=korg; t=1795023963;
+	bh=pFlqhdTR9Ra3G5B3cqB47jBxdCYR0ofOLIXEDcLzEvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O36rvupoA7Q99VPeWlT77aDfexCrOfahsRbImsEvUgUEXPkGtaLhuko7Q9ECGXCSL
-	 tJKG8VkzQHwKATQgh2bQ+83U0JVEOne8Pmxiw83wFfeQjshler0JyLcDAKjxdz8goe
-	 idtRIQ5qPVATlZ91nKsbclzylJVGxvHm659Ipp/8=
+	b=oJrrFrwgOXUJY4gUoncOm3CvKlPKxHxICBZVva+gV/QigBhzz34bQNEnhHrqsq8Fq
+	 q+pVH1oKqBYSC95/9MZBqNElY5LVe62oC6yMQalGv8mN72/CI2FL2vRGYz+0dxlPhE
+	 coh5MGm9Ty8rBB9aKYrTdkD003Dw/2ZxSfOflY0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Richard Cheng <icheng@nvidia.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0518/2151] cxl/core: Fix dport use-after-free via the einj_inject debugfs file
-Date: Wed, 18 Nov 2026 15:37:33 +0100
-Message-ID: <20261118150140.911922900@linuxfoundation.org>
+Subject: [PATCH 6.18 0554/2151] pmdomain: imx: Propagate SCU provider registration failures
+Date: Wed, 18 Nov 2026 15:38:09 +0100
+Message-ID: <20261118150142.142722009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,62 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 0de71a1ab211694be7e88d56fc35c9bf72078ad1 ]
+[ Upstream commit d3efba7921f3ebebd91fc481910a428c78414fd8 ]
 
-The per-dport einj_inject debugfs file retains a pointer to the
-'struct cxl_dport', but its lifetime is not tied to the dport. Unbinding
-the dport host frees the dport and leaves einj_inject behind, so writing
-the file dereferences freed memory.
+imx_scu_init_pm_domains() ignores of_genpd_add_provider_onecell() and
+returns success even when none of the initialized domains are published to
+DT consumers.
 
-The stale directory also prevents recreation on rebind.
+Return the provider error and remove the initialized domains in reverse
+order before devm releases their backing storage on probe failure.
 
-Remove the per-dport debugfs directory when the dport host is released.
+The issue was found by our static-analysis tool and manually reviewed.
 
-Found by code inspection, then reproduced on a QEMU CXL topology with
-KASAN (the einj_cxl_is_initialized() guard had to be forced open, as
-QEMU emits no EINJ table). Unpatched, writing the leftover file after
-unbind gives a KASAN slab-use-after-free report in cxl_einj_inject(),
-and rebind hits "already exists in 'cxl'". Patched, the directory goes
-away with the dport and rebind recreates a working einj_inject.
-
-Fixes: 8039804cfa73 ("cxl/core: Add CXL EINJ debugfs files")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260914121843.718493-1-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: c800cd7824bd ("firmware: imx: add SCU power domain driver")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pmdomain/imx/scu-pd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index c049b0e5eca7c..bfb2e457fa223 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -835,6 +835,11 @@ static int cxl_einj_inject(void *data, u64 type)
- DEFINE_DEBUGFS_ATTRIBUTE(cxl_einj_inject_fops, NULL, cxl_einj_inject,
- 			 "0x%llx\n");
+diff --git a/drivers/pmdomain/imx/scu-pd.c b/drivers/pmdomain/imx/scu-pd.c
+index 3ec33667a308c..41dd45b48a762 100644
+--- a/drivers/pmdomain/imx/scu-pd.c
++++ b/drivers/pmdomain/imx/scu-pd.c
+@@ -474,7 +474,7 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	struct genpd_onecell_data *pd_data;
+ 	struct imx_sc_pm_domain *sc_pd;
+ 	u32 count = 0;
+-	int i, j;
++	int i, j, ret;
  
-+static void remove_debugfs(void *dentry)
-+{
-+	debugfs_remove_recursive(dentry);
-+}
+ 	for (i = 0; i < pd_soc->num_ranges; i++)
+ 		count += pd_ranges[i].num;
+@@ -503,7 +503,13 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	pd_data->num_domains = count;
+ 	pd_data->xlate = imx_scu_pd_xlate;
+ 
+-	of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	ret = of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	if (ret) {
++		while (count)
++			pm_genpd_remove(domains[--count]);
 +
- static void cxl_debugfs_create_dport_dir(struct cxl_dport *dport)
- {
- 	struct cxl_port *parent = parent_port_of(dport->port);
-@@ -853,6 +858,8 @@ static void cxl_debugfs_create_dport_dir(struct cxl_dport *dport)
++		return ret;
++	}
  
- 	dir = cxl_debugfs_create_dir(dev_name(dport->dport_dev));
- 
-+	devm_add_action_or_reset(dport_to_host(dport), remove_debugfs, dir);
-+
- 	debugfs_create_file("einj_inject", 0200, dir, dport,
- 			    &cxl_einj_inject_fops);
+ 	return 0;
  }
 -- 
 2.53.0
