@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036988;
-	b=amLVKA/CamRkz0eCaco6+5OAwE4NM5vV1ClZcIbOap804c2Sw0mgMRK7TWaT/ihZgYQb
-	 LHeHJ0Bq27wUaoyVlWa7xRrCE9oo1oJg2gegIg/4KsYsZjx5igF9uC8d7bD20ynKkZe0N
-	 GFZm7eDg4hFJ/kfHgD7rIZQnhBncdy1UhlBLAMlJU50ceGazE6wlmuHi3+pGJ2D2R6afw
-	 BWT+NFFD/rULZMKbaU/yYAR6Th4k2Tpc8ZiUlQdVExRz7Ooj8okFs2aHqxZZODnhr7pkq
-	 n+D+Djh96+4P/tOojxOLI1GgehiRYHiVhE/SubFFKYbKnaB9cMms0GVryTzkTD11UuQ==
+	t=1795036991;
+	b=Wr5Yf1+ao3Ez0Lo8sbBZJ54xiFIaDaiyuZVk8EghdloWvgGbxBC3F8KQBp181HxFExmd
+	 Cni05YRaCIcb2SbgesqxrcdPff5thhJO51aRLGlq5js9TwxKtVtD/Y8Zn3Nips4/rj5Ht
+	 fz10S5n9pvMI9vDlmNY+T/PISr1vjvVw9ATyLXWf0Q4AbN0JgwlonlYaCxu14qk5GkJTo
+	 f1nJGHPuwQF5HDGgFAeUf6GPp5IcshHOyYIPEDSDsDFn2V1BXnmHYnM8fnBlMo8Ryo5UW
+	 emW4HsKdZObErDnS0CdmVRXZrldbDJhjgvFPIhHFeiQSmN3ymISJDNINoOeGAMcw46w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3AdsAa6w69/HCiqDoKyITBQ6019ddGs1JDeQ6wKLHrI=;
-	b=YI1wLcidJPHB623Wf9Cn1un31cLwayrsyWGOGrA8IL8Ux0Bkcav5BC6e56ZZj2ITF5IZ
-	 gNfv3w5sdWzPSsJ8AqhDOAwEoyDKwnrpuA1RIGyY17lFo2YNmjJFcC9UhdXVXdqSp9o6T
-	 FjIROzFwDGKHyxsAruj8T3h/Df/yGcs0e+KwKJvbzaJbbzlbmR0tQewHRNCYkySrmVnia
-	 itFslQG4vSISQ/IzHkNjszre1LTPzmYeaSiRROczwON0jUoxipjeByk7oGK6U7BWlBQq3
-	 ui6muih2JbwWWdkrfCaw8jGOXg1a8MiDRkNLkDNNeTaxsKmowW0RCqd2AKO9CWMksDw==
+	bh=uwHzGIz1Rm+Pw9egg+8HGD9/ZZPbSPSEKsj3U/7vceQ=;
+	b=oQVNsrSF24PbR0SpdpFGh8JbJrjqDuNhhrZC22j2DV/Ps+6YddyZF/1J2QmkfsXHAO43
+	 OS51cVKiwOojMtycGWv8zlT3mTv2ctnlbshKlnj7IZftR3sJh3BSrhSwGpzM34JrayrqH
+	 D4qz77WsnV4XlNNzA5UKZgtzcAzw39qOia/P/4+J6J4D9CIdmoOhHno5goVeFHUkAMtsh
+	 nljDEmJYOFTrVJFzIoDPpAcsWqAC/hTRvNy7FOEATqNgyP2cGzbsahR9fFrlJoSL0YGsD
+	 yKIgS2BkKZTM4DhePnu0fO/qoGhlnDK1zFF65JITlT6NJIPbLlqNA7jRZYRAl8iQ7vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wnx4qK7k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KAudJGJM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A9F60A2600;
-	Wed, 18 Nov 2026 21:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DA1606A33A;
+	Wed, 18 Nov 2026 21:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wnx4qK7k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06C61F000C4;
-	Wed, 18 Nov 2026 21:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KAudJGJM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DF71F000C4;
+	Wed, 18 Nov 2026 21:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036988;
-	bh=3AdsAa6w69/HCiqDoKyITBQ6019ddGs1JDeQ6wKLHrI=;
+	s=korg; t=1795036991;
+	bh=uwHzGIz1Rm+Pw9egg+8HGD9/ZZPbSPSEKsj3U/7vceQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wnx4qK7kv9KLjLBt2NRVqrp6siHKcyXwwH9JDNTlsa9iciBdhyx52b9UBOB0PVawB
-	 KITl1yzYx9m3zlCNRUkvcX5JZDE8M2wIh+hD4FIyP5SCDcEgA9IV1YGieVoD2bw5Gb
-	 /EYqkICcYryRV7UZOeR1Nc4/le7s0qwAXp7AZRqQ=
+	b=KAudJGJMveFYjqRgttIHrQdz7nQ7xqK/ajgb+9Ggjvjwxo182RAom4gJWF2kQse+5
+	 zd7xwqbHstA5gcBvo8zon5R4338Q6eMkcjQYJDtrIImjwpKfIhSpmU4HQ01zwxmKqA
+	 BuXI5iO0QFdlYMF2JtHBMX4tfj1QO2dFe1nZMo38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1255/3318] ASoC: hdac_hda: Balance the runtime PM disable in codec remove
-Date: Wed, 18 Nov 2026 15:31:17 +0100
-Message-ID: <20261118150357.849193805@linuxfoundation.org>
+Subject: [PATCH 6.6 1256/3318] LoongArch: Use pa_to_nid()/nid_to_addrbase() rather than hard-code
+Date: Wed, 18 Nov 2026 15:31:18 +0100
+Message-ID: <20261118150357.879834939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,56 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit f26c0d5f91d918bb66cbbc8916f41836adb38346 ]
+[ Upstream commit 244eb26bbd152896f976db6415550993cd60b46d ]
 
-hdac_hda_codec_remove() disables runtime PM of the codec device before
-releasing the HDA link and calling the codec driver's remove callback,
-so that no runtime resume can race with the teardown and access the
-link or the already freed codec driver data.
-snd_hda_codec_cleanup_for_unbind() then disables runtime PM again.
+NODE_ADDRSPACE_SHIFT is 44 now but may be changed in future, so use
+pa_to_nid()/nid_to_addrbase() rather than hard-code.
 
-On the next probe snd_hda_codec_register() enables runtime PM only once,
-leaving it disabled after the ASoC card or the codec driver has been
-unbound and bound again: the codec stays powered and runtime_status
-reads 'unsupported'.
-
-Re-enable runtime PM at the end of hdac_hda_codec_remove() to balance
-its own disable. The codec remains disabled until it is registered again.
-
-Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-4-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/loongarch/include/asm/numa.h | 2 +-
+ arch/loongarch/kernel/irq.c       | 3 ++-
+ arch/loongarch/pci/pci.c          | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index c497354251cb2..dfa47be25ebc4 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -525,6 +525,7 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		return;
+diff --git a/arch/loongarch/include/asm/numa.h b/arch/loongarch/include/asm/numa.h
+index b5f9de9f102e4..553d8f72f0e23 100644
+--- a/arch/loongarch/include/asm/numa.h
++++ b/arch/loongarch/include/asm/numa.h
+@@ -14,7 +14,7 @@
+ #define NODE_ADDRSPACE_SHIFT 44
+ 
+ #define pa_to_nid(addr)		(((addr) & 0xf00000000000) >> NODE_ADDRSPACE_SHIFT)
+-#define nid_to_addrbase(nid)	(_ULCAST_(nid) << NODE_ADDRSPACE_SHIFT)
++#define nid_to_addrbase(nid)	(_U64CAST_(nid) << NODE_ADDRSPACE_SHIFT)
+ 
+ #ifdef CONFIG_NUMA
+ 
+diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
+index df42c063f6c43..f4da717512746 100644
+--- a/arch/loongarch/kernel/irq.c
++++ b/arch/loongarch/kernel/irq.c
+@@ -19,6 +19,7 @@
+ 
+ #include <asm/irq.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ #include <asm/setup.h>
+ 
+ DEFINE_PER_CPU(unsigned long, irq_stack);
+@@ -68,7 +69,7 @@ static int __init early_pci_mcfg_parse(struct acpi_table_header *header)
+ 
+ 	for (i = 0; i < n; i++, mptr++) {
+ 		msi_group[i].pci_segment = mptr->pci_segment;
+-		pch_group[i].node = msi_group[i].node = (mptr->address >> 44) & 0xf;
++		pch_group[i].node = msi_group[i].node = pa_to_nid(mptr->address);
  	}
  
-+	/* prevent runtime PM callbacks while the link and the codec are torn down */
- 	pm_runtime_disable(&hdev->dev);
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 	return 0;
+diff --git a/arch/loongarch/pci/pci.c b/arch/loongarch/pci/pci.c
+index a25307d6aee81..d4deff031ded7 100644
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -13,6 +13,7 @@
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <asm/cacheflush.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
  
-@@ -532,6 +533,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		codec->patch_ops.free(codec);
+ #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+@@ -44,7 +45,7 @@ int raw_pci_write(unsigned int domain, unsigned int bus, unsigned int devfn,
  
- 	snd_hda_codec_cleanup_for_unbind(codec);
-+
-+	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
-+	pm_runtime_enable(&hdev->dev);
+ phys_addr_t mcfg_addr_init(int node)
+ {
+-	return (((u64)node << 44) | MCFG_EXT_PCICFG_BASE);
++	return (nid_to_addrbase(node) | MCFG_EXT_PCICFG_BASE);
  }
  
- static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
+ static int __init pcibios_init(void)
 -- 
 2.53.0
 
