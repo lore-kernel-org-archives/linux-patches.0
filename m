@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032656;
-	b=ic2OB8k4jD1Pc7DE9o06jy3uDX476wYRNvifLx5w0IQC+7dTMV6DdDYFGaaWx+P2W1g8
-	 UU9RF60Taz6SR8vyzRmlxiw39rDRa32dBOv9s+a1pTSKr0TAjxJ3z6wgrKbSh7TwD8J5e
-	 FL9PueWlYUVip3LCMPOgwMRVutZjIozmM4TM3LPgwen2E7TahPQSN9vMLLBWIaZ8Rz3nI
-	 WWj9C0hLnx6TD59s46u4EBh6LgBJssqXzOU1zYZtHL8+I8loxI48WGdJ+hBn03OKC70Q9
-	 g+YeRcGJBYSI+G2fMhyZ6CyV3+phv/eug8vEr9ztTB7DC8Q4gEs9tupl6J8pz2we1RQ==
+	t=1795032659;
+	b=wNdJc9HIlhg2kA6MsHpflj3HOfevzMQEge/tZTDYxRpTeD+Z5TjmI310mMJ1Y/71OxdV
+	 BLqU2ytpH9qpJ63gSB6m5oBP4HQ6SDrgKnNRUsIKiBYPP87jF38NLsuqxNRAhkriuzl6y
+	 Sro+pCiWV2WBL5LpONhT/6Wxj/2n7PHqEBlNDYiaRmulSXPMG8jEvVdheQAn4IwFwDrSD
+	 1xhU7TgM7VtsutndTOpqQodgNNatEKYql0nxVwGEb0kDhSp0vg8Mr5h6Lwlp/Fac2tZob
+	 5/jWBtWYM0uUyACgGuHn8PhpBp+UmI5wIeAzQeNOgYH+Iv3/xBO5QRTiwffAFmZFCIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032656;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032659;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Pr7ryA9P8ILcC+4x9KsrSNME0XiKxT3n9Aa2YNzLGxk=;
-	b=mEC/6k6o6zuD8XV1o3CcjardcC0zQkocJpw3azaJ57wrPF3XJygsF5jX9ZI3RbLltckS
-	 Bk+mKJDaI/vMXIIClbuHg6mJoKs49PUYj6XjBPHYFUfjxG/i1gV53j3wARHzf3uod/GSa
-	 aqn0rn8a/1yqg5xhVrQG4N7wX6J9R4H6abt3fhywu3sAoBIb0VH76elOLsgJe2GnajlHd
-	 h8YWSqY9etJdip0ouGGQXg0EYzj2KA/bwmoweosHatKVAmPCRa1Ou0z8Oxy6BmNSCP0Si
-	 FY2ZJaBek8f2MHN+Q1ZjQWObbZNqP1N2CccxJgWXh4mPOqxE3jWWGr0W03wustmycuw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=wuimvSpWOZpdyY5Nbg/xoYm+gLbeaaQGPcXX7J7LBmo=;
+	b=ryFxaCThBY9+IozzellYC8tVcXTsAtfmUatXAvA4XU3BFf4OP9ySqVX37NXmcetl6G5K
+	 qXZVU+taRLcKpgIDap0wKhgln/7lYraZEQHsWYWVTnI013gv6K0JWP52fkVUkXSrkZ9/8
+	 AJDM8iNvsBz3/3PKmJOBMFhZnyR+19GgoSm+SBC8wu+HfqtVxKjkHx2jBCkhtbAEClb/X
+	 kiT7SD2rub6NyGMW/LWSGWEnlIjy1TxHbcdd2ZFN7vWiBhyZF/tgBorCbyTzdniY+fYJ7
+	 z44RswqNO/o4ypBuSYg4xJR21JRjZ45VPjuQK1C18fFrm5qTB6/blcyUITlmq+szD9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8yB9SZ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPbgn6Da;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9937A606A325;
-	Wed, 18 Nov 2026 20:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AF0606A32A;
+	Wed, 18 Nov 2026 20:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8yB9SZ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F021E1F000C4;
-	Wed, 18 Nov 2026 20:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPbgn6Da
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52EC1F000C4;
+	Wed, 18 Nov 2026 20:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032656;
-	bh=Pr7ryA9P8ILcC+4x9KsrSNME0XiKxT3n9Aa2YNzLGxk=;
+	s=korg; t=1795032659;
+	bh=wuimvSpWOZpdyY5Nbg/xoYm+gLbeaaQGPcXX7J7LBmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8yB9SZ8YXfRJuEnGW0MAW7L5AQ7cafiu+aXvlegLTdC4HT30utrUkKBfxGb50WlW
-	 Ts52WdCRMsesfAcNfEWFab89MyD7+9x9fYu45V/KT+Xq+K98zsuvgp8M/kS4TjLmDB
-	 tUC254gUCEk0ZpQo8bSDSCnkgoRwvORJcuHBXej8=
+	b=fPbgn6Da0SHdV9wAUZxkBFFtloYGoE6TxNGcbSWDMT7lPNruN5aujNouNNRpWqa6S
+	 +mWp5ETMuVDP6XU7mDDUnlJ+Y3U7i1IAd7TKoMz1izbi0p8W15qXM5cptqgOtTCpzq
+	 cAPofnccOEayWcl5iaeMVKzwggUEx4LEMTaYBPSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1489/1756] platform/x86: ibm_rtl: Fix potential OOB read at signature search
-Date: Wed, 18 Nov 2026 16:00:16 +0100
-Message-ID: <20261118150108.234858851@linuxfoundation.org>
+Subject: [PATCH 6.12 1490/1756] selftests: ALSA: pcmtest: Check the frame count of each transfer
+Date: Wed, 18 Nov 2026 16:00:17 +0100
+Message-ID: <20261118150108.270211527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,62 +62,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit f1d81af2521ad504a20481fef12c358d26e6c3a6 ]
+[ Upstream commit 317f2ddb6662fca8954e381a1bc632667872c4a3 ]
 
-The loop for signature search fetches 22 bytes of struct ibm_rtl_table
-at each check, while the loop count is calculated in 4 bytes unit,
-which means that, at the last entry, it fetches over the limit.
+The tests keep the result of snd_pcm_writei(), snd_pcm_readi() and
+their non-interleaved forms in a size_t. A size_t is never negative, so
+ASSERT_GE(res, 0) always passes.
 
-Rewrite the loop to use the byte offset and correct the boundary
-condition check for avoiding the potential OOB access.
+The capture tests still catch a failed read when they compare the data.
+But the playback tests do not. The driver sets pc_test to 1 when it saw
+no corrupted data, and that is also true when it saw no data at all. So
+a playback test passes even when every write fails.
 
-Fixes: 15dd100349b8 ("platform/x86: ibm_rtl: fix EBDA signature search pointer arithmetic")
+Store the result as snd_pcm_sframes_t and check that the whole request
+was transferred. The calls block, so a short count means an error.
+
+Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261021064012.457870-1-tiwai@suse.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/6f16e2a01f18c0ea069164bab31999182ff6d49e.1792390197.git.sammiee5311@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/ibm_rtl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../selftests/alsa/test-pcmtest-driver.c      | 21 +++++++++++--------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/platform/x86/ibm_rtl.c b/drivers/platform/x86/ibm_rtl.c
-index 139956168cf94..82fda8d9178be 100644
---- a/drivers/platform/x86/ibm_rtl.c
-+++ b/drivers/platform/x86/ibm_rtl.c
-@@ -234,9 +234,9 @@ static const struct dmi_system_id ibm_rtl_dmi_table[] __initconst = {
- };
+diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+index ca81afa4ee90c..ef73413462998 100644
+--- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
++++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+@@ -166,7 +166,7 @@ FIXTURE_SETUP(pcmtest) {
+ TEST_F(pcmtest, playback) {
+ 	snd_pcm_t *handle;
+ 	unsigned char *it;
+-	size_t write_res;
++	snd_pcm_sframes_t write_res;
+ 	int test_results;
+ 	int i, cur_ch, pos_in_ch;
+ 	void *samples;
+@@ -190,7 +190,7 @@ TEST_F(pcmtest, playback) {
+ 		it[i] = patterns[cur_ch].buf[pos_in_ch % patterns[cur_ch].len];
+ 	}
+ 	write_res = snd_pcm_writei(handle, samples, params->rate * params->time);
+-	ASSERT_GE(write_res, 0);
++	ASSERT_EQ(write_res, params->rate * params->time);
  
- static int __init ibm_rtl_init(void) {
--	unsigned long ebda_addr, ebda_size;
-+	unsigned long ebda_addr, ebda_size, offset;
- 	unsigned int ebda_kb;
--	int ret = -ENODEV, i;
-+	int ret = -ENODEV;
+ 	snd_pcm_close(handle);
+ 	free(samples);
+@@ -206,7 +206,7 @@ TEST_F(pcmtest, playback) {
+ TEST_F(pcmtest, capture) {
+ 	snd_pcm_t *handle;
+ 	unsigned char *it;
+-	size_t read_res;
++	snd_pcm_sframes_t read_res;
+ 	int i, cur_ch, pos_in_ch;
+ 	void *samples;
+ 	struct pcmtest_test_params *params = &self->params;
+@@ -222,7 +222,7 @@ TEST_F(pcmtest, capture) {
+ 	snd_pcm_format_set_silence(params->format, samples,
+ 				   params->rate * params->channels * params->time);
+ 	read_res = snd_pcm_readi(handle, samples, params->rate * params->time);
+-	ASSERT_GE(read_res, 0);
++	ASSERT_EQ(read_res, params->rate * params->time);
+ 	snd_pcm_close(handle);
+ 	it = (unsigned char *)samples;
+ 	for (i = 0; i < self->params.sec_buf_len * self->params.time; i++) {
+@@ -239,7 +239,8 @@ TEST_F(pcmtest, ni_capture) {
+ 	snd_pcm_t *handle;
+ 	struct pcmtest_test_params params = self->params;
+ 	char **chan_samples;
+-	size_t i, j, read_res;
++	snd_pcm_sframes_t read_res;
++	size_t i, j;
  
- 	if (force)
- 		pr_warn("module loaded by force\n");
-@@ -271,9 +271,9 @@ static int __init ibm_rtl_init(void) {
- 		return -ENOMEM;
+ 	chan_samples = calloc(CH_NUM, sizeof(*chan_samples));
+ 	ASSERT_NE(chan_samples, NULL);
+@@ -257,7 +258,7 @@ TEST_F(pcmtest, ni_capture) {
  
- 	/* search for the _RTL_ signature at the start of the table */
--	for (i = 0 ; i < ebda_size/sizeof(unsigned int); i++) {
-+	for (offset = 0; offset + sizeof(*rtl_table) <= ebda_size; offset += 4) {
- 		struct ibm_rtl_table __iomem * tmp;
--		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + i*sizeof(unsigned int));
-+		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + offset);
- 		if ((readq(&tmp->signature) & RTL_MASK) == RTL_SIGNATURE) {
- 			phys_addr_t addr;
- 			unsigned int plen;
+ 	for (i = 0; i < 1; i++) {
+ 		read_res = snd_pcm_readn(handle, (void **)chan_samples, params.rate * params.time);
+-		ASSERT_GE(read_res, 0);
++		ASSERT_EQ(read_res, params.rate * params.time);
+ 	}
+ 	snd_pcm_close(handle);
+ 
+@@ -273,7 +274,8 @@ TEST_F(pcmtest, ni_playback) {
+ 	snd_pcm_t *handle;
+ 	struct pcmtest_test_params params = self->params;
+ 	char **chan_samples;
+-	size_t i, j, read_res;
++	snd_pcm_sframes_t write_res;
++	size_t i, j;
+ 	int test_res;
+ 
+ 	chan_samples = calloc(CH_NUM, sizeof(*chan_samples));
+@@ -294,8 +296,9 @@ TEST_F(pcmtest, ni_playback) {
+ 	}
+ 
+ 	for (i = 0; i < 1; i++) {
+-		read_res = snd_pcm_writen(handle, (void **)chan_samples, params.rate * params.time);
+-		ASSERT_GE(read_res, 0);
++		write_res = snd_pcm_writen(handle, (void **)chan_samples,
++					   params.rate * params.time);
++		ASSERT_EQ(write_res, params.rate * params.time);
+ 	}
+ 
+ 	snd_pcm_close(handle);
 -- 
 2.53.0
 
