@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044740;
-	b=KA3R+N/GyQ+xkZ1wRH0XfqCbEuXUI6ZPZa/bFGY2YwWtbyswnwkxSoqpAg/nvDJTJxni
-	 +MXeEZGCiQgVzbIYmmzG7/p2v4H9VGvCKq8YRaKUrvg5dZKbTgFXEMByWNe8JrwjVKwiQ
-	 NIcnnDirw1ygBNt4ylmdCsxwr4p5pZKvIrMNB0t9/A8sIOjVv2pvhYtvZ9qJyYz41YF08
-	 HiqS84FHMpNesY1QNdAxgtF6sdhyKdxY6fAWIqUEYOnvkIoxEOITGF3mJPHsmvBLbzJTT
-	 SLKq49gBpMrXOP95Rkg7qMj6fJ0rOasSurTwO4JBy1r4FDvC/ZyliLV5y+1gsSO+7cA==
+	t=1795044743;
+	b=UHDTkIkFyZ+TZF/4yrOaPB2NS/es5/XQmVihw4RPQBxT08AwnzxRXReWNDKGS+k5nO9+
+	 Jzh8JLkySBk0C5SoafpycHrqfGkw5a7Zw5Y5+uIdaHmWV8XpIkx4QrY9kqP2OyUgR8/Nk
+	 K7stm+J0GR7Y95/LgyJ7SgYVwCFMwC3gH7ayxCN8Gwd7WxOcj2TCIroBSf4oX+XsvPJWT
+	 ZKnd/UAgxfPA8AwMzby2dHeYePFqYNzYihRjM2vEi4AsbnfZBtN4iqASq3OF1Xnir780H
+	 pRXvZCJ+SyQqfzbj4QAotVkhNqbmGb4oYoG5ysBvofY22tj1z5xLE6Pue1IEBuRhHGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RwxCITINSjyeSIZKg5fUq2PJAcKTQj9hxbB94E1PXWw=;
-	b=WqkcXicivjKWiX/0Ruc4yHDO5bElEAaz0/Dhq7fqY0Y453OeETqy+wvUCwoNvlFOYJIa
-	 X2qOrRIJqyr/gBqEIDQE13uf3DoniHiSpVdjvac12jwgLVvjOQ+l8hKu8Os0bVZPHIN6N
-	 KDEPU0U9Tm5hZ4OPJleY5LzYXp5oCUVMHODCpQBdGrgA/Zz+LGPSStYzWOpnsP33MHrVl
-	 YVPEFJgzp4yrfkYnxIkwMlmr0g+ldYJ84zJk0fGkrG2bff0qljTF4kVo0IjPi/JZ43f65
-	 0eY+X9mBYBtCZzaaDBoolFe274/Scfk4GbRTNf0CCu69ULrUbDgWCiB+JSGqXs3xVfQ==
+	bh=n8rmG6oyJbkc+2JCkTZYzUPTjmvpwbDfD+YWAC5jYuE=;
+	b=pmAhVQaGKJ1/p5N7+jb3sYxS5m8pGDs6XgfZLW33kwIgxNntyRIbTC6TTTbAeUQe1QKl
+	 CxQH/IbnHGUyKJEY0WzDN5fOhWV03Yq+WFef5pMwyVG8Cm93a9E2RtjkzKbXJerepLrQa
+	 ikTLXGK9TIw82y96LBwXzmX301RjdFAzmwWfMDTET7OSd1Q827ymQagM0PzO2Pn949V59
+	 gfLEYNXimHHbgXODE4+BJvUAW0qh2xNV6ho+fAFDvYgG8TVNnGI8zOhX417zx0cZ5ystq
+	 bcTWHm12Okzo9eUY8k5WiWy3YvUMo6atMMGKgUK/Uod9z4IYxKFt6m3tO+R3H+UkZDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XExZ9p68;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ShehoEgB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6BA606A320;
-	Wed, 18 Nov 2026 23:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFF9606A33F;
+	Wed, 18 Nov 2026 23:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XExZ9p68
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0C51F000C4;
-	Wed, 18 Nov 2026 23:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ShehoEgB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EC81F000C5;
+	Wed, 18 Nov 2026 23:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044740;
-	bh=RwxCITINSjyeSIZKg5fUq2PJAcKTQj9hxbB94E1PXWw=;
+	s=korg; t=1795044743;
+	bh=n8rmG6oyJbkc+2JCkTZYzUPTjmvpwbDfD+YWAC5jYuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XExZ9p68s79PbI2I4MH737KCUtWGg4BhfJBea1Ib+eXmKMf2hFYnplB6zuszLS2qb
-	 crY2xZNALDo86oliMNd3VwEA36SGva2aqGtaS6cPkhytOZUmqAVh6FxLZXpMuiEalK
-	 z3lR6rHFc1548fidS0HSus+1E23dwMmYfPn1bnv4=
+	b=ShehoEgBg7zGNjpe6q5rdyR129t4j5NNKpMfrVpl9f6ZpxNX0VzAiG4Pn3PiZRt3A
+	 cMI0mcZTGmYS/E/YiIrfOC6/BAQ85W2RG0auX1mG3mTAMTpDEeVn/PGAZ5is/lm40S
+	 MWgyZJCWgL09AMZPr4H3WYbdGalqisLK3whBKMns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Zachariah Mithani (AploSec)" <zachariah@aplosai.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 0672/2857] ksmbd: prevent stale data from being written by SMB2 WRITE requests
-Date: Wed, 18 Nov 2026 15:28:26 +0100
-Message-ID: <20261118150225.757642729@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0673/2857] ksmbd: prevent share root removal through empty paths
+Date: Wed, 18 Nov 2026 15:28:27 +0100
+Message-ID: <20261118150225.795446705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,108 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit bc0e0f5ac1d7b044d403f859406b4b66d4b1ce9b ]
+[ Upstream commit 9fd1fcbbf84986a7bcf601a2b90540899069d263 ]
 
-Initialize the compatibility byte in request buffers without zeroing
-the entire allocation. Keep the one-byte compatibility exception for
-SMB2 messages so valid zero-length WRITE requests remain compatible,
-and validate the data range in the WRITE handlers against the current
-compound request before accessing it.
+A FileLinkInformation request can supply "/" as the new link name.
+smb2_get_name() strips the trailing slash and passes an empty string to
+ksmbd_vfs_kern_path_start_removing().
 
-This prevents stale request-buffer data from being written to files or
-sent to IPC pipes.
+ksmbd_vfs_path_lookup() resolves an empty pathname as the configured share
+path, without LOOKUP_BENEATH. With ReplaceIfExists set, smb2_create_link()
+can therefore remove the share root from its parent before link creation
+fails. An authenticated client with a writable share and DELETE access to
+a file can trigger this if the share root is empty and the mapped user
+has write and search permission on its parent directory.
 
-Fixes: 443d61d1fa9f ("ksmbd: allocate one more byte for implied bcc[0]")
+Return -EINVAL for empty pathnames when for_remove is set, before
+resolving the share path or acquiring removal resources. Ordinary lookups
+continue to accept empty pathnames for opening the share root.
+
+Fixes: 74d7970febf7 ("ksmbd: fix racy issue from using ->d_parent and ->d_name")
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-32436
+Reported-by: Zachariah Mithani (AploSec) <zachariah@aplosai.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: replaced smb2_current_req_len() calls with inline calculations using NextCommand or the remaining request buffer length ]
+[ sashal: Moved the empty-name check from ksmbd_vfs_path_lookup() to smb2_create_link() because the lookup helper lacks for_remove. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c |  1 +
- fs/smb/server/smb2pdu.c    | 34 +++++++++++++++++++++++++---------
- 2 files changed, 26 insertions(+), 9 deletions(-)
+ fs/smb/server/smb2pdu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 168292f73a843..28c60d3070a25 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -403,6 +403,7 @@ int ksmbd_conn_handler_loop(void *p)
- 		if (!conn->request_buf)
- 			break;
- 
-+		conn->request_buf[pdu_size + 4] = 0;
- 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
- 
- 		/*
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 1157acc74caf2..ef70f17ac9303 100644
+index ef70f17ac9303..6b24448a55e18 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -6688,23 +6688,28 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
- 	int err = 0, ret = 0;
- 	char *data_buf;
- 	size_t length;
-+	unsigned int data_offset, req_len;
- 
- 	WORK_BUFFERS(work, req, rsp);
- 
- 	length = le32_to_cpu(req->Length);
- 	id = req->VolatileFileId;
-+	data_offset = le16_to_cpu(req->DataOffset);
-+	req_len = le32_to_cpu(req->hdr.NextCommand);
-+	if (!req_len)
-+		req_len = get_rfc1002_len(work->request_buf) -
-+			work->next_smb2_rcv_hdr_off;
- 
--	if ((u64)le16_to_cpu(req->DataOffset) + length >
--	    get_rfc1002_len(work->request_buf)) {
--		pr_err("invalid write data offset %u, smb_len %u\n",
--		       le16_to_cpu(req->DataOffset),
--		       get_rfc1002_len(work->request_buf));
-+	if (data_offset < offsetof(struct smb2_write_req, Buffer) ||
-+	    data_offset > req_len || length > req_len - data_offset) {
-+		pr_err("invalid write data offset %u, length %zu, req_len %u\n",
-+		       data_offset, length, req_len);
- 		err = -EINVAL;
+@@ -5841,7 +5841,8 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 	link_name = smb2_get_name(file_info->FileName,
+ 				  le32_to_cpu(file_info->FileNameLength),
+ 				  local_nls);
+-	if (IS_ERR(link_name) || S_ISDIR(file_inode(filp)->i_mode)) {
++	if (IS_ERR(link_name) || link_name[0] == '\0' ||
++	    S_ISDIR(file_inode(filp)->i_mode)) {
+ 		rc = -EINVAL;
  		goto out;
  	}
- 
- 	data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
--			   le16_to_cpu(req->DataOffset));
-+			   data_offset);
- 
- 	rpc_resp = ksmbd_rpc_write(work->sess, id, data_buf, length);
- 	if (rpc_resp) {
-@@ -6855,14 +6860,25 @@ int smb2_write(struct ksmbd_work *work)
- 		writethrough = true;
- 
- 	if (is_rdma_channel == false) {
--		if (le16_to_cpu(req->DataOffset) <
--		    offsetof(struct smb2_write_req, Buffer)) {
-+		unsigned int data_offset = le16_to_cpu(req->DataOffset);
-+		unsigned int req_len = le32_to_cpu(req->hdr.NextCommand);
-+
-+		if (!req_len)
-+			req_len = get_rfc1002_len(work->request_buf) -
-+				work->next_smb2_rcv_hdr_off;
-+
-+		if (data_offset < offsetof(struct smb2_write_req, Buffer) ||
-+		    data_offset > req_len ||
-+		    length > req_len - data_offset) {
-+			ksmbd_debug(SMB,
-+				    "invalid write data offset %u, length %zu, req_len %u\n",
-+				    data_offset, length, req_len);
- 			err = -EINVAL;
- 			goto out;
- 		}
- 
- 		data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
--				    le16_to_cpu(req->DataOffset));
-+				    data_offset);
- 
- 		ksmbd_debug(SMB, "filename %pD, offset %lld, len %zu\n",
- 			    fp->filp, offset, length);
 -- 
 2.53.0
 
