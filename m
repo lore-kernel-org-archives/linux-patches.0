@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028810;
-	b=f9Y3dl4PoeSW8XOVkAu7bDb3uGfuWu3vQQ9ziR6voXtyvJNILUSBi1C72xfqSWHR1zNp
-	 ZkaS9UmeIX+6xY1TMicJ5E8GcmTXSXm7W1oDR905dGBK8T9+L3NVI8JDAEwkUzyzhGmuF
-	 VCrg301KRHlCAzG7foYUJLD8UXjeHVX8wk/+RwvHWf1gGaAAq67aykVpfkISsniZVdySI
-	 qmYZSU1h+UlDlWroE7hTeM7HNzSPqsRtam+A/acFDpzmLiESaNSTVolW4qEuKJgSVMbEF
-	 3V6RuV9UNva6FtuXiM/syJws88lUy5fvLKixBp/aLzRW23cObkUk1gYxRAKcPd9rXqQ==
+	t=1795028813;
+	b=YEb7j2cjkbt/kAK86+UjHVQ2g5d7NrPaWgQYAMQnG9j9ysDKBmceF29qoFW7FRTFyGQl
+	 8pkCt6vTpuQBUGs1pW+0DPPQ9tGuCn71mhSeD4vHkwLWR8hOYNccbUg7abNglYYN0DSlz
+	 5kbbKUKIpciISpodm56n4U7Q3Jhp5Ss4KaYjYcP69qW+LxrmUxZ+DAQ1Nn/KBjPvXqdCD
+	 ShPhx0dJx0Iz0KOo8tjSBByeUKsEXdLhPaGvIHPreWWH/ULpZBBVXzNluj8yjMiGMJOZW
+	 5Ke/Xl4YTwrvTWMg0s5nH+taOYgC5822qDS1cr/mLlr6o4CuX8++kohZSilkbG5qcfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028810;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KcYKYYbVv8lIyYH2r1CI/x6wqY+6xeiZx6DJEGp6sRs=;
-	b=DKSMTsqvp17xDbewWJCR4R5uULtwVyGYySEK0dzE9tKHU8mPvMeIyXRSC0Ya+Q0lFpOl
-	 wDp0VklhZUm3unBW7xETny+j+K7duC1UPOQ30fyvnoaZ1WrScEobtIBqIPPQSHT6Cdn0e
-	 MRWOCSmYQsg5OFoAF/TIkvSUQqiCRVkuTkFwf9l98MJSZk3+Kr1TXuGbrw1SQHaiS7Pgr
-	 sdWKytLt/VxMYuSDE46nLZkKHZfgB6opHm/NDAyiLBVUzdvYfu6sRZuAZ16fmNRZjIVcx
-	 Omd/dNjjh6zr2MZ3YaD7GD4axGkIkcASFD/0VHc4JwjLv1ISpWFKhvSS30IZWZbCD5w==
+	bh=zIhtI0DyD/bqkjW8lPloE/xbXqF6v3xTQI8n2pUkdyY=;
+	b=PwI7PSe1e8UHNCLC+30PhtL5uPeFbXLxOFrEuU/xYdXV9khfcKp6wp3GAXNupWOXeO5X
+	 ack3vQPP8M/evsvLWKbwGC4WUcx0yAHP3xQJcQoGMNkfRNUqcCLU0TulbQyEzq9vcDw36
+	 +/MST+myWvzjz1PGIKku3WhXDpmI2H/nQ/061aWX0Cv6U43eWfVrNqOEx20vsyJtRkjfi
+	 GxkjD5rXal9oqPOrA8zMy/ldRfYKTow2Bm135Bz9Vp5KaTDAE4xAP3NCmNa3peikFF//u
+	 m6bEUYrPsjuA/qqQeVRrZJHx1Zk8lwyXjPGDfKYC1P0VoxPEidP/h0tEi7EKbAx4FKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5If60LL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A/EMIBWI";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DA060A2608;
-	Wed, 18 Nov 2026 19:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD64606A33E;
+	Wed, 18 Nov 2026 19:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5If60LL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897221F000C4;
-	Wed, 18 Nov 2026 19:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A/EMIBWI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE241F000C6;
+	Wed, 18 Nov 2026 19:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028810;
-	bh=KcYKYYbVv8lIyYH2r1CI/x6wqY+6xeiZx6DJEGp6sRs=;
+	s=korg; t=1795028813;
+	bh=zIhtI0DyD/bqkjW8lPloE/xbXqF6v3xTQI8n2pUkdyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5If60LLJAaTI4JnpNG1aQJqsqh+xYpjF1tYl1JSQXXmgrCa5Mow2N/zabcUecVaE
-	 5qinnxJCQ6ZcT8U5jlY8cfwv/g0S1CZbKZdiArB45qVPQn3C++nb5XRGKKcndmNOZ/
-	 tZPQ5N1a/rSgMUQo2YMENxcRlaMTRz7LJXdOuRQU=
+	b=A/EMIBWIrvn1rAKSsbr6Is+1xSl8XB5IG0LTW1vquvIFz15aqw0OSuskj60/uD8UX
+	 9dLgsA+OySXACuo+MSCoC/kSXfsnIzOnbVKGqwi7ELjqY6WRe/ha6RricNCJ9I1Ewh
+	 z1o8FzF2URobejJEHvxPFdWDt4Dnl9Dma4NQCS/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0128/1756] xfs: add a flag to convert unwritten extents without allocating blocks
-Date: Wed, 18 Nov 2026 15:37:35 +0100
-Message-ID: <20261118150013.294925072@linuxfoundation.org>
+Subject: [PATCH 6.12 0111/1756] rose: refuse an empty message when the Q bit is included
+Date: Wed, 18 Nov 2026 15:37:18 +0100
+Message-ID: <20261118150012.618981276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,109 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit f3ca3498dfe624f9b604c934263538a3acd55af5 ]
+With the ROSE_QBITINCL socket option set, rose_sendmsg() takes the Q
+bit from the first byte of the message and pulls that byte off.
+Nothing checks that there is a first byte: a send() of zero bytes
+reads the Q bit from beyond the data copied from the user, skb_pull()
+fails without a word, and an empty data frame goes out with a Q bit
+taken from uninitialised memory.
 
-xfs_bmapi_write() with XFS_BMAPI_CONVERT also allocates blocks for
-holes and delalloc extents in the range. Add XFS_BMAPI_CONVERT_ONLY for
-callers that may only convert already allocated blocks. It stops at a
-hole or delalloc extent, and returns -ENOSR if it stops before mapping
-anything.
+Refuse such a message with EINVAL before anything is allocated.
+x25_sendmsg() checks for that byte too, with pskb_may_pull().
 
-Marked for stable because "xfs: refuse a pNFS LAYOUTCOMMIT of a range
-without blocks" needs it.
-
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20261013120359.GB2944@lst.de
-Cc: stable@vger.kernel.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Placed XFS_BMAPI_CONVERT_ONLY and its trace entry after XFS_BMAPI_NORMAP because XFS_BMAPI_EXTSZALIGN is absent. ]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit fd8a23b811b7c46d0b9aefc2a45955ea8f685a8e)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_bmap.c | 14 ++++++++++++--
- fs/xfs/libxfs/xfs_bmap.h | 10 +++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ net/rose/af_rose.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_bmap.c b/fs/xfs/libxfs/xfs_bmap.c
-index b2b5a36ead97b..5a79ae2e2276c 100644
---- a/fs/xfs/libxfs/xfs_bmap.c
-+++ b/fs/xfs/libxfs/xfs_bmap.c
-@@ -4380,6 +4380,8 @@ xfs_bmapi_finish(
-  * Returns a negative error code on failure, including -ENOSPC when it could not
-  * allocate any blocks and -ENOSR when it did allocate blocks to convert a
-  * delalloc range, but those blocks were before the passed in range.
-+ * With XFS_BMAPI_CONVERT_ONLY, it stops at a hole or a delalloc extent instead
-+ * of allocating blocks, and returns -ENOSR if it stops before mapping anything.
-  */
- int
- xfs_bmapi_write(
-@@ -4439,6 +4441,8 @@ xfs_bmapi_write(
- 	 */
- 	ASSERT((flags & (XFS_BMAPI_PREALLOC | XFS_BMAPI_ZERO)) !=
- 			(XFS_BMAPI_PREALLOC | XFS_BMAPI_ZERO));
-+	ASSERT(!(flags & XFS_BMAPI_CONVERT_ONLY) ||
-+	       (flags & XFS_BMAPI_CONVERT));
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 1b5230ed4a452..2cb096068e5ed 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -1286,6 +1286,10 @@ static int rose_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 	if (len > 65535)
+ 		return -EMSGSIZE;
  
- 	if (XFS_IS_CORRUPT(mp, !xfs_ifork_has_extents(ifp)) ||
- 	    XFS_TEST_ERROR(mp, XFS_ERRTAG_BMAPIFORMAT)) {
-@@ -4487,6 +4491,9 @@ xfs_bmapi_write(
- 		 * that we found, if any.
- 		 */
- 		if (need_alloc || wasdelay) {
-+			if (flags & XFS_BMAPI_CONVERT_ONLY)
-+				break;
++	/* With the Q bit included, the first byte of the data holds it */
++	if (rose->qbitincl && len < 1)
++		return -EINVAL;
 +
- 			bma.eof = eof;
- 			bma.conv = !!(flags & XFS_BMAPI_CONVERT);
- 			bma.wasdel = wasdelay;
-@@ -4581,10 +4588,13 @@ xfs_bmapi_write(
- 	 *
- 	 * To avoid a successful return with *nmap set to 0, return the magic
- 	 * -ENOSR error code for this particular case so that the caller can
--	 * handle it.
-+	 * handle it. The same goes for XFS_BMAPI_CONVERT_ONLY stopping at a
-+	 * hole or a delalloc extent at the start of the range, in which case
-+	 * nothing has been changed.
- 	 */
- 	if (!n) {
--		ASSERT(bma.nallocs >= *nmap);
-+		ASSERT((flags & XFS_BMAPI_CONVERT_ONLY) ? bma.nallocs == 0 :
-+							  bma.nallocs >= *nmap);
- 		return -ENOSR;
- 	}
- 	*nmap = n;
-diff --git a/fs/xfs/libxfs/xfs_bmap.h b/fs/xfs/libxfs/xfs_bmap.h
-index 7592d46e97c66..0a7c32c6ce34f 100644
---- a/fs/xfs/libxfs/xfs_bmap.h
-+++ b/fs/xfs/libxfs/xfs_bmap.h
-@@ -87,6 +87,13 @@ struct xfs_bmalloca {
- /* Do not update the rmap btree.  Used for reconstructing bmbt from rmapbt. */
- #define XFS_BMAPI_NORMAP	(1u << 10)
+ 	size = len + AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN;
  
-+/*
-+ * Use with XFS_BMAPI_CONVERT to convert unwritten extents without allocating
-+ * blocks. Stop at a hole or a delalloc extent: return the mappings found so
-+ * far, or -ENOSR if there are none.
-+ */
-+#define XFS_BMAPI_CONVERT_ONLY	(1u << 12)
-+
- #define XFS_BMAPI_FLAGS \
- 	{ XFS_BMAPI_ENTIRE,	"ENTIRE" }, \
- 	{ XFS_BMAPI_METADATA,	"METADATA" }, \
-@@ -98,7 +105,8 @@ struct xfs_bmalloca {
- 	{ XFS_BMAPI_REMAP,	"REMAP" }, \
- 	{ XFS_BMAPI_COWFORK,	"COWFORK" }, \
- 	{ XFS_BMAPI_NODISCARD,	"NODISCARD" }, \
--	{ XFS_BMAPI_NORMAP,	"NORMAP" }
-+	{ XFS_BMAPI_NORMAP,	"NORMAP" }, \
-+	{ XFS_BMAPI_CONVERT_ONLY,	"CONVERT_ONLY" }
- 
- 
- static inline int xfs_bmapi_aflag(int w)
+ 	if ((skb = sock_alloc_send_skb(sk, size, msg->msg_flags & MSG_DONTWAIT, &err)) == NULL)
 -- 
 2.53.0
 
