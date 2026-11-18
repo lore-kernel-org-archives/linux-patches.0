@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042666;
-	b=pBZ3L4NMEQwIqZjiWRxolXIKuNDCyruQuf/G2k7y8Khqgcz5jHEXZslRHRtihDTU5THL
-	 DnV+uzVIR2T8DSJJqiDqb5F8lT09ybNhXUsbTZIloyvNoicr50yD0Cz7yQ7RiPi8L+np0
-	 ZvmHfCC1r12GzMoq57GULBD+A74bOPGFeBI6tco8XHowD+1mhfeX/s+AhmtLhQ0CVbEAO
-	 +oix8O3jS+YbR7XxJPeqVTBfIw4xhajtWJtqCIJS/L2Q7L9XxEWVQz0imbhdwktBbLcif
-	 3uwgxtXotvdfoONmDs2cxTyf6PbiT4jb35zI6YDBxVGRTPC00FSAuAnr1uZ9msvVZHQ==
+	t=1795042668;
+	b=YrHtB/NhrUbJk0VcDKWJKwfy+cAs3JQMxTiXObXtTIrD2y5LuLWJnxpnheVXuimLdlUr
+	 m6yy+dizv4EH9d5D7pEI2stOU9T+OChJtg82r5JxKlFE+/x2bb0o5GPoKeowfZXizOQrh
+	 hZCSU5KOQ/jkLq4EcsoEQwJz4sn4mj1Uoh7lUJF9dvPWc4sD9BFDdBfrGyksQV2biabyI
+	 58wFpzUXZaGonG790318OHD6EY8nrc+p5V3CVnOF9wS04wcSzJELQWl5OwA3Bhy56CMcf
+	 GtJEe6B16pwvxtHLEoQ7IdrdvE09+lgZwvWNsjIpTmGMuT54Rt1t9kW+Y8QgZrf9R0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7R9hTmPR/jBw4IgYaONe4gLlXUalBcHpHM9XcXLwbQY=;
-	b=PiCZlALr4Y7Yh8xBW8qNiocyuV0mi3YCxuyb84urfr8yBBpnWDlAk+Sk7ig+hONG8U84
-	 md7LbNl2xbxxx1HPU6S2iY/Uzu2SdjRoByLBoUdC9ivNCYyedGJK1/ldBeWyvUO7G/0R2
-	 UFVCNhmAksMrRaSrxt1kJEHX74+U8riwPdlbL0EYV4oR92huWWRAvr9KDgVbGitV6wNi1
-	 DL8Whxj9/CUC90dVo/0Zz9ELEsdarMknEvW89Tsy3jEKRosmyFlTPX4GjN9RFGbowvLgb
-	 VNyi1wItk42/PYtBP6GT5k8LkVPsRMfhJYVZfP52cWnyld2VnjxP/it8pWGrqClZLZg==
+	bh=bgXMNO9rj3QxQ2LivXXq8LrbwDmDgQy1VKV7yggtKDs=;
+	b=WweOmkDblZBICz7ug655YB6W3weS5PDQadFKr2Fg0SN5YRZN81qXu7So45DUwXEzhICx
+	 yedQjB0UpMPYLelWlM/B348okpE1rnQ+8uYfx/TTIUPvtmmO9ZFnzlJJpZXDQmuKaVNhy
+	 JndFDsiZWceTzJTgq/pysWi8rGXK3POLFspHqCQCHv7a2x9pXjPYNIrlI7Er+qrQEZ83Y
+	 wrv2559EezEJq+lj4JwDfjeo0AhjL8mOFEZ5newqO5yK5RctNecRc5V4lAFNL5rL48cxb
+	 Fnys2CiCRGm9bO8tsgdDG4DLsUUeeiv8IG/NPKnBsbk4M8QBlI7e2gm1OhNmJTndYBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FYQaIJ9i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9yOJnqf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F2E606A320;
-	Wed, 18 Nov 2026 22:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B6F606A31C;
+	Wed, 18 Nov 2026 22:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FYQaIJ9i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686FD1F000C4;
-	Wed, 18 Nov 2026 22:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9yOJnqf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4161F000C4;
+	Wed, 18 Nov 2026 22:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042665;
-	bh=7R9hTmPR/jBw4IgYaONe4gLlXUalBcHpHM9XcXLwbQY=;
+	s=korg; t=1795042668;
+	bh=bgXMNO9rj3QxQ2LivXXq8LrbwDmDgQy1VKV7yggtKDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FYQaIJ9icrEylMgMhPeC6qH3vaV9ru9cCI8YOjcI1CfM95DIEI5eroYb4Hw5s5aBb
-	 pDSvhbznQet2TzzVrZxIHjKGRVnspOxwGoA3Kbmu6YoREwQhOK+dfj6H8Ck2QEV7D1
-	 CSAZeQfbQqIX6AQvkZJaM8iwbnxX6Kl3pxU21wCc=
+	b=r9yOJnqfF91Q5Ox+QiVvGtPdGEGCz/p0oc07uZxFiAnDoFw/Psf/JH36qnz9FsK1j
+	 CcPCxnuAIbZdgG4k/BPJlqIijyBcZpdh0md638KjGeWlmLeN4tRpbELIaooIBwdnr/
+	 dPrN6Hf5NaQpkhzaDnHYIR5JFg51hSgQfXYwh2M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3253/3318] block: dont lose the status of a failed flush request
-Date: Wed, 18 Nov 2026 16:04:35 +0100
-Message-ID: <20261118150457.229376468@linuxfoundation.org>
+Subject: [PATCH 6.6 3254/3318] blk-mq: keep sharing tags fairly after a queue update
+Date: Wed, 18 Nov 2026 16:04:36 +0100
+Message-ID: <20261118150457.257203344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,47 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 67c43ceaa29e9b904216651697adf20445b219fc ]
+[ Upstream commit 620cfc7a664278a55d068ed88fff1242fddc4ef2 ]
 
-flush_end_io() stores the status in fq->rq_status for whoever drops the
-last reference to finish the flush sequence. blk_mq_put_rq_ref() calls
-it with BLK_STS_OK from tag iterators and the timeout handler and
-overwrites an error the real completion stored. With two extra
-references, reading /sys/block/<disk>/inflight is enough for that, a
-failed flush completes everything waiting on it with success and fsync()
-lies to the application.
+A hctx only gets BLK_MQ_F_TAG_QUEUE_SHARED from
+blk_mq_add_queue_tag_set(). The hctxs blk_mq_update_nr_hw_queues()
+allocates for queues that joined long ago never get it, so they aren't
+counted in active_queues and hctx_may_queue() lets them take all the
+tags. One NVMe namespace can starve the others after the first update.
 
-Only store a status that is an error.
+Set the flag on the new hctxs.
 
-Fixes: 2e315dc07df0 ("blk-mq: grab rq->refcount before calling ->fn in blk_mq_tagset_busy_iter")
+Fixes: 868f2f0b7206 ("blk-mq: dynamic h/w context count")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-6-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-30-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-flush.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ block/blk-mq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/blk-flush.c b/block/blk-flush.c
-index 313f0ffcce42e..8cb7544c49931 100644
---- a/block/blk-flush.c
-+++ b/block/blk-flush.c
-@@ -226,7 +226,13 @@ static enum rq_end_io_ret flush_end_io(struct request *flush_rq,
- 	spin_lock_irqsave(&fq->mq_flush_lock, flags);
- 
- 	if (!req_ref_put_and_test(flush_rq)) {
--		fq->rq_status = error;
-+		/*
-+		 * Remember the status of the flush for whoever drops the last
-+		 * reference. blk_mq_put_rq_ref() gets here with BLK_STS_OK and
-+		 * must not wipe it out.
-+		 */
-+		if (error != BLK_STS_OK)
-+			fq->rq_status = error;
- 		spin_unlock_irqrestore(&fq->mq_flush_lock, flags);
- 		return RQ_END_IO_NONE;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 32b0bb53b8758..58cbf858fe134 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -4979,6 +4979,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 			goto fallback;
+ 		}
+ 		blk_mq_map_swqueue(q);
++		/* The new hctxs don't know yet that they share their tags */
++		if (set->flags & BLK_MQ_F_TAG_QUEUE_SHARED)
++			queue_set_hctx_shared(q, true);
  	}
+ 
+ reregister:
 -- 
 2.53.0
 
