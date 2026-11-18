@@ -1,59 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057833;
-	b=gJ2d61l1+8tog95FaCXOIIw8KsiHgPI4AJvms6dxWb2g+yEctM15hfM+MfC9EQc/xssy
-	 R5ffH086CcZD+5djB6B16ZYVpIONbX/gMdTd/OTW8KNbwO7GQhQuFxT1BEuy/1b7fAz1q
-	 DS33QuoAaNOI9cUqoT0f+l7mKnrOi271eU4KH4PU1k5PJGgCKKch8qeSmosXT2l3Djxt+
-	 Obooe0CaWpd95Y+y1w32MduVoG8Yzs2WTeWrlEZwBoJw5gi+z+yuC6qT0XczFHRPm3ClR
-	 b0fbqEi+uMlqwcyAkEoQMM97/UGfATivzRmdZbvj07KGsU25qerpvVfOAJXP7Yzl8iQ==
+	t=1795057835;
+	b=mxJRdUJADTn2Inmx0vt8g3Zv0ZIJDX6VYDYGGWPftg6JKFNweYDd/W+PSWPw3EOObCyz
+	 GQWHL4QkiqL3v5r77dd5aZfKmtIJ1TkadZ3x0p/x8wHibwl6bcxPI8AFyPgj62A53yH4d
+	 zjgKe+QWXAtC0tYcbDfjBRAUSWSxZ65jzRUZ+86K2hCnDg5eBcmfAByuswIAgnTbZwjcj
+	 aK9X/MscjzejLNOndNNQ6d6ttxjymhv9UkNIOA5oocZRNxZdiRtDWgNsBd3FS262NlH77
+	 btvCSpWditCwzacZrntIC379E1hgxaQ07dGKKjaE31QqYWWt3oxXHx5lHmnQXL6spKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iotEFTF348QZ1ulziS941SmVEkAP2x/u/Fd5Pg4X/FI=;
-	b=kfccXzEqkoyZi+kBSppAKDy/QDuJu1c6rgztDxgoLP2T/F+L3tlx96/j6W4fdYShEJxR
-	 cWW1EwmWdXO9mejH6MYF0tavpEO+LtLRF5bPuI5WFaNHxMLuFPkaCn5csVDJrox2/v2MI
-	 NRDEQYwxA40clXVA8ugEgvO1YwckJS31UIzJzrMKUrvjOGKvB7RIG1GN6CP0c15617DMK
-	 wG2UM1QD637xB+8UPVhSHBU70pPiFLhM9xwqPx/cLGtcHSvMMRqpmYcEI+BroqbJG7IaC
-	 f2iCPEbqDDzcf9cDaRYJi1bAWSXvcSqmlZBsmcNqj1hoJFqJy9dVw7NQHGZ7f/lKfNQ==
+	bh=G4CwVLoAiOnrlzJfyMZ9rnfuLclKVVWlOf+JhAou8Tw=;
+	b=qCVlCSrYq1S2P5pzIXcIamEima/L33WghfywEXa702qQIalefGoS+1RVFkaQYoAVkRwU
+	 vG8S3P4yw831oW6DMtzAFdKiInh1LwZMz80yzqGu6Qh4Haw5mLp6J9k9Y6B0OT8RB0eLJ
+	 4Tm5NGeU0Zt4iELx711i7oIX3FSBD86dAotmlDzfxo6M7qRp15FqGUzX+qItQqC96GXpO
+	 IGxPiIw8rSXZNxZztVxrkvg4Iw8Mb6f8cPdbl3iJ1Uu3fEF+WEtYdhPf3P3gnAN47BxwF
+	 Y9New+kDGE6xVWcEBjq+c1E5wlD2abqmLfYwHwzKee0AHnMoWf66AZSPs9Hf7QOF79w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v8n75GYJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePEji6+x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1624A606A32A;
-	Thu, 19 Nov 2026 03:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF074606A32C;
+	Thu, 19 Nov 2026 03:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v8n75GYJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9B41F000C4;
-	Thu, 19 Nov 2026 03:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePEji6+x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EEE1F000C4;
+	Thu, 19 Nov 2026 03:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057832;
-	bh=iotEFTF348QZ1ulziS941SmVEkAP2x/u/Fd5Pg4X/FI=;
+	s=korg; t=1795057835;
+	bh=G4CwVLoAiOnrlzJfyMZ9rnfuLclKVVWlOf+JhAou8Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v8n75GYJcsVn2hod8mBKpta9jSbxhZXBGNYfLD1avQ6IVwcpZxxlYbwSDtCnJxwif
-	 rHGGcnZQALNv5Bl1T3pUjMr71cL2mGZJ+7FIySYgZpZDO1jDOAEhA1NkIzq3lE5CDi
-	 2THqAoC3cqiTQDfa0Q1iZH7vBsfifGLhJ4CuWqII=
+	b=ePEji6+xfdHdUnhpg9m9GCYGy2ny9KCJLxtlN+5Yn0VwLVgc9ldRoTJzTvgZBqj8B
+	 asnoGgKYccmAXHO6dlwRTAQ6rPgV3mX0Y9xeUhRLRA/g2ItLHOfrhB4qqFx3idVw5b
+	 L+qL4Ukif03ZSmQJIEaYYmc2hG/dBWU0xeJh1/ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Kees Cook <kees@kernel.org>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 5.10 0263/1848] ocfs2/dlm: hold a lock reference across grant AST enqueue
-Date: Wed, 18 Nov 2026 15:38:21 +0100
-Message-ID: <20261118145923.293677555@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>,
+	Shun Ota <shun.ota@miraclelinux.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0272/1848] net/sched: flower: Fix chain template offload
+Date: Wed, 18 Nov 2026 15:38:30 +0100
+Message-ID: <20261118145923.665231813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -75,220 +71,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 71743471204e21113295c786e5cfa570294234a4 upstream.
+[ Upstream commit 32f2a0afa95fae0d1ceec2ff06e0e816939964b8 ]
 
-A newly granted remote lock must remain alive until its grant AST is
-queued.  dlmlock_master() publishes the lock on res->granted with its base
-and queue references, then drops res->spinlock before calling
-dlm_queue_ast().  The resource's reserved AST count does not retain the
-lock itself.
+When a qdisc is deleted from a net device the stack instructs the
+underlying driver to remove its flow offload callback from the
+associated filter block using the 'FLOW_BLOCK_UNBIND' command. The stack
+then continues to replay the removal of the filters in the block for
+this driver by iterating over the chains in the block and invoking the
+'reoffload' operation of the classifier being used. In turn, the
+classifier in its 'reoffload' operation prepares and emits a
+'FLOW_CLS_DESTROY' command for each filter.
 
-This can fail when a peer dies with an immediately grantable CREATE
-buffered on its socket.  O2NET's node-down callback flushes receive work
-before DLM cleanup, but the flush only waits for work queued on entry.  A
-data-ready callback that already selected the socket container can queue
-new receive work after the flush advances its work color.  Socket shutdown
-does not discard bytes already queued for TCP receive.
+However, the stack does not do the same for chain templates and the
+underlying driver never receives a 'FLOW_CLS_TMPLT_DESTROY' command when
+a qdisc is deleted. This results in a memory leak [1] which can be
+reproduced using [2].
 
-The late receive work and DLM node-down cleanup can interleave as
-follows (the lock reference operations shown are before this fix):
+Fix by introducing a 'tmplt_reoffload' operation and have the stack
+invoke it with the appropriate arguments as part of the replay.
+Implement the operation in the sole classifier that supports chain
+templates (flower) by emitting the 'FLOW_CLS_TMPLT_{CREATE,DESTROY}'
+command based on whether a flow offload callback is being bound to a
+filter block or being unbound from one.
 
-  Socket data-ready        Node-down thread         Receive worker
-  -----------------        ----------------         --------------
-  o2net_data_ready()
-    select sc under
-    callback read lock
-                           o2net_disconnect_node()
-                             queue shutdown
-                             begin flush; new color
-    queue sc_rx_work
-    in the new color
-    release callback lock
-                             shutdown socket
-                             flush returns
-                                                    read buffered CREATE
-                                                    dlmlock_master()
-                                                      lock res->spinlock
-                                                      add lock to granted
-                                                      unlock res->spinlock
-                           DLM node-down cleanup
-                             lock res->spinlock
-                             dlm_free_dead_locks()
-                               unlink lock
-                               put queue/base refs
-                               free lock
-                             unlock res->spinlock
-                                                    dlm_queue_ast()
-                                                      __dlm_queue_ast()
-                                                      read lock->lockres
-                                                      (use-after-free)
+As far as I can tell, the issue happens since cited commit which
+reordered tcf_block_offload_unbind() before tcf_block_flush_all_chains()
+in __tcf_block_put(). The order cannot be reversed as the filter block
+is expected to be freed after flushing all the chains.
 
-DLM cleanup holds res->spinlock while dlm_free_dead_locks() drops the
-queue and base references.  The CREATE handler no longer holds that
-spinlock when __dlm_queue_ast() reads the lock, before taking its AST list
-reference.
+[1]
+unreferenced object 0xffff888107e28800 (size 2048):
+  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
+  hex dump (first 32 bytes):
+    b1 a6 7c 11 81 88 ff ff e0 5b b3 10 81 88 ff ff  ..|......[......
+    01 00 00 00 00 00 00 00 e0 aa b0 84 ff ff ff ff  ................
+  backtrace:
+    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff81ab374e>] __kmalloc+0x4e/0x90
+    [<ffffffff832aec6d>] mlxsw_sp_acl_ruleset_get+0x34d/0x7a0
+    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
+    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
+    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
+    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
+    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
+    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
+    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
+    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
+    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
+    [<ffffffff8379d29a>] ___sys_sendmsg+0x13a/0x1e0
+    [<ffffffff8379d50c>] __sys_sendmsg+0x11c/0x1f0
+    [<ffffffff843b9ce0>] do_syscall_64+0x40/0xe0
+unreferenced object 0xffff88816d2c0400 (size 1024):
+  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
+  hex dump (first 32 bytes):
+    40 00 00 00 00 00 00 00 57 f6 38 be 00 00 00 00  @.......W.8.....
+    10 04 2c 6d 81 88 ff ff 10 04 2c 6d 81 88 ff ff  ..,m......,m....
+  backtrace:
+    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff81ab36c1>] __kmalloc_node+0x51/0x90
+    [<ffffffff81a8ed96>] kvmalloc_node+0xa6/0x1f0
+    [<ffffffff82827d03>] bucket_table_alloc.isra.0+0x83/0x460
+    [<ffffffff82828d2b>] rhashtable_init+0x43b/0x7c0
+    [<ffffffff832aed48>] mlxsw_sp_acl_ruleset_get+0x428/0x7a0
+    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
+    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
+    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
+    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
+    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
+    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
+    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
+    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
+    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
 
-Take a temporary lock reference under res->spinlock when a grant AST will
-be queued, and drop it after dlm_queue_ast().  This keeps the lock alive
-across cleanup until the AST path has taken its own reference, without
-reversing the existing AST/resource lock order.
+[2]
+ # tc qdisc add dev swp1 clsact
+ # tc chain add dev swp1 ingress proto ip chain 1 flower dst_ip 0.0.0.0/32
+ # tc qdisc del dev swp1 clsact
+ # devlink dev reload pci/0000:06:00.0
 
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in __dlm_queue_ast+0x8a4/0xc00
-    Read of size 8 at addr ffff88810ead5940 by task kworker/u16:3/52
-
-    CPU: 3 UID: 0 PID: 52 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: o2net o2net_rx_until_empty
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? __dlm_queue_ast+0x8a4/0xc00
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? __dlm_queue_ast+0x8a4/0xc00
-     kasan_report+0xe0/0x110
-     ? __dlm_queue_ast+0x8a4/0xc00
-     __dlm_queue_ast+0x8a4/0xc00
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_raw_spin_lock+0x130/0x270
-     ? __pfx___dlm_queue_ast+0x10/0x10
-     ? __pfx_do_raw_spin_lock+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x45/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lockdep_hardirqs_on_prepare+0xeb/0x1a0
-     dlm_queue_ast+0x46/0x70
-     dlmlock_master+0x51f/0xf50
-     ? __pfx_dlmlock_master+0x10/0x10
-     ? dlm_create_lock_handler+0x2b2/0x870
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     dlm_create_lock_handler+0x35b/0x870
-     ? __pfx_dlm_create_lock_handler+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? kvm_clock_get_cycles+0x31/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_dlm_create_lock_handler+0x10/0x10
-     o2net_rx_until_empty+0x1dae/0x32c0
-     ? reacquire_held_locks+0xdd/0x200
-     ? __pfx_o2net_rx_until_empty+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? process_one_work+0x935/0x1b40
-     ? process_one_work+0x834/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x9a8/0x1b40
-     ? __pfx_process_one_work+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x177/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x351/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf70
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 52:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_slab_alloc+0x89/0x90
-     kmem_cache_alloc_noprof+0x20b/0x5c0
-     dlm_new_lock+0x39/0x5f0
-     dlm_create_lock_handler+0x16e/0x870
-     o2net_rx_until_empty+0x1dae/0x32c0
-     process_one_work+0x9a8/0x1b40
-     worker_thread+0x65c/0xe40
-     kthread+0x351/0x460
-     ret_from_fork+0x659/0x940
-     ret_from_fork_asm+0x1a/0x30
-
-    Freed by task 603:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kmem_cache_free+0x242/0x580
-     dlm_lock_release+0x1df/0x2f0
-     dlm_lock_put+0x51/0x80
-     __dlm_hb_node_down+0x15be/0x2710
-     dlm_hb_node_down_cb+0x6c/0xa0
-     o2hb_run_event_list+0x34a/0x500
-     o2hb_do_disk_heartbeat+0x1a07/0x2950
-     o2hb_thread+0x1ed/0xdc0
-     kthread+0x351/0x460
-     ret_from_fork+0x659/0x940
-     ret_from_fork_asm+0x1a/0x30
-
-    The buggy address belongs to the object at ffff88810ead5900
-     which belongs to the cache o2dlm_lock of size 184
-    The buggy address is located 64 bytes inside of
-     freed 184-byte region [ffff88810ead5900, ffff88810ead59b8)
-
-    [Page and shadow memory dumps omitted.]
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0043-v5-1ad07df761ff49638789@gmail.com
-Fixes: 2c5c54aca9d0 ("ocfs2/dlm: Add missing dlm_lock_put()s")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bbf73830cd48 ("net: sched: traverse chains in block with tcf_get_next_chain()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Shun Ota <shun.ota@miraclelinux.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmlock.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/sch_generic.h |  4 ++++
+ net/sched/cls_api.c       |  9 ++++++++-
+ net/sched/cls_flower.c    | 23 +++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/dlm/dlmlock.c
-+++ b/fs/ocfs2/dlm/dlmlock.c
-@@ -140,6 +140,8 @@ static enum dlm_status dlmlock_master(st
- 					  res->lockname.len)) {
- 			kick_thread = 1;
- 			call_ast = 1;
-+			/* Keep the lock alive through AST enqueue. */
-+			dlm_lock_get(lock);
- 		} else {
- 			mlog(0, "%s: returning DLM_NORMAL to "
- 			     "node %u for reco lock\n", dlm->name,
-@@ -168,10 +170,12 @@ static enum dlm_status dlmlock_master(st
- 	wake_up(&res->wq);
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 0c55a129fac92..ee5cf157f8ca2 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -362,6 +362,10 @@ struct tcf_proto_ops {
+ 						struct nlattr **tca,
+ 						struct netlink_ext_ack *extack);
+ 	void			(*tmplt_destroy)(void *tmplt_priv);
++	void			(*tmplt_reoffload)(struct tcf_chain *chain,
++						   bool add,
++						   flow_setup_cb_t *cb,
++						   void *cb_priv);
  
- 	/* either queue the ast or release it */
--	if (call_ast)
-+	if (call_ast) {
- 		dlm_queue_ast(dlm, lock);
--	else
-+		dlm_lock_put(lock);
-+	} else {
- 		dlm_lockres_release_ast(dlm, res);
-+	}
+ 	/* rtnetlink specific */
+ 	int			(*dump)(struct net*, struct tcf_proto*, void *,
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 81ebfcdf00bd5..9e06dd8108c82 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1413,6 +1413,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
+ 	     chain_prev = chain,
+ 		     chain = __tcf_get_next_chain(block, chain),
+ 		     tcf_chain_put(chain_prev)) {
++		if (chain->tmplt_ops && add)
++			chain->tmplt_ops->tmplt_reoffload(chain, true, cb,
++							  cb_priv);
+ 		for (tp = __tcf_get_next_proto(chain, NULL); tp;
+ 		     tp_prev = tp,
+ 			     tp = __tcf_get_next_proto(chain, tp),
+@@ -1428,6 +1431,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
+ 				goto err_playback_remove;
+ 			}
+ 		}
++		if (chain->tmplt_ops && !add)
++			chain->tmplt_ops->tmplt_reoffload(chain, false, cb,
++							  cb_priv);
+ 	}
  
- 	dlm_lockres_calc_usage(dlm, res);
- 	if (kick_thread)
+ 	return 0;
+@@ -2773,7 +2779,8 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
+ 	ops = tcf_proto_lookup_ops(name, true, extack);
+ 	if (IS_ERR(ops))
+ 		return PTR_ERR(ops);
+-	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
++	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump ||
++	    !ops->tmplt_reoffload) {
+ 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
+ 		module_put(ops->owner);
+ 		return -EOPNOTSUPP;
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 01d5903596aa0..7c8fd0c12588d 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -2414,6 +2414,28 @@ static void fl_tmplt_destroy(void *tmplt_priv)
+ 	kfree(tmplt);
+ }
+ 
++static void fl_tmplt_reoffload(struct tcf_chain *chain, bool add,
++			       flow_setup_cb_t *cb, void *cb_priv)
++{
++	struct fl_flow_tmplt *tmplt = chain->tmplt_priv;
++	struct flow_cls_offload cls_flower = {};
++
++	cls_flower.rule = flow_rule_alloc(0);
++	if (!cls_flower.rule)
++		return;
++
++	cls_flower.common.chain_index = chain->index;
++	cls_flower.command = add ? FLOW_CLS_TMPLT_CREATE :
++				   FLOW_CLS_TMPLT_DESTROY;
++	cls_flower.cookie = (unsigned long) tmplt;
++	cls_flower.rule->match.dissector = &tmplt->dissector;
++	cls_flower.rule->match.mask = &tmplt->mask;
++	cls_flower.rule->match.key = &tmplt->dummy_key;
++
++	cb(TC_SETUP_CLSFLOWER, &cls_flower, cb_priv);
++	kfree(cls_flower.rule);
++}
++
+ static int fl_dump_key_val(struct sk_buff *skb,
+ 			   void *val, int val_type,
+ 			   void *mask, int mask_type, int len)
+@@ -3219,6 +3241,7 @@ static struct tcf_proto_ops cls_fl_ops __read_mostly = {
+ 	.bind_class	= fl_bind_class,
+ 	.tmplt_create	= fl_tmplt_create,
+ 	.tmplt_destroy	= fl_tmplt_destroy,
++	.tmplt_reoffload = fl_tmplt_reoffload,
+ 	.tmplt_dump	= fl_tmplt_dump,
+ 	.owner		= THIS_MODULE,
+ 	.flags		= TCF_PROTO_OPS_DOIT_UNLOCKED,
+-- 
+2.53.0
+
 
 
