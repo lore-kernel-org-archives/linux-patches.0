@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057772;
-	b=KrB35sXmOQhwcxWWKEJmuF5tSDzym/8dmvUTAOhgPT5k4ehrKaosKycfdryNgPDk/pUB
-	 aN/t308RqD5H1Vgstnf2lK9RIVRrNPW6pVS2b1ciJW/KfrUAkMxyIvCF9KCcQE7Gg3u+K
-	 kz+uVNe1PVkZk+0Bnipoch8nxaH0wF/1LyvBFnyJ0GmC3/7hUvXzLUgWOSKjE2evVqxq7
-	 e2P7lGofhX47EXqpS4b0BcGp93Mjwc9jHE8ECmIg5ROX1DOaMDY+VKQXH3kpf37u32fIn
-	 /+V5Rhspg38QN3qL222oK9lmA4J5rx27Us+nXUFq/wvU9gWgLtJtHEC/Kl6yYcEsiOg==
+	t=1795057774;
+	b=EkpjJ5yZpTMAvRUHzC735rgd2ewH2wrkw/CAWYfvKqxXYoPQFxrTYhxOTm+iGMkbt5cG
+	 akYXVtRMBWfwBwg+r9rf+13kseJ3vNZIKCrel+qfFj3q6jo7i8TCaBP+P/4IybEOD+wo1
+	 s2jO0DKBlHyGLWgZfNn5O/h3u+jWkSVMmH5m9Nh6dg2cEM2YgcfXHJ0iswNpMiDNCbh1W
+	 BKM5A3pMpvt+vDB6vSz/dKc7zZchrmoH7/tb/FsBO0bz7qyjExAnmXigjzw925PXFqL5J
+	 YcgHWyTTeM+tOpDorubgN+/9VSU37J1Frik+F8RjGKVFb2adeei9vZ/C8roLf/GTUAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cZZQA7w/Ehte+r/3QDDjH8n6yN6uEFs8Rd/ribbz99E=;
-	b=lmY3B4fA75mwha3odGkxu+DAxCububqgviMBF8FjtpzpENx5mlWlZnz9My7ZlHFp7RTu
-	 e5sjn0CRn86E9l6ZtU3egiXyQL7iTOYzuYA5yYlSeITB7oL8io35v/kusY9slVCwyJzRI
-	 CIAYSUAEvPiCTwRk14ZahUVpKlVEn3bNmGKS9/7MmGYw4QnE5dr9uWjTV25sv8QPx6Sd2
-	 HPT58iju6NMuZMoYZOPaZ3epxs5GdUEmSFSNEj0GPnbk/sup1EBJRxZlsBNvgmqmoEE/Y
-	 U3GCYH6uqvUZojzrGbYM4u7i8BaJVLeGlR7VOmrLNw6Ocn61AdcJPd8xPJyigszF9DQ==
+	bh=7vFPGkvdm8A/lCIlpjr4Vn8pgm86eC2WenojkdOfRUM=;
+	b=M8X9Y7bpJTwrqonl0OyVrLyHsiNGXLgRXmFOiJYlC8yZveIhYjRmoHKRTkhTIzCI0oVv
+	 6wupA4u32ch7FyXbsXgNJjpAkbCTAOIpPDcUyvy+OQ8WjYzZ6GWYlz32g8lz/7IJbrjqD
+	 u31DowXxNDB74Nx/RNbQ3W+ZSS/AHsmLEzKcaZlUAVSXNcOQ4gxu4Evip+ArkvIg+M7nV
+	 85mvotnkRpeHaVNumlIu/COMcWqfyIDk/5rI0ytKhQrubQf/BzIdRCR3GPwZpxv2UXTG4
+	 SazIli5iHyqw6Ch/bW/HVBWRQSpkkZrBoMzebnXEs/urnT9d0RZU73zVDaufjUUJPvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ELnJ0d/S";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD5bhQ1h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B1A606A32A;
-	Thu, 19 Nov 2026 03:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FE2606A320;
+	Thu, 19 Nov 2026 03:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ELnJ0d/S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B131F000C4;
-	Thu, 19 Nov 2026 03:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD5bhQ1h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338191F000C4;
+	Thu, 19 Nov 2026 03:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057771;
-	bh=cZZQA7w/Ehte+r/3QDDjH8n6yN6uEFs8Rd/ribbz99E=;
+	s=korg; t=1795057774;
+	bh=7vFPGkvdm8A/lCIlpjr4Vn8pgm86eC2WenojkdOfRUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ELnJ0d/SLYOPCE16ttw/S62xEE91Wx1xfOiuJUNSvXxXsKLGlyARHkMcbUr7TUQh6
-	 aFnbggLrwqmhvcZMfOZ8HpC7T61v4hFPuE9QNojH1kvxAXKsY7fJvP/1WdbGZL6SUy
-	 1CQ7qz+PEDwil+0bygA0T7v0rlplpb18sJ5tuVus=
+	b=yD5bhQ1hbzVcZ3pbneykTD0LrMXfKVxzo/bI0eTlIcsvkwR854HHemB32YGertQ1D
+	 TifOMqznX3hTapWkJh6GYqbaG03yTQ6RDnKb7cypCXrsg4RfWM/MYu8mXsk6QkQm9l
+	 TDYexL8yEvGKJo+M/yy3McCt80mzcSsrGvkg25u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0221/1848] openvswitch: defer tunnel netdev_put to RCU release
-Date: Wed, 18 Nov 2026 15:37:39 +0100
-Message-ID: <20261118145921.232186412@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 0248/1848] HID: wacom: Use hdev->product in wacom_setup_touch_input_capabilities
+Date: Wed, 18 Nov 2026 15:38:06 +0100
+Message-ID: <20261118145922.342318044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,53 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 6931d21f87bc6d657f145798fad0bf077b82486c ]
+commit 86472508a7ef74b525e79a79d2d02d911a641d6b upstream.
 
-ovs_netdev_tunnel_destroy() may run after NETDEV_UNREGISTER already
-detached the device. Dropping the netdev reference in destroy can race
-with concurrent readers that still observe vport->dev.
+Replace the lookup-dependent 'wacom_wac->shared->touch->product' references
+with 'hdev->product' inside wacom_setup_touch_input_capabilities() since
+'hdev' is already available (via container_of) and represents the touch
+device itself.
 
-Do not release vport->dev in ovs_netdev_tunnel_destroy(). Instead, let
-vport_netdev_free() drop the reference from the RCU callback, matching
-the non-tunnel destroy path and avoiding additional synchronization
-under RTNL.
-
-Fixes: a9020fde67a6 ("openvswitch: Move tunnel destroy function to oppenvswitch module.")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260319074241.3405262-1-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 6931d21f87bc6d657f145798fad0bf077b82486c)
-[Harshit: Adapt the lifetime fix to dev_put() and one-argument rtnl_delete_link().]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/vport-netdev.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/hid/wacom_wac.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
-index 70cc8854b8d53..8cbf787d1fcb6 100644
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -191,8 +191,6 @@ void ovs_netdev_tunnel_destroy(struct vport *vport)
- 	 */
- 	if (vport->dev->reg_state == NETREG_REGISTERED)
- 		rtnl_delete_link(vport->dev);
--	dev_put(vport->dev);
--	vport->dev = NULL;
- 	rtnl_unlock();
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -3870,8 +3870,8 @@ int wacom_setup_pen_input_capabilities(s
+ int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
+ 					 struct wacom_wac *wacom_wac)
+ {
++	struct hid_device *hdev = container_of(wacom_wac, struct wacom, wacom_wac)->hdev;
+ 	struct wacom_features *features = &wacom_wac->features;
+-
+ 	if (!(features->device_type & WACOM_DEVICETYPE_TOUCH))
+ 		return -ENODEV;
  
- 	call_rcu(&vport->rcu, vport_netdev_free);
--- 
-2.53.0
-
+@@ -3880,9 +3880,11 @@ int wacom_setup_touch_input_capabilities
+ 	else
+ 		__set_bit(INPUT_PROP_POINTER, input_dev->propbit);
+ 
+-	if (features->type == HID_GENERIC)
++	if (features->type == HID_GENERIC) {
++		hid_dbg(hdev, "generic touch setup\n");
+ 		/* setup has already been done */
+ 		return 0;
++	}
+ 
+ 	input_dev->evbit[0] |= BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
+ 	__set_bit(BTN_TOUCH, input_dev->keybit);
+@@ -3914,19 +3916,17 @@ int wacom_setup_touch_input_capabilities
+ 		input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 		__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
+ 
+-		if (wacom_wac->shared->touch->product == 0x361) {
++		if (hdev->product == 0x361) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 12440, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 8640, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x360) {
++		} else if (hdev->product == 0x360) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 8960, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 5920, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x393) {
++		} else if (hdev->product == 0x393) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 6400, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+@@ -3956,8 +3956,8 @@ int wacom_setup_touch_input_capabilities
+ 		fallthrough;
+ 
+ 	case WACOM_27QHDT:
+-		if (wacom_wac->shared->touch->product == 0x32C ||
+-		    wacom_wac->shared->touch->product == 0xF6) {
++		if (hdev->product == 0x32C ||
++		    hdev->product == 0xF6) {
+ 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
+ 			wacom_wac->has_mute_touch_switch = true;
 
 
