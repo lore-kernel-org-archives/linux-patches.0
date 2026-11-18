@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028864;
-	b=xhET/OeKe1UmT2ixeOO/7hp5wejIJsObjO1wJiwbmcgta91e13WkfUPZO4GheHDGI41e
-	 ewCT8yf+lTpUqXllLiz+Fk8DudfRpDNy9uXEzQQL/PcBIod+uIC1325SJbc49/UfWGQST
-	 hu2TT+9iV1F+/Yh4TD/hWfYsfo1qxMt2CT3UGCpibRCIuErKXqGgbwqZ+5aXc9glFli3i
-	 XT8VuGl+vCtWjP6Y2lQymhceSwHpTfFhe5x/puOmwoiDebsITdZglhvHz4uZJATauEYf+
-	 27rUNpvnwZjMT2BIpd/SYts94Os8wqyO5FOi/EwfECkr81iSiNwn2nWYzYhN6SwpZ1Q==
+	t=1795028866;
+	b=YJwhnJ3Cna+Xf6yihHeEfaoN1r7YecmdYwT96Dt9UivBpVrR7LFRkLGArAAKOI+1LaeP
+	 gnqH7ZYjm2MupAaQKaXaTMczhcyOUO1RPJaGJGH2de/SXsVhCbKEf+TeUK++qS2EQ4MWb
+	 ye6MR3OM3CpNLggC8oOVQ/amZlzZpayUH8iSVB3nPm2ZSLncOR35ZI2m+pqlFU7IzoPx6
+	 Zge5t8Ddn8mQrbkv2jpMfeMVbaj4nxo0MBaSL3yJPoR973RmGfIaqGzv2ORbqWp4AE5TV
+	 fSJy5dPS6WtZiQe8Q87I0vX4te07ay2kZzvfe5wsYGLzcGSX4n/ogYt8pCNnLXmt6Dg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028866;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GmpHdXMELlALRWuJop8nB0IetK8MkSZsAMNXszYm5EY=;
-	b=hTa2D5t64EKAXAImehru+lwe4MNdhX4/+tEmt4a+MiPobUJeggjE/xufXZq9LxDjpqkX
-	 q84qf/tB6KOPwwImzPw/9MVxkTU8znoMwuai1NDJUZWBy+CzD9lLOOve3DhbnkwZPWO8Q
-	 uAUO4v9cfVtLQEW2KR4s9rKQoGiPIYp2hypzarn4tj4PMb3BdwXrJBnwVba2IQAugctX7
-	 WK8K/x8KO8G3Inq5p8OoZgtmJ+Lc2Ne6MXYl6LQBhl2eUyKf72a2jLKm8Qu/IjGScTuPC
-	 5acvwaDqbOSFqwxhioXQZfoQy0zLE53ROey4YTDOc3XTSPMUPIjOJ3jZfQ9NajsiqeQ==
+	bh=4AHzEa0KmjUCJxbQkBk72cmuhq46gZkyMybSR/aRwC0=;
+	b=k0m6bc7nwAgQjd5eH9ozJIiJsTHUXuXC/fcus4TcFsTyG9Z87B3DHeJtDfDWNPDpvMNN
+	 m+jBW/coTBJdBNGFiZzbXWmznr8ozx/t2VcSg1O15XSsTvfcrpisrRb+Qp+D9emN0Nme4
+	 V9Hxw31UlwVRCcgtTKUJxMxVf9p46yGhDxumcxOK9zbedDlzzCZIJnWzRC315KaPuozE4
+	 ts8Fq0nl+wG9tnqd7BWHfHBx6m+nwb4bFIKGTdWZjvzwQF2F87Jm8Q0nTRrceIgtnc0b8
+	 fuJKIPY6hbWeAuejZMSfP0hbnTmuxFJ4MIfRcds2j+fuNwunG8lQZhmc6/0NsfGfLmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmBIW8GL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JziL7PcD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C4C606A32A;
-	Wed, 18 Nov 2026 19:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE0E60A2609;
+	Wed, 18 Nov 2026 19:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmBIW8GL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C1B1F000C4;
-	Wed, 18 Nov 2026 19:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JziL7PcD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3051F000C4;
+	Wed, 18 Nov 2026 19:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028863;
-	bh=GmpHdXMELlALRWuJop8nB0IetK8MkSZsAMNXszYm5EY=;
+	s=korg; t=1795028866;
+	bh=4AHzEa0KmjUCJxbQkBk72cmuhq46gZkyMybSR/aRwC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmBIW8GL+hB82WHg8CpRNm5IU1AWN/1gy3XH1kTR88AisrNiv20Xjq3j/cTm2VWGY
-	 D54xd+ryt1+SWmN8V2AC4p43GrKutaqZr0mAVt236E5ATxgYA/sSzJzAkjjKwQykOk
-	 3EdIddf5VdI7rYcS36OvJ7NZz2ktNlox/nI5XAp4=
+	b=JziL7PcDUfbi/tbTumw2zs0vxpasDuNy+sJKqTBii4V0+bfe8OFhKCxP19MdDyCeD
+	 myAVMWRdCWqUy2ZwH7auTaHc9PEM64m1RQXit4fRMJhMWYr4KfoKbhM4R4iTZTIHRt
+	 /jCHZrT4SVk2y4tB3B/qwSqE9QRkPugd64Ad2WTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+bfc9e55cf4f98183c636@syzkaller.appspotmail.com,
+	Chandradhar Kumar <chandradhar.2003@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0145/1756] bpftool: Fix spurious batch file read error
-Date: Wed, 18 Nov 2026 15:37:52 +0100
-Message-ID: <20261118150013.920589941@linuxfoundation.org>
+Subject: [PATCH 6.12 0146/1756] regulator: fixed: reject incompatible platform devices
+Date: Wed, 18 Nov 2026 15:37:53 +0100
+Message-ID: <20261118150013.957414876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,67 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan_fl@163.com>
+From: Chandradhar Kumar <chandradhar.2003@gmail.com>
 
-[ Upstream commit 713c02b59e21840f623a3e31c43d967026c75181 ]
+[ Upstream commit f7396c2dbbc1bed6c2c554d1ddf80d16e4780a7d ]
 
-do_batch() checks errno after the read loop to detect read failures,
-but fgets() does not clear errno on success, so a stale errno left by
-a previously executed command (e.g. map dump's EBADF from a double
-close) makes bpftool report a batch file read failure and exit with an
-error even though every command succeeded.
+The fixed regulator driver expects non-DT platform devices to provide
+their configuration through platform_data as a struct fixed_voltage_config.
 
-Clear errno before each fgets() call, so the post-loop check only
-sees the outcome of the last read: zero on success or EOF, E2BIG for
-an overlong line, and a genuine errno when fgets() fails.
+An explicitly bound driver can bypass the normal platform device/driver
+matching and attach the fixed regulator driver to an unrelated platform
+device. This causes the driver's platform_data to be interpreted as a
+struct fixed_voltage_config even though it contains data for a different
+device.
 
-Since errno is now reset before every read in batch mode, drop the
-USE_LIBCAP errno reset in main() that existed only to keep errno clean
-for the batch mode.
+Reject non-DT platform devices whose name does not match the fixed
+regulator driver before accessing their platform data.
 
-Fixes: 71bb428fe2c1 ("tools: bpf: add bpftool")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260824092657.1789956-2-chenyuan_fl@163.com
+Fixes: 4b74ff651249 ("regulator: add support for fixed regulators.")
+Reported-by: syzbot+bfc9e55cf4f98183c636@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=bfc9e55cf4f98183c636
+Signed-off-by: Chandradhar Kumar <chandradhar.2003@gmail.com>
+Link: https://patch.msgid.link/20260822065519.112441-1-chandradhar.2003@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/main.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/regulator/fixed.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/bpf/bpftool/main.c b/tools/bpf/bpftool/main.c
-index a0536528dfde2..be60478b4692d 100644
---- a/tools/bpf/bpftool/main.c
-+++ b/tools/bpf/bpftool/main.c
-@@ -354,7 +354,11 @@ static int do_batch(int argc, char **argv)
+diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
+index 254c0a8a45559..0f5451532c883 100644
+--- a/drivers/regulator/fixed.c
++++ b/drivers/regulator/fixed.c
+@@ -29,6 +29,7 @@
+ #include <linux/regulator/of_regulator.h>
+ #include <linux/regulator/machine.h>
+ #include <linux/clk.h>
++#include <linux/string.h>
  
- 	if (json_output)
- 		jsonw_start_array(json_wtr);
--	while (fgets(buf, sizeof(buf), fp)) {
-+	for (;;) {
-+		errno = 0;
-+		if (!fgets(buf, sizeof(buf), fp))
-+			break;
+ /* Default time in millisecond to wait for emergency shutdown */
+ #define FV_DEF_EMERG_SHUTDWN_TMO	10
+@@ -229,6 +230,9 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
+ 	enum gpiod_flags gflags;
+ 	int ret;
+ 
++	if (!pdev->dev.of_node && strcmp(pdev->name, "reg-fixed-voltage"))
++		return -ENODEV;
 +
- 		cp = strchr(buf, '#');
- 		if (cp)
- 			*cp = '\0';
-@@ -455,16 +459,6 @@ int main(int argc, char **argv)
- 
- 	setlinebuf(stdout);
- 
--#ifdef USE_LIBCAP
--	/* Libcap < 2.63 hooks before main() to compute the number of
--	 * capabilities of the running kernel, and doing so it calls prctl()
--	 * which may fail and set errno to non-zero.
--	 * Let's reset errno to make sure this does not interfere with the
--	 * batch mode.
--	 */
--	errno = 0;
--#endif
--
- 	last_do_help = do_help;
- 	pretty_output = false;
- 	json_output = false;
+ 	drvdata = devm_kzalloc(&pdev->dev, sizeof(struct fixed_voltage_data),
+ 			       GFP_KERNEL);
+ 	if (!drvdata)
 -- 
 2.53.0
 
