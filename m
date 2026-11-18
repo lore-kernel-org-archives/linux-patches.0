@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046150;
-	b=2l9UT2a2SRLYkRRQ9AXDd0AUgD6ge0GMtc46p0wWHqrB7Xo6rBYAtdXHQUUc474P9Fsi
-	 nJlvagTO4ExouEVFnMQ5Ma5WBrm1m6VZHyJo0rIoa0UargcRfMTOxh3o16AhRmmeFOxgH
-	 G78LinHSPqWHvnGtW3OoDqT4+LA4iege9Uw/vIN2G9GBrzyDdKY441/MH3eVB0rn6m6b4
-	 7XYckT/G15uMp5a3CiG6q2A9FOOOC8vHkYY+rc06ZQa58IXvTGHqUdfdNDnZo0wCTlyOo
-	 Y6y1I1V1wYx3J2mq8++0SVwLTVuZvsQpqibNK7ENwyKj9HlbOI5UfGQCWi+ZyEmNTJA==
+	t=1795046153;
+	b=quvG+s0BSqKjhWsxmCj5EAZsN70mmcW4GR8ScDgxqQjMRh0q+jdFZsX2TkXyZp6rOsO/
+	 UPBMwx4Mc+Ppr0z94JxkuDNHo2BGTar+9TvnaGAb3rjl4caYUTxIbnM+Ilj2hm+Df7Vx3
+	 qFrzQkKI8A8n30FQGpb7L+nbklPyHDwDDONjjQy8n792xS4HK8zyNTomsXjV1uzSFn029
+	 xWnG9WGVjsg3MfomRVDOofI3h/v6TYJ7WlWpLEox/ysXW7Yw2+aUL5YeiLAjah65Xv1Xc
+	 ucQSgNApZNJLM61fPtbNIa/eEPFQetXIgISFM+sX4PuNiET4tAVdhYh6wDv4xUzQzXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jshfVg/kINrpP4cIfPdhL9Kavf5arm/Wor//Z8wdaZ0=;
-	b=nF+hlFGVqn2XVMd/mWnXqDauo9AtlwZNPHcBPBL/kixP9wszdiUl6caIRhJSAfU7YnvY
-	 RqcD/NYuDZZ1Zpry3uatrNevo+VYz8Lzp4i93YD3V+Y27O9DPIDtHaE8ZiOC65vyxAAl8
-	 nqP+X6fTjjTaNamNinSnG2wMYt6seyNG2Bngheb4ALRZzursHw4lq3/lOk2/ES1UV0oNv
-	 6RL7DzIAmSKk79lEy7KLY1r/OV2HfeJ8GOTDeTGQtZpuqWa8xlht6IgCJW/TX0h0+zsEl
-	 XhFXvzKncY16Y5ta6FsRmxW55QWAEi/r+csAKjBH48QSKB6moj1ePEv3VCnmVISdiGQ==
+	bh=nZSyCXaSZciliUP9E6wz06cpaOGjQ8MkHJ3hZBwSEG4=;
+	b=qXkplrZRb8LyrotO9p0eFyQ8dRr1R8Feew8WBOjsNGKmRVPdwMut2x8y7vIcnqXY2NKP
+	 5AcM5pEFen2IIZo/m9H3hGsIOivB/uzkIJPT6mj5q0zOpEr/gYN+aETu8zkz2Zf6lekBt
+	 9PAgJANp5zc8sBZBxyFFCv5cvAAoapoXIZmgLE7bnrUeo3f+gHhtBZKci6Q9I9keubFXW
+	 gCGpbbtUq5/RCkaEMXMW8bD47LjiqkSisk4HAPV6q7FdJLes96iZeUB/0MEj1QBzRPl0i
+	 dWy56Jgo+s1thl0hk9iCmol9qsLt6S3KFU3xJYV6HqTnjyc9VMq5BBVTeh8JxLmpRxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JWTuP0Y/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIzdy7t+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C048C606A31C;
-	Wed, 18 Nov 2026 23:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA4A606A31C;
+	Wed, 18 Nov 2026 23:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWTuP0Y/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA5E1F000C5;
-	Wed, 18 Nov 2026 23:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIzdy7t+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9731F000C4;
+	Wed, 18 Nov 2026 23:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046150;
-	bh=jshfVg/kINrpP4cIfPdhL9Kavf5arm/Wor//Z8wdaZ0=;
+	s=korg; t=1795046153;
+	bh=nZSyCXaSZciliUP9E6wz06cpaOGjQ8MkHJ3hZBwSEG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JWTuP0Y/ShYmoODO1m1MybpyhfJoPNyxOWwOwTgeNelIAwei7X+H+kLDhdQXJlYbK
-	 bQctoJZYN9EbZdgc13WiLVJJF7FlVp1Lnc2U4Qxt8tm/NENSTwAmOejguY/hzxx2t0
-	 SEgdwQJ4sGik/KDS7DkXN4quK3+/i/XMXPeC0LhM=
+	b=NIzdy7t+u5aNNPjVXn9wCZhfs2XUEYsz6XE8Ii2SC6ioAqSuaDSXFC32BtjKUL53x
+	 fJc5noFqgNgLGtSoq+udF8KRdSNCvao9W3Hlp60lZ0DwNOyrO+nEkckUYpN7sBlWno
+	 gr0AFcW5klhPGIuh610PMHMM3NPBcUPIBYI0atKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1161/2857] mtd: rawnand: ndfc: use ioread32be/iowrite32be and allow COMPILE_TEST
-Date: Wed, 18 Nov 2026 15:36:35 +0100
-Message-ID: <20261118150243.391405318@linuxfoundation.org>
+Subject: [PATCH 6.1 1179/2857] NFSv4/pnfs: Free the netid when draining a data-server address list
+Date: Wed, 18 Nov 2026 15:36:53 +0100
+Message-ID: <20261118150244.055091599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,123 +68,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit 4f2692a5383e4bdd43ae940cda012360f7217a2d ]
+[ Upstream commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a ]
 
-Replace ppc4xx-specific in_be32/out_be32 with generic ioread32be/
-iowrite32be to make the driver portable. Add COMPILE_TEST dependency
-to get build coverage on non-ppc4xx architectures.
+nfs4_pnfs_ds_addr_free() releases all three of an address entry's
+allocations, but the four sites that drain a decoded list before it
+reaches a data server open-code the loop and free only da_remotestr and
+the entry, leaking da_netid.  Both layout drivers drain that list when
+nfs4_pnfs_ds_add() returned a data server already in the cache, and
+again on their error exits.
 
-While at it, replace 4xx with 44x. The latter was removed a while ago
-and is only kept for compatibility.
+Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
+one owner.  A striping mount reaches the cached case on nearly every
+GETDEVICEINFO, since many deviceIDs name the same data servers.
 
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/Kconfig |  2 +-
- drivers/mtd/nand/raw/ndfc.c  | 20 ++++++++++----------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ fs/nfs/filelayout/filelayoutdev.c         | 17 ++---------------
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c | 17 ++---------------
+ fs/nfs/pnfs.h                             |  1 +
+ fs/nfs/pnfs_nfs.c                         | 21 +++++++++++++--------
+ 4 files changed, 18 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
-index 900b121219394..ed828149c94cf 100644
---- a/drivers/mtd/nand/raw/Kconfig
-+++ b/drivers/mtd/nand/raw/Kconfig
-@@ -71,7 +71,7 @@ config MTD_NAND_AU1550
+diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
+index e90e1cf2f0aa1..263046faccc59 100644
+--- a/fs/nfs/filelayout/filelayoutdev.c
++++ b/fs/nfs/filelayout/filelayoutdev.c
+@@ -175,27 +175,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 			goto out_err_drain_dsaddrs;
  
- config MTD_NAND_NDFC
- 	tristate "IBM/MCC 4xx NAND controller"
--	depends on 4xx
-+	depends on 44x || COMPILE_TEST
- 	select MTD_NAND_ECC_SW_HAMMING
- 	select MTD_NAND_ECC_SW_HAMMING_SMC
- 	help
-diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
-index 338d6b1a189eb..7dfb7b2f2f3cf 100644
---- a/drivers/mtd/nand/raw/ndfc.c
-+++ b/drivers/mtd/nand/raw/ndfc.c
-@@ -43,13 +43,13 @@ static void ndfc_select_chip(struct nand_chip *nchip, int chip)
- 	uint32_t ccr;
- 	struct ndfc_controller *ndfc = nand_get_controller_data(nchip);
- 
--	ccr = in_be32(ndfc->ndfcbase + NDFC_CCR);
-+	ccr = ioread32be(ndfc->ndfcbase + NDFC_CCR);
- 	if (chip >= 0) {
- 		ccr &= ~NDFC_CCR_BS_MASK;
- 		ccr |= NDFC_CCR_BS(chip + ndfc->chip_select);
- 	} else
- 		ccr |= NDFC_CCR_RESET_CE;
--	out_be32(ndfc->ndfcbase + NDFC_CCR, ccr);
-+	iowrite32be(ccr, ndfc->ndfcbase + NDFC_CCR);
- }
- 
- static void ndfc_hwcontrol(struct nand_chip *chip, int cmd, unsigned int ctrl)
-@@ -69,7 +69,7 @@ static int ndfc_ready(struct nand_chip *chip)
- {
- 	struct ndfc_controller *ndfc = nand_get_controller_data(chip);
- 
--	return in_be32(ndfc->ndfcbase + NDFC_STAT) & NDFC_STAT_IS_READY;
-+	return ioread32be(ndfc->ndfcbase + NDFC_STAT) & NDFC_STAT_IS_READY;
- }
- 
- static void ndfc_enable_hwecc(struct nand_chip *chip, int mode)
-@@ -77,9 +77,9 @@ static void ndfc_enable_hwecc(struct nand_chip *chip, int mode)
- 	uint32_t ccr;
- 	struct ndfc_controller *ndfc = nand_get_controller_data(chip);
- 
--	ccr = in_be32(ndfc->ndfcbase + NDFC_CCR);
-+	ccr = ioread32be(ndfc->ndfcbase + NDFC_CCR);
- 	ccr |= NDFC_CCR_RESET_ECC;
--	out_be32(ndfc->ndfcbase + NDFC_CCR, ccr);
-+	iowrite32be(ccr, ndfc->ndfcbase + NDFC_CCR);
- 	wmb();
- }
- 
-@@ -91,7 +91,7 @@ static int ndfc_calculate_ecc(struct nand_chip *chip,
- 	uint8_t *p = (uint8_t *)&ecc;
- 
- 	wmb();
--	ecc = in_be32(ndfc->ndfcbase + NDFC_ECC);
-+	ecc = ioread32be(ndfc->ndfcbase + NDFC_ECC);
- 	/* The NDFC uses Smart Media (SMC) bytes order */
- 	ecc_code[0] = p[1];
- 	ecc_code[1] = p[2];
-@@ -113,7 +113,7 @@ static void ndfc_read_buf(struct nand_chip *chip, uint8_t *buf, int len)
- 	uint32_t *p = (uint32_t *) buf;
- 
- 	for(;len > 0; len -= 4)
--		*p++ = in_be32(ndfc->ndfcbase + NDFC_DATA);
-+		*p++ = ioread32be(ndfc->ndfcbase + NDFC_DATA);
- }
- 
- static void ndfc_write_buf(struct nand_chip *chip, const uint8_t *buf, int len)
-@@ -122,7 +122,7 @@ static void ndfc_write_buf(struct nand_chip *chip, const uint8_t *buf, int len)
- 	uint32_t *p = (uint32_t *) buf;
- 
- 	for(;len > 0; len -= 4)
--		out_be32(ndfc->ndfcbase + NDFC_DATA, *p++);
-+		iowrite32be(*p++, ndfc->ndfcbase + NDFC_DATA);
- }
- 
- /*
-@@ -222,13 +222,13 @@ static int ndfc_probe(struct platform_device *ofdev)
- 	if (reg)
- 		ccr |= be32_to_cpup(reg);
- 
--	out_be32(ndfc->ndfcbase + NDFC_CCR, ccr);
-+	iowrite32be(ccr, ndfc->ndfcbase + NDFC_CCR);
- 
- 	/* Set the bank settings if given */
- 	reg = of_get_property(ofdev->dev.of_node, "bank-settings", NULL);
- 	if (reg) {
- 		int offset = NDFC_BCFG0 + (ndfc->chip_select << 2);
--		out_be32(ndfc->ndfcbase + offset, be32_to_cpup(reg));
-+		iowrite32be(be32_to_cpup(reg), ndfc->ndfcbase + offset);
+ 		/* If DS was already in cache, free ds addrs */
+-		while (!list_empty(&dsaddrs)) {
+-			da = list_first_entry(&dsaddrs,
+-					      struct nfs4_pnfs_ds_addr,
+-					      da_node);
+-			list_del_init(&da->da_node);
+-			kfree(da->da_remotestr);
+-			kfree(da);
+-		}
++		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
  	}
  
- 	err = ndfc_chip_init(ndfc, ofdev->dev.of_node);
+ 	__free_page(scratch);
+ 	return dsaddr;
+ 
+ out_err_drain_dsaddrs:
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ out_err_free_deviceid:
+ 	nfs4_fl_free_deviceid(dsaddr);
+ 	/* stripe_indicies was part of dsaddr */
+diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+index e764e5a25f43d..e404b0f660bf8 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -155,26 +155,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 		goto out_err_drain_dsaddrs;
+ 
+ 	/* If DS was already in cache, free ds addrs */
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs,
+-				      struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 
+ 	__free_page(scratch);
+ 	return new_ds;
+ 
+ out_err_drain_dsaddrs:
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 
+ 	kfree(ds_versions);
+ out_scratch:
+diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
+index 0cc6f9a295f2c..255935a4c9f28 100644
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -416,6 +416,7 @@ int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
+ struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
+ 						 struct xdr_stream *xdr,
+ 						 gfp_t gfp_flags);
++void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
+ void pnfs_layout_mark_request_commit(struct nfs_page *req,
+ 				     struct pnfs_layout_segment *lseg,
+ 				     struct nfs_commit_info *cinfo,
+diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
+index 11bc2c12009dc..c4b61b4b0b1c7 100644
+--- a/fs/nfs/pnfs_nfs.c
++++ b/fs/nfs/pnfs_nfs.c
+@@ -679,23 +679,28 @@ static void nfs4_pnfs_ds_addr_free(struct nfs4_pnfs_ds_addr *da)
+ 	kfree(da);
+ }
+ 
+-static void destroy_ds(struct nfs4_pnfs_ds *ds)
++void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
+ {
+ 	struct nfs4_pnfs_ds_addr *da;
+ 
++	while (!list_empty(dsaddrs)) {
++		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
++				      da_node);
++		list_del_init(&da->da_node);
++		nfs4_pnfs_ds_addr_free(da);
++	}
++}
++EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
++
++static void destroy_ds(struct nfs4_pnfs_ds *ds)
++{
+ 	dprintk("--> %s\n", __func__);
+ 	ifdebug(FACILITY)
+ 		print_ds(ds);
+ 
+ 	nfs_put_client(ds->ds_clp);
+ 
+-	while (!list_empty(&ds->ds_addrs)) {
+-		da = list_first_entry(&ds->ds_addrs,
+-				      struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		nfs4_pnfs_ds_addr_free(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
+ 
+ 	kfree(ds->ds_remotestr);
+ 	kfree(ds);
 -- 
 2.53.0
 
