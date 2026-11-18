@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046642;
-	b=bzLq4fknZpSQPtMIlokIGpcHWVAIqoNAq+8DsDzi3qIIATa5ajtKswoLaOA5IPGkc4f2
-	 NygfJ6SfK94Ybq2hcFLzw7zriJxZQZ8zKXdvSWUtTo/mYR8z2FjohyHyamRLMi1KewjTX
-	 C1/mCEDjh2LahUUJVjmRuH4JfGRPb3YloDen7wm0gO0fRLtMul3XnYjcghZ/dizwWGTdD
-	 u4/UmVbBe4Dyiv+QnkE6fMVKWB9OtZ73gC0+MXiQOKvUZuUFCpvSy10TnSYeQ2QhHeVSi
-	 tuZCmkDq//8bPwuBiVYTcuzjzrUqPqWljmFDe9O59al+BuhO+/mwB8F7bWYh03M+NAQ==
+	t=1795046645;
+	b=WnqyXsWsagAzwp7mjMpe0wcsAMXgZisGe2NNfiHIIIvRoByo0vlkHCZTBoortanDKxre
+	 meUBIMn4QAZCoza/uRNeq0uKFJ2D/ax/vFI7vbFl3h1Xq7j5QyT7biD2gxPoop1xeKBaD
+	 H3fmQFDTmlTQr+DGEkKwm1gkMtsdtAxc0Aa2PIFeshOLGg7X6ajNkJ9Sq2IzpaPzwVCdY
+	 ylBsfr6mebXFb8WKu3/zH4dfi1WRgRBtOge12KPF4bDHS7Xf98vIbZ7Dd85m5f/IfrBzF
+	 E5YJ0CcuuG7cxpYzYfXHNDWDH/SZn5FIEtI9fFmDf+pMhfg6LT9GtI39PlPFx6SIjOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=yoS8J/Muoik7FeOzI1f/H970B08jIuG70tv49jq2Elw=;
-	b=hi2vgJNuMlC0po2dY//Ofnw57jGBRM3c/zUN3zxJBjOu9zK+I+BKnPnFEm1lTyJyifgH
-	 mntjtpLi0saw9tRFFebRPOr7mqgpjWbacnFjKnWVVLju9nYC+Z2QYHX+WSHQ49c4kp4Ic
-	 h1hvXE/0DCOYKfkE84VXL6cTG3U9WX9sHKX55cygioh/a1GetvXd2ReNSG97FVDnMwvua
-	 n0fL6gmdOCUworv+9FnnBb7+0lWMA6HSxBheXIhFYRpVofNbHQ/aHp7tY19xaJ2jiyhtM
-	 t0Z9YMHqbQ5u5+TAd4KOM0Q+6OIYcgw3u2ceiHWiMc/OBJeiqEWiHsYk3JTinFJz1fA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GS8sxhSF8w4Bw+EuX8FnBAJJV4ZsMUqw3xWdqf9xwds=;
+	b=i2mM3ROuqwZBrlsCocz4JAaHGUBzL1OYMSynk2Ld/+dilvtCfbgvUzknYsABqRPyPGDS
+	 S/o1tO+NMxnPXV8KJ6KBLglMOaMnL9yKXkewkeREKo0nN9sgwHF5QYjHKnuB++8HG+Jvp
+	 6v3jM5w/0u07Hm/P7FOpStxBoBMpFoIzkR5871NO6JnFLs1xAtaB7Yy0KAXxoI7QNZVfw
+	 6Y/ubq4I3E/1bWyrysVgVD3Dz93WCLNxMiyHTHERtJS/f8Ee2I0Qq3UWfeMw/gcLwqll5
+	 JVWUgMnc3RZDgwnyMq9ZXBFkLQ3yyI0f+aE1BnpBRDpVQlAvVtzVNoFAYl3CK7zkIoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbhHuXFZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z65CioPY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289D1606A320;
-	Thu, 19 Nov 2026 00:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA85606A32A;
+	Thu, 19 Nov 2026 00:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbhHuXFZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816A51F000C4;
-	Thu, 19 Nov 2026 00:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z65CioPY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FF01F000C4;
+	Thu, 19 Nov 2026 00:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046642;
-	bh=yoS8J/Muoik7FeOzI1f/H970B08jIuG70tv49jq2Elw=;
+	s=korg; t=1795046644;
+	bh=GS8sxhSF8w4Bw+EuX8FnBAJJV4ZsMUqw3xWdqf9xwds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbhHuXFZlFcRWVj6WsIK6wkzhYcxHvOsOndeZNseuU9nyjzvToMB0TBeYbGzToyKo
-	 JlmWdNeMHNRXxedBxi9WsuOsIM+TfiY4Ts+Ax0X01Kg8hx9hEVGGPuqDVeV/ZNFI9O
-	 y9H19AxVDGURGvqcIxXi9PnHs8vla3suCfUeoLyc=
+	b=z65CioPY0YSQpbgoZwMTbVKZpXujIv0fdLeHTY5EE9/bhi1DWWee6gtcskzAOXJuG
+	 zayhAblgoioLu7ieQHEQP6N1aY53x6wJsMlRf3QnCNnYW53YTsMwRxfBDgYfUVu8Fn
+	 LQMt7cm5uATsIhTWwzFN8kBsGEg3eKHwSIL9157M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Andrea Pesaresi <andreapesaresi82@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1354/2857] media: microchip-isc: fix awb_mutex and lock lifecycle
-Date: Wed, 18 Nov 2026 15:39:48 +0100
-Message-ID: <20261118150250.162330776@linuxfoundation.org>
+Subject: [PATCH 6.1 1355/2857] arm64: dts: mediatek: mt7986: correct timer frequency
+Date: Wed, 18 Nov 2026 15:39:49 +0100
+Message-ID: <20261118150250.198131754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,171 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Andrea Pesaresi <andreapesaresi82@gmail.com>
 
-[ Upstream commit 5540b48c0702f6a1389db3d473d7fd0db930422a ]
+[ Upstream commit 1cf18e4b9815beaf0439c5b57b65b45151c82ad7 ]
 
-isc->lock and awb_mutex were initialised in isc_async_complete() and
-destroyed in isc_async_unbind(), tying their lifetime to the subdev
-bind/unbind cycle instead of the device:
+The MT7986 architected timer runs at 12,986,200 Hz rather than 13 MHz.
+Firmware reports 13 MHz through CNTFRQ_EL0, causing the system clock to
+run slow by about 1062 ppm. This exceeds the kernel's 500 ppm NTP
+correction limit and leaves clock discipline saturated.
 
- - isc_async_unbind() destroyed awb_mutex before cancel_work_sync(),
-   which takes it;
- - a failed .complete() left them initialised, and isc->lock was
-   destroyed only on the .complete() error path, so the normal unbind
-   path leaked it;
- - a rebind runs .complete() again and reinitialises a live mutex.
+The corrected rate comes from MediaTek's downstream OpenWrt feed, where
+it is applied to both MT7986A and MT7986B. Since upstream mt7986b.dtsi
+includes mt7986a.dtsi, add it once to the common timer node so the
+architected timer driver uses the actual counter rate.
 
-Initialise both with devm_mutex_init() at probe so they live for the
-whole device lifetime and are freed at remove, and drop the init and
-destroy from the .complete()/.unbind() callbacks.
-
-isc_async_complete_err then only returned ret, so drop the label and
-return directly at each error site.
-
-Fixes: 314c96e5203d ("media: atmel: atmel-isc-base: use mutex to lock awb workq from streaming")
+Fixes: 50137c150f5f ("arm64: dts: mediatek: add basic mt7986 support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: Changed the additional isc_formats_init() failure path to return directly after removal of the obsolete mutex cleanup label. ]
+Link: https://github.com/mediatek/mtk-openwrt-feeds/commit/6a4c41c41410cd5042ad10c39da6593ba036283c
+Link: https://github.com/openwrt/openwrt/issues/24789
+Signed-off-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+[ sashal: Adjusted context for the timer node’s earlier location because the upstream node reordering is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/atmel/atmel-isc-base.c  | 18 +++++-------------
- .../media/platform/atmel/atmel-sama5d2-isc.c   |  9 +++++++++
- .../media/platform/atmel/atmel-sama7g5-isc.c   |  9 +++++++++
- 3 files changed, 23 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
-index 9e91e4d948a24..a2e5030f0d597 100644
---- a/drivers/media/platform/atmel/atmel-isc-base.c
-+++ b/drivers/media/platform/atmel/atmel-isc-base.c
-@@ -1754,7 +1754,6 @@ static void isc_async_unbind(struct v4l2_async_notifier *notifier,
- {
- 	struct isc_device *isc = container_of(notifier->v4l2_dev,
- 					      struct isc_device, v4l2_dev);
--	mutex_destroy(&isc->awb_mutex);
- 	cancel_work_sync(&isc->awb_work);
- 	video_unregister_device(&isc->video_dev);
- 	v4l2_ctrl_handler_free(&isc->ctrls.handler);
-@@ -1863,8 +1862,6 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 
- 	isc->current_subdev = container_of(notifier,
- 					   struct isc_subdev_entity, notifier);
--	mutex_init(&isc->lock);
--	mutex_init(&isc->awb_mutex);
- 
- 	init_completion(&isc->comp);
- 
-@@ -1884,7 +1881,7 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	if (ret < 0) {
- 		v4l2_err(&isc->v4l2_dev,
- 			 "vb2_queue_init() failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	/* Init video dma queues */
-@@ -1896,19 +1893,19 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	if (ret < 0) {
- 		v4l2_err(&isc->v4l2_dev,
- 			 "Init format failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	ret = isc_set_default_fmt(isc);
- 	if (ret) {
- 		v4l2_err(&isc->v4l2_dev, "Could not set default format\n");
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	ret = isc_ctrl_init(isc);
- 	if (ret) {
- 		v4l2_err(&isc->v4l2_dev, "Init isc ctrols failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	/* Register video device */
-@@ -1928,15 +1925,10 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	if (ret < 0) {
- 		v4l2_err(&isc->v4l2_dev,
- 			 "video_register_device failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	return 0;
--
--isc_async_complete_err:
--	mutex_destroy(&isc->awb_mutex);
--	mutex_destroy(&isc->lock);
--	return ret;
- }
- 
- const struct v4l2_async_notifier_operations isc_async_ops = {
-diff --git a/drivers/media/platform/atmel/atmel-sama5d2-isc.c b/drivers/media/platform/atmel/atmel-sama5d2-isc.c
-index ea3e8b86a7f31..629bb9ada4698 100644
---- a/drivers/media/platform/atmel/atmel-sama5d2-isc.c
-+++ b/drivers/media/platform/atmel/atmel-sama5d2-isc.c
-@@ -30,6 +30,7 @@
- #include <linux/interrupt.h>
- #include <linux/math64.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/platform_device.h>
-@@ -405,6 +406,14 @@ static int atmel_isc_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, isc);
- 	isc->dev = dev;
- 
-+	ret = devm_mutex_init(dev, &isc->lock);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_mutex_init(dev, &isc->awb_mutex);
-+	if (ret)
-+		return ret;
-+
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	io_base = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(io_base))
-diff --git a/drivers/media/platform/atmel/atmel-sama7g5-isc.c b/drivers/media/platform/atmel/atmel-sama7g5-isc.c
-index 4bc2f5c7f2f7d..2da0f7282d015 100644
---- a/drivers/media/platform/atmel/atmel-sama7g5-isc.c
-+++ b/drivers/media/platform/atmel/atmel-sama7g5-isc.c
-@@ -33,6 +33,7 @@
- #include <linux/interrupt.h>
- #include <linux/math64.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/platform_device.h>
-@@ -394,6 +395,14 @@ static int microchip_xisc_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, isc);
- 	isc->dev = dev;
- 
-+	ret = devm_mutex_init(dev, &isc->lock);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_mutex_init(dev, &isc->awb_mutex);
-+	if (ret)
-+		return ret;
-+
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	io_base = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(io_base))
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+index c647d99c9554a..b595c08701658 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+@@ -81,6 +81,7 @@ wmcpu_emi: wmcpu-reserved@4fc00000 {
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupt-parent = <&gic>;
++		clock-frequency = <12986200>;
+ 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
 -- 
 2.53.0
 
