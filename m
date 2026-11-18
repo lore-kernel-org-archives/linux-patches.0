@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059467;
-	b=ZAnUJsiBwEhslgWwlJf/5oXaVZNEhzlraa0c7F74TsDijq7G7CLNom+Zvp02mOwJkoJI
-	 Tyh6e1rH5lI44oArKBB2MRzePs+3kv+spoOT07DPyacKpBOwMSHHTxuzIsASrw2Kl48od
-	 kttq+NzyMznJCghFl6FMa9pHpv9zIOdv8O3NrMYHyRY0xYfy41oz79aI3DcX7Czsx8NvY
-	 IBBejK9KzW/ARJSxQ/Vd03mIEsji/QpdKQ+i5KiJgk3g5prhij5IsiF7ZLRwTTHqiCy+w
-	 Mh9zKX1Ntky+vi7r8YwtD4Rv0KG2UtCnUAQTHLaH6nmpqPBlak5r3DX6PgkhTktKrxw==
+	t=1795059470;
+	b=wnyhzZV0dYow5xELiPNP7emBYFfX5jphYPXj7yFGA7lzd6i23ZEQKipes4lqPyAA0LYA
+	 0ZPrgFF+boXPKcsJrl/dW/bklaNvFvPNqYO7t8EdNRGcj0TT9Rvoeof1vJO4P/UyhufaE
+	 ra5PYjhA8fvgboAno6lJcmRXLC1eNYIsINHRzFYN4EbqJZxQve6WO0Vs0e9P7keDAzI7r
+	 0J2LKSodviKiYBW/gK/9WW1tvnp6759hYQ3u27wXtw/MftxMzHdYGfNJ+PxWko8DEOKbN
+	 Zna9Q5ovL3MFDm9ejYF1oNTx7ZrTz45kezyhpjKc+Cx6oDiPuI0CVXGrxDxWjhCUHPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ay7gIlzBokujsw81GArTojZJyorCXMP1TTM8zSMBpAI=;
-	b=UZGMc5g6pr2SaQTVtsVjvmmq2zflLNodKJC28zTplwiL7xIMb+9gfuWXAOZYtlDuYd9Q
-	 bShjWzlCurZpM1IcRMM9SgTcUDwSfeY6HaRIdwgO7vnXYUV6flme8ksKskffb9bKQjVE8
-	 S8niMmg5BCWAQSmmiJ9R2n1WaLKA5FGBxJpm1beByEtmny8baHvHPuSlsx9Zw8jKDIW+U
-	 Y7uSbSEpBma5WIlDpT9pgCFTcBOSmDpfx6Zccr9i92k9gT3U7pux/RSzzKjXcMSRQoZBW
-	 96t8J/JkpIczalY66zm/L25WPKAHnvaZ94hlshXSVNlmFFIhdcXxDv9Fk1mgcxNlUag==
+	bh=MiXzcQSGnsDU/1OVYiXX6Fkjruii+DdTxTvbyt9hwQQ=;
+	b=JV3OIP+O67iNJvfNcqIWpsXtOYiDtSZACJMbZ/o7UxOXu3/8QDbi6T0TlH5YAYe/61+S
+	 VxemUhvUjnEFndSumYNeH3TOnt2GGXeI4b9zdxaOE38/upEzQ98k5O2zOGfsynQA7UvQS
+	 Mdr/kP2wwVtKvxDi4OUU+zuVHApJCkg213oU6REdqAGsv9WIaErq4mUz9Y+dUSCDuZ6Ue
+	 d/QARGP+zeTBCcP53qwH9xm6kgSqXL5hPMxkorAQocqbWwn19hNUe3nIlUTdH53ot/4+f
+	 wRFzhA/w/SmkLnfOqoVewO4YKtsbjm6jkwbD4EdYUcWfVapy44vzXAVJlZ1qdw93c+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvZTu8+a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DKiqKTQJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F730606A31C;
-	Thu, 19 Nov 2026 03:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A74606A31C;
+	Thu, 19 Nov 2026 03:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvZTu8+a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8487E1F000C4;
-	Thu, 19 Nov 2026 03:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DKiqKTQJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EF61F000C4;
+	Thu, 19 Nov 2026 03:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059467;
-	bh=ay7gIlzBokujsw81GArTojZJyorCXMP1TTM8zSMBpAI=;
+	s=korg; t=1795059469;
+	bh=MiXzcQSGnsDU/1OVYiXX6Fkjruii+DdTxTvbyt9hwQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvZTu8+aECunRCM6CHGNxLAJM+01uvqp37sUp3735ZkedcB5xRowKelnIEV/opk56
-	 O0P8ogecOQ71Pf8aif4HL2d45il8E0FrXdN8U9RF+3qCfxqKLmAFUII3jW5krNO0TV
-	 igdbtExnO0QXCTzydXtHqjtLdB8lLvGTtkESEfWo=
+	b=DKiqKTQJ7sp6nSRRiiWxruAeYSylBztTIPSyaIMeL4//VzzWYj6DUN8ZilQk7BTGG
+	 kjlkTdqSJR+SOkqlwCV26t3KbY4uOHCLdANxK/RXRD/v+oq+ExIY24caCC7LRtHMuv
+	 Nlhxk+OXPIRAlN4HuDOIJIekrPijc1wHFcnVe3sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Chung-Chiang Cheng <cccheng@synology.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0853/1848] take the guts of file-to-pipe splice into a helper function
-Date: Wed, 18 Nov 2026 15:48:11 +0100
-Message-ID: <20261118145952.266574715@linuxfoundation.org>
+Subject: [PATCH 5.10 0854/1848] splice: report related fsnotify events
+Date: Wed, 18 Nov 2026 15:48:12 +0100
+Message-ID: <20261118145952.302839728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,57 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Chung-Chiang Cheng <cccheng@synology.com>
 
-[ Upstream commit faa97c48c33454ac0107db930a491b692dd1dff1 ]
+[ Upstream commit 983652c691990b3257a07f67f4263eb847baa82d ]
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+The fsnotify ACCESS and MODIFY event are missing when manipulating a file
+with splice(2).
+
+Signed-off-by: Chung-Chiang Cheng <cccheng@synology.com>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230322062519.409752-1-cccheng@synology.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 79b496ebe382 ("splice: avoid stale f_pos writeback on error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ fs/splice.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/fs/splice.c b/fs/splice.c
-index 070b192b56386..8237ed720a35f 100644
+index 8237ed720a35f..c4d3ac181a9f6 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1005,6 +1005,23 @@ static int splice_pipe_to_pipe(struct pipe_inode_info *ipipe,
- 			       struct pipe_inode_info *opipe,
- 			       size_t len, unsigned int flags);
+@@ -30,6 +30,7 @@
+ #include <linux/export.h>
+ #include <linux/syscalls.h>
+ #include <linux/uio.h>
++#include <linux/fsnotify.h>
+ #include <linux/security.h>
+ #include <linux/gfp.h>
+ #include <linux/socket.h>
+@@ -1079,6 +1080,9 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 		ret = do_splice_from(ipipe, out, &offset, len, flags);
+ 		file_end_write(out);
  
-+static long splice_file_to_pipe(struct file *in,
-+			 struct pipe_inode_info *opipe,
-+			 loff_t *offset,
-+			 size_t len, unsigned int flags)
-+{
-+	long ret;
++		if (ret > 0)
++			fsnotify_modify(out);
 +
-+	pipe_lock(opipe);
-+	ret = wait_for_space(opipe, flags);
-+	if (!ret)
-+		ret = do_splice_to(in, offset, opipe, len, flags);
-+	pipe_unlock(opipe);
-+	if (ret > 0)
-+		wakeup_pipe_readers(opipe);
-+	return ret;
-+}
-+
- /*
-  * Determine where to splice to/from.
-  */
-@@ -1084,13 +1101,7 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
- 		if (out->f_flags & O_NONBLOCK)
+ 		if (!off_out)
+ 			out->f_pos = offset;
+ 		else
+@@ -1102,6 +1106,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
  			flags |= SPLICE_F_NONBLOCK;
  
--		pipe_lock(opipe);
--		ret = wait_for_space(opipe, flags);
--		if (!ret)
--			ret = do_splice_to(in, &offset, opipe, len, flags);
--		pipe_unlock(opipe);
--		if (ret > 0)
--			wakeup_pipe_readers(opipe);
-+		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
+ 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
++
++		if (ret > 0)
++			fsnotify_access(in);
++
  		if (!off_in)
  			in->f_pos = offset;
  		else
