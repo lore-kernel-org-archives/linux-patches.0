@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036312;
-	b=JMOIahAkYBUZvbksCV/e1C5O7A8iou33SkXusu5t+1Co5QoEWO74xKfiQXywuiNASIlw
-	 fTfx8+4yKKvBu4q1WuymwkdaHdgy3yPaOLkp+zgQ+uGrh6m8wKmK1IstvcB42slMG6gpt
-	 uIU8KXP3p2txOuLWkO2Aq5+TIuwrjJRi7n0nvIaV+DidtuezMIZKu4Xt1bDlwqxnKKYkL
-	 sCPTnpsWNWUigPkv1sfFoM+XmzACyk6QMZQp2BFn0YO50BxyK84RjeMUAaKjoSmxMm0vR
-	 59AYwbk1nHqxWVzI6JCk9fngyme2Pb2aXwUkXaiSQaOIZT4b7SJYTaQjkfCHlGjDUmw==
+	t=1795036314;
+	b=g9V/ombtAtOz9i087hGl7LpWdsDzI8mlzq1m16PZ5Y18/mE7/cgdlSgzfUu39CT5rqgl
+	 yJpqw4lVu9H0FoS/bVhUhtQX1MMg1Zbg+5E8oe/5ZJCbrGnElGuo4h302F5/6fP4JJwE9
+	 PRqcukz8VhTLeNxZr8l1K726o1nnoA25OfxwIJG7KFMdSKmh88iSuvseNx217kNZaXWYR
+	 TIFhcQvOM8XWqQWmCnulwmuNTxqjfjXUnwtgdkMxQL97jP6YRHrjVV5NmzJZxxLafoqmB
+	 Omluw9wVsBSbSwzZOObIbFoch9VHTK0+bdRhPNR8pMPutIiaM5GDnijz/VTOkZsfU0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uuW/Y7wrO3tSfKGO1jeVq8BxycZOFHqwP85+PHkYIfY=;
-	b=GLHXoeTkU5v540XfLEnT16JMDm7ln5p4EFvfzLZgHQF1wOj61fM+foqKW1PKNlXa5JZU
-	 cetYclpqsIek4AeNWtMQUrT6T7Yk+r52tJhXD9TtT+2Uuw9okhb0bzlH2HoML35tfeQpo
-	 TlLaTGVyhQGY3+BhvTD6ZATukftClLFhfrxXFi0gEDDe3m3SGfk9rE+c+QjCcw/0lv8Ih
-	 R/JmV0TkuKh634JDVpKLqNAhy0n6oL5WpZncQF4SjLcfHUBsOT9g5j7OXRQI2DYJ1N0EQ
-	 ibPbjBommp2wLUAx8tFGiR/QhMUNKNWDK6eXtobTJfIH6chha7uHB1NMcAPy/Ec6dig==
+	bh=O8T92WbSVt/BO1GSKvbCF/nXexiDgh9XsoCh35M3yJg=;
+	b=YHbmEtrryuOmV6tL08pPMBxc4b2jZlQpQitgJDmEwT0st9dtdfagG1JtJaoKF7Jz4/pt
+	 3RuWIk5Tnl0GbPywFc0XhS0cZBBEMz/u4RSecadRuAeVkXcdIjsyFX0la5nSoVCgdARls
+	 LbAJk1105Vmir65S4Du9CZDbcPOpEym9yFJKTXzcrMKqmg7L0Sk/+P9we9yrLjrw0k0QW
+	 pHCDfhYSTJfHZ2MswZ58QwBtsuOUP+8f1mwhOFWscZzFI0F50Wg6iS4d8swL52aNGRcAZ
+	 5fHofB+nWpgoUHo+mhgqiRo8JY5Ih90B8sMvhPONWzKZnlYdSazK7eMbzU15RNCm2ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T7BwPMG8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKnjdoHu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA84E606A320;
-	Wed, 18 Nov 2026 21:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF79606A31C;
+	Wed, 18 Nov 2026 21:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T7BwPMG8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F541F000C4;
-	Wed, 18 Nov 2026 21:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKnjdoHu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A701F000C4;
+	Wed, 18 Nov 2026 21:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036311;
-	bh=uuW/Y7wrO3tSfKGO1jeVq8BxycZOFHqwP85+PHkYIfY=;
+	s=korg; t=1795036314;
+	bh=O8T92WbSVt/BO1GSKvbCF/nXexiDgh9XsoCh35M3yJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7BwPMG8IWtI1gYPuXT/apEqhbC4EDrs4/jrYzTp4do2WeuctJTeWlAIIDgklQ7+Y
-	 sIWwydYwtNnU/Tj+KOAN7ReumDndD8wFVqGen4E10JNfupLYrP808jz8p2LpnsjChm
-	 ba7WQXx+AYSlWgLxBozhotpSnLFFoKMO+R8R7bPE=
+	b=mKnjdoHuBNOxHfyVdN61COOPWPJv1Cz0q9/NWg2ifG6VO/AMwWfS997s7GusRe74P
+	 d2Jr6H7P9yOHtSFDDUtsNNn9CZJY5GR9Xayhrh9h+VfW9qOoItf+F4gjUi74Pi7k0b
+	 xIOvsW2piyRtlHL+Z9Pe8a5A4CEbfcp9OjAll67E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Will Deacon <will@kernel.org>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1012/3318] perf: xgene: initialize lock before requesting IRQ
-Date: Wed, 18 Nov 2026 15:27:14 +0100
-Message-ID: <20261118150350.242193408@linuxfoundation.org>
+Subject: [PATCH 6.6 0972/3318] staging: rtl8723bs: fix RX buffer OOB write from device-reported length
+Date: Wed, 18 Nov 2026 15:26:34 +0100
+Message-ID: <20261118150348.865516073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,50 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit d4b7b0c77142b3bc535192fa65130474a129c487 ]
+[ Upstream commit c52929073fccbc149267a2fd7458626a7e9abcfc ]
 
-xgene_pmu_probe() requests the PMU IRQ before initializing
-xgene_pmu->lock. request_irq() enables IRQ handling before it returns,
-so xgene_pmu_isr() can run in this window and acquire the uninitialized
-raw spinlock.
+sd_recv_rxfifo() trusts the device-reported RX0_REQ_LEN value
+(hal->SdioRxFIFOSize, a u16 read from the card via CMD52) as the
+size of the next RX packet and passes it to sdio_read_port(), which
+copies that many bytes into the recvbuf skb whose data area is only
+MAX_RECVBUF_SZ (10240) bytes. A bogus device on SDIO can report up to
+65535 bytes, causing a heap overflow of up to ~55KB past the skb
+buffer.
 
-Initialize the lock before requesting the IRQ so the handler always sees a
-valid lock.
+Bail out when the RX0_REQ_LEN exceeds MAX_RECVBUF_SZ. This is expected
+to keep behavior unchanged on normal devices.
 
-Fixes: 832c927d119b ("perf: xgene: Add APM X-Gene SoC Performance Monitoring Unit driver")
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/8114c3adc1acaea78523cc0fb4d4b25f7665cee9@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/xgene_pmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8723bs/hal/sdio_ops.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
-index 9972bfc11a5ca..56449eb936459 100644
---- a/drivers/perf/xgene_pmu.c
-+++ b/drivers/perf/xgene_pmu.c
-@@ -1892,6 +1892,8 @@ static int xgene_pmu_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return -EINVAL;
+diff --git a/drivers/staging/rtl8723bs/hal/sdio_ops.c b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+index 107f427ee4aa5..e825384fd0e1d 100644
+--- a/drivers/staging/rtl8723bs/hal/sdio_ops.c
++++ b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+@@ -792,6 +792,13 @@ static struct recv_buf *sd_recv_rxfifo(struct adapter *adapter, u32 size)
+ 	struct recv_priv *recv_priv;
+ 	struct recv_buf	*recvbuf;
  
-+	raw_spin_lock_init(&xgene_pmu->lock);
++	/* RX0_REQ_LEN is device-reported; the skb buffer is only
++	 * MAX_RECVBUF_SZ bytes, reject bogus lengths instead of
++	 * overflowing past it.
++	 */
++	if (size > MAX_RECVBUF_SZ)
++		return NULL;
 +
- 	rc = devm_request_irq(&pdev->dev, irq, xgene_pmu_isr,
- 				IRQF_NOBALANCING | IRQF_NO_THREAD,
- 				dev_name(&pdev->dev), xgene_pmu);
-@@ -1902,8 +1904,6 @@ static int xgene_pmu_probe(struct platform_device *pdev)
- 
- 	xgene_pmu->irq = irq;
- 
--	raw_spin_lock_init(&xgene_pmu->lock);
--
- 	/* Check for active MCBs and MCUs */
- 	rc = xgene_pmu_probe_active_mcb_mcu_l3c(xgene_pmu, pdev);
- 	if (rc) {
+ 	/*  Patch for some SDIO Host 4 bytes issue */
+ 	/*  ex. RK3188 */
+ 	readsize = round_up(size, 4);
 -- 
 2.53.0
 
