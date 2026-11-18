@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051267;
-	b=sLqX7k09Qyxeb6yxI5bGLvsQEwSYIw7QWeQPhJEB2vTDIqoOHODtuZw+dtoQ60GDzXYj
-	 jEB97oneV/+FRZSJXtve/s6Xt+KmZSsXkjsDxjR29Y055c5sLSZMV8C08CGEPSPmuHAc9
-	 I+NViOqf4fh0P312KMosaweRhaETDeWEHFaY4rWg3ChPKaGjN6JUZlU2JXVzQpr+hezSt
-	 m+yB3whU/nvln5sgCFhq2fbtR42jF8GntlfSoLihd13kFeXHDcgAi1vDP2ZNq0br4iSED
-	 vHdxzWDuvpNym5UiWSJwgF/7W/T0arvj183D505/zd22lZ+lliSDp4TpzkTp6CiVEhg==
+	t=1795051270;
+	b=SPgqU0O3XAdg9lZ1rMqQ3tv3KZpxNyGn7pDd/tmhEdadSHFzcZCerWyGCZKf5RblpjJc
+	 JsmojljiqaT4yKClkzof8NTjm99hOjjjgyfh2+o7bi205cwHWcqHXSSNKJ3K2LlKfhyu7
+	 xqZjEgcwJ2VMQJQ3+wcqElKLrtLvufQkJ7xvueG6k01LImn12HFi1ZYzsIxpwZj6bVCkU
+	 RphHRQog+I0EbdOe2i5WyI2FGGBRfHq+dc2BwnLOdvDNRVEtLpj2ttN4Twgpn13bF+/mq
+	 4GYjPQncNpIvfj1nGKIqgVxOVLcukNynmOOzGF6CK28fznpFarskEZvZwc3HsiV/Hng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051267;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051270;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x36dCKXYoeYm1t05Zam89/Ww2tKvkqyQScjo/+pW7d8=;
-	b=CgaA5OEUfTmUNyXSJNQ4xCc7K4wkMwQuc8lWwMEEvy3StfWqZnKnuPRxOPtycbPnje/S
-	 N8+RVUjlhclpwzwBl3Gs6rQFjBehtowTvEqgrFcfQ/jowAa2q6lraxqXVhJ7VAioRs/2q
-	 LF0DubDiKSrY7uSsrkCMC4PdYewxN6Rcmrrp6Otr7P41PkpSE3MDYSoyuKh9ax2c0OPgX
-	 Dvl/TJk999MON3OpzZrNUryPUjBAXzQZ0bp6e8env3eCdE7mAcQGcfQ2EVQKmKwI0JHN1
-	 W7e/vEc/LiSq8HR1vDxbJ5b9N+wrCB2npTrl5MWDZ3iFyE9tqKfXEzcIauqjoPLRmYg==
+	bh=nzH2hHCx/Q+eYaDD8OoPVItME3jqvsVeywrkhZKxpNw=;
+	b=BBTKa9IRfDQdrvqWgkaRLvHAdXsXSGJCc22qgYQjj36u3UNZKuKmmS4GdKZYfzMfgjup
+	 pr/vcluz4S19V16PN+nFDSbGUc+ZdHjV+Z5Kgz/5aKvdwoO0SbpMUTyZzqiFxeaZZaULt
+	 JUEISxSlRdx2g0a8+rE77UyRj4RS7Qz9MPOmUVOCXkX0XIrpcqxGRWVdD/yjF39dmhanm
+	 qinDdDDv//bagPMZfio5CtPI6CNmVAtLqW8jS3aBI4J3e7bpkF6xDLdVdN95j8q+3rAe/
+	 j07o2/zr1tygFkgS9+WrmMgGQRKP/7VAMyIeZihsCHeN0YFsSibxR8Z7/t+KqBaP0UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTbv6K8q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOphn1kH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6056E606A325;
-	Thu, 19 Nov 2026 01:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54048606A320;
+	Thu, 19 Nov 2026 01:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTbv6K8q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE55B1F000C5;
-	Thu, 19 Nov 2026 01:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOphn1kH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCC41F000C4;
+	Thu, 19 Nov 2026 01:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051267;
-	bh=x36dCKXYoeYm1t05Zam89/Ww2tKvkqyQScjo/+pW7d8=;
+	s=korg; t=1795051270;
+	bh=nzH2hHCx/Q+eYaDD8OoPVItME3jqvsVeywrkhZKxpNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTbv6K8q8hGc8keJzgjqQTtKEqow5hPH3nV6m/cQwHNP0mgFqWnrKVpnahF+yOKPP
-	 KMALehXrpps5MWUZ5m0ORclZrdvneWZgOqx/guPDKjNLkBMEhphHVJj3DW0GUBMUmS
-	 MMZFV3cqixg2erzUJel687co1wu9KJUMceYTSAec=
+	b=EOphn1kHq98ulwaIorSIFB5cOOjCGM+xBRUm7h9fUx2QHhJ1+EoZnKA3wMwxK0k8E
+	 nv+COLrQ5b48XnudubG5mIJbikRSNKoXkjoLnhbfeNhJgwPqY84KILiPBv0w7nHSry
+	 68Qm6sw7SScyUuBy+7p9AJq5MsidWaXas0nZ+Bi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0148/2214] ata: ata_generic: Dont store pci_device_id
-Date: Wed, 18 Nov 2026 15:30:24 +0100
-Message-ID: <20261118150016.089260290@linuxfoundation.org>
+Subject: [PATCH 5.15 0149/2214] ALSA: hda/conexant: Add NULL check for dc_mode_path
+Date: Wed, 18 Nov 2026 15:30:25 +0100
+Message-ID: <20261118150016.121719115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,51 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 4f3075f629077a8cb3d3455c794a1f4a8fc8b43e ]
+[ Upstream commit 273806f38ce95c95c288a03d3de1e423cd3e5543 ]
 
-pci_device_id is not guaranteed to live longer than probe due to presence
-of dynamic ID. All information apart from driver_data can be easily
-retrieved from pci_dev, so just store driver_data.
+snd_hda_add_new_path() returns NULL when no path exists between the
+given NIDs, but olpc_xo_update_mic_pins() passes dc_mode_path
+straight to snd_hda_activate_path() which dereferences it without
+checking. Add the missing NULL guards, same as the local path
+variable already has in the same function.
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260723-pci_id_fix-v4-1-3580726844e1@garyguo.net
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ata_generic.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_conexant.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/ata_generic.c b/drivers/ata/ata_generic.c
-index 20a32e4d501d3..177c902b2988b 100644
---- a/drivers/ata/ata_generic.c
-+++ b/drivers/ata/ata_generic.c
-@@ -51,11 +51,11 @@ enum {
- static int generic_set_mode(struct ata_link *link, struct ata_device **unused)
- {
- 	struct ata_port *ap = link->ap;
--	const struct pci_device_id *id = ap->host->private_data;
-+	unsigned long driver_data = (unsigned long)ap->host->private_data;
- 	int dma_enabled = 0;
- 	struct ata_device *dev;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 0a2ebb8789bb3..44b1d5c3ff993 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -467,7 +467,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
+ 	if (!spec->dc_enable) {
+ 		/* disable DC bias path and pin for port F */
+ 		update_mic_pin(codec, 0x1e, 0);
+-		snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
++		if (spec->dc_mode_path)
++			snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
  
--	if (id->driver_data & ATA_GEN_FORCE_DMA) {
-+	if (driver_data & ATA_GEN_FORCE_DMA) {
- 		dma_enabled = 0xff;
- 	} else if (ap->ioaddr.bmdma_addr) {
- 		/* Bits 5 and 6 indicate if DMA is active on master/slave */
-@@ -206,7 +206,7 @@ static int ata_generic_init_one(struct pci_dev *dev, const struct pci_device_id
- 			return rc;
- 		pcim_pin_device(dev);
+ 		/* update port B (ext mic) and C (int mic) */
+ 		/* OLPC defers mic widget control until when capture is
+@@ -503,7 +504,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
+ 		update_mic_pin(codec, 0x1b, 0);
+ 		/* enable DC bias path and pin */
+ 		update_mic_pin(codec, 0x1e, spec->recording ? PIN_IN : 0);
+-		snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
++		if (spec->dc_mode_path)
++			snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
  	}
--	return ata_pci_bmdma_init_one(dev, ppi, &generic_sht, (void *)id, 0);
-+	return ata_pci_bmdma_init_one(dev, ppi, &generic_sht, (void *)id->driver_data, 0);
  }
  
- static struct pci_device_id ata_generic[] = {
 -- 
 2.53.0
 
