@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017981;
-	b=etb8ZvTLGNjzHEsECDHMnU6pny1KEuxh5c8tSYFTEZlMd7DIYQct4dAJhD0dkMa4hpFL
-	 WGsvgbuLAbQh9oOpFHhGEGH9umGerr062Bxq/3HmexoOURc2N5JPv68JwzfJ/Qc2wYHjI
-	 OMz0z2MOhWhLyc2a+Re4k86Y/Pvia9z6B/+2uefipKCd7qOWlrvyU8MChgxTI6EO5rZkQ
-	 RauyMq8h/cuHW+45oUjH8mQObpkASfkpYru35RNvm+9oWJ8c7ddCBBDM4MJqvkDk1CJb7
-	 5CUFiusRUR7qgLvO5qFGioDxFomUE9TrTE9wpkWR2+VkJZL3tjvQKVytIdKD3/E0Syg==
+	t=1795017984;
+	b=R8YaLqOU2wRvOVJuLnZod/p3Uv0mHvuYmjjK8kkvcVF9Z0Ud8DR4GnOUeSUDpODFPhVp
+	 cNZ6u5VncarSyiviwz82l5Bjt/WcFnjj8OAW3/f/3MBh0iGFa9YSILRohfwyLw7clFiIs
+	 tkhT+1uLYHKpAC7OTXhH0ApRHfKIKBpEf9vYmVVIcz92o9jCv1vfVdJlUrxBYvs4hQnRo
+	 3w+ztIt9QTlEXfEKINQswbYeQ9kQD79BwyBMycbCPxVI6QNgFCf35D4P/+OFZAqxq/P8Z
+	 hREmnRl4mSUM2WwnIwJ3EvXLXRlOb0V2VyUxNBmN1ufeRVoLGglg8jzf7DQpv3xORKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UYwHu6EGLubTTyR8fnoy2u9qlCNk0kIEwTSovFTxHPk=;
-	b=y4oDnnlBQwaM/5VcIWJveSXStmYtHOUro4EtlYtTGzIFZv/oDMB3zQM6bT9vt7w+l+SQ
-	 Nq5TmRb8HbuOooCHZVv6WuReAEO9EUEBs2ONwV8fKzJP83OsKi4/q3PLZlzPNOMfkA8SB
-	 h/2oL2CNPjFtCZhWMNdLoCyBgRWGcgZt0QZkjpjegtwXlwyaGuY/Opz10faKARl5NoMVw
-	 JDs/eIwsEykxzx05Brd/1gCCmdWxIZARyq4/RyTFpYFeYfbzZNAgIW348muue0/EbCHXR
-	 SNI9u2maPjkcvhIyq2mjc4os5KMUNyu5zkMwyJ/tThkfv2IvxJe1Tt7gctUJlB56lgg==
+	bh=7ZMLlaqXXjL4pI5Oj1sugUyOYhmj5GCvWqTTlKeENR8=;
+	b=P8+EJ+Ps/ug6CrcZyT97naU/Oia4crNtHUiU6Nf3cTgNzHXOvmLQdjVuNUYd00jLJTuR
+	 oT7d98bjtoYsYrfAmwzXpg+m04udqfT1dISQ9VXMNjFjU2tcTszzQHntHemEIppd6kmOy
+	 CxaAJ4BNsLFqHBFRk3beyZ6F4c1fn3APUuadp0SZos2O096ocIAfQmzc2Ntn+zsiKlBA8
+	 IsaLre1kpGeAbfQpzSmE7o6kH2awLJx6KATqHyhqacy1dnQcrKOULatPb/UvKMB5l4BGV
+	 pVum5M4LTdU1xa0BaBLTzUQEU/V7TgLGXGBMl+/jwe+tPPNNPUFzLo+BqNkBDvLQHdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AeMOQLsg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qMwl6b/e";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FD9606A31C;
-	Wed, 18 Nov 2026 16:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F444606A31C;
+	Wed, 18 Nov 2026 16:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AeMOQLsg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCC11F000C4;
-	Wed, 18 Nov 2026 16:06:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMwl6b/e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75D11F000C4;
+	Wed, 18 Nov 2026 16:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017981;
-	bh=UYwHu6EGLubTTyR8fnoy2u9qlCNk0kIEwTSovFTxHPk=;
+	s=korg; t=1795017984;
+	bh=7ZMLlaqXXjL4pI5Oj1sugUyOYhmj5GCvWqTTlKeENR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AeMOQLsgPBp8uA6i1Ox07dlFXFNOwKz8NZot9W19go1yRcNJcdG72nMHM9fK4UWk2
-	 VCMHLdkFplNqo8rPNerDOkX6OHCd70UQEVMiq+P4HHrdNWQtch5DcRsb8mSXnd0HCK
-	 u80k39yRj8Jo7coAIeZZUOUr5wAMGJpkfwKj6L9w=
+	b=qMwl6b/eO/2iMpHgxnecFceSVFelQ8rgxwYhzRUW5ti36Wf43H+K58MxlitStN8wF
+	 tAPfFPeVXsjxtJdkTLcPf73pog8YmSpZFANdgFrPaRAMThky+gMWzZKDINUogBTpBi
+	 zxiYW0+XQHwOY6051hgoLnmFjXFuUykbZBsUbXiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Roberto Ricci <io@r-ricci.it>,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1077/2651] dt-bindings: vendor-prefixes: Add Sophos
-Date: Wed, 18 Nov 2026 15:38:37 +0100
-Message-ID: <20261118150326.766433376@linuxfoundation.org>
+Subject: [PATCH 7.3 1078/2651] x86/hibernate: Ignore page-zero RAM in E820 checksum
+Date: Wed, 18 Nov 2026 15:38:38 +0100
+Message-ID: <20261118150326.805725931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,35 +69,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit 538f8ec6b9c711833c5217a8bd8207a282265303 ]
+[ Upstream commit 29671cabfc09afb1ee2426b21173cdde276a95ac ]
 
-Add the "sophos" vendor prefix for Sophos Ltd., a vendor of network
-security appliances.
+The legacy kexec_load path reconstructs the E820 map exported through
+sysfs.  kexec-tools leaves the first 1 KiB unavailable for the real-mode
+transition, so a kernel entered through kexec_load can see conventional
+RAM starting at 0x400.  A subsequent firmware boot reports the same RAM
+range starting at zero.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Assisted-by: LLM
-Signed-off-by: Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+The hibernation E820 checksum compares those byte representations and
+rejects the image, even though the maps agree from page one onwards.
+A QEMU guest showed this transition:
+
+  firmware:     RAM [0-0x9fbff]
+  kexec_load:   gap [0-0x3ff], RAM [0x400-0x9fbff]
+  firmware:     RAM [0-0x9fbff]
+
+The checksum covers e820_table_firmware, which trim_bios_range() leaves
+alone.  The nosave regions come from e820_table instead, where
+trim_bios_range() has already turned conventional RAM in page zero into
+reserved memory, so page zero never occurs in the image, whatever the
+firmware map says about it.
+
+Canonicalise only the conventional-RAM portion below PAGE_SIZE before
+calculating the checksum.  Preserve RESERVED, ACPI, NVS, UNUSABLE, PMEM
+and all other E820 types so that changes to exceptional mappings remain
+detectable.
+
+This is deliberately narrower than Marco Scardovi's June proposal to
+checksum only RAM and its opt-in relaxed_memmap successor.  Rafael
+noted that ignoring non-RAM changes could hide moved ACPI or UEFI
+regions still used by the resumed kernel.  This patch preserves every
+non-RAM entry and ignores only RAM within page zero, which common setup
+already reserves and excludes from the image.
+
+Bump RESTORE_MAGIC, since the checksum semantics change, so that an
+image written by a kernel without this change is refused by the magic
+check instead of being compared under different rules.
+
+In the same guest, with the page-zero difference kept, hibernation and
+resume now work after both a direct boot and a kexec_load boot.  An
+image written by an unpatched kernel is refused at resume with
+"Unrecognized hibernate image header format!", and the firmware-booted
+kernel carries on.
+
+Fixes: 62a03defeabd ("PM / hibernate: Verify the consistent of e820 memory map by md5 digest")
+Reported-by: Roberto Ricci <io@r-ricci.it>
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://lore.kernel.org/all/Z-hYWc9LtBU1Yhtg@desktop0a/
+Link: https://lists.openwall.net/linux-kernel/2025/04/04/1372
+Link: https://lore.kernel.org/all/CAJZ5v0jmOj0WBtMTvbnaD+2b0bTFowA=JWrqRzaaCYpHpai1Nw@mail.gmail.com/
+Link: https://lore.kernel.org/all/20260623165724.10753-1-scardracs@disroot.org/
+Link: https://patch.msgid.link/20260926052117.3613637-1-matthias.goergens@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/power/hibernate.c | 51 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 45 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index f3e9129ee88eb..2d93308624cea 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -1609,6 +1609,8 @@ patternProperties:
-     description: Sony Corporation
-   "^sophgo,.*":
-     description: Sophgo Technology Inc.
-+  "^sophos,.*":
-+    description: Sophos Ltd.
-   "^sourceparts,.*":
-     description: Source Parts Inc.
-   "^spacemit,.*":
+diff --git a/arch/x86/power/hibernate.c b/arch/x86/power/hibernate.c
+index a2294c1649f65..dbb340fb24ada 100644
+--- a/arch/x86/power/hibernate.c
++++ b/arch/x86/power/hibernate.c
+@@ -63,6 +63,25 @@ struct restore_data_record {
+ 	unsigned long e820_checksum;
+ };
+ 
++static bool trim_e820_page_zero_ram(struct e820_entry *entry)
++{
++	u64 lowmem_size;
++
++	/*
++	 * Page zero is BIOS-owned and registered as nosave.  Boot loaders may
++	 * therefore omit part of its conventional RAM entry without changing
++	 * any memory available to the image.  Preserve all other E820 types.
++	 */
++	if (entry->type != E820_TYPE_RAM || entry->addr >= PAGE_SIZE)
++		return true;
++
++	lowmem_size = min_t(u64, entry->size, PAGE_SIZE - entry->addr);
++	entry->addr += lowmem_size;
++	entry->size -= lowmem_size;
++
++	return entry->size;
++}
++
+ /**
+  * compute_e820_crc32 - calculate crc32 of a given e820 table
+  *
+@@ -70,18 +89,38 @@ struct restore_data_record {
+  *
+  * Return: the resulting checksum
+  */
+-static inline u32 compute_e820_crc32(struct e820_table *table)
++static u32 compute_e820_crc32(struct e820_table *table)
+ {
+-	int size = offsetof(struct e820_table, entries) +
+-		sizeof(struct e820_entry) * table->nr_entries;
++	struct e820_entry entry;
++	u32 crc = ~0;
++	u32 nr_entries = 0;
++	u32 i;
++
++	for (i = 0; i < table->nr_entries; i++) {
++		entry = table->entries[i];
++		if (trim_e820_page_zero_ram(&entry))
++			nr_entries++;
++	}
++
++	crc = crc32_le(crc, (unsigned char const *)&nr_entries,
++		       sizeof(nr_entries));
++
++	for (i = 0; i < table->nr_entries; i++) {
++		entry = table->entries[i];
++		if (!trim_e820_page_zero_ram(&entry))
++			continue;
++
++		crc = crc32_le(crc, (unsigned char const *)&entry,
++			       sizeof(entry));
++	}
+ 
+-	return ~crc32_le(~0, (unsigned char const *)table, size);
++	return ~crc;
+ }
+ 
+ #ifdef CONFIG_X86_64
+-#define RESTORE_MAGIC	0x23456789ABCDEF02UL
++#define RESTORE_MAGIC	0x23456789ABCDEF03UL
+ #else
+-#define RESTORE_MAGIC	0x12345679UL
++#define RESTORE_MAGIC	0x1234567AUL
+ #endif
+ 
+ /**
 -- 
 2.53.0
 
