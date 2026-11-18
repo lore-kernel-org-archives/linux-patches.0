@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039642;
-	b=imo78Z8mT78LtKLQCUdz4uyD4TURleDtWeMLgOS6A+NtBSWTfLTajzYPVtxBv7OVtKaJ
-	 5DMCxYp39z2OxWaw+FoqsEF7UsEmhAhTa2FM46uS/DzF/Yhlx6vyZrTjdf21PLILRk1Fp
-	 HJxQpTGDVn8qxByohBDSgXQu5KJVuUCKZu5/DJeamCzwJ4UhE6Ci6v2O0SDwjXgFlH6ft
-	 rbadCeEjr5tB1XQktUF94HSkdPAjw3WmC4dN2hAVSmbjhc5b+WwPETjFvGcnEeaiVhoLG
-	 Lx/zaulpaKFjncD7mhPzbfKJgV6YbzJL40pOj1iwPXbCtU0qnk0DqV2/NCAPAOp6MEw==
+	t=1795039645;
+	b=Xo/JKlpHUYUDaBTPFgi1Mq/KnHsv/XH8iPGBY9vpmgp6Ei/chQZ9yVtFbLNfRrByZWeo
+	 bAOUM2AZ+vKDS1TiGG7of58obHf/g31ESwNnrV33pRU8bzDZj5dwjXhAEOZKxl+C0Gukq
+	 eDBN8jvpeQRIhZt6y+yGeBch0jprZK9K87vdCcQztKCISzZVpl0ds6qgRki7lo+KePMLL
+	 4kvPWHjxh5HiOv9WiOXeo2aAurWesstudvyqlfPHkJbR3dIsFou8oVsZxQBQ7hIZajbdZ
+	 xmS3i0yz1GcIjXJ6jtLO93LehgNnOgyqN9dAU3Qpc0QkU/xRlCfL0QnWidQNMYyQvcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6yjrGOI5sY/zpzANJXwZFToeuZupdxKfVWV6fT7gMHY=;
-	b=HRoTljJT+4XPJ3NOEQfB2PJ0nxLllc72TZkNVANguXaiKj3LQhB6XFb7wdf23jjA3upH
-	 GdI3WvIhZRprU4lF5putjE++qHZeTEVafB2fLjIi3A4VxMqEG+CE0nXei72GGtO7CuSix
-	 dPKllQEfhVF70XK6jSWCA3MkuDjLti5X/xD9kcXwTDzMP4NfVgNNaupUI0uqVsyGVb8w2
-	 C7D6UdhN5Gh1/Cu5yuk0YvrkMpZZxLYBUXYi3RKDnLECs4UAyzMdYDjSq5xodJX55UOx/
-	 nmZHDqcuClMu09pClszd8eH2rxERR/EXKKXiiDSy39PedxbXHlhsJr5yrZBKJ0gYNzw==
+	bh=dJ/aJmY2VO2Jx6XHz5/c9OA6vzbJSiDG2QvxBbIrIEM=;
+	b=VNRrUAi7F7e/18HI7PO1ss1i/c2HoH0aKfhmPkaRdT54sNqA1E1BWmymhRGUpDCtpTtz
+	 Z+M4BFcSqi1K1VemSOwnEn7wsiV1G6ac/A23LRcZZ6aPXnmiHeZ4ze5aEH/bGikSgltQt
+	 oWlYvvvMiXSZOQI1qyqLtXquryfZQ+V7VjyGbPpmOzGe63gb4DaJ/ANlWnWMOyw8RH4sv
+	 xLdVlPC72m/n8Cap1pzUvAXgFIwkOvH3sK00cOCulNjR6dDGvBpMCH/U2ZztrP7dgyT1k
+	 jJKTgrQrFKXpYo22msLHoXh6bTOa2MGjn2tfx3pyLePr1bhNWbIZDarXTxZ48NcgQ4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lg+DOJhR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csqfrQPi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9BB606A325;
-	Wed, 18 Nov 2026 22:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97989606A31C;
+	Wed, 18 Nov 2026 22:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lg+DOJhR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D231F000C4;
-	Wed, 18 Nov 2026 22:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csqfrQPi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABF81F000C4;
+	Wed, 18 Nov 2026 22:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039642;
-	bh=6yjrGOI5sY/zpzANJXwZFToeuZupdxKfVWV6fT7gMHY=;
+	s=korg; t=1795039645;
+	bh=dJ/aJmY2VO2Jx6XHz5/c9OA6vzbJSiDG2QvxBbIrIEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lg+DOJhRrOs2FK8OUusOPGjFBBBUNidsg+a4Un8UdR+V3ILIR2Fx/S/oRmpyEh53U
-	 miQiUixTgVzemdupFk4zAPq15E5FUyAnIosDqqAGJxi58mCoaSWnYUNb+ACGC92pWn
-	 eIoCihG+w4K0OvhAxGbDi7BUtH3waMcSMGE5Pv7I=
+	b=csqfrQPi+1uBsDFXuKGkUKdjytIpjXI4NaA3k64EkgBHcrQEcXFOVK0SKB1zVkRr5
+	 v/vEsj6AtuUv6V1gr3+H3nzabkMJcOwNP0SG8hJabhpJI3MJFxT6jTicFrEkyLZ39l
+	 IiIkZztk0f6NAHUok2vObkbAI0Z9w0GXwFQnSqU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Jan Kara <jack@suse.cz>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2172/3318] gfs2: Fix journaled truncate range end offset
-Date: Wed, 18 Nov 2026 15:46:34 +0100
-Message-ID: <20261118150427.144993996@linuxfoundation.org>
+Subject: [PATCH 6.6 2173/3318] ACPI: glue: Fix up and adjust acpi_unbind_one()
+Date: Wed, 18 Nov 2026 15:46:35 +0100
+Message-ID: <20261118150427.172082599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,47 +67,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a52652efd8f985397e87669f505af83f06e335cf ]
+[ Upstream commit 693546852656075e0247ac637b05625ead134eff ]
 
-The third argument to truncate_pagecache_range() is the inclusive end
-offset, but gfs2_journaled_truncate_range() passes the length of each
-chunk. A hole punch at an offset larger than its length therefore
-creates an inverted range.
+Since none of the acpi_unbind_one() callers check its return value and
+it always returns 0 anyway, make it void.
 
-Commit 86066914edff ("gfs2: Don't support fallocate on jdata files")
-disables fallocate for jdata files.  Otherwise, the following bug
-could occur:
+Also notice that unlocking physical_node_lock for the given ACPI device
+should be carried out before dropping the reference to it in case that
+reference is the last one (highly unlikely), so rearrange the code to
+make that happen.
 
-The MM truncation path then underflows the unsigned partial-folio
-length and passes an oversized range to folio_zero_range(), triggering
-a BUG. Pass the last byte of the chunk so page-cache invalidation
-covers the intended range.
-
-Fixes: 4e56a6411fbc ("gfs2: Implement fallocate(FALLOC_FL_PUNCH_HOLE)")
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 3e3327837c18 ("ACPI: Use list_for_each_entry() in acpi_unbind_one()")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/10940500.nUPlyArG6x@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/bmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/glue.c     | 10 ++++++----
+ include/acpi/acpi_bus.h |  2 +-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
-index 06825903ea1dc..55d4c659bef3d 100644
---- a/fs/gfs2/bmap.c
-+++ b/fs/gfs2/bmap.c
-@@ -2409,7 +2409,7 @@ static int gfs2_journaled_truncate_range(struct inode *inode, loff_t offset,
- 		if (offs && chunk > PAGE_SIZE)
- 			chunk = offs + ((chunk - offs) & PAGE_MASK);
+diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
+index a194f30876c59..cc9ee8cb820fc 100644
+--- a/drivers/acpi/glue.c
++++ b/drivers/acpi/glue.c
+@@ -316,13 +316,13 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
+ }
+ EXPORT_SYMBOL_GPL(acpi_bind_one);
  
--		truncate_pagecache_range(inode, offset, chunk);
-+		truncate_pagecache_range(inode, offset, offset + chunk - 1);
- 		offset += chunk;
- 		length -= chunk;
+-int acpi_unbind_one(struct device *dev)
++void acpi_unbind_one(struct device *dev)
+ {
+ 	struct acpi_device *acpi_dev = ACPI_COMPANION(dev);
+ 	struct acpi_device_physical_node *entry;
  
+ 	if (!acpi_dev)
+-		return 0;
++		return;
+ 
+ 	mutex_lock(&acpi_dev->physical_node_lock);
+ 
+@@ -337,15 +337,17 @@ int acpi_unbind_one(struct device *dev)
+ 			sysfs_remove_link(&acpi_dev->dev.kobj, physnode_name);
+ 			sysfs_remove_link(&dev->kobj, "firmware_node");
+ 			ACPI_COMPANION_SET(dev, NULL);
++
++			mutex_unlock(&acpi_dev->physical_node_lock);
++
+ 			/* Drop references taken by acpi_bind_one(). */
+ 			put_device(dev);
+ 			acpi_dev_put(acpi_dev);
+ 			kfree(entry);
+-			break;
++			return;
+ 		}
+ 
+ 	mutex_unlock(&acpi_dev->physical_node_lock);
+-	return 0;
+ }
+ EXPORT_SYMBOL_GPL(acpi_unbind_one);
+ 
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 36d5a61d04e98..6e47b6f44c4b3 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -604,7 +604,7 @@ struct acpi_bus_type {
+ int register_acpi_bus_type(struct acpi_bus_type *);
+ int unregister_acpi_bus_type(struct acpi_bus_type *);
+ int acpi_bind_one(struct device *dev, struct acpi_device *adev);
+-int acpi_unbind_one(struct device *dev);
++void acpi_unbind_one(struct device *dev);
+ 
+ enum acpi_bridge_type {
+ 	ACPI_BRIDGE_TYPE_PCIE = 1,
 -- 
 2.53.0
 
