@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015513;
-	b=BQNqMxbV9ccuRBZvybiPLe+YT9q9NdQgs9AsgNd4mEn0LlFrHiNpTUAskoAozgcNYz6p
-	 2NFxxWKyN8ysFjK/7PBurrG25IcaZV41AQfclUdelaoi61ujhikyByTCBpIg4h8Bu0TBf
-	 KNq9tgGAs6gVoP/wIpq0jLsJQqiwXOzYyIxCQX6K65cMAZNLy6IGmVsHzml/9YpNsKC0K
-	 F/o0u2F6vw1EUnURQ4MTnSB4fSXjZ+qhDDHQIW7Z7ifYUgWeC50uAVShG9lvF587rw9rK
-	 kHPrw6Z2L2bKVRpRTXxN5PjcfkKA6Dhwc87kgDLfl10NyWcXhlLkCvnlba0d6JOJa0w==
+	t=1795015516;
+	b=LY+ofyie+zWsY5SQ1N776SwCZSiQpWOtJqkneLjsIREiZSoqJoSGQVx5Av01cw2NC5I7
+	 4k8mvnw66isCAa8NlmaLxuVtc8H5H2iygyBx2qi5WyO9H44hKS8RR/jYgh/2p1yuh144w
+	 MnTQOsZTGEFXZi7jEXo8Llfo4jnmMYHBI7hRuYmrqtGWOifVw2e+6bmtaRRL7mSec/lgr
+	 pKBda1ptuJ6rdlqZIRqy1TbxqO4/ogu+Z33wEGCmiJ5uLjnme3OyiNNPvu7cPgoIikQnd
+	 WbI5+vudAptgJ10wosF1rbi1cYxo/l70rR2mrrXzeSAs0vOv/iAn4gbBLxjGhnxplWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015513;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bGX1Kd7krEvJtHvELeqEznr7IW9BX2XiDZ4IxvGJLa0=;
-	b=WPszPYeNJiHlyJ+4SPcMoS9y1dU5Br6K3SHjCyTwcDEHaOEssUb+D8wZS68F9Dxz3/aN
-	 mxdFwuW+fbudCe99TVqsDBAHu1QVfiIMQEZX7Pb2/ZVQC7xsozBQ0jC/9ac9l32/PeQHO
-	 hHQLj7q52k5gr4wXF+nIYCXINrwhOT/OBSantBOOlxn8kHyLSCHxaFz8pDtsrfUGPvRqS
-	 9WUOjgaFABBvzqGH2NOlPrd/oXt45MaI++i2h5ZfJ4tu7mv81FoJYvYzJtAI8mjOZuOz6
-	 pAiLx7N4TnSl+XjTvFElBHiG1GF1KPEOLYq4hZjHnNwxWtyxK118uQ8vmqgDmmzivng==
+	bh=2YMpvcwjZBo6A17+kchkd7Wi1e8tA/WBCLMYxCTiJ5E=;
+	b=zPBwv9GHIpWA7U6DRuKAjHHov9DN6UTa8rNDO16OsB4eD5Dh6s/EalUmMwA30qe/D1P4
+	 +xJXXxhdBKhGMLYat4a1URcuHqD74a/2bWpK9CNPmLtcj9rsOVYqRETBCYWrc+5FyVspL
+	 5N6Wlex7T+XWJlUNCB52cA9xws6T7LZv63QPt6N32I+DcCokDiq3BV8uvQj1D6hM2gkBK
+	 oMaVz7fZeyno5FCd4uN0TZLw+Jk4SRt6JD5UycWWbr3R8Z8GW8ukqi3KfkhtyNu/i8bvI
+	 9kNV0TuZNwh+kl5SQRwh5XURcISoABUdOAQuuEoAyxdQM5xzbBYanYdPx+Gjj9UHtbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f98ayGZO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cySBsH4q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBDB606A32C;
-	Wed, 18 Nov 2026 15:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D8060A261F;
+	Wed, 18 Nov 2026 15:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f98ayGZO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7261F000C9;
-	Wed, 18 Nov 2026 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cySBsH4q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850D01F000CF;
+	Wed, 18 Nov 2026 15:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015513;
-	bh=bGX1Kd7krEvJtHvELeqEznr7IW9BX2XiDZ4IxvGJLa0=;
+	s=korg; t=1795015516;
+	bh=2YMpvcwjZBo6A17+kchkd7Wi1e8tA/WBCLMYxCTiJ5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f98ayGZO0MK97d3m1RnxUrldDAg1M4FvrYjIVuqR3xUstT8RZa9+nQCsbAxbBV8aq
-	 h37tSkHixsxKt9ZZxC3UJjgB7RzNMRxygy8cesDplvz1Ys5V3Gm3tJ52B7GwOFCIS6
-	 7lqvRIrlpLsm6SnOr7W6LRQhgND+exBXNqr1br+k=
+	b=cySBsH4qJzUhit8ahqzhccL4I6aT+0+REZOWq6eCNgaAeOcgG4LUpYy5shypidOkR
+	 XOJUgmHbzuhavqBDD/KXA8vHqyx7uWlewvPD+RObLf7J2hoa2fgCJIHdvwb5OMa3GF
+	 EcL0ng+4TiqYtcjt28Z6IWp7VAYyQkOVqm+qVwik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0163/2651] sched: Switch rq->next_class in proxy_reset_donor()
-Date: Wed, 18 Nov 2026 15:23:23 +0100
-Message-ID: <20261118150253.720417150@linuxfoundation.org>
+Subject: [PATCH 7.3 0199/2651] wifi: ath11k: fix NULL dereference in ahb remove when QMI init incomplete
+Date: Wed, 18 Nov 2026 15:23:59 +0100
+Message-ID: <20261118150255.029294037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,35 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
 
-[ Upstream commit 1f880513859336b1d4f9731d3a67d22d0b3b6aad ]
+[ Upstream commit 1a7bcf5324c8e2de6512eca5b028b6b283181d3f ]
 
-Similar to commit 04f80f8b12a0 ("sched: Switch rq->next_class on
-proxy_resched_idle()"), we should also set the rq->next_class
-when we call proxy_reset_donor().
+On WCN6750, if QMI messages never arrive (for example when qrtr_smd
+is not ready), WLAN initialization stops before the device is fully
+registered. In this case ATH11K_FLAG_QMI_FAIL is not set because no
+QMI event handler is executed.
 
-Fixes: f13beb010e4a ("sched: Have try_to_wake_up() handle return-migration for PROXY_WAKING case")
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260807035232.1881495-6-jstultz@google.com
+When the driver is removed, ath11k_ahb_remove() still calls
+ath11k_core_deinit(), which eventually triggers
+ath11k_ce_cleanup_pipes() on uninitialized CE pipes and results in a
+NULL pointer dereference in ath11k_hal_srng_access_begin():
+
+  ath11k_hal_srng_access_begin+0x14/0x68 [ath11k]
+  ath11k_ce_cleanup_pipes+0x184/0x190 [ath11k]
+  ath11k_pcic_stop+0x24/0x38 [ath11k]
+  ath11k_core_deinit+0xfc/0x1c0 [ath11k]
+  ath11k_ahb_remove+0x38/0xa0 [ath11k_ahb]
+
+Fix this by invoking ath11k_ahb_remove_prepare() before the state
+check and skipping ath11k_core_deinit() if ATH11K_FLAG_REGISTERED
+is not set, core initialization did not complete and CE pipes may
+remain uninitialized, making ath11k_core_deinit() unsafe.
+
+Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.2.0.c2-00204-QCAMSLSWPLZ-1
+
+Fixes: 00402f49d26f ("ath11k: Add support for WCN6750 device")
+Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260806101331.484063-3-miaoqing.pan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath11k/ahb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9c23a190e7de3..174b6b2331744 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -3773,6 +3773,7 @@ static inline void proxy_reset_donor(struct rq *rq)
- 	WARN_ON_ONCE(rq->donor == rq->curr);
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index e417b0a0f2d7f..c3ce5ea36e3c3 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -1296,14 +1296,15 @@ static void ath11k_ahb_remove(struct platform_device *pdev)
+ {
+ 	struct ath11k_base *ab = platform_get_drvdata(pdev);
  
- 	put_prev_set_next_task(rq, rq->donor, rq->curr);
-+	rq->next_class = rq->curr->sched_class;
- 	rq_set_donor(rq, rq->curr);
- 	zap_balance_callbacks(rq);
- 	resched_curr(rq);
+-	if (test_bit(ATH11K_FLAG_QMI_FAIL, &ab->dev_flags)) {
++	ath11k_ahb_remove_prepare(ab);
++
++	if (!test_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags)) {
+ 		ath11k_ahb_power_down(ab, false);
+ 		ath11k_debugfs_soc_destroy(ab);
+ 		ath11k_qmi_deinit_service(ab);
+ 		goto qmi_fail;
+ 	}
+ 
+-	ath11k_ahb_remove_prepare(ab);
+ 	ath11k_core_deinit(ab);
+ 
+ qmi_fail:
 -- 
 2.53.0
 
