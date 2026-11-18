@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020233;
-	b=lNlYqREvavp66ApxDOlYan6sP0oAfELRH7vyqy6a8xkPOFO5qQlbF2FVZhJcBxkBAOHv
-	 wxUq1fUnP4cRyIsY6Ptv6kUWGz9MHq7+vH7HNj2/2oD36fE7fBu1ZfnRlM+e2XeQ7SS22
-	 5CFZUMDKlC2J3RVvjZWYt8KmrzyofyGpfMciAMjDcgXJamsOhj7JG0miafAVMpcgk2g7a
-	 Sd5dBAYWQu6DaeGu6FVfF5ieE32CUj8HersPmLugpEBcUk6AHnzHPkXRnkA1FRdxPTW1K
-	 sHKnx+Os2OxGmaBjbKRenZFVhojRMJdIbQVah29caDMgyXD90oD0zcpgUDzdgQFsbwA==
+	t=1795020235;
+	b=rm4AuxP/tnyhA7XeowZGJPx49hxSQUHhfBkFjk+qI1EvumxvbDsYWjUJb2TTvZV7a7O9
+	 rFp2Zdqot5bMiCc593b6//DxP4DfdJ7IPas8yv7h+ERwcCyWThAvdfC6zWplb1bgKfr1v
+	 r2ul1bllFy8WuTNMfeApd9hfpG3IliAhMEyn9tL8rIeG7noe7SjQ3txy272CI6LcZUIhU
+	 ZFZi6XoLstsKkuAedDdCE71D18H+yy4yp2kgEYAq7s0H5LvlQEtw7OprOZN9rwNw8ND4l
+	 mBTNLJSXnmw1D7IHU5CJBcANmghZooY+gKJzWONC7NeS6y6yk/sKRlthA3DDIWuYlfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=spR57m8X/P4FCvI+7sYalGNdahHFPo4caelDzhXmSqg=;
-	b=EQ4FOGNJ9LPSlcq4Ien5xD+JjcCIicxOyX5m65vLmB8O9Mmgy/Kes+O/otzj9Dza7tKy
-	 4kHfWaMIKLikt4yU2IkCQBXCjdRX2xFCjKvMYVP9xzR7R4TybAfB87JeOD+U18TCjtso4
-	 cZjg/tgmMJS3A0KK39UGfKr7zy0KHV1IhBJOvNuONhg37kt8M4dwOAuR+eh5MHMnl+LI9
-	 jSWAwPesh4zg82bgHoyX7k5dkYG1hdJVY5MVgvDzicp8J1/92lr5ML8tAymhwiJP94Hf7
-	 PtYTiwE2GyCDkCFUTs3flKTTQIErQ1a/PggeVOPf4v0SENfLsqEPXbNoUlsVWxc8Juw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=iYSEBxl0Utvif2YQN41PEz0D8lGR081EDY4qydmOYas=;
+	b=auUUCSzI9Kr7H2+GVBXTdX7uZbBwebKko3Ef21y8XX1G5y1CQBcE+/SX+5ntfbZXyF9n
+	 W2uXlIjGSaN7GgPHa+CMUMrDABayfAizaJJAEdfVHoD2BQ77rK5TZnqWsNqwN+TAcVWWC
+	 q+7sW95diukm1Zbbl9Pxu/G9ynEZL6dcvmxlmT8FkxZqpUGkLe4shR7ogAlA41JZFXqAW
+	 00QmO9WAuq0J5PM507/hE0h8T8hw+Gq+95/8ynZFe7fr6he1XSQl4OdlVq8/O9RXa8viP
+	 WHqU7w7jzR2l9g7Jjeyk66UgejWwRyJdBv6wM7T0281LLMBYFRVXDgDdFHRqROs+w9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TF4pDJC1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VLU/G8vX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D98E606A325;
-	Wed, 18 Nov 2026 16:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3504606A31C;
+	Wed, 18 Nov 2026 16:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TF4pDJC1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615AC1F000C4;
-	Wed, 18 Nov 2026 16:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLU/G8vX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3279A1F000C4;
+	Wed, 18 Nov 2026 16:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020232;
-	bh=spR57m8X/P4FCvI+7sYalGNdahHFPo4caelDzhXmSqg=;
+	s=korg; t=1795020235;
+	bh=iYSEBxl0Utvif2YQN41PEz0D8lGR081EDY4qydmOYas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TF4pDJC1PjfLLZ6lecxudGrd4pb/gfmRQJztEhZYhDs69qwrRTM3/uayhwXJ7CGvF
-	 qhSacHU4mEEEMdE1n5ST3K8GX1Ypw1z0AMdEtvhzLEBoF04QW+BUQZJPQz9vnOKivu
-	 nDF/Dlkp1lMVrPrgk0mGaSZTaSrQwcs+iIH+p630=
+	b=VLU/G8vXTXVmmR76P08pYJj5CAr3ZmkJ+Z58e23knwH0fzJRcnU6QlaeL0PSsOqVC
+	 vzdE6Wql0fkLcp4HioYyNSAWyusOZuOLsVkDAUYJ64OEJ14VCnP9p7rwPQCTl15EQ8
+	 1Itoeqx2YyXmd9TW0VqrszwZo4n/aLmLOMlWzaHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Shang En Sim <sim@shangen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1876/2651] Bluetooth: L2CAP: hold l2cap_conn::lock in l2cap_connect_cfm()
-Date: Wed, 18 Nov 2026 15:51:56 +0100
-Message-ID: <20261118150354.481087516@linuxfoundation.org>
+Subject: [PATCH 7.3 1837/2651] platform/x86: hp-wmi: Fix hwmon keep-alive teardown
+Date: Wed, 18 Nov 2026 15:51:17 +0100
+Message-ID: <20261118150353.233000340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,53 +62,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Shang En Sim <sim@shangen.org>
 
-[ Upstream commit 115e6a21c88a5f708b2b025f7567ab78a782a74f ]
+[ Upstream commit 574245e62cb09e159b4c37e1a9091c100448b5c3 ]
 
-l2cap_new_connection() -> __l2cap_chan_add() modifies
-l2cap_conn::chan_l, which is guarded by l2cap_conn::lock. The lock is
-not held in l2cap_connect_cfm().
+hp_wmi_hwmon_init() initialises keep_alive_dwork with INIT_DELAYED_WORK()
+and relies on hp_wmi_bios_remove() to cancel it. Nothing cancels the work
+if probe fails after hp_wmi_hwmon_init() has run, so the devm-managed
+priv can be freed while the work is still pending.
 
-Fix by holding conn->lock in l2cap_connect_cfm() to make the locking
-systematic.
+The ordering is also wrong on both ends. The work is initialised only
+after the hwmon device is registered, so a sysfs write to pwm1_enable
+can schedule an uninitialised work item. On removal, the work is
+cancelled in .remove(), before devres unregisters the hwmon device, so a
+sysfs write can requeue it after the cancel.
 
-Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Use devm_delayed_work_autocancel() and set it up before registering the
+hwmon device. devres then cancels the work on every teardown path, after
+the hwmon sysfs interface has been removed and before priv and its mutex
+are released. Drop the now-unneeded cancel in hp_wmi_bios_remove() and
+the platform drvdata that was only used for it.
+
+Fixes: c203c59fb5de ("platform/x86: hp-wmi: implement fan keep-alive")
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Shang En Sim <sim@shangen.org>
+Link: https://patch.msgid.link/20261001031012.48473-2-sim@shangen.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/hp/hp-wmi.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index de7397e53c2a3..8fc38a9e02bf7 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7728,6 +7728,8 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
- 	 * we left off, because the list lock would prevent calling the
- 	 * potentially sleeping l2cap_chan_lock() function.
- 	 */
-+	mutex_lock(&conn->lock);
-+
- 	pchan = l2cap_global_fixed_chan(NULL, hcon);
- 	while (pchan) {
- 		struct l2cap_chan *chan, *next;
-@@ -7752,6 +7754,8 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
- 		pchan = next;
- 	}
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 022100d9d5503..5582feea3c365 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -18,6 +18,7 @@
+ #include <linux/bits.h>
+ #include <linux/cleanup.h>
+ #include <linux/compiler_attributes.h>
++#include <linux/devm-helpers.h>
+ #include <linux/dmi.h>
+ #include <linux/fixp-arith.h>
+ #include <linux/hwmon.h>
+@@ -2549,7 +2550,6 @@ static int __init hp_wmi_bios_setup(struct platform_device *device)
+ static void __exit hp_wmi_bios_remove(struct platform_device *device)
+ {
+ 	int i;
+-	struct hp_wmi_hwmon_priv *priv;
  
-+	mutex_unlock(&conn->lock);
-+
- 	l2cap_conn_ready(conn);
+ 	for (i = 0; i < rfkill2_count; i++) {
+ 		rfkill_unregister(rfkill2[i].rfkill);
+@@ -2568,10 +2568,6 @@ static void __exit hp_wmi_bios_remove(struct platform_device *device)
+ 		rfkill_unregister(wwan_rfkill);
+ 		rfkill_destroy(wwan_rfkill);
+ 	}
+-
+-	priv = platform_get_drvdata(device);
+-	if (priv)
+-		cancel_delayed_work_sync(&priv->keep_alive_dwork);
  }
  
+ static int hp_wmi_resume_handler(struct device *device)
+@@ -2919,6 +2915,17 @@ static int hp_wmi_hwmon_init(void)
+ 	ret = hp_wmi_setup_fan_settings(priv);
+ 	if (ret)
+ 		return ret;
++
++	/*
++	 * Set up the work before registering hwmon so that, on teardown,
++	 * it is cancelled only after the sysfs writers that schedule it
++	 * are gone.
++	 */
++	ret = devm_delayed_work_autocancel(dev, &priv->keep_alive_dwork,
++					   hp_wmi_hwmon_keep_alive_handler);
++	if (ret)
++		return ret;
++
+ 	hwmon = devm_hwmon_device_register_with_info(dev, "hp", priv,
+ 						     &chip_info, NULL);
+ 
+@@ -2927,8 +2934,6 @@ static int hp_wmi_hwmon_init(void)
+ 		return PTR_ERR(hwmon);
+ 	}
+ 
+-	INIT_DELAYED_WORK(&priv->keep_alive_dwork, hp_wmi_hwmon_keep_alive_handler);
+-	platform_set_drvdata(hp_wmi_platform_dev, priv);
+ 	ret = hp_wmi_apply_fan_settings(priv);
+ 	if (ret)
+ 		dev_warn(dev, "Failed to apply initial fan settings: %d\n", ret);
 -- 
 2.53.0
 
