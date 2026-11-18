@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046114;
-	b=MNDJXGMZsD70BPWo0Y9L9iamCAAqrDihEovVu7t9G6gpRxAW9+bhyyWwtRSmfBxvD2sj
-	 lBYh51OWgQFd4xG3iWYltAfpRg8Odbgfc07GgWBF5TPX/bmnOYZdWwOwymSke0rxcyXi3
-	 e5EFwh2CHaZ6tMdpcAr5Q7Pvo5fT6HBYBwfBuEunQ8/XpmuIZeHRYhHxjIpq6TpK1iZHr
-	 Gfl7uTCbbvvXkPUTJJIr5qU6I4i1l76EIvr5qbwtJXYw4qnlHMbFw9vsoBg7P3pQpLTb9
-	 Z4SgMx/BhPA0t6iUrdaT/gOCJlUNBxOGNgR/rRn6VUbSeM7+UsKMvmDdysmb7asnV7g==
+	t=1795046117;
+	b=mJ1WcnC3zLkS6esm6AQpUdPEhFJAm3gEo0ZdQoKMxbJUiz57NzuNHbFYfeUsLM8g7zAo
+	 8WlZUUOVzXbIAfLbH+ib43RnlVV+IHZ789GEmPu6M+TvteEred8BmvF39xM6Ssy5FD571
+	 h7C1XBxm8qb9/evw1AxQVCcjx2JLz+4kJ1fMzDM7qkDcdyPxEhmsSe362p7EKjsUopf0U
+	 GJJVUvS7vO3UTi/Zeli9nACe9yxRfZ/fdGg/721+fpKcYsF1+wKqWZoFOiwFx16yEayNW
+	 PxJWqbuYzCbbs+Hq43pRXUn93wUsSW2V2i6Z1zBATt0T75FOUHzXyE3sUn4bmsr+2Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046114;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Au2Mt07FjGG5hk/+FYTagFAytGwXRZLN01eC/8Y3gkE=;
-	b=draE3qIlJL4ZxEJnAFGjYX+/Qe5iquMsekhcr0ZCqAw9kRNnuSBsUeDUXmHamSo4I3wx
-	 3jCuQOWP0FYt2QNGvMdShFap/ixbSaKkr5qOT0Qz7oSzRQn/qtquoOJtvupmuG3Hw1N8A
-	 SMiuKgbQTTSp0GvSA7KQTSfdq7ZUpOXe07rVc+giRTb7V95qkodUk0l3RCI9tgToHBCvL
-	 8NMewpxjReYHv5ddRo+b2ppPwMinx71eZflb9znOy2SSn2V7M8kcIEJxwflCfn1L/1Zfc
-	 Q6SU9IMr7kKuhxr4/RZf1oDRjXybCgSO0JYKOWrfSYHSTDGLxO8PwNoa2gQsqXp86/A==
+	bh=uSnrg2hkrFx6JML7emRzTk5tzP4eWuy29s3za+hw9Bs=;
+	b=ZPBfuqE/F93NOsx3MlpNty6nkXqxCg4S8UcnFUpMT8VpWsgyvBRCdrqQSdxnVQaXByl3
+	 /VQ7CAmRbOJfnQn+s7sHHjKkjfx5yv5BsWZ4wKxxXetxjUx2Rl42/Ak9oghgaWGwXYOhV
+	 EO6qvDQZ9/tcZZIoRTRLWSC4p8DguAV3ANGJoVEkBs9qqqOZ/kBz+9+FZ6Rztsmb3cYON
+	 xGCYdy9IiLO+DShkQoKljlyExQQy3I+el1aefS7Ua3OnRkzePfaiO7lvqHUxvEwZCvEdp
+	 x6s0Tq/46babPURybX29OIxwPMYp6Di4TpMVsL83DDK4sUSGkbwRba7hPUKab1l7h3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T/ozHyDq";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2m4+Auim;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101AD606A31C;
-	Wed, 18 Nov 2026 23:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C126606A325;
+	Wed, 18 Nov 2026 23:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T/ozHyDq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1CD1F000C4;
-	Wed, 18 Nov 2026 23:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2m4+Auim
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412991F000C5;
+	Wed, 18 Nov 2026 23:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046113;
-	bh=Au2Mt07FjGG5hk/+FYTagFAytGwXRZLN01eC/8Y3gkE=;
+	s=korg; t=1795046116;
+	bh=uSnrg2hkrFx6JML7emRzTk5tzP4eWuy29s3za+hw9Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T/ozHyDqskWQD2OK1FAHNqqJcnnwVxPDtD4EN5/GqW42IBqQl523376lmTy7Cv4P8
-	 YrJB7ZHTpxGGSmQ8CAmg3oKI4OkAY6xaUSYkDh9Qag1cGl9SuU7enRsLrDWhdUb0c8
-	 Hp2GDfCSx43H/8GvQt0BlYC5t62hJmYBWKhGTXMk=
+	b=2m4+AuimhFcvIgzpYv/X/RFYdtHTt3BtDOtV/lsoESMYbgCy2stFIEuxeR23mATF5
+	 QXbA/rLon8S0fFIsSjf+LyA/SMueFfhIaG/l8BLz8UimXZKN+x07z4iqOUGhWMWDm+
+	 /tuFgNHMMSqo5mEi9E2eX/Ctk4dDDEwmod19tuXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Jinwang Li <jinwang.li@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1124/2857] smb: client: bound POSIX lock data area by response length
-Date: Wed, 18 Nov 2026 15:35:58 +0100
-Message-ID: <20261118150242.083016293@linuxfoundation.org>
+Subject: [PATCH 6.1 1115/2857] Bluetooth: L2CAP: Ignore connection responses with wrong ident
+Date: Wed, 18 Nov 2026 15:35:49 +0100
+Message-ID: <20261118150241.769235521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,61 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Jinwang Li <jinwang.li@oss.qualcomm.com>
 
-[ Upstream commit 8fc9af68c57156ff64769f30e831553cd03b3000 ]
+commit a9f9eeb5344fc7dc625e5700ccf09891bc2603b5 upstream.
 
-CIFSSMBPosixLock() receives a TRANS2 response whose server-provided
-DataOffset and DataCount are not required by validate_t2() to describe an
-interval inside the response. A server can therefore make the client read a
-cifs_posix_lock beyond the response buffer and return those kernel bytes
-through F_GETLK.
+Adjusted context as stable does not have the lockdep_assert_held()
+call in l2cap_connect_create_rsp().
 
-Use smbCalcSize() to obtain the full response length after any multipart
-TRANS2 reassembly, then reject data areas that extend past it before
-dereferencing them.
+L2CAP/COS/CED/BI-28-C requires the IUT to ignore a Connection Response
+that carries an invalid Identifier.
 
-Fixes: fc94cdb94462 ("[CIFS] Fix new POSIX Locking for setting lock_type correctly on unlock")
-Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: subtracted 4 bytes from smbCalcSize() and replaced smb_EIO2() tracing with plain -EIO ]
+l2cap_connect_create_rsp() only checks that a connection request is
+outstanding, not that the response answers it. Add an ident check
+against the pending request so that a mismatched response is dropped.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jinwang Li <jinwang.li@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/l2cap_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 531502df79970..a64a1f44300c4 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2052,6 +2052,7 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
- 		cifs_dbg(FYI, "Send error in Posix Lock = %d\n", rc);
- 	} else if (pLockData) {
- 		/* lock structure can be returned on get */
-+		unsigned int rsp_len;
- 		__u16 data_offset;
- 		__u16 data_count;
- 		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
-@@ -2062,10 +2063,16 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
- 		}
- 		data_offset = le16_to_cpu(pSMBr->t2.DataOffset);
- 		data_count  = le16_to_cpu(pSMBr->t2.DataCount);
-+		rsp_len = smbCalcSize(&pSMBr->hdr) - 4;
- 		if (data_count < sizeof(struct cifs_posix_lock)) {
- 			rc = -EIO;
- 			goto plk_err_exit;
- 		}
-+		if (data_offset > rsp_len ||
-+		    data_count > rsp_len - data_offset) {
-+			rc = -EIO;
-+			goto plk_err_exit;
-+		}
- 		parm_data = (struct cifs_posix_lock *)
- 			((char *)&pSMBr->hdr.Protocol + data_offset);
- 		if (parm_data->lock_type == cpu_to_le16(CIFS_UNLCK))
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 174f7a513f9d1..69040c96e0e39 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4319,11 +4319,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 
+ 	l2cap_chan_lock(chan);
+ 
+-	/* Only accept a response to a connection request we sent and that
+-	 * is still outstanding. A channel waiting in BT_CONNECT for security
+-	 * or the feature mask has not sent one yet.
++	/* Only accept a response matching a connection request we sent and
++	 * that is still outstanding. A channel waiting in BT_CONNECT for
++	 * security or the feature mask has not sent one yet.
+ 	 */
+-	if (!l2cap_chan_connect_pending(chan))
++	if (!l2cap_chan_connect_pending(chan) || chan->ident != cmd->ident)
+ 		goto done;
+ 
+ 	switch (result) {
 -- 
 2.53.0
 
