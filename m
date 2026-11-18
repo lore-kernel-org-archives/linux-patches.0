@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034253;
-	b=XD5JX7Ur/lDcWzAM4SffSKHbqxKp+SBRbf2uUEfOQrjJrT6F29DGow4D0jAW9Y1okKn1
-	 tljxysL2mGnbovztDewQ9AnjegTTPybAci61DfvNOBHquvIX/nGvTSwhUpKar0quoxlsH
-	 WUnIjYbQw4EwVuK2biLbIuffIJ+wz3WT8U5sMscsnAQBbbDOL0S+XaHpDgiVhvF2ODsBQ
-	 sUw8KkXI3V3yQbxvzKOjlpiB0fzW4BAAIi7nATl/1gTIhtLwQy8FLrDBcRMU2QjrlGFqf
-	 RO7lV8J/xHbBTGZHMqccGR/tbf/ERZJZqDX4NJJdnsr5QbLwCx+/Dxq1965ZWgckRkQ==
+	t=1795034256;
+	b=1YZhz47uF2E6vpsR5SC7pGu/QuhRWDZKwmji6AHFcAR2uJ9bQouy5suDW/t9cMD0/c6W
+	 WZUCGoHr9wndfHD2Ny1pQ+nLEaTMTUqxnz88Vw9mHcpmMrYq8i+c2lMTxgt3J/aenm/Pd
+	 08/V9jegR8RBUKOgJjmi0iKA7/TOgxshJnWerBES3WhbrDZ/QF2UMisiYYvS7dQv1cf0Y
+	 1JdpjgURt0I/ZCDUvN5idZMwV5/+SPCRgCYoaeSM8SIAUD9Lt6beV1cQ/NQWYDyn51P9f
+	 KTCX/he6cIPeokWopAM10YwftsCrRfoFb7lKgz8BpbcXd05sHnlEby7v2DYvziGVuGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034256;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e3UU5yUjfEKcwapCEWB84YtnPh6enruU4Yzv1uZy7Dc=;
-	b=wmwNVztnNGMW0P8aHx55WhPqY6t1Sc/8tYINlcY6eFVL1hNiPHIYT+/HNbgz8/u7BHiJ
-	 8OXLPQfkS0EBPm6dd9ptGS0spilsvNfFB10PVzi+6CgGptOikx9aXeM0A0e8TeZfmlyFX
-	 7c09/17GJAhL+BfewGpWmvPgt0kYlO1CuEMH358xGh1vQlxJnUaR/d1hICsthSZcHwQxc
-	 gUiL9lmT7Yg+nrP64uk41xPcGw5USmtwkw/X8sHG5ixjvRS+j23RuobXWuVrXuj9NAWmR
-	 GbwRtbx+JJTkqV/EAbjQcPAd5UPvVsJf/E1S2bf7IYgkDKx5TXX0MbSEHt0VB5Oy1Hg==
+	bh=uLMya6iwwt73V3PfiMG4W3MLKgn3/jNnejQdNxaYauY=;
+	b=S+18YLyVmTSdReunq6+UP1flQ5L4GEZ2nXM2z03+IWlCVU7pPYwBu0mvnf5HHNxqYn2B
+	 lNjg1iybMuvBhh1CH8TpS9QkBKwakZb7SoNWIBOOIYzCV279wSZK1OaqMOPZoLV411gSg
+	 6JaTbrGPB9Yr2IOefgc3nsKne8ObR+UIdfClYgzYyOzm2H6Yb52mr+kIg4kyt+fQQXuq1
+	 bz8lkh30VhsIIzzFBkyIWpQkq+ZzoC3NVj4oHLs/EkjwS5H2zO2G9uu7trvXtaV5al7Hl
+	 wwfSwMbX2tyWD3LNfrEzuHrTFiRjpN7FGFUBptu7Qr2Smq6nt0PLlfOeGFUv5QpB0hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QR0H2b7r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5bFZdK0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34D8606A325;
-	Wed, 18 Nov 2026 20:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362B2606A320;
+	Wed, 18 Nov 2026 20:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QR0H2b7r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08D81F000C4;
-	Wed, 18 Nov 2026 20:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5bFZdK0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880A41F000C5;
+	Wed, 18 Nov 2026 20:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034253;
-	bh=e3UU5yUjfEKcwapCEWB84YtnPh6enruU4Yzv1uZy7Dc=;
+	s=korg; t=1795034256;
+	bh=uLMya6iwwt73V3PfiMG4W3MLKgn3/jNnejQdNxaYauY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QR0H2b7r3Z3QNCkPOtrZN8CWVOugoaHekuEvbpNl41RmSKJdPfVK8XTuSmllo7zCv
-	 QKUN7nZx8jxlY/4ytW+RF36F0IbrR7v7T790Ng9c6k06accaqNHnhi5wqeLWD6lZz3
-	 vVjO/5p+sM7FCfLy6nhNlODjw7HcaE2NcKI+ODdY=
+	b=C5bFZdK0twF8dh27fypMqlECyY+HUKGvjtTwdWavJQkpfCREMPPrpN2KHFd2nvVAT
+	 BBreqP988FU+SL+M7MU1ylOdlEjVpuQ/ZvAjQV1NRt3a5MqYYJmiHI1SqLmrRt5Mff
+	 HMGoISHvmlwLbK4Idt/txypqwAv8KwZFP8DV2Yxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xiong Weimin <xiongweimin@kylinos.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0304/3318] ASoC: codec: max98926: fixup invert setup mask
-Date: Wed, 18 Nov 2026 15:15:26 +0100
-Message-ID: <20261118150324.871342520@linuxfoundation.org>
+Subject: [PATCH 6.6 0305/3318] vdpa_sim: hold iommu_lock across dma_unmap passthrough transition
+Date: Wed, 18 Nov 2026 15:15:27 +0100
+Message-ID: <20261118150324.911728520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,57 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
+[ Upstream commit 7b411448c668bfab0d0e572cee5a592cea396ce7 ]
 
-invert might have both WCI/BCI mask, but regmap_update_bits() masks
-BCI only. It needs both mask. Fixup it.
+vdpasim_dma_map() updates the IOTLB and the passthrough (iommu_pt)
+state under iommu_lock.  vdpasim_dma_unmap() clears iommu_pt and
+resets the IOTLB before taking iommu_lock, then deletes the mapping
+while holding the lock.
 
-	static int max98926_dai_set_fmt(...)
-	{
-		...
-		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
-		case SND_SOC_DAIFMT_NB_NF:
-			break;
-		case SND_SOC_DAIFMT_NB_IF:
-=>			invert = MAX98926_DAI_WCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^
-		case SND_SOC_DAIFMT_IB_NF:
-=>			invert = MAX98926_DAI_BCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^
-		case SND_SOC_DAIFMT_IB_IF:
-=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		default:
-			...
-		}
-		...
-		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
-				MAX98926_DAI_BCI_MASK, invert);
-		...		^^^^^^^^^^^^^^^^^^^^^
-	}
+A concurrent dma_map(), dma_unmap(), or reset path that also touches
+the same address space can therefore observe or modify the IOTLB and
+iommu_pt state without consistent locking.
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Perform the passthrough transition and range deletion under the same
+iommu_lock scope, matching dma_map().
+
+Tested-on: openEuler VM (6.16.8, /usr/src/linux-6.16.8)
+Tested-by: Xiong Weimin <xiongweimin@kylinos.cn>
+
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260626020545.607600-3-15927021679@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98926.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
-index 922ce0dc4e609..d034e8d31be09 100644
---- a/sound/soc/codecs/max98926.c
-+++ b/sound/soc/codecs/max98926.c
-@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
- 	regmap_write(max98926->regmap,
- 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
- 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
--			MAX98926_DAI_BCI_MASK, invert);
-+			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
- 	return 0;
- }
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index 20edde71280e9..b7d24faa8af3e 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -691,12 +691,11 @@ static int vdpasim_dma_unmap(struct vdpa_device *vdpa, unsigned int asid,
+ 	if (asid >= vdpasim->dev_attr.nas)
+ 		return -EINVAL;
+ 
++	spin_lock(&vdpasim->iommu_lock);
+ 	if (vdpasim->iommu_pt[asid]) {
+ 		vhost_iotlb_reset(&vdpasim->iommu[asid]);
+ 		vdpasim->iommu_pt[asid] = false;
+ 	}
+-
+-	spin_lock(&vdpasim->iommu_lock);
+ 	vhost_iotlb_del_range(&vdpasim->iommu[asid], iova, iova + size - 1);
+ 	spin_unlock(&vdpasim->iommu_lock);
  
 -- 
 2.53.0
