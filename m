@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030798;
-	b=FuRd+ZSUD732Y1CJiiPKcAFT337CSG4+3H0IGsCZaI4FNI4QsmLRhX+hT9ukV6UBZVKc
-	 V2m5V3pUwuYiOqnjoN3ZyQtanF/8+LbOt+C829dyMLMjyocS8Pr+ejWyP6UmwE0aLhIFx
-	 KgEhVQrMBEzUSBqssp4YIndb3YLde6DviDPOefdP64d2kqvvBkQoSWhZNGwu+/b3cjwbu
-	 MKd2BUNjgtOwIx0NutQh05sef0E+HVx/1FqEWzbmklW7gpACDuQGp29HoF0Mbd0+r13XS
-	 PjaGFUm8jHV0VCE1qviieN9oL3wvoax1kg0Fhd+23F032Qp0WhlH54Hv5hixAk6qDBw==
+	t=1795030800;
+	b=SJwSmiw/VJYdnM3VM4BjKw1UCZuhlvq31pC18uNi2KoODrTp7i9g0GLC5v0GBOvu8gT2
+	 osG3vyaO6D0k8Rf+M414w4n17B8u81j3U1wuV38e6vzSh3BTEneHMNKaK1peiHoFhEV+f
+	 5gay5OYnSi45AaAL56pWrnbigzHUj+6oXpE1ed1S3A/0suuxKkPwbLd/t0Zk/VanRyvVs
+	 mzdDPtv6fYLLFDo7Wt5fnOI1ocTv3aFXFSG+lhlh0Yj89Ir425ifoTxxw/lllt5iDIkd4
+	 CRHPkHC8U7xPLXojuF1pzh0OeMfz2yHQ/kcINMV9ys8YE92hSCpv7o0HKxNLi6NBxsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uy377rLGYQ9QWbZ0r3ayzlIiUdGJDVTDZ5UmLCPy7Ww=;
-	b=K8X8al8TXKj3NGy4Vee1iyevsUBpS6g86vBGrMgJkaUYvSoZKBIlU24Sc7g3nJfNfesw
-	 jWNJUkQ/gi9SmBfd8NKkuLrYlKGe3TtVvCkAyalgiLJUwCTqXNo62C5j9o59CEnLE85KG
-	 HlJN7gzPP2OAfJcEZHnRjmmK5+gnnSyo7c9ym1kADl/OBgraMlgZUaSryDy5SKkovf8FO
-	 FGI4PtAMj62sWUV31ulDPIUzX2NeBxS8wa24/OOYBWYaP56hYIB9xogV1f6oKYoVr2kus
-	 bVVAIojsjTW7alcB7HeW7fJoBzZbk5ydJw1kdZK89WjRUeu+wtF9+KdteLBW2xzHReQ==
+	bh=/HAIJ/Csd2OFYbx2SuKtJhTkuSeQ1dB7mYOmjxXbNWc=;
+	b=p+nnPkRWeFdd0eTiXkB0KKS84G95/yHQDnoZ+SXU+vXfj+6zwPtT2rm4V3wwJG/qv8+9
+	 pmUe0HMfSODTT2Ond9yS6Wv7BKZlTtYEqsZaIBNXCsqFsr3/gHLtwKuTr6bCQGBEKmg/o
+	 my9dgbCBsh5wpwPuVurq72rB2G209vnfVLYsT8NPbgrSslWt0YZVX6HEpm3Z50vQqe/RF
+	 a4Da19Shm8KIU4U9bSd5sabsyn4VRsfihYyE2rm4dDn9I8mgvJBsT/Fp/K7WQ3XSmET3h
+	 v+AiAkDDbmyv+6/QwCcYOAeZbyw4g7JvFEhFqEXpLCBPxDz8ap34ZaFiDeBE8pZkZMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QwqpnsWb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdGfl5Xy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055CD606A92E;
-	Wed, 18 Nov 2026 19:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB929606A92E;
+	Wed, 18 Nov 2026 19:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QwqpnsWb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEB21F000C4;
-	Wed, 18 Nov 2026 19:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdGfl5Xy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD1E1F000C4;
+	Wed, 18 Nov 2026 19:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030797;
-	bh=uy377rLGYQ9QWbZ0r3ayzlIiUdGJDVTDZ5UmLCPy7Ww=;
+	s=korg; t=1795030800;
+	bh=/HAIJ/Csd2OFYbx2SuKtJhTkuSeQ1dB7mYOmjxXbNWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwqpnsWblSK34kn/sU392bY41jk9k1HfLP2ySrC5qY5bh2zm4pCZpYXfukauEAqRI
-	 9Hs79vLfQAk94XZtrFykFma7gjruUlUMqg0k4e590UVpRNzIvgsbL0kO3tvS/g1UxN
-	 UaGrS5slz69ixQ1xmDxo7U7GI3G3/kFet2J7K0f8=
+	b=vdGfl5Xy9LcHgxke5w57wN8xcb5k6W5sS8BH11SxCfZXGYRuYVUHA30ztK8SsYETC
+	 SmOe0RcN3erwRo++0VpVR1w5rCD93mV8DeBkJJKgZ24huHtIJzIea/NkagW8zFIjCe
+	 1iTOAR5pSJLdTM31O3gGraifY1A3brL9ypLGHbHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0830/1756] power: supply: ab8500: Preserve battery termination current
-Date: Wed, 18 Nov 2026 15:49:17 +0100
-Message-ID: <20261118150042.548159436@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 6.12 0792/1756] phy: rockchip: usbdp: Only enable USB3 when not in high-speed mode
+Date: Wed, 18 Nov 2026 15:48:39 +0100
+Message-ID: <20261118150041.234317067@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,40 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 3b33eda4067494658d51db0792377fef98787e3f ]
+[ Upstream commit fbbf6c85b08008bf68ef49931175edeaa36ba82f ]
 
-The battery-info parser uses a negative value for an unspecified
-termination current. Testing the value as a boolean instead replaces
-every valid positive current from the battery description with 200 mA.
+Ensure that USB3 mode is not accidently enabled during PHY re-init
+for systems that are configured as high-speed only via DT.
 
-Apply the default only when the property is unspecified so batteries
-retain their described charging termination current.
-
-Fixes: 9c20899da46b ("power: supply: ab8500: Standardize termination current")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-6-e986ed321cc6@kernel.org
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/message/20260626212424.C215E1F000E9%40smtp.kernel.org
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-11-8d507cb1174f@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_bmdata.c | 2 +-
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/ab8500_bmdata.c b/drivers/power/supply/ab8500_bmdata.c
-index 3e6ea22372b2d..0a6ea935fdc0f 100644
---- a/drivers/power/supply/ab8500_bmdata.c
-+++ b/drivers/power/supply/ab8500_bmdata.c
-@@ -174,7 +174,7 @@ int ab8500_bm_of_probe(struct power_supply *psy,
- 	if (bi->constant_charge_voltage_max_uv < 0)
- 		bi->constant_charge_voltage_max_uv = 4100000;
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index a2af4443fc067..896000513e4b6 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -974,7 +974,7 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 		if (ret)
+ 			return ret;
  
--	if (bi->charge_term_current_ua)
-+	if (bi->charge_term_current_ua < 0)
- 		/* Charging stops when we drop below this current */
- 		bi->charge_term_current_ua = 200000;
- 
+-		if (udphy->mode & UDPHY_MODE_USB)
++		if (!udphy->hs && udphy->mode & UDPHY_MODE_USB)
+ 			rk_udphy_u3_port_disable(udphy, false);
+ 		udphy->phy_needs_reinit = false;
+ 	} else if (udphy->phy_needs_reinit) {
 -- 
 2.53.0
 
