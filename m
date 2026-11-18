@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028939;
-	b=vd+jnRRZavZtpXF8MBb0zdkotMfrr0hPyNRZi7NpV8XA7QKjqOrPOnjIt/qQ7FP3cEJa
-	 lXrJG5d8xuXyZJH6VqQPh2mN6LfI7iIVzA/EH6tAYSXjQWw0phIicZzqiqvDv0Yv35jD0
-	 4UdRHv5q32IDQXeqSPiBsuoJ7soNcPlMZlzkKdSEQtQToFryF2f6zkCtGK6RxJhEQCFyq
-	 5whymnMyDysjNDsmPcQO4COndiVkV/2KndbgNz32TdM5mdZi7gGKoO5HLuO7/u0d+5LSE
-	 /QSx7cdPbt4y50y7mjFAQ81AreibijccYCVdNuv/aYcMgpaZqN1C8m2L1i9fYkvUKDg==
+	t=1795028942;
+	b=YPYU0kNGOFdS6I6gGRui7DnD3EAgv13yl2WSlTkxUE4yfOfztCBGc3QDLAYk2r8M4tVy
+	 /aB29e7VM65PSjyUghdUiauwON0/h9Fi6xl4nxP0v9EuQ7eWU5exp5qynpTsz9MEw3PCG
+	 No2Yg7VyU77ce5q5YiGOpGRaFQOraTEG72BezQVweRzLW10/JYHkMQ/FyjThAYcm/LuvO
+	 fcCqL9nWP7d05txuyhZV3Pf/8ICCDCMlXbHqiamj9rmyhpTqIUq6JEkdd4pydE+IBCOA/
+	 4h8uJIX1mDPOsH/Rz8ADycvL3mbsGtg7YBXYF1doP+iXD5PmnBEvf+HIZR3JwTXLkUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Nm8dC7qiDMuJbnVCkL712/u5oute4uSX18vdVw0GNsw=;
-	b=Eu+K+qi4CbQF1y4t1EpSgXkg97MbuzDVA+eWHEmtGYwFiFJzUU8awZea9vuRf2cXcBll
-	 648w/pty/LPo3VcMshctPS5DQDlHj0hKURZYEdcpSLdG04/4206iAkVeHW+nkbKvg2ylZ
-	 aKqABuF3bTCbSJRBWvcBPuOvZ8i9FGrey1THTdcI52OXXFSfrtEW17Wx9U/rXn1BnJZjq
-	 gobWvakMLhB0doWnnjvxZwd0ScEr3b2wHty8ZEKpcyNMEZGMb6zXqnSkWdoJzDpOEF5/F
-	 VxSW0uhWw5W4x/9otJwqRsjLRoc/s5MUk5ijy3ER98SYnypCbxRL1OHzj8A6Bj4IqCA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=00Kliof3C3dBcUtlvMxMX2hz0nTjH9UUmK42nX+Q4KI=;
+	b=RHJSTP9e6U3aZgyvhRtSVhAbs7WKKCVhooQd7X8BMrM2f7Al/Uj57YQDeytVGQFTwfI0
+	 VLKlTWoPT9F/I9dm2tKm+G2YYoFhLDtmWSK342q3eSr6YLo1PRJcbwPLkJuM6qAIWD1sd
+	 yTm21b1Td90I/q1NPhtoHKNB0kY6ags7WUQW0q/uGkQyr4yuZ3f+J26GL3nh71TqUcMG1
+	 9VcdKEWFuvGZuksODFypidSWGc0X/4ovzUPrVgE0FS5ATy/aYlXNToY9A4q23W16xeaFA
+	 g0f07jmyRsKknlR/4THXcKrRX+bQEw0z/eeahwtXF7RAhOJr+h4kco2+7SqwTmh7kCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BQBxuYIv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RGN2zRrO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69D4606A31C;
-	Wed, 18 Nov 2026 19:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB95606A331;
+	Wed, 18 Nov 2026 19:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BQBxuYIv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C54B1F000C4;
-	Wed, 18 Nov 2026 19:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RGN2zRrO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BD91F000C6;
+	Wed, 18 Nov 2026 19:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028939;
-	bh=Nm8dC7qiDMuJbnVCkL712/u5oute4uSX18vdVw0GNsw=;
+	s=korg; t=1795028942;
+	bh=00Kliof3C3dBcUtlvMxMX2hz0nTjH9UUmK42nX+Q4KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BQBxuYIv66wUHfZSzJLpsuntQN6vS/zslLTcdUhJ9xOM0Ck8ZtgNBpIDAAFLimFvo
-	 IYn+8q30rZQNO2kHG4QlXyJrYxX2z0kudMo62ch8be3OPwmzGvru+WKfsaohBepNJo
-	 8h0TaVQGactV5w0dehO0G6CGoMWQcuurhdJYSnVM=
+	b=RGN2zRrOew3ApWwvjarYaBzVNwp5Bge2yXmmqdhI9zJUkUPnjEOZYqd5HUFfEoAck
+	 y0qhVcFzRsB51oyzs+NOBoSyd2MFpYNCB5pSecLxNQ8ReBl/FKcRWEZ8zzVA+K3tl6
+	 b5eUE20HYZvxTZyDaSAulgDGkyEBqKPmcyufIWHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0174/1756] perf jitdump: Validate debug entries on native (non-swap) path
-Date: Wed, 18 Nov 2026 15:38:21 +0100
-Message-ID: <20261118150015.384308881@linuxfoundation.org>
+Subject: [PATCH 6.12 0175/1756] perf jitdump: Validate sym string NUL-termination in code load
+Date: Wed, 18 Nov 2026 15:38:22 +0100
+Message-ID: <20261118150015.422681787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,7 +64,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -73,20 +72,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 51e14e495f0cea061bbad33e7635f7fd857113ad ]
+[ Upstream commit 98bfe1142ccbaa5ffdca5dcdddd26f238ad33585 ]
 
-The bounds-checking and nr_entry clamping added for the byte-swap path
-only runs when jd->needs_bswap is true.  On native-endian files, nr_entry
-passes through unvalidated to jit_repipe_debug_info(), which stores it
-as jd->nr_debug_entries.  Downstream, jit_process_debug_info() in
-genelf_debug.c iterates nr_debug_entries times via debug_entry_next(),
-which calls strlen() on each entry's name field — a crafted nr_entry
-causes OOB reads and writes.
+jit_repipe_code_load() computes sym = (void *)jr + sizeof(jr->load) and
+passes it to jit_emit_elf() which calls strlen(sym) via jit_write_elf().
+If code_size equals total_size - sizeof(jr->load), the sym pointer
+aliases the code blob with no NUL terminator, and strlen() scans past
+the buffer into adjacent heap memory.
 
-Add bounds-checked iteration in jit_repipe_debug_info() that validates
-each debug_entry fits in the payload and its name is NUL-terminated
-before calling debug_entry_next().  Clamp nr_debug_entries to the count
-of valid entries.
+Add a memchr() check to verify the symbol name is NUL-terminated within
+the region between the load header and the code blob before use.
 
 Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -96,55 +91,27 @@ Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ tools/perf/util/jitdump.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index d118a39fb2058..5c684db97fce2 100644
+index 5c684db97fce2..4cbae8a02d2d9 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -678,8 +678,10 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
+@@ -486,6 +486,13 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
  
- static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
- {
--	void *data;
--	size_t sz;
-+	struct debug_entry *ent;
-+	void *data, *end;
-+	size_t sz, valid;
-+	uint64_t i;
- 
- 	if (!(jd && jr))
- 		return -1;
-@@ -699,10 +701,25 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 	jd->debug_data       = data;
- 
- 	/*
--	 * we must use nr_entry instead of size here because
--	 * we cannot distinguish actual entry from padding otherwise
-+	 * Clamp nr_debug_entries to entries that actually fit in the
-+	 * payload.  The byte-swap path already does this for cross-endian
-+	 * files; validate on the native path too, since downstream
-+	 * jit_process_debug_info() iterates via debug_entry_next() which
-+	 * calls strlen() on each entry's name field.
- 	 */
--	jd->nr_debug_entries = jr->info.nr_entry;
-+	end = data + sz;
-+	ent = data;
-+	valid = 0;
-+	for (i = 0; i < jr->info.nr_entry; i++) {
-+		if ((void *)ent + sizeof(*ent) > end)
-+			break;
-+		/* name must be NUL-terminated within the payload */
-+		if (!memchr(ent->name, '\0', (char *)end - ent->name))
-+			break;
-+		ent = debug_entry_next(ent);
-+		valid++;
+ 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
+ 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
++
++	/* sym string lives between the load header and the code blob */
++	if (!memchr(sym, '\0', code - (unsigned long)sym)) {
++		pr_warning("jitdump: unterminated symbol name in code_load record\n");
++		return -1;
 +	}
-+	jd->nr_debug_entries = valid;
++
+ 	count = jr->load.code_index;
+ 	idr_size = jd->machine->id_hdr_size;
  
- 	return 0;
- }
 -- 
 2.53.0
 
