@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021919;
-	b=sa9PMvthZ9vtzaDE8iCzm3sBO95QosfYtMeo+IEZcpwqO7QdNHYzjvafa1wovsE/Wb9d
-	 xa6Bn/LxP08Z41eGhV19HCvDcu/MkCbQgHIsLgBAK2vYf0zhPYFc9YQjCNSt0suWQtrHX
-	 blUeBTJM/v+gPX0yZTC4/aiJz8wfBZzeFQ2fMRhvllcYMvqmvBm4h5E48awCtgy02kAHF
-	 Wo1vtxraOGr6Kz+LxL/6fo36sBIgMD/eKN9isuk1v+H6TSEwuG0pYSwfwYbnBJgrEZ2Qr
-	 pm3vObqalgzix8zELITUQYkHVDbAokWX4W7dSjzbZRH5hIS3dktmd3FONa0y1gu3XGg==
+	t=1795021922;
+	b=EPKbxDgEsFn+PsAn+Xq2b4VpRYEzIS95wxBdeTwn2uAIwJeXtLvEyjQA6Imu7v9fMxIt
+	 0lqb+v0PWUchLL+KZsa1pUruGVI21cl/0rkgTXoRZu8VYeP2wrjAt1vKUr5tzzNp/kYB3
+	 BODi3K7ohv53wFB8BuZ1TXgKN1CeASw4eQvkHN3mZjz+xl3Ij9Patj97hXvQ5//+t77Au
+	 4nxAwzG1Zo4moKf0pWohs7lUiz7eRqSZUTyRk6xhcHmaAmL3eEmJis9tCuOOMRrnWbEU8
+	 il6gwgag7GlfQ6UkZoyitJ4X//2O0/CdAiBXvY2jWJxD8jVDsIqrd7P1I0FwAzSb4aA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I8LVhnIjvu9UgM9/qSJbc3o95k5RsZJQjeSCZE4yLwU=;
-	b=cjeezV9D8XrtcWlWfo2RhNjd9dIjY1ukPOG/xIhhCoJG2AzaHP2Lw93A1rMoV0MZxADS
-	 VBXuuNVomyRjwh0y9Oy054KJm+ifVXeFhQOLLJ0Y0sxG2fOJk+rZiRXyr6MxLJfUy4xOf
-	 rtwFV18qBXCZmEeb5jlX+P/1Zk1/ghP8IBE4QyDGQy6SueY36P2eiG8y+jYVPWaT+DMHY
-	 VOyr+5iicSd1Ei7Ok0NFKahVBO+EHUq/1MO3DSNOoKBwMT4UwFdXrPSOGJMKLls/dclbm
-	 +pWvmE6skFDLNd20egpH0vuR6OonnVS9coxULDBWXtCJL9IgIV+a+L7UiNdoKt7kuKQ==
+	bh=m1VrUpu4VYpu87vjHPZLELUMsfC68VJcXD1ptQVtdPA=;
+	b=uO2H7HcZnIPLc7Db8v1acPi2W5nT8ag0tRWEQ6qFCv65DDyKSUOBL6ItiBAa7L/vA0wh
+	 dWE5VlrLyigTBrYoUDazf8J3YxnbppBOq8RrLh/rZTAXxUvcGn/Ji42P5j9P8teYoXYNb
+	 FMjzDdih6cHQk6HTEpF0ysbo4DXrbMRaWlzLd9yfYI2sarkPEas7rBl/4G+m9tqkptyiz
+	 4DkSRhcp02421bLgaHhKXJIYtt2ME24Ypv8v1HWEn2vrIZh1qnXnAK4+yxy/KHPLTWc7t
+	 vaiGXoQFoH54qyWYjQFMZrd7PVEIwGKd10mLQmi6SVW72jeN+7X1MJY75npW3xZ4cHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfAC+ZRq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBAwa8SS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878ED606A32F;
-	Wed, 18 Nov 2026 17:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB93606A32C;
+	Wed, 18 Nov 2026 17:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfAC+ZRq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD13F1F000C8;
-	Wed, 18 Nov 2026 17:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBAwa8SS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12D81F000C4;
+	Wed, 18 Nov 2026 17:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021919;
-	bh=I8LVhnIjvu9UgM9/qSJbc3o95k5RsZJQjeSCZE4yLwU=;
+	s=korg; t=1795021922;
+	bh=m1VrUpu4VYpu87vjHPZLELUMsfC68VJcXD1ptQVtdPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfAC+ZRqLrLl7CjfA+NUpIt33Qn87KkF5ncsvtMxVGueDkAz71zlXST8tJV6MuKam
-	 izMoZ7EpZbB7phBBAaQ5Hx0naYSkvgYTEyJxSUye0P5IDPFfGczs2RVN4909r7nQqw
-	 lLof5X4199ZBnfLzG0bdpzdGwM3X9Pe9ke/Y3Rro=
+	b=UBAwa8SStT1SWrxcjrwNVttbtLub4A/KmxeHSPR/I4fkedpnmHw+id5F8HzSyMKPa
+	 v4WeIG9IXqwypvDep+ofFlZGdQdJT/mxRrO+fp+nY9g3AhCLVuYklBxJAr8TvVoQ0H
+	 4X+2XVDbl9xHVs97cTvi7vbHvDHO/soCMlZlal9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junbin Zhang <sprooc69@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2477/2651] sched_ext: Reject rq-lock-taking kfuncs in tracing programs
-Date: Wed, 18 Nov 2026 16:01:57 +0100
-Message-ID: <20261118150414.122327953@linuxfoundation.org>
+Subject: [PATCH 7.3 2478/2651] x86_energy_perf_policy: Fix optarg keyword matching
+Date: Wed, 18 Nov 2026 16:01:58 +0100
+Message-ID: <20261118150414.151368116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,147 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junbin Zhang <sprooc69@gmail.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit b07a7450f6ef98c79ebd450a92fc4bb6b8f1e02e ]
+[ Upstream commit 0177067d195a4757149f6702af191987377c71c3 ]
 
-scx_bpf_cpuperf_set() and scx_bpf_cidperf_set() are members of
-scx_kfunc_ids_any, which is registered for BPF_PROG_TYPE_TRACING.
-A tracing program can run in a context which already holds the target
-rq lock, in which case scx_cpuperf_set() attempts to acquire the same
-lock again:
+Replace strncmp() with strcmp() for exact string matching in
+parse_optarg_string().  Exact keyword matching is safer and clearer.
+This prevents accidental matches with longer strings
+like "performance-foo".
 
-  __schedule()
-    rq_lock(rq);                          /* rq->__lock is held */
-    trace_sched_switch();
-      BPF tracing program
-        scx_bpf_cpuperf_set(smp_processor_id(), 1024);
-          scx_cpuperf_set();
-            locked_rq = scx_locked_rq(); /* NULL */
-            rq_lock_irqsave(rq, &rf);    /* same lock */
-
-scx_locked_rq() only tracks rq locks held during SCX callback
-invocations, so it cannot detect an rq lock held by the surrounding
-kernel code.
-
-The deadlock can be reproduced with two BPF programs. The first is a
-minimal SCX scheduler, which only needs to be registered and enabled:
-
-  SEC(".struct_ops.link")
-  struct sched_ext_ops minimal_ops = {
-          .name = "minimal",
-  };
-
-The second is a tracing program attached to tp_btf/sched_switch,
-which fires from __schedule() with rq->__lock already held:
-
-  SEC("tp_btf/sched_switch")
-  int BPF_PROG(on_sched_switch, bool preempt, struct task_struct *prev,
-               struct task_struct *next, unsigned int prev_state)
-  {
-          scx_bpf_cpuperf_set(bpf_get_smp_processor_id(), 1024);
-          return 0;
-  }
-
-With both programs attached, the next context switch on any CPU
-deadlocks that CPU. Lockdep reports:
-
-  WARNING: possible recursive locking detected
-  7.3.0-rc7 #3 Not tainted
-  swapper/3/0 is trying to acquire lock:
-   (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x1e/0x30
-
-  but task is already holding lock:
-   (&rq->__lock){-.-.}-{2:2}, at: __schedule+0xeb/0x1430
-
-   Possible unsafe locking scenario:
-
-         CPU0
-         ----
-    lock(&rq->__lock);
-    lock(&rq->__lock);
-
-    *** DEADLOCK ***
-
-  Call Trace:
-   <TASK>
-   print_deadlock_bug.cold+0xc0/0xd0
-   __lock_acquire+0x12fa/0x1b80
-   lock_acquire+0xd1/0x2f0
-   _raw_spin_lock_nested+0x32/0x40
-   raw_spin_rq_lock_nested+0x1e/0x30
-   scx_cpuperf_set+0x1e9/0x310
-   scx_bpf_cpuperf_set+0x9b/0x230
-   bpf_prog_..._on_sched_switch+0x3d/0x41
-   bpf_trace_run4+0x125/0x450
-   __traceiter_sched_switch+0x4b/0x70
-   __schedule+0x94a/0x1430
-   schedule_idle+0x26/0x50
-   cpu_startup_entry+0x2d/0x30
-   start_secondary+0xfc/0x100
-   </TASK>
-
-The CPU remains locked up with interrupts disabled.
-scx_bpf_cidperf_set() is similarly affected, as it resolves the CID
-through scx_cid_to_cpu() before reaching the same rq-locking path.
-
-There is no reliable way for these kfuncs to determine whether the
-surrounding tracing context already holds an rq lock. Reject calls to
-both kfuncs from tracing programs at verification time, while
-preserving their availability to SCX struct_ops and syscall programs.
-
-Fixes: a11d6784d731 ("sched_ext: Fix missing rq lock in scx_bpf_cpuperf_set()")
-Signed-off-by: Junbin Zhang <sprooc69@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 4beec1d75196 ("tools/power x86_energy_perf_policy: support HWP.EPP")
+Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ .../x86_energy_perf_policy/x86_energy_perf_policy.c  | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index b1c28516ff2cb..996ebfca769c4 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -10992,6 +10992,22 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- 	.filter			= scx_kfunc_context_filter,
- };
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 0dc959e30076b..1fbe6af508d0f 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -335,22 +335,22 @@ int parse_optarg_string(char *s)
+ 	int i;
+ 	char *endptr;
  
-+/*
-+ * Kfuncs which may take the rq lock on their unlocked path.
-+ *
-+ * A tracing program can execute in any kernel context, including ones which
-+ * already hold the rq lock (e.g. sched_switch). scx_locked_rq() only tracks
-+ * rq locks taken for SCX callbacks, so from such a context it returns NULL
-+ * and these kfuncs would acquire the already held rq lock again and deadlock
-+ * the CPU. They cannot be made safe for tracing programs, so keep them off
-+ * the tracing hook. Members must also stay in scx_kfunc_ids_any so that
-+ * struct_ops and syscall programs keep their access.
-+ */
-+BTF_KFUNCS_START(scx_kfunc_ids_no_tracing)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_set, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cidperf_set, KF_IMPLICIT_ARGS)
-+BTF_KFUNCS_END(scx_kfunc_ids_no_tracing)
-+
- /*
-  * cpu-form kfuncs that are forbidden from cid-form schedulers
-  * (bpf_sched_ext_ops_cid). Programs targeting the cid struct_ops type must
-@@ -11099,6 +11115,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
- 	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
- 	bool in_cid = btf_id_set8_contains(&scx_kfunc_ids_cid, kfunc_id);
-+	bool in_no_tracing = btf_id_set8_contains(&scx_kfunc_ids_no_tracing, kfunc_id);
- 	u32 moff, flags;
+-	if (!strncmp(s, "default", 7))
++	if (strcmp(s, "default") == 0)
+ 		return OPTARG_NORMAL;
  
- 	/* Not an SCX kfunc - allow. */
-@@ -11111,7 +11128,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 		return (in_unlocked || in_select_cpu || in_idle || in_any || in_cid) ? 0 : -EACCES;
+-	if (!strncmp(s, "normal", 6))
++	if (strcmp(s, "normal") == 0)
+ 		return OPTARG_NORMAL;
  
- 	if (prog->type != BPF_PROG_TYPE_STRUCT_OPS)
--		return (in_any || in_idle || in_cid) ? 0 : -EACCES;
-+		return (!in_no_tracing && (in_any || in_idle || in_cid)) ? 0 : -EACCES;
+-	if (!strncmp(s, "power", 9))
++	if (strcmp(s, "power") == 0)
+ 		return OPTARG_POWER;
  
- 	/*
- 	 * add_subprog_and_kfunc() collects all kfunc calls, including dead code
+-	if (!strncmp(s, "balance-power", 17))
++	if (strcmp(s, "balance-power") == 0)
+ 		return OPTARG_BALANCE_POWER;
+ 
+-	if (!strncmp(s, "balance-performance", 19))
++	if (strcmp(s, "balance-performance") == 0)
+ 		return OPTARG_BALANCE_PERFORMANCE;
+ 
+-	if (!strncmp(s, "performance", 11))
++	if (strcmp(s, "performance") == 0)
+ 		return OPTARG_PERFORMANCE;
+ 
+ 	i = strtol(s, &endptr, 0);
 -- 
 2.53.0
 
