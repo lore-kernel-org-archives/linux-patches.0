@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043200;
-	b=tXNs2yl9fIzyw/ePlpFCsDNm3EbrbTrM3eT5P0DZxQjcC0RUHwmOXv1S0E9BcqT8PXpS
-	 le/eq8Ej7l4usGJc9I3JIHQG25lMxyb2GfCiociCkbZdj138BS659KrEaZS46EVE+To7w
-	 KLPZnPqvTTw8a3VJgu4IzYURznE3kBBoHiqd32d4VpA1v/C24vjKKISZ17xdDFhIW34J0
-	 JD6S+4AnGsdtuXzFLIdvSjo9HkiEGcGMVhdZOocomzaULrh62lo66dgizdfQiLuJ+8DpW
-	 2r6WUoMh6hljs1Vjmeui26Fzrbxuh3H0eA13jaGBOj873elc/AcRLeTZ43BSNUOkoUA==
+	t=1795043203;
+	b=FqUx7QIE8bwfRY/u6k0AHpGtL+Lu6jza9OwHso3Gsq/HTdAC4kiv7D4t1zAN1axVo7xL
+	 vR2THmm/ZTF3kahc8yFwjMd9j+0r1uhdL/9L8klaTaKcvSijNzamlTTtoWwPE8Qyb1OaX
+	 rLFPU7+G0tRc8nygwtUmwLwomZFiafY0wnwCM4ArDXTIIukgF1xAPRyBfJC/F3Z4qgEKe
+	 kS+CR8HgqyBocnc+t5XOLWYvG+IYOlcQWF11sSC3Fl4yKCnQI2Z2VbpBYH+UG5keUOHOt
+	 xn92cZMGXw9Ji7On4f1l6NY9Ad6l3piIC2gdLb+2Ep2BkimIYlwZ2SWiJzOoHyHocGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043200;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043203;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cq2QVLf22UWt+ZCyijpL9OKs7doWtZv6K61JdwMMXOA=;
-	b=0BsIazZjAAs//6OgPiSAGOCyPZET7KFgfEKWGP7ehcUbhXueb9o+XzTvj407BOAF2vgi
-	 xXimtXq1SGgTrHZnz4XRw6YqECNuu8TNx0smfLd+BNqfHM2fkKXNVspdzc7f0xvMUzDYP
-	 t5bJ86/HwJy/QfTE7Yq+XXXOIbhoftosRXkRHoln8ORqjaEroQoiAABu9NJ3/PAvcmXBM
-	 oupzt4Xc+zZepg9kOUIRpklGX+Dbyc0kc8yl2S2zLydYZENEen5cn4JH+EtzuWHgcwx5P
-	 Xa6GQmwfXHm9q+1nmfkO3NMPfQqhnARzt1jUsGV0sU5aIQ2niW7Jg9vqy8IE3Zuq7qA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=XE/UwXq17OJ4974KOQpQNhAvdlgsXTXCeKYwGbtueOs=;
+	b=lFVlQuSMoXD9coSwrW+ddApnGEFcpEPsHUD1LXYTZM2gHtu16WwfzbjGnPar4UubnwNy
+	 bqA/TInjtLrIOoAPkhVkIkorTCQVTxtc6y5On6LkgRHt6yb0/3U0vaJxtQQJkPYRiwf4U
+	 AQ4HwNizOawRjqDxe85SfXDTwUBRZQvxa3jNL21u4Zo5+WpV4hCJZejAoBsdhxPflc8Ju
+	 9eqQ/Ndv5jkNf4IX6sqhSwag5j5dBy1V2EEoTQ1o/81NS469ZJpbG0QAMgTtJ2Je/4Wn+
+	 byXt3gvWQWMcXpfR5DuLn8Zbkv4mtQTOERlg3PMI/8Nw+rfgW17a/+CKOHknIrQ3CNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wv7hqRY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HT+ozEW6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E9F606A325;
-	Wed, 18 Nov 2026 23:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466E4606A32C;
+	Wed, 18 Nov 2026 23:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wv7hqRY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43E71F000C4;
-	Wed, 18 Nov 2026 23:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HT+ozEW6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966F81F000C4;
+	Wed, 18 Nov 2026 23:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043200;
-	bh=Cq2QVLf22UWt+ZCyijpL9OKs7doWtZv6K61JdwMMXOA=;
+	s=korg; t=1795043203;
+	bh=XE/UwXq17OJ4974KOQpQNhAvdlgsXTXCeKYwGbtueOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0wv7hqRYkjhwZ7ylSSFwigVj3cZs8bQLf6IhP5RsJU7Sx/6fxzkmIovDOGYM6r/GV
-	 bObAbza4Nyi9QdQqXz2DfyNR75tUljIQXa/3FBajP+yvU6qun0ciWQ+SjVZY1FLhLB
-	 t9v24hxSUwZ7Oei9Z8ECf+6J625FeSB5ilPcw4so=
+	b=HT+ozEW67lhUxfOyrZQPpoPRJu9uUjKa2+cbuTC/z1KxPnTbmUk/BP7KcAed12/LE
+	 UBZGq9iV2GoBE9wA67ONysrjtXsKf49k5ckdV5QjdM8twJHRzrGYo45RqfJ23nSmuq
+	 WkcUBI5/iVA/OcUE1FsgD1SQA7Vx2284fCosLRf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>,
+	Denis Benato <denis.benato@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0126/2857] media: go7007: s2250: propagate control I/O failures
-Date: Wed, 18 Nov 2026 15:19:20 +0100
-Message-ID: <20261118150205.887883248@linuxfoundation.org>
+Subject: [PATCH 6.1 0127/2857] platform/x86: asus-nb-wmi: map ProArt key (0x8b) to KEY_PROG3
+Date: Wed, 18 Nov 2026 15:19:21 +0100
+Message-ID: <20261118150205.923635455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,104 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
 
-[ Upstream commit 59dc14a6cb5ff1ae5ce2f6ebf51fe0139e1c0623 ]
+[ Upstream commit 6303451189a6d8f304221065c44ccd597e0acbe5 ]
 
-The brightness and contrast paths use oldvalue after read_reg_fp()
-without checking whether the read succeeded.  A failed read leaves
-oldvalue uninitialized and can write arbitrary reserved register bits.
+The dedicated "ProArt" key on the ASUS ProArt PX13 (HN7306) emits ASUS
+WMI event code 0x8b. This code is absent from the asus-nb-wmi sparse
+keymap, so pressing the key only produces a "Unknown key code 0x8b"
+message and does nothing in userspace.
 
-Return read and write errors from every control path so failed hardware
-access cannot be reported as a successful control update.
+On this model the key is exposed solely through the WMI interface and has
+no HID scancode, so it can only be handled inside asus-nb-wmi. Map 0x8b
+to KEY_PROG3 so the key emits a bindable event, consistent with the
+existing KEY_PROG3 mapping used for the ASUS programmable/Armoury key.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
+Reviewed-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260719090843.66777-1-nizar.m.kabbani@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/s2250-board.c | 54 ++++++++++++++++----------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ drivers/platform/x86/asus-nb-wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/go7007/s2250-board.c b/drivers/media/usb/go7007/s2250-board.c
-index 2f45188bf9d47..6635c82cc1983 100644
---- a/drivers/media/usb/go7007/s2250-board.c
-+++ b/drivers/media/usb/go7007/s2250-board.c
-@@ -365,36 +365,48 @@ static int s2250_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct s2250 *state = container_of(ctrl->handler, struct s2250, hdl);
- 	struct i2c_client *client = v4l2_get_subdevdata(&state->sd);
- 	u16 oldvalue;
-+	int ret;
- 
- 	switch (ctrl->id) {
- 	case V4L2_CID_BRIGHTNESS:
--		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
--			     ctrl->val | (oldvalue & ~0xff));
--		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
--			     ctrl->val | (oldvalue & ~0xff));
--		write_reg_fp(client, 0x140, 0x60);
--		break;
-+		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
-+				   ctrl->val | (oldvalue & ~0xff));
-+		if (ret)
-+			return ret;
-+		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
-+				   ctrl->val | (oldvalue & ~0xff));
-+		if (ret)
-+			return ret;
-+		return write_reg_fp(client, 0x140, 0x60);
- 	case V4L2_CID_CONTRAST:
--		read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_CONTRAST0,
--			     ctrl->val | (oldvalue & ~0x3f));
--		read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_CONTRAST1,
--			     ctrl->val | (oldvalue & ~0x3f));
--		write_reg_fp(client, 0x140, 0x60);
--		break;
-+		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST0,
-+				   ctrl->val | (oldvalue & ~0x3f));
-+		if (ret)
-+			return ret;
-+		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST1,
-+				   ctrl->val | (oldvalue & ~0x3f));
-+		if (ret)
-+			return ret;
-+		return write_reg_fp(client, 0x140, 0x60);
- 	case V4L2_CID_SATURATION:
--		write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
--		break;
-+		return write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
- 	case V4L2_CID_HUE:
--		write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
--		break;
-+		return write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
- 	default:
- 		return -EINVAL;
- 	}
--	return 0;
- }
- 
- static int s2250_set_fmt(struct v4l2_subdev *sd,
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index cba515ce3444d..2fd4ff8ff0f52 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -565,6 +565,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, 0x86, { KEY_PROG1 } }, /* MyASUS Key */
+ 	{ KE_KEY, 0x88, { KEY_RFKILL  } }, /* Radio Toggle Key */
+ 	{ KE_KEY, 0x8A, { KEY_PROG1 } }, /* Color enhancement mode */
++	{ KE_KEY, 0x8B, { KEY_PROG3 } }, /* ProArt key (PX13/HN7306) */
+ 	{ KE_KEY, 0x8C, { KEY_SWITCHVIDEOMODE } }, /* SDSP DVI only */
+ 	{ KE_KEY, 0x8D, { KEY_SWITCHVIDEOMODE } }, /* SDSP LCD + DVI */
+ 	{ KE_KEY, 0x8E, { KEY_SWITCHVIDEOMODE } }, /* SDSP CRT + DVI */
 -- 
 2.53.0
 
