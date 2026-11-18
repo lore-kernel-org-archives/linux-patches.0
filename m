@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050233;
-	b=AfY0MioU9drEE/ygd9fAEJ9DmvB8jyfcn19v9nfCx3xUk/6sg5JRZcw8TxjmfNXq04+f
-	 3osVR6ycdd6dlEiKo122SyyBw4fLx4xAA0ZpvBXRSC1ozOOBm1CKRbDQXnbwYJeRoCpD5
-	 nqdCjV9bJ1AYVKiMYzpjqT9sH37AIoVqMjmMYbUwyBWNbiivzMgVF4o3gOQBBAe7ADHAU
-	 UVa2pbv4ZCDZL/oYiyRIVaBAagoW5ZHM/7Q388lN+iv4RSpfmtgdqKHDwY7QKKNexumJZ
-	 b+ecC3T42d/vQWg0szHpmC5caA8O5Ju8yKs/ZNCfJ7YIYqP7EliddyjPLzJsRVzQ1gA==
+	t=1795050235;
+	b=R6MIRXeYNE8iSLCHrlcsEga9I4w/SsAC+3U83RZNonAOJ5yKpjuiuAlN6BObcm8QLgGc
+	 0U9fsMoVN609WKnPIy1PJM6rioi9J9FWog1bPHYJWFmK3QKAhIPWJk7BsP9rBQ8SI25uV
+	 NQfe/E1o6VY/gOCSfGMUx81uhLvqIxfF8BZuSCYrIaPRrGVylD+bl7B0bgR2/+fSAHGD3
+	 qhiM7v810+0zZ+hY0PFyyurFDLYRdSwlN0Yx7qgEegNBa/NudgNub+w5W565Gc9ZqipTT
+	 rN6T5JW6mgZRTJtWlo4eABxYaxoIe8DIQFQ442AVEsnqmJoonpqgw2xLkDijedHKpVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2LspjyufAFicDsd1cp89B06B8OdsvelvYf5LFsmYFlA=;
-	b=t2oGvlnynXRh1N6SWu5pe2M3Lxrc5U5Y322vDMcfkZ6ehU9ND+EYnK/4/ziSF77tL3ir
-	 1jcCdTCdik+I3AwcWS+ri4wCz1PwoloknKsI/qysd721gdtyS9Ke3woJTRLelLdQiV0Lp
-	 41wNMmQyQAsHhatk4ClkTyAGNRi8eDuS4VEVqkD9oFn37HHg39X2BqM4MrrS/Mh0bDpYG
-	 9CAtjXtChZI8NIwxaZja/3CLvLIkuXKlr6hmE223WXikSDJGIfLhkAxUcVCVB/sPTQpW2
-	 HzJRi7Zhx16p8YreRaXD5bq1g6HYMsJSP0iX7rnmE6sCOqDxMmEx7vF+u1AQG06fdOA==
+	bh=GCo2kzHzA6RFb+PrkwJ6sBx1c1G01gD/xlKqD1YFJOg=;
+	b=G716eRWeWJ3E6xQsBSX86IbBz5/sfAVAQvqZigmvClSXfoXZvwI+fNXLDWPDqEH7tkiA
+	 zlesbYZnWxgEaHW/muuw40ju3GHx2nESrt7UBtNF/pzw9vukZ1eqvV4gu9RShKUBpeqjB
+	 Fa7HB92m7SCp/kDty8BCxQwEHBtSivbc4s5TQcFij6cywHZeHTusCQ3Wm/euwQvzHMkGb
+	 mfAcZMHVwqgCWEX3sjZSyiHeiMoNZc2S4nZvZuEbENBmAYQ3sFqP9yIRhuv1H7CkmZ5GE
+	 AI2Ss0Hp+U3yLzdWqmAfPDZ2HG9ZkjqqVatDNAk72RIv20liCYS5Ti/BPj1hQuWVtNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c0XhCEVc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvIC25Gv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA9606A330;
-	Thu, 19 Nov 2026 01:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C89606A32F;
+	Thu, 19 Nov 2026 01:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c0XhCEVc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F291F000C4;
-	Thu, 19 Nov 2026 01:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvIC25Gv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A411F000C5;
+	Thu, 19 Nov 2026 01:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050232;
-	bh=2LspjyufAFicDsd1cp89B06B8OdsvelvYf5LFsmYFlA=;
+	s=korg; t=1795050235;
+	bh=GCo2kzHzA6RFb+PrkwJ6sBx1c1G01gD/xlKqD1YFJOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c0XhCEVcZz70FjhXWi7SeewncVPSKp8mBEZyQ+dAr3+HNIg6RYM/5u170TfNFR0eL
-	 L4TTxsSO/DFCgEHbQ2Y/nDft1MVlKag5Gx0CnR+RzUqywKk0IhK5xuSJZ9hQzko3Cp
-	 VOWeTRkGhS9NhW/ogwgupw+DlhmSrFhVz3tmeV8U=
+	b=vvIC25Gv7X48UI/cui1m4EpukCTD6ztzIfb4Z/10UDRA4I9gZCr69eGDlf1MrZUrR
+	 7SlA29vG/lBBdjw4yNmgK9ohyYKV6aPlfWYo3nYFyI8HSUlsQ9pNbSsd0wHFbte4dB
+	 JeJS0ifdN0Zqvw/yjQ+jLqNSXkv+tUvx/fYHacMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Zhang <zhangfeionline@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2636/2857] net: stmmac: xgmac: do not treat TBU as a TX event
-Date: Wed, 18 Nov 2026 16:01:10 +0100
-Message-ID: <20261118150336.505022519@linuxfoundation.org>
+Subject: [PATCH 6.1 2637/2857] mptcp: options: mpc: avoid printing uninit data
+Date: Wed, 18 Nov 2026 16:01:11 +0100
+Message-ID: <20261118150336.541193212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengfei Zhang <zhangfeionline@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 305deb54c6c287e586bed92da2375ae1220e8dde ]
+[ Upstream commit a234ee8eb9a20d1a272f0d2ceabdb35165071778 ]
 
-Commit 8d07a7930434 ("net: stmmac: xgmac: Do not enable TBU interrupt")
-removed TBUE from the default DMA interrupt mask, but did not remove the
-TBU check from dwxgmac2_dma_interrupt().
+When parsing the MP_CAPABLE suboption, this pr_debug() might read and
+print uninitialised values.
 
-TBU is set whenever a TX channel runs out of descriptors. Since TBUE is
-not enabled and only enabled bits are cleared, the TBU status bit is
-never cleared. As a result, TBU stays set on every idle TX channel,
-regardless of whether there is any TX traffic.
+That's mostly harmless, but that's also confusing. Fixing that also
+avoids some tools to complain about accessing uninit data.
 
-With a shared interrupt, stmmac_dma_interrupt() checks all channels,
-so every interrupt from any source schedules TX NAPI on every idle TX
-channel.
+So read these fields only if they have been set.
 
-Only use TI to trigger TX processing.
+Note: this was initially reported by Clashiko as an existing issue. The
+code has been analysed by a human and confirmed. This is a non-urgent
+fix.
 
-Fixes: 8d07a7930434 ("net: stmmac: xgmac: Do not enable TBU interrupt")
-Signed-off-by: Pengfei Zhang <zhangfeionline@gmail.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20261013024747.2688984-1-zhangfeionline@gmail.com
+Fixes: cc7972ea1932 ("mptcp: parse and emit MP_CAPABLE option according to v1 spec")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261013-net-next-mptcp-misc-feat-7-4-part2-v1-1-1181e5d2fda4@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/options.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-index 38cdf24372a01..7729a2ddfc1b5 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-@@ -366,7 +366,7 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
- 		u64_stats_update_end(&stats->syncp);
- 		ret |= handle_rx;
- 	}
--	if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
-+	if (likely(intr_status & XGMAC_TI)) {
- 		u64_stats_update_begin(&stats->syncp);
- 		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
- 		u64_stats_update_end(&stats->syncp);
+diff --git a/net/mptcp/options.c b/net/mptcp/options.c
+index 79c5f731a5e12..e466d73f3f80c 100644
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -126,8 +126,11 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 			ptr += 2;
+ 		}
+ 		pr_debug("MP_CAPABLE version=%x, flags=%x, optlen=%d sndr=%llu, rcvr=%llu len=%d csum=%u\n",
+-			 version, flags, opsize, mp_opt->sndr_key,
+-			 mp_opt->rcvr_key, mp_opt->data_len, mp_opt->csum);
++			 version, flags, opsize,
++			 opsize >= TCPOLEN_MPTCP_MPC_SYNACK ? mp_opt->sndr_key : 0,
++			 opsize >= TCPOLEN_MPTCP_MPC_ACK ? mp_opt->rcvr_key : 0,
++			 opsize >= TCPOLEN_MPTCP_MPC_ACK_DATA ? mp_opt->data_len : 0,
++			 opsize == TCPOLEN_MPTCP_MPC_ACK_DATA_CSUM ? mp_opt->csum : 0);
+ 		break;
+ 
+ 	case MPTCPOPT_MP_JOIN:
 -- 
 2.53.0
 
