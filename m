@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039910;
-	b=qqipcT4CmAdiD665NnDbCYCnj8ixVPE29iWzxoZ/zGBt04nVd2aLdtWXCYCLeXt6+P6l
-	 kwraTtaZopVFqjf31O9TbzFdvo8+SBsguGVeL05jkrVqSnh8jPN4DqjXx0oxTlEPPS9tP
-	 igss6ygH1usbaDx5xgAS/8KSRKoUu47btJIwSlMLaSr4g+FCJ8SeWkI77HWPK4XIcev/2
-	 mW1z2NqmVXiV7DsI2WjyohLMx9vMTJxCWiTWch6fRZXB0rrqkm4MXi8qbIixhAP7mmqxf
-	 5zYCn1ehZ6VQnlRaOhUdmfxTptjpgQdEEobGQ/1V0qYszdiRlCoH3vHrHEB3EM5iGjA==
+	t=1795039912;
+	b=fpAguaTLy5fTeEqq388RNnfDBTJCkAK3QDjJxw4te1avmcm/bPMW1u7vCxGWoI2Bb5mI
+	 759YHJ5Clk+mrCpRAT703UGf6lO0gm9Ex3Tble/EtJcFxNK8eNC/WegiUYv4IYojT66SK
+	 B2zXScgxwK4A6t+LEHvE+5ulL5JqRz8zomqCNruU7ehoRelBln2pW15UPi+lFkyaN8MTq
+	 j1W60em9tkTxMgNLtsS6TSXxqK2pw/wfWmBeoiH3LGeMF6HwYzRsp3dAS/Ad8Tkjqd4T8
+	 O++vXcEnBWaCHAaqnNWJAetwGNzmh/5J5RWC6r2YJuBzEJvlny195xXdaLuacbUVHDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039910;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BHn1hXHOpzbHPHRjbUrlRTnUCdWj+Not+lv3+/dpa7I=;
-	b=0IDrzCnPWvOsBYZR+qvY6H7pFrAA0ygl1BirUqvqxPDQTf4M0FNlm2ZnQhjPAxXYHQRB
-	 EzavaX/0SxJT8BXaZdhSN9QxXDK7KnihidcktE/8KfeDoI2rAJBduk4KCPxxU+E3/16f1
-	 Az7HD+hWDdU6haYtElRkypaVZDUAoVWyIiObPQsI2KvOYqn0n/eS+gIa67eygGsRaz9ad
-	 BIdYvaGp2wSfnccKG9tPXMBL2qpzRDl+XOWE+miHjBai3kEGBEdH9eB8Kuy1+xX7aBbgr
-	 ThJ9U+R/wVIcdC1S+dnFXfjhn1O0WQPAPAwBkMhz7zESGaKMgDssLtpfU6iUW6aPleA==
+	bh=PnYaeDsdpH7/rmdBgwQWmvhLGapijPLLPc2+co0wl6o=;
+	b=WcnQ23wb8O7Q3XNyWaAWKVgOb9hrOhxIF58m+6nv/PYxYZi6GiFFt3rp7LjhijvB6S7g
+	 Nl0PnZ9zsg1vTRyHX36iM+9JJ/qozhr7FvNnPSS9ByocgExGDU8CZF56OgtR0h+O76aCi
+	 vKvRv8ayYFPRHBhNuYNOPVXcyPsYClsBGZunM2qnOPylTBDdcQMiKcQoXjr6lXYD3SbhZ
+	 /HRFMDg53M0JWf/DJ51XrJK1kcisZ/w1VKAl7ztF0/lu9SQGxArwzeV6ErEXE1KUYdlH6
+	 7NRlnEdIna3v2DJ4GKz7W0xt8BPQ1W+T3FqjOiPd57/UZl9oBHvpMaCJQORU77WvaiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bndy1IhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a1/qObvt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC5D606A31C;
-	Wed, 18 Nov 2026 22:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B502606A325;
+	Wed, 18 Nov 2026 22:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bndy1IhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF4E1F000C4;
-	Wed, 18 Nov 2026 22:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1/qObvt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF021F000C4;
+	Wed, 18 Nov 2026 22:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039909;
-	bh=BHn1hXHOpzbHPHRjbUrlRTnUCdWj+Not+lv3+/dpa7I=;
+	s=korg; t=1795039912;
+	bh=PnYaeDsdpH7/rmdBgwQWmvhLGapijPLLPc2+co0wl6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bndy1IhS4B4Ajo9vv34WYbHi74Vj/wf09R5UU3RUtbJGCSFAk89W8guv6csd0KVhj
-	 WiF9SkSfxF86m163h7u83Lgaz0ZsxL3NJLqIDct84Ja/41cMtbsur3Ie1I4qAHJx82
-	 rDqpfirCqA7uv8V2XCqP1xhrjWwwp8LH2Y98xE2s=
+	b=a1/qObvtx3cf4Nx8CGcCa63l62u8qh1aX/EmpEEdtHsAjLc7G8Lwqp2VRiUBQ7DBu
+	 6NxWRx187cSrNzPrsZQiyTCw5HPEhWmbwUStLqS8iK42yvWYe9FNV0RURL5R5uxSJB
+	 jbwAkiRjUnGUEH8byuirmVnVIsjCc65GMZsUaWsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Lucero <alucerop@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Asseily <karl@asseily.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2267/3318] ACPI: HMAT: preserve hmat_adist_nb notifier block
-Date: Wed, 18 Nov 2026 15:48:09 +0100
-Message-ID: <20261118150429.816354873@linuxfoundation.org>
+Subject: [PATCH 6.6 2268/3318] dt-bindings: vendor-prefixes: add ESS Technology
+Date: Wed, 18 Nov 2026 15:48:10 +0100
+Message-ID: <20261118150429.841436001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,45 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alejandro Lucero <alucerop@amd.com>
+From: Karl Asseily <karl@asseily.com>
 
-[ Upstream commit b1c75a77d494298b8dedf46062f2072239bbc33b ]
+[ Upstream commit beb56d1d3de522885b30bb97fee83825041d65c2 ]
 
-Remove __meminitdata from hmat_adist_nb declaration preserving it even
-when CONFIG_MEMORY_HOTPLUG is not set. Otherwise further notifier
-registrations using register_mt_adistance_algorithm() will find a
-notifier chain likely corrupted.
+Add the vendor prefix for ESS Technology, Inc., maker of the SABRE family
+of audio DACs. The prefix follows the company's domain, esstech.com.
 
-This is the case when cxl_region_probe() calls
-register_mt_adistance_algorithm() what can happen when CXL regions
-are dynamically created at any time from Type3 device(s) or when a Type2
-device is initialized at its driver probe.
-
-Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
-Signed-off-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260716181114.35962-2-alejandro.lucero-palau@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Asseily <karl@asseily.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260918182317.143223-2-karl@asseily.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 1d6450c139225..78ff99d29e41d 100644
---- a/drivers/acpi/numa/hmat.c
-+++ b/drivers/acpi/numa/hmat.c
-@@ -903,7 +903,7 @@ static int hmat_calculate_adistance(struct notifier_block *self,
- 	return NOTIFY_STOP;
- }
- 
--static struct notifier_block hmat_adist_nb __meminitdata = {
-+static struct notifier_block hmat_adist_nb = {
- 	.notifier_call = hmat_calculate_adistance,
- 	.priority = 100,
- };
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 7376a924e9aca..6d938b8d61d31 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -442,6 +442,8 @@ patternProperties:
+     description: Seiko Epson Corp.
+   "^esp,.*":
+     description: Espressif Systems Co. Ltd.
++  "^esstech,.*":
++    description: ESS Technology, Inc.
+   "^est,.*":
+     description: ESTeem Wireless Modems
+   "^ettus,.*":
 -- 
 2.53.0
 
