@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040725;
-	b=pKEZB6Ejl7qoHLDNq5SZWOSfcTgWtniscOinQ9k8tqmRurHKgGnUxlrekor9C1xqP/Bq
-	 stJW9Dk+iMj0miUd7zt+1CIbBEy1Xvx82/QhTwAWO/Bc2mnJOVbFk2Vct4GDQz3du5oz9
-	 O0ji26AUV8BGvUVyfD6WG1rEfuLmqcKZsYdAxfDDDE0SzGgIcLPIC4iBrjLwQUj/NEN8F
-	 CPzDujWqYnu44QYHsFSKmAOa44kvyOOH8sBHx7VFZmSf72aWLqxUSrmIKb2yvn9L8ZNjb
-	 WI+28KbljyixdFKG64kUaOoybcVNjwgUE97V7GiH5cJqIeFi4J7ChDTp/JRLxVH3C9g==
+	t=1795040728;
+	b=dM2B8mmpfPkrnzYV2tKaPLxYorHQCXfA/Be2tg5IMYGy67UGUwHmzehD5vKxY8OKLQ6i
+	 k71DJ7UjQNh1Fr7BaxBl/cX9xb6iNGHs4V7cFAXtyvQ+Rz9mCUAHtSvB7s1p5y8dP+poX
+	 WMu+8vBsHopcDsNHOYdvSdGbmW4UfcEo0CJR5alQCdF7AveEx2/MTAOty+lppHddcR5j4
+	 xkHtRAamAnN+hc//W3RxGWd4FGqTHpkRrkvoNABKF9DDtFLcyc+QQbhuDlgIqh83Dm8O0
+	 eBfLP+F2+luR5t/sA/m5BLQso9/+shb0XGB0J8KxOiw+7OAYZoII8XDoxKYQulrbAKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VPoC9X0ZOrLRF5QgBhj8Xbtj/giTWAuREJh9Ul6S4hs=;
-	b=cOn4tG2/zhKDZOS8ZkJ2pc7IPJ0LJJ4YF44tFZhLbMlS/6nmXLEePV3wGjzOLDFAsMCI
-	 xRtlKcrDsk+RFwuyWnvjN4+XDmJM/8wfnNfWM5rCPKHG3+Cf5KedF5iljJlqaMtsgfwx8
-	 13Vc3WE+GT5kiaanHLh/0bf2Z8vZRAL/AbdRoAYHAbEBYAqDLDpE7PIj1nXSH2WGGLsHZ
-	 D627xj8XOIIpKHWafOdO4nuDThplJC4W0hrDwGBbJg8LWYsHP8adwSwSZmK6GsC+sk6OO
-	 fPk6mX3Stt97RzM9iqa6psy0VYO7kGvDYZV1luA5ZZupmr6MzkOlhnE4IOgvDIeygvA==
+	bh=NFr8PL8C34aVNjrb090RbnSfkpJsXYM6y3xAqCWrAdU=;
+	b=OFM/PfkKFSQ8uH2dOu/mscYb0KbKWC6qgVeDH85r6rtrraidZMV2vLamBfJ2MRiZbjpM
+	 m2WCL9igFPwQckSMIn5oeK0ohHEkA4F6g1Lb2MKKgAJ/Kkcco+gS0XDVmgVOSrlV+dL9X
+	 WfsKqld+eaHMXRazl9iLxo9SKncUazdOP3swtnKt57cs1bNQfYXEBsq7djPNQWWYhR73p
+	 A5yBaXi3SOHQaNP2UYViQneBmUjCFEyn5264uAIKvB0/yOCvcUiXdLPb2lJRzUcm+5AHY
+	 SkPcqZIuh3ORBUyW+f53GFcrT06XR6wmdcVzAqktUA7N5z0Ds3vUvhZE9nZQTYVr5yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GD7uq4Jy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4q1PS34;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A47C606A31C;
-	Wed, 18 Nov 2026 22:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CBE606A32A;
+	Wed, 18 Nov 2026 22:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GD7uq4Jy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EAB01F000C4;
-	Wed, 18 Nov 2026 22:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4q1PS34
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359E91F000C4;
+	Wed, 18 Nov 2026 22:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040725;
-	bh=VPoC9X0ZOrLRF5QgBhj8Xbtj/giTWAuREJh9Ul6S4hs=;
+	s=korg; t=1795040727;
+	bh=NFr8PL8C34aVNjrb090RbnSfkpJsXYM6y3xAqCWrAdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GD7uq4JyT5nIhrVXEIf8usSpRQ0+8DRoJx/rmOjq+Ayk1Xk5XPIW5/LP+ynWiAHNT
-	 JARdIt6D+qxb0NVQ1GjBBbjIzF3sUXRdcOUkCCzdW7rxmEFqIumJFeKgF4vB5WULGx
-	 4K/8HJyadfV2hw1UT6NsJsBD7IAH7pQexQjgRvTE=
+	b=S4q1PS34zFmN4DUtcdcBdIuaO2N0/nFUpnXm2NmyV7oYsz9YrOAWRQqNLG/blJ7Uo
+	 uiBpuys6HlzhD2LXnZo+L7fTBo7k42fF5gw4XBr0ifGUXcPrVTwZh6PxpGx28NJQjG
+	 uOpy9XNQb1XPdyDcQYOcZNc8x48gM8d4s1MPT60U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2559/3318] power: supply: ab8500_charger: Respect AB8505 register layout
-Date: Wed, 18 Nov 2026 15:53:01 +0100
-Message-ID: <20261118150438.034111445@linuxfoundation.org>
+Subject: [PATCH 6.6 2560/3318] power: supply: ab8500_charger: Handle detection errors
+Date: Wed, 18 Nov 2026 15:53:02 +0100
+Message-ID: <20261118150438.060854939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,108 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit dcecf527632297011153f088573689a1ad1de790 ]
+[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
 
-Several AB8505 charger fields differ from AB8500. Its long VBUS
-falling debounce is 300 ms rather than 100 ms, and its VBUS
-overvoltage selector has a different encoding programmed through OTP.
-Writing the AB8500 6.3 V value selects 9 V on AB8505.
+ab8500_charger_detect_chargers() returns either a charger bitmask or
+a negative register-access error. The probe and component-bind paths
+use a negative return value as a bitmask, making failed reads appear
+as both AC and USB connections.
 
-AB8505 revision 3 also defines SwControlFallback as reserved,
-correcting older documentation which led the driver to support
-autopower there. Preserve the AB8505 overvoltage setting, wait for its
-documented debounce, and reject the unsupported autopower setting.
+Propagate detection errors and release the bind-time workqueue on
+failure.
 
-Fixes: 0ed5107fa860 ("ab8500-charger: Do not touch VBUSOVV bits")
-Fixes: b016322293c7 ("ab8500-charger: Add support for autopower on AB8505 and AB9540")
+Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
+Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-9-e986ed321cc6@kernel.org
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/power/supply/ab8500_charger.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 3df719fac2ddb..5ebf0080ab2df 100644
+index 5ebf0080ab2df..a53fe0fb1a408 100644
 --- a/drivers/power/supply/ab8500_charger.c
 +++ b/drivers/power/supply/ab8500_charger.c
-@@ -52,7 +52,7 @@
- #define MAIN_CH_DET			0x01
- #define MAIN_CH_CV_ON			0x04
- #define USB_CH_CV_ON			0x08
--#define VBUS_DET_DBNC100		0x02
-+#define VBUS_DET_DBNC_LONG		0x02
- #define VBUS_DET_DBNC1			0x01
- #define OTP_ENABLE_WD			0x01
- #define DROP_COUNT_RESET		0x01
-@@ -383,6 +383,10 @@ static void ab8500_enable_disable_sw_fallback(struct ab8500_charger *di,
- 	u8 bit;
- 	int ret;
- 
-+	/* SwControlFallback is reserved and must remain clear on AB8505. */
-+	if (is_ab8505(di->parent))
-+		return;
-+
- 	dev_dbg(di->dev, "SW Fallback: %d\n", fallback);
- 
- 	if (is_ab8500(di->parent)) {
-@@ -691,12 +695,16 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 
- 	if (!probe) {
- 		/*
--		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC100
-+		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC_LONG
- 		 * when disconnecting ACA even though no
- 		 * charger was connected. Try waiting a little
--		 * longer than the 100 ms of VBUS_DET_DBNC100...
-+		 * longer than its 100 ms debounce. AB8505 uses
-+		 * a 300 ms falling debounce for the same bit.
- 		 */
--		msleep(110);
-+		if (is_ab8505(di->parent))
-+			msleep(310);
-+		else
-+			msleep(110);
- 	}
- 	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
- 		AB8500_CH_USBCH_STAT1_REG, &val);
-@@ -707,7 +715,7 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 	dev_dbg(di->dev,
- 		"%s AB8500_CH_USBCH_STAT1_REG %x\n", __func__,
- 		val);
--	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC100))
-+	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC_LONG))
- 		result |= USB_PW_CONN;
- 
- 	return result;
-@@ -3174,7 +3182,7 @@ static int ab8500_charger_init_hw_registers(struct ab8500_charger *di)
- 		}
+@@ -3451,6 +3451,10 @@ static int ab8500_charger_bind(struct device *dev)
  	}
  
--	if (is_ab8505_2p0(di->parent))
-+	if (is_ab8505(di->parent))
- 		ret = abx500_mask_and_set_register_interruptible(di->dev,
- 			AB8500_CHARGER,
- 			AB8500_USBCH_CTRL2_REG,
-@@ -3523,11 +3531,14 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 
- 	di->bm = &ab8500_bm_data;
- 
--	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
--
- 	/* get parent data */
- 	di->dev = dev;
- 	di->parent = dev_get_drvdata(pdev->dev.parent);
-+	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
-+	if (di->autopower_cfg && is_ab8505(di->parent)) {
-+		dev_warn(dev, "autopower is not supported on AB8505\n");
-+		di->autopower_cfg = false;
+ 	ch_stat = ab8500_charger_detect_chargers(di, false);
++	if (ch_stat < 0) {
++		destroy_workqueue(di->charger_wq);
++		return ch_stat;
 +	}
  
- 	/* Get ADC channels */
- 	if (!is_ab8505(di->parent)) {
+ 	if (ch_stat & AC_PW_CONN) {
+ 		if (is_ab8500(di->parent))
+@@ -3739,6 +3743,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
+ 
+ 	/* Identify the connected charger types during startup */
+ 	charger_status = ab8500_charger_detect_chargers(di, true);
++	if (charger_status < 0) {
++		ret = charger_status;
++		goto remove_ab8500_bm;
++	}
+ 	if (charger_status & AC_PW_CONN) {
+ 		di->ac.charger_connected = 1;
+ 		di->ac_conn = true;
 -- 
 2.53.0
 
