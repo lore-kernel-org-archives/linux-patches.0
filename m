@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038414;
-	b=A/4PBdLz8HVvnH1NgllkOC4LPt19nTlussJYbnQ0uOrqtO7BLOzZe1DldsXgtQqO87c0
-	 +PsftFZezbem0usx3iT/7PC/ifVfwse4I5zmS4DKaK5cgl+1FB7dOZzsbiN20RyS8pFrG
-	 T9M1yakYltpu9XC7bcr/JFjqRoQALvM65tFRrVukSa5A6nbvnZXFraF/V1QLAHotC8eiH
-	 7wh6W+lfTtyF7Jtml8DTe5AvDiYy+PwjBErhgReT8V1GEyv8V+Jcmp5Drm6ans76l8L2/
-	 LGxi1iZX2cgiNP7ZeWP2yewkN0kFEMM1LZguV2Ihb5fAoZHUS4JScGzUx71BE+/R+tQ==
+	t=1795038417;
+	b=CX8tmFMElypDn5YwjN7exoDF6ZnslUOYorZbxm+PvyOJsjLA+xtR1bpT8GyLFJBCHwbb
+	 FtryQyWqxwj3HUYra8pt67+c9mPjZ7lkst9kDfmqTYka0JP4MfnTl4dBtgF4BlQOp2Z3D
+	 LTpMGh+OhMDxIInI9Z6WbKn6EWVu0N9/lslUQhDEjIRGveMoTzBBQ1ALbix/IpNDY6eNA
+	 U9YRuS/6QA3MHOFT10uNS8ZwMDM+AMt0dUQiRChmdX9qCm7pVrSIvuKqaxdQKK+/rgOBk
+	 3ksmTrfdQzBxmzVDSjS2s9HhRprAWLVsaj+OJvBA0ac7SahiDVsOr4Lk5vrrWaeGflQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=arZzA7TMYp+c6LizH78/7M5ZZ9wyoP9i95M9k7uHp58=;
-	b=DuUyAdRAt9hq0LvwmNbSZhA+w28KncOTlFbN47rZvdZPEa7d54uYKF+cbrEfL/rcx/jN
-	 IkXqmkuKVvlSNpGMWYADSRXI7gJWY7tUGGp9Mg0vftotmDslAkeLFD5N9xu5vbHyDj3J8
-	 XhCAa/KwRsAPFxU9g7jskVhz7cu9RYEWxs5MSPduj7TjNOGSFRcSqqL4TSF1Cdyxbd/x7
-	 VaBH3htlifCSY2/FKfTgDGk7qwvoEMofSaFvZ0rYnCwwKGvFZpqeCjhpGRfYhy9P2wpdy
-	 m7ytQIVYQPO6mqYBgdLsRWiXN1stAdvKRXDF4vKF8qakOM72yPYepvbcxnOuos1I+Ew==
+	bh=DzQImuQfu7K7QP/z7cNBE0X4fPPM81c4SvSFXPRYRmc=;
+	b=KxWXfK5/oULmwN8IGaDzdMLo+/kzS/gT4usevFDItMdcINBWnGUG9eaoG+6ALP1lR1sX
+	 guLa3+DyL+jyL4/ryMTdBtoXWtgkep6HoWSzM96C+GYJeZYWo6FrL5z8BTykfWCDAZxqb
+	 PecCAgk9TlnqawWjelmsVImeUSoCqf+VKzSYdtl1yJp2sgxBF1W8Q3pXpH5+suZ2T7FDh
+	 xUAAWxgWcL53xSV6VIZXSrM4q/VQVu5U5xLjPduGGpoq4HtKJSUmUIeU7ExANMlOXfpbM
+	 O1tTla0V50T1mpUaw138SNyjbUrlxPU78MOEe0HgFEJWMN38zMkeqVHDvQ6PvkI2oYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaSkeuWQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxRJvAnl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635F9606A320;
-	Wed, 18 Nov 2026 21:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406DA606A325;
+	Wed, 18 Nov 2026 21:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaSkeuWQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AC31F000C4;
-	Wed, 18 Nov 2026 21:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxRJvAnl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6861F000C4;
+	Wed, 18 Nov 2026 21:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038414;
-	bh=arZzA7TMYp+c6LizH78/7M5ZZ9wyoP9i95M9k7uHp58=;
+	s=korg; t=1795038417;
+	bh=DzQImuQfu7K7QP/z7cNBE0X4fPPM81c4SvSFXPRYRmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YaSkeuWQ8MlVzifVcZNbQo2yy6ayKVlamHpeLf3xCBeGbP1N/2DosOjySAOIWCM/m
-	 1CMpegqQ8UcHyW2SwI+OrSL/M7TSDES/RTulWw+ZIzxy69ZgmeBjS3xH28ymJd5jdH
-	 jDmEU8Hl4N8XgYsbJs0BBmA3A2WOql/ME0KcfVg0=
+	b=xxRJvAnl47bpVZ7KnFTbGt5gxKGgqxXtC7wsVgsqtQgQ3qRh+6VTCvOe3qlRnc6Cy
+	 RIfYqhQFcYV1WC0BS3pKbSv/akkw2VO4hmja2niFvZg9fTaUs48rE3uBpSNCoeHpbb
+	 G0gWvLbA9C5eXnhCWJDPAqPxQrlqb5Q9NFPW5K2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1733/3318] drm/amdkfd: fix doorbell allocation race creating duplicate allocations
-Date: Wed, 18 Nov 2026 15:39:15 +0100
-Message-ID: <20261118150413.855185385@linuxfoundation.org>
+Subject: [PATCH 6.6 1734/3318] nilfs2: force clear dirty state when restoring from the shadow map
+Date: Wed, 18 Nov 2026 15:39:16 +0100
+Message-ID: <20261118150413.885192947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,184 +69,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit bebad45050945a3d668d6701fb77ae2571c5d44b ]
+[ Upstream commit cb6702e63e0a16afd83875294e5ce53becdd1b1f ]
 
-The check-and-allocate sequence on pdd->qpd.proc_doorbells is
-lockless at every call site of kfd_alloc_process_doorbells():
-kfd_get_process_doorbells() (mmap of /dev/kfd),
-kfd_ioctl_create_queue() and the CRIU restore path each test the
-pointer under different locking (or none), so two racing threads can
-both observe NULL and each allocate a doorbell BO and bitmap,
-orphaning one allocation and handing the two mappings different
-backing pages.
+When garbage collection fails, nilfs2 rolls the DAT metadata file's page
+cache back to a shadow copy taken before GC started.
+nilfs_clear_dirty_pages() drops the dirty state of the folios in the DAT
+cache, then nilfs_copy_back_pages() overwrites them with the saved
+contents and warns if one is still dirty:
 
-Move the serialization into kfd_alloc_process_doorbells() itself,
-using a new per-process-device mutex so all three call sites are
-covered regardless of their own locking.  The device-global
-kfd->doorbell_mutex is not suitable here: it is acquired under
-dqm->lock on the kernel-doorbell path (start_cpsch() -> pm_init() ->
-kq_initialize() -> kfd_get_kernel_doorbell()), so holding it across
-the sleeping allocations above would create a lock-ordering
-inversion with dqm->lock via TTM eviction, and it would also
-serialize doorbell setup of unrelated processes behind a
-device-wide lock for per-process state.
+	/* overwrite existing folio in the destination cache */
+	WARN_ON(folio_test_dirty(dfolio));
 
-This issue was discovered by Tencent CodeBuddy Security.
+nilfs_clear_dirty_pages() used to clear the dirty state unconditionally,
+which is safe here because the rollback runs with the log writer
+stopped, so nothing else can dirty the cache while it runs.  The same
+helper is also used when writeback finds dirty folios after the
+filesystem has degraded to read-only, where it does run concurrently
+with the log writer, so commit ca76bb226bf4 ("nilfs2: do not force clear
+folio if buffer is referenced") made nilfs_clear_folio_dirty() skip a
+folio if any of its buffer heads is busy.  The rollback caller shares
+that helper, so its clearing step can now return with a folio still
+dirty.
 
-v3 (Felix Kuehling):
-- Removed unlocked check in kfd_get_process_doorbell flagged as
-  problematic by Sashiko Bot. Fall back to the locked check inside
-  kfd_alloc_process_doorbells
-- Added missing mutex_destroy
-v4 (Felix Kuehling):
-- Removed unlocked checks around other kfd_alloc_process_doorbells calls
+A DAT folio can hold a busy buffer head without anyone modifying the
+folio: nilfs_mdt_read_block() submits read-ahead for the blocks
+following the one it was asked for and waits only for the first, so the
+read-ahead buffers are still locked when it returns.  With a block size
+smaller than the page size, a locked read-ahead buffer can share a folio
+with a block that GC dirtied and keep the whole folio dirty past the
+clearing step.
 
-Fixes: 16f0013157bf ("drm/amdkfd: Allocate doorbells only when needed")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e27ba5ad5f76932d4f6cbacd25c81c2dd40ec4a)
+Add a force flag to nilfs_clear_dirty_pages() and
+nilfs_clear_folio_dirty() that skips the busy buffer check, and set it
+in the two calls from nilfs_mdt_restore_from_shadow_map().  The
+read-only fallback callers keep passing false, so that commit still
+protects them and the WARN_ON() is left alone.
+
+Fixes: ca76bb226bf4 ("nilfs2: do not force clear folio if buffer is referenced")
+Closes: https://lore.kernel.org/lkml/CANypQFZSYrtcshnUzOPiqatyLd-M8_OReOewQoAi_V5yY0dTtg@mail.gmail.com/
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context for older inline queue buffer handling and missing SDMA validation and process counter code. ]
+Suggested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Assisted-by: Claude Code:claude-opus-5
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+[ sashal: adapted nilfs_clear_folio_dirty() to nilfs_clear_dirty_page() while preserving the separate silent argument ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c  | 18 +++++++-----------
- drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c | 23 +++++++++++++++++------
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h     |  3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_process.c  |  2 ++
- 4 files changed, 29 insertions(+), 17 deletions(-)
+ fs/nilfs2/inode.c |  4 ++--
+ fs/nilfs2/mdt.c   |  6 +++---
+ fs/nilfs2/page.c  | 51 ++++++++++++++++++++++++++++-------------------
+ fs/nilfs2/page.h  |  5 +++--
+ 4 files changed, 38 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 57a41ff6ea930..44cd1b54d020e 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -339,12 +339,10 @@ static int kfd_ioctl_create_queue(struct file *filep, struct kfd_process *p,
- 		goto err_bind_process;
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index 5e17408c80ae6..32063441e898f 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -162,7 +162,7 @@ static int nilfs_writepages(struct address_space *mapping,
+ 	int err = 0;
+ 
+ 	if (sb_rdonly(inode->i_sb)) {
+-		nilfs_clear_dirty_pages(mapping, false);
++		nilfs_clear_dirty_pages(mapping, false, false);
+ 		return -EROFS;
  	}
  
--	if (!pdd->qpd.proc_doorbells) {
--		err = kfd_alloc_process_doorbells(dev->kfd, pdd);
--		if (err) {
--			pr_debug("failed to allocate process doorbells\n");
--			goto err_bind_process;
--		}
-+	err = kfd_alloc_process_doorbells(dev->kfd, pdd);
-+	if (err) {
-+		pr_debug("failed to allocate process doorbells\n");
-+		goto err_bind_process;
+@@ -185,7 +185,7 @@ static int nilfs_writepage(struct page *page, struct writeback_control *wbc)
+ 		 * have dirty pages that try to be flushed in background.
+ 		 * So, here we simply discard this dirty page.
+ 		 */
+-		nilfs_clear_dirty_page(page, false);
++		nilfs_clear_dirty_page(page, false, false);
+ 		unlock_page(page);
+ 		return -EROFS;
  	}
+diff --git a/fs/nilfs2/mdt.c b/fs/nilfs2/mdt.c
+index 75a2ed5ee6e09..c0c1e217bd384 100644
+--- a/fs/nilfs2/mdt.c
++++ b/fs/nilfs2/mdt.c
+@@ -411,7 +411,7 @@ nilfs_mdt_write_page(struct page *page, struct writeback_control *wbc)
+ 		 * have dirty pages that try to be flushed in background.
+ 		 * So, here we simply discard this dirty page.
+ 		 */
+-		nilfs_clear_dirty_page(page, false);
++		nilfs_clear_dirty_page(page, false, false);
+ 		unlock_page(page);
+ 		return -EROFS;
+ 	}
+@@ -634,10 +634,10 @@ void nilfs_mdt_restore_from_shadow_map(struct inode *inode)
+ 	if (mi->mi_palloc_cache)
+ 		nilfs_palloc_clear_cache(inode);
  
- 	/* Starting with GFX11, wptr BOs must be mapped to GART for MES to determine work
-@@ -2294,11 +2292,9 @@ static int criu_restore_devices(struct kfd_process *p,
- 			goto exit;
+-	nilfs_clear_dirty_pages(inode->i_mapping, true);
++	nilfs_clear_dirty_pages(inode->i_mapping, true, true);
+ 	nilfs_copy_back_pages(inode->i_mapping, shadow->inode->i_mapping);
+ 
+-	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping, true);
++	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping, true, true);
+ 	nilfs_copy_back_pages(ii->i_assoc_inode->i_mapping,
+ 			      NILFS_I(shadow->inode)->i_assoc_inode->i_mapping);
+ 
+diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
+index 2dbf74936a7ed..c664cf867e9d6 100644
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -370,8 +370,10 @@ void nilfs_copy_back_pages(struct address_space *dmap,
+  * nilfs_clear_dirty_pages - discard dirty pages in address space
+  * @mapping: address space with dirty pages for discarding
+  * @silent: suppress [true] or print [false] warning messages
++ * @force: whether to clear the dirty state regardless of busy buffer heads
+  */
+-void nilfs_clear_dirty_pages(struct address_space *mapping, bool silent)
++void nilfs_clear_dirty_pages(struct address_space *mapping, bool silent,
++			     bool force)
+ {
+ 	struct folio_batch fbatch;
+ 	unsigned int i;
+@@ -392,7 +394,7 @@ void nilfs_clear_dirty_pages(struct address_space *mapping, bool silent)
+ 			 * was acquired.  Skip processing in that case.
+ 			 */
+ 			if (likely(folio->mapping == mapping))
+-				nilfs_clear_dirty_page(&folio->page, silent);
++				nilfs_clear_dirty_page(&folio->page, silent, force);
+ 
+ 			folio_unlock(folio);
+ 		}
+@@ -405,13 +407,16 @@ void nilfs_clear_dirty_pages(struct address_space *mapping, bool silent)
+  * nilfs_clear_dirty_page - discard dirty page
+  * @page: dirty page that will be discarded
+  * @silent: suppress [true] or print [false] warning messages
++ * @force: whether to clear the states regardless of busy buffer heads
+  *
+  * nilfs_clear_dirty_page() clears working states including dirty state for
+- * the page and its buffers.  If the page has buffers, clear only if it is
+- * confirmed that none of the buffer heads are busy (none have valid
+- * references and none are locked).
++ * the page and its buffers.  If the page has buffers and force is false,
++ * clear only if it is confirmed that none of the buffer heads are busy (none
++ * have valid references and none are locked).  If force is true, the states
++ * are cleared unconditionally, the caller should guarantee that the page is
++ * not being modified concurrently.
+  */
+-void nilfs_clear_dirty_page(struct page *page, bool silent)
++void nilfs_clear_dirty_page(struct page *page, bool silent, bool force)
+ {
+ 	struct inode *inode = page->mapping->host;
+ 	struct super_block *sb = inode->i_sb;
+@@ -429,24 +434,28 @@ void nilfs_clear_dirty_page(struct page *page, bool silent)
+ 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+ 			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
+ 			 BIT(BH_Delay));
+-		bool busy, invalidated = false;
++
++		if (!force) {
++			bool busy, invalidated = false;
+ 
+ recheck_buffers:
+-		busy = false;
+-		bh = head;
+-		do {
+-			if (atomic_read(&bh->b_count) | buffer_locked(bh)) {
+-				busy = true;
+-				break;
++			busy = false;
++			bh = head;
++			do {
++				if (atomic_read(&bh->b_count) |
++				    buffer_locked(bh)) {
++					busy = true;
++					break;
++				}
++			} while (bh = bh->b_this_page, bh != head);
++
++			if (busy) {
++				if (invalidated)
++					return;
++				invalidate_bh_lrus();
++				invalidated = true;
++				goto recheck_buffers;
+ 			}
+-		} while (bh = bh->b_this_page, bh != head);
+-
+-		if (busy) {
+-			if (invalidated)
+-				return;
+-			invalidate_bh_lrus();
+-			invalidated = true;
+-			goto recheck_buffers;
  		}
  
--		if (!pdd->qpd.proc_doorbells) {
--			ret = kfd_alloc_process_doorbells(dev->kfd, pdd);
--			if (ret)
--				goto exit;
--		}
-+		ret = kfd_alloc_process_doorbells(dev->kfd, pdd);
-+		if (ret)
-+			goto exit;
- 	}
+ 		bh = head;
+diff --git a/fs/nilfs2/page.h b/fs/nilfs2/page.h
+index bff6257ef83bd..bce9a1b5c8f02 100644
+--- a/fs/nilfs2/page.h
++++ b/fs/nilfs2/page.h
+@@ -41,8 +41,9 @@ void nilfs_folio_bug(struct folio *);
  
- 	/*
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
-index fdcf7f2d1b5b4..6af268a031f22 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
-@@ -239,11 +239,9 @@ phys_addr_t kfd_get_process_doorbells(struct kfd_process_device *pdd)
- 	struct amdgpu_device *adev = pdd->dev->adev;
- 	uint32_t first_db_index;
- 
--	if (!pdd->qpd.proc_doorbells) {
--		if (kfd_alloc_process_doorbells(pdd->dev->kfd, pdd))
--			/* phys_addr_t 0 is error */
--			return 0;
--	}
-+	if (kfd_alloc_process_doorbells(pdd->dev->kfd, pdd))
-+		/* phys_addr_t 0 is error */
-+		return 0;
- 
- 	first_db_index = amdgpu_doorbell_index_on_bar(adev,
- 						      pdd->qpd.proc_doorbells,
-@@ -257,12 +255,21 @@ int kfd_alloc_process_doorbells(struct kfd_dev *kfd, struct kfd_process_device *
- 	int r;
- 	struct qcm_process_device *qpd = &pdd->qpd;
- 
-+	mutex_lock(&pdd->doorbell_mutex);
-+
-+	/* Another thread may have won the check-and-allocate race */
-+	if (qpd->proc_doorbells) {
-+		mutex_unlock(&pdd->doorbell_mutex);
-+		return 0;
-+	}
-+
- 	/* Allocate bitmap for dynamic doorbell allocation */
- 	qpd->doorbell_bitmap = bitmap_zalloc(KFD_MAX_NUM_OF_QUEUES_PER_PROCESS,
- 					     GFP_KERNEL);
- 	if (!qpd->doorbell_bitmap) {
- 		DRM_ERROR("Failed to allocate process doorbell bitmap\n");
--		return -ENOMEM;
-+		r = -ENOMEM;
-+		goto unlock;
- 	}
- 
- 	r = init_doorbell_bitmap(&pdd->qpd, kfd);
-@@ -284,11 +291,15 @@ int kfd_alloc_process_doorbells(struct kfd_dev *kfd, struct kfd_process_device *
- 		DRM_ERROR("Failed to allocate process doorbells\n");
- 		goto err;
- 	}
-+
-+	mutex_unlock(&pdd->doorbell_mutex);
- 	return 0;
- 
- err:
- 	bitmap_free(qpd->doorbell_bitmap);
- 	qpd->doorbell_bitmap = NULL;
-+unlock:
-+	mutex_unlock(&pdd->doorbell_mutex);
- 	return r;
- }
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 8f6fe5312b26e..b2683275ed017 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -752,6 +752,9 @@ struct kfd_process_device {
- 	/* per-process-per device QCM data structure */
- 	struct qcm_process_device qpd;
- 
-+	/* Serializes process doorbell allocation for this device */
-+	struct mutex doorbell_mutex;
-+
- 	/*Apertures*/
- 	uint64_t lds_base;
- 	uint64_t lds_limit;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 93740b8fc3f44..b860598d86f22 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1061,6 +1061,7 @@ static void kfd_process_destroy_pdds(struct kfd_process *p)
- 			pdd->runtime_inuse = false;
- 		}
- 
-+		mutex_destroy(&pdd->doorbell_mutex);
- 		kfree(pdd);
- 		p->pdds[i] = NULL;
- 	}
-@@ -1600,6 +1601,7 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 	pdd->dev = dev;
- 	INIT_LIST_HEAD(&pdd->qpd.queues_list);
- 	INIT_LIST_HEAD(&pdd->qpd.priv_queue_list);
-+	mutex_init(&pdd->doorbell_mutex);
- 	pdd->qpd.dqm = dev->dqm;
- 	pdd->qpd.pqm = &p->pqm;
- 	pdd->qpd.evicted = 0;
+ int nilfs_copy_dirty_pages(struct address_space *, struct address_space *);
+ void nilfs_copy_back_pages(struct address_space *, struct address_space *);
+-void nilfs_clear_dirty_page(struct page *, bool);
+-void nilfs_clear_dirty_pages(struct address_space *, bool);
++void nilfs_clear_dirty_page(struct page *page, bool silent, bool force);
++void nilfs_clear_dirty_pages(struct address_space *mapping, bool silent,
++			     bool force);
+ unsigned int nilfs_page_count_clean_buffers(struct page *, unsigned int,
+ 					    unsigned int);
+ unsigned long nilfs_find_uncommitted_extent(struct inode *inode,
 -- 
 2.53.0
 
