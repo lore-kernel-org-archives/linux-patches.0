@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025985;
-	b=37ZVC5ql3I/jnkQHlHB0tKpBr4UAmwVGJxIpATNIH7+HNH+1tz2uMCmsj0h+rAW/8OUJ
-	 rIp6Ew5XrLEGjuEJpIhW+qzYoUxGe1ywb6UJH/3E0UnpF680IonTOdf9rS1lkzTs0GAp/
-	 xI7p7Tgn8nUrj3NaO3HBixVybljSHJgg3dA2yI41Hea/1F+0h37L0zgSvzR20+7XbZN1L
-	 JElRqFDr1OmPcne5h9V46atGy/941B65RDh62FVQ/XpNdYPxxOqc5psSvVtM31pm2c0+5
-	 P3A6FKGMB8coGCFD+VI8fd+iszm6ROMF0Li3bl097bItIP/Gd0LT9ypoxCOhDNQNvzw==
+	t=1795025988;
+	b=Ee/zNkA0iNTeYnlAR/jEaECDlt09TU8gCqkSW72WCmxAnMRURZjvlyRgYiVswCuUWJ0q
+	 wrB2JytmkDGyg9Fi5T3lxbqbC6V2lyZEbaWn+fZ+a+FPlloT576PvKPFUVpSM8p4t7qy1
+	 n3SVv94vy0u8k3PXC1DerWqh0W1F68pg0AcQNw7f8lp3LnCQcwraX8Z71kp45higPxqir
+	 D0jlfX7cA9KGc2nFNZb1CPFMDZOZpGO0PozpSbQk8H2jPQUtO6Rr2RqPorVYkV4vysd9d
+	 BsJuOTQhIOIQKq5BY3W8Y+AGOSB+VFgWV6vaq7pDkgeT6a/udPdsQPjQtrCFL88qKjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=QZpjer5qkCrKvRvoOckybWdfy6r6hD2qyb6lUDXWYKk=;
-	b=rxPNk211CKjetKY79GAOub/IjrjaR45no5Y/Y0E6WhTXlw7DwTPl7lrd95S4N5O2pgYY
-	 f6u958OhPGoQRjk3lW8VbLmH/9tvCrHY4C6gJtbJBuNKHL12J5zML4lePxQF2MEBiFI+H
-	 R0B1NszFHjxT7dyAWoA3EfZbSBwRPeoDYe33pHAU3IIVokD6QbbpK5XKz9/xeGelSORtO
-	 bs0iDezZUx2s2jn3a9Cz2NoVkpO2vGO0dw9vbXD5+4jQXZBo0rBb34vNH6/Nk1/DjQogx
-	 xhIihrP7xzonndUUufAa1tdwJ5dt0e2WYVkD5tcV+hyxQhbm8lzFBuQYAwJLvOE/m6A==
+	bh=fOobGz8RfPjmIfldsBTPE4/X1bfEdnpsBYmpQhNyljs=;
+	b=E9itnXpFtYHEQ9oj4ZHt7MDrErfRLeOT+FbWCR2YRZxmgNbpbFJgG626aVHAbY6YUFwF
+	 6ug6YnmB57q2Mc8i8DYCNKl+R/mnHYxeUJEipXl/GU2da5JB02CJ2+dp0vJEPScccSZwD
+	 v1DjYBAIPXMw4tX8FGdLknjtaATWqfISyii6vkiicb4rSpkOiugpMHJbvkGFEfkvMYbx7
+	 oJMRFcJb1lwjrC3bzzuTEZAPbzdry9vEayJHZjHWNsJxSm+lrGjzSefMBjZS4D9k8J1Qk
+	 yNcMjYuSm3gcLTUCQWdgnCttzVkyWalDGeOGXoz4DicyIkAR3u3n6r0LwZtFOUoHVUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gr2Xf1rT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quhiIWjD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA553606A32F;
-	Wed, 18 Nov 2026 18:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B256C606A332;
+	Wed, 18 Nov 2026 18:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gr2Xf1rT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA841F000C4;
-	Wed, 18 Nov 2026 18:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quhiIWjD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9031F000C4;
+	Wed, 18 Nov 2026 18:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025985;
-	bh=QZpjer5qkCrKvRvoOckybWdfy6r6hD2qyb6lUDXWYKk=;
+	s=korg; t=1795025988;
+	bh=fOobGz8RfPjmIfldsBTPE4/X1bfEdnpsBYmpQhNyljs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gr2Xf1rTED5zd2JylzRt/7oJVygkSDxzj/3cAvC7l0313ZIcdTJKkjPojpzS2AdrN
-	 xIHn0hKbzF0CzOFcvtbghxMN2v/EVDKXT8Ksr2jIKk0O/Eb3xvi1huQjPawfGqY0qq
-	 gnSVIiPItJ2nrLWTngqe782d+l7is4uLI3TAUqeE=
+	b=quhiIWjD4+M8/RZcrhp7TpNSFTdBGQMzklBetMCcajB+DZdJ+T8xt3HkB1b1yEcW6
+	 mPOL82t8j1hwyAuqDwSAQPgdnS4J+D1bcBG8OmQKqNoaG7PMoEJWR1AC+pJAHbNk9b
+	 xtBpHjSFvXCgi8YPhCtFALmdvlOfWiR7z2XTixOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1273/2151] ASoC: mediatek: common: Keep codec references until the card is bound
-Date: Wed, 18 Nov 2026 15:50:08 +0100
-Message-ID: <20261118150208.501815050@linuxfoundation.org>
+Subject: [PATCH 6.18 1274/2151] ASoC: mediatek: mt8188: Constrain UL8 FE to its back ends capabilities
+Date: Wed, 18 Nov 2026 15:50:09 +0100
+Message-ID: <20261118150208.536016340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,70 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Michał Kopeć <michal@nozomi.space>
 
-[ Upstream commit 6cb1f09e1f699d0c7f748057bc50d84a1e9e77fc ]
+[ Upstream commit 76775717c4adc283d5e7aed469468c8fa1ada4a7 ]
 
-mtk_soundcard_common_probe() drops the codec references parsed from the
-devicetree right after devm_snd_soc_register_card() returns. When a
-component is still missing, snd_soc_bind_card() queues the card for a
-later rebind and registration still returns success, so the card is not
-instantiated yet. The rebind reuses the same dai_link array, but with the
-codec references released both the codec name and of_node are unset, so
-it fails the dai link sanity check and the sound card never appears.
+UL8 advertises up to 24 channels, but its only back end, ETDM1_IN,
+supports at most 16, and its bit clock is limited to 24.576 MHz.
+Without merged constraints, userspace can open UL8 with 48 kHz, 24
+channels and 32-bit slots, which then fails in hw_params:
 
-Release the references right away only when the card was instantiated
-or registration failed. Otherwise keep them for the rebind and release
-them when the device is unbound.
+  mtk_dai_etdm_configure bck rate 36864000 not support
+  ASoC error (-22): at snd_soc_dai_hw_params() on ETDM1_IN
 
-Fixes: bce93a162505 ("ASoC: mediatek: Add common machine soundcard driver probe mechanism")
+Set dpcm_merged_chan/rate/format, as the DL front ends already do, so
+the FE only offers configurations the back end can accept.
+
+Fixes: 96035d46d4b4 ("ASoC: mediatek: mt8188: add machine driver with mt6359")
 Signed-off-by: Michał Kopeć <michal@nozomi.space>
-Link: https://patch.msgid.link/20261003194501.832558-2-michal@nozomi.space
+Link: https://patch.msgid.link/20261003194501.832558-4-michal@nozomi.space
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/common/mtk-soundcard-driver.c    | 23 +++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-mt6359.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/mediatek/common/mtk-soundcard-driver.c b/sound/soc/mediatek/common/mtk-soundcard-driver.c
-index a2a30a87a359f..102499bfffe18 100644
---- a/sound/soc/mediatek/common/mtk-soundcard-driver.c
-+++ b/sound/soc/mediatek/common/mtk-soundcard-driver.c
-@@ -131,6 +131,11 @@ void clean_card_reference(struct snd_soc_card *card)
- }
- EXPORT_SYMBOL_GPL(clean_card_reference);
- 
-+static void mtk_soundcard_put_card_reference(void *data)
-+{
-+	clean_card_reference(data);
-+}
-+
- int mtk_soundcard_startup(struct snd_pcm_substream *substream,
- 			  enum mtk_pcm_constraint_type ctype)
- {
-@@ -331,8 +336,22 @@ int mtk_soundcard_common_probe(struct platform_device *pdev)
- 
- 	ret = devm_snd_soc_register_card(&pdev->dev, card);
- 
--	if (!needs_legacy_probe)
--		clean_card_reference(card);
-+	/*
-+	 * When a component is still missing, snd_soc_bind_card() queues the
-+	 * card for a later rebind and returns success, so the card is not
-+	 * instantiated yet. That rebind reuses this same dai_link array, so
-+	 * the codec references parsed from the devicetree must be kept until
-+	 * the device is unbound: dropping them leaves both name and of_node
-+	 * unset and the rebind fails the dai link sanity check instead.
-+	 */
-+	if (!needs_legacy_probe) {
-+		if (ret || snd_soc_card_is_instantiated(card))
-+			clean_card_reference(card);
-+		else
-+			ret = devm_add_action_or_reset(&pdev->dev,
-+						       mtk_soundcard_put_card_reference,
-+						       card);
-+	}
- 
- 	if (ret) {
- 		dev_err_probe(&pdev->dev, ret, "Cannot register card\n");
+diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+index c6e7461e8f764..e61ee390d233f 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
++++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+@@ -1139,6 +1139,9 @@ static struct snd_soc_dai_link mt8188_mt6359_dai_links[] = {
+ 		},
+ 		.dynamic = 1,
+ 		.capture_only = 1,
++		.dpcm_merged_chan = 1,
++		.dpcm_merged_rate = 1,
++		.dpcm_merged_format = 1,
+ 		SND_SOC_DAILINK_REG(capture8),
+ 	},
+ 	[DAI_LINK_UL9_FE] = {
 -- 
 2.53.0
 
