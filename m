@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024767;
-	b=NwPc0ZjcbcIs9bt1cMZvqJF0gR14V60Rki0tHQWZI7Jw9aM5uLOyedCVYdynqDAhx3AF
-	 KWbNEeWHmesN1PRwHyXXUtHi3KgoPTzmHtfo9neB9Twx6cXf4J3JojbSbt7E3beBDPX41
-	 Vf4t7ToeCnZr62T2oc0KYe+sS5YCusOQF3ZotE2aRIwHPzd+CcDkMrdyuRl7njcdnLRQ9
-	 QNRZhqaqgUO6BMoEuBaWbi6udJYoLxwd4FyJiLw2A+qei8QuIHRCrDFxUoi7dkuKX+rUm
-	 tJ/66M9O+4/6bkmt8TA9l3ddt8ePE4wJIQYfdB4awg5tNgqpQ5De3a5PVksVSk3+QOg==
+	t=1795024769;
+	b=RA4QU5khkcQEo5XYeWCVgVOUYn9ndvUBDq6p76pXU2mZv9pt23PvuB65kTo+kzq3FB54
+	 qyFqzDUmy69MXJJCtERzg7Vde882AVVLlbksnFl0K4iTX0r3OYJMVem1dw7xTpOmZK1et
+	 pkU6GX829fby5Kv0E0Y7nG4odzlbHB32hXLAFScrfXNCM4k5FthuYTA61RljyPlwCVlc0
+	 +C0tiJT+31xA3I8n1Yiu9tKoQ8zzch3uH7fHJQ2NuW/b72L66hYO2ZuzGLdsHaRvMpTEm
+	 bNK/gQyrGTTwtgRRjat9zPX050mkXZJIEXBn5pkh4W2iTgLbikbSdqfKLjAe082GCZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024767;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YvszQhPJtB5pWc8zRrQZ3fc9cpk3xO6hAhBvXM04blA=;
-	b=AWFksZBb0IW8xWf2vacRQZ1ZOkrMBGLLbM3wrKDlwStsf+xLnG7JGVE7XmvKfaNl3SdP
-	 cJlyYYj9dcPm20azLOHcETkY00gTEnRsFvKNO54cgjvT3MtC4u8RaVdSYGq0O8jynEfPB
-	 6YRDj2TtYNYbDglDnW81raRgX/C9/ql1qehD6q5lcxYULlOjovFUUWxHpSdPh5lK+prka
-	 dO5G92M6IaorydxOwN0pcmAJhNvUaQ7xvwWtXfts4lrSonNQR7oCPNo70Sx1hTt8Kg7no
-	 Fhzhm4iEqrG0UzeeMgjx3CWpfEkwKxPHnpnOBzhH+7lLyFnfPNRbGOmV98jaPIG75PA==
+	bh=1a3X4LzP3VCF1+UBFzFfps+PWlxAfsaXWCK9rYkQLkY=;
+	b=g0lOmmy0UCtqIEYF2KH4Z1BY1rWPP8+0+djtEuXqopBBTg94eFFYq5EMr8hf7AJHKvCU
+	 l69bGzM+V5ctB443WgVd5QIjmz2uvZs1vOu2HZYx/QDm0RBvUPAhxQ0egm/5Jjy2PFLaj
+	 6Yy3dFRkp9ICEOMyThEMMQzVHh6oq8j92gmD34fwftBlniIkk0BekA29oYV+yt1ZbFxji
+	 SI5rOd/8mpx8YQ87oMGiFCTTJAGPlatNjI4O3Row0OO8TuAUBA5ioefH+FBUZhQFptUpk
+	 9nPyt/doNrWpZy7nLiPnmcZgQBWNac0W6UgX2MYzcCVMA8K0GAEBATbTy+K7CJOpBqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsZghNeN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDJPq8NN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0618D606A32C;
-	Wed, 18 Nov 2026 17:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1B7606A33B;
+	Wed, 18 Nov 2026 17:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsZghNeN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEB21F000C9;
-	Wed, 18 Nov 2026 17:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDJPq8NN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83561F000C4;
+	Wed, 18 Nov 2026 17:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024766;
-	bh=YvszQhPJtB5pWc8zRrQZ3fc9cpk3xO6hAhBvXM04blA=;
+	s=korg; t=1795024769;
+	bh=1a3X4LzP3VCF1+UBFzFfps+PWlxAfsaXWCK9rYkQLkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsZghNeN07sEnycq7gdRljQ+3c955a6jU4Fqmm1kR1YXV8zqnCZPPIGcrtqX3c8hP
-	 PqJEhkgb5o3Ou86mgDz8O4xLqDe1ZjrytTJIE8xU2AbvRsthEv+ThFe5mu3XIesNAy
-	 K3F+fJbYUKGYziaeedIw+lsLe6RtxABczO8f/agY=
+	b=YDJPq8NNLuEJneMquuI4404315Bvzh+MnxtZbaVcIN88yETnbXmB++uuimUGDkN0d
+	 wzcHWloz3QvtYEjdUBk4q8gBWu5bCBSrGD0LV6G1YK27+yDnoN4NVlP/SgCOOor/yS
+	 e9d9dieoXVnzwpvb/wrK41JFPYu/g5f85NOVJhw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0842/2151] spi: spi-qpic-snand: fix read location register usage in qcom_spi_config_cw_read()
-Date: Wed, 18 Nov 2026 15:42:57 +0100
-Message-ID: <20261118150152.924416315@linuxfoundation.org>
+Subject: [PATCH 6.18 0843/2151] RDMA/mlx5: Restore mr->pi_mr after temporary stack-local assignment
+Date: Wed, 18 Nov 2026 15:42:58 +0100
+Message-ID: <20261118150152.964539401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,58 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit f3c0a2b557ea87cbd802b278783c32484a063ded ]
+[ Upstream commit 9728effe43d8fc4d58e12b697d0d6127355abdd5 ]
 
-While configuring a codeword read, the com_spi_config_cw_read()
-function unconditionally schedules writing of the regular read
-location registers. However these registers should be written
-only if the actual codeword is not the last one.
+In handle_reg_mr_integrity, when mr->pi_mr is NULL (physical-address
+optimization path), the code points mr->pi_mr at a stack-local pa_pi_mr
+so set_pi_umr_wr can read it during this call. The pointer is never
+restored, so after the function returns mr->pi_mr dangles at a freed stack
+frame. A second IB_WR_REG_MR_INTEGRITY posted on the same MR without
+remapping reads the stale pointer and dereferences it.
 
-Change the function to schedule writing of the registers corresponding
-to the acual codeword only.
+Save the original pi_mr (captured at function entry) and restore it on
+the out path.
 
-While at it, also drop the single-use 'reg' and 'num_cw' local variables
-and use the respective values directly in order to make the code easier
-to understand.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20260922-qpic-snand-fix-cw_read-readloc-v1-1-67f6819fb3d7@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2563e2f30acb ("RDMA/mlx5: Use PA mapping for PI handover")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260919100848.2442-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qpic-snand.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/mlx5/wr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 567485785ec96..2f279516de4a9 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -486,15 +486,14 @@ static void qcom_spi_set_read_loc(struct qcom_nand_controller *snandc, int cw, i
- static void
- qcom_spi_config_cw_read(struct qcom_nand_controller *snandc, bool use_ecc, int cw)
- {
--	__le32 *reg = &snandc->regs->read_location0;
--	int num_cw = snandc->qspi->num_cw;
--
--	qcom_write_reg_dma(snandc, reg, NAND_READ_LOCATION_0, 4, NAND_BAM_NEXT_SGL);
--	if (cw == (num_cw - 1)) {
--		reg = &snandc->regs->read_location_last0;
--		qcom_write_reg_dma(snandc, reg, NAND_READ_LOCATION_LAST_CW_0, 4,
-+	if (cw == (snandc->qspi->num_cw - 1))
-+		qcom_write_reg_dma(snandc, &snandc->regs->read_location_last0,
-+				   NAND_READ_LOCATION_LAST_CW_0, 4,
-+				   NAND_BAM_NEXT_SGL);
-+	else
-+		qcom_write_reg_dma(snandc, &snandc->regs->read_location0,
-+				   NAND_READ_LOCATION_0, 4,
- 				   NAND_BAM_NEXT_SGL);
--	}
+diff --git a/drivers/infiniband/hw/mlx5/wr.c b/drivers/infiniband/hw/mlx5/wr.c
+index 9947feb7fb8a0..1748c633213ed 100644
+--- a/drivers/infiniband/hw/mlx5/wr.c
++++ b/drivers/infiniband/hw/mlx5/wr.c
+@@ -925,6 +925,7 @@ static int handle_reg_mr_integrity(struct mlx5_ib_dev *dev,
+ 	qp->next_fence = MLX5_FENCE_MODE_INITIATOR_SMALL;
  
- 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
- 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+ out:
++	mr->pi_mr = pi_mr;
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
