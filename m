@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061928;
-	b=a1OUGLSXXT06KNsEwEJWEmGM7AT3C8hDCOywrRwatjiQJBWhpbBj5SfNFgjyEHEOVB0C
-	 2l/v4M5VOrXDE+DEXOVkqjK82uiBSbguOyPRB5OBqWCnrPjN01ReJ4Y6DZHfYu4eft5ib
-	 b1OFnHo2An7YFBjmJc7BjRDuamrKUJ5js7Godg+H0tspZl2VAHAG+5H8Uqv2CNBRc7srN
-	 mMCzq5t7s/x7IIzuf3yuqxEYwlxBCCGH/Ec9D813Izm+BCx6G3EWEb0Slk2lLRON/2r1h
-	 PObq/lQ9gvl0N8gA7qLUDj7q/Ss8kaondz3bA3RoFbMS3mjOY0wj5kJhXmU1Dbie9jQ==
+	t=1795061931;
+	b=gDMfQTPJn/CerjXYIllVfnY0EgcKRBWH9ygBCu5IEqt+4yVEhATppFXWRJctRDe7YjXI
+	 89G3uM0+Ku7om34us5kbdYyKJsniDu7Mj1IqzqPYvVtFUJucfMuhsQJZhEsIm0bmwnR9l
+	 y8Dc+lMvba8fMRWC2yEg0PltzHlRWXB6tyxS1bLI5FZelT8kMwC6sl3aDv+nDtfN2u81E
+	 qF3WA9njHIfRNvDb1SvGGflhMemWCXFrNgY7/bn4ejkqWnhk2K8VMXx+4sojrGTh6l9BC
+	 Ge//PuY7eR3eKvSWis0cv9iIKvfY28cxouE5Bp9tPYNZsbf2CcHXm3A+0g7uUaKlMPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5nstCvd4yIbgobtg144MG1qMjkFTeY6BcfUdCy7wXNc=;
-	b=isPTj2W477YP2OAZuJW9cXw2BdzP3klZ8TuToTO8s9piYkBvVQOyjmSjTrLhN9Lsebwq
-	 x5uywNvUgZb7gRJb7MCoZBG9rg78JPmhp8ZM5h6H7fxQWVo6UTD5vK5rR7AkehVdHuat9
-	 b6tYvRB+zUko0ZpKXx9npwyFanrlFqh2zZKL6upMyGF/kil/Wb72juELbmqbYcN3D9jW3
-	 vn7SAO9kGuUAdldnwDkppYDJ/xej6AqrCl6kdrDDg5YjmRpGTtqgw23ewLW+FdhY01k2M
-	 Gp6rnVxbgjliBFPXeFQUhl6kBkCJ0AGjb4XLOmeDcL8sSt8kVrR90GvjWKOsNkJEpZA==
+	bh=sb4gVfcR6d7yn1y6QnfZBvasVyvLGSNOWv8ikaADZTQ=;
+	b=lk9KK++KHcxf8ln1IRdWAXjksaomU3mrOMzHI0s026iqsXKJi7aSTpXcqTE2NTdxQ9pw
+	 8D7M59PQHtUvm/0DH4lWyPAimOfJhS4+3DRhmVnmQwARjgughzYPLH/p5a9+ClHMzjFnw
+	 GuK0LiyeQegoC9Mw2/8f/ydiQqqguF+isMNhdDUdfghAVsE36TI+TxibMCa3Y4UZkZ7gp
+	 oZvSrXcQ74QoaLvdBd7nRl4bfgjRYLEE9Jz/ePscQ/3TfqVnyRki0Jei5WbY9Q1UkOynt
+	 6vzXXmvAtqXIhVrDirr1+6dlcHlhf45McK3dY50dFtNls6jCyNWg9NJD/Qfn6422BCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6SRE+vJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2p4Pt89M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79871606A326;
-	Thu, 19 Nov 2026 04:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95190606A320;
+	Thu, 19 Nov 2026 04:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6SRE+vJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF211F000C4;
-	Thu, 19 Nov 2026 04:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2p4Pt89M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93A61F000C4;
+	Thu, 19 Nov 2026 04:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061928;
-	bh=5nstCvd4yIbgobtg144MG1qMjkFTeY6BcfUdCy7wXNc=;
+	s=korg; t=1795061931;
+	bh=sb4gVfcR6d7yn1y6QnfZBvasVyvLGSNOWv8ikaADZTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6SRE+vJ6iaHNCiPnetNuGxzbkieHm2Iuo3Vum020tDkgruwbfto/fMbDg11qTy26
-	 DRBxvn21yYXQvEq7sSgskDtaQvYVtHB4D5f2lwBKY/VNhCG2g3IBpwMgVjcoYuwwRF
-	 D1LgDLqhYG+4pQKpexaFKVOJ5pMxFbM1WVoEXgMU=
+	b=2p4Pt89MrZvY/8kQwxbCnm/XmtkV6WnHPPjrcLkGfSn/UahDXpBesYzZiMKKrCeNQ
+	 GNqIVrEcfrpnMXT2XqOFkQJQlwMeeB3Ll2pnpM+vZQjjnsyywdZIBSz74lLaYEyAgl
+	 7wtFHb2bhnYOzhWfq7llD18mG2TmoUbS2BPCHp6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1726/1848] ALSA: pcm: Remove channel-map controls before freeing substreams
-Date: Wed, 18 Nov 2026 16:02:44 +0100
-Message-ID: <20261118150031.868628576@linuxfoundation.org>
+Subject: [PATCH 5.10 1727/1848] cgroup/cpuset: use mems_allowed_seq when checking a policy nodemask
+Date: Wed, 18 Nov 2026 16:02:45 +0100
+Message-ID: <20261118150031.901215030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,88 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
+[ Upstream commit b0cec62d2867ab3ed27604d5c177b8960c43b17a ]
 
-A late HDA codec bind on an already registered card builds new PCMs
-before registering them. add_std_chmaps() publishes generic channel-map
-controls during this BUILD stage. If an earlier chmap succeeds and a
-later allocation fails, probe cleanup frees the BUILD PCM while the
-card's control device remains accessible.
+A cpuset update changes the task's mems_allowed and rebinds its
+mempolicy in separate steps under mems_allowed_seq, but the check
+reads both without it.  This can cause a spurious numa placement
+miss under some cpuset/mempolicy combinations.
 
-These generic controls are added directly by snd_pcm_add_chmap_ctls();
-snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
-devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
-substreams before free_chmap() withdraws their generic control:
+A reader that loads one mask before the update and the other after
+it can see a spurious empty intersection and drop the nodemask.
 
-  Late HDA codec bind / rollback        Control GET on the live card
-  ------------------------------       ----------------------------
-  hda_codec_driver_probe()
-    snd_hda_codec_build_pcms()
-      PCM is BUILD
-    snd_hda_codec_build_controls()
-      add_std_chmaps()
-        publish an earlier chmap
-        later allocation: -ENOMEM
-    snd_hda_codec_cleanup_for_unbind()
-      snd_hda_ctls_clear()
-        generic chmap remains
-      codec_release_pcms()
-        snd_device_free()
-          BUILD: skip dev_disconnect
-          snd_pcm_free_stream()
-            kfree(substream)
-                                       snd_ctl_elem_read()
-                                         down_read(controls_rwsem)
-                                         pcm_chmap_ctl_get()
-                                           walk freed substream
-            free_chmap()
-              snd_ctl_remove()
-                wait for GET
-                                         up_read(controls_rwsem)
+For example, a task with cpuset.mems={0} and MPOL_BIND={0}.  If the
+cpuset moves to mems={1,2}, the policy is rebound to {1}.
 
-The control read lock cannot protect a substream already freed before
-control removal starts. The failure above occurs before
-snd_card_register(), so the PCM has not transitioned out of BUILD.
+The allocator can race and compare the old mems_allowed {0} against
+the new policy {1} - which will result in a dropped nodemask and a
+misplaced allocation on node 2.
 
-Move free_chmap() before the substream free loop. Its snd_ctl_remove()
-withdraws the control and drains readers under controls_rwsem before any
-substream is released. Normal registered-device disconnect already
-removes the control, so the later call remains harmless on that path.
+Simply retry the intersection until mems_allowed_seq is stable.
 
-Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This covers the task policy, which is rebound under mems_allowed_seq.
+VMA policies are rebound afterwards by mpol_rebind_mm(), outside
+mems_allowed_seq, and are not covered by this change.
+
+Fixes: cc9a6c877661 ("cpuset: mm: reduce large amounts of memory barrier related damage v3")
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/cgroup/cpuset.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index d4eb842784143..756857ea80d0b 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -830,6 +830,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 	/* free all proc files under the stream */
- 	snd_pcm_stream_proc_done(pstr);
- 
-+	/* Drain channel-map callbacks before freeing the substreams. */
-+	free_chmap(pstr);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 304fa45a1d7e9..62b9ac240ec93 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -3516,10 +3516,21 @@ nodemask_t cpuset_mems_allowed(struct task_struct *tsk)
+  * @nodemask: the nodemask to be checked
+  *
+  * Are any of the nodes in the nodemask allowed in current->mems_allowed?
++ *
++ * A cpuset update rebinds the task's mempolicy and changes mems_allowed in
++ * separate steps, so retry if an update raced with the check.
+  */
+ int cpuset_nodemask_valid_mems_allowed(nodemask_t *nodemask)
+ {
+-	return nodes_intersects(*nodemask, current->mems_allowed);
++	unsigned int seq;
++	int ret;
 +
- 	substream = pstr->substream;
- 	while (substream) {
- 		substream_next = substream->next;
-@@ -844,7 +847,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 		kfree(setup);
- 	}
- #endif
--	free_chmap(pstr);
- 	if (pstr->substream_count)
- 		put_device(&pstr->dev);
++	do {
++		seq = read_mems_allowed_begin();
++		ret = nodes_intersects(*nodemask, current->mems_allowed);
++	} while (read_mems_allowed_retry(seq));
++
++	return ret;
  }
+ 
+ /*
 -- 
 2.53.0
 
