@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044785;
-	b=lOoecWgkf6/9lWONRg2U9nWcRUQ5OZJQNVIL7qdVjk5F514jNJJ4THgBRjTk5UhzPk3k
-	 2ko1bvuj3bA4Tc3wfQt5JuzVJ093Vj6EM4/ACfI0qxiLz9vBFBCfs3zVU6oFYy8jTCelc
-	 s0TJnhkhLHLrUnFhrhKZZQMOlVA9E2GSrHJIomJl+vvlPFXw11lm8OC9ExGXTcWT7aNL+
-	 HH7G8CpFTxIP0jjg3L7UKqr3pdKUKmsutFIf4KD45Yj8aGEhvgBgyUxYIUMVxexd4WQYg
-	 f2WwMrW2F2vABKA2em9+06MnWcdYMcJk++6LN4Al1IfEJfv8DKgHyHL8kSQOQOwhTjA==
+	t=1795044788;
+	b=A6Fyw2kTD/fObDL+wOzbQAwM6w6JLV3Qp9K4vi/sUvgaqAnhn2YmdXjQprcPrtVY1Hok
+	 DVduzfqTbe2xHvSJDqx+uNgzpiLxC9ERuU45L205QAooOSEO2W6guLvf6cAvdQkwPEqxE
+	 uoTDA2QL3ZrDmWrmugUuNu1r2USq4VpP+/9X1BYg339Ztx4webiYxN3k2UIQgApDDaqTq
+	 UdGaQhlvdx9CRtLJ9s726nUoZkC6JpdMAQokTDVF0piKwa7Ckz8YF5l2Lfd4XGoe5Gt2i
+	 c+c5IRchtIUgK0cowadol2LT3HAszy/ADUxpvCYg0P/SXKSlx+WlS8MsEKY5/Nc1msQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hOfOkTUYBipHauBZbaO0eYsQWXt/UkLioSZ0ya4s+Qs=;
-	b=dW5qOZ4OC2WSVXuflyDqK/CeaZEIT3tTmX8OXISwWqtakz4rKg07+E6mgUZXiDu5LbYq
-	 rlVaQczX7GeV4/bpLJQUL93rz9Ikp3I4hM92qZku4jVZEdYceBh7ySPTdXV/oRVt1ppkF
-	 nY0SThihLdfLIwCsq2l/M4p5k7IwlSDVkxJdG7IBQSkgVYTXjj+x+thVprdGPktaYJ/d4
-	 qxzrDknjHj8xbK6Y0TvKdwD7DbP4OJ/YyHXXE346I9Mwmk58yfewa2LmD+fNW0QIn0Wn5
-	 r3ronirwxIas8BpN8smAP+jferrSZlkuqrz6w4sMWPYvch1b+Bkdhsr2fK5Nkdz6VVQ==
+	bh=o9BZ7O21pdo9OSVNJhq5oCX47G8h2HRb9039luavBI8=;
+	b=qIJd/iVy6BsYJnL3zbNg+lGVRtDWlRAOJIrGIyMNNxWt8dTCFQb/pS0R8NgsdBEWiNns
+	 ETSsH6SD72KKOfXp91MgcbqWk5yLJCHEZMcn+ulSLDwEeeJF622Ldp3Hh2UMS3Rr4IMA2
+	 YN/R9OaR2MKme2tmN0haJxixs0FtNYbUCm1cHkprPB2g4sOItn6KBbyP6LrGDvVbWpp8f
+	 Dq/mAMK2g3TqoAL9wFK2TLi4cdzXk0zYJVa0v8YDy3w/PE3xLu0ytBiZPVvS7PhfCRzod
+	 nERU0eKaBmnFgkm/OjcvuTWQ77FC9RYaYirLOk52O+eJMKvOQVY1We6RJAsYczsM8jA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qa29Aj76;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VjTRTDv8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB66606A33A;
-	Wed, 18 Nov 2026 23:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4A8606D673;
+	Wed, 18 Nov 2026 23:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qa29Aj76
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FC61F000C6;
-	Wed, 18 Nov 2026 23:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VjTRTDv8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CE91F000C4;
+	Wed, 18 Nov 2026 23:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044785;
-	bh=hOfOkTUYBipHauBZbaO0eYsQWXt/UkLioSZ0ya4s+Qs=;
+	s=korg; t=1795044787;
+	bh=o9BZ7O21pdo9OSVNJhq5oCX47G8h2HRb9039luavBI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qa29Aj76rDZDnNMhVc0nQz+jlzrvVMIw1ryDTLndLh7uqp3zodNCUM4RtAcMDVioH
-	 ni4XPcxr0ba9tcuL0quwLRcVTJTU77/tkl1Z2b2BqgBYOfdh49K8sV1qIYuGL9aRb3
-	 0iNT+YRppjeS5qUNZmZ7vxp8PZwJsBmB0wTBaysE=
+	b=VjTRTDv8gT8Ta5suZko/8oGw1qGUzgqNO5jVj4XCFUk1XxD6WPdysw5RE5UpJ51Ee
+	 T9PZbFFDrbgcKAIpXP1CFus7hzusoclR7oQVNkzY7+0++Cr83pnZSs0MP7dQGjCJbs
+	 qsRSwALx2sOXCErfEHNAIWraMMrXoQ0J7mlqqVKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Richard Patel <ripatel@wii.dev>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0692/2857] smb: client: fix OOB last_entry pointer from unbounded LastNameOffset
-Date: Wed, 18 Nov 2026 15:28:46 +0100
-Message-ID: <20261118150226.473872189@linuxfoundation.org>
+Subject: [PATCH 6.1 0693/2857] genirq: Defer kfree(irqaction) until irq_thread_dtor() finishes
+Date: Wed, 18 Nov 2026 15:28:47 +0100
+Message-ID: <20261118150226.511330534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,162 +68,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Richard Patel <ripatel@wii.dev>
 
-[ Upstream commit 570c783a96f054dd3ac409a92772e9afb705d21c ]
+[ Upstream commit d04adff6860587e843948b0c31174f8ae11b8dfe ]
 
-CIFSFindFirst() and CIFSFindNext() locate the last entry of a
-TRANS2_FIND_FIRST2 or TRANS2_FIND_NEXT2 response by adding the
-LastNameOffset of the response parameters to the start of the data
-area, and store the result in psrch_inf->last_entry. MS-CIFS 2.2.6.2.2
-defines that offset as the offset of the entry's file name; the client
-follows the reading of NT and Samba servers, which point it at the
-entry. LastNameOffset is only checked against CIFSMaxBufSize, which
-says nothing about the response actually received: validate_t2() lets
-the data area start up to 1024 bytes into the buffer, and SendReceive()
-copies at most CIFSMaxBufSize + MAX_CIFS_HDR_SIZE bytes of a response,
-16468 by default, into a cifs_request allocation of CIFSMaxBufSize +
-MAX_SMB2_HDR_SIZE bytes, 16588 by default. The pointer itself can
-therefore be placed anywhere from the end of the received data to 820
-bytes past the end of the allocation.
+When an interrupt thread exits abnormally via do_exit() (e.g. the interrupt
+handler oopses) without returning from irq_thread(), a concurrent call to
+free_irq() could free the irqaction before the irq_thread_dtor() exit task
+work runs.
 
-The read through that pointer is far larger than its displacement.
-find_cifs_entry() hands last_entry to cifs_save_resume_key() after every
-FindNext and after the FindFirst of a search rewind, and
-cifs_fill_dirent() takes the length of the name from the entry itself: a
-__le32 FileNameLength for most levels, a __u8 for
-SMB_FIND_FILE_INFO_STANDARD, and for SMB_FIND_FILE_UNIX the result of a
-scan for the terminating NUL over up to PATH_MAX + 1 UTF-16 units. The
-name is recorded as the resume name of the search, and the next
-CIFSFindNext() rejects only a recorded length of PATH_MAX or more before
-copying the name into the ResumeFileName of its request and sending it
-with the resume key taken from the same entry: up to 4 KiB of memory
-from past the end of the allocation leaks to the server, and for
-SMB_FIND_FILE_UNIX the NUL scan runs about twice as far before the
-length is even known. The entry does not have to lie outside the
-response for that either: a maximal response ends about 120 bytes before
-the end of the allocation, so an entry in its last bytes with a name
-just under PATH_MAX has nearly all of that name copied from past the
-allocation.
+  irq thread (oopsed)                 free_irq()
+  -------------------                 ----------
+  do_exit()
+    exit_mm()
+      complete_vfork_done()  -------> kthread_stop() returns
+    exit_files() ...                  kfree(action)
+    exit_task_work()
+      irq_thread_dtor()
+        action->...                   <- use-after-free
 
-It needs nothing unusual from the client: a FindNext response that
-reports no entries and does not end the search makes find_cifs_entry()
-send the next FindNext at once, carrying whatever was parsed at
-LastNameOffset, and a search rewind can do the same after its
-FindFirst. SMB1 is not negotiated by default: this takes a malicious
-or compromised server, a mount of it with an explicit vers=1.0, which
-CONFIG_CIFS_ALLOW_INSECURE_LEGACY (default y) permits, and a directory
-listing on that mount.
+Track the pending exit work with the IRQTF_EXIT_WORK thread flag, and have
+__free_irq() wait for the bit to clear before kfree().
 
-With KASAN enabled, a response that places the last entry past the
-buffer, with a large DataOffset and a LastNameOffset near the end of
-its range, gives:
+irq_thread_dtor() only runs on irq_thread abnormal exit. If that dtor also
+faults, free_irq() will hang indefinitely, but double IRQ thread faults
+require a reboot anyways.
 
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x7aa/0x7f0
- Read of size 4 at addr ffff88807b55c33b by task ls/83
+[ tglx: Add missing include ]
 
- CPU: 1 UID: 0 PID: 83 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
- Call Trace:
-  <TASK>
-  kasan_report+0xdf/0x1a0
-  cifs_save_resume_key.isra.0+0x7aa/0x7f0
-  cifs_readdir+0x1ed6/0x29c0
-  iterate_dir+0x1c0/0x570
-  __x64_sys_getdents64+0x133/0x270
-  do_syscall_64+0x109/0x5d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
- Allocated by task 83 on cpu 0 at 19.317556s:
-  cifs_buf_get+0x36/0x90
-  smb_init+0x4f/0x110
-  CIFSFindNext+0xf7/0x14c0
-  cifs_readdir+0xf51/0x29c0
-
- The buggy address belongs to the object at ffff88807b558000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 623 bytes to the right of
-  allocated 16588-byte region [ffff88807b558000, ffff88807b55c0cc)
- ==================================================================
-
-The four bytes read there are the FileNameLength of the entry, which
-cifs_fill_dirent() takes before anything checks where the entry lies.
-
-Ignore the last entry when it does not start inside the received
-response or the response holds no entries; for a response without
-entries, last_entry pointed into or past its empty data area and
-cifs_save_resume_key() parsed whatever the buffer held there. The
-entry is bounded by the response that was received, which is what the
-buffer holds, rather than by the data area the response declares,
-which a later patch checks against the received length. Record the
-search handle before the last entry is examined, since a response
-without a usable last entry still carries the handle that the search
-is continued and closed with; leaving the assignment in the else
-branch would drop the handle of every response without entries.
-
-This bounds where the last entry starts, not how far it is parsed: an
-entry that starts within the final bytes of the response still has
-its fixed part read past the end of the received data and its name,
-up to 4095 bytes, copied from past the end of the allocation, until
-the following patch bounds the parse itself. A response without a
-usable last entry continues the search with an empty resume name,
-since the preceding patch, "smb: client: fix use-after-free infoleak
-via the readdir resume name", drops the recorded name whenever a new
-response is installed. This patch applies on top of that one and
-relies on it: without it, every response rejected here would leave
-the previous name in place, pointing into a buffer that has been
-released.
-
-A conforming server is not affected: the last entry lies inside the
-data area of the response.
-
-Fixes: 0752f1522a91 ("[CIFS] make sure we have the right resume info before calling CIFSFindNext")
-Fixes: b77d753c413e ("[CIFS] Check that last search entry resume key is valid")
+Fixes: ed3e694d78cc ("move exit_task_work() past exit_files() et.al.")
+Signed-off-by: Richard Patel <ripatel@wii.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Link: https://patch.msgid.link/20261009145842.1616117-2-ripatel@wii.dev
+[ sashal: Replaced unavailable kthread_stop_put() with kthread_stop() followed by put_task_struct(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ kernel/irq/internals.h |  2 ++
+ kernel/irq/manage.c    | 32 ++++++++++++++++++++++----------
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -4039,14 +4039,17 @@ findFirstRetry:
- 	psrch_inf->presume_name = NULL;
- 	psrch_inf->resume_name_len = 0;
- 	psrch_inf->resume_key = 0;
-+	if (pnetfid)
-+		*pnetfid = parms->SearchHandle;
- 	lnoff = le16_to_cpu(parms->LastNameOffset);
--	if (CIFSMaxBufSize < lnoff) {
-+	if (!psrch_inf->entries_in_buffer) {
-+		psrch_inf->last_entry = NULL;
-+	} else if (psrch_inf->srch_entries_start + lnoff >=
-+		   psrch_inf->ntwrk_buf_start + bytes_returned) {
- 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
- 		psrch_inf->last_entry = NULL;
- 	} else {
- 		psrch_inf->last_entry = psrch_inf->srch_entries_start + lnoff;
--		if (pnetfid)
--			*pnetfid = parms->SearchHandle;
- 	}
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index 35e85323940c3..7f1b7c1534d18 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -30,6 +30,7 @@ extern struct irqaction chained_action;
+  * IRQTF_AFFINITY  - irq thread is requested to adjust affinity
+  * IRQTF_FORCED_THREAD  - irq action is force threaded
+  * IRQTF_READY     - signals that irq thread is ready
++ * IRQTF_EXIT_WORK - irq thread exit task_work is pending
+  */
+ enum {
+ 	IRQTF_RUNTHREAD,
+@@ -37,6 +38,7 @@ enum {
+ 	IRQTF_AFFINITY,
+ 	IRQTF_FORCED_THREAD,
+ 	IRQTF_READY,
++	IRQTF_EXIT_WORK,
+ };
+ 
+ /*
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index a5843563d0154..8827e7cb7166e 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -21,6 +21,7 @@
+ #include <linux/sched/isolation.h>
+ #include <uapi/linux/sched/types.h>
+ #include <linux/task_work.h>
++#include <linux/wait_bit.h>
+ 
+ #include "internals.h"
+ 
+@@ -1216,17 +1217,14 @@ static void wake_threads_waitq(struct irq_desc *desc)
+ 		wake_up(&desc->wait_for_threads);
+ }
+ 
+-static void irq_thread_dtor(struct callback_head *unused)
++static void __irq_thread_dtor(struct irqaction *action)
+ {
+ 	struct task_struct *tsk = current;
+ 	struct irq_desc *desc;
+-	struct irqaction *action;
+ 
+ 	if (WARN_ON_ONCE(!(current->flags & PF_EXITING)))
+ 		return;
+ 
+-	action = kthread_data(tsk);
+-
+ 	pr_err("exiting task \"%s\" (%d) is an active IRQ thread (irq %d)\n",
+ 	       tsk->comm, tsk->pid, action->irq);
+ 
+@@ -1243,6 +1241,14 @@ static void irq_thread_dtor(struct callback_head *unused)
+ 	irq_finalize_oneshot(desc, action);
+ }
+ 
++static void irq_thread_dtor(struct callback_head *unused)
++{
++	struct irqaction *action = kthread_data(current);
++
++	__irq_thread_dtor(action);
++	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
++}
++
+ static void irq_wake_secondary(struct irq_desc *desc, struct irqaction *action)
+ {
+ 	struct irqaction *secondary = action->secondary;
+@@ -1301,6 +1307,7 @@ static int irq_thread(void *data)
+ 	else
+ 		handler_fn = irq_thread_fn;
+ 
++	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+ 	init_task_work(&on_exit_work, irq_thread_dtor);
+ 	task_work_add(current, &on_exit_work, TWA_NONE);
+ 
+@@ -1325,6 +1332,7 @@ static int irq_thread(void *data)
+ 	 * oneshot mask bit can be set.
+ 	 */
+ 	task_work_cancel_func(current, irq_thread_dtor);
++	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
  	return 0;
  }
-@@ -4164,7 +4167,10 @@ int CIFSFindNext(const unsigned int xid,
- 	psrch_inf->resume_name_len = 0;
- 	psrch_inf->resume_key = 0;
- 	lnoff = le16_to_cpu(parms->LastNameOffset);
--	if (CIFSMaxBufSize < lnoff) {
-+	if (!psrch_inf->entries_in_buffer) {
-+		psrch_inf->last_entry = NULL;
-+	} else if (psrch_inf->srch_entries_start + lnoff >=
-+		   psrch_inf->ntwrk_buf_start + bytes_returned) {
- 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
- 		psrch_inf->last_entry = NULL;
- 	} else {
+ 
+@@ -1859,6 +1867,13 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
+ 	return ret;
+ }
+ 
++static void irq_stop_thread(struct irqaction *action)
++{
++	kthread_stop(action->thread);
++	put_task_struct(action->thread);
++	wait_on_bit(&action->thread_flags, IRQTF_EXIT_WORK, TASK_UNINTERRUPTIBLE);
++}
++
+ /*
+  * Internal function to unregister an irqaction - used to free
+  * regular and special interrupts that are part of the architecture.
+@@ -1963,12 +1978,9 @@ static struct irqaction *__free_irq(struct irq_desc *desc, void *dev_id)
+ 	 * the same bit to a newly requested action.
+ 	 */
+ 	if (action->thread) {
+-		kthread_stop(action->thread);
+-		put_task_struct(action->thread);
+-		if (action->secondary && action->secondary->thread) {
+-			kthread_stop(action->secondary->thread);
+-			put_task_struct(action->secondary->thread);
+-		}
++		irq_stop_thread(action);
++		if (action->secondary && action->secondary->thread)
++			irq_stop_thread(action->secondary);
+ 	}
+ 
+ 	/* Last action releases resources */
+-- 
+2.53.0
+
 
 
