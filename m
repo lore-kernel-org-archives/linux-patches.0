@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042512;
-	b=sMkV8lxvr1HQLQejBNdBfiPovfLwG71SOKnomxMBJMolG+p85psa4bXZj4YJYcsopP44
-	 +UhXQi/8Wo69sD1vKt/9dCmxix9XCpj6qIuNcmC5O29FtRp3YmnaCbaVJupQGBMOOUvim
-	 EFj8yLNdMMzaZqxG2rF9OlaENMaJfIAMhM5STG1jn9XOw4g/5kIDZjMkr9MZdK55Int/Y
-	 VJGgNBVx8N4Xyl8z4m7SKOP+h/FTxUVCEJcYwO3Hw5dn2r8BX1O6TLkTa9B1mP9VMCRID
-	 FPBUKPK3npxx31HylsKONIWhOSXuo1wcMxng+Hhs40iBYZifnJH6XOBPzrFZF62f77Q==
+	t=1795042515;
+	b=y3wxRZ2c0WScaOpNRS8T2Qe68TDRAky2FloImeBeadkrEgUOMrvwrvGFLj0H1kl5qFqO
+	 TZiS/+pliJoLVTZcpQ8Agd9Js4VGb6tirV4H/c4hm7Tb17E67IPgjpKfyZuWduhyO6d2O
+	 FpnmNPP1LNdU8r23ACw4hD740hqeJqfYQxRQLbDiK+dkUoUVUN/six7Rg2o8GUTa2bS8d
+	 dErIdLZN9I0pWF2bIw81S0kgTEznTdUDNOXJgslHCLCWdr0bhXcvme8b0mFzfXn2g0niz
+	 dixspdITenTZFbKAU7xtFiFGttostRY2wp78WkOXVJZLvhWR6/CFfoidmjBEAnSl31A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QG/J4wkxY+XruOzkYIuDDkTWnrXbawua0MQsFsn9ddo=;
-	b=sbwZtUTe2FMotsw2I0km7yBfgMUrpkbEovDI5lHGGiYAXcb171Fcrws6rjxV2XahLiOD
-	 TVVDOjG40B4fsjneWxYC60O7cIzcqT38x7MwaZScQgfWLdOriyt9jl4ixosQjiFMUtvSI
-	 mNtQvlmSTQRVACAmuHukFx0rT7sYXZsj5GiIp7o4Wx87i2pllhGeSihzPXp6sRRzQVAjX
-	 7PclCgCZMV6rcThRMDxqTI3ukgnV4ZpqNci9fNagMcFt1G5u8C0srEEUL6t1Hk6iGjZIV
-	 ZQInAVOkVItac+/sWzCueR6vwBg/tZaNHcO2LSelwaypu22eCsRX6KIlqkTmIZrll5g==
+	bh=6YU5z66STTb+pKjeuVDZBvgRJHRw9rnzWDLVbvHuYSg=;
+	b=zsX9zicXzp6bbfoYYIcLKZ114ixLL+4WGDqrAwE18I4dKf16RwOHhcb3bq9DPXPVgnFA
+	 yvhoP67EJFELGiLl568rOb5FVaJdXsBhOaQOCpGmwdluwIJubxW4teYN8kxmnTFtMkqwP
+	 g80NofFOjVZTHZrEybh1DsJX0RWyjgle+DGaEO/Zbxes+osw22h57bwTWO0wyP5XeVIcF
+	 ACOgsr9iXjQ1RIbApUNQOiynfrRJbHqlp/7FX9P8EVx7a3gHiNBP9DC/DscHiVrWESzWr
+	 Q5di2rYCbtU/amTeNdXm50BhMlg/uGsJ339faof2F2LdSFnbm9Dy95MAouzKqsq9A1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wb+ZNSIU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UzxL9vhn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44B0606A32A;
-	Wed, 18 Nov 2026 22:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896B9606A31C;
+	Wed, 18 Nov 2026 22:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wb+ZNSIU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AAC1F000C4;
-	Wed, 18 Nov 2026 22:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UzxL9vhn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D710B1F000C4;
+	Wed, 18 Nov 2026 22:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042512;
-	bh=QG/J4wkxY+XruOzkYIuDDkTWnrXbawua0MQsFsn9ddo=;
+	s=korg; t=1795042515;
+	bh=6YU5z66STTb+pKjeuVDZBvgRJHRw9rnzWDLVbvHuYSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wb+ZNSIUhZUB5e7LR0LhcE0pyldx3bYGBC+y5Xd5b0uJLjvLF6LuDdoruoyjGXz5n
-	 v2on8mfBwMGEK+H0sKWSbtfKX5qRvHU/qt5Thu7/KIWVqXvGvhYuLtqP64LmbLkGbx
-	 DcJnClMAWJQ+fYanlI0zafAIEgB1KZk0lgtF/g+M=
+	b=UzxL9vhnim+wQ5KENuDdATQbQJzjNfRc4jhZfctgV7HJYOv5KL8wdoKzYK7i4Q6zg
+	 KgDYd1i9MqW5MFNdbpEi4slxTBIA8mZiFIUsW6B5GLZVnEmAHjg6OGdodjm4AgyJlX
+	 2aF3RT1V7qtYgMfMA7qMNNxn3TCPjpZEv1x9PRV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Machon <daniel.machon@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3195/3318] net: lan966x: do not inject uninitialised bytes past skb->len
-Date: Wed, 18 Nov 2026 16:03:37 +0100
-Message-ID: <20261118150455.625689890@linuxfoundation.org>
+Subject: [PATCH 6.6 3196/3318] net: lan966x: do not warn on MAC entries that are not port destined
+Date: Wed, 18 Nov 2026 16:03:38 +0100
+Message-ID: <20261118150455.653452095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,72 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit b4a7180558eb3cd8affa1e240b22171425bdfcb4 ]
+[ Upstream commit 2cffcf1aeabb187e4f08fe4f5363128a3c45d786 ]
 
-lan966x_port_ifh_xmit() writes the frame to the injection FIFO one
-32-bit word at a time, and pads frames shorter than 60 bytes with zero
-words.
+lan966x_mac_irq_handler() scans the rows of the MAC table that the
+analyzer reports as changed, reads back all four columns of each row and
+treats ANA_MACACCESS.DEST_IDX as a port number.
 
-Before this patch, the last word is loaded whole even when skb->len is
-not a multiple of four, so 1 to 3 bytes past the end of the frame are
-read. For a frame shorter than 60 bytes those bytes are also
-transmitted, as VLD_BYTES marks the whole last word valid and the
-padding starts at the next word.
+Before this patch, a destination index above num_phys_ports hits a
+WARN_ON(). The driver installs such entries itself:
+lan966x_mac_cpu_learn() uses PGID_CPU, and L2 multicast entries use a
+general-purpose PGID. A row holding one of them is read back whenever
+another entry in the same row is learned or aged out, so the scan warns
+in normal operation, repeatedly once the MAC table is busy.
 
-Write the trailing bytes from a zeroed word. The number of words written
-and VLD_BYTES are unchanged.
+Skipping such a column is already the right behaviour. Drop the
+WARN_ON() and keep the bounds check as a plain filter.
 
-Found by an AI code review agent. Reproduced on a lan9668 board with
-register injection, by sending a
-57 byte frame and capturing it on the link partner: byte 57 of the
-padded frame was not zero. With the fix all padding bytes are zero.
+Found by an AI code review agent. Reproduced on a lan9668 board by
+bridging two ports with a 10 s ageing time and sending three rounds of
+2048 new source MACs: the base kernel warned 42 times from
+lan966x_mac_irq_process(), the fixed kernel did not warn.
 
-Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
+Fixes: 5ccd66e01cbe ("net: lan966x: add support for interrupts from analyzer")
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-inject-tail-bytes-v1-1-51d599a48313@microchip.com
+Link: https://patch.msgid.link/20261026-lan966x-mac-warn-v1-1-9c885f9cbda9@microchip.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/lan966x/lan966x_main.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index ce48685a50b20..99d3ecae82628 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -253,9 +253,8 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
- 		lan_wr((__force u32)ifh[i], lan966x, QS_INJ_WR(grp));
- 	}
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c b/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
+index baa3a30c039f4..96bb0a16ac08d 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
+@@ -447,7 +447,7 @@ static void lan966x_mac_irq_process(struct lan966x *lan966x, u32 row,
  
--	/* Write frame */
--	count = DIV_ROUND_UP(skb->len, 4);
--	last = skb->len % 4;
-+	/* Write the whole words of the frame */
-+	count = skb->len / 4;
- 	for (i = 0; i < count; ++i) {
- 		/* Wait until the fifo is ready */
- 		err = lan966x_port_inj_ready(lan966x, grp);
-@@ -265,6 +264,20 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
- 		lan_wr(((u32 *)skb->data)[i], lan966x, QS_INJ_WR(grp));
- 	}
+ 			lan966x_mac_process_raw_entry(&raw_entries[column],
+ 						      mac, &vid, &dest_idx);
+-			if (WARN_ON(dest_idx >= lan966x->num_phys_ports))
++			if (dest_idx >= lan966x->num_phys_ports)
+ 				continue;
  
-+	/* Write the last 1 to 3 bytes, zero padded to a whole word */
-+	last = skb->len % 4;
-+	if (last) {
-+		/* Wait until the fifo is ready */
-+		err = lan966x_port_inj_ready(lan966x, grp);
-+		if (err)
-+			goto err;
-+
-+		val = 0;
-+		memcpy(&val, skb->data + count * 4, last);
-+		lan_wr(val, lan966x, QS_INJ_WR(grp));
-+		++i;
-+	}
-+
- 	/* Add padding */
- 	while (i < (LAN966X_BUFFER_MIN_SZ / 4)) {
- 		/* Wait until the fifo is ready */
+ 			/* If the entry in SW is found, then there is nothing
+@@ -501,7 +501,7 @@ static void lan966x_mac_irq_process(struct lan966x *lan966x, u32 row,
+ 
+ 		lan966x_mac_process_raw_entry(&raw_entries[column],
+ 					      mac, &vid, &dest_idx);
+-		if (WARN_ON(dest_idx >= lan966x->num_phys_ports))
++		if (dest_idx >= lan966x->num_phys_ports)
+ 			continue;
+ 
+ 		spin_lock(&lan966x->mac_lock);
 -- 
 2.53.0
 
