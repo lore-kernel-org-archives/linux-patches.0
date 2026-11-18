@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051435;
-	b=lSdG9Zj9/RVknWBCdp/OZTvVIqn5u3fLc1aduEIKduFmD5oov8+yg6CMt3tvMngJbJXG
-	 jFF+31jVLcifSQo1ESnmZ9NiniDaH2LALjsSEEJVOGXtwU6QxU2jjt/JV02uLDwLSp+Cz
-	 OwASVZ7AC4Hy6qRvm9g/7Oiyv1tf6vm0uJ36xJhW0wb/XNKVNZnrSqmt+z9Yjp2ieGWVK
-	 Rx20DGhRU6FwylFAkyH6FYO21xJbG4BXtLMelK/2u5q4hUMNEV11ioT7xrow6VeMBb1ie
-	 n4KMs9M6SE4QOTxjYN9JkWcNWCcn7mTi7Lnrq7i9U6Si4IRWNQ/jI2Dd6MXWArXJc4g==
+	t=1795051438;
+	b=kLcn6Hd7VCPPWMhY2Equs6D27vx+3LqZeTYNVrW+XtlPuzTQub4SJgG2tUa4sTAlNNBO
+	 XhJKhtXHeUZDrTTzG1vo0KgCV4qA58jXFz4rmIwCkuhqFvs19dLAOIE9Ctsn8xsomzksI
+	 vEjqct1wjWhrEcOMQZ6aMW9eisGJMC9i6JDvVeYMseSGlUcHI3cxpAoAXkLEVCMyCdMSm
+	 JzaH5NnZQm6favJdeypZ2SQLw45AGv5QAGf6/bxuocEGrZroMpelxdrLj/LX0/vBPariv
+	 vAh+81IUoroZx/H8RdpLjO475Nnt6rzHVp8mFH0a/O/DC6RDbnLV3Jk0jUpJ/UpY6Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=t/u39wHQ9Qzrv4B9M9mkOeWJHETeP2GFTRSThcZgW+g=;
-	b=YTQ33UmNPHpHH34XdwwFOfLe83iNbOCm/IEWYQ2RHffpcp2RLjDby39eQVYQCrhEUELD
-	 at0Ys9S+WPBSHPD0Ac4IJ1LydzqsonBvycIvRHaZHYgPHEAMekVT1znj+/agFMgLebmE4
-	 DkIqM7P76vLelnEgf582Kcufkb12GiuPQJFr4XIPSUHz3yD0c3J1fiqCLXko2YRXWXnWL
-	 IJSYzb8+LKpbsaQjlnhH6o1yH9oFdgNY7WJGPrM8pC08Kd3KEyNuWKV5XhVbOb2JCGs9d
-	 vgJKmUc+mVXGYe181DaRyb+2WQIkea4Et7OGpIkOhixCcmUy92IMYKplHoAlQ1Yo31g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=iH2YUdLWgKIHUYHPj0Q1u7ZtF3Nzrb0F3IwCb9XRKEg=;
+	b=Rket1SVg1IZm5wyqOxGYk2ytU1iOSXMG8xpNn2Gtwp1DO9AQAJaTGOahYxydyMNjuP6g
+	 5u5V8Asnlmdf8zZTDENr1rD7AozC0BSCfkZ9vNgCB/LURQJNnBQO3HXd26hvptibEDohS
+	 93ucxkKzuTeIOOfFgk+UZQd+fdKOM/ck9sokD30PIMrs6AM8t6FqfuCK/NRi9Zr1hiCdW
+	 uvQt1AzLmd1fKZhRoKkQ/8D6PUs/jFLVuAbIcaa3W1RvB40qPWRao9gCXiSKMGPc7S+eF
+	 X9DZTCZk9zzy6uiWMn5chZIvhh0NCIsUP26d0e5NTJ4HzrCjINPqcC4PgxNMC5PR9Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGon2FnX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdstCck7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC6A606A31C;
-	Thu, 19 Nov 2026 01:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A7A606A32C;
+	Thu, 19 Nov 2026 01:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGon2FnX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42651F000C4;
-	Thu, 19 Nov 2026 01:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdstCck7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D521F000C4;
+	Thu, 19 Nov 2026 01:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051435;
-	bh=t/u39wHQ9Qzrv4B9M9mkOeWJHETeP2GFTRSThcZgW+g=;
+	s=korg; t=1795051438;
+	bh=iH2YUdLWgKIHUYHPj0Q1u7ZtF3Nzrb0F3IwCb9XRKEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGon2FnXvtkXhaZHF7YESxs1amsXSM0mgAqMRC03mGqBy85wxUAoyBWsEshpcciq0
-	 acHb21MqDYy8+dfCk3gR2f8F/RP+FzQJLyOTHkEIf5W+TDkOOPV4ulZHbGjXDkVXM0
-	 JC0AR6rJSWWvNBE8GKX2njHdgN/G+Ol+S1RBKXrg=
+	b=HdstCck7FrEH0uO+XkuohYrGH7az0Hq/oPdPTDKwyHU4A4FvLJ7wtqSp56u/IIL2r
+	 k94DKt3KkusE5eyKJKhcd3cgdj9Hj2yRAKpiRekMGvQQ0u/THvS/+CA/Zaatw0k/dq
+	 HVO5eL6kyX5neQoA3PYC5v97VQoTpfC4/wTVJjFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wen <anmuxixixi@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0206/2214] exfat: keep FITRIM within the requested range
-Date: Wed, 18 Nov 2026 15:31:22 +0100
-Message-ID: <20261118150018.449181277@linuxfoundation.org>
+Subject: [PATCH 5.15 0174/2214] s390/dasd: Snapshot intrc before freeing the request block
+Date: Wed, 18 Nov 2026 15:30:50 +0100
+Message-ID: <20261118150017.028560542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,90 +63,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Wen <anmuxixixi@gmail.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 2de727471b3b13409466a4af4f8824a86073bf4b ]
+[ Upstream commit dc3e3f7306cb74066f231251602b1be5aaec7bd8 ]
 
-exfat_find_free_bitmap() searches the entire allocation bitmap and may
-wrap around to its beginning. exfat_trim_fs() does not verify that the
-returned cluster is still within the requested FITRIM range.
+__dasd_cleanup_cqr() maps the completion result to a block status by
+reading cqr->intrc, but only after discipline->free_cp() has returned the
+request block to its memory pool (dasd_eckd_free_cp() ends in
+dasd_sfree_request()). On SMP another CPU can reallocate that block and
+overwrite cqr->intrc before it is read, completing the request with the
+wrong error. proc_bytes is already snapshotted before free_cp() for the
+same reason; do the same for intrc.
 
-As a result, a partial FITRIM operation may discard free clusters outside
-the user-specified range and report a trimmed length larger than the
-requested length.
-
-Validate each returned cluster against the requested range and stop the
-search when it wraps around or passes the range end.
-
-Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://patch.msgid.link/20260805111612.1285190-5-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/s390/block/dasd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index 26808f0d3e9ff..0ebbfa55caca6 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -297,14 +297,27 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
- 	mutex_lock(&sbi->bitmap_lock);
+diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
+index eaa9457c1c29b..845f82215dfb3 100644
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -2745,17 +2745,23 @@ static void __dasd_cleanup_cqr(struct dasd_ccw_req *cqr)
+ 	struct request *req;
+ 	blk_status_t error = BLK_STS_OK;
+ 	unsigned int proc_bytes;
+-	int status;
++	int status, intrc;
  
- 	trim_begin = trim_end = exfat_find_free_bitmap(sb, clu_start);
--	if (trim_begin == EXFAT_EOF_CLUSTER)
+ 	req = (struct request *) cqr->callback_data;
+ 	dasd_profile_end(cqr->block, cqr, req);
+ 
 +	/*
-+	 * exfat_find_free_bitmap() may wrap around to the beginning of
-+	 * the bitmap. Reject a cluster outside the requested range.
++	 * free_cp() returns the request block to its memory pool, so snapshot
++	 * everything still needed from cqr before calling it - another CPU can
++	 * reallocate and overwrite the block right after.
 +	 */
-+	if (trim_begin == EXFAT_EOF_CLUSTER ||
-+		trim_begin < clu_start || trim_begin > clu_end)
- 		goto unlock;
- 
--	next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
--	if (next_free_clu == EXFAT_EOF_CLUSTER)
--		goto unlock;
-+	for (;;) {
-+		if (trim_end >= clu_end)
-+			break;
-+
-+		next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
-+		/*
-+		 * Stop if the search wrapped around or moved beyond the requested
-+		 * FITRIM range.
-+		 */
-+		if (next_free_clu == EXFAT_EOF_CLUSTER ||
-+			next_free_clu <= trim_end || next_free_clu > clu_end)
-+			break;
- 
--	do {
- 		if (next_free_clu == trim_end + 1) {
- 			/* extend trim range for continuous free cluster */
- 			trim_end++;
-@@ -325,17 +338,11 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
- 			trim_begin = trim_end = next_free_clu;
- 		}
- 
--		if (next_free_clu >= clu_end)
--			break;
--
- 		if (fatal_signal_pending(current)) {
- 			err = -ERESTARTSYS;
- 			goto unlock;
- 		}
--
--		next_free_clu = exfat_find_free_bitmap(sb, next_free_clu + 1);
--	} while (next_free_clu != EXFAT_EOF_CLUSTER &&
--			next_free_clu > trim_end);
-+	}
- 
- 	/* try to trim remainder */
- 	count = trim_end - trim_begin + 1;
+ 	proc_bytes = cqr->proc_bytes;
++	intrc = cqr->intrc;
+ 	status = cqr->block->base->discipline->free_cp(cqr, req);
+ 	if (status < 0)
+ 		error = errno_to_blk_status(status);
+ 	else if (status == 0) {
+-		switch (cqr->intrc) {
++		switch (intrc) {
+ 		case -EPERM:
+ 			error = BLK_STS_NEXUS;
+ 			break;
 -- 
 2.53.0
 
