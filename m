@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061047;
-	b=jaxF9vXKZo5Fva6eblLlrhBq6gj3NzL/yXl6GsNWKxXEO71toHeE03XerPnbqLLggP+o
-	 BenqkBGNCqiMg4klYNKoo6EgSOLkmU9SCtfx7LVgT1xdHnAVpWb0zaiWE0Y3PpDrrMF1j
-	 iQfwgNAx82UtAYZH5RalD4HhdLXNxDCj1jI/WJcrTNnj5Egu+sjfotmC+JdJuLZ1GVoSH
-	 VWqRMDPnu3QGdKa7Jwa+BTgBLOm2V/6jKV4Sm0FzAysT2gg0nSbHzR+vaqUVPaAlcZKX/
-	 n+9oxwFxvheUfTT0mKXEX4q+QRNsWMBCpeChkh3BqdYu47EkRwpJ8R/SSY9K/4SEmZQ==
+	t=1795061050;
+	b=cHfk5bpK/DGUuFXeimVQL4cjs5HijGdG/+TfxLBYDfuDPv1dtLKM+a0A8TjFq0giTCnA
+	 A6AvHA4rzxBxZTHTRjzWWzNull02dLwmYoPUONL8G+hIvoJD8Zu99cOdxvCdDaJ0zD4MN
+	 kvtTUgkhLWyZrrunTU7cqlS/z3F8FE2/HE10/rcOX8Iy7X0BiFXqzjhHyuUgfej2HW5kC
+	 qBaCwTcjKQgU3EKj9u2XDWZxjCeGNWXcPqX2S8X6SDmQ5Tuw/7aPicB6BmTaDjn+S19t5
+	 ysNoEU66iMMEow6fC3UoMds3suC8NzAAJ7BkulK1W1P5sktSWP1qTD1BuKSgRYgyoXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2JNLxpaFWff84dQtNBJrBco+U6i5VVq8oylp9+FayBI=;
-	b=LOVs9EuWLR/KuBI1XS/zkL+CHPRoC/PuUenXAHujPCHJCN/f+5qYUKQJhXHkqrrNgOlE
-	 1E+N71kZjEvpxO2Mr+tXJc6n+68GIzPbGb7l4WyjGtYHsdkUmRk5VbOPsbi6ZML1oPzay
-	 T2JDHylbLVjYY32WeDHlKEcXdV/nhTK56E3S/8+4RtGthCz5S5ssz31l2+wtIdRn9pHTW
-	 gBfJiGpsuGsxIKcqX3SCBwhzKr4PY2mS/wjvM/5Sml5azBxNe4VK3fpDddj9iXQln4BUE
-	 Y5yOAD3bwZMUdTAfbktVfqY25mHnN+h7/KqWSlml7zcTkRq01wtRPy2+ar0UyQqgVCw==
+	bh=Mno5uSnTAnXpl8nn0eKbIqaIFqCwQBcaMDfvBpmNJLQ=;
+	b=GC/8AJnTH8OIkC3Nyq+IhMZVvXpgBX75vIsnxP8iCqrZVEo8RDATMQGA3onPOctGl3FT
+	 PuazIsFLtiYEntTUTpdZRc8i4jRavZJ5q3yKoq6HSg6p44xZL7IAKyQcO30gO2j+1aNih
+	 yEjzjZ77lNCP5PtR9/Q1jyMy3YI7aRR8dVykJ4ugiflOCMGMtI60DxbrqaVT4IBeufN3q
+	 aSdSe7ee/bOghAcwlJ4Dh9x8bBro6ljWiGx/HU5I3i/ZLWjbja2VIWzBRC0slrtiBlPgF
+	 ZYBZBvCLcbYGZKlwBHq/JlkNYw15vXvVgtt+cYsP5UCEU9GO48dr0+AJo+35QoCpOkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxYx2WYM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pofLBQH8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BD5606A325;
-	Thu, 19 Nov 2026 04:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0161B606A326;
+	Thu, 19 Nov 2026 04:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxYx2WYM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7751F000C4;
-	Thu, 19 Nov 2026 04:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pofLBQH8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490481F000C4;
+	Thu, 19 Nov 2026 04:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061046;
-	bh=2JNLxpaFWff84dQtNBJrBco+U6i5VVq8oylp9+FayBI=;
+	s=korg; t=1795061049;
+	bh=Mno5uSnTAnXpl8nn0eKbIqaIFqCwQBcaMDfvBpmNJLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxYx2WYMGmEMqst9Uqh0dUiB/rc7GRijW8sJxHR9nphek0CxUhJ7tjRKDtrGjB6pP
-	 3fR4ss9M0AE6X6+DGHgofv96NTUcxdtSgqLzEtY5OJ71UBkJ24P+fa25Gp7/ZNSumo
-	 mpSopwDk5HyygLO1nFqjRdUflqXMa2GO/Q+ZtWdw=
+	b=pofLBQH8Cli/bdk+YJZk+Ttg/bgLS7EW0pLPv4GmhAqVrArWRy2ekM+9YnUKnQP4p
+	 pjSYLiuUQvGBj8ry7m+t1Ydrjf6Yix35i87+0otxbQl10I0Pbg0QG0jfgYpE4kGIAc
+	 KC/WVU+0I6F1GUy4BrSoPJb+6HiwBCgDZEUtE11U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1412/1848] RDMA/siw: Fix length of first chunk in siw_try_1seg()
-Date: Wed, 18 Nov 2026 15:57:30 +0100
-Message-ID: <20261118150018.616113711@linuxfoundation.org>
+Subject: [PATCH 5.10 1413/1848] RDMA/hfi1: quiesce SDMA asynchronous cleanup on exit
+Date: Wed, 18 Nov 2026 15:57:31 +0100
+Message-ID: <20261118150018.653009159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,42 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit aac27aa8c5cfe3c3c6029b9c0f1113e0a53329de ]
+[ Upstream commit e95d076bc1fca7cc36fc8f2f0e9687f79fd314bd ]
 
-When a short-single SGE payload crosses a page boundary, siw_try_1seg()
-computes the length of the first chunk as the amount that spills into
-the second page instead of the amount left in the first page
+The SDMA state reference and completion cover the software cleanup
+tasklet, but not the hardware cleanup tasklet, err_halt_worker, or
+flush_worker. Queued instances can therefore access an SDMA engine after
+per_sdma is released.
 
-	part = bytes - (PAGE_SIZE - off);
+After the state machine has stopped, cancel err_halt_worker first
+because it can publish the hardware cleanup tasklet. Then kill that
+tasklet and drain the remaining flush work.
 
-Use the remaining length of the first page as the first chunk.
-
-Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
-Link: https://patch.msgid.link/r/20260927115351.12245-1-serhatkumral1@gmail.com
-Assisted-by: LLM
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260928134148.977-1-getshell@seu.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/sdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index ccc6d5bb1a276..8704b8db3c0ac 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -81,7 +81,7 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
- 			if (likely(PAGE_SIZE - off >= bytes)) {
- 				memcpy(paddr, buffer + off, bytes);
- 			} else {
--				unsigned long part = bytes - (PAGE_SIZE - off);
-+				unsigned long part = PAGE_SIZE - off;
+diff --git a/drivers/infiniband/hw/hfi1/sdma.c b/drivers/infiniband/hw/hfi1/sdma.c
+index 68a8557e9a7c4..c3c1c04b6c027 100644
+--- a/drivers/infiniband/hw/hfi1/sdma.c
++++ b/drivers/infiniband/hw/hfi1/sdma.c
+@@ -1625,6 +1625,9 @@ void sdma_exit(struct hfi1_devdata *dd)
+ 		 * it is not running.
+ 		 */
+ 		sdma_finalput(&sde->state);
++		cancel_work_sync(&sde->err_halt_worker);
++		tasklet_kill(&sde->sdma_hw_clean_up_task);
++		cancel_work_sync(&sde->flush_worker);
+ 	}
+ }
  
- 				memcpy(paddr, buffer + off, part);
- 				kunmap(p);
 -- 
 2.53.0
 
