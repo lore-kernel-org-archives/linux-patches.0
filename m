@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036917;
-	b=A9UCRMfe33awkBFi2NTCHKDfa/N4VEQZXjGtYFB+PY8trqfLGcOhU/LDz5tijaS3eQkg
-	 r73qd1vvfNmmk0dDqqiwazRCtEUB5wJPFNvKKfMOt2+uWkfnBWq/D/zckD32XtfcvhR6x
-	 kQYeq4zjz52Xu4NggOI0TZH0XPf8aFsXTdeB3ueXaVM6dE8o4zOkzV8oKO4boCKJU1Nie
-	 pl5XjNplPCawxOsgFouQbyfS2PuJd69Uqn3yy16LXy2wAXPHv8HfiindqqRYrWX5oQBD1
-	 bBLHxHkSom2aVLsdYyxfyfYA4ZAOwx4Coc9l3778ygBkFOOjM/bm2Ze+H7iIJfselVA==
+	t=1795036920;
+	b=AByhUnIf1VXsXfcifPWOv6YV35iTgw7cFTMIMRqxROkAcaOm+jOsWfhoN9QQmuJMntfv
+	 wL52xQ7woF1gijx47DL/0ZXTk9w1DDO2Uq9Ze9aNoild66K6EOWFYNYEp7PIiOoxok1Ks
+	 YoDN6HwzduJ8hIMJKFnXsf6FGmduJrL4gPtxy0TNXvDOWf4sg9lu89c9gu2zrqkJKTew3
+	 Y355YPWpXBCxktujtmlpqxcjcGrC6AWrszKeesB8iX9VlZ1OiKPCsf0/SjQT1pdSlj7ig
+	 S8OXd0SIESnhsAMX+eLtZpmmcONB5rzkBhyW8z/a9keoZiilZgYvTBN7rR07pmzuQIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PBPX++dw1ki5snwbQBYonyatbUia6HGXKwcJbTcVn+Q=;
-	b=fdkY918NVDy9yZ6wZZGMrElqcN/Q2qblNgiEZU8DwbbNmMXf/AybHrhRCjS7DqMBZOXj
-	 B8hOOyCYDLB5o3nPdGFbd6awgwuAHgDwLd+KDB5X4UhMopGPHy9flTmf3QgVb0VIXlSty
-	 XU7Qcplfjo9WmogFH5H8lbqNRJ0etfsXxenKmyY5MwQ1sDTVGDcGh/QpGKKQHIshhTODl
-	 f7DlHrfRSoAeQ0FbOzWa5R2QLAWj6yIzgAusbINAGC0Z+4oB88e9J26GzxSS2d6XCgJM5
-	 79HFO3nYK/nsEIZtVMdFfNqRFArO8whU9pLjrydUkZZUUmbCg3C1mXmk2ERKmZGb1Xg==
+	bh=BIZJlenKAUWYnLkIf6IAF0EpDFSPfXLn+wNHiRXweyU=;
+	b=EaVqXmM7j1XPnE5O+AHupcCPL9nD4wlD6rY0HeNxrhmc5Oj7VtAobP9OMuT3ywzoV9QM
+	 WbqLaVi7n4gVt5fpitqrGdscE48/FwCSRFaa1Gfk+g3fGbKLDVqsi++LqvxaipwkFdk9S
+	 aq6f/x1/u3XtRBFMNjjUYOLKTfROjGAX0ICG7qe9EAanWUOiV3yhWwMWTpvXPCApFlA1B
+	 UnZXe0YJoyrBJNPaOSpQQ+MpGHOUVVsNaQEXsY68O2Nono+9IEEYMrFuN35Qq3PlVUv++
+	 jl0CJ5OdCdDEou/faLGwYv/X8rU+OATQkuqJT8lIAFuPXoO63mzhxjgSDXkQsk7f8rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb8SWoGg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2scKjZy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E37606A31C;
-	Wed, 18 Nov 2026 21:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750FA606A31C;
+	Wed, 18 Nov 2026 21:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb8SWoGg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DCB1F000C4;
-	Wed, 18 Nov 2026 21:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2scKjZy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6B11F000C4;
+	Wed, 18 Nov 2026 21:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036917;
-	bh=PBPX++dw1ki5snwbQBYonyatbUia6HGXKwcJbTcVn+Q=;
+	s=korg; t=1795036920;
+	bh=BIZJlenKAUWYnLkIf6IAF0EpDFSPfXLn+wNHiRXweyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sb8SWoGgDBy6wdwkRdryFQEupk4HZ2vLGdVx3g+nltt0f2czT4j6eqIDH0nZq92bd
-	 HCWOZiRG+EGVQgmMJKAU3QFXwhRs6aEs+U6T2KTlbZ0rHsY1GH/CMbDXHZhuuIed8X
-	 /R3gqs0AugM2vXOeRuKkABBYjwrgj34QoXneAd/U=
+	b=M2scKjZyMOrkDnRUd7AuX9Buemc8W4+TpkHQ0wLokCFT5ZCmBZW+ON0vxAU21dJys
+	 ZNKPHP9wFiGbh89HizN5cEmFzSskYZunKX/K6hwwwlzm3Ug0Ww+MYFtPZbLVOIo0mN
+	 GZmlG0Yiy/VI3p+yQaq5TVKU7Zg6jddnATZtqyH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+f8e3e01d8dda8689@bugs.sh,
+	co+f92fbe44e3c6df69@bugs.sh,
 	Xiang Mei <xmei5@asu.edu>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1228/3318] ceph: reject mdsmaps that claim more than CEPH_MAX_MDS ranks
-Date: Wed, 18 Nov 2026 15:30:50 +0100
-Message-ID: <20261118150357.028828114@linuxfoundation.org>
+Subject: [PATCH 6.6 1229/3318] ceph: require the dentry lease record to cover struct ceph_mds_reply_lease
+Date: Wed, 18 Nov 2026 15:30:51 +0100
+Message-ID: <20261118150357.059200983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,36 +72,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit c1742590d2b2fc5fb217e1a9b520108f1fe282e5 ]
+[ Upstream commit 7286b2ffe04d4b39b4e9884f714792589d94f316 ]
 
-check_new_map() sizes its export-target bitmap from CEPH_MAX_MDS but walks
-it with newmap->possible_max_rank, which comes straight off the wire:
-ceph_mdsmap_decode() sets it to max(m_num_active_mds, m_max_mds), then
-overwrites it with the size of the "in" set.  Neither is bounded by
-CEPH_MAX_MDS, only by m_info allocating, so a monitor announcing more ranks
-than the bitmap holds makes test_bit() read past the end of targets[].  The
-clear_bit() loop above indexes the same bitmap, though it is additionally
-bounded by mdsc->max_sessions.  The map arrives on the monitor connection,
-which is unauthenticated in legacy msgr mode.
+parse_reply_info_lease() reads a 32-bit struct_len off the wire and only
+checks that many bytes are present, without requiring struct_len to cover
+sizeof(struct ceph_mds_reply_lease) (10 bytes).  A malicious MDS can
+declare a shorter record and still get the pointer published: the
+following *p += sizeof(**lease) overshoot is undone by *p = lend, so
+nothing downstream rejects the reply.  ceph_fill_trace() ->
+update_dentry_lease() then reads 10 bytes through that pointer on any
+lookup on a mounted CephFS, running past the end of the message front.
 
-CEPH_MAX_MDS is a protocol constant from src/mds/mdstypes.h, and the
-reserved inode ranges in super.h are laid out one rank apart over that
-span, so a map claiming more ranks is corrupt.  Reject it where the rank
-space is established rather than letting the count reach check_new_map().
+Require the record to cover the structure, matching the sibling
+parse_reply_info_dir().  A conforming MDS always encodes the full 10
+bytes.
 
-  BUG: KASAN: stack-out-of-bounds in check_new_map (fs/ceph/mds_client.c:5968)
-  Read of size 8 at addr ffffc90000ac7798 by task kworker/1:2/127
+  BUG: KASAN: slab-out-of-bounds in __update_dentry_lease.constprop.0 (fs/ceph/inode.c:1459)
+  Read of size 4 at addr ffff888026c63d65 by task kworker/0:3/2366
   Workqueue: ceph-msgr ceph_con_workfn
   Call Trace:
-   <TASK>
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   kasan_check_range (mm/kasan/generic.c:186 mm/kasan/generic.c:200)
-   check_new_map (fs/ceph/mds_client.c:5968)
-   ceph_mdsc_handle_mdsmap (fs/ceph/mds_client.c:7060)
-   extra_mon_dispatch (fs/ceph/super.c:802)
-   mon_dispatch (net/ceph/mon_client.c:1483)
+   __update_dentry_lease.constprop.0 (fs/ceph/inode.c:1459)
+   ceph_fill_trace (fs/ceph/inode.c:1474 fs/ceph/inode.c:1823)
+   mds_dispatch (fs/ceph/mds_client.c:4229 fs/ceph/mds_client.c:7225)
    ceph_con_process_message (net/ceph/messenger.c:1424)
    ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
    ceph_con_workfn (net/ceph/messenger.c:1576)
@@ -110,51 +102,35 @@ space is established rather than letting the count reach check_new_map().
    kthread (kernel/kthread.c:436)
    ret_from_fork (arch/x86/kernel/process.c:158)
    ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-   </TASK>
-  The buggy address belongs to stack of task kworker/1:2/127
-   and is located at offset 288 in frame:
-   check_new_map (fs/ceph/mds_client.c:5846)
-  This frame has 1 object:
-   [32, 288) 'targets'
+
+  The buggy address is located 357 bytes inside of
+   allocated 360-byte region [ffff888026c63c00, ffff888026c63d68)
 
 Cc: stable@vger.kernel.org
-Fixes: d517b3983dd3 ("ceph: reconnect to the export targets on new mdsmaps")
-Reported-by: co+f8e3e01d8dda8689@bugs.sh
+Fixes: 4ac4c23eaa38 ("ceph: decode alternate_name in lease info")
+Reported-by: co+f92fbe44e3c6df69@bugs.sh
 Assisted-by: LLM
 Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mdsmap.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ceph/mds_client.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
-index 7a90c8f8a470a..8ddbe33306d19 100644
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -170,6 +170,10 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
- 	 * and the mds rank >= m_num_active_mds.
- 	 */
- 	m->possible_max_rank = max(m->m_num_active_mds, m->m_max_mds);
-+	if (m->possible_max_rank > CEPH_MAX_MDS) {
-+		err = -EIO;
-+		goto corrupt;
-+	}
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index a32f6341fbeb6..20c3e637ba796 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -337,6 +337,8 @@ static int parse_reply_info_lease(void **p, void *end,
  
- 	m->m_info = kcalloc(m->possible_max_rank, sizeof(*m->m_info), GFP_NOFS);
- 	if (!m->m_info)
-@@ -316,6 +320,10 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
- 	{
- 		int num_laggy = 0;
- 		ceph_decode_32_safe(p, end, n, bad_ext);
-+		if (n > CEPH_MAX_MDS) {
-+			err = -EIO;
-+			goto corrupt;
-+		}
- 		ceph_decode_need(p, end, sizeof(u32) * n, bad_ext);
+ 	lend = *p + struct_len;
+ 	ceph_decode_need(p, end, struct_len, bad);
++	if (struct_len < sizeof(**lease))
++		goto bad;
+ 	*lease = *p;
+ 	*p += sizeof(**lease);
  
- 		for (i = 0; i < n; i++) {
 -- 
 2.53.0
 
