@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030101;
-	b=iCeDdx5IhA+rpctZZgveksQCF9gSvK9YcRtt7NcSTtyKMLMe0mgtIb3Ucwj9AJVC8Ab/
-	 UIim9ysMm22+9yfJ7V35LtUm2widz8/FZxvA4P5g1ms3+q6mPivgbOd4IBRlccjSOxpAQ
-	 0orVqIDXt9E4q9KJFo87aAuQAgCoyOiZo9gbrqembVc7Irt3bwjD69BvtIM7mkEvy0NZP
-	 /V2PDaQsDsext1uitmoxUzhhm6XNWjNEIDKzGUgWGWV/XyXQ+coCoyCoEHtov/w0ItE/e
-	 Vl1SsZOGTLXAheTKcNiUebHD8zZ/6HsQeRytpaYydAZ0mDervdr8UhI/AAZoJ+kcNiQ==
+	t=1795030104;
+	b=4X5q2z+FI+68fnLoWPADhnV2LPCKuQRXsyiCnOmX6UtiMLnF2P4OsF3kP+ZF/95+/WNd
+	 cvFyFuppvhoCe+L4jnt1r5R+JIvAcmcd8LxMJMmBiN9DljWKMZnJXQywPhiEkw01p4jQQ
+	 TCFu1+ovTLbuEMXI4ZoM36Z352AHfwzQQLmpCr/mK7kLATrr8NR6D62jSFxUtR9E/Mb+7
+	 jMysqXZsMhAE87aHeTbI3EXto4v5ADzu2WpMO7O4fi+uqEFnoC8UIro0mDsL+Rw1iLCdn
+	 9GmoanfA0p1RLo/l+KPAlC+UCf8qbgW/pt98ah77OGEGQIl9IjlHClcnlRGKIcZJVuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6cAJYW6+RpFgG0/RQ1/q3EHXQWw2Gio5JLa6CjCjGOk=;
-	b=VLebG0f3jIOKIYOX9BDnmYuivlFiIog6pIFO7T57DZirU3ziHZ+VqeK0UG59bLeVd3T5
-	 jhlZVH9/hz0BGZj/bDM3bE0UNZrUO9JG1+yJyiaeqMS/hM6spTrOPdqo8z1qoA7QZwIgo
-	 ChzR1dLR2F/rqZZr2Xw0GKwVmOU7XfOjFo8+au/so9jVVJkIdpNNIq4y3rA4exxsNiNkn
-	 2cu5TH517Yw1obffqJ9R3GQtTubOw/lMZno/cmDTgEy6dIBu+kyPFBlJoNUQDarg81Llv
-	 MkXl8OQ2VPf/6JNa1nmZ2umhgS2Fqb+Y2KPZ6pcvCb9QgNM4aIl2IiNYEmClxPl8A/A==
+	bh=ky+vqAjgJMTc7v1KrfkqHovODDbb4u/jhNCmOsRszrU=;
+	b=HKa4rQ8ns2DBwjkmT5alVCGwsuZSsB/6JYTz79WX7/33G0ns3TXeAfJYE30ytV1N3Wo2
+	 h0GpkyHeYOHPHxpWFV/AIyt95bB8F+v01zzid2sCqtsRMUN7hOb/mSK6nLqVeSRybyKcI
+	 VYh78HNl2+Av1dY4yBkSa3s4wDTfyso1WUHEdPQbzFSbyOaDmZ3l1VYQHYVNTz/ys3TBg
+	 b/U51LLL2zn3F4vbEuOL4RpOjr9GL0qNoaJTTrUKFPj4LwlvfiaUn4EbzUhgQgmYFB2+P
+	 CpY3K/wbuKydQ1kvWlRhVhmS3F7PZT/TNvOAMp4dZ0/HoIsCaI2sDiadfVzrUvm6DWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Daig5dmm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sO2tPe8q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8783960A6F55;
-	Wed, 18 Nov 2026 19:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D5E606FF6E;
+	Wed, 18 Nov 2026 19:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Daig5dmm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FB41F000C5;
-	Wed, 18 Nov 2026 19:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sO2tPe8q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D5C1F000C5;
+	Wed, 18 Nov 2026 19:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030101;
-	bh=6cAJYW6+RpFgG0/RQ1/q3EHXQWw2Gio5JLa6CjCjGOk=;
+	s=korg; t=1795030104;
+	bh=ky+vqAjgJMTc7v1KrfkqHovODDbb4u/jhNCmOsRszrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Daig5dmmABuPv2NWOvcPUY9fOefEDVhH74+IHL0nqwq+5kJwlIsMnpQw0/7DqzSKJ
-	 PC9bu9Fs/N8x9rExpRT+6tNzdA7VUZ4NwA+1pmEEMv6ECnv1PDf0u2h2lVV2GRGlUK
-	 j2B9s5Ird3hRvaqFrG9YwerUb/rqMt2ikGO6IsKE=
+	b=sO2tPe8qIhdnN/Gd3CxlEzOly1WzhJ06I376aBa1cyn8WSU7o7v63fcIbhqNt2gng
+	 u2j/unH6is2ke81PxgoiRE2c/p4/DSuQkvrRSZUk4xBnksokTV8ZYUF8i47nQcCD7I
+	 xOX6xIpo5aX4X+IB2QnxBkhZCX1j7vo7Qtja2S8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Chancel Liu <chancel.liu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0585/1756] arm64: dts: qcom: x1e80100-qcp: Mark the EC reset gpio as reserved
-Date: Wed, 18 Nov 2026 15:45:12 +0100
-Message-ID: <20261118150032.309847049@linuxfoundation.org>
+Subject: [PATCH 6.12 0559/1756] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
+Date: Wed, 18 Nov 2026 15:44:46 +0100
+Message-ID: <20261118150031.343589154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,39 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit fd7d7b5d307f3a475e9555dfd89ff80cfae46b3c ]
+[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
 
-GPIO 65 from TLMM is used by the embedded controller as its reset line.
+After a warm reboot the REG_ASRCSR register may not be in its hardware
+reset state. regmap caches the register value as 0 (the assumed default),
+so when the desired clock source index is also 0, regmap_update_bits()
+skips the actual hardware write because it believes the register already
+holds the correct value. This leaves a stale clock source in the hardware.
 
-On some devices, toggling the embedded controller reset line makes the
-device not power up at all, unless the battery is unplugged.
+Replace regmap_update_bits() with regmap_write_bits() so that the masked
+fields are always written to hardware regardless of the cached value.
 
-So reserve it in order to prevent Linux from requesting or
-reconfiguring it.
-
-Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-8-fde7f8a53382@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
+Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_asrc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 9062eb6766f2c..8a9ddc2817e4e 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -812,6 +812,7 @@ wcd_tx: codec@0,3 {
- &tlmm {
- 	gpio-reserved-ranges = <33 3>, /* Unused */
- 			       <44 4>, /* SPI (TPM) */
-+			       <65 1>, /* EC reset */
- 			       <238 1>; /* UFS Reset */
+diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
+index ffd4a6ca5f3cb..f68b53ba17dd7 100644
+--- a/sound/soc/fsl/fsl_asrc.c
++++ b/sound/soc/fsl/fsl_asrc.c
+@@ -521,10 +521,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
+ 			   ASRCTR_USR(index));
  
- 	edp_reg_en: edp-reg-en-state {
+ 	/* Set the input and output clock sources */
+-	regmap_update_bits(asrc->regmap, REG_ASRCSR,
+-			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
+-			   ASRCSR_AICS(index, clk_index[IN]) |
+-			   ASRCSR_AOCS(index, clk_index[OUT]));
++	regmap_write_bits(asrc->regmap, REG_ASRCSR,
++			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
++			  ASRCSR_AICS(index, clk_index[IN]) |
++			  ASRCSR_AOCS(index, clk_index[OUT]));
+ 
+ 	/* Calculate the input clock divisors */
+ 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
 -- 
 2.53.0
 
