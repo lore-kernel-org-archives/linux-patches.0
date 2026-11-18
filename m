@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047610;
-	b=BSTckytjjquPgO8dvh7uuTNBcN25c7ZFT5YmY+fqvzEkcZzdgrxbGLSKYgxz24oAT+7v
-	 KKcZ+ekilZ0Gmjh8QrWAd/cLFia/EtzUCp27TtS/TslT/5h5PdWA4WQV/Qn1yIvstx0af
-	 ojFuKA6QWDzw45s5oSM7lvn7HD2rMSz4OCbwgY695/q/dFy56TFlYYgbhz+K8umWpBlgA
-	 UPztoPTgEWGn2I99oyGr6aak4/e/dfDiUs1AnICtO1fAQVpJzsZ7qf+P2yYHGWVehAGfE
-	 uiYyR6A+TLaTghjhcAXU0KIU4XRVzWWzmGBr0RsTsPCCkmo6V3L7HG439PrJ+e4d6/w==
+	t=1795047614;
+	b=N/cMgpzzRRq4cZC1wRZ30gjdcp/lUPJPl5bakBwuf1MSEVa8GmXW0GFJkc3JaBp9Bc1h
+	 /+C31SgM/hfPVnIAGT/J/yw3l4hs1W1c5ZbaumuocrlvoBHpZBt20fSvAloPzeFsH3my4
+	 k/Z0e0b0f4UYA517klmOqNhqbFokWDpAPn1Ay/5OJQ3dNeFgGe6ArKikOQOzSRHLB+R08
+	 X3hA+sEAfs3tXsoIpupwlNxlByg6YHvdX8UI12qCOdTMYm/7Qf6m8AQAl6VWyIsaftNOG
+	 cDd4JHv9wvtvpazXzmwTwT+XHUDKr2MerRyJUPNmx2MNT4TZS5YrWSzlwYrhL1457tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047614;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7lrExduf+0zDnWpYOmCJZan3cZqSjqhVbkF1x+BMStg=;
-	b=08LqWbOH+zSFSoCnTpOUsqYsu6oeNNT7vm4/xF18JkBfMVkxExuS9bTNyzImJKCFQi2V
-	 vlKuiimPrxxhSc5Hp4Z9IFsNg2lDas2xqBQjj9HZW8WX9TF8Dq3uqxQQ7FT7SXmnqJw6K
-	 xuUCDp47LEAN+MopELobvKyWtjaVqZXHYA2qJSxMHNcvuyMf4M0bbtOULQc45V0hLPr8W
-	 yl3tX103uDB2bnEk2UpLTprVb3L6lbmO+9Evp1UTQrNlIUceOKFCjOrWPujBZcGEfxWPQ
-	 te7RsZsxS8l79piS7lpcoBGi1HqWLqqWZwukRyPCVu17UHgHUzd3DcXxjfBaTiygzrg==
+	bh=1aORABAHUttX24pPU+RaXAmaIDt0a8d/St46oeVU5JM=;
+	b=yqhoqqvW+P1XS3B87EKtJiA4JGRL2PA3a18UTawcFYV1mGDU2esOJzQY9cBZYq2l0ub/
+	 Mcw0ic7cl6mxp9tuKbke+TfrOYzYitGohKUUUfKXF7j/oCkm2bpisramzzOGDuUANOR/I
+	 F15z2Qz+5XwqugHKd3DTvfp4NFnfkGk55S1FCnhXr+PsCOpeZxnmAW45cvPMNN8fIlVPe
+	 plR1Z9rlXltVBxNeJ8jMbw+Z1mSokbtfRlw2aiXO1Vwc171PtQpPi63Dv0pOZJl/9Wm4e
+	 Whk8BIlYPmpvgQw9zIjqLzZtgHeIpI92phi0ameH+/FbNoazLWM/wQpHBiWGxzA9YkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDfu9ku6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImxWJCXN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A16606A325;
-	Thu, 19 Nov 2026 00:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66686606A31C;
+	Thu, 19 Nov 2026 00:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDfu9ku6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A48C1F000C4;
-	Thu, 19 Nov 2026 00:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImxWJCXN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EFD1F000C4;
+	Thu, 19 Nov 2026 00:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047610;
-	bh=7lrExduf+0zDnWpYOmCJZan3cZqSjqhVbkF1x+BMStg=;
+	s=korg; t=1795047614;
+	bh=1aORABAHUttX24pPU+RaXAmaIDt0a8d/St46oeVU5JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zDfu9ku6kyXLehUJjMmgS/TkaE8LFq2yvWbKCXge7/3JvKzWPWcg4uck5Xo7JXk/l
-	 nRWn+4aDk6ak4nnYxo1GZ6tUaP3M9HLoCQfE+TPqRc9SwLJvvo/h8vgQvjexVqHlzP
-	 iqOvysl84pW+8FfZo41yvTXlM91hIiHN0u2YOLFg=
+	b=ImxWJCXN7bTlvDlOpXkwWsed06f9FI/W3HUQpFJQJaV3YbBH30/Cw3ufRgqBuROAn
+	 jPoU15HAZNiq1fw0Uzi5vm9bKRlIN8BUHGOEeWgD+8SD3WK0mXTYpqRh+uxP1duMUa
+	 03eWGmMfJjBzs9WF4/dY+RAsBDJIkLBoBd5gt1j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vas Zayarskiy <contact@vasily.cc>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1683/2857] hwmon: (aquacomputer_d5next) Avoid truncating scaled sensor readings
-Date: Wed, 18 Nov 2026 15:45:17 +0100
-Message-ID: <20261118150301.931425152@linuxfoundation.org>
+Subject: [PATCH 6.1 1701/2857] drm/amd/display: Avoid closing unowned DDC pins
+Date: Wed, 18 Nov 2026 15:45:35 +0100
+Message-ID: <20261118150302.579238360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,111 +72,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vas Zayarskiy <contact@vasily.cc>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit c221091f7e30c64280e4cbfa27dc4c05edc96d0c ]
+[ Upstream commit e7ba638b8116cb5f1a5690f543052371215f1626 ]
 
-High Flow Next power is reported in watts. Multiplying the 16-bit value
-by one million can overflow both the signed intermediate and the u32
-cache. Store power in long, perform the conversion in u64, and clamp to
-LONG_MAX. The other existing power conversions fit in a signed 32-bit
-value. Return -ENODATA for unavailable power instead of exposing the
-stored error as a reading.
+[WHY]
+dal_ddc_open() cleans up pins it acquires on later failures. If the
+data-pin open fails, this attempt acquired nothing. If opening the
+clock pin or configuring fails, dal_ddc_open() closes the pins it
+opened. An extra dal_ddc_close() is unnecessary and unsafe:
+GPIO_RESULT_ALREADY_OPENED can mean AUX owns the existing handles,
+and closing them here would disrupt AUX.
 
-The power cache is updated by HID reports without the hwmon read mutex.
-Read it once with READ_ONCE() and use that snapshot for both the
-availability check and the returned value. Mark the corresponding
-updates with WRITE_ONCE() so that the shared accesses are explicit.
+[HOW]
+Remove the extra dal_ddc_close() from the failed-open path.
 
-Widen the shared current cache to u32. The Aquastream XT conversion to
-milliamperes can exceed 65535 mA; clamp its negative conversion results
-to zero before assigning to the unsigned cache. This also permits devices
-with scaled aggregate currents to store milliamperes directly.
-
-Fixes: aed80bb91de8 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer High Flow Next")
+Cc: Jerry Zuo <jerry.zuo@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 175ae7772b68757b4932f34ff862923cab7abe21)
 Cc: stable@vger.kernel.org
-Signed-off-by: Vas Zayarskiy <contact@vasily.cc>
-Link: https://patch.msgid.link/20260927191316.4137752-2-contact@vasily.cc
-[groeck: Dropped obsolete 'Assisted-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Replaced priv->fan_structure->power with the existing AQC_FAN_POWER_OFFSET constant. ]
+[ sashal: Applied the edit to dc_link_is_dp_sink_present() instead of dp_is_sink_present(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
-index f192919fa3643..876900f829ec3 100644
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -17,6 +17,7 @@
- #include <linux/hwmon.h>
- #include <linux/jiffies.h>
- #include <linux/ktime.h>
-+#include <linux/limits.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/seq_file.h>
-@@ -312,9 +313,9 @@ struct aqc_data {
- 	/* Sensor values */
- 	s32 temp_input[20];	/* Max 4 physical and 16 virtual */
- 	u16 speed_input[8];
--	u32 power_input[8];
-+	long power_input[8];
- 	u16 voltage_input[8];
--	u16 current_input[8];
-+	u32 current_input[8];
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+index f0db2d58fd6b8..9282b065a90a2 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+@@ -399,12 +399,8 @@ bool dc_link_is_dp_sink_present(struct dc_link *link)
+ 	 * which indicates we need additional delay
+ 	 */
  
- 	/* Label values */
- 	const char *const *temp_label;
-@@ -525,6 +526,7 @@ static umode_t aqc_is_visible(const void *data, enum hwmon_sensor_types type, u3
- static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		    int channel, long *val)
- {
-+	long power;
- 	int ret;
- 	struct aqc_data *priv = dev_get_drvdata(dev);
+-	if (dal_ddc_open(ddc, GPIO_MODE_INPUT,
+-			 GPIO_DDC_CONFIG_TYPE_MODE_I2C) != GPIO_RESULT_OK) {
+-		dal_ddc_close(ddc);
+-
++	if (dal_ddc_open(ddc, GPIO_MODE_INPUT, GPIO_DDC_CONFIG_TYPE_MODE_I2C) != GPIO_RESULT_OK)
+ 		return present;
+-	}
  
-@@ -542,7 +544,10 @@ static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		*val = priv->speed_input[channel];
- 		break;
- 	case hwmon_power:
--		*val = priv->power_input[channel];
-+		power = READ_ONCE(priv->power_input[channel]);
-+		if (power == -ENODATA)
-+			return -ENODATA;
-+		*val = power;
- 		break;
- 	case hwmon_pwm:
- 		if (priv->fan_ctrl_offsets) {
-@@ -755,9 +760,9 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	for (i = 0; i < priv->num_fans; i++) {
- 		priv->speed_input[i] =
- 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] + AQC_FAN_SPEED_OFFSET);
--		priv->power_input[i] =
--		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
--				       AQC_FAN_POWER_OFFSET) * 10000;
-+		WRITE_ONCE(priv->power_input[i],
-+			   get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
-+					      AQC_FAN_POWER_OFFSET) * 10000);
- 		priv->voltage_input[i] =
- 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
- 				       AQC_FAN_VOLTAGE_OFFSET) * 10;
-@@ -780,10 +785,11 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	case highflownext:
- 		/* If external temp sensor is not connected, its power reading is also N/A */
- 		if (priv->temp_input[1] == -ENODATA)
--			priv->power_input[0] = -ENODATA;
-+			WRITE_ONCE(priv->power_input[0], -ENODATA);
- 		else
--			priv->power_input[0] =
--			    get_unaligned_be16(data + HIGHFLOWNEXT_POWER) * 1000000;
-+			WRITE_ONCE(priv->power_input[0],
-+				   min_t(u64, get_unaligned_be16(data + HIGHFLOWNEXT_POWER) *
-+					 1000000ULL, LONG_MAX));
- 
- 		priv->voltage_input[0] = get_unaligned_be16(data + HIGHFLOWNEXT_5V_VOLTAGE) * 10;
- 		priv->voltage_input[1] =
+ 	/*
+ 	 * Read GPIO: DP sink is present if both clock and data pins are zero
 -- 
 2.53.0
 
