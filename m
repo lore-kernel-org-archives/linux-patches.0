@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055420;
-	b=f2nQYkyzl3dCBdcFZxOT+kmHVc2mUMfFltw20VmHcE0HA6WHsSU45TFw4JMBDUYIkXyJ
-	 L6RVhMocMVbtKR+JMKhIYBZAHCYqvkZTtprs14pS8HyF7oaoIJY40Ay9siaCx6w5Xgnps
-	 Udk1zk9ZsEAYTAS9nIoxWBS4dPK2FEa8X26g2OJm0LrVgS2zVDxFVCkRm2Falg5A0YLeL
-	 UTQVLOP2OOqWQIlnSKc0/pbgjctZZqJKuxhJAikNMSSK5yrGbFjwuSAymuVL0zvNf0y7R
-	 T2vs+jFJEEgMRa5GywjhKy1BSUY9sTJwHdEcYicV/8AJRlE48ELy2HcfH5ZepVpHjdQ==
+	t=1795055423;
+	b=Wn3ypy140sSMKTXHzxweBy/QvXQfEzr9V209u4qLo+yaaxPLx4vFkJkoQWs05eRmygP1
+	 rPrPranBLdDK6jl5zoQsbEIhX00UYTpHph8OfS1TwQ3S8pjYn1F+whQmFJ/GVh0WcpNcY
+	 YeCt95zUw3R3e/7Hgg537rRVGsQbO6E2XKzQtiX2ydteTP/2ip8wsz8A02l1tK7DbCf/4
+	 13jcYACXTipwd9vIoyUcG0Dsffuqjj1O9DCpC4hDhIpIJvcVS0pfIsEjmgAJNXVcs9FUG
+	 KAU9ut4IBqfKmaQI/UFyFAL0zJfd4JPGxNLedjK2AK0anoa2PlEwbGuopLNfegqvbcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055423;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jD72eDQ6fvc9SPHudNxTD3QC8vPEuyUkB4bkpbBsM3U=;
-	b=J5bCvXv0HI775mFTcn4Isyuq1UyEX5HdmkaRkqIrto8CEwqboOzMQ8DPd8HkUxR3JImd
-	 z+v2hRFMWcXAOtN8r6vob+KDwpBZrDzlPFC3gU4JeWmHBccTiQ3NY4JLVorQOONKzTZTc
-	 3HMYL+p1FvkkWkXgIEMETphPE2t9IPSJWLSNOVP8EBh1MeQyoL1YGkG/u1I/pP4F8m3QJ
-	 hQmvX1E5ELye2UgAq/A/ZT/awqgXb7PlyywWPEkAVfZRSwUr9hoduJVJINdZ2UDbkftvg
-	 IvKSCgxk3TgWVwnpI4iIdYSKzC9+inZc/x0A7XC7JgWOUBheu1YHBXa6BOCJxyVuXpA==
+	bh=/ysx/XjViVkLvF2mytDIhvokOIVYSU8MoPOkYCPMpPM=;
+	b=GvuE+qjwAGjDdxHVfBhJRdNTiXunR1SsuLf+CEcYWepTbZl4txnnjO9AaRUabM5ZSrbM
+	 +/tNsYpIvc4JNE5TmDJZp7BhwKfeAn5qNPSeGm8lxo+kYh6hmC4o8tvMdozjqr3f6mUjQ
+	 I339paRuc03WvS5zK8Akftg54bBWyTTyCjWMGTyY7jvfyoH2zRre/b3lytMkBe/NBbhiZ
+	 Gdk01UKrt1A4I3sN+hIZymmdGp/41Gt9hveX5g8yfkM9djwnM4BxM0acdjSBzNkdA71mh
+	 pfRH4K8rfFlcpSisKqapstcz8lxnnuthf6NLW96Y/ki24F9VSFXwtoN6xTlC3zveGug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia3k3nTN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4AdsMSX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1C2606A325;
-	Thu, 19 Nov 2026 02:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BE3606A325;
+	Thu, 19 Nov 2026 02:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia3k3nTN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9461F000C4;
-	Thu, 19 Nov 2026 02:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4AdsMSX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA9A1F000C5;
+	Thu, 19 Nov 2026 02:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055420;
-	bh=jD72eDQ6fvc9SPHudNxTD3QC8vPEuyUkB4bkpbBsM3U=;
+	s=korg; t=1795055423;
+	bh=/ysx/XjViVkLvF2mytDIhvokOIVYSU8MoPOkYCPMpPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ia3k3nTNEA0sXV7ZmB7ltTBnIL43X9qjy2GMxMeTBGH2Ive1C5niXp48MMSjtfKk1
-	 y3RyuvwxVZ+86TLhDyS7YyqluDe5iZKLRLbz9J7I8HBou2lK2xKBliSnNAzw0lS8ZQ
-	 2+7yjLuK7aopHhJH1WplmFUlMxqryH7QpGXcp6zI=
+	b=o4AdsMSXfdqXwXQ7/BrJqNKftt3Q/EhfQZmBc/c80DhYNrOJLWqceeo1K5TGDoyHs
+	 BrJrLhduMCZTdYGVYwdMUrT3DSkSvbOE6maCGFnaqYJbI0wwfi13C6XOQSgTNud/V5
+	 NP0SECPFX4dpSKWr3mHCadR0h/K+b5C7IGSSuNRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1624/2214] m68k: apollo: Fix interrupt setup
-Date: Wed, 18 Nov 2026 15:55:00 +0100
-Message-ID: <20261118150116.936727826@linuxfoundation.org>
+Subject: [PATCH 5.15 1625/2214] drm/msm/a6xx: Fix secondary rail vote in ARC votes
+Date: Wed, 18 Nov 2026 15:55:01 +0100
+Message-ID: <20261118150116.972128863@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,60 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 6cdbe63badcb524c88f2c8b3cee08f2ffc099a1b ]
+[ Upstream commit 128a0edde50780ed9eb93ab5d2e18ca24c1f1c43 ]
 
-The user interrupt vector needs to be installed before the interrupts
-are unmasked otherwise the timer tick isn't handled and boot up gets
-stuck in calibrate_delay().
+Using the requested level can pick a secondary corner lower than the one
+required to support the chosen primary corner, under-voting the
+dependent rail. To fix this, match against the selected primary voltage
+instead.
 
-Assisted-by: Claude:claude-fable-5 # Wrote Apollo DN3000 emulator using QEMU
-Fixes: 0aa78106c661cf6c ("[PATCH] m68k: convert apollo irq code")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://patch.msgid.link/20260828094940.3882602-1-daniel@0x0f.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/755592/
+Message-ID: <20260923-hawi-gpu-v1-2-0c3c79a1a470@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/apollo/dn_ints.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/apollo/dn_ints.c b/arch/m68k/apollo/dn_ints.c
-index 02cff7efc8342..e62c96c5b0dd6 100644
---- a/arch/m68k/apollo/dn_ints.c
-+++ b/arch/m68k/apollo/dn_ints.c
-@@ -2,6 +2,7 @@
- #include <linux/interrupt.h>
- #include <linux/irq.h>
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 8fa2b9e051002..a5aa7750a280d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1304,10 +1304,14 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
+ 		/*
+ 		 * Look for a level in in the secondary list that matches. If
+ 		 * nothing fits, use the maximum non zero vote
++		 *
++		 * The secondary rail depends on the primary rail, so match it
++		 * against the quantized primary voltage (which is >= the
++		 * requested level), not the requested level itself.
+ 		 */
  
-+#include <asm/irq.h>
- #include <asm/traps.h>
- #include <asm/apollohw.h>
- 
-@@ -9,10 +10,13 @@ unsigned int apollo_irq_startup(struct irq_data *data)
- {
- 	unsigned int irq = data->irq;
- 
-+	m68k_irq_startup(data);
-+
- 	if (irq < 8)
- 		*(volatile unsigned char *)(pica+1) &= ~(1 << irq);
- 	else
- 		*(volatile unsigned char *)(picb+1) &= ~(1 << (irq - 8));
-+
- 	return 0;
- }
- 
-@@ -24,6 +28,8 @@ void apollo_irq_shutdown(struct irq_data *data)
- 		*(volatile unsigned char *)(pica+1) |= (1 << irq);
- 	else
- 		*(volatile unsigned char *)(picb+1) |= (1 << (irq - 8));
-+
-+	m68k_irq_shutdown(data);
- }
- 
- void apollo_irq_eoi(struct irq_data *data)
+ 		for (j = 0; j < sec_count; j++) {
+-			if (sec[j] >= level) {
++			if (sec[j] >= pri[pindex]) {
+ 				sindex = j;
+ 				break;
+ 			} else if (sec[j]) {
 -- 
 2.53.0
 
