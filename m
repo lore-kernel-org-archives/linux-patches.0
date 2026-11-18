@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023370;
-	b=f16fjgrg0w23Ldec4tq6B+sCWvU7y2yVESTcBlZYMxm39VYt2xIp3bnadh/mSdFJA/Ez
-	 7+YrjvwBW2SoY2wMNzBTdMzU9z5HAv+Vj2aeAQsbQUpnWK7R1MrQfquq+gXAKkZgkY++B
-	 UFDGUB3un2OIOSZxnTFcgIiciybQORY1PTnI6zpWTuQcCinY/mZ6JPmGOws/VPbc7sdFC
-	 tHRDdgSJnzwbYNnNa+JCgG5QRKxhurQBZCpb791ciIIZZZo9EhQh4lfsu7ILvNCfOgGhr
-	 Q/WKSeccNltx1vMBV5v3TC63SFwTzM2PgvY45Yid/3wP9CCrQsM8Kk9R3COSn+3jF1g==
+	t=1795023373;
+	b=NgNyOQYm2XaWfe97LA/N5FtkLsA9NT+5ZcZL+FnMXMAjTbVlgholLfXVj8UNer+TBprv
+	 SzwAjutKO/SV8DDLMIdYmeWrFJQA3MPzWwFmaEdT7+A73oW+4fvwaV1nhdCBUmWx256zg
+	 dXNJFqDneSs2pz/FXF5nh1oqz8Zg6eh7yzmPOQD109UmyLl8i22astStkNxMwTY67Zmx9
+	 CKe8DgQcw5OLJZ1GWMRL3MAQidTxaHk4scViN/634YS1CpXKYvBGW+0/UfX3z+y+ovD46
+	 OIzAzp0iuloU38zOBhFkjbKdNqKoD47A/1Q7CAR9Y0Zw9lHBsT41mTGgGgnww9EWphw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lrI3rqx4DJPa2JfCs2hNT5Ba7S1WZKfKmxhAFSOeaa4=;
-	b=z/tMiUGJEb3IdbkwWAQn1iTT0aukVCO6BHF0zjuBmHjW7Z9GWwAo/0xLly8R+DMDgEnu
-	 lQWKJgzU/zGefa0KFYrHAU95gt6w4fDWM2AqjrRs7rojF8oUO+VW0BCKbnbqeHP/kHi2L
-	 iFAfdipaebK+owp7ge/00fKHNCS4tF0aPFSOjLO8A4DIDRSHGUFiJo9FpwRgJTAJ1rd8g
-	 RuF8y+Hzm2UKt8HloHugxYnUf52KK4w8wgk0v68s9OFJKZgCGr0SlaQm7BUham8Kyyk/9
-	 jVelzhi+/xnA78uRG9lBUukgu8Va9vy5FR4wjPqTgCOYIwc/Vo78pPQn5V7L+eLqHIQ==
+	bh=RpORf7SHY2jCvOg2P5ZPfar77KcFTg7NNrDnI7h2Ykk=;
+	b=gAOKO/EeCKRJUlw2nDytQ8mfXe806dGNFnRBS2HwFPuKAkwqTw3X51KHPTxOMb25jFzB
+	 P1rrHpqXXpJfq0Z4DccW4IYy//fgbVTIoNkFPquqHamWkozvtKmq11jpDJ/2lNYNXl5Q6
+	 y6E6lx/vD9AXxCi2xmrZ/6ttxngAw4KG0vcsoVXw+CaohfsDFogduek/mNguzEqLG6wRm
+	 caekVJOlmfA3IGWBnbycL/ekSSIby9QlvEvVinYM8Lj71uPXdYNudfxkJBuKX6e7yKl5e
+	 tZF3uxugRVmEJBwqGs/7M5SJHZ7hVpHez6AJqcN0WROfbsGPQosnRdv7pyjxHxCdj7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJHE6wTv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=StgmRg8e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3E3606A33E;
-	Wed, 18 Nov 2026 17:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5204060A2619;
+	Wed, 18 Nov 2026 17:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJHE6wTv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5B01F000C7;
-	Wed, 18 Nov 2026 17:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=StgmRg8e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701051F000CD;
+	Wed, 18 Nov 2026 17:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023370;
-	bh=lrI3rqx4DJPa2JfCs2hNT5Ba7S1WZKfKmxhAFSOeaa4=;
+	s=korg; t=1795023373;
+	bh=RpORf7SHY2jCvOg2P5ZPfar77KcFTg7NNrDnI7h2Ykk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wJHE6wTvpxRBUwh4weTzTinMl6r+CMCgxxbc8P3O7yJdbBbeVZMWtcs8sTfnRGjDr
-	 5OAPdenjTcGFHM3CUOeCRdlTgBwBE3XfKi5dFwQBGbfQXrkIzcYFb9vjIqnhzElyUS
-	 wM6jyFGyAHFmUre7GZ9djqMpUCVPGg5O9hcBXgXA=
+	b=StgmRg8eTyW8p3tutJKKVsGWqW58kEcOCGFUsQemSkC010+MEDK4YrjQbyRzzfETh
+	 Rt8XZJVuUCbfDA3+Dh0vQXRxazNYOeeIPsAnHpXDP04om5YmD1zYlyGEnysR7Uf9Jb
+	 0Qdr9WqMe29oXHPB2vE3R0rpLnSlv8dB3TzQXRuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0292/2151] ASoC: codecs: sma1307: validate setting firmware layout
-Date: Wed, 18 Nov 2026 15:33:47 +0100
-Message-ID: <20261118150132.543027586@linuxfoundation.org>
+Subject: [PATCH 6.18 0339/2151] scsi: mpi3mr: Fix buffer overflow in the BSG target device map
+Date: Wed, 18 Nov 2026 15:34:34 +0100
+Message-ID: <20261118150134.417226542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,65 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit af0f4f7a042e39bf70fa7406351b26efead18dff ]
+[ Upstream commit 203b3072e7aa10d98b3f2b766693ea925cfc571d ]
 
-sma1307_setting_loaded() checks a byte count against an element count, then
-reads an eight-int header and a fixed default table from the firmware. It
-also trusts the mode count while indexing a five-entry mode_set array.
+The size of the target device map buffer is held in a u16 while the number
+of devices it is derived from is not bounded to fit. With enough devices
+the size wraps, a short buffer is allocated, and the loop that fills it
+writes past the end.
 
-Validate the byte-to-int conversion, fixed header/default extent, mode
-count, and exact mode table layout before parsing the setting file.
+Do the calculation in size_t.
 
-Fixes: 576c57e6b4c1 ("ASoC: sma1307: Add driver for Iron Device SMA1307")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830134428.9550-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: fb428a2005fc ("scsi: mpi3mr: Fix issues in mpi3mr_get_all_tgt_info()")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-14-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sma1307.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_app.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/sma1307.c b/sound/soc/codecs/sma1307.c
-index c6b6cbadf202b..1bc7c6915ec9a 100644
---- a/sound/soc/codecs/sma1307.c
-+++ b/sound/soc/codecs/sma1307.c
-@@ -1721,7 +1721,9 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
- 			__func__, setting_file, ERR_PTR(ret));
- 		sma1307->set.status = false;
- 		return;
--	} else if ((fw->size) < SMA1307_SETTING_HEADER_SIZE) {
-+	} else if (fw->size % sizeof(int) ||
-+		   fw->size < (SMA1307_SETTING_HEADER_SIZE +
-+				       SMA1307_SETTING_DEFAULT_SIZE) * sizeof(int)) {
- 		dev_err(sma1307->dev, "%s: Invalid file\n", __func__);
- 		release_firmware(fw);
- 		sma1307->set.status = false;
-@@ -1744,6 +1746,10 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
- 	sma1307->set.checksum = data[sma1307->set.header_size - 2];
- 	sma1307->set.num_mode = data[sma1307->set.header_size - 1];
- 	num_mode = sma1307->set.num_mode;
-+	if (num_mode < 0 || num_mode > ARRAY_SIZE(sma1307->set.mode_set)) {
-+		sma1307->set.status = false;
-+		return;
-+	}
- 	sma1307->set.header = devm_kmalloc_array(sma1307->dev,
- 						 sma1307->set.header_size,
- 						 sizeof(int),
-@@ -1779,7 +1785,11 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
+index 85315ee17c70b..83503c44cc2ac 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_app.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+@@ -1466,7 +1466,8 @@ static long mpi3mr_bsg_pel_enable(struct mpi3mr_ioc *mrioc,
+ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
+ 	struct bsg_job *job)
+ {
+-	u16 num_devices = 0, i = 0, size;
++	u16 num_devices = 0, i = 0;
++	size_t size;
+ 	unsigned long flags;
+ 	struct mpi3mr_tgt_dev *tgtdev;
+ 	struct mpi3mr_device_map_info *devmap_info = NULL;
+@@ -1492,8 +1493,8 @@ static long mpi3mr_get_all_tgt_info(struct mpi3mr_ioc *mrioc,
+ 		return 0;
+ 	}
  
- 	/* MODE */
- 	offset = sma1307->set.header_size + sma1307->set.def_size;
--	sma1307->set.mode_size = DIV_ROUND_CLOSEST(size - offset, num_mode + 1);
-+	if ((size - offset) % (num_mode + 1)) {
-+		sma1307->set.status = false;
-+		return;
-+	}
-+	sma1307->set.mode_size = (size - offset) / (num_mode + 1);
- 	for (int i = 0; i < num_mode; i++) {
- 		sma1307->set.mode_set[i]
- 		    = devm_kzalloc(sma1307->dev,
+-	kern_entrylen = num_devices * sizeof(*devmap_info);
+-	size = sizeof(u64) + kern_entrylen;
++	kern_entrylen = (uint32_t)num_devices * sizeof(*devmap_info);
++	size = sizeof(u64) + (size_t)kern_entrylen;
+ 	alltgt_info = kzalloc(size, GFP_KERNEL);
+ 	if (!alltgt_info)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
