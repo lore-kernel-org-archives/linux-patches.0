@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017072;
-	b=nfj+fJvhY8V1G0rInsweBhBaOPB2/dBMH1Kvh9apUNM4HEWkx/ei/VPZgh5X2z+N/Yzr
-	 ERCxjES8jYnAHUpEsmS5Vj/OVa13uulxBAGwmN4aw7Ip739hqGocnOk8ZCPG640nsMcBj
-	 RIVqp8cvaLSHGIurN3s5QDsuXP64b5IF7EzHHR0F4c1QGMZosc/hg/pmnqgb7gpb2C1F/
-	 wjTG5KEoMXsjQu4zzANXPuhAke4HebgnGcPkxz/KZRBouzLXJaIEYmcCg8pYCGRh0Ro3K
-	 /cZf6833CBONBlafmPzQ1wJyjQ+XqJRzbB72w8zQEa3TrNrs2jY+weD7ICGjNuC1Xtg==
+	t=1795017074;
+	b=2IQ6FHMJBU88CSFHdXTpD3+yGjFNIhaJWe5Ose4lKvxj5OenTlOm7kNwh2Jt7aIxGT7i
+	 oi185eQd5HSpG42fu04N7fLeP1TKP7UrWC4WP/vEsEObuqFhvY7+pPGk10TAH7kFMdomh
+	 nq3XBk7UG0sVxtePlvFZA4bqXiqZ/Xsb55AExFhIh3I3waqwnUxxdHwU8ju430HlyatBB
+	 efORFQaxXwlKb/0cUcaxJMUC58kM9etrDSBx1WQeIYGy9W8bHrsDzjcEiyJnrUYSvHbFY
+	 AxffDrhaoDZQYyfkgDz26+daczYH9rT4rvlKs5Qw8Q7n1fU1qg3mNQDi8klR0tgFBPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KHFyjIftMtGRd/Xb63oe34hNhG+t9C8Nef2/SxlM0fo=;
-	b=TaQQUT58VJwCgSVl/QKW0OBhfhH2udmJ+KEwhLbtVKgBpGrS8hgFLUll4i4W2xaZ0jfF
-	 OloRnAc6BAONhZkvnUeW0tZUKgeNkwL7l2W0Y9ZOEUTswrjvZVlxj3++w3qfBW6bMBpcr
-	 o1OyNdFlLz8dofPHDfX8l2D5sOyS1T2vEkHEGVASoNBX2t72f6E9ayWqhmwsTAJINV1mJ
-	 bAltm2JsXNCFtEVM4ECArUu9xdXJ0KfPCMHCw1CNMiWcVDEl2MYYik3A7AXYUwyt+Z29h
-	 aXavF8rGgEb3ZY/fhAm51UmiClSKo5frEr1pviLzddUf9nnNeqX3KtpxohZrikxf3Yw==
+	bh=/j1cJR7E6A/caM23ZmD3ggp6F4Xjvf1s55IcmV/3KHU=;
+	b=KgbLPBME7FDzlcMx3vOr2QJebttjCKKvdE3dVZGEffcV/pFtWBYvxXksZunnZwhEMirK
+	 xd+o9Unchk4eNu1Z/X5TDRaRO7JdkrPRUTBmdIEceDyvpJcfYu+ZO2wHRGESgpZoTMxY3
+	 uPOpgVia/+zpnUccwSyaaECpsbmh/pjIzMvuu2yQb/tFn3NBu4CfH7+8/15Lf8INYRNyW
+	 SxVCGK07vfjEtqo8thgqoscenB2b3GW7gBUJx4Y1n9GO+gLYZPjxrBPclxWANrM96ylfI
+	 dTPiOcffWsAiAgZvZPrBvLCATqVAegmM9wOCU20COpWDGI/pCOpqpsE6HqIzFsLiqvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbvX1qCc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaTPGcPu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F86E606A332;
-	Wed, 18 Nov 2026 15:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C936D606A32A;
+	Wed, 18 Nov 2026 15:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbvX1qCc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580FF1F000CF;
-	Wed, 18 Nov 2026 15:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gaTPGcPu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F8A1F000CA;
+	Wed, 18 Nov 2026 15:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017071;
-	bh=KHFyjIftMtGRd/Xb63oe34hNhG+t9C8Nef2/SxlM0fo=;
+	s=korg; t=1795017074;
+	bh=/j1cJR7E6A/caM23ZmD3ggp6F4Xjvf1s55IcmV/3KHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PbvX1qCc5CmnSHaldjBMvvBZRarpkgFa9bLaZ+QJ3Hl7Fhh2fziL4r/+qD/kgdoyR
-	 w1gljRvWUletCfYOHivXbcrNCz1sYesUhnYc8feIgbbWDCwCJMBTRSlJ61txxIeLah
-	 4TFW3QYJNsyy69e7TKutSKKDMhuKuSBJjU/qQ9gA=
+	b=gaTPGcPuMxrVfHNKHwwTFi0EDLP+qXzjieCMt2R2E0UWbwUAu8gpKglwAUXLPUmK4
+	 2GX5UDlvF3M3AVbFYvrmeicdeZYiDeFHL0OWeBGgpnu5w2R/9a0liJVRTklJjHPvu9
+	 /Z9xJY+h2tSji75oZaNxhhylZ82KS7LUL4FKFcgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esteban Urrutia <esteuwu@proton.me>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>,
+	Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0754/2651] clk: qcom: alpha-pll: Check Lucid Ole PLL status before configuring
-Date: Wed, 18 Nov 2026 15:33:14 +0100
-Message-ID: <20261118150315.024702367@linuxfoundation.org>
+Subject: [PATCH 7.3 0755/2651] clk: qcom: Fix CLK_GLYMUR_GPUCC default and CLK_GLYMUR_EVACC duplicate
+Date: Wed, 18 Nov 2026 15:33:15 +0100
+Message-ID: <20261118150315.060820611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,45 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esteban Urrutia <esteuwu@proton.me>
+From: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
 
-[ Upstream commit eb34e2804ce4ea56efb741e23d598469274a2f94 ]
+[ Upstream commit 748f9caa7ab158598295f6c195e8a2bcbbace841 ]
 
-On some platforms such as SM8475, not doing this may result in graphical
-glitches when the mdss driver takes over.
-This fixes the aforementioned issue.
+Commit 6b150572bb76 ("clk: qcom: Add defaults for desired arm64 drivers")
+missed adding a defaults for CLK_GLYMUR_GPUCC and created a duplicated
+for CLK_GLYMUR_EVACC instead. The original patch series did't have this
+problem and was introduced during the merge. Fix this by removing the
+duplicate and adding a default for CLK_GLYMUR_GPUCC.
 
-Fixes: 3132a9a11e57 ("clk: qcom: clk-alpha-pll: Add support for lucid ole pll configure")
-Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260713-sm8450-qol-dispcc-v3-3-56fd05822270@proton.me
+Fixes: 6b150572bb76 ("clk: qcom: Add defaults for desired arm64 drivers")
+Signed-off-by: Sivansh Gupta <sivansh.gupta@oss.qualcomm.com>
+Reviewed-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260821045214.2623299-2-sivansh.gupta@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/clk/qcom/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index f8313f9d0e30f..60173b076cc5f 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -2373,6 +2373,15 @@ void clk_lucid_ole_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
- {
- 	u32 lval = config->l;
- 
-+	/*
-+	 * If the bootloader left the PLL enabled it's likely that there are
-+	 * RCGs that will lock up if we disable the PLL below.
-+	 */
-+	if (trion_pll_is_enabled(pll, regmap)) {
-+		pr_debug("Lucid Ole PLL is already enabled, skipping configuration\n");
-+		return;
-+	}
-+
- 	lval |= TRION_PLL_CAL_VAL << LUCID_EVO_PLL_CAL_L_VAL_SHIFT;
- 	lval |= TRION_PLL_CAL_VAL << LUCID_OLE_PLL_RINGOSC_CAL_L_VAL_SHIFT;
- 	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), lval);
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index d1fc9bf87126b..283cca5aca0e9 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -73,7 +73,6 @@ config CLK_GLYMUR_DISPCC
+ config CLK_GLYMUR_EVACC
+ 	tristate "Glymur EVA Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+-	default m if ARCH_QCOM
+ 	select CLK_GLYMUR_GCC
+ 	default m if ARCH_QCOM
+ 	help
+@@ -96,6 +95,7 @@ config CLK_GLYMUR_GPUCC
+ 	tristate "Glymur Graphics Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+ 	select CLK_GLYMUR_GCC
++	default m if ARCH_QCOM
+ 	help
+ 	  Support for the graphics clock controller on Glymur devices.
+ 	  Say Y if you want to support graphics controller devices and
 -- 
 2.53.0
 
