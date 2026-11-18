@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016538;
-	b=Xp3mEyKgI1/kZ3TbdbAE24M7AImlL9IkM7G0OjnFp2J6YIZtuGGl0n/dFdwv+ll2YvCs
-	 94Ng2T6VUVdPNbNFDeOBh8zc/pWhJ5/U5CxOBdKAp2SwojhjdxXNR0PV1sr81gFSlGE1n
-	 uGK2e/bbJHSwqhsU3abGhs+YAG2LwVa5ypVyPrJQEsh/Y/RCidvj4mLUcyw/oNOCsw+3m
-	 U/5gA8Bi4o4rDuBUQP1U+IrynuLxwKt4+ViRu543HXt2B3TXzDdueXyvbnn+Axc0efeGn
-	 aepGHY4Cu3fbiw/7gYSkJfuwnGiUB9jjbuemTVqCCW6iJUO7hYveHRPiOhZWwAuJH8g==
+	t=1795016541;
+	b=aSxEou1g/CkhQS51HDU5q6UeMzOycsyj8NDPN8gieoFtsEYp0sFthOrauZ+rcNCEV0cb
+	 r8rw3XxL+311EWT/YZ+cXEBiITIBO55X7PPxn+rvTPZ8tkL2JuvMXUHdnKHdz7ao7YJG5
+	 /UCG4yZ+6RhGAfssL2h6HF94PgcdrFO4kYfp+NReew2Fs1TeuA8SQeCwxN7zYrIuEYi/U
+	 KvIAOlNViw8E2Go0fDKrrj8UuQH16bRsyMY2M5tJGMzvlbsJw0AeU9YdOnw1hRv2epaqx
+	 tPlt6anlZjaGaREg2bynb7+Th52TCFTTnvUZE+p61pw5oQkSCT1PT1c6Hju3u5YUExA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OCBm5sEV4nGCJGki+khFrZ2EqKJ3e33NVf0oA4C4Rpg=;
-	b=Pit7sOGLIuVxBwyyIWmpSh4svVgsNsLHXOAEy7LN4uTWCIGhflqrUsxrNigE9GIH/UQG
-	 hjfoWoI5G0A8BJ3pQH16EQKcVxNZsqjaH3fgqxAP/unJFERm4vNuaZau8d22HOC22rq4N
-	 Fxmd3cfO4EUkRbLABhdSuG4i6icYs0zMHUrmArAhoOdGbYhvMQKT2KwVkDvTR6+DqlPwy
-	 1rfQH/xCoDwRf69ftsSypFYXpjBwfnS0wcKxWfCQZFlTzVNY9ROtWmM56y5Nt/dBkH4Km
-	 jRqUczPYAiZ7GbaISbQ41XCV2yGUP/i3+sB4hi+1A871+RDypiSUPhVjdMLsd3w9hDg==
+	bh=EKezhkTZVTPvLlrZzEwddwEjPtvJNqSLMNRLIhodKIU=;
+	b=5jknjLRPnfySqWKRO36CRZyqecpSSXThZl6xSr0zB9rzQR/fx4N0bFEpXvVNCOehOHf9
+	 XMd6gIOBznhA9mLNAEUgNfxKet2/zKmf8i1DSpsS9I7L7HtPGEessDi+3GoT9kDC8HOYO
+	 83hGMQZwPbq4YPimgU1Elof6Wl/UEuujHnb+Yzy1WewvmO5X9eBsMGAZBGCDWfIM2RGqJ
+	 /xyXHAAJk2pUGYBzMJS79/29uVmP5VOQjjzpRNXTFbKPhGeIzkSFfiOdnENyRizA2DkJr
+	 i0YLWVblRI4o5XfjD3vb3Mk5FTULcXy3vwIXxkK2l4KwTl3EVBlNL/eKu63qCR3AL3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwmSs1gQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rFXf0EfT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CA7606A31C;
-	Wed, 18 Nov 2026 15:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C91B606A334;
+	Wed, 18 Nov 2026 15:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwmSs1gQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D24D1F000C4;
-	Wed, 18 Nov 2026 15:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rFXf0EfT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4EB1F000C4;
+	Wed, 18 Nov 2026 15:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016538;
-	bh=OCBm5sEV4nGCJGki+khFrZ2EqKJ3e33NVf0oA4C4Rpg=;
+	s=korg; t=1795016541;
+	bh=EKezhkTZVTPvLlrZzEwddwEjPtvJNqSLMNRLIhodKIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwmSs1gQmAZyEX+PfxyYtwMZvTBjsJMsiSrTwiNCLm8V1wQRwfX/FPrtv1O52Z6F9
-	 ffmdMO/xCD2XxOMEbYBFkoJmUuiEW1Mn7AvIBim/+6NI9WBMxTd86lPSrxGNrR5lJX
-	 CgUk7xyqoWE8k7sZlqBddyQOihtNdtwMvsFvnNSk=
+	b=rFXf0EfTVhI3Oe3dMtbb76aRDPON2YJfzSzp8xdxfptvcxqTiHTKe2z8TW65j3FzO
+	 pU3/6JPLMRGH6F0/6ISD/Y77mfhlbKYLytvv9BxD07C7ZG4PqHDL/forHiHKWj2Xy9
+	 3YiecfMbFSO0LPjR9HYSxOIT9ZYHGyifj41y6b7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0521/2651] kernfs: dont hold kernfs_rwsem across dir_emit()
-Date: Wed, 18 Nov 2026 15:29:21 +0100
-Message-ID: <20261118150306.503329776@linuxfoundation.org>
+Subject: [PATCH 7.3 0522/2651] ASoC: SOF: amd: return -EINVAL for unknown PCI revision in acp7x suspend
+Date: Wed, 18 Nov 2026 15:29:22 +0100
+Message-ID: <20261118150306.538240289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,83 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 341c65579de5b632eb7913bb68b3e375eeeb3ddf ]
+[ Upstream commit e419e9a6cbfe1d0947dd5ab8dabe9a5ed4b4f572 ]
 
-kernfs_fop_readdir() holds kernfs_rwsem for reading across the whole
-listing, dir_emit() included.  dir_emit() copies to userspace, so it can
-fault into reclaim while holding the lock that every create, remove and
-rename in the hierarchy needs.  sysfs and cgroupfs have one per machine.
+amd_sof_acp7x_suspend() is registered only for ACP7.B and ACP7.F
+platforms. If an unexpected PCI revision reaches the switch statement
+the default case previously fell through, leaving ACP_CONTROL
+with a stale value (enable=false) before writing ZSC_DSP_CTRL=1.
+Return -EINVAL instead to surface the programming error immediately.
 
-Under memory pressure the monitoring daemons fault on their own
-getdents(2) buffer with it held:
-
-        below: page allocation stall for 120 secs: order:0,
-        mode:0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_ZERO|__GFP_COMP)
-        nodemask=(null),cpuset=hostcritical.slice,mems_allowed=0
-        Call Trace:
-         <TASK>
-         dump_stack_lvl+0x5d/0x80
-         __alloc_frozen_pages_noprof+0x5f4d/0x6300
-         ? memcg_list_lru_alloc+0x73/0x320
-         ? ima_file_check+0xd0/0x7d0
-         vma_alloc_folio_noprof+0x145/0x560
-         handle_mm_fault+0x17c9/0x2720
-         ? find_vma+0x27/0x30
-         do_user_addr_fault+0x39f/0x6e0
-         exc_page_fault+0x8f/0x110
-         asm_exc_page_fault+0x22/0x30
-        RIP: 0010:filldir64+0xd7/0x1a0
-        [Code:/RSP:/RAX:..R15: register block elided]
-         kernfs_fop_readdir+0x2de/0x420
-         iterate_dir+0x8c/0x1f0
-         __se_sys_getdents64+0x61/0xe0
-         ? copy_page_from_iter+0x860/0x860
-         do_syscall_64+0x6a/0x250
-         entry_SYSCALL_64_after_hwframe+0x4b/0x53
-         </TASK>
-
-Commit 9aab10a0249e ("kernfs: Don't re-lock kernfs_root::kernfs_rwsem in
-kernfs_fop_readdir().") took the lock drop out because dir_emit() was
-handed kernfs_node::name, which a rename can free.  The previous patch
-emits a copy instead, so drop the lock around dir_emit().
-
-A listing is no longer atomic within one getdents(2) call, which for
-most sysfs and cgroup directories is all of it.  POSIX leaves that
-unspecified for an entry added or removed since opendir(3).
-
-Fixes: 9aab10a0249e ("kernfs: Don't re-lock kernfs_root::kernfs_rwsem in kernfs_fop_readdir().")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20260911182815.1992483-4-shakeel.butt@linux.dev
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 1c9646f3180e ("ASoC: SOF: amd: add system and runtime PM ops for ACP7x")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20260910132251.1171943-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/soc/sof/amd/acp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index cb55dc3397acc..e7659b10c23fd 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -2015,10 +2015,14 @@ static int kernfs_fop_readdir(struct file *file, struct dir_context *ctx)
- 		file->private_data = pos;
- 		kernfs_get(pos);
- 
--		if (!dir_emit(ctx, name, len, ino, type)) {
--			up_read(&root->kernfs_rwsem);
-+		/*
-+		 * dir_emit() can fault, so run it unlocked.  @pos is pinned
-+		 * above and kernfs_dir_pos() rechecks it on the way back.
-+		 */
-+		up_read(&root->kernfs_rwsem);
-+		if (!dir_emit(ctx, name, len, ino, type))
- 			return 0;
--		}
-+		down_read(&root->kernfs_rwsem);
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index f89ad86260b4e..688df7acd2e21 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -1197,7 +1197,8 @@ int amd_sof_acp7x_suspend(struct snd_sof_dev *sdev, u32 target_state)
+ 		enable = true;
+ 		break;
+ 	default:
+-		break;
++		dev_err(sdev->dev, "Unexpected PCI revision: 0x%x\n", acp_data->pci_rev);
++		return -EINVAL;
  	}
- 	up_read(&root->kernfs_rwsem);
- 	file->private_data = NULL;
+ 	snd_sof_dsp_write(sdev, ACP_DSP_BAR, ACP_CONTROL, enable);
+ 	snd_sof_dsp_write(sdev, ACP_DSP_BAR, ACP7X_ZSC_DSP_CTRL, 1);
 -- 
 2.53.0
 
