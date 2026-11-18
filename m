@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049366;
-	b=MuTYo1vUuQjV7kWq3+pj2qfuhF+qWdGrIkZS6H1qkCKUaMTTaRmTkU7TXo8qFpq7SjHX
-	 lKjrp0Y70mlBOEk0XBkpTC2bvhrHoLheeiJWD4NC5a95Fq8sLYI3Q4OZJhI299gOsgCnK
-	 a4V2ZMepQGz6d6otUyXiCEmwD8Tgn5EelmGcmnsswBMpIjjWEXvljXTZR7oqGEKUAluRc
-	 8gyTuuhGTKQr+5wnOwe+7mhYu4W3Gyu1EJawJr2zE9YUy9kdfdG5Msnju1SyCD+AT8vL+
-	 wOYIvo1HkaGpWUgIJ1ZnwViSgVwFo3/A4KZXgUfTE68Gr1qWS87IQiFMgeLEo3WpbgA==
+	t=1795049369;
+	b=f1lUsXfNh7upXvTQlkqwCHuwFjqF5qbHNSjztlp440zynWqJGuJLeRkGJIyFBJcToUo/
+	 99WuvcuVMlSGFDCvAy69qJpFqvpbBzDeL+biqBa81dqMiNZG2LN8RkXTb2Q6axrU3oiMu
+	 dZkdHyBQ3g2grR7BW1p/0SfbtBCkBka3loUL3eCKbLavjzqjMG4ZGzh5rTjsGO2b+B8BK
+	 D2yD5eRC7ckFMmjsllPKLw+OIBQ1UDswY+1n/iTEyv/ZkfAC8qB6gHsSjgiUnsG/6jkXu
+	 6OqCb3P2tG9pQHLB2i3CUULLwgF1bd/eloTng2jukFiMkwrgnC3PYbLa8kP5MPLWztg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049366;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049369;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=samJdQBu3PX6fBIMTeNPmV9+QS4w8aDniHJPzZcV6aE=;
-	b=ZoEyuP9Je17Q+VXWRnMI40DPutzgzbK3gov1MBFz2RsQtiKM1Sso2+LnmM9ZQlxdE0/J
-	 6vy6O2Z8HP8f/AyyP+F87fCDAkJ6GTTznPcrIC1j2exwA9DmJCBwZfvDwMv3R3LM5GB2I
-	 HA9gSU+dhuQ1h4vBzenv6fCZEg6qQ5BlBilo5YOhvVDV3EjYrkKFzoZ7TeUd7XYPPnqPz
-	 th1w2DoGPPWUEA6VJHNaAtjik+I2E62/KDwhtWrz8jyEo3+eTPV0Z8YJ5H4egQ12tkzTz
-	 A8DGBv8cCA0EXk1mjNqwZqNgUxn+brdH9ZScPCvs25EG/S9Rg899tPrlEcjUwjksJAA==
+	bh=TouZeSY5d4AkaMlVY9nheYMbasFKOgO0qUE1EXih3EU=;
+	b=3sqro1W8ezc8B8RYmHGzDgkgkwgOaDeeBQJrrEtMp2i6rkhrst/kE0fu5Jr70tygHtJl
+	 MCo6yIBeHt18ruWtpkdnOnGabAZoy1bsCubxIg8s/ZpKry25SQ/9SSZ+6vllChAxhToqr
+	 YaNfjvSVz/qtOIJb0L1vPqmJ/dxBD9AzWZ/Xct4EGg4t2t+PN+vJ0+UHGV2onME1svM0U
+	 20DRCuj/ZTrMNAlS0nxYGw5HpOdwQbcrCbtPz8BxvMIksM+CIAFYF38ZPPEeEqkQLQayo
+	 F+XFQ6zLMHCeS68pfiflvjgv+nRROpRh8ZFZhb3XoQStHWoyTnAjTnGp6U3yXMe35hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjnHac62;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODjXBYOd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0F3606A330;
-	Thu, 19 Nov 2026 00:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8F6606A32A;
+	Thu, 19 Nov 2026 00:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjnHac62
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA6A1F000C5;
-	Thu, 19 Nov 2026 00:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODjXBYOd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4EB1F000C5;
+	Thu, 19 Nov 2026 00:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049366;
-	bh=samJdQBu3PX6fBIMTeNPmV9+QS4w8aDniHJPzZcV6aE=;
+	s=korg; t=1795049369;
+	bh=TouZeSY5d4AkaMlVY9nheYMbasFKOgO0qUE1EXih3EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NjnHac62mTio3em3OUEFvlqnUw8ldt85kPP7/28HtMpqLhqV8XcYRZpAjc59gj3a5
-	 KjT+5liXMN4/dFly5mStKJu5nm2G+lR7ehmBF/vGv2lC+QjMHUuLnE1KBUTQRqSMWz
-	 pQDlTyWvfOAPi2M2DUqf10XQuflO41Oht1AHmwgI=
+	b=ODjXBYOdrfsyDx1clI9QKDHBneYjFN9Jm67GZ7GDuiGzJtoo9BOkZmjsoVSikse0a
+	 1SYqus1qnXW8R/5DmzssBovRrFhL87vuyr7aJ2Ph1z+ZTomJTMNI7ZT77rjwTNt2gq
+	 Aetz7uUE59/QY8rBHVyOERP3E8DmNeC/U/Kl/GLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Rosen Penev <rosenp@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2327/2857] ALSA: hda: Avoid non-operational GPU warning at regular device removal
-Date: Wed, 18 Nov 2026 15:56:01 +0100
-Message-ID: <20261118150325.320982237@linuxfoundation.org>
+Subject: [PATCH 6.1 2328/2857] crypto: talitos - allocate channels with main struct
+Date: Wed, 18 Nov 2026 15:56:02 +0100
+Message-ID: <20261118150325.357962322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,50 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 3af4ed9f927c469f23d03a76e3b438ed09715bd3 ]
+[ Upstream commit 24818f77603b3fcb7f3da5802b28bcc5ac7604aa ]
 
-When a hda-intel driver is removed manually and it has a GPU with
-switcheroo, it always gives a warning like "GPU sound probed, but not
-operational:..." no matter whether GPU has been actually operational
-or not.  This warning was originally put for machines that really
-suffer from the non-operational GPU HDMI audio, but it's seen at the
-common path a normal device removal also goes over.
+Use a flexible array member to combine allocations.
 
-For avoiding a confusing warning, move the check and the warning at
-the error path of azx_probe_continue() that is the point where the
-non-functional GPU gets detected and given up.
+Add __counted_by for extra runtime analysis.
 
-Fixes: 2b360ba9a493 ("ALSA: hda: intel: Fix Optimus when GPU has no sound")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007171231.8147-1-tiwai@suse.de
+Error in case of no channels as they are required.
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 666d66df2525 ("crypto: talitos - init tasklets before requesting IRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/talitos.c | 19 +++++++------------
+ drivers/crypto/talitos.h |  5 +++--
+ 2 files changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 38d7ca14a795b..3058479c42dc6 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -1377,7 +1377,6 @@ static void azx_free(struct azx *chip)
- 			 * actually stop the chip) to allow GPU to suspend via
- 			 * vga_switcheroo, and print a warning.
- 			 */
--			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
- 			pm_runtime_disable(&pci->dev);
- 			pm_runtime_set_suspended(&pci->dev);
- 			pm_runtime_enable(&pci->dev);
-@@ -2413,6 +2412,8 @@ static int azx_probe_continue(struct azx *chip)
- out_free:
- 	if (err < 0) {
- 		pci_set_drvdata(pci, NULL);
-+		if (hda->vga_switcheroo_registered)
-+			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
- 		snd_card_free(chip->card);
- 		return err;
+diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
+index ec2ea6c726a74..9efe5533761c1 100644
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -3421,14 +3421,20 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	struct device *dev = &ofdev->dev;
+ 	struct device_node *np = ofdev->dev.of_node;
+ 	struct talitos_private *priv;
++	unsigned int num_channels;
+ 	int i, err;
+ 	int stride;
+ 	struct resource *res;
+ 
+-	priv = devm_kzalloc(dev, sizeof(struct talitos_private), GFP_KERNEL);
++	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
++		return -EINVAL;
++
++	priv = devm_kzalloc(dev, struct_size(priv, chan, num_channels), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
++	priv->num_channels = num_channels;
++
+ 	INIT_LIST_HEAD(&priv->alg_list);
+ 
+ 	dev_set_drvdata(dev, priv);
+@@ -3448,7 +3454,6 @@ static int talitos_probe(struct platform_device *ofdev)
  	}
+ 
+ 	/* get SEC version capabilities from device tree */
+-	of_property_read_u32(np, "fsl,num-channels", &priv->num_channels);
+ 	of_property_read_u32(np, "fsl,channel-fifo-len", &priv->chfifo_len);
+ 	of_property_read_u32(np, "fsl,exec-units-mask", &priv->exec_units);
+ 	of_property_read_u32(np, "fsl,descriptor-types-mask",
+@@ -3523,16 +3528,6 @@ static int talitos_probe(struct platform_device *ofdev)
+ 		}
+ 	}
+ 
+-	priv->chan = devm_kcalloc(dev,
+-				  priv->num_channels,
+-				  sizeof(struct talitos_channel),
+-				  GFP_KERNEL);
+-	if (!priv->chan) {
+-		dev_err(dev, "failed to allocate channel management space\n");
+-		err = -ENOMEM;
+-		goto err_out;
+-	}
+-
+ 	priv->fifo_len = roundup_pow_of_two(priv->chfifo_len);
+ 
+ 	for (i = 0; i < priv->num_channels; i++) {
+diff --git a/drivers/crypto/talitos.h b/drivers/crypto/talitos.h
+index 043ea7965d2b8..adc2af74ec62d 100644
+--- a/drivers/crypto/talitos.h
++++ b/drivers/crypto/talitos.h
+@@ -141,8 +141,6 @@ struct talitos_private {
+ 	 */
+ 	unsigned int fifo_len;
+ 
+-	struct talitos_channel *chan;
+-
+ 	/* next channel to be assigned next incoming descriptor */
+ 	atomic_t last_chan ____cacheline_aligned;
+ 
+@@ -155,6 +153,9 @@ struct talitos_private {
+ 	/* hwrng device */
+ 	struct hwrng rng;
+ 	bool rng_registered;
++
++	struct talitos_channel chan[] __counted_by(num_channels);
++
+ };
+ 
+ /* .features flag */
 -- 
 2.53.0
 
