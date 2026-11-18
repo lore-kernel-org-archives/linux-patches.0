@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044636;
-	b=1/8Gx4eYkfmZ64Xg5vDb8TKUC0AzNfC9m3OQvjbeng5GP4BJ9RWuhZ7XCOltFUOjY+P+
-	 Ocj/YG3Stq1R88n3DqEqHIBXzBr73uGQ0wBZ2w39eJYa5eCJwVxUFa1MAmyJK1xBUwKcj
-	 plfVCEIsqVVnk1NAC4MG2SbowRycmQXIQMquuecBR8SD3J84CIsTLvG1Jes3SgGowXcfu
-	 9slJHngRdNa3aOF8xMh75LFq0/tkSKlg3+KlzJsRKSWiawomlfBfCoiaibtQSz0ngmNFR
-	 YhTIwcSWKVRyMs7A1xaTw2KzkwAli+hXOKZ9dg5eN38GkHXazFUMQaa9cBwLR0+0Mpw==
+	t=1795044639;
+	b=NipQrmxt0CixULVgcGe186KWcrpI6vGF+7v0u7xFNnXcMobStGDXvysystCfju7MoA5k
+	 uO3KF0gohzA/RTiGzHCEqTLmptumh6EIxdWlCk+fOCYRyrGHA4AfqebpczC0cGsR2XbUe
+	 s+epO9+WyXZ1AKf6+vLRXYXQ46q2k3EXJ/xPb7BD8dB8+yNJo9wQzbvjGoLs6PuLWgEen
+	 3sr4ZVC0EFL0TLDMArlGoN2Ymo7nxzDL3qzK6pyXqDcaV/LonkvATmxwb1/XMk0ySBPeN
+	 EwZGDKMipTF2DuPoCKBgvQYKF/yHSNDM2g+a0wfjc03QDuh3s+9kcP1wbctDxReoHbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044636;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=spDhx9B7mEH+beKu95oEbaUDs567EiiwungSVpH8v60=;
-	b=jw2SOhqDmfuoY6rdvnb03wwxJQ2b9rpHpBFImcsxYELKg9fUwQc+jgvvM44yoOKVLE/l
-	 Mj8AF38LhJpzCuVUpF45JVj8XavR/YcPshBqFchl4Z5BbexEKwgB6B9htykCdd4xjhXqx
-	 5bS/Bc1PAqjqoOmvCIAcUR2GW9C0OJ07cuLHrC9yjKL9UasVbEHCJaFPG0L/qgofhkysX
-	 HBgPlCs0812Y/w/AMMp5B/vEmtoA2QW6Gzkq9K8XG7PQMXgUnIyW8Qg36AXnLPSofVZ9n
-	 2AbH/RCjkgCTpax/0XT+C9zb790hGJvP+RuVjCaPqCkFZgtH5xwv0cDtbPex4U6jwbA==
+	bh=eQY1xZixlBaMCeXcmT14SiR0Tx22RH+W9nKrxJotTFc=;
+	b=tHmhjkhP3d8a63oz5ERbLbPtYHeE9UjdIbfawYdKj5FWbCq502oPFfUHda2zrx5Q45Dy
+	 K/B6CnjaMSbKq0R03W+WUkHWjEOt4GHL85ymtm5LBJlRd2U0hXFkADwc7wDJgZeKqp1WG
+	 0g6wqo04cw8ZY3iZb0ZQQ4+XCNxx+Lt5NplnVDTInYkONFA2LwpsRITox3tRJRA0C7wZa
+	 pdlfjiPTLnKyhVufORLUEcx5OifW+m/2V4D35wk1r3XeApTA6fX7cKwfVP6jbdhB9NJul
+	 +JiGnhDB+iFVIvA12Kulm79oYgS9v/6tZ5/2wdYcfL3G2CZJVM+QZ+/h4qJpt4JpBDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqXizG2b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keWUDAI+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A181760A2602;
-	Wed, 18 Nov 2026 23:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86CC606A33F;
+	Wed, 18 Nov 2026 23:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqXizG2b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00071F000C9;
-	Wed, 18 Nov 2026 23:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keWUDAI+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F631F000C6;
+	Wed, 18 Nov 2026 23:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044636;
-	bh=spDhx9B7mEH+beKu95oEbaUDs567EiiwungSVpH8v60=;
+	s=korg; t=1795044639;
+	bh=eQY1xZixlBaMCeXcmT14SiR0Tx22RH+W9nKrxJotTFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sqXizG2b6QejFLqEHKhUSxJghLE5cLcjwvfN++AagRRl8ActqFH9357W9m/X9ySor
-	 /s69qITKYSgbuZlPAMgdtFDbAXEjARubtnXVNbhHj8YbaXA0MZCMNcsEYlZmIWKM1v
-	 bsEY/aWqatzzRfhqC9rZv4r/fw6AINRIZ1i4mUKc=
+	b=keWUDAI+iXTnBvP4Ir+her5n0Envxfj1YW9dnPScgstsKi4C3XpFZoFn8tzXdVQXr
+	 xtZ/BUcvqAssd+KOjsS0Zw27E+rNo8Npltn2NWVc/J3yLGiuCwDHZSo0JobxJSPJIZ
+	 m5vfaN2ACEC/8H2mhLeKh6zaM3PRjAMguLqaRWcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 0639/2857] HID: picoLCD: check for fb_deferred_io_init() error
-Date: Wed, 18 Nov 2026 15:27:53 +0100
-Message-ID: <20261118150224.525542309@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 0640/2857] HID: pxrc: reject short input reports
+Date: Wed, 18 Nov 2026 15:27:54 +0100
+Message-ID: <20261118150224.565097518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,63 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit feade898fc958ff355101adf12d5632272e64220 upstream.
+commit 0deb22da5a8c6663c3e071f55fd7d7e3189f5517 upstream.
 
-fb_deferred_io_init() allocates deferred I/O state, populating
-info->fbdefio_state, or leaving it NULL if an error occurs.
+The HID core invokes raw_event callbacks before validating the report
+length.  pxrc_raw_event() reads byte seven and writes bytes one and seven
+without checking that the report contains those bytes.
 
-Currently picolcd_init_framebuffer() ignores its return value.
+A one-byte input report reproduced the first invalid access under KASAN:
 
-Therefore if an error arises in fb_deferred_io_init() (for instance, due
-to an allocation failure) info->fbdefio_state is left NULL.
+  BUG: KASAN: slab-out-of-bounds in pxrc_raw_event+0x161/0x260
+  Read of size 1 by task hidtrigger/90
+  Call Trace:
+   pxrc_raw_event+0x161/0x260
+   kasan_report+0x139/0x170
 
-When the file is subsequently opened, fb_open() will dereference a NULL
-pointer (calling fb_deferred_io_open()).
+Require all eight bytes before reading or rewriting the report.
 
-Fix this by checking for the error.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
 
-Also correct cleanup ordering - defio is initialised after the sysfs file,
-so cleanup defio first.
-
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Fixes: acc3e34613da ("HID: Add driver for PhoenixRC Flight Controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-picolcd_fb.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hid/hid-pxrc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-picolcd_fb.c
-+++ b/drivers/hid/hid-picolcd_fb.c
-@@ -558,17 +558,23 @@ int picolcd_init_framebuffer(struct pico
- 		goto err_cleanup;
- 	}
+diff --git a/drivers/hid/hid-pxrc.c b/drivers/hid/hid-pxrc.c
+index 71fe0c06ddcd..e3755d8b85c2 100644
+--- a/drivers/hid/hid-pxrc.c
++++ b/drivers/hid/hid-pxrc.c
+@@ -55,6 +55,9 @@ static int pxrc_raw_event(struct hid_device *hdev, struct hid_report *report,
+ {
+ 	struct pxrc_priv *priv = hid_get_drvdata(hdev);
  
--	fb_deferred_io_init(info);
-+	error = fb_deferred_io_init(info);
-+	if (error) {
-+		dev_err(dev, "failed to initialize deferred I/O\n");
-+		goto err_sysfs;
-+	}
++	if (size < 8)
++		return 0;
 +
- 	error = register_framebuffer(info);
- 	if (error) {
- 		dev_err(dev, "failed to register framebuffer\n");
--		goto err_sysfs;
-+		goto err_defio;
- 	}
- 	return 0;
- 
-+err_defio:
-+	fb_deferred_io_cleanup(info);
- err_sysfs:
- 	device_remove_file(dev, &dev_attr_fb_update_rate);
--	fb_deferred_io_cleanup(info);
- err_cleanup:
- 	data->fb_info    = NULL;
- 
+ 	if (priv->alternate)
+ 		priv->slider = data[7];
+ 	else
+-- 
+2.56.0
+
 
 
