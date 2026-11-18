@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025660;
-	b=UBy7fMGkxn9DOeORKK7o8vqlBrPk9ENOOEG47snS5YBREBlDj/8IN4dimmhfyRMY6qLw
-	 4L2+qVdWcLdU4D/4Z56DFOx1InyHYsTSUz2BjRLV0XQ5g0D58CthgD9kYf3/BXJN+RSTx
-	 YkqQlXQ+o3FeD1fqvQt8ZM2sXwdZFIiSDBxIpDTPaIuo5poK9tSDAi418pXSRzp+P8Sdj
-	 xYK7DNIyFW7TC+VhS3c7MXmEHHXQcC+Qb29CZ4siM/pNUxl2TfbXCjFwZhKayj9SNtvpk
-	 ZaY3+h/y8WO7BfrfISkB8xQfDErtEHg/KdFnlyfe9mIIK7uJLr0/b3u4bsncOV1HJlA==
+	t=1795025663;
+	b=dQzN9OwI1vDam8TSbT4QiJd95CrZClVk5OV109cPyJvc2YG9l0kY/UF9AWFTxyS9Oc3V
+	 53M40L1It5vElrpHzrZ+3vVnbqQOw4Xw16m5Mu+KyM6h/WpnpKEEBrU+aXGekm/GOA5tD
+	 batUWUCB6fN7iun+v+CBEPgr3s9k9+casCmxjq1TOTtfJPgl725mk1l/mYlzYbEtsVltZ
+	 ZDuJ8Ss9WEHAIhZRwC463/03lyHi3cGPt/UeHhQNCzpcDHjyDxYeh3iQRi4MjPMDmXxlK
+	 Bki0lxfA0XHbrIiBHxFqGXxeKE5jrqRjQLrE9hd7MBsSKioSKDE5i6aB/3X3p0UPoLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5eMibdEN74Qcw/BoNd/+MvzWkM1mKAWL/vBkHGhxlh0=;
-	b=A0ceirF+q6MLivspa1V9BDktYQGJk50EHTcpfuOsLgYbPT27jFRBVwJuHUjTHXQtS4TJ
-	 DNZ4pcY8YyU0IChpneob4sWXVnn8TOLvdpzXjkwnETYDw/dk4dJnp3QXeuKX+UhP7hJPU
-	 o3A6qqWu5qzHJVTb4dWiqvDNjXV4FxFeolQhZJDrE5X+9t29V/+6Cvzax2/kj/rLZ0wie
-	 xFoayi2WRaJRknEV5TPEoxYSY+B9fbk1TYORzcRr7GaxkCqa1rUF9ISHuRWxWzUEqXzEs
-	 rjIIRwpqDnne/Ykb7zS/x0TvS44t7t1iYVwvMyHYeSvlh31QEdw/pWTnkZtKAv7XX9Q==
+	bh=8mcfPANpUs3ITFHwJRT9fYezOyGCoZdwpsaLFmJXGQA=;
+	b=j0hGoyhu/R9HyscWc9z0Aq70LwUJ3kiHcbvEVq8DaLmiKiEJ+I204DV947axfIG9l668
+	 DeaExKiH3N2oVXra+DI/uW+qRYTCEgUWG5OnkALkzWv3E5k7wkpb3XALhQyBum/lpZXxU
+	 y1sO+HQ6ZB0Wt4vtuIMjvoVcoNwLZ1taY5AN6B3u97lXx4tHIG9X3I8dklTnp3m0+j1i4
+	 zbpFEYgMnx/fO7IdmAbZs2MAgodmn7G/W2PyXR3afbier6g25sflxkXAI2WoQtDlU1OQb
+	 xV2k5zmLOTZzxws5QvuSgt7hV4JEWQ+Ix+FV0uqrM5MAy/MGomTefn7mr6Br/mQYZxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b+oG2Kmb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWTNMy0A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86A0606A31C;
-	Wed, 18 Nov 2026 18:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9049E606A31C;
+	Wed, 18 Nov 2026 18:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b+oG2Kmb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7E81F000C5;
-	Wed, 18 Nov 2026 18:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWTNMy0A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C4A1F000C5;
+	Wed, 18 Nov 2026 18:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025660;
-	bh=5eMibdEN74Qcw/BoNd/+MvzWkM1mKAWL/vBkHGhxlh0=;
+	s=korg; t=1795025663;
+	bh=8mcfPANpUs3ITFHwJRT9fYezOyGCoZdwpsaLFmJXGQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+oG2Kmb8H5tobiHOYgVYPhyb1pGvpTHiw+zi2acCn8SQbjtaqg1sGDnO29mu3WYU
-	 Hq95WJYFWsjhizn1fuwHbEoicldt1rfgwg5jzCyq3WlTuMx661VPheEUYJ9ftb3bMX
-	 fh5TSjJdRdKSkisY6MTUoec/HxcQOzmoRf/UsnVk=
+	b=XWTNMy0AxOlVKEes+Qf/THbLrOH6BOQeRZs8+KlJlzdDghFRjkEHLVTRGUZVg3qqv
+	 kCq/ykE8d/RMlaJi5BLLBlBMwUEyU2XIlwi2fdn6eRoPFGnw/3K970jtLsl6BAGYDD
+	 PtKJ6SxP4QnVPhMUPlHD27GkUb7fmdCXxqwY6iZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+619e27617b2abe6b9b72@syzkaller.appspotmail.com,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	"Denis Efremov (Oracle)" <efremov@linux.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1106/2151] floppy: avoid NULL deref in reset_interrupt when cont is cleared
-Date: Wed, 18 Nov 2026 15:47:21 +0100
-Message-ID: <20261118150202.532098471@linuxfoundation.org>
+Subject: [PATCH 6.18 1152/2151] sh: defconfig: Enable the current M66592 UDC symbol
+Date: Wed, 18 Nov 2026 15:48:07 +0100
+Message-ID: <20261118150204.148359744@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,70 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7c82781039c03a3e47b70d3259f336adbb9d2692 ]
+[ Upstream commit 9b65dcd94222c37febf98127b1ac5452c94a16d0 ]
 
-reset_fdc() arms do_floppy = reset_interrupt; the IRQ handler then
-queues that function via schedule_bh(). If unlock_fdc() or do_wakeup()
-clears cont before the work runs, reset_interrupt() dereferences a NULL
-cont and oopses.
+The M66592 UDC provider is built under CONFIG_USB_M66592. Several
+SuperH defconfigs still enable the removed CONFIG_USB_GADGET_M66592
+symbol.
 
-Example crash excerpt:
+Replace the stale entries with the current provider symbol.
 
-[ 1070.468148] status=80
-[ 1070.468152] fdc_busy=1
-[ 1070.468158] cont=          (null)
-[ 1070.468161] current_req=          (null)
-[ 1070.468162] command_status=-1
-[ 1070.468163]
-[ 1070.557051] floppy0: floppy timeout called
-[ 1070.557053] no cont in shutdown!
-[ 1070.557056] floppy0: floppy_shutdown: timeout handler died.
-[ 1074.419509] floppy0: FDC access conflict!
-[ 1074.419782] BUG: unable to handle kernel NULL pointer dereference at
-0000000000000008
-[ 1074.421969] PGD 0 P4D 0
-[ 1074.422320] Oops: 0000 [#1] SMP NOPTI
-[ 1074.422648] CPU: 10 PID: 3269 Comm: kworker/u256:4 Kdump: loaded
-[ 1074.423830] Hardware name: inspur Standard PC (i440FX + PIIX, 1996),
-BIOS 0.0.0 02/06/2015
-[ 1074.424284] Workqueue: floppy floppy_work_workfn [floppy]
-[ 1074.424757] RIP: 0010:reset_interrupt+0x3a/0xa0 [floppy]
-
-The same NULL deref has also been reported by syzbot on upstream.
-
-Return early if cont is already NULL after result(). The hardware reset
-has completed; result() still drains the FDC. A later request can lock
-the FDC and reset again. This is a defensive fix for stale work, not a
-rewrite of the floppy continuation state machine.
-
-Reported-by: syzbot+619e27617b2abe6b9b72@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-block/00000000000093c4d105f9aa34d6@google.com/
-Link: https://lists.openwall.net/linux-kernel/2021/10/27/56
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Link: https://patch.msgid.link/20260723073512.11120-1-yangxiuwei@kylinos.cn
-Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Fixes: 193ab2a6070039e7 ("usb: gadget: allow multiple gadgets to be built")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Assisted-by: Codex:gpt-5
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be> # build-tested
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/sh/configs/migor_defconfig   | 2 +-
+ arch/sh/configs/sdk7786_defconfig | 2 +-
+ arch/sh/configs/shx3_defconfig    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index 3b8fd00c710c2..f380c5a163e56 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -1786,6 +1786,9 @@ static void reset_interrupt(void)
- {
- 	debugt(__func__, "");
- 	result(current_fdc);		/* get the status ready for set_fdc */
-+	/* Stale work: unlock_fdc()/do_wakeup() may have cleared cont. */
-+	if (!cont)
-+		return;
- 	if (fdc_state[current_fdc].reset) {
- 		pr_info("reset set in interrupt, calling %ps\n", cont->error);
- 		cont->error();	/* a reset just after a reset. BAD! */
+diff --git a/arch/sh/configs/migor_defconfig b/arch/sh/configs/migor_defconfig
+index 31dbd8888aaa9..4ee81b944be25 100644
+--- a/arch/sh/configs/migor_defconfig
++++ b/arch/sh/configs/migor_defconfig
+@@ -74,7 +74,7 @@ CONFIG_LOGO=y
+ # CONFIG_LOGO_SUPERH_MONO is not set
+ # CONFIG_LOGO_SUPERH_CLUT224 is not set
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_USB_G_SERIAL=m
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_RS5C372=y
+diff --git a/arch/sh/configs/sdk7786_defconfig b/arch/sh/configs/sdk7786_defconfig
+index 2433aa5f44a86..72e9700e2f6c9 100644
+--- a/arch/sh/configs/sdk7786_defconfig
++++ b/arch/sh/configs/sdk7786_defconfig
+@@ -147,7 +147,7 @@ CONFIG_USB_MON=y
+ CONFIG_USB_OHCI_HCD=y
+ CONFIG_USB_STORAGE=y
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_MAX6900=y
+ CONFIG_RTC_DRV_SH=y
+diff --git a/arch/sh/configs/shx3_defconfig b/arch/sh/configs/shx3_defconfig
+index 52e7a42d66c72..56b724520c55f 100644
+--- a/arch/sh/configs/shx3_defconfig
++++ b/arch/sh/configs/shx3_defconfig
+@@ -79,7 +79,7 @@ CONFIG_USB=y
+ CONFIG_USB_MON=y
+ CONFIG_USB_R8A66597_HCD=m
+ CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_M66592=y
++CONFIG_USB_M66592=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_SH=y
+ CONFIG_UIO=m
 -- 
 2.53.0
 
