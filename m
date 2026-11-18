@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035708;
-	b=Cxmxk4YH4049IzqpFdwWRHr9wlONN4BNWmKTXLTexvKH1tW0CgdHT0KZdUVAQfTRGCBR
-	 tP+fSZEmFfiH/QJh4j4D6Ky3PakLL956WcR6xaJX0ktrgZwjyJePaHL+PAJb9q3cK4hdx
-	 JtG6CIgcW8WLrjGwtDV+pnKVMolPsmcBniuJLCk/ZtXTLK6SImWjE0K4XOgUXk8+lYT9F
-	 BJHuH0RUUrDrnXfKWl6O/zpISo75NLnJfyvDBc50QsT8D1aPnIHJ6p9kwkh4pSFYFg3Im
-	 3xjtbXedARZN2+yKVtS2VZsTdyvI4ydHnZcRzckZHi73eC2B5yOIa0HBM8ZEGIR//fQ==
+	t=1795035711;
+	b=VAzXgC2BEKU/CkyZfG3gFnT9qKow1h6mG3AaDSiPXg1KZfQMvm5toLwMa2Ua9ajKRmjb
+	 tcemzWNMAK2fHy7E6ro4/iAaBUqBJ6ODcC6upBhuxiwxEL1jS51Aclo/B02LMG9bO0YgJ
+	 2qwIFqfoXIESTeR053RC5WWEiLq6sgVvRlRsxsF/fzj/Az5blXB+UJ5xgdpAL8TdacNZ8
+	 dTzAZxyOp/mtj17Le4RCdvDKYaIXEFvduV60lqM7H/qUqbKL4m7DcXjDVGEP9BGDGSO+G
+	 JwF8h1E11pdRVkqJuzQGRLKgOKsz1JjccP5wq+Xe7+RLNv6CHkadcqPNyhnBP53blAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035711;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KXEJIrnRFEaeVi4YankqMVIBKr9xEEiAUnHQdrXeXAA=;
-	b=f6gIYoqD5uQ/t2SIKdtpzG6k30pM/3J37x9gexeOJ9EXrTO0dLcwsD9XtoBR8AsVCpCn
-	 fMLgMysLd+CULCPtoG36WurybZDr3Zj+l+v03iYOcDw9k40mpW7i/O79RKDYg7eGYrSjb
-	 U9y80d48Ql3yt5wbCgTupsKo/HYEJzoJKCm8h/LxrCKEavLiz3nRkWOZos4pYXP9l/hqk
-	 gC08Wtg5oGCGgcGhl0+iV1iAU5+nzZ07cLA/80gwRJMOdKnjJU1cZiVZjOCrT01LlXmH8
-	 jSvHkwY+ut3hnIbfYr6RVC4BS+MRYi9Uffh3jKJs+b4fmjVcc6Hd8zFhH42a6utfvYg==
+	bh=5nhasKrK5mxKT2ybFadnWRPOFBoq0HL34461zY2MaZ4=;
+	b=uF9+z19Afhya7ymzBWiI4GUdWCjh0ISbtkeNfNcbX1rvX7M4njdsxYy1EAZ5IqLRTBAk
+	 7neOtbfpP3o4PqrKIKmABmosx6IBrTVrzPmJE2OipDp+J7VQ0tXwbswGg5zTKql2JUb6j
+	 pMBVdN8SlNYRFvj2BgyPr/ato3WoUMeRtOHsyQkIVQZ69hqq9su1odll5AiUbr5QJEoqw
+	 8o3vfpjya3MuaiAjycUJBJpB7WU8MF0KuTdVmvA9RJgQ5vMTjeDCQAeqBLvcFgRcUgOU4
+	 CWNDwq3V9LJppldqFBOc9o+q+M1UY4B5F6/xHsQDrgoAj3PdL2Di8TDMGZIuz95nMqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zserKuex;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtOSFUc2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37457606A336;
-	Wed, 18 Nov 2026 21:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B377606A32A;
+	Wed, 18 Nov 2026 21:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zserKuex
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5521F000C4;
-	Wed, 18 Nov 2026 21:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtOSFUc2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7D01F000C4;
+	Wed, 18 Nov 2026 21:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035708;
-	bh=KXEJIrnRFEaeVi4YankqMVIBKr9xEEiAUnHQdrXeXAA=;
+	s=korg; t=1795035710;
+	bh=5nhasKrK5mxKT2ybFadnWRPOFBoq0HL34461zY2MaZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zserKuex9DI0qh57qOchGPSppcEmp7vvOcbGfqmW6zshcaeh9gf8d+Idb/OVVEJTq
-	 OmGG0W1wAr9WDmPCv3NneCHw0X7ipg4skIAbtq1E5OFV8uMCmrqNlv5YtkCj21ybsF
-	 orWUoFmTpxWy7ji2hszhmmruJX1F3ainvxe4zCAI=
+	b=HtOSFUc2PqRGsDZWBTut2lMoemf/USGq6lzloqqslE2BqkwuBiCOVMJoGVI8Utgr9
+	 0S5LYbMte+6f8XJy5rw/2cRWOr+vKTeoO5kVNc7BBsgPeV4p3W4HEIsy5dNtb4OfF4
+	 q/xByu73lsjY+qtVC8JMxr2MEv9VFiCRJAJg0EA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0800/3318] media: redrat3: Ensure all urbs are suspended
-Date: Wed, 18 Nov 2026 15:23:42 +0100
-Message-ID: <20261118150342.930918159@linuxfoundation.org>
+Subject: [PATCH 6.6 0801/3318] media: sunxi-cir: Ensure no more interrupts can occur before free
+Date: Wed, 18 Nov 2026 15:23:43 +0100
+Message-ID: <20261118150342.968689582@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,31 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-[ Upstream commit 1582f545273f2aa4eb4ee6f3a89b433f5c85c68f ]
+[ Upstream commit f9b33ec404200c03dd490ec133b8f9bf599c5444 ]
 
-Ensure that the learn urb is stopped before suspend.
+Only call rc_free_device() once the hardware has been stopped.
 
-Fixes: c49fcdde38cb ("[media] redrat3: enable carrier reports using wideband receiver")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
 Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
 Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/redrat3.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/rc/sunxi-cir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
-index b99279ae24bfd..aa9242bc604b0 100644
---- a/drivers/media/rc/redrat3.c
-+++ b/drivers/media/rc/redrat3.c
-@@ -1170,6 +1170,7 @@ static int redrat3_dev_suspend(struct usb_interface *intf, pm_message_t message)
- 	usb_kill_urb(rr3->narrow_urb);
- 	usb_kill_urb(rr3->wide_urb);
- 	usb_kill_urb(rr3->flash_urb);
-+	usb_kill_urb(rr3->learn_urb);
- 	return 0;
+diff --git a/drivers/media/rc/sunxi-cir.c b/drivers/media/rc/sunxi-cir.c
+index 6b12453430644..dc9d983d15aa3 100644
+--- a/drivers/media/rc/sunxi-cir.c
++++ b/drivers/media/rc/sunxi-cir.c
+@@ -373,8 +373,8 @@ static void sunxi_ir_remove(struct platform_device *pdev)
+ 	struct sunxi_ir *ir = platform_get_drvdata(pdev);
+ 
+ 	rc_unregister_device(ir->rc);
+-	rc_free_device(ir->rc);
+ 	sunxi_ir_hw_exit(&pdev->dev);
++	rc_free_device(ir->rc);
  }
  
+ static void sunxi_ir_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
