@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057098;
-	b=jVGiP5loQ0h1Xfo309+M1rUg2brMeYAEPd7RoI51jycLwKOjMkKVTwtTwjG09dh4S7PX
-	 +hqSgGqcgAl744zDVy/vHLePSWroUAFK56NRcR3jHIUqgMxkB/PyJS0ArWbuE8FVaNDLR
-	 88LDgRJ60W97Egl0jMsvP28jmuviMhDJOnIBeHz0735Szl2Lk1EnbEysy0+5Kug/pAH1P
-	 IeHGC0TbieLQGi0oSpd9C4eNM6D+JVNQAdLDJeyBs9mLS1mgWNE9zYRjix2x08TEi80u1
-	 nNt8gXoKGfCTTw0tgey4ZacNJRVsaQN+N370JgrthD1vGikgoffTdAkXLgZVURESIjA==
+	t=1795057101;
+	b=vQ1LKdgcNsWQ45NSI1DA3T++QUChTSCKBwvSUp6/iD7n9stdgcxJxYqjNrOroUPtWW6c
+	 rjXJsJLB+pidCJTS6iOls/kiZUXObb4Ty7VnTNmy4+8+aTAcj7VfkoLMjBcJkWjLF/6fK
+	 4at9sIGkV44HPzeObVrARFGBAV7z2nWhluuPuOFn7T70ZPBEprNbkFhGpVHKfV7CL9tbo
+	 BhqoerELvL5G1gFu0UR4SMDYTCqVqj2fWFmRmwP38SUxYmcyoJuD7Qty4h/ZY8r8jeNxX
+	 AH+iRKxLbraphIoVDFyVHoweRSlgYiBhAnZ+eydSX6xlFrS4DmfqntCTrpYauAPCc2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f6RqrT0FQ70dLFC+EFqz8GoRIdAxIhdurRYtcj3Rdcw=;
-	b=MG4wajCY1ImfbLL2FBQ8OI6l5lyvITCaCwvLLSCgQ2/p1eKGiI4Ae70czOfasXOlAnpk
-	 en4fzKAWSZQunX8+wXqKu8ozOg9boPxMnYM/NpSWZn4SVZMRlmNpzMFDZQ/HMfCO0HcSw
-	 JYm1GY8mS+RIcUVYd3q0gF2S6n+5/DBCb3KI1LxpV73RuWrYJX3MG+d4TxWustD7FN7TT
-	 6HNEEHl4FXhsA6qb3S1RJE2nkLXt4pb1Yi3aLXpDgdwEUHruTHobEMj07PJRwT8LFuCUD
-	 t+YPXNImGrznyvUC64FaqSEZFeBkLt4C6lEenDPI3UpBuabXiIkYxAKIQDiXVXu+PfQ==
+	bh=s5VcVSCI5Rr5xaEQqkMvFKHTzLmgbNLUvsGQx8QCMUk=;
+	b=P9C7hJalffCEwKJMcyHHi/F9HnMSyKF1i9cm+821b5SWa6e9VKfyZshm3x6934uUAdQd
+	 jmtIxtQxQiR+Kvr+Idqa82goqFnUGUiABb1SCK8oAwmccd3jOMRU2188BKYODzRNyx1po
+	 hgTnSZMBX3+xW0gp8Y8z5Ct3njXPAWHBgVFdgvDF/Qeb4W+IyD1R7QuCp1zJvP6vsIx/O
+	 aSunXqkzGBbdWfro5IqEbswvcgMOqKLYSgfxBFQBrkLT2XR882gsQabi4kJMKUPbbXqvD
+	 SUlq9x4NZuMSBeVBO+pB6mnsR1pHjQbRz9Bd6dy0T3pV9Pwl5c24zCExhUEwmzrfLfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwZV0oud;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8aWerL4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B28C606A320;
-	Thu, 19 Nov 2026 02:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAD8606A31C;
+	Thu, 19 Nov 2026 02:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwZV0oud
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D077D1F000C4;
-	Thu, 19 Nov 2026 02:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8aWerL4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDF51F000C4;
+	Thu, 19 Nov 2026 02:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057098;
-	bh=f6RqrT0FQ70dLFC+EFqz8GoRIdAxIhdurRYtcj3Rdcw=;
+	s=korg; t=1795057101;
+	bh=s5VcVSCI5Rr5xaEQqkMvFKHTzLmgbNLUvsGQx8QCMUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwZV0oudkzvrrp/scnpq/7agH4TlBh5mzXGNNmbd8IvWrae9yqkc0dlw9gj3EtHFQ
-	 IjgXwQ815qJwRq6IvLocDrJAIA+cc0py9XihItDtyoYv85906zzhHu/e6VB2dY6w72
-	 Mf1OEHN3lr1SfYRK3VrZn3FtWNqZKyAopEn8SfDo=
+	b=R8aWerL4kmZwlxgDQGN5/5kZIxHpmB40w/h/bKeqeEVCdquvwPI3uqvfJS06ujJaH
+	 sh6g3M6hJVljZzZRfFzGRprys1lt9oRDtZmsixlEtJYbqlx0mpf8Wz/cFvDHCik3uL
+	 +Q0oLzIraeN9q6xpeYP5lZc1iLhM8SIOb/b+sxI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aswin Karuvally <aswin@linux.ibm.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0003/1848] net/iucv: fix the recvmsg window update
-Date: Wed, 18 Nov 2026 15:34:01 +0100
-Message-ID: <20261118145911.390912025@linuxfoundation.org>
+Subject: [PATCH 5.10 0005/1848] wifi: mac80211: shut down RX BA session timer on teardown
+Date: Wed, 18 Nov 2026 15:34:03 +0100
+Message-ID: <20261118145911.458351798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,129 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
+commit e588e83e5c7a0f6d7a77dbbb58927c8c8cfd598e upstream.
 
-iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
-testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
-the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
-is zero and one recvmsg() on its own socket is enough for an unprivileged
-process to take a spurious disconnect.
+Tearing down an RX BA session while a BlockAckReq frame is being
+processed can rearm the session timer after teardown deletes it. A later
+expiry then accesses the freed tid_rx state.
 
-It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
-allocates GFP_KERNEL inside a section the code treats as atomic. Sending
-outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
-msg_recv is sampled for the advertised window and subtracted after
-dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
-while recvmsg holds no socket lock, so both can subtract the same value,
-the counter goes negative and the credit reaches the peer twice.
+___ieee80211_stop_rx_ba_session() uses del_timer_sync() before RCU
+readers have finished with tid_rx. del_timer_sync() does not prevent a
+concurrent ieee80211_rx_h_ctrl() reader from calling mod_timer()
+afterward.
 
-Test the transport, claim the credit with atomic_xchg() after the last
-error exit and hand it back if the transmit fails, and send once the lock
-is dropped.
+Mark tid_rx removed under reorder_lock before deleting the timers, and
+serialize the BAR removed check and mod_timer() call with the same lock.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
-Cc: stable@vger.kernel.org
-Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+This differs from the upstream commit, which uses timer_shutdown_sync()
+instead. Linux 5.10 does not provide that helper.
+
+LLM assistance was used to find the bug and review.
+
+Fixes: a87f736d942c ("mac80211: use RCU for RX aggregation")
+Cc: stable@vger.kernel.org # 5.10.x
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 41 ++++++++++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 17 deletions(-)
+ net/mac80211/agg-rx.c | 5 ++---
+ net/mac80211/rx.c     | 5 +++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index d37e8f4ad4727..034c4c79b898d 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -223,12 +223,6 @@ static int afiucv_hs_send(struct iucv_message *imsg, struct sock *sock,
- 	phs_hdr->flags = flags;
- 	if (flags == AF_IUCV_FLAG_SYN)
- 		phs_hdr->window = iucv->msglimit;
--	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
--		confirm_recv = atomic_read(&iucv->msg_recv);
--		phs_hdr->window = confirm_recv;
--		if (confirm_recv)
--			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
--	}
- 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
- 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
- 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
-@@ -261,21 +255,29 @@ static int afiucv_hs_send(struct iucv_message *imsg, struct sock *sock,
- 	}
- 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
+diff --git a/net/mac80211/agg-rx.c b/net/mac80211/agg-rx.c
+index 6ef8ded4ec764..b23ff9793fac7 100644
+--- a/net/mac80211/agg-rx.c
++++ b/net/mac80211/agg-rx.c
+@@ -103,12 +103,11 @@ void ___ieee80211_stop_rx_ba_session(struct sta_info *sta, u16 tid,
+ 	if (!tid_rx)
+ 		return;
  
-+	/* Claim the receive credit here, not while building the header:
-+	 * to minimize the time the window is zeroed.
-+	 */
-+	if (flags == AF_IUCV_FLAG_WIN || !flags) {
-+		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
-+		phs_hdr->window = confirm_recv;
-+		if (confirm_recv)
-+			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
-+	}
- 	__skb_header_release(skb);
- 	nskb = skb_clone(skb, GFP_ATOMIC);
- 	if (!nskb) {
- 		err = -ENOMEM;
-+		atomic_add(confirm_recv, &iucv->msg_recv);
- 		goto err_free;
- 	}
+-	del_timer_sync(&tid_rx->session_timer);
+-
+-	/* make sure ieee80211_sta_reorder_release() doesn't re-arm the timer */
++	/* Prevent BAR and reorder release from rearming the timers. */
+ 	spin_lock_bh(&tid_rx->reorder_lock);
+ 	tid_rx->removed = true;
+ 	spin_unlock_bh(&tid_rx->reorder_lock);
++	del_timer_sync(&tid_rx->session_timer);
+ 	del_timer_sync(&tid_rx->reorder_timer);
  
- 	skb_queue_tail(&iucv->send_skb_q, nskb);
- 	err = dev_queue_xmit(skb);
- 	if (net_xmit_eval(err)) {
-+		atomic_add(confirm_recv, &iucv->msg_recv);
- 		skb_unlink(nskb, &iucv->send_skb_q);
- 		kfree_skb(nskb);
--	} else {
--		atomic_sub(confirm_recv, &iucv->msg_recv);
--		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
- 	}
- 	return net_xmit_eval(err);
+ 	call_rcu(&tid_rx->rcu_head, ieee80211_free_tid_rx);
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 8ec630a4d069e..c7504dff7b4b3 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -3101,12 +3101,13 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
+ 		event.u.ba.ssn = start_seq_num;
+ 		event.u.ba.sta = &rx->sta->sta;
  
-@@ -1258,6 +1260,7 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	unsigned int copied, rlen;
- 	struct sk_buff *skb, *rskb, *cskb;
-+	bool send_win = false;
- 	int err = 0;
- 	u32 offset;
- 
-@@ -1350,16 +1353,20 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
- 			if (!list_empty(&iucv->message_q.list))
- 				iucv_process_message_q(sk);
--			if (atomic_read(&iucv->msg_recv) >=
--							iucv->msglimit / 2) {
--				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
--				if (err) {
--					sk->sk_state = IUCV_DISCONN;
--					sk->sk_state_change(sk);
--				}
--			}
-+			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
-+			    atomic_read(&iucv->msg_recv) >=
-+							iucv->msglimit / 2)
-+				send_win = true;
- 		}
- 		spin_unlock_bh(&iucv->message_q.lock);
++		spin_lock(&tid_agg_rx->reorder_lock);
 +
-+		if (send_win) {
-+			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
-+			if (err) {
-+				sk->sk_state = IUCV_DISCONN;
-+				sk->sk_state_change(sk);
-+			}
-+		}
- 	}
+ 		/* reset session timer */
+-		if (tid_agg_rx->timeout)
++		if (tid_agg_rx->timeout && !tid_agg_rx->removed)
+ 			mod_timer(&tid_agg_rx->session_timer,
+ 				  TU_TO_EXP_TIME(tid_agg_rx->timeout));
  
- done:
+-		spin_lock(&tid_agg_rx->reorder_lock);
+ 		/* release stored frames up to start of BAR */
+ 		ieee80211_release_reorder_frames(rx->sdata, tid_agg_rx,
+ 						 start_seq_num, frames);
 -- 
 2.53.0
 
