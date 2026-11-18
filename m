@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043466;
-	b=uPSYLhYU4pFdAgq7kHhn21xMR2g06u2yh12ZwnIkk+rtROm81H3uU7zBmmhgxLBfLjAE
-	 6bMVJUfOTJWMqaQekBTbPM1hMr/TYEsLQ4I+ePoxQqaT13/GOz3RGmH4E4X33JbgY9Oc2
-	 qqlY2sYdh1X5e778FmHCVt9vyDv+8HkEuoW3BUnRG1I+rfRiIt9YX02kWp5GlkQSD6IbV
-	 0+O15U2v70Jcm3z95YzPj1IlT156ihmeXFKHc7WlHFYD5sAX7ApLcj9rvBp7qqvFptsCx
-	 XDDUGux+O/4t2OZWKnS/77HXTuOcuBb3yE/NpPlFNa0gxsQv78QUtkXD+X2mvOeiOhQ==
+	t=1795043468;
+	b=0kEw5kY+E8j2eEY7TlBOC73XqiGHElacMD5ts+HyyYScP5/g0QJswr/kzx3uG8M0IdsQ
+	 ENnph0/h6vRzVka/kIRARFUG7FrB4/puGP//H9gwmli5CnDDhSCkGK0q4EaU9jpH+9kFg
+	 EQnP/4vu/JTMWl619xZlykKlmx2Ajb5IgGKyzVCZrkgd0Qctlv9OFvCzkAwegc8FQOIDY
+	 7qSoxjKJFz7ddoBVG9Wb6tIBAu/KoOGi0w3QyfkMiOK4XNzeMXW+zxPCQLmgZWMNtEu+R
+	 nRFCO9hNTUNSH2lr/sxs/JJntRZIkbXDznP40e4J8tdXufVJuSUkksHZdkP/fJkVuLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y9UiJN4lR62i9ll6jhEsSEkKAgoZS+/pSTbTwCg0SNs=;
-	b=tkagNsZ1+KuIK7qZUyekGrXNzKZeoXkbm7x+BlyAxY4hTODZoFPMKYwE18sLFIZBIoJL
-	 pJ57rldHgHcBr1icCNiVYI0xUnaVtwh5zcvjlXhB1jQiRGRwtTw4vToPF6PRPXgzMRA6v
-	 AeVwQhxny43A5kNFJ32KkoRR2Gp4aIO2gJ8g9HallkueXwLO/93jjo9X9wkRt9hdmH/2L
-	 UEwopLbZyOJcGvsusYcTTBZQD4h7t5ClU00zRvLGWE/L/cdavdxPgk/4KKIx0z7EYq5df
-	 sOsY2x83/rE+CjDwY6HY/sE5Rz8hgR8aaFLWEUGo7b3l3D0coPrNwG6z1DVGuyPTp2w==
+	bh=Si7I3+6fwAkkosIH2fjGCsBuRmJ+jr71MRSdjJRHuvA=;
+	b=MUxmoR8jjCKSuqY+c9uciobp0AcF15TxwJEoYenITltZ0qwGfwe9PW/E5B+W55ox2Sfj
+	 zj0se85MWWX6xoS6/JYc5RaSa88hjcmILIIYtZX4XioK8FSIG23n4Swycl1nD0u5qb3B7
+	 UUIl1turoJQaqhdkaoGqHGmIEJeWSmn4IHpI8rr6K8NU8hi6WiBySnTVbNi0XLaNT1BXO
+	 Q5DOSNdGKHHFdL5IdWxUCJIxF8MLNwK2Ic4adS642Ur2a5y8ZcfI4J6Q/XzsYlBEkmy+N
+	 OOl5OQMp0Fr5Ae3VWApsAOj9yVlucMhpcnOPibozl8Nze7ozKggrM/LyzW6Lg204L4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Pdpbj4/2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFeaayAn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01134606A320;
-	Wed, 18 Nov 2026 23:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F12606A320;
+	Wed, 18 Nov 2026 23:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pdpbj4/2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E68B1F000C4;
-	Wed, 18 Nov 2026 23:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFeaayAn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48FC1F000C4;
+	Wed, 18 Nov 2026 23:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043465;
-	bh=Y9UiJN4lR62i9ll6jhEsSEkKAgoZS+/pSTbTwCg0SNs=;
+	s=korg; t=1795043468;
+	bh=Si7I3+6fwAkkosIH2fjGCsBuRmJ+jr71MRSdjJRHuvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pdpbj4/281qSWGgQfMW+jDTkhdt6rmnaItrWrD12I3BmrLjVw3+6x7XVVt8wDb7gS
-	 TkF8HorSXGEQMgVAvXDCrHMqwyGUL4Xn1bRqU8v+4JZT7qfhKCtk8s1uB4psM4351P
-	 pRljymX154SBBJa8hXI6FbqfhtgEhyNvdjyCD4WI=
+	b=JFeaayAnVkvj+HVBBc0B/wRGQXnOeE2w2Huo74Z3vhWAhR3WvA5tBYToHKqHOZeqk
+	 7/17S5fWezz6BWNPpo4CZqUhhV1YaqbccZ6D15pq65Ylj5iXCO0wNntvaP8EejGhvl
+	 sEhzEtND2ej7XaQ6QYkbYlJ048v7RPcUajFcc0K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Andreas Kemnade <andreas@kemnade.info>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0220/2857] fbdev: omap2: dsi: do not copy isr table
-Date: Wed, 18 Nov 2026 15:20:54 +0100
-Message-ID: <20261118150209.384217192@linuxfoundation.org>
+Subject: [PATCH 6.1 0221/2857] fbdev: udlfb: validate vendor descriptor items
+Date: Wed, 18 Nov 2026 15:20:55 +0100
+Message-ID: <20261118150209.420048508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,54 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 31875c51c31edec57b3620f278680c23a823763b ]
+[ Upstream commit 3cc2fad376ac7360b4518277aa923752624db59c ]
 
-To te able to unregister stuff from isrs, the corresponding table was
-copied.  Nobody seems to unregister stuff that way, so it does not help.
-But there are stack-allocated objects passed to these isrs giving chances
-of UAF of these objects if irqs are unregistered while they are handled,
-so better do not copy that table.
+dlfb_parse_vendor_descriptor() walks key-length-value items inside the
+DisplayLink vendor descriptor.
 
-Suggested-by: sashiko-bot@kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Require each item to contain its key, length and declared value bytes
+before reading item-specific fields such as max_area.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap2/omapfb/dss/dsi.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/video/fbdev/udlfb.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-index 7cddb7b8ae344..53b621081311b 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-@@ -325,8 +325,6 @@ struct dsi_data {
+diff --git a/drivers/video/fbdev/udlfb.c b/drivers/video/fbdev/udlfb.c
+index 33c42a766e5b1..a04554fbf701a 100644
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -1637,19 +1637,29 @@ static int dlfb_parse_vendor_descriptor(struct dlfb_data *dlfb,
+ 		desc += 5; /* the fixed header we've already parsed */
  
- 	spinlock_t irq_lock;
- 	struct dsi_isr_tables isr_tables;
--	/* space for a copy used by the interrupt handler */
--	struct dsi_isr_tables isr_tables_copy;
+ 		while (desc < desc_end) {
++			char *value;
+ 			u8 length;
+ 			u16 key;
  
- 	int update_channel;
- #ifdef DSI_PERF_MEASURE
-@@ -837,15 +835,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
- 		del_timer(&dsi->te_timer);
- #endif
+-			key = *desc++;
+-			key |= (u16)*desc++ << 8;
++			if (desc_end - desc < sizeof(key) + sizeof(length))
++				goto unrecognized;
++
++			key = get_unaligned_le16(desc);
++			desc += sizeof(key);
+ 			length = *desc++;
  
--	/* make a copy and unlock, so that isrs can unregister
--	 * themselves */
--	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
--		sizeof(dsi->isr_tables));
- 
-+	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
- 	spin_unlock(&dsi->irq_lock);
- 
--	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
--
- 	dsi_handle_irq_errors(dsidev, irqstatus, vcstatus, ciostatus);
- 
- 	dsi_collect_irq_stats(dsidev, irqstatus, vcstatus, ciostatus);
++			if (length > desc_end - desc)
++				goto unrecognized;
++
++			value = desc;
+ 			switch (key) {
+ 			case 0x0200: { /* max_area */
+-				u32 max_area = *desc++;
+-				max_area |= (u32)*desc++ << 8;
+-				max_area |= (u32)*desc++ << 16;
+-				max_area |= (u32)*desc++ << 24;
++				u32 max_area;
++
++				if (length < sizeof(max_area))
++					goto unrecognized;
++
++				max_area = get_unaligned_le32(value);
+ 				dev_warn(&intf->dev,
+ 					 "DL chip limited to %d pixel modes\n",
+ 					 max_area);
 -- 
 2.53.0
 
