@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052959;
-	b=je/7O2OIV04rUrMyV1zw3tlGZIpLLStR06afVcclmzkJ9IR5yhUKqqqQi5bLe9ISKDXy
-	 mbzN1kwz+4EdqVlAaOelBl/Apm3DoISRNTAYuR3qLcn7twwOVYCoYVX0gBI0LiY/K/uGU
-	 R+0WPbN3/AigiUg3U67P/j4DhnD6+UQHMvAiBdE/gaX7jKG6oAlU1mMddwM6xzt0/iwUH
-	 mWb6Y0AfsjlVLoURdl8Iez2LvPan+HLLZQEeSVt/aJW4PL1xr4dq3BfRRjHZyeuZixFaO
-	 CTgHcZrY4NBWI9Ec+iJEyRfg3T+VUpWbciegDm/kb6j8YLOnYxnr0HaS13scSAR67YQ==
+	t=1795052962;
+	b=mwPMK9nvw/ZHr9REaNKyzR/dRSg3mhymeDtgy69mfESK7YD/p0Qce0nQS4VK089FHK7h
+	 Eqm40tjWdL85jeu8ox6yLaJLBT6JT1ER0IgizIhhFqn9HZIDsqEZqMDIdCj+6Ml62VsOY
+	 tejOqsnGxjYPBVQcJz9LybFihfFxcyMxuuOwkjS//UoGNckCVwKRHInGSnVfaIwvGQxWS
+	 9DwEbUDgz+Kxs7njKGuaRq4/mfLjV3/089H8jl/7oiyKuLLe+KbtoY8/PRp1TjcfUfIzl
+	 g/FTUnG2mjqRtjHMmIA0DxKE2fh5/0GPTf9+TEJx8HigdF55voPoA5QRxGpKV5/Jjkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4MFJsh+9DI+9vZdHz2uK4cZR4G92nlB2y8oZIbdLYRo=;
-	b=EhzvJvYsK9xcPDtWpAKSE9tlAqQ1iMAscLNKGIp41K9LQJjiMDAJzPaganYKBUOVJZHN
-	 JUGgbmq9AukSY9n+xSvA95YSL5Zd4WO1mP2yJloKit7DZM8H6k4UYW24+IvmfZekrZS2A
-	 6lCa5Dpc3L9VvwxSD3sGGtDmmKDqVmmpnvDVoEqKlPepo2T+6OjWnHloGlHLXxHnBCT9w
-	 OXyeKR/nZlhX2152OwHtN3RUhmfYXHywrSQ+M5n41a7RZyeqti8Ak7OGujss+YHqRpZ+9
-	 iSyBFiCBQrSb4pwsWhTcHx/rZNAkMOilRcPOsdy3nNJInhooKsC7XfxJTzK9Mq+IqHg==
+	bh=JOpRzWmBJ/7HWUoUxS2aQPzzlwbhYWe4W833ty4m+b4=;
+	b=LPw1e+jbh9KvCqDHJT0BitWHSgmZrRLS5K0bLgd8RW4PnY4k6hHshaCJt85yFUqQA66P
+	 fz+F5bZrW/WY++y3q7WGMY0WBcc65IECSIAvZu692vnjbNIeBs1CXQfPjcn3rkDJTKemv
+	 i/9DXtl+LKc4GuzTzMFYQa4vOy6wTR5Ou3x58tK5Fg7WQ9NEzqCSALnyejEp4p/q1dsw9
+	 xuW0wOIdp+y8v8BWgXAAZcmoPahYgjWlW1HoBrMstBgno0wVjTw6+rd3O/F8XZQLlnWKk
+	 emmE3IR7/bq+Kfi/aGt8dEykKip/BZWm2GeTAiWV4RqidYC9zO2UQPUi93T6HSFQvtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OWsNfizo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m9MqlqrF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF0E606A32A;
-	Thu, 19 Nov 2026 01:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCEA606A320;
+	Thu, 19 Nov 2026 01:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OWsNfizo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093D81F000C4;
-	Thu, 19 Nov 2026 01:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m9MqlqrF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30F11F000C4;
+	Thu, 19 Nov 2026 01:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052959;
-	bh=4MFJsh+9DI+9vZdHz2uK4cZR4G92nlB2y8oZIbdLYRo=;
+	s=korg; t=1795052962;
+	bh=JOpRzWmBJ/7HWUoUxS2aQPzzlwbhYWe4W833ty4m+b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OWsNfizoCcWzpRAtJuAMxr+ni/7QP+tTSn2x9bCJatLwvNW2Hxhouk4UKVUYw8tDh
-	 0ikMm9Li+wQ0stwDAuwiKXV7kbT/GFgFXR23MMBeR3135QgGL3ATz9ikPXhK2MqM77
-	 UAbNTvOyVySU4XT/JFrZYYiTN+Lko2sM2WhPSbMk=
+	b=m9MqlqrFXy2pOFpRC/HoE44DEQUIoTHHJi7EoLT2SfT1mG4h3wzTIBpc9YZCpAqMw
+	 dXBLufGOBjl4pknbvTMoYdFF88ipNYj97KeAaVX5Xdv+jr62ueMYAaFynssFt1cjd+
+	 /LM8NED2F/dENNTG719DTzCdoMfMoLQY1zpE+hiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0750/2214] tcp: fix reordering addition overflow in MTU probing
-Date: Wed, 18 Nov 2026 15:40:26 +0100
-Message-ID: <20261118150041.776958410@linuxfoundation.org>
+Subject: [PATCH 5.15 0751/2214] fs: skip copy_file_range write limits when there is no data
+Date: Wed, 18 Nov 2026 15:40:27 +0100
+Message-ID: <20261118150041.812853977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -74,58 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit c1df9c0c0536393de43310f84ca4f8b217271a00 ]
+[ Upstream commit 81dfa035891f0502674332ee97db348a16486de0 ]
 
-Commit efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and
-MTU probe sizes") widened size_needed and the MSS multiplication, but
-tp->reordering + 1 is still evaluated as u32. RTAX_REORDERING accepts
-an unrestricted u32, and tcp_init_metrics() can install U32_MAX.
+generic_copy_file_checks() reduces count to zero for a source offset at
+or beyond EOF, but still checks the destination write limits. If pos_out
+is at RLIMIT_FSIZE, this sends SIGXFSZ and returns -EFBIG even though
+there is no data to write.
 
-In that case the extra-data requirement becomes zero. A write queue
-with probe_size - 1 data bytes and a FIN satisfies the sequence-space
-check. The coalescing walk can pass the queue head to
-tcp_skb_can_collapse(), and tcp_clone_payload() can produce an skb
-whose advertised payload exceeds the data in its fragments. Local
-delivery followed by TCP_ZEROCOPY_RECEIVE can then walk beyond the
-fragment array. KASAN reports a slab-out-of-bounds read in
-can_map_frag().
+For example, GNU cat copying a 1024-byte regular file to another regular
+file with RLIMIT_FSIZE=1024 copies all bytes and is then killed by its
+next copy_file_range() call at EOF. A zero-length request can fail in
+the same way.
 
-Cast reordering before incrementing it so the arithmetic handles the
-entire u32 metric range. For U32_MAX, the required size exceeds the
-32-bit queue and window limits, so the existing checks skip the probe.
-The calculation is unchanged for all other reordering values.
+Check write limits only when count is nonzero, as the ordinary write
+checks already do. Keep the other copy validation in place.
 
-Fixes: efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes")
+Fixes: 96e6e8f4a68d ("vfs: add missing checks to copy_file_range")
 Cc: stable@vger.kernel.org
-Cc: Wyatt Feng <bronzed_45_vested@icloud.com>
-Cc: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261028160226.2170244-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261026015738.46230-1-dennylin0707@gmail.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/read_write.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 7ebd8c88d2ab3..caa8227789c3d 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2370,7 +2370,7 @@ static int tcp_mtu_probe(struct sock *sk)
- 	mss_now = tcp_current_mss(sk);
- 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
- 				    icsk->icsk_mtup.search_low) >> 1);
--	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
-+	size_needed = probe_size + ((u64)tp->reordering + 1) * tp->mss_cache;
- 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
- 	/* When misfortune happens, we are reprobing actively,
- 	 * and then reprobe timer has expired. We stick with current
+diff --git a/fs/read_write.c b/fs/read_write.c
+index da1bb81355a9f..b2d9a27a7414d 100644
+--- a/fs/read_write.c
++++ b/fs/read_write.c
+@@ -1446,9 +1446,11 @@ static int generic_copy_file_checks(struct file *file_in, loff_t pos_in,
+ 	else
+ 		count = min(count, size_in - (uint64_t)pos_in);
+ 
+-	ret = generic_write_check_limits(file_out, pos_out, &count);
+-	if (ret)
+-		return ret;
++	if (count) {
++		ret = generic_write_check_limits(file_out, pos_out, &count);
++		if (ret)
++			return ret;
++	}
+ 
+ 	/* Don't allow overlapped copying within the same file. */
+ 	if (inode_in == inode_out &&
 -- 
 2.53.0
 
