@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046969;
-	b=wqdN4Mef9AuRsj+Cz/W37JJ+JBT8n+yMxVfdGCTHbQjnHVkX3UGWITYcZ4Tl7JNtDI6N
-	 Muz8893Pa+/eadtLptkfCRlff3A2ZjImLbgUwVHzT3s/s09nZw5Ckt5rkO2txf/ow5OKW
-	 6sH4m1LWYGgt0+8ql1Pq18VW9O+kWDSwnTfOhOeWDgusb2Uu022JBxFXADR1YWv7MBE+2
-	 24AAjITF7NJKUfrbSXznWzshRpc0pz+8E6KxBeX83yJmWhKTgBZBuh7pbqRdiWIazKB5u
-	 Ju3ofiqNJVDkqV/oeEpwnOv70NjNWdRKNTQRrnvLlOvrWqAvBjAz83zsanVVcLQQGkA==
+	t=1795046971;
+	b=SuadB8HFri/gANMjbJ2eJv2DG+Se29P/+g7phXlEJnPFfZqz4XJAZz4pLnQXmcdSIIma
+	 i1bAoOo4O1UQyBdwCm6c6rPOkefAAnoqX//CYS8qs3Iv2gj7wjkroGhQ25598K8T1WzP9
+	 qnDGg0mirZtqBF/0FfYrXPa34I8QXbcyw3xPHjDTR/cRVnHHu1K+9TSIh/w9+b1pNcYhC
+	 rmUD2XDY1HqswdZlbFJ+ijeA/oXiexBm/Zerl3q4d1xRKC5d2+YwARMQ9pQ0gDkm/JFVX
+	 FJM2OvR0TTnLbh8MkdZm7fF2uorKjcyVM8xkZfqeIA1Wz/SzGeTRsuS0v/unCIsFf7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T0q3A0webdV+bBNvXxldaKvMSh5Z+MCqf/Gj27JsZPs=;
-	b=WxEmeP+ULyxHV6/OtDRIYYupL8MqPQRt5ej3DLxlnZUkgkF3l8OyFN6+GseSXEesC5Q+
-	 sZYR+RuD3ysuKMWGmk/IFy32n2dA26pmBuwWSXatJoQGmiV7D/6SFzPIvMRhES7IdtV8b
-	 xL376Lv6HzLy2mUFbZksAkmUp0E1KaHej7Yj4EguMGvRfzPI2WDSEQCpz4FANoAhnCUi+
-	 aFMmgTZHPBm951/PwWkyXKRMbnJZbqanirMy3oUGSxn+akEg7JZ6XBFKU3SaUqcAz4P+X
-	 ae5M0be5Q19CjHuJq1nGrLEewuXBAPXFURBZk4vyc98gstGrSdj69o1H5Smlsiox86Q==
+	bh=2FZ2UMONGS11z/Y0d396rbmhuplZXFivaQRp7PMIb44=;
+	b=xo5go49k3QCo4wPRVs/tjYOfOsQD5LER5PIO+dTYUxNw7LdjaRlYPQ75HUfCxBsZW05i
+	 yJGqOFlk0HS6ySjFKcDt3MN7QzqjveeIPvYEkh7M++izP/Nn+odo47tNLT7EF3om0SQul
+	 T8t2/lWxzvbACdinIXeKy/bkcn6aH9U4+MYMx7yKFXBs6Gix2zdbrqcNFeXAs/9L6nAx/
+	 KrORap3Qw2m8AG6fpItsbI2rrv3zrPOGY8PHtJFgiusEeR+NaeWpp2mWryjRdcgn/1POW
+	 bK7H7XwkIBb9r679+iZ5d5u/N216t5AfjiGgr/Ve2NGv5MlK2+xoUCGQuMCY4jTCFhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iEK0tlwz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fW4s1zuf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AB9606A320;
-	Thu, 19 Nov 2026 00:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A927606A31C;
+	Thu, 19 Nov 2026 00:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iEK0tlwz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8491F000CA;
-	Thu, 19 Nov 2026 00:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fW4s1zuf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31281F000C4;
+	Thu, 19 Nov 2026 00:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046968;
-	bh=T0q3A0webdV+bBNvXxldaKvMSh5Z+MCqf/Gj27JsZPs=;
+	s=korg; t=1795046971;
+	bh=2FZ2UMONGS11z/Y0d396rbmhuplZXFivaQRp7PMIb44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iEK0tlwzev2sR6bIrqVdc/7pqNjT+NHBWpSAFGeNIFeyr4KNPbKb8iFrnSWGiw/QY
-	 NqLV7s3TekI0GEDrGRwlk04iUBjvCVkh0E9Ws9qfCM8XSKb7ARXbSZ0qD+mtNschPl
-	 DUUhn962jYup7GjTlefh47XZHySmc8ZUjWbZEXy4=
+	b=fW4s1zufmivtUXELVxFEQCUHFL4C8vcDWlEb2GcgwhXIF4eAOEzegpZGECWccyUIy
+	 y24PK0ZHBMCP7WFS3Fq1FTQPLwN+Buiay8axIzafqZUNDXYWFnY03C/EzNlNZ3dQiD
+	 Mk8G0fBS/CEDcV005JsQ+E0xhwkTBdfIPjrFDYAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1464/2857] serial: sc16is7xx: add comments for lock requirements
-Date: Wed, 18 Nov 2026 15:41:38 +0100
-Message-ID: <20261118150254.027124299@linuxfoundation.org>
+Subject: [PATCH 6.1 1473/2857] irqchip/imx-intmux: Fix runtime PM teardown on remove
+Date: Wed, 18 Nov 2026 15:41:47 +0100
+Message-ID: <20261118150254.352535583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,50 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 42405cb77fd35b5acc0e5a11d74eef68c2afa484 ]
+[ Upstream commit b167c1a30e9e020e4c5e102c7a555943742c024b ]
 
-Indicate why lock needs to be asserted when accessing
-MSR register, as this is not immediately obvious when looking at this
-register in the device datasheet.
+imx_intmux_probe() enables the IPG clock and then drops its runtime PM
+reference with pm_runtime_put(). With CONFIG_PM enabled, the runtime
+suspend callback disables the IPG clock. With CONFIG_PM disabled, the
+clock remains enabled after probe.
 
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20251027142957.1032073-15-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1c41d09dcd07 ("serial: sc16is7xx: declare MCR and IER as volatile registers")
+imx_intmux_remove() accesses the CHANIER registers without first making
+sure that the device is runtime active. The device may therefore be
+runtime suspended with the IPG clock disabled when these registers are
+accessed. In addition, the remove path only calls pm_runtime_disable()
+and does not balance the clock enable when CONFIG_PM is disabled.
+
+Resume the device and acquire a runtime PM reference before accessing
+the registers. If resume fails, skip the register accesses but still
+tear down the chained handlers and IRQ domains. Disable runtime PM
+afterwards, drop the acquired reference without triggering another
+runtime suspend, and explicitly disable the IPG clock.
+
+This keeps the clock enabled while the hardware registers are accessed
+and balances the clk_prepare_enable() performed during probe for both
+CONFIG_PM configurations.
+
+This issue was found by manual code inspection.
+
+Fixes: bb403111e017 ("irqchip/imx-intmux: Implement intmux runtime power management")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260914134211.1734163-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-imx-intmux.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index ccac831bc69e2..c55cad61ff0bd 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -530,10 +530,10 @@ static const struct sc16is7xx_devtype sc16is762_devtype = {
- static bool sc16is7xx_regmap_volatile(struct device *dev, unsigned int reg)
+diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
+index c7bf73dcb7a10..87061eac27e91 100644
+--- a/drivers/irqchip/irq-imx-intmux.c
++++ b/drivers/irqchip/irq-imx-intmux.c
+@@ -284,12 +284,16 @@ static int imx_intmux_probe(struct platform_device *pdev)
+ static void imx_intmux_remove(struct platform_device *pdev)
  {
- 	switch (reg) {
--	case SC16IS7XX_RHR_REG:
--	case SC16IS7XX_IIR_REG:
--	case SC16IS7XX_LSR_REG:
--	case SC16IS7XX_MSR_REG:
-+	case SC16IS7XX_RHR_REG: /* Shared address space with THR & DLL */
-+	case SC16IS7XX_IIR_REG: /* Shared address space with FCR & EFR */
-+	case SC16IS7XX_LSR_REG: /* Shared address space with XON2 */
-+	case SC16IS7XX_MSR_REG: /* Shared address space with TCR & XOFF1 */
- 	case SC16IS7XX_SPR_REG: /* Shared address space with TLR & XOFF2 */
- 	case SC16IS7XX_TXLVL_REG:
- 	case SC16IS7XX_RXLVL_REG:
-@@ -768,6 +768,7 @@ static void sc16is7xx_update_mlines(struct sc16is7xx_one *one)
- 	unsigned long flags;
- 	unsigned int status, changed;
+ 	struct intmux_data *data = platform_get_drvdata(pdev);
+-	int i;
++	int i, ret;
++
++	ret = pm_runtime_resume_and_get(&pdev->dev);
++	if (ret < 0)
++		dev_warn(&pdev->dev, "failed to resume device: %d\n", ret);
  
-+	/* Lock required as MSR address is shared with TCR and XOFF1. */
- 	lockdep_assert_held_once(&one->lock);
+ 	for (i = 0; i < data->channum; i++) {
+ 		/* disable all interrupt sources of this channel */
+-		writel_relaxed(0, data->regs + CHANIER(i));
+-
++		if (ret >= 0)
++			writel_relaxed(0, data->regs + CHANIER(i));
+ 		irq_set_chained_handler_and_data(data->irqchip_data[i].irq,
+ 						 NULL, NULL);
  
- 	status = sc16is7xx_get_hwmctrl(port);
+@@ -297,6 +301,11 @@ static void imx_intmux_remove(struct platform_device *pdev)
+ 	}
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	if (ret >= 0) {
++		pm_runtime_put_noidle(&pdev->dev);
++		clk_disable_unprepare(data->ipg_clk);
++		pm_runtime_set_suspended(&pdev->dev);
++	}
+ }
+ 
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
