@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037834;
-	b=m2JbBjulrrlFIorBE/QK2J8X8uhlsGgw0KDegtgA40opochsjm73D0KiEJIDXdgbxuqM
-	 onz97DIL4sUd+YwcGrJprrmWR2GRxMwFmVY66P3kXEDUDJ63Tv3capnkqTB19TRxo/P65
-	 2zUocwjrg1/7X7roZA8/X+v8Q3t21z65DMpE3AcmkMr3puXEcnp8c+GOAHrO+oYrXnEoS
-	 Oc8uu3oMT3Z75oKWv5vy2zHawJzSezuh888fWD52YOIlfwSHNpclSkArQG1vAkcnZ60Gr
-	 8Wuv83FxET4rYxoMmM+DaRh7A6zdBB0dNcE3bbDpmXSokynPUjX7TRrlfV0dDnf+NbQ==
+	t=1795037837;
+	b=AUbwawnGUgYDh6WYfXlgXui3ykMSKgOsLXYrsH3FNOwL6VU06Ihx28aa8J2wRjRtQGSk
+	 k1Yy3L2IKonQXLfej7u0xnomkQRroLOTDmjEu4aHK1HBa/77M/1A+j5MovOuXxFsy6lUn
+	 e+JX78ZyghCWEzviBnKny5jltQEQxy1JmtvCEKx0jVA8YLgljZ3zQEvwiOXSjNrH7TJf6
+	 ixBNdbBGizGY/nyV3/JHynpMUHw1V0IZoQ1tyNkPitCsA3ZB/HsTsz5zUb59uzpV2axn3
+	 OFaV55XIPIlMngdqn4rg943WytJJOaaH/R9FLwadqsGIFBczDO5x0m7xQylqksIw3ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037834;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=EObHrAurtsBLb51OuzzAGylnVUsJti8nW+NOr/jPQkY=;
-	b=D5lpd85uhrXF7UOBF99TZjaGFf8H8sy8+c3EtiNgBBIVgTee4jAu/6ni2RKeeJozKmGM
-	 jZaxH49kXxGZ1mySOE7V6GSCXyCQTxSfmsCCPquKW1tuZs4idCq1a0MB67YEPiASk0xVM
-	 WyblXSs6JxLDrt4BSr8FDXqbEeX6buTeDCeRqz+OgFhIn+R27AN3n32taA36MU5NYr072
-	 iWAEkTfjPae8GVG/C1tQal6TcIJgcQ9ll+p7bM21eaTuOGnYrbihaBJLBSwKgeFXrgWoy
-	 +vJm2kHBRcr5grJUoHrU4vhWYJQiCJ1/wKLhJ7OQgRtfBrNKq8sB9wKO1T0NgfZ+uCQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VJ4bp3AIA8ZTMJ6CSd058kOmE6YGrl8qnaSttzGWA2w=;
+	b=lc4LAKYnNP8HiptH0Xisz9oujr90bp9C8N+3/Fzh+bAQBl9ep65QN67qfb0H3IhEQMFQ
+	 31lKqPkmWIp5RmlMZAZWcPJ0+dtCdMBP8VawFzfpDzVBaWm7pg2vMpqB/b1B2tZDHAs4k
+	 aUlGw48eBXxc59o62ZjkvZ38vDW4fFnIPmx4o8UV3+yfRi5dvtJrpRvnzZL6URujFki2m
+	 olWZVV6Fp3f4gacZBFGRXbo7NgvVFV29Yygdm+J6pK2HESQXVbzO4SkJmhsamvUGsDNha
+	 pfxOTgIVkbb3JLtt4qRrmcyZBhoKlV+XMxKFxH9fL8p0TWJ50oZQtc9sLQuLqz8Aqmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dsFPbJg9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VcxD+O28;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD3560A2603;
-	Wed, 18 Nov 2026 21:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC6C606A32A;
+	Wed, 18 Nov 2026 21:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dsFPbJg9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DF81F000CC;
-	Wed, 18 Nov 2026 21:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VcxD+O28
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36EF1F000CA;
+	Wed, 18 Nov 2026 21:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037834;
-	bh=EObHrAurtsBLb51OuzzAGylnVUsJti8nW+NOr/jPQkY=;
+	s=korg; t=1795037837;
+	bh=VJ4bp3AIA8ZTMJ6CSd058kOmE6YGrl8qnaSttzGWA2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dsFPbJg91ONfvJ/MytHusQdxC1+pUaPwLzhYBlSYeZhr4ws9qiZlEXjMUDc79rTvz
-	 1EaDNDXIPWNnRlw46Q3gCR5JYf/e+SYR4MoqyBbw2ZrTx6N3GY6pfLWOPgolOJEmyK
-	 lKz5jj4QvueHxBg10xwm1J4MrspS3atknhumwdLw=
+	b=VcxD+O28sbGj9/5io7lUK/UILrCJJusqzwCr4E/+mhSX8585yVvFipgWxYrfMOoUb
+	 /OAH0WYmygJ7kOf4k8DpztPwWiFoHSQPjgtF0sy7y7Ip14gdRNbM4vGVDcFVSCtynF
+	 RX0G85E18mbgW4C5LKIRKOQAgiPJ7KsSdDRv3iqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1534/3318] drm/amdgpu: dont drop the gang dependency fence twice
-Date: Wed, 18 Nov 2026 15:35:56 +0100
-Message-ID: <20261118150406.994407312@linuxfoundation.org>
+Subject: [PATCH 6.6 1535/3318] nvmet: dont return memory contents beyond valid data when reading ANA log page
+Date: Wed, 18 Nov 2026 15:35:57 +0100
+Message-ID: <20261118150407.025055569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,61 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-[ Upstream commit 6d1f901a83603a7d314e4a756b416b11d8dc7e35 ]
+[ Upstream commit 29b8758b4700357909f06705a0c48c7a60c556d5 ]
 
-drm_sched_job_add_dependency() drops the fence reference when it fails,
-but amdgpu_cs_submit() drops it again, so the scheduled fence of a gang
-member loses a reference it still needs.
+The host side does not know how much valid data will be returned by the target
+so it will typically provide a buffer larger than the amount of valid data in
+the ANA log page.  The memory allocation used by the target does not guarantee
+that prior kernel memory contents will not be returned past the end of the valid
+page data.  Fix this to ensure that the SGL is zeroed before copying the data.
 
-A GFX+COMPUTE gang waiting for another context, with the
-xarray node allocation for the leader's dependency failed through
-failslab:
-
-  WARNING: drivers/dma-buf/dma-fence.c:589 at dma_fence_release+0x34d/0x730, CPU#1: amd_uapi_regres/2993
-   drm_sched_job_cleanup+0x2c2/0x340 [gpu_sched]
-   amdgpu_job_free+0xcb/0x3e0 [amdgpu]
-   amdgpu_cs_parser_fini+0x435/0x710 [amdgpu]
-   amdgpu_cs_ioctl+0xcd2/0x7a60 [amdgpu]
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:dma_fence_signal_timestamp_locked+0x1b8/0x610
-
-Fixes: ed21f6c3fe42 ("drm/amdgpu: fix another missing fence reference in the CS code")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5aa070a83c8378810b906cc8bfc650ce69822a7c)
+Fixes: 72efd25dcf4f ("nvmet: add minimal ANA support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/nvme/target/admin-cmd.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index efbd297f4cc43..12000996f7a45 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1316,10 +1316,8 @@ static int amdgpu_cs_submit(struct amdgpu_cs_parser *p,
- 		fence = &p->jobs[i]->base.s_fence->scheduled;
- 		dma_fence_get(fence);
- 		r = drm_sched_job_add_dependency(&leader->base, fence);
--		if (r) {
--			dma_fence_put(fence);
-+		if (r)
- 			return r;
--		}
- 	}
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 32f01c00dc416..a033d8dce5aab 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -282,6 +282,15 @@ static void nvmet_execute_get_log_page_ana(struct nvmet_req *req)
+ 	u16 ngrps = 0;
+ 	u16 status;
  
- 	if (p->gang_size > 1) {
++	/*
++	 * The header and one descriptor per enabled group are the only bytes
++	 * written below; zero the whole transfer first so the unwritten tail
++	 * does not leak stale kernel memory to the host.
++	 */
++	status = nvmet_zero_sgl(req, 0, req->transfer_len);
++	if (status)
++		goto out;
++
+ 	status = NVME_SC_INTERNAL;
+ 	desc = kmalloc(struct_size(desc, nsids, NVMET_MAX_NAMESPACES),
+ 		       GFP_KERNEL);
 -- 
 2.53.0
 
