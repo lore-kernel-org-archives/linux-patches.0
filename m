@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029159;
-	b=vX3uXq1SxOiJGEAQmn8lXoyGtGXQc/jyE1Uf9cIE7xv9Q7gqrkjlTwt0bq00jNHzNq4A
-	 IJvvxpm2IAhrFKanZex8UlMV8vchkhNC+wGi2FaqGqHl5ZMU3cmCMWvAhAKJHoK5mVTsP
-	 FR0Ft3hSnJhcBuBdEU0CKAA1Uq69iD8XJc6qA+IO5owW9fzTjc9Qts2PLqU6ZrUzbHk2v
-	 f49VZZ1fbp6qs9ntGM2Wpwxk/8W5a6rZIag8JSJPwmE333+RqZeZcDqYVCGZaKAWwVrtL
-	 PQB/YswGhsRLh1oG3hu64sKmHTJLYnmq8dEMcq4l+WB0qAI0KvZm3GWTN9aMs/tcWMg==
+	t=1795029162;
+	b=c17kxYktSorH79D0o5Kld1HPRUWNomaund6X/zuj/IG9/tvlS/TXaRwTkfWlFHhg835k
+	 7JkaLxNZmdlTfRPvQXtDRdJ7xphiY2GXRjkEaNyPowwBTdKUeAjEGTZqjHEn1TXQ6ZL8H
+	 KwBteN7Vr6OKpsV8uFY6gUaTIL8Fy1860QdZVm9UD0lQ/Pk144tU8uEol52NMPTAEhu6m
+	 b9bsFHlnnjjcZpShBrdP/Eljx+zR2aZivKwYSH/uIlqccorqkskO7CE7OVFovMLmadWpH
+	 lGKwNFDfvGu2eKom2MZRCUtRUDy5zDXyRelOqlzFPYPOeQfaK2Ma0Yq6J8XSFM37k2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kzgKsP9UjVuo82re2sCD4hUHToIftCaKbIeV3fSzw4A=;
-	b=oHspXvOO3bk+vDL6Ol8VN+y0gOoB7VqpG1H93iXxPQykAs5abnyo0BW9q+nxS1TXpPw6
-	 kQcSG3DGZis0ntEKlzaq4d0XmQIZSCGNQpmQwWOTFLTx/JUx/VHstzbby6/M9LaCCIroZ
-	 bDddSlkfsmptfXCRoD0PFnFZxfSTdWf2CqRvu0PO+a+DY9s3/GP5AROkLcxa/KJkZmeIQ
-	 FVEpAOY8w9i5OhPvD3BXYC9pfrJO8lWMLJhXWxmZK7LkW7Q6p4wul3B2wg170dFrcj+5L
-	 yEecrcZIfhRPkoAX7ocDfa28VlxJKbi5eTyiy/C8oGlQuWLtOFpk8lhmvNucUOcE3Kw==
+	bh=9CTGoV6yOOmke+qpcyzxbBUWcqgyYZDjXDMi/amGBQg=;
+	b=jmhmSAuJd3T1xsPscGn2C1Kx4nVXpxhpbA8W14HVrMxHQvznN5LstcOXISL9T1/shY06
+	 +3pDAVEuknQuHDNlYhcO2g5HuwmqMmI2aG+956vWZJro0Nk75k6jUczj3QXF/ms1xIr2v
+	 o6yTk21zuTLiXa3hRMzQZ71JJy/qBmhoPC0GICzJnXLvUcG4cwlvvFNHtABxyT5RH5VLy
+	 6Brcf07wXhB7OI4bzScTVVVB+CcHZs2GkGCQnGTvYvAZzJ4W+JGQkTbmf1X/RjLv6bUa4
+	 XELvDewUVZq+s1zT5YdOnwI4xyd715XxuFkSrHLCl4K3p0CC1VZBpWA3nN/VZSOxCeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6gykhBF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/UqEDft";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962CE606A31C;
-	Wed, 18 Nov 2026 19:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F3C606A320;
+	Wed, 18 Nov 2026 19:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6gykhBF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA99B1F000C6;
-	Wed, 18 Nov 2026 19:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/UqEDft
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58171F000C4;
+	Wed, 18 Nov 2026 19:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029159;
-	bh=kzgKsP9UjVuo82re2sCD4hUHToIftCaKbIeV3fSzw4A=;
+	s=korg; t=1795029162;
+	bh=9CTGoV6yOOmke+qpcyzxbBUWcqgyYZDjXDMi/amGBQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c6gykhBF/EH8V5rOcyQaZLu5wr6UmsoBg6m2gCNdVBVmGI4s65GswvLJCGcoOJ8WB
-	 j2xuMSyUBk6Xyl72V4azKELfxCqjeDyxwMhh/ioVJeXeD5Rfm+cfdHbrRoT1JwZOOw
-	 oznewN4xrjH56PS2ema4HEYsPzFjLXeOXZIV0KX8=
+	b=a/UqEDftxlKHAF5KJL96/ZNnikkRnh6pcBsU9+z8SUPneEyAHWlHFVSPfsP/nv4qN
+	 YK0xAG1jLqH4DSJrXEcWmBXTF9dxEcDkVhD+kd7ME00bO66bF1d3KhX1+KOobw7Bke
+	 8pY0s/5t1mIrETaAVJDdGESJlhohDxbVVaNAlJdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0250/1756] gpio: crystalcove: add missing MODULE_ALIAS()
-Date: Wed, 18 Nov 2026 15:39:37 +0100
-Message-ID: <20261118150018.338527103@linuxfoundation.org>
+Subject: [PATCH 6.12 0251/1756] drivers/base/node: fix UAF on device_register() failure
+Date: Wed, 18 Nov 2026 15:39:38 +0100
+Message-ID: <20261118150018.377986914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,34 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 32c7f7f80e5f7f2764682fd456054478fc11c8d9 ]
+[ Upstream commit 6d7e9bc51d8f2d73b3403c759c769f880082f9ae ]
 
-The crystalcove GPIO driver lacks a MODULE_ALIAS() to allow it to be
-auto-loaded.
+node_init_node_access() frees the access node with kfree() if
+device_register() fails. After device_register() the embedded device is
+initialized and must be released with put_device() so that
+node_access_release() can free it.
 
-Fix this by adding the missing platform alias.
-
-Fixes: 104fb1d5153c ("gpio: Add support for Intel Crystal Cove PMIC")
-Assisted-by: LLM
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 08d9dbe72b1f ("node: Link memory nodes to their compute nodes")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260907024732.1452228-1-gonglinkai@kylinos.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-crystalcove.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/node.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpio/gpio-crystalcove.c b/drivers/gpio/gpio-crystalcove.c
-index 25db014494a4d..636e4d3f990b1 100644
---- a/drivers/gpio/gpio-crystalcove.c
-+++ b/drivers/gpio/gpio-crystalcove.c
-@@ -395,3 +395,4 @@ module_platform_driver(crystalcove_gpio_driver);
- MODULE_AUTHOR("Yang, Bin <bin.yang@intel.com>");
- MODULE_DESCRIPTION("Intel Crystal Cove GPIO Driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_ALIAS("platform:crystal_cove_gpio");
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index deccfe68214ec..091e397b72b47 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -144,20 +144,19 @@ static struct node_access_nodes *node_init_node_access(struct node *node,
+ 	dev->parent = &node->dev;
+ 	dev->release = node_access_release;
+ 	dev->groups = node_access_node_groups;
+-	if (dev_set_name(dev, "access%u", access))
+-		goto free;
++	if (dev_set_name(dev, "access%u", access)) {
++		kfree(access_node);
++		return NULL;
++	}
+ 
+-	if (device_register(dev))
+-		goto free_name;
++	if (device_register(dev)) {
++		put_device(dev);
++		return NULL;
++	}
+ 
+ 	pm_runtime_no_callbacks(dev);
+ 	list_add_tail(&access_node->list_node, &node->access_list);
+ 	return access_node;
+-free_name:
+-	kfree_const(dev->kobj.name);
+-free:
+-	kfree(access_node);
+-	return NULL;
+ }
+ 
+ #ifdef CONFIG_HMEM_REPORTING
 -- 
 2.53.0
 
