@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025649;
-	b=U4X5WY5eC6yxd3DIu3p3T8EJwpLj+Se30vgt5Ajz2mFKEbmAigmCtFitN0cvpiTYftk4
-	 37A2i6s2E/mfCcjZbeeR7BPNfWjsHtaRxfch/B2JA97UQG04wFwRI4cJkvzqw5sczYuyv
-	 24fFnPkol8RjD2Hsj4g2MlXpIr7jk3KeOLkuG56e1419jidruGxwkGzdbzs0p3nLT/D2L
-	 3thsAfdYD8m4bFXIiZ06WgbME1wAnnj34Olp9fkjmRGBLGFihqSuSbVuZaIkIno5sp20v
-	 pwo7Y6QBYKKwq0Tq5tOrfhF2rzCHG6wjNwuR3Fd2Vvfm0qLSOYKf0bhgBzXd/QdHw4w==
+	t=1795025653;
+	b=vnCFrUCDEooMvZUwf+ecDmPu8DsD48f9MrpUkl3hof6z0LF0LSVyVHyG2C3q1j7erTah
+	 u3Yq9KfHKhnIfocqfThQkcEfqsksnBCsZPN9Fh+DbvX7Q7egLN87G9hUqGXHqIO4Ow9tD
+	 MzDt3/+1Ksb7iYIqsFS75Vn53MD59OOO8HbwwEgR4L13Y9/yGmurhaWTg7MjT7Yt8zOnF
+	 bomK0VMbKWK39ZUeLosAbMUWK+6NdioPeXDDtOOafPje4XIGrzr9DDjxGVy+BXJxCeQr/
+	 DG7gI8ufCYK8EM+za+3fYE7QkTQqq5CD0q04LBSv4KdoUs8jsBhILkaeIe1yCQNP/kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025653;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DqDdT2p26Oit05rrQfyIkqP/PT3sdAIN7ml8wQBpdSA=;
-	b=WjrWJP7uH/41LhT5vln8SAiOg/K7vn5N+SN/M3iIXPUstIOMIzRihTf4SUsOQ5mJu11g
-	 lxPmU2pR22jwTKt6prMgLBhDm7nfwziFWzTFYrHM0HhJzPefunIFfuCDCIdfaM93zCJCc
-	 ZjpMrnQe604wUikh5a+Lh0OZjvFZmMlaH4+CvnrCtBIDZcLw4M7p3JbsZT0QQrBIobh9o
-	 x4hdIW7+qUL2CFpr9i4X1rSp/TFJYebcDi26nV8MLDc3c66Z+tT+0d+NF65qD3hZFX/A6
-	 hH5ubuoWynj2nNggxfN2eEb+ibyHCIGWjoT0BlJLcOQP4scl+iyXntTQKjzO7fbY+3A==
+	bh=8ZBaqsy+IZGf/8+cLfsOpklYTA5ULe5THNYh+I/QIms=;
+	b=ktpjAXEzKTSg3yn/bCT8RVPFAlVhOjFYIc29sWyopZq+n8axqTd7VKqNsUN9pmd2FNtQ
+	 A0nyhC4ycLO+4Hy4/PEP0eV1j9gPAANgCTen9+vzmd40d/ZghF4cG2P3fXEokIYH4qqoS
+	 d0k0eXHJOnXHE+c3u9uaAMe1C7BA0QelgNac4G0/JzWk/vyDElcNCeLso3ckUEc6rO9J3
+	 HVSPUKt7hfTxHSkCia+BDxsdPeGblw3aDjqN+3aSNUYlUmgbhq7gGxmDV8XbnkLeWz7BT
+	 8guuAkXpCQw5Cg/sJAM9RR9UHvHTYwsjLnwmwafjoDsZs8xT5isO5tUvPd9JzowicwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZOFmkXI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vTTWFnaj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB338606A320;
-	Wed, 18 Nov 2026 18:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4AD606A32A;
+	Wed, 18 Nov 2026 18:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZOFmkXI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088A21F000C4;
-	Wed, 18 Nov 2026 18:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vTTWFnaj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16DF1F000C6;
+	Wed, 18 Nov 2026 18:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025649;
-	bh=DqDdT2p26Oit05rrQfyIkqP/PT3sdAIN7ml8wQBpdSA=;
+	s=korg; t=1795025652;
+	bh=8ZBaqsy+IZGf/8+cLfsOpklYTA5ULe5THNYh+I/QIms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fZOFmkXIjPw6ouvBNyI5gyPge/r/jc9e9G4UMZCOg+H3uqnmQerDrYV5SQoMAzJvL
-	 oNsMN0eEhSnjJl0n//B24wnoLlyrypA2b8/AywmPNUICx6gmnrRhcTBzGT4KjAf5lK
-	 VPaGUslOGTuFuBz9Ey8Bnccw1tu1XmzuIhkANUhk=
+	b=vTTWFnajcESD9yLf15pe9GgFagn7qQqLat3ui69Xb+sG+Bktc/bMki4aTQh7DFfmJ
+	 wmZnz5jWEHEDKsxQnxX/2MGp47MffoxHPvl5vp2FqFLetUPFcA7qfqoOYIEme4MknJ
+	 dZPVtRGLpiazZIghiS09OWhrLt14cONxKsMVNkc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Demidov <roman.demidov.nn@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1112/2151] drm/msm/a6xx: check pm_runtime_resume_and_get during resume
-Date: Wed, 18 Nov 2026 15:47:27 +0100
-Message-ID: <20261118150202.740355125@linuxfoundation.org>
+Subject: [PATCH 6.18 1113/2151] dmaengine: ste_dma40: Fix physical cyclic capability
+Date: Wed, 18 Nov 2026 15:47:28 +0100
+Message-ID: <20261118150202.778550817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,101 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Demidov <roman.demidov.nn@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit e2f57c576f14f96449cfee840860cb9707501d23 ]
+[ Upstream commit 11101a8e3e42273a5910a149f6324040b88f4747 ]
 
-The return values of pm_runtime_resume_and_get() calls in a6xx_pm_resume()
-are not checked, which can lead to hardware access on suspended devices
-and PM reference underflows.
+d40_dmaengine_init() configures dma_both for physical channels that can
+handle both slave and memcpy transfers. Physical DMA40 channel setup has
+supported cyclic LLIs since cyclic transfer support was added, but the
+DMA_CYCLIC capability is set on dma_slave a second time instead of
+dma_both.
 
-Fix this by checking the return value of each pm_runtime_resume_and_get()
-call and properly unwinding the previously acquired resources on failure.
+Set DMA_CYCLIC on dma_both so d40_ops_init() installs
+device_prep_dma_cyclic and physical channels advertise cyclic support.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757106/
-Message-ID: <20260929142103.81854-2-roman.demidov.nn@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 0c842b551063 ("dma40: cyclic xfer support")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-1-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 38 +++++++++++++++------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ drivers/dma/ste_dma40.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index a2aae30f7d117..94543360c982a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2238,44 +2238,48 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
- 	opp = dev_pm_opp_find_freq_ceil(&gpu->pdev->dev, &freq);
- 	if (IS_ERR(opp)) {
- 		ret = PTR_ERR(opp);
--		goto err_set_opp;
-+		goto err_unlock;
- 	}
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index d52e1685aed53..28b34a279cef3 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -2907,7 +2907,7 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 	dma_cap_zero(base->dma_both.cap_mask);
+ 	dma_cap_set(DMA_SLAVE, base->dma_both.cap_mask);
+ 	dma_cap_set(DMA_MEMCPY, base->dma_both.cap_mask);
+-	dma_cap_set(DMA_CYCLIC, base->dma_slave.cap_mask);
++	dma_cap_set(DMA_CYCLIC, base->dma_both.cap_mask);
  
- 	/* Set the core clock and bus bw, having VDD scaling in mind */
- 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
- 	dev_pm_opp_put(opp);
- 
--	pm_runtime_resume_and_get(gmu->dev);
--	pm_runtime_resume_and_get(gmu->gxpd);
-+	ret = pm_runtime_resume_and_get(gmu->dev);
-+	if (ret < 0)
-+		goto err_opp_clear;
-+	ret = pm_runtime_resume_and_get(gmu->gxpd);
-+	if (ret < 0)
-+		goto err_put_dev;
- 
- 	ret = clk_bulk_prepare_enable(gpu->nr_clocks, gpu->grp_clks);
- 	if (ret)
--		goto err_bulk_clk;
-+		goto err_put_gxpd;
- 
- 	ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
- 	if (ret) {
- 		clk_bulk_disable_unprepare(gpu->nr_clocks, gpu->grp_clks);
--		goto err_bulk_clk;
-+		goto err_put_gxpd;
- 	}
- 
- 	if (adreno_is_a619_holi(adreno_gpu))
- 		a6xx_sptprac_enable(gmu);
- 
--	/* If anything goes south, tear the GPU down piece by piece.. */
--	if (ret) {
--err_bulk_clk:
--		pm_runtime_put(gmu->gxpd);
--		pm_runtime_put(gmu->dev);
--		dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
--	}
--err_set_opp:
- 	mutex_unlock(&a6xx_gpu->gmu.lock);
-+	msm_devfreq_resume(gpu);
-+	a6xx_llc_activate(a6xx_gpu);
- 
--	if (!ret) {
--		msm_devfreq_resume(gpu);
--		a6xx_llc_activate(a6xx_gpu);
--	}
-+	return 0;
- 
-+	/* If anything goes south, tear the GPU down piece by piece.. */
-+err_put_gxpd:
-+	pm_runtime_put(gmu->gxpd);
-+err_put_dev:
-+	pm_runtime_put(gmu->dev);
-+err_opp_clear:
-+	dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
-+err_unlock:
-+	mutex_unlock(&a6xx_gpu->gmu.lock);
- 	return ret;
- }
- 
+ 	d40_ops_init(base, &base->dma_both);
+ 	err = dmaenginem_async_device_register(&base->dma_both);
 -- 
 2.53.0
 
