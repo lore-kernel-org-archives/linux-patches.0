@@ -1,63 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033436;
-	b=CjrI+vTcYYjnqHY2HFd3Glr3Ewi2SYe3RHs4YgDD4OWJLHOjzlstfkr4yJRrs7sdd4Kz
-	 8o3QKfxwPnh7vQQwWqQeEvlpdgAbSyhC8w7b/Vm2NcGGkLZ0LCO9RPg28DW4xKIgeQxup
-	 lc3q4VmHmEMS/etmmNTODbAnYUMYQ2JIZaVIwF95SyJ5dJVvIy+Tcxu9TmC0C0fuue0Y8
-	 BEeBBgukX/03ZoYDKZMjPRAv2t+nq95OKDnPEi7fvH4f2w6+bsIES90km5Q8PefxVnb0P
-	 mY7Z+nmbH1cpLodW+aUEnS/NVmrZt7KnRcWyzOaIXhFj2sadJGYnlLqjrkCiuqjIXDw==
+	t=1795033439;
+	b=PEl8Mds5WPOZwgYjWis6zlN5sKl89eoWx3gjw7Xshc9TE7jkiNp4XGMGlxrjw3Av2e61
+	 K2gloJnd/4+9Bieia49vTMxwmjH+odxOCU4olDXrBkS0lEpIFMMOMETaupps5xiF+DKhJ
+	 Vo4h81T6Jm7JS7bzrv8/zppDu8StfMW2pWsP4vTrYx71S3UZmv1jQom4BMEv8tY29ord9
+	 EBcfKCinYetROF/7xJNAqepRzRSFopEFQuhONOVM5B83kj4SG1ptBEKDZqOYahqFXTSAb
+	 HF4Gh9CxgZ4aiWoAne0rg/RGCmOMO2he13s2Gz8O6M0vDjYnetg4UR4WB7hPtEqQXmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Db2PCO1ZvhzN2CSZO/jo+gujxH3R+bGpo9bbhd7uS5k=;
-	b=bKnyeK1Nnic4NbIiWLPM+f0eTQt1XL3J2s5jiZywZzkzSkE+5aovWcZZrvlZOFclob63
-	 2578Z3Vy3s4u537WKhxXLzkrAnHO/9YjwaHwmD/uIRFPP3bpvkMLNc6o0TcP+VV3/DHj9
-	 Mm0avnF+Ke5S48KNcbqqs31QEsYeiwiEYVzDlRlW+M8z9+QpWLosL1kPizNOg9AjTkUhg
-	 oFzkTBtNyZJ3pYnk/UiInZIPx0+Tt80VtYdmHNPWjUBA5bNGorTuefsSJPhO7mSTG7KjU
-	 bVs9uXCoVaOjskKvJCa5M1V1uh6iYNV33DpbsqCz/tIOWV8CmG65fQGV1kWCFJIEmlg==
+	bh=RoHQrbu9HJU/2ccVK3pZVhZHRRIEAQ7a0hzOnUncRFk=;
+	b=lR1tu6nW2SGaSeev6xZIrhAqU9pEmUkXfomjzbjh7dnWcqvVcSBZkf2uPR+P10z4fxmL
+	 nobqaoAvOjoGtm5Wh/5jXGlHfkSr30UGJk5prEBhBl+1/29qzhY8Ne6gDXwQ9CxIroruF
+	 b0U/LtNh5T+NgF5lC9TnXdjJ26pYGDsxIujlOEZY9ykokHCKWA9dVXJTuiN41+pwjGfWU
+	 725bCLFxOSeGedD/8lU0uY9lOcf54zY3hepW7CosgaXBOXMDYeaSZiFJtb1rH4piCYZDl
+	 x8/EUFyft4oHgfuarG0DM3fyP4f+dnU6T9KLa/8eQBVWcjMSOQT+rDlUURBGE8aFnQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJWR2fcm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQcheUFN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE98E606A31C;
-	Wed, 18 Nov 2026 20:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90703606A31C;
+	Wed, 18 Nov 2026 20:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJWR2fcm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6091F000C6;
-	Wed, 18 Nov 2026 20:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQcheUFN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99091F000C4;
+	Wed, 18 Nov 2026 20:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033436;
-	bh=Db2PCO1ZvhzN2CSZO/jo+gujxH3R+bGpo9bbhd7uS5k=;
+	s=korg; t=1795033439;
+	bh=RoHQrbu9HJU/2ccVK3pZVhZHRRIEAQ7a0hzOnUncRFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BJWR2fcmWGSutyxJLLax1Pjy2K9/B5VxcmsfepQzdTmB+x+SxFGfl6En7rL/p+tCr
-	 TKb+N4kwdeZcThb+jQOc968Xcw9Db4bH3g6ouwHJS4Tfcu7jRErid+MWlZNJ7+KPjV
-	 bOeMu/cUHesOLxBLEyrBxHNn5RNFWwhBzroPlECA=
+	b=sQcheUFNJOm2NpXLNaWotT7o2JGY7ooF9B+BzUvrRD5IZiVcoRAzqyLk5eAm5JFSb
+	 QfrJnSeu2xZYCNULoNMGYKB1OO4LK4lsfqbfBmtkAxBKpVpGrm/cBT/xa2t4spmxkY
+	 Bnh68/mJgt/PHpWdGu6y+Ym+RnZ1HvzuzTarmnM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Leno Hou <lenohou@gmail.com>
-Subject: [PATCH 6.6 0015/3318] mm: vmscan: fix dirty folios throttling on cgroup v1 for MGLRU
-Date: Wed, 18 Nov 2026 15:10:37 +0100
-Message-ID: <20261118150314.147539863@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Ting-Han Hou <ue081723@gmail.com>
+Subject: [PATCH 6.6 0016/3318] net: gso: limit recursive IP-in-IP segmentation
+Date: Wed, 18 Nov 2026 15:10:38 +0100
+Message-ID: <20261118150314.185377622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -79,80 +71,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 13b6b620910436c29dea398382e83c9499fd13e4 upstream.
+commit 006c8b834aed8b02bd8fb9fb05e9e7ead37d1763 upstream.
 
-The balance_dirty_pages() won't do the dirty folios throttling on
-cgroupv1.  See commit 9badce000e2c ("cgroup, writeback: don't enable
-cgroup writeback on traditional hierarchies").
+IP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()
+for each nested IP header. encap_level tracks header bytes, not callback
+depth, so a deep chain can exhaust the kernel stack. Making
+inet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP
+GSO/TSO later made the path reachable. The IPv6 stackable path was
+introduced separately and uses the same guard.
 
-Moreover, after commit 6b0dfabb3555 ("fs: Remove aops->writepage"), we no
-longer attempt to write back filesystem folios through reclaim.
+Count IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once
+per top-level GSO operation and preserved across GRE/UDP context changes.
+Use the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first
+five entries pass, and the sixth returns -EINVAL before dispatching
+another GSO callback.
 
-On large memory systems, the flusher may not be able to write back quickly
-enough.  Consequently, MGLRU will encounter many folios that are already
-under writeback.  Since we cannot reclaim these dirty folios, the system
-may run out of memory and trigger the OOM killer.
-
-Hence, for cgroup v1, let's throttle reclaim after waking up the flusher,
-which is similar to commit 81a70c21d917 ("mm/cgroup/reclaim: fix dirty
-pages throttling on cgroup v1"), to avoid unnecessary OOM.
-
-The following test program can easily reproduce the OOM issue.  With this
-patch applied, the test passes successfully.
-
-$mkdir /sys/fs/cgroup/memory/test
-$echo 256M > /sys/fs/cgroup/memory/test/memory.limit_in_bytes
-$echo $$ > /sys/fs/cgroup/memory/test/cgroup.procs
-$dd if=/dev/zero of=/mnt/data.bin bs=1M count=800
-
-Link: https://lore.kernel.org/3445af0f09e8ca945492e052e82594f8c4f2e2f6.1774606060.git.baolin.wang@linux.alibaba.com
-Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Kairui Song <kasong@tencent.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Leno Hou <lenohou@gmail.com>
+Fixes: 3347c9602955 ("ipv4: gso: make inet_gso_segment() stackable")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/all/cover.1790157745.git.zihanx@nebusec.ai/
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260924051521.32568-2-zihanx@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Ting-Han: ipv6_gso_segment() still calls ipv6_hopopt_jumbo_remove()
+  right after skb_reset_network_header() in this version; keep the new
+  recursion check directly after skb_reset_network_header() as upstream
+  does, before the jumbo removal. IP_TUNNEL_RECURSION_LIMIT is still 4
+  in this tree because 77facb35227c ("net: increase
+  IP_TUNNEL_RECURSION_LIMIT to 5") is not here, so the fifth entry is
+  the one that fails until that commit is applied ]
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ include/net/gso.h      |    8 ++++++++
+ net/core/gso.c         |    1 +
+ net/ipv4/af_inet.c     |    3 +++
+ net/ipv6/ip6_offload.c |    4 ++++
+ 4 files changed, 16 insertions(+)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -5431,8 +5431,22 @@ static bool try_to_shrink_lruvec(struct
- 	 *  If too many file cache in the coldest generation can't be evicted
- 	 *  due to being dirty, wake up the flusher.
- 	 */
--	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
-+	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken) {
-+		struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+--- a/include/net/gso.h
++++ b/include/net/gso.h
+@@ -19,10 +19,18 @@ struct skb_gso_cb {
+ 	int	encap_level;
+ 	__wsum	csum;
+ 	__u16	csum_start;
++	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
++	u8	recursion_counter;
+ };
+ #define SKB_GSO_CB_OFFSET	32
+ #define SKB_GSO_CB(skb) ((struct skb_gso_cb *)((skb)->cb + SKB_GSO_CB_OFFSET))
+ 
++static inline bool gso_recursion_inc_test(struct sk_buff *skb,
++					  unsigned int limit)
++{
++	return ++SKB_GSO_CB(skb)->recursion_counter > limit;
++}
 +
- 		wakeup_flusher_threads(WB_REASON_VMSCAN);
-+		/*
-+		 * For cgroupv1 dirty throttling is achieved by waking up
-+		 * the kernel flusher here and later waiting on folios
-+		 * which are in writeback to finish (see shrink_folio_list()).
-+		 *
-+		 * Flusher may not be able to issue writeback quickly
-+		 * enough for cgroupv1 writeback throttling to work
-+		 * on a large system.
-+		 */
-+		if (!writeback_throttling_sane(sc))
-+			reclaim_throttle(pgdat, VMSCAN_THROTTLE_WRITEBACK);
-+	}
- 	/* whether this lruvec should be rotated */
- 	return nr_to_scan < 0;
- }
+ static inline int skb_tnl_header_len(const struct sk_buff *inner_skb)
+ {
+ 	return (skb_mac_header(inner_skb) - inner_skb->head) -
+--- a/net/core/gso.c
++++ b/net/core/gso.c
+@@ -117,6 +117,7 @@ struct sk_buff *__skb_gso_segment(struct
+ 
+ 	SKB_GSO_CB(skb)->mac_offset = skb_headroom(skb);
+ 	SKB_GSO_CB(skb)->encap_level = 0;
++	SKB_GSO_CB(skb)->recursion_counter = 0;
+ 
+ 	skb_reset_mac_header(skb);
+ 	skb_reset_mac_len(skb);
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1378,6 +1378,9 @@ struct sk_buff *inet_gso_segment(struct
+ 	int id;
+ 
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*iph))))
+ 		goto out;
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -17,6 +17,7 @@
+ #include <net/udp.h>
+ #include <net/gro.h>
+ #include <net/gso.h>
++#include <net/ip_tunnels.h>
+ 
+ #include "ip6_offload.h"
+ 
+@@ -122,6 +123,9 @@ static struct sk_buff *ipv6_gso_segment(
+ 	bool gso_partial;
+ 
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	err = ipv6_hopopt_jumbo_remove(skb);
+ 	if (err)
+ 		return ERR_PTR(err);
 
 
