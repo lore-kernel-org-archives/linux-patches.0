@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025474;
-	b=tODoK8+m65MFrj4LhSxRRWZ7UOTI4gJzD1XFkzcHzMk72llhZFG7F5WkR7S/fmuWXE7U
-	 8amoSRLA7KWXMIKfJKuEzwDffp5G+nn81fWW8/UuRncdwkB3r+J0tKubhtahkCOV/d1De
-	 JSE2CgInWNX/oKZosGdZVN0sUMWJkEZhSj7bwquJeUDFws+LJncA2Me8h7fMOcD6NSoKA
-	 xMabLGKvsApQnPaAYxJQk/hRHdycsK14y1pnw/PAFFnWevekjm0sPVzQySWTIXyTuMjqe
-	 +2fq3HcVa8R7gmiWEydjuHk5hfa/45NaVXypeOBCaR22ocNyt8HbzWPR624OscUWB4g==
+	t=1795025477;
+	b=KCSr+s2bq/LtYV8hog7d9hateB0OW78TbZ3muNifAkdhFaO9yt4+6K3K4k3zXsSXFh7s
+	 WoglCyMepmquIXGa/13WOjE0GFtBEz5vrbjcCWhFaUgVc+4rNeGcylGjLwim6vKuKSOhZ
+	 j9DUn8qVyYfblXXpNbowStlWzuYGkrXaovYDP+rJPEZIUO6CFSYEmSiiXGy+rL+aQx0Yo
+	 0XNSKTIEck3dqacJieNUQOWoNEKfEJJihMsw77Rm9rGg+bT/qPf0Wpps2kKI/dacF94Pj
+	 yA29elQQc7aLDTJRUNMVi8x2/a2GQsbVRMawlCW8ApefJdFdpmrVbKjj1jA48/9pG7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025474;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lqtmuj6X9h4q2oKpc1++pGFNxzGIZvX5VWFBsY2i6pk=;
-	b=Q+NCytFNQrUjGIyA/nSrgP41QPrtCzVU4kAgNFcrwsnRxvmsO48Iqqw6lOmy4jMXq/Rg
-	 OqXMryf6k/WV6iPowBo7lIJnGxx/ydPsCDAE0Tm+IjkwWvgXfNk9IRMttnCiRNdQvtD97
-	 QcnpJOpbmoecHtG7WfLM1Jawde9jDpmpX0quFlsCpdwXpyz7WqnjzQhpsqCwvIixmMetM
-	 UI+bE2CesXPmiibHyoBAO+9nXPlVO8NBzXGBJ7xKjsWoXrnKUMHCRxiBv1b8EldLgipFh
-	 nXWYCaFd2CZ+INLCcn2N4Oapeqa3dLruQVMa4UhrI/BvwalldmO3NkaoZoxaczRrgBw==
+	bh=GPX6p5kG04r7VnZ2sBb3ZG4b56pM++Bac7wRK3Uun6Y=;
+	b=xJtZbwhPNklVOPHGoS1AvoG+Wb5bj+eWNXUrsHb5OwLmRe+2WVpBKDUKYAybgksDwA6P
+	 sivu9TbUVts7hvwZ8IJxvAjPhGL1DI3z/z7v20Cp2UVz0DnLHDZ0jDBgiMd1jmBCR7S1L
+	 4HYEFQBlS2grtQJo7GhDgYTiiASDiJZDjUpxMxxIqhZ72k5EVDYDurnYK20rNWhnoJtQd
+	 M8slvSa7joaNSbn3CqmUxtBgYC9zxSXS+tOMtFc3v0qtE23PNT9UX60rPQOlAYuRWWD+v
+	 W/4SaY4OewTt7OM27TV/FR7fgqSTesEP4dnDO6g44dN26YYLfGu39L/S0uS/bd05JHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuL2Rs97;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru3LCHVr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F560A260B;
-	Wed, 18 Nov 2026 18:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D77606A320;
+	Wed, 18 Nov 2026 18:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuL2Rs97
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A63F1F000C4;
-	Wed, 18 Nov 2026 18:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru3LCHVr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB3F1F000C4;
+	Wed, 18 Nov 2026 18:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025474;
-	bh=lqtmuj6X9h4q2oKpc1++pGFNxzGIZvX5VWFBsY2i6pk=;
+	s=korg; t=1795025477;
+	bh=GPX6p5kG04r7VnZ2sBb3ZG4b56pM++Bac7wRK3Uun6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuL2Rs97HhdokSMbXyK/HZigMo7pPhm72Sr81L+oAdIikaOrC7voIoEWNpo6Uxmzq
-	 j33eiXEgXuIZT3+V8kIcaFumdsUXz/3/FY4r2I8qqiZDmvw9BndfRn0Tjs2QW4D/nc
-	 r5T7DOa4ZphuKkbdKTTIAYIZKnH1xD9OxCU0stzE=
+	b=ru3LCHVrAS4GoV/ub8waP+Z81sWcD82PNDYBZXwnVrE2bzp+FmNWkPMcSTxG7kP3a
+	 YIWTfnfdQFj/8OugxCTVeRlbvTz3ENwpHVjPdeO2CNxsE6pBa2VfrHOd4rM0uiVabc
+	 jKNl6qjUI7E2gcOaNmK7GSjfI/dHqXif0gAn8Hsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1091/2151] soc: qcom: pmic_glink: Avoid losing early rpmsg probe
-Date: Wed, 18 Nov 2026 15:47:06 +0100
-Message-ID: <20261118150202.022757317@linuxfoundation.org>
+Subject: [PATCH 6.18 1092/2151] soc: qcom: geni-se: provide PROG_RAM_DEPTH for I2C HUB Serial Engines
+Date: Wed, 18 Nov 2026 15:47:07 +0100
+Message-ID: <20261118150202.056367586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,48 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 0c79a829af36a94143c747a0ab8f0a8563b17cfa ]
+[ Upstream commit 803f9950a6c6e0b37ed7f24925feed823703467e ]
 
-The PMIC GLINK rpmsg device can appear before the platform device has
-finished probing. In that case pmic_glink_rpmsg_probe() sees
-__pmic_glink as NULL and returns -ENODEV, which is treated as a fatal
-probe failure for the rpmsg endpoint.
+The I2C Hub serial elements lacks DMA, so the SE_HW_PARAM_2 register which
+is in the DMA register space doesn't exist for those instances.
 
-If this race is hit, pg->ept is never installed and PMIC GLINK clients
-never receive the service-up notification. This may leave the system
-with no Type-C functionality and without battery/power supply
-management.
+Provide the ram depth in the compatible data to be used instead
+of the reading the missing SE_HW_PARAM_2 register.
 
-Return -EPROBE_DEFER when the rpmsg endpoint arrives before the platform
-device is ready.
-
-Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260720-topic-pmic_glink_defer-v1-1-94c0f233f2f7@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 522bfb4f33c0 ("soc: qcom: geni-se: Use HW PROG_RAM_DEPTH to validate firmware size")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260923-topic-sm8x50-i2c-hub-fw-ram-v3-1-44287b4e814b@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pmic_glink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/qcom-geni-se.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index c0a4be5df9267..83088e3d15c94 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -243,7 +243,8 @@ static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
- 	guard(mutex)(&__pmic_glink_lock);
- 	pg = __pmic_glink;
- 	if (!pg)
--		return dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
-+		return dev_err_probe(&rpdev->dev, -EPROBE_DEFER,
-+				     "no pmic_glink device to attach to\n");
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index f85cac34c7260..ca251d84d540e 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -94,22 +94,26 @@
+  * @base:		Base address of this instance of QUP wrapper core
+  * @clks:		Handle to the primary & optional secondary AHB clocks
+  * @num_clks:		Count of clocks
++ * @prog_ram_depth:	Available CFG RAM depth for instance without SE_HW_PARAM_2
+  */
+ struct geni_wrapper {
+ 	struct device *dev;
+ 	void __iomem *base;
+ 	struct clk_bulk_data clks[MAX_CLKS];
+ 	unsigned int num_clks;
++	unsigned int prog_ram_depth;
+ };
  
- 	dev_set_drvdata(&rpdev->dev, pg);
+ /**
+  * struct geni_se_desc - Data structure to represent the QUP Wrapper resources
+  * @clks:		Name of the primary & optional secondary AHB clocks
+  * @num_clks:		Count of clock names
++ * @prog_ram_depth:	Available CFG RAM depth for instance without SE_HW_PARAM_2
+  */
+ struct geni_se_desc {
+ 	unsigned int num_clks;
+ 	const char * const *clks;
++	unsigned int prog_ram_depth;
+ };
  
+ static const char * const icc_path_names[] = {"qup-core", "qup-config",
+@@ -1005,6 +1009,7 @@ static const struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const s
+ 						     enum geni_se_protocol_type protocol,
+ 						     u32 *fw_size_out)
+ {
++	struct geni_wrapper *wrapper = se->wrapper;
+ 	struct device *dev = se->dev;
+ 	const struct elf32_hdr *ehdr;
+ 	const struct elf32_phdr *phdrs;
+@@ -1069,8 +1074,11 @@ static const struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const s
+ 		cfg_val_end = le16_to_cpu(sefw->cfg_val_offset) +
+ 			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u32);
+ 
+-		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
+-					   readl_relaxed(se->base + SE_HW_PARAM_2));
++		if (wrapper->prog_ram_depth)
++			prog_ram_depth = wrapper->prog_ram_depth;
++		else
++			prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
++					readl_relaxed(se->base + SE_HW_PARAM_2));
+ 		if (fw_size >= prog_ram_depth) {
+ 			dev_err(dev, "Firmware size (%u) exceeds RAM size (%u)\n",
+ 				fw_size, prog_ram_depth);
+@@ -1381,6 +1389,7 @@ static int geni_se_probe(struct platform_device *pdev)
+ 		return PTR_ERR(wrapper->base);
+ 
+ 	desc = device_get_match_data(&pdev->dev);
++	wrapper->prog_ram_depth = desc->prog_ram_depth;
+ 
+ 	if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
+ 		int i;
+@@ -1433,6 +1442,7 @@ static const char * const i2c_master_hub_clks[] = {
+ static const struct geni_se_desc i2c_master_hub_desc = {
+ 	.clks = i2c_master_hub_clks,
+ 	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
++	.prog_ram_depth = 1020,
+ };
+ 
+ static const struct of_device_id geni_se_dt_match[] = {
 -- 
 2.53.0
 
