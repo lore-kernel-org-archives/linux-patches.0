@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020611;
-	b=DPo31nWdgKFFr+Q6JawtYvYDJzKbgCA54ni7Y0QhAuNqe/uUoQZUgp9qYfV96Ap50qA9
-	 mmU5xRjENBCFnDxKKbi5WTaFG587hubZq/ybOxym4AmEppMY/FRN2DwsDAyH+hQz7F4df
-	 AnkcZkcv8G2hDieoCHqFIe/jQDiMYhgHBKzRdzMaltiQuOULu/nXrh+98Vf4ac7x6QR34
-	 gko5SVyvAY1U3JpHF9ZHmMnLnaaFA9u8siUK6Tn2VBbVZRrQOO4PE4+gE5hTaRwsxoaJj
-	 Mt8BA3wzSuKoHcEP/cYqEHEWVVTFvRCFDQsl/nDXCjL96XTAPjyTE11eedIeLY26Mkg==
+	t=1795020614;
+	b=W2Ees2qvahNHkNHHgT5Zks+3tgiMTlTocknrUjIam9o8znKusgLjSL9vp9YDQ9ENWhrF
+	 JGI+ZrO1N0oV37EA2flncm5FbZN+FpXXTKUd0kNJDUXhMU7N457VEhalCxBxCUEpQPDt/
+	 GgR1esoZUiOGutiACGu9lANOzaZU6TWyMK3rFqfF8QzGiyi+ZDvxbZ60fSf43+3+klq8z
+	 lzlsCVR+/mXsXG2Q4E7A0CFgYLlEKTH80y1u/rvYih6MdDRANhhfuFZRj7JFmxQUDJD56
+	 ykDagPGPmij4dEvS1ae53KloEvTKXJuj2r72gNKgs+08L2rUDSK7bt0NZ0hizuMunyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020614;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y2rkBTrBTJAo75mDyc+P634X8e+/CIE+VqXmB71PXJg=;
-	b=rOVn0YlIOtxdbeZFGm/rmkH42nHThEttes4Rw6hNN0zRvT1NOT2EIIGG0a9mtborCTb3
-	 oHtYAmj7+EMAvpUGCOoGY2GgljWmiRmgs5PitYNAW70s9W0Pp26Pcnm+/r/FDUGSLrcry
-	 s2HW4F6HnWIf/Sa2+ArlCvOGcd79AdFEwWJWYnwTiH8OPYY5eiu7jPzuro9I/d+tZi9Sc
-	 4aG3cyfOXIjHNZuGFHPW/B3wARSZ9ljyFrDn7/E4vN+ZXxkk7iRiwkMHxUdEIkdZtSeVa
-	 22eaErbTTI/3vjZmKGH3Rx9u5UUTj7vW3yOvNhYkl+psyCjiK54GDYb4i8Yvhl8mvOQ==
+	bh=EMc39RJQrDFdSysBAz05aVOqOImVMHmuM7+F5H/lMQI=;
+	b=kT36jrS7FkTukL55atx014NiM0sbKy1wosAs4hYAStFedO3/S3qOvMzBukXtuNIb3wpb
+	 SaEvDrjR+ttwBeZXWLzVkJmKqMrB4DVZrN+YNm41EA3UTYf+cxR5PUuq+xpDZF7NUyobf
+	 Zt4avNZAxX7A52tg7k0nupj6QGVDWaD8SQ9xZx2el+aSg/LSNzCAbkpybnOBFpsBFuT56
+	 IJx8jrGccQ54YrBj3tJvaldH64OkLmFlNI52OVq8cGN8MN/0jeoGkbLs3uIarw80+46Uk
+	 QmcbqX3F5G8qq4tAEpFOxOkBbNyxY+TE0p4gWMSLu0DdA2fskgaRYYI/w0qxnMQSkcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyT54Fti;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lJOY/N/m";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6624C606A320;
-	Wed, 18 Nov 2026 16:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2851260A2601;
+	Wed, 18 Nov 2026 16:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyT54Fti
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B399E1F000C4;
-	Wed, 18 Nov 2026 16:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJOY/N/m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1411F000CE;
+	Wed, 18 Nov 2026 16:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020611;
-	bh=Y2rkBTrBTJAo75mDyc+P634X8e+/CIE+VqXmB71PXJg=;
+	s=korg; t=1795020614;
+	bh=EMc39RJQrDFdSysBAz05aVOqOImVMHmuM7+F5H/lMQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FyT54Ftii5bQYfegERCuBttlpKA3n4wYlQEEdzORnbQxqT14uGCDSuwwIlU9EHDuU
-	 Fka3WZda/jAfpwv/7AyQt5RwI8UVW0C3Z2ZFD8vDaUVNvk9d9ZeRMZ80ydBrVl8J2j
-	 jVnNgc0SWA18K0cgp1cUAJtK6i4Zu0/lykIaUA4w=
+	b=lJOY/N/mhHbIKGRWlyh8DgEK/oplx7AOwJBLaF9s8zq0yttv0CJUofU2Jl6FyghJr
+	 dXIOfVMOh4vjF+xCoWGWLGfz7xaslM340NSORQxJ5hXfn/S7yoY/IhM2VaKLAiBfZ7
+	 /hew5h6HMyFO56fJPzFBBRnltl96MjykyXxU1do8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1973/2651] selftests/bpf: Create the vxlan devices of test_tunnel with their MAC
-Date: Wed, 18 Nov 2026 15:53:33 +0100
-Message-ID: <20261118150357.477244196@linuxfoundation.org>
+Subject: [PATCH 7.3 1974/2651] ALSA: core: Serialize snd_refcount put and sync
+Date: Wed, 18 Nov 2026 15:53:34 +0100
+Message-ID: <20261118150357.507566059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,64 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 33cbc5c2cadfe3b43f024e89880dd8fe2efb3a2e ]
+[ Upstream commit 6904743ab77e0684dff319f3806ef982e5eea6cf ]
 
-The vxlan tests of test_tunnel create a tunnel device in the initial
-netns with "ip link add", and then give it the MAC address that the
-static neighbor entry at the other end points to with "ip link set".
+When a thread tries to sync-and-destroy the resource with
+snd_refcount_sync(), it might lead to a UAF in a very slight time
+window.  Namely, snd_refount_put() calls wake_up() after
+atomic_dec_and_test(), but wait_event() in snd_refcount_sync() checks
+the condition via atomic_test() without serialization, hence the
+thread that called snd_refcount_sync() can continue immediately to
+release the resource before another thread calls wake_up().
 
-systemd-udevd assigns new devices of the initial netns a MAC address of
-its own, following its MACAddressPolicy, when it handles their uevent.
-When it gets to that after the test set the address, the replies sent
-to the configured MAC are dropped as meant for another host, and the
-ping of vxlan_tunnel fails after 10 seconds.
+For avoiding the race above, introduce the spinlock and take it at
+snd_refcount_put() and snd_refcount_sync() in order to serialize the
+operations.
 
-Pass the address to "ip link add". udevd leaves alone the address of a
-device that was created with one.
-
-Fixes: 1ee7efd40abf ("selftests/bpf: Move vxlan tunnel testcases to test_progs")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-tunnel-vxlan-mac-v1-1-624dd769c334@gmail.com
+Fixes: dcca9b6064c3 ("ALSA: Add simple refcount helper functions")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20261015071838.31082-1-tiwai%40suse.de
+Reviewed-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20261015112256.3902-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/test_tunnel.c  | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ include/sound/core.h | 1 +
+ sound/core/misc.c    | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
-index eb93099312720..7b35bf9498056 100644
---- a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
-+++ b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
-@@ -161,9 +161,9 @@ static int add_vxlan_tunnel(void)
- 	    IP4_ADDR2_VETH1, MAC_VETH1);
+diff --git a/include/sound/core.h b/include/sound/core.h
+index 15be947a730ef..bea596f36f58e 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -84,6 +84,7 @@ struct snd_device {
+ struct snd_refcount {
+ 	atomic_t count;
+ 	wait_queue_head_t waiter;
++	spinlock_t lock;
+ };
  
- 	/* root namespace */
--	SYS(fail, "ip link add dev %s type vxlan external gbp dstport 4789",
--	    VXLAN_TUNL_DEV1);
--	SYS(fail, "ip link set dev %s address %s up", VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
-+	SYS(fail, "ip link add dev %s address %s type vxlan external gbp dstport 4789",
-+	    VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
-+	SYS(fail, "ip link set dev %s up", VXLAN_TUNL_DEV1);
- 	SYS(fail, "ip addr add dev %s %s/24", VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
- 	SYS(fail, "ip neigh add %s lladdr %s dev %s",
- 	    IP4_ADDR_TUNL_DEV0, MAC_TUNL_DEV0, VXLAN_TUNL_DEV1);
-@@ -198,11 +198,10 @@ static int add_ip6vxlan_tunnel(void)
- 	    IP6VXLAN_TUNL_DEV0, MAC_TUNL_DEV0);
+ void snd_refcount_init(struct snd_refcount *ref);
+diff --git a/sound/core/misc.c b/sound/core/misc.c
+index 066fb9ecdcdc3..6fe199e76e837 100644
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -183,11 +183,13 @@ void snd_refcount_init(struct snd_refcount *ref)
+ {
+ 	atomic_set(&ref->count, 0);
+ 	init_waitqueue_head(&ref->waiter);
++	spin_lock_init(&ref->lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_refcount_init);
  
- 	/* root namespace */
--	SYS(fail, "ip link add dev %s type vxlan external dstport 4789",
--	    IP6VXLAN_TUNL_DEV1);
--	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
--	SYS(fail, "ip link set dev %s address %s up",
-+	SYS(fail, "ip link add dev %s address %s type vxlan external dstport 4789",
- 	    IP6VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
-+	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
-+	SYS(fail, "ip link set dev %s up", IP6VXLAN_TUNL_DEV1);
+ void snd_refcount_put(struct snd_refcount *ref)
+ {
++	guard(spinlock_irqsave)(&ref->lock);
+ 	if (atomic_dec_and_test(&ref->count))
+ 		wake_up(&ref->waiter);
+ }
+@@ -195,6 +197,7 @@ EXPORT_SYMBOL_GPL(snd_refcount_put);
  
- 	return 0;
- fail:
+ void snd_refcount_sync(struct snd_refcount *ref)
+ {
+-	wait_event(ref->waiter, !atomic_read(&ref->count));
++	guard(spinlock_irq)(&ref->lock);
++	wait_event_lock_irq(ref->waiter, !atomic_read(&ref->count), ref->lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_refcount_sync);
 -- 
 2.53.0
 
