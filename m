@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048314;
-	b=eVHU9SOl2hVFCYeNboPyIVldp+axHj0eOkLyExMFFXphyPT6T4bwX4hEYoyWhjF+iiT9
-	 ai1lgpwUC/7/aJ+3wtpKK/U6RMPixBtsHliBoX4SIU9SGqhh2hKLnIojUS34F1kSbmvJn
-	 0Ax/WKYDT0r5dnsn/XiAeiFvweqRsTB1AfTZxhN5+sQxdq/iYLTK4yN1K46Nknj11BPGN
-	 ddMaUwd4xhhH6trVqRQX3k3CNB5/B8/FBfHgFuz9hSYI+H45rMN1zoisUPiG2bI49JUc6
-	 cvalZFKlKIt56oWrx+DulhUqa13T9kJkKWAlBAvxcrL434LRVM5UALEHok7acLaHnsw==
+	t=1795048317;
+	b=ORhnw9FC7LnF9KKKikJDaV6H+kRG238RShQuvhIyraG7o+1ia4UgLulL4Z2cN42sRK+T
+	 +dBZbvhojnk/6CANfHnkul4SgS7KM/MwALc7t90DvV/BDlH39T842TY1jq3Ktk5VgR8zZ
+	 pvegguGYjXYLzeYs2Cotq4OgMQ1DJ0dW4PI3b7rCD3dK7kpbsyOiGIrHjf0o0Gxkh2kTY
+	 9pk7sb7QumhMh5VT33Ei0/fxoLd+gXoVJoEkCaoANoulPvmDPh+6dnuEeHBim1KO2XHZ1
+	 HyvxySG3MGhoR+BcF2cqArVZyz9Fq15aeOc1W/bJ3LcmL8UD4le3Q9infaIJRB/vMwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xHQ1FDfjOgqQZiaznE6yFI+0r1kPpm5GlV01z4ey/3Q=;
-	b=UQxlg4bXj2wpAgsW9Bah0cPKiANI+Qb2jnK5S/Ic8085vk9Md/vDmk5vAl4gG6Ano0kW
-	 /ll1rNyq8aVUypEOtqlIbtqcRUMSiDR8zGVVbdwhUYf1TeDSCb3dn47oNSFxq+HaN9PO7
-	 aY+dqhZOA1KGrKo926O36C9FTEtLe9EECVrDTzz+PR1eF1sd/7lyJ8bcgyBJisovBfOAF
-	 MNGoF28Pw8JPMRuGVzNlS8n7nJfV1SAAs7j3dIQZrbBs1SpNiAqa5lJkEL41PZgs2NHH2
-	 7keWTfq1LUYWMX3a73CpPslzayQarzOiT6xq0gBNA6SLbRa4+QIuGSza5DZnq5TabSA==
+	bh=MjvW3+PNaT8J7fDscFn9UHTN5pyea2VNCd0M494ixz8=;
+	b=XGBoCjBnyfdc4sryTNQKzEzeyuzMTL89+Lx57qKmGVNtjhuhuKerurc+mTqmfxYC6f3k
+	 eugp2sRlx7UmNRvMvvH2EXWkBHugU5EPVIvojDaHZviYNrt71Uym8vNammrn1fNBag3dP
+	 MQzOTUFTsS3jMsxaZc2PrXB4BtH1lxUV3LSaxXfbeEDQQAAXeV8ZZpkGgLVBlec6mItny
+	 jeKFrSL3JwnUQZfst4IxOIF6OgQAFAsIQ2se1i7n0DvVGP7QxPgZFtiINMZm2GGl8yhhv
+	 b3lwM1Xny5l5Cek88KSjFAEPrt82FwAVMg7HivC3Or+vEP3nu/zSkJIz56vtPxL/dmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syTTJmod;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQei9Zqb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013CF606A32F;
-	Thu, 19 Nov 2026 00:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22249606A31C;
+	Thu, 19 Nov 2026 00:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syTTJmod
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B191F000C4;
-	Thu, 19 Nov 2026 00:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQei9Zqb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D351F000C4;
+	Thu, 19 Nov 2026 00:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048313;
-	bh=xHQ1FDfjOgqQZiaznE6yFI+0r1kPpm5GlV01z4ey/3Q=;
+	s=korg; t=1795048316;
+	bh=MjvW3+PNaT8J7fDscFn9UHTN5pyea2VNCd0M494ixz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syTTJmodm0xDLeUUnu3K0OxLjL2SQBta3KBey1CzNZQmQtgw6ex681q1cWvSDz8BO
-	 DUxNrhHRuYaNWOOTZOBDVh8VMvzA+3Ra2GnicW6P0JCTP5e3hFr8oWmD2gi50v/aKn
-	 /gjXgCTMOiT6B3lPH4PT23MMt+J56a8AhZ9T/4Mk=
+	b=OQei9ZqbAUJAh/NO6S5XcZoZtjc+BaqCF8A9dKCaVFhctpSRqNbpRgKSvgS8h6pbT
+	 0nujYzA6o7zM/3KVUajFf3w3ASwJmOhR6q08iEWIHfO61bFB0fCtvIwkOjVqnrXMLw
+	 XWUfVv2VTbZBzFKBqqKBsJi4RTkljIpe4KHmEscQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Yonghao Zhang <hyz3367@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1899/2857] firewire: cdev: Fix FW_CDEV_IOC_CREATE_ISO_CONTEXT references in kernel-doc
-Date: Wed, 18 Nov 2026 15:48:53 +0100
-Message-ID: <20261118150309.615119503@linuxfoundation.org>
+Subject: [PATCH 6.1 1944/2857] remoteproc: core: Set trace buffer name for diagnostics
+Date: Wed, 18 Nov 2026 15:49:38 +0100
+Message-ID: <20261118150311.211206997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,51 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Yonghao Zhang <hyz3367@gmail.com>
 
-[ Upstream commit 0a6cf2b7adcbd362039e9d282f73aff3f24022ca ]
+[ Upstream commit e23eab619b0d2dd796618406ba25da62f4d539a2 ]
 
-The fw_cdev_event_iso_interrupt and fw_cdev_event_iso_interrupt_mc
-comments refer to FW_CDEV_CREATE_ISO_CONTEXT, but the ioctl is named
-FW_CDEV_IOC_CREATE_ISO_CONTEXT.
+rproc_trace_read() (in remoteproc_debugfs.c) prints the name of a
+trace buffer whose device address could not be resolved, but nothing
+ever assigns trace_mem.name, so that the diagnostics always prints
+an empty string:
 
-Correct both references. The misspellings were introduced separately
-with the userspace interface documentation and multichannel reception
-support.
+	Trace  not available
 
-Fixes: 7ada60e36764 ("firewire: Document userspace ioctl interface.")
-Fixes: 872e330e3880 ("firewire: add isochronous multichannel reception")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/r/20260911222807.7673-1-kmehltretter@gmail.com
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Copy the generated "trace%d" name into the memory entry, so the
+diagnostics identifies the buffer failed to translate.
+
+Fixes: a987e6b91a5a ("remoteproc: fix trace buffer va initialization")
+Assisted-by: Claude-Code:glm-5.3
+Signed-off-by: Yonghao Zhang <hyz3367@gmail.com>
+Link: https://lore.kernel.org/r/20260911081810.740028-1-hyz3367@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/firewire-cdev.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/uapi/linux/firewire-cdev.h b/include/uapi/linux/firewire-cdev.h
-index 92be3ea3c6e0b..0d7870249ab55 100644
---- a/include/uapi/linux/firewire-cdev.h
-+++ b/include/uapi/linux/firewire-cdev.h
-@@ -211,7 +211,7 @@ struct fw_cdev_event_request2 {
- /**
-  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
-  * @closure:	See &fw_cdev_event_common;
-- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
-+ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
-  * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
-  * @cycle:	Cycle counter of the last completed packet
-  * @header_length: Total length of following headers, in bytes
-@@ -271,7 +271,7 @@ struct fw_cdev_event_iso_interrupt {
- /**
-  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
-  * @closure:	See &fw_cdev_event_common;
-- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
-+ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
-  * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
-  * @completed:	Offset into the receive buffer; data before this offset is valid
-  *
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index ac6ec64f7db66..8b21c04ce60d5 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -578,6 +578,9 @@ static int rproc_handle_trace(struct rproc *rproc, void *ptr,
+ 	/* create the debugfs entry */
+ 	trace->tfile = rproc_create_trace_file(name, rproc, trace);
+ 
++	/* keep the name for the diagnostic in rproc_trace_read() */
++	strscpy(trace->trace_mem.name, name, sizeof(trace->trace_mem.name));
++
+ 	list_add_tail(&trace->node, &rproc->traces);
+ 
+ 	rproc->num_traces++;
 -- 
 2.53.0
 
