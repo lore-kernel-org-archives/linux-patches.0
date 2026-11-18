@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049211;
-	b=L0apOAP6djs5HDdU0Ll94e9Nm9Wvx93JXqx1h56B/W//9C/Vn8fE+oity0bU3vSMqWdd
-	 Sg75GyXL/A7D47H3uwf/s0Djhgox/p8nUreSdzybhUFwZ1s5sURkCgQ86/3aDLSWOUs3e
-	 7Y/lIQPLPbyNraI6eVyiDX5iuDy0c+sWLEIfYjAFW4eT9oYAtiMHWAwfM1+BtOK0C7ZY+
-	 pDFQS/DdLPsivqdsgsf505C9k9zatzNWB0OIKvQEDlB3/Akd0YR/GyI6x5X+FD4Bjd4Bq
-	 iwquWGHxuatMESzGdmabdenJtqjfYsOLMlyAKz4AE4pcS3lLDj/kIk0cL1100ekeZRw==
+	t=1795049213;
+	b=4H3lTO10UvY2IG2wSuCYK87fev1jKWRCkU7rjaXYQXIQjFQlVVcmtd27A+zqsvPQ2OZ/
+	 vsXRBRazgK0OrY9a6skXkJhMgv2M0eMfF7T033NxEtJ+QSW2WerDMLOCZcW+RsQgui7oB
+	 hgtez7XXeVDR0Fv229Xlb2n6LHEq7RAXBK3PVesS2BqKr/jKt/LXYSkDIwmsjX0ijGIIc
+	 10NzIhLiW6akrYb1V2USJGwt7ZsaHauviQg+EyePwvLLUoIVhwCJZAjZsZOf9jYHXCXjY
+	 xWVY9Kx24WBvDS4WUFqq3d9pSPEUgscfZEc6plRPOC1LoPyAPQuhl+PmyRKdDJutTkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ngDkOgh6EypCy5RpZ7TzRd79UQeXg3L6/rOC/QiVbuc=;
-	b=tHcKuSnqxBmRfpKVcjqldZRLIVxgMF8TesKHQgcsJ1k7oY3mYTBaLGPldNeEYQkMparr
-	 VvieatWaxd3MW+fpM/BiguTnFwJtdhQIweByzZ5cDUHCiobMNvlStX2WvxJNqbAv6fd36
-	 cbRvzAjlOYc5XOh6raBhpKNrBqX5m2p64MVWi+0e8bdo60fmoWf7Vmt1/LgvjGd72QTDH
-	 ZHVAoARdGBWFHYl2BtlJDF7HNvfFpGsAw1x2uw1buAIV6PKAg5w/lAwSQtx4O8ltEHB04
-	 7WOYesVb0+mdCcE9q47+ExWtuAWo8x5wzRG15NDDudffP2dm2jDOQ6jc3BnxtdzqA/A==
+	bh=5dxen3P1V1auFotM4E6xpBtp5Bs8ISX35cPFAIoFDIk=;
+	b=2cbkLXzMSCBPbvf0FUlo9a+Q0bE9oB8uClRHfeZmv3NqnFWJ8HCNzCULuxkNvboByrGa
+	 C+xu0MTEAKYHCXk5P0jTHv2FXKIGBkO7CngOnP9On9rsWnekhtYUeYNv6wCmd4j/SI/vb
+	 BYYrYQzvpCe+bK4S9+cFH6WGAHELyYrP+PIzZn24HoVJRwmbc4J4rK4PGyt1Gx2ug+XNj
+	 x4K4UCMLU+bUFQLS5urAPzBuZt1bcMC2nMmVblbY8FT/mgQ+YKS01Bp/7QQ0CkVhnXfB4
+	 h0+gebyBJzGFhPrAvu9tomuPH0x/nTJ1ahlac4G/C9zSMeV4P1Sa2P93zvMnS9Y+Ikw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VtqJ6btX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRz5SJzW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF38606A320;
-	Thu, 19 Nov 2026 00:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F282606A31C;
+	Thu, 19 Nov 2026 00:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VtqJ6btX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9051F000C4;
-	Thu, 19 Nov 2026 00:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRz5SJzW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6761F000C4;
+	Thu, 19 Nov 2026 00:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049210;
-	bh=ngDkOgh6EypCy5RpZ7TzRd79UQeXg3L6/rOC/QiVbuc=;
+	s=korg; t=1795049213;
+	bh=5dxen3P1V1auFotM4E6xpBtp5Bs8ISX35cPFAIoFDIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VtqJ6btXKaog1EsE3I8q+SBYiUMtj0GmmGA2czDmHjDrnUUa1+kMPzbt2GJ4W7yBO
-	 d2LZQE9eamgoansu5Vb2qZfXeaOJTH/CKhsUt5u2i3lf8DufYUBtnaWOHMCH/sBpts
-	 PMPJ6GzwDeKYIFKGAR5u2Yt2OD2q2chVRp8tA8U0=
+	b=LRz5SJzWM4sXBQqBm7nxSF4S/sN83uQMFgdiCGLOxnk9dcXcC8YH/FvfU7o7ilKjS
+	 HRb/nJdnzLSAl4b7mDjrjwQYjtrgFcPEdm104isAlVm8DbgYmgp8e1Qads6FwGl8tR
+	 Eij+2zu1QUK9cYUrxHqxEgN8k9v4MHigbNxZpql0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Linus Walleij <linusw@kernel.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2268/2857] dmaengine: ste_dma40: Fix event group bounds
-Date: Wed, 18 Nov 2026 15:55:02 +0100
-Message-ID: <20261118150323.109549874@linuxfoundation.org>
+Subject: [PATCH 6.1 2269/2857] dmaengine: ste_dma40: Fix V4B event group mapping
+Date: Wed, 18 Nov 2026 15:55:03 +0100
+Message-ID: <20261118150323.144971248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,132 +71,168 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit e66a9dbe04c71249cfb2a544c9c25d1b3b761fba ]
+[ Upstream commit b36f8fce7314fed53563c60e683ff86deb8a51ae ]
 
-The dev_type validation can allow values whose derived event group has no
-matching physical channel pair. d40_allocate_channel() then indexes
-phy_res with j + event_group * 2, and __d40_set_prio_rt() uses the same
-group to select priority and realtime registers.
+DMA40 physical resources are connected in pairs to event groups. The
+mapping repeats after each complete set of groups.
 
-The physical-mode validation also compares dev_type with the number of
-physical channels. However, dev_type identifies an event line: DB8500 has
-eight physical channels but 64 source and 64 destination event lines. The
-event group determines which physical channel pair can serve an event, so
-the physical channel count is not a valid dev_type limit.
+D40_GROUP_SIZE and D40_PHYS_TO_GROUP() encode the four-group V4A layout.
+On V4B, which has five groups, resources 8 and 9 are consequently offered
+both to event groups 0 and 4. The GCC clock bookkeeping also treats these
+resources as group 0 instead of group 4.
 
-Reject dev_type values outside the hardware event-group range, remove the
-incorrect physical channel count limit, and stop the physical-channel
-search before a partial final channel group can index past phy_res.
+Derive the physical-resource stride and reverse mapping from the
+variant-specific number of event groups. This preserves the V4A mapping
+and gives V4B a ten-resource stride: resources 8 and 9 belong only to
+group 4, while resources 10 and 11 repeat group 0.
 
-Fixes: 26955c07dcf3 ("dmaengine: ste_dma40: Amalgamate DMA source and destination channel numbers")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
+Fixes: 3cb645dc85a0 ("dmaengine: ste_dma40: support more than 128 event lines")
 Assisted-by: LLM
-Link: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-20-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-21-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/dma/ste_dma40.c    | 47 ++++++++++++++++++++++++++------------
+ drivers/dma/ste_dma40_ll.h |  2 --
+ 2 files changed, 33 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 1b0dea372e477..b51211af27b52 100644
+index b51211af27b52..adea958581079 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -81,6 +81,10 @@ struct stedma40_platform_data {
- #define D40_LCLA_LINK_PER_EVENT_GRP 128
- #define D40_LCLA_END D40_LCLA_LINK_PER_EVENT_GRP
+@@ -84,6 +84,7 @@ struct stedma40_platform_data {
+ /* Number of event groups per hardware register layout */
+ #define D40_EVENT_GROUPS_V4A 4
+ #define D40_EVENT_GROUPS_V4B 5
++#define D40_PHYS_PER_EVENT_GROUP 2
  
-+/* Number of event groups per hardware register layout */
-+#define D40_EVENT_GROUPS_V4A 4
-+#define D40_EVENT_GROUPS_V4B 5
-+
  /* Max number of logical channels per physical channel */
  #define D40_MAX_LOG_CHAN_PER_PHY 32
+@@ -1898,6 +1899,12 @@ static bool d40_alloc_mask_free(struct d40_phy_res *phy, bool is_src,
+ 	return is_free;
+ }
  
-@@ -509,6 +513,7 @@ struct d40_chan {
-  * @high_prio_clear: the high priority clear register
-  * @interrupt_en: the interrupt enable register
-  * @interrupt_clear: the interrupt clear register
-+ * @num_event_groups: number of supported event groups
-  * @il: the pointer to struct d40_interrupt_lookup
-  * @il_size: the size of d40_interrupt_lookup array
-  * @init_reg: the pointer to the struct d40_reg_val
-@@ -523,6 +528,7 @@ struct d40_gen_dmac {
- 	u32				 high_prio_clear;
- 	u32				 interrupt_en;
- 	u32				 interrupt_clear;
-+	u32				 num_event_groups;
- 	struct d40_interrupt_lookup	*il;
- 	u32				 il_size;
- 	struct d40_reg_val		*init_reg;
-@@ -1754,6 +1760,11 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
- 	bool invalid_dev_type = conf->dev_type < 0;
- 
-+	if (!invalid_dev_type &&
-+	    D40_TYPE_TO_GROUP(conf->dev_type) >=
-+	    d40c->base->gen_dmac.num_event_groups)
-+		invalid_dev_type = true;
++static int d40_phy_to_group(struct d40_base *base, int phy)
++{
++	return (phy / D40_PHYS_PER_EVENT_GROUP) %
++	       base->gen_dmac.num_event_groups;
++}
 +
- 	if (!conf->dir) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
-@@ -1770,8 +1781,7 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 		invalid_dev_type = conf->dev_type >= max_dev_type;
- 	}
+ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ {
+ 	int dev_type = d40c->dma_cfg.dev_type;
+@@ -1908,11 +1915,14 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 	int j;
+ 	int log_num;
+ 	int num_phy_chans;
++	int phy_group_stride;
+ 	bool is_src;
+ 	bool is_log = d40c->dma_cfg.mode == STEDMA40_MODE_LOGICAL;
  
--	if (invalid_dev_type ||
--	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
-+	if (invalid_dev_type) {
- 		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
- 		res = -EINVAL;
- 	}
-@@ -1936,8 +1946,12 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 	phys = d40c->base->phy_res;
+ 	num_phy_chans = d40c->base->num_phy_chans;
++	phy_group_stride = D40_PHYS_PER_EVENT_GROUP *
++			   d40c->base->gen_dmac.num_event_groups;
+ 
+ 	if (d40c->dma_cfg.dir == DMA_DEV_TO_MEM) {
+ 		log_num = 2 * dev_type;
+@@ -1946,13 +1956,18 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
  				}
  			}
  		} else
--			for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+			for (j = 0; j < d40c->base->num_phy_chans;
-+			     j += D40_GROUP_SIZE) {
- 				int phy_num = j  + event_group * 2;
-+				if (phy_num + 1 >= num_phy_chans)
-+					break;
+-			for (j = 0; j < d40c->base->num_phy_chans;
+-			     j += D40_GROUP_SIZE) {
+-				int phy_num = j  + event_group * 2;
+-				if (phy_num + 1 >= num_phy_chans)
++			for (j = 0; j < num_phy_chans;
++			     j += phy_group_stride) {
++				int phy_num = j + event_group *
++					      D40_PHYS_PER_EVENT_GROUP;
 +
- 				for (i = phy_num; i < phy_num + 2; i++) {
++				if (phy_num + D40_PHYS_PER_EVENT_GROUP >
++				    num_phy_chans)
+ 					break;
+ 
+-				for (i = phy_num; i < phy_num + 2; i++) {
++				for (i = phy_num;
++				     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
++				     i++) {
  					if (d40_alloc_mask_set(&phys[i],
  							       is_src,
-@@ -1957,8 +1971,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 							       0,
+@@ -1971,9 +1986,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
  		return -EINVAL;
  
  	/* Find logical channel */
--	for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
- 		int phy_num = j + event_group * 2;
-+		if (phy_num + 1 >= num_phy_chans)
-+			break;
+-	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
+-		int phy_num = j + event_group * 2;
+-		if (phy_num + 1 >= num_phy_chans)
++	for (j = 0; j < num_phy_chans; j += phy_group_stride) {
++		int phy_num = j + event_group * D40_PHYS_PER_EVENT_GROUP;
++
++		if (phy_num + D40_PHYS_PER_EVENT_GROUP > num_phy_chans)
+ 			break;
  
  		if (d40c->dma_cfg.use_fixed_channel) {
- 			i = d40c->dma_cfg.phy_channel;
-@@ -3279,6 +3295,7 @@ static struct d40_base * __init d40_hw_detect_init(struct platform_device *pdev)
- 	base->log_chans = &base->phy_chans[num_phy_chans];
+@@ -2000,14 +2016,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 		 * channels.
+ 		 */
+ 		if (is_src) {
+-			for (i = phy_num; i < phy_num + 2; i++) {
++			for (i = phy_num;
++			     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
++			     i++) {
+ 				if (d40_alloc_mask_set(&phys[i], is_src,
+ 						       event_line, is_log,
+ 						       first_phy_user))
+ 					goto found_log;
+ 			}
+ 		} else {
+-			for (i = phy_num + 1; i >= phy_num; i--) {
++			for (i = phy_num + D40_PHYS_PER_EVENT_GROUP - 1;
++			     i >= phy_num; i--) {
+ 				if (d40_alloc_mask_set(&phys[i], is_src,
+ 						       event_line, is_log,
+ 						       first_phy_user))
+@@ -3118,9 +3137,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
+ 			base->phy_res[i].allocated_src = D40_ALLOC_PHY;
+ 			base->phy_res[i].allocated_dst = D40_ALLOC_PHY;
+ 			base->phy_res[i].reserved = true;
+-			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
++			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
+ 						       D40_DREG_GCC_SRC);
+-			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
++			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
+ 						       D40_DREG_GCC_DST);
  
- 	if (base->plat_data->num_of_phy_chans == 14) {
-+		base->gen_dmac.num_event_groups = D40_EVENT_GROUPS_V4B;
- 		base->gen_dmac.backup = d40_backup_regs_v4b;
- 		base->gen_dmac.backup_size = BACKUP_REGS_SZ_V4B;
- 		base->gen_dmac.interrupt_en = D40_DREG_CPCMIS;
-@@ -3292,6 +3309,7 @@ static struct d40_base * __init d40_hw_detect_init(struct platform_device *pdev)
- 		base->gen_dmac.init_reg = dma_init_reg_v4b;
- 		base->gen_dmac.init_reg_size = ARRAY_SIZE(dma_init_reg_v4b);
- 	} else {
-+		base->gen_dmac.num_event_groups = D40_EVENT_GROUPS_V4A;
- 		if (base->rev >= 3) {
- 			base->gen_dmac.backup = d40_backup_regs_v4a;
- 			base->gen_dmac.backup_size = BACKUP_REGS_SZ_V4A;
+ 
+@@ -3140,9 +3159,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
+ 		base->phy_res[chan].allocated_src = D40_ALLOC_PHY;
+ 		base->phy_res[chan].allocated_dst = D40_ALLOC_PHY;
+ 		base->phy_res[chan].reserved = true;
+-		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
++		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
+ 					       D40_DREG_GCC_SRC);
+-		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
++		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
+ 					       D40_DREG_GCC_DST);
+ 		num_phy_chans_avail--;
+ 	}
+diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
+index c504e855eb02b..b04c4e92b4ed0 100644
+--- a/drivers/dma/ste_dma40_ll.h
++++ b/drivers/dma/ste_dma40_ll.h
+@@ -16,8 +16,6 @@
+ 
+ #define D40_TYPE_TO_GROUP(type) (type / 16)
+ #define D40_TYPE_TO_EVENT(type) (type % 16)
+-#define D40_GROUP_SIZE 8
+-#define D40_PHYS_TO_GROUP(phys) ((phys & (D40_GROUP_SIZE - 1)) / 2)
+ 
+ /* Most bits of the CFG register are the same in log as in phy mode */
+ #define D40_SREG_CFG_MST_POS		15
 -- 
 2.53.0
 
