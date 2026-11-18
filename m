@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057727;
-	b=f0qQQPnNuKqmYNV20WihsZI0mgzcqjBDuZJ/gzOzyzFuG9S+zajye6tCfC9BD8odVnc9
-	 BXUB+PqT/pualOB/nnrYYZamFgPyUS70J8dog/OwIZdwhpsNSh8SuF32SWDfRtxcyfMLv
-	 N5+6UFbGxnX+C4u479jNJXB8m+n135qVInovMR2/msWOGtk0nc2RRF64Jb2ea3weHdBUJ
-	 h2egr7f0GEbpIT7i10072VRog4bB/y8Tc3N6TVpjYAlUza9YOiAUwmtd2UKubi6zgK3fG
-	 fjbKlDpDZwLihbCIucP3+N/hihC+tsur1ty030qM6k5DvRLEeRx5kUX295tCjpo7+xg==
+	t=1795057730;
+	b=oa0/79paxQAyoeuU3EdRJb3vR/75UN/+iocg8ahDD9jOhIyxIaC1olCGUSJXElVhy95F
+	 R58sAtEtpO9FJ0iy7LWYD51CDnkyZQgU/gHiehUyIJ2kUhQhW066D+odZiaZPt5cwFSWw
+	 VaJ3mvMHhv34qDHZD3v6jreww5YWZK6GBZYitY9HKYj7pomOekX1S1kIM/zbP8XylkIRx
+	 X48i3mFRbVdqthHESnLsGgjnu2UQ+D/o199sWzGOb8XAnL1CrojUWEcIkUKm4J5haM4eT
+	 KLd0klfRg9PFf892VWBRsWxxzlQ5VfEVbuTA2zL+moY2TXlf8gD0O6h9StnEFVV+eQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057730;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SdSYCaaZUUJBmwaaMVGAy+mkx6RYwDtFfFqPAgRySik=;
-	b=jYn+1Oij7gdjKgDUMWO65PNLxsd+86tU9KTd9hbGUyHvLWkEkMWGAGDaf6Jh+MgeylMP
-	 FwsGypfaHJs+u2Nzi5u6kv4r+NAO912gLJ+h3TYmRhqhCbfG5v4XJDkBEJ7aNSz3T+8TX
-	 SPLA780VKYsiq9MGc2xWsnVRL90u4OXabgzKNxJuhoQAvGPFNAlXJW13x3rHxXt13QhoG
-	 g9NczotVUARb9+TArwlg8Vxh1Hjc1uOyvuQAYs/qT9ayM4apPuSgnyBKJG2IYD4kG9i1Y
-	 +kRLgKLrP/pTo/JiQOxdGbheg2RB7Yrb4d5PRI4tFQ86SVNoHvpTJRW5jjImwP5WdxQ==
+	bh=c6DiucTxDDhVR8hptaKh2kNGg+EgmtLs5SryrlXymxY=;
+	b=udPJPqnL6mJojTMsZdymqgk+BZA854LNd2s0CxI5N/MAwZ2fdnuNtRZPFm+cwMxkAUe4
+	 aT3JB9j3/bjyvj8jdbKNE6sBYipZmH8nSpsnPtouRgN+5TZ6wS+Sv+pL6feCHkaVROo2M
+	 ZXbXMJMcljny4hZl2lDU6WcP6Mdieuv8XHaT2Qw/lNya9miDueNHrV+nGFgewhoSv1QAR
+	 va43cnpEK3y1mZ9pfrJTTjpIwEUNbyJUScYDi2v5FvnJY/bZVGw8+dMCDUr4zlk1IC5ov
+	 OJT/aaXPXRBPGNpAkDJzMUidB0JGoFApabek3XQSeJCakR7bnzAJgvRl5J+hQZj3m6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L12kIOIw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiKkkv5A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B72606A31C;
-	Thu, 19 Nov 2026 03:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FB7606A320;
+	Thu, 19 Nov 2026 03:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L12kIOIw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6766B1F000C4;
-	Thu, 19 Nov 2026 03:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiKkkv5A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293DE1F000C4;
+	Thu, 19 Nov 2026 03:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057726;
-	bh=SdSYCaaZUUJBmwaaMVGAy+mkx6RYwDtFfFqPAgRySik=;
+	s=korg; t=1795057729;
+	bh=c6DiucTxDDhVR8hptaKh2kNGg+EgmtLs5SryrlXymxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L12kIOIwtjgMTAH17sMMtLaAXtoYtal9eFjqfDhJ31chSOpTJBuazY9jscdwJnC7t
-	 KlihHEmAuQ+fq1C/BlVUUCjbQIUnoHy3UYPccDpDq0bvVnBOFPE+Yii5WHtLGFH6b3
-	 evxnqZh6CM5uvJYjMX8uPxsQCvdaSst8M/J3a8JY=
+	b=aiKkkv5AanDIaG8pCAxTLoaqdkoNzFIEz1yVMy7mW6uh0RvMsMEMsweo3Hm8zAoEF
+	 c1830xhq1WBBjco9JL4k2j2UHuMrm/n8PzLz/uUtjMi928h2FfcKM3RHK9PlKvFZMo
+	 JJBTjsmGcmKdx8Xbe5jk19sGrDIEw/5aA7rZihRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 0234/1848] backlight: qcom-wled: Fix WLED3 brightness register stride
-Date: Wed, 18 Nov 2026 15:37:52 +0100
-Message-ID: <20261118145921.750068087@linuxfoundation.org>
+	stable@kernel.org,
+	Riwen Lu <luriwen@kylinos.cn>,
+	xiongxin <xiongxin@kylinos.cn>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0235/1848] gpio: dwapb: mask/unmask IRQ when disable/enale it
+Date: Wed, 18 Nov 2026 15:37:53 +0100
+Message-ID: <20261118145921.792797297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,48 +73,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: xiongxin <xiongxin@kylinos.cn>
 
-commit e60dc9c05e0f415ef8bc63b3179abdd49830a619 upstream.
+commit 1cc3542c76acb5f59001e3e562eba672f1983355 upstream.
 
-WLED3 has a 16-bit brightness register pair per string, at 0x40 + 2*n,
-which is what the pm8941-wled driver wrote to:
+In the hardware implementation of the I2C HID driver based on DesignWare
+GPIO IRQ chip, when the user continues to use the I2C HID device in the
+suspend process, the I2C HID interrupt will be masked after the resume
+process is finished.
 
-	rc = regmap_bulk_write(wled->regmap,
-			wled->addr + WLED3_CTRL_REG_VAL_BASE + 2 * i,
-			v, 2);
+This is because the disable_irq()/enable_irq() of the DesignWare GPIO
+driver does not synchronize the IRQ mask register state. In normal use
+of the I2C HID procedure, the GPIO IRQ irq_mask()/irq_unmask() functions
+are called in pairs. In case of an exception, i2c_hid_core_suspend()
+calls disable_irq() to disable the GPIO IRQ. With low probability, this
+causes irq_unmask() to not be called, which causes the GPIO IRQ to be
+masked and not unmasked in enable_irq(), raising an exception.
 
-The restructuring for WLED3 turned that into WLED3_SINK_REG_BRIGHT(n),
-defined as 0x40 + n, so the two byte writes for consecutive strings
-overlap: string 1 overwrites the MSB of string 0 with its own LSB, and
-with the default three strings only string 1 ends up with the requested
-value.
+Add synchronization to the masked register state in the
+dwapb_irq_enable()/dwapb_irq_disable() function. mask the GPIO IRQ
+before disabling it. After enabling the GPIO IRQ, unmask the IRQ.
 
-Use the 2 byte stride.
-
-Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260921-qcom-wled-backlight-v4-2-bab8c7ef73cb@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 7779b3455697 ("gpio: add a driver for the Synopsys DesignWare APB GPIO block")
+Cc: stable@kernel.org
+Co-developed-by: Riwen Lu <luriwen@kylinos.cn>
+Signed-off-by: Riwen Lu <luriwen@kylinos.cn>
+Signed-off-by: xiongxin <xiongxin@kylinos.cn>
+Acked-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-dwapb.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -59,7 +59,7 @@
- #define  WLED3_SINK_REG_CURR_SINK_SHFT			5
+diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
+index d6240ae0f87ca..51bed3adafc1f 100644
+--- a/drivers/gpio/gpio-dwapb.c
++++ b/drivers/gpio/gpio-dwapb.c
+@@ -282,13 +282,15 @@ static void dwapb_irq_enable(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 	u32 val;
  
- /* WLED3 specific per-'string' registers below */
--#define WLED3_SINK_REG_BRIGHT(n)			(0x40 + n)
-+#define WLED3_SINK_REG_BRIGHT(n)			(0x40 + (n * 0x2))
+ 	spin_lock_irqsave(&gc->bgpio_lock, flags);
+-	val = dwapb_read(gpio, GPIO_INTEN);
+-	val |= BIT(irqd_to_hwirq(d));
++	val = dwapb_read(gpio, GPIO_INTEN) | BIT(hwirq);
+ 	dwapb_write(gpio, GPIO_INTEN, val);
++	val = dwapb_read(gpio, GPIO_INTMASK) & ~BIT(hwirq);
++	dwapb_write(gpio, GPIO_INTMASK, val);
+ 	spin_unlock_irqrestore(&gc->bgpio_lock, flags);
+ }
  
- #define WLED3_SINK_REG_STR_MOD_EN(n)			(0x60 + (n * 0x10))
- #define  WLED3_SINK_REG_STR_MOD_MASK			BIT(7)
+@@ -296,12 +298,14 @@ static void dwapb_irq_disable(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 	u32 val;
+ 
+ 	spin_lock_irqsave(&gc->bgpio_lock, flags);
+-	val = dwapb_read(gpio, GPIO_INTEN);
+-	val &= ~BIT(irqd_to_hwirq(d));
++	val = dwapb_read(gpio, GPIO_INTMASK) | BIT(hwirq);
++	dwapb_write(gpio, GPIO_INTMASK, val);
++	val = dwapb_read(gpio, GPIO_INTEN) & ~BIT(hwirq);
+ 	dwapb_write(gpio, GPIO_INTEN, val);
+ 	spin_unlock_irqrestore(&gc->bgpio_lock, flags);
+ }
+-- 
+2.53.0
+
 
 
