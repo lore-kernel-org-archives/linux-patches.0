@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044934;
-	b=myGmpV8lxFbq8bvpue+JdYkNq2pKG7skMySIjTc9gyomWqe0xkqKXz8d7ufvn6Aarn45
-	 FS6vP0N122PZE7sMT9f9bFClXviuNAtEDPzeCT3Q6R+SLUdqhXOTn8YA4g8vqFRPEFWdT
-	 LdIKG8xdiw7jG6k6aJobC5sik1Ldx4ug/yMCDcgG4WaePXhQMp5r8M4cid324gw1FunZ9
-	 YT3u4V6nmwCrrwc0a+Ox3my8UmB7MTcwC/ApzI+6teCy5tKi2AIXN+nmmyg4ko2bfyy4q
-	 CUxnkxVJ4TqyByeQF6l1qZPMS8fb6qRfTWn5cP6Hcym2GRx6uAUZwIRjVg+mrDPfpYg==
+	t=1795044937;
+	b=Ku5W59/fSEM+Cip556YMo+MzMh0JAattfDbY6xn2nu9vEFdZOQDAdJoAorFSl00wl3Dv
+	 eBlk23btIRbd/m1H/n+A7kvwrHIpi3sCgw4X06acDrjWDazx95upCAFdoLtphz4Rr/9JU
+	 3Od5enw5BLbtCfmMTx1vYsN0zhqaXQHtfGiPga+FwZPcv2larTXRAAMPdpQM0DAj03zCY
+	 JcPC2VY7J9mUJB+Q6kNqX19K34iLZO69olODHgcDKi1AEpcrdPPDP7dMDxJo3O5g97Lri
+	 gbKiGCox5I84tfPxzn6h8a59EkrQu8WNuC0hu+fEqpG9npQDs9TfC7zewfp4uTIDiIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044934;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1eIPldyTHzydIn+PPWcouyWu/qVzfq2hucm2eJryu70=;
-	b=mlQGx6PDc78Ai7tv8BqQ+RInzyUEsJfSOmsnVR5lnALonSbFdfcWtRj0j116offtxe+4
-	 b5YYALk7/hUu9Jp/Ayi0RuBBs3kX5g+K+wf4GPLBw/oIqG+zZRzBZ6qdDRMvE7Ne1sBiM
-	 LEiA1dYLYFZ9H8+9SxmBHW7hZ4E8EY/AE+ZTl2HZHHe9dZx7tbzyyFQ5ZWNquB+qBQjD7
-	 /9ihzTtB+8D9+9+FgUetk7JvhigwYHznyZtcxvHFqhhyaCaFnPk8coCaqa7Q4429yrjkQ
-	 lN5/jwfvmhomCeujtNdCNKn6l1tLCuxzM2zzrHV3a0LTDVIvDClhUjBvJCLEVhDTWVQ==
+	bh=4AMAzwS4oiNixFuU473BBjGdCBBL2F2JaOn9ToQ0hn8=;
+	b=Nm51LkeQo7m+QwaiVWNVqzMMqfyFRX1Bq+WnYXDvsdXgaklvK+OgLApgbSiAR8nYNlTl
+	 vLEl7oFXpPgqEalen9de2PGLMIQigpGEOhddTV7qB0u08A4EiQFsv0BduMOtzH2+O6oQc
+	 ACuflncDBaTT2r9aq66quh6hG8B+/nbfvEoMiCwrzfB6J4l0fq8aUU55VQBxK8YxN7mWF
+	 vAtkg3xilCRmqRTTM0eK0tynAWWkBTPkqHkrV5cmPRvYlAkaNYNjFgUd//Xvc+8dNPM4F
+	 e4Q2qNPo5YlWfeZdz6v9mO+oHmA6n8AvCQYKH+YeJ3S7J6WND6kXLu6fwVKZPiOJ0Hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LI5iQq01;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J01GosWr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFBC606A331;
-	Wed, 18 Nov 2026 23:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF53606A331;
+	Wed, 18 Nov 2026 23:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LI5iQq01
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ED81F000C4;
-	Wed, 18 Nov 2026 23:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J01GosWr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C824A1F000C4;
+	Wed, 18 Nov 2026 23:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044934;
-	bh=1eIPldyTHzydIn+PPWcouyWu/qVzfq2hucm2eJryu70=;
+	s=korg; t=1795044937;
+	bh=4AMAzwS4oiNixFuU473BBjGdCBBL2F2JaOn9ToQ0hn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LI5iQq01oIbvOTbNCP4qo5Z/BNxQ1dmxryMcMLk/lBPaUZUqzLcNRB8iw6Fv6VGwg
-	 AsWKds1I2AWs9diNA4olgm7lBz7bUH9QD1kq+t9Lfy7xe7+bmjjYdF0pB/+pJZADkB
-	 5CqsAwQvlNxKpAF5IV7aF2Kmq3mSap5ae5JeSCn0=
+	b=J01GosWr9sEVwqa7aznPVrhpwbI46euRN2wLOJ9bOp4Lmbt5pzIKvrGdmiThPA4ac
+	 6YFASQsiQkzaFJuWbPBs2I5yInPHupAdM9Qu/T3SmIrB5Zv96PJO3xfJmBgddutsHc
+	 y6GxS94/u976dAwPX8qwlUL5Fr5bo/HN6lJAQV8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
+	Punnay Sharma <punnaysharma805@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0745/2857] media: marvell-cam: fix unmet dependency for VIDEO_MMP_CAMERA
-Date: Wed, 18 Nov 2026 15:29:39 +0100
-Message-ID: <20261118150228.377426362@linuxfoundation.org>
+Subject: [PATCH 6.1 0746/2857] staging: media: av7110: fix corrupted BER reporting in sp8870
+Date: Wed, 18 Nov 2026 15:29:40 +0100
+Message-ID: <20261118150228.412423178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,39 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Punnay Sharma <punnaysharma805@gmail.com>
 
-[ Upstream commit 1179929b3abd4adb6ca7fae91d649c64a7293aca ]
+[ Upstream commit 5764f9bd7b7a72c6df49db6c8c00d4f9994a55ba ]
 
-VIDEO_MMP_CAMERA selects I2C_GPIO without ensuring
-'GPIOLIB || COMPILE_TEST' is enabled, despite I2C_GPIO depending on it.
+In sp8870_read_ber(), the 14-bit Bit Error Rate (BER) is assembled by
+reading two I2C registers: 0xC08 (lower 6 bits) and 0xC07 (upper 8 bits).
 
-Let's add the same dependency to VIDEO_MMP_CAMERA.
+The current implementation masks the lower bits via `tmp = ret & 0x3F;`
+but subsequently overwrites `tmp` entirely when processing the upper
+bits using a direct assignment (`tmp = ret << 6;`). This logical error
+causes the lower 6 bits of the BER hardware metric to be silently
+discarded.
 
-This unmet dependency bug was found by kconfirm, a static analysis tool for
-Kconfig.
+Fix this by using a bitwise OR (`tmp |= ret << 6;`) to correctly merge
+the MSB and LSB payloads before returning the metric to the DVB core.
 
-Fixes: 67a8dbbc4e04 ("[media] marvell-cam: Basic working MMP camera driver")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Signed-off-by: Punnay Sharma <punnaysharma805@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/marvell/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/media/deprecated/saa7146/av7110/sp8870.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/marvell/Kconfig b/drivers/media/platform/marvell/Kconfig
-index d6499ffe30e8b..5a4897896c797 100644
---- a/drivers/media/platform/marvell/Kconfig
-+++ b/drivers/media/platform/marvell/Kconfig
-@@ -21,6 +21,7 @@ config VIDEO_MMP_CAMERA
- 	depends on V4L_PLATFORM_DRIVERS
- 	depends on I2C && VIDEO_DEV
- 	depends on ARCH_MMP || COMPILE_TEST
-+	depends on GPIOLIB || COMPILE_TEST
- 	depends on COMMON_CLK
- 	select VIDEO_OV7670 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
- 	select I2C_GPIO
+diff --git a/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c b/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
+index 9767159aeb9b2..f68479e75e462 100644
+--- a/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
++++ b/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
+@@ -384,7 +384,7 @@ static int sp8870_read_ber (struct dvb_frontend* fe, u32 * ber)
+ 	if (ret < 0)
+ 		return -EIO;
+ 
+-	tmp = ret << 6;
++	tmp |= ret << 6;
+ 	if (tmp >= 0x3FFF0)
+ 		tmp = ~0;
+ 
 -- 
 2.53.0
 
