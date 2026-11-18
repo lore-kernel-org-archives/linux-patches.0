@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029095;
-	b=R9jc47iyX6bX4SDTMV8zH3gwPHoDr+XsSY7gpwOuVJf5ct5gsX18+4rzZZ7UCMThvLLr
-	 4dt5Y8X3fX/rs7/d8RVAXUnBSbUPji833l/hladO8qQWnbeJmQ+VUUZO4QcTW2+iAPQFj
-	 kmAMTbyJwBC4hKWtS4qZCIKiI7I4Jv6fATojWY+K545DVhHrf4+hJo4dbDyCRKf7VrCGq
-	 U66ybsykcAvqSopWQInQg+AD9pt1mVXiT4EiQIhWadMaWNYsXdY6CgHwzLmxNmNfVCIDv
-	 IQht/QvzRPqFhmn0mVIeuN4R1FwON67db09fCytXnTQj8negem/LghzxXb0L42S9aAw==
+	t=1795029098;
+	b=ZIdSNnIok21rr2cjHuFfBwyZMUZVzdxjcwCXAMuvlMvp+uqaVvM4ut52qIL9MyEsr+NQ
+	 lNIZpaQiAj78TzTUz9Rcm7xxecntVpddgVSJgIYN3J02X7gwSvkxmeGz7mdeb1NltMqtf
+	 s75QX/mecttQhqwgajsG1MmnHtXiF06AHa/PMMOqomGIdoohRsu+kOzHWQFkdSA9Csoko
+	 2MEQ7FZMSstsE2UALdcaHSqKQATn0TXzD+1cW9ZCYf/flljfelzrYVPS7kmOOdpSJgWu9
+	 xuJ1MKDpg+S/xlwEYkbuljIfjM3FPdTzn0X1EMD3WP3hg1062EGLv6gTE5HwnWumSsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DOb7m0qBpEnqhJVA2jddhJlorZFDX4Wh9KLh5QhODY0=;
-	b=st7son+Poa93+K/OrgqTOJ0j4jG+47WnHasAFOkr1NPVZxLAI6ud0z7/1cgEBBBMYbuu
-	 AAj8s18TI5/zZlY8XtYArtI/lfTJFWUjwA9MeywGSovILK5BX3wy/aTEjAryBYIA6O20T
-	 9IrW44wW9wkr8OcDYVNSexiF1e8KbeuIIGkiA0P2ktOAi7SNnRpZv2phuv1m7bHYsPcrR
-	 3QIlCn3ubJpb11zO6Zi7RjPhho6clixiAVtgUgGC66UlChELIvskwR7aKfHDe/ubWJS3w
-	 0nutTUVkpECN0na44YOqcDbv9H3fCuRLT6K3M/guqS5oTqF1C5CPm8MOGY1rSLXlILA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=27eKhSk9oha9KgduKK5smMvJo1jeZbCFO7PHWNtlOzc=;
+	b=IW6V2wDfJANFIoIvO3SRKVT0SYgaAkd2O4WPgN1iAmyB0AgmIWfJEaqJnLnBUWZExpyx
+	 tZ6ElBhh+wf3+0XaMyhrQjs33rj+v/s3YuGbg47Y1ieYw7qNz9stk7UZOkFC0v5+orVvT
+	 MaElyPVeLjcjM2fTW9k6fgKBWHSqsHbBKkiNkjUr6HB3/h+INo61GfhYIvGcImiv2CIZN
+	 ModdRtj4k4WQuUXb1vixYoluEfqEH6rukyYgZsYQZpu0cMaUFxErJLqPycvqvBxqHgdmz
+	 bpSTPlFrZLHWdj1GomdvkXuyN2uiF4kcULmzcurpP9UsdyUk3PXlunn7ML9OXHi/zEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PsGwZzvv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WEpETg3h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AFA606A32C;
-	Wed, 18 Nov 2026 19:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68232606A32A;
+	Wed, 18 Nov 2026 19:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PsGwZzvv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDF51F000C6;
-	Wed, 18 Nov 2026 19:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WEpETg3h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0431F000C4;
+	Wed, 18 Nov 2026 19:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029095;
-	bh=DOb7m0qBpEnqhJVA2jddhJlorZFDX4Wh9KLh5QhODY0=;
+	s=korg; t=1795029098;
+	bh=27eKhSk9oha9KgduKK5smMvJo1jeZbCFO7PHWNtlOzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PsGwZzvvJpSRa2Le6jDrvWleolUPNxgp5hfeXGZ0RrCTwQnZXiRnMHIk/Fdq6IENw
-	 tZ1kik4rFs6ucU9cJNea2OVnXj/1ICaPGLUW3lv7P2tyTSMOTPF67cTfmSQtJvdNvv
-	 BSGHj64w4dAnTlS+7nsm0LmX9zNuQMR5ragu4sXQ=
+	b=WEpETg3hKJZaBqFhzC+pYrkQj73bOSaOkTBw1SW5WcyN9Z3N2Dag5VFBy9kGWxHsq
+	 aoCA523HjgXEqkAdBp6Kxt6SbZkhiV2h3MBkvKYjWgWeiC59yRw+3MVjYixHbawXJH
+	 6KDno0s/gL9jhEBxtTavTXYb5hrwfdp8jbimRE5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Julius Bairaktaris <julius@bairaktaris.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0229/1756] wifi: mac80211: fix swapped fq_overlimit/fq_overmemory in aqm debugfs
-Date: Wed, 18 Nov 2026 15:39:16 +0100
-Message-ID: <20261118150017.391249830@linuxfoundation.org>
+Subject: [PATCH 6.12 0230/1756] irqchip/riscv-imsic: Use GENMASK for base address masks
+Date: Wed, 18 Nov 2026 15:39:17 +0100
+Message-ID: <20261118150017.426448166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,46 +63,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julius Bairaktaris <julius@bairaktaris.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 25f3f2ff88ae604a3b473b501fc55d58fcb0f5eb ]
+[ Upstream commit bd7d57a03c4b0fa3b0291ec64d688ebfed5edffc ]
 
-The two scnprintf arguments for fq_overlimit and fq_overmemory are in the
-wrong order, which results in the aqm debugfs file showing the overmemory
-count under the fq_overlimit label and vice versa.
+The IMSIC DT binding allows riscv,guest-index-bits up to 7 and
+riscv,hart-index-bits up to 15. On RV32, guest-index-bits=7 and
+hart-index-bits=13, together with the 12-bit IMSIC page offset, is a
+binding-valid layout that consumes a 32-bit low-address mask.
 
-Fixes: 2a4e675d887b ("mac80211: Export fq memory limit information in debugfs")
-Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
-Link: https://patch.msgid.link/20260904090626.92727-1-julius@bairaktaris.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The parser accepts this equality case because it rejects only values
+larger than the remaining bit budget. The base address canonicalization
+then builds the low-address mask with BIT(sum) - 1. When sum is 32 on
+RV32, that expression shifts an unsigned long by its full width.
+
+Keep the legal equality layout and express the mask with GENMASK(sum - 1,
+0) instead. The existing parser bounds guarantee that sum - 1 is below
+BITS_PER_LONG at both mask sites.
+
+Fixes: 21a8f8a0eb35 ("irqchip: Add RISC-V incoming MSI controller early driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://patch.msgid.link/20260718040000.004.929c1ef2-caplitmus-rv@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-riscv-imsic-state.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
-index 28b1355cc062f..610acecd45f8b 100644
---- a/net/mac80211/debugfs.c
-+++ b/net/mac80211/debugfs.c
-@@ -98,8 +98,8 @@ static ssize_t aqm_read(struct file *file,
- 			"RW fq_quantum %u\n",
- 			fq->flows_cnt,
- 			fq->backlog,
--			fq->overmemory,
- 			fq->overlimit,
-+			fq->overmemory,
- 			fq->collisions,
- 			fq->memory_usage,
- 			fq->memory_limit,
+diff --git a/drivers/irqchip/irq-riscv-imsic-state.c b/drivers/irqchip/irq-riscv-imsic-state.c
+index 06ff0e17c0c33..61e30372a67df 100644
+--- a/drivers/irqchip/irq-riscv-imsic-state.c
++++ b/drivers/irqchip/irq-riscv-imsic-state.c
+@@ -7,6 +7,7 @@
+ #define pr_fmt(fmt) "riscv-imsic: " fmt
+ #include <linux/acpi.h>
+ #include <linux/cpu.h>
++#include <linux/bits.h>
+ #include <linux/bitmap.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+@@ -739,9 +740,9 @@ static int __init imsic_parse_fwnode(struct fwnode_handle *fwnode,
+ 		return -EINVAL;
+ 	}
+ 	global->base_addr = res.start;
+-	global->base_addr &= ~(BIT(global->guest_index_bits +
+-				   global->hart_index_bits +
+-				   IMSIC_MMIO_PAGE_SHIFT) - 1);
++	global->base_addr &= ~GENMASK(global->guest_index_bits +
++				       global->hart_index_bits +
++				       IMSIC_MMIO_PAGE_SHIFT - 1, 0);
+ 	global->base_addr &= ~((BIT(global->group_index_bits) - 1) <<
+ 			       global->group_index_shift);
+ 
+@@ -820,9 +821,9 @@ int __init imsic_setup_state(struct fwnode_handle *fwnode, void *opaque)
+ 		}
+ 
+ 		base_addr = mmios[i].start;
+-		base_addr &= ~(BIT(global->guest_index_bits +
+-				   global->hart_index_bits +
+-				   IMSIC_MMIO_PAGE_SHIFT) - 1);
++		base_addr &= ~GENMASK(global->guest_index_bits +
++				      global->hart_index_bits +
++				      IMSIC_MMIO_PAGE_SHIFT - 1, 0);
+ 		base_addr &= ~((BIT(global->group_index_bits) - 1) <<
+ 			       global->group_index_shift);
+ 		if (base_addr != global->base_addr) {
 -- 
 2.53.0
 
