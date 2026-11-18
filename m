@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032437;
-	b=Ij+slKDJiQS91/x+etSbnJSTAv6HsZj7/VfOyeAiHXj9fTshdXU5hL2eLIKga26SMxXd
-	 lcF5JfKvIdBgksvVBizys66wW4EV2+d7kLM05J/6jhRns/ULXnRFRh5W/6ZkWUG23aFe6
-	 uTrrZA5d1rnlwlJLRKx2XoljNmgJ3UFXR5Q+mpw8vRv6uaZ6uBri/ORrjvw4Hg7CLYcMS
-	 gPruzHtZRMQ2BPvkM7UZOfb+FwuZp9aGpew4jWx/ydStKbCHxB/0dNzxdnRgGd1AKNq9F
-	 mHkEWJcD2AH45umJ/DpKeKISkcF6fput+6H0J6pKKM//r1WGl78ARrs5qolNMRFBLnQ==
+	t=1795032440;
+	b=faXyC5XPbR7TGwYGl7RiMmG+EHR7OYb6lxMWs9KYZ7BL7jStoWA3yOK3HOIhrzMbTmUR
+	 z+kXL9cSPOmlaaR8dJdDwEMvJyZvHapNMEA76Bsp04BNRdJZJUuigkFPvpNsdpyKvY1q8
+	 MKwQ25XNN83zIcSOWLIHH4vTweQYcTUoZ5A+OfX4/fmt66Vb8W0NAU9EVLUEX08qugfi7
+	 uftxWw5I8DL2/X7U624dx9A+6w0mo0MTxDI5PEhZr1pNRPX6srmh1sPlrh3vEdJM/93Rx
+	 cYQaQ7pYU/OW124b8gT7CmMlWJd4W8BsyWL5nUJFyCejiqMEG+hrXSc7LzYiIjekLxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Obk7sRXZSL0y0KFbeQUqavulBgcnvB39Ictseefd/A=;
-	b=ZQG6FQqT4SToAfr32k3QCPyqt8/mcLl+doOLu5emEvoKCWzqiannLWnTOGwrhAmAB9cq
-	 hU1ZRwBOVoXxR+nXzygL/boHIzdW5tAKNt1B/jRalBazQA9FAxHyVlY92zTBsNAsJ+8tq
-	 it6/i7z4/J13XLmzUUatjtjs4SpKi65YZTnoExSTsEqcTE2N2VPtGnqxf8TUaGJ6Jq1Xe
-	 97nz8PGZa6FVv6LEsZRYK2iIEAtTgJWGK+gxD65wh95CiOUGHU/nfXCJqegWxkzjjC/WE
-	 zHQOTEV+hy0f54NWYy4lSwVLRtG2tuWAFljiokLwaGx+XLthCCpryIIDbpZ7RNyqrYw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=a9HDKhYpL0FECJO2S8ORqPOvrJujxQX8R44nX976vv0=;
+	b=NQJqgsgbQNRTsgKWX+LUZeThBRMDnIznuYpEDbV6Xi/oHdos+t8WU9trJoNadNJDpHUS
+	 G3ZUUZfwEnxVrCNJpZ6swt/wrWLnNFIb6BiytBMI0lUatpL9/buVit8gXz9ukcJxq1xiL
+	 eWoSRS9inYpzVfp/s8EBairpVIGpCH8Y8+CTUTIQMh9Hzd1cahzGNQtGOd/0RhdHNhd4M
+	 sY4YNwJFBZtfYp20A3h7NYqg9u+S3xM1JXDNvJ/lvNmlxTCBtOdw6rNDf+0U3G/A7HX9K
+	 CXfxjsNNEWxUI2jNU+S1y04711+lK+uhq8Y1lF5Iqh0L+8RHNW4ir0/ZIcvUBxWbIeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZoxjZHhw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DyETOzoB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4F3606CB24;
-	Wed, 18 Nov 2026 20:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACC0606CB29;
+	Wed, 18 Nov 2026 20:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZoxjZHhw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3A11F000C5;
-	Wed, 18 Nov 2026 20:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DyETOzoB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788691F000D2;
+	Wed, 18 Nov 2026 20:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032437;
-	bh=3Obk7sRXZSL0y0KFbeQUqavulBgcnvB39Ictseefd/A=;
+	s=korg; t=1795032440;
+	bh=a9HDKhYpL0FECJO2S8ORqPOvrJujxQX8R44nX976vv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZoxjZHhwIQLae5xtieKr1r951l1apOsf+940HIm2vuiqZ+YNAFdxHloxe4kmtGII2
-	 qq9jMCrEgNu2FQZsxL6Mi87jbDjqoQngFrcUd0nzdfnEJycRZGuixSWlNqMaDU2nf2
-	 VG22fRqFsChAB/di/9sqNOmOBrXtruXuYbGy16iU=
+	b=DyETOzoBw9NYUn5UPsVQe3Tram1Rgnb1uV3Lo/R9X5/nEVh4FIPqnM65G74bl+XtX
+	 GbD++NVDgz53gGk+LilZ87LdZCzT/GdPnk3jPlTPdodAtXdcIQQgt216trGdgIvbZo
+	 HBpHn+IFnlLYzuFz3h7XtvxkmtlMbdUdrtjlbXIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1410/1756] netfilter: xt_dccp: handle reserved options as single-byte
-Date: Wed, 18 Nov 2026 15:58:57 +0100
-Message-ID: <20261118150105.340891080@linuxfoundation.org>
+Subject: [PATCH 6.12 1411/1756] nios2: ksyms: Declare __mulsi3 export
+Date: Wed, 18 Nov 2026 15:58:58 +0100
+Message-ID: <20261118150105.382226988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,57 +64,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 2edda78aa4eb04cd8f112a81897510ee0cdd7099 ]
+[ Upstream commit 2180d11e06fb56fd13643ae59964f144896870be ]
 
-The DCCP UAPI defines option numbers 3 through 31 as reserved.  Like
-Padding and Mandatory, these options occupy one byte.  dccp_find_option()
-only treats values below 2 as single-byte and interprets the byte after a
-reserved option as a TLV length.
+GCC may emit libcalls to __mulsi3(). As modpost is not aware that this
+function is provided through the linked in libgcc, it fails:
 
-This can skip a later option and invert an XT_DCCP_OPTION rule result.  A
-local production-hook fixture installed the same DROP rule for IPv4 and
-IPv6.  In three fresh boots per kernel, a target-only packet was dropped
-20/20 times, while adding reserved option 3 before the same target let
-20/20 packets reach the protected receiver.  The fixed kernel dropped all
-trigger packets in three fresh boots and preserved the normal controls.
+ERROR: modpost: kernel/locking/test-ww_mutex.ko: symbol '__mulsi3' undefined!
+ERROR: modpost: kernel/time/test_udelay.ko: symbol '__mulsi3' undefined!
+ERROR: modpost: kernel/resource_kunit.ko: symbol '__mulsi3' undefined!
+ERROR: modpost: fs/fuse/virtiofs.ko: symbol '__mulsi3' undefined!
+etc.
 
-Treat every option up to DCCPO_MAX_RESERVED as single-byte, matching the
-protocol definition.  Triggering requires
-CONFIG_NETFILTER_XTABLES_LEGACY, CONFIG_NETFILTER_XT_MATCH_DCCP, an
-option-based rule, and remote protocol-33 reachability.  The touched source
-is unchanged at 0c2669a9f4a1d607e7591ae50ccf3c432a0aff08, where the patch
-applies and builds cleanly.
+Make sure modpost can see the symbol from libgcc.
 
-Fixes: 1d3de414eb20 ("[NETFILTER]: New iptables DCCP protocol header match")
-Assisted-by: LLM
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610171933.J4bFOfL8-lkp@intel.com/
+Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_dccp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/nios2/kernel/nios2_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/xt_dccp.c b/net/netfilter/xt_dccp.c
-index 037ab93e25d0a..bab2fd6dba5fd 100644
---- a/net/netfilter/xt_dccp.c
-+++ b/net/netfilter/xt_dccp.c
-@@ -62,7 +62,7 @@ dccp_find_option(u_int8_t option,
- 			return true;
- 		}
- 
--		if (op[i] < 2 || i == optlen - 1)
-+		if (op[i] <= DCCPO_MAX_RESERVED || i == optlen - 1)
- 			i++;
- 		else
- 			i += op[i + 1] ? : 1;
+diff --git a/arch/nios2/kernel/nios2_ksyms.c b/arch/nios2/kernel/nios2_ksyms.c
+index 54f7b23df1bf5..33aa76f2eca10 100644
+--- a/arch/nios2/kernel/nios2_ksyms.c
++++ b/arch/nios2/kernel/nios2_ksyms.c
+@@ -39,6 +39,7 @@ DECLARE_EXPORT(__udivsi3);
+ DECLARE_EXPORT(__umoddi3);
+ DECLARE_EXPORT(__umodsi3);
+ DECLARE_EXPORT(__muldi3);
++DECLARE_EXPORT(__mulsi3);
+ DECLARE_EXPORT(__ucmpdi2);
+ DECLARE_EXPORT(__lshrdi3);
+ DECLARE_EXPORT(__ashldi3);
 -- 
 2.53.0
 
