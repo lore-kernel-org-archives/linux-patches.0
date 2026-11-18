@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038247;
-	b=XKIGk/vw5unn9AHyIikT1vSaYBzUNRtFSQix+PJHcYZPr0Vuwx7WBeR9/P36AKkAhPP7
-	 8RG3IHDaOvUt/l6wJOq2kmUVV5HQB6EQuJP59J5AIG/YBbNajFVGeHgYHGzdtahSZCIfK
-	 tncwg9K0haRRX4lZjnaIU5MJXcIbi1DZH5yVZwVJi/VYNqkFvb7cHTjWNF1zL91R0N6Cr
-	 27xo/ToHEUkBa7GIIxhuZNrN5RKxhULA3AMZJpJYHeg1dBs3hng7zbT0dr2UZPuq+e+eB
-	 C/C8W1VMYZ3neS3x2BiLLOtELaQVABmZCqbIKOIhMMc3SPZM+yZhFPXJcavfTI0T6Cg==
+	t=1795038249;
+	b=f6M4MpuxllWvMXMhzebuRWR4x2UYjfd3TpkqvMm6Sjrr2aj/LkKm0SJF/euHbZIsr3Po
+	 s1U3k05uxknDilAW9p0GOSoF7ECgkbSDLfvw4yTB1UCuI0fefjoxkV4wwOwnd4Dc90v3y
+	 SaiRdqab2ks2DojFFA+PX5rJ7lmdrzBrptAgx0bQJPGOn8cZkhnq6fUfD5SUQP3nr8qt7
+	 KEIZ6E5smuBQBij6gx+djLiY5Ypi+P/2pemI6yDiaWIcfVOG6GBklpV5ef4oWqZ6Qkam5
+	 JKWJsAnLcPfh1Re1Hb8vvqVRBzv8siSUAzbMaF6337tmNgHqLT/R4YxseerJq7s9OlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vnNum6WcG1DRiJ6foEAkIz4hpy7nN+e2k2h5atpIB0Q=;
-	b=npmmVugiaSJ+f+0XjjFqdQn4InWMuljlnOaDeetnj9XJucDYjK3WuM09LSNzXlEZ5woU
-	 WB4M6D+Ez7038rk2QDy6UO/1nKdDqfzY6m1HMoO7ETB2XrkxveCWUgo828Yq8JQxWkQip
-	 7htSKpAzsXRR7FLCeFK9+cKDhqN45g+DMQWNjCMa8Qub6AiWoCZGegnJGVXOoiQ6fDXJN
-	 b34u7aEWZcO9MQK6CVxodYrW/cb48zcQLSpSg8l/zH4m+9mrqOFQUC1YyQqQD+wde0dJU
-	 XjdHFBpvE5WRS3rejXQ/TJqn852ezUwYV6js3JPP2vj4Oc1k3uYUobCFQVPdvWE893g==
+	bh=hFEukBmmmdXuQxbnUWF0w4LdxB+j4p8yhybCXQvrIms=;
+	b=0YjVwkC40TCeZNcsPMQoJ7Y6oCvT3cJ9j/rGjioSS/JOJRsl5uQOthScX5VwkSmfOc6Q
+	 10kMhe4oGbTfHvLbZDn+zoIwXJAXjWDC+RhZJHwuG6AnnsR3c7c3g0qYwXZ4gVFpk+KYg
+	 Lypm5DVtUxWtcnjSKOteL86wOJw/N6HDCR9W5x0Wzwnd5URjyilGhJYLLdIWLeeJzC9/f
+	 qDl5JtA8cZMJS7g99ZWVfh5f8GDVLJQiQyU3lWrQWSS0Pv8U2CisfFzZDtHsINqDTca7h
+	 F+Vdt2VYj/mYgUyPrxlNLemPzjEK5AdHUpeC//8Z78jchmWN3SFX21Gm08DDAldOivw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O7/xgShD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIWyaYrv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4867606A31C;
-	Wed, 18 Nov 2026 21:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2D1606A325;
+	Wed, 18 Nov 2026 21:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7/xgShD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1871F000C4;
-	Wed, 18 Nov 2026 21:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIWyaYrv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A247D1F000C4;
+	Wed, 18 Nov 2026 21:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038246;
-	bh=vnNum6WcG1DRiJ6foEAkIz4hpy7nN+e2k2h5atpIB0Q=;
+	s=korg; t=1795038249;
+	bh=hFEukBmmmdXuQxbnUWF0w4LdxB+j4p8yhybCXQvrIms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7/xgShDSpTO1TcgGZKevycrW2wOk2uWT2hkEVzz6VqI+8lG8y6t6QUfZsgZUpWEM
-	 Pa57V7g7ntPnvMgWdlr+MW74ISkU7iArTNkvqJiZFzCQdwfPKhMYt5dRz/MHukW3Qk
-	 pi0FoQyMhc/QM7qk7uiT97Y9D/2m+Q/CWZR1yLe8=
+	b=UIWyaYrvMu0u/gAzbAQE2L4OjQgVmxZfDw0BPuIH7qrfYCkfKxuax/MTtKVuUOzjW
+	 rbYT0kq5jWQXXYxAbTBnSRSF3KHH365IGYJHCNxdP5jff7DtYsLRzdKP9vrSVGp375
+	 SO6gnbCuRXCf8cMbtw+CZqOqxZT77lyOT/qszQ/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1650/3318] sctp: hold shkey across socket migration
-Date: Wed, 18 Nov 2026 15:37:52 +0100
-Message-ID: <20261118150411.261900918@linuxfoundation.org>
+Subject: [PATCH 6.6 1677/3318] wifi: rtw88: usb: only let the frames a dozing station needs use the after-DTIM queue
+Date: Wed, 18 Nov 2026 15:38:19 +0100
+Message-ID: <20261118150412.114168090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,70 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit ad1320865b1826ffa2e81e37c49535751e81335c ]
+[ Upstream commit 185971f1b4eb4ea9059d76cf1a18f992eef998c1 ]
 
-sctp_sock_migrate() transfers queued DATA skbs from the old socket to the
-new one. skb_orphan() invokes sctp_wfree() during that transfer and drops
-the skb-owned shared-key reference.
+With the budget in place the high queue can no longer take the chip
+down, but ordinary chatter still competes with the frames a sleeping
+station actually needs. mac80211 marks every broadcast and multicast
+frame with IEEE80211_TX_CTL_SEND_AFTER_DTIM while a station dozes,
+mDNS and SSDP included, so under normal traffic the budget is spent on
+frames nobody waits for.
 
-If userspace has removed that key from the association, this can be the
-final reference. The following sctp_set_owner_w() then dereferences the
-freed chunk->shkey while trying to take the new owner reference.
+Do what the vendor driver does with its default "allow special" high
+queue filter: admit only ARP, EAPOL and DHCP to the after-DTIM path,
+the frames a station coming out of power save has to see; everything
+else goes out on its access category queue at line rate. The frames
+are classified the way rtw89_core_tx_btc_spec_pkt_notify() does it,
+from skb->protocol and the network and transport header offsets that
+mac80211 keeps from the netdev path; EAPOL is the control port flag.
+Frames the AP relays between its own stations arrive as ETH_P_802_3
+and are not inspected, they leave on the access category queue.
 
-Take a temporary shared-key reference before orphaning the skb and release
-it after the new owner has taken its reference. This preserves the selected
-authentication key throughout the ownership transfer.
+With the filter in place the page pool stays at 1803 through the same
+180 second storm, a DHCP flood still takes the after-DTIM path (and is
+then held by the budget), and join/ping cycling without power save is
+unchanged (10/10).
 
-Bug found and triaged by OpenAI Security Research and
-validated by Trail of Bits.
-
-Fixes: 1b1e0bc99474 ("sctp: add refcnt support for sh_key")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261009074244.3718-2-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 52ffeaa358d1 ("sctp: re-point retained control chunks on association migration")
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260910081716.769081-3-mehmet.fide@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 27 ++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 4f9978e4f268d..d974d5d147771 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -148,9 +148,19 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
+diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
+index 117bcb2659dc6..6eb85096d5d58 100644
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -2,9 +2,11 @@
+ /* Copyright(c) 2018-2019  Realtek Corporation
+  */
  
- static void sctp_clear_owner_w(struct sctp_chunk *chunk)
- {
-+	/* Keep the shkey alive until the new owner takes its reference. */
-+	if (chunk->shkey)
-+		sctp_auth_shkey_hold(chunk->shkey);
- 	skb_orphan(chunk->skb);
++#include <linux/ip.h>
+ #include <linux/module.h>
+-#include <linux/usb.h>
+ #include <linux/mutex.h>
++#include <linux/udp.h>
++#include <linux/usb.h>
+ #include "main.h"
+ #include "debug.h"
+ #include "reg.h"
+@@ -496,6 +498,27 @@ static int rtw_usb_write_data_h2c(struct rtw_dev *rtwdev, u8 *buf, u32 size)
+ 	return rtw_usb_write_data(rtwdev, &pkt_info, buf);
  }
  
-+static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
++static bool rtw_usb_bmc_needs_dtim(struct sk_buff *skb)
 +{
-+	sctp_set_owner_w(chunk);
-+	if (chunk->shkey)
-+		sctp_auth_shkey_release(chunk->shkey);
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
++	struct udphdr *udphdr;
++
++	if (info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO)
++		return true;
++
++	if (skb->protocol == htons(ETH_P_ARP))
++		return true;
++
++	if (skb->protocol == htons(ETH_P_IP) &&
++	    ip_hdr(skb)->protocol == IPPROTO_UDP) {
++		udphdr = udp_hdr(skb);
++
++		return udphdr->dest == htons(67) || udphdr->dest == htons(68);
++	}
++
++	return false;
 +}
 +
- #define traverse_and_process()	\
- do {				\
- 	msg = chunk->msg;	\
-@@ -9700,7 +9710,7 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
- 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
- 	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
- 	sctp_assoc_migrate(assoc, newsk);
--	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w);
-+	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
+ #define RTW_USB_HIQ_REFILL_INTERVAL	(HZ / 10)	/* one unit of budget per 100 ms */
+ #define RTW_USB_HIQ_BUDGET_MAX		16
  
- 	/* If the association on the newsk is already closed before accept()
- 	 * is called, set RCV_SHUTDOWN flag.
+@@ -538,7 +561,7 @@ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct rtw_usb *rtwusb,
+ 	else if (is_broadcast_ether_addr(hdr->addr1) ||
+ 		 is_multicast_ether_addr(hdr->addr1))
+ 		qsel = (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) &&
+-		       rtw_usb_hiq_take_budget(rtwusb) ?
++		       rtw_usb_bmc_needs_dtim(skb) && rtw_usb_hiq_take_budget(rtwusb) ?
+ 		       TX_DESC_QSEL_HIGH : skb->priority;
+ 	else if (skb_get_queue_mapping(skb) <= IEEE80211_AC_BK)
+ 		qsel = skb->priority;
 -- 
 2.53.0
 
