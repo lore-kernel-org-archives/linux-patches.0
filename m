@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046456;
-	b=eztctRG85rtTEZEMhriwKdrhq3Ej6HLG+z+lQFgyPJ/feUOPq9exc9QneIT9Qrow9+Xb
-	 BIQHE8B+GI/b+YFf+sVFAF034bZ47UHLkDogLSywtvcRMWaS5vyYaONCtwo9XzZKq6uMa
-	 ePXV9aigjfDK7zACPtyRypyvtKcw1apTEGuDG2IdWCdMJf4FRuRiYLqX34VTwmWwJnLJe
-	 9Ul3EWU7yFqoNmya00V0Ruy60xVGGK7gsvYeqqAL+pPImD8tCcw9CxJrjCLjUQuOg2zhF
-	 UO9kaOcr2cj6yjn/HKSYrkAa+5LtrkFKVFrFxKeLvEH7zOXljUHp0/G7ekMAgVWdU+A==
+	t=1795046458;
+	b=jGPbdLSKy6uKpMBhnIcAdG4I7i8w2yGozh4SR3lxJ8+1Kmmu9PXtDY2Y+JcF6I3ZO2ft
+	 6gPToGjxnEZ9/ZsTFaHSQj7VCMSpxKoNEWhaA++G25ekPlrynMtia9+Z/aOsXUs6F+3nO
+	 Q0NaSZkSFz01D7ngxlPlTDXa5EG0aqK1Tl2itk6+XNc0O2nszKWeCJrVRxQme/sFs8mk6
+	 Y3aD+xJJremPAxdsrvwNMGJqpwHlT1a062PQj0fmikqG4XQHZf3Lzx4sK7Mk4SWyomNxK
+	 TR+TJDpYlVqYSfTViABKRuIrBTUFR0RtLW+BJJI37Gw/SYd8NdvitZB3RMa50BF+TNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046458;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bt4MpU+kQ37lZI9Pu1LFfvqsMXCQtT7nbPjA3Lgn2J0=;
-	b=UmJH6We/fRU9yk0uSqlsPWfgsRzVmBMGndPrgJC6WFOcUdb+LqdAai15+GIT9/sOgdbp
-	 4ACis6I1p6wOtiImYihFMUDMSOeW6B+TrRyCNMY6WUJKJM1VuZZ+G2myjWnv5mA0n0YY8
-	 i4BoaMAXnxBIUYvP5My0McabHMrzJjXU9imkoyKxcVXTIkf9fjjAU3UlT7AT1nU96mP//
-	 izX/rpvAcoBYMVeV4iBMR33lH6p3ZSLwWY6qq0Z/rn0U+7fGQ/xoeVfvPxyt3zdvnqDS2
-	 ZQHvTCJaxKJScXspFwiSHpg8VfpCx13US2y3Wqsy7XyY1euf+dG/cS0AYQkkce65MqQ==
+	bh=w5sPtE0EG2g8KF++pHqERwRUISQP7TI7Sjbi9EqoJQ0=;
+	b=aGI4Ib/TQmL6Hi0HUn9jOR9f2MhbnEXgKzg/A2S8YsvXTB6k/1yNf4vtqpjKL3SHzDg2
+	 sEOAE9buQYxhduO4nwWH6F5fLUGO3SgqShXWpNik0u+1yihzJZOR5nleRBbOIlRM2kkBU
+	 0iXMWR4lD7UFhfYTEiQlSF+YKa/LJPOtscgth9jR9CIc+UudKW7fevwWvLXXi4QIODdVG
+	 DeMCwaDkKGKUy/LBBJcUXUlR+GcZMIHClJ0IIBukqaAjNNBQQo8TtMjLd0kNk9LOLimDi
+	 +s3plml2fCQYp/YmiDGgkJ2eBOf/Amwso7ggYY7sP61ANyhykwkVigYd2uemnTCp/5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W/8kEuuX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3zgrheb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10627606A320;
-	Thu, 19 Nov 2026 00:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3BC606A325;
+	Thu, 19 Nov 2026 00:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W/8kEuuX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634951F000C5;
-	Thu, 19 Nov 2026 00:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3zgrheb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313131F000C5;
+	Thu, 19 Nov 2026 00:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046455;
-	bh=Bt4MpU+kQ37lZI9Pu1LFfvqsMXCQtT7nbPjA3Lgn2J0=;
+	s=korg; t=1795046458;
+	bh=w5sPtE0EG2g8KF++pHqERwRUISQP7TI7Sjbi9EqoJQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/8kEuuXLlIZjbiIALwvyX2bmMA9B2dVY/1x13EL54/tU4665g0++GqqRRqcoD4Gk
-	 nVBBWCD+h9NvdZTH/ZysTk6J1YnsVyxGZdtxYuoYF4BuiVfeuY/M6yssYB1PWhS0Ec
-	 Ni3c+aw2LbeaLcAepauHdNUZGsuc7WyX0nE0kvbI=
+	b=K3zgrhebc+hBuOyA13ruh8GQKYthfThDETWnEQPIr6zGOg0bwNxG1PJYAkec0ibly
+	 AhCOIM7y+/3/teyv9KeYWkG6/wI21OKCTFQi0eQzTjwkXkHQ5Af32SuuDGmr+1VuQx
+	 2XSURVctGPV3CTsCKZAnRDqYJ4//hsOJpUUCyR6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Chris Mason <mason@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1250/2857] Bluetooth: hci_sync: re-enable legacy advertising on resume
-Date: Wed, 18 Nov 2026 15:38:04 +0100
-Message-ID: <20261118150246.557460266@linuxfoundation.org>
+Subject: [PATCH 6.1 1286/2857] mm/mmu_notifier: set ->mm only after mmgrab()
+Date: Wed, 18 Nov 2026 15:38:40 +0100
+Message-ID: <20261118150247.800803011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,91 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 737139f4157d302292a6b937d96922879ecabfa3 ]
+[ Upstream commit 5ad9e4b0f1104f5dbfb41125c34bb30ea6dc7a94 ]
 
-hci_resume_advertising_sync() never re-enables advertising on a
-controller without extended advertising.
+Radeon uses a non-NULL notifier->mm to decide whether to call
+mmu_interval_notifier_remove() when freeing a buffer object.
+__mmu_interval_notifier_insert() sets ->mm before validating the range,
+so a wrapping userptr range can leave ->mm set after insertion fails.
+Cleanup then tries to remove an unregistered notifier for which no mm
+reference was acquired.
 
-It restores HCI_ADVERTISING from advertising_old_state, then calls
-hci_schedule_adv_instance_sync(), which starts with:
+Set ->mm only after mmgrab(), once insertion can no longer fail. While
+we could fix radeon's code instead, setting ->mm on success only makes
+the code more robust.
 
-  if (hci_dev_test_flag(hdev, HCI_ADVERTISING) && !ext_adv_capable(hdev))
-          return -EPERM;
+Fix generated by an LLM and sent by Chris Mason in private.
 
-The flag it tests was set a few lines earlier by the resume itself, so
-the call returns -EPERM without sending anything. The return value is
-discarded by every caller, so the failure is silent: advertising_paused
-is cleared, HCI_ADVERTISING is set, and the controller is not
-advertising.
-
-Observed on a BCM43455 (no extended advertising) after an active scan:
-btmon shows the pause disabling advertising and no re-enable in the ten
-seconds that follow, the device does not appear in another controller's
-scan, and btmgmt info still reports "advertising" in current settings.
-
-Enable instance 0x00 directly in that case, the way reenable_adv_sync()
-already does for the same situation. Instances continue to go through
-hci_schedule_adv_instance_sync() so the software rotation loop is
-rearmed.
-
-This affects every caller of hci_resume_advertising_sync(), not only the
-scan path: address resolution changes, accept list updates, discovery
-stop, suspend/resume and the end of an LE connection attempt all leave
-advertising disabled on such a controller today.
-
-The resume does nothing when the controller is already advertising, as
-it is after directed advertising was started for a peripheral
-connection, so it does not replace that advertising.
-
-err is initialised because the extended branch leaves it unset when
-adv_instances is empty and HCI_LE_ADV_0 is clear.
-
-Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
+Fixes: 3506ff69c3ec ("drm/radeon: use mmu_interval_notifier_insert")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5.5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify description ]
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-29-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/mmu_notifier.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 28e7fa689aae8..453ed84d3e242 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2734,7 +2734,7 @@ static int hci_pause_advertising_sync(struct hci_dev *hdev)
- static int hci_resume_advertising_sync(struct hci_dev *hdev)
+diff --git a/mm/mmu_notifier.c b/mm/mmu_notifier.c
+index f45ff1b7626a6..fa5b60f51e463 100644
+--- a/mm/mmu_notifier.c
++++ b/mm/mmu_notifier.c
+@@ -915,7 +915,6 @@ static int __mmu_interval_notifier_insert(
+ 	struct mmu_notifier_subscriptions *subscriptions, unsigned long start,
+ 	unsigned long length, const struct mmu_interval_notifier_ops *ops)
  {
- 	struct adv_info *adv, *tmp;
--	int err;
-+	int err = 0;
+-	interval_sub->mm = mm;
+ 	interval_sub->ops = ops;
+ 	RB_CLEAR_NODE(&interval_sub->interval_tree.rb);
+ 	interval_sub->interval_tree.start = start;
+@@ -932,8 +931,12 @@ static int __mmu_interval_notifier_insert(
+ 	if (WARN_ON(atomic_read(&mm->mm_users) <= 0))
+ 		return -EINVAL;
  
- 	/* If advertising has not been paused there is nothing  to do. */
- 	if (!hdev->advertising_paused)
-@@ -2767,13 +2767,19 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
- 		 */
- 		if (hci_dev_test_and_clear_flag(hdev, HCI_LE_ADV_0))
- 			err = hci_enable_ext_advertising_sync(hdev, 0x00);
--	} else {
-+	} else if (hdev->cur_adv_instance) {
- 		/* Schedule for most recent instance to be restarted and begin
- 		 * the software rotation loop
- 		 */
- 		err = hci_schedule_adv_instance_sync(hdev,
- 						     hdev->cur_adv_instance,
- 						     true);
-+	} else if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
-+		   !hci_dev_test_flag(hdev, HCI_LE_ADV)) {
-+		/* hci_schedule_adv_instance_sync() rejects instance 0x00 while
-+		 * HCI_ADVERTISING is set, so enable it directly.
-+		 */
-+		err = hci_start_adv_sync(hdev, 0x00);
- 	}
+-	/* pairs with mmdrop in mmu_interval_notifier_remove() */
++	/*
++	 * Pairs with mmdrop in mmu_interval_notifier_remove(). Drivers take a
++	 * non-NULL ->mm for "registered", so set it only with the reference.
++	 */
+ 	mmgrab(mm);
++	interval_sub->mm = mm;
  
- 	hdev->advertising_paused = false;
+ 	/*
+ 	 * If some invalidate_range_start/end region is going on in parallel
 -- 
 2.53.0
 
