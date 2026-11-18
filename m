@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032160;
-	b=qxJFoqhoU+EPXWH0FYjPVKiviFAxT91RXN51NYrt0+uBILpcZ1/Szz0+CJnKS3+WU+zS
-	 njpuGnUvW9KZdH9uwn5l1MupdTNAIy/EXCm64XPZPz+3YEPst/vQPEUfy4hNKPbg37YXB
-	 kO76+qPToPe6R6SJ9P23ZUZnCYFzDOPFV+QLnQIqZUaPtmelf2RIiKGwOGo2qAJhXvGHS
-	 lJkDaftcbZRwSCdyW88Ot+a7nEuEQl7XZkTXFdg6e/74pdNboCAiq68TFRyiKouMqSmbH
-	 5eN5Pe+QsL2sRbN971bLpy1imr1rvGodE0I0/OdQw5jE7GadGGuB1MoqQE0EzqmzvZA==
+	t=1795032162;
+	b=A2S528EsDz2+17X0A3LGIfC4eY45EgVDrR/OyvcDhq4Ce8DR4PgcaOs62xoGMYvzm67i
+	 CeKBxBJmE+dOK7rps+bE2V1oo2QS+ZoZqKOLILOCJh4MX8mdMoJ7hqvY+NVnJTkuGe8wx
+	 CQFiMAdcirQtUE32o75igeDid8SpkToeHndBZRL1SSTKLiGv5wz1aDuv0ma6kpvdAh3sK
+	 G99xRNWzdu5lUPenqjJloMO72KDX1Y6urDSCvHI95mzuG9RslqEBfky6Q8MKHVtip7uBU
+	 tiBcrKrPJqNH0ersifNfSGfXyJZtm/BFuVFLwNjSgLtqjxGNNJ4ICbonGxQs/Zlr2EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EgS61Fo9lInjYCzs/6IS4mPsStiGXH6Z+CK4SnqZWUo=;
-	b=evn4UEOfk5jUo9VB3dsVIRJ7CSsscfHrreWoC3dbbCCkuvf/zOixlCJ+Vyz6s4C5N/Ef
-	 yvjRRWHAeQIfG9fd0TSxIIXxcPU1hBXloJtZOM0NGrnE+XK8jjURcPAYO2VB1GVnm1vIz
-	 X2Nvw6fSEZr63hFMPhYaCqBooIt0L+qmKSmSJIH9f/YTLWz6e9wstiRUTG/0M/EcQ/0mo
-	 0kZkV10jPzbwLgWMrDt6l5m45ohRKoCguzDkCQkE6a8wI1nQp7ruRnAeNwYOhuqDet3BK
-	 p/Vv4GVYRelp7WMDTtitqHXh/ctl8XNmdhVVeAdtsprSrvcUid6Ea4N0OhoVWBbv80A==
+	bh=DRtptG8R3M90ihd5037oMoXcix7Mj5HqsX5oOCwniN8=;
+	b=Q52Mhf02MGiXBcs01GLEUPEer8qbD9HoWgJOIohIyv5pN2Na/OM/c95XQFr6CyQVS9ei
+	 Z98e964lIHylHgvADBX1EBvnInhCrG+c43xgIMBMroQD5GcYbKV1tqpqPs7cvNe7Y0tFc
+	 daIJ5KxbbIwRJUlYuI0hnLw1r7+eMpGLXwLOeW+lAABdpV/p7++kgCheXIRRcquKDIksJ
+	 l8vv5XfudiScCzqEztlUa2+7uzSsXDlmnH2EWFQzCZ4+9QTo7TiXBZuxUiEk3Xx28eJzA
+	 opV1EyJmXyL6BPjGq05bbf1A/2eg1QXL1bvYvuAOBctYeMCs//PE2qHJo34dudX7mSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buLO3oXZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R83QAuIU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE63606A32A;
-	Wed, 18 Nov 2026 20:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D488D606A31C;
+	Wed, 18 Nov 2026 20:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buLO3oXZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E611F000C4;
-	Wed, 18 Nov 2026 20:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R83QAuIU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362F01F000C4;
+	Wed, 18 Nov 2026 20:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032160;
-	bh=EgS61Fo9lInjYCzs/6IS4mPsStiGXH6Z+CK4SnqZWUo=;
+	s=korg; t=1795032162;
+	bh=DRtptG8R3M90ihd5037oMoXcix7Mj5HqsX5oOCwniN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=buLO3oXZFT018c8lcvcLjnVJ7h2+sszd+6y+l/iQKWXqEGPH9KFgA5HED5BTer9o8
-	 58GMVe5D0NQG4s5+VDGX5NGuZsscoxWIRXVXNJjt1oUZtNZO45V6WA8ThTuzZa7H39
-	 M0h0o3Gf4ly/6qqYRXC5sX7zQdnmfD6Kvd4+EPvQ=
+	b=R83QAuIU2Q4Ew94y55d3F3pbI68Fz4f+B7ZGZZG2sNMNaXjYd2+d8OlIB1RH3Kvrr
+	 jeOQQpcyX6JQS8tMyHdVFvPqDeNRexTFfEuonpGRFBGjzblqYcz7ssmar/WImawwKd
+	 xAUY5DyuJDFIIj9aFRc4BshGEI4ZK/U5lLpQfXlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1312/1756] ASoC: mediatek: mt8195: Fix ETDM startup error handling
-Date: Wed, 18 Nov 2026 15:57:19 +0100
-Message-ID: <20261118150101.699503910@linuxfoundation.org>
+Subject: [PATCH 6.12 1313/1756] ASoC: mediatek: mt8195: Fix HDMI TX startup error handling
+Date: Wed, 18 Nov 2026 15:57:20 +0100
+Message-ID: <20261118150101.737251330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,105 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 8e67c67f3fd2505b8b7a9dd38d8dabe47273490d ]
+[ Upstream commit 1d6f1785d90334b66809a57ebfc40a5b1cfa80ec ]
 
-Check and propagate errors when enabling the ETDM MCLK and clock
-gates during startup.
+Check and propagate errors when enabling the clock gate and MCLK
+during HDMI TX/DP TX startup.
 
-If enabling a clock fails, disable the clocks that were already
-enabled to keep the clock state balanced.
+If MCLK enabling fails, disable the clock gate that was already
+enabled before returning the error.
 
 Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
-Reviewed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-14-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261014112752.683032-15-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 50 ++++++++++++++++-----
- 1 file changed, 40 insertions(+), 10 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-index db84f9e34114c..d6100a6aa7757 100644
+index d6100a6aa7757..66f8468e534a8 100644
 --- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
 +++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-@@ -1580,36 +1580,66 @@ static int mtk_dai_etdm_startup(struct snd_pcm_substream *substream,
- 	int cg_id;
- 	int mst_dai_id;
- 	int slv_dai_id;
--	int i;
-+	int i, ret;
+@@ -2326,13 +2326,25 @@ static int mtk_dai_hdmitx_dptx_startup(struct snd_pcm_substream *substream,
+ 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+ 	int cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(dai->id);
++	int ret;
  
- 	if (is_cowork_mode(dai)) {
- 		mst_dai_id = get_etdm_cowork_master_id(dai);
- 		if (!mt8195_afe_etdm_is_valid(mst_dai_id))
- 			return -EINVAL;
- 
--		mtk_dai_etdm_enable_mclk(afe, mst_dai_id);
-+		ret = mtk_dai_etdm_enable_mclk(afe, mst_dai_id);
+-	if (cg_id >= 0)
+-		mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
++	if (cg_id >= 0) {
++		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
 +		if (ret)
 +			return ret;
- 		cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(mst_dai_id);
--		if (cg_id >= 0)
--			mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+		if (cg_id >= 0) {
-+			ret = mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+			if (ret)
-+				goto err_disable_mclk;
-+		}
++	}
  
- 		mst_etdm_data = afe_priv->dai_priv[mst_dai_id];
- 
- 		for (i = 0; i < mst_etdm_data->cowork_slv_count; i++) {
- 			slv_dai_id = mst_etdm_data->cowork_slv_id[i];
- 			cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(slv_dai_id);
--			if (cg_id >= 0)
--				mt8195_afe_enable_clk(afe,
--						      afe_priv->clk[cg_id]);
-+			if (cg_id >= 0) {
-+				ret = mt8195_afe_enable_clk(afe,
-+							    afe_priv->clk[cg_id]);
-+				if (ret)
-+					goto err_disable_slv_clk;
-+			}
- 		}
- 	} else {
--		mtk_dai_etdm_enable_mclk(afe, dai->id);
-+		ret = mtk_dai_etdm_enable_mclk(afe, dai->id);
-+		if (ret)
-+			return ret;
- 
- 		cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(dai->id);
--		if (cg_id >= 0)
--			mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+		if (cg_id >= 0) {
-+			ret = mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+			if (ret)
-+				goto err_disable_mclk;
-+		}
- 	}
+-	mtk_dai_etdm_enable_mclk(afe, dai->id);
++	ret = mtk_dai_etdm_enable_mclk(afe, dai->id);
++	if (ret)
++		goto err_disable_cg_clk;
  
  	return 0;
 +
-+err_disable_slv_clk:
-+	while (--i >= 0) {
-+		slv_dai_id = mst_etdm_data->cowork_slv_id[i];
-+		cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(slv_dai_id);
-+		if (cg_id >= 0)
-+			mt8195_afe_disable_clk(afe, afe_priv->clk[cg_id]);
-+	}
-+
-+	cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(mst_dai_id);
++err_disable_cg_clk:
 +	if (cg_id >= 0)
 +		mt8195_afe_disable_clk(afe, afe_priv->clk[cg_id]);
-+
-+err_disable_mclk:
-+	mtk_dai_etdm_disable_mclk(afe, is_cowork_mode(dai) ? mst_dai_id : dai->id);
 +
 +	return ret;
  }
  
- static void mtk_dai_etdm_shutdown(struct snd_pcm_substream *substream,
+ static void mtk_dai_hdmitx_dptx_shutdown(struct snd_pcm_substream *substream,
 -- 
 2.53.0
 
