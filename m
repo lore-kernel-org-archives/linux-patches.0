@@ -1,55 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021430;
-	b=121kGAtl0tXUAMfaV3+OobmisfZQMhVn1mMvvH+Vky/RmnFrysuz6FCfM8aY60zsySwB
-	 Dtdafs+HA9Ph931lEmpRSSPFnOcnxA+BJe+nGlmQkWm15U1Wgdnm1W3Cigt1TpdM7QAOU
-	 RwXOy+Mz5Arzj8lTuIHaf7QGz1XI5QRT7PuQuP4wLTldEE4O9+GTOZFDxH+xQDc7CRbJ3
-	 Hz+7ZaT7b0U1kiGli2s4ywNzqoeTHLMPATSRt7sRcA7WtEEeCQy5i0KWGteBDChidcyff
-	 ykIuDFr8eLdPZwdxv0D6ceUP+BS5vUQ+QKyikXkC6aD/qbkZl8sd1Y6oFC5IrbOb0Sg==
+	t=1795021433;
+	b=SGLUB67KOxYUfDRx9jx1aImTSsy15JC5+MuYuyvFV+mh0lHq7roiJLX13HxLmi1q6l+Q
+	 HGLMCJu/2+cU5/gWYvwBcmeDpg9FruPT/XZktUvJ52uFAMEp5d0U+z4y0x1dA1w09nIjE
+	 9rCQlc+OKC7q0/itNQEJ5TwIxyq2qFCUpZgkBhYr9jtgCfa2p35wXXsNc+SO+1xrThdKp
+	 GBKqritmTeFiyppop8PxJ0uczxzxGcaF7ldBqn5WuTNULyI9kVttBzKAbP7JoQIMHpnhm
+	 I4O9ExZZEvRh22WtrYETn8VzCzmYMXdMHjERUrJyf42MBP9ZB0Cm/sywdaGIgXvJsAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MCQwDfcAH4A0EQ7uhjMEZjqS/BWXAslDKlBi9iDm3Sg=;
-	b=LpYV8JTcCc6/YYrRK5Rccswlq0llwqvyDeoSv+XjQi0Qt0DOZvQG14o6K150LhXs5gUg
-	 /MUpea644c1q0yey5QglIHcUXqwq8YHJwfUntx+zhuu40+1WViQAjdlFFMYP7a6ZPgcgO
-	 u04RrmWXrJ5hYbsu4jutsUDkrvtv+9I4qRg0L3xxoq1BkzTlCljWcyuMQT6olpnjfD+rF
-	 HUvBsFAMLZ8aBtfS+ZBIqOpOAkx3E0AjZYrDRK6DRgjSSpSx6+2a5ZBr9DuFrIf4l9K1r
-	 2Ka5UunI0UvJMdnng1g6MClaLgPfzduH+G77MOoqTiRKM8im7wwxNP+i+37qGV00UAg==
+	bh=Gi0eR4rURcw1GGBMFWVp+W0z0c+Lq1XseNb3UkNwWOA=;
+	b=Q2+oYAdBLKGPE+HXN8FsqiBiq3Sha2kydSw2fA8QuoVb0CF/7JQuTGki2yfnfRRZAaKe
+	 SYsf6bx4k0EYM+wxXJNmPqGHwEaf6wo2FWCPGE9gTrvIzbYSE4amHmyiPJ8BpzOD9mP5c
+	 AlSp9sw5L1vkf0OBRq+B7W0EzzsIZh+2/FoTao6ONqV+Et0HCkpa353EKTHeWDwZ/sHHW
+	 yPSOiIfTTAUh62J8DVlIpA1BI8LsglN5wdw7yhPX/uxJuifFd51ttTYrlOSJXsGKpciRP
+	 9YO8Lvw4zcRWBVb30r/GsxMZi4yIPE91dmKb6u1+zQjyLyaX3kaLaMZkVNFPRtA4kXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZVIjZ6bQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNTsLUwz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823BB606A31C;
-	Wed, 18 Nov 2026 17:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B62560A2627;
+	Wed, 18 Nov 2026 17:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZVIjZ6bQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44AC1F000CA;
-	Wed, 18 Nov 2026 17:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNTsLUwz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668991F000C8;
+	Wed, 18 Nov 2026 17:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021430;
-	bh=MCQwDfcAH4A0EQ7uhjMEZjqS/BWXAslDKlBi9iDm3Sg=;
+	s=korg; t=1795021432;
+	bh=Gi0eR4rURcw1GGBMFWVp+W0z0c+Lq1XseNb3UkNwWOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZVIjZ6bQF6Nnbmvkui7BHl6vgkoziXvFwcy4jLkmEtwiY+8yojlNtTcm6CosssQsG
-	 eO/hR7yGQ2wwc9zWfFJC/wjNHcnl5cHyhRysJ2c77Pp/MhMud+sINSKNOHacU0U8O5
-	 nqmgS5BbYRm8D1WgAV1LsKYNXBxwzbNvW7YXdY8M=
+	b=WNTsLUwzO4LVYTXH43mbJXc96hhW7Hq26SqDOTdDihncOZRwKkpQDQOFfQZ88zA50
+	 wkoeIsOI6JAeKikhTTDXmUE+s4FzCAFY9JRad8lK4+GRYAleuhO9RhCcL16L/EZ2zf
+	 i/8IzBo1vNMra10rpggIPT6+/VMb+tXWzovbIUqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
+	Kees Cook <kees@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2303/2651] ocfs2: reserve xattr value tree metadata only once
-Date: Wed, 18 Nov 2026 15:59:03 +0100
-Message-ID: <20261118150408.107728694@linuxfoundation.org>
+Subject: [PATCH 7.3 2304/2651] ocfs2: initialize status waiters before publishing them
+Date: Wed, 18 Nov 2026 15:59:04 +0100
+Message-ID: <20261118150408.217627860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,119 +76,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 5365f1f417b36627f825aacf9844ae24b671b525 ]
+[ Upstream commit f6bfa6c458288d72948af95391b205f3eb775721 ]
 
-ocfs2_calc_xattr_set_need() asks for the new value's extent tree twice
-when it replaces an inline value smaller than a value root with one large
-enough to be stored outside.  The "stored outside" branch reserves the
-tree and then falls through to meta_guess instead of going out:
+o2net_prep_nsw() publishes its stack waiter in nn_status_idr and
+nn_status_list under nn_lock, then initializes the wait queue and
+completion status after releasing the lock.  A concurrent disconnect can
+find that waiter through o2net_complete_nodes_nsw() and call wake_up()
+before the wait queue has a valid lock and list head.  The sender can also
+overwrite a completion status with its initial value.
 
-        if (!ocfs2_xattr_is_local(xe)) {
-                ...
-                xv = (struct ocfs2_xattr_value_root *)
-                     (base + name_offset + name_len);
-                value_size = OCFS2_XATTR_ROOT_SIZE;
-        } else
-                xv = &def_xv.xv;
+Initialize the wait queue and status before publishing the waiter.
+nn_lock then orders publication against completion, and no reader can
+observe a partially initialized object.  Leave the IDR allocation and its
+failure handling unchanged.
 
-        if (old_clusters >= new_clusters) {
-                ...
-                goto out;
-        } else {
-                meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
-                ...
-                if (value_size >= OCFS2_XATTR_ROOT_SIZE)
-                        goto out;
-        }
+A controlled case-modified test kernel used a synthetic connection to
+enter the real send path and overlap publication with disconnect.  The
+candidate completion and wake-up code were unchanged.  Its Oops includes:
 
-On the fall-through xv is def_xv, so what gets added here is the two
-blocks ocfs2_extend_meta_needed() wants for an empty value root -- and
-both sides of meta_guess reserve that same tree again.  The create side
-has done so since commit 3ed2be719eb9 ("ocfs2: allow for more than one
-data extent when creating xattr"), which ported this reservation to the
-create case without noticing it was already on the way in, and the
-existing-block side since commit 0cdc7dde00ec ("ocfs2: fix missing
-metadata reservation for large xattrs").  Both were chasing the same
-RESTART_META failure in ocfs2_xattr_extend_allocation(), for xattr create
-and then for xattr update.
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: 0010:__wake_up_common+0xa0/0x1f0
+  Call Trace:
+   <TASK>
+   __wake_up+0x36/0x60
+   o2net_complete_nsw_locked+0x222/0x370
+   o2net_set_nn_state+0x917/0xea0
+   o2net_disconnect_node+0xd0/0x190
+   o2net_validate_control_write+0x454/0x500
+   full_proxy_write+0x11f/0x180
+   vfs_write+0x25a/0x1010
+   ksys_write+0x111/0x200
+   do_syscall_64+0x114/0x620
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Modules linked in:
 
-ocfs2_init_xattr_set_ctxt() hands the total straight to
-ocfs2_reserve_new_metadata_blocks(), so the surplus is two blocks held for
-the whole transaction.  A setxattr that would otherwise fit can come back
--ENOSPC on a filesystem whose metadata allocator is nearly exhausted.
-
-Move the reservation into the branch that stops there, leaving meta_guess
-as the only place that reserves for a value tree the fall through is about
-to create.  The paths that do go out keep reserving against the value root
-they already have, which for an external old value is the on-disk one and
-so can legitimately ask for more than two blocks.
-
-Both sides of meta_guess have to come out even on their own now that the
-copy covering for them is gone.  The existing-block side only started
-reserving the value tree in the commit this one is tagged against.  The
-create side has reserved the tree since 3ed2be719eb9, but only the tree:
-the block ocfs2_create_xattr_block() claims came out of the same two, and
-on the fall-through it was the duplicate removed here that made up the
-difference.  So "ocfs2: reserve metadata for a new xattr block and its
-value tree" has to land first -- without it the create side reserves 2
-where 3 are needed and the value tree is back to RESTART_META.  That one
-fixes a shortfall of its own on the path that reaches meta_guess directly,
-where there was never a duplicate to cover it, so it is worth taking
-alone; this patch is not.
-
-Link: https://lore.kernel.org/20261010113454.1420939-4-joseph.qi@linux.alibaba.com
-Fixes: 0cdc7dde00ec ("ocfs2: fix missing metadata reservation for large xattrs")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0066-v1-437a0422801b292a2879@gmail.com
+Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/ocfs2/cluster/tcp.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 316418e2d909f..a061cd891867f 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -3474,12 +3474,21 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
- 			credits += ocfs2_remove_extent_credits(inode->i_sb);
- 			goto out;
- 		} else {
--			meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
- 			clusters_add += new_clusters - old_clusters;
- 			credits += ocfs2_calc_extend_credits(inode->i_sb,
- 							     &xv->xr_list);
--			if (value_size >= OCFS2_XATTR_ROOT_SIZE)
-+			/*
-+			 * The old value occupies at least as much room as a
-+			 * value root, whether it sat outside or inline, so the
-+			 * new root fits where it was and no new xattr block or
-+			 * bucket is needed -- only the metadata to extend the
-+			 * tree hanging off it.  A smaller one is replaced
-+			 * outright, which meta_guess below reserves for.
-+			 */
-+			if (value_size >= OCFS2_XATTR_ROOT_SIZE) {
-+				meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
- 				goto out;
-+			}
- 		}
- 	} else {
- 		/*
-@@ -3531,6 +3540,10 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
- 		 * Reserve metadata for the new xattr's value extent tree.
- 		 * The not_found path above adds credits for this tree but
- 		 * omits meta_add, leaving meta_ac NULL for large values.
-+		 *
-+		 * This is all of meta_ac on this side beyond the xattr tree
-+		 * above: no xattr block is allocated here, and a new bucket or
-+		 * index block is paid for out of data_ac.
- 		 */
- 		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
- 			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
+diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
+index 0ba26bd2eba11..0eaf2c4a6989e 100644
+--- a/fs/ocfs2/cluster/tcp.c
++++ b/fs/ocfs2/cluster/tcp.c
+@@ -301,6 +301,11 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
+ {
+ 	int ret;
+ 
++	/* Initialize all completion-visible state before publishing the waiter. */
++	init_waitqueue_head(&nsw->ns_wq);
++	nsw->ns_sys_status = O2NET_ERR_NONE;
++	nsw->ns_status = 0;
++
+ 	spin_lock(&nn->nn_lock);
+ 	ret = idr_alloc(&nn->nn_status_idr, nsw, 0, 0, GFP_ATOMIC);
+ 	if (ret >= 0) {
+@@ -311,9 +316,6 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	init_waitqueue_head(&nsw->ns_wq);
+-	nsw->ns_sys_status = O2NET_ERR_NONE;
+-	nsw->ns_status = 0;
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
