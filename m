@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059174;
-	b=DcEh2IBAWJ8w6Pz+ieGL4Cbfj6PvQGrkkOtByOeUsRpF8E83kLXLZU//MZRegYz355nN
-	 E1ixSS6qVRJ5yF9il8P2ZBU+jcXhKXGgKTR1gi+998mzOlQkMVdF9O+6v/D7VpVvzFPOD
-	 FnPBOa3am67ySjyFg/jEXZD6UeC7tYC7pooB6nVuFwUMAKx6HNMkDY/QtgG7WN4+N2BBV
-	 Ankz9YdkUebxIo6N4sQ/boN19CQ3oM9PCN0dyMMyFoN8Hp4H9Xy9yiQMZMCtqIEvV6Qf3
-	 orS0rnwjj46QKEGCaOgYAv/mQ1M6TLAqDPVURtZiYQsIuwxAylWjB71DIySB8z6lSFA==
+	t=1795059177;
+	b=LhI6H/N0LZVQZm4T3ZGT4jdFZAo5oGqkbTK9WZcq7jO6kXlTY1G8JiMyh8TukucYbjdI
+	 ZeGJj0DzJWkJv+IDAe8aukxuxc6K59RevzETF2h27bF25CUKpG7fKg1d2WJbS8gD3lx5h
+	 RL4+u4P+rD+OLalKEWe48zka/mbDkkXbESsMWGtbG/bVvvOvc9F3qQmyZhRYF5Yv7CycQ
+	 XM9xO/I7tE7CtGxxf7hc2gVd6av84B5DkOpoYyH6IT8L6620vi+Mk846cWuVLl7lmnW56
+	 VIWdvRUZ0g28bSpJUIoLxwYv7Hvbjpa4/xlF1XeMpe+WumzVoEDhOGLf8OrzOHPUGuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ceNVYRvHw0ULzpCgOsbhDInxQ1g4L740tp4Sl6k8Fuw=;
-	b=dFmqbXoTouc2WNdUJhKu3Pi6ataPJmQ+Ez6kP0aTJEWgMJuFekEic/kfGTmWjElLHjGK
-	 ipeUY7P6ElWmHLwNoGanTe9ItS4pLlxLU419scxO57AIT1kWlrr4c4eKfJFAxVvu5fbVb
-	 HGjbqab/8zgfQVMGOn7E3klYdnmV5mepxIdczkRmsnVCXLw4bLA1h0ePr866Qb+5IrEzd
-	 v5nipoyxKbgQK41khDl5/G5GugUCHqCnsZ3kDF388CXI7TF//kKVGIXo33L9MUUNTIR4h
-	 mVTE0xzWFVHpWPQ5t/MPgwK6L6r+GFy7X+ljcVmx18VP47Wc149o9gQ9Kkr2oY8wHvA==
+	bh=rsW0jcIBzk81rj9G0Rf8M2ukpBcfljbq8iHTyzlKJL4=;
+	b=lwO2HkZtm+kN/4Rl83U2c5JXzI+Eb69GgD2QDnuUP+QYtYeAFK+XLMPpsQQGTjumeNrP
+	 SWJGk1A5P8vDrYPqALR7Ubk/tlicyuy3NlVRdu624a8LyDlwF5QfmiCCMzNxBlcHHKYRe
+	 RlesgfVsAYYzv6z37Os0ZfnddASahc9+4sTN12T82CVLHOefsPsiUS9LNbxBn3Hw1RMDo
+	 tchAhbcIpQhg+m8TUFvqhf52HOOVDoAsNnF6rc677iUm0CsCgPHnLLWt4UJCxXkQpVrax
+	 ZM1t1G9QPFHsa/1wxbNzT1eyrcgXC4+La0Z4wEa1vsskSI1TtkpEp91i7GHU8/Iia+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0zWhrd4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3askmwZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60093606A33D;
-	Thu, 19 Nov 2026 03:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42098606A31C;
+	Thu, 19 Nov 2026 03:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0zWhrd4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAED1F000C4;
-	Thu, 19 Nov 2026 03:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3askmwZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D4A1F000C4;
+	Thu, 19 Nov 2026 03:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059174;
-	bh=ceNVYRvHw0ULzpCgOsbhDInxQ1g4L740tp4Sl6k8Fuw=;
+	s=korg; t=1795059177;
+	bh=rsW0jcIBzk81rj9G0Rf8M2ukpBcfljbq8iHTyzlKJL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0zWhrd4nLU12lgtrul+g7zI/6D7fhU44s8s0w7QnUkrR2Y+nGUDV3+XvfA8u/2gu
-	 r2BUud94aKIHH3ERO21TOIrklrzFnYqv5XKle7iR2QpX1mwTYgIq72+Ax4bvnu7c/Q
-	 ndDWUGTXlvI/C3WxPNzgDKxeCdI0XDCc8uKcEJIw=
+	b=c3askmwZtMQteuwQS8kLOMRutQuORIET16hHhy0XXsgt6DkXHLX1UBOjd9l8XEbZ+
+	 LgLL1D7XgoawSrLiKL3oeqwPJicF+9xo33rFpzlbjEP//UXtIuHS1OlKgf6ZH6nBiJ
+	 JtbokT8aS4U0Tt7Jc/UYV/3UyZ+e5RWwxvcbecK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	James Clark <jjc@jclark.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0711/1848] ocfs2: keep locking_state within the cluster connection lifetime
-Date: Wed, 18 Nov 2026 15:45:49 +0100
-Message-ID: <20261118145945.644944390@linuxfoundation.org>
+Subject: [PATCH 5.10 0747/1848] net: ethernet: ti: am65-cpsw-nuss: Enable timestamping of unicast PTP packets
+Date: Wed, 18 Nov 2026 15:46:25 +0100
+Message-ID: <20261118145947.763204597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,130 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit 5bdef466851e39ba752634cbea68e5ea24ccfb24 ]
+[ Upstream commit 6887a8f98244ba4c0fbe2d2461b9b8f8a300e326 ]
 
-The locking_state reader calls ocfs2_dlm_lvb() through the selected
-cluster stack.  Its debug-object reference keeps the tracking list alive,
-but does not keep that stack selected without a cluster connection.
+On a BeagleY-AI (J722S), ptp4l as a unicast master (unicast_listen) logs
+"received DELAY_REQ without timestamp" for each unicast Delay_Req, and
+its port goes to FAULTY after "timed out while polling for tx timestamp"
+for the first unicast Sync.
 
-DLM initialization publishes the file before establishing its connection,
-and DLM shutdown drops the connection while the file still exists.  Both
-the mount error unwind in ocfs2_mount_volume() and ocfs2_dismount_volume()
-remove the debugfs subtree only after ocfs2_dlm_shutdown() has returned.
-Whenever the disconnect releases the last stack reference, which is the
-case for a failed mount and for any unmount without a pending hangup, a
-concurrent reader dereferences a NULL active_stack:
+am65_cpsw_nuss_hwtstamp_set() does not set the TS_UNI_EN bit (bit 24) of
+the port's TS_CTL_LTYPE2 register. According to the TRM (J722S TRM
+SPRUJB3D, 12.2.1.4.7.13.5.1 Ethernet Port Receive Event and
+12.2.1.4.7.13.5.2 Ethernet Port Transmit Event), this bit must be set
+for the port to timestamp PTP event messages over UDP sent to a unicast
+address; without it, only messages sent to the PTP multicast addresses
+selected by the TS_107 and TS_129 to TS_132 bits are timestamped. TI's
+netcp_ethss driver for the Keystone 2 Ethernet switch, which has the
+same timestamping registers, always sets TS_UNI_EN.
 
-  Mount error unwind                  Debugfs reader
-  ------------------                  --------------
-  ocfs2_mount_volume(): out_dlm
-    ocfs2_dlm_shutdown()
-      disconnect last cluster
-        clear active_stack
-                                      read locking_state
-                                        ocfs2_dlm_seq_show()
-                                          ocfs2_dlm_lvb()
-                                            dereference active_stack
-  fill_super(): out_debugfs
-    remove debugfs subtree
+Set TS_UNI_EN along with the other bits. With this change, ptp4l in the
+same setup gets timestamps for the unicast Delay_Req and Sync messages.
 
-Publish the debug files only after the connection and the mount lock
-resources are initialized, so a failed DLM initialization has no debug
-reference to drop.  Remove them again in the common DLM shutdown helper
-before the connection is dropped: debugfs removal waits for readers that
-are inside the file operations, and the parent directory is still present
-at that point in every caller.  This covers the mount error unwind, the
-ocfs2_fill_super() failures after a successful mount that dismount with
-mnt_err set, and unmounts whose disconnect releases the stack directly.
-
-Only the relevant frames of the report are kept:
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:ocfs2_dlm_lvb+0x38/0xf0
-Call Trace:
- <TASK>
- ocfs2_dlm_seq_show+0x36a/0xb70
- seq_read_iter+0x480/0x1110
- seq_read+0x362/0x5a0
- full_proxy_read+0x11f/0x180
- vfs_read+0x1a0/0xc20
- ksys_read+0x111/0x200
- </TASK>
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0011-v7-61e3ef8b1ad44ac2e817@gmail.com
-Fixes: 286eaa95c5c5 ("ocfs2: Break out stackglue into modules.")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: b1f66a5bee07 ("net: ethernet: ti: am65-cpsw-nuss: enable packet timestamping support")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20261102135117.419539-1-jjc@jclark.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index a8ec22045ccaa..63c5312a5ed58 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3330,6 +3330,14 @@ static void ocfs2_dlm_shutdown_debug(struct ocfs2_super *osb)
- {
- 	struct ocfs2_dlm_debug *dlm_debug = osb->osb_dlm_debug;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 6228faa1a8c3d..ecffb524116ca 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -103,6 +103,7 @@
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319	BIT(21)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320	BIT(22)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO BIT(23)
++#define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN	BIT(24)
  
-+	/*
-+	 * Drain the readers before the cluster stack goes away: the
-+	 * locking_state reader resolves ocfs2_dlm_lvb() through the
-+	 * stack. Every caller removes the parent directory later.
-+	 */
-+	debugfs_lookup_and_remove("locking_state", osb->osb_debug_root);
-+	debugfs_lookup_and_remove("locking_filter", osb->osb_debug_root);
-+
- 	if (dlm_debug)
- 		ocfs2_put_dlm_debug(dlm_debug);
- }
-@@ -3344,8 +3352,6 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
- 		goto local;
- 	}
+ /* The PTP event messages - Sync, Delay_Req, Pdelay_Req, and Pdelay_Resp. */
+ #define AM65_CPSW_TS_EVENT_MSG_TYPE_BITS (BIT(0) | BIT(1) | BIT(2) | BIT(3))
+@@ -1274,7 +1275,8 @@ static int am65_cpsw_nuss_hwtstamp_set(struct net_device *ndev,
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_132 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320 |
+-			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO;
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO |
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN;
  
--	ocfs2_dlm_init_debug(osb);
--
- 	/* launch downconvert thread */
- 	osb->dc_task = kthread_run(ocfs2_downconvert_thread, osb, "ocfs2dc-%s",
- 			osb->uuid_str);
-@@ -3385,9 +3391,10 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
- 	ocfs2_orphan_scan_lock_res_init(&osb->osb_orphan_scan.os_lockres, osb);
- 
- 	osb->cconn = conn;
-+	if (conn)
-+		ocfs2_dlm_init_debug(osb);
- bail:
- 	if (status < 0) {
--		ocfs2_dlm_shutdown_debug(osb);
- 		if (osb->dc_task)
- 			kthread_stop(osb->dc_task);
- 	}
-@@ -3417,10 +3424,11 @@ void ocfs2_dlm_shutdown(struct ocfs2_super *osb,
- 	ocfs2_lock_res_free(&osb->osb_orphan_scan.os_lockres);
- 
- 	if (osb->cconn) {
-+		/* The disconnect below may release the selected stack. */
-+		ocfs2_dlm_shutdown_debug(osb);
-+
- 		ocfs2_cluster_disconnect(osb->cconn, hangup_pending);
- 		osb->cconn = NULL;
--
--		ocfs2_dlm_shutdown_debug(osb);
- 	}
- }
- 
+ 	ts_ctrl = AM65_CPSW_TS_EVENT_MSG_TYPE_BITS <<
+ 		  AM65_CPSW_PN_TS_CTL_MSG_TYPE_EN_SHIFT;
 -- 
 2.53.0
 
