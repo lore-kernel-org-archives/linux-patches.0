@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046042;
-	b=mxyWkyfbWPAIhQkuN7u2VKJSFhly5dhozHln8/D5bC7Tp3uaY6IdpevfqjudcZbo5lwv
-	 VDIUeiwBEu+T5HvoDJdkggb5slMGAehLsV+z4JS98PV+D+jr2wqR0KydkPHsnDs7FBfQa
-	 0hCy1D3z7aVUvRmMrquX919FACBdVNYWFnLvaBZxr1xljgs1yCB9cwfK83MPZF9MWaPX6
-	 jukSy0VBwaiLAkerZDb5fu3jG4bhnFROFbqncNqsnpXm7+XZKCtQOiueq6fa10B1fnaxF
-	 tl3bk6CzhYeLm5Jle0slywA6MimI0ZJr7I7B2xUKsA47Mh3q3mGt4uYIwBppDZ7yigw==
+	t=1795046045;
+	b=Jn6Wmh+MBtA+Ap5uCXtpKSfGm0agSXAg1TazPSpNHzsHJZD6hItc9/9a5Ri7wT5YWeFw
+	 UCJv0croWoFNA+A5VBLxuzN7kyx+SIm6glQ4HufEz0KtKj3OaT9PfIVSDtXfekEpvjhI+
+	 6fu5SmLK20WxkaCG5b6hGHTk9yeF29Sun2cJvwjQju89Il3/zZCAwwwGbqGxNWIum1Bd4
+	 E07ylAuuEQiCq+GsuCDTvGCtdzvRqDNTE56gnKmprs8ZJimKsumgOXOA1jKfidiHYxlJ1
+	 QoZ8BtGQsNO1s887MC5E34MIBjiPN3Ahd2Yv7pSL0kci2Txi9oMXYSpyjZ3Ti1JE98Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aJ+ATW8Z8mZhBxf8R1Zcl6myAHrwjunWdV8Pjjzq+p4=;
-	b=qkNqQcCSBZPpHUEbS6Wye+Z+Xey+cAaLFgOYvAMPp9xN5vVVvqNHKXzA2Ucp2M5TMJXY
-	 HDnknnsHIzM5wDH4tp/UebQdfPjvPkwq1vTsUqSXETKG5STKTziBV5gbAWz2/oMt17JBW
-	 siAeRafyN7JK6uLjKn935t8FyCS4ZetZ+r9koHdQdnGudhKg0N41pFMsk8nnwwcMA1qX2
-	 8y0/jOuWt4vqJpjtZZn1fYclwobLmA2pXpFzgRtk2+HE+FlHUFQbGY1wHd1RlxxsUwgPE
-	 reKghbXMaWas/ToOwx2MrNJkUXaRpp4YyjlKueaZNCb2qfuxuHIqSoCOlzWKF7NJDtA==
+	bh=KL4eQ4diLhsUr8nXRX9ZlpRnoqao2dPlIR/fErpGQeY=;
+	b=FyVqWNRIlviZ7USFRp31Np99g74pwaY8aIQM3B6JBqeKrqDC1ix7aHKviTXOXxK6Ad3/
+	 Y9Ore8w2DGxscGVYLk5zJLFgwCqPvxjgWXenQ5boCzQE7VpvPCQyvl6XN03Dp/vEOqM6f
+	 6b5k5XCgIFPSvHjc89Y+BkgP51InE/0KuuqtR1j5+LToDrOIxWEnritA1sMHgakQZykhb
+	 CPyfoCGG12iqfKg4DH6fIBTaA2AXZcYzSNdg/Q/Mb7qDUqcJzVWTVruqMEAv7BATtKBi4
+	 eo4/hk1tX6wzVbDqC6FVfW1HcKRjJ+mqKcQfEFmunmGJCBdFvyL+6UUvVUcQPo5ZMgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AtikGjAo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsULNf8n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E6C606A32A;
-	Wed, 18 Nov 2026 23:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F871606A32F;
+	Wed, 18 Nov 2026 23:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AtikGjAo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0410B1F000C4;
-	Wed, 18 Nov 2026 23:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsULNf8n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F481F000C4;
+	Wed, 18 Nov 2026 23:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046042;
-	bh=aJ+ATW8Z8mZhBxf8R1Zcl6myAHrwjunWdV8Pjjzq+p4=;
+	s=korg; t=1795046045;
+	bh=KL4eQ4diLhsUr8nXRX9ZlpRnoqao2dPlIR/fErpGQeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AtikGjAoR8fhKURsWERcZFUYA2pReXcDKhkuNI3Ui525TwDbRyOaT0K7Tcj+vA6cd
-	 vNpXbgG+HwPa4Ou7HNhlp2lnWVY7An7zc0LqFcmbGf87I9v7aHUIennvyMp3KN1eQY
-	 Gm0WvQWxm9kJ+L4865X+DOAaKixd15+WMG1q+1OY=
+	b=RsULNf8nPBtVQ4gMvCl9yKxEXlBmN+cmk9t5hYjtDYB4zLpwhjLjFaUcqjvP2iyve
+	 dFWvZChG57gB5DSyiKzg0pQjQRJaSe9pjcNtskl/aUOxm/M88TdtB3nK2ZRJiRVo2c
+	 Q08Xqme/qzso0PmbHaUfF7Wi48OvV5FZx6m7FDSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	syzbot+675af112519ca34f5502@syzkaller.appspotmail.com,
+	Shuai Liu <847807867@qq.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1140/2857] io_uring/sqpoll: dont attach to a thread that is canceling
-Date: Wed, 18 Nov 2026 15:36:14 +0100
-Message-ID: <20261118150242.636291084@linuxfoundation.org>
+Subject: [PATCH 6.1 1141/2857] io_uring/sqpoll: dont set IO_SQ_THREAD_SHOULD_STOP on thread exit
+Date: Wed, 18 Nov 2026 15:36:15 +0100
+Message-ID: <20261118150242.670656011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,63 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Shuai Liu <847807867@qq.com>
 
-Commit 22d9db9fd64a493525d692b32c556875b7254665 upstream.
+Commit fca3ff9e2eee7d285585daf51942e0b5e2be354a upstream.
 
-io_sq_offload_create() refuses to attach a ring to an SQPOLL thread
-that has already gone, by checking sqd->thread under sqd->lock. Since
-the thread drops the lock while io_uring_cancel_generic() waits for its
-requests, that check can run while the thread is on its way out and
-still see it. The new ring is then added to ctx_list, io_uring_setup()
-succeeds, the thread finishes canceling and exits without ever having
-looked at the ring, and io_uring_enter() fails with -EOWNERDEAD.
+io_sq_thread_stop() carries a WARN_ON_ONCE() asserting that
+IO_SQ_THREAD_SHOULD_STOP isn't set yet, i.e. that stopping the SQPOLL
+thread is never attempted twice. Since commit 22d9db9fd64a
+("io_uring/sqpoll: don't attach to a thread that is canceling"), the
+SQPOLL thread itself sets that bit on its way out, so that
+io_sq_offload_create() won't attach a new ring to a thread that is
+canceling.
 
-Only a thread that exits on a fatal signal can be caught like this, as
-the stop bit is set once the last ring has let go of the sqd, when no fd
-is left to attach through. A fatal signal is group wide and attaching
-needs the same thread group, so the attacher is on its way out as well.
-Still, make the check see it: set the stop bit before canceling,
-whatever the reason for the exit, and test it when attaching.
+When the thread exits on a fatal signal, the bit is thus set before the
+ring teardown gets to io_sq_thread_stop(), which now triggers the
+warning on every such exit:
 
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Fixes: cb0306c52ffa ("io_uring/cancel: drop sqd->lock while SQPOLL waits")
+  WARNING: io_uring/sqpoll.c:88 at io_sq_thread_stop
+  Workqueue: iou_exit io_ring_exit_work
+  Call Trace:
+   io_put_sq_data
+   io_sq_thread_finish
+   io_ring_ctx_free
+   io_ring_exit_work
+
+Introduce a separate IO_SQ_THREAD_EXITING bit for the thread marking
+itself as on its way out, and check it in io_sq_offload_create() along
+with IO_SQ_THREAD_SHOULD_STOP. IO_SQ_THREAD_SHOULD_STOP regains its
+original meaning, "a stop has been requested", and the WARN_ON_ONCE()
+holds again.
+
+Reproduced with an SQPOLL ring and an immediate fatal signal: the
+warning fires on v7.3.0+ (22d9db9fd64a present) and is gone with this
+change.
+
+Reported-by: syzbot+675af112519ca34f5502@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=675af112519ca34f5502
+Fixes: 22d9db9fd64a ("io_uring/sqpoll: don't attach to a thread that is canceling")
+Signed-off-by: Shuai Liu <847807867@qq.com>
+Link: https://patch.msgid.link/tencent_BB08960D79E0261B5C1EB1E589787734E907@qq.com
+[axboe: trim excessive comment]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.1 has no io_sq_tw_pending() before the final cancel]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sqpoll.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ io_uring/sqpoll.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
-index 2cbe580d76afc..a9400233053d3 100644
+index a9400233053d3..dd6f279ef17cb 100644
 --- a/io_uring/sqpoll.c
 +++ b/io_uring/sqpoll.c
-@@ -337,6 +337,12 @@ static int io_sq_thread(void *data)
- 		timeout = jiffies + sqd->sq_thread_idle;
- 	}
+@@ -23,6 +23,7 @@
+ enum {
+ 	IO_SQ_THREAD_SHOULD_STOP = 0,
+ 	IO_SQ_THREAD_SHOULD_PARK,
++	IO_SQ_THREAD_EXITING,
+ };
  
-+	/*
-+	 * Cancelation drops sqd->lock while it waits, and a ring could attach
-+	 * to a thread that is on its way out. A fatal signal doesn't set the
-+	 * bit, so set it here for io_sq_offload_create() to see.
-+	 */
-+	set_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
+ void io_sq_thread_unpark(struct io_sq_data *sqd)
+@@ -340,9 +341,10 @@ static int io_sq_thread(void *data)
+ 	/*
+ 	 * Cancelation drops sqd->lock while it waits, and a ring could attach
+ 	 * to a thread that is on its way out. A fatal signal doesn't set the
+-	 * bit, so set it here for io_sq_offload_create() to see.
++	 * stop bit, so mark the thread as exiting here for
++	 * io_sq_offload_create() to see.
+ 	 */
+-	set_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
++	set_bit(IO_SQ_THREAD_EXITING, &sqd->state);
  	io_uring_cancel_generic(true, sqd);
  	sqd->thread = NULL;
  	list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
-@@ -411,7 +417,10 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
- 		list_add(&ctx->sqd_list, &sqd->ctx_list);
- 		io_sqd_update_thread_idle(sqd);
+@@ -419,7 +421,8 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
  		/* don't attach to a dying SQPOLL thread, would be racy */
--		ret = (attached && !sqd->thread) ? -ENXIO : 0;
-+		ret = 0;
-+		if (attached && (!sqd->thread ||
-+		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state)))
-+			ret = -ENXIO;
+ 		ret = 0;
+ 		if (attached && (!sqd->thread ||
+-		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state)))
++		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state) ||
++		    test_bit(IO_SQ_THREAD_EXITING, &sqd->state)))
+ 			ret = -ENXIO;
  		io_sq_thread_unpark(sqd);
  
- 		if (ret < 0)
 -- 
 2.53.0
 
