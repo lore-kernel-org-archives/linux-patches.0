@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032889;
-	b=k2UvDw2pimUEzi6mb34tBiGUFryR1cHD2edVQxwf1AwxZ4qpHRdkcrzab1I3eVNLWnxJ
-	 em9/2JMfLlHJz4DTMb4tfuY8i69NfmtTlRloQIEtBQqoXfTKrTJbJzyKeFyOr6JRDVsn+
-	 DvMV4QGiGWHJwXA4Ut5r/3mju57H0zd/UwaEVleXP2l9g02IEo2a74yf8YWfu+cmDLxKS
-	 HWn9XQMFIPpjNbnhI2zxRRoOhiI6u7f9GINaBeImID8VddPZ23B3EXzFSoIoVUdDIsgk7
-	 eI8Ik5zcCAp4sL8eUD2ftxd+HK/J18XVJYXkLdMMJQx9w76Ff4hhBwkV34uSwUNsX9g==
+	t=1795032893;
+	b=Iz4GqfAnICO3aGaVt6hTb4cRq5PN4BbSOQMOTjXlYcI2lcefHqZiFjQ1+2LAmORy/xk1
+	 O3ncRenphsSAL0b9tqnQhLWnmJab6sGUFM2tOmGRBM8UIuhddymbIsHUkCx3pwowpXmPZ
+	 6Eg/mv7WhlPGwvWidAtkwDiQon4xXDBzi6d4Cqgl0B/GF+EAGpACrODAE3FeO6wyuqGkO
+	 Y3snJVnEb2qt4PPS5Iosw2RjWsBh/7Zv21gXHLQCmbEA6WRYiQPNx5/vVxaFGKBVdV9lH
+	 r/z06ArhzJ4UedpeDyIY1d1utwTknN8AIHw7Mzm9EBUx1YPE6Qq5lBMrZ04yuKX1Sew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4+efXwSjKZ2YDTvi2L+1kfIgNJKwpvKKchAKy7MLIsw=;
-	b=CsN/ZI91z94+sDMh+RqPkRmJi7ua96ZmiLTr/nis55RossE02rQTYjfu5QU8TJOERPDl
-	 5eTqhGPtrx966opMFiffxKNMgLriGwN1NhuhQuS+2UYtJcTQxtU8pJ+XIXhWVblQ92hPX
-	 6oHhyrP8lkz9qRbz/k/a2VEu05gk5GZAyHTv0HiQVtyrJMBfr/Sc7Q3bsZ3GOWxgoceZF
-	 GeLRAYeL4W9B4sG5nX3uJiwU44GUFhvacNcmGXqN3oBadc+ct2ZhzKlJgIyQxobN/DYbC
-	 MBxe0rKiKOu6B1HqowrPCZ3R0u1FUo3utJll3Wmvm2iuWV8gpulknW7OGJd3rmtOSrQ==
+	bh=eistNpQDkq35NzbDikjTm91kWSGQ4gl1HSNzrpXp+JA=;
+	b=hvMthoCLvMLUvkIXf8N38AnrwN8AmYBg86QxXC+APs2bfqxGJlmMPclU12GZC0UpBx2f
+	 imFeU7ww/v+/8QX6J+VQnGPIsMly9naSd5YR+ZAw9eBBIdUGDpSx5Hot3H1iJ1j1nmSvs
+	 NNwQWIhWKPoxIaALjVFvJIWVKrYbgLLFva9Q1lzG6xXmU28EilApT128MKs9SjpCRhqor
+	 edtjiNAdOZZQkBzBHB7b+T4RjmBTLfkDIVWl1797Aq5oaaFRLVJrXwg3iY/6fnP3ikX8N
+	 +6ZT9txsQ6wGupCdPoJcIi2dAma2qWQlR+FuMsK249eyBJ6bDu1QCNvpfEG56YBf8wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B7BYuHrA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3f7dAPY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34A3606A33E;
-	Wed, 18 Nov 2026 20:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BD9606A33A;
+	Wed, 18 Nov 2026 20:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B7BYuHrA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E411F000C4;
-	Wed, 18 Nov 2026 20:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3f7dAPY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A59B1F000C4;
+	Wed, 18 Nov 2026 20:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032889;
-	bh=4+efXwSjKZ2YDTvi2L+1kfIgNJKwpvKKchAKy7MLIsw=;
+	s=korg; t=1795032892;
+	bh=eistNpQDkq35NzbDikjTm91kWSGQ4gl1HSNzrpXp+JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B7BYuHrA7COK3hsG1tpfNVV2T/XoYRZ6S/UpP0xQNNGXO6u6+OIrQJ8LQuT6bN8xB
-	 rVWtU0J3KRKqXNKN2H+Fzc13rz5690DHLcRKpiSx2zC6hnfzml+rJQCRBFbB+xhtQa
-	 TwJ37ty0VdexpIZ6nAn+icNRYHyzVJM5pE3KA6Gs=
+	b=d3f7dAPYX6TS4OgI17DAMuRJxG05rteKFRwi4EQ31KzubHAjHUzJYio6CQhTmASLd
+	 xIPgPqNLYiFKSoSGtjTE31Q0jJ0WBzJwdHPvAgGCBj258/5yHJZKabNy23xXHdxe6f
+	 WMcdTVAUy9dpo1JbWX0dJ6nao5kuA9Cs9SLTCiGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Waiman Long <longman@redhat.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1573/1756] libceph: reject bad connect_seq in msgr1 READY reply
-Date: Wed, 18 Nov 2026 16:01:40 +0100
-Message-ID: <20261118150112.385074320@linuxfoundation.org>
+Subject: [PATCH 6.12 1574/1756] cgroup/cpuset: Make sure compute_partition_effective_cpumask() is only called for valid partition
+Date: Wed, 18 Nov 2026 16:01:41 +0100
+Message-ID: <20261118150112.425889980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,55 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 6dfc1b1a99da4909aee07a906352be5c3fc9baba ]
+[ Upstream commit 356a3aa7404e420e6f19c5ed42db7b8bd0c7ee9f ]
 
-process_connect() WARN_ON()s when the peer's READY/SEQ reply carries a
-connect_seq other than ours + 1. That value comes off the wire, so a
-misbehaving or malicious server can trigger the warning at will (and
-panic machines running with panic_on_warn).
+With visual inspection to make sure that
+compute_partition_effective_cpumask() is only called for valid partition
+root, it was found that the function can be called for an invalidated
+partition near the end of cpuset_hotplug_update_tasks(). When partcmd is
+set, update_parent_effective_cpumask() is called to either invalidate a
+valid partition or with partcmd_update to check if an invalid partition
+can be switched back to valid. In both cases, cpuset_force_rebuild()
+should be invoked. However, compute_partition_effective_cpumask()
+should only be called when an invalid partition is switched back to
+valid. When a partition is invalidated, compute_effective_cpumask()
+should be called instead.
 
-Check it before touching connection state and fail the connection with
-a protocol error instead, like the other bad-reply cases here.
+Also add a WARN_ON_ONCE() in compute_partition_effective_cpumask() to
+ensure that a valid partition root is passed in.
 
-Fixes: 31b8006e10a4 ("ceph: messenger library")
-Reported-by: syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=21f8628595b2061c438d
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 72c6303acfa1 ("cgroup/cpuset: Take isolated CPUs out of workqueue unbound cpumask")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/messenger_v1.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
-index 0cb61c76b9b87..d3a9d08b59d84 100644
---- a/net/ceph/messenger_v1.c
-+++ b/net/ceph/messenger_v1.c
-@@ -891,6 +891,12 @@ static int process_connect(struct ceph_connection *con)
- 			return -1;
- 		}
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index e11c70729e0a4..3662acc2cff89 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1988,6 +1988,8 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
+ 	struct cpuset *child;
+ 	bool populated = partition_is_populated(cs, NULL);
  
-+		if (le32_to_cpu(con->v1.in_reply.connect_seq) !=
-+		    con->v1.connect_seq + 1) {
-+			con->error_msg = "protocol error, bad connect_seq";
-+			return -1;
-+		}
++	WARN_ON_ONCE(!is_partition_valid(cs));
 +
- 		WARN_ON(con->state != CEPH_CON_S_V1_CONNECT_MSG);
- 		con->state = CEPH_CON_S_OPEN;
- 		con->v1.auth_retry = 0;    /* we authenticated; clear flag */
-@@ -902,8 +908,6 @@ static int process_connect(struct ceph_connection *con)
- 		     con->v1.peer_global_seq,
- 		     le32_to_cpu(con->v1.in_reply.connect_seq),
- 		     con->v1.connect_seq);
--		WARN_ON(con->v1.connect_seq !=
--			le32_to_cpu(con->v1.in_reply.connect_seq));
+ 	/*
+ 	 * Check child partition roots to see if they should be
+ 	 * invalidated when
+@@ -3879,9 +3881,12 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
  
- 		if (con->v1.in_reply.flags & CEPH_MSG_CONNECT_LOSSY)
- 			ceph_con_flag_set(con, CEPH_CON_F_LOSSYTX);
+ 	if (partcmd >= 0) {
+ 		update_parent_effective_cpumask(cs, partcmd, NULL, tmp);
+-		if ((partcmd == partcmd_invalidate) || is_partition_valid(cs)) {
++		if (is_partition_valid(cs)) {
+ 			compute_partition_effective_cpumask(cs, &new_cpus);
+ 			cpuset_force_rebuild();
++		} else if (partcmd == partcmd_invalidate) {
++			compute_effective_cpumask(&new_cpus, cs, parent);
++			cpuset_force_rebuild();
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
