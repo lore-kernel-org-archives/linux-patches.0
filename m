@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046080;
-	b=fahPXfmEXvOvU2PXDgq0868/ZZFf2Uo6X0P1dl/a+16nM4K8FymvbRkiH7KpV8mznFgW
-	 NWYEKYxKvCUG3XML/tuJXAMp5bHhjbpfPXXwc1pYZNnW/EigDDa0bvEuX3A4FtgqMel+i
-	 jM+cFyfpXoWJOowxTFCDx7XKYFVBSYntwcq4CkAqkT/RnAzo1fC4c7jChF8WhrHTk/66Q
-	 po9z3wlfizYcjStAqWB7tYhdnRrC8IbKf4r3V3QTSd1lU5+8zkGLMi8sZiGl5VtArKnPM
-	 NnEqqHGsQhhqOpS0TBlw0MBXfiLqQBcPgKC+kXUWhNnmn9Bm1hGieIF/Yy0Sm+n+Pbw==
+	t=1795046083;
+	b=fit1U3SOHref0o5WYPF+oAfJT7BC55acZcjlTR5CxBEZSVKQ64Gkk4YpZFNO28Op7YAQ
+	 vFStTUD8AA+k5rxd4AwCvd/PtNsKB5Xsu2u4GZsAy1bqxVABOxtcTdu5Z1EIQvsR/+Vkt
+	 4iqSpiDJoRN0ujXjrp0fcT9aeyYEpav6BaZXCyWBuxphE1YSum5muoZCeWD904AzXhvtZ
+	 pKfmXtzXN42sKJr0q3axd6/Gtvh+iAkwDQC1rbHa2EfsTjkBQ7PXAA6y9t6MWw+/IENZ6
+	 0DAsQj/WUTtQ69oZWaipkdGjP7nhgKIXGlMdxIezmAKH+R6NQ4rmPHSQFoL7hiHShEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eiMcgf1bnMCB3E3+SV4cRmq/qtq/VRBBhwAIKJtBPHI=;
-	b=ZryO0QhQvIK8KTLuVY/oj3BtAv+altvBWYuzP5V/4hCPLVHm+CtdgISkok8dVyImoO9D
-	 xC47tRGkhxisX+FxQkt7b514nVDM88cvit13fBRgfTZ+EtLtA9Qcv/aedhsUxVGb+Y+Uj
-	 KKNUWwnrxiHJpelAyOKXZ/xCMR9tjiK/LUqYgZMke4efg0vRxkRgbxRmNbpCHoMJx04tJ
-	 h21eIHLgAmJOu8bB0vI1V6SqnfkCkDved9P1M24/GUI3N/hNgiKkO1Lb35SgliMTdkwVF
-	 eFCnMZHc0JzQYaIh+aWiDeulw0q57fCdv++8kVbJ5Pzs8np5pLhmfc6Y9xwSJVoILbA==
+	bh=HfbDYRLSN758jNcAFNtlf+1DrLU5+epWHt1K2VYQr1U=;
+	b=yu3kkfc7trqYUpf4j5O1KV8DNp7hV/54XohXIxj7WSTAwhXhuCLZyWDHy/FZ3LGaddtj
+	 emsxjpuHjPRWjkZzCmqEpso545kdUohGAVDW/micjzePm2Tp4D1mCdrUYZxhVaNyy8aV3
+	 rJRXmHhFLoehaLN0FXZZOzEeHVR9BMLqHnEcIHjJcDk3ff6asI1oztVFO0uqMEtv4xnQH
+	 gzknqk/F9upbzTFd/th8AxQn2WHCZrp57/5prLUCA5jqE2HXOId5nWAO9dWzHmEH/O7Y4
+	 Gscc/g0btI8/CkHWCTS3w+q87Y/sH59eNQYAOTTEY48goYleVLE4Ng2F2MnLDuDyTCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfVBDapZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WieMAWMK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E4E606A32A;
-	Wed, 18 Nov 2026 23:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1CA606A32A;
+	Wed, 18 Nov 2026 23:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfVBDapZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42ED1F000C4;
-	Wed, 18 Nov 2026 23:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WieMAWMK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46A01F000C5;
+	Wed, 18 Nov 2026 23:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046080;
-	bh=eiMcgf1bnMCB3E3+SV4cRmq/qtq/VRBBhwAIKJtBPHI=;
+	s=korg; t=1795046083;
+	bh=HfbDYRLSN758jNcAFNtlf+1DrLU5+epWHt1K2VYQr1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xfVBDapZcLM1hc98exITUVYrW2qJeGg2NAjelMtxvaZQcq0OIlQ3kvYlzMDtTf6hz
-	 M9/qd7mJM2lwnKwtbsqC0G4ejI3JO2cJWBvYVmdI833p8e4gTMd7GovBt44+/y4ZG/
-	 b8AZfc8iSfbHopvpApqDF1WXHMff6cqpTIUbWRzI=
+	b=WieMAWMKF6uTFQvl5daqCyy7sEP0HhFS32Feah4QYYfR2n9VKM7xhlYBCwEuD0yjb
+	 S3czsJ66GE4OtVaQWN3jupftCfNpe4src03xdoBtJTWBIyBNfPqg5EMVPlxdDtm4Xq
+	 h2JguGJcjQmNp6ouT1MGBuOYmRLgqte3+iys3x/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Tejun Heo <tj@kernel.org>,
+	Liz Fong-Jones <lizf@honeycomb.io>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1152/2857] ACPI: CPPC: Propagate errors from cross-CPU FFH calls
-Date: Wed, 18 Nov 2026 15:36:26 +0100
-Message-ID: <20261118150243.062579050@linuxfoundation.org>
+Subject: [PATCH 6.1 1153/2857] writeback: keep cleanup_offline_cgwb()s scan out of syncs
+Date: Wed, 18 Nov 2026 15:36:27 +0100
+Message-ID: <20261118150243.100978204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,54 +70,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Liz Fong-Jones <lizf@honeycomb.io>
 
-commit 36e96b469da24868f727b4cd168d7cf01cbd163d upstream.
+[ Upstream commit 90c96612460e6accddbda5a195e6ddaa391ecde0 ]
 
-The arm64 and RISC-V CPPC FFH accessors ignore the return value of
-smp_call_function_single(). If the target CPU is offline, the call can
-return -ENXIO without running the callback. The accessors then consume
-callback output which was never initialized and may report success.
+On a filesystem mounted with lazytime, sync() and syncfs() can return
+without persisting timestamp updates of inodes attached to a dying
+cgroup wb, so a crash after the sync loses them. File data and sizes are
+not affected.
 
-CPU offlining leaves the CPU's CPPC sysfs attributes present. On arm64,
-the AMU feature mask does not exclude an offline CPU, so a paired counter
-read can expose uninitialized stack values through feedback_ctrs. RISC-V
-has the same problem in both SBI and CSR reads, and its write paths also
-inspect an uninitialized callback status after a failed cross-CPU call.
+Since commit f6988c90671e ("writeback: bound cleanup_offline_cgwb()
+rescans by rotating scanned inodes"), isw_prepare_wbs_switch() moves the
+inodes it walks to the newest end of the list. When a pass fills its isw
+before reaching an inode that got its lazytime update after a sync's
+cutoff, the walked inodes land past it on b_dirty_time, and the sync's
+queue_io(), which stops at the first inode dirtied after the cutoff,
+misses them. The late inode has to be one without a pending lazytime
+update; one already on b_dirty_time keeps its position.
 
-Return the SMP call error before using callback output. The arm64 single
-and paired counter readers already check the helper's return value. For
-RISC-V, also check the callback status before copying a read value: an
-unsupported CSR sets the error but does not initialize the value.
+The window is narrow. cleanup_offline_cgwbs_workfn() skips wbs with
+anything on b_dirty, b_io or b_more_io, so the scan has to land between
+wb_writeback() fixing dirtied_before and taking list_lock for its first
+queue_io(), unless a multi-pass drain started before the wb got dirty
+IO.
 
-Fixes: 68c5debcc06d ("arm64: implement CPPC FFH support using AMUs")
-Fixes: 30f3ffbee86b ("ACPI: RISC-V: Add CPPC driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-18-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Take wb_switch_rwsem for read across the scan, as
+process_inode_switch_wbs() does for the switches.
+
+Fixes: f6988c90671e ("writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes")
+Cc: stable@vger.kernel.org
+Suggested-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/all/0bc5d58533f10b4841807be3025daa11@kernel.org/
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
+Link: https://patch.msgid.link/20261017040710.1174009-1-lizf@honeycomb.io
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ Take wb_switch_rwsem before this branch's rcu_read_lock(), as
+  down_read() can sleep. ]
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/topology.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/fs-writeback.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index 7f50162ee7c83..e712f315af452 100644
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -291,9 +291,7 @@ int counters_read_on_cpu(int cpu, smp_call_func_t func, u64 *val)
- 	if (WARN_ON_ONCE(irqs_disabled()))
- 		return -EPERM;
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index f82d5d70a6cd0..337970ba58237 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -731,6 +731,13 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
  
--	smp_call_function_single(cpu, func, val, 1);
--
--	return 0;
-+	return smp_call_function_single(cpu, func, val, 1);
- }
+ 	nr = 0;
++	/*
++	 * The scan moves walked inodes to the newest end of b_dirty_time,
++	 * past ones it didn't reach. If one of those was dirtied after a
++	 * sync's cutoff, the sync's queue_io() stops there and misses the
++	 * moved ones. Exclude syncs as process_inode_switch_wbs() does.
++	 */
++	down_read(&wb->bdi->wb_switch_rwsem);
+ 	/*
+ 	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
+ 	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
+@@ -753,6 +760,7 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 		restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_dirty_time,
+ 						 &nr);
+ 	spin_unlock(&wb->list_lock);
++	up_read(&wb->bdi->wb_switch_rwsem);
  
- /*
+ 	/* no attached inodes? bail out */
+ 	if (nr == 0) {
 -- 
 2.53.0
 
