@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056322;
-	b=O2tk7NSWnptjKYw36tsJB6jhI78ohbXlpLDyNScJnstV7DMbjKhFkISZX6UlBXsH71an
-	 MIEPAyNqB2seL7wS1dmwG358xwGQYpbk9/7vgd/rX+tbxmTNqE9KfyIt+a8byF32YuBxY
-	 jUgEhBkC9TH86yv+QvmUaBT3Byk4iv+OZgZT3iLmhWyDXwhRUrX7OFCO3MI9QlpECmZ1x
-	 2dfManyg3Wa0K9xEEBck/Gqs5w3lbktr5oUwYwaN6JF0X0EAq/ZATE7BumOz5SDHEifGi
-	 ehEDOvG9iIEXMlTfg4vhmiZFdOHaCygmSiUi7kQESbFFGvizFRgsXXKFwbS+M/4QmSw==
+	t=1795056324;
+	b=k1dXPsCl26z0ZlNrFZ3YHJLv+7+nt1FeGim/G8E6rsgOsDOb7UEqWbVu1zTGV6wCEzPL
+	 lN8kbhT1suKo2aEWREsDRn96u0iZhYCTTYZ2WyILFpIRB0gOYUbnOQL4N9QKS7LklU4lW
+	 TRYPBlgtMWDkVBY6DGJFwFNTol439w9Fhfdczb6p+9QLyQH2q2iHD0aY+rQ8ugSeEtHOU
+	 0/uzshVdY14aVSEwGjkmj/1FgIyfjNkWZQX2pQtUdtD/3OowCqCLoEq0M8Ax0g4ziAd/7
+	 hNuQsHuMwgPycCsymaBP6mL4busEir9uiFM2813UiDCgtfCdFqK54TxVong54Ae47sQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056324;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PcuAR5FJ1+V+29VnexdNs9p8yHiKNiHEKAjZ9Yz4Az8=;
-	b=vhnsPnxp2/crybbmYd797uDsMI5vk6LvK6X13CaFZErXdbDEdhGYHPTfKZWUCIfoutXy
-	 2NNHiB4At7woD3Yg9R5P5IMgV4x2BqB5QfDGzMR0Eybz9AHX4zTjY0OJBgPtz3G/53Yl3
-	 fHWzG/VwYtRM/LXQwpmmdXSSMr3EOmxS1tccRfHJuajlfooJSgwO4cZSo3DXN7BS+ot4S
-	 5xx/vujZ6qRGu2JbxDeK5tfQgnS9r9itwAhx90ciUdyQDl+fnAmPhnaxI79o6l+WqOBnq
-	 hO5SSc/fyXQmkVdmXcqxgeqZPDy8X5+VSxmqT53t5W7aeM7isFJmWUa1TH/nqgqD4Kg==
+	bh=2wNkosDq9KdkzDrA3AKL61bRH2ACsgwX+v5vq97OReQ=;
+	b=YP4dNb2Lu3CQPZ1bfeKMYjKAlES6luF4g7j/pKbEBmAfDAqZF3Q2QR4sW+VhxeZazdzU
+	 svbG5v4+ty2ZCAwHvyuOA5UbEeY/KnpCQtu36iTX67t/exuEsm5qI107jTBlBDrSMc7Vb
+	 lNj1mFoVfa/T7tULmY2O4JOrcfm7oP05MX49C1l01Bwxuo0vlvpv3k5WFSM3TvS5u9qjv
+	 JZkWwP40H2d4GDgW2grPcUw8cq304C+KQEMLtj2MzTCWgb43+D78dflV2W8Is5Jlw5DPE
+	 sN5mLI/QDTZAUnoPQSZ+bIH+KQSb2qS4gECQrfudZ/+rSHVkgRzrtxCaFSLjBFhFxeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E9P+QWfl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mn1isMQ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09796606A320;
-	Thu, 19 Nov 2026 02:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB378606A320;
+	Thu, 19 Nov 2026 02:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E9P+QWfl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7331F000C4;
-	Thu, 19 Nov 2026 02:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mn1isMQ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F36F1F000C4;
+	Thu, 19 Nov 2026 02:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056321;
-	bh=PcuAR5FJ1+V+29VnexdNs9p8yHiKNiHEKAjZ9Yz4Az8=;
+	s=korg; t=1795056324;
+	bh=2wNkosDq9KdkzDrA3AKL61bRH2ACsgwX+v5vq97OReQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9P+QWfl1i31iPMr3zenZQesAysDOSsJskwhWG/FhrspM99/OkZecYs1qIGmumIZh
-	 pYfVTO9+zVI18JACXSGBx8pOaSxReWGGAmRIQMDcrzi359eWbRedTIj44Y3MFYpOyj
-	 I6nYfVSFiqtDscthmRwx57ADeg0eulUj0PceY0k0=
+	b=mn1isMQ6crO8VI5sQ01E879/DS777nxlC9uHIvXOB2FUzIqSxtKQ4MdLwID5Hchl8
+	 Nzb6XLiSJy05UV2X9Bm9iKs3DIDa8iug1OSdEKwYhxhsOkXZJjzGNrlB86lyZYx3zN
+	 GLnvuhi2/a/QJUt/EEaCFjMtFB0ca1GgV5jh9GU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1944/2214] net/mlx5e: use skb_share_check() in the loopback selftest hook
-Date: Wed, 18 Nov 2026 16:00:20 +0100
-Message-ID: <20261118150128.774796160@linuxfoundation.org>
+Subject: [PATCH 5.15 1904/2214] ALSA: jack: Fix kctl free at error in snd_jack_kctl_new()
+Date: Wed, 18 Nov 2026 15:59:40 +0100
+Message-ID: <20261118150127.300133836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,41 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 16fb7aa6955a0af9f67ca42a61d9be58dfc9382a ]
+[ Upstream commit f421be924fec67f74bb0b6988ea8f0a3480df2a7 ]
 
-The loopback hook gets a shared skb when another ETH_P_IP handler is
-bound to the device. skb_linearize() on a non-linear frame then hits
-BUG_ON(skb_shared()).
+When an error happens in snd_jack_kctl_new(), it tries to free the new
+kcontrol element via snd_ctl_free_one().  But snd_ctl_free_one()
+releases only the memories, and the internal linked list and hash
+entries still remain, which may lead to bogus accesses to user.
 
-Call skb_share_check() before linearizing the skb.
+Replace with the correct destructor, snd_ctl_remove(), for clearing
+the whole resources of the given kcontrol, instead.
 
-Fixes: 95b9606b15bb ("net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-3-458369bfa1ba@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9058cbe1eed2 ("ALSA: jack: implement kctl creating for jack devices")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261013120528.52586-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/core/jack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
-index c380340b81665..1d132614ae44b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
-@@ -188,6 +188,10 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
- 	struct udphdr *udph;
- 	struct iphdr *iph;
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index 03d155ed362b4..304082c44c8be 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -452,7 +452,7 @@ static struct snd_jack_kctl * snd_jack_kctl_new(struct snd_card *card, const cha
  
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
-+		goto out;
-+
- 	if (skb_linearize(skb))
- 		goto out;
+ 	return jack_kctl;
+ error:
+-	snd_ctl_free_one(kctl);
++	snd_ctl_remove(card, kctl);
+ 	return NULL;
+ }
  
 -- 
 2.53.0
