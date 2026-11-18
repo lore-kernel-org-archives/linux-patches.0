@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017675;
-	b=cHrMrZwYAHnAlmoUUy1v1h7HaO8rpWpy748FxWHuptRa+T+KPhjKrY1pUyMVBmdDTGt0
-	 E0okjir9SDcT8uYkt3opu5Gq/JJ2vX3yyPr8+AAliaiHHIx37BrntdQK+jEgP7rFdOr3x
-	 NREruCw5LS6rqDUcHV9DlKLweaNEMtpghWmiF1njz77tdn35WWw8CQPcqpTY4sk/pZ5tM
-	 CfGDyOgpNBOa2KpXd2SSaR5tnPD/q1anGIpWgBgfKnTQhN9klvZVeqeAA36fwlAOzd+cy
-	 ZB5qkD77JIgm+qPZtGje0nYlsYRpysfbZ86j8a+prQ8qA1gUZaP3uTOnZ5WndgR1o/Q==
+	t=1795017678;
+	b=qHBCRyGubufWSmA/iPUaNhtfd2xaDfYLoS2+V+jYijjozjR6r7uz/kRwxScfvgdSD1Sh
+	 iBEEdiaAzbtR83psyMaWeI7cAsqoOR5LoPip+YFHsOYD5rn0TTv2gY4ghmBx0M6HLxwhi
+	 9POnkGwNzaoolyrS+hVQb92IWZPCo9U7CQBjseUk7DOEHI05TWH2WViwbRF5qeboTJV+2
+	 L/0YuiVVvlj6rKJe+k70AYgUgZ4FcLvowlRjycrq+XtStqTX7nb15G9lrWw6gCqtJC+4U
+	 wlY0sbAKlmV6oo6nP+8Czl9IT8LfrfNsIMIOf45mrh5kNWI9Ppb89zryTINlc0WWRCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017678;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eFjBcuWYv+GaDrsM55fCV/gF0CfG9S7aP7clISpETGk=;
-	b=1rAKiKF8qyRFsp7jXXmPZy13QLU1v+hyifea2rSv4hhJDE7JTtl4NU9BKffLkz+ybtve
-	 mWYnGTgn8BA5U6FvxdZMAkb0hqK63MgVM9uqqBmGzXmlmMtdpsSKnID5zZWfdMK0hbt4D
-	 IFpmd+6LeIR5fwt1GPGhjEKvXH1jDcN6SP/TqbLFNUSn+CB4O0frChaPe5Tvoo5ZVJYur
-	 NBpKw8fNJv57bzIE0CtrMvYFibQIt1lQ+ZUCIoONfTEiDYjzyYVFtgBJrr449CtK+inrQ
-	 oimKEBv8UEOh1meOHcyl9DtFTxGCBsGrVs+LAvbi+6/V4PHFH4ISRg2UmfAew+7wGnA==
+	bh=bAiE/8frYy8lD9hX6EhApdKHi4ibP7XYT5QmuA4doSQ=;
+	b=rFbytstqO/2oYuhvB4bm2BKpySt5paklrchlXao/SS9FeSCMHqkSUtN/CgKbkOl9KZ0+
+	 QB6NumEF3sDb2ziV4ERHtpR3hCUiphbFRu7VgJNq3ES5gFp9P46qorh4uCVbBKomgyfp6
+	 TKJCTHy/J3j1zhx6nbs6x4VMIgdNAXgjWmIr+N3EBR8vwclX526d7K3NAXm64XkC/dB3h
+	 vbX3b506ovnU9Ag91zfMSLjdgVRfos4COkJeAs023spePGq5U84Gn4iPco3eURpmIYrVE
+	 x0sRvI6vy4CcHn7/W3W0N/OIgm2YKCJd+uqMwe4aq10Qjhy3vUKOlNhHgdmn6EoQfaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xp2kyXiw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4yBdyBe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D15606A320;
-	Wed, 18 Nov 2026 16:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089EF606A32F;
+	Wed, 18 Nov 2026 16:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xp2kyXiw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAE01F000CA;
-	Wed, 18 Nov 2026 16:01:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4yBdyBe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BA11F000C5;
+	Wed, 18 Nov 2026 16:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017675;
-	bh=eFjBcuWYv+GaDrsM55fCV/gF0CfG9S7aP7clISpETGk=;
+	s=korg; t=1795017677;
+	bh=bAiE/8frYy8lD9hX6EhApdKHi4ibP7XYT5QmuA4doSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xp2kyXiwGmZ/TCV0Sunr64Enmu8KEFXOBoKmkTDUfxWO++E+AfY1mkZ/8y+cUfRhe
-	 hGjxmOQbzuUGW+A6GGTwG1LrrSR7jqYxiNIAiPKd0qDxQZk2Zbzof5gRAXLP/ag5PQ
-	 55LMVY124fKgontf5KC809eAUEo85MgqkRj7Qfvk=
+	b=h4yBdyBeIBglJRTWJ0ZYueDqy4X7HkauoReMujhONxudp2c2/adSXE/vZK2GMHxWS
+	 oQYhrPi8hSz3YjO+2qSMWMTTiA0YJCJqqIf+aRkpmXsW7UO8fib0lBpzChYOlU/Ezg
+	 ZmBkw98u2e1z2De6xcxufqTpi3J93djUvcM7K9K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0970/2651] ASoC: mediatek: mt8192: Propagate mt8192_afe_gpio_request() errors in ADDA DAI
-Date: Wed, 18 Nov 2026 15:36:50 +0100
-Message-ID: <20261118150322.822082340@linuxfoundation.org>
+Subject: [PATCH 7.3 0971/2651] ASoC: mediatek: mt8192: Propagate errors in TDM DAI DAPM event handlers
+Date: Wed, 18 Nov 2026 15:36:51 +0100
+Message-ID: <20261118150322.860279854@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,134 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit eed9414a1b075e2df308e7222e3786981bd42b32 ]
+[ Upstream commit d0bc9613bc2d9e20a7e4f3e447cd9427c95d194a ]
 
-Currently, DAPM event handlers in mt8192-dai-adda.c ignore the return
-value of mt8192_afe_gpio_request(). If GPIO configuration fails during
-PRE_PMU or POST_PMD events, the error is silently ignored.
+Currently, DAPM event handlers in mt8192-dai-tdm.c ignore return values
+from mt8192_afe_gpio_request() and mt8192_mck_enable().
+If GPIO configuration or master clock setup fails during DAPM events,
+the error is silently ignored.
 
-Fix this by checking and propagating error codes from
-mt8192_afe_gpio_request() in all ADDA DAPM event handlers.
+Fix this by checking and propagating error codes properly in all
+TDM DAI DAPM event handlers.
 
-Fixes: 607ac4859564 ("ASoC: mediatek: mt8192: support adda in platform driver")
+Fixes: 52fcd65414ab ("ASoC: mediatek: mt8192: support tdm in platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-13-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260918133912.133799-14-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-adda.c | 44 +++++++++++++++------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-adda.c b/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-index f8cb84621d386..c5c726a6e4230 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-@@ -218,10 +218,13 @@ static int mtk_adda_ul_event(struct snd_soc_dapm_widget *w,
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
+diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
+index 49440db370af0..36fa0f32ed1cb 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
++++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
+@@ -250,6 +250,7 @@ static int mtk_tdm_en_event(struct snd_soc_dapm_widget *w,
  	struct mt8192_afe_private *afe_priv = afe->platform_priv;
- 	int mtkaif_dmic = afe_priv->mtkaif_dmic;
+ 	int dai_id = get_tdm_id_by_name(w->name);
+ 	struct mtk_afe_tdm_priv *tdm_priv = afe_priv->dai_priv[dai_id];
 +	int ret;
+ 
+ 	if (!tdm_priv) {
+ 		dev_warn(afe->dev, "%s(), tdm_priv == NULL", __func__);
+@@ -261,16 +262,17 @@ static int mtk_tdm_en_event(struct snd_soc_dapm_widget *w,
  
  	switch (event) {
  	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+		if (ret)
-+			return ret;
- 
- 		/* update setting to dmic */
- 		if (mtkaif_dmic) {
-@@ -239,7 +242,9 @@ static int mtk_adda_ul_event(struct snd_soc_dapm_widget *w,
+-		mt8192_afe_gpio_request(afe->dev, true, tdm_priv->id, 0);
++		ret = mt8192_afe_gpio_request(afe->dev, true, tdm_priv->id, 0);
+ 		break;
  	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+		if (ret)
-+			return ret;
+-		mt8192_afe_gpio_request(afe->dev, false, tdm_priv->id, 0);
++		ret = mt8192_afe_gpio_request(afe->dev, false, tdm_priv->id, 0);
  		break;
  	default:
++		ret = 0;
  		break;
-@@ -257,11 +262,14 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int mtk_tdm_bck_en_event(struct snd_soc_dapm_widget *w,
+@@ -282,6 +284,7 @@ static int mtk_tdm_bck_en_event(struct snd_soc_dapm_widget *w,
  	struct mt8192_afe_private *afe_priv = afe->platform_priv;
- 	int mtkaif_dmic = afe_priv->mtkaif_dmic_ch34;
- 	int mtkaif_adda6_only = afe_priv->mtkaif_adda6_only;
+ 	int dai_id = get_tdm_id_by_name(w->name);
+ 	struct mtk_afe_tdm_priv *tdm_priv = afe_priv->dai_priv[dai_id];
 +	int ret;
+ 
+ 	if (!tdm_priv) {
+ 		dev_warn(afe->dev, "%s(), tdm_priv == NULL", __func__);
+@@ -293,7 +296,9 @@ static int mtk_tdm_bck_en_event(struct snd_soc_dapm_widget *w,
  
  	switch (event) {
  	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
--					1);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
-+					      1);
-+		if (ret)
-+			return ret;
- 
- 		/* update setting to dmic */
- 		if (mtkaif_dmic) {
-@@ -291,8 +299,10 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
--					1);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
-+					      1);
-+		if (ret)
-+			return ret;
- 
- 		/* reset dmic */
- 		afe_priv->mtkaif_dmic_ch34 = 0;
-@@ -446,15 +456,20 @@ static int mtk_adda_dl_event(struct snd_soc_dapm_widget *w,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
-+	int ret;
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
+-		mt8192_mck_enable(afe, tdm_priv->bck_id, tdm_priv->bck_rate);
++		ret = mt8192_mck_enable(afe, tdm_priv->bck_id, tdm_priv->bck_rate);
 +		if (ret)
 +			return ret;
  		break;
  	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
-@@ -469,17 +484,22 @@ static int mtk_adda_ch34_dl_event(struct snd_soc_dapm_widget *w,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
+ 		mt8192_mck_disable(afe, tdm_priv->bck_id);
+@@ -314,6 +319,7 @@ static int mtk_tdm_mck_en_event(struct snd_soc_dapm_widget *w,
+ 	struct mt8192_afe_private *afe_priv = afe->platform_priv;
+ 	int dai_id = get_tdm_id_by_name(w->name);
+ 	struct mtk_afe_tdm_priv *tdm_priv = afe_priv->dai_priv[dai_id];
 +	int ret;
+ 
+ 	if (!tdm_priv) {
+ 		dev_warn(afe->dev, "%s(), tdm_priv == NULL", __func__);
+@@ -325,7 +331,9 @@ static int mtk_tdm_mck_en_event(struct snd_soc_dapm_widget *w,
  
  	switch (event) {
  	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
--					0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
-+					      0);
+-		mt8192_mck_enable(afe, tdm_priv->mclk_id, tdm_priv->mclk_rate);
++		ret = mt8192_mck_enable(afe, tdm_priv->mclk_id, tdm_priv->mclk_rate);
 +		if (ret)
 +			return ret;
  		break;
  	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
--					0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
-+					      0);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
+ 		tdm_priv->mclk_rate = 0;
 -- 
 2.53.0
 
