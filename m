@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026768;
-	b=IT7gTDO7e8QUCmzJKEJtK52QvNj9V4qrDBHQJxFwnMJJxmk/KsPATF+pZG0V+/LKPv4V
-	 ctUHIwR1LcnO9PBFW82/nvcwtSwQpL7hBqurDlrWvEqYp6/OQCJs0XdKZ0YC0DmAX5M+S
-	 66Ctqb03e/Jml7f90cxmTsMcXxQ1ZKUrsNmmdo32Hgt7flnpdIjgrxImZ+L6M5SS2qdiJ
-	 jw8MXouFpxdAHEqVR4RonTwCmhQ0ikJkGgELjInOH0q4yjVwYmagsOT9+S3ylyJksl3B8
-	 CxRoupZpTM2jCb0wSnyzG0FoPi48M4+oqQGC/fFabq50RlHOtviL4tLRJ2Zp+9C0T5g==
+	t=1795026770;
+	b=IZAcUnIBodmUyMItcDbv3IO/I1Wd/Dmz+c+dL9SAHKJIm4pCp0jC64MfCVJnqIUYGVk4
+	 myWiejp/iE5/9AM8swgb2hTevwRtJ0aIUdnK4XFyR29F6LTIh3r79N81Y55yNGtZSs022
+	 B/KXT6V35yVi4eNutlPz0TvIQFSIM3y0zyHWaExGIVgqscN5p3YjeblBcT19oGDBo+Cdb
+	 2cH3M2bzR37iJzQZspyn2HGGnwoSpRvAOshrP8H5Rb7T2OMNGx/q5sXvEaTfGZ7zuHghh
+	 ASB9P5YCHSvQd9yCs7DDuErkgcfKIzNaLXtNjAJMUk7hv9bM4HNOBEuQdDC4jOf0/tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FHIvQ9miKGTPZxdnq0KYk9q6+jCjtw2woykB6rCsD0I=;
-	b=ATFdi+/pR5UP+fHIREeBJdsjCKC5FtwRG740O+WqBz4PbUVyHrmEqqLzm0OzQwrSXO28
-	 vVQl7LR3Zrsd1727dAsYsSZYyA1hkvcy5mtfSTaOMvuNbrOH/KatGqoXMWQox7urf+cLF
-	 bS+/+rzQQF5o1wIWCl+4SZYBp9uZB2THnQBHgDjK/+mN+3ikzCDuCVvMopAa2Nf/RN/8r
-	 M4mk8Ciy7A2iw2A59ReQTIkHCvzTLrPHAWPUQBO54u+gEe74Ry49NDNJNmtpkQ87gXwZF
-	 ifeBM1bn8q4SnjCDNGQxfY8gcV44VCPZ3CVJua0NNuC3KVEZ6AlTxIF9IZQtMKCYNSQ==
+	bh=QbTfnVp8Jw2TOEiIbiCv2Bom+5RiQm5DNNgVFzpapNc=;
+	b=iFLEDYDMNbs2XBwiV0f6htSLlOW02EievkCpxqjZ3NJGuXoBKS2y9PM8DJFEALeEgYSx
+	 gy9yW+JfAg3eWLn4tqPc5b13QuzPPUn8V07zGn2up707lpnDAFMevtax7E0Mz4Ttp9O3G
+	 xiggisvCdI4ts3hbmAJ68YQ0PyRYv9TyMekGX2k7f7ylOhEaTSrtwXcirLwf4UyjS2eGu
+	 4XImKLG0Pwjyl5uJDv3ekHNH8kl1ZRQbw5QTIz7zW8hBuNAFR+kBLYvDHYL03yWu1tfsh
+	 eFJaN7yCFpcld0ey94D/4dIXePMRoqIJGvCrxQdNZkxVzhgr2o9vi2zmSPW5/86iRzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x55QAV8q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsemuoaE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A4A606A31C;
-	Wed, 18 Nov 2026 18:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A537A606A32A;
+	Wed, 18 Nov 2026 18:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x55QAV8q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4046D1F000C4;
-	Wed, 18 Nov 2026 18:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsemuoaE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071851F000C4;
+	Wed, 18 Nov 2026 18:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026767;
-	bh=FHIvQ9miKGTPZxdnq0KYk9q6+jCjtw2woykB6rCsD0I=;
+	s=korg; t=1795026770;
+	bh=QbTfnVp8Jw2TOEiIbiCv2Bom+5RiQm5DNNgVFzpapNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x55QAV8qdGX2IsGBP5ePY+jQqNk7k+HYTo3wqdUSm3b9heALjHDrVpYeQBRIJWY8T
-	 bynosIsUNgoNMJ35XnUlyHTjF8se5+osta0GGxSFT8+oSNJF1vkxIn+s7y1hza7SFD
-	 K4a6+9pKLcvFXKGrv0M8maaQsHkWBKA450KqZMtM=
+	b=bsemuoaEDjpxA5/w1yxHVYHVOa1pR62ju6ipZw12Ez95y6r9iVWt1APV8wvzjjUhY
+	 Le3aefG8/17ngUE/ZgGE1LhYOAujJop+cpt18EQGYEU+rywWWE7Y1HqQ8UhnpVe4PM
+	 VzX9lostVHt1sgLpEIkEXWKM7azO1P8m5fd2cCOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Pepper <cochcoder@proton.me>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1550/2151] Bluetooth: hci_sync: scan unfiltered for host-resolved RPAs
-Date: Wed, 18 Nov 2026 15:54:45 +0100
-Message-ID: <20261118150218.370519385@linuxfoundation.org>
+Subject: [PATCH 6.18 1551/2151] clocksource/drivers/timer-ti-dm: Handle runtime resume failure
+Date: Wed, 18 Nov 2026 15:54:46 +0100
+Message-ID: <20261118150218.405778375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,75 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Pepper <cochcoder@proton.me>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 397464709a204da9b8dc3b01d6ea42539d951cd2 ]
+[ Upstream commit c40b76c8cf580466d9e56223f7f74beecc165480 ]
 
-Restore unfiltered scanning for pending IRK peers when the controller
-cannot resolve private addresses. Keep accept-list filtering while
-suspended and when forced by periodic advertising synchronization.
+omap_dm_timer_write_counter() accesses timer registers and updates the
+saved counter value after requesting a runtime PM reference. If runtime
+resume fails, the timer remains inaccessible and no reference is
+acquired, but the function still writes the register, drops a
+reference, updates the cached value, and reports success.
 
-Fixes: e209e5ccc5ac ("Bluetooth: MGMT: Mark LL Privacy as stable")
-Assisted-by: OpenCode:gpt-6.1-sol
-Signed-off-by: Kyle Pepper <cochcoder@proton.me>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Check the return value and propagate an error before touching the timer
+state.
+
+Fixes: 0494fc345b37 ("clocksource/drivers/timer-ti-dm : Capture functionality for OMAP DM timer")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20261003080812.429386-1-yaojiale02@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/clocksource/timer-ti-dm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a5a6708b93cbd..6967da50aef05 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2639,7 +2639,7 @@ static int hci_le_set_privacy_mode_sync(struct hci_dev *hdev,
-  */
- static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
- 				       struct conn_params *params,
--				       u8 *num_entries)
-+				       u8 *num_entries, bool force_filter)
+diff --git a/drivers/clocksource/timer-ti-dm.c b/drivers/clocksource/timer-ti-dm.c
+index 793e7cdcb1b16..37508d5a1670d 100644
+--- a/drivers/clocksource/timer-ti-dm.c
++++ b/drivers/clocksource/timer-ti-dm.c
+@@ -1076,6 +1076,7 @@ static int omap_dm_timer_write_counter(struct omap_dm_timer *cookie, unsigned in
  {
- 	struct hci_cp_le_add_to_accept_list cp;
- 	int err;
-@@ -2652,6 +2652,11 @@ static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
- 		return 0;
- 	}
+ 	struct dmtimer *timer;
+ 	struct device *dev;
++	int ret;
  
-+	/* Host-resolved peers need unfiltered scanning while awake. */
-+	if (!force_filter && !hdev->suspended && !ll_privacy_capable(hdev) &&
-+	    hci_find_irk_by_addr(hdev, &params->addr, params->addr_type))
-+		return -EINVAL;
+ 	timer = to_dmtimer(cookie);
+ 	if (unlikely(!timer)) {
+@@ -1085,7 +1086,10 @@ static int omap_dm_timer_write_counter(struct omap_dm_timer *cookie, unsigned in
+ 
+ 	dev = &timer->pdev->dev;
+ 
+-	pm_runtime_resume_and_get(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0)
++		return ret;
 +
- 	/* Select filter policy to accept all advertising */
- 	if (*num_entries >= hdev->le_accept_list_size)
- 		return -ENOSPC;
-@@ -2983,7 +2988,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 	dmtimer_write(timer, OMAP_TIMER_COUNTER_REG, value);
+ 	pm_runtime_put_sync(dev);
  
- 			num_entries = 1;
- 			err = hci_le_add_accept_list_sync(hdev, &pa,
--							  &num_entries);
-+							  &num_entries, true);
- 			goto done;
- 		} else {
- 			rcu_read_unlock();
-@@ -3047,7 +3052,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 
- 	for (i = 0; i < n; ++i) {
- 		err = hci_le_add_accept_list_sync(hdev, &params[i],
--						  &num_entries);
-+								&num_entries, false);
- 		if (err) {
- 			kvfree(params);
- 			goto done;
-@@ -3069,7 +3074,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 
- 	for (i = 0; i < n; ++i) {
- 		err = hci_le_add_accept_list_sync(hdev, &params[i],
--						  &num_entries);
-+								&num_entries, false);
- 		if (err) {
- 			kvfree(params);
- 			goto done;
 -- 
 2.53.0
 
