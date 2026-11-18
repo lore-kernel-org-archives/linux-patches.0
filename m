@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058794;
-	b=gV5xOXO9Gdtp4MdwyhEbH8cvAsJb3vYCsp0+Ka1JZeV1UCsxtudMb3U4mW8t2kaSf3HA
-	 sNKG0kTlbmuJLvN9D5SsCwAFodXQ5v5Eiq56reAQDToK8hJpVyidHkFrm1xfhd+JlR0fR
-	 8UaiHw81zQKIK2G3R6Oin9NhnGxaVxZBvhvzrZWNXP3PI0Uw4DoQz/kyMr/kSga098WMl
-	 lprz7gePnPVCPiWJd4bKVsbsZgveh5czgIUO/I3WNAXOn+fMqviRC3iOjaFNB8yIQMBYE
-	 NapAKSC+qe2p+EWDMRW6Vowl0/vCZr+3zDfth/p82cyZoiVtpkgnzeD3NHyM3eEZz6w==
+	t=1795058797;
+	b=JMcoTOmHXweRpcyvWpvGdF9PWR5M8eVuKMi3UST4ogsuYpHK+v5hN1n2JGNdd3XL7W79
+	 /79lJVq9c/bN7vpSd8Rg54Q3uHNUUN1GYd3QcoyG9HaE39eCf+n5AqzLIsW5DzjcV0rn1
+	 XJBlE7II0YWT3CIrnfTs9Wbw+Ni3TVscgaSw9ainqok6KZXlE7ZxGucppFL5I+AU2n4Qx
+	 M1mkmSrd8NyfCFjuR4+Yx2ouP6nyJRd+ARMroh5cz9QStgjZG9Kcv3okiLnEWIq1Ye9bB
+	 5DBznIovGhU96tcxJlBdBGjJBuCvX8nkFMBhW9qOtIEK0XhtwNc/HR8Sr5zAkQWe3AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=mmTksT6SU+PvwMAfXtgh5iR4xcspa+txk03JDXbkaMU=;
-	b=aSgI+LjZfMdjWiaH8TloVY5hITtNxGQPxZe9qR7ILwTeMPh8CCjQdu0/X0siq8W2V33K
-	 s2bHl7dgogtRkvNJiMseLAh/l07VPhwwxePzf74Clvc90rg90zK1CzkhIGZFMjajbLcoa
-	 EyTu/j9MAZJdtnYsvVfp7zyt41yxE7zozMuxqReCsQdm73ekpd/YPvKh7b5BlgDDD2k+v
-	 HGRaadDBBJA68eMKMBkiCRb8Y5PZ+zuQqyApkZDPqUAjEmTgySfF7p9jc5LFRDbvY8FdX
-	 0uVR8xkg6fTmAITJrs4UY1vNFw4bMbsJYtkSUzT1JKDmSppuqZzVuObUtM6SNfLFwlA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0rFOy7LUE6mMwrodntZs8yEpW6AVdId5lwJVEiVVhm8=;
+	b=ZSMtGLWYNVmbm/Fnee4vEbszPhf3E+jZyquOFrtUWMSat3jzppWU7OUKQT7dCw2eUfr8
+	 Woqms94JzJgvjsWqNY2Mx1Ch1Q0ZfiA0O8xjkcKgjv/qRFAgxS+A37bVk/t/Ge6OSw8Xk
+	 4y7WkkioKeKxhlvKIQE0HYr8LO5UcsoUda1/LjSeaGvv305sKQooM0F3gmTnS3WIY/jYl
+	 beGorwn2vUuKz3VqJUvv7pGRLimnPes7QfobMAs8fCsgqec9xRFiesdt2n4H3d7bsjy6D
+	 GLQ1ZjADGddoCam/ehHkcPT8l6EbzyQq64F+N+1CXyCPbpbZUwyzpKk7Cyb2lh1KxwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzQygOy9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxphsjuL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254A5606A31C;
-	Thu, 19 Nov 2026 03:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA26606A31C;
+	Thu, 19 Nov 2026 03:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzQygOy9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781EA1F000C4;
-	Thu, 19 Nov 2026 03:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxphsjuL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9771F000C4;
+	Thu, 19 Nov 2026 03:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058794;
-	bh=mmTksT6SU+PvwMAfXtgh5iR4xcspa+txk03JDXbkaMU=;
+	s=korg; t=1795058796;
+	bh=0rFOy7LUE6mMwrodntZs8yEpW6AVdId5lwJVEiVVhm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YzQygOy9lPs0BRsgwF8hQ8QYjBI1LtSshR9hBVfOFtwadyUX6SyBFxp2k797p/US4
-	 PbbVgM35BNOcIUBTHH68vQWFQBnEWowTTVhM1KedM7PdixnhOq9zwX/O5dxhP9x697
-	 gj06BpwcMw0XU4qZvM2bm12wgEGeqHyLgJ2+TzaI=
+	b=HxphsjuLt8C8xeUzlNt3wRy4ILkJSWfNikQLsOJqMNOWNTt8fK94JI3oaOxcsKujI
+	 PvVczC+D4ltOAoxEwE2TyJwHUYxUkCeqaoipn4KcKNyIpvHeZfez/5zpPHK32DnvDr
+	 3Trgdiy3sgVc5zGy/fHfzaeoc8atXjc20nqw+c1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0576/1848] libceph: only set read_from_replica on read requests
-Date: Wed, 18 Nov 2026 15:43:34 +0100
-Message-ID: <20261118145939.268979186@linuxfoundation.org>
+Subject: [PATCH 5.10 0612/1848] SUNRPC: fix oversized GSS proxy token copy
+Date: Wed, 18 Nov 2026 15:44:10 +0100
+Message-ID: <20261118145940.922325915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,53 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit d6c7a5fcd08873c45a2dcd645a0690fd1443af50 ]
+[ Upstream commit 62319c2534b603b416fa2aa2f3ef18c311f75010 ]
 
-ceph_osdc_alloc_request() ORs the mount option's read_from_replica
-flag into r_flags for every request, writes included.  The flag is
-meant for reads: calc_target() skips the replica choice for any
-request that has CEPH_OSD_FLAG_WRITE, and the OSDs only know
-BALANCE_READS on read ops.  Sending it on writes is at best ignored;
-with read_from_replica=balance a buffered write that fell back to
-ceph_sync_write() after losing BUFFER to a revoke failed with -EIO,
-while the same run without the option works fine.
+gss_read_proxy_verf() allocates one page per token chunk, but it copies the
+entire linear head of an RPC request into in_token->pages[0]. A UDP datagram
+can leave more than PAGE_SIZE bytes in the linear head, so a large
+RPCSEC_GSS INIT token overwrites following pages.
 
-Gate the flag on CEPH_OSD_FLAG_READ.
+Copy the linear head in page-sized chunks before switching to the request
+page array. The linear head itself can span multiple pages.
 
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
 Cc: stable@vger.kernel.org
-Fixes: 22d2cfdffa5b ("libceph: move away from global osd_req_flags")
-Assisted-by: Cursor
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Assisted-by: Codex:gpt-5
+Link: https://patch.msgid.link/20260910125120.3798995-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ sashal: adapted the copy source and length calculation to argv->iov_base and argv->iov_len instead of XDR stream pointers ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osd_client.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/auth_gss/svcauth_gss.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index 92d379c60da5c..819d29dba0a08 100644
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -1094,7 +1094,9 @@ struct ceph_osd_request *ceph_osdc_new_request(struct ceph_osd_client *osdc,
- 	req->r_base_oloc.pool = layout->pool_id;
- 	req->r_base_oloc.pool_ns = ceph_try_get_string(layout->pool_ns);
- 	ceph_oid_printf(&req->r_base_oid, "%llx.%08llx", vino.ino, objnum);
--	req->r_flags = flags | osdc->client->options->read_from_replica;
-+	req->r_flags = flags;
-+	if (flags & CEPH_OSD_FLAG_READ)
-+		req->r_flags |= osdc->client->options->read_from_replica;
+diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
+index ab99ffb464ffa..8ebebbdef911d 100644
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1183,10 +1183,11 @@ static int gss_read_proxy_verf(struct svc_rqst *rqstp,
+ 	}
  
- 	req->r_snapid = vino.snap;
- 	if (flags & CEPH_OSD_FLAG_WRITE)
+ 	length = min_t(unsigned int, inlen, argv->iov_len);
+-	if (length)
+-		memcpy(page_address(in_token->pages[0]), argv->iov_base, length);
++	for (to_offs = 0; to_offs < length; to_offs += PAGE_SIZE)
++		memcpy(page_address(in_token->pages[to_offs >> PAGE_SHIFT]),
++		       (char *)argv->iov_base + to_offs,
++		       min_t(unsigned int, length - to_offs, PAGE_SIZE));
+ 	inlen -= length;
+-
+ 	to_offs = length;
+ 	from_offs = rqstp->rq_arg.page_base;
+ 	while (inlen) {
 -- 
 2.53.0
 
