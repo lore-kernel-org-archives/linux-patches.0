@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031800;
-	b=4iDxgWmauVWydyloph6HXqcX5QXSEUvi/j/cYbgKMbckCqgbnZWNjEHE9wFdssDfXl+P
-	 Y1MgqVf/5MN5dpdxlj3uSHfhN/gUcRUe+LMaUiDltvHI/sHtHPjH84xXeXPu/8CIFjb4h
-	 K//RXfXpWuS57keHEEWRoMM3uLgHqvqB3EseDmln14wLtL45Ocy0Ys9fDvpLspqn8GIYC
-	 fVyjgeRZDW8uUiuYaCWoF+YhT+ckJhEG0RQ5dMaWYIv46QxBeiOAmO00Wsf0AYmCRb3IT
-	 t98Xi5CWDxCYV6I7VUEDv4Qkc0SlHuHK18I/c98Bhsj5qw56G/qGoTTVirEDhJRJ1qQ==
+	t=1795031803;
+	b=cZuLgE05JGA/VWsiDQnSwsDKN9xNbAlGiHdgauNv82qdBmx3hE1l/rcU8YuKgzEeDvHj
+	 QWggMZK83zFFUDlOsy2n23LCRHYFKDM4E+MxlioFrvxnO2DXHGxGJo3KdilGRCubRDqfI
+	 i19FRcFCM+x81XIfODWY80cvJ79nFQeSMFVrp6cm3iX7plDiU9EPqsa3hbAjHY5RdA8Rs
+	 NbnGQ8l1SkY+CzTIdF7vaU4rctWoqOMpxxtmOQ/1f1COqtjH8Ce5jmXJ8ggDBx351ehW8
+	 6aM1RtGs3/A5eSdl1K3tJ8SER6odHz0cxSyv5b4uoxiEeu9DFSS5KCwwhp6G8H0SzBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2vON+hkEJOqXyavYCT3o9FFRE/DWrrOy7/n1DRONaM0=;
-	b=ipSQCuVeJRZ63aQ8MqN2XVigMPGD2ZOXztlXLmcvMm2mfVYXQ9hubGuMMqzZ3KZXDq8d
-	 FnIMEh3UhfXm7JYnG2wpeWd6j/TQfgGmMW8txePtDbbcRBhDlLl3eHB2YCr46kqiZZXUM
-	 fdHI8j3xmRUW/UV0pyX7b8rCVkR3Ieg8dDzRCQ6LbIsv767AzZran6b/0MDZ4itsItJCm
-	 OoT2ITqkZAokf79jCHc9KssyO4KDwER662BQN/Lsl78GZU9Xt7nRuc/pS+7MNvJAEuA5D
-	 lmT6eOyO1x5dmFXt/mMybYBa1ex2xfGNC3ukDTCnVSAnExxAhauOtzpIPiMbFFVKqaA==
+	bh=14c95qI9B4/NP5Q1f9i2tw/RbRPWcliZSYk8KpXCSNw=;
+	b=Olg454F8c5yhpKSiEnmFr942X27HWSYDXB+2Jme905W6xKUBGa/PPHuqS0EnFAW3giSW
+	 zLz37uckH+2/u4ab/juc1Z4yNQyof6VUXprTQ19Zd8kqeSeufuuHBm7XKIkSRUCXrQamg
+	 8LRXMa2PE9Hyf74wgZpFzhAP4XPauCjt/UMlX1Mf0B7CQ0qCs2hkMkuwnBjqZtV1if+ip
+	 nxBQ1UJtb9F+dt940cDJEiEUsepZo09ufIFBOYQE9K9gVBHQgBZNDVVAN/+hVbr2gMc9x
+	 teorjCfWWc0X8eBYKObMRgHwXVh9+OzccnktJmtTdEWY4jA/Hjj5Jsl3DcgtwKnR+iA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ4e9jAI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dsrimrgp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B51606A320;
-	Wed, 18 Nov 2026 19:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67890606A31C;
+	Wed, 18 Nov 2026 19:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ4e9jAI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73911F000C4;
-	Wed, 18 Nov 2026 19:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dsrimrgp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6C61F000C4;
+	Wed, 18 Nov 2026 19:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031800;
-	bh=2vON+hkEJOqXyavYCT3o9FFRE/DWrrOy7/n1DRONaM0=;
+	s=korg; t=1795031803;
+	bh=14c95qI9B4/NP5Q1f9i2tw/RbRPWcliZSYk8KpXCSNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZ4e9jAIK1Jz8y1nVYskQ5Dtb5h4oO8AwwTmBOGL6jMPD8i6TsxE1kBNZe86PBO4r
-	 eV33fTd+xvaRYrjb7Ay9XY3dUUij50mhhHDICL7eBw0UofK5cDW0hvMfonAzVAdRIM
-	 R0fJ8nTjama7l00QVuzo8P0Ia/kO64iUiNta1Ids=
+	b=DsrimrgpnoePeHnWDqdBl4ymdwF7chl6RP0lmFlS+IY+8h20/2EDH7XPuXlMa59Vl
+	 LwmmTBXLDSm5JCI0ncld1DAwOrqNmuDIeV+dztS7o54p0kk2L+DaVZFcq7Gu3Knlt3
+	 NJFpKWW5YUolKrOMhsIjTXun76hkquJD0ObsZdU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingxuan Guo <gmx472@qq.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1149/1756] firmware: cs_dsp: clear dsp->running on the cs_dsp_run() error path
-Date: Wed, 18 Nov 2026 15:54:36 +0100
-Message-ID: <20261118150055.784927555@linuxfoundation.org>
+Subject: [PATCH 6.12 1185/1756] mm/slab: Mark the kmem_buckets_create() context as a Context: section
+Date: Wed, 18 Nov 2026 15:55:12 +0100
+Message-ID: <20261118150057.077738765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,52 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingxuan Guo <gmx472@qq.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit ad6be54d13496a0b5c6d1edeea99504e438cdb7a ]
+[ Upstream commit 655668f0caf32a42fef10aaf31137e52f46a0260 ]
 
-cs_dsp_run() sets dsp->running = true once the core has been started, but
-the error path below it only stops and disables the core, leaving the flag
-set.  The first thing that can fail after that point is the post_run client
-hook, and it is reachable in mainline: wm_adsp registers
-wm_adsp_event_post_run(), which can fail in wm_adsp_buffer_init().
+kmem_buckets_create() had the same sentence about calling context as
+kmem_cache_create(), but lacked the "Context:" prefix, so kernel-doc
+rendered in the body instead of as a "context" section.
 
-The core is then stopped and disabled, but dsp->running still reads true,
-and that stale state is acted on elsewhere: cs_dsp_coeff_write_ctrl() and
-cs_dsp_coeff_read_ctrl() talk to the DSP when ctl->dsp->running is set, and
-client drivers use the flag to decide whether the firmware is up (cs35l41
-checks cs_dsp.running before its early events and on hibernate/resume).
+Give it the missing prefix. Additionally fix the "a interrupt" typo
+__kmem_cache_create_args() had.
 
-The flag cannot simply be moved below the hook: post_run hooks such as
-wm_adsp_event_post_run() read controls while they run, and
-cs_dsp_coeff_read_ctrl() only goes to the DSP when the flag is set.
-
-Clear the flag on the error path, before the core is stopped - the order
-cs_dsp_stop() already uses.
-
-Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
-Signed-off-by: Mingxuan Guo <gmx472@qq.com>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/tencent_B839C5A92D762B5717B9637A5CFA0841C608@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b32801d1255be ("mm/slab: Introduce kmem_buckets_create() and family")
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20261014052344.384723-1-kees@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/slab_common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index ea452f1908542..ff1d0793a7ca0 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -2872,6 +2872,8 @@ int cs_dsp_run(struct cs_dsp *dsp)
- 	return 0;
- 
- err:
-+	dsp->running = false;
-+
- 	if (dsp->ops->stop_core)
- 		dsp->ops->stop_core(dsp);
- 	if (dsp->ops->disable_core)
+diff --git a/mm/slab_common.c b/mm/slab_common.c
+index 88f1c07fa13ff..12d0f5a2b9ff2 100644
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -302,7 +302,7 @@ __kmem_cache_alias(const char *name, unsigned int size, slab_flags_t flags,
+  * &SLAB_TYPESAFE_BY_RCU - Slab page (not individual objects) freeing delayed
+  * by a grace period - see the full description before using.
+  *
+- * Context: Cannot be called within a interrupt, but can be interrupted.
++ * Context: Cannot be called within an interrupt, but can be interrupted.
+  *
+  * Return: a pointer to the cache on success, NULL on failure.
+  */
+@@ -406,7 +406,7 @@ static struct kmem_cache *kmem_buckets_cache __ro_after_init;
+  *		to/from userspace.
+  * @ctor: A constructor for the objects, run when new allocations are made.
+  *
+- * Cannot be called within an interrupt, but can be interrupted.
++ * Context: Cannot be called within an interrupt, but can be interrupted.
+  *
+  * Return: a pointer to the cache on success, NULL on failure. When
+  * CONFIG_SLAB_BUCKETS is not enabled, ZERO_SIZE_PTR is returned, and
 -- 
 2.53.0
 
