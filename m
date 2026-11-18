@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038663;
-	b=Od/RvPtT0uN8vcE0+w+ydrJZ+NzoPuBfSCLUqk8E8XB3sMtSmU9R9fvHXp6dysopB9Ea
-	 hgCHyXPrAEPS3d/z+u5vKb91gYPIYzwGWnQ782io+qeBtDkOJ5IYiJQJzqu1NKVHI0xtV
-	 wIcGLot3Xqe6Bq8ogUydxRRuBwXDuTOg70JVm+yeWVDNsNfDgazoh8nYiaqnf6kA79iGM
-	 t5Plj5RmW07ZWJuBLA0Rn6wHl6v/G3N+X6Ms9FDRuLdAjstT4O1MF65hNYfOYUjQm/I/V
-	 qTKJTnxfIYh1iayILAANOMkUYP04dDD49r5hwV/PsjTHBoB3NtMz9aZ2alFtCXIN0XQ==
+	t=1795038666;
+	b=rOv+k2j11HArfi4VLqWjEsewkpp7zBpUvM2PefKTjGZVtDey9OkNOF5qYqOTmpj3+576
+	 1CdShuc8KBlZxAGqJMjoBWcJhJN2rmGNhyh5eMoyqTCLnRv6IhuSvwuUFo4omGPKcYQMG
+	 ZXmLbCiMgbQCG9a1hSjRr3GmhyitL6OvHzIQNFRypXNWyoYhXeXiKQ6OGzaYLx1wbJ3DQ
+	 5Mrhbqnyu5T3TGUs/J1yOKauLF1yUYykomWO3gg6tlCPj1OW0mSUKag1GyQRT5dG1a9u3
+	 0REc4lJX31fCxdPuFi1gI9tTJn7w9wReHGLXehF4ybfAmaObt1PYr/5N6Y0zxKwQEgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038663;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=sd7B7m6w6ujWSQRBBrgk77FcJpVx/8NZMtWh3QdZq/0=;
-	b=qCLk+pjIe5ilWuEXupBAohurFkKtup9eLd2kl3aT+jl13pVCYYbglmaA9+YfnjORXQjt
-	 EoB4tH8kni4wXrGgT2aHnuoo3w5aPI2/K7wrl02w4oGOGSCJYNLka84I68Xm5CJd5RN6V
-	 3Km+Uz/RISjGgmEJkFSkAgrHCMddiv/AK8EM07DpG0AFNYx0B03StJyOWwjuITqu1NsxN
-	 5UmSqFgv/EX4l1TuojPn6fDjCWKhIINMyaPSw7P2leDPmVIz6pZm+EHWYzI62vHa9s7+f
-	 uqJcw9HgwTfA085XKKCd9NgmhudXAApMLSzBm10X7d7e8S2lYwIoFrw3cdn9Yoa5X7Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=EGyZfa8PPpbfY/11adGdwSR12VsYAnMxKdcsXWiz21Q=;
+	b=zzLhfofF/K3t0cHjCjej1VNrci1fA+2cRrtfBKUKzDojqJAiqjsXKSNNNmhqgNY9TNCV
+	 cKJzr8DMI4RuUVY1/Nxuo9ybGpqJjbnIEIDKc+3xURRXe4ekOfpmeH+Fh2I27/JvlhK+9
+	 uEnNAqDFpDX9zQ+AATkU9Wthrspza2hBps6KBB2O08DSgbuNBJheoYplYAuSXhK8/AE2k
+	 Xet4bSliOjNOnXlIM11KwKZvs/RSRiXgr/gL9Nv84cHRQXHTNe90XEXG7dO1VcohjWOk+
+	 yaWUygxu8OW6DDFU/8ZcLrab2Ze+km2CUBWqBmJJVqNml3OCDCyUq1jPaqxWW2F4KMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcQWQrCZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iil2/iDy";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBB9606A31C;
-	Wed, 18 Nov 2026 21:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C793606A31C;
+	Wed, 18 Nov 2026 21:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcQWQrCZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14851F000C4;
-	Wed, 18 Nov 2026 21:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iil2/iDy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B921F000C4;
+	Wed, 18 Nov 2026 21:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038663;
-	bh=sd7B7m6w6ujWSQRBBrgk77FcJpVx/8NZMtWh3QdZq/0=;
+	s=korg; t=1795038666;
+	bh=EGyZfa8PPpbfY/11adGdwSR12VsYAnMxKdcsXWiz21Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pcQWQrCZT1WsXg10WLEoiOZ14mwDLorQjtoaBIVDvRXHdQDuq9NBkoI5fsgR2DarB
-	 9LLfZEzNHc2dKTKtRRNjgdLtL7OiOfN+x2S3ORjRn6yMdrwE4acExSj9HtX4vOgGnC
-	 M29UhiNPv/WI2mhPMT4/zt7ueA8HPhApgVsu1lrM=
+	b=iil2/iDyGl4eW/l2zcGijOOpn1yQx2lmpheF47TFlQkFP/gxVIvpAg9OrQRmBdAvw
+	 YYjDRAiw3bApjRKRkITk5DmNNIjHDHFhTTgwsUKKnU1DjFbLST1G4vOhVl/H4IIrSe
+	 YN85EAGMf9Y4cRwdNHVQkyddY5gLrlqe/AAOgCmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1821/3318] iommufd/iova_bitmap: Ensure that iova_bitmap_set() handles the full IOVA
-Date: Wed, 18 Nov 2026 15:40:43 +0100
-Message-ID: <20261118150416.493667990@linuxfoundation.org>
+Subject: [PATCH 6.6 1822/3318] virtio_fs: read the vring size under virtio_fs_mutex in ->get_tree
+Date: Wed, 18 Nov 2026 15:40:44 +0100
+Message-ID: <20261118150416.521803832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,87 +63,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit e21952d72b4740f08a272d694cca223b6b0099ca ]
+[ Upstream commit e7ccc777a040343b80f95f4cc5c12ce1df3187f4 ]
 
-Generally userspace is going to step the dirty bitmap through the IOVA
-space. However if the bitmap ends in the middle of a large PTE this is
-problematic. The first step will clear the dirty bit and report dirty to
-the end of its bitmap while the second step will see the clear'd dirty and
-report clean for the start of the bitmap. If it happens this ends up
-losing dirties.
+The vring size was read after virtio_fs_find_instance() had dropped
+virtio_fs_mutex, so a concurrent virtio_fs_remove() could free the
+virtqueue first. The reference from the lookup keeps the virtio_fs
+alive, but not its virtqueues.
 
-Further this function is missing bounds checking so if this does happen
-ther is a good chance it will write memory beyond what the userspace was
-expecting.
+Hold the mutex across the lookup and the read.
 
-Return an error code if this illegal condition happens.
+This issue was found by an in-house static analysis tool.
 
-Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
+Fixes: a7f0d7aab0b4 ("virtiofs: split requests that exceed virtqueue size")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260925161142.189813-2-parri.andrea@gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-[ sashal: Adapted the VFIO bitmap implementation by adding the missing error field and propagating it through the existing iterator. ]
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ sashal: Adjusted context to preserve kref_get(&fs->refcount) instead of upstream’s kobject_get(&fs->kobj). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/iova_bitmap.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/fuse/virtio_fs.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
-index 3f48125e2b9f0..e78cb1b4e7364 100644
---- a/drivers/vfio/iova_bitmap.c
-+++ b/drivers/vfio/iova_bitmap.c
-@@ -113,6 +113,8 @@ struct iova_bitmap {
- 
- 	/* length of the IOVA range for the whole bitmap */
- 	size_t length;
-+
-+	int err;
- };
- 
- /*
-@@ -381,11 +383,11 @@ int iova_bitmap_for_each(struct iova_bitmap *bitmap, void *opaque,
- 	     ret = iova_bitmap_advance(bitmap)) {
- 		ret = fn(bitmap, iova_bitmap_mapped_iova(bitmap),
- 			 iova_bitmap_mapped_length(bitmap), opaque);
--		if (ret)
-+		if (ret || bitmap->err)
- 			break;
- 	}
- 
--	return ret;
-+	return ret ? ret : bitmap->err;
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index b5ecbd146301b..d78ad4cc4fc94 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -265,26 +265,23 @@ static int virtio_fs_add_instance(struct virtio_fs *fs)
+ 	return 0;
  }
  
- /**
-@@ -408,6 +410,18 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
- 			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
- 	unsigned long last_page_idx = mapped->npages - 1;
+-/* Return the virtio_fs with a given tag, or NULL */
++/* Return the virtio_fs with a given tag, or NULL.
++ * Callers hold virtio_fs_mutex, which also keeps the virtqueues alive.
++ */
+ static struct virtio_fs *virtio_fs_find_instance(const char *tag)
+ {
+ 	struct virtio_fs *fs;
  
-+	/*
-+	 * If the range cannot be recorded then the system call returns failure.
-+	 * This is to prevent loosing dirties if userspace is expecting to step
-+	 * the bitmap through the IOVA space.
-+	 */
-+	if (!length || length > bitmap->length || iova < bitmap->iova ||
-+	    iova - bitmap->iova > bitmap->length - length) {
-+		if (!bitmap->err)
-+			bitmap->err = -EPROTO;
-+		return;
-+	}
+-	mutex_lock(&virtio_fs_mutex);
++	lockdep_assert_held(&virtio_fs_mutex);
+ 
+ 	list_for_each_entry(fs, &virtio_fs_instances, list) {
+ 		if (strcmp(fs->tag, tag) == 0) {
+ 			kref_get(&fs->refcount);
+-			goto found;
++			return fs;
+ 		}
+ 	}
+ 
+-	fs = NULL; /* not found */
+-
+-found:
+-	mutex_unlock(&virtio_fs_mutex);
+-
+-	return fs;
++	return NULL; /* not found */
+ }
+ 
+ static void virtio_fs_free_devs(struct virtio_fs *fs)
+@@ -1488,13 +1485,17 @@ static int virtio_fs_get_tree(struct fs_context *fsc)
+ 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
+ 	 * to drop the reference to this object.
+ 	 */
++	mutex_lock(&virtio_fs_mutex);
+ 	fs = virtio_fs_find_instance(fsc->source);
++	if (fs)
++		virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
++	mutex_unlock(&virtio_fs_mutex);
 +
- 	do {
- 		unsigned int page_idx = cur_bit / BITS_PER_PAGE;
- 		unsigned int offset = cur_bit % BITS_PER_PAGE;
+ 	if (!fs) {
+ 		pr_info("virtio-fs: tag <%s> not found\n", fsc->source);
+ 		return -EINVAL;
+ 	}
+ 
+-	virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
+ 	if (WARN_ON(virtqueue_size <= FUSE_HEADER_OVERHEAD))
+ 		goto out_err;
+ 
 -- 
 2.53.0
 
