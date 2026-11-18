@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022542;
-	b=3YlJWo/ng8t8ugncQJt2bkyEqmN15z4ZoFkMrY3QzfrzhOl//Ls+QtuXQYBQCG1+CP7H
-	 XLlHZE/05o0jPUc2Q7AP1P3PbnEJvszdMxXH+OXXuh0ebAjfjzHjv9B/RZFDOndQgHYgh
-	 XQlDruulZaZjQqagpX/4F80QoM9zMsJ+OCw23CAOyDOygLaOUggCrojiV3yF7zVvtXWdU
-	 a5+f6IAPMv9U+ok7eYhLhRLOkD5FOtDSGrncmGxLTEarz9M26uKYNRBB2SmfjFRiy38Fq
-	 ctoVOgmJkLcjkl8mMM/kLFwF8caDvvoPwlWf0WzL/Iz4cdmBHtCX20jH3flYn82dkpg==
+	t=1795022545;
+	b=vOpSFi+r8zgToq4aOHSAZOCy6kOzKy5Ww8aH7UB8rxXJWiZyoji+3olShaZGgTr621m9
+	 zjPV7QehtMaFH0rLzRaapJ3EVBYit1iUYPW138qXlVVvX0nYarUWFRhSDEtvK5vuXFjIX
+	 zq6IMRQqj2eRsMAyN193obDSMLtROaO8ajcmLD4NPtS02xSaq/Gqth432MMNETxgniFiO
+	 NWOftmxtZerPSn+Uf+1nMCqNY/YSQ83h4aP2xEVW/+ffLEQfeX1b4VoxbYRafX6B4p7ko
+	 QzBGoEwLLiW9coHSVMroHBr7t6+r8JopOCzYWGLAhDxxmPCRO3wjn6fFM5Fl1ch+76A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022545;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J1+/agxNIX5S/AmxGrfryiqwqoRZqj2ryFaufvWfC8E=;
-	b=w3gqazNheA8v655av1tNibXNw0YzognL6mWJQMuWkebcvJDchpsnzJC5v/9fhMxLfwoD
-	 8w20ZxZdYn89md3b+DaSi07MDk/jTHJQPoDv+vtlXlgEx+AhuK9+EJSat6WbdPVm+kHcm
-	 Ih5xzB0VGs5SO7SmpEtVi0biwp8PXRrayw9yq7PNvhQ3MM2Qf8j9noamM0HduAN9iqe44
-	 HUGH2LKvlw7cj791brbaZJqUdH/MlS5FFA59Eb8dpSHq+kIFhsWRXdBNAizkuuKmzqSrl
-	 n3213e9PklnkwrjevnRQSWEm3CjuYGesm9Ax6UDpY8QOWldoh8n8KjFIWPWWdVavl4g==
+	bh=Bom+iC3+702gaj6sTuXyH4dj5XceONfMb+9tB7PiqlI=;
+	b=0UDjYAohvwssosd/SK3bkPmkpQbEyKAKdL4yr59ZLkUCIlW6IRdXMXNGQd4GJYeMqEaQ
+	 /hVOAWP5rhD6sJyE1HMGv3ZFX7PtNQBD/qaHSnvqH2zCcVn1kAubXHqPrTIUQbYx6iRzr
+	 3zAG+bHxxgRrgbIO/0Yjy1qNWe9UavBv/6qXZdJR6SErGBBJVWj2J2rLXHx2ayddlhzYX
+	 c72pVT2sXnX+FQdWmzuo6U+6k1VIHuNHrqumuHsYZqlM77JL/J+N0NApWR98AADPXw4LT
+	 uaiL9tYmmFg4wbJVWaKsOMYmeinYT5b0clC1QilxSGxepppB+dxg3WoJz6z4ydm0bVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NARPia1y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVK9V16y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4481260A2609;
-	Wed, 18 Nov 2026 17:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E800A606A32A;
+	Wed, 18 Nov 2026 17:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NARPia1y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF7D1F000C5;
-	Wed, 18 Nov 2026 17:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVK9V16y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DEF51F000C6;
+	Wed, 18 Nov 2026 17:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022542;
-	bh=J1+/agxNIX5S/AmxGrfryiqwqoRZqj2ryFaufvWfC8E=;
+	s=korg; t=1795022544;
+	bh=Bom+iC3+702gaj6sTuXyH4dj5XceONfMb+9tB7PiqlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NARPia1yTA+NhC7vtLd5OuB8yIqsBT54ALVdxSOz1QqIvPwvN00LYkgPeggNYZqjD
-	 93041mvqTeGBeYfMREcAl4Ur25KvqBScE8TtJWj+nDrofscEMCSL2MhTDa2J4UKb1z
-	 KU3pmfmdvwxL+JX9a/7QGxxvfUGrtm/Ka6VtSFHc=
+	b=wVK9V16yj4d5IvxIfwjH1rwJVvY4fZmSMK0Pwk4TSpFG8FYksoy8MOI6rwqQlWT4c
+	 2IrW1JA4jDRumoVIZRRqR2FXJKBvCwtFeY0dEb8MZ/NGOk9eImC3X3PE+S+njI0rRM
+	 BNNaWL1hG2DhmYHkQn4c+eEl+Mr4wlrTZtnY8FMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0009/2151] mm/shmem: hold off eviction in shmem_writeout()
-Date: Wed, 18 Nov 2026 15:29:04 +0100
-Message-ID: <20261118150121.978553416@linuxfoundation.org>
+Subject: [PATCH 6.18 0010/2151] fbcon: Rebuild rotated font buffer on font change
+Date: Wed, 18 Nov 2026 15:29:05 +0100
+Message-ID: <20261118150122.014403377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,127 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit 8f59173b5ca358bf4d1017b44da3cbe6faa80daf ]
+[ Upstream commit e4b6b865d45d8dafb6c6f28c8a993a5b4431d25a ]
 
-Once shmem_writeout() has moved the folio from the page cache to the
-swap cache, the folio lock no longer keeps the inode alive: truncation
-and eviction find a swap entry, free it and do not wait for anybody.
-That did not matter as long as swap_writeout() was the last thing the
-function did.  But since it puts the folio back when swap_writeout()
-returns AOP_WRITEPAGE_ACTIVATE, it uses the mapping and the inode
-afterwards:
+fbcon_rotate_font() caches a rotated copy of the console font in
+par->rotated.buf. The buffer is sized from the font's width, height
+and charcount, and is rebuilt in fbcon_init(), fbcon_switch() and
+fbcon_modechanged(), but not in fbcon_do_set_font().
 
-  reclaim                               last close of an unlinked file
-  shmem_writeout()
-    shmem_delete_from_page_cache()
-    swap_writeout()
-      zswap_store() fails               shmem_evict_inode()
-      writeback is disabled               shmem_truncate_range()
-      return AOP_WRITEPAGE_ACTIVATE         shmem_free_swap()
-                                        destroy_inode()
-                                        ... RCU grace period, freed
-    shmem_add_to_page_cache(mapping)
-      xas_lock_irq()            <- use after free
+When the font is changed through KDFONTOP, the new geometry is
+installed and vc_resize() redraws before the buffer is rebuilt. The
+rotated putcs/cursor ops then index the old buffer with the new cell
+size; KASAN reports a slab-out-of-bounds read in soft_cursor().
 
-swap_writeout() behaves that way if zswap is enabled, cannot take the
-folio and the memcg or one of its ancestors has memory.zswap.writeback
-set to 0.
+Rebuild the buffer for the visible console before the redraw, as the
+other callers do: select the console's blitting state with
+set_blitting_type() (which also uploads the new font's map on
+tile-blitting hardware), then rebuild. Background consoles keep
+their rebuild at fbcon_switch() time, as the buffer is shared per
+framebuffer and must not be updated for a console that is not being
+displayed.
 
-shmem_unuse() already added infrastructure to deal with that.
-Reuse info->stop_eviction to protect the inode during writeout. Increment
-it before removing the folio from the page cache, and decrement it after
-swap_writeout() and any attempted reinsertion and inode accounting.
-In shmem_evict_inode(), wait for the counter to reach zero even if
-swapoff has already removed the inode from the swap list. Add some helpers
-to make the code easier to digest.
+To ensure a correct rollback when the rebuild or the following
+vc_resize() fails, save the rotated font state, clear it before
+rebuilding, and restore it in the error path of
+fbcon_do_set_font().
 
-There is a known remaining issue with two swapoffs racing, and the empty
-list check not being able to detect that race. That will be addressed
-separately later.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 6344a6d9ce13 ("mm/shmem: writeout free swap if swap_writeout() reactivates")
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-[ david: code cleanups; improve description ]
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-6-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: inlined upstream eviction helpers at their call sites to avoid adding new functions ]
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: adapted rotated font cache handling to the older fbcon_par layout and font reference-counting API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 57 ++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 5ce1c0ddf8cde..6828611bcdfe0 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1411,16 +1411,21 @@ static void shmem_evict_inode(struct inode *inode)
- 			}
- 			spin_unlock(&sbinfo->shrinklist_lock);
- 		}
--		while (!list_empty(&info->swaplist)) {
--			/* Wait while shmem_unuse() is scanning this inode... */
-+		/*
-+		 * Writeout may still use the inode after swapoff has removed it
-+		 * from the swaplist, so always wait at least once.
-+		 */
-+		do {
- 			wait_var_event(&info->stop_eviction,
- 				       !atomic_read(&info->stop_eviction));
-+			if (list_empty(&info->swaplist))
-+				break;
- 			spin_lock(&shmem_swaplist_lock);
- 			/* ...but beware of the race if we peeked too early */
- 			if (!atomic_read(&info->stop_eviction))
- 				list_del_init(&info->swaplist);
- 			spin_unlock(&shmem_swaplist_lock);
--		}
-+		} while (!list_empty(&info->swaplist));
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 903823c9ce567..51860796f4364 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2430,6 +2430,12 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+ 	u8 *old_data = vc->vc_font.data;
+ 	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	u8 *saved_fontdata = NULL, *saved_fontbuffer = NULL;
++	u32 saved_fd_size = 0;
++	int saved_cur_rotate = 0;
++	bool rotated_saved = false;
++#endif
+ 
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+@@ -2449,6 +2455,33 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	else if (!vc->vc_hi_font_mask && charcount == 512)
+ 		set_vc_hi_font(vc, true);
+ 
++	/*
++	 * Select the console's blitting state and update the rotated font buffer
++	 * to match the new font, so that the rendering below does not use a
++	 * cache that was built for the old font. Clear the cached state so
++	 * the rebuild allocates a fresh buffer; the old state is kept until
++	 * the font change can no longer fail.
++	 */
++	if (con_is_visible(vc)) {
++		set_blitting_type(vc, info);
++		if (par->rotate_font) {
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++			saved_fontdata = par->fontdata;
++			saved_fontbuffer = par->fontbuffer;
++			saved_fd_size = par->fd_size;
++			saved_cur_rotate = par->cur_rotate;
++			par->fontdata = NULL;
++			par->fontbuffer = NULL;
++			par->fd_size = 0;
++			par->cur_rotate = 0;
++			rotated_saved = true;
++#endif
++			ret = par->rotate_font(info, vc);
++			if (ret)
++				goto err_out;
++		}
++	}
++
+ 	if (resize) {
+ 		int cols, rows;
+ 
+@@ -2465,11 +2498,28 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 		update_screen(vc);
  	}
  
- 	simple_xattrs_free(&info->xattrs, sbinfo->max_inodes ? &freed : NULL);
-@@ -1685,6 +1690,13 @@ int shmem_writeout(struct folio *folio, struct swap_iocb **plug,
- 			spin_unlock(&shmem_swaplist_lock);
- 		}
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	if (rotated_saved)
++		kfree(saved_fontbuffer);
++#endif
+ 	if (old_userfont && (--REFCOUNT(old_data) == 0))
+ 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
+ 	return 0;
  
-+		/*
-+		 * Once the folio has left the page cache, its lock no longer
-+		 * keeps the inode from being evicted and freed: hold eviction
-+		 * off, in case the folio has to be put back below.
-+		 */
-+		atomic_inc(&info->stop_eviction);
+ err_out:
++#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
++	/*
++	 * Drop the buffer built for the new font and restore the saved
++	 * state.
++	 */
++	if (rotated_saved) {
++		kfree(par->fontbuffer);
++		par->fontdata = saved_fontdata;
++		par->fontbuffer = saved_fontbuffer;
++		par->fd_size = saved_fd_size;
++		par->cur_rotate = saved_cur_rotate;
++	}
++#endif
+ 	p->fontdata = old_data;
+ 	vc->vc_font.data = old_data;
+ 
+@@ -2489,6 +2539,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
+ 		set_vc_hi_font(vc, false);
+ 
++	/*
++	 * Re-select the blitting type, which re-uploads the font map on
++	 * tile-blitting hardware.
++	 */
++	if (con_is_visible(vc))
++		set_blitting_type(vc, info);
 +
- 		swap_shmem_alloc(folio->swap, nr_pages);
- 		shmem_delete_from_page_cache(folio, swp_to_radix_entry(folio->swap));
+ 	return ret;
+ }
  
-@@ -1692,6 +1704,8 @@ int shmem_writeout(struct folio *folio, struct swap_iocb **plug,
- 		error = swap_writeout(folio, plug);
- 		if (error != AOP_WRITEPAGE_ACTIVATE) {
- 			/* folio has been unlocked */
-+			if (atomic_dec_and_test(&info->stop_eviction))
-+				wake_up_var(&info->stop_eviction);
- 			return error;
- 		}
- 
-@@ -1708,6 +1722,8 @@ int shmem_writeout(struct folio *folio, struct swap_iocb **plug,
- 			shmem_recalc_inode(inode, 0, -nr_pages);
- 			swap_free_nr(folio->swap, nr_pages);
- 		}
-+		if (atomic_dec_and_test(&info->stop_eviction))
-+			wake_up_var(&info->stop_eviction);
- 
- 		/*
- 		 * The swap_cache_del_folio() below could be left for
 -- 
 2.53.0
 
