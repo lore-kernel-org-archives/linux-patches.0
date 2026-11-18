@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042822;
-	b=A3JnHA1bF8mNBJFcL/fJpTOl/b5ErF7lLbWWpiDTOWXuNfRlqk8Eg/YCoMb0uJH4cX1b
-	 NcYv0bnyEGv4C6CGJ2knqA51fBSM2QQntMZOfDNuPiDY9U8GS1DKpqlZFGDQeOvD4kBqs
-	 /9Rx7yBn972Px+wsn7XOHZrYl24ndoUflKGYemJ5Z+MQ1oPLoXWHENzARYnW4bS1rPBPq
-	 jO8lm0s6fK5Ugg/8F5Ck+zyvQa+EY1+eXlh5oSDq4GIOKlNHz5sYYx7KRD3AKbvbs/7Fm
-	 QjziRMVapIs2gupfycESU2NgFEjjaBs9bPZq4LmEA3eEFO3b6V3GvXB0mg6/QXMKmew==
+	t=1795042824;
+	b=xQEWZTSDotlPQmHtin/Tgof5n2VHNvwLlNYQ5W6I96pMsrgnjcEqrg0kwm2tHtStQhH9
+	 IsHC6g8XbW+X/dsylmLrbWo8DQ+sKdYROgYh75OvUEgTxK0QA1oMrmgJiscRiOcohdDwe
+	 UAolz9r52KLNb7asPDmg/wnRkcFJjN/vdjwzJ4w27nncgGib3JZXZ7UPo+RS4Axjbb0VY
+	 JH35GkSVBx96jT0lnSKnhD4f33Pf2xION70m9+8D4ou5og68XgMNGLbXchskke0U1a+yX
+	 ToJAZDcqUPou98sGf24xHJVAMx+UMAoJz95uL8NgQX+idDtv6PBJdDiIBUmnwAT/94A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RrIG6W8qok7gUnRk6uX45y9OWoQKRX1lU/dV6f5775s=;
-	b=G2Cr6M9MRZ1nh+xCksAB6Kz2iEIFng/ivO561msNPji1OWXTLHUCb0XHLc9jsGS3HcL5
-	 hq+asLCP6zfqHBYebXoFOW79eagMkJIKfHKZJn5/ngBKSMG0lYaxFp5pBJnBlZDPE4/sj
-	 LlupayRffYA3/RiG3FOh+TpKIzYFCU4+d35Oz+VQgrqeKkeqVP/elAQPkWe6Vef67F0bH
-	 VxxGDWCovUaI1OtoB7fgwaObAQoqCZ7T75j4SJaEL0HNNnw09EMtQZBmuvjvLCm9hnSwI
-	 DY7o/6k2vp6odvGSg3bnFDVhksYtwfqv9q3Tt+RA0pqh6OEsISu3vzqvJpo4Ji3BxRA==
+	bh=hwJGXaPaUiCZfnMJbc7fxqcfYNwJWaiIkxIvnMyyUYE=;
+	b=Duncb1t1YFFtjKIA7hx/v/tiXK7PzZZfEYVcue4vbqDx/Wb05YFJszcMi/aUthvB1bbL
+	 hlMnzCZxv2Bm0oz8liM/HCWVYY7sI+uFEnaRIPxTwB3x9R+UrXnPMwO1SkVnQeDvAHqpq
+	 CeO+HHxHUV2oEMCc9KK4++FHG2mFY0t1qPdfAcki6+Y1GJgzbDtn/dmnkC5D5W570Z4vq
+	 ErijjCvJvMaurABVbP8c4w9C7k96irtX6QVB3IumpLvPreo3gryVa0woE7QkFkK3oilA0
+	 kkxDDOciA/+kCf/eoSrxnzeb5JQRn+nyNiDyjqYu0L4sRBaDyCtqISFj9CkbDskmehw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osnePMhM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tkl+EOZL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30572606A332;
-	Wed, 18 Nov 2026 23:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACA2606A31C;
+	Wed, 18 Nov 2026 23:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osnePMhM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B961F000C4;
-	Wed, 18 Nov 2026 23:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tkl+EOZL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F641F000C4;
+	Wed, 18 Nov 2026 23:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042821;
-	bh=RrIG6W8qok7gUnRk6uX45y9OWoQKRX1lU/dV6f5775s=;
+	s=korg; t=1795042824;
+	bh=hwJGXaPaUiCZfnMJbc7fxqcfYNwJWaiIkxIvnMyyUYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=osnePMhM4IVfZ4g010sISBDhVTStDROJDguQr6lnT6OePkedgJ/RiYfoIIpraJYhM
-	 hmAylTF7h379tmAN8PLaoabWz8DVgkaIUWdPisF6CFe3ztNZDia80jFbUcD7PhXrN+
-	 LjG7OpJSxunVqYBMLxtL8dq0BIUaHN6IV0Zi4tsg=
+	b=tkl+EOZLYLojjOrKzG2Z90oWUjvmFAAF3l1r0lQyMCBLOLPXtf4K3xX+NAT1zFhnI
+	 A8ufQS4kfJ6sbI/wV+U7TL0uSeN0wq4BAyiQx1EMqltdqpZA4HfZA5CmCmUYhQXrIX
+	 UW2fJhVfwcCVg2MWjHeIXptVYYUjsNT3rh8T++5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 3307/3318] net: bcmgenet: if UMAC was suspended in SW_RESET, restore it to SW_RESET
-Date: Wed, 18 Nov 2026 16:05:29 +0100
-Message-ID: <20261118150458.798066154@linuxfoundation.org>
+	Li RongQing <lirongqing@baidu.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.6 3308/3318] apparmor: avoid potential double free when remapping DFA tables
+Date: Wed, 18 Nov 2026 16:05:30 +0100
+Message-ID: <20261118150458.830909055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,55 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-commit 5857e5a196b069766a39ceb754736326a43bc6bc upstream.
+commit 7ccd884a5e5386f4c7d98625113f4924f70286b4 upstream.
 
-When the revised suspend/resume sequence was introduced this led to an edge
-case where the TX is left disabled in the following sequence.
+When unpacking a DFA, aa_dfa_unpack() stores a table in dfa->tables
+before attempting to remap a 16-bit table to 32-bit.
 
-1. phy link is down, so UMAC is held in reset and then network interface
-   is WoL enabled
-2. Enter suspend, bcmgenet_wol_power_down_cfg() enables UMAC_RX since MAC
-   is in SW_RESET
-4. Enter resume, UMAC_RX is left enabled. Since we only enable UMAC_TX
-   and UMAC_RX in SW_RESET. The UMAC_TX is never enabled again on link up.
+However, remap_data16_to_data32() frees the original table when
+allocation of the new table fails. This leaves the corresponding
+dfa->tables entry pointing to freed memory. If the unpacking then
+fails, dfa_free() attempts to free the same table again.
 
-The issue was hit in production and I verified the sequence keeps
-the TX  disabled in my standalone test. I tested on an internal
-development board with bcm77122, but should be reproducible
-on any genet HW that supports power management.
+Only publish the table to dfa->tables after any required remapping
+has completed successfully, so that dfa->tables never contains a
+pointer to a table that has already been freed.
 
-Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260930230634.3132729-1-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9208c05f9fdf ("apparmor: add support for 2^24 states to the dfa state machine.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ security/apparmor/match.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -253,6 +253,17 @@ int bcmgenet_wol_power_up_cfg(struct bcm
- 	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
- 	reg &= ~CMD_CRC_FWD;
- 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
-+
-+	/*
-+	 * Mirror wol_power_down_cfg(). If only UMAC_RX
-+	 * is enabled, then we must place the UMAC back
-+	 * into SW_RESET.
-+	 */
-+	reg = bcmgenet_umac_readl(priv, UMAC_CMD);
-+	if ((reg & CMD_RX_EN) && !(reg & CMD_TX_EN)) {
-+		reg |= CMD_SW_RESET;
-+		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
-+	}
- 	spin_unlock_bh(&priv->reg_lock);
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -393,7 +393,6 @@ struct aa_dfa *aa_dfa_unpack(void *blob,
+ 		/* check for duplicate table entry */
+ 		if (dfa->tables[table->td_id])
+ 			goto fail;
+-		dfa->tables[table->td_id] = table;
+ 		data += table_size(table->td_lolen, table->td_flags);
+ 		size -= table_size(table->td_lolen, table->td_flags);
  
- 	/* Resume link status tracking */
+@@ -410,9 +409,9 @@ struct aa_dfa *aa_dfa_unpack(void *blob,
+ 				if (!table)
+ 					goto fail;
+ 			}
+-			dfa->tables[table->td_id] = table;
+ 			break;
+ 		}
++		dfa->tables[table->td_id] = table;
+ 		table = NULL;
+ 	}
+ 	error = verify_table_headers(dfa->tables, flags);
 
 
