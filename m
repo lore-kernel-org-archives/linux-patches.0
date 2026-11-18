@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034376;
-	b=YequRC21fFW+G2PMl97oX9f361+2RFmMMDRLd4lvMDQoQdeXtRW3ktlxPtnkPoRDJlOn
-	 4LcxH2oy/d/a4PTFay+EUxRK8vAQjvrOUo3Lou3Y74stNoTSPQrJeF0aVvWipOUhhBMir
-	 agclHIG9WCzpDqcbyMVvse6d6wExSS2m+MnCuLDT2OG6ql+OR7LEFLK6k7oBYthF//YNA
-	 AqW9Jyouz2/7JhKx/Q8VR3dHivSwMKGSqiwaWK9cYgdUKY0q2ITnmvZN9oCCYPXkElife
-	 ntSnQwI61u2/Eykc0XVEat7gMqFrvtwqpyIt4NsUNYJmZiT4yVqhGMrdteiF78Q15Gg==
+	t=1795034379;
+	b=Y6fzMDp5wdIzDSkJG0YaPJhSMwhYCODitX2MMFjruqkzBqaf5XzJghK5NSnUKqqEJqCm
+	 XEdPpbELwbwjKenlsDyeMixS4f+kyl2u+7QSXCK8AiYiM8sQ5f9goeO/4K62Q0a1WjvvQ
+	 EAs6CrA74xwWWxNbWqraTsLCZDEs09ADz4s84HLzRlYzG+gie+ptDSzB/fKy3ywBwCrjU
+	 aIEx2k4ba8Z/qgqw+ZHwb7bGi5gBqu2P+sPlPjYuCc2J/wy9v/LY3qBIz8MbtfnUuoydJ
+	 XDHtqvpEVvej4/bP0TOyHjxX+2veHp5T3lp53PuN+3KUFwLIMpXv28kejmlcr3qVcbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034379;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jyvEuwbx/w69VZ35r4fg0DdQxFaY5DHkyNDXKcHghaQ=;
-	b=iITbdyk+1jcDElg4C8fR/sa0YOAUmMcdrINMK51pGw7FOgAIedY+Ea+hq8IYldGYVst1
-	 zgpWgzUe4gro2OcyfgP7tl1jCL7GUXKuMpZKu7QkdKLaVI+n9O761E3RM8ySzJRHwUZ5C
-	 k1GqyLZ1ZVXjkuGiCX5329xykRszXe6H67k5f4rp2IZID1IiQBOCB95Ur5Ltezq16dc/q
-	 PaIuIzG7WH0qEVLoXgPl5uQvEVz5jpXCOLnAQ+0oqoes6euV03SYZbebtaolQwvC2li8W
-	 Hp+riBxO6LwzoAGsFCN6badIsceQfHqbn64Sq3+3ZqeUzNPtILetu1bBoO9pFk6a8Kg==
+	bh=gop2q08By5GrrO9IR+RD8sRGEKEDbw66wZNnSrWYSPI=;
+	b=33lWTkOqdfmrMhtt5QcaVy4d0Rki/APoFujz5bLBZctgjpESIq50BwBOOCqj94FOqt2a
+	 XjluLvmQPT+G/KYftTNJ2LT3PXqrpjaIYySnMitcjv90x0ZjmshjWjHDraTJpUAoyJkN8
+	 OcVErEZW1hXxqkBNFDKX1wkx8YcCxTZDNlqu6kfE24iwbepzux8I24UYWBhWZ4PMAMHnW
+	 okg1dZ5SD5qxmr+jPPMwulfpPR4lkWjqZc6j5ZKEQuKqcdWwqmFGu3HePgc70uRAzUeB9
+	 RtY0TFxGZsR0MbPcHMefE5cM4/BVf3d3ivzt83AgZxmedXu38UxWtxZ/YfTXHvsAhbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VoKh6bPU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX97sjar;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9FF606A325;
-	Wed, 18 Nov 2026 20:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046E2606A32F;
+	Wed, 18 Nov 2026 20:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VoKh6bPU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB391F000C4;
-	Wed, 18 Nov 2026 20:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX97sjar
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550621F000C4;
+	Wed, 18 Nov 2026 20:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034376;
-	bh=jyvEuwbx/w69VZ35r4fg0DdQxFaY5DHkyNDXKcHghaQ=;
+	s=korg; t=1795034378;
+	bh=gop2q08By5GrrO9IR+RD8sRGEKEDbw66wZNnSrWYSPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VoKh6bPUOtHjIoYJSwSjFtX9qsfqjxO6C4EgRKgmFfwtfiwSispKQ9zdSf1/NNfUG
-	 F1eEbfRLgqE08kcK1009Fd8gftBd4sFzk4Sl8YmAvbiW8YNYgjlvQ/4vKBIDwI/Gu4
-	 +299fl6o1ZkhMzcbTtL9qrCDNKiMnaOvedg8um8A=
+	b=wX97sjarypgNqV/5D6M8DzeEN+SG2LpSCB9jHWvAP6DXfM5UAazqvpjwUpUVFqxnb
+	 /TG0ni5tz4FZg3/80vFt/QE2wu9kCaVwPxqT6W07WCpC+G4clr9eqQRLYdTNcScmWU
+	 IflgcIF75gJ5desDp4O6g5wXO0grJ7thWOXamgJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
+	renpanpan <renpanpan@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0330/3318] ALSA: hda/conexant: Always enable the headset-mic pin on plugin
-Date: Wed, 18 Nov 2026 15:15:52 +0100
-Message-ID: <20261118150325.821062373@linuxfoundation.org>
+Subject: [PATCH 6.6 0348/3318] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 14-dv1001TU
+Date: Wed, 18 Nov 2026 15:16:10 +0100
+Message-ID: <20261118150326.486777773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,53 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: renpanpan <renpanpan@kylinos.cn>
 
-[ Upstream commit 9642a5e843758686e02a7f0d1df9eb0f7f96603c ]
+[ Upstream commit ece609abc95cc0f75e633d93f3d868b030d9a8fe ]
 
-Rename the function to cx_process_headset_detect_plug_type() to reflect
-that it only reports the detected plug type, and move the pin control
-write into cx_update_headset_mic_vref() so that node 0x19 is always set
-to enable the headset mic with the 80% VREF whenever the mic is
-present, regardless of the type detection result.
+The HP Pavilion 14-dv1001TU (subsystem ID 103c:8987) uses a Realtek
+ALC287 codec. The mute LED on this machine is controlled by GPIO bit
+0x10, which was verified via hda-verb, but the subsystem ID is missing
+from the quirk table. As a result, the ALC287_FIXUP_HP_GPIO_LED fixup
+that drives GPIO 0x10 is never applied and the mute LED stays off even
+though the associated LED class device toggles correctly.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260826115344.2128835-1-songxiebing@kylinos.cn
+Add the missing SND_PCI_QUIRK entry to map this subsystem ID to
+ALC287_FIXUP_HP_GPIO_LED so the mute LED works as expected.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221810
+Signed-off-by: renpanpan <renpanpan@kylinos.cn>
+Link: https://patch.msgid.link/20260930065504.24151-1-rppxj178543@163.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 8674ef6edf04d..b128fa6613813 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -213,7 +213,7 @@ static void cx_auto_free(struct hda_codec *codec)
- 	snd_hda_gen_free(codec);
- }
- 
--static void cx_process_headset_plugin(struct hda_codec *codec)
-+static void cx_process_headset_detect_plug_type(struct hda_codec *codec)
- {
- 	unsigned int val;
- 	unsigned int count = 0;
-@@ -249,10 +249,12 @@ static void cx_update_headset_mic_vref(struct hda_codec *codec, struct hda_jack_
- 	 * Check hp&mic tag to process headset plugin & plugout.
- 	 */
- 	mic_present = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
--	if (!(mic_present & AC_PINSENSE_PRESENCE)) /* mic plugout */
-+	if (!(mic_present & AC_PINSENSE_PRESENCE)) { /* mic plugout */
- 		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x20);
--	else
--		cx_process_headset_plugin(codec);
-+	} else {
-+		cx_process_headset_detect_plug_type(codec);
-+		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x24);
-+	}
- }
- 
- #ifdef CONFIG_PM
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 79fdf52840b84..ce5c948802307 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10232,6 +10232,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
++	SND_PCI_QUIRK(0x103c, 0x8987, "HP Pavilion 14-dv1001TU", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
