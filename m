@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033392;
-	b=Ws+KdDBHUB+LCa56i0p9Lv4xGCZ3v3oq4rlwmk3qTN6nxXKa42s+/Fu53kCs/I0zuq4O
-	 tFPqK5j7CLBLhQ8T5nXfr0W8lp28tSX9UaqXgh4uKczt+QmNX0GXgCHFEChfy9KOA/fj6
-	 S2Wmqe7zingOx65JW3MhHExj+PbST5WeCGN1ipb6t0rOuCB3HR01UpjSImeCwzLsKoifv
-	 95PC3FL2Iik8JKnPqEFeRKouBmnAaoR2T1g3s2IPLkrELHLV4I+Z08LarjezPk4fcunpn
-	 kjaBS1DrnKunRVWWIq1U9hZHK1OkPesfgg84anLrIiCUOmBmBgawDBL3u4cmd4ov2hQ==
+	t=1795033395;
+	b=QZ8PdbYBzdBh3j2TpT3R0Qjg9EFLA2EmT0rgVyaVq8oAfmPlhT1ThgOhvouqlqFe+SWB
+	 a9JSapgXlJrWh8v2gHnq1SCiSWeCCdTFpVxI3KK0YlEBqd2nXbLi4dvdoGJkkSAfgrxIZ
+	 Hm3dNre2HDJvSe65bq3zHPoPLJGkL88pnK2dHvx4E4ALGwOHEqAddHzrRLutCXTxj4uSF
+	 W+qnmY3YoJi/1ao3CGJNPlDh51k48ziPseu0namNSpeWnu4hjxFlSsZiB+MQKgll0frB2
+	 FHAOsbjm6gDfeKTZxJ0+f9Enk6w6MwvClvo2hN58GsSm1ygO1KGp6ETqJlZuZojB00A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0IWJxIr99iPYOiEi86SQpgkurJjbvhYrvCpdx3MCrHk=;
-	b=0dkySRP25bfS8WPpaBkGkuH/awj+hJt8hqWiA/4OKr/QHkTEaSMlj58zvODL3I7MeOm4
-	 uSOjS6MaqhpenZgnpDhZV1ejTxSPM1gm4Cx9+lVi9ocdscKisDL+BG3FyrZA+m3usYYZz
-	 BrAYVyEe8StJ/UJV8afjmvm0+mFaSmlaxwnMg3/spqylsz2VAU9NSt23XwkIKOVbC4OZG
-	 0TtxSB9VkZhizi/EDE+dSanUtvR7AXjebyrJ5MbLuuiTj/TkZayYYDF2D1HZzde0Df/gL
-	 PhTKY5vaZFpU3xaGx7D+X+B/tJusTAy7h5zs0JXp3J5jf/mEKg5d9aWqtehKE4IvG/w==
+	bh=2vVyQabnt/CzEyeZY0e5Bteavs5N/4g3fngM2TFqLkM=;
+	b=2QKpTnfEeu/ECpz9GOB8g2JiwHirrny3+XyD38T2mfB5OjLwUT9EHYprFeNhenIizN21
+	 7iqODNZjW6r14WhGgxtpUuqtB8tBSGtuoUQ70V8AD93GG+ZXab5bfNsmgB67YO2PDDdPB
+	 ha7hRicjkH2v2eR7EUJatGljksi/4rdRBXpkOe8ywJAtR+4Vxv/MYt752s5vch7tcCQr3
+	 G6739i42vC92t+fLFBXLK6il8gt9FbFzRfMB17fcsy484Rac+ZBGy+Q8jjxyp8kpMUnMA
+	 v8wh2EEBKjN9pN2YZVKuOVUhz9eNWeL73x0Qb1hFcW6//vLv6LvVf1fuLppc+WUiqqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnLOFC03;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKfC7Q2K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF19606A330;
-	Wed, 18 Nov 2026 20:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE6960A260C;
+	Wed, 18 Nov 2026 20:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnLOFC03
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2471F000C4;
-	Wed, 18 Nov 2026 20:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKfC7Q2K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC451F000CE;
+	Wed, 18 Nov 2026 20:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033392;
-	bh=0IWJxIr99iPYOiEi86SQpgkurJjbvhYrvCpdx3MCrHk=;
+	s=korg; t=1795033395;
+	bh=2vVyQabnt/CzEyeZY0e5Bteavs5N/4g3fngM2TFqLkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZnLOFC039+9oPRTM88nsL5P3kJPboRzP+96WHYdB2eMP2QzfdDPGbom5bPeq1VhuF
-	 lZPZ6j6P4699m6k9jR+e+P7j9/VSiOSsuXra6+2GZumdLnrr4nI7r8zqMQEZ0SjKj9
-	 OLRp56tZCtaJfZH0EQdT4hg3hrB5/D5/RYNzzYEc=
+	b=pKfC7Q2KJZCwETTIu1Hn5iJ8h5qeCxJ3tCu3HnWyL+5NVm3i1mvzs72U3CstbbrQ+
+	 GRptc6LUnD9b8dB3Ryz8rEDY1geikGEfK+NX3nZLAIMZEhrleWWB2XQ4er1S9QCvJg
+	 82BcLZEbAgLNvDjMeIir0Im2797/Cw6yC2oD2OKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brown <matthew@bargrove.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 1753/1756] ceph: fix leaked inode reference on writeback abort at umount
-Date: Wed, 18 Nov 2026 16:04:40 +0100
-Message-ID: <20261118150119.316016167@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 1754/1756] net: bcmgenet: stop Tx NAPI before disabling the queues
+Date: Wed, 18 Nov 2026 16:04:41 +0100
+Message-ID: <20261118150119.357686193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,77 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brown <matthew@bargrove.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-commit c25aee9c630fb86f98d79eccb75765067079b972 upstream.
+commit 7e87508b5c4d81210d0a736ed01962e52f5c4c56 upstream.
 
-ceph_dirty_folio() takes a wrbuffer claim on each newly dirtied folio: it
-bumps i_wrbuffer_ref (taking an ihold() on the 0->1 transition) and
-attaches the snap_context to folio->private.  That claim is released only
-by ceph_put_wrbuffer_cap_refs(), which for a submitted write runs from
-writepages_finish().
+bcmgenet_netif_stop() and the Wake-on-LAN branch of bcmgenet_suspend()
+both disable the Tx queues first and stop Tx NAPI several steps later. A
+completion in flight calls netif_tx_wake_queue() in between, and nothing
+stops the queue again, so a transmit can reach the rings after they have
+been freed.
 
-In ceph_submit_write(), if ceph_inc_osd_stopping_blocker() fails -- which
-happens during umount -- the request is aborted before submission: the
-already-collected folios are only redirtied and unlocked, so
-writepages_finish() never runs and the claim is leaked.
-redirty_page_for_writepage() -> folio_redirty_for_writepage() ->
-filemap_dirty_folio() sets PG_dirty directly and does not go through
-->dirty_folio, so ceph_dirty_folio() is not re-entered to rebalance it.
-Because every subsequent writeback also fails the osd_stopping_blocker,
-i_wrbuffer_ref never returns to 0, the ihold() is never dropped, and the
-inode cannot be evicted:
+Close is safe because dev_deactivate_many() stops the qdisc first.
+bcmgenet_suspend() does not, so stop Tx NAPI before the queues on both
+paths.
 
-  VFS: Busy inodes after unmount of ceph
-  kernel BUG at fs/super.c:650!
+KASAN on a Raspberry Pi CM4, driven from an MTU change because suspend
+freezes user space before the callback runs:
 
-Release the orphaned claim in the abort path before redirtying, via
-ceph_undo_wrbuffer_claim(): detach the snap_context, drop the wrbuffer
-reference (letting i_wrbuffer_ref reach 0 and iput() the inode), and drop
-the snap_context reference -- i.e. do what writepages_finish() would have
-done for these never-submitted folios.
+  BUG: KASAN: use-after-free in bcmgenet_xmit+0x17f8/0x2258
+  Write of size 8 at addr ffffff8055844a68 by task ksoftirqd/0/14
+   bcmgenet_xmit+0x17f8/0x2258
+   dev_hard_start_xmit+0x13c/0x588
+   sch_direct_xmit+0x108/0x340
+   __dev_queue_xmit+0x1190/0x3848
 
-Only the locked_pages entries are undone; folios still in the fbatch were
-never dirty-cleared by this call (folio_clear_dirty_for_io() is the
-ownership-transfer point, and a successful move NULLs the fbatch slot), so
-they hold no claim this call owns.
-
-Cc: stable@vger.kernel.org
-Fixes: fd7449d937e7 ("ceph: fix generic/421 test failure")
-Signed-off-by: Matthew Brown <matthew@bargrove.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260922130639.1660797-1-nb@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/addr.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1431,6 +1431,16 @@ void ceph_shift_unused_folios_left(struc
- 	fbatch->nr = n;
- }
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3351,6 +3351,8 @@ static void bcmgenet_netif_stop(struct n
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
  
-+static void ceph_undo_wrbuffer_claim(struct inode *inode, struct folio *folio)
-+{
-+	struct ceph_snap_context *snapc = folio_detach_private(folio);
-+
-+	if (!snapc)
-+		return;
-+	ceph_put_wrbuffer_cap_refs(ceph_inode(inode), 1, snapc);
-+	ceph_put_snap_context(snapc);
-+}
-+
- static
- int ceph_submit_write(struct address_space *mapping,
- 			struct writeback_control *wbc,
-@@ -1488,6 +1498,7 @@ new_request:
- 			    CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
- 				fsc->write_congested = false;
++	/* Stop completion polling before it can wake a stopped queue */
++	bcmgenet_disable_tx_napi(priv);
+ 	netif_tx_disable(dev);
  
-+			ceph_undo_wrbuffer_claim(inode, page_folio(page));
- 			redirty_page_for_writepage(wbc, page);
- 			unlock_page(page);
- 			put_page(page);
+ 	/* Disable MAC receive */
+@@ -3365,7 +3367,6 @@ static void bcmgenet_netif_stop(struct n
+ 	/* Disable MAC transmit. TX DMA disabled must be done before this */
+ 	umac_enable_set(priv, CMD_TX_EN, false);
+ 
+-	bcmgenet_disable_tx_napi(priv);
+ 	bcmgenet_disable_rx_napi(priv);
+ 	bcmgenet_intr_disable(priv);
+ 
+@@ -4297,6 +4298,8 @@ static int bcmgenet_suspend(struct devic
+ 	netif_device_detach(dev);
+ 
+ 	if (device_may_wakeup(d) && priv->wolopts) {
++		/* Stop completion polling before it can wake a stopped queue */
++		bcmgenet_disable_tx_napi(priv);
+ 		netif_tx_disable(dev);
+ 
+ 		/* Suspend non-wake Rx data flows */
+@@ -4306,7 +4309,6 @@ static int bcmgenet_suspend(struct devic
+ 			netdev_warn(priv->dev,
+ 				    "Timed out while disabling TX DMA\n");
+ 
+-		bcmgenet_disable_tx_napi(priv);
+ 		bcmgenet_disable_rx_napi(priv);
+ 		disable_irq(priv->irq1);
+ 		bcmgenet_tx_reclaim_all(dev);
 
 
