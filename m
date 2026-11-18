@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039764;
-	b=zcm8wOjATK9C38z63JG/shWs1cq0mdQniVyNceavrLdDGAMtlqbPN7ke1yGmT9izhd08
-	 m7Lq3aKn5e3GIeb3yb/K7jVLLJ1I8eH6G83Lgjge17xLtlp3F7MWHr7TZfG2Cee3hPSqa
-	 gMQ1j5ssaTMr+NeCp0YsqGokqbV1CgzKl8sO4o+V4WJZGSi0O4utf0nV6cljpUNyH9u9A
-	 fqaS4pPhH3rVJwextB1UThIYbl3JmYuTVIDfYr9vNWZ1BegnBdf/rQIPDJrVACh9QmmgH
-	 YCXlluvKM5qDNFPPdYvLBU2JPqihMYds9r8UNEOCpcBum+k6eeRTdgYcq5pC+XKsJ6g==
+	t=1795039767;
+	b=uUMJLasju3pj14VI/lOW0zddZ5jdkPl3quLPTsn8vcf0BKM69Rlpwjr/vZmOSq3rhQIi
+	 b83tPtPhLsWCQ3u/uJAkUakUkTClPTtgYpFM90X+pL3fJkaQrkFltqWwAN6IoMkrGDCV0
+	 d0sjoFI9soivmWckkoCJYE8Gd71gfJ6nUAa3gj0Ujcf3y0bYHrSblDatS7lIt+UEQ9J+/
+	 c96pJxxJa2xoofDppYMKdGRI98CU5a7gPu6MKWx3MUMZeD2zimBU3SAX2A9D7OM8HQrTv
+	 mozQC8InvuaroUPpa1HQ0GPgH8UJa97+FzhGmr5WepjK2IRVE8UZeEIHLDDoXNPExNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039767;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=QluxIy3waJYXUrmpGdgNkhZLwVmYjKsYgvJ+HiOOet0=;
-	b=yI9JKvr2kEfgR+Q+anFWfnxHUsWjZYs49Wegl6Lhk6Ni2J1VAZshDLa4hfI0S4N7awuZ
-	 AnjXg8faXNI0mGcUlIb05h3LC2QWZxA1VyAbH+nSyrEtRxyqtEp9ayV7BDqT3egforoHt
-	 39TTWB2InnVHBuj5MzqHkbMxrSW1aROlRD+US3zaXjL9d1KqiynnSqCLF+7D8vw4Kcrrl
-	 TOoTK43OoO59rXQk1hjLtyhZec3PBgN4Rq55mcRGJEE8vrSdD04ig/d8ObvaaGb+uwuFQ
-	 Mdrf5sTjz4IFBt3bvEYTRC/yrcXAsUohbdwX3kCjFXYCLq8EIZvzDuFC9nVimRuZz/A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=TX0kkGg5czlp6bTpXaHfHDZGARJyW1LM0ZhTbcDQGec=;
+	b=K68N9t9sIN/SePGdOdcEBHu3EbdHaVSTOcYNDPdcr+ggAWTQEYf2k7EmZB6YI4puQYw4
+	 mwni8PXwwIHOC0ICKHB89KvehRLO9lnC9vZuKwcnr3KPRQ4ckcK62lZd+J+UrZ23URn8T
+	 nquOXuio8TsaSQYueHI48GvAIL33JsVpLPfafwHDsvGDpCHw6iv9lScmpv0ySOfw2Qgna
+	 mTRzG/khNmrY3RB8+q8ZdhpZd9uGP++GCAd44mruy4UAKUJ8FcNNlxPjOoRYyN3xp2jUX
+	 aqAXmKdx/bt0WM+bvDg1TuP7R6IDYJrQxllGcCL7Fs8XCop8QewNGZZRZPVtootlKGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AEpERWgb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6QDvv5R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAABC606A325;
-	Wed, 18 Nov 2026 22:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E5F606A320;
+	Wed, 18 Nov 2026 22:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AEpERWgb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279591F000C4;
-	Wed, 18 Nov 2026 22:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6QDvv5R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5791F000C4;
+	Wed, 18 Nov 2026 22:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039764;
-	bh=QluxIy3waJYXUrmpGdgNkhZLwVmYjKsYgvJ+HiOOet0=;
+	s=korg; t=1795039767;
+	bh=TX0kkGg5czlp6bTpXaHfHDZGARJyW1LM0ZhTbcDQGec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AEpERWgbCkCaPeV/FtDTro4eGVTbmaLcmBum4gaBtCsr0htFj86eqtO4ODj8xIZka
-	 Ov/isBhzkGANQBfxLubVaRjEMx1TtC5U4Y4WbLqwLme0spOD7hBwA6jB7yHCAw1ZgC
-	 vU9x8YJivdeTaiFZEwFwwiJm+CYUTCuoHXBMWuKQ=
+	b=D6QDvv5R4UE2WmCi3Ed3txFFZKA5m6m3TK751jN9G3+W+yISj+MjwfJ8cErWP3qOE
+	 fK2smkVyivlO3PJ4ksxvXrOSWHnpDtHh85ZiZ1jixgJ1scedjI+jV4dO+sapA/YXDq
+	 hKtXdYoGcxDUdVG7A+kJVXGe9yx1Mqer3WoUgaY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2216/3318] wifi: wfx: fix use-after-free of the cooling work on device removal
-Date: Wed, 18 Nov 2026 15:47:18 +0100
-Message-ID: <20261118150428.380116321@linuxfoundation.org>
+Subject: [PATCH 6.6 2217/3318] firmware: imx: dsp: fix mailbox channel leak on kasprintf failure
+Date: Wed, 18 Nov 2026 15:47:19 +0100
+Message-ID: <20261118150428.408780547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,76 +62,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérôme Pouiller <jerome.pouiller@silabs.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 17402a869778f6c17b88fd360d7a96378779f97c ]
+[ Upstream commit e3631d0242842940f9e902afaea98202e56277e8 ]
 
-When the device reports that it is too hot, wfx_suspend_hot_dev() blocks
-the Tx queues and arms cooling_timeout_work with a 10s delay. If the
-device recovers a normal temperature before the delay expires, the work
-is canceled. Else, the work declares the chip frozen and unblocks the Tx
-queues.
+If kasprintf() fails while setting up mailbox channels, already
+requested channels from earlier iterations were never freed. Route
+the failure through the existing cleanup path.
 
-However, this work is never canceled when the device is removed.
-cooling_timeout_work is queued on the system workqueue, while struct
-wfx_dev is released by wfx_free_common() (through ieee80211_free_hw()).
-So, if the device is unbound during this 10s window, the work fires
-after struct wfx_dev has been freed and dereferences it.
-
-Cancel the work during the teardown. It has to be done after
-wfx_bh_unregister(): the "device too hot" indication is processed by the
-bh, so canceling the work earlier would allow the bh to rearm it. On the
-other hand, the work calls wfx_tx_unlock(), which may in turn call
-wfx_bh_request_tx(). So it has to be canceled before bh_wq is destroyed.
-
-Note that the Tx queues are intentionally left blocked: the device is
-going away, so there is nothing to unblock.
-
-The issue was reported by the Sashiko review bot and the fix has been
-written by Copilot (including the commit log). The use-case is difficult
-to reproduce, so this code has not been tested. However, I don't believe
-this patch could cause any regression.
-
-Fixes: 1d52d29983e5d ("staging: wfx: add support for 'device too hot' indication")
-Assisted-by: Sashiko:gemini-3.1-pro-preview
-Assisted-by: Copilot:claude-opus-5
-Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20260906204831.949692-2-jerome.pouiller@silabs.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: ffbf23d50353 ("firmware: imx: Add DSP IPC protocol interface")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/imx/imx-dsp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/main.c b/drivers/net/wireless/silabs/wfx/main.c
-index e8b8b71c1d3ad..e005de8e80428 100644
---- a/drivers/net/wireless/silabs/wfx/main.c
-+++ b/drivers/net/wireless/silabs/wfx/main.c
-@@ -468,6 +468,7 @@ int wfx_probe(struct wfx_dev *wdev)
- 		wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
- bh_unregister:
- 	wfx_bh_unregister(wdev);
-+	cancel_delayed_work_sync(&wdev->cooling_timeout_work);
- 	destroy_workqueue(wdev->bh_wq);
- 	return err;
- }
-@@ -478,6 +479,7 @@ void wfx_release(struct wfx_dev *wdev)
- 	wfx_hif_shutdown(wdev);
- 	wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
- 	wfx_bh_unregister(wdev);
-+	cancel_delayed_work_sync(&wdev->cooling_timeout_work);
- 	destroy_workqueue(wdev->bh_wq);
- }
+diff --git a/drivers/firmware/imx/imx-dsp.c b/drivers/firmware/imx/imx-dsp.c
+index a48a58e0c61f8..0bb224861900e 100644
+--- a/drivers/firmware/imx/imx-dsp.c
++++ b/drivers/firmware/imx/imx-dsp.c
+@@ -99,8 +99,10 @@ static int imx_dsp_setup_channels(struct imx_dsp_ipc *dsp_ipc)
+ 		else
+ 			chan_name = kasprintf(GFP_KERNEL, "rxdb%d", i - 2);
  
+-		if (!chan_name)
+-			return -ENOMEM;
++		if (!chan_name) {
++			ret = -ENOMEM;
++			goto out;
++		}
+ 
+ 		dsp_chan = &dsp_ipc->chans[i];
+ 		dsp_chan->name = chan_name;
 -- 
 2.53.0
 
