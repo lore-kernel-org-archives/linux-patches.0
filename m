@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035493;
-	b=ii/rZCTnc93FRDQVn1J/w6m6s7UlWjOWGQY9/yo9aYkbpKIfxFoNpBRq8qXQU63GSbzX
-	 8MfTmQwTdGqPoBd4Qxl/Tnz7l0ydCW0isPpLo8V7wRw56bga8lF0LSblXGUarHacQePmr
-	 5n/EDrd6Jc37qxDHGYhhF66ynhGVV7+tlHpWU5ZxLdjvH8KKUjzGYD5DBBdXaOufJJyYP
-	 qle0JET2WYLhzY3UoSik/7gKVtmptvSSubipvEbsXEVo1yvv8kvTUKiKsX1L2lRwfwfqB
-	 VvmdhVCOHTteF4Do6vr4el9Sa5M67SiA6z16kOOYtZ6uae6b5f/4ndpDFttMUzRNYhw==
+	t=1795035496;
+	b=TNR7yYuBsJo8jJUTdnKYVT3bm3eu4QtTuAeRS6/z1jCgAnusSTMVV6qYhBCt4lNsY913
+	 6Re14xpIsXJKagUN5lywcO8EZ9eDEukKwLDpVx99H15jVTLxu0U4aSjN7jBlk6b2xwiRH
+	 j3/hpHjD4pcIaBGOFUrCvhrBr1piGiiIiHS8AFb8rSOdUoAV1y0ygeDv00JACMnmPzqlP
+	 gQcHwfHUmSlvH478LSnu/JHw/ee7xrwtscsWJOn7UZDQ/7BmtIrcJjoII3zvQlTq1XjCB
+	 fZt0rwkJBf/Gr+VHb4GOQ5aKiDR+9rv26XJ90T/4CH6889eJVxrxGlFw33y+89h4k+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ewV3l7cyUs0yWTjVeBjNk8uipTvYIsfgS4Rh3HY0mW8=;
-	b=b0nH8ONtO8PktxCWkodQ4KJXVjzgs0bLln40HXCoJoE7VaoExJBFUrQlMfT2Er2fGhyF
-	 Bg0KLd9auAgb/3PzYUuamW1EnxJMUvp8IpNklgvcAs52w531SYedXzd+JvLJ90XSjtiX7
-	 hw+u+9ObPprGy2+TtC2ZnFGwrRE2GYCbXEMX/sGYrSPMNNDmorSCZS229VqKJKPcBbOaw
-	 MtT3Cgx/Jo+RpBgKaNv2qoCv1FWkFgukpIieDoKh0Z0lQ4iSBZo3nfn54Gt0WmoRmwy1v
-	 JNvyL1wSKW4ZnNem/1JhzLJwmjNCDzJB+Qbi2Mx63eNhDdCqzN5Pm4XQnVuOuZXyU3w==
+	bh=EjXHAfiHaSEVRS5ElbZGQsBJpBSqdSDP0Hjf0njoEdU=;
+	b=JgzbQc2rustuQ75CpIwckwALAoe5roIcIr8M28vVWFyd6Qg7TAa0Jl07sRK4dldXAICl
+	 e1rJZ0pZLMZBduPaZTrwrIN+bJ9KOVM5XIwtrzwmUX/FUNUqWk3f79mDZCq6l0DX1k/+v
+	 YZdk12wUZuD5yNlXa7pVyF4QvktYqqcZ9Qf4CMHo+MQyy7cAuRQAlFbiTQQyIHSroYXRE
+	 gT2CmhbQIsWo7mY/AQmrwqYiVNQQjaae6C1SobWcsv5ZZVUNT2V4ByrR38HKkVHi5jfJI
+	 hu9ybE3arjb8vMoxz4Fdm+EM7ur6FdSTiMLgpnl98wQBPwaWZv4tGLGRafVNEGQgAOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MA22jduo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGqC47+i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF4D606A31C;
-	Wed, 18 Nov 2026 20:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D146606A320;
+	Wed, 18 Nov 2026 20:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MA22jduo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D0C1F000C4;
-	Wed, 18 Nov 2026 20:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGqC47+i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C4E1F000C5;
+	Wed, 18 Nov 2026 20:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035493;
-	bh=ewV3l7cyUs0yWTjVeBjNk8uipTvYIsfgS4Rh3HY0mW8=;
+	s=korg; t=1795035496;
+	bh=EjXHAfiHaSEVRS5ElbZGQsBJpBSqdSDP0Hjf0njoEdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MA22jduoMKgCJN9fbaQPcNr1cWsTgn7FUgjbtdnNTK6g6VpxT7ovr4oZBfFUSEgoO
-	 NEZXYhex1A7JUCkAOVWOvMbm5kIMLJ5w7f++J0hDayWy4YUnD6tc/NG8TTWjwmNPh4
-	 F7NRhYu48LyvTqFQbeKf5mEjlC4s+dWufTr+4PXQ=
+	b=FGqC47+i4op3lPwlQhAn9LGFFlyYR4UpYA0uTJ8POAUzzQTpuMhvCurX7+/fYw/9X
+	 N+vySfHdA1B1ai84OsulICcL/2KllkAKQCH8paFsq+QDJOCWGyuCc2vgk4MEk7m9/h
+	 knv78BJd2eO2w5bMm69topYlxXjr+TO1TRB8BHz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0697/3318] NFSD: Resolve the recall-any mask names in the trace format
-Date: Wed, 18 Nov 2026 15:21:59 +0100
-Message-ID: <20261118150339.251959107@linuxfoundation.org>
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 0724/3318] HID: amd_sfh: Use report type from request node
+Date: Wed, 18 Nov 2026 15:22:26 +0100
+Message-ID: <20261118150340.223915774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,50 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit c563a1f0679566d7d586802e5346591d0af8da78 upstream.
+commit 85f1bea97f1909f81577cfcf3e4db9017e7f5337 upstream.
 
-RCA4_TYPE_MASK_* are enum constants, so the preprocessor cannot fold
-them into the print format that show_rca_mask() builds for the
-nfsd_cb_recall_any event. Nothing declares an eval map for them
-either, so trace_event_eval_update() has no substitution to apply at
-module load, and the event's format file ships the enumerator names
-verbatim. trace-cmd and perf cannot decode the bmval0 field.
+Use report type from request node while sending feature and input reports
+to HID core. The cli_data report type array is never assigned and
+feature reports are sent as input reports.
 
-Declare the eval maps for the nine mask bits show_rca_mask() decodes.
-The format then carries the shift counts as integers, the same shape
-the SUNRPC trace points already emit from their BIT() flag decoders.
-
-Fixes: 638593be55c0 ("NFSD: add CB_RECALL_ANY tracepoints")
+Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
+Closes: https://github.com/ublue-os/bazzite/issues/5796
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260818184151.31180-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/misc/nfs.h |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hid/amd-sfh-hid/amd_sfh_client.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/trace/misc/nfs.h
-+++ b/include/trace/misc/nfs.h
-@@ -359,6 +359,16 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
- 		{ IOMODE_RW,			"RW" }, \
- 		{ IOMODE_ANY,			"ANY" })
- 
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_RDATA_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_WDATA_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_DIR_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_FILE_LAYOUT);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_BLK_LAYOUT);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX);
-+
- #define show_rca_mask(x) \
- 	__print_flags(x, "|", \
- 		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
+@@ -90,7 +90,7 @@ void amd_sfh_work(struct work_struct *wo
+ 						    cli_data->feature_report[current_index]);
+ 		if (report_size)
+ 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
+-					 cli_data->report_type[current_index],
++					 node_type,
+ 					 cli_data->feature_report[current_index], report_size, 0);
+ 		else
+ 			pr_err("AMDSFH: Invalid report size\n");
+@@ -99,7 +99,7 @@ void amd_sfh_work(struct work_struct *wo
+ 		report_size = mp2_ops->get_in_rep(current_index, sensor_index, report_id, in_data);
+ 		if (report_size)
+ 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
+-					 cli_data->report_type[current_index],
++					 node_type,
+ 					 in_data->input_report[current_index], report_size, 0);
+ 		else
+ 			pr_err("AMDSFH: Invalid report size\n");
 
 
