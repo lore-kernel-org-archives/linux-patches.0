@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049547;
-	b=e9G4x/VCqy3lV3ksIjIhWVBrsVBszwZ42s5Ru+9h8SlKjcrxdI7c0IDKDdgGhi1/YYn8
-	 A2+LCIxugEzAbt587RAIFNSEDlhWRugq7rC1LV15/VX+414tyFIAiU1MuJiPdMNmRxMVS
-	 ++gr8+zs1VaCPxm9LfJAsZBt1+njtKs8VhSe2HN3zCUsqCX/8fz7IyVXcJUVHkyOss3uJ
-	 Z29zBG++5nVJm0LZa8pIVy69jATpL4QjuH1mluwSvY1YuubH92l3eaN6KS9riBmmddSrC
-	 BwbwtyPnEUUUrCYNdE/HCUKeErkPhnx3tMpOfw0EammxN4k3JTs2ra5pGnXlyvrBjdg==
+	t=1795049549;
+	b=uubse9dQyZ9kTNSHHWSAEsJGrruEitRSrkXOKUC3iP9Tk4tL6tQ+WK5o53uenzQzzITf
+	 b0B9WKmHWVrB03TeTIZo/zkEea8W6Zj3RrREpmWe/bhcaSg21QxlLIDJA2K79MY3pW7cK
+	 YqFsrhz73+Ww/KhYD6xuMDHkuOZf+KqhAn5eub8s2pLOwcT318GY9nOuxfkkIM2bh9q6W
+	 nVkmveAChDPubfwSzHtJJpWix47wGGVz3YQXhbg4pAesF55KjyTWdsmrJLwgNfG+Lu4rk
+	 09VSMIUro4CmLpDigMRNI1ZBoSoFhSkLZO6/tPYWlj6qNgKSR+Jij33gsUz3S1kUUNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=RIrx9Iwa19oTbLiL/ZyrALa6PCUZNqaP8YY/mElMwCM=;
-	b=sFAbcSamALCyA96yvNYEsl9G8PGOw4DqwUPizJXiRnvOZXjHu7Yj7zfwbfj+6xi9mjXK
-	 XS1ShU75nbJeFKhMIkxVZeIoF9go9jys27W3mDlgq9Hn3K+dqB7m9aDsHahcGIRJQMFPB
-	 CIWgnsMhpeBMOmiU9b2TAJAEFH2a9BSgxZwpLREMNye7+6aTa6/4b63KOfBk95ICz9UFg
-	 1fYnuvqGCM5xAifcEj8k8gvbe6UgaqWLMFMsy8M2vMwqoSfJB9vrRaMg5AZVDLoxvQ2AI
-	 9eFQgTKqnyoIxuxz7GidgfqhFyiP3+QHsAGuUwFCZCYP2MECK9JYA3z5MhIFzfo4k3g==
+	bh=thNKDfBJ3rXiL8JGHJhIaQV9WjHOEV90j3rAzq7l4Cs=;
+	b=pYTOMsYYjEdULF6b1k2/oywwlW5nkXldWrsaCMak1qAYLiUKpsmOaIGxZ3bw+Ev1MugH
+	 0Dug1+3viQ7dso4SPmO5CwSUlcsm1Dl6+0p1OFz3GvXRY6tZ8Fh/o/7QlM8lc4TlnZQFw
+	 xnEH4JgpqH958mwHl3bQtD8Jp99LIuHt9B81iwg1xlbUZb56TUiTnDTfBFMftzyfmduOe
+	 A5eQwRm68NHlXqLUMyEJ5PhntPyYkT4Pgysk46DHkR+wk5iqRqjWfLKyR14/Gxwgcp9Zg
+	 uAqLfhMj4t7BouhSOhgU8StDL6CmcMnOybGJLKjtAPy5Ka6gH+CBGrQ2FWY/Qpy8c7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FaSyDevI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="POg/hYtE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0278D606A320;
-	Thu, 19 Nov 2026 00:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA770606A31C;
+	Thu, 19 Nov 2026 00:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FaSyDevI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B4D1F000C4;
-	Thu, 19 Nov 2026 00:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POg/hYtE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5DE1F000C4;
+	Thu, 19 Nov 2026 00:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049546;
-	bh=RIrx9Iwa19oTbLiL/ZyrALa6PCUZNqaP8YY/mElMwCM=;
+	s=korg; t=1795049549;
+	bh=thNKDfBJ3rXiL8JGHJhIaQV9WjHOEV90j3rAzq7l4Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FaSyDevIPaDabpo7T97bEdC39WVveLkv4x7m1zbvaYUKCeYlzvAWrQ6ZoLsfJfPV2
-	 dal2Urzneve2+ntBerD8GUTTfuhN7Pg7Ro/M8nSaVLYJ3ELDJ0XmEbZQYa6CxHkUQG
-	 VLhWHNhTfliiCCXYgtNsTb3U3JFr1r2MyBG3CfvI=
+	b=POg/hYtEFq4HIzmqydGzKjnPy1Q5oO7RhJkja2vCwXhwAcYhv6hX/mARgca+8FDOt
+	 Cv+eYgtFs4kXvbnj6VGqMH2mENjALR1Mnce8D1aoRDOKW7zYgLZOuyhcq1w7ZLT5SW
+	 jgya5GAyn/MbwTqk98OzXXncU6Hz2rhmZzsQT+uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nir Yehoshua <nir@ciphersecuritylabs.com>,
-	Ahmed Yaseen <yaseen@ghoul.dev>,
+	Aleksandrova Alyona <aga@itb.spb.ru>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2389/2857] platform/x86: asus-wmi: validate custom fan curves on enable
-Date: Wed, 18 Nov 2026 15:57:03 +0100
-Message-ID: <20261118150327.542805178@linuxfoundation.org>
+Subject: [PATCH 6.1 2390/2857] platform/x86: intel_telemetry: initialize default trace verbosity
+Date: Wed, 18 Nov 2026 15:57:04 +0100
+Message-ID: <20261118150327.580055602@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,82 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Yaseen <yaseen@ghoul.dev>
+From: Aleksandrova Alyona <aga@itb.spb.ru>
 
-[ Upstream commit bcbdfe03566ad0d01c6af3b5476e8cadffe4d3df ]
+[ Upstream commit 1b55ec81926eb7f6e4fad692fa4040a569e9daf7 ]
 
-Custom fan curves reach firmware unchecked, so a curve whose temperature
-or PWM decreases from one point to the next is accepted. The firmware
-does not respect such a curve: a first point of 100% followed by 50%
-leaves every point running at 100%. The kernel keeps reporting the
-points that were written, so sysfs stops describing what the fans are
-actually doing.
+telemetry_def_get_trace_verbosity() returns success without initializing
+the output verbosity value.
 
-Check the curve when enabling and reject it if it is invalid. Validation
-is done on enable rather than on write because fan curves are written
-one point at a time and are inconsistent mid-write.
+The default telemetry operations are installed when the core driver is
+initialized and again by telemetry_clear_pltdata() when the platform
+driver is removed. The telemetry debugfs files can remain available after
+the platform driver removal.
 
-Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
-Reported-by: Nir Yehoshua <nir@ciphersecuritylabs.com>
-Signed-off-by: Ahmed Yaseen <yaseen@ghoul.dev>
-Link: https://patch.msgid.link/20260831-fan-curve-validation-v2-1-7274ca16c8fe@ghoul.dev
+A subsequent read of pss_trace_verbosity or ioss_trace_verbosity calls
+telemetry_get_trace_verbosity(), which may use the default callback and
+return success without setting verbosity. The uninitialized value is then
+passed to seq_printf().
+
+Validate the output pointer and initialize the default verbosity to zero
+so callers never use an uninitialized value after a successful call.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 378f956e3f93 ("platform/x86: Add Intel Telemetry Core Driver")
+Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
+Link: https://patch.msgid.link/20260917110812.2831-1-aga@itb.spb.ru
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/platform/x86/intel/telemetry/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index a2d877817183e..c715782bfae76 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -2523,6 +2523,33 @@ static int fan_curve_write(struct asus_wmi *asus,
- 					 arg1, arg2, arg3, arg4, &ret);
+diff --git a/drivers/platform/x86/intel/telemetry/core.c b/drivers/platform/x86/intel/telemetry/core.c
+index e4be40f73eebf..6a1e9df26ba1b 100644
+--- a/drivers/platform/x86/intel/telemetry/core.c
++++ b/drivers/platform/x86/intel/telemetry/core.c
+@@ -51,6 +51,10 @@ static int telemetry_def_get_eventconfig(
+ static int telemetry_def_get_trace_verbosity(enum telemetry_unit telem_unit,
+ 					     u32 *verbosity)
+ {
++	if (!verbosity)
++		return -EINVAL;
++
++	*verbosity = 0;
+ 	return 0;
  }
  
-+/*
-+ * A fan curve is a set of points the firmware interpolates between, so it
-+ * only makes sense if neither temperature nor PWM ever decreases along it.
-+ */
-+static int fan_curve_validate(struct device *dev, struct fan_curve_data *data)
-+{
-+	u8 *percents = data->percents;
-+	u8 *temps = data->temps;
-+	int i;
-+
-+	for (i = 1; i < FAN_CURVE_POINTS; i++) {
-+		if (temps[i] < temps[i - 1]) {
-+			dev_warn(dev, "fan curve: temperature decreases at point %d (%u < %u)\n",
-+				 i, temps[i], temps[i - 1]);
-+			return -EINVAL;
-+		}
-+
-+		if (percents[i] < percents[i - 1]) {
-+			dev_warn(dev, "fan curve: pwm decreases at point %d (%u < %u)\n",
-+				 i, percents[i], percents[i - 1]);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static ssize_t fan_curve_store(struct device *dev,
- 			       struct device_attribute *attr, const char *buf,
- 			       size_t count)
-@@ -2609,6 +2636,11 @@ static ssize_t fan_curve_enable_store(struct device *dev,
- 	}
- 
- 	if (data->enabled) {
-+		err = fan_curve_validate(dev, data);
-+		if (err) {
-+			data->enabled = false;
-+			return err;
-+		}
- 		err = fan_curve_write(asus, data);
- 		if (err)
- 			return err;
 -- 
 2.53.0
 
