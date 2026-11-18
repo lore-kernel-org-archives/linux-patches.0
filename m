@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061701;
-	b=t439i5KFQZJSLItpwaIIHfrdDoDniAZ7q5Y+ob+vRTmCDuG5bu8K8R0cafUjLwOs/DOR
-	 ZGc4C3VB+TSBqK82XvlYSBNUoGVbYtgm6pphauq5RLAu6X5kIs6ic5iY03bhA7I5WcV0+
-	 qAvRYf6AVPCYWhGe3Dpmib+SunV57J8zmB4LOHzu3OyHqMe8qE9oR8txeefBzcu9o6mDo
-	 GXdV/xCz4gzYD7mqlgvH0/V/COTCq011Y+sTUI3dT6RPGjGUWMyPe3wBqwJZKaKUA5/1+
-	 dJbysmKvxI+Pk+qHjNtGyKR5J71fX07Sa1vEGpLQ8jb8sghN0pEmZpwrS/F96+7O6lg==
+	t=1795061704;
+	b=LjVeWIoypACFrJguFKC/S4XcY3lWXWOAizyAUBZjzYe4uAAjyCkVBw7ypCQkyjyp47Rq
+	 zocfIKUuBhI8h3lsuDfEej6NDouGMRewiRkF/qfDuVwWhKslcm5XeLpHhkUT2YulITQjr
+	 oNaKbE+CsvQiPMHoRGfEsxf7UE1G/46udMjYMcowMU5PSVjQGiACpmrFVTHjAq9LEWZXA
+	 vEOgrlnwLth0B6KLkwuiXUMsWPVm9WNOURV9Y96ff48nF2prpHzCmfCZQ99zp4eWAc55A
+	 ZzhV+YAHVhdcpZkaCJB75UPgqQissLjbd8bnMYtJIowSzMAcukrSxE3LwtNIKZQsacg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061704;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LijPKvN1px3IY4DwcpekjrPfFBhStdgAiVahAYH8vfg=;
-	b=wabsHyeSpKy+h1eyq17MH1FFdiDh1jmCYmIcupSjByugvx/jho5JdKAW4bfJl5AEwJ0p
-	 htz343mJwG/yNdYPN2kTt+QG6CnGLeT6WnD4Q66skeMNi9a8E/d68SMnlqw4O5ZSUd4tR
-	 6TidoBDd8VYjC77nUq8sq+s0ZhwTn9aUSry6RqD/ciA9ft5fPxXKgM5CtBrXhKyNzGHtW
-	 OCMxtBgEWM/vQyA/gPc2LhYsy76Rd3j6FsAjFsBSqLTkiNI4K2e1HmzkVlkwk1b9Lpmt9
-	 zdLd4M9fR2o7VfLQEltdUzC4RdwrzeMqZOIeqiv5L9G/ZAuckT7NU0pfmm2fxtt899Q==
+	bh=1oXSFvptcb5nxVx6snS63IwWWVNZ/Yd7EUcTGwqoJ/Y=;
+	b=W8gSToO1cWuaYnQzGdwZdkJluUJEFoYKFAj7L4/JD2JXcF9R5q1p294Wg1EkLnHe2+R/
+	 eK/HptFnqmvjpg4OgZ8L+mmpkmZPvojj3IrV2BUxXhsovTriItazVHIV3z5bUP8EJHcnN
+	 +oxtAgHW8CNMTw+W9HBkelkKsaC68ZTHXu8b5uZJ4ok9XWmze+E9Y95WhQbWFgACdOgdC
+	 kFd9QX3faBYBdKiMMyWvT+62X0Rjt8ScVIkUUcWV1AXg8uxP52csv2263Nqz3BS1077F/
+	 EDU7BA0vjKKXp8ORrLyjry9rL7iLm1tFc2aqiOTPTRLU9CSfpWJvNlgZ9ev9O76roPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f665kxON;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="E/soi30B";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76400606A32A;
-	Thu, 19 Nov 2026 04:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C228606A330;
+	Thu, 19 Nov 2026 04:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f665kxON
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85011F000C4;
-	Thu, 19 Nov 2026 04:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E/soi30B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E79A1F000C4;
+	Thu, 19 Nov 2026 04:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061701;
-	bh=LijPKvN1px3IY4DwcpekjrPfFBhStdgAiVahAYH8vfg=;
+	s=korg; t=1795061704;
+	bh=1oXSFvptcb5nxVx6snS63IwWWVNZ/Yd7EUcTGwqoJ/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f665kxONQaM7M+CihF4CqSfPlYMYNBnQpgv1/79ersX2nWX+g9NHEJoIYMrtkWIuV
-	 swyTgrub6aZezb+JaaXaD3uFqqowVQAxOnDntfSMd5R31V0WNZyyt/B42Kjc3d7hk+
-	 cjGyKKoQPnduRGMtPwDmcSj/NIHshRLHHFwHM6/o=
+	b=E/soi30BZGl+/y2jd0mOcR0vdgq4C8bc3iD04DeQintec2U9GWw16MyphniVZEpWK
+	 LLdjOBAJv+0z6oWsYWXliewWI6t2Y5qyCL473gJPcbpqYVEHNRftg6d7xZZHOSTXD2
+	 pvAV3rA577IMm3UX/k/U8gcOiirxHlMfYwDKeRtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1640/1848] ASoC: codecs: wm_hubs: Fix definition of MIXINR to MIXOUTR volume control
-Date: Wed, 18 Nov 2026 16:01:18 +0100
-Message-ID: <20261118150028.299691078@linuxfoundation.org>
+Subject: [PATCH 5.10 1649/1848] Bluetooth: L2CAP: hold chan in l2cap_ecred_conn_rsp()
+Date: Wed, 18 Nov 2026 16:01:27 +0100
+Message-ID: <20261118150028.766437701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,38 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 22bfcedd3febd6acc63ecf8bfd9638210e4b9a5e ]
+[ Upstream commit b508a2a2d846ccc4c8f691e4e3dfca6f97dfe85a ]
 
-The Right Output Mixer Right Input Volume (MIXINR_MIXOUTR_VOL) is at
-bits 2:0 of Output Mixer6, not at bits 8:6, which hold the IN2LN volume
-(IN2LN_MIXOUTR_VOL).
+l2cap_chan_del() calls l2cap_chan_put() to drop the conn->chan_l
+reference.  If this was the last reference, UAF follows.
 
-Fixes: 942c435ba79f ("ASoC: Add WM8993 CODEC driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/1ea1d115cea5b183dd51bba5cd9e38157b3482ee.1791959026.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+l2cap_ecred_conn_rsp() iterates chan_l list and calls l2cap_chan_del()
+on some members, without holding chan reference.
+
+Fix by holding refcount while using chan after l2cap_chan_del().
+
+Since orig is looked up by dcid provided by remote, it's also possible
+orig == chan, so reference needs to be held also after orig use.
+
+Fixes: 41c2713b204e ("Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp")
+Assisted-by: deepseek-v4-flash
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm_hubs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/codecs/wm_hubs.c b/sound/soc/codecs/wm_hubs.c
-index 0c881846f485f..3b0cc340bfec9 100644
---- a/sound/soc/codecs/wm_hubs.c
-+++ b/sound/soc/codecs/wm_hubs.c
-@@ -426,7 +426,7 @@ SOC_SINGLE_TLV("Right Output Mixer IN2RP Volume",
- SOC_SINGLE_TLV("Right Output Mixer Left Input Volume",
- 	       WM8993_OUTPUT_MIXER6, 3, 7, 1, outmix_tlv),
- SOC_SINGLE_TLV("Right Output Mixer Right Input Volume",
--	       WM8993_OUTPUT_MIXER6, 6, 7, 1, outmix_tlv),
-+	       WM8993_OUTPUT_MIXER6, 0, 7, 1, outmix_tlv),
- SOC_SINGLE_TLV("Right Output Mixer DAC Volume",
- 	       WM8993_OUTPUT_MIXER6, 9, 7, 1, outmix_tlv),
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 98f82f4613e93..15809ca665ffa 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6419,12 +6419,14 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 		    chan->state == BT_CONNECTED)
+ 			continue;
  
++		l2cap_chan_hold(chan);
+ 		l2cap_chan_lock(chan);
+ 
+ 		/* Check that there is a dcid for each pending channel */
+ 		if (cmd_len < sizeof(dcid)) {
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
++			l2cap_chan_put(chan);
+ 			continue;
+ 		}
+ 
+@@ -6463,6 +6465,8 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 				__set_chan_timer(orig, 0);
+ 				l2cap_chan_unlock(orig);
+ 			}
++
++			l2cap_chan_put(chan);
+ 			continue;
+ 		}
+ 
+@@ -6508,6 +6512,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 		}
+ 
+ 		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
+ 	}
+ 
+ 	mutex_unlock(&conn->chan_lock);
 -- 
 2.53.0
 
