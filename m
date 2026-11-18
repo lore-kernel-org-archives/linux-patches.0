@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019508;
-	b=cIiwYQOwDU+gCq/5g8cK/yrbfRNlk32ypGX+rsf8BcNvIVPQ5iaHdbKnQvusdGLycFEe
-	 Z0z9yEyFSQgdkLe0h6vCW0WltcWjzy1LG4qqKKChLlGj6/IVbeAB9O+zcCcbMK1coohZi
-	 eAPn1TEso7OPrPcLat4n/H3Kfnv+aXVeWBNlEKvq+roV7LqKVcCUMuBHxwacpRnkp+dyk
-	 65WsdSPhcJRKuwyIIeWvfzcjA3GT7VMORbOVzbDZeHB51XSo2K8NdoC2H6whCzTanBLHe
-	 u99lSICP/XW/Cn6+pFmutymLcddjYgWJAaCfO+vxwIC6E7SeT0V9Hr18vWAGlh+Nkgg==
+	t=1795019512;
+	b=5NJUOpiDoMmc3K1mmJduzXrbjt9oQQtWYlaK7J6oXfR9LbU+F0GhTzZ6alnGkRDFm/W5
+	 Krcp36bIgNxfqPuBhSpeieqB/nkTW3LBIOM/Saz4XAiSAkqdOns2E9DA0dIMQYAeNEnE7
+	 /vtDcwCqf2RyfErMrs66mxobiywGHCAeRBE5yWN3WBG5+O73xKRNeqJiOro49/thOqaQK
+	 JXRYpfaLEFpbjoCQSmg8vfJa4ecLnNz2eY8QKYa9zIaRWv6+XkdklJCKuNqBxSjwXhNuW
+	 qqIDsE1cRPmwU2xBwnMNKxPXj2xaaFXHiAMIyxwTZJX7/Kgo2Fh80LMVw9YO9irjwQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D0pPP3LIvEwFBXFRQM0xPFQzO2bNDTr3FAZYO+NDU78=;
-	b=OcGSE91JQXy2PUQXCKRe3E2dR60SdXDTU978DomwHbYKTzJMf8H7AAnYx80p0NrwS/bh
-	 EyCaL7x60fr5PcxsgXG8qKDJXB9MlegenM3UBNHLcz1LV/rZZjSjsw/KF6fl3b8PwOJKo
-	 4+cqyfTq/HLm8rlKJn3b3K3SYY+jk2pCGOMIjyQd5ivv70HY4nnnNJMiqD3mw3mjb64JN
-	 7W4rPip5L4xK7GbEgfVfjmxX//7mTjSj3rdV4BPYew9kteVV6b9D0h9cNCldoDkvAF+5X
-	 pB/6UVTzoyIgzdRKwJ7cXWBYJ89290Q6KuiLmUwsFD0Kdu9w7aHR+Xldm84Z4YXg38w==
+	bh=jIzKm29R0SDhM2g3DOUU2CT8tBmBQeIVmMhcZrwwkes=;
+	b=gUbmWFunKqcFajOpYj+4ZHC4LiRGlUjPOui4jqgzmVs/Ie7x/RG5I07tQRqUFJtZeiKe
+	 EBqM7GUjp1jaZ54Xcy0upxyyglmUV8XdIHuj5h+UEb8t6fZdk1faGSULlfeWjm3S3r13f
+	 o++mKfLdeAYyMFe86YjvPeCXetrJMTYGM4ih26dgOm+3Jf/pigpNrAwbyyl4hLp3d1OaB
+	 5rAcmTKNPijxuzlFcQIrXsGeMq+8Rf1XQQXmlQhxMKuMIVCyYcP3oCqWqzpkGncTSxdyl
+	 55albJoXFKbQ3oZT1ip5hwpfHD+DT2FP88XOiSRorRAKGK4Ms1th0O7O8WP5Z1iONCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lezw1yV7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PeuvQWB6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCF8606A332;
-	Wed, 18 Nov 2026 16:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0891606A31C;
+	Wed, 18 Nov 2026 16:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lezw1yV7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A6B1F000C5;
-	Wed, 18 Nov 2026 16:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PeuvQWB6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DBD1F000C4;
+	Wed, 18 Nov 2026 16:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019508;
-	bh=D0pPP3LIvEwFBXFRQM0xPFQzO2bNDTr3FAZYO+NDU78=;
+	s=korg; t=1795019511;
+	bh=jIzKm29R0SDhM2g3DOUU2CT8tBmBQeIVmMhcZrwwkes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lezw1yV7aDjKyVqjaPfRvdy9Zg74i1bfymTPLO9bWBhRsuozXk1ocq5X7AFIQGVwY
-	 rIGwr6dSVXsKfVBCjIEr8aB338RP8QbZCz9Y5EO69JrGpO7iUYXJ+WBipvhwJ/cO39
-	 yq20bql/olzxhZ/mIdEjplU94Ilt5r3pzQ35nR/k=
+	b=PeuvQWB6usP+tlFY3UOQlZPuhP5u6Jjn4do3vXfrjtI/x5NHOBjnTtTD6YRwOpm5Z
+	 iDPtindtYYwQYchlmchYvWJg+TbVbK66/Q6kWB6t1IgrdXdldk0NHnQph8Z9Np9nYz
+	 gQ5b6qrJP86vVn+wcwcmEgsqPZxTmFv0GQ9DzBp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1569/2651] rtc: abx80x: properly handle shared IRQs
-Date: Wed, 18 Nov 2026 15:46:49 +0100
-Message-ID: <20261118150344.426285776@linuxfoundation.org>
+Subject: [PATCH 7.3 1615/2651] seq_buf: Do not pop from an overflowed seq_buf
+Date: Wed, 18 Nov 2026 15:47:35 +0100
+Message-ID: <20261118150345.999412696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,122 +68,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoni Pokusinski <apokusinski01@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
+[ Upstream commit b7e688b5635a0888613f4d620eeb7440e2f23a7e ]
 
-The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
-but the handler always returned IRQ_HANDLED and cleared the status
-register even when no interrupt source from the RTC was active.
+When a seq_buf has overflowed, its len is size + 1, so seq_buf_pop()
+decrements len to size and reads buffer[size], one byte past the end of
+the buffer. It also leaves len equal to size, which no longer counts as
+overflowed, so a truncated seq_buf then looks like a complete, full one.
 
-This could cause the driver to claim interrupts belonging to other
-devices sharing the same IRQ line and could also clear unrelated status
-bits in the RTC status register.
+An overflowed seq_buf logically has no last character to pop: the
+length of what was written has been lost, and the last byte of the
+buffer may be the NUL written by vsnprintf() or bytes that were never
+committed. Return -1 for an overflowed seq_buf, as for an empty one,
+and leave it overflowed, as the rest of the seq_buf API does until
+seq_buf_clear() or seq_buf_init().
 
-Only handle the interrupt when the alarm or watchdog flags are set, and
-clear only those interrupt status bits that were handled. Return
-IRQ_NONE when the interrupt was not generated by the RTC.
+The current callers do not reach this, e.g. trace_syscalls only calls
+trace_seq_pop() when the trace_seq it pops from has not overflowed, and
+kernel/bpf/diagnostics.c sets the length from strnlen() before popping.
 
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Add tests for the pop corner cases.
+
+Tests passed under qemu on ARCH=x86_64 with GCC 16.2.0 and CONFIG_KASAN=y,
+and on big-endian ARCH=s390 with GCC s390x-linux-gnu 16.1.0.
+
+Fixes: 32e0f607ac6a2 ("tracing: Add trace_seq_pop() and seq_buf_pop()")
+Assisted-by: LLM
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20261005155708.1471260-2-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ include/linux/seq_buf.h   |  4 ++--
+ include/linux/trace_seq.h |  5 ++++-
+ lib/tests/seq_buf_kunit.c | 42 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 48 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index e4fd7b5d4b110..ca9eb93bfa0d2 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -50,12 +50,18 @@
- #define ABX8XX_CTRL2_RSVD	BIT(5)
+diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
+index 9f2839e73f8a1..f5a350347bc5b 100644
+--- a/include/linux/seq_buf.h
++++ b/include/linux/seq_buf.h
+@@ -155,11 +155,11 @@ static inline void seq_buf_commit(struct seq_buf *s, int num)
+  *
+  * Removes the last written character to the seq_buf @s.
+  *
+- * Returns the last character or -1 if it is empty.
++ * Returns the last character, or -1 if @s is empty or has overflowed.
+  */
+ static inline int seq_buf_pop(struct seq_buf *s)
+ {
+-	if (!s->len)
++	if (!s->len || seq_buf_has_overflowed(s))
+ 		return -1;
  
- #define ABX8XX_REG_IRQ		0x12
-+#define ABX8XX_IRQ_EX1E		BIT(0)
-+#define ABX8XX_IRQ_EX2E		BIT(1)
- #define ABX8XX_IRQ_AIE		BIT(2)
-+#define ABX8XX_IRQ_TIE		BIT(3)
-+#define ABX8XX_IRQ_BLIE		BIT(4)
- #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
- 
- #define ABX8XX_REG_CD_TIMER_CTL	0x18
- 
- #define ABX8XX_REG_OSC		0x1c
-+#define ABX8XX_OSC_ACIE		BIT(0)
-+#define ABX8XX_OSC_OFIE		BIT(1)
- #define ABX8XX_OSC_FOS		BIT(3)
- #define ABX8XX_OSC_BOS		BIT(4)
- #define ABX8XX_OSC_ACAL_512	BIT(5)
-@@ -261,6 +267,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	struct i2c_client *client = dev_id;
- 	struct abx80x_priv *priv = i2c_get_clientdata(client);
- 	struct rtc_device *rtc = priv->rtc;
-+	unsigned int status_flags_clear;
- 	int status;
- 
- 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
-@@ -277,9 +284,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	if (status & ABX8XX_STATUS_WDT)
- 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
- 
--	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-+	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
- 
--	return IRQ_HANDLED;
-+	if (status_flags_clear) {
-+		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-+					  status & ~status_flags_clear);
-+		return IRQ_HANDLED;
-+	}
-+
-+	return IRQ_NONE;
+ 	s->len--;
+diff --git a/include/linux/trace_seq.h b/include/linux/trace_seq.h
+index 697d619aafdca..7174ebf3f015f 100644
+--- a/include/linux/trace_seq.h
++++ b/include/linux/trace_seq.h
+@@ -86,7 +86,10 @@ static inline bool trace_seq_has_overflowed(struct trace_seq *s)
+  *
+  * Removes the last written character to the trace_seq @s.
+  *
+- * Returns the last character or -1 if it is empty.
++ * Returns the last character, or -1 if the underlying seq_buf is empty or
++ * has overflowed. Note that only that buffer is consulted: a @s marked
++ * full by a write that did not fit, which trace_seq_has_overflowed()
++ * reports as overflowed, still pops the last character written.
+  */
+ static inline int trace_seq_pop(struct trace_seq *s)
+ {
+diff --git a/lib/tests/seq_buf_kunit.c b/lib/tests/seq_buf_kunit.c
+index 0934dfb602ff6..de491f96c1acb 100644
+--- a/lib/tests/seq_buf_kunit.c
++++ b/lib/tests/seq_buf_kunit.c
+@@ -115,6 +115,47 @@ static void seq_buf_putc_test(struct kunit *test)
+ 	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), "");
  }
  
- static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
-@@ -913,6 +926,41 @@ static int abx80x_probe(struct i2c_client *client)
- 
- 	i2c_set_clientdata(client, priv);
- 
-+	/* Disable unused interrupts */
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read irq register\n");
-+		return -EIO;
-+	}
++static void seq_buf_pop_test(struct kunit *test)
++{
++	DECLARE_SEQ_BUF(s, 8);
++	struct seq_buf t;
++	char *buf;
 +
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
-+					data & ~(ABX8XX_IRQ_EX1E |
-+						 ABX8XX_IRQ_EX2E |
-+						 ABX8XX_IRQ_TIE |
-+						 ABX8XX_IRQ_BLIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write irq register\n");
-+		return -EIO;
-+	}
++	/* Nothing to pop. */
++	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), -1);
++	KUNIT_EXPECT_EQ(test, s.len, 0);
 +
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
-+		return -EIO;
-+	}
++	seq_buf_puts(&s, "hello");
++	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), 'o');
++	KUNIT_EXPECT_EQ(test, seq_buf_used(&s), 4);
++	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), "hell");
 +
-+	/* Unlock write access to Oscillator Control Register */
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
-+		return -EIO;
++	/* A 0xff byte must not be mistaken for an empty buffer. */
++	seq_buf_putc(&s, 0xff);
++	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), 0xff);
 +
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
-+					data & ~(ABX8XX_OSC_ACIE |
-+						 ABX8XX_OSC_OFIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
-+		return -EIO;
-+	}
++	/* A full buffer pops its last byte. */
++	seq_buf_puts(&s, "abc");
++	seq_buf_putc(&s, 'd');
++	KUNIT_EXPECT_FALSE(test, seq_buf_has_overflowed(&s));
++	KUNIT_EXPECT_EQ(test, seq_buf_used(&s), 8);
++	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), 'd');
++	KUNIT_EXPECT_EQ(test, seq_buf_used(&s), 7);
++	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), "hellabc");
 +
- 	if (abx80x_caps[part].has_wdog) {
- 		err = abx80x_setup_watchdog(priv);
- 		if (err)
++	/*
++	 * An overflowed buffer has nothing to pop, and stays overflowed. Use
++	 * a buffer allocated at its exact size, so that KASAN reports any
++	 * read past its end.
++	 */
++	buf = kunit_kmalloc(test, 16, GFP_KERNEL);
++	KUNIT_ASSERT_NOT_NULL(test, buf);
++	seq_buf_init(&t, buf, 16);
++	KUNIT_EXPECT_EQ(test, seq_buf_printf(&t, "%s", "longer than sixteen"), -1);
++	KUNIT_EXPECT_EQ(test, seq_buf_pop(&t), -1);
++	KUNIT_EXPECT_TRUE(test, seq_buf_has_overflowed(&t));
++}
++
+ static void seq_buf_printf_test(struct kunit *test)
+ {
+ 	DECLARE_SEQ_BUF(s, 32);
+@@ -354,6 +395,7 @@ static struct kunit_case seq_buf_test_cases[] = {
+ 	KUNIT_CASE(seq_buf_puts_test),
+ 	KUNIT_CASE(seq_buf_puts_overflow_test),
+ 	KUNIT_CASE(seq_buf_putc_test),
++	KUNIT_CASE(seq_buf_pop_test),
+ 	KUNIT_CASE(seq_buf_printf_test),
+ 	KUNIT_CASE(seq_buf_printf_overflow_test),
+ 	KUNIT_CASE(seq_buf_get_buf_commit_test),
 -- 
 2.53.0
 
