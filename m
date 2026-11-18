@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042507;
-	b=Gl7wiOVLQmsdKNMZBnB1tBjrEFOKXdNOaP+Wqs4eb9SVw/EDpxMfIPZHc7+S90digK30
-	 0kEB09Rk12WCzMGBK2jvkH3YIo0PVJXlQdQv2h/vwRAB13n6tWGtvpWbBiljLgy7c/i3e
-	 WDuS/MHMf/4TGapx7PTILUHH7nHMwynTPB3aVppWJ2AFkODXG7tsPgAz2ZcWFncYlLVDe
-	 hbozBH9a9XLigNkm2OdVrQHJP09VDtbcqo0tRLIpgmWp6vSrHZXqLg3Zx9MvaNwIGZ+Rg
-	 SPRiuHNPbXCyIqson4P4pqEaXb3hvKmXwWjN7DRRP5Q+Ed2TaK9OB8BlpR/kTyXMqCw==
+	t=1795042509;
+	b=HQvn5LzN+89oI38bc68dfssi2/RZLLMtwpDp7lApCFf6xvDlndrZohpd2ND0IEaQjH6I
+	 Y2+H/hu3UxUSO6k/ZHsCd7+d1KdQGKgst5elxVL4f5zuokutxTLkuBLtEysdX1v6FdJHQ
+	 MndmLc0qMuwsmyMUKsAF2r6Yqq7/NpQ4gy8lOSAEnaHKlo7pRnOWkKtHsdUG2zaDue/QP
+	 kNrXoogdsaiVKUxyROm4P+ErpU0Ni+kDplKioXpNyabmu1GcPXC3GytddlOIxpJw3CPGr
+	 EFN4xTkH7dworuUIJm4Gz46rQ8te1Xm9eXHF2k7ZkktcKeclswNNMsbPeaJDSwCkxQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AHQD07R18r+n/gTjRdU4tx0b5KgIKUyl/DcYtEFewp4=;
-	b=3DCs5NP87kqbUQWbeqLsxUz7v+KaiMFOVnJfs4zJgek7WI5kYC9g6e7mIskd9x23TZwt
-	 hbSRTkI7ZR05zt6ZffJIGe66X5DmgRyetSC5xSTNnW8RChy/O2PZVE5G4LJNUsGYbZSS3
-	 7stsP+bgG4/kHnOxQFhJhQ9HvBghf4Y7VXsoLYpLlZQmavYU0J4YwpSoNDaFd10bS19NT
-	 O4W3IBrSaNRcZqmZ25uECZx3tpgAggHcBsp3a1U/17lMF2YPJ/3f1pT5dQriWAjioDYjV
-	 n8drdmrA4hvo2uc7/fH3kCkw7T4yPEQyPJMhDyZryopRwkEuzW7SfU60VSp5wSTSTbQ==
+	bh=h+UT7NxUNl3O2MNMUx1fAzncByevntzW2CqoceMwCt4=;
+	b=GnYa/0H7Iqq40arv3l0FX5jIFwDwSlyhk+fW432NyFaTTnVQR5D2zQde1jbsevgfF6dk
+	 7zerDZoCu79+Bb8CYs/wGwK4zEqQPy6efsphOsHirfeUH2XX8wDIxTT355DutNnq40sBR
+	 9u/fUweJuobG0/GbogPTOsz70njh1yV012D/lLn4Hg4KczVSGSkXzCnAqU3xqVUXbUcO0
+	 uo8de18CX6ZmA+IOGAffrpLNEZOYwQuLSgansTJEQe+qEDkZ+xrCvw58EJLLM7Ini7NWN
+	 h963bpye5OgecSoQ8EE0C7r66Wy6gjihSOQENF0DQo2g0D14fpcRtkDduZ0A1KyyW5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSHgSe+k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecMpLzFt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1726F606A31C;
-	Wed, 18 Nov 2026 22:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F9B606A31C;
+	Wed, 18 Nov 2026 22:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSHgSe+k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C63B1F000C4;
-	Wed, 18 Nov 2026 22:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecMpLzFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EE91F000C4;
+	Wed, 18 Nov 2026 22:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042506;
-	bh=AHQD07R18r+n/gTjRdU4tx0b5KgIKUyl/DcYtEFewp4=;
+	s=korg; t=1795042509;
+	bh=h+UT7NxUNl3O2MNMUx1fAzncByevntzW2CqoceMwCt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSHgSe+kcJPTVCHiFevxGFak419eqLE0shFSaT8O3Sk9rO9uo0FKA1K7uiwHCp8tL
-	 aqNGH7QXZOHrl0a0ThtWBFpHSQKsBOgMQ2/NRWdNXODuB0akoGq2mLcjAryOfSlUds
-	 D7PeeSHbOCQQPm1FbP+eE10q0FEJ3DeN9tNIqtz8=
+	b=ecMpLzFtnjBCbQQvB8ZyVG4ydBbkblSOQJZlZYzmHqxlbBgJWDCgcn6lKfOkOD+5M
+	 7NN3ClIzLyIOX32n1HXd3lgqfhgz7L36ViSMgEPSNO85yoP1fKO0UHqh437PekEjsf
+	 XdGIJqQ3Uf4H8bkb+zPoaIVvLNlfcLYETGQOZEiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ting-Han Hou <ue081723@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3194/3318] net: xps: bound the cleanup loop by the old maps num_tc
-Date: Wed, 18 Nov 2026 16:03:36 +0100
-Message-ID: <20261118150455.596613486@linuxfoundation.org>
+Subject: [PATCH 6.6 3159/3318] scripts/gdb: fix radix tree lookup pointer handling
+Date: Wed, 18 Nov 2026 16:03:01 +0100
+Message-ID: <20261118150454.628958700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,46 +71,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Ting-Han Hou <ue081723@gmail.com>
 
-[ Upstream commit 6d5a2cb0b7d6caf170d37ae7ac74738d592d2a05 ]
+[ Upstream commit 66d190b072b4e261aff35debb53872ace9b80628 ]
 
-__netif_set_xps_queue() walks the OLD dev_maps to free its entries.  The
-per-row trip count uses the NEW num_tc while the row stride uses the OLD
-dev_maps->num_tc, so when dev->num_tc was raised without rebuilding the
-XPS map the last row indexes attr_map[] past the allocation:
+Patch series "scripts/gdb: fix radix tree lookup and stack depot
+diagnostic", v2.
 
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue+0x1458/0x1ee8
-  Read of size 8 at addr ffff000014f69458 by task insmod/112
+Two scripts/gdb fixes.
 
-The loop frees entries in dev_maps, so both the trip count and the stride
-must come from dev_maps->num_tc.  The map is sized
-XPS_CPU_DEV_MAPS_SIZE(old num_tc)/XPS_RXQ_DEV_MAPS_SIZE(old num_tc, ...),
-so iterating the new (larger) num_tc reads past the end.
+Patch 1 fixes $lx_radix_tree_lookup(), which dereferenced slot contents
+as if they were node pointers. v2 also handles the XArray sibling,
+retry and zero entries that Sashiko pointed out: they carry the
+internal tag but are not node pointers, and the v1 patch raised a GDB
+MemoryError on them. Large folios in the page cache make sibling
+entries common, so this was worth fixing rather than documenting.
 
-Fixes: 255c04a87f43 ("net: embed num_tc in the xps maps")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20261021155538.67867-1-phx0fer@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Patch 2 is unchanged from v1 apart from being resent with git
+send-email, since the earlier copy was word-wrapped by the mail
+client. Sorry about that.
+
+Both patches are tested against standalone GCC-built fixtures that use
+the kernel struct layouts (details below the --- line of each patch),
+not against a running kernel.
+
+This patch (of 2):
+
+lookup() casts each slot to a pointer to a node pointer and then
+dereferences it. Since the slot already contains an entry pointer,
+this reads the entry's contents as another pointer instead of
+returning the entry itself. Internal entries also keep their tag
+bits when descending, so multi-level trees are read from the wrong
+address and $lx_radix_tree_lookup() fails with a memory error.
+
+Sibling, retry and zero entries carry the same internal tag but are
+small integers rather than node pointers, so the tag alone must not
+decide whether to descend. A page cache populated with large folios
+has a sibling entry in every slot but the first of each folio.
+
+Walk the tree the way xas_load() does: descend only through entries
+that xa_is_node() would accept, follow sibling entries to the
+canonical slot of a multi-index entry, and treat retry and zero
+entries like empty slots since they hold no data. Remove the explicit
+shift counter, as traversal now follows the entry type.
+
+Link: https://lore.kernel.org/20261011023044.1722-1-ue081723@gmail.com
+Link: https://lore.kernel.org/20261011023044.1722-2-ue081723@gmail.com
+Fixes: b7235d6bb516 ("scripts/gdb: add a Radix Tree Parser")
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: LLM
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/gdb/linux/radixtree.py | 66 ++++++++++++++++++++--------------
+ 1 file changed, 40 insertions(+), 26 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 61dfbfd283634..a270657f672fb 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2755,7 +2755,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		goto out_no_old_maps;
+diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
+index bc2954e45c327..8ce9936dfa50f 100644
+--- a/scripts/gdb/linux/radixtree.py
++++ b/scripts/gdb/linux/radixtree.py
+@@ -27,6 +27,24 @@ def entry_to_node(node):
+     indirect_ptr = node.cast(long_type) & ~constants.LX_RADIX_TREE_INTERNAL_NODE
+     return indirect_ptr.cast(radix_tree_node_type.get_type().pointer())
  
- 	for (j = 0; j < dev_maps->nr_ids; j++) {
--		for (i = num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
-+		for (i = dev_maps->num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
- 			map = xmap_dereference(dev_maps->attr_map[tci]);
- 			if (!map)
- 				continue;
++def is_node(entry):
++    # Like xa_is_node(): internal entries below 4096 are sibling, retry
++    # or zero entries rather than pointers to a struct xa_node.
++    ulong_type = utils.get_ulong_type()
++    return is_internal_node(entry) and entry.cast(ulong_type) > 4096
++
++def is_sibling(entry):
++    # Like xa_is_sibling(): a multi-index entry occupies several slots,
++    # and all but the first hold a sibling entry that encodes the offset
++    # of the first one.
++    ulong_type = utils.get_ulong_type()
++    return is_internal_node(entry) and entry.cast(ulong_type) < \
++        xa_mk_internal(constants.LX_RADIX_TREE_MAP_SIZE - 1)
++
++def sibling_offset(entry):
++    ulong_type = utils.get_ulong_type()
++    return int(entry.cast(ulong_type)) >> 2
++
+ def node_maxindex(node):
+     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
+ 
+@@ -40,39 +58,35 @@ def resolve_root(root):
+ 
+ def lookup(root, index):
+     root = resolve_root(root)
+-    node = root['xa_head']
+-    if node == 0:
+-        return None
++    entry = root['xa_head']
+ 
+-    if not (is_internal_node(node)):
+-        if (index > 0):
++    if is_node(entry):
++        node = entry_to_node(entry)
++        if index > node_maxindex(node):
+             return None
+-        return node
+ 
+-    node = entry_to_node(node)
+-    maxindex = node_maxindex(node)
+-
+-    if (index > maxindex):
+-        return None
+-
+-    shift = node['shift'] + constants.LX_RADIX_TREE_MAP_SHIFT
+-
+-    while True:
+-        offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
+-        slot = node['slots'][offset]
++        # Walk down the tree like xas_load() does.
++        while True:
++            offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
++            entry = node['slots'][offset]
+ 
+-        if slot == 0:
+-            return None
++            while is_sibling(entry):
++                entry = node['slots'][sibling_offset(entry)]
++                if node['shift'] and is_node(entry):
++                    # xas_descend() turns this into a retry entry.
++                    return None
+ 
+-        node = slot.cast(node.type.pointer()).dereference()
+-        if node == 0:
+-            return None
++            if not is_node(entry) or node['shift'] == 0:
++                break
++            node = entry_to_node(entry)
++    elif index > 0:
++        return None
+ 
+-        shift -= constants.LX_RADIX_TREE_MAP_SHIFT
+-        if (shift <= 0):
+-            break
++    # Empty slots and retry or zero entries hold no data.
++    if entry == 0 or is_internal_node(entry):
++        return None
+ 
+-    return node
++    return entry
+ 
+ def descend(parent, index):
+     offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
 -- 
 2.53.0
 
