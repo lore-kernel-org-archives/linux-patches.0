@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049355;
-	b=GDBafYVl5hcwQkHvxp/GHVF1t+qhN3rbyTvG+291oJRuZ6BpIFelRC+oz+XGksxoRlAN
-	 Qmlq21EWWF15mkkyLdC5AqvozX3Q3LezrMCEd7z6nvNXRMQ7JfUaadVQJY+ZQowTTYmj7
-	 fn8LvcdyFlfIGR3/Gcy74vXgwADwXgMvO/q3asOlCEThgGH/TMQE5TJQKmF/6bn9qi9j5
-	 WczZTGHnrz6FSQyiTzGFH+6J3wF53+fxPk+Wjh71e0wXqZ5Z4M+ikhV3khDaXkDLPDARZ
-	 QjNUfFiJAUqI1JW4o6WPCBSR58pvWXREyQRX0Jenohtw2Yid+B99CuYukDzsXD66eow==
+	t=1795049358;
+	b=Ajyj9WkmDA7sooO8u4S+NwQWK07M5JzkXcN3zuklsg1WZoyWHbuk7T7MkKwayvfWGWHZ
+	 11q5fEHPSB+Bmv5y3sTKM8hBGZoGhYrpHO344PsI0kW+117KpXagsybRnnpONOgo0PYW4
+	 Y6AcCCqljdv1Int6U+Up+Hs4QY/CYdIJv4sk2O98XQUHFXhWwpTPGOwO9Bp+tfjkvTw55
+	 //hiSPlCuBey1zKVW8A7IxAFXpURnr8yj+MK3fry/xOys+AIxShQ6uWsgOot6glE8bCAc
+	 Qqa+jwEOShr8JlyLvtZiR7tVLgB63D4zV1kkBciE4g0ExshnOqZ5z97ERR45w2q06ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZZaqpzW4yqKG7zLy0PXs9FqNP4uhG/q6zDX5jbaUzOk=;
-	b=Ctlm4GZvRJlIlbc5WQNqcK6IKa9YzGHZWyiwRzaBKa1XvQAHQnlfycZoB40JD4atR2GW
-	 6l1RCF/clWgcS/BDdOdwbBwDFO9dHL9/41Z6eGANusjH/8szRV803Zr1nzw/83fNIs0J2
-	 otmU2b4RD+6/Ere59SsHO8VnnX9h7jL65i/K3UhuMF4snpg1FN6670sO3Quu58mCQNwon
-	 ZDjqrdKV+oS4wzt9HghvCZcrksaRzf0v+g07OsgxXF2YH4TwB8kD9YkIbkN5TgsBElKPi
-	 i81k1nZrNiuvOar4LtLR1gqiszxnrAIzQVm/f5W4KvcVU9uVbD4aHnor1Au5r09qG9A==
+	bh=clKvP5IZu932/N9M6vJtP3zyLorIDfYA9CXN2K9IY84=;
+	b=jdVe2FII/T8VPr+exrCu+JDTb1//tjfKhD4uilxdtyc97AzuiahaQ0hhRaMTKE2m61iV
+	 wvYdNy2oSt/2b9HZiSrzkh8dEZE3557Yz8rsmH7cobFbV0BCx80rElDyUfcZ25lN65XQ+
+	 Q0DMIDDbFLssISYs4yRl8ertgxPdr/25/kNYGmPKZwnmUVtbtsUwUfp3PvPu/tpfu3mOJ
+	 1kP1vzEj22ZmFg8Gne9PVmvKXYk4Vc2QE5x299PwhL/4g5Y7lhqFuktDGgW4x7algOC+L
+	 9kRjvrcR9ohnbFy/w5Qgo8E2L1HBU+0fFcTRAVXszxeG+EzKNu//lmOaBd4Bwq7rtjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNepOU42;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsyX05Vc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC50606A32A;
-	Thu, 19 Nov 2026 00:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BA6606A31C;
+	Thu, 19 Nov 2026 00:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNepOU42
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B001F000C8;
-	Thu, 19 Nov 2026 00:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsyX05Vc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D551F000C5;
+	Thu, 19 Nov 2026 00:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049355;
-	bh=ZZaqpzW4yqKG7zLy0PXs9FqNP4uhG/q6zDX5jbaUzOk=;
+	s=korg; t=1795049358;
+	bh=clKvP5IZu932/N9M6vJtP3zyLorIDfYA9CXN2K9IY84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNepOU42QD+Jk1G2qXCzFxhem+lnOeZIQUpwFxwscbFL8b9LVUoN/uG/eKCN90OhC
-	 wz0jdfWYK+ILGCC8FDEyfcCWaddsUSLSZyirf8bhAcEEN1k/ImNcdLnWaSon5LjvOd
-	 HIUTU6/oZmpHIWFGYSmyC0ra5bjcw4Do2xShO9f4=
+	b=BsyX05VckyvUKJBe7q+DEe1usimijhTKVdvM2qfiynhUqSV/OFMaiuZtgen1mdc0I
+	 pJ8eYv4ExB07mKqUv4TAN/oqON/B7O0Uud4NbsTXp1rB7cmT8+lNuuYbNb08k8EneU
+	 36/v1CV2jvxNtr/FzP9fzckfNzcn48ym5GuOs88M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Melissa Wen <mwen@igalia.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2271/2857] dmaengine: ste_dma40: Validate memcpy configuration
-Date: Wed, 18 Nov 2026 15:55:05 +0100
-Message-ID: <20261118150323.219649729@linuxfoundation.org>
+Subject: [PATCH 6.1 2316/2857] drm/amd/display: use right type for amdgpu_dc_performance event entries
+Date: Wed, 18 Nov 2026 15:55:50 +0100
+Message-ID: <20261118150324.921802054@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,79 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
+[ Upstream commit 99858eda764364bae733448c7eb79145d3d043ec ]
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+Some amdgpu_dc_performance trace event params are passed as unsigned
+long but stored as uint32_t, cutting them off on 64-bit. Use the right
+type on entry fields and on printk use unsigned format accordingly.
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
-
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
-
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 0cf5eb76e2b4 ("drm/amd/display: Add tracing to dc")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 6f0a918e65812..684ca58c03591 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1766,7 +1766,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+index d7813017f7c24..7bc89954882ff 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+@@ -74,10 +74,10 @@ TRACE_EVENT(amdgpu_dc_performance,
+ 		const char *func, unsigned int line),
+ 	TP_ARGS(read_count, write_count, last_read, last_write, func, line),
+ 	TP_STRUCT__entry(
+-			__field(uint32_t, reads)
+-			__field(uint32_t, writes)
+-			__field(uint32_t, read_delta)
+-			__field(uint32_t, write_delta)
++			__field(unsigned long, reads)
++			__field(unsigned long, writes)
++			__field(unsigned long, read_delta)
++			__field(unsigned long, write_delta)
+ 			__string(func, func)
+ 			__field(uint32_t, line)
+ 			),
+@@ -91,12 +91,9 @@ TRACE_EVENT(amdgpu_dc_performance,
+ 			*last_read = read_count;
+ 			*last_write = write_count;
+ 			),
+-	TP_printk("%s:%d reads=%08ld (%08ld total), writes=%08ld (%08ld total)",
+-			__get_str(func), __entry->line,
+-			(unsigned long)__entry->read_delta,
+-			(unsigned long)__entry->reads,
+-			(unsigned long)__entry->write_delta,
+-			(unsigned long)__entry->writes)
++	TP_printk("%s:%u reads=%08lu (%08lu total), writes=%08lu (%08lu total)",
++		  __get_str(func), __entry->line, __entry->read_delta,
++		  __entry->reads, __entry->write_delta, __entry->writes)
+ );
  
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2061,12 +2062,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2074,6 +2080,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
+ TRACE_EVENT(amdgpu_dm_connector_atomic_check,
 -- 
 2.53.0
 
