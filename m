@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021486;
-	b=iAJgIlBppQ06i+mWLoKEh6ZvKXpfVKJvRl9Sxd18XSqBP5aP9Q6Vgm3D329Je4+Ax8gL
-	 IwTZQfOAGLRPbQ5uzZVXodFRe9RL8cp9NVQ39VcmoAA4WzMPKmQfeU/9zXXYFA9Y9XM2+
-	 8dMJHhA15jFyK3s29qP9DEJnYO8asveN6hPzpnw72t3c+c3yWTJt9WxI6snRLLo0+4XtI
-	 IGO9ci7WZkDlxoeMgHUEFQTHG4HoHWBDu9+tGaAplMGKXZ5F2W4W0KsgmYmcVRyNVXDXQ
-	 IjBTv5iC/2C7EgIL/hzWYRUls7Qso2x1pONgNu0tYrm6WwFZuOo1DWMdb+UQskFN/eg==
+	t=1795021489;
+	b=5pGrsGshEGM0iw70sDEWDwSQA5HmniFzfql6sJHCkrpGJ1cEB3BNqFltfq+ck+7juJM5
+	 NyF9za7DZxqa+DKacqZRIt0Cpv028HEulFcZalgbNtXHnnO5piUTeel4fzpZ71LkHNCGZ
+	 Ml8Q2+DJhaXZpinX4C2gekJDpXv67nv5Q4DsnlvNeKF5hFXPNybDCi2vQv4S7EqnyPId3
+	 F8sUx4tt/seR6Vf7zAdd/BMAZ78vLHjRC7/N2czn1GHS4qunkQsqt7cLlvdcfhx1B4qhL
+	 lbO51BA6+P7XMR+q4LBCGCVrmD2AlWJSBp2ZLo5i0iNhB4Z5gPFJlgpdePFz7VUcuOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z6mqeawNQ01VOnXnkCHbrUKHylV42VuGhqrzui5Mqck=;
-	b=Ncs/Q4YkS84IjpEdLZ0hS5XPqeEirN9ddUskFnWFh0DaBcDlrwbjRFleVp3hl/nCShHO
-	 S8NwN9e7MiBsToRRteXLEWa2vROPQc30frqzbs3Qe5f+myWfbbPJrRae5OlKgngAMPiji
-	 WBYjbNgSmeitxuu67gmejvVvz2KaUOeVQycxM5jG+gS9gjJYgY+GL+/coF5yUiFvtyT9J
-	 aGEgbouRvOnuUw7l6WB2dN+A8S0+MykkHA/Ct9cPiYyxk6ljsi2o7piutmzixj+6FConV
-	 DMqjB6nGLWTr3AJI/toYMPanj5Jk6IghTB8pMMBTcpLSsSfJvM8TPBUMvInCxGrDaIA==
+	bh=IXyM0UG6lzYfpv8r6tchCmWL+HmiV7yfkz3zoBYq29Y=;
+	b=KrZzlY/xi2r9nlY68GNkxZEzsD1grej6iuOGOkYAiM9jIoCPK2aDS0dakIBcZyVcZgQv
+	 hDwaioV25iIoBvVdl0A+FbZChIF/FRL/zYaCyFFvDPhLINfkNgT5rITa6xU+dmHyvOw7N
+	 KiPOCdXCnYZyUIwvOhyO1BlJ0AIXRRh80rBrOFFzlKuSFonMFhpqppuEmY/4U8/SoB7Pl
+	 o1+JM6fH0eIrwbIIr8+TUoBoUCNVnqr0V2as1cr+higsn9ykx1b6MwEIPlSg3g+ArzAlS
+	 +he19ZsisQM2YKxEevPKP3FlfOEkwHek05CYmlI+zYpXXkQNvDNSTk+esOLzMgkTT/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZdRibTj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YY1RqNZ7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A50F606A331;
-	Wed, 18 Nov 2026 17:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC6E606A32A;
+	Wed, 18 Nov 2026 17:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZdRibTj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7309C1F000C5;
-	Wed, 18 Nov 2026 17:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YY1RqNZ7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF161F000C4;
+	Wed, 18 Nov 2026 17:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021486;
-	bh=Z6mqeawNQ01VOnXnkCHbrUKHylV42VuGhqrzui5Mqck=;
+	s=korg; t=1795021488;
+	bh=IXyM0UG6lzYfpv8r6tchCmWL+HmiV7yfkz3zoBYq29Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZdRibTj0R38ia2rd80yUbesIKBSVLLO0HY9GGc7Yrg8HafEGD3W+wt08KfE45x4Y
-	 q1cEzRY7ipGAsY3uoafdrx9rv1GY8sLD6J2dxoMULsTUg9pTP/JFCtGJ3NhbndZLJP
-	 YksSiG4RULuRvLGf9NiGOqXGjlIqplUOITHnj1EI=
+	b=YY1RqNZ7LbRe0KIhnwMHd1hxXSGJpVZfk+DOfL90aUpXginXO0a+T6YaWsfoMrMwQ
+	 WCGnth9TDgt2qRVwQYr5Xba2kdzimMGKbQ/ygT3Eze+8/qLJC7sK6qNlO+VnT7L+V+
+	 n7eswSB0zGDZwfJSAmAVcSooJ8E+Db9ehxHygYPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2325/2651] sh: Select BINFMT_FLAT_NO_DATA_START_OFFSET for !MMU
-Date: Wed, 18 Nov 2026 15:59:25 +0100
-Message-ID: <20261118150408.856952173@linuxfoundation.org>
+Subject: [PATCH 7.3 2326/2651] PCI/pwrctrl: Power off child devices on power-on failure
+Date: Wed, 18 Nov 2026 15:59:26 +0100
+Message-ID: <20261118150408.888192594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,58 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waldemar Brodkorb <wbx@openadk.org>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit f45711b39e03ff5e80b60dcc1fd34b3fc7d3d36c ]
+[ Upstream commit b6087ff2b7a4c9f98c78f56f0f357557fc008768 ]
 
-binfmt_flat offsets the in-memory start of the data segment by
-MAX_SHARED_LIBS words and then aligns it to FLAT_DATA_ALIGN, so FLAT_FLAG_RAM
-binaries end up with a gap between text and data (commit 2217b9826246
-("binfmt_flat: revert "binfmt_flat: don't offset the data start"")).
+pci_pwrctrl_power_on_device() recursively powers on the child nodes of a
+device before powering on the device itself. If powering on a child fails
+(e.g. returning -EPROBE_DEFER), the function returned immediately, leaving
+the sibling children that were already powered on in the same loop
+iteration enabled.
 
-SH position-independent code finds the GOT with a PC-relative mova of
-_GLOBAL_OFFSET_TABLE_, which assumes data follows text directly, as elf2flt
-lays out the image. With the gap, the GOT register points below the real GOT,
-so every GOT load reads the neighbouring slot and gets a wrong pointer. On a
-J2 (sh2eb, no MMU) this made userland crash or hang right after start-up.
-In my case the data was moved up by 0x20 bytes.
+Since probe deferral is a standard boot path, this leads to unbounded
+regulator and clock enable increments across retries. The error path in
+pci_pwrctrl_power_on_devices() only powers off the top-level children
+processed before the failing one and explicitly stops at it, so it can
+never clean up the siblings leaked deeper in the failed subtree.
 
-Commit 04d82a6d0881 ("binfmt_flat: allow not offsetting data start") added
-CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET for architectures that cannot
-tolerate such a gap; currently only riscv !MMU selects it. Select it on SH
-as well when building without an MMU.
+Power off the sibling children that were successfully powered on before a
+child fails, and power off all children if the device's own power_on()
+fails after its children were already enabled. Switch to a manual child
+iterator so the failing node can be tracked and its reference released in
+the error path.
 
-Tested on a J2 board (Numato Mimas V2, sh2eb, no MMU) with Linux 7.3 and
-FLAT binaries built with elf2flt: with this change the data segment starts
-exactly at the end of text and init runs.
-
-Without the patch bootup fails with:
-[   12.080472] Fixing up unaligned userspace access in "init" pid=1 pc=0x(ptrval) ins=0x6583
-[   12.123609] Fixing up unaligned userspace access in "init" pid=1 pc=0x(ptrval) ins=0x6583
-[   12.175153] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00007f00
-
-Fixes: 2217b9826246 ("binfmt_flat: revert "binfmt_flat: don't offset the data start"")
-Signed-off-by: Waldemar Brodkorb <wbx@openadk.org>
-Assisted-by: LLM
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: b35cf3b6aa1e ("PCI/pwrctrl: Add APIs to power on/off pwrctrl devices")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260909-pwrtctl-power-on-rallback-v1-1-412ef996ba27@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pwrctrl/core.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/arch/sh/Kconfig b/arch/sh/Kconfig
-index d60f1d5a94c0f..b501153551c04 100644
---- a/arch/sh/Kconfig
-+++ b/arch/sh/Kconfig
-@@ -15,6 +15,7 @@ config SUPERH
- 	select ARCH_MIGHT_HAVE_PC_PARPORT
- 	select ARCH_WANT_IPC_PARSE_VERSION
- 	select ARCH_NEED_CMPXCHG_1_EMU
-+	select BINFMT_FLAT_NO_DATA_START_OFFSET if !MMU
- 	select CPU_NO_EFFICIENT_FFS
- 	select DMA_DECLARE_COHERENT
- 	select GENERIC_ATOMIC64
+diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+index c14df117ece37..0e2387cf46577 100644
+--- a/drivers/pci/pwrctrl/core.c
++++ b/drivers/pci/pwrctrl/core.c
+@@ -252,14 +252,16 @@ static int __pci_pwrctrl_power_on_device(struct device *dev)
+ static int pci_pwrctrl_power_on_device(struct device_node *np)
+ {
+ 	struct platform_device *pdev;
++	struct device_node *child;
+ 	int ret = 0;
+ 
+-	for_each_available_child_of_node_scoped(np, child) {
++	for_each_available_child_of_node(np, child) {
+ 		ret = pci_pwrctrl_power_on_device(child);
+ 		if (ret)
+-			return ret;
++			goto err_power_off;
+ 	}
+ 
++	child = NULL;
+ 	if (!pci_pwrctrl_is_required(np))
+ 		return 0;
+ 
+@@ -279,6 +281,19 @@ static int pci_pwrctrl_power_on_device(struct device_node *np)
+ 
+ 	platform_device_put(pdev);
+ 
++	if (ret)
++		goto err_power_off;
++
++	return 0;
++
++err_power_off:
++	for_each_available_child_of_node_scoped(np, tmp) {
++		if (tmp == child)
++			break;
++		pci_pwrctrl_power_off_device(tmp);
++	}
++	of_node_put(child);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
