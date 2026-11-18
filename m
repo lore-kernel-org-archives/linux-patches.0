@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058954;
-	b=EbUQP3pS771EloR1X2oBwlysDRhR0Xn8aTjipiLqabSonyBkMgtLPnihfh+CigvN/usg
-	 izpt0iXKcgkZFrR2ADosBMDhy7+k+Mptw0vE8VYFN1N0nB4YVKSp8FxbJS1z8RDzLzTk+
-	 KZQgfO9COHPC01q2EL/gh7NN6ImVzczBZGFATfSzcQetG8JCxA1bkjpNjC8gu0Y00FOIC
-	 Upif1EGGPO7OEUT8wEL3uXGBHX2s+diDyIUVm8walFUWmV9x0BSwbnUcZffdni9WRrIFB
-	 gfB8e6jtGqe/GnAIOVMgz4aJ041JKWaid7IZ+pZGSghVXdU1D6cxy0n6dx7wTx1lucg==
+	t=1795058957;
+	b=atwRVA829jPROsDwJCixbQFH+XD4fsFYmfVfmwR8OTfKBLmeaXKIpqC3A7AywQeORgit
+	 gl+i+/NphIi4GMNvJ6wbLgFcuJHR24zAmoBFWQg8dLvkHeSClfnxqJ/z0lusD6lA2w8sq
+	 c8iNmCGSojQ/wsheQCVKfgmNVlmK52jM3iFBot6E3dG6+pVBFwlJOeeAf57+xj+A0dETL
+	 Mazf7IcZeGjaMjRy4CgcjnsMKPhUfYbUtn1vvzKv941oOXAsxoGtK3azWiNYLJYk+VDLw
+	 X9zA7Zg/iYhVunxemN+qCltlhj2pfkgOsiNWmi2QCc+X0gSvomXyBxWpnBTMGpakt0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CqtMg9BS9Fk88cqT74MdffB8YyByFwK+ApwkMVZrgAU=;
-	b=EHJIBI/pie7HmFxG71OPOlUwwH994BK6yJNrANnd8TQBTiXlpTPophSbqkPOMu7/LsJR
-	 hdMtr6ZrmMdvXJ7yZWKeLqvD6ypf2/grY1OM2Nii7OFEkeV1b5cm9NakbY/jaX23IUxXe
-	 /kldPAJYKAr1K54un7jyhmfvuNPalGUQ1bFMLOEdVqFD8v2IdiALjEZtJ/3oFk7qstb4b
-	 GkXt2FPh6bwTPV2PgXCDBSFyj+XJvZEsIVibD5PuBNu7IXFuGnyiD2nvaQXuiHn9IMl5N
-	 9LW/G1KIw4feDTwBauVlBzN6sLDNszxhPiWliWyLyPOsntg9n6gjT84dZRCLjkcDvfg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=v6vhs8nqfOnCuoJMJ7Igf8pyLSCR9wmCXOL6PdHg+TQ=;
+	b=H6cVZ5YorHQm2ZA6yy0tO36DWwDrl+OFSXsZJbSBCFX7SLIcNUiFHVfw6tcXHpt1zjm6
+	 kZ6l59K7EbpkYTVXIg3Uj4E21OXso8BRy5xWgY3nwWY+MwFDz5g+opOo26t6xDDP9C+dN
+	 Pq/bsBpfXkpbqEg6CTKdVOMz/u0xU18hbzOaVNSjEIZcSCSyebX5Wm9Ktc8vk6rv40SIh
+	 K4O5RXR0hT5uv95+XgmtLj0IpfbtkLMqyz2OPHSk3bYIcf6OuP1lMGhRecNePdUZLitWR
+	 pMV8A7GekfEZY5ihbLseb2ce4NRbtga8tDLh7tT6QvD8YDRQAbYZDw+6kNh8P/4aNEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8a8cZcW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAILpvjd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DD0606A320;
-	Thu, 19 Nov 2026 03:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350CF606A32F;
+	Thu, 19 Nov 2026 03:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8a8cZcW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FFC1F000C5;
-	Thu, 19 Nov 2026 03:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAILpvjd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508801F000C5;
+	Thu, 19 Nov 2026 03:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058953;
-	bh=CqtMg9BS9Fk88cqT74MdffB8YyByFwK+ApwkMVZrgAU=;
+	s=korg; t=1795058957;
+	bh=v6vhs8nqfOnCuoJMJ7Igf8pyLSCR9wmCXOL6PdHg+TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8a8cZcWcTf6fuTkHUF8+B9qDjopO8AffUWju6+bJLDVYmXIQPzFHl0hHue72/kRS
-	 avh1NN62V5DP7gSFYfhpVxw30McUHo+zDV8eR27z2rZ7JfbWu3LtRkz8qI41LIIbrZ
-	 7N3o3stIgyM5o34vyQp4QQbC+kZe8gjXWsaeN7Vs=
+	b=RAILpvjdT7+Ip8b6ufjOQyyO43U10c1HD1mofWGMYcE0BksFIdgjd5DrvBfVnZ9aF
+	 gfOiphaaDB6DwyPhHAEe2hOnF7qkLjc0SMzLOsn+on4LYzNa+3H53RO4KgORwE9Pvg
+	 hHFcQlve6H5AL83jH2ws4UuCI+L66nXO/3P96pB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0663/1848] pwm: tiehrpwm: Clear period on disable to allow reconfiguration
-Date: Wed, 18 Nov 2026 15:45:01 +0100
-Message-ID: <20261118145943.515465201@linuxfoundation.org>
+Subject: [PATCH 5.10 0672/1848] posix-timers: Accept NULL clock_getres() output in stubs
+Date: Wed, 18 Nov 2026 15:45:10 +0100
+Message-ID: <20261118145943.991048992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,55 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit e74b9a7ee50071aad25d3989bf985292f90b0c6e ]
+[ Upstream commit 5b819071e4346256c4edbae5cc2095dff25694fc ]
 
-Both channels share one period register, so ehrpwm_pwm_config() rejects a
-period differing from the sibling's period_cycles[]. That value was cleared
-only in .free(), not in .disable(), so a stopped channel kept blocking the
-sibling from switching to a new frequency. Clear it in .disable() too.
+With CONFIG_POSIX_TIMERS disabled, clock_getres() returns -EFAULT for a
+supported clock when the result pointer is NULL. POSIX permits a NULL
+result pointer to suppress returning the clock resolution.
 
-Testcase:
+Only copy the result when a destination is provided, in both the native
+and time32 stubs. This matches the full POSIX timer implementation and
+preserves clock ID validation.
 
-  cd /sys/class/pwm/pwmchip0; echo 0 > export; echo 1 > export
-  for p in pwm0 pwm1; do
-    echo 1000000 > $p/period; echo 500000 > $p/duty_cycle
-    echo 1 > $p/enable; echo 0 > $p/enable; echo 2000000 > $p/period
-  done
-  echo 1 > pwm0/enable	# before: -EINVAL, after: succeeds
-
-Fixes: 01b2d4536f02 ("pwm: pwm-tiehrpwm: Fix conflicting channel period setting")
+Fixes: baa73d9e478f ("posix-timers: Make them configurable")
+Fixes: d822cdcce43f ("posix-timers: Move compat versions of clock_gettime/settime/getres")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20260929120806.2790355-1-alexander.sverdlin@siemens.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Link: https://patch.msgid.link/20261020161121.85042-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/time/posix-stubs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index d799537f320c8..e3bb8d54ce153 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -386,6 +386,9 @@ static void ehrpwm_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 
- 	/* Disable clock on PWM disable */
- 	pm_runtime_put_sync(chip->dev);
-+
-+	/* A disabled channel must not constrain the sibling's period */
-+	pc->period_cycles[pwm->hwpwm] = 0;
- }
- 
- static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+diff --git a/kernel/time/posix-stubs.c b/kernel/time/posix-stubs.c
+index 3783d07d60ba0..4eb4d7cb6179a 100644
+--- a/kernel/time/posix-stubs.c
++++ b/kernel/time/posix-stubs.c
+@@ -116,7 +116,7 @@ SYSCALL_DEFINE2(clock_getres, const clockid_t, which_clock, struct __kernel_time
+ 	case CLOCK_REALTIME:
+ 	case CLOCK_MONOTONIC:
+ 	case CLOCK_BOOTTIME:
+-		if (put_timespec64(&rtn_tp, tp))
++		if (tp && put_timespec64(&rtn_tp, tp))
+ 			return -EFAULT;
+ 		return 0;
+ 	default:
+@@ -210,7 +210,7 @@ SYSCALL_DEFINE2(clock_getres_time32, clockid_t, which_clock,
+ 	case CLOCK_REALTIME:
+ 	case CLOCK_MONOTONIC:
+ 	case CLOCK_BOOTTIME:
+-		if (put_old_timespec32(&rtn_tp, tp))
++		if (tp && put_old_timespec32(&rtn_tp, tp))
+ 			return -EFAULT;
+ 		return 0;
+ 	default:
 -- 
 2.53.0
 
