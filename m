@@ -1,53 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059856;
-	b=FcaKX9ECKVKmU6jBl7DmyCLL1v5WFJYcRRdAmzJIGZLhNNng2ezTc1/9yKQYgVcjIJwL
-	 +kjkibEAXXkwLti9YhGlcoutrnaU8vJPAslqeJDs5zhcZYhGnjS1Pf9Z8HbAjhB87vOa7
-	 i7YBWOeTidHtyQTsiSowHINWfmzGPhX3xH6a6GT106NX8thsl1FN13sMrPCb9tQyNhKkL
-	 TywrNNXASiXFhbB1H7qgeERgm3L0RH+ZSK4Yix5Msw546yfNapqK4EGbPYi01mO4QQTNL
-	 SSYNVUf3GfzgeruO+l7FASJmKv0g5Hynpbn0LG+UwBgIG+VNaNrdulSWgcu2OkovRYg==
+	t=1795059858;
+	b=ZxJcy7XTf+IQOjBcY3Fkyqc3NTNA90CUswezictTHBgSpvZBFuVm/Kzl+0WEoUamjfl2
+	 yCRNUDlGV4+QvnVWC9geLpEVO1EQ+EemS0Swxbz976aDwpZ4GcWI3lYFVr7t4DgmlGd3D
+	 /RPdVPSusrSbVkonea2XFXmnkMppexmgedAp7a7XlyVFU2kO5oog/z6GnlxlbYXXYSOeQ
+	 hBM1i45ZhUDeRBsUhKxdbADEgDT+P/VmpETDcrZG8Ss3imtmHaFj9jPjbO4oJWFD5ZGHl
+	 yalnk6t7ydb74oyIjUNlEKstrXFpODkr6+h8fFYYFRub52qtFRfnmhlvQLfEFLkHO5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U4gRUhExVVO1+MC+mKs14B76ymZq59FL4fTR2Tmkg80=;
-	b=t/l+tNmYqLPJi06xTf2pXjiijssOAcShrvsR3LrfMwG1lci1PDvFrEgZ0FzCCPzWFOSY
-	 SjRXjQXP4RcUXqGqbbREzfUTl9zVgKwEpePmYNWd8wvctWtySIzWdveSjg54gv/SG8C4t
-	 UlPXf69J+CT5EhvUMg2EQvuusAbxigNrFPFSzFSmY6TPknY0+AXJcj4kPHshWjE0tDhlH
-	 mhJovW+nlXXoRRnyXBvr9HNEmQpTwdBW5q48dA7KqvNR9s/ahMU+h055kZ8s7GfetaOmq
-	 KE2qeRnONnW3Y0iHtTRZW264Sm6Z0c49AIvd4ZC8+yLNPSAgGrSKXj5eHFlG6YVBDUg==
+	bh=/ZLFsZq2+bYU3+F0H0bfw9wn0XaLFOVQO68En51UjIw=;
+	b=260AEtzeEjdQl5VlR8Fd5sT4rxD1AtlGYkFZzUjcZpuvGWcwcpazcK2diQjUMBcXReB0
+	 7TacUo4BjO2rvrra5xdhysyJiTueZx62G1Mbf66Vb40ww47jIXyTMTLVUFpFlKZjGKKYV
+	 0ejWg09qM7JxPpMjKKHsIGkya9JY/05c5c3qT89CpBCfVGCUtRJriB6LRMCY6ilO+Wagb
+	 /ZglVE3t7UTn/+9AJ+oCnrFxuH7jLaFoAdIZo+/NEp9zcrVwpl4vGw0nkJ+CjNX41VMqO
+	 5wh8PuEe0H9Laq1vdeeHAqBvikogrVGRVlYZQBb6xAxDtca7yODJbbozvwkS2gFmppw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhYYzVw5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m7LbuCJe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22F9606A325;
-	Thu, 19 Nov 2026 03:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C986F606A325;
+	Thu, 19 Nov 2026 03:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhYYzVw5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5C01F000C4;
-	Thu, 19 Nov 2026 03:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m7LbuCJe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CB51F000C4;
+	Thu, 19 Nov 2026 03:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059855;
-	bh=U4gRUhExVVO1+MC+mKs14B76ymZq59FL4fTR2Tmkg80=;
+	s=korg; t=1795059858;
+	bh=/ZLFsZq2+bYU3+F0H0bfw9wn0XaLFOVQO68En51UjIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JhYYzVw5/v4huLB1/NaduK9RoMV6VJwXMHbjXNzuL4/+FzkWILGAQntEucuc263XH
-	 25Vj0VSsip8Z5/g7/Ay/xHkduR29K4gXMDDBHVVOlFnHI3zaYmpcahXuoGnNBaHejq
-	 HdEO3Xn6TxRJ2buOz8RunCnpVJMebEUsR0QtcIX4=
+	b=m7LbuCJeltszYep1mzUuFLFChdxj4/0HRJr1pTl0TeH7araoqTlI+Ddb53fdniUbb
+	 8nQt5w1bA1xHceFh8IxsfAgj0Pv++AOAncmt1Pe4t0gvSvs4PWMqg10W60x848umed
+	 zjaOilxlEA+vfhXVC//4e7Rx9o872tqfmxY7bzxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Yufan Chen <ericterminal@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Kees Cook <kees@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0992/1848] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
-Date: Wed, 18 Nov 2026 15:50:30 +0100
-Message-ID: <20261118145958.402175450@linuxfoundation.org>
+Subject: [PATCH 5.10 0975/1848] ocfs2/cluster: initialize heartbeat regions before publishing them
+Date: Wed, 18 Nov 2026 15:50:13 +0100
+Message-ID: <20261118145957.776122027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,68 +79,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
+[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
 
-mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
-before allocating and registering the secondary PHY. If allocation,
-EEPROM override, or PHY registration fails, it returns without restoring
-the primary PHY capabilities. The EEPROM override failure also leaks the
-newly allocated ieee80211_hw.
+A region on o2hb_all_regions must have an initialized config item and
+name. o2hb_heartbeat_group_make_item() currently links the zeroed region
+under o2hb_live_lock, drops the lock, and only then initializes hr_item.
+The lock therefore protects the list without protecting initialization
+from readers of the published item.
 
-Route all failures through common labels that free the secondary hardware
-when it was allocated and restore the primary PHY capabilities.
+With global heartbeat enabled, a DLM_QUERY_REGION from the current
+joining node can pass the existing-domain and protocol checks while a
+configfs mkdir creates another region. The DLM locks are not taken by
+the constructor, and the network worker does not take the configfs
+subsystem mutex. The following ordering is possible:
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+  Configfs mkdir                     O2net receive worker
+  --------------                     --------------------
+  Allocate reg
+  Lock o2hb_live_lock
+  Link into o2hb_all_regions
+  Unlock o2hb_live_lock
+                                     dlm_query_region_handler()
+                                       dlm_match_regions()
+                                         o2hb_get_all_regions()
+                                           Lock o2hb_live_lock
+                                           Copy 32 bytes from NULL name
+                                           Unlock o2hb_live_lock
+  config_item_init_type_name()
 
-Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
-Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-[ sashal: adjusted context for older mt76 PHY API signatures and omitted the unavailable EEPROM override error handling ]
+The query thus dereferences NULL. Initialize hr_item before linking the
+region so the existing list lock also orders name initialization before
+any reader. Reject a failed name allocation, since the initialization
+helper does not propagate that error.
+
+Use config_item_put() on initialized constructor failures to release the
+name and respect references retained by o2hb_region_pin(). Initialize
+the list heads, mutex and delayed works needed by o2hb_region_release()
+before any such put, and leave the list node self-linked after rollback.
+Keep the existing handler drain before removing a failed published item.
+
+KASAN report as below:
+
+    ==================================================================
+    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
+    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
+
+    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: o2net o2net_rx_until_empty
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     kasan_report+0xe0/0x110
+     ? o2hb_get_all_regions+0xbb/0x1f0
+     kasan_check_range+0x105/0x1b0
+     __asan_memcpy+0x23/0x60
+     o2hb_get_all_regions+0xbb/0x1f0
+     dlm_query_region_handler+0x4c2/0xc20
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kvm_clock_get_cycles+0x31/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     o2net_rx_until_empty+0x1a50/0x3200
+     ? reacquire_held_locks+0xdd/0x200
+     ? __pfx_o2net_rx_until_empty+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
+Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Omitted relocation of the mutex, stopping flag and delayed-work initialization. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/init.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index e194259c84e90..b579dbf173f1e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -398,8 +398,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 9731b9f3b9d84..938425dce6e9a 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -2047,6 +2047,14 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		goto free;
+ 	}
  
- 	mt7615_cap_dbdc_enable(dev);
- 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops);
--	if (!mphy)
--		return -ENOMEM;
-+	if (!mphy) {
++	INIT_LIST_HEAD(&reg->hr_all_item);
++	INIT_LIST_HEAD(&reg->hr_handler_list);
++	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
++	if (!config_item_name(&reg->hr_item)) {
 +		ret = -ENOMEM;
-+		goto error;
++		goto put_item;
 +	}
- 
- 	phy = mphy->priv;
- 	phy->dev = dev;
-@@ -431,7 +433,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 
- 	ret = mt76_register_phy(mphy);
- 	if (ret)
--		ieee80211_free_hw(mphy->hw);
-+		goto error_free_hw;
 +
-+	return 0;
-+
-+error_free_hw:
-+	ieee80211_free_hw(mphy->hw);
-+error:
-+	mt7615_cap_dbdc_disable(dev);
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_region_num = 0;
+ 	if (o2hb_global_heartbeat_active()) {
+@@ -2055,22 +2063,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
+ 			spin_unlock(&o2hb_live_lock);
+ 			ret = -EFBIG;
+-			goto free;
++			goto put_item;
+ 		}
+ 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	}
+ 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
+ 	spin_unlock(&o2hb_live_lock);
  
- 	return ret;
- }
+-	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
+-
+ 	/* this is the same way to generate msg key as dlm, for local heartbeat,
+ 	 * name is also the same, so make initial crc value different to avoid
+ 	 * message key conflict.
+ 	 */
+ 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
+ 		name, strlen(name));
+-	INIT_LIST_HEAD(&reg->hr_handler_list);
+ 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
+ 			sizeof(struct o2hb_nego_msg),
+ 			o2hb_nego_timeout_handler,
+@@ -2093,10 +2098,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	o2net_unregister_handler_list(&reg->hr_handler_list);
+ remove_item:
+ 	spin_lock(&o2hb_live_lock);
+-	list_del(&reg->hr_all_item);
++	list_del_init(&reg->hr_all_item);
+ 	if (o2hb_global_heartbeat_active())
+ 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	spin_unlock(&o2hb_live_lock);
++put_item:
++	config_item_put(&reg->hr_item);
++	return ERR_PTR(ret);
+ free:
+ 	kfree(reg);
+ 	return ERR_PTR(ret);
 -- 
 2.53.0
 
