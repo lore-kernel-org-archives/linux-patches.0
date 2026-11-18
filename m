@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024744;
-	b=4Dih/w3qIVAG9f3BnY5GECF6UFnkaXLfxnKX+jglgeE258eCTRV4KxuPse8BwdRLJubx
-	 8l6dveXoAswmgfiD0mVlxHTTr4dVONJ5IkAFnAX3SK/HqD30clRZhKW4DNrVt6HVwpgfn
-	 RDzwe5vF4A+Ts3LrWTkXFM55u99Fh+w6X3StxuGjV1s36UoNF8h8jEOerTNUiQjBuozfh
-	 doNb3VM/aD69d5bBWcdNfQj/4m5MO2+py2UJiPZDCFHM3IlXwwAbcc/QAN6JF6WwLP+5R
-	 OrmUDQLFw9zdRmL31YJBzQ2Y2soTiBDpLkne/OngbdPsmowhETBpU/6NgNLSSz7YBbA==
+	t=1795024747;
+	b=EarjpLRpxImivDrE62Yzw/L7679AhW/bzNF6979G6bWEL/5yLqKM0rZK7cYsQcV+vLaz
+	 R07xeJx5ouxuo8jItvR9g3hFZXpwYXuHBiJdUEv9nuMU/hbQUtTzLr1PQJteEYu/K9BkQ
+	 qZOlv3bLkbUYJXW7AgEwLG+IZOhkqOugbpf/SkjK3FQ4Aa56+mrOIKNETzth1NePmJel1
+	 bNqFcwFI3Sn6po9Km7qXkFPZW4M5OmZZ8ywHr66gf9eBuSHJRAAjAEkFkjHLEtSOHKJ3W
+	 fkrnTNdlXua73rs+Fpl4200VclyJN6nsyWd5Du4yCHWWxjeF4mlC6p7Vl74VcrI6rPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024744;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UxHuCkFYlV33181R5BTAiiI9VxwK+d0c4EDqKu1yD2M=;
-	b=xRtba/LhBowRXWlFMsFfWaPA7MEoigCsHXvMgG3jGyEoFkxVxFqsyEn25AUIQ7lpOCKc
-	 ip1JqOMstFxI0A+zCHhUiDroOnHUYmB1PeJIUnBotA7PncBlaaJFBbLEZlSc9hsr3S2I2
-	 Ug0Zjosv40+lRKX7Q7cG7D3VLH3xkbNG6MJ7Um8eRrd9C5IOsIVIvCd7H168D3ySm1Nbq
-	 QkDlpdCUin770LUtpZfK+iaL3SjA+IWRO6gPNdSL6ROJddf4wvY6g6X/FQGzUikxLVE3F
-	 IaX/mAE9IYjsdSdjStdZBHrb1MvpvYV8338nDmf3MQrNmwRl7IRIqgr9vSCiCG90Sqw==
+	bh=Hz3jC+ImZIQvKc4Jhl/35LZJYiCzlHYtb2jbe5oP5/s=;
+	b=nnTpbdLU/hCqm41R2svOrXa2Ma7g6cLKpwWP5aOklBZ9MO0SF383O8y1Y4EbsKeV/Sxw
+	 7no5GABNgNd0WxvR4kFqHhDBO6JFYmZc9H7w1h5b11PPjynacsV9yXPxpNBW1OEkQXo3W
+	 0XvA+r9EO39XIT1iaVHrZR+NxrtCo0wApNWRdPHNRrCvxyFgCu6lsKrz2bh3p3AsSoj3O
+	 9jL/lKqW8Ttisel2jz3ku7alt/RU7iualUWPsisjj7yue2yj1SC+AMMqsg//sldyBs7Py
+	 /BD+5jqqeCFRf4Htbk0K3msxLFKP4NWQ4CSQRe31vun+a5S7i9EvwR2uVCnUew/QpQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucYuaDft;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9NsOThu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5E7606A331;
-	Wed, 18 Nov 2026 17:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C2C606A336;
+	Wed, 18 Nov 2026 17:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucYuaDft
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841E71F000C5;
-	Wed, 18 Nov 2026 17:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9NsOThu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7114D1F000C4;
+	Wed, 18 Nov 2026 17:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024744;
-	bh=UxHuCkFYlV33181R5BTAiiI9VxwK+d0c4EDqKu1yD2M=;
+	s=korg; t=1795024747;
+	bh=Hz3jC+ImZIQvKc4Jhl/35LZJYiCzlHYtb2jbe5oP5/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ucYuaDftyVq6dvcWGPx1eIRUrMFt79NSszP45ibNslyLSu5o77BzRrS0yMkYWBFYs
-	 bme28UUJLTVDjlswnUymld2efWmDwmUyVJQ1Z2jjppSIvZRLu2/+8OHN+zVC0wd82C
-	 kAli+UKzzoJpSfw46ggNoz0ygdLR7TMFbs9uFwBY=
+	b=Y9NsOThuLEdKPzKCo4mUfQkYo98WIXWzY5bAlMexs3BuxIBAZfux3WRXSCO/V1kDZ
+	 hm74lEgxb3T66gLXoponHtjY0ssTWkVPjCh2JRQ0bwNHPRJlLpijt3RrfRFoFMutbf
+	 rOkzVHMaVsgcP61Uk+4BIEyaE7hVr90jWw7SV3hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0835/2151] perf vendor events intel: Fix sierraforest umask encoding.
-Date: Wed, 18 Nov 2026 15:42:50 +0100
-Message-ID: <20261118150152.623642449@linuxfoundation.org>
+Subject: [PATCH 6.18 0836/2151] perf vendor events intel: Fix skylakex umask encoding.
+Date: Wed, 18 Nov 2026 15:42:51 +0100
+Message-ID: <20261118150152.658856293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,81 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a86bd28b6e71101a1b11b7768f9bbc648b7b14d3 ]
+[ Upstream commit f37e7dfbd34c4e48d2bea4c5e0e64c398671e87b ]
 
 Fix UMaskExt that was wrongly encoded when the UMask was 0.
 
-Fixes: 9626368d429a ("perf vendor events intel: Update sierraforst events to v1.01")
+Fixes: 748d5cf71948 ("perf vendor events intel: Fix uncore topics for skylakex")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../perf/pmu-events/arch/x86/sierraforest/uncore-cache.json  | 5 +++++
- .../arch/x86/sierraforest/uncore-interconnect.json           | 2 ++
- 2 files changed, 7 insertions(+)
+ .../pmu-events/arch/x86/skylakex/uncore-interconnect.json   | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json
-index 3d1fb5f0417ec..e3946d897cb11 100644
---- a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json
-+++ b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json
-@@ -692,6 +692,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.DIRBACKED_ONLY",
+diff --git a/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json b/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json
+index eef801c68bd25..08311bdb2b203 100644
+--- a/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json
++++ b/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json
+@@ -13462,6 +13462,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.DATA_HDR",
          "Experimental": "1",
          "PerPkg": "1",
-+        "UMask": "0x4000",
-         "Unit": "CHA"
++        "UMask": "0x800",
+         "Unit": "UPI"
      },
      {
-@@ -721,6 +722,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.INCLUSIVE_ONLY",
+@@ -13472,6 +13473,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.DUAL_SLOT_HDR",
          "Experimental": "1",
          "PerPkg": "1",
 +        "UMask": "0x2000",
-         "Unit": "CHA"
+         "Unit": "UPI"
      },
      {
-@@ -739,6 +741,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.UPDATE_EXCLUSIVE",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x100",
-         "Unit": "CHA"
-     },
-     {
-@@ -758,6 +761,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.VICTIM_EXCLUSIVE",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x400",
-         "Unit": "CHA"
-     },
-     {
-@@ -767,6 +771,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.VICTIM_SHARED",
+@@ -13482,6 +13484,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.LOC",
          "Experimental": "1",
          "PerPkg": "1",
 +        "UMask": "0x200",
-         "Unit": "CHA"
+         "Unit": "UPI"
      },
      {
-diff --git a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json
-index 251e5d20fefec..ce49487324b36 100644
---- a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json
-+++ b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json
-@@ -515,6 +515,7 @@
-         "EventName": "UNC_B2CMI_IMC_WRITES.NI",
+@@ -13514,6 +13517,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.NON_DATA_HDR",
          "Experimental": "1",
          "PerPkg": "1",
-+        "UMask": "0x300",
-         "Unit": "B2CMI"
++        "UMask": "0x1000",
+         "Unit": "UPI"
      },
      {
-@@ -524,6 +525,7 @@
-         "EventName": "UNC_B2CMI_IMC_WRITES.NI_MISS",
+@@ -13524,6 +13528,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.REM",
          "Experimental": "1",
          "PerPkg": "1",
-+        "UMask": "0x500",
-         "Unit": "B2CMI"
++        "UMask": "0x400",
+         "Unit": "UPI"
+     },
+     {
+@@ -13567,6 +13572,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.SGL_SLOT_HDR",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x4000",
+         "Unit": "UPI"
      },
      {
 -- 
