@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044732;
-	b=XMo1CqPPvJ6sdnrwOG0/PRuTwTm3UkuFhWod9REBTzqhLgWhDoAFeJVlRJsRrnsbvbQa
-	 5XG3WeOan50yorcP8GS08fVi2P7Pblp/SN27AQWW9HCHFi8cWV3uk61L8EdP9AO9EbCcu
-	 5ZR3xIwI5t66hdIUGiCVRVx7xi3WWlJuTolsVAZ0Cz3Tx+oPnjMQ8KQTQMxFrNYjTG1Gc
-	 cWiQkGZ6CT91u0p5dzCzi8cSSz2Xlc1Dp6oXqXbSz89Tsdm5xMB3QvQNRaaa9ZKQSbFJu
-	 O7KD9RME5ETWdwzPR66ayUyOoUCKaRu2CWhfnI5Sm+6sMSlI422iLHXhg/q2y/kU4AA==
+	t=1795044734;
+	b=DpgwH7AlDn64C9jEafC0dKIYzxS6qcf8ZfU98mk2UI8Fky3pwYHwmy915vLowxWfPSHe
+	 aFfUoreOoo7RBUX6T66XROeNiBknPKRoGUCWONRvbTA4ZcqKU3WOdcSlXuB8aC6vNrleA
+	 RgGKn56kmebtTeZ7w2mNSeViDqrB+vDt8vVMPaleMQfD7/zotx9lbFpq1/cgkt6beT5HQ
+	 /Y2fMHcRmQn+rYakOnpLtjZDYVeLP88hK9Q0Eg8I4yf8CLdbtZDW4sjtDxzVv6ze2ZDqe
+	 AMXucxEE0Q6dH6YfffPWf5vNVrAMps8MPj6PJ6hM0VzsvVOXxSrPqCYVIwNqd1Aupww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3HwcsjSpv/UBtTImZUIW6avudTMeIYHUt4hv6aAIidg=;
-	b=wHGb33AusBMJMyzLvRPLlOjmwJQ9+mUcaQarSu/NcSgh91AKjxPMF7Vbwm00Ly0kpC6H
-	 T0PB8wfTwpBQFsDwAElnpyTLDMCDC3laqgeOiOM2V8XeZBnk2gwlsqSffGPPKW5HVGlNc
-	 G8SZAWELT0j8UAn8lr+Fdj4v2gRXqDiQLZCjzfoLuwna2g/zwcDKk1GKeIp2bQlo1QSwB
-	 FfYvN2bK7tsFFoJTfJQX8qDl6GJXIdtCGlQeCGhO6k7PJNaxW05GCk08D+iHdyhrH43cM
-	 z3yssFiuMA5zzFNkkmpjK3fWO4uIqkgUX3K0BY3pGPpwejkAFleBdjg129g2Rynw+YA==
+	bh=tRuvkpCqFV1xbTYyyun4JZluH1bSCxwYH60mfsSbiYc=;
+	b=IIz/rIF7bGJPQF5joxv70YPASof9jSMPV+YJYmocv7w9bdoZWFZY53T/AoAaFAI60mU7
+	 9CbjLFfBR8ulg9SsulRGMWvoutkKlSykdeyfAGOiNDBg9+8sJqvQ4fyR+BMNxYlYsHuFg
+	 /sxyy33xa7d9A0ZaqPF358Tc8vrZTgDSypxb1w1+rvUxN6SfYNLMcnwVz2+IF/pKZtpbE
+	 SIU1av4KkzXaYrJtDnUw3XkYoqecI9YaP8GFr18IcFOB4Iq410+Tt8p5nsMEw4/sQQCFJ
+	 IH5wdd7QZHoL1+4v1vcV1IMhLMnE7o/Kb7bXSK3IYK7LZpRbZ9Uer5st43E/XuA5EzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dC+gwJC4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np2q3mAU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC5C606A332;
-	Wed, 18 Nov 2026 23:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89F8606A325;
+	Wed, 18 Nov 2026 23:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dC+gwJC4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531EA1F000C4;
-	Wed, 18 Nov 2026 23:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np2q3mAU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319FB1F000C4;
+	Wed, 18 Nov 2026 23:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044731;
-	bh=3HwcsjSpv/UBtTImZUIW6avudTMeIYHUt4hv6aAIidg=;
+	s=korg; t=1795044734;
+	bh=tRuvkpCqFV1xbTYyyun4JZluH1bSCxwYH60mfsSbiYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dC+gwJC4cXWYYCcW7mZSuqJiRvAtdueaaEpD7t8w0B8LLoBpyQCnyZEEtepNU0Mnp
-	 0EnDuCgBDPNr0I89YcInj5yQmi8xHAcnmtFnI+Jtx8fYC2JbQTG0QqYkqjgotXxCfj
-	 3VuSS1xXcxawqeP9OWMPdGMH8zlJ+R+Wsnss5qjA=
+	b=Np2q3mAU437Wu3xnElKKe4EJHEOkPOH1DLyfDzLZXiuo8iwDpahg6Eg5aZ2ONzeXM
+	 EhVECpMrkNlWnKfaMT6qanDRSPnSQ1oC5DbCtOwmtcgwgAVRZehFmFNT91GbMB+RgP
+	 CdOPszOtnx1LZrJlxLi85HgvSbLwtoN2D6mOgAK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0670/2857] net/sched: cls_flower: avoid stale mask references after delete
-Date: Wed, 18 Nov 2026 15:28:24 +0100
-Message-ID: <20261118150225.684785052@linuxfoundation.org>
+Subject: [PATCH 6.1 0671/2857] ksmbd: fix parent dentry lifetime in directory enumeration
+Date: Wed, 18 Nov 2026 15:28:25 +0100
+Message-ID: <20261118150225.722044894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,211 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhang Zheng <z1652074432@gmail.com>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 58f7989da6e715ce834ac861b7ba6ae9f9bdb098 ]
+[ Upstream commit 171df27077fb49b4af2c53ad2cedcd0e39664fe8 ]
 
-Flower releases a mask reference when a filter is removed from the
-classifier. The filter object can remain alive while dump, walk, or
-hardware reoffload paths hold a reference to it. Those paths can then
-dereference f->mask after the mask has already been released.
+ksmbd_populate_dot_dotdot_entries() builds the ".." entry from
+the open directory's d_parent and passes that pointer to
+ksmbd_vfs_fill_dentry_attrs() without taking a reference. That pointer
+is only valid while the directory stays under this parent. If a
+concurrent rename moves the directory elsewhere, the old parent loses
+its last reference; a following rmdir then turns it into a negative
+dentry with d_inode cleared, and after the RCU grace period the dentry
+itself is freed. The worker still holds the raw pointer and
+dereferences d_inode through vfs_getattr() and vfs_getxattr().
 
-Keep the mask reference until the filter reference count reaches zero.
-Release the mask synchronously from the final __fl_put() while the caller
-still holds the tcf_proto reference, and leave the existing RCU work to
-free the mask. This keeps the mask available to every reader that still
-holds the filter.
+A remote SMB client, authenticated or guest, triggers this by listing
+a directory while that directory is moved under a new parent and the
+old parent is deleted. It can be done by the client itself with write
+access or by other concurrent writers, triggering null-ptr-deref and
+slab-use-after-free on a KASAN build.
 
-The filter is still removed from the classifier indexes immediately.
-Therefore, a deleted filter can temporarily retain an otherwise empty
-mask; fl_delete() uses the handle IDR, rather than the mask list, to
-determine whether the classifier has become empty.
+  KASAN: null-ptr-deref in range
+      [0x0000000000000000-0x0000000000000007]
+  Workqueue: ksmbd-io handle_ksmbd_work
+  RIP: 0010:xattr_permission+0x9d/0x160
+  Call Trace:
+   vfs_getxattr+0x9c/0x1b0
+   ksmbd_vfs_getxattr+0x82/0x100
+   ksmbd_vfs_get_dos_attrib_xattr+0x7f/0x130
+   ksmbd_vfs_fill_dentry_attrs+0x435/0x650
+   ksmbd_populate_dot_dotdot_entries+0x25e/0x630
+   smb2_query_dir+0xcf9/0x1a20
+   handle_ksmbd_work+0x5f1/0x1c80
+   process_one_work+0x90b/0x19d0
 
-Failed mask assignment can leave fnew->mask as an error or borrowed
-pointer without an owned mask reference. Clear it before the common
-failure path so the final put cannot release an unowned reference.
+Fix by using the dentry reference counting APIs: take the parent with
+dget_parent(), take a matching dget() on ".", and dput() the dentry
+once ksmbd_vfs_fill_dentry_attrs() has returned or the pattern does
+not match.
 
-This fix does not add fields, snapshots, or per-filter memory.
-
-Fixes: 92149190067d ("net: sched: flower: set unlocked flag for flower proto ops")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yucheng Lu <kanolyc@gmail.com>
-Signed-off-by: Yuhang Zheng <z1652074432@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/20261012010720.2248662-2-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adapted fl_change() error cleanup to use the existing errout path instead of unbind_filter and errout_idr. ]
+Cc: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: adjusted context for the existing ksmbd_vfs_fill_dentry_attrs() call using user_ns without a return-value check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 49 ++++++++++++++++++++++++------------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
+ fs/smb/server/smb_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index c6eb857bce895..ea0592b0249c3 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -508,15 +508,22 @@ static void fl_hw_update_stats(struct tcf_proto *tp, struct cls_fl_filter *f,
- 				 cls_flower.stats.used_hw_stats_valid);
- }
- 
--static void __fl_put(struct cls_fl_filter *f)
-+static bool __fl_put(struct tcf_proto *tp, struct cls_fl_filter *f)
- {
-+	bool last = false;
-+
- 	if (!refcount_dec_and_test(&f->refcnt))
--		return;
-+		return false;
-+
-+	if (f->mask)
-+		last = fl_mask_put(fl_head_dereference(tp), f->mask);
- 
- 	if (tcf_exts_get_net(&f->exts))
- 		tcf_queue_work(&f->rwork, fl_destroy_filter_work);
- 	else
- 		__fl_destroy_filter(f);
-+
-+	return last;
- }
- 
- static struct cls_fl_filter *__fl_get(struct cls_fl_head *head, u32 handle)
-@@ -553,11 +560,10 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
- 	list_del_rcu(&f->list);
- 	spin_unlock(&tp->lock);
- 
--	*last = fl_mask_put(head, f->mask);
- 	if (!tc_skip_hw(f->flags))
- 		fl_hw_destroy_filter(tp, f, rtnl_held, extack);
- 	tcf_unbind_filter(tp, &f->res);
--	__fl_put(f);
-+	*last = __fl_put(tp, f);
- 
- 	return 0;
- }
-@@ -598,7 +604,7 @@ static void fl_put(struct tcf_proto *tp, void *arg)
- {
- 	struct cls_fl_filter *f = arg;
- 
--	__fl_put(f);
-+	__fl_put(tp, f);
- }
- 
- static void *fl_get(struct tcf_proto *tp, u32 handle)
-@@ -2229,12 +2235,14 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 		goto errout;
- 
- 	err = fl_check_assign_mask(head, fnew, fold, mask);
--	if (err)
-+	if (err) {
-+		fnew->mask = NULL;
- 		goto errout;
-+	}
- 
- 	err = fl_ht_insert_unique(fnew, fold, &in_ht);
- 	if (err)
--		goto errout_mask;
-+		goto errout;
- 
- 	if (!tc_skip_hw(fnew->flags)) {
- 		err = fl_hw_replace_filter(tp, fnew, rtnl_held, extack);
-@@ -2288,7 +2296,6 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 
- 		spin_unlock(&tp->lock);
- 
--		fl_mask_put(head, fold->mask);
- 		if (!tc_skip_hw(fold->flags))
- 			fl_hw_destroy_filter(tp, fold, rtnl_held, NULL);
- 		tcf_unbind_filter(tp, &fold->res);
-@@ -2296,7 +2303,7 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 		 * after this.
- 		 */
- 		refcount_dec(&fold->refcnt);
--		__fl_put(fold);
-+		__fl_put(tp, fold);
- 	} else {
- 		if (handle) {
- 			/* user specifies a handle and it doesn't exist */
-@@ -2341,17 +2348,15 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 	if (in_ht)
- 		rhashtable_remove_fast(&fnew->mask->ht, &fnew->ht_node,
- 				       fnew->mask->filter_ht_params);
--errout_mask:
--	fl_mask_put(head, fnew->mask);
- errout:
--	__fl_put(fnew);
-+	__fl_put(tp, fnew);
- errout_tb:
- 	kfree(tb);
- errout_mask_alloc:
- 	tcf_queue_work(&mask->rwork, fl_uninit_mask_free_work);
- errout_fold:
- 	if (fold)
--		__fl_put(fold);
-+		__fl_put(tp, fold);
- 	return err;
- }
- 
-@@ -2364,8 +2369,10 @@ static int fl_delete(struct tcf_proto *tp, void *arg, bool *last,
- 	int err = 0;
- 
- 	err = __fl_delete(tp, f, &last_on_mask, rtnl_held, extack);
--	*last = list_empty(&head->masks);
--	__fl_put(f);
-+	spin_lock(&tp->lock);
-+	*last = idr_is_empty(&head->handle_idr);
-+	spin_unlock(&tp->lock);
-+	__fl_put(tp, f);
- 
- 	return err;
- }
-@@ -2387,12 +2394,12 @@ static void fl_walk(struct tcf_proto *tp, struct tcf_walker *arg,
- 		rcu_read_unlock();
- 
- 		if (arg->fn(tp, f, arg) < 0) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			arg->stop = 1;
- 			rcu_read_lock();
- 			break;
- 		}
--		__fl_put(f);
-+		__fl_put(tp, f);
- 		arg->count++;
- 		rcu_read_lock();
- 	}
-@@ -2443,7 +2450,7 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		cls_flower.rule =
- 			flow_rule_alloc(tcf_exts_num_actions(&f->exts));
- 		if (!cls_flower.rule) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			return -ENOMEM;
- 		}
- 
-@@ -2461,7 +2468,7 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		if (err) {
- 			kfree(cls_flower.rule);
- 			if (tc_skip_sw(f->flags)) {
--				__fl_put(f);
-+				__fl_put(tp, f);
- 				return err;
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index 0350697c9093b..d30547f656ccd 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -447,16 +447,17 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+ 			if (i == 0) {
+ 				d_info->name = ".";
+ 				d_info->name_len = 1;
+-				dentry = dir->filp->f_path.dentry;
++				dentry = dget(dir->filp->f_path.dentry);
+ 			} else {
+ 				d_info->name = "..";
+ 				d_info->name_len = 2;
+-				dentry = dir->filp->f_path.dentry->d_parent;
++				dentry = dget_parent(dir->filp->f_path.dentry);
  			}
- 			goto next_flow;
-@@ -2477,11 +2484,11 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		kfree(cls_flower.rule);
  
- 		if (err) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			return err;
- 		}
- next_flow:
--		__fl_put(f);
-+		__fl_put(tp, f);
- 	}
+ 			if (!match_pattern(d_info->name, d_info->name_len,
+ 					   search_pattern)) {
+ 				dir->dot_dotdot[i] = 1;
++				dput(dentry);
+ 				continue;
+ 			}
  
- 	return 0;
+@@ -465,6 +466,7 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+ 						    user_ns,
+ 						    dentry,
+ 						    &ksmbd_kstat);
++			dput(dentry);
+ 			rc = fn(conn, info_level, d_info, &ksmbd_kstat);
+ 			if (rc)
+ 				break;
 -- 
 2.53.0
 
