@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019512;
-	b=5NJUOpiDoMmc3K1mmJduzXrbjt9oQQtWYlaK7J6oXfR9LbU+F0GhTzZ6alnGkRDFm/W5
-	 Krcp36bIgNxfqPuBhSpeieqB/nkTW3LBIOM/Saz4XAiSAkqdOns2E9DA0dIMQYAeNEnE7
-	 /vtDcwCqf2RyfErMrs66mxobiywGHCAeRBE5yWN3WBG5+O73xKRNeqJiOro49/thOqaQK
-	 JXRYpfaLEFpbjoCQSmg8vfJa4ecLnNz2eY8QKYa9zIaRWv6+XkdklJCKuNqBxSjwXhNuW
-	 qqIDsE1cRPmwU2xBwnMNKxPXj2xaaFXHiAMIyxwTZJX7/Kgo2Fh80LMVw9YO9irjwQA==
+	t=1795019514;
+	b=zAnEdWlFepQBC9Co5ueE2/gGbJya4EzCKKi7yigAfYcdSU4otl8Byz1qRjs8czUm0cBK
+	 KfDw8NT+eVGZcombNb4wKbhY7UFFyiu77bM0vvibwtjVAn+wQG2Ennp0X3aHAtzSNp6F2
+	 3vJ56ZpQuyML/26vJ3IhtGWyiVncRk09DBbpb3slhI4xjfLfd8gKH9yRagWUWcpdj4Yu/
+	 HrRU7c7gdI0H1XQYOLxAjiapO5cuh3LD3rJkA9LR/M0+vv9vgIfbDy/E36dtyaVgNUeIR
+	 ZFOo7ZxM+wUc+wcsr5PH1QdikNp/59anL2oXD8e9OTpwtDjOZc4HTScKJv9z/XhX95Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jIzKm29R0SDhM2g3DOUU2CT8tBmBQeIVmMhcZrwwkes=;
-	b=gUbmWFunKqcFajOpYj+4ZHC4LiRGlUjPOui4jqgzmVs/Ie7x/RG5I07tQRqUFJtZeiKe
-	 EBqM7GUjp1jaZ54Xcy0upxyyglmUV8XdIHuj5h+UEb8t6fZdk1faGSULlfeWjm3S3r13f
-	 o++mKfLdeAYyMFe86YjvPeCXetrJMTYGM4ih26dgOm+3Jf/pigpNrAwbyyl4hLp3d1OaB
-	 5rAcmTKNPijxuzlFcQIrXsGeMq+8Rf1XQQXmlQhxMKuMIVCyYcP3oCqWqzpkGncTSxdyl
-	 55albJoXFKbQ3oZT1ip5hwpfHD+DT2FP88XOiSRorRAKGK4Ms1th0O7O8WP5Z1iONCw==
+	bh=y+4D0rXW9j75+jIq3Mow0nrWUIWuywfBc+/Ask4kFWw=;
+	b=FL9e5ZVciMN9mDf+Dg6SCe3zOsZRlXd46MA3bWYAJw9yVXM2k0MDEkv9eU6nTurYFUfF
+	 3FA5EZxAe4xazqGHGGtoNY/aBvlg0opq4I5wasxMHuqs7RQGJEYAGWcPin11TYst3mGyT
+	 XLuYqmb08f4XaNjnkJ3GBtw6id7m2v51G7fZsXJTnXORfGmK092JjwZgcrNM8hnHKoa/v
+	 yG19DctXsOKl8TLhVLsZeFQ0UINoVLBWjwiHEmuwOe2u3+tGPSWUOIy3P28ex09cwSjnr
+	 sv6Er5a6SE0fWBnUkNBkv1cHpubM9zw/CvQ5xALb1hSUOG2GsoaEIRwfv+KA8EbSdWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PeuvQWB6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdBUBZMF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0891606A31C;
-	Wed, 18 Nov 2026 16:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A18606A7CD;
+	Wed, 18 Nov 2026 16:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PeuvQWB6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DBD1F000C4;
-	Wed, 18 Nov 2026 16:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdBUBZMF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C8D1F000C4;
+	Wed, 18 Nov 2026 16:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019511;
-	bh=jIzKm29R0SDhM2g3DOUU2CT8tBmBQeIVmMhcZrwwkes=;
+	s=korg; t=1795019514;
+	bh=y+4D0rXW9j75+jIq3Mow0nrWUIWuywfBc+/Ask4kFWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PeuvQWB6usP+tlFY3UOQlZPuhP5u6Jjn4do3vXfrjtI/x5NHOBjnTtTD6YRwOpm5Z
-	 iDPtindtYYwQYchlmchYvWJg+TbVbK66/Q6kWB6t1IgrdXdldk0NHnQph8Z9Np9nYz
-	 gQ5b6qrJP86vVn+wcwcmEgsqPZxTmFv0GQ9DzBp8=
+	b=MdBUBZMFTaFoIcnbrEBn92N1/laG1WdrQM1llOXGLQ/I4ptemciQQ6q07+Vf6jIIE
+	 62M/KDCqZQKz39uSR5d7OlJhQ2HzwA6JwexAMUkLM6MV5csnIuFA4MkeKbDvJ52qGv
+	 am0TTALt/9sv0TU/EtKW2WXzqu9NcUAVvLIkDZf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Kees Cook <kees@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1615/2651] seq_buf: Do not pop from an overflowed seq_buf
-Date: Wed, 18 Nov 2026 15:47:35 +0100
-Message-ID: <20261118150345.999412696@linuxfoundation.org>
+Subject: [PATCH 7.3 1624/2651] net: devmem: replace gen_pool with freelist
+Date: Wed, 18 Nov 2026 15:47:44 +0100
+Message-ID: <20261118150346.323975781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,137 +68,392 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit b7e688b5635a0888613f4d620eeb7440e2f23a7e ]
+[ Upstream commit 083e64a3af7717363d1918baede5757235f94a87 ]
 
-When a seq_buf has overflowed, its len is size + 1, so seq_buf_pop()
-decrements len to size and reads buffer[size], one byte past the end of
-the buffer. It also leaves len equal to size, which no longer counts as
-overflowed, so a truncated seq_buf then looks like a complete, full one.
+devmem only needs fixed-size net_iov allocations for each dma-buf binding.
+The gen_pool tracks the same free set indirectly through DMA addresses,
+which makes devmem depend on the generic allocator even though the users
+are fixed-size net_iov chunks.
 
-An overflowed seq_buf logically has no last character to pop: the
-length of what was written has been lost, and the last byte of the
-buffer may be the NUL written by vsnprintf() or bytes that were never
-committed. Return -1 for an overflowed seq_buf, as for an empty one,
-and leave it overflowed, as the rest of the seq_buf API does until
-seq_buf_clear() or seq_buf_init().
+Mirror the io_uring zcrx model more closely by keeping a binding-level
+freelist protected by spin_lock_bh(). Use a single net_iov_area owner for
+the binding, populate each net_iov's DMA address while walking the SG
+table, and check at teardown that all net_iovs have returned to the
+freelist.
 
-The current callers do not reach this, e.g. trace_syscalls only calls
-trace_seq_pop() when the trace_seq it pops from has not overflowed, and
-kernel/bpf/diagnostics.c sets the length from strnlen() before popping.
+Validate the DMA-BUF size against the net_iov size up front and derive the
+RX and TX entry count from it, avoiding a separate SG-table pass.
 
-Add tests for the pop corner cases.
+Drop the NET_DEVMEM select of GENERIC_ALLOCATOR now that devmem no longer
+calls gen_pool APIs.
 
-Tests passed under qemu on ARCH=x86_64 with GCC 16.2.0 and CONFIG_KASAN=y,
-and on big-endian ARCH=s390 with GCC s390x-linux-gnu 16.1.0.
-
-Fixes: 32e0f607ac6a2 ("tracing: Add trace_seq_pop() and seq_buf_pop()")
-Assisted-by: LLM
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20261005155708.1471260-2-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260917181116.3319017-2-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 3a82195416fd ("net: devmem: check uid and netns in net_devmem_get_binding()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seq_buf.h   |  4 ++--
- include/linux/trace_seq.h |  5 ++++-
- lib/tests/seq_buf_kunit.c | 42 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 48 insertions(+), 3 deletions(-)
+ net/Kconfig       |   1 -
+ net/core/devmem.c | 182 +++++++++++++++++++++-------------------------
+ net/core/devmem.h |  15 ++--
+ 3 files changed, 88 insertions(+), 110 deletions(-)
 
-diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
-index 9f2839e73f8a1..f5a350347bc5b 100644
---- a/include/linux/seq_buf.h
-+++ b/include/linux/seq_buf.h
-@@ -155,11 +155,11 @@ static inline void seq_buf_commit(struct seq_buf *s, int num)
-  *
-  * Removes the last written character to the seq_buf @s.
-  *
-- * Returns the last character or -1 if it is empty.
-+ * Returns the last character, or -1 if @s is empty or has overflowed.
-  */
- static inline int seq_buf_pop(struct seq_buf *s)
- {
--	if (!s->len)
-+	if (!s->len || seq_buf_has_overflowed(s))
- 		return -1;
+diff --git a/net/Kconfig b/net/Kconfig
+index e384773935515..76ab44aa439a6 100644
+--- a/net/Kconfig
++++ b/net/Kconfig
+@@ -68,7 +68,6 @@ config SKB_EXTENSIONS
  
- 	s->len--;
-diff --git a/include/linux/trace_seq.h b/include/linux/trace_seq.h
-index 697d619aafdca..7174ebf3f015f 100644
---- a/include/linux/trace_seq.h
-+++ b/include/linux/trace_seq.h
-@@ -86,7 +86,10 @@ static inline bool trace_seq_has_overflowed(struct trace_seq *s)
-  *
-  * Removes the last written character to the trace_seq @s.
-  *
-- * Returns the last character or -1 if it is empty.
-+ * Returns the last character, or -1 if the underlying seq_buf is empty or
-+ * has overflowed. Note that only that buffer is consulted: a @s marked
-+ * full by a write that did not fit, which trace_seq_has_overflowed()
-+ * reports as overflowed, still pops the last character written.
+ config NET_DEVMEM
+ 	def_bool y
+-	select GENERIC_ALLOCATOR
+ 	depends on DMA_SHARED_BUFFER
+ 	depends on PAGE_POOL
+ 
+diff --git a/net/core/devmem.c b/net/core/devmem.c
+index f4d60654ce7fd..2ac9d74010a9f 100644
+--- a/net/core/devmem.c
++++ b/net/core/devmem.c
+@@ -8,7 +8,6 @@
   */
- static inline int trace_seq_pop(struct trace_seq *s)
+ 
+ #include <linux/dma-buf.h>
+-#include <linux/genalloc.h>
+ #include <linux/mm.h>
+ #include <linux/netdevice.h>
+ #include <linux/types.h>
+@@ -30,23 +29,13 @@ static DEFINE_XARRAY_FLAGS(net_devmem_dmabuf_bindings, XA_FLAGS_ALLOC1);
+ 
+ static const struct memory_provider_ops dmabuf_devmem_ops;
+ 
+-static void net_devmem_dmabuf_free_chunk_owner(struct gen_pool *genpool,
+-					       struct gen_pool_chunk *chunk,
+-					       void *not_used)
++static void
++net_devmem_dmabuf_free_chunk_owner(struct dmabuf_genpool_chunk_owner *owner)
  {
-diff --git a/lib/tests/seq_buf_kunit.c b/lib/tests/seq_buf_kunit.c
-index 0934dfb602ff6..de491f96c1acb 100644
---- a/lib/tests/seq_buf_kunit.c
-+++ b/lib/tests/seq_buf_kunit.c
-@@ -115,6 +115,47 @@ static void seq_buf_putc_test(struct kunit *test)
- 	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), "");
+-	struct dmabuf_genpool_chunk_owner *owner = chunk->owner;
+-
+-	kvfree(owner->area.niovs);
+-	kfree(owner);
+-}
+-
+-static dma_addr_t net_devmem_get_dma_addr(const struct net_iov *niov)
+-{
+-	struct dmabuf_genpool_chunk_owner *owner;
+-
+-	owner = net_devmem_iov_to_chunk_owner(niov);
+-	return owner->base_dma_addr +
+-	       ((dma_addr_t)net_iov_idx(niov) << owner->binding->niov_shift);
++	if (owner) {
++		kvfree(owner->area.niovs);
++		kfree(owner);
++	}
  }
  
-+static void seq_buf_pop_test(struct kunit *test)
-+{
-+	DECLARE_SEQ_BUF(s, 8);
-+	struct seq_buf t;
-+	char *buf;
-+
-+	/* Nothing to pop. */
-+	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), -1);
-+	KUNIT_EXPECT_EQ(test, s.len, 0);
-+
-+	seq_buf_puts(&s, "hello");
-+	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), 'o');
-+	KUNIT_EXPECT_EQ(test, seq_buf_used(&s), 4);
-+	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), "hell");
-+
-+	/* A 0xff byte must not be mistaken for an empty buffer. */
-+	seq_buf_putc(&s, 0xff);
-+	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), 0xff);
-+
-+	/* A full buffer pops its last byte. */
-+	seq_buf_puts(&s, "abc");
-+	seq_buf_putc(&s, 'd');
-+	KUNIT_EXPECT_FALSE(test, seq_buf_has_overflowed(&s));
-+	KUNIT_EXPECT_EQ(test, seq_buf_used(&s), 8);
-+	KUNIT_EXPECT_EQ(test, seq_buf_pop(&s), 'd');
-+	KUNIT_EXPECT_EQ(test, seq_buf_used(&s), 7);
-+	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), "hellabc");
-+
-+	/*
-+	 * An overflowed buffer has nothing to pop, and stays overflowed. Use
-+	 * a buffer allocated at its exact size, so that KASAN reports any
-+	 * read past its end.
-+	 */
-+	buf = kunit_kmalloc(test, 16, GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_NULL(test, buf);
-+	seq_buf_init(&t, buf, 16);
-+	KUNIT_EXPECT_EQ(test, seq_buf_printf(&t, "%s", "longer than sixteen"), -1);
-+	KUNIT_EXPECT_EQ(test, seq_buf_pop(&t), -1);
-+	KUNIT_EXPECT_TRUE(test, seq_buf_has_overflowed(&t));
-+}
-+
- static void seq_buf_printf_test(struct kunit *test)
+ static void net_devmem_dmabuf_binding_release(struct percpu_ref *ref)
+@@ -62,24 +51,20 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
  {
- 	DECLARE_SEQ_BUF(s, 32);
-@@ -354,6 +395,7 @@ static struct kunit_case seq_buf_test_cases[] = {
- 	KUNIT_CASE(seq_buf_puts_test),
- 	KUNIT_CASE(seq_buf_puts_overflow_test),
- 	KUNIT_CASE(seq_buf_putc_test),
-+	KUNIT_CASE(seq_buf_pop_test),
- 	KUNIT_CASE(seq_buf_printf_test),
- 	KUNIT_CASE(seq_buf_printf_overflow_test),
- 	KUNIT_CASE(seq_buf_get_buf_commit_test),
+ 	struct net_devmem_dmabuf_binding *binding = container_of(wq, typeof(*binding), unbind_w);
+ 
+-	size_t size, avail;
+-
+-	gen_pool_for_each_chunk(binding->chunk_pool,
+-				net_devmem_dmabuf_free_chunk_owner, NULL);
+-
+-	size = gen_pool_size(binding->chunk_pool);
+-	avail = gen_pool_avail(binding->chunk_pool);
+-
+-	if (!WARN(size != avail, "can't destroy genpool. size=%zu, avail=%zu",
+-		  size, avail))
+-		gen_pool_destroy(binding->chunk_pool);
++	if (binding->freelist)
++		WARN(binding->free_count != binding->chunk_owner->area.num_niovs,
++		     "destroying dmabuf binding with outstanding net_iovs: total=%zu, free=%zu",
++		     binding->chunk_owner->area.num_niovs,
++		     binding->free_count);
+ 
++	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
+ 	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
+ 					  binding->direction);
+ 	dma_buf_detach(binding->dmabuf, binding->attachment);
+ 	dma_buf_put(binding->dmabuf);
+ 	xa_destroy(&binding->bound_rxqs);
+ 	percpu_ref_exit(&binding->ref);
++	kvfree(binding->freelist);
+ 	kvfree(binding->tx_vec);
+ 	kfree(binding);
+ }
+@@ -87,21 +72,15 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
+ struct net_iov *
+ net_devmem_alloc_dmabuf(struct net_devmem_dmabuf_binding *binding)
+ {
+-	struct dmabuf_genpool_chunk_owner *owner;
+-	unsigned long dma_addr;
+ 	struct net_iov *niov;
+-	ssize_t offset;
+-	ssize_t index;
+-
+-	dma_addr = gen_pool_alloc_owner(binding->chunk_pool,
+-					1UL << binding->niov_shift,
+-					(void **)&owner);
+-	if (!dma_addr)
++	spin_lock_bh(&binding->freelist_lock);
++	if (unlikely(!binding->free_count)) {
++		spin_unlock_bh(&binding->freelist_lock);
+ 		return NULL;
++	}
+ 
+-	offset = dma_addr - owner->base_dma_addr;
+-	index = offset >> binding->niov_shift;
+-	niov = &owner->area.niovs[index];
++	niov = binding->freelist[--binding->free_count];
++	spin_unlock_bh(&binding->freelist_lock);
+ 
+ 	niov->desc.pp_magic = 0;
+ 	niov->desc.pp = NULL;
+@@ -113,14 +92,16 @@ net_devmem_alloc_dmabuf(struct net_devmem_dmabuf_binding *binding)
+ void net_devmem_free_dmabuf(struct net_iov *niov)
+ {
+ 	struct net_devmem_dmabuf_binding *binding = net_devmem_iov_binding(niov);
+-	unsigned long dma_addr = net_devmem_get_dma_addr(niov);
+-	size_t niov_size = 1UL << binding->niov_shift;
+ 
+-	if (WARN_ON(!gen_pool_has_addr(binding->chunk_pool, dma_addr,
+-				       niov_size)))
++	spin_lock_bh(&binding->freelist_lock);
++	if (WARN_ON_ONCE(binding->free_count >=
++			 binding->chunk_owner->area.num_niovs)) {
++		spin_unlock_bh(&binding->freelist_lock);
+ 		return;
++	}
+ 
+-	gen_pool_free(binding->chunk_pool, dma_addr, niov_size);
++	binding->freelist[binding->free_count++] = niov;
++	spin_unlock_bh(&binding->freelist_lock);
+ }
+ 
+ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding)
+@@ -194,12 +175,15 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 		       struct netlink_ext_ack *extack)
+ {
+ 	struct net_devmem_dmabuf_binding *binding;
++	struct dmabuf_genpool_chunk_owner *owner;
+ 	size_t niov_size = 1UL << niov_shift;
+ 	static u32 id_alloc_next;
+ 	struct scatterlist *sg;
+ 	struct dma_buf *dmabuf;
+-	unsigned int sg_idx, i;
+-	unsigned long virtual;
++	unsigned int sg_idx;
++	size_t total_niovs;
++	size_t niov_idx;
++	size_t i;
+ 	int err;
+ 
+ 	if (!dma_dev) {
+@@ -249,33 +233,55 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 		goto err_detach;
+ 	}
+ 
++	if (!IS_ALIGNED(dmabuf->size, niov_size)) {
++		err = -EINVAL;
++		NL_SET_ERR_MSG_FMT(extack,
++				   "dmabuf size %zu not aligned to niov size %zu",
++				   dmabuf->size, niov_size);
++		goto err_unmap;
++	}
++
++	total_niovs = dmabuf->size >> niov_shift;
+ 	if (direction == DMA_TO_DEVICE) {
+-		if (!IS_ALIGNED(dmabuf->size, PAGE_SIZE)) {
+-			err = -EINVAL;
+-			NL_SET_ERR_MSG(extack, "TX dma-buf size must be a multiple of PAGE_SIZE");
++		binding->tx_vec = kvmalloc_objs(struct net_iov *, total_niovs);
++		if (!binding->tx_vec) {
++			err = -ENOMEM;
+ 			goto err_unmap;
+ 		}
+-		binding->tx_vec = kvmalloc_objs(struct net_iov *,
+-						dmabuf->size / PAGE_SIZE);
+-		if (!binding->tx_vec) {
++	} else {
++		spin_lock_init(&binding->freelist_lock);
++		binding->freelist = kvmalloc_array(total_niovs,
++						   sizeof(binding->freelist[0]),
++						   GFP_KERNEL);
++		if (!binding->freelist) {
+ 			err = -ENOMEM;
+ 			goto err_unmap;
+ 		}
+ 	}
++	owner = kzalloc_node(sizeof(*owner), GFP_KERNEL,
++			     dev_to_node(&dev->dev));
++	if (!owner) {
++		err = -ENOMEM;
++		goto err_free_freelist;
++	}
+ 
+-	binding->chunk_pool = gen_pool_create(niov_shift,
+-					      dev_to_node(&dev->dev));
+-	if (!binding->chunk_pool) {
++	owner->area.base_virtual = 0;
++	owner->area.num_niovs = total_niovs;
++	owner->binding = binding;
++	owner->area.niovs = kvmalloc_objs(*owner->area.niovs,
++					  owner->area.num_niovs);
++	if (!owner->area.niovs) {
+ 		err = -ENOMEM;
+-		goto err_tx_vec;
++		goto err_free_owner;
+ 	}
++	binding->chunk_owner = owner;
+ 
+-	virtual = 0;
++	niov_idx = 0;
+ 	for_each_sgtable_dma_sg(binding->sgt, sg, sg_idx) {
+ 		dma_addr_t dma_addr = sg_dma_address(sg);
+-		struct dmabuf_genpool_chunk_owner *owner;
+ 		size_t len = sg_dma_len(sg);
+ 		struct net_iov *niov;
++		size_t nr_niovs;
+ 
+ 		if (!IS_ALIGNED(dma_addr, niov_size) ||
+ 		    !IS_ALIGNED(len, niov_size)) {
+@@ -283,64 +289,40 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 			NL_SET_ERR_MSG_FMT(extack,
+ 					   "dmabuf sg entry (addr=%pad, len=%zu) not aligned to niov size %zu",
+ 					   &dma_addr, len, niov_size);
+-			goto err_free_chunks;
+-		}
+-
+-		owner = kzalloc_node(sizeof(*owner), GFP_KERNEL,
+-				     dev_to_node(&dev->dev));
+-		if (!owner) {
+-			err = -ENOMEM;
+-			goto err_free_chunks;
++			goto err_free_chunk_owner;
+ 		}
+ 
+-		owner->area.base_virtual = virtual;
+-		owner->base_dma_addr = dma_addr;
+-		owner->area.num_niovs = len >> niov_shift;
+-		owner->binding = binding;
+-
+-		err = gen_pool_add_owner(binding->chunk_pool, dma_addr,
+-					 dma_addr, len, dev_to_node(&dev->dev),
+-					 owner);
+-		if (err) {
+-			kfree(owner);
+-			err = -EINVAL;
+-			goto err_free_chunks;
+-		}
+-
+-		owner->area.niovs = kvmalloc_objs(*owner->area.niovs,
+-						  owner->area.num_niovs);
+-		if (!owner->area.niovs) {
+-			err = -ENOMEM;
+-			goto err_free_chunks;
+-		}
+-
+-		for (i = 0; i < owner->area.num_niovs; i++) {
+-			niov = &owner->area.niovs[i];
++		nr_niovs = len >> niov_shift;
++		for (i = 0; i < nr_niovs; i++, niov_idx++) {
++			niov = &owner->area.niovs[niov_idx];
+ 			net_iov_init(niov, &owner->area, NET_IOV_DMABUF);
+ 			page_pool_set_dma_addr_netmem(net_iov_to_netmem(niov),
+-						      net_devmem_get_dma_addr(niov));
++						      dma_addr);
+ 			if (direction == DMA_TO_DEVICE)
+-				binding->tx_vec[owner->area.base_virtual / PAGE_SIZE + i] = niov;
++				binding->tx_vec[niov_idx] = niov;
++			else
++				binding->freelist[binding->free_count++] = niov;
++			dma_addr += niov_size;
+ 		}
+-
+-		virtual += len;
+ 	}
+ 
+ 	err = xa_alloc_cyclic(&net_devmem_dmabuf_bindings, &binding->id,
+ 			      binding, xa_limit_32b, &id_alloc_next,
+ 			      GFP_KERNEL);
+ 	if (err < 0)
+-		goto err_free_chunks;
++		goto err_free_chunk_owner;
+ 
+ 	list_add(&binding->list, &priv->bindings);
+ 
+ 	return binding;
+ 
+-err_free_chunks:
+-	gen_pool_for_each_chunk(binding->chunk_pool,
+-				net_devmem_dmabuf_free_chunk_owner, NULL);
+-	gen_pool_destroy(binding->chunk_pool);
+-err_tx_vec:
++err_free_chunk_owner:
++	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
++	goto err_free_freelist;
++err_free_owner:
++	kfree(owner);
++err_free_freelist:
++	kvfree(binding->freelist);
+ 	kvfree(binding->tx_vec);
+ err_unmap:
+ 	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
+diff --git a/net/core/devmem.h b/net/core/devmem.h
+index 4a293a7d1149c..db2eb6372aee9 100644
+--- a/net/core/devmem.h
++++ b/net/core/devmem.h
+@@ -14,6 +14,7 @@
+ #include <net/netdev_netlink.h>
+ 
+ struct netlink_ext_ack;
++struct dmabuf_genpool_chunk_owner;
+ 
+ struct net_devmem_dmabuf_binding {
+ 	struct dma_buf *dmabuf;
+@@ -26,7 +27,7 @@ struct net_devmem_dmabuf_binding {
+ 	 * dereferenced.
+ 	 */
+ 	void *vdev;
+-	struct gen_pool *chunk_pool;
++	struct dmabuf_genpool_chunk_owner *chunk_owner;
+ 	/* Protect dev */
+ 	struct mutex lock;
+ 
+@@ -57,6 +58,10 @@ struct net_devmem_dmabuf_binding {
+ 	/* rxq's this binding is active on. */
+ 	struct xarray bound_rxqs;
+ 
++	spinlock_t freelist_lock ____cacheline_aligned_in_smp;
++	size_t free_count;
++	struct net_iov **freelist;
++
+ 	/* ID of this binding. Globally unique to all bindings currently
+ 	 * active.
+ 	 */
+@@ -77,17 +82,9 @@ struct net_devmem_dmabuf_binding {
+ };
+ 
+ #if defined(CONFIG_NET_DEVMEM)
+-/* Owner of the dma-buf chunks inserted into the gen pool. Each scatterlist
+- * entry from the dmabuf is inserted into the genpool as a chunk, and needs
+- * this owner struct to keep track of some metadata necessary to create
+- * allocations from this chunk.
+- */
+ struct dmabuf_genpool_chunk_owner {
+ 	struct net_iov_area area;
+ 	struct net_devmem_dmabuf_binding *binding;
+-
+-	/* dma_addr of the start of the chunk.  */
+-	dma_addr_t base_dma_addr;
+ };
+ 
+ void __net_devmem_dmabuf_binding_free(struct work_struct *wq);
 -- 
 2.53.0
 
