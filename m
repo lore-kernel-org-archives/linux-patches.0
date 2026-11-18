@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060210;
-	b=WLloxPfzJdWKS443xFhpvg1lfpcZS56ycKWUDNtzqyCuIVq4bbKUlEzpF50DZOAfA5Y2
-	 nGsvzsKbUvi6MM+4JgdwvDtNYPpGePbNAOaDx1wzLHADPrOiIdV1Jycgo+3AGC+eK8jMf
-	 /B00Ew+faNAKNU1gGUjSu3A8HlGS5HeA+zrRXLL+VSarJ6manJ+bSmJ3i8CKoBjvowYEi
-	 /n+p4tDuGsPLy//RVggzxnV/zrLRfA8OLrsPaDBYCWCFwGYhPjJdr4bk6D1kajplF6Dsf
-	 m00OngRWge4AOcQ9TqDj/sNR6mq+xfjHn3E3W/oHy6ItTsY2ZCnZp37HOakJGrR0Fdw==
+	t=1795060213;
+	b=UK6cLg4I5CNqvnks1B0qCRJuYRKEZSWhQ68NLVfJg3rPk26exazJlV4hxh5qR1TkFiiA
+	 g7zY03x/CkF2IcjT/ejd5HFjoKkFYbDoHd9IY1oIwQp4GJF5yqIAanQpgKPL8Vf+l6WK/
+	 izsKg+9/n+XNvAuiP1zK1vzWgmpQXDlG7enFdxVmz4ySjIV6zDZDCJv5LD/iaUgJDbNMn
+	 huGqpsOabtDlprlTCAd2uY6SewC02oviAMCMqzST24Q+2n7BcbxPiEeavaXJtirKhaf/Z
+	 v2sYfdZdXFB1nZzDTsYmZL0nL+CfSkSeui1zE0u994x9XXyy3SbgO2+PF6i/NFExvGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1B5RG3kA8lRoNfdQ5vFksoqoxXDqibshra3X2MyelmE=;
-	b=XwzcwJmOM4B/cNIy8LEt1CiZrNF9Oy8JkDhK4pDUKiCL8plXKQZx80IGWbC5DLphM1Q4
-	 dprxlcJUOItcmUpGJECM3BujuOeKe2uoadif+6CVL8aoKyQRxogjScaEa8dBMHWpDguCF
-	 lbnTlFFBhMecTwlWGtlw/TTKj+Q+X/OTQkvoaBnW30Ma0S64giXrjNQiC3D1/F6/FigEf
-	 dJSFbWufy6HXRIZtbGpwUT88vZLdufK4wOtFHvjcj9IsfQ8zaV7KCzFuV93Hs8ItF4quN
-	 a8XfUv/P+bFRQTQiUc8Ai27vqjPaKx9W/mj8SwsqV4ArvUidR7aCMqgrQUviM9kTXpw==
+	bh=+N1jbFmJxSZv/51Fe+4YrrfW1yayFmO7cREU5zklJsY=;
+	b=mqC1UssC3a6pn0VVpUSumLlB/PHeOnA5oPZbUgjp8CLP5d/tAoW1639tNuIfFkaGuld8
+	 vJPE478XQLhvJdx5/PQoDIWv2lzy9Lxjk1zwhN8DL/SL1WGJXvvF3UmIEeuVOTLKiCugC
+	 rT22uQ4ZrtBlexbsqOpz4Nsbk2gZ/fURifY6YGaRprZokGV7PGWw9xi+vA3fRb8i5mMxZ
+	 9Z/Nmk2+fHUA/W4GT7Sw01Ena2/Pv7cAPh++eJfG1/ykEbxGSSnJcUZOwzdIPCNWULVds
+	 1CEQEkvJrakM6QpPd9+SrxC4Sz/QEnFXIN0QYutOEd5eceD90e01R9AsrPjoR1hgvdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cp5rZoof;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHtfGUQe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96032606A326;
-	Thu, 19 Nov 2026 03:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7730D606A326;
+	Thu, 19 Nov 2026 03:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cp5rZoof
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D261F000C4;
-	Thu, 19 Nov 2026 03:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHtfGUQe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C727C1F000C4;
+	Thu, 19 Nov 2026 03:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060210;
-	bh=1B5RG3kA8lRoNfdQ5vFksoqoxXDqibshra3X2MyelmE=;
+	s=korg; t=1795060213;
+	bh=+N1jbFmJxSZv/51Fe+4YrrfW1yayFmO7cREU5zklJsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cp5rZoof3a8f6JZgynMvodT2pOb0iB4KHYEVNJHFr/P97g+U2f+UwXLsLoXKKCOSz
-	 6g6lqzXl5IS7TozrXgj9gpnf3/xhNvCAXdxVRIJo6OrFCDmCgt7DV0TROTdvj2R0DU
-	 QgY0PxSiaJDHJyFVuEyg9ez4RzaRWVoePf6dKyWQ=
+	b=DHtfGUQeGQiCOIrP6119vgFmIV7cW3zEcyDpepXssGIIJkdrd7PNYc/yf0A7z9kC/
+	 5Q8eQ7USbXIerZQd3hsRfzclVuApUKwIu6+wDcS8Vb/TyI7U2Q2IkS0Kwrrsc2l0jx
+	 wPr1uuE4PSkGhzX8v2HOgNuA4yceVZGAS31kBW/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joachim Vandersmissen <git@jvdsn.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 1118/1848] crypto: ecdh - explicitly zeroize private_key
-Date: Wed, 18 Nov 2026 15:52:36 +0100
-Message-ID: <20261118150006.138133618@linuxfoundation.org>
+	Raveendra Talabattula <raveendra.talabattula@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1119/1848] drm/komeda: Fix bits parsing of GLB_CORE_ID
+Date: Wed, 18 Nov 2026 15:52:37 +0100
+Message-ID: <20261118150006.174904431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,42 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joachim Vandersmissen <git@jvdsn.com>
+From: Raveendra Talabattula <raveendra.talabattula@arm.com>
 
-commit 73e5984e540a76a2ee1868b91590c922da8c24c9 upstream.
+[ Upstream commit ec902de0221747094f9ccbb61454e9633fbf282f ]
 
-private_key is overwritten with the key parameter passed in by the
-caller (if present), or alternatively a newly generated private key.
-However, it is possible that the caller provides a key (or the newly
-generated key) which is shorter than the previous key. In that
-scenario, some key material from the previous key would not be
-overwritten. The easiest solution is to explicitly zeroize the entire
-private_key array first.
+GLB_CORE_ID contains the product and version information returned by the
+hardware. The current macros parses VERSION_MINOR as a 4-bit field and
+VERSION_STATUS as an 8-bit field, which does not match the register
+layout. As a result, the driver reports an incorrect version number.
 
-Note that this patch slightly changes the behavior of this function:
-previously, if the ecc_gen_privkey failed, the old private_key would
-remain. Now, the private_key is always zeroized. This behavior is
-consistent with the case where params.key is set and ecc_is_key_valid
-fails.
+Fix the parsing macros to match the hardware specification:
+- VERSION_MINOR is 8 bits at [11:4]
+- VERSION_STATUS is 4 bits at [3:0]
 
-Signed-off-by: Joachim Vandersmissen <git@jvdsn.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd628c1bed79 ("drm/komeda: komeda_dev/pipeline/component definition and initialzation")
+Signed-off-by: Raveendra Talabattula <raveendra.talabattula@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260803142122.4127851-2-raveendra.talabattula@arm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecdh.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/arm/display/include/malidp_product.h | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/crypto/ecdh.c
-+++ b/crypto/ecdh.c
-@@ -33,6 +33,8 @@ static int ecdh_set_secret(struct crypto
- 	    params.key_size > sizeof(u64) * ctx->ndigits)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/arm/display/include/malidp_product.h b/drivers/gpu/drm/arm/display/include/malidp_product.h
+index 16a8a2c22c423..f0c34eff523f1 100644
+--- a/drivers/gpu/drm/arm/display/include/malidp_product.h
++++ b/drivers/gpu/drm/arm/display/include/malidp_product.h
+@@ -8,14 +8,18 @@
+ #define _MALIDP_PRODUCT_H_
  
-+	memset(ctx->private_key, 0, sizeof(ctx->private_key));
-+
- 	if (!params.key || !params.key_size)
- 		return ecc_gen_privkey(ctx->curve_id, ctx->ndigits,
- 				       ctx->private_key);
+ /* Product identification */
++/* GLB_CORE_ID fields as per HW specification:
++ * MINOR is 8 bits ([11:4]) and STATUS is 4 bits ([3:0]).
++ * Update masks/shifts accordingly.
++ */
+ #define MALIDP_CORE_ID(__product, __major, __minor, __status) \
+ 	((((__product) & 0xFFFF) << 16) | (((__major) & 0xF) << 12) | \
+-	(((__minor) & 0xF) << 8) | ((__status) & 0xFF))
++	(((__minor) & 0xFF) << 4) | ((__status) & 0xF))
+ 
+ #define MALIDP_CORE_ID_PRODUCT_ID(__core_id) ((__u32)(__core_id) >> 16)
+ #define MALIDP_CORE_ID_MAJOR(__core_id)      (((__u32)(__core_id) >> 12) & 0xF)
+-#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >> 8) & 0xF)
+-#define MALIDP_CORE_ID_STATUS(__core_id)     (((__u32)(__core_id)) & 0xFF)
++#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >>  4) & 0xFF)
++#define MALIDP_CORE_ID_STATUS(__core_id)     ((__u32)(__core_id) & 0xF)
+ 
+ /* Mali-display product IDs */
+ #define MALIDP_D71_PRODUCT_ID	0x0071
+-- 
+2.53.0
+
 
 
