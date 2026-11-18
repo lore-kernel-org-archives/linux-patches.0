@@ -1,56 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036802;
-	b=qEyquIJgnTug2sz3BsFhrK9ku/Y0HEVSGLTfac3c8X+kWYuXRWfIFr4ctLhEeinOJvMr
-	 PNySQZYb6w0q/N8OUANGcD2OQH1IbOE8U0GrWOMCbTzRrKIK2f1y/eFYy3b65P8mclAa0
-	 AYXE2HpH8EShLZZZThOgcvl1IfvhAOhHQ2bgyNWwPZ3CYNJZ/Sn6iK5ab+vOCZBRfP90b
-	 hdsImEKHphMmoJSkUvcnkGitPvREJodMie5EuIN2yzlSfT82YeslAS13bfMTl+oqJNfxg
-	 Ie+oMzk47kvzls6W9sfeS7yezUn+8aeMbVec0ifMo75RS29MUzqOGtk634Ss6ekPBvA==
+	t=1795036805;
+	b=aj2OQnsY+jMvt0NNYS9iXLgnsaBMgXsBfsS2WnVHQDJEKLmQB5HDfiTsgORrMfRDR8kY
+	 MOVxsBuijlOpGXa/X/pxPn5lzhQGYph6V8Fmimu0wCG8MW4tHVXVJNwN22jgPFgSODDHi
+	 6/hS5nREPuFal42tOHLmq5Pq5pk1dua4cJifiRKzBmjLTZF5eGXZaCpljFu4YjPJzzHFV
+	 Su89dZK9o/Dv/vtCE5EywOb7DpfPuJo2AzuD8rwaPr4XNl8TEHUJGbeNwITjaOzK0h5fR
+	 ale/p00zHQU8JjORGL7e+EohdmKL0qjkzExmlWN5mz0mBHgbAZ331Kw7awmAZY+W29A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sM33bUFZjrCdOoO3sRHT0EAQQ+u3AoF/ThbXqFYft+U=;
-	b=eWGSev38I2T3gGVv2nTQYRImM7dWJaZqIB7vSiHedCK6HczmbAHFmWbGHxQK+E/bU7wV
-	 sCtDkJrXFtvm1yNyaTQjqEJ40rGKWhb2YWNj95NYDRT5m9wJBYIUIbFsT7/Nb8lU6QYsU
-	 XvfyxLOJtlIlAWQnbk1yXKh/VE9CF9E5fUQRANGSbW2bG4+vmQ772NLXUKplJg9NJxHEG
-	 U0qkfKGpYfFykeYX1jPuLFuudiaWk3O1tGRK+rmuB91rSv6nDW1Tp1KtxitNtj/4lISC8
-	 pdG2/BImt1sGcQgPj7QzVRNYvMDq4RoigBKzi03H5DafGEvc/e6rdodufOUIKXC36zw==
+	bh=VyN90FWBr2RcU9dOEmpDEjKzQRbVBFRMJjLs2SMZhdY=;
+	b=gweMqST6zFirlo/eVgCGExCHFNWedzkJCNM5k0dOLlxU5ETHEnfe6U7F6HIES2z4VHd8
+	 iUnDyffcMlfPvUen1ncyzif35gjy9zvW9av3bcLgSyQcBeVth0pT54OYF2A+uFwDKdEbd
+	 eIi39FdEhpHO02qDuuUN+FUgEX9SucvZMvsuWJB6UxOSu/rT4W5GG9s2I8oXthvGrBcX9
+	 BqU10JdH2yYAD7y9dSm/bhfAgGjszRXs+qpXF4I1HK9nlgRBl5weCow08USPYJ6PRjnJa
+	 m1Gc0MseSjBmYsb0DtpzcLCqj9nNMu/X7f45/dKPV7h8gVU6EnqXNQBgqR4rVDWgRNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMfYwQBJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VoU03baB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B442F606A31C;
-	Wed, 18 Nov 2026 21:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB3F606A31C;
+	Wed, 18 Nov 2026 21:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMfYwQBJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109141F000C4;
-	Wed, 18 Nov 2026 21:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VoU03baB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF10D1F000C4;
+	Wed, 18 Nov 2026 21:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036802;
-	bh=sM33bUFZjrCdOoO3sRHT0EAQQ+u3AoF/ThbXqFYft+U=;
+	s=korg; t=1795036805;
+	bh=VyN90FWBr2RcU9dOEmpDEjKzQRbVBFRMJjLs2SMZhdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pMfYwQBJ4s9AvnrnylxcPe3V/NK6yWsa/52bkDd2YqTyhngFDLsvJMBameMUd+bpH
-	 zsqXi9qKBCaf8LBYr/WTIRUaj302I7IXL7uY/EcsR9skCvOVtGob8yVrTy4hz6USTJ
-	 UVjVhTYBACbEc4arPzg62xHrAcAsDENjqp7d1azo=
+	b=VoU03baB4KGYoiUTE3BCyL2ln1M8HH5Ruhsq6hRSR2+UCdgAS1xbyXOpKF3vZRHId
+	 eSnwLlAitXbRnIJ3ajmAE7SSoCzibKsWlTndF4UVLRKFZuluQp4x2qJhBkPckbUF/f
+	 wq7wOnScChykifQLmTMyvS9GalYl+U4mRFChnkpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Anderson Ferneda <anderson.ferneda@braza.com.br>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Yufan Chen <ericterminal@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Kees Cook <kees@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1188/3318] ocfs2: deal with legacy signed xattr name hash values
-Date: Wed, 18 Nov 2026 15:30:10 +0100
-Message-ID: <20261118150355.798887825@linuxfoundation.org>
+Subject: [PATCH 6.6 1189/3318] ocfs2/cluster: initialize heartbeat regions before publishing them
+Date: Wed, 18 Nov 2026 15:30:11 +0100
+Message-ID: <20261118150355.830827831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,197 +79,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 824d26d11448b4d4f19677bce27c7fe5e962f4c6 ]
+[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
 
-Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") set
--funsigned-char globally, which changed the result of the naked 'char'
-load in ocfs2_xattr_name_hash():
+A region on o2hb_all_regions must have an initialized config item and
+name. o2hb_heartbeat_group_make_item() currently links the zeroed region
+under o2hb_live_lock, drops the lock, and only then initializes hr_item.
+The lock therefore protects the list without protecting initialization
+from readers of the published item.
 
-	hash = (hash << OCFS2_HASH_SHIFT) ^
-	       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT)) ^
-	       *name++;
+With global heartbeat enabled, a DLM_QUERY_REGION from the current
+joining node can pass the existing-domain and protocol checks while a
+configfs mkdir creates another region. The DLM locks are not taken by
+the constructor, and the network worker does not take the configfs
+subsystem mutex. The following ordering is possible:
 
-A name byte >= 0x80 used to sign-extend and now zero-extends, so the
-hash no longer matches the xe_name_hash an older kernel stored.  An
-indexed xattr tree is searched by that hash alone, and both the bucket
-binary search and the entry scan within it stop as soon as the wanted
-hash falls below an entry's, so the entry is never reached: getxattr,
-setxattr and removexattr return -ENODATA for a name that listxattr
-still lists.
+  Configfs mkdir                     O2net receive worker
+  --------------                     --------------------
+  Allocate reg
+  Lock o2hb_live_lock
+  Link into o2hb_all_regions
+  Unlock o2hb_live_lock
+                                     dlm_query_region_handler()
+                                       dlm_match_regions()
+                                         o2hb_get_all_regions()
+                                           Lock o2hb_live_lock
+                                           Copy 32 bytes from NULL name
+                                           Unlock o2hb_live_lock
+  config_item_init_type_name()
 
-Search with the current unsigned hash and, on a miss, retry with the
-legacy signed one, as ext4 does in commit f3bbac32475b2 ("ext4: deal
-with legacy signed xattr name hash values").  New entries are always
-stored under the unsigned hash.  Skip the retry when the two hashes are
-equal, so that a miss on an ASCII name does not walk the tree twice.
+The query thus dereferences NULL. Initialize hr_item before linking the
+region so the existing list lock also orders name initialization before
+any reader. Reject a failed name allocation, since the initialization
+helper does not propagate that error.
 
-A miss is not empty handed: ocfs2_xattr_bucket_find() leaves xs->bucket
-holding the bucket a new entry would go into.  So after a double miss
-drop it and search once more with the unsigned hash, otherwise a new
-entry would be placed by its legacy hash and stored under its unsigned
-one, breaking the ordering the search relies on.
+Use config_item_put() on initialized constructor failures to release the
+name and respect references retained by o2hb_region_pin(). Initialize
+the list heads, mutex and delayed works needed by o2hb_region_release()
+before any such put, and leave the list node self-linked after rollback.
+Keep the existing handler drain before removing a failed published item.
 
-Only indexed trees are affected; inline xattrs and non-indexed xattr
-blocks compare names with memcmp and never look at the hash.
+KASAN report as below:
 
-Also spell out the signedness instead of leaving the current hash to
--funsigned-char, as commit 854f0912f813 ("ext4: make xattr char
-unsignedness in hash explicit") did, so that both variants stay correct
-if this is backported to a kernel without the flag.
+    ==================================================================
+    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
+    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
 
-Link: https://lore.kernel.org/20261009083002.2621201-4-joseph.qi@linux.alibaba.com
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: o2net o2net_rx_until_empty
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     kasan_report+0xe0/0x110
+     ? o2hb_get_all_regions+0xbb/0x1f0
+     kasan_check_range+0x105/0x1b0
+     __asan_memcpy+0x23/0x60
+     o2hb_get_all_regions+0xbb/0x1f0
+     dlm_query_region_handler+0x4c2/0xc20
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kvm_clock_get_cycles+0x31/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     o2net_rx_until_empty+0x1a50/0x3200
+     ? reacquire_held_locks+0xdd/0x200
+     ? __pfx_o2net_rx_until_empty+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
+Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org> # 6.2+
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 93 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 82 insertions(+), 11 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index c7f7e08259629..c5251cccb479a 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -557,9 +557,10 @@ static inline const char *ocfs2_xattr_prefix(int name_index)
- 	return handler ? xattr_prefix(handler) : NULL;
- }
- 
--static u32 ocfs2_xattr_name_hash(struct inode *inode,
--				 const char *name,
--				 int name_len)
-+static u32 __ocfs2_xattr_name_hash(struct inode *inode,
-+				   const char *name,
-+				   int name_len,
-+				   bool legacy_signed)
- {
- 	/* Get hash value of uuid from super block */
- 	u32 hash = OCFS2_SB(inode->i_sb)->uuid_hash;
-@@ -568,13 +569,30 @@ static u32 ocfs2_xattr_name_hash(struct inode *inode,
- 	/* hash extended attribute name */
- 	for (i = 0; i < name_len; i++) {
- 		hash = (hash << OCFS2_HASH_SHIFT) ^
--		       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT)) ^
--		       *name++;
-+		       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT));
-+		if (legacy_signed)
-+			hash ^= (signed char)name[i];
-+		else
-+			hash ^= (unsigned char)name[i];
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index c693302c68303..6b7bf4ecdd689 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -2116,6 +2116,18 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
  	}
+ 	reg->hr_node_num = O2NM_MAX_NODES;
  
- 	return hash;
- }
- 
-+static u32 ocfs2_xattr_name_hash(struct inode *inode,
-+				 const char *name,
-+				 int name_len)
-+{
-+	return __ocfs2_xattr_name_hash(inode, name, name_len, false);
-+}
-+
-+static u32 ocfs2_xattr_name_hash_signed(struct inode *inode,
-+					const char *name,
-+					int name_len)
-+{
-+	return __ocfs2_xattr_name_hash(inode, name, name_len, true);
-+}
-+
- static int ocfs2_xattr_entry_real_size(int name_len, size_t value_len)
- {
- 	return namevalue_size(name_len, value_len) +
-@@ -4164,11 +4182,12 @@ static int ocfs2_xattr_bucket_find(struct inode *inode,
- 	return ret;
- }
- 
--static int ocfs2_xattr_index_block_find(struct inode *inode,
--					struct buffer_head *root_bh,
--					int name_index,
--					const char *name,
--					struct ocfs2_xattr_search *xs)
-+static int __ocfs2_xattr_index_block_find(struct inode *inode,
-+					  struct buffer_head *root_bh,
-+					  int name_index,
-+					  const char *name,
-+					  u32 name_hash,
-+					  struct ocfs2_xattr_search *xs)
- {
- 	int ret;
- 	struct ocfs2_xattr_block *xb =
-@@ -4177,7 +4196,6 @@ static int ocfs2_xattr_index_block_find(struct inode *inode,
- 	struct ocfs2_extent_list *el = &xb_root->xt_list;
- 	u64 p_blkno = 0;
- 	u32 first_hash, num_clusters = 0;
--	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
- 
- 	if (le16_to_cpu(el->l_next_free_rec) == 0)
- 		return -ENODATA;
-@@ -4208,6 +4226,59 @@ static int ocfs2_xattr_index_block_find(struct inode *inode,
- 	return ret;
- }
- 
-+static int ocfs2_xattr_index_block_find(struct inode *inode,
-+					struct buffer_head *root_bh,
-+					int name_index,
-+					const char *name,
-+					struct ocfs2_xattr_search *xs)
-+{
-+	u32 name_hash, legacy_hash;
-+	int name_len = strlen(name);
-+	int ret;
-+
-+	name_hash = ocfs2_xattr_name_hash(inode, name, name_len);
-+
-+	ret = __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					     name_hash, xs);
-+	if (ret != -ENODATA)
-+		return ret;
-+
-+	/*
-+	 * Nothing under the current hash.  The entry may have been stored by
-+	 * an older kernel, which sign-extended the name bytes when hashing.
-+	 * Skip the retry when the two hashes are equal, so that a name made
-+	 * only of ASCII does not have to walk the tree twice.
-+	 */
-+	legacy_hash = ocfs2_xattr_name_hash_signed(inode, name, name_len);
-+	if (legacy_hash == name_hash)
-+		return ret;
-+
-+	/*
-+	 * A miss still leaves xs->bucket holding the bucket a new entry would
-+	 * be inserted into, so drop it before searching again.
-+	 */
-+	ocfs2_xattr_bucket_relse(xs->bucket);
-+
-+	ret = __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					     legacy_hash, xs);
-+	if (!ret) {
-+		pr_warn_once("ocfs2: xattr tree with signed name hash\n");
-+		return ret;
++	INIT_LIST_HEAD(&reg->hr_all_item);
++	mutex_init(&reg->hr_arming_mutex);
++	reg->hr_stopping = true;
++	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
++	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
++	INIT_LIST_HEAD(&reg->hr_handler_list);
++	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
++	if (!config_item_name(&reg->hr_item)) {
++		ret = -ENOMEM;
++		goto put_item;
 +	}
-+	if (ret != -ENODATA)
-+		return ret;
 +
-+	/*
-+	 * Not under either hash.  Restore the unsigned placement, since that
-+	 * is where a new entry is stored: leaving the bucket where the legacy
-+	 * hash put it would break the ordering the search relies on.
-+	 */
-+	ocfs2_xattr_bucket_relse(xs->bucket);
-+
-+	return __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					      name_hash, xs);
-+}
-+
- static int ocfs2_iterate_xattr_buckets(struct inode *inode,
- 				       u64 blkno,
- 				       u32 clusters,
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_region_num = 0;
+ 	if (o2hb_global_heartbeat_active()) {
+@@ -2124,26 +2136,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
+ 			spin_unlock(&o2hb_live_lock);
+ 			ret = -EFBIG;
+-			goto free;
++			goto put_item;
+ 		}
+ 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	}
+ 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
+ 	spin_unlock(&o2hb_live_lock);
+ 
+-	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
+-
+ 	/* this is the same way to generate msg key as dlm, for local heartbeat,
+ 	 * name is also the same, so make initial crc value different to avoid
+ 	 * message key conflict.
+ 	 */
+ 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
+ 		name, strlen(name));
+-	mutex_init(&reg->hr_arming_mutex);
+-	reg->hr_stopping = true;
+-	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
+-	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+-	INIT_LIST_HEAD(&reg->hr_handler_list);
+ 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
+ 			sizeof(struct o2hb_nego_msg),
+ 			o2hb_nego_timeout_handler,
+@@ -2166,10 +2171,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
+ remove_item:
+ 	spin_lock(&o2hb_live_lock);
+-	list_del(&reg->hr_all_item);
++	list_del_init(&reg->hr_all_item);
+ 	if (o2hb_global_heartbeat_active())
+ 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	spin_unlock(&o2hb_live_lock);
++put_item:
++	config_item_put(&reg->hr_item);
++	return ERR_PTR(ret);
+ free:
+ 	kfree(reg);
+ 	return ERR_PTR(ret);
 -- 
 2.53.0
 
