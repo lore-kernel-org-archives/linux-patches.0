@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040869;
-	b=34zINkEnv+sOWp6Wev/7HP/6yffbryeBRUyh+t/faad/haObWs6MWUWgoVYfFASegoep
-	 ojo8z5IM2Z58ehnArRoVwxbdV1+g00tkKwbPU5hg0rUvIuR6J23hkTbp2buCjPkSx7UIi
-	 RNonBmXiYcodNi0EFKLkkARB50H460U02398Q+41mMj4ANAaYvYNTYREplcAVa0dHZWrF
-	 VNcEH5td6Gen98hyDxAUOUpBBLCzPlX8MTzTSZYfbDaP3uikbr/HdCXTkvSPqOQrNzvhg
-	 FWGkHE8eOwq67gNhr0493j+hzntplXBBdpYZPXuX2Ci6JfJcGMIJBQmWcJ5BeZqjghw==
+	t=1795040871;
+	b=dWqHIiB9TuNu6/j42ySpAic++Lt/EmBDaUjE2SSrpouAQocLPl3B0Y9wyUqG+HPf2hcJ
+	 c8mXEvuePEMJhy8Ehz5U7iYlDIxVWjIR3BeMvfC+KVa5Zid+/lVO2n8SejyXmupQAbD9p
+	 7P4FvIzQn2YB8ZPCLOEjYfmhNPgoQ4WdOkj3F5Z/qDUgQj2g8W8sJ6N36/M0yfvJxN45T
+	 gyoYAGLNAvrIhKzjGpwhWbbCdnjR3h/v5Dqa7JUmoMT3LbN3nAYJSi+lCgRHMPpjd0Kii
+	 FPYwTnkfAmH8Rj3/snCGUwF3984RBDJRvdKNJ0KWKCdrHTBKksPyprcl/+UqvfuvTsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4+m4pQNlnyj+XoPwU6I/IOyCZ1mkVidb619LuXdPq/k=;
-	b=Sccdtg0gm4sH2XsDwIMDdX28d3xXJY+N6/V1gYIurOjL34EuMb8djkZ7akP1o5DFd+MD
-	 AgBzBds4uD2l8el+sFgEVRQXBfluOD3J11KRdUmvv/Z84cadVA+kEyQYHBDzqR0J0wgDE
-	 bsPfX/kMHJ9PmCE4N0MDqjzSoimIK//RgKI+HysEgdozb7CERiENvHDeaBzlBClP8c5Ht
-	 XEfrlsYSR5bd2jBCWtxwR2hyAgILxd9V+usOBSLEqJeoHdagK0ym2XkimoCHUTxWa1eUu
-	 AEiXwVuIp3hqFpHbkep5ONE7d0xWjC5CLlAjr2L8hbTyFjVt4Q0DJY8WF3W/5DubKCA==
+	bh=RSbjzRlJpYkvrxgKDvenOmeSQauBrVMi1b3lRTJO22g=;
+	b=kcc8iIEtOPStmihZXUg+zK/Z5Dhu/O9yxBwFAWcfPiXjwstlsEGrQHO9aVP76GbyuzEk
+	 KYiLYMohYifRWyST9strUJOv6KmDlukxRrMrSAniRljaItbAegvQ8eJNGC85b0ZgAbQTM
+	 19f/+K3jJfKCniSirEa/TmNKGKpYgbUnCRdqn5oohhAH0FmIRRjyjLFcqLmlDeO4+969r
+	 AOVkMh7Zcgkl8OY2Hr/wXreJzzPea9BLWvC/IzRBGeX5DSM+doeYuCITXsHOyuEIea6pC
+	 whO/jZJTdDiuBnzfOav7L9Aq2pDYCW2ifQGoGrSU6F0Vv+vwo0migTBwWES39BM2Y6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rvAd8LuV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUpexS3b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CEA606A31C;
-	Wed, 18 Nov 2026 22:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B518E606A32C;
+	Wed, 18 Nov 2026 22:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rvAd8LuV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB361F000C4;
-	Wed, 18 Nov 2026 22:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUpexS3b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E9B1F000C4;
+	Wed, 18 Nov 2026 22:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040868;
-	bh=4+m4pQNlnyj+XoPwU6I/IOyCZ1mkVidb619LuXdPq/k=;
+	s=korg; t=1795040871;
+	bh=RSbjzRlJpYkvrxgKDvenOmeSQauBrVMi1b3lRTJO22g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvAd8LuVd8njRrWgcLI1plPNqGtwqKz4OEcB8P3OtLeWAKt/i7JU7phb1bUYD7ihn
-	 8u7EjZh4nnv7/88Lj4+PTE11wwD5UR+/BOHjINmnYnhRBuyKkQ+70q+/SiCzYBZ5vs
-	 3sULqQfXUOy1E8E7waDVygRBLbdfDqAjYiGgV7IE=
+	b=EUpexS3bDAfVgq0xyc+t53xTEB6eTma6nFnBSzpf2XGDQT2FjLMVOqP624JE0leF4
+	 vQrk9kcWnjRAoyQwl5eYfcEGWIUbk1IUstxlrtaNoPFdtRwx5dOf42iYoQ02qWTD+5
+	 oSN0BLcrnxP/h2GnJiQFKogIjKkXy5u70QmjV2tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2610/3318] dmaengine: ste_dma40: Put the LCPA SRAM node
-Date: Wed, 18 Nov 2026 15:53:52 +0100
-Message-ID: <20261118150439.440803450@linuxfoundation.org>
+Subject: [PATCH 6.6 2584/3318] cpufreq: tegra194: fix double-pointer error in get_cpu_ndiv
+Date: Wed, 18 Nov 2026 15:53:26 +0100
+Message-ID: <20261118150438.709222223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,40 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 9a3762b470421658214baeb6cce3eed7344bb435 ]
+[ Upstream commit f0a750dad7da1c653e85f0698063235453b43831 ]
 
-of_parse_phandle() takes a reference to the LCPA SRAM node, but d40_probe()
-does not release it after translating the node into a resource. This leaks
-the node reference for the lifetime of the system.
+ndiv is already a u64 pointer, passing &ndiv to smp_call_function_single()
+results in a u64** being written to instead of the caller's u64 variable,
+so the caller always reads back an uninitialized ndiv.  Drop the spurious
+'&'.
 
-Put the node immediately after of_address_to_resource() so both the success
-and error paths release the reference.
-
-Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-14-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 0839ed1fd7ac ("cpufreq: tegra194: add soc data to support multiple soc")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/tegra194-cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 066188e289286..55b4728aaad97 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3579,6 +3579,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 	}
- 	/* This is no device so read the address directly from the node */
- 	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
-+	of_node_put(np_lcpa);
- 	if (ret) {
- 		dev_err(dev, "no LCPA SRAM resource\n");
- 		goto report_failure;
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index 454767c2ad6ba..a02480e2660d0 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -339,7 +339,7 @@ static void tegra194_get_cpu_ndiv_sysreg(void *ndiv)
+ 
+ static int tegra194_get_cpu_ndiv(u32 cpu, u32 cpuid, u32 clusterid, u64 *ndiv)
+ {
+-	return smp_call_function_single(cpu, tegra194_get_cpu_ndiv_sysreg, &ndiv, true);
++	return smp_call_function_single(cpu, tegra194_get_cpu_ndiv_sysreg, ndiv, true);
+ }
+ 
+ static void tegra194_set_cpu_ndiv_sysreg(void *data)
 -- 
 2.53.0
 
