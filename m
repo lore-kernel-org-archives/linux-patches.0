@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023782;
-	b=ugOJRZ6J+SszJmVaC+MEgLy66JHLgLZv1AOgDEnWVeZPWyj0CwhGTCthOmE96/DUzczx
-	 YwKXzQzAXppPMXP1KAhbtJ1CaNWIt9LpP+rUV6hJg+xzhJQRX6KBxPUh/Wyt1nj4pZH+U
-	 +8qdroSZHx04ae58xIfDAr/90+LU+FE3EyghbLbFHTXgP3OvgHIK5RLoayQUIErEpp0zh
-	 1Q8WLFj0X0nRScq5Cat5uDSMdcCjJtdbaTgpehto6UW0cK2QLq/AyhFEm0MjBtY3ORcDw
-	 I9Clld3Ae3Qu+Thxio8Hm0RyDOYupPTYpoQK5IBjtDdYgzveBYpJxw4YhIwLE0CHF5w==
+	t=1795023785;
+	b=jTUZJj55G7slHEcmgSOUwPFbbGk4QCbBN35r3f+XIheAoIDgzZ1FGbOI4n2K8RR9P7kj
+	 xymOXIgcT72gymXfdctG4AMgDfVk9UgW1IyaR8xuqQgwUIoMwE6ieDDk1ykBOhmHiMJsH
+	 bi3f2XE2pX89J/gAvnqc6s7GRdf4gJQPRNgu/equrXU8RxA3WyijOIy86QhVrT9/d0PTV
+	 Twnbdffat3hrccrAXzPOvC9q+mcwpOM0JDeS9TkzNtWoKnDFW+LkLynmuPe+n2wazfffX
+	 1Iwh4ebTk/rRnRALlxhVgxGcsY1YA7uwHOvyAkfuNnLhYApQ3nDlk9jxEK9a6KkXqvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023782;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9Mq2tsgksphgR0Olzbt9nxKeTT+2vZpbbyXcf5Ucg48=;
-	b=N7S0oVeutfS1VMzZPNcxOkK+0Q1AGuII38eRtzHfIEdTIr/9X/UIsRZk4NOtOEhDmwmk
-	 c+5RWXss3s9Az8DQJ7fFtpeb7EeNIIt3LD6gY5+n9W1jJvSHGNlA0M8BS4djFYozGK2YL
-	 rNRP5f7MPKVQxJnnrC8ii+0CTSmEq4OaXrsi8be+rNECKbCdoLu+zZvuLkKzoic12ApQU
-	 9aNJWFFA405ziXUWZAEipEnfdvzsnRCLoES4qnNd7b221oKGkBQRymXQZPk/lzsPAnPU/
-	 UmwJ7UT+Czg72PZDVYvaYwUKLVjzarGSn0CuyrU+eJomHQ+Titt0EM5cL7sI1Ldv/tA==
+	bh=dNje3zB3rvNToBaODFBETrdn24ImTetU5fFaJf6i2RY=;
+	b=KaA3Qmfflh8XV2OpUKdHgdujY65OIVJYXneRTSJ1DAxT4dlFzQvWnYLmnYYRzfNv6wXS
+	 xXJuM5Xb+neH9qwSfH+mldIwyVYlWF3+CGHDb1bkkMdDwrtbWnS65gv20phLa/4vHrHud
+	 RGCct229QscIHon1NfcTXmQDuLNwhF+FheKD1HEND8H5qTHgCWM+b/ogcy3RtY0Zd7ZQD
+	 7F4pOVlgCS7DNbOng/OplVRLfgwaBjLHWoEKblxbRqjv8gUhjtoSiNbqrPFiPWfkgDWEP
+	 LRg2CLlT534sMdqVHyFu87HwfSv+1k1GEh1M6umtJCwnuTNIrhHeL9EzkWr0pcYqPCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJfCZtZm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7yRyWiP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B016F606A320;
-	Wed, 18 Nov 2026 17:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29594606A332;
+	Wed, 18 Nov 2026 17:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJfCZtZm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3791F000C6;
-	Wed, 18 Nov 2026 17:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7yRyWiP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808CF1F000C7;
+	Wed, 18 Nov 2026 17:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023782;
-	bh=9Mq2tsgksphgR0Olzbt9nxKeTT+2vZpbbyXcf5Ucg48=;
+	s=korg; t=1795023785;
+	bh=dNje3zB3rvNToBaODFBETrdn24ImTetU5fFaJf6i2RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FJfCZtZmFKtT4w7GE5GmIf31GOW+kVWKqUHRjRHN7cu7vWtnwPG0S2Pu8WBrv1MjP
-	 ITfoqPyTr6BctgflwmJhYQedpd44wo9Rrkqo/f987Kx7k8ITSLxYo4cKCgVlrOCg4S
-	 chDrJhF28lnAHmSBrzPg4PBSSs6RgToDOOoZPEOU=
+	b=d7yRyWiPYRYbdePspmRabYB2NNvHSEoZBNyS2dLTJLRZKrvR6TCcmGGZfDrfiKLEA
+	 nJ5WkYc+lqjKki/Mz/+zCUEBCZBox0wJ3ieGRQHroQrDJ5SPLdN50jQCu2EwWfmtGF
+	 HnKiKaaJvPblRK7X08YHaJzVmxACzgmWBjG4arEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Pengpeng Hou <hppiscas@163.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0492/2151] clk: si521xx: correct the SI52147 OF output enable map
-Date: Wed, 18 Nov 2026 15:37:07 +0100
-Message-ID: <20261118150139.976572563@linuxfoundation.org>
+Subject: [PATCH 6.18 0493/2151] clk: milbeaut: Return divider update timeouts
+Date: Wed, 18 Nov 2026 15:37:08 +0100
+Message-ID: <20261118150140.011476285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 7a4cc47d715f08309089d40b8c29fb0ba79917db ]
+[ Upstream commit 92d0998090d1716ee6b47174c10eb9415a12fca8 ]
 
-The SI52147 data sheet assigns DIFF0 through DIFF3 output-enable bits to
-0x17 in control register 1. The OF match data uses 0x15, leaving the
-DIFF2 bit out of the map, while the I2C ID table already uses the
-documented value.
+m10v_clk_divider_set_rate() logs when the hardware does not clear its
+write-valid request, but still returns success to the clock framework. It
+also uses the sleeping poll helper while holding the divider spinlock.
 
-Use 0x17 for the SI52147 OF entry so both enumeration paths expose the
-documented outputs.
+Use the atomic poll helper under the lock and return its timeout so the
+rate change is not reported as successful before the hardware accepts it.
 
-Fixes: edc12763a3a29 ("clk: si521xx: Clock driver for Skyworks Si521xx I2C PCIe clock generators")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+The issue was found by our static-analysis tool and manually reviewed.
+
+Fixes: 6a6ba5b55a72 ("clock: milbeaut: Add Milbeaut M10V clock controller")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-si521xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-milbeaut.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk-si521xx.c b/drivers/clk/clk-si521xx.c
-index 4ed4e1a5f4f2b..f167fd63c5040 100644
---- a/drivers/clk/clk-si521xx.c
-+++ b/drivers/clk/clk-si521xx.c
-@@ -375,7 +375,7 @@ MODULE_DEVICE_TABLE(i2c, si521xx_id);
- static const struct of_device_id clk_si521xx_of_match[] = {
- 	{ .compatible = "skyworks,si52144", .data = (void *)SI521XX_OE_MAP(0x5, 0xc0) },
- 	{ .compatible = "skyworks,si52146", .data = (void *)SI521XX_OE_MAP(0x15, 0xe0) },
--	{ .compatible = "skyworks,si52147", .data = (void *)SI521XX_OE_MAP(0x15, 0xf8) },
-+	{ .compatible = "skyworks,si52147", .data = (void *)SI521XX_OE_MAP(0x17, 0xf8) },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_si521xx_of_match);
+diff --git a/drivers/clk/clk-milbeaut.c b/drivers/clk/clk-milbeaut.c
+index bb94d02a76cf1..3b33ea6c889d6 100644
+--- a/drivers/clk/clk-milbeaut.c
++++ b/drivers/clk/clk-milbeaut.c
+@@ -414,8 +414,8 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				unsigned long parent_rate)
+ {
+ 	struct m10v_clk_divider *divider = to_m10v_div(hw);
+-	int value;
+ 	unsigned long flags = 0;
++	int value, ret = 0;
+ 	u32 val;
+ 	u32 write_en = BIT(divider->width - 1);
+ 
+@@ -437,8 +437,10 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ 	if (divider->write_valid_reg) {
+ 		writel(M10V_DCHREQ, divider->write_valid_reg);
+-		if (readl_poll_timeout(divider->write_valid_reg, val,
+-			!val, M10V_UPOLL_RATE, M10V_UTIMEOUT))
++		ret = readl_poll_timeout_atomic(divider->write_valid_reg, val,
++						!val, M10V_UPOLL_RATE,
++						M10V_UTIMEOUT);
++		if (ret)
+ 			pr_err("%s:%s couldn't stabilize\n",
+ 				__func__, clk_hw_get_name(hw));
+ 	}
+@@ -448,7 +450,7 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	else
+ 		__release(divider->lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static const struct clk_ops m10v_clk_divider_ops = {
 -- 
 2.53.0
 
