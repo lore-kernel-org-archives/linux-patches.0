@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057206;
-	b=2cEPRMBtf13Xs+804kMIlWHraRP5wZKSZE2AyQs0t9X8Ta/3OoMuU1sP3I/+JJX3VrXJ
-	 ilNipASxQT0BNVRN/BY6lz6HgK10viwK0yqC5Lbr5wkUPanUQO4ZQh//kDuWXM8esbAhj
-	 ddVUWjuRa6bLnEWI81FyI2fz0w2WTv0XCl0SMP23XfyTqgMKco2l/o5OPReU0KgOrBbtI
-	 ZrFaYC9LN3OSH5uYVKit6iPg7E/WIWYvm+AQ3pyJtwmAmY/TSwQLivOu/tzgzf9uDWCCK
-	 QBEjY624yCV4NMQjM1ukPyC/hH6h/0QejpcY/smqxd00XoecUyFsg687VT65rQZvkoA==
+	t=1795057209;
+	b=fetDxRIa1IEa22A39k7UJ4H+EwbkaC4y1ZURadPlejrvqDOIMuUCrsQ7C1BXXJKIqNY/
+	 bqJ6oh62EXPHRAaz8lpWc9BnbtnmpyJXkWnc6Odk8JH1iEabfTGZ2dzXtbxlkiZlLYiqv
+	 PEDf+DTCKNqBkT2SW0SPD/+nINr4/KBExEhEKCGR0J0JCRwIy5hKsG+9vFUZbGaGkY6aO
+	 M9b1llU5JoaD6u/aYdeUqXG1ltg/sO3WyNgPGZ8RZV+gD8NKnrECKLA+m/4xS+0nzQaO1
+	 G/ocBmucEJRbnDj8cFK498H1eYZdo9UYDWObfaLxDx7H1U5/PN4K9NrraIC26h2oGDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057209;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m0kaLJaTrqJ48HiSNijgO3r+/kJyMr4hUfR8CSJyP1U=;
-	b=CuWBrfXMIEgpQedk1C94hGzyxpa6fGCCvOWSWSabzJ9Ria29BV3C4fnN+gHOw0MviUP2
-	 TxRHJm0lcyPbclN2w9WvOgjhyQcGxon7dJ+ht+YLUvhQuDPS6zCMfh3/l19A+GG7xV1Y1
-	 xsE/aXU0/UDU6lR/mkgf1W6yXjqbed6VVVHKHQUO6sv5N8fhmclReCOL506dmTzRkqFbI
-	 pFyogtveBwJ87POy276cIiOt094mpYYRF6pjsz+zDL9GKzcmvToqLDcRBUZ8obA5oPBZt
-	 stGhPntgK0gjyjz2nksosgvZv1ORR7Rk6115iB+unl9r1HvkmQKBr0FsBoKz7Jh5vIg==
+	bh=TtfwzXcW461vMgGTBX1I9BlySDcULqggi4062xXlod4=;
+	b=g88bB+akoxnnU2WPfN7Uvj3euURsyaxEv+PF2MRSav3Hw4oIvAC1uCcrja3D8uVcR/ww
+	 75pvspfTJL4biIEPj6ga0mK+9b9bYQBxHibMnJpvH+5Mk7JlVq7IAfbTu4ayMRroFjxaV
+	 iQvK7UYVAgiZL6iH0M+g7x4YManTlZj5R8+INlC7EmnMo53vav60CSgvNCe1p+wt9iHY8
+	 a5j6EB56C63qrveCGhPNSVhoxXOzsIpp/e+x7yceonmyr/aKs59HaMdEeWbST4DnoWdmK
+	 82r1kfAvMhu21T62gk+FQ9bzbzqUiP0GB/VmBE6LllszCQPXT6AbpdDQ87CRztxX8Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIdHhSPg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L38juMhT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2688060A2607;
-	Thu, 19 Nov 2026 03:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A101606A339;
+	Thu, 19 Nov 2026 03:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VIdHhSPg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1FB1F000C8;
-	Thu, 19 Nov 2026 03:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L38juMhT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A25C1F000C9;
+	Thu, 19 Nov 2026 03:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057206;
-	bh=m0kaLJaTrqJ48HiSNijgO3r+/kJyMr4hUfR8CSJyP1U=;
+	s=korg; t=1795057208;
+	bh=TtfwzXcW461vMgGTBX1I9BlySDcULqggi4062xXlod4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VIdHhSPgl+2CFvCMr6Ziofbw6pFybbLe38HDybECjMDsP0BdRJrDgUbpCDHFaAKuA
-	 Zf2MrEC+cUM/e3T0Q2MYIgE4DETJcpz7q492aEnvCSVqNQEq760umscPyPP6YIyTQ3
-	 IhsEzGT0qu3qKgzam4ZklZzyKjY8Bf2SLz5zkfUI=
+	b=L38juMhTPpBtpfNxB5y44bPLn9dcIWzMej1dunLl+1K8CYcENjkxEpAkPvmuzSETE
+	 vEvQFzJdTmwhtkWP5sTG9L2HwO8Jh8Y4qmzkXB8pzNCg+VKVcymBhoYT5UqikIf+tR
+	 1nz2QiGdbPHNS9QiQHNsYSFrkGOCF/wfxJMvyYV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Florian Westphal <fw@strlen.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0046/1848] netfilter: ebtables: bound num_counters like nentries in do_replace()
-Date: Wed, 18 Nov 2026 15:34:44 +0100
-Message-ID: <20261118145913.034696148@linuxfoundation.org>
+Subject: [PATCH 5.10 0047/1848] dmaengine: pl330: remove debugfs file on teardown
+Date: Wed, 18 Nov 2026 15:34:45 +0100
+Message-ID: <20261118145913.067412427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,75 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 43ae85af154b27f9a0ff602f7a01e3a7583ffdab ]
+[ Upstream commit 0d3e3376b289cdaff5b3b6c1581999926ff1000f ]
 
-do_replace_finish() allocates the counter buffer before it is validated:
+init_pl330_debugfs() creates a debugfs file with struct pl330_dmac as
+private data. pl330_remove() then unregisters the DMA device and frees
+the PL330 channel/thread state without removing that file.
 
-   counterstmp = vmalloc_array(repl->num_counters, sizeof(*counterstmp));
+Keep the debugfs dentry and remove it before tearing down the DMAC state
+used by the debugfs show callback.
 
-do_replace() only checks num_counters against INT_MAX / sizeof(struct
-ebt_counter), so vmalloc_array() can be asked for up to 134217726 * 16 =
-2147483616 bytes (~2 GiB).
-
-num_counters must in fact equal nentries: do_replace_finish() later
-rejects the request when repl->num_counters != t->private->nentries.
-get_counters() folds the per-CPU counters back into one entry per rule,
-so what userspace gets is bounded by nentries, never by nentries *
-nr_cpus. Apply the same upper bound used for nentries (MAX_EBT_ENTRIES)
-to the incoming num_counters so the over-sized allocation can no longer
-be requested.
-
-The allocation is still kept outside the ebt_mutex, since vmalloc() may
-sleep and trigger reclaim; only the bound is tightened.
-
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma/pl330.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index 426a28ed68ce4..fef9aa64acf3e 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -38,6 +38,8 @@
- #define COUNTER_OFFSET(n) (SMP_ALIGN(n * sizeof(struct ebt_counter)))
- #define COUNTER_BASE(c, n, cpu) ((struct ebt_counter *)(((char *)c) + \
- 				 COUNTER_OFFSET(n) * cpu))
-+#define MAX_EBT_ENTRIES (((INT_MAX - sizeof(struct ebt_table_info)) / \
-+			 NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index 627aa9e9bc12a..f7731e9abe9b6 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -502,6 +502,7 @@ struct pl330_dmac {
+ 	struct dma_pl330_chan *peripherals; /* keep at end */
+ 	int quirks;
  
++	struct dentry		*dbgfs;
+ 	struct reset_control	*rstc;
+ 	struct reset_control	*rstc_ocp;
+ };
+@@ -2963,14 +2964,24 @@ DEFINE_SHOW_ATTRIBUTE(pl330_debugfs);
  
+ static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
+ {
+-	debugfs_create_file(dev_name(pl330->ddma.dev),
+-			    S_IFREG | 0444, NULL, pl330,
+-			    &pl330_debugfs_fops);
++	pl330->dbgfs = debugfs_create_file(dev_name(pl330->ddma.dev),
++					   S_IFREG | 0444, NULL, pl330,
++					   &pl330_debugfs_fops);
++}
++
++static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
++{
++	debugfs_remove(pl330->dbgfs);
++	pl330->dbgfs = NULL;
+ }
+ #else
+ static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
+ {
+ }
++
++static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
++{
++}
+ #endif
  
-@@ -1084,10 +1086,9 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
- 		return -EINVAL;
+ /*
+@@ -3219,6 +3230,8 @@ static void pl330_remove(struct amba_device *adev)
+ 	struct dma_pl330_chan *pch, *_p;
+ 	int i, irq;
  
- 	/* overflow check */
--	if (tmp.nentries >= ((INT_MAX - sizeof(struct ebt_table_info)) /
--			NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
-+	if (tmp.nentries >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
--	if (tmp.num_counters >= INT_MAX / sizeof(struct ebt_counter))
-+	if (tmp.num_counters >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
++	deinit_pl330_debugfs(pl330);
++
+ 	pm_runtime_get_noresume(pl330->ddma.dev);
  
- 	tmp.name[sizeof(tmp.name) - 1] = 0;
-@@ -2151,10 +2152,9 @@ static int compat_copy_ebt_replace_from_user(struct ebt_replace *repl,
- 	if (tmp.entries_size == 0)
- 		return -EINVAL;
- 
--	if (tmp.nentries >= ((INT_MAX - sizeof(struct ebt_table_info)) /
--			NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
-+	if (tmp.nentries >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
--	if (tmp.num_counters >= INT_MAX / sizeof(struct ebt_counter))
-+	if (tmp.num_counters >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
- 
- 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
+ 	if (adev->dev.of_node)
 -- 
 2.53.0
 
