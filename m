@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022003;
-	b=yuUAflTLrMZX0ym9gp2yVHR+qGlV6NSklJYKxX+hRG77DhnerPMrB+4M6CsgwvSD2C3E
-	 Nxb/iZOkLxGHu+3DhkaoPIoN8HuEpaDE48yiUxyu8WDiZsKEl2Kn+KIom2SkK4Y635eTS
-	 rK0cOQZsMgNKwN0REja7MjwIu69qBuYFFIhMt1RhRy8pFsNN8DCrvyljgZnkqi0b/6s15
-	 L7THqCrA0ESKMehgCpFS+7PEPI85J05T6BCknfgdd9WPUujb8eOc4Jb0iR0iyIudgPtNc
-	 SX7oLPGnCabEku9ZULer2sFDA0ACl0NHXUh0e++ZPQgqINrxWvE0qyc/d4lUuRJ81sA==
+	t=1795022007;
+	b=rbOAziPsBIWKiZ8mFy0gKpht+/HF/XR3bzsfxWfGPoormrOv2hwTKrvaDapAYjaKrgZK
+	 fRxBfvd17jf6+9/ukh30WkPL3iC5K/Kk43elpI0PZQy33Bv+CZ+K6A+tP9VwG8jpOnSHE
+	 51MpTKEQb+z3bm4qC5wuOdLy/x9Q1UggQfRRL1PxtPkmGliZmm3wsRrdT1DMeSE+pFg2u
+	 rmK6awCjh6krsn7Qn1zs0UQFtVjmjlCYuMzXIkhpiX+rJA5QfUi6T0qHP/W4aVCwd3gDx
+	 wNm8KWaVa/QQJ6nkaMGK9IL9Yobfx2NeugbuC6cczZ1o/DeXF/R0liOEiw3FI5fwgdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z8O1FI8vMYI03JU4SxSIVHUoS5DVFpZGU/HIVju2wUk=;
-	b=uOjOy8sG5/D9diuPiNzc8lh6wkHoX621liRIbL7Hbiq0ddhDMsjvL4YPhlC5OF1QE6hI
-	 t5QnqxkLLGFVxf8Tdm5RCQph81TG1fwZjXhzwNiwMZncwDF33zg4axLfAUXVMLkyaWBqq
-	 d+4CY5FNkf/6ISfCie75lpXmSF50ubbhk009OblPngCKhq8tmjxYkFPdrORzCG/gzroZX
-	 9DHtKq3gemuSDe1vgKv0wHSeGdI8KpMyS3ePTqTNGz7n5nSggCQ0OCM79J85xH0tLmXBQ
-	 1ZfkdB8d8RhlQOEDpBCE4z6C+E06s++aEXa8IL0JvhRMlnWmjDQReaxQzAXgvgNStnA==
+	bh=2SULwx7DsI6AdH7ZS/LZVsgv2dIWKn9kjOHC7kukL/k=;
+	b=0pVxMDJgrlCM+K/pZCDMtSrUEBryFEMSO2Y6bXWPOEDvtKyVEf5+3MrUrVR0m66qAxci
+	 yUgXiIMl5fmoi4tZ4FR/N3inHwfvUQXi98Qzjpz8oGjnos6aF2BnKSK0JYuYkh7MqlPBg
+	 LE3u7WN6qZbAJYrTCf+V4E5rLQ/kPfehvep3d3Yxmc+cmMDHoEJ7sQZ3xSOXsdrftob2R
+	 rHWjJYCKOo9WPRnIAf56ceyal1Coev6aGrYURT3tGZjJGprnAUktk0yyj7qCMkZs4pYuz
+	 6+jAOeDhpsbEdGGuxB9WWQYCtXfZXVL2UvH85V5iVHjDmkLDSp1NpNvnncuzcl5PcFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shKMdmgB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T8D2KSlD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E7F606A31C;
-	Wed, 18 Nov 2026 17:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA462606A31C;
+	Wed, 18 Nov 2026 17:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shKMdmgB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362061F000C4;
-	Wed, 18 Nov 2026 17:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T8D2KSlD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040DA1F000C4;
+	Wed, 18 Nov 2026 17:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022003;
-	bh=z8O1FI8vMYI03JU4SxSIVHUoS5DVFpZGU/HIVju2wUk=;
+	s=korg; t=1795022006;
+	bh=2SULwx7DsI6AdH7ZS/LZVsgv2dIWKn9kjOHC7kukL/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shKMdmgBwmFyhwU9E77lD/i0uqXYbx3LgYQ6acHpH39sWkPxlu4QpaJxHZW7vGsZb
-	 rWM3u5W4w57nmAKEpiezMAryDwyqXYQg6TIWJJLknZmARhexi3raZgngySpntsAzR6
-	 iS4s05QWh2kZPBf5TOhmTfajjpQGU8NCpKCKl+14=
+	b=T8D2KSlDULTNqlt+9Ankhoz6Hsp1WndntdG4cK8/gIWYAs5mmkQYvA+yKdnGmHO54
+	 7mBDId+/psKRFcP3oHgA18RcZg9x6SOBYobpEuOpbFsua2+K64yA39zXOFXDej47aB
+	 BxZ6fgOBy2skxS6fqrzPbMGtsaBEhhwG47O1jHMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2509/2651] net: lan966x: dont disable hardirqs in fdma tx clear path
-Date: Wed, 18 Nov 2026 16:02:29 +0100
-Message-ID: <20261118150415.079310061@linuxfoundation.org>
+Subject: [PATCH 7.3 2510/2651] net: dsa: mv88e6xxx: fix 6351 family statistics snapshot
+Date: Wed, 18 Nov 2026 16:02:30 +0100
+Message-ID: <20261118150415.111597220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,68 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit b2e17432e7ee75997657f99862eb83be0c78a6c1 ]
+[ Upstream commit 9663edfa71e8807890203578dab6db60c6b548c4 ]
 
-lan966x_fdma_tx_clear_buf() runs from the NAPI poll and frees the
-buffers of completed tx DCBs with napi_consume_skb(),
-page_pool_recycle_direct() and xdp_return_frame_bulk(), under
-lan966x->tx_lock.
+The 88E6171, 88E6175, 88E6350 and 88E6351 take the port number in the
+low bits of the statistics operation register. The 6320 snapshot helper
+instead encodes the port as (port + 1) << 5. On an EA4500 with an
+88E6171, this causes ethtool -S to return physical port 0's MIB counters
+for every user port. Traffic on other ports does not update their
+reported hardware counters.
 
-Before this patch, the lock is taken with spin_lock_irqsave(), so the
-buffers are freed with hardirqs disabled. RX skbs are marked for
-page_pool recycling, so when such an skb is forwarded back out and its
-tx completion frees it here, the free path reaches __page_pool_put_page(),
-which warns via lockdep_assert_no_hardirq().
+Before the snapshot operation was moved into the chip operations, only
+the 6320 and 6352 families used the shifted encoding. The refactoring
+incorrectly assigned that encoding to all four 6351 family chips.
 
-Take tx_lock with a plain spin_lock(), as the other tx_lock users,
-lan966x_port_xmit() and lan966x_fdma_xmit_xdpf(), already do.
-tx_clear_buf() runs from the NAPI poll, so disabling hardirqs there is
-not needed.
+Use the unshifted snapshot helper for the entire 6351 family. This
+matches the Marvell DSDT statsCapture() implementation, which uses the
+raw port number for chips outside DEV_RMON_PORT_BITS, including these
+four chips.
 
-Found with lockdep enabled (CONFIG_PROVE_LOCKING), which the assert
-depends on. Reproduced on a lan9668 board by redirecting received frames
-out of another port with tc mirred.
+The original 88E6171 change was tested on an EA4500: pings through
+different switch ports updated only the corresponding port's hardware
+counters. The other three chips have not been hardware tested.
 
-Fixes: 11871aba1974 ("net: lan96x: Use page_pool API")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-fdma-tx-clear-hardirq-v1-1-5f70f026a2e4@microchip.com
+Fixes: a605a0fe7115 ("net: dsa: mv88e6xxx: Abstract stats_snapshot into ops structure")
+Link: https://lore.kernel.org/all/404d5f2d-24a5-4edc-897b-b1b3c54a20e1@lunn.ch/
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20261026164733.737299-2-f.fainelli@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-index b66bd1cfea10d..5cc9b2321dad5 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-@@ -337,14 +337,13 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
- 	struct lan966x_tx_dcb_buf *dcb_buf;
- 	struct fdma *fdma = &tx->fdma;
- 	struct xdp_frame_bulk bq;
--	unsigned long flags;
- 	bool clear = false;
- 	struct fdma_db *db;
- 	int i;
- 
- 	xdp_frame_bulk_init(&bq);
- 
--	spin_lock_irqsave(&lan966x->tx_lock, flags);
-+	spin_lock(&lan966x->tx_lock);
- 	for (i = 0; i < fdma->n_dcbs; ++i) {
- 		dcb_buf = &tx->dcbs_buf[i];
- 
-@@ -389,7 +388,7 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
- 	if (clear)
- 		lan966x_fdma_wakeup_netdev(lan966x);
- 
--	spin_unlock_irqrestore(&lan966x->tx_lock, flags);
-+	spin_unlock(&lan966x->tx_lock);
- }
- 
- static int lan966x_fdma_rx_check_frame(struct lan966x_rx *rx, u64 *src_port)
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index a4a8c7e11bf4f..50ce7b7828995 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -4610,7 +4610,7 @@ static const struct mv88e6xxx_ops mv88e6171_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -4714,7 +4714,7 @@ static const struct mv88e6xxx_ops mv88e6175_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -5380,7 +5380,7 @@ static const struct mv88e6xxx_ops mv88e6350_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -5426,7 +5426,7 @@ static const struct mv88e6xxx_ops mv88e6351_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
 -- 
 2.53.0
 
