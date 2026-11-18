@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047456;
-	b=icTibZVXm7Xlhy0DV7ILk/JrhG/7Q4nFvSwEf/MmHVRcdrZRFHh3/UdX1C7Zv1zGjhq+
-	 bCDYn6EARoGevSF2i0Nw4o51CHcCuj6xPlfXcZT6rtUCr2zQ522mYXk2HR1tcft6OKzmT
-	 TQrFcWN18VPJwVUKwms45uVSuSftX2vLYFrGM5RbV18OP8orgV9H+DarM73obpHeHcuIx
-	 Z4my3fqhMPTjdgoSTDxjrQgejXS4o0Y6kDH6t3S8Sr+YeFyCQF6Ye9YfoZVSaVR0zP4hw
-	 sMnOz6R4CTBS5++VzmfW7/lRscEn2aby3IOTtZdPfjopiGtue7s/RzC80Ay4hggUBFw==
+	t=1795047459;
+	b=BxxyaE/yrLytRz1ZGIZALzp1pcfZ66aSsEgm0AdBqgWnR0mbpugFYnVd5LA7hZVduy4Y
+	 LiV5bn7PtZldPXggrTCpsG+srWIO8gfigBhASQpthcZ/ShyMfNW7/6xJa5myzbst0GtGq
+	 +kS5MXhcBMPMweAYqi5at39O7hSKqA6kayEHdPXcommXd0x22ohl5DDsITk1cJebsjWNU
+	 eHQ2jhgroVqfPvNWdEs9iy41lvenrz/fzGkJjkMI/xoEhKD2oIFmvukbchxEPmcFCxLmh
+	 b1JbS1HqN3Mwl8fk4a7bibEr+Z62EXjeaAkAkF+XtXRdB2Dg8VtvuuaNRs1ZZJ2nYhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1KxildMwkse87Zy4hLiHs3Kq6V//VPRHFIuHuhE2ilE=;
-	b=j29GD0N6S4QPnyh56Vgbup/CIIyyLMUgxJCpDUn2Ajjj/Bi/LvbqLfu2UpQ6hkiqUcwN
-	 cjXyM8/pRYZtv9bA21YJcphzS1F2aoAnlUWvIKaYEzlf5qyt7D2u31g1Xm+YSKOCvQ2CB
-	 5fYkZsonBr4cNCzMU3Duib+yqV0B4MWaglADdxy/Moj8RObO/58KbAeb/aBpEz6tf4hD2
-	 6f/uEG7jRoJa6UXvQY9JlMNJEqTJCZhkzTiLQinekMo/tYbvr22vBlHttfhk1rgCCVq/Y
-	 w7fDnUgB8DTRgfRU8aIji4BKsZhBzfdUSufQE8o7O9gBFTo6oMZdSeL4qaKrAWSUB9g==
+	bh=PNxmMetOoxjlwYDNyrgOyu6ffxQkkBcKW9d1uclRcnc=;
+	b=jy99EiqVHPjPc0dZjyHyQtGUqJfGBNOBjwn6Ap7MUTRdPDMIGgUEYq75I4Dz1Vi3K6mh
+	 jW6Nwv+Na5qwA2XLe8oe0xtaUcajIgkFXeGidJl+3PurNOFlaDfH8UyraAPputl+C2vUj
+	 OxBJVPDId9/owYsMm4SRgw3dSVzVzS+4E934oXM+z5mVFPmorcM1oykZww2Nbgyz5RjZF
+	 37C854PexaTutLDcDY1HhMIb+Ya+GNr1f/sVBSE/ixj0pqwc2bb3AtXg4g3KQqETkfWKD
+	 imW1KnIdOapxtGfzEuTP0SlxCA5Ichw3HTDN21MoE2k0davq2iEsQC8Zt6iSo2NrGOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIr6R+T3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4ftbKDn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4F6606A31C;
-	Thu, 19 Nov 2026 00:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AC1606A31C;
+	Thu, 19 Nov 2026 00:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIr6R+T3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF99B1F000C4;
-	Thu, 19 Nov 2026 00:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4ftbKDn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935EE1F000C4;
+	Thu, 19 Nov 2026 00:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047456;
-	bh=1KxildMwkse87Zy4hLiHs3Kq6V//VPRHFIuHuhE2ilE=;
+	s=korg; t=1795047459;
+	bh=PNxmMetOoxjlwYDNyrgOyu6ffxQkkBcKW9d1uclRcnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIr6R+T3fsXhmyj6mQAd+QjMAofHbGmuTVJE0XDKyTmLzXwAtSmudrAVik4U7Ge3o
-	 1UPdXW28cVgDWE3RDyamB/yu5YblM/HwccLzeQlGmwOulMPddGqwWck0WCz5nQmOed
-	 8d/AxidTLmOlwBsJdiq1J70HogpbOv0qiwgF9hnU=
+	b=E4ftbKDnEv5J3lwpldivikICeFK8kPulgE2VOcC6Ga/HN23taTqGlulDKsAO8FpXM
+	 x1wkXGNTDTEOJNx4ySgm3BWUOS3JMNCS2m+1zC36kgjNFzdt/WGWNT8XV2vkQFTcj1
+	 +AUD+E4Y+I0QFR5AtYeY0bWy+SGk6sbsafHacMmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1638/2857] selftests:core: test coverage for dup_fd() failure handling in unshare_fd()
-Date: Wed, 18 Nov 2026 15:44:32 +0100
-Message-ID: <20261118150300.316210753@linuxfoundation.org>
+Subject: [PATCH 6.1 1647/2857] hwmon: (sht15) Stop deferred work before releasing its resources
+Date: Wed, 18 Nov 2026 15:44:41 +0100
+Message-ID: <20261118150300.637661910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,143 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 611fbeb44a777e5ab54ab3127ec85f72147911d8 ]
+[ Upstream commit 5eab1e7f7ed12893f3864fe46ffcd5a41a752d6a ]
 
-At some point there'd been a dumb braino during the dup_fd()
-calling conventions change; caught by smatch and immediately fixed.
-The trouble is, there had been no test coverage for the dup_fd() failure
-handling - neither in kselftests nor in LTP.  Fortunately, it can be
-triggered on stock kernel - ENOMEM would require fault injection, but
-EMFILE can be had with sysctl alone (fs.nr_open).
+The IRQ handler and regulator notifier can leave work pending after a
+measurement or notification completes. Neither work item is drained before
+its resources are released on removal or probe failure.
 
-Add a test for dup_fd() failure.
-Fixed up commit log and short log - Shuah Khan
+Disable read_work before freeing the IRQ, since the worker can re-enable
+it. Use request_irq()/free_irq() for explicit teardown. Unregister the
+regulator notifier before cancelling update_supply_work and disabling the
+regulator. Apply the same ordering to probe failures.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: df0b7e0ea59c ("selftests/core: fix unshare_test with large fs.nr_open")
+Fixes: 251eb40f5ccd ("hwmon: sht15 humidity sensor driver")
+Cc: stable@vger.kernel.org
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20261024014044.27853-1-mhun512@gmail.com
+[groeck: Dropped obsolete 'Assisted-by: tag]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: replaced disable_work_sync() with cancel_work_sync() after guarding the read state and disabling the IRQ ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/core/Makefile       |  2 +-
- tools/testing/selftests/core/unshare_test.c | 94 +++++++++++++++++++++
- 2 files changed, 95 insertions(+), 1 deletion(-)
- create mode 100644 tools/testing/selftests/core/unshare_test.c
+ drivers/hwmon/sht15.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/tools/testing/selftests/core/Makefile b/tools/testing/selftests/core/Makefile
-index ce262d0972699..8e99f87f5d7c2 100644
---- a/tools/testing/selftests/core/Makefile
-+++ b/tools/testing/selftests/core/Makefile
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- CFLAGS += -g $(KHDR_INCLUDES)
+diff --git a/drivers/hwmon/sht15.c b/drivers/hwmon/sht15.c
+index ae4d14257a11d..a0f2f1a2beb87 100644
+--- a/drivers/hwmon/sht15.c
++++ b/drivers/hwmon/sht15.c
+@@ -31,6 +31,7 @@
+ #include <linux/bitrev.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/of.h>
++#include <linux/workqueue.h>
  
--TEST_GEN_PROGS := close_range_test
-+TEST_GEN_PROGS := close_range_test unshare_test
+ /* Commands */
+ #define SHT15_MEASURE_TEMP		0x03
+@@ -804,7 +805,7 @@ static irqreturn_t sht15_interrupt_fired(int irq, void *d)
+ 	disable_irq_nosync(irq);
+ 	atomic_inc(&data->interrupt_handled);
+ 	/* Then schedule a reading work struct */
+-	if (data->state != SHT15_READING_NOTHING)
++	if (READ_ONCE(data->state) != SHT15_READING_NOTHING)
+ 		schedule_work(&data->read_work);
+ 	return IRQ_HANDLED;
+ }
+@@ -976,11 +977,8 @@ static int sht15_probe(struct platform_device *pdev)
+ 		goto err_release_reg;
+ 	}
  
- include ../lib.mk
+-	ret = devm_request_irq(&pdev->dev, gpiod_to_irq(data->data),
+-			       sht15_interrupt_fired,
+-			       IRQF_TRIGGER_FALLING,
+-			       "sht15 data",
+-			       data);
++	ret = request_irq(gpiod_to_irq(data->data), sht15_interrupt_fired,
++			  IRQF_TRIGGER_FALLING, "sht15 data", data);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to get irq for data line\n");
+ 		goto err_release_reg;
+@@ -988,15 +986,15 @@ static int sht15_probe(struct platform_device *pdev)
+ 	disable_irq_nosync(gpiod_to_irq(data->data));
+ 	ret = sht15_connection_reset(data);
+ 	if (ret)
+-		goto err_release_reg;
++		goto err_free_irq;
+ 	ret = sht15_soft_reset(data);
+ 	if (ret)
+-		goto err_release_reg;
++		goto err_free_irq;
  
-diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
-new file mode 100644
-index 0000000000000..7fec9dfb1b0e3
---- /dev/null
-+++ b/tools/testing/selftests/core/unshare_test.c
-@@ -0,0 +1,94 @@
-+// SPDX-License-Identifier: GPL-2.0
+ 	ret = sysfs_create_group(&pdev->dev.kobj, &sht15_attr_group);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "sysfs create failed\n");
+-		goto err_release_reg;
++		goto err_free_irq;
+ 	}
+ 
+ 	data->hwmon_dev = hwmon_device_register(data->dev);
+@@ -1009,9 +1007,15 @@ static int sht15_probe(struct platform_device *pdev)
+ 
+ err_release_sysfs_group:
+ 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
++err_free_irq:
++	WRITE_ONCE(data->state, SHT15_READING_NOTHING);
++	disable_irq(gpiod_to_irq(data->data));
++	cancel_work_sync(&data->read_work);
++	free_irq(gpiod_to_irq(data->data), data);
+ err_release_reg:
+ 	if (!IS_ERR(data->reg)) {
+ 		regulator_unregister_notifier(data->reg, &data->nb);
++		cancel_work_sync(&data->update_supply_work);
+ 		regulator_disable(data->reg);
+ 	}
+ 	return ret;
+@@ -1025,12 +1029,18 @@ static int sht15_remove(struct platform_device *pdev)
+ 	hwmon_device_unregister(data->hwmon_dev);
+ 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
+ 
++	WRITE_ONCE(data->state, SHT15_READING_NOTHING);
++	disable_irq(gpiod_to_irq(data->data));
++	cancel_work_sync(&data->read_work);
++	free_irq(gpiod_to_irq(data->data), data);
 +
-+#define _GNU_SOURCE
-+#include <errno.h>
-+#include <fcntl.h>
-+#include <linux/kernel.h>
-+#include <limits.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <syscall.h>
-+#include <unistd.h>
-+#include <sys/resource.h>
-+#include <linux/close_range.h>
-+
-+#include "../kselftest_harness.h"
-+#include "../clone3/clone3_selftests.h"
-+
-+TEST(unshare_EMFILE)
-+{
-+	pid_t pid;
-+	int status;
-+	struct __clone_args args = {
-+		.flags = CLONE_FILES,
-+		.exit_signal = SIGCHLD,
-+	};
-+	int fd;
-+	ssize_t n, n2;
-+	static char buf[512], buf2[512];
-+	struct rlimit rlimit;
-+	int nr_open;
-+
-+	fd = open("/proc/sys/fs/nr_open", O_RDWR);
-+	ASSERT_GE(fd, 0);
-+
-+	n = read(fd, buf, sizeof(buf));
-+	ASSERT_GT(n, 0);
-+	ASSERT_EQ(buf[n - 1], '\n');
-+
-+	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
-+
-+	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
-+
-+	/* bump fs.nr_open */
-+	n2 = sprintf(buf2, "%d\n", nr_open + 1024);
-+	lseek(fd, 0, SEEK_SET);
-+	write(fd, buf2, n2);
-+
-+	/* bump ulimit -n */
-+	rlimit.rlim_cur = nr_open + 1024;
-+	rlimit.rlim_max = nr_open + 1024;
-+	EXPECT_EQ(0, setrlimit(RLIMIT_NOFILE, &rlimit)) {
-+		lseek(fd, 0, SEEK_SET);
-+		write(fd, buf, n);
-+		exit(EXIT_FAILURE);
-+	}
-+
-+	/* get a descriptor past the old fs.nr_open */
-+	EXPECT_GE(dup2(2, nr_open + 64), 0) {
-+		lseek(fd, 0, SEEK_SET);
-+		write(fd, buf, n);
-+		exit(EXIT_FAILURE);
-+	}
-+
-+	/* get descriptor table shared */
-+	pid = sys_clone3(&args, sizeof(args));
-+	EXPECT_GE(pid, 0) {
-+		lseek(fd, 0, SEEK_SET);
-+		write(fd, buf, n);
-+		exit(EXIT_FAILURE);
-+	}
-+
-+	if (pid == 0) {
-+		int err;
-+
-+		/* restore fs.nr_open */
-+		lseek(fd, 0, SEEK_SET);
-+		write(fd, buf, n);
-+		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
-+		err = unshare(CLONE_FILES);
-+		EXPECT_EQ(err, -1)
-+			exit(EXIT_FAILURE);
-+		EXPECT_EQ(errno, EMFILE)
-+			exit(EXIT_FAILURE);
-+		exit(EXIT_SUCCESS);
-+	}
-+
-+	EXPECT_EQ(waitpid(pid, &status, 0), pid);
-+	EXPECT_EQ(true, WIFEXITED(status));
-+	EXPECT_EQ(0, WEXITSTATUS(status));
-+}
-+
-+TEST_HARNESS_MAIN
+ 	ret = sht15_soft_reset(data);
+ 	if (ret)
+ 		dev_err(&pdev->dev, "Failed to reset device (%pe)\n", ERR_PTR(ret));
+ 
+ 	if (!IS_ERR(data->reg)) {
+ 		regulator_unregister_notifier(data->reg, &data->nb);
++		cancel_work_sync(&data->update_supply_work);
+ 		regulator_disable(data->reg);
+ 	}
+ 
 -- 
 2.53.0
 
