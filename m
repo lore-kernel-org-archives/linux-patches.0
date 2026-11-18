@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048451;
-	b=WJZVlLnAhbTUUkz6lqvO/TmYDGIDJ15hjna2mGxH24itGw5DFSFpS5yaY1WmNbCkyyE/
-	 Oi8qtQORWjc463+GxhG1yfIfnILPzfX5lC/wAWCxRxqngzfqnARGxQpNzi20c+QxSAmcV
-	 x8s6hduWaERRejdOG2cxunXRsh+NmWkeff5R7RmYmYwLNIiMNHU45sqYtaAlkbVqM2dtf
-	 xLy4lsIonPKh/cYaUtZB5XyPLdcO+cjFV6s77csRmiZ/l7v1MPnNg72KzIbLoqUwpzawd
-	 WngfeSJBsEUjtCqv9dqqH+kMrGI0X9VhVRy0VH+BQPPnlxUXo7pr7PAp/rQoxBG3p3g==
+	t=1795048454;
+	b=l/HMBSfVA0XLLUayCoI+ROEmwTu5+PMVdXhhMJ0tQBFbD0tWSSrNhEFIjopH01E5OCT6
+	 o+N9KpJ+LIHdFEa3hxQXZU++paYt2B34r9Y7Vd1/uLdWl0hrsq7gX0hbE2putgVlVTQJU
+	 gNDXUS/GRLvy2j+iGxUKh7QOyhy/l19Lvx0nzIYntZSQHvzk04hsNxUzJoo3A7hI+KkRt
+	 7P96eSdaj+6RnqR91Tno0kICpvrWxNtlbXRo811/j5e8C47dzsiq8AE5207NuRPwgGKLI
+	 YXwTkshkq38yvGHCR9vm9qJ/69l7P4FHOBa1IvpLNXw3X2/Q3anELU2YwCmh/VpbE3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1OhPLXIH4OyqZLdAFykg+vG+lDCJkA6TUOfAy5NAtBQ=;
-	b=T7uctFgu1vbFsNmCamuwkb6Jmn4PIPyaT72LK15KtAFEbzvzZWQLSF8OeWs3eB/HfDzi
-	 8LrB+KZO7zyrtr2ulNgzSlB3vG0cszhPfeaa7YoSGre1YI9UJfU2I/+g4e5THROVQQ5T5
-	 oL02XpaAuoJoF5YQVAYZ3w1HfjfL7sUcvLGJnpjiTrrV82hNVpRs2PWD9xNIW3Yu55WBw
-	 rDISXdUkPavnNEM5XSs8p9vBBQdsNxpshFjaua6rj9ajdHKCQ3kxacEdCdHeJ3PAxA/qD
-	 lYHgUpUMk0mgo69c7wmsWnCXcmtBRIBoUO2F+ewos5Vf6ripc4Q3EPckq7NnO57Mprw==
+	bh=k3YJg3T6tQ9wWq+f2g/s5qorUYUPIqlsud8tpmv/g5Y=;
+	b=hX6WFm1BDiIv3VU9zUBp4/9DrfmGRwPUaam0GUMfFfTdKiWUeAOkMAnfuJ+YEn5stTab
+	 wK17+Aze7xUxUHY2bGDBESQFwCYOh0t/Yy2VgxufErpyFly8Ikez4zASqQHdQl0wztThS
+	 LGKK535EbhZbWf9x7z61HPVnJR09aMOcVbWmQIzt04YZUso5D1f0/I/DPeWRL+X5sJJ8S
+	 A5kv8GvxoZE6z7tlErqHOsu8afvZQobNjBKL0eG2MD1kbt95mAbugetke/mK16Q8pDl1m
+	 Ym9X1A9qEt1KaBkID1irozYwI64Zc6ZFLLmvQrZsEvsfhbA3kEqqEKa7A/Q4GjGTisw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQ7yWbop;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+taQFm0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB32C606A334;
-	Thu, 19 Nov 2026 00:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24625606A336;
+	Thu, 19 Nov 2026 00:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQ7yWbop
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFF51F000C4;
-	Thu, 19 Nov 2026 00:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+taQFm0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6191F000C4;
+	Thu, 19 Nov 2026 00:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048451;
-	bh=1OhPLXIH4OyqZLdAFykg+vG+lDCJkA6TUOfAy5NAtBQ=;
+	s=korg; t=1795048454;
+	bh=k3YJg3T6tQ9wWq+f2g/s5qorUYUPIqlsud8tpmv/g5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQ7yWbopPWiG1I6+ZNx8+ZxIAQ7iO7w962fn3U7+kiPSj8H6wnMlKQuxZXldDiTzl
-	 7vjWgMnxvTitxv49+6ht1rUStu5AgUm7JYkXtUqNaPOXWXIoKBf3Rrgzjlcgq3xV/b
-	 twjFOiGxXwylcQIOGJ2LcuUVi7dgz5VFVpvr5/+k=
+	b=q+taQFm0esHRXpfcuemYww1pMgPcMrc1Pv25Nxmv2mypBSZGmRJR4hrERO2grYTXF
+	 dXNVjsf+3RNz4LfJ+h8Rd65HW3oMUHPnQe3UoCs/U2hTIipdrBZ2mVvFB0lm8HjH34
+	 rrIKqPAnRWRjIz5Vci8yCywL4YxIyn5r/XEuLFgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kim Wooseok <5mghybrid@khu.ac.kr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2000/2857] wifi: rtl8xxxu: Use dev_* instead of pr_info
-Date: Wed, 18 Nov 2026 15:50:34 +0100
-Message-ID: <20261118150313.376602900@linuxfoundation.org>
+Subject: [PATCH 6.1 2001/2857] wifi: rtl8xxxu: free RX skb when URB submission fails
+Date: Wed, 18 Nov 2026 15:50:35 +0100
+Message-ID: <20261118150313.409501459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,47 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Kim Wooseok <5mghybrid@khu.ac.kr>
 
-[ Upstream commit bd954a7e4aa0739630884fc572d2d0e4dcd16e25 ]
+[ Upstream commit 9f7edf4e8584c87e3c478c6dd87c08d51b5157c2 ]
 
-Replace two instances of bare pr_info with dev_info and dev_warn.
+When usb_submit_urb() fails, rtl8xxxu_submit_rx_urb() unanchors the URB
+but leaves the newly allocated skb in urb.context. For ENOMEM/EAGAIN,
+the RX worker puts the request back on the pending list. The next
+submission allocates another skb and overwrites that pointer, leaking
+the previous buffer. Stopping before the retry also leaks it, because
+pending-list cleanup frees only the URB.
 
-Also make their messages a little more informative.
+Free the skb and clear urb.context in rtl8xxxu_submit_rx_urb() when
+submission fails. This keeps buffer allocation and failure cleanup in
+the same function, so a request returned for retry or teardown no longer
+owns an skb. Remove the corresponding cleanup from start and the RX
+worker; they only need to decide whether to retry or free the URB.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/c9f3ebb2-769b-7d80-cac2-5a9d1bcc010a@gmail.com
-Stable-dep-of: 9f7edf4e8584 ("wifi: rtl8xxxu: free RX skb when URB submission fails")
+Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Assisted-by: GPT-6 Astra
+Signed-off-by: Kim Wooseok <5mghybrid@khu.ac.kr>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260921-codex-rtl-rx-v3-submit-v4-1-eeb09fe8f791@khu.ac.kr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 20a7537d2cae8..19eadfd65a980 100644
+index 19eadfd65a980..4a7f48f10b304 100644
 --- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
 +++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -2000,7 +2000,8 @@ static int rtl8xxxu_download_firmware(struct rtl8xxxu_priv *priv)
+@@ -5291,7 +5291,6 @@ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
+ 	struct rtl8xxxu_priv *priv;
+ 	struct rtl8xxxu_rx_urb *rx_urb, *tmp;
+ 	struct list_head local;
+-	struct sk_buff *skb;
+ 	unsigned long flags;
+ 	int ret;
  
- 	val8 = rtl8xxxu_read8(priv, REG_MCU_FW_DL);
- 	if (val8 & MCU_FW_RAM_SEL) {
--		pr_info("do the RAM reset\n");
-+		dev_info(&priv->udev->dev,
-+			 "Firmware is already running, resetting the MCU.\n");
- 		rtl8xxxu_write8(priv, REG_MCU_FW_DL, 0x00);
- 		priv->fops->reset_8051(priv);
- 	}
-@@ -5320,7 +5321,8 @@ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
- 			rtl8xxxu_queue_rx_urb(priv, rx_urb);
- 			break;
+@@ -5323,8 +5322,6 @@ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
  		default:
--			pr_info("failed to requeue urb %i\n", ret);
-+			dev_warn(&priv->udev->dev,
-+				 "failed to requeue urb with error %i\n", ret);
- 			skb = (struct sk_buff *)rx_urb->urb.context;
- 			dev_kfree_skb(skb);
+ 			dev_warn(&priv->udev->dev,
+ 				 "failed to requeue urb with error %i\n", ret);
+-			skb = (struct sk_buff *)rx_urb->urb.context;
+-			dev_kfree_skb(skb);
  			usb_free_urb(&rx_urb->urb);
+ 		}
+ 	}
+@@ -5874,8 +5871,11 @@ static int rtl8xxxu_submit_rx_urb(struct rtl8xxxu_priv *priv,
+ 			  skb_size, rtl8xxxu_rx_complete, skb);
+ 	usb_anchor_urb(&rx_urb->urb, &priv->rx_anchor);
+ 	ret = usb_submit_urb(&rx_urb->urb, GFP_ATOMIC);
+-	if (ret)
++	if (ret) {
+ 		usb_unanchor_urb(&rx_urb->urb);
++		dev_kfree_skb(skb);
++		rx_urb->urb.context = NULL;
++	}
+ 	return ret;
+ }
+ 
+@@ -6436,7 +6436,6 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+ 	struct rtl8xxxu_rx_urb *rx_urb;
+ 	struct rtl8xxxu_tx_urb *tx_urb;
+-	struct sk_buff *skb;
+ 	unsigned long flags;
+ 	int ret, i;
+ 
+@@ -6487,13 +6486,8 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
+ 		rx_urb->hw = hw;
+ 
+ 		ret = rtl8xxxu_submit_rx_urb(priv, rx_urb);
+-		if (ret) {
+-			if (ret != -ENOMEM) {
+-				skb = (struct sk_buff *)rx_urb->urb.context;
+-				dev_kfree_skb(skb);
+-			}
++		if (ret)
+ 			rtl8xxxu_queue_rx_urb(priv, rx_urb);
+-		}
+ 	}
+ 
+ 	schedule_delayed_work(&priv->ra_watchdog, 2 * HZ);
 -- 
 2.53.0
 
