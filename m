@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025877;
-	b=5qGys8Ux7ck/vSYsPDXZsTlGU88n1oauqQnA2bQ7e7kQRtGpMLf4jIczmrAfaMk1JALS
-	 R20/mA6gpXo8ihXLfhFBzC2qPwKio48k4WkRpwjUaBDN7C5KyET6AraiI5bmdw/dbWTCU
-	 UVCGqhPma7gMUCz03U38RaALyYIF4acJlh8+JFB7RYZv0Uz8Fn5JWOfjzwxfBAB1JxQDO
-	 4xZYrWdN7M6Vx36Y81nz15BQc3ZivdlltdteJwX648vtrPupVZHlwfZXgni4sbhZL0i0n
-	 wnf6Z+9Cde/LdAmA39BgOneXrW0+2CJKN72bII+oy8AMHt59PVf42eWgF+B+Hz+jhOQ==
+	t=1795025879;
+	b=X+VyNO8x9j5HZbzJZwRflTHQ0mnjGGZ9X2tJGtT0/opZnUyDLFc4wapVUlz2nJcCgVE3
+	 Ki00dmEiSX7bkfzWq1y+K/MCoHcJeS25y9tLc1bs1vcmp6JOCWSkkij8pZU1R9mOI6vrW
+	 OpFSYGgVPGpm279q5UJBigJd+pN8avZKkIhA4mFnPlGpZ+27SY7QL8lrcq6i1PpSgri26
+	 w4mnpGvRp9OVzbXOkt+/ERexO+3jxu40mEYcC08eqZdqrOoFPXx6xCVeQXYpGSrx3w2EI
+	 uBs8kOSFm+Miy/geIxsRl7cAm2iTcBgBJa+UtgoFUBl7d44SmCfmyEFxQXs4xQzTSSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JZNOYhkEMFZh6oPAwFs5dgEKA5pulZpMH/hHD87lgis=;
-	b=cvnHQLA77cvKOjptBFXylAUDDh/PeB7O4y+eVxU3hi/0Y2+7avCIMdYtYtFbDDM4nWzG
-	 kpKk4447V30Io4Wl1fS7QDEIj9kEuHlPfQiUramlB9QyeHq1d73BEUngQpgZ0b5BBqBsX
-	 xH85h7P6B+ID/ahxiBaqq+sa8oGECjwovkCJdPR+UPJjBARvb2CMCA9yjmrPYwKWkzYnZ
-	 SePi1ePhG3R6wNhY5gP2pVy6doDP4QU7WRBbhbW/eVJuWQmvDgm30MaCBTTIkYey68+MH
-	 7gaZuG+9k9K3QxH1jJzWTapq/Az19juAPv7H8cvSKoVqbh67oTHvLAiDICdnA0UxipA==
+	bh=y9DOp7XzhLxJyp9SC8mFY2a9/7a+tQ2jpzL8iF3J7hI=;
+	b=RYVt0kIyv/RYaBs+SFxkXK7JtoyAxsdhdiVXxmb+9mQldnZhYT+8zrUgO6gRqxgF7vAt
+	 8DaGWUToMp7Xol7gb/KN7BDdUD6Sd8+wn93bk6ulwXCMtKwppeJCgyH051+vUv63+TfF+
+	 DC+qzRexW4DDD2Qi+zPMB3OEACDdSCjzik7y6EMhBLqYa1sF4nqVV48okLvo0Zx5SzGyx
+	 oTjnVbiGa3VDMC8WfJThOeBE5pVd9YQU56DzSa4rIA8RU3CGpATP9GQi5DjPeq9SFqlnE
+	 IVU8R5pELUtjMnaeYLd7GkP/GB1Odpti/ugs7AgsPLuZ6qWV0gVNOKV42cuqisJG0gA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7Fisymg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9CBlF3x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209B6606A32A;
-	Wed, 18 Nov 2026 18:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6D6606A332;
+	Wed, 18 Nov 2026 18:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7Fisymg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5E1F000C4;
-	Wed, 18 Nov 2026 18:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9CBlF3x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3245D1F000C4;
+	Wed, 18 Nov 2026 18:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025877;
-	bh=JZNOYhkEMFZh6oPAwFs5dgEKA5pulZpMH/hHD87lgis=;
+	s=korg; t=1795025879;
+	bh=y9DOp7XzhLxJyp9SC8mFY2a9/7a+tQ2jpzL8iF3J7hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7FisymggGQFQl9S61pK9xkBibXUPQTdOtQ0HH7r787GW4QTTFiz93SK3qIM6XHy0
-	 mg8bKi1lv8m209ySwFU4d3Ka0J/+mxD/LxtJqmipF2F6gG22WTfFcUx2Tre1+zcNRD
-	 IJasZMZXmNPlfDYQrihZkRZGWvPHihKZXyn6GhMs=
+	b=L9CBlF3xPtuc4V/kB2kkU0BBQz7kOZZ7rfVfw/DgzBlEqc+4EkyAJfmSwHbfztJ3A
+	 vhurCA36L+26+P3/ywp4TCJ2uGx/cjZnue+Z/cHclXTdAOSwliFOZQWZGr3tu9Atge
+	 ikrmqkZY4gGpIxmSBYkoInQjsWQD6xBJIZgYJrFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Crispin <john@phrozen.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1234/2151] wifi: mt76: mt7996: disable the RX NAPIs before the DMA cleanup
-Date: Wed, 18 Nov 2026 15:49:29 +0100
-Message-ID: <20261118150207.132496827@linuxfoundation.org>
+Subject: [PATCH 6.18 1235/2151] ASoC: rockchip: rockchip_sai: Handle runtime PM resume failures in set_fmt
+Date: Wed, 18 Nov 2026 15:49:30 +0100
+Message-ID: <20261118150207.167228815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,55 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Crispin <john@phrozen.org>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 7a5a3843178c61d99d939b231318692d08fff79b ]
+[ Upstream commit 39205bb7ed4fe74f0b5df58d9b6529ac2690303f ]
 
-mt7996_unregister_device() leaves the RX NAPIs enabled, so
-mt76_dma_cleanup() deletes enabled NAPIs and destroys page pools that
-are still bound to them. On rmmod, the kernel warns in
-__netif_napi_del_locked() for every RX queue and in
-page_pool_disable_direct_recycling(). Until the IRQ tasklet is disabled,
-an interrupt can still schedule a NAPI that was already deleted.
+rockchip_sai_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-Disable every RX NAPI that was added before the MCU exit and the DMA
-cleanup. This includes the host RRO queues: mt76_dma_init() skips them,
-but mt7996_dma_rro_start() adds their NAPIs later when WED is not
-active, so a check for mt76_queue_is_wed_rro() would miss them.
-
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: John Crispin <john@phrozen.org>
-Link: https://patch.msgid.link/20261006205936.669125-27-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: cc78d1eaabad ("ASoC: rockchip: add Serial Audio Interface (SAI) driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903112739.373621-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/rockchip/rockchip_sai.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 778a9ca8d5fa0..18d30c1790bd8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1734,6 +1734,8 @@ int mt7996_register_device(struct mt7996_dev *dev)
+diff --git a/sound/soc/rockchip/rockchip_sai.c b/sound/soc/rockchip/rockchip_sai.c
+index b38c2cb81f807..02a99a7279984 100644
+--- a/sound/soc/rockchip/rockchip_sai.c
++++ b/sound/soc/rockchip/rockchip_sai.c
+@@ -486,7 +486,9 @@ static int rockchip_sai_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ 	unsigned long flags;
+ 	int ret = 0;
  
- void mt7996_unregister_device(struct mt7996_dev *dev)
- {
-+	int i;
-+
- 	cancel_work_sync(&dev->dump_work);
- 	cancel_work_sync(&dev->wed_rro.work);
- 	cancel_work_sync(&dev->reset_work);
-@@ -1744,6 +1746,10 @@ void mt7996_unregister_device(struct mt7996_dev *dev)
- 	mt7996_coredump_unregister(dev);
- 	mt76_unregister_device(&dev->mt76);
- 	mt7996_wed_rro_free(dev);
-+	for (i = 0; i < ARRAY_SIZE(dev->mt76.napi); i++) {
-+		if (dev->mt76.napi[i].dev)
-+			napi_disable(&dev->mt76.napi[i]);
-+	}
- 	mt7996_mcu_exit(dev);
- 	mt7996_tx_token_put(dev);
- 	mt7996_dma_cleanup(dev);
+-	pm_runtime_get_sync(dai->dev);
++	ret = pm_runtime_resume_and_get(dai->dev);
++	if (ret)
++		return ret;
+ 
+ 	mask = SAI_CKR_MSS_MASK;
+ 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
 -- 
 2.53.0
 
