@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025263;
-	b=dbtNqpOBDYAGdKPEqJuwcrXYs56fdmkt2xq029FdrwwaHhb1hjRZot7Ui3TKAPcLfdWS
-	 e8j1ERgg49MGz/7hBbg9XrW38CArKlxjhUeT4JDQWxKVAhgKW40TQyutdzsXzPRsZ3y/4
-	 Dz8D/CKo8DFCEXpD2bwp5pwTuBGqMbb8ExHvHfKopQffotAxOd74//wQ9zdCEEqm3aj4s
-	 qwHoCsB2UIjOpcbc0DckQmaMxq+LSuTL+ADj/oY7rNCe4bmjVBAeIm1LB39mc903cLEnk
-	 ivfW1uAO7/W0KYORUBHOzA+utmj9SKOg5CiyP9oI7U+aTyQFWYh6Gv3TOTEtRlFYYXg==
+	t=1795025265;
+	b=oebsZcnsFXwIpd7/A25Ch6FCPzEGoERtb4lTr8vHwJHWFTHT/WgVfzYLKSOhYLDxehTK
+	 uJLfkNTJRLnkYncE7qk96ECSmd0o9hxMDJviF7ahwpL5DhEcdqvpug9qj2Ub62NE+EsZw
+	 wrQ1IEcRU/HhUSc1fkESspDSHfxWA697SHPm13Z19bDwQo/6bt0hZjTkTxOmFBaxURFWd
+	 jcwzUrKdB/s4e3TwbS2kIdFQTZIOraCSTuWzqlN9vwCspXFCsBISXh+zhTojWp3vrwQiS
+	 xz37g3gkW6NtWfr6kkbSBn8uMtyT3zKujKweju8+4wRnB55TI4cPaFXEAekBSarlSAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UpIUf1GJc7tVP5dw6pgyEhBDdZx/L7K1+slPvb8FhU0=;
-	b=PsLw+ntInlno2R3237oRPI3XLtiJ5900QRItny+OjzEFFihRbkw1m0ROEdrKE8S+fJRL
-	 HFZrpWDumXXfM+o5V8souBOE6R8YyhfOfRPa7LD1V/BPTrI5JcdJK2OXPqFCmLVwtKcHu
-	 ce6cR1EsDxf/vNpZGr0YxgYR6yadHNh/ltWuG16JEuwzObuAQCc5ne5DzIi05AmhPY71F
-	 +FZ/5y1SIBM+Y//YsKT1xnzvDZWIalN6xko1ALB0Y5tylLZFqqaxtPEjohf9mbsTf74t+
-	 Be7QNgRGa+7q4tUWMWnFlV6ufHmeIIde1X19f8H9Y02Q/hUrYlNZHnqekHU0v+JSy2g==
+	bh=Pav7JNSpnN7ggx192xmZY8LL60/N3/lHflWK/iOQtlo=;
+	b=XkeDZqaXBtkMSa9UzWPRbdWR503l1SUO7Dzt5xGJamKRE/FuxHqzTBz5F1DeOPbAcZpa
+	 SwuiDZ+SlYgqkZyv12sNGAwSt2qkLr5lbS4YSyxedAHsfW/capSLVadrxegcvmq4PcZzc
+	 GacPIXrsy29eELfv/wU3HzPhQWoDaQmGzqFqI04NbvkK3BD7rhjcJNPOLTZfnuC5LwTEp
+	 9DgOcgOkGjXn/PFx/or4Z0ng5mkEcNFU3JIzlliqS1wf/eYnTz4TTGYfkjfIrgMcmXvSl
+	 qm553rjAi7+SQ3WtMlu3jvfqw+fO+zIF5ANicf5z42dxuWDqL2vRYCOLFJXAF0zXwOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DQ6MxRI/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IoIf+g4t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E110F606A33F;
-	Wed, 18 Nov 2026 18:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E46606A333;
+	Wed, 18 Nov 2026 18:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQ6MxRI/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18F51F000C9;
-	Wed, 18 Nov 2026 18:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IoIf+g4t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B661F000C6;
+	Wed, 18 Nov 2026 18:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025262;
-	bh=UpIUf1GJc7tVP5dw6pgyEhBDdZx/L7K1+slPvb8FhU0=;
+	s=korg; t=1795025265;
+	bh=Pav7JNSpnN7ggx192xmZY8LL60/N3/lHflWK/iOQtlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQ6MxRI/5AwDsBEE3gW0roAa75o+9U4aMNsXsEv18No9rmkxNgNdrg40da0rEGCjm
-	 hHrthVpDI2t9L0g9YvDbak/5rYu38qCsoWfjs323B0s920Izn6Ngebwre4askdIAcD
-	 p0pThUGRJ4Vu/uU7bmsb65H2WA8jDKt3WxJOO8j8=
+	b=IoIf+g4tDs9+ZfhMomLqE6K0Zl6ZA/8rgND+E1XYJGLhPTM6Yt1C8Nm8jAXGxyMTD
+	 zBtAYDvM+bm3Uxw4tg84HMva7ao3skUq51gU1yC1SUbYKti5UXHBTWfV1KoqP7pIbz
+	 tvq8cokS+e/dqrG775OGMx0l9JFl8CLeojSmaqik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	John Garry <john.g.garry@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1015/2151] scsi: scsi_debug: Abort SCSI commands via an internal command
-Date: Wed, 18 Nov 2026 15:45:50 +0100
-Message-ID: <20261118150159.387538758@linuxfoundation.org>
+Subject: [PATCH 6.18 1016/2151] scsi: scsi_debug: Stop printing extra function name in debug logs
+Date: Wed, 18 Nov 2026 15:45:51 +0100
+Message-ID: <20261118150159.422351638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,196 +68,364 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 581ca490353ca5f4bee0d662595af27c06e603d4 ]
+[ Upstream commit a743b120227a371f37c46738d91cc7a9691dbcf6 ]
 
-Add a .queue_reserved_command() implementation and call it from the code
-path that aborts SCSI commands. This ensures that the code for
-allocating a pseudo SCSI device and also the code for allocating and
-processing reserved commands gets triggered while running blktests.
+The driver defines as follows pr_fmt:
 
-Most of the code in this patch is a modified version of code from John
-Garry. See also
-https://lore.kernel.org/linux-scsi/75018e17-4dea-4e1b-8c92-7a224a1e13b9@oracle.com/
+  #define pr_fmt(fmt) KBUILD_MODNAME ":%s: " fmt, __func__
 
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Suggested-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251031204029.2883185-8-bvanassche@acm.org
+...meaning that we already get the function name added in any debug
+statements.
+
+Remove using of __func__ in debug logs to avoid the duplication.
+
+For instances of where the function name was being printed, add some
+verbose comment to avoid using "" (which would be a bit silly).
+
+It would be nicer to stop using pr_fmt(), but that would mean rewriting
+approx 100 debug statements to have a sensible and clear message.
+
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20251113133645.2898748-2-john.g.garry@oracle.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 92feb036a2d3 ("scsi: scsi_debug: Avoid 32-bit overflow in WRITE SCATTERED offsets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 116 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 105 insertions(+), 11 deletions(-)
+ drivers/scsi/scsi_debug.c | 101 +++++++++++++++++---------------------
+ 1 file changed, 45 insertions(+), 56 deletions(-)
 
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 60ed10fa1f7fd..47206da6f4161 100644
+index 47206da6f4161..7d462ede0e11a 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
-@@ -6756,20 +6756,59 @@ static bool scsi_debug_stop_cmnd(struct scsi_cmnd *cmnd)
- 	return false;
- }
+@@ -1369,8 +1369,7 @@ static void mk_sense_invalid_fld(struct scsi_cmnd *scp,
  
-+struct sdebug_abort_cmd {
-+	u32 unique_tag;
-+};
-+
-+enum sdebug_internal_cmd_type {
-+	SCSI_DEBUG_ABORT_CMD,
-+};
-+
-+struct sdebug_internal_cmd {
-+	enum sdebug_internal_cmd_type type;
-+
-+	union {
-+		struct sdebug_abort_cmd abort_cmd;
-+	};
-+};
-+
-+union sdebug_priv {
-+	struct sdebug_scsi_cmd cmd;
-+	struct sdebug_internal_cmd internal_cmd;
-+};
-+
- /*
-- * Called from scsi_debug_abort() only, which is for timed-out cmd.
-+ * Abort SCSI command @cmnd. Only called from scsi_debug_abort(). Although
-+ * it would be possible to call scsi_debug_stop_cmnd() directly, an internal
-+ * command is allocated and submitted to trigger the reserved command
-+ * infrastructure.
-  */
- static bool scsi_debug_abort_cmnd(struct scsi_cmnd *cmnd)
+ 	sbuff = scp->sense_buffer;
+ 	if (!sbuff) {
+-		sdev_printk(KERN_ERR, scp->device,
+-			    "%s: sense_buffer is NULL\n", __func__);
++		sdev_printk(KERN_ERR, scp->device, "sense_buffer is NULL\n");
+ 		return;
+ 	}
+ 	asc = c_d ? INVALID_FIELD_IN_CDB : INVALID_FIELD_IN_PARAM_LIST;
+@@ -1402,8 +1401,7 @@ static void mk_sense_invalid_fld(struct scsi_cmnd *scp,
+ static void mk_sense_buffer(struct scsi_cmnd *scp, int key, int asc, int asq)
  {
--	struct sdebug_scsi_cmd *sdsc = scsi_cmd_priv(cmnd);
--	unsigned long flags;
--	bool res;
--
--	spin_lock_irqsave(&sdsc->lock, flags);
--	res = scsi_debug_stop_cmnd(cmnd);
--	spin_unlock_irqrestore(&sdsc->lock, flags);
--
--	return res;
-+	struct Scsi_Host *shost = cmnd->device->host;
-+	struct request *rq = scsi_cmd_to_rq(cmnd);
-+	u32 unique_tag = blk_mq_unique_tag(rq);
-+	struct sdebug_internal_cmd *internal_cmd;
-+	struct scsi_cmnd *abort_cmd;
-+	struct request *abort_rq;
-+	blk_status_t res;
-+
-+	abort_cmd = scsi_get_internal_cmd(shost->pseudo_sdev, DMA_NONE,
-+					  BLK_MQ_REQ_RESERVED);
-+	if (!abort_cmd)
-+		return false;
-+	internal_cmd = scsi_cmd_priv(abort_cmd);
-+	*internal_cmd = (struct sdebug_internal_cmd) {
-+		.type = SCSI_DEBUG_ABORT_CMD,
-+		.abort_cmd = {
-+			.unique_tag = unique_tag,
-+		},
-+	};
-+	abort_rq = scsi_cmd_to_rq(abort_cmd);
-+	abort_rq->timeout = secs_to_jiffies(3);
-+	res = blk_execute_rq(abort_rq, true);
-+	scsi_put_internal_cmd(abort_cmd);
-+	return res == BLK_STS_OK;
- }
- 
- /*
-@@ -9224,6 +9263,56 @@ static int sdebug_fail_cmd(struct scsi_cmnd *cmnd, int *retval,
- 	return ret;
- }
- 
-+/* Process @scp, a request to abort a SCSI command by tag. */
-+static void scsi_debug_abort_cmd(struct Scsi_Host *shost, struct scsi_cmnd *scp)
-+{
-+	struct sdebug_internal_cmd *internal_cmd = scsi_cmd_priv(scp);
-+	struct sdebug_abort_cmd *abort_cmd = &internal_cmd->abort_cmd;
-+	const u32 unique_tag = abort_cmd->unique_tag;
-+	struct scsi_cmnd *to_be_aborted_scmd =
-+		scsi_host_find_tag(shost, unique_tag);
-+	struct sdebug_scsi_cmd *to_be_aborted_sdsc =
-+		scsi_cmd_priv(to_be_aborted_scmd);
-+	bool res = false;
-+
-+	if (!to_be_aborted_scmd) {
-+		pr_err("%s: command with tag %#x not found\n", __func__,
-+		       unique_tag);
-+		return;
-+	}
-+
-+	scoped_guard(spinlock_irqsave, &to_be_aborted_sdsc->lock)
-+		res = scsi_debug_stop_cmnd(to_be_aborted_scmd);
-+
-+	if (res)
-+		pr_info("%s: aborted command with tag %#x\n",
-+			__func__, unique_tag);
-+	else
-+		pr_err("%s: failed to abort command with tag %#x\n",
-+		       __func__, unique_tag);
-+
-+	set_host_byte(scp, res ? DID_OK : DID_ERROR);
-+}
-+
-+static int scsi_debug_process_reserved_command(struct Scsi_Host *shost,
-+					       struct scsi_cmnd *scp)
-+{
-+	struct sdebug_internal_cmd *internal_cmd = scsi_cmd_priv(scp);
-+
-+	switch (internal_cmd->type) {
-+	case SCSI_DEBUG_ABORT_CMD:
-+		scsi_debug_abort_cmd(shost, scp);
-+		break;
-+	default:
-+		WARN_ON_ONCE(true);
-+		set_host_byte(scp, DID_ERROR);
-+		break;
-+	}
-+
-+	scsi_done(scp);
-+	return 0;
-+}
-+
- static int scsi_debug_queuecommand(struct Scsi_Host *shost,
- 				   struct scsi_cmnd *scp)
+ 	if (!scp->sense_buffer) {
+-		sdev_printk(KERN_ERR, scp->device,
+-			    "%s: sense_buffer is NULL\n", __func__);
++		sdev_printk(KERN_ERR, scp->device, "sense_buffer is NULL\n");
+ 		return;
+ 	}
+ 	memset(scp->sense_buffer, 0, SCSI_SENSE_BUFFERSIZE);
+@@ -1421,8 +1419,7 @@ static void mk_sense_info_tape(struct scsi_cmnd *scp, int key, int asc, int asq,
+ 			unsigned int information, unsigned char tape_flags)
  {
-@@ -9424,6 +9513,9 @@ static int sdebug_init_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- 	struct sdebug_scsi_cmd *sdsc = scsi_cmd_priv(cmd);
- 	struct sdebug_defer *sd_dp = &sdsc->sd_dp;
+ 	if (!scp->sense_buffer) {
+-		sdev_printk(KERN_ERR, scp->device,
+-			    "%s: sense_buffer is NULL\n", __func__);
++		sdev_printk(KERN_ERR, scp->device, "sense_buffer is NULL\n");
+ 		return;
+ 	}
+ 	memset(scp->sense_buffer, 0, SCSI_SENSE_BUFFERSIZE);
+@@ -1450,15 +1447,12 @@ static int scsi_debug_ioctl(struct scsi_device *dev, unsigned int cmd,
+ {
+ 	if (sdebug_verbose) {
+ 		if (0x1261 == cmd)
+-			sdev_printk(KERN_INFO, dev,
+-				    "%s: BLKFLSBUF [0x1261]\n", __func__);
++			sdev_printk(KERN_INFO, dev, "BLKFLSBUF [0x1261]\n");
+ 		else if (0x5331 == cmd)
+ 			sdev_printk(KERN_INFO, dev,
+-				    "%s: CDROM_GET_CAPABILITY [0x5331]\n",
+-				    __func__);
++				    "CDROM_GET_CAPABILITY [0x5331]\n");
+ 		else
+-			sdev_printk(KERN_INFO, dev, "%s: cmd=0x%x\n",
+-				    __func__, cmd);
++			sdev_printk(KERN_INFO, dev, "cmd=0x%x\n", cmd);
+ 	}
+ 	return -EINVAL;
+ 	/* return -ENOTTY; // correct return but upsets fdisk */
+@@ -1662,8 +1656,8 @@ static int p_fill_from_dev_buffer(struct scsi_cmnd *scp, const void *arr,
  
-+	if (blk_mq_is_reserved_rq(scsi_cmd_to_rq(cmd)))
-+		return 0;
-+
- 	spin_lock_init(&sdsc->lock);
- 	hrtimer_setup(&sd_dp->hrt, sdebug_q_cmd_hrt_complete, CLOCK_MONOTONIC,
- 		      HRTIMER_MODE_REL_PINNED);
-@@ -9443,6 +9535,7 @@ static const struct scsi_host_template sdebug_driver_template = {
- 	.sdev_destroy =		scsi_debug_sdev_destroy,
- 	.ioctl =		scsi_debug_ioctl,
- 	.queuecommand =		scsi_debug_queuecommand,
-+	.queue_reserved_command = scsi_debug_process_reserved_command,
- 	.change_queue_depth =	sdebug_change_qdepth,
- 	.map_queues =		sdebug_map_queues,
- 	.mq_poll =		sdebug_blk_mq_poll,
-@@ -9452,6 +9545,7 @@ static const struct scsi_host_template sdebug_driver_template = {
- 	.eh_bus_reset_handler = scsi_debug_bus_reset,
- 	.eh_host_reset_handler = scsi_debug_host_reset,
- 	.can_queue =		SDEBUG_CANQUEUE,
-+	.nr_reserved_cmds =	1,
- 	.this_id =		7,
- 	.sg_tablesize =		SG_MAX_SEGMENTS,
- 	.cmd_per_lun =		DEF_CMD_PER_LUN,
-@@ -9460,7 +9554,7 @@ static const struct scsi_host_template sdebug_driver_template = {
- 	.module =		THIS_MODULE,
- 	.skip_settle_delay =	1,
- 	.track_queue_depth =	1,
--	.cmd_size = sizeof(struct sdebug_scsi_cmd),
-+	.cmd_size = sizeof(union sdebug_priv),
- 	.init_cmd_priv = sdebug_init_cmd_priv,
- 	.target_alloc =		sdebug_target_alloc,
- 	.target_destroy =	sdebug_target_destroy,
+ 	act_len = sg_pcopy_from_buffer(sdb->table.sgl, sdb->table.nents,
+ 				       arr, arr_len, skip);
+-	pr_debug("%s: off_dst=%u, scsi_bufflen=%u, act_len=%u, resid=%d\n",
+-		 __func__, off_dst, scsi_bufflen(scp), act_len,
++	pr_debug("off_dst=%u, scsi_bufflen=%u, act_len=%u, resid=%d\n",
++		 off_dst, scsi_bufflen(scp), act_len,
+ 		 scsi_get_resid(scp));
+ 	n = scsi_bufflen(scp) - (off_dst + act_len);
+ 	scsi_set_resid(scp, min_t(u32, scsi_get_resid(scp), n));
+@@ -3186,8 +3180,8 @@ static int resp_mode_select(struct scsi_cmnd *scp,
+ 		return DID_ERROR << 16;
+ 	else if (sdebug_verbose && (res < param_len))
+ 		sdev_printk(KERN_INFO, scp->device,
+-			    "%s: cdb indicated=%d, IO sent=%d bytes\n",
+-			    __func__, param_len, res);
++			    "cdb indicated=%d, IO sent=%d bytes\n",
++			    param_len, res);
+ 	md_len = mselect6 ? (arr[0] + 1) : (get_unaligned_be16(arr + 0) + 2);
+ 	bd_len = mselect6 ? arr[3] : get_unaligned_be16(arr + 6);
+ 	off = (mselect6 ? 4 : 8);
+@@ -5123,8 +5117,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 	if (lbdof == 0) {
+ 		if (sdebug_verbose)
+ 			sdev_printk(KERN_INFO, scp->device,
+-				"%s: %s: LB Data Offset field bad\n",
+-				my_name, __func__);
++				"%s: LB Data Offset field bad\n", my_name);
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
+ 		return illegal_condition_result;
+ 	}
+@@ -5132,8 +5125,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 	if ((lrd_size + (num_lrd * lrd_size)) > lbdof_blen) {
+ 		if (sdebug_verbose)
+ 			sdev_printk(KERN_INFO, scp->device,
+-				"%s: %s: LBA range descriptors don't fit\n",
+-				my_name, __func__);
++				"%s: LBA range descriptors don't fit\n", my_name);
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
+ 		return illegal_condition_result;
+ 	}
+@@ -5142,8 +5134,8 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		return SCSI_MLQUEUE_HOST_BUSY;
+ 	if (sdebug_verbose)
+ 		sdev_printk(KERN_INFO, scp->device,
+-			"%s: %s: Fetch header+scatter_list, lbdof_blen=%u\n",
+-			my_name, __func__, lbdof_blen);
++			"%s: Fetch header+scatter_list, lbdof_blen=%u\n",
++			my_name, lbdof_blen);
+ 	res = fetch_to_dev_buffer(scp, lrdp, lbdof_blen);
+ 	if (res == -1) {
+ 		ret = DID_ERROR << 16;
+@@ -5160,8 +5152,8 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		num = get_unaligned_be32(up + 8);
+ 		if (sdebug_verbose)
+ 			sdev_printk(KERN_INFO, scp->device,
+-				"%s: %s: k=%d  LBA=0x%llx num=%u  sg_off=%u\n",
+-				my_name, __func__, k, lba, num, sg_off);
++				"%s: k=%d  LBA=0x%llx num=%u  sg_off=%u\n",
++				my_name, k, lba, num, sg_off);
+ 		if (num == 0)
+ 			continue;
+ 		ret = check_device_access_params(scp, lba, num, true);
+@@ -5173,8 +5165,8 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		if ((cum_lb + num) > bt_len) {
+ 			if (sdebug_verbose)
+ 				sdev_printk(KERN_INFO, scp->device,
+-				    "%s: %s: sum of blocks > data provided\n",
+-				    my_name, __func__);
++				    "%s: sum of blocks > data provided\n",
++				    my_name);
+ 			mk_sense_buffer(scp, ILLEGAL_REQUEST, WRITE_ERROR_ASC,
+ 					0);
+ 			ret = illegal_condition_result;
+@@ -5866,8 +5858,8 @@ static int resp_verify(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
+ 		goto cleanup;
+ 	} else if (sdebug_verbose && (ret < (a_num * lb_size))) {
+ 		sdev_printk(KERN_INFO, scp->device,
+-			    "%s: %s: cdb indicated=%u, IO sent=%d bytes\n",
+-			    my_name, __func__, a_num * lb_size, ret);
++			    "%s: cdb indicated=%u, IO sent=%d bytes\n",
++			    my_name, a_num * lb_size, ret);
+ 	}
+ 	if (is_bytchk3) {
+ 		for (j = 1, off = lb_size; j < vnum; ++j, off += lb_size)
+@@ -6679,14 +6671,14 @@ static int scsi_debug_sdev_configure(struct scsi_device *sdp,
+ 	devip->debugfs_entry = debugfs_create_dir(dev_name(&sdp->sdev_dev),
+ 				sdebug_debugfs_root);
+ 	if (IS_ERR_OR_NULL(devip->debugfs_entry))
+-		pr_info("%s: failed to create debugfs directory for device %s\n",
+-			__func__, dev_name(&sdp->sdev_gendev));
++		pr_info("failed to create debugfs directory for device %s\n",
++			dev_name(&sdp->sdev_gendev));
+ 
+ 	dentry = debugfs_create_file("error", 0600, devip->debugfs_entry, sdp,
+ 				&sdebug_error_fops);
+ 	if (IS_ERR_OR_NULL(dentry))
+-		pr_info("%s: failed to create error file for device %s\n",
+-			__func__, dev_name(&sdp->sdev_gendev));
++		pr_info("failed to create error file for device %s\n",
++			dev_name(&sdp->sdev_gendev));
+ 
+ 	return 0;
+ }
+@@ -6874,7 +6866,7 @@ static int scsi_debug_abort(struct scsi_cmnd *SCpnt)
+ 
+ 	if (SDEBUG_OPT_ALL_NOISE & sdebug_opts)
+ 		sdev_printk(KERN_INFO, SCpnt->device,
+-			    "%s: command%s found\n", __func__,
++			    "command%s found\n",
+ 			    aborted ? "" : " not");
+ 
+ 
+@@ -6962,7 +6954,7 @@ static int scsi_debug_device_reset(struct scsi_cmnd *SCpnt)
+ 	++num_dev_resets;
+ 
+ 	if (SDEBUG_OPT_ALL_NOISE & sdebug_opts)
+-		sdev_printk(KERN_INFO, sdp, "%s\n", __func__);
++		sdev_printk(KERN_INFO, sdp, "doing device reset");
+ 
+ 	scsi_debug_stop_all_queued(sdp);
+ 	if (devip) {
+@@ -7002,7 +6994,7 @@ static int scsi_debug_target_reset(struct scsi_cmnd *SCpnt)
+ 
+ 	++num_target_resets;
+ 	if (SDEBUG_OPT_ALL_NOISE & sdebug_opts)
+-		sdev_printk(KERN_INFO, sdp, "%s\n", __func__);
++		sdev_printk(KERN_INFO, sdp, "doing target reset\n");
+ 
+ 	list_for_each_entry(devip, &sdbg_host->dev_info_list, dev_list) {
+ 		if (devip->target == sdp->id) {
+@@ -7015,7 +7007,7 @@ static int scsi_debug_target_reset(struct scsi_cmnd *SCpnt)
+ 
+ 	if (SDEBUG_OPT_RESET_NOISE & sdebug_opts)
+ 		sdev_printk(KERN_INFO, sdp,
+-			    "%s: %d device(s) found in target\n", __func__, k);
++			    "%d device(s) found in target\n", k);
+ 
+ 	if (sdebug_fail_target_reset(SCpnt)) {
+ 		scmd_printk(KERN_INFO, SCpnt, "fail target reset 0x%x\n",
+@@ -7036,7 +7028,7 @@ static int scsi_debug_bus_reset(struct scsi_cmnd *SCpnt)
+ 	++num_bus_resets;
+ 
+ 	if (SDEBUG_OPT_ALL_NOISE & sdebug_opts)
+-		sdev_printk(KERN_INFO, sdp, "%s\n", __func__);
++		sdev_printk(KERN_INFO, sdp, "doing bus reset\n");
+ 
+ 	list_for_each_entry(devip, &sdbg_host->dev_info_list, dev_list) {
+ 		set_bit(SDEBUG_UA_BUS_RESET, devip->uas_bm);
+@@ -7047,7 +7039,7 @@ static int scsi_debug_bus_reset(struct scsi_cmnd *SCpnt)
+ 
+ 	if (SDEBUG_OPT_RESET_NOISE & sdebug_opts)
+ 		sdev_printk(KERN_INFO, sdp,
+-			    "%s: %d device(s) found in host\n", __func__, k);
++			    "%d device(s) found in host\n", k);
+ 	return SUCCESS;
+ }
+ 
+@@ -7059,7 +7051,7 @@ static int scsi_debug_host_reset(struct scsi_cmnd *SCpnt)
+ 
+ 	++num_host_resets;
+ 	if (SDEBUG_OPT_ALL_NOISE & sdebug_opts)
+-		sdev_printk(KERN_INFO, SCpnt->device, "%s\n", __func__);
++		sdev_printk(KERN_INFO, SCpnt->device, "doing host reset\n");
+ 	mutex_lock(&sdebug_host_list_mutex);
+ 	list_for_each_entry(sdbg_host, &sdebug_host_list, host_list) {
+ 		list_for_each_entry(devip, &sdbg_host->dev_info_list,
+@@ -7074,7 +7066,7 @@ static int scsi_debug_host_reset(struct scsi_cmnd *SCpnt)
+ 	stop_all_queued();
+ 	if (SDEBUG_OPT_RESET_NOISE & sdebug_opts)
+ 		sdev_printk(KERN_INFO, SCpnt->device,
+-			    "%s: %d device(s) found\n", __func__, k);
++			"%d device(s) found\n", k);
+ 	return SUCCESS;
+ }
+ 
+@@ -7225,8 +7217,8 @@ static int schedule_resp(struct scsi_cmnd *cmnd, struct sdebug_dev_info *devip,
+ 			scsi_result = device_qfull_result;
+ 
+ 			if (unlikely(SDEBUG_OPT_Q_NOISE & sdebug_opts))
+-				sdev_printk(KERN_INFO, sdp, "%s: num_in_q=%d +1, <inject> status: TASK SET FULL\n",
+-					    __func__, num_in_q);
++				sdev_printk(KERN_INFO, sdp, "num_in_q=%d +1, <inject> status: TASK SET FULL\n",
++					    num_in_q);
+ 		}
+ 	}
+ 
+@@ -7252,8 +7244,8 @@ static int schedule_resp(struct scsi_cmnd *cmnd, struct sdebug_dev_info *devip,
+ 	}
+ 
+ 	if (unlikely(sdebug_verbose && cmnd->result))
+-		sdev_printk(KERN_INFO, sdp, "%s: non-zero result=0x%x\n",
+-			    __func__, cmnd->result);
++		sdev_printk(KERN_INFO, sdp, "non-zero result=0x%x\n",
++			    cmnd->result);
+ 
+ 	if (delta_jiff > 0 || ndelay > 0) {
+ 		ktime_t kt;
+@@ -8691,7 +8683,7 @@ static int __init scsi_debug_init(void)
+ 
+ 	sdebug_debugfs_root = debugfs_create_dir("scsi_debug", NULL);
+ 	if (IS_ERR_OR_NULL(sdebug_debugfs_root))
+-		pr_info("%s: failed to create initial debugfs directory\n", __func__);
++		pr_info("failed to create initial debugfs directory\n");
+ 
+ 	for (k = 0; k < hosts_to_add; k++) {
+ 		if (want_store && k == 0) {
+@@ -8807,7 +8799,7 @@ static int sdebug_add_store(void)
+ 	if (unlikely(res < 0)) {
+ 		xa_unlock_irqrestore(per_store_ap, iflags);
+ 		kfree(sip);
+-		pr_warn("%s: xa_alloc() errno=%d\n", __func__, -res);
++		pr_warn("xa_alloc() errno=%d\n", -res);
+ 		return res;
+ 	}
+ 	sdeb_most_recent_idx = n_idx;
+@@ -8864,7 +8856,7 @@ static int sdebug_add_store(void)
+ 	return (int)n_idx;
+ err:
+ 	sdebug_erase_store((int)n_idx, sip);
+-	pr_warn("%s: failed, errno=%d\n", __func__, -res);
++	pr_warn("failed, errno=%d\n", -res);
+ 	return res;
+ }
+ 
+@@ -8923,7 +8915,7 @@ static int sdebug_add_host_helper(int per_host_idx)
+ 		put_device(&sdbg_host->dev);
+ 	else
+ 		kfree(sdbg_host);
+-	pr_warn("%s: failed, errno=%d\n", __func__, -error);
++	pr_warn("failed, errno=%d\n", -error);
+ 	return error;
+ }
+ 
+@@ -8991,7 +8983,7 @@ static int sdebug_change_qdepth(struct scsi_device *sdev, int qdepth)
+ 
+ 	if (qdepth > SDEBUG_CANQUEUE) {
+ 		qdepth = SDEBUG_CANQUEUE;
+-		pr_warn("%s: requested qdepth [%d] exceeds canqueue [%d], trim\n", __func__,
++		pr_warn("requested qdepth [%d] exceeds canqueue [%d], trim\n",
+ 			qdepth, SDEBUG_CANQUEUE);
+ 	}
+ 	if (qdepth < 1)
+@@ -9003,7 +8995,7 @@ static int sdebug_change_qdepth(struct scsi_device *sdev, int qdepth)
+ 	mutex_unlock(&sdebug_host_list_mutex);
+ 
+ 	if (SDEBUG_OPT_Q_NOISE & sdebug_opts)
+-		sdev_printk(KERN_INFO, sdev, "%s: qdepth=%d\n", __func__, qdepth);
++		sdev_printk(KERN_INFO, sdev, "qdepth=%d\n", qdepth);
+ 
+ 	return sdev->queue_depth;
+ }
+@@ -9276,8 +9268,7 @@ static void scsi_debug_abort_cmd(struct Scsi_Host *shost, struct scsi_cmnd *scp)
+ 	bool res = false;
+ 
+ 	if (!to_be_aborted_scmd) {
+-		pr_err("%s: command with tag %#x not found\n", __func__,
+-		       unique_tag);
++		pr_err("command with tag %#x not found\n", unique_tag);
+ 		return;
+ 	}
+ 
+@@ -9285,11 +9276,9 @@ static void scsi_debug_abort_cmd(struct Scsi_Host *shost, struct scsi_cmnd *scp)
+ 		res = scsi_debug_stop_cmnd(to_be_aborted_scmd);
+ 
+ 	if (res)
+-		pr_info("%s: aborted command with tag %#x\n",
+-			__func__, unique_tag);
++		pr_info("aborted command with tag %#x\n", unique_tag);
+ 	else
+-		pr_err("%s: failed to abort command with tag %#x\n",
+-		       __func__, unique_tag);
++		pr_err("failed to abort command with tag %#x\n", unique_tag);
+ 
+ 	set_host_byte(scp, res ? DID_OK : DID_ERROR);
+ }
 -- 
 2.53.0
 
