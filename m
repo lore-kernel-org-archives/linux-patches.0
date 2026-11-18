@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026563;
-	b=J/sgN3fkic+A47GHFN0avVXYaVJq+roAKyqE2+Bjvu4JlUEp6jHdAOtRIGENzJOLXSVG
-	 90d4hL2z0pQepy/l9OwyNPRBOLMXrGRky2i2KWo7uOI6qqavMthQ89rXNCOsF21c0wxOV
-	 HIzIzhgfd6M15CIj6mGZ9Gf/7B3zJAlhjn7yPfwoC+uext8W5ElHh4QzMPWwTTiMnX7o3
-	 PQIqKugdmClrDoqJjOFet8dmKx02MXek6gkCJb3AphDzCZR7edUOeGFPjDQCTcHvalFIS
-	 EZSBp1nJD/ZK3GzAE7HOEd2m2IbyOo3CFlhva9m6mxdFWb7j+5yp+ihngRYLLHiiNcw==
+	t=1795026565;
+	b=jk8YA51fE1uaMUm1OCormePTq/OQGFQbpRu9Zc4rhPYmp7pjQOjDX8e8+vU2pEL0Bq1q
+	 m54B5l7Lqc4YhnNgFWobmJvkSWXY+vOWAgy+IyHqCOw4SWWQayrr+fazeRpdE6X1ZTUWR
+	 zs4POG9B+ZnNF1zUDbwFMtrzBQNACqP7QnG0rI0LiAwSHZqIe6huO4iN01Fow0hViHCzq
+	 2zoArgHwm+3ByJZFSFq6RvtQabsoitgfWfnCgQ6zYYz7yoYd2mzDlNQa1RCiCfzUP5lBC
+	 aYCwueXtmwlsHDGJRsGm+P9hoMj9jNCW+PeeZJhiN/mJjm1r8rguf1gkZqk6SB6aBzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026563;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026565;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dGT+P9LHRwfCWJr3leKa17RPe/fmQiKoht9jz+Jz0gc=;
-	b=lfFx+zaCqx+KnHNaHAwd3LQLF9F2UXsp+WfA/QweiSEUbHqo3GxbedQFaIG8DQ2wvhh0
-	 6gOOaszXc48TWot8IMuKhznhbu4XEiGPsBvqSApbA2v/OCNvODW2dc5GLw2ZcbCg8UJCo
-	 iKpVQRMS4wHNBiEC+ib6isf3VCEq12PIhfCpR5c1kr7uwFQXIh6ygUI/MWtfBZjJb1avN
-	 dqVMgl6u+j8L+4tARW+NmMBgdZ2ZfzVGmAISpkCm1qfXcWOi02uTbonZYjCgk5yFgKtMq
-	 V2cCrPL9kUvSiJ0l+VY8TSv+lqLfldK5Ovc6qdDgh55wxaYyDSiSlDtXywfWHfxYyEg==
+	bh=Wc53iwX0Zzjl1nOpKwwQDOSl/SO1ohJ/4DWXqX1kMgk=;
+	b=WlbCDt2ko1MyjsYNGwnTA4l4oiLBCrhjxALAa9Sbx57C/rDy0/tqJCjEwPZNGL+VQtdj
+	 NuZlYmu3r80Lq6dojxMXjQ0H6TO9xcSEmOgC6D3bp++jCHVLI2tZrbaiMgjpuaIoBrebH
+	 jpIagnceg5IOlHCdvBbDGjyn0O/j7bJN6+Fs3fSiGbqoifJbvthzbVf+paCS13Y5YH9Uz
+	 dvBBUebCn6lHDeGyg+BBdhLtw0TWkG9kuz2DZPIl0cbho0m2FSa6GTC6dyimdqm5dYsNC
+	 x3uQYb0pd6qVZK7ZAinQ/2Tywtb+VvMupVqzNOo84TOGtvu68QmzHrvZSvuW4w2eQ3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKNO6ohH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svFun8wT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089FB606A31C;
-	Wed, 18 Nov 2026 18:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED10606A31C;
+	Wed, 18 Nov 2026 18:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKNO6ohH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF781F000C4;
-	Wed, 18 Nov 2026 18:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svFun8wT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D911F000C4;
+	Wed, 18 Nov 2026 18:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026562;
-	bh=dGT+P9LHRwfCWJr3leKa17RPe/fmQiKoht9jz+Jz0gc=;
+	s=korg; t=1795026565;
+	bh=Wc53iwX0Zzjl1nOpKwwQDOSl/SO1ohJ/4DWXqX1kMgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gKNO6ohHuiYmgwUurIrGrsHTKxmBkR7M1h2nMvCKfTML2tzLRfeIwCkV+SV+JBG+I
-	 vG/HHJnFlH9sMqfT6bOW+dh82auMyRenv39mtV+FV1tuUnuTI8FnE8YyGsNWte5eQM
-	 70mIc5CYLDBXIrC98l2GdRFQz0EH068c5B90sxvU=
+	b=svFun8wTBJNKctRhCAGqp6lleHm5VE3kAjOJJqYZyqyPy8zxSyssGMHzXKJiKzVqr
+	 +q9oJ3rUd7pZ3iADGaLa1yK8URSPrz+zy1waeHpOkN6ZpDyv/yZe8HXa8DxWQNsqfJ
+	 sKLdkDsq7ZJEp2ZQAIuOdWiDwpvMIHWDY5hIdO1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1481/2151] ALSA: pcm: Protect delay DMA sync in forward and rewind, too
-Date: Wed, 18 Nov 2026 15:53:36 +0100
-Message-ID: <20261118150215.835787076@linuxfoundation.org>
+Subject: [PATCH 6.18 1482/2151] ALSA: line6: Use kzalloc() for PCM buffer allocation
+Date: Wed, 18 Nov 2026 15:53:37 +0100
+Message-ID: <20261118150215.873648650@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,74 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d5096bb9beacb448091c1c9541432021dd5c1fcd ]
+[ Upstream commit 9ec633573c1d162bfc82cae52d14c220c875612f ]
 
-Like the previous fix for snd_pcm_delay() (in the commit 50f413b83b31
-"ALSA: pcm: Protect delay DMA sync against concurrent HW_FREE"), the
-snd_pcm_dma_buffer_sync() call in snd_pcm_forward() and
-snd_pcm_rewind() needs the similar protection against the concurrent
-hw_free action for avoiding potential UAFs.
+LINE6 driver allocates the PCM buffer via kmalloc(), and this might
+leave some bytes uninitialized that are out of the actual ring buffer
+size, while it's still exposed via mmap.
 
-Fixes: a25684a95646 ("ALSA: memalloc: Support for non-contiguous page allocation")
+For avoiding the leak of the uninitialized kernel memory, simply
+replace it with kzalloc().
+
+Fixes: 705ececd1c60 ("Staging: add line6 usb driver")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261013120528.52586-4-tiwai@suse.de
+Link: https://patch.msgid.link/20261013120528.52586-5-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/usb/line6/pcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 7797efb2c8976..2c038cdda6873 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -3037,11 +3037,15 @@ static snd_pcm_sframes_t rewind_appl_ptr(struct snd_pcm_substream *substream,
- static snd_pcm_sframes_t snd_pcm_rewind(struct snd_pcm_substream *substream,
- 					snd_pcm_uframes_t frames)
- {
-+	struct snd_pcm_runtime *runtime = substream->runtime;
- 	snd_pcm_sframes_t ret;
- 
- 	if (frames == 0)
- 		return 0;
- 
-+	/* Keep the DMA buffer alive through the sync below. */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
- 	scoped_guard(pcm_stream_lock_irq, substream) {
- 		ret = do_pcm_hwsync(substream);
- 		if (!ret)
-@@ -3050,17 +3054,22 @@ static snd_pcm_sframes_t snd_pcm_rewind(struct snd_pcm_substream *substream,
- 	}
- 	if (ret >= 0)
- 		snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_DEVICE);
-+	atomic_dec(&runtime->buffer_accessing);
- 	return ret;
- }
- 
- static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
- 					 snd_pcm_uframes_t frames)
- {
-+	struct snd_pcm_runtime *runtime = substream->runtime;
- 	snd_pcm_sframes_t ret;
- 
- 	if (frames == 0)
- 		return 0;
- 
-+	/* Keep the DMA buffer alive through the sync below. */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
- 	scoped_guard(pcm_stream_lock_irq, substream) {
- 		ret = do_pcm_hwsync(substream);
- 		if (!ret)
-@@ -3069,6 +3078,7 @@ static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
- 	}
- 	if (ret >= 0)
- 		snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_DEVICE);
-+	atomic_dec(&runtime->buffer_accessing);
- 	return ret;
- }
- 
+diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
+index f46e20ba58435..1f58eafa75fda 100644
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -155,7 +155,7 @@ static int line6_buffer_acquire(struct snd_line6_pcm *line6pcm,
+ 	/* Invoked multiple times in a row so allocate once only */
+ 	if (!test_and_set_bit(type, &pstr->opened) && !pstr->buffer) {
+ 		pstr->buffer =
+-			kmalloc(array3_size(line6pcm->line6->iso_buffers,
++			kzalloc(array3_size(line6pcm->line6->iso_buffers,
+ 					    LINE6_ISO_PACKETS, pkt_size),
+ 				GFP_KERNEL);
+ 		if (!pstr->buffer)
 -- 
 2.53.0
 
