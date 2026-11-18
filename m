@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055315;
-	b=lByyYPIxklcxWp4as/XuTU4RUduhXK/YcpQ9IfuT6LQ2cL/Mwgq5Kd+SOl4iWUx9Z1NB
-	 z/FeMsMrTM867VUfRTDBAluAIbjkwobMcolGVGlyjsLXFzdPiZIWdT1NzZCo9YvmnbhU7
-	 xhRYvoLf5CHAscsqVMignLMyz1irDPAQtPgPNmprUY98e4iNEZ/ts7T0P/bCcx2t2IYAX
-	 Xs9vsWirIHn/L/QB8YtfOc2dK8fQ5L2hcla3cx4CBX7HWy1IwEZztjr46gbwEBmvuobnL
-	 FoQIyqx6JFok5JKpiAUt90yy4A02uHid6VD8ZPvHIwX8zpt0S5pDaHVgXOrXWVBZBUg==
+	t=1795055318;
+	b=VRYHv0RH6RlWTjlynurNDVjDUiPfGW2DuXI2L8VmNLE1S/VF92ADPWCermfh6K638y88
+	 Osj8o6hhTwQJhD7AwijSAmV51VbHSSa6V9yPsaH6uSfBEEJXbnQZU0Uz52A9iPD9vdscK
+	 j9XSfg4w1heY7x8JiSl/QODFlidUtIo6z7bGcs+rY53jICPMYvxkc37wNUaGvf8YMKGVm
+	 Ki/a5ebS9k9SxvdWJcls91bN11/pMvT2yR2ZqcncHATg3yzHGDcJ1jJQAvBGwCp/rrfFV
+	 LbHh5mqZGJRy2p0hzJKnqWKd7XG2+oQnAzwnXpfb/uqergT6lOUt75b2oGGekqfvfvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IYZ6GkIMoPs3oFk8ldpdZVtUD3RVYVFfUiZgOBBC204=;
-	b=s56p/q1AKZOhSRN9EJfpDC3i3AAIGT7Hi8MgBWuDjogHepWo946mJ2MW8SuYnqaxDJ3Z
-	 EO42dRcaVP1UwA3JSuqAY/vm2V2cAa+rQFL5JjbtMUvnp8EK43FPSJ9BkFEzLAD2xzzk1
-	 Dc3Z/aKNVMFv6iAbF46QA1NlWa9sXO/tcKs3KZPCMN6SkZ7QqfyLHNvmmO1gS6B2Ff77Z
-	 cNWt9MfhAnJTFExJC2o9rlkCx/s67bGzIqv8t+laMpkJg4gYWZ5r+pX146Cq942nO1/kW
-	 auMLxtf4WH2sHZSNH6se3EIUfy1lIxxzcL12AuZKva8WsE4b6fwswnwhtP97roSIKsQ==
+	bh=x6TIq8XPteTD+oh972Hn8CRkpXHQl5h1JqDwgyvQ0Bk=;
+	b=VVF/8u6UTOLTFi5TNIhP1ykXhpk1QGRVcnLmt5f3uZaST8UQNBF2fHJ2vrqYY+Xrymop
+	 /uLktwplCZP+Yjbns/RCnouOQmpGPdsPvJizA8Kp+1bQz0fZpbZOl6rzu4M5BO0SbAmkX
+	 EvC+al9IHMVJF0tcuqyP4r9duHbZPJpAzplumuXJYi8REwEiG/wYLJJKTFuDW7Y2pzPVQ
+	 SNXmdNHpP6AyxHlJxD/9mQ5wL7v3ip8BlUWYQvuLNsz7ik2WrmRF/wb4h3SrUTkc/tCd0
+	 yo5+8I001FJtCcsnSOcjUc0VTYYpD+D7+ASjNJF1+aCxRm7MTP8jfvZUdj6WC24XPEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfqUVgjK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qJhEh/Pj";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BA1606A325;
-	Thu, 19 Nov 2026 02:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAE5606A332;
+	Thu, 19 Nov 2026 02:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfqUVgjK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2E51F000C4;
-	Thu, 19 Nov 2026 02:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJhEh/Pj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD381F000C4;
+	Thu, 19 Nov 2026 02:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055315;
-	bh=IYZ6GkIMoPs3oFk8ldpdZVtUD3RVYVFfUiZgOBBC204=;
+	s=korg; t=1795055318;
+	bh=x6TIq8XPteTD+oh972Hn8CRkpXHQl5h1JqDwgyvQ0Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZfqUVgjKcQYxAcfv0e3jpv5DSXpb1pCIcxDla0bTKCBhaEhgB2BKvBVbBRaol2Eva
-	 mn/V3B55HSocqeBKvfWEqsarDAUNmJCDZr/ejKdltFnQ/nSPoJTJ+S4+dmu/HqN6pn
-	 e8JkA8va2kz2YAnTihKjpFQ55Hnqw0xeTYxhxqjk=
+	b=qJhEh/Pj47v6cmxRv/VJIqaixr+SCU/BWS2Q7mfJRsn2rJaQiSa/x+zuvpqSLH69S
+	 1psPO8lstvsgjIUD9MGPMEVHREGuikwwr9NhPASt4fgqZPepDXdDEbWclVjRwVVKy/
+	 i2YWosRDbke760TqY4GMcdVZ6v4AyWmNB5mBg2k4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
+	"Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1586/2214] dt-bindings: vendor-prefixes: add Genesys Logic
-Date: Wed, 18 Nov 2026 15:54:22 +0100
-Message-ID: <20261118150115.445881951@linuxfoundation.org>
+Subject: [PATCH 5.15 1587/2214] dt-bindings: vendor-prefixes: Add GPLUS
+Date: Wed, 18 Nov 2026 15:54:23 +0100
+Message-ID: <20261118150115.481438992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,19 +69,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 
-[ Upstream commit 38cea8e31e9ef143187135d714aed4d7bd18463c ]
+[ Upstream commit d7a2d86837b9de8d378f040cfc9184905d82bd78 ]
 
-Genesys Logic, Inc. is a manufacturer for interface chips, especially
-USB hubs.
+Add vendor prefix for GPLUS.
+https://www.gplus.com.tw
 
-https://www.genesyslogic.com.tw/
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221206055228.306074-2-uwu@icenowy.me
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230107133145.139731-1-linmengbo0689@protonmail.com
 Stable-dep-of: aa906abf611c ("dt-bindings: vendor-prefixes: add Free Mobile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -88,18 +87,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index fd2d25d7fa51b..f32408840be63 100644
+index f32408840be63..7dc90c24d5261 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -445,6 +445,8 @@ patternProperties:
-     description: GE Fanuc Intelligent Platforms Embedded Systems, Inc.
-   "^gemei,.*":
-     description: Gemei Digital Technology Co., Ltd.
-+  "^genesys,.*":
-+    description: Genesys Logic, Inc.
-   "^geniatech,.*":
-     description: Geniatech, Inc.
-   "^giantec,.*":
+@@ -463,6 +463,8 @@ patternProperties:
+     description: Shenzhen Huiding Technology Co., Ltd.
+   "^google,.*":
+     description: Google, Inc.
++  "^gplus,.*":
++    description: GPLUS
+   "^grinn,.*":
+     description: Grinn
+   "^grmn,.*":
 -- 
 2.53.0
 
