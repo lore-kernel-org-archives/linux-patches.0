@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047361;
-	b=wNE3XH9SU6MCKK2dwds2OBtkvjuFbQlk2uK1hAYa8qGtqIcvsgnumRn+O1mwhne1aQnq
-	 MIKbvCsipyC3iR3zzMdAf8GbUGCJiTjJu2X9oL6W36HYzGZupzWkU1Yp5Gopi86heES86
-	 cM4Pw+m/MOTjmKmXSvtXruv6N7Her4jCwZmqpqkKvyARbgjNiD5O5x8OGX3KUIhsNC+fx
-	 uOz3q33UEdGb2ug6g3cxh74hs3iV2rpqcSkRNAt+WJHFMdoMZCWbV0gAnlFB13TZInTfd
-	 gDGHFxTuG/LA9jVnWgPfbbwTpdLyLE2i77Ci8+Gfh66+AqvQLbCVQSpGH8HkAxfbu4g==
+	t=1795047363;
+	b=Sk3crNbP+Hf8mhTeo+c2c00wg+djJ1Mp8bnP4l+JLzWwyrr695Hde3+9qei0oGYRnayu
+	 +4D9rcSzk4mRHdDHw711jd6I/4ucrI+HCQRdjWZ+ztsNpEAMNKRx87MABr283pk/jXgtF
+	 Fl2fxwOProSjxvyugzZVxNdNR0yCa83tAMP4QoDofxFsLQwennY/QdPdEb2tfLcLpv7Z1
+	 7qlqcH2ZgKbf/ohhZz/lzq9RNHWA7ChCF1EMKT2+gi5/CCWqeocCYhb4uKh0JrnCg17IN
+	 NOya1A3kPY1u+U1h+bMOpZS+V/IVD2WQWQcjUiwqD0NUUUlKdU8eS6z3hcC9g66l4Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IfLheiXLtO3XdG9tXy2FYyUO13jjXFI3uspl6LLkmRY=;
-	b=EOuGdq/CKBnhcQCGNhN1Bh5tFGlIDG2Smbp443PS/80OKpDzMngDR/k5hURXlA4pSoQP
-	 hGSumH36B1r9Xc4SsUxisO5seY4/IZJfuAN86Q18ZJSvGvmH4+vxBevE0/0t5KS0B1+F5
-	 9jtSytRstvYpd5SECovACA0wM5KYyehjh5KL26KF2b/p0g+dc5NT3QuiY2r3sdbBliTfn
-	 YC7SEOJ+lm5/hVhy/dowIRr34TnR0aSN/hHvCAzOa+1rjgbTbIYf7OVawn+BW2Q6a8UQi
-	 wbETh6xACvfvxZkSqailGODs/m9ormuxvU5N3fXNG/KhpMUOovQ6lJGLCcZEjoGpdrw==
+	bh=IKYYZ3l4oEas2GFncWD9Pxklzp7OG45aEENUxOrVMos=;
+	b=CyR4U9UPYccsWZCSnBWgzj2ksnZED0SdiJCsb3S2qGOJVrqfYueV4rz3/F2+lUpB8Cs6
+	 IQIn4CAoVq1Tw4FGOwadCzCMcNYkIFQo78bm+xn/0DqY+JAEYyZawZNaDJ9Bkz+uk+z20
+	 9C7c9OF9BAC2oTRrLiCIx8yM7o7YZCbaWFIzuTvc5c2nvUsTQBetktAYBDpj/SqwIP9Yt
+	 YnDQm1zNADPXB7T9+SwR33EHeZGlSycaEDMPQwcD4g7+4fnYPxpdfRMRnPdYIcyHIIp9v
+	 /kBSSeD3SicbACZG+a23+Jk+Bf88oNxryD7utW1O2+H4TVDmpmt6HfY2pe+D8RvkHVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRvAf80H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJNaXPWl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15D4606A333;
-	Thu, 19 Nov 2026 00:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5052606A31C;
+	Thu, 19 Nov 2026 00:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRvAf80H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AB21F000C6;
-	Thu, 19 Nov 2026 00:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJNaXPWl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B931F000CE;
+	Thu, 19 Nov 2026 00:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047360;
-	bh=IfLheiXLtO3XdG9tXy2FYyUO13jjXFI3uspl6LLkmRY=;
+	s=korg; t=1795047363;
+	bh=IKYYZ3l4oEas2GFncWD9Pxklzp7OG45aEENUxOrVMos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRvAf80H03FJDocZAkewtARabLhSewRB2jIfqAPCFxMdpi3KcmqzWccG2tSgBZLbU
-	 06qbwD9f4/OsjYd2+Xj1ZNtkT87q3qkT6Up7UJoajxizChZ3cgNKDib/d+UpTONWvA
-	 FwMR7zP7RMundF6Cp3/l/D7OKrnNl4aeDvDkdtkY=
+	b=JJNaXPWlDPsVYfn5aJRLGAkyHvDUMSwH57d+EuhA1dxqGNm4oo3TXmxfNru6/Royv
+	 gwIYUUQKYY500kaXBf9Dp0bqtf+ZEK1Oi34WuEymdApeEltIauxIqOFIwtpMlJMp0T
+	 79p6QVNjzpNwx/zcOynFcbpWnaMrIKZl0NpxHTm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1612/2857] net/packet: check TX_RING fragments before memory accounting
-Date: Wed, 18 Nov 2026 15:44:06 +0100
-Message-ID: <20261118150259.397305114@linuxfoundation.org>
+Subject: [PATCH 6.1 1595/2857] ata: libata: Do not leave ata_host_stop() registered when activation fails
+Date: Wed, 18 Nov 2026 15:43:49 +0100
+Message-ID: <20261118150258.804933781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,74 +68,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
+[ Upstream commit d2f977008cbbae195df678ee1e70e5802f9bd0b8 ]
 
-tpacket_fill_skb() adds the full non-linear payload length to
-skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
-PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
-greatly exceeds the device MTU.
+ata_host_start() registers ata_host_stop() as a devres action as soon as
+it has succeeded, which hands the release of the host resources over to
+devres: ->port_stop() and ->host_stop() are then called by the driver
+core when probe() fails.
 
-A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
-loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
-turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
-drop that apparent last reference and free the still-live packet
-socket before refcount_warn_saturate() restores the counter.
+ata_host_activate() and ahci_host_activate_multi_irqs() can both fail
+after ata_host_start() has succeeded, e.g. if devm_request_irq() or
+ata_host_register() fails, and they return the error with the devres
+action still registered. A driver which releases the host resources in
+its probe() error path therefore releases them twice: once itself and
+once through ->host_stop().
 
-Check that the remaining payload fits in MAX_SKB_FRAGS pages before
-accounting it. Include the initial page offset in the calculation,
-and move the existing -EFAULT handling out of the fragment loop.
-This preserves the accepted packet sizes and error code while
-preventing an invalid frame from injecting an oversized byte charge.
+All ahci-platform drivers are in that situation, e.g. ahci_probe() calls
+ahci_platform_disable_resources() while ahci_host_stop() does the same
+through devres. This gives refcount underflow warnings from the clk,
+regulator and phy cores and, for shared resources, can disable resources
+which are still in use by other devices.
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Add ata_host_undo_start(), which stops the ports and drops the devres
+action without calling ->host_stop(), and call it from both activation
+helpers when they fail. Releasing the host resources on failure is then
+always left to the caller, which is what all callers having a probe()
+error path already assume.
+
+This changes the semantics for the drivers which implement ->host_stop()
+while also completely lacking error handling for the activate host call.
+Add activate host error handling for sata_qstor and sata_fsl. For
+sata_fsl this also means that hcr_base and host_priv are now released
+when activating the host fails, which ->host_stop() did not do when
+ata_host_start() itself failed.
+
+Note that ata_pci_sff_activate_host() is deliberately left as is: none of
+its callers releases the host resources in its probe() error path, they
+all rely on ->host_stop() being called by devres, including
+ata_pci_init_one(), which releases the devres group of the host itself.
+
+Fixes: 1896b15eddb4 ("ahci_platform: perform platform exit in host_stop() hook")
 Cc: stable@vger.kernel.org
-Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ 6.1: adjust for context in kernels lacking 3948b05950fd ("net:
-  introduce a config option to tweak MAX_SKB_FRAGS") ]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-13-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/ata/libahci.c          |  2 +
+ drivers/ata/libahci_platform.c |  4 ++
+ drivers/ata/libata-core.c      | 75 +++++++++++++++++++++++++++++++---
+ drivers/ata/libata-sff.c       |  5 +++
+ drivers/ata/sata_fsl.c         |  6 ++-
+ drivers/ata/sata_qstor.c       |  8 +++-
+ include/linux/libata.h         |  1 +
+ 7 files changed, 91 insertions(+), 10 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index cc5bb8765f52e..779e316c68d08 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2694,6 +2694,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index 2bfd82f3fee18..54b7b2283ed5e 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -2662,6 +2662,8 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
+ 			      host->ports[i]);
  	}
  
- 	offset = offset_in_page(data);
-+	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
-+		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
-+				     (unsigned int)MAX_SKB_FRAGS);
-+		return -EFAULT;
++	ata_host_undo_start(host);
++
+ 	return rc;
+ }
+ 
+diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
+index 6ed700a02df43..b5cf2108518fc 100644
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -691,6 +691,10 @@ EXPORT_SYMBOL_GPL(ahci_platform_get_resources);
+  * ahci-platform host, note any necessary resources (ie clks, phys, etc.)
+  * must be initialized / enabled before calling this.
+  *
++ * On failure, ->host_stop() is not called, so the caller has to release the
++ * resources it enabled (clocks, regulators, resets, PHYs) in its probe()
++ * error path.
++ *
+  * RETURNS:
+  * 0 on success otherwise a negative error code
+  */
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index b80113ebb3fc9..fd602ffbc5f7d 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5841,6 +5841,46 @@ int ata_host_start(struct ata_host *host)
+ }
+ EXPORT_SYMBOL_GPL(ata_host_start);
+ 
++/**
++ *	ata_host_undo_start - undo ata_host_start()
++ *	@host: ATA host to undo_start
++ *
++ *	Stop the ports of @host and drop the devres action registered by
++ *	ata_host_start(), without calling ->host_stop().  Nothing is done if
++ *	@host has not been started.
++ *
++ *	This gives the release of the host resources back to the caller, which
++ *	is what a driver whose probe() error path releases those resources
++ *	itself needs when starting or activating the host fails.
++ *
++ *	LOCKING:
++ *	Inherited from calling layer (may sleep).
++ */
++void ata_host_undo_start(struct ata_host *host)
++{
++	int i;
++
++	if (!(host->flags & ATA_HOST_STARTED))
++		return;
++
++	for (i = 0; i < host->n_ports; i++) {
++		struct ata_port *ap = host->ports[i];
++
++		if (ap->ops->port_stop)
++			ap->ops->port_stop(ap);
 +	}
 +
- 	len_max = PAGE_SIZE - offset;
- 	len = ((to_write > len_max) ? len_max : to_write);
++	/*
++	 * Drop the action added by ata_host_start() without calling it.
++	 * It does not exist if neither ->port_stop() nor ->host_stop() is
++	 * implemented, in which case there is nothing to drop.
++	 */
++	devres_destroy(host->dev, ata_host_stop, NULL, NULL);
++
++	host->flags &= ~ATA_HOST_STARTED;
++}
++EXPORT_SYMBOL_GPL(ata_host_undo_start);
++
+ /**
+  *	ata_host_init - Initialize a host struct for sas (ipr, libsas)
+  *	@host:	host to initialize
+@@ -5925,6 +5965,12 @@ static void async_port_probe(void *data, async_cookie_t cookie)
+  *	starts ports, registers @host with ATA and SCSI layers and
+  *	probe registered devices.
+  *
++ *	On failure, the host remains started, i.e. the devres action
++ *	registered by ata_host_start() is kept, so ->host_stop() is called by
++ *	the driver core when probe() fails.  A caller which releases the host
++ *	resources in its own probe() error path must therefore call
++ *	ata_host_undo_start().
++ *
+  *	LOCKING:
+  *	Inherited from calling layer (may sleep).
+  *
+@@ -6031,6 +6077,10 @@ EXPORT_SYMBOL_GPL(ata_host_register);
+  *	have set polling mode on the port. In this case, @irq_handler
+  *	should be NULL.
+  *
++ *	On failure, the ports are stopped again and the devres action
++ *	registered by ata_host_start() is dropped without calling
++ *	->host_stop(), so releasing the host resources is left to the caller.
++ *
+  *	LOCKING:
+  *	Inherited from calling layer (may sleep).
+  *
+@@ -6051,27 +6101,40 @@ int ata_host_activate(struct ata_host *host, int irq,
+ 	/* Special case for polling mode */
+ 	if (!irq) {
+ 		WARN_ON(irq_handler);
+-		return ata_host_register(host, sht);
++		rc = ata_host_register(host, sht);
++		if (rc)
++			goto undo_start;
++
++		return 0;
+ 	}
  
-@@ -2705,12 +2711,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	while (likely(to_write)) {
- 		nr_frags = skb_shinfo(skb)->nr_frags;
+ 	irq_desc = devm_kasprintf(host->dev, GFP_KERNEL, "%s[%s]",
+ 				  dev_driver_string(host->dev),
+ 				  dev_name(host->dev));
+-	if (!irq_desc)
+-		return -ENOMEM;
++	if (!irq_desc) {
++		rc = -ENOMEM;
++		goto undo_start;
++	}
  
--		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
--			pr_err("Packet exceed the number of skb frags(%lu)\n",
--			       MAX_SKB_FRAGS);
--			return -EFAULT;
--		}
--
- 		page = pgv_to_page(data);
- 		data += len;
- 		flush_dcache_page(page);
+ 	rc = devm_request_irq(host->dev, irq, irq_handler, irq_flags,
+ 			      irq_desc, host);
+ 	if (rc)
+-		return rc;
++		goto undo_start;
+ 
+ 	for (i = 0; i < host->n_ports; i++)
+ 		ata_port_desc_misc(host->ports[i], irq);
+ 
+ 	rc = ata_host_register(host, sht);
+-	/* if failed, just free the IRQ and leave ports alone */
+-	if (rc)
++	if (rc) {
++		/* Free the IRQ, so that the handler can no longer run */
+ 		devm_free_irq(host->dev, irq, host);
++		goto undo_start;
++	}
++
++	return 0;
++
++undo_start:
++	ata_host_undo_start(host);
+ 
+ 	return rc;
+ }
+diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
+index f51697e203404..3c4a7a7f27b2c 100644
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -2335,6 +2335,11 @@ EXPORT_SYMBOL_GPL(ata_pci_sff_prepare_host);
+  *	hosts.  This separate helper is necessary because SFF hosts
+  *	use two separate interrupts in legacy mode.
+  *
++ *	Note that, unlike ata_host_activate(), the devres action registered
++ *	by ata_host_start() is kept on failure, i.e. ->host_stop() is called
++ *	by the driver core when probe() fails.  All callers of this function
++ *	rely on that, none of them releases the host resources itself.
++ *
+  *	LOCKING:
+  *	Inherited from calling layer (may sleep).
+  *
+diff --git a/drivers/ata/sata_fsl.c b/drivers/ata/sata_fsl.c
+index 6bfa9f0542b67..f38c2089d55a5 100644
+--- a/drivers/ata/sata_fsl.c
++++ b/drivers/ata/sata_fsl.c
+@@ -1490,8 +1490,10 @@ static int sata_fsl_probe(struct platform_device *ofdev)
+ 	 * device discovery process, invoking our port_start() handler &
+ 	 * error_handler() to execute a dummy Softreset EH session
+ 	 */
+-	ata_host_activate(host, irq, sata_fsl_interrupt, SATA_FSL_IRQ_FLAG,
+-			  &sata_fsl_sht);
++	retval = ata_host_activate(host, irq, sata_fsl_interrupt,
++				   SATA_FSL_IRQ_FLAG, &sata_fsl_sht);
++	if (retval)
++		goto error_exit_with_cleanup;
+ 
+ 	host_priv->intr_coalescing.show = fsl_sata_intr_coalescing_show;
+ 	host_priv->intr_coalescing.store = fsl_sata_intr_coalescing_store;
+diff --git a/drivers/ata/sata_qstor.c b/drivers/ata/sata_qstor.c
+index 8ca0810aad26c..fb4d69b598a1f 100644
+--- a/drivers/ata/sata_qstor.c
++++ b/drivers/ata/sata_qstor.c
+@@ -584,8 +584,12 @@ static int qs_ata_init_one(struct pci_dev *pdev,
+ 	qs_host_init(host, board_idx);
+ 
+ 	pci_set_master(pdev);
+-	return ata_host_activate(host, pdev->irq, qs_intr, IRQF_SHARED,
+-				 &qs_ata_sht);
++	rc = ata_host_activate(host, pdev->irq, qs_intr, IRQF_SHARED,
++			       &qs_ata_sht);
++	if (rc)
++		qs_host_stop(host);
++
++	return rc;
+ }
+ 
+ module_pci_driver(qs_ata_pci_driver);
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index 52b73315dae33..8df3d85a4cdff 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -1069,6 +1069,7 @@ extern struct ata_host *ata_host_alloc_pinfo(struct device *dev,
+ extern void ata_host_get(struct ata_host *host);
+ extern void ata_host_put(struct ata_host *host);
+ extern int ata_host_start(struct ata_host *host);
++void ata_host_undo_start(struct ata_host *host);
+ extern int ata_host_register(struct ata_host *host,
+ 			     struct scsi_host_template *sht);
+ extern int ata_host_activate(struct ata_host *host, int irq,
 -- 
 2.53.0
 
