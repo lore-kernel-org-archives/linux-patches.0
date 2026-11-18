@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035421;
-	b=ChibTpRN29JAaKVGTHOWY5bymYPUasPnGoJDcFxCHKM1o1HU0+oLhibloYqOLksX17Xw
-	 A9Ad0B6eAFoeWZns80ShSivPPsCNlINhlwNcK3io+KkTF9rsqqQrYieAtQQIMTbqCAZqr
-	 6Vvyye5QevRv8UJuopaj75gx3OEP5pu4FLcEYWjxBzivwQDeJaEL8aMsxpNybMVmDSg2J
-	 tlEYxtemIujAvG5LvwvKIoxc6shAA5zA+I29VMA/BnZXP19IbZ0Z9XDTbLQttAfPEoyav
-	 hx9x8E7TOprp6WX4EpMRZOfbqG371lv+gWYLia16J4aoVrZ6WzHMzQnftuzo0K1Dx7w==
+	t=1795035424;
+	b=upoEEJh3/QqNayn0szTUzqNL4kCR6dabZO878RlylKGmhFQIo6rMwuFE/kgqeVUSHh1Q
+	 PydrMMIknkyZCIQ6ghxWgXzGVNC1U5Mam47Hl5XoCSijVRF0lXdFM/1xzuQ5iX++poic5
+	 Cv+6Q8tz3MuO10XwUBAWeFUcfX2zAm6hz5SckPu8+FDjKwY2GNKrrEzn8n4fiJhutk1Fr
+	 hf6ytljjW7igKnxOcFJxp67efE3m09y9yLDZrQDlS6YudsP/0p0kBYd2q68HwdZBOyemw
+	 CSGsRF/j/nNqpRm/sSWsa/Ajgt8gcOI+/5FJpItcOpUORizrFGVdymC3W/P2ITOa0pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UIh8x1Ecng0DhczWCFzveut1E7Br+HEuT8KqE400xbI=;
-	b=TPML8C2pR0YchZL6Oc+lpE8KuHYSCrbczDaWi2bS+2YlXpezcum0pBPZei8CKwGbp0tq
-	 cowUEZFNwGTCnRJ4+Lf1ZFcGEvBPxSfY0I2DEyf4jtKe7tb3cN5EtPFc/hXFkyQGukg7Y
-	 Dggh9KFZU9Zb/F57jLq7j/WFpyy/IasqK8b8XUHJAsGTH5Fte1neQ0rNX2JSy55fGNVa9
-	 9t9fh3VLk226H5sGGX2FqkKpmufcVJMh5CXNwfUYhKSLLAdrT2vbA5sYB9G5k6FEDMBYl
-	 GdmMDVGScXoC89MOzLnshCRxY86bqmErxwCKMp56wznsLgdVB7es0NQZrwH9LqN3PMg==
+	bh=sv2ZLCo7FQkxiNwyjgWVWiV6fKe08otWc8wWII8zAqU=;
+	b=Z+NwHVT/LwLNPezogGMWdnDYjFOp7aNqzLEjm8Up7aE/HY46ClhgOeU2hjuExkv50dEX
+	 RxZ89vCxhk1uAkjeS+im68XNSj52mHZWK5w9mVWCdkfTQzI4fL/Eq9kIl8sVSGjpu9T6w
+	 4O1szuXu9sLHhPHeBoxozwNLOEnY6/O0qfMo7P60+9ECRR1XJhn6k/3lOng2B7cmh+wuT
+	 fryzLGutrOBKrSAyYPiVrNDFre5gSzRm8d71zA9lKZF5MxyaKva50ELG+9T9d6EXA8Wco
+	 lF8PAMCHwSWYBpuic399TTi2gE3qUpt5Id63ZO/d/g/u31tY/HOdi4jl9bEXMj7B2Ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWanvy2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUQHRYr9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58345606A32C;
-	Wed, 18 Nov 2026 20:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC76606A31C;
+	Wed, 18 Nov 2026 20:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWanvy2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67211F000C4;
-	Wed, 18 Nov 2026 20:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUQHRYr9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4064E1F000C4;
+	Wed, 18 Nov 2026 20:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035421;
-	bh=UIh8x1Ecng0DhczWCFzveut1E7Br+HEuT8KqE400xbI=;
+	s=korg; t=1795035423;
+	bh=sv2ZLCo7FQkxiNwyjgWVWiV6fKe08otWc8wWII8zAqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IGWanvy2WeiE5vliYrpLh44Qn0eZEormpboiRFvLkhI79YjHCeYncSR2fVxDSRysh
-	 aVm5n0d4yKt94/YQvVt/oSQL7vZt57AXvymuFiU4d/R7X1ECDq10BkTogIb9As8PXV
-	 pTKwFO3I9J2lFRUZ+LCbZVivZAmLttLWREquw4pA=
+	b=AUQHRYr9kiIYnND0Qs6BAO9LnA75IZq9/Zw7HIlg8ls0oTyZ70lk3KPeNxS6VT1uH
+	 Xb9726K/1esQ/XGk/t7vrNVuuPI7N6JFiby23wa13zwqkxieRtBsyM4/a7Kbq2MBPL
+	 OpyoBrUXYmnT8hgwBalM2nlyzYRURWSbD18TLwmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Fahad Alharbi <fahad@codepure.com>,
+	Miklos Szeredi <miklos@szeredi.hu>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.6 0649/3318] ovl: fix a torn path in ovl_get_redirect()
-Date: Wed, 18 Nov 2026 15:21:11 +0100
-Message-ID: <20261118150337.475137153@linuxfoundation.org>
+Subject: [PATCH 6.6 0650/3318] ovl: fortify ovl_copy_xattr() against underlying layer modifications
+Date: Wed, 18 Nov 2026 15:21:12 +0100
+Message-ID: <20261118150337.513481163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,73 +68,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 2001cd7ca5560198131e46c6ca3c3472b06145c2 upstream.
+commit e6b9117076fb4c0ff4a670efa9c876d9a50d79ab upstream.
 
-A hard link of a metacopy file that races with a rename of an ancestor
-stores a redirect to the wrong lower file.
+Adapt ovl_getxattr_value() to be used from ovl_copy_xattr(), by
+allowing to pass it a pre-allocated buffer, which can be resized
+and by handling the ENODATA/EOPNOTSUPP return codes in the caller.
 
-Each component of an absolute redirect must be the name that a dentry
-has in the parent that the walk continues with. ovl_get_redirect()
-copies the name under d_lock and calls dget_parent() after the unlock,
-and the callers for a hard link hold no lock that stops a rename across
-directories. A rename between the two steps combines the old name with
-the new parent.
+This replaces the retry loop in ovl_copy_xattr() with a single retry
+after resizing the buffer. If the value changed again by then, the
+underlying layer was modified, so return -EIO instead of retrying.
 
-With delays in ovl_get_redirect(), an unprivileged user hard-linked a
-metacopy file while renaming its ancestor to another directory, the
-stored redirect named another lower path, and after a remount the file
-showed the data of a root-only file.
+As a side effect, ovl_copy_up_meta_inode_data() now returns -EIO instead
+of -ERANGE in this case of underlying xattr size changes.
 
-Fix this by taking the parent first and checking it again under d_lock.
-
-Fixes: e04527fefba6 ("ovl: fix dentry leak in ovl_get_redirect")
+Reported-by: Fahad Alharbi <fahad@codepure.com>
+Tested-by: Fahad Alharbi <fahad@codepure.com>
+Suggested-by: Miklos Szeredi <miklos@szeredi.hu>
+Link: https://lore.kernel.org/linux-fsdevel/CAJfpegsVoUyqy0dYkTvBGRZvgdv_nmzmCw_uF+LP-Vq3EhEkSg@mail.gmail.com/
+Fixes: e4ad29fa0d22 ("ovl: use a minimal buffer in ovl_copy_xattr")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/dir.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c |   68 +++++++++++++++++++++++--------------------------
+ 1 file changed, 32 insertions(+), 36 deletions(-)
 
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -975,7 +975,19 @@ static char *ovl_get_redirect(struct den
- 		const char *name;
- 		int thislen;
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -73,6 +73,9 @@ static int ovl_copy_acl(struct ovl_fs *o
+ 	return err;
+ }
  
-+		/*
-+		 * A rename can move d to another directory at any time.  Hold
-+		 * d_lock to copy the name that d has in this very parent, or
-+		 * else the path mixes the old name with the new parent.
-+		 */
-+		tmp = dget_parent(d);
- 		spin_lock(&d->d_lock);
-+		if (unlikely(tmp != d->d_parent)) {
-+			spin_unlock(&d->d_lock);
-+			dput(tmp);
-+			continue;
-+		}
++static ssize_t ovl_getxattr_value(const struct path *path, char *name,
++				  char **value, ssize_t *value_size);
 +
- 		name = ovl_dentry_get_redirect(d);
- 		if (name) {
- 			thislen = strlen(name);
-@@ -988,13 +1000,13 @@ static char *ovl_get_redirect(struct den
- 		if (thislen + (name[0] != '/') > buflen) {
- 			ret = ERR_PTR(-EXDEV);
- 			spin_unlock(&d->d_lock);
-+			dput(tmp);
- 			goto out_put;
+ int ovl_copy_xattr(struct super_block *sb, const struct path *oldpath, struct dentry *new)
+ {
+ 	struct dentry *old = oldpath->dentry;
+@@ -130,34 +133,12 @@ int ovl_copy_xattr(struct super_block *s
+ 			break;
  		}
  
- 		buflen -= thislen;
- 		memcpy(&buf[buflen], name, thislen);
- 		spin_unlock(&d->d_lock);
--		tmp = dget_parent(d);
+-retry:
+-		size = ovl_do_getxattr(oldpath, name, value, value_size);
+-		if (size == -ERANGE) {
+-			size = ovl_do_getxattr(oldpath, name, NULL, 0);
+-			/* Nothing was read into value, so it must not be used */
+-			if (size >= 0 && size <= value_size)
+-				size = -EIO;
+-		}
+-
++		size = ovl_getxattr_value(oldpath, name, &value, &value_size);
+ 		if (size < 0) {
+ 			error = size;
+ 			break;
+ 		}
  
- 		dput(d);
- 		d = tmp;
+-		if (size > value_size) {
+-			void *new;
+-
+-			new = kvmalloc(size, GFP_KERNEL);
+-			if (!new) {
+-				error = -ENOMEM;
+-				break;
+-			}
+-			kvfree(value);
+-			value = new;
+-			value_size = size;
+-			goto retry;
+-		}
+-
+ 		error = ovl_do_setxattr(OVL_FS(sb), new, name, value, size, 0);
+ 		if (error) {
+ 			if (error != -EOPNOTSUPP || ovl_must_copy_xattr(name))
+@@ -972,26 +953,39 @@ static bool ovl_need_meta_copy_up(struct
+ 	return true;
+ }
+ 
+-static ssize_t ovl_getxattr_value(const struct path *path, char *name, char **value)
++static ssize_t ovl_getxattr_value(const struct path *path, char *name,
++				  char **value, ssize_t *value_size)
+ {
+ 	ssize_t res;
+ 	char *buf;
+ 
+-	res = ovl_do_getxattr(path, name, NULL, 0);
+-	if (res == -ENODATA || res == -EOPNOTSUPP)
+-		res = 0;
++	res = ovl_do_getxattr(path, name, *value, *value_size);
++	if (res == -ERANGE) {
++		res = ovl_do_getxattr(path, name, NULL, 0);
++		/* Xattr changed underneath us? */
++		if (res >= 0 && res <= *value_size)
++			return -EIO;
++	}
+ 
+-	if (res > 0) {
+-		buf = kzalloc(res, GFP_KERNEL);
++	if (res > *value_size) {
++		buf = kvmalloc(res, GFP_KERNEL);
+ 		if (!buf)
+ 			return -ENOMEM;
+ 
+ 		res = ovl_do_getxattr(path, name, buf, res);
+-		if (res < 0)
+-			kfree(buf);
+-		else
+-			*value = buf;
++		if (res < 0) {
++			kvfree(buf);
++			/* Xattr changed underneath us? */
++			if (res == -ERANGE)
++				return -EIO;
++			return res;
++		}
++
++		kvfree(*value);
++		*value = buf;
++		*value_size = res;
+ 	}
++
+ 	return res;
+ }
+ 
+@@ -1002,7 +996,7 @@ static int ovl_copy_up_meta_inode_data(s
+ 	struct path upperpath;
+ 	int err;
+ 	char *capability = NULL;
+-	ssize_t cap_size;
++	ssize_t cap_size = 0;
+ 
+ 	ovl_path_upper(c->dentry, &upperpath);
+ 	if (WARN_ON(upperpath.dentry == NULL))
+@@ -1010,7 +1004,9 @@ static int ovl_copy_up_meta_inode_data(s
+ 
+ 	if (c->stat.size) {
+ 		err = cap_size = ovl_getxattr_value(&upperpath, XATTR_NAME_CAPS,
+-						    &capability);
++						    &capability, &cap_size);
++		if (cap_size == -ENODATA || cap_size == -EOPNOTSUPP)
++			cap_size = 0;
+ 		if (cap_size < 0)
+ 			goto out;
+ 	}
+@@ -1039,7 +1035,7 @@ static int ovl_copy_up_meta_inode_data(s
+ 	ovl_clear_flag(OVL_VERIFIED_DIGEST, d_inode(c->dentry));
+ 	ovl_set_upperdata(d_inode(c->dentry));
+ out_free:
+-	kfree(capability);
++	kvfree(capability);
+ out:
+ 	return err;
+ }
 
 
