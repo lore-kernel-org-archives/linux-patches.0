@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038033;
-	b=PLtvsOsu53gY8FJNCGgI0Fe99tDrSofUIlUU8pFTV4VgUKIeInw89D3yLP9W94ZGP3+w
-	 QnPJB2C6SE9xA4/mZxB454sC//OI9YaXiE5JoaUhnzlXbGTbMsLl3oKH9XVoW0Ji64B3i
-	 mtjfrTqNT0rYsqN//h0OVvSgKzSm+gvcVXOZjXUc8aftTo26vzW0ZX5+rdT1yO5XEMZyM
-	 LiYkrkRaSQBCw1Rdqh+XfVNtyryn9/qVRq4nU/drSEjXWJPHB6NwyIrZUpLZ0SKHECCWb
-	 IrPaS8/dO79dQE8hRcNtfA+KtPey3QRU/dKhaFsWA3v0ZaOm+/AibKqaMgudUZH9Qug==
+	t=1795038035;
+	b=McW7NXlezo52kfhSAFmjav8mlsEGimRBI1GQ2E5AzUoWGHb7Vw1exo9LTdtm5pYRO6Cj
+	 fcmjvZ4YbPAIqKw3kojBsuaGAJ3uTb6gsaTYd62ELURIMiVUo5w3M6ZdLUgM9Qz6iPFHa
+	 nEBaPLze56GmL15CV9Uy5dl/GtbEzZYBYHfWmgGiJBXmqb/iC9EX3eaKoyh4muoQo2E7K
+	 Lv3qr7A3yhmkGj3jK9VIfb2bD4gmH6IGgWAPQ6U3pfplJXojJHjC6IZCKPwnjga8cAImG
+	 Lsp0sP2unGDNLxqJEUf2tfSqTfROLIaXbBn2tGb7Pu8ovg2JZuPu0O+Pkeklw6LFEfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+z7WJq51z/RG9bHW9g8EG5LvzKUUadprtdSCKuVrNGU=;
-	b=U1wN7TgOVMZAIZzsjq11HDki7Ao7PCClh70VhWYIHbdD1MbcFmB90Agzn38vH5nLlQfw
-	 DZ0cMGNY9ooqws6UkPm1qXnxTG271+CE+2O7J6yiMPffHYaPFJfxfvWoQNRChXyuMvKcY
-	 HJvxnXT1XovkYQVIRU3zUjuTPibvd484t5xailwlQkYdhii324i/0xX4NEJoyYwIr4kvk
-	 VD2dBTxqokqGMraLcPhdVac7rp4Y5XVvxL5xyCQ8AC0JF0wqpnXFm3YBGdppbJdeR3mF7
-	 ZY77ah6O6KCccauBjmehjtSgzK45nlQQg9gT4XY8XkExIVsIZh9Jf4enqiusCGSEf2g==
+	bh=MLxBZTDTtf9yUgmHeD/eTJo3nhjRqsL2ctmgUzTGYDo=;
+	b=0pUucBlSLSEfLIRjoN4Cj1sVheVaFoCei1Ywn92tN+pzea+z6VUZgS5P8T1v+ETjERYn
+	 Z1RwD0wC11ZYvljfNrc2pPT+1YYs3fbBdozLYphjqtlourZEzm/QXlNcMAsNWY+mgq5ia
+	 H7IJlWljWyiSft7E25GSFXtKDPAM1a8FGUVXr93zraZD6rrFzYSfk9rnNbgxk2XH+rYEo
+	 wIQ7IrFXXJ7hJzUEJc7J3qUcgUocqOjj9LPi20WgGR5trWmkfd60HEXuRCcqA6zIXdhvd
+	 R8BTpd3egFyaTvuehcjmSSwIqJtds/qsKkjI9x5zHyJcUKt87PEMP+kXbrO7rIMhUSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+2eQyAV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdP4X8ys;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069F0606A32F;
-	Wed, 18 Nov 2026 21:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF4F60A261D;
+	Wed, 18 Nov 2026 21:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+2eQyAV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073411F000C6;
-	Wed, 18 Nov 2026 21:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdP4X8ys
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7751F000D0;
+	Wed, 18 Nov 2026 21:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038032;
-	bh=+z7WJq51z/RG9bHW9g8EG5LvzKUUadprtdSCKuVrNGU=;
+	s=korg; t=1795038035;
+	bh=MLxBZTDTtf9yUgmHeD/eTJo3nhjRqsL2ctmgUzTGYDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+2eQyAVPBJdIFonKo8bNKQtpdhYFOIuWv4bckhRFMEct/bDVWiE5j1D63kdhLZ6x
-	 beTCrKOsJrgXz70SAZZ1IVwfP75qa3ari1LNeKZBuStoHRXHJCjkc5KeYYuK0NdsU0
-	 RumH9Il3BKO76A0eQgSV3A99zAfyA1o4boThmhFk=
+	b=OdP4X8ysKuhHhn/jaWFcTPHw5UCI+WUvYWlp3M53sDFAZkNOb965NMuKb6Tlb78P2
+	 RQDz8kr9O+NazP3xO46CzT2n7p19O0f6OF+Q2T0OkqHVyIPj13UTpKKKO5fidtvFhy
+	 YDgF08odsV6ldM96yQIFHuyVcsqT5KGp3G6kb+U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1600/3318] alpha: load the MMU context when switch_mm() switches the current task
-Date: Wed, 18 Nov 2026 15:37:02 +0100
-Message-ID: <20261118150409.169100059@linuxfoundation.org>
+Subject: [PATCH 6.6 1601/3318] Bluetooth: hci_sync: pause advertising for the scan address update
+Date: Wed, 18 Nov 2026 15:37:03 +0100
+Message-ID: <20261118150409.203750562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,102 +68,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-[ Upstream commit 9b8be19d5dc9525a408942e2e8012873199e7455 ]
+[ Upstream commit 56ed6b127a27c418dc2daa3fd076539d8fe69c4c ]
 
-The 6.6.y header still contains ev4_switch_mm().  Retain it, and omit the
-unrelated do_page_fault() declaration move.  Of the direct callers
-described below, 6.6.y has kthread_use_mm() and do_shoot_lazy_tlb();
-sched_force_init_mm() is not present.
+hci_active_scan_sync() programs a non-resolvable private address with LE
+Set Random Address on every active scan start.
 
-ev5_switch_mm() only prepares the incoming PCB. The context is installed
-by PAL_swpctx, which alpha_switch_to() issues against that PCB on the way
-out of the scheduler.
+BLUETOOTH CORE SPECIFICATION Vol 4, Part E, 7.8.4 says the controller
+shall return Command Disallowed (0x0C) for that command while legacy
+advertising or scanning is enabled. hci_pause_addr_resolution(), called
+just above, only stops advertising when LL privacy is in use, so on a
+controller without it the command is issued while advertising is still
+on:
 
-Direct callers reach switch_mm() without going through alpha_switch_to():
-kthread_use_mm(), which borrows an mm for the current kernel thread,
-sched_force_init_mm() on the CPU-hotplug teardown path, and
-do_shoot_lazy_tlb(), which switches to init_mm from an IPI. None explicitly
-loads the context, so the task can carry on running under whatever was
-loaded before. For kthread_use_mm(), current->mm then names the borrowed
-mm even though its context has not been loaded. The other two callers
-change active_mm while leaving current->mm NULL.
+  Bluetooth: hci0: Opcode 0x2005 failed: -16
 
-The stale page-table root need not be swapper_pg_dir; it may belong to a
-user process that ran on the CPU earlier, and the kthread's user accesses
-can then read and write that process's memory wherever the stale mappings
-allow. Translations taken that way can also end up tagged with the
-borrowed mm's ASN: ev5_switch_mm() writes that ASN into the PCB, which the
-next PAL_swpctx installs against the stale ptbr. An address the stale
-tables do not map faults instead, and since do_page_fault() resolves
-faults against current->mm without reloading the context, the same access
-can fault again on return.
+It does not converge either. hdev->random_addr is only set on a
+successful command complete, so it stays BDADDR_ANY, and the deferral
+added by commit c2994b008492 ("Bluetooth: hci_sync: Fix not setting
+Random Address when required") requires it to be set. Unlike the
+resolvable address a few lines above, which is reused while rpa_valid(),
+the non-resolvable one is regenerated and rewritten on every call, so a
+controller that refuses the write is asked again at the scan restart
+period of about 10 s, for as long as discovery keeps restarting.
+Observed on a BCM43455, which has no LL privacy and no extended
+advertising, 190 rejections in one capture, every one retrying the same
+address:
 
-sched_force_init_mm() needs CONFIG_HOTPLUG_CPU and do_shoot_lazy_tlb()
-needs CONFIG_MMU_LAZY_TLB_SHOOTDOWN. Alpha selects neither, so only
-kthread_use_mm() is reachable in practice. Test the caller's identity
-rather than special-casing individual callers.
+  < LE Set Random Address  Address: 02:16:91:90:F1:D4 (Non-Resolvable)
+  > Command Complete       LE Set Random Address, Command Disallowed
+  < LE Set Random Address  Address: 26:90:57:96:9A:3E (Non-Resolvable)
+  > Command Complete       LE Set Random Address, Command Disallowed
 
-The scheduler passes the incoming task, which is not current until
-alpha_switch_to() runs; all three direct callers pass current. Test for
-that and load the context the way activate_mm() does. All three run with
-interrupts disabled across the switch, so this completes before any
-shootdown can be taken and needs no asn_lock handshake.
+Pause advertising for the address update, and resume it once the update
+is done and before the scan is started. The pause does not outlive the
+function: it is taken only when nothing else holds it, and every exit
+resumes advertising, which also releases the pause taken by
+hci_pause_addr_resolution(). A failed pause returns before marking
+anything paused, so the error path is a no-op.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+The resume in the error path is no longer guarded by ll_privacy_capable().
+That guard matched a pause taken only under LL privacy; the pause added
+here is unconditional, and hci_resume_advertising_sync() returns early
+when nothing was paused.
+
+One caveat this widens, raised on the previous posting. When
+HCI_ADVERTISING is set, hci_pause_advertising_sync() also clears
+HCI_DISCOVERABLE and HCI_LIMITED_DISCOVERABLE and zeroes discov_timeout,
+and hci_resume_advertising_sync() restores only HCI_ADVERTISING, so the
+discoverable state is lost. It reproduces today on an LL privacy
+controller through hci_pause_addr_resolution(); the unconditional pause
+makes it reachable without LL privacy as well. hci_suspend_sync() also
+pauses unconditionally, so a device that suspends loses the same state
+on any controller today. That asymmetry is pre-existing and is left
+alone here rather than folded into a scan path fix.
+
+Legacy controllers have one random address register, shared by the
+scanner and the advertiser. Restoring the advertiser here can reprogram
+it when the advertiser is non-connectable, so the scan then uses that
+address rather than the one generated for it. Both are non-resolvable
+and neither is linkable to the identity address. With privacy enabled
+both roles already share one resolvable address the same way.
+
+With the patch, on the same hardware:
+
+  < LE Set Advertising Enable    Enable: 0x00              Success
+  < LE Set Random Address                                  Success
+  < LE Set Advertising Parameters                          Success
+  < LE Set Advertising Enable    Enable: 0x01              Success
+  < LE Set Scan Parameters                                 Success
+  < LE Set Scan Enable           Enable: 0x01              Success
+
+The address write is accepted, and advertising is restored before the
+scan is started.
+
+Over 119369 btmon records and about 12 minutes of the normal workload of
+that device, alternating active and passive scanning with ten outgoing
+connection attempts, every LE Set Random Address succeeded and there were
+no Command Disallowed responses of any opcode, against one per scan
+restart before.
+
+Patch 1 is required: without it the resume added here returns -EPERM on
+the controllers this fixes and leaves advertising disabled.
+
+Fixes: 3c44a431d62b ("Bluetooth: hci_sync: Resume adv with no RPA when active scan")
 Cc: stable@vger.kernel.org
-Tested-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-2-linmag7@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-(cherry picked from commit 9b8be19d5dc9525a408942e2e8012873199e7455)
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Assisted-by: Claude:claude-opus-5.5 btmon
+Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Valentin: Adjusted for 6.6.y: the privacy guard removed in the failed: label
+  reads use_ll_privacy(hdev) in this tree, and the line after the added
+  resume is only if (hci_is_adv_monitoring(hdev)) {, without the
+  HCI_QUIRK_STRICT_DUPLICATE_FILTER term. The added lines are unchanged.
+  Requires commit 737139f4157d ("Bluetooth: hci_sync: re-enable legacy
+  advertising on resume"). ]
+Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/mmu_context.h | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
-index 42c9ab7624224..85e71a5eead1d 100644
---- a/arch/alpha/include/asm/mmu_context.h
-+++ b/arch/alpha/include/asm/mmu_context.h
-@@ -132,6 +132,8 @@ __get_new_mm_context(struct mm_struct *mm, long cpu)
- 	return next;
- }
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 5b838b9ff2fac..403cc418c19a3 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6106,6 +6106,7 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 	u8 filter_policy = 0x00;
+ 	/* Default is to enable duplicates filter */
+ 	u8 filter_dup = LE_SCAN_FILTER_DUP_ENABLE;
++	bool paused;
+ 	int err;
  
-+extern void __load_new_mm_context(struct mm_struct *);
+ 	bt_dev_dbg(hdev, "");
+@@ -6129,6 +6130,12 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 	if (err)
+ 		goto failed;
+ 
++	/* LE Set Random Address is disallowed while advertising is enabled. */
++	paused = !hdev->advertising_paused;
++	err = hci_pause_advertising_sync(hdev);
++	if (err)
++		goto failed;
 +
- __EXTERN_INLINE void
- ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 	      struct task_struct *next)
-@@ -141,6 +143,16 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 	unsigned long mmc;
- 	long cpu = smp_processor_id();
+ 	/* All active scans will be done with either a resolvable private
+ 	 * address (when privacy feature has been enabled) or non-resolvable
+ 	 * private address.
+@@ -6138,6 +6145,9 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 	if (err < 0)
+ 		own_addr_type = ADDR_LE_DEV_PUBLIC;
  
-+	/*
-+	 * kthread_use_mm() and do_shoot_lazy_tlb() switch current's mm
-+	 * without alpha_switch_to(), which loads the context. The latter
-+	 * requires CONFIG_MMU_LAZY_TLB_SHOOTDOWN, which Alpha does not select.
-+	 */
-+	if (next == current) {
-+		__load_new_mm_context(next_mm);
-+		return;
-+	}
++	if (paused)
++		hci_resume_advertising_sync(hdev);
 +
- #ifdef CONFIG_SMP
- 	cpu_data[cpu].asn_lock = 1;
- 	barrier();
-@@ -187,8 +199,6 @@ ev4_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 	ev5_switch_mm(prev_mm, next_mm, next);
- }
+ 	if (hci_is_adv_monitoring(hdev)) {
+ 		/* Duplicate filter should be disabled when some advertisement
+ 		 * monitor is activated, otherwise AdvMon can only receive one
+@@ -6162,9 +6172,8 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 		return err;
  
--extern void __load_new_mm_context(struct mm_struct *);
--
- #ifdef CONFIG_SMP
- #define check_mmu_context()					\
- do {								\
+ failed:
+-	/* Resume advertising if it was paused */
+-	if (use_ll_privacy(hdev))
+-		hci_resume_advertising_sync(hdev);
++	/* No-op when advertising was not paused. */
++	hci_resume_advertising_sync(hdev);
+ 
+ 	/* Resume passive scanning */
+ 	hci_update_passive_scan_sync(hdev);
 -- 
 2.53.0
 
