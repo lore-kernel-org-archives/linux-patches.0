@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050971;
-	b=XePMxMZV0JNe9YJCe0rVGIRzHd6KGkHEIecuww+0MNxa7/43yLZ4UDkWvP624C8i7456
-	 A8FuS23l2AOELlzNynUe8yZC1bZZQEI35NR4/a6KqdWel25WKxlRv+E6jz+vzE35Uh0F2
-	 JXRzf+A+PyeAjEcnHposPak9XSn9a64SbePWARslNNZ3lu+YQzTYIkW7aFS9VJRINulTo
-	 Twk8EkbFC/jn6PRh1k6TEu15CF2Eg2wM+LiaYm1mxlC++F1A+0wDivQQ5bUGk/VwLgdN7
-	 DTIU3NqfA+Tj9zv8KZaqgAs3z0BwXHvIHVMT14lYRGiMzwOzAG4sR0kIOGi2dn9JZkA==
+	t=1795050973;
+	b=J+x5H+/ticy3zF1aKOnQ2hyCXLhwhULWPF20/8vHUWw7ycYKXdHQcnkebv7EQdG651uI
+	 WwCeH++2Agnj9UKVGd9YWc2TeeoD7NQTqJ0UDKTgkxGYx8IW/gOWyXek07qmlDKhb7+ki
+	 JJy5zzG+b1QKGQNcV6Io2dKOYhRF40FS16ICrZnUKnK6czcX81xsiyXG+kGQiXGlisVyh
+	 dFn2PWybiqMDB1XTT8o4GhK0OGVvT7KJetLoXIOyRvKN7D+rySsn5MFU/CSc+JaBb1FfS
+	 mqWGlOm3w9UDCvfam/+WvOJwZEQvgaTe0kPbJNSgSV6E+oPqdQaYF2cVdOSKOrlsQsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7yjNVWce0gwRmgh52LDh4oNjAJhJFFFdO+m1QqZajC4=;
-	b=W0TFdaoBXlbZoeE2xMrMn6nJifiq929ty7F6sW2RviDuJgKR330iJF51ahxYUhtureve
-	 D7yHIsQuSry4b4fhDUmJ85IrMZhY3pHjP8yTbmon5PRa/jab0vEC/U0JTMQZnKij20lLg
-	 x3WDB87d7FpoU4dh+KvRYQbVU2Zwx0+hi+JveZCUwvRSgWxHPY7hpUpkML+f7wq60qcPh
-	 EsklqmcLfacjaV8QcYIU1bCH/P5UgP+ZRgLsZnb2zYgse9u2BXIzw+TtMtPaUxkL1MwM8
-	 qkGqFBMvzlr/hLRvD1mUsVxx+eCCrB7Z5z6mAadba26GunQeUa66+L36d28C41ED77Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=iCevrzCrzPYcP5NpXfVLe61KGZsY97KPMDBA0LXv/Yw=;
+	b=ilCdyLF3eusDOE2moXtQm7SyV+B0Lm6sWUTfvNGF7TGQADt6V2fNt+iaLUQBqjTcJkgh
+	 AS4YJaK56F5W7bbonKZ20OCNqb4PTmurM4fRkNgWJHkFcx9wJcZ7hFx8MWcpWQezEAHee
+	 pO3PkJZH3UThLhCC8BX1jG+kWM8MAlZ0j7zMHQNHPToEnJwTEIDdXQJiPr52asemzBlsD
+	 0SeeRkLu08py2egVXVAbKzVAaQQcNqibD9aD+qHn3Gc/cVT7JgO6LpSxm1fknQC+3hcE4
+	 qk/d2LksebQ94jMgRNFkDskWopMXS9MaDivJN5T97aczPQ3GAfFu+TfHs9U5alAumlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=utQtXK2S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuWudALT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E588606A320;
-	Thu, 19 Nov 2026 01:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB876606A320;
+	Thu, 19 Nov 2026 01:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=utQtXK2S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE9C1F000C4;
-	Thu, 19 Nov 2026 01:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuWudALT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9901F000C4;
+	Thu, 19 Nov 2026 01:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050970;
-	bh=7yjNVWce0gwRmgh52LDh4oNjAJhJFFFdO+m1QqZajC4=;
+	s=korg; t=1795050973;
+	bh=iCevrzCrzPYcP5NpXfVLe61KGZsY97KPMDBA0LXv/Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=utQtXK2SC0puW9XzC6y4av8DrMDF/2LXeHF9IluaQvuyn0ErzdF94hNyL99YVBvMv
-	 SsPd/yl0gneYkmJ/GyWzLs8zorSsrnjEK61fbkK2lIufFIvxIX3m9cgnTUKBer9Jv/
-	 uYaAjEXaMLqu/NSdFk19ihy7adcanj16jI+bm4gA=
+	b=JuWudALTQpdUJ2nGStsGhz+T6Gem6NtICYDaa5bFHXFS6YO9Cfxva3fsWbt9Y2oUs
+	 NUiGVMuBqsXgXtUOIE/clAxEP8bigdKAnG3PqcoiXVzVcHose5qx0X9Dyo8mX2sjWW
+	 fk2XcNhDkS2rH944j5osuWCf4D+yjL4LfH2yPcUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.15 0011/2214] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
-Date: Wed, 18 Nov 2026 15:28:07 +0100
-Message-ID: <20261118150010.597730300@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	stable <stable@kernel.org>,
+	Denis Arefev <arefev@swemel.ru>
+Subject: [PATCH 5.15 0012/2214] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
+Date: Wed, 18 Nov 2026 15:28:08 +0100
+Message-ID: <20261118150010.637131611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,87 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
+commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 upstream.
 
-When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
-next update contains an odd number of full 16-byte blocks, it processes
-one leading block through poly1305_mult() so that the remaining NEON
-work has an even block count.  That requires converting the accumulator
-to the base 2^64 form used by poly1305_mult().  The final ADC of that
-conversion stores the carry into d2, but the following accumulation and
-poly1305_mult() use h2.  If the conversion carries across bit 128, the
-carry is dropped and the emitted tag is wrong.
+svdm_consume_modes() checks pmdata->altmodes against the array size once
+before the loop over the count, but forgot to check the bound at every
+point in the loop.
 
-This was introduced by Cryptogams commit 03dc4adf91c8
-("arm/poly1305-armv*.pl: optimize branches."), which removed the
-reduction that consumed d2 shortly before Linux imported the code.
-OpenSSL's copy did not take that change.
+In the well-behaved SVDM discovery flow this is harmless because each of
+at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
+modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
+CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
+ACK with any request the port actually sent.  Once port->partner is set,
+an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
+or malicious port partner can therefore drive altmodes to
+ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
+Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
+the loop could then writes up to five entries past altmode_desc[].  For
+mode_data_prime the next field in struct tcpm_port is the
+partner_altmode[] pointer array, which then receives partner-chosen
+SVID/VDO bytes.
 
-The carry is possible because the NEON code stores the accumulator [h0,
-h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
-carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
-2^26 - 1.  For example, the reachable state
+Move the bound check inside the loop so the array can never be indexed
+past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
+supplies or how the function was reached.
 
-  h0 = 4
-  h1 = 2^26
-  h2 = 2^26 - 1
-  h3 = 2^26 - 1
-  h4 = 2^24 - 1
-
-represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
-(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
-(bit 24 of h4) not being set; the extra comes from the h1 limb being
-above the normal base 2^26 range.  When this value is converted into the
-non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
-of h2) is necessary to preserve the value.
-
-Given the above bounds, a carry into bit 128 happens exactly when
-h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
-
-Store the carry into h2, matching the other base 2^26 to base 2^64
-conversions in poly1305_blocks() and poly1305_emit().
-
-This bug causes an incorrect tag to be emitted.  However, this is
-unlikely to happen in practice where Poly1305 is used with a random key,
-since the random key tends to distribute the accumulator values
-throughout their valid range.  There isn't an obvious way for an
-attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
-land on the precise values where this bug occurs.
-
-[EB: Rewrote the commit message to more clearly describe the bug and
- its impact, and simplified explanation about why there's a carry bit.]
-
-Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Cc: Badhri Jagan Sridharan <badhri@google.com>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Denis Arefev: adapted for 5.10/6.1: tcpm has no SOP' support here,
+svdm_consume_modes() takes no rx_sop_type argument and has a single
+pre-loop bound check instead of the two in the SOP/SOP' switch;
+drop that one check and add the per-iteration bound check]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>                                    
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/crypto/poly1305-armv8.pl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpm.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/crypto/poly1305-armv8.pl
-+++ b/arch/arm64/crypto/poly1305-armv8.pl
-@@ -372,7 +372,7 @@ poly1305_blocks_neon:
- 	adc	$h1,$h1,xzr
- 	lsr	$h2,x14,#24
- 	adds	$h1,$h1,x14,lsl#40
--	adc	$d2,$h2,xzr		// can be partially reduced...
-+	adc	$h2,$h2,xzr		// preserve carry into top limb
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -1536,17 +1536,16 @@ static void svdm_consume_modes(struct tc
+ 	struct typec_altmode_desc *paltmode;
+ 	int i;
  
- 	ldp	$d0,$d1,[$inp],#16	// load input
- 	sub	$len,$len,#16
+-	if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
+-		/* Already logged in svdm_consume_svids() */
+-		return;
+-	}
+-
+ 	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
+ 		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
+ 		return;
+ 	}
+ 
+ 	for (i = 1; i < cnt; i++) {
++		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
++			/* Already logged in svdm_consume_svids() */
++			return;
++		}
+ 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
+ 		memset(paltmode, 0, sizeof(*paltmode));
+ 
 
 
