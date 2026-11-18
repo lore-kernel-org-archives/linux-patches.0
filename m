@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057361;
-	b=04ZlPkOnTKxZySuYjQFP+gnJ4KJTJBLEk9q3lM4iFL8u6i4rcZCP3yM92cn/cO5NMUDw
-	 DeY4WD3itnwOuDcObE+Ei1hGuZPuKqLSlgIw/604ukvmtu3fnmCQs13CPpNp61sH3JEdg
-	 7Wx0uKbUR+KZl4M+zD/Pbi2csFV/vNrnLF1utUzYbNf8p5EK8S1tjoJBYAzBjmNZinpya
-	 GlfY74UUX0tcKJz6pLrM4Ou3O8G8PCf89AsaXYIWUFSHjzHqKq5Gw7E+F+DfOp7xItJyD
-	 O28fLv4GcwGaekH7U0Mk7/uawQOnRZAcdhrqQYLe39mLzKmyg6JN/gexy5NKSH0z3Bg==
+	t=1795057363;
+	b=dEgloiEPrPpEwhKLQujDkH44VKR6z3P12Hnjskrnqbup1gTeGm8pSZFZ1qMljS1CqEEb
+	 c1u65TB1VoTj1MNnFfc43N2zB6dItLmHtq7hI7a/OMR31mwxJHW1qqhBoaNvNpaY7uYh3
+	 gVRDOaChJnOnklCVK5sUVE9eyOU/CFtHH4i7saTMml8qXZYQGQCWHGvTdHq03MzsDgudJ
+	 EgpRfXkbj0Q1MQWn2QkfmcF0kjupG1OLaERUUl3zJqnCJDXCwAB5MYAEjgsisp4YfnMtw
+	 nP2gXXh8IrOVTkHciuQ5frSEPcfgWtkoJPWFEp6HbP7Q6AR0XPjKpgTVQcivcLcOMkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gyrGDFneG6mZDRJKbkon6T8OKf+r56bPcthru/yrKjQ=;
-	b=UPQbDM00nLPMktBJLtOVLOGl1bo98lsoqo/Pq+xt1BYtNYOmCGXh6vIvBZyNxSJmVbCk
-	 yqxZ+e//uG5Uj7CqzDctf1M+Q/lGLi0IMGZV6VShe/2YvJfb/r5nXg9THYu7DhhyemwMN
-	 6J1HoKaLEG3rE6ErcK35j8MYxPsjPOuig9BBNCQPmjaAx8+yIsW73z78wKniRFYi+y6VA
-	 JVC8opBPpbvSeoPVkSvuPIMEYwcrcD+P/OJ0KLGmd9C/hqYXVbkEITJ8MDjLFVe0ha11L
-	 R5irqi7If7U/k54tl4RhPmyQLcdTw1mnR9VmU5GQesldnQyJpqVqARxX2BNV563Qh5A==
+	bh=FwySRPimWKxyVqEIU10NLgSY41W9cOkTiWsw3vTRXvY=;
+	b=B3OWOhJeqaub6nknUGndMgbD41COtUEdTQsesUzLOQ311Y7uBeGTq/2/9MTTW5KAw1i8
+	 rFHpOb6Dry6/Y1fyc7xsLk3YjYEa4zSKY/BFG76hZ4UiAizDx3vfpllKI0kdyRhokebBe
+	 gklxu7vEvzlhGSbgbOfrh68IFI5kYuu9pIlIiS7x+0IJk3LiaWoX0uJA8gLOvjr37oHbT
+	 teta65eJmqaRH2Ag/SpbumRUJHu85LzdsqzwovCPys9y0HDddqB48TBvWSF8FeelrzXjQ
+	 SnQovWAQNqYg69W1KtSXq6Q6VXQ9V2TXuEkEfi8DIyvmN67FZFo6C0//zm00R1ZLjkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fN+afdrJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfKK3d9D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0458C60A2619;
-	Thu, 19 Nov 2026 03:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BC260A260A;
+	Thu, 19 Nov 2026 03:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fN+afdrJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456EE1F000C5;
-	Thu, 19 Nov 2026 03:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfKK3d9D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068A21F000C8;
+	Thu, 19 Nov 2026 03:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057360;
-	bh=gyrGDFneG6mZDRJKbkon6T8OKf+r56bPcthru/yrKjQ=;
+	s=korg; t=1795057363;
+	bh=FwySRPimWKxyVqEIU10NLgSY41W9cOkTiWsw3vTRXvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fN+afdrJ6YT5idNkaM2nA9S/zN571M+1fD9WYhdasMLXZFVIW+t/wE9AOXDqr3EEJ
-	 NPmzyOeVNrahTAjT3yRtqgL2qRWH0/ng91hkxxhAnX2qhvPVbNzB9eC97UGKhPf1PA
-	 C+3AJceJ4uIOMdeQuQrsuOvnp9IFc+DFdmesv7iw=
+	b=XfKK3d9DrnjnbKvI3R5mtC8JtMXWwbbmyvnMV38VBU1zjXAmLqEkAc9ASfCDsx6JB
+	 Bfc6WHu/3iqKqlp5+KX4Xe3gGigfVPcrJqtcQ5jBXqpbwxVXPnk/MtwGdmMgq6mn9i
+	 9HkfjvnaIVqo1Yt9yDcIPb9ssS/EJA9URfqJMyTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Pu Lehui <pulehui@huawei.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0104/1848] riscv, bpf: Add support for BPF_SDIV and BPF_SMOD in RV32 JIT
-Date: Wed, 18 Nov 2026 15:35:42 +0100
-Message-ID: <20261118145915.392946561@linuxfoundation.org>
+Subject: [PATCH 5.10 0105/1848] power: reset: piix4-poweroff: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:35:43 +0100
+Message-ID: <20261118145915.425786573@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,93 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 2e0fa2389c50fd3a69bb738efa74e127b7516938 ]
+[ Upstream commit ffefc5d9a052f67bc87b57d1107fd7cc1fa1a3d4 ]
 
-The current rv32 bpf jit compiler incorrectly treats BPF_SDIV and
-BPF_SMOD as unsigned operations. The BPF instruction set allows
-signed division and modulo by reusing the BPF_DIV and BPF_MOD opcodes
-with the instruction offset set to 1.
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Update the emit_alu_r32() function to accept an 'is_sdiv' variable and
-emit the correct div and rem instructions when the offset is 1.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Before this patch:
-[   44.161771] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
-[   44.167385] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
-[   44.171053] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
-[   44.172081] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-After this patch:
-[   16.002192] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 95 PASS
-[   16.002983] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 1059 PASS
-[   16.017167] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 136 PASS
-[   16.023002] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 109 PASS
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Link: https://lore.kernel.org/bpf/20260714002451.4091139-2-visitorckw@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704152336.51384-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp32.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/power/reset/piix4-poweroff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
-index f300f93ba6456..3190c8e5d3874 100644
---- a/arch/riscv/net/bpf_jit_comp32.c
-+++ b/arch/riscv/net/bpf_jit_comp32.c
-@@ -509,12 +509,15 @@ static void emit_alu_r64(const s8 *dst, const s8 *src,
- }
+diff --git a/drivers/power/reset/piix4-poweroff.c b/drivers/power/reset/piix4-poweroff.c
+index 7f308292d7e38..19ab3822338ed 100644
+--- a/drivers/power/reset/piix4-poweroff.c
++++ b/drivers/power/reset/piix4-poweroff.c
+@@ -96,6 +96,7 @@ static const struct pci_device_id piix4_poweroff_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82371AB_3) },
+ 	{ 0 },
+ };
++MODULE_DEVICE_TABLE(pci, piix4_poweroff_ids);
  
- static void emit_alu_r32(const s8 *dst, const s8 *src,
--			 struct rv_jit_context *ctx, const u8 op)
-+			 struct rv_jit_context *ctx,
-+			 const struct bpf_insn *insn)
- {
- 	const s8 *tmp1 = bpf2rv32[TMP_REG_1];
- 	const s8 *tmp2 = bpf2rv32[TMP_REG_2];
- 	const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
- 	const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
-+	u8 op = BPF_OP(insn->code);
-+	bool is_signed = insn->off == 1;
- 
- 	switch (op) {
- 	case BPF_MOV:
-@@ -539,10 +542,12 @@ static void emit_alu_r32(const s8 *dst, const s8 *src,
- 		emit(rv_mul(lo(rd), lo(rd), lo(rs)), ctx);
- 		break;
- 	case BPF_DIV:
--		emit(rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
-+		emit(is_signed ? rv_div(lo(rd), lo(rd), lo(rs)) :
-+				 rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
- 		break;
- 	case BPF_MOD:
--		emit(rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
-+		emit(is_signed ? rv_rem(lo(rd), lo(rd), lo(rs)) :
-+				 rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
- 		break;
- 	case BPF_LSH:
- 		emit(rv_sll(lo(rd), lo(rd), lo(rs)), ctx);
-@@ -1044,7 +1049,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 			emit_imm32(tmp2, imm, ctx);
- 			src = tmp2;
- 		}
--		emit_alu_r32(dst, src, ctx, BPF_OP(code));
-+		emit_alu_r32(dst, src, ctx, insn);
- 		break;
- 
- 	case BPF_ALU | BPF_MOV | BPF_K:
-@@ -1068,7 +1073,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 		 * src is ignored---choose tmp2 as a dummy register since it
- 		 * is not on the stack.
- 		 */
--		emit_alu_r32(dst, tmp2, ctx, BPF_OP(code));
-+		emit_alu_r32(dst, tmp2, ctx, insn);
- 		break;
- 
- 	case BPF_ALU | BPF_END | BPF_FROM_LE:
+ static struct pci_driver piix4_poweroff_driver = {
+ 	.name		= "piix4-poweroff",
 -- 
 2.53.0
 
