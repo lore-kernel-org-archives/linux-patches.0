@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020606;
-	b=bSFGiWYn9UNuuFnLEgj1cK1AbgpC8itspzMzSH2DulFrCtrB3gwRVhQOAujxvh0hx/+o
-	 bgZ0x4LS6vYAgrPDDAx6CtUt+LKSCE6N43FqAc13Q358hMbXSa/h2nqabFgogvB57xNN8
-	 KsSuYHFC0622IbVOWfigWsmkB16yeMOSniMnXY8ltqjqWZUSUb0eHkHfBsw/SJyjCYSL2
-	 N+reNVnD8CAdyKi5OrOsfsdKxN81cNWlcITtkvkLdp4SNaeRGQLzGeuCHuJgaK7AmHfUO
-	 7qUhu7h+SNPYF2w77wJ66fo9XAGV2HyJ0Qg7hxj+5pfJFZIfm3prMF2QUkDBdgKBlKg==
+	t=1795020608;
+	b=z7aMrRGwPR0s1VRdFl8pDhblKnaUvvz6VssLU0LpjfUM8SAOsIofNt+KkwRj8wrQYi+g
+	 buBV69VeyxgDhGnbugXLNeo/qF6IcWn1WLZPMwQV3LdlIpXVVrqK4fwRKZOGAKljN2mDb
+	 4UCOOcFA8l8DSRJB6jAyRYlAsUf5O9VqpEN7nPe8D9lA8njjBumqYMS5SZErOMG1CxhfJ
+	 Yck9GwMuL7MdjYYLwhyafeUnOwQyUAX9zVfWldl1JJsZJzOr9zXJkdZq1aOm/q+DtRDJe
+	 2IBGFwgRiV7cn01jvAG2t5uI9ofVdO5bh+6gG6uY2UH9Vi+CPNhXyBbL9w2UdZ0OdWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bYHbi8nnWIUgpDzn/fRh882KFU2lFUW58it41kuh56M=;
-	b=PzcG3KGsDfb5miaUs4gD4mqylLRgTm2tEJPVz0Z4Q5qAJb1c4QI3VJqy5UIVU12BZS77
-	 VCBrh0FlwmTxDzPLm7uHPxKLcV/joR3HtN/Xtm4tiUViHH7vvIcolbg5RkGZmlDq2LWGs
-	 fKvwI0ohhd0o9Hf0vbUZYOu2ENbjYOaxEUFnCBRI72dA3B/S9JWZjNXFhb0rsH50/g4db
-	 RwklPHbDjU/oiGAlTK3q7pHpwK8ht3jxGx9udl+ILVDwo+LWDr3yXB0BRYG0n0gd8ChQe
-	 RUtXh2xJJHsGQ/h4Y2wFwplPyZcKFYEY2osrTyTcymFeTu45kRkaG+slkrQ/GhwRHSg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=x0owyecB+7uEyr359APnvTLJo2n88qhDI6aGt4vRIk4=;
+	b=MKswTprtvmsBgafnc1b0XiDHIag2orqDuYwaQuIxO6iDOmOEU3iBq7xfV6Rti+oUl1zO
+	 vyCkyrM69dqKV3m6Cw14lyzwhx+1GSrlG/d6lIDEzbES6ZAXsf1broVihUIC3rDDIv9EY
+	 oSWxJNHu6sBjk131zkqCbKzj70d5Ubgq+LseP3StZZI9dkPS4nl43+C9BiNiEDeZhTMsa
+	 d+R4sXqChUDxC1mkRov2RrIbULMN8bfiHLZfFPUrTeFh4UBCoxWJaE3SVTvkbzkio/h+3
+	 ZGqxVDJw2nSN7clbTkB3au8kUkzNWl52mKAP2H90auyjvCleH8fx/C01p4Ns3OKK7bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gzv1dxd1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6g7hFVG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F338606A338;
-	Wed, 18 Nov 2026 16:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B46B60A260F;
+	Wed, 18 Nov 2026 16:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gzv1dxd1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140B11F000C4;
-	Wed, 18 Nov 2026 16:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6g7hFVG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11491F000D3;
+	Wed, 18 Nov 2026 16:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020605;
-	bh=bYHbi8nnWIUgpDzn/fRh882KFU2lFUW58it41kuh56M=;
+	s=korg; t=1795020608;
+	bh=x0owyecB+7uEyr359APnvTLJo2n88qhDI6aGt4vRIk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gzv1dxd1SA6/9IEtNZN/0ClMOcZPtpQQWLaO7aFyANUpXXrV1YHJPAU2zAFDvtrFU
-	 7SDv/ZoA/si3NuydEOOuCFOl0swC1agGifCcUo/1prOACFPhiiEBwmgqReKZxSZ6D7
-	 4HpD/LdFV8JfY74SNesIYC8t0oaSQ1ohNpr6YkMY=
+	b=u6g7hFVGoh00Inu0Khall73TjLCfcR/UDBmVGmhsjUdV7HBVN8POv8tbPQDDhd7CT
+	 zOZTmjzEqAAEfiDZhdcsPZH3q1C+EEgbMaK8NmpQrZob9H+FAMpeHQuxHGarh/rdGv
+	 MGrGyit5Te5HPIfrYnc6U8m7lE/2GfuHjLxp3qjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Praveen Kumar Kannoju <praveen.kannoju@oracle.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1971/2651] vdso/vsyscall: Keep the CLOCK_AUX base scaled
-Date: Wed, 18 Nov 2026 15:53:31 +0100
-Message-ID: <20261118150357.419335874@linuxfoundation.org>
+Subject: [PATCH 7.3 1972/2651] IB/mlx4: Avoid requeueing executing CM timeout work
+Date: Wed, 18 Nov 2026 15:53:32 +0100
+Message-ID: <20261118150357.448246703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,80 +62,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Praveen Kumar Kannoju <praveen.kannoju@oracle.com>
 
-[ Upstream commit 8d17190fae2caab89cd5df19257ed9dac0739e3b ]
+[ Upstream commit 9bcf45bfcaf83aed81b5fb12f0edf4c16e73e02e ]
 
-The vDSO basetime of a clock is stored in the scaled nanoseconds of
-tkr_mono, so that the reader can floor the base and the cycle delta
-together in vdso_calc_ns().
+id->scheduled_delete is set by schedule_delayed() itself.  It is used
+in two cases after the RTU timeout support was added:
 
-vdso_time_update_aux() instead shifts the base down to nanoseconds, adds
-the offset, and shifts it back up, which zeroes the fractional nanoseconds
-of xtime_nsec.  The reader then floors the base and the delta separately:
+* A new id_map_entry is created, and a 60-second RTU timeout is
+  scheduled.
+* DREQ or REJ is received for an existing entry, and the normal
+  30-second teardown timeout is scheduled or adjusted.
 
-  ktime_get_aux():  base + ((delta * mult + xtime_nsec) >> shift)
-  vdso:             base + (xtime_nsec >> shift)
-                         + ((delta * mult) >> shift)
+The following race is possible when the RTU timeout expires while a
+DREQ or REJ is handled:
 
-Since floor(a) + floor(b) <= floor(a + b), the vDSO reports 0 or 1 ns
-below the syscall for the same clock.  It is not a monotonicity problem:
-across an update the step is floor(a + d) - floor(a) - floor(d), which is
-0 or 1, never negative.
+ CPU 0: timeout work                         CPU 1: DREQ/REJ handler
+ --------------------                        -----------------------
+ RTU timer expires
+ timeout callback starts
+ waits for id_map_lock                       takes id_map_lock
 
-Add the offset in scaled nanoseconds as the other high resolution clocks
-do, and normalise with __iter_div64_u64_rem() so that the stored base
-stays below one second and the userspace fast-path does not iterate more
-in __iter_div_u64_rem().
+                                             calls schedule_delayed()
+                                             calls mod_delayed_work()
 
-Only the sub-second field changes.  (a + (b << shift)) >> shift is exactly
-(a >> shift) + b, so the seconds carried out of the normalisation are the
-same as before; what the old form dropped was the low shift bits of the
-remainder.
+                                             drops id_map_lock
 
-monotonic_to_aux.tv_nsec is a normalised timespec64 fraction, so it stays
-below NSEC_PER_SEC even for a negative offset, and the sum stays below
-2 * (NSEC_PER_SEC << shift).  The largest shift clocks_calc_mult_shift()
-can pick is 32, which makes that 8.6e18 against a u64 limit of 1.8e19.
+ takes id_map_lock
+ removes mapping
+ frees id_map_entry
 
-Fixes: 380b84e168e5 ("vdso/vsyscall: Update auxiliary clock data in the datapage")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20261002153104.1347978-4-zhanxusheng@xiaomi.com
+                                             requeued timeout runs
+                                             accesses freed id_map_entry
+
+mod_delayed_work() may requeue the work after the timeout callback has
+started.  The original timeout callback then frees the id_map_entry,
+leaving the requeued work with a dangling delayed_work pointer.
+
+When a timeout is already scheduled, first cancel its pending work.  A
+successful cancellation means the callback has not started and the
+timeout can safely be scheduled again.  If cancellation fails, the
+callback is executing and will free the entry after id_map_lock is
+released; do not requeue it.
+
+cancel_delayed_work() is deliberately used instead of
+cancel_delayed_work_sync(), because the timeout callback may be waiting
+for id_map_lock, which is held by the caller.
+
+Fixes: fa09adf4231f ("IB/mlx4: Fix stale CM id_map entries when RTU is never received")
+Signed-off-by: Praveen Kumar Kannoju <praveen.kannoju@oracle.com>
+Link: https://patch.msgid.link/20261014121344.100048-1-praveen.kannoju@oracle.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/vsyscall.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/mlx4/cm.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/time/vsyscall.c b/kernel/time/vsyscall.c
-index f43dd3f4744b5..0e4b499328c08 100644
---- a/kernel/time/vsyscall.c
-+++ b/kernel/time/vsyscall.c
-@@ -155,11 +155,11 @@ void vdso_time_update_aux(struct timekeeper *tk)
- 
- 		vdso_ts->sec = tk->xtime_sec + tk->monotonic_to_aux.tv_sec;
- 
--		nsec = tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
--		nsec += tk->monotonic_to_aux.tv_nsec;
--		vdso_ts->sec += __iter_div_u64_rem(nsec, NSEC_PER_SEC, &nsec);
--		nsec = nsec << tk->tkr_mono.shift;
--		vdso_ts->nsec = nsec;
-+		nsec = tk->tkr_mono.xtime_nsec;
-+		nsec += (u64)tk->monotonic_to_aux.tv_nsec << tk->tkr_mono.shift;
-+		vdso_ts->sec += __iter_div64_u64_rem(nsec,
-+						     (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
-+						     &vdso_ts->nsec);
+diff --git a/drivers/infiniband/hw/mlx4/cm.c b/drivers/infiniband/hw/mlx4/cm.c
+index 1e5e525fea733..810f95e55fda1 100644
+--- a/drivers/infiniband/hw/mlx4/cm.c
++++ b/drivers/infiniband/hw/mlx4/cm.c
+@@ -301,10 +301,20 @@ static void schedule_delayed(struct ib_device *ibdev, struct id_map_entry *id,
+ 	spin_lock_irqsave(&sriov->going_down_lock, flags);
+ 	/*make sure that there is no schedule inside the scheduled work.*/
+ 	if (!sriov->is_going_down || id->scheduled_delete) {
++		/*
++		 * Do not requeue timeout work that is already executing. The
++		 * timeout handler may be waiting for id_map_lock and will free
++		 * this entry after the caller releases it.
++		 */
++		if (id->scheduled_delete &&
++		    !cancel_delayed_work(&id->timeout))
++			goto out;
++
+ 		id->scheduled_delete = 1;
+ 		id->rtu_timeout = rtu_timeout;
+ 		mod_delayed_work(cm_wq, &id->timeout, timeout);
  	}
++out:
+ 	spin_unlock_irqrestore(&sriov->going_down_lock, flags);
+ }
  
- 	__arch_update_vdso_clock(vc);
 -- 
 2.53.0
 
