@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039688;
-	b=VF/8GVbelIeudYhVDhbaUCrPilk4I5d0+4MWa5ltTvbXjfF7iw9Z7PaYKX3Un0wGgkte
-	 V3jBjxCJxQOFNGTJHv0zZkKcfKMVkPYJAcd/PLXcJ+te5NQfkHLWy1OTi0FgU0VnHNsSo
-	 Z2HlCsIau2MOHUdKvkJkcaFIfeI51/y54Ihi1fODldKHKkIyVRq1nLjfBtvcQjwSCAmRp
-	 TuD2kZuV4dh8pzKOpTMJao54QKAFFnANW4KyAeOdRWCih2KiclYu9GRdEmKpVwHzzpRga
-	 zcAqQoL6UDCcPCGrMtJ9RShlY4IxwU7x026Tn0CPWNGuQy/5HEswF4TORjgBR7S9wlA==
+	t=1795039690;
+	b=SfV2aNnIgXSHg3gYwy4Payy3DOd661gAjraXhbcsP8VGs+LrOxVGVZVkq1KvzBp/rIa7
+	 I+G2HAPN6/Y1E4+rzIE4Yr3tL+DSktHxfvFIKYF8r77UjUsCYjT+7T4FFCfZoMiosnsPa
+	 UeNH/po6ufb/mPLMD1/XaRSI+p+rRWwkwpYJCH8lVcFv9AigrX45MbELrXJlBZaLGyKfJ
+	 w7ChiOh+QtqDq4eZEhI5gd71R+UMWELlRBcDPIlKfrCOFs+ZHGPr683BC2CJiGz+FUMPy
+	 A7lkh2+WYtZBfocCgDh5nmURMXmGo13exf6AgeKiiHeyIS8sFviwY/iLqdhZJfu2fxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039690;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cuR1BzMPwH5KhF6dqLvAZXtdut7kDrD5C17LGdHNgLI=;
-	b=gTyADNMAWaO4jFoPsBMcad/vH3ZJVH6nZy1JU6HI4P7Q1ANq+10yKEsa7ILeEdEzzdxL
-	 SLm+AZiWdW8el8TKl0P4cxP/0V5kMuGaXr5Q7cmxUyBxZgyzHu7kimU9lHvOe5DEKJh42
-	 TliCYBu5KKfE1LpZqqUcaq1yMLocBVJaz3rA/iWSB7V1F9s+bjygBhkhMuY7k8+81Mlph
-	 wNwxDWcNJf+yaubm2CH+2V0crJm8W2+RcmRNlTKQ6GW7Gt9LzXhAKI2ra3L1Zh6cgO5SA
-	 4pxPoIvOBpdS0qOSJEAGzoE/NKwJXjxsKxiLtIoD1qpG6nP3Rtdi7xUL5o3Hmv2DwZQ==
+	bh=lCfkJrXK/gLmrVMSfywtJl8KyUJZVWMUeeboAb5Kb4g=;
+	b=ZTIWO9l6q1pjEFqbXOl6GG+mv/FHP5UTDp7qHWxKn1KGAn9VnhWZGExN72C0j2JvEE5W
+	 u+YNLSjf6k7ws+Q0VCShTiKSYfff2fHFWTSgRlHGtiFyu3iiY52H6o1JD6ZQMgbzRnEXm
+	 jBoFsEKJlapgwT9gzzY3TKusEO6Yr9P4SXz/sLceTD0NDgJYkv6sm2eNSQutUFA5w4vrV
+	 gj1CAhpN+ErZ3uxA3vhQhKUxQeAZ58g04PLwJnwLO8VRYC/FCgXV6vw+mpoIh15GlCfTU
+	 LOHTcZxBI+uvxenL5Y4QT3pHkoLW1pKynN70qseYLPcw64QVM/0siOJjZSAggHaTusg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KitQHICj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TQF11sMe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD8D606A31C;
-	Wed, 18 Nov 2026 22:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5D2606A31C;
+	Wed, 18 Nov 2026 22:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KitQHICj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386281F000C4;
-	Wed, 18 Nov 2026 22:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TQF11sMe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7DB1F000C4;
+	Wed, 18 Nov 2026 22:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039687;
-	bh=cuR1BzMPwH5KhF6dqLvAZXtdut7kDrD5C17LGdHNgLI=;
+	s=korg; t=1795039690;
+	bh=lCfkJrXK/gLmrVMSfywtJl8KyUJZVWMUeeboAb5Kb4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KitQHICjHXHEM6Ln2cY59CqeNy2RQcBHs+6br2FHA2uvQ76u6Dw4CnJql/ntIXYlZ
-	 i1+5ylO++7iW+twLbgKAbXnucMqmSaa31sCeG0CDBzjtT63hT7ymJgOh7qOv/9yr22
-	 j1c8JIX5vVksmkzqn80tpH8ogEG95f/M+mKrecXM=
+	b=TQF11sMeNyuHe3aqAaByM+/0lSsmoml2xLv/akSsjew97Q66PY/lWKtN3YfCkM+eO
+	 6eVrIO+4/+mCTFSrMQw0tbpMnGTL5P3LspXjGiB5QAilYPhpfmFyC/YfJb2uCC8zd2
+	 FnL5pZO8uv4eHtJFUZAWj6Pu+nSRCNuvzN4220ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Justin Yeh <justin.yeh@mediatek.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2138/3318] efi/libstub: Fix efi_set_event_at() parameter documentation
-Date: Wed, 18 Nov 2026 15:46:00 +0100
-Message-ID: <20261118150426.203131103@linuxfoundation.org>
+Subject: [PATCH 6.6 2183/3318] HID: i2c-hid: Unfollow the panel on shutdown
+Date: Wed, 18 Nov 2026 15:46:45 +0100
+Message-ID: <20261118150427.455628233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,39 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Justin Yeh <justin.yeh@mediatek.com>
 
-[ Upstream commit c12a3a4b35e47fd511fbd550d3637318be41c4eb ]
+[ Upstream commit 59fc35a1edbfa5405122d749cf8843da131fd796 ]
 
-efi_set_event_at() documents ids although its array index argument is
-named idx. This produces missing and excess parameter warnings.
+i2c_hid_core_shutdown() sends SET_POWER(SLEEP) even for panel followers,
+but nothing in device_shutdown() guarantees whether the panel, and hence
+our own power, is still on by the time we get there.
 
-Match the argument name and fix the adjacent spelling of array.
+Do what i2c_hid_core_remove() does and just unfollow the panel.
+drm_panel_remove_follower() calls panel_unpreparing() only while the
+panel is still prepared, which powers us down properly; if it is already
+unprepared no transfer is attempted at all. On MT8196 the panel is
+unprepared long before us, so this also drops the ~2s i2c bus timeout
+from every reboot.
 
-Fixes: 8c0a839c2bcc ("efi/libstub: Descriptions for stub helper functions")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 96a37bfd232a ("HID: i2c-hid: Support being a panel follower")
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efistub.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index 5ecb9d3f3e9f9..ccce54356a457 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -220,8 +220,8 @@ typedef void (__efiapi *efi_event_notify_t)(efi_event_t, void *);
-  * efi_set_event_at() - add event to events array
-  *
-  * @events:	array of UEFI events
-- * @ids:	index where to put the event in the array
-- * @event:	event to add to the aray
-+ * @idx:	index where to put the event in the array
-+ * @event:	event to add to the array
-  *
-  * boottime->wait_for_event() takes an array of events as input.
-  * Provide a helper to set it up correctly for mixed mode.
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index cbffeb7186a6f..9ad603bcaf596 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -1302,7 +1302,16 @@ void i2c_hid_core_shutdown(struct i2c_client *client)
+ {
+ 	struct i2c_hid *ihid = i2c_get_clientdata(client);
+ 
+-	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
++	/*
++	 * Like in i2c_hid_core_remove(): if we're a follower, the act of
++	 * unfollowing will cause us to be powered down. Otherwise we need to
++	 * manually do it.
++	 */
++	if (ihid->is_panel_follower)
++		drm_panel_remove_follower(&ihid->panel_follower);
++	else
++		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
++
+ 	free_irq(client->irq, ihid);
+ 
+ 	i2c_hid_core_shutdown_tail(ihid);
 -- 
 2.53.0
 
