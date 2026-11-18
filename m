@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050733;
-	b=hNuC9J8D9BwbwDp3ReJtNzLBNyCht6sBQTsIQmCpG8LghpQGOBbY44ouHNPGtwoBQw30
-	 8la5ZY3TFMsZ34yJxcw75lplcPUFgUj1R8LC054KmIM1duCahVAuTI3uA6PGpLO+U8lQe
-	 2I97vfdVmY+JInIm8JJU0If/7gHNHdhzj5m6WAieUv1KbuLl2sLupCsQ87wW/E3WCF0RQ
-	 CuaBeeLoM3VIs1+l9aIV7fsZp4TzWhTRCMXoHLwSUs6GspdgsdeXxtJUK/r57ncrGQrrL
-	 nm52Ylby2ro2cvPwDeCj/3F9ba8XyvJQFONguRwNES2XaBggG2tVKR6bMT8tUoMHCyA==
+	t=1795050736;
+	b=zFoVdTry53dLy/3jCCkTkHf5x+L+YSKS2T+IQCBlNsUY0hOUM2lMGo3+loR46+u0TbGq
+	 PzWOXVTe3h9p6B7ZaFW5zUPnzeCg8VRUPmp7J8kvXdIqLJay/QYG5wXXvmt9UrR7EJrTn
+	 MMvRJugaTduWECy3dyr1OLIzdmuf8DSJdMjSFz2Ely9HsJr4zNLLIUqDX11elNu9Lc9i0
+	 3oyj1LQmW9QB5MUF+op8wETm4vwQiqmooet4/DxHpuZy6cEzUokGRT8WuFIeQfRkJMeTy
+	 DNZfRhDobDV9fxU5AvUrx9FbOIfD6m2jSFgeSfNRr1wBhH/Pkrs4GdKngHnSTfXysMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050733;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050736;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wWs84pC+MPGa7MYDi4u7kWGElqENlKLQ6pdDEfbIglY=;
-	b=gSS1hOLseiDgzyZ86VPRnA3jml4Pxqukdc4KYx39ucJz9Q3Rfp2CP7aShnt4dssFW3cQ
-	 k7zS7CGyO90rSPWsak5gJ25IrPHYsuZJhnX6Z0uNXqa+XvVinzXIPjE5T58p53CvkLy+i
-	 23T3f1ZO/FW0KqRJqYbKykwU5xbUvF+H21gxVNooAQJQWBKdDhTFTrdtBu7HKbJ3o8tfU
-	 nJ+obvUnvacQk1FZ7D+c1xx2pymc8hXrHEm1I1F/xl4WRm7Xr3k+7FAOvQEcHQFBFAyFA
-	 UuxIgOSW1C0SsWNwwh3DfC5vtjaYGiojvlyIpWbLhqOi8DdpHVLVTw5Un67sfj7U5rw==
+	bh=RMsC3R9PH4JrO1/2agaNNl6qHfbj3TrThXIwyHGotnw=;
+	b=YWsn1CaNKLt2bJmhEYWhNAkHARH+axFh1JdIHPwnkwjCUhR7oBQ/4/d++ywx6xfS+Xae
+	 gOO9GzMUZ7FKVSfuYxLGfID32U0owTiu8WP0vR5+RU3+i1qLQrAkyUgdyGbsvFiwkQGXK
+	 jL+EJ4IO377jA4jfKm4TA3cqQnQ40SoTQ17l65VmyOe+ekyQ4psaSebG4okF3GXel8bZ/
+	 Jg9rNnGkMNH07ApX/uyBJHGIR5bvKPLF5tH3Lh1EqjqLfWlqp38xZyfT5YHTzCd7ufKaj
+	 w9/uNrVY0/w5vtRam4N6JB+djMAbyiEvdfqvfPkdTEb4n1g8dBz8wsIxotOj6WNiDVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UqhXaUoy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4sIRsIE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973D5606A31C;
-	Thu, 19 Nov 2026 01:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3682606A320;
+	Thu, 19 Nov 2026 01:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UqhXaUoy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16991F000C4;
-	Thu, 19 Nov 2026 01:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4sIRsIE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC461F000C4;
+	Thu, 19 Nov 2026 01:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050733;
-	bh=wWs84pC+MPGa7MYDi4u7kWGElqENlKLQ6pdDEfbIglY=;
+	s=korg; t=1795050736;
+	bh=RMsC3R9PH4JrO1/2agaNNl6qHfbj3TrThXIwyHGotnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqhXaUoyxqZzGZwJ17P1PmizxRD5nMXS5exrqqvIbp6zICiZ5bGBzu/Hgm4bwwBTQ
-	 vm3ECvLlWgA7VuOOXOccRH19qPUXFlKZwlLKiBRFvHk3AV4TWpFd24we+uoQTr7b2q
-	 eSIWk93hbJFU2dIA8Ey2TzZnW4S9iDXqbnAeOAiI=
+	b=G4sIRsIEaiCTN863w4TuCzRGuJIb+0eKyOpshMIml55AdZbOX/MkfoxisMaBAjXLk
+	 QR8dqp1gHxlKvZRbNz6dpiIvQdcFz9k4OMvpVcxSczjI/9lE/hJFrGo1PgmG6h3MSM
+	 grjolT9b2UFTmrWLAqTHSrdgGZhPLCoIdSpZq6D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2814/2857] bnxt_en: Change bnxt_rx_xdp function prototype
-Date: Wed, 18 Nov 2026 16:04:08 +0100
-Message-ID: <20261118150342.926878683@linuxfoundation.org>
+Subject: [PATCH 6.1 2815/2857] eth: bnxt: free XDP frags when xdp_do_redirect() fails
+Date: Wed, 18 Nov 2026 16:04:09 +0100
+Message-ID: <20261118150342.961388041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -76,153 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 1614f06e09ad6b271c6ed8ffd87ccf89ec51526c ]
+[ Upstream commit c10f3420d59859df107838aa97b49357616d9b47 ]
 
-Change bnxt_rx_xdp() to take a pointer to xdp instead of stack
-variable.
-This is in prepartion for the XDP metadata patch change where
-the BPF program can change the value of the xdp.meta_data.
+When xdp_do_redirect() fails bnxt_rx_xdp() recycles the head page but
+not the frags of a multi-buffer frame. Their agg ring slots have
+already been refilled, so the pages leak, and the page pool can't be
+destroyed until they are returned, which will never happen. Redirect
+to an AF_XDP socket in copy mode fails this way with -ENOMEM whenever
+the socket's fill ring runs out of buffers.
+A socket bound without XDP_USE_SG also fails with -ENOSPC for every
+frame that doesn't fit in a single chunk.
 
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+All the other drop paths in this function free the frags.
+
+Pointed out in LLM review of the first patch of the series.
+Tested on a BCM57504 at MTU 9000 by redirecting 60k 8000B ICMPv6
+echo requests (a head and two agg buffers each) to lo, which can't
+transmit XDP frames. The page pools' inflight count stayed flat
+rather than growing by two pages per frame.
+
+Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
 Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Jesper Dangaard Brouer <hawk@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240402093753.331120-5-pavan.chebbi@broadcom.com
+Link: https://patch.msgid.link/20261027234940.1267225-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c10f3420d598 ("eth: bnxt: free XDP frags when xdp_do_redirect() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 28 +++++++++----------
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h |  2 +-
- 3 files changed, 16 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 7328697c016ca..2bb1e26034048 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1970,7 +1970,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 	}
- 
- 	if (xdp_active) {
--		if (bnxt_rx_xdp(bp, rxr, cons, xdp, data, &data_ptr, &len, event)) {
-+		if (bnxt_rx_xdp(bp, rxr, cons, &xdp, data, &data_ptr, &len, event)) {
- 			rc = 1;
- 			goto next_rx;
- 		}
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 635f3e46305f6..c68b5b045f300 100644
+index c68b5b045f300..95f620991ec78 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -219,7 +219,7 @@ void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
-  * false   - packet should be passed to the stack.
-  */
- bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
--		 struct xdp_buff xdp, struct page *page, u8 **data_ptr,
-+		 struct xdp_buff *xdp, struct page *page, u8 **data_ptr,
- 		 unsigned int *len, u8 *event)
- {
- 	struct bpf_prog *xdp_prog = READ_ONCE(rxr->xdp_prog);
-@@ -241,9 +241,9 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+@@ -310,6 +310,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
  
- 	txr = rxr->bnapi->tx_ring;
- 	/* BNXT_RX_PAGE_MODE(bp) when XDP enabled */
--	orig_data = xdp.data;
-+	orig_data = xdp->data;
- 
--	act = bpf_prog_run_xdp(xdp_prog, &xdp);
-+	act = bpf_prog_run_xdp(xdp_prog, xdp);
- 
- 	tx_avail = bnxt_tx_avail(bp, txr);
- 	/* If the tx ring is not full, we must not update the rx producer yet
-@@ -252,10 +252,10 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 	if (tx_avail != bp->tx_ring_size)
- 		*event &= ~BNXT_RX_EVENT;
- 
--	*len = xdp.data_end - xdp.data;
--	if (orig_data != xdp.data) {
--		offset = xdp.data - xdp.data_hard_start;
--		*data_ptr = xdp.data_hard_start + offset;
-+	*len = xdp->data_end - xdp->data;
-+	if (orig_data != xdp->data) {
-+		offset = xdp->data - xdp->data_hard_start;
-+		*data_ptr = xdp->data_hard_start + offset;
- 	}
- 
- 	switch (act) {
-@@ -267,8 +267,8 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 		mapping = rx_buf->mapping - bp->rx_dma_offset;
- 		*event = 0;
- 
--		if (unlikely(xdp_buff_has_frags(&xdp))) {
--			struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(&xdp);
-+		if (unlikely(xdp_buff_has_frags(xdp))) {
-+			struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
- 
- 			tx_needed += sinfo->nr_frags;
- 			*event = BNXT_AGG_EVENT;
-@@ -276,7 +276,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 
- 		if (tx_avail < tx_needed) {
+ 		if (xdp_do_redirect(bp->dev, xdp, xdp_prog)) {
  			trace_xdp_exception(bp->dev, xdp_prog, act);
--			bnxt_xdp_buff_frags_free(rxr, &xdp);
 +			bnxt_xdp_buff_frags_free(rxr, xdp);
- 			bnxt_reuse_rx_data(rxr, cons, page);
- 			return true;
- 		}
-@@ -286,7 +286,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 
- 		*event |= BNXT_TX_EVENT;
- 		__bnxt_xmit_xdp(bp, txr, mapping + offset, *len,
--				NEXT_RX(rxr->rx_prod), &xdp);
-+				NEXT_RX(rxr->rx_prod), xdp);
- 		bnxt_reuse_rx_data(rxr, cons, page);
- 		return true;
- 	case XDP_REDIRECT:
-@@ -303,12 +303,12 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 		/* if we are unable to allocate a new buffer, abort and reuse */
- 		if (bnxt_alloc_rx_data(bp, rxr, rxr->rx_prod, GFP_ATOMIC)) {
- 			trace_xdp_exception(bp->dev, xdp_prog, act);
--			bnxt_xdp_buff_frags_free(rxr, &xdp);
-+			bnxt_xdp_buff_frags_free(rxr, xdp);
- 			bnxt_reuse_rx_data(rxr, cons, page);
- 			return true;
- 		}
- 
--		if (xdp_do_redirect(bp->dev, &xdp, xdp_prog)) {
-+		if (xdp_do_redirect(bp->dev, xdp, xdp_prog)) {
- 			trace_xdp_exception(bp->dev, xdp_prog, act);
  			page_pool_recycle_direct(rxr->page_pool, page);
  			return true;
-@@ -323,7 +323,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 		trace_xdp_exception(bp->dev, xdp_prog, act);
- 		fallthrough;
- 	case XDP_DROP:
--		bnxt_xdp_buff_frags_free(rxr, &xdp);
-+		bnxt_xdp_buff_frags_free(rxr, xdp);
- 		bnxt_reuse_rx_data(rxr, cons, page);
- 		break;
- 	}
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-index ae8159c5f56c4..7408c31a9a9a8 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-@@ -18,7 +18,7 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
- 				   struct xdp_buff *xdp);
- void bnxt_tx_int_xdp(struct bnxt *bp, struct bnxt_napi *bnapi, int nr_pkts);
- bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
--		 struct xdp_buff xdp, struct page *page, u8 **data_ptr,
-+		 struct xdp_buff *xdp, struct page *page, u8 **data_ptr,
- 		 unsigned int *len, u8 *event);
- int bnxt_xdp(struct net_device *dev, struct netdev_bpf *xdp);
- int bnxt_xdp_xmit(struct net_device *dev, int num_frames,
+ 		}
 -- 
 2.53.0
 
