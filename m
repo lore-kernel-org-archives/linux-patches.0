@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055505;
-	b=jqCJ2fMM7MvH6FJyeMEEJNLqZKmv/j4dqU4h6EuUw9S3O3xlH3+jUlQKkkLzmMHhHEZS
-	 9AgJz+zW8lYZpv1ApTluCf7omHvOfOOvdfEIKYWpGZR3uAcpqB46/2g06Ljt/TUnK81P+
-	 xYrx/v0u2FQ29H3cAYjVgpc6abAUa0ZfyQ+UVXe7NcHEVF4C9nWf6wZ14jBPx0JSKg7de
-	 ryZB8YXSbc53JC5eqtbmHDYZgM9Q24wBcB82mYzWLm+b+kxZ0zdKlfWcX8p/bgMVOfA9y
-	 haRtOYPYYfMQuyNBZo5jXo0sYYnK7zOe3BaySRAlU16lgKf8nzgGiUz1FloJezlOq+A==
+	t=1795055507;
+	b=nHHHM5AWrsOhz2N5iozJXe6W6lbeui+0C/skTmoSHwO7AZmsAHdtL0fQlna3Vm01N3XC
+	 A/U6Ui7ovgdQKx1/djUfNJGVWcew4K6XouBu52TiXMOR0uNA4OxbtudQAQVQtuq4yVPc3
+	 T3bsW9ZkUeqiknCHEGERi7867K45Dpr+zV6/Aly/KM2YjOblq6a7R7TlBLTdsneiKOqJr
+	 J9NreEgdt3rmwykkxcIgvb5ZF4coDLMd5wvjdfbAuggux/M/BmX5S7sOTIYfXIUsfUHbv
+	 RDkp3volMOxrIpVlDdg8MXCvQcRZgxhryoUV6/uo99vbuaA4WgU0PP68XvaqWkdU8tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iTP2N8ZC5WvCvIs/gQSnJxd4FB/geA4KwLLIennh57o=;
-	b=ARG6byKHKI6vt97BWyUq8NT0Q2/InRVsp++bceg8CD2VpwobH/pr0rAKiZFofEklI04/
-	 k5/OWCvUHpRrr1HmTaNrBhypYiCaa7Tg8psvibrxA8DrMRHKSsYZ5sIeuxbYk6D0a425h
-	 uRX/kcPXa5cuHG/QPmLfKmfwsipqJsis/bw9F1BHV5GMaGLYGZpz42TlC6SM8bS9wahlN
-	 AeNWxpstk3DefCrx7rup0tiSVau/BvYibKkJCfPM6fKCzhFOdtv5aGJ0zOEh7lRLA7wYz
-	 WUdDiizxW28Xuzva2FXkmlDo9iBnvRJS6dSZo07DOR7JdsSCKKJEKvW7hGrVfuhi91g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qe8zqfmS6t6mNCUd0TZ6q42S6U3M6XFWooTLDL9dx/A=;
+	b=QNTtzMPDWnhMWmgUVbUpJD/GpNbHuvA0XHo/nLiD5AABWaMSlpO6pgHphKDF9AjBY4XW
+	 OCQ5gt9Z3Ugzyl5UZTrDT/NFSSgtHYxOALIFZBtVlFIXmuiFO3aBtA2iXVTY1PnY7xhi9
+	 VytN1EXuwgWsF6inARNiQFRHtcJkdJgk8aM/l++RYk8H6VsY1wX5mAfmza5709GGoQmIX
+	 tqdClbfdVyxoVpHpjIbkc8h8PSVUGpByJeS+831nsEgaR0G6J0fLJ8iDua/Jqx2UaEVKf
+	 h3SgwFR/Sizl1upD8eUhN6xmhrNcDSELTrw5pf4CWMl8XAXN09OgRzTTk/8wCKeQ0cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAkVhrRx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v5ywskDS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94B7606A330;
-	Thu, 19 Nov 2026 02:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C560A606A335;
+	Thu, 19 Nov 2026 02:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAkVhrRx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F04F1F000C4;
-	Thu, 19 Nov 2026 02:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v5ywskDS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B581F000C4;
+	Thu, 19 Nov 2026 02:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055504;
-	bh=iTP2N8ZC5WvCvIs/gQSnJxd4FB/geA4KwLLIennh57o=;
+	s=korg; t=1795055507;
+	bh=qe8zqfmS6t6mNCUd0TZ6q42S6U3M6XFWooTLDL9dx/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAkVhrRx3XbJEOFlYSIDwfOeCLroor7Bja3cG4uDTjHIu3aKlnT5D/TDQp1t2W0bF
-	 tisNw9T4gcGetuyak+vfAMtPepifJY/P+UYSEDXvyk5qyeVeYx84VWBx5VXBtsYn/E
-	 4m1ybWAHvfPhPxMB+fvfUzAAahWWu9Vh1P42I9UU=
+	b=v5ywskDSKjJ2teOt7wjm8K1+18/qrs/T6rrMA+J3mbxlt/BCfHn/Zu1eJmepiacsx
+	 Tq4BeYReM1N3bkWZ681yxn3jRk6O96PTeT5sR/EztGDBXDjGGw2wIbwHQHyu1IgKHf
+	 EgWpxTrkSby5wXHSMUpFVOJ4XaG8bG2PMiOsfdsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arka@arkamondal.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1638/2214] iio: dac: ad5758: Reject out-of-range raw values
-Date: Wed, 18 Nov 2026 15:55:14 +0100
-Message-ID: <20261118150117.459757370@linuxfoundation.org>
+Subject: [PATCH 5.15 1656/2214] ASoC: mediatek: mt8192-mt6359: Fix error handling in MTKAIF calibration
+Date: Wed, 18 Nov 2026 15:55:32 +0100
+Message-ID: <20261118150118.134654924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,46 +62,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arka Mondal <arka@arkamondal.net>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit ebc026be1b719e47bd7f2f1e72fabc875b590f87 ]
+[ Upstream commit d6c8a0b5bf696d89350e43bf554362de8929f801 ]
 
-ad5758_write_raw() passes the value from userspace straight to
-ad5758_spi_reg_write(), which keeps only the low 16 bits. Writing -1
-to the raw attribute gives full-scale output, and 65536 gives code 0.
+mt8192_mt6359_mtkaif_calibration() ignored the return values of
+pm_runtime_get_sync() and mt8192_afe_gpio_request(), which could
+leave PM runtime references or GPIO state unbalanced on failure.
 
-Return -EINVAL for values outside 0 to U16_MAX, as ad5755 does.
+Switch to pm_runtime_resume_and_get(), check each GPIO request,
+and unwind on error.
 
-Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
-Signed-off-by: Arka Mondal <arka@arkamondal.net>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 18b13ff23fab ("ASoC: mediatek: mt8192: add machine driver with mt6359, rt1015 and rt5682")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260918133912.133799-16-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5758.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../mt8192/mt8192-mt6359-rt1015-rt5682.c      | 37 +++++++++++++------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/iio/dac/ad5758.c b/drivers/iio/dac/ad5758.c
-index 0572ef5181012..5a8ede7d6e640 100644
---- a/drivers/iio/dac/ad5758.c
-+++ b/drivers/iio/dac/ad5758.c
-@@ -558,6 +558,9 @@ static int ad5758_write_raw(struct iio_dev *indio_dev,
+diff --git a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
+index fca228ea781b3..6cf0dce4d5a72 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
++++ b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
+@@ -141,12 +141,23 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 	int chosen_phase_1, chosen_phase_2, chosen_phase_3;
+ 	int counter;
+ 	int mtkaif_calib_ok;
++	int ret = 0;
  
- 	switch (info) {
- 	case IIO_CHAN_INFO_RAW:
-+		if (val < 0 || val > U16_MAX)
-+			return -EINVAL;
-+
- 		mutex_lock(&st->lock);
- 		ret = ad5758_spi_reg_write(st, AD5758_DAC_INPUT, val);
- 		mutex_unlock(&st->lock);
+-	pm_runtime_get_sync(afe->dev);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
++	ret = pm_runtime_resume_and_get(afe->dev);
++	if (ret < 0)
++		return ret;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
++	if (ret)
++		goto err_pm_put;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
++	if (ret)
++		goto err_disable_adda_1;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
++	if (ret)
++		goto err_disable_adda_0;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
++	if (ret)
++		goto err_disable_adda_ch34_1;
+ 
+ 	mt6359_mtkaif_calibration_enable(cmpnt_codec);
+ 
+@@ -267,10 +278,14 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 
+ 	mt6359_mtkaif_calibration_disable(cmpnt_codec);
+ 
+-	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
+-	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
+-	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
+ 	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 0);
++err_disable_adda_ch34_1:
++	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
++err_disable_adda_0:
++	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
++err_disable_adda_1:
++	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
++err_pm_put:
+ 	pm_runtime_put(afe->dev);
+ 
+ 	dev_info(afe->dev, "%s(), mtkaif_chosen_phase[0/1/2]:%d/%d/%d\n",
+@@ -279,7 +294,7 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 		 afe_priv->mtkaif_chosen_phase[1],
+ 		 afe_priv->mtkaif_chosen_phase[2]);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
+@@ -297,9 +312,7 @@ static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
+ 	afe_priv->mtkaif_protocol = MTKAIF_PROTOCOL_2_CLK_P2;
+ 
+ 	/* mtkaif calibration */
+-	mt8192_mt6359_mtkaif_calibration(rtd);
+-
+-	return 0;
++	return mt8192_mt6359_mtkaif_calibration(rtd);
+ }
+ 
+ static int mt8192_rt5682_init(struct snd_soc_pcm_runtime *rtd)
 -- 
 2.53.0
 
