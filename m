@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030509;
-	b=OfAUm0HEgXyu50INcr/fGNmB595dSPbwerY2d8Hhq5r+IqYk8n6pkiomOUOnHDtfc0ud
-	 6216t6K99+OSCDT1VjXOoHPO1wy+e5+5HzaJ/Ryp2/mLnVRyC3tAn+2JJLovUpD5O+nMu
-	 aJUKdGhfLb3u5j8iHa8ISjnR7QXhP9vdj0iqi64nuyEiYUD2ASatg1SShh+UQgZus6HGA
-	 qPah6ej2krIqF0pcxpTUSfSDomhCjL1/VaC0iESgAoqta/xqrrOzENw1HmfT1k5C7YWr4
-	 ApYtuf8F59iZu1noMfUgSXn7Dlp9PfDNltIUb7x8RxJDtPg2mnGdiOmvRlm1wxouyHA==
+	t=1795030512;
+	b=5bLSftPFao11bKNSE6v3e+U8nWuYAIEyfyF8V2wLKfOP41fFehsH1bJ1Z/vbqmtY+gIG
+	 nAr7tr9wcvPswwO3V7AAHX8iV3Fa9BpYgJBQ+1Sc1qIkeI3D17JiueP3GZRPT8VyqlXBm
+	 Iqq9457sZniNzsIUjKYkY+1FAvX4wyS/4bH+9YDK6Pkvkxiyr24vGZxmy+/XPbcDhmWyK
+	 p/pHfzumumkuv5mQZC0H3vglPCPmOda47RA40jEW+IlljPc59OACqy8nB0e6X2fW9MeAp
+	 EWESNaF4uxTQ+JChGmmroM/+x8CQhSlBSDHOCW/AL7y024M2xX6wyHeem2n4Xfm81Lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7IITbpEBkUbJZe53Cr0Fgxd2/sqQ3G5zmQp+UQLLqG4=;
-	b=JQ8hM4Q3+5dTY7SKL2xUjr6LKoQgI2z4hjK0euPtpKGl3OJiftwDJZrv8nu1I4JmUtLE
-	 0Bq92GrETVi6c3dbGjjwmWivba3hBomx0+xJb1uIr2S/7M09T6nCrPwHJePbk/VaQRvLr
-	 ESsyMsMlQJrL5uhk2ZmrY98lk2x5zk5nn8QYC28D8L59u5GPCEaG70HNVe5QWyAyNezMm
-	 nrpzkc1T2++9b1I6smaNxa798QjSJvjhGTDVC/NTyxamjFKW1VTmJQIOSTPrslMKV6X1w
-	 XYKWsva1xX22uem5yD+PUXel3ScjXd8DlEIqGiEDrG59TJyFiVJhvvuNR158tdxomfw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=XLrx4ElEexT9bpVJR/F9AFgcIGwKBhwlm3x9Sd9DhaM=;
+	b=pE4oIizfMrVGvkpkE4tSx4j+bV0CYaRWbtwgt9mde+pLteK2s1uH9chYWa15VPRpZeYJ
+	 eRIAxBiVrD9/xxTTEVcQYQ2sAGPNJrE7YYMsovUPMvmhPnoaE8pQT/V/U6s7N14D5REor
+	 8b/s09SrZNmhSyfCzlfqh/U9wBrWtNZ9YNdgpKG4WlzyyDc1vhQq0DzqVv0jBvaYGbSuu
+	 jU4MCDAZC2dIaBX9r88s4qIfRZERsobAD79AvNvIsHq4hJIXQo5QwKcv35/7/9zkT/ZYI
+	 XM2StRvL9AB6UQgGRTklkp7+0vdGirpKwKl5Zs8CJ0uIDe/0N+lxtWh5Ygat25Kwb3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jn7WzM8W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhNax249;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDCF606BB50;
-	Wed, 18 Nov 2026 19:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E985606BB50;
+	Wed, 18 Nov 2026 19:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jn7WzM8W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21FB1F000C6;
-	Wed, 18 Nov 2026 19:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhNax249
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27931F000C6;
+	Wed, 18 Nov 2026 19:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030509;
-	bh=7IITbpEBkUbJZe53Cr0Fgxd2/sqQ3G5zmQp+UQLLqG4=;
+	s=korg; t=1795030512;
+	bh=XLrx4ElEexT9bpVJR/F9AFgcIGwKBhwlm3x9Sd9DhaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jn7WzM8Wuq1k2H5jhfv4ayzIWo2ScyNV1CM2v0h/zJaYs0pYAXSW0/RtdiUZclk5w
-	 /T18wJBGnU7ywhqxYrbxEQ8Flg/g4aON1vWgB/NaXKs/5f0s5ZjorL3Ri/GVOVIlyz
-	 zYQtscjmk+eBIFIa2YoRWaepWf4mihCsvT1YK7sM=
+	b=XhNax249Kqu62HO9zKZw23JIiHSRdAcpK785P2fta2F5acXFmfOVc9QCzPG7mZokc
+	 dYSK7n3kVXUx/J1SI+5XkjKYayFXYjD3fxrk86XLmM4UQYx+5Niix4qPZw1Wv4Hif9
+	 qmjTUmoK7UD5zAFWn3ZUMcfsZWoXqUPgwnVA1ClU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yili Zhang <zhangyili01@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0693/1756] RDMA/nldev: Fix NULL deref in dumps of objects abandoned by DRIVER_FAILURE
-Date: Wed, 18 Nov 2026 15:47:00 +0100
-Message-ID: <20261118150036.793086313@linuxfoundation.org>
+Subject: [PATCH 6.12 0729/1756] rtc: ftrtc010: drop needless struct ftrtc010_rtc::rtc_dev member
+Date: Wed, 18 Nov 2026 15:47:36 +0100
+Message-ID: <20261118150038.695189613@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,109 +63,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yili Zhang <zhangyili01@baidu.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 9f4c322be27bf617cad2f4a15f6c6024a69e220c ]
+[ Upstream commit a55d44807b63f171f8079d770c9d82fa87046cdd ]
 
-fill_res_cq_entry() dereferences cq->uobject->uevent.uobject.context->res.id
-unconditionally for user resources.
+The memory pointed to by the ::rtc_dev member is managed via devres,
+and no code in this driver uses it past _probe().
 
-This is normally safe by ordering: destroy_hw() removes the resource
-from the restrack before uverbs_destroy_uobject() clears ->context,
-and the XA_ZERO_ENTRY marker set by rdma_restrack_begin_del() hides
-the entry from concurrent netlink dumps.
+We can drop it from the structure and just use a local temporary
+variable, reducing runtime memory consumption by a few bytes.
 
-The ordering breaks when a driver keeps failing to destroy an object
-during ucontext teardown. uverbs_destroy_ufile_hw() then falls back to
-__uverbs_cleanup_ufile(RDMA_REMOVE_DRIVER_FAILURE), which
-abandons the object in place: the HW object and its restrack entry
-are intentionally leaked, while the uobject bookkeeping is torn down
-and ->context is explicitly set to NULL by uverbs_destroy_uobject().
-rdma_restrack_del() is never reached, so the orphaned entry stays in
-the device restrack with a valid kref, reachable by any subsequent
-netlink dump.
-
-Observed on 6.1.52 with MLNX_OFED 24.10, after an mlx5 FW failure
-left a process unable to tear down its CQ (destroy_cq FW command
-failing during FD close):
-
-  WARNING: ... uverbs_destroy_ufile_hw+0xe3/0x100
-  BUG: kernel NULL pointer dereference, address: 0000000000000058
-  RIP: 0010:fill_res_cq_entry+0x15e/0x180 [ib_core]
-   res_get_common_dumpit+0x304/0x530 [ib_core]
-   nldev_res_get_cq_dumpit+0x1a/0x20 [ib_core]
-
-The faulting chain maps to the source (CR2 = 0x58):
-  cq->uobject            (struct ib_cq +0x08, res at +0x98)
-  uobject->context       (struct ib_uobject +0x10, NULL after abandon)
-  context->res.id        (struct ib_ucontext +0x58)
-
-The recent restrack rework (8d186210677c and its series) moved the
-restrack deletion to the start of the destroy flow and thus fences
-concurrent dumps from an object being destroyed, but it does not
-cover this case: when destroy fails, rdma_restrack_abort_del()
-restores the entry, and the RDMA_REMOVE_DRIVER_FAILURE sweep still
-never removes it from the restrack.
-
->From the fallback until the device is unregistered, any "rdma res
-show cq" deterministically takes the NULL pointer dereference; this
-is a long-lived state, NOT A RACE. The dump path holds neither the
-restrack lock (dropped before the fill callback runs) nor
-ufile->hw_destroy_rwsem, and rdma_restrack_get() only guarantees
-that the res memory stays alive, not that ->context is still valid.
-
-Fix the dump side: check the uobject context directly instead of the
-rdma_is_kernel_res() marker. A non-NULL uobject already implies a
-user resource, so kernel resources keep being skipped, and the
-additional ->context check skips the RES_CTXN attribute for
-orphaned entries instead of crashing the dump. The orphaned resource
-itself remains visible in "rdma res show" (cqn/cqe/usecnt/pid),
-which is what an operator needs after the accompanying uverbs WARN
-to diagnose the driver destroy failure.
-
-fill_res_pd_entry() has the same pattern (pd->uobject->context->res.id)
-and is fixed the same way; a PD can even reach the fallback without
-its own driver callback failing, e.g. uverbs_free_pd() returns -EBUSY
-while another object that failed to destroy still holds the PD usecnt.
-
-Fixes: c3d02788b45a ("RDMA/nldev: Provide parent IDs for PD, MR and QP objects")
-Signed-off-by: Yili Zhang <zhangyili01@baidu.com>
-Link: https://patch.msgid.link/20260923131239.6521-1-zhangyili01@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250304-rtc-cleanups-v2-6-d4689a71668c@linaro.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: c60478875a44 ("rtc: ftrtc010: fix clock resource leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-ftrtc010.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 98d33ad6a397a..b5892ab187e4e 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -651,7 +651,8 @@ static int fill_res_cq_entry(struct sk_buff *msg, bool has_cap_net_admin,
+diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
+index cb4a5d101f537..02608d3784958 100644
+--- a/drivers/rtc/rtc-ftrtc010.c
++++ b/drivers/rtc/rtc-ftrtc010.c
+@@ -28,7 +28,6 @@ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:" DRV_NAME);
  
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CQN, res->id))
- 		return -EMSGSIZE;
--	if (!rdma_is_kernel_res(res) &&
-+
-+	if (cq->uobject && cq->uobject->uevent.uobject.context &&
- 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
- 			cq->uobject->uevent.uobject.context->res.id))
- 		return -EMSGSIZE;
-@@ -741,7 +742,7 @@ static int fill_res_pd_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, res->id))
- 		goto err;
+ struct ftrtc010_rtc {
+-	struct rtc_device	*rtc_dev;
+ 	void __iomem		*rtc_base;
+ 	int			rtc_irq;
+ 	struct clk		*pclk;
+@@ -113,6 +112,7 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 	struct ftrtc010_rtc *rtc;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
++	struct rtc_device *rtc_dev;
+ 	int ret;
  
--	if (!rdma_is_kernel_res(res) &&
-+	if (pd->uobject && pd->uobject->context &&
- 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
- 			pd->uobject->context->res.id))
- 		goto err;
+ 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
+@@ -160,29 +160,28 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 		goto err_disable_extclk;
+ 	}
+ 
+-	rtc->rtc_dev = devm_rtc_allocate_device(dev);
+-	if (IS_ERR(rtc->rtc_dev)) {
+-		ret = PTR_ERR(rtc->rtc_dev);
++	rtc_dev = devm_rtc_allocate_device(dev);
++	if (IS_ERR(rtc_dev)) {
++		ret = PTR_ERR(rtc_dev);
+ 		goto err_disable_extclk;
+ 	}
+ 
+-	rtc->rtc_dev->ops = &ftrtc010_rtc_ops;
++	rtc_dev->ops = &ftrtc010_rtc_ops;
+ 
+ 	sec  = readl(rtc->rtc_base + FTRTC010_RTC_SECOND);
+ 	min  = readl(rtc->rtc_base + FTRTC010_RTC_MINUTE);
+ 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
+ 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+ 
+-	rtc->rtc_dev->range_min = (u64)days * 86400 + hour * 3600 +
+-				  min * 60 + sec;
+-	rtc->rtc_dev->range_max = U32_MAX + rtc->rtc_dev->range_min;
++	rtc_dev->range_min = (u64)days * 86400 + hour * 3600 + min * 60 + sec;
++	rtc_dev->range_max = U32_MAX + rtc_dev->range_min;
+ 
+ 	ret = devm_request_irq(dev, rtc->rtc_irq, ftrtc010_rtc_interrupt,
+ 			       IRQF_SHARED, pdev->name, dev);
+ 	if (unlikely(ret))
+ 		goto err_disable_extclk;
+ 
+-	return devm_rtc_register_device(rtc->rtc_dev);
++	return devm_rtc_register_device(rtc_dev);
+ 
+ err_disable_extclk:
+ 	clk_disable_unprepare(rtc->extclk);
 -- 
 2.53.0
 
