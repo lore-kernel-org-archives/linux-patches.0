@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057142;
-	b=FhX0y/KFNoRI/S964US9s5/6O24UyKg0vuHHwj755gH2LPMR1p4yLCxGXq8mn4ymOKyN
-	 1FHwqYnuyU7c//276VxkI+gX6qdJVQFf6WJX+ky0E1jaav9pP1+7jIq93xJieKLpjuaVP
-	 xtmHaaL13oNx+9Q6KKh9+Zn+bwAuzT7YwkUVFzbXA5TpB/lGOSsQyo0l60jCGBrWPFvWz
-	 ePLfwXMJkb5hYGaW+zMh0kwwD5wUU+gkcarAtJalCvM6swLApZpomzVY2MdB35i8vSdbL
-	 Vexjj02v06U9rji8ktLhFPulw8S5+3I0XwbgIZWBDf7aiaRXSyx7FwJxlsid4/j8Xvg==
+	t=1795057145;
+	b=24AQqTzm/EgM269nrX+oxPne3Sz5Z1O5bX3Uit8mEYwU0LAcpv+hMMsBZ/0D4PEVMPwQ
+	 o23/cb30iJALbZwttoouonSs9bhnLAQpLzt7pFWiRLE4uZWqvwPIUHtSghxJrB5vss4dL
+	 GWB355NTS7cFf44eAwH9gm1CZoP8j9HjvRX5+aNyQRlvb0GFD/aIGbKDNVTgdhyBOJ2GG
+	 vMcf2eKjAn1n0rGcx2Tpfe3cmX7zqLNvt1A0WrGqAuMyU+2jJhkpk5xcdxErADANlxiLA
+	 FetX9e6gxlaZfupKP7iDCJqRIFcQjORGgaC2m7Wi9B1Pf6e7q8tdtqt0CUCoXoZ8Clg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057142;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MpYL9KTE90tlpuJ/BCMrNN56kQ0+upOxmydLhFIzBi8=;
-	b=gjABmWmWUk4+IHZh2lKgZ9HRZ1fB6uALwmKRNWHLHH3GDKkTx9elGLldd05qNhdzxFLB
-	 lCgYKR6F4+bvGM+1FyvkN9F9v6oRc+7k1ipnECsD9nl/aA5NzPXNK8w9PMme6xyuuTQCy
-	 hv0TRCHX4r1+MkLFFTK6fVG6YMV40z7MhOR6KpdjBo5p6T9MVby5gvyC6C0XtMLnwqW4q
-	 hJ0Ox8oYdqgARP8Zx7g5Xk7AVZp9+gAsW8QrfOHOgXmESTcPZIHnHaPXWT/g2tEZK9h2e
-	 7DHEpwRsLMcG5RVCpUDrUFCMzcuzJVqy7kWYhJsqzVEj8MZaiFhzHPJFo6/DTwc2MfA==
+	bh=ekz7JF/VFaNOP4nCnZGuWWRd5LosZPjav8M2WfXXsRo=;
+	b=whoPKKWbO6FfrBLQ4QAT0UJINjBSEMylpdlyk6xFjl6QMZsCqiNhMX1rujM20Mt+rSRq
+	 X29zNWgrUJtCcdcAmT5xAO9l8mv3P48gdI7sJB5+fvHGK7nqbovVoLFhs/+NbSc2cxRv8
+	 C05MuSCb61f1GstEKOZI37w8sluI0VBbWeCXRNuHx7jqkICGsm4lSZn26rFHiKJ84zp7z
+	 v8Xjw9z2f5jmI1CxlZCGrMjeOGnwUCBtjKbKOAj9unmG/69rs6CSniR5xlgf1T+JeP+lv
+	 Wx2oBKULpZYGSUgABwKxtYGSaaoqmrTAWYD3abXS+8U21nRpWaSDbjJ2an7CDMgtUjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfAz3Ahz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M5wru4ZA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4743606A32A;
-	Thu, 19 Nov 2026 02:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF9606A31C;
+	Thu, 19 Nov 2026 02:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfAz3Ahz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060A21F000C4;
-	Thu, 19 Nov 2026 02:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M5wru4ZA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4771F000C4;
+	Thu, 19 Nov 2026 02:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057142;
-	bh=MpYL9KTE90tlpuJ/BCMrNN56kQ0+upOxmydLhFIzBi8=;
+	s=korg; t=1795057145;
+	bh=ekz7JF/VFaNOP4nCnZGuWWRd5LosZPjav8M2WfXXsRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dfAz3AhzodOgN7ydSiAwe1YCR5g0j797zf2JKI3jvouTrUzG5NeZCImjfCsUy/hgm
-	 6ITYKNRF5StvoFtZ+vh6b+Yfzpmf4KkcNGkMEOhKigz0MKoMkW7LV5QwJjG2Ioor+K
-	 rhCDO0P8i17zt+jasB/b3oBrwVJD3c269Td0+Yys=
+	b=M5wru4ZAMwVNOec9mL3UpYrurYk35PZJ9aFJoQSRumUddkBNO/zMOGoww2DkSlmnP
+	 O1rNTfSX/4RGS9Z9WB2YeQn7x4Wuskz3pE/JAs+15237osDYkrPwcMCnob9yGSfNC/
+	 C/zCDg2nKlyy7iv1REnx1BgewvieCSvHg1d5wcmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0026/1848] drm/rockchip: dw_hdmi: Use resume_early pm ops for system suspend
-Date: Wed, 18 Nov 2026 15:34:24 +0100
-Message-ID: <20261118145912.167897296@linuxfoundation.org>
+Subject: [PATCH 5.10 0027/1848] drm/amd/pm: Validate OD DPM triples before mutating tables
+Date: Wed, 18 Nov 2026 15:34:25 +0100
+Message-ID: <20261118145912.264492973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,69 +70,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit af3a9eadc11896f6677bcb7102bfb7c84be48d2d ]
+[ Upstream commit b390cb9d776039fc4f0be13b2649299079227d12 ]
 
-rockchip_drm_sys_resume()/drm_mode_config_helper_resume() is called
-before the resume pm ops of dw-hdmi. This result in an atomic_enable()
-before dw_hdmi_rockchip_resume()/dw_hdmi_resume() is called.
+vega10_odn_edit_dpm_table() and smu7_odn_edit_dpm_table() could mutate
+the live ODN table for valid triples, then return 0 after detecting a
+truncated buffer or out-of-range index. Validate all (index, clock,
+voltage) triples first and return -EINVAL on any failure; only then
+apply updates.
 
-Resume (without changes):
-- rockchip_drm_sys_resume()
-  - drm_mode_config_helper_resume()
-    - atomic_enable()
-- dw_hdmi_rockchip_resume()
-  - dw_hdmi_resume()
-    - dw_hdmi_init_hw()
+v2: Use distinct message for different error case, removed unused
+input_level from validation loop (Lijo)
 
-Change to use resume_early pm ops for system suspend to ensure pm ops
-for dw-hdmi is run before rockchip-drm pm ops. Also fix a possible NULL
-pointer dereference timing issue while at it.
+v3: Reject negative level indices, input[] is long but was compared only
+against unsigned table bounds, so negative values could pass and truncate
+when assigned to uint32_t input_level.
 
-Resume (with changes):
-- dw_hdmi_rockchip_resume_early()
-  - dw_hdmi_resume()
-    - dw_hdmi_init_hw()
-- rockchip_drm_sys_resume()
-  - drm_mode_config_helper_resume()
-    - atomic_enable()
+Set DPMTABLE_OD_UPDATE_SCLK/MCLK only after validation passes,
+so a failed sysfs write does not leave need_update_dpm_table set for a
+later commit.
 
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Tested-by: Heiko Stuebner <heiko@sntech.de> #rk3328
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260518193748.2482823-12-jonas@kwiboo.se
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 34 ++++++++++-------
+ .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 37 ++++++++++++-------
+ 2 files changed, 43 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-index 91e28fcdd22e9..3041f76d8fc78 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-@@ -592,17 +592,18 @@ static int dw_hdmi_rockchip_remove(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index f2852e5c505ed..ca06b6da3e4e3 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -5093,23 +5093,29 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 	}
+ 
+ 	for (i = 0; i < size; i += 3) {
+-		if (i + 3 > size || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
+-			pr_info("invalid clock voltage input \n");
+-			return 0;
++		if (i + 3 > size) {
++			pr_info("truncated clock/voltage input\n");
++			return -EINVAL;
+ 		}
+-		input_level = input[i];
+-		input_clk = input[i+1] * 100;
+-		input_vol = input[i+2];
+-
+-		if (smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
+-			podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
+-			podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
+-			podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
+-			podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
+-			podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
+-		} else {
++		if (input[i] < 0 || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
++			pr_info("invalid clock/voltage level\n");
+ 			return -EINVAL;
+ 		}
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		if (!smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
++			return -EINVAL;
++	}
++
++	for (i = 0; i < size; i += 3) {
++		input_level = input[i];
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
++		podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
++		podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
++		podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
++		podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
+ 	}
+ 
  	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+index 6a4ee61612313..77d9be460c961 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -5457,11 +5457,9 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 	if (PP_OD_EDIT_SCLK_VDDC_TABLE == type) {
+ 		dpm_table = &data->dpm_table.gfx_table;
+ 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_sclk;
+-		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
+ 	} else if (PP_OD_EDIT_MCLK_VDDC_TABLE == type) {
+ 		dpm_table = &data->dpm_table.mem_table;
+ 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_mclk;
+-		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
+ 	} else if (PP_OD_RESTORE_DEFAULT_TABLE == type) {
+ 		memcpy(&(data->dpm_table), &(data->golden_dpm_table), sizeof(struct vega10_dpm_table));
+ 		vega10_odn_initial_default_setting(hwmgr);
+@@ -5479,21 +5477,32 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 	}
  
--static int __maybe_unused dw_hdmi_rockchip_resume(struct device *dev)
-+static int __maybe_unused dw_hdmi_rockchip_resume_early(struct device *dev)
- {
- 	struct rockchip_hdmi *hdmi = dev_get_drvdata(dev);
- 
--	dw_hdmi_resume(hdmi->hdmi);
-+	if (hdmi)
-+		dw_hdmi_resume(hdmi->hdmi);
- 
+ 	for (i = 0; i < size; i += 3) {
+-		if (i + 3 > size || input[i] >= podn_vdd_dep_table->count) {
+-			pr_info("invalid clock voltage input\n");
+-			return 0;
++		if (i + 3 > size) {
++			pr_info("truncated clock/voltage input\n");
++			return -EINVAL;
+ 		}
+-		input_level = input[i];
+-		input_clk = input[i+1] * 100;
+-		input_vol = input[i+2];
+-
+-		if (vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
+-			dpm_table->dpm_levels[input_level].value = input_clk;
+-			podn_vdd_dep_table->entries[input_level].clk = input_clk;
+-			podn_vdd_dep_table->entries[input_level].vddc = input_vol;
+-		} else {
++		if (input[i] < 0 || input[i] >= podn_vdd_dep_table->count) {
++			pr_info("invalid clock/voltage level\n");
+ 			return -EINVAL;
+ 		}
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		if (!vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
++			return -EINVAL;
++	}
++
++	if (type == PP_OD_EDIT_SCLK_VDDC_TABLE)
++		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
++	else
++		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
++
++	for (i = 0; i < size; i += 3) {
++		input_level = input[i];
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		dpm_table->dpm_levels[input_level].value = input_clk;
++		podn_vdd_dep_table->entries[input_level].clk = input_clk;
++		podn_vdd_dep_table->entries[input_level].vddc = input_vol;
+ 	}
+ 	vega10_odn_update_soc_table(hwmgr, type);
  	return 0;
- }
- 
- static const struct dev_pm_ops dw_hdmi_rockchip_pm = {
--	SET_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume)
-+	SET_LATE_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume_early)
- };
- 
- struct platform_driver dw_hdmi_rockchip_pltfm_driver = {
 -- 
 2.53.0
 
