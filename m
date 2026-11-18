@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045793;
-	b=BkgFMjxUzfrBzPRQBQczqowzl+6MBnGDdJf31/J553iuJuOnB6lqyKje2d84U0Fk4cAA
-	 0IhYXugyXxxbbgr8Rrw13g3dA0K30iU5sgugqitgaJSxjbod7bdpiQ/Cz92ZbUaZQsnen
-	 RYe4Si3hg8V6SsjoMZpFloTnzxWzYKshxGaPC5ihg/K+bYxkzeOBBnaaOhj4EqyEpt3D/
-	 JzrIeOcRitKm+Rrgrkr5NPqG0kN7J3OvrZil5cJblX0lXTE0cmN45D6krRuMJyZD0DmpT
-	 B1BJyGZnau6n6ujFFwoOcqrImUfcKc4z//g9i67SSJrI3UsUzGUBbsVrXxNf2pwpcyg==
+	t=1795045796;
+	b=3lDtaXEJ+CwX8/1wg7XT3DleZpEsTFSXk3LK6rAiLoTmP4Y7MDpVdxQ/UfmwA7NuzFLu
+	 sEtYIaMspCTNEu9RHdNVjxBLirDbjfNCmaxrXPrZrTVhtAVkgJpB7qMOx22/+U7uWxeE5
+	 6cE43Ijd1S8k1jcF3I77ye9Kbkrc82fRT+B7EdmhlAUjCvyJjRQacnp1IGww53KYYs1i9
+	 iNwGaH7lY8Xhk/pfnviAD49WHUoKEiJr/yq8Jw+aw/4mpUBMmHkaDFqv7y/A1AnSafstr
+	 WC8keikCyNYXdSF8zqUXlJn8X4t35iYty0wRM4wbHIDmrjkqNqRq7Y8BrG9z5U+tRLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uBomruob1mLBVUjoBFKTxJqzLjDXwz5xHD0bn7ULLQA=;
-	b=qtN2JcRFM829v7+uFyT9nbd1mUKa93rIeweKXjVv/vP/bPy8pdxnRN432TJcTuK38LEj
-	 NgKOt1cV42fuPATmTLVamUn+d0YVTm0oYr4p1zlfnjC8FfL2BRC7yIbosZAtl9FMRKwW2
-	 aB9s7I1n+gCCaBy82IC2xsZpjCEIddkJg8LXMI/XN4j39TzSA8hy7fzxNGKsdk3/pevbF
-	 BE83S7nHEjMjr6OlFZfPVtyTIXHk2MCYuz76YQfpd9ayw2ON2vBIWj//Fyr9xs9mRPMga
-	 88hjR5jhgMvn/aIpYvdg6sP7cohmP72eFw4867oItVkgtj6KZMtIeGhdDq95QsSgbBQ==
+	bh=i/cd7Hmdl1qSmZF2duwVeTy4Oc9FsDZWZ4bC6ddF010=;
+	b=JHSgCR5vREdu1svm30LanPCjluOV0UXqNdLWQSl5eTfa8mZM/BLB5FhIkGiyw/d1G1Zn
+	 sFRnxVVNrdCulI/Z5B0jUSH16rK1BQP/9x2t4neFVPOkSd8Eb1zHRD6XW+deJLTjOV9w/
+	 fVadlR6F7pK+Ep0IZYRuLDNI+oODjVEE0RsngEp4/su3p485OsmHceSxF/NXuI6ufoBxM
+	 m737imp9PzpwIilmIhjRcwMvmepcBhPH+SHJiQyrghwwWd2eT72g0KV1ioHJXPmI/YYJk
+	 BxijOEkBcRLnbkHZX2oSWpozjZFTAbKdchX3Z+lcPUcrQIjgjBzxMbhdYvFKHCLsfsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWthkojf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8qiJdeS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA99606A31C;
-	Wed, 18 Nov 2026 23:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BD6606A325;
+	Wed, 18 Nov 2026 23:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWthkojf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0341F000C4;
-	Wed, 18 Nov 2026 23:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8qiJdeS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFE41F000C4;
+	Wed, 18 Nov 2026 23:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045793;
-	bh=uBomruob1mLBVUjoBFKTxJqzLjDXwz5xHD0bn7ULLQA=;
+	s=korg; t=1795045796;
+	bh=i/cd7Hmdl1qSmZF2duwVeTy4Oc9FsDZWZ4bC6ddF010=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZWthkojfNRlJYYdM83nKzCaHSdYfT18ZgWixj4/eW+nWUZ1cMBTpXHDJG8ceU11w6
-	 MiXyfDNtnYZyrOjqwoDtkwvAiWwrVyVrYn8ACI/pdAaccWwoZlc7ep/jmInNdnUKXX
-	 HLm10TTNcN14NWRc4B4Kg/D0n1cpm+HCAIQbh7GI=
+	b=e8qiJdeSeE1x5yjHvRP+q6G+HBMChkEK6G5aMX1RfRUjmeounQCY8dBSPCmoAC226
+	 KyQK66yjqE5tOPCeDjl3iGqFtahKHzNIiQG7TxdNMFj2ANdJybnUDIgzY/4WVRDdjz
+	 tbv7r/rnBluUcw7Hqh66NBtB635+fPdo0tuCXWJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Felix Hoffmann <f3lix.dev@gmx.de>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1050/2857] libceph: Fix multiple unsafe decodes in ceph_oloc_decode()
-Date: Wed, 18 Nov 2026 15:34:44 +0100
-Message-ID: <20261118150239.400703117@linuxfoundation.org>
+Subject: [PATCH 6.1 1051/2857] libceph: reject mismatched CRUSH weight-set sizes
+Date: Wed, 18 Nov 2026 15:34:45 +0100
+Message-ID: <20261118150239.435164666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,63 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Felix Hoffmann <f3lix.dev@gmx.de>
 
-[ Upstream commit 10655007b9b679e46a9e383202c7bb791e5d1d13 ]
+[ Upstream commit d8fc89b5bfe4cb3aebe4c8a818247d11291b841c ]
 
-ceph_oloc_decode handles unchecked data received over the network from
-an OSD. Currently, there are multiple decode operations that aren't
-covered by any bounds check. Decoding these fields can therefore result
-in out-of-bounds reads if a corrupted message is received.
+A CEPH_MSG_OSD_MAP message can contain CRUSH choose args with replacement
+weight vectors for straw2 buckets.  decode_choose_args() validates the
+optional IDs vector against the referenced bucket, but does not validate
+the size of any replacement-weight vector.
 
-This patch fixes the issue by adding bounds checks covering all
-previously uncovered decode operations.
+The CRUSH mapper assumes that each replacement vector has exactly as many
+entries as the bucket.  A zero-length vector for a nonempty bucket makes
+bucket_straw2_choose() dereference NULL, while a shorter nonzero vector
+causes an out-of-bounds read.  An authenticated monitor or OSD can deliver
+such a map and crash a kernel client when it performs placement for an
+ordinary request.
 
-[ idryomov: use ceph_decode_64_safe() for hash ]
+Reject a nonempty collection of weight sets for an absent bucket and
+require every replacement-weight vector to match its bucket size.
 
 Cc: stable@vger.kernel.org
-Fixes: 205ee1187a67 ("libceph: follow redirect replies from osds")
-Assisted-by: Cursor
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osd_client.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ceph/osdmap.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index 7df1b9239b4c3..5395cfa519bb7 100644
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -3507,6 +3507,7 @@ static int ceph_oloc_decode(void **p, void *end,
- 	ceph_decode_need(p, end, len, e_inval);
- 	struct_end = *p + len;
+diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
+index 68bd45852fc37..e812b30778d57 100644
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -378,7 +378,9 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
+ 		ceph_decode_32_safe(p, end, num_buckets, e_inval);
+ 		while (num_buckets--) {
+ 			struct crush_choose_arg *arg;
++			struct crush_bucket *bucket;
+ 			u32 bucket_index;
++			u32 i;
  
-+	ceph_decode_need(p, end, 8 + 4 + 4, e_inval);
- 	oloc->pool = ceph_decode_64(p);
- 	*p += 4; /* skip preferred */
+ 			ceph_decode_32_safe(p, end, bucket_index, e_inval);
+ 			if (bucket_index >= arg_map->size)
+@@ -389,10 +391,18 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
+ 			if (ret)
+ 				goto fail;
  
-@@ -3519,7 +3520,7 @@ static int ceph_oloc_decode(void **p, void *end,
- 	if (struct_v >= 5) {
- 		bool changed = false;
- 
--		len = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, len, e_inval);
- 		if (len > 0) {
- 			ceph_decode_need(p, end, len, e_inval);
- 			if (!oloc->pool_ns ||
-@@ -3538,7 +3539,9 @@ static int ceph_oloc_decode(void **p, void *end,
- 	}
- 
- 	if (struct_v >= 6) {
--		s64 hash = ceph_decode_64(p);
-+		s64 hash;
++			bucket = c->buckets[bucket_index];
+ 			if (arg->ids_size &&
+-			    (!c->buckets[bucket_index] ||
+-			     arg->ids_size != c->buckets[bucket_index]->size))
++			    (!bucket || arg->ids_size != bucket->size))
+ 				goto e_inval;
 +
-+		ceph_decode_64_safe(p, end, hash, e_inval);
- 		if (hash != -1) {
- 			pr_warn("ceph_object_locator::hash is set\n");
- 			goto e_inval;
++			if (arg->weight_set_size && !bucket)
++				goto e_inval;
++
++			for (i = 0; i < arg->weight_set_size; i++) {
++				if (arg->weight_set[i].size != bucket->size)
++					goto e_inval;
++			}
+ 		}
+ 
+ 		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
 -- 
 2.53.0
 
