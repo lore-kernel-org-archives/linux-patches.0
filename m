@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062057;
-	b=nF3IkdSoiYwi8jCU1hBBqWqH3XhwzWPBbToohKMOvLfSTLn5FRGSogyECyhXsWjAXDVQ
-	 Z5r5OwkDXYeDgb+hnA5Za/Rpk/9YUL/zcRvzfWUZPLd5kuNPV1txCRdDFGUnB0wH4Ici/
-	 2d70SHe/y50NfqCGzzg5EJgAB/fTvrcHWpS1CmcAcKVb7HcCMUrwaFe10zeVYszYJn2Hz
-	 hBBv3a269HymvoAy+lJqWQPmNhwDnAtjpLPTo2hpw8o3UxDDbSSPTxFyPnwiLsPcX6iyU
-	 DQQ1/+Z+GdL/4WTw8C1bEMY1p5/+OEkm1prL8u1l1irhcIZdF7e0V0QReQZSTTtXMJg==
+	t=1795062061;
+	b=JWAw8844gnD3ch1IFcUPhKCN9CpRduxP9HoCCz24awM6GVphpCesxD9QoZYu7hXnR+2k
+	 9/ImceR5jNFNBkyOHArIelJezvdtIDTQ7qqpTY1O7qNtDSkwGXvY86Qb8MLXWFT5+ev23
+	 Nh6BjNmyNO4O2GGiSMsWM845hhlSmw16jCpcraE3yB9ScfafsjGexS8om1NOHlSBof0Q5
+	 yJv6n1vTSvWf3qkOAAGO6c34Tr5kHERjGIEbNRVu5HZggNH67QzhnsMfr+JStIeRGnuQS
+	 y9fuy4rzsplc5cJhahptPZZGALR2TYkcjJvZClSK+DI/w7jGD9oRRg3h8fpV6YNvPFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LAMfzURfCzuNX6SPNCBgCyMSi7rKKvRby6nRgYIXhWg=;
-	b=yRD6D2MrO1jIhv44S0a99oRWBdstPwJ3SRz8lVpUNfoKgoA9IIMQkqlSIHCtuFcDJy9d
-	 7GrDTUuoGvMwB8sss3Hb+2G1iDe2kAEv+MCuSSclpmQHCoE0VvKnC6PpW7y5E3fIJwk/8
-	 eMgPucf5cd1bWSDk3C4mkOMftNdNxUZOAKi8kztG/huSOzRCySJqY3vqZVTtro7ikjBDP
-	 JZB8CVH4L2A2/W3oLDJ0z74KuXh7bpuSMYTgox67dDc9yvmklWkMmmuwwJlwCAWaVukFk
-	 Npi4XwG8gEh9NXU3lQolkkkTQ6S0Q/o5Pz6VgMhYMDw7A1pkPCN8mJa4hpZF6gWmg2g==
+	bh=SEWoFJURn3lUM7+jNNMWfnpeV/99EzUXNYFWbPa15pw=;
+	b=CAJS/vlhplFjkTspFXYeiC4fWtuAqLP+Kr5kvNrPp/c3j9cfiNYomJkKwjj8/2OKN4+I
+	 lCljNFGnmLPcBOJtid7QDln+mdt2Uwbd+2fdJryhA66bjEMZeClW7mBGHvbFXTC+9jQxK
+	 VyMFrItEuTfFKyhpMVVrW8gJr4z0TCx68tqvfaEdvN9YnevC/z3nOsFhsrgCptxlbYzXH
+	 mZgcMO6QaDfxur2IMOPBiESP/PIl60Uydyrr+WfZtscZGoVc08zLJuaDPioLHB0v5vCx/
+	 +uwJ5RvmaA5zXV1+Frt1xtKWf9QinZ5z/Yxn8/eKfzCnxrpDOBLR7HChpV4+gqnOdNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qea2Sft7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=De2N8S0D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98F5606A320;
-	Thu, 19 Nov 2026 04:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35874606A32A;
+	Thu, 19 Nov 2026 04:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qea2Sft7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BB51F000C5;
-	Thu, 19 Nov 2026 04:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=De2N8S0D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD25B1F000C5;
+	Thu, 19 Nov 2026 04:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062057;
-	bh=LAMfzURfCzuNX6SPNCBgCyMSi7rKKvRby6nRgYIXhWg=;
+	s=korg; t=1795062060;
+	bh=SEWoFJURn3lUM7+jNNMWfnpeV/99EzUXNYFWbPa15pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qea2Sft7gZ+6KDoHaLrY7mLAIaLNyRwPGUiVap4wqnJxTCuNYYtas7xI/zr4dvKQ/
-	 iCRoQGILZqwAoSCMerAotnoLA0GGZpYl50IJHfJvusa+nUbVn6BqUAsLVRnc+OKDgS
-	 hNVL5jkfbEjaFNqTMTHTs8HofRNhNtZubOyS8Sac=
+	b=De2N8S0DYNVPmGzS681uR1sGlG6fCZ13vuKF5z7Q8JxhpbXDm8PCoT+HWAqpO7WIO
+	 7JkfV601RBkbgCxIoIoYkOoBbDOnYdsQ16EKaV92ouEuS1O8GadVZzWOdKaBOb5za/
+	 6zQg/pji3GM0NYPPOPD+2A/daiwnYm0lTXLlQczg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Bradley Morgan <brads@mainlining.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1772/1848] profiling: fix sampling step on 64-bit big-endian systems
-Date: Wed, 18 Nov 2026 16:03:30 +0100
-Message-ID: <20261118150033.573062039@linuxfoundation.org>
+Subject: [PATCH 5.10 1733/1848] ASoC: cs42l56: Remove the ADC Mute Switch control
+Date: Wed, 18 Nov 2026 16:02:51 +0100
+Message-ID: <20261118150032.123428940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,44 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit b1d68946a08313895f352af5336623d29739c299 ]
+[ Upstream commit ff404ef11b975baf38c4472c51a6674c239e8021 ]
 
-read_profile() stores the sampling step in an unsigned long but copies
-only four bytes to userspace.  On 64-bit big-endian systems (not common
-obviously), this copies the upper 32 bits and discards the rest, causing
-/proc/profile to report zero for normal shift values.
+The ADC Mute Switch control writes bits 2 and 3 of the Misc ADC Control
+register. These are the ADCA Invert and ADCB Invert bits, which have
+their own controls. The ADC mute bits are bits 0 and 1, and the DAI mute
+callback already sets them.
 
-Cast to unsigned int so we get the correct 4 bytes, while keeping the
-shift calculation in unsigned long.
+So the control has never muted the ADCs, and nobody can be relying on
+it. Remove it rather than point it at the mute bits, so the ADCs are
+muted in one place only.
 
-A small C reproducer under qemu-s390x reproduced this and proved the fix
-works for prof_shift=2.
-
-Link: https://lore.kernel.org/20261020101225.917959-1-thnkslprpt@gmail.com
-Fixes: 2d186afd04d6 ("profiling: fix shift-out-of-bounds bugs")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
+Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/all/atXh3Br+fuH83S0q@opensource.cirrus.com/
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20261019124022.3410793-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/profile.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/cs42l56.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/profile.c b/kernel/profile.c
-index 0db1122855c0d..c2ab50a88da51 100644
---- a/kernel/profile.c
-+++ b/kernel/profile.c
-@@ -476,7 +476,7 @@ read_profile(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 	unsigned long p = *ppos;
- 	ssize_t read;
- 	char *pnt;
--	unsigned long sample_step = 1UL << prof_shift;
-+	unsigned int sample_step = (unsigned int)(1UL << prof_shift);
+diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
+index ee41b512a4fa3..9108b2503bc98 100644
+--- a/sound/soc/codecs/cs42l56.c
++++ b/sound/soc/codecs/cs42l56.c
+@@ -387,7 +387,6 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
+ 			      CS42L56_PGAB_MUX_VOLUME, 0, 0x34, 0x24, pga_tlv),
+ 	SOC_DOUBLE_R_TLV("ADC Volume", CS42L56_ADCA_ATTENUATOR,
+ 			      CS42L56_ADCB_ATTENUATOR, 0, 0x00, 1, adc_tlv),
+-	SOC_DOUBLE("ADC Mute Switch", CS42L56_MISC_ADC_CTL, 2, 3, 1, 1),
+ 	SOC_DOUBLE("ADC Boost Switch", CS42L56_GAIN_BIAS_CTL, 3, 2, 1, 1),
  
- 	profile_flip_buffers();
- 	if (p >= (prof_len+1)*sizeof(unsigned int))
+ 	SOC_DOUBLE_R_SX_TLV("Headphone Volume", CS42L56_HPA_VOLUME,
 -- 
 2.53.0
 
