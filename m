@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034479;
-	b=KDZWCXRUz+y8yzcQNKoSVmJD6Ls6szKKpWpyhz+iIg0IQJ9i2tsCqavSlW6ChVipnr+H
-	 uLgadMCnvgPIXHzlUA6lvxauK4oQtQDIb3J407CYBy+J18xEa6dbm0g7NvLH0+P6O/Bgw
-	 9B3p8DPmtYSYKQfHmUKNd3IRlXMYRmY28GfHZopjl+ZI5oT7JZe5mxMszmb4pPnJky73X
-	 gfxi08ODA4A5ZeErzoVxK79yS6+AvAgMp9KlrUSfI4scrlO97+5M/sUq3bF7ewz5kNpcy
-	 5BP0oaE2sx5nH8C7UOHf96ai8kuBHuDOPY05y3Z05JucrhflGeqlZFjpn/C7k+F+4hw==
+	t=1795034482;
+	b=hKFV9JuFNyUbc7Qf4pQaE5glYkc/7fspUCLTMDf0E7B5TXEKiVwNzZbNmEWq/2pDZG1D
+	 i0vqGNGltsv2VWd90xgc+ClNeMCSwvAMmzQZhdT1I4tvN1Kd7TtYLVX9FwMIABW3GD/go
+	 n/FtDxMZu7usLVqqYN8UVX+PMBF96So0KJhSSXnoGZyIsxvRwsAe1ZgWGUaCPw82J5fsy
+	 5nQAl2wgOOTnCugZfszyiu3SUEqp8jYK5swPL6IhtmQ99axO6dJF8t7O+zHS92fa84O7C
+	 RyPvf1irL7bzt4870FD2/u6xhwZBkZWD/7dZWZm2vy9TAFI91qGdq2CrMvFgf9IJc1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=dbte7P/4DF1MZUxI/TpAx5YcterUfycd6WCnvYLxA7M=;
-	b=FB4woxcm8qGXZcEPXzVLOi7oqAl6Apa5l5UFGeE2UklbtP6OCpMrW1KNZV01YXG/69PG
-	 2q1GlUgGIbQY44bKUhoQaZToPukobPiY3qblebcNYBNmUUpS2gjV7W2pExRPC/DfLq7d7
-	 Y6KranLOVRunNaiBz/mZjxDY+xM6R04drYBmMksz0McCsYSGYxU2PlQmUM6rJpeQQ9lPl
-	 J5TzVOnDFil0aaNYj1/bBDWnaUZtxfNMh2ePDWDnNCimU5T5VS/qUh0U4KZfh8vSPApY8
-	 DmYowT7IFmvmxm1RYfdog6G18QSTWp67ahHsjsZ2EoSx7z88v1SWltLEKuHaIW8o6OQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=N8ohq41TIOGSYRKEcZrR/jDWQz2V7J8FLOfqQJgEDAs=;
+	b=FcUg2LLB2ydfwC8Kdly+ovAwMn8QQ4R3/50a1PKJcNO4WJVIJa8R388CGEv13caR8sl1
+	 rhi1ScTB3l+cPIREuoVqfD2n3uoeKcQd0jLr4HTsI4515omhJw9SeKPwBGGvw91vkwpFv
+	 ZGAiTOcYlofEv1V0az4jjvHZW7mzrR6rgFnw9vDJIqT45zm4E8mEMy01wlMJ3FLqfQRCH
+	 C5ikRdCHCzglxT9VtJpTPBcnWlpm9GfIHOhqiOtqGkO48hNNk4RCkHbYfMMdNNFOyp8n/
+	 KxKfaFjbqlLovQ/fXfIrYt9hvToaRxH+sYYR9aJaPWZFmkXWM2iC1qmuYYxxLlIbWew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMXPmyNJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlazVYAg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0C4606A31C;
-	Wed, 18 Nov 2026 20:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C675606A320;
+	Wed, 18 Nov 2026 20:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMXPmyNJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C210B1F000C4;
-	Wed, 18 Nov 2026 20:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlazVYAg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8293B1F000C4;
+	Wed, 18 Nov 2026 20:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034479;
-	bh=dbte7P/4DF1MZUxI/TpAx5YcterUfycd6WCnvYLxA7M=;
+	s=korg; t=1795034482;
+	bh=N8ohq41TIOGSYRKEcZrR/jDWQz2V7J8FLOfqQJgEDAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMXPmyNJrGS9R4LjcUrkIdHE7mYBHRF+otxaKVI5B8hFYqXGGZJsRpqiVWSUKbk+L
-	 Oc8Hs+Paet+TndfWOfjcdGgAyyasmTqCFqrDztrwOaujrRTto5RX6+hJ4FejcS0uy2
-	 umErrHd5chcRj93jLfh257vJj6gw6M/CQWGNhvfo=
+	b=MlazVYAgBG434Bf5vacHHoLKWhx7y6eE8B3BJdVxyj8UnL12VIaJP3YqAlEcNdfHb
+	 iUPb6Ds1sIgZ5nR4M7rwsYQdxo0zOmjO6U2LUNsZQcsXgFxuG27LxqRhmRMtFOWEWM
+	 S/6wYYBurBxDMtexBvI10YMRRoAUIsCxRyqKCPNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0337/3318] HID: roccat: fix locking in roccat_connect() and roccat_disconnect()
-Date: Wed, 18 Nov 2026 15:15:59 +0100
-Message-ID: <20261118150326.075031108@linuxfoundation.org>
+Subject: [PATCH 6.6 0328/3318] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
+Date: Wed, 18 Nov 2026 15:15:50 +0100
+Message-ID: <20261118150325.747487898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,74 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
 
-[ Upstream commit d76994443eed0af297cb82bd038ae9d76327ef90 ]
+[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
 
-Extend critical section in roccat_connect() to ensure that partially
-initialized 'struct roccat_device' is never exposed in 'devices' list,
-and do the same in roccat_disconnect() to avoid racy 'devices' access
-against roccat_release().
+The M-Audio Venom (0763:2084) does not answer any GET_CUR request
+of its feature units, hanging up the USB microcontroller and
+"responding" with timeouts. So the mixer building lasts around 47
+seconds, and the device does not stream at all.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The same GET_CUR requests issued through libusb (with no kernel
+driver bound) complete correctly and blazingly fast. So it seems
+to only happen during the initial probe.
+
+I defined an explicit composite quirk to bypass the mixer creation,
+as it is not needed (the synth already comes with volume controls).
+
+With both this and the device flag applied, the synth works
+flawlessly.
+
+Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-roccat.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
-index e54b6a8a92ef7..77042c7edf765 100644
---- a/drivers/hid/hid-roccat.c
-+++ b/drivers/hid/hid-roccat.c
-@@ -344,8 +344,6 @@ int roccat_connect(const struct class *klass, struct hid_device *hid, int report
- 		return temp;
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index f4995560050ab..b505ec63f199d 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -1814,6 +1814,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 		}
  	}
+ },
++{
++	/*
++	 * M-Audio Venom
++	 *
++	 * The AudioControl interface times out on every GET_CUR request,
++	 * which adds around 47 seconds to the card registration and
++	 * freezes the device, blocking streaming.
++	 * Using an explicit composite quirk to skip the mixer entirely.
++	 */
++	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
++	QUIRK_DRIVER_INFO {
++		.vendor_name = "M-Audio",
++		.product_name = "Venom",
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_IGNORE(0) },
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_STANDARD_MIDI(3) },
++			QUIRK_COMPOSITE_END
++		}
++	}
++},
  
--	mutex_unlock(&devices_lock);
--
- 	init_waitqueue_head(&device->wait);
- 	INIT_LIST_HEAD(&device->readers);
- 	mutex_init(&device->readers_lock);
-@@ -356,6 +354,7 @@ int roccat_connect(const struct class *klass, struct hid_device *hid, int report
- 	device->cbuf_end = 0;
- 	device->report_size = report_size;
- 
-+	mutex_unlock(&devices_lock);
- 	return minor;
- }
- EXPORT_SYMBOL_GPL(roccat_connect);
-@@ -369,15 +368,12 @@ void roccat_disconnect(int minor)
- 
- 	mutex_lock(&devices_lock);
- 	device = devices[minor];
--	mutex_unlock(&devices_lock);
- 
- 	device->exist = 0; /* TODO exist maybe not needed */
- 
- 	device_destroy(device->dev->class, MKDEV(roccat_major, minor));
- 
--	mutex_lock(&devices_lock);
- 	devices[minor] = NULL;
--	mutex_unlock(&devices_lock);
- 
- 	if (device->open) {
- 		hid_hw_close(device->hid);
-@@ -385,6 +381,8 @@ void roccat_disconnect(int minor)
- 	} else {
- 		roccat_free_device(device);
- 	}
-+
-+	mutex_unlock(&devices_lock);
- }
- EXPORT_SYMBOL_GPL(roccat_disconnect);
- 
+ /* Casio devices */
+ {
 -- 
 2.53.0
 
