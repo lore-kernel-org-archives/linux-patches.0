@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059450;
-	b=4NF6GaXRKMhdQx8wsSHNhmDB/yy+GQrvwEdaRVmJx5mR+yvSalt72BaDG2e/9Ssf2X0e
-	 wsgqhp27axB6rvSue/3SvkI7AQBzUz+HCc9B/033ql0MoZ6VAPjGLHvIFBfWAnjxvAbv9
-	 9fLt81SIOWaMLvWBexFrQfcTZLmM6f1Fx/3VS46DjWwUt+BHrXdmuvBPdHRT7uvOgDEo6
-	 CTzONMr6YtRMVg726X3UdY4idWi2mfZaNpl+X82o35+4dFlRMJvFJ8Ia3hLIhRDP6LGCF
-	 UK4w7vXXEtMmxK0O86ylrsPEUTCyWKVQ4i8rRbXZxjzCOd0GFUd63//Bb20OGDKC3UQ==
+	t=1795059453;
+	b=paC2ADm3cXwrktfPfRe3gP1oPiMZaZrRDu3Bn8OpTWAYBfsqBFFzeSJS/hwj+3kCVd6b
+	 cv0gQtWA9DCdj/FxF0v0M/jCQ8a+eTlmJ9oEiCHHWCj6/jnhe9HCZ9W560ZXu4HJtPM/P
+	 SFUOu21tlx8lMD42w1LhBMcax7I39U19TBsvipOOlNhy3Zzp8g96FG1Fv7kZZncHdAXtM
+	 2geVYrZJR9N6ZcePNYmGJDdgksNdOrfjDQ9dirwJGGPvR7Z8wtmhb3hgvddf37aoPVTbk
+	 CSOkfTinahZK81iCNaUkb7rDUR1mEfyGw/j9LlRk29/Csouamrd8DTch7QJ45i5M6mQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059450;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f4/7IBKr6tDJmh1i9JtZ+zddyw15ZKBaJExMSa0TL9w=;
-	b=CUQ6B5LqK4UoOjTOvhNkau74b1a1Tztfva7wlFSq6ScUrLCwxlug4hn4GJuFqCUIJU3R
-	 c5d8HxaN2YDwGxG90bAQIHpQN1Pn6p6C5F/ofrrYY/nnyqyIM9k+IXK0dJ67roOxKr41C
-	 4Cl0XTo+9rH831TAx7ndPFm/KUCJ501kr0ho8BSEy5FJQdl2EgwUOeUaGeRV9xgi+4OC4
-	 ehgGk2jKz9Yz6T3Ro2mYoMxZT5kfZbYbxUB5c0x1yskmF7muxVaWp/lUY9XxtK53VcLgY
-	 5LnyltgJpi3En9M9c2MsJXq3N7HUnJStj6srbdSB/+kU55k0WTdw20QkVY+Mp2fbYyw==
+	bh=3Ve2eKwhek0L75gUOiddocGEzzTldTQJy4a+DAt2G9k=;
+	b=Tcnhomf3jlM9h4Pjzdx8Fpn0QQUyW5X6bGZRIjq9LPotdb1lo7/JUEp424n4MD/Fedak
+	 P4CIvSyNtH/qdCW+8TI2kn8dDoJXZWtQP0q835cdVhj3vtv2SpBVX/XuchDo0ZJh/Za5p
+	 oulSF+yDAqhArBSavL4HAyIRCydSB2AHSKaeAlT1hP58jVd8930ClsqlGgYu8JN9wZ2ud
+	 Z7sXwSU3UdDBMvDeTw4EZrhL1sVgBicaB5RsryrvCa7F5bFlEdF9xmoPeI4Jf3XnDM8Tm
+	 sRL3p2i8tQBYaHVYqYRS7hlmqQt0mMBUyDSM3AV7hSgcJ9RC9F7ga3T2RlpX3uGVQuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qur7OVWE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fyKn6h+I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D11606A325;
-	Thu, 19 Nov 2026 03:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8839F606A325;
+	Thu, 19 Nov 2026 03:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qur7OVWE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0061F000C4;
-	Thu, 19 Nov 2026 03:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fyKn6h+I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EA51F000C4;
+	Thu, 19 Nov 2026 03:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059450;
-	bh=f4/7IBKr6tDJmh1i9JtZ+zddyw15ZKBaJExMSa0TL9w=;
+	s=korg; t=1795059453;
+	bh=3Ve2eKwhek0L75gUOiddocGEzzTldTQJy4a+DAt2G9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qur7OVWEJM0lCHWMEAjHMQP59nbgHWg67ms3uc6apj0hQ77HLbDNxtNngXFt5/S+p
-	 mwfUii24Gfm2kaZus+W1cEejDc3+5oMdr47wnJJDOPfQYYARMjzrqSS7Rn1IBfcV4Q
-	 pEv5Rsts2OqlNmmrLJ8QJTummbfgpzTTnW2dRhy8=
+	b=fyKn6h+I0YW7Gshp1CRU+1134M9V0rc4TRBAIToIA6Zm6pTzOQQuaa2LJb7pXnZ58
+	 A05he30VcqoixziGLAOP9HzfSkW++MlEx+JNwpw/4fFbupm+mVP6xH+DaDMqMW2LKy
+	 U5Edwj0nx85gYN6pR5zz0FSC5+z6p1JljP8VcGyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0804/1848] ALSA: usx2y: Refuse a retried DSP load after a failure
-Date: Wed, 18 Nov 2026 15:47:22 +0100
-Message-ID: <20261118145950.004579091@linuxfoundation.org>
+Subject: [PATCH 5.10 0805/1848] ALSA: bcd2000: Fix race between rawmidi and disconnect
+Date: Wed, 18 Nov 2026 15:47:23 +0100
+Message-ID: <20261118145950.041878720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,73 +68,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1f8101b6adc87a3ddbd51fcb6609251591758026 ]
+commit 221253723dc58bb901c3f27a7659823e63fc598c upstream.
 
-snd_usx2y_hwdep_dsp_load() sets up the asynchronous sequence URBs and
-the interrupt URB when the FPGA firmware image with index 1 is loaded,
-and then creates the ALSA devices.  If usx2y_in04_init() or
-usx2y_create_alsa_devices() fails, the URBs that were already set up
-are left in place.
+The 5.10.y tree is still built with -std=gnu89, so the guard() and
+scoped_guard() helpers used by the upstream patch cannot be used
+here.  Use explicit spin_lock_irqsave()/spin_unlock_irqrestore()
+pairs instead; the locking scope is unchanged.
 
-The core keeps the index unloaded when the callback fails, so user
-space may issue the same request again.  The second attempt then enters
-usx2y_async_seq04_init() or usx2y_in04_init() with the URBs still
-allocated and trips WARN_ON(usx2y->as04.buffer) or
-WARN_ON(usx2y->in04_urb).
+Although we tried to fix the potential UAF issues at USB disconnect on
+bcd2000 driver, there is still an overlooked case -- namely, when a
+rawmidi trigger callback has been already running at USB disconnect
+handling, the in-flight function (e.g. bcd2000_midi_send()) could
+still access the URB, because the previous URB NULL-check & clearance
+was considered only for the URB complete callbacks, but not about the
+parallel rawmidi operations.
 
-The URBs cannot be released at this point: the card may already have
-registered PCM devices that user space can still open, and the
-disconnect handler accesses the URBs without holding the DSP lock.
-Mark the chip as hung instead, so that a retried request is refused
-with -ENODEV and the assertions keep their meaning.  The URBs are
-released by snd_usx2y_card_private_free() when the card is freed.
+For addressing the race, this patch introduced a new spinlock that
+covers each rawmidi operation as well as the rawmidi handling in the
+complete callback.  The URB is cleared with the lock, so it guarantees
+that the pending rawmidi task already finished or a NULL check is
+effective.
 
-A failing usx2y_async_seq04_init() still releases its own URBs, so that
-path remains retryable.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261031191557.8460-1-25031212351@stu.xidian.edu.cn
+Fixes: 459d3a64766f ("ALSA: bcd2000: clear the URB pointers on disconnect")
+Link: https://patch.msgid.link/20260910155227.996210-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-
-In 5.10 a failure of usx2y_create_alsa_devices() frees the card, so
-there is no retry to refuse on that path and only usx2y_in04_init() is
-marked as hung here.
-
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usX2Yhwdep.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/bcd2000/bcd2000.c | 45 +++++++++++++++++++++++++++++++------
+ 1 file changed, 38 insertions(+), 7 deletions(-)
 
-diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
-index eeafe580d0382..50c03e6cd5d5c 100644
---- a/sound/usb/usx2y/usX2Yhwdep.c
-+++ b/sound/usb/usx2y/usX2Yhwdep.c
-@@ -193,6 +193,9 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
- 	int lret, err;
- 	char *buf;
+diff --git a/sound/usb/bcd2000/bcd2000.c b/sound/usb/bcd2000/bcd2000.c
+index c3312b3c46f97..da2c843440d27 100644
+--- a/sound/usb/bcd2000/bcd2000.c
++++ b/sound/usb/bcd2000/bcd2000.c
+@@ -43,6 +43,7 @@ struct bcd2000 {
+ 	struct usb_interface *intf;
+ 	int card_index;
  
-+	if (priv->chip_status & USX2Y_STAT_CHIP_HUP)
-+		return -ENODEV;
++	spinlock_t midi_lock;
+ 	int midi_out_active;
+ 	struct snd_rawmidi *rmidi;
+ 	struct snd_rawmidi_substream *midi_receive_substream;
+@@ -90,7 +91,11 @@ static void bcd2000_midi_input_trigger(struct snd_rawmidi_substream *substream,
+ 						int up)
+ {
+ 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
++	unsigned long flags;
 +
- 	snd_printdd("dsp_load %s\n", dsp->name);
++	spin_lock_irqsave(&bcd2k->midi_lock, flags);
+ 	bcd2k->midi_receive_substream = up ? substream : NULL;
++	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
+ }
  
- 	buf = memdup_user(dsp->image, dsp->length);
-@@ -217,6 +220,7 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
- 		err = usx2y_in04_init(priv);
- 		if (err) {
- 			snd_printk(KERN_ERR "usx2y_in04_init error\n");
-+			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
- 			return err;
- 		}
- 		err = usx2y_create_alsa_devices(hw->card);
+ static void bcd2000_midi_handle_input(struct bcd2000 *bcd2k,
+@@ -194,6 +199,9 @@ static void bcd2000_midi_output_trigger(struct snd_rawmidi_substream *substream,
+ 						int up)
+ {
+ 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
++	unsigned long flags;
++
++	spin_lock_irqsave(&bcd2k->midi_lock, flags);
+ 
+ 	if (up) {
+ 		bcd2k->midi_out_substream = substream;
+@@ -203,11 +211,14 @@ static void bcd2000_midi_output_trigger(struct snd_rawmidi_substream *substream,
+ 	} else {
+ 		bcd2k->midi_out_substream = NULL;
+ 	}
++
++	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
+ }
+ 
+ static void bcd2000_output_complete(struct urb *urb)
+ {
+ 	struct bcd2000 *bcd2k = urb->context;
++	unsigned long flags;
+ 
+ 	bcd2k->midi_out_active = 0;
+ 
+@@ -219,12 +230,15 @@ static void bcd2000_output_complete(struct urb *urb)
+ 		return;
+ 
+ 	/* check if there is more data userspace wants to send */
++	spin_lock_irqsave(&bcd2k->midi_lock, flags);
+ 	bcd2000_midi_send(bcd2k);
++	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
+ }
+ 
+ static void bcd2000_input_complete(struct urb *urb)
+ {
+ 	int ret;
++	unsigned long flags;
+ 	struct bcd2000 *bcd2k = urb->context;
+ 
+ 	if (urb->status)
+@@ -234,6 +248,8 @@ static void bcd2000_input_complete(struct urb *urb)
+ 	if (!bcd2k || urb->status == -ESHUTDOWN)
+ 		return;
+ 
++	spin_lock_irqsave(&bcd2k->midi_lock, flags);
++
+ 	if (urb->actual_length > 0)
+ 		bcd2000_midi_handle_input(bcd2k, urb->transfer_buffer,
+ 					urb->actual_length);
+@@ -244,6 +260,8 @@ static void bcd2000_input_complete(struct urb *urb)
+ 		dev_err(&bcd2k->dev->dev, PREFIX
+ 			"%s: usb_submit_urb() failed, ret=%d\n",
+ 			__func__, ret);
++
++	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
+ }
+ 
+ static const struct snd_rawmidi_ops bcd2000_midi_output = {
+@@ -348,16 +366,28 @@ static int bcd2000_init_midi(struct bcd2000 *bcd2k)
+ 	return 0;
+ }
+ 
++static void bcd2000_midi_free(struct bcd2000 *bcd2k,
++			      struct urb **urb_p)
++{
++	struct urb *urb = *urb_p;
++	unsigned long flags;
++
++	if (!urb)
++		return;
++
++	usb_poison_urb(urb);
++	spin_lock_irqsave(&bcd2k->midi_lock, flags);
++	*urb_p = NULL;
++	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
++
++	usb_free_urb(urb);
++}
++
+ static void bcd2000_free_usb_related_resources(struct bcd2000 *bcd2k,
+ 						struct usb_interface *interface)
+ {
+-	usb_poison_urb(bcd2k->midi_out_urb);
+-	usb_poison_urb(bcd2k->midi_in_urb);
+-
+-	usb_free_urb(bcd2k->midi_out_urb);
+-	usb_free_urb(bcd2k->midi_in_urb);
+-	bcd2k->midi_out_urb = NULL;
+-	bcd2k->midi_in_urb = NULL;
++	bcd2000_midi_free(bcd2k, &bcd2k->midi_out_urb);
++	bcd2000_midi_free(bcd2k, &bcd2k->midi_in_urb);
+ 
+ 	if (bcd2k->intf) {
+ 		usb_set_intfdata(bcd2k->intf, NULL);
+@@ -397,6 +427,7 @@ static int bcd2000_probe(struct usb_interface *interface,
+ 	bcd2k->card = card;
+ 	bcd2k->card_index = card_index;
+ 	bcd2k->intf = interface;
++	spin_lock_init(&bcd2k->midi_lock);
+ 
+ 	snd_card_set_dev(card, &interface->dev);
+ 
 -- 
 2.53.0
 
