@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018056;
-	b=tRx4jPuFaiiEKBl0I1a6qChkCFg3gxKfvnwxZvsfjkXc7eBD94eYB22Kftahss+3wbuP
-	 TmeZWIBDi2wc7nQqrBxkiyTsPLZHwa9PpAZ/5wI6z+Db74e0+mBP9B/NEZxYpI13fV0Lx
-	 M0Zsrvp554SiPMwYxVy/D50yKfgwWRYZHb36HuR3OuDK2KAMj6+2iuM4wzXA7SNu+EXzH
-	 jty9T8jZCFIzckrke11nNJahJbk9fpA/4zMxm9lJRnNAbAdXT7OB9E+9rXJz/L40CyxSu
-	 d66y3BHU+V/NCAZ+EBgBdinRlgrfZk2Tbh1yxkEZ+Gn26/EyUUPCylfxHyEGcMUadYA==
+	t=1795018059;
+	b=Sjw4ThkHNIdaJP7YpbZ8ebii3cIqrya2wsHNo9W41HLnoMt8OYNTKtjupbnkT90ws0In
+	 bVGCKJtO9QasYw3qLXfqwGoshqrLbwZSmgsp/w+yLPjEMlyRCA9EJ9vhLlTL7Vy+BLIMi
+	 bz8JXzXgbn8DoF9Q0/OnbRePkxj/oMBIz+EQDeeLMBgQ3FEJ0PgGbXvwCr1K6+wlO8ken
+	 vPYNfJJpeg4eUVrNKhbne/4AKqCId0AXQkdYF5qeIPdnvKDW1Ca18Lou+OrIRw6O6ltc+
+	 Es3+9Zh6392NfmNcSe0mMQxulUTk0iwY25pblD0KShKlwa9WPtz/OdK961G8Kt4iDxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018056;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nk9DQxjSrXi7snEMetF7tpvc1LuYAVS5tKWOsQN/dto=;
-	b=PGA5yk1Q910jqVl0ZryqBz/NpfEAuXdk4/II+wSlgK5UnwaOLZ/syqhKECRUAo5txeY0
-	 AQYyP87Q/a3QXLJrjAFAyOWVVc1nkpcnv1cR05XrQ1z2ZPjFt0Ql7fQOQSdUOCfUMV5O+
-	 Xdk1+t4VbRZ32JY5MjPNb6G4+ekzoCpBdIF0PPnl8N6O8pKDEIMGDV/qOT6/t9U313caZ
-	 RolhTinCQ6MJjyEUbIvd0ePrRlQ3lc9MSy4xATXHl/xAWdVTcYJUxRRtcaJWac+V7bjaq
-	 C27whZasnBTfuSVMkfGuIf0anii7AoDvERjyAt27Ic/d5jy+nVVv+Tg6IQDPiFz6Ifw==
+	bh=mnk3lykODxMOda6g2qxoVGP8p2sddxKQHTCOFinK5ZI=;
+	b=lpBdPh7cWiYThSGsBtZimj2nkjeDGnU+19Fa9/6k+fv/vCrprINZbnceJdBiPfBrh8d4
+	 Kc8wg5AozbosLah2EPPlqqLFf6YtL2IbLHByDOl3+6uxTHFnF62KEB/hUFqoCaxOzzDe0
+	 BkTitz5tNNMomx1LfNVTg6CLX/8puXcUtpKv7z4mNKb0ODHTBbIEhyz4fxGft9EIyaP2A
+	 kO7U7iOWjEqUoBq1/jvi6LIWNXkI9hhzAoQ9X2F+JkmFEYe1emQ9O//a3mztkE7kRQuSo
+	 s2FcfDMSb3MummpDYRoa6mWgOqT1XqmhndUgdtJLPCI9k0fvuRakzfeh/PrRCViwN8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWCkkFqU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdfySimp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729DF606A31C;
-	Wed, 18 Nov 2026 16:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537BF606A337;
+	Wed, 18 Nov 2026 16:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWCkkFqU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E721F000C5;
-	Wed, 18 Nov 2026 16:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdfySimp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F421F000C4;
+	Wed, 18 Nov 2026 16:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018056;
-	bh=nk9DQxjSrXi7snEMetF7tpvc1LuYAVS5tKWOsQN/dto=;
+	s=korg; t=1795018058;
+	bh=mnk3lykODxMOda6g2qxoVGP8p2sddxKQHTCOFinK5ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RWCkkFqUvNEsw9xmg0vMCWnbqewpfVAf3xgU/3QytLNyQ+tSPj5ag6AvG06mRiZYQ
-	 mrsCa4tClJ3yeTuQ6cCEaIKMx3qsim0c8XGpwIh2i+cwegq1YhO9lxlqM2sX0g8B6d
-	 Vix32iuZVN8bB/Q4uxNdaqydp7xqjNzceF6C7Lig=
+	b=wdfySimpXAlkXLGrQDHDFbSdDbAnygck58nOSbiwpXrtTRk1F3t2LB/rgfSD2KLzQ
+	 lyMxmW9PCDokolHnDfqpk6RU0si7hRnTvprnJOcHNgUJ/W4FqG1NbcbI8diGIwPpSj
+	 Wb1mcnHnV380VF1lUy0HOf+1PtPEnCMvPHAoPV/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1087/2651] arm64: dts: qcom: kaanapali: Add GCC CX power domain
-Date: Wed, 18 Nov 2026 15:38:47 +0100
-Message-ID: <20261118150327.130447244@linuxfoundation.org>
+Subject: [PATCH 7.3 1105/2651] serial: 8250: Fix section mismatch with CONFIG_MODULES=n
+Date: Wed, 18 Nov 2026 15:39:05 +0100
+Message-ID: <20261118150327.774496369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,40 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 9339897ad7eded77adf834e032482f7609911448 ]
+[ Upstream commit c44a4925cdac02af781ebfae96df68a7bf3580b0 ]
 
-The GCC GDSCs on Kaanapali are backed by the RPMh CX power domain. Without
-describing that parent domain, consumers of GCC-provided GDSCs can enable
-their local domain without causing the required CX vote to be held.
+Without CONFIG_MODULES, __init_or_module means __init, so
+serial8250_pnp_exit() and serial8250_hub6_exit() end up in .init.text.
+They are also called from serial8250_exit(), which is __exit, and
+modpost warns:
 
-Add the CX power-domain reference to the GCC node so votes from GCC GDSC
-consumers can propagate to RPMh CX.
+  WARNING: modpost: vmlinux: section mismatch in reference: serial8250_exit+0x2a (section: .exit.text) -> serial8250_pnp_exit (section: .init.text)
 
-Fixes: 2eeb5767d53f ("arm64: dts: qcom: Introduce Kaanapali SoC")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260924-qcom-tie-cx-to-gcc-v5-28-38732033e5b5@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The exit code never runs in such a kernel, so nothing breaks at runtime.
+But a function that is called from both __init and __exit code can't
+carry either annotation, so drop it.
+
+Fixes: a300273c458c ("serial: 8250: hub6: Add cleanup code")
+Fixes: 4cf187f9dea9 ("serial: 8250: pnp: Annotate init and exit functions for conditional discarding")
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Link: https://patch.msgid.link/20260926163506.487201-1-danishkhateeb03@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/kaanapali.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/8250/8250_hub6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/kaanapali.dtsi b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-index 131fd2a16c545..c1528cc8b7b3f 100644
---- a/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-+++ b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-@@ -552,6 +552,8 @@ gcc: clock-controller@100000 {
- 				 <&ufs_mem_phy 2>,
- 				 <0>;
+diff --git a/drivers/tty/serial/8250/8250_hub6.c b/drivers/tty/serial/8250/8250_hub6.c
+index 4d4c54c951cb9..848d9723ac56a 100644
+--- a/drivers/tty/serial/8250/8250_hub6.c
++++ b/drivers/tty/serial/8250/8250_hub6.c
+@@ -54,7 +54,7 @@ int __init serial8250_hub6_init(void)
+ 	return platform_device_register(&hub6_device);
+ }
  
-+			power-domains = <&rpmhpd RPMHPD_CX>;
-+
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
+-void __init_or_module serial8250_hub6_exit(void)
++void serial8250_hub6_exit(void)
+ {
+ 	platform_device_unregister(&hub6_device);
+ }
 -- 
 2.53.0
 
