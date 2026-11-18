@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020870;
-	b=mtUkQdJvxlJXKVbt6ifAInmrD/2MyP0pIpQ6ECvxTihy2c5NMji9Ij28SvDzxTff0mEe
-	 3xkNsO1SeaYrMQOdQm4e+ris8lKqvkYU7r+r8fd4cUDF7VOfMQbUdpcAYq12A/PTPVOWP
-	 5jBs2c8q6zZM2RbmTbGIegltCJhC4fu86M70z5FUoNdWolSFeVYH9AxoQgsCQX7hTzePC
-	 3V82FqlmjOVMcUqMVeV3Nhc4Rk7ew92dvnok7jjRhUORk/Tu1qi3ZD3ocgKtYt4y9+pVX
-	 INKJmqkQieVQ98NgU7qlp2HDE6OVRMIJRpu9OJh3HmvqZjn0nJ1P6en7kvk7u5ixXNg==
+	t=1795020873;
+	b=O6jLCa7zeVbQLmTIF3WK20bZfZliFEbK5fTbLFNl3X8XOcKiSu2c30c9E691qiU/Tggk
+	 Fla9xqJXeDqB1W2j90xoeiwFSs65oqwlUmMwYNgSsJ9iJshSr7HYMipJvKAYtYEH4czdM
+	 f9SE7GJsQlGze/6Nq3b7eKPNdURmiSr54ytp1trfs53EXtj4ZfMOokjiB6fGYeGyzYkYH
+	 XKV6e2NvUO9qVI/9zugO3ZUgcAzHMMBsCNaqWcdUZkXyHkw6LkXE+4pVyT/Ku1Cya8/4F
+	 Txo4snHF18x4avoSY1q+VF4S+L6lZ6+Ou5cLrDloMIMKlltsDiqcYwmwt/9yOoTuHcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R//2/xZZY8hddp3r1UaIitP2uzuivyfZyhYzrfD88fw=;
-	b=HxVEMDIq+RPsqCCeFEcWbdaA9TNgNNvHqWGJEDRKWQvedWdhWy8RZ43mikntQimLeD17
-	 bEpFt8NetS6f9PZarmq3YvGr3jq276zBZGAqiqQc2QSmULrOsiXi4JQlHIOjYA9fbRSNf
-	 MeALdfNaHQg55Ar32BK2jWZxzYzzMuD/pLX6SIo3n6m08AXwYmbahjojWnkofjf8+3+rK
-	 WoOY4UCL2FLm5e3GBN6JP+kMLDIGsmVEvqCQaUcoPcdxg7japHS4GGokQMuQrN+CBah8S
-	 QyGqY7qc4wDYmf1RGCfIWlFoRolOOS1TS/CoZPCzqVNnpw19OlzM0jy0zdmcuaWX2Uw==
+	bh=xN/zyVRhvpxb2E4ZeQmHbaRTQkAhoYnsLU6TOZL9u/M=;
+	b=cck+38H9gmwiLGPyUqZXkmLKTzQs/+LSq6wgwLRNiL0i2uwJNEAnk9bJQhwIhoLSgHAJ
+	 YYEJQPNV3hHXuTr+mR2kfLZVOhNTnTgR48z7yzPKsBm7kLRfg270Wd8VFo+K/a9RcGy9r
+	 aHroD4tVlTXSfov9xNTttH6AEzNk19Rf+YDR/V/ZCEuCksat4oOAuOIx0hMNLK+NwsRFf
+	 KEOJ9ArNcjIsqZuiqai3LxO/EUSRLH6H/Ry3GSI/E1NdRu+rMbhK/oauJETxIn2/mMUJA
+	 k1GzZhEDzjymDAbBvEnVo4oQNeMZwa4p3A39sOF5RzYSejrUqNLoZUsNslOMgFYHV5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ9Of7+E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gwGdwA4d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5EF606A320;
-	Wed, 18 Nov 2026 16:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD99606B5B1;
+	Wed, 18 Nov 2026 16:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ9Of7+E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876E81F000C4;
-	Wed, 18 Nov 2026 16:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gwGdwA4d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8FF1F000C4;
+	Wed, 18 Nov 2026 16:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020870;
-	bh=R//2/xZZY8hddp3r1UaIitP2uzuivyfZyhYzrfD88fw=;
+	s=korg; t=1795020872;
+	bh=xN/zyVRhvpxb2E4ZeQmHbaRTQkAhoYnsLU6TOZL9u/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZ9Of7+EmrRe2Pp+e6taQP6iG/jc94Q4sP1dJipaVuyU3ftPhSDvaXtcQdpTfqZwc
-	 4P0WddRe10wJtQDp2kdK9pBOtsQ2H2AXL4e1AGUEAe+FzRwy63lUp8rCBS9U8WCuri
-	 ID6J7s1ATvKscvjNG+QJzC0wXG8kmF3OZzAW8l3o=
+	b=gwGdwA4dEbd5pjvStdrpjIyOmwoYm9zrwJqPFYb7PuQOl4thQURKFjHZVMKl9NDPu
+	 5mdVZ9CCl0QcewmbGs2gX9M3v1mBRRfXLUiLyFMZhYa9bALjU2hMHK8TW1SQjYk2mH
+	 sht3liQIAanP/imJPlhZmrGWCekqaflJ1PTlA1Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2106/2651] bpf: Bound the nesting that the BTF show code follows
-Date: Wed, 18 Nov 2026 15:55:46 +0100
-Message-ID: <20261118150401.786168426@linuxfoundation.org>
+Subject: [PATCH 7.3 2107/2651] bpf: Fix stale offload->prog pointer after realloc
+Date: Wed, 18 Nov 2026 15:55:47 +0100
+Message-ID: <20261118150401.816517119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,67 +70,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 13ac7c05bc45d3445b580da186548dd3487fae4e ]
+[ Upstream commit 8e83d53596445fcf5b0385e5fbe8bcd971e06d06 ]
 
-btf_struct_show() and btf_array_show() recurse for every nested struct
-and array.  MAX_RESOLVE_DEPTH bounds one resolve walk when BTF is loaded,
-not the nesting: a member whose type is resolved already is not walked
-again, so BTF that defines its types from the inside out can nest them as
-deep as it has types.
+bpf_prog_realloc() moves a program that the rewrites of the verifier make
+outgrow its pages.  It updates aux->prog, but not the offload->prog of a
+device-bound program.  When the device is unregistered,
+__bpf_offload_dev_netdev_unregister() hands the stale pointer to
+__bpf_prog_offload_destroy(), which faults on the freed program:
 
-Whoever may load BTF, with CAP_BPF or a BPF token, can give such a type
-to the value of a map.  Reading the file of that map in bpffs then
-overruns the kernel stack: with a few hundred levels the stack guard page
-is hit and the kernel panics.
+  BUG: unable to handle page fault for address: ffffc90000071050
+  RIP: 0010:__bpf_prog_offload_destroy+0x3f/0x310
 
-Stop at 32 levels.  That is MAX_RESOLVE_DEPTH, and __btf_show_indent()
-has as many columns.  Nothing is shown for a member that lies deeper, and
-the status becomes -E2BIG, which bpf_snprintf_btf() and
-bpf_seq_printf_btf() return.  The types of an x86_64 defconfig kernel nest
-14 deep.
+It takes the right to load a device-bound XDP program, CAP_BPF and
+CAP_NET_ADMIN or a BPF token, and a device that can be removed.
 
-Fixes: b00b8daec828 ("bpf: btf: Add pretty print capability for data with BTF type info")
+Commit a1aa9ef47c29 ("bpf: Fix stale offload->prog pointer after constant
+blinding") repaired the other place that replaces a program.  Do the same
+here.
+
+Nothing keeps the device while a program is loaded, so it can also be
+unregistered at that very moment.  That frees the offload, and it may have
+read offload->prog already when the old copy of the program is freed.  In
+both places update the pointer under bpf_devs_lock, before the old copy
+goes.
+
+Fixes: ab3f0063c48c ("bpf: offload: add infrastructure for loading programs for a specific netdev")
+Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
+Fixes: a1aa9ef47c29 ("bpf: Fix stale offload->prog pointer after constant blinding")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-19-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-21-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ include/linux/bpf.h  |  5 +++++
+ kernel/bpf/core.c    |  4 ++--
+ kernel/bpf/offload.c | 16 ++++++++++++++++
+ 3 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index d870bc5e50bc8..b1adb52e2f310 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -1065,6 +1065,8 @@ static const struct btf_type *btf_type_skip_qualifiers(const struct btf *btf,
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 5f39502e4a57b..b13b751d9a4f2 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -3670,6 +3670,7 @@ int bpf_dev_bound_kfunc_check(struct bpf_verifier_log *log,
+ void *bpf_dev_bound_resolve_kfunc(struct bpf_prog *prog, u32 func_id);
+ int bpf_prog_dev_bound_init(struct bpf_prog *prog, union bpf_attr *attr);
+ int bpf_prog_dev_bound_inherit(struct bpf_prog *new_prog, struct bpf_prog *old_prog);
++void bpf_prog_dev_bound_moved(struct bpf_prog *prog);
+ void bpf_dev_bound_netdev_unregister(struct net_device *dev);
+ 
+ static inline bool bpf_prog_is_dev_bound(const struct bpf_prog_aux *aux)
+@@ -3731,6 +3732,10 @@ static inline int bpf_prog_dev_bound_inherit(struct bpf_prog *new_prog,
+ 	return -EOPNOTSUPP;
  }
  
- #define BTF_SHOW_MAX_ITER	10
-+/* nested structs and arrays shown; __btf_show_indent() has as many columns */
-+#define BTF_SHOW_MAX_DEPTH	32
- 
- #define BTF_KIND_BIT(kind)	(1ULL << kind)
- 
-@@ -1458,8 +1460,18 @@ static void *btf_show_start_aggr_type(struct btf_show *show,
- 				      const struct btf_type *t,
- 				      u32 type_id, void *data)
- {
--	void *safe_data = btf_show_start_type(show, t, type_id, data);
-+	void *safe_data;
- 
-+	/*
-+	 * Structs and arrays are shown by recursion.  BTF loading bounds the
-+	 * depth of one resolve walk, not how deep resolved types may nest.
-+	 */
-+	if (show->state.depth >= BTF_SHOW_MAX_DEPTH) {
-+		show->state.status = -E2BIG;
-+		return NULL;
-+	}
++static inline void bpf_prog_dev_bound_moved(struct bpf_prog *prog)
++{
++}
 +
-+	safe_data = btf_show_start_type(show, t, type_id, data);
- 	if (!safe_data)
- 		return safe_data;
+ static inline void bpf_dev_bound_netdev_unregister(struct net_device *dev)
+ {
+ }
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 7f11555a50702..b803819fce83c 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -273,6 +273,7 @@ struct bpf_prog *bpf_prog_realloc(struct bpf_prog *fp_old, unsigned int size,
+ 		memcpy(fp, fp_old, fp_old->pages * PAGE_SIZE);
+ 		fp->pages = pages;
+ 		fp->aux->prog = fp;
++		bpf_prog_dev_bound_moved(fp);
  
+ 		/* We keep fp->aux from fp_old around in the new
+ 		 * reallocated structure.
+@@ -1555,8 +1556,7 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other)
+ 	 * know whether fp here is the clone or the original.
+ 	 */
+ 	fp->aux->prog = fp;
+-	if (fp->aux->offload)
+-		fp->aux->offload->prog = fp;
++	bpf_prog_dev_bound_moved(fp);
+ 	bpf_prog_clone_free(fp_other);
+ }
+ 
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index d855399812eec..5a10f40a7831d 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -96,6 +96,22 @@ static int __bpf_offload_dev_netdev_register(struct bpf_offload_dev *offdev,
+ 	return err;
+ }
+ 
++/*
++ * @prog takes the place of a copy that the caller is about to free. Nothing
++ * keeps the netdev while a program is loaded: once the lock is dropped, no
++ * unregistration is left that has got the old copy from offload->prog.
++ */
++void bpf_prog_dev_bound_moved(struct bpf_prog *prog)
++{
++	if (!bpf_prog_is_dev_bound(prog->aux))
++		return;
++
++	down_read(&bpf_devs_lock);
++	if (prog->aux->offload)
++		prog->aux->offload->prog = prog;
++	up_read(&bpf_devs_lock);
++}
++
+ static void __bpf_prog_offload_destroy(struct bpf_prog *prog)
+ {
+ 	struct bpf_prog_offload *offload = prog->aux->offload;
 -- 
 2.53.0
 
