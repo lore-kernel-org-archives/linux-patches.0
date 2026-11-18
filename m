@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044220;
-	b=k1lAVwOh4JVEt3X0Q9CAKX/8aAtFn2GXKGYbBdjgd9nOy+00x1B6I0vgWRFoHKsfSBFE
-	 V0k+rlVWZNqWdYfl5VRoMrgf4y/Ap39i6U8Z3CtdKk0FSKpFL59AQdf/kMYD/vcpQC1RL
-	 pmPB4PmjvvjzGs+ARm7oOxIH39VfA3moBV5TA0kCBAJoMf7f8vPgn4iMRmsI4ZWH9F5gd
-	 fv9zAlyribCZ3hUtJJS2mi8vLraAIdq7WHv4JcjtLW5uHymnuPHaQXq+kvbQfy+252mWH
-	 oobL6vGPRWHq4HBxss6T3UNuanW8EoePZ9B3Rgd1RXiGWFkv4v7EBHLOoAjSLitCR5Q==
+	t=1795044223;
+	b=5DIY1IYHnnioShMklGxFYGrhWWojmEOQCwSd685SBxFb2oY+2I3VfHp4P++wmJahPHY0
+	 ZS3F7DO1bDDA0wCJ0A6oW69GyajgjNsKSSRKVJPSCqMPGt//NrVbg1L/tj+X70yvW5svH
+	 3PqjHpFcfsxkDIct/8lKhvqKp9Dfl7I/FkGxPVr31DUk3UXG5h2j/Gj67YrIFmnJkC4sk
+	 4nXalP+5L03bq0C8SQvtkmpwfpNk6mWQzJed1qgm3h/31/s9Zc3RP1x7HCOlEQ+Mk3Sin
+	 NX/x4AK/R5MC0D0JthaRznNo6XM1Ok2JXP3o2aIhjJumbLighsoDc2rGqjwsqOxg0Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2tbYucxS+V2p1/h1ZUPhhJDNlr8qQNIpFP3CtJVzAoU=;
-	b=i6EZ5hWCJyKJPYfwIa0weHp6ZDHFZNWGfYWpiXQbWvtfF5m3mgzcD3bwbqvQ9wcVJwI1
-	 Haf1emqxntDyTMUiko4Zizqf/5y71q1hQBwXFzt1LKbfMUsnrIg8xr+5CuEa6BilkNuQm
-	 X61FpgbshtgF7RT/hilw4T2Pp6st+5FI+nplpOrBNWGCCm2dwkK8dconJMoQXSKdUa3kt
-	 rGu9ObQgdtluQDTdmoy5tE8wOtU3CUFrihY0ZsAi93+3l7wRSA1uGm+L/xLZeVxLUXSk6
-	 b4U0kWHskndIVNaflLVi8BE3NxuSjYEpi19gEnnpBwdNKJNeJ/QiJC1HygYiTAxo0GQ==
+	bh=JXxaFx4De6vDSQj9CFLCY6yUl7jEYS01kgQfgoS3M0I=;
+	b=a8bnrUJCOtKWbZmRHF3mBVVxo+og09b3wGXfKeDexeexaFVuUAABYaZYl2BapB/jtGKY
+	 LGYyUibN4uDdC5P171kYwcqOrbR8bhCc95xiqXHGUtXe1N/2+3OEeK1Qn81poD81CKF9z
+	 i/s22WP+RMgb19QrpagZLn1jl4WWZkTjRBffAifmS6nPI4H21qtjgD+W7guvufhqpwJ4R
+	 NfK2AEyKFOZXjdtt3K0d3oNkwLmvJtdFDQ5HNJ/gDtXW/1W2keZPwImdXoS1d/mCVUUcU
+	 54Ytm+Tutpl2jsZce/n5yDYAUChCEx3TBJHa9fvwUlEjJGj+G6DGIFQJ6hcE3RjLZxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2IzTorF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+ElMvZ4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F736606A320;
-	Wed, 18 Nov 2026 23:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6074606A325;
+	Wed, 18 Nov 2026 23:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2IzTorF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA891F000C4;
-	Wed, 18 Nov 2026 23:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+ElMvZ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5087D1F000C4;
+	Wed, 18 Nov 2026 23:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044220;
-	bh=2tbYucxS+V2p1/h1ZUPhhJDNlr8qQNIpFP3CtJVzAoU=;
+	s=korg; t=1795044222;
+	bh=JXxaFx4De6vDSQj9CFLCY6yUl7jEYS01kgQfgoS3M0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2IzTorFWJWKU7VkLlXxHAdQy/HqDx/wvmsvloMYPRVqlwz41Oq7aYcBzlZ1167jw
-	 YqY028ay2bnVMBwD78jR+4q+b/f2YK++PG8vs6HKZ8tCIXyDQQGGceJ8okYFLukjlJ
-	 xmD5LpfXl+BMAZhrKcA51Z7RZo2dt2wCtq7aGiGY=
+	b=I+ElMvZ4rlPHyELegvqdCQmyNDlwSwSbe2a4OkcYbMUmZ9XrT2mc0ZS0ODGadGd6q
+	 QWBGXeso3l6ro6GINv5kBb5uh8M1q1I9ugsl2dzhXy+hmGR6hj8fzwz1yMn6yq6usG
+	 O3q8IyvIp5AeCBW8HN7nb/pKWCaSyHT6AaKPPI14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Vlad Kulikov <vlad_kulikov_c@pm.me>,
+	Jan Kara <jack@suse.cz>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Ma Wupeng <mawupeng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0490/2857] drm/i915/dmc: Add sanity check for DMC load address
-Date: Wed, 18 Nov 2026 15:25:24 +0100
-Message-ID: <20261118150219.097868739@linuxfoundation.org>
+Subject: [PATCH 6.1 0491/2857] ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure
+Date: Wed, 18 Nov 2026 15:25:25 +0100
+Message-ID: <20261118150219.133291386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,129 +73,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+From: Vlad Kulikov <vlad.kulikov.c@gmail.com>
 
-[ Upstream commit 7dedc5bb11f95e96fe80757c924d8d9aa7327759 ]
+[ Upstream commit 7229d74e5e8c1f140529d405c88d4493e37ce4e3 ]
 
-For DMC firmware header version 3, the firmware load address is stored
-in dmc_info->start_mmioaddr and later used by dmc_load_program().
+If setup_mq_sysctls(ns) fails after mq_init_ns(ns) succeeds, the error
+path skipped releasing the internal kernel mqueue mount kept in
+ns->mq_mnt. That leaves the vfsmount/superblock referenced until final
+namespace teardown, i.e. a resource leak on this rare failure edge.
 
-Unlike the MMIO address table, the firmware load address is not
-validated. Add a sanity check to ensure it is within the valid range.
+Unwind it by calling mntput(ns->mq_mnt) before dropping user_ns and
+freeing the IPC namespace. This mirrors the normal ordering used in
+free_ipc_ns().
 
-BSpec: 69671, 68378
-Fixes: 3d5928a168a9 ("drm/i915/xelpd: Pipe A DMC plugging")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:Sonnet-5
-Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
-Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260922133535.3180973-6-dibin.moolakadan.subrahmanian@intel.com
-(cherry picked from commit 5e47ee5c76ca9becde8df4ad5202845b7ffcbc4c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-[ sashal: Changed the dmc_id parameter from enum intel_dmc_id to u8 and display->drm to &i915->drm in drm_err(), since this tree lacks the enum and the display variable. ]
+Link: https://lkml.kernel.org/r/20251021181341.670297-1-vlad_kulikov_c@pm.me
+Signed-off-by: Vlad Kulikov <vlad_kulikov_c@pm.me>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Aleksa Sarai <cyphar@cyphar.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Ma Wupeng <mawupeng1@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: f0e48172a59e ("ipc: drop the mqueue mount with kern_unmount() on setup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dmc.c      | 55 +++++++++++++++++++
- drivers/gpu/drm/i915/display/intel_dmc_regs.h | 12 ++++
- 2 files changed, 67 insertions(+)
+ ipc/namespace.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dmc.c b/drivers/gpu/drm/i915/display/intel_dmc.c
-index 722fdffb09f93..0b5666d5318ec 100644
---- a/drivers/gpu/drm/i915/display/intel_dmc.c
-+++ b/drivers/gpu/drm/i915/display/intel_dmc.c
-@@ -543,6 +543,55 @@ static void dmc_set_fw_offset(struct intel_dmc *dmc,
- 	}
- }
+diff --git a/ipc/namespace.c b/ipc/namespace.c
+index 3075ca4920f1a..745826c9206bc 100644
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -61,10 +61,10 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
  
-+/*
-+ * Check if the load address is within the valid range for the given DMC ID.
-+ */
-+static bool dmc_load_addr_sanity_check(struct intel_dmc *dmc,
-+				       u32 start_addr, u32 payload_size,
-+				       int header_ver, u8 dmc_id)
-+{
-+	u32 start_range, end_range, end_addr;
-+
-+	if (header_ver != 3)
-+		return true;
-+
-+	switch (dmc_id) {
-+	case DMC_FW_MAIN:
-+		start_range = DMC_MAIN_PROGRAM_BASE_START;
-+		end_range = DMC_MAIN_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPEA:
-+		start_range = DMC_PIPEA_PROGRAM_BASE_START;
-+		end_range = DMC_PIPEA_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPEB:
-+		start_range = DMC_PIPEB_PROGRAM_BASE_START;
-+		end_range = DMC_PIPEB_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPEC:
-+		start_range = DMC_PIPEC_PROGRAM_BASE_START;
-+		end_range = DMC_PIPEC_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPED:
-+		start_range = DMC_PIPED_PROGRAM_BASE_START;
-+		end_range = DMC_PIPED_PROGRAM_BASE_END;
-+		break;
-+	default:
-+		MISSING_CASE(dmc_id);
-+		return false;
-+	}
-+
-+	if (payload_size == 0)
-+		end_addr = start_addr;
-+	else if (check_add_overflow(start_addr, payload_size - 1, &end_addr))
-+		return false;
-+
-+	if (start_addr < start_range || end_addr > end_range)
-+		return false;
-+
-+	return true;
-+}
-+
- static bool dmc_mmio_addr_sanity_check(struct intel_dmc *dmc,
- 				       const u32 *mmioaddr, u32 mmio_count,
- 				       int header_ver, u8 dmc_id)
-@@ -683,6 +732,12 @@ static u32 parse_dmc_fw_header(struct intel_dmc *dmc,
- 		return 0;
- 	}
+ 	err = -ENOMEM;
+ 	if (!setup_mq_sysctls(ns))
+-		goto fail_put;
++		goto fail_mq_mount;
  
-+	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
-+					dmc_header->header_ver, dmc_id)) {
-+		drm_err(&i915->drm, "DMC %d: firmware has wrong load address\n", dmc_id);
-+		return 0;
-+	}
-+
- 	dmc_info->payload = kmalloc(payload_size, GFP_KERNEL);
- 	if (!dmc_info->payload)
- 		return 0;
-diff --git a/drivers/gpu/drm/i915/display/intel_dmc_regs.h b/drivers/gpu/drm/i915/display/intel_dmc_regs.h
-index 5e5e41644ddfd..07bf6a6fcd6b9 100644
---- a/drivers/gpu/drm/i915/display/intel_dmc_regs.h
-+++ b/drivers/gpu/drm/i915/display/intel_dmc_regs.h
-@@ -76,6 +76,18 @@
- #define TGL_PIPE_MMIO_END(dmc_id)	_PICK_EVEN(((dmc_id) - 1), _TGL_PIPEA_MMIO_END,\
- 					      _TGL_PIPEB_MMIO_END)
+ 	if (!setup_ipc_sysctls(ns))
+-		goto fail_mq;
++		goto fail_mq_sysctls;
  
-+/* For DMC header version v3*/
-+#define DMC_MAIN_PROGRAM_BASE_START	0x80000
-+#define DMC_MAIN_PROGRAM_BASE_END	0x86fff
-+#define DMC_PIPEA_PROGRAM_BASE_START	0x90000
-+#define DMC_PIPEA_PROGRAM_BASE_END	0x96fff
-+#define DMC_PIPEB_PROGRAM_BASE_START	0x98000
-+#define DMC_PIPEB_PROGRAM_BASE_END	0x9efff
-+#define DMC_PIPEC_PROGRAM_BASE_START	0x52000
-+#define DMC_PIPEC_PROGRAM_BASE_END	0x53fff
-+#define DMC_PIPED_PROGRAM_BASE_START	0x59000
-+#define DMC_PIPED_PROGRAM_BASE_END	0x5afff
-+
- #define SKL_DMC_DC3_DC5_COUNT	_MMIO(0x80030)
- #define SKL_DMC_DC5_DC6_COUNT	_MMIO(0x8002C)
- #define BXT_DMC_DC3_DC5_COUNT	_MMIO(0x80038)
+ 	err = msg_init_ns(ns);
+ 	if (err)
+@@ -77,9 +77,10 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
+ 
+ fail_ipc:
+ 	retire_ipc_sysctls(ns);
+-fail_mq:
++fail_mq_sysctls:
+ 	retire_mq_sysctls(ns);
+-
++fail_mq_mount:
++	mntput(ns->mq_mnt);
+ fail_put:
+ 	put_user_ns(ns->user_ns);
+ 	ns_free_inum(&ns->ns);
 -- 
 2.53.0
 
