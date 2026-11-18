@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036602;
-	b=thgdFP7wZBxTeFemxMsI9i8WdGzjusUuhdSiI8h2rAWAVcr6sUtDm/p0JYoygF+Egl73
-	 syMYkidbZ0m/52t4iZRkFuKvGVuC+wwCl8YedTZ33M5MZs61Nszir0L7YmRqy0YsIglL5
-	 IWc2DHbiDXN3TpgXfOQtc2KfSeKGGNKvhsZDilZDI3M+qW3t5Ay4CLyusawrhAmK+0FQH
-	 yu8EdKBYfCTFFnkq7JpsY8Xp697UaTx5VLWfBLU97g2GeWIh94nkezo30rI67wOqPFpB/
-	 6jYFsd6UDR5ncKht8uxjDQDVj6ainUMLvu9eLEhaN9lVTdIb3PVZdAtebSmo9/CzS1A==
+	t=1795036604;
+	b=4nOaPhklKOs2o5vSVU5VqeLi3IsyFCHEXzYYlJmioejKUR7qFlclFKff+bdCcZbtMDsP
+	 qpOpTiofQHkh5+OkThnGH0GZY1a4DYhWkQ5sYmBlKXELJCExE2QrDUe6D5pLVjmF5D3TD
+	 gEX9GTAELfLyPdFKiarsgJmKLqnSayLlLmUwpgJeZ/btLxFUevOdE02aAzFqqVuOkAEOE
+	 MFmkdWjnwzv4HDkgbzDv9/qxiT8VpQi70+SYz2a6hxB+qf4FmF1GRITn+vx2W4L03Y7gh
+	 /NFEfyu+BJZbJA/Uxxp84Lac4FWKsEpMbsndaCmeHha8mMQY6F1BAAJ7fF8xbtsXaUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vDJxDpDv3V4bWnfalcpblpT5hKRsHDKsC4QgjqoPseA=;
-	b=qGjpjMPXHjC/fIXIdUR0FTstYFujy8zsyowIkWXGPeSnOeT/XDGmKyHS3aGi6O19C959
-	 FD/eajS0mQ7ul9BXvy6G6htDvF0yu8RKgdM1VuRvyiz2giFKhis50TfulSz5YWeeWaVb8
-	 Vl62YbYZs9Jx98wWat6m1vln6NMa0dROdUFTnJh5jaku0T3vaeACmxQxuOeV09nQzsgwI
-	 6ml5hNxQ+h1hLDSqC7U8EJ33NcN3NGGIltwBGjueVWeluv9C06JDVlLSNHRAZ2dKxsYjW
-	 57S44Ig+K6j3VBjjgiMnaP9WGnrcyNuB2/lvdT/HWAiNKO8ajIy5hAYiv2pNwrED8pA==
+	bh=C1lzGOiLs4fNvwh79fYHAZvVuq6oW/vPTRMn0U6MZRw=;
+	b=eh9XCXwfoqSh/R3Zr+W3xmN83Yo6KAQ4CuSNqsg1h89hUi3r0ghYLp2KA7bk+8ycDn0B
+	 lw5LYxmvqGNiPVTcZnZsf7urTgpSPWhVJdTrtMxOYtzcd37zwbEFLWhjkFOCmybjyv1vM
+	 y3joqWFfGeSvoKc8IAPbKFRGBuOdnUh5ssGqECSG+EcpNY1EjU53N01Jza/XAqsNdzwBe
+	 0KKYnpQ/iQGzjdPNBVSue1oPJBUPISb8ZG28gjA46+atdEypMZ7Qo1Q4TQHvpDSs6/VbU
+	 0NF/KxkPuHIJjWugodDqTDsYsQf4yaLuugPTp1H+lt3tYzcz61yKkPeqxs4m+zr8O/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWOs2qHV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZigJFM8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19357606A320;
-	Wed, 18 Nov 2026 21:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5496606A320;
+	Wed, 18 Nov 2026 21:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWOs2qHV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711951F000C4;
-	Wed, 18 Nov 2026 21:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZigJFM8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3875D1F000C4;
+	Wed, 18 Nov 2026 21:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036602;
-	bh=vDJxDpDv3V4bWnfalcpblpT5hKRsHDKsC4QgjqoPseA=;
+	s=korg; t=1795036604;
+	bh=C1lzGOiLs4fNvwh79fYHAZvVuq6oW/vPTRMn0U6MZRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pWOs2qHVmTONIWr29jO34eMlCp3Qag72f5T9cp5ls3MXypLBNwu2cC1zNHtLTLhCC
-	 scO9Fak9EwMDYBweJqQ5Rak8auR1pwmK4dTG3FGeeSPocrFXXHICvpi5Y8Ca0xMt2l
-	 b2Nl4coNdGjPXJNk1EpmUVRO2Xbee+91o+0HOvIg=
+	b=CZigJFM8AyvSXWglH6UIDt5MV7I3KaiRGNQ8A7pZ7PIkjYZk4EromMOH+7xXxS1lJ
+	 f0lxCL06+CpP7R4/s3AKHZ5xLrEJgkxo5BFRS+JIt14J4zIkJqyvrY3IwjFebPbRik
+	 bww8r1KtlcCIyHzldrM0Ut2owuhEq72dA3DtsX6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1119/3318] crypto: qat - initialise state_lock on every path in adf_devmgr_add_dev()
-Date: Wed, 18 Nov 2026 15:29:01 +0100
-Message-ID: <20261118150353.596519856@linuxfoundation.org>
+Subject: [PATCH 6.6 1120/3318] irqchip/gic-v3-its: Dont clamp nvecs to zero when id_bits is 32
+Date: Wed, 18 Nov 2026 15:29:02 +0100
+Message-ID: <20261118150353.629483126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,64 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 4ad7c1bd5f3dcd3fd6efbb068d6ee2a68dddfece ]
+[ Upstream commit 5a9d62555e7164ec79a5fe70153d79cf1fdfd614 ]
 
-state_lock is initialised at the end of adf_devmgr_add_dev(), but the VF
-on host path whose id mapping already exists returns earlier via
-'goto unlock'. That mapping outlives the VF, so this path is taken every
-time a VF is recreated on a BDF that already hosted one, e.g.:
+GITS_TYPER_IDBITS is five bits, so id_bits reaches 32 and
+min_t(unsigned int, ...) truncates BIT(32) to 0. nvecs becomes 0,
+its_lpi_alloc() rejects that, and its_msi_prepare() returns -ENOMEM.
+On 32-bit ARM the shift is undefined instead.
 
-	echo 0 > sriov_numvfs
-	echo 32 > sriov_numvfs
+The clamp is correct for every value below the maximum, so only that
+one value is affected.
 
-accel_dev is freshly allocated on each probe, so state_lock is left zeroed
-and adf_dev_up() takes an uninitialised mutex. With CONFIG_DEBUG_MUTEXES
-this is reported on a dh895xcc with 32 host-bound VFs:
-
-  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-  WARNING: kernel/locking/mutex.c:159 at mutex_lock+0x171/0x1c0
-  Call Trace:
-   adf_dev_up+0x27/0xe0 [intel_qat]
-   adf_probe+0x700/0xa80 [qat_dh895xccvf]
-   local_pci_probe+0xd5/0x190
-
-The same happens on teardown when adf_dev_down() locks it again.
-
-Initialise the lock next to the other per-device state, before the tables
-are updated, so it is done on every path.
-
-Fixes: 1bdc85550a2b ("crypto: qat - fix concurrency issue when device state changes")
+Fixes: ce9e40a9a5e5c ("irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports")
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: Radu Rendec <radu@rendec.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://patch.msgid.link/20260908142632.2795308-3-fuad.tabba@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c | 2 +-
+ drivers/irqchip/irq-gic-v3-its.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c b/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
-index 9bdfa5b1614fe..98aebbe044d56 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
-@@ -137,6 +137,7 @@ int adf_devmgr_add_dev(struct adf_accel_dev *accel_dev,
- 
- 	mutex_lock(&table_lock);
- 	atomic_set(&accel_dev->ref_count, 0);
-+	mutex_init(&accel_dev->state_lock);
- 
- 	/* PF on host or VF on guest - optimized to remove redundant is_vf */
- 	if (!accel_dev->is_vf || !pf) {
-@@ -210,7 +211,6 @@ int adf_devmgr_add_dev(struct adf_accel_dev *accel_dev,
- 		map->attached = true;
- 		list_add_tail(&map->list, &vfs_table);
- 	}
--	mutex_init(&accel_dev->state_lock);
- unlock:
- 	mutex_unlock(&table_lock);
- 	return ret;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 592050e0246b9..224319b4eee6d 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3416,7 +3416,7 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 	 * Also honor the ITS's own EID limit.
+ 	 */
+ 	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
+-	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
++	nvecs = min_t(u64, nvecs, BIT_ULL(id_bits));
+ 	nr_ites = max(2, nvecs);
+ 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
+ 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
 -- 
 2.53.0
 
