@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057237;
-	b=fTeJhI1H1jNtrbLzqWMEAMq1HmVnbsW5PurjXyGeSQGAggrq/6HRIlJww5fs5JOph0lf
-	 PgFf6Z0RLFyzuSPmyUB6kMjK1GsL8w3hxg01qxxZhZkWRLchuQo86e2/O34FQeAn1lSuu
-	 Q0RH2Oqfv5reJYJWAuhqYo5tgv5uMseIWjdKJ995MNLaFgCl8RLJx4HuACLtE7K1WI+V0
-	 JBKgDqGEVucXr5MdDAu6Op0CnuqGqAuQwrj1Lxjtc1Dn0V5iuPvxJ+VW/8vxx3PmD5YCw
-	 BSbhsb/0nOcyl64F46esKhVP4X1PCLOf8lLTTCJ9G6yUcI5GpwkNUfL21X8MKDdTdCQ==
+	t=1795057239;
+	b=FJJLYycVUeNmYcVZiXxlPR/Cg0ugZlu1TbiM1jPIqSIUajWm/H1D1xSpuZi/2//J5Wyh
+	 tV1w5lpcKdB4YOEKKXgQMaZ7H87iiE11OYnSFu05M1U84ssRPEHt+ApiNtT0/o+UtOTNb
+	 SPZc0ArmMkxcLAKNn6da/j92if5+H3PpVN9BdcHkKaj8DF/kxm7FebECDn2eacv8UOgmc
+	 K0a4I6bJIkS5SDDtPlpsnKS++gEPjCRfFWNxwvZFSt4fUXxXbn39oIH5oescLc7jHoKv4
+	 QtIDnhuVIAaITAwxU3ss7ywHJuHIhwwHkFJa6U7NOb0PmyKgv8sDUvRfpRCPa2EVcfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057237;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XDCF6oIvO6m1GFTQOXOj7k+Il46PXVqtfwxf/nhj5I0=;
-	b=IBfWmgIFQz0blK46mcIk9bQ6T/kp5SFw3FOJMPeoRPQbKVUZ1aBMc+cL54uRAly1qiJn
-	 +umk+opOvbqwso1SOP7l0C7I8HlVy+BRQ+4RiguyP6P7SeZLDsxJnPESvjUnK8tqBgj0v
-	 ElpP+nQRGHcTg8tbjY9x+3VI5Hoee3NRG9Y7kfGYAC9T8lsUHgRORWnDjo41vKISHgurH
-	 Y++n5/Nx4VwUZEMHxpBy5Lfa9oXR74Kd9yLEFnZ1p3la+dHPIVPVXl4XG4xOLMoXmbG8s
-	 mEnpYFVPDfhD6pZm8MxfTmd808w7SRM+yuFLFu33q88XHSF8ud9kiFCAm1/0w66Z96g==
+	bh=sENhq7SLJSH6KOPufSnWHYG28gHl+hnxTA/5HizR+zw=;
+	b=e9s13DBXA7lg2qPooJ0KHTNCCl5zUPy3YzK3L5pSA+ktpRKh0S4AudGp/2YgKmJBz1f7
+	 Z4COpQaL6Jl3SmkoRFBu+eU9HIKcEp4KUgD2QRnGrnIP5lT/G2QaYuLbZo0Zgi8DL0ZCl
+	 wvFF2+9vvlldYQeHgdyQw7+ebypKkrgExgpub2u0sK5Gz2p1uou4zsbxXpZu56YaQlDPZ
+	 OZI+X2LAALF1UF4WNZlWhx+Qgi6sHYp6XNh6V01+YtSTbifb+oC0And6cLjE7k8qY+hHg
+	 2AJ/AZXUa91RwI2eFIzpiOgbH2zX4+9UODdOR/alaj/1oakuykKOw5Kqe6FaHbfUhvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m2wmJzKu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xsyjPVMV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3545D606A31C;
-	Thu, 19 Nov 2026 03:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC03A606A31C;
+	Thu, 19 Nov 2026 03:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m2wmJzKu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5551F000C5;
-	Thu, 19 Nov 2026 03:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xsyjPVMV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3645B1F000C5;
+	Thu, 19 Nov 2026 03:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057236;
-	bh=XDCF6oIvO6m1GFTQOXOj7k+Il46PXVqtfwxf/nhj5I0=;
+	s=korg; t=1795057239;
+	bh=sENhq7SLJSH6KOPufSnWHYG28gHl+hnxTA/5HizR+zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2wmJzKub0FtUZBGaCrpo8E6LsdQxRwfL56Vsx4N+NcOzAz1xdqOWXthJF/RnMOQy
-	 P79AUAS8r5NLUHmRtz+Vll2QWgqygBZjQ+4wWYE3c4ktVUIYJ9TQVa5sBCqGaDiYw9
-	 9HLc6T8HMK3jZln9q1uY0HM2G7gf3cy3OU7nZLtI=
+	b=xsyjPVMVW+oEUqhY7bHmBqMa/x5m4tk7YzAJB12OXOrsXsNX039A3V3rxjzg88CSu
+	 m1trQLcqO5gFvOors1gOQru0SaS8UM43nMNoOmpSRLzh2UdKw+9JzwMVjnQVy0+42n
+	 LoMoTtrNofk2N9BZbzUzUAZSjLQvHlZ2fFOZD3Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	David Laight <david.laight.linux@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0060/1848] usb: fsl_qe_udc: check qe_alloc_request() failure in ch9getstatus()
-Date: Wed, 18 Nov 2026 15:34:58 +0100
-Message-ID: <20261118145913.640358112@linuxfoundation.org>
+Subject: [PATCH 5.10 0061/1848] usb_string_copy: Use kzalloc() to avoid leaking old data
+Date: Wed, 18 Nov 2026 15:34:59 +0100
+Message-ID: <20261118145913.674533676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,49 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 612551bf7cf7113b8bbd5e8c1eea86d9427c2f95 ]
+[ Upstream commit 057df423bf4747091cf942af57307627e941e1fb ]
 
-qe_alloc_request() may return NULL on allocation failure. ch9getstatus()
-passes the return value directly to container_of() and then immediately
-dereferences the resulting qe_req pointer. Check the allocation result
-before using it and stall the control request on failure.
+If the string is read while being updated (which is why the copy is done
+in place) and the new string is longer than the old one, then the reader
+can read memory that isnt part of either string.
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260620120631.2894977-1-haoxiang_li2024@163.com
+Use memcpy() to copy the known length string instead of strcpy.
+
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Link: https://patch.msgid.link/20260608095523.2606-37-david.laight.linux@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fsl_qe_udc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
-index 618b0a38c8855..085071049aca8 100644
---- a/drivers/usb/gadget/udc/fsl_qe_udc.c
-+++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
-@@ -1935,6 +1935,7 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
- 			u16 index, u16 length)
- {
- 	u16 usb_status = 0;
-+	struct usb_request *usb_req;
- 	struct qe_req *req;
- 	struct qe_ep *ep;
- 	int status = 0;
-@@ -1975,8 +1976,11 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
- 		}
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index e00762efd6da2..4cc4dc8bd839e 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -114,11 +114,11 @@ static int usb_string_copy(const char *s, char **s_copy)
+ 	if (copy) {
+ 		str = copy;
+ 	} else {
+-		str = kmalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
++		str = kzalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
+ 		if (!str)
+ 			return -ENOMEM;
  	}
- 
--	req = container_of(qe_alloc_request(&ep->ep, GFP_KERNEL),
--					struct qe_req, req);
-+	usb_req = qe_alloc_request(&ep->ep, GFP_KERNEL);
-+	if (!usb_req)
-+		goto stall;
-+
-+	req = container_of(usb_req, struct qe_req, req);
- 	req->req.length = 2;
- 	req->req.buf = udc->statusbuf;
- 	*(u16 *)req->req.buf = cpu_to_le16(usb_status);
+-	strcpy(str, s);
++	memcpy(str, s, ret + 1);
+ 	if (str[ret - 1] == '\n')
+ 		str[ret - 1] = '\0';
+ 	*s_copy = str;
 -- 
 2.53.0
 
