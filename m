@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031744;
-	b=Vy31L2/Gk+3Mrm3zfhPy0QlHDTAWzexYys47WECxk8v+Jtzxh1V1T2Mt3bk4HFoP67xP
-	 WICedYyTphjtsbaWnhIYY+hdSuWakrXW//wknVWUncDhqkoXEbvzoIGSbVYukfH4DBG0T
-	 xMhOAg369IeSNVNWMQ6ZhKW4EgdEXb8QVnJja3y6jviT5nEM91DY5XdtrmdU87NiRWjtu
-	 HFSbwvlB001UPanZ3vCW7xKCg2k1cVqUgCxtm8+me68EeobpwMqZI6JKqQq3w8xG5VR/s
-	 btYcMMiy5pXC4+uwLjRCzvf61QYi1aXJfpQQhlFDSmpZYv/ycaMSZX5rzd39J55pifA==
+	t=1795031747;
+	b=jl1/RnYHNhu9/HpTFgZG230uUl7pBscj5VBUlhQXUYscA8pmLeTejTY54JiBQOv7JpoN
+	 8Q2z5ahERVJhlJEyosp1rvFWocm5ossGNODMn+f41vD8wmMXCIlxSugdl3yWJ1g0xrIpB
+	 MwCDc7TiMvv/A7iYAQoHakQQLE3cKmUA5LT8l1/yQBAGQhEx4Q6g8KtUXHp7mxs0SpDNo
+	 Yb4hpfslIMmcdjUkK9mIpvMC9ooJx4PfjTmn2wVwlvw2XquJI/0x1hTH1ce6i1GmZKnoW
+	 IYuA16ReM0Dxn4j9+hj1M98oEkamQDQXAqiFJDqdXCrY3RcsfEMKpHCTN+qxfy69M+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031744;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=flGOHJX0ZuM1N5sfetN0YHkVK1N81BYI8eQLfwPj3Ko=;
-	b=fd7qrMN89m5womtqAdiInY6MdKlr8YYw9tkQsvDDdwnDl1wDkXgU7dQ4lZsuFErKmSTc
-	 YQ0Ok1KqzCw0Ewby5WDqMrmeT7BqvsPoPjpoQK3Vn9L8Hl06k3Ke6J+OWKsfoJNmu9+5z
-	 3YsG8J4cLmx5LFcvrq5iB27rI6XLO8f+9WDxD3HGsnI9mP10KotVKWwx8XSgJLgDhMYIM
-	 aisect9XNsF4nBxDpOlM3O48AVeeaVwHY1Gie8cYhxBLKVLltCWIAcuv7+5YgZseqXsh7
-	 ejHNxSk18UA9l4AC8LseA1+DzioluBtmgCibRshK+X9lt0i51Lp7FQ7z0jo1NdYWj8A==
+	bh=7iibyYiGl1Lz5o0E9dSd8n7xB3kRqEOVoiTmhmHHFno=;
+	b=Iq50OagIJvJhLfvbg09UHQhSDtEfJNq3oU9JvnBMw9hbBKrLoihQ3YZq4b267+yROOWZ
+	 knxv2r/BaPFNqF39rg8CapF5V/JW5DIr8SgIgELsyHhmdQ3xA6mEFfATOeWf5vPcZhCIo
+	 OIrqsj0cWzRwGhN2wKrPShpP5RQtTlVm+RkEs0vMeK5XlT43yhXrgd/VyUoKDzCLx0Ftw
+	 FBmVs7sLHHLbeEmjHBiVqvV9PwUp0/O9cB4xMf6721i0/iy5ibcTX58qGp40OzObAKyUk
+	 tjwROUFzkzZUDsJPuXd1Oi5OfX5sMJaUOGlE7ClF2jXT8K8MBWhqMFYCFL0PsdK/G2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F59lkdkG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6ds58xF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F67606A320;
-	Wed, 18 Nov 2026 19:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA5A606A320;
+	Wed, 18 Nov 2026 19:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F59lkdkG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1591F000C4;
-	Wed, 18 Nov 2026 19:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6ds58xF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9405E1F000C4;
+	Wed, 18 Nov 2026 19:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031744;
-	bh=flGOHJX0ZuM1N5sfetN0YHkVK1N81BYI8eQLfwPj3Ko=;
+	s=korg; t=1795031747;
+	bh=7iibyYiGl1Lz5o0E9dSd8n7xB3kRqEOVoiTmhmHHFno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F59lkdkGsb6s9NpkmP0xbPwylR1xq7zDwZqBI7UpVLKax3i1IW0KjnLkBOXr3SL1Y
-	 kHCkH4cgcAjh20Zxd8Pv04IAHQThLUwetuI2aOE7HXd93Gqp6XGvOESBJR+ucPWPEM
-	 VEl9cFtKkenLndAfKkYe2Q9cUMJKqVHqR4OxM7Uc=
+	b=R6ds58xFuXWpF/p07Yz5umrFRX+5skpwxjwJY3CwElo9bWXVFfv+6F+zL2nAsMsLn
+	 6RVTPKm2U9yDVgAXjvuIhO6ZYFZpehcfGxJPKBMYVmiwfEx4GS0bYAs/y3JQKPXoJ3
+	 d8zIGq+PQnB6tYobkO7SVJFmJXKR2tEOSx6VW+HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Priyanka Mani <priyankamani2100@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1166/1756] ASoC: mediatek: mt8365: Fix out-of-bounds read in get_iir_coef()
-Date: Wed, 18 Nov 2026 15:54:53 +0100
-Message-ID: <20261118150056.400990076@linuxfoundation.org>
+Subject: [PATCH 6.12 1167/1756] ASoC: codecs: wcd937x: request watchdog IRQs without devm
+Date: Wed, 18 Nov 2026 15:54:54 +0100
+Message-ID: <20261118150056.437214662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,55 +68,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Priyanka Mani <priyankamani2100@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit e913917febd31998e3d0b9e8c861e538a6185045 ]
+[ Upstream commit b3f17433a1eb9f89b79f8459d7661207abce0b9c ]
 
-get_iir_coef() looks up a resampling coefficient set by reading an
-index "k" from iir_coef_tbl_matrix[][] and using it to index
-iir_coef_tbl_list[], which has 8 entries (valid indices 0..7).
+The watchdog IRQs are requested from the codec component probe and released
+from its remove callback. Use the same non-devm lifetime for both
+operations.
 
-Before the lookup, "k" is only rejected when it is >= IIR_NO_NEED (11),
-or equal to IIR_RATIOVER (9) or IIR_INV_COEF (10). The value 8 is
-neither a sentinel nor a valid table index, so it falls through to the
-else branch and iir_coef_tbl_list[8] is read one element past the end
-of the array. The bogus coef pointer and count are then returned to
-mt8365_dai_set_config(), which dereferences coef.
+Use request_threaded_irq() and keep free_irq() in the component remove
+callback. Return errors from each request and unwind only IRQs that were
+successfully requested, including failures later in component probe.
 
-The current matrix never produces 8, so this cannot be triggered today,
-but the bounds check is wrong: it relies on the matrix contents instead
-of the size of the array it guards. Bound the lookup with the actual
-array size so only valid indices reach the table.
-
-This was found by Smatch:
-
-  sound/soc/mediatek/mt8365/mt8365-dai-i2s.c:271 get_iir_coef()
-  error: buffer overflow 'iir_coef_tbl_list' 8 <= 8
-
-Fixes: 402bbb13a195 ("ASoC: mediatek: mt8365: Add I2S DAI support")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/67af3580-a907-403d-8bfd-76b5c304ab99@stanley.mountain/
-Signed-off-by: Priyanka Mani <priyankamani2100@gmail.com>
-Link: https://patch.msgid.link/403cc04bb103dff096edf72b99ae6868ee91f359.1791782072.git.priyankamani2100@gmail.com
+Fixes: 9be3ec196da4 ("ASoC: codecs: wcd937x: add wcd937x codec driver")
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20261004102346.1203410-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8365/mt8365-dai-i2s.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wcd937x.c | 44 +++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 17 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
-index 89575bb8afedd..0fa3b7ed5f4dc 100644
---- a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
-+++ b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
-@@ -267,7 +267,7 @@ static const u32 *get_iir_coef(unsigned int input_fs,
- 		if (k >= IIR_NO_NEED) {
- 		} else if (k == IIR_RATIOVER) {
- 		} else if (k == IIR_INV_COEF) {
--		} else {
-+		} else if (k < ARRAY_SIZE(iir_coef_tbl_list)) {
- 			coef = iir_coef_tbl_list[k].coef;
- 			cnt = iir_coef_tbl_list[k].cnt;
+diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
+index 17ddd91eac5fc..94ffcd32aedf4 100644
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -2535,23 +2535,23 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
+ 						      WCD937X_IRQ_AUX_PDM_WD_INT);
+ 
+ 	/* Request for watchdog interrupt */
+-	ret = devm_request_threaded_irq(dev, wcd937x->hphr_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
+-					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+-					"HPHR PDM WDOG INT", wcd937x);
++	ret = request_threaded_irq(wcd937x->hphr_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
++				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
++				   "HPHR PDM WDOG INT", wcd937x);
+ 	if (ret)
+-		dev_err(dev, "Failed to request HPHR watchdog interrupt (%d)\n", ret);
++		goto err_free_clsh;
+ 
+-	ret = devm_request_threaded_irq(dev, wcd937x->hphl_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
+-					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+-					"HPHL PDM WDOG INT", wcd937x);
++	ret = request_threaded_irq(wcd937x->hphl_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
++				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
++				   "HPHL PDM WDOG INT", wcd937x);
+ 	if (ret)
+-		dev_err(dev, "Failed to request HPHL watchdog interrupt (%d)\n", ret);
++		goto err_free_hphr_irq;
+ 
+-	ret = devm_request_threaded_irq(dev, wcd937x->aux_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
+-					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+-					"AUX PDM WDOG INT", wcd937x);
++	ret = request_threaded_irq(wcd937x->aux_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
++				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
++				   "AUX PDM WDOG INT", wcd937x);
+ 	if (ret)
+-		dev_err(dev, "Failed to request Aux watchdog interrupt (%d)\n", ret);
++		goto err_free_hphl_irq;
+ 
+ 	/* Disable watchdog interrupt for HPH and AUX */
+ 	disable_irq_nosync(wcd937x->hphr_pdm_wd_int);
+@@ -2563,23 +2563,33 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
+ 						ARRAY_SIZE(wcd9375_dapm_widgets));
+ 		if (ret < 0) {
+ 			dev_err(component->dev, "Failed to add snd_ctls\n");
+-			wcd_clsh_ctrl_free(wcd937x->clsh_info);
+-			return ret;
++			goto err_free_irqs;
  		}
+ 
+ 		ret = snd_soc_dapm_add_routes(dapm, wcd9375_audio_map,
+ 					      ARRAY_SIZE(wcd9375_audio_map));
+ 		if (ret < 0) {
+ 			dev_err(component->dev, "Failed to add routes\n");
+-			wcd_clsh_ctrl_free(wcd937x->clsh_info);
+-			return ret;
++			goto err_free_irqs;
+ 		}
+ 	}
+ 
+ 	ret = wcd937x_mbhc_init(component);
+-	if (ret)
++	if (ret) {
+ 		dev_err(component->dev, "mbhc initialization failed\n");
++		goto err_free_irqs;
++	}
++
++	return ret;
+ 
++err_free_irqs:
++	free_irq(wcd937x->aux_pdm_wd_int, wcd937x);
++err_free_hphl_irq:
++	free_irq(wcd937x->hphl_pdm_wd_int, wcd937x);
++err_free_hphr_irq:
++	free_irq(wcd937x->hphr_pdm_wd_int, wcd937x);
++err_free_clsh:
++	wcd_clsh_ctrl_free(wcd937x->clsh_info);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
