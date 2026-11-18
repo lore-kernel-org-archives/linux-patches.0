@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027372;
-	b=ijikQ3i6KnEr/TO4bk5HW1e/VFol2iehx0gPdlLZYmgEjMvKR0iXcBIWRpRwz6F2vH2m
-	 wSG3dj5iH7BIbC9fuRLN1Lk44Zoyu8NP4rTpLBIS6MO7uQz6puPQiWaDJn5LzxtjdWtjN
-	 Jb4e2/I5ZYf5y4Z3waKTMpKcuggNWz2SftLRn85ePmVGAHIdlEgxL0AO9tuAkaJBVdjjw
-	 3j/Wb7gwpy0mxbyNhP2t2cxbmpKVoKswKERBmgECVW4HPCga94YnMwH+Qv9k+YTvEOr8Z
-	 RrDgCLqeMo6elanOqeF8pNYLeraGfI53lWRrWLO8QvzvqS5rbvMVzur7ykuuZvYXfHw==
+	t=1795027375;
+	b=yB0Q2AKYCfYlldG74kHyLLZT1uys8/Y0T24MDXd9xhsLZxje0dlNlPOk5ybu5fbFHTVl
+	 14Bz3uaiCZklgBvUbEY17gnYAWe+HjEpu6WT+YH1lvBXuQODARjvXzNxutxdrdUcTcW/4
+	 Unm7q0TGwS72U04ovlvOZwVe9pc6VC1tjeM0NtsPeWULJ3rW4DrUh74CTjIV9cL0H4LRA
+	 kcVuQxEehJ64hjGG672cBS+prB0HBhbXFURGiFjiwhXN+1ckW+2G0SI9wuSbhvqGU6hIX
+	 GQfLRnsA4kFop9J+I2Oa9n38ExWn9Z3o4Qe/LD1HYM51k3ZeLvvTTCqFIvJDNRubZig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5go++4AUwOd/UyrrFANtAZAqCYIs0Ao7sEfmFXQ0fgI=;
-	b=W/QkqChdt2qhw4PuPnGP4zL7clz8tocAiwv/5CKL9RNq7LOfQjSTOll1DY4cIxhQxZfX
-	 kb7IU1N5J2ZGygJmiq/H2P0OM2vtt4G8HFr2iyTdDQzxgmpCtfGEhpemHCbFnXK7V5Uko
-	 jkJOOx/rs5xR4m9GVzG+O+IS3ApfkB2hospKcqskIHEbS2YU6Lo9OnKEOHHBktv9im0kC
-	 T1ZFiYD2iOP1naLlzeTUs8gttAOJyiyZCgtpe5nSS9+04S5679ATUdfgCMnTbctiOFn7k
-	 AG/nXI1oWIBOl3zuZA2+R5r9oTE7ZA8AXkKNkUfMwxiOWIPYoctN+9e/uuXDJEtzNZg==
+	bh=BBZnHvO7LnkEI68DrKtIqmLtzbUC4GNqbFp3A7n+3Mo=;
+	b=AN2Ojbx9uD+y7PtlhLd+DmJjejh3t7thW/jqaa+/ALV8C1UfTXQRhxWzzQg+O3y59FSD
+	 0Noc6poSdJjJOrini05HgwrzcxvxXuH61wUSbAv16j1ObwxxIOBMQWzDsZZSwb9nPTPw7
+	 avUtgmp7uRaQdfYN7s1mjJwdiFLDKol5QA6LwJaYmHcZAGRUglN+jaMAzEvHri7d+NTnj
+	 ht8bK49E1J5cXZjuF7qtona/Wxbv0Wt/Yy54cufpRArEMD9E28R5/2zW/6AmmLD4aJy9A
+	 xyRNjlJSI2eYWYHvUhvVs7alQELttlIsPvYabE4Vh6YtuIb/iuf977Mwdit8GiOLc5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5TTmW+S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r1YeU+Ka;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65722606A331;
-	Wed, 18 Nov 2026 18:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788D260A2613;
+	Wed, 18 Nov 2026 18:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5TTmW+S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEC61F000C4;
-	Wed, 18 Nov 2026 18:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r1YeU+Ka
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837EF1F000C5;
+	Wed, 18 Nov 2026 18:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027372;
-	bh=5go++4AUwOd/UyrrFANtAZAqCYIs0Ao7sEfmFXQ0fgI=;
+	s=korg; t=1795027375;
+	bh=BBZnHvO7LnkEI68DrKtIqmLtzbUC4GNqbFp3A7n+3Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m5TTmW+ScfZToP0zjyMMKIN4yEgmVy4l1tjlblwGYgFUkaWaHkz8agNWkWcfRUXz0
-	 Xa96chEZq+hzNtGjrgzDCDrdZDqKqWZCizIAgV9zGlS7yjGQAiW86ZLIg1tQPspVMs
-	 0RZN3Vqf2NQrJhxZKNEgq8EqUFQCHnkCuXnmxmjU=
+	b=r1YeU+Ka0bRy3nMDmgiHhQBvZ/T7MyNDRPCQxE6szlLmwsyjix4VRhV7W3CggiIY4
+	 fTw9X+xuQ8TSOQXgiX2yv4eDwjNjOt1lCTjNjjpDwcMqmHurzhK/lbQHhUfDCSs/7q
+	 ksTuSFRCo+9ihbwUfobwRGaAnBhi5YeZsBqdjchY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kent Gibson <warthog618@gmail.com>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1765/2151] gpiolib: fix memory leak in gpiod_set_array_value_complex() EPERM error path
-Date: Wed, 18 Nov 2026 15:58:20 +0100
-Message-ID: <20261118150226.132841848@linuxfoundation.org>
+Subject: [PATCH 6.18 1766/2151] gpiolib: clear the event clock flags when a line is released
+Date: Wed, 18 Nov 2026 15:58:21 +0100
+Message-ID: <20261118150226.169294312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,65 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit 138d7365c20efe47b4caa92c46f086ec39b81f78 ]
+[ Upstream commit d35f61581ee67f8d4d58c325bac813cea528b6b9 ]
 
-A drive-by review by Sashiko reports that, where the line has not been
-configured as an output, gpiod_set_array_value_complex() can return
-without freeing potentially alloced bitmaps, thus leaking memory.
+gpiod_free_commit() clears the flags that a request sets on a line, but
+not GPIOD_FLAG_EVENT_CLOCK_REALTIME and GPIOD_FLAG_EVENT_CLOCK_HTE,
+which gpio_v2_line_config_flags_to_desc_flags() sets from the uAPI v2
+line config. Once a line requested with
+GPIO_V2_LINE_FLAG_EVENT_CLOCK_REALTIME or
+GPIO_V2_LINE_FLAG_EVENT_CLOCK_HTE is released, GPIO_V2_GET_LINEINFO_IOCTL
+and the line info changed events, the "released" one included, keep
+reporting that event clock for the free line:
 
-Cleanup the bitmaps before returning.
+  GPIO_V2_GET_LINE_IOCTL, line 1, input, event clock realtime:  ok
+  close()
+  GPIO_V2_GET_LINEINFO_IOCTL, line 1:  input, event clock realtime
 
-Fixes: 92ac7de3175e ("gpiolib: don't allow setting values on input lines")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-gpio/sashiko-outbox-168233@kernel.org/
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20261016105442.109836-1-warthog618@gmail.com
+The flags are set before edge detection is set up, so a request that
+fails in hte_ts_get(), for instance because no HTE provider handles the
+line, leaves GPIOD_FLAG_EVENT_CLOCK_HTE behind as well. The next uAPI v2
+request rewrites both flags, but requests through uAPI v1, sysfs exports
+and in-kernel consumers do not, and the line info then shows the event
+clock of an earlier user for them too.
+
+Clear both flags together with the other flags of the request.
+
+Reproduced under QEMU with a test GPIO chip: after a released request
+with the realtime event clock, and on a kernel with CONFIG_HTE=y but no
+HTE provider after a failed request with the HTE event clock, the line
+info of the free line still reports that event clock. With this change
+it reports none.
+
+Fixes: 26d060e47e25 ("gpiolib: cdev: allow edge event timestamps to be configured as REALTIME")
+Fixes: 2068339a6c35 ("gpiolib: cdev: Add hardware timestamp clock type")
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Link: https://patch.msgid.link/20261012-gpiolib-event-clock-v1-1-aambrozewicz@nvidia.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index c23ba5e94cd6f..a0a0d8ca6d82e 100644
+index a0a0d8ca6d82e..3fb738f61bf79 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -3694,7 +3694,7 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
- 				  unsigned long *value_bitmap)
- {
- 	struct gpio_chip *gc;
--	int i = 0, ret;
-+	int i = 0, ret = 0;
- 
- 	/*
- 	 * Validate array_info against desc_array and its size.
-@@ -3772,8 +3772,10 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
- 			int hwgpio = gpiod_hwgpio(desc);
- 			int value = test_bit(i, value_bitmap);
- 
--			if (unlikely(!test_bit(GPIOD_FLAG_IS_OUT, &desc->flags)))
--				return -EPERM;
-+			if (unlikely(!test_bit(GPIOD_FLAG_IS_OUT, &desc->flags))) {
-+				ret = -EPERM;
-+				goto cleanup_bitmap;
-+			}
- 
- 			/*
- 			 * Pins applicable for fast input but not for
-@@ -3806,10 +3808,10 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
- 		} while ((i < array_size) &&
- 			 gpio_device_chip_cmp(desc_array[i]->gdev, guard.gc));
- 		/* push collected bits to outputs */
--		ret = 0;
- 		if (count != 0)
- 			ret = gpiochip_set_multiple(guard.gc, mask, bits);
- 
-+cleanup_bitmap:
- 		if (mask != fastpath_mask)
- 			bitmap_free(mask);
- 		if (bits != fastpath_bits)
+@@ -2519,6 +2519,8 @@ static void gpiod_free_commit(struct gpio_desc *desc)
+ 		clear_bit(GPIOD_FLAG_BIAS_DISABLE, &flags);
+ 		clear_bit(GPIOD_FLAG_EDGE_RISING, &flags);
+ 		clear_bit(GPIOD_FLAG_EDGE_FALLING, &flags);
++		clear_bit(GPIOD_FLAG_EVENT_CLOCK_REALTIME, &flags);
++		clear_bit(GPIOD_FLAG_EVENT_CLOCK_HTE, &flags);
+ 		clear_bit(GPIOD_FLAG_IS_HOGGED, &flags);
+ #ifdef CONFIG_OF_DYNAMIC
+ 		WRITE_ONCE(desc->hog, NULL);
 -- 
 2.53.0
 
