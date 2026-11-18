@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045539;
-	b=bowK4Mm2CPvRQAgW+6rkyJUFDsYmooIyrMIhFCSWoMWtMlW6htt/P5ZsLi4rSR/3MkEM
-	 /7JGMAnqgSj4yGP9tHKHgyucapNHqvt9I0zH/SBxa52xlLwaHnxw3ZLelBL458uac7Q8q
-	 EFHN6m07/hfgqabBPXFHSr7DSZR8oc+Ol5cshnFcf4doyFqCr7wPtCEfFkqneGIQv2PNK
-	 b5GwMXgYokN4dzs+742Ed5aLolic9jMtgIF1yQZpo0KegbvlKgRNdYx+MFGxhdi53gzgb
-	 tXiMFUaM94xtZgonw9Y0OLU7tgGuAwDqg3YusPsC6Snl8RC6rOxdGrcwtav+EKQdPiw==
+	t=1795045542;
+	b=v4oE8bY+HcIslnpOBErz1zoKsrBaGAaEiY7tsGPOcQ9JVKOfMA90EI1G3Uk7S7SGALrl
+	 vAhDEWXCWSoaUEBfWyIDoQBrgeuAVK8JxSqNWlu0opUGhBJNQed+fkEyovmIly++bGvWX
+	 RXPezE7He0Vz7mtBmQ7xWkpjmkANF1PKzElvD3au6BV9I3OZIr7I6mdRPugRy9Jx7UL0p
+	 K1gP7RGNo7byVun9gZ4yfgaE6QDShN4L46ZPpU3BB9+um0sXXhUEMLJ9fEceXTBW8ztbv
+	 gIeLBWfbKFzWIvlOG3YnMtyNCh3U2N+WShPRGblPeVwDgGW3IBaNOWqVeB9iN8kYQpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045539;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VDEuCehc+tZh+YjePramtwrlJgjD6m+GI67la4nOUeM=;
-	b=jzTCbwKZz/Et6XDPxu+0bMlrutgvWzjduGt6krLIXLjTJI0z+0GFnxBYfhU0AAHTEvsV
-	 93keA37AyPq3K3wvvSo1LYPvmdeA+3IovAQBJV6pq3xnMr1GWmd+WGkcnWpkYvOKcrGeG
-	 VWShXbIoG1j7cc8E38Xywj6TapnFeElHKKMn6USs/5cYJGvt8cauaXa6N/OcuhPgwZmKW
-	 LucVcjwoDf96Qt5lMfBjQyoJdIemWx9XrqfBQW2t25QQCPTv3f2m+PUcIqJqUZ0rYfwQI
-	 nObfwTpeKyupKfVTlfCucnH8nQ1nlYfSxO0VR3eBhN05fzyrdeTWK4LBf+lFZjXrL7A==
+	bh=X6jRO6t2PogRPJdoqfUI3lGP3Xo7yV6GvzAuRsxHnOg=;
+	b=BQK+cBBn89hBVONE2nhXdaVkQYVK8Hjt27J/KXf/6/lJ8/2PL0DSdvzwXhyU2xZKN5tm
+	 1Wz2JYQKLHVQajyiGgX96j3D8jI//f8tGxoZ1sB3MweDV/XN9ojNZvJ/XCDa26JB8IEUw
+	 YTOwx0o1tJOqX6CPDZzZ7n5MycVJ4FUrTBixF+0WecjkuheNcxZ/gM5gvOIKJHYCpzbCh
+	 /mOhV+aCZaGBmKbyZ0gT8VaPRgnoxwUWfFgVNCfxdKMgjDz9uwcFA8g1TpbARnZoEDNTg
+	 kYm9z5c7p+lPfh5PmPUr82txvLoK6C9LWfi35HFNM8AG+IrLZcytqBLhEfyz8FX2azQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLpMpzMU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNQX+DZ8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDCD606A32C;
-	Wed, 18 Nov 2026 23:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14561606A320;
+	Wed, 18 Nov 2026 23:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLpMpzMU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F68C1F000C4;
-	Wed, 18 Nov 2026 23:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNQX+DZ8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E511F000C4;
+	Wed, 18 Nov 2026 23:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045539;
-	bh=VDEuCehc+tZh+YjePramtwrlJgjD6m+GI67la4nOUeM=;
+	s=korg; t=1795045541;
+	bh=X6jRO6t2PogRPJdoqfUI3lGP3Xo7yV6GvzAuRsxHnOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KLpMpzMUpXVfzdmxyAB5k2Q8RQfryjjL6fTu7RDK3zQE6tJlgk5r+baSEPVO7wNGs
-	 zqW/ZmTYDTQmtoAqObyUvqhCBjt+HKteZ2TnKcOszw6Wy7VQLCwO3W5gE28VeU4gun
-	 psuQqfinAHxBEz6E9VLvDsETY6tHFEllW51lk8UQ=
+	b=NNQX+DZ8cV1QL1srRK7foWzoUcpcCrzYBkKTLHH7Om3/3EI0SpVg1YfYEFQMgsP6B
+	 hQNLzf7iHUaczLT9PcHSWyS2Xfils/UWe/fdO59vl47pnX7ZVJ7IeR4YAVxHCa5Alb
+	 zS3Ww7O447q1Ge6VHpSqc8k8YfmDOgszllH3126c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	stable@kernel.org,
+	Kaixuan Li <kaixuanli0131@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0960/2857] spi: jcore: fix divide-by-zero when speed_hz is zero
-Date: Wed, 18 Nov 2026 15:33:14 +0100
-Message-ID: <20261118150236.167864568@linuxfoundation.org>
+Subject: [PATCH 6.1 0943/2857] f2fs: check every cur_*_segno[] entry on readonly images
+Date: Wed, 18 Nov 2026 15:32:57 +0100
+Message-ID: <20261118150235.561617966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,51 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Kaixuan Li <kaixuanli0131@gmail.com>
 
-[ Upstream commit 7db773075501248893c22b11bedc6745d6d0be45 ]
+[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
 
-jcore_spi_baudrate() computes hw->clock_freq / 2 / speed without
-validating speed. The SPI core fills transfer.speed_hz from
-spi->max_speed_hz when it is zero, and jcore_spi_probe() never sets
-host->max_speed_hz, so the clamp in __spi_setup() is skipped. A
-spi_device created via the sysfs new_device interface (or a DT node
-without spi-max-frequency) therefore has max_speed_hz == 0, and any
-SPI_IOC_MESSAGE transfer reaches jcore_spi_baudrate() with speed == 0,
-causing a division by zero and a kernel panic.
+sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
+against main_segs, but on an image with the RO feature the goto that skips
+the duplicate-segno cross-checks also leaves the enclosing loop, so only
+index 0 of each array is ever checked.
 
-Clamp speed to a minimum of 1 Hz before the division so the divisor is
-never zero. The computed divider then truncates to the register field
-width and the transfer simply runs at the slowest supported rate.
+An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
+reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
+segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
+three out-of-bounds writes during mount and the mount then succeeds.
 
-Verified by inspection of the __spi_setup() clamp and
-__spi_validate()'s speed_hz handling; the division-by-zero path
-requires the J-Core controller, which was not available.
+Use continue so every index is bounds-checked, and skip the node-vs-data
+cross-check explicitly, which is the other thing the old goto skipped.
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 2cb1b3b3ac0a ("spi: add driver for J-Core SPI controller")
-Cc: stable@vger.kernel.org # 4.9+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261014-spi-jcore-divzero-v1-1-a8205d30f2d1@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@kernel.org
+Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
+Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-jcore.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/super.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-jcore.c b/drivers/spi/spi-jcore.c
-index 74c8319c29f17..e8b8e160d2e34 100644
---- a/drivers/spi/spi-jcore.c
-+++ b/drivers/spi/spi-jcore.c
-@@ -84,6 +84,8 @@ static void jcore_spi_baudrate(struct jcore_spi *hw, int speed)
- {
- 	if (speed == hw->speed_hz)
- 		return;
-+	if (speed <= 0)
-+		speed = 1;
- 	hw->speed_hz = speed;
- 	if (speed >= hw->clock_freq / 2)
- 		hw->speed_reg = 0;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index a1c33931d175e..1b6d28116a04c 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3611,7 +3611,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			return 1;
+ 
+ 		if (f2fs_sb_has_readonly(sbi))
+-			goto check_data;
++			continue;
+ 
+ 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
+@@ -3623,14 +3623,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			}
+ 		}
+ 	}
+-check_data:
++
+ 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
+ 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
+ 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
+ 			return 1;
+ 
+ 		if (f2fs_sb_has_readonly(sbi))
+-			goto skip_cross;
++			continue;
+ 
+ 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
+@@ -3642,6 +3642,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			}
+ 		}
+ 	}
++	if (f2fs_sb_has_readonly(sbi))
++		goto skip_cross;
++
+ 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
+ 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
 -- 
 2.53.0
 
