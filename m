@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038178;
-	b=PIoAd2wBYtN9R0Y9zYy1SPW+gVOD/FemhjYdlBVsAg+f26qX4LEMWTSSET3N01hxLwkX
-	 tY3TXSED9RayCmxV2cg/td9um4j+ufotp68ng+oMfJqRMpGUCGy1GNEkL4BGwIT+hq31B
-	 vlv7k6joxzhJw2yKvLVuK9muj6HK/upFHd6r+ykiWxv/WyiuvdjFSdcPvrVHsRwBOEupP
-	 fBcq2BJedcL2wsILTFBXvaLM6quffvLgbFWO3qHaxdeqIEf7LMcePCcs9vBcZQ3MyMhHg
-	 LH2rcQB91ib20ug+Ellb2XZGbp3hQHWhmzs8pdJzCl93EoEoGTwJb747eY6hN7XR4sg==
+	t=1795038182;
+	b=XF4+1bMnqS3pc4AoR6Xz4LL3O/yr81XLsLfTs+PvvGkIb174iHQi74OTmJTk3QoaUkXf
+	 m6C7rCG04ejN1S8azpO5etbli6tWW6nGSBNov3Ohk5paJUiDIKg02TQG2m4YW98/jTHoy
+	 NTvDxMjiajJWiRH6T7IWIqPR7I3Ut77mYDWhoq/Jefp2zSGjCpYl+bEPVSZBM/cu12Hi8
+	 LayLBrIln7F4WerS1PjeXWaUYcbjnbI4vVi65GZ8Ea1D7LTaLEBDvWdqMa8hFwX43auWC
+	 /DLMGTW7M6DzKAHYA/qHQB1q81jX6MwDQhVYIF2HdNm90fYgnAPHIGUNHoidCP2y6pA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=yCsV/drS862lhwLAOKRbARqzeQ1V5SSKHugRtpuzMO8=;
-	b=SWBF8rWZmAtxt27SEYZ5WHLACZ0fGV5ihOlyLqUku7Eu+4Iw5uA9TO76JnpS37UU6mcy
-	 eNpZtXuz1tC/FHGAFIQjy6qXjrcTCrFYWAL3twwvZLLtHxsNIzpp2JcfNLh6SxYNx3xLH
-	 bZRAuElBi4WMLXthdSlurDmKYPQFrfFLiEn7RafST+3d21ganF15TjZsqU9VwsPZIbPe6
-	 GCEQ6IrG403vQ1KVLj91GYJhTMu0979L1/C5i0GS1xPCbHE4/NLOfsi2t+2eRfxeirkNM
-	 RyBlOAosxXhmI7hAEvUPNveA2IuUzyTwneCCqribfvlGy4ce74MaZUp9j1yNBkpAXWw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gpcCZNxBMcO3/lFgLL204lKJB/14CYXLOepLMjhBKPo=;
+	b=mbbh38RFVaTGVZ5AeMABJ1ZE7Inar5DE8iqc5VOWbvagUzn1jYYQhmCO5GEDneExcZrd
+	 em1kYvSlkAEzNE8Vqt7HaSsM8MW1FWaD68qdA9T36raEEGPmheDhiBWQVdERrgFvx+fZE
+	 fNHa49ofy8yl0EUDCQRLVGNfDWGZ6RjuTeW74zfwkH3r86y6XFi1R6TNiuqZduHeU9Zip
+	 9rjSGl83Is0nXUnz7E7oSNP8tjEtGeHVj6R9XXiU84yobjw1OrhKUGwS4GJ2F2MlI1/Uj
+	 FZlDu+j8bPUMH/J12jng8A8q72kJidDBxnIs4qYQ+XmR/8m4TPBhOwGx4nEI6kxuwJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gi64Mlv1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Nlcmzy/y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DD0606A32A;
-	Wed, 18 Nov 2026 21:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09413606A31C;
+	Wed, 18 Nov 2026 21:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gi64Mlv1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F6D1F000C4;
-	Wed, 18 Nov 2026 21:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nlcmzy/y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562C11F000C4;
+	Wed, 18 Nov 2026 21:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038177;
-	bh=yCsV/drS862lhwLAOKRbARqzeQ1V5SSKHugRtpuzMO8=;
+	s=korg; t=1795038181;
+	bh=gpcCZNxBMcO3/lFgLL204lKJB/14CYXLOepLMjhBKPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gi64Mlv1MhlAlFgxykPvMYuP6UqDEMuqVr9lv8FMyqpWLiE0h4OdWHPYUPGiHUWw/
-	 rDue6qsFzlyUCu8XiB0UMS0mCvLJZWmMEwNqLOjHfFJB0OI2HlMZkLC2ZWVw6dATE3
-	 JH7A3BN+7vfSNnv58eEd44WWte9MGACYYF6HUbeQ=
+	b=Nlcmzy/y8HP/nZZVswR53h7CQu9v7IycNX9mHmpK15Y0bviQcXvdmDjyLxNaXvNxP
+	 7Zrghn80n3F5fdPF1cjxplQPX2DQKHToIkodTVo2K4VdfeSIuEwe5kf8YJXuDDJ6qF
+	 aGUOU6cNkAjbvQogXVJa1uiu+8pvz/Gyh1GRks6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1612/3318] media: microchip-isc: store the unshifted PFE_CFG0 BPS value
-Date: Wed, 18 Nov 2026 15:37:14 +0100
-Message-ID: <20261118150409.548307716@linuxfoundation.org>
+Subject: [PATCH 6.6 1603/3318] media: meson-ir-tx: Simplify and improve using dev_err_probe()
+Date: Wed, 18 Nov 2026 15:37:05 +0100
+Message-ID: <20261118150409.265771398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,94 +63,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 14cbe597504a04c5c49342d0566438e2b438a948 ]
+[ Upstream commit 9af7c980f3ea3e85418beb25dc4d34939183e436 ]
 
-pfe_cfg0_bps held a pre-shifted BPS value (ISC_PFE_CFG0_BPS_EIGHT was
-0x4 << 28) ORed straight into the register. The other format selectors
-like cfa_baycfg store the bare field value and position it at the write,
-so this one was inconsistent.
+With dev_err_probe() the error paths can be implemented in a more
+condensed way with the added benefit that the error code is added to the
+error messages by name.
 
-Store the bare BPS value and apply it with FIELD_PREP() at the PFE_CFG0
-write, and fix the pfe_cfg0_bps comment to match. No functional change.
-
-Suggested-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Stable-dep-of: 6e9eaa3b9387 ("media: microchip-isc: fix WB offset and gain register field masking")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 32999b8a9d5c ("media: meson-ir-tx: Ensure rc_free_device() is called on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/microchip/microchip-isc-base.c |  4 +++-
- drivers/media/platform/microchip/microchip-isc-regs.h | 10 +++++-----
- drivers/media/platform/microchip/microchip-isc.h      |  4 +++-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/media/rc/meson-ir-tx.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 8bafe1824ca15..8a1ebb1a74e00 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -8,6 +8,7 @@
-  * Author: Eugen Hristev <eugen.hristev@microchip.com>
-  *
-  */
-+#include <linux/bitfield.h>
- #include <linux/delay.h>
- #include <linux/interrupt.h>
- #include <linux/math64.h>
-@@ -291,7 +292,8 @@ static int isc_configure(struct isc_device *isc)
- 	struct isc_subdev_entity *subdev = isc->current_subdev;
- 	int ret;
+diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
+index be353d22bbd7f..94208f76bb33a 100644
+--- a/drivers/media/rc/meson-ir-tx.c
++++ b/drivers/media/rc/meson-ir-tx.c
+@@ -337,20 +337,17 @@ static int __init meson_irtx_probe(struct platform_device *pdev)
+ 	spin_lock_init(&ir->lock);
  
--	pfe_cfg0 = isc->config.sd_format->pfe_cfg0_bps;
-+	pfe_cfg0 = FIELD_PREP(ISC_PFE_CFG0_BPS_MASK,
-+			      isc->config.sd_format->pfe_cfg0_bps);
- 	pipeline = isc->config.bits_pipeline;
+ 	ret = meson_irtx_mod_clock_probe(ir, &clk_nr);
+-	if (ret) {
+-		dev_err(dev, "modulator clock setup failed\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "modulator clock setup failed\n");
++
+ 	meson_irtx_setup(ir, clk_nr);
  
- 	dcfg = isc->config.dcfg_imode | isc->dcfg;
-diff --git a/drivers/media/platform/microchip/microchip-isc-regs.h b/drivers/media/platform/microchip/microchip-isc-regs.h
-index e77e1d9a1db87..185ef0eab7ad3 100644
---- a/drivers/media/platform/microchip/microchip-isc-regs.h
-+++ b/drivers/media/platform/microchip/microchip-isc-regs.h
-@@ -31,11 +31,11 @@
- #define ISC_PFE_CFG0_MODE_PROGRESSIVE   (0x0 << 4)
- #define ISC_PFE_CFG0_MODE_MASK          GENMASK(6, 4)
+ 	ret = devm_request_irq(dev, irq,
+ 			       meson_irtx_irqhandler,
+ 			       IRQF_TRIGGER_RISING,
+ 			       DRIVER_NAME, ir);
+-	if (ret) {
+-		dev_err(dev, "irq request failed\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "irq request failed\n");
  
--#define ISC_PFE_CFG0_BPS_EIGHT  (0x4 << 28)
--#define ISC_PFG_CFG0_BPS_NINE   (0x3 << 28)
--#define ISC_PFG_CFG0_BPS_TEN    (0x2 << 28)
--#define ISC_PFG_CFG0_BPS_ELEVEN (0x1 << 28)
--#define ISC_PFG_CFG0_BPS_TWELVE (0x0 << 28)
-+#define ISC_PFE_CFG0_BPS_EIGHT  0x4
-+#define ISC_PFG_CFG0_BPS_NINE   0x3
-+#define ISC_PFG_CFG0_BPS_TEN    0x2
-+#define ISC_PFG_CFG0_BPS_ELEVEN 0x1
-+#define ISC_PFG_CFG0_BPS_TWELVE 0x0
- #define ISC_PFE_CFG0_BPS_MASK   GENMASK(30, 28)
+ 	rc = rc_allocate_device(RC_DRIVER_IR_RAW_TX);
+ 	if (!rc)
+@@ -366,9 +363,8 @@ static int __init meson_irtx_probe(struct platform_device *pdev)
  
- #define ISC_PFE_CFG0_COLEN	BIT(12)
-diff --git a/drivers/media/platform/microchip/microchip-isc.h b/drivers/media/platform/microchip/microchip-isc.h
-index f5e322c2e36bc..d7bcd74efff92 100644
---- a/drivers/media/platform/microchip/microchip-isc.h
-+++ b/drivers/media/platform/microchip/microchip-isc.h
-@@ -62,7 +62,9 @@ struct isc_subdev_entity {
-  * @mbus_code:		V4L2 media bus format code.
-  * @cfa_baycfg:		If this format is RAW BAYER, indicate the type of bayer.
- 			this is either BGBG, RGRG, etc.
-- * @pfe_cfg0_bps:	Number of hardware data lines connected to the ISC
-+ * @pfe_cfg0_bps:	ISC_PFE_CFG0 BPS field value (e.g. ISC_PFE_CFG0_BPS_EIGHT),
-+			written into PFE_CFG0 with FIELD_PREP(ISC_PFE_CFG0_BPS_MASK)
-+			at configure time.
-  * @raw:		If the format is raw bayer.
-  */
+ 	ret = devm_rc_register_device(dev, rc);
+ 	if (ret < 0) {
+-		dev_err(dev, "rc_dev registration failed\n");
+ 		rc_free_device(rc);
+-		return ret;
++		return dev_err_probe(dev, ret, "rc_dev registration failed\n");
+ 	}
  
+ 	return 0;
 -- 
 2.53.0
 
