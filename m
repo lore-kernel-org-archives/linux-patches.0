@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044738;
-	b=ZZQsfady+X10JOqmKrsHAWFIknfIYTNpBu6N3mcpaz7ioF1CR28sXkzPb8cAS0MhE3Er
-	 koV0zUMakfgre16OUnprnGy9on/uaa9emCBK3R6HIupy0zv6FG0y/wqPNHT9ftrto0qs+
-	 e02vvdrv6Jj4ikInoG7Y1IZX94F1o/QGe06oBHhbCEDVhalzrat1Ld7sXIfivRle9bD3W
-	 xD2wORSBzTXoraPwi5ItY0PHfsnNSb+UvSgyJ8k6EJ7tOSHWQkMefTgY6cUhONCTYu6iq
-	 3APTEtauoCBHeMN0dgd2p115JpjQI1NGMI//fEmiqy/Q9kstgObWtjN7HcR6wB6qOig==
+	t=1795044740;
+	b=KA3R+N/GyQ+xkZ1wRH0XfqCbEuXUI6ZPZa/bFGY2YwWtbyswnwkxSoqpAg/nvDJTJxni
+	 +MXeEZGCiQgVzbIYmmzG7/p2v4H9VGvCKq8YRaKUrvg5dZKbTgFXEMByWNe8JrwjVKwiQ
+	 NIcnnDirw1ygBNt4ylmdCsxwr4p5pZKvIrMNB0t9/A8sIOjVv2pvhYtvZ9qJyYz41YF08
+	 HiqS84FHMpNesY1QNdAxgtF6sdhyKdxY6fAWIqUEYOnvkIoxEOITGF3mJPHsmvBLbzJTT
+	 SLKq49gBpMrXOP95Rkg7qMj6fJ0rOasSurTwO4JBy1r4FDvC/ZyliLV5y+1gsSO+7cA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044738;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6vadb7PO25hmz7gZCi7Vag+z/RcLWPOkEcqShRI7iGs=;
-	b=PBSHlkF9ea78+hFs2YSMqdDT1BkIWC1V5Z9W1/UBGcOGftpm83Sr2tjOizBikEiNW3SY
-	 ID/3rq1akXV1rb2yPuykqzXGtwEp/hsU1quay/Vs5mh9cVSeSOV5DimxpRKAUI+Lv8u+z
-	 TEB9KgGupIVMxBCA8IVPUxyEYWJtjhVMJul9lmFxOjClC/d5GSmXT4MDUh3hpI7P9whX5
-	 W+uxw+lQh6hg0PjCXTYz3MuslrMPv05UJw55FkL1YdFfRtPHhvW/GRBE34kbv9aMISSA0
-	 OXIkpKJDxqSDak6lBNdCLp4d3MvASKb8IUENifb/Yf74IEfrDIozmvRDANTXxar8GCA==
+	bh=RwxCITINSjyeSIZKg5fUq2PJAcKTQj9hxbB94E1PXWw=;
+	b=WqkcXicivjKWiX/0Ruc4yHDO5bElEAaz0/Dhq7fqY0Y453OeETqy+wvUCwoNvlFOYJIa
+	 X2qOrRIJqyr/gBqEIDQE13uf3DoniHiSpVdjvac12jwgLVvjOQ+l8hKu8Os0bVZPHIN6N
+	 KDEPU0U9Tm5hZ4OPJleY5LzYXp5oCUVMHODCpQBdGrgA/Zz+LGPSStYzWOpnsP33MHrVl
+	 YVPEFJgzp4yrfkYnxIkwMlmr0g+ldYJ84zJk0fGkrG2bff0qljTF4kVo0IjPi/JZ43f65
+	 0eY+X9mBYBtCZzaaDBoolFe274/Scfk4GbRTNf0CCu69ULrUbDgWCiB+JSGqXs3xVfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IstYBFRZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XExZ9p68;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2789606A320;
-	Wed, 18 Nov 2026 23:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6BA606A320;
+	Wed, 18 Nov 2026 23:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IstYBFRZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3991F000C4;
-	Wed, 18 Nov 2026 23:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XExZ9p68
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0C51F000C4;
+	Wed, 18 Nov 2026 23:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044737;
-	bh=6vadb7PO25hmz7gZCi7Vag+z/RcLWPOkEcqShRI7iGs=;
+	s=korg; t=1795044740;
+	bh=RwxCITINSjyeSIZKg5fUq2PJAcKTQj9hxbB94E1PXWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IstYBFRZp3w2Tc4PZoeaS5cumJ6Z//qCFc4IYw5icM7RtFWq4w1/w5GK8DnWzUS1q
-	 skoIr6l2pxNpou/k0l0Glbb7n1saHbLylXJ8yB1YYyo686CpNooPMs27WzLLkx4g6E
-	 L/KTsjNfMkkzGeQH9huo1cJzTgWHnO8Iqig4Fyi4=
+	b=XExZ9p68s79PbI2I4MH737KCUtWGg4BhfJBea1Ib+eXmKMf2hFYnplB6zuszLS2qb
+	 crY2xZNALDo86oliMNd3VwEA36SGva2aqGtaS6cPkhytOZUmqAVh6FxLZXpMuiEalK
+	 z3lR6rHFc1548fidS0HSus+1E23dwMmYfPn1bnv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 0627/2857] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
-Date: Wed, 18 Nov 2026 15:27:41 +0100
-Message-ID: <20261118150224.073940354@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 0672/2857] ksmbd: prevent stale data from being written by SMB2 WRITE requests
+Date: Wed, 18 Nov 2026 15:28:26 +0100
+Message-ID: <20261118150225.757642729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +68,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
+[ Upstream commit bc0e0f5ac1d7b044d403f859406b4b66d4b1ce9b ]
 
-Ensure all reserved flags are zeroed when setting the msg_pending flag as
-part of SynIC message delivery, as setting only msg_pending can leak seven
-bits of kernel stack data to the guest.  E.g. gcc typically uses a
-bitwise-OR to set the msg_pending flag, without initializing the on-stack
-variable.
+Initialize the compatibility byte in request buffers without zeroing
+the entire allocation. Keep the one-byte compatibility exception for
+SMB2 messages so valid zero-length WRITE requests remain compatible,
+and validate the data range in the WRITE handlers against the current
+compound request before accessing it.
 
-Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
-to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
-it would be quite easy to misread the initial read of guest memory and
-think that zeroing the entire structure is completely superfluous.
+This prevents stale request-buffer data from being written to files or
+sent to IPC pipes.
 
-Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
+Fixes: 443d61d1fa9f ("ksmbd: allocate one more byte for implied bcc[0]")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-32436
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: replaced smb2_current_req_len() calls with inline calculations using NextCommand or the remaining request buffer length ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/hyperv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/connection.c |  1 +
+ fs/smb/server/smb2pdu.c    | 34 +++++++++++++++++++++++++---------
+ 2 files changed, 26 insertions(+), 9 deletions(-)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -772,7 +772,9 @@ static int synic_deliver_msg(struct kvm_
- 		if (no_retry)
- 			return 0;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 168292f73a843..28c60d3070a25 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -403,6 +403,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		if (!conn->request_buf)
+ 			break;
  
-+		hv_hdr.message_flags.asu8 = 0;
- 		hv_hdr.message_flags.msg_pending = 1;
++		conn->request_buf[pdu_size + 4] = 0;
+ 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
+ 
+ 		/*
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 1157acc74caf2..ef70f17ac9303 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6688,23 +6688,28 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
+ 	int err = 0, ret = 0;
+ 	char *data_buf;
+ 	size_t length;
++	unsigned int data_offset, req_len;
+ 
+ 	WORK_BUFFERS(work, req, rsp);
+ 
+ 	length = le32_to_cpu(req->Length);
+ 	id = req->VolatileFileId;
++	data_offset = le16_to_cpu(req->DataOffset);
++	req_len = le32_to_cpu(req->hdr.NextCommand);
++	if (!req_len)
++		req_len = get_rfc1002_len(work->request_buf) -
++			work->next_smb2_rcv_hdr_off;
+ 
+-	if ((u64)le16_to_cpu(req->DataOffset) + length >
+-	    get_rfc1002_len(work->request_buf)) {
+-		pr_err("invalid write data offset %u, smb_len %u\n",
+-		       le16_to_cpu(req->DataOffset),
+-		       get_rfc1002_len(work->request_buf));
++	if (data_offset < offsetof(struct smb2_write_req, Buffer) ||
++	    data_offset > req_len || length > req_len - data_offset) {
++		pr_err("invalid write data offset %u, length %zu, req_len %u\n",
++		       data_offset, length, req_len);
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
+ 
+ 	data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
+-			   le16_to_cpu(req->DataOffset));
++			   data_offset);
+ 
+ 	rpc_resp = ksmbd_rpc_write(work->sess, id, data_buf, length);
+ 	if (rpc_resp) {
+@@ -6855,14 +6860,25 @@ int smb2_write(struct ksmbd_work *work)
+ 		writethrough = true;
+ 
+ 	if (is_rdma_channel == false) {
+-		if (le16_to_cpu(req->DataOffset) <
+-		    offsetof(struct smb2_write_req, Buffer)) {
++		unsigned int data_offset = le16_to_cpu(req->DataOffset);
++		unsigned int req_len = le32_to_cpu(req->hdr.NextCommand);
 +
- 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
- 					      &hv_hdr.message_flags,
- 					      msg_off +
++		if (!req_len)
++			req_len = get_rfc1002_len(work->request_buf) -
++				work->next_smb2_rcv_hdr_off;
++
++		if (data_offset < offsetof(struct smb2_write_req, Buffer) ||
++		    data_offset > req_len ||
++		    length > req_len - data_offset) {
++			ksmbd_debug(SMB,
++				    "invalid write data offset %u, length %zu, req_len %u\n",
++				    data_offset, length, req_len);
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
+ 
+ 		data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
+-				    le16_to_cpu(req->DataOffset));
++				    data_offset);
+ 
+ 		ksmbd_debug(SMB, "filename %pD, offset %lld, len %zu\n",
+ 			    fp->filp, offset, length);
+-- 
+2.53.0
+
 
 
