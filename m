@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020347;
-	b=E2KaWPE5fvnNpoNg7A6p+iv3bYxP9podzZt1LJOutHzU35W4un5xPOLSEYaPZo/Y0xmK
-	 gX1fPMDMdudiWKVuW8dix6hSQ4zJAncKiO/F6qchymW6sd6eCbSwbsAlpFSlQEulg4Jzo
-	 y7ArLrNp3ljQCH8hs0zVb/jaTWYMv5QLlBw4V3AszsndLUFSE+3OPR9CeHhUtCvpW/Z5L
-	 DMQ8V0yoRAMVi10UIcl2yqLrlTvPhYzu3m8/k+uN1pTNcXHRwhNY7benjBCSZoeolZ40g
-	 JgLIhrwtkyDyWCenrUUGc0Ciq6HnI5wS8pw3wTGiHVwfMSYQYcIxF7FdcJZhNnsaY7w==
+	t=1795020350;
+	b=kQPFV/2wd4MukLTvaAkfYk/J4S4awgn3YOu9mVbHBSsUG9+Ea7DcXI40bPQ6BVmBYWu2
+	 8vGGjNkGkdKErQiDYXShy6OBBreKfV7rH6jefNqVVgqs4Pp8/ZjpYin3JtbqMWQC5qPnT
+	 Hq5R2VZ0xSYyZdb7i3VOflcxIWJIZlRPxHC6TGV9o/t2fqPlCoDl2ecXL3mqSDOcP9Ct/
+	 Wql27sMTq6Fbs2UizGesnFtrB7gdhDqmgpkTh5yWNdw0+4Qgtj+Wr1f2NGXFauBmq/cuN
+	 ylnEBGyykXEa7K3Ps/NiFaAxRBwrCbS14EaH3pY5zmLbdxFlqXk+YCH5vpgJzqbVOjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0z4VI+2VtpDuJT5EEx1tS12wztHsLJzL+p4bZhXyyb0=;
-	b=jMBW/MGPGCgVwisn4VDt0LOS8EHYlvFYBRvTBBOmdVVob64awcDSy7YIIFnOImZVf2Cu
-	 0FY1IXR0nq68FVZB2IDkpZWAkSe0QFkZ8L0d34EovZvsMDhmOd3/oTsVJ2jZfvoLk0qZq
-	 hSrpxoyGOBrqPktnGCh1gCFcR4MeGHmuMC5GE/i15JI4CCzkB+zU8MbBKVpjiQpu09m6x
-	 m4atVgXISqga9K2CRYKPGHpjmg7/zHWAurofoevm6lFyXGyPNPDEh7ikqo3SnmE3VYElA
-	 eir/UZ78Bk87zh4Zm4BW1rTZFGUeImGTC6I3U1ni4T680Xsr1IeN7cyWEQxnTgaTsyg==
+	bh=apZgFvUymYfFR/alNr1hFGqutJgYnLMSifNFyF8ZqVE=;
+	b=3gE8lU+y6zKhR8JFKmPcW9NwR8T9ni6DuRn/qOesSXnbWTZG6ZOcqFUxO8VeDy+Da/7A
+	 VRScAkicBSx4OQ7vbKLIg4JBMLY7JXQtTqERvwE17HWI1vBjUloROAEiGrIdS9LzwDq0e
+	 d79xQHoENwlVUeV2jqtAHJr0kz5yxi5p+Y7VMPgUnGuwPWsgzs/Cd1J6sgHO3YictgJ2p
+	 D39pWH4KxKSERUm31aK2HqX9JyajwFLf/IbcGM0mbBGqRqy9E0nJ2m53g/vaG0+qYNdis
+	 3o/7CkSfF15mLIywea46K/sBl3sdzNApflTRQ/Wy2g6NkOnAXbYIzNNqF9+EXofQGWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcMeq1Lm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWICCh35;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675BB606A330;
-	Wed, 18 Nov 2026 16:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCDF606A332;
+	Wed, 18 Nov 2026 16:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcMeq1Lm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B171F000C6;
-	Wed, 18 Nov 2026 16:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWICCh35
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1121F000C4;
+	Wed, 18 Nov 2026 16:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020347;
-	bh=0z4VI+2VtpDuJT5EEx1tS12wztHsLJzL+p4bZhXyyb0=;
+	s=korg; t=1795020350;
+	bh=apZgFvUymYfFR/alNr1hFGqutJgYnLMSifNFyF8ZqVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YcMeq1Lmm2QzpBgI+OyOzHMYVSboi8aq/MOKSCHerco1O13PKn7aDA4Pcbc0uHAPl
-	 67YQ5J7DkIRVejqWwBA4Kp2jQnws8YaeKz/opD9Xc+X7UxUKa2DnaaUPZ/VrMRgt7c
-	 q8Gg3doGMMiUs6g6si9ZJMMxPpm4bcMDGuz2uDBc=
+	b=ZWICCh351mmnPiDfAfe25p40fLcjRD1O1QJNKqoQuhxKVya/hJszTwkFMk2h5u2o6
+	 vOIcEBZBXJR2BbONPai6CNJxjf0aevnl9TjKfI1NbeTgeeU6163KlZ0cgfsu8JJun/
+	 sFdK4TN4jQWsXTof0Nfss+OleC5zxeyhGPyABeaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xingui Yang <yangxingui@huawei.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1917/2651] scsi: libsas: Fix out-of-bounds memcpy() in sas_ssp_task_response()
-Date: Wed, 18 Nov 2026 15:52:37 +0100
-Message-ID: <20261118150355.773576064@linuxfoundation.org>
+Subject: [PATCH 7.3 1918/2651] scsi: hisi_sas: Fix incorrect delay values from magic-number cleanup
+Date: Wed, 18 Nov 2026 15:52:38 +0100
+Message-ID: <20261118150355.807914741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,35 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 4d7f9c3fdce773f6c69d17c1d4a05bd5e17f4b99 ]
+[ Upstream commit 7307109c92f702434669bfcd29fb8058ccc07b45 ]
 
-The min_t(int, ...) clamp of the device-provided sense_data_len turns
-negative for values >= 0x80000000 and is then used as the memcpy()
-length, reading and writing out of bounds. Compare as u32
-instead. Well-formed responses are unaffected.
+Commit 4ca7fe99fc84 ("scsi: hisi_sas: Use macro instead of magic
+number") replaced several delay constants with a single macro of value
+100. However, three sites originally used different values:
 
-Fixes: 366ca51f30de ("[SCSI] libsas: abstract STP task status into a function")
+  - reset_hw_v3_hw:     udelay(50) -> udelay(100) [doubled]
+  - disable_phy_v3_hw:  mdelay(50) -> mdelay(100) [doubled]
+  - disable_host_v3_hw: mdelay(10) -> mdelay(100) [10x longer]
+
+The overly long delays on the PHY disable and host shutdown paths
+increase boot and shutdown time for all local PHYs.
+
+Add separate macros for each delay to restore the original values while
+still avoiding magic numbers.
+
+Fixes: 4ca7fe99fc84 ("scsi: hisi_sas: Use macro instead of magic number")
 Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://patch.msgid.link/20261009033238.1076098-2-yangxingui@huawei.com
+Link: https://patch.msgid.link/20261009033238.1076098-3-yangxingui@huawei.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_task.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/libsas/sas_task.c b/drivers/scsi/libsas/sas_task.c
-index e9d291007817b..2080e5836179b 100644
---- a/drivers/scsi/libsas/sas_task.c
-+++ b/drivers/scsi/libsas/sas_task.c
-@@ -25,7 +25,7 @@ void sas_ssp_task_response(struct device *dev, struct sas_task *task,
- 	case SAS_DATAPRES_SENSE_DATA:
- 		tstat->stat = SAS_SAM_STAT_CHECK_CONDITION;
- 		tstat->buf_valid_size =
--			min_t(int, SAS_STATUS_BUF_SIZE,
-+			min_t(u32, SAS_STATUS_BUF_SIZE,
- 			      be32_to_cpu(iu->sense_data_len));
- 		memcpy(tstat->buf, iu->sense_data, tstat->buf_valid_size);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 8a2500993e19d..9c363e2373538 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -547,6 +547,9 @@ struct hisi_sas_err_record_v3 {
+ #define IRQ_AXI_INDEX 11
  
+ #define DELAY_FOR_RESET_HW 100
++#define STOP_PHY_DELAY_US 50
++#define DISABLE_PHY_DELAY_MS 50
++#define DISABLE_HOST_PHY_DELAY_MS 10
+ #define HDR_SG_MOD 0x2
+ #define LUN_SIZE 8
+ #define ATTR_PRIO_REGION 9
+@@ -983,7 +986,7 @@ static int reset_hw_v3_hw(struct hisi_hba *hisi_hba)
+ 
+ 	/* Disable all of the PHYs */
+ 	hisi_sas_stop_phys(hisi_hba);
+-	udelay(HISI_SAS_DELAY_FOR_PHY_DISABLE);
++	udelay(STOP_PHY_DELAY_US);
+ 
+ 	/* Ensure axi bus idle */
+ 	ret = hisi_sas_read32_poll_timeout(AXI_CFG, val, !val,
+@@ -1072,7 +1075,7 @@ static void disable_phy_v3_hw(struct hisi_hba *hisi_hba, int phy_no)
+ 	cfg &= ~PHY_CFG_ENA_MSK;
+ 	hisi_sas_phy_write32(hisi_hba, phy_no, PHY_CFG, cfg);
+ 
+-	mdelay(HISI_SAS_DELAY_FOR_PHY_DISABLE);
++	mdelay(DISABLE_PHY_DELAY_MS);
+ 
+ 	state = hisi_sas_read32(hisi_hba, PHY_STATE);
+ 	if (state & BIT(phy_no)) {
+@@ -2755,7 +2758,7 @@ static int disable_host_v3_hw(struct hisi_hba *hisi_hba)
+ 
+ 	hisi_sas_stop_phys(hisi_hba);
+ 
+-	mdelay(HISI_SAS_DELAY_FOR_PHY_DISABLE);
++	mdelay(DISABLE_HOST_PHY_DELAY_MS);
+ 
+ 	reg_val = hisi_sas_read32(hisi_hba, AXI_MASTER_CFG_BASE +
+ 				  AM_CTRL_GLOBAL);
 -- 
 2.53.0
 
