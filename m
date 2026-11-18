@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037171;
-	b=qasiT9ZJd6XzhJqRFqyJegWhggb5y6IZxdEHFz/0bPoP+o6q6dQktmnyOHh2+KCJ1iZL
-	 twCieBlMurowYwJr90sWRz5RW4ZaJYycPmNMOz6BG5XgUqCZJ8YB2FQbfGl2WCI1/eP9O
-	 k92W+WzJa49DguKn+2v8O+ICMSoTNwDq4hqM9je8i6H8P2qfM/s+xcJnAXmQFHuH5sVpa
-	 vXDmpAG+dL6ox7afbp2ecDgMn6+ky6QNTxvNkIsP7KqnHopVA6/JCvKYuuQXe9dfgivfe
-	 7+q6XMuA0DKh6aCck82c4zHr4keGWNMXVVk4SuYbLg3Dbzx2O5ngi75xjplAgp36Dkw==
+	t=1795037174;
+	b=blNi+m3ud1dgSkfQF7aYaHCaNfr7fkUtbmsQ/mMossxgAZCJjmR3rLmptSjNuszjgtdG
+	 FRArhrII5TSkGRwrSTcge9vuFo8H74iWFHa9JqRjhlyx3m8Mh5fnGoL8uGWVZOh2w3qYH
+	 WTeqz/rnjz8IaYdClxYYwWJGHnRiScQjvKg9DPPOFfJfHpUQRQdsWIpIzj/cNF9e1IkTO
+	 M/CNQA131EINMrv4stVCD04cDsUGRt3T1uCLJtvM8SJIs06WOj08Xp7QgkUBx/vh9t7yV
+	 Vd9al7xy/EnBXc37sfmNfeGXEjpbAjtHCnmi6BcoB1622euc+ejB7Dt1Q2YEQX523HQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eiRFM1r2jE7Cvjkyfn8dRYuqlIF6SGjOqinB9gQ0sQ4=;
-	b=eGaIz6imBlgofzmZPLVKzaoYCMC+51OYtOvEP/3CDjkcekwxBEgXS0HHBFEHJZs2KNJb
-	 VkRsP48sO3mPVd9sPnrDTob6vfAH0cKl8GhljaAiXPcWMZDyqH28OqWYfMKAfCtKctSDW
-	 +zFU7zlUx/yQkJFFiPjPS4q/seyLY6DTpU8k/xSRDmMDK7zWdB0LsiwqJmKYXFfkgxX4M
-	 a96yXBb/FOEFniXptPVvKCnlMFc6fKWwHeRjovAZIYo9PYEI0kNykS+D6UrXL0ahrDzwg
-	 Gg5T+73EFpdiKqTgYbViXzMQ6IDe6sD1s9a9C/EMNYBhb551K8OOPeiH9RJSDSuqVMA==
+	bh=+3kkC2gX+Z5K6qp3en1bFzo54Fo0l0VoMVr4UFoAGu8=;
+	b=XTZTeC6HjRPrTLqgwha10S/KRr9tnUxFwizY4D9DRFFbdriOMsjXhf4VSa6G9VxZgptC
+	 FHaj4TQ7XtIbJUyDNuHRlVJiv/beVBulb7IqGx7eHSXj37mR/igfAGo1ONQp01AltM7Ei
+	 4oi5072q60hER/iZbvA3v353NGvmunZMd1VxhJ1le4av58HgtcgwG6U0Mm7Q9mZT+0y9C
+	 jTa6EPY77X2gCeaBNjL65Zm4rOC8H8+Yxq72eYZT2xGO7TOHEeqw+FroSHgV2yoI7mCJN
+	 TTGmK0kLKZCwTzyMvTvLRYXwVMWx4SmOWU7memvmSPQj0Uw6jVwNc9Ol/9ULawOFOaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8t2qKmg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bcKqtcl8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79881606A331;
-	Wed, 18 Nov 2026 21:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0759606A400;
+	Wed, 18 Nov 2026 21:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8t2qKmg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E0E1F000C4;
-	Wed, 18 Nov 2026 21:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bcKqtcl8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19C81F000C4;
+	Wed, 18 Nov 2026 21:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037171;
-	bh=eiRFM1r2jE7Cvjkyfn8dRYuqlIF6SGjOqinB9gQ0sQ4=;
+	s=korg; t=1795037174;
+	bh=+3kkC2gX+Z5K6qp3en1bFzo54Fo0l0VoMVr4UFoAGu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c8t2qKmgCEfzRHFOrOlBSxRPeRpr+l/gU1bmpYnO4bii8TIDcyHR/YCWKFoW/4DEI
-	 o1j4JMzlvCnPOYvzup0FTTHwF2KLd+bJQy1zT42ZKQOh9sget1gQ8+1w6NtK8yf2nA
-	 ceXxm9b1E1lUa/EkUnUV6w298KtyoS33K8Mc/T0E=
+	b=bcKqtcl8ovcIXaYei3YnzwVajiR5Z8TXW1Mc5D6cdXG8rGhpzhQM1adExOy0VcpLl
+	 sfRxPSTtH6h4wzniUc+hq6P8uUAUCwno1o/9Aa6Q7EyanMRfrHOO9OOUsWNPjb90r3
+	 d9e4X8zkMtIeSAT+1yYCkNFdIErefjrHdJ1U8P+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Arun Potharaju <arun.potharaju@hammerspace.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1318/3318] nfs: convert to using new filelock helpers
-Date: Wed, 18 Nov 2026 15:32:20 +0100
-Message-ID: <20261118150359.854203610@linuxfoundation.org>
+Subject: [PATCH 6.6 1319/3318] NFSv4/flexfiles: fail I/O to the data server once a lock is lost
+Date: Wed, 18 Nov 2026 15:32:21 +0100
+Message-ID: <20261118150359.885021186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,230 +69,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Benjamin Coddington <bcodding@hammerspace.com>
 
-[ Upstream commit d7c9616be0759c1cfb44a68ba838548d22b98484 ]
+[ Upstream commit 7fa2ad367abe6d3155daefb57331e7fce1a17afd ]
 
-Convert to using the new file locking helper functions. Also, in later
-patches we're going to introduce some temporary macros with names that
-clash with the variable name in nfs4_proc_unlck. Rename it.
+When a client loses a byte-range lock, because its lease expired and it
+may not recover the lock (nfs.recover_lost_locks=0) or because reclaim
+failed, it marks the lock state NFS_LOCK_LOST and fails further I/O by
+that lock owner.  Otherwise an application that believes it holds a
+lock over a range is never told that the lock is gone, and can
+overwrite data that another client has since written under its own
+lock on that range.
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20240131-flsplit-v3-11-c6129007ee8d@kernel.org
-Reviewed-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 7fa2ad367abe ("NFSv4/flexfiles: fail I/O to the data server once a lock is lost")
+The NFSv4 READ/WRITE and file layout I/O paths apply this in
+rpc_call_prepare, where nfs4_set_rw_stateid() returns -EIO for a lost
+lock.  The flexfiles data server I/O path does not: the NFSv3 data
+server path never checked, and the check on the NFSv4 path was removed
+when the data server stateid began to be taken from the layout.
+
+Fail read and write RPCs to the data server in rpc_call_prepare when the
+lock is lost.  The data server path has no use for the stateid that
+nfs4_set_rw_stateid() selects, and selecting it looks up a delegation
+or open stateid on every I/O.
+Instead add nfs4_lock_context_lost(), which only tests NFS_LOCK_LOST,
+and check it alongside the open state.  Its lookup,
+__nfs4_lookup_lock_state(), is split out of __nfs4_find_lock_state()
+and takes no reference: a lock state is only unlinked from
+state->lock_states under state->state_lock, so one found while holding
+that lock cannot be freed before it is released.  Use it in
+nfs4_copy_lock_stateid() as well, which only reads the lock state under
+that lock.  That drops a reference get and put from stateid selection
+for all NFSv4 I/O without changing the stateid selected.
+
+Terminating the RPC in rpc_call_prepare is not enough on its own.  The
+done callback reads the -EIO as a data server connection error, forgets
+the device ID, and resets the I/O to pNFS (or, for an NFSv4 data
+server, possibly to the MDS).  After a reset to pNFS a new LAYOUTGET is
+granted and rpc_call_prepare fails the I/O again, without end.  The
+existing NFS_CONTEXT_BAD check does not loop, since the open state is
+then invalid and pnfs_update_layout() fails the reset I/O, but it still
+forgets the device ID.
+
+So when an RPC that was never sent fails and the open context is bad,
+the open state is invalid, or the lock is lost, complete it with -EIO
+without error handling.  An RPC that was sent and failed is handled as
+before, so a real data server error is still reported to the MDS.
+
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Fixes: bb21ce0ad227 ("flexfiles: use per-mirror specified stateid for IO")
+Cc: stable@vger.kernel.org
+Tested-by: Arun Potharaju <arun.potharaju@hammerspace.com>
+Assisted-by: LLM
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.c |  2 +-
- fs/nfs/file.c       |  4 ++--
- fs/nfs/nfs4proc.c   | 12 ++++++------
- fs/nfs/nfs4state.c  | 18 +++++++++---------
- fs/nfs/nfs4xdr.c    |  2 +-
- fs/nfs/write.c      |  4 ++--
- 6 files changed, 21 insertions(+), 21 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 25 +++++++++++++++--
+ fs/nfs/nfs4_fs.h                       |  2 ++
+ fs/nfs/nfs4state.c                     | 38 +++++++++++++++++++++++---
+ 3 files changed, 59 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index af7751f05bbd7..55b345a4b9e48 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -156,7 +156,7 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
- 	list = &flctx->flc_posix;
- 	spin_lock(&flctx->flc_lock);
- restart:
--	list_for_each_entry(fl, list, fl_list) {
-+	for_each_file_lock(fl, list) {
- 		if (nfs_file_open_context(fl->fl_file)->state != state)
- 			continue;
- 		spin_unlock(&flctx->flc_lock);
-diff --git a/fs/nfs/file.c b/fs/nfs/file.c
-index cf16ee710d42b..1d67e7c7d6e73 100644
---- a/fs/nfs/file.c
-+++ b/fs/nfs/file.c
-@@ -863,7 +863,7 @@ int nfs_lock(struct file *filp, int cmd, struct file_lock *fl)
- 
- 	if (IS_GETLK(cmd))
- 		ret = do_getlk(filp, cmd, fl, is_local);
--	else if (fl->fl_type == F_UNLCK)
-+	else if (lock_is_unlock(fl))
- 		ret = do_unlk(filp, cmd, fl, is_local);
- 	else
- 		ret = do_setlk(filp, cmd, fl, is_local);
-@@ -890,7 +890,7 @@ int nfs_flock(struct file *filp, int cmd, struct file_lock *fl)
- 		is_local = 1;
- 
- 	/* We're simulating flock() locks using posix locks on the server */
--	if (fl->fl_type == F_UNLCK)
-+	if (lock_is_unlock(fl))
- 		return do_unlk(filp, cmd, fl, is_local);
- 	return do_setlk(filp, cmd, fl, is_local);
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index a1dc557245977..254ae2d45ee28 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1372,12 +1372,27 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 	dprintk("%s: err %d op %d status %u\n", __func__, err, opnum, status);
  }
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 626f7337dd535..cf1832641b84a 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -7074,7 +7074,7 @@ static int nfs4_proc_unlck(struct nfs4_state *state, int cmd, struct file_lock *
- 	struct rpc_task *task;
- 	struct nfs_seqid *(*alloc_seqid)(struct nfs_seqid_counter *, gfp_t);
- 	int status = 0;
--	unsigned char fl_flags = request->fl_flags;
-+	unsigned char saved_flags = request->fl_flags;
  
- 	status = nfs4_set_lock_state(state, request);
- 	/* Unlock _before_ we do the RPC call */
-@@ -7109,7 +7109,7 @@ static int nfs4_proc_unlck(struct nfs4_state *state, int cmd, struct file_lock *
- 	status = rpc_wait_for_completion_task(task);
- 	rpc_put_task(task);
- out:
--	request->fl_flags = fl_flags;
-+	request->fl_flags = saved_flags;
- 	trace_nfs4_unlock(request, state, F_SETLK, status);
- 	return status;
- }
-@@ -7427,7 +7427,7 @@ static int _nfs4_proc_setlk(struct nfs4_state *state, int cmd, struct file_lock
++static bool ff_layout_io_state_lost(const struct nfs_pgio_header *hdr)
++{
++	struct nfs_open_context *ctx = hdr->args.context;
++
++	return test_bit(NFS_CONTEXT_BAD, &ctx->flags) ||
++	       !nfs4_valid_open_stateid(ctx->state) ||
++	       nfs4_lock_context_lost(ctx->state, hdr->args.lock_context);
++}
++
+ /* NFS_PROTO call done callback routines */
+ static int ff_layout_read_done_cb(struct rpc_task *task,
+ 				struct nfs_pgio_header *hdr)
  {
- 	struct nfs_inode *nfsi = NFS_I(state->inode);
- 	struct nfs4_state_owner *sp = state->owner;
--	unsigned char fl_flags = request->fl_flags;
-+	unsigned char flags = request->fl_flags;
- 	int status;
+ 	int err;
  
- 	request->fl_flags |= FL_ACCESS;
-@@ -7439,7 +7439,7 @@ static int _nfs4_proc_setlk(struct nfs4_state *state, int cmd, struct file_lock
- 	if (test_bit(NFS_DELEGATED_STATE, &state->flags)) {
- 		/* Yes: cache locks! */
- 		/* ...but avoid races with delegation recall... */
--		request->fl_flags = fl_flags & ~FL_SLEEP;
-+		request->fl_flags = flags & ~FL_SLEEP;
- 		status = locks_lock_inode_wait(state->inode, request);
- 		up_read(&nfsi->rwsem);
- 		mutex_unlock(&sp->so_delegreturn_mutex);
-@@ -7449,7 +7449,7 @@ static int _nfs4_proc_setlk(struct nfs4_state *state, int cmd, struct file_lock
- 	mutex_unlock(&sp->so_delegreturn_mutex);
- 	status = _nfs4_do_setlk(state, cmd, request, NFS_LOCK_NEW);
- out:
--	request->fl_flags = fl_flags;
-+	request->fl_flags = flags;
- 	return status;
- }
++	if (task->tk_status < 0 && !RPC_WAS_SENT(task) &&
++	    ff_layout_io_state_lost(hdr)) {
++		task->tk_status = -EIO;
++		return 0;
++	}
++
+ 	if (task->tk_status < 0) {
+ 		ff_layout_io_track_ds_error(hdr->lseg, hdr->pgio_mirror_idx,
+ 					    hdr->args.offset, hdr->args.count,
+@@ -1465,7 +1480,7 @@ static void ff_layout_read_record_layoutstats_done(struct rpc_task *task,
+ static int ff_layout_read_prepare_common(struct rpc_task *task,
+ 					 struct nfs_pgio_header *hdr)
+ {
+-	if (unlikely(test_bit(NFS_CONTEXT_BAD, &hdr->args.context->flags))) {
++	if (unlikely(ff_layout_io_state_lost(hdr))) {
+ 		rpc_exit(task, -EIO);
+ 		return -EIO;
+ 	}
+@@ -1549,6 +1564,12 @@ static int ff_layout_write_done_cb(struct rpc_task *task,
+ 	loff_t end_offs = 0;
+ 	int err;
  
-@@ -7591,7 +7591,7 @@ nfs4_proc_lock(struct file *filp, int cmd, struct file_lock *request)
- 	if (!(IS_SETLK(cmd) || IS_SETLKW(cmd)))
- 		return -EINVAL;
++	if (task->tk_status < 0 && !RPC_WAS_SENT(task) &&
++	    ff_layout_io_state_lost(hdr)) {
++		task->tk_status = -EIO;
++		return 0;
++	}
++
+ 	if (task->tk_status < 0) {
+ 		ff_layout_io_track_ds_error(hdr->lseg, hdr->pgio_mirror_idx,
+ 					    hdr->args.offset, hdr->args.count,
+@@ -1652,7 +1673,7 @@ static void ff_layout_write_record_layoutstats_done(struct rpc_task *task,
+ static int ff_layout_write_prepare_common(struct rpc_task *task,
+ 					  struct nfs_pgio_header *hdr)
+ {
+-	if (unlikely(test_bit(NFS_CONTEXT_BAD, &hdr->args.context->flags))) {
++	if (unlikely(ff_layout_io_state_lost(hdr))) {
+ 		rpc_exit(task, -EIO);
+ 		return -EIO;
+ 	}
+diff --git a/fs/nfs/nfs4_fs.h b/fs/nfs/nfs4_fs.h
+index 47c5c1f86d662..7efe74933a10f 100644
+--- a/fs/nfs/nfs4_fs.h
++++ b/fs/nfs/nfs4_fs.h
+@@ -519,6 +519,8 @@ extern int nfs4_select_rw_stateid(struct nfs4_state *, fmode_t,
+ 		const struct cred **);
+ extern bool nfs4_copy_open_stateid(nfs4_stateid *dst,
+ 		struct nfs4_state *state);
++extern bool nfs4_lock_context_lost(struct nfs4_state *state,
++		const struct nfs_lock_context *l_ctx);
  
--	if (request->fl_type == F_UNLCK) {
-+	if (lock_is_unlock(request)) {
- 		if (state != NULL)
- 			return nfs4_proc_unlck(state, cmd, request);
- 		return 0;
+ extern struct nfs_seqid *nfs_alloc_seqid(struct nfs_seqid_counter *counter, gfp_t gfp_mask);
+ extern int nfs_wait_on_sequence(struct nfs_seqid *seqid, struct rpc_task *task);
 diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 78d52c2006dcc..7805f33d77a03 100644
+index 7805f33d77a03..ca99e662d7747 100644
 --- a/fs/nfs/nfs4state.c
 +++ b/fs/nfs/nfs4state.c
-@@ -847,15 +847,15 @@ void nfs4_close_sync(struct nfs4_state *state, fmode_t fmode)
+@@ -844,10 +844,13 @@ void nfs4_close_sync(struct nfs4_state *state, fmode_t fmode)
+  * be made.  Failing that, a "consistent" choice is preferable.  The
+  * consistent choice we make is to prefer the first owner, that of a
+  * Posix lock.
++ *
++ * Called with state->state_lock held.  No reference is taken: a lock
++ * state is freed only after it is unlinked under state->state_lock.
   */
  static struct nfs4_lock_state *
- __nfs4_find_lock_state(struct nfs4_state *state,
--		       fl_owner_t fl_owner, fl_owner_t fl_owner2)
-+		       fl_owner_t owner, fl_owner_t owner2)
+-__nfs4_find_lock_state(struct nfs4_state *state,
+-		       fl_owner_t owner, fl_owner_t owner2)
++__nfs4_lookup_lock_state(struct nfs4_state *state,
++			 fl_owner_t owner, fl_owner_t owner2)
  {
  	struct nfs4_lock_state *pos, *ret = NULL;
  	list_for_each_entry(pos, &state->lock_states, ls_locks) {
--		if (pos->ls_owner == fl_owner) {
-+		if (pos->ls_owner == owner) {
- 			ret = pos;
- 			break;
- 		}
--		if (pos->ls_owner == fl_owner2)
-+		if (pos->ls_owner == owner2)
+@@ -858,6 +861,16 @@ __nfs4_find_lock_state(struct nfs4_state *state,
+ 		if (pos->ls_owner == owner2)
  			ret = pos;
  	}
++	return ret;
++}
++
++static struct nfs4_lock_state *
++__nfs4_find_lock_state(struct nfs4_state *state,
++		       fl_owner_t owner, fl_owner_t owner2)
++{
++	struct nfs4_lock_state *ret;
++
++	ret = __nfs4_lookup_lock_state(state, owner, owner2);
  	if (ret)
-@@ -868,7 +868,7 @@ __nfs4_find_lock_state(struct nfs4_state *state,
-  * exists, return an uninitialized one.
-  *
-  */
--static struct nfs4_lock_state *nfs4_alloc_lock_state(struct nfs4_state *state, fl_owner_t fl_owner)
-+static struct nfs4_lock_state *nfs4_alloc_lock_state(struct nfs4_state *state, fl_owner_t owner)
- {
- 	struct nfs4_lock_state *lsp;
- 	struct nfs_server *server = state->owner->so_server;
-@@ -879,7 +879,7 @@ static struct nfs4_lock_state *nfs4_alloc_lock_state(struct nfs4_state *state, f
- 	nfs4_init_seqid_counter(&lsp->ls_seqid);
- 	refcount_set(&lsp->ls_count, 1);
- 	lsp->ls_state = state;
--	lsp->ls_owner = fl_owner;
-+	lsp->ls_owner = owner;
- 	lsp->ls_seqid.owner_id = ida_alloc(&server->lockowner_id, GFP_KERNEL_ACCOUNT);
- 	if (lsp->ls_seqid.owner_id < 0)
- 		goto out_free;
-@@ -993,7 +993,7 @@ static int nfs4_copy_lock_stateid(nfs4_stateid *dst,
- 		const struct nfs_lock_context *l_ctx)
- {
- 	struct nfs4_lock_state *lsp;
--	fl_owner_t fl_owner, fl_flock_owner;
-+	fl_owner_t owner, fl_flock_owner;
- 	int ret = -ENOENT;
- 
- 	if (l_ctx == NULL)
-@@ -1002,11 +1002,11 @@ static int nfs4_copy_lock_stateid(nfs4_stateid *dst,
- 	if (test_bit(LK_STATE_IN_USE, &state->flags) == 0)
- 		goto out;
- 
--	fl_owner = l_ctx->lockowner;
-+	owner = l_ctx->lockowner;
+ 		refcount_inc(&ret->ls_count);
+ 	return ret;
+@@ -1006,7 +1019,7 @@ static int nfs4_copy_lock_stateid(nfs4_stateid *dst,
  	fl_flock_owner = l_ctx->open_context->flock_owner;
  
  	spin_lock(&state->state_lock);
--	lsp = __nfs4_find_lock_state(state, fl_owner, fl_flock_owner);
-+	lsp = __nfs4_find_lock_state(state, owner, fl_flock_owner);
+-	lsp = __nfs4_find_lock_state(state, owner, fl_flock_owner);
++	lsp = __nfs4_lookup_lock_state(state, owner, fl_flock_owner);
  	if (lsp && test_bit(NFS_LOCK_LOST, &lsp->ls_flags))
  		ret = -EIO;
  	else if (lsp != NULL && test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) != 0) {
-@@ -1529,7 +1529,7 @@ static int nfs4_reclaim_locks(struct nfs4_state *state, const struct nfs4_state_
- 	down_write(&nfsi->rwsem);
- 	spin_lock(&flctx->flc_lock);
- restart:
--	list_for_each_entry(fl, list, fl_list) {
-+	for_each_file_lock(fl, list) {
- 		if (nfs_file_open_context(fl->fl_file)->state != state)
- 			continue;
- 		spin_unlock(&flctx->flc_lock);
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index a9d57fcdf9b40..b685d6f641900 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -1303,7 +1303,7 @@ static void encode_link(struct xdr_stream *xdr, const struct qstr *name, struct
- 
- static inline int nfs4_lock_type(struct file_lock *fl, int block)
- {
--	if (fl->fl_type == F_RDLCK)
-+	if (lock_is_read(fl))
- 		return block ? NFS4_READW_LT : NFS4_READ_LT;
- 	return block ? NFS4_WRITEW_LT : NFS4_WRITE_LT;
- }
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 85426764017ce..b8c957318396e 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -1356,7 +1356,7 @@ static bool
- is_whole_file_wrlock(struct file_lock *fl)
- {
- 	return fl->fl_start == 0 && fl->fl_end == OFFSET_MAX &&
--			fl->fl_type == F_WRLCK;
-+			lock_is_write(fl);
- }
- 
- /* If we know the page is up to date, and we're not using byte range locks (or
-@@ -1396,7 +1396,7 @@ static int nfs_can_extend_write(struct file *file, struct folio *folio,
- 	} else if (!list_empty(&flctx->flc_flock)) {
- 		fl = list_first_entry(&flctx->flc_flock, struct file_lock,
- 					fl_list);
--		if (fl->fl_type == F_WRLCK)
-+		if (lock_is_write(fl))
- 			ret = 1;
+@@ -1014,11 +1027,28 @@ static int nfs4_copy_lock_stateid(nfs4_stateid *dst,
+ 		ret = 0;
  	}
- 	spin_unlock(&flctx->flc_lock);
+ 	spin_unlock(&state->state_lock);
+-	nfs4_put_lock_state(lsp);
+ out:
+ 	return ret;
+ }
+ 
++bool nfs4_lock_context_lost(struct nfs4_state *state,
++			    const struct nfs_lock_context *l_ctx)
++{
++	struct nfs4_lock_state *lsp;
++	bool ret;
++
++	if (!test_bit(LK_STATE_IN_USE, &state->flags))
++		return false;
++
++	spin_lock(&state->state_lock);
++	lsp = __nfs4_lookup_lock_state(state, l_ctx->lockowner,
++				       l_ctx->open_context->flock_owner);
++	ret = lsp && test_bit(NFS_LOCK_LOST, &lsp->ls_flags);
++	spin_unlock(&state->state_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(nfs4_lock_context_lost);
++
+ bool nfs4_copy_open_stateid(nfs4_stateid *dst, struct nfs4_state *state)
+ {
+ 	bool ret;
 -- 
 2.53.0
 
