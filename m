@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050907;
-	b=e5tMoVWutaOeNn3fo9ooLxuREE6WeAU4B92876GPGa6wrJQ/qdT1m+yFbZ2FRqb0T8x4
-	 LQx+iPiGGmlcCigls34JGAtncG7GjcMXPqJPQNiNV5vQNSDo/jgzXTJwqOKnhGbUK1GpQ
-	 PAL1YEjziIUDwuZZhdtA8njFzLI4AaBZ/4HEjjiOaDnYGJUx5ybjZRT/84Ab6tEp1T8d0
-	 7VVTk2kplwWl/nS25D6G0sKiWV7Nw8yoSsIXLmxnxvQig0h/I1/VcLlxvAy39RuL0jn3C
-	 zvXTCRB1Mpvg4o8mbnWc/PzPHyjuWpmOFXJtrYBusIMlCeusWFWoL5VIV7sJrHOwCDQ==
+	t=1795050910;
+	b=43k04uH94fPO6MQaJW2hI042o07VMe0ivFeUvi08C5OQo+sfrGI8eQpkRxQj3XSIzC6o
+	 ugL3N6bgS4TJ9GQddVEth5/PJ+xTR/POv5r54oEePXZ5NXfdxFnvuEetdgehz6LBC583+
+	 fTGU/HiJI3pFp8Fz1ro//fIsWm95VvgKFbgZ4ULH7PYKKYYuBr+SWM+TtHIIduCktq/sT
+	 h2YOWz1guP/SZoEu/f1rZmXwzGdvvXgq5xMc0Zz/lKPAzqbSinRpdrSEkwiMTo/im8s97
+	 eSVFtsiH1zvbshzd5c2llcEVQgaMTro9xvlKuc0JANu/n6cf5Xt2tWDtR2zdrF1W9Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZZe7HzcUGoLyXsxYUZFPT3mKUfdxx9yjqZW0t0GASoE=;
-	b=sqRQ6YuYxAHCvPhaOatjSfQMTJT4tTndV3rJ6qv7oj5UUUwtxoJxMjxDUFeuf8OexczO
-	 v8tU37sRR/aMngeHzA6/DH3OXMSSe9c733wgtquUftDr+kCWSJLlhXKTZysfRZkLeIfuq
-	 rzIWUbTk9lAD1+BPiMSqErGtfwg7VJ+8Mk2CacIgn2CGPrT3sOqzyyWsCVvF2n02j0mlj
-	 o92RMkbCN32MmL994iZMndKyy9UZHVvmn3tMRuXlUBepfeiBPKQNolR8JJl3El/XPd5aN
-	 fn5P83xphJu8JKmFbdB9d7qC8yuxFIf0GZREJSLVQsrbCWeUoo6BGzbnPUH61QAq2Nw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+h3cs9EmCaTDzQAhPtyboRCQVV2F+14O506gDgCL6Uk=;
+	b=RtUVV+9lchHajCobwL/BG1mllK915NAsYEt82bPJj7DwcXp1a+oF2Jx+uzBDIxo7n9gG
+	 go7kuqbziqDrxSfEFrRYM4IfFiuqSrutyaGAco3PU2zDBFocAthAt8XPJjTIOo6kNE3wG
+	 OcaK0JbDhT4STZcH+ben157aHJwBTDu7jB1drtw+cFlvyZSXjRxuVOaepVlVVxShXISJ/
+	 RpP3j3vgGzbImwYeqqPRPXN4Mo6ojWu+hGwzIMnvk5rkqUTpk7v0QZ+5fCyzOLnd5lERf
+	 L6NrAb6hh5lduRNKLxD0WhU7mEill4a9ryLyNtTcuzGvAlEXVGTJaBTbZCmk6mSqipQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8kYTRrB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1fh/gUGJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E96606A31C;
-	Thu, 19 Nov 2026 01:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202B6606A31C;
+	Thu, 19 Nov 2026 01:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8kYTRrB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB51E1F000C4;
-	Thu, 19 Nov 2026 01:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fh/gUGJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773BD1F000C4;
+	Thu, 19 Nov 2026 01:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050907;
-	bh=ZZe7HzcUGoLyXsxYUZFPT3mKUfdxx9yjqZW0t0GASoE=;
+	s=korg; t=1795050910;
+	bh=+h3cs9EmCaTDzQAhPtyboRCQVV2F+14O506gDgCL6Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c8kYTRrBdxL8iHZif+S42gSA5F/2zs+M21zc3r6AJwOea2tihW6oVpGzvx0z3QQk0
-	 qWJ3vgUdnOBWKZQy2/O1/HOic2YsM6vDCsVvT5mzUDsJWxZ9Q0LBT53yonMN4+E2vR
-	 GhFEErLHGvAKMntd7cSr89YQZLVIfeZXjQpcm8KE=
+	b=1fh/gUGJbZq9kdMsdFur14uzw2j4VGIYBdzPgMNDoOIFI6E6KI2iihJWnf+05b2eF
+	 oINS9kijDRachPPnGt5htU3uTBLCW+/NVCgLNbDWPPgMWQqIWL/cHal+ipErNyGLGI
+	 kTVPqgRgNjtupDr1Arzd4HHc3lEPL2P620hsxL70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 0021/2214] bpf, arm64: Fix off-by-one in check_imm signed range check
-Date: Wed, 18 Nov 2026 15:28:17 +0100
-Message-ID: <20261118150010.982581679@linuxfoundation.org>
+Subject: [PATCH 5.15 0022/2214] drm/amdgpu: Use vmemdup_array_user in amdgpu_bo_create_list_entry_array
+Date: Wed, 18 Nov 2026 15:28:18 +0100
+Message-ID: <20261118150011.019186500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,57 +62,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-commit 1dd8be4ec722ce54e4cace59f3a4ba658111b3ec upstream.
+commit c4ac100e9ae252b09986766ad23b1f83ca3a369d upstream.
 
-check_imm(bits, imm) is used in the arm64 BPF JIT to verify that
-a branch displacement (in arm64 instruction units) fits into the
-signed N-bit immediate field of a B, B.cond or CBZ/CBNZ encoding
-before it is handed to the encoder. The macro currently tests for
-(imm > 0 && imm >> bits) || (imm < 0 && ~imm >> bits) which admits
-values in [-2^N, 2^N) — effectively a signed (N+1)-bit range. A
-signed N-bit field only holds [-2^(N-1), 2^(N-1)), so the check
-admits one extra bit of range on each side.
+Replace kvmalloc_array() + copy_from_user() with vmemdup_array_user() on
+the fast path.
 
-In particular, for check_imm19(), values in [2^18, 2^19) slip past
-the check but do not fit into the 19-bit signed imm19 field of
-B.cond. aarch64_insn_encode_immediate() then masks the raw value
-into the 19-bit field, setting bit 18 (the sign bit) and flipping
-a forward branch into a backward one. Same class of issue exists
-for check_imm26() and the B/BL encoding. Shift by (bits - 1)
-instead of bits so the actual signed N-bit range is enforced.
+This shrinks the source code and improves separation between the kernel
+and userspace slabs.
 
-Fixes: e54bcde3d69d ("arm64: eBPF JIT compiler")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20260415121403.639619-2-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: c833d6c7199c ("drm/amdgpu: Limit BO list entry count to prevent resource exhaustion")
 Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/net/bpf_jit_comp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |   43 +++++++++++-----------------
+ 1 file changed, 18 insertions(+), 25 deletions(-)
 
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -493,8 +493,8 @@ static int build_insn(const struct bpf_i
- 	int ret;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
+@@ -224,43 +224,36 @@ void amdgpu_bo_list_put(struct amdgpu_bo
+ int amdgpu_bo_create_list_entry_array(struct drm_amdgpu_bo_list_in *in,
+ 				      struct drm_amdgpu_bo_list_entry **info_param)
+ {
+-	const void __user *uptr = u64_to_user_ptr(in->bo_info_ptr);
+ 	const uint32_t info_size = sizeof(struct drm_amdgpu_bo_list_entry);
++	const void __user *uptr = u64_to_user_ptr(in->bo_info_ptr);
++	const uint32_t bo_info_size = in->bo_info_size;
++	const uint32_t bo_number = in->bo_number;
+ 	struct drm_amdgpu_bo_list_entry *info;
+-	int r;
+-
+-	info = kvmalloc_array(in->bo_number, info_size, GFP_KERNEL);
+-	if (!info)
+-		return -ENOMEM;
  
- #define check_imm(bits, imm) do {				\
--	if ((((imm) > 0) && ((imm) >> (bits))) ||		\
--	    (((imm) < 0) && (~(imm) >> (bits)))) {		\
-+	if ((((imm) > 0) && ((imm) >> ((bits) - 1))) ||		\
-+	    (((imm) < 0) && (~(imm) >> ((bits) - 1)))) {	\
- 		pr_info("[%2d] imm=%d(0x%x) out of range\n",	\
- 			i, imm, imm);				\
- 		return -EINVAL;					\
+ 	/* copy the handle array from userspace to a kernel buffer */
+-	r = -EFAULT;
+-	if (likely(info_size == in->bo_info_size)) {
+-		unsigned long bytes = in->bo_number *
+-			in->bo_info_size;
+-
+-		if (copy_from_user(info, uptr, bytes))
+-			goto error_free;
+-
++	if (likely(info_size == bo_info_size)) {
++		info = vmemdup_array_user(uptr, bo_number, info_size);
++		if (IS_ERR(info))
++			return PTR_ERR(info);
+ 	} else {
+-		unsigned long bytes = min(in->bo_info_size, info_size);
++		const uint32_t bytes = min(bo_info_size, info_size);
+ 		unsigned i;
+ 
+-		memset(info, 0, in->bo_number * info_size);
+-		for (i = 0; i < in->bo_number; ++i) {
+-			if (copy_from_user(&info[i], uptr, bytes))
+-				goto error_free;
+-
+-			uptr += in->bo_info_size;
++		info = kvmalloc_array(bo_number, info_size, GFP_KERNEL);
++		if (!info)
++			return -ENOMEM;
++
++		memset(info, 0, bo_number * info_size);
++		for (i = 0; i < bo_number; ++i, uptr += bo_info_size) {
++			if (copy_from_user(&info[i], uptr, bytes)) {
++				kvfree(info);
++				return -EFAULT;
++			}
+ 		}
+ 	}
+ 
+ 	*info_param = info;
+ 	return 0;
+-
+-error_free:
+-	kvfree(info);
+-	return r;
+ }
+ 
+ int amdgpu_bo_list_ioctl(struct drm_device *dev, void *data,
 
 
