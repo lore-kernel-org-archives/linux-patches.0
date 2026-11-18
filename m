@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057455;
-	b=QL55UUzqFtkzo5OvhUl7yApVwAOnYy9xCww0ExRPJHBdllsnmjMZ2gt+6VA9d4paho+4
-	 yxPzK6qH5isnYsjAeG0Dv3gAr8iCxeDgJvzqYZ+3OkP4Ufv/ir5Sy3jk7lSqlPUQJItGv
-	 PMHFrkz59QuUZEEELxy3jooxtP2oFA7qa2NRxKaPqzThYYhmxPwb2mOYZrs/+nXYNGTwB
-	 1hhknUciIz8PSlkwBSMnfpmg3FM9r9ZRkzX4rfvj1bYh1eDGZhqRH6wiD84zkmqmLHVpI
-	 CKHiOlheNr66szeAcf+LXWRL0NYZJxBFIx9XlyH5fJxhz91Ct6iGd8QqRrmJ4+vy3tA==
+	t=1795057457;
+	b=RFDCUEZw39ST3dpucbZfAaSYd7Gtvje0eJ4wU99JqD37AxF568uf+s1n9uleTF6R3vQb
+	 KgUAt846Up6O2B/uVQe3TDCFlld4Q0VKxXuC7Z0QFY/GI6c/odXrZkU4el3iT/2nrezZI
+	 d0Xb9Y1rNMKpvB2WZ5Tk4dXWxdniHhdzdNy6YRJbreOPKhHSBceMFNKWAJzUqEl1f3PpI
+	 s2w4SsdZ/xl0qoXOsRB8SKZriHgw7Sk3x/8PMWH7S69F8IsBtmTvK2+Iny7CzVfCINHy/
+	 xdcp89herurUkRoc18NCOX9rQ/yCgQD4aUXsul9y5WU9GTOsxPExok9CZ+m2ItSURcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CjlE1dV4380eTk+3rzgjgbh+B04m7mEKuZ6ZS+pBoUk=;
-	b=uDS8k2ILPVUTQFr8lrW2V3wODu3KpWOOu1hrMDKP3FB+VhWHsKaeygl9QTzjTPInxLP2
-	 J2uCoLKpbuYmnug26RbotkBS8NeW6+8DQzyXGGYcPeCtYLVQkw1O2oBbPShRB6jP/rvT/
-	 IHhlODFLkJNbLZvnjXUBgxECD221huMhVhrKpAg0f+M//uwGpnr+m8GdvN3z/83QKqx6i
-	 fQkJQYiS3455ZXZ2PlGVBxoSNMHqjuBSHdOgwmHM4m5BfVtGBGcxr7YdpqIwmCExBQAJE
-	 VB1DRu7u5Vb3PatT+hZFk3XRkI4V4PrQUu2fvLaifj3LTdyWu8EM92yN87iwAjnY+kA==
+	bh=F3dQP3gYrPo1Jb9ulzfm4H7BuXA1xrtOqeoVe45ecbI=;
+	b=wUrBV378+u/LdCAzKYOsFMO/bpK7oD2qNc3wL2dzbkiY2/8afBQjP/pn7uMl19t1Rym2
+	 hYpZvFCVZitYdVgb9NrvuzoeWuA6gOKg6jyFmLjaOPco0hoXZCPKYtK3+u3ldXe/vZ7rS
+	 ud+xt18ZqGV6bZt9Z+EW8q8PXihQVo9d/SReg8h2hZqiYjOFPF/3k2Jw2upwWjwWqdGDx
+	 oZ88sDyqdvXyESUrBg/Jvd/L4a998JTN0w9ouPEggvuyAX9M/pElRDngLvWyzVZrjpuF5
+	 GLeTaY39JJklOdJ5EqRxKWwf1pjgz5I22oSjYGY9OGC7n1iMT/UNAM5DDiGnj7zz6/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2cNMNSi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xskj19tG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32AF606A33A;
-	Thu, 19 Nov 2026 03:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C986360A261E;
+	Thu, 19 Nov 2026 03:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E2cNMNSi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4060A1F000C6;
-	Thu, 19 Nov 2026 03:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xskj19tG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243281F000C8;
+	Thu, 19 Nov 2026 03:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057454;
-	bh=CjlE1dV4380eTk+3rzgjgbh+B04m7mEKuZ6ZS+pBoUk=;
+	s=korg; t=1795057457;
+	bh=F3dQP3gYrPo1Jb9ulzfm4H7BuXA1xrtOqeoVe45ecbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E2cNMNSi4imEdiV2uTdrGshgeDbIF6IcGN+jWhPkbzz/Ez1/Gmn3Pw4ybgW0sMRMC
-	 YNIyUGqAMBp2rNFCCYP+MU8IKsCyzLzBXo2Fv3a5o/fV1RJQlMz3rR3he4Cv5UOm1l
-	 omZwnV01X73OZOh92q9jRcHxQSCsIxMoENwNpHmU=
+	b=xskj19tGOXc9dR6JYNasnaGLDmjfL0kUDjpF0bi70bkMkfGaLEsRXmC8vbJZRvzwq
+	 1a+XMStaaSiLnLdL2adPNcWZWMcU3AWeh0SK+CVGFW+NsFnS34stj5wwiUTrZLlrFx
+	 XESLO3p+Ne4KOJaVv+kCQ4bosgz+beUVrDD2/3oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
+	0072a70 <90307219+0072a70@users.noreply.github.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0134/1848] virtio_console: take a kref in find_port_by_vq() to fix port UAF
-Date: Wed, 18 Nov 2026 15:36:12 +0100
-Message-ID: <20261118145916.801103409@linuxfoundation.org>
+Subject: [PATCH 5.10 0135/1848] wifi: mt76: mt76x02: report rx FCS errors to mac80211
+Date: Wed, 18 Nov 2026 15:36:13 +0100
+Message-ID: <20261118145916.883545467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,95 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 18dd0b4e489e4f0e3b748cf36ccb909c75a3efab ]
+[ Upstream commit ddae0bcb01e71c1184bb3f526f9622e31dc38f3b ]
 
-find_port_by_vq() returns a raw struct port pointer without taking a
-reference on it, unlike find_port_by_devt_in_portdev() which does.
-find_port_by_vq()'s only two callers, in_intr() and out_intr(), run as
-virtqueue interrupt callbacks, entirely independent of and possibly
-concurrently with unplug_port(), which itself runs from a workqueue when
-the host sends a VIRTIO_CONSOLE_PORT_REMOVE control message.
+When the fcsfail filter is enabled the hardware passes frames with a bad
+FCS up to the driver, but mt76x02_mac_process_rx() never checks
+MT_RXINFO_CRCERR and hands them to mac80211 without
+RX_FLAG_FAILED_FCS_CRC. In monitor mode the radiotap flags byte then
+never gets IEEE80211_RADIOTAP_F_BADFCS set and corrupted frames cannot be
+told apart from clean ones.
 
-unplug_port() removes the port from portdev->ports under ports_lock,
-then later drops its last reference with kref_put(), freeing it via
-remove_port(). find_port_by_vq() also walks portdev->ports under
-ports_lock, so if it finds the port still on the list, the list removal,
-and therefore the eventual kref_put(), has not happened yet, and taking
-a reference at that point is always safe. Without doing so,
-in_intr()/out_intr() can be left holding a pointer to a port that
-unplug_port() frees on another core before they are done using it.
+Set RX_FLAG_FAILED_FCS_CRC from the descriptor CRC error bit, matching
+mt7603, mt7615, mt7915, mt7921, mt7925 and mt7996.
 
-Both triggers are host-controlled as the host decides when to send the
-PORT_REMOVE control message and when to kick the port's data vq. So a
-malicious backend could race the two on purpose, without any guest side
-cooperation. The freed object is a generic kmalloc allocation containing
-a wait_queue_head_t, which in_intr()/out_intr() pass to
-wake_up_interruptible() after touching the stale pointer.
-wake_up_interruptible() invokes a function pointer read out of the wait
-queue's entries. If the freed slab slot is reclaimed with attacker
-influenced content before that call, then this is an arbitrary function
-call primitive rather than just undefined behaviour.
-
-Take a reference in find_port_by_vq() while still holding ports_lock,
-matching find_port_by_devt_in_portdev(), and release it in in_intr() and
-out_intr() once they are done with the port.
-
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Link: https://patch.msgid.link/20260717150622.23636-1-harimishal1@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
+Closes: https://github.com/morrownr/mt76/issues/38
+Tested-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260613002544.27750-3-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/virtio_console.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
-index 5131bc5e36753..fec32f3c80540 100644
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -312,6 +312,12 @@ static struct port *find_port_by_id(struct ports_device *portdev, u32 id)
- 	return port;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+index e0e588d51adc0..c5d3bb1d04b04 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+@@ -790,6 +790,9 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
+ 	if (rxinfo & MT_RXINFO_L2PAD)
+ 		pad_len += 2;
  
-+/*
-+ * Finds a port by the virtqueue and returns a pointer to struct port
-+ * with the reference count incremented.
-+ *
-+ * Callers MUST decrement it when finished.
-+ */
- static struct port *find_port_by_vq(struct ports_device *portdev,
- 				    struct virtqueue *vq)
- {
-@@ -320,8 +326,10 @@ static struct port *find_port_by_vq(struct ports_device *portdev,
- 
- 	spin_lock_irqsave(&portdev->ports_lock, flags);
- 	list_for_each_entry(port, &portdev->ports, list)
--		if (port->in_vq == vq || port->out_vq == vq)
-+		if (port->in_vq == vq || port->out_vq == vq) {
-+			kref_get(&port->kref);
- 			goto out;
-+		}
- 	port = NULL;
- out:
- 	spin_unlock_irqrestore(&portdev->ports_lock, flags);
-@@ -1748,6 +1756,7 @@ static void out_intr(struct virtqueue *vq)
- 	}
- 
- 	wake_up_interruptible(&port->waitqueue);
-+	kref_put(&port->kref, remove_port);
- }
- 
- static void in_intr(struct virtqueue *vq)
-@@ -1793,6 +1802,8 @@ static void in_intr(struct virtqueue *vq)
- 
- 	if (is_console_port(port) && hvc_poll(port->cons.hvc))
- 		hvc_kick();
++	if (rxinfo & MT_RXINFO_CRCERR)
++		status->flag |= RX_FLAG_FAILED_FCS_CRC;
 +
-+	kref_put(&port->kref, remove_port);
- }
- 
- static void control_intr(struct virtqueue *vq)
+ 	if (rxinfo & MT_RXINFO_DECRYPT) {
+ 		status->flag |= RX_FLAG_DECRYPTED;
+ 		status->flag |= RX_FLAG_MMIC_STRIPPED;
 -- 
 2.53.0
 
