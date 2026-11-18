@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033011;
-	b=yZKeWYavVcjEyXCT1RUv1hlWs/kCGo0mPG8UnmRNsQNY7nKA3eBnkF0K+CWczm6OLzs5
-	 GRyvqstbGX5ArYk1UmpyKtpXqsb4xt1iOF5UOeipEgKj081PfAi4bPkJKJE58BbAA+d1k
-	 VG94dkQ4xzZetibPh2Kc01cL6/lmih1+xBHUiER1M9cDXX3kHzJeqibjbTfIrc3EWT58u
-	 lHHnhNu82FarLVxJ69FZbIOAn9mjbL/gzxpXTsaZjl8Oxca+Z2OWgIYACt9+325u24u4k
-	 /J9cWKquqB4Dzq9F00Sk1odhIrEx2AW8iWcuEIp8hkSohFBZPGKawQME+FbNd89Qzxg==
+	t=1795033014;
+	b=f6C2apWHpXC41rLUWFH0IO1bb7zNx0X9hRfIc4uUS5Kk5edksW8Lcj5OPWD/2+2RYPMG
+	 XoG47cqWw9Jfmws3jRH1FkEhfJI0U78NOLzJocwbuFUlaDRASEDLUtRusD1HP7772J7Kn
+	 pdo68cyBWEHM2dvceFeKS0M6nlivmrWgMfe/VpSYVrh5nIpwYckOhlW1dnAaQWTGyn5fi
+	 ek+9eqxcueySMj2jNIBMRx+hwi2w5lyVHmaTIK8sFAsNgSzLLQN5m7FkDKLAO9sCBis3h
+	 rcwgCmOReUV4ITobg00pF52i8JX2FK0O0osMksNythMBZBOeSMdbLHYkFnBFq1v4R+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033011;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VNxvvP4QKrti2em66B3zefMSxV418OJwRMCu2S8VMO0=;
-	b=frct/KW4CkjT49/2FKw1S7ncEdiyo66BhzHZfuwVsSRsI9n7VGGTWkkA2AotXVx7ThMW
-	 xSkzPzhYc8mcincx89RWZ0hpHr4uNfwWFHERCj13lGmqUGI3b481qN1hK0OwGKu5sgud6
-	 /g0kK7p5uAxOOdrHI4Q3nh7TU+36SQc6eafEWuSobmyL5FGZtexgEedHhKOkIoGxNrZG9
-	 x+djZ9VGK3UCe7cMaZrZszrUfbYBuFST332IpBGJLa5Pyo/iFz+3DEvGNTyX2K1b4rwe9
-	 X4LtF7sgt15qBkZBj+TzdcLExzAxR6d+iMc8t9eb7dqTGXgflTka/1m4HVhXSQ/K25w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=z0xSVdii2XUd9W7XrzfmYGlTXfPqAPGA2ve9jILYJBo=;
+	b=zgotRZ98v3mGCw0VPuv0jgQepMCHy7Fm1jfSyN2hm8FxXDlqvfMMZ2Q6aUoOOn1jMsgP
+	 AwKsZCcXCz6vEA2+WolOmQccecg3cFCF6+AgCrA7+2ECFHmGvXn2jBW3DoQcIHKIMkEjL
+	 rnKlZTNvxVWakaZ9ZpZFYQ0NFwUCvT7vi37LAsd6HlOvMKSGbOYu8dxHDp0wv8G7Ntdfr
+	 fk4YB3CV5cWyhmyFXhxUmw3KSrQ9CF4aGspA+ByQdPBYCJUlxpo2WLsNlPP//5NwRjjLS
+	 1s6vKQ16jjP1wbwIm2ZhZV6ZZfLYF7mRPJT25otxsZ3GQdotnG+8VbO0t9rUcQ8aZ9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T3/Lq4Cj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m4KofH0u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A13606A325;
-	Wed, 18 Nov 2026 20:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C982260A260B;
+	Wed, 18 Nov 2026 20:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3/Lq4Cj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122661F000C4;
-	Wed, 18 Nov 2026 20:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m4KofH0u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C501F000C4;
+	Wed, 18 Nov 2026 20:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033011;
-	bh=VNxvvP4QKrti2em66B3zefMSxV418OJwRMCu2S8VMO0=;
+	s=korg; t=1795033014;
+	bh=z0xSVdii2XUd9W7XrzfmYGlTXfPqAPGA2ve9jILYJBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3/Lq4Cjk7gpdmpz1JuEKBBfRZrakyyZKpf1zFeenS97JiVOHKTpOZqfik4CwqAjC
-	 n9YNnKIkdYM9dtm7jhwuUTyAGPIFkQ9oNheV8bzF6LejwhIXfCMvwuZK7xN3Kd0zsQ
-	 kqoTESWjTSSEgM9PyUtkKyW3vMQkU5HByMDT/CfI=
+	b=m4KofH0uVjB3KqvbhvSryeAQGgzkaKm6NyMVlq9VWqA5DMx4Foi20FvySP8PPL8c2
+	 Beosl+vsF66sP0R8DvHBWDGglBbRYjkkh1PEWHSpBjssG1SpHsjR2DeC9cqHBPXOrR
+	 AnaseDSGoGRHdui94BNPfgbMDRHC9VcaptEM1+Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1617/1756] net: dsa: mv88e6xxx: fix 6351 family statistics snapshot
-Date: Wed, 18 Nov 2026 16:02:24 +0100
-Message-ID: <20261118150114.213144216@linuxfoundation.org>
+Subject: [PATCH 6.12 1618/1756] usbnet: fix EVENT_RX_PAUSED race in usbnet_skb_return()
+Date: Wed, 18 Nov 2026 16:02:25 +0100
+Message-ID: <20261118150114.250209894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,87 +62,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Ömer Mete Kaya <omermetekaya0@gmail.com>
 
-[ Upstream commit 9663edfa71e8807890203578dab6db60c6b548c4 ]
+[ Upstream commit 67ae1b80cf73f592b35e4b5e5001a24d6d6c8637 ]
 
-The 88E6171, 88E6175, 88E6350 and 88E6351 take the port number in the
-low bits of the statistics operation register. The 6320 snapshot helper
-instead encodes the port as (port + 1) << 5. On an EA4500 with an
-88E6171, this causes ethtool -S to return physical port 0's MIB counters
-for every user port. Traffic on other ports does not update their
-reported hardware counters.
+On SMP, usbnet_skb_return() can observe EVENT_RX_PAUSED as set on CPU0
+while usbnet_resume_rx() clears the flag and drains rxq_pause on CPU1.
+The skb can then be queued after the drain has completed and remain
+stranded until the next MTU change or device stop.
 
-Before the snapshot operation was moved into the chip operations, only
-the 6320 and 6352 families used the shifted encoding. The refactoring
-incorrectly assigned that encoding to all four 6351 family chips.
+Synchronize the EVENT_RX_PAUSED state transition and paused-queue
+dequeue operations with rxq_pause.lock. In usbnet_resume_rx() splice
+the paused queue into a local queue under the lock, then drain the
+local queue lock-free. In usbnet_skb_return() use a double-check
+pattern under rxq_pause.lock on the slow path, keeping the normal
+RX fast path lock-free. Use spin_lock_irqsave() to match the lockdep
+class shared with other sk_buff_head locks taken from hardirq context
+in defer_bh().
 
-Use the unshifted snapshot helper for the entire 6351 family. This
-matches the Marvell DSDT statsCapture() implementation, which uses the
-raw port number for chips outside DEV_RMON_PORT_BITS, including these
-four chips.
+Discovered by Sashiko, not triggered, not tested on real hardware.
 
-The original 88E6171 change was tested on an EA4500: pings through
-different switch ports updated only the corresponding port's hardware
-counters. The other three chips have not been hardware tested.
-
-Fixes: a605a0fe7115 ("net: dsa: mv88e6xxx: Abstract stats_snapshot into ops structure")
-Link: https://lore.kernel.org/all/404d5f2d-24a5-4edc-897b-b1b3c54a20e1@lunn.ch/
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20261026164733.737299-2-f.fainelli@gmail.com
+Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
+Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
+Link: https://patch.msgid.link/20261024084538.256596-1-omermetekaya0@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/usb/usbnet.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 63d40a40ad0c1..29dc1ecb5eebd 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -4613,7 +4613,7 @@ static const struct mv88e6xxx_ops mv88e6171_ops = {
- 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
- 	.port_get_cmode = mv88e6352_port_get_cmode,
- 	.port_setup_message_port = mv88e6xxx_setup_message_port,
--	.stats_snapshot = mv88e6320_g1_stats_snapshot,
-+	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
- 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
- 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
- 	.stats_get_strings = mv88e6095_stats_get_strings,
-@@ -4715,7 +4715,7 @@ static const struct mv88e6xxx_ops mv88e6175_ops = {
- 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
- 	.port_get_cmode = mv88e6352_port_get_cmode,
- 	.port_setup_message_port = mv88e6xxx_setup_message_port,
--	.stats_snapshot = mv88e6320_g1_stats_snapshot,
-+	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
- 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
- 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
- 	.stats_get_strings = mv88e6095_stats_get_strings,
-@@ -5375,7 +5375,7 @@ static const struct mv88e6xxx_ops mv88e6350_ops = {
- 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
- 	.port_get_cmode = mv88e6352_port_get_cmode,
- 	.port_setup_message_port = mv88e6xxx_setup_message_port,
--	.stats_snapshot = mv88e6320_g1_stats_snapshot,
-+	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
- 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
- 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
- 	.stats_get_strings = mv88e6095_stats_get_strings,
-@@ -5421,7 +5421,7 @@ static const struct mv88e6xxx_ops mv88e6351_ops = {
- 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
- 	.port_get_cmode = mv88e6352_port_get_cmode,
- 	.port_setup_message_port = mv88e6xxx_setup_message_port,
--	.stats_snapshot = mv88e6320_g1_stats_snapshot,
-+	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
- 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
- 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
- 	.stats_get_strings = mv88e6095_stats_get_strings,
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 2ca0808398bf5..e50b5cd426980 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -332,9 +332,14 @@ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ 	unsigned long flags;
+ 	int	status;
+ 
+-	if (test_bit(EVENT_RX_PAUSED, &dev->flags)) {
+-		skb_queue_tail(&dev->rxq_pause, skb);
+-		return;
++	if (unlikely(test_bit(EVENT_RX_PAUSED, &dev->flags))) {
++		spin_lock_irqsave(&dev->rxq_pause.lock, flags);
++		if (test_bit(EVENT_RX_PAUSED, &dev->flags)) {
++			__skb_queue_tail(&dev->rxq_pause, skb);
++			spin_unlock_irqrestore(&dev->rxq_pause.lock, flags);
++			return;
++		}
++		spin_unlock_irqrestore(&dev->rxq_pause.lock, flags);
+ 	}
+ 
+ 	/* only update if unset to allow minidriver rx_fixup override */
+@@ -701,13 +706,20 @@ EXPORT_SYMBOL_GPL(usbnet_pause_rx);
+ 
+ void usbnet_resume_rx(struct usbnet *dev)
+ {
++	struct sk_buff_head q;
+ 	struct sk_buff *skb;
++	unsigned long flags;
+ 	int num = 0;
+ 
++	__skb_queue_head_init(&q);
++
+ 	local_bh_disable();
++	spin_lock_irqsave(&dev->rxq_pause.lock, flags);
+ 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
++	skb_queue_splice_init(&dev->rxq_pause, &q);
++	spin_unlock_irqrestore(&dev->rxq_pause.lock, flags);
+ 
+-	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
++	while ((skb = __skb_dequeue(&q))) {
+ 		usbnet_skb_return(dev, skb);
+ 		num++;
+ 	}
 -- 
 2.53.0
 
