@@ -1,52 +1,82 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028398;
-	b=bFZckrBPrz95nL40TGhyEa1O9/bn4l9xJFEmZ/FzPb5oJ34c3ML7CikU0KnR6F9+gEbt
-	 i+/AxKpFnPYAepMg7s196BQ7BXhG7b1uyZoPt8TGLNuU2udCt2sx06xPWEIaFYAWV4EGN
-	 rVuB4UwjVzZtE9hgTg8bWygi7fvsYLnrWeqIoHSkTKUirgeIh3w4aXTMO6/GT0ZHx2ix5
-	 5uoYSijLd/XtVVJ6uxDLC1cn/uAnqby1mTKmiPUKnNChPqSuVJNGxO75Z20T9gZeybUji
-	 aFhCzizztfPABmUAlIuGPmo46pxnu0vmDpfzfsTC5sL2/3nZcNZZFb7EWmvX/2sA/Zg==
+	t=1795028404;
+	b=xNMHDQHwSJemtNrP/mrrAGeiT2tBwNjuFWABrc6xskf+oxfaD7ZFOpMaYlu+yrMMFC6/
+	 3DRwYgug4+WWjKB00Emq08cAaVBS20+4/+IuYQm9UiaOhu0vz+RGiBoVweJJeOxHBcrT+
+	 ctKd1SeFlZ6wv1EZzbI43LAWXS49ewxpr5gIG59y+56Bzcgtjap2x6oeq5K4sIWlISAYy
+	 R8zODOzFhFc0nE4ZTsBIl93vyFGJPK8pZGNTG2dztfwO0aLk9fqA66CQTaPHC34+H91Di
+	 +zsqNBeTAMv2vzL+KARE1VCvi8nc+cS5IPibalfbQYs+le94UTNrhsAq1AnylxUJs/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NLET59Qlq8EnekCaDEXVhERdc+UuA/dGlcoEU/lhH5k=;
-	b=oVldhboz27XvleFn8kGdm6ND+d56BodRIcWAIoACbWfYWyrQpvHNK3NrN4z/rddlWIPB
-	 Iwm1RzXkcQQOVmax4kpI6vhVNv7MOH99amIrmRNQ54WTLSSgW2eLBaUeGwqLQQ0/dzRr4
-	 PMldFjhjF4zNHW0wHN8ebgWcdl5tF++oV9w1S45lXgVcE1IWNiZ13FrKEFD8Izv92qD0z
-	 qXmM/r4n9733WaXRJOSbTD6agavUUWXbHSde2lfpx4/iMo5Uv5BxbuGqPUOi3dbLYqMj1
-	 BFr4i9s13hquvAV+Re5K9Kntic0VMcfhb/+FBtl5JQNSu4evRHl5vIfzkwjrckRdkFA==
+	bh=CZQ2HGQsb7G7oIaCV3C0DBbXNiRmPUKjf+l2NcQRg38=;
+	b=yb6sOvBIqyB19Mm1B72o3CZ2MVikkcL45ceU+OBKLnrIIj63R6ebHvKHfIQN0BzurwBV
+	 FCDVp7MvkmOk6fQdY3jnAcs+gwHxF1ZI//RY11PGbDtz/6R4eF0lW38vq+tzeessi+839
+	 I3PLgtitO+qQ9L8dxJr00plT5VOuDsr8hU7lyzErilASdF4mGKBRcD8oUfn0facDTQGeC
+	 HsDWVdDUj+L9kHupfhk5qdOD0bmwKOCO2QRQxtvLqZlECBpss7wV28qXTLQSWI9DKZhjW
+	 D1QYM3X249wz0f7OiOO+sHoP6q0etxaQmeBZKggY3o2JA/Tm67gMAbbyYFLnQzAfVdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IOJmVR+0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoljiTOO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8596C606A325;
-	Wed, 18 Nov 2026 18:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E5E606A31C;
+	Wed, 18 Nov 2026 19:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IOJmVR+0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24511F000C4;
-	Wed, 18 Nov 2026 18:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoljiTOO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED51D1F000C4;
+	Wed, 18 Nov 2026 19:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028398;
-	bh=NLET59Qlq8EnekCaDEXVhERdc+UuA/dGlcoEU/lhH5k=;
+	s=korg; t=1795028403;
+	bh=CZQ2HGQsb7G7oIaCV3C0DBbXNiRmPUKjf+l2NcQRg38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IOJmVR+0y5w47YAvUjUqzxTx93cfCBMJ1l37D/fWQOvWrfGz9ECuy82mPZkOv1zhl
-	 x0qH8Eqp2zGFXsgTq/sT4S95XaINfR2DWhEvz7qJ8VHb+joRSbIgr2mRKzOU1DeWyP
-	 tG+1Xp+5q5HDjdwzcq4gsypzqrYMp0F3kzPCBCF0=
+	b=GoljiTOOuqaPxqUIDnMNT+7Pai7Z//UtGizT6vLrFzseLEzvCt2wpdxmZ3y0tZOH4
+	 A8sVpb3uT6nJJ1gCFULyM4s+H0VkfHbNUM0DgqhQI4JS12U0CEq5L37rHMaC0Ionfa
+	 hyYZ1U84fxKbh6OcZLkAsambyu2U6aNp0VGjIUUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <almagui@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Lameter <cl@linux.com>,
+	Martin Liu <liumartin@google.com>,
+	David Rientjes <rientjes@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	SeongJae Park <sj@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R . Howlett" <liam.howlett@oracle.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Yu Zhao <yuzhao@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Dmitrii Chervov <fary.ru@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2129/2151] libbpf: fix cross-endian build with newer libbpf
-Date: Wed, 18 Nov 2026 16:04:24 +0100
-Message-ID: <20261118150239.238435032@linuxfoundation.org>
+Subject: [PATCH 6.18 2130/2151] mm: fix OOM killer inaccuracy on large many-core systems
+Date: Wed, 18 Nov 2026 16:04:25 +0100
+Message-ID: <20261118150239.274509514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,54 +98,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 087f3964f4b3 ("libbpf: Support layout section handling in BTF")
-added extra data to the BTF header.
+[ Upstream commit 5898aa8f9a0b42fe1f65c7364010ab15ec5c38bf ]
 
-This extra data is ignored in the native case, but when building with
-different endianness the bswap code in old libbpf would check for strict
-size equality, leading to build failures such as this when BTF data is
-generated with a newer version of libbpf (through pahole)
-    BTFIDS  vmlinux.unstripped
-  libbpf: Can't load BTF with non-native endianness due to unsupported header length 32
-  FAILED: load BTF from vmlinux.unstripped: Operation not supported
-  make[2]: *** [../scripts/Makefile.vmlinux:72: vmlinux.unstripped] Error 255
+Use the precise, albeit slower, precise RSS counter sums for the OOM
+killer task selection and console dumps.  The approximated value is too
+imprecise on large many-core systems.
 
-Newer libbpf versions also properly ignore trailing data in the bswap
-case, but the patch is too intrusive to backport, so take the header
-length comparison fix from it instead.
+The following rss tracking issues were noted by Sweet Tea Dorminy [1],
+which lead to picking wrong tasks as OOM kill target:
 
-Link: https://github.com/NixOS/nixpkgs/pull/570639
-Fixes: 3289959b97ca ("libbpf: Support BTF loading and raw data output in both endianness")
-Acked-by: Alan Maguire <almagui@kernel.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+  Recently, several internal services had an RSS usage regression as part of a
+  kernel upgrade. Previously, they were on a pre-6.2 kernel and were able to
+  read RSS statistics in a backup watchdog process to monitor and decide if
+  they'd overrun their memory budget. Now, however, a representative service
+  with five threads, expected to use about a hundred MB of memory, on a 250-cpu
+  machine had memory usage tens of megabytes different from the expected amount
+  -- this constituted a significant percentage of inaccuracy, causing the
+  watchdog to act.
+
+  This was a result of commit f1a7941243c1 ("mm: convert mm's rss stats
+  into percpu_counter") [1].  Previously, the memory error was bounded by
+  64*nr_threads pages, a very livable megabyte. Now, however, as a result of
+  scheduler decisions moving the threads around the CPUs, the memory error could
+  be as large as a gigabyte.
+
+  This is a really tremendous inaccuracy for any few-threaded program on a
+  large machine and impedes monitoring significantly. These stat counters are
+  also used to make OOM killing decisions, so this additional inaccuracy could
+  make a big difference in OOM situations -- either resulting in the wrong
+  process being killed, or in less memory being returned from an OOM-kill than
+  expected.
+
+Here is a (possibly incomplete) list of the prior approaches that were
+used or proposed, along with their downside:
+
+1) Per-thread rss tracking: large error on many-thread processes.
+
+2) Per-CPU counters: up to 12% slower for short-lived processes and 9%
+   increased system time in make test workloads [1]. Moreover, the
+   inaccuracy increases with O(n^2) with the number of CPUs.
+
+3) Per-NUMA-node counters: requires atomics on fast-path (overhead),
+   error is high with systems that have lots of NUMA nodes (32 times
+   the number of NUMA nodes).
+
+commit 82241a83cd15 ("mm: fix the inaccurate memory statistics issue for
+users") introduced get_mm_counter_sum() for precise proc memory status
+queries for some proc files.
+
+The simple fix proposed here is to do the precise per-cpu counters sum
+every time a counter value needs to be read.  This applies to the OOM
+killer task selection, oom task console dumps (printk).
+
+This change increases the latency introduced when the OOM killer executes
+in favor of doing a more precise OOM target task selection.  Effectively,
+the OOM killer iterates on all tasks, for all relevant page types, for
+which the precise sum iterates on all possible CPUs.
+
+As a reference, here is the execution time of the OOM killer before/after
+the change:
+
+AMD EPYC 9654 96-Core (2 sockets)
+Within a KVM, configured with 256 logical cpus.
+
+                                  |  before  |  after   |
+----------------------------------|----------|----------|
+nr_processes=40                   |  0.3 ms  |   0.5 ms |
+nr_processes=10000                |  3.0 ms  |  80.0 ms |
+
+Link: https://lkml.kernel.org/r/20260114143642.47333-1-mathieu.desnoyers@efficios.com
+Fixes: f1a7941243c1 ("mm: convert mm's rss stats into percpu_counter")
+Link: https://lore.kernel.org/lkml/20250331223516.7810-2-sweettea-kernel@dorminy.me/ # [1]
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Suggested-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Martin Liu <liumartin@google.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: "Liam R . Howlett" <liam.howlett@oracle.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+
+[ Backported without changes ]
+Signed-off-by: Dmitrii Chervov <fary.ru@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/mm.h |  7 +++++++
+ mm/oom_kill.c      | 22 +++++++++++-----------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 7f3b23aeaaba7..4b0e99f6f5ce9 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -229,14 +229,14 @@ static int btf_parse_hdr(struct btf *btf)
- 	struct btf_header *hdr = btf->hdr;
- 	__u32 meta_left;
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 2c0503bbcc190..bc5771e26e1db 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2843,6 +2843,13 @@ static inline unsigned long get_mm_rss(struct mm_struct *mm)
+ 		get_mm_counter(mm, MM_SHMEMPAGES);
+ }
  
--	if (btf->raw_size < sizeof(struct btf_header)) {
-+	if (btf->raw_size < offsetofend(struct btf_header, str_len)) {
- 		pr_debug("BTF header not found\n");
- 		return -EINVAL;
- 	}
++static inline unsigned long get_mm_rss_sum(struct mm_struct *mm)
++{
++	return get_mm_counter_sum(mm, MM_FILEPAGES) +
++		get_mm_counter_sum(mm, MM_ANONPAGES) +
++		get_mm_counter_sum(mm, MM_SHMEMPAGES);
++}
++
+ static inline unsigned long get_mm_hiwater_rss(struct mm_struct *mm)
+ {
+ 	return max(mm->hiwater_rss, get_mm_rss(mm));
+diff --git a/mm/oom_kill.c b/mm/oom_kill.c
+index c145b0feecc1f..e6a69fa0b7b21 100644
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -228,7 +228,7 @@ long oom_badness(struct task_struct *p, unsigned long totalpages)
+ 	 * The baseline for the badness score is the proportion of RAM that each
+ 	 * task's rss, pagetable and swap space use.
+ 	 */
+-	points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
++	points = get_mm_rss_sum(p->mm) + get_mm_counter_sum(p->mm, MM_SWAPENTS) +
+ 		mm_pgtables_bytes(p->mm) / PAGE_SIZE;
+ 	task_unlock(p);
  
- 	if (hdr->magic == bswap_16(BTF_MAGIC)) {
- 		btf->swapped_endian = true;
--		if (bswap_32(hdr->hdr_len) != sizeof(struct btf_header)) {
-+		if (bswap_32(hdr->hdr_len) < offsetofend(struct btf_header, str_len)) {
- 			pr_warn("Can't load BTF with non-native endianness due to unsupported header length %u\n",
- 				bswap_32(hdr->hdr_len));
- 			return -ENOTSUP;
+@@ -402,10 +402,10 @@ static int dump_task(struct task_struct *p, void *arg)
+ 
+ 	pr_info("[%7d] %5d %5d %8lu %8lu %8lu %8lu %9lu %8ld %8lu         %5hd %s\n",
+ 		task->pid, from_kuid(&init_user_ns, task_uid(task)),
+-		task->tgid, task->mm->total_vm, get_mm_rss(task->mm),
+-		get_mm_counter(task->mm, MM_ANONPAGES), get_mm_counter(task->mm, MM_FILEPAGES),
+-		get_mm_counter(task->mm, MM_SHMEMPAGES), mm_pgtables_bytes(task->mm),
+-		get_mm_counter(task->mm, MM_SWAPENTS),
++		task->tgid, task->mm->total_vm, get_mm_rss_sum(task->mm),
++		get_mm_counter_sum(task->mm, MM_ANONPAGES), get_mm_counter_sum(task->mm, MM_FILEPAGES),
++		get_mm_counter_sum(task->mm, MM_SHMEMPAGES), mm_pgtables_bytes(task->mm),
++		get_mm_counter_sum(task->mm, MM_SWAPENTS),
+ 		task->signal->oom_score_adj, task->comm);
+ 	task_unlock(task);
+ 
+@@ -603,9 +603,9 @@ static bool oom_reap_task_mm(struct task_struct *tsk, struct mm_struct *mm)
+ 
+ 	pr_info("oom_reaper: reaped process %d (%s), now anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB\n",
+ 			task_pid_nr(tsk), tsk->comm,
+-			K(get_mm_counter(mm, MM_ANONPAGES)),
+-			K(get_mm_counter(mm, MM_FILEPAGES)),
+-			K(get_mm_counter(mm, MM_SHMEMPAGES)));
++			K(get_mm_counter_sum(mm, MM_ANONPAGES)),
++			K(get_mm_counter_sum(mm, MM_FILEPAGES)),
++			K(get_mm_counter_sum(mm, MM_SHMEMPAGES)));
+ out_finish:
+ 	trace_finish_task_reaping(tsk->pid);
+ out_unlock:
+@@ -959,9 +959,9 @@ static void __oom_kill_process(struct task_struct *victim, const char *message)
+ 	mark_oom_victim(victim);
+ 	pr_err("%s: Killed process %d (%s) total-vm:%lukB, anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB, UID:%u pgtables:%lukB oom_score_adj:%hd\n",
+ 		message, task_pid_nr(victim), victim->comm, K(mm->total_vm),
+-		K(get_mm_counter(mm, MM_ANONPAGES)),
+-		K(get_mm_counter(mm, MM_FILEPAGES)),
+-		K(get_mm_counter(mm, MM_SHMEMPAGES)),
++		K(get_mm_counter_sum(mm, MM_ANONPAGES)),
++		K(get_mm_counter_sum(mm, MM_FILEPAGES)),
++		K(get_mm_counter_sum(mm, MM_SHMEMPAGES)),
+ 		from_kuid(&init_user_ns, task_uid(victim)),
+ 		mm_pgtables_bytes(mm) >> 10, victim->signal->oom_score_adj);
+ 	task_unlock(victim);
 -- 
 2.53.0
 
