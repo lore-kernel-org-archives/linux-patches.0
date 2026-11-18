@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030412;
-	b=S2rrSBytuXLr2HxtgLlN/bUYarAi+ZlDdvybIYYPnVZ4IjwCJ7asduE/iGFtmKGPk9La
-	 Qenr3m6d4HVuQyrHtfqvrfYpDlu0C7Y3Bpc1uoOar/uvq7Z1Gjt7b4QukYJCm8PF8bQkG
-	 VZNRbhgywgUI0Iump4jb/C8kJ3pyVDPVh3t8BxL08E45T8H/HX4ch24J8WZNjChNWXa4F
-	 L+fklO3pVw5mws7jev+wPIPCSTDLjBDl+4uh5dukk2b7esr0Ap2C08IlBYv/v5T2PbFx6
-	 OQpICtFQJWpzFmXe5ApZQKuayC+TVQh3+HlWoUlxG8SLBLUKyK/XzuenHjZSI9S8Zyw==
+	t=1795030414;
+	b=hKs+UpcYnrKJ/dptuPQ3CbLiXJXrmwUQxkOqEhCmh8ibYUEMeI5QI5k+Y3QAQNsjBqQO
+	 02gSVssLkz1mLqjt1bVK/hswx2mgBnwzhocitL6h3H3y8Q9nLVkjkIyT36sKOdRv7T/l8
+	 68ZYQsGbWYzcaDEwiCbNWpshoJQwMhm3cMWwcmYDw0z/62b1WLWSHQSBeJ/0vjVklDSVh
+	 CuTI2iKrwCl0JXctjXl7XpPIhGpzN8L2UED/4AF/XUd+BgpdZaLqfZLL5eew9fM8yK5Nr
+	 am8Ow3/UJPRGIt8YfIcame3nP5BE8paSD6hrcGsFA0GoVT56TjfNZIKdeS+kHY6Tt9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SHTTYPm1nF+1kTGdx5QysNIFEd+9kYYjVZm8J9EhRwM=;
-	b=uOAzlO6XUhNpy68zbNpWl/SajNOdFQRstEzqqji8cS+/+Mf1K+mLM+y+LxU8u5WA8hSN
-	 F+iuCVEUG4rwK+ewXkBXSHfhv254ANPG7bd3i4YDvbsm6uUQ4Hk35z5Glrz+JJxa4uLQG
-	 8oQ5y3tcPR66sTixfb9GmNdiXQt8JJhDwmI7ZNbqwQG0NOl0AchiN2myPh2crnw24yYRT
-	 zWZXL7Ztl1dnxp2cTS19W8piR3v2Vs3vu4PLhCcgQo2qLl7gX8c/65aXTsPRL0uEEJfEl
-	 2gso/Zc22v85O4fIcbzENF994g0R2JOmnzR/97p+Ljt4lqTV0ic0gCmhOTN4pWg9pXA==
+	bh=6oDNG4yHjSD0skGOoxDizLgOfkv1qwmpctq419h/AUE=;
+	b=3YbnLdS9hBCyPDcXlibMGmi8f31EyWejGJJeWlEkFziXGuCkKvM1L0NvuWkI32ZrtDGe
+	 1qIipPtBaCd/3wcDykAIzL4iFZWyiI4d5FkowFikgw21GItU1mUBRdSSVB++nkE9YQtdO
+	 qBEMZCuxB3IKzqtDUf+Y8uYYTYWNsR7PPvzMvvfEgxMSgg31uvE6wxAmCybehdrMANX8J
+	 qx+dfdOUsB0whbbCAMfFwSBynFN8JiiTnkOu+wPTsfMKbi4XYMeK5nOQ8ZccHjuOG9gsH
+	 WyfmIX/tIfI/IdeLizSQ0OxhV++VkG6Ww9GiU5vUuhBa7DEUzY2O8UmmzKOAVqlEPhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QB5NyhEl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JRTwPnwz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062DD606A336;
-	Wed, 18 Nov 2026 19:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00EB606A336;
+	Wed, 18 Nov 2026 19:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QB5NyhEl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0A51F000C4;
-	Wed, 18 Nov 2026 19:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JRTwPnwz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F3E1F000C4;
+	Wed, 18 Nov 2026 19:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030411;
-	bh=SHTTYPm1nF+1kTGdx5QysNIFEd+9kYYjVZm8J9EhRwM=;
+	s=korg; t=1795030414;
+	bh=6oDNG4yHjSD0skGOoxDizLgOfkv1qwmpctq419h/AUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QB5NyhElr3WDdvqqfKJZUfgTki/CrJnTHFc/NM09hngdfLD3tldPx3qfyif63LWv8
-	 JwbRvxblfnrxUYvc+iN+h4Yj4sGLFmcfk5+BPn7ZWdZuJiQWR+za8Hd0GA8B+A6Giq
-	 MSOYaj78e5pntJAq75IBX0W/RBGj/F0v0SCxsqvM=
+	b=JRTwPnwz10rS9Akga/C79QoVmoeB3NCR5c4Zeb+vGrNFSRadW9g7pkt7T6Sc1rIg6
+	 kji8tPJjLD8fFye+ZbHJtgw8q8FeTfM123PbuKQkJUvnZXI6kT8m3O6F3Oh9sI3C3q
+	 aN4n2h7zmOmZjdiRWc6Nwp83hkPg9c+47vqAuHs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0654/1756] ASoC: mediatek: mt8192: Propagate mt8192_afe_gpio_request() errors in ADDA DAI
-Date: Wed, 18 Nov 2026 15:46:21 +0100
-Message-ID: <20261118150034.920246256@linuxfoundation.org>
+Subject: [PATCH 6.12 0645/1756] ASoC: mediatek: mt8192: fix APLL mux error handling
+Date: Wed, 18 Nov 2026 15:46:12 +0100
+Message-ID: <20261118150034.502272920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,134 +70,172 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit eed9414a1b075e2df308e7222e3786981bd42b32 ]
+[ Upstream commit e8c263e0ef957fd8286e299b2be9266b902cec16 ]
 
-Currently, DAPM event handlers in mt8192-dai-adda.c ignore the return
-value of mt8192_afe_gpio_request(). If GPIO configuration fails during
-PRE_PMU or POST_PMD events, the error is silently ignored.
+Propagate errors from clock operations in the enable path and clean up
+previously enabled clocks when a later operation fails.
 
-Fix this by checking and propagating error codes from
-mt8192_afe_gpio_request() in all ADDA DAPM event handlers.
+For the disable path, continue disabling all clocks even if a clock
+operation fails. Log the error without returning it, so the disable path
+can perform as much cleanup as possible.
 
-Fixes: 607ac4859564 ("ASoC: mediatek: mt8192: support adda in platform driver")
+Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-13-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260918133912.133799-2-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-adda.c | 44 +++++++++++++++------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 54 +++++++++++++---------
+ 1 file changed, 32 insertions(+), 22 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-adda.c b/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-index 99de85b876435..9a29f2feb174d 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-@@ -218,10 +218,13 @@ static int mtk_adda_ul_event(struct snd_soc_dapm_widget *w,
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
- 	struct mt8192_afe_private *afe_priv = afe->platform_priv;
- 	int mtkaif_dmic = afe_priv->mtkaif_dmic;
-+	int ret;
+diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
+index 416aff7262539..bd778e5663b56 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
++++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
+@@ -87,7 +87,7 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 		if (ret) {
+ 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_1], ret);
+-			goto EXIT;
++			return ret;
+ 		}
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_1],
+ 				     afe_priv->clk[CLK_TOP_APLL1_CK]);
+@@ -95,7 +95,7 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_1],
+ 				aud_clks[CLK_TOP_APLL1_CK], ret);
+-			goto EXIT;
++			goto err_disable_mux_aud_1;
+ 		}
  
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
+ 		/* 180.6336 / 4 = 45.1584MHz */
+@@ -103,7 +103,7 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 		if (ret) {
+ 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1], ret);
+-			goto EXIT;
++			goto err_set_parent_mux_aud_1;
+ 		}
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1],
+ 				     afe_priv->clk[CLK_TOP_APLL1_D4]);
+@@ -111,31 +111,36 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1],
+ 				aud_clks[CLK_TOP_APLL1_D4], ret);
+-			goto EXIT;
++			goto err_disable_mux_aud_eng1;
+ 		}
+ 	} else {
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1],
+ 				     afe_priv->clk[CLK_CLK26M]);
+-		if (ret) {
 +		if (ret)
-+			return ret;
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1],
+ 				aud_clks[CLK_CLK26M], ret);
+-			goto EXIT;
+-		}
+ 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1]);
  
- 		/* update setting to dmic */
- 		if (mtkaif_dmic) {
-@@ -239,7 +242,9 @@ static int mtk_adda_ul_event(struct snd_soc_dapm_widget *w,
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_1],
+ 				     afe_priv->clk[CLK_CLK26M]);
+-		if (ret) {
 +		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
-@@ -257,11 +262,14 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
- 	struct mt8192_afe_private *afe_priv = afe->platform_priv;
- 	int mtkaif_dmic = afe_priv->mtkaif_dmic_ch34;
- 	int mtkaif_adda6_only = afe_priv->mtkaif_adda6_only;
-+	int ret;
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_1],
+ 				aud_clks[CLK_CLK26M], ret);
+-			goto EXIT;
+-		}
+ 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_1]);
+ 	}
  
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
--					1);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
-+					      1);
-+		if (ret)
-+			return ret;
+-EXIT:
++	return 0;
++
++err_disable_mux_aud_eng1:
++	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1]);
++err_set_parent_mux_aud_1:
++	clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_1],
++		       afe_priv->clk[CLK_CLK26M]);
++err_disable_mux_aud_1:
++	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_1]);
++
+ 	return ret;
+ }
  
- 		/* update setting to dmic */
- 		if (mtkaif_dmic) {
-@@ -291,8 +299,10 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
--					1);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
-+					      1);
-+		if (ret)
+@@ -149,7 +154,7 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 		if (ret) {
+ 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_2], ret);
+-			goto EXIT;
 +			return ret;
+ 		}
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_2],
+ 				     afe_priv->clk[CLK_TOP_APLL2_CK]);
+@@ -157,7 +162,7 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_2],
+ 				aud_clks[CLK_TOP_APLL2_CK], ret);
+-			goto EXIT;
++			goto err_disable_mux_aud_2;
+ 		}
  
- 		/* reset dmic */
- 		afe_priv->mtkaif_dmic_ch34 = 0;
-@@ -446,15 +456,20 @@ static int mtk_adda_dl_event(struct snd_soc_dapm_widget *w,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
-+	int ret;
+ 		/* 196.608 / 4 = 49.152MHz */
+@@ -165,7 +170,7 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 		if (ret) {
+ 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2], ret);
+-			goto EXIT;
++			goto err_set_parent_mux_aud_2;
+ 		}
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2],
+ 				     afe_priv->clk[CLK_TOP_APLL2_D4]);
+@@ -173,31 +178,36 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2],
+ 				aud_clks[CLK_TOP_APLL2_D4], ret);
+-			goto EXIT;
++			goto err_disable_mux_aud_eng2;
+ 		}
+ 	} else {
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2],
+ 				     afe_priv->clk[CLK_CLK26M]);
+-		if (ret) {
++		if (ret)
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2],
+ 				aud_clks[CLK_CLK26M], ret);
+-			goto EXIT;
+-		}
+ 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2]);
  
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
+ 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_2],
+ 				     afe_priv->clk[CLK_CLK26M]);
+-		if (ret) {
 +		if (ret)
-+			return ret;
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
-@@ -469,17 +484,22 @@ static int mtk_adda_ch34_dl_event(struct snd_soc_dapm_widget *w,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
-+	int ret;
+ 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
+ 				__func__, aud_clks[CLK_TOP_MUX_AUD_2],
+ 				aud_clks[CLK_CLK26M], ret);
+-			goto EXIT;
+-		}
+ 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_2]);
+ 	}
  
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
--					0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
-+					      0);
-+		if (ret)
-+			return ret;
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
--					0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
-+					      0);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
+-EXIT:
++	return 0;
++
++err_disable_mux_aud_eng2:
++	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2]);
++err_set_parent_mux_aud_2:
++	clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_2],
++		       afe_priv->clk[CLK_CLK26M]);
++err_disable_mux_aud_2:
++	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_2]);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
