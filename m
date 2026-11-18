@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022478;
-	b=DJw97zlgTjL2OxzS8P4GP0AmGvXjLcR2u4IGXCpMB13rErLfHL6sBTDU8Js659FYBX4j
-	 yW9yzAimtvR/gt+gFFFFth3TTcHinEMtuez177zyWJQWaUWrjm0xn/oYwHXIbNdiO6ADU
-	 GPcxsc72tMJeBSRB92jc4zkQTRsQzPCwAqtjCUfikPE8ZCCXuOZCLtVfvJ+7wFrwG1k3j
-	 NE/SqDxdQxK4qqdNAuRRzAljg0Cn4rrnzDR0cKcI67g0oXq//QI1dkxTt9KtiRhqMCl8/
-	 X+CqrsmV6qPYEoLOjiLGgxcjwDQyNW45vBi3diip2jM0qcQAJW9LfzryTYCjFjlD5cw==
+	t=1795022481;
+	b=YbgG2E89CWCYpr7IUUBkmu3KKPgK55Y7YT8GrLpfyLtGuSHOFPK7gLN9eAJ30GSgZ63d
+	 K4dqeRLq+Z7YXVjkGk9r9+ekpe1cD69VnJySbYY9kv0YkzTQXPkDOdzC3e6uiUnPZZpLD
+	 RT1Ukn+SaVX/NRMseQxHKVyHXYteoifQcjD0/P1tIEc2yGgltiXoFg+xbhM13Pi22jwaH
+	 DR5YKpQvWDRJW7i0+qtzycYx6K2foR6ZfmW4rvCHwFm7pF/AV+dkyWSPRUirtb735yj8c
+	 c6bMmFD5V+hg/hf7FYqokycrJBbH9QLlKFQv1iQTgmwpyOpkzUAnk2yI3AgAGq3lv/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RX0yMBEnL77rIkFFo807FE66nqN1ej0qHFtUmAqKyZY=;
-	b=TEWJV5b4TIPfXvz233/clHz7AYC6iLXx9WNs9gfuMo5+zWzLlD9j5VSedj5bipeF1fPz
-	 QSg3SQp5sGndYT9QJSxzk7QqN8CNYQ2lhiQEYnIySq8POV3m6xZKjNOkKKTLFN5A+MDut
-	 OMjVyQ9PLKOMNfZp1oNH4p2QBdB4gOQKMAnnbeuEP9f/n4HzEokuiIiAzpv5UmJz9T+Uf
-	 2g9MOaCiE01tl2q+hISLQ41JULdG4BZQCZ+2qXmklMUTDjUBZhTy1K2eo9IrgPYDtqMTp
-	 9tJi2q05xFGDXMYGHsoZf0/hhhkRWaCwLRFoO8jr80ynA0ovPEOFDNMxoGNJknoCujQ==
+	bh=zoQpz3HxgwqC+2+dOEclW6nEs7jNYpBbOcb3uRjOesc=;
+	b=LceoTAHp7T5sVBBWN8T1GMTGgYXpQXQimydYD4xzyCwj83nvxwU+uBwKDb4feZTjndXq
+	 +GXAe/YO78ZyewGMcsZJD1+tSzF/9V/TZ7y9k3nEY/YE65HZjuY/+2SGB4kzVQcQG6LDm
+	 aukutEx3v6HRIq1RddAIiYxtvhbYtK83L8hs0m3w8C8TJz6VuTJ12npHn/cvRrIqJplPw
+	 GIImE1PcezIbeQSGHGax/IrK7pcBM3R2r+i3Fi+WXRC3Nd2g8MObpgAN0elseY/wT7lG6
+	 6zPiVK0/MAMt8zN8ar/IKPmyxFwiN8e6mUNOfNVq6JQCxTUdFAeKw28EFghccniFktg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KlQGDOfo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrLLUtrJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EF5606A32A;
-	Wed, 18 Nov 2026 17:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D454606A320;
+	Wed, 18 Nov 2026 17:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KlQGDOfo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD811F000C4;
-	Wed, 18 Nov 2026 17:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrLLUtrJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F43A1F000C6;
+	Wed, 18 Nov 2026 17:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022478;
-	bh=RX0yMBEnL77rIkFFo807FE66nqN1ej0qHFtUmAqKyZY=;
+	s=korg; t=1795022480;
+	bh=zoQpz3HxgwqC+2+dOEclW6nEs7jNYpBbOcb3uRjOesc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KlQGDOfoz4MgOXPuO95m3RgatNyXJ5i4LYII/TkbYtV30G+0fQvDFD5Q2xFph610x
-	 0/4+bq9bMDOxGRt7UFr4pFX/CEAQfL1rgWtVEjl+PtprZaCfQwxBbuV79Mr10HKtc8
-	 MqhWWCI8skbUjJIHqxTDZS1FToyeEbNrIEqeoQGM=
+	b=wrLLUtrJYOhq8cFcD/HgGC3S9LqVZztpx8rHmYi3evlDUrEzMmUR4yuINv9pX9Txb
+	 x2dh8KMqAT4/4u7rpq6WGGsFaY4xjdludmcRHZEcVDbtM/qiQ/4jbjCods1rGh8UlD
+	 FA/DUx2ijXprZHXyk1sBzSIfS8wnuyv9+mXjWGtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	HOYOUNG SEO <hy50.seo@samsung.com>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0027/2151] cxl/pci: Use the Device GPF DVSEC for restricted endpoints
-Date: Wed, 18 Nov 2026 15:29:22 +0100
-Message-ID: <20261118150122.641172407@linuxfoundation.org>
+Subject: [PATCH 6.18 0028/2151] scsi: ufs: core: Change the error check sequence for auto hibern8
+Date: Wed, 18 Nov 2026 15:29:23 +0100
+Message-ID: <20261118150122.680110225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,52 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: HOYOUNG SEO <hy50.seo@samsung.com>
 
-[ Upstream commit d2654fa0d841fa36ffa76577f83a2810d643ae19 ]
+[ Upstream commit 6b2ff2b3eafa381db9b4c8a6ed98b353b2a09f39 ]
 
-cxl_gpf_get_dvsec() picks between the Port and the Device GPF DVSEC
-from the PCIe type of the given device, and only a plain endpoint
-counts as a device. A restricted CXL device is an endpoint too, but
-it falls into the port case and is probed for the Port GPF DVSEC
-instead of the Device GPF DVSEC.
+Auto-hibern8 enter and exit are performed by the host controller without a
+UIC command, and the auto-hibern8 idle timer only runs while no UIC command
+is outstanding. An auto-hibern8 error (IS.UHES or IS.UHXS) is therefore
+usually reported while hba->active_uic_cmd is NULL.
 
-On an RCD, dirty shutdown tracking therefore never arms: the DVSEC
-lookup in cxl_nvdimm_arm_dirty_shutdown_tracking() fails, the dirty
-shutdown count stays invalid, and the warning complains about a
-missing Port GPF DVSEC on a device.
+Since commit fcd8b0450a9a ("scsi: ufs: core: Make ufshcd_uic_cmd_compl()
+easier to analyze"), ufshcd_uic_cmd_compl() returns early when
+hba->active_uic_cmd is NULL, before ufshcd_is_auto_hibern8_error() is
+called. Such auto-hibern8 errors are no longer recorded in hba->errors, so
+ufshcd_check_errors() is not called for them and the error handler is not
+scheduled.
 
-Treat restricted endpoints as devices.
+Check for auto-hibern8 errors before checking for an active UIC command, as
+was done before that commit, but keep returning early when there is no
+active UIC command so that a NULL cmd is never dereferenced. Only report
+the missing UIC command if no auto-hibern8 error was found.
 
-Fixes: 36aace15d9bd ("cxl/pci: Drop the parameter is_port of cxl_gpf_get_dvsec()")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20261008034619.28059-2-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-[ sashal: Replaced the unavailable is_cxl_restricted() helper call with the equivalent pci_pcie_type(pdev) == PCI_EXP_TYPE_RC_END comparison. ]
+Fixes: fcd8b0450a9a ("scsi: ufs: core: Make ufshcd_uic_cmd_compl() easier to analyze")
+Cc: stable@vger.kernel.org # v6.13+
+Signed-off-by: HOYOUNG SEO <hy50.seo@samsung.com>
+Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261027110357.3649301-1-hy50.seo@samsung.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: used host_lock directly because it is already a pointer ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index 48c1f3854b799..d2ee7d853f1fd 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -819,7 +819,8 @@ u16 cxl_gpf_get_dvsec(struct device *dev)
- 		return 0;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index d595072f7c0a4..572c0510d6bb4 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5581,15 +5581,22 @@ static irqreturn_t ufshcd_uic_cmd_compl(struct ufs_hba *hba, u32 intr_status)
+ {
+ 	irqreturn_t retval = IRQ_NONE;
+ 	struct uic_command *cmd;
++	bool ah8_err;
  
- 	pdev = to_pci_dev(dev);
--	if (pci_pcie_type(pdev) == PCI_EXP_TYPE_ENDPOINT)
-+	if (pci_pcie_type(pdev) == PCI_EXP_TYPE_ENDPOINT ||
-+	    pci_pcie_type(pdev) == PCI_EXP_TYPE_RC_END)
- 		is_port = false;
+ 	guard(spinlock_irqsave)(hba->host->host_lock);
++
++	/*
++	 * Auto-hibern8 is performed without a UIC command, so check for
++	 * auto-hibern8 errors before checking for an active UIC command.
++	 */
++	ah8_err = ufshcd_is_auto_hibern8_error(hba, intr_status);
++	if (ah8_err)
++		hba->errors |= (UFSHCD_UIC_HIBERN8_MASK & intr_status);
++
+ 	cmd = hba->active_uic_cmd;
+ 	if (!cmd)
+ 		goto unlock;
  
- 	dvsec = pci_find_dvsec_capability(pdev, PCI_VENDOR_ID_CXL,
+-	if (ufshcd_is_auto_hibern8_error(hba, intr_status))
+-		hba->errors |= (UFSHCD_UIC_HIBERN8_MASK & intr_status);
+-
+ 	if (intr_status & UIC_COMMAND_COMPL) {
+ 		cmd->argument2 |= ufshcd_get_uic_cmd_result(hba);
+ 		cmd->argument3 = ufshcd_get_dme_attr_val(hba);
 -- 
 2.53.0
 
