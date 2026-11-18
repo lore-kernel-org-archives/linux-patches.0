@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017218;
-	b=Ul34wcoZ/knR1o/45WKSW0KYnuHzVxciZEALZvhzbn4R09WMwhkwwtis/fYMfYyrz+zK
-	 9k/G1qtTiN2RrwdIewguO4iCWchg5mUvqIIxDQqeyR+COCxEnbDv8ZhXoL9u4B38DNojP
-	 1CkSU1tFjLXC0m3cgBQhtpWJ9bsHz49FgzSgGkPGGx5hM9QnKQGjyllmc+I5zl4v0FQEi
-	 2J8LU7U770PCFUXWhvdfJ567bu3iwFzIoTtQc75qRGnJu/E9BW5Re/F73Fahulh02zdic
-	 iOdi8HEQLIpeCKsWd6bKc2SN11mNq9+A9Dm4r+IfsDO8YZltHC085UQD005iePPZ5fg==
+	t=1795017221;
+	b=KnocXD+Ko4Kdv8yHNx6hxPLDCyiCQesk3hIJkAC13Y7fE0aPxw9sQgxUXhsyPM63rbiW
+	 Q3VmM1Sjum81xHhGkX0XTOjGYXlzTx3BTtRqEhBXkWXiJoePooEVFN4W7w7EkytoDmvmS
+	 8tzGPcmw2a1KpuQ8f8vqQFBIADG8mVjqfMir36cvGXJ+yOm5+/8UHewMil4GtBOWQaDEA
+	 ItA9gcRlulIKLjEgrta21UqnwgvaMVGDqiGcXjbMRRlbpjK+CGkH7PfLJtBPZ4zIV/ck+
+	 pZNWAVjMmvBQ/4gprb9U0h7CvtDfmD9+2mxAKi7Df4Ge11BzWOR2RyD5ZVwpksVE3fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rH+X63imr66xBj1EpV58L2nOupHgIol/mXNpFJOEQ28=;
-	b=sraPgNPue9MtCxfhw3ZKtVRVEDVPj50Rognw5/QndmeU3TSAZwEQY7FYuk3Vls6NKgEK
-	 mqcIirDGkE2cfTI+PmZ3nqup5AkmsbYkFr8NnNulEnB14iyNgpUB0MXyXLPii7myBan74
-	 hpnqxE/8PmmqDnzehIDpYOjBBIkR/qxHGnUfxADJCncW19xLd4pUvrwYO6pSLB2UBZiCI
-	 jx2NmEnmpgajLolVRxlh0+2rQu58q3jWnNLbzrmxVlUn4KSyP2rl4bqbxBbOtg6xenUFu
-	 RZm5wxnIwRY17tdGqp+uX83+M6vb41Xz4N7LoFMFl5uUPbGrnjTqv79MBxUdNRuDhtA==
+	bh=2mEAVq4sV200h5wqdNcoJSFtvR9pVaajj5fPC5sWx1U=;
+	b=Ds1HQbZWskm5egIOKcUbt1/w7qTRK2m0bGl/uRZdRqL7CYZttVaKz2bf5qY6KEq5zoDz
+	 TJzv8fIWFDdVhe7G5wwE1b5f3BYmnN8VbClsNKCefUPiup9GZaOTb+7yh/pY/pTe4JQdB
+	 Xq3ipQPM0rMss7F5Nea0UiaQdwfD54QWN4j4yZQZCifusHPmpYcy+Be6I3Bzxhagn0SS9
+	 4Payq5LeF+S2jeiGkLLqmp3x25eBYIEN72heXc45CmF7LjJqPDtEWPllHcAOnK4iKFcEJ
+	 FYV65AIbpudogsJfnGRYXLYaowQY1lpuxPt3UmEUstu9PPZwgi+VQmjqewE6L3tsRag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqKOzYsw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cslZPnB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6300606A33D;
-	Wed, 18 Nov 2026 15:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BC1606A31C;
+	Wed, 18 Nov 2026 15:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqKOzYsw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AF51F000C4;
-	Wed, 18 Nov 2026 15:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cslZPnB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073ED1F000C4;
+	Wed, 18 Nov 2026 15:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017218;
-	bh=rH+X63imr66xBj1EpV58L2nOupHgIol/mXNpFJOEQ28=;
+	s=korg; t=1795017221;
+	bh=2mEAVq4sV200h5wqdNcoJSFtvR9pVaajj5fPC5sWx1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WqKOzYswSVJDy7JB89O89qxmxCDmvQP4i5IO+WC/jMi4JaumTX2MsTrDFeokXMTHS
-	 fZumZ3G1oUSc7FWdmgqZzhFeEIlOU87oAUJ889LygEyyNCFAsJ1lCovt33o270Yr0j
-	 rMbEAcGD8X8GXu8sCaPYGY6qw15Lu+BhNx+R+o+Y=
+	b=1cslZPnBrVb+ycUnBiNZ16Z6+f+meknfOVQpcSmZePWGYip+M7fjKbf7gK9l6Ow2V
+	 58Tn2kbfYZ4vk0oe3ggl1vBTvwJesxQTyvss9mwU2Frd2SK13uGW0YvAiagHzDxrHE
+	 xdjDT8A7PH6hZzv7mxBDXGDHh9nSLRW719eKmRJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0806/2651] ASoC: mediatek: mt8188: mt8188-afe-clk: Handle clock enable errors
-Date: Wed, 18 Nov 2026 15:34:06 +0100
-Message-ID: <20261118150316.893576284@linuxfoundation.org>
+Subject: [PATCH 7.3 0807/2651] ASoC: mediatek: mt8188: mt8188-afe-pcm: Handle runtime resume errors
+Date: Wed, 18 Nov 2026 15:34:07 +0100
+Message-ID: <20261118150316.944437254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,136 +72,70 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 1b65c13d1af99170e2a855ca9212a03daa3e7f04 ]
+[ Upstream commit f5f6941d92972ba66829a99999fa825e63da5162 ]
 
-Clock enable errors are currently ignored by several AFE clock
-control functions.
+Errors from clock enable and regcache synchronization are currently
+ignored during runtime resume.
+Check the return values from mt8188_afe_enable_reg_rw_clk(),
+regcache_sync(), and mt8188_afe_enable_main_clock(), and abort the
+runtime resume if any of them fails.
+On failure, disable the previously enabled reg_rw clocks and restore
+the regmap to cache-only mode.
 
-Check the return values and roll back previously enabled clocks when
-a subsequent clock enable fails.
-
-Fixes: f6b026479b13 ("ASoC: mediatek: mt8188: support audio clock control")
-Fixes: 9be0213a6858 ("ASoC: mediatek: mt8188: refine APLL control")
+Fixes: bf106bf09376 ("ASoC: mediatek: mt8188: add platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260907120310.135693-5-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260907120310.135693-6-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 69 ++++++++++++++++++----
- 1 file changed, 58 insertions(+), 11 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-index 7360cbf6671b4..1ff975ef98eca 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-@@ -582,22 +582,47 @@ static int mt8188_afe_disable_top_cg(struct mtk_base_afe *afe, unsigned int cg_t
- int mt8188_afe_enable_reg_rw_clk(struct mtk_base_afe *afe)
- {
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+index 7b1f5d05f4d61..f8cbe7bac36de 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+@@ -3030,22 +3030,33 @@ static int mt8188_afe_runtime_resume(struct device *dev)
+ 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
  	struct mt8188_afe_private *afe_priv = afe->platform_priv;
--
+ 	struct arm_smccc_res res;
 +	int ret;
- 	/* bus clock for AFE external access, like DRAM */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
-+	if (ret)
-+		goto err_local_bus;
  
- 	/* bus clock for AFE internal access, like AFE SRAM */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
-+	if (ret)
-+		goto err_intbus;
+ 	arm_smccc_smc(MTK_SIP_AUDIO_CONTROL,
+ 		      MTK_AUDIO_SMC_OP_DOMAIN_SIDEBANDS,
+ 		      0, 0, 0, 0, 0, 0, &res);
  
- 	/* audio 26m clock source */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
+-	mt8188_afe_enable_reg_rw_clk(afe);
++	ret = mt8188_afe_enable_reg_rw_clk(afe);
 +	if (ret)
-+		goto err_26m;
++		return ret;
  
- 	/* AFE hw clock */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
-+	if (ret)
-+		goto err_afe;
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
-+	if (ret)
-+		goto err_a1sys_hp;
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
-+	if (ret)
-+		goto err_a1sys;
+ 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
+-		goto skip_regmap;
++		return 0;
  
- 	return 0;
+ 	regcache_cache_only(afe->regmap, false);
+-	regcache_sync(afe->regmap);
++	ret = regcache_sync(afe->regmap);
++	if (ret)
++		goto err;
 +
-+err_a1sys:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
-+err_a1sys_hp:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
-+err_afe:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
-+err_26m:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
-+err_intbus:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
-+err_local_bus:
++	ret = mt8188_afe_enable_main_clock(afe);
++	if (ret)
++		goto err;
+ 
+-	mt8188_afe_enable_main_clock(afe);
+-skip_regmap:
+ 	return 0;
++err:
++	mt8188_afe_disable_reg_rw_clk(afe);
++	regcache_cache_only(afe->regmap, true);
 +	return ret;
  }
  
- int mt8188_afe_disable_reg_rw_clk(struct mtk_base_afe *afe)
-@@ -633,7 +658,13 @@ static int mt8188_afe_enable_a1sys(struct mtk_base_afe *afe)
- 	if (ret)
- 		return ret;
- 
--	return mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A1SYS_TIMING);
-+	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A1SYS_TIMING);
-+	if (ret) {
-+		mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static int mt8188_afe_disable_a1sys(struct mtk_base_afe *afe)
-@@ -654,7 +685,13 @@ static int mt8188_afe_enable_a2sys(struct mtk_base_afe *afe)
- 	if (ret)
- 		return ret;
- 
--	return mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A2SYS_TIMING);
-+	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A2SYS_TIMING);
-+	if (ret) {
-+		mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A2SYS]);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static int mt8188_afe_disable_a2sys(struct mtk_base_afe *afe)
-@@ -742,8 +779,18 @@ int mt8188_apll2_disable(struct mtk_base_afe *afe)
- 
- int mt8188_afe_enable_main_clock(struct mtk_base_afe *afe)
- {
--	mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
--	mt8188_afe_enable_afe_on(afe);
-+	int ret;
-+
-+	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
-+	if (ret)
-+		return ret;
-+
-+	ret = mt8188_afe_enable_afe_on(afe);
-+	if (ret) {
-+		mt8188_afe_disable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- 
+ static int init_memif_priv_data(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
