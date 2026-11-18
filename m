@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017638;
-	b=1JA465zDqkyv3ixcFEV9XKDNR4aIDVArWXc7XpLRh4uWZvK7bOH2sJ316IGiYfm7+4+/
-	 jDU+IO7T2bc2gK+mtZl4RF49OKprhGSEauyl+vTjt11uMYIfmFbihM1nd4HODZGzm8gdC
-	 iabX+V/vT/QlBmVVqloRxpxvKgs0w2I5l6U+NTiwHBhwwC5Jv8maXrDFtEtvwYvMnRdVo
-	 8VZ86uaPQPtcIIdKDy6LnQJwUqstYcA0jO49dnxSKukqUvlHHPLtECVeQY6zZ25F//7np
-	 EFEbYqIG7FgGnDvgAc/r3EeppngEtLO21EiPiopgvCswPgFZoDMaiCthppoMenTG35w==
+	t=1795017641;
+	b=FKcDioHlnIqr/cqejUDR8GT83kkd21pbhM67u/c550y8v7rxz0TiKhK+t1dlDexCxqtF
+	 pp8gIPSQ3HGMq08w9D1146cMB088+MR6drANNiyHtmqSa1Iy9pEZTooMAHy3BEj6SqLry
+	 NvZuDzBnCcmbZowEqR/UxQtQOC1sLVDsSVEbq0nI8rxrzsgpYWyR6p/ynxlHefQeB3m4r
+	 Zz4ooyJZ7Lmnl6nAdG/e5qlTzqid2HKaLdoeCTGzWqaJay4W7sXJiI09+JeRsvTebnvUM
+	 Puyr6e9sbG2cPghCsv0FxvvE64z6IjKtrer2a1yNxShcHRn5n1MSjhpDTmrOGNo4aAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UaVHWYwMUgG5QSWRdnbChW7hTw/wrhh7xI6BL37bz/4=;
-	b=tFh0rANaUEzNwpydqyDIzpxjFGltOjwvfupQKF1qhbG/uNttjmYVF+RjolWOipVgQvOq
-	 LontCr9dZST2hSl/ZIfn0+ybCvc5NEyabxmpAJYPcVSASaupkEagOBttprbCHlTRLvyrY
-	 nmcAUtT7nITAV1TIVQSfY5ismsV0tlegPmGue/7APvM5qQISTsnvjNCrTr7fzYAoPK+oY
-	 u2xqigMvXczfdx4EN8FQz7Q95yl9lXqCeISQllwQf/KJsvB1mMsOqXpjaLjRh7bUTBP8G
-	 ZDCc5WZdXHMxbelayZNQOUI87ry2tLhgba5HkuJQKVnoSgkCxcpSNjIFB+eg8WPytog==
+	bh=YPFsxdyvIUxrtEGcbk5p+xdHEAu6yab4p9Jn5cwbpdc=;
+	b=HX163k6/aYo/oOh07NjwIuwDdOulS4WT8YItLMarjSWgGfjP/30AcuptwCvlUtr/1E0u
+	 MQ0uoeHfLuXhsn5qnOspwlOF2Mf09M7+ghoOblQHIKW3gel+DfQzUDl4aThM1xnl4kUMK
+	 psMORVor7SLCyJpFR1NDCDynyxJepUqsZ5LRDr5+ZKeXCwAApLsRI9Z6pg+IjpfmCLwT2
+	 g+Jx3tCgo4fHnr0zZu54LhhQue8VJ+EZgCcjGbXja5iBt/eB4TYRRKVLay+AZW1+gltqy
+	 PPM/bR0Np/78ikfkqm6Dmtzjc29dKcCFsuv34ha5avl0YD7u0LybnQlphaxlY1dghvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j2RsGLIi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bf8ER4Sq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD68E606A32F;
-	Wed, 18 Nov 2026 16:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1A560A260F;
+	Wed, 18 Nov 2026 16:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j2RsGLIi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4C21F000C4;
-	Wed, 18 Nov 2026 16:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bf8ER4Sq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E7A1F000CA;
+	Wed, 18 Nov 2026 16:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017638;
-	bh=UaVHWYwMUgG5QSWRdnbChW7hTw/wrhh7xI6BL37bz/4=;
+	s=korg; t=1795017641;
+	bh=YPFsxdyvIUxrtEGcbk5p+xdHEAu6yab4p9Jn5cwbpdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j2RsGLIiwv0EUWD7P19NBOc7tRzaIJMBzN7EK6eXVpf6uk0gtkNrvLhb0/nWx+OKo
-	 W7STXg+OUXLx6QuDiuygQeQF62mYmR+dG409dm6Gvwxz8PVDTUsRhcWrhzy8fq0p+P
-	 11kFtC8CCh1w+sGyzsKKSgfItgODFZ+vYZeiSFkY=
+	b=bf8ER4Sqtu2SJoP1pZ3L47rvSmlD0G1CviBy74Ii5p97QoC6l+U22K/yh8E8rAlHH
+	 A8L2uXfS4KHjauO3DAzez6yyeh7BOyWJntbEI/d6IpSMvZP4iQ/JyPN14nKFPKgLbx
+	 Q3akmU207GkOT8EY8RD5fRUOLlRyx0MLqnrd+qO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0915/2651] ARM: dts: gemini: Use a level-high interrupt for TVE200
-Date: Wed, 18 Nov 2026 15:35:55 +0100
-Message-ID: <20261118150320.834519057@linuxfoundation.org>
+Subject: [PATCH 7.3 0916/2651] netfilter: nfnetlink: Fix for interrupted hook dumps
+Date: Wed, 18 Nov 2026 15:35:56 +0100
+Message-ID: <20261118150320.870575094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,41 +68,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 5bf1bb010712bba28eda926ed453db3cab91381a ]
+[ Upstream commit d3950004ba90350bcdf414c5f804da277178564a ]
 
-TVE200's interrupt is configured as rising-edge. On the D-Link DIR-685,
-this can stop interrupt delivery after the first vertical interrupt,
-causing vblank and page-flip timeouts and delaying framebuffer console
-startup.
+Handling of concurrent hook changes with a dump in progress was
+problematic in nfnl_hook_dump and entirely broken in nfnl_hook_dump_nat.
+Address all issues in a single patch to please the review LLM.
 
-The vertical interrupt can remain pending after acknowledgment. Use
-level-high triggering so the pending condition is delivered again
-without requiring another edge.
+Introduce sequence numbers in struct netns_nf to replace pointer
+value-based modification detection which may fail due to memory buffer
+reuse. This also eliminates the need for most manual cb->seq updates and
+excessive array index value checks.
 
-Fixes: d2b85241a9f5 ("ARM: dts: Add TVE200 to the Gemini SoC DTSI")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Message-ID: <20260921-gemini-tve200-fix-v1-2-8be03ac2a8f7@kernel.org>
+Since nat hook updates are protected by a different mutex than others,
+they have to bump their own sequence number. nfnl_hook_dump_nat
+therefore open-codes what nl_dump_check_consistent does but bumps
+cb->seq instead of setting NLM_F_DUMP_INTR flag.
+
+Dumps of many nat hooks was entirely broken since the array index was
+not (re)stored. Use cb->args[1] for that and make sure it is reset upon
+completion as the same dump may loop over multiple arrays of nat hooks.
+
+In nfnl_hook_dump, don't signal NLM_F_DUMP_INTR if
+nfnl_hook_entries_head returns error: This is a permanent condition
+which does not change during a dump. It is already caught by
+nfnl_hook_dump_start though, so should not happen anyway.
+
+In general, access ops array pointer values using READ_ONCE since they
+are assigned to using WRITE_ONCE.
+
+Avoid setting NLM_F_DUMP_INTR flag in garbage memory by calling
+nl_dump_check_consistent only for non-empty skbs. If not a single
+netlink message was created, nfnetlink code will take care of setting
+the flag.
+
+Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
+Fixes: b010e2a4a9ac ("netfilter: nfnetlink_hook: Dump nat type chains")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/gemini/gemini.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netns/netfilter.h  |  2 +
+ net/netfilter/core.c           | 18 ++++++++-
+ net/netfilter/nf_nat_core.c    | 11 +++++
+ net/netfilter/nfnetlink_hook.c | 74 ++++++++++++++++++++--------------
+ 4 files changed, 73 insertions(+), 32 deletions(-)
 
-diff --git a/arch/arm/boot/dts/gemini/gemini.dtsi b/arch/arm/boot/dts/gemini/gemini.dtsi
-index 23e68e17ffbbd..d8f64fea0a79d 100644
---- a/arch/arm/boot/dts/gemini/gemini.dtsi
-+++ b/arch/arm/boot/dts/gemini/gemini.dtsi
-@@ -445,7 +445,7 @@ dma-controller@67000000 {
- 		display-controller@6a000000 {
- 			compatible = "cortina,gemini-tvc", "faraday,tve200";
- 			reg = <0x6a000000 0x1000>;
--			interrupts = <13 IRQ_TYPE_EDGE_RISING>;
-+			interrupts = <13 IRQ_TYPE_LEVEL_HIGH>;
- 			resets = <&syscon GEMINI_RESET_TVC>;
- 			clocks = <&syscon GEMINI_CLK_GATE_TVC>,
- 				 <&syscon GEMINI_CLK_TVC>;
+diff --git a/include/net/netns/netfilter.h b/include/net/netns/netfilter.h
+index a6a0bf4a247e5..7fd78394d1e7b 100644
+--- a/include/net/netns/netfilter.h
++++ b/include/net/netns/netfilter.h
+@@ -33,5 +33,7 @@ struct netns_nf {
+ #if IS_ENABLED(CONFIG_NF_DEFRAG_IPV6)
+ 	unsigned int defrag_ipv6_users;
+ #endif
++	unsigned int hook_base_seq;
++	unsigned int nat_hook_base_seq;
+ };
+ #endif
+diff --git a/net/netfilter/core.c b/net/netfilter/core.c
+index 675a1034b3400..940dea2663e95 100644
+--- a/net/netfilter/core.c
++++ b/net/netfilter/core.c
+@@ -386,6 +386,15 @@ static void nf_static_key_dec(const struct nf_hook_ops *reg, int pf)
+ #endif
+ }
+ 
++static void bump_hook_base_seq(struct net *net)
++{
++	unsigned int base_seq = READ_ONCE(net->nf.hook_base_seq);
++
++	while (++base_seq == 0)
++		;
++	smp_store_release(&net->nf.hook_base_seq, base_seq);
++}
++
+ static int __nf_register_net_hook(struct net *net, int pf,
+ 				  const struct nf_hook_ops *reg)
+ {
+@@ -430,6 +439,7 @@ static int __nf_register_net_hook(struct net *net, int pf,
+ 	if (!IS_ERR(new_hooks)) {
+ 		hooks_validate(new_hooks);
+ 		rcu_assign_pointer(*pp, new_hooks);
++		bump_hook_base_seq(net);
+ 	}
+ 
+ 	mutex_unlock(&nf_hook_mutex);
+@@ -483,6 +493,7 @@ static void __nf_unregister_net_hook(struct net *net, int pf,
+ {
+ 	struct nf_hook_entries __rcu **pp;
+ 	struct nf_hook_entries *p;
++	bool found;
+ 
+ 	pp = nf_hook_entry_head(net, pf, reg->hooknum, reg->dev);
+ 	if (!pp)
+@@ -496,7 +507,8 @@ static void __nf_unregister_net_hook(struct net *net, int pf,
+ 		return;
+ 	}
+ 
+-	if (nf_remove_net_hook(p, reg)) {
++	found = nf_remove_net_hook(p, reg);
++	if (found) {
+ #ifdef CONFIG_NETFILTER_INGRESS
+ 		if (nf_ingress_hook(reg, pf))
+ 			net_dec_ingress_queue();
+@@ -511,6 +523,8 @@ static void __nf_unregister_net_hook(struct net *net, int pf,
+ 	}
+ 
+ 	p = __nf_hook_entries_try_shrink(p, pp);
++	if (found)
++		bump_hook_base_seq(net);
+ 	mutex_unlock(&nf_hook_mutex);
+ 	if (!p)
+ 		return;
+@@ -784,6 +798,8 @@ static int __net_init netfilter_net_init(struct net *net)
+ 		return -ENOMEM;
+ 	}
+ #endif
++	net->nf.hook_base_seq = 1;
++	net->nf.nat_hook_base_seq = 1;
+ 
+ 	return 0;
+ }
+diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+index cc8e1e81006d5..b214e0f0a5c86 100644
+--- a/net/netfilter/nf_nat_core.c
++++ b/net/netfilter/nf_nat_core.c
+@@ -1161,6 +1161,15 @@ nfnetlink_parse_nat_setup(struct nf_conn *ct,
+ }
+ #endif
+ 
++static void bump_nat_hook_base_seq(struct net *net)
++{
++	unsigned int base_seq = READ_ONCE(net->nf.nat_hook_base_seq);
++
++	while (++base_seq == 0)
++		;
++	smp_store_release(&net->nf.nat_hook_base_seq, base_seq);
++}
++
+ static struct nf_ct_helper_expectfn follow_master_nat = {
+ 	.name		= "nat-follow-master",
+ 	.expectfn	= nf_nat_follow_master,
+@@ -1245,6 +1254,7 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 		nat_proto_net->nat_hook_ops = nat_ops;
+ 
+ 	nat_proto_net->users++;
++	bump_nat_hook_base_seq(net);
+ 
+ 	mutex_unlock(&nf_nat_proto_mutex);
+ 
+@@ -1299,6 +1309,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 		goto unlock;
+ 	priv = nat_ops[hooknum].priv;
+ 	nf_hook_entries_delete_raw(&priv->entries, ops);
++	bump_nat_hook_base_seq(net);
+ 
+ 	if (nat_proto_net->users == 0) {
+ 		nf_unregister_net_hooks(net, nat_ops, ops_count);
+diff --git a/net/netfilter/nfnetlink_hook.c b/net/netfilter/nfnetlink_hook.c
+index 95005e9a60668..b05fd79397c5b 100644
+--- a/net/netfilter/nfnetlink_hook.c
++++ b/net/netfilter/nfnetlink_hook.c
+@@ -54,7 +54,6 @@ static int nf_netlink_dump_start_rcu(struct sock *nlsk, struct sk_buff *skb,
+ 
+ struct nfnl_dump_hook_data {
+ 	char devname[IFNAMSIZ];
+-	unsigned long headv;
+ 	u8 hook;
+ };
+ 
+@@ -338,27 +337,47 @@ nfnl_hook_entries_head(u8 pf, unsigned int hook, struct net *net, const char *de
+ }
+ 
+ static int nfnl_hook_dump_nat(struct sk_buff *nlskb,
+-			      const struct nfnl_dump_hook_data *ctx,
+-			      const struct nf_hook_ops *ops,
+-			      int family, unsigned int seq)
++			      struct netlink_callback *cb,
++			      const struct nf_hook_ops *ops, int family)
+ {
+ 	struct nf_nat_lookup_hook_priv *priv = ops->priv;
+-	struct nf_hook_entries *e = rcu_dereference(priv->entries);
++	struct nfnl_dump_hook_data *ctx = cb->data;
++	struct net *net = sock_net(nlskb->sk);
+ 	struct nf_hook_ops **nat_ops;
+-	int i, err;
++	unsigned int i = cb->args[1];
++	struct nf_hook_entries *e;
++	unsigned int base_seq;
++	int err = 0;
+ 
++	base_seq = smp_load_acquire(&net->nf.nat_hook_base_seq);
++
++	e = rcu_dereference(priv->entries);
+ 	if (!e)
+-		return 0;
++		goto out;
+ 
+ 	nat_ops = nf_hook_entries_get_hook_ops(e);
+ 
+-	for (i = 0; i < e->num_hook_entries; i++) {
+-		err = nfnl_hook_dump_one(nlskb, ctx, nat_ops[i],
+-					 ops->priority, family, seq);
++	for (; i < e->num_hook_entries; i++) {
++		err = nfnl_hook_dump_one(nlskb, ctx,
++					 READ_ONCE(nat_ops[i]),
++					 ops->priority, family,
++					 cb->nlh->nlmsg_seq);
+ 		if (err)
+-			return err;
++			break;
++
+ 	}
+-	return 0;
++out:
++	if (!err)
++		i = 0;
++	cb->args[1] = i;
++
++	if (cb->args[2] && base_seq != cb->args[2]) {
++		cb->seq++;
++		err = -EINTR;
++	}
++	cb->args[2] = base_seq;
++
++	return err;
+ }
+ 
+ static int nfnl_hook_dump(struct sk_buff *nlskb,
+@@ -373,35 +392,31 @@ static int nfnl_hook_dump(struct sk_buff *nlskb,
+ 	unsigned int i = cb->args[0];
+ 
+ 	rcu_read_lock();
++	cb->seq = smp_load_acquire(&net->nf.hook_base_seq);
+ 
+ 	e = nfnl_hook_entries_head(family, ctx->hook, net, ctx->devname);
+-	if (!e)
++	if (!e || IS_ERR(e))
+ 		goto done;
+ 
+-	if (IS_ERR(e)) {
+-		cb->seq++;
+-		goto done;
+-	}
+-
+-	if ((unsigned long)e != ctx->headv || i >= e->num_hook_entries)
+-		cb->seq++;
+-
+ 	ops = nf_hook_entries_get_hook_ops(e);
+ 
+ 	for (; i < e->num_hook_entries; i++) {
+-		if (ops[i]->hook_ops_type == NF_HOOK_OP_NAT)
+-			err = nfnl_hook_dump_nat(nlskb, ctx, ops[i], family,
+-						 cb->nlh->nlmsg_seq);
+-		else
+-			err = nfnl_hook_dump_one(nlskb, ctx, ops[i],
+-						 ops[i]->priority, family,
++		const struct nf_hook_ops *cur = READ_ONCE(ops[i]);
++
++		if (cur->hook_ops_type == NF_HOOK_OP_NAT) {
++			err = nfnl_hook_dump_nat(nlskb, cb, cur, family);
++		} else {
++			err = nfnl_hook_dump_one(nlskb, ctx, cur,
++						 cur->priority, family,
+ 						 cb->nlh->nlmsg_seq);
++		}
+ 		if (err)
+ 			break;
+ 	}
+ 
+ done:
+-	nl_dump_check_consistent(cb, nlmsg_hdr(nlskb));
++	if (nlskb->len > 0)
++		nl_dump_check_consistent(cb, nlmsg_hdr(nlskb));
+ 	rcu_read_unlock();
+ 	cb->args[0] = i;
+ 	return nlskb->len;
+@@ -442,10 +457,7 @@ static int nfnl_hook_dump_start(struct netlink_callback *cb)
+ 		return -ENOMEM;
+ 
+ 	strscpy(ctx->devname, name, sizeof(ctx->devname));
+-	ctx->headv = (unsigned long)head;
+ 	ctx->hook = hooknum;
+-
+-	cb->seq = 1;
+ 	cb->data = ctx;
+ 
+ 	return 0;
 -- 
 2.53.0
 
