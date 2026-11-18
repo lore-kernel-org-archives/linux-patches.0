@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019141;
-	b=MqRmsjZ2/9vKBEZ2hkEGexJOY4ZryIg9bcnbi+faVAB8gyvLi1tUpQYsENmL5JSWL38e
-	 cCNZ8IUSJmn5wXjYNuwyvAYMok2zAQztOJjoGszWrGHTX5/2sK2Qrk/Z29Z9IuEEDPLcy
-	 qa6HyLTPEvW1EmYeRR6g3uONi6mjcOCzcnDaDSM0GrHSzzrTlpxmgP/YTvPHl3SoRo07t
-	 8EbwMZEejPrdKyRNAD5dvnNiQhNM8oMQsMCvqqcS4dLjQWiSqV73p/m956SqENQi2Cyii
-	 ak2j7/jXafVd7IRU9f9TT/XU+h6DSFVstt9FNjL+1e41hjc8h7FcdH5ZzIoNd53b6hw==
+	t=1795019144;
+	b=xkXK3Q2AcpOvv2Fp3T/xCdfvjGD5r6nmLq2qqhPb93pQrHzhp569NdZQ1vHmCEIHX+Pt
+	 TB7yAd+NVyuJoHahnHCSTQR+SK/P4w0A329l7w0bv5mvvxIExrUyaC66XYp/cw0ddaCGp
+	 OO8x1vmpPMozjfbuNaCfd5QJEl7RHef86AMxGghDDGxSuxWEs0EzvuUcqH7EUovFrQ/+R
+	 c3uQs+eJwW4oX/j9l9Fxlf8fEyZOu+iPrSAc1soIGcmi69nkS9L6c53vedBtcXVyFZEMn
+	 u+7O7FppSm8PzGiXokr/5gAVNTc1tJp4UdTQ/kuRRiGsuc4t83zYdq2tvE5ZSo1LpxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WTW7unawDEpQ1c0zdR0tIpwnVVF7BjTdHHjHQ/MH72E=;
-	b=grQ9TUTqVSA9y9KoQV1sGIAVjWY8Fax/59LBLw4MmpySRO1nFVTIyE8bokZbqN6XdVfk
-	 qEH5ULSUdCdkwgEvzK0dsYEsf4xW2hEYRjyBaR6uvgg+inD6a7Le0mmz6tHHotAPiaGga
-	 fhbeDCm7m+NXkNYkqSRvYsWvNtRem9E7V+lpu7Uc4RvE2vTaCVN4Vx37PkPGB87aXKhBT
-	 sHIE3cOVC3Y+OeHK0Q75hBfr9gjKiC276VmvEgrqvUZYRFFYOSMIO86R+UDTpAVZjlCCh
-	 2fbc2d+Wl1yK3rD6popWew/sD5l5KiTLR60lYnNr9uvjUJMW4NQU8HbUSxVoX1TJSsA==
+	bh=EPiuItMP0QxLRVVrOQEGXZl3QVhd3OXlwIq074PMk+Q=;
+	b=FZV0LrAjAu+BQzteoJou51ImBqBdRh3JD83pAc1qhsBbIY8w/xKiaMUdi2D8sgPcR4Tt
+	 /PN6sEGyidebUvc+ZeXj+WlIcGVWkkf5qHy0ly9tIKWUdfYjFFw6vtDnaarkU5SkWNK8K
+	 1Xz3Wa5T9JF8FC3rP77tcjxHizgjh3A4D69eblCi2BDf4ZWxBS6D8UkrEX6Xgy9RValAG
+	 Qzo90hA0pft/I2ZLZ3yjM8yea1oeagquaSLv9UJskxx9JU6zIcRWV4F0mz7cGa37BnDpA
+	 dceifk52l/bKozXj48Vp4Mgv7KVk9Vjbf/CaI25aRUS9AY3/X8DtnbhdkGk6vjMpfQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NV0ZTYqU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGdo+2JS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E52606A325;
-	Wed, 18 Nov 2026 16:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A239606A31C;
+	Wed, 18 Nov 2026 16:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NV0ZTYqU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A521F000C4;
-	Wed, 18 Nov 2026 16:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGdo+2JS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FBD1F000C4;
+	Wed, 18 Nov 2026 16:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019141;
-	bh=WTW7unawDEpQ1c0zdR0tIpwnVVF7BjTdHHjHQ/MH72E=;
+	s=korg; t=1795019143;
+	bh=EPiuItMP0QxLRVVrOQEGXZl3QVhd3OXlwIq074PMk+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NV0ZTYqUjNFmqbM1WxvcSSJCphlg4/BE0dblvz8Lyv/AZSebBpCbFIoWuxKE289Hz
-	 HLfHolDhiBewARpB4tn/hnKhU7H/E1wFaSV1Q86oFbXZEzN6nSQNI3qGUYUnRYCG+b
-	 Vzx06oHjrIQbfnDWVXq3H1vA5sJ+FugY2WnrD28M=
+	b=HGdo+2JSTw6Waa/V6lj38rO7RNqi/BgCkXPEz6nlUE2DHzgbqMORW6/nGmLVkJ0TE
+	 HNm/6y2U6vWeSolssRcG6JlImbXLVn8WZQDcQFSSCOAt0UZzDsKNzay4awPrfVhgiD
+	 4U8URBUuL25rWhi0EzIfpiydfITrA9w1gi4Iu5Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1491/2651] wifi: mt76: mt7921: fix of_node reference leaks in regd update
-Date: Wed, 18 Nov 2026 15:45:31 +0100
-Message-ID: <20261118150341.697012459@linuxfoundation.org>
+Subject: [PATCH 7.3 1492/2651] wifi: mt76: mt792x: compute the assoc RSSI from the chain signals
+Date: Wed, 18 Nov 2026 15:45:32 +0100
+Message-ID: <20261118150341.732579887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,136 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 2f209a8dca88507bc094de370e582adefc55723e ]
+[ Upstream commit 2d12f56631ef307e58651b560ccda1f324a059f9 ]
 
-mt7921_regd_channel_update() and __mt7921_mcu_set_clc() never
-release the nodes returned by mt76_find_power_limits_node(),
-of_get_child_by_name() and mt76_find_channel_node(). Each regulatory
-domain change and each CLC update on a device with DT power limits
-leaks these references.
+mt792x_mac_rssi_iter() adds status->signal of auth and assoc response
+frames to the BSS RSSI average, which mt7921_mcu_sta_update() and
+mt7925_mcu_sta_update() send to the firmware as the station RCPI.
+mt7925 never sets status->signal, since mt76_rx_convert() computes it
+from the chain values later. The average is thus fed 0 dBm on mt7925.
 
-Release every node after use. This relies on
-mt76_find_power_limits_node() also returning a reference for the
-fallback node, which it does since commit 3a62c9f7ec3d ("wifi: mt76:
-Fix of_node reference leak in mt76_get_rate_power_limits()").
+Compute the signal from the chain values, as mt76_rx_convert() and
+mt76_check_sta() do, and skip a frame without a valid chain signal. On
+mt7921, the average now follows the combined value instead of the
+strongest chain.
 
-Fixes: 09382d8f8641 ("wifi: mt76: mt7921: update the channel usage when the regd domain changed")
-Link: https://patch.msgid.link/20261007112419.1277594-3-nbd@nbd.name
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Link: https://patch.msgid.link/20261007112419.1277594-4-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/mcu.c   |  7 ++++-
- .../net/wireless/mediatek/mt76/mt7921/regd.c  | 28 ++++++++++++++++---
- 2 files changed, 30 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index c90d0da706a1a..fec5205b33ca4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -3,6 +3,7 @@
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+index 1e20b333cc612..ebf4c32924c45 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+@@ -165,14 +165,16 @@ mt792x_mac_rssi_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+ 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 	struct ieee80211_hdr *hdr = mt76_skb_get_hdr(skb);
++	int signal;
  
- #include <linux/fs.h>
- #include <linux/firmware.h>
-+#include <linux/of.h>
- #include "mt7921.h"
- #include "regd.h"
- #include "mcu.h"
-@@ -1359,6 +1360,7 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 		.acpi_conf = mt792x_acpi_get_flags(&dev->phy),
- 		.mtcl_conf = mt792x_acpi_get_mtcl_conf(&dev->phy, alpha2),
- 	};
-+	struct device_node *np;
- 	int ret, valid_cnt = 0;
- 	u32 buf_len = 0;
- 	u8 *pos;
-@@ -1368,8 +1370,11 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
+-	if (status->signal > 0)
++	signal = mt76_rx_signal(status->chains, status->chain_signal);
++	if (signal > 0 || signal <= -128)
+ 		return;
  
- 	if (dev->phy.chip_cap & MT792x_CHIP_CAP_CLC_EVT_EN)
- 		req.cap |= CLC_CAP_EVT_EN;
--	if (mt76_find_power_limits_node(&dev->mt76))
-+
-+	np = mt76_find_power_limits_node(&dev->mt76);
-+	if (np)
- 		req.cap |= CLC_CAP_DTS_EN;
-+	of_node_put(np);
+ 	if (!ether_addr_equal(vif->addr, hdr->addr1))
+ 		return;
  
- 	buf_len = le32_to_cpu(clc->len) - sizeof(*clc);
- 	pos = clc->data;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/regd.c b/drivers/net/wireless/mediatek/mt76/mt7921/regd.c
-index fcdeb65cd8ef2..699617d9e48f7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/regd.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/regd.c
-@@ -28,6 +28,21 @@ bool mt7921_regd_clc_supported(struct mt792x_dev *dev)
- 	return true;
+-	ewma_rssi_add(&mvif->bss_conf.rssi, -status->signal);
++	ewma_rssi_add(&mvif->bss_conf.rssi, -signal);
  }
  
-+static bool
-+mt7921_regd_dt_has_channel(struct device_node *band_np,
-+			   struct ieee80211_channel *ch)
-+{
-+	struct device_node *chan_np;
-+
-+	if (!band_np)
-+		return false;
-+
-+	chan_np = mt76_find_channel_node(band_np, ch);
-+	of_node_put(chan_np);
-+
-+	return !!chan_np;
-+}
-+
- static void
- mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- {
-@@ -43,14 +58,14 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- 
- 	sband = wiphy->bands[NL80211_BAND_5GHZ];
- 	if (!sband)
--		return;
-+		goto out;
- 
- 	band_np = np ? of_get_child_by_name(np, "txpower-5g") : NULL;
- 	for (i = 0; i < sband->n_channels; i++) {
- 		ch = &sband->channels[i];
- 		cfreq = ch->center_freq;
- 
--		if (np && (!band_np || !mt76_find_channel_node(band_np, ch))) {
-+		if (np && !mt7921_regd_dt_has_channel(band_np, ch)) {
- 			ch->flags |= IEEE80211_CHAN_DISABLED;
- 			continue;
- 		}
-@@ -59,17 +74,18 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- 		if (IS_UNII_INVALID(0, 5845, 5925))
- 			ch->flags |= IEEE80211_CHAN_DISABLED;
- 	}
-+	of_node_put(band_np);
- 
- 	sband = wiphy->bands[NL80211_BAND_6GHZ];
- 	if (!sband)
--		return;
-+		goto out;
- 
- 	band_np = np ? of_get_child_by_name(np, "txpower-6g") : NULL;
- 	for (i = 0; i < sband->n_channels; i++) {
- 		ch = &sband->channels[i];
- 		cfreq = ch->center_freq;
- 
--		if (np && (!band_np || !mt76_find_channel_node(band_np, ch))) {
-+		if (np && !mt7921_regd_dt_has_channel(band_np, ch)) {
- 			ch->flags |= IEEE80211_CHAN_DISABLED;
- 			continue;
- 		}
-@@ -81,6 +97,10 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- 		    IS_UNII_INVALID(4, 6875, 7125))
- 			ch->flags |= IEEE80211_CHAN_DISABLED;
- 	}
-+	of_node_put(band_np);
-+
-+out:
-+	of_node_put(np);
- }
- 
- int __mt7921_mcu_regd_update(struct mt792x_dev *dev, u8 *alpha2,
+ void mt792x_mac_assoc_rssi(struct mt792x_dev *dev, struct sk_buff *skb)
 -- 
 2.53.0
 
