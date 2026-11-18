@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022987;
-	b=EvFd5cgVA0a+6d8ga8UKaLk55jF+gPyxXsmsnFyjUWay6LOxcVzhFQiYbrz/E8rfC+NH
-	 OR1kcQgWyyaYSerbXciXf6NsDOEuhdx8MfqmxOMrJ2400OtZsNmiMS7DtdvYoiRa2Dr8S
-	 JvV12YUahVfWibnHcCNV6dSEaFrJXKzHgFKH24DGTEYRulqhDnsbVhSvdH5JNOj5styGD
-	 t1hMHKUstzXR/aElmtUyAA0kzkWeH257/t6OcNZu8bHTPQKlXSp7DAynAf51JY15Fvpvl
-	 1eOlSD2MG8D5s3HH1eCs4wglwr75v34AwSNu5ogdn7nPiv/E0TvQNxI/0cX/5LTE6HA==
+	t=1795022990;
+	b=E8K74+uAgK/bTTZEUVVfdeLuC/a2mvB5GnH+PXo2k0Z84y7Lc2VJkaYaq3Nfz5VJQ0Lw
+	 4fAKRq0cTGn5vdIApL6IAB7gKLTUfPNzcjsuXw3EJ8FcR9N8HDJH5apZSOdaQarHAs8VT
+	 pH8nhvz6gOEbuerJs0r/fa3NI+6tJ0J0oErF1waerjQd2BIBPCHDHMtbJ+BJOSS5wtHNP
+	 R5dVd21QiwhsgTM4VUre0OHbI87HzbLkAQ50EGZVfTHDxv69lNKAdLnglWbsqbvwyBs8m
+	 gz48t8ozt19qrwp2ouRqu6dbmczEic+YwLQF+7pIBuQHN/bs5AuhdsLIqOJaHLmfwWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022990;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NzGbzI9OXjjdN9q1L6aYSCiieQws2VOsEL8S43MJg3c=;
-	b=DEW3E0nIQDxmy20+hlU3P2yOfgWDn7PZIbNdLRC0fA0xc0O96a0HAy53NmUv/tcHFujH
-	 fLJ3+JBDrrGKz8DMYvRe+XgLP8kiI5yRBS6OgSN6F75+G97kzokEc9/hYHKqUJwjq1+kX
-	 wA9v+0LARjkSP67EflCPrN+vi5oysMnPE2ZSiKAi/BS0/1eIyQmi0iE0KPoJPcdQEJv0I
-	 N3RhdWu7bWcdSZBVjBb0Sdc1R8iFhpRMyzr/IzWRHT2+ehXI6jOjrztuJjyD+YASodeft
-	 vxz8t6O4WkMh8DZf6+vWH/Ex4AMRxnC/y4nQ3+nLuKhb79fH1frWL6q4SlYHgUCIbOg==
+	bh=czzWrGNj7S/aL4/pf6omUgw3WKXGXozPkSLaKFP1sTs=;
+	b=DYxz/Rvn1GjB0h6tCsl6aZBnjl4FTJGRLCJWeQNqZ+Tt0R/9KzhPAyi5rWfFn4Fx/5Cl
+	 pWiLxmBxFmBmqfAhGhcVRjkn4LqYJHbhj6Jzna0tKG2lqezewXIZwyMi2pT0JmCVZWCIV
+	 ETQjiAw/2ur70TBvw3ByKdNBMyMv0W9WT+55Rvnh4UNJK3i4+LAg5cv+Ig6JAn/D+ANEC
+	 uxeGL5vfAULeB8jFKzvDOk+Gw8SI3+L8qxAHoKye7iV4dOmhE+tJ7XAfgcFJU6mcHawQi
+	 P6cVXZwfXOYfk1uds4ess0p9crmCUay2DNENJ0rWd3noz5oi7hp+wh8svEVRMWKkVDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4bwU9vf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnpIyBqn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F24D606A31C;
-	Wed, 18 Nov 2026 17:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75CD606A31C;
+	Wed, 18 Nov 2026 17:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4bwU9vf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80ACC1F000C4;
-	Wed, 18 Nov 2026 17:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnpIyBqn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D721F000C4;
+	Wed, 18 Nov 2026 17:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022987;
-	bh=NzGbzI9OXjjdN9q1L6aYSCiieQws2VOsEL8S43MJg3c=;
+	s=korg; t=1795022989;
+	bh=czzWrGNj7S/aL4/pf6omUgw3WKXGXozPkSLaKFP1sTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y4bwU9vfuCtzF6k953EAOYXOOPQy3i3X5xNu03TK7aoqisjRs6zlzznMMQ+Q7W4po
-	 v80KMXsxRuiA72UQ8MIim24/egPQPVOgcRDtXvIVrdV4tz5b4iG9B14eLMp6WhsZut
-	 gcREUa1rlG8ZbMheoNqfr6/oAXSBZxMJZCIY1DBE=
+	b=ZnpIyBqno2hhTkhBLjZ9993pk5AjrSzugpaAVJkmiQYczCKQ8H9tufyXfbZMXiXnN
+	 7zU+ycu01CBlVSCVr2nN/8+a8W/Vvo5O+k2sl3Xcj3eZC7coWNCNKlXgTX6cA5y9nM
+	 YuDlcGzjG9MzPG0FXvtukH9qdJB1AgJ+GEw3XIqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Rosen Penev <rosenp@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0208/2151] PCI: endpoint: pci-epf-vntb: Pass PF/VF number when BAR programming
-Date: Wed, 18 Nov 2026 15:32:23 +0100
-Message-ID: <20261118150129.359767993@linuxfoundation.org>
+Subject: [PATCH 6.18 0209/2151] dmaengine: fsl_raid: dont invoke client callback under desc_lock
+Date: Wed, 18 Nov 2026 15:32:24 +0100
+Message-ID: <20261118150129.395044004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,42 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit afe2aa9dc93d904730bab63f5ccb514a318e6464 ]
+[ Upstream commit 62c267ce97444f8a381f2bb3cd5d534eb362c540 ]
 
-vntb_epf_mw_set_trans() programs the memory-window BAR through
-pci_epc_set_bar() with hardcoded function numbers (0, 0), so the BAR
-lands on the wrong function whenever the vNTB EPF is bound to anything
-but PF0. The other BAR programming sites in the vNTB driver already pass
-the EPF's own numbers.
+fsl_re_dequeue() holds re_chan->desc_lock while calling
+fsl_re_desc_done(), which synchronously invokes the DMA client completion
+callback via dmaengine_desc_get_callback_invoke(). If that callback
+submits new work (e.g. fsl_re_tx_submit()), it tries to reacquire the
+same desc_lock and deadlocks on the spinlock.
 
-Pass the EPF's own func_no/vfunc_no here as well.
+Collect completed descriptors into a local list under the lock, then
+release the lock and invoke the callbacks before moving the descriptors
+to the ack queue.
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260728172306.2751813-2-den@valinux.co.jp
+Link: https://patch.msgid.link/20260718053010.3074329-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/fsl_raid.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 39d9844873f53..eef9d0e724381 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -1156,7 +1156,8 @@ static int vntb_epf_mw_set_trans(struct ntb_dev *ndev, int pidx, int idx,
- 	epf_bar->barno = barno;
- 	epf_bar->size = size;
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 6aa97e258a557..ad77694520e9e 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -162,6 +162,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 	struct fsl_re_hw_desc *hwdesc;
+ 	unsigned long flags;
+ 	unsigned int count, oub_count;
++	LIST_HEAD(completed);
+ 	int found;
  
--	ret = pci_epc_set_bar(ntb->epf->epc, 0, 0, epf_bar);
-+	ret = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
-+			      ntb->epf->vfunc_no, epf_bar);
- 	if (ret) {
- 		dev_err(dev, "failure set mw trans\n");
- 		return ret;
+ 	fsl_re_cleanup_descs(re_chan);
+@@ -182,8 +183,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 		}
+ 
+ 		if (found) {
+-			fsl_re_desc_done(desc);
+-			list_move_tail(&desc->node, &re_chan->ack_q);
++			list_move_tail(&desc->node, &completed);
+ 		} else {
+ 			dev_err(re_chan->dev,
+ 				"found hwdesc not in sw queue, discard it\n");
+@@ -196,6 +196,17 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 			 FSL_RE_RMVD_JOB(1));
+ 	}
+ 	spin_unlock_irqrestore(&re_chan->desc_lock, flags);
++
++	/* Invoke the client callbacks outside the channel lock. The callback
++	 * may submit new work which re-acquires desc_lock, so holding it here
++	 * would deadlock.
++	 */
++	list_for_each_entry_safe(desc, _desc, &completed, node) {
++		fsl_re_desc_done(desc);
++		spin_lock_irqsave(&re_chan->desc_lock, flags);
++		list_move_tail(&desc->node, &re_chan->ack_q);
++		spin_unlock_irqrestore(&re_chan->desc_lock, flags);
++	}
+ }
+ 
+ /* Per Job Ring interrupt handler */
 -- 
 2.53.0
 
