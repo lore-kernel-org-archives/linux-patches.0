@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019588;
-	b=Xym7mhZn8Ry3Eyv9hLkUwKOHOfQj0yU11eeGeG6YIgYsO7xc5+faJ13oy/BiEBG/oJgt
-	 NMmZz4dS1QQ3xBEhzMc+0ZP913CYogtbiAB1rio/jI0NmL6P+lOaEiSSG2uuqxcXldHnN
-	 Z7Gz6RcnAJQy//VVBMK8WPDnkiCA/1qx9JCSpacdpXwvak8jXgxz0dQQWfzcrkuMFL4dw
-	 X0NoApe3t++bAHR/SIjsujGgA14+oAIchyb4XkEj9Q/55hKpsW/02691TWjDHj7/nNZxQ
-	 W8sTFUSuYsVjbJ6OVVxiMhlstTcL4RTm1l5LhSAjs2Be074EaNe1FILUMQ0CsEA4QUw==
+	t=1795019590;
+	b=YDLwuwu6HOi7C4pZT455P8tlOt41TGKssBNNeeNLcByxwM/IzbRp4y8NFv5jYDJGIIfJ
+	 8yKXFR9jQ4O0jpiJQjOFl35mxtE1aW+sX6sBQ08Ye1VfH5aSrTq+M2vstI8hEC8llzcQ3
+	 9fOLi0KJ+kNZ/OWrKWJMkSBy/pGUiWI8O/gkS2jUGv4P/qiK6ze+v9cMUsCGyg1HXazZY
+	 ZkdpD56biHiF1smJtKMpVRtWkANjoT9qCvHzTd8iFWlpg98RjFr775wZbnaa2ctlaDnUi
+	 Q4LXrjj28iHt/fjR6/KpEmQMMuTitzNollSnpx1LfTXr9LIT4jnWKe1aiDAv7d7AeRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qHnQVLzGH1TZ57kFLd0UZPb66ikDmW/s7KqHI9O1/iU=;
-	b=R3X6XTbv1PFQLik3ectpoyTiCnMaSZDD0VWW13l9NUVWR5p0445ILsNjQTrgkkWkvlzU
-	 M0/ccXDS3vBLl3wBM7xHM4Easw3CLeXR63/+qSNAjwBiNUoGnEdtYXOU8phGJQ8rQupcA
-	 t2w3dAaFvMgo9a1+hQLbnCputnG6LFDPBF7ddpNzKSImI1EUr/jk2XRtDUb7Nz6IB8VP0
-	 XZEk89qWENhYVObxFY5EVhpU3LgmfzSV6A7MVxt2oW2KWHDBnZeuuox5MftSpmSy/NgmM
-	 3d6AFfCf92XTV825hbdP29zw/uyDGPvcTKwZfsk0tSJWiGacNzES1pKRedpgobmItFQ==
+	bh=RT6ntsWJZSAgTukH6h80q3T4OeNRL/MLDBguuL1a//0=;
+	b=YKAI4zb3Kf2nBofw6TXYV06DPY5Bc6dmfqHR8jpbMiJt/KEfd72KFDebxV1LbhY45rvN
+	 heH2Uh+KsJIap8vAjKUVRD7t0JdsTYoLUoUP1t7K2h2l+WaLoD9bLKR7dZEGxDhjXQzB1
+	 5uiLfRpAWbqUE18bETsEB1/1zhnq3Er5DPNg35BUQjzkRXpivcNFxDHW0WHtMnwBcZB2d
+	 3DSujxtUEAFQ9ykybBC7IEOmytKgnglsG7HBF4tkHSI3XMoA0JG05e3HFMjA4MVkdWNZY
+	 Fa52EDcUCk33rD9jLttbygABe69obzKBEvHI76VwGJnycpenD9Q8qcKAeVAKYQ1+jdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZQxk9ES;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfn51KG+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA0C606A7DF;
-	Wed, 18 Nov 2026 16:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11C7606A320;
+	Wed, 18 Nov 2026 16:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZQxk9ES
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F54F1F000CC;
-	Wed, 18 Nov 2026 16:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfn51KG+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2546E1F000C8;
+	Wed, 18 Nov 2026 16:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019588;
-	bh=qHnQVLzGH1TZ57kFLd0UZPb66ikDmW/s7KqHI9O1/iU=;
+	s=korg; t=1795019590;
+	bh=RT6ntsWJZSAgTukH6h80q3T4OeNRL/MLDBguuL1a//0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZQxk9ESMjwIjCaOv2yEvkzdR393oDKlr/eOqbUDvzVQaXIDN6//uVZAmz2+lFyi/
-	 2b0zrvghxWd5arD+8TXJiLfT1Iyxng9F9d8EhDh2pBvoY2oJGW+QGajTVKKQWFwUzv
-	 BeBu9xEt4AhjeF/pOGz6HWdMtqPFRFCTTP+TFAhk=
+	b=gfn51KG+Wl7G7BiKRJgw45PFCsVG2W1Q1NocGQJk9vsxbD7EfFKymzEtQ0txk0D/8
+	 tfLfLIURJO6gLZ7VoOERlYptQILolpsK/7jTauH6U/Z8Ut3Dzv+DDN0G6p+Ox1CQw5
+	 s+QvsM1i2BADjcXj4mcO24ypB3z1nYMjgi+8Y9SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Zhang <yidong.zhang@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Daniel Thompson <daniel@riscstar.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1648/2651] accel/amdxdna: Reject device heap BO when dev_mem_size is not set
-Date: Wed, 18 Nov 2026 15:48:08 +0100
-Message-ID: <20261118150347.121040995@linuxfoundation.org>
+Subject: [PATCH 7.3 1649/2651] net: stmmac: set real_num_tx_queues to max(offset + count)
+Date: Wed, 18 Nov 2026 15:48:09 +0100
+Message-ID: <20261118150347.151983987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,43 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Zhang <yidong.zhang@amd.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 3e32932d3626d0279f9b3531bd648f8c0a16cb08 ]
+[ Upstream commit d128212667593c548a3c67d30031063ed46c29b7 ]
 
-NPU3 devices do not set dev_mem_size, since they do not use a device
-heap. Creating an AMDXDNA_BO_DEV_HEAP BO on such a device hits the
-WARN_ON(!is_power_of_2(dev_mem_size)) check, which any user with
-access to the device node can trigger.
+tc_setup_dwmac510_mqprio() computes the number of real TX queues as the
+sum of the per-TC queue counts. mqprio_validate_queue_counts() only
+rejects out-of-bounds or overlapping ranges, so layouts with gaps or a
+non-zero first offset are accepted, and in those cases the sum is smaller
+than the highest queue referenced by the netdev TC map.
 
-Return -EOPNOTSUPP when dev_mem_size is 0.
+netif_set_real_num_tx_queues() then passes this too-small count to
+netif_setup_tc(). However stmmac_set_ndev_tcs() has already zeroed
+dev->prio_tc_map() through netdev_reset_tc(), so when netif_setup_tc()
+runs every priority maps to TC0 and only the TC0 range is checked. A
+layout whose TC0 range fits but where a later TC references a queue
+beyond the new real_num_tx_queues is left with num_tc set and its TC map
+pointing at queues that are no longer real, without any warning; only
+when TC0 itself is out of range is the mapping disabled. The real
+prio_tc_map is programmed later by the qdisc, after this call, so the
+driver cannot rely on netif_setup_tc() to catch those cases.
 
-Fixes: d76856beb4a4 ("accel/amdxdna: Refactor GEM BO handling and add helper APIs for address retrieval")
-Signed-off-by: David Zhang <yidong.zhang@amd.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20261008232416.2646054-1-yidong.zhang@amd.com
+Compute num_tx_queues as the maximum of offset[i] + count[i] instead of
+the sum of the counts, so real_num_tx_queues always covers the highest
+queue referenced by the TC map. This is a no-op for the contiguous
+channel-mode layouts where offset[i] == i and count[i] == 1.
+
+The issue has been reported by sashiko and the patch has been tested on
+Qualcomm RB3-Gen2 board.
+
+Fixes: 195e4f409a40 ("net: stmmac: support fp parameter of tc-mqprio")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261006-stmmac-mqprio-prio-offload-v5-1-d7da93419784@oss.qualcomm.com
+Tested-by: Daniel Thompson <daniel@riscstar.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index f4832337ec31d..f14484bc31ec0 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -1140,6 +1140,11 @@ amdxdna_drm_create_dev_heap_bo(struct drm_device *dev,
- 	struct amdxdna_gem_obj *abo;
- 	int ret;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 42a00446e9b41..1aa80d51ab33a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -1303,7 +1303,8 @@ static int tc_setup_dwmac510_mqprio(struct stmmac_priv *priv,
+ 			.count = qopt->count[i],
+ 			.offset = qopt->offset[i],
+ 		};
+-		num_tx_queues += qopt->count[i];
++		num_tx_queues = max(num_tx_queues,
++				    qopt->offset[i] + qopt->count[i]);
+ 	}
  
-+	if (!xdna->dev_info->dev_mem_size) {
-+		XDNA_DBG(xdna, "Device heap is not supported");
-+		return ERR_PTR(-EOPNOTSUPP);
-+	}
-+
- 	WARN_ON(!is_power_of_2(xdna->dev_info->dev_mem_size));
- 	XDNA_DBG(xdna, "Requested dev heap size 0x%llx", args->size);
- 	if (!args->size || !IS_ALIGNED(args->size, xdna->dev_info->dev_mem_size)) {
+ 	err = stmmac_set_ndev_tcs(ndev, qopt->num_tc, tc_to_txq);
 -- 
 2.53.0
 
