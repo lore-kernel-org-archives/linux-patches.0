@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047234;
-	b=ZSTWv/2sP3CTPQ9Czl28MaOkRreww5isAkhGSYLE2AJJqNzM+h4ZE9PsBYRNy84UWst2
-	 AkBBcdklYlNFxKQYNyKDlUwoa5lHwdQDdm9Fdr+F0ennddyx1sf05ygZE/x8sUNDo+QIs
-	 HeTQraqbFL2qXnIVFckZF9J3n7rSksYV1X18nE+ydRQ252QHQbzw6TFs4uZkef/rqHt9n
-	 cW6mp2xhcaZqzw2VnpTyOTF429Xe7VAGAv/ZM189SifV/Jwy1LvdUiK7z7eyIEchN/KDn
-	 s1GTK9R541KWfwVUvPhAGAdUhWnLsikdGgEETz0T3K4lXTfI26Y2fY2pyJpHCPhd0Lw==
+	t=1795047237;
+	b=zZP3u1xq+lq1KLkqLGA3wLaVB0JF5NHj90wd1aX4hmM4YH7rz/wY2G125jutFyp9XQ3W
+	 5SIycHznBjg8IIdSir1sF7AptpQq4U2h75RFSLxBaEsKcXm9ND2nB2F19i/aiAwoSKM4A
+	 Csm4l5JDnEYBZrgYlgmiIyEct2Z5Vut+xJxBHO+XkXdv6/KEDbi1IxOiHiCRrENvKdWlY
+	 3h8Bvpb5zijal6JswxKhyMnmBO6tqP0sybGixWZ/JdLFpqsYPl+7S6RJVz4LLuO0NnFYx
+	 msGeMwYM8j7ixCUt0cbB0lp6gd2cSrvcHWLJcJqJaSlSiEIxMWyulRSpRzJL1jwrmWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q8TL9zNagRK/scHogcHJkACq70kbKkVcd9iHqHcPtaQ=;
-	b=IWSv90AZUGxfOemd7K6AOhNPExLnC0FCn6gyoMtF/YJqhRHusi6eJkGvTbVJ8qRTFrc5
-	 bonSfca4tet5sNNjPoc1Qst0IA/jSKs51+hHbxiUg1S7S2WkAVSdKSsrix9oW0+M+b1XK
-	 zXiej6ZzM+573kQHtX+DIY2ByBxuu7IWIYSSkEqK5RaB40BOYvvua8aR+t0BX90oqY+Kz
-	 vSyvkhLgnvNix1g99RsOnXaLYuz8Z87gGT4lXT1o1p3nESNnEMRunt0pYnCRBVSYBpKaK
-	 Wqj8i+s1oL+aG+yUnZKJuP5ik9jaoe8B1gb2t5SW0V040/5TagHdrIZGLQ1KLGA0jMw==
+	bh=OWml0S2aP//IINTwBsRfFljce0c1vHcZbLEH7hJCFH8=;
+	b=vpcoS405UXg3/yokOxF67G4uJttO0T1JnOKWm00H9ecOQ2K3kywiZmVi1AHxmNxAQauT
+	 bCccMVMT+fHyO2Yg4ni7nEuPS3adVBm5UUMVOJf2aIzhPypT2Rb2GFFpJSB568RoRe6dd
+	 EToZUM2ltn85lFtWY8XqlAEcrN5GHkIDT5vSNt9EyzsAAOFT50b4gL3VXweWfF06kgqGj
+	 Jl5Z45sncZkf4gm2e2cwVIaweWWzF6QU3N+84AmG7WRvo8SsmCwUD7kNT7kTmPbkWDtvY
+	 Db0nIz8Mgu5CjDNmXO0t9Tebh8jDXKPZMSI3PFbbYX2TZl52SC9L0UGZHQkf7BseCgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNoFiDyy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFEa7Uag;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F837606A325;
-	Thu, 19 Nov 2026 00:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36147606A31C;
+	Thu, 19 Nov 2026 00:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNoFiDyy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770831F000C4;
-	Thu, 19 Nov 2026 00:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFEa7Uag
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309A11F000C4;
+	Thu, 19 Nov 2026 00:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047234;
-	bh=q8TL9zNagRK/scHogcHJkACq70kbKkVcd9iHqHcPtaQ=;
+	s=korg; t=1795047236;
+	bh=OWml0S2aP//IINTwBsRfFljce0c1vHcZbLEH7hJCFH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jNoFiDyyDTQfmk/7kBmUUMmQbtWFUgXtIedSxLqSbyksi+F12RMkX78LAQ+SBrR16
-	 wwRT8dwuHY+OrNCvWFVHh6MhxEtNvzUqO9mxGg4DzWOYvlu/NUuaZNA7xmF5YGhaV9
-	 7CeblyrfxvXqgwBxbcCQRVYxBmqdu2uecaZU/vPQ=
+	b=sFEa7UagHW1XaHN3L/Ig52yIgOAdrcrJSQ+cTxUyHI6aPlobHogNRjU2Lo3ZI+DEN
+	 VwBxD/Ra/SC+ickJB852yPjBpiPRKaEXgRSc70s475UeCuwCAX+yf9FD6v4HB1gXEa
+	 E4BlGD6Fr5iew6tvIvcjvor6AZNJVI3CZwCNOolI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Yu Zhang <yuz08559@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1567/2857] nvmet: force reconnect when number of queue changes
-Date: Wed, 18 Nov 2026 15:43:21 +0100
-Message-ID: <20261118150257.806311575@linuxfoundation.org>
+Subject: [PATCH 6.1 1568/2857] nvmet: take subsys->lock while force-reconnecting in nvmet_subsys_attr_qid_max_store()
+Date: Wed, 18 Nov 2026 15:43:22 +0100
+Message-ID: <20261118150257.846358027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,64 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit 2be2cd5287152a6284b45244b6e5c2f7e0a218bd ]
+[ Upstream commit 9f426f14051181e251590783e68ce589a63e2b1c ]
 
-In order to test queue number changes we need to make sure that the
-host reconnects. Because only when the host disconnects from the
-target the number of queues are allowed to change according the spec.
+nvmet_subsys_attr_qid_max_store() sets subsys->max_qid and then walks
+subsys->ctrls to force every controller to reconnect, but it holds only
+nvmet_config_sem (for write).  subsys->ctrls is protected by subsys->lock:
+nvmet_alloc_ctrl() adds an entry under subsys->lock, and nvmet_ctrl_free()
+removes it under subsys->lock with list_del() + kfree() (not kfree_rcu).
+The free path takes no nvmet_config_sem, so the two locks are independent.
 
-The initial idea was to disable and re-enable the ports and have the
-host wait until the KATO timer expires, triggering error
-recovery. Though the host would see a DNR reply when trying to
-reconnect. Because of the DNR bit the connection is dropped
-completely. There is no point in trying to reconnect with the same
-parameters according the spec.
+A controller teardown (host disconnect, keep-alive timeout or fatal error
+-> nvmet_sq_destroy() -> nvmet_ctrl_put() -> nvmet_ctrl_free()) can
+therefore list_del() an entry while qid_max_store() is iterating the list,
+corrupting the walk.
 
-We can force to reconnect the host is by deleting all controllers. The
-host will observe any newly posted request to fail and thus starts the
-error recovery but this time without the DNR bit set.
+KASAN, concurrent "echo 128 > .../subsystems/<nqn>/attr_qid_max" racing
+nvme-loop controllers connecting and disconnecting, panics in seconds:
 
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Chaitanya Kulkarni  <kch@nvidia.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Acked-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 9f426f140511 ("nvmet: take subsys->lock while force-reconnecting in nvmet_subsys_attr_qid_max_store()")
+  BUG: KASAN: null-ptr-deref in nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
+  Read of size 8 at addr 0000000000000090
+  Call Trace:
+   nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
+   configfs_write_iter+0x1a7/0x250
+   vfs_write+0x5df/0x940
+   ksys_write+0xfd/0x1e0
+
+(also seen as a general-protection fault dereferencing a LIST_POISON
+pointer at the same instruction.)
+
+Take subsys->lock around the list_for_each_entry() loop, matching every
+other subsys->ctrls accessor.  ->delete_ctrl() only queues asynchronous
+controller teardown, so it does not re-enter subsys->lock under the loop.
+
+Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Cc: stable@vger.kernel.org
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Tested-by: Yu Zhang <yuz08559@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/nvme/target/configfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index c966d1e3a1354..8c12de188e992 100644
+index 8c12de188e992..cbc3693d5fc0a 100644
 --- a/drivers/nvme/target/configfs.c
 +++ b/drivers/nvme/target/configfs.c
-@@ -1318,6 +1318,8 @@ static ssize_t nvmet_subsys_attr_qid_max_show(struct config_item *item,
- static ssize_t nvmet_subsys_attr_qid_max_store(struct config_item *item,
- 					       const char *page, size_t cnt)
- {
-+	struct nvmet_subsys *subsys = to_subsys(item);
-+	struct nvmet_ctrl *ctrl;
- 	u16 qid_max;
+@@ -1332,8 +1332,10 @@ static ssize_t nvmet_subsys_attr_qid_max_store(struct config_item *item,
+ 	subsys->max_qid = qid_max;
  
- 	if (sscanf(page, "%hu\n", &qid_max) != 1)
-@@ -1327,8 +1329,13 @@ static ssize_t nvmet_subsys_attr_qid_max_store(struct config_item *item,
- 		return -EINVAL;
- 
- 	down_write(&nvmet_config_sem);
--	to_subsys(item)->max_qid = qid_max;
-+	subsys->max_qid = qid_max;
-+
-+	/* Force reconnect */
-+	list_for_each_entry(ctrl, &subsys->ctrls, subsys_entry)
-+		ctrl->ops->delete_ctrl(ctrl);
+ 	/* Force reconnect */
++	mutex_lock(&subsys->lock);
+ 	list_for_each_entry(ctrl, &subsys->ctrls, subsys_entry)
+ 		ctrl->ops->delete_ctrl(ctrl);
++	mutex_unlock(&subsys->lock);
  	up_write(&nvmet_config_sem);
-+
+ 
  	return cnt;
- }
- CONFIGFS_ATTR(nvmet_subsys_, attr_qid_max);
 -- 
 2.53.0
 
