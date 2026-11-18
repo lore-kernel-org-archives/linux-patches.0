@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017022;
-	b=TluoTIDSVj+gi2zpxQzljTbDVyIKnQroX6xN1X9mUCk1hTHsSv/aMHy8+WP5Ak9oF9b2
-	 Dd9GxbAPVXojVG+PsgPM5fCzTwtuJftzYC028c5xSOaH9+2Fq7Vc+mXYmr0R3yCtYsWcu
-	 qhJHLzEr4zU3H631TMhrPeKh7NtE3dMXBsBZ/sEhBBKhx07VitK8OrVZLsnKg3iOQ230B
-	 AX9dVfQT76Topzno3x9jXj8rQ+cg4Xm8VI/mseRKWLQVjtbCJyPN70YHzmK+Y4WfnL5XT
-	 qdAALA9OWsHjUYpNprUaHzXx7w3P3XUWyypTH/NGedSHsUDx9+mN302lU8D5WPS+fxA==
+	t=1795017025;
+	b=N0rC104K8n1zAI6Vh/vdVyML1CicHbH50gbEOSs0e6b5LFE4z/nnn1C2DqG5GiLYiJVb
+	 PzCyfXcIdNZtrPAn6cIyW/EaaftQ7kEgqbYwI8nT8xN5jRQ5wCavkMeblsZhRehvu7mHW
+	 RvjGEx71kzIufFByvDV3RrCCVSn5mavzRpoQLfjjiDZyNVUN4VHFddsamVV+NhdaQr1/1
+	 xkR7WBuQBU8PMugUboqxMnu6JMCoyI9mXirZXllddVE+jzvUR52eAzFKrZNiCcqda+r4X
+	 nCgBJo6tv9+Ftl7nY5jrqZijsEANM8WLfEpGIDXZ+uI5ylcTVVNBh+9+TINDQtmJdPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gILbcr+tmhFkLmVzgNfCSVuwuToXgFStfMnZ7EvS8zw=;
-	b=kven/2sI5ziQ5TroQo2H+SKfCK3Die93AzR4e8h6uPk8sXqtqHx/JWip2FqG31rc1b+S
-	 OlRugrRjCyKX3WCb2Qt3UomyQCYWBbwn8QwkTfjUsEIh6vUEvxj16ETtEIU7C9wTEVz3P
-	 BWDaHkV9+W/HClSBLWF2aQh+JxdxP2sR+0o/XBQtOrL46JvPbHTDVHCgiLXvou0ffMG21
-	 kdFp9l96UR3axIotE1HopdAhxfl3s2rLRl0sJeVWFaZilYBzkaBmh4DuKhDj7gP98QAN8
-	 ksPiumSp113qRF9fTRA7f6g9hMc5LVnVoxJsnjjDOhZfpLQNT1Yvwyvu2TAOYeiVWGQ==
+	bh=T2epQPFKqJB7GlBzoTHqHF6gK9NRr6tXiWZKQR083mM=;
+	b=DtDKRsUsDtKvjNvIwbQuMMn1QF9jsu9iyLRzNGKNF7OjolozHwxEe5qz3H3Jnsul1iR2
+	 W7VCwSmu9/HD/tqYeETVmofxHzYmosZuTX9FsTnDNDxWKUq7O3RDohavEoXpD0p3I3+KN
+	 jO2u83QJaPtz9/Sf7Om0yZ/uxs9RgLX80rJTERvYzGFq5cG7ugWVxaPwBmNa0r280HwdN
+	 /mjK9qAmQhDjjt+DC20RTE6e25LNj10PeyF8/ZknKnUinaKNYPwF3MwBsoJ64b644i1dB
+	 reeBiwzTir0bRH2Rj/dR0OMPyAxHqq32R9j7vKv62UQigfFtRqerhPrw92Fxk25kduA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1U93bmL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ENIzMC4Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556E4606A320;
-	Wed, 18 Nov 2026 15:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B64606A320;
+	Wed, 18 Nov 2026 15:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1U93bmL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00281F000C4;
-	Wed, 18 Nov 2026 15:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ENIzMC4Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1FD1F000C4;
+	Wed, 18 Nov 2026 15:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017022;
-	bh=gILbcr+tmhFkLmVzgNfCSVuwuToXgFStfMnZ7EvS8zw=;
+	s=korg; t=1795017024;
+	bh=T2epQPFKqJB7GlBzoTHqHF6gK9NRr6tXiWZKQR083mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1U93bmLsNsZbj/tie7Sp9xp3mpZ792gA35Y/X9jBfPz4IHMfxl9qqgDKa+O+xy5p
-	 QRr1z8ecOuzZDH25acKKb2Zn6Cewc8N8M4UbfKw5q4UNF6oeosAmjC8snzcI3hyxzO
-	 DfReSDeIN/CvOmeYYkm2JsLjHwQB3lWCBb5gtVp8=
+	b=ENIzMC4QxPGw/FyxXGM/Icafk6+dya2lB1PM0flu9e3BO0fv/opsxyOtxYoWhyiYr
+	 8ZfH5Sby17YHM04MWd5v7m+5c1Nl7LnkShf8fohPWqq/E/bvDpkPqUIzWfl8HWqkBO
+	 cEpbvfI3JSZAj7EIKIlYnmUQaqw3alLadG2SsFJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Thomas Huth <thuth@redhat.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0696/2651] crypto: ccp - fix SFS ioctl race against device teardown
-Date: Wed, 18 Nov 2026 15:32:16 +0100
-Message-ID: <20261118150312.900781594@linuxfoundation.org>
+Subject: [PATCH 7.3 0697/2651] crypto: ccp - kill v3 IRQ tasklet during teardown
+Date: Wed, 18 Nov 2026 15:32:17 +0100
+Message-ID: <20261118150312.932045539@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,65 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit de4929b47683ed22d8c05f68d2d0f0cfd95b90a1 ]
+[ Upstream commit b72a639bdee6e07d8091718ac3e451d9c5cba1b5 ]
 
-sfs_ioctl() reads psp_master->sfs_data and caches it in sfs_dev before
-taking sfs_ioctl_mutex, while sfs_dev_destroy() frees sfs_dev->page
-and sfs_dev->command_buf with no locking at all and only clears
-psp->sfs_data afterwards. A call to sfs_ioctl() that reads sfs_data
-just before sfs_dev_destroy() runs will still acquire the mutex and
-go on to use the now-freed command buffer in send_sfs_cmd().
+On PCI devices using MSI-X, ccp_irq_handler() schedules irq_tasklet. The
+teardown paths release the IRQ but do not drain a tasklet that was
+already queued, so it can access ccp after the device-managed allocation
+has been released.
 
-Have both functions take sfs_ioctl_mutex before touching
-psp->sfs_data, so a call that is already using sfs_dev completes
-before teardown can free it, and a call arriving after teardown sees
-sfs_data cleared and returns -ENODEV instead of racing it.
+Kill the tasklet after releasing the IRQ in both the initialization
+error path and ccp_destroy().
 
-Fixes: 648dbccc03a0 ("crypto: ccp - Add AMD Seamless Firmware Servicing (SFS) driver")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Fixes: 7b537b24e76a ("crypto: ccp - Change ISR handler method for a v3 CCP")
+
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sfs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/ccp-dev-v3.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/crypto/ccp/sfs.c b/drivers/crypto/ccp/sfs.c
-index a4777839790b4..530141f8bc743 100644
---- a/drivers/crypto/ccp/sfs.c
-+++ b/drivers/crypto/ccp/sfs.c
-@@ -111,13 +111,13 @@ static long sfs_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 	struct sfs_device *sfs_dev;
- 	int ret = 0;
+diff --git a/drivers/crypto/ccp/ccp-dev-v3.c b/drivers/crypto/ccp/ccp-dev-v3.c
+index 60a133e23e5f5..d92de4ad31ac5 100644
+--- a/drivers/crypto/ccp/ccp-dev-v3.c
++++ b/drivers/crypto/ccp/ccp-dev-v3.c
+@@ -506,6 +506,8 @@ static int ccp_init(struct ccp_device *ccp)
+ 			kthread_stop(ccp->cmd_q[i].kthread);
  
-+	guard(mutex)(&sfs_ioctl_mutex);
-+
- 	if (!psp_master || !psp_master->sfs_data)
- 		return -ENODEV;
+ 	sp_free_ccp_irq(ccp->sp, ccp);
++	if (ccp->use_tasklet)
++		tasklet_kill(&ccp->irq_tasklet);
  
- 	sfs_dev = psp_master->sfs_data;
+ e_pool:
+ 	for (i = 0; i < ccp->cmd_q_count; i++)
+@@ -545,6 +547,8 @@ static void ccp_destroy(struct ccp_device *ccp)
+ 			kthread_stop(ccp->cmd_q[i].kthread);
  
--	guard(mutex)(&sfs_ioctl_mutex);
--
- 	switch (cmd) {
- 	case SFSIOCFWVERS:
- 		dev_dbg(sfs_dev->dev, "in SFSIOCFWVERS\n");
-@@ -191,8 +191,11 @@ static void sfs_exit(struct kref *ref)
+ 	sp_free_ccp_irq(ccp->sp, ccp);
++	if (ccp->use_tasklet)
++		tasklet_kill(&ccp->irq_tasklet);
  
- void sfs_dev_destroy(struct psp_device *psp)
- {
--	struct sfs_device *sfs_dev = psp->sfs_data;
-+	struct sfs_device *sfs_dev;
-+
-+	guard(mutex)(&sfs_ioctl_mutex);
- 
-+	sfs_dev = psp->sfs_data;
- 	if (!sfs_dev)
- 		return;
- 
+ 	for (i = 0; i < ccp->cmd_q_count; i++)
+ 		dma_pool_destroy(ccp->cmd_q[i].dma_pool);
 -- 
 2.53.0
 
