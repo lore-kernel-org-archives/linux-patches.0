@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016140;
-	b=J9ZZYqfJlaK/0biLEcWodgyFvBuGG0u65+1PvGEUHOdIn1aeg19ZwPYU5fDC/KY3rSBB
-	 LdQT+QLObQ6tAkORj28DeX+aZMWQvfnbHxsb2DwqoLmiFf27YmQfxOwSDK8XXWsRahz5d
-	 D38+nGK7thfPKE3mB3dlu03GY69MwpY99ogvR35TL5CnTxmZiWPo11pLb2hiU25y7yrZp
-	 XrUL2asYcSiVgLzyhIz2BkHTsz++JW8JXsABdvRimtUlVNv+A0aL7+NnCrWRRrM5BXc3d
-	 hFaqZq8u5+WbatrIjstQZQ52yNYegqZ0mBWIDdnvi94h/1ahlTfx5LmBUJpHBjw3vyA==
+	t=1795016143;
+	b=g+42YFWj+HrRIIkHbYZPZ+5e/2T+Sgz/COCxW5gJBDSaUNRuBX0XuRfQMtaVQ+Dxson8
+	 MM3QSESaNhNoGbeXHM0ylp6A4asc4ntMgm5v7WWsBmapnuQYLkAbXbFLLdw1sXQvwNk8R
+	 evsaro/5N/ZrAnu9tIuLUxna3qrVATi2rFXe4LG3/xGU1dIzJO9DpRJ+Z/1ifP+v5nNtp
+	 syDvifkNmLLRvJz6LK81fdeIMrQXq4WHKRUDZcPICqy6NiuDeRH9p5MUG/NAYB2XNnhp7
+	 rFxDmuqB4cQrjI/RCwas1s7SWbJkxNFFRGNJ0vhFznsMXUOnH7aSJ2UEKmiSa122DUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OIExqzOxJNHPCfp46qZCTSKvSsxSXi65U4y4Zq56tcU=;
-	b=DoxgzNxnycQSdPggRDA632A4mDi3l6QQAuyyqtFAYxrks3X9BwpKq5WgNi0GUTHZOtjk
-	 hCxHbHCn+AaqglUurriOfsPsy9n3WrGyOnw974TNmo9tFeDaK4ZTc99YX4NRlr8CpfN6c
-	 Yk31DVcfh0tva6PpqfiL5G7VMeQjUJDVcr/38/BzjHiTjR1hqK+nvwDWzNpCCAI2Fagfz
-	 Ai3iz+8F6o17xalaMY2pDRATlEa3OwVLRIJgq9x+u6TrHwTBammTaPp1ocrCwz/RUMI1c
-	 rAVMElBgPOAFWeOAEnGNEACzm/8USpX/MWzkXbiHTPZZVqmkY8hrUCAuPnGzEazLRmg==
+	bh=VIbTxovdEkDYEplWPQwLGxzOhM6E1QrdfMDTwHICcDI=;
+	b=xh0Y+2y1TTDjW5JmuZMfVE0wRDTvz/uQq6rf0QraNTqDbniqA3MjY2F65473/Zv+5jla
+	 p5+9MFjIZ5/GlRhMnTOfJlq07BIp8xXi7qoI74sUwqsbzONuFU/YKCS1nX3zKAuaQZcJB
+	 QMqJXbb6d/cYUnX6xhr00SIlqVcjp/5B/Nl4ZuDbYo4uhhzZk/kqeuDPxMLTICBgl/OFU
+	 LHamfgCrO6+hXAoajrxDS5bwQFF+ECVkTO5AUW+1R0koO3BlzwA2uBIKxGb8C75yjXaeD
+	 95kgAGt3wk/wfzbNkfV8cjPGt0J04PPX4zPUPdvxjcJvu0NxiLWHO75Yxf/gLETb4QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBiT3S1S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXpEQ6gk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44E4606A330;
-	Wed, 18 Nov 2026 15:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533EC606A320;
+	Wed, 18 Nov 2026 15:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBiT3S1S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF03D1F000C4;
-	Wed, 18 Nov 2026 15:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXpEQ6gk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B971F000CB;
+	Wed, 18 Nov 2026 15:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016140;
-	bh=OIExqzOxJNHPCfp46qZCTSKvSsxSXi65U4y4Zq56tcU=;
+	s=korg; t=1795016143;
+	bh=VIbTxovdEkDYEplWPQwLGxzOhM6E1QrdfMDTwHICcDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBiT3S1SkDF9Mq5YqyMPogWWnqjiUZ0wriQsDk9wod1g0grbwuy8xKLrMGqLzbXFq
-	 BtJI3bHPikFfktj0b+Mw/DUDjElCm5SC27ayGKZPnEu/LB2ipAEJ4QR33h1L5DMYcV
-	 WiAwO86JV2Vi45tEaqCq1hkQSNZkJGDGfN7XgxMo=
+	b=rXpEQ6gk2/DdXWfxUIKn9i3ToY0nzn//TaRkBvmq8tf/DvBlGSyv3xsvXjLkOMW0K
+	 IGR1lT4URdtaBtSceYKAu52jz3v9A5OsQ+NCBtEd6zM5+1uMaqvRaQ3wPDN52Me25F
+	 MKCNHLxTgS9tk+oIfJgB2/+aW8iNHQ3u6OXm9YxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Justin Yeh <justin.yeh@mediatek.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Gabriel Fernandez <gabriel.fernandez@foss.st.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0421/2651] HID: i2c-hid: Unfollow the panel on shutdown
-Date: Wed, 18 Nov 2026 15:27:41 +0100
-Message-ID: <20261118150302.989395127@linuxfoundation.org>
+Subject: [PATCH 7.3 0422/2651] ARM: dts: stm32: fix vdda supply for onboard hub on stm32mp15 DK boards
+Date: Wed, 18 Nov 2026 15:27:42 +0100
+Message-ID: <20261118150303.021979827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,53 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Yeh <justin.yeh@mediatek.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit 59fc35a1edbfa5405122d749cf8843da131fd796 ]
+[ Upstream commit 8d8f88e0f3e602cd967bdd8d7bc218ac7613650a ]
 
-i2c_hid_core_shutdown() sends SET_POWER(SLEEP) even for panel followers,
-but nothing in device_shutdown() guarantees whether the panel, and hence
-our own power, is still on by the time we get there.
+stm32mp15 DK boards use Microchip USB2514 HUB. Since vdda supply has been
+added, the regulator framework wrongly associates the 'vdda' supply
+dedicated to ADC, so the wrong regulator is referenced.
+Only the 3v3 regulator is used to supply both the digital and the analog
+part of the HUB.
 
-Do what i2c_hid_core_remove() does and just unfollow the panel.
-drm_panel_remove_follower() calls panel_unpreparing() only while the
-panel is still prepared, which powers us down properly; if it is already
-unprepared no transfer is attempted at all. On MT8196 the panel is
-unprepared long before us, so this also drops the ~2s i2c bus timeout
-from every reboot.
-
-Fixes: 96a37bfd232a ("HID: i2c-hid: Support being a panel follower")
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 673655f7944f ("usb: misc: onboard_dev: add vdda support for Microchip USB2514")
+Signed-off-by: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20260821-usb_fixes_vdda-v1-v2-1-23cc919b59fb@foss.st.com
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/st/stm32mp157f-dk2-scmi.dtsi | 1 +
+ arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi      | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index a61fd1de52030..a8a9854854f52 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -1357,7 +1357,16 @@ void i2c_hid_core_shutdown(struct i2c_client *client)
- {
- 	struct i2c_hid *ihid = i2c_get_clientdata(client);
+diff --git a/arch/arm/boot/dts/st/stm32mp157f-dk2-scmi.dtsi b/arch/arm/boot/dts/st/stm32mp157f-dk2-scmi.dtsi
+index 89de85a2eff32..172347769e025 100644
+--- a/arch/arm/boot/dts/st/stm32mp157f-dk2-scmi.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp157f-dk2-scmi.dtsi
+@@ -180,6 +180,7 @@ &sdmmc3 {
+ &usbh_ehci {
+ 	hub@1 {
+ 		vdd-supply = <&scmi_v3v3>;
++		vdda-supply = <&scmi_v3v3>;
+ 	};
+ };
  
--	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
-+	/*
-+	 * Like in i2c_hid_core_remove(): if we're a follower, the act of
-+	 * unfollowing will cause us to be powered down. Otherwise we need to
-+	 * manually do it.
-+	 */
-+	if (ihid->is_panel_follower)
-+		drm_panel_remove_follower(&ihid->panel_follower);
-+	else
-+		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
-+
- 	free_irq(client->irq, ihid);
+diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi
+index 599ea07bdb19c..01ac3d7d6d0ef 100644
+--- a/arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi
+@@ -764,6 +764,7 @@ hub@1 {
+ 		compatible = "usb424,2514";
+ 		reg = <1>;
+ 		vdd-supply = <&v3v3>;
++		vdda-supply = <&v3v3>;
+ 	};
+ };
  
- 	i2c_hid_core_shutdown_tail(ihid);
 -- 
 2.53.0
 
