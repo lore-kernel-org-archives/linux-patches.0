@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033666;
-	b=PY0TTD/x22wUNT7fASHMZCEIXYoSG5OWvG8yEIrlpDGwULoDgq+tD0Vus/Qpr1Zu2qob
-	 VZs+uoSvfUgoQ9Ks7N0oYOVuw0wKom5GrGUmUcdZOaHQ3riewH2xOVJ9OlschDlSveFAr
-	 xewESRyiu0wYQzK6zzlBOdvX6sc6AEEWMMluPE3hb6wrnrVaHH0YX3jpWSgMPCEFvzBZU
-	 NIhZ5VRCpOrpReLWq8vZll64Ctqg5HMKPAVrcOFaz69wa6m5qhjQ+gQnBX9a2dL2v7rnj
-	 TJpAvB2T+uV6iEcErGuQJsaiWQ+5Dbd/3cwlklXSIP8hQCIQ/DoE8T68oivrXgTpnrg==
+	t=1795033669;
+	b=ZKKYI7zU+H4ST47zZ+gy1zB8hG7BFS+YoQZKqUjfOlbrqIqP/hMEnompGYp9l3vRh4Ir
+	 cfw+I0gyBgy9QFvzf6l6h5B4IoFx6vYZNJZc7MzbPmqom2Y+Z++Qd4PUdUrEgwJqqn3cn
+	 tw/vFtYpn5BbdKikPGJFg74LGeim4N54Om5kY4k40/nrIFfNoD21T2qUbbpzayBu85tWS
+	 yAD0SnaRvFnIfN6tCsAzW1A/x65AVftlRn2ROMxrH70g/1SCt8dyUqzIgT1fIxGPWR+FI
+	 /CIj/S5LCgEtwsuKuYPlNWXeoXL8Zb9hrOX0tFJlDFDvY1y9nHwmsBS+n37bVzqGjtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8FaLDUPGinJVvZNIReLe8srUdYUjhm/svWqsJn/DiZI=;
-	b=K9pePz7xM6DZZTkRgauipWKfT2IsWpNRQemUEU+zeV/pmSnIxhTdxKe73agKWEsenLbA
-	 sWanEA1YaA5JH8SSNcXEHnzYnCyV97DqVl2LnAMAvxOEu6POp/aJ010FM+DDlwLcsCaCh
-	 DOuBhTEUYjI117OJwTQo7LadKHWGK3YcR8f1TD+IxDy8zGUIS/1AGaTW9efw48A3fLs4A
-	 BAkBgEBP2KemLJNazsbr/RWt9BG+MeIbpg3CHmWXR6/Pn3p28rJsgqZrQlO4RQlJrhG1g
-	 o6zkyGL1rBtGAXqHfBQh2fFDNbaSEHQ+5legb/6fAnUA1Se8fBmcx186vwD8vhY5EFA==
+	bh=ihZVRQUClZbjIr+DGs0/qyoQWvLwbGLf/UHndXZB2Gc=;
+	b=tSiuw0eSu+KINkiyKIqaej66SdXqQFOoI28ibemkeYF5M//zJac7ONkOMYM75l7gOCoi
+	 MzT6ONaB3kC8xvC3RMtriFqiUSwm970PaHe1BhlGz54pUnlJ/qsHuurIlvMJyaGt22ImH
+	 SEcxJoln/WkZyAhkPtfuht0sBct4vD+mCShp6TLOBXXx18SGtm+kHkkeagWQKNMe5Zns/
+	 Uybe7PWFvMqpsXJPmeKh7s7P53hXEmsuSxll/BHnLuge9EkAcd1ExOfXOhJj7pG3ehH9j
+	 jnyom9IEhLOHN3yM7qu39BXMHKe85uXIR/FxfsRhF8PafDC0UTJ1nyHZLCLVLK5OahA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHkFRjUA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYr1rC4j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EA8606A320;
-	Wed, 18 Nov 2026 20:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986EF606A320;
+	Wed, 18 Nov 2026 20:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHkFRjUA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D811F000C4;
-	Wed, 18 Nov 2026 20:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYr1rC4j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87641F000C4;
+	Wed, 18 Nov 2026 20:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033666;
-	bh=8FaLDUPGinJVvZNIReLe8srUdYUjhm/svWqsJn/DiZI=;
+	s=korg; t=1795033669;
+	bh=ihZVRQUClZbjIr+DGs0/qyoQWvLwbGLf/UHndXZB2Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHkFRjUA7wCkbsBr4oxcmKiAp1szOlqCuUMh/hlt60fE6Gq5CcTCKx+YnInHxGjHC
-	 SUMJoXnqzkQAnGrYAWftJ9k+I0PbGOjRFjjy/vY3J5Jkb+u2fKIGJQBPuOrz6IpLER
-	 Dt+p89el7L9dFAqLZ97Sgf/3MZKc15EpEMixqfqY=
+	b=WYr1rC4jqFJ6xd558jTeC8OZzRtkQ4LLXeR2Sc/mEjk58KDyE7QzmtDdMfJmdlVqY
+	 FsG1HJ4lN4MaoC2p/gYesLbnqXsDkTkYHYD7koej3Kn0ct9QrGm9QHNUgPd6Un74kJ
+	 3/PdlIxelnWZq13DfPbDjORZ6XzqeYujrJFgGZBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mike Tipton <mike.tipton@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0096/3318] crypto: keembay - add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:11:58 +0100
-Message-ID: <20261118150317.063546893@linuxfoundation.org>
+Subject: [PATCH 6.6 0097/3318] pmdomain: qcom: rpmhpd: Skip retention by default
+Date: Wed, 18 Nov 2026 15:11:59 +0100
+Message-ID: <20261118150317.104842133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,39 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Mike Tipton <mike.tipton@oss.qualcomm.com>
 
-[ Upstream commit b73b71df4cb4ca241165ad31218c82dfe489147c ]
+[ Upstream commit 7178817f190496f2bfdec181fb4aa72832448468 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+Retention is very rarely an operational corner. In the majority of
+cases, HW cannot operate properly at Retention levels and so the minimum
+operational level when enabling a rail is the first corner above
+Retention. A small subset of always-on use cases can operate at
+Retention, but those aren't controlled from HLOS.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+Currently, we allow Retention by default and only disallow it special
+cases. But this leaves us open to various failures when the PD is
+enabled without first being voted to an OPP above Retention. Such as
+when a child GDSC PD requests to enable its parent RPMh PD. In this
+case, the GDSC would get stuck powering on.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
+Newer chips have started supporting Retention on rails that didn't
+previously (such as for MMCX). Instead of adding more special cases to
+skip Retention on MMCX, start skipping Retention by default since it's
+almost never desired from an HLOS perspective.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Mike Tipton <mike.tipton@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/keembay/keembay-ocs-ecc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pmdomain/qcom/rpmhpd.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/crypto/intel/keembay/keembay-ocs-ecc.c b/drivers/crypto/intel/keembay/keembay-ocs-ecc.c
-index fb95deed9057a..4d020070e185c 100644
---- a/drivers/crypto/intel/keembay/keembay-ocs-ecc.c
-+++ b/drivers/crypto/intel/keembay/keembay-ocs-ecc.c
-@@ -989,6 +989,7 @@ static const struct of_device_id kmb_ocs_ecc_of_match[] = {
- 	},
- 	{}
+diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
+index 823604952b5ec..78f0ac5bb0019 100644
+--- a/drivers/pmdomain/qcom/rpmhpd.c
++++ b/drivers/pmdomain/qcom/rpmhpd.c
+@@ -40,7 +40,6 @@
+  * @addr:		Resource address as looped up using resource name from
+  *			cmd-db
+  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
+- * @skip_retention_level: Indicate that retention level should not be used for the power domain
+  */
+ struct rpmhpd {
+ 	struct device	*dev;
+@@ -57,7 +56,6 @@ struct rpmhpd {
+ 	const char	*res_name;
+ 	u32		addr;
+ 	bool		state_synced;
+-	bool            skip_retention_level;
  };
-+MODULE_DEVICE_TABLE(of, kmb_ocs_ecc_of_match);
  
- /* The OCS driver is a platform device. */
- static struct platform_driver kmb_ocs_ecc_driver = {
+ struct rpmhpd_desc {
+@@ -175,7 +173,6 @@ static struct rpmhpd mxc = {
+ 	.pd = { .name = "mxc", },
+ 	.peer = &mxc_ao,
+ 	.res_name = "mxc.lvl",
+-	.skip_retention_level = true,
+ };
+ 
+ static struct rpmhpd mxc_ao = {
+@@ -183,7 +180,6 @@ static struct rpmhpd mxc_ao = {
+ 	.active_only = true,
+ 	.peer = &mxc,
+ 	.res_name = "mxc.lvl",
+-	.skip_retention_level = true,
+ };
+ 
+ static struct rpmhpd nsp = {
+@@ -757,7 +753,15 @@ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
+ 		return -EINVAL;
+ 
+ 	for (i = 0; i < rpmhpd->level_count; i++) {
+-		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
++		/*
++		 * Most HW won't function properly at Retention. The minimum
++		 * operational level is the first level above Retention. The
++		 * small subset of HW that can operate at Retention isn't
++		 * controlled by HLOS. Skip the Retention level to avoid HW
++		 * failures when the PD is enabled without first having an
++		 * explicit OPP level set.
++		 */
++		if (buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
+ 			continue;
+ 
+ 		rpmhpd->level[i] = buf[i];
 -- 
 2.53.0
 
