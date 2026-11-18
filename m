@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016494;
-	b=mJe9ngCnx4wlbrOQh921OU4agvUStJ/piasWSH/wTgGRa/DLLBf/GuCViMvg/kiHGlNV
-	 kdS6I6lwkyeYON43wjBMtXYo/GtICZdyNmIuM28a+oRYwgqqCNwKv/uStu+MpUeP9mGrp
-	 FLWIQuCH1rPunPL/LLUv8sddvIbWQ+7nyUYwv20865wqQ2Y3p4nliKvqvsjLVh8Q2Crg1
-	 Ex9bL7xEA3M0Rwi6Ej3e0Gaw6C3+WZNDNILX1MH3DyRD5ESX6FktUIhSJNDU3abrMINh2
-	 dRINeW6uSY/E+Wu6lXT+qmJpfmvTKKxhamPvrrqpc0WNyx9m37sczfOqtiIu9is/eQQ==
+	t=1795016497;
+	b=jpVUzCXFKGrJg6UIKZsVeZJ6GLOPTPQfwwuwYlrD8YSxNERgCnTipCOSueziWRLBUb2m
+	 qwlU2x6iVIr9bk6UbkFlgBwsUWAuCiV3lLVUGJuEG1Getv1evs25V3QGoENVxs1c02uaJ
+	 wI5Rfxk5esM6K1UmRtSuNa1wqXEYmie7UaRcJmNxApjKrgLb4tYzYfeGG/NFGxhGyVGOr
+	 xzj4z2BHNGxX8da/qtUkwceWASJUUJkscdEQW60jZYL3o1IC8Z22hozSH6iZi/dUTHGEm
+	 F2/mo8V66XtSvlzbo3iYSJ1SO393VC4EhKzts7T5zqaEksls3grWpZ6+lDk3jF3+G5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3D91293mAHEceTlOVy7tdSaYAAVS4gOeMP4lNX7u5pY=;
-	b=TFhsxh1Dk/40AuxIHDi2BzHc53CMO4EKMgSAsdJXqtuOgseChDQuQTDkNr024nNI3GxS
-	 sQU9NTEhPw8DNH86W/pBnXrGk7/2jJ9kXU1sGgJj4V7hcEM5gqMAY+PTtv+WG0eY9wcTW
-	 8Tvu/xZg0iGMRdnq/LaLFWQgmkqlInB2lY17ofaGXWBDRDovTYQnDXLDbhoeXvXx7D6dO
-	 PSR3t/bBJP8w61hx6cut2KbUpBwDlBTmrei9cvCMKWveMZqQpReiOAG/81NW06PoyG4K0
-	 QaKGMpCIC+Jk1Me4Xj3JktHbPGdigzG2KNVNwaYUFtyVA3tquDZ3KwNbaND3S1AhUHg==
+	bh=JuPhjYQ/lBeyRcDAkhLK5Pr2Q3algxVwqoRy3S86Zf8=;
+	b=XULq3OfJFJTB4Zyj3m3PgDB0BQMmYIW927HOyjyGcnGUsCYQtwVSjLu8pUKyqQAslwPk
+	 jcGBxkp2zS9YvWlhX/VqXzKMKBOqZMSYn8ruRNRauxV7bfpUtIqwoPaX49WYylCSbwS5S
+	 uTgLCoWgDAyyYhX5LkjwiPU69WLhd/Kt9fG7NhGVm8w8Z07bVsoxYlDkJ3Jh7VajPrgYp
+	 FjJFG+ywkC8MCrv+OzpRYm9SFwNwie4x/OpNy2ENr6cv82QnKMEA+7L7aFCTd0SOqQBWs
+	 VoXw6LwMKJJinBRh3rs/c7PINf5+lBho1fRC9Ia+U9Q/nPecqyxzOMTXdMEkolTqn4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4zXLeG0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxFbh5u3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71FE606A320;
-	Wed, 18 Nov 2026 15:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5FD606A32C;
+	Wed, 18 Nov 2026 15:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4zXLeG0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225731F000C4;
-	Wed, 18 Nov 2026 15:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxFbh5u3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B131F000C4;
+	Wed, 18 Nov 2026 15:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016494;
-	bh=3D91293mAHEceTlOVy7tdSaYAAVS4gOeMP4lNX7u5pY=;
+	s=korg; t=1795016497;
+	bh=JuPhjYQ/lBeyRcDAkhLK5Pr2Q3algxVwqoRy3S86Zf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4zXLeG02HKnu7I5ezJhLevISSDr2Rc2HI9Is8Ww+q+gehZMEv0Woey0DS1F+cr40
-	 Sebk3T5H9nErJ4iB5SlvL7g3WxajP7e538UlDuVKS0au9RuVyBjXIkj0CXdpmz15vz
-	 vfRZCPQRK7XvF9aRT5mfzmEVlkx8/Z4XK+LbS9dY=
+	b=pxFbh5u3iclbvzQ8wygZ68cGFlFjWz+g1V8ZKGF6KULdn5c2Gf56EiMKtGXH9Odl5
+	 pvETVTipx2uBW3p45SfPPj2vsm+PYAZaJqaCilW4zNnonvLF7zWKiFQ/xVi86Hq0U6
+	 Sibh/EW8DicyrLpsyWMBF8RIsJFkz4lcw8R+v4LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Chang <seanwascoding@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0548/2651] drm: bridge: dw_hdmi: Fix constant truncation warning on phy_mask
-Date: Wed, 18 Nov 2026 15:29:48 +0100
-Message-ID: <20261118150307.476026754@linuxfoundation.org>
+Subject: [PATCH 7.3 0549/2651] accel/amdxdna: Fully initialize map structure before registering notifier
+Date: Wed, 18 Nov 2026 15:29:49 +0100
+Message-ID: <20261118150307.514181459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,44 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Chang <seanwascoding@gmail.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit cb6a133bc75bc4c5b25f7c278b6c74bf46a3d71b ]
+[ Upstream commit 5eee433b5c97821979e7de58476dc245ee168d89 ]
 
-In dw_hdmi_probe(), casting the bitwise complement of (HDMI_PHY_HPD |
-HDMI_PHY_RX_SENSE) directly to u8 triggers a compiler warning
-(-Wconstant-conversion).
+The map structure is currently only partially initialized when the
+notifier is registered. Although holding mmap_write_lock() prevents
+the notifier callback from running before the remaining initialization
+is complete, the ordering can be confusing during code review.
 
-Due to C integer promotion rules, the bitwise OR and bitwise NOT are
-evaluated as 32-bit signed integers, producing 0xFFFFFF0D before being
-cast down to u8.
+Fully initialize the map structure before registering the notifier so
+that the structure is completely constructed before it is published.
 
-Fix this by explicitly masking the inverted 32-bit result with 0xFF
-to keep only the lower byte and prevent implicit upper-bit truncation.
-
-Signed-off-by: Sean Chang <seanwascoding@gmail.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260819151216.56833-1-seanwascoding@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260911163907.1193852-1-lizhi.hou@amd.com
 Stable-dep-of: ac18f34f5927 ("accel/amdxdna: Fix race between unmap and free BO")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-index 34c5f583e9108..937d61c42b58d 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-@@ -3353,7 +3353,7 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
- 	hdmi->channels = 2;
- 	hdmi->disabled = true;
- 	hdmi->rxsense = true;
--	hdmi->phy_mask = (u8)~(HDMI_PHY_HPD | HDMI_PHY_RX_SENSE);
-+	hdmi->phy_mask = ~(HDMI_PHY_HPD | HDMI_PHY_RX_SENSE) & 0xff;
- 	hdmi->mc_clkdis = 0x7f;
- 	hdmi->last_connector_result = connector_status_disconnected;
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 5a1a2ee261b76..e861db6f93693 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -415,6 +415,15 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
+ 		goto free_map;
+ 	}
  
++	mapp->range.notifier = &mapp->notifier;
++	mapp->range.start = vma->vm_start;
++	mapp->range.end = vma->vm_end;
++	mapp->range.default_flags = HMM_PFN_REQ_FAULT;
++	mapp->abo = abo;
++	kref_init(&mapp->refcnt);
++
++	INIT_WORK(&mapp->hmm_unreg_work, amdxdna_hmm_unreg_work);
++
+ 	ret = mmu_interval_notifier_insert_locked(&mapp->notifier,
+ 						  current->mm,
+ 						  addr,
+@@ -425,15 +434,6 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
+ 		goto free_pfns;
+ 	}
+ 
+-	mapp->range.notifier = &mapp->notifier;
+-	mapp->range.start = vma->vm_start;
+-	mapp->range.end = vma->vm_end;
+-	mapp->range.default_flags = HMM_PFN_REQ_FAULT;
+-	mapp->abo = abo;
+-	kref_init(&mapp->refcnt);
+-
+-	INIT_WORK(&mapp->hmm_unreg_work, amdxdna_hmm_unreg_work);
+-
+ 	down_write(&xdna->notifier_lock);
+ 	if (list_empty(&abo->mem.umap_list))
+ 		abo->mem.uva = addr;
 -- 
 2.53.0
 
