@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023601;
-	b=wTVBjwVeL9HI415Vf6cz7NqfXdSm+T5aANVc6wOCzuH4k18co29oDdfIeTOod4ab1kEL
-	 /LKHKkx3V3H4ANKW9OeHe4ueRl0q27i+is3b5Km6HzH9Rjil4hlP4/ShjBrNP4lMCD8oM
-	 XfwyZL6srecEUbQtkZQGnxznjbgEyZEt756T8FgcnIoVoO15dGW6+1iY61M1Th3VRYFi4
-	 f2EG8pyqFjrtsiGIQJ5NwJFgfIcpCOQXS8H62NyNU9JAZDwG3rlLkefP+fSOgqf0lleIV
-	 YPQziGz93y+IUO0MZa8+XxesAuYcaXPx58U0H0/ilefWkr3wzwR/A48x+LxkjxWswcg==
+	t=1795023603;
+	b=G2wQBuBELLGSZuo6EbC22K6t4p8hYbyT6FlaXSnn84hSQ0l1jNZqPcXp6LuqcF3vlxnE
+	 jIpvDxb6zg93dNPn0E5UFI8/sXmzr9F30xHr7F2KCn4AyW/0LZzaEVLWB3MQMJ/v6FCeT
+	 AIp6cDTSxx/8oW6vQ8eHFWK3TeqBqIz3gekr8KsgRGkD2DGnN+ou0w6aRBN+fb9GlQnI4
+	 ExLCW5YWuWb4VQ/IZAakiUVFxHHAdYAFiTGyOeqWLhzDWzZsksz7OvuFKRklXEBk9b5HI
+	 vKGPqjhI3EpnuDcwr7Uzwu+5Wvt50C22R3j3luhxEp2KgFv1Jd6+EDZw3JRLou2FRBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OKU+QpMaSw5dfcTaTlYqigmjYm/sOAz4PlYZGlBrv+U=;
-	b=3tKdd0bBjlhKjvT8E/BCrX6vIsK5vVoGYoplgRnUhu7NVKzC7J7eIks/5HPP52rezNdA
-	 aq3los3vp6WoB/PSzyuH0OnzMvqvd64LyzQgvwFUdyb9/79mnz+NcqLvs5r7WJCikEHnV
-	 UOTn+4Sfnq0JRgWF+MYks4zh22vkI+SMKFYsOuP+dk5tISBMYQ1QLErE3zwp9B4ktDMSB
-	 +/T4PHlyepR39RQ3TKsM7a7cIKIbqB9dtGIYk/SeO48rC5KT+GVQkdtwPJvijlbewbd2F
-	 GUnhp/wPb7NR8O+5g1OCl1zKXF1Zaj+0uMgRKINig6vKUwaVx609F70oLXSsEDT3raQ==
+	bh=Vr1SyBp79DVThLPX3QVrKuqOKR7N0BcrsanHARbp+DA=;
+	b=bN5azT22rOcdkU+BsyJhYgDoowPu/03TWLl+/znsoCm6/Gq5gc9UEtx3dYDg9D3dA1x+
+	 XqtkMdrFRZoGWbjhLqz8wwpCiF088phcX+Mrfd3Ll9+Jr+NTun9edl7fxNCPVgxS6KJTR
+	 foCMGtyCRYu7z0nueSD8SU4J0E/+HkpiCn5DN09tl8R39C34Fw1yr7vbpMhvsq4UW1267
+	 q8FlMAGKS/vZXFyTtPLR6ppuoc6Z9XPf00Pby9+qEHNvqIYtlezI/KHFIqzD5JMmN+2LP
+	 /SL6P00CPri7kdpYjfwmOBWxyBE/oh+UYCw4URfDKUpqws+3MEVI5ayFELg9T5s+/gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqLwb7kE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIpXAe0v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F57606A31C;
-	Wed, 18 Nov 2026 17:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9186D606A31C;
+	Wed, 18 Nov 2026 17:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqLwb7kE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8191F000C4;
-	Wed, 18 Nov 2026 17:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIpXAe0v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E131F000C4;
+	Wed, 18 Nov 2026 17:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023600;
-	bh=OKU+QpMaSw5dfcTaTlYqigmjYm/sOAz4PlYZGlBrv+U=;
+	s=korg; t=1795023603;
+	bh=Vr1SyBp79DVThLPX3QVrKuqOKR7N0BcrsanHARbp+DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oqLwb7kEHVcxzyoemqLtgNf/AED9lpijCS/pEeqFKMJKSi6zfywRbM5a/SsfmvhxA
-	 I0zzp8KIVIQm6R9/14ROoONjIj76IT9of7JwjtAJrX/2+RlEMKUxolugIafGKFTyOA
-	 sVVPa5EGLiDKFUgZVwZNkH9tJGyLhP538uP3rJJc=
+	b=qIpXAe0vHCru04a419rOp+6vAF0xrrIYSnbA5Rx6A7ViHKSrSmA0FFJ1hUxoVSIaQ
+	 02aJ4OBBj5xElrzcTRqQjt88IFsPaS6ZjHnt962RIZPsLOHygvzcc3lO3v2O1ihFWu
+	 s9Sqpqgyq5NNEvRbVPR9hKGr7uJICACacunUiDGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0425/2151] clk: sunxi-ng: div: Add feature support to M clock macro
-Date: Wed, 18 Nov 2026 15:36:00 +0100
-Message-ID: <20261118150137.536890169@linuxfoundation.org>
+Subject: [PATCH 6.18 0387/2151] crypto: lskcipher - preserve state across unaligned chunks
+Date: Wed, 18 Nov 2026 15:35:22 +0100
+Message-ID: <20261118150136.169731325@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,64 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit f43bed1fb1ddf7b350ceb7c371c624795a7820e8 ]
+[ Upstream commit ba871255f796d1f599ba710f03e1803d1b374a75 ]
 
-Add a variant of SUNXI_CCU_M_DATA_WITH_MUX_GATE() that accepts CCU
-feature flags, such as CCU_FEATURE_UPDATE_BIT.
+crypto_lskcipher_crypt_unaligned() splits a request into page-sized
+chunks but never sets CRYPTO_LSKCIPHER_FLAG_CONT, so a stateful algorithm
+restarts from its keyed state at every page boundary. It also marks every
+chunk CRYPTO_LSKCIPHER_FLAG_FINAL, which is wrong but harmless: chunks are
+trimmed to a multiple of the chunk size, so the trailing partial block that
+FINAL guards against is caught after the loop instead.
 
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-1-cbde21c9fe69@pigmoral.tech
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Stable-dep-of: 59dced16a82d ("clk: sunxi-ng: sun55i-a523-ccu: Use M-only clocks for MBUS, IOMMU and DRAM")
+ARC4 is the only lskcipher with internal state, and cbc, the other
+in-tree user of the direct API, never passes more than one block, so
+this went unnoticed. bpf_crypto_crypt() however hands
+__bpf_dynptr_data() to crypto_lskcipher_encrypt() unchecked, leaving
+both alignment and length to the BPF program. An 8192-byte ARC4 request
+offset by one byte comes back with its second page identical to its
+first: the keystream is reused.
+
+Set FINAL only on the last chunk and CONT after the first, mirroring the
+progression used by crypto_lskcipher_crypt_sg().
+
+Fixes: 0ae4dcc1ebf6 ("crypto: skcipher - Add internal state support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_div.h | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ crypto/lskcipher.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_div.h b/drivers/clk/sunxi-ng/ccu_div.h
-index be00b3277e976..46370c0b57f00 100644
---- a/drivers/clk/sunxi-ng/ccu_div.h
-+++ b/drivers/clk/sunxi-ng/ccu_div.h
-@@ -212,16 +212,17 @@ struct ccu_div {
- 	SUNXI_CCU_M_WITH_GATE(_struct, _name, _parent, _reg,		\
- 			      _mshift, _mwidth, 0, _flags)
+diff --git a/crypto/lskcipher.c b/crypto/lskcipher.c
+index 091761d6ca0bf..b78522212ad53 100644
+--- a/crypto/lskcipher.c
++++ b/crypto/lskcipher.c
+@@ -75,6 +75,7 @@ static int crypto_lskcipher_crypt_unaligned(
+ 	unsigned ivsize = crypto_lskcipher_ivsize(tfm);
+ 	unsigned bs = crypto_lskcipher_blocksize(tfm);
+ 	unsigned cs = crypto_lskcipher_chunksize(tfm);
++	u32 flags = 0;
+ 	int err;
+ 	u8 *tiv;
+ 	u8 *p;
+@@ -98,13 +99,16 @@ static int crypto_lskcipher_crypt_unaligned(
  
--#define SUNXI_CCU_M_DATA_WITH_MUX_GATE(_struct, _name, _parents, _reg,	\
--				       _mshift, _mwidth,		\
--				       _muxshift, _muxwidth,		\
--				       _gate, _flags)			\
-+#define SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(_struct, _name, _parents, _reg, \
-+					    _mshift, _mwidth,		\
-+					    _muxshift, _muxwidth,	\
-+					    _gate, _flags, _features)	\
- 	struct ccu_div _struct = {					\
- 		.enable	= _gate,					\
- 		.div	= _SUNXI_CCU_DIV(_mshift, _mwidth),		\
- 		.mux	= _SUNXI_CCU_MUX(_muxshift, _muxwidth),		\
- 		.common	= {						\
- 			.reg		= _reg,				\
-+			.features	= _features,			\
- 			.hw.init	= CLK_HW_INIT_PARENTS_DATA(_name, \
- 								   _parents, \
- 								   &ccu_div_ops, \
-@@ -229,6 +230,15 @@ struct ccu_div {
- 		},							\
- 	}
+ 		if (chunk > cs)
+ 			chunk &= ~(cs - 1);
++		if (chunk == len)
++			flags |= CRYPTO_LSKCIPHER_FLAG_FINAL;
  
-+#define SUNXI_CCU_M_DATA_WITH_MUX_GATE(_struct, _name, _parents, _reg,	\
-+				       _mshift, _mwidth,		\
-+				       _muxshift, _muxwidth,		\
-+				       _gate, _flags)			\
-+	SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(_struct, _name, _parents, _reg, \
-+					    _mshift, _mwidth,		\
-+					    _muxshift, _muxwidth,	\
-+					    _gate, _flags, 0)
-+
- #define SUNXI_CCU_M_DATA_WITH_MUX(_struct, _name, _parents, _reg,	\
- 				  _mshift, _mwidth,			\
- 				  _muxshift, _muxwidth,			\
+ 		memcpy(p, src, chunk);
+-		err = crypt(tfm, p, p, chunk, tiv, CRYPTO_LSKCIPHER_FLAG_FINAL);
++		err = crypt(tfm, p, p, chunk, tiv, flags);
+ 		if (err)
+ 			goto out;
+ 
+ 		memcpy(dst, p, chunk);
++		flags |= CRYPTO_LSKCIPHER_FLAG_CONT;
+ 		src += chunk;
+ 		dst += chunk;
+ 		len -= chunk;
 -- 
 2.53.0
 
