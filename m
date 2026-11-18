@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028163;
-	b=li/CiysWYEuN/25TSbS1/lnpyaqUV/OfW3g5voXRQuyvK1H7q98dILhdBr9H6IjFYiHe
-	 68WSmrb4G1Av9HCf/93L0f9azcRVa+Ig5ttMlrZQSGC6nGGOaWcfYEnxAuesx/YXruhYR
-	 lR7rYrSG36QeEIf8loO8J6sWyNZfQQMrAVXhjJJUpWJt15IqvNeqiVfGKE8dNQjeb1jDS
-	 JC8KZBOGGrSaOfPOXXOu+DsO0DqIZBGZia/8GNnRKzBsulCJYDMNSsVu3ZQKcyGKJLkC9
-	 FjEQZQ2uV37BUTKNoMWwGsy5xPfD9qHwsplflZBLbL11FrnXT8fj7+9fvaE++Nu9grQ==
+	t=1795028166;
+	b=3B+h8dy36a2xksLPVHQVpEpL2BPw6D6gP8/+Da+wTv2n+Dvqpe8QjUVyn5fg3guSJtOq
+	 DYxfBkLhdWdjMcZBlbfbe6RNmPn5cX+yfJxneDEspUQqipqJUGEEa4T8ypHFYC4ceUuru
+	 d2FQxPwz3U4hd3hb0PosRXfefpeeR2CkWMV5GMvenn/aML7zDGcln0B12LHtGRDn0yn2s
+	 iBaRa846BvjYEEXkOcYHjRXQ3Ub4Sprnvezz4pDM/xp7s6/YWjridsxLsYCNyE9Za3jfH
+	 J9Qc3p/tR0o53fdxDNO7HyGmgXE2xTRnedh0honYyw4Kw9r4TPat3u8zEDHPCX2Ej9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028163;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vYqeUCJFUfM9cPknGCoMRkJqwHsMVDvLyieZoTyoW8M=;
-	b=1eJjuHLLCI9CxPjDhOxqarwagkw6YRb2XZp5dzOKaH+2jUU8b34wpx7eJqCGH3/sOwS7
-	 4hoevbsTwWze5nf2xfCffnCI548VgI9qbAzKLtaJiF8/uJ6/1TZafMyj8b6RinPgHuQ9K
-	 j+cvfKWvMSi0Z8ETd6QF91NRPrDlSTF2jT0o6vcP2+DTA5NSfHkNVYeJxiJjOBNBDzoW6
-	 EN0EbjR0EvyWEaNySgnlSj2A/bUZC4ngM6W/jAkm3tClbpuu2gfGESn3PHg0kAGONPhv4
-	 3KS/Eg6GA0F5gyv4XkQLTRWZ5OAaRgkwHcKT9smLvD46ec2NN7JhxiUiSm1jfswy0Jw==
+	bh=wS8OTGVfpoYkMM6kJZ9AwlAZ4We+he3fBYag7vRPRno=;
+	b=NLeLWA0KKTIOlVmjZi1MhlzvTvFdljCtWxbspWZkZqh9I7dLrtMwYOqr0sowBbqlav6K
+	 Z2weXVb+i6csvuEjx7qIIGs5cnVWUKL7qILqxEAWYk8W+mGdv8CNcyu/jnPejzPq+78u/
+	 XengxGIczfgWkBlLYT6YAw+yBP89C+cUv6a3TnVBnNDhpMi7r1+0RIaTwK2DzPbSIAApf
+	 9vSa/z5rHdauTg19ivyu6PAAVa+aYUFGlu/UkvPg6Zam6t7K7eTV3W7pPpRbQgPREKtOe
+	 e83svObfYkaZ6Ks4W/M95KmLqKGDIWyhX+JIK3ztpqZKmVgW7xcH0KX4tqgvPQZ0KwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vfzCr19Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AFfAxfT8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731E3606A32F;
-	Wed, 18 Nov 2026 18:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1E060A2619;
+	Wed, 18 Nov 2026 18:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vfzCr19Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BA01F000C4;
-	Wed, 18 Nov 2026 18:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AFfAxfT8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9347A1F000CA;
+	Wed, 18 Nov 2026 18:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028163;
-	bh=vYqeUCJFUfM9cPknGCoMRkJqwHsMVDvLyieZoTyoW8M=;
+	s=korg; t=1795028166;
+	bh=wS8OTGVfpoYkMM6kJZ9AwlAZ4We+he3fBYag7vRPRno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vfzCr19ZBXQlsvCi9TajJQbQL8VzrhlXFH+4Xgf0D2aibOkxI0Yw9Afp/b2c4/9rB
-	 2bOtFSnDUZfTgGwEH2+PoZ22uyk9Ziu0WniS7CTumeZFiV6eRazqeMQsqZl3o8qJRh
-	 YAnm6+kS8NLyMhYmJZ/F9GKiLDXptWxmSOaAuUrk=
+	b=AFfAxfT83H2nOAv1TfTI+4AHPhlhbRz3ST6UgoBkiTI4wtgAwG158OZ01UqYLiQ2F
+	 Dk4KktihoKkzOWdj820XRlrDr264S5ILTDLjAdAsIRqaGTEMYViPZKDGqPcWc8Hrw9
+	 jl2s+cBiJTrvs4rTgmqxWswQJfC7J0YnkMOyvhhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2006/2151] net: lan966x: fix the DB dataptr of frames from ndo_xdp_xmit
-Date: Wed, 18 Nov 2026 16:02:21 +0100
-Message-ID: <20261118150234.802365909@linuxfoundation.org>
+Subject: [PATCH 6.18 2007/2151] net: lan966x: release the in-flight slot of a stale TX skb
+Date: Wed, 18 Nov 2026 16:02:22 +0100
+Message-ID: <20261118150234.838055448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,48 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit ce3192e0dafa829e76edefecc16a32589b53c875 ]
+[ Upstream commit 074caa30a62726c0ee959e8b8ccb64cda0b26ae5 ]
 
-lan966x_fdma_xmit_xdpf() transmits both XDP_TX frames and xdp_frames
-from ndo_xdp_xmit, and builds the DB with
-lan966x_fdma_xdp_tx_dataptr_cb(), which adds XDP_PACKET_HEADROOM to the
-stored DMA address.
+lan966x_ptp_txtstamp_request() counts every two step TX skb waiting for
+its timestamp in lan966x->ptp_skbs, and refuses new ones once
+LAN966X_MAX_PTP_ID are in flight. lan966x_ptp_txtstamp_old_release()
+frees the skbs that have waited longer than LAN966X_PTP_TIMEOUT.
 
-Before this patch, the headroom is also added for xdp_frames. For
-XDP_TX the stored address is the start of the page pool page, but for an
-xdp_frame it is the mapping of the IFH placed in front of the frame
-data, so frames from ndo_xdp_xmit are read from XDP_PACKET_HEADROOM
-bytes after their IFH.
+Before this patch, old_release() does not decrement ptp_skbs, so every
+skb whose timestamp never arrives, for example because the switch
+discarded the frame, keeps its slot forever. Once LAN966X_MAX_PTP_ID
+slots are lost, two step frames fail to transmit on every port of the
+switch.
 
-Use the plain tx dataptr callback for xdp_frames.
+Return the number of released skbs from old_release() and subtract it
+from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
+takes.
 
-Found by an AI code review agent. Reproduced on a lan9668 board with an
-XDP program redirecting frames from one port to another: none of the 20
-frames arrived intact on the link partner. With the fix all 20 did.
+This fixes the accounting only. A port's stale skbs are still aged out
+only when that port sends a two step frame, so a port that stops sending
+them keeps its stale skbs, and their slots, until it sends one again.
+That behaviour is unchanged by this patch.
 
-Fixes: 29cc3a66a81d ("net: lan966x: use FDMA library for adding DCB's in the tx path")
+Found by an AI code review agent. Reproduced on a lan9668 board.
+
+Fixes: 77eecf25bd9d ("net: lan966x: Update extraction/injection for timestamping")
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-xdp-xmit-dataptr-v1-1-d0dd068324de@microchip.com
+Link: https://patch.msgid.link/20261026-lan966x-ptp-stale-tx-slot-v1-1-9f7c895eb1ff@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-index b13c60438b978..4e9f347a1387c 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-@@ -686,7 +686,8 @@ int lan966x_fdma_xmit_xdpf(struct lan966x_port *port, void *ptr, u32 len)
- 		       FDMA_DCB_STATUS_BLOCKO(0) |
- 		       FDMA_DCB_STATUS_BLOCKL(next_dcb_buf->len),
- 		       &fdma_nextptr_cb,
--		       &lan966x_fdma_xdp_tx_dataptr_cb);
-+		       len ? &lan966x_fdma_xdp_tx_dataptr_cb :
-+			     &lan966x_fdma_tx_dataptr_cb);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+index 8c40db90ee8f6..9be2cfe6feeb7 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+@@ -376,9 +376,10 @@ static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
+ 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
+ }
  
- 	/* Start the transmission */
- 	lan966x_fdma_tx_start(tx);
+-static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
++static unsigned int lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+ {
+ 	struct sk_buff *skb, *skb_tmp;
++	unsigned int purged = 0;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
+@@ -389,14 +390,18 @@ static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+ 
+ 		__skb_unlink(skb, &port->tx_skbs);
+ 		dev_kfree_skb_any(skb);
++		purged++;
+ 	}
+ 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
++
++	return purged;
+ }
+ 
+ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
+ 				 struct sk_buff *skb)
+ {
+ 	struct lan966x *lan966x = port->lan966x;
++	unsigned int purged;
+ 	unsigned long flags;
+ 	u8 pdu_type;
+ 	u8 rew_op;
+@@ -408,9 +413,10 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
+ 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
+ 		return 0;
+ 
+-	lan966x_ptp_txtstamp_old_release(port);
++	purged = lan966x_ptp_txtstamp_old_release(port);
+ 
+ 	spin_lock_irqsave(&lan966x->ptp_ts_id_lock, flags);
++	lan966x->ptp_skbs -= purged;
+ 	if (lan966x->ptp_skbs == LAN966X_MAX_PTP_ID) {
+ 		spin_unlock_irqrestore(&lan966x->ptp_ts_id_lock, flags);
+ 		return -EBUSY;
 -- 
 2.53.0
 
