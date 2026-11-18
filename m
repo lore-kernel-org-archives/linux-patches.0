@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028626;
-	b=kn41NkenlEhvrYPWb5ozTe1jkw/KBgMo0NfnunQeeAeQujAepsgiujXL/VrtX9QSDd79
-	 sGOkWFMEeidBB+Yaewq8PpfFdM6JFo1oyEaZHWKsTWMTSev0Oqraebfim5d0UES8yONCZ
-	 dKxI8Z34BBXIprU1/B6zQPVFopOJC8nGUTiXXKA82ZvGxfRZ8ROZTAdIVMCPEBiqLbEqn
-	 zHGIwk6T6YWq5gC2BXKSH44usTcisOZZTdmzILpfvxr5wdH1nnVbcNJ6Uvk2/Cq2AdqsX
-	 Q8djdRRe3xYoXRQxvucn041fjxF96FttzQi/Jl/+J++sbbjdznPxs6iImELf70lvM5w==
+	t=1795028629;
+	b=kbXq0TdlMlbIIO354cH3ZpA55wgUa+f3t/tB6Y9enzUKtHxuqCtQWpK/hi7KXdvfeoO/
+	 H/r15Tco6OQStTvD0/zcLdRQnjm8LPC6T9Q2I4N2JEoqGqd3XwngUHgTMpBOEx3zhm9bt
+	 avwCj3g+3pCsPvsOo1hEk7h5iUG8lhXCID+4Tb30cIibknbsJXCNMB8urxLd1ZIsBHp0f
+	 eTU+aKnnnJXe6A693VM1UzSiZcmbo/mmSAN9CdGjz3VOLy14SWmjWVyeeZzwUT51Tdx0P
+	 vOEzHLYbH8hZcvm4e3m1ayoIdyoAPWeHkOKW2W+XPodUmrDwCrM/8ta189AvYQfph4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OLYVu5fqs2h7Vn/R/KCo4/wYy6udOfZ7NSFawYrlTks=;
-	b=RpcG6/1ho2+crR5Bz/D8K12euM2t9/Gc78ATGBbtUyKcD0zCKxkj9m3fKVmhB8L+0VwH
-	 1wk2T5UnWM/M+SDe8pmEQ4ZZWG1DBUNDoKllpfAme08saAf5f1GvHIItNFFjX8U3Ozfaa
-	 H7jFJ8sDqw8LzgGm/oSZBadJoK1EXaCA3jDiUsZyGhyANlReO1hRmpla3yjOyjRHu9GCd
-	 sPB2Kg9LPDhxtegLvabHKkeViascVX1y0oAw3Z7Du4SyfZkjR2sjLJ8WZI0wBghiSg8n6
-	 u7vH882tYO04FtBKLXz77TLpmMvHJmdIVfgNaMylxuLypwk/8iwnuW+GYoQq1mtzRwQ==
+	bh=pSj6JftcuxopaybhQUk+irMAriNxZu9vR4VJAU3mS88=;
+	b=f7gP3BLS+W+u7/s139R9pMFkvofqZ0GtDNdMAz/UZVj42SlKHmPyXAVJazfGHbZH8JxT
+	 tv9If0Rss/0m2udVcB5WRIwGR9aZnVmLDDBHSLBh4N2xtYLb9xjczzpIZhZALgdGEcG6G
+	 5T8cg0swYkO9Wo3tAFJZeq0vueeMQ3yvPOK6U8ov7wZwPufPs2M12qr/6QTQOYDPdnNyC
+	 v3n6yPazmqmmmz8Dfwu4FhGZyRpTwHAlK5etzL4uWsbMUD26+9BTA+7QvaHYiJ2orMPoR
+	 mHl3m4mOdU7+/MywJJA/5KyH2oX57vPj15G/Sqfl8Bgvwd4wb7nw5/2fz8GTIa6D1+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fg+tcuy1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWk4Kl0a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC3D606A32F;
-	Wed, 18 Nov 2026 19:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136DA606A325;
+	Wed, 18 Nov 2026 19:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fg+tcuy1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AFC1F000C4;
-	Wed, 18 Nov 2026 19:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWk4Kl0a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BAC1F000C4;
+	Wed, 18 Nov 2026 19:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028626;
-	bh=OLYVu5fqs2h7Vn/R/KCo4/wYy6udOfZ7NSFawYrlTks=;
+	s=korg; t=1795028628;
+	bh=pSj6JftcuxopaybhQUk+irMAriNxZu9vR4VJAU3mS88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fg+tcuy1vKYfczHqpi088YIh/rWnCCxLUkZqSsGFmEBz8E9imht/pqaGcGoQo2Zap
-	 TBYOZsrCa0aEFUh2SZzk9UbI6wlnJZ4Cu2CwUKb6WZ03WwXSutrBze/E1Z855sIt6v
-	 DRAcmrHm7a0qBhmIZPLTPT/EszVmaYq01MPXS8yw=
+	b=zWk4Kl0ansRGS7LpD4Lv09Stoy8VKSWqset/Y4Zm3uh+KSK6YSsCxAbgveYPRJyjp
+	 /CtRYU8Oz/Ltx02aBbM0yGQmMuRfJnFKm/hgI5ce1LaUKnQ0QCoM30VsBjSEllGRJX
+	 SFtfnMFcmbd3kiyOD0EVI4Zvuuwelk2qaDPQ2egU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0060/1756] hwmon: (chipcap2) Switch to guard() for mutext handling
-Date: Wed, 18 Nov 2026 15:36:27 +0100
-Message-ID: <20261118150010.750048180@linuxfoundation.org>
+Subject: [PATCH 6.12 0061/1756] hwmon: (chipcap2) Drop unnecessary include files
+Date: Wed, 18 Nov 2026 15:36:28 +0100
+Message-ID: <20261118150010.785837518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,149 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 232ba88182083b4410df41cf310c9a16b84e547e ]
+[ Upstream commit 4c8d758d4ebff3780d09599f2c8db5d6af3ca2af ]
 
-Switch to guard() for mutex handling to simplify the code, getting rid
-of the 'ret = x, break; return ret;' construct and return the result
-of the operation instead.
+The driver does not perform any locking, does not execute or use any sleep
+related functionality, and does not allocate memory. Drop the unnecessary
+include files.
 
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Stable-dep-of: bed5f0c075eb ("hwmon: chipcap2: serialize access to the alarm indicators")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/chipcap2.c | 63 ++++++++++++----------------------------
- 1 file changed, 18 insertions(+), 45 deletions(-)
+ drivers/hwmon/chipcap2.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
-index 6a69c7699594b..2572710fb2384 100644
+index 2572710fb2384..4a9c51c792aed 100644
 --- a/drivers/hwmon/chipcap2.c
 +++ b/drivers/hwmon/chipcap2.c
-@@ -13,6 +13,7 @@
- 
- #include <linux/bitfield.h>
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/completion.h>
- #include <linux/delay.h>
- #include <linux/hwmon.h>
-@@ -573,55 +574,40 @@ static int cc2_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		    int channel, long *val)
+@@ -82,7 +82,6 @@ struct cc2_data {
+ 	struct completion complete;
+ 	struct device *hwmon;
+ 	struct i2c_client *client;
+-	struct mutex dev_access_lock; /* device access lock */
+ 	struct regulator *regulator;
+ 	const char *name;
+ 	int irq_ready;
+@@ -575,8 +574,6 @@ static int cc2_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
  {
  	struct cc2_data *data = dev_get_drvdata(dev);
--	int ret = 0;
  
--	mutex_lock(&data->dev_access_lock);
-+	guard(mutex)(&data->dev_access_lock);
- 
+-	guard(mutex)(&data->dev_access_lock);
+-
  	switch (type) {
  	case hwmon_temp:
--		ret = cc2_measurement(data, type, val);
--		break;
-+		return cc2_measurement(data, type, val);
- 	case hwmon_humidity:
- 		switch (attr) {
- 		case hwmon_humidity_input:
--			ret = cc2_measurement(data, type, val);
--			break;
-+			return cc2_measurement(data, type, val);
- 		case hwmon_humidity_min:
--			ret = cc2_get_reg_val(data, CC2_R_ALARM_L_ON, val);
--			break;
-+			return cc2_get_reg_val(data, CC2_R_ALARM_L_ON, val);
- 		case hwmon_humidity_min_hyst:
--			ret = cc2_get_reg_val(data, CC2_R_ALARM_L_OFF, val);
--			break;
-+			return cc2_get_reg_val(data, CC2_R_ALARM_L_OFF, val);
- 		case hwmon_humidity_max:
--			ret = cc2_get_reg_val(data, CC2_R_ALARM_H_ON, val);
--			break;
-+			return cc2_get_reg_val(data, CC2_R_ALARM_H_ON, val);
- 		case hwmon_humidity_max_hyst:
--			ret = cc2_get_reg_val(data, CC2_R_ALARM_H_OFF, val);
--			break;
-+			return cc2_get_reg_val(data, CC2_R_ALARM_H_OFF, val);
- 		case hwmon_humidity_min_alarm:
--			ret = cc2_humidity_min_alarm_status(data, val);
--			break;
-+			return cc2_humidity_min_alarm_status(data, val);
- 		case hwmon_humidity_max_alarm:
--			ret = cc2_humidity_max_alarm_status(data, val);
--			break;
-+			return cc2_humidity_max_alarm_status(data, val);
- 		default:
--			ret = -EOPNOTSUPP;
-+			return -EOPNOTSUPP;
- 		}
--		break;
- 	default:
--		ret = -EOPNOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
--
--	mutex_unlock(&data->dev_access_lock);
--
--	return ret;
- }
- 
- static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		     int channel, long val)
- {
- 	struct cc2_data *data = dev_get_drvdata(dev);
--	int ret;
- 	u16 arg;
- 	u8 cmd;
- 
-@@ -631,41 +617,28 @@ static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 		return cc2_measurement(data, type, val);
+@@ -617,8 +614,6 @@ static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
  	if (val < 0 || val > CC2_RH_MAX)
  		return -EINVAL;
  
--	mutex_lock(&data->dev_access_lock);
-+	guard(mutex)(&data->dev_access_lock);
- 
+-	guard(mutex)(&data->dev_access_lock);
+-
  	switch (attr) {
  	case hwmon_humidity_min:
  		cmd = CC2_W_ALARM_L_ON;
- 		arg = cc2_rh_to_reg(val);
--		ret = cc2_write_reg(data, cmd, arg);
--		break;
--
-+		return cc2_write_reg(data, cmd, arg);
- 	case hwmon_humidity_min_hyst:
- 		cmd = CC2_W_ALARM_L_OFF;
- 		arg = cc2_rh_to_reg(val);
--		ret = cc2_write_reg(data, cmd, arg);
--		break;
--
-+		return cc2_write_reg(data, cmd, arg);
- 	case hwmon_humidity_max:
- 		cmd = CC2_W_ALARM_H_ON;
- 		arg = cc2_rh_to_reg(val);
--		ret = cc2_write_reg(data, cmd, arg);
--		break;
--
-+		return cc2_write_reg(data, cmd, arg);
- 	case hwmon_humidity_max_hyst:
- 		cmd = CC2_W_ALARM_H_OFF;
- 		arg = cc2_rh_to_reg(val);
--		ret = cc2_write_reg(data, cmd, arg);
--		break;
--
-+		return cc2_write_reg(data, cmd, arg);
- 	default:
--		ret = -EOPNOTSUPP;
--		break;
-+		return -EOPNOTSUPP;
- 	}
--
--	mutex_unlock(&data->dev_access_lock);
--
--	return ret;
- }
+@@ -712,8 +707,6 @@ static int cc2_probe(struct i2c_client *client)
  
- static int cc2_get_irqs(struct cc2_data *data, struct device *dev)
+ 	i2c_set_clientdata(client, data);
+ 
+-	mutex_init(&data->dev_access_lock);
+-
+ 	data->client = client;
+ 
+ 	data->regulator = devm_regulator_get_exclusive(dev, "vdd");
 -- 
 2.53.0
 
