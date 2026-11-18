@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034426;
-	b=p44VNI2BCw2pvJy+OuQv+Yad4zvUqFneZFk5iaaMJ9fCExXHbg9kwzWP8+/zRbQx+k38
-	 dNwWQI56S+4+b2tTt++eRZDiab0vYFJJdV2axki36ki2l0afC2VGccdU9oN+gMdgot4hV
-	 ytlar0gClpi0C0Zf4NunHaQVE4WiA8xqNQFUBRg5LRjEhykHQm89S2JGUyhUqOzp+wL4v
-	 f3BGH43XtfgkTs0lrXu0sK+5LUWWWd9p8xUxAlVPjnXOGhHRESxf6F/q8ERYnspzy4NCM
-	 gR8IG0E9mYr4ec+6b/VF2+WSeyHe/nh11MjiuLFM1JApTRBT8A4RGzMkLxq0nanddjg==
+	t=1795034429;
+	b=N0oDj+jud5JkxFyJ9N5K19hUJ6tona+L3IMB0TbVjT1V4fZ25HLLuUXKyi3LmgZIziQE
+	 LzI03wLH3bDR1p9MGcNiHTWQf1yrSqvOIAHD5ddjqUOq8rUGzX1zKUQI1avCLSFmPm5rT
+	 mJ2YAUpfSYicl4Iu2M8uBfrZxFHbSLE7SlVVynLYpfNb5//wdaPyV9kEwrdz5DpEN5t9C
+	 MlVJ3bIQGEaIdyJHmfbmcQkQnKtNrLA+rhxYzbH7Q26BLo3yLdW07akMM7VCAas+JX0hy
+	 ExiOM3cQ1exAcPx38WLX5a1gTGvU4DgcFGbzHRPfztkhXRNsoDt8Bjifi5FDWilc1mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034426;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034429;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EkWsGc3uay0ExQqZbSzp5tuUmEjD46lrESdN9jM4JJQ=;
-	b=S97puQI73masL3ALXXVxTHmTCXW3zXizsEM/djgDNs8uPzWOx65/0JuplOrYVWMu6Aeb
-	 bUD/bVA9GtMh/mEKVs/ejKhSh7uAMz7aQV+H0A2oBUiufExDob40X2AmYS5J1sGN+xH6f
-	 Qbe/J/hxH8lvBxHpSv04jupu2SdztN83qYhQ+166nB8Wt29W19F3SjGeaQ989aDTAYhOg
-	 eyBwTdaDggX+bNG2BJWp+7aswFg2vg3zpK240hjovfxfT/vU7M5R021lHtJe/wWtzVRSD
-	 0dzL3e6tb5tghzLRJI1zT7Ol1GqtI7/19Gv+p6FFAVum8vgZ4VySJFvR0i4nGXbb1rQ==
+	bh=ZN7DtNHoIFdwr6fK+uwRt2PtFMlyy2VZlnwnJ34a30U=;
+	b=Uvj5DscJfULpkY32jvd0jzGYulz/c6jJ6rz5qeycBlTr4JkWyXkdfx/h1itfAVblfRsE
+	 vq3mYQH6U+XM3gVQ7sZH4w4CG6E7faHFOzC/IudbH4zYM5plU6Uh8scxo2pVon39aR2LA
+	 0zexVmQM64IMF5P3npj0lRX4MSTiyz8f5DLqFun5C+1OqPlxRtCso4wSoWcYb5J52QI13
+	 zmRisLEB8h19uc4v5XJ1aQSMag8NpHJ8JNrHLb4pwBuxd5AhYduDzW6Thr1aA77DfQFLf
+	 lM8uiSCCSzf2FrYd+6Nyn3e/qBjlWoo66gMNWeMSCHt2A7H9qovq/yAZjOvOcYIjNrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmSzFhKh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCgtC78Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CA1606A31C;
-	Wed, 18 Nov 2026 20:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D028606A31C;
+	Wed, 18 Nov 2026 20:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmSzFhKh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2521F000C7;
-	Wed, 18 Nov 2026 20:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCgtC78Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF061F000C4;
+	Wed, 18 Nov 2026 20:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034426;
-	bh=EkWsGc3uay0ExQqZbSzp5tuUmEjD46lrESdN9jM4JJQ=;
+	s=korg; t=1795034429;
+	bh=ZN7DtNHoIFdwr6fK+uwRt2PtFMlyy2VZlnwnJ34a30U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmSzFhKhjE88tn3y2rEfNJtQnTO/zjAVBim/f/6ah7HQ3Otmpp38G7XZ1VkHEDA9g
-	 pB+J7JWlLek/th9oTGryl+acQguBmkjUFwE+RMyDb6L/z/UMoeP8QoM+xqY7RGpCET
-	 ninmZNcInxhcyPS6MpfTWXZiE7ZxL6yWpwOtGkPU=
+	b=OCgtC78Zm5GWR3N5YNwjqSlmzbc1gNHGDHHtTFn34GhO9aQgac7DzigZBe67UaDxo
+	 AbzJ6vnymFfzc4sUn0eMMNE5GHGkg/nJHFnXSuXcN8aYI3xpUb2x9UEUmrLIMscOoS
+	 vKPj65ioSSB3tzOUXUbYsmOnZVRQVE/3vwPNgVTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0364/3318] net: usb: pegasus: do not advance rx_skb->data on dropped frames
-Date: Wed, 18 Nov 2026 15:16:26 +0100
-Message-ID: <20261118150327.079779067@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.6 0365/3318] ocfs2/dlm: drain join handlers before releasing module text
+Date: Wed, 18 Nov 2026 15:16:27 +0100
+Message-ID: <20261118150327.115199960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,86 +73,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit bfa09dccf98cf78dd9282259b2140bd1472f5ae9 upstream.
+commit 28f366d84023651e50e32e29931401ba0df3e679 upstream.
 
-For the 0x8513 chip, read_bulk_callback() skips the 2-byte receive
-header by advancing pegasus->rx_skb->data in place. This is done before
-the pkt_len > PEGASUS_MTU check, and when that check drops the frame
-the good path resubmits the same skb with the advanced rx_skb->data as
-the transfer buffer, still PEGASUS_MTU bytes long.
+The code for a registered DLM handler must remain resident until its
+last invocation finishes. dlm_unregister_net_handlers() only removes
+dlm_join_handlers from the o2net registry. o2net_handler_get() takes a
+kref on the wrapper, but that reference does not pin ocfs2_dlm text.
+o2net_process_message() calls nh_func after dropping o2net_handler_lock.
 
-Every frame with an oversized length field therefore moves the receive
-buffer two more bytes towards the end of the skb data area. A device
-that keeps sending such frames makes the host controller write received
-data over skb_shared_info and past the end of the allocation, and the
-corrupted skb_shared_info is used when the skb is eventually freed.
-With an emulated device sending frames filled with 0x5a on a KASAN
-kernel:
+With CONFIG_OCFS2_FS_O2CB=m, ocfs2_dlm can be loaded independently of
+ocfs2_stack_o2cb while nodemanager continues handling messages from a
+configured, heartbeating peer. If no dependent module or module reference
+prevents normal unload, the following ordering is possible:
 
-  BUG: KASAN: slab-out-of-bounds in dummy_timer+0xade/0x3f00 [dummy_hcd]
-  Write of size 1536 at addr ffff888105821202 by task swapper/1/0
-  ...
-  Oops: general protection fault, probably for non-canonical address 0xeb4b474b4b4b4b4c: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0x5a5a5a5a5a5a5a60-0x5a5a5a5a5a5a5a67]
-  RIP: 0010:skb_release_data+0x36f/0x800
+  Receive worker                       Module unload
+  --------------                       -------------
+  o2net_handler_get()
+    take wrapper kref
+    drop handler lock
+  <preempted>
+                                       dlm_exit()
+                                         unregister handlers
+                                       release DLM module text
+  call saved nh_func
+    in released module text
 
-Only skip the header with skb_reserve() once the frame is going to be
-passed up, so the receive buffer always starts at the beginning of the
-skb data area. Unlike the old pointer adjustment, skb_reserve() also
-moves skb->tail, so the two header bytes now count against the buffer
-size: lower the length limit for the 0x8513 accordingly, otherwise a
-pkt_len of PEGASUS_MTU - 1 or PEGASUS_MTU would trip skb_over_panic().
+Use o2net_unregister_and_flush_handler_list() in the shared DLM
+unregister helper. It first prevents new lookups, then waits for the
+ordered o2net workqueue to drain, including a concurrent destruction of
+that queue. The acquired invocation therefore finishes before dlm_exit()
+returns and the loader releases the callback code. The same helper
+covers partial registration and dlm_init() error unwind before module
+memory is released.
 
-Found by code review with LLM assistance and reproduced with an
-emulated USB device (raw-gadget + dummy_hcd).
+Skip the drain when the private join-handler list is empty. Early
+dlm_init() failures can reach this helper before any handler has been
+published. Partial-registration failure also reaches it a second time
+after the first call has already unregistered and drained the list.
+Neither case needs to take o2net_wq_mutex or drain unrelated work.
+The list is changed only by serialized module init/exit paths; a
+nonempty list still uses the full unregister-and-flush helper.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021020310.34045-2-law.wei.jie@gt.tech.gov.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Oops report as below:
+
+    Oops: int3: 0000 [#1] SMP KASAN NOPTI
+    CPU: 2 UID: 0 PID: 54 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+
+Hardware identification omitted.
+
+    Workqueue: o2net o2net_rx_until_empty [ocfs2_nodemanager]
+    RIP: 0010:0xffffffffc0423871
+    [Instruction byte dump omitted.]
+
+Register dump omitted.
+
+    Call Trace:
+     <TASK>
+     ? o2net_rx_until_empty+0x19b1/0x3300 [ocfs2_nodemanager]
+     ? __pfx_o2net_rx_until_empty+0x10/0x10 [ocfs2_nodemanager]
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     ? kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ? ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ? ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    Modules linked in: ocfs2_nodemanager [last unloaded: ocfs2_dlm]
+    ---[ end trace 0000000000000000 ]---
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0076-v6-12de5f4628f57fba3be3@gmail.com
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/pegasus.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ocfs2/dlm/dlmdomain.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -464,6 +464,7 @@ static void read_bulk_callback(struct ur
- 	u8 *buf = urb->transfer_buffer;
- 	int rx_status, count = urb->actual_length;
- 	int status = urb->status;
-+	int rx_offset = 0;
- 	__u16 pkt_len;
+--- a/fs/ocfs2/dlm/dlmdomain.c
++++ b/fs/ocfs2/dlm/dlmdomain.c
+@@ -2214,7 +2214,8 @@ static LIST_HEAD(dlm_join_handlers);
  
- 	if (!pegasus)
-@@ -513,7 +514,7 @@ static void read_bulk_callback(struct ur
- 	if (pegasus->chip == 0x8513) {
- 		pkt_len = le32_to_cpu(*(__le32 *)urb->transfer_buffer);
- 		pkt_len &= 0x0fff;
--		pegasus->rx_skb->data += 2;
-+		rx_offset = 2;
- 	} else {
- 		pkt_len = buf[count - 3] << 8;
- 		pkt_len += buf[count - 4];
-@@ -525,13 +526,14 @@ static void read_bulk_callback(struct ur
- 	 * If the packet is unreasonably long, quietly drop it rather than
- 	 * kernel panicing by calling skb_put.
- 	 */
--	if (pkt_len > PEGASUS_MTU)
-+	if (pkt_len > PEGASUS_MTU - rx_offset)
- 		goto goon;
+ static void dlm_unregister_net_handlers(void)
+ {
+-	o2net_unregister_handler_list(&dlm_join_handlers);
++	if (!list_empty(&dlm_join_handlers))
++		o2net_unregister_and_flush_handler_list(&dlm_join_handlers);
+ }
  
- 	/*
- 	 * at this point we are sure pegasus->rx_skb != NULL
- 	 * so we go ahead and pass up the packet.
- 	 */
-+	skb_reserve(pegasus->rx_skb, rx_offset);
- 	skb_put(pegasus->rx_skb, pkt_len);
- 	pegasus->rx_skb->protocol = eth_type_trans(pegasus->rx_skb, net);
- 	netif_rx(pegasus->rx_skb);
+ static int dlm_register_net_handlers(void)
 
 
