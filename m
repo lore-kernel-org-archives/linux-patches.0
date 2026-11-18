@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022895;
-	b=xr+DHnbESZEKMI+2zLEyPtLhHAUFMlX+s8Ev8VPW8mF1oLfU/NqaTxBs7tHZXwiAwSIT
-	 dQOrsg2gIF+JA0iLX4e5PdyBN+TbG8uDVXwpuQ7GSnxSEaezqJhMn6y0rX2dymr3rwrpY
-	 7KRnzTkR5GRkcEVcJ+B1QMVWYepZo4iBA6q0jiWFvhi6BnXlL5PrT5juAoUcpLkj4wWII
-	 FWzpZIx3y+YmlzBnIp2mA5xrzTUFNbFSq5NhGDrJJ+ceKgnuN0hliACHsPSgl1sKaEgCK
-	 Zvmrk4x/AFJdYzeuKYn4dJ2xgfBUD8AI+EjB9S0cWwFx0wXFMyXDqrMCIK0ip2MCTsw==
+	t=1795022898;
+	b=sT+xwQA9fewB4SalDrYwtPgbQelcrAXdYA/SaRgMwGPr/CmSCiUgoq9eehsc5p+qilRR
+	 msldNm4pW5hVp4PiZ5q5AUIf8nh6zKdtT3OGCIhMflswyNk/KJFjAlYaUotpaDjTrQz+d
+	 0iPvEytubHZPM6ARJ9GzIZe6I3uujGpN4o9EVqljDVnIilvcrL8VdLUC7FHWGK0278wjs
+	 TfjCiSVY3OhVWYNxni9p82DXk5azR+BEB75oe9ozq3odN2vtkCp8sS1Ktzwz/8F/TtggB
+	 8fEKQcB3S9R8vY7uxhgZxnV29/R+EhZka9ECmOedTwS01F0dRiIAa9q8Er8me2CbXaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022898;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s484Ko2FX8WDpYqTRyZB1mDlu/5eJqQnN3c1TvOWDME=;
-	b=f8GmiOviJ9NCXOrpgE0g9lZXfjfnypVdfwNAUUEy86b/z4N49WTJgq55atmVcquuptgV
-	 7IQuu9LlHsLfuAt7IKOeHrCv04nlQUH4bhJlATNQDuZOG2rcl01dsjdmQvd13Zjpo2Ad1
-	 xGSLA+HIrWBZeVng9w0D2muysCFIQgO2rNfIMlgZwmJafAvH+lvjiBREhgOtY00xA1AN0
-	 ctgjZAL064hrGX/DYRmDE9rmXpQR+TwNG87gI6i+WelaJlF0VBe3jf9DPO4JSe304gh5g
-	 hDWqiPB9ITaJPgiUmOICDTkPzW0P3vKFm5rfaD1hHdZ0EFW+L8I1j+YmUGLJwYVoSTA==
+	bh=JFAp0DUrxIj/ieKDZibFwSq+NUv3BWmiD7Vlb0sxELM=;
+	b=FPWJ3FqRVl9Zg0N798LrQPSzFnZlzNFa9GCGXZ1Ep0zG02MO9UZk1RC8RQ27T1+ugLsV
+	 ZMBTUsXpd7ioa2lPVj+K8eguuTIl+Ob5PVRjlZSKnkPIRuChwhUjF7sl7UyebTo9gG4Ps
+	 tHo713JFmuiA97rg5r0ueYh59V0HslazAf5AArL7pfAzROfbt7GQ1xSGPYjtfQsqGZL2b
+	 E140i/N5ziah8N7MuTEnlDNVVe2hqdpTiEhFCE2YDBu8zWfcsExWOPb4Gi7c9v0nDo/GF
+	 5fpd0ZXmTHa9Z8ZFqfwPIqPOMkwf+u3EZdISqbaP/pf/Ki+x7DNo0/VfoDan4aJuo5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSnuSkHt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RoKyyuM1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89E3606A32A;
-	Wed, 18 Nov 2026 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7ED6606DA93;
+	Wed, 18 Nov 2026 17:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSnuSkHt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A28F1F000C5;
-	Wed, 18 Nov 2026 17:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RoKyyuM1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C165D1F0092B;
+	Wed, 18 Nov 2026 17:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022895;
-	bh=s484Ko2FX8WDpYqTRyZB1mDlu/5eJqQnN3c1TvOWDME=;
+	s=korg; t=1795022898;
+	bh=JFAp0DUrxIj/ieKDZibFwSq+NUv3BWmiD7Vlb0sxELM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aSnuSkHtfT2HNF/5beDY4XyopID+jlxskLHIwVV5CfjeITwpODgX3tUhtpj1wmfxv
-	 +gl7JImXxn2NrXwYPjGkbMXPjdP7Ad8LJmgsjJCwVGAQ0s9qTyL2I00TwpvHCTNwyI
-	 44ZAx1MCYpoJolYbRwRCK8QxpjwZh3LdUCgVYGV0=
+	b=RoKyyuM1eKNFLpqvzGHo/F63wC9H9j9eHyCZtpWD964PwiakFY/LNBGU+1cAbcT5M
+	 rWkoqY9IAdUjC6P72zR2Ol8vUmNu3hLECX/3N+0soKqOGcQiPbP86B5K+PSLZthPZZ
+	 6VJT6oR1lnPiypqwQMLBclgooxXxbvuCBFEyO0l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0139/2151] drm/panthor: Take reqs_lock in soft_reset for clearing pending_reqs
-Date: Wed, 18 Nov 2026 15:31:14 +0100
-Message-ID: <20261118150126.847686273@linuxfoundation.org>
+Subject: [PATCH 6.18 0175/2151] cxl/mce: Avoid alias page retirement for corrected errors
+Date: Wed, 18 Nov 2026 15:31:50 +0100
+Message-ID: <20261118150128.109582741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,43 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
 
-[ Upstream commit 2d354adc5bbabe2e818be09bbe13f6bfde4a30c7 ]
+[ Upstream commit 04a7b330c8b60dfff200d9a32dd6615f97b59d07 ]
 
-panthor_gpu_soft_reset() sets pending_reqs to 0 without taking the
-requisite reqs_lock.
+cxl_handle_mce() offlines the aliased page of an Extended Linear Cache
+(ELC) region for any MCE with a usable address in the region. This
+includes corrected errors, needlessly reducing usable memory.
 
-Fix this by taking the lock for the duration of the modification.
+Skip ELC alias retirement when mce_is_correctable() identifies the
+reported error as corrected. Uncorrected errors with a usable address
+in the ELC region continue to retire the aliased page as before.
 
-Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260812-panthor-cache-flush-fix-v4-3-751e32901898@collabora.com
+mce_usable_address() already implements the per-vendor checks that
+determine whether the reported address is usable, so no separate
+memory-error classification is needed.
+
+On AMD, a corrected legacy bank 4 DRAM ECC error (XEC 8) reports a
+usable address and retired the aliased page before this change.
+Tested under QEMU with Intel Skylake-Server and AMD EPYC-Milan models.
+
+Fixes: 516e5bd0b6bf ("cxl: Add mce notifier to emit aliased address for extended linear cache")
+Signed-off-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260824134957.11085-1-shaikhkamal2012@gmail.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gpu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/cxl/core/mce.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
-index 77d0f4ced1206..7f2dc65386fd4 100644
---- a/drivers/gpu/drm/panthor/panthor_gpu.c
-+++ b/drivers/gpu/drm/panthor/panthor_gpu.c
-@@ -334,7 +334,10 @@ int panthor_gpu_soft_reset(struct panthor_device *ptdev)
- 		return -ETIMEDOUT;
- 	}
+diff --git a/drivers/cxl/core/mce.c b/drivers/cxl/core/mce.c
+index 65fed913b2217..3ac6802e750d2 100644
+--- a/drivers/cxl/core/mce.c
++++ b/drivers/cxl/core/mce.c
+@@ -18,7 +18,13 @@ static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
+ 	u64 spa, spa_alias;
+ 	unsigned long pfn;
  
--	ptdev->gpu->pending_reqs = 0;
-+	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
-+		ptdev->gpu->pending_reqs = 0;
-+	}
+-	if (!mce || !mce_usable_address(mce))
++	if (!mce)
++		return NOTIFY_DONE;
 +
- 	return 0;
- }
++	if (mce_is_correctable(mce))
++		return NOTIFY_DONE;
++
++	if (!mce_usable_address(mce))
+ 		return NOTIFY_DONE;
  
+ 	spa = mce->addr & MCI_ADDR_PHYSADDR;
 -- 
 2.53.0
 
