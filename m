@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061196;
-	b=4ZJ/URekUDZ1Evk+pb+eAjIdDxmnqCYyfSOOUieDlH4Jj9Ks2Rn54Fxiwb3V1NQoIx51
-	 Df9JJvZ9P8wfecSxm2IcxQU0bSaAIUFW3ZzYQhbYcKreYkx6yBswOiqR/UHX0DKHFzsBx
-	 kzt02Mfnw1x6NSwiTqKIWU9pR/cZ50xPdAMsicEbPjh6q8GxfNG2pzrx5JBRmSjl3xmQx
-	 MSN+q6QnOOd2dsQiPK7FyJUuym9UpU28rKWPaM1kkc2tyMDYeeOGmKUhRHJhtvGLndBWm
-	 XBNdQXpEp4amKThq9hEdmZatTNGKMtDOr80C8WaLyiLXlepgRbar+DgLbLgacjU41tA==
+	t=1795061198;
+	b=bdo6TzHBUmdQG0Jgv9x+O6ACoP9IALjaYBelU2myopKEcVozDs2jE7IF4semDduoTf7J
+	 6dBSNmqcFEP4Q53NbzUZz7/JvANXYEkHY2dBXigiuMfQjAsQ5dA3ZrjNhImpDO1u+/Cjg
+	 Sy1zkDJQATjsMuTJbgPetdg7pLLCNj2gqtdThvWF0XN2B5pgCrK4KU6OIKBtJ0qgKT9q6
+	 Ws6k06BPhiNT5/YFmAoc5YTwY8CHK/odY/l1zRQ6S7X6f8IyMDmY4ZkZGurMVqLJ18UBC
+	 bO2KxtVxoYvrMM26tY9lBb5RNS9VmoEQ2QEvDctryeaCTxIOKWcsE8xQ5RuOWy3qNDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fz8hKbgP4Hh/BRfIc5s21C30R9nJQGnJIPqCWyiv+3s=;
-	b=hyeX/LUvX1Ab8c1rgrnxEUE+kRsKO8xJlOtWvs0LXJawR/2jSvkq5bRnlqgnsi9JvPLa
-	 dPtdNWNqCi6JcAmhb7FCh6HuiCJAspgZix0Keam4YXAZ2C/bDnfGckKqXjxOKttcZJ1Lb
-	 pbzJDlF/RCsTNproUl+Y5yKV9Sgl1FrmDfYnybCVJXCnAziMK9sTF8bv1S/lSCsEa/k8f
-	 Sbqd3kd2kdK868uUxk4+uwOt2MpNuG7CL3FgZCc/2xhnoyjaxxmUwurrQllsh/Zq2jDz/
-	 uUrvH0zWJFyUXmpz2KGQH1lmQT7LWGRrXx5lxCGzKcNnEtbmnzO5nt4Iv3LuRokqUuQ==
+	bh=lxVUiwGLzR3Lf9AHvrzsn56ZYjr3ErKk+ob5o+kvBsk=;
+	b=obHMhlqz0s8sPv0300Xx6x6oMC02UkZn2UAHlYZ04kNu2BelXIitMTJzLrEdY4RCnnRC
+	 y8yte6GLmLRIDXAFxnjrjZucEqPgtaPF5+5P2jWK2R1E9JOoMYwqPAfitDFox1xCZDssX
+	 kJhRLB/QXGNjFtf9RDU+4dx3k+QSfb5mIYB2QMtAgptOcZuj1b6jTdW/hM2GpSYn5W41j
+	 xI3532/mUK8YIHJPFvfAsHM8lOw9rVqbYGHYmKrZSLj1hadws5bMsuMqyl2n/g/5koLNz
+	 gf+ACz+xbOuKc7L6dcJ6ixxSPUX3k3M7TKKAw2iaYwO52suP36e3TveHfV64yr7NXYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gbp1DFi/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RiZZ/WzU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CBB606A326;
-	Thu, 19 Nov 2026 04:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B0E606A325;
+	Thu, 19 Nov 2026 04:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbp1DFi/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDAD1F000C4;
-	Thu, 19 Nov 2026 04:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RiZZ/WzU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B371F000C4;
+	Thu, 19 Nov 2026 04:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061195;
-	bh=Fz8hKbgP4Hh/BRfIc5s21C30R9nJQGnJIPqCWyiv+3s=;
+	s=korg; t=1795061198;
+	bh=lxVUiwGLzR3Lf9AHvrzsn56ZYjr3ErKk+ob5o+kvBsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbp1DFi/kvaRYFnnM6/A+3CJtFHb7meI8ohE/mLF3Tryyxc6EdzvEJSN+/oIK3k+6
-	 dW1o4gojUkcx3lkPAYJVlq6o87i+LOfPnXpshEDwnrGLz8oGPKa4wSlFm5n7KCiMK3
-	 Qp6HCIZ59AYMCgEal68bsKXNddYVcYsrmaZX/zn4=
+	b=RiZZ/WzUPf1troV7GJRqGF9qsEWvyjBSYV/AOTUZ2bqxPd84PBl79N+T21I2BkSLs
+	 2Z9xF51FFOURXV3YxhQL7f0BvRye1+bErL0UpUE14zSJ5TJEFsqf2Dg+QIglf3Fpwi
+	 J2gMdJNQgCAN3GIsuSB7cfHjQy+RKqmaJhwL0F6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1425/1848] ARM: vexpress: fix device_node refcount leak in vexpress_smp_dt_prepare_cpus()
-Date: Wed, 18 Nov 2026 15:57:43 +0100
-Message-ID: <20261118150019.195464387@linuxfoundation.org>
+Subject: [PATCH 5.10 1426/1848] misc: enclosure: fix UAF on device_register() failure
+Date: Wed, 18 Nov 2026 15:57:44 +0100
+Message-ID: <20261118150019.237188987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,50 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 27b98d331f1dcebe088ab51a7061a387a7440cb2 ]
+[ Upstream commit 0f3b12bab74e13a2b8686a49c5b83099da61e032 ]
 
-vexpress_smp_dt_prepare_cpus() obtains a reference to the SCU device
-node via of_find_matching_node() and passes it to of_iomap(), but never
-calls of_node_put() on it. of_iomap() does not take ownership of the
-node, so the reference is leaked. The function is the .smp_prepare_cpus
-hook invoked once from the __init SMP bring-up path, so this is a
-one-shot leak of a single refcount during boot, with no functional
-impact.
+After device_register() fails, the embedded struct device has already been
+initialized and must be released with put_device() so that
+enclosure_release() can drop the parent reference and free edev.
 
-Annotate scu with the __free(device_node) cleanup attribute so the
-reference is released when the function returns.
+The error path currently does put_device(parent) + kfree(edev), which
+skips the device lifetime rules and can free the object while the device
+core still owns a reference (use-after-free).
 
-Found while reviewing a CodeQL report for vexpress_flags_set() on the
-same SMP bring-up path.
-
-Fixes: d2606f81d563 ("ARM: vexpress: Simplify SMP operations for DT-powered system")
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260925173252.933705-3-geoffreyhe2@gmail.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: d569d5bb3fd9 ("[SCSI] enclosure: add support for enclosure services")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260806070358.1599627-1-gonglinkai@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-vexpress/platsmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/enclosure.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-vexpress/platsmp.c b/arch/arm/mach-vexpress/platsmp.c
-index 99c93124aa68d..acc7473515e39 100644
---- a/arch/arm/mach-vexpress/platsmp.c
-+++ b/arch/arm/mach-vexpress/platsmp.c
-@@ -64,8 +64,8 @@ static const struct of_device_id vexpress_smp_dt_scu_match[] __initconst = {
+diff --git a/drivers/misc/enclosure.c b/drivers/misc/enclosure.c
+index f950d0155876a..6ac14c2e614b5 100644
+--- a/drivers/misc/enclosure.c
++++ b/drivers/misc/enclosure.c
+@@ -147,8 +147,7 @@ enclosure_register(struct device *dev, const char *name, int components,
+ 	return edev;
  
- static void __init vexpress_smp_dt_prepare_cpus(unsigned int max_cpus)
- {
--	struct device_node *scu = of_find_matching_node(NULL,
--			vexpress_smp_dt_scu_match);
-+	struct device_node *scu __free(device_node) =
-+		of_find_matching_node(NULL, vexpress_smp_dt_scu_match);
- 
- 	if (scu)
- 		scu_enable(of_iomap(scu, 0));
+  err:
+-	put_device(edev->edev.parent);
+-	kfree(edev);
++	put_device(&edev->edev);
+ 	return ERR_PTR(err);
+ }
+ EXPORT_SYMBOL_GPL(enclosure_register);
 -- 
 2.53.0
 
