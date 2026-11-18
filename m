@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055096;
-	b=xCXeSFRVjRMQO2KDnzhNMO2rRWt7VZWhb/SIVOC0XQjjHx3BcAM6qkRXfDQHOO3e1Nj7
-	 4mtRIVrKrEGT95L24DaavSCTTjAgYPyGdTuZeld0TCo3qrCl25BLAQ5tY00047gZYfAvS
-	 zuQvw8xAwkkVhHwsin5HEaIr9y/6jUVpCP62SU2u4g7Aymi9p8bjWS7eweeaU9oaEzG83
-	 Ph9Os13Lz5ATOY/MLWb+XdhBCAF5er3x25LuY8i9hskjM6WAZ+njULZZPjJ8JVmZhjhpJ
-	 /icgns8eOi8oxtjAQpp2/xSbUYqXyZ9RvMf4D5BztXeIxvls7CEm1wsQpRYHAkfDivw==
+	t=1795055099;
+	b=KbVEaTGFMIiXFakaPM2o9kwxcEpSBX4Q2JRJFWaC2Ik3UEOxZg2v6LeQPGQRxWR7u2Np
+	 sV/+pdNLaK2GgxBK9ydHN8nuAl4vO6jSz4ZJ1r+ptC9m2VqPcznrMe0PrUMxWFjKQY7Jy
+	 WPxMKyvhsTISS6oaRCgC+o9qhufveDk8Gm1beIS07vaONPLM/92f9BLCyTls0c242dDd2
+	 ISrdXlXEoCdfzb+ysuvnCc8p6MNlgNdpO9YtidMn/EfcIDynRQKOqHUWwMvq+8oZNyNKn
+	 Kkjms/+gd6EImZvJyL1dVvIR1zcGBH2GgThES2ZoXCEmaDbesG9kEx0+00YrrRhjtMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rtNRmK/i47TfD6HwmT+E+6te9VDqvvKGh7Q3Av0x4W0=;
-	b=UNb1shLSXFOdh7RgbexxuIwXomTwPln8hjisEVjDrIMVV28r78j2bPXn2tP8UXyQv0Nx
-	 z3MLMJST8IxK2N8zPy4t5U76CPi1G1zhre5spo48/Yxj6AZDsceonNMOOBYcZ3eXA9LYi
-	 BB8xmQc3s87nKvJKCHIqNrzyIIoLnv6UMrF1y1XJvVKZOvibeHbJxBO9ymL4Tp1t5XmhH
-	 YSBRZ6jgEpBn2jRKmLnMdRNaHH1+gLdn22kJKaI2TKUQMMnVHNDQq6xLrcaHUcBhY/RnT
-	 Dt0uF/soLNS9t1L56DfFjbpdbzak9/b8uKIvqTNCu1mLQrKjbA7yCuBH1CgOPQ/8mZg==
+	bh=2HxcTLbVlljDCSi8fogW3bi10qX5IdwNgJqS1aH0lOc=;
+	b=EVtPOLAXroAaGXtWC+9qEAFj4PgOp0kOBwsAiXAXeIdoWYklwxX1OFrqOBDTqYeGGHS5
+	 SNNsL3hMTlPHHTLi1VFWXJJQXrIWpveDEbqVA0I8OFTgeDPmllzj2J6x9gZE29xG+/eID
+	 KjBUT/yM6QQespd7rKyujs697r/bXtNEnzcbGO7qe4O69cZkOn5XncMmVW/QZ9CorMkPV
+	 c1kJcxUnoflxrfAjUU1Vu2Ppk06GUcg+Bm2XUtrSYB3TVuKdGWhxo5U3ivRZqtplTnrtC
+	 t2tZ9W8VHBFx67MBbFhVco2WHQmDhQ19B3KUFeYCispO9bgpDD/f14hD2i2Yi9nekxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zm5fs0dQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUpbhXmM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E00606A325;
-	Thu, 19 Nov 2026 02:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDC0606A31C;
+	Thu, 19 Nov 2026 02:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zm5fs0dQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE78A1F000C4;
-	Thu, 19 Nov 2026 02:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUpbhXmM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E89A1F000C4;
+	Thu, 19 Nov 2026 02:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055096;
-	bh=rtNRmK/i47TfD6HwmT+E+6te9VDqvvKGh7Q3Av0x4W0=;
+	s=korg; t=1795055099;
+	bh=2HxcTLbVlljDCSi8fogW3bi10qX5IdwNgJqS1aH0lOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zm5fs0dQEumj7BOFkJO/8eTiV1eceCdWRGu2m5ZITAEJPMs0ZE4rW4DmZICazwjnh
-	 STEp4TAF/qjp8FwQSVT2ZG6iSyW1OTkuBzxfQrqOzp4L0fpUHZRTDFsbelu4C5zbn4
-	 u4NWARAzJMj1ZxbyVg/CibhG56+9UEFxNZpWdGyg=
+	b=vUpbhXmM2f/C/eDHJ6yJOWM4ndPoq5y6Vu/vrlZPyiaCovCw/RaY58GMKr+Tzvxml
+	 9ceEJSPuiMptfacvpol5JSv4qanZeqTP1DyMgaKGNnqwjQprxVSSyGS/9yWXSPYeeg
+	 3kxKrWBjNOJsF7EXW4GBgLlYejJfm0qLSEoGl6sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1468/2214] regulator: ab8500: Treat cut 1.0 VAUX3 as fixed
-Date: Wed, 18 Nov 2026 15:52:24 +0100
-Message-ID: <20261118150109.931524946@linuxfoundation.org>
+Subject: [PATCH 5.15 1469/2214] regulator: ab8500: Test dedicated enable bits only
+Date: Wed, 18 Nov 2026 15:52:25 +0100
+Message-ID: <20261118150109.964869244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,49 +70,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit b9fc8a8d31b914b09329240f532ff0e9c00cd727 ]
+[ Upstream commit a5ee78846015512b4d3d32f8aa463024a23234ce ]
 
-The early-cut workaround currently gives AB8500 cut 1.0 the 16
-programmable VAUX3 settings introduced with cut 1.1. On cut 1.0 the
-selector is not programmable and VAUX3 is fixed at 1.2 V.
+Some regulator control registers have independent enable and low-power
+bits. is_enabled() currently tests their combined update mask, so an
+off regulator with its low-power bit set is incorrectly reported as
+enabled.
 
-Register VAUX3 as a fixed-voltage regulator on cut 1.0 and retain the
-16-value workaround only for cut 1.1.
+Add an optional enable mask and use it for VINTCORE, AB8500 TVOUT,
+AB8505 ADC, and AB8505 VAUX5/6. Regulators whose two-bit field encodes
+the complete operating state continue to test the full update mask.
 
-Reference: AB8500 User Manual, UM0836 Rev 3, p. 240
+References: AB8500 User Manual, UM0836 Rev 3, p. 214;
+AB8505 User Manual, DM00046744 Rev 3, pp. 171-172 and 223
 
-Fixes: 2b75151a1041 ("regulators: Added ab8500 v2 support")
+Fixes: 65e03ed2d0cd ("regulators: Fixed errors in ab8500 register mapping")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-4-fe88b01829bf@kernel.org
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-5-fe88b01829bf@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/regulator/ab8500.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 662434cccd217..110c660e899d7 100644
+index 110c660e899d7..c00bd8bf1e058 100644
 --- a/drivers/regulator/ab8500.c
 +++ b/drivers/regulator/ab8500.c
-@@ -1783,9 +1783,14 @@ static int ab8500_regulator_register(struct platform_device *pdev,
- 	config.driver_data = info;
- 	config.of_node = np;
+@@ -162,6 +162,7 @@ struct ab8500_shared_mode {
+  * @update_bank: bank to control on/off
+  * @update_reg: register to control on/off
+  * @update_mask: mask to enable/disable and set mode of regulator
++ * @enable_mask: optional mask for an enable bit separate from the mode bit
+  * @update_val: bits holding the regulator current mode
+  * @update_val_idle: bits to enable the regulator in idle (low power) mode
+  * @update_val_normal: bits to enable the regulator in normal (high power) mode
+@@ -183,6 +184,7 @@ struct ab8500_regulator_info {
+ 	u8 update_bank;
+ 	u8 update_reg;
+ 	u8 update_mask;
++	u8 enable_mask;
+ 	u8 update_val;
+ 	u8 update_val_idle;
+ 	u8 update_val_normal;
+@@ -377,6 +379,7 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
+ {
+ 	int ret;
+ 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
++	u8 enable_mask;
+ 	u8 regval;
  
--	/* fix for hardware before ab8500v2.0 */
--	if (is_ab8500_1p1_or_earlier(ab8500)) {
--		if (info->desc.id == AB8500_LDO_AUX3) {
-+	/* Handle the different VAUX3 implementations in early AB8500 cuts. */
-+	if (info->desc.id == AB8500_LDO_AUX3) {
-+		if (is_ab8500_1p0_or_earlier(ab8500)) {
-+			info->desc.ops = &ab8500_regulator_mode_ops;
-+			info->desc.n_voltages = 1;
-+			info->desc.volt_table = fixed_1200000_voltage;
-+			info->voltage_mask = 0;
-+		} else if (is_ab8500_1p1_or_earlier(ab8500)) {
- 			info->desc.n_voltages =
- 				ARRAY_SIZE(ldo_vauxn_voltages);
- 			info->desc.volt_table = ldo_vauxn_voltages;
+ 	if (info == NULL) {
+@@ -392,13 +395,15 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
+ 		return ret;
+ 	}
+ 
++	enable_mask = info->enable_mask ? info->enable_mask : info->update_mask;
++
+ 	dev_vdbg(rdev_get_dev(rdev),
+ 		"%s-is_enabled (bank, reg, mask, value): 0x%x, 0x%x, 0x%x,"
+ 		" 0x%x\n",
+ 		info->desc.name, info->update_bank, info->update_reg,
+-		info->update_mask, regval);
++		enable_mask, regval);
+ 
+-	if (regval & info->update_mask)
++	if (regval & enable_mask)
+ 		return 1;
+ 	else
+ 		return 0;
+@@ -833,6 +838,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x44,
++		.enable_mask		= 0x04,
+ 		.update_val		= 0x44,
+ 		.update_val_idle	= 0x44,
+ 		.update_val_normal	= 0x04,
+@@ -861,6 +867,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x82,
++		.enable_mask		= 0x02,
+ 		.update_val		= 0x02,
+ 		.update_val_idle	= 0x82,
+ 		.update_val_normal	= 0x02,
+@@ -1070,6 +1077,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x01,
+ 		.update_reg		= 0x55,
+ 		.update_mask		= 0x18,
++		.enable_mask		= 0x10,
+ 		.update_val		= 0x10,
+ 		.update_val_idle	= 0x18,
+ 		.update_val_normal	= 0x10,
+@@ -1092,6 +1100,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x01,
+ 		.update_reg		= 0x56,
+ 		.update_mask		= 0x18,
++		.enable_mask		= 0x10,
+ 		.update_val		= 0x10,
+ 		.update_val_idle	= 0x18,
+ 		.update_val_normal	= 0x10,
+@@ -1113,6 +1122,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x44,
++		.enable_mask		= 0x04,
+ 		.update_val		= 0x04,
+ 		.update_val_idle	= 0x44,
+ 		.update_val_normal	= 0x04,
+@@ -1141,6 +1151,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x82,
++		.enable_mask		= 0x02,
+ 		.update_val		= 0x02,
+ 		.update_val_idle	= 0x82,
+ 		.update_val_normal	= 0x02,
 -- 
 2.53.0
 
