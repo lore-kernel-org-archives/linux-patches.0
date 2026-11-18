@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060961;
-	b=sI+RGu9n844P/DO6ZXtH+dY1dFV6ZYSHLP/DqggOMneyKlEFOFJhHye+zCi9vYoTbpsT
-	 yach1Gr3qYM+Z2d8aXiyHWsXhdeP665t/Qgz9pcuQCiPbjgGc5kHT97P4/za3czXbQrwz
-	 YGLI+FjbmNbUpSHJCd5nA6Ahk6F+tfl0r3LIOjn5YZd0SZKEunVWgUEyFoeQ8Qv6aj/QX
-	 QQoHkmCYOUNht9X6ALerSOxfwjA8dfs5u4bzVourFCEU1ZX2/4o2OBDv2o6qsameBou5r
-	 +v3HbpQ0uPmXdW7JuSz8rx3aXNFpwFCdjqSeYqjAGqvat5Wgctm9UKKjkmU96cFcDsg==
+	t=1795060963;
+	b=bs3X5nsFBJRosoyehsjoKhtqAez12yjfbw9K1Qqur26ZQ3zmGmlqsDv9f8fk2eoTVLaZ
+	 kuN11DB0eitLeOvbvo2Jvzf3oN9F6QScCXhLjrJzF5s1ge3Csmno1oy33MkkXhQlcF7YK
+	 7X5CL0qcxYldIYd5va18fkwshHDwqRLE8GIn2AWm3t9W7S8Hfx2MA/0KwH7NVpkjkB5rG
+	 OMpDWAVcAUqwckhYfYumPhX9IRLwWuFCfbLc+8vzfMgQRr5yLt8xu9FVbqYbJWFdsC9wl
+	 B+XesdDyRkQPbTx8QL4G3DFTiXvsKC7FFirlYiMEh65K3W1f/LNzyqAyDbADQyEzndw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dgoNxz4hXmaHBrXjLnP49bw3KjLH+R06MnfGI5xeWvM=;
-	b=dieTIp8y0JruFSoOCY5zh27RGIrRpFt9Jt3SaD55CigXZjOFfOYHtrwYSMXuL2PknPvg
-	 qv6jGqjjUlxheprPzFCyWcZQa+GvzSeK5ecwdciTSWPOGODpSmFusYbp9E8maAZfH1u9z
-	 CCece3nP7YpeJoSZtWX1BoHtKyRrvlzcw0MBa+QM0tWM3ddkqMNzZAMgIuncMEx3DmkOl
-	 6HHjb8nY9c3s9q/kMKXVJB10NckN6ywwpn6cQmsxrm9sdfR13Zi9fuhJVOhmsZ7Huzr/7
-	 waGcvDuJvEq2XY9H9wy5AX8nS1o9YgevjCP3lG2wLTGLYucUry3yZezoqEoOAkKBlFA==
+	bh=0bI3aReTV4IpZPfg7QtjO6JBm/oB/Bt7wvxbyg6+/bM=;
+	b=UoW5Hwc9d4crZtjLqLPCEG2idNWTfO+jP9hJ1AAvGGbzFCRcUTjdDM8H6SorMC1piEhg
+	 rcMII0HK6ctxyrcmOrtXhH8TdhO4rzsvzT1W2jhAYQG6+8TRjv0E64X5qgtEM7AlGA6iY
+	 7+HpvY2rMrWSJ4cXkHFUt0DJH06MYPVaoRFw5CmqbELff5buYIpKc3wmujOt7WcGcTdvg
+	 SwEzVf9GSgAMaNbznuPDvzF2rLh2h6xn0T4Pp6oI0CU2Imb0PqH1IC+2xW37b5qqktlQF
+	 ynYaEPcIOewGX18Rcb/S2sTU0uZEsLvEB3tcMCVYEj4UEdOG4DTpgtw2aXbFegzE0XA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tk9DM+3x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yx7O0WbI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223F9606A320;
-	Thu, 19 Nov 2026 04:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D910E606A320;
+	Thu, 19 Nov 2026 04:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tk9DM+3x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8AD1F000C4;
-	Thu, 19 Nov 2026 04:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yx7O0WbI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70331F000C4;
+	Thu, 19 Nov 2026 04:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060960;
-	bh=dgoNxz4hXmaHBrXjLnP49bw3KjLH+R06MnfGI5xeWvM=;
+	s=korg; t=1795060963;
+	bh=0bI3aReTV4IpZPfg7QtjO6JBm/oB/Bt7wvxbyg6+/bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tk9DM+3xLbQxsli/oWUhZTNAxdk8MsapwoYWkkIDiOB30E9uAbz3eCdR5knb3hsGH
-	 IIfkL6WX/iteDSCwdbEuDHwnA2XhS3Cw6sj9iSdp9P6zTQwl0OOK7EUbmTU71PZ7M4
-	 7GBidJCxvF2G6RhAL0RqVQhQd+Q7mzCM4yi9OJRI=
+	b=Yx7O0WbItucWV+PYrkKtm4S+JwOAsSjTiIcO6OAJPXP8CSVGUAxtQyfx9lMVqqjNh
+	 nD52crJ48Y7akP0/JDNrnSzUSsAjpzH5ZqrEw6hRTd9r27QCg0OSrJV3TUcV3UL7cy
+	 +DAofKR52hdhP2VockisZ7+dNKQxd7/kOfU7G+Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niko Huuskonen <niko.huuskonen.00@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1387/1848] ALSA: caiaq: Fix the Kore controller key map
-Date: Wed, 18 Nov 2026 15:57:05 +0100
-Message-ID: <20261118150017.525000380@linuxfoundation.org>
+Subject: [PATCH 5.10 1388/1848] spi: spi-rspi: Add support to deassert/assert reset line
+Date: Wed, 18 Nov 2026 15:57:06 +0100
+Message-ID: <20261118150017.563458186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,99 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niko Huuskonen <niko.huuskonen.00@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit c0508fc6895137f9e2dd43c1a09cc834254cc149 ]
+[ Upstream commit aadbff4af5c90919cbe67e2c4d77c68cdefa454e ]
 
-keycode_kore does not match the hardware in two places:
+On RZ/G2L SoC we need to explicitly deassert the reset line
+for the device to work, use this opportunity to deassert/assert
+reset line in spi-rspi driver.
 
-- Softkeys 5 to 8 are listed in reverse order, so pressing the fifth
-  softkey reports BTN_8, the sixth BTN_7 and so on. Softkeys 1 to 4 are
-  correct. The OpenKoreBridge project, which drives a Kore 2 through
-  this driver, works around the same reversal in userspace.
+This patch adds support to read the "resets" property (if available)
+from DT and perform deassert/assert when required.
 
-- On the first Kore controller the touch sensors of the eight knobs are
-  scrambled: touching knob 1 reports KEY_BRL_DOT6, knob 2 KEY_BRL_DOT8,
-  knob 3 KEY_BRL_DOT2, knob 6 KEY_BRL_DOT7, knob 7 KEY_BRL_DOT1 and
-  knob 8 KEY_BRL_DOT3. Only knobs 4 and 5 are right.
-
-Put the softkeys in order for both controllers, and give the first Kore
-controller its own touch sensor order, so that BTN_n and KEY_BRL_DOTn
-belong to the n-th knob. The touch sensor order of the Kore 2 is left
-alone, as it could not be checked.
-
-Userspace that compensates for the old order needs to follow. It can
-read the key map with EVIOCGKEYCODE, which also makes it possible to
-support kernels with and without this change.
-
-Tested on a Kore controller (USB ID 17cc:4711).
-
-Link: https://github.com/OpenKoreBridge/OpenKoreBridge
-Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
-Assisted-by: LLM
-Signed-off-by: Niko Huuskonen <niko.huuskonen.00@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260927003532.289468-3-niko.huuskonen.00@gmail.com
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20211118031041.2312-3-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 7b85114d47f6 ("spi: rspi: Fix DMA mode when the DMA controller is built as a module")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/input.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/spi/spi-rspi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
-index 6a5adb8d1e6a7..aee526e0da36a 100644
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -41,11 +41,11 @@ static const unsigned short keycode_kore[] = {
- 	BTN_3,
- 	BTN_2,
- 	BTN_1,
--	BTN_8,
--	BTN_7,
--	BTN_6,
- 	BTN_5,
--	KEY_BRL_DOT4,   /* touch sensitive knobs */
-+	BTN_6,
-+	BTN_7,
-+	BTN_8,
-+	KEY_BRL_DOT4,   /* touch sensitive knobs (Kore 2 order) */
- 	KEY_BRL_DOT3,
- 	KEY_BRL_DOT2,
- 	KEY_BRL_DOT1,
-@@ -55,6 +55,21 @@ static const unsigned short keycode_kore[] = {
- 	KEY_BRL_DOT5
- };
+diff --git a/drivers/spi/spi-rspi.c b/drivers/spi/spi-rspi.c
+index 4600e3c9e49e4..7ff89313cae5b 100644
+--- a/drivers/spi/spi-rspi.c
++++ b/drivers/spi/spi-rspi.c
+@@ -21,6 +21,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/of_device.h>
+ #include <linux/pm_runtime.h>
++#include <linux/reset.h>
+ #include <linux/sh_dma.h>
+ #include <linux/spi/spi.h>
+ #include <linux/spi/rspi.h>
+@@ -1226,8 +1227,14 @@ static const struct of_device_id rspi_of_match[] = {
  
-+/* index of the first touch sensor in keycode_kore */
-+#define KORE_TOUCH_KEYS	24
+ MODULE_DEVICE_TABLE(of, rspi_of_match);
+ 
++static void rspi_reset_control_assert(void *data)
++{
++	reset_control_assert(data);
++}
 +
-+/* the first Kore controller reports its touch sensors in this order */
-+static const unsigned short keycode_kore1_touch[] = {
-+	KEY_BRL_DOT4,
-+	KEY_BRL_DOT8,
-+	KEY_BRL_DOT3,
-+	KEY_BRL_DOT7,
-+	KEY_BRL_DOT2,
-+	KEY_BRL_DOT6,
-+	KEY_BRL_DOT1,
-+	KEY_BRL_DOT5
-+};
+ static int rspi_parse_dt(struct device *dev, struct spi_controller *ctlr)
+ {
++	struct reset_control *rstc;
+ 	u32 num_cs;
+ 	int error;
+ 
+@@ -1239,6 +1246,24 @@ static int rspi_parse_dt(struct device *dev, struct spi_controller *ctlr)
+ 	}
+ 
+ 	ctlr->num_chipselect = num_cs;
 +
- #define MASCHINE_BUTTONS   (42)
- #define MASCHINE_BUTTON(X) ((X) + BTN_MISC)
- #define MASCHINE_PADS      (16)
-@@ -656,6 +671,12 @@ int snd_usb_caiaq_input_init(struct snd_usb_caiaqdev *cdev)
- 		input->absbit[BIT_WORD(ABS_MISC)] |= BIT_MASK(ABS_MISC);
- 		BUILD_BUG_ON(sizeof(cdev->keycode) < sizeof(keycode_kore));
- 		memcpy(cdev->keycode, keycode_kore, sizeof(keycode_kore));
-+		BUILD_BUG_ON(KORE_TOUCH_KEYS + ARRAY_SIZE(keycode_kore1_touch) >
-+			     ARRAY_SIZE(keycode_kore));
-+		if (cdev->chip.usb_id ==
-+		    USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER))
-+			memcpy(cdev->keycode + KORE_TOUCH_KEYS, keycode_kore1_touch,
-+			       sizeof(keycode_kore1_touch));
- 		input->keycodemax = ARRAY_SIZE(keycode_kore);
- 		input_set_abs_params(input, ABS_HAT0X, 0, 999, 0, 10);
- 		input_set_abs_params(input, ABS_HAT0Y, 0, 999, 0, 10);
++	rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
++	if (IS_ERR(rstc))
++		return dev_err_probe(dev, PTR_ERR(rstc),
++					     "failed to get reset ctrl\n");
++
++	error = reset_control_deassert(rstc);
++	if (error) {
++		dev_err(dev, "failed to deassert reset %d\n", error);
++		return error;
++	}
++
++	error = devm_add_action_or_reset(dev, rspi_reset_control_assert, rstc);
++	if (error) {
++		dev_err(dev, "failed to register assert devm action, %d\n", error);
++		return error;
++	}
++
+ 	return 0;
+ }
+ #else
 -- 
 2.53.0
 
