@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047220;
-	b=hvBLWVaGmONT2yKsqvR7ojUdcFt0xEf/ZZx4YgtbOx5SlntyD0QokDBK07c/6+l+9+ZA
-	 SIBgCVU4n7Aedpo584Mo51F9RUyspymAh0AvpTQ3NQw37Ti/OUBrCBkag9VjJHmGqLYl0
-	 t4xidvMidLywStkSTyfpZeJDPvcs++S1b02nm1Uj95olCtr/jr6xMqva15RMzCjtgXU78
-	 AaaBQqlIG9s8QI6aDUaFjjemET2kzf6Fop9FWfeSFNFD8tj4uAkEaLGnJ1YUtz7ZCe954
-	 PuQTlqnlJbw1vPybmjyu6vSLy8bb+THiMNrQa1XzPv49SVGzyDPC5ImKebAYLJk7ViQ==
+	t=1795047223;
+	b=G80xYNPQ1JF6gw1RxpJT4HR78trIScQSMQfhB4EbadjTfRZso8JRPC1EkaFav/MvKQtU
+	 Rd1xJu7yYG6l3Gfmha18HfcQAfTY5gUPLZv4sziJNIZ2pcwkifnJvD9pROEqBxCNZAW74
+	 EhvUD2UXCegYTvyT3LzyqE/31mnFq2QMc9tM1rnWyHCfIh8q0jUHufwwsRFVPvx/+5Z4Y
+	 LgL3Pagi4sxc/utj8JE+7RcsPmVvE/fV+e6DUjhAD2ho7f3fJdJYcK+lBwgBAVJwH7pS8
+	 ZUdlg08bIYKdKMyoYWvHcyECK8jIrzd4aUYtfZpYkuT5Ge9uDG2K9LXF95K6OTEM26A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IyPHK0iKLZVfpyD7YRJ46m4mPpm1W+hU3of7udm5UBM=;
-	b=kPkgwrdSTVOCqsW6KbwXP1VYFUL72p4Ynx1wdXCByagt9RGTyQcfDNiO6qLM4r/MzG6i
-	 /TN1lWXlqRfkOGebzE9RKY6Qc3BTt/7OrZf+9RSeZoKh07n8PoPGHde0ntcXU5v+izdH9
-	 npCSDupYiw8QOnBX3qAYnzP7/LI+G5wQZJZIhn8ak7AgmFMd9BYRMRjIG9O97fvcvjERY
-	 XR2i4lNWbo96aMalbPwstTh1kNfWYJa7I8KPEA5fQJG5szYNtH30pL4SKnz68rJRpDsh5
-	 1o74qjXV+chmJPg+BFTZpwG9XYgwFpUK5KqtlPpmjuN2+g/69NPq/Wy7cTGcX3cTYGg==
+	bh=CrlnaNFstmMb/etWnh2rMRUEGlmfLF3BT0px5leJcw8=;
+	b=lRvHdXpQtDiWjkrsAoBGilP3lFhDWJ/AQGE0/P+5jL0tcdMi3lAfOCBNMk0hf7xW6dol
+	 NV8abXRnnfc2n06l5a1YPZ46vJ7MFRLaGnEM8Bo3HwySUmiTyeCZC5UqgJFDY0ppo8bGV
+	 F8kBVFpftEFMcZqyfMZrygGyOwbG1k90+SD3pwByZmtb3kTNQw6PN1iSxLOL4X7xMNMOE
+	 apC3ZYi2+fBS6WVb5SrQNvrXR6+PxywP5Xv1HafHOUSRpnmYGFc4MTS2aidilAq7z7yMl
+	 wIW86Q/sTBi3LZOGDZFuSwXR1OPFaxYDVtj+KU7fEA/tV5VgjwlzdgNujDW4XwLMOzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+jDfkNW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+91qOnW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AB060A2608;
-	Thu, 19 Nov 2026 00:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E3D606A33D;
+	Thu, 19 Nov 2026 00:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+jDfkNW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36271F000C5;
-	Thu, 19 Nov 2026 00:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+91qOnW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC591F000C4;
+	Thu, 19 Nov 2026 00:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047220;
-	bh=IyPHK0iKLZVfpyD7YRJ46m4mPpm1W+hU3of7udm5UBM=;
+	s=korg; t=1795047222;
+	bh=CrlnaNFstmMb/etWnh2rMRUEGlmfLF3BT0px5leJcw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j+jDfkNWnM1FZVdRV2Yh3FJMo+2ZJ/5+61kFkL2eWXU/yJdkfzBl7bxXcIuOhAIqJ
-	 /npCYdzTw6LOzJ7v0IBDrQLIM5duKNh0Q3yKvxNE7cRGec04JJrIwE4fVhGG5BO3Gb
-	 2Wd4E1ooHvKAVbhdDXS4Xp8ZQrQwRCQ9di8KQ/RQ=
+	b=h+91qOnW3JIW5tydtnMUs1n6OalEWRSKFoeXehaH48d1LrN5M+AfwhK9YwKoD61wr
+	 gMrjv+u7jj6NJP6f3EzYsq8nszEujpnBdQoE/TGoNIIp1f6/Th+Z/yZ5rVk1nAqLkd
+	 AjduG3xTuitFBSf5JhA+H/BbpcGzJIsJ8feRnpy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Brian Geffon <bgeffon@google.com>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1562/2857] mm/mremap: correctly uncharge accountable VMAs in error path
-Date: Wed, 18 Nov 2026 15:43:16 +0100
-Message-ID: <20261118150257.634598028@linuxfoundation.org>
+Subject: [PATCH 6.1 1563/2857] ARM: 9488/1: smp: set current pointer in assembly before jumping into C
+Date: Wed, 18 Nov 2026 15:43:17 +0100
+Message-ID: <20261118150257.668073231@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -74,69 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 65e722a74df992719676ead85a9e93fb2b5a0983 ]
+[ Upstream commit f6e551e7d515579b952422c93415470fb672d848 ]
 
-The mremap error path is a fragile and unwieldy beast - it reverses the
-page table move then updates vma_remap_struct state to swap VMA, length and
-address between old and new VMAs in copy_vma_and_data().
+With CONFIG_KCOV_INSTRUMENT_ALL=y, secondary CPUs fail to come online
+on ARMv6K/ARMv7 SMP:
 
-If the mremap() operation didn't specify MREMAP_DONTUNMAP then its caller,
-move_vma(), invokes unmap_source_vma(), which unmaps the new VMA rather
-than the old one.
+  CPU1: failed to boot: -38
 
-For accountable VMAs when MREMAP_DONTUNMAP is not specified,
-unmap_source_vma() unsets VMA_ACCOUNT_BIT during this unmap in order that
-only the delta of a VMA expansion is charged (performed by
-vrm_calc_charge() earlier).
+The compiler inserts a call to __sanitizer_cov_trace_pc() at the entry
+of secondary_start_kernel(), before set_current(task). The KCOV hook
+dereferences current while TPIDRURO is still uninitialized, causing a
+data abort before cpu_init() has installed the exception stacks. The
+secondary CPU consequently never completes startup.
 
-Therefore nothing uncharges the expanded VMA size, and there is a permanent
-leak in global Committed_AS.
+Initialize current in the secondary assembly handoff, as
+__mmap_switched already does for the boot CPU.
 
-Resolve the issue by uncharging when MREMAP_DONTUNMAP is not specified.
+With current set in assembly, the set_current() call in
+secondary_start_kernel() is redundant. Drop it together with the
+function and the task argument. The hotplug resuscitate path in
+arch_cpu_idle_dead() needs no hand-off either, as smp_ops.cpu_die()
+can only return if the CPU kept its register state, TPIDRURO included.
 
-Link: https://lore.kernel.org/20261019-other-mremap-charge-leak-v1-1-d94477fe6545@kernel.org
-Fixes: fdbef6149135 ("mm/mremap: don't account pages in vma_to_resize()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Dmitry Safonov <0x7f454c46@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted vrm_uncharge() to a direct vm_unacct_memory() call with an explicit VM_ACCOUNT check in move_vma() ]
+Assisted-by: Claude:claude-fable-5
+
+Fixes: 50596b7559bf ("ARM: smp: Store current pointer in TPIDRURO register if available")
+Cc: stable@vger.kernel.org
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+[ sashal: Adjusted context in arch_cpu_idle_dead() to accommodate the missing unreachable() call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm/include/asm/smp.h   |  2 +-
+ arch/arm/kernel/head-nommu.S |  1 +
+ arch/arm/kernel/head.S       |  1 +
+ arch/arm/kernel/smp.c        | 15 ++-------------
+ 4 files changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index ec66e7be8afea..9a53eeb2191f5 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -692,6 +692,19 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 		 */
- 		move_page_tables(new_vma, new_addr, vma, old_addr, moved_len,
- 				 true);
-+
-+		/*
-+		 * The new VMA will be unmapped rather than the old one.
-+		 *
-+		 * When an accountable move is being performed, this unmapping
-+		 * will not uncharge any expansion, so do that now.
-+		 *
-+		 * A move is accountable if the VMA is accountable and
-+		 * MREMAP_DONTUNMAP is not specified.
-+		 */
-+		if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP))
-+			vm_unacct_memory(to_account >> PAGE_SHIFT);
-+
- 		vma = new_vma;
- 		old_len = new_len;
- 		old_addr = new_addr;
+diff --git a/arch/arm/include/asm/smp.h b/arch/arm/include/asm/smp.h
+index 7c1c90d9f5827..e46a380a4bbb4 100644
+--- a/arch/arm/include/asm/smp.h
++++ b/arch/arm/include/asm/smp.h
+@@ -43,7 +43,7 @@ extern void set_smp_ipi_range(int ipi_base, int nr_ipi);
+  * Called from platform specific assembly code, this is the
+  * secondary CPU entry point.
+  */
+-asmlinkage void secondary_start_kernel(struct task_struct *task);
++asmlinkage void secondary_start_kernel(void);
+ 
+ 
+ /*
+diff --git a/arch/arm/kernel/head-nommu.S b/arch/arm/kernel/head-nommu.S
+index 950bef83339f5..9fe76c8d1d476 100644
+--- a/arch/arm/kernel/head-nommu.S
++++ b/arch/arm/kernel/head-nommu.S
+@@ -117,6 +117,7 @@ ENTRY(secondary_startup)
+ 	ldr	r7, __secondary_data		@ reload r7
+ 	ldr	sp, [r7, #12]			@ set up the stack pointer
+ 	ldr	r0, [r7, #16]			@ set up task pointer
++	set_current r0, r1
+ 	mov	fp, #0
+ 	b	secondary_start_kernel
+ ENDPROC(secondary_startup)
+diff --git a/arch/arm/kernel/head.S b/arch/arm/kernel/head.S
+index 21930b9ac1c4c..85f3eab3eb393 100644
+--- a/arch/arm/kernel/head.S
++++ b/arch/arm/kernel/head.S
+@@ -442,6 +442,7 @@ ENTRY(__secondary_switched)
+ 	adr_l	r7, secondary_data + 12		@ get secondary_data.stack
+ 	ldr	sp, [r7]
+ 	ldr	r0, [r7, #4]			@ get secondary_data.task
++	set_current r0, r1
+ 	mov	fp, #0
+ 	b	secondary_start_kernel
+ ENDPROC(__secondary_switched)
+diff --git a/arch/arm/kernel/smp.c b/arch/arm/kernel/smp.c
+index 978db2d96b446..4b3cf4105a837 100644
+--- a/arch/arm/kernel/smp.c
++++ b/arch/arm/kernel/smp.c
+@@ -376,12 +376,9 @@ void arch_cpu_idle_dead(void)
+ 	 */
+ 	__asm__("mov	sp, %0\n"
+ 	"	mov	fp, #0\n"
+-	"	mov	r0, %1\n"
+ 	"	b	secondary_start_kernel"
+ 		:
+-		: "r" (task_stack_page(current) + THREAD_SIZE - 8),
+-		  "r" (current)
+-		: "r0");
++		: "r" (task_stack_page(current) + THREAD_SIZE - 8));
+ }
+ #endif /* CONFIG_HOTPLUG_CPU */
+ 
+@@ -400,23 +397,15 @@ static void smp_store_cpu_info(unsigned int cpuid)
+ 	check_cpu_icache_size(cpuid);
+ }
+ 
+-static void set_current(struct task_struct *cur)
+-{
+-	/* Set TPIDRURO */
+-	asm("mcr p15, 0, %0, c13, c0, 3" :: "r"(cur) : "memory");
+-}
+-
+ /*
+  * This is the secondary CPU boot entry.  We're using this CPUs
+  * idle thread stack, but a set of temporary page tables.
+  */
+-asmlinkage void secondary_start_kernel(struct task_struct *task)
++asmlinkage void secondary_start_kernel(void)
+ {
+ 	struct mm_struct *mm = &init_mm;
+ 	unsigned int cpu;
+ 
+-	set_current(task);
+-
+ 	secondary_biglittle_init();
+ 
+ 	/*
 -- 
 2.53.0
 
