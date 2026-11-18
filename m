@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045066;
-	b=xGWtvBDox1Xw6nFpa0xLnhpS04/EgBrtNuZ13iOlOMEUlMFugc2LhmTL94sDTscjx/ej
-	 EblIx/puOnnW1g+HnNnrLNrP9eS+V7HGaInKLZnVF+zEDQcEM/XjDiWqVLFHuluDoXv68
-	 ZXxOUM1mdBGHCt136DoiTPlPvf5mPh9PVoAAdiEwipkWBbNy0roX5gzcs/8m22DfV3HdO
-	 GRshDaxvivaKaNGU2tS9fYmdgCs1+2DuMDy/5PQlmAZtuK0RKyBjKHhhtrGGlsJM9YwcD
-	 I9EIml+xiRL8k3woULck4QpjpyTgWngTk+IeGtMB9YK3wSRCilRXpXIWEIuM0HA37og==
+	t=1795045069;
+	b=KZ/sy8AojDWG2o5DxRSneK6reyNe7cCYpemMDeTj0vUjJwePO/wz6CPeHRSZw97V7Gvy
+	 tXxeaHsZ2WmWY5D1CUplukAnMkIYmMksEXfBx4oYJsXuN2ShokYz6H/DHXU5GPm0/lXiu
+	 JTTbBiDZTLsZ4fDbos4YKW1Nt4sMj3Q8Ks0EkUwAHoXLpXPaLCSU1xzFpyyony0Iefnn+
+	 w7cBlS2Zcs9epAJ9DkR+Mb/wtwCgWeOdV37VzaNQiu9rA77EHga585PZ9RmpIIbQ3YwDt
+	 pQamnl4blxtPF3Fsu/q9qUjeEY+A+LBYjqBO5ohs1EHAts4A8dO9Hx8wWZNSrtxe/Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LI26Rfz322MWBp+yY9zj0BHRlQmotjJNntAqevVk9MU=;
-	b=W+k5Jo22zPUViIN/sYo5BfKRqCjgE4iYfKX1PFrY1cWz/NzhKuhm5wbh3USJF7a4evYX
-	 E+X85H6cDOrwS6AEXhZ9NF0/afG7GP/PrtF9p7l2Vd546syMBjms8JFRtMj8kUOn4uF16
-	 HVw197CQboDvgV3tqCaMHk8uovyS3MzOF7lBNsv+8twIIr6JoXUG77A9y1iDx7ARMiyUv
-	 ddgcNdQNPGGgyTdyLIjtc2tayn6j1ZhASfU7GhZZrMlJLdglgbhoqvnMDall82aapiIR2
-	 xPoj8s2k5RxZaX3M6hCMYjyIsXKkQ/+vcTfkfY3wk4bxsxi94ezwp+jW99AUBeelo1g==
+	bh=0b0emIR40Sn4X+myvFJBEv+rp5zgSD3f6n5NXnjuUyA=;
+	b=HjF88Ahc68HHN1hw+Nd7wbXCEFAHTda/QjZuZkA5eXLRMklkEN3RRRMKRIP04UhQiuqm
+	 JMylGMxAvJPz9PPLRMZWEQnrHyk8vQD3fM9FFY4P7uwRGGRPZN7MJSWEGwharHd3O+phK
+	 QeJ96Jdez70+R2WBAKPGANd80B879GHg/wAuXbr//CSg1wwYrgYQ2tGAL36tGMlWaPL9s
+	 06ZYl7Ysb6okuq2GBmrIDuG8IktA7YmV0GD6iw6LxAnYDyXpgIuwW53sA+B3QZxcma2UK
+	 j2fjeac7OvrXQmmhii405r/nixWKi+UEEz/0ESNZvquIFqNLXbS7d0SVjv5aqXZ1N6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hNLWwGIA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ev+5qg1m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1878F606A31C;
-	Wed, 18 Nov 2026 23:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0502606A325;
+	Wed, 18 Nov 2026 23:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hNLWwGIA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACAC1F000C4;
-	Wed, 18 Nov 2026 23:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ev+5qg1m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5511F000C4;
+	Wed, 18 Nov 2026 23:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045066;
-	bh=LI26Rfz322MWBp+yY9zj0BHRlQmotjJNntAqevVk9MU=;
+	s=korg; t=1795045068;
+	bh=0b0emIR40Sn4X+myvFJBEv+rp5zgSD3f6n5NXnjuUyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hNLWwGIAgLLa4ZPbB5vzCAUFcSx3wdzQCn7WB1S8SLvHRMMlCpZZ/iBGng2bcUb7T
-	 e/24JxaFx+LvoW37y0Pb1Z8Of9emLKRKo37XOOLcUiWFIQQW2HjhOLhrSCD6BtckUS
-	 GOf5HzoNjYiubUPckuU0KLOS2tWimHZupgT278Ds=
+	b=Ev+5qg1mx2lTk1Jzk9aWMUAnwZJMCgK3PpgOrt1Dfk1PcIZlLkRMgXqmprKKLANiE
+	 7/jvTPWsZgCTPoyXlX41JpJ5g6gsi+wHF1sKW7sbDV3LhFPlHpzhKO2lvN5ogwLkSl
+	 vd3uzKxpjiMBILluekZCVqcRCwAVSm5/tQSw8TV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0792/2857] media: ir_toy: Validate the maximum tx carrier
-Date: Wed, 18 Nov 2026 15:30:26 +0100
-Message-ID: <20261118150230.086254596@linuxfoundation.org>
+Subject: [PATCH 6.1 0793/2857] media: meson-ir-tx: Prevent divide by zero in meson_irtx_prepare_pulse()
+Date: Wed, 18 Nov 2026 15:30:27 +0100
+Message-ID: <20261118150230.120831523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,33 +70,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-[ Upstream commit 27303392aa87b61692faadec8b00e0ca66bf98dd ]
+[ Upstream commit 05d9c515cf13056875abbf73adb4a19dd7ba32eb ]
 
-Reject any carrier the hardware cannot generate. This also fixes
-a divide by zero if a carrier of U32_MAX/16 is set.
+If an excesively high carrier is set, meson_irtx_prepare_pulse() will
+cause a divide by zero if tb_us is 0. Prevent such a carrier from being
+set.
 
-Fixes: 8bff1386d62d ("media: ir_toy: allow tx carrier to be set")
-Cc: stable@vger.kernel.org
+Fixes: 49be1c78d575 ("media: rc: introduce Meson IR TX driver")
 Signed-off-by: Sean Young <sean@mess.org>
+Cc: stable@vger.kernel.org
 Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ir_toy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/meson-ir-tx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
-index 69e630d85262f..9eb4cc99a1284 100644
---- a/drivers/media/rc/ir_toy.c
-+++ b/drivers/media/rc/ir_toy.c
-@@ -373,7 +373,7 @@ static int irtoy_tx_carrier(struct rc_dev *rc, uint32_t carrier)
- 	u8 buf[3];
- 	int err;
- 
--	if (carrier < 11800)
-+	if (carrier < 11800 || carrier > 3000000)
+diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
+index ff89956562f7d..278604024ef51 100644
+--- a/drivers/media/rc/meson-ir-tx.c
++++ b/drivers/media/rc/meson-ir-tx.c
+@@ -219,6 +219,9 @@ static int meson_irtx_set_carrier(struct rc_dev *rc, u32 carrier)
+ 	if (carrier == 0)
  		return -EINVAL;
  
- 	buf[0] = 0x06;
++	if (!DIV_ROUND_CLOSEST(USEC_PER_SEC, carrier))
++		return -EINVAL;
++
+ 	ir->carrier = carrier;
+ 	meson_irtx_set_mod(ir);
+ 
 -- 
 2.53.0
 
