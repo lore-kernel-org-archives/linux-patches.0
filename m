@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018796;
-	b=VqIRwm/JWv0Cl7NkTiJRIXmVcfQtuDS67hSualrErPmm1jTwqndy/F61R/Eem5yjQAOK
-	 3l5rV1szv2KNU2tcz6tCV8VyJ1PoECAVD6TJwKUgJpki8x7o0Rz6H4sQcPkzS6rKHoVG5
-	 F2sBYezK7TvQ0WbUeJeLO7hfI03MiJhXh+vW2cttWG00MajLbnhGNSWCJu+uKOB1okHB5
-	 McReaFHgkHEZKdFAHqOUUOd9OWzyAZ4RVOqaJ/cEGdY2IW/HsYRhAbZbK2VLAv6WHSyfQ
-	 8APdMeLnFrekfNboxRapovkziXgQ+e7JA60l6eCWP1Tz33xWwaUHUia6yA+GmdOI6eA==
+	t=1795018798;
+	b=Z53uCX0d+9bExoFWuad6WwYToLrjlGCvmdI5abd/xxn6CerFPjSU71eoTMmb+jh76+Vo
+	 Hi7PthJQm340Ix+L7IsirYjNMzivYdOa+5PuYBq5SbnYV6qQBKpOL7UCGMeYLCxWZa6L5
+	 t2KUU5mKHelAo0BwfESJIpMD7lB7r0P+7i5hDpBSlnAc3WLmEQiu7RmUm2BFuJQZY2JAM
+	 rbeAbjeAPT05Yc3d4abbfgJs1uJLhQZvl1qwU0rnpL9Kj779lY/drciIZsmF1x7Cb1LsL
+	 9EozCTzGpVdli0ktk0fCqxhFhkCiRABXfSpJ1uYYTwLr7BCPM/4F6YcnxWngyFBOm2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018798;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o8Yz1mJVJTGwDGf3HYf/xqGbLy4Pk+tq3iq7QqtKAmQ=;
-	b=i0VW8UELDWpWnlJKKgLj8kMiI1zxq1lrlNnSppcZe4QjlB23+ZA6j/qscsQ7AEY4pPaK
-	 ERMG84FTLsCaj6EhHkFQa9Rw92v0Ry2kbU6rcuJwp8smktiow34a9+24pXCBWMNd83O5V
-	 8oKERMJxxYmBc0HruUT2ShsIsHUNguLbiyvTwxbN5uUIkW/kZD8hv1MKYISntVqpc3Rw2
-	 49D4w1B52sivtLW0eEUJIBKFPyNrRHni29zCi9isZ2nCrUXHYFzrWoZlfr0LPyD0o3yxo
-	 6qfuqG8gbvYkaOmC8AZqJ6zHMnac+3u8yJMd6Nhkja4hsWnJiT7R4TtxzJDvMuwZpEg==
+	bh=kIRqa4ZcTT2iW6o8m+JaFXk8vN/tXLqet8WZXn7DM7M=;
+	b=lBZATpvS3v5O7ru001o9vGQUUPqsC7idHTEBArIe0SVKfLhMuXECKc9CYgsaSgAWQdca
+	 WMIe1AC1j7vIeJUZCJIx7j1VO1TdTM0VpsCKZJqCPkze8OUCAJqN+6ASb32sfvTOgAxvo
+	 JOksFb6tnZITlcBaOl2Yq3UStUrg6RZ0NNDg49BEEO17/AIzOXCLgl2oIJ+X6ke8yRr1c
+	 COPSxyRUDHUoRT1Tdqt7uneLeaT9Lt9TEoK6XXHE8iclDEuFjeFeuBv9F4NnuNq3BKzRU
+	 50/hlBODB8llXOQAzPSVuUCXGxeVT+Xs/nWY4HaYRuVKbdXoRLx5cgcsaN/xicJhJUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFiwSjJL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZtFNL2Td;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E491D606A31C;
-	Wed, 18 Nov 2026 16:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA43606A325;
+	Wed, 18 Nov 2026 16:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFiwSjJL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FD61F000C8;
-	Wed, 18 Nov 2026 16:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZtFNL2Td
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0072A1F000CA;
+	Wed, 18 Nov 2026 16:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018795;
-	bh=o8Yz1mJVJTGwDGf3HYf/xqGbLy4Pk+tq3iq7QqtKAmQ=;
+	s=korg; t=1795018798;
+	bh=kIRqa4ZcTT2iW6o8m+JaFXk8vN/tXLqet8WZXn7DM7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFiwSjJLBAqIXTToFOmBPTKa4GMHK4agRiDaGlOIgsNloAjYJhdpMnWp3fQNJpvwB
-	 cUaP3W9xvW4DuoEjxifZ2HMHqD1ZFdH4PyC4Y5CLbn+2UN3Ius92weiElbbTfG0tEh
-	 B8cu+pVpYWlWB6ixXJas1f9QcJWVStW2O36FHQ8Q=
+	b=ZtFNL2TdEgnwZ3MfPbm2SSODB6jmkYcEPRXt6O07tCbd9j9mk5QM6SJbII49K0BSE
+	 DfpW3wI+WDcj/Tm5jY9NIH0nPLXhj2vLWvovUNiTislEi5sUfRiOLrZ5aK3vpj22F0
+	 GjUD2TTjMOy+3tAbAeGY2gT6VfTxRFhbEa6ALmW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1350/2651] dmaengine: ste_dma40: Fix logical channel bounds check
-Date: Wed, 18 Nov 2026 15:43:10 +0100
-Message-ID: <20261118150336.626423977@linuxfoundation.org>
+Subject: [PATCH 7.3 1368/2651] riscv: fix RVG_SYSTEM_CSR_MASK width mask
+Date: Wed, 18 Nov 2026 15:43:28 +0100
+Message-ID: <20261118150337.279646332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,64 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit 57938e0c2a24f9f792fe9f611391ef6b58d1aa21 ]
+[ Upstream commit f89e5ee4d8c6cd56499cd87e550d4d4e19cf7e17 ]
 
-d40_validate_conf() checks the raw dev_type against num_log_chans,
-but d40_allocate_channel() derives the lookup_log_chans index as either
-2 * dev_type or 2 * dev_type + 1.
+RVG_SYSTEM_CSR_MASK should be 12 bits [31:20], shifted down by 20 bits.
+Replace GENMASK(12, 0) by GENMASK(11, 0).
 
-Validate the dev_type against the derived logical channel index limit so
-channel allocation cannot write past lookup_log_chans.
-
-Fixes: 26955c07dcf3 ("dmaengine: ste_dma40: Amalgamate DMA source and destination channel numbers")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-19-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: cd054837243b ("riscv: Allocate user's vector context in the first-use trap")
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260911194233.3379532-1-aurelien@aurel32.net
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/insn.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 1b1edcb724804..fcb0749286757 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1881,15 +1881,26 @@ static int d40_validate_conf(struct d40_chan *d40c,
- {
- 	int res = 0;
- 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
-+	bool invalid_dev_type = conf->dev_type < 0;
+diff --git a/arch/riscv/include/asm/insn.h b/arch/riscv/include/asm/insn.h
+index c3005573e8c99..ad348d8b88574 100644
+--- a/arch/riscv/include/asm/insn.h
++++ b/arch/riscv/include/asm/insn.h
+@@ -142,7 +142,7 @@
+ #define RVG_OPCODE_JAL		0x6f
+ #define RVG_OPCODE_SYSTEM	0x73
+ #define RVG_SYSTEM_CSR_OFF	20
+-#define RVG_SYSTEM_CSR_MASK	GENMASK(12, 0)
++#define RVG_SYSTEM_CSR_MASK	GENMASK(11, 0)
  
- 	if (!conf->dir) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
- 
--	if ((is_log && conf->dev_type > d40c->base->num_log_chans)  ||
--	    (!is_log && conf->dev_type > d40c->base->num_phy_chans) ||
--	    (conf->dev_type < 0)) {
-+	if (!invalid_dev_type && is_log) {
-+		int max_dev_type;
-+
-+		if (conf->dir == DMA_DEV_TO_MEM)
-+			max_dev_type = DIV_ROUND_UP(d40c->base->num_log_chans, 2);
-+		else
-+			max_dev_type = d40c->base->num_log_chans / 2;
-+
-+		invalid_dev_type = conf->dev_type >= max_dev_type;
-+	}
-+
-+	if (invalid_dev_type ||
-+	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
- 		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
- 		res = -EINVAL;
- 	}
+ /* parts of opcode for RVF, RVD and RVQ */
+ #define RVFDQ_FL_FS_WIDTH_OFF	12
 -- 
 2.53.0
 
