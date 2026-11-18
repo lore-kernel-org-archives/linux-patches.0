@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053349;
-	b=xPGcB/F+KFv5Zl1GX/5mnAqtlFu6NiFy6UUWMQ+tRUcBEMkgO+k+L+G+Cj/BdFUeH01G
-	 Jxa10/VY5fxF8eq+GI8AS8J/zcXYsiJDnHKBGy+gXHMNMPyyV2Nxwnm2Can+zJizg9xWN
-	 QzvI/dio5IgTqBJ/mH2GgI4u1K9BKY9P81bUEfjTwfF4IUg2CmLdSEcFnkI5EvOxiiaZI
-	 9BSMdf1kOIgAIJf+BQRuASKxDjWuqD7AUKvqaJ544CHTiIldMEMBM8T/IrcOpjiNNBtlO
-	 eFgwQa1hwbdFmvb+YFJwvjqYWwKevf0WtYGB7oH+s1QkZftYZUPpEgkUH+olNGlz3ZA==
+	t=1795053352;
+	b=J4M6+mRBoTlaDW3/CZBEly5W1v3yacXzt1f7eUMY0yC/LYOIAJ/NNjG6jWFe26GjdnMy
+	 0Sjje2+D3YU9C9vOvgq6Bzh7UDo6L0wVWp8hZCYTicramddXocDtgOGX4MrzkuFZuL8DW
+	 4ayiHFKlc/vZMZXUWZ3wuv0TBYzgHO2ciCM95f+VFCCQoUZkJgO4jTRIELURa4FWslm4+
+	 IEuWJK+8wcftGjiB0ebye8EoULWst65nbr+Ytu9kaDOM3n/BICnjA4F2chYz1cKwxeuCv
+	 D9JfCCVJIrWGK6AUoxfYjnfVJKJsMWgeA1FZyLmlUgpLs13EyoRq8ZgIuWFwOrmZc+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y0KRAQyphwAOzZM4WJ937e24BbHPES8bWxd/Hm28t10=;
-	b=vNkmTstsRDk/2JrycnUBoz8x5+QbGE/Mz5c0jTm0thfDWLc+CiVTxmvKa2dEw+LMUw1x
-	 yFU3mGj9tlNnJtQXfewDceuopScGZNKfbXRHBr0ufnvAoSULmJuN9+3xF+PuUaEw1NeUc
-	 qABWyjXdKQ4/pvxkU3hbetMj9jqoMWPr23GAis/A/Fw5xnrl17QA4hvrg5UN7kcKGHB6G
-	 VttF4assdEdEGccVyvwkqp5Wh4p3gyeyjXNOYj4S+Ou4Wv4YbxEhg52T+EEAu0OZg239w
-	 Y2iPjhG9b10RjAlz6moGHoIDVk+kzf778WsXSUWXQMvwGDPR1kulowVsH1vC2tK2Xbw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DRyZwoUS77OmR9maFnWiR9u7DiMNr1pPvrhadSFyXuA=;
+	b=UoDihF4yRcgD1I3v1q37QLd1poQlNy4zHh0XFQFpcK3N/+Sq1pxv6GehfI5+GIUw0yn1
+	 nxfZEfONUwur3egbmXC1viD5bQBsUsL6/NCDaFY2dTRsgPFCbVgZUuxWg6nz2kYTXio0Z
+	 BySDnvcGfvErTaRHCoqVO6lL782tDPuuh9EZPdybFu0uwcRH9cZkURvnuHM91iXN5r6i2
+	 Mut6bCU4JVW787DFxqTZjQ008OO5icptVpCzMbNSghYYO1qG6MylcUHp4LjzS9Tlim+3c
+	 kSJLMAHOqrBL95Nb0UYJA99YoRB2HY8vJ9CnlYewrVIXEtqfxatVo9taJZor3H5TCgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMvVi3cA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOeMxy6Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6926606A330;
-	Thu, 19 Nov 2026 01:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F80606A338;
+	Thu, 19 Nov 2026 01:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMvVi3cA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F417C1F000C5;
-	Thu, 19 Nov 2026 01:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOeMxy6Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78CC1F000C4;
+	Thu, 19 Nov 2026 01:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053349;
-	bh=Y0KRAQyphwAOzZM4WJ937e24BbHPES8bWxd/Hm28t10=;
+	s=korg; t=1795053352;
+	bh=DRyZwoUS77OmR9maFnWiR9u7DiMNr1pPvrhadSFyXuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMvVi3cAShqCNSBIjfb9ch7muebggmv/D159x4Awms2YzQ+Kn9G1uv7VvqxoWTyai
-	 hrhz4PwK0JrlNqAQUPMazP6eJmj3Rb9JXCOexOF/EVgOBcsF01oxuu03miH+AAGJ2+
-	 O1H+dIVQTxSnHxxzNgdRtB23vQBKV6/O1YXnTxVA=
+	b=XOeMxy6Q30QVaG+UuQElrCgpwEfeULamaeSWFkSTAicAyXCjN7JadyD/ZHG917gJk
+	 Hf1lpASWATafHpsp3hGmEH7PYWJU54VZY00sHrBvsN8dHpD1dWB0TvpJGMse0vYdXb
+	 69bQYWHKYYCSGAf1oELIjCpb5+PwJuuCMAHSywts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0886/2214] ocfs2: wait for filecheck kobject release after a failed add
-Date: Wed, 18 Nov 2026 15:42:42 +0100
-Message-ID: <20261118150047.700453777@linuxfoundation.org>
+Subject: [PATCH 5.15 0842/2214] drm/vc4: Publish the output fence outside of job_lock
+Date: Wed, 18 Nov 2026 15:41:58 +0100
+Message-ID: <20261118150045.877793178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,230 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit a25c02af29c3e95128e4343fceb4bdace8e480a0 ]
+[ Upstream commit 9ee552a42c3905b4547e83173d46413137ec329a ]
 
-The filecheck kobject and its release completion are embedded in
-ocfs2_super, so the osb must outlive the kobject. On a failed
-kobject_init_and_add(), creation clears fs_fcheck and calls
-kobject_put(), but returns without waiting for the release callback.
+job_lock is taken by the V3D interrupt handler, so nesting an IRQ-unsafe
+lock under it creates an inversion. drm_syncobj_replace_fence() takes
+drm_syncobj::lock, which other paths acquire with interrupts enabled. For
+example, a thread interrupted while holding it blocks the handler on
+job_lock, and the handler can only make progress once the submit path
+releases job_lock, which it cannot do while waiting for drm_syncobj::lock.
 
-With CONFIG_DEBUG_KOBJECT_RELEASE, the last put queues delayed cleanup.
-Mount failure can then free the containing osb before the embedded
-release timer expires:
+This is reported by lockdep:
 
-  Mount failure                     Delayed cleanup
-  -------------                     ---------------
-  ocfs2_filecheck_create_sysfs()
-    kobject_init_and_add() fails
-    fs_fcheck = NULL
-    kobject_put()
-      queue delayed release
-  return to mount error cleanup
-  ocfs2_dismount_volume()
-    remove_sysfs() skips the wait
-    kfree(osb)
-                                    expire embedded release timer
-                                      access freed osb
+[  188.139076] ========================================================
+[  188.139086] WARNING: possible irq lock inversion dependency detected
+[  188.139096] 7.3.0-rc3-00067-gc4f3feeaf60f #67 Tainted: G         C
+[  188.139108] --------------------------------------------------------
+[  188.139116] swapper/0/0 just changed the state of lock:
+[  188.139125] ffff0000054f8ff8 (&vc4->job_lock){-...}-{3:3}, at: vc4_irq+0xa8/0x28c [vc4]
+[  188.139234] but this lock took another, HARDIRQ-unsafe lock in the past:
+[  188.139242]  (&syncobj->lock){+.+.}-{3:3}
+[  188.139256] and interrupts could create inverse lock ordering between them.
+[  188.139267] other info that might help us debug this:
+[  188.139275]  Possible interrupt unsafe locking scenario:
+[  188.139284]        CPU0                    CPU1
+[  188.139291]        ----                    ----
+[  188.139299]   lock(&syncobj->lock);
+[  188.139312]                                local_irq_disable();
+[  188.139320]                                lock(&vc4->job_lock);
+[  188.139335]                                lock(&syncobj->lock);
+[  188.139350]   <Interrupt>
+[  188.139358]     lock(&vc4->job_lock);
+[  188.139372] *** DEADLOCK ***
 
-The normal removal path waits for fs_kobj_unregister, but it returns
-early when fs_fcheck is NULL. The failed-add path therefore leaves the
-delayed work and its completion in freed storage.
+Hand the fence over after job_lock is dropped. The job can complete and
+drop exec->fence in that window, so take a reference first and publish
+through the local pointer, as exec may already be gone.
 
-Wait for the existing release completion after the failed-add
-kobject_put(), before returning to mount error cleanup. This keeps the
-enclosing osb alive until the kobject has finished releasing, matching
-the normal teardown path.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in __run_timers+0xa6d/0xa90
-    Write of size 8 at addr ffff8881178a5658 by task swapper/0/0
-
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <IRQ>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? __run_timers+0xa6d/0xa90
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? __run_timers+0xa6d/0xa90
-     kasan_report+0xe0/0x110
-     ? __run_timers+0xa6d/0xa90
-     __run_timers+0xa6d/0xa90
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx___run_timers+0x10/0x10
-     ? __lock_acquire+0x5a3/0x2140
-     ? __pfx_do_raw_spin_lock+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     timer_expire_remote+0xfa/0x160
-     ? __pfx_timer_expire_remote+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     tmigr_handle_remote_up+0x4ba/0x9d0
-     ? __pfx_tmigr_handle_remote_up+0x10/0x10
-     ? tmigr_handle_remote+0x21a/0x340
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? __pfx_tmigr_handle_remote_up+0x10/0x10
-     __walk_groups_from+0x5a/0x160
-     tmigr_handle_remote+0x24f/0x340
-     ? __pfx_tmigr_handle_remote+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     run_timer_softirq+0x222/0x270
-     ? __pfx_run_timer_softirq+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lockdep_hardirqs_on_prepare+0xb8/0x1a0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     handle_softirqs+0x1fa/0x8d0
-     ? __pfx_handle_softirqs+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? _raw_spin_unlock+0x23/0x40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __hrtimer_rearm_deferred+0x1fb/0x5d0
-     __irq_exit_rcu+0x113/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     </IRQ>
-     <TASK>
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-    RIP: 0010:pv_native_safe_halt+0xf/0x20
-    Code: fa 18 01 e9 ee 37 ff fa 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 23 c7 14 00 fb f4 <e9> c7 37 ff fa 66 2e 0f 1f 84 00 00 00 00 00 66 90 90 90 90 90 90
-    RSP: 0018:ffffffff87c07cf8 EFLAGS: 00000206
-    RAX: 0000000000045d0f RBX: ffffffff87c2d4c0 RCX: ffffffff86111e95
-    RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff815b508e
-    RBP: fffffbfff0f85a98 R08: 0000000000000001 R09: ffffed10310c68ba
-    R10: ffff8881886345d3 R11: 0000000000000000 R12: 0000000000000001
-    R13: 0000000000000000 R14: 1ffffffff0f80fa4 R15: dffffc0000000000
-     ? ct_kernel_exit.constprop.0+0xc5/0xf0
-     ? do_idle+0x3ae/0x650
-     default_idle+0x9/0x10
-     default_idle_call+0x6c/0xb0
-     do_idle+0x3ae/0x650
-     ? __pfx___schedule+0x10/0x10
-     ? __pfx_do_idle+0x10/0x10
-     ? rest_init+0x1cd/0x330
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     cpu_startup_entry+0x54/0x60
-     rest_init+0x1e1/0x330
-     ? __pfx_acpi_read_bit_register+0x10/0x10
-     ? __pfx_rest_init+0x10/0x10
-     ? acpi_os_write_port+0x23/0xb0
-     ? __pfx_kernel_init+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? acpi_ut_status_exit+0xd6/0x180
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? acpi_ut_status_exit+0xd6/0x180
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? acpi_enable_subsystem+0x2b0/0x4e0
-     ? __pfx_x86_late_time_init+0x10/0x10
-     start_kernel+0x417/0x4b0
-     x86_64_start_reservations+0x18/0x30
-     x86_64_start_kernel+0x111/0x120
-     common_startup_64+0x13e/0x158
-     </TASK>
-
-    Allocated by task 494:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x28d/0x610
-     ocfs2_initialize_super.isra.0+0xab/0x3070
-     ocfs2_fill_super+0x801/0x3920
-     get_tree_bdev_flags+0x35d/0x5f0
-     vfs_get_tree+0x93/0x320
-     fc_mount+0x1d/0x200
-     path_mount+0x592/0x1e00
-     __x64_sys_mount+0x24b/0x2d0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 494:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x308/0x580
-     ocfs2_dismount_volume+0x43c/0x9b0
-     ocfs2_fill_super+0x258f/0x3920
-     get_tree_bdev_flags+0x35d/0x5f0
-     vfs_get_tree+0x93/0x320
-     fc_mount+0x1d/0x200
-     path_mount+0x592/0x1e00
-     __x64_sys_mount+0x24b/0x2d0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff8881178a4000
-     which belongs to the cache kmalloc-8k of size 8192
-    The buggy address is located 5720 bytes inside of
-     freed 8192-byte region [ffff8881178a4000, ffff8881178a6000)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1178a0
-    head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-    flags: 0x200000000000040(head|node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000040 ffff888100043880 dead000000000122 0000000000000000
-    raw: 0000000000000000 0000000000020002 00000000f5000000 0000000000000000
-    head: 0200000000000040 ffff888100043880 dead000000000122 0000000000000000
-    head: 0000000000000000 0000000000020002 00000000f5000000 0000000000000000
-    head: 0200000000000003 fffffffffffffe01 00000000ffffffff 00000000ffffffff
-    head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff8881178a5500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff8881178a5580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-    >ffff8881178a5600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                        ^
-     ffff8881178a5680: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff8881178a5700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-    ==================================================================
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0087-v6-78f3c3d6d70887d6e0cc@gmail.com
-Fixes: b9fba67b3806 ("ocfs2: fix error path kobject memory leak")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: e84fcb95e074 ("drm/vc4: Export fence through syncobj")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-1-b763df9e33e1@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/filecheck.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vc4/vc4_gem.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/filecheck.c b/fs/ocfs2/filecheck.c
-index 2c7f7abd31969..d768b42cd7f11 100644
---- a/fs/ocfs2/filecheck.c
-+++ b/fs/ocfs2/filecheck.c
-@@ -188,6 +188,8 @@ int ocfs2_filecheck_create_sysfs(struct ocfs2_super *osb)
- 		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
- 		entry->fs_fcheck = NULL;
- 		kobject_put(&entry->fs_kobj);
-+		/* Keep ocfs2_super alive until the kobject is released. */
-+		wait_for_completion(&entry->fs_kobj_unregister);
- 		kfree(fcheck);
- 		return ret;
- 	}
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index ff77aee389776..6d4a085d46f0b 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -689,8 +689,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+ 	fence->seqno = exec->seqno;
+ 	exec->fence = &fence->base;
+ 
++	/* The job can complete and drop exec->fence as soon as job_lock is
++	 * released, so hold our own reference.
++	 */
+ 	if (out_sync)
+-		drm_syncobj_replace_fence(out_sync, exec->fence);
++		dma_fence_get(&fence->base);
+ 
+ 	vc4_update_bo_seqnos(exec, seqno);
+ 
+@@ -712,6 +715,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+ 
+ 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+ 
++	if (out_sync) {
++		drm_syncobj_replace_fence(out_sync, &fence->base);
++		dma_fence_put(&fence->base);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
