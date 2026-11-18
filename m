@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025318;
-	b=E0cVI9jxlP5rMMb5Ggtto0c0CK3aoDTqEg9+hiQWIvqg8FgTIY733e57f6jwMGYxAgSK
-	 QLSYckkljWFS+2cVLyaO5BH53SE0Fw4CNrL3/0aYjIjOR9wDFiEBCC+p58fdvIPqCeSYr
-	 dFWgnlLXMlA8ZHpDXCkOirGlhk/HPHSDgWIDum6sGLuEslOWXJbq2ttUPyBGmqk84EZK/
-	 RL5TNxSfMvravfix3HIIVAeDVSPzYhfmf6bb0ONzmuia7BpPyCNaomLCMVeuwCEqNKODK
-	 yab02ZdJ3egboa1zjiL2zyuOVKxZJmijW8ylPcUzw7PYJATlio/zRFz8S/ZpgjZYDWQ==
+	t=1795025321;
+	b=2yHOOilhMIU6hP25k6rYZzzFYA1y/G+804sLnbV7m3l4LCiAo9Plo3YmPAkvg4rlqIr+
+	 DUfAqwiBGBKmXXU9qjqZ/vWUgZHRghUkTuEG0gS7lEAxoK25b824BRK3vVuvHO6ipyfTA
+	 xB7yrGRiXu4pgCAXTYZgkepKOBWssud1QjYPXn76nDNhBf74AvvcjE59qVOT0ezBgn64m
+	 1vNTkBl4lKhiuFEC8wwyAfMZ3sfKKj5ky7YQYXH1KLmAl62nl56H/9CAjmH89PbHK6Kp7
+	 cEHCEFZWIWOkLfyJRR21rBgf31ApqY2ON98a0ujYpK7BGRQJxAUpwKdKrEvXgPy7PZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025321;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+mNVN1JXyZfyhnUxtYvBn6dLSsNp94YGwLd5zQY7GVg=;
-	b=y3pZ6SX1uFq70+Q4Wck5Gah+Oow2sXHlpEwFcPHwXSG73+733CCC54AH5GRbeBvEsFXD
-	 4l2Zt3n2gMNZpuzdIDDg+A/RHMLa4FO/FlixAVUovUjYo9JcM7Q7SIxKkvdIeESCLLAJL
-	 z8QoupNvOYgoCDkAhtgtToFPtSWHJyaxz8qjYoYcQElX4hVxyCh67Y87KMzVYjw0EEJah
-	 ImRwtEaVXlQXd0/enOOsmfLCDx0E9OGHoBRSkmpa7IeUyrymGKO7tpSUzW7DteIfCo1Xa
-	 g9UWIjLaZdVh2EpC4DSepI7+FanjdLAGTUVqS0QbEUvXg1C+QdE2gTZ1QzPaRNxlang==
+	bh=mdGZPT7bFDPk72iK1bWcYfxqeHV0dnjAWOFT3vXijbQ=;
+	b=k26G669ZBdiCjkeqwvvZyVj2mwWLZ2tZUEoWxe+dpS6ViGAzo32w1xAYsMd6SFT/tH9R
+	 SEOMSUvl7uFRw7q/h5EAsiasTPXA4cBCV0p08cCw7tKLpreR2oBXt+EbESqQPrMt/6qA1
+	 kXWSNoX5aYhoLVcN+AJ03w5dsm8TbS9cXawgzc3ybgMlVtFRFywhU6w2Chh9H7wW/MIRb
+	 rszg6iAim+fVjiUz3/2yC/+3y7P70x7eERpSByCcKAnuSb0tc2Kiwf2LdIVdnwiiolGU2
+	 GicsbVvu5m+0yqABP4XwO6yNHXuGYNRu/jEQI4BGn/ylMcMfD+HKukOEt/u1VY9giFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irIm4w2Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zSbXuZfn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562F9606A32A;
-	Wed, 18 Nov 2026 18:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D789606A332;
+	Wed, 18 Nov 2026 18:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irIm4w2Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FF01F000C4;
-	Wed, 18 Nov 2026 18:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zSbXuZfn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DC11F000C5;
+	Wed, 18 Nov 2026 18:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025318;
-	bh=+mNVN1JXyZfyhnUxtYvBn6dLSsNp94YGwLd5zQY7GVg=;
+	s=korg; t=1795025321;
+	bh=mdGZPT7bFDPk72iK1bWcYfxqeHV0dnjAWOFT3vXijbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=irIm4w2YfLxh3/oK9m1hkrHxNQGXRKUP3MvcDVqamxAdsd1q8eSc3Vue3EsGXDi8l
-	 W4moqubAQD8gXJb6C3t8afB7A3CPK+bQTF5r2tRUvwZtDFNxjRsLzHy58INMVm6aRE
-	 kpzk49c+oD44QbZ4LRJF3275Jq+iAm1Gf0Rk4dTM=
+	b=zSbXuZfnaknQq1dIbKp6jdEQk/4KYx4YjzT/pTElPednRhMdIO42DkpKN++6irtRg
+	 IGuRM8ldL/D5GY9jk+CVpCi5CBAX164JTJLj/hepKXXLZL/dBzLnOUmqElYLcxlCro
+	 E6IDwcIrSSsBTjuRNXZviQyGlWnvsrg4VyEqpak4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	sashiko-bot@kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1037/2151] power: supply: bq257xx: Use psy directly instead of driver data
-Date: Wed, 18 Nov 2026 15:46:12 +0100
-Message-ID: <20261118150200.125712572@linuxfoundation.org>
+Subject: [PATCH 6.18 1038/2151] perf/cxl: Program the requested event group on configurable counters
+Date: Wed, 18 Nov 2026 15:46:13 +0100
+Message-ID: <20261118150200.157200089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,39 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 1a64071bb30d97b75a1029943b6a3481098b254b ]
+[ Upstream commit b22dcc11429866e07dc54299255e8ca13c26d38a ]
 
-bq257xx_external_power_changed() is handed the power supply it is called
-for, but passes pdata->charger to power_supply_am_i_supplied(). Those are
-not equivalent during probe or teardown, and a supplier's changed_work can
-reach power_supply_external_power_changed() when pdata->charger doesn't
-point anywhere meaningful (e.g. freed memory during teardown).
+cxl_pmu_get_event_idx() sets *counter_idx for a configurable counter but
+never *event_idx. hwc->event_base stays 0, so cxl_pmu_event_start()
+programs event group 0 no matter which group the user asked for.
 
-Use the psy argument, which is valid whenever the callback runs.
+Return the matched capability's event_idx.
 
-Fixes: 1cc017b7f9c7 ("power: supply: bq257xx: Add support for BQ257XX charger")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Link: https://patch.msgid.link/20260910-bq257xx-init-v3-2-4e219a1a04a5@flipper.net
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq257xx_charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/perf/cxl_pmu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/bq257xx_charger.c b/drivers/power/supply/bq257xx_charger.c
-index 7ca4ae6109027..b0164813808d2 100644
---- a/drivers/power/supply/bq257xx_charger.c
-+++ b/drivers/power/supply/bq257xx_charger.c
-@@ -564,7 +564,7 @@ static void bq257xx_external_power_changed(struct power_supply *psy)
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index 39b46550a5109..eedc94616531a 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -513,7 +513,10 @@ static const struct attribute_group *cxl_pmu_attr_groups[] = {
+ 	NULL
+ };
  
- 	pdata->chip->bq257xx_get_state(pdata);
+-/* If counter_idx == NULL, don't try to allocate a counter. */
++/*
++ * If counter_idx == NULL, don't try to allocate a counter. Callers that
++ * allocate pass both counter_idx and event_idx.
++ */
+ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
+ 				 int *event_idx)
+ {
+@@ -541,7 +544,7 @@ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
  
--	pdata->supplied = power_supply_am_i_supplied(pdata->charger);
-+	pdata->supplied = power_supply_am_i_supplied(psy);
- 	if (pdata->supplied < 0)
- 		return;
+ 	pmu_ev = cxl_pmu_find_config_counter_ev_cap(info, vid, gid, mask);
+ 	if (!IS_ERR(pmu_ev)) {
+-		if (!counter_idx)
++		if (!counter_idx || !event_idx)
+ 			return 0;
+ 
+ 		bitmap_andnot(configurable_and_free, info->conf_counter_bm,
+@@ -552,6 +555,7 @@ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
+ 			return -EINVAL;
+ 
+ 		*counter_idx = i;
++		*event_idx = pmu_ev->event_idx;
+ 		return 0;
+ 	}
  
 -- 
 2.53.0
