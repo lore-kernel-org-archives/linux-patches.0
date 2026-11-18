@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017934;
-	b=NIpVShJViqryHPRbpNhjaa1drCdVxpLoLs7NDb32ks9r87BOl2aoRvZ5z0/QQtA36FX8
-	 hCqq2xA5+aYk8nvvXV8kOEzZAQGL+30fJ3MeMK5RUEvNL08KdGHEHVqt3jZk4WAbvlioj
-	 bhAKYCZ+x2hIf+0AAeggUTWDZx4GKeZ2kPUI5pGVnAdLTFAunevK6/wv2yuuncCCmAuAP
-	 nb2s0hFq7T0h2vyblCGzyNp4GFKdutDBVhkrXX6rwH1meNzqplMNey/KRudzMozvyCDv+
-	 3d6CgGEBcR8j3HMrf9njzQvlfWuVDGVkG0c8OmCpWnuaso3IWMIqAk9gP2gNUrOInkw==
+	t=1795017937;
+	b=S0OWAS25d1JC607GRmXli+ioZ/eCtif/b8Y9bqqu9afnoEOokxkJp+fvrapiS/kPzpaO
+	 3wdISX75+VWaNyMD5nlNtFF8iT+MZ3NeHD1i7ljbqemTG9pP65AsTrpK6NJHjNU4r0XcR
+	 69gU302VNC5hCApKpKLILq1DbUqHDVBvdTdFJXulrMmSXxQtbq5Vi+NuHb+6w4pZF1IQR
+	 DoacqNUnlyl1VdWVIw3s2oPK5SmdOmVEwPvuGfWvpaYXL4jhkJMwddIEWmXcidvf3NNWe
+	 SrbHhHp03WA0D6FDLPmxg+vQwom6HZ6pvnIbfhjGRJRWkB5tv9iNaM7kht/DVatscrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017934;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bk2QuIN82RXJ1UlsDBfvUe4ZIpFdUm0GY3gcLJXR5+8=;
-	b=yt98RzJVUbvGUEee7XJgLFY7PWjdkF8SZSjvKdLypsav6f/ni/st9iniEtSHbd5nS1ue
-	 pBZdsx68RGeI8HFiW6GcnjEyhxHKaRcdP1WLbuQZ2dQHJvd3iEkuJ5rPyrdt3Hp47Vv3i
-	 7JYACDUDtzW31Jj50xn0FfNZfocoB9L6/iULCeXYpxgtpEaDXCPFSPMrE/IJsjlSBDrRu
-	 x9F7Dtp8vz5WqtBB7iJL2lPiEwImR8Dd2BAPb/sWcDY8FvAJEiy0cuuPurDLQhAt3lQFN
-	 tSFu6CNU21trlrYqpuTXJNLFJCETvSKWp3w1cfOzfFrTEMxmqOb3Zh5F9B6YoyyyjUA==
+	bh=mg1MPy6t/7BApboLtzzGH+XNJnMW6LPZvL7Vr6cZAa0=;
+	b=M0AFsQbEJH97zkfx3Wv9rRimRwZbOGTO/lNBXl/oZCTepeyHTkvMrZ1dTnthp+DSg5w2
+	 BMAgDPJ7AfDEuk5/zOplKQ30BiY80ZK//D0QobOsN6fNAxUitGQWfL5mZwzqdBrRh2Q7y
+	 fB7E69mzltVsiPN83mziEki9/pDcizjvry2/yEBCMeb2lHl/iWMKPWyEqBeBxMPpM73qX
+	 KVYRLQnUFq9YLr9tNLAusv8F63Rh0CgKGhF+THFa25Vomey5XWv7JiJXPcLjlX65bl4t7
+	 XNGqv7VszeVMRUN6hOgva8FeXS0LfQjK7QifeorFD+nM1CqNYwHrxl4IjweS7LPojWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8Pt36PI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs5pmhTR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DD2606A31C;
-	Wed, 18 Nov 2026 16:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B90606A31C;
+	Wed, 18 Nov 2026 16:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8Pt36PI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E621F000C4;
-	Wed, 18 Nov 2026 16:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs5pmhTR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8381F000C4;
+	Wed, 18 Nov 2026 16:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017934;
-	bh=bk2QuIN82RXJ1UlsDBfvUe4ZIpFdUm0GY3gcLJXR5+8=;
+	s=korg; t=1795017937;
+	bh=mg1MPy6t/7BApboLtzzGH+XNJnMW6LPZvL7Vr6cZAa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8Pt36PIhynY6OVjF9+r3xiwGMlimT2CN2ljNKmeYhWAZdiQBgqD1WN9pROzyLNXD
-	 ZHaHPG9etuqbpixr/rIogx2kH1LDc8h1KDBwnVjKxaobHkNRVSCS9L8tdp+kwJZ50n
-	 INNSueVLDxEURUQ3br/epXcFqux9+8SUQzYaHVHY=
+	b=Rs5pmhTRVeGjRuhXv0z1UNCHm2kI8ZTX4YBCVmNzXBaRC2jgBfMK16iOm4tIQco6m
+	 rIjiCd3W36SsANvVI0Xb5v/uqjrVOxyCxezYmsHSg1/alcSQOJsFufcsoZ/Mf7pOyu
+	 J4IsS5nHnNzsMfTUKQfelOcBpdnEaAQB9FS4VSlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1061/2651] pinctrl: stm32: Fix clock reference leak in stm32_pctl_probe()
-Date: Wed, 18 Nov 2026 15:38:21 +0100
-Message-ID: <20261118150326.178856904@linuxfoundation.org>
+Subject: [PATCH 7.3 1062/2651] kconfig: tests: Reset all KCONFIG_* env variables by default
+Date: Wed, 18 Nov 2026 15:38:22 +0100
+Message-ID: <20261118150326.215125111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,56 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Nicolas Schier <n.schier@fritz.com>
 
-[ Upstream commit dfd8259507c53a3c7eb0dd11c1152c88e12aa316 ]
+[ Upstream commit 8688f0b29d021cad8188b11d5664b4a1f595691b ]
 
-stm32_pctl_probe() obtains one clock per bank with
-of_clk_get_by_name(), but none of the error paths drop those
-references: the loop returns directly when a later clock lookup fails,
-and both the clk_bulk_prepare_enable() failure and the err_register
-path return without calling clk_bulk_put().  clk_bulk_disable_unprepare()
-only disables the clocks, it does not release them.
+Reset all environment variables with names starting with 'KCONFIG_' from
+the user-provided environment.
 
-Release the references on these paths; the success path keeps them as
-the driver needs them for suspend/resume.
+This fixes the 'warn_changed_input' test on systems with
+KCONFIG_WARN_CHANGED_INPUT=1 and ensures a cleaner test environment.
 
-Fixes: 451bc9aea9a1 ("pinctrl: stm32: Add check for clk_enable()")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 645323a7f4e5 ("kconfig: add optional warnings for changed input values")
+Signed-off-by: Nicolas Schier <n.schier@fritz.com>
+Reviewed-by: Julian Braha <julianbraha@gmail.com>
+Link: https://patch.msgid.link/20260929-kconfig-tests-minor-updates-v2-1-c5902bee1d0c@fritz.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/kconfig/tests/conftest.py | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 93127da05d560..6ebb8ea260d1b 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1980,6 +1980,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 		pctl->clks[i].clk = of_clk_get_by_name(np, NULL);
- 		if (IS_ERR(pctl->clks[i].clk)) {
- 			fwnode_handle_put(child);
-+			clk_bulk_put(i, pctl->clks);
- 			return dev_err_probe(dev, PTR_ERR(pctl->clks[i].clk),
- 					     "failed to get clk\n");
- 		}
-@@ -1990,6 +1991,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 	ret = clk_bulk_prepare_enable(banks, pctl->clks);
- 	if (ret) {
- 		dev_err(dev, "failed to prepare_enable clk (%d)\n", ret);
-+		clk_bulk_put(banks, pctl->clks);
- 		return ret;
- 	}
+diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
+index 2263bd2a3b3ac..6fb391ac8fa9e 100644
+--- a/scripts/kconfig/tests/conftest.py
++++ b/scripts/kconfig/tests/conftest.py
+@@ -57,9 +57,12 @@ class Conf:
+         # Override 'srctree' environment to make the test as the top directory
+         extra_env['srctree'] = self._test_dir
  
-@@ -2014,6 +2016,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 	}
+-        # Clear KCONFIG_DEFCONFIG_LIST to keep unit tests from being affected
+-        # by the user's environment.
+-        extra_env['KCONFIG_DEFCONFIG_LIST'] = ''
++        # Clear all KCONFIG_* environment variables
++        env = {
++            varname: os.environ[varname]
++            for varname in os.environ.keys()
++            if not varname.startswith("KCONFIG_")
++        }
  
- 	clk_bulk_disable_unprepare(banks, pctl->clks);
-+	clk_bulk_put(banks, pctl->clks);
- 	return ret;
- }
- EXPORT_SYMBOL(stm32_pctl_probe);
+         # Run Kconfig in a temporary directory.
+         # This directory is automatically removed when done.
+@@ -75,7 +78,7 @@ class Conf:
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE,
+                                   cwd=temp_dir,
+-                                  env=dict(os.environ, **extra_env))
++                                  env=dict(env, **extra_env))
+ 
+             # If input key sequence is given, feed it to stdin.
+             if in_keys:
 -- 
 2.53.0
 
