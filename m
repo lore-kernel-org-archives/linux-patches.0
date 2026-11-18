@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060689;
-	b=PksIZABeSTWymMR5HuLC5EMVOWC9oYivs8grGd1fF0pL/G4E9VwvKxN/aLAUbNm5MiQo
-	 8A8WvnQ9Dskd1pZwrnIEAfNKkn6DmhrggtgYbyQXgEjxV0WcycY/2USzTfvljDlyDbyEG
-	 obkONn2i3EiteKeu9TenxA1HQBv0gIhPivBZzLb7r0NNSk0XcOh+nlJB80kGrhwBOSFqG
-	 ZPruWKfEITHusK20USoNB8vxZXtVqr06aH006OYXZB2OiMn8c54bJDqKZOSBIG6grHwX+
-	 M4RmHXIE1V3Rh2g7wcXwNU3VJUTOG8QlRjd1nz3KA7Q/MpuvmgA7nfT9UTSXQrLnvlw==
+	t=1795060692;
+	b=N9qj3mMNIypE99R3NCnrJ7Qt6WPYzGm04XnBchi0lmp+aOvVPe+aBo0OyOZwQA2JbjS9
+	 U1iDHvNG9TEOV91ogyjxdKRgs6okX+Ti0ftq0c993nT6BWVej800xvu4wDldYIkG71nTf
+	 CSGNvxXlJ4NwvICqEPyTdrDa+bSLF5aVi1zjzeohGQUmIbGP1gCBCkGi/twvFZpanZOuv
+	 iIFSphCzMviU+lGy8ho1PYuc5iw1JTM30esvtn5L+z/lWrWSefG9cO5SoboXbv35xwpKO
+	 ZygRDrX0FSfIXVENACQT/NFlxMmeWao0XnlyAE1fiCFUXPBfGm7fmcJGSHWiRlXm7sA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060692;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kvrwsV1EG9Yj0hVQxOgmE/ljWIoRI4Ct0FYVHRKZsXk=;
-	b=3ZpgMgDzbiJHFllmke3RY5k6gG8CCTDyKX0Br7rSU7QVlMWOFjoiWZGi3saVrwzCQ7AB
-	 JzSArKQXgwOwlt+2ipWXIuDisxdOEIKOvFZWnJYfi3go9g+Pk/w2gY2spQaKX937Th2os
-	 QFbaIOGgb+bZbB1QTPjTnCe8VYz8FuaACUrJqbhNqT3576pU8tnyUrxRzg11EEafoW2xn
-	 RrivZe9pK0hGp3+kHfdLGmnoGlGBnJKJALXTPrQVjCgRd50RG4YrYfZKaq8HyPAQdteRo
-	 kJjRaBbOV1Tuul928epZojjk7tjH2W07UMdg12vngHBMxvQN9yNOQ8joXXjQpsqUu5w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=LzOBUyXc12OQ4iPODB9jOPdBLYnKpLxoTX2wJPtD6QY=;
+	b=Tv4ctNqdq6672kRH8GZoU2N34a1OLzLnamGbbPWhQa0lFlc1AyAUSVRx+Buv8UFUi8qO
+	 vBVrPLhSxi909O6HtMyQeAmCXNJavj12aDTH7CQZvqm+KuLnLCnoGTe1R4CH94WWzDiGL
+	 1Z/frngc7sYTtUHytbHmIMDTZM0I6klsLl1dLgfSR/WdxFii7XWhlSKvOg6dF1cSNUHTC
+	 sgqgSNKX5tOQ6oOeIdZPrib1wdmhfSxfthrYckH++0R/a0LuaRQlkKfzbsbsnnIwm3Vis
+	 vcPU8pnWYkECbYggBxlC07k2cnb5F3LHDa8Z431Zmdc5e6u9JxJBuJ1Q+jb1RDsM1Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t1a+77Dp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o4sr1oX/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB001606A325;
-	Thu, 19 Nov 2026 03:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4F5606A320;
+	Thu, 19 Nov 2026 03:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t1a+77Dp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C84C1F000C5;
-	Thu, 19 Nov 2026 03:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4sr1oX/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61E11F000C4;
+	Thu, 19 Nov 2026 03:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060689;
-	bh=kvrwsV1EG9Yj0hVQxOgmE/ljWIoRI4Ct0FYVHRKZsXk=;
+	s=korg; t=1795060692;
+	bh=LzOBUyXc12OQ4iPODB9jOPdBLYnKpLxoTX2wJPtD6QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t1a+77DpDLmgSgJsMNVZbkcJHAqm+stLogYVv8ZzExKAaR7kiTm5CnKf/+XHSTzUT
-	 wGn4BACPYcO68ejLw/xXyVetSa91CpY44yPQruh3I1k0q7oC2dbSUIJidtscXl4Pny
-	 0DWg0pz99ZyeDVgbv/kevSCvNvdDghhGgtj42xLA=
+	b=o4sr1oX/MsCzknv4aZ51Xh2OE2MN9LTQKJPFOmt4AYQCKR3LsO/cXeH59QVqA9Ux9
+	 G8RrWdNK6oNAopsZKbSuLi4GvK8QDzejhSIOn4pE38wd/sQElRvvWwTrQBXCyDakzS
+	 OMKeK4CW0y8AHL6aDNzYIHIgjwHEbN6t2umxuekI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	David Gow <david@davidgow.net>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1247/1848] perf header: Fix potential memory corruption in cpu_cache_level__read
-Date: Wed, 18 Nov 2026 15:54:45 +0100
-Message-ID: <20261118150012.010101354@linuxfoundation.org>
+Subject: [PATCH 5.10 1248/1848] microblaze: uaccess: Zero out destination on failed get_user()
+Date: Wed, 18 Nov 2026 15:54:46 +0100
+Message-ID: <20261118150012.045801594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,77 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit d964ffba01f5d0935dd6bc850029958a62c74491 ]
+[ Upstream commit 54c35131e628e1a18f02365495a24a73a1fb515e ]
 
-strim() may advance the pointer assigned to cache->size which causes
-later frees to crash.
+On failure get_user() is supposed to zero out the destination variable.
+This is documented in the kdoc of the microblaze get_user()
+implementation and validated in lib/tests/usercopy_kunit.c.
 
-Fix by performing the strim and then memmove-ing the potentially shifted
-string back over the original string.
+Currently that zeroing is missing.
 
-The bug was introduced by the transition from rtrim() to strim(), as
-rtrim() wouldn't move on the left.
+Add it.
 
-Fixes: 13c230ab6e56c6ae ("perf tools: Ditch rtrim(), use strim() from tools/lib")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 0d6de9532663 ("microblaze_mmu_v2: uaccess MMU update")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: David Gow <david@davidgow.net>
+Link: https://patch.msgid.link/20260914-kunit-microblaze-v2-1-7d5756e858f8@weissschuh.net
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ arch/microblaze/include/asm/uaccess.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 94b9c96c29d58..d2a2e526ddb07 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1091,7 +1091,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
- 		return -1;
+diff --git a/arch/microblaze/include/asm/uaccess.h b/arch/microblaze/include/asm/uaccess.h
+index 7c5d92e2915ca..da376aa705a31 100644
+--- a/arch/microblaze/include/asm/uaccess.h
++++ b/arch/microblaze/include/asm/uaccess.h
+@@ -162,7 +162,8 @@ extern long __user_bad(void);
+ #define get_user(x, ptr) ({				\
+ 	const typeof(*(ptr)) __user *__gu_ptr = (ptr);	\
+ 	access_ok(__gu_ptr, sizeof(*__gu_ptr)) ?	\
+-		__get_user(x, __gu_ptr) : -EFAULT;	\
++		__get_user(x, __gu_ptr) :		\
++		((x) = 0, -EFAULT);			\
+ })
  
- 	cache->type[len] = 0;
--	cache->type = strim(cache->type);
-+	{
-+		char *trimmed = strim(cache->type);
-+
-+		memmove(cache->type, trimmed, strlen(trimmed) + 1);
-+	}
- 
- 	scnprintf(file, PATH_MAX, "%s/size", path);
- 	if (sysfs__read_str(file, &cache->size, &len)) {
-@@ -1100,7 +1104,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
- 	}
- 
- 	cache->size[len] = 0;
--	cache->size = strim(cache->size);
-+	{
-+		char *trimmed = strim(cache->size);
-+
-+		memmove(cache->size, trimmed, strlen(trimmed) + 1);
-+	}
- 
- 	scnprintf(file, PATH_MAX, "%s/shared_cpu_list", path);
- 	if (sysfs__read_str(file, &cache->map, &len)) {
-@@ -1110,7 +1118,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
- 	}
- 
- 	cache->map[len] = 0;
--	cache->map = strim(cache->map);
-+	{
-+		char *trimmed = strim(cache->map);
-+
-+		memmove(cache->map, trimmed, strlen(trimmed) + 1);
-+	}
- 	return 0;
- }
- 
+ #define __get_user(x, ptr)						\
 -- 
 2.53.0
 
