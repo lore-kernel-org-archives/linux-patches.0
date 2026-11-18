@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020430;
-	b=NldglqSo1QpmGcGsj+Wm5w42oV7agPZdJpXNL299YNUPC9dkH6Qe/FNq7Y1yq2wSNMa0
-	 pEUtG5p7KhIQ0Vp6mEi94SjzIEXlGEvXj5agxXxFF7BCCan8/enpJKzcGY4Xp6juA5lJE
-	 YcUp+G3hQdkYliUpt/TTdoUonWnlzhT8PMhCEDgiB6LcfsQiy7oyaq0lC0h/2bzB/ReVq
-	 AKditQpvdHH+7UpVDVZjcmf2NpsL/XvUygWXNtexNkBVwBBjXdV2ERNqOXDioL1naJDgq
-	 p/2mt5EXxdonNiQF7MiZrh+KDWAf7sZYx0ChH4sqZ7tF8KGVCen7R4YbYsiNvSYvgZQ==
+	t=1795020433;
+	b=MDImcQzzrVJmEtOodzLUXQqkJQEYf6zzd81hhug5jZRKsMo0bcVEjmEeM1emw0uDqZma
+	 +wiV0o19qtPlaiB49vns5mzF/gE14yg8IYX9xjUbd2YcgD4Ezt/e+A0sYjHMauyZR9cA3
+	 JJFm4aEO1zBSVnQOJNwkGSm/KEVm2uGuYPN699Wxqh82yQF1KJ2ZohF8GX2MuTXfEjre3
+	 IA2x7dSq30yZd8CCB8vx9aAVQMJlopSgaxPQ21I2H/Errtt/6AoJg9IWyEwmLPaC0uHTK
+	 7H4sdYt/i5QLl0nE4rN5XFXTcCeNoV9zymwn8mTIelhmbH1DwFf7hRbn9WsH3cpJqVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Kypml57nqVuOWyUsIu4zqzxwYEm7gr/ILHSoy8d3H4g=;
-	b=yoMOMEOdhZs84BE6nbFO+wVAqCPl5mP0VyWuO6ujxDjtzSMm1HZxIlIp2WJ+SDdV3kkF
-	 NnaA4lvRVVCoaZaqQXa5mEHB3a/wvLXOVElRORRe8xy56suvueqRJxTwN3xoCqcsv0Eh7
-	 bIbQDbsE4d23fz+2LuwRF3xZuYojrnnNneVhr3L/sXHg/RsvuyUhLpmZ+mKbnm6tQBeSL
-	 IuqCIJMMLQZBQZ/3u4EWhWP2W3PRmUqmrGvS/lQnPol2x4VYirI+42k1TM+tidC6Zw1PV
-	 nEkXcqhnYiK4SIB6U2VbJ5MQ4GnZAasBuSF7BcAbI3fwLo7OmV9KNVi4IYtBDY5fTPQ==
+	bh=Zlg4C5IrVdtK3prQAcSNzAS6g+E6eta9UNlZiSNG0sw=;
+	b=EZIUC/uDt03nW2MxTEOAe3hR8RLhbxUsakYsu45vpNDCmWufLgHupW5AJ/S8RcRYc7mD
+	 QkZqo7xXx30kZPj76SDSQq/JgyAmkI+EK8Qb5kVYF0ndDjN5PPSwyGk3gP+iDLfirQrzX
+	 BGBQqTjNb/R7z5UeFMlxhy6DILrUYldcq79SGpKe5OVCAA1C9XlkyKtOcJI0JcSrolUDt
+	 3vPVXr0ehEZtaEp57Z/0t1q6ho4zISvmC5aPqcIPyYAWe77u8t3RjYaRunhmajG7IMpup
+	 XPUh3RBEUinJOyhdaCR39Cya1J5nZiKQraPYRpRwabrSospXUR3m0Ay03NnxbUdgt7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xe7cEXwj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GINVqLjt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85875606A31C;
-	Wed, 18 Nov 2026 16:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45569606A31C;
+	Wed, 18 Nov 2026 16:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xe7cEXwj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85911F000C4;
-	Wed, 18 Nov 2026 16:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GINVqLjt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D92C1F000C6;
+	Wed, 18 Nov 2026 16:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020430;
-	bh=Kypml57nqVuOWyUsIu4zqzxwYEm7gr/ILHSoy8d3H4g=;
+	s=korg; t=1795020433;
+	bh=Zlg4C5IrVdtK3prQAcSNzAS6g+E6eta9UNlZiSNG0sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xe7cEXwjpUEMZ/K3tWsGB2gfFw1D8RFvMkOZ2cFTld9VRNu+LUmiczvgUZyLvk4kW
-	 alSK9WFBy6FMbXr6AbB1VptQpdiuy82chrIp8SbYs9NxJYjG0h4GrkSzZ+4ZehsZHc
-	 yy4m/71OW0AEc/JshuM2BHIkbgVlA0pPMb4zRCE8=
+	b=GINVqLjt8YGKmyyX6d7Yjo3NECCRgxw4iKHKEgj2Z/y3pSLwdY52gnRb/AfiHnIES
+	 DoJ4NgqHGFtbaaj/Opu88JndtyTw0cA7kqs2JDpwQDS0dw4AIFl/eh0ysWt7Gci77S
+	 fTfwAKFw5zt+AVX3KjJehAosblvEsLzqJ9a6l1xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1949/2651] irqchip/mips-gic: Fix unbalanced cm_core_lock in for_each_online_cpu_gic()
-Date: Wed, 18 Nov 2026 15:53:09 +0100
-Message-ID: <20261118150356.750507433@linuxfoundation.org>
+Subject: [PATCH 7.3 1950/2651] irqchip/mips-gic: Fix recursive acquisition of gic_lock in gic_set_affinity()
+Date: Wed, 18 Nov 2026 15:53:10 +0100
+Message-ID: <20261118150356.779698380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,93 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Benoît Monin <benoit.monin@bootlin.com>
 
-[ Upstream commit 03c4d26933d54556a89379db5923ae9e474569e8 ]
+[ Upstream commit 1bae25dcc6beb8b874f23601d2efa142ac4f9f36 ]
 
-Commit d9e2ed610a60 ("irqchip/mips-gic: Support multi-cluster in
-for_each_online_cpu_gic()") added a gic_unlock_cluster() call to the
-macro's loop increment, which unconditionally invokes
-mips_cm_unlock_other() on multi-cluster systems. However nothing in the
-loop ever acquires the corresponding mips_cm_lock_other(), so on
-multi-cluster hardware every invocation of for_each_online_cpu_gic()
-releases an unheld per-CPU cm_core_lock.
+Commit 322a90638768 ("irqchip/mips-gic: Multi-cluster support")
+made gic_set_affinity() call gic_set_type() when an interrupt's
+affinity is moved between clusters. gic_set_type() takes gic_lock with
+raw_spin_lock_irqsave(), but gic_set_affinity() holds gic_lock at that
+point, so the same raw spinlock is acquired twice, triggering a deadlock.
 
-With CONFIG_PROVE_LOCKING this triggers a "bad unlock balance detected"
-warning at boot, e.g. from gic_irq_domain_map() while mapping local
-interrupts. Only the first occurrence is reported, since the first
-warning permanently disables lockdep (debug_locks = 0); the unbalanced
-release itself silently persists.
+Split gic_set_type() into a gic_set_type_locked() helper that assumes
+gic_lock is already held. gic_set_type() takes gic_lock and calls the
+helper, and gic_set_affinity() calls gic_set_type_locked() directly,
+since it already holds gic_lock.
 
-Fix this by moving both the acquire and release into
-__gic_with_next_online_cpu() so they stay balanced. When advancing to a
-CPU in a remote cluster, lock the CM redirect block for that cluster via
-mips_cm_lock_other(); when leaving a remote cluster (or finishing the
-iteration) release it with mips_cm_unlock_other(). Local-cluster CPUs
-require no locking, so single-cluster systems are unaffected. This also
-makes the redirect region behave correctly when accessing local register
-blocks of CPUs in other clusters.
-
-Drop the now-unused gic_unlock_cluster() helper and its call from the
-for_each_online_cpu_gic() increment.
-
-Fixes: d9e2ed610a60 ("irqchip/mips-gic: Support multi-cluster in for_each_online_cpu_gic()")
+Fixes: 322a90638768 ("irqchip/mips-gic: Multi-cluster support")
 Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Link: https://patch.msgid.link/20260929-sync-gic-counters-v4-1-ec70c4b60434@bootlin.com
+Link: https://patch.msgid.link/20260929-sync-gic-counters-v4-2-ec70c4b60434@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mips-gic.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/irqchip/irq-mips-gic.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
-index 19a57c5e2b2ea..3b31cbcbed6f3 100644
+index 3b31cbcbed6f3..f2ae60d39d66d 100644
 --- a/drivers/irqchip/irq-mips-gic.c
 +++ b/drivers/irqchip/irq-mips-gic.c
-@@ -70,6 +70,10 @@ static int __gic_with_next_online_cpu(int prev)
- {
- 	unsigned int cpu;
- 
-+	/* Release the redirect/other region lock to the previous CPU, if any. */
-+	if (prev >= 0)
-+		mips_cm_unlock_other();
-+
- 	/* Discover the next online CPU */
- 	cpu = cpumask_next(prev, cpu_online_mask);
- 
-@@ -77,23 +81,12 @@ static int __gic_with_next_online_cpu(int prev)
- 	if (cpu >= nr_cpu_ids)
- 		return cpu;
- 
--	/*
--	 * Move the access lock to the next CPU's GIC local register block.
--	 *
--	 * Set GIC_VL_OTHER. Since the caller holds gic_lock nothing can
--	 * clobber the written value.
--	 */
--	write_gic_vl_other(mips_cm_vp_id(cpu));
-+	/* Lock access to redirect/other region to the next CPU */
-+	mips_cm_lock_other_cpu(cpu, CM_GCR_Cx_OTHER_BLOCK_LOCAL);
- 
- 	return cpu;
+@@ -297,14 +297,14 @@ static void gic_ack_irq(struct irq_data *d)
+ 	}
  }
  
--static inline void gic_unlock_cluster(void)
--{
--	if (mips_cps_multicluster_cpus())
--		mips_cm_unlock_other();
--}
--
- /**
-  * for_each_online_cpu_gic() - Iterate over online CPUs, access local registers
-  * @cpu: An integer variable to hold the current CPU number
-@@ -108,7 +101,6 @@ static inline void gic_unlock_cluster(void)
- 	guard(raw_spinlock_irqsave)(gic_lock);		\
- 	for ((cpu) = __gic_with_next_online_cpu(-1);	\
- 	     (cpu) < nr_cpu_ids;			\
--	     gic_unlock_cluster(),			\
- 	     (cpu) = __gic_with_next_online_cpu(cpu))
+-static int gic_set_type(struct irq_data *d, unsigned int type)
++static int gic_set_type_locked(struct irq_data *d, unsigned int type)
+ {
+ 	unsigned int irq, pol, trig, dual;
+-	unsigned long flags;
++
++	lockdep_assert_held(&gic_lock);
  
- /**
+ 	irq = GIC_HWIRQ_TO_SHARED(d->hwirq);
+ 
+-	raw_spin_lock_irqsave(&gic_lock, flags);
+ 	switch (type & IRQ_TYPE_SENSE_MASK) {
+ 	case IRQ_TYPE_EDGE_FALLING:
+ 		pol = GIC_POL_FALLING_EDGE;
+@@ -351,11 +351,16 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
+ 	else
+ 		irq_set_chip_handler_name_locked(d, &gic_level_irq_controller,
+ 						 handle_level_irq, NULL);
+-	raw_spin_unlock_irqrestore(&gic_lock, flags);
+ 
+ 	return 0;
+ }
+ 
++static int gic_set_type(struct irq_data *d, unsigned int type)
++{
++	guard(raw_spinlock_irqsave)(&gic_lock);
++	return gic_set_type_locked(d, type);
++}
++
+ #ifdef CONFIG_SMP
+ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 			    bool force)
+@@ -407,7 +412,7 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 	 * trigger type in the new cluster.
+ 	 */
+ 	if (cl != old_cl)
+-		gic_set_type(d, irqd_get_trigger_type(d));
++		gic_set_type_locked(d, irqd_get_trigger_type(d));
+ 
+ 	/* Route the interrupt to its new VP(E) */
+ 	if (gic_irq_lock_cluster(d)) {
 -- 
 2.53.0
 
