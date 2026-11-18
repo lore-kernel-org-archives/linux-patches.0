@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051519;
-	b=xblhzC2+bM8qWH4mJjgVuav8UOOY0G6JrhxjVV+Dz1qboyWd2zLgN1QO8LhP+fIlIjLS
-	 gyCHwG7QepdihtfxyGOeESrSAKLbwm4y3HtJP14Nse4LmVeum2fTng4tZtJAVFhe4ncnw
-	 N8C7i2XWVoheQqrfvWnGrxwnNsJ7KEjv76YU2aWe8biVZQZHL7PlkPH/2bbJ8+i7KjsJt
-	 r4wXKV4AgU7un1fMg9m3AKww4R62UzNtKG9CbfMsfB4EhVqe+qFRp1zCcKWDaO8wg8T9Y
-	 8xInsRQyC+ekH5biUT3YG3AT8AfzB1qVEPFQeQJP44tPN4+WaK8DwodkRyN8EOWP8Bw==
+	t=1795051522;
+	b=hPHPxv5HM2j/d52eve+DaDCoXFGTT8TR+zCSFhdu2uLouUd7UQsTywmF9zMqKpRCoLPv
+	 uzyCj579iCUKLV9gNU/9pFaEahOs5DrR2wDP9kgbi6BF5zIdnRjjrhBzSbY9fUCfTswEo
+	 nxnbr5alzehOgV9jz47dbeNibcQ1wCj1fNlCplbvVemejoN8V/NYasGqvsyAUDXdt37ZA
+	 wAO+Z2IPtzxDCH2rjBI2Eui09mkWJAs+gadal3+PAViIiXAZy2NGRIElbTakDt+zNZOtZ
+	 pj0MR5gXUDI7RWttrfjVCqc6/lv0g4F/C8xkCLJ88TmXDT7m1+qaoTSEKgSMRlQReoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=CsiJDxzAGU120sEZf0P1ZfYRGvSykTGqbE/UAYmV85s=;
-	b=iqVMNeSdHM7Q2yxnWVUVahk1xBwH9joMhgbMk0/MvKuA4p+HAAjR5Tnn8nbIva/LGirz
-	 uu/rUHOu7oOI6+TBKSeqSmamlXE8oYSGYTlhHtWlhPAktZz+WWWy5hPgG931N6vldAyEW
-	 J38yviWu/HM6YutElv5wn6xMFAFD8s1NAtzsgnJxO4QDmeO6zhYIJZC8GC3MdNz59YLw/
-	 Xntj6zWncDSVW9CgpFUvaGRp+CbDTQ/gW7hvNkx+Zgi+C3/xo+mFOY+hqDHhcQWJuwbZx
-	 MKu4UW6J+QOsLMCROWxvYsaZvAQDX+423TQwuhVWwhBGfN85k0WB8+YNyiItOsGii9Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PLbZqzaAcXGxQSdNThlE6ZAMie3Z0w303gnOD4MaZ04=;
+	b=wB3fo+5NYU6OFnALBeo0/tjedT5m8+b74RPX0kWCF/Z3JJ39/U7dMkjLOoqdVdDhaFbt
+	 kt3qm3kBSVcJALZIkDYhmfqQo+ttdpHDC87w/d/yysUj7ZwWyMsPjZKGhJ+g2dDvl+KTD
+	 bgScmwoiRgaqKwkOUCIcNhJh6oGhVT1U8EK16tOXnblu/cqYWLEOTZ/noEDSjZmO9C+RF
+	 M+LtzNZgJrPYRDuhJXF8QhMuaPRgvRPI8AQ8bbv+GwjDkPjfWJofGWXftZ/RhbVPkPxUY
+	 oIO9n2f/cd+cyhoTDywJqynyCPrWLW48UPhYn1qOv/rgDoSEa+9oICmNXwjoI+ZNP1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PCADmRLD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uZwMxME+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CD9606A31C;
-	Thu, 19 Nov 2026 01:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648F606A31C;
+	Thu, 19 Nov 2026 01:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PCADmRLD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D701F000C5;
-	Thu, 19 Nov 2026 01:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uZwMxME+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF7E1F000C5;
+	Thu, 19 Nov 2026 01:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051519;
-	bh=CsiJDxzAGU120sEZf0P1ZfYRGvSykTGqbE/UAYmV85s=;
+	s=korg; t=1795051522;
+	bh=PLbZqzaAcXGxQSdNThlE6ZAMie3Z0w303gnOD4MaZ04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PCADmRLDHKuTbTslyWKzsl7xo2eNtgCM0QA2yRAQzd075YZPPjPVxN3fFwD51xR0U
-	 tgGu72h5Xk9hqEOdSsQGPl6PJzUsQvEm6Osf6ISNvzVgXfGA8xO8Wqu9vN8Looj3Cg
-	 2j+egpsgRCyKd77fOBCgr543nmfbfI9HfThmjMMo=
+	b=uZwMxME+LAnOQnTjY+Pj1Nxx8Eo/HYRJ7T5/QcsTuNCD7y8Gd5zaJsYrwuMEoBz4T
+	 v6etaofJm8WlzCI5creVU2wWptzZzwKKhvEXSjd0rNvxkZukh6k8ld0TNPqNaU2GMp
+	 O4UJCLnlUmX5gu+/yTX6gS8z0teDJ/jrg3jzRZ6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Andras Pataki <apataki@flatironinstitute.org>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0210/2214] ksmbd: handle empty QUERY_ALLOCATED_RANGES output
-Date: Wed, 18 Nov 2026 15:31:26 +0100
-Message-ID: <20261118150018.589151875@linuxfoundation.org>
+Subject: [PATCH 5.15 0237/2214] ceph: do not cache negative dentries for snapped directories
+Date: Wed, 18 Nov 2026 15:31:53 +0100
+Message-ID: <20261118150019.681743515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -61,62 +64,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 7f07791522a251e2be087d11ae9cd51eb3408f1d ]
+[ Upstream commit af59562a5b3d34fb3aa7753f2543393578d06dbf ]
 
-FSCTL_QUERY_ALLOCATED_RANGES can be issued with a valid input buffer but
-without room for an output range.  Do not reject the request before
-looking at the file layout.  If the query would produce a range, return
-STATUS_BUFFER_TOO_SMALL.  If it produces no ranges, return success with an
-empty output.
+When a LOOKUP/LOOKUPSNAP in a snapped directory returns ENOENT
+without a trace, ceph_finish_lookup() creates a negative dentry
+via d_add(dentry, NULL).  For live directories this is fine — the
+dentry naturally expires.  But for snapped directories,
+ceph_d_revalidate() unconditionally trusts all cached dentries
+(valid = 1), so a negative dentry created by a transient error
+persists forever, hiding entries that genuinely exist in the
+snapshot.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Only cache negative dentries for live (non-snapshotted) parent
+directories.  For snapped parents, skip the negative dentry so
+that VFS retries the lookup on the next access.  Since the
+conditions that trigger a negative dentry (MDS transient error,
+local ENOENT shortcut, or MDS null dentry lease) are all rare in
+snapped directories, the performance impact of this change is
+negligible.
+
+Link: https://tracker.ceph.com/issues/78529
+Reported-by: Andras Pataki <apataki@flatironinstitute.org>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/ceph/dir.c   | 10 ++++++++--
+ fs/ceph/inode.c |  3 ++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index bd51c02c24ca7..66f3bc4ddd2bf 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -7626,8 +7626,6 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
- 	int ret = 0;
- 
- 	*out_count = 0;
--	if (in_count == 0)
--		return -EINVAL;
- 
- 	start = le64_to_cpu(qar_req->file_offset);
- 	length = le64_to_cpu(qar_req->length);
-@@ -7639,8 +7637,18 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
- 	if (!fp)
- 		return -ENOENT;
- 
--	ret = ksmbd_vfs_fqar_lseek(fp, start, length,
--				   qar_rsp, in_count, out_count);
-+	if (!in_count) {
-+		struct file_allocated_range_buffer range;
-+
-+		ret = ksmbd_vfs_fqar_lseek(fp, start, length, &range, 1,
-+					   out_count);
-+		if (!ret && *out_count)
-+			ret = -ENOSPC;
-+		*out_count = 0;
-+	} else {
-+		ret = ksmbd_vfs_fqar_lseek(fp, start, length,
-+					   qar_rsp, in_count, out_count);
-+	}
- 	if (ret && ret != -E2BIG)
- 		*out_count = 0;
- 
+diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
+index 74845a793aa36..3f42ea92f81c2 100644
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -721,8 +721,13 @@ struct dentry *ceph_finish_lookup(struct ceph_mds_request *req,
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				if (d_unhashed(dentry))
+-					d_add(dentry, NULL);
++				if (d_unhashed(dentry)) {
++					struct inode *parent =
++						d_inode(dentry->d_parent);
++					if (!parent ||
++					    ceph_snap(parent) == CEPH_NOSNAP)
++						d_add(dentry, NULL);
++				}
+ 			}
+ 		}
+ 	}
+@@ -773,6 +778,7 @@ static struct dentry *ceph_lookup(struct inode *dir, struct dentry *dentry,
+ 			    dentry->d_name.len) &&
+ 		    !is_root_ceph_dentry(dir, dentry) &&
+ 		    ceph_test_mount_opt(fsc, DCACHE) &&
++		    ceph_snap(dir) == CEPH_NOSNAP &&
+ 		    __ceph_dir_is_complete(ci) &&
+ 		    __ceph_caps_issued_mask_metric(ci, CEPH_CAP_FILE_SHARED, 1)) {
+ 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 3adc4adef49a8..d0079a7726854 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -1456,7 +1456,8 @@ int ceph_fill_trace(struct super_block *sb, struct ceph_mds_request *req)
+ 				ceph_dir_clear_ordered(dir);
+ 				d_delete(dn);
+ 			} else if (have_lease) {
+-				if (d_unhashed(dn))
++				if (d_unhashed(dn) &&
++				    ceph_snap(dir) == CEPH_NOSNAP)
+ 					d_add(dn, NULL);
+ 				update_dentry_lease(dir, dn,
+ 						    rinfo->dlease, session,
 -- 
 2.53.0
 
