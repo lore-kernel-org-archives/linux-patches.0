@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045359;
-	b=ogKdvPKPbT3+mWPhylhuWEh32CjbcwfjKjkYt4XWWNyUcT1FdTFRQWqUnBXEXrYR7alc
-	 GCF04axxQUZL20jyq5GgnmaIbsp09OTTFBKep9dzoZnECU32uMOCzb5UueHcDkTwPkOFY
-	 0MjETWwJdv2tcND5KOmgmChs6SsZGzXJPZc25llPVtvnByVeLtN4e5czODWT5QBjYmAkv
-	 KdX3hDX2tg0y3y5RSQX+pb4MOP9O9/+1QCIfKMLZZf3EjOb+44c9V465uGBneo0CVt7Iz
-	 T7WMziR/a3WTQQ5bsVPo3ZEdc9sFm4MHaBQTK7mu0Yip6MOi2l3csXgXrRIBinfhS2g==
+	t=1795045362;
+	b=xotYiCUgjoL8c9Wxzzb+veKtKFtyELVG+sS4GR8VEyJLanQT5FPgRL70KOspi9Ci67DL
+	 gwlew3T/b+ZYDkq21kBAymzsPRsNbswPdBntfQUBlVZP9V144CaUHxbweqVuJ4G3fh/Xy
+	 sqOITGGXWtM0Ojx88SHXYgy/lgy+fg38QhlB3bl1QceMG8nWUVZbq28HMlNnFQqiZoE7J
+	 jmjn1561BYfK7rO85DfIdYBMHzbXmXQVaGraLcLe2XU34hG67IjYczB0l/b22wIKA4Bx0
+	 jal88ioqhVQkZ5ptP7hiv7ovVRXIN/rNIoPgdztsAFWOE1P2cxMP+lMdHHugZ9oXfMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sDzFMh1R0glAa21A8k3EPCfow2eHWnU3r9/8QZ1S82E=;
-	b=DgwBVsgszck/44lQ8RU4GsW6PBbbwu6Mff6EM1ZAHzm12PXambl1FvbSzgyXhLlJk8uA
-	 KeoY3ImuzP/lSVQoyYpoP1qB0VtQvBldLG59+GMPo95sd83GYyd2zqucSOnUCrsWe23nl
-	 4tklt7fzqlrgYR+De4Ds02njE+6a7aLZOJxsqaIXMPVCmS/joWlqrNwzUQ7LtwA7yPtk+
-	 1FPwHKuMNpduAEKqWv2d1bVpGiIXDiRZaMDAxAaFsiK4opDGrAN88pkTbdlWCGMbdZ7UK
-	 U7lJ+tl+n3cEl/aD+lgnnoXQB9odLV3hxGMH3GNEb3/4C92p7XnrhpVkwoMcNSit8CA==
+	bh=HuVh9hMyLItkkTowDd92cU1u6KzWdCRQqMJRca9ugEo=;
+	b=Yl++aWltKACpNwr6/ovWPBw+ZVn3/3fRBMnO7RMDpyFMZadriUmskdDQIz/Mxd6dL7/N
+	 cfJaEGd/A0Ykl+qMIt2tkF2JfYzKDvXnqywkgT9WiHZyccepTRPZvmLP2z21rfjm6K3su
+	 clOnhhJjiaLeffQpi6RnOyPjNn47UqtOdaGH1NoynZuXZ1Wdgg8Y2Rc3n5JOzoNetrUoB
+	 xBZ/5qTdgv6tEMiIpdtNuQDrzPXv0fnVwA514RAr/anTOPlzJk4QdX7ZdhVIHNo5bRzhy
+	 q0fnVi2xUfJzNqoGNG+g75fqW2SjcJrHjXvyqjLjC/aD8znE4DEEguipkaC8PNSlYaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMYLiCiD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jT/gQWpF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C39606A320;
-	Wed, 18 Nov 2026 23:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421D606A334;
+	Wed, 18 Nov 2026 23:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMYLiCiD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2381F000C4;
-	Wed, 18 Nov 2026 23:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jT/gQWpF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1594D1F000C4;
+	Wed, 18 Nov 2026 23:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045358;
-	bh=sDzFMh1R0glAa21A8k3EPCfow2eHWnU3r9/8QZ1S82E=;
+	s=korg; t=1795045361;
+	bh=HuVh9hMyLItkkTowDd92cU1u6KzWdCRQqMJRca9ugEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMYLiCiD7VIrKR+fRRH8T/7H+SWw+KIxrV6hdN+5iBdySFtN08xYAdA7BKBCMMuh4
-	 1cEsGeFRzeMPpQHJ0WM/a5LGFOSK7Z2e1gffN67OavLpzHqV8EqKwutilJA5uNXTpw
-	 Y6m72fQQB6C4560x+01JJy7PE9rScU4WLc3uSU88=
+	b=jT/gQWpF51J4oaWT3Ih5QJe1auF4uPxpDx+RrDNBw/ezokQDrSzXTCkDMrtE2Zc3O
+	 oI8D6BXEyLJRNnayvVvUzRdIM9zOCxKjLx/VZCombnpYn/JrIBltGwvXHkZ5PR/cCv
+	 A5IYvdkNl/MlpEqDh5eB6WCieIGoE9sQ14DU5RX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0845/2857] staging: rtl8723bs: fix RX buffer OOB write from device-reported length
-Date: Wed, 18 Nov 2026 15:31:19 +0100
-Message-ID: <20261118150232.000691453@linuxfoundation.org>
+Subject: [PATCH 6.1 0836/2857] cxl/acpi: Check ACPI companion before use
+Date: Wed, 18 Nov 2026 15:31:10 +0100
+Message-ID: <20261118150231.672143508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,52 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit c52929073fccbc149267a2fd7458626a7e9abcfc ]
+[ Upstream commit 371c2ad1624283b6c7a62a28199f5161d388a738 ]
 
-sd_recv_rxfifo() trusts the device-reported RX0_REQ_LEN value
-(hal->SdioRxFIFOSize, a u16 read from the card via CMD52) as the
-size of the next RX packet and passes it to sdio_read_port(), which
-copies that many bytes into the recvbuf skb whose data area is only
-MAX_RECVBUF_SZ (10240) bytes. A bogus device on SDIO can report up to
-65535 bytes, causing a heap overflow of up to ~55KB past the skb
-buffer.
+Platform drivers can be forced to match devices outside their ID tables
+through driver_override.  cxl_acpi_probe() assumes that every bound device
+has an ACPI companion and dereferences adev->dev.bus without checking the
+result of ACPI_COMPANION().  Force-binding cxl_acpi to a platform device
+without a companion therefore causes a NULL pointer dereference.
 
-Bail out when the RX0_REQ_LEN exceeds MAX_RECVBUF_SZ. This is expected
-to keep behavior unchanged on normal devices.
+This was reproduced by setting the driver override for the pcspkr platform
+device to cxl_acpi and binding it through sysfs:
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
+  BUG: kernel NULL pointer dereference, address: 0000000000000280
+  #PF: supervisor read access in kernel mode
+  RIP: cxl_acpi_probe+0xf4/0x220
+  Call Trace:
+   platform_probe+0x4d/0x80
+   really_probe+0x106/0x370
+   device_driver_attach+0x4c/0xa0
+   bind_store+0xd0/0x100
 
-Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+Commit 2b3a5dabe89e ("platform/surface: acpi-notify: Check ACPI
+companion before use") fixed the same force-binding issue in another
+platform driver.  Check the companion before setting up the CXL root and
+return -ENODEV when it is absent.
+
+Fixes: 7d4b5ca2e2cb ("cxl/acpi: Add downstream port data to cxl_port instances")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/8114c3adc1acaea78523cc0fb4d4b25f7665cee9@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260926071605.3013893-1-yaojiale02@163.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/hal/sdio_ops.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/cxl/acpi.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/hal/sdio_ops.c b/drivers/staging/rtl8723bs/hal/sdio_ops.c
-index 107f427ee4aa5..e825384fd0e1d 100644
---- a/drivers/staging/rtl8723bs/hal/sdio_ops.c
-+++ b/drivers/staging/rtl8723bs/hal/sdio_ops.c
-@@ -792,6 +792,13 @@ static struct recv_buf *sd_recv_rxfifo(struct adapter *adapter, u32 size)
- 	struct recv_priv *recv_priv;
- 	struct recv_buf	*recvbuf;
+diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
+index d7d789211c173..3c8c54e809d51 100644
+--- a/drivers/cxl/acpi.c
++++ b/drivers/cxl/acpi.c
+@@ -440,12 +440,16 @@ static int pair_cxl_resource(struct device *dev, void *data)
  
-+	/* RX0_REQ_LEN is device-reported; the skb buffer is only
-+	 * MAX_RECVBUF_SZ bytes, reject bogus lengths instead of
-+	 * overflowing past it.
-+	 */
-+	if (size > MAX_RECVBUF_SZ)
-+		return NULL;
+ static int cxl_acpi_probe(struct platform_device *pdev)
+ {
+-	int rc;
++	struct cxl_cfmws_context ctx;
++	struct acpi_device *adev;
+ 	struct resource *cxl_res;
+ 	struct cxl_port *root_port;
+ 	struct device *host = &pdev->dev;
+-	struct acpi_device *adev = ACPI_COMPANION(host);
+-	struct cxl_cfmws_context ctx;
++	int rc;
 +
- 	/*  Patch for some SDIO Host 4 bytes issue */
- 	/*  ex. RK3188 */
- 	readsize = round_up(size, 4);
++	adev = ACPI_COMPANION(host);
++	if (!adev)
++		return -ENODEV;
+ 
+ 	device_lock_set_class(&pdev->dev, &cxl_root_key);
+ 	rc = devm_add_action_or_reset(&pdev->dev, cxl_acpi_lock_reset_class,
 -- 
 2.53.0
 
