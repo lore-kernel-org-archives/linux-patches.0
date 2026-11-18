@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017289;
-	b=bCPpHAKE5Hxe/DkMCeqzNBXAfXOb1OPD81qgIlryjAGY8Oel6jGXXzbgR1/TRiNdixnP
-	 kRvnLEq5Qy2HNszbC/5VsJ0JBjwxtRg6viD6WhBj5XzpmxEJrXD0DLXuU6q86HTvUNvYE
-	 iGJHTNlGYouvunyJERAOACqwEDVNOgseXJqjRT33SHDdqCRtuQlAj93RGVcFL0SRDj2U4
-	 AZOxDIIukNWtEDdOLrUJoYvYQqwjl9w1LWozftM3GOt48WtosI2eeI9qRJqu16paoKihG
-	 wE2vFNtxMvjZPbwMd1nDXIHRQ9Gw9BfrLdoAhuz/d+RUAjGQoM1+vhQuoFEFQl19Vpg==
+	t=1795017292;
+	b=FLyKEts6O0xdaAnTSdxuzN6wUQZ9X3++38OLWQnguuItiVBgeNbj04z8c70LrM3sb9Az
+	 fdOFFXliGb4hJPxFfG5RSpeHKCe1JzFuE3P7QnThU4Hvyb6CFqxfvIfb0nHh5X62ApF92
+	 2wq8PbjM2gcDW4dtehba4YEc28Npw7gtyq0L4Qgfr+n28aAmCB+2YRhE/0YtJ7WLiLpYX
+	 RyN1vsYYtJHpmTHMzyxB1zFmU+tlNzGJsGeGA7XaWhx4X4vHiNujH3tE8z8ZcPlueSv57
+	 6vBkvZDEtV9lMVzR7quT6A+Y2j0/kmOsUFtopojkXJoNBpoBHYQ6FUnetldYORnFHEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jvkX3RKj7wMA2h0uFFLWF8hXEs7LZdsIU3MDtfIdxoU=;
-	b=BHpo122vhg4QnzX19tLKVxvSLFliDbePdEaqKxvHalT9E22781nmXQtfCLN5iDpXLqZq
-	 wN0H3pvSjAkIxjVRdlmsRS2Tew1bA7+t+NMjUaJsVmYfOyCmLERBf5hLKMfqYQFKff426
-	 zrdsemqp2TpKm5gakEuyx5IPidFMiHJWHp+1K8yZXyUcp74ZNd/nFyfua8buY1iMkn107
-	 ljGVeGfgTakKIX7hHRiOQPzFYedmLpVTh9vZsejFrO4Fjvw6YiXI2pnwL0/3VX7bJcf7b
-	 cGt//2+KDub439FJnpSkFBiaTut/OXGocrq/B2dIiXib7jtY74BTP68nMu84/Knop9Q==
+	bh=Pc0qcYEcYYH486QX3BIAYkuEAK8vITdHbiuaZXLnsTY=;
+	b=tcmvyIAbu/4QGRFU0rZJTvA8jHxMAOblyaCt8Z5/h45SsGvqAePW9lG+xKmBZtfvmV8g
+	 PdTLVVOSjDa2FSvacy0D10g9Jj2eP1HVFK9cBVlbKq1j4t+ubewjhBovm9Zf5SXCmqB0Q
+	 efZwnEvSqcdI1pc8U7/+wqWIBMkjQzXJ0UYr7DRun/xbLlJGBbyiH0ND3K1UwY/RgRjCr
+	 knrOTJWhkyRzBlqy6sZdEH+jIiWOSH8FMkf85gnQpGwJ6iuoAOveGBt1Edqyqx9meB4I+
+	 btJYOd/UkxXI4JDu+9X+kTUs0XeUpK5o6ZjdNNoqSE6Ca8XMdIRmaFUSN42omCOK6BA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMORciu4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZQpnYNY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7117B606A320;
-	Wed, 18 Nov 2026 15:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D672606A320;
+	Wed, 18 Nov 2026 15:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMORciu4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB921F000C5;
-	Wed, 18 Nov 2026 15:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZQpnYNY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410591F000C5;
+	Wed, 18 Nov 2026 15:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017289;
-	bh=jvkX3RKj7wMA2h0uFFLWF8hXEs7LZdsIU3MDtfIdxoU=;
+	s=korg; t=1795017291;
+	bh=Pc0qcYEcYYH486QX3BIAYkuEAK8vITdHbiuaZXLnsTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMORciu45FXN1E7hN0TszxoHHAP86ROHQ1vu1X5kRkRTf/lD5PTJeRtCpB1+TfXcJ
-	 NOX2dVzZIxhshmVsJQ3hjssDmu6xuvJLy94UTi1a1Rzj4XSKpKrE2PAb1eFbu5410y
-	 8IkUK+jzILuwXgL2jCr/bZYyzEYTY6wpIR0SIM4o=
+	b=fZQpnYNYXNIEL6ny438w3o+z35agZpu3E9oKZwto10y1KL58cwbHtT9o0Rj9Dz4bc
+	 DI8gA08qIgAsLN3y1j4EhAOujEIx/yTyCgGwKJTC2/9VDCmgnk++A5E1WmFVVwdhru
+	 OcgSGYMS4w6o3Vd+h58FPgcnrn0tvSrRdXoEFn+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0824/2651] perf llvm: Fix memory leak of args->fileloc in symbol__disassemble_llvm()
-Date: Wed, 18 Nov 2026 15:34:24 +0100
-Message-ID: <20261118150317.556089795@linuxfoundation.org>
+Subject: [PATCH 7.3 0833/2651] arm64: dts: qcom: x1e001de-devkit: Mark the EC reset gpio as reserved
+Date: Wed, 18 Nov 2026 15:34:33 +0100
+Message-ID: <20261118150317.871642858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,43 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit fe529886843f451ad6da7e65d53325432e0f80fb ]
+[ Upstream commit 0297c8e98a054fc2a0afcb96114f57603a02594e ]
 
-In symbol__disassemble_llvm(), after calling llvm_addr2line(), if the
-subsequent disasm_line__new() fails, the code directly jumps to 'err'
-without freeing args->fileloc, leading to a memory leak.
+GPIO 65 from TLMM is used by the embedded controller as its reset line.
 
-Fix this by explicitly calling free(args->fileloc) before jumping to the
-error handling path when disasm_line__new() fails.
+On some devices, toggling the embedded controller reset line makes the
+device not power up at all, unless the battery is unplugged.
 
-Fixes: 04885681788855bb ("perf annotate: LLVM-based disassembler")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+So reserve it in order to prevent Linux from requesting or
+reconfiguring it.
+
+Fixes: 7b8a31e82b87 ("arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-2-fde7f8a53382@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/llvm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/llvm.c b/tools/perf/util/llvm.c
-index a0deb742a7331..dc66f6cc1db65 100644
---- a/tools/perf/util/llvm.c
-+++ b/tools/perf/util/llvm.c
-@@ -254,8 +254,10 @@ int symbol__disassemble_llvm(const char *filename, struct symbol *sym,
- 			       (unsigned int *)&args->line_nr, false, NULL);
+diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+index be1a8ac8c699e..3ba45a7884a23 100644
+--- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
++++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+@@ -1194,7 +1194,8 @@ wcd_tx: codec@0,3 {
+ };
  
- 		dl = disasm_line__new(args);
--		if (dl == NULL)
-+		if (dl == NULL) {
-+			free(args->fileloc);
- 			goto err;
-+		}
+ &tlmm {
+-	gpio-reserved-ranges = <44 4>; /* SPI (TPM) */
++	gpio-reserved-ranges = <44 4>, /* SPI (TPM) */
++			       <65 1>; /* EC reset */
  
- 		annotation_line__add(&dl->al, &notes->src->source);
- 
+ 	eusb3_reset_n: eusb3-reset-n-state {
+ 		pins = "gpio6";
 -- 
 2.53.0
 
