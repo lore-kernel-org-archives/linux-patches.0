@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039538;
-	b=25JbA2klt6/70q/hMbQshjeeapqBKEo711QTYFO8qFxLG59QGR97kweoJDTRE8OVas/j
-	 Bdn0LQxF9dFW9Sf+DN6Y2Lt+V0l+xJ0Afpt/0qjOqUXzNnYyT0fcMFik1a3Qp9rcuokJC
-	 rceIHZ0ePxrzWZCh7nEvxmGDTFyuyxPksXUNLKNydmClINgFKCBmG5U+xNERmtrw5VRSJ
-	 IJXoIwtGKmHul28zBjDUlomCLGCqm7dTbzL7XsGB4mBZM0DnkFgYmOxO2iyGwFvbRRx7V
-	 3b90t0t2W6scUZPkBvgcF5IvK3bunxbvO3uMOUjByRjA+zYbZIdD0+p5zVuMYm4UpwQ==
+	t=1795039541;
+	b=r712FH75J4Vkwuw0hiVfY2+6VQV1zQTKB9xMK81ZUWbhwyWe4yziRXIsJfV1UvZQ4vGa
+	 SdoP1FliTFUrU4WalcAQr62Far7ed4OGxAqUsveQD7F6IQF/8LphdagPtaaibRqM2AKIT
+	 7owGzmOeZvdGHzQS4UXGgHT+1HAgVXswSBl323Yg+2qXndVg74MZEFjD0EoGrCbXFmfdP
+	 TUwEhZaB4/gXjaPd1ZouTO5Tx1dgVYwqt3rBVg6QmiRIn6cYV+oVag97yFq0WPBWyqLkX
+	 9G2rJLSXxjbApGeaQqlEag8cGlyKfbt1dbO6eB833cUV7Mk//4tL9qA3zrha0aFBT+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OL+jY+eoqH7RsGmcNatZy+Tn2P8mHbecZBqvl/A/FrA=;
-	b=5GK0JBotIed/Yw0/Tkn1FO7+5tYy4rnVqp8XLaGnDojrp5a6apsXoIS6JFYwAkpoKUUH
-	 EKPua/2xWHjfEcQmm1yQXcCjeToit6ZaPuaO5Cn+dViG4Knqb0YFwrCtQ8Ml5BLFn1+iX
-	 XWNX1Qw1157vhrxmP8EAR5QwzrF6KkOegEZgPwzKUaDRBMDZ/D/mrAMq50VkGAtBfZxTs
-	 vWP3ywyeGxn4kISfEq9pOC1Co1HbQin06/77HcvKLf3N0+riKuTaZBGjGLvlBgKV4OkUO
-	 YK9jX6d/HF777EBbPULubU5faP/lq7QdmFMt/v29IgDVGid8x5pAI7r7ZRdn8ywfvnA==
+	bh=oouwHh5SkIPYkDU/TcDlr4VyMCDBEKB7HoZ0m8MQjLM=;
+	b=oC8O2En1xSnNK6C0dVQ3nqug7k98PmPGHmeHYpk98dT6a3z81zU7NbsfjdVP/Ik8UE55
+	 5UJ7A5NDc2xUIWLhGa1KMjeXYDCczvx3ju8NZvWCp3zDm2yg46XJDl6ssBk9luDx+fjc/
+	 EzoobJ+Y5M2WHDxqu7u7lho3WSJ31bLfpQU9GDkoNc2tBKhRlOPrfMlj8oxRsWgNJaBeZ
+	 85jXmb+0bI7UNmisQL4p6s22dwEzS1LZBGtPtCs3ReH8GMeQu/1yKdS7vVc/MRCp498Sv
+	 edlI3seI5F2nTtsmEzCL9fNjx8ajPlELT+kg9MAzGLTgNCsL/8ZF6bZBTp2oMewHN6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhZmzzWx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BrAnuRvF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C99C606A320;
-	Wed, 18 Nov 2026 22:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30151606A31C;
+	Wed, 18 Nov 2026 22:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhZmzzWx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE3A1F000C6;
-	Wed, 18 Nov 2026 22:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BrAnuRvF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CB31F000C4;
+	Wed, 18 Nov 2026 22:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039538;
-	bh=OL+jY+eoqH7RsGmcNatZy+Tn2P8mHbecZBqvl/A/FrA=;
+	s=korg; t=1795039541;
+	bh=oouwHh5SkIPYkDU/TcDlr4VyMCDBEKB7HoZ0m8MQjLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhZmzzWxPQIsOOpn2yHKqojkEBpV+AFmgrG/9a6lOcBmNwog1BljYzkNQtGn+45Dk
-	 aUkeNqlBFM7Sj4EvZaoxx03CZ+bcpq3TAH8WBe9CuDN6uvlF8aojTCBqfP2riodbl/
-	 ctBfoHjEqG9EcE/ja/D+rSTofrEz35Cd+WzLJhig=
+	b=BrAnuRvFzkNA1qvkpQGaC7o8AUyF93XW3dI5XM9anvbTdeLiq0LvPydYRPWNkH5/b
+	 /bVFR+mpCEHV5sHdv/6Bmbgpbb25ZLpdY8uSR+GQbhaaGYo8OYPAYSoSptBAP83Gxi
+	 gVpbM5bLzvVPLmnNjifD6rnCKfKi8YEvdeftddXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2134/3318] scsi: mpi3mr: Fix out-of-bounds read in PCIe topology change events
-Date: Wed, 18 Nov 2026 15:45:56 +0100
-Message-ID: <20261118150426.083813995@linuxfoundation.org>
+Subject: [PATCH 6.6 2135/3318] scsi: mpi3mr: Fix use-after-free of the firmware event workqueue
+Date: Wed, 18 Nov 2026 15:45:57 +0100
+Message-ID: <20261118150426.115929922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,59 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 7d572b4dc4ed0494e67097d4b7368666655f5c99 ]
+[ Upstream commit c94c746e6c80439a4a9a0e1e20f2dae62a4d57ef ]
 
-The number of entries in a PCIe topology change event is used to walk the
-entry array without being compared against the amount of event data that
-was received.
+The enqueue path reads the workqueue pointer before taking the event lock,
+while the remove path clears that pointer and destroys the workqueue while
+holding it. The enqueue can therefore reach queue_work() after the
+workqueue is gone.
 
-Bound the entry count to the received event data before use.
+Move the check inside the lock.
 
-Fixes: 8e653455547a ("scsi: mpi3mr: Add support for PCIe device event handling")
+Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-15-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-17-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 74bfddfd42c09..48dd77a91aa1d 100644
+index 48dd77a91aa1d..b38f68ac20c49 100644
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2554,12 +2554,28 @@ static void mpi3mr_pcietopochg_evt_th(struct mpi3mr_ioc *mrioc,
- 	struct mpi3_event_data_pcie_topology_change_list *topo_evt =
- 	    (struct mpi3_event_data_pcie_topology_change_list *)event_reply->event_data;
- 	int i;
--	u16 handle;
--	u8 reason_code;
-+	u16 handle, avail_len;
-+	u8 reason_code, max_entries, num_entries;
- 	struct mpi3mr_tgt_dev *tgtdev = NULL;
- 	struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data = NULL;
+@@ -233,10 +233,11 @@ static void mpi3mr_fwevt_add_to_list(struct mpi3mr_ioc *mrioc,
+ {
+ 	unsigned long flags;
  
--	for (i = 0; i < topo_evt->num_entries; i++) {
-+	avail_len = event_reply->event_data_length * 4;
-+	if (avail_len < offsetof(struct mpi3_event_data_pcie_topology_change_list, port_entry)) {
-+		ioc_err(mrioc, "PCIe topology event: event data too small (%u bytes)\n",
-+			avail_len);
+-	if (!mrioc->fwevt_worker_thread)
+-		return;
+-
+ 	spin_lock_irqsave(&mrioc->fwevt_lock, flags);
++	if (!mrioc->fwevt_worker_thread) {
++		spin_unlock_irqrestore(&mrioc->fwevt_lock, flags);
 +		return;
 +	}
-+	max_entries = (avail_len -
-+		      offsetof(struct mpi3_event_data_pcie_topology_change_list, port_entry)) /
-+		      sizeof(struct mpi3_event_pcie_topo_port_entry);
-+	num_entries = topo_evt->num_entries;
-+	if (num_entries > max_entries) {
-+		ioc_err(mrioc, "PCIe topology event: num_entries(%d) exceeds max(%d)\n",
-+			num_entries, max_entries);
-+		return;
-+	}
-+
-+	for (i = 0; i < num_entries; i++) {
- 		handle = le16_to_cpu(topo_evt->port_entry[i].attached_dev_handle);
- 		if (!handle)
- 			continue;
+ 	/* get fwevt reference count while adding it to fwevt_list */
+ 	mpi3mr_fwevt_get(fwevt);
+ 	INIT_LIST_HEAD(&fwevt->list);
 -- 
 2.53.0
 
