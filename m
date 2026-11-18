@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033323;
-	b=ZzaVM5/UU47f94Kw1fK8Jj97VYTq+FHWOWDM34iV1X4pLzkM1w6MdWPkkdqJd7LjIeBt
-	 0VdTGWmXF1O7QhAdOotbUkCDH47nlfmbT9gMUzUJtjPVDYGhRumHd0WADzVnO9QSQk55/
-	 +04pCVg7GRKnkKGO4vcTrvcOq7e3D0yiK5F3IciT1WJiRq+nn5zHi4M0JZYHCAw1tSEfB
-	 qgt8bw4OrjzGYJHQDz0EgKcstYzED7mygtATOWP/DTaH2Gv4Pb9ieu4/oox0A46JxAXS3
-	 TjM/svR0Ypnkgi4s+iRi/cpW6LP8776uYqFzPWpXOkZQrzZLQbCGIgFOzsKjOfoToRQ==
+	t=1795033326;
+	b=gNm/74NiEONwrdbPLjTfCi3ATlCaY4W8bfZFIpdbCgW3xe4sQmA1qc6RdtEd8/nVWkI6
+	 HR5Bir4bLqhVtjX2aZ8Bk0KvLgUyEtQllTciPKmbTamZAvLjt8Mt9JvkRsgrpfTRrM5+a
+	 TYjOIYC+/ZP2i8zmI9tiEJ+s3ZwPk+iixqOlj+6n9ukkI3yMeurcN5k3bv2IEUoDG0C11
+	 BC+lIqonJvir0VWZwRG1mvAhDzdlVi9oe3Uu4h2rCqDf+ocrRCAY6XzcAVjqMFdh2vJHa
+	 Wf1NxBMr8GxfQb878dRkVXWRChOLV3NL/0xUW0IhT+MWHkroQX95EPuSlT9l+/XpOfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wAOJLMMB6IPE1JK28GbiZl6e5QJZF+YJzdOFHCqr3oo=;
-	b=KNwVU1pVb66MfL/VycCAJuvnqrdnbkTc576KyEa5UU35+ICLopdXNv0EIWt9NbT9KqAz
-	 pbtzyylNzrZjLmOetFzs24pE59rA2OrNegby5DsM2JChrjy2ISQsQMxHcWfurx4C/1yov
-	 v+yzYSGkADVapEIJxIwdv/emMqMeUaDWG5RTewRPLNtAl03+ye5KcTYWkD4IQZzjOZBxt
-	 XMW3QDXowN5tISCzCs3kYvvjpCEkiohsvxLHGAf/qWfdqy4hBesvDp6D0C/QjUoy+B+Te
-	 fJYk514SWXNAJ3fpz8urR2FXoo/Kt4Amar7Hy7MHCZ7dWmJp/AwTm7rQRQFCHB8RGPw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=/qoVA2TLNv7NptFbXx1vWeWjynQFGQ2vMFPAIjG/v1A=;
+	b=xSuNZr+fI4wj6G6z6+V0zVwYA7vur180N6av72V9FgR9PuB6tQePW1iRqEzN/oK0IFg/
+	 KQlAhh071hVKQdNZRFexEnN1oYaosOl0TtDP0ek3IzpI0nhzbCdvyST6eId0Mqg0HIskh
+	 WH0t8GbItkHa+5yOBzfJ7DJVslANlC9JDojl+MuDTiJBuNLufeTHGqLrWSOI3+lSwX8y2
+	 9OmKEPgdc0JScuB79G0rWfeSsWzRWyOeOdoVf5nHsjzy8TfEvbT2rLGjUg/mZ6CwJ1yXK
+	 pvfRP8rraHPhbS/nS+rWcIH+zVwHg4WnERUxPdTp3swjWaIBbuL3V7DdLvTldEYBCIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ds5eeR7/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y/SBcMza";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8F606A31C;
-	Wed, 18 Nov 2026 20:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB56D606A31C;
+	Wed, 18 Nov 2026 20:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ds5eeR7/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BDA1F000C4;
-	Wed, 18 Nov 2026 20:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y/SBcMza
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04071F000C4;
+	Wed, 18 Nov 2026 20:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033323;
-	bh=wAOJLMMB6IPE1JK28GbiZl6e5QJZF+YJzdOFHCqr3oo=;
+	s=korg; t=1795033326;
+	bh=/qoVA2TLNv7NptFbXx1vWeWjynQFGQ2vMFPAIjG/v1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ds5eeR7/x1c7+eLBE8D2nYGECjMqN/RDqqRFKWZXwO6yPPyzqP8ip6ulKhEsHS6Ay
-	 fFnVsWgWQWp4nD8u07dvWHmvjSpXOvypQms//QQ7aLat2a8NQxohFRyMfUiDlVjG6d
-	 jwxGeVUt/NdvkRSpLebzAR0Kdc5v+CPU6uwbx10M=
+	b=y/SBcMzaAQhjD4dKpsePAjhTllUaMlQ0ns0BT4YjChCE3IQZ4ebXJAee7ud8wXbNc
+	 40cPTxRd2nMNX3R4jWzVzokPBQqx7nJ/rcGOPVyvBCx326ms05GxGLsPj2mbbuPfdh
+	 E777fSEQtuhKfZz6Smn+I4TkkaStlwIMEU6HY/sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.12 1727/1756] kernfs: avoid READ_ONCE() on a kgid_t in kernfs_new_node()
-Date: Wed, 18 Nov 2026 16:04:14 +0100
-Message-ID: <20261118150118.330320452@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.12 1728/1756] nvmet-auth: reject incomplete DHCHAP messages
+Date: Wed, 18 Nov 2026 16:04:15 +0100
+Message-ID: <20261118150118.366476748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,56 +63,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit ef179363b04306dbc645c53207b9ad3516ebc75f upstream.
+commit 29e027774324dbd5321a67bbd16840e8f7bcd189 upstream.
 
-kernfs_new_node() reads the parent's gid with READ_ONCE(attrs->ia_gid).
-That gid is a kgid_t, which is a struct.
+Commit c9359401036e ("nvmet-auth: reject undersized AUTH_SEND
+payloads") only ensures that AUTH_SEND has auth_type and auth_id
+before nvmet_execute_auth_send() starts parsing the payload, but the
+DHCHAP path reads t_id before it verifies message lengths. A two-byte
+DHCHAP NEGOTIATE payload can therefore still trigger an OOB read that
+KASAN reports as:
 
-On SMP alpha, READ_ONCE() ends by casting the value it loaded back to
-the type of its argument. Here that is a cast from a struct to the same
-struct. GCC accepts that as an extension, but ISO C does not allow a
-cast to or from a struct type, so sparse warns:
+  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_send
+  Read of size 2 at addr ffff8880030d8364
 
-  fs/kernfs/dir.c:751:31: sparse: sparse: cast to non-scalar
-  fs/kernfs/dir.c:751:31: sparse: sparse: cast from non-scalar
+Require the payload to cover the minimum DHCHAP message length
+before parsing it.
 
-Read the gid_t inside the kgid_t instead, and wrap it back up with
-KGIDT_INIT(). This is still a single marked load of the same four bytes.
-
-There is no functional change. With GCC 12 for alpha (the config from
-the report) and GCC 14 for x86-64 (with and without KCSAN),
-fs/kernfs/dir.o has the same object code before and after this change.
-
-Fixes: 81bdc85b4c08 ("kernfs: fix up the unlocked attribute reads on the creation paths")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610261608.vItiXCGW-lkp@intel.com/
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261027143247.3537239-1-shakeel.butt@linux.dev
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: c9359401036e ("nvmet-auth: reject undersized AUTH_SEND payloads")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/kernfs/dir.c |    2 +-
+ drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -697,7 +697,7 @@ struct kernfs_node *kernfs_new_node(stru
- 		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
- 
- 		if (attrs)
--			gid = READ_ONCE(attrs->ia_gid);
-+			gid = KGIDT_INIT(READ_ONCE(attrs->ia_gid.val));
- 
- 		if (flags & KERNFS_DIR)
- 			mode |= S_ISGID;
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -256,7 +256,7 @@ void nvmet_execute_auth_send(struct nvme
+ 		nvmet_check_transfer_len(req, tl);
+ 		return;
+ 	}
+-	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
++	if (tl < sizeof(struct nvmf_auth_dhchap_failure_data)) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+ 			offsetof(struct nvmf_auth_send_command, tl);
 
 
