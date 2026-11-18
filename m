@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017499;
-	b=pzUbRhv3Z0YzhENfsL2mVPTtrYFcUGbS7llPv6VMk4Z7y8G7xb45Q9/IFv+GA66B7Vcn
-	 vy8+dvbrRXcXkuIwq1DTj8T4ineWKO5ifK+72en7hWf3ppE/2+oGfXklbeOsMpEHmPOFS
-	 bqENA4ruAqKWpTgK3+dNMkpgvgl+gBstTNmXxADmFzBz9NJh0hmtn3+KEUXeoZwXzFGS2
-	 JVzGqg6dgqgFlASmwayk5Vsty08Proy+/tFH+tRaYQhjAuaDra6mkNOLqJBmVWaAtl1RF
-	 rMZMK+liBZkwP/bNzO/sCWS1i0KbCk8DBAAsY50PBD+OCu9op0gDRSjNm30IpegRXAQ==
+	t=1795017502;
+	b=lHyN1AJRmtuxAnKSaFfZhEBDtabon7krdMrddIv/7jH6sEl3ZTVOz9b7rNkVEsPrBhjR
+	 khLmkXea5epNwDHMchyvxC05WN6fNO8VVUgencCha5PWrkxHBotcIr9Rq4nyuP4IRz7ea
+	 vM+/U1wH2T9NUfuvjq+02nNS2Yla3HV7gJ2kp7koeFpy3anKBOK0SNU+i+c3dBNRoSN2m
+	 kcwlZt0gyAuWjn5qY0jm3lxEW7X8AI3XtLFNsZeVFCkEpa7IMyuaPBgHf8/H3Urs68QvC
+	 1V2n+PBFfpItxOBYQn+iv/YSecyZFQZ1DgSv+nWrsS2fq7pUIbOi3UWWEZCEtpyqzwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+XNeIGMA9S8t7wkCL02LMcz6nkyTDdWT0ZIvp6izTrI=;
-	b=fn0wjobGK2lLegLTMqzbjAzEV9S1fP6R/y3Axlr9YuVpNYqX40Ywc0ankVkig5XihXKA
-	 7UNTvUfUK+cT9b8Y/2s6kdw7DoDJB/bnjzXHQffAbxMRqN+Ip87JFiYY2X9pqSbEP28oy
-	 p6NgnDBM/ZF+/wDDaxflGiQrD8zCx55pDU55gW9hiqVgV3c/sE9fMcpUcAgD0+MgHWWD9
-	 e1GkZvuJ6QgHNxPx27N0Tc7li9eP1BTVVbzUiulA2E4LHSOioivsRYiMdviY2e1RVPG5H
-	 kFtehhWBuy9kFdgQh4Q+InD5c9tz+WmBTsQT3rbgqHRZJtZCkq0IKdcHUFOUg45AXog==
+	bh=MLz356rPPC2nvLvTHGtQHa2KeGB1fay1RRPswV8/fz4=;
+	b=cdrDUnW+5x1Qbbpb0rTit9gtwEhYN4Z7F7zoZLGF9mUgBk3UbkM2C35wGVa8NbrA0zjF
+	 lH+Ufb4Df/f9eAK4sGut7qiCIyrGOzH/5uyQapZ5T4JhVWpVPf/IOCkD8S2LcQDZ8zYFF
+	 VBOhF+zl1/tbkaoXfnTcMZA+M5M2xqWdHgFRtaCUeqzm4wvdh+osTK0N5DQfRx2iN+sxm
+	 x4ZELhuoE6EENNlwHEnJlYpfua3wHN4mWeTodFFPAfbl1ICun0w57uYIUihHZE7fhyN02
+	 /LibNgiCLOPUJafQz8cDx+0oYUXDUIdG6fbhZErIDgX7TmQ/H1P+n9iAfnq0AyoJ6yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OO8U2aDO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mS/bRcSX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77168606A31C;
-	Wed, 18 Nov 2026 15:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F0E606A334;
+	Wed, 18 Nov 2026 15:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OO8U2aDO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D5B1F000C5;
-	Wed, 18 Nov 2026 15:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mS/bRcSX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B0B1F000C5;
+	Wed, 18 Nov 2026 15:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017499;
-	bh=+XNeIGMA9S8t7wkCL02LMcz6nkyTDdWT0ZIvp6izTrI=;
+	s=korg; t=1795017502;
+	bh=MLz356rPPC2nvLvTHGtQHa2KeGB1fay1RRPswV8/fz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OO8U2aDOpTiDxm5qI6P0UzbZg5YtaYKVlkzoTbfwWBPH5eYOAewrjWQufs75mncYK
-	 avpkMa6pRXIJtzv9HFkCSKnUPmc2QJ+oBw7Kqh0mCAbY7/HWllMtXT8ztAXFPw/aXz
-	 jkmakY/GfRfDx6FdQCRZuyylIWFot7mJNsqc7pBs=
+	b=mS/bRcSXIysdrXNxk/nVAEA9MIxQz+BG4pXxHeqNy2QlLPCxRmL5lP/NkKGebq2O+
+	 /+3JTsLPHj4tjYGmcfxVLgy23NzhniCVXCTz3h2BHkNrR4SiZ77XYvLAbPdjAAPXgy
+	 ZD954ucJbSvJcQ+eFP7b8ViQDonayuU7bhPC+6jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Swapnil Sapkal <swapnil.sapkal@amd.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0905/2651] perf synthetic-events: Check schedstat domain allocation failure
-Date: Wed, 18 Nov 2026 15:35:45 +0100
-Message-ID: <20261118150320.456092965@linuxfoundation.org>
+Subject: [PATCH 7.3 0870/2651] ASoC: mediatek: mt8183: Fix APLL enable error handling
+Date: Wed, 18 Nov 2026 15:35:10 +0100
+Message-ID: <20261118150319.178217337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,54 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit bac027175ada974b3fde9eb0690ca5d698e0a6d1 ]
+[ Upstream commit 30cf48383006579d7cd35380cc6e766260b72bff ]
 
-__synthesize_schedstat_domain() uses event after zalloc() without
-checking for allocation failure, unlike __synthesize_schedstat_cpu().
+Currently, the mt8183_apll*_enable() functions call mux_setting(afe, true)
+but do not check its return value to handle failures.
 
-If zalloc() fails and returns NULL, dereferencing ds->header.type
-immediately crashes with a segmentation fault:
+In addition, the cleanup paths of mt8183_apll*_enable() do not call
+mux_setting(afe, false) when the enable operation fails, while the
+mt8183_apll*_disable() functions do.
 
-  Program received signal SIGSEGV, Segmentation fault.
-  0x00005555558aed8a in __synthesize_schedstat_domain ()
-  #0  0x00005555558aed8a in __synthesize_schedstat_domain ()
-  #1  0x00005555558b889a in perf_event__synthesize_schedstat ()
-  #2  0x000055555563c397 in cmd_sched ()
-  #3  0x00005555556583a1 in handle_internal_command ()
-  #4  0x00005555555bf739 in main ()
+Add error handling for apll*_mux_setting() and call mux_setting(afe, false)
+in the cleanup paths when mt8183_apll*_enable() fails.
 
-perf_event__synthesize_schedstat() already treats a NULL event as an
-error and cleans up, so return NULL when the allocation fails.
-
-After this fix, an allocation failure returns NULL safely, allowing the
-caller to exit gracefully without crashing:
-
-  [ perf sched stats: Failed !! ]
-
-Fixes: c3030995f23b3d35 ("perf sched stats: Add record and rawdump support")
-Signed-off-by: Hui Su <sh_def@163.com>
-Cc: Swapnil Sapkal <swapnil.sapkal@amd.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903045203.175337-4-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/synthetic-events.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
-index 2eac2310a01da..f5c90d4f4262f 100644
---- a/tools/perf/util/synthetic-events.c
-+++ b/tools/perf/util/synthetic-events.c
-@@ -2776,6 +2776,8 @@ static union perf_event *__synthesize_schedstat_domain(struct io *io, __u16 vers
- 	size = sizeof(*ds);
- 	size = PERF_ALIGN(size, sizeof(u64));
- 	event = zalloc(size);
-+	if (!event)
-+		return NULL;
+diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+index dd1a5925af96d..06556689976db 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
++++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+@@ -376,7 +376,9 @@ int mt8183_apll1_enable(struct mtk_base_afe *afe)
+ 	int ret;
  
- 	ds = &event->schedstat_domain;
- 	ds->header.type = PERF_RECORD_SCHEDSTAT_DOMAIN;
+ 	/* setting for APLL */
+-	apll1_mux_setting(afe, true);
++	ret = apll1_mux_setting(afe, true);
++	if (ret)
++		return ret;
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL22M]);
+ 	if (ret) {
+@@ -405,6 +407,8 @@ int mt8183_apll1_enable(struct mtk_base_afe *afe)
+ ERR_CLK_APLL1_TUNER:
+ 	clk_disable_unprepare(afe_priv->clk[CLK_APLL22M]);
+ ERR_CLK_APLL22M:
++	apll1_mux_setting(afe, false);
++
+ 	return ret;
+ }
+ 
+@@ -430,7 +434,9 @@ int mt8183_apll2_enable(struct mtk_base_afe *afe)
+ 	int ret;
+ 
+ 	/* setting for APLL */
+-	apll2_mux_setting(afe, true);
++	ret = apll2_mux_setting(afe, true);
++	if (ret)
++		return ret;
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL24M]);
+ 	if (ret) {
+@@ -459,6 +465,8 @@ int mt8183_apll2_enable(struct mtk_base_afe *afe)
+ ERR_CLK_APLL2_TUNER:
+ 	clk_disable_unprepare(afe_priv->clk[CLK_APLL24M]);
+ ERR_CLK_APLL24M:
++	apll2_mux_setting(afe, false);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
