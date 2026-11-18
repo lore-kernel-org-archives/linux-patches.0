@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041186;
-	b=DP/iQ7epOEuvk93XZzRjznmJXODQUDGDyGE8PJuW4K7SqJxwL6ApWIbPB4gVuCpnpFCJ
-	 4bsdFP32Aqn0F76Is6vj0s+egXVz/pmegT2fG7LS5UpP4g17pO7qDwuZE74aFXRzklmGw
-	 CRZviuUkf3XcydCTF/6g3ui3U77rPQEa3jNBl5YMalIMm1N4/rjmWelqDPjbAsiv+QGb1
-	 8f9/oo6PO2EahHqgAQQxV867WeBGBV3xVH1vOZB1xyIBFIkugu7H55Q2gKADtZhksvc0C
-	 zeyobs+3X8f88xOlyzynbgWFtH5u3t2GZityP2kctB8V+Jkf/pKxb4voddu8t3ZfzCQ==
+	t=1795041189;
+	b=Bc2NfgIVrT7tP8naSgIyGyommerpg0btH2RGR/97Q5DIov2pC1r2P1WLjFZUVyvSPnvu
+	 18B4mRsti5hLibP+9aHp8t8t7M4L3ArO+wtDqQKNAiqLEnwWpTuvbwrTELNQ0HT9M9t/Z
+	 hJos1qVwYG4IXtMViqgMZj0eRsuqKy41eHXT5+moPqcaNNa/vcNBTWA3OWZv9ARg8fqUO
+	 vrkjhiIMm7fo0+f7zlG8QMvOnYaZQx+WX/ZHwOpRwYi9UvmUL/jf3YbXiy6oyuoetl9a+
+	 2CP7s0iDHdwWkD1a+MXwpJf4gAcromhDArPnkX429oz5S6K6Hwnw7yPZ0jiK7yDh2fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y2DF8HgRFpQLAFb6P4wUDZY8G46DgN7VL83Ou+jwnpQ=;
-	b=myC3VNg6rSEviNHemLkQvMkpgjl0H3RREG6tKwxrLXV3+UmkarbXuMzSsDtQqSqJBLlr
-	 4Kb+K3zocfqbHmbwUcQ2wIebrieI6OqDxH52WaakHcjI76Cj7aWr3LvtTUMU3+9B4PPjr
-	 2J0hfb0l9JLvmOQq/2lBfkxovxVNso3HWWQYfBqOim9j2kBWY+71KTLLKG/XiEKdDn3WS
-	 CbaXEVl/e1XBFjDXm2dTG6F81VAcBvK05SXkw8x4dcaQPbfbH2tApRbwraoPuh+ti5OSF
-	 CETC9xjHgKZ3Wmn/U1yjbpjoC13XqunBA78pvr3mE/nImvQCE3vdTuPUwVVIuM9ij+w==
+	bh=vwsVWKJ5DxGjjXmRJwSXQy/8yPs5yPAZyUEVcxspRMQ=;
+	b=0QVXC6t0eFj8fS+YolnW2tJZ2fUnDkoclFXYyceB7sWD02IORbLXYpl7R20+SdehXUfI
+	 NSVQMFsbqDRTEUUu+3DrPFe8ETj6KNGrpCPEXGhLKcahTiWfefzLzW77K9E+oDfoqnwt8
+	 hAvODsIguWmD+Buou0MThI9VZ4GNtjcMK5tvT2WSYqZx/ozOjfpO9jwG73Ou/3T1wGu0o
+	 JmO6Xqb1UvHbeCDo6cTKWtpjvA3uE6BgEjDeXMEgu0e4XQMHz7xfatm02w/qUOzZWKEDL
+	 UM5eCMnpJE0zdxVjBhemRsiyFZZKS0z3r52UBrvaue8w778qEVgmDz73w62ckAA6nzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGLANDbl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1DPW0jVD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6B2606A31C;
-	Wed, 18 Nov 2026 22:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97C9606A32A;
+	Wed, 18 Nov 2026 22:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGLANDbl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827DD1F000C4;
-	Wed, 18 Nov 2026 22:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1DPW0jVD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0821F000C4;
+	Wed, 18 Nov 2026 22:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041186;
-	bh=y2DF8HgRFpQLAFb6P4wUDZY8G46DgN7VL83Ou+jwnpQ=;
+	s=korg; t=1795041188;
+	bh=vwsVWKJ5DxGjjXmRJwSXQy/8yPs5yPAZyUEVcxspRMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGLANDbl/7drgrpsEgZpWpdTO/q3HxGoWPUHPsP7rwM7nJDwrDrAsCB2wAn8sHeLF
-	 PQ1XGXfvRQd1NjDy94Fy7DHvkh9qEeSrkk3Zi/H+V0qPNED+S/biDilEQa8g3AiPyQ
-	 9S1ObF7jrZlEfQErP3GOkaBQIE7AF/uE3qgsDmkw=
+	b=1DPW0jVDxgXdYM78OPtSoADCi2diL5/9iGNLOzfDQGnxBVCL+hjYqjBr0h8psNT/5
+	 gXqKYBXBfwsadFXOYkS4PO8OKqsVRyUrIVJTsNThRha5y6AmPmu933hGUlaLZvcBZr
+	 oMevXsXH/OXTh58AHovbi3QC/yHp6RcfEll71tJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tushar Dave <tdave@nvidia.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2724/3318] rtc: abx80x: properly handle shared IRQs
-Date: Wed, 18 Nov 2026 15:55:46 +0100
-Message-ID: <20261118150442.561593715@linuxfoundation.org>
+Subject: [PATCH 6.6 2725/3318] PCI/P2PDMA: Safely terminate ACS redirect lists
+Date: Wed, 18 Nov 2026 15:55:47 +0100
+Message-ID: <20261118150442.587876068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,122 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoni Pokusinski <apokusinski01@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
+[ Upstream commit fa291d6429ebc1efb7fab011f643b842ae5f23f1 ]
 
-The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
-but the handler always returned IRQ_HANDLED and cleared the status
-register even when no interrupt source from the RTC was active.
+seq_buf marks an overflow by setting len to size + 1. The ACS diagnostic
+path unconditionally writes a terminator to buffer[len - 1], so a path with
+enough ACS ports to fill the 128-byte buffer writes one byte beyond the
+buffer when verbose diagnostics are requested.
 
-This could cause the driver to claim interrupts belonging to other
-devices sharing the same IRQ line and could also clear unrelated status
-bits in the RTC status register.
+Use seq_buf_str() to terminate truncated output safely and remove the final
+semicolon only when the buffer did not overflow.
 
-Only handle the interrupt when the alarm or watchdog flags are set, and
-clear only those interrupt status bits that were handled. Return
-IRQ_NONE when the interrupt was not generated by the RTC.
-
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 52916982af48 ("PCI/P2PDMA: Support peer-to-peer memory")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tushar Dave <tdave@nvidia.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-4-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ drivers/pci/p2pdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index ce0bcb03bfbdb..7b983cf21df25 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -50,12 +50,18 @@
- #define ABX8XX_CTRL2_RSVD	BIT(5)
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index f97ac18a8dc8f..560a776188479 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -641,11 +641,13 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
+ 	}
  
- #define ABX8XX_REG_IRQ		0x12
-+#define ABX8XX_IRQ_EX1E		BIT(0)
-+#define ABX8XX_IRQ_EX2E		BIT(1)
- #define ABX8XX_IRQ_AIE		BIT(2)
-+#define ABX8XX_IRQ_TIE		BIT(3)
-+#define ABX8XX_IRQ_BLIE		BIT(4)
- #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
+ 	if (verbose) {
+-		acs_list.buffer[acs_list.len-1] = 0; /* drop final semicolon */
++		/* Drop the final semicolon; the list is not empty here */
++		if (!seq_buf_has_overflowed(&acs_list))
++			acs_list.buffer[acs_list.len - 1] = '\0';
+ 		pci_warn(client, "ACS redirect is set between the client and provider (%s)\n",
+ 			 pci_name(provider));
+ 		pci_warn(client, "to disable ACS redirect for this path, add the kernel parameter: pci=disable_acs_redir=%s\n",
+-			 acs_list.buffer);
++			 seq_buf_str(&acs_list));
+ 	}
+ 	acs_redirects = true;
  
- #define ABX8XX_REG_CD_TIMER_CTL	0x18
- 
- #define ABX8XX_REG_OSC		0x1c
-+#define ABX8XX_OSC_ACIE		BIT(0)
-+#define ABX8XX_OSC_OFIE		BIT(1)
- #define ABX8XX_OSC_FOS		BIT(3)
- #define ABX8XX_OSC_BOS		BIT(4)
- #define ABX8XX_OSC_ACAL_512	BIT(5)
-@@ -261,6 +267,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	struct i2c_client *client = dev_id;
- 	struct abx80x_priv *priv = i2c_get_clientdata(client);
- 	struct rtc_device *rtc = priv->rtc;
-+	unsigned int status_flags_clear;
- 	int status;
- 
- 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
-@@ -277,9 +284,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	if (status & ABX8XX_STATUS_WDT)
- 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
- 
--	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-+	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
- 
--	return IRQ_HANDLED;
-+	if (status_flags_clear) {
-+		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-+					  status & ~status_flags_clear);
-+		return IRQ_HANDLED;
-+	}
-+
-+	return IRQ_NONE;
- }
- 
- static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
-@@ -914,6 +927,41 @@ static int abx80x_probe(struct i2c_client *client)
- 
- 	i2c_set_clientdata(client, priv);
- 
-+	/* Disable unused interrupts */
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read irq register\n");
-+		return -EIO;
-+	}
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
-+					data & ~(ABX8XX_IRQ_EX1E |
-+						 ABX8XX_IRQ_EX2E |
-+						 ABX8XX_IRQ_TIE |
-+						 ABX8XX_IRQ_BLIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write irq register\n");
-+		return -EIO;
-+	}
-+
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
-+	/* Unlock write access to Oscillator Control Register */
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
-+		return -EIO;
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
-+					data & ~(ABX8XX_OSC_ACIE |
-+						 ABX8XX_OSC_OFIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
- 	if (abx80x_caps[part].has_wdog) {
- 		err = abx80x_setup_watchdog(priv);
- 		if (err)
 -- 
 2.53.0
 
