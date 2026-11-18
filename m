@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049108;
-	b=rvgtqTE5iM2rn2CQD+VuXuvZgOpl9acOy6gur9fU116MxmKhteoS3zvbg8pjTABiaEhB
-	 nlQHFVageBMzlaTRPItp62nLGCvTP8R4n2sU7cYiGNua/b48qqhkwlpRFBDoRoQAkwKsq
-	 9cTwJ/8Uh7gjXRunOK2XA+p5NwsrFAJvKq+CeMLbtgIJP2YZcHpp/Ghy5GBP32/ftJu8f
-	 Xmxvni57aWRYZfO9ckg1WeFWqzgyScDNvcLi/U9QU5QOldVKIdrswf/n3oxT5E+61GQVr
-	 KS/R0jozRTmh+aQaBO6Dyzw8paP719QsSHcUbGRtFHNL5qZA7BfqYNjYT/Hkn+PFdZA==
+	t=1795049111;
+	b=ZkriU1jBlr7ZPL8pXAiqVe0FZSqFKqDb9CNwGRy7WAEebXJI/ZFDVFyTmF8wArTTe7pi
+	 cUJsthcUdUJjuX8SCwDVRjheK4AiGaZNfm9te0EqUHhUbtDBg3dZVu27UJ4Dtarm8zPuZ
+	 dGAHldsXr4rz9+6Xtrw2ux9euydCYdRIpYEubkqltbZYuYgFkzr9Aol9rKhZcOW6UNsHA
+	 F/Y5ERlJG4whsyVgcRUeWARTOP5/l0zZVjeG9b4Zq6Qgr7LdHMeCQbQO2mug8LY+3Cc5s
+	 WTtUyBkjpm9dqCL8kSOiQf/0jq3jl9AwWEWbJt4xHMHBViEWYOycJmYvc5Hv8J2yKKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gk00+hmTrkNPFhIxHamBcE9R1t9vkCDgi/jnAEwiiT0=;
-	b=RLF9FWiAnVGaI/SPv2p+7FXVO4/xqbMn4UHoEulE27Z8epKLKm3Ks90k2AEFwZ9Gzxfk
-	 uAQMQHhYe7p15pPyOMCYyp/kiIcqs45KqC3221suHGcrPmhemQ+7/JG1ePQTNEFgtD5cB
-	 0g2CLTOX4Li0vLRZ+fqsDczrz3G6xsjhgFLyN8RZ7ksnx0WwiV8tfTaVNetK7VTDr2TC1
-	 ahwpGUGClbrYUaF2wfS1A0oo/IPJ+L4YMCGGp4X1LIakz2+RqQCV87LFuN30ugnR7mmR0
-	 YcxlZQfZXS99DS3U3lq7g4RloPIZtvNSuuFao2+ohdl2CXDXsZhmfaPltmzy4KAcOBA==
+	bh=1UzgObiJWRazU8QH+hAAMP2HNn0uJufHm0RUxOA0vCI=;
+	b=JgyQHmKqJ1h9Ceq64hbV5IXiBo79XgKoqzQkvhbn3xqS+nihhDRgcl+34su3y2vs06Sd
+	 DjYEeEIizZNW3+51+dn6+Ap7ARsqTbPspDI6usR+qy2EAELc29R3XuxPFuQj4BBEUwM2I
+	 id1qMMbAhxVg5oSz0p05CxkCoqcVhQFTQfrW6GmF0qPvU9ZAn9Oqy8V05OE9oO9aDtrjk
+	 s9bugGr2PUjBmowkowUhPDOP8erh4U52lN6r06ljv/1ZDVEcFpEfjNZbKhoIQE7xxqA0p
+	 8Tq/irPw/8uMdeApY3E2gkidDGwiv+HOIl7Ea7+BdhtNRpIhEjAO44jbPrU0HcnqseA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftT4FRUh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ijhU0j0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0F7606A31C;
-	Thu, 19 Nov 2026 00:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD1F606A320;
+	Thu, 19 Nov 2026 00:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftT4FRUh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DE91F000C4;
-	Thu, 19 Nov 2026 00:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ijhU0j0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE66F1F000C4;
+	Thu, 19 Nov 2026 00:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049108;
-	bh=Gk00+hmTrkNPFhIxHamBcE9R1t9vkCDgi/jnAEwiiT0=;
+	s=korg; t=1795049111;
+	bh=1UzgObiJWRazU8QH+hAAMP2HNn0uJufHm0RUxOA0vCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ftT4FRUhjPYW00O5Ltat920heF1Z8/Sjgxns4goGRUjHePDjEw2jibeFe13+I+HwS
-	 oFJEM0BfFkyM4mo/hfnCK64CRV8VD7hiryJ2p3erWfY07fj4eZVBWHSNfJbBcuqPdw
-	 0kk4rmEx28RsBKtTyhGgzwaU09y7cODQZE+XQBsY=
+	b=1ijhU0j0lZNFWQerxw24kPwcen8J/1CRTKGxeUY7Htg1vSHHYyQpwcBrhNy/q7xl4
+	 h8tZMGnQOo3oVRZdiakPIgGNYoCfdt2KshVYCpUKiLRnO7ItGnCpOorrq+0YAeBCFi
+	 tHG0lpMCcM743RhOpxHkmgiYvb7lYQZEWhC2jZq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Igor Velkov <iav@iav.lv>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2192/2857] drm/msm/dpu: drop core_clk_rate overrides from _dpu_core_perf_calc_crtc
-Date: Wed, 18 Nov 2026 15:53:46 +0100
-Message-ID: <20261118150320.339737144@linuxfoundation.org>
+Subject: [PATCH 6.1 2183/2857] arm64: dts: amlogic: meson-sm1-odroid-hc4: run the SPI NOR at 40 MHz
+Date: Wed, 18 Nov 2026 15:53:37 +0100
+Message-ID: <20261118150320.004090644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,45 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit e7e2495595e01839b117e9c08500ff80cd218f6a ]
+[ Upstream commit b44e2be772f866985cafdf90355285069ea68495 ]
 
-core_clk_rate override is handled in _dpu_core_perf_get_core_clk_rate().
-Drop imperfect duplicating code from _dpu_core_perf_calc_crtc().
+At 104 MHz, reads return corrupted data: bit 0 of the first byte of a
+transfer flips from 0 to 1 part of the time. The same byte read as the
+second byte of a transfer was correct in all 100 reads. One 4 KiB block
+read 200 times came back wrong 157 times. Writes are unaffected.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/636070/
-Link: https://lore.kernel.org/r/20250209-dpu-perf-rework-v5-7-87e936cf3004@linaro.org
-Stable-dep-of: 480ba24aa340 ("drm/msm/dpu: compute the CRTC bandwidth from the state being checked")
+flashcp verifies while it writes, so a bootloader update erases blocks
+it should skip and can abort halfway, with the flash half written.
+
+The Hardkernel vendor device tree for this board uses 40 MHz. At 40 MHz
+the same tests pass: 200 block reads with no mismatch, and 14 flashcp
+runs with no block erased.
+
+Tested on ODROID-HC4 with an XT25F128B.
+
+Fixes: 7178f340e929 ("arm64: dts: meson-sm1-odroid-hc4: add spifc node to ODROID-HC4")
+Assisted-by: LLM
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Link: https://patch.msgid.link/20261002-hc4-spi-nor-v2-2-8366a4f91049@iav.lv
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 3464f1e3162fe..c2ed07d1c3c77 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -123,16 +123,14 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
- 	if (core_perf->perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
- 		perf->bw_ctl = 0;
- 		perf->max_per_pipe_ib = 0;
--		perf->core_clk_rate = 0;
- 	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
- 		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
- 		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
--		perf->core_clk_rate = core_perf->fix_core_clk_rate;
- 	} else {
- 		perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
- 		perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
--		perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
- 	}
-+	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
+diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts b/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
+index ffd2aef45617b..22e7bdacd85bf 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
+@@ -134,7 +134,7 @@ flash@0 {
+ 		#size-cells = <1>;
+ 		compatible = "jedec,spi-nor";
+ 		reg = <0>;
+-		spi-max-frequency = <104000000>;
++		spi-max-frequency = <40000000>;
+ 	};
+ };
  
- 	DRM_DEBUG_ATOMIC(
- 		"crtc=%d clk_rate=%llu core_ib=%u core_ab=%llu\n",
 -- 
 2.53.0
 
