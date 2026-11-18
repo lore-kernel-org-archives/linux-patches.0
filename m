@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023532;
-	b=dmK0iEfSjG6RXCP+Mlw+nffdfz4bEPD9gl5e2LquUCLlLhUMFGa7YXCHDoCUIBvtxG7g
-	 y/T2juUKlzq15/LoqmjxW3W92OF/C9RJSqE+oHNf/V06UCFTafypna5VD3FAxy61BEA9l
-	 edrzegyGW/nsC/xIcWXa1ZkZzVovq8Ay/7kHM32ekLYWGsOoSTW1cIRW4nnODX8PkFM5C
-	 9t+uHIU9ECavP2+CLPQR5atTVCsdQO9IZFxU2KsO4DylbQSOgC+27Sbq8cgGBHyfQ+zBG
-	 Jk4Q2jVFjS65HMFcc8Qf0VxLpn9jyPqRj+peeQWrm0ceN5dshhdgyXp8E7MZNx+Zs3Q==
+	t=1795023535;
+	b=w6dWxkbp/ZltlF9Wbfp8XJqeES+GZN2lqNhHuOjLPiizSE1w+ci38kL3AIc7vDb7DacD
+	 Ccyhqqgg124xb1gYd3Ms8iPl2t0WNqleI2Ef+2njqmaAr+j80JKlvl+YLouFARpwD8EoW
+	 XVgl0FXfOk6x8GrCPA/A1JlSCB7nr/Rlo8HxCLpQlbPpFhGJPWHl52l4dUrfRV5bmhe+T
+	 dywI+i99w01f3BQfS2Ry/57G4y1djgD68pqxCMr+ppmdMHOSJWxCssdDF8RIPtttQrIB1
+	 i0b3ma+FTWp2+CWiba1Nwl5KeR8DjsD8WTOIoEl2corGMn6n79AWmpn5Nyf0zpHTTWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fdrhE/9/11LgP78wbdKNcSfDdCry515sCXA3+5xw+hc=;
-	b=lYmKBME51hpqtNM3m0BNgJYMUE6cD/iNWcHpuHUnYbL9itVXNnpfNREwb/4BVm/3lcYd
-	 3j0eTGsE/quAZ4BuOoXmRtaRFJI2EJy4J89PtzUyBikuegR+IgwAMKYPFNh/JQQ3HLzy8
-	 1znOMU8vhfcsGv/L7GRwBBVio5ams7lDYL/fws3aa9yYrUgNQTZQ9LhJq3+WSWUDpfFYY
-	 o/DpPdrxD5fIOi4xQw9Z4yAqhIsw4Qd0oyo6JXCjcKLWHAUWMriEV0p4L4/6SP8w1IHKg
-	 f2OkfZHS6kYNksyxgVCbRSftB3sHkfTPT6VUEUBaddAPfYu5kO4rxiX2BSkjRhjuc2A==
+	bh=ZOMuMOeua56e/5gM/It9k3xu2GXPz+kzy84aoON2cig=;
+	b=w2a4OS+9pNZcnvJbxV6WIQpvePI+WJACD4x8/Scd085e7c9Cs14A2Lb3+apJkRiaCZeU
+	 jKAKYPbZXKgURRQCURnyPGO3iqSQWwrt4D9BtUHiquOvFyTOIxz7k0TZM5URxwJqExyLH
+	 ISWuX3qjTzrm/+CIulNi8S2Lr90kj/4b2MxLE81t0VSTw9dSygktAtrcRmxzjn6PdBEUw
+	 YjZStmKPAlgvlO6EALpHc20akpPwInSvTRvulBrk9eeZ3/GiX9apCZ23CNnshxH0SNmwb
+	 PB4xM7subblOPDK1sIAYY41VI3P4w0LeOzBUTDjSBk7/85QugFrviMFke06OtAVlsQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMdHszPE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sWrs7bLZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB19606A31C;
-	Wed, 18 Nov 2026 17:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C49606A332;
+	Wed, 18 Nov 2026 17:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMdHszPE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC251F000C4;
-	Wed, 18 Nov 2026 17:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sWrs7bLZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D5F1F000C4;
+	Wed, 18 Nov 2026 17:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023532;
-	bh=fdrhE/9/11LgP78wbdKNcSfDdCry515sCXA3+5xw+hc=;
+	s=korg; t=1795023535;
+	bh=ZOMuMOeua56e/5gM/It9k3xu2GXPz+kzy84aoON2cig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zMdHszPEJwxjsoEVgzyARAsnLQI+hDmcUVhRUOqwyIspWuFA0m8nrMNaT68p4iCjf
-	 ai129pOmNt9R9zQvn/iyemkIteqExHEJVnfNlO9q1fc9WcU85upJaV1MY5gC7iu0Lg
-	 NY9tOf3+oJSlcIkOC3tncPUrcZU1fRhpgOFUaXG4=
+	b=sWrs7bLZknhon8gymWSh/ihWb/U2Oh6o5SRDQLapNGLkpsC0f5avv+b6YmibidhDk
+	 JBiwv1G371fhHPKB2I5Sjq4GcGCAttzuMEAyl7jn6VlIfGRy/Wre5N4Wck4r2D7X1F
+	 R+yRsVE095x9fl7/bl9Onjsy/Bxy1nJXqLyp4Imk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Marek Vasut <marex@nabladev.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0403/2151] PM: runtime: Only queue an idle check for RPM-linked suppliers
-Date: Wed, 18 Nov 2026 15:35:38 +0100
-Message-ID: <20261118150136.741975210@linuxfoundation.org>
+Subject: [PATCH 6.18 0404/2151] ARM: dts: stm32: Drop bias-disable from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
+Date: Wed, 18 Nov 2026 15:35:39 +0100
+Message-ID: <20261118150136.778570793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,50 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit be5755f023e7e02ec90bbd1d4ca63a0abe594733 ]
+[ Upstream commit 3572825773791f4258b553391f4e2187df321731 ]
 
-When a device RPM-suspends, it queues up an idle check for all of its
-suppliers, in case that device was the last consumer, and those
-suppliers are now able to suspend. Today, we do this for all suppliers,
-and not only for those suppliers that are marked for use by runtime PM.
-This isn't directly harmful, but it is a bit wasteful, and also may
-induce unexpected suspend attempts (e.g., if a device was purposely last
-touched with pm_runtime_put_noidle()).
+Drop bias-disable property from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
+to fix the following DT checker warning. The bias-pull-up property is
+the only bias-related property that has to be present in those pinctrl
+node subnodes.
 
-To avoid excess idle checks, only call pm_request_idle() on linked
-suppliers that opted into runtime PM.
+"
+arch/arm/boot/dts/st/stm32mp153c-dhcom-drc02.dtb: pinctrl@50002000 (st,stm32mp157-pinctrl): sdmmc1-b4-0:pins1: {'pinmux': [10253, 10509, 10765, 11021, 12813], 'slew-rate': 1, 'drive-push-pull': True, 'bias-disable': True, 'bias-pull-up': True} is valid under each of {'required': ['bias-pull-up']}, {'required': ['bias-disable']}
+"
 
-Noticed by inspection of trace logs.
-
-This is not expected to have a functional impact on systems that are
-using device links properly, and should only be considered an
-optimization.
-
-Fixes: 5244f5e2d801 ("PM: runtime: Defer suspending suppliers")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Link: https://patch.msgid.link/20260901013341.1417232-1-briannorris@chromium.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7cd8567d988a ("ARM: dts: stm32: Enable internal pull-ups for SDMMC1 on DHCOM SoM")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://lore.kernel.org/r/20260828150111.173089-1-marex@nabladev.com
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 6980a8dfced2c..e487f8892d3ea 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -361,7 +361,8 @@ static void rpm_suspend_suppliers(struct device *dev)
- 
- 	list_for_each_entry_rcu(link, &dev->links.suppliers, c_node,
- 				device_links_read_lock_held())
--		pm_request_idle(link->supplier);
-+		if (device_link_test(link, DL_FLAG_PM_RUNTIME))
-+			pm_request_idle(link->supplier);
- 
- 	device_links_read_unlock(idx);
- }
+diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
+index 4cc633683c6b7..0a4263e6209d8 100644
+--- a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
+@@ -505,9 +505,11 @@ &sdmmc1_b4_pins_a {
+ 	 * - mandatory on SoMs without SD voltage translator
+ 	 */
+ 	pins1 {
++		/delete-property/ bias-disable;
+ 		bias-pull-up;
+ 	};
+ 	pins2 {
++		/delete-property/ bias-disable;
+ 		bias-pull-up;
+ 	};
+ };
 -- 
 2.53.0
 
