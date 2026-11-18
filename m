@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058681;
-	b=dXMOtb9wL2pHs4GKHYznXedPlD5gnjSq5ooLG6E5bDRBIEkIYZfx58z45x1MUqmeocKy
-	 uYOS2McPTfVEI/XtbDe8E6XM+il9engxU988RCPU2M69mvLkl8BvLqDzikt+aoJVRJeMZ
-	 sjC0ZSrQgFx+2FoLzDpYrm+G0qnHZAYaqJtT/Ks4RO0oyIaOsNceOfTycHk2E4QeZvbfU
-	 Mqq7VP+RPNPIvUGdV3H8O6f8IpzdYElztAJXc+hpmVIF/Jh9kTvgjK4RzOb6BnfoxmRqM
-	 z3jjo2UtiRRWxD8xJnLFIs2h7lZT1Zt60AvWZ6xSJpfJ5hgjbfALszRQYWenxw7Mrmw==
+	t=1795058684;
+	b=GR0gzHnqsKqVSD+YuYhYqnek7r+htYLQl8urEHFpeQAcffyipG/rNDY+bYaftQgw6wMI
+	 hQWkBq1fTj5pqPq3NwPN/IaXVZIncnSsUJ8wpQYVW+6EknjDUGoMSMyhfOJtdI69e4/Gq
+	 0vq9yXm/ZCEkyyF8w9QZoUmMTVFaFKHXI8ec3tN/1qDtUkNVQprrO4F2D4VGbk4Irr0D6
+	 f22M66DHCy5fiO46oAdJSBF/NBHrqk9QnCzo8RlmlPsjRFVyLAU0njM9bFNAUNhSN9wx9
+	 fQyQ2bWTIAGzqTeEDVBEXtsXBds/X+MgywMhcZ458q0zsCcO5XkLNHlOPnCRfF6KaQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qjbozt3EOMJNU0oPWvZQBzmPy7WKRBTvhC69Ca2z6ek=;
-	b=Ldvzg/07WYcIJ/FQT0ycRoqYi/nsjxVH366I3I2BAiYS0FLxo6Y51KsvqTlqkPVYq3ia
-	 CJbMxlO57HN7cfxKq33tdo1D8vvNsqK7CFZEPFPYdWPs+ucA67kr2KP9B20RhA9S/f0Z2
-	 3c+bSQD0j+dDoHw7kMPhhef5/s99RviEsvW0UevlG+PY+CzEo0WrZSAXKndEhRTBJPbFG
-	 gB1dFNt3GFlQxx9vugi8LBUy2Q3dwOD180KUgL4PGDijifHuGq11lSghZKuubSXoNkRQe
-	 lYVDZAItfcEiRVzK1nq0KuAi5rOrA7OP/ZuFmrI4JzFKhZbMH7fEEj/b0P9dBYSwQ3w==
+	bh=7YZP2IR4QbChhH9CLRsAxqRVLQRlDv8TiL5+Gd+yEh8=;
+	b=Kym4ubEFIS2BRBUtMYto4CEfq6Ji2305O1wqHef7TiYBVaw4JiO6O1tG6StKDdGj1s5g
+	 GjfgMBSDKcVMS7OrmNJZ1hmdcRV/H/yuT06EqP18xFZthaBLolo2rh/sRVeU8kPyyoetn
+	 RDUzcR7AXhmhqSKYNj/zEJHYF2hcJWKrUAFVBx0z9ZBMq2JcbXbfEn5fRmU3tx+51VFZy
+	 380IQMeGCPi0mSl9sUDgngOfbhaOFEC7d3T/CF8pfsSOohz0o7uEfDZqpDBq5z7ebdDM0
+	 m1Mv6b8zdgNGlCR1heXsrRggSKjvSQovNWNGA7oagsUhzAoShlmeedbyaotBtvLBLjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYSglI84;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NJG/KM+c";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AA5606A32C;
-	Thu, 19 Nov 2026 03:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC3606A326;
+	Thu, 19 Nov 2026 03:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYSglI84
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6331F000C9;
-	Thu, 19 Nov 2026 03:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NJG/KM+c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496C91F000C4;
+	Thu, 19 Nov 2026 03:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058681;
-	bh=qjbozt3EOMJNU0oPWvZQBzmPy7WKRBTvhC69Ca2z6ek=;
+	s=korg; t=1795058683;
+	bh=7YZP2IR4QbChhH9CLRsAxqRVLQRlDv8TiL5+Gd+yEh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bYSglI84rtqwA6wLXlxMuvTV0jc90TYfXjWMv98UXXSnuglMMdCNjua7lL+sbn6yv
-	 k3omJ2WPpbb0ti/SD6hONS+EowFr0JbKQBIde1pxKKklBD+rLFe8wuKfn1ORdYh8VC
-	 j+ubg/qDTBO+wqWN6w96X8g0Aule38BHeDoW9z2c=
+	b=NJG/KM+cHinHuoCOyCpLjeuoA83nyJcPYLTiMklyk0akwj6Ve1TgZu9/EjYI15bzx
+	 KJT0h2Eqd0J41tiND34JSyKKOE5Rxx96ggY0eaI96VjnEjYG7cORyrhpgYhnmYEGTB
+	 s93Iqb6+y7m7IqgZl4M8goDlfeA61Maf0lClSLec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0570/1848] compat: avoid double rounding in times()
-Date: Wed, 18 Nov 2026 15:43:28 +0100
-Message-ID: <20261118145938.917734336@linuxfoundation.org>
+Subject: [PATCH 5.10 0571/1848] ocfs2: snapshot the dentry name while tracing file release
+Date: Wed, 18 Nov 2026 15:43:29 +0100
+Message-ID: <20261118145938.970507335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,50 +74,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 6b30c39a5e333cfb1475acf0f73de6ef954eea8a ]
+[ Upstream commit 5898987d4a92b70ae73fd8355cc3a388b4dfa4e6 ]
 
-do_sys_times() already converts CPU time to USER_HZ ticks.  The compat
-path converts each value back to jiffies before converting it to
-COMPAT_USER_HZ.  This round trip can lose precision even when the two
-userspace rates match.
+ocfs2_file_release() passes the live dentry name and length to a trace
+event while holding oi->ip_lock. This lock protects the open count and
+delays RCU reclamation of external names, but it does not serialize name
+changes during rename. The dentry can switch between inline and external
+names, and a separately loaded length can describe a different name.
 
-With HZ=250 and USER_HZ=COMPAT_USER_HZ=100, one user tick becomes two
-jiffies and then zero compat ticks.  Every odd tick count loses one tick,
-so any of the four tms fields can underreport CPU time by an additional 10
-ms.
+The ocfs2__file_ops event sizes and copies its __string separately.
+A concurrently rewritten inline name need not remain consistent between
+those operations. External names can also be selected at this call site;
+the existing spinlock critical section protects their allocation lifetime,
+while a snapshot additionally pairs a stable name with its length.
 
-Return the value directly when the native and compat units match.  Keep
-the existing conversion for differing rates.
+Take a name snapshot before acquiring oi->ip_lock and release it after
+dropping the lock. Keep the trace call and open-count argument inside
+the original critical section. Cache the event-enabled check so the
+snapshot stays paired even if tracing is toggled meanwhile.
 
-Link: https://lore.kernel.org/20261020210157.52057-1-dennylin0707@gmail.com
-Fixes: f06febc96ba8 ("timers: fix itimer/many thread hang")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-2@gmail.com
+Fixes: 468eedde23d6 ("ocfs2: Remove mlog(0) from fs/ocfs2/file.c")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sys.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ocfs2/file.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/sys.c b/kernel/sys.c
-index 811f6df1caed0..51391c646781d 100644
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -994,6 +994,9 @@ SYSCALL_DEFINE1(times, struct tms __user *, tbuf)
- #ifdef CONFIG_COMPAT
- static compat_clock_t clock_t_to_compat_clock_t(clock_t x)
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index c5145ec2fa03c..17687a8831a67 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -142,18 +142,26 @@ static int ocfs2_file_open(struct inode *inode, struct file *file)
+ static int ocfs2_file_release(struct inode *inode, struct file *file)
  {
-+	if (USER_HZ == COMPAT_USER_HZ)
-+		return x;
+ 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
++	struct dentry *dentry = file->f_path.dentry;
++	struct name_snapshot name;
++	bool trace_enabled = trace_ocfs2_file_release_enabled();
 +
- 	return compat_jiffies_to_clock_t(clock_t_to_jiffies(x));
- }
++	if (trace_enabled)
++		take_dentry_name_snapshot(&name, dentry);
  
+ 	spin_lock(&oi->ip_lock);
+ 	if (!--oi->ip_open_count)
+ 		oi->ip_flags &= ~OCFS2_INODE_OPEN_DIRECT;
+ 
+-	trace_ocfs2_file_release(inode, file, file->f_path.dentry,
+-				 oi->ip_blkno,
+-				 file->f_path.dentry->d_name.len,
+-				 file->f_path.dentry->d_name.name,
+-				 oi->ip_open_count);
++	if (trace_enabled)
++		trace_ocfs2_file_release(inode, file, dentry,
++					 oi->ip_blkno, name.name.len,
++					 name.name.name, oi->ip_open_count);
+ 	spin_unlock(&oi->ip_lock);
+ 
++	if (trace_enabled)
++		release_dentry_name_snapshot(&name);
++
+ 	ocfs2_free_file_private(inode, file);
+ 
+ 	return 0;
 -- 
 2.53.0
 
