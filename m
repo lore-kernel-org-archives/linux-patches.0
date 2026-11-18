@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017912;
-	b=bwjuLTORNrJr73KtzyyPU427wYtn4vFPCTBIOq9jtUGgM3vF4RwXB5gqANw/1X0v5nnP
-	 z5nuv79G44CmZyTpoXbaF1eXhEWge/LE2pUj99Xi1eoU2jSAo5xF8FLjIE0Qc+gJXZYcv
-	 n/fFbBtQYu2QUGvt5/Sv4o/+mfSjySmN7n1NEeiD0ksRMNztS3pvdL2pSYyb5XYtu5vnB
-	 Lx3W2TOYjmCCTZw0CiYJSPwGqF32b1qXZa98ujAiptGifcTj1cjWmMJIYabWWLjR13/L3
-	 8YZZDhWzSBtDQ6bxhuDh/vxiHlGxPwyQxmazoqZlx7/Tc6txJAAg3zJYbmJQ4Mzrucw==
+	t=1795017915;
+	b=W0YWHo87injpU6CmpQRndjzMeKhky4Cre7QCoZ7k9IzmJEKM3rDmjdrI03ObLSgFBpRM
+	 mro7Qj4o6yJbDhGPftBrKWF5HL94jyJaypJvr3KexnQGAPtJVcrC0qyTm/hU3Rl4EYYEO
+	 zIUa5sX+cSs2+JZfZNpaOBJq5e0QXEezMJAD3yHiP2Pl/OtYBp6JhPaAf41dOfrRmPJ6v
+	 jkK/wlqrIoGozSvZ9si1zcXv3iPLrEALv8HuCjVFUsAR3oPuK8X5e14TW0Eg9++7VaeMp
+	 QL1qPyiy8Zoywosf27L+xmnuvBc04y4HYMrS8mT2ErSnZ/KqOuK/k3PPnVLtIOr287g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yl0dEhS2rUZ2d68Jne+CcPN6i22BcADCmMFBcaHFBmg=;
-	b=tKZ7ruCP78vrmV2qIPA6QrfSfpaLLJq5ouRkIprpDaSXuGsuaC1wTVJX5WPekeT+N+7Z
-	 dczpJhP1PXTe+JVGrViLwtdkknHuwfbk4w+haaQiDaAfhvGuQlfV1Q3VPgvjKyjpbXT7E
-	 srvbFYasQjgd091GsGmECjUF3rjzUGx6pOTU3z4IGTy2jtmoYlGz9w4+SqQh+CE1XYHUh
-	 cH1ZnEr98NAWQFxgHE7V/D/VA99+BfeMn4KE6Wa+WcZGT9jK0+BxN/LW9679CIINQHci6
-	 XQJ/d6ftQV1FfB8QfvJx98Io5+GDvBYs/AtgIo7y4YbbSkjHPe4NGNec1iF0k99uKrg==
+	bh=HYcJ2kl48/KQQnDE5B0CVMpeY1s0lA+VrWoCFlsIE/k=;
+	b=kjR5HFVyJAm7RiLvp/KxQC7AY7nirQU2giuYBV9AUuvjSmhJrUOph9YtrM9/7WxGD1et
+	 1FZPkbfbjoY1MHc0XxDehwzSLb/CG4LyoZPJCb51YIQxa1brFsuRwRL3+u3D5JxDeoJBU
+	 tLyDtfC0K/aoeoulBFdb6kwYZVLszSVKvTHAxZtgN4Epq6NdqQcnnL2EycyVDZjeL3mFx
+	 sLukh/01hnrF0KrplCBmw/e6YbuixJc2urF9eLjCowDMIkMl0/bXN4rKUMUrBOEP+bmjz
+	 8Mswg5CqjSsu+gDQswZtPHUitkS6AhHidiSimsYCd7WbCgwoSQgbXbXhRec9HdvfZpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5ArG4lf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yd8Tkryj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD66606A31C;
-	Wed, 18 Nov 2026 16:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD55606A31C;
+	Wed, 18 Nov 2026 16:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5ArG4lf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF781F000C4;
-	Wed, 18 Nov 2026 16:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yd8Tkryj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F48E1F000C4;
+	Wed, 18 Nov 2026 16:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017912;
-	bh=Yl0dEhS2rUZ2d68Jne+CcPN6i22BcADCmMFBcaHFBmg=;
+	s=korg; t=1795017915;
+	bh=HYcJ2kl48/KQQnDE5B0CVMpeY1s0lA+VrWoCFlsIE/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R5ArG4lfFVaYjn3VxC5nlnmvrq2u9M+4tlfntKsJqJ+9bZxo2IkCttsWRdtd//ZIK
-	 f8iLkA7gFlZ9st92vwisfQaE8hHKXioLUVVZNwcAvQPHr+MU6ncO/ZabHGwqZuls5H
-	 RiVz2+0Y//EOlofwUCu+/XLF4rmbEXsu/way1avw=
+	b=yd8Tkryjd127vp/sgF21xjDWNJKYYl42Z3zr843B74i0jb+8dNWrK/P9XCIEg41n4
+	 b3siHlqoOSwLA5vZ+N/HM2ruGRX/d8tl4uW/Z5l+SOMCuK6xRlp1xDNiyFLspz7ses
+	 uh77XnE39kdgWEl2QFouuF1zGNF+ogpasiddTHwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Quanye Yang <quanyeyang@proton.me>,
-	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1054/2651] RDMA/rtrs-clt: Validate peer-supplied IO completion msg_id
-Date: Wed, 18 Nov 2026 15:38:14 +0100
-Message-ID: <20261118150325.917372725@linuxfoundation.org>
+Subject: [PATCH 7.3 1055/2651] RDMA/siw: Fix length of first chunk in siw_try_1seg()
+Date: Wed, 18 Nov 2026 15:38:15 +0100
+Message-ID: <20261118150325.954561632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,88 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanye Yang <quanyeyang@proton.me>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit c1fcde82f7b68181553af7efb4410df04109a9a8 ]
+[ Upstream commit aac27aa8c5cfe3c3c6029b9c0f1113e0a53329de ]
 
-process_io_rsp() indexes clt_path->reqs[] with the 19-bit msg_id
-taken from a WRITE_WITH_IMM immediate. That value is chosen by the
-peer. The only check was WARN_ON(msg_id >= queue_depth), which still
-lets a completion run after free_path_reqs() has set reqs to NULL,
-or against a slot whose FRWR is already gone. Either path
-dereferences req->mr and can GPF; KASAN reports a null-ptr-deref at
-offsetof(struct rtrs_clt_io_req, mr).
+When a short-single SGE payload crosses a page boundary, siw_try_1seg()
+computes the length of the first chunk as the amount that spills into
+the second page instead of the amount left in the first page
 
-Treat a missing reqs array, an out-of-range msg_id, or a req
-without an MR as a protocol error and recover the connection.
+	part = bytes - (PAGE_SIZE - off);
 
-Link: https://patch.msgid.link/r/20260923-rtrs-warning-inrtrs-clt-rdma-done-v1-1-0827a9a77c0b@proton.me
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://lore.kernel.org/r/CA+0ovCiJZz6O8LzsS9Dq1-JE1OE1L_OTA6Mr-WratpUE6jczHw@mail.gmail.com
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Signed-off-by: Quanye Yang <quanyeyang@proton.me>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Use the remaining length of the first page as the first chunk.
+
+Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
+Link: https://patch.msgid.link/r/20260927115351.12245-1-serhatkumral1@gmail.com
+Assisted-by: LLM
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 5ecfbad5ac89c..5050895477e69 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -489,18 +489,22 @@ static int rtrs_post_send_rdma(struct rtrs_clt_con *con,
- 					    imm, flags, wr, NULL);
- }
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index f7dd32c6e5ba4..54c9d97015e8f 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -85,7 +85,7 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
+ 			if (likely(PAGE_SIZE - off >= bytes)) {
+ 				memcpy(paddr, buffer + off, bytes);
+ 			} else {
+-				unsigned long part = bytes - (PAGE_SIZE - off);
++				unsigned long part = PAGE_SIZE - off;
  
--static void process_io_rsp(struct rtrs_clt_path *clt_path, u32 msg_id,
-+static bool process_io_rsp(struct rtrs_clt_path *clt_path, u32 msg_id,
- 			   s16 errno, bool w_inval)
- {
- 	struct rtrs_clt_io_req *req;
- 
--	if (WARN_ON(msg_id >= clt_path->queue_depth))
--		return;
-+	if (!clt_path->reqs || msg_id >= clt_path->queue_depth)
-+		return false;
- 
- 	req = &clt_path->reqs[msg_id];
-+	if (!req->mr)
-+		return false;
-+
- 	/* Drop need_inv if server responded with send with invalidation */
- 	req->mr->need_inval &= !w_inval;
- 	complete_rdma_req(req, errno, true, false);
-+	return true;
- }
- 
- static void rtrs_clt_recv_done(struct rtrs_clt_con *con, struct ib_wc *wc)
-@@ -562,7 +566,8 @@ static void rtrs_clt_rkey_rsp_done(struct rtrs_clt_con *con, struct ib_wc *wc)
- 		if (WARN_ON(buf_id != msg_id))
- 			goto out;
- 		clt_path->rbufs[buf_id].rkey = le32_to_cpu(msg->rkey);
--		process_io_rsp(clt_path, msg_id, err, w_inval);
-+		if (!process_io_rsp(clt_path, msg_id, err, w_inval))
-+			goto out;
- 	}
- 	ib_dma_sync_single_for_device(clt_path->s.dev->ib_dev, iu->dma_addr,
- 				      iu->size, DMA_FROM_DEVICE);
-@@ -634,7 +639,13 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
- 			w_inval = (imm_type == RTRS_IO_RSP_W_INV_IMM);
- 			rtrs_from_io_rsp_imm(imm_payload, &msg_id, &err);
- 
--			process_io_rsp(clt_path, msg_id, err, w_inval);
-+			if (!process_io_rsp(clt_path, msg_id, err, w_inval)) {
-+				rtrs_err(clt_path->clt,
-+					 "Invalid IO rsp: msg_id %u queue_depth %zu\n",
-+					 msg_id, clt_path->queue_depth);
-+				rtrs_rdma_error_recovery(con);
-+				return;
-+			}
- 		} else if (imm_type == RTRS_HB_MSG_IMM) {
- 			WARN_ON(con->c.cid);
- 			rtrs_send_hb_ack(&clt_path->s);
+ 				memcpy(paddr, buffer + off, part);
+ 				kunmap_local(buffer);
 -- 
 2.53.0
 
