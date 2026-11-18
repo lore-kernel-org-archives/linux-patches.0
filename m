@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056683;
-	b=5QgYlNaPdaX/ZBMnwsZn7cEJdhwh949FZi7K8QEuRfsGHuAoNsXdJnVQBQJ+2lkVGzL/
-	 Oxj3/yc0hp2R/IM2vA/lT/Vcbt9c0zu793N8M0w4PI1ooi/IB0drXZ+SLpmCSwhMCqTbi
-	 eHPwq5r47k4laLiRevIRCA6hToyDwVDSRQBrAI1F9VwK8CCGg9Dskaz0kEi900NnpVb55
-	 Ba4f9EiDH3cnoWwut4JTNd+K2Wq9zso9fKsBxccDpJQTS3YgV8/EiAQLpdvRpOcevA+EM
-	 PdhJFELGoVLG5pxup3ATwEspZ/3iS7fOVhXTO/9XB78usSMUe497BOB7U38e4+Z5hzg==
+	t=1795056686;
+	b=TeQj512zbexDZ9t6uFEi6PMBQyf4MoC4yA99d+LPJKxp+5uuo3qqJKih6L1zgbI8gI8H
+	 cYh3PtKZgiB+Ib8jvcYqAvIC0RtsPYrj7gKbnq3BaFm6FJ6IDRsAuQSjEY9H8zCg8g9Jq
+	 G9e0d0K2M480b1xlbVhXoRcnF5UGmW2ObdROpmrI7Jk2/oxmaUe2Jz43H6fNKFd96zvDg
+	 4aHQTgrC+iv1gLwLQrzWrYlqEp5LHdegquccQJUTFFo6Murn9fXZZn76XMeGpISmAFCS+
+	 YPgtIbWXdTZXqhQXnXaoQZpEJV0+SQJyxqx2ZC22DqWZUKPRqnoVcxykD1kbSHA5NZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+KRHicYVrbQ02Nm+1uqHxKL3rwA9W+WbbOkEuyjnJKg=;
-	b=AP536AALystd7M1etaXD44FwZkIEv6W6BUApQklwlWsGX67A3MItuazLdotcmtrsET8P
-	 iZBoxSDm3eh172baGpvBg6UvKV1/8lPYb6hYnaIEzOG9h2sgha2Lse57Ol3182hiqOwXL
-	 S71zpvY46EmsxzNiMP4VyBImgfre4ykBlSqwMqdMPqe0KjGutVDZwQ1nbHNWxLdcK0tAL
-	 ZDPz1L3zDQvvwM9ZWB4MXqJG4Yrs1vyQFzO71Wk+RSVVa2WGvC/eSFCQR0tb2NzUSOfUO
-	 RI7N4L/5Zz7KoG94laTWRZi89u2qVJ50dJFTHZqDqDtcFUw1H/ipowr5I87JUbNOdFA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+FhaW2lbiX/DWloSC7vNs11buwm9D1gScpu1vLQ/xVI=;
+	b=xcUze1+tJGALXfnuNpqLLN7NAStoE8iqH8FZpYmH0ttLXWJFlYhTgJZEbNRMyi4Qp4Nq
+	 nIehGc5ZjlSYiy6OfJAMF6Z975wmFJcCggMJYkueKaAi/TqYqftC3eet6xkoGWrRtEMum
+	 96mzrp8QTPpKEANcRS/ODhZS2o4M572XU7/v3hmfDPz0myoROZeNI6ljRVKXwZ+qZwYp8
+	 1zvn47PKEq6n0DuRRChUUmo6MuLVZtBav7MRyiNieX87z9hwfcp6gSvzWFL+6h55cqB5e
+	 M7oeGu9mJbn0/snO4SbAEeUtpBOEmSspFu9ERASNDtBbyphee3aRgT/8N956jRewJcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIMMoFe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIfVh2j7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8553A606A320;
-	Thu, 19 Nov 2026 02:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B7F606A31C;
+	Thu, 19 Nov 2026 02:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIMMoFe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D51F000C4;
-	Thu, 19 Nov 2026 02:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIfVh2j7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB9F1F000C4;
+	Thu, 19 Nov 2026 02:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056683;
-	bh=+KRHicYVrbQ02Nm+1uqHxKL3rwA9W+WbbOkEuyjnJKg=;
+	s=korg; t=1795056686;
+	bh=+FhaW2lbiX/DWloSC7vNs11buwm9D1gScpu1vLQ/xVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JHIMMoFeU6DF0xhkchoRg/GqCBmt+y+J9b8qFIbqqlrGQCU1DCQPa+++SVnVXAQNs
-	 oPlaXG6PM3N6owcte3ARF7DFRtwQRf94+XQ4Griy3hLS1aNaY3T9Z98LdclITFLYAO
-	 AINCGk3CKs8HCvASoUSWw/+pvk3VWlxn6SLSFANk=
+	b=qIfVh2j7VdrqRrNGbwZ5IHS6HPRboyeIygSvtCg2biMIQ65K0+EjQymwAV2DDcy+R
+	 ylER2feHSY+XzhiKO47hwhmtr82JpJOYkz/nPqpLda959m/fRTHjUPxwT1i0lqbhj0
+	 D5wIhP3J9pBHQmdfgWEiObZLVTI2qVCE/mWjUAgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2073/2214] platform/x86: gpd pocket fan: Cancel work before releasing GPIOs
-Date: Wed, 18 Nov 2026 16:02:29 +0100
-Message-ID: <20261118150133.558815389@linuxfoundation.org>
+Subject: [PATCH 5.15 2074/2214] ipv6: Hold RCU when emitting route hardware flags notification
+Date: Wed, 18 Nov 2026 16:02:30 +0100
+Message-ID: <20261118150133.596446009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,70 +65,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 9962770049c715fc30a7b3274d8f245167c0a410 ]
+[ Upstream commit 7c9cb1edaf8fd8e1af25e39741e603500986ef66 ]
 
-The fan worker changes the direction of both GPIOs and schedules its
-next run. Its managed cancellation action is registered before the GPIOs
-are acquired, so devres releases the GPIOs before cancelling the work. A
-running worker can therefore change a GPIO after the driver has released
-it.
+fib6_info_hw_flags_set() is called by drivers from process context
+without RTNL or RCU. When the route uses a nexthop object,
+rt6_nlmsg_size() and rt6_fill_node() access the nexthop's RCU protected
+nexthop info and group pointers via rcu_dereference_rtnl(), resulting in
+suspicious RCU usage splats [1].
 
-Register the work cancellation action after both GPIO acquisitions. This
-makes devres cancel and drain the worker before releasing either GPIO.
-No work has been queued yet if GPIO acquisition or action registration
-fails.
+Fix by holding RCU while sizing and filling the notification, like
+fib_alias_hw_flags_set() already does. Switch to GFP_ATOMIC for the skb
+allocation accordingly.
 
-This issue was identified as part of our ongoing research while
-reviewing kernel code.
+Reproducer:
 
-Fixes: b82a7b018b93 ("platform/x86: gpd pocket fan: Clean-up by using managed work init")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/179229442299.3956787.17526066623947466315.gpd-pocket-fan@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+ # echo "10 0" > /sys/bus/netdevsim/new_device
+ # sysctl -wq net.ipv6.fib_notify_on_flag_change=1
+ # sysctl -wq net.ipv4.nexthop_compat_mode=1
+ # ip -6 nexthop add id 1 blackhole
+ # ip -6 route add 2001:db8:1::1/128 nhid 1
+
+[1]
+WARNING: suspicious RCU usage
+7.3.0-rc7-virtme-g191aa41548b2 #38 Not tainted
+net/ipv4/nexthop.c:1539 suspicious rcu_dereference_check() usage!
+[...]
+Workqueue: events nsim_fib_event_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+ lockdep_rcu_suspicious.cold (kernel/locking/lockdep.c:6972)
+ nexthop_for_each_fib6_nh (net/ipv4/nexthop.c:1539 (discriminator 16))
+ rt6_nlmsg_size (net/ipv6/route.c:5728)
+ fib6_info_hw_flags_set (net/ipv6/route.c:6503)
+ nsim_fib6_rt_add (drivers/net/netdevsim/fib.c:671 drivers/net/netdevsim/fib.c:694)
+ nsim_fib6_rt_insert (drivers/net/netdevsim/fib.c:759)
+ nsim_fib_event_work (drivers/net/netdevsim/fib.c:856 drivers/net/netdevsim/fib.c:889 drivers/net/netdevsim/fib.c:1493)
+ process_one_work (kernel/workqueue.c:3396)
+ worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (arch/x86/kernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+ </TASK>
+
+Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://lore.kernel.org/netdev/179152182668.434549.18232968419539498055@kernel.org/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20261019140337.2886875-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/gpd-pocket-fan.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/ipv6/route.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/gpd-pocket-fan.c b/drivers/platform/x86/gpd-pocket-fan.c
-index 7a20f68ae2061..01f9676fc0f43 100644
---- a/drivers/platform/x86/gpd-pocket-fan.c
-+++ b/drivers/platform/x86/gpd-pocket-fan.c
-@@ -153,10 +153,6 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 8286e723d56bc..521ee189235dd 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6270,7 +6270,9 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
+ 	if (!net->ipv6.sysctl.fib_notify_on_flag_change)
+ 		return;
  
- 	fan->dev = &pdev->dev;
--	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
--					   gpd_pocket_fan_worker);
--	if (ret)
--		return ret;
- 
- 	/* Note this returns a "weak" reference which we don't need to free */
- 	fan->dts0 = thermal_zone_get_zone_by_name("soc_dts0");
-@@ -175,6 +171,11 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
- 	if (IS_ERR(fan->gpio1))
- 		return PTR_ERR(fan->gpio1);
- 
-+	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
-+					   gpd_pocket_fan_worker);
-+	if (ret)
-+		return ret;
+-	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_KERNEL);
++	rcu_read_lock();
 +
- 	gpd_pocket_fan_force_update(fan);
++	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_ATOMIC);
+ 	if (!skb) {
+ 		err = -ENOBUFS;
+ 		goto errout;
+@@ -6283,10 +6285,13 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
+ 		goto errout;
+ 	}
  
- 	platform_set_drvdata(pdev, fan);
++	rcu_read_unlock();
++
+ 	rtnl_notify(skb, net, 0, RTNLGRP_IPV6_ROUTE, NULL, GFP_KERNEL);
+ 	return;
+ 
+ errout:
++	rcu_read_unlock();
+ 	rtnl_set_sk_err(net, RTNLGRP_IPV6_ROUTE, err);
+ }
+ EXPORT_SYMBOL(fib6_info_hw_flags_set);
 -- 
 2.53.0
 
