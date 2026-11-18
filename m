@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049308;
-	b=UpCKuQZySnsR2SJTNQ8Ug5aGMMGgjxKvwx8ijyjbJ/c8dIjZTyYwqQH1aIqQrwLlqfQm
-	 /wmEJ5vdi4ukkU0hrlSvWBXFXrHRQqmGW9g/MwegXRRtIOTLPfU+rsxZ16iXu7ycUJO1b
-	 71pfGVyxN+6RdvAV4IGU4ITCiONTi0TQzj6V3NUiCzk4eZoATbDojTsbi9zHM8rwcjlPL
-	 A9ACzg4cmqYP8+Ocg+Iss77lGwdwIgBRAEDVdz9Noes8dmxNh/TQ5e0I4q7Tm35PQKHEW
-	 +AVYvPL4dBSYiPW/dTqTTcNZ9jp3pD22uR3F3hHQ7SukAwXP0Yvk6jOAhdWIfKkLEYg==
+	t=1795049311;
+	b=CTsUp1O2nouhIEUikiHQuI1k59S0IGkCixx1ZFeg71/R88c09kxgHvmwMS45/hTeetbu
+	 cHWf4F6bYwKXhxw8K9I8QwJ/PfKnzCmrZ9MKKxU5X/AYgy1O2jf8BW/7JN3fk3HlJx0ca
+	 hFOIIi0Yoj1SWLzdQp/CseNMl3V4RmvAT370TPZ9FmzGDI5D4FUSpE4j9/yllHK/roqO2
+	 anZVg5AJNHnj7cBM/LwaZH6RUv/m/ptl6dQV4yfvwb7R8P7hoF0DmJ1JM3zhYEaltXpay
+	 5DsugpAwBNdra+OwpfKW6hY180vhQXuzGHDv5jFlHfaR0hHSKtPVOfJ6yfozFfXXELA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049308;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049311;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S3IQGjxAFSvH8Z655BzAn2U+HTjlvyc/dcDEDeUOAHo=;
-	b=lIiw267sD2FHjwY+XUHyMMo4dxYB0jswwT17izfoJoSMOYIV39mxJIU7QbtZZziSwAi1
-	 u639NxA2j/awj4V0KXIwXOqPzialB4SC1YkDouIrM0aIBJSwty1jiHIOoxD2GxMxty+6f
-	 1ZjRpf6uM9DbXdAIIFqLrmp21vtpo1/FlGEra77fSEX9AKn/ueaxHAtLPdE+XklRo189t
-	 +JK819uvn7U5I+r+8fqhXoF8cVFjdQMUOAolFgd+F+l17/jyKcOdppL2EQQfdawn3wBhM
-	 EFT6jOxBE389foH5KDZy9ETrRHJDrYfBcOCF4wAg0/GkJXhJLWRIoallvQlqSnKdMTg==
+	bh=u7bzJW4DRFMpVSVispH2vlUsmr+TKA8RkrxdLdlQBpA=;
+	b=D7Nf7rVu/ylg4r2oCRytijHKOdBw/b4Q9rM1FQEEWZPsWVDnZZQ2wz7PRxGMXZz+FlzQ
+	 yeId/y2oTeEUR255JqwYC/SI86DjAZGdQ1S6I8Su7PZfe/plwSvTqkp/9+1iLDWTVSp+Z
+	 OnDG9byWBhgJwKKEqKevTB93edPkiSDMi3bMFJ/W/BLGQdF53Os6+cgJk0MTGHibNcjko
+	 wlszZpIQOVvH9JtGn8UxN3wvgi38Xq/ujZPIs8IyucgE4joDaJU80qpgHUkhwkeYRFN3O
+	 54biQDm4QmIFV/c2x3xmbQeYm7dKmKYIuW9suEkEbsoQo8LsTW6SPNUbR7xZCpLmeTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8l1rmRO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JwZTsrpp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870D7606A339;
-	Thu, 19 Nov 2026 00:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA56606A33A;
+	Thu, 19 Nov 2026 00:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8l1rmRO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E4A1F000C5;
-	Thu, 19 Nov 2026 00:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JwZTsrpp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8D31F000C5;
+	Thu, 19 Nov 2026 00:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049308;
-	bh=S3IQGjxAFSvH8Z655BzAn2U+HTjlvyc/dcDEDeUOAHo=;
+	s=korg; t=1795049310;
+	bh=u7bzJW4DRFMpVSVispH2vlUsmr+TKA8RkrxdLdlQBpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8l1rmROYRQORPZ951YNqVj7fciEF4+/t3vfyMTCIMGATLNYcROLbjw0ZgevD3ntj
-	 upiq80xT9PInqujOykHuM5+5xWPaAyu9SkGonwxoqgUPAoWgZw3VlQtVWefcWFRs7l
-	 4+6dw5aIVvwXbpedlWBMW4ONavrtPRjTlZvNyCbk=
+	b=JwZTsrppUMHRVIcPrt5c6hTdSLJQbJtWCc6g1lW3dzjiyz9/YP0ZKQUMJIYo254Qs
+	 rWgPC/cakEOCle8HxESku/K7ygoU0vo5u40zEMG6hiTudS421NTj5quJ+lOsjRt+dx
+	 aGywVaoRbYirFPNE7uQ18PqfQqqsrQ3aNIOe9C0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2304/2857] wifi: mt76: mt76x02: validate RX padding before use
-Date: Wed, 18 Nov 2026 15:55:38 +0100
-Message-ID: <20261118150324.447107299@linuxfoundation.org>
+Subject: [PATCH 6.1 2305/2857] wifi: mt76: usb: fix source overread in mt76u_copy
+Date: Wed, 18 Nov 2026 15:55:39 +0100
+Message-ID: <20261118150324.483654580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,55 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit baf375ca58eaa24503f9febac75c056852694c3a ]
+[ Upstream commit d435130cdd064b901d8ce5ada0322298e6a86a49 ]
 
-The RX descriptor provides L2 and PN padding lengths that are used to
-locate the CCMP IV and determine how many bytes to remove from the packet.
-These lengths are not checked against the received skb length before the
-IV is read or mt76x02_remove_hdr_pad() is called.
+mt76u_copy() rounds up len to a multiple of four and uses the rounded
+length as the bound for memcpy() from the source buffer. When the
+caller's length is not four-byte aligned, the final copy reads up to
+three bytes past the source buffer.
 
-Reject frames whose IV does not fit within the skb or whose header padding
-would extend past the end of the skb.
+Keep the original length for the source copy and zero the remaining
+bytes in the transmit buffer so that the hardware access width remains
+four-byte aligned.
 
-Fixes: 30ce7f4456ae ("mt76: validate rx CCMP PN")
+Fixes: 9446248669968 ("mt76: speed up usb bulk copy")
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925152754.2323624-1-yaojiale02@163.com
+Link: https://patch.msgid.link/20260925150556.2304003-2-yaojiale02@163.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/usb.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-index a845820024796..06d1469a448bb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-@@ -818,9 +818,13 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
- 	len = FIELD_GET(MT_RXWI_CTL_MPDU_LEN, ctl);
- 	pn_len = FIELD_GET(MT_RXINFO_PN_LEN, rxinfo);
- 	if (pn_len) {
--		int offset = ieee80211_get_hdrlen_from_skb(skb) + pad_len;
--		u8 *data = skb->data + offset;
-+		unsigned int offset = ieee80211_get_hdrlen_from_skb(skb) + pad_len;
-+		u8 *data;
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index 82d20e052d19a..7fe5bec44bd4f 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -160,8 +160,10 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ {
+ 	struct mt76_usb *usb = &dev->usb;
+ 	const u8 *val = data;
+-	int ret;
+ 	int current_batch_size;
++	int len_aligned;
++	int copy_len;
++	int ret;
+ 	int i = 0;
  
-+		if (offset + 8 > skb->len)
-+			return -EINVAL;
-+
-+		data = skb->data + offset;
- 		status->iv[0] = data[7];
- 		status->iv[1] = data[6];
- 		status->iv[2] = data[5];
-@@ -840,6 +844,9 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
- 		}
- 	}
+ 	/* Assure that always a multiple of 4 bytes are copied,
+@@ -169,12 +171,16 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ 	 * See: "mt76: round up length on mt76_wr_copy"
+ 	 * Commit 850e8f6fbd5d0003b0
+ 	 */
+-	len = round_up(len, 4);
++	len_aligned = round_up(len, 4);
  
-+	if (pad_len + ieee80211_get_hdrlen_from_skb(skb) > skb->len)
-+		return -EINVAL;
-+
- 	mt76x02_remove_hdr_pad(skb, pad_len);
- 
- 	if ((rxinfo & MT_RXINFO_BA) && !(rxinfo & MT_RXINFO_NULL))
+ 	mutex_lock(&usb->usb_ctrl_mtx);
+-	while (i < len) {
+-		current_batch_size = min_t(int, usb->data_len, len - i);
+-		memcpy(usb->data, val + i, current_batch_size);
++	while (i < len_aligned) {
++		current_batch_size = min_t(int, usb->data_len, len_aligned - i);
++		copy_len = min_t(int, current_batch_size, len - i);
++		memcpy(usb->data, val + i, copy_len);
++		if (copy_len < current_batch_size)
++			memset(usb->data + copy_len, 0,
++			       current_batch_size - copy_len);
+ 		ret = __mt76u_vendor_request(dev, MT_VEND_MULTI_WRITE,
+ 					     USB_DIR_OUT | USB_TYPE_VENDOR,
+ 					     0, offset + i, usb->data,
 -- 
 2.53.0
 
