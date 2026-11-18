@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028261;
-	b=JBAZ5qalW1xTtQXW/Kt6JZEKqhPbKDhTzBpKhVo+v2ZyZKPbCDCb8qB6aTF2Nk61tCXO
-	 cmqszFPiPCEKicTJSJDo7rI/Qw/AJC+rIYGuXOKwD4KwqtB7RlGuJC5rwMjGXQnMEbVAL
-	 0Zc0f3lF4IhGHsMKz8Yei/2gQOqhsQUgoVQ4ah6OuUIYeQ/YpTcCODsi0Z9DA4faOTZ+t
-	 tI6zY1W85sLgTeukO3HweVAaAbxn5+7drMzEoWqpkh6mAMaEvVMuDzmhJja+EPZDVK5pt
-	 ajRdAdkMV0pdr4SQt1ooxLY9RLBmawXOn6FOydt/0shHm21Vig+E/uFLrPTmNJlSnSw==
+	t=1795028264;
+	b=Far4uTO0geaaSTOSrTPHZFxu2H5ZTUDKoLss15MwNOCfkKrgFsD0gUeK/EHc10PrgEfE
+	 yZtC04zIzeHoShE+pamDsAy4YqzQ2Vj7Zg9ZRNhm2fgry1ClHTCuSZ8AbnmQloNmaZneU
+	 bFj23owPesIurqYIpnSBFXVU72MUnezEBVSdKYSqIN6QG5QXUwN1LHOmekb/PU4uRQzkA
+	 HhnE/eTd+hI08FsowuzKW3sv6rxcnA46qQwk68PHtJec+WFflEtLd1qxH7vU7pXczoEus
+	 GKP1YjKT672UiiH9+9J3sogUj2TFcf3ajHQz4k3i0HwhKTi6kgfqL4PrOpu28jUGKZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6DoF5jL9K8EwXKgWD3GqMcbRPoPE7i6WCnR+A8PRdqM=;
-	b=yyOP5PNNv5zfItVfUtrYBfFY3vEiDQsfRvu3bJQ/NEb4scbepF8QFMw2i9PwDKq4e7J9
-	 49iSCj2NomgmF+x6cI8BK+Prh+V5jLEPRaMZEYI53qyT1I4y7fYnu5BC0JpysgXmfVZq+
-	 N32BpOzPZMLmljTbYGjLkmLslX9BkzQXrxjDJUkpynCKwiV+LIUsOlkBUQu+im+sEMsDA
-	 26vV839lvu4vmpVwWoWZND+wh337e9SzhXE6BxZwrQ/GOg0tpaOzoMj1SD2fyMJLbsWJi
-	 8AsywlxlwHQapcKK3UVahc7QD9vhvfoZDtZE57VEadm3YLwt4d4U44FqHi6+mtqGB8A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=IbuATUkD0KA9vuuXu5ognjVLNB2J+NBsuPIbpJOx/+8=;
+	b=srhxLcayc/yV7GXwEdeRCNXht7l6DljD2ZAbzLPcZ+XDM92aNIejwIA/hNK40ymeqI2H
+	 RcOsWOWl6F30op/jN/ef0BDd955+aVxHsx6muK/aaKB3qynWvczMlJ/xaPiKTx1xmKFVL
+	 d3tR3DJWWdNaWVMkE84uzigQPYkMq1+EbqtCGfcgxsYkEDc6cZkPdcypbPAonH1n0l6p6
+	 yUPnCi2qccVNK1xbk5ZNlyjVkkT/N1OAemw19DSbsavTveR7lJnnm+1XwuPi6kzB4gloj
+	 mxC+xsk4ZI85G5GVMEmV8FH0GH4sPyugtxqopnJrreK5K/GIykWbeBKTO0Zjk4Sg0Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YB5NzUs+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0mIShcD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A04606A32C;
-	Wed, 18 Nov 2026 18:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1618760A2608;
+	Wed, 18 Nov 2026 18:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YB5NzUs+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9382E1F000C4;
-	Wed, 18 Nov 2026 18:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0mIShcD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DFA1F000C9;
+	Wed, 18 Nov 2026 18:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028261;
-	bh=6DoF5jL9K8EwXKgWD3GqMcbRPoPE7i6WCnR+A8PRdqM=;
+	s=korg; t=1795028263;
+	bh=IbuATUkD0KA9vuuXu5ognjVLNB2J+NBsuPIbpJOx/+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YB5NzUs+wcSTEMQ7DGhE6DHbrOmOe8yWk6oqhKUqRwMpLnfMPv/BO1NbaDeM0WQU4
-	 ULK7UApL8gRGJFcsAVvCNQXBnb5UFcsFogAhCKuq3gzGvQiJ1dVV7jxxYn+YHKPThh
-	 7KOXT8QrSqv8Ga1nYNnnJpUnHDOO3gnWcddBRKR4=
+	b=m0mIShcD81eNxCEwLSc2/Wm1jGQZjS0/4+zOcb28yKoAsAZerZS/enAC/HOXQm0go
+	 iyDs7D/ifkCIeseMRRHOYeX1auume/95z5D856pE/Hho//C1Up2BpOffiDgGOB4XQz
+	 ZOstRK6cTw7e4ocsuamu71Jz2YYHBROT3smVfcVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Reisner <philipp.reisner@linbit.com>,
-	Lars Ellenberg <lars.ellenberg@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2081/2151] drbd: stop the start_resync timer of a dying device
-Date: Wed, 18 Nov 2026 16:03:36 +0100
-Message-ID: <20261118150237.517698055@linuxfoundation.org>
+Subject: [PATCH 6.18 2046/2151] net: dcb: initialize PFC value before calling getpfccfg
+Date: Wed, 18 Nov 2026 16:03:01 +0100
+Message-ID: <20261118150236.257078305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -65,45 +62,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit a439d3fe3ec2bfe0b4ccb77973ae97949bcf46ec ]
+[ Upstream commit ca87a2dffbb550fc934647d5e8d1c4ae85590132 ]
 
-start_resync_timer gets armed for up to a second and nothing ever
-deletes it, so drbd_destroy_device() can free the device with the timer
-pending. Shut it down where request_timer is shut down.
+dcbnl_getpfccfg() and dcbnl_cee_fill() pass the address of an
+uninitialized stack u8 to the driver's getpfccfg() op and then put it
+into the netlink reply unconditionally.  The op returns void, so the
+core cannot tell whether the driver wrote the value.
 
-Fixes: 370a43e7982d ("drbd: Work on the Ahead -> SyncSource transition")
-Cc: Philipp Reisner <philipp.reisner@linbit.com>
-Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
-Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261028164415.1262013-13-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+i40e_dcbnl_get_pfc_cfg() and ice_dcbnl_get_pfc_cfg() return without
+writing *setting unless the DCBX agent is host managed and in CEE mode.
+Both drivers normally run with firmware managed DCBX
+(DCB_CAP_DCBX_LLD_MANAGED), and i40e with FW LLDP disabled runs host
+managed in IEEE mode, so on a DCB capable i40e/ice port the PFC values
+in DCB_CMD_PFC_GCFG and DCB_CMD_CEE_GET replies, and in the CEE part of
+RTNLGRP_DCB notifications, come from uninitialized stack.  The same u8
+is reused for all eight priorities, so this is one byte per reply.
+
+dcb_doit() only requires CAP_NET_ADMIN for RTM_SETDCB, so the GET
+commands are available to unprivileged users.
+
+Set the value to 0 before each call, like the PG config path already
+presets its outputs to DCB_ATTR_VALUE_UNDEFINED.  0 is also what the
+reply contains today on kernels built with CONFIG_INIT_STACK_ALL_ZERO,
+so nothing changes for those.
+
+Found by code inspection, compile-tested only (W=1).  I don't have
+i40e/ice hardware to check the reply.
+
+Fixes: b94b013eb626 ("ice: Implement DCBNL support")
+Fixes: 5effa78e7c94 ("i40e: Add netlink callbacks support for software based DCB")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Link: https://patch.msgid.link/179289284460.50470.572724041164324949@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/dcb/dcbnl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index 1f6ac9202b66a..00726f9c35106 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2159,6 +2159,7 @@ void drbd_destroy_device(struct kref *kref)
- 	struct drbd_peer_device *peer_device, *tmp_peer_device;
+diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
+index 03eb1d941fca8..6e76b385f04c1 100644
+--- a/net/dcb/dcbnl.c
++++ b/net/dcb/dcbnl.c
+@@ -281,6 +281,7 @@ static int dcbnl_getpfccfg(struct net_device *netdev, struct nlmsghdr *nlh,
+ 		if (!getall && !data[i])
+ 			continue;
  
- 	timer_shutdown_sync(&device->request_timer);
-+	timer_shutdown_sync(&device->start_resync_timer);
++		value = 0;
+ 		netdev->dcbnl_ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0,
+ 		                             &value);
+ 		ret = nla_put_u8(skb, i, value);
+@@ -1396,6 +1397,7 @@ static int dcbnl_cee_fill(struct sk_buff *skb, struct net_device *netdev)
+ 			goto nla_put_failure;
  
- 	/* paranoia asserts */
- 	D_ASSERT(device, device->open_cnt == 0);
+ 		for (i = DCB_PFC_UP_ATTR_0; i <= DCB_PFC_UP_ATTR_7; i++) {
++			value = 0;
+ 			ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0, &value);
+ 			if (nla_put_u8(skb, i, value))
+ 				goto nla_put_failure;
 -- 
 2.53.0
 
