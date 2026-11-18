@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045750;
-	b=colVPSIFtf2keWCxLeCFPJXyJe0y+mBZjgjTmH1wQhLBGPb1dTvpPfvNn7Jtl7tH8lhy
-	 b8dHHLckiKsSHIAXhXEnJ2UEnFzxKlq58Y9srlH8z5LNnjFKlIuUh311iol+mJO7/zHdx
-	 9lFULtIOKmZDOIDV6lKEfi7E90Vp2U3Wi4qqnDxG3NCMyAK+F0jyg/eZKlumI0ofe6a0k
-	 EIyZmQR8ndNRc6cyefm52PH8c05xgU9wAKJNuTnv285QmOvIGBVKsrEZAlrXBF/+n4ms1
-	 WQFyRT7OLEInMjLl09Ec9xK/bTS+bhZAbxVPj9mlwEA1PsUy50mQgqUOkmitWkMb3zQ==
+	t=1795045752;
+	b=m3AmPVb2TvAdGYXnLlDTidn6UoCuJo44HCb54PV9T/K6AAmd2JsScFY54p0FBUbMNrA1
+	 9msmoBNGj9LXJ1zS2RbCiIYJFqVdEKDO3PQowZIzmzh+lQsy0Uw+eEoG1atBNtDjpk3pE
+	 5DNde8X5agndb5Rpw1/kgJx78GpVjKXNiobrpNwJ6CpDkUY18oZ5QDKDE/izURkCt0XiV
+	 qm6zi3vCQs5dcZFrrPha543SHef+h3nZvwqYGSPE3OoGkCft6Lf9Iz6zcORvLY+gVdd0l
+	 gCspbcuQ5epeb0WlYyFT0vruuBKv1uWSlwZvu4lus1z8Vpz5m9jgDXAxh9wnWjCK0/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7o68eTgEsknFFEh40ryUY2D+ntl5jFI2mA/IDAPx4nA=;
-	b=Lw5GrydLAiGCUIBdmCcaE8VqprtyeDM7utN3CAVGpZp2jCsUadsrX4zq8L1v465onTwX
-	 cuA9ihcKsU1UrKsj/c3B9exEevLyqFoz5q3Xedq0u7bOMXUMYBsb1WCNOucZpTACY2UXr
-	 HdSohGIcnWjl/xghmOk5j++u46A4k+HyrdnCsFg6KPhesEe1RnHlBACmWYiC/jkMNjrBa
-	 2s9FdPpLmk8SFKgAwXAPgPD3nKqICOkpX9Ed/iO4okJJisQDUVFqP44a1OvyNwpvbinq/
-	 X5DGaxgoDEyGwyu5yu30wnuW6ZIU8iT9wFpYhqNRr69oT9ctu/7NP/U4Qqn/wIIlELA==
+	bh=O5hD36bjHNznsq7JvsFl9TLo1rkLMBdnjvaR5VqzLAE=;
+	b=Cj6qC2d7KWsh9mDR7mebNq1SJUudAhOGpWyfynb1HWEqwJ7fNhQ2kK/oMwFw4r+BepC0
+	 FWT46sI1+0sERabYjafvdPRA2HXKSmdoR3PliX4jZo5PfolO2Hqw93q2RLl/BRw8CbxBM
+	 oqHPrsQTCdw7oJNPxw8AeJJGiK33ucLFpjq1WFN/uARis9en2zcIaT5zMvvZQJqLi7dCa
+	 iZRzuxxSxcZnHZyVfdeQDGYyyfNYMocLNe2UEoWTYyBHN4SWoiRYcAJ3fC92hKXckhFDI
+	 oSUE0RP7jjgSXCYOEuVpT6jrYXYf8IcycF0ceEC1a7HCbpmsyMbTZ5HD++49gwZwaOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHgbesPv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yhT1F+n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8524606A31C;
-	Wed, 18 Nov 2026 23:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC51F606A334;
+	Wed, 18 Nov 2026 23:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHgbesPv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469BF1F000C4;
-	Wed, 18 Nov 2026 23:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yhT1F+n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACBD1F000C4;
+	Wed, 18 Nov 2026 23:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045749;
-	bh=7o68eTgEsknFFEh40ryUY2D+ntl5jFI2mA/IDAPx4nA=;
+	s=korg; t=1795045752;
+	bh=O5hD36bjHNznsq7JvsFl9TLo1rkLMBdnjvaR5VqzLAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nHgbesPvaYMoxzcD1uKIjFFMaiFU9fMmJoyGYdbUvI2r+Cf2R8DSq1hSxPanj8jp8
-	 QMKBrCjsgZGSohH2U0DbiRI5YvRR8Lmc03z7WiQgyDqMRCcNM/VyZaBzt+NaJoa2lQ
-	 ONUCCPg6XJFHJJd6q/4+Bu54H5qhemOz8IUOTMsc=
+	b=1yhT1F+nuOBURKxZ1t/4GDJf19Af699XhL4DQDO4NyEt9sEyON3tFQtnXhvpbczc3
+	 xK/HPKDwR7F8UhVFEUpXOK3c6giNeDzeWiH5bxcbLW8XeWBMRwFNQS3jvBwYNWTDOU
+	 +vRdEKVjpqnykVAjm3+DlplTvfbAt/uz98dFT+mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Maksimov <nickstogramm@yandex.ru>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0984/2857] ALSA: hda/via: Apply runtime PM workaround for ASUS X55A
-Date: Wed, 18 Nov 2026 15:33:38 +0100
-Message-ID: <20261118150237.035694518@linuxfoundation.org>
+Subject: [PATCH 6.1 1029/2857] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
+Date: Wed, 18 Nov 2026 15:34:23 +0100
+Message-ID: <20261118150238.648629010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,37 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit f6e8d5ebde5ceb7d3c0eef6e9e4d82862b503ade ]
+[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
 
-ASUS X55A requires the same workaround like other machines with
-VT1802, otherwise it loses the codec power on a few nodes and the
-sound stays silent.
+When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
+stack data is copied and written to REG_SM0D1_REG. Equally on the read
+part, an unnecessary read is done.
 
-Link: https://bugzilla.altlinux.org/45606
-Cc: <stable@vger.kernel.org>
-Tested-by: Nikita Maksimov <nickstogramm@yandex.ru>
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20261017101257.215166-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Guard these extra copy/write and read for the page_len to fix leaking
+uninitialized stack memory.
+
+Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_via.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_via.c b/sound/pci/hda/patch_via.c
-index 2994f85bc1b9a..59d4c1689c764 100644
---- a/sound/pci/hda/patch_via.c
-+++ b/sound/pci/hda/patch_via.c
-@@ -1044,6 +1044,7 @@ static const struct hda_fixup via_fixups[] = {
- static const struct snd_pci_quirk vt2002p_fixups[] = {
- 	SND_PCI_QUIRK(0x1043, 0x13f7, "Asus B23E", VIA_FIXUP_POWER_SAVE),
- 	SND_PCI_QUIRK(0x1043, 0x1487, "Asus G75", VIA_FIXUP_ASUS_G75),
-+	SND_PCI_QUIRK(0x1043, 0x1c33, "Asus X55A", VIA_FIXUP_POWER_SAVE),
- 	SND_PCI_QUIRK(0x1043, 0x8532, "Asus X202E", VIA_FIXUP_INTMIC_BOOST),
- 	SND_PCI_QUIRK_VENDOR(0x1558, "Clevo", VIA_FIXUP_POWER_SAVE),
- 	{}
+diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
+index 20eda5738ac49..4497e02113863 100644
+--- a/drivers/i2c/busses/i2c-mt7621.c
++++ b/drivers/i2c/busses/i2c-mt7621.c
+@@ -143,7 +143,6 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 	u16 addr;
+ 	int i, j, ret, len, page_len;
+ 	u32 cmd;
+-	u32 data[2];
+ 
+ 	i2c = i2c_get_adapdata(adap);
+ 
+@@ -189,6 +188,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 		/* transfer data */
+ 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
++			u32 data[2] = { };
++
+ 			page_len = (len >= 8) ? 8 : len;
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+@@ -197,7 +198,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 			} else {
+ 				memcpy(data, &pmsg->buf[j], page_len);
+ 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
+-				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
+ 				cmd = SM0CTL1_WRITE;
+ 			}
+ 
+@@ -207,7 +209,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+ 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
+-				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
+ 				memcpy(&pmsg->buf[j], data, page_len);
+ 			} else {
+ 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
 -- 
 2.53.0
 
