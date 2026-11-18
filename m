@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043033;
-	b=Zt5ofR5nsLh6Q3BWnEILU1cEmviUkbKGpcuEZnv79558DS7iD6b25fPs00R7BmXRZdbN
-	 I0gPGeMm3K6axlZk/lbkUR0TBHKImsGVv0LYrs+1NYPo0H9F/fYKQ/rho04jvW+WFshod
-	 KVT0psD2PNVIigGp9xRESj4d8WoQfrV+J/crFoo/O6atbWfOGecmK/OsSZBGbb94JijUk
-	 9Kx8BLqW58lF8DWlCSw0KZSmTLJLC1toa31e9m3yWGqM2qDS28+qUjrqAaqD9sjaPV5/H
-	 6kEFpYlU0EDRWFwg8xjlt41E/SMSQo2UU8yFUSE6HPVb8O0pGUbaWXIstS84qbuGLuA==
+	t=1795043036;
+	b=mGY1XY55xznKjMFjW4BC56BcgF4WhtH1Sz7qWqDapOquCUiWB4ge9mP/Z/FD/brO5VT7
+	 dISvrskJEXz8Yjq6TuDM+OVXoK/C35xjRO0wqhziZ3CF1Kx40sohIjHKfsWrNIaR3/NXC
+	 8TrHxa9i5DQs9E/Vs+Wl8cs37t6vvneW27o/O0O2Dx1fQpRVkTdwu9YCJ8sXJDz3ExGdd
+	 Z7ap5PxkvexrvoBX7RZxWbkpm3j1LT9Ml+k6Hw85iBIP+OTV5R7SizRJUTctt3zXPfUEw
+	 lNXsLdUXVveU+uZaium8rfmIHNlGw7w76p6bNHz/IwabQzUlVjcirNjSZhe6jsercxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CJQX/eUqelb9MM0OpJ8BdDH8ZDAzmn3GGz7bGfanHAg=;
-	b=0Wn/oR2hKmok7SYj5W32rddaMmiVGuno+sJnyfC7W2Jw5Lg7d3kuzumWZjRHT2lg/1VH
-	 8iZ4V2OuHf43jdM8BlNYxetDLrLe8MlRSYsS8UXeh0JvwHNfW120oicJpWQrmZn8sPYJ2
-	 v+YtOap9UPrDl+AGEeqokqsC2cV0tnsEmLmZpAlKqTOZmMczYA3oWQAvkpwEBAd6VGeJo
-	 ypZsSwtXRE3oZ0fRQLpbVoiZsO/Ps7q4fkWlZDBByndfR0v94/NJHkICVS1GAA9ciHMLG
-	 H3knPDlKH+0cZ9IE14YMqh3C0RtCw0dg9+s5j4JIO301a8k6x9T4brM+t+enLnPxklA==
+	bh=iHfYwPA3FqFuu4iAM777jj/XtcPG1I1bcFudLVARo9Q=;
+	b=4WwGuWNSUqPMa2SzSbfEwOKXOWVl56v+YW+v2EwYqSn5ZQBEELZNhyvmsMrNHGoeTpJC
+	 O26Q0qtoLjnAONurxmjsO5+FJ16De2R6YzYMl0R5lwUjm6LUaezdIAnREBcNe+/CKo2Nx
+	 Jb6bNYzA2oqFDXUIXCwNsZksp9DKOPksUpVdAywGLeo+HwIgUvCRT3w007C37nV4X39u1
+	 UckvA3+Ik8o9jb/7DngZRw6z32dNIQaBOyMIVMCR5e4KTV3HTqHImzuMjC5+C+UsVBnUy
+	 kZw5KN5Dv65lNCcS5aDUuFzVh66d5a+Gufj+q496ABF8bJcTyyIToh9OZpJxCW/J9sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bZF8iE8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiBkWE8Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F2F60A3816;
-	Wed, 18 Nov 2026 23:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1295460A2615;
+	Wed, 18 Nov 2026 23:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bZF8iE8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874BD1F000CF;
-	Wed, 18 Nov 2026 23:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiBkWE8Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD8D1F000C6;
+	Wed, 18 Nov 2026 23:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043033;
-	bh=CJQX/eUqelb9MM0OpJ8BdDH8ZDAzmn3GGz7bGfanHAg=;
+	s=korg; t=1795043035;
+	bh=iHfYwPA3FqFuu4iAM777jj/XtcPG1I1bcFudLVARo9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bZF8iE8nqk8H/3VFT4h81ATIni4E/+qSXFncs60PMM7daupMtiRyyRxs3PTfH4zZ
-	 Rzmamjg23upGA7sNdRapqd3a5DsUrYOOHk+F+LTLkL8NomxcuS6Am+4+GeBwshH6Cw
-	 jB5OzJYQrMcyqKLXr81SK07c3rHja/DwJXb5gqrE=
+	b=JiBkWE8ZTpTAelLn0JHecLAe4D52wnm4SOFk18VD1YZrTiGpf7yqvj4oQhQ2gP4cs
+	 97kIu7/Uy3BWgD8CJ04HMXt6mxE8ETCaZgAyhQNWzpMnd2yDl8BbrFu/5Duw7OdJ59
+	 g/ulO7zxlI8vUFH4TJ1JTfa3SG/W/IxcG/1xCeVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0059/2857] mmc: dw_mmc: stop and complete DMA also in STATE_DATA_BUSY state
-Date: Wed, 18 Nov 2026 15:18:13 +0100
-Message-ID: <20261118150203.432637063@linuxfoundation.org>
+Subject: [PATCH 6.1 0068/2857] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
+Date: Wed, 18 Nov 2026 15:18:22 +0100
+Message-ID: <20261118150203.770975474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,35 +74,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit cb3fcb8d118b874178251d1f02613f60d25e4ddc ]
+[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
 
-When transfer was stopped in STATE_DATA_BUSY state, there was no call to
-dma_ops->cleanup function, so the DMA mapped buffer was never properly
-unmapped. Fix this by calling dw_mci_stop_dma() function also in that
-state to ensure proper cleanup call when DMA transfer was used.
+Update pci_ats_supported() to additionally check the associated PF's
+status when called on a VF. This ensures that PF-level quirks and
+untrusted status are correctly propagated to VFs, providing a robust
+support check that aligns with the kernel's PF-centric ATS configuration
+model and is immune to the timing of VF-specific fixups.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/dw_mmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/ats.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
-index 0822493c949e8..c2920001510c2 100644
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2209,6 +2209,7 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
- 			}
+diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
+index c967ad6e26267..aa89408cf0195 100644
+--- a/drivers/pci/ats.c
++++ b/drivers/pci/ats.c
+@@ -39,10 +39,13 @@ void pci_ats_init(struct pci_dev *dev)
+  */
+ bool pci_ats_supported(struct pci_dev *dev)
+ {
+-	if (!dev->ats_cap)
++	if (!dev->ats_cap || dev->untrusted)
+ 		return false;
  
- 			dw_mci_stop_fault_timer(host);
-+			dw_mci_stop_dma(host);
- 			host->data = NULL;
- 			set_bit(EVENT_DATA_COMPLETE, &host->completed_events);
- 			err = dw_mci_data_complete(host, data);
+-	return (dev->untrusted == 0);
++	if (dev->is_virtfn)
++		return pci_ats_supported(pci_physfn(dev));
++
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(pci_ats_supported);
+ 
 -- 
 2.53.0
 
