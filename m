@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059833;
-	b=IDvB6aID5xYqZdhPKM4YE5cKvGOmhRqlro2Z96BnaaBnAGWWjgr6Qk0XOKBGXmVsS5q/
-	 LvvwQeyiFpjBWyl+IB8nA1ZcfneU0ttvd0tvLTJ+p9ryyZlFSMKzOEvOrjYY5YjD7ssuT
-	 hLW3zOx6FB47qGAPghFmLsCmZwWA3xFCSyUb7i0jCNDujKVpFOsj+c4RrAYrByHxQm+yt
-	 uHj92b49mWQHRwJzFxlXpCIOtv614Ca5JSwbMzRSGJyypxI25LOKYaQZzV6TyVLKby+Do
-	 nt/BowkLDRCjHnkKVmC2HoQfkhpDWHyQJ6NnJjlWyfGEZVZtkJenEexz4Iyfmlpi3NA==
+	t=1795059836;
+	b=iM3OuDFsoeSNlgeYDoulw2/xtjki5FM6vRCGkxCvDxfHgLhLCVY2PWtaHVO1sC3d63NP
+	 fGQBkyYrLJgTBcjfVgsV65voLumgyxcyakCHNaI4gaLX3e6GzuIf7v+B+w2D/NCxe2Pu2
+	 +38JyXqkjWnQFzy+sKaDtOa7wNmgaXyySal3NPcwxEOLxTRdLHk9lD1RkBbw4I/QS1jPh
+	 jBnDWsIBFo5Hp4qfs3ZRMPI72i+bbRbNYpt75SLkNrLsHzVfnB/VV89/58usd/4M/MJ8B
+	 Q+VjWmookeTXugsIh8YoYR/A11cavPaCUIzXgNuxx24miK080OCOP/7eUjfFvc4ya+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WifheW7fzfhiXuz6kSuq11/odfSky8xNr2R/GcjQm/o=;
-	b=eSrVgoHqeCRIL6jKnMW09t3YFHjS4U82wLK2R5Bh9qaG7baes4Y9GBz7+4850iB7gRWI
-	 jSf/ftnzp4nip0hrjMU+Lg1bBd1lNOmqJzpYIWdFsq4PcZecdt30K4IgBPg7bepMyEHPw
-	 RzO6z/4xHUSU3qMveiyw8q3c9x7Z6X3i7metXthv4uyLA/voyETL4EO3yZsg619Lz59bz
-	 sB0zvrmoWBPaRK4nMZe8dY6QM3oIFgCnhP/3gTTDYKkvp1YuAFJaPhQu4LVAn3y8ouok5
-	 orSJtnxzY2G7iX4LzbEVSStd0VY1iKb4lIUi5mVUjoPQYzPOIDxoqgBtqWlUtO51W4Q==
+	bh=GQCSN5BPs9o64HCEdpmxlhGCHX3o244W7NLHxDnk83E=;
+	b=g7j41BBbkmj0GHvFHsW9ytJhYWzuFXcJ9qVKwfOpkh3Ywk3serkVh0HDw2HH4+jOW6p5
+	 VildnkftqzzF75pqCGb5Cowmn7euBMIv/pbb4QPP+6oBGZSfoXety8yl3RzaM4yNR/5tX
+	 8/IJ+7dGL+ZJG8vCynvdsddvHfp4hRDx9L8gJE94WYhgtuo2ocw1o+RPoct+NDsxyqGm0
+	 pDX1RSjTKxzxe1tfv5wi4SpDjR+HNinkYei4oD3Ldcw8GzhkhcyG/6w18sVJtSup/uk6w
+	 r+q18fNutkdlEIUd3p/c4vAn2Mvwbk+Izntv4SILQH8Cgs/5SE4gBpj5V6Kro2+DLbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oc2r5MpY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1K0BTGx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EB9606A320;
-	Thu, 19 Nov 2026 03:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A69606A325;
+	Thu, 19 Nov 2026 03:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oc2r5MpY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A001F000C4;
-	Thu, 19 Nov 2026 03:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1K0BTGx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762B31F000C4;
+	Thu, 19 Nov 2026 03:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059833;
-	bh=WifheW7fzfhiXuz6kSuq11/odfSky8xNr2R/GcjQm/o=;
+	s=korg; t=1795059836;
+	bh=GQCSN5BPs9o64HCEdpmxlhGCHX3o244W7NLHxDnk83E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oc2r5MpYPoKvyuuWUGR78RJSl8wuubSCKp5j0KIDCSghUXtfa59RNSvd/sT8m/9yn
-	 bVSPnDaYBeOCRIt02bOF/emclW+zBi3BfzRhF7r7eA5TYcbG1dgfbiE/qKMarkGWuy
-	 42AOPxlMIb+EOFDG1I9r7UdvCdJM5tVcE5a/+i+o=
+	b=T1K0BTGx3Q3ROkw7uogcQW405NL2NOeBBp1i3uhi3FIOVqGYrYSCIesM4hWQQkEvv
+	 OBhN+gJtKdIsTbNWlPEfyOflGr5E8AnSMzcLKCl/I5hBgTvOow+j8U6TbP1zFU715K
+	 +AtyK8+4pDjI3qhPLx8ewSCPsHGC3CRITrtorZec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0984/1848] dcache: report a Tasks-RCU quiescent state in dentry_kill()
-Date: Wed, 18 Nov 2026 15:50:22 +0100
-Message-ID: <20261118145958.102041165@linuxfoundation.org>
+Subject: [PATCH 5.10 0985/1848] ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200
+Date: Wed, 18 Nov 2026 15:50:23 +0100
+Message-ID: <20261118145958.136443304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,60 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-[ Upstream commit a647a53bc89a046bee4a12a0a5627f2dfaaef807 ]
+[ Upstream commit 874323b68c93c6808e034dc0113681e822e6fb42 ]
 
-I am constantly seeing the following warning on Meta's fleet:
+The C200 (046d:0802) reports a mic capture volume range of
+1536..7680 with a resolution of 1 (6144 steps), triggering
+"Warning! Unlikely big volume step count (=6144), linear volume or
+wrong cval->res?" at probe and exposing a uselessly fine-grained
+mixer control.  This is the same firmware behavior as the other
+UVC-era Logitech webcams already carrying QUIRK_FLAG_MIC_RES_384
+(C500, C600, C210, C270, C310, C510, C525, ...), so apply the same
+quirk: CTL_MSG_DELAY_1M (which the Logitech VENDOR_FLG would provide
+if the device-specific entry did not short-circuit the lookup) plus
+MIC_RES_384.
 
-  INFO: rcu_tasks detected stalls on tasks:
-    native_queued_spin_lock_slowpath
-    locked_inode_to_wb_and_lock_list
-    inode_io_list_del
-    evict
-    __dentry_kill
-    shrink_dentry_list
-    shrink_dcache_tree
-    d_invalidate
-    btrfs_delete_subvolume
-    btrfs_ioctl_snap_destroy
-    btrfs_ioctl
-    do_syscall_64
+Verified on real hardware: with the quirk the warning disappears and
+the driver logs "set resolution quirk: cval->res = 384".
 
-dentry_kill() is the common funnel for dentry teardown: dput(),
-shrink_dentry_list() and shrink_dcache_tree() all reach it, once per
-dentry, and its cond_resched() is the only reschedule point on that path.
-
-cond_resched() is not an RCU-tasks quiescent state.
-
-Use cond_resched_tasks_rcu_qs() so the teardown reports an RCU-tasks
-quiescent state as it proceeds.
-
-Fixes: 9c5f1d30199d ("dcache: move cond_resched() into the end of __dentry_kill()")
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260918-dcache-task-rcu-qa-v1-1-963ec83e6d0b@debian.org
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: applied the cond_resched() replacement in __dentry_kill() instead of dentry_kill() ]
+Link: https://patch.msgid.link/20261008230844.11246-1-olivier.kaloudoff@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Replaced the quirk flag table entry with a USB_ID case in volume_control_quirks(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index d17c98508a088..34e8a97e0323e 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -595,7 +595,7 @@ static void __dentry_kill(struct dentry *dentry)
- 	spin_unlock(&dentry->d_lock);
- 	if (likely(can_free))
- 		dentry_free(dentry);
--	cond_resched();
-+	cond_resched_tasks_rcu_qs();
- }
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 7f64199139d31..48178272bf422 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1163,6 +1163,7 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
+ 		}
+ 		break;
  
- static struct dentry *__lock_parent(struct dentry *dentry)
++	case USB_ID(0x046d, 0x0802): /* Logitech Webcam C200 */
+ 	case USB_ID(0x046d, 0x0807): /* Logitech Webcam C500 */
+ 	case USB_ID(0x046d, 0x0808):
+ 	case USB_ID(0x046d, 0x0809):
 -- 
 2.53.0
 
