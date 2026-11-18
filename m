@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060044;
-	b=0nhAORHPM2NXK9PuKVZMkHJDcZnY33vohwBibNej1sKZ+jEspnk2qzb6+jOXQ4jFS5Px
-	 KMDs8UZz+RflpIsD6UGoApVL+4pCx/a+LAdO1Q5Y4K7dVDhPchjQ4f2+Qmuy3BIp+6psn
-	 2nnRyRvFCflMM1sm3d7iXW/S9NBAa9SRVyVup8GMIn9l9sZbq20fXDbyM07uK1Vn6ymku
-	 KInNh6CbSt3h9SIdMZ63EXjCK7tyQHPMLdiU0Ed50SqKq/tWpOIxMzR2PuzZq3Lbjz9A/
-	 L+BWeHRDftJOTN+KkkgUY59Y5G9E91xBY9op5ku5t0rFf2nRoIFql8WMasAWMlYGWew==
+	t=1795060047;
+	b=E5dzfABtyANJrPzEr0ki3ZcEKLr8s8aXxxpfQZR4K2579KL1pYPESm/nQJp/NaPZJcOJ
+	 UgAKKUXs0OAYQOYNM2AEuqecwAlBP6iEYw8zR5fAu7DYFl4I4drXAXG8uHKeE0sc01kv/
+	 UVv5vdPjcVN3tf0vw+BpzTD4Q6tN39LqnR3fKPhstFkwmwSfBJQ4J7ADvDtC/uUM0vy+n
+	 lhlZgZUPRs43q0+lWJGJLy0EK31RfHQbVidtJ0aJmCHYbKdf4moJNK+8fqljHiVsBRmhm
+	 OYPZK6BV1NPElVPNN2r/zg1dkhrwPHPAn/3FCTArRob4c8kz2M2B4ExeVMiO16lLDOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mIdIbU+EbhzeA/FJ6u7Naz4xPUx3inKWfDGadwyPWNo=;
-	b=zyT0Ipv/OAGvXY/Rt6+I2z0xuVsjACdg0t6m7qFnOiEVMr+CraEDm8bhUDsr7pXoJrfh
-	 Ozpuks90kQNCNW70A5KLIMRb3IuSItVGbWvpdgRPiydXtmoyCVPtlF1/BE512fT99Fxbc
-	 IMSxRoIrAIG7dpdtVljgVw59KVQi5CQh84ElnYW+uDjy24BMRgQWmsq7l+ieyYyfQrd4S
-	 D/l/0vp6D/Yd6MOOKOzMz8AKgg2Lovb9HXxx0CTU6LOXVF57mEufwFcelGLOILizRCA7s
-	 k11jYQwR7b775E1aTJVMKXWKMUI1mH38C9xM9C9z1hXaCI6rY4x3+gF+qL1TU+IwTqg==
+	bh=TkVGZEH0oivQWvhb8I37mX1I4sepwXCRqqzX2B/z24g=;
+	b=WFHJWCdWqw7nYTcZzCv8eQBoyybBDqhdA4OSt3DSb5rg6/NkOwD8EZXoKtXJ/i8n7Cha
+	 YzlQ06aQhoDI8A4BLX6YRUda80uqapyTAnCmYq2JMJAt7iLatihQ3rCu6KmTTOA0MtV6O
+	 CUt6aOWD4vn6HN7mQQcd1RXjwVE4SQo4QncwWPrrEstPp2cFkEN2oX4j80hcZQl5+25CN
+	 cnNV0tGNkSnm6NNO20UK9Zdc9w/4Q77F9KWIH+SImrVMAgl7slxR/6wv7r65mxSalHRwg
+	 1tlC4DJC8ZpjIcyaELjn6/DSx1GlshwKgEH70p0r/O/5GQHstyl4DzuyxOUNCy85uOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9PzbLq2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctY2H3uC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07F8606A320;
-	Thu, 19 Nov 2026 03:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3775E606A320;
+	Thu, 19 Nov 2026 03:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9PzbLq2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54AF1F000C9;
-	Thu, 19 Nov 2026 03:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctY2H3uC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884CF1F000C4;
+	Thu, 19 Nov 2026 03:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060044;
-	bh=mIdIbU+EbhzeA/FJ6u7Naz4xPUx3inKWfDGadwyPWNo=;
+	s=korg; t=1795060047;
+	bh=TkVGZEH0oivQWvhb8I37mX1I4sepwXCRqqzX2B/z24g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9PzbLq2zcDDAfeeaJCEApFC4bh1lPEfXbkUWH4AaKrB0+FQmtpasH0F+PgEosiSL
-	 0Ig1QGxLX+DHTU4UTqVMSXtSNAMqPNAkkay4OqK3uohGEDWpqADphh/xD9/zbVriNe
-	 KEvvbYV5U5VkC6+T1+1YzS6Dnka1umQZAHg2L6Ss=
+	b=ctY2H3uCTS8zMfz5Tvlm+LaFE2rRWgo8lViesDcdeiKzECe45UqMmZ38CJJvy5cbW
+	 UUf6Afk4f7eh9X9FJJ2Ec/V6WZFdsKWE5KLrbmOh5RrFfehFemxuockiK7peI8RNZQ
+	 zv1svmuRvNRyl2lnJHEBQQbomlUowKuoky2YS7wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Wang Zhan <wang.zhan@smartx.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yuho Choi <oss.patchbox@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1021/1848] inet: frags: limit the truesize of a reassembly queue
-Date: Wed, 18 Nov 2026 15:50:59 +0100
-Message-ID: <20261118145959.916068619@linuxfoundation.org>
+Subject: [PATCH 5.10 1057/1848] iommu/virtio: Reset device before deleting virtqueues on probe failure
+Date: Wed, 18 Nov 2026 15:51:35 +0100
+Message-ID: <20261118150001.665263734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -73,112 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit 3ae20e4697eb969104fe4b1e98a675f0100382b6 ]
+[ Upstream commit 1f8efac19a0870cdfdf8477e447e5a07ddce9623 ]
 
-The truesize of fragments in a reassembly queue is only bounded by
-the per netns ipfrag_high_thresh sysctl, which has no upper limit.
+viommu_probe() marks the device DRIVER_OK before populating the event
+virtqueue and registering the IOMMU device in sysfs.  viommu_fill_evtq()
+hands the device a set of device-writable buffers through
+virtqueue_add_inbuf(), so from that point on the device may write into
+them and into the rings.
 
-inet_frag_reasm_finish() sums the truesize of all fragments in an int.
-If this sum reaches 2^32, it wraps, and the final sk_wmem_alloc
-adjustment of the socket owning the reassembled skb can cancel its own
-reference, leading to a use-after-free of this socket.
+If either step fails, the error path deletes the virtqueues without
+resetting the device first.  The event buffers are allocated with
+devm_kmalloc_array() and are released as probe unwinds, so the device can
+go on writing to memory that has been freed.
 
-This can be triggered from an unprivileged user/network namespace,
-raising ipfrag_high_thresh and using padded TUN packets, which keep
-a large truesize after being trimmed by ip_rcv_core().
+Reset the device before deleting the virtqueues, the way viommu_remove()
+already does.
 
-Track the sum of the truesize of fragments in each queue, and refuse
-a fragment that would make it bigger than INT_MAX / 2. Callers kill
-the queue on this error. This bound is far above the needs of
-legitimate traffic.
-
-Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
+Fixes: edcd69ab9a32 ("iommu: Add virtio-iommu driver")
 Cc: stable@vger.kernel.org
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Cc: Florian Westphal <fw@strlen.de>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Tested-by: Wang Zhan <wang.zhan@smartx.com>
-Link: https://patch.msgid.link/20261030081225.2575462-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: moved the truesize reset from inet_frag_queue_flush() to ip_frag_reinit() ]
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261004182218.177343-1-oss.patchbox@gmail.com>
+[ sashal: replaced virtio_reset_device() with vdev->config->reset(vdev) after the existing err_unregister cleanup ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  | 9 +++++++++
- net/ipv4/inet_fragment.c | 4 ++++
- net/ipv4/ip_fragment.c   | 1 +
- 3 files changed, 14 insertions(+)
+ drivers/iommu/virtio-iommu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 4cbd413e71a3f..400375468536c 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -71,6 +71,7 @@ struct frag_v6_compare_key {
-  * @meat: length of received fragments so far
-  * @flags: fragment queue flags
-  * @max_size: maximum received fragment size
-+ * @truesize: sum of the truesize of queued fragments
-  * @fqdir: pointer to struct fqdir
-  * @rcu: rcu head for freeing deferall
-  */
-@@ -91,6 +92,7 @@ struct inet_frag_queue {
- 	int			meat;
- 	__u8			flags;
- 	u16			max_size;
-+	unsigned int		truesize;
- 	struct fqdir		*fqdir;
- 	struct rcu_head		rcu;
- };
-@@ -173,6 +175,13 @@ extern const u8 ip_frag_ecn_table[16];
- #define IPFRAG_OK	0
- #define IPFRAG_DUP	1
- #define IPFRAG_OVERLAP	2
-+#define IPFRAG_TOOBIG	4
-+
-+/* Max sum of the truesize of fragments in a queue. This keeps the sums
-+ * done in inet_frag_reasm_prepare() and inet_frag_reasm_finish() well
-+ * below INT_MAX. Legitimate traffic stays far below this limit.
-+ */
-+#define INET_FRAG_MAX_TRUESIZE	(INT_MAX / 2)
- int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 			   int offset, int end);
- void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index 18217537cb298..6d6d90123be02 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -353,6 +353,9 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- {
- 	struct sk_buff *last = q->fragments_tail;
+diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
+index 81dea4caf561f..ef5eabeafa8c7 100644
+--- a/drivers/iommu/virtio-iommu.c
++++ b/drivers/iommu/virtio-iommu.c
+@@ -1058,12 +1058,12 @@ static int viommu_probe(struct virtio_device *vdev)
+ 	/* Populate the event queue with buffers */
+ 	ret = viommu_fill_evtq(viommu);
+ 	if (ret)
+-		goto err_free_vqs;
++		goto err_reset_vdev;
  
-+	if (skb->truesize > INET_FRAG_MAX_TRUESIZE - q->truesize)
-+		return IPFRAG_TOOBIG;
-+
- 	/* An IP fragment is never a GSO packet, but an untrusted source
- 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
- 	 * that reach the reassembled skb, whose head keeps the first
-@@ -415,6 +418,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	ret = iommu_device_sysfs_add(&viommu->iommu, dev, NULL, "%s",
+ 				     virtio_bus_name(vdev));
+ 	if (ret)
+-		goto err_free_vqs;
++		goto err_reset_vdev;
  
- 	FRAG_CB(skb)->ip_defrag_offset = offset;
- 
-+	q->truesize += skb->truesize;
- 	return IPFRAG_OK;
- }
- EXPORT_SYMBOL(inet_frag_queue_insert);
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 5cdc65a5c010b..00dff2c866154 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -263,6 +263,7 @@ static int ip_frag_reinit(struct ipq *qp)
- 	qp->q.rb_fragments = RB_ROOT;
- 	qp->q.fragments_tail = NULL;
- 	qp->q.last_run_head = NULL;
-+	qp->q.truesize = 0;
- 	qp->iif = 0;
- 	qp->ecn = 0;
+ 	iommu_device_set_ops(&viommu->iommu, &viommu_ops);
+ 	iommu_device_set_fwnode(&viommu->iommu, parent_dev->fwnode);
+@@ -1101,6 +1101,8 @@ static int viommu_probe(struct virtio_device *vdev)
+ err_unregister:
+ 	iommu_device_sysfs_remove(&viommu->iommu);
+ 	iommu_device_unregister(&viommu->iommu);
++err_reset_vdev:
++	vdev->config->reset(vdev);
+ err_free_vqs:
+ 	vdev->config->del_vqs(vdev);
  
 -- 
 2.53.0
