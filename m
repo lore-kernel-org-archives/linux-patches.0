@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019444;
-	b=CbD8xDY6gjyExk1WHzRUf5LQxcz3Frn8OjGG41tYoOX9Wwjlr8cy0jWVkon8IGbKk1uu
-	 LqtCazRCt/aFUOw9kzvEVjX4F04vvfnOWmBICWPGaJ7F1vsRxp4J2xcTHqzZrChy1SHL7
-	 98scYNreGiHYmxqmb8c+RP0jPGo8ZCjoe4SZxJSPb1xgzmTqG2hVaTiumhDqTe8teju1h
-	 QiJA+GS9pDQLNWISWE9zPu+D9SHtCJjSaNygodVw06RpzecKTockC26PmaIMIhH1rbePV
-	 xCvjVrHyprV3zi83HfF2tHupmnzABYhAkN+MIYrzGjcQoXGpFBZz4EdzayH+bVB9IIw==
+	t=1795019447;
+	b=amof21SMw88NctWNAmrARcNacAXp3UjS/I8fehvFmVQlr41XXCTtu4SvDTL1Cpu6scHN
+	 Qww13BHijvlhbPkYcgSa6SpDnjO41q2dn+VsabztpMLcJFgqTKpH1Ho4U9fdQHf0f1mr4
+	 CluAYhmd7VCrK7G6wvqBKNY/9YtWgUjPSaFLr2L5yhKP78eJx3AvKuBNdziEnBBkB4mDH
+	 zF/ba6fO+OTnu/xGmJ0DwMQj1uJWlaHh5g3EG6RAb+uTMMV2FDp+spbIdjwq+gy8csGaS
+	 yuelSvdsWhh3Fetmpv75VDPiodZ3i2ZDgiQCc6XXqU3ZLFPcLsueolab3gO9EaJaDMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019447;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kxMlh8i3N7fQPgkDBWo77dGfqZ5V9/dKUj/SsHiqFds=;
-	b=eVFB3iUuf6LTlnScAwaSXN0CK1t2sBsVzUauNcJ7fI31IpGyvE+euNdLFkL1V48F/qSo
-	 XfNyRdVic9cP8ij3hOXMz/eMdi9ch/GI2mXWuAWXwowX3puMwlXTOk5/Qjoj7vmF8krzb
-	 YtEGmdPvcbeW95HcO234vuh4YF4OFOuORPPnUDzFFwAVE0KMqFEi0vehsOwHF8EWDj0mt
-	 S0xgU0dwxqsv8dn/5Or1usm+5MjJwAZE7zqXGx0BzUf3jFlYBC1XQqvMQPOwLfjTnYDLU
-	 cbOLq3nfGqMwdNWCqhnFO2p5ZPR+Y4+Z3PPlLaB6px39hR95SI7+qX0sDzV9tpzyOQA==
+	bh=JTaQaq9aopVTb51Z+IJNwBFsg9PD6MxFaGp4Ucbu24Y=;
+	b=APO6hN62VlN48EGIQ+hS3SqgAlU//7E7CRNzSObElAZzXaICK3DgRjeGA2DTgPAvVzVO
+	 5S25fesjAO2VILwB3Se/bx7Ne5g/r/C/42iZWK3Njujl9nFrD+jNs56UMpa/8duAJyIXP
+	 1OcYcmMpqHxHF4RWK4fMmeD7ING6D6yCHSXgmG179ZVf4mRz+MCxlewRT95+NT90YCecW
+	 DEpwr2EbZ+9QSb9SP9xgRoO2GBevQ1HcxKHDIaqrO4dK3US2H5oZom+E6istD5sFOEiLn
+	 HMpfMarLBKwh6gJ+xQfGJp0mesP8mOboGB354A+pthTs6OGYqSP7sQAhVew/1I6XAvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJnVznGi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgY3eHmi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB94160A2624;
-	Wed, 18 Nov 2026 16:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A02606B555;
+	Wed, 18 Nov 2026 16:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJnVznGi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179C91F000C5;
-	Wed, 18 Nov 2026 16:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgY3eHmi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4851F000C5;
+	Wed, 18 Nov 2026 16:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019444;
-	bh=kxMlh8i3N7fQPgkDBWo77dGfqZ5V9/dKUj/SsHiqFds=;
+	s=korg; t=1795019447;
+	bh=JTaQaq9aopVTb51Z+IJNwBFsg9PD6MxFaGp4Ucbu24Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJnVznGifRMdKP0c5QP5WEbhzpkD7nqlGvKQOYin6Zw92PlQB5c/hLgkbQsFg5zdH
-	 mCLSnaxnhYRMdxKsO230kAF/66TLgvqGgpRBq478WP8e44T+gNyv1ln88gRIbEvlHa
-	 I3UymoloMAI9oK9svlNAMMjKiWr0Xwli5eYDODXM=
+	b=OgY3eHmisQhoLnOAFQ4ay/ajQ2KvQBFnho5q5VgbJtNjpcwDumZ/kvILKcHzgWa8o
+	 UWLIOAK/OajUzZk+syDVfTQHZdH8HektlAYmZ/vUomxAcCwNMa83pFsurx3KzJyrEn
+	 XD+f2EdDimTiXlMujOaYuZSuBnHOq1L84JkQ3Etw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksim Krasutski <krasutskimaksim@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tushar Dave <tdave@nvidia.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Matt Evans <matt@ozlabs.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1598/2651] ALSA: hda/realtek: Fix mute LEDs on HP ENVY 17-cr1xxx
-Date: Wed, 18 Nov 2026 15:47:18 +0100
-Message-ID: <20261118150345.401651493@linuxfoundation.org>
+Subject: [PATCH 7.3 1572/2651] PCI/P2PDMA: Wait for RCU readers before freeing state
+Date: Wed, 18 Nov 2026 15:46:52 +0100
+Message-ID: <20261118150344.528559232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,45 +73,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksim Krasutski <krasutskimaksim@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit dd83323e4d5e22bd04f7506a9ec33533465c8393 ]
+[ Upstream commit 1b82c6657e957f598b6e19e045e0bbd5cb370083 ]
 
-The HP ENVY Laptop 17-cr1xxx with subsystem ID 103c:8be8 uses an
-ALC245 codec and two CS35L41 I2C speaker amplifiers. Its existing
-quirk configures the amplifiers but does not enable the speaker
-and microphone mute LED handlers.
+pci_p2pmem_find_many() scans all PCI devices without locking or protection
+against driver unbind, including devices with poolless P2PDMA state.
+pci_has_p2pmem() may observe pdev->p2pdma just before driver unbind clears
+it, while pci_p2pdma_release() skips the grace period when no pool is
+present. This allows devres to free the object while it is still in use.
 
-Select ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS to retain the
-amplifier setup and enable both mute indicators.
+Clear the pointer with RCU_INIT_POINTER() and always wait for pre-existing
+RCU readers before returning. The same grace period continues to protect
+gen_pool users for pool-backed providers.
 
-The equivalent change was tested on an HP ENVY 17-cr1xxx running
-Kubuntu 26.04.1 with kernel 7.0.0-38-generic. Both keyboard mute
-indicators were confirmed working.
-
-Fixes: aa8e3ef4fe53 ("ALSA: hda/realtek: Add quirks for various HP ENVY models")
-Assisted-by: LLM
-Signed-off-by: Maksim Krasutski <krasutskimaksim@gmail.com>
-Link: https://patch.msgid.link/20261010185335.30949-1-krasutskimaksim@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 372d6d1b8ae3 ("PCI/P2PDMA: Refactor to separate core P2P functionality from memory allocation")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tushar Dave <tdave@nvidia.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Matt Evans <matt@ozlabs.org>
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-2-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/p2pdma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 8d8a0b85d5618..e61cb50a8de97 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7734,7 +7734,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8be5, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be6, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be7, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x103c, 0x8be8, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8be8, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8be9, "HP Envy x360 2-in-1 Laptop 15-fh0xxx", ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8bfd, "HP Pavilion 15-eg3xxx", ALC287_FIXUP_HP_GPIO_LED),
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index 8124bcebfa2d3..52974809e1e18 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -236,9 +236,8 @@ static void pci_p2pdma_release(void *data)
+ 		return;
+ 
+ 	/* Flush and disable pci_alloc_p2p_mem() */
+-	pdev->p2pdma = NULL;
+-	if (p2pdma->pool)
+-		synchronize_rcu();
++	RCU_INIT_POINTER(pdev->p2pdma, NULL);
++	synchronize_rcu();
+ 	xa_destroy(&p2pdma->map_types);
+ 
+ 	if (!p2pdma->pool)
 -- 
 2.53.0
 
