@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050945;
-	b=YxiuP1OK1pmF4WBhpGU93dtw+fTzKxSVQzD0cCR1u0VeKVtE3kTr154ks8Ps1XlXyZEk
-	 AdLEG2LHVC37zRTxTd9jGnMnQbxVJGdX0yznvS3lQk5+gm/wsDAAoCwm6Ytt8ogxSBYtb
-	 3baOaBFgwYIuzFnthfUbnYLXcoGmoOQTeCgeizBiZum6AGIRoCivAJn4uF6/UDPu1Hk9p
-	 RF5pU2omRSw6QsyiXzS2syQaostL8+noK/MrmkuhLgWMgY0qh60udXV4XvDyWGrnkTtCt
-	 HmfD6JX0HaOh2tXmt5XFjR8G8616iI/nAaHw10KCWibn3+1A0p8kXjGdVTgCxBUgjtg==
+	t=1795050948;
+	b=O7jZJCgy7eBc5ZZU+SEETdD8aJq9AWr8URbKRJouBbUFIb9Ug9uhWKjk7+6gisnHowF7
+	 AGU+goY38A/k1/bH9pXNjpLmUOMpsIwoUvDQdRZB7/x3XRW09h+YF7RDfFfA6cuDnsPRr
+	 FDUgbhKaO7mxUAS+4+5oLtv2MuY6wqokpRl/7yOFMnccd+3O5FO+yn1cTb5kZG6xGjD5i
+	 ntl9JOaoPXTdcWbzm4T6Vgb9xBfvT3goUFUdGgzudqwkSysljYv3UGl+6CjkauwIopMT2
+	 nbOOQaXXKpxSeVVKDdCRv8tHXErx7eGFzrF6lccqir66FrYpk8aCu0pXVC4UnaZMKVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yrR0wy/PjCmWDdfa4tuDflgV+EKvFtmZoiVtUcyOm1Q=;
-	b=h3gUIgXHQfFI++DDZZGIQvt3O8byDbOxivVQauzpScvguo0s8uRDRikuj7FQ2momuFW8
-	 ZOLaXdZcMw8y3jbpq6Ys9wyN/pj+gG26tb4HUOqbyOQulzG46DdMKGHahAAzaKsYBWF03
-	 gfDKFZc/3kzofDbSt0lzJBZkP2V9w+g1KzYDOMe1nV3PGlqDOvuS2SDnFnBWw6vF7CV13
-	 /3oj5axhZAPDSerhcc65MBsVpBYJP/O1uiNYyX8Tt1JjeThcipovTYCtEgNiLdFVZ+UWr
-	 I2m88D0YGePbvt8ziHD4K20z/TTDOpX62yaNBeqOcuRCgiAzPlCBgd3V19rq4EI9qcg==
+	bh=ypXlzOCO/bEd3DYT5Rv1M4UBUPAHwGJ1DNfwXqjBAnE=;
+	b=wlmjXmS9sSNDAs1a2NMKprSnkIAVjsKiZqe+GBLlN9NMP8HEXBJ9P94cQBRwg5OmR4oj
+	 jHkdlvt1OErv9oE5Mn1wdx4PbgW3rDk5kjS6EbnhR0hJhwI0lFEAKqvlRYkl2QWoP+HmM
+	 NBkf9eHrkUmF+x1v0K8/d4T7DEIgZuwsMRLAV5LZx/Roz0KeVGL6S5wXWdgTnB6hktCBv
+	 E8jRzpGI04MpHvd+0b0ouugN15VEbcE1JwaQvXsfQQRArQKhE7fyJmReQJ1vig8l0/J5p
+	 F5bNoN0JbueBIYixZJzhdo9KHefkYXTvJvqZkLhO7uxKnbBiLqiyp19yjinyvTYYXkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZME3pe+j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLLl4nIV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983A9606A330;
-	Thu, 19 Nov 2026 01:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D74606A33F;
+	Thu, 19 Nov 2026 01:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZME3pe+j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15D61F000CB;
-	Thu, 19 Nov 2026 01:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLLl4nIV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3AD1F000CA;
+	Thu, 19 Nov 2026 01:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050945;
-	bh=yrR0wy/PjCmWDdfa4tuDflgV+EKvFtmZoiVtUcyOm1Q=;
+	s=korg; t=1795050948;
+	bh=ypXlzOCO/bEd3DYT5Rv1M4UBUPAHwGJ1DNfwXqjBAnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZME3pe+jrNHihDesqcL2pMKKABTfyp5oD6BvVMhyfxtSHG5G0/kcFvES4IM8awcg6
-	 NrHAE6jwqBtBig5EwR8yKbpvTkE4nW/9W7KHfZPy6PkxtSplqbQ1zVkfL0C7DgDhUw
-	 obUrlPPHUYsMMXODMnMo54zZT2r6SVxXsW0xXudo=
+	b=yLLl4nIV43JxGBfPIU2Hm22EGqrKNnbpzcYtLsmXOuyr0rPA+c+PxEBCJVGROUNfl
+	 H7Yug8+QT9Joq0P2PNfLpRsWZKK8HdWyBeQbyGvdBQAWeEh447nezPAAod91AlAhPG
+	 ku54pNZWEu6tKH7BCJbMTMIvQtbtGGe9XB8+nDDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0033/2214] ASoC: tlv320aic26: remove keyclick sysfs file
-Date: Wed, 18 Nov 2026 15:28:29 +0100
-Message-ID: <20261118150011.413137041@linuxfoundation.org>
+Subject: [PATCH 5.15 0034/2214] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
+Date: Wed, 18 Nov 2026 15:28:30 +0100
+Message-ID: <20261118150011.453804884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,46 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit ae375f8d063d71e598c0d7e14fc056154c84d7a7 ]
+[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
 
-aic26_probe() creates the keyclick sysfs file on the component device.
-The file callback uses the ASoC component pointer stored in the driver
-private data.
+hdac_hdmi_dev_probe() gets the HDA link before allocating and
+initializing the HDMI codec private data. Several later error
+paths return directly without dropping the link reference,
+leaving the hlink refcount unbalanced.
 
-There is no matching remove callback, so the sysfs file can remain after
-the component is removed while its backing component state is gone.
+Release the link reference on probe failures. Also turn display
+power off if the failure happens after it has been enabled.
 
-Add a component remove callback that removes the keyclick file.
+This issue was dicussed in:
+https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
+I think the paths fixed here are probe failure paths: the device
+has not been fully initialized or bound, and runtime PM suspend
+cannot be relied on to balance the reference taken during probe.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260615064549.34110-1-pengpeng@iscas.ac.cn
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic26.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320aic26.c b/sound/soc/codecs/tlv320aic26.c
-index 077415a572255..a863cd54b9528 100644
---- a/sound/soc/codecs/tlv320aic26.c
-+++ b/sound/soc/codecs/tlv320aic26.c
-@@ -321,8 +321,14 @@ static int aic26_probe(struct snd_soc_component *component)
- 	return 0;
- }
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 6a17926fa8692..7bfb3ee325212 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -2163,8 +2163,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
+ 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
  
-+static void aic26_remove(struct snd_soc_component *component)
-+{
-+	device_remove_file(component->dev, &dev_attr_keyclick);
-+}
-+
- static const struct snd_soc_component_driver aic26_soc_component_dev = {
- 	.probe			= aic26_probe,
-+	.remove			= aic26_remove,
- 	.controls		= aic26_snd_controls,
- 	.num_controls		= ARRAY_SIZE(aic26_snd_controls),
- 	.dapm_widgets		= tlv320aic26_dapm_widgets,
+ 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
+-	if (hdmi_priv == NULL)
++	if (hdmi_priv == NULL) {
++		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 		return -ENOMEM;
++	}
+ 
+ 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
+ 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
+@@ -2173,8 +2175,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
+ 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
+ 	hdmi_priv->hdev = hdev;
+ 
+-	if (!hdac_id)
++	if (!hdac_id) {
++		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 		return -ENODEV;
++	}
+ 
+ 	if (hdac_id->driver_data)
+ 		hdmi_priv->drv_data =
+@@ -2199,6 +2203,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
+ 	if (ret < 0) {
+ 		dev_err(&hdev->dev,
+ 			"Failed in parse and map nid with err: %d\n", ret);
++		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
++		snd_hdac_display_power(hdev->bus, hdev->addr, false);
+ 		return ret;
+ 	}
+ 	snd_hdac_refresh_widgets(hdev);
 -- 
 2.53.0
 
