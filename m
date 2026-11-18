@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018235;
-	b=h0yp0jj7fAkitHNtJhox7evcrH3acSztZ+pJNmjEmNR3tuqGo35/p/y485hDdXoqMTLv
-	 s9JyJpxWmE2ncilCss3m8N5aGCsnCvn53IA3QfI7XZsuIiUY+liwDbOfjkQHQozpZFQoT
-	 tIvEuSR4U0rpd1rGMzfWiurfwhh7BqJrOlE1ttknYv3Swn5n02Osr/oLxAHwf6NZxvQv6
-	 ooErVzPg8oP2OQJCxOSDbflStGffLY/30BsV7thzcMNgRhVxX/Dgvw8AIC8t5Mz7yvsev
-	 Fj2gJwi5B4nTK1FjQ4TsNj5clkOb5rkBI8fBGuzEBSmPVx9sejPV+EV1AJjvFXnmqnA==
+	t=1795018238;
+	b=YHaQ450gqMJTKwaRgfUHVhnShyQXaB8Kl8Cl2g4EZwZolG+UL+4qg568swFa+APy0ryT
+	 fvt8t8isp3HsOYnYC73Imu25C371rpiKkXXCCbBPP1UoaxgzLc+MIp/Dp6p08rvt4dy8I
+	 EcQW2ByE+XTnEP9+oSngvjEN1KTtWw5fpwE24ANjm1l1mjx4IOk1LEYHT3d/4uXtglhUN
+	 K4nqlO2daVRaK9B8Plv4REzcbQKAnqfkFvnJXSx84bK0AlcTFAEwlwFGXS3qUt4wUJigF
+	 r3HfiIjWQMEy5+MdLQ0VolIyjQdurVdkIUIObERSaiXblT5ag5p6f1omwoN63nZkdRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Exsagz1J6sNvcSUlngo0oPMr4o0EBv5ELDjt1RzrXiY=;
-	b=YD3vz3rKhqs/8+PedJ70oNIeKqK/ub444F0moeTjVRQ9L3+X4QlP527LImCunrZqPyGF
-	 PH5suK4yzPe6siiPBoTyHyf2Wj/OS+SALP9HWPVfsSr8B/roFT2uWXkh909uByELFj3R+
-	 qSB3HCLDr4F6AuoRn301Yx3RR9hxqOlfHcTfGkBXCVG6C5nnues1Efn3sSFBhse7wAGTZ
-	 ILBiYZE+rSU2wGm1Gqwy8r13gW15cANB5ZIkbE2/hevm/oKQcO+XziTVidEFq6NeNdKX+
-	 8B2OZ9/oyFxnXlz88QPEiJCGwhCptRvV7w1OaSU5QsCilNtQ4MZjuWZfD/ea2GvcNng==
+	bh=RleclYZA7wFpbFhtW8Yx8Z8bkHYrmNaRpRpOuKRokW0=;
+	b=4/PPEHeOYu0mYzvFomxqrBWi6Vxzt7tHJ0guwlbIfOiuVIcfnJ6+ygWaTmOTabcGA90z
+	 f8QOCmCo7gzH6AiI09/nJmvPiIRp5IkxxL3UFMIantqfhbHgXiri/9EEEE750Q9FNCENx
+	 sQ+DKRap63xfbrpHMZSZ0gljlxapEH7Q+UTa4exjrETQ62MwSvKMmNP9XYrYkVohRpMrN
+	 H4CxBB5mixG4p3XdEMg4LVjLBrqRgcnSmKTNGs4Xx/hAbc0210B+xDBxHsL8mRTgFpEua
+	 ovjmb7KCGbwansb3Jlk+OLBUR+fKjNeX9FC4G8Ri9L8pVXVESmSuhltEUzQBLSPSiUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdBMuP85;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zUkU59Xy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FC1606A31C;
-	Wed, 18 Nov 2026 16:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6598A606A330;
+	Wed, 18 Nov 2026 16:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdBMuP85
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC781F000C4;
-	Wed, 18 Nov 2026 16:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zUkU59Xy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50FB1F000C7;
+	Wed, 18 Nov 2026 16:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018235;
-	bh=Exsagz1J6sNvcSUlngo0oPMr4o0EBv5ELDjt1RzrXiY=;
+	s=korg; t=1795018238;
+	bh=RleclYZA7wFpbFhtW8Yx8Z8bkHYrmNaRpRpOuKRokW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdBMuP85BzUEeBH/CAUQsTIGvsYhp5pp7shSqPbEjMTqS7R8BKbf3xPAMUqRFwNRo
-	 KDKaGvfxYQy2U67eH/2zt+LXHG680c64rgIjghzM/U9LjkVY/79DYCHsvXsUY3RLih
-	 6Yg9gWyfwCNduiYmO9Sp0Dq1/5fym4UH1Le94eBY=
+	b=zUkU59XyDJzolL2dnPYfg3W6Ffrbb81tznjNp1gFcrPs8NHrRRqcIo4QuCdOdKabr
+	 WyGMjmWO1soMlgZczphxRQar2LsoEf/eZt+9ySyGxkfmJ/AONw2jqB7grNmvMMwP96
+	 mIh9LeVP9tKJKyLdNA0EO/mVOP7wgZxIHIa1NkV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Yixun Lan <dlan@kernel.org>,
+	Yuri Zaporozhets <yuriz@vodafonemail.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1167/2651] riscv: dts: spacemit: k3: Replace incorrect CLINT node with ACLINT nodes
-Date: Wed, 18 Nov 2026 15:40:07 +0100
-Message-ID: <20261118150330.023555150@linuxfoundation.org>
+Subject: [PATCH 7.3 1168/2651] ASoC: dwc: Use OF match data again for StarFive JH7110
+Date: Wed, 18 Nov 2026 15:40:08 +0100
+Message-ID: <20261118150330.059378790@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,96 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Yuri Zaporozhets <yuriz@vodafonemail.de>
 
-[ Upstream commit cc6371a7f5195387584e56054f3af671ff7354dc ]
+[ Upstream commit d532e2f5c288556075dc429941861391118787a0 ]
 
-The K3 implements separate ACLINT MSWI, MTIMER and SSWI devices. The
-existing CLINT node at 0xe081c000 incorrectly describes the SSWI
-register space in the non-secure window as a legacy CLINT.
+Commit d6d6c513f5d2 ("ASoC: dwc: Use ops to get platform data") made
+dw_i2s_probe() fetch its platform data with of_device_get_match_data(),
+and commit 52ea7c0543f8 ("ASoC: dwc: i2s: Add StarFive JH7110 SoC
+support") put the JH7110 configuration into the OF match table. Commit
+9c97790a07dc ("ASoC: dwc: Fix non-DT instantiation") then went back to
+pdev->dev.platform_data so that non-DT users such as AMD work again.
 
-The ACLINT register space is mapped at two base addresses: a secure
-window at 0xf1810000 and a non-secure window at 0xe0810000. The
-secure window exposes all three components, while the non-secure
-window only exposes SSWI; the MSWI and MTIMER offsets are reserved
-there. Moreover, depending on the eFuse configuration, the non-secure
-window may be entirely inaccessible, whereas the secure window is
-always available.
+Since then the JH7110 match data is never read. The probe runs neither
+the JH7110 clock and reset setup (i2s_pd_init) nor uses its capability
+flags; it configures the DAI from COMP_PARAM_1 instead. On the
+VisionFive 2, i2stx0 drives the bit and frame clocks for HDMI audio, but
+COMP_PARAM_1 reports it as slave-only, so the sound card fails to probe:
 
-Replace the CLINT node with the three ACLINT devices, all using
-secure-window addresses: MSWI and MTIMER for machine-level firmware
-such as OpenSBI, and SSWI for supervisor software interrupts.
+  designware-i2s 120b0000.i2s: ASoC error (-22): at snd_soc_dai_set_fmt() on 120b0000.i2s
+  asoc-simple-card sound-hdmi: probe with driver asoc-simple-card failed with error -22
 
-Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260918-k3-aclint-v3-6-cf4fd4050e14@pigmoral.tech
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Take the OF match data first and fall back to the platform data when
+there is none, so that both DT and non-DT users get their configuration.
+
+Tested on a VisionFive 2 v1.3B (v7.0.3 with local HDMI audio patches):
+the HDMI sound card now probes and plays through i2stx0. The non-DT
+path is build-tested only.
+
+Fixes: 9c97790a07dc ("ASoC: dwc: Fix non-DT instantiation")
+Assisted-by: LLM
+Signed-off-by: Yuri Zaporozhets <yuriz@vodafonemail.de>
+Link: https://patch.msgid.link/20261001192552.2904-1-yuriz@vodafonemail.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3.dtsi | 43 +++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 13 deletions(-)
+ sound/soc/dwc/dwc-i2s.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index b8c3fe5dbaa80..af56ab9f543a1 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -1258,19 +1258,6 @@ saplic: interrupt-controller@e0804000 {
- 			riscv,num-sources = <512>;
- 		};
+diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
+index 2e9fb79b1cd8b..2f483b78a2279 100644
+--- a/sound/soc/dwc/dwc-i2s.c
++++ b/sound/soc/dwc/dwc-i2s.c
+@@ -18,6 +18,7 @@
+ #include <linux/reset.h>
+ #include <linux/slab.h>
+ #include <linux/pm_runtime.h>
++#include <linux/property.h>
+ #include <sound/designware_i2s.h>
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
+@@ -913,13 +914,16 @@ static int jh7110_i2stx0_clk_cfg(struct i2s_clk_config_data *config)
  
--		clint: timer@e081c000 {
--			compatible = "spacemit,k3-clint", "sifive,clint0";
--			reg = <0x0 0xe081c000 0x0 0x4000>;
--			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>,
--					      <&cpu1_intc 3>, <&cpu1_intc 7>,
--					      <&cpu2_intc 3>, <&cpu2_intc 7>,
--					      <&cpu3_intc 3>, <&cpu3_intc 7>,
--					      <&cpu4_intc 3>, <&cpu4_intc 7>,
--					      <&cpu5_intc 3>, <&cpu5_intc 7>,
--					      <&cpu6_intc 3>, <&cpu6_intc 7>,
--					      <&cpu7_intc 3>, <&cpu7_intc 7>;
--		};
--
- 		/* sec_i2c3: 0xf0614000, not available from Linux */
+ static int dw_i2s_probe(struct platform_device *pdev)
+ {
+-	const struct i2s_platform_data *pdata = pdev->dev.platform_data;
++	const struct i2s_platform_data *pdata = device_get_match_data(&pdev->dev);
+ 	struct dw_i2s_dev *dev;
+ 	struct resource *res;
+ 	int ret, irq;
+ 	struct snd_soc_dai_driver *dw_i2s_dai;
+ 	const char *clk_id;
  
- 		mimsic: interrupt-controller@f1000000 {
-@@ -1300,5 +1287,35 @@ maplic: interrupt-controller@f1800000 {
- 			riscv,num-sources = <512>;
- 			status = "reserved";
- 		};
++	if (!pdata)
++		pdata = dev_get_platdata(&pdev->dev);
 +
-+		aclint_mswi: interrupt-controller@f1810000 {
-+			compatible = "spacemit,k3-aclint-mswi";
-+			reg = <0x0 0xf1810000 0x0 0x4000>;
-+			interrupts-extended = <&cpu0_intc 3>, <&cpu1_intc 3>,
-+					      <&cpu2_intc 3>, <&cpu3_intc 3>,
-+					      <&cpu4_intc 3>, <&cpu5_intc 3>,
-+					      <&cpu6_intc 3>, <&cpu7_intc 3>;
-+		};
-+
-+		aclint_mtimer: timer@f1814000 {
-+			compatible = "spacemit,k3-aclint-mtimer";
-+			reg = <0x0 0xf1814000 0x0 0x8000>;
-+			reg-names = "mtimecmp";
-+			interrupts-extended = <&cpu0_intc 7>, <&cpu1_intc 7>,
-+					      <&cpu2_intc 7>, <&cpu3_intc 7>,
-+					      <&cpu4_intc 7>, <&cpu5_intc 7>,
-+					      <&cpu6_intc 7>, <&cpu7_intc 7>;
-+		};
-+
-+		aclint_sswi: interrupt-controller@f181c000 {
-+			compatible = "spacemit,k3-aclint-sswi";
-+			reg = <0x0 0xf181c000 0x0 0x4000>;
-+			#interrupt-cells = <0>;
-+			interrupt-controller;
-+			interrupts-extended = <&cpu0_intc 1>, <&cpu1_intc 1>,
-+					      <&cpu2_intc 1>, <&cpu3_intc 1>,
-+					      <&cpu4_intc 1>, <&cpu5_intc 1>,
-+					      <&cpu6_intc 1>, <&cpu7_intc 1>;
-+		};
- 	};
- };
+ 	dev = devm_kzalloc(&pdev->dev, sizeof(*dev), GFP_KERNEL);
+ 	if (!dev)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
