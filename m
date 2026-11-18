@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018896;
-	b=qPQjBHb2fFjjRYF7xr5vofKY+cqPrKiaCSLcjDlO7wYlLYExJEDvvH8PsnzFSYGEzYJG
-	 i9tRgtUe10bAQBzM9WhSnSIC/khfQOetstQdl+tkw49nI1c8tdd3ELZF+gMOBoMOz+rM/
-	 oY3RkwTys7vBULSVOLVCmIbpzEhFfGOItoOflcyMVOskPoiSlpf78VCjdDtUxbSUy8GK/
-	 Kz8ycSd4Zz8Gt8+7f6TAmlDOnrvvFSbwstOlpPLnU4dipg1X3+mbAfbDATLbNPRiZLIWY
-	 RCXNTDv2LEHPfWo6tRqWHF2sqjc6G7osmdtmkR2NYGSqcjDQ38BRwsMc0R5CdEF6wXQ==
+	t=1795018899;
+	b=TtRyVcI8tbUYpeRWFjPKHYswKpOBmpSqLbIq4r3xTknq306OAxhpDT1xtCvZ7z0Rs/kn
+	 dZx3yJ3bFexGonMPWUs8D6/lAnqaIaY2OdxTJuNoet81PmQu6BC6yrdDnevDGtOkonOJ7
+	 kZFQ2Y20OSrF3W2K0sTWQVbmNDD9NJ6F/B8iJfXoTwFIbxt0ekHbS/I6T3GI6DjtY5lJ/
+	 1dV4bTJM61PvaydeC/hzhnE0lLFWCsKH343geaw5xoZi4eMtudlUYCm/mtPVwlIvOnIUD
+	 aVFTYuH6y59PrmweQV9a31tvpNpkGrJ3m0JoDvkVm0wXEl8c+Si1MvksmvXfQnk5SEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RPrdKqNKsXkgFHmPRFalErLe8/D7l3KaevoeSHv5qSQ=;
-	b=gH3jQHOJ/zBFOglwvtGztco183yIeHYJfYTDH4xbYO66vFXPRvsjIkwiuhIViwYDHMOO
-	 hKEx3pGLI4QTDghELeEu7uqJGLDzjlHQXitwngY9SFnCqR7dUSZ4n2smbhJjnUXPAUzhP
-	 c7QwO3Gx9VdWmDNCRNkKoDo65T/6WGRsREi63fzFAStA0It2l0gBw+JpW8x/53P6ZYFHV
-	 y97XXMQ4B+ZdQN9lBiKdgr+WSVfabZTXlrJe/vp9QcMAqZ6AwWWFfHJQ5ka3Wayil4AjH
-	 7mazJeb8n4/v1ABwtf5vnSEvHgpL66gBHLkV22o3eKzf1AO7RlMf/lqjoONmq7BBndg==
+	bh=VIaC3Y/36dKjlJcASpM9EzNDYcltqzNHwdSQCAIOrMY=;
+	b=eMWzt14xCSIRVPXk/kx3o1clUxjEq571QO+ff5HzNaZuMxpVhWAfEY4i7MI+IJJ5tdGc
+	 Ep6RIpBdwIIysrmKv3+xukoVr9M6RQLiEsB5GSUquZV5pBl2eoRbLmJL2+HzLD+5d3qgy
+	 RdH8MXT5cap99LKuEEMG9262gyxegqolfWaWMPM0fQ1JQ9FzA5CykrHdgw5+ZoTCTnaPX
+	 hdiswGu8HZ8CQjA+8d0eaTjlBXSBoXig9dYqe2ZajL1/16CoEWZ14/JVUcbSC5rbLkcn4
+	 QweF1ywaCbLupHlE/uq3Eq72uvqlf+d/u0oIqVodub0TteTcdHP4t3QbX3PPF/MVHkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fUfjpFF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0tBs8nk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E2E606A31C;
-	Wed, 18 Nov 2026 16:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FAB606A31C;
+	Wed, 18 Nov 2026 16:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fUfjpFF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617951F000C4;
-	Wed, 18 Nov 2026 16:21:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0tBs8nk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA9D1F000C4;
+	Wed, 18 Nov 2026 16:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018895;
-	bh=RPrdKqNKsXkgFHmPRFalErLe8/D7l3KaevoeSHv5qSQ=;
+	s=korg; t=1795018898;
+	bh=VIaC3Y/36dKjlJcASpM9EzNDYcltqzNHwdSQCAIOrMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1fUfjpFFNXDwzH7A2wyGggDo4AAALDAfcUNB+OBthoX5HB40b/CkuWQ97uw2HgN9A
-	 OOlZCiASjPWoDQQgLauH2HrsLyh3gZ/kI0lghkWGCBW1ryI9D+rPPm/LmNblFNTaku
-	 5e2Wn8slNSdWWejlPupO2lT2UuuP7QCWP2Y28OXo=
+	b=Q0tBs8nkCwO+iNHQKINE8ZXLIrFvaLq/JY48nukMpiG1K/8mo0ZPaV2Y4p4oUedM0
+	 H1Op3wIV2Ugijs1P+9+H3wTUtpehD+jQ/uHYMgKfa5Dfwmk7/vLUrfxu3nwVsN2qCy
+	 dYtKVO3O8IAwLF3EwNrHiiS9NLVX3eIJC8lQCPv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Priyank Rathod <rathodpriyank@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1404/2651] wifi: mm81x: check bytes_remaining before reading delimiter
-Date: Wed, 18 Nov 2026 15:44:04 +0100
-Message-ID: <20261118150338.559007167@linuxfoundation.org>
+Subject: [PATCH 7.3 1405/2651] PCI/AER: Fix struct pci_dev reference leak in aer_process_err_devices()
+Date: Wed, 18 Nov 2026 15:44:05 +0100
+Message-ID: <20261118150338.595583121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Priyank Rathod <rathodpriyank@google.com>
 
-[ Upstream commit 54a54c06868d0c2beb9ec3e2ffda0f6cb33d5c8e ]
+[ Upstream commit e86ac10110d00e6c3801f38bde1863951315222b ]
 
-mm81x_yaps_hw_read_pkts() reads a full 4-byte delimiter and then
-subtracts sizeof(delim) from bytes_remaining on every loop iteration,
-guarded only by "bytes_remaining > 0". If 1-3 bytes are left in the
-window, this reads past the end of the valid data and then subtracts
-4 from a value smaller than 4, driving bytes_remaining negative.
+When an AER error occurs, candidate error-source devices are added to
+e_info->dev[] by add_error_device(), which takes a reference with
+pci_dev_get().
 
-A negative bytes_remaining then reaches the total_len > bytes_remaining
-branch, where "bytes_remaining" is passed to memcpy() as the copy
-length. Implicitly converted to size_t, a negative int becomes a
-huge value, turning that memcpy() into a massive out-of-bounds copy.
+A device can be recorded without any error status being present: the
+Requester ID fast path in is_error_source(),
 
-Bail out of the split loop once fewer than sizeof(delim) bytes remain,
-the same way the existing "end of stream" check bails on a zero
-delimiter.
+  if (e_info->id == pci_dev_id(dev))
+    return true;
 
-Fixes: b1906cea00b0 ("wifi: mm81x: add mm81x Wi-Fi HaLow driver")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260919192231.272078-1-meatuni001@gmail.com
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+matches purely on the ID reported by the Root Port and returns true without
+reading the device's AER status registers.
+
+In aer_process_err_devices(), handle_error_source() is called only if
+aer_get_device_error_info() returns non-zero, i.e. only if an unmasked
+error status bit is actually set. It returns 0 if the device has become
+inaccessible (status and mask both read as all ones, so
+status & ~mask == 0) or if no unmasked status bit is set.
+
+Because handle_error_source() was responsible for calling pci_dev_put(),
+skipping it permanently leaks the reference taken in add_error_device().
+
+Decouple reference lifetime from error handling by moving pci_dev_put() out
+of handle_error_source() and into the aer_process_err_devices() loop, so
+every recorded device is put exactly once.
+
+handle_error_source() is static and aer_process_err_devices() is its only
+caller, so no other path is affected.
+
+Fixes: 60271ab044a5 ("PCI/AER: Take reference on error devices")
+Signed-off-by: Priyank Rathod <rathodpriyank@google.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260918-fix-aer-refcount-leak-v2-1-bdd1ff1c35a9@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/morsemicro/mm81x/yaps_hw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/pcie/aer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c b/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c
-index 3d641d23c35ba..e1102b8fb8020 100644
---- a/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c
-+++ b/drivers/net/wireless/morsemicro/mm81x/yaps_hw.c
-@@ -486,6 +486,9 @@ static int mm81x_yaps_hw_read_pkts(struct mm81x_yaps *yaps,
- 		int total_len;
- 		int pkt_size;
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index 6ab23318b4052..7f97e96de2a98 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -1341,7 +1341,6 @@ static void handle_error_source(struct pci_dev *dev, struct aer_err_info *info)
+ {
+ 	cxl_rch_handle_error(dev, info);
+ 	pci_aer_handle_error(dev, info);
+-	pci_dev_put(dev);
+ }
  
-+		if (bytes_remaining < (int)sizeof(delim))
-+			break;
-+
- 		delim = le32_to_cpu(*((__le32 *)read_ptr));
- 		read_ptr += sizeof(delim);
- 		bytes_remaining -= sizeof(delim);
+ #ifdef CONFIG_ACPI_APEI_PCIEAER
+@@ -1531,6 +1530,7 @@ static inline void aer_process_err_devices(struct aer_err_info *e_info)
+ 	for (i = 0; i < e_info->error_dev_num && e_info->dev[i]; i++) {
+ 		if (aer_get_device_error_info(e_info, i))
+ 			handle_error_source(e_info->dev[i], e_info);
++		pci_dev_put(e_info->dev[i]);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
