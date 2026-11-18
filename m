@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041766;
-	b=AbewwkoIT3eYi9T5qT8dIs2G5VuaMj38zm5kqfBqEAmFnto7HgAvMoqqvpm8dMrd5Smz
-	 ZUCXHfm5tH1NU1t7927e+Ryu/I63x57PMAaROTCfpBKRfayWWf/g5APyRsFlr/zm1LAUQ
-	 5vmfmtDjnz82l0XJplm5WxGmYmIab2JJVvaW6MN62w7Ff/gbTdbr9lJ0K9Ry/O7UyfEGG
-	 eNOWYU90jXfOnnOWccd+zEMcgAbi2aYuuL3OINjwT0zM2ctGJaX488nK62ToXIeUcklvt
-	 mwz0Um/JzRsTAgsEWALEkoAbKkSHHM1F2f89dLSxl+fDn/K7HHzjng6br0g9D1m7G/Q==
+	t=1795041769;
+	b=A41i2spgfrDYYKSzFX1Zb32hYOVUMLZtyS3Nk/QNbMJelkM3SQqSfR+8myoXkyVwhg3a
+	 Y5OYTt7v5INCX1Eu7k0yuVIqtgH1YaJb90YsqP0GrIG/JcvnlEuO0F4oXMw3PZth1RWyz
+	 P/TesuKNbAnvgenwVCi5tiBYUgjhhBewaxNAN7/M4h92goGXE9W4kxgB2TmKZ1fKLtTwt
+	 3a+cLanaPHJLH82QYk4IS5H9/dCjV28tLv+kEbB1H1Dfhtr3I3oeM4XEbC5ZsRgi0vbK6
+	 k6y3Rkt+AsFy3y/GRMBFHSiA4peF8gBY4myxB/niaggZihrGqYUZ7BNW3D7cR0Yfexw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QwyodEtAbK6hEes0ymHMosOuZZXAQ9eus2rI/BaNDxQ=;
-	b=Xwusd2J/vjGYs3zn7SGcOfYIIB4zilrUHQXwcsEMQwl9lXWEpxlYp8DSsAv5adYBwyYn
-	 bAk4+pD3PqwbcJAWXo0LmNpGbhCFJomD5D9YlZICKjaQYS3r8bGCiJCq5wUkaP0eDggAq
-	 2oXEoZlVKqQ/Re0KgMeyIRlGCMVU+sfGmrEeD388k1okyC0ucTdpzY7QWQ7LY91oIA1g4
-	 P0GIyqBn8yqAUeCsjYMFYS99P3wCiWN1jTYk3NQEzStN7aJW261rLd3bMQEvjDG/imXP5
-	 2K/7rtRXj+EFkuY22VWvMVdD/oU99rzYSatff0g0nXff1VY87MTFzUBg7AN7sVQsEOA==
+	bh=1lVJKbaN8KjP8YUdZCZaOhYV1xWO1X1ksCJJmC2yZmw=;
+	b=pf9gFYlkbCqMkyMs3WwaTkQJaJSwMNx1GFl9eeg1QQXQg96PxVpIxtHtileBY7lVxWq+
+	 STWnNxo9rDRsCheXqXPIEBG54/I8nB9E3Dtl/jE6rBcOWbc4FrQnccqxhZ6kZj7iB6Xbv
+	 2SVm0Mi0YRS1YEa4UHuP6mpPP6djF3D56GUJmORLmT0ry9mA01GfR0FXU7y/auUyRMk9e
+	 lG0rT6ObpiEcHtZFHWxkFRxg3bCgojy1IFDsr4tXBxUralA7ElSaL2i/+8zEGr8Kqhq9D
+	 Bp/eDiGQbY05vmQClfHshs6JN1U13a4H1eRKpHoHGRxBADDofPWpCFhVO22LW+YoYzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lP1hB9hP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmNmWbMh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EFD606A31C;
-	Wed, 18 Nov 2026 22:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE41606A32A;
+	Wed, 18 Nov 2026 22:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lP1hB9hP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18081F000C4;
-	Wed, 18 Nov 2026 22:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmNmWbMh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79D41F000C5;
+	Wed, 18 Nov 2026 22:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041766;
-	bh=QwyodEtAbK6hEes0ymHMosOuZZXAQ9eus2rI/BaNDxQ=;
+	s=korg; t=1795041769;
+	bh=1lVJKbaN8KjP8YUdZCZaOhYV1xWO1X1ksCJJmC2yZmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lP1hB9hPGl/qNZDTWjRmlUYfv8JQDKz6Mvt59cf3+D677P/ZSCP7H6sILLvGWjHAl
-	 saxgLhd1Gg2xZK4NU4W7TYTbPSj4+mN8o3egAG9PdIsw0G39mqsJZ6wo6ISP2pXNSv
-	 YbY1Ize5kCvSMO0wjBdsxQ0ldlli3vtbmfagWHhw=
+	b=wmNmWbMhyPlXbQgdmcZQqqS9ME1LkZ3rmcCkhtcHXHXNnNxFz/HNryLz6IVu+xbVT
+	 3PBFsmsHOp5btg4WdoOmwyOgcrHJN+CNrfVejboFqwbameO5U3oBpe9cBhf45HEDp/
+	 9gXgzcJymNjlK2PLEG0SUw3tz77cCiSmMyHATbbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2894/3318] Bluetooth: MSFT: Serialize handle map cleanup with event processing
-Date: Wed, 18 Nov 2026 15:58:36 +0100
-Message-ID: <20261118150447.319490913@linuxfoundation.org>
+Subject: [PATCH 6.6 2930/3318] ASoC: intel: avs: convert not to use asoc_xxx()
+Date: Wed, 18 Nov 2026 15:59:12 +0100
+Message-ID: <20261118150448.288652853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,95 +68,521 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 56e20c3d8ad340bbfc90221c4aae1c870485fb57 ]
+[ Upstream commit 5d2d1a48a2f7734aee273303fadbb5929b5b8d37 ]
 
-MSFT monitor handle mappings must remain valid while vendor events look
-up and use them under hdev->lock. msft_do_close() removes and frees the
-mappings without that lock.
+ASoC is now unified asoc_xxx() into snd_soc_xxx().
+This patch convert asoc_xxx() to snd_soc_xxx().
 
-hci_dev_close_sync() clears HCI_UP and drains the RX workqueue before
-MSFT cleanup. However, a transport callback that already passed
-hci_recv_frame()'s state check can queue a vendor event after the drain
-returns, if no earlier shutdown callback has quiesced reception. The
-driver close callback runs after MSFT cleanup, so event processing can
-overlap the unlocked removal. msft_monitor_device_evt() can then
-traverse freed list entries or read handle_data->mgmt_handle after it is
-freed.
-
-Take hdev->lock while resetting monitor states and removing handle
-mappings in msft_do_close(), as normal monitor cancellation already
-does. An active event reader then finishes before its mapping is freed,
-and later lookups see an empty handle map.
-
-An instrumented kernel produced this KASAN report (timestamps removed
-and unrelated frames omitted):
-
-    BUG: KASAN: slab-use-after-free in msft_vendor_evt+0x1906/0x1990
-    Read of size 2 at addr ffff888104df3602 by task kworker/u17:2/502
-
-    Workqueue: hci0 hci_rx_work
-    Call Trace:
-      [...]
-      msft_vendor_evt+0x1906/0x1990
-      hci_vendor_evt+0x6f/0x90
-      hci_event_packet+0x894/0xc70
-      [...]
-      hci_rx_work+0x3f8/0xfa0
-      [...]
-
-    Allocated by task 499:
-      [...]
-      msft_add_monitor_sync+0x6a8/0x10a0
-      msft_add_monitor_pattern+0x7f/0xb0
-      hci_add_adv_monitor+0x1fa/0x2e0
-      [...]
-
-    Freed by task 499:
-      [...]
-      kfree+0x307/0x580
-      msft_do_close+0x238/0x750
-      hci_dev_close_sync+0x546/0x1380
-      [...]
-
-    The buggy address belongs to the object at ffff888104df3600
-      which belongs to the cache kmalloc-32 of size 32
-    The buggy address is located 2 bytes inside of
-      freed 32-byte region [ffff888104df3600, ffff888104df3620)
-    [...]
-
-Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/871qf4qnfz.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 85bc213f96ac ("ASoC: Intel: avs: Unprepare a stream when recovery occurs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/intel/avs/boards/da7219.c   |  4 +--
+ sound/soc/intel/avs/boards/es8336.c   |  8 ++---
+ sound/soc/intel/avs/boards/i2s_test.c |  2 +-
+ sound/soc/intel/avs/boards/max98373.c |  2 +-
+ sound/soc/intel/avs/boards/max98927.c |  2 +-
+ sound/soc/intel/avs/boards/nau8825.c  |  8 ++---
+ sound/soc/intel/avs/boards/rt274.c    |  4 +--
+ sound/soc/intel/avs/boards/rt286.c    |  8 ++---
+ sound/soc/intel/avs/boards/rt298.c    |  8 ++---
+ sound/soc/intel/avs/boards/rt5663.c   |  8 ++---
+ sound/soc/intel/avs/boards/rt5682.c   |  8 ++---
+ sound/soc/intel/avs/boards/ssm4567.c  |  4 +--
+ sound/soc/intel/avs/pcm.c             | 44 +++++++++++++--------------
+ 13 files changed, 55 insertions(+), 55 deletions(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index a5199797b4256..7e8f0b13aba67 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -684,6 +684,8 @@ void msft_do_close(struct hci_dev *hdev)
+diff --git a/sound/soc/intel/avs/boards/da7219.c b/sound/soc/intel/avs/boards/da7219.c
+index 85014d98f7e8a..2059d61567384 100644
+--- a/sound/soc/intel/avs/boards/da7219.c
++++ b/sound/soc/intel/avs/boards/da7219.c
+@@ -90,7 +90,7 @@ static const struct snd_soc_jack_pin card_headset_pins[] = {
  
- 	bt_dev_dbg(hdev, "Cleanup of MSFT extension");
+ static int avs_da7219_codec_init(struct snd_soc_pcm_runtime *runtime)
+ {
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 	struct snd_soc_component *component = codec_dai->component;
+ 	struct snd_soc_card *card = runtime->card;
+ 	struct snd_soc_jack_pin *pins;
+@@ -140,7 +140,7 @@ static int avs_da7219_codec_init(struct snd_soc_pcm_runtime *runtime)
  
-+	hci_dev_lock(hdev);
-+
- 	/* The controller will silently remove all monitors on power off.
- 	 * Therefore, remove handle_data mapping and reset monitor state.
- 	 */
-@@ -698,6 +700,8 @@ void msft_do_close(struct hci_dev *hdev)
- 		kfree(handle_data);
+ static void avs_da7219_codec_exit(struct snd_soc_pcm_runtime *rtd)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
+ }
+ 
+ static int
+diff --git a/sound/soc/intel/avs/boards/es8336.c b/sound/soc/intel/avs/boards/es8336.c
+index 0a023f871d93a..6d2a7c8e445e4 100644
+--- a/sound/soc/intel/avs/boards/es8336.c
++++ b/sound/soc/intel/avs/boards/es8336.c
+@@ -97,7 +97,7 @@ static struct snd_soc_jack_pin card_headset_pins[] = {
+ 
+ static int avs_es8336_codec_init(struct snd_soc_pcm_runtime *runtime)
+ {
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 	struct snd_soc_component *component = codec_dai->component;
+ 	struct snd_soc_card *card = runtime->card;
+ 	struct snd_soc_jack_pin *pins;
+@@ -138,7 +138,7 @@ static int avs_es8336_codec_init(struct snd_soc_pcm_runtime *runtime)
+ static void avs_es8336_codec_exit(struct snd_soc_pcm_runtime *runtime)
+ {
+ 	struct avs_card_drvdata *data = snd_soc_card_get_drvdata(runtime->card);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 
+ 	snd_soc_component_set_jack(codec_dai->component, NULL, NULL);
+ 	gpiod_put(data->gpiod);
+@@ -147,8 +147,8 @@ static void avs_es8336_codec_exit(struct snd_soc_pcm_runtime *runtime)
+ static int avs_es8336_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *runtime = asoc_substream_to_rtd(substream);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_pcm_runtime *runtime = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 	int clk_freq;
+ 	int ret;
+ 
+diff --git a/sound/soc/intel/avs/boards/i2s_test.c b/sound/soc/intel/avs/boards/i2s_test.c
+index bc3065c6ceda7..1dd0c59a8d91b 100644
+--- a/sound/soc/intel/avs/boards/i2s_test.c
++++ b/sound/soc/intel/avs/boards/i2s_test.c
+@@ -32,7 +32,7 @@ static int avs_create_dai_link(struct device *dev, const char *platform_name, in
+ 		return -ENOMEM;
+ 
+ 	dl->cpus->dai_name = devm_kasprintf(dev, GFP_KERNEL, "SSP%d Pin", ssp_port);
+-	dl->codecs = &asoc_dummy_dlc;
++	dl->codecs = &snd_soc_dummy_dlc;
+ 	if (!dl->cpus->dai_name || !dl->codecs->name || !dl->codecs->dai_name)
+ 		return -ENOMEM;
+ 
+diff --git a/sound/soc/intel/avs/boards/max98373.c b/sound/soc/intel/avs/boards/max98373.c
+index 3833251ade265..7820435e3a53e 100644
+--- a/sound/soc/intel/avs/boards/max98373.c
++++ b/sound/soc/intel/avs/boards/max98373.c
+@@ -66,7 +66,7 @@ avs_max98373_be_fixup(struct snd_soc_pcm_runtime *runrime, struct snd_pcm_hw_par
+ static int avs_max98373_hw_params(struct snd_pcm_substream *substream,
+ 				  struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *runtime = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *runtime = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *codec_dai;
+ 	int ret, i;
+ 
+diff --git a/sound/soc/intel/avs/boards/max98927.c b/sound/soc/intel/avs/boards/max98927.c
+index 09b231bf4e6d6..ae465b231249c 100644
+--- a/sound/soc/intel/avs/boards/max98927.c
++++ b/sound/soc/intel/avs/boards/max98927.c
+@@ -66,7 +66,7 @@ avs_max98927_be_fixup(struct snd_soc_pcm_runtime *runrime, struct snd_pcm_hw_par
+ static int avs_max98927_hw_params(struct snd_pcm_substream *substream,
+ 				  struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *runtime = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *runtime = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *codec_dai;
+ 	int ret = 0;
+ 	int i;
+diff --git a/sound/soc/intel/avs/boards/nau8825.c b/sound/soc/intel/avs/boards/nau8825.c
+index 38c5087d98e97..9f15b22a3c3f6 100644
+--- a/sound/soc/intel/avs/boards/nau8825.c
++++ b/sound/soc/intel/avs/boards/nau8825.c
+@@ -106,12 +106,12 @@ static int avs_nau8825_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 	snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+ 	snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
+ 
+-	return snd_soc_component_set_jack(asoc_rtd_to_codec(runtime, 0)->component, jack, NULL);
++	return snd_soc_component_set_jack(snd_soc_rtd_to_codec(runtime, 0)->component, jack, NULL);
+ }
+ 
+ static void avs_nau8825_codec_exit(struct snd_soc_pcm_runtime *rtd)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
+ }
+ 
+ static int
+@@ -138,8 +138,8 @@ avs_nau8825_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pcm_hw_para
+ static int avs_nau8825_trigger(struct snd_pcm_substream *substream, int cmd)
+ {
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+-	struct snd_soc_pcm_runtime *rtm = asoc_substream_to_rtd(substream);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtm, 0);
++	struct snd_soc_pcm_runtime *rtm = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtm, 0);
+ 	int ret = 0;
+ 
+ 	switch (cmd) {
+diff --git a/sound/soc/intel/avs/boards/rt274.c b/sound/soc/intel/avs/boards/rt274.c
+index ebfee54814cee..b376d4c2d7063 100644
+--- a/sound/soc/intel/avs/boards/rt274.c
++++ b/sound/soc/intel/avs/boards/rt274.c
+@@ -87,7 +87,7 @@ static struct snd_soc_jack_pin card_headset_pins[] = {
+ 
+ static int avs_rt274_codec_init(struct snd_soc_pcm_runtime *runtime)
+ {
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 	struct snd_soc_component *component = codec_dai->component;
+ 	struct snd_soc_jack_pin *pins;
+ 	struct snd_soc_jack *jack;
+@@ -121,7 +121,7 @@ static int avs_rt274_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 
+ static void avs_rt274_codec_exit(struct snd_soc_pcm_runtime *rtd)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
+ }
+ 
+ static int avs_rt274_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pcm_hw_params *params)
+diff --git a/sound/soc/intel/avs/boards/rt286.c b/sound/soc/intel/avs/boards/rt286.c
+index 84cf9a0c8dfed..36da0578d5b47 100644
+--- a/sound/soc/intel/avs/boards/rt286.c
++++ b/sound/soc/intel/avs/boards/rt286.c
+@@ -67,12 +67,12 @@ static int avs_rt286_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 	if (ret)
+ 		return ret;
+ 
+-	return snd_soc_component_set_jack(asoc_rtd_to_codec(runtime, 0)->component, jack, NULL);
++	return snd_soc_component_set_jack(snd_soc_rtd_to_codec(runtime, 0)->component, jack, NULL);
+ }
+ 
+ static void avs_rt286_codec_exit(struct snd_soc_pcm_runtime *rtd)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
+ }
+ 
+ static int avs_rt286_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pcm_hw_params *params)
+@@ -98,8 +98,8 @@ static int avs_rt286_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pc
+ static int
+ avs_rt286_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *runtime = asoc_substream_to_rtd(substream);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_pcm_runtime *runtime = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 	int ret;
+ 
+ 	ret = snd_soc_dai_set_sysclk(codec_dai, RT286_SCLK_S_PLL, 24000000, SND_SOC_CLOCK_IN);
+diff --git a/sound/soc/intel/avs/boards/rt298.c b/sound/soc/intel/avs/boards/rt298.c
+index 3b0e2b1a32519..3cd8057f0ed64 100644
+--- a/sound/soc/intel/avs/boards/rt298.c
++++ b/sound/soc/intel/avs/boards/rt298.c
+@@ -78,12 +78,12 @@ static int avs_rt298_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 	if (ret)
+ 		return ret;
+ 
+-	return snd_soc_component_set_jack(asoc_rtd_to_codec(runtime, 0)->component, jack, NULL);
++	return snd_soc_component_set_jack(snd_soc_rtd_to_codec(runtime, 0)->component, jack, NULL);
+ }
+ 
+ static void avs_rt298_codec_exit(struct snd_soc_pcm_runtime *rtd)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
+ }
+ 
+ static int avs_rt298_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pcm_hw_params *params)
+@@ -109,8 +109,8 @@ static int avs_rt298_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pc
+ static int
+ avs_rt298_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
+ 	unsigned int clk_freq;
+ 	int ret;
+ 
+diff --git a/sound/soc/intel/avs/boards/rt5663.c b/sound/soc/intel/avs/boards/rt5663.c
+index 770b36d05bf42..2e84bd629766d 100644
+--- a/sound/soc/intel/avs/boards/rt5663.c
++++ b/sound/soc/intel/avs/boards/rt5663.c
+@@ -79,14 +79,14 @@ static int avs_rt5663_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 	snd_jack_set_key(jack->jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+ 	snd_jack_set_key(jack->jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
+ 
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(runtime, 0)->component, jack, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(runtime, 0)->component, jack, NULL);
+ 
+ 	return 0;
+ }
+ 
+ static void avs_rt5663_codec_exit(struct snd_soc_pcm_runtime *runtime)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(runtime, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(runtime, 0)->component, NULL, NULL);
+ }
+ 
+ static int
+@@ -113,8 +113,8 @@ avs_rt5663_be_fixup(struct snd_soc_pcm_runtime *runtime, struct snd_pcm_hw_param
+ static int avs_rt5663_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
+ 	int ret;
+ 
+ 	/* use ASRC for internal clocks, as PLL rate isn't multiple of BCLK */
+diff --git a/sound/soc/intel/avs/boards/rt5682.c b/sound/soc/intel/avs/boards/rt5682.c
+index b93468ae09773..f1c46c6abd9de 100644
+--- a/sound/soc/intel/avs/boards/rt5682.c
++++ b/sound/soc/intel/avs/boards/rt5682.c
+@@ -92,7 +92,7 @@ static struct snd_soc_jack_pin card_jack_pins[] = {
+ 
+ static int avs_rt5682_codec_init(struct snd_soc_pcm_runtime *runtime)
+ {
+-	struct snd_soc_component *component = asoc_rtd_to_codec(runtime, 0)->component;
++	struct snd_soc_component *component = snd_soc_rtd_to_codec(runtime, 0)->component;
+ 	struct snd_soc_card *card = runtime->card;
+ 	struct snd_soc_jack_pin *pins;
+ 	struct snd_soc_jack *jack;
+@@ -137,14 +137,14 @@ static int avs_rt5682_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 
+ static void avs_rt5682_codec_exit(struct snd_soc_pcm_runtime *rtd)
+ {
+-	snd_soc_component_set_jack(asoc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
++	snd_soc_component_set_jack(snd_soc_rtd_to_codec(rtd, 0)->component, NULL, NULL);
+ }
+ 
+ static int
+ avs_rt5682_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *runtime = asoc_substream_to_rtd(substream);
+-	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, 0);
++	struct snd_soc_pcm_runtime *runtime = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(runtime, 0);
+ 	int pll_source, freq_in, freq_out;
+ 	int ret;
+ 
+diff --git a/sound/soc/intel/avs/boards/ssm4567.c b/sound/soc/intel/avs/boards/ssm4567.c
+index 7db1b89b0d9e9..9418371a2ffc4 100644
+--- a/sound/soc/intel/avs/boards/ssm4567.c
++++ b/sound/soc/intel/avs/boards/ssm4567.c
+@@ -50,12 +50,12 @@ static int avs_ssm4567_codec_init(struct snd_soc_pcm_runtime *runtime)
+ 	int ret;
+ 
+ 	/* Slot 1 for left */
+-	ret = snd_soc_dai_set_tdm_slot(asoc_rtd_to_codec(runtime, 0), 0x01, 0x01, 2, 48);
++	ret = snd_soc_dai_set_tdm_slot(snd_soc_rtd_to_codec(runtime, 0), 0x01, 0x01, 2, 48);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	/* Slot 2 for right */
+-	ret = snd_soc_dai_set_tdm_slot(asoc_rtd_to_codec(runtime, 1), 0x02, 0x02, 2, 48);
++	ret = snd_soc_dai_set_tdm_slot(snd_soc_rtd_to_codec(runtime, 1), 0x02, 0x02, 2, 48);
+ 	if (ret < 0)
+ 		return ret;
+ 
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 69bb01ae25765..c3e1d9554ee1c 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -58,7 +58,7 @@ avs_dai_find_path_template(struct snd_soc_dai *dai, bool is_fe, int direction)
+ static int avs_dai_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai, bool is_fe,
+ 			   const struct snd_soc_dai_ops *ops)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct avs_dev *adev = to_avs_dev(dai->dev);
+ 	struct avs_tplg_path_template *template;
+ 	struct avs_dma_data *data;
+@@ -127,7 +127,7 @@ static int avs_dai_be_hw_params(struct snd_pcm_substream *substream,
+ 	struct snd_soc_pcm_runtime *fe, *be;
+ 	struct snd_soc_dpcm *dpcm;
+ 
+-	be = asoc_substream_to_rtd(substream);
++	be = snd_soc_substream_to_rtd(substream);
+ 	for_each_dpcm_fe(be, substream->stream, dpcm) {
+ 		fe = dpcm->fe;
+ 		fe_hw_params = &fe->dpcm[substream->stream].hw_params;
+@@ -167,7 +167,7 @@ static int avs_dai_nonhda_be_startup(struct snd_pcm_substream *substream, struct
+ 
+ static void avs_dai_nonhda_be_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct avs_dev *adev = to_avs_dev(dai->dev);
+ 	struct avs_dma_data *data;
+ 
+@@ -216,7 +216,7 @@ static int avs_dai_nonhda_be_prepare(struct snd_pcm_substream *substream, struct
+ static int avs_dai_nonhda_be_trigger(struct snd_pcm_substream *substream, int cmd,
+ 				     struct snd_soc_dai *dai)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct avs_dma_data *data;
+ 	int ret = 0;
+ 
+@@ -303,7 +303,7 @@ static int avs_dai_hda_be_hw_params(struct snd_pcm_substream *substream,
+ static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+ 	struct avs_dma_data *data;
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct hdac_ext_stream *link_stream;
+ 	struct hdac_ext_link *link;
+ 	struct hda_codec *codec;
+@@ -320,7 +320,7 @@ static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct sn
+ 	data->path = NULL;
+ 
+ 	/* clear link <-> stream mapping */
+-	codec = dev_to_hda_codec(asoc_rtd_to_codec(rtd, 0)->dev);
++	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
+ 	link = snd_hdac_ext_bus_get_hlink_by_addr(&codec->bus->core, codec->core.addr);
+ 	if (!link)
+ 		return -EINVAL;
+@@ -333,7 +333,7 @@ static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct sn
+ 
+ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct hdac_ext_stream *link_stream = runtime->private_data;
+ 	struct hdac_ext_link *link;
+@@ -345,7 +345,7 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
+ 	if (link_stream->link_prepared)
+ 		return 0;
+ 
+-	codec = dev_to_hda_codec(asoc_rtd_to_codec(rtd, 0)->dev);
++	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
+ 	bus = &codec->bus->core;
+ 	format_val = snd_hdac_calc_stream_format(runtime->rate, runtime->channels, runtime->format,
+ 						 runtime->sample_bits, 0);
+@@ -372,7 +372,7 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
+ static int avs_dai_hda_be_trigger(struct snd_pcm_substream *substream, int cmd,
+ 				  struct snd_soc_dai *dai)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct hdac_ext_stream *link_stream;
+ 	struct avs_dma_data *data;
+ 	int ret = 0;
+@@ -500,7 +500,7 @@ static int avs_dai_fe_startup(struct snd_pcm_substream *substream, struct snd_so
+ 
+ static void avs_dai_fe_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct avs_dev *adev = to_avs_dev(dai->dev);
+ 	struct avs_dma_data *data;
+ 
+@@ -534,7 +534,7 @@ static int avs_dai_fe_hw_params(struct snd_pcm_substream *substream,
+ 	hdac_stream(host_stream)->period_bytes = 0;
+ 	hdac_stream(host_stream)->format_val = 0;
+ 
+-	fe = asoc_substream_to_rtd(substream);
++	fe = snd_soc_substream_to_rtd(substream);
+ 	for_each_dpcm_be(fe, substream->stream, dpcm) {
+ 		be = dpcm->be;
+ 		be_hw_params = &be->dpcm[substream->stream].hw_params;
+@@ -641,7 +641,7 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
+ 
+ static int avs_dai_fe_trigger(struct snd_pcm_substream *substream, int cmd, struct snd_soc_dai *dai)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct avs_dma_data *data;
+ 	struct hdac_ext_stream *host_stream;
+ 	struct hdac_bus *bus;
+@@ -872,7 +872,7 @@ static int avs_dai_resume_hw_params(struct snd_soc_dai *dai, struct avs_dma_data
+ 	int ret;
+ 
+ 	substream = data->substream;
+-	rtd = asoc_substream_to_rtd(substream);
++	rtd = snd_soc_substream_to_rtd(substream);
+ 
+ 	ret = dai->driver->ops->hw_params(substream, &rtd->dpcm[substream->stream].hw_params, dai);
+ 	if (ret)
+@@ -967,7 +967,7 @@ static int avs_component_pm_op(struct snd_soc_component *component, bool be,
+ 	for_each_component_dais(component, dai) {
+ 		data = snd_soc_dai_dma_data_get_playback(dai);
+ 		if (data) {
+-			rtd = asoc_substream_to_rtd(data->substream);
++			rtd = snd_soc_substream_to_rtd(data->substream);
+ 			if (rtd->dai_link->no_pcm == be && !rtd->dai_link->ignore_suspend) {
+ 				ret = op(dai, data);
+ 				if (ret < 0) {
+@@ -980,7 +980,7 @@ static int avs_component_pm_op(struct snd_soc_component *component, bool be,
+ 
+ 		data = snd_soc_dai_dma_data_get_capture(dai);
+ 		if (data) {
+-			rtd = asoc_substream_to_rtd(data->substream);
++			rtd = snd_soc_substream_to_rtd(data->substream);
+ 			if (rtd->dai_link->no_pcm == be && !rtd->dai_link->ignore_suspend) {
+ 				ret = op(dai, data);
+ 				if (ret < 0) {
+@@ -1084,7 +1084,7 @@ static const struct snd_pcm_hardware avs_pcm_hardware = {
+ static int avs_component_open(struct snd_soc_component *component,
+ 			      struct snd_pcm_substream *substream)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 
+ 	/* only FE DAI links are handled here */
+ 	if (rtd->dai_link->no_pcm)
+@@ -1102,12 +1102,12 @@ static unsigned int avs_hda_stream_dpib_read(struct hdac_ext_stream *stream)
+ static snd_pcm_uframes_t
+ avs_component_pointer(struct snd_soc_component *component, struct snd_pcm_substream *substream)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct avs_dma_data *data;
+ 	struct hdac_ext_stream *host_stream;
+ 	unsigned int pos;
+ 
+-	data = snd_soc_dai_get_dma_data(asoc_rtd_to_cpu(rtd, 0), substream);
++	data = snd_soc_dai_get_dma_data(snd_soc_rtd_to_cpu(rtd, 0), substream);
+ 	if (!data->host_stream)
+ 		return 0;
+ 
+@@ -1132,7 +1132,7 @@ static int avs_component_mmap(struct snd_soc_component *component,
+ static int avs_component_construct(struct snd_soc_component *component,
+ 				   struct snd_soc_pcm_runtime *rtd)
+ {
+-	struct snd_soc_dai *dai = asoc_rtd_to_cpu(rtd, 0);
++	struct snd_soc_dai *dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 	struct snd_pcm *pcm = rtd->pcm;
+ 
+ 	if (dai->driver->playback.channels_min)
+@@ -1436,7 +1436,7 @@ static void avs_component_hda_remove(struct snd_soc_component *component)
+ static int avs_component_hda_open(struct snd_soc_component *component,
+ 				  struct snd_pcm_substream *substream)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct hdac_ext_stream *link_stream;
+ 	struct hda_codec *codec;
+ 
+@@ -1470,7 +1470,7 @@ static int avs_component_hda_open(struct snd_soc_component *component,
+ 		return snd_soc_set_runtime_hwparams(substream, &hwparams);
  	}
  
-+	hci_dev_unlock(hdev);
-+
- 	mutex_lock(&msft->filter_lock);
- 	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
- 				 list) {
+-	codec = dev_to_hda_codec(asoc_rtd_to_codec(rtd, 0)->dev);
++	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
+ 	link_stream = snd_hdac_ext_stream_assign(&codec->bus->core, substream,
+ 					     HDAC_EXT_STREAM_TYPE_LINK);
+ 	if (!link_stream)
+@@ -1483,7 +1483,7 @@ static int avs_component_hda_open(struct snd_soc_component *component,
+ static int avs_component_hda_close(struct snd_soc_component *component,
+ 				   struct snd_pcm_substream *substream)
+ {
+-	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct hdac_ext_stream *link_stream;
+ 
+ 	/* only BE DAI links are handled here */
 -- 
 2.53.0
 
