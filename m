@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055105;
-	b=cm8FeZoqGTmzLkE7K9/8oEb9gvnRNyTXr8ePQkz7czFlYbADrkPTxT5e4vlXWrldsbgN
-	 Mmcxpva0E57r5MpnK/IZyYSYTnR25xA6tRl3dsWFgH6N10Rh6UZM4rDAkhHNHqE+z4MKY
-	 TN5kaUykFC665utLDeDLZuG8L7R26rZnDn5sp3dImhGyPM4RAS920cw0zmRFahAZwqR13
-	 zqkMl7kNd7YZMQMK3KoZ+RzOPlYb3qHPU/sLcb8qC/anEp7GuGwPZXWChw43pM8SxnZrr
-	 87l2WMOCVPpLljNLdNmF6idQZjzQsKD/Fm9yO2GI1epOhlth6clvDWUODPPrsbzoFRA==
+	t=1795055108;
+	b=nSK9H7jbH+NQyWi8/swSDIajQiIIIc4CDUxm5WR5TYViCIx+ukNOZzttNu4EtCDMpSMX
+	 tn0SAcYVx2dX85+yOnFCP6iWt4TECGAixTgrA4O6URRirxITZKnCsJaz+3CtF421MX5Vg
+	 Gdv+MfD/LShUCRLc/JM0zWhu1pInK0uWq+Djsd/ObBiabpdQMjB2wH6NWpp8R5rvV/0CR
+	 MDqyI+0tZNIzCGnaY3pTvAqvmN9R5+62bwrPk8qG0mSSk+bhPP3b5BvOIJupx02v4mXZT
+	 Psm9eE8vSAUP1sCT1jqxnN99ZM9cHNwjIjnCL47jOBbJX1HG592BLSdMsiksSlRfVLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4JUC2AZf5W5Tb2C68KvxaoQCUsG2JS0XRMoJtqxQI4Y=;
-	b=oYGmIDgXEJMjNT2fiMaCHHTIf/7666IbfaV0fMyJZKewW5d420xudaKmKeMvvoPdLXuc
-	 lSho/o+yt2ts6TipsL1E3GhBw4nrekGyuyf6wEh+NEXnfpPpVYrmVQ1cusJlFOHqZan/H
-	 QVjeHRtLiDLSYiRTu/jUsg/BIknJ8IdIwr5/9jTpUxCIQMNM42OuMN0DeUCT6uB8f5ta3
-	 DvlRAR0HJcEo0JttEFx2nQXUEQtfeQUK7Szi+3RfcKS7UI8BX4HQDe6mNL/mpjPsJTXK5
-	 bwxt88CstrQ2vrsN0/e51mTv79kVWQ+yYVURoNMMtjMWhrgMMrrkCEYoBEOli2gd8hQ==
+	bh=+taVC5L09WQsGWCWfNKSNkBny/dqKgHSTV4GHEuiiQw=;
+	b=V0n2QwjdtbpqG8hR7/GSS9rC6U4JYyPFl+ArpdyyljJV9Ryd1/v6Hr5K32oT7CIiR9Vd
+	 8wBTS7k0egCopVB39SZc2kXMRpA3SXjGxrRP/rL/PMDdk7fU8P+M9x+yd0CKpjAlXC2ta
+	 rLWHuxwdjG4/zC5Am+6UAg8vOA9HyrzIAOSPQhWEC9I0oKDo0Z8V/8gt4ellXJ1J6a73/
+	 glgM0uis5KwfBuxtuBRpn2iKIpSpr5bXqgO8U0ijXdZZRQE17OF8+Z2m68OG86KoFMnsX
+	 /hBJnh5h1X1IEiLkruYZ32rkGKnYGxkfFTioDQ/LV3+X1GN8esVbv3uqijLXoL0ypeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtgrMLA9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xO9gqHad;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47F4606A31C;
-	Thu, 19 Nov 2026 02:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E33A606A320;
+	Thu, 19 Nov 2026 02:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtgrMLA9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410221F000C4;
-	Thu, 19 Nov 2026 02:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xO9gqHad
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2549D1F000C4;
+	Thu, 19 Nov 2026 02:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055104;
-	bh=4JUC2AZf5W5Tb2C68KvxaoQCUsG2JS0XRMoJtqxQI4Y=;
+	s=korg; t=1795055107;
+	bh=+taVC5L09WQsGWCWfNKSNkBny/dqKgHSTV4GHEuiiQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rtgrMLA9iLpRChMkaQYA8jieafKxt/7z9z4nzIEma6vsovdj2I4zoxHZcz2PPrVqh
-	 oP7D7kmEsNbph+mCzz//8Wlp6ODGRVjMM5hhs0Eml6+qDxMxtAY8kYw/3//4UIFG75
-	 h2HONCg2tbqCP6C3yH99BpvkCpB2abF4BsDlqpyU=
+	b=xO9gqHadkIv6jFXp7koSJm/no+gpC6hSi926/azfi4RTIgfgw8zZ0eKbLClNugJP0
+	 xDnwSE87xa5dgM9H9/YMMiVYkn6DBq9SdHZTh+4xlIDI8n8NmM30oYat7TLzpKXW3P
+	 giVdkGW1XUxuF4h+39Azt68UMdytJDpMGdyJGlYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Wang <wangjia@ultrarisc.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1461/2214] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
-Date: Wed, 18 Nov 2026 15:52:17 +0100
-Message-ID: <20261118150109.508696544@linuxfoundation.org>
+Subject: [PATCH 5.15 1506/2214] RDMA/uverbs: Make CQ handle mandatory for WQ creation
+Date: Wed, 18 Nov 2026 15:53:02 +0100
+Message-ID: <20261118150112.226695124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,44 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Wang <wangjia@ultrarisc.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit e6b49f8016ee8b642e8e495d1704342ee0b35d72 ]
+[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
 
-axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
-walk the hw_desc[] array of a single transaction. If multiple
-transactions have allocated LLIs, the channel count can exceed the
-transaction-local nr_hw_descs and make the DMA error path read past the
-end of hw_desc[].
+UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
+method definition, so the mandatory attribute bitmap does not enforce
+its presence.  When userspace omits it, uverbs_attr_get_obj() returns
+ERR_PTR(-ENOENT) and the handler stores that error pointer into
+wq_init_attr.cq without validation.
 
-Use the descriptor-local nr_hw_descs count when dumping LLIs.
+The bogus cq pointer is then passed to the driver's create_wq callback.
+In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
+container_of to the ERR_PTR value, producing a near-NULL pointer.  The
+subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
+dereference:
 
-Fixes: ef6fb2d6f1ab ("dmaengine: dw-axi-dmac: simplify descriptor management")
-Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260902-dma-fix-v3-2-414c6449fbcc@ultrarisc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000296
+  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
+  Call Trace:
+   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
+   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
+   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
+   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
+   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
+
+A WQ without a CQ was never valid; the legacy write path always required
+one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
+attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
+when the CQ handle is missing, before the handler ever runs.
+
+Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 32faa698eab88..afae2f218bed1 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1001,10 +1001,7 @@ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
- static void axi_chan_list_dump_lli(struct axi_dma_chan *chan,
- 				   struct axi_dma_desc *desc_head)
- {
--	int count = atomic_read(&chan->descs_allocated);
--	int i;
--
--	for (i = 0; i < count; i++)
-+	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
- 		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
- }
- 
+diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
+index 7ded8339346f3..c23f455231bf0 100644
+--- a/drivers/infiniband/core/uverbs_std_types_wq.c
++++ b/drivers/infiniband/core/uverbs_std_types_wq.c
+@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
+ 			UVERBS_OBJECT_CQ,
+ 			UVERBS_ACCESS_READ,
+-			UA_OPTIONAL),
++			UA_MANDATORY),
+ 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
+ 		       UVERBS_OBJECT_ASYNC_EVENT,
+ 		       UVERBS_ACCESS_READ,
 -- 
 2.53.0
 
