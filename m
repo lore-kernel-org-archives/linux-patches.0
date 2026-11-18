@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056198;
-	b=SACIG3LgoajwCFocim841Kf+4V0Gg/XK5beaBp0Qqtp2fp9bMlI1QrK/Z6uePGWEjx4a
-	 /g1Y93Jks8i5XkWXYLBKms97lVu2xKcvxTpgLUBUUZSQSoUnJ6mPyMI1yIzpA7ssYQ3AH
-	 K0SgWwEIkgr4z1w0z40XqJTktE+vGCO1+uMQhvXPdE0690KlkfIth3LKriXBNJ3GQmL8r
-	 9JjuNdiXWb4A3ggkdzwdB1yQ9herrQ/vg2DUYUwxYjYaeyVyyjBeOg8V4LebH3jRIZ0BU
-	 +Zrm4q+fNd7rFNN7G8puHKWsrMtkBGzPKu/7bJBUpcle+g55HLE6gLq7t4NJWqVnIuw==
+	t=1795056202;
+	b=bB2DfF50ph8gdW0K4r+aMf2Hc4ispf+4v8/NwKessfZJH+TQcegTFrc9O6AyRBgAP2Ag
+	 bt6UktvH5DtBAv6XLaBhREkenv9iZxDFs92DO6oNgWriaTZqcPffg5/y90V1di9D2couA
+	 nvt1pi15uz5q2UF+DBOnVY69aVIcax9YhnpwZQfFUOGOaCqnK22exzemfrS3QG46FW5Ya
+	 ojjt9jyG2DOqTeftavBdgrflOY4fnGcDHXGk81aWle3Sxue+IPW3uv3276H0/WL0a4my1
+	 78zEiw38Kmob/2XSjl1arEuZKbZg7Tl7WlWfOY8HMk2BH1qVBYKC+IpylmXdn9vmmqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056198;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2gHwMYCb8jpnkWUt/nG1Hpx2HLzyt7+pvaImELi8Xb4=;
-	b=5jb0WZtYfn2hoYuQ4b2wCKUs+pHq8m095ysLvHHO2huOFreBddX8uxat68eSfATDooM3
-	 E8AKJkWkp06d6vA7RuV/Um3/BuQVa4ooYiP6F4hg4Fkq6XMLI4wLbCnEL6yuDgvwO12b7
-	 tmW3JtOF9ZZEqmUOVtjPSWQD0ihMr+3aKP7t4FKl5pEHwGdX3JM/JpIfZoPhCNH4FXi46
-	 3R8o2n6ZuF4ccp7AeOba0dniiZX4zWGDojn/Hf1qFEwvDdyymd0Z+wXWCHjt4quROF73I
-	 2eBFCa8Qrnc416h2CZALGy4nB6SJQzORwKV5w5TXs6vLfEdSgsLp0WpHgqvTkHM6KCw==
+	bh=O7VxQL/gdVogJ0P3c26S27uOZWKLHXpdVg9KmIFWux4=;
+	b=LSn54np1LKFIVhoNxCUtd0Stk7QC0OdYLpzfVBtnp09TH3em0Ps569D0+IWyxWPwuBpQ
+	 sISZmjWRyFjhiO8NvM7mzhN/3atB073n8RYOAmpi1VkVKPhhoYtZD9YDZUcXZX/hrrQWo
+	 yZRMM0GJ/uR/LYDwK4iiXVWm+AGP5oWsh+FmR9V2vMjYsDSkVYBAn4+N4qZgoLj2hphkn
+	 +jUFQKs7XRZGlFRp+kr1NeEC4RsNp9jIHS7077SLYrcF1tGKty/b2OSbIhD7Sv3vZNTvx
+	 JbRNp2U+OxzbQH2mBkHILt9mN6X/tsghryG2ngac//gbG84G0NHvIVRNOnPLxneBJjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3ukHqZi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2i1IyLC6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655B8606A320;
-	Thu, 19 Nov 2026 02:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D6A606A320;
+	Thu, 19 Nov 2026 02:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3ukHqZi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B491F000C4;
-	Thu, 19 Nov 2026 02:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2i1IyLC6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4361F000C5;
+	Thu, 19 Nov 2026 02:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056197;
-	bh=2gHwMYCb8jpnkWUt/nG1Hpx2HLzyt7+pvaImELi8Xb4=;
+	s=korg; t=1795056201;
+	bh=O7VxQL/gdVogJ0P3c26S27uOZWKLHXpdVg9KmIFWux4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3ukHqZiHN3egWSF8NdRR0nXCHjY/+T7wFYw8U50KELiw87dC1+N3P4MQNzhhzgnr
-	 kw35/ybzEMEYKaDlQNPdWqczi6zqOPsQH4lan+6/jh4B/UTDcF7M4eEyJTFj5eI3e+
-	 CYhX2k0YuaSSM62wxZWqxQ5wf/uVul0N1SV/Q+p8=
+	b=2i1IyLC6U0GXNncpeWrCdyl1fx0383Ar36FAk3F+uAr2TQcQ5RqTo0RSmiAino5xf
+	 t20pzmvr1Jwqcfo+durLO9zCBEOupjj6yEMNf219p86VVkGO3Zxc/WyQ2BPBNTPX1V
+	 jAmpDi0CLkk/OgXofQet+LFx/ryjenDKvRBDhgws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1862/2214] ALSA: rawmidi: Drain input work before freeing the runtime
-Date: Wed, 18 Nov 2026 15:58:58 +0100
-Message-ID: <20261118150125.820358967@linuxfoundation.org>
+Subject: [PATCH 5.15 1863/2214] calipso: hash the cache key, not the option start, in calipso_cache_add()
+Date: Wed, 18 Nov 2026 15:58:59 +0100
+Message-ID: <20261118150125.854361914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,63 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 8c3529f0a8faaac7d73333486f69da1617ecc579 ]
+[ Upstream commit d538cc3ec0bc4cb7b40981b3213a6c6671959ed5 ]
 
-The input runtime embeds event_work, so the work must be drained before
-close_substream() frees the runtime. The cancellation in
-snd_rawmidi_input_trigger() runs before close clears substream->opened,
-leaving a window for snd_rawmidi_receive() to enqueue more work.
+calipso_cache_add() stores calipso_ptr + 2 as the cache key, but
+computes entry->hash over calipso_ptr, i.e. starting two bytes earlier
+at the option type and length.  calipso_opt_getattr() looks entries up
+with calipso_cache_check(calipso + 2, calipso[1], ...), which hashes the
+key itself.
 
-With a sequencer subscription to a USB MIDI input port, an in-flight
-completion can overlap the last subscription's midisynth_unsubscribe():
+The two hashes only match on a jhash collision, so the CALIPSO label
+cache never hits and every labelled packet takes the full DOI lookup and
+category conversion path.  The memcmp() on the key keeps lookups
+correct, so this is a performance bug only.
 
-1. snd_usbmidi_input_data() observes input_triggered and is delayed
-   before calling snd_rawmidi_receive().
-2. Unsubscribe enters close_substream(), clears input_triggered through
-   the provider trigger callback and returns from cancel_work_sync().
-   The substream is still opened.
-3. The completion resumes. snd_rawmidi_receive() takes substream->lock,
-   sees opened set and queues runtime->event_work before dropping the
-   lock.
-4. Close clears opened under that lock, closes the provider and frees
-   the runtime. Stopping USB URBs does not drain the raw-MIDI work.
-5. The queued work runs and snd_rawmidi_input_event_work() reads event
-   or substream from the freed runtime, causing a use-after-free.
+Hash the stored key, as cipso_v4_cache_add() does for CIPSO.
 
-Cancel input event_work again after clearing opened, before closing the
-provider or releasing the runtime's private data. Receive holds
-substream->lock through its opened check and work enqueue, so once close
-has cleared opened under that lock, no further receive can queue work.
-The final cancellation therefore drains any late work before the
-runtime is freed. Keep it outside the spinlock so a running callback can
-finish.
-
-Fixes: b3c705aa9e91 ("ALSA: rawmidi - Use workq for event handling")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-98489078ab56528d8e4a-v2-9408ce8c8f3c70b5c10d@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4fee5242bf41 ("calipso: Add a label cache.")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/179138670045.80227.16155454353416856947@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/rawmidi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/calipso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
-index b1632ab432cf7..add1cea72c4c7 100644
---- a/sound/core/rawmidi.c
-+++ b/sound/core/rawmidi.c
-@@ -522,6 +522,9 @@ static void close_substream(struct snd_rawmidi *rmidi,
- 				snd_rawmidi_output_trigger(substream, 0);
- 		}
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 72079ef2959b9..e4e2ee5059c3d 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -284,7 +284,7 @@ static int calipso_cache_add(const unsigned char *calipso_ptr,
+ 		goto cache_add_failure;
  	}
-+	/* Drain input work queued after the earlier cancellation. */
-+	if (substream->stream == SNDRV_RAWMIDI_STREAM_INPUT)
-+		cancel_work_sync(&substream->runtime->event_work);
- 	substream->ops->close(substream);
- 	if (substream->runtime->private_free)
- 		substream->runtime->private_free(substream);
+ 	entry->key_len = calipso_ptr_len;
+-	entry->hash = calipso_map_cache_hash(calipso_ptr, calipso_ptr_len);
++	entry->hash = calipso_map_cache_hash(entry->key, calipso_ptr_len);
+ 	refcount_inc(&secattr->cache->refcount);
+ 	entry->lsm_data = secattr->cache;
+ 
 -- 
 2.53.0
 
