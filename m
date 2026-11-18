@@ -1,47 +1,46 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017848;
-	b=YNmCGVsu8anXSVV/YOpTdX+TyuCSYhBxSi56pSTJzYxw/cpbllHMEPF1JSLBsChMNv0N
-	 s/sjpqq4WH2fhxPT/a45geka3SjP+IODgkyZ8R/+4A/zltBIVedbY+P/NKGlgtcLKOUhA
-	 0OEcwAOecsQxhL7Op8MTzFdDBmxRDGv3mNzySylbfwwGzYj0GdH9mb18aS636vB0CaYNl
-	 vV/gyn8IupeZsjELrpKAVECrqebsiF96SJZWMLMivofojVkhWcE8WI5Rd2NAXwfHyMQFg
-	 M/rHtRUvbEFDYyQGoUMNvtkssPTe7oh44KAKUxK47JRJsO3Sp+N0r5XhUt8ujzcjf+A==
+	t=1795017850;
+	b=IQjplJjnr0gaRypmjAa/XrZbduHZuTKraWJUHmo3XV84XUYZVjaYoja0nWtFlEG1NgoN
+	 g0QFE/lqT0JG9ezE7IRyByYIon+O/7KKteJBIB1XnlQKsKPFGJC5GIGZeHEM5+/xHpOvD
+	 2YXjVKKu0UN1ACitHE8bkIsIkHQOckFl0yDFYlBwB0uAXviWuZlyEY74lkbo9r7CRK+lF
+	 C65r2dIKPRZskh1og7CXVU2tbws17Sp7FN6f3muM/4slL6iXcvKDKrp/o7EU4ViAF3lrm
+	 uLU5tH1UQTBXZ8g62U2deNshHQWRpiO0ukYS4CTRJ3e5b5qtKJNzSxYZXNlgtKEnKXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017850;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0oLUCZM5hnSqmSO3B1S+RJQk4NJY2cG3hFjSyykyXWg=;
-	b=SkbhBCsUuW0S3Sbt5mEK9hSEbNbk+frq0cgBZDncEBovEk8TeVZk+OxZrKlkh0jCoN9b
-	 RrgyfamGxHy6EiFIUfI0LI2MToAkj6pZ/if5+jMRaJuqWyPSnZFdDbau13vqPx6hCs7ny
-	 5gOSQR40xDt5+KDoLLkUINBXiBINNeJo4fPybSU1bd+7848xUjawZLds+f9mdHdXji309
-	 QgD2jjBT36CMtWf37NQ4u+20lmY29vO5/BSr9hIgqtqS7DpmrNXoPW8/HIxL09SjRRulb
-	 TJnk9dOXkMqI4L0AtaFCRjmzeDkFLFPDPpK1Kan3SON8nkwD2i5rSZEUfzwfJ3y+piw==
+	bh=JWhnqDFSq5ZS2wfQKAOAhXPeCdVAKSA3+snZkYH6guI=;
+	b=y7UkXSf9QVHTQ8htal2d+PGV5dglzFDDS9cT8V/FX5tebrkQ25z09+q53lcqshKEnFlf
+	 xC4kzfxzPU++pKlMQRbFY46f1dTLol2jCpdMs/OvF8xx20n5MQXzjNMTK/S4xvVxRM6zH
+	 MZV9bvSnaY4cAXjp7Ce8NPEmZQxk2T+qi4WJKNTe6EGGd2VMGIUZib8m7zNA2EijXpm7q
+	 StIoDmIfGfDtxaHO0u6sxnSA3LwYTwsOV8uEFberUI9LdtRtV50Go33YCtyDWddOGOYsf
+	 NKiVZ8QrdIHdKoOMWtLNklcirkam7bb6YBz5I2xtMnnNY7hYtUgRoW26n1zgjPhrWDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWJx2AdI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7sULz+U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E6C606A320;
-	Wed, 18 Nov 2026 16:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73955606A31C;
+	Wed, 18 Nov 2026 16:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWJx2AdI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0992D1F000C4;
-	Wed, 18 Nov 2026 16:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7sULz+U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3F61F000C4;
+	Wed, 18 Nov 2026 16:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017847;
-	bh=0oLUCZM5hnSqmSO3B1S+RJQk4NJY2cG3hFjSyykyXWg=;
+	s=korg; t=1795017850;
+	bh=JWhnqDFSq5ZS2wfQKAOAhXPeCdVAKSA3+snZkYH6guI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWJx2AdIdyHf/pJxBDo/9Eru+SVGzbyAxB2/4i8jB/NT06CR1Xi6NRfvxIwPwlm6w
-	 dJSjkDfIQibbULgLWQWY2SBcc7rbDCa9mjMZ8sP8ocTURxR9unExvkNlRA8WPjBKKM
-	 +SlhuqKBXyDKL2V6j2lb1MP7ryf3TzZzj7Gm7ZHg=
+	b=X7sULz+ULMR/8ahSezP7kL9GeVD7OR2TRrWpsNaoDSJL5f7aolvHa0Hv8z7WQN3AA
+	 uwLKNdmohh+kH88ypRiLynOowV18clzVz8fe99wHD2xIfShU9wnomSz40evSvhr2xd
+	 bpwi54ZZVqjnC1Pmsojve83oO09tu8nrIPWBQ1II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Abhishek Dubey <adubey@linux.ibm.com>,
 	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
 	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
@@ -49,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hari Bathini <hbathini@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1029/2651] powerpc64/bpf: fix compare instruction emitted for tailcall
-Date: Wed, 18 Nov 2026 15:37:49 +0100
-Message-ID: <20261118150325.007404009@linuxfoundation.org>
+Subject: [PATCH 7.3 1030/2651] powerpc/bpf: Move out dummy_tramp_addr after Long branch stub
+Date: Wed, 18 Nov 2026 15:37:50 +0100
+Message-ID: <20261118150325.045881760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -75,102 +74,173 @@ Content-Transfer-Encoding: 8bit
 
 From: Abhishek Dubey <adubey@linux.ibm.com>
 
-[ Upstream commit 3ebf4ae6d8afac11fe6732418dd378e031f8f4ed ]
+[ Upstream commit 6652b9941a6c9b6814ca6d2eb153dbf162b89a02 ]
 
-The tail_call_info field can contain either a scalar counter
-value or a 64-bit pointer to the counter, using a 32-bit
-compare (cmplwi) only checks the lower 32 bits, which can lead
-to incorrect comparisions when location of counter is near 4GB
-boundary. Use instruction cmpldi/cmplwi for accurate comparision
-in corresponding cases.
+Move the long branch address field to the bottom of the long
+branch stub. This allows uninterrupted disassembly until the
+last 4/8 bytes. The last bytes exclusion is logically necessary to
+prevent disassembly failure, otherwise the actual program layout
+is never altered. Hence no effect on overall program size.
+Also, align dummy_tramp_addr field with 8-byte boundary.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/bpf/20260517191450.85AE6C2BCB8@smtp.kernel.org/
-Fixes: 2ed2d8f6fb38 ("powerpc64/bpf: Support tailcalls with subprogs")
+Following is disassembler output for test program with moved down
+dummy_tramp_addr field:
+.....
+.....
+pc:68    left:44     a6 03 08 7c  :  mtlr 0
+pc:72    left:40     bc ff ff 4b  :  b .-68
+pc:76    left:36     a6 02 68 7d  :  mflr 11
+pc:80    left:32     05 00 9f 42  :  bcl 20, 31, .+4
+pc:84    left:28     a6 02 88 7d  :  mflr 12
+pc:88    left:24     14 00 8c e9  :  ld 12, 20(12)
+pc:92    left:20     a6 03 89 7d  :  mtctr 12
+pc:96    left:16     a6 03 68 7d  :  mtlr 11
+pc:100   left:12     20 04 80 4e  :  bctr
+pc:104   left:8      c0 34 1d 00  :
+
+Failure log:
+Can't disasm instruction at offset 104: c0 34 1d 00 00 00 00 c0
+Disassembly logic can truncate at 104, ignoring last 8 bytes.
+
+Update the dummy_tramp_addr field offset calculation from the end
+of the program to reflect its new location, for bpf_arch_text_poke()
+to update the actual trampoline's address in this field.
+
+All BPF trampoline selftests continue to pass with this patch applied.
+
+Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
 Signed-off-by: Abhishek Dubey <adubey@linux.ibm.com>
 Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 Tested-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
 Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Acked-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/961601491716ef9e00f79e3aa9f7f4ef4440d4d3.1789982239.git.skb99@linux.ibm.com
+Link: https://patch.msgid.link/552225fc257381fb83d282b3040c6ad363246465.1789982239.git.skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/net/bpf_jit.h        | 6 ++++++
- arch/powerpc/net/bpf_jit_comp.c   | 2 +-
- arch/powerpc/net/bpf_jit_comp64.c | 8 ++++----
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ arch/powerpc/net/bpf_jit_comp.c | 44 ++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/arch/powerpc/net/bpf_jit.h b/arch/powerpc/net/bpf_jit.h
-index 44fa414dc5a76..4da8bde92e1ef 100644
---- a/arch/powerpc/net/bpf_jit.h
-+++ b/arch/powerpc/net/bpf_jit.h
-@@ -195,6 +195,12 @@ struct codegen_context {
- 
- #define bpf_to_ppc(r)	(ctx->b2p[r])
- 
-+#ifdef CONFIG_PPC64
-+#define PPC_RAW_CMPLLI(a, i)    PPC_RAW_CMPLDI(a, i)
-+#else
-+#define PPC_RAW_CMPLLI(a, i)    PPC_RAW_CMPLWI(a, i)
-+#endif
-+
- #ifdef CONFIG_PPC32
- #define BPF_FIXUP_LEN	3 /* Three instructions => 12 bytes */
- #else
 diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
-index 1272409336120..15511fb1b517e 100644
+index 15511fb1b517e..cfe01c3544db5 100644
 --- a/arch/powerpc/net/bpf_jit_comp.c
 +++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -791,7 +791,7 @@ static void bpf_trampoline_setup_tail_call_info(u32 *image, struct codegen_conte
- 		 * Setting the tail_call_info in trampoline's frame
- 		 * depending on if previous frame had value or reference.
- 		 */
--		EMIT(PPC_RAW_CMPLWI(_R3, MAX_TAIL_CALL_CNT));
-+		EMIT(PPC_RAW_CMPLLI(_R3, MAX_TAIL_CALL_CNT));
- 		PPC_BCC_CONST_SHORT(COND_GT, 8);
- 		EMIT(PPC_RAW_ADDI(_R3, _R4, -BPF_PPC_TAILCALL));
- 
-diff --git a/arch/powerpc/net/bpf_jit_comp64.c b/arch/powerpc/net/bpf_jit_comp64.c
-index 667e2d4d2c612..c1e86fe0bd79f 100644
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -276,7 +276,7 @@ void bpf_jit_build_prologue(u32 *image, struct codegen_context *ctx)
- 		 */
- 		EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_2), _R1, 0));
- 		EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_2), -(BPF_PPC_TAILCALL)));
--		EMIT(PPC_RAW_CMPLWI(bpf_to_ppc(TMP_REG_1), MAX_TAIL_CALL_CNT));
-+		EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_1), MAX_TAIL_CALL_CNT));
- 		PPC_BCC_CONST_SHORT(COND_GT, 8);
- 		EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_2),
- 								-(BPF_PPC_TAILCALL)));
-@@ -662,7 +662,7 @@ static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 o
- 	PPC_BCC_SHORT(COND_GE, out);
- 
- 	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_1), _R1, bpf_jit_stack_tailcallinfo_offset(ctx)));
--	EMIT(PPC_RAW_CMPLWI(bpf_to_ppc(TMP_REG_1), MAX_TAIL_CALL_CNT));
-+	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_1), MAX_TAIL_CALL_CNT));
- 	PPC_BCC_CONST_SHORT(COND_LE, 8);
- 
- 	/* dereference TMP_REG_1 */
-@@ -672,7 +672,7 @@ static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 o
- 	 * if (tail_call_info == MAX_TAIL_CALL_CNT)
- 	 *   goto out;
- 	 */
--	EMIT(PPC_RAW_CMPLWI(bpf_to_ppc(TMP_REG_1), MAX_TAIL_CALL_CNT));
-+	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_1), MAX_TAIL_CALL_CNT));
- 	PPC_BCC_SHORT(COND_EQ, out);
+@@ -52,19 +52,19 @@ asm (
+ void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context *ctx)
+ {
+ 	int ool_stub_idx, long_branch_stub_idx;
+-	int ool_stub_sz;
++	int stub_sz;
  
  	/*
-@@ -707,7 +707,7 @@ static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 o
- 	 * tail_call_info.
++	 * The dummy_tramp_addr field is placed at bottom of Long branch stub.
+ 	 * Align the mis-aligned dummy_tramp_addr field in the fimage.
+ 	 * The alignment NOP must appear before OOL stub, to make
+ 	 * ool_stub_idx & long_branch_stub_idx constant from end.
+ 	 *
+ 	 * The fimage can be non 8-byte aligned, so final alignment depends
+-	 * on start of fimage and the stub's instruction count offset. The
+-	 * OOL stub size is 4 instructions (with CONFIG_PPC_FTRACE_OUT_OF_LINE)
+-	 * or 3 instructions (without) before dummy_tramp_addr.
+-	 *
+-	 * Emit a NOP here if address is not SZL aligned.
++	 * on start of fimage and the stub's instruction count. The
++	 * stubs block has 11 instructions (with CONFIG_PPC_FTRACE_OUT_OF_LINE)
++	 * or 10 instructions (without) before dummy_tramp_addr field. Emit a
++	 * NOP if the address of dummy_tramp_addr is non aligned.
+ 	 *
+ 	 * In pass=0 when image==NULL, conservatively account for space
+ 	 * required to accommodate alignment NOP. In case final pass skips
+@@ -72,8 +72,8 @@ void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context
+ 	 * jited_len signifies correct program size.
  	 */
- 	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_2), _R1, bpf_jit_stack_tailcallinfo_offset(ctx)));
--	EMIT(PPC_RAW_CMPLWI(bpf_to_ppc(TMP_REG_2), MAX_TAIL_CALL_CNT));
-+	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_2), MAX_TAIL_CALL_CNT));
- 	PPC_BCC_CONST_SHORT(COND_GT, 8);
  
- 	/* First get address of tail_call_info */
+-	ool_stub_sz = IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) ? 16 : 12;
+-	if (!image || !IS_ALIGNED((unsigned long)fimage + ctx->idx*4 + ool_stub_sz, SZL))
++	stub_sz = IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) ? 44 : 40;
++	if (!image || !IS_ALIGNED((unsigned long)fimage + ctx->idx*4 + stub_sz, SZL))
+ 		EMIT(PPC_RAW_NOP());
+ 
+ 	/*
+@@ -94,28 +94,29 @@ void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context
+ 
+ 	/*
+ 	 * Long branch stub:
+-	 *	.long	<dummy_tramp_addr>  // 8-byte aligned
+ 	 *	mflr	r11
+ 	 *	bcl	20,31,$+4
+-	 *	mflr	r12
+-	 *	ld	r12, -8-SZL(r12)
++	 *	mflr	r12	// lr/r12 stores pc of current(this) inst.
++	 *	ld	r12, 20(r12) // offset(dummy_tramp_addr) from prev inst. is 20
+ 	 *	mtctr	r12
+-	 *	mtlr	r11 // needed to retain ftrace ABI
++	 *	mtlr	r11	// needed to retain ftrace ABI
+ 	 *	bctr
++	 *	.long	<dummy_tramp_addr>  // SZL bytes aligned
+ 	 */
+-	if (image)
+-		*((unsigned long *)&image[ctx->idx]) = (unsigned long)dummy_tramp;
+-
+-	ctx->idx += SZL / 4;
+ 	long_branch_stub_idx = ctx->idx;
+ 	EMIT(PPC_RAW_MFLR(_R11));
+ 	EMIT(PPC_RAW_BCL4());
+ 	EMIT(PPC_RAW_MFLR(_R12));
+-	EMIT(PPC_RAW_LL(_R12, _R12, -8-SZL));
++	EMIT(PPC_RAW_LL(_R12, _R12, 20));
+ 	EMIT(PPC_RAW_MTCTR(_R12));
+ 	EMIT(PPC_RAW_MTLR(_R11));
+ 	EMIT(PPC_RAW_BCTR());
+ 
++	if (image)
++		*((unsigned long *)&image[ctx->idx]) = (unsigned long)dummy_tramp;
++
++	ctx->idx += SZL / 4;
++
+ 	if (!bpf_jit_ool_stub) {
+ 		bpf_jit_ool_stub = (ctx->idx - ool_stub_idx) * 4;
+ 		bpf_jit_long_branch_stub = (ctx->idx - long_branch_stub_idx) * 4;
+@@ -1310,6 +1311,7 @@ static void do_isync(void *info __maybe_unused)
+  * bpf_func:
+  *	[nop|b]	ool_stub
+  * 2. Out-of-line stub:
++ *	nop	// optional nop for alignment
+  * ool_stub:
+  *	mflr	r0
+  *	[b|bl]	<bpf_prog>/<long_branch_stub>
+@@ -1317,14 +1319,14 @@ static void do_isync(void *info __maybe_unused)
+  *	b	bpf_func + 4
+  * 3. Long branch stub:
+  * long_branch_stub:
+- *	.long	<branch_addr>/<dummy_tramp>
+  *	mflr	r11
+  *	bcl	20,31,$+4
+  *	mflr	r12
+- *	ld	r12, -16(r12)
++ *	ld	r12, 20(r12)
+  *	mtctr	r12
+  *	mtlr	r11 // needed to retain ftrace ABI
+  *	bctr
++ *	.long	<branch_addr>/<dummy_tramp>
+  *
+  * dummy_tramp is used to reduce synchronization requirements.
+  *
+@@ -1426,10 +1428,12 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type old_t,
+ 	 * 1. Update the address in the long branch stub:
+ 	 * If new_addr is out of range, we will have to use the long branch stub, so patch new_addr
+ 	 * here. Otherwise, revert to dummy_tramp, but only if we had patched old_addr here.
++	 *
++	 * dummy_tramp_addr moved to bottom of long branch stub.
+ 	 */
+ 	if ((new_addr && !is_offset_in_branch_range(new_addr - ip)) ||
+ 	    (old_addr && !is_offset_in_branch_range(old_addr - ip)))
+-		ret = patch_ulong((void *)(bpf_func_end - bpf_jit_long_branch_stub - SZL),
++		ret = patch_ulong((void *)(bpf_func_end - SZL), /* SZL: dummy_tramp_addr offset */
+ 				  (new_addr && !is_offset_in_branch_range(new_addr - ip)) ?
+ 				  (unsigned long)new_addr : (unsigned long)dummy_tramp);
+ 	if (ret)
 -- 
 2.53.0
 
