@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046034;
-	b=ZILFiYmqyUf6J79bs0U0oBOPnLHGtTFsxaUx25IMSemR5Y4ULHjcHcMTZ4chdvybg+X+
-	 9JGjejr9Jrs9uquHhDM3TncjebVV9+iONuCZ+mNVtCw6A+QsOt+Jbfd4Yo818CRup8B6p
-	 vVermUpidF9xaQy7WYGNH9J0K7XEiM4JDAB2goBpYo34oakypx6km3fYIp++41uyMtJFB
-	 Jo2lMb5Z1p1LQv6XFEqbsC7WGgVlqErTBeb91SaM/eJfXPwkQjRmf2YpMMno5sdQXzuSd
-	 ku/pDIOE6fHRrcmpwQuKUnZHpHO5Ug289ROpFRLX98BI0i7WEVOJnKgbv3zzpAfczFw==
+	t=1795046037;
+	b=racEWiDoPFfE2Oj0uhhlTOpNFday0Mcu7hMkElN6hyEaqR5j0UjGS72qbz+6g0TGyYV9
+	 nNHrZQ/GHXUEy/2z7C6SVM+qfyRu6GVO2q5gSVEAHTPPQbNDk4IKfy0qa+NGpLg2l5v1O
+	 o/bU5NMZIYDUPRSvGGKEOR4h92V1nFWWwAtC/7BBYsS2rkustFCjD1+dTM85cQUw6f4uw
+	 +Rw37p0L+s8gXVQHkb/2ZDsv7V2ISi0u8A1jCL/4ANODpLTHCSrXdZPYuKSZDVAgVIJ4s
+	 HVqhb3L0NMMcNrppmr9RTD5w/05g61IbL7MiVmIOk9KJy0g74V3vBJPTQRTdOlWTNrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tCGfHu1rZqNZoxvB3SQ58KZ/Ir+RVw7g7gAgHslA2X4=;
-	b=4bNo/z3VM5FTSpStzDo3hsU9i880mv73qB3iLJiY6Rlh6B1VgNiy9PXxwJlB1ge8QkNk
-	 5E25syJhdHEQTCfWVvkcwpl0q8R5RhwPAxBYkETHU5Y8TcGmq0OoN6Chp3BfTAvs+Pe8Q
-	 W09gQYDsh5fj+87rwzJ9LJKdKA/bKPeDjJej3vSoiDwAo2LTyZPrCmalfj1ttTRR6BnFa
-	 HnOOp1cyFm5ReeZv+T5LHxn8vsBWc3u5ZH/cqcQXep1rJIbduRsHIsSMh93K1fLr5F2H4
-	 ElZ1sqiaHQ+n7/Ua3seLOMqzHP6x60RZQ1h+eNfj9QK6qXJHy1hAHMZZYUFJym6tMCQ==
+	bh=nMOHHyMQvs1Zp1OZ91Ssv6Vp2CBDzvC9cOh2VcvPvvc=;
+	b=x2veHWvDejsUa67mZAUIv3DfOCwg6q4olrqnkZpsW7RT1huTS6oxqbz4Hm2CL2b59PRU
+	 6XmL5TAWlMDKcR3tffCSGc3VGzOdTwPNc71yGx/ZBYzZPoFgv+yIApRRYRPSxL4Ac5KJf
+	 FklrDM/W92J587tFaIH4QBGRc7OpgNjRNLXhL4uxvULqzcpzU+B5RjVtTfbzy1ApVuK5q
+	 U8pCCAmRS2SlAwNweOfw7fD71RPFaUZ8AxC6kf18DN3b3kx8zsn3Hz8j1TABVrWhc8XAL
+	 Uqevs2J9WU7nglGpb4EwDhNhb2pr3XJM8pI2qB7IgxNXTmmgH4WxVrg8deIXcNwHD/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVU3uvR9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLCaby1D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B8B606A325;
-	Wed, 18 Nov 2026 23:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FF2606A31C;
+	Wed, 18 Nov 2026 23:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVU3uvR9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A358F1F000C5;
-	Wed, 18 Nov 2026 23:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLCaby1D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6179F1F000C4;
+	Wed, 18 Nov 2026 23:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046034;
-	bh=tCGfHu1rZqNZoxvB3SQ58KZ/Ir+RVw7g7gAgHslA2X4=;
+	s=korg; t=1795046036;
+	bh=nMOHHyMQvs1Zp1OZ91Ssv6Vp2CBDzvC9cOh2VcvPvvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVU3uvR944w/AwyywGgLSzGa9eFX1wMAoPKgL6N2FLuxmSVSAUNctI1owbhLQKRqj
-	 F7n8MDgY+CC5shlc/DycFt+iU76ODNIkzIJoXVc88g/hfm1Zej+Re86tYJHo6USOfk
-	 IhwHwKFhmAP0IougLdQrkp2D87JnifJ3uyEZ1mrc=
+	b=iLCaby1DwHLCgEafCZBCSu7hYWz+3XKFUcIxBSalFno3T0/vib+nlBNqyooeBWUbj
+	 IQKVCVy1JrY6fAC0I7YX22PT2c27lWkouPlCQyPpcvVNEIbaod0iIkl6We4J7FDFbW
+	 5db37CWz08LoQdHljhJPVc8SDFEOINYyEkETEx10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Til Kaiser <mail@tk154.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1137/2857] serial: amba-pl011: keep transmitter enabled when disabling RS485
-Date: Wed, 18 Nov 2026 15:36:11 +0100
-Message-ID: <20261118150242.531185620@linuxfoundation.org>
+Subject: [PATCH 6.1 1138/2857] mlxsw: Initialize register query payloads
+Date: Wed, 18 Nov 2026 15:36:12 +0100
+Message-ID: <20261118150242.567689630@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,62 +69,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Til Kaiser <mail@tk154.de>
 
-commit 97f85204275ae4d7fb530e451f3acc65c1ec1155 upstream.
+[ Upstream commit 15b7a86a8888dc6a8fd19e181757e32389de9064 ]
 
-Disabling RS485 on an open port calls pl011_rs485_tx_stop(), which
-turns off the transmitter. Only the RS485 TX path turns it back on, so
-any later output stays queued and tcdrain() hangs until the port is
-closed.
+MFGD register queries can exhaust EMAD retries and leave Mellanox
+Spectrum switches stuck during boot or shutdown when running OpenWrt
+built with GCC 15.
 
-pl011_rs485_tx_stop() also checks only the hardware FIFO. If a DMA
-transfer has started but has not filled the FIFO yet, the transmitter
-is turned off under the transfer and the DMA channel never recovers.
+An example failure is shown below with the second line wrapped:
 
-When leaving RS485 mode, cancel pending deferred starts and stops, leave
-the transmitter enabled and start any TX that was still waiting for
-delay_rts_before_send.
+  EMAD retries (5/5) (tid=9b544fc100001f35)
+  EMAD reg access failed (tid=9b544fc100001f35,reg_id=90f0(mfgd),
+                          type=query,status=0(operation performed))
 
-Fixes: 8d479237727c ("serial: amba-pl011: add RS485 support")
-Cc: stable@kernel.org
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20261012-fix-pl011-rs485-txe-v2-1-e9bf7d218389@tipi-net.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[nb: Use rs485_tx_started and omit timer handling on older kernels.]
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+On an SN2100, the failure occurs during driver teardown on reboot.
+On an SN3420, it occurs while probing mlxsw_spectrum during boot.
+
+The register query API transmits the supplied payload to the device
+before replacing it with the response. Both MFGD callers pass an
+uninitialized stack buffer, so the request contains arbitrary register
+field values and reserved bits. This makes the request depend on stack
+contents and compiler code generation.
+
+Initialize both MFGD query buffers in the firmware fatal event
+configuration and reporter test paths. The initialization has been
+confirmed to eliminate the boot and shutdown hangs on both switches.
+The subsequent read-modify-write still preserves the other fields
+returned by the device.
+
+Also initialize the FORE fan fault query and the MOGCR mirroring policer
+base query, which pass entirely uninitialized payloads. Restore the MTMP
+query initialization in the temperature history reset path, where only
+the slot and sensor index fields are set before querying the register.
+
+This follows commit 5b0907407e7f ("mlxsw: core: Zero payload buffers for
+couple of registers"), which initialized other query payloads after a
+firmware field length bug caused firmware to consume uninitialized data.
+
+Tested with firmware 2020.1148 and with 2016.3900 from linux-firmware.
+
+Fixes: 7d83ee111008 ("mlxsw: core: Introduce fw_fatal health reporter")
+Fixes: 2c6a33cd334b ("mlxsw: core: Extend hwmon interface with fan fault attribute")
+Fixes: 4039504e6a0c ("mlxsw: spectrum_span: Allow setting policer on a SPAN agent")
+Fixes: b890ad418e1f ("mlxsw: core_hwmon: Extend internal structures to support multi hwmon objects")
+Cc: stable@vger.kernel.org
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261014173117.26305-1-mail@tk154.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 15b7a86a8888dc6a8fd19e181757e32389de9064)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/core.c          | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c    | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index d61ecbb06d94e..ca970fad7f103 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2235,8 +2235,21 @@ static int pl011_rs485_config(struct uart_port *port, struct ktermios *termios,
- 	struct uart_amba_port *uap =
- 		container_of(port, struct uart_amba_port, port);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
+index f36a416ffcfe9..4aafcbe9d90ad 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
+@@ -2015,7 +2015,7 @@ mlxsw_core_health_fw_fatal_test(struct devlink_health_reporter *reporter,
+ 				struct netlink_ext_ack *extack)
+ {
+ 	struct mlxsw_core *mlxsw_core = devlink_health_reporter_priv(reporter);
+-	char mfgd_pl[MLXSW_REG_MFGD_LEN];
++	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
+ 	int err;
  
--	if (port->rs485.flags & SER_RS485_ENABLED)
-+	if ((port->rs485.flags & SER_RS485_ENABLED) &&
-+	    !(rs485->flags & SER_RS485_ENABLED)) {
-+		u32 cr = pl011_read(uap, REG_CR);
-+
-+		/*
-+		 * Leaving RS485 mode, which only enables the transmitter while
-+		 * sending. Don't stop it, as that stalls a DMA transfer still
-+		 * in flight. Keep the transmitter and receiver enabled.
-+		 */
-+		uap->rs485_tx_started = false;
-+		cr |= UART011_CR_TXE | UART011_CR_RXE;
-+		pl011_write(cr, uap, REG_CR);
-+	} else if (port->rs485.flags & SER_RS485_ENABLED) {
- 		pl011_rs485_tx_stop(uap);
-+	}
+ 	/* Read the register first to make sure no other bits are changed. */
+@@ -2036,7 +2036,7 @@ mlxsw_core_health_fw_fatal_ops = {
+ static int mlxsw_core_health_fw_fatal_config(struct mlxsw_core *mlxsw_core,
+ 					     bool enable)
+ {
+-	char mfgd_pl[MLXSW_REG_MFGD_LEN];
++	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
+ 	int err;
  
- 	/* Make sure auto RTS is disabled */
- 	if (rs485->flags & SER_RS485_ENABLED) {
+ 	/* Read the register first to make sure no other bits are changed. */
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
+index 0fd290d776ffe..2881271d529bf 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
+@@ -120,7 +120,7 @@ static ssize_t mlxsw_hwmon_temp_rst_store(struct device *dev,
+ 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
+ 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
+ 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
+-	char mtmp_pl[MLXSW_REG_MTMP_LEN];
++	char mtmp_pl[MLXSW_REG_MTMP_LEN] = {0};
+ 	unsigned long val;
+ 	int index;
+ 	int err;
+@@ -177,7 +177,7 @@ static ssize_t mlxsw_hwmon_fan_fault_show(struct device *dev,
+ 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
+ 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
+ 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
+-	char fore_pl[MLXSW_REG_FORE_LEN];
++	char fore_pl[MLXSW_REG_FORE_LEN] = {0};
+ 	bool fault;
+ 	int err;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
+index fa3fef2b74db0..04aecdee69a30 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
+@@ -1718,7 +1718,7 @@ static int mlxsw_sp2_span_init(struct mlxsw_sp *mlxsw_sp)
+ static int mlxsw_sp2_span_policer_id_base_set(struct mlxsw_sp *mlxsw_sp,
+ 					      u16 policer_id_base)
+ {
+-	char mogcr_pl[MLXSW_REG_MOGCR_LEN];
++	char mogcr_pl[MLXSW_REG_MOGCR_LEN] = {0};
+ 	int err;
+ 
+ 	err = mlxsw_reg_query(mlxsw_sp->core, MLXSW_REG(mogcr), mogcr_pl);
 -- 
 2.53.0
 
