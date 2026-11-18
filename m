@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056555;
-	b=QwaGXSdVnf5kLI7uKz48dcWuEWqkiX4W3xrzbsHc7e63L5QQicEKPyg58oQWBxusfFdK
-	 p3A+4h6ZPAAEVqBmim5PfW9H/sd1iFM8/TvPecub4j9AhYAytYcXSgB4ujq9mjeaqLIuH
-	 FabR7a8DpzAsj0rvO7o3ym7dSBI2igHhAKJk5G6Zf9vpJMouFWhPVQCmGu9HqWuDZfkaq
-	 7esRRePtOBoRg5X4akGEG5FEZ/FyUHUHRuhTndtjvlMqnvZs15vzU7Pxw4U8rH2rnLb3B
-	 GhfH1gaaFXMdb/foVh1etIE512u8qNQ8gRX6Xr7i2zeDN35WGlL2CVTYYeFccGXds3g==
+	t=1795056558;
+	b=MBItX+nkkNqbHAgGP8Wrd3NxBwu+LrM8/mSkdDeIL5l0idOFLqy0a3Is0X2XFYX+Vqfl
+	 8XOMmHYMYzdddtTCfsu+pSCx2ssYPvbE+CJHbQiePb8QqjuDt2+fuVjlMdWaanlIEiboP
+	 kvgGtr83rr9u3x2MlOhDoUEAZPlwyLt/KTDA/0p7GaT9Vg/t/CVJpB5rhP5AU5Nge6MoN
+	 K6huD6AuAtfO/uNWfZof8OyL0wMP20oxMycvnhoSpZTCVjbNE6TyPkeXkkhVneIDrBCkC
+	 SiOU9i2LWTVfQ2qno5HCXY8uie84lpeFDyJGQF8gMbla23lzaB1JeFLvQU7VlVyiAHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9f+1jotSRmXhCqElBDdi8Vwyh25esqSSxwZt1J29H4Y=;
-	b=xuvs8Yi2iiHQc3R3AJ0frmhYDhcGkSpKjBIYWv8HuF6267GmZkwrM2ZSS3rFi/LZqN+U
-	 XUXaiGK1PRucBJvGZ2dyMCjS3mK7EJBeIbmd4pg/9wOrQXnrhUQTv6ZXmtF7W2sMrLOhe
-	 o1NK9uw2mNGz56nVJbvTMUK+fwWfYtmK2kpucCiPEXm6SUvcT+VcUlcxGuouc0Yp0Wzlp
-	 mlbciJCkHoVjxQVqagCy3kj8dS98rw82xL75qPuA6OmiiY5PU/0VOAkx1LJ/QbUg2ZgP+
-	 bYxcJWQ+tY00WxachJ1XKW6iN9hQE/jUwnBR8LWrvgXO/BCzRATiIPaE9ypxsK3lupQ==
+	bh=eos1qW92VA+ygd5EzJeme+heUn0Pfv2/NbNQmvNo4Mw=;
+	b=uTQkwZV7l5JuODME2q6Wj9ECMtiTii3I99eywuQzz/VbHEbx/AtV7FS2qeXU3uXIT57i
+	 rGT5VPOB8bfZkzcOZXYG+r3YkorsTDPRwxvYu4518hrGVdjF6ZiVTZDTcc4l7xnujmdOY
+	 +IDRpKu4fAhxq9CZP6Jjexh3O56MtBJYm77NkZN/kLFbm3J1TFhCbsWPi4pVG4eDEGKhI
+	 NTZtgO8f0ZGeyK1wWpVzoFm6w1Sfj8vNHXDN5J1dm9OmtAhZND9p2sjOF0m7SfgjiN52z
+	 D5Ymcbmqf8/mE0XrmMnoymOW4u24jBnsotTNknjlr/59iOXascyW2GwB2GzaexXft5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GV4uTRm9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGJXRssV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D167606A330;
-	Thu, 19 Nov 2026 02:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D60606A32A;
+	Thu, 19 Nov 2026 02:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GV4uTRm9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D0D1F000C5;
-	Thu, 19 Nov 2026 02:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGJXRssV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533EE1F000C4;
+	Thu, 19 Nov 2026 02:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056555;
-	bh=9f+1jotSRmXhCqElBDdi8Vwyh25esqSSxwZt1J29H4Y=;
+	s=korg; t=1795056557;
+	bh=eos1qW92VA+ygd5EzJeme+heUn0Pfv2/NbNQmvNo4Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GV4uTRm94x9Kv+ejdogLF0S/NwKNUF7AO/baS8o6C9xbiXCcim+6n4wc+hFIUXPjt
-	 7Vy6oNMWrXH2o8ebGACrYsE/SKO9Tq96f6RmTYGMf5m6R0iiPfCPLiYE9UwJCWu0wN
-	 FsYdNy6TXy+nrnTUf30LecRF1wmUbo1LUie8rqFs=
+	b=yGJXRssVZ+H5GUNmK8x1v4CTc5gFBEoGjpNw1wzGwCD+LMxPJB00/nNBX0i/JWao5
+	 PU8mO9AKUqJSeoqV8o+FarVzqMxnBGziMY5QPiRp3cZWAExI4sLcJ/QFqf9pNgJIz6
+	 cOAv0jUSdtE/+O1Lz7Dl+pGeUOEypAaFgRcOE9aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2028/2214] selftests: netfilter: conntrack_vrf.sh: prefer socat, not iperf3
-Date: Wed, 18 Nov 2026 16:01:44 +0100
-Message-ID: <20261118150131.883995863@linuxfoundation.org>
+Subject: [PATCH 5.15 1993/2214] ASoC: mediatek: mt8195: Fix ETDM MCLK error handling
+Date: Wed, 18 Nov 2026 16:01:09 +0100
+Message-ID: <20261118150130.536541223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,107 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 99bc5950ebd4f84e48b5d1c53c13cf117031de82 ]
+[ Upstream commit 91dce9c7eec25e95b5ca32e17e60e2c27333d411 ]
 
-Use socat, like most of the other scripts already do.  This also makes
-the script complete slightly faster (3s -> 1s).
+Propagate errors from mt8195_afe_enable_clk() when enabling the
+ETDM MCLK instead of always returning success.
 
-iperf3 establishes two connections (1 control connection, and 1+x
-depending on test), so adjust expected counter values as well.
+This allows callers to properly handle failures when enabling the
+MCLK.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20240423130604.7013-8-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a20a01ae8981 ("selftests: netfilter: fix return value in zone subtest")
+Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
+Reviewed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-13-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/netfilter/conntrack_vrf.sh      | 40 ++++++++++---------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/netfilter/conntrack_vrf.sh b/tools/testing/selftests/netfilter/conntrack_vrf.sh
-index f7417004ec714..073e8e62d350b 100755
---- a/tools/testing/selftests/netfilter/conntrack_vrf.sh
-+++ b/tools/testing/selftests/netfilter/conntrack_vrf.sh
-@@ -43,15 +43,9 @@ cleanup()
- 	cleanup_all_ns
- }
+diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
+index 9031d410bbd0a..ee3d8270f957c 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
+@@ -1500,9 +1500,7 @@ static int mtk_dai_etdm_enable_mclk(struct mtk_base_afe *afe, int dai_id)
+ 	if (clkdiv_id < 0)
+ 		return -EINVAL;
  
--if ! nft --version > /dev/null 2>&1;then
--	echo "SKIP: Could not run test without nft tool"
--	exit $ksft_skip
--fi
+-	mt8195_afe_enable_clk(afe, afe_priv->clk[clkdiv_id]);
 -
--if ! conntrack --version > /dev/null 2>&1;then
--	echo "SKIP: Could not run test without conntrack tool"
--	exit $ksft_skip
--fi
-+checktool "nft --version" "run test without nft"
-+checktool "conntrack --version" "run test without conntrack"
-+checktool "socat -h" "run test without socat"
- 
- trap cleanup EXIT
- 
-@@ -79,7 +73,15 @@ ip -net "$ns1" li set veth0 up
- ip -net "$ns0" addr add $IP0/$PFXL dev veth0
- ip -net "$ns1" addr add $IP1/$PFXL dev veth0
- 
--ip netns exec "$ns1" iperf3 -s > /dev/null 2>&1 &
-+listener_ready()
-+{
-+        local ns="$1"
-+
-+        ss -N "$ns" -l -n -t -o "sport = :55555" | grep -q "55555"
-+}
-+
-+ip netns exec "$ns1" socat -u -4 TCP-LISTEN:55555,reuseaddr,fork STDOUT > /dev/null &
-+busywait $BUSYWAIT_TIMEOUT listener_ready "$ns1"
- 
- # test vrf ingress handling.
- # The incoming connection should be placed in conntrack zone 1,
-@@ -160,16 +162,16 @@ table ip nat {
- 	}
+-	return 0;
++	return mt8195_afe_enable_clk(afe, afe_priv->clk[clkdiv_id]);
  }
- EOF
--	if ! ip netns exec "$ns0" ip vrf exec tvrf iperf3 -t 1 -c $IP1 >/dev/null; then
--		echo "FAIL: iperf3 connect failure with masquerade + sport rewrite on vrf device"
-+	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
-+		echo "FAIL: connect failure with masquerade + sport rewrite on vrf device"
- 		ret=1
- 		return
- 	fi
  
- 	# must also check that nat table was evaluated on second (lower device) iteration.
--	ip netns exec "$ns0" nft list table ip nat |grep -q 'counter packets 2' &&
--	if ip netns exec "$ns0" nft list table ip nat |grep -q 'untracked counter packets [1-9]'; then
--		echo "PASS: iperf3 connect with masquerade + sport rewrite on vrf device ($qdisc qdisc)"
-+	if ip netns exec "$ns0" nft list table ip nat |grep -q 'counter packets 1' &&
-+	   ip netns exec "$ns0" nft list table ip nat |grep -q 'untracked counter packets [1-9]'; then
-+		echo "PASS: connect with masquerade + sport rewrite on vrf device ($qdisc qdisc)"
- 	else
- 		echo "FAIL: vrf rules have unexpected counter value"
- 		ret=1
-@@ -195,15 +197,15 @@ table ip nat {
- 	}
- }
- EOF
--	if ! ip netns exec "$ns0" ip vrf exec tvrf iperf3 -t 1 -c $IP1 > /dev/null; then
--		echo "FAIL: iperf3 connect failure with masquerade + sport rewrite on veth device"
-+	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
-+		echo "FAIL: connect failure with masquerade + sport rewrite on veth device"
- 		ret=1
- 		return
- 	fi
- 
- 	# must also check that nat table was evaluated on second (lower device) iteration.
--	if ip netns exec "$ns0" nft list table ip nat |grep -q 'counter packets 2'; then
--		echo "PASS: iperf3 connect with masquerade + sport rewrite on veth device"
-+	if ip netns exec "$ns0" nft list table ip nat |grep -q 'counter packets 1'; then
-+		echo "PASS: connect with masquerade + sport rewrite on veth device"
- 	else
- 		echo "FAIL: vrf masq rule has unexpected counter value"
- 		ret=1
+ static int mtk_dai_etdm_disable_mclk(struct mtk_base_afe *afe, int dai_id)
 -- 
 2.53.0
 
