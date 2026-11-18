@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044033;
-	b=ZOop25jQsX/+5Kj0t4OwJ3mNnaLDJr9G6J2G3oKSwDfEN36qipTgsDRLRU1hHSR/q++P
-	 QSUeLioysNt4dYIQR0v6UjKY3yUT8vb0u7nn3uw9gAPBN9USLg2xc/PWppfTHfjxkPvVV
-	 MRIag4LigLPIvTne2UtApGbhRJp72A65lsT92mxeYp1dSM+COQFmi8F49GKpJclNbEjZ9
-	 h/S+2YGtZtF/uNhxJ+yxrEfO0ZQ9KgaozCG/ImcIxRclBk1l3m4cOz9Rm1Ffa3YdJxuah
-	 LakAKzfZEH4U3oacGFh7y4AcK5/q3oM/sA++Kzh4/5f0wJ53GxbBDOz1xUj3w/Sff2A==
+	t=1795044036;
+	b=FjHy9DJgjSRF85IP+JbegMj4jtK+UxXUwdL16Z79XRC6oFZMr+3gMMvhO/caFefRGaEb
+	 0CL/3zC1Zb9NIU5+hCyqsIO0LcLutZWBVHLN0vlZLwORsu8D1UWLVmFSh1D+cKh3zNSqA
+	 yci2cbPCdMi7+Cc12zPj9btrYn9HsSbCdJqJo79L+NUmPHyloW6uqdwVI7N31OHTT8YnE
+	 9M3tqwHZzqtccwSAc0ZhVtUC6RO2Tq466kB5UsrLey9I0SThptWRFwtm5Jvrkwq83wGBO
+	 4i9uLwIgby801FqjjQdC+V69rvbWJTXjr1K8yEoflbzLEL2Z0pcJy5Lnaf+TDqZaksQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q7mfJ8KPZ91fWLDXGc+fRomsU/iprOG64yLU3jmW7Do=;
-	b=E5T+K742aNk6GAKSpcD//IiT87Lu4JNXHshcFyXKiQUWEe84d7jGoSx+DoozPp31cg/B
-	 etixyr04Ioz6krTgRGwWFahLYGX8UCfYkBjSYEx0Wj83rrgE6O5X3LQkcJOayCS/pQT6q
-	 2yO/CQfnRR6119ZD9n3A0ZW+v6NhkB7kBplEPcXAc2VqBvVfgX89lJWxnA313q0IgwlmH
-	 4JwNePwXpwBt0e5IgRQfTDYGRVpVvk693waXN0hj/uXjbddkvdsH2NrzrpsHDd0k5zBnw
-	 T7ltkcDdxWYvZZPhqkm9jRYMdD5wnLa0c+xdKEwzKQeXUU91v5msCsm4EW4Mh6QFCng==
+	bh=aQHc1xjgF/ZS5K9xU7xqd5X5EUo7X9A3xhLGnDDZ8rM=;
+	b=yetpIYqBMsx2b3FELnqAKftO8y8aSGT6uzHDl2c+OXLC02+CIzeUjSCknusXYtA5GGKJ
+	 bhgvNlGKEflNO3tzLvS/ox0+eq8ct+um+uqHbztRI5h/B4Us2uxAumKRHQ17cs7tx06vG
+	 YEu0dGc1k3qB8AANGk1qbLx6Be6kG5kFS7DjrTA4Me3b4QyF85PqEG8DYLgPrbQzBwUzX
+	 O27YrI5DcprSojCPG0qn80vWujrB/Z3/Ykct0FCh88mBIzRDqrDbhdCR1ffAMsYDwEqW8
+	 m+Sf/DWI1rttZHMEdmLcL/SvnGBJQDCYDeBq6YR6dpZ0QI+dahImbjjMBnA/4Ol6XiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FTfSpf5C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn1qajTz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF4C606A31C;
-	Wed, 18 Nov 2026 23:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68191606A31C;
+	Wed, 18 Nov 2026 23:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FTfSpf5C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE24C1F000C4;
-	Wed, 18 Nov 2026 23:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn1qajTz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B930A1F000C6;
+	Wed, 18 Nov 2026 23:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044033;
-	bh=Q7mfJ8KPZ91fWLDXGc+fRomsU/iprOG64yLU3jmW7Do=;
+	s=korg; t=1795044036;
+	bh=aQHc1xjgF/ZS5K9xU7xqd5X5EUo7X9A3xhLGnDDZ8rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FTfSpf5Ccg0R5iAx/cKy8Saf6WEX/D64Z4XeCWWyLWOUnCu9ghFiUulxSDvGtTNW0
-	 0zJjORKAman9VvLrpXpzE7k4Eh0tiL5ee0ycqVqvyEZvMRBx9rILnDWdlSG1Fu4mkw
-	 wN+fifEjEcRunjqPCuoRQc5c2sDqEfQvuXMwEsDs=
+	b=Dn1qajTzwVqGPqL8ZYIMDvihe/R+TUXBx4fokXgS+nDQgXtzuT2L2mNel3XuMrE83
+	 U0K9kYonmJc97O8pkTJF00To49nnn6qbBwPh8x2OwjZNpAL4RQjz4nntv6Y3/iKjXH
+	 aM0ecootaavCSk3SPfFbcmvkvBexu//9mOGvk3kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Cen Zhang <cenzhang@linux.microsoft.com>,
+	Francis Perron <francis@akrites.dev>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0424/2857] tracing: Take trace_array reference when opening a tracer options file
-Date: Wed, 18 Nov 2026 15:24:18 +0100
-Message-ID: <20261118150216.651580951@linuxfoundation.org>
+Subject: [PATCH 6.1 0425/2857] KEYS: encrypted: fix integer overflow of datablob_len
+Date: Wed, 18 Nov 2026 15:24:19 +0100
+Message-ID: <20261118150216.688228482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,135 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Cen Zhang <cenzhang@linux.microsoft.com>
 
-[ Upstream commit ed0aff60f83a9bdc2f6556376ac79c96b3ce7e80 ]
+[ Upstream commit 8697c431e297eb0d0ab13dda6bc172b48a34f05c ]
 
-When a tracer option file is opened, it is passed a descriptor that points
-to an element on the trace_array's topts array. This element has
-information to find the trace array and other information. It uses this
-element to take a reference of the trace_array so that the trace_array
-does not get removed while this file is opened.
+encrypted_key_alloc() stores datablob_len in a u16. It is computed from
+multiple string and payload lengths. If the result exceeds U16_MAX, the
+assignment truncates the allocation size. KASAN reports a 32760-byte
+slab-out-of-bounds write when __ekey_init() copies the master key
+description into the undersized buffer.
 
-Unfortunately, there's a race condition where the element itself could be
-freed by the removal of the instance the trace_array represents causing a
-use-after-free as this element that is used to find the trace_array to
-increment its reference counter is also freed when the instance is
-removed.
+The total payload length stored in key->datalen is also a u16. Use
+check_add_overflow() to reject values that do not fit either destination,
+and use kzalloc_flex() for the flexible-array allocation.
 
-To solve this, add a trace_array_tracer_options_get() helper function that
-will take the address of the element that is passed to the open function
-by the inode->i_private pointer and search all the trace_arrays under a
-lock to find the one that the element's address is in the range of the
-trace_arrays topts array elements. When a match happens, that trace_array's
-reference would be increased.
-
-Note, there's a race where if an admin was deleting and creating trace
-instances at the same time and the memory of the old trace_array's array
-matched the memory of the new trace_array that it could in theory open the
-option from the wrong trace array. But we do not care because it would be
-stupid to perform that kind of action. As long as the only thing that can
-happen is that the option from the wrong trace array is used and doesn't
-crash the kernel it will only make the user confused. But if they are
-doing something stupid like this, they are already confused, so no harm
-done.
-
+Fixes: 7e70cb497850 ("keys: add new key-type encrypted")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260910221209.62dad8d3@robin
-Fixes: 7e2cfbd2d3c86 ("tracing: Have option files inc the trace array ref count")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-trace-kernel/20260902121918.5a9e9d1b@gandalf.local.home/
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ sashal: replaced the missing __trace_array_get() helper call with an open-coded tr->ref++; return 0; inside the already-locked list walk. ]
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Signed-off-by: Cen Zhang <cenzhang@linux.microsoft.com>
+Signed-off-by: Francis Perron <francis@akrites.dev>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260909153433.83117-1-cenzhang@linux.microsoft.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+[ sashal: Replaced the upstream kzalloc_flex() allocation with the equivalent kzalloc(struct_size(...), GFP_KERNEL), since kzalloc_flex() doesn't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 48 +++++++++++++++++++++++++++++++++++++++++++-
- kernel/trace/trace.h |  1 +
- 2 files changed, 48 insertions(+), 1 deletion(-)
+ security/keys/encrypted-keys/encrypted.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index bf8f3ca9df076..1d9625a95cc8e 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8919,12 +8919,57 @@ trace_options_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 	return cnt;
- }
- 
-+static bool tr_option_match(struct trace_array *tr, void *topt)
-+{
-+	for (int i = 0; i < tr->nr_topts; i++) {
-+		struct trace_options *tr_topts = &tr->topts[i];
-+
-+		if (topt >= (void *)&tr_topts->topts[0] &&
-+		    topt < (void *)&tr_topts->topts[tr_topts->nr_topts])
-+			return true;
-+	}
-+	return false;
-+}
-+
-+/*
-+ * The topt is the address of a trace_array->topts[] element that holds the
-+ * the tracer options descriptor. But since the trace_array reference has not
-+ * been taken yet, it cannot be dereferenced as it could have been freed by
-+ * a rmdir of the instance the trace_array represents.
-+ *
-+ * Search the list of trace_arrays and compare the topt to the address of
-+ * the entire trace_array topts array for each trace_array in the list.
-+ * If one is matched, then take the reference and return it. If not, the
-+ * trace_array no longer exits.
-+ */
-+static int trace_array_tracer_options_get(void *topt)
-+{
-+	struct trace_array *tr;
-+	int ret;
-+
-+	ret = security_locked_down(LOCKDOWN_TRACEFS);
-+	if (ret)
-+		return ret;
-+
-+	if (tracing_disabled)
-+		return -ENODEV;
-+
-+	guard(mutex)(&trace_types_lock);
-+	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
-+		if (tr_option_match(tr, topt)) {
-+			tr->ref++;
-+			return 0;
-+		}
-+	}
-+	return -ENODEV;
-+}
-+
- static int tracing_open_options(struct inode *inode, struct file *filp)
+diff --git a/security/keys/encrypted-keys/encrypted.c b/security/keys/encrypted-keys/encrypted.c
+index 1e313982af02a..b39bf082d5a29 100644
+--- a/security/keys/encrypted-keys/encrypted.c
++++ b/security/keys/encrypted-keys/encrypted.c
+@@ -18,6 +18,7 @@
+ #include <linux/parser.h>
+ #include <linux/string.h>
+ #include <linux/err.h>
++#include <linux/overflow.h>
+ #include <keys/user-type.h>
+ #include <keys/trusted-type.h>
+ #include <keys/encrypted-type.h>
+@@ -606,6 +607,7 @@ static struct encrypted_key_payload *encrypted_key_alloc(struct key *key,
  {
- 	struct trace_option_dentry *topt = inode->i_private;
- 	int ret;
+ 	struct encrypted_key_payload *epayload = NULL;
+ 	unsigned short datablob_len;
++	unsigned short payload_totallen;
+ 	unsigned short decrypted_datalen;
+ 	unsigned short payload_datalen;
+ 	unsigned int encrypted_datalen;
+@@ -659,16 +661,22 @@ static struct encrypted_key_payload *encrypted_key_alloc(struct key *key,
  
--	ret = tracing_check_open_get_tr(topt->tr);
-+	ret = trace_array_tracer_options_get(topt);
- 	if (ret)
- 		return ret;
+ 	encrypted_datalen = roundup(decrypted_datalen, blksize);
  
-@@ -9208,6 +9253,7 @@ create_trace_option_files(struct trace_array *tr, struct tracer *tracer)
- 	tr->topts = tr_topts;
- 	tr->topts[tr->nr_topts].tracer = tracer;
- 	tr->topts[tr->nr_topts].topts = topts;
-+	tr->topts[tr->nr_topts].nr_topts = cnt;
- 	tr->nr_topts++;
+-	datablob_len = format_len + 1 + strlen(master_desc) + 1
+-	    + strlen(datalen) + 1 + ivsize + 1 + encrypted_datalen;
++	if (check_add_overflow(format_len + 1 + strlen(master_desc) + 1
++			       + strlen(datalen) + 1 + ivsize + 1,
++			       encrypted_datalen, &datablob_len))
++		return ERR_PTR(-EINVAL);
++
++	if (check_add_overflow(datablob_len,
++			       payload_datalen + HASH_SIZE + 1,
++			       &payload_totallen))
++		return ERR_PTR(-EINVAL);
  
- 	for (cnt = 0; opts[cnt].name; cnt++) {
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index f86b6f263ddf6..c6b3eba6899f6 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -202,6 +202,7 @@ struct array_buffer {
- struct trace_options {
- 	struct tracer			*tracer;
- 	struct trace_option_dentry	*topts;
-+	int				nr_topts;
- };
+-	ret = key_payload_reserve(key, payload_datalen + datablob_len
+-				  + HASH_SIZE + 1);
++	ret = key_payload_reserve(key, payload_totallen);
+ 	if (ret < 0)
+ 		return ERR_PTR(ret);
  
- struct trace_pid_list *trace_pid_list_alloc(void);
+-	epayload = kzalloc(sizeof(*epayload) + payload_datalen +
+-			   datablob_len + HASH_SIZE + 1, GFP_KERNEL);
++	epayload = kzalloc(struct_size(epayload, payload_data, payload_totallen),
++			   GFP_KERNEL);
+ 	if (!epayload)
+ 		return ERR_PTR(-ENOMEM);
+ 
 -- 
 2.53.0
 
