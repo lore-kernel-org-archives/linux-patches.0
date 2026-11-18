@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037241;
-	b=InDwCBVSRyy8qfksxJrYCkpzQ/8ObODYBW8msl585mCx5rytBe0szwcmXNqXkYMKeovl
-	 eVWnZbwPPHmk3JEu1LCC76rQz+HChck9FYxxGAxlN/wYOO7eWa6VDq9txiQkpYnkIMFvf
-	 iWXQBWxc0B5rIV0eeVm2X72cDB+eJ5TKRUah48ZqDy/3jt4Pli8Cu+1v6DK7hfx86I2j/
-	 TKwgZQKyf1ldo+fJpQm3+XOEUpRoZz4knZgl6Y/j+QLzgifCPK/aymNOPIC9HnzlwTQY2
-	 obQF6NJLo4ylDPt5l+eRXRE/N1f2iU22x4DGinwNKxADGNOxf28sCr4328pb43I97yg==
+	t=1795037244;
+	b=slJKN2Kayrpq58aCandQpgZVzoPcXKE4cigXyk/vpiTgUAsh69pdFcyrjIWSYGJSaEEV
+	 yQ2arKLAJ314huU/bvvTUXFecc9u/YMUS4vzEg07BR4RIgRjflKezsZYSfgLd/CaSQwvV
+	 vwSWR6fcIzMv7LmyzKzNRHKZgkaDkVUj0JrL6boHTOpBXE9U9w1hZV68N8yZyGJTPBzhV
+	 VsrkJaRdloUpgEIZcKnk3Gd4mKT9IIENbnRH8L58eW9oTUZ/O01zGiMpz/er8Ni6quG7Z
+	 R6KKon20bKE1kR0VJm6BaJXSfmjfMCf9T2RmGZPjW+ns8w3EA74ze6LmPdc2VbijXTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JBOM1t2Eg3tx58HB4p7shY+4xfoktoAlyEQE//tv9ho=;
-	b=2EO0PBgpqKF/A9YFYMCw3OZpAQfECXppuSnBF827m29bILOJMEcE9qvqKaOQ3NhrZS8T
-	 ATQ7PjvzH5CzwM9kcltjavxt8JShENzColHME/o9cpmK67ItSJlOEBB8ALv5EUEkqtMtD
-	 +1cNDoA31EBW6hMEl5GgLjygIppwFMCkauFLaL81pQBYhhJLBq268ny7ZUrLFRpmkD/Ca
-	 +69X2rLj3bgpsfXGb6NNRc6lfHSPTB+/DP72y5riwQZfvoVmyQi/JNruzPhTHjQ4wp+oA
-	 bpAJk2hXfDc7u9GMI4p9rtw0V1gGv/3PWnQQRWiR/jAhv7dTvHWLZuks8mzK9zhQMfA==
+	bh=NiKDK2gkx02qltArUzkITP1FGJcmHHu3NmJox0Fvwps=;
+	b=GtgLhK1zkTbjgiOkP+NhwoM3lP6m0I1cI3ci/Rp0mYn9sJNyUjlOLxHaOXKP9zySYNLn
+	 J305ntmIIiPxO28zx5J/+1+fC7FwvqLmtSvmke36loSAfNm/kc4MuKVMj69NvIwNjN2hk
+	 ovRXoAgR+FbF9hZxwDor6h/GOCO5rGYP+7EZSPudaohsavtw1eY3GyNYzigwrnwZwzeYu
+	 ZrZ8vdxB+SA3aWD7dbkt7w3cMA4TFRzPZi3lhEeMGAtubhYGHizJgqtly9VnB5MAlWvdB
+	 bL8giP5/ivjnY1yXFKa9Kz6H3pxrUoDxtSX+F/wfMlIlJt4egSDI/7FOR0NTOUiI9yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nA5pMCKc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qoRLY/JK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD94606A320;
-	Wed, 18 Nov 2026 21:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A638D606A32F;
+	Wed, 18 Nov 2026 21:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nA5pMCKc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9804C1F000C4;
-	Wed, 18 Nov 2026 21:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qoRLY/JK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07221F000C4;
+	Wed, 18 Nov 2026 21:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037241;
-	bh=JBOM1t2Eg3tx58HB4p7shY+4xfoktoAlyEQE//tv9ho=;
+	s=korg; t=1795037244;
+	bh=NiKDK2gkx02qltArUzkITP1FGJcmHHu3NmJox0Fvwps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nA5pMCKcRlAVymsvJXV70JK6sdGuGYK2kCs61HFXya8WA9eqhcmjoLED/0opfn9q9
-	 y8sgbg9ETB5HwNH4ScaOq6hmzTIE2E6a8q8+KaCL9WyvINSpr0HCR5DWO38IDg0nmn
-	 Nq9Xt7QW72ip1K7lbuGNEVANv3u4BgKP8N5vMcBU=
+	b=qoRLY/JKsg6uK+wpkbjY3UA4XCNsTqINewtOF7Z3qQOFA0CJ9ntisfI2MR+yV1QVE
+	 KLNnssCzAlhOgMoGwMgEDhI5/I58c5yG+PFjehT4Xk4HfSHMs5WpjuHfNOaNrkWTIV
+	 bUblcCv8n0UPjkNzXgiNRK7Sd8z1kt1PeBeRMFLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1297/3318] ocfs2: read the xattr entry hash before defragmenting the bucket
-Date: Wed, 18 Nov 2026 15:31:59 +0100
-Message-ID: <20261118150359.176716747@linuxfoundation.org>
+Subject: [PATCH 6.6 1288/3318] tcp: fix reordering addition overflow in MTU probing
+Date: Wed, 18 Nov 2026 15:31:50 +0100
+Message-ID: <20261118150358.901171937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,120 +74,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit f48151da595e74efdc23d83d8d6d142207b8c731 ]
+[ Upstream commit c1df9c0c0536393de43310f84ca4f8b217271a00 ]
 
-Patch series "ocfs2: fix stale xattr entry pointers and empty header
-reads", v1.
+Commit efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and
+MTU probe sizes") widened size_needed and the MSS multiplication, but
+tp->reordering + 1 is still evaluated as u32. RTAX_REORDERING accepts
+an unrestricted u32, and tcp_init_metrics() can install U32_MAX.
 
-Five defects in the ocfs2 extended attribute code, plus one robustness
-measure that belongs with them, all on the paths that move entries
-between a block, a bucket and an index tree.  They fall into two groups.
+In that case the extra-data requirement becomes zero. A write queue
+with probe_size - 1 data bytes and a FIN satisfies the sequence-space
+check. The coalescing walk can pass the queue head to
+tcp_skb_can_collapse(), and tcp_clone_payload() can produce an skb
+whose advertised payload exceeds the data in its fragments. Local
+delivery followed by TCP_ZEROCOPY_RECEIVE can then walk beyond the
+fragment array. KASAN reports a slab-out-of-bounds read in
+can_map_frag().
 
-Stale entry pointers (patches 1 to 3)
+Cast reordering before incrementing it so the arithmetic handles the
+entire u32 metric range. For U32_MAX, the required size exceeds the
+32-bit queue and window limits, so the existing checks skip the probe.
+The calculation is unchanged for all other reordering values.
 
-ocfs2_xa_set() writes through a pointer into xh_entries[] that two of
-its callers invalidate first.  Defragmenting a bucket ends in a sort()
-on xe_name_hash, and lib/sort.c is an unstable heapsort, so entries that
-share a hash can trade slots.  Copying a block into a bucket changes the
-order outright, since a block holds its entries in insertion order while
-a bucket holds them by hash, yet ocfs2_xattr_update_xattr_search()
-relocates the search by the index the entry had in the block.  Neither
-path compares the entry's name with the one being set, so setxattr() can
-replace a neighbouring attribute's value and still report success, or
-trip ocfs2_xa_reuse_entry()'s BUG_ON.  Patch 1 takes the hash before the
-sort; patches 2 and 3 look the entry up again afterwards.
-
-Reads of an empty entry array (patches 4 to 6)
-
-A block and a bucket may both hold no entries: ocfs2_xa_remove_entry()
-keeps the last slot when it removes the only one, so an empty bucket
-still carries the hash it is keyed by.  Three sites index xh_entries[]
-without checking xh_count and so read xh_entries[-1], which lands on the
-header and comes back as xh_count | xh_free_start << 16.  Nothing
-faults, but the value is acted on: the collision check reports no
-collision for an empty bucket, the divide commits a sentinel hash that
-hides part of the key space from ocfs2_xattr_bucket_find(), and the
-block to bucket copy claims storage the bucket does not hold.  Patches 4
-to 6 guard each site and keep the one read of xh_entries[0] that
-ocfs2_xa_remove_entry() documents as intentional.
-
-This patch (of 6):
-
-ocfs2_xattr_set_entry_index_block() takes the hash a bucket split has to
-work with out of xs->here, but only after ocfs2_xattr_set_entry_bucket()
-has tried and failed to fit the entry.  That call defragments the bucket
-when it runs out of room, and ocfs2_defrag_xattr_bucket() finishes by
-sorting the entry array by name hash.  lib/sort.c is not stable, so two
-entries sharing a hash may trade slots and xs->here is left naming an
-entry other than the one the search found.
-
-The hash value itself survives the permutation -- the array is already
-sorted, so a slot can only exchange with an equal-hash neighbour -- but
-there is no reason to depend on that.  Pick the hash up before the set,
-where xs->here is unambiguously the entry the search landed on.
-
-No functional change intended.
-
-Link: https://lore.kernel.org/20261024151012.1059683-1-joseph.qi@linux.alibaba.com
-Link: https://lore.kernel.org/20261024151012.1059683-2-joseph.qi@linux.alibaba.com
-Fixes: e39baff18b85 ("ocfs2: use the stored hash when checking xattr bucket collision")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
+Fixes: efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes")
+Cc: stable@vger.kernel.org
+Cc: Wyatt Feng <bronzed_45_vested@icloud.com>
+Cc: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261028160226.2170244-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index c5251cccb479a..89b454eaff68f 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -5907,6 +5907,22 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 
- 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
- 
-+	/*
-+	 * An existing entry keeps the hash it was stored under, and that is
-+	 * the hash a split has to work with.  A new entry is stored under the
-+	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
-+	 *
-+	 * Read it before the set below.  Filling the bucket may defragment it,
-+	 * and ocfs2_defrag_xattr_bucket() re-sorts the entry array, so
-+	 * afterwards xs->here only denotes whichever entry the sort left in
-+	 * that slot.
-+	 */
-+	if (xs->not_found)
-+		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
-+						  xi->xi_name_len);
-+	else
-+		name_hash = le32_to_cpu(xs->here->xe_name_hash);
-+
- 	ret = ocfs2_xattr_set_entry_bucket(inode, xi, xs, ctxt);
- 	if (!ret)
- 		goto out;
-@@ -5922,17 +5938,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 	 * the maximum number of collisions we will allow for then is
- 	 * one bucket's worth, so check it here whether we need to
- 	 * add a new bucket for the insert.
--	 *
--	 * An existing entry keeps the hash it was stored under, and that is
--	 * the hash a split has to work with.  A new entry is stored under the
--	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
- 	 */
--	if (xs->not_found)
--		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
--						  xi->xi_name_len);
--	else
--		name_hash = le32_to_cpu(xs->here->xe_name_hash);
--
- 	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
- 	if (ret) {
- 		mlog_errno(ret);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 327e38c81fef2..5e805d05856f4 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2436,7 +2436,7 @@ static int tcp_mtu_probe(struct sock *sk)
+ 	mss_now = tcp_current_mss(sk);
+ 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
+ 				    icsk->icsk_mtup.search_low) >> 1);
+-	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
++	size_needed = probe_size + ((u64)tp->reordering + 1) * tp->mss_cache;
+ 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
+ 	/* When misfortune happens, we are reprobing actively,
+ 	 * and then reprobe timer has expired. We stick with current
 -- 
 2.53.0
 
