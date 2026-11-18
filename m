@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044061;
-	b=YABExIYWeAKHHfdc6qz54zONhg7hj0XR3MZeQ6rfORJnnQoVuFArDSgIrDe5EMA72rh4
-	 fK68yNWgQLUvd+4y95oIX0KA3zRhdEzxzCwQsAPJxyv6aWW7g6l/JCTavMDJWidDM+gTN
-	 mxK1zO6hoBmvhcgCsqHpufZnWIPLrOsWYg1NBU5+nfgTnbtZMyrV4etJIjp96Zf81TWQ/
-	 b/VFEGJYYURkJ9A8m6dPuZ1WIaa/Apq21KaeRR4EQIpRhdbPu/mc2D0zMzctAdZ8MNpPr
-	 om0Ok5gBFUzdtW3m1Ei7N5Zl/CQkZziUdZRRuvyK+KSi6uuWXEBxmvsJuGKomvwv+7Q==
+	t=1795044064;
+	b=BW1QyjMwDQVj6vQUccHKwiHtbiYFbiDLe585Ua6brH1CsMdar+QQYLHqOQrj9JvgUFt9
+	 5Gh9ie6hDdtqIJgWPZRe2+04UAGRj52droJDQu+4yKETZx2rE4kiYBSQn/kLuHMEn5y1a
+	 bqIlMTJn8S8dgRgmZvGL6F3zGkw8XgDQdSHOi4AhC9kokjHdepx5a4JKMgyz4WecemQof
+	 CA6Hp7yUjxftEuLpfbgF2G6mg3H/NrSNO56oK5gMYtKIX4qzZrgPaiC//7n6WpPW9eC+/
+	 MTsTGUVy9+UDe2qRRBKG4jkCWc0l02PxFN+iTM+vIk4ri+5nqPUGNmpgPS/ZmOn+GHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cgfYjYVIBBcLUZR15YAS+ra6mXaDuJfRAYpo3dbM6Qg=;
-	b=GW3MAI7lz9bGIX16ytupN1dB+tPMJEy8NkyMDoYAPfb5P4i87hwHpBfcHRqxoCFyIEk1
-	 4AYUVTZXILox+Cw4GEaydg3Dld7IY2+K9Ld9tojuLvzhFPfeSbLI92JXAOqNqpW6Ugcsj
-	 dDJXygX+7gY13CH58cM1l7KiXExrDwj27lvs/KadTfPmvC+TRaZ9n1InB8vmUNjx3GddF
-	 AvDg/B0Xnfw+72qiX58bVYePjyZYy6nLSrcFCtuY3xqnYRguSmMWrT2bFrQmki2YdXhme
-	 AwgiLXUy8T6Zb8zy+LC9CYg2uBdyS8XzsEV550ZgMoJi8xJ3s+wbgg2hZ+gnEvL7bfw==
+	bh=t5yBbC4sctcuN6+C6ABTzzoRr6GzwaXrLMuAXgByQ7o=;
+	b=24NTAFH2eYbCqRweA5yQSyrQQ70bDIPYA8HiK4a1XPxg4sgyfX7zFhj40+obA1LiGkaV
+	 sWuY+rE6uv7KicENyCXOfUXOm0PVXVC8dG1GELCHBCOMoBo24lf2mlUQw1em8+uw/xEh4
+	 MmiUrDDYXaApL4ugpAs8VKzGxIWpOp45BzZfCM9FBbLO1NvE6rcC1re+oDToYRX0ddFKH
+	 /ALx1lsjQ+VDym06+NhyHYAr8KJ+C+h81QBUgDzhOV0AlEpfKOBl5Skr8Y9bus5w1fjE4
+	 GM0dGeumAnCPbMVGJ0hQUObOCQU/2xM1YI18G7XmZbMYWzRXghsdUDdpMcw4RYA1aAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SI8FdneF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2R05lx17;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7577F606A31C;
-	Wed, 18 Nov 2026 23:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C331606A31C;
+	Wed, 18 Nov 2026 23:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SI8FdneF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71711F000C4;
-	Wed, 18 Nov 2026 23:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2R05lx17
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBD21F000C4;
+	Wed, 18 Nov 2026 23:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044061;
-	bh=cgfYjYVIBBcLUZR15YAS+ra6mXaDuJfRAYpo3dbM6Qg=;
+	s=korg; t=1795044064;
+	bh=t5yBbC4sctcuN6+C6ABTzzoRr6GzwaXrLMuAXgByQ7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SI8FdneFx2VRvjsElZRLQk5QTdUEYORYO93fMEF2gSI6vDThXHWE4xXEjrBn8CAhF
-	 gAyWstvOT3H0wD//cENXtOaYp6a+3NpkAwfi1/CznHcpInyxZx7CcAbOQRU83V4ACg
-	 22dNoQzUBUKU/5UZEdlGiEPiuGTqBmvmYOap822k=
+	b=2R05lx17SrGv84QIl5NeXIKX6Q6JOHaVX9beiYb17/6NFr36kgTAu8EfCRP5yTBnE
+	 wuMFt5h1yNl1Bkb81dx/en/saF1cioX3cwgeraFBZd/dXicYT0uoEOUTEgZpUYujIS
+	 TkgfYl/bzDpHfRamxOt1ZyqWcKukiEmr1jlACrmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0433/2857] wifi: mac80211: refuse to make a monitor active when it has no queue
-Date: Wed, 18 Nov 2026 15:24:27 +0100
-Message-ID: <20261118150216.972520479@linuxfoundation.org>
+Subject: [PATCH 6.1 0434/2857] i2c: imx: disable autosuspend on remove
+Date: Wed, 18 Nov 2026 15:24:28 +0100
+Message-ID: <20261118150217.008565166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,52 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 2b04d6556964ae9f89819b86a0a7801e39c3aae5 ]
+[ Upstream commit e0c3e9d76adbe522dd420a766ce42d03ce887c29 ]
 
-A monitor interface only gets a TXQ if it's created active, and one can't
-be added later. Setting the flag on a down interface is still allowed, so
-the driver is handed a monitor with no queue. ath9k dereferences it:
+i2c_imx_probe() enables runtime PM autosuspend with
+pm_runtime_use_autosuspend(). The probe error path correctly undoes
+this setting with pm_runtime_dont_use_autosuspend(), but the normal
+remove path only disables runtime PM.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000066
-  RIP: 0010:ath_tx_node_init+0x49/0x170 [ath9k]
-   ath9k_add_interface+0x10c/0x140 [ath9k]
-   drv_add_interface+0x54/0x250 [mac80211]
-   ieee80211_do_open+0x32f/0x800 [mac80211]
+The runtime PM API requires pm_runtime_use_autosuspend() to be undone
+with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
+was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
+set therefore leaves the runtime PM state incompletely cleaned up after
+the driver is unbound.
 
-Reached with CAP_NET_ADMIN by "iw dev X set monitor active" followed by
-"ip link set X up". RTNL is held, so netlink operations block behind it.
+Add the missing pm_runtime_dont_use_autosuspend() call to the remove
+path.
 
-Refuse the flag when there is no queue to give.
+This issue was found by manual code inspection.
 
-Fixes: 79af1f866193 ("mac80211: avoid allocating TXQs that won't be used")
-Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260904200338.10829-1-lucid_duck@justthetip.ca
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Added a local->ops->wake_tx_queue && check to the condition, since drivers here may lack that op and never get a TXQ, and adjusted the context to match the surrounding MU-MIMO code. ]
+Fixes: 588eb93ea49f ("i2c: imx: add runtime pm support to improve the performance")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.5+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260914091544.1667137-1-lgs201920130244@gmail.com
+[ sashal: adjusted the hunk context because i2c_imx_remove() still returns int, so the new call sits before the existing return 0; instead of the closing brace. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/i2c/busses/i2c-imx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 0274aac7fb9ed..10df0b81a878d 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -104,6 +104,11 @@ static int ieee80211_set_mon_options(struct ieee80211_sub_if_data *sdata,
- 			return -EBUSY;
- 	}
+diff --git a/drivers/i2c/busses/i2c-imx.c b/drivers/i2c/busses/i2c-imx.c
+index 41030f0ff7801..9018160e70fa1 100644
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1660,6 +1660,7 @@ static int i2c_imx_remove(struct platform_device *pdev)
  
-+	/* TXQs are reserved in ieee80211_if_add() and cannot be added later */
-+	if ((params->flags & MONITOR_FLAG_ACTIVE) &&
-+	    local->ops->wake_tx_queue && !sdata->vif.txq)
-+		return -EOPNOTSUPP;
-+
- 	/* also validate MU-MIMO change */
- 	monitor_sdata = wiphy_dereference(local->hw.wiphy,
- 					  local->monitor_sdata);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
