@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027886;
-	b=qahNkncDd0GcvGRaDot358RmpuzsFqpaZoDgzWZZE1tRhiTXMJT9h44TGtiYLIjA3GLe
-	 WwSVnWJLtjDs3hW5Df5WfYwm4wym4Lqx4Uan0Eoutk1X0Z/g5h0G/3lMMGa4yFimPVzmD
-	 lPtyG8nR8LXY+Yw8Af9uyek4VHNvy/XRQNEaKmobREkglAiDYRlOCO0i1nvQVXfd0EDJT
-	 0GEUijRXn7IV+pRBN8ZVSxIbiiRvBDoeqRbkNX83XNE1OiAcQTUisV7P75ODZnrhOttaE
-	 MJqr4n4mth8i/fmnVDnzCST8JbkAnh4v8Fzu2YzGwekecf70IX+iOvNt8ZMmi71x7ZA==
+	t=1795027889;
+	b=h4TJkT08897DUbaMomiA5wgeKCDCbYBEN3SjkWr+UZKv6ZD/4ynTFfcNpeRWPlKOW84L
+	 Z1iEq9Y5OnhSmAGxylvP1CFSkA5UqLXsujIhunnLAm3yKZIwdSsBpwhJS/4TThHSVHef4
+	 JyZ2o7qxGGX4tu8tFWpAS+o9QuzEqfEr+n4eKmwBl5bORF93Pbq8Y3ZtSa2Xo52BL85lo
+	 dRK5KgepZq4T3SrKY7quxPFx3qQJF8roDhKDQKEOzgSxQRg9bircKvSaf9XUtuOoG+tTu
+	 Zza1P1aMy13sUI9w3SfekXh1VSP4NzTsNxPXHkGJ41Z2VJkca0SIJK+ucabhWYr4Q6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=za6wICvvhbNdYQIHwdVUf6OogULfiKyhre19SwUMBKQ=;
-	b=48nxskXsAwRtp48XbDAK4dPN40st+YDGa1Dj7yz3d/B/bTnfNyq1FJTofxzTyDxfQolY
-	 fssmCgk24J3/TbjKHO+Y060uVVWRy9OUhyVjawnQrLEiveRjnTfEbwU08wIuAkhdIzP7O
-	 19BZn2/SH3tkikbGpkYrSzSUm+FtyfVGYMR6BKIp4Mjp/zZYKOWOCXvogdxXfU7XTSQLg
-	 j0pt2wp1WpEbeQBPl1BLgm1duxcVpXZSoSQhdChPtpY4gxRb6KMTJ7FBUgP946V8leNlC
-	 H1HHNn5KBFOniMbqYvBVhMVpSR+SJlukxv5/hoosuGqwM2kRoaU94Z3j1W4tQLVSZuw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=XYGE68kp1NHvjklsc+0vGyDo6S1EYqEMvTHjRcFPp24=;
+	b=3IeZ/0p07QIkitGCTCr0MuiV0anfnQ5BBMUmiXcsFm40seKuipc2eIuCOzxya7sz/9Ni
+	 +Kd7vlEccoXmTfyis2ESy3QWmsKmxc8sT+2nKQHjvS/dRLMWFEiF9nRPaUtJaDo5uVWwm
+	 ITtn82GO2yBCszDJtXfMO0CgvAWIAgEWVXHdc7K8z9BWs0YpE4kUcUJyfpGWGifs0RLuW
+	 lqtYUCI7OGDCPLCXZOH2I1uMRBTED+VAqqbUi6mX9fv3QPtLaa7vPTMXel2OrMXlS4LGH
+	 TsD5eWJsgnLpndfgjjietu80HJ/7+j1CIsj3gUwHE22tb5Wz3GYjTgZnvYO/wva/j2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeWB398T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=07i40brR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A392B606A31C;
-	Wed, 18 Nov 2026 18:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77370606A31C;
+	Wed, 18 Nov 2026 18:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeWB398T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0152C1F000C4;
-	Wed, 18 Nov 2026 18:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=07i40brR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6DE1F000C4;
+	Wed, 18 Nov 2026 18:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027886;
-	bh=za6wICvvhbNdYQIHwdVUf6OogULfiKyhre19SwUMBKQ=;
+	s=korg; t=1795027889;
+	bh=XYGE68kp1NHvjklsc+0vGyDo6S1EYqEMvTHjRcFPp24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YeWB398TnPdttBPLVDRxSRNWqGb+LaUgg3FYkqvmGcOeO2YIZdrx/4kar0MZpZtzG
-	 9zsNlVCMO6RAMXeNTfMwFUJBeefiOetdLRTQV8gzvVg65OYCohVUpNNP5oQ2OqwDXu
-	 cblI1Lv4ZYjbM80QZrWm6RSCr6J8a7Ipon86C6XU=
+	b=07i40brRileASQgfP9Z22zUFldryi/7xJ5/gl5jVqrzpXXhjLKtS+Ux+gFXJfQ2R3
+	 tssEO6k8POuEKpQ9273tPi0Ced4PJeZOZT9ShOVRInna+VA68b4e+JOFKrt1ERcGKj
+	 7+GLhh5Z/E6RA5m+z8jFC8zdttc4WhimjeUbzKPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Nam Cao <namcao@linutronix.de>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1947/2151] vdso/gettimeofday: Correct the read of tz_minuteswest and tz_dsttime
-Date: Wed, 18 Nov 2026 16:01:22 +0100
-Message-ID: <20261118150232.691760995@linuxfoundation.org>
+Subject: [PATCH 6.18 1948/2151] ALSA: pcmtest: Reject invalid fill_mode values
+Date: Wed, 18 Nov 2026 16:01:23 +0100
+Message-ID: <20261118150232.726652143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,51 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit cbd0f65b48f52d308c457b0fd5201324abadb501 ]
+[ Upstream commit 5deb9c57ba93d28a52871a96f3d8794d2cbed035 ]
 
-When these fields got moved from 'struct vdso_time_data' to the new
-'struct vdso_clock', this access was forgotten.
+The fill_block() function handles only fill_mode 0 (random) and 1
+(pattern). With any other value it writes nothing and does not move the
+buffer position. A capture stream then gets no data, and a read fails
+with -EIO after the timeout. Nothing in the kernel log says why.
 
-'vd' is not an array, but a pointer to a single structure. The code
-works by accident in its current form as CS_HRES_COARSE is 0.
+Check the value in a set callback, so a bad value is rejected both when
+the module is loaded and when the parameter is written.
 
-Replace the incorrect array access with a regular pointer dereference.
-
-Fixes: 886653e36639 ("vdso: Rework struct vdso_time_data and introduce struct vdso_clock")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Link: https://patch.msgid.link/20260902-vdso-tz-v1-1-4d37a6b85ff9@linutronix.de
+Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261026031655.2699561-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vdso/gettimeofday.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/drivers/pcmtest.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/lib/vdso/gettimeofday.c b/lib/vdso/gettimeofday.c
-index 95df0153f05ab..f18083f64d10b 100644
---- a/lib/vdso/gettimeofday.c
-+++ b/lib/vdso/gettimeofday.c
-@@ -380,8 +380,8 @@ __cvdso_gettimeofday_data(const struct vdso_time_data *vd,
- 		    vc->clock_mode == VDSO_CLOCKMODE_TIMENS)
- 			vd = __arch_get_vdso_u_timens_data(vd);
+diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
+index 651a79c3f5786..5a016267ed8a4 100644
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -72,13 +72,32 @@ static u8 playback_capture_test;
+ static u8 ioctl_reset_test;
+ static struct dentry *driver_debug_dir;
  
--		tz->tz_minuteswest = vd[CS_HRES_COARSE].tz_minuteswest;
--		tz->tz_dsttime = vd[CS_HRES_COARSE].tz_dsttime;
-+		tz->tz_minuteswest = vd->tz_minuteswest;
-+		tz->tz_dsttime = vd->tz_dsttime;
- 	}
- 
- 	return 0;
++static int fill_mode_set(const char *val, const struct kernel_param *kp)
++{
++	short mode;
++	int err;
++
++	err = kstrtos16(val, 0, &mode);
++	if (err)
++		return err;
++	if (mode != FILL_MODE_RAND && mode != FILL_MODE_PAT)
++		return -EINVAL;
++	fill_mode = mode;
++	return 0;
++}
++
++static const struct kernel_param_ops fill_mode_ops = {
++	.set = fill_mode_set,
++	.get = param_get_short,
++};
++
+ module_param(index, int, 0444);
+ MODULE_PARM_DESC(index, "Index value for pcmtest soundcard");
+ module_param(id, charp, 0444);
+ MODULE_PARM_DESC(id, "ID string for pcmtest soundcard");
+ module_param(enable, bool, 0444);
+ MODULE_PARM_DESC(enable, "Enable pcmtest soundcard.");
+-module_param(fill_mode, short, 0600);
++module_param_cb(fill_mode, &fill_mode_ops, &fill_mode, 0600);
+ MODULE_PARM_DESC(fill_mode, "Buffer fill mode: rand(0) or pattern(1)");
+ module_param(inject_delay, int, 0600);
+ MODULE_PARM_DESC(inject_delay, "Inject delays during playback/capture (in jiffies)");
 -- 
 2.53.0
 
