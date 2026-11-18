@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018227;
-	b=isrJkNxYF4ZJKj1qMCnFFvEu313+pQli95itO37VaHWM6DJTxWtHJ6IEUwRf/wAPdfyd
-	 oala9QIeWB2ryYG4jhdj4/wY6CgPzBNjhvBRlSph54go3nYE4Airnsa7XYBKuxQGdr04X
-	 BaPCYhxlGu3Jk9Rz719qhcPrz9CahJWQKzvFfADD/RZW1rx1mt8oq2kWQ5U031wYKXZbL
-	 glMA4Uw4myWA9HyzeGxkxsp9Zghd0hTOyeSSFBC6i0xWkzXfIj3p2wteL/uzqlyqtZpNa
-	 YWODeHtBXVZUlzgdp+JsGrOa1foSDcc8lhgvwnNcnXbS6stgrMZFQ3HhV9YNrfrL2uw==
+	t=1795018230;
+	b=rD/pNZu86hXaP/Mei47TiMSCu2qOa/YvFZhzPcSjDOvQfBMtNo6IqrS4ZqKPem4D0m9Q
+	 w6LYKX0Xpp1XNmjPv63/rm80gR3/6FL7wJf4cOOFGlUutR4dlMiAJzVljsMWMpcIqhhVE
+	 pA9nv199WWxcTVsIuRmj6VdqRya6NchG5fDo7/C8pKY1J3zvYFdJCUDPurd8S+4s8WFqi
+	 mqc9BlFyNWke+7EP3H0sOyPbJPDGPC9aESMvoL5rrTQAhCqFPITo/ZviKJCA9K4nqUBbq
+	 Dj0VeYIbCB8tc2I31uadU0uuK+ybQUSx05YCfhqlUSuNThaCwfLvWp+TZ+eTHcJGRmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AheosJinlzLv+JtDPKqeaqWcqTeWlMCMAPfx6einJxY=;
-	b=XQ5b+beeGp96xPPOpBqyL8m1O5gLhyIo32f6UKN6/vocO95zBCePbaFAzXN0b1GtgbOA
-	 QQO+5dUi2h71U+hheuTVSMJzX8Pm+v6Hzjpcq2ixXQOg8+ls6MQi1sP5wlC9EpejuoD0y
-	 IyFvWFTTj/Na+/z7HVYMQwNOr67AHK5bvpOugeVdQTunxgUUyDAYKX1XBi1LldXRZwq/e
-	 dr1bT2OqyPnOLGszx3l5x/M+KMy1BsL/oZvYcq6hGaGVCHBc+HeFiXJ2zIU9dP1dUbtaS
-	 yj/Nc2tOCYYlUXQ/vk0pdIOf4WF4YWzkWo8sm4R6vnYXUruceaT6SuROzDP1CTpODVA==
+	bh=m0300EH9re/mAoINtAuJLdnoopHBlGbZMiBgG0IFWRg=;
+	b=pSHuqcKEcQpV+OHh098o9pVqEZSiU9hwZ7yUCDPQI91t60QY8lTgxK13z26Geod4AdMn
+	 wxMq1GuHpZW6iHtvpryUYkJdrICjzbR4xtBQktszOs0sUkeifLfbKjKLsWnW5FHhF7ZTD
+	 1HfB4Cm+0B5LxyFnA1Ot5zCJRL5AI+q0zS7qFr36PW4KNBhOmADAgf8oRKIAEaEW9masz
+	 F4wEhRDzg5wVtET62tB7bz6srObQMFe44luEEqIZqd/oetzu0eXONrMxLNQucOJjfffrg
+	 b4D4mTjeJynMJZDDz2FTqFXcYt/NYEr3mA5lZ5LfT3cXBqcDOLu2ETaDslsTjAYik5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKibfbL8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAXv3DFh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA50606A334;
-	Wed, 18 Nov 2026 16:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C8C606A32A;
+	Wed, 18 Nov 2026 16:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKibfbL8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C3A1F000C4;
-	Wed, 18 Nov 2026 16:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAXv3DFh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDF71F000C4;
+	Wed, 18 Nov 2026 16:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018227;
-	bh=AheosJinlzLv+JtDPKqeaqWcqTeWlMCMAPfx6einJxY=;
+	s=korg; t=1795018230;
+	bh=m0300EH9re/mAoINtAuJLdnoopHBlGbZMiBgG0IFWRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKibfbL83X3315Yopu71nUQhP5VWEl9wEwevSmkoIVsq5zZmZ+w59LGV2qo+idWeF
-	 A1wX1sMd3amkJ2LlDul6e1czBvcVBBS5m3OIz1wSPQ20QiTa/ySl2QJpw3hltbHmnn
-	 jUcqgPdGVrziv7h5gpuWjF6BwdTqKoaY6UistUN4=
+	b=BAXv3DFh/F6uQBdT/llXiL/M1sw9tNi8gXU/d/xekGymPrQTSL/9foS5QGU4e86oA
+	 MPJf+cLNC0uSK+4wdGTWtvXAODx4/f0PZ1OdH409MOP/0LB1aGtapze4IyKJcj09h9
+	 IFmMXcQBckiTfxYwbwpaCMLrRptXVxrTaO5PusjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
+	James Morris <jmorris@namei.org>,
+	Jennifer Berringer <jberring@redhat.com>,
 	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1164/2651] riscv: dts: spacemit: k3: move USB3 phy to board level
-Date: Wed, 18 Nov 2026 15:40:04 +0100
-Message-ID: <20261118150329.918220646@linuxfoundation.org>
+Subject: [PATCH 7.3 1165/2651] riscv: dts: spacemit: k3-com260: keep dldo4 enabled
+Date: Wed, 18 Nov 2026 15:40:05 +0100
+Message-ID: <20261118150329.951809744@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,62 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: James Morris <jmorris@namei.org>
 
-[ Upstream commit a87ca1e5b5d28dee5af42f59f3c6f833c5ad1da0 ]
+[ Upstream commit f314c98807c12272a1902aeda9c648d81b39bad2 ]
 
-On the SpacemiT K3 SoC, the combo phy provides 8 lines that can
-either be used for PCIe or USB3, depending on its configuration
-(spacemit,apmu). This configuration is defined at the board level, and
-assigning a phy line to a USB3 controller while it is configured as PCIe
-results in an "Invalid PHY mode" error.
+dldo4 on the P1 PMIC is marked regulator-boot-on, but has no consumer
+described in the device tree. The regulator core can therefore disable
+the firmware-enabled rail during unused-regulator cleanup.
 
-Move the USB phy definitions at the board level, as it is done for the
-submitted PCIe controller [1]. As a consequence, boards that do not
-enable a USB3 controller node will not match the DT schema due to
-missing PHY entries. This is not an issue as dtbs_check only validates
-enabled nodes.
+Enabling pcie4_rc on a K3 CoM260 Dev Kit without this change while the
+board's included RTL8852BE module is connected to the M.2 E-key slot
+results in CPU hard-lock, as seen in kernel log:
 
-[1] https://lore.kernel.org/spacemit/20260923015016.64069-1-inochiama@gmail.com
+[   32.521536] dldo4: disabling
+[   48.125823] watchdog: CPU3: Watchdog detected hard LOCKUP on cpu 4
+[   64.125829] watchdog: BUG: soft lockup - CPU#1 stuck for 26s!
+[   64.125926] Hardware name: SpacemiT K3 CoM260 IFX (DT)
+[   64.125928] epc : smp_call_function_many_cond+0x158/0x740
+[   64.125938]  ra : smp_call_function_many_cond+0x11a/0x740
 
-Fixes: 46380e4b1534 ("riscv: dts: spacemit: k3: add USB controller and USB phy support")
-Cc: Inochi Amaoto <inochiama@gmail.com>
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260928205012.3689405-2-aurelien@aurel32.net
+GitHub Copilot assisted with diagnosis and build and test automation, and
+changelog drafting.
+
+Fixes: cfe5c91cb73c ("riscv: dts: spacemit: k3: Initial support for CoM260-IFX board")
+Assisted-by: GitHub-Copilot:gpt-sol-5.6
+Signed-off-by: James Morris <jmorris@namei.org>
+Signed-off-by: Jennifer Berringer <jberring@redhat.com>
+Link: https://patch.msgid.link/20260928231807.1757995-2-jberring@redhat.com
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 ++
- arch/riscv/boot/dts/spacemit/k3.dtsi         | 3 ---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index b084a35aa00e3..0a6f669d509a9 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -328,5 +328,7 @@ &usb3d_u2phy {
- };
+diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+index 37627963a6492..8102b9847afd0 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+@@ -170,6 +170,7 @@ dldo3: dldo3 {
+ 			dldo4: dldo4 {
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
+ 				regulator-boot-on;
+ 			};
  
- &usb3d {
-+	phys = <&usb3d_u2phy>, <&combophy 4 PHY_TYPE_USB3>;
-+	phy-names = "usb2-phy", "usb3-phy";
- 	status = "okay";
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index 86ccfb82e295c..b8c3fe5dbaa80 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -452,9 +452,6 @@ usb3d: usb@81a00000 {
- 				 <&syscon_apmu RESET_APMU_USB3_D_VCC>,
- 				 <&syscon_apmu RESET_APMU_USB3_D_PHY>;
- 			reset-names = "ahb", "vcc", "phy";
--			phys = <&usb3d_u2phy>,
--			       <&combophy 4 PHY_TYPE_USB3>;
--			phy-names = "usb2-phy", "usb3-phy";
- 			phy_type = "utmi";
- 			snps,dis_enblslpm_quirk;
- 			snps,dis_u2_susphy_quirk;
 -- 
 2.53.0
 
