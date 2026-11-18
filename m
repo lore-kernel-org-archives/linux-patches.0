@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061218;
-	b=yxgg1YW9vKpWLDVRdvqkCxcKDy1o6emcuVMjMrZU5toHYBBC0HD7sva0VaPB63pSzGyn
-	 iNKZ1mPEgRZNKCI7Z0EdvMkl5lnCTFjDyctTbUSbAbfg9C+d+diLued2oTOJef/3BaXzO
-	 ri1jh+yhNkLjJcNbtCWCNJ4NxLRv0uqGZMk3QFcoGAH1pDvgShm0s0SfTg6KUxUYINOpA
-	 fU7qSAWslkBBQ6dHjufIb8NIQMucK64cff7Pq1KuOFxB3+Z7l5N/O/5465K+uH/GLiD1E
-	 7yScaHCOOkwoI6rRiejJqJZAC4roWJONAMyJF5NWVMnePKPKM6NcAialYNsev64zkWw==
+	t=1795061221;
+	b=Ju46FWje+optDhgkEFOsY0K9eEPVYFOBZB5J33dcERSAK/oiXeM6nqc7JwUhZbtue1k9
+	 BRPGPwJjENL0kq/zxfwisKDxrnUpQCAZiOfOy2PwqDOP7z4NbWObeNErm3W3v6IVcVDWv
+	 GnNMGN3gAyuCVaruriF4pdu56YzKKQjD1me71lYDaVR3HZ3cK/VUra9hs3h2jIx4BI4/A
+	 BMmm3WWZWSJwxgtzliWgCI0grW/c9fPKU1yuSfNMQ18ppGK4igvUcgQcXrrFsV0vafG+L
+	 fwf6qUsW4PA9dNghvGnFKzRTAgiSOfS1GahNnCRovT2uH7MEEbzt/efy4N0h3XaVNSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e+sIWLiftudr+O0BqLKzUt7Fuf6+j2sCrGn2Zxhp5O8=;
-	b=vPe3g7kQ4cYsjL7vGxheKU5JWhLCZmvwVn8VL109axSd11x11HjVvNXZD9Bv+5yIRhK0
-	 CqDQVzYFsyzKfLHS/ro3XCJ8Lg5gCyW9lJfZX/YUtYCzS1Brp/Wqv10EHIzQ66C8oNIrV
-	 GR+wP9U8alK064MC8wBYZJIAH6HNJufLOCcQzhVbU4cq9buhtbt83CyEXRA2qZARwAsOu
-	 CrYH0ZphZw7q+wu1pzr9ciqtwQ6ITgeTc3qZdJLPexWNvO4cFlCcWh7heoaalTaRZECQc
-	 D7xM7hKkK/rL3jGKFuG4VF2R3Tb0GoVhdn5oX8Xt3tSPktPBLGBvH9wBW3qCxxymtBA==
+	bh=z8SrNgBLNtAk9PgmSkCaEVsrSDTwYR1mCx/vbCGFw0A=;
+	b=vJ8GUgQ+aRWd2kMMk6f7PvA6HGCVg9GtqkNQGfzqGkq+vU3hv6vBzovlIkBjjUNOHLFD
+	 reaT9YMnYhknz0wkoIJrBocJB7ayiG6t2iP9Mx6nbB5rplK9vLeAbDo6OjoKbcoZXrSkS
+	 UcUcCE89VAMCMuFvt3ucQMfUxLJ68+u37vBlt088QEDXeWkNa85NW6MOnploLb1JKH2ny
+	 lTWr6QKTwpzTZPppzLP8wOOwEc7/nEVgcal4qCT/nGRm5nuZCbRsDg6401paZZ7QGupOT
+	 rFW+lJnbatjQl8rUUAkgXAKfPbjG9qEymXzRp5ZL70RgN1TQod6kXd4LAdQe3GADl4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y862PpW3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YbvBWr1H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCC7606A320;
-	Thu, 19 Nov 2026 04:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80453606A320;
+	Thu, 19 Nov 2026 04:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y862PpW3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236F51F000C4;
-	Thu, 19 Nov 2026 04:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YbvBWr1H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7211F000C4;
+	Thu, 19 Nov 2026 04:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061218;
-	bh=e+sIWLiftudr+O0BqLKzUt7Fuf6+j2sCrGn2Zxhp5O8=;
+	s=korg; t=1795061221;
+	bh=z8SrNgBLNtAk9PgmSkCaEVsrSDTwYR1mCx/vbCGFw0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y862PpW3LMKPVk2MO5eswFrVRtZ9hLzWrpcKIDGVv+MoUjdQbNOHE/omQFA6OG1nt
-	 JRu5d3RlDJYGTScmBj5LQBccG2s1ND3+zL916PVj/t7M4agek6fX741DNqg1fwIIas
-	 S5aX7SdOAwbKeWjo9W65Eetbt+v2/zgTo/h5J0wo=
+	b=YbvBWr1H8VvWBGwGon0CqpgnoBIty0boNlbjQcgZhvie744QbGmlVx4KNTiF44lWE
+	 M9FCBnnDQ6+cWbcUz9heHYzPKKh6ise81857aUF7AaMsKkzLYZ9DLQFGqXdziK4Bo/
+	 BCUN1om/6vMN3K//TfiaQs+qLPsb0KpGin1g/mXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Logan Gunthorpe <logang@deltatee.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1475/1848] dmaengine: ioat: disable relaxed ordering before registering the device
-Date: Wed, 18 Nov 2026 15:58:33 +0100
-Message-ID: <20261118150021.041896079@linuxfoundation.org>
+Subject: [PATCH 5.10 1476/1848] dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
+Date: Wed, 18 Nov 2026 15:58:34 +0100
+Message-ID: <20261118150021.078861999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -73,72 +73,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Logan Gunthorpe <logang@deltatee.com>
 
-[ Upstream commit 10d34fbca6e09a6a18d64fa3ebaa3db9f27fc1a6 ]
+[ Upstream commit f3017892457d8bb664ea4b912910dc254e2dd825 ]
 
-ioat3_dma_probe() disabled PCIe relaxed ordering after calling
-dma_async_device_register(), so if an error occurs and the code jumps
-to err_disable_interrupts, the function returns with the device still
-registered in the core's dma_device_list while the caller frees the
-ioatdma_device struct, leaving a dangling registration that anything
-walking the device list can dereference after it's been freed.
+plx_dma_create() registered the interrupt handler with request_irq()
+before initializing plxdev->bar. If the device raised an interrupt in
+that window, plx_dma_isr() would dereference the still-NULL bar.
 
-Move the capability read/write ahead of dma_async_device_register()
-instead. Nothing after registration depends on relaxed ordering
-already being disabled, and nothing before it depends on the device
-being registered, so this is a plain reordering. It also means every
-remaining step after registration can't fail, so there's no need to
-ever have to unregister the device once registered.
+Move the bar assignment ahead of request_irq() so everything the
+handler can touch is initialized before it can run.
 
-Fixes: 511deae0261c ("dmaengine: ioatdma: disable relaxed ordering for ioatdma")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/dmaengine/20260707165906.249F41F000E9@smtp.kernel.org
-Acked-by: Dave Jiang <dave.jiang@intel.com>
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.kr
+Fixes: c2dbcaa8c672 ("dmaengine: plx-dma: Implement hardware initialization and cleanup")
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Link: https://lore.kernel.org/dmaengine/20260707165906.249F41F000E9@smtp.kernel.org/T/#u
-Link: https://patch.msgid.link/20260902062153.31048-9-logang@deltatee.com
+Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.kr/T/#u
+Link: https://patch.msgid.link/20260902062153.31048-11-logang@deltatee.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/dma/plx_dma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 2a47b9053bad8..677efa50fefce 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -1168,15 +1168,6 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 		       ioat_chan->reg_base + IOAT_DCACTRL_OFFSET);
- 	}
+diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+index 1669345441619..c0a224000575a 100644
+--- a/drivers/dma/plx_dma.c
++++ b/drivers/dma/plx_dma.c
+@@ -505,17 +505,17 @@ static int plx_dma_create(struct pci_dev *pdev)
+ 	if (!plxdev)
+ 		return -ENOMEM;
  
--	err = dma_async_device_register(&ioat_dma->dma_dev);
--	if (err)
--		goto err_disable_interrupts;
+-	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
+-			 KBUILD_MODNAME, plxdev);
+-	if (rc)
+-		goto free_plx;
 -
--	ioat_kobject_add(ioat_dma, &ioat_ktype);
--
--	if (dca)
--		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
--
- 	/* disable relaxed ordering */
- 	err = pcie_capability_read_word(pdev, PCI_EXP_DEVCTL, &val16);
- 	if (err) {
-@@ -1192,6 +1183,15 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 		goto err_disable_interrupts;
- 	}
+ 	spin_lock_init(&plxdev->ring_lock);
+ 	tasklet_setup(&plxdev->desc_task, plx_dma_desc_task);
  
-+	err = dma_async_device_register(&ioat_dma->dma_dev);
-+	if (err)
-+		goto err_disable_interrupts;
+ 	RCU_INIT_POINTER(plxdev->pdev, pdev);
+ 	plxdev->bar = pcim_iomap_table(pdev)[0];
+ 
++	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
++			 KBUILD_MODNAME, plxdev);
++	if (rc)
++		goto free_plx;
 +
-+	ioat_kobject_add(ioat_dma, &ioat_ktype);
-+
-+	if (dca)
-+		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
-+
- 	if (ioat_dma->cap & IOAT_CAP_DPS)
- 		writeb(ioat_pending_level + 1,
- 		       ioat_dma->reg_base + IOAT_PREFETCH_LIMIT_OFFSET);
+ 	dma = &plxdev->dma_dev;
+ 	dma->chancnt = 1;
+ 	INIT_LIST_HEAD(&dma->channels);
 -- 
 2.53.0
 
