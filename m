@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051688;
-	b=VotcN2J981cz1ww8l+CuyQpNzxRuPN8ibTqOnH1UzUh4tZf027M27SGCItYLJmMUOo30
-	 Q8gkmzaSMchhp/+NJSaFVyKuZ6x9sGiGEWuXMfU9/IoXbib26ld0KZSzNuhwkhcUn1BMz
-	 i0/GDdHVd38/c7gzgqgOi2dDeSrF5po+1Tz00uCra7eYgX/SiJiYEcOVbt7RIO9ljvUTJ
-	 zF3usR2H7ZEQbCYYXf49qsF9YCNKQPldMaFzRj+PKIEHV1mYX7pRNcF1315JgxmmYI6ta
-	 DHaUUnF1vy4XM/7/bf9Ml+4mwGhMlPP9392gpM2coETS0ksQFf0AWPeWrRdBInAp71w==
+	t=1795051691;
+	b=3r6gC0NyVvFhqFto1dwgmbChAf2Dtjv1y1pDNkOS57ftoiW916d+6capoV5o7NbWm2W0
+	 bzKCgAKqjMhevfSmjOujClHiU5COAMahQap2KhrtKzcOCMi1QazxSfnDX17HigYKg+yMy
+	 eUGeXKh5EfLoGgpwhDgyRT3MGHcVUinGvPNLXAGE2fnq5FotJcoafAW3oyfX8yVlPE1+B
+	 0JvHIM36qsHnPWjAOGY/ZFqeAAQBkTj4a7YarU4k4o5AjBKcLkoltwqE5BW6AWdSDMkub
+	 T2WYYUz3ElhvUsgx47rnsNVnlkCZkUTXvkFgeGIw/PjtdI0dyg/rmliwtqwc7pkcc4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IpELwHwgYkYL0M1WmLBLxrRHEXhNI5ynLmQmAePmS24=;
-	b=Ma3XGq9V1Ir/1yjbXOfO02nrffN/lnUB9gSmRUZma+c5dxKz02YL4dcfjAOs5iBDKyvV
-	 iIlcrQC1xl6uKRwhDnKw0PC6FgYXdL4xygSD80/N0XQYPCKxBDieIJfTSLxYBHmyd4x9I
-	 V0q0QVVP1yphVhQFw86NWWOhJVB5MIKfghFuAi9AetcNdKXpCAnY1PWFia8szv5Csy2T2
-	 w+mE5jkKXqRY6Li7KFBkJtgdhYFxuZzWbVfab0X0ZF8PmUik/9dYFjisqcOv+4r4YHKuc
-	 LB2wFNG9girY5Dc+EyVcRnahXqSIAMvzctb6NJCtRvV/Qhde+YXGZnhBuIwTdEsOy7Q==
+	bh=mDomTz/EHA1EP0+cF4Ge96wqZK0JWZ/UNmCrF+tzEZk=;
+	b=EaJs6HzDLyvky7xw6uSvlWBoynnEXEXXLLyEgFW7DMYzKVnSbd+rWQ+Pl21LDETg3JJq
+	 e4b/9fWLbUiorl/eNURebUJkyHl5S/D+jSCG+/FV75GqQ2eCU4Wz2hrw97uNzigj4xH7f
+	 UfP6U/cvVI8YhHniGOIqkOxGYv4eZVpIf2R87dJ0nrk4hmBzHrq3C9itpcp6x7c7+hIjm
+	 ybCXtvqxzCDFbg4XYXo4jdgfmmhj1YT0uNB/8lyBQ3RKL04HkUgLWtPmn5wG+Da5EovEB
+	 V6Qz4Q3Xo01Mwq4kxRH1jumo/UktOdmtSEZMIp2ow/IUCbLHIhq1ZyNsHPJsb4hNC6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rODjc59T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mByBnE1R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E318606A320;
-	Thu, 19 Nov 2026 01:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503A3606A31C;
+	Thu, 19 Nov 2026 01:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rODjc59T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEB81F000C4;
-	Thu, 19 Nov 2026 01:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mByBnE1R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98701F000C4;
+	Thu, 19 Nov 2026 01:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051688;
-	bh=IpELwHwgYkYL0M1WmLBLxrRHEXhNI5ynLmQmAePmS24=;
+	s=korg; t=1795051691;
+	bh=mDomTz/EHA1EP0+cF4Ge96wqZK0JWZ/UNmCrF+tzEZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rODjc59TFkvJ/+dV1usvJZDPZIYj3oHux5Ro9HikV9EdUdRVv/bgt0aKojzlW4V3O
-	 47E8SQq24MieIn4mQQk93hFAYHdRWotFh/vsp20od57aB6sL38qHGZGsejx6iyv9mF
-	 YKMBjCSrA9L2W4Hfu4tCtxazpYNk8Ig3DMxs3+60=
+	b=mByBnE1RTO0S67RVDiV4WAfkyZIdvtJPa6QHZl1kKN6bNtCSSpL9e7etUINi0JVPw
+	 pf3D4HQg52GDF3XvT6XRVwhx9R+BssZfjvTsblC6pNuTFmtosFyxPfszkAKTa0O6sE
+	 ioEyutH/L2Ot+CJtVMOOFDM4HUDBbuQP60Lmud0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
+	co+9782320f78c23f40@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 0296/2214] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
-Date: Wed, 18 Nov 2026 15:32:52 +0100
-Message-ID: <20261118150022.025004117@linuxfoundation.org>
+Subject: [PATCH 5.15 0261/2214] media: em28xx: reject audio endpoint with zero packet size
+Date: Wed, 18 Nov 2026 15:32:17 +0100
+Message-ID: <20261118150020.550820449@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,74 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
+commit aebfe430ba885d2f8fc882d7a6d60a7fdbe535d8 upstream.
 
-In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
-cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
-are bound with cx23885_ir_rx_work_handler and
-cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
-system_wq when an AV_CORE interrupt is received, and the IR subdevice
-can also schedule the IR works from its interrupt service routine via
-the v4l2_device notify callback.
+em28xx_audio_urb_init() divides by the audio endpoint's wMaxPacketSize
+without checking it, so a USB device that declares a zero-sized audio
+endpoint divides by zero at probe time.
 
-If we remove the device, cx23885_finidev makes cleanup and the memory
-allocated for dev is released by kfree(dev), while the works mentioned
-above may still be pending or running. The sequence of operations that
-may lead to a UAF bug is as follows:
+Reject a zero-sized audio endpoint like a missing one; the caller already
+unwinds on a negative return.
 
-CPU0                                      CPU1
+  Oops: divide error: 0000 [#1] SMP NOPTI
+  Workqueue: usb_hub_wq hub_event
+  RIP: 0010:em28xx_audio_init (drivers/media/usb/em28xx/em28xx-audio.c:718)
+  Call Trace:
+   em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+   em28xx_init_dev.isra.0 (drivers/media/usb/em28xx/em28xx-cards.c:3887)
+   em28xx_usb_probe (drivers/media/usb/em28xx/em28xx-cards.c:4258)
+   usb_probe_interface (drivers/usb/core/driver.c:396)
+   ...
+   usb_set_configuration (drivers/usb/core/message.c:2268)
+   usb_generic_driver_probe (drivers/usb/core/generic.c:250)
+   usb_probe_device (drivers/usb/core/driver.c:291)
+   ...
+   usb_new_device (drivers/usb/core/hub.c:2703)
+   hub_event (drivers/usb/core/hub.c:5961)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  Kernel panic - not syncing: Fatal exception
 
-                                          | cx23885_irq
-                                          | schedule_work(&dev->cx25840_work)
-cx23885_finidev                           |
-cx23885_input_fini(dev)                   |
-cx23885_ir_fini(dev)                      |
-cx23885_shutdown(dev)                     |
-free_irq(pci_dev->irq, dev)               |
-pci_disable_device(pci_dev)               |
-cx23885_dev_unregister(dev)               |
-v4l2_device_unregister(v4l2_dev)          |
-kfree(dev)                                |
-// dev is freed                           |
-                                          | cx23885_av_work_handler
-                                          | // use dev (use-after-free)
-
-Fix it by canceling the works after the IRQ handler that can schedule
-them has been stopped, and before proceeding with the remaining
-cleanup in cx23885_finidev.
-
-Note that the flush_work() calls in cx23885_input_ir_stop() do not
-close this race: they only wait for works that are already queued or
-running at that moment, they do not prevent the IRQ handler, which is
-still registered at that point, from scheduling the works again
-afterwards, and they are skipped entirely when dev->sd_ir is NULL.
-The cancel_work_sync() calls are therefore placed after free_irq(),
-the only point at which no new work can be scheduled.
-
-Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
+Fixes: 1b3fd2d34266 ("[media] em28xx-audio: don't hardcode audio URB calculus")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reported-by: co+9782320f78c23f40@bugs.sh
+Closes: https://lore.kernel.org/all/51lCz4R7QyTUKbh4mhXNaNzX0evpk0siOzbh%40bugs.sh/
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/usb/em28xx/em28xx-audio.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/media/pci/cx23885/cx23885-core.c
-+++ b/drivers/media/pci/cx23885/cx23885-core.c
-@@ -2230,6 +2230,10 @@ static void cx23885_finidev(struct pci_d
- 	/* unregister stuff */
- 	free_irq(pci_dev->irq, dev);
+--- a/drivers/media/usb/em28xx/em28xx-audio.c
++++ b/drivers/media/usb/em28xx/em28xx-audio.c
+@@ -703,6 +703,13 @@ static int em28xx_audio_urb_init(struct
+ 	}
  
-+	cancel_work_sync(&dev->cx25840_work);
-+	cancel_work_sync(&dev->ir_rx_work);
-+	cancel_work_sync(&dev->ir_tx_work);
+ 	ep_size = em28xx_audio_ep_packet_size(udev, ep);
++	if (ep_size == 0) {
++		dev_err(&dev->intf->dev,
++			"Audio endpoint 0x%02x has a zero packet size\n",
++			EM28XX_EP_AUDIO);
++		return -ENODEV;
++	}
 +
- 	pci_disable_device(pci_dev);
+ 	interval = 1 << (ep->bInterval - 1);
  
- 	cx23885_dev_unregister(dev);
+ 	dev_info(&dev->intf->dev,
 
 
