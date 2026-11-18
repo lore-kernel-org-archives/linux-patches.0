@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048258;
-	b=DPM8LL6ilIiQOcqxTCj9DdSuJREULmVZr2uLpkMH6pGYjlmRLfr7DaG2dNjstXGM40/F
-	 BseeGSI5RfgK8+diianFJiR0uiY+W6r8Um6bKoUK8ZoWjgFDi6oamLhF+51IbZ0Gxs0mQ
-	 AIRigGl0KepUYK6IWjToBCQdANnoYnx35tvUn/8XaWt5RVv2MgIOSYP+X9IMoVxPtONOF
-	 eIDeW7bIp/q/OVtUDUwnQuCTINxvFAK2e76GV9wd/yCrya7XKivSjBy4axuBhHzoJCs52
-	 cgccwonpAo52DKektn68LSH7YLVoIV5tLJPNXOkOpJ+kQo6UeWUal0a1X1IWtUygTdw==
+	t=1795048260;
+	b=avue3tMq3lyhf8NfVZ61B99iCHMoOQdY20ATD+W87WZtN085GBmuAZ0+QHKonAG2fd50
+	 LPC9nrzZ3FgL7PHJRYFuQrZ0EhS/4iZMEJTIem15EAEmcMXn/kxxu/BkurrqI9MZUHwzD
+	 HrN9HC/bK+Jr6xi6nqbcK+gephWZ6Cc8wcq1312cJDcNiEhqZ62bjXYGfiK//PIBlc13l
+	 RYN7KSGVPYs5HM9psl0D0VDZMfSE6Eb/mqO5c1/Kw23yRtlQDGBOBEdOqAMPiuWxwe+3C
+	 u9us0rpGe01qnphvSJhEP6lrva1nC+vGafz+mKXxoinxkFFDLjUnwFpLSgMzhUWyLoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=xLoxkv6Jo+cdEYGXBjXE2T+UmkZvEULr7KEU0boGDPI=;
-	b=ON12ZFNG306H5pjXLEUfqMoUhjWZbHxuLunzpkC0FxHSpggyLKI4iQuTBhCKmjqLMwe6
-	 jIErRUF96J4fZ6PSfRXP6BOUsu6+fRaBeScxl9z4j51mdoMRpjrUrS3lJljAnGUNvQFIo
-	 6PGPkU7AJhG+TJjK2as/nCS3iHYaBwiZuc3LDDM1GK5UvYzGRLfk+pbJLxW7XBfbg5VcW
-	 BjowJImxPRvwbYAWnvve4Oc4V49Pq3H3lie0wIZRE7Y2qyW2U5urxjQynP0ZChbf88emV
-	 UQc/CK4sw51KjwA+QapnFR9zEiLKe3+O6ekmc8hqi9XkVYAvTMTIj0bk4u4Q8blP70Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5ma3reD7eJqd7IEcpeP8x/ns/WogkxKL38g0YR3xiHE=;
+	b=ZjGOJgxIjiR1YNoVafqEgki2hqN8AhWCiOU103u1TD5KW0jZ4UwY8JzKz/ENpqV6VZ9H
+	 eyx2cAufpKlR18yX4AAFrIkduM7m3jDrh6XrMWnZqA8F9VWf0TZFpuavcGY3umg9dc36n
+	 q+UgBqGGS6FIpbNPRpHsYHsAZeK0015oDeTrvJEaHUzObNjuI9c+nKyJzEO26RkkBTX6h
+	 i9/kaqaNm7LJ0CBAxBFry9uZdvvrMZ4UCJZXtLI22ekEoaGEivNL8LqN1qvHJ7AT9U663
+	 n0N+DIy8uq0kSxnS29AQlf1w8sIFp/x35I8jE/HEiSiGGKSGrkHHxrlCh9L0XFRehEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iji4OSnu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p11J08yl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E289E606A325;
-	Thu, 19 Nov 2026 00:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0741606A330;
+	Thu, 19 Nov 2026 00:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iji4OSnu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027BB1F000C4;
-	Thu, 19 Nov 2026 00:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p11J08yl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A171F000C4;
+	Thu, 19 Nov 2026 00:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048257;
-	bh=xLoxkv6Jo+cdEYGXBjXE2T+UmkZvEULr7KEU0boGDPI=;
+	s=korg; t=1795048260;
+	bh=5ma3reD7eJqd7IEcpeP8x/ns/WogkxKL38g0YR3xiHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iji4OSnu2dVensX17jD05loo9n4q/ACdQJRYLmnHpNVI78r0gQ2PYXj638IAxqhnk
-	 OqlsRTha6RRrHm8xNgtxi71lsp7UUiR6qMRrdETiQNSn9eFMR/vpxiILUJIN9SSkj5
-	 W521UkteeF0eihC0lcAyNri6aMqhMH7i3Ji8vWZ8=
+	b=p11J08yl07ITms8RKjV6xSWrloU3B+cuQ/6EtilJWefA2GuY0LBZ8fiCBHPX2OsK8
+	 M5n5H7L+Q7U7WvAYqvGrGYb9NujKBayG+CKqkceNhf46Z4pBryDzCZ3ateSdaIfzXc
+	 EHT1uuT9iZ+yKeCWmwI1PRjWT00HKn+N5iIiDJPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	David Gow <david@davidgow.net>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1929/2857] pinctrl: amd: add timeout to irq-enable readback
-Date: Wed, 18 Nov 2026 15:49:23 +0100
-Message-ID: <20261118150310.671312164@linuxfoundation.org>
+Subject: [PATCH 6.1 1930/2857] microblaze: uaccess: Zero out destination on failed get_user()
+Date: Wed, 18 Nov 2026 15:49:24 +0100
+Message-ID: <20261118150310.704577583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,61 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 44c232e80adc26634e40b3dbeaa20711da9ecf0d ]
+[ Upstream commit 54c35131e628e1a18f02365495a24a73a1fb515e ]
 
-amd_gpio_irq_set_type() polls INTERRUPT_ENABLE with IRQs off
-and no timeout. Use readl_poll_timeout_atomic() and return
--ETIMEDOUT.
+On failure get_user() is supposed to zero out the destination variable.
+This is documented in the kdoc of the microblaze get_user()
+implementation and validated in lib/tests/usercopy_kunit.c.
 
-Fixes: b85bfa246efd ("pinctrl/amd: poll InterruptEnable bits in amd_gpio_irq_set_type")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Currently that zeroing is missing.
+
+Add it.
+
+Fixes: 0d6de9532663 ("microblaze_mmu_v2: uaccess MMU update")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: David Gow <david@davidgow.net>
+Link: https://patch.msgid.link/20260914-kunit-microblaze-v2-1-7d5756e858f8@weissschuh.net
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/microblaze/include/asm/uaccess.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
-index 7aaafa271003d..4fc8581cbd763 100644
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -18,6 +18,7 @@
- #include <linux/errno.h>
- #include <linux/log2.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/gpio/driver.h>
- #include <linux/slab.h>
- #include <linux/platform_device.h>
-@@ -488,7 +489,7 @@ static void amd_gpio_irq_eoi(struct irq_data *d)
- static int amd_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- {
- 	int ret = 0;
--	u32 pin_reg, pin_reg_irq_en, mask;
-+	u32 pin_reg, pin_reg_irq_en, mask, reg;
- 	unsigned long flags;
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-@@ -562,8 +563,9 @@ static int amd_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	pin_reg_irq_en |= mask;
- 	pin_reg_irq_en &= ~BIT(INTERRUPT_MASK_OFF);
- 	writel(pin_reg_irq_en, gpio_dev->base + hwirq * 4);
--	while ((readl(gpio_dev->base + hwirq * 4) & mask) != mask)
--		continue;
-+	if (readl_poll_timeout_atomic(gpio_dev->base + hwirq * 4, reg,
-+				      (reg & mask) == mask, 1, 1000))
-+		ret = -ETIMEDOUT;
- 	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
+diff --git a/arch/microblaze/include/asm/uaccess.h b/arch/microblaze/include/asm/uaccess.h
+index 3aab2f17e0462..ea6653dc2e68a 100644
+--- a/arch/microblaze/include/asm/uaccess.h
++++ b/arch/microblaze/include/asm/uaccess.h
+@@ -95,7 +95,8 @@ extern long __user_bad(void);
+ #define get_user(x, ptr) ({				\
+ 	const typeof(*(ptr)) __user *__gu_ptr = (ptr);	\
+ 	access_ok(__gu_ptr, sizeof(*__gu_ptr)) ?	\
+-		__get_user(x, __gu_ptr) : -EFAULT;	\
++		__get_user(x, __gu_ptr) :		\
++		((x) = 0, -EFAULT);			\
+ })
  
+ #define __get_user(x, ptr)						\
 -- 
 2.53.0
 
