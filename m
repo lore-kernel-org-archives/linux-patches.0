@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040115;
-	b=hRjmwJpW58cDeQEZ2nf6vd8s8GuWut63krBmWgo45LwKMiWqzEK0jqcI8uvHI/X4nlfc
-	 KpqUrfkB8i+nhoRgqpkZWsOYmpbGkGrzz+JwveNHJKmYDh6JVMiXAEnq9GVEJkSlbpFCo
-	 a0Nn9EBYTTkAOjNPKzR0oTaxE3RF0wbNlAGuuzfF48jXUxA5nxyx4sk+DdS9eyem9uX0i
-	 7gsYLNg0xhEAcoQcH7jZTWQDI0goPqTqX6LJJrdW97vk4LjavKW30HttNKwk7YI4IVlHZ
-	 //wB7sJXX8L9daoUVxKWwkR02kAdVh+ZROPwY+bO2XoAvmxwWU6OUY2Rc43fuVSRaJQ==
+	t=1795040118;
+	b=qkrF/50BbInHaKjL0M5X5UX61YScm0G2ltg9CP9esbsw2ptB44WFyxbk0zqSEw8WPqg8
+	 vF5vkhkVJ4XoKUnEUResiZX06GWhKyk+9a22oZQ1vwsmonDoXB47U+wyhxyYrTRZPUbXV
+	 JnR9lCeORnTtyCqJMWRUQ9AMyl1QF20BHHAdX+zI2Q1AzA8LVrab7APGXLEjeXMglosbO
+	 dWMiqOHhhnysbTsG9CsE2+rFmS6YoWgMxtXPe+Nm0eIbSCgvt15zU+uQa31qNVMNihddR
+	 ECsPldNeS8DK+YhJ6NSk9qi/PZbGvASly+gNdyHT0pyDiBaurdCq2RoOZyGl4dfZvDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tkUtl2/0gTr/PQ8ckSRs1m1G84KKehzA8jC8XdGSd7k=;
-	b=0K9GAhUndCM4fhmdPSGsftlTn/apgJfFgntgGrfm2q7JmqRo/PsenPy8irJ5RftvRXsz
-	 3VZsmzNc2jBE/njCFq/b+8GjzwwMkyZkYaR/S2yYfno1hiz8ZJ1wbS7q+4MbU12BrNMo7
-	 f6fgViMUb0Y+zBZN+QUlhamOSuXpvpQezA1UOlt1NdlaGPkKThIm8QIG3Ejo8YEv7aWw3
-	 8+DvO8yru8YOi/oIbSCPqQyKyGRj2w4aZyFIlsvMFaYxZxpIAQiTGeoNSoXhHvMdB9n32
-	 gc2ZCWT+wXEVCRcABocd9iLG7k/hOu0eKjrfByTO+hoL3jk9uw7dT2LnlpzH8D/ZR7w==
+	bh=iY/QRFdyi9TChA2G1BOtOmDCg790v9VVU4QTiELh3kI=;
+	b=te8OflAnpzCoKJV8cxLRQRBBRDVR1FwEUg7RX4NYN2jD3xmQTzR2OcbsSPkzjLMTlbHt
+	 DA5DsTrZP2BKbSOb1Xc7jedVYn+BVnq5N1QiSVnejJGopWSGmxRCJxJCYmKDkVhIzJMX9
+	 dSBqe9gQyWkoGxTjqWoQ+wuq59r7D4ODqFCmWThzLv51x/hvhO9Mj2GmfZoczZFobAdKw
+	 lkGrvBPI9oVp4qVVPbUq0a/kOOZuXaBJ69KRLYXSlZOOqX8e82tP9B6Cj2ETTIgHdJnC+
+	 3nxt88TjwrNCm5w1QNS670B/fcGRWuCBsnnRMyM6jRG3pQErSgXAXUyIumDkbAo8r7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lK8Y4hys;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXqovzOS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C420606A32A;
-	Wed, 18 Nov 2026 22:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90727606A331;
+	Wed, 18 Nov 2026 22:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lK8Y4hys
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F4E1F000C4;
-	Wed, 18 Nov 2026 22:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXqovzOS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9744B1F000C4;
+	Wed, 18 Nov 2026 22:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040115;
-	bh=tkUtl2/0gTr/PQ8ckSRs1m1G84KKehzA8jC8XdGSd7k=;
+	s=korg; t=1795040118;
+	bh=iY/QRFdyi9TChA2G1BOtOmDCg790v9VVU4QTiELh3kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lK8Y4hysq+2ASVPsasm+dfz29j9pGAmKmWeeU34hz7HV3mM3VmwyINL4sCLXpY74C
-	 Esfc4ay1/ID5Xqq9Iv8Y14PdgxP2MNS4wKDt2EwGMOv5/78TTXMJ6LwgVWCXTpv/a4
-	 Zvu38xHavyURKBWxeOU0t4AYepDcvlS5EO47AlEg=
+	b=IXqovzOSqLd2GrMmh5EebyaHXcHPY+ids/MwMXLoC+R8l793lvYQcwYZCbrzI6MPj
+	 7YLJUpegYjr1cv6wvNINn2PVT2lRBZ0K9TiWh+uOMjrPBP9vf5eknOQP1bimZoNzSA
+	 64JfhU55WaGkkui9jyrZbCZLLdoreKthLW9wCBQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Leo Yan <leo.yan@linux.dev>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2342/3318] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
-Date: Wed, 18 Nov 2026 15:49:24 +0100
-Message-ID: <20261118150431.887203671@linuxfoundation.org>
+Subject: [PATCH 6.6 2343/3318] perf mem: Fix size tracking for mem_lvls in perf_script__meminfo_scnprintf()
+Date: Wed, 18 Nov 2026 15:49:25 +0100
+Message-ID: <20261118150431.919735820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,48 +72,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Thomas Falcon <thomas.falcon@intel.com>
 
-[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
+[ Upstream commit 06d5ce78e4fea2cf0738da903aa248a81101c155 ]
 
-After a warm reboot the REG_ASRCSR register may not be in its hardware
-reset state. regmap caches the register value as 0 (the assumed default),
-so when the desired clock source index is also 0, regmap_update_bits()
-skips the actual hardware write because it believes the register already
-holds the correct value. This leaves a stale clock source in the hardware.
+When printing memory info in perf script, the entire size of the
+buffer is passed to perf_mem__lvl_scnprintf() instead of the remaining
+size. Pass the remaining buffer size instead.
 
-Replace regmap_update_bits() with regmap_write_bits() so that the masked
-fields are always written to hardware regardless of the cached value.
+This issue was detected by sashiko during an internal code review.
 
-Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
-Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: fdefc3750e847a91 ("perf mem: Print memory operation type")
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Leo Yan <leo.yan@linux.dev>
+Assisted-by: Sashiko:gemini-3.1-pro-preview
+Signed-off-by: Thomas Falcon <thomas.falcon@intel.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/util/mem-events.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index 72dc23c994bcd..c6fc03e364a61 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -521,10 +521,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
- 			   ASRCTR_USR(index));
- 
- 	/* Set the input and output clock sources */
--	regmap_update_bits(asrc->regmap, REG_ASRCSR,
--			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
--			   ASRCSR_AICS(index, clk_index[IN]) |
--			   ASRCSR_AOCS(index, clk_index[OUT]));
-+	regmap_write_bits(asrc->regmap, REG_ASRCSR,
-+			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
-+			  ASRCSR_AICS(index, clk_index[IN]) |
-+			  ASRCSR_AOCS(index, clk_index[OUT]));
- 
- 	/* Calculate the input clock divisors */
- 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
+diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
+index 3a2e3687878c1..7724c68c0f4cb 100644
+--- a/tools/perf/util/mem-events.c
++++ b/tools/perf/util/mem-events.c
+@@ -516,7 +516,7 @@ int perf_script__meminfo_scnprintf(char *out, size_t sz, struct mem_info *mem_in
+ 	i += scnprintf(out, sz, "|OP ");
+ 	i += perf_mem__op_scnprintf(out + i, sz - i, mem_info);
+ 	i += scnprintf(out + i, sz - i, "|LVL ");
+-	i += perf_mem__lvl_scnprintf(out + i, sz, mem_info);
++	i += perf_mem__lvl_scnprintf(out + i, sz - i, mem_info);
+ 	i += scnprintf(out + i, sz - i, "|SNP ");
+ 	i += perf_mem__snp_scnprintf(out + i, sz - i, mem_info);
+ 	i += scnprintf(out + i, sz - i, "|TLB ");
 -- 
 2.53.0
 
