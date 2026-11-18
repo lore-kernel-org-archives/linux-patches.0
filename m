@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044974;
-	b=LzN1KQ+GDqQSzQQAAjFZlDc4e/eIwQBRQpioargmIOdpQ7+8UcjJ6Cs4foO/tuFMlaIG
-	 ASv/lq/E3Sm0Romn1lLA/RTnP2hcKu2Th75ChwEqT2OtUa7b+3vX1x4gnhA+DUD6LSW8C
-	 Qb15BQnnTmKrRo95Ddz/r89da+Je4tMaUblPQ2CnNn03AfnyvaYlw9VcUa9nw4ABIG0GT
-	 hWkZj12NveEk/RTb5fKVUoRq98kgzq6f+YNhXEbrUnOWbMHIhYCRHCnbntdIucY2gtf96
-	 c72TE894OXyUco4nA5YpfU2Qj9fuZ1uMLRVzs+oBWK+JkUQdjNceCqTKspPYYTJWlPQ==
+	t=1795044977;
+	b=lQYaUWsyMS8w4i6+pvKS56G7HRnxlLIqsFpgygD2A8AsyRllTr+XT1aGFciIrky6egt5
+	 3ZCX1Om0tm6cQAljHIqDXyBMqnSLQjQakcUePuHxYtXUYOWtFRAMwQF3MWyRoMKf9TwLu
+	 fZrAgySA99zFaGdArHgW9R8Z9NfVLVNwBXcqZ+76sQpz1+8Dw5F9L7tPS2sHi6ziPfVVI
+	 Wgfn8v+ySCR29643vZ9bk1RjwdTufcfLjo4Ko9AqmOjy5mTsAmZWK8uyRbmw6zKO3I4eq
+	 fkczuiYiGU/yl8v505RXx+BnScTk99B3gJZHAzdDUoud6Z9WTOApuN2kB5FfxsxpDVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XQqwc5EUIICDi0Cs9QOdutm/2yp+OQW0h+WT88IrQZw=;
-	b=2+8CPYgaraCBBIaXfwxuFgG1Mny0WueP5RH+x9V6r/zCKtbahi2nXzR/KuW8WHFSinUq
-	 XAcQ3+bprrYBfA1X94qRuIWutVrMN0IlmIVJ/OQpwxx/iI6lvYfXCR3hMQ+2YbyEsIurW
-	 1xHgcifrCRpLnJFfTDkTD6V8PM61pRXm9N9NNwZQSzwRgzlc+dxdo6V0uWqIljCgrMAQk
-	 E7kTUj7ThufvvjRaPlHZfEO0NQsCUgg3taq8wypAI5heA6Me6RLpJJR054GZNe53cHYeI
-	 cLJ5tXJ2mRmf/1OixTk63BJIJnkIEDVY4Qsi7DLp3Klk33jEMOwVeDJ68En9d7XDQdQ==
+	bh=6ff5QEESrrYtgGELk0EPOyU5TddLwyhw8Apk4bNiQy8=;
+	b=frC/np8we12tuvm3mqcPc/3us3v7bumI+0sGiDgAgwcfcg2rKoGCE72O7sqNP84orKk9
+	 kB3KcTWNWucj5i3GbtuGRmq9Jd+fNdwgJvmiJcUKc1b2yPTHmbzKG/QgHw8D8Wt/UfoIW
+	 Zf8WTigAV9XVekakDva+UslPnBOtFceHyugfCXqEgnHtMBEIj0wCaD0XYaGeCk3yAU5+z
+	 OUk+isJeW2DsjvHcOunBrSogIEftp8H6SrYS7EN/woLPEzISkRYBI04tQFsynjmu5kJx3
+	 Kf6z3ViE6LAo3o47tKwM8Z7bVJ80T+I0hxuegKX3aY141VjPc4FsbTt7OmhtF7izOqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+F5aRX6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4zs6Tai;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F333360A2602;
-	Wed, 18 Nov 2026 23:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162A1606A320;
+	Wed, 18 Nov 2026 23:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+F5aRX6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC6B1F000C4;
-	Wed, 18 Nov 2026 23:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4zs6Tai
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2743F1F000C4;
+	Wed, 18 Nov 2026 23:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044973;
-	bh=XQqwc5EUIICDi0Cs9QOdutm/2yp+OQW0h+WT88IrQZw=;
+	s=korg; t=1795044976;
+	bh=6ff5QEESrrYtgGELk0EPOyU5TddLwyhw8Apk4bNiQy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+F5aRX6g92lOK+sCQwBrXzO5XfNgtFCgrgcvDYxj9mwDCT0Q5Tb/+IwfzeBn52M+
-	 7Xf6Tizn/kBKY2cALmeGuQzLBOfA+rG9cap/Aq/cbPYMOGL5CoBIeWpdBn8OD0rMib
-	 13JVp/M6W7U6FYIdA2Nyxie7VXQnthe9gvPjMsBM=
+	b=a4zs6Tai/01ASZVsI+FEvCG9QbeWm6y9C3zp0q7qkEcpvLCCFILOZu8tCvMOF3noh
+	 All/vjbareHsCv1gAp6KWt4S11YYIwbx1vUcfVAha6E0OHHD+Z3eOtnuWlYy8Ndni/
+	 Pv8PpyHZJC6G8xGRpodk8/2j1Nz5IJ+/WyOptdfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binwon Song <qlsdnjs236@chungbuk.ac.kr>,
-	Eric Kim <seohyun.kim@outlook.kr>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0758/2857] sched/fair: Reset NUMA fault locality after scan period update
-Date: Wed, 18 Nov 2026 15:29:52 +0100
-Message-ID: <20261118150228.844092285@linuxfoundation.org>
+Subject: [PATCH 6.1 0732/2857] fs_pin: publish pins with RCU list helpers
+Date: Wed, 18 Nov 2026 15:29:26 +0100
+Message-ID: <20261118150227.906371985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,59 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Kim <seohyun.kim@outlook.kr>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit e81ee06308379a5f2ededf997bcf17551bce5db7 ]
+[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
 
-When updating the task scan period for NUMA locality checks,
-update_task_scan_period() checks whether there were no faults or failed
-migration on the last scan window, at which it prolongs the scan period.
+pin_insert() initializes a pin before adding it under pin_lock.  The kill
+paths read the list heads under RCU without taking that lock.  Plain hlist
+insertion does not publish the earlier initialization to those readers.
 
-However, p->numa_faults_locality, which is used to check for migration
-failure and number of faults at the previous scan window is not cleared
-after changing the scan period, which unintentionally increases
-numa_scan_period up to numa_scan_period_max even when there were no
-migration failures or no faults at previous scan.
+KCSAN weak-memory checking reported acct_on() callback initialization
+racing with pin_kill() after the superblock-list publication.  The
+corresponding LKMM model permits the stale read with plain publication;
+the RCU release/acquire pair forbids it.
 
-Fix this by jumping to the out label on early exit at this case to
-ensure p->numa_faults_locality is always cleared before returning.
+Use the RCU hlist add and dereference helpers for both pin lists.
 
-Closes: https://lore.kernel.org/all/20250404095354.311156-1-qlsdnjs236@chungbuk.ac.kr/
-Reported-by: Binwon Song <qlsdnjs236@chungbuk.ac.kr>
-Signed-off-by: Eric Kim <seohyun.kim@outlook.kr>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/Message-ID:
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/fs_pin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 325e7542fbb4b..84a007ca144b3 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -2370,7 +2370,7 @@ static void update_task_scan_period(struct task_struct *p,
- 		p->mm->numa_next_scan = jiffies +
- 			msecs_to_jiffies(p->numa_scan_period);
- 
--		return;
-+		goto out;
- 	}
- 
- 	/*
-@@ -2414,7 +2414,10 @@ static void update_task_scan_period(struct task_struct *p,
- 
- 	p->numa_scan_period = clamp(p->numa_scan_period + diff,
- 			task_scan_min(p), task_scan_max(p));
--	memset(p->numa_faults_locality, 0, sizeof(p->numa_faults_locality));
-+
-+out:
-+	memset(p->numa_faults_locality, 0,
-+	       sizeof(p->numa_faults_locality));
+diff --git a/fs/fs_pin.c b/fs/fs_pin.c
+index 47ef3c71ce907..1a508f2167e0a 100644
+--- a/fs/fs_pin.c
++++ b/fs/fs_pin.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/fs.h>
++#include <linux/rculist.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include "internal.h"
+@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
+ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
+ {
+ 	spin_lock(&pin_lock);
+-	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
+-	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
++	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
++	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
+ 	spin_unlock(&pin_lock);
  }
  
- /*
+@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
+ 	while (1) {
+ 		struct hlist_node *p;
+ 		rcu_read_lock();
+-		p = READ_ONCE(m->mnt_pins.first);
++		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
+ 		if (!p) {
+ 			rcu_read_unlock();
+ 			break;
+@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
+ 	while (1) {
+ 		struct hlist_node *q;
+ 		rcu_read_lock();
+-		q = READ_ONCE(p->first);
++		q = rcu_dereference(hlist_first_rcu(p));
+ 		if (!q) {
+ 			rcu_read_unlock();
+ 			break;
 -- 
 2.53.0
 
