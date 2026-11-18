@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031397;
-	b=ZvbLY80d2Rq/PgzWZJ0qeBL0qyygbLGnYW3j2p+shAb2F2rdKS21fiB9fddBWhgSlutw
-	 rLuKYfmFL83fs4owdiKM4EtQbRysavY2SF3uDtqv75sImlClaq1OZMzdw7XuGkl3TCDfn
-	 KSY65U3GhqPPrTHlnQMXAMrsD3M1z9nBnl2CI3b55t90NvzBVvSLXaiDmpYmO1wVOc3KL
-	 F3NI444OkTnWQdKh9daAFc5OnTktc2urCa0Sl3/WmlFBUMq/TjMZ+T+sBwbZyQIf8sRkT
-	 8WnGWjJZ200GKMdX+L9fmKUNWyiUNn94NNgfWizvDezYKS+xg8FdJuztrBwnOkG7WEg==
+	t=1795031400;
+	b=lKKm79yUtQ0U3xLv0GOP//0jijEbo8TCmprMMR6JZebaXpmfxAUORGe9GTLtkAjksyuL
+	 KdT1ESZi8XWcyqFmo9Z4dnkG2xmtPC1tlc9XDzOrtSIjW+tg0ee0ok8iqPQWs19KRjtrb
+	 YI1ILxK5HscLbuq8kcwWC2Jl9qZXZ6s+MjP/gWYMbvFtK8WuRtFA8NMTf5yot0oV0tF02
+	 ZAZatBiVJBeEWMeyK4UgKe6K9z6+ipyiDRJsasSuhF4CUFOlcy/q8Z79g4CrX3jOps/gW
+	 w0v4FowysddWhTWW+Pnomz99GmiM3vAYlPFxD1mi9EaFRPd9URorPIkjJwR5BLnJD/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031400;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HFKnXy0zGJmArDr+yhLz0bEbbRWmT+GBpyO/JXIhceg=;
-	b=sf/KVwOcDaffVUD5IOS14Tn/lGA757Zvj0ZQLKzXQwqxvnbm3Dyuh/YWiHXJMmdOyag4
-	 joJYW5maIeF7BE/SlZjDKbSJG9Cs5UU9Cz15c77aKRMPLsXDoPo8bUyXE+2jH5sVB4kYU
-	 DRkBXk9M08+DN+B/cAZnBQx/84jHP5ffki3ZZdedGl5TvPl7Ux76ZemMQreq6CP29myj2
-	 OEcgCUJm5DIKCJv76PxHR5dtzgxCFV4X0j2jL3jKqWf52ivx4H8owsXro92VkC/08Bo4j
-	 pyxl2OSWJgSOm4VbuJF82rmCunrpdQS3y1rcUD0eNe5V8m+YdA5gSxFR9mNsA6him8Q==
+	bh=MbRRfDh5SbGs/+na7uo1oJ8pIkgNu3aFnROnVUwzY8M=;
+	b=j9XJAD2AxCyZypfhI9Mix4koXPNpYz9PSdtjgBRnnvOkexXfimMjMtDsa4I3d/ImVka6
+	 VfHf1cXrTa4BzUKA7OPwIguRcjavKJj31Bbjo5Yk8LHfLz01z/Tk3SkkfvhFbP85XOE+0
+	 VoMqmvLslUklg4jKSsk/vs2T8ptqhoUL7xLSPRBH5BXEe7/KtxPE8Z5PzFCSLqc6Nq6V6
+	 2rL+P37Wr7412qsWpfXlQd1ltQlF77fjlbvkk+gNT6xCb5Gxn29FgFsmQwVstx6FTxWrk
+	 t9bWNW2AG1OeOmiuNzS2Plu6zO7UjM114h87lSLDs+IFc52Y18RbXhhIeGoC5GsKZDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwnXgdrj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kO9kfL0w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B6D606A337;
-	Wed, 18 Nov 2026 19:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1EF606A320;
+	Wed, 18 Nov 2026 19:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwnXgdrj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB711F000C5;
-	Wed, 18 Nov 2026 19:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kO9kfL0w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E351F000C9;
+	Wed, 18 Nov 2026 19:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031396;
-	bh=HFKnXy0zGJmArDr+yhLz0bEbbRWmT+GBpyO/JXIhceg=;
+	s=korg; t=1795031399;
+	bh=MbRRfDh5SbGs/+na7uo1oJ8pIkgNu3aFnROnVUwzY8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwnXgdrj8WrvgGyZzFOD0WAY7D9UlXaUb1OG65C/Ig7rCl6VWy7aEjsB0mn7H0b6o
-	 YEl8+fWuJAjewSAVJ/ZP/DNluFpXn5RgXitD52IoFryZBoRNvQDJAmEQOviD9HFksY
-	 MOw6aj1D8kiRPXXuF/PV6lYlZ6tvVFLjBHZ3bMVg=
+	b=kO9kfL0woavH0qBJ9t3lWZCrI0mCJmDZJa0xfml5CQPWYyh/vfgTMdw70u9IIIKrw
+	 sBZXwQBwNXoOtPk/YSj1Sf5PV38hXtx66QRTWMc4FisHnEMUxdtqzXFR+we8oT8+FE
+	 FR6bQhvyKZ/hxdkq0GcSsZbyFSJYMnjN+m2A5Xyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Skokov <skokovmaksimevg@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Kees Cook <kees@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1043/1756] bpf: test_run: Fix false -EBADMSG after skb leaves CHECKSUM_COMPLETE
-Date: Wed, 18 Nov 2026 15:52:50 +0100
-Message-ID: <20261118150051.566423887@linuxfoundation.org>
+Subject: [PATCH 6.12 1044/1756] kbuild: Mark the initcall ordering recipe as recursive
+Date: Wed, 18 Nov 2026 15:52:51 +0100
+Message-ID: <20261118150051.618892182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,65 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 36edb1c7738dade8ed83ec4e0aef000e538b2095 ]
+[ Upstream commit ae5f6044c4cdffe2b3361b15c1d6fc67b339f2a4 ]
 
-With BPF_F_TEST_SKB_CHECKSUM_COMPLETE, bpf_prog_test_run_skb() computes
-skb->csum over the packet from the network header to the end and marks
-the skb CHECKSUM_COMPLETE. After the program has run, it recomputes the
-checksum and returns -EBADMSG if it does not match skb->csum.
+generate_initcall_order.pl, which orders initcalls for Clang LTO, forks
+a child per input file, up to the job count scripts/jobserver-exec
+passes it in PARALLELISM. It used to run from link-vmlinux.sh, which
+the top-level Makefile invokes as a recursive recipe, but
+commit 5d45950dfbb15 ("kbuild: move vmlinux.o link to
+scripts/Makefile.vmlinux_o") moved it into a recipe without "+".
 
-bpf_skb_change_tail() resizes the skb with __skb_trim_rcsum() and
-__skb_grow_rcsum(), which move a CHECKSUM_COMPLETE skb to CHECKSUM_NONE
-and leave skb->csum as it is. The post-run check still compares against
-that stale value, so a correct program fails with -EBADMSG. After a
-trim, skb->csum still covers the removed bytes. After a grow, later
-writes cannot update skb->csum, even with BPF_F_RECOMPUTE_CSUM, because
-skb->csum is only adjusted for CHECKSUM_COMPLETE skbs.
+GNU Make passes the jobserver pipe only to recipes it treats as
+recursive, and the make 4.3 in CentOS Stream 9 also hides it in
+sub-makes (a backport of the fix for GNU Make bug 58232), so
+jobserver-exec cannot open it and prints:
 
-skb->csum only holds the packet checksum while ip_summed is
-CHECKSUM_COMPLETE. With CHECKSUM_NONE the stack does not rely on it and
-validates the packet in software, so there is nothing to compare. Only
-do the check if the skb is still CHECKSUM_COMPLETE after the run. A
-program that keeps the skb CHECKSUM_COMPLETE but leaves skb->csum stale
-still gets -EBADMSG.
+  WARNING: Unable to reopen jobserver read-side pipe: FileNotFoundError(2, 'No such file or directory')
 
-Dropping the checksum offload is documented behaviour of
-bpf_skb_change_tail() ("implicitly linearizes, unclones and drops
-offloads"), and the stack does the same in other places, for example
-skb_forward_csum(). The test harness has to accept CHECKSUM_NONE either
-way, whether or not the helper is later taught to keep
-CHECKSUM_COMPLETE.
+PARALLELISM is then left unset, and the script caps its children at the
+number of online CPUs instead of the free job slots.
 
-Fixes: a3cfe84cca28 ("bpf: Add CHECKSUM_COMPLETE to bpf test progs")
-Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261009174755.22026-2-skokovmaksimevg@gmail.com
+Mark the recipe as recursive again (this makes "make -n" runs the script
+again too, as it did from link-vmlinux.sh). Masahiro posted the same
+change and withdrew it because the script was given only vmlinux.a, and
+so never ran more than one child [1]. But on arm64, LoongArch, and RISC-V
+with CONFIG_EFI_STUB, KBUILD_VMLINUX_LIBS also gives it the EFI stub's
+lib.a. Either way, the warning is silenced.
+
+Tested ARCH=x86_64 defconfig with CONFIG_LTO_CLANG_THIN=y, LLVM=1
+(Clang 24.0.0git), and GNU Make 4.3 plus CentOS Stream 9's
+make-4.3-cloexec.patch.
+
+Fixes: 5d45950dfbb15 ("kbuild: move vmlinux.o link to scripts/Makefile.vmlinux_o")
+Link: https://lore.kernel.org/all/CAK7LNARCM=rUm8mA8GRQ7ufeyfneGf4OEvHmESKt=zuxs2KrHw@mail.gmail.com/ [1]
+Assisted-by: LLM
+Reviewed-by: Nicolas Schier <n.schier@fritz.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://patch.msgid.link/20261010081914.540611-2-kees@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ scripts/Makefile.vmlinux_o | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 7f12abc8a80cb..17bc05b542eda 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1131,7 +1131,13 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		memset(__skb_push(skb, hh_len), 0, hh_len);
- 	}
+diff --git a/scripts/Makefile.vmlinux_o b/scripts/Makefile.vmlinux_o
+index 0b6e2ebf60dc1..020ca994d149f 100644
+--- a/scripts/Makefile.vmlinux_o
++++ b/scripts/Makefile.vmlinux_o
+@@ -19,7 +19,7 @@ quiet_cmd_gen_initcalls_lds = GEN     $@
  
--	if (kattr->test.flags & BPF_F_TEST_SKB_CHECKSUM_COMPLETE) {
-+	/*
-+	 * A helper such as bpf_skb_change_tail() may have downgraded the skb
-+	 * from CHECKSUM_COMPLETE. skb->csum is then unused by the stack and
-+	 * there is nothing to validate.
-+	 */
-+	if ((kattr->test.flags & BPF_F_TEST_SKB_CHECKSUM_COMPLETE) &&
-+	    skb->ip_summed == CHECKSUM_COMPLETE) {
- 		const int off = skb_network_offset(skb);
- 		int len = skb->len - off;
- 		__wsum csum;
+ .tmp_initcalls.lds: $(srctree)/scripts/generate_initcall_order.pl \
+ 		vmlinux.a $(KBUILD_VMLINUX_LIBS) FORCE
+-	$(call if_changed,gen_initcalls_lds)
++	+$(call if_changed,gen_initcalls_lds)
+ 
+ targets := .tmp_initcalls.lds
+ 
 -- 
 2.53.0
 
