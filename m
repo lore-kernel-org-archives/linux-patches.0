@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020670;
-	b=UWKm9F/YrOglCDA+AT44d+/efTmV+EaZ8J5cBjRrgkul9SUFqqZkaGfWag1rPGEbCnzX
-	 GSXE7oWHPS61NRTIWhTFsca0mwFQhkbLzUYuoH3gmS+CYwGrzGG3nGjQa3QP/ZEr/E6dm
-	 /dN349hKFkMlDDmKJvV+OfJwsxLkXyVaxd+2XjCsuH6fAqTzc9eRnH+JK5t5CmY2Cmk7t
-	 dZqQ8STkUhlZvLo0rBaHNRzww9DD55uz8iZX0G2z7m72HujNEy7iZFIiGzFDuxKxMbHPz
-	 KUyYTsQQcCHVFeHed+zDJZikFDOCsI1qrycLMlcIpTL5gEKMBOWjbNFF0ZZcTGAVGEA==
+	t=1795020673;
+	b=YZrnKAV6MIvEMalXbwBrzG0NjCathcpYnU5wJ6UWYvyUIQUGqX6PBvppAOPPA44lL9bN
+	 eaDx2SDwgUthVa5YC+WIbmLLMTFHNduW/u/9sVKyhO1rMk5Xz5FGSCxRK+rPzZ+GO4YFW
+	 jsVwjZ8xixsisINYHdZA9JKSDo1qFHwtr0xPg+iK/1+0K/N82loyz88rrzhTtRTY+cQNt
+	 X7loQpJklqyjxNUwHF46TuSeRzyWGhibjOUD4Yk0Bh8pkOic38llPWpyP29JW/U7HgDyN
+	 JN6FuYskx1mPpTTEhiX54fnGAmFOB40o6nD1iUHGWdBgovhcb+cNET6/BmQyaKgoVkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020670;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020673;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0MphNW0b++7S7/dSOwdbxW9bdGmsw3c4Du+ps2NuQ0M=;
-	b=OHXXn/iS+EfefRg4mD138vg4Kz+wLHddN539es/MwQUMRp7+ZItVX6+MsyS+Xd5ti9u7
-	 0s5/S9uRESWGz1ygjFRuXRfEQCMq0Jrk+/91tWWqgy2nqC0MnLJ0Uy7goidoabtNHiFmQ
-	 as58ArqDAkIzgiCAmQl3eD9yuufQe8SCnIgsnmc3lV8CDer+yWwh3yiTbsYMkmIZoii90
-	 21BHX/wo+BdvqJrkmNsoyGR32YyFepYQUm00VJIHFIBVQeOFe96RZMfRpxkRRH1qwsaDA
-	 V43WI6FvJaee4ReLTCvggn5sV/R06F0c42s5WlV5sUr6sRrurbCWkYiTX3YYSTGpZFg==
+	bh=OkfatGRlSpiwgSqavcQ782f858tA9mEAcptbcCvvbm0=;
+	b=fbIvn9CtFKeOEYWVPwGJOmF5Etm/DTk+PtREZ0FXKu8DY61SCFsVDDvPg2clbkrO2ZJw
+	 VS7TcspXXc2Sgc6S6CbozR8UJDTIVBFiZOivec81bKPnmnF63OnkuAXsyG3dx/hF8rVQj
+	 i/EhhBXZ9cXSVcLthzaQBz3MhBbf1xbKzuUqs3ZdzWERSI1oe2nzs2MM1Jtnd7m3HjYMP
+	 o0Rp6xJFZ4p7pm2xrS8o6gIY5/0zVvcodY22zMg46edF7/0ndQhM3zgHWImqnBtOH9Snl
+	 CalKnXC2WxffqfjmwotSktv0prI5sXSoG8igFmJHs40C5SJ3awXwiJF/rJlffqcmy6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CckXZScx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8OfI7Ly;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A46606A331;
-	Wed, 18 Nov 2026 16:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFD8606A333;
+	Wed, 18 Nov 2026 16:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CckXZScx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8F71F000C6;
-	Wed, 18 Nov 2026 16:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8OfI7Ly
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194981F000C4;
+	Wed, 18 Nov 2026 16:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020669;
-	bh=0MphNW0b++7S7/dSOwdbxW9bdGmsw3c4Du+ps2NuQ0M=;
+	s=korg; t=1795020672;
+	bh=OkfatGRlSpiwgSqavcQ782f858tA9mEAcptbcCvvbm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CckXZScxm2GJyPtGBzBwuMs074jmTl/76FKn/dOHYJhn5ma1+mzp82jppSOZYQxpJ
-	 uhRoW6HhPydk5hc2Dd/HhIWraDDK4PKsfF6I8bWWpEfjf8q2wuhDhTkZFwg2z7rnVg
-	 znb8k9YqAe/JM5QH+3Gs9gRmjKwI9yQS6Sps3F3s=
+	b=X8OfI7Lyj0N1KlEfVd7obrFZwq717bvhLorGkPnkCDjucixydo6Uo9vnGmUQOoiwZ
+	 8Ie5j+J1mhISUD7KjqZufNIUxlR4ASt0mObqDUTK8IvoG2ZI5qNIaXZfiFwEnpi01y
+	 1jPYSaL4FJcDltIPTmtW0DVaU3fLGfYQ6YVuB+GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ad4fc9c8360b68e353f@syzkaller.appspotmail.com,
-	Nehuen Lian Bova <nehuenlian.kernel@gmail.com>,
+	Dmitriy Geels <dmitriy.geels@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2034/2651] HID: magicmouse: fix null pointer dereference in magicmouse_event()
-Date: Wed, 18 Nov 2026 15:54:34 +0100
-Message-ID: <20261118150359.357001340@linuxfoundation.org>
+Subject: [PATCH 7.3 2035/2651] HID: logitech-hidpp: cancel reset_hi_res_work on probe failure
+Date: Wed, 18 Nov 2026 15:54:35 +0100
+Message-ID: <20261118150359.385468406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,39 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nehuen Lian Bova <nehuenlian.kernel@gmail.com>
+From: Dmitriy Geels <dmitriy.geels@gmail.com>
 
-[ Upstream commit 5b66b65cfd6f697b1addb6159cbece53d20db2fc ]
+[ Upstream commit 0be03caba6c002385e74d60be934b961aa5e88dc ]
 
-Add a guard clause to check if 'msc' and 'msc->input' is NULL
-before attempting to access its fields, preventing a general
-protection fault.
+The probe error path cancels hidpp->work before freeing the HID++ device
+data, but does not cancel reset_hi_res_work.
 
-Fixes: b8d56ef91cc3 ("HID: magicmouse: Apple Magic Mouse 2 USB-C support")
-Reported-by: syzbot+5ad4fc9c8360b68e353f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5ad4fc9c8360b68e353f
-Signed-off-by: Nehuen Lian Bova <nehuenlian.kernel@gmail.com>
+reset_hi_res_work can be scheduled while probing the device. If probe
+subsequently fails, the work can run after the driver data has been
+freed.
+
+Cancel reset_hi_res_work in the probe error path to prevent a potential
+use-after-free.
+
+Fixes: ed80cc4667ac ("HID: logitech-hidpp: Add HIDPP_QUIRK_RESET_HI_RES_SCROLL")
+
+Signed-off-by: Dmitriy Geels <dmitriy.geels@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-magicmouse.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
-index d637c04773799..e6d4d49305268 100644
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -553,6 +553,10 @@ static int magicmouse_event(struct hid_device *hdev, struct hid_field *field,
- 		struct hid_usage *usage, __s32 value)
- {
- 	struct magicmouse_sc *msc = hid_get_drvdata(hdev);
-+
-+	if (!msc || !msc->input)
-+		return 0;
-+
- 	if ((msc->input->id.product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
- 	     msc->input->id.product == USB_DEVICE_ID_APPLE_MAGICMOUSE2_USBC) &&
- 	    field->report->id == MOUSE2_REPORT_ID) {
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 9646380febaca..27d83b8bbaaf3 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4791,6 +4791,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ hid_hw_start_fail:
+ 	sysfs_remove_group(&hdev->dev.kobj, &ps_attribute_group);
+ 	cancel_work_sync(&hidpp->work);
++	cancel_work_sync(&hidpp->reset_hi_res_work);
+ 	mutex_destroy(&hidpp->send_mutex);
+ 	return ret;
+ }
 -- 
 2.53.0
 
