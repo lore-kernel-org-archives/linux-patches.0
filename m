@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055382;
-	b=j0MAxHieYktFtW5sqKuhCOuz3pvS1vtAI3qeH9jTISHuENfLyb/smLkRjEutNoi+JC2m
-	 6FNVwCt3ad4fzDJ8woPftUlCwTy5RaR1YsKvxZJopPApBp1i6FkC/gRiXR9h5LojIZIcu
-	 xolG1xix6THrJFJzkZ6R2o6YeuE2nyxax+4bH2JuNXo+0PNouVWaGIEJYJE3JpXWzGk9u
-	 Gjl1nfq3IuuXkRJdJUxY3RjelW6wTQnGnuW7oyRQ3WTft/XpbbSXx/Y59vaDl4eON+qWL
-	 Rkyy8yz2o/RAYZ18HcSsH3Vac9v7PiT2gi+8l006dRqmqvEr+wuu5clizM+CD2jv7mg==
+	t=1795055385;
+	b=ujPgJllp3uGCWUoj9iZL1pnYTSUGGAqNZOtyRAGmmFrKX/rfT/P3kYVF/F//asjBeBFZ
+	 bZ80LdiYeXv6h/XWyYMnuxm9VD5i41m8y1R9aKRg9Dtunay/yP4p8ehW8jaFZzTGMSA75
+	 EB1SB5yctEvJSigezU5LnaWVAVFob8eAjdQJIVZ8febR4l5qhvN7m2g0eePOOdJZ8tAi+
+	 k26YZk8MkEvKpjaeRS7sa8PvpigrtcERyUQOWyySWcee0r7V0mpF5IzR1ST3jWnADF4hA
+	 fomo1lvZzX3Ded0ivPDkzy29HARGnWPJZwD6yXCrPf6ZpV3Km7qKjOf5qyMCLo5IyEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055382;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zsuOjXu65lmZOtZVPMsPVHlwe1Omy1C+qZdzmUgSZjc=;
-	b=qCR8qy685/WEsZMm78xsuqRzNFjIh8zTsYlhbGO9weldTxsYphK3OHU4HcqmJfAU/ogs
-	 ZlzCYfP6X+bq4LrrMJ3WQPeuf0QlYZ0F2hpPqbciI6/YRX7yq/qJcIIMjisFNuamS9Xs4
-	 RUQXV/DsS31eFHUNXAEbQvVK2aLXfFExed72HyFfJwWbNvtQ54k169ftSQOXCQH22X29J
-	 NpMiRnYDOU6+VbTYNJZvhj/gWxiiBmGoLcCuWMuN3/7OUtnJNB44nHCVa/PnW3GG55ZYw
-	 JHHSVXbe15s2LQceK6t1ccw3bEziMtMqD6jdqy/asaMOApN528LDvchu+Aau4BFlCUw==
+	bh=HrnwOZPawkEEJ0x4nD4Ff6FIUuwslQcd1ikMNy01Q6w=;
+	b=TXOupbTzMP2hatn2/iWPtqnfaxaZFSsAqPWCXbmJQbvc+zz8yHw/gdfqo3wseYflL7cy
+	 7Yoom3GqQfDkBdnsRZwwElYpAYYeawOd1hoOg+0tO5rWKrq+rfUd+CIJGmN1hDefuzQNZ
+	 RaYlrLuUT9/kKp6xm8wZ+2L6e21/SI5AG/IQIV7uzGOFhbmOMImVylxNSHXEBXb3I4LeD
+	 +0MlILgAFwKuzCRG4JgYdzC2gMZz1PeBnA+JrFRA6+3oXYpozMgY+3doG7cThFnHJome3
+	 U8/x2SJwCXH2aY2w3+ZAARA1OBpsExyxqBtkJe3z218ffkB74LgsdEykDATYIEMDZpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mIVG/8Mf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QhObu7qq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF72606A332;
-	Thu, 19 Nov 2026 02:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A10D606A32C;
+	Thu, 19 Nov 2026 02:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIVG/8Mf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C503C1F000C9;
-	Thu, 19 Nov 2026 02:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QhObu7qq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830CC1F000C4;
+	Thu, 19 Nov 2026 02:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055382;
-	bh=zsuOjXu65lmZOtZVPMsPVHlwe1Omy1C+qZdzmUgSZjc=;
+	s=korg; t=1795055385;
+	bh=HrnwOZPawkEEJ0x4nD4Ff6FIUuwslQcd1ikMNy01Q6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mIVG/8Mf1DDimbUGT/iMfpSUDjcchincsqTKA5U+OhkHSf9iToHj7dLs2ZDUO0uJp
-	 KZF2OBTC0aF1jpQ8fKdg0AY+q+uSLycXgyny9PyrkUGgaIM/XzrcxOyZiVVqOGSJnK
-	 GpjP+U4opVTd84e7ClySq4o5plxRdG25jwjE8h4I=
+	b=QhObu7qq3AMYWdfxAGsv4oLSEC3GWm0PpB1RFAakZCnCL1FvVPfYH3+vb5Zih4V6Z
+	 /i83TfCkrYXejixKLHoi10/UxNKq9Jnet+tXVaRQhKprmG4+pmNTK42CTcMVXL9EHZ
+	 bFcTbJLjNhV9V+AZI7PCJaEmYvuOxG8VZq5DAbv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1594/2214] ASoC: fsl_asrc: check the second front-end DMA channel
-Date: Wed, 18 Nov 2026 15:54:30 +0100
-Message-ID: <20261118150115.744345266@linuxfoundation.org>
+Subject: [PATCH 5.15 1612/2214] ACPICA: Fix PCC OperationRegion command offsets
+Date: Wed, 18 Nov 2026 15:54:48 +0100
+Message-ID: <20261118150116.471323205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
+[ Upstream commit 888dab4b04ea8725168c6d50d0bfb8057fccca18 ]
 
-The temporary Front-End DMA request can fail independently of the
-persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
-returned NULL pointer is immediately used to read its private data.
+ACPI 6.3, section 5.5.2.4.7.3, states that the PCC Operation
+Region is associated with the region of shared memory that follows the
+PCC signature.
 
-Check the temporary channel and release the previously acquired
-persistent Front-End channel on failure. Clear its slot so a later
-hw_free cannot release it twice. ASoC marks a component's hw_params
-only after success and skips unmarked components during rollback, so
-returning an error alone would leak the earlier channel.
+The generic and extended PCC shared memory layouts include the 4-byte
+signature at offset 0, so their raw shared memory COMMAND fields are at
+offsets 4 and 12 respectively. Since AML field offsets for the PCC
+OperationRegion are relative to the region after that signature, ACPICA
+must look for those COMMAND fields at OperationRegion offsets 0 and 8.
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+Adjust the generic and master subspace command checks to use those
+OperationRegion-relative offsets. Otherwise writes to the COMMAND field
+can fail to invoke the PCC address space handler at the offset described
+by the PCC OperationRegion definition.
 
-Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://github.com/open-acpica/acpica/pull/1205
+Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+[ rjw: Fixed the Fixes: tag ]
+Link: https://patch.msgid.link/20260922144302.3847593-2-sudeep.holla@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/acpi/acpica/exfield.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
-index 79dd5a9b8f481..e547e2e10cab2 100644
---- a/sound/soc/fsl/fsl_asrc_dma.c
-+++ b/sound/soc/fsl/fsl_asrc_dma.c
-@@ -231,6 +231,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
+diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
+index 8618500f23b39..5f3a19e74252d 100644
+--- a/drivers/acpi/acpica/exfield.c
++++ b/drivers/acpi/acpica/exfield.c
+@@ -45,12 +45,13 @@ static const u8 acpi_protocol_lengths[] = {
  
- 		/* Get DMA request of Front-End */
- 		tmp_chan = asrc->get_dma_channel(pair, dir);
-+		if (!tmp_chan) {
-+			dma_release_channel(pair->dma_chan[!dir]);
-+			pair->dma_chan[!dir] = NULL;
-+			return -EINVAL;
-+		}
- 		tmp_data = tmp_chan->private;
- 		pair->dma_data.dma_request2 = tmp_data->dma_request;
- 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
+ /*
+  * The following macros determine a given offset is a COMD field.
+- * According to the specification, generic subspaces (types 0-2) contains a
+- * 2-byte COMD field at offset 4 and master subspaces (type 3) contains a 4-byte
+- * COMD field starting at offset 12.
++ * According to the specification, the PCC OperationRegion begins after
++ * the PCC signature. The raw shared memory COMD offsets of 4 for generic
++ * subspaces (types 0-2) and 12 for master subspaces (type 3) therefore
++ * appear at OperationRegion offsets 0 and 8.
+  */
+-#define GENERIC_SUBSPACE_COMMAND(a)     (4 == a || a == 5)
+-#define MASTER_SUBSPACE_COMMAND(a)      (12 <= a && a <= 15)
++#define GENERIC_SUBSPACE_COMMAND(a)     (0 == a || a == 1)
++#define MASTER_SUBSPACE_COMMAND(a)      (8 <= a && a <= 11)
+ 
+ /*******************************************************************************
+  *
 -- 
 2.53.0
 
