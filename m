@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034747;
-	b=pJ0vhiN2qQi2Zw1LDtiHjDrU49mIP4CO3l4ZZ4PgGo/23jPIkh0ORIKsufqmjdFVLdjJ
-	 3qPnnOCIZ+nOuTJ1VsPNNrqSd/mNCNtnM1XMAJvS2hJBxVOH3Q6bvIqOyC9cidoqlDj4a
-	 HzYInKctAkTj6cmvk8zgiqMS9wCZxhxQMEuyQzxt1M0e7r12JRnAVeR+o+elIUd36BpzK
-	 bGht917SRoE8VPrs9tFlLZaiqnY++TYs1/QBomH2oFlDXjsCLP1J4ro8MC7JIOeB4eYNS
-	 b6wtZm5pigOt8z3IthLrGG0x8ii0jGTwPgW5hIIJFVPyh6ZzzrtEjWxfzGZOYMKtujA==
+	t=1795034750;
+	b=uztOsdwruKQUyD7c5OCAn+MYn1JRTx+5PldIYSR0Zs7JolyJ5NnoP5ynh0dooPbhNKwX
+	 kGJftI3Clyo6+TgBEwpuXnC04p7Wo2A4cCNuZeiAttFVLBc4eTgXeS2E3EvAZB4F9EePN
+	 cj5Sy6ZN3lyDMPZkC7Lg9ZrbIijtcwNZVb5S5hpd2g/q5yn/D+4sB6Q7cvooOjRh3N6jE
+	 OnOIH0OPoXjF9YHMxXONUbknz2kUs4OOyvzRwNDWxNfAVwuBU0fxjmSWOb6QVjGNKAIP2
+	 X9c0p/pYMK3J3upAEBsnSmo+iIo3R8khbz767gdBRM96NC4B/CAxxjdz2JraqYNdUhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034747;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ABp/ln+jzwEMoZE0uxjlaF+gULOsAmfk2EuPakfxyao=;
-	b=jCH+zNj+3GnuVBwME31QHxOpr3g4AK7t9IlTd5y+Nwc61ISaOoH7D+qfneUII11iKJWM
-	 1VYrKOBQjIyTkk3V5dyzyBqSmY8ebzDAZIy2xzLt8gLDB5LiUW+O3trykT6ZJyFbaxdp1
-	 5Wa4PFfCBPCaBCSBxpC7NGY90qC3cGnBAmhcsCo7B8uNfjCp1kEvpVpY3cECes6OfFk3h
-	 u+8F/MRQPmklKbXFYTSdIK2p0eiAf9bLp/wLk9MQhTpGcus7tFqQnCGQS+oB+gKPDubqH
-	 soQVLLoJTFgku3CnDl3UxpGXzDwAkNgBwZmwa07om5OnuDHrvoVmGBzrn9Uh6USvLiA==
+	bh=462c41CGoOf190gJfllhXUMPLa67zrofv0kPHlyUm3U=;
+	b=bwRekLbPo0m1710CvoPI0Ok2oLEVkFeuq5nKdNMgzXqFyPC/tsFKFOXXCfgEKblyynWC
+	 rUJdJpbVpFiMNuoXrwb0UQi6wNSeGo0fN88lBK+1Xgz7Abml/InckBq/LObYUc/6aojno
+	 BmmryXoMN0NNcW+jT/MnILxTwz8gmoYfxuKNucKF7xxmfZzdRIA4l/HlnqttJv3rUHstU
+	 HAAxSWm7rNvqnr2zYGujFV2xfbu/msEJWcnnMRuYH2yRpZCPubjb5KWdGjimJYa/vrFnv
+	 caHQ0PzF2BZ1feerb7Glqs7Y+JQgbzRY8NyXeLNtNsLBig8zoPN8hYZvhfCb4E7d/ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C3K7LLzP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xsl63Spm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9B9606A334;
-	Wed, 18 Nov 2026 20:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BFC606A31C;
+	Wed, 18 Nov 2026 20:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C3K7LLzP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4F41F000C4;
-	Wed, 18 Nov 2026 20:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xsl63Spm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8771F000C4;
+	Wed, 18 Nov 2026 20:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034747;
-	bh=ABp/ln+jzwEMoZE0uxjlaF+gULOsAmfk2EuPakfxyao=;
+	s=korg; t=1795034750;
+	bh=462c41CGoOf190gJfllhXUMPLa67zrofv0kPHlyUm3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C3K7LLzPGhLCcYnwx7Ylm2nbsHqzmJFZYQllNkuBm3KdWGbc6jleEOvSZgO/wvRG9
-	 UNPN25PNuFeo/3etJQnl9uOBWTtKuWMLwnh6XhwzU5IxZruI/k0RkN/OEdYHD3su2M
-	 xbYDltva6QVmqPxxb82GI8RAa1yA3RQrJTw1riGc=
+	b=Xsl63SpmsveyuNIIQruZm7uiCDihVKzrE9hnkLLs3KhVeMGVra1pWl7QcRwVVXCZY
+	 T/XJb+GlhqJFf2BBBhhUuOTyy9iduBuA50Xd6nR5cn1yK9hc2R2qcqhzaJ76l7m6Tf
+	 /R0r67Rjiq/5QbisUxYnVZ7IH/aEtFaAMsUxS2JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Helge Deller <deller@gmx.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0477/3318] Input: hp_sdc - shut down kicker timer on module exit
-Date: Wed, 18 Nov 2026 15:18:19 +0100
-Message-ID: <20261118150331.246804803@linuxfoundation.org>
+Subject: [PATCH 6.6 0478/3318] wifi: mac80211: refuse to make a monitor active when it has no queue
+Date: Wed, 18 Nov 2026 15:18:20 +0100
+Message-ID: <20261118150331.283814174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,46 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 309731e95917125bbd13626a7a5600490a5bf44f ]
+[ Upstream commit 2b04d6556964ae9f89819b86a0a7801e39c3aae5 ]
 
-hp_sdc_kicker() rearms hp_sdc.kicker with mod_timer() after scheduling the
-tasklet.  The module exit path uses timer_delete_sync().  That waits for a
-callback already running but can still leave the timer rearmed.
+A monitor interface only gets a TXQ if it's created active, and one can't
+be added later. Setting the flag on a down interface is still allowed, so
+the driver is handed a monitor with no queue. ath9k dereferences it:
 
-A callback can therefore leave the timer pending while hp_sdc_exit() tears
-down the driver, allowing timer activity to access dismantled driver state.
+  BUG: kernel NULL pointer dereference, address: 0000000000000066
+  RIP: 0010:ath_tx_node_init+0x49/0x170 [ath9k]
+   ath9k_add_interface+0x10c/0x140 [ath9k]
+   drv_add_interface+0x54/0x250 [mac80211]
+   ieee80211_do_open+0x32f/0x800 [mac80211]
 
-Use timer_shutdown_sync() for final teardown.  It waits for a running
-callback and prevents rearming after module exit begins.
+Reached with CAP_NET_ADMIN by "iw dev X set monitor active" followed by
+"ip link set X up". RTNL is held, so netlink operations block behind it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Refuse the flag when there is no queue to give.
+
+Fixes: 79af1f866193 ("mac80211: avoid allocating TXQs that won't be used")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Helge Deller <deller@gmx.de>
-Link: https://patch.msgid.link/20260902154004.3595416-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ sashal: Used the older del_timer_sync() name in the context line, since this tree predates the rename to timer_delete_sync(), while the added timer_shutdown_sync() line is unchanged. ]
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260904200338.10829-1-lucid_duck@justthetip.ca
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: Adjusted context lines around the inserted check, since this tree has the older MU-MIMO validation code (monitor_sdata lookup) instead of the reworked virtual-monitor condition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/hp_sdc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/cfg.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/input/serio/hp_sdc.c b/drivers/input/serio/hp_sdc.c
-index 13eacf6ab4310..ee096d7c7846c 100644
---- a/drivers/input/serio/hp_sdc.c
-+++ b/drivers/input/serio/hp_sdc.c
-@@ -980,7 +980,7 @@ static void hp_sdc_exit(void)
- 	free_irq(hp_sdc.irq, &hp_sdc);
- 	write_unlock_irq(&hp_sdc.lock);
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 2ae07248a4564..12b57df5d9f50 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -104,6 +104,10 @@ static int ieee80211_set_mon_options(struct ieee80211_sub_if_data *sdata,
+ 			return -EBUSY;
+ 	}
  
--	del_timer_sync(&hp_sdc.kicker);
-+	timer_shutdown_sync(&hp_sdc.kicker);
- 
- 	tasklet_kill(&hp_sdc.task);
- 
++	/* TXQs are reserved in ieee80211_if_add() and cannot be added later */
++	if ((params->flags & MONITOR_FLAG_ACTIVE) && !sdata->vif.txq)
++		return -EOPNOTSUPP;
++
+ 	/* also validate MU-MIMO change */
+ 	monitor_sdata = wiphy_dereference(local->hw.wiphy,
+ 					  local->monitor_sdata);
 -- 
 2.53.0
 
