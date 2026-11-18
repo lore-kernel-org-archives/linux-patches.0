@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060147;
-	b=Q41xsGUVx/SnC6QzICXHrmVIpWsdSqG6S/SZaadn6WVN/aZMiMdt0nLW/aWDe+y13GSZ
-	 Lm9yYXXwvVHJTfWAx6H6mwJoj8yq7nMuMwf3S5YJQgNWaW+Ri1aAtwjuPf/fqDNJF6JTY
-	 a5U/LTDlEVW4yJDebXVo2JvuJ4CUCFqdAng1xV589Y48/x/rao+Ezxe8LXBi2OSwkhCYR
-	 F87Wqo5JSKcwecZotPNlEX09kfRexhmj4taUMlG/YLaV6MidjrkxPGKqbkO5+5oj2Zi0A
-	 RUAaCA2Rg7zoyJ8eqwdlmsxXKAwAFuI71B72L3gOtTGEb1wIKj3ewYKxSRCb2EAYwLQ==
+	t=1795060150;
+	b=OAFrIMKwQ3GuFZGQgWVPg25TAUoJfbBv5BvMqLZPZlciy3VGcRHxFJj1lFjbGleQllQL
+	 j7C52wnuvjpm0x6IN7BU+Dnk64xvPoB2YU4Z9tRcIabr7Kw2mq19S22+uPaTc0Jfvooia
+	 avYJfbCqWqKmO1n4wIdtcyojwJlj2zSAElH6cNR1FDh67l3z+2i9U6VolS8zxCozqm7YH
+	 HSV8BnMBzPG0UJMRB6/2pz6Le+43bcYlRS8Jo8kf2H2Yo2TMuoRCE5K5Gz4T+aSjH5dvx
+	 BbjaJ8X69yzhIZxS+sdqv9i6/PL1dbThmdY2gEAyvSiSgKHkn28aS5nGAY8I2CXX4qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060147;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060150;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=METmJIiJpDmyOdwRD7rUEuI3ELXrEBrC4BrK/kmXIX8=;
-	b=cDi6M7ODYKr+D3hNhG6dgjHrhlhnirczX2LzbuzZc7jZjhSFqqAjWi8IW+fB91xoEfam
-	 pw33vF/bBNMBxbkRu3CZxpxT0ZG3oRZahbHLEoYr6ibKazkal97fZtk2htCn15/kCja0l
-	 ZIxZG1f2wmb8so982iPoaDbE764uZ6TwdlOKvqRp1lbI27QVbOOMPEkF0NinCLPcI+uiq
-	 xkro2GXsN46FNORK8J4+no03AikprgcmCqdsRpsP5a4ZEc9lO5lruz7SdjJZBHTXPliNI
-	 Aq+ZvEW6RW1qunh6THkueAxY2jtRFhPveen8JiIIKwuB8e6K7bRZC1uXny2Fuwwomgw==
+	bh=0HTFVe//TNR+ak7lrzSeuUERgIUdLj4pN7nwkpniuPM=;
+	b=4zEuNhLVLg3AS0jlcoy0Z5Yx3keWx72spPJ5UDty+MwRDzZRhwIDMh9MoMlzsRAY5ABR
+	 jRLePJAmSoq1Z8AGvH/TFfUaH0ROwg1vBKu4QF3oJ+cUz2mwqhZlyMBuPxMPyjiRuOKhX
+	 JDAHo7OXFh/wsYbXJtvfeoV2uev4cP2ecQ8TC2zHFyaxCmE92+OF05PXvVTBUUEuBg3yy
+	 G8DMPtDBjl/NODjLITmFSMWz8olGvfsfDNEnrFNDFnE7roTRqW0ZIouST3sx38Jolp+Fv
+	 3OsW4bMGqclyCU/rnIUk1URIBb02g0fMiFK3v6nvmXA+UMZiGFDmsfTtGDUII+fkt9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZkylWOq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Szkkzpwr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DBA606A320;
-	Thu, 19 Nov 2026 03:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3839B606A325;
+	Thu, 19 Nov 2026 03:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZkylWOq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7381F000C4;
-	Thu, 19 Nov 2026 03:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Szkkzpwr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0071F000C4;
+	Thu, 19 Nov 2026 03:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060147;
-	bh=METmJIiJpDmyOdwRD7rUEuI3ELXrEBrC4BrK/kmXIX8=;
+	s=korg; t=1795060150;
+	bh=0HTFVe//TNR+ak7lrzSeuUERgIUdLj4pN7nwkpniuPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SZkylWOqYNR3nZj5lcZs6UDzejQFVhdAbkk+F+Zoa0udvCuBtYKadLMlF5G8T9FK3
-	 gnR6mIVkLTZvRpYNDeuuIam6p9LAglITQlKMvFuVOj/hfsJQJk+aB5bobkhg6h32vk
-	 5ILLmF6GLWlGO5ypA7Onf8o4h92SY2mWU9GqOjdI=
+	b=SzkkzpwrYDhEjlTt3ggqkS6ygJO/4zgKiHWzIPaxLCFr5kH58XS/KUYDz4dZRqvHd
+	 5sPVU/bFM+7EApf4fW9nw3VoKp8H+pXXtEeKDilkmZ42Mb5+gWtWeLSLT2mdyDkqMy
+	 m7fXCXYSIGZ4fgsP1QXSSYXIjEcuWrrV4CbhuOOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Yingjie Wang <1075151112@qq.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1094/1848] mm/shmem: make shmem_file() check the files inode
-Date: Wed, 18 Nov 2026 15:52:12 +0100
-Message-ID: <20261118150004.708371204@linuxfoundation.org>
+Subject: [PATCH 5.10 1095/1848] nvmet: reject keep-alive timeouts that would overflow
+Date: Wed, 18 Nov 2026 15:52:13 +0100
+Message-ID: <20261118150004.745572677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,115 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit d3710111839d11339e414b1bb3fea3d05ab83f6e ]
+[ Upstream commit 96ae13f40ce5930cd58c43128e385131476f2a66 ]
 
-shmem_file() only checks if file->f_mapping is a shmem mapping. This
-mapping can belong to another file, however, as with a Coda file backed
-by a tmpfs container after mmap().
+nvmet_set_feat_kato() and nvmet_alloc_ctrl() convert the 32-bit
+millisecond KATO from the host to seconds with DIV_ROUND_UP(kato, 1000).
+The addition in DIV_ROUND_UP() is done in 32 bits, so any KATO above
+4294966296 ms wraps around and rounds to 0 seconds. A Set Features
+command with KATO 0xffffffff then succeeds but disables the keep-alive
+timer: Get Features returns 0 and Keep Alive fails with Keep Alive
+Timeout Invalid. A Connect command with such a KATO creates a controller
+without a keep-alive timer.
 
-So it does not guarantee that the file inode is an actual shmem inode.
+The converted value has more consumers that can overflow. Get Features
+multiplies it by 1000, and the timer paths multiply it by HZ in 32 bits
+and arm a delay that must not exceed MAX_JIFFY_OFFSET.
 
-Seal handling and memfd preservation use this check before accessing
-shmem inode state, so they can access an inode of the wrong type.
+Reject a KATO whose rounded value does not fit all of these. Return Keep
+Alive Timeout Invalid from both Set Features and Connect. Validate Set
+Features before stopping the current timer so a failed update leaves its
+timeout unchanged. Round in 64 bits. A KATO of 0 keeps its current
+meaning.
 
-Let's make shmem_file() check the inode's file operations instead, to
-identify shmem inodes reliably. This will identify regular shmem inodes,
-including memfds and ordinary tmpfs files, independently of wrapper file
-operations.
-
-Use shmem_mapping() in collapse_file() instead to not change the behavior
-of collapse_file(): it operates on the page cache and uses mapping->host
-for shmem inode operations. Focusing on the file does not seem relevant.
-
-Fixes: c49fcfcda8b5 ("mm/shmem: update file sealing comments and file checking")
-Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
 Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <mason@kernel.org>
-Suggested-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-3-d6437171ecc3@kernel.org
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adjusted patch context to fit the older shmem helper layout. ]
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: Adapted controller allocation error handling to return status directly and set req->error_loc. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/shmem_fs.h | 15 ++++++---------
- mm/khugepaged.c          |  2 +-
- mm/shmem.c               |  5 +++++
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/nvme/target/admin-cmd.c | 7 ++++++-
+ drivers/nvme/target/core.c      | 7 ++++++-
+ drivers/nvme/target/nvmet.h     | 8 ++++++++
+ include/linux/nvme.h            | 1 +
+ 4 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
-index a5a5d1d4d7b1d..fe9063e9b2ee1 100644
---- a/include/linux/shmem_fs.h
-+++ b/include/linux/shmem_fs.h
-@@ -67,8 +67,14 @@ extern unsigned long shmem_get_unmapped_area(struct file *, unsigned long addr,
- 		unsigned long len, unsigned long pgoff, unsigned long flags);
- extern int shmem_lock(struct file *file, int lock, struct user_struct *user);
- #ifdef CONFIG_SHMEM
-+bool shmem_file(struct file *file);
- extern bool shmem_mapping(struct address_space *mapping);
- #else
-+static inline bool shmem_file(struct file *file)
-+{
-+	return false;
-+}
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 835ff574f80b9..93efea9de3259 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -739,8 +739,13 @@ u16 nvmet_set_feat_kato(struct nvmet_req *req)
+ {
+ 	u32 val32 = le32_to_cpu(req->cmd->common.cdw11);
+ 
++	if (val32 > NVMET_MAX_KATO * MSEC_PER_SEC) {
++		req->error_loc = offsetof(struct nvme_common_command, cdw11);
++		return NVME_SC_KA_TIMEOUT_INVALID | NVME_SC_DNR;
++	}
 +
- static inline bool shmem_mapping(struct address_space *mapping)
- {
- 	return false;
-@@ -106,15 +112,6 @@ static inline struct page *shmem_read_mapping_page(
- 					mapping_gfp_mask(mapping));
- }
+ 	nvmet_stop_keep_alive_timer(req->sq->ctrl);
+-	req->sq->ctrl->kato = DIV_ROUND_UP(val32, 1000);
++	req->sq->ctrl->kato = DIV_ROUND_UP_ULL(val32, MSEC_PER_SEC);
+ 	nvmet_start_keep_alive_timer(req->sq->ctrl);
  
--static inline bool shmem_file(struct file *file)
--{
--	if (!IS_ENABLED(CONFIG_SHMEM))
--		return false;
--	if (!file || !file->f_mapping)
--		return false;
--	return shmem_mapping(file->f_mapping);
--}
--
- extern bool shmem_charge(struct inode *inode, long pages);
- extern void shmem_uncharge(struct inode *inode, long pages);
+ 	nvmet_set_result(req, req->sq->ctrl->kato);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 61e96097bfe9c..068e490098aa9 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1325,6 +1325,11 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	int ret;
+ 	u16 status;
  
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index e523bb9381189..bf70c3bbf91ec 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1690,13 +1690,13 @@ static void collapse_file(struct mm_struct *mm,
- 		struct page **hpage, int node)
- {
- 	struct address_space *mapping = file->f_mapping;
-+	const bool is_shmem = shmem_mapping(mapping);
- 	gfp_t gfp;
- 	struct page *new_page;
- 	pgoff_t index, end = start + HPAGE_PMD_NR;
- 	LIST_HEAD(pagelist);
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
- 	int nr_none = 0, result = SCAN_SUCCEED;
--	bool is_shmem = shmem_file(file);
- 
- 	VM_BUG_ON(!IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) && !is_shmem);
- 	VM_BUG_ON(start & (HPAGE_PMD_NR - 1));
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 8858db132090c..bd91e3e9fb5a6 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -254,6 +254,11 @@ static const struct inode_operations shmem_special_inode_operations;
- static const struct vm_operations_struct shmem_vm_ops;
- static struct file_system_type shmem_fs_type;
- 
-+bool shmem_file(struct file *file)
-+{
-+	return file && file_inode(file)->i_fop == &shmem_file_operations;
-+}
++	if (kato > NVMET_MAX_KATO * MSEC_PER_SEC) {
++		req->error_loc = offsetof(struct nvmf_connect_command, kato);
++		return NVME_SC_KA_TIMEOUT_INVALID | NVME_SC_DNR;
++	}
 +
- bool vma_is_shmem(struct vm_area_struct *vma)
- {
- 	return vma->vm_ops == &shmem_vm_ops;
+ 	status = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
+ 	subsys = nvmet_find_get_subsys(req->port, subsysnqn);
+ 	if (!subsys) {
+@@ -1401,7 +1406,7 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 		kato = NVMET_DISC_KATO_MS;
+ 
+ 	/* keep-alive timeout in seconds */
+-	ctrl->kato = DIV_ROUND_UP(kato, 1000);
++	ctrl->kato = DIV_ROUND_UP_ULL(kato, MSEC_PER_SEC);
+ 
+ 	ctrl->err_counter = 0;
+ 	spin_lock_init(&ctrl->error_lock);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index ef162b64fabef..90bb5352c4cc8 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -7,6 +7,7 @@
+ #define _NVMET_H
+ 
+ #include <linux/dma-mapping.h>
++#include <linux/jiffies.h>
+ #include <linux/types.h>
+ #include <linux/device.h>
+ #include <linux/kref.h>
+@@ -503,6 +504,13 @@ void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
+ #define NVMET_KAS		10
+ #define NVMET_DISC_KATO_MS		120000
+ 
++/*
++ * Largest keep-alive timeout in seconds that can be reported back in
++ * milliseconds and converted to jiffies without overflowing.
++ */
++#define NVMET_MAX_KATO	\
++	min3(U32_MAX / MSEC_PER_SEC, U32_MAX / HZ, MAX_JIFFY_OFFSET / HZ)
++
+ int __init nvmet_init_configfs(void);
+ void __exit nvmet_exit_configfs(void);
+ 
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 5727185ffe423..ff756283b9230 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -1485,6 +1485,7 @@ enum {
+ 	NVME_SC_SGL_INVALID_OFFSET	= 0x16,
+ 	NVME_SC_SGL_INVALID_SUBTYPE	= 0x17,
+ 
++	NVME_SC_KA_TIMEOUT_INVALID	= 0x1A,
+ 	NVME_SC_SANITIZE_FAILED		= 0x1C,
+ 	NVME_SC_SANITIZE_IN_PROGRESS	= 0x1D,
+ 
 -- 
 2.53.0
 
