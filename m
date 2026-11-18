@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021623;
-	b=g9NOEcEEXu7Pyuop3urGY8bAS/ZVyqf9M3vDb8O//sLY2bkm7N+gvykJTj98GD7Ae7By
-	 4dU3b6+lZlZogz3x08SYptJql598eUIDgREtVz65REF/EAd7dMi0wjOvGlgVU9OTMJK6O
-	 z0//vE3dX7lYyguMYcmn09GB21HnisR7uBW00UhWmoHa1sREfENeL94RPduka+yD8ne2C
-	 tY7W+u6Qyyf0oVeFIQ/vlpVpCzzHjcW3AYwF2ksWs6zrW/WANIPtJDf6pjC1sn86T7jhA
-	 n0wicL+PxI05HWHqHWGebeDvziq9Uk/YfZ5bm+bxYe/sgeNWm2LfI4kODsuT0qHPTZQ==
+	t=1795021626;
+	b=bX7+Z7bEOzgbtswPgJdaOPJFdsF5rxbAbZ2I2AbALmz0bhI4799ySgHpQJNh+OneqtYn
+	 17dVExNunJKJtlB+wQH1pxfeVshBcYGJEwe3tlgfnFdEEXAbH2POzmPSL7u5I+QxHGnUG
+	 uHP/Qv/1D/C51IhLAkZoKmrl4ZGAg3CbAKlm+7Gg1LQ3UNyVhFbDsBtgnlUDTIY3i/CY5
+	 QxMAl0Sh9XAkOHQ5qpF1ZRzOz7aS9UhzKmz8J32pbx0NO0t4jJfKKj9AsHfIGFgWCsMv8
+	 4cDVTvjNwkKvzzrKalJ7wLSTP1tiybVSUxjbJ+DKIu9EYArNZQ4PmWoXqkLkwT7UudQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Io9K1Fp0Hoc5YVjuqNA4cq3w9Sx2JBAb1jZXcPPoUrI=;
-	b=c1LARyr59+ujneBtkd7D5XxE7D+0YfwKwc3aDho3irTKVMxakdRztwsL451CbpJ/fRvN
-	 FZ71caEFNIADs6olcHftquDCJkMKuMcE7P/53/2hJUHdZD8NSIHZtOneQRQpzYwJDqb2l
-	 6KcrvaX+tz0JbRbscfyeKsK7zEvnkdKB4BPGBfSIjNn0EhaUNumnq7nFjr9SKbDnTwA8v
-	 MK85TnWgUYl12Sst+0tYMu49qzST19hEJ4v8j0XkNYbwLq2gUC4BndQdGTyDQKQ+ZIUpH
-	 zVgW8SE5PBjmz8YnYJjVLNgj9ZUkBRInfcMIrCAy+2UfHVdODWWkTxBIiP666Drq6pA==
+	bh=BZCnuTRTUaJOVnUwKKZoMmXTmkUBQ7VUbl2fBqU7qO0=;
+	b=UpiBKuyzfC5dmByG6N1KpMctl7d14j4M6FiscGQq7NA0HeBRrbWMdpVBHtvAu0RAAP85
+	 Snn5gRKbSmwt7lWgYL2dzQ/J/1fOc8642bPnAfJhsSHERz9ElsECjMTrJDkU3qR5/2dUx
+	 yt5P3rt9ERtefY9sHOUwxaNO82ZHuytyfMWDv9+ohk2CNkULgNo3IpzXCOQN66LXTebAz
+	 rTR8E/YEPipeA6geGIFHb+B3DeiMaYqZ84Qh3Lu1S5dnKC+q7AR5DhUXJP26FEgcQLckw
+	 nDbs4BWAsRsoVctPhD2iIcjWpDqvjWQgaavi67hS1sNHEuUQ2Zj1W53YZQT7HanOQNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uo39NAGN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F01GmdBq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7765D606A31C;
-	Wed, 18 Nov 2026 17:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7488606A31C;
+	Wed, 18 Nov 2026 17:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uo39NAGN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F221F000C4;
-	Wed, 18 Nov 2026 17:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F01GmdBq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9BE1F000C4;
+	Wed, 18 Nov 2026 17:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021623;
-	bh=Io9K1Fp0Hoc5YVjuqNA4cq3w9Sx2JBAb1jZXcPPoUrI=;
+	s=korg; t=1795021625;
+	bh=BZCnuTRTUaJOVnUwKKZoMmXTmkUBQ7VUbl2fBqU7qO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uo39NAGN7/t70hBHIEcSTRhkDtALfLI8H4GehhJ2Fhc2WfxRR2T/Opb2n2who43e5
-	 e7dv/Qpw3zO0Fq26GohauwFpguPYU+t36sVctEN/ueahje39wnFFUTxAHhV2jN57d1
-	 hW02wpFXBJjCSTWINvQEPWc7yrwdM8/r4Zh8xYxg=
+	b=F01GmdBqaP4H8pEbmOZxkLL/bsG/moD4UbAirhhhf7UDcztdYcm7isQMRKzl+t0Ri
+	 vwOW9AKVRCtbndJJUIizigz9kEdKzWYKgLS9/CXE8zTgKRgJapLSXFAFeiquTzVClG
+	 rVNRf9ucYvJaiInbHc+yJv89cD6g2rQnpiMe5+xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Kubik <piotr@kubik.pl>,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2374/2651] net: pse-pd: si3474: validate the channels of a PI
-Date: Wed, 18 Nov 2026 16:00:14 +0100
-Message-ID: <20261118150410.963097218@linuxfoundation.org>
+Subject: [PATCH 7.3 2375/2651] net: sparx5/lan969x: do not read past skb->len when injecting a frame
+Date: Wed, 18 Nov 2026 16:00:15 +0100
+Message-ID: <20261118150410.992680783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,71 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Kubik <piotr@kubik.pl>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 110eb808324fd9713b04d874c97283d965e43d2a ]
+[ Upstream commit 9642ce6cb51ebd596d0a02074ba9b2a387e974b0 ]
 
-si3474_get_of_channels() accepted channel 8, one past the last channel.
-The driver then accessed channel 4 instead: quad 1, channel index 0.
+sparx5_inject() writes the frame to the injection FIFO one 32-bit word
+at a time, and pads frames shorter than 60 bytes with zero words.
 
-It also accepted a 4-pair PI whose two channels are not a channel pair
-of one quad. The chip forms a 4-pair port only from channels 0+1 or 2+3
-of a quad (2P/4P mode bit in POWER_ALLOCATION, PORT_REMAP default), and
-the driver sends every register access of a PI to the quad of its first
-channel, so such a PI enabled and measured the wrong channels.
+Before this patch, the last word is loaded whole even when skb->len is
+not a multiple of four, so 1 to 3 bytes past the end of the frame are
+read. For a frame shorter than 60 bytes those bytes are also
+transmitted, as VLD_BYTES marks the whole last word valid and the
+padding starts at the next word.
 
-Reject both at probe.
+Write the trailing bytes from a zeroed word. The number of words written
+and VLD_BYTES are unchanged.
 
-Discovered by an AI code review agent; no shipped device tree triggers
-it. Validated and tested on an SDG-9000 board (MediaTek MT7988A, two
-Si3474) with Linux 6.18 and a modified device tree: one chip with a
-channel at reg 8, the other with a 4-pair PI on channels 1 and 2. The
-driver now rejects both at probe, and the unmodified device tree still
-probes all eight PIs. No kernel selftest covers PSE hardware.
+Found by an AI code review agent, and reproduced on lan969x and sparx5
+with register injection: bytes 57 to 59 of a 57 byte frame were not
+zero. With the fix they are zero, and traffic still passes on both
+chips.
 
-Fixes: a2317231df4b ("net: pse-pd: Add Si3474 PSE controller driver")
-Signed-off-by: Piotr Kubik <piotr@kubik.pl>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20261019162453.1244120-3-piotr@kubik.pl
+Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021-sparx5-inject-tail-bytes-v1-1-7dcc035c8ddf@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pse-pd/si3474.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../net/ethernet/microchip/sparx5/sparx5_packet.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/pse-pd/si3474.c b/drivers/net/pse-pd/si3474.c
-index e4eff88ae6723..97a3b998729d9 100644
---- a/drivers/net/pse-pd/si3474.c
-+++ b/drivers/net/pse-pd/si3474.c
-@@ -250,9 +250,9 @@ static int si3474_get_of_channels(struct si3474_priv *priv)
- 					"Failed to read channel reg property\n");
- 				return ret;
- 			}
--			if (chan_id > SI3474_MAX_CHANS) {
-+			if (chan_id >= SI3474_MAX_CHANS) {
- 				dev_err(&priv->client[0]->dev,
--					"Incorrect channel number: %d\n", chan_id);
-+					"Incorrect channel number: %u\n", chan_id);
- 				return -EINVAL;
- 			}
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+index f713656f1fae1..14c9ae673e354 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+@@ -169,8 +169,8 @@ static int sparx5_inject(struct sparx5 *sparx5,
+ 			 struct sk_buff *skb,
+ 			 struct net_device *ndev)
+ {
++	u32 val, w, count, last;
+ 	int grp = INJ_QUEUE;
+-	u32 val, w, count;
+ 	u8 *buf;
  
-@@ -267,6 +267,16 @@ static int si3474_get_of_channels(struct si3474_priv *priv)
- 				pi->np);
- 			return -EINVAL;
- 		}
-+
-+		/* The 2P/4P mode bit pairs channels 0+1 and 2+3 of a quad */
-+		if (pairset_found &&
-+		    (priv->pi[pi_no].chan[0] ^ 1) != priv->pi[pi_no].chan[1]) {
-+			dev_err(&priv->client[0]->dev,
-+				"PI %pOF: channels %u and %u are not a channel pair\n",
-+				pi->np, priv->pi[pi_no].chan[0],
-+				priv->pi[pi_no].chan[1]);
-+			return -EINVAL;
-+		}
+ 	val = spx5_rd(sparx5, QS_INJ_STATUS);
+@@ -189,14 +189,23 @@ static int sparx5_inject(struct sparx5 *sparx5,
+ 	for (w = 0; w < IFH_LEN; w++)
+ 		spx5_wr(ifh[w], sparx5, QS_INJ_WR(grp));
+ 
+-	/* Write words, round up */
+-	count = DIV_ROUND_UP(skb->len, 4);
++	/* Write the whole words of the frame */
++	count = skb->len / 4;
+ 	buf = skb->data;
+ 	for (w = 0; w < count; w++, buf += 4) {
+ 		val = get_unaligned((const u32 *)buf);
+ 		spx5_wr(val, sparx5, QS_INJ_WR(grp));
  	}
  
- 	return 0;
++	/* Write the last 1 to 3 bytes, zero padded to a whole word */
++	last = skb->len % 4;
++	if (last) {
++		val = 0;
++		memcpy(&val, buf, last);
++		spx5_wr(val, sparx5, QS_INJ_WR(grp));
++		w++;
++	}
++
+ 	/* Add padding */
+ 	while (w < (60 / 4)) {
+ 		spx5_wr(0, sparx5, QS_INJ_WR(grp));
 -- 
 2.53.0
 
