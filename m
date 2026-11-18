@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055293;
-	b=TCgtQjpNxM5Ot8DU4NNFXwpj88AUeAa3SZHtAa4lBKNSFf0+50/2fO7eDQKSsWcmcKDm
-	 06pqfWL2nnmro0gkCwzH2VrpSsTXNMxJM5idV/8AEUUDMzfX7zOTUgUmjjhZHfM0KcMkp
-	 Qy6HkUBxjXxP6G3gYTBAxV56ZWaDkfCQsuxyvMHPLdKDSD3iH95cqhGAuU0e7j8TP6git
-	 eZl51i1B49E5x+/d7SYTZElfCbKy8sJRVyZW3iQ3rR9Yw0qDwEm99Cbl6RsjP3diIwTKU
-	 /6z7HgGSlmuuQGNRkNK+wtkQhoXBDTLapp66bAnOFg4AkDZ3PCp4hP+DYDR0ju1reSQ==
+	t=1795055296;
+	b=Wf/XuYX259Q1Gbzs10zEQNhQybav7wovQUJEfnn8jSe5I2BgNwjbm1Wf8cQrZ17vXMS6
+	 EbtqAp4v6wBH894egq7QRQyQ3PpWa80tiAIgiu/wTQHJ2los7ozD+HeTxT85il6lWsF0j
+	 FWlCpZlWdQud3qZ9XOpV6mCChFoIZNWdNzFMFzcLr3s1HolPaqo9b/f+EYWxsfOW5yofJ
+	 viEohSoZ3yaQ4N0Kv0YOUVs64w07MWuTnnQgsBspQPIbRlRg9M3qIpUccQzeEhKwY45rS
+	 yd64llu5UT+eX1kkEcCLTB6WDSAxCPaxhk96+vEx/ftPTKiPQfhAJjNynN8zn4SCuCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055293;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055296;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mdQ1MofT+816Gzu9l3+xUHQJNbg1EKu8l3cdDdO5j2k=;
-	b=LLYVdRzX/3ICnfZZENeohy+RthwEbinN87E6IpM/e4jIQ8BlqgSMToIWTSWIEw5+GUls
-	 MjDYieiDqQkQt83ROuuP4F9Psud81Xe82gE/jwQzSTrgLJPeM/wh+tSvdlGahBRZ7liv+
-	 AtEBUdrS4Mta6e27Sh9abvpNggLeikUgywC4qCj/I8cE4uLI+rrkXhoagGxOdD3Lxb98Q
-	 i/NvLUCmVf9B7neea6xMsFlv6Yn4ICsYsq/sxJbPmSn099IdTnprzly2EiT0ZVt66KjMf
-	 ONnf46L+toq9XVu/3GKNk6lMVB12NbMw70ZGEdbHD6aCEK57BYrATuptCtCq6ENvHVQ==
+	bh=PgdYYT3sOWwBn/5WA3Y8YnyISvIPtHckcPcIfLXRDsI=;
+	b=LgXq1qyZr60KuRm+P3HmrjxTeCjIkTx6I8memKaONWa2giVpUZLda2gl49dmsn8YBTmU
+	 BS6fxxIBlcIOsH/eZ/5sIVeJWvsM+gYfh5w5GDI2uElY9VL/eGuuBXGVEVUCr48ZM9j2B
+	 8qnU86AhPKL4nLEs0t1bE6pd/nWj3ycrEYbZUOrGPqjj+wP5LL3PlTXx/fIU6QVnQ/BZK
+	 c94L03M5HERskZscxX+Hoqh0s1+iBuzt8cPnul5JeignAjp9KkurlkG1pWtArFqw3AZLg
+	 dss9QRqL7Vx7yYac0KPGk4sntSqYWXZlTEvmIPp4iFqDJVBZiwjr15jINx1i/wHFkSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uaCqPZsk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DDNSYpt8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27B160A2602;
-	Thu, 19 Nov 2026 02:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E01F606A330;
+	Thu, 19 Nov 2026 02:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uaCqPZsk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F3E1F000C5;
-	Thu, 19 Nov 2026 02:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DDNSYpt8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D721F000C4;
+	Thu, 19 Nov 2026 02:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055293;
-	bh=mdQ1MofT+816Gzu9l3+xUHQJNbg1EKu8l3cdDdO5j2k=;
+	s=korg; t=1795055296;
+	bh=PgdYYT3sOWwBn/5WA3Y8YnyISvIPtHckcPcIfLXRDsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uaCqPZskuypa8kl/oLZW0Y5378t+xGJcRzaIriks6KEtX40v4Uc9X/OCcSl1GNs3p
-	 sonLessRUAFExOVvWELDVytpCJJX2oWfG1c6OBN5pz7wrSamImaaROzZLc42Rc+9Iq
-	 Mb4vqqWakufZ8PRD3mzppZDRV5P+yllnoifrYW1s=
+	b=DDNSYpt8w7IX1EMycfOBCALF+v0CzQHxnZkWVkqY5rKnZUvt8ue5NG+AmEbq+25RN
+	 aETveLdHi/2PXgafIl7c74BOBp6WHb+erq3T7LS/OqC+C+6rTbEXuuvUneNsZxtk5A
+	 6izP7pQJp7Gz0ttVrs6s/CQz4UduBzIU8eJqtHu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Bongio <jbongio@google.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1552/2214] RDMA/irdma: Use kvzalloc for lvl2 leafmem allocation
-Date: Wed, 18 Nov 2026 15:53:48 +0100
-Message-ID: <20261118150114.195100422@linuxfoundation.org>
+Subject: [PATCH 5.15 1579/2214] swim: Remove redundant RELAX actions
+Date: Wed, 18 Nov 2026 15:54:15 +0100
+Message-ID: <20261118150115.193479562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,81 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Bongio <jbongio@google.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 9c40f13a63a4b87177de3e8c318af25068fc6ab4 ]
+[ Upstream commit 04cb277e6841b55b950b42063fe11501b5d1676a ]
 
-During VM live migration or when registering large memory regions
-(e.g., guest memory >= 256 GB backed by 4 KiB pages), get_lvl2_pble()
-calculates total leaves exceeding ~131,072. The memory required for
-lvl2->leafmem.va exceeds 4 MiB (sizeof(*leaf) * total > 5.24 MiB).
+Wherever we have a swim_select() or swim_readbit() call there is an
+implicit RELAX. That means the caller doesn't have to do it. Remove the
+redundant code.
 
-Because kzalloc() requires physically contiguous pages, requests larger
-than MAX_PAGE_ORDER (4 MiB on x86_64) fail and trigger a warning:
+BTW, Inside Macintosh says, "Be sure [...] that CA0 and CA1 are set high
+before changing SEL." Hence the RELAX found in swim_select(). The SwimIII
+driver in mkLinux also has that. But the swim3.c driver in Linux is odd:
+it scatters RELAX actions around as though SEL was not actually under its
+control... In anycase, swim.c really does control SEL so there's no need
+for that here.
 
-  WARNING: CPU: 123 PID: 119906 at mm/page_alloc.c:5997 __alloc_frozen_pages_noprof+0x50c/0x1050
-  Call Trace:
-   <TASK>
-   alloc_frozen_pages_noprof+0xc0/0x240
-   ___kmalloc_large_node+0x3d/0xd0
-   __kmalloc_large_node_noprof+0x1b/0x90
-   __kmalloc_noprof+0x254/0x660
-   get_lvl1_lvl2_pble+0xbc/0x270 [irdma]
-   irdma_get_pble+0x44/0xc0 [irdma]
-   irdma_setup_pbles+0x46/0x1d0 [irdma]
-   irdma_reg_user_mr_type_mem+0x41/0x230 [irdma]
-   irdma_reg_user_mr+0x194/0x1c0 [irdma]
-   ib_uverbs_reg_mr+0x1b0/0x2c0 [ib_uverbs]
-
-The leafmem array is purely host software tracking structures (struct
-irdma_pble_info) and does not require physically contiguous memory.
-
-Switch the allocation from kzalloc() to kvzalloc() and free it with
-kvfree() so that requests exceeding MAX_PAGE_ORDER fall back to
-virtually contiguous memory via vmalloc.
-
-Fixes: e8c4dbc2fcac ("RDMA/irdma: Add PBLE resource manager")
-Assisted-by: LLM
-Signed-off-by: Jeremy Bongio <jbongio@google.com>
-Link: https://patch.msgid.link/20260916173203.2555458-1-jbongio@google.com
-Tested-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/08ab67c2780c9107b87a1ece8b5f9cb54a8cea70.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b736189c93c9 ("swim: Deduplicate polling loops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/pble.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/block/swim.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
-index f4d5d1cee681f..965b84c0bc1ec 100644
---- a/drivers/infiniband/hw/irdma/pble.c
-+++ b/drivers/infiniband/hw/irdma/pble.c
-@@ -328,7 +328,7 @@ static void free_lvl2(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 	if (root->addr)
- 		irdma_prm_return_pbles(&pble_rsrc->pinfo, &root->chunkinfo);
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index f4fbe195cbc09..adde8dc537259 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -336,7 +336,6 @@ static inline void swim_motor(struct swim __iomem *base,
+ 		swim_action(base, MOTOR_ON);
  
--	kfree(lvl2->leafmem.va);
-+	kvfree(lvl2->leafmem.va);
- 	lvl2->leaf = NULL;
+ 		for (i = 0; i < 2*HZ; i++) {
+-			swim_select(base, RELAX);
+ 			if (swim_readbit(base, MOTOR_ON))
+ 				break;
+ 			set_current_state(TASK_INTERRUPTIBLE);
+@@ -344,7 +343,7 @@ static inline void swim_motor(struct swim __iomem *base,
+ 		}
+ 	} else if (action == OFF) {
+ 		swim_action(base, MOTOR_OFF);
+-		swim_select(base, RELAX);
++		swim_write(base, phase, RELAX | PHASE_PIN_DIR);
+ 	}
  }
  
-@@ -357,7 +357,7 @@ get_lvl2_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 	lvl2->leaf_cnt = total;
+@@ -355,13 +354,11 @@ static inline void swim_eject(struct swim __iomem *base)
+ 	swim_action(base, EJECT);
  
- 	lvl2->leafmem.size = (sizeof(*leaf) * total);
--	lvl2->leafmem.va = kzalloc(lvl2->leafmem.size, GFP_KERNEL);
-+	lvl2->leafmem.va = kvzalloc(lvl2->leafmem.size, GFP_KERNEL);
- 	if (!lvl2->leafmem.va)
- 		return IRDMA_ERR_NO_MEMORY;
- 
-@@ -366,7 +366,7 @@ get_lvl2_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 	ret_code = irdma_prm_get_pbles(&pble_rsrc->pinfo, &root->chunkinfo,
- 				       total << 3, &root->addr, &fpm_addr);
- 	if (ret_code) {
--		kfree(lvl2->leafmem.va);
-+		kvfree(lvl2->leafmem.va);
- 		lvl2->leaf = NULL;
- 		return IRDMA_ERR_NO_MEMORY;
+ 	for (i = 0; i < 2*HZ; i++) {
+-		swim_select(base, RELAX);
+ 		if (!swim_readbit(base, DISK_IN))
+ 			break;
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(1);
  	}
+-	swim_select(base, RELAX);
+ }
+ 
+ static inline void swim_head(struct swim __iomem *base, enum head head)
+@@ -385,7 +382,6 @@ static inline int swim_step(struct swim __iomem *base)
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(1);
+ 
+-		swim_select(base, RELAX);
+ 		if (!swim_readbit(base, STEP))
+ 			return 0;
+ 	}
+@@ -399,8 +395,6 @@ static inline int swim_track00(struct swim __iomem *base)
+ 	swim_action(base, SEEK_NEGATIVE);
+ 
+ 	for (try = 0; try < 100; try++) {
+-
+-		swim_select(base, RELAX);
+ 		msleep(3);
+ 
+ 		if (swim_readbit(base, TRACK_ZERO))
 -- 
 2.53.0
 
