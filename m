@@ -1,58 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059135;
-	b=EWCfyfUyGf5OZUxv4XZNDRuA/hPyqwDipx1gK1kHRDmeHeh4bhQ2x0A257N1KibP8Zy/
-	 ZW0IMzp5RKKBXQ4LXs6HeJ/xTpQPdNFQZmlDe/acTNdiq73B6R/0zt4eZO5FYVGz1Z5df
-	 FCHwmnvYocCULCsFJjuCl5doTwagOlI7Gj+/5QMcXGXiN1vvFByPSpcu+LjiyfzZjCT4k
-	 JGEDB/rtUg8KXTK/1Pl2oqpYXJuXoT+lV4s6xyTbyDFubcyDkCtlyPmYofEhjBKMRcKwA
-	 RJd8yfN4nRR+qFT67b45R+ODfxoUnIJYINxHZxotgtTAPJ7CXOTjjEHgd9G0Cb0aYcQ==
+	t=1795059136;
+	b=35t0o4ohUrbLslcgdscoiGhZ90TT6aLKpX/5+3OSPGw+z/9Vl34iC1h3LypuEfkPzx3M
+	 5LJRM5ADqqX+VBatTh3eBRUwhiemKe7AEvLk24NyAsdIHIuIizvcAU8bJ9em5iT78ej1p
+	 rHF22EGrOZ6HBv3bguZUGXLHn2TMDLBg/ju9T0RZXx+dkU/vZ7Fzs6pcovWuf7LdwM900
+	 a7kTNQhL9ZID0hXjyvBRmEhFJX2qY53cAimQVZEup/zR5oca7k9PVCiZxBImtrr9SDbnv
+	 BRLqgHIDzugSd53y0tZdA7mjmdfOMQJAlmygiBXSWbgfHIDlW49wD4Ds54IWBPBmPvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059135;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+JadyCdnekqyrW31TgvG9Iaz+hUF3ilcGe9kj7d3PtE=;
-	b=N81BnS3/i1gY1f+P3Yhx449+GpYZDVhi+r9iILtO7ntt/qQ42KAgnaGWsQjqxVK81o29
-	 MXIIorKZh6aYr8ya2E29PoAnJeow7rgcAG2NcMip5XlJpNZJ/+5qOSo8jXIZ/PnD7E/39
-	 oKrYd+wQN7UeK3a1gA2Mq7ZIXRS/Vwx27msJB3VXDHmNkkzsv/pRbxv29h3MG683PSoj0
-	 WQ5FUkgh/4oZaKcRbYmOVuNTiK32rulxoXMPZSPIIjyuDSfTxOLirImi9s7ab/DM5ziZ/
-	 XHQLkhaFVuKgwnSeHqXsvnsr94QlC3okhWDqQUS/BHUUyBIoVq8qDUUKyJhr5dOIeLQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059136;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=pAo0sgsxAqoikRuu4Qee0vGiWqDOqsoV6WEE8Ptn/HY=;
+	b=ak/bnNIY2hHE2OPI+PmCPYc73BP+6fR0bV/Wl1kqpRFf0EMMoYTcpXGO89s/au2Ba4OW
+	 Pb9vlFrKMcv8mtmN0CwbaCzFZr3mtmYNF6V3qRCRR9vx8endW9CO0lqcZ68Zo8gIG0Ihw
+	 v9CNMFECMknU2HaL+cD6uuuerfOsLA8JAL0eTYWAb3BZKUGdKhnA50+NznusK0T7uiiqR
+	 K8RmzG00UMf8oHuRNlHezZRWBQd+eEetlahIjdXScl8gR6b/1zeA2yhw5BRSYx6Fu33Wf
+	 LANrGyab+fEwiiQ2ZLLKBZDuIRJWMJRB0+2/1TAyi6pC85CEaosPLy40tAuMVu+JP8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rz4vAqBS;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=googlemail.com;
+	spf=pass smtp.mailfrom=googlemail.com;
+	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=ySyqDPo8;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7F3606A31C;
-	Thu, 19 Nov 2026 03:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75D6606A320
+	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 03:32:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D75D6606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rz4vAqBS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8BA1F000C4;
-	Thu, 19 Nov 2026 03:32:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059134;
-	bh=+JadyCdnekqyrW31TgvG9Iaz+hUF3ilcGe9kj7d3PtE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rz4vAqBSeY6FissUl5i4xN9u8bRXfDnOXRiNsJTRz+zosLOEvZVpy803GNZ+54LUt
-	 4d9PN5mthgpBHQFg7cfGhq+8PrizdSZuXrgwbcgowHw8QprQ2dCm2xRLaHamC/hmal
-	 acrhKPaL/YKQ9yJ3X7kyrYfs25g8Z+jM22/BMFuI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Xia Yan <yanxia@cmss.chinamobile.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0734/1848] ipv6: fix device binding after failed datagram connect
-Date: Wed, 18 Nov 2026 15:46:12 +0100
-Message-ID: <20261118145946.960377969@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
-References: <20261118145911.150052362@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=ySyqDPo8
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a35ac4475dso13210755e9.2
+        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:32:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20260707; t=1795059134; x=1795663934; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=pAo0sgsxAqoikRuu4Qee0vGiWqDOqsoV6WEE8Ptn/HY=;
+        b=ySyqDPo8joUTmlU6RyOlXtDqcATdptsQDcP1kpJ2hW0qkMGbh1LOeqrsNSCx54ZZs4
+         zc3mneJ6ZigErrpgkgCh+n41iA78WtQPQrDCy89Qyqo6T4W32kZ4OIaSgL1kCbBURio2
+         jMhYZ8e4QfZz+sdWID/qJSikoqrXuNFIgL5HGz8xBLvA10F8+YNSrXnMVeKin4KP0dXZ
+         tcog9E3k2xIe2mG9OfSqczfwo+GlI7weqNfhvRh2HEvr86TyGVaM6D2KODmGXeqn1RJR
+         I63iy+pZGagyZtILe6CZ7cixycmY2vK8EhtMLwx09GYJWwxWU13hJsYA2U9bxos139yw
+         /OAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795059134; x=1795663934;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pAo0sgsxAqoikRuu4Qee0vGiWqDOqsoV6WEE8Ptn/HY=;
+        b=LGi0Jh5aO2EYDyBPlJfS/YUYnHo2w0mo55wR/B822L4UPh5V888Dqa4PMK1nYeQUkN
+         Fhy8uOlG3kcRr1ze/s/+IkkYr8IHaIL1xT2DpmXCTR4IzYl2WCW5toqUOSvMwHp3J9uu
+         vVJp2rwyw/l3BFe65hxXdfeAtSNio8DnFoe0OZplOMQWEYWFCadkyGMQBATPCsVUKoOP
+         aBOAMtf0ErlVzUBLBbVxY0SABx/3CCiCAaDiq/cUAJL65sd1COl+WVAn2pQOwhffWFgb
+         e14U0RueAPKRGnuu5AkJ11BZT/DxQQOy0TePTfw/LVIXrxND1jnbabDRE/GyfJz+dpht
+         Ks/g==
+X-Gm-Message-State: APuU4Z9RCpEfbOjELwApfESqpR6Sa/NOrYqGep0aNukSPk/KqfrWmHfJ
+	n/mo4wUEs5G29FrNsLhA740IZ+jHWK9Oxs4cNflOBSGJ9+kFglLCA6A=
+X-Gm-Gg: AYBFou2T7SZIlABFhdUzknqi2eeoeLERsgOwxDtCosWcMAFiO8MuTkGbb0ev0hNG2SW
+	+4+Mv4dwQyGsZs328AONeFn1RmeRHIZ1+QrsHvxWZZKTXmj3y55reQteyLAHsqilQs1Zlel+sPc
+	jre/67aacWlD93VsIdV2qpUxI/brQEp2RXJ4oqbzi70X72e5LMm2zan6LLBIQiSaVKpe5vZ0uUx
+	/Vf5TchSHpjiipKQpg1DEvlMsfiuCad29xt9doBeK2T4Zo6DD3Jj4eQE35OcGRvoXMkB3r4r1Y4
+	+viRpbETEYUYjdVcThQIKjhg7nnqmAS2nHY+NBh9K+lJt4+or2kBsAHiUd4p+bZuW4c7vbIKKvw
+	JyACLZ/FtG9faOJFuV7BC+Fe5YkwyEtvVOnxdYFPE/8/+19Iclp6ZZ2bY+Ad1TBU01YQ32e1K7g
+	UsvrFKI6g+trOaeFyZm1buloVyUTuIOGhfWDAm1HgDb9LwU11zonU3b4GzCxb/mx6eReG2Wx42+
+	L07gX6sm4fUDoZkJh8bjjISRypvmfpTq7tz9Ihrzf2VVZS+1fIuHSyNJta0Nz7rQ5Z9QZwnKcBX
+	vhj7h8qo7VLRofBq1qhV7on1ELb9vPmwUo8YiR7ZaUlk1Nm5BHHSFwvx3n/8LQ5eTbUEMp7znDr
+	gGaao
+X-Received: by 2002:a05:600c:3e0c:b0:4b7:6b96:e431 with SMTP id 5b1f17b1804b1-4bb7da458eemr92432145e9.28.1795059134175;
+        Wed, 18 Nov 2026 19:32:14 -0800 (PST)
+Received: from [192.168.1.3] (p5b057d66.dip0.t-ipconnect.de. [91.5.125.102])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb8532f1a9sm3566085e9.3.2026.11.18.19.32.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 19:32:13 -0800 (PST)
+Message-ID: <8a4f9aed-be54-41a3-acd9-d25458885ea7@googlemail.com>
+Date: Thu, 19 Nov 2026 04:32:13 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,86 +90,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 7.3 0000/2651] 7.3.6-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261118150247.972732815@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+Am 18.11.2026 um 15:20 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 7.3.6 release.
+> There are 2651 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-------------------
 
-From: Xia Yan <yanxia@cmss.chinamobile.com>
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-[ Upstream commit bc53aab4881adc134f495092034e9e7c0791d84c ]
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-__ip6_datagram_connect() can change sk_bound_dev_if when connecting to
-an address that needs a scope ID. If ip6_datagram_dst_update() fails,
-the old peer address and port are restored, but the new device binding
-is left behind.
 
-A UDP socket can then keep reporting its original peer while sends and
-attempts to reconnect to that peer fail with ENETUNREACH. Replies to the
-socket are also dropped by the device match. The same problem occurs
-when a scoped multicast destination picks up np->mcast_oif.
+Beste Grüße,
+Peter Schneider
 
-Save the original binding before processing the scope and restore it
-along with the peer information on failure. This completes the rollback
-in commit 2f987a76a977 ("net: ipv6: keep sk status consistent after
-datagram connect failure") and preserves the new binding on success.
-
-Found while reviewing scope-ID handling in __ip6_datagram_connect().
-
-Confirmed by exchanging UDP traffic over ::1, then attempting a link-local
-connect with a nonexistent scope ifindex or a down interface. After that
-connect fails, the original peer is still reported but communication and
-reconnecting to it fail.
-
-Tested before and after the fix in UML for three rounds, covering explicit
-scopes, multicast interface fallback, initially unconnected sockets and
-existing bindings. With the fix, the old binding and peer are retained,
-and traffic and reconnection to the original peer work. Also built on
-x86_64 with W=1 using adjusted allmodconfig and allyesconfig
-configurations, with no new warnings.
-
-Fixes: 2f987a76a977 ("net: ipv6: keep sk status consistent after datagram connect failure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261029135822.448299-1-yanxia@cmss.chinamobile.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/ipv6/datagram.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index 8f772274f0daa..b265930e74514 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -141,6 +141,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
- 	__be32			fl6_flowlabel = 0;
- 	__be32			old_fl6_flowlabel;
- 	__be16			old_dport;
-+	int			old_bound_dev_if;
- 	int			addr_type;
- 	int			err;
- 
-@@ -211,6 +212,8 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
- 		goto out;
- 	}
- 
-+	old_bound_dev_if = sk->sk_bound_dev_if;
-+
- 	if (__ipv6_addr_needs_scope_id(addr_type)) {
- 		if (addr_len >= sizeof(struct sockaddr_in6) &&
- 		    usin->sin6_scope_id) {
-@@ -253,6 +256,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
- 		sk->sk_v6_daddr = old_daddr;
- 		np->flow_label = old_fl6_flowlabel;
- 		inet->inet_dport = old_dport;
-+		WRITE_ONCE(sk->sk_bound_dev_if, old_bound_dev_if);
- 		goto out;
- 	}
- 
 -- 
-2.53.0
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-
-
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
