@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795073028;
-	b=RkHgnW0727o33q7FzuFyL3HFskmpjuoEwD3Fbs5Bs3xD4njsFKpyEsZ0k8tVgNJ36mRA
-	 7Tw/VO0Ecoo+f0c1uovR/ca9GYliff87euVODqlIAVMuqMwSyMPyWUofrZXV2Qzqks3LA
-	 0Fuw5wFoyiqB6HN69S+tzkf4p0bmplqcQcaV81T5yjFs9o9lcxqjhDf+D+7edpLRnwxva
-	 /0TL6j/AWfgp/8kS7pDDBeaZrB5ef8gstgCeLDGBDufKVYbsugqa6Y6NQWaZUfuAThXiM
-	 PtP1glCVuVZpH1gXqPknTDSZKyG7iIf/Hggdtquib8116qHKCtuRr71zn5LdTPwJL8Q==
+	t=1795073173;
+	b=MJlGkOA3KdDzX5ESYnjoniF+OGqBU9HrYOE0LQ5A7hsjvAPVjjtTkoFYNZJAPvgSA1O/
+	 sNxf3q/00Da1XnO4ieLLi8N6OhUdEKfAm6W3UVb5BMoG4KJ49B6gPW2QlL/06t6SbEBoL
+	 3tirWbXe+8kmxrGeI9A+ftbsf/ThErpjwdUN/Z935cLQho8AQXAUrEocVuKHVuET4rDp1
+	 uU2RSUF5W2Z0bGwoW8vdl24XDJffFzrBjGL4Yjsobd1MpEmJRucIfW/sKYre6zmQG2Fw7
+	 O1OkMUOo0+z4vCv0hGo0hVtGKxKlWHVk5/nY892ofoQM3IDLBB+pKl8ocClJfrYyV2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795073028;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795073173;
 	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
 	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=s1E7amwr2Ec6lhWT6IJc+C+PoDVlMOHKsEuqBzS/k0s=;
-	b=j9EDRm3JmlBtKg2SZQ58B1e4sq2GHF17cEzv/fgbOu+UhU/1T30m99tOI3tMqhueYwap
-	 GoK1p0tnhGhBLVqNB1InEOOvfNa2EULTwu5ImXTm9rTGFAmXhEVPDQaToHtRXVVNBFzNH
-	 gCh5MU4diK2HtQTD4NyzWeNDYRKklMISY39bjnZuZ5bLnE687xXxUbrna3dn/YMIfcu0A
-	 62V7ejAvRbdk9CmYjUbSQM5zKjvAMrXs/FJK6CBYSXAk4FY11w3lnUvJtbjxPADQNobc3
-	 OMB9yH0nLst0Agb6E8QWXnUmge1Sj8ZtS+xgRzGcuWc1Ko58BHOR/IOI+kPVsheOQLw==
+	bh=e3RmIyg+sqDNJ434dD8xi+wJRQR6wg3BW/At88s145Y=;
+	b=1xmNe0KjGbIYpDPadV1+2Y8UiGSC33vr/iSFTh9UPPhQUgxM4bzQPbGEjK0aHmblJzwH
+	 /yM+r7otpXW9lFypjli4JGXqcBpcEKNjFmx/8pd4qXqhmkLJVJ+ZFTFjp2D9c6ZnIjGZN
+	 0P9/xTD+j32AmlpWN4W0bqN+9UeeAFc5Yk+Bg5n3w8BT6ni7TWGl1llBu5vQn832MAfwf
+	 wZ2Ka0MxWGr17LVOmNTH1QajJwmM95q6SJM7NUWpf004DSwpuKftDQS9OCILCLBFlSmGM
+	 VXBfWlWY5uOtTtO0aun0855+/gjSLO2zDa73Ri0hTs6/dpGqC+mHBnAR9iUG9vCrSsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="IyNXhNy/";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="IoR/0XHD";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CD5606A320;
-	Thu, 19 Nov 2026 07:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B56606A320;
+	Thu, 19 Nov 2026 07:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IyNXhNy/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1721F000C5;
-	Thu, 19 Nov 2026 07:23:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IoR/0XHD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6231F000C5;
+	Thu, 19 Nov 2026 07:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795073027;
-	bh=s1E7amwr2Ec6lhWT6IJc+C+PoDVlMOHKsEuqBzS/k0s=;
+	s=k20260515; t=1795073172;
+	bh=e3RmIyg+sqDNJ434dD8xi+wJRQR6wg3BW/At88s145Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=IyNXhNy/v9KLUUKWji3e8YUuhdPEiIe9COxX/6VugvBqzngldqF9xxsZD7Iq75Ojv
-	 9i+Ee5gIKM9t4E02yikUh/d6aWCJOt2QrWs0xaXq7BYCm9MkaC6ud/lirwWYiJGu17
-	 wku6rZjZMXpRE1wRY33w52k4TLTvB/s8gMWk6UPsNbA4IYkiz4h9FLXJtf4d/UOP9h
-	 A7R9Wxcn21nyLF4wIG9dCYRBL5fAHh03zC9CKs3Jufq1Qjf82HsCBvzxtbIJx479G1
-	 XVaL1qDVkQPBCsM+rttWOolUBtIzufKIOIz2zgopLGeuGCEpbOsHZ9RBi0K++Aj282
-	 CfChWn9F0vSqA==
-Message-ID: <a646c127-dab8-481e-b9e5-d6eaa839c2c3@kernel.org>
-Date: Thu, 19 Nov 2026 08:23:44 +0100
+	b=IoR/0XHD7Muc0pZmCj5yguME1mrdvcu/jmgcpD7e1SHj0BRY27o4nM/sFS31SqKqJ
+	 CaAm9OF6oRs6zz1LLoCfrbrqfWWylJ4qYy7I3LmUnISxR8kPzv5Dvkv2kGb+wcFvXI
+	 i3xP98HrgVAMbb6ZBRgTUxyh9OMj77jIxWjAN9kU6Wv93G6I6DUr8CSgq3k/DbErz9
+	 +Sc3YqGgnUbSwOnXQELuISu2sZ82pgpCu8LMJU4tdssh3FczSuzwJdiH27eIPXusPp
+	 Rziln8WutVv9lpPjLc4ZIcIjCj6Ko4WwkVMo1TteiYe/FjTjqfF2L47CmLeaMQpc1P
+	 8Jln52QpRAL6Q==
+Message-ID: <ffb3b09b-7575-4e5a-ad98-022801346fa8@kernel.org>
+Date: Thu, 19 Nov 2026 08:26:09 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -52,14 +52,14 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0286/2651] perf trace: Enhance BTF type formatting to
- symbolise kernel function pointers
+Subject: Re: [PATCH 7.3 0865/2651] perf annotate-data: Resolve type DIEs in
+ the debug file they came from
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Aaron Tomlin <atomlin@atomlin.com>,
- Ian Rogers <irogers@google.com>, Arnaldo Carvalho de Melo <acme@redhat.com>,
- Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, Ian Rogers <irogers@google.com>,
+ Namhyung Kim <namhyung@kernel.org>,
+ Arnaldo Carvalho de Melo <acme@redhat.com>, Sasha Levin <sashal@kernel.org>
 References: <20261118150247.972732815@linuxfoundation.org>
- <20261118150258.204483253@linuxfoundation.org>
+ <20261118150318.997111678@linuxfoundation.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -104,92 +104,48 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20261118150258.204483253@linuxfoundation.org>
+In-Reply-To: <20261118150318.997111678@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 18. 11. 26, 15:25, Greg Kroah-Hartman wrote:
+On 18. 11. 26, 15:35, Greg Kroah-Hartman wrote:
 > 7.3-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Aaron Tomlin <atomlin@atomlin.com>
+> From: Arnaldo Carvalho de Melo <acme@redhat.com>
 > 
-> [ Upstream commit c6dd6161815d0c10ed24ad13fdad847bec63d961 ]
+> [ Upstream commit 14ca0a28de37849afdda6ffd4c9047f58d8906c2 ]
 
+This does not build either:
+
+> --- a/tools/perf/util/annotate-data.c
+> +++ b/tools/perf/util/annotate-data.c
 ...
-This does not build on i386:
+> @@ -778,12 +782,14 @@ static void global_var__collect(struct data_loc_info *dloc)
+>   			if (pos->reg != -1)
+>   				continue;
+>   
+> -			if (!dwarf_offdie(dwarf, pos->die_off, &type_die))
+> +			if (!die_get_type_die(dwarf, pos->die_off, pos->die_tag,
 
-> --- a/tools/perf/builtin-trace.c
-> +++ b/tools/perf/builtin-trace.c
-...
-> @@ -1079,33 +1135,40 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
->   }
->   
->   static size_t trace__btf_scnprintf(struct trace *trace, struct syscall_arg *arg, char *bf,
-> -				   size_t size, int val, char *type)
-> +				   size_t size, unsigned long val, char *type)
->   {
->   	struct syscall_arg_fmt *arg_fmt = arg->fmt;
->   
->   	if (trace->btf == NULL)
->   		return 0;
->   
-> -	if (arg_fmt->type == NULL) {
-> -		// Check if this is an enum and if we have the BTF type for it.
-> -		syscall_arg_fmt__cache_btf_enum(arg_fmt, trace->btf, type);
-> -	}
-> +	if (!arg_fmt->btf_type_cached)
-> +		syscall_arg_fmt__cache_btf_type(arg_fmt, trace->btf, type);
->   
->   	// Did we manage to find a BTF type for the syscall/tracepoint argument?
->   	if (arg_fmt->type == NULL)
->   		return 0;
->   
-> +	if (type && strchr(type, '*')) {
-> +		if (btf_is_enum(arg_fmt->type) || btf_is_func_ptr(trace->btf, arg_fmt->type))
-> +			return 0;
-> +	}
-> +
->   	if (btf_is_enum(arg_fmt->type))
->   		return btf_enum_scnprintf(arg_fmt->type, trace->btf, bf, size, val);
->   	else if (btf_is_struct(arg_fmt->type) || btf_is_union(arg_fmt->type))
->   		return btf_struct_scnprintf(arg_fmt->type, trace->btf, bf, size, arg);
-> +	else if (btf_is_func_ptr(trace->btf, arg_fmt->type)) {
-> +		arg->val = val;
-> +		return syscall_arg__scnprintf_ksym(bf, size, arg);
+util/annotate-data.c:785:30: error: implicit declaration of function 
+‘die_get_type_die’; did you mean ‘die_get_typename’? 
+[-Wimplicit-function-declaration]
 
-builtin-trace.c:1164:24: error: implicit declaration of function 
-‘syscall_arg__scnprintf_ksym’; did you mean 
-‘syscall_arg__scnprintf_buf’? [-Wimplicit-function-declaration]
-
-> +	}
+> +					      pos->from_alt, &type_die))
+>   				continue;
 >   
->   	return 0;
->   }
+>   			get_global_var_info(dloc, pos->addr, &var_name, &var_offset);
 >   
->   #else // HAVE_LIBBPF_SUPPORT
->   static size_t trace__btf_scnprintf(struct trace *trace __maybe_unused, struct syscall_arg *arg __maybe_unused,
-> -				   char *bf __maybe_unused, size_t size __maybe_unused, int val __maybe_unused,
-> +				   char *bf __maybe_unused, size_t size __maybe_unused, unsigned long val __maybe_unused,
->   				   char *type __maybe_unused)
->   {
->   	return 0;
-> @@ -2529,7 +2592,8 @@ static size_t syscall__scnprintf_args(struct syscall *sc, char *bf, size_t size,
+> -			global_var__add(dloc, pos->addr, var_name, &type_die);
+> +			global_var__add(dloc, pos->addr, var_name, &type_die,
+> +					pos->from_alt);
+>   		}
 >   
->   			default_scnprintf = sc->arg_fmt[arg.idx].scnprintf;
->   
-> -			if (trace->force_btf || default_scnprintf == NULL || default_scnprintf == SCA_PTR) {
-> +			if (trace->force_btf || default_scnprintf == NULL ||
-> +			    default_scnprintf == SCA_PTR || default_scnprintf == SCA_KSYM) {
+>   		delete_var_types(var_types);
 
 
-builtin-trace.c:2597:82: error: ‘SCA_KSYM’ undeclared (first use in this 
-function)
-
->   				btf_printed = trace__btf_scnprintf(trace, &arg, bf + printed,
->   								   size - printed, val, field->type);
->   				if (btf_printed) {
 
 -- 
 js
