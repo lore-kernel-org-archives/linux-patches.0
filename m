@@ -1,83 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795082761;
-	b=Kz5sskKTx71uCJYn9aIZqim5ynTwfVIKoRuzTfwnZr0HhymGIkTeU88BuYcH+OWgB0Y6
-	 jXnncPGWXPG/BTjLrhX6xdnixbQ4vccMF7TXHpNEXTOhyCtwK5jc4zkY0VZjFHFhOYPV0
-	 H7s555SGusXvQnNIGvKF8fJzsqkJWukH92RZLJQK8xBuCk1ccaxHrxzq0Qucstw5OoSzG
-	 xola2zE771BROJQwRik3Q2+Iw+xC5yp5j/uwafQGlhrEVQLuB6qljMYf9RppOpDUONOxG
-	 KDqLLWS++DKAS69i5Wd5ka2XKJBg7+4Tjd8u+btVs9nOyB/ge6O9wdWgguGM7u6AGnA==
+	t=1795086499;
+	b=YSfy0NSW3jV+v70/7uiZIgj/zeP+a3HxIEmMroXXq9TQ59y4eh/fWX39wTKDBdT5tF0u
+	 q4QrRQ3gPDnCeP3agh7Xz6h7m0c5akYKHkGC3S5/I94Simq2Smup1w2iSO6SydDSlygsc
+	 7HtWJY3doAZ+nzd01NRF3uSDVvHFx0a41kKudheNUBcdfvRSv8fXtP1bYvBOZeYTzY5m8
+	 B6toZfXJ+F5G2uFG2WYhTrDpUgas3TbaUUqzV65IP8ooRTdqAgzEkevTTckSzRLwyOaiF
+	 7mZ8bnKAfovIEugN376AwXL+5R6QXdsTg01sdWMgPyVt58vIpd93dyR/rv4JzTH2ZMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795082761;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
-	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
-	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=1pu3s1RNhCfYBQVBqWt1xNmbqy5Z06xt9peEDYwPftA=;
-	b=nFYTQlvPqThn2Ka9/TaAt4CPIxdZ5PNwLvQtYaw9HYRnCB5JV/pJu+WGZqdQI1jeFOHU
-	 OdDgTefGReR+Ld4d+ow1ICxh4IG8/1S6hpxKBWRuDZK+6iGpgfqOh11ZF3a3p4jiDvghJ
-	 sR+Zox/dMDydYy6Y3xGGbzdQF0LRyd6qnJsPGWErEQa2H2gVZGTQU6aq0PmaxxW2sPtbq
-	 LLcJX+gDUTrJ31OaDQVqCxmCjpXQcpEq/LNNxxB1jShg146WFjD7sho9vFpw0YP5JXBsQ
-	 dmeInDMzl9CDI+4cDDsF3fy/JxtyZ8EmB5l3dn0OMdAtynhCIPEwPu7kmDIuteu6w7g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795086499;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=1gFFQM2dmDCAWo152jTDOkXj2oU6JPJwu8xp6zLm5EU=;
+	b=Rgz11/1FwNB5kqHsunZDJ2UdOtpPLbalhd9hrICdgQuZZuj/OLlZb5S1OUGfN6A5THU8
+	 Zk4hlLl6N5R8SczXQ+oF+BmFjZzaKc5v7u6Nv0CYP0KVxTqI+25LvZDgty9TGcyRWZwtl
+	 QSumPysepB9Xq94dtYxZvT1J1rCU16LtcPb1bPe5lO7Rm6P3Bkm/KZ1r5FhWSCDeWhV9y
+	 JFbslJ2HpuFu+MIHtrWv8NH8HZ/sS1pCPlc0wsLrlThsMg3aqeJ+F+82eFAD5BZ4ZQHzv
+	 jNhzkE906lzQXy/jnjQ3V3uE7dDyp8DLLeC4mK1VCJmljKq37/VvjWjqpjATP0YQKtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=uniontech.com;
-	spf=pass smtp.mailfrom=uniontech.com;
-	dkim=pass header.d=uniontech.com header.i=@uniontech.com header.a=rsa-sha256 header.s=onoh2408 header.b=jkDI3NPL;
-	arc=none smtp.remote-ip=18.194.254.142
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kprc097L;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2625D606A330
-	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 10:05:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2625D606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48E2606A324
+	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 11:08:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C48E2606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=uniontech.com header.i=@uniontech.com header.a=rsa-sha256 header.s=onoh2408 header.b=jkDI3NPL
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1795082734;
-	bh=1pu3s1RNhCfYBQVBqWt1xNmbqy5Z06xt9peEDYwPftA=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=jkDI3NPLdMkFK2BCcK3fQfR1YStoYxgU9UZ82qRcYh7OL9l5zpYj4j7e5J/oNjxgf
-	 4xSC9NtFg8A/vy1wCRTL/5NU7tJMJqdituA2sofQGpGjtEExLe+Qf5Zu8VvLm9grZV
-	 QIwKnuU5+jGH9QDWodrO0BS/D6eY/RQMTDMLd2YI=
-X-QQ-mid: zesmtpgz1t1795082728t675d45dd
-X-QQ-Originating-IP: R2mHRb551O+Bb2eEepRyzrHSHdKjf6nxen43zPbnCnE=
-Received: from localhost.localdomain ( [61.183.83.60])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 19 Nov 2026 18:04:56 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 2637527613255995905
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.6 0000/3318] 6.6.163-rc1 review
-Date: Thu, 19 Nov 2026 18:04:51 +0800
-Message-ID: <C37A4482F2CF010D+20261119100450.3648618-2-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
-References: <20261118150313.527275416@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kprc097L
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4bb6886d30aso18856115e9.3
+        for <patches@lists.linux.dev>; Thu, 19 Nov 2026 03:08:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795086497; x=1795691297; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1gFFQM2dmDCAWo152jTDOkXj2oU6JPJwu8xp6zLm5EU=;
+        b=kprc097LsRkvN8Nqz4/OwORTKGoYJIxr2nxlEG1EGqCEBZG6QQz4wdQEs98JiSFmQs
+         IaHKV2z2WgUF7AdpvpRBDGKs0L2zYjTsvPOL7VghcGnfbLNvY2g1hx6bteIcWOywhaXK
+         1uDfN6E/j4OVSVTDjfy6bmWMV19+4pmCu1FhuM8YnRgFrzMnFL9V6cXMni+pGxr6OlC5
+         atdlREE/GjJsD7SP9JlqMqWJNPqqSwob83MlJqHD91PAX+im2bpGGadN0w5LDb1SrbF/
+         +YUptdDhvGY4BD2wJ+Gfdll7o8eQI8o6OY1UhZX3BctjqvHMsisVE6LEsT8DFWPlKDx2
+         nbKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795086497; x=1795691297;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1gFFQM2dmDCAWo152jTDOkXj2oU6JPJwu8xp6zLm5EU=;
+        b=Bn4KUirhada0ELs0mvX+xHmFRTAt+wTuLPvko4tYDBclUIz1VO7gAIh7+Zs+7shXVC
+         GU5YVPBZfcv/3EMmPzc/wymclZPDx1oDaDpplbuRmo1hhWLjkGlxrqNpznqFtZAeRUDy
+         qVBTDIDXIY//CZ7/HBT9jMLxZLl8Pc/vLqgSknlO/ec5JpCxFdJiGK6+VLed3iQd0evD
+         pI32cYaLsewnXE44s6GccUa0iD2cfFX/hppl3uB20ykM6vznQTqDKxF60tTOm+v7dbdN
+         wT3L2nhfbuMK4IUGB6p5VG//eFTjwSOky0lCmaEwBZ6tgOEVW1wFQw9qCAM52HQ+nsw+
+         rdpw==
+X-Forwarded-Encrypted: i=1; AL+hErHh/6QsPSPvrwnA2kiee6Nj65WbBLvF8f+O1BKc5k+jRNukGM+VQAKmJcPFcFu6/zE0L7qGca9D@lists.linux.dev
+X-Gm-Message-State: APuU4Z/iBnbHsq4bs8v9QmKOmcW9wVDZU+eom+bH3aw4Tj3jXRS8tHZv
+	xYJXjp1VGlhmwaSUhBCunUEkB5rXHjHExIItprT+wa6yOdUo2Yg8gW1e
+X-Gm-Gg: AYBFou0MmShs9jApvAYf+wzcnBbVkKoVRgiNTuSlDqlR4spKK8tJ8h9QdY/zAJA/EJv
+	TlunjjUpLSHTmz1RwBxYpr79CUwk62vpNktCBvIBfmbG0s0daJiBVgmPF+2IgH2gQlpvLcybWj1
+	9bb8YVkqAK0sPfxx8l8zZv/iYXScidmcF9VUifJhETUl2tZs1MnS1fzoyrExZf72Uyd5qyqiS9H
+	YuCfmSJkn4j1Hr5GT65FbuY4tOnBZ7bAHsdWm32B09ZO0yXQg6wxHG9iIhqcUvdZZJIUeLAvC7Z
+	huiU3A3ucKiKkKNLsUUsjx1xTp69yj7QYADOAs0d5Qt1LApxqjZF98cfLMRs9nCqX96gVM5hVKO
+	a4QZ3t9Gj/nnqIngf648+zdT0HdjZvrigjGtUWUEVk1G32PWUDKZRG228hvsy/MTGoEG6pmcoiW
+	WewWU9vJdXGT4ec5aU+TBcIyHSYxNhSp44JCFncqftgiU5FlEEQ/Jihjd1+4nalV9OnDwWTQjyC
+	7X5uuVoZC4Q8zB4VXxgT1BvW72h2qukxhUjkBrV1UjOz3l3x1ViX5JqePL3h9TiDfG9N5DDWHZe
+	3rgzcsGDDcbmn56Ax9Z35HVRo6wSnpDMR4HpOTIA//3azDcjjkexOOd29rE9P22I8jBMMyIYDc0
+	JqH0C8LQ3X1J33WV8IVVnjrCvg2y5a69rMU6/fSCzThnRVVQ+veClsEulErWxX9Axe9BrftUOcG
+	31D85rTn5PR3oSBJiuLMERoJLMgw==
+X-Received: by 2002:a05:600c:4e50:b0:4bb:6a5a:7834 with SMTP id 5b1f17b1804b1-4bb7da1edf4mr105406365e9.20.1795086496881;
+        Thu, 19 Nov 2026 03:08:16 -0800 (PST)
+Received: from eagle.home.marco.cx ([2a02:908:176:3bde:c85e:e9f9:a271:af77])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853b216esm29479975e9.12.2026.11.19.03.08.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2026 03:08:16 -0800 (PST)
+Date: Thu, 19 Nov 2026 12:08:14 +0100
+From: Marco Schirrmeister <mschirrmeister@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 0000/2151] 6.18.65-rc1 review
+Message-ID: <av7WKeKW4NdFzDk2@eagle.home.marco.cx>
+References: <20261118150121.603863898@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -87,40 +102,24 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N7JPoHYNfxrhtafgv6X4Orr1aMbDgg/dzTxA/Jxdrar4oH8j/9NiBHla
-	eBysXL/hIgpa58JSoVKM1CXtctomEhNKbbZW3QgrG/AZJkD1WapV1ZfH0QMYAx5NY+ddkUP
-	tdZzR9SkObk2pm1Xf5iOgvnl5lOEo1ks7n3Q1+Z56ffkzrUlVkr72gAFbICmggIUwr49Sgw
-	0EbSE+63N3zaANoJzKEuSee2eEX+JZyZmsGTaLejj7VcpMks6Ku9KfseMsRCMrLDZdwQLsU
-	36azqv2XWLKhlJgNQXQLyLNlQgMDh56HhR6TRxte4Px7LlUh91GMVsRlHWwTGV7Bs+wea8i
-	/EVWxh/xT/OVbbiMaM0FBp3CMmbAk17aXEjQZ20UDKK5KIzzv9xNHGTWCwh34owWD2cttD1
-	JE4qQRj0y7Gde9wu9L+QEjuhAeqkiIMmtRKmfFttD+HTVAvmi5A/qLqLMGBuXXxKVX0YUdX
-	tdMFggXB+QseGrJJv8E6ws+5RIiLlirh7osfiehZDUYufynlcOmL7RmYcXWpbG0FF1RLMyj
-	czdcejKisD7PTFnxF/POOfK9+K7nxCqN+5i17pRi1NfZDYxmTNacTenhv0VmwGLDOjw5HcB
-	UWTRpSwM1bel91UWaWD57mUcZVH4N6/mK0lMa49YDQ9tr0ou745y7htI8esX/j2WXvN+Smf
-	8XP8pb7TdRI+3A1XT8aKoG0DWGO2UzEQesKBkpzpFZqLoVjH0Dd4U5mamovL7nH4BaakQAl
-	M3TsqTM5sigFQYgq3v0gHVI4qV6LrTd1wprhaVEG2zrMtxtimh0hhynV8ubO9uw0Wcm/SoO
-	shBl0ZKvDNM+AOeUAJaZXvBIAlfuz+HHOE2tg8mo38zv5kaayxJA7DOfcnPYwB2nIX5ytrF
-	yBtIj5LltRWsT+c0G2IC22oDb28b7CSlHyeKeKsNaWKXbonSCHZ/EQY2eB2cpNFfywMrKmZ
-	e+L9hOn15St/cbnujO0DN6q1Adu5JhjvaiCXaOZ8mNJQWFUI6hLq3Rl8k26dnO3ROvaY79b
-	iscY0bKjGUvhU4fSQ3CeO52law8xqFc8M6Sb3ZHMg6U5MTEPQT2QQNXlgy0TcWEDYxaQXri
-	TkUj7T78lMQLzWL5JBIdOMbx8j7qOoF/8SWTdNMk/TM6pYPzSrSwjzC0v5mq5tEPkBMicF+
-	Rpm6
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+On Wed, Nov 18, 2026 at 03:28:55PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.65 release.
+> There are 2151 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Native arm64 build on Arch Linux ARM with 7.3 uapi headers and
+CONFIG_DEBUG_INFO_BTF=y works fine, without my local __u128
+patch.
 
-Best Regards
-Wentao Guan
+Booted on an Odroid HC4 (Amlogic S905X3). No regressions noticed.
 
-Log:
-Linux version 6.6.163-rc1-arm64-desktop-hwe-gc4e45e560351 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT Thu Nov 19 17:25:15 CST 2026
-Linux version 6.6.163-rc1-loong64-desktop-hwe-gc4e45e560351 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT Thu Nov 19 17:41:44 CST 2026
-Linux version 6.6.163-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP Thu Nov 19 17:58:25 CST 2026
-Linux version 6.6.163-rc1-amd64-desktop-hwe-gc4e45e560351 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin18) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Thu Nov 19 17:07:17 CST 2026
+Tested-by: Marco Schirrmeister <mschirrmeister@gmail.com>
+
+Thanks,
+Marco
 
