@@ -1,49 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795104542;
-	b=JTMYwPhz8IHoLufqOPwne5xwswqhbK3xQZT+j1T2ZQH4euXdiEZdOpDKJ2M6kCO3UhNz
-	 ua3ktxy/zccP/BXxMsUjhMasFT1tXWzfq6q6V0ye3Crj5g6/OyFYDbfhQJ+kO3wg0J8JO
-	 6lkRkIMCVxaqK7um37xlAPhlrkIwVZS2qU+wGaaO6wlE5tE9lxJR09McopNTHn6BfRpMd
-	 jsObrQfkZA0bw3mJpjEoAY+2RNThdTmoscrniJFbN4TyXgy38LuzV56bN82WDea8/3muX
-	 gZdkBslHAfUBLhwJg4EiC9ncBHV+2eXFOTpJllITA/LcbZimf9IZzBNIOnIwKp+t0VA==
+	t=1795104544;
+	b=PXSFJA4rqlqZnhUvKegU7/RH9+vY2RgnPB9C/gqJzGydgqXfjv7uwUg8jEWGqUCYYwAP
+	 rlHO8GxFoIqtMVQ6M6LrFZvfZVbpEdwxphctmZZ+rJGyzI5L4gkNn1aLIGqaG0T3DqXqc
+	 9UG6zWMdS1M5Yn3f0zgbuMRYF6g36BvVOE0fNxq4B1nO+2xuuoAX8KVoAAGXp7Oqce3DW
+	 z26Hsf3XVoCZdzPJRfZ7mcIWbX2lWpU7qjy2jJnNu48DwmVSq1nzMUYh2MTs6pFXxoDJs
+	 jcNhC83bBodzluQpMYTSPJtslP1y68jTIR/RL2h7NMGkOozXBkh3ZPaI88tNePc9dsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795104542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795104544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=kh52LSMncJuZXp9Lka+gCj3RdlJjfbNFlPv5v7tFRDk=;
-	b=YhGD34ZrxAUplyj7nLZXELyYeF/nFX/UPRher8ot/3bij1tfxOmGyTOuzXK9WuxVN4cl
-	 PVk0fWS/hvGAunhbY9Hu53rG+R5DmRG7ZAN/TRaobbGtlvSwCm6g4ZAZJ6/Dx6j2rjetS
-	 PEaYSv+UrD/nTRbqKQ79Co4O9gRlrWsuLRBXIwEZ15IOt8s7mugaIDRPk9eaNmvPSWWSv
-	 q1Wd6v1rojsDOGJp0SbbikC7qzzUVyydexO3Y0F/j2OldpR63cBmbONHtbqX7+S+gb6UP
-	 VvLl81YcoWja9ficC5kHzqDKlkUWrqcjzhRAKEtIy/4M1J0VMMEgQJhBcYmFFUUl0Cg==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=XqmKc+XBG1VAK4vWqNSjv6YPlh+RX/NQ7jrBZbtJy5M=;
+	b=TflLg5GGHOeUINi52RSj63e1dFPpd+VCr4rQ1kRETtlklGuZtgFOuwR1hqUPBmCz6iGX
+	 0b3tWm8gBF27wtxakM858WAJvkcas3yhnTCU5+PoUOjxybFX/o7meJh8CVeH8eCkPdlpz
+	 7qBAvzI9yeYxFqt2eotmQ1KVpLHUwGrehULXGbeJLEHbZRGvdrAY/wH0+oPgZYqRdC3ZV
+	 nJqnZCtoQ8e+n1MzC3XsRPW3Tp3O7vkcqg7XZhJfDw0Ns3hDcZwg69XacGUxdigh9xCCO
+	 3t8ixfof9DmZaiNBzZUs23k8Uxu70oHmi+VwD1cphOHtxk6pePuDIydDrOER+IueF5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U20YdjXp;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nZM2OD2y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E635606A32C;
-	Thu, 19 Nov 2026 16:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01DB60A2608;
+	Thu, 19 Nov 2026 16:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U20YdjXp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B051F000CA;
-	Thu, 19 Nov 2026 16:08:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nZM2OD2y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B51B1F000C5;
+	Thu, 19 Nov 2026 16:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795104541;
-	bh=kh52LSMncJuZXp9Lka+gCj3RdlJjfbNFlPv5v7tFRDk=;
+	s=k20260515; t=1795104544;
+	bh=XqmKc+XBG1VAK4vWqNSjv6YPlh+RX/NQ7jrBZbtJy5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U20YdjXpN4T+YAAoQlQr1o1UXpHdvu2xZOl42c0Ms5IlbJHoiU0nGV2IlV8JDZR4f
-	 omA8z5bd8WgqqDdQTWkAgOdv5ZfpAliC2K4sRZlADhthoMhX4oKidrpfdwqDxZ3mKh
-	 zuxrisSoyEaHIkgSocrlexxQkj8wBc5ECTRIZT6zCoZBDUdQNMtRMhoO2+SixAzip0
-	 QUa9Ofd2cInNrqo+i8LIY3It0HBD46wKH3iqrk8F9ht++CAlVDjYx744CxF0+lj0kN
-	 ZkmBu2SZKvQ2tT/YIcSS7exrWwygK9K8d1VGcwOPOSekjW62Xtlb770Z8Yfq6XnmsC
-	 hezaU24Y/35PA==
+	b=nZM2OD2yckFhye3cYK6Aj85GlLJ9Pyc/7/ah5IsxkFhVl0f9zyWVbEquZA0aYjmQW
+	 kNHUAOYON6+b2/KM5rnN/WzIQSMv3RKqyQUSVouZJjx5fJG1sAZjKvVPVh3nRXKUKB
+	 QDf5wg6VQa1ziANUPMaBT/sglPnsmMiDum553hGRbuvlzqelYoYi7xBaNU4SfrWpIv
+	 Id4MrlAg4Ppn5WHrVjf6vwNYGIqlDslKHbuq2GGqMuMtOaEsmHcbFI4H0GQTAeDVNZ
+	 PH4KZ+mka4ZCkftl4NWngyItfUN0rOsLlLiADQkJcNlgBhTdpKK94iGQ9jzl2sHkNR
+	 7dZXMKgQ8vH9w==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org,
@@ -62,15 +61,13 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	broonie@kernel.org,
 	achill@achill.org,
 	sr@sladewatkins.com,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Thorsten Leemhuis <linux@leemhuis.info>
+	Sergey Lebedev <lsa.uz@pm.me>
 Subject: Re: [PATCH 7.3 0000/2651] 7.3.6-rc1 review
-Date: Thu, 19 Nov 2026 11:08:27 -0500
-Message-ID: <2026-11-19-1-daily-reply-0025@kernel.org>
+Date: Thu, 19 Nov 2026 11:08:28 -0500
+Message-ID: <2026-11-19-1-daily-reply-0026@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <b1aecdb0-5076-4df1-82a0-e4f5dc755578@leemhuis.info>
-References: <b1aecdb0-5076-4df1-82a0-e4f5dc755578@leemhuis.info>
+In-Reply-To: <20261119032558.37385-1-lsa.uz@pm.me>
+References: <20261119032558.37385-1-lsa.uz@pm.me>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -80,19 +77,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-> This failed to build for me on s390x while building tools/perf/:
-> > util/annotate-data.c: In function ‘global_var__collect’:
-> > util/annotate-data.c:785:30: error: implicit declaration of function ‘die_get_type_die’
+> One problem, reported separately: 1120/2651 (debugfs_create_str()
+> read-only) is queued without the two patches before it, and warns at
+> boot here.
 
-Thanks. Queued the missing prerequisite for 7.3.
+Thanks. Queued the soundwire conversion for 7.3 and 6.18.
 
-I'm dropping c6dd6161815d ("perf trace: Enhance BTF type formatting to
-symbolise kernel function pointers") from the 7.3, 6.18 and 6.12 queues, and
-14ca0a28de37 ("perf annotate-data: Resolve type DIEs in the debug file they
-came from") from 6.18 and 6.12.
+6.12 does not take it, so I'm dropping 5ec78be95520 ("debugfs: make
+debugfs_create_str() read-only") from the 6.12 queue. 6.6 has no compiled
+writable caller and needs nothing.
 
 -- 
 Thanks,
