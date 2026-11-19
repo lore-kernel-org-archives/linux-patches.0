@@ -1,59 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.125.188.123
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795058591;
-	b=x/1KcmRcSpd1MobmrDUnXskkz8xqcEvNBUTMxZJT8zqoxmMys6miWc31KIgxBo8o8rzr
-	 i/oDt13rYy7+nCt5roXh7SHxpVcbaQB35ffeZr1TLof2QthP3dtMboSA55oQQYva9q6Za
-	 oMfhCk6Lt7/gn5+oPmMv2Zl4UkkzorgPTnRSJmiV30paNyGjVntXuVDU1rMDkfycxO6bD
-	 7xZWsubsId31kABqz4zh8/5yLMvhoSATFFU2s8BAzvjjss+TxzEmJ5DIILFDvyqci1TKM
-	 hyRHwnpml7IKLQOqAIzqKe4lUR8mvRoEFzPzaEXgVLGuW+8pNIWEU/k8mbw5uAyELpw==
+	b=lzk4HHGEsEIURARgw1qIjbeLPuQLgsFyYsvhKTXICvosjTuK4DxIC5ocZDoTXgfvbnlq
+	 2Aq/3HcitC2rhCJEvsZD7OCXr+YRjiAXthUi6DUbzLbkp0vYtgW8Wu2ghNRjOm8AVexiv
+	 cPotqsHknuZbMoSg/IQIvALfV8nlr19ssJQ3ahG9xXhNDYiIsmR/qRGFPGD7gocYKyqgr
+	 24OVa4FTEq5w4tuNlg8a4SXVFwUuP0fe8fYEOKzG+L3fSEWADabzt3f/TJ+GYSHMFVRAx
+	 KuzTAN3g8tCbERBEZpetU+TEljDTDO/RbOtEc9s80e0LgXJgNBOjzWdWNPoAXKvygig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795058591;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=K5Ki510SYY9ARFuA/OfGe7khj0F2joLrL+4mtQZ/zJ0=;
-	b=ZvfP9Am9rZpj2E25lnRbD0wDkB3erWYPtmejxZtcGa8ECqFPcFsEpclF/mi0dinNr6q/
-	 Q29g/JPkZfp1lesI/eD/R738d6n4Xz7WaIXCHSOSfnWXFkDOQ8cGCDf4BiBSIPbIy5dUZ
-	 69R92jJbQM0y4wtn+PBDuf8hIkpsv/U2+fAKO50uvP/fxX9AbcE3m2BysLWZPFlOf5zcP
-	 E5vrY21WgYtsRgckynEW4CC62jxM4s40vfX6NVR0GHY141JYvuVy+SdaEarcA6fwZRo1c
-	 ff6Y4ME517+lc/HOMxV8jaSZmIfYggs9cjVND4B97LHq1yoZfSFRGUpb3vWDtASieJA==
+	h=DMARC-Filter:Received:DKIM-Signature:Received:
+	 X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 X-Received:Received:Mime-Version:Content-Transfer-Encoding:
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
+	 In-Reply-To;
+	bh=1gCemJ+OoIUXvLmdwnpvyyQkDg9ytHfxR6YyKzs9Mfc=;
+	b=meTH/qZMRVN5wnXGqA1ayWkeO+R48qdE5kzft9vJFt6Lr2KheSsDcUmHFvxrdwrTrOgR
+	 7CZtOruJEYlmdq5epZLtwQ2CpK/MXK4yhkAlzM7K7nbHK8oo2qjZxW921G8stFM0dQnXg
+	 rkXsODCl2herkVB6/jc9orQBHwtMBRFuZi8YX9yfmWNIsI52phGGKrs+LIVLPQl8Gkcq6
+	 hvdkhkvRcWdnzj6d6Oml/VHH3GNZmT+oOAObhvjfQQ5Umm/VFTlJCIzRWUP9/rclFhbiI
+	 RfWU/uStiXBvB+WC80dR0wN1c068uTHWqnzuVwV1FPTTklmWdz3a60UWt5/R5I08GYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IrzUUyhk;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=canonical.com;
+	spf=pass smtp.mailfrom=canonical.com;
+	arc=none smtp.remote-ip=185.125.188.123
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3841606A330;
-	Thu, 19 Nov 2026 03:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IrzUUyhk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563C01F000C4;
-	Thu, 19 Nov 2026 03:23:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058590;
-	bh=K5Ki510SYY9ARFuA/OfGe7khj0F2joLrL+4mtQZ/zJ0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IrzUUyhkL7YDO1Tn9SY5PADqp5FyNLkz5Sx5QodcvMrshyItWAl3ZfG3lL75W914p
-	 XjVCh+MgkU5bIKD1NN27dZ0w+ztGgnKuDyj4pd78+L3lSeIfW/p3aDqMliicqH/VAA
-	 wwN+uUjvjSFClj5QqdQ0qcJO4SVQhcyWVghwgiqE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
-	Sanan Hasanov <sanan.hasanov@ucf.edu>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0541/1848] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
-Date: Wed, 18 Nov 2026 15:42:59 +0100
-Message-ID: <20261118145937.599795302@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
-References: <20261118145911.150052362@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCA2606A32F
+	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 03:23:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BCCA2606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0F9643F4C1
+	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 03:23:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20251003; t=1795058589;
+	bh=1gCemJ+OoIUXvLmdwnpvyyQkDg9ytHfxR6YyKzs9Mfc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To;
+	b=FkNpLKTVaJZoNZ0vDRmBq00qsolc2tWt0NLFMupCdKA60Qt/ovgX7bHF3DYm+h/ZX
+	 Z32Xt8QM033eJybDBEfUp2KIgZDy+LJhbH8l40mymF6O3lzMy5cDtdQJl0zlwJRFjD
+	 ledP4PVS2avu8B4jLBHKbGt4ymP1jg2fSl3627wDEJXgAMPN7U9yX/be+PAs/t1OWK
+	 dVb0itKpHfdwif6hAbzADWNo/FexnvtmSAH8xgUyA3+RUFn/2/EffnLYBOQNunejR5
+	 sQdXN/IXl5HHsvxSf+O6nJbjikEd1UQiEBcWlZuh2kx3b2S0ENMo9EuHn2LcYo+Bvs
+	 JxPvvb9pi3iQuHMamZshzlxIfQFk4IabgwoKi8y1iiYD0EYD0R3HMwrZVwHgUIV1YJ
+	 4p7BchvdUgaHKOyUIu7JmbM+CuLwsH16wD6h1iyoNg6HfpApXRzAJD7hAofZmDplOh
+	 0Bl/yGod4YKUc6mM7zVJlhQqlqMQnaco7cLZxIc79uX5R3FlIXUL4MzRCrdxB+rMLj
+	 2sGpnkT8EgqfY4qLGB3qlsSiZzNUcWHht9/dB8ICo1s5hfOziMR5j8Zg/LFFlbqrZy
+	 sSFTxj4XXm/kO9WrWh17CHgTBknVgIo8cjZd0YleHBrnOwyZxwtHOYb+QI6EEHhYop
+	 WeRVA/a2SsoVx+VA4Ab8I3i0=
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-9212335e257so13988296d6.3
+        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:23:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795058588; x=1795663388;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1gCemJ+OoIUXvLmdwnpvyyQkDg9ytHfxR6YyKzs9Mfc=;
+        b=FS6PwTSlVMRfg1FADd9Jx2zGn5UeYWG+3YD9kXrK9rGDg+OZNLQKBnUNydxJcHxUDZ
+         dlzzCRh2wz0KA6wVqOb/9oGywSUQkzby6R+veHPLBMRIqQn/JMQbNEpiSoYzAW8vXSr8
+         4xshk0gET9tW47GECRtxJOvotueMHBOS8k/O+QcPKJcL9uoA/pDrOJqYFC5R8CKA+ARr
+         6jXYzTIAefHUoIfd4Y0Y0+KY19e9oz+mLycfVspEWk/rtAUOmDapw9tVn2A+DPGdHKKm
+         pf0jvYha920mVvuZFp08BTVqXWXco5g/S+iiob+S88iF/m/MniP6IddBdNcdG2z/QajO
+         LEvw==
+X-Gm-Message-State: APuU4Z8CrFDX1271Uv6HmzxFQmpbwZFqcjsgjmdFbkRBu38qP0gkqZ1y
+	MbETY0OXr4g2+2//oTQj6VbGXMNk3qORk2GpO94iMb3Qyk3E1gkKwlLdY2guU5SjhEQIkyN7O5a
+	ioSYCnl8NGLZjCggp+pEdCPZg3xpbgwyGmrTDoXOhB0mefohFoUWnIlmemp65miZf4MA+Nnguzd
+	A=
+X-Gm-Gg: AZFdTZfXNsgJYg7bRg4/4ZkuL/oD/TFl85t7rM1LebE0WfuQ61Zz3U6Ml6aDf17AuSz
+	GciEbyGvaWz/Yn3Exe/FFkd6VuH07zg7WP3/aMZN5BUjreAlr1JLNtoZ/dDN8DSHZAYQ4odI/uB
+	G4a+1Fcc93yi3PuKFzHqiPNF4od9XjCqmhLZayjLXYTCPOtEN7WxWU3A0PVTyhh6trkbny2saB+
+	Fu6rQFmpDGKun3kx6lpfK9XAadYTM4UXnTSiAgckU80aV+maDIARudRwhd7snsQ+VLtr+GuY+go
+	8GxguW1TlwW8qeCv5qcKfC0O1zTMhuJ/mTUAAVo7pHXFdU1tefAFS9xLJ2S/h5e8L5imqOh6X61
+	I0zgVLgyry0Ky/AbyO+jQCtDeVuo05BZNrSlLo3um++77f/E640UkephROOd2RA==
+X-Received: by 2002:a05:6214:4886:b0:921:2b3f:95e5 with SMTP id 6a1803df08f44-9212b3f9742mr4788986d6.24.1795058587638;
+        Wed, 18 Nov 2026 19:23:07 -0800 (PST)
+X-Received: by 2002:a05:6214:4886:b0:921:2b3f:95e5 with SMTP id 6a1803df08f44-9212b3f9742mr4788556d6.24.1795058587036;
+        Wed, 18 Nov 2026 19:23:07 -0800 (PST)
+Received: from localhost ([107.159.93.232])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92114d28215sm38265326d6.16.2026.11.18.19.23.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 19:23:06 -0800 (PST)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,95 +95,131 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 18 Nov 2026 22:23:03 -0500
+Message-Id: <DMYV5T0TLKEG.1RHCZH8L40LWY@canonical.com>
+Cc: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+ <torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+ <linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+ <lkft-triage@lists.linaro.org>, <pavel@nabladev.com>,
+ <jonathanh@nvidia.com>, <f.fainelli@gmail.com>,
+ <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>, <conor@kernel.org>,
+ <hargar@microsoft.com>, <broonie@kernel.org>, <achill@achill.org>,
+ <sr@sladewatkins.com>, "Miguel Ojeda" <ojeda@kernel.org>, "RUST"
+ <rust-for-linux@vger.kernel.org>
+Subject: Re: [PATCH 7.3 0000/2651] 7.3.6-rc1 review
+From: "Alice C. Munduruca" <alice.munduruca@canonical.com>
+To: "Gary Guo" <gary@garyguo.net>, "Thorsten Leemhuis"
+ <linux@leemhuis.info>, "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ <stable@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20261118150247.972732815@linuxfoundation.org>
+ <cb9ff126-7767-4c60-b735-1b7890a247fc@leemhuis.info>
+ <DMYMKQ2PRN7X.WKDSQ4X8JIFB@garyguo.net>
+In-Reply-To: <DMYMKQ2PRN7X.WKDSQ4X8JIFB@garyguo.net>
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+On Wed Nov 18, 2026 at 3:39 PM EST, Gary Guo wrote:
+> On Wed Nov 18, 2026 at 7:02 PM GMT, Thorsten Leemhuis wrote:
+>> On 11/18/26 15:20, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 7.3.6 release.
+>>> There are 2651 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>=20
+>>> Responses should be made by Fri, 20 Nov 2026 14:55:47 +0000.
+>>> Anything received after that time might be too late.
+>>>=20
+>>> The whole patch series can be found in one patch at:
+>>> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.6=
+-rc1.gz
+>>> [...]
+>>
+>> This failed to build for me due to a problem with rust during the "make
+>> bzimage" stage:
+>>
+>> """> error[E0432]: unresolved import `crate::util`
+>>>   --> rust/pin-init/internal/src/init.rs:17:5
+>>>    |
+>>> 17 |     util::*,
+>>>    |     ^^^^ could not find `util` in the crate root
+>>>=20
+>>> error[E0599]: no method named `extract_cfg_attrs` found for struct `Vec=
+<Attribute>` in the current scope
+>>>    --> rust/pin-init/internal/src/init.rs:171:39
+>>>     |
+>>> 171 |                 let cfg =3D field.attrs.extract_cfg_attrs();
+>>>     |                                       ^^^^^^^^^^^^^^^^^
+>>>     |
+>>> help: there is a method `extract_if` with a similar name, but with diff=
+erent arguments
+>>>    --> library/alloc/src/vec/mod.rs:4245:4
+>>>=20
+>>> error[E0599]: no method named `as_ident` found for reference `&Member` =
+in the current scope
+>>>    --> rust/pin-init/internal/src/init.rs:413:28
+>>>     |
+>>> 413 |         let ident =3D member.as_ident();
+>>>     |                            ^^^^^^^^ method not found in `&Member`
+>>>=20
+>>> error: aborting due to 3 previous errors
+>>>=20
+>>> Some errors have detailed explanations: E0432, E0599.
+>>> For more information about an error, try `rustc --explain E0432`.
+>>> make[2]: *** [rust/Makefile:649: rust/libpin_init_internal.so] Error 1
+>>> make[2]: *** Waiting for unfinished jobs....
+>>> make[1]: *** [/builddir/build/BUILD/kernel-7.3.6-build/kernel-7.3.6-rc1=
+/linux-7.3.6-0.rc1.400.vanilla.fc45.x86_64/Makefile:1440: prepare] Error 2
+>
+> It looks like there's missing dependency not picked for pin-init changes.
+>
+> Greg, can you drop
+>
+>     [PATCH 7.3 0580/2651] rust: pin-init: internal: init: emit `slot` usi=
+ng mixed site hygiene
+>     [PATCH 7.3 0579/2651] rust: pin-init: internal: init: support tuple s=
+truct constructor syntax
+>     [PATCH 7.3 0578/2651] rust: pin-init: internal: init: support tuple s=
+tructs in `[pin_]init!`
+>
+> ? While patch 0580 is a fix, pin-init is not used in a way that manifeste=
+d the
+> issue in 7.3, so it's simpler to just drop it and the other two picked as=
+ dep of
+> it.
+>
+> Best,
+> Gary
+>
 
-------------------
+Hey all,
 
-From: Sanan Hasanov <sanan.hasanov@ucf.edu>
+After dropping the above patches there remain a few compilation errors with=
+ LLVM=3D1. They all seem to
+relate to pointers in bindings being sent across threads. I am unable to di=
+agnose the issue farther
+than this, as I'm just starting to dabble in rust/ so hopefully someone mor=
+e experienced can track
+down the patch at issue.
 
-[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
+I've uploaded the build log alongside the config used in the pastebin links=
+ below.
 
-ccp_raw_event() is the HID ->raw_event() callback and takes
-wait_input_report_lock with a plain spin_lock(). This callback can run
-in very different contexts depending on the transport: from process
-context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
-interrupts enabled, and from URB completion, which is softirq context
-for HCDs using HCD_BH and hard interrupt context for HCDs that do not
-(e.g. OHCI, UHCI).
+>>> make: *** [Makefile:256: __sub-make] Error 2
+>> """
+>> Full log:
+>> https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedor=
+a-rc/fedora-45-x86_64/11350094-stablerc-fedorarc-releases/builder-live.log.=
+gz
+>>
+>> Have to run, so not time to look at where this is coming from right now,
+>> sorry.
+>>
+>> Ciao, Thorsten
 
-Taking the lock from process context with softirqs enabled while the
-same lock is also taken from softirq context can deadlock if the
-softirq interrupts the lock holder on the same CPU. Lockdep reports:
+Link: https://pastebin.com/WCpUdkaC
+Link: https://pastebin.com/5BUM2Cys
 
-  WARNING: inconsistent lock state
-  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
-  ...
-   spin_lock include/linux/spinlock.h:347 [inline]
-   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
-   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
-   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
-   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
-   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
-
-For the same reason, the spin_lock_bh() in send_usb_cmd() is not
-sufficient when ccp_raw_event() is called from hard interrupt context.
-
-Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
-interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
-which always runs in process context.
-
-Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
-Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
-Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/hwmon/corsair-cpro.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index f117479096ef8..05bf1bbdc4c0a 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	 * the raw event parsing and marked the ccp->wait_input_report
- 	 * completion as done.
- 	 */
--	spin_lock_bh(&ccp->wait_input_report_lock);
-+	spin_lock_irq(&ccp->wait_input_report_lock);
- 	reinit_completion(&ccp->wait_input_report);
--	spin_unlock_bh(&ccp->wait_input_report_lock);
-+	spin_unlock_irq(&ccp->wait_input_report_lock);
- 
- 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
-@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
- {
- 	struct ccp_device *ccp = hid_get_drvdata(hdev);
-+	unsigned long flags;
- 
- 	/* only copy buffer when requested */
--	spin_lock(&ccp->wait_input_report_lock);
-+	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
- 	if (!completion_done(&ccp->wait_input_report)) {
- 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
- 		ccp->buffer_recv_size = size;
- 		complete_all(&ccp->wait_input_report);
- 	}
--	spin_unlock(&ccp->wait_input_report_lock);
-+	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
- 
- 	return 0;
- }
--- 
-2.53.0
-
-
-
+Sorry and best of luck,
+ - Alice C. Munduruca
