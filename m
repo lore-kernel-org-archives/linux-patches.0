@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795072453;
-	b=YgaWBrYuNZny1Kki8zNw/pWeWPWGpbnZbbGVhsidChAHNaqL75n8Bmywln9AKo+dhdTC
-	 zwAhiqn/2FducA0nDpqC0af5RZ4Rn/wPCQu8vDCcwgNmIoL4JsQ7bPk9ZOsnLTVxDkg4R
-	 774x4vmiAl+paXijN7RfAnpF5rGUsdeN/wHa086SAvY8w/hVAIgdkG/KzZzqmEzjNkcyp
-	 V+jZwZGHwN5ayTBRADxjSS994BBIR4+SqFTXt+Ly0pHjiHZ1dEMj+gdEtoM+4C+3aM5BL
-	 POPUzDTd8+omuQIuXdnoxtojMBrsgl2+e0EdA8rtRq9hEKXVW46zqGaPGUKdraBoHJw==
+	t=1795072536;
+	b=J6uhTytPkJcLmFevMkTiILskInCKxjTnZVTShfslpq62WMLDABlxhDJrYcP4Fn5GcJRQ
+	 utX1r1CuELrTpV/01deFgv4zAj9rVJnucwxYsGnYYawxMHcV7Fe7sZUCJPbrigKLsN4K7
+	 qQH+KXUaGo3MwFG42OtOi2ebjqyKYjxFIJ5CzvFRl4Q/Et6DDoJCpZ2TWADwAqMNQWKCR
+	 q0WqwKc1FZEjlv7ibZUHunziVpQJLoP7+VqvtYW46R0ecL21Da0MnaVuS7T4UwMduEanZ
+	 pc2aRslG2WFIxDwRUaXekSBqvcjhVjH4Y35AIfxJknS4/Hb1oYpQ3fikqzqDIlnd7MQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795072453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795072536;
 	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
+	 Subject:From:To:Cc:References:Content-Language:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=Lzcn4w3oaayMxf41T+zF2kyH4deWT2GR/BDQtdvQXQg=;
-	b=3vTv1tknz6boTVj4n+C6Kw8ch4sY9BZ3mlZRZz1Bg3DqwOQ7H7+5mP9JP4VLT4er2Bol
-	 EzuJ51k/cIurKCCI1/eagjSnrocUS/dWqpFhnCbpiwsxUlJmTXtuTCDDq2+VL+5UdxSpq
-	 6SgYSA0GlKlr3OIFfYCGFvTGs+ZZI0kEqI65l8YkI8R/69KcW424FCY/o+W0zK38VUwJq
-	 7sh5LS9VrM5wSSJPt+er/Artax/GOfAzOnLAaFwaja/deHT/ffxKpCqEhaNTd5n7Cq1FB
-	 5KCFMFzXC5tI8pDZU2oflePn9/zu1qQwRNAnu0adamec1zy1VAMI2CiATSkXI8UQorA==
+	bh=cbNpNqeEcejcdW8J47plwOXcUw/0+BzSVTXKYCKTZlM=;
+	b=zfRAmKX7F8Y5xKUh8x7hxkhkpeleypoPoh9ocTeUlzn797VHIIKXwKzixOeiu+M8lgPR
+	 5bG2TyTfm75eZEBomUpS8tWuvR75pXCO+7DQaeUE7cZCViHi8G/zWBZz4cWLPhQFvh/ZE
+	 s+zVHgdJw1nnZGc3ofJC5DVayj+VkiunAo5EnrKk9bNtbAHsCEw0tnaNfiEsjvx2G7Kbi
+	 oKCKHtH2bSA88WRmirABdf3HGxmbLEnBlgNNyWn/9+CRbFaQzW3ysRsZ6EiUtqlCVtWbI
+	 1YM/Q/ltwO+cV+IimlvusDXeLBKIKel800MXzq0ClG+cJ4RJO4xUK9Vydf5To4lRzPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="I/ccIKFo";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="jk6/SbJl";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB1C606A320;
-	Thu, 19 Nov 2026 07:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE88606A320;
+	Thu, 19 Nov 2026 07:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=I/ccIKFo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DC71F000C4;
-	Thu, 19 Nov 2026 07:14:11 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jk6/SbJl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038211F000C4;
+	Thu, 19 Nov 2026 07:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795072453;
-	bh=Lzcn4w3oaayMxf41T+zF2kyH4deWT2GR/BDQtdvQXQg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=I/ccIKFopbk3wDKBhC4o5elEyIeoZLWMjsLUf4tBaPxFc8TuOVGFqJCmupop45IWu
-	 ldgXWNiK8LX0CR+jgXSdpGrLSAcS7KtC9UfNO9+Tk7X2g0c5jyrO+hJI8XXZNuwG57
-	 f/7+5yLVJ48OW2WBgwBsE5aTx1+KP2gR/lWWaaLYtcIU1pNQyfqBaCGfVlo3mCc3BL
-	 2Q4rQ/6YcqoeinjqB4HzRGbzAuDY4wj6iNShnJG1NgZhzLusKDSVszffHkQEysnjlZ
-	 f6+0K6F2r5YXmsmOcNE1ofBVAckKo3/GCUP7L+O3Its+P4KNIzgsHrA3Qov1sHOaQR
-	 01tBnoIjWKrww==
-Message-ID: <1dc09b41-c35a-4af0-a074-0e2c06b5b449@kernel.org>
-Date: Thu, 19 Nov 2026 08:14:10 +0100
+	s=k20260515; t=1795072536;
+	bh=cbNpNqeEcejcdW8J47plwOXcUw/0+BzSVTXKYCKTZlM=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To;
+	b=jk6/SbJl9KebGbyDvCcOomeedUD7BR8Ue6SpYnA+Bn0u2TfUc3qNTwXkVMxO9v6P1
+	 A4babRNCdRF280mUCaKxBZ8KobjQzY7RqgGS7iFGfSp2+H0xGlLGNWbozwKv5CIXn8
+	 ++tGzIfk7DLw88VI2Id87EQcoAEZVvmlUMZel5FwDbf2IelOXRHXfIIfgdjwhbC759
+	 cccEgj1mf0QzZ0kWdvfZP2O1Mdw86hgDWt6r0vxW/qBDv5YVHTZ2jHWwdp2PPOkwcz
+	 3oNg5WfuJsJ7xV1xDIIfa3UHHIqcZ7JKIa1BAXjOn2w33qKXlU8QNyq+QK7Yg4xWH7
+	 NRsjbU7zDgkJw==
+Message-ID: <e641cbaa-9632-4209-beb4-6e2b25af6736@kernel.org>
+Date: Thu, 19 Nov 2026 08:15:33 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -52,15 +52,16 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0579/2651] rust: pin-init: internal: init: support
- tuple struct constructor syntax
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Gary Guo <gary@garyguo.net>,
- Mohamad Alsadhan <mo@sdhn.cc>, Sasha Levin <sashal@kernel.org>
-References: <20261118150247.972732815@linuxfoundation.org>
- <20261118150308.574020217@linuxfoundation.org>
-Content-Language: en-US
+Subject: Re: [PATCH 7.3 0578/2651] rust: pin-init: internal: init: support
+ tuple structs in `[pin_]init!`
 From: Jiri Slaby <jirislaby@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Mohamad Alsadhan <mo@sdhn.cc>,
+ Gary Guo <gary@garyguo.net>, Sasha Levin <sashal@kernel.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+ <20261118150308.536638917@linuxfoundation.org>
+ <c73ab715-394b-4edc-a52b-2035f00b9a63@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=jirislaby@kernel.org; keydata=
  xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
  rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
@@ -103,69 +104,82 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20261118150308.574020217@linuxfoundation.org>
+In-Reply-To: <c73ab715-394b-4edc-a52b-2035f00b9a63@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 18. 11. 26, 15:30, Greg Kroah-Hartman wrote:
-> 7.3-stable review patch.  If anyone has any objections, please let me know.
+On 19. 11. 26, 8:12, Jiri Slaby wrote:
+> On 18. 11. 26, 15:30, Greg Kroah-Hartman wrote:
+>> 7.3-stable review patch.  If anyone has any objections, please let me 
+>> know.
+>>
+>> ------------------
+>>
+>> From: Mohamad Alsadhan <mo@sdhn.cc>
+>>
+>> [ Upstream commit d48aa955cb91745ef2e5089f9277a7a95060cce3 ]
+>>
+>> Extend the initializer syntax so that a field can be named by an index,
+>> addressing tuple struct fields the same way a struct expression does:
+>>
+>>      pin_init!(Foo { 0: value, 1 <- initializer })
+>>
+>> Tuple fields are not exposed by a `let` binding to the fields after them,
+>> since they have no name to bind; `_0` would shadow a user variable.
+>>
+>> Signed-off-by: Mohamad Alsadhan <mo@sdhn.cc>
+>> [ Fixed incorrect index calculation and cleaned up the code - Gary ]
+>> Link: https://patch.msgid.link/20260904-tuple-struct- 
+>> v1-3-72c50bd037fd@garyguo.net
+>> Signed-off-by: Gary Guo <gary@garyguo.net>
+>> Stable-dep-of: e30decc3f9a0 ("rust: pin-init: internal: init: emit 
+>> `slot` using mixed site hygiene")
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>   rust/pin-init/internal/src/init.rs | 115 +++++++++++++++++------------
+>>   rust/pin-init/src/lib.rs           |  32 +++++++-
+>>   2 files changed, 95 insertions(+), 52 deletions(-)
+>>
+>> diff --git a/rust/pin-init/internal/src/init.rs b/rust/pin-init/ 
+>> internal/src/init.rs
+>> index fd0b5ea4a0a30..5920bb281a500 100644
+>> --- a/rust/pin-init/internal/src/init.rs
+>> +++ b/rust/pin-init/internal/src/init.rs
+>> @@ -8,10 +8,13 @@
+>>       parse_quote,
+>>       punctuated::Punctuated,
+>>       spanned::Spanned,
+>> -    token, Attribute, Block, Expr, ExprCall, ExprPath, Ident, Path, 
+>> Token, Type,
+>> +    token, Attribute, Block, Expr, ExprCall, ExprPath, Ident, LitInt, 
+>> Member, Path, Token, Type,
+>>   };
+>> -use crate::diagnostics::{DiagCtxt, ErrorGuaranteed};
+>> +use crate::{
+>> +    diagnostics::{DiagCtxt, ErrorGuaranteed},
+>> +    util::*,
+>> +};
 > 
-> ------------------
+> Now I see:
+> [   70s] error[E0432]: unresolved import `crate::util`
+> [   70s]   --> ../rust/pin-init/internal/src/init.rs:17:5
+> [   70s]    |
+> [   70s] 17 |     util::*,
+> [   70s]    |     ^^^^ could not find `util` in the crate root
+> [   70s]
 > 
-> From: Mohamad Alsadhan <mo@sdhn.cc>
-> 
-> [ Upstream commit 3b3ff9034a497fb3b8429f6fe8ba5697bc7dcebd ]
-...
-> ---
->   rust/pin-init/internal/src/init.rs | 381 +++++++++++++++++++++++++++--
->   rust/pin-init/internal/src/lib.rs  |  11 +-
->   rust/pin-init/src/lib.rs           |  16 ++
->   3 files changed, 383 insertions(+), 25 deletions(-)
-> 
-> diff --git a/rust/pin-init/internal/src/init.rs b/rust/pin-init/internal/src/init.rs
-> index 5920bb281a500..dc5dfb2ca1142 100644
-> --- a/rust/pin-init/internal/src/init.rs
-> +++ b/rust/pin-init/internal/src/init.rs
-...
-> @@ -71,16 +145,103 @@ struct DefaultErrorAttribute {
->       ty: Box<Type>,
->   }
->   
-> -pub(crate) fn expand(
-> +pub(crate) fn expand_with_cfg(
-> +    initializer: Initializer,
-> +    default_error: Option<&'static str>,
-> +    pinned: bool,
-> +    dcx: &mut DiagCtxt,
-> +) -> Result<TokenStream, ErrorGuaranteed> {
-> +    let initializer = match initializer.kind {
-> +        InitExprKind::Tuple(expr) => {
-> +            expr.validate(dcx)?;
-> +
-> +            let mut initializer = Initializer {
-> +                attrs: initializer.attrs,
-> +                this: initializer.this,
-> +                kind: expr,
-> +                error: initializer.error,
-> +            };
-> +
-> +            // Removing a tuple field renumbers every field after it, which cannot be expressed with
-> +            // a `cfg` attribute on the initializer of a single field. Therefore, resolve tuple
-> +            // field cfgs before continuing. Struct expression syntax uses explicit numbers, so
-> +            // there is no need to pre-expand them and we only need to emit their cfgs on generated
-> +            // code.
-> +            for (field_idx, field) in initializer.kind.fields.iter_mut().enumerate() {
-> +                let cfg = field.attrs.extract_cfg_attrs();
 
-This does not fly either:
+And for this one I also see:
+[   70s] error[E0599]: no method named `as_ident` found for reference 
+`&Member` in the current scope
+[   70s]    --> ../rust/pin-init/internal/src/init.rs:413:28
+[   70s]     |
+[   70s] 413 |         let ident = member.as_ident();
+[   70s]     |                            ^^^^^^^^ method not found in 
+`&Member`
 
-[   70s] error[E0599]: no method named `extract_cfg_attrs` found for 
-struct `Vec<Attribute>` in the current scope
-[   70s]     --> ../rust/pin-init/internal/src/init.rs:171:39
-[   70s]      |
-[   70s]  171 |                 let cfg = field.attrs.extract_cfg_attrs();
-[   70s]      |                                       ^^^^^^^^^^^^^^^^^
-[   70s]      |
+
+Either you do not pick up rust patches, or you compile-test rust ;).
 
 -- 
 js
