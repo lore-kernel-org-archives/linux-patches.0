@@ -1,64 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058562;
-	b=QfucIwEfGd6+GIwDL6lc2KJe4Ua+lhFsBatFkknXGA7h4U0WiEbrwiuqU1XA4EPtWwj0
-	 cAaiWXSJgAZwH/SFGK/3sA9ycRzFFJekOuPjxxsHAx4VXVMzsb9r1NOh1dR8KQ13FVqiC
-	 Yijmt/V9RNNhzZyZlJU/LTJRrS/eUWsyK9B9WRgVIPsa9A+lTiBA/URZenqcTNhkt+6tr
-	 8cg+KG0J4/UZs43DV2P+wSM9jQbmZdsqv/KHxuUjiPCLL337VFcX0IdR9R1LfFyESXlTe
-	 O7VHg8EtMdWnUQrAsv+A0OG45t8tdGBUQy39Ktef/UPzZuL1ms0C9oK0gEPNeY3jZuw==
+	t=1795058563;
+	b=kHAoJzizIZI6fav3PJ9cODG8sQOvqHLtXvsHeVMtzuyVW1nBBpOeka8JyHwgHbN+g0Y7
+	 SaruBzZjG5dkrMIE7Mqo9EiCYs1cxDVm6b1vQdUapQ84hNbGNXzrZL9ywBKjJ4RegdyYT
+	 SzIl06F4ThqrBx18sBYJtW0NNvNtwbNqaJB2TNZ3gVex9sGTdLe1Nk/wC8i4OStgB0bXX
+	 P2+yt5qm90fKd7lif6BEsBSFqLnHdxcbozyxPLLgqfteo7uhoGl0CKE8FHUDtnTSCXJUI
+	 FASCQQU3AyL9BxGK3omrI10DgvkmXyqAtcUH58OKscWUP2NpYAscQ4Yy3DjfhZQuhHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058562;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FuN9iqezPbdtIDzenf0uERyVN8rx/cYGNTWEOUe4Dww=;
-	b=VdTa3h09mUZQYAfPPh+UCC+bblAwfJYxcQBf0amPQZEAlT347j8ARFdsiwBCtj3Yk95c
-	 WNjpz0rr6QFr11kDAaU36oefyVq11G8rhaQ/c20Vt253XEdIuO7n6ml5zbRZOYJq6Z4cj
-	 t81VpQs3VtK4vYysqYDUHGpe5JQQ+ekgUxcB9YviOmCtySvV0PP3RWedJNC0+w8ajQTVn
-	 H2xq2/SlRydnEbbWmN1d95T4ikJrGBnoZFLmbC8l0hRm2lcAWFJIInUtkjsVpvKHaoJyX
-	 HT61eYN4lkvN30RwOl7V/om83hMd8FaL3uX3sSeY9Oss3jhaiVv7JnRje/GtKHdeBJQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058563;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=AKmYgMCE5Gwxj78QU1v/OC/KdP6R4MGCQSDb6SIyFlE=;
+	b=PhKaFs/O+rhI8QIjvrdrpcAQByCPL7VE5L5zrEYjbAPBhXzkjMRzwsQvpa/PeshUpJuY
+	 A8aZ39mtFahgDcew+cbGKHJuOHa77t8+c1wpf3xmpfmuexeyjdFempDzVpYq+HTDf4na9
+	 oqlDxmw6g39ls3E52C0nvTk1vxycLa7IcvaPxOaiFixs9cG5eANNZMHUhobnOMGvHHxNO
+	 YMviX69MziIRBv30AGhiSmwttB3AYNlBt7hdxYQ8NF3g5MOmuE7tHILv15Wkcf8Nwexwa
+	 rcX7O+MGR2UzxQyFp7icYxc3eeYcF1Rl2REx9Vy+0WjrHEa5+30etDS9RxbTmUW3pPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZXLL65V;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=googlemail.com;
+	spf=pass smtp.mailfrom=googlemail.com;
+	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=MvTgKLMi;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9823D606A33E;
-	Thu, 19 Nov 2026 03:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C462C60A2607
+	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 03:22:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C462C60A2607
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZXLL65V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045291F000C4;
-	Thu, 19 Nov 2026 03:22:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058562;
-	bh=FuN9iqezPbdtIDzenf0uERyVN8rx/cYGNTWEOUe4Dww=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZXLL65VYYV5VFT1xLHGU9TwUU3nmkoSr4NbZTVNdmGeA/kqpTD2Zh1yYcdqXQCgx
-	 6AdRSYyIxWI9v0DTOpnsxorRsgPOLRcFR1jnVuTxvjuR0g7AMcCbnUDnhpR5UgRXfE
-	 7Semd4R18FDR9BGAIJQ80OMvBnE4rwMRPeVBIlhk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	"Theodore Tso" <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0490/1848] ext4: fix out-of-bounds read in ext4_get_group_info()
-Date: Wed, 18 Nov 2026 15:42:08 +0100
-Message-ID: <20261118145934.829594221@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
-References: <20261118145911.150052362@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=MvTgKLMi
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a1b07c3c5fso17258975e9.1
+        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:22:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20260707; t=1795058561; x=1795663361; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=AKmYgMCE5Gwxj78QU1v/OC/KdP6R4MGCQSDb6SIyFlE=;
+        b=MvTgKLMi6pW2xpbEMfPebxCQ28Ok54SJjBIUPo9biiyeC7Eu23NjV5vi0n7IloTGwH
+         xGwThv3hwD4ttB6MULG2CH81sGcN0F6rAKA+h+OaWtKj79JkQnu/LUgsXvnp28AsSZyc
+         oHxkB7uCwe/VrK23YtfWt3zKnubSuwTi63S35fivGbYcRHTXFRYKhBfV9HpMaGNqmWW4
+         QUcW6lzVZK8tGGE5A+wF7Z6WusiVN7QYrKqHbEy/9Zha98py8VXpgAEfPdeBimY7rwu5
+         1rZWz4geJ/bXghpi5T/1ysm2rjUgBNX9JgpiEboqHMu2fZsW/jmpXCEYangX6lVG4KWi
+         9//Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795058561; x=1795663361;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=AKmYgMCE5Gwxj78QU1v/OC/KdP6R4MGCQSDb6SIyFlE=;
+        b=Nz92b13k/KM1BBrNus5a1Xt/gMJ3Xs/Mqwnk0isy//yum8wI0AU7nyTLnAwZxcn8Uf
+         H5A5dI3rqk/xM8DXGlH02KOyhVtTtQjsy0MuBYMyqNiTVjV1yYSu3ESJX2l0cPr872bp
+         W9oHmumx9pgC7Q+KVZx0DlsD3vUyahbH2tZ0xKm1n7Zqym5x+UWcplW+dgwrDfV3K2ig
+         sWKi9/1S92SmIq5ygx82bnFaY7m3HbllKTLREq0YFHRC/YA53VSUgu0VXqO5jrMI1Lr/
+         Ki8oZ7VPxPv6MjcgdrY3SakBrjwE98v4d8GwM1A6+6/YSZgqgnhSIr9kY3JaIiyYLX6B
+         nxZA==
+X-Gm-Message-State: APuU4Z9UnZ1iDh7rQBMC+0O4cdy6c7O/UAq7/Q6qHop7NNHdvmh/i3Ht
+	khOj3EZxrOa7a2THsPvAoJ9uDxXBV7Q8Oc6Tm9mbBgOmG2mRarFzjGA=
+X-Gm-Gg: AYBFou0zu/cgGUP1Pk32RfzcYtbUl8FRk8LUlxPqJlPeFQ0Q/UJKG08HLcVBH2Lh52t
+	qqgD19IYklmJ7LoaQJSqy42JyVcVk+ApwNdYb55iAWGlPit/hP9RoCQnr5cN17tMF/IB00Vcj94
+	aqAN2LqWEFeRM5sJd0IXhmqjlxLglEs9EusO68/e8Vq9fPlXF5nLwlLaEZLab2vJZC4L6XENeAt
+	HHtGrn4WTDWD+cB1qXwLhsXp3sO4XRkbLH+l4oA4BjISBLdJRpsiy+jliDFhU/GJ1aFpoY5+4bD
+	IOlY5i3TzspOv2jxJdI58WhpRYRUFgkZP5dQfqFZoa7WOfdUHPK9wDzMtnKXbURbj4pAYrqbz+i
+	znRjow1k1RM2GcuqJym5wdxHkAqO5uazTh9cYnM+eja30AKozedIgFI533QPKheiLFAQvW+lMAB
+	gi6cEtpx7VFWEIrAS5HMQByLofZdAk6giBX4EfKQZzD2k5wH7DKoVXan5OzmnomgBE45SJ5JVoV
+	xUWGkogo2wmtVm/wNE9sKBXa9cccFESAWDICVBHb0acL7uPaG1BgCL9c48QKvqzMHZRmha1amEa
+	bs3YBsqk/IqWftyX4oIAufwFlqqhsJwXOO7+SZ2c1/Kvy8Mu7UrcTChckUg5QjdBEub+9g2VTJA
+	uj3MQLQ==
+X-Received: by 2002:a05:600c:348f:b0:4a1:f377:5c68 with SMTP id 5b1f17b1804b1-4bb7da4784bmr85514715e9.34.1795058560948;
+        Wed, 18 Nov 2026 19:22:40 -0800 (PST)
+Received: from [192.168.1.3] (p5b057d66.dip0.t-ipconnect.de. [91.5.125.102])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb8526cbd0sm5941125e9.0.2026.11.18.19.22.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 19:22:40 -0800 (PST)
+Message-ID: <eaa1f85b-44e3-4f95-84e9-3500327be809@googlemail.com>
+Date: Thu, 19 Nov 2026 04:22:39 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -68,87 +90,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 0000/2151] 6.18.65-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261118150121.603863898@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+Am 18.11.2026 um 15:28 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.65 release.
+> There are 2151 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-[ Upstream commit b067d3c1f90b536e9aa9f48b19580475a0b34f0f ]
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-A plain read of s_groups_count in ext4_get_group_info() allows CPU
-load-load reordering. On weak memory models, speculative prefetch of
-s_group_info prior to the boundary check could lead to an out-of-bounds
-read if a concurrent online resize expands the array and increments
-s_groups_count.
 
-The data race occurs between the ioctl configuration path (holding the
-resize lock via ext4_resize_begin) and the lockless metadata lookup path:
+Beste Grüße,
+Peter Schneider
 
-   CPU 0 (Writer, Resize Lock)                CPU 1 (Reader, Lockless)
-   ---------------------------                ------------------------
-   ext4_ioctl()
-     [EXT4_IOC_GROUP_ADD]
-     ext4_ioctl_group_add()
-       ext4_resize_begin() // Takes lock
-       ext4_group_add()
-         ext4_mb_alloc_groupinfo()
-           // Publishes expanded array via RCU
-           rcu_assign_pointer(s_group_info, ...)
-
-         ext4_flex_group_add()
-           ext4_update_super()
-                                              ext4_get_group_info()
-                                                // Speculative / out-of-order read
-                                                [Loads old/smaller s_group_info pointer]
-             [Plain C store / smp_wmb()]
-             sbi->s_groups_count += ...;
-                                                // Reads new s_groups_count,
-                                                // boundary check passes
-                                                if (group >= s_groups_count)
-
-                                                // Out-of-bounds array access!
-                                                sbi_array_rcu_deref(..., s_group_info)
-
-Fix this by using ext4_get_groups_count() to enforce acquire semantics.
-
-Cc: stable@vger.kernel.org
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Baokun Li <libaokun@linux.alibaba.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Zhang Yi <yi.zhang@huawei.com>
-Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
-Link: https://sashiko.dev/#/patchset/20260825095422.3166067-1-ruanjinjie%40huawei.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20260902074805.398540-8-ruanjinjie@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/ext4/balloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index 679bf230b2984..f06b4149bdda5 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -325,7 +325,7 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
- 	struct ext4_group_info **grp_info;
- 	long indexv, indexh;
- 
--	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
-+	if (unlikely(group >= ext4_get_groups_count(sb)))
- 		return NULL;
- 	if (unlikely(!EXT4_SB(sb)->s_group_info))
- 		return NULL;
 -- 
-2.53.0
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-
-
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
