@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795072765;
-	b=WgCuuimTYTRWmI9dQVOP+wBCdURUYk3qoJSWVfgd1eV2ZX+B3GA7e7sYjNRbQWya1Yf+
-	 /Ykl3S00CzD1flZPKjRb7/uKVixxYr41HmuwWC/eLjQyniBqSzEPpkSZbuYuYXVzZuO8p
-	 VXBYDCc1wxpG3SK3I+5SFrjt3oC8haYbx3vpcWr4DqKxxaJ1INQDCycMGIPEXaNO/hJwU
-	 IUVSiI+0BiW8Tf7ugMrNQPldfoQ6/JuwHiogJRBpblgzjHq9N9yHAhtP03NKPa0MPrr+m
-	 P9R/oMCYLxWFx/6sY9lg2xp+w/4OI+XNaiAJUV3G9hdMi1SevhyjBq2dpz8E5EQcRmQ==
+	t=1795073028;
+	b=RkHgnW0727o33q7FzuFyL3HFskmpjuoEwD3Fbs5Bs3xD4njsFKpyEsZ0k8tVgNJ36mRA
+	 7Tw/VO0Ecoo+f0c1uovR/ca9GYliff87euVODqlIAVMuqMwSyMPyWUofrZXV2Qzqks3LA
+	 0Fuw5wFoyiqB6HN69S+tzkf4p0bmplqcQcaV81T5yjFs9o9lcxqjhDf+D+7edpLRnwxva
+	 /0TL6j/AWfgp/8kS7pDDBeaZrB5ef8gstgCeLDGBDufKVYbsugqa6Y6NQWaZUfuAThXiM
+	 PtP1glCVuVZpH1gXqPknTDSZKyG7iIf/Hggdtquib8116qHKCtuRr71zn5LdTPwJL8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795072765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795073028;
 	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
 	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=JGH8dnM2BI/s1mgvWClCH3pkAXo73qLg8wYZfIZ/+pY=;
-	b=Zwp8WBZhfsPR+GME/HpR5/8RXlkpuT5KLEkpXv/vsKQFL/DOAg4fwHrrO2tL21FgaD8N
-	 kjzMXfOBRe1PBwBoFg0Us6P9c5PVi/gIvts/4Moam87ybZimpvXXgWag/Dcmi7Sj+KSpN
-	 iyrC8+QbWCzDcjfXa2iQzpR7RTG1c52pPRO/n7CrDWeAruRKBcgYbw+BAKKhxD7RCw6vY
-	 /vNuhNh0MkuJ6UqDMz352p7UQQrkdtxJgBMCzdAXnkE/EmY3ywTPvtkUcYiIyawmFr4Cl
-	 Y0HJHd+XY1tUrwE5bcWK4Z/tZ1xqOkpTteid0tFZNLsCMg7mwbqLktwK41SRJdnOesg==
+	bh=s1E7amwr2Ec6lhWT6IJc+C+PoDVlMOHKsEuqBzS/k0s=;
+	b=j9EDRm3JmlBtKg2SZQ58B1e4sq2GHF17cEzv/fgbOu+UhU/1T30m99tOI3tMqhueYwap
+	 GoK1p0tnhGhBLVqNB1InEOOvfNa2EULTwu5ImXTm9rTGFAmXhEVPDQaToHtRXVVNBFzNH
+	 gCh5MU4diK2HtQTD4NyzWeNDYRKklMISY39bjnZuZ5bLnE687xXxUbrna3dn/YMIfcu0A
+	 62V7ejAvRbdk9CmYjUbSQM5zKjvAMrXs/FJK6CBYSXAk4FY11w3lnUvJtbjxPADQNobc3
+	 OMB9yH0nLst0Agb6E8QWXnUmge1Sj8ZtS+xgRzGcuWc1Ko58BHOR/IOI+kPVsheOQLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WpBxmTiF;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="IyNXhNy/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2658C606A320;
-	Thu, 19 Nov 2026 07:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CD5606A320;
+	Thu, 19 Nov 2026 07:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WpBxmTiF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455331F000C4;
-	Thu, 19 Nov 2026 07:19:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IyNXhNy/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1721F000C5;
+	Thu, 19 Nov 2026 07:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795072764;
-	bh=JGH8dnM2BI/s1mgvWClCH3pkAXo73qLg8wYZfIZ/+pY=;
+	s=k20260515; t=1795073027;
+	bh=s1E7amwr2Ec6lhWT6IJc+C+PoDVlMOHKsEuqBzS/k0s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=WpBxmTiFmfO9H8G8rrmi/1vhx6Ib3uEYuBCFCdMFuJZrvwxrAcN1KOMs8AmEN7tCW
-	 E5TybYuqwW47jSgFpV8el/zNMe4+7kDLpLqlIcNZBtyDa5QuDfNnl3vlXbl0VHlwkW
-	 TRmvwzcFvsCOUegHTM+pKTmhnGQ0N8wq13lfBjwRN1QOIQuTOHNh0VsmBp2sILUSuA
-	 0JdFMwRpVhRJC8YqwRQpw2NHOA0GD2/xP2B4s0ytHw0C+rGkJg6udvoNgKGs2P/77Z
-	 a8NojRMli/+TOODLE3iaBM1QoxIho7Mp/C/mnXqggzD7bcZN/kcsosyPIn6j6/HLQQ
-	 vQZiXJrGGsvIg==
-Message-ID: <fd52d21a-34c3-4686-a9d1-099933e7cae2@kernel.org>
-Date: Thu, 19 Nov 2026 08:19:21 +0100
+	b=IyNXhNy/v9KLUUKWji3e8YUuhdPEiIe9COxX/6VugvBqzngldqF9xxsZD7Iq75Ojv
+	 9i+Ee5gIKM9t4E02yikUh/d6aWCJOt2QrWs0xaXq7BYCm9MkaC6ud/lirwWYiJGu17
+	 wku6rZjZMXpRE1wRY33w52k4TLTvB/s8gMWk6UPsNbA4IYkiz4h9FLXJtf4d/UOP9h
+	 A7R9Wxcn21nyLF4wIG9dCYRBL5fAHh03zC9CKs3Jufq1Qjf82HsCBvzxtbIJx479G1
+	 XVaL1qDVkQPBCsM+rttWOolUBtIzufKIOIz2zgopLGeuGCEpbOsHZ9RBi0K++Aj282
+	 CfChWn9F0vSqA==
+Message-ID: <a646c127-dab8-481e-b9e5-d6eaa839c2c3@kernel.org>
+Date: Thu, 19 Nov 2026 08:23:44 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -52,14 +52,14 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 1913/2651] PCI: iproc: Use the EROM outbound window on
- BCMA
+Subject: Re: [PATCH 7.3 0286/2651] perf trace: Enhance BTF type formatting to
+ symbolise kernel function pointers
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Semih Baskan <strst.gs@gmail.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
- Bjorn Helgaas <bhelgaas@google.com>, Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, Aaron Tomlin <atomlin@atomlin.com>,
+ Ian Rogers <irogers@google.com>, Arnaldo Carvalho de Melo <acme@redhat.com>,
+ Sasha Levin <sashal@kernel.org>
 References: <20261118150247.972732815@linuxfoundation.org>
- <20261118150355.645960710@linuxfoundation.org>
+ <20261118150258.204483253@linuxfoundation.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -104,46 +104,92 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20261118150355.645960710@linuxfoundation.org>
+In-Reply-To: <20261118150258.204483253@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 18. 11. 26, 15:52, Greg Kroah-Hartman wrote:
+On 18. 11. 26, 15:25, Greg Kroah-Hartman wrote:
 > 7.3-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Semih Baskan <strst.gs@gmail.com>
+> From: Aaron Tomlin <atomlin@atomlin.com>
 > 
-> [ Upstream commit 9850907ee1dd4376c09c4129e0adbe3b39d191b7 ]
-...
-> ---
->   drivers/pci/controller/pcie-iproc-bcma.c | 40 ++++++++++++++++++++++--
->   1 file changed, 37 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/pcie-iproc-bcma.c b/drivers/pci/controller/pcie-iproc-bcma.c
-> index 593418c2bc3aa..1e258cd8fed4f 100644
-> --- a/drivers/pci/controller/pcie-iproc-bcma.c
-> +++ b/drivers/pci/controller/pcie-iproc-bcma.c
-...
-> @@ -38,10 +63,20 @@ static int iproc_bcma_pcie_probe(struct bcma_device *bdev)
->   	struct pci_host_bridge *bridge;
->   	int ret;
->   
-> -	bridge = devm_pci_alloc_host_bridge(dev, sizeof(*pcie));
-> +	bridge = pci_alloc_host_bridge(sizeof(*pcie));
->   	if (!bridge)
->   		return -ENOMEM;
->   
-> +	bridge->dev.parent = dev;
-> +
-> +	ret = devm_add_action_or_reset(dev, devm_pci_alloc_host_bridge_release,
-> +				       bridge);
+> [ Upstream commit c6dd6161815d0c10ed24ad13fdad847bec63d961 ]
 
-This does not build on armv7hl:
-drivers/pci/controller/pcie-iproc-bcma.c:72:45: error: 
-'devm_pci_alloc_host_bridge_release' undeclared (first use in this 
-function); did you mean 'devm_pci_alloc_host_bridge'?
+...
+This does not build on i386:
+
+> --- a/tools/perf/builtin-trace.c
+> +++ b/tools/perf/builtin-trace.c
+...
+> @@ -1079,33 +1135,40 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
+>   }
+>   
+>   static size_t trace__btf_scnprintf(struct trace *trace, struct syscall_arg *arg, char *bf,
+> -				   size_t size, int val, char *type)
+> +				   size_t size, unsigned long val, char *type)
+>   {
+>   	struct syscall_arg_fmt *arg_fmt = arg->fmt;
+>   
+>   	if (trace->btf == NULL)
+>   		return 0;
+>   
+> -	if (arg_fmt->type == NULL) {
+> -		// Check if this is an enum and if we have the BTF type for it.
+> -		syscall_arg_fmt__cache_btf_enum(arg_fmt, trace->btf, type);
+> -	}
+> +	if (!arg_fmt->btf_type_cached)
+> +		syscall_arg_fmt__cache_btf_type(arg_fmt, trace->btf, type);
+>   
+>   	// Did we manage to find a BTF type for the syscall/tracepoint argument?
+>   	if (arg_fmt->type == NULL)
+>   		return 0;
+>   
+> +	if (type && strchr(type, '*')) {
+> +		if (btf_is_enum(arg_fmt->type) || btf_is_func_ptr(trace->btf, arg_fmt->type))
+> +			return 0;
+> +	}
+> +
+>   	if (btf_is_enum(arg_fmt->type))
+>   		return btf_enum_scnprintf(arg_fmt->type, trace->btf, bf, size, val);
+>   	else if (btf_is_struct(arg_fmt->type) || btf_is_union(arg_fmt->type))
+>   		return btf_struct_scnprintf(arg_fmt->type, trace->btf, bf, size, arg);
+> +	else if (btf_is_func_ptr(trace->btf, arg_fmt->type)) {
+> +		arg->val = val;
+> +		return syscall_arg__scnprintf_ksym(bf, size, arg);
+
+builtin-trace.c:1164:24: error: implicit declaration of function 
+‘syscall_arg__scnprintf_ksym’; did you mean 
+‘syscall_arg__scnprintf_buf’? [-Wimplicit-function-declaration]
+
+> +	}
+>   
+>   	return 0;
+>   }
+>   
+>   #else // HAVE_LIBBPF_SUPPORT
+>   static size_t trace__btf_scnprintf(struct trace *trace __maybe_unused, struct syscall_arg *arg __maybe_unused,
+> -				   char *bf __maybe_unused, size_t size __maybe_unused, int val __maybe_unused,
+> +				   char *bf __maybe_unused, size_t size __maybe_unused, unsigned long val __maybe_unused,
+>   				   char *type __maybe_unused)
+>   {
+>   	return 0;
+> @@ -2529,7 +2592,8 @@ static size_t syscall__scnprintf_args(struct syscall *sc, char *bf, size_t size,
+>   
+>   			default_scnprintf = sc->arg_fmt[arg.idx].scnprintf;
+>   
+> -			if (trace->force_btf || default_scnprintf == NULL || default_scnprintf == SCA_PTR) {
+> +			if (trace->force_btf || default_scnprintf == NULL ||
+> +			    default_scnprintf == SCA_PTR || default_scnprintf == SCA_KSYM) {
+
+
+builtin-trace.c:2597:82: error: ‘SCA_KSYM’ undeclared (first use in this 
+function)
+
+>   				btf_printed = trace__btf_scnprintf(trace, &arg, bf + printed,
+>   								   size - printed, val, field->type);
+>   				if (btf_printed) {
 
 -- 
 js
