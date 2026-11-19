@@ -1,60 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795097329;
-	b=yOhhkmNxhRZHkA5raXFGntqX7vjwu5zSg7IuZWPNHkEnWPYS1kvNzxpjZ7KFo096JPrK
-	 s+Ylw/KZOUkFY/0ti7LjT92H5o6yHvhz6RRGsrrfgiD6stNeZC6LBxeR4J5uuZcLKZgXB
-	 osrasvGwR8SLK50juR3tNc2bqE1q/9SBaxCue0pyLc7n5wU33FmKrumDQXt58XJA+crUY
-	 xtr664owg8dwG5FNxBiNAdcNgWP7qPGXf/myn/m3oPq9d8J5SagdxYKpe3KLLDuMlvwDj
-	 OFaLCzwnUyq89Jn+DKUmkLBKwNI+4+AIFTaEDUjFtFd2HkSVsRFXeubWODn83KI9b3A==
+	t=1795102655;
+	b=1J016mahj4G2RRylpUlYBED0yYtda2rIdTR1X9oaa/Mh6FjYJkoJIKnvlwN/z36cW8Cc
+	 a2tWvYAfxxTLQ19hUyW1Zt7a6+QZUrqA6W2AIZBjg/Z3K7wmTPv4Ude1LRtwyOiKBJS/H
+	 co6vqQ5oAYgu8Z7WYF4xcwpFuPj9S4LrNzu2F+B/opmqMYtqVysyfifi8yUOclxQ05uEr
+	 0+eAf6IdYxH8kUwF65cr0lNhIp1DlIhQFtzLeKZtLEkfeizZty+oLzWug8SIseBb1ulAS
+	 8aeYoSoKG0ov3oIX35AdCeARs9YVvwHNZRsyAivuCM4UnB8GOk6tckmayold6Rg8U3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795097329;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=IkUQ/Hyn5hzUG4i31KA8ExA7XZ1o5KCxvl7XJP+wUrc=;
-	b=EtTAGiuhHMt9a4+MFEWemuMjdAbwhGV8TPvI1B1GlbYyK1BivmyeBT5oU3VVLaCapb18
-	 EbHnJ3wXp5BmI5flEAxwlMWCSAIWijQs/818A7zIl7Jiiw2KSqBpZOcjFW/jCFim9aluR
-	 0gYzBR3HgcHZ7TFwg8pUw6N3Q4ZiBiPqXc657Dh/Fe0FuGyRb9FQlYNRDGVfh5K1rqINx
-	 KKhNkeNNx/YvO0WI+MmRSVsQzhUg2lR3qVlt0sUgmRDXGQjgg6AKjzUizHYsLD0INyE0O
-	 44ayv84GB9tQTJVORuki1FYK0fqJy6HbFEvbrsQg+BwYoCBxFvRWHbtRSeNAL4sXbVA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795102655;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=TO+8nrTIMWn71QJShuf5TRZeIr14Js9cHAmW6jrwfig=;
+	b=WaWBBGDIJclUscXjBu34f13mWifY/2kWb2xWWPm1/CcxVLq6Kjna4dr0iFyEs4j+7kf5
+	 s24uzjnX867WVO/KHHElrlYVk9tYHqC9UUSNyJfSv2BLo3iwe9q8NHBrUr1d1yp5JQLKg
+	 1snftONhb1OR+MAobgbnqp/VhNeuI2IEFhz/VtcoLFJpO5jJk3tl611RLJF5CKOxSJx3T
+	 N9dZ2uzFiENHn1ZRTDOlkwPdk4A9KX/2tbbBgqI97+q4bwzENKG1kcHcW+NTawdP9iEnj
+	 pRrZA9/YrQ3UTmxk0Vw7pLL3wxbudEbhto1Lf0G5AaVTsPrtW2r/S2DMUfoAAtYqzFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iZVAzrSC;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linuxfoundation.org;
+	spf=pass smtp.mailfrom=linuxfoundation.org;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=TjYZHQow;
+	arc=none smtp.remote-ip=209.85.161.52
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D514606A330;
-	Thu, 19 Nov 2026 14:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E173E60A260B
+	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 15:37:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E173E60A260B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iZVAzrSC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFCA1F000CC;
-	Thu, 19 Nov 2026 14:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795097329;
-	bh=IkUQ/Hyn5hzUG4i31KA8ExA7XZ1o5KCxvl7XJP+wUrc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZVAzrSC/zPggAViGnqaEJtmJy7btxJmXzo/R04++vmD2qHLSgc86vEuVAfNxmZXh
-	 ILkv23+8qHJSDJUyUjsINbMPGLDNua7FtGLbSztALTdavdDKbDQSITi8JshAbbo+FD
-	 W4XHyd//VxD4Cnuxc7D6sQ5yDe7VI3g5FqAzDEgkKyCwfR9H7Qq4U5fKtTaixKOpoS
-	 Bj4nv+w2hE1tnrM0vcq8Nz07EOwVc0Q0YMwCoSZziQpnEPrLBpUlUUn+F7s7mB5UBs
-	 8V63Mhl3R1Um82PCX8r62jy7ypDwbb2ayAK9hnP0WIpTsMp+r6ocINZS95qQ9cHUhH
-	 Fkdzn8f0h391Q==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: axboe@kernel.dk,
-	hch@lst.de,
-	patches@lists.linux.dev,
-	sashal@kernel.org,
-	stable@vger.kernel.org,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Boqun Feng <boqun@kernel.org>,
-	linux-block@vger.kernel.org,
-	rust-for-linux@vger.kernel.org
-Subject: Re: [PATCH 6.12 0534/1756] block: remove BLK_MQ_F_SHOULD_MERGE
-Date: Thu, 19 Nov 2026 15:08:30 +0100
-Message-ID: <20261119140830.15616-1-ojeda@kernel.org>
-In-Reply-To: <20261118150030.389817521@linuxfoundation.org>
-References: <20261118150030.389817521@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=TjYZHQow
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-71aea92f666so1533849eaf.2
+        for <patches@lists.linux.dev>; Thu, 19 Nov 2026 07:37:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1795102650; x=1795707450; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TO+8nrTIMWn71QJShuf5TRZeIr14Js9cHAmW6jrwfig=;
+        b=TjYZHQowfabTS6Z+HI50xO+blTkH8RDJnIdkBA4KeFOrr8G7cxYIK7gwqEibWI6yOL
+         mLTg2ErJdjejgbOW6KczKvGFwB9Z3J/vuQTy9x6GUlew4qZlHpru2PVQ0T6b0QhLzUvu
+         eQvDRRVBpa5bPpVPLkRDn/rlHzi5yTNo+V3tI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795102650; x=1795707450;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TO+8nrTIMWn71QJShuf5TRZeIr14Js9cHAmW6jrwfig=;
+        b=MrDK/uZUA5fGT2qIxbqqtH9jowHfA9bVu7zlpRWuI/n4aPpj5k18g462n/baQE/BYw
+         diqVyQivAX5Jiq4fvOCTWsJnhLHA5nco9w1CT4q/aX20X3WFJP8ycRzYSIyih1BchMik
+         2dnR2F7mxQbFj9tWa9P0dHw5158UHsBZ1WwkjCNSqxFsGxQ7MCgCS/H6lqQi4xZetoQG
+         FQoLbGzTVX+8eFnSHFRFHYUmlkI7izxemIYKLDLCHoExz+YWCbf4cjBvDu+u9MXukEy+
+         cclI/i7sHiUUdVAoIzqPtbkPF4N4B/wWrCF3t4ow2ItOuSE36mHprDQ8FQ0HCCMbWnE6
+         uXyA==
+X-Gm-Message-State: APuU4Z9lYZPnXoPzkIXnpUWawKkMp8Nn8Sd2H7zsCUKaaKVvrFYwvCte
+	m9DG92TqQIjgpEQyMo1CB27y2WxmFfJhzc8teVw76fCiTF9tnG3hFvJmHB953zY1xtU=
+X-Gm-Gg: AYBFou1ued5ZWn31EMYzMeb/7wqBqIrgOCyz1Sw4y7SdsKkKBe25NQhiuVpkaEQ+8kM
+	209OHlAD83T0zLicc5Ev8s1clFZD7ivvrJSt08OZREXRX7F/RkVnP3SJ/TZPlGDBrWs9bsQI3F1
+	m5etZCledi5hiUwPeS2F8WCeu2fQPzGCyC+cIJzHuxobQpoLiYWb6t3SQPESVj3uYZHXqyJY9ec
+	n/mf1lt9FUu0YB8NMROIijOTRtn8T7Qtq3Tp65M34cnR/uJq6R3tkYQ92FGlCyWXttDEkisbl6t
+	jPgPAAC9vDMSPaXQKT4an6ZVA3+G4espWnk7koPsFe70ImCxCrjtQ+0YVgahjWKtu5ruOC9cRTA
+	ySKkhgod5pBtsOw3+bqEozBs+p0TRqRX0/9i/abvZ/xtzwc8W5GNyPvhqeqF6epctfHhcLbl/W0
+	xL6bcjVHEydrEmZNL3EyaFTG2mPnLdL6mYieBLM6sN1r1rTZlRShPUlxbVYLxvwDVq5pQuRp5Rf
+	oF80HfrJDHKi2sBY2JRxQ66U2a/ERdWd5rSgpz3z4OfZMMZVbbJi5qTTQbGgagZSkPKzbjB+0dr
+	TMYGPBU6yNeFzH2ABoHrwNoVJ0ealwatSHTJNQ==
+X-Received: by 2002:a05:6820:f025:b0:71a:ed81:a2e4 with SMTP id 006d021491bc7-71b18293191mr5288368eaf.12.1795102649706;
+        Thu, 19 Nov 2026 07:37:29 -0800 (PST)
+Received: from [192.168.1.128] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-862f01f71d6sm5008625a34.11.2026.11.19.07.37.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Nov 2026 07:37:29 -0800 (PST)
+Message-ID: <0d95318d-d9b3-4732-99cc-ed9c96c20b36@linuxfoundation.org>
+Date: Thu, 19 Nov 2026 08:37:24 -0700
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -64,40 +87,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.3 0000/2651] 7.3.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 18 Nov 2026 15:44:21 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> BLK_MQ_F_SHOULD_MERGE is set for all tag_sets except those that purely
-> process passthrough commands (bsg-lib, ufs tmf, various nvme admin
-> queues) and thus don't even check the flag.  Remove it to simplify the
-> driver interface.
+On 11/18/26 07:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.3.6 release.
+> There are 2651 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 20 Nov 2026 14:55:47 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+Compiled and booted on my test system. No dmesg regressions.
 
->  enum {
-> -	BLK_MQ_F_SHOULD_MERGE	= 1 << 0,
->  	BLK_MQ_F_TAG_QUEUE_SHARED = 1 << 1,
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-This causes:
-
-    error[E0425]: cannot find value `BLK_MQ_F_SHOULD_MERGE` in crate `bindings`
-      --> rust/kernel/block/mq/tag_set.rs:55:38
-       |
-    55 |                     flags: bindings::BLK_MQ_F_SHOULD_MERGE,
-       |                                      ^^^^^^^^^^^^^^^^^^^^^ not found in `bindings`
-
-We need:
-
-  31d813a3b8cb ("rust: block: fix use of BLK_MQ_F_SHOULD_MERGE")
-
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Andreas Hindborg <a.hindborg@kernel.org>
-Cc: Boqun Feng <boqun@kernel.org>
-Cc: linux-block@vger.kernel.org
-Cc: rust-for-linux@vger.kernel.org
-
-I hope that helps!
-
-Cheers,
-Miguel
+thanks,
+-- Shuah
