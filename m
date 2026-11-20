@@ -1,61 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795207190;
-	b=LU72ZPQ34x0YsvPToeLtAZeyby1LE8+FFU+Rt2fhbGm+1ApBMhy2otpq92lioTSPHHRv
-	 aCQ0/OEXsCftNz9ti5oPvDARAwEvRDIjJ4XUoP3CYBm2tvOUvw53xA4bv6cw4OtA2RNCO
-	 pkQymyUBQhv2JiIM2dKReFwoC1HhI1tu+3+/NNKGJI1W0fqmyFA/MGSSAt6UXIF9LY1kQ
-	 uXtzOVkHxvG0MK80Xq6QT/2itV8Ny0fe28TZMRXYDa90cwgtfNqm/KIcfOkoAQ2/cz1cP
-	 WI4F9GfDRfNDoAFL4gOQVTtXiB4bdatFa7/m0ekGAogrWWgTKluyHPrYDlGiksx8FIQ==
+	t=1795207191;
+	b=UgLbTelguT4Z6P3/MOHBXM4rIF3MDaxMmZS3sw9G02+hPV+knrrNUy0Mm+1dnLXgIMzf
+	 jQSchbgY4EwGhj5Qsu8qhxI8Qeplw3Mb/WjWEvUAJhPYtjraZy+QLaYubpVFYtpz1F5+b
+	 8R0HH5j8bIwkg0irjPKtQ001BWp6x6wcFnpQHJEZAOvykaDg6llWOqp/Ysfudbnu6hiZv
+	 MbU9QI+RctSPnu3J9kXlTZvVia0S1aG6ahSzZQdxAHv0ZRlTQj4bAuTpbgaIumIxsMS1B
+	 wG5zt9H3sISM3ywi3xec+hgKN6ZmNDtRXwijZe9fL5HVtcZOkNWdhja3VHZt7qUyntQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795207190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795207191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=0fg85nWoIkAcbBBbrcWVKrN+WE80IqFFapI5wpCmhDE=;
-	b=CjO+KL7+UdknHNgHeqZLJv05oO2H5PFR3FSHsyHxMKANNloloNl9uy9v1vXOiuefhHIq
-	 6Z9gvga/aw7zYZBtQNhY1/7FoAUFLRDwh7VmjJVFbR951A30/cjj9QAhBPpjsHFcVv/d5
-	 a1zsI9p134c6rXRKKymKPqK2y7KvjrI/r10HqT1kXztr/X/SrhYDzWhIgjbDYVbUoBDAb
-	 JHTRLrv9DjUXpVNYBYvW3ozyF7Vya2WsMIZ8UEilU+BqlLxQ5eC+om91yzGQIHUI6g4QJ
-	 XFWpHkVVvXtNkYJnMn7LjdA5574Jm10b6W9pEn/ZEfwgAwzhzAfClOV07bIq+7aj1bg==
+	bh=y4ktv8LnI0QyrmsVLYgwBkh9j/OSk33rJ3hww2GTZ6E=;
+	b=SPaDd23sj39E0MFnh0VRmqGv3MwwCRlUynhQrX1tWIs9zt0vptMd/0O+B0u0qGfmPGLY
+	 tSLvn/eXyA5hwjfMf52ndE+mzzixesxq8hWz8sZtfxHKYjOhx1T11YhS3yEljnNrmXeWI
+	 Ha9u8sS7mfDbL6F7cp2nzh1n6XuoNpaDrr1pA6BV7yGwIKRCh3MgKARHDupUKOHYBfa3g
+	 f8+DiarHDpmPGJsdCgGyuPRhh4Ardz3lvHKo4Rksj5cgvJdA923V1kBrJqih0KGY+H8Jw
+	 xL0NfPiayLz7L+U70m3jfoVn/yMu71JeIzgCZvNgbmGaOE1ngBTiHOuiJPW4xeqPOAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MOxZ4Y0Z;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eIiuzBtC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD71606A6DB;
-	Fri, 20 Nov 2026 20:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8AB606A6CE;
+	Fri, 20 Nov 2026 20:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MOxZ4Y0Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA031F000CA;
-	Fri, 20 Nov 2026 20:39:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eIiuzBtC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D1E1F000C0;
+	Fri, 20 Nov 2026 20:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795207189;
-	bh=0fg85nWoIkAcbBBbrcWVKrN+WE80IqFFapI5wpCmhDE=;
+	s=k20260515; t=1795207191;
+	bh=y4ktv8LnI0QyrmsVLYgwBkh9j/OSk33rJ3hww2GTZ6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOxZ4Y0Z7e7uxIkC5oCSsFAne6YOy1JCG8nEwgygQk5HRsFntiNUpPPWvwm5H3QSo
-	 abrNtmIuDRfVY1AXRrCqOs1kUfTNcNiQ1PsAJJ+SFWH+N+ld1zmSg4sR4LfHdodE82
-	 8k9tQjQKLp586NkeCwpGuQMqc6DHJxsb8Q/MHS37Fry07MX4GlNGRfDSeGAyV7/t37
-	 D9ar76gTAwzLNTdRySJ8U/saLW0EKF5yRbD1bl6IB10sxl1174WWRJd9t/LIS5HrOx
-	 hCZPfMKlQL/G2cJtlFZmZxs3kcxXRK/9zwcdSFRpN/5wUOmfwc67VwF475OK1myIbR
-	 cVaTKZZ8JhpfA==
+	b=eIiuzBtC0vqpkqnfygCEYPwzId72f2L5Tc0hL1kIYPCqGZpJz4ZmBPbIZRZm+Q1G3
+	 YGIow38MMiqKr1+S+twDXERppuoxtVDHScN5xQ75nDe+QFXKv75YGcZFwJHRsUrKPz
+	 6cDpyekhEamuKJnormtdGe5FScpH59INK7We/EAWV0bTaCOMdTFbazNYT3aEu6GVEA
+	 JKsT3OCaQxebuFlwQZwS2BM8n5hkia4RU5pVl3NsOGh4IiTzYQDCqQkICDARFlcHH0
+	 vk6YzxfDSqDiOGyEdP+/NcYHzD8ZNIq+ZiUrSEvIv0jPOuAsyV8lHrTC0pH3KiHvhz
+	 3k7JJm0UCrKhQ==
 From: Sasha Levin <sashal@kernel.org>
-To: Matthieu Baerts <matttbe@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.1 1649/2857] mm/mremap: recheck PUDs under the page table lock
-Date: Fri, 20 Nov 2026 15:39:06 -0500
-Message-ID: <2026-11-20-1-daily-reply-0017@kernel.org>
+	Usama Arif <usamaarif642@gmail.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: Re: [PATCH 6.12 0450/1756] Revert "rcu/nocb: Fix rcuog wake-up from offline softirq"
+Date: Fri, 20 Nov 2026 15:39:07 -0500
+Message-ID: <2026-11-20-1-daily-reply-0018@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <2026112048-scheme-cornstalk-9990@gregkh>
-References: <2026112048-scheme-cornstalk-9990@gregkh>
+In-Reply-To: <417bce40-3566-4079-8241-2704cce5f7a4@oracle.com>
+References: <417bce40-3566-4079-8241-2704cce5f7a4@oracle.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,11 +65,11 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> thanks, now dropped from here and 5.15.y
+> Could we include 0999f6156013, or retain the offline-CPU guard until the
+> IPI helper is removed?
 
-The build break is fixed by 54a948a1e97a ("mm/huge pud: use transparent huge
-pud helpers only with CONFIG_TRANSPARENT_HUGEPAGE"), which is now queued ahead
-of it, so I've requeued the recheck patch for 6.1 and 5.15.
+Queued 0999f6156013 ("rcu: Remove swake_up_one_online() bandaid") ahead of the
+revert for 6.12 and 6.6, thanks.
 
 -- 
 Thanks,
