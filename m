@@ -1,71 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795188222;
-	b=suEtXrFgLq3PzWBXDHoP4knvG96EH/XiD20gB+5+5yhmINvEMHqqj9Mg1UWZE1f+Ur4V
-	 f5Mfox2/MrF+3qJGj+pS3RybgZpNM2GNDzmG1drjq/2ohcfoTH23PDtirQqsgNmPCrt3w
-	 JcX/bg/IhoJR056Ac3EgkMYpxm76Hcw+LvPnWH1o/sde5SBcrToR3nDaVuqwx9mlEPPKo
-	 +foZu526vBTOnczDCXa5IGaUMsQNFpQVr2tIHZc6HS72D0OSI78DwlqGrr40uEXWiUqju
-	 KDm+mnQ3qcvoHk9Bst/m8lKmG3Z5WZp/F/sm28/TfxLAbjC08Y9WEGphMnwHInLHsGA==
+	t=1795188663;
+	b=sdEGPM6kv5ahDJ1PaDezBDwEX/G5JtUGb1K+oULR+dtYSBW1bm56+rZNcZMqkSBsiuhp
+	 EO1f/h2c2wl2En/Syy8o5SRCMbPTlE7oQ0neZyKSdKtOvNs3wey17v8mFD4497cElb9Gh
+	 U6oQIdRlpjVde5tg+uy94t+Bm6Is+TEnrxxhbaGs2H/cwYVPzPO0+BGpQWdsxyEikxGXH
+	 MtkRL/p9ZXqtI61D3GtsniZYredyWlkJSqy24R8fTC5BaIsxxI1vKPVMzWRQX+6ow5dMO
+	 5ra2KxF8eN8bjS0b3r3TpSm/DKLn2QpqzYed+NdSH2BaeZBslZoeFrP8J/tKhuhniTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795188222;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=abI0MkN9ofZZx1hBCem6C++Lk9GXWtlv3oo41rsU6AM=;
-	b=sHzdUHS+b+qC9FbHwjPNzBXv2IVrm/WtwR6Wzp/9RD2K0eD22US23dk0oR3iw9SqbgDN
-	 y+bcz55pfLXfNS29KLlw5yvlxDn2ro6oXFe6lPHG6ft2RhbLZ+7gVaJwdjs5+Dbf8Y7cx
-	 3Dx4Jo43lUXmrNkmvKkZT4RHJHJz9BM3iA/4m79LXQBErqQqCYscY+uVCf8WY1WAnwImJ
-	 bgOY+6O0oATUjlna7Ex1Sgm110l9w8XX8rllumRLd+YYTTgfvJ6mQdZBT7D+jAWGH7VSe
-	 hjQAfCSf9mNKXiLGbJgLiUnA2hx+iGytyWzHeZHNn093odiAkv5gQ/fi9PgyUgdscIw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795188663;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=x+LtO2SwiU2c8Ea5LiuiuZFMhci9d0US17iO+xBudqw=;
+	b=jvoNgBUGexUvkDZSs04qM7rIDx70Gz+oe088QtS6BYG0FGs4rkhq8PKjaWPKYKhiA8xd
+	 LkIPB9mMFxB4t+5nuNTWclaW5bHsec+ke3Gg6OmYhFVGwmFsChgNcvmgqkK+pdLodMvJH
+	 l3TfKBwVOVPh3gYaPWF+HninJfPr5PWyqsH768FPyyzh1PYDGukc/3GZKnydlEI7yokaU
+	 92xgHdeojqg6INZ3DSbTwRzTc2UaDv0WTHZUrc2XoMsVL1bkjK7Du2RZwNLFxWzZWzJWR
+	 QGb1B14Xh4w1wk1kK0mU6uJdH47rI3QNnCIjkPmLHBe6TP9YyzfWB1XqmTCJXshS7jA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eBmOQQ6T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TAJhNarl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0084B606A326;
-	Fri, 20 Nov 2026 15:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A58606A320;
+	Fri, 20 Nov 2026 15:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eBmOQQ6T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87B21F000C6;
-	Fri, 20 Nov 2026 15:23:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795188221;
-	bh=abI0MkN9ofZZx1hBCem6C++Lk9GXWtlv3oo41rsU6AM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eBmOQQ6T+4hWjxOqsco6Kf57dE/XlEnhEaqP8yLDl/37khHypOVVE6y7KmeRXytYi
-	 aTALH20jtwKdUzbWeQjNI4r0SnaL4iKGdVp7SESC3P/lypB8dubhLOQytgc4uoAB70
-	 MnHk3htQibrHtn/V81WdfiJMh5opyiskBpJB5uwUQAS94h1UVoDnZQu29uveQaIHJ3
-	 zr3Ik+d5dF40mhzjpgFf/603cY+/2v6t6hCUg9IFF2GZPFi16QBIbhkdbLYuqXwiV7
-	 q0oxcogZuXtQS2HPmA9b/IFx72hjstV20XyCBkA9qhmXC3bfg75y41zayd9a99Qp6B
-	 NbGgDTbLZRulg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 7.3 0000/2642] 7.3.6-rc2 review
-Date: Fri, 20 Nov 2026 16:23:31 +0100
-Message-ID: <20261120152331.24002-1-ojeda@kernel.org>
-In-Reply-To: <20261120055248.913352689@linuxfoundation.org>
-References: <20261120055248.913352689@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TAJhNarl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6666C1F000C4;
+	Fri, 20 Nov 2026 15:31:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795188662;
+	bh=x+LtO2SwiU2c8Ea5LiuiuZFMhci9d0US17iO+xBudqw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=TAJhNarlchTc78iE9SLMRzF/t7uZSLTbgOoUV1827wPMD3vNY/D62qEtPQd68cp08
+	 CQ5coLW7FPA8r6SGzSidU1BwrIkYEVlDtyxcuiVRDYaZo7Mubg3HGGBF4fseJmOQf6
+	 22jFIs1EwFK2PUETw1r/ai+Pov+Oxf/PrZr/o1hI=
+Date: Fri, 20 Nov 2026 16:31:00 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Sasha Levin <sashal@kernel.org>,
+	Sean Christopherson <seanjc@google.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Nikolay Borisov <nik.borisov@suse.com>,
+	Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: Re: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
+Message-ID: <2026112026-plank-heavily-4ef8@gregkh>
+References: <20261104211043.516122098@linuxfoundation.org>
+ <20261104211109.504581890@linuxfoundation.org>
+ <dac4e304-98e6-4e61-93f4-8d971069d936@intel.com>
+ <2026110539-lived-blast-ef64@gregkh>
+ <auyRq2HXJIfMXgBh@google.com>
+ <20261106-re-kvm-tdx-bus-lock-drop@kernel.org>
+ <6e48bcc5-8f7c-4e5a-9e34-1cab1c53dd92@intel.com>
+ <2026112012-hardener-radish-1583@gregkh>
+ <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -75,27 +63,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
 
-On Fri, 20 Nov 2026 06:58:20 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.3.6 release.
-> There are 2642 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 22 Nov 2026 05:44:39 +0000.
-> Anything received after that time might be too late.
+On Fri, Nov 20, 2026 at 07:43:32PM +0800, Xiaoyao Li wrote:
+> On 11/20/2026 2:38 PM, Greg Kroah-Hartman wrote:
+> > On Fri, Nov 20, 2026 at 02:23:41PM +0800, Xiaoyao Li wrote:
+> >> On 11/6/2026 9:19 PM, Sasha Levin wrote:
+> >>> On Thu, Nov 05, 2026, Sean Christopherson wrote:
+> >>>> Yes, please drop it.  Thanks!
+> >>>
+> >>> Dropped from the 6.18 queue only: 7.3 has the prerequisites.
+> >>
+> >> Can you pick this patch for 6.18 queue now? I check the linux-6.18.y, which now
+> >> has all the prerequisite patches now.
+> > 
+> > What is "this patch"?
+> > 
+> > You dropped the context...
+> 
+> Exactly this one:
+> https://lore.kernel.org/all/20261104211109.504581890@linuxfoundation.org/
+> 
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64 and arm32:
+Please just put the info in the email itself
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+{sigh}
 
-I don't see anymore the pin-init errors reported by Thorsten and Jiri in
--rc1.
+Now, to make it even easier, just send the backported patch properly and
+we can queue it up that way.
 
-Thanks!
+thanks,
 
-Cheers,
-Miguel
+greg k-h
