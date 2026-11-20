@@ -1,101 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795165204;
-	b=rjv5HPO8/X/vn8xJkNOlLU3/LuUpq0aT+dK0szLU22ZNxuqBmTbPgK5JttnxajYJQqri
-	 GJcJvKVMPtgpOW6hf0C8jsc1n0GZ3x2g9UL7P/GXxv06VtcCUXNX0etGEsPHkGTsneDVQ
-	 H6le4bq4wX0pFLoxG1VCYZ6jM6JbeV1mJTziVDp3fw9wAibQAnleLCR3s4skCnj2yR731
-	 M5+KUwhrWGtXu21j7MxJKLQMiUzhHEgsWlnDBH5oMFgU+6JJ46iVRgJbM5VSneFjLiYh9
-	 LY4DaFiVYsipFby6KjKZwzQjcw8OAy0BjP0lz/uMX9QHi+5tluSjDAJneeCABTAj0lw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795165204;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795165261;
+	b=R7bQcgy6W5F8Fr4DV/wW0pX+ToI1i7Wddhk5ZxKaFs/pzIu4uFh4IZYTQdmRMSwzdJ1v
+	 z7knmF3xTYUrfeal79d09VDvJymvXL8DgeuLaxlr9kkUK+7ywcLbqcKdJrHrYVIXdLJc6
+	 Kk0X4y+nPDMfZav9kJkzIiiN2Y7sm30PIJNtro88627Ds1dCPvlxquvuqRo6MfzTL2Cbx
+	 25bw+P476lZZuicIE6BnMLH6mk619lXwP8i/rk6KmhoXrP6wRvY6ZBrQc0LGPuyvMaSkK
+	 /si1J4bjpJSZxAm6SvNwDFhhFvlrjGtGxfuQBBtEK7Ts8n30MprZodzSwhCTcBmf2TA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795165261;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Sender:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=5NSy9VUbR/SX8a1pHNb7IdxpnGO7bEH3/Aun+Fy4hqE=;
-	b=EeCdLXxXWLOiYGrI07MutGkqbXcoeET1Ze6U3OObgKS6GGg4ftwdEtV1QxiIqlLshpAN
-	 19wal+y0hqisWUIm+TMb18qT9nVmHwUjEtz9nWbXvskZTY1WvB9bTDbkgTcTJ8LW+TmP5
-	 iqWV4yMFgwXyzlH8i+JMlfcaiKEZikJpaSJDZS2Xy4QHCgQOawhJOzWY3IHL0jrtnL0JR
-	 YUGBOPKZlKVwckRX7s8iek+x3RtIKoGK6QpP1JkUNVTzwKwSqKgiUQIdLMUD1tlWeYByH
-	 qbZlhXqO1Fag7nNpvTvTf4FRcf5ezs4B6Ph4iGflwKarn3ON90Ny0hzFsQK5YnWqKCw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=fail header.from=debian.org;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RepgOIi7;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=PZieRENVmUX5OHXGvmzJIcsoS8CWVu3mfuhhXe7ha4o=;
+	b=cHEWhJaDjIHiKxfldBJ7XnvyRFFle3KAKAnrr9LJZW3qerusnCex+hML9qIrR+1RYuV1
+	 Zny3487yWdHyLWylCaG949ip7Q98GZRhHZkjCFIfkwRy/IICgPmW3FWMU9+H/R72ScKLD
+	 t38eKYyi6ZkV29UtOc4s/SAVylVDAlmES5gQ1Pmvn4a9gTOSn9Z46G1bp0W1U35wGOAi9
+	 TLeHCHj+BWFxPlG9hokJUaKE56N4kpkEMeoKo1FCnWGNK2Hg8jVfWUSiEaEC99VyHERBg
+	 ZrjQXkzvV/2K7aBDU+MrXQjBslM+Hw7vPuKJ2TibZi9EDNtpE946XYc5lL2YUmjzYig==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=futuring-girl.com;
+	spf=pass smtp.mailfrom=futuring-girl.com;
+	dkim=pass header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=MthRrWwN;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.48
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D622760A6F70
-	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 09:00:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D622760A6F70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9723D606A325
+	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 09:01:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9723D606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RepgOIi7
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a1fbd52ab6so4360625e9.0
-        for <patches@lists.linux.dev>; Fri, 20 Nov 2026 01:00:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=MthRrWwN
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c4d427836e9so101631666b.1
+        for <patches@lists.linux.dev>; Fri, 20 Nov 2026 01:01:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795165259; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OgIobXbdXmUp9kV+5MfQ41HsM9zwJRZcQSwy4Zv0xWpkgKcgDStoTakBkLOQFeQ47+
+         bG5QYLvOoOJIBJQc86YiooXeoY++J0njfTESsT6HEjjZffomz3ITYPeZzVATckWbgmzi
+         WaD1vykZ3Nr6/P0SBM8X35RMbWSmO2yLGQlFgbc8cUxLNzj/Z6nMdbO5bx0O1pAezbeF
+         KooktUfbLrXiKVpbGRkYnbMTnMZv/rxF0XGggPzymjRazCetFicggWiiDd0nUaHn6eFM
+         eXZEnuy5XtLZ0NKhYohi5IosZybvO3hDFA5/0mT+Gbnf6z530uVpVFVOjOEUzUk1ZOtm
+         3F/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PZieRENVmUX5OHXGvmzJIcsoS8CWVu3mfuhhXe7ha4o=;
+        fh=HMRYke4OJqfyraU6qgMMHaiW/6s/JI2UGwUKxmgirBw=;
+        b=p2+X+7jHnQ0KbXOcH57sQHTieX4PwgDT4P8NQrhH3VMgPbdIHumXQEuICawbBW31os
+         M7R3vElPgp0IoOaM7Jk6Ivit0C9mlW/RLbcj+Zs6+iqKeEmtbc+7DYuMIxHu6u5rvC2/
+         3F8KBsqU6oVELerN7Q3Cx4hWLcEdPFe5/gLc8s1uO4NZd5OTeoRpBCtKOxDJP034KdGU
+         XFNfkUH04MJY5QgeTJuWWSEgPsuVwJVMBI4HptI30IlmxOmy1pMvgly2bF5iiPZ1TES0
+         Lg9eFeioyO3lSxNNLP39J7kC64AmSa2G93ybA3jOVRYtTHNgp1+MmXdOUgsMBG2ZolUo
+         5EAA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795165201; x=1795770001; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5NSy9VUbR/SX8a1pHNb7IdxpnGO7bEH3/Aun+Fy4hqE=;
-        b=RepgOIi7dx72bb9uYjsMVFh6Nr95d5B/yg1RvWe2w1CBfqfnYFRdTA/SYLfjTFVklx
-         p4uGX6x+xLtjESpCEjkCLcWkxYj/Et+QhHY3HVoO9oMZFv8Shdra/ghyYfBW6hRjnvgc
-         TXoF9dbVG2/PjO6FKC1KYzg+Txn8kTTfT2GyaDpaL6rilbxVl/YcKrj0jAfmpY97Qlaz
-         /JA87al8HUwEiH7JpwSEZs+tIkbzTgj64cNDZ3uppui+H/IQTyQHeas3uFiSqdCUXOMD
-         P4+KLiUygbqcppGGZueXumeW2J918yTJfqsA1vjc3FGkjiusvDA3Mlu/bHtnjpKTfpkK
-         oqdQ==
+        d=futuring-girl.com; s=google; t=1795165259; x=1795770059; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PZieRENVmUX5OHXGvmzJIcsoS8CWVu3mfuhhXe7ha4o=;
+        b=MthRrWwNqRLhGRCG36LH/ymZZBfW/eNldw2ptghEoNzw6LpWNJ/w1AD1dO7PEGHxd9
+         lwmgOsBC/4B4su0835HV+N2eRF9ZGA1ptD7X4re8dg7XRm/UE1p1XAi8swJXERv/PhSQ
+         ipFCO46JSHFGu+GOyhMmFsmEkjeucLEqILzkhlIjbh7AWADodMUnt3YHCqVQQuzkjTbm
+         QbDzr/f5Iyj23k2vI3BN5w+CWk7h2zGK9JZZNkS+ZTWc+lfMMNRp1TVA0SkFC+3Cbnos
+         D1HpkrHKJX+FR9WOMQvgWPJwxPp+KKk4bAwOPXb9ZObADAoyeHmZ1TQTxszovkSy0pK+
+         pD5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795165201; x=1795770001;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5NSy9VUbR/SX8a1pHNb7IdxpnGO7bEH3/Aun+Fy4hqE=;
-        b=KBzDHSTZyuf5wgg37dpC6q/V29QYGh9+TQMUuBTMbXpBCZ8UNs2T5YyattNwndUK9C
-         yDTta3QbfW4vvg4aN4Z6QXD0A3ZkblzkhCwZQtenCQjAnF0XejUiv5mlBKGYXnwgpQcm
-         QZQLZCM9hsmulUTfp7wboPvcmUF0Xk5PHPWR7gE49aAsvZ2uFUEdRfew20MJiNSvGxSu
-         koVg7eL9cU8iwS+NMBDfLgpNhodMSrjuy2swDp3Bm1mm9Ea5aqCkJO+VvkYHUJq2Kq80
-         8vIzQxe3aXGrNNZAq40LkSnpyWANSGULowX2+GEzmgmRY5v49hgwOqFlbmgxgjfX8y3y
-         2F6A==
-X-Forwarded-Encrypted: i=1; AL+hErFITxQbW0a/BwtSUaHmhE25fy+Hta7V2pPy54J0ihJk5CM9J1kBGCiUrP7t1WU6CgGsq9E1oPrF@lists.linux.dev
-X-Gm-Message-State: APuU4Z9XThdtsx+PEnLxDj++CoWJe+7ek4G0p6IzqIJeC9gp4v7IGXaH
-	BcyVYi/eSVGIi8F+ldZKRCyhMLqYs0q2Jw3nobSklyBbzKYuih7R6LDv6vp5hWxF
-X-Gm-Gg: AYBFou2SdMfRWGF4903TQC4Y5Po4HHNKpTO5Jnzry82+uq0jtTRHIxHMfoLNXRCKJsL
-	ec6dDPP7/ApQ/19mSHGBAMHCa9joSly7IIUIUkYo001R86aeSX+HPuBJGurlVkxEtX/67enulbT
-	99LsXYcmeV9NjBPrWXqhBVv18zjVzuqHQ9W6JqhimOCxAwQ+TUauPZ1/SDzzxUU8TlJkjAF4Xy2
-	xG60Lv9kDF+hpCVNLK7Cb9fbDaSk16TDOOslWwMDYttuBBmnkZjVFuu68R0EbhAVyJHlQXTv79I
-	tjre4N4O9VEUMtbt654uBdpyiexdAza0X4YufTTqKChL71TEJxbefWjbY0Sotdg9WPSkrEux6N0
-	Z5OOMQx8LUZ9kaaNjE3LebOAzaN26XggJq7VNWKnSJWPvd0Xrzl9AtEHcLqvh/z9GZbK4Cz8tVe
-	ULdHtm65XdcQZeOPjLiRfe+e7bc2goP8q7YicPbQIJWDRkv2rqqk3U9xGTVn+2/9QwkhzHPz9G5
-	MKkjijY2JgFGWTztI5J459lp+lyb6mfaBWOtAB+xHO0VwMeW0YRR158MhlqJ32IwwXdjcZkJzfc
-	8xs+OOxXu9EMWuJPb+nEu0qiXPT+4oRS9upjWznKYc3JCxiI2f92DV/FjeV1uu4C
-X-Received: by 2002:a05:600c:a15:b0:4b6:267a:dd6e with SMTP id 5b1f17b1804b1-4bb88938a62mr48117625e9.28.1795165200875;
-        Fri, 20 Nov 2026 01:00:00 -0800 (PST)
-Received: from eldamar.lan (c-82-192-247-196.customer.ggaweb.ch. [82.192.247.196])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab69bf629dsm3971885f8f.9.2026.11.20.01.00.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 01:00:00 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id 705B7DC06FA; Fri, 20 Nov 2026 09:59:59 +0100 (CET)
-Date: Fri, 20 Nov 2026 09:59:59 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>, benh@debian.org
-Subject: Re: [PATCH 6.12 0695/1756] perf python: Initialize debug output on
- module load
-Message-ID: <awAMD5kuizXPSt-7@eldamar.lan>
-References: <20261118150007.957976754@linuxfoundation.org>
- <20261118150036.866211196@linuxfoundation.org>
+        d=1e100.net; s=20260707; t=1795165259; x=1795770059;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PZieRENVmUX5OHXGvmzJIcsoS8CWVu3mfuhhXe7ha4o=;
+        b=1U8n5Y31UK2PZwzPYApEfykHpoU0QGLKw29K1/amlwwKRKK6+AxVc5iZ0XqhbAaH/N
+         o5e0BhgJPE+/9wmw8SiGMdGevYy7s/kzo1lmg45Sgrmf7tJ6Oo5odINqP+yDYIdsFSUc
+         j+jSClux1Eo+nmbCvKiYLSpvg8zV8HTkIYMYVP6xoGZ7V2Ot8LbXkpuBBPm568iPvNYD
+         QigJO7rkag1rKBBLVUnVDab/9YZdY1OIKoKFzUnNKwfs/bdTtUhZ2ZFl4N8Hzb2eS35Z
+         zUKwZIyA/EhiyQ4BmRju+umK+kse5noC9trnJOZuwPcODqfZgYqBO/pLTXhXZm5a+YpB
+         hISQ==
+X-Forwarded-Encrypted: i=1; AL+hErHpTaWBs/0M6B11AqKLWaufDqA5QXo9YnxlAJy5f8p03/TTjhWFjQH+wgsnpEeicV4diCL5dZmE@lists.linux.dev
+X-Gm-Message-State: APuU4Z93UEvpOwwl6rmvtc2z3PHXDP95Yu4+rF7/Ay8z7v4PDKAQ/nQW
+	M+cR3wbdXeqQBpO/sgQydoSuFwbrvBlWACjb6K1rc6/EYnPHGYihySoEtJubuNAaQi1Dk6TupoE
+	BstyAhyvEfDKcfhFQdMOmAdcPPp58GIt+HxrTVPw2Jw==
+X-Gm-Gg: AZFdTZcJDSk6aYnm22L7IvKk3GF0W4ERT5bwdat3eXeDkDbjkWZnkqF+7c6TeMEauI+
+	IZkFNc/QqZSCRtpQO7WNzYSMALQzbq5mlZJKjLIWT9yuYSPlYNDX/sKh/Are5oDHycebGmOY+uX
+	77GdFHWQ3G3T9Uyq1tH+WPYRK0hySHFp22WkTUgTkZGJqQ/dMO+lfD/45HJVjt4YbSzhkkVNDUU
+	dAsveuoo4lLGXsLBmfQt0mBXJEVTBh+MeJPbI4u6Gx3aAplZR2LgOYk6yqu9I7LM713bqm9pCxm
+	Q3SZy4068KPQOCAwhhyOzCK16hWsu037bFXndfv9jnU+m68tNaKCjt1ybS5re/LO9sgUw+bDzfs
+	WiXRhNe1MTJ3ZIJElUmMdan/seL/ubWsfBAvw
+X-Received: by 2002:a17:907:2d9f:b0:c50:f0f9:ad74 with SMTP id
+ a640c23a62f3a-c513a99aa4fmr235834066b.9.1795165257779; Fri, 20 Nov 2026
+ 01:00:57 -0800 (PST)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -105,91 +104,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261118150036.866211196@linuxfoundation.org>
+References: <20261120055248.913352689@linuxfoundation.org>
+In-Reply-To: <20261120055248.913352689@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 20 Nov 2026 18:00:41 +0900
+X-Gm-Features: Aa3M54rlZA_OBwjiZKWCvnO1fS0Oy5SCnCxiMl_HpsSggZDP4dM965l7S2Cnigk
+Message-ID: <CAKL4bV6kN20uHLeG=ZV3FHe2HghsA-yRp3+YgCVgTvGybek5Hw@mail.gmail.com>
+Subject: Re: [PATCH 7.3 0000/2642] 7.3.6-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Greg
 
-On Wed, Nov 18, 2026 at 03:47:02PM +0100, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Ian Rogers <irogers@google.com>
-> 
-> [ Upstream commit 3d13b3f1f3a7cd33d1847a4b87c3198089b6c4a7 ]
-> 
-> Unlike the perf binary's main(), PyInit_perf() does not call
-> perf_debug_setup(). As a result, the first warning or error printed from
-> the perf Python C extension hits debug_file() with _debug_file == NULL
-> and emits 'debug_file not set' without a trailing newline before the
-> actual diagnostic message.
-> 
-> Call perf_debug_setup() in PyInit_perf() and add the missing trailing
-> newline to the fallback warning in debug_file().
-> 
-> Fixes: ec49230cf6dda704 ("perf debug: Expose debug file")
-> Assisted-by: Antigravity:gemini-3.1-pro
-> Signed-off-by: Ian Rogers <irogers@google.com>
-> Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  tools/perf/util/debug.c  | 2 +-
->  tools/perf/util/python.c | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-> index bd968b4883cbd..5b53c9f8ec66f 100644
-> --- a/tools/perf/util/debug.c
-> +++ b/tools/perf/util/debug.c
-> @@ -55,7 +55,7 @@ FILE *debug_file(void)
->  {
->  	if (!_debug_file) {
->  		debug_set_file(stderr);
-> -		pr_warning_once("debug_file not set");
-> +		pr_warning_once("%s not set\n", __func__);
->  	}
->  	return _debug_file;
->  }
-> diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-> index 66d3b0c633b25..7b9b6d464a3e0 100644
-> --- a/tools/perf/util/python.c
-> +++ b/tools/perf/util/python.c
-> @@ -1371,6 +1371,7 @@ PyMODINIT_FUNC PyInit_perf(void)
->  
->  	/* The page_size is placed in util object. */
->  	page_size = sysconf(_SC_PAGE_SIZE);
-> +	perf_debug_setup();
->  
->  	Py_INCREF(&pyrf_evlist__type);
->  	PyModule_AddObject(module, "evlist", (PyObject*)&pyrf_evlist__type);
-> -- 
-> 2.53.0
+On Fri, Nov 20, 2026 at 3:04=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 7.3.6 release.
+> There are 2642 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 22 Nov 2026 05:44:39 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
+7.3.6-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-7.3.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-This commit causes the following failure:
+Linux version 7.3.6-rc2 tested.
 
-  GEN     python/perf.cpython-313-x86_64-linux-gnu.so
-/home/build/linux-stable-rc/tools/perf/util/python.c: In function ‘PyInit_perf’:
-/home/build/linux-stable-rc/tools/perf/util/python.c:1374:9: error: implicit declaration of function ‘perf_debug_setup’ [-Wimplicit-function-declaration]
- 1374 |         perf_debug_setup();
-      |         ^~~~~~~~~~~~~~~~
-error: command '/usr/lib/ccache/gcc' failed with exit code 1
-cp: cannot stat 'python_ext_build/lib/perf*.so': No such file or directory
-make[3]: *** [Makefile.perf:739: python/perf.cpython-313-x86_64-linux-gnu.so] Error 1
-make[2]: *** [Makefile.perf:292: sub-make] Error 2
-make[1]: *** [Makefile:76: all] Error 2
-make: *** [Makefile:93: perf] Error 2
-make: Leaving directory '/home/build/linux-stable-rc/tools'
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-> 
-> 
-> 
+[    0.000000] Linux version 7.3.6-rc2rv-gd6a022cc5dc8
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 16.2.1 20260810, GNU ld (GNU
+Binutils) 2.47) #1 SMP PREEMPT_DYNAMIC Fri Nov 20 17:29:14 JST 2026
 
--- 
-  .-.  Salvatore Bonaccorso --------------- Debian GNU/Linux Developer
-  oo|  ----------------------------------------- http://www.debian.org
- /`'\  GPG key ID: 0x789D6F057FD863FE --------------------------------
-(\_;/) Fingerprint: 04A4 407C B914 2C23 030C  17AE 789D 6F05 7FD8 63FE
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
