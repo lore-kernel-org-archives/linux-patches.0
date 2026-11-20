@@ -1,61 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795207169;
-	b=2MbJ9qRzDNr3IrqcCLt87aBNhQobmTH614cE1G1JF2Sxvpt/k60Uu7Ux3GQODxmYKdp4
-	 lD2/ojI1igAADtUaatGnaGU0+657O9pU3/RtFUnvak1bOJQ8xLcTlS+x/lIVllKlpj6XZ
-	 QsDXgkmo2l8Vi02yzWr5SnoPI/FnkcD+c3qr9WNbG9i51sl1AOQOKslaLn5HPpyEqkt8Q
-	 f7kGJkVrQJcisEdrgrqzfzQVRDCKhhVSJzgb2MnCupwMbAglVF8UoL4RyzrwrApFWULXH
-	 J0Xvgu9W4WRAr14NX56ThC6i0rd+1mGaZav+0chPtUr6rGyew9Ul7J+NBnTJz8aqG7A==
+	t=1795207180;
+	b=bdJaexal3/T6haToxjNd2ZkrTiEHV615C5ZvxIyk1XXpozu/wonR9KQowK91k0GMwqh+
+	 BZgKN0Qoyp2fUzvrRpA3WcWsW2IAcHvfX4GOkLmuDBD74dBDfQSmRSDxpvfNJ2o5B9e5C
+	 vkC8MbZu3u5JclnyPM6h0FqMcOOwmz3fWnFcx1Oxm2MKBAXNEb+EWCKMg8zBqxS40TuPH
+	 GRABvIf5sXuD5sD9srYGxIpTMiPV9PbM6qMg/aC8ttPz4QoDoLdF+D/6l6kT61JseUBHk
+	 mSgS+wLf437sbFkObEa2dfrj9Gc43PPFM5QxpyWiCM0cAH7AHq/l0RaybHXCOPQV1Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795207169;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795207180;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=9WRh3lMhqGX8fLFGpf319A/rK37D7i/I4aDzmNYd/hw=;
-	b=aONRBQ9X4SyVwA2pK6AVd6F6gXEV80hbPjeiTk4AW4UE7Cs58wFUK1Wg7nTh/yUhYu6m
-	 BkPCBb5j1DpATZFjRnMfJroIZnpWSa3Ll+qiGOS6X32NJ+3Gctgxg1C7RzWFf9+1kStbb
-	 qnh3wmLZhaSe/Myvc4myaF/hYIE3y9RTZLA1IHBO+CQSMnwK9SzN77YA4IJBIS9uFpdsq
-	 +EQg7fS3wJeceqmRhIJOtgHaMCjHI9LRvM4s6NSkAWZyG532swGWLK40vDbSWYolF4j84
-	 SK+J5VOONXi58W1f55X9ZZlS89oqTjA+rGVL4hMO7Rlb1kB/V+9p5tyYO9JMe3kUO6Q==
+	bh=jyzEO4pUHQDGLzGBcUH3c94wzak5+U83+rXl9UYyxFc=;
+	b=KgzPdIZ8h6Bo6SMtj6wPiEtK9JF4+/ki/yXi7mmVv7Lp/765zMqEOBFw2vgwJjqdBqfA
+	 hQ2qS4/4rGTB8bnZCH6YMk7D09jWmc/uc9m1QM65FVrU7bJ+MJ0tlnRcAZ2hJimMFjuxV
+	 7vSWrBS3THUxcwNds272N+jnn4bYFgJSBBZWD0NZUyIaomMyUhKDOtvv7vgfeW0eOU/Do
+	 AqdpG92TOMN+ADQ9pPuL0Hhue/TsscdiTFGEx11A0DtzXbj61V+NFtdUeBh9yJAhrvmiV
+	 MtaQ4dutLvCQ1RnOImSCEhvFDYtDF8atz81g8JzbvNwfATw5IQcFQm6Nj+eNROticww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hB6QVgRj;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bbjYLJ84;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEBB606A6DF;
-	Fri, 20 Nov 2026 20:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E6E606A334;
+	Fri, 20 Nov 2026 20:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hB6QVgRj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598181F000E0;
-	Fri, 20 Nov 2026 20:39:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bbjYLJ84
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A57F1F000D8;
+	Fri, 20 Nov 2026 20:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795207168;
-	bh=9WRh3lMhqGX8fLFGpf319A/rK37D7i/I4aDzmNYd/hw=;
+	s=k20260515; t=1795207179;
+	bh=jyzEO4pUHQDGLzGBcUH3c94wzak5+U83+rXl9UYyxFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hB6QVgRj9lfcwuew3i5ykPAtyh14DvqR6IoOeTQlOrIlD4h2s7YQVvqe2U2D83m3m
-	 tgkRUlt8Yzfybq0W6gAvf/jbg5oyqtreNjiMvwxT19bEqqpupkNk6pq2qaxSYZatM1
-	 FCZEToxLN1eGZMtJZDW7Ux92MPvMSDfHa47PvVNSo2ecJvIpLl6SsnBraT0IFuDrSK
-	 J0acXk03segCE1WUfD87TAni0Y/VsvI6szqYALyiB2hWfGCqjOErKtS059L1HKQevu
-	 CIKZfFL+SEldN/0JZOpdK8PbjQNIehAzc/Y7lZUmteMhRtObJr+2USiBVz/N/JiSSU
-	 egQKttY/6fU1w==
+	b=bbjYLJ84coghLgxInKkF52Hhqdc6Ma9MGGrLKBsoBthFn6StxBuUmtQFW+kSb6IYH
+	 gQfDTInMvE1ws8dOcofwZiiW2v0rSyfTb4o+K14MBq2XTkE2IHsmAq3iucgeBQCmdW
+	 qsGMqiTZnN64B+GI+x51wYsPvaxRV2kEjo3tNgmtIwmbU85o5VSJDsZvWRvcpN/jkj
+	 eDhpTTckS+dGo5YHQTZJMFW1sD1ft17uNupc4MpuCMs7ZBvpRG2MRTHt7I+Fv3ECQ3
+	 Tk7vKGjgLHraznNGoGLC6BUpSxvgUoihb9Fr8nCK4CzI6S/tlfaPHXqMKZbhWByzCG
+	 /CbatCEaPKIsQ==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Will Deacon <will@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 0819/1756] perf/cxl: Dont share the overflow interrupt, and keep it pinned
-Date: Fri, 20 Nov 2026 15:38:52 -0500
-Message-ID: <2026-11-20-1-daily-reply-0003@kernel.org>
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Chenyi Qiang <chenyi.qiang@intel.com>,
+	Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
+Date: Fri, 20 Nov 2026 15:38:59 -0500
+Message-ID: <2026-11-20-1-daily-reply-0010@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <8d1be42c-3ecc-498a-a4b3-3c9ed2f2bafe@oracle.com>
-References: <8d1be42c-3ecc-498a-a4b3-3c9ed2f2bafe@oracle.com>
+In-Reply-To: <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
+References: <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,12 +65,13 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I think this needs 28b2b667f48f ("cxl/pci: Add the PMUs after
-> configuring events").
+> >> Can you pick this patch for 6.18 queue now? I check the linux-6.18.y, which now
+> >> has all the prerequisite patches now.
 [...]
-> Could we take the prerequisite first ?
+> Exactly this one:
+> https://lore.kernel.org/all/20261104211109.504581890@linuxfoundation.org/
 
-Queued the missing prerequisite for 7.3, 6.18, 6.12 and 6.6, thanks.
+Queued for 6.18, thanks.
 
 -- 
 Thanks,
