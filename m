@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795187545;
-	b=HdXkJ8BIqgEUSWxmE3+t0khjEMRPYCzA61p/qjwRFp+BJpGsbl177s/0OoQXhKhSqTtY
-	 iRwJJ/2Cv/R+t0C5UtbkLdlgCMn8vsh1UrkeJJ77nYXUl7aHfFY+6sNMQdoorjHGOuUHk
-	 y0bPDgy6cvLgCpWpWU8gdZ+zaxz4mhrc3FyQcmGg7C72uxEzyz26FCBzA2iexon5ax6vT
-	 T+Y6jH36YjjP1KYyWRfyrsNcIs+H9a0/8tUH9E6lfHDPigPyG/2lO9MgmHk68Xzcp0/yl
-	 mBJtt5OyvdJci2vhSdwdO1fSBRna7KU9ZGRziRTAqfE4zZ5N9lC+cplgznoAnvIi4Ew==
+	t=1795188034;
+	b=prDvvkZA9iQwLhuyX7FrD+IwTPHzSE0jgrRPk1+hz0ahlVyL/7kDF3YGOk9UPAq6MaX8
+	 4JkMX+lCtzOF2QtBQLzQXc+ZR+0Oqz2BH4e6O/1ya1wQipvjM+qlQ3icfPgJuGHZ8DAJu
+	 0tpZ6lJ+MckR3PR26spxxuYkxMpv8GNjHZOC19yo+6xEavKTBcLkiQ6ekr18uBF9PJiyV
+	 EWv7VlZOKFhpHlW5cjjb7osD67Qg9vaTE4OPKwCscgRvS3EQWKNwHE6lDu3npOt5BtPvi
+	 OEbEBcG7oYGrr3MgUbMQwrTP/hjRS8Nx1/p/pMiI2D17G1vicvTvLb/vOoQqiq4Q4Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795187545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795188034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=XeHR8KcI4u5N4CABwzKgjeTMfIUHpiO+90sGtoBXfzE=;
-	b=G/1kbzMqvWNEyifrghAT5Imi3EAYQJZqapfdJsXZ+KMZF6KAcWpzvC2aJ7QYKq6ouYMx
-	 8tRN39PEOjCIqMl4XEJPzfmNmWyuImsIks5yALPTzbMEZiql2He/6UkPuosEbGUIOapxg
-	 1+o3gDvSSANMxERZ4ckfrfYsHhTfGVZNkih60zGBzAYgkQXz6SmkdcNRjygWV85dVs3Ze
-	 g+g6xMGBHtrKNAvsnsLkFRPbDWWG2bOf2EoT8k7CLB11qSfLCnKfXaaIt/Jy2R+FVm8CZ
-	 SM8/IYWbc2e2hWWKcO5mMYDULZLXbkiJ/S+cvPXY016POh45ODPGhc7yLrJmuzXM9bg==
+	bh=mw9W7yG3b/5ngJNfYZs1DLh0D/ZBDHwP3c9DgQL212o=;
+	b=tIf/TJv3NTnzE/dwqc/SojmSurqBPVgkJTbM9MC1aH5ehqLN2y7MqC1SpAklBwJD/K9W
+	 zwtos195/WT2NObtq31ZbK2SCR6YGvCOk9dlZArk+ygFH06TABXmH+SaXjOh6KoVy7Wj0
+	 h9zpIRmFHh+woU5Ux04PV5Y5d1fnL0DQupuASShLFmCr/VT8IptEYj44NDuEsStrFwVjO
+	 Uz8p4njS+RFV9ZstD12r58mwl1q9Icnav26ND1w5xUsmLIYEjo8Aus0FS2vyRbzI0weay
+	 rt9Vdr3bR9lUqzdev+NTNCzh2/Pdclmwsu0fdwEkmH7/ddPwSesiujZprF1aNN3FnuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Lc1vRAnl;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LPqyCJKj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F54606A32C;
-	Fri, 20 Nov 2026 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3B6606A325;
+	Fri, 20 Nov 2026 15:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Lc1vRAnl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D178C1F000C6;
-	Fri, 20 Nov 2026 15:12:19 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LPqyCJKj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175841F000C4;
+	Fri, 20 Nov 2026 15:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795187544;
-	bh=XeHR8KcI4u5N4CABwzKgjeTMfIUHpiO+90sGtoBXfzE=;
+	s=k20260515; t=1795188034;
+	bh=mw9W7yG3b/5ngJNfYZs1DLh0D/ZBDHwP3c9DgQL212o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lc1vRAnluELw19Za83aYiKwzRxIiGlTtm+kG+Y3fQ+Hczy8Uva68/XpPvOrWJZp9t
-	 GJTtM2hPg2zH+1w79fXPbxGsOWbLWPqOcFIAnOD8VUwvSgH1bUlVZu6XoI/UywQRwy
-	 ICpo8FGnutqVi4qR3qYCivR//VU6tWA16ckXu+csHLpkEFyhYHrh7nS7MHm9arMPL5
-	 oUGU3RRRhyRopdN6+AoyruTwDf5gcK0s4cN2L8Vk622RjomUxfHp9/0H6nHpnP2nr7
-	 aC8KJa/tyNysSgvAQsbZ5CnSl5oEEZJFPN8G5VC/teV8VEr7LgXGbdHB3j58X6J3lS
-	 DqTPEMuy3nZug==
+	b=LPqyCJKjNEIyMNIKtR7OYWPhnDc+K1LmyWo3cTnHOIxiW6ZBkU6qgZM7ZT33lmGgA
+	 Te2xaXjgbDaqMenmXO24ODlEeaF9uYBd8607uQ5NzPEbyqMc0hBpikQKYZpqF0ckP1
+	 h5hbFnk1i4+ic56VmTxUxpY5UOYtR3bXVDZSXz0Wm6vrW++dFjknCDlrAjmmyCHFF/
+	 uWyfoUeqntC9rLuXRpgA6pumHCsRWV1QY+9Gre+YHB6/mOGF+RafFu6X4zF3QQ1pMc
+	 XB5XPlNi1mXVEBrc/v+b3e5bgVB+U9Dr739u4jUttKbbKgbtIvMW97CcGK5Ta++Cl6
+	 kK9O/IZPAun7A==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: achill@achill.org,
@@ -61,11 +61,11 @@ Cc: achill@achill.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.12 0000/1736] 6.12.119-rc2 review
-Date: Fri, 20 Nov 2026 16:12:14 +0100
-Message-ID: <20261120151214.22886-1-ojeda@kernel.org>
-In-Reply-To: <20261120054951.366579794@linuxfoundation.org>
-References: <20261120054951.366579794@linuxfoundation.org>
+Subject: Re: [PATCH 6.18 0000/2144] 6.18.65-rc2 review
+Date: Fri, 20 Nov 2026 16:20:23 +0100
+Message-ID: <20261120152023.23562-1-ojeda@kernel.org>
+In-Reply-To: <20261120055114.182757740@linuxfoundation.org>
+References: <20261120055114.182757740@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -77,10 +77,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 20 Nov 2026 06:57:42 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Fri, 20 Nov 2026 06:58:10 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.12.119 release.
-> There are 1736 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.18.65 release.
+> There are 2144 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -88,11 +88,12 @@ On Fri, 20 Nov 2026 06:57:42 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > Anything received after that time might be too late.
 
 Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+for loongarch64 and arm32:
 
 Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-I don't see anymore the `BLK_MQ_F_SHOULD_MERGE` error I reported in -rc1.
+I don't see anymore Jiri's "cannot be shared between threads safely"
+issue anymore (which he reported on 7.3, but I also saw on 6.18 in -rc1).
 
 Thanks!
 
