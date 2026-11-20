@@ -1,70 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.37
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795146933;
-	b=rrrsTK4IvWVpLFz3pawhwPM2b4emmJvhVP+kPqgl31UGkRgxZfA7myRYCsfnkJW2okVh
-	 lpJ9V5QoiYwxHLWi0meaVe+yXn0OAnWgm8GgysEgJOeWRK4h8NRnoaRLrpQSwwKiPCGyf
-	 eWNYL9Ty3Pm1WHw8iF1xQR2JG7/8tRFofWosTO9nDz4pfMmRVfiTNlpxYyuTGcYT2cPvm
-	 ZwAzEnt0ecCmjS0eF0JnNveHA71RaZ2hpiHXvUWXZHmY/kOUdS3zkr15kS394Ghfuofwx
-	 gEu2fI5VksRrCEJ1LxQR3ogpqJu6P26CeA9lWQ3m5fP/2eoyecVeQo+Mu0Di/iJD38A==
+	t=1795147031;
+	b=YQMlwL0at9R/u/5657OpfeeJ9MIPXJoO7NZl+rwwvUgMgPAoGr6e6INtWcUjb+nZR5xC
+	 4MqhaT6+SprhNkxzf1RlY57zJkYUzMBp1DkSPlG9ZkrNi/UOQRO8nnSzqZLAqk7rhg8EM
+	 /AaKvUaqj/Kegqtzx5TwiaThdBL3LktqJcm75A/R3mZ5qcC/PWzlFu+Z/83VyIJ89Qa27
+	 R/K0C2rXmCke2HB3QH+bLwZUFB+6tkaLlgM9oIbgWWG8Fm7fpuSYGPAca5Wv9ittEaKkJ
+	 0CcSxFK0WHLpvPPfXEBQzcInpsSOm1QoD1Bugh2gg7u2aZGOTNTbgFqT3DJZjPb+kDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795146933;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=Wmcb4dTMJFIsR3cB+IE3EGHuT+3Q3Ct6EhJsH00YYO4=;
-	b=ryroLh/ElvQQpN8Qz5j+fywauso2/Tye6GuvU65bCKHcHzGmth5BSzHXsqx6GEYUXZ22
-	 g4gkVGEOl3SKbcOvqn/eiWs51n6vmFg+/sY+pqo+Ek0Knmgz/VpeWgudArichwBIOWXGf
-	 rP4QwRfwLxTBCfoekY1+yP6TUm3aUsu8jAZSagj/PlqYakIqcEpEF4RFUaUg4pxArTTtA
-	 YA8KQxhx//4FFMyp4hOb9AYQj/crX0JKIIrC40P016yVyVyilRpvyuQfoQ2y1sj4Bc1qY
-	 IuA+1CnB2kpxWocr9aLc6xjXr3V2oa85FaWbghnV343tU7KAcDnaxXMe+DuxaYpX8/w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795147031;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=11okyqYHxE0IernNnQyz3EyafRRbkarCz5jl6k/WWBA=;
+	b=q5CQLJpucAzQiwst4BucLxChbG4vFyWHPYzVGL7E7E6/7fLlqGsAu9zvLljpOZCZt4tl
+	 kOmdB6SzqRgHNCehOnlAOBWEro1r58QtBT2ABEpSCcvQpYmhBonoOXEJrHgLHz9jHSXUQ
+	 WxTv7E1EszbEa3MgEvx82gNzw2NM4MDBUV/jHxyT6AyUP7DpT0Z77AYDSy70ZvmisWtnW
+	 9roor1ValqYbXqs0hkzEXFM9y0LHXeiljeBclydc6UneodeZJTee+wkuGyPeuhcA4eXf9
+	 KKy3w05vCwx+Ra8fbEZj8gtZ+49XjElelC9RW89TTI9TW/KZy4zpUeIsK1I8zYXWDdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=codewreck.org;
-	spf=pass smtp.mailfrom=codewreck.org;
-	dkim=pass header.d=codewreck.org header.i=@codewreck.org header.a=rsa-sha256 header.s=2 header.b=zR7qOTyT;
-	arc=none smtp.remote-ip=62.210.214.84
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=w6rz.net;
+	spf=pass smtp.mailfrom=w6rz.net;
+	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=JIUXM2qO;
+	arc=none smtp.remote-ip=44.202.169.37
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85D4606A325
-	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 03:55:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A85D4606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EF9606A32A
+	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 03:57:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88EF9606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=codewreck.org header.i=@codewreck.org header.a=rsa-sha256 header.s=2 header.b=zR7qOTyT
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id ACC4114C2D6;
-	Fri, 20 Nov 2026 04:55:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1795146922;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Wmcb4dTMJFIsR3cB+IE3EGHuT+3Q3Ct6EhJsH00YYO4=;
-	b=zR7qOTyT9luajpwgtLj2ZUzHQtw0UHTUOIs2yCvXGcUhCYB93vXne4Vu2lZuxACxdS4BZN
-	K5nxVDH9V39RxbHIp4QoIGMbOl0g//izPSZgLYcC6QCQO2ZL0JQKdF9NYzTFs9Y4hpR9Pi
-	aBg9dx+0hvnC8IRKdMcfcJBx58ZjkQmecOJ//ae0chUoRFO37TdJSTTE52NfUYQZddMvto
-	lLPXPJ06UFR565k2o8AK2BvdVJzn2S4L/blun8SAwurOaApDD2WsA4g91sz7fvwv6gbcg0
-	2NVZmygUHNvLmPejotYdbzd+wdVYGG76IxqxkRoXHEarty1uUqAac7FOykhNKw==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 2193485e;
-	Fri, 20 Nov 2026 03:55:18 +0000 (UTC)
-Date: Fri, 20 Nov 2026 12:55:03 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Francesco Dolcini <francesco@dolcini.it>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	Aristo Chen <aristo.chen@canonical.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 7.3 1238/2651] phy: freescale: fsl-samsung-hdmi:
- initialize default rate
-Message-ID: <av_El2-tHN0DJRC5@codewreck.org>
-References: <20261118150247.972732815@linuxfoundation.org>
- <20261118150332.571312313@linuxfoundation.org>
- <20261118223142.GA597634@francesco-nb>
- <20261120020908.2320910-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=JIUXM2qO
+Received: from eig-obgw-5004b.ext.cloudfilter.net ([10.0.29.208])
+	by cmsmtp with ESMTPS
+	id UC2txftdvV16IUFkLxS5PZ; Fri, 20 Nov 2026 03:57:09 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id UFkLxw5EYuJrPUFkLxL0Ug; Fri, 20 Nov 2026 03:57:09 +0000
+X-Authority-Analysis: v=2.4 cv=WLZ/XmsR c=1 sm=1 tr=0 ts=6affc515
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=UheLhBLhog78gnJQedQA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=11okyqYHxE0IernNnQyz3EyafRRbkarCz5jl6k/WWBA=; b=JIUXM2qOrIubJ6u7hVHK1jHHGD
+	oNHMX6yo1YUSyEe5IJC+XlYpOcpCL1IYQkC957TCwYiCskR7Fb3anf3wCGpzsaIUwtkreEWxzHcZN
+	hM+ffR/PX6CNwr9bzF2sib9pAk1gA9wJRYIebYBinVDznnbyf807AfeqqOKy7bJfmxQXO0Zp1Umch
+	T9YPMvP/RgWNnaKQXaqMWKzjdPGRE0gBj9olPEdHXRUpCcHOJiH2uGpndoiM2v2r/mGrm1FGCS0eu
+	JG8RG800aCw800hpyAWFYZ/qv83uyfx8WaCHKJXNuV4MfnFTUwp3bVVqsv5MCDa6jwXPbHfigF0v8
+	EWjZ4N1A==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:33018 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.100.1)
+	(envelope-from <re@w6rz.net>)
+	id 1xUFkK-00000001Pyr-14cM;
+	Thu, 19 Nov 2026 20:57:08 -0700
+Message-ID: <4a210c36-d99d-4a74-b94f-41f6a28d5040@w6rz.net>
+Date: Thu, 19 Nov 2026 19:57:06 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -74,20 +76,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261120020908.2320910-1-sashal@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 0000/2214] 5.15.226-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261118150009.797899913@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.206.103
+X-Source-L: No
+X-Exim-ID: 1xUFkK-00000001Pyr-14cM
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:33018
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 118
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfI/JK0mWI/T1Yfmm8w1RgTBgVJ78hpozznqEVwrg8uc22EwTgt+UuIy8nN9vd76PfJgyq09QOjM85RKXB9lugXkh5kKBm2AogRlOForf6st0vsnj8PHy
+ 9xTlNNmz35xu3UAFmzzH/Byd5jhTawuhlnj3Yd1+N6IaKWCMqVfB1L/g0UqrgnRGKQwnAoWZ/ruIzw==
 
-Sasha Levin wrote on Thu, Nov 19, 2026 at 09:08:58PM -0500:
-> Dominique, the 6.12 NULL dereference you bisected is this same patch:
-> 6.12 does not set cur_cfg before the clock is registered.
+On 11/18/26 06:27, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.226 release.
+> There are 2214 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 20 Nov 2026 14:55:35 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.226-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Yes!
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Adding commit 41db46233467 ("phy: freescale: fsl-samsung-hdmi: Refactor
-finding PHY settings") on top sets cur_cfg correctly and also fixes the
-NULL deref, but I definitely agree with dropping patches at this point
-(this cycle has been big enough!!), thank you for all the work!
+Tested-by: Ron Economos <re@w6rz.net>
 
--- 
-Dominique Martinet | Asmadeus
