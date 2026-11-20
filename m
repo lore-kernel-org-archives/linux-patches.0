@@ -1,13 +1,13 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.71
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795197150;
-	b=mYlSbe2YqqpJ7aFurtkCK20CnALgaLVLVjMEr2Vfc4ExMukfZ4SB1Oyhu6ECPzMEqZRA
-	 VT2sgRXIMlXdY4iKTb5f3PEYFgSUqAXKHodD8M89qlch9GaqS04P+DHgVfuK/6U9ocO5h
-	 dBE7H4Oqlt8qvCGYlxVwgAgIZDqZmoQGnQRZJx2ro/ZlyZWj/iU5B6nTSFVri7zsggVnM
-	 k75rXslNf0TOQ2RoqlM6z2QYK/5F9EqqiKnML0Q+DN+thfMrpOjH+cawZe9WXd2y0tPaY
-	 5+ePY0YXjAZOAEUQLjImK9BU9PCz27DntdsLiqnsoHUt9Je/PzTvr/Ua/4A1f2dMHGw==
+	t=1795197151;
+	b=p0WquAqvwIvSg7Cij7Xzj6WdVWWHSwTXgEHQfSVklOqPws6WqMsWCXUZ0ymgwzCPSlzV
+	 3VGphxWPO+jzsUIHBpnL8p3cuDbCm83i5WrHvjPKoH4H3zK+JGzr8JZsoH9spVChea56d
+	 RBugYFjh05QWzv4kUJzLjJS+WmdpElP1qI6MU7J6cyysHEjWibRlT2a+ba6Ay3H8rhVP8
+	 pjE278vDu98lBNRmSPhjl7O+gG9t+RlhxUl5dxo0+8DUJXr9yONMC0TRDQGmXWpeLET1A
+	 e7TTy/tf66PYtfmHWEH6hxGZtUHPDMteny0/vW61lgu0KLANbzZW9dPu1vemrMW0xjA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795197150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795197151;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:In-Reply-To:References:Content-Transfer-Encoding:
 	 Content-Type:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,43 +24,43 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=LnEx0WsQf20srwNNDhRJC1m0YAtShj7rCKT4UNJlIc0=;
-	b=MC3bK8qbvaOTRRTeMIMA7hl/jiN3RZOo49qSStOikqnK+eUvQxUtZ71dcHMdKGrzhZxs
-	 SdQ5/W9JfUo8qX8PfLcN2n//fXMDMgtN82TKbeEstHpAae/scJCV+t2eh4q6tNMNwmMtD
-	 z3buyqKO4hbe6z6wec8mcrE54NjzKNFFCWaAsAxvLL/I6peKaS4EBPYucknHZ9T3mMYM8
-	 PP3RqXA2Iy4N0SdwXWMvRceO7EpWxTfFx6OZbfizwXfDjsI/aO8UvlR9+uwPpPZgRN5hL
-	 qEckdDdtkLhbuzV/e7cGyh3gVkdSw0/W09oZvc8qh3sgubSh/XI0SsrfFFEKTSb81eQ==
+	bh=FAPTTXKUz+0O/TqZ4vjLdHytqGfRBpIZI/ZDDRs8aC8=;
+	b=Pbpxb/3dTVkd/8OPcrm2s4YrPCBT0pteeqo3n1E8NUPEtxZzYb45+cNdoQ0wIJPXgIwt
+	 FzqSvXJIFwhL5NiEG4SCsJJ5aZSIvvcLOZeLxy5Y0EWPcs1nu2LL/GxAlBFz4USVgJvZA
+	 pKqYEmDifGvqN/OuNMgBKs424VoXzxlTdwZvNzWZYN3esM8sl37qFUQr8pxa912fpaUGx
+	 IBSv8p86qr2GJu2mY6tXf4XMHMMz8Pa8yF/DUFI7Vbf1TJWMyZFJXTjjoX/gCQSMNaiLm
+	 /V2HjlvFsI1hXbN4z/st8Uk7GJ+fdpI9J30DiIq3oUKPi5GojevzIy7Ix4bdzwYzv+Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=AzytQ5Eu;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=RFO0C3vQ;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.71
 Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010071.outbound.protection.outlook.com [52.101.201.71])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D05606A33D;
-	Fri, 20 Nov 2026 17:52:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 71D05606A33D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC93606A33B;
+	Fri, 20 Nov 2026 17:52:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1EC93606A33B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=AzytQ5Eu
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=RFO0C3vQ
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n/qOTzK4umavjUCIMxKZDgXsuKM5kne7mDMF4JbguPtCiWQC+Us4FyrLp3IYA/OQ5p2/s/oGVAHqR5qmDXKdtulZfwiBLavPYO3Z4ZkPHoh7pPG1H9hCOvATAlvXR21gVOgnWZgEGWJFwd6bAmSgNLpWuY3UfFJoXw9joIKvAEWfVW7TutHIj4P+IpCjp6dL9FH16rPnoaJMaDIYisUxl6ZwU0sxDZtztRX5kaDuKT6Xx9Gmyvzha9N95VFC1QzUZMZOHHXnCitDB9MJQoBw47kz7I1IJklvBZuG0ziXuvmlFmUTSk+GWlvEPBPkceLjfHLZsgpZHQ+/D+HVempaig==
+ b=wQySA+qlyT4MjN1TNgQtqyxOhPXWtqU7WI7onhj/2aPKsBVcBMQB3LYfddmwd/vLP9yTeneXOgE2/0ybGTQmHVZQJuSutl/KB0q6E/5bOdQZvEyVk01B+3BxrIhUUexU6n8pzK2TTmRXzTvyznTHsKM6B31bdSwwAps/+zPIo1tb48oCKBDuY3WebUGP33TF3562bVvY/ILplCuasSd3VDutlyJYwk9wKRPdeCKygSMhzh5Je6mWcUpI2ELfPnDvpHZU11dRnQ2/2V6Wfio1qbudkOSBqvAzFBcPiQ6FCdIQTwuGyjMKiG07nHtgMeIydDCB8FiZNlmUMTE/s1RC7Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LnEx0WsQf20srwNNDhRJC1m0YAtShj7rCKT4UNJlIc0=;
- b=Ir/I5TbOqeyoJEYB9LMAm2LxQAYrmy+2WMpt8lsVP/zOznHFziMHuqMjXTDOn/uueV8F/h732foNEVv26a39KVV+AVTffQxn9H5whAWz8mzI/uHkZdJDUw88TI5zRXSYcEnQXHPAlsgEEHLQxIoOl+VTyiAmc/KvcWvUdUXsdwz1Uf2LAljogMH3wlSMWEpJrVyeQcl24aq1SGhKmXocS+Tv5R/RhpxN+oCecVKWOZSB5x2g/aE8x/p4QiGwEs1ya5Ij4MhUrq7J1dUwXeafRQzVcZDl0TiqGg/4pp3jFmC7bW1FpoLg2IjluFDiixNrkB8+FxMTkmlcBv4J6+DHbw==
+ bh=FAPTTXKUz+0O/TqZ4vjLdHytqGfRBpIZI/ZDDRs8aC8=;
+ b=cxvn1gzBZc8KpofFRCnYZlTz83Q/7SG4isV4WBbHbGItmvnB4dBUnP1hViG7v2kHWfl1Dqx/voZ391b/+Mvn8vAlysu6RTCh6iCMPLFNzUXM8+RJNx1qPTPtw+dl/4Bz/8kCujWFSC1xSPC/LtKVppSkeiVa3sLW4ddKO+T5+k2aiAYcmPTSIDI8ZGjiZ1vYaZOV8oo9HPY3L1MtKBLcDDkkuOEwjTNJVJ3zeN1hKlKsdQpz4qTdfToO7TxMahVxqx4RKx9c7howD39UwNp9YcATxUj5CrblARyyPLmrk1BEcz818BYQNRy/QpmK/bH5TAjrZRFoam+F6qqVWWNgyg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LnEx0WsQf20srwNNDhRJC1m0YAtShj7rCKT4UNJlIc0=;
- b=AzytQ5EueW2SFrYJYOkT5Qm32c6gP3k2IoVl23DO8OdatlRRXx1Cmc5mRr942WnITn+NGgl4slZCH6JtTxVOFo+gAopqs1zUsFqLzOrMt0wzcbShv7Z/GB/2iEDkDjjA5V6BEpXaPRits2BGOMVEJsB2F2ClSJCh5jeT9ptti2igcZgeYKW+rZ7CVlCezMU9/3GVRCKBQ1Z9FiYdLd7yCV1sauh/la/aIoIzVrn+445I8qEYEokV+iKNkzzIgtOB4K63P1gl7TThlhAFA+zIUK/9JeIYrcVqYy2Ta8coKnKMAeLvHF54fqg8kaVJ4jQ6Kcz5HRI4bcyghoOhUDISDg==
+ bh=FAPTTXKUz+0O/TqZ4vjLdHytqGfRBpIZI/ZDDRs8aC8=;
+ b=RFO0C3vQd+DdKT68I4ky3cQqYuFZoIBCzIfVBmKKETHugc2R7brrbwNvvM047VsVeoP4D3zb7Rp3B63j8hxvQaBBttBOdIR7WaI+PqSXasS0tWh+IqDI6IZ+vCuZGEHg8tt/VqTwH9u49/1lhAIUNpM3LkligFsgyiowFMxDVIO+F1y456deUjPR5JpxN0NiHjbSkS2i3pw8v7X3iFLuVryWLlK9j0qPrzkommdT5ZMSQ2oZ9fTAxo+NYiDd0Sjxg3FHEAwEcyGbR1KXiKJfHFI1FdG7W4k2GYfwTSvcpEzzYOYvxLVEqkPShxleqb7Pns357LgLqMALzx4F1gt2lQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
@@ -99,15 +99,15 @@ Cc: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	patches@lists.linux.dev,
 	=?utf-8?q?Piotr_Kr=C3=B3l?= <piotr.krol@3mdeb.com>,
 	Ross Philipson <ross.philipson@gmail.com>
-Subject: [PATCH v3 07/11] arm64: drtm: Update the linker script for EFI_STUB_DRTM
-Date: Fri, 20 Nov 2026 13:52:00 -0400
-Message-ID: <7-v3-22d1a1eb7d2e+17de-arm64_drtm_jgg@nvidia.com>
+Subject: [PATCH v3 03/11] efi/libstub: Have efi_kaslr_relocate_kernel() handle extra_size
+Date: Fri, 20 Nov 2026 13:51:56 -0400
+Message-ID: <3-v3-22d1a1eb7d2e+17de-arm64_drtm_jgg@nvidia.com>
 In-Reply-To: <0-v3-22d1a1eb7d2e+17de-arm64_drtm_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BN9PR03CA0730.namprd03.prod.outlook.com
- (2603:10b6:408:110::15) To CHBPR12MB731189.namprd12.prod.outlook.com
+X-ClientProxiedBy: BLAP220CA0029.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:208:32c::34) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -120,242 +120,211 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|IA1PR12MB6329:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6168f0be-23b2-41ee-7743-08df472efea6
+X-MS-Office365-Filtering-Correlation-Id: 7811cfb9-70cd-410b-1917-08df472efeb3
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|7416014|376014|1800799024|366016|18002099003|22082099003|261009223027099003|3023799007|11063799006|261022115727099003|56012099006|921020|261102123227099003|261028144727099003|261026140227099003|261026121527099003|261021121427099003|261021123027099003|261022105027099003|261022075727099003|10067099003;
+	BCL:0;ARA:13230040|23010399003|7416014|376014|1800799024|366016|18002099003|6133799003|22082099003|261009223027099003|11063799006|5023799004|261022115727099003|56012099006|921020|261026135527099003|261102123227099003|261028144727099003|261026140227099003|261021133027099003|261026121527099003|261022113327099003|261021121427099003|261021123027099003|261022105027099003|261022075727099003|261026130827099003|261021130227099003|261021135927099003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	4pKAL1BHQlof3lEnalH6b1L26HlBZx21genk6G8HIu8FP7P3OBrSAj/5fu0zI7jQQ2s/gEPZ6m4qb1mi1gVQyPcCRUlGu6YTMe+Zda9/is2lccLcSZrscqMHyAJEnDeIy8gDP6tePwyT6x1J4gw/3E4jsP2PKOeCnZdva6ucsQ1W6UTLSOr4/l26/1yYd3CAknHExo2XOi1Hp0lTjnRAbZBg3jtttUPxQkhX5iUOotOo9gXJa62XHi+59zgBJ4B6Y6hiB2BgTMwYc2HIka0LaxDuunFcceUmSQUZ3XruLZhUod0Znfq0xWllC2L6iv+YiFazHPP8rrPJNIkrHR4MMUmXhbU07Z2B3F/qxgKPtGU2R1ffcZMcANBZWtHt/WJDrHEhYbsz85BbujAnmECpvJPDw3NxxogKSk5rR9sMixGryyjWNdl8zFw/0YTdYVNdaF9YjQ0hNaCTfaHxvPiWnttCsNfychavOJL3bf8BqR5OipAoa/LzT5P3QiEgV0obMND6ycli9Z9bixZlqjysaEky7u4Xs/EWCad0+koAaEz8fOGBiWURvSG6yHOcO4U7lQRrd9P7KJ4++W9Ovn2dQ6UsZwd6fgkNWGzMjpbFnSqBIsMzc79tFhLkDgkwbxB99m/rFujEKJnzHJ8xceOI/024Nw2Nlv2oiIsqAFFjM78NX6na2xQTd39N9M9ZpWppM+y6aQcp9y6iH1BPOcC+gA==
+	ZyBiNzP+m2npuiwnjZBBLXqcQnVE9m9RJZcZ+QMX874kklaEXmti7eyKW9jfT6Hcq2oIExjRd+vkPYZoBiEBgQvQ1ABMak93xPln6R95mt4KN/CfVsqvFrWvGyjcOaM+JkaH5E4Q9OfiDsZQ6KhgG5sk0yRFoHlt1Re11jbo7awi3vSc5DueH8MiLrNYnCH1XVaXZ7Y9ol2mMfxASI2jkdh6UIu3UkvPkMyTiIkJjPxBgApIIWyOcXbX3ctHHKxHVe6W4GvncGFX7L3e+tfzLlcFLWWHFqpWyiGirFlSZfVD1KnjoxTL3D91OFK+gEqiFSnrHf/jsXuGAW50Zs/fcvJ3tCaYMsgSOUGIcFUG1JVao68WhuCK2/1N1ivVZ2rSNB5th0cRbjbKHZ0m8ruktnTrR8MrHvNXbbJRmf7munIybDC4UYcmTJ2py/ZJmdwvJTBdHVncXJyjsfi6wJcWzNNh1/vzfao5grcEB8Ea3A+3Z3qFQiJv4G+wl4VshDRK0i+kXh0xuguuk20dPF9Vlx4SsCGjnRov6OZk7eiIq+npf0+s99fkfpN7SBa2BLExhVuBuvJfQJk7G9ds1S5k+ioiZkkUU6ba5xqiqnai84X2X9hun37YkF4mGGjC9bAxKJfVY0ImyKC0TlQqCSV9/8ui/NWSZP2DSsRPB1OB03W40k4Hee3qGTdaiLLCWNqVxkYaDbekmwuLn7fSmxEqYA==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(18002099003)(22082099003)(261009223027099003)(3023799007)(11063799006)(261022115727099003)(56012099006)(921020)(261102123227099003)(261028144727099003)(261026140227099003)(261026121527099003)(261021121427099003)(261021123027099003)(261022105027099003)(261022075727099003)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(18002099003)(6133799003)(22082099003)(261009223027099003)(11063799006)(5023799004)(261022115727099003)(56012099006)(921020)(261026135527099003)(261102123227099003)(261028144727099003)(261026140227099003)(261021133027099003)(261026121527099003)(261022113327099003)(261021121427099003)(261021123027099003)(261022105027099003)(261022075727099003)(261026130827099003)(261021130227099003)(261021135927099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?9RP9Ao5EvfUi+3BBL2Q6o4ccl0q8Zmmj6RFzm0viPk9Xkp/q9pDOBgkjGssj?=
- =?us-ascii?Q?Oy2YoMh1O6bKq5BzZqKHVOXIbfVgGopJBJHnSn5XvFW1F2AlO7IsHsj0DxMD?=
- =?us-ascii?Q?GHO9nHxlHUP42Yf0Wz14C6d/dlUfAJ5mmawLlrB8Rek3TPazJlCc4SmnW0ll?=
- =?us-ascii?Q?lD4VQsUEqnelteiynrdeL9LcmIh4rky73lIo/BpZTVaGOAhxgrQ8jyMxzJLi?=
- =?us-ascii?Q?OjTkNetqa1WA1qiLvMy9nve83bdupYRK5X+Vmf6c91aEBVLn/sdiOw4zH88R?=
- =?us-ascii?Q?c2ntGooN0chEKWicIaJIeElmDdGYf8GSZLo9OBXEYtBv46HlZytHTqmhDJmM?=
- =?us-ascii?Q?WVYA/mX0T9nl9QJ5NsSKLjeWeq/++irTows0Y+PUppimzt/KVInYlcl8gH9G?=
- =?us-ascii?Q?Nx1/5NTvDDEa6qWhjceeblPUtmsWLj7P6QQSES7K0RH3EM7h+ozL0rDklCTR?=
- =?us-ascii?Q?NarjCTSVeQEaUt4rias6mzUJSK6dCFVQ/MEPW20ZYq3RXVQuHkmBnzUlbM29?=
- =?us-ascii?Q?Lr2VBb+pmFtfFcZdb+tUCC+XAbQo3tE8+2JdGuOcBfQdJLb1e/DB1X5kMMw3?=
- =?us-ascii?Q?UuQUx/CxOVVFBIGWuP/DrQhFf5YVNEknI+AVLU2+pinGNBvY9s5MwAq8naND?=
- =?us-ascii?Q?3/DNdprjrYFR0cZe4P0573Dxr/NappTqyVmGkRm0eV7gyfQQALsvzBMLb0PJ?=
- =?us-ascii?Q?KBY7EeWx7WPHsVxlVSUSQwMYy6skRkDQv4+CDvmGZdErRgNOTUop/a6p4K6w?=
- =?us-ascii?Q?brUsSVpuhi4WaSApvHlgaC2L3GLrIJvCuoZM79pZrpKx6mXjV31/Ptpd0isw?=
- =?us-ascii?Q?wbPcAd4dBlJJz49iLXDnoNBP7b8UuJaSrsJ6ZD5gH73DoYEa/ZF++Mtp8OTR?=
- =?us-ascii?Q?EEw5E5CpUobmxUubXNUjOmYU92drqX5Naaq0kUD+kMtLw0W+kOVm0hzU5nV6?=
- =?us-ascii?Q?8g+jX8V4ChYZIz9idjvr1ABO8tWKvyoeR1mIRSMNyrBZoZi3gcZ5ZX8B0eWu?=
- =?us-ascii?Q?14CJ9fZaz22aNdoBe9+Pbc4M85YYZ25RLyxnLvassWwDmSnwdnugaSz5A+ke?=
- =?us-ascii?Q?jbqli09NXjWnRW8KzaR4MsBlLne+JZvuzIsrNk4R+xIysXeX6EllO6WUzwa/?=
- =?us-ascii?Q?Z4LiVhn6x2UFjlwhdLo0W/LeKysY1ppHJOzyvj9c8VT3gOeIEoZnErPTx8Vd?=
- =?us-ascii?Q?D3UCKNEQw2rTNPbB1Hs7RIvm7WK9En9ZNG2CVTQzsEIsvEdQKqtVSzTVVMle?=
- =?us-ascii?Q?kqbLzlKTQui1QjCg0ibhKca31F27qqRiT1NDlmb9vOpYOmD0wBOyS8Fhw/y6?=
- =?us-ascii?Q?19OnSovJ4VT1nuz8V4/BvLMk2iF64l4pcrMcCZ1CcMFmYho+zPTIpP1mxf/j?=
- =?us-ascii?Q?GQKDkjD/WtZt7j4QXJqaGoSyfBpMTobzNtSAPrznjXDuO9+I0za1f0w8BEwX?=
- =?us-ascii?Q?ZNJ8ku79k/raddirf9XftzFDcobiEsLqwzMq7Y0eWhEMuesnnoneud+YlsE1?=
- =?us-ascii?Q?CcEA5H68bmAq3ycYBiTPH8LxUpEvv2cmHdVbzNGobDm+e7Ublrb4vNUlLirz?=
- =?us-ascii?Q?K3g4uopyww3VUzOjMJ28GK+9HGQtxZzbha7HpT+MBLdXvZHLn30j4c4yM9YL?=
- =?us-ascii?Q?Qgp1XVco6LDplMJN8icbwVOi3H7YkY+rAlriHrWBkV5fi2QZCPGBBSrjwNvH?=
- =?us-ascii?Q?e2UY3EHnoGwZvwCGfrMU3epJ2wQnMcBLUh4BkpnX7/4Ixndn?=
+	=?us-ascii?Q?PNUKdKw+K3972jG4HUAGCjQMMgS1LUYyBbEwJFpfA8+Yb3s4UyUhj3mqEyhZ?=
+ =?us-ascii?Q?0mV8IDMheYOeywc9h97f05P/r2aOINn4s/1WoKtL391PHnZahFnJuTvlVZCr?=
+ =?us-ascii?Q?3fvY5vvOnhmmnZmDfaphvZyZlRN5Tfxt14fxJDt20GayLzHBgfMtkCqkyTkd?=
+ =?us-ascii?Q?/skry78eiRGHuZVVqHqaX4k4d0kheDybNYHziDTNUsNVe9+iqMBDBCGi0fFa?=
+ =?us-ascii?Q?0rrv3MLMQBK1HbhcqbvARskh6niKWEHMGBQBUhNV8GfFI8OuytrJ0ofsXmJP?=
+ =?us-ascii?Q?Sih2UMuugForVM3Y+r/xx+uEEabvAiSvB4arkGEJg3psSUN3Q0wjqwIsRUFl?=
+ =?us-ascii?Q?MiQKiH4+9Sg66PFsRCfsU4JH0jrKqUSkb7b8+iUpHvmAQ/m1yyZgmzmCgpqQ?=
+ =?us-ascii?Q?Fv6szj6cTguZW1oZGmN4RO1DTS9uV8pympXV7HFrS0ICFNh72FPQezaToXNG?=
+ =?us-ascii?Q?PwFj4CHgZDF1mO3zXTOMyCX5cFFfhKwoTdsunPFAU8U8ZW+GHDaYOpysEgU7?=
+ =?us-ascii?Q?RPIXYJveAH9mLDQfDS8kYTgDttpicdnsFZNqo9Qzo/CR3Z8+lykZLbSierfM?=
+ =?us-ascii?Q?+TmPy3+Lg+z4GNAhA2jdU+QJ7DZfGI1NDSU+2Gjd7RCjqcZXH1nwNBo5q1gE?=
+ =?us-ascii?Q?onGl4eEmOUGEITWiXLEea1jpIxSgIaGQpX9ckD9/HiEgH27ic7QEnIFR+QXU?=
+ =?us-ascii?Q?ICoC6MzYCpAI/W3Mwnn2g7kz3pzBxNrq7VYMDIdDUP/jn8jAqxSgc4Y9/Nh+?=
+ =?us-ascii?Q?RFCWwiS0IJ/mZw1vjRuwESRLOtTLPk89Ox+xvtFcUDA8+T+4x63bNnZL3vK1?=
+ =?us-ascii?Q?GN/BdGN+OiMksuNZNojMDF/ydbR7OcxZnR2Af3zuTD+KPV39yYE8+gaC9e2/?=
+ =?us-ascii?Q?tPuN5t7x0+4NEnW+4MDaV03WC13KYlHLyfjWqQt1BiuCdmKytQnXhG4SWbjO?=
+ =?us-ascii?Q?LpX26kY0c98oHFzANwcNwo7J8njv9I9sr4mYFFJZIR9LuFYnbw5Ul9KSK1g+?=
+ =?us-ascii?Q?ADJJ6nu0eIvRilto+O0E3/eGi6Uzu78mBG8rdxFdeUozV+xI7Zj1iEuq5cP5?=
+ =?us-ascii?Q?grys34M2uLh8CW+cDjhf9qjfe+bIYdt7XTbt0cc6rNimJG+xtISRpfJmuMit?=
+ =?us-ascii?Q?AKDp4jdqrfZh285keqrWKV/HPstffvUT+3LUnKeQFUis4NM715Bt61TPm1wf?=
+ =?us-ascii?Q?4/mi6hjHfJgnOfAIbE7VzZeOglEBOPnFrtEvowOfjeBnpUViQOoNJrUFHmGr?=
+ =?us-ascii?Q?B21QwwvvDWroKQwpyMo32TnPZ55t6DhhK8DYHr/YFMVZfSsvhHRMkOPxFv3v?=
+ =?us-ascii?Q?g0F3hoYxgq1Vn5ocGwTzbcPxQub1ot2jbqpMKne5OR62xnmgrpyjVx9meSFv?=
+ =?us-ascii?Q?cZMmxK3VIVWfE+wjarE7pWCvJ4iIuq6M6fmcVvLV6T9aZHhj1tWEMvv44N6Y?=
+ =?us-ascii?Q?X+TpZ7v5r0ISQXN5RbipS3GBKzUIxirDVagHexs51psQMmfYqNJVkIoEHcU7?=
+ =?us-ascii?Q?e90tEMWBkkKWCKa5h59djMSL64/2thY+QvwtzkMXOmzr80ap+P9W9Bw32aEr?=
+ =?us-ascii?Q?knZzkeLKYtIBmi3OlLlULBvj2nIrYftYJTFmFoxc3ERVX8/xKZK9CI1wzq+C?=
+ =?us-ascii?Q?46ljg9JQ1Frjtaz56s/G0yxSwu97wtAmbyPZeZ1p8SlHUYVGgDfBQGQSnHQR?=
+ =?us-ascii?Q?RiNuf03O8zUvUY3UThUyW3IRVg2xBQdym7oJzXq3SagR25T5?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6168f0be-23b2-41ee-7743-08df472efea6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7811cfb9-70cd-410b-1917-08df472efeb3
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 17:52:07.7984
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 17:52:08.1098
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: N5OInsQjQQr7xSVuJ1JL201QDnsXpMSr/MO4Ll/1VHXbXmAaBi8/IUqOFKpGevCs
+X-MS-Exchange-CrossTenant-UserPrincipalName: JWICvMnbVG4t9kufQ6j/o0SYZ13cEEIJ+6xlnV5M9cOmXdkYSg2heA7ZB4/fr3tJ
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6329
 
-Implement the link layout that CONFIG_EFI_STUB_DRTM requires. This maps
-vmlinux into the Dynamic Launch Measured Environment (DLME) defined by the
-spec.
+extra_size is additional memory required that must be immediately after
+the image.
 
-Broadly, Image fits into the spec defined DLME region memory layout in
-this order:
- - Program headers and padding up to _stext. EFI can write to these while
-   loading the stub so they do not have a stable measurement.
- - All the boot-time immutable data, including .text, .data, .init
-   and so on (measured)
- - Data written by the EFI stub
- - .bss, padding and other 0'd data up to _end
- - The "DLME Data" written by the launch process. This is a datastructure
-   the post launch kernel will parse to get trusted information about th
-   launch.
+There are three possibilities here, each a little different:
+- relocating for kaslr, just request extra_size like the zboot flow does
+  when allocating the random placement from EFI
+- in place, attempt to allocate from EFI precisely after Image to
+  confirm nothing weird is there, failing that
+- like any other error with the in place EFI location allocate
+  non-randomly with extra_size included
 
-New linker symbols are added to mark these areas and their offsets are
-placed into the efi_image_info so both stubs can get them.
-
-The spec's design of the DLME was intended to fit a typical OS image like
-this, with two areas that are unmeasured and an inner measured region.
-
-Linux zeroes the unmeasured area of .bss/etc after the DRTM launch so it
-also reaches a known value. The DLME data is written by the launch and is
-trusted. The EFI stub data is either ignored or will have to be sanitized.
-
-Add a section for the unmeasured data before the PECOFF padding. This is
-an allocated section so it is zero'd in the image and is only 64 bytes in
-my builds. There is a high chance it gets absorbed into the padding
-region.
-
-The post-launch kernel will have to reserve the "DLME Data" before
-starting the allocator since it falls outside the linker map. This will
-happen in the first series to consume this data.
+Adjust things to use a kernel_allocsize which is >= the memsize computed
+from the image_info.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- arch/arm64/kernel/vmlinux.lds.S           | 59 ++++++++++++++++++++++-
- drivers/firmware/efi/libstub/efistub.h    | 20 ++++++++
- drivers/firmware/efi/libstub/image_info.S |  5 ++
- 3 files changed, 83 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/kaslr.c | 77 ++++++++++++++++++++++------
+ 1 file changed, 61 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index 1869b44ae19095..f4e9fd90cd1b12 100644
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -190,10 +190,24 @@ SECTIONS
- 
- 	.head.text : {
- 		_text = .;
-+#ifdef CONFIG_ARM64_DRTM
-+		/* DEN0113 R314010: The DLME region must start at a 4KB aligned address. */
-+		ASSERT((_text & (SZ_4K - 1)) == 0,
-+		       "DLME region is not 4 KiB aligned");
-+#endif
- 		HEAD_TEXT
- 	}
- 	.text : ALIGN(SEGMENT_ALIGN) {	/* Real text segment		*/
- 		_stext = .;		/* Text and read-only data	*/
-+#ifdef CONFIG_ARM64_DRTM
-+		__drtm_measured_start = _stext;
-+		/*
-+		 * DEN0113 R314020: The DLME image must start at a 4KB aligned
-+		 * address. This happens always because SEGMENT_ALIGN is big.
-+		 */
-+		ASSERT((__drtm_measured_start & (SZ_4K - 1)) == 0,
-+		       "DLME measured start is not 4 KiB aligned");
-+#endif
- 			IRQENTRY_TEXT
- 			SOFTIRQENTRY_TEXT
- 			ENTRY_TEXT
-@@ -352,6 +366,44 @@ SECTIONS
- 		__mmuoff_data_end = .;
- 	}
- 
-+	/*
-+	 * DRTM layout for DEN0113 as it relates to the link layout, refer
-+	 * to Figure 8 in 1.4b. In that language:
-+	 *  "Free Space 1" is the PE header and padding between _text and
-+	 *        __drtm_measured_start (_stext)
-+	 *  "DLME Image" is from __drtm_measured_start to __drtm_measured_end
-+	 *  "Free Space 2" is kernel efi data/bss/etc till __drtm_dlme_start
-+	 *  "DLME Data" is a memory sized "Minimum Size of DLME data"
-+	 *        and is retained after boot for use by the kernel
-+	 *
-+	 * Thus, the DRTM_PARAMETERS follow from that:
-+	 *   DLME Region Address = _text's PA ie the start of Image
-+	 *   DLME Region Size = DLME Data Offset + "Minimum Size of DLME data"
-+	 *   DLME Image Start Offset = __drtm_measured_start - _text
-+	 *   DLME Image Size = __drtm_measured_end - __drtm_measured_start
-+	 *   DLME Data Offset = __drtm_dlme_start - _text
-+	 *   Normal World DCE region address = PA of __drtm_dlme_start +
-+	 *                                  "Minimum Size of DLME data"
-+	 *
-+	 * The EFI stub will place any optional "Normal World DCE" region
-+	 * immediately after the "DLME data". It is only used internally by the
-+	 * FW during the launch and has no effect on the link layout.
-+	 */
-+#ifdef CONFIG_ARM64_DRTM
-+	__drtm_measured_end = .;
-+
-+	/*
-+	 * Writable EFI stub state. When DRTM is being used the stub's mutable
-+	 * data cannot reside in the normal .init.data because that section
-+	 * will be measured.
-+	 */
-+	.unmeasured.data : {
-+		*(.unmeasured.data)
-+		*(.init.efidata .init.efidata.*)
-+		*(.init.efibss .init.efibss.*)
-+	}
-+#endif
-+
- 	PECOFF_EDATA_PADDING
- 	__pecoff_data_rawsize = ABSOLUTE(. - __initdata_begin);
- 	_edata = .;
-@@ -374,10 +426,15 @@ SECTIONS
- 
- 	. += SZ_4K;		/* stack for the early C runtime */
- 	early_init_stack = .;
--
- 	. = ALIGN(SEGMENT_ALIGN);
- 	__pecoff_data_size = ABSOLUTE(. - __initdata_begin);
- 	_end = .;
-+#ifdef CONFIG_ARM64_DRTM
-+	/* DEN0113 R314030: The DLME data must start at a 4KB aligned address. */
-+	__drtm_dlme_start = .;
-+	ASSERT((__drtm_dlme_start & (SZ_4K - 1)) == 0,
-+	       "DLME data is not 4 KiB aligned")
-+#endif
- 	__pi__end = .;
- 
- 	STABS_DEBUG
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index e404f29693c51c..154d2aefe6505f 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -1179,6 +1179,10 @@ struct efi_image_info {
- 	s32	_end_offset;
- 	s32	entry_offset;
- 	s32	sysfb_primary_display_offset;
-+#ifdef CONFIG_ARM64_DRTM
-+	s32	__drtm_measured_start_offset;
-+	s32	__drtm_measured_end_offset;
-+#endif
- };
- 
- /*
-@@ -1223,6 +1227,22 @@ void *efistub_kernel_entry(const struct efi_image_info *image_info)
- 	return offset_to_ptr(&image_info->entry_offset);
+diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
+index 2f1f3e19583def..f50c36a2fd635e 100644
+--- a/drivers/firmware/efi/libstub/kaslr.c
++++ b/drivers/firmware/efi/libstub/kaslr.c
+@@ -80,7 +80,44 @@ static bool check_image_region(u64 base, u64 size)
+ 	return false;
  }
  
-+#ifdef CONFIG_EFI_STUB_DRTM
-+static inline unsigned long
-+efistub_drtm_measured_offset(const struct efi_image_info *image_info)
++/*
++ * The PE loader owns only kernel_memsize of the image.  Try to own the
++ * requested tail separately at the exact adjacent address instead of
++ * relocating the complete region.
++ */
++static efi_status_t allocate_image_tail(unsigned long image_addr,
++					unsigned long kernel_memsize,
++					unsigned long extra_size,
++					unsigned long *free_addr,
++					unsigned long *free_size)
 +{
-+	return image_info->__drtm_measured_start_offset -
-+	       image_info->_text_offset;
++	efi_physical_addr_t tail_addr;
++	efi_status_t status;
++
++	/*
++	 * Since we intend to use efi_free() for reserve_addr it should be
++	 * aligned to the higher alignment since efi_free() includes rounding.
++	 * For ARM64 the kernel image is already aligned up to EFI_ALLOC_ALIGN
++	 * by the linker.
++	 */
++	tail_addr = image_addr + kernel_memsize;
++	if (!IS_ALIGNED(tail_addr, EFI_ALLOC_ALIGN))
++		return EFI_OUT_OF_RESOURCES;
++
++	extra_size = round_up(extra_size, EFI_ALLOC_ALIGN);
++	status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
++			     EFI_LOADER_CODE, extra_size / EFI_PAGE_SIZE,
++			     &tail_addr);
++	if (status != EFI_SUCCESS)
++		return status;
++
++	*free_addr = tail_addr;
++	*free_size = extra_size;
++	return EFI_SUCCESS;
 +}
 +
-+static inline unsigned long
-+efistub_drtm_measured_size(const struct efi_image_info *image_info)
-+{
-+	return image_info->__drtm_measured_end_offset -
-+	       image_info->__drtm_measured_start_offset;
-+}
-+#endif
-+
- efi_status_t efi_boot_kernel(void *handle, efi_loaded_image_t *image,
- 			     const struct efi_image_info *image_info,
- 			     char *cmdline_ptr);
-diff --git a/drivers/firmware/efi/libstub/image_info.S b/drivers/firmware/efi/libstub/image_info.S
-index 587a3eaff1c363..065bbfdf8fabad 100644
---- a/drivers/firmware/efi/libstub/image_info.S
-+++ b/drivers/firmware/efi/libstub/image_info.S
-@@ -17,3 +17,8 @@ __efistub_efistub_image_info:
- #else
- 	.long	0
- #endif
-+
-+#ifdef CONFIG_EFI_STUB_DRTM
-+	.long	__drtm_measured_start - 0b
-+	.long	__drtm_measured_end - 0b
-+#endif
+ static void efi_kaslr_copy_kernel(unsigned long image_addr,
++				  unsigned long kernel_allocsize,
+ 				  unsigned long *free_addr,
+ 				  unsigned long *free_size,
+ 				  const struct efi_image_info **image_info)
+@@ -88,14 +125,13 @@ static void efi_kaslr_copy_kernel(unsigned long image_addr,
+ 	unsigned long kernel_base	= efistub_kernel_base(*image_info);
+ 	unsigned long kernel_size	= efistub_kernel_size(*image_info);
+ 	unsigned long kernel_codesize	= efistub_kernel_codesize(*image_info);
+-	unsigned long kernel_memsize	= efistub_kernel_memsize(*image_info);
+ 
+ 	memcpy((void *)image_addr, (void *)kernel_base, kernel_size);
+ 	*free_addr = image_addr;
+-	*free_size = kernel_memsize;
++	*free_size = kernel_allocsize;
+ 
+ 	efi_icache_sync(image_addr, image_addr + kernel_codesize);
+-	efi_remap_image(image_addr, kernel_memsize, kernel_codesize);
++	efi_remap_image(image_addr, kernel_allocsize, kernel_codesize);
+ 
+ 	*(unsigned long *)image_info += image_addr - kernel_base;
+ }
+@@ -119,7 +155,9 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *free_addr,
+ 				       u32 phys_seed)
+ {
+ 	unsigned long kernel_base	= efistub_kernel_base(*image_info);
+-	unsigned long kernel_memsize	= efistub_kernel_memsize(*image_info);
++	unsigned long extra_size	= efi_drtm_get_extra_size();
++	unsigned long kernel_allocsize	= efistub_kernel_memsize(*image_info) +
++					  extra_size;
+ 	u64 min_kimg_align		= efi_get_kimg_min_align();
+ 	unsigned long image_addr;
+ 	efi_status_t status;
+@@ -129,30 +167,36 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *free_addr,
+ 		 * If KASLR is enabled, and we have some randomness available,
+ 		 * locate the kernel at a randomized offset in physical memory.
+ 		 */
+-		status = efi_random_alloc(kernel_memsize, min_kimg_align,
++		status = efi_random_alloc(kernel_allocsize, min_kimg_align,
+ 					  &image_addr, phys_seed,
+ 					  EFI_LOADER_CODE, 0, EFI_ALLOC_LIMIT);
+ 		if (status == EFI_SUCCESS) {
+-			efi_kaslr_copy_kernel(image_addr, free_addr, free_size,
+-					      image_info);
++			efi_kaslr_copy_kernel(image_addr, kernel_allocsize,
++					      free_addr, free_size, image_info);
+ 			return EFI_SUCCESS;
+ 		}
+ 		efi_warn("efi_random_alloc() failed: 0x%lx\n", status);
+ 	}
+ 
+ 	/* Try to use the image in place */
+-	if (!check_image_region(kernel_base, kernel_memsize)) {
++	if (!check_image_region(kernel_base, kernel_allocsize)) {
+ 		efi_err("FIRMWARE BUG: Image BSS overlaps adjacent EFI memory region\n");
+ 	} else if (IS_ALIGNED(kernel_base, min_kimg_align) &&
+-		   (kernel_base + kernel_memsize) < EFI_ALLOC_LIMIT) {
+-		/*
+-		 * Just execute from wherever we were loaded by the UEFI PE/COFF
+-		 * loader if the placement is suitable.
+-		 */
+-		return EFI_SUCCESS;
++		   (kernel_base + kernel_allocsize) < EFI_ALLOC_LIMIT) {
++		if (!extra_size) {
++			/*
++			 * Just execute from wherever we were loaded by the UEFI
++			 * PE/COFF loader if the placement is suitable.
++			 */
++			return EFI_SUCCESS;
++		}
++		status = allocate_image_tail(kernel_base, kernel_allocsize,
++					     extra_size, free_addr, free_size);
++		if (status == EFI_SUCCESS)
++			return EFI_SUCCESS;
+ 	}
+ 
+-	status = efi_allocate_pages_aligned(kernel_memsize, &image_addr,
++	status = efi_allocate_pages_aligned(kernel_allocsize, &image_addr,
+ 					    ULONG_MAX, min_kimg_align,
+ 					    EFI_LOADER_CODE);
+ 	if (status != EFI_SUCCESS) {
+@@ -160,6 +204,7 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *free_addr,
+ 		return status;
+ 	}
+ 
+-	efi_kaslr_copy_kernel(image_addr, free_addr, free_size, image_info);
++	efi_kaslr_copy_kernel(image_addr, kernel_allocsize, free_addr,
++			      free_size, image_info);
+ 	return EFI_SUCCESS;
+ }
 -- 
 2.43.0
 
