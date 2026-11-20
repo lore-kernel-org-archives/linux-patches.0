@@ -1,60 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795140566;
-	b=YmvPLDHb7XeiAZT9cmWzoQqsFwnL1Sv7BjXf4cIydNVNV/YHnoh/88i9DEZnqch86btr
-	 wRihC55sp/VK7HSo8LodhThMmbahLGE0jNrXAsl9QNL5HkYf2f73MwSG9We8yGSAkDdm+
-	 GDXbH6C0LJo4aSJPaBjBrDFx9ZYy8hobwW85J2SMDgXJml938JIsQNu7pdtkLvXXetrIP
-	 vivGPMrB8jN4Dgkfa+FdYOaVtvwitHH5k/L9mScl7GtF+wuUM62MUZ70U2Ibw9a3aG/pU
-	 Q8jvypCkCIg6s+niVmnAhyeigxR9e/30a4KDwsQYFUlday5YgpyDbncdlm836jJV8HQ==
+	t=1795140567;
+	b=pRf20R+NfmViauXBcPKV3zjgdCePqGntmQVRthehm7aNkFjPrro2LgGgefCvAtelN0Zz
+	 6RMLOyVIxByuwflwQEzFxoh0noVft8ftuR8+lUfpZCo0rRSOC132MxXY3Baq7oFMGmYBW
+	 3g2rOugr/8dz82u81ZHyQ9cBKSiinqNJEZlUCvjZuUjguGF9vIbYAKv+I9lkVIzQ5PxRc
+	 dpuaN1zTce2mfYAn6VnR7n6bwavOINBNaY0Xyj2u4gtVmy3pbqszVtr3RFxcf1e/PR4jA
+	 V9n+lj1dE4ZL6GIr04RRa9jdduW0IPLVjYEO3IYZcb3l+DGE53F8WqLeXe0qtj/PcrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795140566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795140567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=bma9YZvNPM7Avyhxd7mziKiP7ijMLTNw7xHdBq2mZtA=;
-	b=A7+Z5nEzg6q+NBYskRD8+27lJTtwBpEBwJx5HqU750NvFxbPvcHIyRX+87YIVDEIKVvq
-	 Rkuk9ABmCK74Di9NuGROe0UdpIWrO7NZ09Z6iyLpM1XcgzsB3b1OAULZKioBqpGs9aT5b
-	 mjkRvdhI/3Pw+baZqA6ydqfrWwgBwpM8EYdNZAl3EKeCG25qutuYhdxpTz1yzViszqx3o
-	 v6PNPBQXd3XhyShruDonoSRGxJIvgoEgpZtap9HJyz3LAePXM3066b2kphVL53AyBVcFm
-	 wZdNL5UbB7kjEsGEtyJvMtw2x6sAGSwjtJg0hGBUWm1sTmw4y+4BlV0vZc8zXr++rBg==
+	bh=f8mTRn/3X3uZEq0um71/dlAedACVCps+ka1nHFg/T/Y=;
+	b=K+AFAZUYoGHWJAnuqnV6v2PQxFc6J7Z/sb8cH3RQYiK1rLeEDL/ImPNZYFbDtHcsnuC5
+	 JQ1byRjdGUS+GygkbgSuo2BQHv9y05iVPtCjMk+PLAMFitionOztRfwq3503iDrtAiJkl
+	 pqLOqkII+s/rF3Qkb8a+qiUE9kgZxgegVVyK8sU7m/u8HOdm6ebM3YOxBWwaLx66cn08N
+	 roz0r4JWC0dNWeemiOvGdf28xR76YQ1bykN5aIPKTMoVyyTo9PNG6j3XuEKVN6WtfzShb
+	 En6nceiq+DbX+06Q/OVovuijBskS2TRviHlL3kJciiWTf6ZIfL3AOeXlRzN36nyNQww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aemKCu6Z;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RjDIxibh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8B360A260B;
-	Fri, 20 Nov 2026 02:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE9D60A2609;
+	Fri, 20 Nov 2026 02:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aemKCu6Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196D41F0089F;
-	Fri, 20 Nov 2026 02:09:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RjDIxibh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434B81F000D2;
+	Fri, 20 Nov 2026 02:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795140566;
-	bh=bma9YZvNPM7Avyhxd7mziKiP7ijMLTNw7xHdBq2mZtA=;
+	s=k20260515; t=1795140567;
+	bh=f8mTRn/3X3uZEq0um71/dlAedACVCps+ka1nHFg/T/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aemKCu6ZROQ2wYvgtiXzvAntRsQ1O96DcSMWzzvfpPzu0tJbQDEmo44H3WSjntb9v
-	 DnQmdfTPirf9V360zKib730r3tT8nylqCIMmGcoQE5KQL1z1MIKElvmGcSYvxAfk6v
-	 ZAiJnMhxspUuq+2DACQQmMzZ2bCl/DcmzIRdnJHxwCoikJsR98dovdaVmHTq9PywwF
-	 luTGQRADuFCmEwoo5d1ht0Qjc0L3miB3EbmZ9uWTOJ3EU9JHg8sMyQ7NrGdpaKxlV/
-	 G2Uc1w6eAt4zdDeoHZ6W5q5f3D9XdNu2estcxtHcjWbz8x+Zj7yjkOS9LnCPdec6Xa
-	 CPvZTferh7dow==
+	b=RjDIxibhEvzAlmEJz9HG0Qvro2AAMtg8tsedwX8IlxdTKheBfBiyw1hO44ShNjzV1
+	 Dcr7nuxGOWDH0ii9AB79Virf6op7Ml8EK2QTYMVVxJbA8UISERLkHHuTHAbhx20xyl
+	 +unQJ3Celdwe3bM/eJn44fjYxVquTj4nARySmzV5OUbpQLj8sSkQS3uYkw61vz9uQr
+	 rIGKkk7wwS3zPYpJGPyf+iprjVe2cwsl3ecm/ctcp+zoiodL6Vzco0Kl7JNtmrxDNO
+	 vk3lbTwBjvXCI6HuvLzxFr5A41EhIEjxHMNf18M/5qzqFquzwVEeesKkZes38XNkV+
+	 9tN1QzXG5mDNw==
 From: Sasha Levin <sashal@kernel.org>
-To: "Barry K. Nathan" <barryn@pobox.com>
+To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Sasha Levin <sashal@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org,
+	gregkh@linuxfoundation.org,
+	axboe@kernel.dk,
+	hch@lst.de,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: Re: [PATCH 7.3 1870/2651] Bluetooth: L2CAP: take chan->lock for l2cap_chan_add/ready/del
-Date: Thu, 19 Nov 2026 21:09:05 -0500
-Message-ID: <20261120020908.2320910-8-sashal@kernel.org>
+	stable@vger.kernel.org,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Boqun Feng <boqun@kernel.org>,
+	linux-block@vger.kernel.org,
+	rust-for-linux@vger.kernel.org
+Subject: Re: [PATCH 6.12 0534/1756] block: remove BLK_MQ_F_SHOULD_MERGE
+Date: Thu, 19 Nov 2026 21:09:06 -0500
+Message-ID: <20261120020908.2320910-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <42da5e9b-1db9-410e-9c72-9f9f4e9489f7@pobox.com>
-References: <b5b8bc11-35bd-45f9-adac-648c1646ac32@pobox.com> <2026-11-19-1-daily-reply-0006@kernel.org> <42da5e9b-1db9-410e-9c72-9f9f4e9489f7@pobox.com>
+In-Reply-To: <20261119140830.15616-1-ojeda@kernel.org>
+References: <20261118150030.389817521@linuxfoundation.org> <20261119140830.15616-1-ojeda@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -66,30 +68,14 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 19, 2026 at 09:15:42AM -0800, Barry K. Nathan wrote:
-> Now I get the following when building the current 7.3 stable-queue
-> (commit 5252483124e6cf016c4a6f41fe1e44f5e1949648) with clang 23.1.6,
+On Thu, Nov 19, 2026 at 03:08:30PM +0100, Miguel Ojeda wrote:
+>     error[E0425]: cannot find value `BLK_MQ_F_SHOULD_MERGE` in crate `bindings`
 
-The remaining errors need 15ad901d92a2 ("Bluetooth: L2CAP: avoid
-maybe-return-locked in l2cap_get_chan_by_scid/dcid"), which does not
-apply cleanly to 7.3. I dropped these from the 7.3 queue:
-
-  - 385c0829e09e ("Bluetooth: L2CAP: take chan->lock for
-    l2cap_chan_add/ready/del")
-  - 987935a58d28 ("Bluetooth: L2CAP: add locking annotations for
-    l2cap_chan_lock/unlock")
-  - 608e0b7a675b ("Bluetooth: L2CAP: add l2cap_chan_close_unlocked() and
-    locking helpers")
-  - 79ff49a72c06 ("Bluetooth: L2CAP: fix race condition in
-    l2cap_sock_shutdown()")
-  - a69dd52612ea ("Bluetooth: 6lowpan: use l2cap_chan_close_unlocked()")
-  - df5175dfcf48 ("Bluetooth: 6lowpan: avoid concurrent peer_del() in
-    bt_6lowpan_disconnect")
-  - 32d86e048d8e ("Bluetooth: L2CAP: hold conn->lock for
-    __l2cap_ecred_conn_rsp_defer")
-
-They will be requeued together with 15ad901d92a2. 6.18, 6.12 and 6.6
-keep 385c0829e09e.
+Dropped cc76ace465d6 ("block: remove BLK_MQ_F_SHOULD_MERGE") from the 6.12
+queue, along with the swim patches it was queued for: 92353a047637 ("swim:
+Convert to blocking queue") and the swim patches after it (04cb277e6841,
+b736189c93c9, abae04f5bed9 and bbcd3e38a4f3), plus b9c109504853 ("swim: Add
+track zero recalibration delay"). Thanks for the pointer to 31d813a3b8cb.
 
 -- 
 Thanks,
