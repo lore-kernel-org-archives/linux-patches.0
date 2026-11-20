@@ -1,86 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795215275;
-	b=RoMoaL6yWUt/+J0N/QX5BB5xPjb+4eqMkdI6NYPHGID3t7zMxA0sTard4hxqjK2/k9H2
-	 n8hXPkPZ/bJ9YNKmVc1pcR6a8bZ/D5H2PBh5WqnthyBA1mvMctTD/qltNpPmgwJU+zT9P
-	 gOq5d2EDeRUP0itXxauctf5n7Pxw4yzi1xpA8FEp/8CXq3lHcMmYi0/xl/HgvpseAOjN0
-	 DmfaezHm2XN+vWfom9MqEqWgB5rTP0Xn48qtrAGknGs1UPXLDgZKb/2cHS5rN/QhqWOr1
-	 jdG9WAVQshSKJmBi4KDwIMDjcal11XJOwOuTCg4EiIMvCW/H6TqOzqFSrBLYcHO1KHg==
+	t=1795217667;
+	b=w70xaSM+RKEuvcPPFWTSiI1AZm/X0x1E6/SZ1zEhC8ePE9ZedSPtqp7sbru2kISDbCga
+	 fPI9k7FhBkakplSS/dISYokqgpkemXlpN07XUzGU/YuqPMVmygffi010bLU4TyitVhs8+
+	 LyLm1UWKiZixDjcz3WeX2JlO+7zxxMycKyVAHpKW1lC64oSzCYvD9N6pJKks8q4ZU3RWA
+	 fFh195yMLYIJZ4vz1nna6CcevUsNwG0tGzNoXMCyVsseU86QPOQAtY7pHveSmEDN0kr59
+	 afYkF+KnuXDVFIKL8RghzC8DHy+6VQOJdkAZ/XAgPgouMRdiorjtqmsRWmaARnliFVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795215275;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=7skHt+YrMSf45fvtAQB9ncjgz8a/0hFVmjlyc9Hg1bM=;
-	b=v5vu1PVwzJCYMxOVqJprmAdcJ4g7YnFHr0NEbIDKXOTGtEcSxLQgBFY3VirQadJR4/ai
-	 j2wa8H+1Vj54uDlY9s7TASBKCe1KX8jxEYnOAcASGPfDFIy5HpKyaAWu+5ApB3cJRqk1p
-	 +Y9AgiMeawpMOJS7dqGGDkRCQazYtS9tDSerepAPbA1vOtg7Aeb/LwUAlQbayllECbNOD
-	 gi8RdF8V8dGiQ9y/s9tD6NM0lQlDq61a0JJw+ByzYnYf2dGUFjBbGstK5k2jNdOA/PTzS
-	 dsvA74P35Qw7oXX/kivBtWf0ImggWjII1Lxyv+JhwVUs6sttoyaS0NMRb4tiBE/QylA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795217667;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type:Content-Transfer-Encoding;
+	bh=d5UxhRENKrjN2WqdptUK5eL7RckbgwjJ8al7suyNLmw=;
+	b=MJby/eB5tMHoouspTqU4FXOHwGUUyNkoFgVxnX1xhSx7jdmKQLWiZeHKZ8kd+ZR4LYx8
+	 G2Td45pH4DbVaU0cA9qb3FKYevU7QFRaRIR9EA+Qko4ZW/ko8Rd9UMoFb4+PEPbUaN2lD
+	 ucCuiJ9nqwb8WLzWSwhJjB+/FgpnW2aUQeSNPoVcICes3hOXuoriSHx0mFVkmb5lwTxx/
+	 UIiQy9Y5QtRcR+LnLSC84lFGihcRxa9hlinrjSY1UfFUZwsKOGb2roIaqoPSYnuWmadUh
+	 gY6b4spyew+NNhyIyDscOw/AyewHLcxVJK682VBMf3g900Ma8OKQuWvSAGezFW0LdPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i5oAe8Ae;
-	arc=none smtp.remote-ip=209.85.222.182
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="kPrgk4/c";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4BC606A693
-	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 22:54:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E4BC606A693
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9790E606A33F
+	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 23:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i5oAe8Ae
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-94961b68685so123523185a.3
-        for <patches@lists.linux.dev>; Fri, 20 Nov 2026 14:54:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795215271; x=1795820071; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7skHt+YrMSf45fvtAQB9ncjgz8a/0hFVmjlyc9Hg1bM=;
-        b=i5oAe8AeM03EIu+nk+7e7ydP++SqKZgVllkfoZTT/jJBzbeg9JXAEoY1xUJmjaun7c
-         sfDMODoiTswwEXXkZoA0CJMjLYb292XkUAijZuyFGcG8Lux003hPHodrmt2e40ep2k0P
-         hX6B4aT3RsNFBMiSZK93m+kX8rjicFP/AHI4474JzN5IsVo9WnTzq+EQnvWToUSz6CLE
-         XZLHZTbbWN6YeQyNbbXd5Lrkdi+lxM8aG1fMDPlSxcnZBJya298L1gXeOrO6NbZlEkRi
-         OHGNY6idXnPmu3LrJ2ww5mvAiIyygFEWQ6P8eaeVM6p8qjOl3ctCyHWRTEv8Bvns7OLQ
-         ++GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795215271; x=1795820071;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=7skHt+YrMSf45fvtAQB9ncjgz8a/0hFVmjlyc9Hg1bM=;
-        b=XgjVkRehYfIPKStuK3a4pU+QcOtWb0+8Rk/y9FPD07tWxMkQ/vyqeuWGVa+rd1RW2B
-         8sBmkuySCr6ZELhSOLaiBoznBC6k4SuGwntOn4UYK8fwYa0vznz45jJPWhxU8EMASKqF
-         7AORLYKZtK+ABsxlpDzaCF8dVWrLOtYLnn5wA92C0jxDMc8MMkRnSKbJsj50Hnm3p9za
-         oVRtEVyUWgZILnB9xVdArhtAwb7mG0PjbMLGdGND5NESoLXCYuyVUcedTnK/U1Qt2pyE
-         pSGPaUV25MIoVecfp/+O2uUGn9h6Fn2ggseUl/S1x8YPv2pj2/xCl8E6vaD+i33xl6Nh
-         joow==
-X-Gm-Message-State: APuU4Z8ZG8BWltfFxVX702WsvQsn4eknoGiSorSCxy7B8oV2TdyMEcfe
-	VXeVunwDjFj7pGbBBcd0qnLpXUK/d83ha6EtZXvHci7gZ6PxXHwzgKRh
-X-Gm-Gg: AYBFou04SK77kKy4qeWXzRk6hr+CWKVr5ykNhYdL13Bv3EeKEpfic859gy16S6oBpts
-	bpm83sE7W3QavKjHOT5hQ8ZnQqCIGRrDGH4uGyshHYvGga798YmwI3ytSkFoPCm2lDgFQw2bjjr
-	kI4GlSUlooGFyVXu/Ee09wKjCnLZylE+hoFglIgyahP2eC5WW/ngJ1EjpeNrtW5gK+sr6dYay/s
-	KKW3LofR8DTRdd3kcYyk7jSgaBVlDsSjiJD9ANobnBpD9MQVBtiZ9h2zRBeY6dAlam1Wer7NcGF
-	BBtRP6CSNNJY3BTvER7hytAaFbjaEOhYL4LeopBXH8dRTxGoC7swzW71maBok4nfwRt8bRvgZQH
-	+7/O8d6cnyIFoNC+ZxnvNYtNJKd/M7+u6erdXTGqu7xJ9heGnp83kJqOA/ZGF2iw1qbJ9Qcz3X1
-	auBFRbVt8slVh5M/oVXTjzeIQ21kpue4OhUVrnYJNbIhvbn3YkfJMXu//Vs/fW2kUIjONKGJhi7
-	ED86djbHHq/e6AiQkB0DZLp5JsDtn4Wb/c3hW3azxeLEg4095O+wYZaUVyg4JUdKaKl//AMuOTt
-	Omw2JyhN+jJj26ZxM/KECyh3huTsHapAlidmaCeovBd+coLcdsh4Vcvm
-X-Received: by 2002:a05:620a:4627:b0:93e:90e0:d2e3 with SMTP id af79cd13be357-949bab0aba7mr751067285a.39.1795215270952;
-        Fri, 20 Nov 2026 14:54:30 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb3f1ee7sm295566385a.28.2026.11.20.14.54.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Nov 2026 14:54:30 -0800 (PST)
-Message-ID: <f47e9c53-c479-44c9-b5c1-b118873f8399@gmail.com>
-Date: Fri, 20 Nov 2026 14:54:27 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kPrgk4/c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2D51F000CA;
+	Fri, 20 Nov 2026 23:34:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795217666;
+	bh=d5UxhRENKrjN2WqdptUK5eL7RckbgwjJ8al7suyNLmw=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=kPrgk4/c9iGM7d9omUE7JaPkkuE4JeyTzm9y0r1D5O/JrECRYDQvPeP1BbMl8ciqk
+	 8TCLIMZGVUGGgg4QuP4XMgmo64/zsUkKTewyF0A2dy1ssZ2HTqiGrd3V6r2Y+C2C7I
+	 II/c0bF/VPCB/WbMMGSil6/nXU52M405WuoIaqVEJSLej7Ao1pCEB/0REFefZ5zH+d
+	 ZdYPcwP5GVJDVYWxFd8iCyg9f/WwmGSjr+mrhKQDaHQB46TTVxXNvtPQXW8gdEA1tJ
+	 3ed6bbLji/Tj4a6Ya8zgXPxTltDkg/nd+mS2SxxhMpjX/gEKMICeT/nXycy2mTnNc6
+	 DBzTCnMfxQLfg==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 93458198003A;
+	Fri, 20 Nov 2026 18:34:23 -0500 (EST)
+Received: from ams-imap-11 ([10.64.2.31])
+  by ams-compute-02.internal (MEProxy); Fri, 20 Nov 2026 18:34:23 -0500
+X-ME-Sender: <xms:-tgAa40WMd_EPWFNg07JZwyPJcDR9Hl4neZG2sZ60S43JjZakvJQFw>
+    <xme:-tgAa94btA2FcjGmKSDp7fs53-xd9zJUgeojcI1BpmZaQ8Kz0eLzPAdMkS9qQ_7FU
+    OZr59jIhg8MHlYyQnwbZeEYlF7PpV4Vxlr8KoLe3U5t0r5NWyCYNKk>
+X-ME-Proxy-Cause: dmFkZTFL9seTInIL2hUW1OvhO1WNW9/yDQMQ3sNpaBykWH23VqJykrvUISWN+rBSHQ+5bq
+    /JQwHxFYPIkL2Xu86dfOWtqtRPVNB/qIKe2+3mjFHHflxOdiuobuj78Hw/FMM8RVcs5xMb
+    dS/DET/rxsPx6SEKm1JZ2K/buPZvqwh9FNjgcHALkKy/XLVkevo5sDDIARq2Z//kZnp9CA
+    rSEoHmeWmhoezQror9Ty81ka79pfF/gOgXmZ1GkKqAi2/yxezmh6ijdV1UEGYFqsznmeWL
+    g6Y1Onmgdfw7a6cltPUu6V6KYEQymMJvNVprAPmF42FlCo/F4k4Y9IbQe/ue2Z+ZHcN6bR
+    AVBfQNgkF9KQh6PxBWA+qfee9aUYQOqptwYa8VjqHfwnjVYok5TV5bLTBLvGn0rIl/+57i
+    WO2CFNlMLurWUHycX9pn9FDh03suHQbu/a60gn8A1Unl1x/x+0E2LPeaCXK7ov30TPL9HY
+    o2ezFIxHQHCXTJI7edwpEegWtCs0Eg73XGWZUHhg6NY3KaNTAF6vI4OBcklGStE1NtEpHe
+    N3vHrVedPTfuvnZlHDtl4lFSJEfm8EUJI7Pvrs07l9xMCrxgGBfUi29jmIbjOM3Gg8ZgCg
+    sI/r+DEJkCrbUJ/3Cs8u1BxQF8UUwcuBBDKvKM9/eCBqk19JS3CGIDZU1VMg
+X-ME-Proxy: <xmx:_9gAa8qH40BxQBQvJaXjFARB-PhdRsMar2JTklrPA3z4SJQHVTmxBQ>
+    <xmx:_9gAa3xjvPAkaVp2Sku5NRZNcCLQid1uQn0F3mHKuHRTI4Ze8YW5dw>
+    <xmx:_9gAa4fNmE8P0lI-MJYK8bBx9g6OJsEHDExPpHD4o_STbil2bs93ag>
+    <xmx:_9gAa7et2LQJdchwIic0GV_SClr-FVPrJ93hKkhrIDg8-j26-Wdt_A>
+    <xmx:_9gAaya0K8B0H7iHsoh_BofrwBklH8I5ogjHkW64OyKf3gN1PHCDP1na>
+Feedback-ID: ice86485a:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id CDCA4F80093; Fri, 20 Nov 2026 18:34:18 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,45 +77,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 0000/2144] 6.18.65-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20261120055114.182757740@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20261120055114.182757740@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Sat, 21 Nov 2026 00:33:58 +0100
+From: "Ard Biesheuvel" <ardb@kernel.org>
+To: "Jason Gunthorpe" <jgg@nvidia.com>, "Alexandre Ghiti" <alex@ghiti.fr>,
+ "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Catalin Marinas" <catalin.marinas@arm.com>,
+ "Jonathan Corbet" <corbet@lwn.net>,
+ "Ilias Apalodimas" <ilias.apalodimas@linaro.org>,
+ "Justin Stitt" <justinstitt@google.com>,
+ linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
+ linux-efi@vger.kernel.org, linux-riscv@lists.infradead.org,
+ llvm@lists.linux.dev, "Mark Rutland" <mark.rutland@arm.com>,
+ "Bill Wendling" <morbo@google.com>, "Nathan Chancellor" <nathan@kernel.org>,
+ "Nick Desaulniers" <ndesaulniers@google.com>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>, "Paul Walmsley" <pjw@kernel.org>,
+ "Randy Dunlap" <rdunlap@infradead.org>,
+ "Shuah Khan" <skhan@linuxfoundation.org>, "Will Deacon" <will@kernel.org>
+Cc: "Jonathan Cameron" <jonathan.cameron@oss.qualcomm.com>,
+ linux-integrity@vger.kernel.org, patches@lists.linux.dev,
+ =?UTF-8?Q?Piotr_Kr=C3=B3l?= <piotr.krol@3mdeb.com>,
+ "Ross Philipson" <ross.philipson@gmail.com>
+Message-Id: <243c6d70-7c81-4ad3-9a67-eb8cfbf454d9@app.fastmail.com>
+In-Reply-To: <3-v3-22d1a1eb7d2e+17de-arm64_drtm_jgg@nvidia.com>
+References: <3-v3-22d1a1eb7d2e+17de-arm64_drtm_jgg@nvidia.com>
+Subject: Re: [PATCH v3 03/11] efi/libstub: Have efi_kaslr_relocate_kernel() handle
+ extra_size
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 11/19/26 21:58, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.65 release.
-> There are 2144 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 22 Nov 2026 05:44:39 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.65-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi Jason,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+On Fri, 20 Nov 2026, at 18:51, Jason Gunthorpe wrote:
+> extra_size is additional memory required that must be immediately after
+> the image.
+>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Given how extra BSS memory is essentially free at boot, is there no way
+we can establish a worst case upper bound for this memory, and just add
+it to the image unconditionally for DRTM capable kernels?
