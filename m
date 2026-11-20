@@ -1,59 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795207180;
-	b=bdJaexal3/T6haToxjNd2ZkrTiEHV615C5ZvxIyk1XXpozu/wonR9KQowK91k0GMwqh+
-	 BZgKN0Qoyp2fUzvrRpA3WcWsW2IAcHvfX4GOkLmuDBD74dBDfQSmRSDxpvfNJ2o5B9e5C
-	 vkC8MbZu3u5JclnyPM6h0FqMcOOwmz3fWnFcx1Oxm2MKBAXNEb+EWCKMg8zBqxS40TuPH
-	 GRABvIf5sXuD5sD9srYGxIpTMiPV9PbM6qMg/aC8ttPz4QoDoLdF+D/6l6kT61JseUBHk
-	 mSgS+wLf437sbFkObEa2dfrj9Gc43PPFM5QxpyWiCM0cAH7AHq/l0RaybHXCOPQV1Dw==
+	t=1795207184;
+	b=rkR4uTJxCc1DW51wbAuuVzXvYR4MmQ+fynD0I4XyNKU+i8w1NvKR0N6PcEkaUTP3wRFi
+	 r2A98mhJfC1QMpapkYPNQzV66PRHlm/LqzFYQlQkUNlrvFqpAvPctihGVsM+ToELhestk
+	 kPaEUNZob8XIy7V9dt7oS47UD3fRiB6Efb8gNJpif5esdObkrr3TIFDa6kR3qOkrkFvI+
+	 e2Bw/uj4DCVWpXFWzcStQ4Xw9odPms/5y0/CrxFkTXuzVkw8RYbBlwzKgKOWfUgmezM7+
+	 V+J+EmxwX6xD9E7Mvka6Vw3ogL/HHwjdPXNFJ7ZGUAKH03wJKth5x0mzzA2W/zXc2rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795207180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795207184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=jyzEO4pUHQDGLzGBcUH3c94wzak5+U83+rXl9UYyxFc=;
-	b=KgzPdIZ8h6Bo6SMtj6wPiEtK9JF4+/ki/yXi7mmVv7Lp/765zMqEOBFw2vgwJjqdBqfA
-	 hQ2qS4/4rGTB8bnZCH6YMk7D09jWmc/uc9m1QM65FVrU7bJ+MJ0tlnRcAZ2hJimMFjuxV
-	 7vSWrBS3THUxcwNds272N+jnn4bYFgJSBBZWD0NZUyIaomMyUhKDOtvv7vgfeW0eOU/Do
-	 AqdpG92TOMN+ADQ9pPuL0Hhue/TsscdiTFGEx11A0DtzXbj61V+NFtdUeBh9yJAhrvmiV
-	 MtaQ4dutLvCQ1RnOImSCEhvFDYtDF8atz81g8JzbvNwfATw5IQcFQm6Nj+eNROticww==
+	bh=RQjHoQg2SeAtlNCOrDFf/6LByv3VuE1etO4z+1nXNYg=;
+	b=iuf6Tf5kvTr+C0Wmd0rYFwMD8ZSA0N6yPeoYSzrmXMf12jCcG4RHDgXV2mkxt841cwTg
+	 ToWT4InaMW00KgPDVue1YUn+0WES8VtBfuDqmsklmWXSikxjSR0hUuaYAcqDep5+NVdZd
+	 7SkLWS07rsj65oHFkao3m6AvTHmNU28llRKgeI/pcN3jii0vgMVV3S0FKBvjG7wOpkUEg
+	 obDZvUTkb167/HhWzBPxKmsy/l9TDi63GKqQ1DHdjWaXsH7c76Tix7LazaBjr4KhdXuIC
+	 wKa4GoGrJAfksYNsF60QDQXSzaXkdvWufeI+UY91OHfrpMgTjX2488dEB6LxOvjSWZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bbjYLJ84;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="SmQt5/oJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E6E606A334;
-	Fri, 20 Nov 2026 20:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E990606A6FE;
+	Fri, 20 Nov 2026 20:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bbjYLJ84
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A57F1F000D8;
-	Fri, 20 Nov 2026 20:39:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SmQt5/oJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BF71F000CA;
+	Fri, 20 Nov 2026 20:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795207179;
-	bh=jyzEO4pUHQDGLzGBcUH3c94wzak5+U83+rXl9UYyxFc=;
+	s=k20260515; t=1795207184;
+	bh=RQjHoQg2SeAtlNCOrDFf/6LByv3VuE1etO4z+1nXNYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbjYLJ84coghLgxInKkF52Hhqdc6Ma9MGGrLKBsoBthFn6StxBuUmtQFW+kSb6IYH
-	 gQfDTInMvE1ws8dOcofwZiiW2v0rSyfTb4o+K14MBq2XTkE2IHsmAq3iucgeBQCmdW
-	 qsGMqiTZnN64B+GI+x51wYsPvaxRV2kEjo3tNgmtIwmbU85o5VSJDsZvWRvcpN/jkj
-	 eDhpTTckS+dGo5YHQTZJMFW1sD1ft17uNupc4MpuCMs7ZBvpRG2MRTHt7I+Fv3ECQ3
-	 Tk7vKGjgLHraznNGoGLC6BUpSxvgUoihb9Fr8nCK4CzI6S/tlfaPHXqMKZbhWByzCG
-	 /CbatCEaPKIsQ==
+	b=SmQt5/oJ9bZbmyDto71PfevgmDEBgE+Us0fmbH14VbMSXi73GJBLMq+CnJml6nLNb
+	 ZC/r8m0IrlslQceu78B+DQNMs3JISUjxmcaJ3HHNI9rGQRBgaDv6c8YgiA4BGAdJjt
+	 hpB2cLlUpi2NsRD43FWpG4LZsj4B78PFnsL8lcFkws17Jws0xSk2oLMCVH/A29B2Wj
+	 4SedFKDX+HKxSxCPpGujgUkfDx1xFTLgz8umHoeU3OQa20TQOwlfUkBDXG9KWTzlOJ
+	 dUgcMvHgQUaL/OBSEGS8I/x8RzXhqAflcM3oIKHaV78A3BE9xvJ+BqP+KKOO1ZS7Gs
+	 soEDUZ6ijJRVA==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Chenyi Qiang <chenyi.qiang@intel.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: Re: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
-Date: Fri, 20 Nov 2026 15:38:59 -0500
-Message-ID: <2026-11-20-1-daily-reply-0010@kernel.org>
+	Tao Chen <chen.dylane@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: Re: [PATCH 6.12 1363/1756] bpf: Add show_fdinfo for perf_event
+Date: Fri, 20 Nov 2026 15:39:02 -0500
+Message-ID: <2026-11-20-1-daily-reply-0013@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
-References: <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
+In-Reply-To: <e454c187-a5ac-4662-a2b4-d186ad3777d4@oracle.com>
+References: <e454c187-a5ac-4662-a2b4-d186ad3777d4@oracle.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,13 +64,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> >> Can you pick this patch for 6.18 queue now? I check the linux-6.18.y, which now
-> >> has all the prerequisite patches now.
-[...]
-> Exactly this one:
-> https://lore.kernel.org/all/20261104211109.504581890@linuxfoundation.org/
+> Could we include the helper change from 823153334042 ("bpf: Add
+> support to retrieve ref_ctr_offset for uprobe perf link")?
 
-Queued for 6.18, thanks.
+Queued for 6.12 and 6.6, thanks.
 
 -- 
 Thanks,
