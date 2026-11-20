@@ -1,63 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795173760;
-	b=UqT/M84OIoRcqPgZ4TjHLaFXXwa4oiQ29uviRl+HbckZWz8t1CzHgmAAzs4tM6fUZK4X
-	 aAtkrVlnqT1yi/BeCS5a0yPHxB/ct1TP28cf4aCQEI2DwYW24kcE8tlmGww8HW8h34Cp/
-	 IXN9ZtWYW9XnPYgKOCbOUVvDfGN+0mGmV7jKjCWKzP5ojktWdy7DhE7xHmWzfb2cB8VNR
-	 QcCF/Evecx9aeuu/Fz3h/re2d1P5ieKkwycfcz3nbtEVLfsJ1S6qXaDkzyAM2JFlZ9791
-	 S0Vg8O2ILkRiLdZyaM7ZBEGm4wf+RXe85bmlfYM2tg2SbwHxxt4kck7zr8UyPrpLLDw==
+	t=1795175019;
+	b=hDV2+ZoB7q7HYXs9+H+NRWqMiVuSvBMi2J+tkY++TiL78QpC9IvuUIFh7t0W3VFpoDTG
+	 7c1SWsCbrKoUt2xpjWUYejBNflAH9FQceOhdSs4cP9HXxmEQD3WKok24Kg1s7QeqxrK3D
+	 56TgjCf5MJ6jPezxqbbi/SEQ+iIJiIvRXHT8KenQ5AE/2YaJFohHuYY1Drd+bFp7XAFH2
+	 kHJghHdEVzLLGOfXpCUXKplw+WJuNo82IJUw7LoN/9QOIDQc7vQOeTydxJa21DGnfsiAQ
+	 FZd90rUkqEu/7aEMypho5nXe1ZesCnwgIBMw3ywb1ObYUqCLlC3B5uLeLGhLSDiUVNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795173760;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Last-TLS-Session-Version;
-	bh=K0f4GyuWmwiU3xAt1qgEIuTwy9fTV0XTeNNsXZl+3Ts=;
-	b=hgAsvxbN2SULSIUo7ooe5c2FK6jperurxbaiFrJ8XcVwWkI+QSFkthdEoMyhsAC487wf
-	 FYOQX0yz5LR6I0jG0gejL+bBig/hV7j3YKCjDal/9KhxsOnd+jnK8K6QHKH2CQrVNZ9IU
-	 MWBo6V/LQUIUxN75EBBsSCk7NzoFHbFXcyWAoOyuPN++EroTRE6PHox9yJD3x1C29CHvJ
-	 YS5lYziFVrdLwulVnopJ+z76yp6s/H7WXc45QG+szaQjidRAZnbCjpSklFl+uh/9rhLgc
-	 n3xOa0t07+ajujnGUoreedPUVmr8P9R6ILUAVrkBdcPCdCFENJoXzGzngIi2qhUzTlA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795175019;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=VesvHE2NCs2cycQn+5+nrmTvzccPzdufxO3TqLOF7RY=;
+	b=x5OY0rcDiPygVIisaLvVZ+2YKQz00emlfcNC2Li7VuhQYe9vUMSTRE4we+mW8FD9VQJB
+	 Sk8bpvIUey+UvUTdfkJzCZdfkTdo5etpl7zz49PpDk68L4UJHfu+vG111sv3/lBaKogtf
+	 N+JZOwzigwIdx8adjUiBIgjmryOFb/N5t+0VriYjRk3SBKVzeoaTp/cwBmjPyiH6hBRdX
+	 3CPpXsBHhS7KE/eFWcS+9Zo/oXzR5H/8MSJj5dS9I54PBWdZqFiK/P+MbsCpa2m85rGRJ
+	 6XsqqJ0tVkpMjWM1tKeSJOT6AYC/Q07ZaxHhEOjDvj+lcblcEFrRNhIBIPlOrUp2NYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nabladev.com;
-	spf=pass smtp.mailfrom=nabladev.com;
-	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=M2s+JNcb;
-	arc=none smtp.remote-ip=178.251.229.89
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=aAuJeIeQ;
+	arc=none smtp.remote-ip=192.198.163.18
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1269E606A325
-	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 11:22:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1269E606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C317460A3803
+	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 11:43:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C317460A3803
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=M2s+JNcb
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2C56510D007;
-	Fri, 20 Nov 2026 12:22:32 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1795173754;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=K0f4GyuWmwiU3xAt1qgEIuTwy9fTV0XTeNNsXZl+3Ts=;
-	b=M2s+JNcbD+sxtiCWVM8jz5IfbpTIjcqntXGnoM3iPEe1IcaWNzrBJUUGwCoisCCTik9Iqc
-	c9F7AlvufbZuQDisdhd6IA9gq57eBsU5TNsUUUTJk39QjmhFTtn9IpmhqMxKnVjgzPcELN
-	jdzSzUqWPoN7FjOdguSZPNICfM3kDQO3dL2UZqF70eLicuvG81knn9Npgkdlhlz/c9kdXa
-	Xvyn+Wz97+uxDW2AHDE42zPkWT4aSRyRmsdA6+tzzdDQXB1xdY6UPvqCLu50vSCWvyApF0
-	zzwPHb4t4rv88JCOQ08T6j5rc+EzX48o46y/vXE9Wqy2+L4hBjb1lk49kBBEuw==
-Date: Fri, 20 Nov 2026 12:22:31 +0100
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.3 0000/2642] 7.3.6-rc2 review
-Message-ID: <awAtd3NV3kVYbQ3b@duo.ucw.cz>
-References: <20261120055248.913352689@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=aAuJeIeQ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795175019; x=1826711019;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=KhjkRsM4o73kxPUE3AzwWYfbcjkFWJVajXiB+PsF+pk=;
+  b=aAuJeIeQosIIFvpnqOJ4ZC4FboafBbJE2VHiHklz93PFQAALb0KlnIbp
+   jsMCIX/M7Yow8l3AHRGD/tvrHBzcSmDH7tx4zwCnFEG/ePu3qmSFlSngF
+   ymTqMXcU4z4NRXrO+Y5TH2+mDFy0KDOUU20aMlHA7yzNei+FTt3FvL5hK
+   rA8sSqHpCieMDqGVOnOc+KZ0bxKn7nuiRxlLvOnuVnSFjkxF3ssypgSlk
+   37Pc1Z8rcS+Pu0vLHS8FUk3o7htcW5zlN0DuefdRNjwNv8iXU0WTH8g4H
+   EECdoJzq5XCnbRzI9R9E2E+KrKA7vUqQtz3mo32PilDPYyyFJnkDNdbod
+   Q==;
+X-CSE-ConnectionGUID: R346PfoBSAue4ldWxQaLiw==
+X-CSE-MsgGUID: jzyfDwk1QuedJeoxdeIoRw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11971"; a="4083655"
+X-IronPort-AV: E=Sophos;i="6.27,222,1787036400"; 
+   d="scan'208";a="4083655"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 03:43:38 -0800
+X-CSE-ConnectionGUID: EzPnGSoHSMemkSFgfwVa2A==
+X-CSE-MsgGUID: nq+i4X5lRMOGq6kExUW+aw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,222,1787036400"; 
+   d="scan'208";a="11044210"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.9]) ([10.124.240.9])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2026 03:43:36 -0800
+Message-ID: <5f94f0aa-80ad-4aac-8b91-5e1aba36ca2c@intel.com>
+Date: Fri, 20 Nov 2026 19:43:32 +0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,41 +72,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="leAxbMl8bKwyHXMe"
-Content-Disposition: inline
-In-Reply-To: <20261120055248.913352689@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>, Sean Christopherson <seanjc@google.com>,
+ stable@vger.kernel.org, patches@lists.linux.dev,
+ Nikolay Borisov <nik.borisov@suse.com>, Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20261104211043.516122098@linuxfoundation.org>
+ <20261104211109.504581890@linuxfoundation.org>
+ <dac4e304-98e6-4e61-93f4-8d971069d936@intel.com>
+ <2026110539-lived-blast-ef64@gregkh> <auyRq2HXJIfMXgBh@google.com>
+ <20261106-re-kvm-tdx-bus-lock-drop@kernel.org>
+ <6e48bcc5-8f7c-4e5a-9e34-1cab1c53dd92@intel.com>
+ <2026112012-hardener-radish-1583@gregkh>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <2026112012-hardener-radish-1583@gregkh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 11/20/2026 2:38 PM, Greg Kroah-Hartman wrote:
+> On Fri, Nov 20, 2026 at 02:23:41PM +0800, Xiaoyao Li wrote:
+>> On 11/6/2026 9:19 PM, Sasha Levin wrote:
+>>> On Thu, Nov 05, 2026, Sean Christopherson wrote:
+>>>> Yes, please drop it.  Thanks!
+>>>
+>>> Dropped from the 6.18 queue only: 7.3 has the prerequisites.
+>>
+>> Can you pick this patch for 6.18 queue now? I check the linux-6.18.y, which now
+>> has all the prerequisite patches now.
+> 
+> What is "this patch"?
+> 
+> You dropped the context...
 
---leAxbMl8bKwyHXMe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi!
-
-> This is the start of the stable review cycle for the 7.3.6 release.
-> There are 2642 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-7.3.y
-
-Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
-
-Best regards,
-                                                                Pavel
-
---leAxbMl8bKwyHXMe
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCawAtdwAKCRAw5/Bqldv6
-8vTrAJwKW+dVO5Vz6iY4GwbYdYt9o+joiQCfcVnPyj04FdfVx78cvby6ZUnw/XU=
-=XOCX
------END PGP SIGNATURE-----
-
---leAxbMl8bKwyHXMe--
+Exactly this one:
+https://lore.kernel.org/all/20261104211109.504581890@linuxfoundation.org/
