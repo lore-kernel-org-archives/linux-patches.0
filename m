@@ -1,13 +1,13 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.177.32
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795209250;
-	b=qSNp0d+bUDn5eSC4ZZVRda4suK0Y+NR31XcUlhb/cXQyGbAtr5NkFrzT5a42NEAULfhz
-	 N/EaYqDBEf4PhoNwLoDbNwntxtbhDssrYnCKzBKaf3Th4Kue5QdyOT6Tnslf3KFGmr0hw
-	 6QyTzLmNY/FcQvhxSDNdJKdjJgpyJ4l4g7LSmHNp4KlxxUGBx9y+9oeRXoII6OrdkEVx8
-	 k+9ucxcNYipB9drWJkieAvfejZ65aiBPp2VcNl6YAQz6CdTNiNjlGNss9XyLra7sgzuyq
-	 V8r90xinxAFyLd2OkYbndDVnAL+eSOkMTmNAgl+8tGdF3AiwoyjL/JTZtE5ftoDdmqQ==
+	t=1795209512;
+	b=N2FWL5UOHPyFPdftOUyl4E0ztlDSmFenY2txGDYEY1UMaobCfxBJb+gjUCsqaHc0QlS9
+	 Ld+Mfjn23aswWDUX0Qn68WTWxfQjJWqvO/UziDdjIKwFgC106hp+fINsL+cQTOvsSw7FV
+	 TAQaoElKyhPoHPafUU1Yl5R5Bc037su//INQMG4nqMa3VpSmROplKhBMnW15GWLVwXnix
+	 TIyOaiekqrrNdeFJszPGeu3eBxoCvUXNBZhjM+/8u/BSkQJwKYkMWktM+4HbMATLvKsPE
+	 Uur0YFL3LtGWtUoY7fxpCZKcUr2YG9wT/zjQZ0d/5yHBT7SLvINPStq3AL26utMwD/A==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795209250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795209512;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
 	 DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:Subject:
 	 To:Cc:References:From:Content-Language:In-Reply-To:Content-Type:
@@ -28,101 +28,101 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
 	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis;
-	bh=1R/m8aVe0nwqP97aCQAcIqw0BEKz4ppAwnljb5vKMHw=;
-	b=FzemRZhs8sVrhu4kzaju9vcCB7PrbZtYdiuEDPr6MjBDikPPbritpvlV6PT7nrribcsN
-	 tsyE1gOSTJMt7cXrRh2zwH/xnkUVCC0nenaBqd1BfuoTFxiVU7sGMyfTBqxlRFlqYKe3i
-	 G3J+QL8PMflmpbjW9IE/6udT4RyO7oAfwCo7BraevG4onA7Dpsdhzrj4Xe+096gelWc8b
-	 Dyb2VZbOAqAnz2DSrM8WXVNWnOYBynHIQmHgST4B38PnO4OqQ4qIJeoxlQZtXMZWcBRaw
-	 uFjbFbX0JmkcL2uVkqKX7RAy6WczV2JnSqusRGp2IK7SERVPdPJomU4By2FPN0brVUQ==
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID;
+	bh=N0TqTD/exguFD9AjunzoqaUayMBbF0+XfhCiaMS791o=;
+	b=mLNWMX2iXcalXPPBU4Ye/gQYE6JClDEslvr6wcJ9z09WB0g3h+VEdctc90Pho5ZZUo7k
+	 UOynksX8wx+xgHbdnGC987xwvA+BMBEBr/0BQ4LTXHOR7uzIju9GfZhIIIhRKnLZTqhjb
+	 2/jczsKyqpD1vKFE2VpLtAfOaqNc7igqJHfyOnOIyDqCPnRVfxrHdmZtoA/0wdiPwOyJe
+	 h2Srlb5vL1U1OWXxMUvspPFMgAYBrcTs7+kCATd1FMnT/i4mfFionyipR9tu6Rcme/jHU
+	 EHwsF8InDhSTk/O0yIMPfLXb6hC1M6r66hOVt5sFhBlFk2Icw9Tjclg/s1VVXhNs+FA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oracle.com;
 	spf=pass smtp.mailfrom=oracle.com;
-	dkim=pass header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=iUKrAYJj;
-	dkim=pass header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b="riVBtF/n";
+	dkim=pass header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=IlC8CdAR;
+	dkim=pass header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b="P+N/uD58";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.177.32
 Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33193606A692;
-	Fri, 20 Nov 2026 21:14:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33193606A692
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E5A606A339
+	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 21:18:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A9E5A606A339
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=iUKrAYJj;
-	dkim=pass (1024-bit key, unprotected) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=riVBtF/n
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AKGkhKg037337;
-	Fri, 20 Nov 2026 21:13:53 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=IlC8CdAR;
+	dkim=pass (1024-bit key, unprotected) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=P+N/uD58
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AKGkjmw3280421;
+	Fri, 20 Nov 2026 21:18:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=1R/m8aVe0nwqP97aCQAcIqw0BEKz4ppAwnljb5vKMHw=; b=
-	iUKrAYJjzP4k8i/pyehFpAYplD6xuqcj/+0wBn4fHQFF8UYL3YKVi91Ivog/8wLJ
-	Xfz+mtRN2F/MLZjvSc5j31RmH+xeBEfLVg6mVxS8ZNeWanGfPTP8SMWR/qdoNsjW
-	HfTGklT72wHzPmH4VdUsuf9qd30Z3oFoiNTygPjMYbLkvhAGAOmCgQAOvrt0MgA4
-	JQMM4FVMGvV+WylddiD12FAFY5jJOMSDGBbvxwpfs5bF1dXOXxK9mBlqdVlQ98TT
-	TrM3M3NmQwky860lSoFG2DCrsU0BOuouTvvAjw9fI+IQY98pDVguVwbcGJSxykqT
-	7OUO7LvLoza0dk3us72ODw==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4j0ytq5b63-1
+	corp-2025-04-25; bh=N0TqTD/exguFD9AjunzoqaUayMBbF0+XfhCiaMS791o=; b=
+	IlC8CdAR1G6dN/hJorKRZoA/orRfIHRGTt9kXB5UspWu2IbjNx2eGLFcmF1bI54V
+	XUbYeffp1rSYEiw1ywv+g5DOati8pLxGiDtqGg/3yCCLEHh+cKNGszz4VZ/tSEsw
+	kjj2jnk/Z7ajfXfTvM8745Vjmsy4XhiRU/EsipUYOksqb6yVLjiamXGczBlbKEtM
+	Pz6198rYydr3VJ9Mi1De3oFbC8OfiXo26pvs3AyqDqfZBqcpZDWCGvDafuwnzhWB
+	a6R7YoHhTbpcZMhjepljVfx5Kq8FaBaoAHcMd65sxCvEY+fmY79o8FwdENMZMedT
+	LgzmM1IuAT75ApEj0yoM7w==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4j0ytsda3y-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=OK);
-	Fri, 20 Nov 2026 21:13:52 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.11/8.18.1.11) with ESMTP id 6AKIb0Yk450918;
-	Fri, 20 Nov 2026 21:13:52 GMT
-Received: from sa9pr02cu001.outbound.protection.outlook.com (mail-southcentralusazon11013061.outbound.protection.outlook.com [40.93.196.61])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4j2un1cvty-1
+	Fri, 20 Nov 2026 21:18:16 +0000 (GMT)
+Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.11/8.18.1.11) with ESMTP id 6AKKEimc1014086;
+	Fri, 20 Nov 2026 21:18:14 GMT
+Received: from ph7pr06cu001.outbound.protection.outlook.com (mail-westus3azon11010060.outbound.protection.outlook.com [52.101.201.60])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4j2tsyf1ee-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=FAIL);
-	Fri, 20 Nov 2026 21:13:52 +0000 (GMT)
+	Fri, 20 Nov 2026 21:18:14 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=r6YAkxnfYoDPAEk2NB7qvnRrT7x21qf0ox9UXCl0apNT6UpDH4fwV2NwX+bwSIJSrzpT7xvXP1f8cAs8EGE7XxeVRiZRvdn2zk/OQrCqw79WL7gIyyie7G+eBC6YpCSRNeG0l0sJK/B5NxgHIvA3HWC5tc/qBMk9cx6PeNkerxRttY/m+0AinDcq0rIJJsdv+RJuthileIYlk/tX6iZK9nBU1zxHGlL3E7bFdr8qWtANkyKET9vJc+0Vi4emwdIWs8Fr5e1xIVxmHmQ8IGQNJimFxaPWBWMrh8f1jSRSohM6OOBcqr9wDySLnCMrIdm21BhiXa75xQWo4AEN38TGMA==
+ b=UFLsrvSpfL7Cfs312PF+Sw3NqiKMkhu49VKyoFZ+exJ7rOOEfL1dIwbHaWjklWrJhEQ77275XfHRHYZsEOKyrS69SFoT1TLwJTg8CtnesZTyHXPQYR+F/w6hsasF/Q5rc60T1XEKJHreiImJm8pTdsfcyUNkCJN/RmoeSuXU8V72PiA2HLT4MzN6exPhA05QLNghRNHpuAshnwqMQ5caVY1dyRWgu5JxRURKCw0Y08PYIo08HgUIcTRk93os4Ig+z20l19s5zpFwRdxQrU1n/nrp5R55RV86CuFOAMOsSE/q+r4ySuX/2mFCKzgOUyIfcMijtjs7gYiUru6OdUV3hw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1R/m8aVe0nwqP97aCQAcIqw0BEKz4ppAwnljb5vKMHw=;
- b=jQZLBVNO7b9JPLlgfIjERN5yZWCaN5A4uc0bwhyCDAjX0b2DOguycmE4r7biNvikCN+rT53m7KhLExV+4BfdZ16pGS3NDGHoulhRMmDnFxeofXhwbUAYWKbBVKycSK+akIYhe/e5qnAnmkITUfhof9SqSqfyJQmcwt5CANsvq7L9ASoSkeXdncCyHKg5uc735FNy56wgAAOGMVo625dlfBf/8GRnVH0YQC9GFfm9/8pNtAySH3EwlAJOGu97md9gjjJIBjVEFvQ5Q8b9+FwYvV77MH7J5Wc4CZcuQlG18wcqITZHa7k+EpGEXm9aCpGlZszSiCI7/yzbr2w63UNoig==
+ bh=N0TqTD/exguFD9AjunzoqaUayMBbF0+XfhCiaMS791o=;
+ b=CGO4Y/fn3cUSrXRIA089EQK5s/OIRph21G2bRhEYY+g2iPm06UHjwj4MyReGHzUfRvl64mfmffpDr1uhIssr5ZdQVt1uu6B++zRdcHJBOP+NVq6oE33DAI9whPt7YeOF+O2U3nvkY7sDsu8d+mGcESv9T+DbesOI7vFkaW2ZdfMUfHznkTZk3kJhMBFbYTRPGb5qtdhhUDBD1MtiNpBq4pGhLZDYh2pbs3JdVFdgLW11JhVTDn9zyWjywu2fO2BshTBuqMlNkHEZ4gXnTStM1cEBvh7Ff+CW8ca408BfSXlyedFBcjHvE8VhQUiAQx50NgqN5WHCUjKJcFLNnD1nKg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1R/m8aVe0nwqP97aCQAcIqw0BEKz4ppAwnljb5vKMHw=;
- b=riVBtF/ncDmvjC+FXHu+RgACIuLpoHmgZuh/m9syu7vsxmBDR/Z8SqXTIgRZpPmS5AaZL/JnrY7RVHtxjhsrTT0by9G58cRVW4vpVZwLGZ4IxoNAVBzt2Qd/t5MX0dhDKhSKrqvtVq7DYCCvi6GtUlUUChjTgLZyv8Rx4bzYBmI=
+ bh=N0TqTD/exguFD9AjunzoqaUayMBbF0+XfhCiaMS791o=;
+ b=P+N/uD58uriVsTX7jpTGjqHdc8sqYovgn9rybgcj9AIOyP3n40F6GRV+ImgUHeaGECkbF6Ouq4k+I4UFVMkAn9B3mRTP85JFgDVjr89pSR3X2eDa34ICpB4SG0A7ho1oMAZw9PDGXELg0aHsf3Xm15983z2EojoxAB78SgvUf1E=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oracle.com;
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
- by LV1PR10MB589353.namprd10.prod.outlook.com (2603:10b6:408:501::9) with
+ by IA0PR10MB6818.namprd10.prod.outlook.com (2603:10b6:208:439::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Fri, 20 Nov
- 2026 21:13:46 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
+ 2026 21:18:12 +0000
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a%6]) with mapi id 15.21.0615.009; Fri, 20 Nov 2026
- 21:13:46 +0000
-Message-ID: <ad2d0077-bfb7-4c43-8266-673b3bc92117@oracle.com>
-Date: Sat, 21 Nov 2026 02:43:39 +0530
+ 21:18:12 +0000
+Message-ID: <f174f64d-be1f-4576-ba7f-15c76053a40d@oracle.com>
+Date: Sat, 21 Nov 2026 02:48:05 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 0043/2214] drm/amd/pm: Validate Vega hwmgr PowerPlay
- table bounds
+Subject: Re: [PATCH 5.15 0313/2214] media: redrat3: fix UAF in probe error
+ path leaving rc device registered
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
         Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, Yang Wang <kevinyang.wang@amd.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>
+Cc: patches@lists.linux.dev,
+        syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
+        Rik van Riel <riel@surriel.com>, Sean Young <sean@mess.org>
 References: <20261118150009.797899913@linuxfoundation.org>
- <20261118150011.779944906@linuxfoundation.org>
+ <20261118150022.665647152@linuxfoundation.org>
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20261118150011.779944906@linuxfoundation.org>
+In-Reply-To: <20261118150022.665647152@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR0P281CA0142.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:96::15) To SJ0PR10MB5834.namprd10.prod.outlook.com
+X-ClientProxiedBy: FR0P281CA0140.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:96::6) To SJ0PR10MB5834.namprd10.prod.outlook.com
  (2603:10b6:a03:3ee::16)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -134,312 +134,241 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|LV1PR10MB589353:EE_
-X-MS-Office365-Filtering-Correlation-Id: f18b62f8-8d16-446b-89d5-08df474b2a05
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|IA0PR10MB6818:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0b80e314-3933-4ec9-9545-08df474bc86f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|261102123227099003|261026140227099003|4143699003|5023799004|261022113327099003|261022105027099003|261021130227099003|261021121427099003|261021135927099003|261009223027099003|261026135527099003|261022075727099003|261021133027099003|261021123027099003|56012099006|261026121527099003|261026130827099003|261028144727099003|261022115727099003|10067099003|22082099003|18002099003|6133799003;
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10067099003|56012099006|4143699003|260925021911599003|260925021311599003|5023799004|261021121427099003|260925022911599003|261022105027099003|261021123027099003|261022075727099003|261009223027099003|261102123227099003|261028144727099003|261026121527099003|261026140227099003|22082099003|6133799003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	MGZ2eFViZcb+HlBqHXQORB4/+V6UfTHFMUzSclorP8lXOI9a+WiTa0NLNpsQnfbM7ERI2B0muok7EC+Eep00VHPWZBNpBNnJ7XIPGwGxWkpDpvwQa1mTu+uSWz7PgbK+YiG1j9nFGXyfz5rWPb8tkhkd+/vKHZzDU1PZ3TbkRTmwR1eM/b/uBP3LX864Y2XWk3b476FXOgdCmDjqAD4TGA0wa8XMSi2Wj/OSdKgItz+U8L7uUZB2n33amNicbP2K8O3kxXms4ZUX2Co0zn3uzppVw8RejX4YYa//IR4EceZjsFUsdjgh6J7cyC0QNbMeTzdcYWNazgXhsVzFJ+PetH0Ug4+iUKrTi9yvi4qMvUpeplHnDRUj/1hxnZPOlslU9eDGwLqodedEXAnsDDMTox4cVwdWT/sHxz44e96NYDvRNLabsGDtyHSs3HmMdaDSZGQvsU8O6u8Mm+sxXzngKMRN3y6IoFucoGM7yECEkuTQxtLaFK24ZsgLqJofHJYKVDMqMRqMVfHoNjk3ip6/7SOEa1Hbdd2gDRHhsx9cQ7Se69WTKKA8KWTI0Nqt/KxwwkXzsg5hzFbcc+HqXBb8lBJgBgV4Rok8ZcKF2EnvsDgdwzymJqZltijgeCtu8h6yIt7MfFk4LXjVhxLPaHIoquKnu75acwsWqj02x+nyhwo=
+	SQfXrkalPajwMZBo/RnjZqN78TNvXUqeR/sQpy8C/EIhkk0CRZX0BjpHZbctEE3tw6IzD31Tum7+JIop/aLH9Pw0wcqAO7l37+WMGN/cynADC8mA1/JEwuhT7eBPHECsOsH+7lAhb4MvhI0owxEq1S11YBv/67Bo+aqeagkQYf3rPTcPipn2uvyx1pr0o1Z39GPZfU+ZGmx0tuobbtl8Q2jDSMDUdLZgrvCHSvPDdxjX5dstT8g7/sRvyt+AfoD9LBcarseOXoHUgDvGgyKGDBNqRYsP9UFEDVRKqjqPmm3Vp8QQhaK3jLhfz0ZF2fe9ieb0mdLsQC9k1qJc4pXBDyw4f+hzGHrm+L1qURxBhVrlIhKWUaou4/njMk8QnyPecbQ84Fp26cjdd45piAcTGnpcB3zITKGJRPIeNU8d2TvfR5g/HZH6rlyq4UrftRIJoOUo+L52YFuBLyzClPQprKHdmzAasyau/0Lxj1gAN4XwpY4NwmuzvxffFJm9VzbQFSdhACUoaL8D/Q5BXGiDljsKnXyao74cmlYtEhnwWnVBgfwGMkwTUkqGrJRwtu/hbcoZydpWb/FMemGqcJMQr3/K7yHtBb+CkPjsiNMkASaNo1lI6ui2tvG3KBwf48c8
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(261102123227099003)(261026140227099003)(4143699003)(5023799004)(261022113327099003)(261022105027099003)(261021130227099003)(261021121427099003)(261021135927099003)(261009223027099003)(261026135527099003)(261022075727099003)(261021133027099003)(261021123027099003)(56012099006)(261026121527099003)(261026130827099003)(261028144727099003)(261022115727099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10067099003)(56012099006)(4143699003)(260925021911599003)(260925021311599003)(5023799004)(261021121427099003)(260925022911599003)(261022105027099003)(261021123027099003)(261022075727099003)(261009223027099003)(261102123227099003)(261028144727099003)(261026121527099003)(261026140227099003)(22082099003)(6133799003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Nm8xaFMrYTg5QVdDRnc5eVV4eVVxZm1aazVDOEFZUnRpY3lNcFZ3NmhuR0NU?=
- =?utf-8?B?N0U4cFdJQy9lbGY1ZWVqY050M2xXNWxKajJiM1B3bmttaENpWUNXMTkxak9j?=
- =?utf-8?B?cGNCRlJJOTcwTDhuOVpkNWhXQ20yK2ZHZnRXZGpUVXhnclR3R1RtcEdrS2tm?=
- =?utf-8?B?dElsMWp5dUdjUzViV2JmdzI1RVNYZi9YNEZVcURGSUZKeDlZQmZBdVRXTnlY?=
- =?utf-8?B?VWVmcVJ0R0VJZndaMnEzdFE4WW1PSHIvMmRoUUM3NTF1aFlKY3Q4ODBySmVz?=
- =?utf-8?B?Y2plMjVEbXFjSWNGeWxnd3lnUklyVUJHRnFGaUdxYnI1WFpRdzRrZXEyd09C?=
- =?utf-8?B?WXRvbXlQVklnalNFSzBlQy9ld3FTZVdpMlRLZHBCdUYrNDY1RTJYbW5PMnFv?=
- =?utf-8?B?N2tNVG9SYWVMNnpMM20xRlBvakcrQWFEWUtWc09kL3puUFg1ZWRjKzNZbEVv?=
- =?utf-8?B?NW9XREFUOGR1RjRjbEhWWStiYTBpWC80VFg5Y1plSkhBbVRrSjZKUVh0WTY5?=
- =?utf-8?B?WEVtVUJSYWhyc1ZleTY5Z1pEMnZGUWwxM0Jwd3lDenA3ZDB1UnZ2aStlMFJY?=
- =?utf-8?B?SVV3c1VKSlZsL1dVc0R4b2IxcHhkZ0FINTlXYkRUaXFXakgxWnV4ZVM1bGhT?=
- =?utf-8?B?RzlXSXVjK2RiaDFLTWthamQxMGRJL1A3cVNQQlJjVHpOV2YyS1I1VW0yMndB?=
- =?utf-8?B?azVaTG9DdXBvejdhdEs4ZFJkaHY2dy9WdE5lcjFGRmNCdlc3V3lKeW4rSnlW?=
- =?utf-8?B?RFREajREVU5YdEF0RjV4a08xTFl6YW50ejVwQmJyUEVZblF3eEp5SkM2ai9u?=
- =?utf-8?B?aW9jTENqWEhqR3R6bXFTeVp3Z21TN1UwVjUwa1NSNkhiOVZJVndZNklqa1FZ?=
- =?utf-8?B?REVQbGtxNnBldlplaWxEbjZQQk4xbEN3T1ZTWDUxS1hPZEhsTkE5aEtGTURU?=
- =?utf-8?B?eWFPa1R5eTJIelVCOVdWWUdrbHNKYjc1TDk5eWx2b21IeFdTVVVRQUpjbldG?=
- =?utf-8?B?aU43Sms0Z1YvcDAwb2l5RUdkSGNaUGtuOFVKOWI2MVMzL25xQyt6YXo5anhV?=
- =?utf-8?B?Q3lWUmFtQTNWNUlUT3ZUNi9zWGZKSk1sTXBwYTNrNXA3MEZ3VERuUEtWVi9D?=
- =?utf-8?B?NXdmUVFkVW9sMmVUc0F0WUlZMk9FKzNzL0thOVBnNy91ZnFjdWN0cW15RXhu?=
- =?utf-8?B?Qmt6dWdZZFQzK3prS3Mvbys5NEdVQVJVMytvZ1dPcEFGOHgwdUhYdjZYWHdC?=
- =?utf-8?B?NGhFQnJoS0I5aXBBdXpGeFBYRGFSejdERjRQZytXUWdmelNCd2lQOTNyQU84?=
- =?utf-8?B?dkZlT0pXQWthOS9RZ1FZL3YxVUU2MjFvVDhhclZ6cXBTYXJnNitSK2RPR0RE?=
- =?utf-8?B?TlpjcEM2K1kvMXdjaDRyWUs2SEQ4YUEvazYwZGdJTXAra21taWR3VnU2OGYx?=
- =?utf-8?B?OWFqWlhBWXY2TmZJL1dtMFltcnJ2NGZGVkhTRTJjM3RrRmpFeEQwQzE3VjdO?=
- =?utf-8?B?SnF2M2tuSkNKK2wvMWhsUlBWcXhxdEs2emlKUVozcUZ3SnM2aldtZHJnRXo5?=
- =?utf-8?B?dWxjWjBCajRwSkNtMytsV1UxZ08wQjB1R3NlWUV4Umt4c0lRcnYzR1kxdDlq?=
- =?utf-8?B?bTRtclF6dlRBd21lTElSalNadXJPNFNmRlpSV2gzOTR3NG1meDdNalN2WHZY?=
- =?utf-8?B?eXRDQXlQV0VEZ3FuR0lpUW9FOHZWdWhtSS84RFRVRG1vZnFWZmRTMTVDOXpU?=
- =?utf-8?B?OUk3MGZ2S1UwVHNzcTk4NlM1anVtWG5jZG9nUi9Wa0gwbWlKd3gvbG9WUjRo?=
- =?utf-8?B?S3JFbkNYMUlFZ0VDY0RhMCtpeHh0OXFtTDRMMFRENUhIMWQ2NHI5N1Q0azdl?=
- =?utf-8?B?QzFtSzZ1YnFTK0tWZ3NGd05BYmNaNU9zRUh6RUQ0YzNkVlBGKzF4dU9YNk5z?=
- =?utf-8?B?ZUxEenVmM3l4aDhsaCtTV3M0bytZRW9hS1p2SEZvY0trQ3VZU1RKZm5NVmZt?=
- =?utf-8?B?S0U2M2d6ckJIYW1MaWZMaS9uUzdTVlZpQWhiVElIMURGU0xWRm52RWwzYXhK?=
- =?utf-8?B?bTNqbk5uck9zb1N0emFEdnM4bGduU1o2b0I3aUE3VTBMUlB3SnFMSHhpdkx5?=
- =?utf-8?B?ZFJvWkJ1NzZXUXdyanNIYnQwN3gvVmVaSWtiSmY4MDRWSVU0Wi8rKytGUjVG?=
- =?utf-8?B?UjNHRVZjK2tPaTJPVVBJQmZ6Sm15WnljUTJxY2ZOYmRtQ2YzQm52RHVmRThC?=
- =?utf-8?B?Z3ZPZmdxT0Job1k1VlB0anZYZ2FReDZvRnhhcXlLZ0ZDM2NDWHhkbUFIdVBH?=
- =?utf-8?B?azlrc0xVU1dHM0V6SDFyK3NOeHhOMUFVUy9mSklmditid1JJUVFsb2l3cVRs?=
- =?utf-8?Q?oJrvF+w2z42ySH6ZQbJPPIHcJZ6NWB2iY15e0?=
+	=?utf-8?B?ZkFERGFqZVpEeWNqbGhiMlVIMFZVaWtaanFZZlRVd1htR1dFTEg0ZTZRZ3Vi?=
+ =?utf-8?B?aThJUTUydC84SDVkcG5zSms2bnNwelVuUXFnNnBiNEY1MkdkV0UvTXJaMnV2?=
+ =?utf-8?B?WW9CY3RXbUFaeldkb2NkWmtEclRVTDJIazdmUlk2N1JTVy84R2pjbU5FenFv?=
+ =?utf-8?B?cTNlNnJGb2g2YUVBTE1PMG5FMm04bzRuczR6dHRjVFNQWWYyenN0dG90cGNy?=
+ =?utf-8?B?NklCMkR4SzJXenVKcmJHenpLWUcxajFXbWY0MWJLbms5Mkg3L3JuTThHM3Vv?=
+ =?utf-8?B?WjZYRnJGZjRpeWgweCtCcUF0VGN3N1Iwa3VQN081UGQxRjRKKy90UndhTGk0?=
+ =?utf-8?B?bnVJNWFXYUZEand1R3FHckgwR0grc1U2N0ZzTDMwakY3YThQUnFsZ2xHa0t6?=
+ =?utf-8?B?TlF0Y25HdjZCMncrUituQ2lOZlRDK3I5ZGdLRzFRWlVmcXdLMS9pZGxldllV?=
+ =?utf-8?B?alV4Rm5CY1htRE1UL2ZJWlJLR0tZeHdyb3VrZWRBQklyZUkwTlZydmQ3alRD?=
+ =?utf-8?B?L0xrNC9ZMUJPWXkzdk5jbzdSTzFhQ2NnZ0k1YTMwRHBNcDUxMG45dEx0TDgy?=
+ =?utf-8?B?Mit2K2xWMEZYMGtUV3htZGdyZ0xMckllZXN6bGk3R08xQ1dQOEZEQXd5dVdW?=
+ =?utf-8?B?MC9laEJTaXRUY3ZzVk9WVUZhQyt1c3BsSUJPcDU1aWJjNHFKMkNjK05ZU1Js?=
+ =?utf-8?B?K2FSODB1YXlTNzQ4K3FQeDZzMXVQQml0cUdVejB6V3p4QStHZXE2QWdXNy9X?=
+ =?utf-8?B?Z3lnSEt3Rzc4MklCTkJMcTZmakxUcUVHWjJNTjJTVWZwZ3NkYWRnSmVBUEJU?=
+ =?utf-8?B?U3dKdmpja3U2elNHTUZFUXZmOXdTMXJWb1BBWHh5bVFKNkRPaFBWZ3h4Slg4?=
+ =?utf-8?B?STQ2U1VxR2prT2NZTjZYV1MrQVJlU2ttMmNvbXZQZW1oMmljZkxpVmZWOVp5?=
+ =?utf-8?B?dm1CNGRac2NuRldySE1hVG1FeTFyM3Q4akxNdXdnTXh2aFZ0aDlZemMxWlVR?=
+ =?utf-8?B?R1NVaWVOUUZFVlpxYWt2amtHcC85UFlTWTVtRENQeTdmT2c2SVZDZHZDUUg1?=
+ =?utf-8?B?QUhjS3hkNTFjVjJQcG9oZEdOUUZhcFFTd3hmNENWMVIwbUVNZS9NWHY4VXdM?=
+ =?utf-8?B?RC8vRVY4L0NkTkFJaVlPc2xIZWtLS2pSNjdYWTJvWE5Vb21ZVTFpU00wdENF?=
+ =?utf-8?B?NGsyZG1Ga2MvcE1oT3pyblhDWFhrSzUyTmVsKzlxdDB6Rk1nblhqS2ZOdjJt?=
+ =?utf-8?B?TlV4QzdGWjJqaHJjQ2d4MnBnb0RIYzNtUmJEUHpkRmtPa3h4NS9VZXMrMURi?=
+ =?utf-8?B?aHZ6MURNNFRWWGxmZXdiU2V0Nm9FaGVHTTMvaDcxV2VERXkzKzlhQ0xrWUor?=
+ =?utf-8?B?N1c4MW9RRG5DNGFZYlZNYW9tTWsvR3MwTGZVaVZuWXlsR1lLWUNuNlBvb0Z4?=
+ =?utf-8?B?VGEvcmdXZlRsemY4U1o1YzhMOGl3NjNOaXVjcDJlN3NWTHZHa1c1ai81NDNP?=
+ =?utf-8?B?cGF4NlJFMUx2UnFnYTA5Y1hTdFkxcWZ0amxIT0FPUG92S0hCQmRnRVQyUWxp?=
+ =?utf-8?B?cHFxVzAzTFFPREl2c0Fybk1NYiswMDJ0Qm9FcC9xSVpabnBIYmVDWWxxK2JM?=
+ =?utf-8?B?SmRxMFFZUFhydjJKaXQ4N1ZVY1h5RXlncUkwdVpVTFRSdGRuWEg0YVg1ak1S?=
+ =?utf-8?B?U2pLUElCc0FTb01QalFNRDl2cWRkM3J6T3VCMVUyMUN0ejgvT3BxeGZwTGln?=
+ =?utf-8?B?UkFTY3FoWnIyUjcrYmFOMGljN2VBeUQ5SGNBK0J6bnM5N3g5K1luSG1WSGpJ?=
+ =?utf-8?B?ZnNqNjN2K2RIU0hxR2NHMnRSSU9xU3lFaEh3QUxXM1VHajdITm4xQUEySGYw?=
+ =?utf-8?B?c2NIVjFZUExQdU5hUUJqNG91UHRNaVBKWTRlMDI0aDhseWtQNU9jWHIzeEg5?=
+ =?utf-8?B?a2xVK0FXYUpUQ1FvL1RHVWZHMzdGLzRIbEVnZE1vd00zMk91Vmtqc1A1L0lr?=
+ =?utf-8?B?Ky9oT2swODVxMTJoZVFIalZVZ0poVXFCREtiL2JsNFZ2V2RFOTAweEtvTVlm?=
+ =?utf-8?B?Wk4xWVFqT3dEanAvZm5CeWxPWmlNMGtsRklvVEdVbzUvdzc5REIydklaNHNi?=
+ =?utf-8?B?OVNoQVhYRmtEdzdvelRvcGxyQjB2TkZic0JrUjZBSXJ3RzcyblVZekkvOGsy?=
+ =?utf-8?B?TDVseS9mdlk2c3FHY2ZYZzgrQ2ptV1ZOQ29ieVpuRGsxRzZidGZTR203ODVJ?=
+ =?utf-8?B?SGlwMUVFQTJzN0djTWlVcFRybGtlc1RoSUtxSDZuTDJtejhJSGZCQ2x4MzdD?=
+ =?utf-8?B?MW1RNzF6VHc3dDkxY1ZIRkFXSWdBTTkvMHFmQTRzbGZNVkhUZmtOdHR3ZXpm?=
+ =?utf-8?Q?GVdrxjhDqmjMk/mCaUZU/58neevwYanIu44aa?=
 X-Exchange-RoutingPolicyChecked:
-	A4EFxlfE0YIjfGMCdRHaa7qbsAjfj3GxYUUtZsBMIZBX7gFqg58Enkb1sy8vefxbPE90rVT481BxyLi4PzUxQAcWeYngPVK5ZQNEjL7j6sthvzOqZA9Vmt9HOwmwCLCFf3xvvzNpT2cEErLk/DW9uxEu5/tpQjZSxo8mXYEjAW4fHGhHcuJASLz9ZzDMgwbG3VA1IpoENc1/N2spptXZ8dNYXvndscRqralzR+SIsD3vzrPpVITM1pJgtDWogW0WYqQT8ImjiFHwbYMp6yDhlabxWJv30yTIrlNh/u2QQNJOq7HBWYp8Xq6JU1z3wChU2bdMIkr1jgJ8Wl8AqX1RPQ==
+	lgDyl6AwMWuBpGywzBHHZGQ3tHEiLtbH1jFL3Y/74I0RzaTUPYT940kKTdk4E0wfcCRFGDqbpTxNMaQkwixhoFhlC4iJdw9NZ9NR8vAY1Y1Bi+CBLa1KrmBYVdKBArRoJordUQXoNZGdfOrB1TWwBIwFb7EG1/ghBjzJDGTgi6n6s3L4hxA4alqr7rJz3PyjG5AvGoWtoStRfcgtLl6oknhdhwbrViETqsh2G4aHCOf6vgUBNwp6pWFFlkJrAYSQ8Vvj7BH7dKpVpj+1TY5rjXIze/LaZYYpicgKudE28kxnn23a9yTKJHw6eg2pMp//SHbi2bXfdnMeSuNCaF0hbw==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	ugxIuyke5+tqEja0+Ug1aWhdDMgJAYGqA06RBJZnE/1gbGITF70eUFCCJ8tDeAleG1zfDBkyMzA4D3CUyIRUCbFm4uH4CavZzfiN/ZFoAv5/y3g5Nw/jL6Wd81HcT8n6+w7oL6ByXRDCdfiLGPADjsRkbB97Z9iCbbrnYfJgacaDa29szKF3VIdrtPG1Icd3U4F4M9aOm4dj2pSSbxbdJ+k3Acn96JQ6y3BkrNCcgIVRkwYRXGV76jg9NKeMKzKgbi+pJa0l+AqOTAUbnq3JiKvalM13YzbwpXqW/m1sm5Jdq0MUdAGoI8tMoBD89yiH9hDa64oIdLxjiONnkoWo0eZSFPNWgPP/J+4CsbhWEtXn+8yUZ6NEq3gE+ZrJuc7Wjzmkpm1qxDk7KWHM0Ph3CUNILoCT0Vsk2nt40td4aFu/8IkiDWK8HllgITBaWedtZZ4UYJFEvBybV5b78urnFQDJpdy8bxMir2e9hlspqedkYYhi24kp0/IavOzohEc0ncv4G9sG3d8Qb9s0p3Q4fqHiRaXLIx9daBlpGLPM3kYVg9TJ8grfzNinsb/tXyh8FwMb8jp1bPlMJqSDXsuJzjks2p3eONAAqNfhWIgmr+c=
+	XCJ5z6QzU70ZrCbE/9yyySGa5BqHG9zBrUTU9tMKsnKhMiACd+7GQ//MoQL4ZR0Qr/kRuQ9qRxreJ6w6ekCSQvq6DOxOwHimA7HIt1Xi7+xs5DTmZNA/YUrD9ZMaErJpM3/0/uyVhq/LGD353BgEBzav1gBWBYqbgERWUlRGQZnL8f7BsZ5wZlNS8+j3lrjRCiXj0F7VI+TJYDLty02UfYGJWdteXaIjeTSjXKZ/+RfLVKXjDQHeapeELZhreeUl0DGoFbmGT1j/2NYUZLkhFX2CJvXFYlLt6D+Awn1AW2Jk1XgQwl1UXvzZVPvd51vjtvMCo0xKB7cIz2lS8QZlIa5gEcyYM7LXzLRKy0r5VJQYIR8HjJKwpdRZdi4Lq3nOHn8YBZRde2SUn7EMBqOv1Y5hazM+cxFahzJBgplQbgeiH0BDnc3gcztwl9oipshkp23yKF5y4Nlj0EyHr+jdCCtEfrpbq2pDalxXjzsQLQqdluH10adrxYMaIdblKstn2IHgpjZmw4futqtn+LreZo89cSd2Va8m/45vdB7FRabsQdO+PcQ9yv4g2cVEmWqY4Os2H/9Us7MFWCWfqabt4uNEqEQ8k7zZz6pVP5xn6zo=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f18b62f8-8d16-446b-89d5-08df474b2a05
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0b80e314-3933-4ec9-9545-08df474bc86f
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 21:13:46.3971
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 21:18:12.2039
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: X2UQTl9h4EEJFq60LJVadrRRrIve9suemahQMV/aSQdr2wTJbyf9UoZ2veGHzjviMvwVwPLhQmhCNM+SHk+EG1TDc2uAmoml/+drMU3jroPNnPArg87QCyT5g/Mzp2xn
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV1PR10MB589353
+X-MS-Exchange-CrossTenant-UserPrincipalName: NR1S8hjgN+orP9mZPN/WCYnSFSXl/PruHnFhweBt+/WryrRSLlLv5QPC3wjQomBG1DNnsYBPF4pWSe3H7xCzGpbE0IDSvBAeNsVtJFsV3EzSfKVo+sAMTzrTjqMKmXMR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB6818
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-20_05,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- malwarescore=0 lowpriorityscore=0 spamscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611200084
-X-Proofpoint-ORIG-GUID: 0cE6o-mjZP5h9nr5bUTJpjIhFxi8qbNg
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA4NCBTYWx0ZWRfX9pOGh4oWTN+i
- fM6dJIXIkUQjpcgScB5GAuS8L7/8ecwVtq/OSsae25m9l3qi5LyKIs8fNp79GkbZLI0tKpvgkGG
- LWYDOL9fvjz4ObdJIoJYioFfIJGlK1Ba1HS8k86PWGtBoAShZHNU
-X-Proofpoint-GUID: 0cE6o-mjZP5h9nr5bUTJpjIhFxi8qbNg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA4NCBTYWx0ZWRfX9LH6x612BdaF
- SIwysrmw/pChKRzc6BY2rHXLnkROBw/FL8Kt7caJNg8Oh7H9Makx2rf7V1yT2BLD1AiJR0afOwC
- jlSrKVVCRREFDhtBgm4dDA5Xyf/PEikGeO+Y3D98nq90t8vYYUlaZqFBB3YPQ5A1TVGRZJFbElM
- fnrA2UaBg79D4jYwnvhoGMXwqN0LxkXVSel6w0mkJcpaRME/DKCrz+hACNFI1QdXHYuAprvCQ2L
- mpQl0jW80t+5E+0Jp+UeE3uBPQ2c0fhsHAB/VS0LFmTDW+cyBlhG/YIw8bazakHrcYYBnZbpf5z
- 88Ws7rreEr+SSm7Qny7qD3CDEGSyCVXWd2jomgnRjkSR797XQ61fZSeQUlaIh0O4oRE3cofAJzR
- wbVYTXB8F5JgvqGvWmaHcc9HC98qyKvQVUo8KZWqlwKTV3qWjyrWjd/Lpv+xoqZWW6MPICu/VOO
- rnzM15QmRwn+DeK3K58+xQfrFcoaGYm78O0ouCm8=
-X-Authority-Analysis: v=2.4 cv=I+vw19gg c=1 sm=1 tr=0 ts=6b00b810 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ bulkscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0 adultscore=0
+ malwarescore=0 mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2611040001 definitions=main-2611200084
+X-Authority-Analysis: v=2.4 cv=APpTTis9 c=1 sm=1 tr=0 ts=6b00b918 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=zJRp6_cAMcgA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=zd2uoN0lAAAA:8
- a=VwQbUJbxAAAA:8 a=y3HbpNODRrDt3eqRP8cA:9 a=QEXdDO2ut3YA:10
- a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12100
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=x4eqshVgHu-cdnggieHk:22 a=edf1wS77AAAA:8
+ a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8 a=fwyzoN0nAAAA:8 a=hSkVLCK3AAAA:8
+ a=xGAvDSoXAAAA:8 a=ag1SF4gXAAAA:8 a=ZU3OVQYHUSHpjjP_CD0A:9 a=QEXdDO2ut3YA:10
+ a=DcSpbTIhAlouE1Uv7lRv:22 a=Sc3RvPAMVtkGz6dGeUiH:22 a=cQPPKAXgyycSBL8etih5:22
+ a=I9AbH5bZuplaqbmfSwNo:22 a=Yupwre4RP9_Eg_Bd0iYG:22 a=5yU3S35YU4bGjq-dph-N:22
+ a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:13532
+X-Proofpoint-ORIG-GUID: bExTQDlTVJC2gWb_te9Qt5Sg1WHJ6Z1G
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA4NCBTYWx0ZWRfX58gdfl2tmDyk
+ PnpP+abxEGl3rCFTfkzFs9VET9uoqTDON1KCn1Mw2Et83nJl9iiHAtg5oFHA2H59Xp3fBJEy41T
+ jVkpCxNsi1OeeT0iWWn54qU1kH5bKdxkefDeKY1p5vlP5glhTq8p
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA4NCBTYWx0ZWRfXybRug1Giof3Z
+ UuFqfZGyIToYHqZt7ZoGLMmDfkheZEYelwDEtqSyIfjdMmm9T+0tYNFXgIrqeD2lI3h/nPgEKS2
+ xjT+rZ24kH+k/cNkVjtqTTLKBlksj1PPT0omkkZj+CjvyyvingIZjwaqK0wXq4iqNDGt+wD735V
+ zg0rex1p3F/bVJjlhdHRhfvuPn7vJvkf2HSRp2h9vuXVrv8faiOOdbLTHeKHTDte2A5uvI6ZLqe
+ 17h+6wVp50ET2V8fuuf0tHu0PVi1VD884LHydott91kFp64+vE1aDsmgxXc640X8dXpHLfwSnZL
+ XTbwHrBh1o0uJjsDFQ0PEOlWY04z7h5kqz+SzOKVS6yqbrUydL2ZxfJ1xc03UdID3M5+S4IBKul
+ R4DX+MN8qFz6hZLOSeWOhLvPx2ctbrq/rT8IBnX3jH0mc8BkXCuvPlmn7PWZ/+i6/0ltvDqv2QB
+ HYHvMQnO45zEec1KLHA2i7/9awIahL1X+iFdIBkE=
+X-Proofpoint-GUID: bExTQDlTVJC2gWb_te9Qt5Sg1WHJ6Z1G
 
 Hi Greg/Sasha,
 
-On 18/11/26 7:58 pm, Greg Kroah-Hartman wrote:
+On 18/11/26 8:03 pm, Greg Kroah-Hartman wrote:
 > 5.15-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Yang Wang <kevinyang.wang@amd.com>
+> From: Rik van Riel <riel@surriel.com>
 > 
-> [ Upstream commit 3a8d8e0b7f61cd759d5d4870b6220161f8a5b114 ]
+> commit af452b9e01331b5338a1e5141624f17607239207 upstream.
 > 
-> The Vega hwmgr PowerPlay table parsers read fixed table fields,
-> state array entries, or SMC PPT fields before validating that the
-> VBIOS table buffer covers those structures. A truncated table can
-> therefore lead to out-of-bounds reads during hwmgr initialization.
+> redrat3 stores its device name and phys path inside the main rr3
+> structure, and the rc device's device_name and input_phys point into
+> rr3. When the RC device is registered, it keeps those pointers.
 > 
-> Reject tables smaller than the fixed PowerPlay table. For Vega10, also
-> validate the state array offset and entry range before dereferencing
-> the state array.
+>    KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
+>    Read of size 1 at addr ffff888051fda758 by task udevd/7464
+>    Call Trace:
+>     string_nocheck lib/vsprintf.c:648 [inline]
+>     string+0x216/0x2d0 lib/vsprintf.c:730
+>     vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
+>     vscnprintf+0x41/0x90 lib/vsprintf.c:3014
+>     sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
+>     input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
 > 
-> Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-> Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>    Allocated by task 10:
+>     redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
+>    Freed by task 10:
+>     redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
+>     redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
+> 
+> Syzkaller triggers this via usb probing. It probes the RedRat3 USB
+> interface, which calls redrat3_dev_probe() in redrat3.c. That function
+> allocates rr3, then builds an rc device whose name points into rr3 via
+> redrat3_init_rc_dev() in redrat3.c, and registers it with
+> rc_register_device().
+> 
+> When the detector enable fails after the RC device is registered, the
+> probe jumps to the led_free path. That path unregisters the LED but does
+> not unregister the RC device before freeing rr3 via redrat3_delete() in
+> redrat3.c. The RC device still holds device_name = rr3->name which is now
+> freed.
+> 
+> Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
+> which calls input_dev_show_name() in input.c, which emits dev->name which
+> is the freed rr3->name.
+> 
+> When the detector enable fails after the RC device is registered, the
+> error path must not leave the RC device registered. Make the probe error
+> path clean up the same way redrat3_dev_disconnect() does.
+> 
+> This change should be safe because the RC device is fully registered at
+> this point and its teardown via rc_unregister_device() is protected by
+> the input device mutex, and rr3 is still alive during unregister so
+> device_name remains valid until after unregister. The URBs are killed
+> before rc_free, so no completion can run after rc is freed. No new lock
+> ordering is introduced.
+> 
+> Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
+> Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
+> Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
+> Cc: stable@vger.kernel.org
+> Assisted-by: Hermes:muse-spark-1.2 syzkaller
+> Signed-off-by: Rik van Riel <riel@surriel.com>
+> Signed-off-by: Sean Young <sean@mess.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->   .../powerplay/hwmgr/vega10_processpptables.c  | 59 ++++++++++++-------
->   .../powerplay/hwmgr/vega12_processpptables.c  |  7 +++
->   .../powerplay/hwmgr/vega20_processpptables.c  |  7 +++
->   3 files changed, 52 insertions(+), 21 deletions(-)
+>   drivers/media/rc/redrat3.c |    4 ++++
+>   1 file changed, 4 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-> index 95b988823f50f..bc75f09112cda 100644
-> --- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-> +++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-> @@ -64,14 +64,17 @@ static const void *get_powerplay_table(struct pp_hwmgr *hwmgr)
->   	return table_address;
->   }
+> --- a/drivers/media/rc/redrat3.c
+> +++ b/drivers/media/rc/redrat3.c
+> @@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
+>   	struct device *dev = &intf->dev;
+>   	struct usb_host_interface *uhi;
+>   	struct redrat3_dev *rr3;
+> +	struct rc_dev *rc;
+>   	struct usb_endpoint_descriptor *ep;
+>   	struct usb_endpoint_descriptor *ep_narrow = NULL;
+>   	struct usb_endpoint_descriptor *ep_wide = NULL;
+> @@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
+>   	return 0;
 >   
-> -static int check_powerplay_tables(
-> -		struct pp_hwmgr *hwmgr,
-> -		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
-> +static int get_vega10_state_array(struct pp_hwmgr *hwmgr,
-> +	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-> +	const ATOM_Vega10_State_Array **state_array)
->   {
->   	const ATOM_Vega10_State_Array *state_arrays;
-> +	u16 state_array_offset;
-> +	size_t state_array_size;
-> +	size_t table_size = hwmgr->soft_pp_table_size;
->   
-> -	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)powerplay_table) +
-> -		le16_to_cpu(powerplay_table->usStateArrayOffset));
-> +	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
-> +			    "Invalid PowerPlay Table!", return -1);
->   
->   	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
->   			ATOM_Vega10_TABLE_REVISION_VEGA10),
-> @@ -80,12 +83,34 @@ static int check_powerplay_tables(
->   		"State table is not set!", return -1);
->   	PP_ASSERT_WITH_CODE(powerplay_table->sHeader.structuresize > 0,
->   		"Invalid PowerPlay Table!", return -1);
-> +
-> +	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
-> +	PP_ASSERT_WITH_CODE((state_array_offset <=
-> +			     table_size - sizeof(*state_arrays)),
-> +			    "Invalid PowerPlay Table!", return -1);
-> +
-> +	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)powerplay_table) +
-> +		state_array_offset);
->   	PP_ASSERT_WITH_CODE(state_arrays->ucNumEntries > 0,
->   		"Invalid PowerPlay Table!", return -1);
->   
-> +	state_array_size = struct_size(state_arrays, states, state_arrays->ucNumEntries);
-> +	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
-> +			    "Invalid PowerPlay Table!", return -1);
-> +
-> +	*state_array = state_arrays;
+>   led_free:
+> +	rc_unregister_device(rr3->rc);
+>   	led_classdev_unregister(&rr3->led);
+>   redrat_free:
+> +	rc = rr3->rc;
+>   	redrat3_delete(rr3, rr3->udev);
+> +	rc_free_device(rc);
+
+I ran an AI-assisted review of 4ea783d0eb10 in 5.15.226-rc1 and
+checked the cleanup path against the code.
+
+This backport can free a redrat3 RC device twice on probe failure.
+
+redrat3.c, redrat3_dev_probe():
+
+     led_free:
+         rc_unregister_device(rr3->rc);
+         led_classdev_unregister(&rr3->led);
+     redrat_free:
+         rc = rr3->rc;
+         redrat3_delete(rr3, rr3->udev);
+         rc_free_device(rc);
+
+In 5.15, rc_unregister_device() already frees unmanaged devices.
+The driver uses an unmanaged allocation.
+
+rc-main.c, rc_unregister_device() (spacing adjusted):
+
+     if (!dev->managed_alloc)
+         rc_free_device(dev);
+
+Upstream (af452b9e0133) ends unregister without that free:
+
+         device_del(&dev->dev);
+
+         ida_free(&rc_ida, dev->minor);
+     }
+
+The extra rc_free_device() is needed under the upstream rules, but
+releases an already-freed device in 5.15.
 
 
-I ran an AI-assisted backport review and checked the finding against the 
-code. It looks valid to me.
-
-The new PowerPlay size check can reject a complete table because it
-counts one state twice.
-
-In vega10_processpptables.c, get_vega10_state_array() now checks:
-
-     state_array_size = struct_size(state_arrays, states,
-         state_arrays->ucNumEntries);
-     PP_ASSERT_WITH_CODE((state_array_size <= table_size -
-         state_array_offset),
-                 "Invalid PowerPlay Table!", return -1);
-
-But ATOM_Vega10_State_Array in vega10_pptable.h still includes one
-state in its fixed size.
-
-5.15:
-
-     ATOM_Vega10_State states[1]; /* ... */
-
-Upstream (3a8d8e0b7f61):
-
-     ATOM_Vega10_State states[]; /* ... */
-
-With states[1], struct_size() adds the requested entries on top of
-that first state. The result is 14 bytes too large.
-
-Let us drop this ?
+lets drop this.
 
 thanks,
 Harshit
 
-
-> +
->   	return 0;
->   }
 >   
-> +static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
-> +	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
-> +{
-> +	const ATOM_Vega10_State_Array *state_arrays;
-> +
-> +	return get_vega10_state_array(hwmgr, powerplay_table, &state_arrays);
-> +}
-> +
->   static int set_platform_caps(struct pp_hwmgr *hwmgr, uint32_t powerplay_caps)
->   {
->   	set_hw_cap(
-> @@ -1250,15 +1275,14 @@ int vega10_get_number_of_powerplay_table_entries(struct pp_hwmgr *hwmgr)
->   {
->   	const ATOM_Vega10_State_Array *state_arrays;
->   	const ATOM_Vega10_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
-> +	int result;
->   
->   	PP_ASSERT_WITH_CODE((pp_table != NULL),
->   			"Missing PowerPlay Table!", return -1);
-> -	PP_ASSERT_WITH_CODE((pp_table->sHeader.format_revision >=
-> -			ATOM_Vega10_TABLE_REVISION_VEGA10),
-> -			"Incorrect PowerPlay table revision!", return -1);
->   
-> -	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)pp_table) +
-> -			le16_to_cpu(pp_table->usStateArrayOffset));
-> +	result = get_vega10_state_array(hwmgr, pp_table, &state_arrays);
-> +	PP_ASSERT_WITH_CODE((result == 0),
-> +			    "Invalid PowerPlay Table State Array.", return result);
->   
->   	return (uint32_t)(state_arrays->ucNumEntries);
->   }
-> @@ -1309,17 +1333,11 @@ int vega10_get_powerplay_table_entry(struct pp_hwmgr *hwmgr,
->   
->   	if (pp_table->sHeader.format_revision >=
->   			ATOM_Vega10_TABLE_REVISION_VEGA10) {
-> -		state_arrays = (ATOM_Vega10_State_Array *)
-> -				(((unsigned long)pp_table) +
-> -				le16_to_cpu(pp_table->usStateArrayOffset));
-> -
-> -		PP_ASSERT_WITH_CODE(pp_table->usStateArrayOffset > 0,
-> -				"Invalid PowerPlay Table State Array Offset.",
-> -				return -1);
-> -		PP_ASSERT_WITH_CODE(state_arrays->ucNumEntries > 0,
-> +		result = get_vega10_state_array(hwmgr, pp_table, &state_arrays);
-> +		PP_ASSERT_WITH_CODE((result == 0),
->   				"Invalid PowerPlay Table State Array.",
-> -				return -1);
-> -		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
-> +				return result);
-> +		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
->   				"Invalid PowerPlay Table State Array Entry.",
->   				return -1);
->   
-> @@ -1361,4 +1379,3 @@ int vega10_baco_set_cap(struct pp_hwmgr *hwmgr)
->   			PHM_PlatformCaps_BACO);
->   	return result;
->   }
-> -
-> diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
-> index 1e79baab753ef..70a38bdaa43fb 100644
-> --- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
-> +++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
-> @@ -65,6 +65,13 @@ static int check_powerplay_tables(
->   		struct pp_hwmgr *hwmgr,
->   		const ATOM_Vega12_POWERPLAYTABLE *powerplay_table)
->   {
-> +	size_t smc_pptable_size =
-> +		offsetofend(ATOM_Vega12_POWERPLAYTABLE, smcPPTable);
-> +	size_t table_size = hwmgr->soft_pp_table_size;
-> +
-> +	PP_ASSERT_WITH_CODE((table_size >= smc_pptable_size),
-> +			    "Invalid PowerPlay Table!", return -1);
-> +
->   	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
->   		ATOM_VEGA12_TABLE_REVISION_VEGA12),
->   		"Unsupported PPTable format!", return -1);
-> diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
-> index 1f90825394575..20af10dda2e81 100644
-> --- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
-> +++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
-> @@ -639,6 +639,13 @@ static int check_powerplay_tables(
->   		struct pp_hwmgr *hwmgr,
->   		const ATOM_Vega20_POWERPLAYTABLE *powerplay_table)
->   {
-> +	size_t smc_pptable_size =
-> +		offsetofend(ATOM_Vega20_POWERPLAYTABLE, smcPPTable);
-> +	size_t table_size = hwmgr->soft_pp_table_size;
-> +
-> +	PP_ASSERT_WITH_CODE((table_size >= smc_pptable_size),
-> +			    "Invalid PowerPlay Table!", return -1);
-> +
->   	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
->   		ATOM_VEGA20_TABLE_REVISION_VEGA20),
->   		"Unsupported PPTable format!", return -1);
+>   no_endpoints:
+>   	return retval;
+> 
+> 
+> 
 
