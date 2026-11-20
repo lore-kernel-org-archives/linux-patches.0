@@ -1,68 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795153185;
-	b=W0xAnvuBS52aShlgHK58Vm6bjXtdlV2/OO79diub8FXBcEiJBkFUEVsPrQnMDnQT/7A3
-	 H7ZTgdDnq0yiPz7J+xoiArQTTYelRzHTMmRooh5xkReSB2gptPqcAoERZvBNVas1yKkrB
-	 AHAdbdJLxx1RCvhvpAIwh17c+iVjtvP8wcW5iNQ8LwfK0xqTV2pmXgoF+XTsEQlu7O9L/
-	 WDREiRlR6P+UirUAG7C6j06pXYvWb8k8bmeGhRPtHWickXMkoiHmAjWuC11CEAX99Z3+m
-	 4/GrckyI7H9ToaIu9f8RC15b7rm5YuJ8blcV2LpL+JfaZMudbudar1/69OqA72ZQ0xQ==
+	t=1795153501;
+	b=zOGcbOPYvGrRh39h+nCKRsHC+qjvdOV63d9/vuysbd7Mt9z399rV1kjMQvDDapNIxjy0
+	 fMTAFMPTjdxCxNPKaqB+uYAJprGlabnyvfdKTdw7+IxnTpMuVuAlioQVZcTKnqm9/mi82
+	 JwjCVAAniz5MDEv6qH6lLetZ2DBgnfl1nVYzbmhJAhswMqcy5HjuOL3rJGpT+AgTVesqs
+	 SEW643zdsQc1ug8w4810M+OpkidGB6Kdqw9P7cZKhHnGDrB8w4AwIbgmoW+x3PBSWjsD/
+	 zq2JdsJgUzt3idBsSdcgbR7l+Gw3QF4uYDOFnJa8EZengiLHizhmShq5divHriGvBtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795153185;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Cc:Subject:To:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=ElvNMLPb9nWTefCnh+Wvm1TWF1EkTveOzrAIj5NeSzA=;
-	b=V13ebIfqp47z5cnGBE2KSjx4DwKXRtttGA5ZK7C4nI0bOqqU3FN4gy9S0h3dNLTPSOxE
-	 6iM68g1rHIignTeq5Y6MXkCCAKMJ+Gsl+qMOJMU3rpxRhceBvYOS67KsKV/ijF2HZ3v5q
-	 UK85q2fZMATnqqACjo3t8VfmsBk2cFbly4azzi2ZqB28DXns9m4+xVgNVgWI6/z24fsC3
-	 7KqoL+wkYX5gyU2x55eI+T/K/bfvyjEGpjwH16nqrkB2pVQ60VQ5BDP7slDliCLOtfiKS
-	 E+j+IiJZkM8AQFPfSpPchUxJWNBekbLkQcpGlyBXIgHitgfbACaJiu8OmvtbWPJ7Q3w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795153501;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=QPoif5nu0plubaIDW+mhF1lB/GnbdIfbOY2E6CR1E+I=;
+	b=C2aABzJERIPa6lzSimFhyapFrn7AIByNYBVyWAup0AoC+rdSCHxuD1DuBoeXdAXcWzx4
+	 QLgr1x/FNZ1ShVYUdyiShmEVa44WW5MA110RACaUQ9fhUsc5SsWedoVmwjVZbVGwH0Ra6
+	 Uvv3H4WJH95qtP5HgCG6kxdnYKS0LYDt7O8P22mcWJn5OyWC7+uuiohuF3erv9kNtTmL0
+	 PdzGsyaLajMz7UqEGFYpdTdKNJExdt12Ou40+QNOTDoE9V86fi1yTn0D5kYBFlhLoAtLz
+	 JcLzy7dhMc0bsyfe3cDkmTL2lFEByYBqwECVqouS+FDaXZRm4OBFbHrNuGj/m9NpuzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=l3wTozIw;
-	arc=none smtp.remote-ip=192.198.163.8
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2G9Hp3F9;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA0B606A320;
-	Fri, 20 Nov 2026 05:39:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAA0B606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83978606A320;
+	Fri, 20 Nov 2026 05:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=l3wTozIw
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795153186; x=1826689186;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=JOXloh/WTQ18M0f0+orJ8jQWk9eyZPfHxhSzgmLwgig=;
-  b=l3wTozIwOlQzZcAXQL7AANbVSETjXCnF+BlPDw7BG/vVoi+UTII+0z2C
-   9s2swZ8PNkbi2D28lgJuT7myndMdAFiS/LjdTafX3c2fSFAH/cyWb/KWi
-   KHTL6mO/VhZY9ASGCCVaHniMXUV8Df3zFhM8HJmKN7KaKe55OZDuay46U
-   FMWIs/l2sGChWtMbWIQ4MEow5FTsi0aXVDZ6FHF2wArUeG3VSrWs8WtTk
-   iix+4eG00KcUsNpv7x2NS9QOD9AOcym5m8HCljZzep9p3HDxBVX4of6up
-   SZvpIhGWcA+26+4oLLSMwyaKPGvQuq6RKfcrNXJO8iiiwz0winuOQHc0J
-   Q==;
-X-CSE-ConnectionGUID: Kqnp6W4nTHGi2+5QRGA7QA==
-X-CSE-MsgGUID: q1pUmyxYQdqrQKJyD6UPVA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11971"; a="3926489"
-X-IronPort-AV: E=Sophos;i="6.27,222,1787036400"; 
-   d="scan'208";a="3926489"
-Received: from fmviesa012.fm.intel.com ([10.60.135.152])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 21:39:45 -0800
-X-CSE-ConnectionGUID: NCD7hbrERneuQrgdNmaJMQ==
-X-CSE-MsgGUID: qCE/ag8EST2VFpCAsOOiuA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,222,1787036400"; 
-   d="scan'208";a="12327914"
-Received: from unknown (HELO [10.238.1.144]) ([10.238.1.144])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 21:39:36 -0800
-Message-ID: <2d8af908-4dd5-43a9-b618-d1ee4189f6ba@linux.intel.com>
-Date: Fri, 20 Nov 2026 13:39:34 +0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2G9Hp3F9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BBD1F000C6;
+	Fri, 20 Nov 2026 05:45:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795153501;
+	bh=QPoif5nu0plubaIDW+mhF1lB/GnbdIfbOY2E6CR1E+I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=2G9Hp3F9/Z7/r/UwAOtgTV/g7Lvid733bUa15bgkHJMZnuKfTfJbWL01iKvezj23n
+	 Auuc887Qci6DGiTai/m9drr8IVpnNfOOaV9mf4J5GYS85EnALuBVMwpe+8BmtFP+8T
+	 yqfwNTt/maLhWKS3Hi1gcgINajdt5RdLkc6hhVOc=
+Date: Fri, 20 Nov 2026 06:44:58 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 1649/2857] mm/mremap: recheck PUDs under the page
+ table lock
+Message-ID: <2026112048-scheme-cornstalk-9990@gregkh>
+References: <20261118150201.293410965@linuxfoundation.org>
+ <20261118150300.709668987@linuxfoundation.org>
+ <e5f84697-3459-4f6a-a835-314d128576a0@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -72,85 +61,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com, Alex Williamson <alex@shazbot.org>,
- Alexey Kardashevskiy <aik@amd.com>, Bjorn Helgaas <bhelgaas@google.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Jacob Pan <jacob.pan@linux.microsoft.com>, Jason Gunthorpe <jgg@ziepe.ca>,
- Joerg Roedel <joro@8bytes.org>, Jonathan Cameron <jic23@kernel.org>,
- Jonathan Hunter <jonathanh@nvidia.com>, Kevin Tian <kevin.tian@intel.com>,
- Krishna Reddy <vdumpa@nvidia.com>, Lukas Wunner <lukas@wunner.de>,
- Nicolin Chen <nicolinc@nvidia.com>, Robin Murphy <robin.murphy@arm.com>,
- Samuel Ortiz <sameo@rivosinc.com>,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- Steven Price <steven.price@arm.com>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>,
- Thierry Reding <thierry.reding@kernel.org>,
- Vasant Hegde <vasant.hegde@amd.com>, Will Deacon <will@kernel.org>,
- Xu Yilun <yilun.xu@linux.intel.com>, Ashish Kalra <ashish.kalra@amd.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, iommu@lists.linux.dev,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Tom Lendacky <thomas.lendacky@amd.com>, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
- linux-tegra@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v9 10/13] iommufd/viommu: Allow PCI TSM backends to
- provide vIOMMU operations
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
- linux-coco@lists.linux.dev
-References: <20261116081935.85372-1-aneesh.kumar@kernel.org>
- <20261116081935.85372-11-aneesh.kumar@kernel.org>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20261116081935.85372-11-aneesh.kumar@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e5f84697-3459-4f6a-a835-314d128576a0@kernel.org>
 
-On 11/16/2026 4:19 PM, Aneesh Kumar K.V (Arm) wrote:
-> In confidential-computing configurations, a vIOMMU may be implemented by
-> a TSM driver rather than by the physical IOMMU driver. Such an
-> implementation also needs the TSM identity when creating and validating
-> vdevices.
+On Thu, Nov 19, 2026 at 07:46:43PM +0100, Matthieu Baerts wrote:
+> Hi Greg,
 > 
-> Allow VIOMMU_ALLOC to first query the TSM associated with the target PCI
-> device for vIOMMU operations. Fall back to the physical IOMMU driver
-> when the TSM does not provide operations for the requested vIOMMU type.
+> On 18/11/2026 15:44, Greg Kroah-Hartman wrote:
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: David Hildenbrand (Arm) <david@kernel.org>
+> > 
+> > [ Upstream commit 402882943dfa8bab5c2bcc66189f9fb2828f248e ]
+> > 
+> > Once get_old_pud() is fixed to accept PUD leaves, unmap_mapping_range() can
+> > clear a leaf between the lookup and the move. Holding mmap_lock in write
+> > mode does not prevent this.
+> > 
+> > If the zap happens before move_page_tables() tests the entry, an empty
+> > PUD can reach move_normal_pud(), where pud_populate() turns it into a
+> > present page table entry. If it happens after the test, move_huge_pud()
+> > can instead try to move an empty entry, triggering CONFIG_DEBUG_VM
+> > warnings on powerpc.
+> > 
+> > Recheck the source under the page table lock in both helpers. Treat an
+> > empty source in move_normal_pud() as a completed move, and use
+> > __pud_trans_huge_lock() in move_huge_pud().
+> > 
+> > In the future we should likely have the code lookup a PUD/PMD lockless
+> > once, instead of multiple times, because one of the problematic bits
+> > here is the:
+> > 
+> > 	pud_trans_huge(*old_pud)
+> > 
+> > Fixes: 0881ace292b6 ("mm/mremap: use pmd/pud_poplulate to update page table entries")
+> > Cc: stable@vger.kernel.org
+> > Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+> > Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+> > Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+> > Link: https://patch.msgid.link/20261031-fixes_core-v3-31-d6437171ecc3@kernel.org
+> > Reviewed-by: Lance Yang <lance.yang@linux.dev>
+> > Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+> > [ sashal: adjusted context for move helpers using direct vma and old_addr arguments instead of pagetable_move_control ]
+> Similar to what I reported on v5.15, our CI also has an issue with this
+> one on v6.1:
 > 
-> Resolve the PCI TSM association under pci_tsm_rwsem, take a TSM device
-> reference, and pin the module providing the operations. Store the TSM
-> device in the vIOMMU. Release the device reference and module pin on
-> allocation failure, fallback to the physical IOMMU driver, or vIOMMU
-> destruction. Drop the device reference before releasing the module pin,
-> since the final put may call into the backend module.
+>   mm/mremap.c: In function 'move_huge_pud':
+>   mm/mremap.c:395:19: error: implicit declaration of function '__pud_trans_huge_lock'; did you mean 'pud_trans_huge_lock'? [-Wimplicit-function-declaration]
+>     395 |         old_ptl = __pud_trans_huge_lock(old_pud, vma);
+>         |                   ^~~~~~~~~~~~~~~~~~~~~
+>         |                   pud_trans_huge_lock
+>   mm/mremap.c:395:17: error: assignment to 'spinlock_t *' {aka 'struct spinlock *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+>     395 |         old_ptl = __pud_trans_huge_lock(old_pud, vma);
+>         |                 ^
 > 
-> The device reference preserves the TSM allocation. Backends providing
-> vIOMMU operations must not unregister their TSM while the module is pinned,
-> since the reference does not prevent backend resource teardown.
+> https://github.com/multipath-tcp/mptcp_net-next/actions/runs/44566582776/job/135709990661#step:9:407
 > 
-> Cc: Jason Gunthorpe<jgg@ziepe.ca>
-> Cc: Kevin Tian<kevin.tian@intel.com>
-> Cc: Joerg Roedel<joro@8bytes.org>
-> Cc: Will Deacon<will@kernel.org>
-> Cc: Robin Murphy<robin.murphy@arm.com>
-> Cc: Bjorn Helgaas<bhelgaas@google.com>
-> Cc: Alexey Kardashevskiy<aik@amd.com>
-> Cc: Lukas Wunner<lukas@wunner.de>
-> Cc: Xu Yilun<yilun.xu@linux.intel.com>
-> Cc:iommu@lists.linux.dev
-> Cc:linux-pci@vger.kernel.org
-> Signed-off-by: Aneesh Kumar K.V (Arm)<aneesh.kumar@kernel.org>
-> ---
->   drivers/iommu/iommufd/viommu.c | 35 +++++++++++++++++++++++++++-----
->   drivers/pci/tsm/core.c         | 22 ++++++++++++++++++++
->   drivers/virt/coco/tsm-core.c   | 37 ++++++++++++++++++++++++++++++++++
->   include/linux/iommufd.h        |  2 ++
->   include/linux/pci-tsm.h        | 24 ++++++++++++++++++++++
->   include/linux/tsm.h            | 25 +++++++++++++++++++++++
->   6 files changed, 140 insertions(+), 5 deletions(-)
 
-This change spans both PCI/TSM and IOMMUFD. Could it be split into
-separate patches for each subsystem—for example, one adding the TSM
-lookup interface and another updating IOMMUFD to use it?
+thanks, now dropped from here and 5.15.y
 
-Thanks,
-baolu
+greg k-h
